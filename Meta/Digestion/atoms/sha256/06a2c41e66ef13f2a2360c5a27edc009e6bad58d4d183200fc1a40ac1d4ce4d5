@@ -1,0 +1,7 @@
+仓内对应普通数学成果为不可变快照 82c3fcbcce00e4e504dc68583c356d9ec41bd942 中的 [profile 343](https://github.com/the-omega-institute/trureturing/blob/82c3fcbcce00e4e504dc68583c356d9ec41bd942/docs/reports/erdos7-odd-covering/profile-notes/321-384/343-original-prefix-sat-reductions-and-transport-obstructions.md)：
+
+- profile343 第 8 节给出有限正见证的精确条件 $\varnothing\ne q_n^{-1}(h)\subseteq F$，并将其等同于前缀拓扑中内部非空；C卷第2.4.2节、C卷第2.4.3节是在 $F=K$ 上的应用，包含自适应查询的具体运行证明。
+- profile343 第 10 节已经给出相同三幂对角构造、正测度、无可计算点、可判定有限层、严格候选数量增长，以及有效满射提升与延迟低层约束的区别。本文将这些既有性质连接到正负认证和随机流接口。
+- profile343 第 9 节给出另一个无限奇素数例子，其相容完成分支不由整数实现，而极限测度为零；它不等同于这里正测度且没有可计算分支的例子。
+- profile343 第 11 节对指定奇数互异流的有限消亡指标问题作条件分类；本文没有新增从该问题到本例的归约，也没有把有限认证障碍变成有限覆盖问题或形式独立性的结论。
+

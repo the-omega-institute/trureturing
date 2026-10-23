@@ -4,7 +4,7 @@
 
 Affine vanishing-diagonal exponents divide their own integer coefficients.
 
-The note hanna2026a395833div quotes Hanna's A395833 generating equation and divisibility conjecture. Write a(p,n) for NegativePowerDiagonalModPrime.a(p,n), the coefficient of its unique normalized integer series A(p). The normalization is a(p,0)=a(p,1)=1, and for n>1 the coefficient of x^n in A(p)(x/A(p)(x)^((p-1)*(n-1)+1)) vanishes. The quotient uses the formal unit inverse. Thus slope d corresponds to p=d+1, and A395833 corresponds to p=3.
+The note hanna2026a395833 quotes Hanna's A395833 generating equation and divisibility conjecture. Write a(p,n) for NegativePowerDiagonalModPrime.a(p,n), the coefficient of its unique normalized integer series A(p). The normalization is a(p,0)=a(p,1)=1, and for n>1 the coefficient of x^n in A(p)(x/A(p)(x)^((p-1)*(n-1)+1)) vanishes. The quotient uses the formal unit inverse. Thus slope d corresponds to p=d+1, and A395833 corresponds to p=3.
 
 The parameters d and n are natural numbers. In the general formula, n-1 and the expression inside intCast are computed in the natural numbers; intCast is the embedding into the integers. In the A395833 formula, 2*intCast(n)-1 is integer arithmetic. Both divisibility conclusions are integer divisibility.
 
@@ -30,7 +30,7 @@ $$\forall n: \mathbb{N}, (1 \le n) \implies (((2) \cdot (\operatorname{intCast}\
 
 *Proof.* Machine-checked in Lean as `D5/S1/Recurrence/Residue/DiagonalExponentSelfDivisibility.hanna_conjecture_a395833` (`✓ std3`). ∎
 
-*Citation.* Paul D. Hanna (2026). *OEIS A395833, divisibility by the vanishing-diagonal exponent*. URL: <https://oeis.org/A395833>.
+*Citation.* Paul D. Hanna (2026). *OEIS A395833, g.f. A(x) satisfies [x^n] A(x/A(x)^(2*n-1)) = 0 for n > 1*. URL: <https://oeis.org/A395833>.
 
 *Commentary.*
 

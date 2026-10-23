@@ -34,7 +34,7 @@ def r2 (a : ℝ) : ℝ := sSup ((fun p => sInf (rootNorms p)) '' U2 a)
 def normalQuadratic (a u v : ℝ) : ℝ[X] :=
   X ^ 2 + C ((a + 1) * (u + v) - 1) * X + C (a * (a + 1) * u * v)
 
-private theorem quadratic_factors (A B c : ℂ) (hA : A ≠ 0) :
+theorem quadratic_factors (A B c : ℂ) (hA : A ≠ 0) :
     ∃ z w : ℂ,
       (C A * X ^ 2 + C B * X + C c : ℂ[X]).roots = {z, w} ∧
       (C A * X ^ 2 + C B * X + C c : ℂ[X]) =

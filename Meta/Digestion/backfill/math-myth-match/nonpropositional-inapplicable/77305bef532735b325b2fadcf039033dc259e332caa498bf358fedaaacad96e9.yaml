@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:77305bef532735b325b2fadcf039033dc259e332caa498bf358fedaaacad96e9
+  normalized_sha256: sha256:77305bef532735b325b2fadcf039033dc259e332caa498bf358fedaaacad96e9
+cas_ref: sha256:77305bef532735b325b2fadcf039033dc259e332caa498bf358fedaaacad96e9
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 证明。：该段仅论证前文命题 52.3（人人各有合适行动，不保证存在同一个合适处方）。，不另立新的命题陈述；前文命题本身仍保留。
+    previous_atom_id: d30b56b86d94fdf52a8a629119e7a69b200f5ba1f32fa13d8bb3e15ad506f055
+    next_atom_id: 79471f928a70494e77886657c0618e21ed6bfa8dfb5951732d5688350b12d4ad

@@ -1,0 +1,55 @@
+**定义 28.1（来源位、图边、控制与共同高斯载体）。** 令
+$\mathcal I=\{A,B,C\}$ 为控制标签集，合法来源域为
+$$
+\mathcal W=\{(b_1,0,b_3,0,b_5):b_1,b_3,b_5\in\{0,1\}\}.
+$$
+这些五位词满足 $b_i b_{i+1}=0$；其三个连续三位窗口各自取值于定义 1.1
+的五态域。来源位置与响应图边通过指定映射
+$$
+b_1\longmapsto A\longmapsto OL,\qquad
+b_3\longmapsto B\longmapsto OR,\qquad
+b_5\longmapsto C\longmapsto LJ
+$$
+相连。此映射是模型数据；三个活动位分处长度五来源中，不是一个三位窗口中
+三个冲突位置的共同激活。令
+$S(w)=\{A:b_1=1\}\cup\{B:b_3=1\}\cup\{C:b_5=1\}$。
+
+响应图固定为定义 26.2 的 $OL,OT,OR,LJ,RJ$，全部基准边权为一，以 $O$
+接地，采用同一坐标空间 $E=\mathbb R^{\{L,T,R,J\}}$。其基准矩阵取定理
+25.3、26.6 的 $K_0$，即
+$$
+K_0=\begin{pmatrix}
+2&0&0&-1\\0&1&0&0\\0&0&2&-1\\-1&0&-1&2
+\end{pmatrix},\qquad G_0=K_0^{-1}.
+$$
+本节的 $x,y,z\ge0$ 仅指三个控制强度，令
+$$
+u_A=\sqrt{x}\,e_L,\qquad u_B=\sqrt{y}\,e_R,\qquad
+u_C=\sqrt{z}\,(e_J-e_L),\qquad
+K_S=K_0+\sum_{i\in S}u_i u_i^{\mathsf T},\quad G_S=K_S^{-1}.
+$$
+坐标向量、图边、来源位与控制标签分别属于上述不同集合；特别地，
+$u_i u_i^{\mathsf T}$ 是作用于 $E$ 的正半定算子。
+所有 $S$ 共用定义 26.1 的 Lebesgue 测度、单位及 $\vartheta>0$，取
+$$
+E_S(\xi)=\tfrac12\xi^{\mathsf T}K_S\xi,\qquad
+\xi\mid S\sim\mathcal N(0,\vartheta G_S),\qquad
+f(S)=-\vartheta\log\frac{Z_S}{Z_\varnothing}
+=\frac{\vartheta}{2}\log\frac{\det K_S}{\det K_0}.
+$$
+这里 $Z_S=\int_E e^{-E_S(\xi)/\vartheta}\,d\xi$。
+每个模式均值及最小二次能量都为零。以 $M=K_S/(2\vartheta)$ 代入
+[Brcic 的有限正定高斯积分](../../../Library/Analytic/brcic2026gaussianquadratic.md)
+及其 [GaussianReplicaReduction 的有限乘积测度积分](../../../D5/S3/Quantum/Entanglement/GaussianReplicaReduction.lean)，
+即给最后的归一化；定义 26.7 中模式平均与退火量的区别仍适用。
+
+为此应用记 $d_S=\det K_S$、$d_0=d_\varnothing$，并定义
+$$
+\begin{aligned}
+\mathcal U={}&f(ABC)-f(AB)-f(AC)-f(BC)\\
+&+f(A)+f(B)+f(C)-f(\varnothing).
+\end{aligned}
+$$
+集合连写表示并集，$\mathcal U$ 是实值目标对控制集合的三阶差，不是来源概率，
+也不是高斯振幅的三阶中心累积量。
+

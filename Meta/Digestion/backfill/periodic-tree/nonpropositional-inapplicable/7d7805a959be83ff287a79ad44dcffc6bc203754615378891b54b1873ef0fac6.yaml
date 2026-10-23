@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:7d7805a959be83ff287a79ad44dcffc6bc203754615378891b54b1873ef0fac6
+  normalized_sha256: sha256:7d7805a959be83ff287a79ad44dcffc6bc203754615378891b54b1873ef0fac6
+cas_ref: sha256:7d7805a959be83ff287a79ad44dcffc6bc203754615378891b54b1873ef0fac6
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 英文证明段（**Proof.** Put M=L_n^2+1. The golden identities give F_(3n)=F_n M and …）仅给出前文命题的推导或证明方向，不另提出独立结论。
+    previous_atom_id: 1af8e5ba365d2fbcba552db1f176b2093af05b5aea6a3c0dc7ad6038ecb0cab2
+    next_atom_id: 4f69489a00f2ef0eb24da61ebc3e036d9ead93170b56ec9ba0988b2a9e34e021

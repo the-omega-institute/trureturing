@@ -1,0 +1,22 @@
+**定理 27.2（Exact full-source adaptive and GLOBAL classification）。** For every target in Definition 27.1, under each original alphabet,
+
+$$
+\boxed{
+C_{\rm ad}(f)=
+\begin{cases}
+0,&H_0=H_1=\varnothing,\\
+1,&\text{otherwise},
+\end{cases}
+\qquad
+C_{\rm pre}(f)=
+\begin{cases}
+0,&H_0=H_1=\varnothing,\\
+1,&H_0\cup H_1\ne\varnothing
+\ \text{and}\ (H_0=\varnothing\ \text{or}\ H_1=\varnothing\ \text{or}\ H_0=H_1),\\
+3,&H_0,H_1\ne\varnothing,\ H_0\ne H_1.
+\end{cases}}
+\tag{27.6}
+$$
+
+In particular, this class has no GLOBAL optimum two. The exact worst emitted-bit fees are $mC_{\rm ad}(f)$ and $mC_{\rm pre}(f)$.
+

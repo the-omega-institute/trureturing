@@ -55,6 +55,61 @@ def blochMatrix (a : ℝ) (r : (EuclideanSpace ℝ (Fin 3))) : Matrix (Fin 2) (F
   !![((a + r 2 : ℝ) : ℂ) / 2, ((r 0 : ℂ) - (r 1 : ℂ) * Complex.I) / 2;
       ((r 0 : ℂ) + (r 1 : ℂ) * Complex.I) / 2, ((a - r 2 : ℝ) : ℂ) / 2]
 
+theorem blochMatrix_trace (a : ℝ) (r : EuclideanSpace ℝ (Fin 3)) :
+    Matrix.trace (blochMatrix a r) = (a : ℂ) := by
+  simp [blochMatrix, Matrix.trace, Fin.sum_univ_two]
+  ring
+
+theorem bloch_blochMatrix (a : ℝ) (r : EuclideanSpace ℝ (Fin 3)) :
+    bloch (blochMatrix a r) = r := by
+  ext i
+  fin_cases i <;> (simp [blochMatrix, bloch]; ring)
+
+theorem bloch_geometry_of_isHermitian (M : Matrix (Fin 2) (Fin 2) ℂ)
+    (hM : M.IsHermitian) :
+    M = blochMatrix (Matrix.trace M).re (bloch M) ∧
+    (Matrix.trace M = 1 → M * M = M → ‖bloch M‖ = 1) := by
+  have h00 : (M 0 0).im = 0 := by
+    have h := congrArg Complex.im (hM.apply 0 0)
+    simp at h
+    linarith
+  have h11 : (M 1 1).im = 0 := by
+    have h := congrArg Complex.im (hM.apply 1 1)
+    simp at h
+    linarith
+  have h10r : (M 1 0).re = (M 0 1).re := by
+    have h := congrArg Complex.re (hM.apply 1 0)
+    simpa using h.symm
+  have h10i : (M 1 0).im = -(M 0 1).im := by
+    have h := congrArg Complex.im (hM.apply 1 0)
+    simpa using h.symm
+  constructor
+  · ext i j
+    fin_cases i <;> fin_cases j <;> apply Complex.ext <;>
+      simp [blochMatrix, bloch, Matrix.trace, Fin.sum_univ_two, h00, h11, h10r, h10i] <;> ring
+  · intro ht hp
+    have htr := congrArg Complex.re ht
+    have hsq := congrArg (fun X : Matrix (Fin 2) (Fin 2) ℂ => (Matrix.trace X).re) hp
+    simp [Matrix.trace, Matrix.mul_apply, Fin.sum_univ_two, h00, h11, h10r, h10i] at htr hsq
+    have hnorm : ‖bloch M‖ ^ 2 = 1 := by
+      rw [EuclideanSpace.real_norm_sq_eq]
+      simp [bloch, Fin.sum_univ_succ]
+      nlinarith [hsq, sq_nonneg ((M 0 0).re - (M 1 1).re)]
+    nlinarith [norm_nonneg (bloch M)]
+
+theorem norm_bloch_le_trace_of_posSemidef (M : Matrix (Fin 2) (Fin 2) ℂ) (hM : M.PosSemidef) :
+    ‖bloch M‖ ≤ (Matrix.trace M).re := by
+  have ht := (Complex.nonneg_iff.mp hM.trace_nonneg).1
+  have hd := (Complex.nonneg_iff.mp hM.det_nonneg).1
+  have he : (Matrix.det M).re = ((Matrix.trace M).re^2-‖bloch M‖^2)/4 := by
+    rw [(bloch_geometry_of_isHermitian M hM.isHermitian).1]
+    rw [blochMatrix_trace, bloch_blochMatrix]
+    rw [EuclideanSpace.real_norm_sq_eq]
+    simp [blochMatrix, Matrix.det_fin_two, Fin.sum_univ_three]
+    ring
+  rw [he] at hd
+  nlinarith only [ht,hd,norm_nonneg (bloch M)]
+
 def effectReadout {m : ℕ} (N : Fin m → Matrix (Fin 2) (Fin 2) ℂ) :
     (EuclideanSpace ℝ (Fin 3)) →ₗ[ℝ] (Fin m → ℝ) := {
   toFun r j := ⟪bloch (N j), r⟫_ℝ / 2
@@ -174,44 +229,12 @@ theorem actual_rank_two_parameters : ∀ {m : ℕ}
     rw [hproj]
     exact lt_of_le_of_lt (Submodule.norm_starProjection_apply_le _ _) hmid
 
-  have matrix_bloch_geometry (M : Matrix (Fin 2) (Fin 2) ℂ)
-      (hM : M.IsHermitian) :
-      M = blochMatrix (Matrix.trace M).re (bloch M) ∧
-      (Matrix.trace M = 1 → M * M = M → ‖bloch M‖ = 1) := by
-    have h00 : (M 0 0).im = 0 := by
-      have h := congrArg Complex.im (hM.apply 0 0)
-      simp at h
-      linarith
-    have h11 : (M 1 1).im = 0 := by
-      have h := congrArg Complex.im (hM.apply 1 1)
-      simp at h
-      linarith
-    have h10r : (M 1 0).re = (M 0 1).re := by
-      have h := congrArg Complex.re (hM.apply 1 0)
-      simpa using h.symm
-    have h10i : (M 1 0).im = -(M 0 1).im := by
-      have h := congrArg Complex.im (hM.apply 1 0)
-      simpa using h.symm
-    constructor
-    · ext i j
-      fin_cases i <;> fin_cases j <;> apply Complex.ext <;>
-        simp [blochMatrix, bloch, Matrix.trace, Fin.sum_univ_two, h00, h11, h10r, h10i] <;> ring
-    · intro ht hp
-      have htr := congrArg Complex.re ht
-      have hsq := congrArg (fun X : Matrix (Fin 2) (Fin 2) ℂ => (Matrix.trace X).re) hp
-      simp [Matrix.trace, Matrix.mul_apply, Fin.sum_univ_two, h00, h11, h10r, h10i] at htr hsq
-      have hnorm : ‖bloch M‖ ^ 2 = 1 := by
-        rw [EuclideanSpace.real_norm_sq_eq]
-        simp [bloch, Fin.sum_univ_succ]
-        nlinarith [hsq, sq_nonneg ((M 0 0).re - (M 1 1).re)]
-      nlinarith [norm_nonneg (bloch M)]
-
   have trace_bloch_pairing (M N : Matrix (Fin 2) (Fin 2) ℂ)
       (hM : M.IsHermitian) (hN : N.IsHermitian) :
       (Matrix.trace (M * N)).re =
         ((Matrix.trace M).re * (Matrix.trace N).re + ⟪bloch M, bloch N⟫_ℝ) / 2 := by
-    obtain ⟨hM', _⟩ := matrix_bloch_geometry M hM
-    obtain ⟨hN', _⟩ := matrix_bloch_geometry N hN
+    obtain ⟨hM', _⟩ := bloch_geometry_of_isHermitian M hM
+    obtain ⟨hN', _⟩ := bloch_geometry_of_isHermitian N hN
     conv_lhs => rw [hM', hN']
     simp [blochMatrix, Matrix.trace, Matrix.mul_apply, Fin.sum_univ_two,
       PiLp.inner_apply, Fin.sum_univ_succ, RCLike.inner_apply]
@@ -442,23 +465,12 @@ theorem actual_rank_two_parameters : ∀ {m : ℕ}
       · rw [abs_of_nonpos hx]
         nlinarith only [hm, hh2, hhn, hx, mul_nonneg hcpos.le hR]
 
-  have effect_bound (M : Matrix (Fin 2) (Fin 2) ℂ) (hM : M.PosSemidef) :
-      ‖bloch M‖ ≤ (Matrix.trace M).re := by
-    have ht := (Complex.nonneg_iff.mp hM.trace_nonneg).1
-    have hd := (Complex.nonneg_iff.mp hM.det_nonneg).1
-    have he : (Matrix.det M).re = ((Matrix.trace M).re^2-‖bloch M‖^2)/4 := by
-      conv_lhs => rw [(matrix_bloch_geometry M hM.isHermitian).1]
-      rw [EuclideanSpace.real_norm_sq_eq]
-      simp [blochMatrix, Matrix.det_fin_two, Fin.sum_univ_three]
-      ring
-    rw [he] at hd
-    nlinarith only [ht,hd,norm_nonneg (bloch M)]
   intro m N rho p v I hI hcI h0 hv hN hnorm hc hrho hread hrank
   let r := fun u => bloch (rho u)
   let p' := fun j => p j - (Matrix.trace (N j)).re / 2
   have hpure : ∀ u ∈ I, ‖r u‖ = 1 := by
     intro u hu
-    exact (matrix_bloch_geometry (rho u) (hrho u hu).1.isHermitian).2
+    exact (bloch_geometry_of_isHermitian (rho u) (hrho u hu).1.isHermitian).2
       (hrho u hu).2.1 (hrho u hu).2.2
   have hbr : ∀ u ∈ I, effectReadout N (r u) = p' + u • v := by
     intro u hu
@@ -486,7 +498,7 @@ theorem actual_rank_two_parameters : ∀ {m : ℕ}
   have hdiag (j : Fin m) : 0 ≤ q j ∧ 0 ≤ A j ∧ b j^2 ≤ A j*q j := by
     have hn : ‖basis.repr (bloch (N j))‖ ≤ (Matrix.trace (N j)).re := by
       rw [basis.repr.norm_map]
-      exact effect_bound (N j) (hN j)
+      exact norm_bloch_le_trace_of_posSemidef (N j) (hN j)
     have ht : 0 ≤ (Matrix.trace (N j)).re := (norm_nonneg _).trans hn
     have hn2 := (sq_le_sq₀ (norm_nonneg _) ht).mpr hn
     have hsq : (basis.repr (bloch (N j)) 0)^2 + (basis.repr (bloch (N j)) 2)^2 =
@@ -525,7 +537,9 @@ theorem actual_rank_two_parameters : ∀ {m : ℕ}
         ext i; fin_cases i <;> simp [blochLinear,bloch]
       rw [he,map_zero]
     have hzsum : ∑ j,basis.repr (bloch (N j)) 2=0 := by
-      simpa using congrArg (fun z : EuclideanSpace ℝ (Fin 3) => z 2) hvec
+      have h := congrArg (fun z : EuclideanSpace ℝ (Fin 3) => (WithLp.ofLp z) 2) hvec
+      rw [WithLp.ofLp_sum, Finset.sum_apply, WithLp.ofLp_zero, Pi.zero_apply] at h
+      exact h
     dsimp [q]
     rw [← Finset.sum_div, Finset.sum_sub_distrib,ht,hzsum]
     norm_num

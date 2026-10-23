@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:f5f376dbe2ed6b955a2706a6b26f17a552b7bd0c5a28d754bf96319538291fb7
+  normalized_sha256: sha256:f5f376dbe2ed6b955a2706a6b26f17a552b7bd0c5a28d754bf96319538291fb7
+cas_ref: sha256:f5f376dbe2ed6b955a2706a6b26f17a552b7bd0c5a28d754bf96319538291fb7
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 定义 31.1（局部干预因果见证）：本段仅约定名称、符号及其判定条件；不主张满足条件的对象存在，也不追加性质定理。
+    previous_atom_id: 6ebbc81a3a86fdabd9c5d07247fabfccad9d696f26d8483c6da633d53cc98135
+    next_atom_id: 7e9291d568cf2c45b6876809d9093091ac98fd222ec46b652c9187729e28065b

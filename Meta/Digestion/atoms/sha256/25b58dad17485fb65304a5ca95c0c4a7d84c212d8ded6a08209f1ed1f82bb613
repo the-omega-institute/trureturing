@@ -1,0 +1,2 @@
+**Finite verification boundary.** Exact rational interval arithmetic checked (9)–(11), all strict guards in §4, the determinant in (8), the three source-response rows, and the original eight trace identities. The symbolic interpolation residuals reduce to zero, including the parent residual (3). These are ordinary mathematical checks; no Lean/kernel certification, exhaustive search, physical-realization claim, optimality claim, or full collision classification is asserted.
+

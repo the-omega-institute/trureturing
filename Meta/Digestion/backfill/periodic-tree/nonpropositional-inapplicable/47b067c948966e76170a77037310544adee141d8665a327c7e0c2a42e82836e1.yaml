@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:47b067c948966e76170a77037310544adee141d8665a327c7e0c2a42e82836e1
+  normalized_sha256: sha256:47b067c948966e76170a77037310544adee141d8665a327c7e0c2a42e82836e1
+cas_ref: sha256:47b067c948966e76170a77037310544adee141d8665a327c7e0c2a42e82836e1
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 章节标题「T.6 两个实嵌入下的取值」仅标示本节主题，不含正文命题或性质断言。
+    previous_atom_id: e1d6cacf0739903ffcd65e7056e534d3e44e806e93fcd9e8000f990f0c4eb850
+    next_atom_id: 0ec06b5626504b4fb14401c7423f86f47d401da46547c262f211c47222073d30

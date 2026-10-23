@@ -1,0 +1,7 @@
+**Definition 53.2 (policy-relative future equivalence).** For a fixed
+successful policy $\pi$, two reachable controller states $k,k'$ are equivalent
+when, under every admitted source compatible with that state, they have the same
+remaining output on every visible response continuation and the same contracted
+resource trace. The action selected at the two states is part of this future
+contract.
+

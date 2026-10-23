@@ -1,0 +1,40 @@
+**Convention 58.17 (mathematical scope and provenance).** The fixed-point and
+deterministic residual-minimization principles are standard background, as
+are the Radon--Nikodym description of the meet of finite measures.
+The resource arguments use the following prior methods:
+
+1. Christoph Haase, *A survival guide to Presburger arithmetic*,
+   ACM SIGLOG News 5(3), 67--82,
+   [doi:10.1145/3242953.3242964](https://doi.org/10.1145/3242953.3242964):
+   Presburger decision procedures used on the exact path and boundedness
+   formulas in 58.20--58.21.
+2. Seymour Ginsburg and Edwin H. Spanier, *Semigroups, Presburger formulas,
+   and languages*, Pacific Journal of Mathematics 16(2), 285--296,
+   [doi:10.2140/pjm.1966.16.285](https://doi.org/10.2140/pjm.1966.16.285):
+   the Presburger/semilinear background for effective integer-set descriptions.
+3. Leonard E. Dickson, *Finiteness of the Odd Perfect and Primitive Abundant
+   Numbers with n Distinct Prime Factors*, American Journal of Mathematics
+   35(4), 413--422,
+   [doi:10.2307/2370405](https://doi.org/10.2307/2370405):
+   the classical finite-dimensional well-quasi-order principle used for
+   existence in 58.21.
+
+Their application here specifies the missing FIB action, source, residual,
+and aggregation interfaces; the counterexamples delimit these interfaces.
+In particular, 58.19 and the interface repair in 58.20 are repository-derived
+mathematical additions, using the cited classical methods.
+No priority claim is made for the background methods or their combination.
+All statements in §58 are ordinary mathematical definitions and arguments.
+Neither the stochastic comparison in §55.3 nor a reference to results in
+another volume certifies an exact Lean application of this contract.
+The existing deterministic
+[KBonacci acquisition contract](../../../D5/S3/ObserverMemory/Algorithms/KBonacciIrreversibleAcquisition.lean)
+does not supply a measurable random full-record extension. The
+[ActualTree per-source RandomContract](../../../D5/S3/Arith/FibonacciAtomic/ActualTreeReadoutAcquisition.lean)
+assumes measurable wrong-return and divergence events of measure zero and
+measurable extended cost for each source; it does not assume measurable
+complete records or the field factorizations required in 58.12--58.13.
+No Lean/kernel-verification claim is made. Construction and effective
+presentation of an appropriate action-closed interface for a general signed
+FIB fibre remain separate unresolved obligations, as in §57.
+

@@ -245,7 +245,8 @@ public sealed partial class ProductionEnvironmentTests
         var environment = new ProductionCliEnvironment("/repo", new FakeRepositoryGateway(
             RawChangeSet.CreateWithKinds([(FileMapPath, RawChangeKind.Modified),
                 (RuleFixture.BlueprintPath, RawChangeKind.Modified), (deleted, RawChangeKind.Deleted)]),
-            Snapshot(fixture.Files, addDefaultFileMap: false), Snapshot(fixture.Baseline, addDefaultFileMap: false)),
+            Snapshot(fixture.Files, addDefaultFileMap: false), Snapshot(fixture.Baseline, addDefaultFileMap: false),
+            addSourcePolicy: false),
             new FakeLeanReportSource(null));
         var failure = Assert.IsType<AdmissionOutcome.InfrastructureFailure>(CheckWithReports(environment, fixture));
         Assert.Contains(message, failure.Message, StringComparison.Ordinal);

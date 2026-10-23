@@ -4423,3 +4423,560 @@ version verification, native authentication or physical verification is
 inferred from these citations or this proof.
 
 ## 77.99 追加锚（本行以下为增补区）
+
+## 78. Common ground lengths, small fixed-cap witnesses and the limits of leaf width
+
+**Definition 78.1 (source-preserving geometric length variants).** Equal ground-stub
+lengths force opposite planar circle intersections; unequal lengths need not. The
+strict height band and unit inherited seams below support a small-source width
+argument. The unrestricted width-or-area obstruction77.3 supplies a different
+witness and weaker hypotheses. Here the common-length range and the unequal
+leaf-width boundary are specified separately.
+
+An admissible source is an authentic nonempty finite ordered full binary
+$\alpha/\beta$ tree under the original source contracts55.1,60.1,66.1 and67.1 in
+the [first continuation](FIB_ATOM_RECURSIVE_HOLOGRAPHIC_BOUNDARY_GEOMETRY_CONTINUATION.md). Its
+leaves carry their actual labels; an internal node is the ordered bracket of its two
+children. Positions are the actual occurrence addresses $p\in\{L,R\}^*$ relative to
+the current root $o$, not equivalence classes of equal subtrees. Every label,
+bracket, left/right order and occurrence is retained. In particular, repeated
+expressions at different addresses are different source vertices. Put
+
+$$
+n=\#D,\qquad \ell(D)=\#\operatorname{Leaf}(D),\qquad
+h(D)=\max_{p\in D}|p|,
+\tag{78.1}
+$$
+
+where $|p|$ is the number of inherited seams from the current root. The half
+skeleton consists of exactly those parent-child seams and exactly two ground stubs
+at every current leaf. Each stub has its own ground tip; all tips are distinct.
+There are no further edges or identifications. If there are $i$ internal vertices,
+counting parent-child edges gives $2i=n-1$ and $n=i+\ell(D)$, hence $n=2\ell(D)-1$.
+There are $n-1$ inherited seams, $2\ell(D)=n+1$ stubs and $2n$ half-skeleton edges.
+The root has incidence two, including when it is a singleton; every nonroot source
+vertex has incidence three, and every ground tip has incidence one.
+
+For each leaf $p$ prescribe two positive geometric lengths $r_{p,1}$ and $r_{p,2}$.
+Write $E_s(D;r)$ for the following spatial contract in $\mathbb R^{s-1}\times\mathbb
+R$, with last coordinate the height $y$. The placement of all source vertices and
+ground tips is injective. Every source vertex satisfies $1/4<y_p<3/4$. Every
+inherited seam is a straight Euclidean segment of length exactly one. Stub $j$ at
+$p$ is a straight segment of length exactly $r_{p,j}$ from $p$ to its own tip in
+$\{y=0\}$. Segments meet only at images of their prescribed common graph endpoints,
+and no vertex lies on a nonincident segment. There are positive minimum incident-ray
+angles and positive clearances between nonincident compact segments and vertices,
+allowed to depend on this finite source, these lengths and this placement.
+
+The common-length contract $E_s^\lambda(D)$ means $E_s(D;r)$ with
+$r_{p,1}=r_{p,2}=\lambda$ at every leaf. It changes only the declared Euclidean
+ground-stub length in76.1; inherited seams remain unit. Thus $E_s^1(D)=E_s(D)$
+of76.1. An unequal near-unit contract instead prescribes each
+$r_{p,j}\in[1-\delta,1+\delta]$, without requiring equality. Here $\delta$ is a
+geometric tolerance, independent of any cable density parameter appearing in the
+analytic carrier.
+
+Admissibility retains one immutable INITIAL, one predeclared fixed cap $H$,
+source-independent actor initialization, the original complete contexts and
+candidates, their whole-candidate guards, every acceptance or refusal, numerical
+Read, absorbing Stop and actual chronological records. In particular the original
+whole substitution is
+
+$$
+\rho\alpha=\beta,\qquad \rho\beta=\langle\beta,\alpha\rangle,
+\qquad \rho\langle u,v\rangle=\langle\rho u,\rho v\rangle.
+\tag{78.2}
+$$
+
+A candidate is accepted only under its original guard $\ell\le H$; refusal retains
+the current source and supplies no candidate Read. Reads retain their original
+functions and source version, and there is no event after Stop. A mathematical
+family of separately legal finite commissions raises no cap and continues no stopped
+history. All existence statements below mean that each legal finite current source
+has its own placement, with the source semantics retained. They give no simultaneous
+apparatus or source- or cap-uniform margin.
+
+**Lemma 78.2 (all-leaf separation with unequal bounded stubs).** Suppose $E_2(D;r)$
+holds and every actual stub length is at most $3/2$. For each leaf $p=(x_p,y_p)$ let
+its two actual grounding coordinates, sorted in increasing order, be $a_p<b_p$, and
+put $I_p=[a_p,b_p]$. Then these closed intervals are pairwise disjoint. This
+conclusion requires no equal-length or opposite-side condition.
+
+**Proof.** Fix a leaf $p$, abbreviate its tip coordinates by $a<b$, write
+$g_a=(a,0)$ and $g_b=(b,0)$, and set $\Delta_p=\operatorname{conv}\{g_a,p,g_b\}$ and
+$L_p=\max\{r_{p,1},r_{p,2}\}$. When the source is not a singleton, let $v$ be the
+source parent of $p$. If $v\in\Delta_p$, a convex representation would give
+
+$$
+v=\theta p+\mu g_a+\eta g_b,\qquad
+\theta+\mu+\eta=1,\qquad \theta,\mu,\eta\ge0,
+\qquad \theta=\frac{y_v}{y_p}>\frac13.
+\tag{78.3}
+$$
+
+The last strict inequality uses both $y_v>1/4$ and $y_p<3/4$. Convexity and the
+exact unit parent seam then imply
+
+$$
+1=|v-p|\le\mu|g_a-p|+\eta|g_b-p|
+ \le L_p(1-\theta)<\frac{2L_p}{3}\le1,
+\tag{78.4}
+$$
+
+which is impossible. Thus the parent is outside the closed triangle. This remains a
+strict contradiction when $L_p=3/2$.
+
+To describe the two sides of the actual stubs without imposing symmetry, for $Y\ge0$
+define
+
+$$
+\begin{aligned}
+t&=Y/y_p,\\
+A(Y)&=a+(x_p-a)t,\qquad B(Y)=b+(x_p-b)t,\\
+F(X,Y)&=\max\{A(Y)-X,\ X-B(Y)\}.
+\end{aligned}
+\tag{78.5}
+$$
+
+For $0<Y<y_p$, $A(Y)<B(Y)$; $F=0$ describes exactly the two stub sides, $F<0$ the
+triangle interior and $F>0$ its exterior. At $Y=y_p$ the only zero is $p$. For
+$Y>y_p$, $A(Y)>B(Y)$, so $F>0$ everywhere. Consequently in positive height the zero
+set is exactly the two actual stubs with their ground tips removed, and the parent
+exclusion gives $F(v)>0$. This description applies even when both tips are strictly
+on the same side of $x_p$.
+
+Delete $p$ and its parent seam from the ungrounded source tree, solely as a proof
+device. The remaining source tree is connected, contains $v$ and every other leaf,
+and has strictly positive height along all its segments. It avoids the zero set of
+$F$ by prescribed incidence. The continuous function $F$ therefore has constant sign
+along its paths, and that sign is positive because it is positive at $v$. In
+particular $F(q)>0$ for every other leaf $q$.
+
+If a tip $g=(X,0)$ of $q$ lay strictly inside $I_p$, then $F(g)=\max\{a-X,X-b\}<0$.
+The intermediate value theorem on the actual stub $[q,g]$ would force a zero of $F$
+before its ground end. That zero has positive height and is on an actual stub of
+$p$, an intersection prohibited by incidence. Equality with an endpoint of $I_p$
+violates global tip injectivity. Thus no tip of any other leaf belongs to $I_p$.
+Applying this conclusion with every leaf as $p$ excludes all overlap, including
+nesting: two overlapping closed intervals with four distinct endpoints have an
+endpoint of one strictly inside the other. For a singleton there is only one
+interval. The triangle bases and the deletion used here are mathematical proof
+devices, not installed edges or source actions. $\square$
+
+**Theorem 78.3 (common-length strict width necessity).** Define
+
+$$
+\lambda_*=\frac{4+2\sqrt{823}}{63},\qquad
+I=[\lambda_*,3/2].
+\tag{78.6}
+$$
+
+For every $\lambda\in I$ and every compatible planar placement $E_2^\lambda(D)$, the
+two tips at each leaf are necessarily on opposite sides, and their intervals obey
+
+$$
+\begin{aligned}
+c_p&=\sqrt{\lambda^2-y_p^2},\qquad
+I_p=[x_p-c_p,x_p+c_p],\\
+2\ell(D)\sqrt{\lambda^2-9/16}
+ &<\sum_{p\in\operatorname{Leaf}(D)}|I_p|
+ \le W<2h(D)+2\lambda,
+\end{aligned}
+\tag{78.7}
+$$
+
+where $W$ is the horizontal span of all actual ground tips. Both endpoints of $I$
+are included.
+
+**Proof.** The polynomial $P(\lambda)=63\lambda^2-8\lambda-52$ has positive root
+$\lambda_*$ and negative root $(4-2\sqrt{823})/63$. Since
+
+$$
+P(3/4)=-361/16<0,\qquad P(1)=3>0,
+\tag{78.8}
+$$
+
+we have $3/4<\lambda_*<1$. Hence $\lambda>y_p$ on $I$. An actual tip $(X,0)$ of a
+length-$\lambda$ stub solves $(X-x_p)^2+y_p^2=\lambda^2$, so the only possibilities
+are $x_p-c_p$ and $x_p+c_p$. Distinct tips force both, proving the opposite-side
+assertion. Lemma78.2 applies because $\lambda\le3/2$. The strict upper height bound
+gives $|I_p|=2c_p>2\sqrt{\lambda^2-9/16}$. A root-to-leaf source path has at most
+$h(D)$ unit seams, whence $|x_p-x_o|\le h(D)$. Because $y_p>0$, each $c_p<\lambda$.
+Every tip is therefore strictly between $x_o-h(D)-\lambda$ and $x_o+h(D)+\lambda$,
+so $W<2h(D)+2\lambda$. Pairwise disjoint intervals have total length at most their
+enclosing span. Summing the strict width floors gives (78.7), also for the
+singleton. $\square$
+
+**Proposition 78.4 (the authentic cap-qualified common-length obstruction).** The
+original ordered substitution family $T_n=\rho^n(\alpha)$ obeys
+
+$$
+T_0=\alpha,\qquad T_1=\beta,\qquad
+T_{n+2}=\langle T_{n+1},T_n\rangle.
+\tag{78.9}
+$$
+
+For its authentic $T_5$, $E_2^\lambda(\operatorname{Pos}(T_5))$ is impossible for
+every $\lambda\in I$. This source is admitted from INITIAL $\alpha$ at a separately
+fixed cap $H=8$, and by the same finite prefix at each separately fixed $H\ge8$.
+
+**Proof.** Apply (78.2) to ordered brackets to obtain (78.9). More explicitly,
+
+$$
+\begin{aligned}
+T_2&=\langle\beta,\alpha\rangle,\qquad
+T_3=\langle T_2,\beta\rangle,\qquad T_4=\langle T_3,T_2\rangle,\\
+T_5&=\langle T_4,T_3\rangle
+ =\big\langle
+ \langle\langle\langle\beta,\alpha\rangle,\beta\rangle,
+              \langle\beta,\alpha\rangle\rangle,
+ \langle\langle\beta,\alpha\rangle,\beta\rangle
+ \big\rangle.
+\end{aligned}
+\tag{78.10}
+$$
+
+Every displayed repetition is a distinct ordered occurrence; this syntax identity
+authorizes no copying operation. The recurrences $\ell_{n+2}=\ell_{n+1}+\ell_n$ and
+$h_{n+2}=1+\max\{h_{n+1},h_n\}$ give the following values.
+
+| $n$ | $\ell(T_n)$ | $h(T_n)$ | alpha leaves | beta leaves |
+| --- | --- | --- | --- | --- |
+| $0$ | $1$ | $0$ | $1$ | $0$ |
+| $1$ | $1$ | $0$ | $0$ | $1$ |
+| $2$ | $2$ | $1$ | $1$ | $1$ |
+| $3$ | $3$ | $2$ | $1$ | $2$ |
+| $4$ | $5$ | $3$ | $2$ | $3$ |
+| $5$ | $8$ | $4$ | $3$ | $5$ |
+
+The ordered leaf addresses and labels of $T_5$ are
+
+$$
+\begin{array}{c|cccccccc}
+p&LLLL&LLLR&LLR&LRL&LRR&RLL&RLR&RR\\ \hline
+\operatorname{label}(p)&\beta&\alpha&\beta&\beta&\alpha&\beta&\alpha&\beta
+\end{array}.
+\tag{78.11}
+$$
+
+There are fifteen source vertices, fourteen unit inherited seams and sixteen ground
+stubs of length $\lambda$. With INITIAL $\alpha$ and $H=8$ fixed before execution,
+the five complete rho candidates have $1,2,3,5,8$ leaves and all pass $\ell\le H$.
+The first acceptance changes the label even though INITIAL contains no beta leaf and
+its geometric address domain does not grow. Final equality with the cap is allowed.
+A sixth candidate has thirteen leaves and is refused at $H=8$, retaining $T_5$ with
+no candidate Read. Stop remains absorbing. The five acceptances also pass at any
+separately fixed $H\ge8$. This is mathematical source admissibility, not an acquired
+execution or a change to the distinct stopped INITIAL $T_2$, $H=3$ history of76.5.
+
+For this source, (78.7) would require
+
+$$
+16\sqrt{\lambda^2-9/16}<8+2\lambda.
+\tag{78.12}
+$$
+
+Both sides are positive, but their squared difference is
+
+$$
+\bigl(16\sqrt{\lambda^2-9/16}\bigr)^2-(8+2\lambda)^2
+ =4(63\lambda^2-8\lambda-52)=4P(\lambda)\ge0
+ \quad(\lambda\in I).
+\tag{78.13}
+$$
+
+The last inequality follows from the two roots of $P$. It contradicts the strict
+necessity, including $\lambda=\lambda_*$ where the squared difference is zero. The
+upper endpoint is covered by the strict parent exclusion in78.2. At $\lambda=1$ the
+contradiction is the original $4\sqrt7<10$, whose squared sides are $112>100$. No
+maximal common-length interval, smallest obstruction or lower-cap classification is
+asserted. $\square$
+
+**Proposition 78.5 (finite three-dimensional sufficiency for both variants).** For
+every fixed authentic legal finite source $D$, the contract $E_s^\lambda(D)$ has a
+placement for every $\lambda\in I$ and every integer $s\ge3$. Separately, for every
+$0\le\delta\le1/50$ and every prescribed family $r_{p,j}\in[1-\delta,1+\delta]$, the
+contract $E_s(D;r)$ has a placement for every integer $s\ge3$. Reflection in $y=0$
+yields an embedded connected double with $3n+1$ vertices and $4n$ edges, retaining
+unit inherited edges and the respective prescribed ground-stub lengths. All angle
+and clearance margins belong to this finite placement.
+
+**Proof.** Use the finite direction and azimuth construction of72.3, with the
+endpoint circles now determined by the prescribed lengths. The source-seam part is
+unchanged. In $\mathbb R^3$ put the root at height $1/2$ and attach children
+successively, always using a unit direction whose vertical component has absolute
+value less than $1/[8(n+1)]$. A source path has at most $n-1$ seams, so every source
+vertex has height in $(3/8,5/8)$.
+
+At a current attachment vertex, directions that send the new segment through a
+nonincident old segment are radial projections of that old segment onto the unit
+sphere. Each such set has spherical area zero: it lies in the at most
+one-dimensional intersection of the sphere with the plane spanned by the vertex and
+the old supporting line. Existing vertices, endpoint collisions and repeated
+incident rays exclude further area-zero sets. For an old segment incident at the
+attachment vertex, its prescribed endpoint contact is allowed; any extra overlap
+excludes its ray. There are finitely many exclusions, and the direction band is an
+open set of positive spherical area. A permissible direction therefore exists at
+every step. This gives an injective separated source tree with the exact unit seam
+lengths.
+
+For a stub of prescribed length $r$ from a leaf $p$, either parameter regime gives
+$r>3/4>y_p$. Its possible tips on the grounding plane form the circle
+
+$$
+ g(\varphi)=\bigl(x_p+c\cos\varphi,\ z_p+c\sin\varphi,\ 0\bigr),
+ \qquad c=\sqrt{r^2-y_p^2}>0,
+\tag{78.14}
+$$
+
+where $(x,z)$ are the two horizontal coordinates. The segments from $p$ to this
+circle form a truncated circular cone. Every point of that cone other than $p$
+determines one azimuth. The double cone's quadratic equation is
+
+$$
+ (X-x_p)^2+(Z-z_p)^2
+   =\frac{c^2}{y_p^2}(Y-y_p)^2.
+\tag{78.15}
+$$
+
+Restricting this equation to an old supporting line gives a quadratic, so at most
+two intersection points unless the line is contained in the cone. Such a contained
+line is a generator: after translating $p$ to zero and rescaling the vertical
+coordinate, write its direction and offset as $(u,t)$ and $(v,w)$. Identical
+vanishing of $|v+ku|^2-(w+kt)^2$ gives $|u|^2=t^2$, $|v|^2=w^2$ and $u\cdot v=tw$. A
+nonzero direction has $t\ne0$; equality in Cauchy-Schwarz then forces $v=(w/t)u$.
+The line passes through the apex and excludes only its generator azimuth in the
+truncated cone. An old line through $p$ that is not a generator meets the cone only
+at $p$, which is an allowed contact only when prescribed. Thus old segments exclude
+only finitely many azimuths once prescribed apex contacts are ignored. Old vertices
+and ground tips each exclude at most one more azimuth; repeated rays are excluded as
+well.
+
+Choose a permissible azimuth, install that stub, and repeat for the second stub and
+every remaining leaf. The first stub is among the old segments when the second is
+chosen. This ensures distinct rays and distinct tips even for unequal prescribed
+lengths. All new open stubs have positive height and all intersections are
+prescribed. Finiteness of the disjoint compact nonincident objects gives a positive
+minimum distance; finiteness of the distinct incident rays gives a positive minimum
+angle. These minima depend on the placement.
+
+Reflect the upper half in the grounding plane and identify only the prescribed
+ground tips of the two halves. Upper and lower open edges have opposite strictly
+nonzero heights, so they have no extra intersections. At a ground tip the angle
+between the upper stub and its reflected stub of length $r$ is $2\arcsin(y_p/r)>0$.
+There are two copies of the $n$ source vertices and $n+1$ distinct ground tips,
+giving $3n+1$ vertices; doubling the $2n$ half edges gives $4n$ edges. Every leaf
+connects its source half to the reflected half, so the double is connected and has
+no self-loops. Finiteness again gives its positive margins. Finally, a
+height-preserving isometric inclusion of this three-dimensional space into $\mathbb
+R^{s-1}\times\mathbb R$ preserves all lengths, incidences, angles and clearances.
+This proves both separately quantified sufficiency assertions. $\square$
+
+**Corollary 78.6 (conditional common-length minimum universal dimension).** For each
+fixed $\lambda\in I$, the minimum universal ambient integer dimension under78.1 is
+three. The same minimum holds at each one fixed cap $H\ge8$ for the legal finite
+commission class that includes INITIAL $\alpha$.
+
+**Proof.** In dimension one, the grounding hyperplane $y=0$ has only one point. It
+cannot supply two distinct ground tips even for a singleton. Dimension two fails for
+the cap-qualified source $T_5$ of78.4. Proposition78.5 supplies a placement for
+every legal finite source in every integer dimension at least three. The order of
+quantifiers is, for fixed $\lambda$ and dimension, every legal finite source
+followed by existence of that source's own placement. At a fixed $H\ge8$, the
+INITIAL-$\alpha$ prefix in78.4 belongs to the stated class, while78.5 still applies
+to every source in that class. This proves the conditional minimum, with no
+assertion about other lower-cap classes, a common apparatus or a physical dimension
+law. $\square$
+
+**Proposition 78.7 (surviving separation and a genuine unequal near-unit
+counterexample).** For $0<\delta\le1/2$, every compatible planar placement whose
+prescribed stub lengths lie in $[1-\delta,1+\delta]$ has pairwise disjoint actual
+grounding intervals. Nevertheless, for every relative tolerance $\varepsilon>0$
+there is an authentic legal $T_2$ placement with unequal lengths in
+$[1-\varepsilon,1+\varepsilon]$ whose two tips at each leaf are strictly on the same
+side. Within any one positive tolerance, these examples have leaf widths tending to
+zero, so proximity to unit length alone implies neither opposite-side tips nor a
+uniform positive leaf-width floor.
+
+**Proof.** The separation conclusion follows from78.2 because every actual length is
+at most $1+\delta\le3/2$. For the counterexample choose
+
+$$
+0<t<\min\{\varepsilon,1/50\},\qquad
+c_1=\sqrt3/2,\qquad c_2=\sqrt{3/4+2t+t^2}.
+\tag{78.16}
+$$
+
+Use the authentic ordered source $T_2=\langle\beta,\alpha\rangle$, with root
+$o=(0,1/2)$, left leaf $L=(-1,1/2)$ labelled beta and right leaf $R=(1,1/2)$
+labelled alpha. The inherited seams $[o,L]$ and $[o,R]$ are straight and exactly
+unit. At each leaf $(x,1/2)$ choose the two tips $(x+c_1,0)$ and $(x+c_2,0)$. The
+respective lengths satisfy
+
+$$
+\sqrt{c_1^2+1/4}=1,\qquad
+\sqrt{c_2^2+1/4}=1+t,
+\qquad 0<c_1<c_2<1,
+\tag{78.17}
+$$
+
+where $c_2^2<3/4+2/50+1/2500=494/625<1$. Both tips are strictly right of their own
+leaf. The entire left stubs have horizontal coordinate less than zero; the right
+stubs have horizontal coordinate at least one. Every open stub is below the
+horizontal source seams at height $1/2$. The two rays from one leaf are different
+and meet only at that leaf. The source seams meet only at the root; a stub meets a
+source seam only at its own leaf. The four ground tips are distinct, with the left
+pair in $(-1,0)$ and the right pair in $(1,2)$. Thus all seven vertices are
+distinct, every incidence is prescribed, every nonincident pair of objects is
+disjoint, and all source heights satisfy the strict band. Finiteness supplies
+positive clearances and incident angles for each fixed $t>0$.
+
+This is source-admissible from immutable INITIAL $\alpha$ at a separately
+predeclared $H=2$: the first two whole candidates have one and two leaves and pass
+the unchanged guard. A third candidate has three leaves and is refused if attempted,
+retaining $T_2$ without candidate Read; Stop is absorbing. This separate commission
+alters no other INITIAL, cap or acquired history.
+
+Each actual leaf interval has width
+
+$$
+|I_L|=|I_R|=c_2-c_1
+ =\frac{2t+t^2}{c_2+c_1}\longrightarrow0
+ \quad\text{as }t\downarrow0.
+\tag{78.18}
+$$
+
+All these placements retain disjoint intervals. For any fixed $\varepsilon>0$ and
+any proposed positive floor depending only on that tolerance, sufficiently small
+positive $t$ violates the floor within the same admissible source and tolerance. The
+limiting value $t=0$ merges the two tips at each leaf and is not a legal placement.
+No uniform angle or clearance survives this limit, nor is such a bound part of the
+counterexample. $\square$
+
+**Proposition 78.8 (orientation-conditioned unequal-length obstruction).** Let
+$0\le\delta\le1/50$ and prescribe every $r_{p,j}\in[1-\delta,1+\delta]$. If a planar
+placement $E_2(D;r)$ additionally has one tip strictly left and one tip strictly
+right of every leaf, then its actual intervals satisfy
+
+$$
+2\ell(D)\sqrt{(1-\delta)^2-9/16}
+ <\sum_p|I_p|\le W<2h(D)+2(1+\delta).
+\tag{78.19}
+$$
+
+Consequently the cap-qualified authentic $T_5$ has no such planar placement. This
+side condition is an added hypothesis for unequal lengths, not a consequence of
+their near-unit bounds.
+
+**Proof.** All lengths are at most $51/50<3/2$, so78.2 gives interval disjointness.
+A stub of length $r$ has horizontal offset magnitude $\sqrt{r^2-y_p^2}$. Under the
+opposite-side hypothesis the interval width is the sum of its two offset magnitudes.
+Since $r\ge1-\delta$ and $y_p<3/4$, each magnitude is strictly larger than
+$\sqrt{(1-\delta)^2-9/16}>0$. The root-to-leaf unit-seam bound is still
+$|x_p-x_o|\le h(D)$, and each offset is strictly less than $r\le1+\delta$. The same
+enclosing-span argument as in78.3 proves (78.19).
+
+For $\ell(T_5)=8$ and $h(T_5)=4$, this necessity would give
+$16\sqrt{(1-\delta)^2-9/16}<10+2\delta$. However,
+
+$$
+\begin{aligned}
+\bigl(16\sqrt{(1-\delta)^2-9/16}\bigr)^2-(10+2\delta)^2
+ &=4Q(\delta),\\
+Q(\delta)&=3-138\delta+63\delta^2,\\
+Q(\delta)&\ge Q(1/50)=663/2500>0
+ \qquad(0\le\delta\le1/50).
+\end{aligned}
+\tag{78.20}
+$$
+
+Indeed $Q'(\delta)=-138+126\delta<0$ on this interval. Both compared quantities are
+positive, so the strict opposite inequality holds and gives a contradiction.
+Three-dimensional sufficiency for every prescribed length family in this band is
+separately supplied by78.5; it assumes no planar left/right condition. $\square$
+
+**Proposition 78.9 (the relation to the unrestricted obstruction).** For every
+$0\le\delta\le1/50$, planar universality for the prescribed unequal near-unit
+contract of78.1 fails without an opposite-side hypothesis. The witness is77.2–77.3's
+$S_{15}$ at a separately fixed cap $98304$. This does not decide existence of a
+compatible unoriented planar $T_5$ with genuinely unequal near-unit stubs, and is
+consistent with the vanishing same-leaf widths in78.7.
+
+**Proof.** Unit inherited seams and every prescribed stub in
+$[1-\delta,1+\delta]\subset[49/50,51/50]$ lie in77.3's independent closed length box
+$[19/20,21/20]$. The strict band implies its positive source heights, and the
+grounding and incidence requirements agree. Thus77.3 excludes a planar $S_{15}$ for
+every such stub assignment. Its legal commission has immutable INITIAL $B_{15}$,
+where $B_0=\alpha$ and $B_{j+1}=\langle B_j,B_j\rangle$ with distinct occurrences.
+At the predeclared cap $98304$, the three whole candidates have $32768,65536,98304$
+leaves and $\rho^3B_{15}=S_{15}$. This is 77.2's symbolic admissibility, not an
+alteration of another commission.
+
+The robust proof uses tips of different-depth leaves in pendant
+$S_0=\langle\langle\beta,\alpha\rangle,\beta\rangle$ occurrences. Their actual paths
+have two stubs and three inherited seams; small bases are controlled by enclosed
+area in77.5–77.6. It does not restore a same-leaf width floor, so78.7 cannot refute
+it. Conversely its larger witness supplies no unoriented unequal-$T_5$ or lower-cap
+classification. For common lengths,77.3 applies on $I\cap[19/20,21/20]$, whereas78.4
+gives the cap-eight witness throughout $I$. The two results have these distinct
+parameter and witness scopes. $\square$
+
+**Definition 78.10 (attribution and retained boundaries).** The separation mechanism
+extends76.2's convex triangle, connected remainder and intermediate-value argument;
+the authentic ordered fixed-cap witness reuses76.3. Proposition72.3 supplies the
+finite direction/azimuth construction, with variable endpoint circles justified
+in78.5. The comparison consumes77.3 and77.5–77.6, including77.4's simple-polygon
+supplier, in their stated scopes. Circle/cone geometry, convexity, tree
+connectedness, the intermediate value theorem and finite interval packing are mature
+methods. The parameter-dependent conclusions and unequal example are a repo-derived
+geometric extension; no priority or new generic-mathematics claim is made. The case
+$\lambda=1$ remains76.1–76.4.
+
+The closed common interval $I$ is sufficient; its maximality is not established.
+Width inequalities are necessary, not existence criteria. Unoriented planar $T_5$
+existence for genuinely unequal near-unit lengths remains undetermined here;
+equal-length cases already excluded above remain excluded. Unoriented unequal
+near-unit universality is excluded by78.9 and77.3. Neither a smallest witness nor a
+lower-cap or extremal parameter classification follows. Every placement and its
+positive margins belong to its own finite source and prescribed lengths, without a
+simultaneous apparatus or source/cap-uniform angle, clearance, thickness or hardware
+bound.
+
+Only the declared geometric stub lengths vary. The full unchanged carrier and laws
+of64.5, recorded in77.1, retain intrinsic unit cable intervals and measures, full
+one- and two-particle Hilbert norms, port/ground/collision domains, kinetic
+coefficients, Hamiltonians, and separate common/killed field inverses with their
+boundary laws. No correspondence transfers these to a length-$\lambda$ or unequal
+cable carrier. The analytic suppliers72.1 and75.15 retain their own hypotheses. The
+centre distances $1+h_v(\varepsilon)+h_w(\varepsilon)$ in72.13 are a different
+prescribed metric: those offsets are neither source heights nor seam depth. The
+specific centre-graph implication and fixed-data threshold77.7–77.8 keep their
+scope; this geometric variation supplies no additional thin-limit or operator
+correspondence.
+
+The original source contracts and complete boundaries77.1 and77.10 remain in force:
+immutable INITIAL, one fixed cap, source-independent initialization, whole-rho and
+distinct Left/Right grafts, full contexts and candidates, original guards,
+destructive actions, Read, refusal, absorbing Stop and acquired chronological source
+records are retained. Source admissibility and a placement authenticate no execution
+and supply no copying, reset, cloning, resampling, unknown-state preparation or
+native operation/metric and Read/Stop bridge. Every field mode and spectator,
+unknown particle/field/auxiliary correlation, full joint norm, common reference and
+actual clock remain required; tracing out, vacuum restriction or calibrated-state
+re-preparation cannot replace them. Mediation, stiffness, compensation,
+ingress/recovery, retained complements and cross-block control require their own
+correspondence.
+
+The three acquisition contracts of76.6 and77.10 retain their source services, finite
+stopping/decoding, actual query/reply histories, paid retained influence and stopped
+transcripts. Their radii, state counts, update rules and clocks do not transfer.
+Full-vector calibration and $\Pi$ assumptions remain separate. Acquisition,
+construction, preparation, field/compensation installation, control, production,
+storage, holding, retention, maintenance, precision and total lifetime resource
+obligations persist. Mathematical lengths, measures and space counts supply no free
+observation, archive or service, clock conversion, measured price, finite memory
+advantage or physical dimension selection. The conditional geometric minimum78.6
+leaves the source, native, field, acquisition, memory and resource programme's
+remaining correspondence obligations intact.
+
+## 78.99 追加锚（本行以下为增补区）

@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:d8217aeda6f8fd7c4c6322aac499dc4e6c2cd9dc6c2ce38ebb5a96aa7fa1b3d0
+  normalized_sha256: sha256:d8217aeda6f8fd7c4c6322aac499dc4e6c2cd9dc6c2ce38ebb5a96aa7fa1b3d0
+cas_ref: sha256:d8217aeda6f8fd7c4c6322aac499dc4e6c2cd9dc6c2ce38ebb5a96aa7fa1b3d0
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 'Pinned Mathlib 56a005855ea17e0b0958f73ec801ae140b0a1679. Upstream declarations: Matrix.vecMulVec_mul_vecMulVec, Matrix.vecMulVec_mul, Matrix.trace_vecMulVec, Matrix.trace_add, Finset.sum_comm, Fintype.sum_sum_type. Rank-one multiplication expands P_z P_w as I+z phi_z+w phi_w+z< w,z >phi_w. Multiplying U_Q and taking trace gives the three displayed terms. For z=b_i and w=b_j+a_i with i<j, the specified alternating basis pairings are -1 and -Q_ji, and the b-projections are the two standard basis vectors. Symmetry and ring normalization yield D_i=-Q_ii, D_ij=-Q_ii-Q_jj+Q_ij and Q_ij=D_ij-D_i-D_j, with no division and hence no characteristic restriction. Searched all D5 sources including private declarations by relation-collapse/irreflexivity, square-zero block and integer-power, rank-one trace and polarization shapes; read the relevant QuadraticForms, Observer, ObserverMemory and S0/Observation owners. No frozen declaration was found supplying an actual subgoal at the full stated commutative-ring or arbitrary-relation scope. Gerzon field-only weighted symmetric-form trace helpers do not cover arbitrary alternating rank-one maps over every commutative ring; MatrixTracePowerSum is size two, not the general block formula.'
+    previous_atom_id: 57527469f9a03747df229b704ee1cdfebd7b684aa446d1eb80bf4d5eb7616700
+    next_atom_id: ef0b1b6cf714d461bc07abbdc0ff1035ba2cef9414d66632f5f404d2abc4cf2c

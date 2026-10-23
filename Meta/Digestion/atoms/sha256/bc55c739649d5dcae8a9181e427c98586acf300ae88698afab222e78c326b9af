@@ -1,0 +1,2 @@
+**Proof (free-value separation).** The initial scalar value is freely observed. An adaptive controller may therefore choose its first literal action as a function of $v$, while the worst fee is the maximum of the two resulting fixed-value costs. A lower bound on one fibre is a lower bound for the full target. Conversely, constructions below are chosen separately for the two observed values and are run with the same original source and endpoint rules; their maximum fee is a valid adaptive protocol. No hidden phase or archive selects a stream.
+

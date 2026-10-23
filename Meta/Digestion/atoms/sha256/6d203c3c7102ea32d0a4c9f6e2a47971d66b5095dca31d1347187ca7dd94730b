@@ -1,0 +1,12 @@
+## 定义 265.1（混杂余量）
+
+\[
+\operatorname{ConfRes}(X,Y)
+=
+P(Y\mid X)
+-
+P(Y\mid do(X)),
+\]
+
+这里的减号表示两个 kernel 的差异，而不是默认其有单一标量范数。
+

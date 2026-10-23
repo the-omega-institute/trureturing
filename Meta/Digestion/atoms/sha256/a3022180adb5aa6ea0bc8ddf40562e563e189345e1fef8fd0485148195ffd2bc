@@ -1,0 +1,123 @@
+**Theorem 9.5 (attained full-fiber frontier).** Under Assumption 9.2, for
+all integers $r\ge1,q\ge0$,
+
+$$
+\mathsf{InvFeas}_*(r,q)\quad\Longleftrightarrow\quad r\,2^q\ge5.
+\tag{NBP.9.8}
+$$
+
+Equivalently, the exact least worst-case fresh invocation count is
+
+$$
+\mathsf Q_*(r)=
+\begin{cases}
+3,&r=1,\\
+2,&r=2,\\
+1,&r=3\text{ or }4,\\
+0,&r\ge5.
+\end{cases}
+\tag{NBP.9.9}
+$$
+
+**Proof, necessity.** Restrict any feasible acquired encoder and reader to
+the actual finite origins $u_0,\ldots,u_4$ of Proposition 9.3. For each
+used supplement value $s$, put
+$H_s=\{h:\sigma(u_h)=s\}$. The nonempty $H_s$ partition five indices
+into at most $r$ parts, even if $\sigma$ depends on every acquired current
+class value. All initial reader inputs are identical within one part.
+Its required rows $R_h$ are different, so it must distinguish all indices
+in that part using its native replies.
+
+At any chosen address, Proposition 9.4 supplies at most two possible
+replies on the witnesses. Encode its default reply by zero and its
+possible different reply by one, using zero alone in the constant case.
+Given the address, this bit reconstructs the entire native reply. At an
+adaptive history, the next address is determined by the common initial
+state and reconstructed previous replies, so the correspondence holds
+at every subsequent query, not only along a designated path. Histories
+with no realizing witness can be assigned constant zero questions.
+After the reader stops, pad the mathematical transcript to length $q$
+with constant zeros; these padding symbols are not native invocations.
+
+The resulting length-$q$ transcripts are injective on $H_s$. If two
+were identical, deterministic reconstruction would give the same native
+history and stopping decision for both. Early stopping adds no extra
+symbol: once that common history determines a stop, both candidates
+stop there with the same output. This contradicts the different rows.
+The argument accommodates absence and repeated invocations through the
+all-address bridge and counts every real invocation before padding.
+
+Apply the existing
+[BinaryProtocolDepthLowerBound](../../../D5/S3/ConceptDynamics/Coding/BinaryProtocolDepthLowerBound.lean),
+`adaptive_binary_protocol_depth_lower_bound`, to the finite source type
+$H_s$, constant already-known concept, target $h\mapsto R_h$ and the
+adaptive binary transcript just constructed. Its worst fiber diversity
+is $|H_s|$, so it gives $\lceil\log_2|H_s|\rceil\le q$, equivalently
+$|H_s|\le2^q$. Summing over the nonempty parts yields
+
+$$
+5=\sum_s|H_s|\le |\{s:H_s\ne\varnothing\}|\,2^q\le r\,2^q.
+\tag{NBP.9.10}
+$$
+
+This uses the existing binary identification capacity, not a new generic
+counting theorem. The five witnesses are alternative fixed sources with
+their own truthful acquisition and export. No source changes during a
+reading run, and no equality of discarded acquisition records is assumed.
+
+**Proof, full-domain attainments.** By Proposition 9.3, the acquired current
+data determine the unique label $h\in\{0,1,2,3,4\}$: inspect the acquired
+right-class values for alpha, taking $h=0$ if none is alpha. This is a
+finite computation on genuinely acquired terms, not a free retained
+marker. The encoders below export only their specified block index.
+Their tables and the five complete row outputs are public finite data
+computed from $P,R_*$ using Proposition 9.3 and Theorem 2.2. Every label
+is actually attained, so each listed block is nonempty on $\mathcal U_*$.
+
+For $r=1$, export one common value. First query $LLL$, a representative
+root of class $a$. Its value is an image, so the reply is beta or branch.
+If it is beta, the actual label lies in $\{0,1,2\}$: a selected $3$ or
+$4$ would force $x_c=\beta=x_a$, contradicting the retained disequality.
+If it is branch, the actual label lies in $\{0,3,4\}$: a selected $1$
+or $2$ would force $x_a=\beta$.
+
+In the beta case, query the root at $q_1R=LLR$; an alpha reply identifies
+$h=1$ and stops. Otherwise query $q_2R=LRR$; alpha identifies $h=2$ and
+any other reply gives $h=0$. In the branch case perform the same tests
+at $q_3R=RLR$ and $q_4R=RRR$, returning $3,4$ or $0$. All these roots
+are reached. Non-alpha replies may be beta or branch; their distinction
+is not needed. Each source is classified correctly with at most three
+calls. In particular $h=0$ remains possible on both outcomes of the
+first query: an image filling with no alpha may still have $x_a=\beta$.
+The strategy does not pretend to make a target-only group test on the
+entire fiber. On $u_0$ it makes all three calls, attaining this bound.
+
+For $r=2$, export the block of the actual label in
+$\{0,1,2\}\mid\{3,4\}$. In the first block, test $b_1$ and then, if
+needed, $b_2$ at their cut roots for alpha; if neither is alpha, return
+zero. In the second block test $b_3$ for alpha; otherwise infer $4$.
+This is correct on every origin of the full fiber with at most two
+calls, and $u_0$ attains two.
+
+For $r=3$, use $\{0\}\mid\{1,2\}\mid\{3,4\}$. The singleton block
+needs no query; in either two-member block test its first right-class
+root for alpha and infer the other member on a non-alpha reply. The
+worst count is one, attained on both non-singleton blocks. For $r=4$
+one may use the four nonempty blocks
+$\{0\}\mid\{1\}\mid\{2\}\mid\{3,4\}$, again with worst count one.
+For $r\ge5$, export the actual label itself, using five values, and
+return its complete row with zero fresh invocations. This last endpoint
+is the attained predecessor/current-alpha correspondence of Theorem 3.2
+and the zero-query acquired-record recovery of Theorem 8.2.
+
+Each construction uses one common deterministic reader and actual
+pre-cut export from the supplied current data. After identifying $h$ it
+returns the entire $R_h$, including canonical restricted class names,
+all disequalities and the absent-cut guards from its concrete beta leaf.
+The reader never asks for a predecessor tree or an unknown-subtree
+comparison. Necessity rules out two calls when $r=1$, one when $r=2$,
+and zero when $r=3,4$. For $r\ge5$ zero is minimal. This proves (NBP.9.9).
+For integer $q\ge0$ these cases are exactly $r2^q\ge5$; a strategy with
+fewer than $q$ calls already satisfies the upper budget, with no extra
+calls required. Hence (NBP.9.8) follows. $\square$
+

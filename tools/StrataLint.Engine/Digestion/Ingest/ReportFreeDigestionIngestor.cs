@@ -9,7 +9,9 @@ internal sealed record ReportFreeDigestionIngestPlan(
     int SkippedExisting,
     ImmutableArray<DigestionCasObject> CasObjects,
     ImmutableArray<DigestionIngestFallback> Fallbacks,
-    ImmutableHashSet<string> AddedAtomIds);
+    ImmutableHashSet<string> AddedAtomIds,
+    ImmutableArray<DigestionContextPointerIndex> ContextIndexes = default,
+    ImmutableArray<DigestionCasObject> ContextCasObjects = default);
 
 internal static class ReportFreeDigestionIngestor
 {
@@ -59,12 +61,6 @@ internal static class ReportFreeDigestionIngestor
             }
         }
 
-        if (!TheoryAtomizerDataLoader.TryLoad(snapshot, out var atomizerRules))
-        {
-            throw new FormatException(
-                $"Atomizer data file is missing: {TheoryAtomizerDataLoader.DataPath}");
-        }
-
         var knownAtomIds = currentAtomIds.ToHashSet(StringComparer.Ordinal);
         var casObjects = new Dictionary<string, DigestionCasObject>(StringComparer.Ordinal);
         var addedAtomIds = ImmutableHashSet.CreateBuilder<string>(StringComparer.Ordinal);
@@ -81,17 +77,8 @@ internal static class ReportFreeDigestionIngestor
                 continue;
             }
 
-            if (!AtomizerRegistry.IsRegistered(source.Atomizer))
-            {
-                if (source.Atomizer != AtomizerRegistry.NoAtomizerId)
-                {
-                    throw new FormatException(
-                        $"ingest source {source.SourceId} has unknown atomizer {source.Atomizer}");
-                }
-
-                sources.Add(source);
-                continue;
-            }
+            _ = AtomizerRegistry.Require(source.Atomizer);
+            DigestionSourceEligibility.Require(snapshot, source.SourcePath);
 
             if (!snapshot.TryGetFile(source.SourcePath, out var sourceFile))
             {
@@ -101,7 +88,6 @@ internal static class ReportFreeDigestionIngestor
             var atomized = Atomize(
                 source,
                 sourceFile.RawBytes,
-                atomizerRules,
                 atomizerResolver,
                 contentKindAtomizerResolver,
                 fallbacks,
@@ -202,7 +188,6 @@ internal static class ReportFreeDigestionIngestor
     private static AtomizedTheoryDocument Atomize(
         DigestionLedgerSource source,
         ImmutableArray<byte> sourceBytes,
-        TheoryAtomizerRules rules,
         Func<string, TheoryAtomizer> atomizerResolver,
         Func<string, TheoryAtomizerWithContentKinds>? contentKindAtomizerResolver,
         ImmutableArray<DigestionIngestFallback>.Builder fallbacks,
@@ -212,10 +197,9 @@ internal static class ReportFreeDigestionIngestor
         try
         {
             atomized = contentKindAtomizerResolver is null
-                ? atomizerResolver(source.Atomizer)(sourceBytes.AsSpan(), rules)
+                ? atomizerResolver(source.Atomizer)(sourceBytes.AsSpan())
                 : contentKindAtomizerResolver(source.Atomizer)(
                     sourceBytes.AsSpan(),
-                    rules,
                     new Dictionary<string, string>(StringComparer.Ordinal));
         }
         catch (Exception exception) when (

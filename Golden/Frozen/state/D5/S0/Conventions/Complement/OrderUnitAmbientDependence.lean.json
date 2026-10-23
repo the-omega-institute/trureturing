@@ -1,1 +1,1 @@
-{"statement_id":"sha256:9eba34858b4aa046e0a05261ea8539b231f462ec2168a9858c2c0dd09ddc4e89"}
+{"statement_id":"sha256:9eba34858b4aa046e0a05261ea8539b231f462ec2168a9858c2c0dd09ddc4e89","declarations":[{"declaration_name_key":"ns(ns(ns(ns(ns(ns(n0,2:D5),2:S0),11:Conventions),10:Complement),26:OrderUnitAmbientDependence),40:order_unit_complement_depends_on_ambient)","kind":"theorem"}]}

@@ -1,0 +1,46 @@
+**Theorem 14.3 (Whitney cross-caps at all four actual worlds).** At
+each $W_i$, the map $\Psi_M$ on the full parent has a Whitney
+cross-cap singularity. Equivalently, its smooth map germ is equivalent
+under local diffeomorphisms of source and target to
+
+$$
+(u,w)\longmapsto(u,uw,w^2).
+\tag{14.9}
+$$
+
+*Proof.* Work in the full two-dimensional regular parent chart
+$(t,b)$, justified at $W_i$ by Lemma 13.2. All three minors vanish
+by Lemma 12.3. Since $p_b\ne0$, the first and second columns of
+$df$ obey $f_t=(p_t/p_b)f_b$, so $df(K)=0$ and $df$ has rank one.
+Use the affine source coordinates given near the chosen point by
+
+$$
+t=t_i+w,\qquad b=b_i+u-s_iw,
+\qquad s_i=p_t(W_i)/p_b(W_i).
+\tag{14.10}
+$$
+
+Their Jacobian is invertible. At the origin their derivatives are
+
+$$
+f_w=0,\qquad f_u=f_b,\qquad
+f_{uw}=H_{Kb},\qquad f_{ww}=H_{KK}.
+\tag{14.11}
+$$
+
+Lemma 14.2 gives
+$\det(f_u,f_{uw},f_{ww})=-\Delta\ne0$.
+This is precisely the classical Whitney recognition criterion:
+$f_w=0$ and linear independence of $f_u,f_{uw},f_{ww}$ imply a
+cross-cap germ. We use that criterion as stated in
+Hasegawa–Honda–Naokawa–Umehara–Yamada, *Intrinsic Invariants of Cross
+Caps*, [arXiv:1207.3853v2](https://arxiv.org/html/1207.3853v2),
+Introduction immediately after equation (1), with its attribution to
+Whitney, *The Singularities of a Smooth n-Manifold in (2n−1)-Space*,
+Annals of Mathematics **45**, 247–293,
+[DOI 10.2307/1969266](https://doi.org/10.2307/1969266).
+It applies to the displayed source jets without a genericity
+hypothesis. The source-specific assertions are the actual common
+roots and the nonzero certificates (14.7); the recognition criterion
+itself is the cited classical result. ∎
+

@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:4cdd3e9343a1440f32b90c63bbb15f16e935d43c6d571a15de407d9bf44817f1
+  normalized_sha256: sha256:4cdd3e9343a1440f32b90c63bbb15f16e935d43c6d571a15de407d9bf44817f1
+cas_ref: sha256:4cdd3e9343a1440f32b90c63bbb15f16e935d43c6d571a15de407d9bf44817f1
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 非命题文本：公式片段 \operatorname{TV}(P,Q)：\[：只引入对象、参数、术语或记号；不附加存在性、唯一性或其他性质断言。
+    previous_atom_id: 4ff67660aa97b659ed0bcdd580fcde443dcc66d5f1ea163253a35b68219f8534
+    next_atom_id: 7cb9f8fadd0bf902543b306788183db2a4b75267ca68ff7b6cbd5c2ed94a0a75

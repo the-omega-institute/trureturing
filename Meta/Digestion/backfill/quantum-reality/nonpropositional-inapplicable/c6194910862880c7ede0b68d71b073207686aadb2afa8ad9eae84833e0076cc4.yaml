@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:c6194910862880c7ede0b68d71b073207686aadb2afa8ad9eae84833e0076cc4
+  normalized_sha256: sha256:c6194910862880c7ede0b68d71b073207686aadb2afa8ad9eae84833e0076cc4
+cas_ref: sha256:c6194910862880c7ede0b68d71b073207686aadb2afa8ad9eae84833e0076cc4
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 假设 247.1 指定固定可编程测量装置的输入、共同操作及正确性要求，不断言这种装置存在。
+    previous_atom_id: 8ab05b5143a1ed262bbffb6e67488046f2ddf77c83fe65b63657d3f5c734f7ad
+    next_atom_id: 75ad788a2ead001d8a4535ba993f3329873664b17c8f97d84cf6776cf74535a8

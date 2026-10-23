@@ -1,1 +1,1 @@
-{"statement_id":"sha256:274ccfaf12bf2cdc9aaa0481edf5463cceb590a83cfcfb10e6605367b35ba5da"}
+{"statement_id":"sha256:274ccfaf12bf2cdc9aaa0481edf5463cceb590a83cfcfb10e6605367b35ba5da","declarations":[{"declaration_name_key":"ns(ns(ns(ns(ns(n0,2:D5),2:S0),8:Diagonal),30:CaptureIntersectionCardinality),32:capture_intersection_cardinality)","kind":"theorem"}]}

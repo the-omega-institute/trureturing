@@ -1,0 +1,13 @@
+**Theorem 6.3 (sharp depth-one history fiber).** At $P=\{L,R\}$ and public
+epoch $n=2$, let $D_{\ne}$ be the two-hole exterior with two distinct
+classes. If the base data consist exactly of that current row and the
+common source/epoch conditions, then
+
+$$
+M_{P,2}(D_{\ne})=K_P=3.
+\tag{NBP.6.3}
+$$
+
+Three supplementary configurations, or two fixed-width bits, are
+necessary and sufficient.
+

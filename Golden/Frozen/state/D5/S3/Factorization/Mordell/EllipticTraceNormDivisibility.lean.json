@@ -1,1 +1,1 @@
-{"statement_id":"sha256:fdad9702a699a66997fe7fa16543d83501c4d54ac6c0d29cf9b1fe454e9432f0"}
+{"statement_id":"sha256:280fd8fac23b6fd67b8fd3fc378091e3773904875d020b07d1b706c049919916","declarations":[{"declaration_name_key":"ns(ns(ns(ns(ns(ns(n0,2:D5),2:S3),13:Factorization),7:Mordell),29:EllipticTraceNormDivisibility),51:elliptic_trace_norm_denominator_divides_coordinates)","kind":"theorem"}]}

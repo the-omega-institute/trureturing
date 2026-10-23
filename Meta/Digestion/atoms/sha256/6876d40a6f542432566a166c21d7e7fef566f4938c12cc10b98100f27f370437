@@ -1,0 +1,8 @@
+**Definition 214.4 (fixed two-late fiber).** Let $L\ge4$, $g,h,B\ge0$, and
+
+$$
+q=(0,0,g,h,0,\ldots,0;g+h+B).
+$$
+
+For a score on this fiber, $B=K-\beta_3-\beta_4=2\sum A+\sum P+T$; an arbitrary competitor need not have $W=B$, because $W=B-\sum A$. The minimization below is over every nonnegative full score, with arbitrary $A$, early $P$, late $P$, cancellations, changed anchor and arbitrary labels.
+

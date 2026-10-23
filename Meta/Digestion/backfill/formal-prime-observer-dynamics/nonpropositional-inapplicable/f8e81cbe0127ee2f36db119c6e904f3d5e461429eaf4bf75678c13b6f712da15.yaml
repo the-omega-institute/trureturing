@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:f8e81cbe0127ee2f36db119c6e904f3d5e461429eaf4bf75678c13b6f712da15
+  normalized_sha256: sha256:f8e81cbe0127ee2f36db119c6e904f3d5e461429eaf4bf75678c13b6f712da15
+cas_ref: sha256:f8e81cbe0127ee2f36db119c6e904f3d5e461429eaf4bf75678c13b6f712da15
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 非命题文本：公式片段 \operatorname{CFTransRes}：\[：只引入对象、参数、术语或记号；不附加存在性、唯一性或其他性质断言。
+    previous_atom_id: 3b4ce1e87f233781baee7b9730e32b676b20c14d2cf919624ffe71d97f227dcd
+    next_atom_id: ac3d0b5db35d8747c83ef14d70520dc5cc25102a2f23fad56d0e2d5ea82653c5

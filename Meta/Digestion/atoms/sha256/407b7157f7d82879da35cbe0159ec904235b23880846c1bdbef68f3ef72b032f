@@ -1,0 +1,18 @@
+**Proof.** Every attained distinct complete target must be the fixed
+output of some reached halting state. One halting state has only one
+fixed output, giving $|Z|\ge m$. With zero calls, every actual initial
+state is already a halt; two different targets cannot share its code.
+Thus the actual exported range and the installed state set each have
+at least $m$ elements. Conversely install exactly $m$ halts, one with
+each attained whole target, and export the code of the correct halt.
+The acquired class roots determine this target by Theorem 10.4, so the
+producer can actually compute and export the code before the cut.
+The root task uses the identical target coloring. No source-dependent
+output decoder or free after-entry computation is needed.
+
+The cut and constant cases follow from Corollary 10.10 and this
+construction. Its fourth case keeps every already blocked member
+absent and every newly blocked occurrence guarded by its predecessor
+beta parent. Those are parts of the installed full outputs, not omitted
+coordinates. $\square$
+

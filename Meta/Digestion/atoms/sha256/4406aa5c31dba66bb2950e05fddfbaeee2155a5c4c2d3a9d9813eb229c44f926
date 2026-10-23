@@ -1,0 +1,11 @@
+**Proposition 112.1 (Stopped three-word event inequality).** Fix
+$L\ge5$, and for $u,v\in\{0,1\}$ let $b^{uv}\in B_L$ have
+$b_4=u,b_5=v$ and every other coordinate equal to one. For every
+finite stopped kernel $q\in\mathscr O_L$ and every label event
+$E\subseteq J_L$,
+
+$$
+q_{b^{01}}(E)\le q_{b^{00}}(E)+q_{b^{11}}(E).
+\tag{112.1}
+$$
+

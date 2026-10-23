@@ -1,0 +1,17 @@
+**Definition 5.1 (whole-image admission and multiplicities).** Use NPL Theorem
+5.3 on the complete input. If it returns the exact finite nonempty image
+$A=f(D)$, run Definition 3.4 with all $r\in A$ and use one resulting admitted
+frame throughout this section. Put
+
+$$
+t_{\eta,\mathbf f}
+ =|\{r\in A:D_{\eta,\mathbf f,r}\text{ is infinite}\}|,
+\qquad
+M_* =\max\bigl(\{1\}\cup\{t_{\eta,\mathbf f}:\eta,\mathbf f\}\bigr).
+\tag{FFM.15}
+$$
+
+Define $H_A$ by (FFM.13) with all rows in $A$. For an attained prefix $p$ let
+$S_h(p)=\{r\in A:\exists u\in D_r, p_h(u)=p\}$ and
+$m_h=\max_p|S_h(p)|$. These sets always test the entire original source.
+

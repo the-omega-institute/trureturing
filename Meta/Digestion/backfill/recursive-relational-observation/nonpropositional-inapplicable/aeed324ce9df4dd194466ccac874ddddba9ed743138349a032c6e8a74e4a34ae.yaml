@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:aeed324ce9df4dd194466ccac874ddddba9ed743138349a032c6e8a74e4a34ae
+  normalized_sha256: sha256:aeed324ce9df4dd194466ccac874ddddba9ed743138349a032c6e8a74e4a34ae
+cas_ref: sha256:aeed324ce9df4dd194466ccac874ddddba9ed743138349a032c6e8a74e4a34ae
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 定义 55.2 只引入二色数组、阈值图、分支需求及禁模式的记号，不断言其刻画可实现性。
+    previous_atom_id: 601e9b49f640c552514a1e6bf396374d8a02a80190a0bf3e2de7f1e6b3aa0ab1
+    next_atom_id: f20024ad4cbced170099c6d97dac142e134f152ded352451c0907ae3b6d54ae0

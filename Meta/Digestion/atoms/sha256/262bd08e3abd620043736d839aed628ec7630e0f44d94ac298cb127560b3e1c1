@@ -1,0 +1,1 @@
+| [A. D. Scott、A. D. Sokal，*The repulsive lattice gas, the independent-set polynomial, and the Lovász local lemma*][ScottSokal]（仓内 `Library/Arith/scottsokal2003repulsive.md`） | `literature-attested` 背景：独立集多项式即硬核配分函数的框架。路径上的递推与闭式（引理 7.2）是经典结果，本卷给出完整证明以便自足，不依赖该文。 

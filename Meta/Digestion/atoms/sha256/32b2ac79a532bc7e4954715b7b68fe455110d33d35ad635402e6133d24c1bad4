@@ -1,0 +1,21 @@
+**Proof.** Proposition 9.3 proves the exact full-domain target count and
+Theorem 9.5 supplies the constant-supplement three-call reader on that
+same domain. On its actual witnesses, reading $LLL$ separates two
+origins from three, as Proposition 9.4 shows; it is not a
+singleton-or-constant question. On the full fiber the same query gives
+the legal three-label covers $\{0,1,2\}$ and $\{0,3,4\}$, followed by
+native right-root tests. The image constraint and retained left-class
+disequality are the reason these covers are valid.
+
+[Native Alpha Recut Memory, Theorem 9.4](RECURSIVE_RELATIONAL_OBSERVATION_NATIVE_ALPHA_RECUT_MEMORY.md)
+retains its original hypotheses and conclusion. It starts with the
+unrestricted old-row fiber and asks for the next entire row after one
+update. Its Proposition 9.3 constructs updated witnesses on which every
+native address is singleton-or-constant. The present task starts with a
+fixed current row, restricts the current source to an actual image, and
+asks for its predecessor row. The repeated partners impose relations
+between the feasible alpha label and the other hidden values, so the
+forward witness bridge is not available for this inverse target.
+This counterexample concerns transfer of a cardinality-only law, not
+the validity of the forward theorem. $\square$
+

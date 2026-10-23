@@ -1,0 +1,17 @@
+**Proof, the acquired interval.** Formula (NAR.16.4) computes the code
+from the initial literal row; the public reference address does not
+make its initial age public. If $0\in S$, return $z_0-e_0(a)$ using the
+already acquired exterior and no new Read. Otherwise choose the public
+$i=\min S$, parse $z=z_i$, and write $c_0=e_0(a)$. Since
+$z=\ell+a_i$, $0\le a_i\le H$ and $\ell\ge\lambda_0$, the unknown
+first-slot exponent $n_0=\ell+c_0$ lies in the finite integer interval
+
+$$
+[A,B]=[c_0+\max(\lambda_0,z-H),\ c_0+z],
+\qquad 1\le B-A+1\le q.
+\tag{NAR.16.11}
+$$
+
+It is nonempty on every promised input because it contains $n_0$.
+The upper size bound follows from $\max(\lambda_0,z-H)\ge z-H$.
+

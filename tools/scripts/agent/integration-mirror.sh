@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
-# Mirror dev merges serially; GitHub checks supply every verdict.
-# Usage: integration-mirror.sh --integration BRANCH [--since DEV_MERGE_SHA]
+# Mirror dev PR landings serially; GitHub checks supply every verdict.
+# Usage: integration-mirror.sh --integration BRANCH [--since DEV_COMMIT_SHA]
 #          [--max N] [--state FILE] [--dry-run] [--required-checks-under-test REF]
 # The integration branch must require exactly dev's required checks. When the
 # integration branch is testing a change of the required checks themselves,
@@ -14,23 +14,23 @@
 # --max bounds successful merges; pending counts the remaining fetched plan.
 # Exit: 0 complete/bounded/dry-run; 64 invalid input/precondition; 65 conflict;
 # 66 red checks (PR left open); 69 transport/incomplete checks/unsafe recovery;
-# 130 interrupted; 143 terminated (69 also when the verdict set never settles).
-# The native watcher exits early before GitHub registers a new PR's check runs
-# ("no checks reported") and on transient API errors (HTTP 5xx); the follower
-# re-enters it, bounded by attempts, until any check is red or all passed.
+# 130 interrupted; 143 terminated.
+# Before required checks register, wait on pull_request runs for the exact head.
+# Native watchers own CI lifetimes; only discovery and transport retries are
+# bounded. A completed run without a terminal required verdict is incomplete.
 # Existing mirror PRs/branches are reused, never force-pushed or recreated.
-# Run one follower per integration branch from a dedicated worktree. A local
-# mkdir lock refuses concurrent invocations; after SIGKILL remove the stale lock
-# only after confirming its recorded PID is no longer running on this host.
+# One OS-held operation scope per integration follower; descendants inherit it.
 # Example: tools/scripts/agent/integration-mirror.sh \
 #   --integration integration-regprog-0912 --since 748360e3dd32 --dry-run
 # This transport does not certify workflow versions, performance, push runs or
 # a stability count; those analyses and delivery to dev belong to the caller.
 set -Eeuo pipefail
 
-VERSION=5
-# Watcher re-entry bound: GitHub registration latency and transient API errors.
-WATCH_ATTEMPTS=30 WATCH_INTERVAL=15
+VERSION=7
+PROTOCOL="$(cd "$(dirname "${BASH_SOURCE[0]}")/../worktree" && pwd -P)/worktree_protocol.py"
+# GitHub discovery/transport retries and merge-request retries.
+RETRY_ATTEMPTS=30 RETRY_INTERVAL=15
+original_arguments=("$@")
 integration='' since='' state='' max=0 dry_run=0 checks_under_test=''
 mirrored=0 pending=0 scratch='' worktree='' lock=''
 merge='' original_pr=0 mirror_pr=0 head='' base='' verdicts='[]'
@@ -40,7 +40,7 @@ log() { printf '%s merge=%s head=%s base=%s %s\n' "$(date -u +%FT%TZ)" "${merge:
 die() { log "ERROR $2" >&2; exit "$1"; }
 remove_worktree() {
   if [[ -n "$worktree" ]]; then
-    git worktree remove --force "$worktree" >/dev/null 2>&1 || return 1
+    python3 -B "$PROTOCOL" --source "$root" remove --path "$worktree" || return 1
     worktree=''
   fi
 }
@@ -52,11 +52,8 @@ cleanup() {
     log "ERROR temporary worktree cleanup failed: $worktree" >&2
     rc=69
   elif [[ -n "$scratch" ]]; then
-    rm -rf "$scratch" || rc=69
-  fi
-  if [[ -n "$lock" ]]; then
-    rm -f "$lock/pid"
-    rmdir "$lock" || rc=69
+    rm -f "$scratch/command.log" "$scratch/first-parent" "$scratch/landings" "$scratch/plan" || rc=69
+    rmdir "$scratch" 2>/dev/null || log "retained additional scratch material: $scratch"
   fi
   printf 'MIRROR_RESULT mirrored=%s pending=%s exit=%s\n' "$mirrored" "$pending" "$rc"
   exit "$rc"
@@ -91,45 +88,57 @@ record() {
       conflict_paths:$conflict_paths}' >>"$state" || die 69 "cannot append state: $state"
 }
 read_verdicts() {
-  local rc=0
+  local rc=0 parsed
+  verdicts='[]'
   run verdicts gh pr checks "$mirror_pr" --repo "$repo" --required \
     --json name,state,bucket,link,workflow,event,startedAt,completedAt || rc=$?
   # gh returns 1 for failed checks and 8 for pending checks even with --json.
   case $rc in 0|1|8) ;; *) return 1 ;; esac
-  verdicts=$(jq -ce 'select(type == "array")' <<<"$output" 2>/dev/null) || return 1
+  parsed=$(jq -cse 'select(length == 1 and (.[0] | type == "array")) | .[0]' <<<"$output" 2>/dev/null) || return 1
+  verdicts=$parsed
+}
+terminal_verdict() {
+  jq -e --argjson required "$integration_required" '
+    any(.[]; .bucket == "fail" or .bucket == "cancel") or
+    (([.[].name] | unique | sort) == ($required | sort) and all(.[]; .bucket == "pass"))
+  ' <<<"$verdicts" >/dev/null
 }
 watch_checks() {
-  # The native watcher is the only wait for verdicts, but it exits early when
-  # GitHub has not yet registered the PR's check runs ("no checks reported") or
-  # on a transient API error (observed: HTTP 503 from api.github.com/graphql).
-  # Re-enter it, bounded by attempts, until the verdict set is terminal.
-  local attempt=0 watch_rc
+  local attempt=0 runs active run_id failed
   while :; do
-    attempt=$((attempt + 1))
-    watch_rc=0
-    run watch gh pr checks "$mirror_pr" --repo "$repo" --required --watch --fail-fast || watch_rc=$?
-    if read_verdicts; then
-      log "watch mirror_pr=$mirror_pr attempt=$attempt exit=$watch_rc"
-      jq -e 'any(.[]; .bucket == "fail" or .bucket == "cancel")' <<<"$verdicts" >/dev/null && return 0
-      jq -e --argjson required "$integration_required" '
-        ([.[].name] | unique | sort) == ($required | sort) and all(.[]; .bucket == "pass")
-      ' <<<"$verdicts" >/dev/null && return 0
+    run watch gh pr checks "$mirror_pr" --repo "$repo" --required --watch --fail-fast || true
+    if read_verdicts && terminal_verdict; then return 0; fi
+    # The aggregate required job need not exist while its unit jobs are running.
+    # Run association uses the exact head and event, including runs whose PR list
+    # is empty. Workflow conclusions never authorize a merge.
+    if run discover-runs gh run list --repo "$repo" --commit "$head" --event pull_request \
+      --json databaseId,headSha,event,status --limit 100 &&
+      runs=$(jq -ce --arg head "$head" 'select(type == "array") |
+        map(select(.headSha == $head and .event == "pull_request")) | select(length > 0)
+      ' <<<"$output"); then
+      active=$(jq -r '.[] | select(.status != "completed") | .databaseId' <<<"$runs")
+      [[ -n "$active" ]] || return 1
+      failed=0
+      while IFS= read -r run_id; do
+        run watch-run gh run watch "$run_id" --repo "$repo" || failed=1
+        if read_verdicts && terminal_verdict; then return 0; fi
+      done <<<"$active"
+      if (( failed == 0 )); then
+        attempt=0
+        continue
+      fi
     fi
-    (( attempt < WATCH_ATTEMPTS )) || return 1
-    sleep "$WATCH_INTERVAL"
+    attempt=$((attempt + 1))
+    (( attempt < RETRY_ATTEMPTS )) || return 1
+    sleep "$RETRY_INTERVAL"
   done
 }
 validate_head() {
-  # Recover only a merge produced for this exact original merge, never an
-  # unrelated branch that happens to occupy the deterministic branch name.
-  local parents subject
-  parents=$(git show -s --format=%P "$head")
-  subject=$(git show -s --format=%s "$head")
-  base=${parents%% *}
-  [[ "$parents" == "$base $merge" && "$subject" == "mirror: #$original_pr $original_subject" ]] \
-    || die 69 "existing mirror head has unexpected parents or subject"
-  git merge-base --is-ancestor "$base" "$integration_tip" \
-    || die 69 "existing mirror base is outside integration history"
+  run validate-mirror python3 -B "$PROTOCOL" --source "$root" validate-mirror \
+    --commit "$head" --base "$integration_tip" --merge "$merge" \
+    --message "mirror: #$original_pr $original_subject" \
+    || die 69 "existing mirror head violates the producer contract"
+  base=$(jq -er '.base' <<<"$output") || die 69 "missing validated mirror base"
 }
 
 while (( $# )); do
@@ -168,13 +177,17 @@ state=${state:-"$common/integration-mirror/$branch_key.jsonl"}
 if [[ -e "$state" ]]; then
   [[ -f "$state" && -r "$state" && -w "$state" ]] || die 64 "state must be a readable, writable regular file"
 fi
+if (( dry_run == 0 )); then
+  if [[ -z "${MIRROR_OPERATION_HELD:-}" ]]; then
+    exec python3 -B "$PROTOCOL" --source "$root" with --path "$root" \
+      --operation "integration-mirror:$integration" -- env MIRROR_OPERATION_HELD=1 \
+      /bin/bash "${BASH_SOURCE[0]}" "${original_arguments[@]}"
+  fi
+fi
 scratch=$(mktemp -d "${TMPDIR:-/tmp}/integration-mirror.XXXXXX") || die 64 "cannot create temporary directory"
 if (( dry_run == 0 )); then
   mkdir -p "$common/integration-mirror" || die 64 "cannot create local state directory"
-  lock_path="$common/integration-mirror/$branch_key.lock"
-  mkdir "$lock_path" 2>/dev/null || die 64 "follower already running or stale lock: $lock_path"
-  lock=$lock_path
-  printf '%s\n' "$$" >"$lock/pid"
+
 fi
 [[ -d "${state%/*}" && -w "${state%/*}" ]] \
   || { (( dry_run )) && [[ "$state" == "$common/integration-mirror/$branch_key.jsonl" ]]; } \
@@ -232,7 +245,7 @@ if [[ -z "$since" ]]; then
 fi
 since=$(git rev-parse --verify "$since^{commit}") || die 64 "unknown --since commit"
 grep -Fxq "$since" "$scratch/first-parent" || die 64 "--since is not on dev first-parent history"
-git rev-list --first-parent --reverse --merges "$since..$dev_tip" >"$scratch/merges"
+git rev-list --first-parent --reverse "$since..$dev_tip" >"$scratch/landings"
 completed=$(jq -c '[.[] | select(.merged_at != null) | .merge] | unique' <<<"$state_data")
 : >"$scratch/plan"
 while IFS= read -r merge; do
@@ -241,13 +254,39 @@ while IFS= read -r merge; do
     continue
   fi
   original_subject=$(git show -s --format=%s "$merge")
-  [[ "$original_subject" =~ ^Merge\ pull\ request\ \#([1-9][0-9]*)\  ]] \
-    || die 64 "merge subject does not identify an original PR: $original_subject"
-  original_pr=${BASH_REMATCH[1]}
+  # Association and subject numbers are candidates; only the PR record is
+  # authoritative about this repository's merged dev landing. The merge prefix
+  # and squash suffix label PRs; other subject numbers can refer to issues.
+  run associated-prs gh api "repos/$repo/commits/$merge/pulls" --paginate \
+    || die 64 "cannot discover original PR for commit $merge"
+  candidates=$(jq -sr --arg subject "$original_subject" '
+    if all(.[]; type == "array") then
+      ([.[][] | .number] + [$subject |
+        (capture("^Merge pull request #(?<n>[1-9][0-9]*)(?: |$)"),
+         capture("\\(#(?<n>[1-9][0-9]*)\\)$")) | .n | tonumber]) | unique |
+      if all(.[]; type == "number" and . > 0 and floor == .) then .[]
+      else error("invalid PR candidates") end
+    else error("invalid PR association") end
+  ' <<<"$output") || die 64 "invalid PR association for commit $merge"
+  verified=()
+  while IFS= read -r candidate; do
+    [[ -n "$candidate" ]] || continue
+    run original-pr gh api "repos/$repo/pulls/$candidate" \
+      || die 64 "cannot verify PR #$candidate for commit $merge"
+    if jq -e --arg repo "$repo" --arg merge "$merge" --argjson number "$candidate" '
+      .number == $number and .merged == true and .base.ref == "dev" and
+      .base.repo.full_name == $repo and .merge_commit_sha == $merge
+    ' <<<"$output" >/dev/null; then
+      verified+=("$candidate")
+    fi
+  done <<<"$candidates"
+  (( ${#verified[@]} == 1 )) \
+    || die 64 "commit $merge must identify exactly one verified merged dev PR (found ${#verified[@]})"
+  original_pr=${verified[0]}
   git check-ref-format "refs/heads/mirror/$integration/$original_pr" || die 64 "invalid mirror branch"
   printf '%s %s\n' "$merge" "$original_pr" >>"$scratch/plan"
   pending=$((pending + 1))
-done <"$scratch/merges"
+done <"$scratch/landings"
 merge=''
 log "plan dev=$dev_tip since=$since integration=$integration count=$pending required=$required version=$VERSION"
 if (( dry_run )); then
@@ -303,24 +342,19 @@ while read -r merge original_pr; do
       if git show-ref --verify --quiet "refs/heads/$branch"; then
         head=$(git rev-parse "refs/heads/$branch")
         if [[ "$head" != "$base" ]]; then validate_head; fi
-        run worktree git worktree add "$worktree" "$branch" || die 69 "cannot reuse local mirror branch"
-      else
-        run worktree git worktree add -b "$branch" "$worktree" "origin/$integration" || die 69 "cannot create mirror worktree"
       fi
-      if [[ -z "$head" || "$head" == "$base" ]]; then
-        if ! run merge git -C "$worktree" merge --no-ff -m "mirror: #$original_pr $original_subject" "$merge"; then
-          conflicts=$(git -C "$worktree" diff --name-only --diff-filter=U -z | jq -Rsc 'split("\u0000") | map(select(length > 0))')
-          if [[ "$conflicts" != '[]' ]]; then
-            git -C "$worktree" merge --abort || die 69 "cannot abort conflicted merge"
-            record conflict '' "$conflicts"
-            die 65 "merge conflict paths=$conflicts"
-          fi
-          die 69 "git merge failed without conflict paths"
+      if ! run worktree python3 -B "$PROTOCOL" --source "$root" prepare-mirror \
+        --path "$worktree" --branch "$branch" --base "$base" --merge "$merge" \
+        --message "mirror: #$original_pr $original_subject"; then
+        conflicts=$(git -C "$worktree" diff --name-only --diff-filter=U -z 2>/dev/null | jq -Rsc 'split("\u0000") | map(select(length > 0))') || conflicts='[]'
+        if [[ "$conflicts" != '[]' ]]; then
+          record conflict '' "$conflicts"
+          die 65 "merge conflict paths=$conflicts; checkout retained"
         fi
-        head=$(git -C "$worktree" rev-parse HEAD)
-        validate_head
+        die 69 "mirror creation/publication failed; checkout retained"
       fi
-      run push git push origin "$head:refs/heads/$branch" || die 69 "cannot push mirror branch"
+      head=$(jq -er '.commit' <<<"$output") || die 69 "missing confirmed mirror commit"
+      validate_head
       remove_worktree || die 69 "cannot remove mirror worktree"
     fi
     run original gh pr view "$original_pr" --repo "$repo" --json title,url || die 69 "cannot read original PR"
@@ -329,7 +363,7 @@ while read -r merge original_pr; do
     body="Provenance: integration-mirror.sh v$VERSION; automated git/gh transport, no review seats or consensus; GitHub required checks supply verdicts.
 
 Original PR: $original_url
-Original dev merge: $merge
+Original dev landing: $merge
 Integration base: $base
 Mirror head: $head
 Script version: $VERSION"
@@ -338,7 +372,7 @@ Script version: $VERSION"
     mirror_pr=${output##*/}
     [[ "$mirror_pr" =~ ^[1-9][0-9]*$ ]] || die 69 "gh returned no mirror PR number"
   fi
-  watch_checks || { record incomplete; die 69 "verdicts not settled for mirror_pr=$mirror_pr after $WATCH_ATTEMPTS watcher attempts; PR left open"; }
+  watch_checks || { record incomplete; die 69 "verdicts not settled for mirror_pr=$mirror_pr after native waits/discovery; PR left open"; }
   log "checks mirror_pr=$mirror_pr verdicts=$verdicts"
   if jq -e 'any(.[]; .bucket == "fail" or .bucket == "cancel")' <<<"$verdicts" >/dev/null; then
     record red
@@ -354,12 +388,12 @@ Script version: $VERSION"
   until run merge-pr gh pr merge "$mirror_pr" --repo "$repo" --merge --delete-branch \
     --match-head-commit "$head"; do
     merge_attempt=$((merge_attempt + 1))
-    (( merge_attempt < WATCH_ATTEMPTS )) || die 69 "merge request failed after $merge_attempt attempts; rerun to recover PR state"
+    (( merge_attempt < RETRY_ATTEMPTS )) || die 69 "merge request failed after $merge_attempt attempts; rerun to recover PR state"
     # A fresh check run registered after the last watch (e.g. on PR creation):
     # wait for the verdict set to settle again before retrying the merge.
     log "merge-pr retry=$merge_attempt: re-entering the watcher"
-    sleep "$WATCH_INTERVAL"
-    watch_checks || die 69 "verdicts not settled for mirror_pr=$mirror_pr after $WATCH_ATTEMPTS watcher attempts; PR left open"
+    sleep "$RETRY_INTERVAL"
+    watch_checks || { record incomplete; die 69 "verdicts not settled for mirror_pr=$mirror_pr after native waits/discovery; PR left open"; }
     if jq -e 'any(.[]; .bucket == "fail" or .bucket == "cancel")' <<<"$verdicts" >/dev/null; then
       record red
       die 66 "red mirror_pr=$mirror_pr left open"

@@ -1,0 +1,31 @@
+### 13.1 同源接口与三个字面地址
+
+本章沿用 §12 的实际有限非空有序树、根和 $L/R$ 地址。记
+$r_x(p)\in\{\alpha,\beta,\mathsf{branch},\mathsf{absent}\}$ 为原四值
+Read，$P_x(p)=\mathbf1_{r_x(p)\ne\mathsf{absent}}$ 为其存在投影。
+一次取得 $P_x(p)$ 仍执行一次原付费 Read；物理 writer 保留该 Read 的完整
+四值回复，解码控制器只保留并使用这一位。不存在另设的免费存在传感器。
+
+固定公开认证的 $N=2k\ge2$，实际寄存器为 $v=\rho^{2k}u$。
+$u$ 不作为控制器输入。供给的 $p\in\{L,R\}^{*}$ 任意，可以是原来不存在、
+现在存在的位置；不供给祖先回复、原位置确认、来源名称或原树描述。
+一个读宏内没有替换或其他寄存器写入，全部物理 Read 作用于同一个 $v$。
+地址不可达时 Read 返回 absent，仍是合法且付费的调用。
+
+定义两个标签探针，以及非根地址 $p=ad$、$d\in\{L,R\}$ 的存在守卫：
+
+$$
+\begin{aligned}
+B_k(p)&=pR^{k-1}LL,\\
+C_k(p)&=pR^kL,\\
+G_k(p)&=aR^{k+1}\qquad(p=ad\ne\varepsilon).
+\end{aligned}
+\tag{ABT.40}
+$$
+
+这里 $p$ 是每个标签探针实际执行的完整前缀。令
+$b=P_v(B_k(p))$、$c=P_v(C_k(p))$，非根时再令 $g=P_v(G_k(p))$。
+§12.3 的 (ABT.36)–(ABT.37) 已供应原来存在的 $p$ 上的标签表
+$\alpha:00$、$\beta:10$、$\mathsf{branch}:11$。以下补足原 absence，
+而不把那张有前提的表直接用到新生位置上。
+

@@ -1,0 +1,13 @@
+**命题 7.1（硬核测度的对偶值）。** 对 $n\ge1$ 与 $\lambda>0$，
+
+$$
+\Phi_{\Gamma_n}\bigl(\mu^{(n)}_\lambda\bigr)=\frac{\lambda}{1+\lambda}\,\mathbb E^{(n)}_\lambda[u],
+\qquad\text{因而}\qquad
+\kappa_n\ge\frac{\lambda}{1+\lambda}\,\mathbb E^{(n)}_\lambda[u].
+\tag{7.1}
+$$
+
+**证明。** 简记 $\mu_\lambda=\mu^{(n)}_\lambda$。$\Gamma_n$ 的每条边可唯一写成 $\{b,b+e_i\}$，其中 $b$ 是低端、$i$ 是 $b$ 的可翻转零；反之每个这样的对 $(b,i)$ 给出一条边。由 $\mu_\lambda(b+e_i)=\lambda\mu_\lambda(b)$ 与引理 3.1(ii) 的齐次性，$h(\mu_\lambda(b),\lambda\mu_\lambda(b))=\mu_\lambda(b)\,h(1,\lambda)=\frac{\lambda}{1+\lambda}\mu_\lambda(b)$。按低端求和得等式，不等式来自定理 3.2(iii)。
+
+$\lambda=1$ 时 (7.1) 的右边是 $\frac12\mathbb E_1^{(n)}[u]=e_n/(2|B_n|)=C_n$，即推论 4.3(i) 的均匀下界；$\lambda<1$ 时测度把质量移向 $1$ 较少的词。
+

@@ -1,0 +1,68 @@
+**Theorem 4.3 (exact selector fibers and lawful separators).** For this
+same $C_m$,
+
+$$
+N_{k_*,0}=M,\qquad N_{k_*,1}=2M^2,\qquad
+\frac{N_{k_*,1}}{N_{k_*,0}}=2M.
+\tag{4.5}
+$$
+
+Each current-residual fiber has exactly $2M$ one-credit boundary
+points. With the selector bit also given, each fiber has exactly
+$M$ points. Hence the exact supplements are $2M$ and $M$ labels,
+respectively $m+1$ and $m$ fixed-length binary bits. The family attains
+the full-branching bound of Theorem 4.1 with $N=M$.
+
+Proof. At the preceding cut,
+
+$$
+S_{ij}=R(ij)=\{0i,1j\},\qquad
+\partial_0S_{ij}=\{i\},\qquad
+\partial_1S_{ij}=\{j\}.
+\tag{4.6}
+$$
+
+The $M^2$ residuals $S_{ij}$ are distinct: their two first-symbol
+branches recover $i$ and $j$. Every $ijb$ is extendable.
+The forward residuals at $k_*$ are all $M$ singleton languages
+$\{x\}$, whereas the one-credit boundary is $(S_{ij},b)$, yielding
+$2M^2$ points.
+
+If two selector bits differ, the requested delete of one is legal
+on only one side. With equal bits and different $i$-components,
+use $-b,+0$ followed by the $m$ supplied bits of the first $i$.
+With equal bits and different $j$-components, use $-b,+1$ followed
+by the first $j$. Each experiment uses one delete and $m+1$ appends,
+within the exact horizon $m+2$; it is legal on exactly one side.
+Deleting the selector and supplying a new one changes the controlled
+prefix through the declared actions of this same $C_m$.
+It does not replace a hidden tagged codeword.
+
+Above $\{x\}$ the fine points are the disjoint families
+
+$$
+\{(S_{xj},0):j\in\{0,1\}^m\}
+\quad\text{and}\quad
+\{(S_{ix},1):i\in\{0,1\}^m\}.
+\tag{4.7}
+$$
+
+Thus every forward fiber has $2M$ points, and every fixed-bit fiber
+has $M$. Proposition 3.2 supplies the optimal alphabet conclusion.
+An explicit attaining label is
+
+$$
+L(ij0)=(0,j),\qquad L(ij1)=(1,i);
+\tag{4.8}
+$$
+
+if $b$ is separately supplied, retain only the unused component.
+The current residual gives the selected component and (4.8) gives
+the rest, so the anchored boundary is recovered.
+
+For a known bit $0$, all $S_{xj}$ differentiate to $\{x\}$ as $j$
+varies. This is the precise missing predecessor relation. It disproves
+an alphabet-only factor-two bound at the same cut for arbitrary
+nonlinear relations. The unbounded claim varies $m$ and the relation:
+every individual $C_m$ is finite. $\square$
+

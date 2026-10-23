@@ -1,1 +1,1 @@
-{"statement_id":"sha256:9905014998b7ba350eceb5d2601e2fa6f3ecd27db260b04a06649e6311cc6633"}
+{"statement_id":"sha256:9905014998b7ba350eceb5d2601e2fa6f3ecd27db260b04a06649e6311cc6633","declarations":[{"declaration_name_key":"ns(ns(ns(n0,12:NikolovSegal),14:CrossingKernel),24:balanced_of_owner_counts)","kind":"theorem"},{"declaration_name_key":"ns(ns(ns(n0,12:NikolovSegal),14:CrossingKernel),24:signedVariables_eq_owner)","kind":"theorem"},{"declaration_name_key":"ns(ns(ns(n0,12:NikolovSegal),14:CrossingKernel),26:support_eq_of_owner_counts)","kind":"theorem"}]}

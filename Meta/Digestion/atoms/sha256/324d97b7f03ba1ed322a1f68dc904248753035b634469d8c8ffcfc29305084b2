@@ -1,0 +1,1 @@
+| [DelayedOriginalReadout][SLHC11-DECODER] | The declarations right_clock_iterate, right_clock_readout, original_presence_guard, original_decoder_correct and original_query_bounds use the same source and delayed-image domain. Address false/true means $L/R$; source true/false means $\alpha/\beta$, opposite to the numerical parity convention here. 

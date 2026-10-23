@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:3e298b57721643168b49e29ef221329f6be055a23edc767bd157d2153522e1a4
+  normalized_sha256: sha256:3e298b57721643168b49e29ef221329f6be055a23edc767bd157d2153522e1a4
+cas_ref: sha256:3e298b57721643168b49e29ef221329f6be055a23edc767bd157d2153522e1a4
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 清单片段“认知负荷”仅列举主题、接口组成或考虑维度；本片段不陈述性质、存在性或推论。
+    previous_atom_id: 56c6c11f346484428f531f4a18e684ee9c0c14634892cf84175fbe953b358dcc
+    next_atom_id: 6938644b345cfe47f663ae455d5bcc700ab73a7e9df0024af976f5f966d6dad3

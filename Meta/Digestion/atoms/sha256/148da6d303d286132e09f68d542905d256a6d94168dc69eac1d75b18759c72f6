@@ -1,0 +1,49 @@
+**Theorem 3.2 (conditional predecessor, old set and current class).** On
+actual transitions $t=\rho v$, conditional on the current complete row
+$R$, the three data $R_P(v)$, $O=H_P(v)$ and $A=A_P(t)$ mutually determine
+one another. In particular,
+
+$$
+O=H\setminus
+ \{qd\in H:d\in\{L,R\},\ \operatorname{Alpha}_C(qR,A)\}.
+\tag{NBP.3.1}
+$$
+
+The root, if cut, remains in $O$. Conversely, $A$ is the current class of
+any newborn right hole; it is $\bot$ if there is no such hole.
+
+For any nonempty subset $\mathcal U$ of actual predecessor sources with
+common current row $R$, its exact number of predecessor rows is
+
+$$
+m(R;\mathcal U)
+=\left|\{A_P(\rho v):v\in\mathcal U\}\right|
+\le k+1.
+\tag{NBP.3.2}
+$$
+
+The subsets may impose additional jointly compatible acquired evidence.
+No arbitrary subset of $H$ is assumed attainable.
+
+**Proof.** At a reached nonroot cut $p=qd$, prefix freedom ensures that
+$q$ is retained as a branch and that the root at $qR$ is visible, possibly
+as a hole. No cut can hide a strict ancestor of $p$; another cut can stop
+the sibling itself or a descendant but cannot hide that sibling root.
+
+An actual image branch at $q$ is an expanded beta block precisely when
+its right child is alpha. If it came from an old branch, its right subtree
+would be a $\rho$ image and could not be alpha. A newborn node is a leaf
+and cannot be this branch parent. Hence the supplied node-birth criterion
+makes $p$ newborn precisely when $\operatorname{Alpha}_C(qR,A)$ holds.
+This proves (NBP.3.1).
+
+An old hole has value $\rho(v|_p)\ne\alpha$. A newborn left hole is beta,
+and a newborn right hole is alpha. Thus all current alpha holes are
+exactly the newborn right cut occurrences; they occupy one class.
+The set $O$ therefore recovers $A$ by the stated rule. Theorem 2.2 recovers
+the predecessor row from $O$, and the predecessor row gives $O$ from its
+hole support. These finite maps prove all equivalences. In each
+common-current-row fiber, predecessor row values correspond bijectively
+to the attained labels in $B\cup\{\bot\}$, proving (NBP.3.2). For $k=0$
+there is one feasible label. $\square$
+

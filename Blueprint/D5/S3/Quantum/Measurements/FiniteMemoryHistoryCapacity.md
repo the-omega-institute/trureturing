@@ -4,7 +4,19 @@
 
 Perfectly distinguishable density matrices number at most the memory dimension.
 
-**Theorem 1.1 (Exact history capacity of finite quantum memory).**
+**Lemma 1.1 (Zero trace pairing forces zero product).**
+
+$$\begin{aligned}\forall d: Nat,\\\forall E, rho: \operatorname{Matrix}(\operatorname{Fin}(d), \operatorname{Fin}(d), \mathbb{C}),\\\operatorname{PosSemidef}(E) \Rightarrow\operatorname{PosSemidef}(rho) \Rightarrow\\\operatorname{Tr}(E \cdot rho) = 0 \Rightarrow E \cdot rho = 0\end{aligned}$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/Quantum/Measurements/FiniteMemoryHistoryCapacity.zero_trace_mul_eq_zero` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+For any finite dimension d, positive semidefinite matrices E and rho with Tr(E rho) = 0 satisfy E rho = 0. Factoring each positive matrix as an adjoint times itself reduces the trace pairing to a squared matrix norm. The capacity theorem uses this product identity to place state ranges in effect kernels.
+
+**Theorem 1.2 (Exact history capacity of finite quantum memory).**
 
 $$\begin{aligned}\forall N, d: Nat,\\\forall \rho, E: \operatorname{Fin}(N) \to \operatorname{Matrix}(\operatorname{Fin}(d), \operatorname{Fin}(d), \mathbb{C}),\\(\forall i: \operatorname{Fin}(N), \operatorname{PosSemidef}(\rho_{i}) \land \operatorname{Tr}(\rho_{i}) = 1) \Rightarrow\\(\forall j: \operatorname{Fin}(N), \operatorname{PosSemidef}(E_{j})) \Rightarrow\\(\sum_{j: \operatorname{Fin}(N)} E_{j} = I) \Rightarrow\\(\forall i, j: \operatorname{Fin}(N), \operatorname{Tr}(E_{j} \cdot \rho_{i}) = \operatorname{if}(i = j, 1, 0)) \Rightarrow\\N \leq d.\end{aligned}$$
 
@@ -25,3 +37,4 @@ This bound concerns perfectly distinguishable records, rather than the number of
 ## References
 
 - Truth anchor: `D5/S3/Quantum/Measurements/FiniteMemoryHistoryCapacity.finite_memory_history_capacity`
+- Truth anchor: `D5/S3/Quantum/Measurements/FiniteMemoryHistoryCapacity.zero_trace_mul_eq_zero`

@@ -1,0 +1,16 @@
+**约定 2.1（有限图与分配）。** 图 $G=(V,E)$ 恒指顶点集非空的有限简单无向图。$b\sim c$ 表示 $\{b,c\}\in E$，$d_b$ 为顶点 $b$ 的度数，$\Delta(G)=\max_bd_b$。一个分配 $a$ 对每个有序邻接对 $(b,c)$ 给出实数 $a_{c\leftarrow b}$，满足
+
+$$
+0\le a_{c\leftarrow b}\le1,\qquad a_{c\leftarrow b}+a_{b\leftarrow c}=1\qquad(b\sim c).
+$$
+
+全体分配记为 $\mathcal A(G)$。对每条边任选一个方向后，$\mathcal A(G)$ 与 $[0,1]^{E}$ 线性同胚，故它是有限维欧氏空间中的非空紧凸集。顶点负载与负载最小最大值为
+
+$$
+L_b^G(a)=\sum_{c\sim b}a_{c\leftarrow b}^{2},\qquad
+\kappa(G)=\min_{a\in\mathcal A(G)}\max_{b\in V}L_b^G(a).
+\tag{2.1}
+$$
+
+每个 $L_b^G$ 是连续凸函数，最大值连续，所以最小值在紧集上取到。无边图的唯一分配是空族，此时 $\kappa(G)=0$。$\kappa$ 是图同构不变量。另记 $C(G)=|E|/(2|V|)$。
+

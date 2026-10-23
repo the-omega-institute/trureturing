@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:89d22f49160ff1510fec1f497320dcecb75bc9767501f8928508585b8dbdfcf9
+  normalized_sha256: sha256:89d22f49160ff1510fec1f497320dcecb75bc9767501f8928508585b8dbdfcf9
+cas_ref: sha256:89d22f49160ff1510fec1f497320dcecb75bc9767501f8928508585b8dbdfcf9
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: Proof exposition for section 464.6. The mathematical statement is supplied by D5/S3/Factorization/Combinatorics/MixedPrimeHistoryAsymptotics.result. The paragraph explains that same statement and its displayed substitutions or definitional consequences; it is not an independent theorem obligation. 原固定 t>0；同一存在量词给唯一 rho∈(0,1)、t*primeSeries rho=1、rho<R<1 和 C,K>0。 全 n 的绝对误差界 K/R^n 给 O_t(R^-n)；同一 cLow,cHigh 给全部 n≥1 双边界，并非仅最终界。
+    previous_atom_id: 132b446f7e37fdc21c7475a4c4be4eba0e1a6b2eb899ffe7fed661d66b2af9a8
+    next_atom_id: f3b579dfe97c8ca4836d219d790b2dd1bfecddef05ab73408fb4488ccf3310ac

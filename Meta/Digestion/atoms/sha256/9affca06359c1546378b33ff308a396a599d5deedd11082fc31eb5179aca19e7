@@ -1,0 +1,33 @@
+**Proof.** Choose any finite ordered full binary skeleton with $k$ leaf
+sites $r_1,\ldots,r_k$ and set $P=\{r_iR:1\le i\le k\}$. Such skeletons
+exist by successively replacing a leaf by a pair; their leaf sites are
+prefix-free, and appending $R$ preserves that property. Reuse the native
+orbit $T_i=\rho^i\alpha$ from
+[Fibonacci Atomic Relation Generation, Theorem 3.2](FIBONACCI_ATOMIC_RELATION_GENERATION.md).
+The $T_i$ are pairwise different: cancelling a common iterate by
+injectivity would otherwise put alpha in a positive $\rho$ image.
+
+For $a=0,\ldots,k$, fill site $i$ by
+
+$$
+s_i^{(a)}=
+\begin{cases}
+\beta,&a=i>0,\\
+\langle\alpha,T_i\rangle,&\text{otherwise},
+\end{cases}
+\qquad u_a=\text{the skeleton filled by }(s_i^{(a)})_{i=1}^k.
+\tag{NBP.3.3}
+$$
+
+After one update each retained site has exterior
+$\langle\beta,\square_{r_iR}\rangle$. Its hidden right value is alpha
+at the selected site and $T_{i+1}$ elsewhere. These $k$ values are
+pairwise distinct in every source. All current complete rows are
+therefore identical with $k$ singleton classes. Their old reached sets
+are $P$ for $a=0$ and $P\setminus\{r_aR\}$ for $a>0$. Theorem 2.2 gives
+$k+1$ distinct predecessor rows, while Theorem 3.2 excludes any further
+predecessor row in this current-row fiber. The ordinary finite
+identification argument, reused in Theorem 6.2, gives the stated bits.
+For $k\ge2$, different selected sites also show that merely retaining
+the number of newborn holes is insufficient. $\square$
+

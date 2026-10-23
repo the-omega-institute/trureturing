@@ -1,0 +1,38 @@
+**Theorem 9.2 (memory is bounded by certified carrier capacity).** If a
+finite-depth metric row bridge exists at depth \(h\), then
+
+$$
+\boxed{m_h\le \mathsf P_X(R_h,\delta_h).}
+\tag{FFM.32}
+$$
+
+Under whole-image admission, with \(H_A\) and \(M_*\) from Theorem 5.2,
+
+$$
+\boxed{M_*=m_{H_A}\le\mathsf P_X(R_{H_A},\delta_{H_A}).}
+\tag{FFM.33}
+$$
+
+In particular, if \(X=\mathbb R^d\) with its Euclidean metric and
+\(0<\delta_h\le R_h\), then
+
+$$
+\boxed{
+m_h\le\left(1+\frac{2R_h}{\delta_h}\right)^d,\qquad
+M_*\le\left(1+\frac{2R_{H_A}}{\delta_{H_A}}\right)^d.
+}
+\tag{FFM.34}
+$$
+
+Consequently, whenever \(M_*>1\) and \(R_{H_A}>0\), any such Euclidean
+bridge must satisfy the conditional lower bound
+
+$$
+\boxed{
+d\ge
+\frac{\log M_*}
+{\log(1+2R_{H_A}/\delta_{H_A})}.
+}
+\tag{FFM.35}
+$$
+

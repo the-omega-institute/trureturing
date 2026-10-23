@@ -3,14 +3,13 @@ using System.Text;
 
 namespace Trureturing.Truth;
 
-/// <summary>The typed inputs needed to assemble the six-artifact truth-release bundle.</summary>
+/// <summary>The typed inputs needed to assemble the five-artifact truth-release bundle.</summary>
 public sealed record TruthReleaseBundleInput(
     SourceSnapshotModel SourceSnapshot,
     ImmutableArray<byte> TruthGraphBytes,
     ImmutableArray<byte> RawLeanReportBytes,
     ImmutableArray<byte> TruthExportBytes,
     ImmutableArray<byte> BlueprintIndexBytes,
-    ImmutableArray<byte> FrozenLedgerHeadBytes,
     TruthReleaseSource Source,
     TruthReleaseTrust Trust,
     TruthReleaseProducer Producer,
@@ -23,14 +22,13 @@ public sealed record TruthReleaseBundleInput(
 /// </summary>
 public static class TruthReleaseBundleWriter
 {
-    // Transport filenames are stable; the manifest and snapshot carry their v2 schema tags.
+    // Transport filenames are stable; the manifest and snapshot carry their own schema tags.
     public const string SourceSnapshotFileName = "source-snapshot.v1.json";
     public const string TruthGraphFileName = "truth-graph.v1.json";
     public const string RawLeanReportFileName = "raw-lean-report.json";
     // Transport name is stable; the artifact's schema_version/dialect specify its V2 content contract.
     public const string TruthExportFileName = "truth-export.v1.json";
     public const string BlueprintIndexFileName = "blueprint-index.v1.json";
-    public const string FrozenLedgerHeadFileName = "frozen-ledger-head.json";
     public const string Sha256SumsFileName = "SHA256SUMS";
     public const string ManifestFileName = "release-manifest.v1.json";
     public const string PublicationFileName = "truth-release-publication.v1.json";
@@ -55,7 +53,6 @@ public static class TruthReleaseBundleWriter
             new ArtifactBytes(RawLeanReportFileName, input.RawLeanReportBytes),
             new ArtifactBytes(TruthExportFileName, input.TruthExportBytes),
             new ArtifactBytes(BlueprintIndexFileName, input.BlueprintIndexBytes),
-            new ArtifactBytes(FrozenLedgerHeadFileName, input.FrozenLedgerHeadBytes),
         };
 
         foreach (var artifact in artifacts)
@@ -81,8 +78,7 @@ public static class TruthReleaseBundleWriter
                 Artifact(TruthGraphFileName),
                 Artifact(RawLeanReportFileName),
                 Artifact(TruthExportFileName),
-                Artifact(BlueprintIndexFileName),
-                Artifact(FrozenLedgerHeadFileName)),
+                Artifact(BlueprintIndexFileName)),
             releaseDigest,
             input.ProducedAt);
         var manifestBytes = TruthReleaseManifestJsonWriter.Write(manifest);

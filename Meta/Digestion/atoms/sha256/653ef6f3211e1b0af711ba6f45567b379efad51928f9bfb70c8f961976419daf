@@ -1,0 +1,55 @@
+**Theorem 2.3 (exhaustive completed homogeneous split).** For every fixed
+$a,H$ as above and every $X\in\widehat{\mathcal T}$,
+
+$$
+\rho^a X=H(X)
+\quad\Longleftrightarrow\quad
+X=\Omega\ \lor\
+\bigl(A_{a,H}\land\exists c\in\mathbb N\ X=T_c\bigr).
+\tag{SFS.8}
+$$
+
+The finite solution set is the entire atomic orbit if $A_{a,H}$ holds,
+and empty otherwise.
+
+Proof. Use the native mass and clock of [URR, Definition 2.1][URR]:
+
+$$
+\begin{aligned}
+\gamma(\rho^b t)&=\gamma(t),&\gamma(T_c)&=0,\\
+\gamma(\langle s,t\rangle)&\ge\max(\gamma(s),\gamma(t)),\\
+\gamma(\langle s,t\rangle)&=1+\gamma(s)+\gamma(t)
+&&\text{if either child has positive mass},\\
+\kappa(\rho^b t)&=\kappa(t)+b.
+\end{aligned}
+\tag{SFS.9}
+$$
+
+Mass zero is exactly the atomic orbit. If finite $X$ has mass $g>0$ and
+$H$ has $m\ge2$ frontier occurrences, its mass is $(m-1)+mg>g$.
+Thus a finite solution must be $T_c$. Homogeneity gives
+$H(\rho^c\alpha)=\rho^c H(\alpha)$, and completed injectivity cancels
+$\rho^c$, making equality equivalent to (SFS.7). This proves both finite
+directions. The special finite recurrence
+$\rho^2X=\langle\rho X,X\rangle$ is already the first conjunct of the
+pinned D5 declaration source_transport_centralizer; it is not claimed anew.
+
+Suppose $X$ is infinite and has a leaf. If every frontier exponent $b\ge a$,
+distribution and injectivity reduce the equation to $X=H_-(X)$, subtracting
+$a$ from every exponent. Each occurrence remains below a pair, so the
+right side has strictly greater minimum leaf depth, a contradiction.
+
+Otherwise choose a frontier address $p$ decorated by $b<a$ and set $e=a-b>0$.
+The equation at $p$ gives the entire subtree $\rho^b X$. If $p$ crossed
+an original leaf of $X$, the corresponding subtree in $\rho^aX$ would be
+finite, whereas $\rho^bX$ is infinite. Hence $p$ is originally reached,
+$Y=X|_p$ is infinite, and original subtree transport gives
+$\rho^aY=\rho^bX$. Cancellation gives $X=\rho^eY$. Substitute this into
+the original equation; homogeneity and cancellation show that $Y$ satisfies
+the same feedback equation. Repeat with the same $p,e$. Then
+$X=\rho^{ke}Y_k$ for every $k$. Each $Y_k$ has a leaf since $X$ does, and
+(SFS.6) gives $\mu(X)\ge\lfloor ke/2\rfloor$ for all $k$, impossible.
+Thus an infinite solution is leafless, hence $\Omega$. Conversely its
+decorations and every pair of them equal $\Omega$. This completes both
+completed-domain directions.
+

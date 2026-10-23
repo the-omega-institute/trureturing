@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:0bfb3a6efcf28fb3ea235994d395228fe75636cad6ef8887c5a8a8d89fe826e4
+  normalized_sha256: sha256:0bfb3a6efcf28fb3ea235994d395228fe75636cad6ef8887c5a8a8d89fe826e4
+cas_ref: sha256:0bfb3a6efcf28fb3ea235994d395228fe75636cad6ef8887c5a8a8d89fe826e4
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 非命题文本：公式片段 \operatorname{ShiftRes}(e,e')：\[：只引入对象、参数、术语或记号；不附加存在性、唯一性或其他性质断言。
+    previous_atom_id: 06da10019a956ebfac14b0fa6d9ca414b072fd99f6ba955bc115e93d9e54f65a
+    next_atom_id: d6c0e0dc18d989b99c6c39ef4339bae20e24ce996e232fba2a97dd6d453e1fc5

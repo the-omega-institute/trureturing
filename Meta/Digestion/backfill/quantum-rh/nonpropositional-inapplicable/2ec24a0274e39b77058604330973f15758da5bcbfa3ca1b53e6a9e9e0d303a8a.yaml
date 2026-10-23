@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:2ec24a0274e39b77058604330973f15758da5bcbfa3ca1b53e6a9e9e0d303a8a
+  normalized_sha256: sha256:2ec24a0274e39b77058604330973f15758da5bcbfa3ca1b53e6a9e9e0d303a8a
+cas_ref: sha256:2ec24a0274e39b77058604330973f15758da5bcbfa3ca1b53e6a9e9e0d303a8a
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: Infinite-range part of the proof of the preceding Robin inequality theorem, using a product bound and logarithmic lower bound.
+    previous_atom_id: c3316916b643d8cf28de3e1b451f7f3ba61d1337f85a87b7eb42cc1568f9621f
+    next_atom_id: f0afc50f6702d4aec5c422592ae0fad412655b94284f7b147a2f659e0f4b72c6

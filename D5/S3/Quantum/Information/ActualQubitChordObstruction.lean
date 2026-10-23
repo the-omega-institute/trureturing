@@ -13,6 +13,7 @@ open D5.S3.Quantum.Foundation.FiniteStateChannel
 open D5.S3.Quantum.Information.ActualPureQubitCostInfimum
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
+set_option linter.style.longLine false
 noncomputable section
 
 namespace D5.S3.Quantum.Information.ActualQubitChordObstruction
@@ -48,6 +49,21 @@ def jointObservation (G : QuantumChannel (Fin 3 × Fin 2) (Fin 3)) :
       ext i j
       fin_cases i <;> fin_cases j <;> simp [blochMatrix] <;> ring }
   exact LinearMap.pi fun k => (programOutput G k).comp B
+
+theorem det_bloch (r : EuclideanSpace ℝ (Fin 3)) :
+    (blochMatrix 1 r).det = (((1 - ‖r‖ ^ 2) / 4 : ℝ) : ℂ) := by
+  rw [EuclideanSpace.real_norm_sq_eq]
+  apply Complex.ext <;>
+    simp [blochMatrix, Matrix.det_fin_two, Fin.sum_univ_three, pow_two] <;> ring
+theorem pure (r : EuclideanSpace ℝ (Fin 3)) (hr : ‖r‖ = 1) :
+    blochMatrix 1 r * blochMatrix 1 r = blochMatrix 1 r := by
+  have he : adjugate (blochMatrix 1 r) = 1 - blochMatrix 1 r := by
+    ext i j
+    fin_cases i <;> fin_cases j <;> simp [Matrix.adjugate_fin_two, blochMatrix] <;> ring
+  have hh := Matrix.mul_adjugate (blochMatrix 1 r)
+  rw [he, det_bloch, hr] at hh
+  norm_num [mul_sub] at hh
+  exact (sub_eq_zero.mp hh).symm
 
 /-- Global exactness of one canonical processor on two actual signals forces a
 nonconstant affine program chord with pure endpoints and a bounded overlap.
@@ -110,24 +126,7 @@ theorem actual_two_probe_chord_and_qfi (a : ℝ) (_ha : 0 < a) (ha1 : a < 1)
       ext i j
       fin_cases i <;> fin_cases j <;> simp [blochMatrix, Matrix.conjTranspose_apply, sub_eq_add_neg]
     have trace_bloch (r : EuclideanSpace ℝ (Fin 3)) : trace (blochMatrix 1 r) = 1 := by
-      simp only [Matrix.trace, Fin.sum_univ_two, Matrix.diag_apply, blochMatrix,
-        Matrix.of_apply, Matrix.cons_val_zero, Matrix.cons_val_one]
-      push_cast
-      ring
-    have det_bloch (r : EuclideanSpace ℝ (Fin 3)) :
-        (blochMatrix 1 r).det = (((1 - ‖r‖ ^ 2) / 4 : ℝ) : ℂ) := by
-      rw [EuclideanSpace.real_norm_sq_eq]
-      apply Complex.ext <;>
-        simp [blochMatrix, Matrix.det_fin_two, Fin.sum_univ_three, pow_two] <;> ring
-    have pure (r : EuclideanSpace ℝ (Fin 3)) (hr : ‖r‖ = 1) :
-        blochMatrix 1 r * blochMatrix 1 r = blochMatrix 1 r := by
-      have he : adjugate (blochMatrix 1 r) = 1 - blochMatrix 1 r := by
-        ext i j
-        fin_cases i <;> fin_cases j <;> simp [Matrix.adjugate_fin_two, blochMatrix] <;> ring
-      have hh := Matrix.mul_adjugate (blochMatrix 1 r)
-      rw [he, det_bloch, hr] at hh
-      norm_num [mul_sub] at hh
-      exact (sub_eq_zero.mp hh).symm
+      exact blochMatrix_trace 1 r
     have physical (r : EuclideanSpace ℝ (Fin 3)) (hr : ‖r‖ ≤ 1) :
         (blochMatrix 1 r).PosSemidef := by
       have ht := congrArg Complex.re ((herm r).trace_eq_sum_eigenvalues)
@@ -161,38 +160,10 @@ theorem actual_two_probe_chord_and_qfi (a : ℝ) (_ha : 0 < a) (ha1 : a < 1)
       ring
     have represent (M : Matrix (Fin 2) (Fin 2) ℂ) (hM : M.IsHermitian)
         (ht : trace M = 1) : M = blochMatrix 1 (bloch M) := by
-      have h00 : (M 0 0).im = 0 := by
-        have h := congrArg Complex.im (hM.apply 0 0)
-        simp at h
-        linarith
-      have h11 : (M 1 1).im = 0 := by
-        have h := congrArg Complex.im (hM.apply 1 1)
-        simp at h
-        linarith
-      have h10r : (M 1 0).re = (M 0 1).re := by
-        have h := congrArg Complex.re (hM.apply 1 0)
-        simpa using h.symm
-      have h10i : (M 1 0).im = -(M 0 1).im := by
-        have h := congrArg Complex.im (hM.apply 1 0)
-        simpa using h.symm
-      have htr := congrArg Complex.re ht
-      simp [Matrix.trace, Fin.sum_univ_two] at htr
-      ext i j
-      fin_cases i <;> fin_cases j <;> apply Complex.ext <;>
-        simp only [Fin.zero_eta, Fin.isValue, blochMatrix, bloch, neg_mul, Matrix.cons_val, Complex.ofReal_add,
-          Complex.ofReal_one, Complex.ofReal_sub, cons_val_zero, Complex.ofReal_mul, Complex.ofReal_ofNat,
-          cons_val_one, Complex.ofReal_neg, sub_neg_eq_add, of_apply, cons_val', cons_val_fin_one,
-          Complex.div_ofNat_re, Complex.add_re, Complex.one_re, Complex.sub_re, Complex.ofReal_re, h00,
-          Complex.div_ofNat_im, Complex.add_im, Complex.one_im, Complex.sub_im, Complex.ofReal_im,
-          sub_self, add_zero, zero_div, Fin.mk_one, Complex.mul_re, Complex.re_ofNat, Complex.im_ofNat,
-          mul_zero, sub_zero, Complex.I_re, Complex.mul_im, zero_mul, Complex.I_im, mul_one, ne_eq,
-          OfNat.ofNat_ne_zero, not_false_eq_true, mul_div_cancel_left₀, zero_add, h10r, Complex.neg_re,
-          neg_zero, h10i, Complex.neg_im, h11] <;> linarith
+      simpa only [ht, Complex.one_re] using (bloch_geometry_of_isHermitian M hM).1
     have radius (M : Matrix (Fin 2) (Fin 2) ℂ) (hM : M.PosSemidef)
         (ht : trace M = 1) : ‖bloch M‖ ≤ 1 := by
-      have hd := (Complex.nonneg_iff.mp hM.det_nonneg).1
-      rw [represent M hM.isHermitian ht, det_bloch, Complex.ofReal_re] at hd
-      nlinarith only [hd, norm_nonneg (bloch M)]
+      simpa only [ht, Complex.one_re] using norm_bloch_le_trace_of_posSemidef M hM
     have probes (k : Fin 2) : (signalProbe k).PosSemidef ∧ trace (signalProbe k) = 1 := by
       fin_cases k
       · constructor
@@ -459,9 +430,8 @@ theorem actual_two_probe_chord_and_qfi (a : ℝ) (_ha : 0 < a) (ha1 : a < 1)
         simpa [plus_norm, minus_norm] using real_inner_le_norm (c + v) (c + b • v)
       have hprod := mul_nonneg (by linarith : 0 ≤ 1 / 2 - ‖z‖) (by linarith : 0 ≤ 1 - ⟪c + v, c + b • v⟫_ℝ)
       nlinarith only [hline, hα, hprod]
-    have inverse_bloch (r : EuclideanSpace ℝ (Fin 3)) : bloch (blochMatrix 1 r) = r := by
-      ext i
-      fin_cases i <;> simp [bloch, blochMatrix] <;> ring
+    have inverse_bloch (r : EuclideanSpace ℝ (Fin 3)) : bloch (blochMatrix 1 r) = r :=
+      bloch_blochMatrix 1 r
     refine ⟨?_, physical, pair_bloch, represent⟩
     refine ⟨probes, c, v, b, hv, lower, b_le, b_lt, ?_, ?_, projected,
       affine_output, chord, ?_, fun u => trace_bloch (c + u • v), strict_inside,
@@ -566,9 +536,9 @@ theorem actual_two_probe_chord_and_qfi (a : ℝ) (_ha : 0 < a) (ha1 : a < 1)
     exact (hrho _ ht).1
   have hshift : DifferentiableAt ℝ (fun t : ℝ => rho (u + t)) 0 := by
     apply (differentiableAt_comp_add_left (𝕜 := ℝ) (f := rho) u (x := (0 : ℝ))).mpr
-    convert! hdiff using 1 <;> simp only [add_zero]
+    convert! hdiff using 1; simp only [add_zero]
   have hderiv : deriv (fun t : ℝ => rho (u + t)) 0 = deriv rho u := by
-    convert! deriv_comp_const_add rho u 0 using 1 <;> simp only [add_zero] <;> rfl
+    convert! deriv_comp_const_add rho u 0 using 1; simp only [add_zero]; rfl
   have hread : ∀ᶠ t : ℝ in 𝓝 0, ∀ j,
       (trace (N j * rho (u + t))).re = p j + t * vel j := by
     filter_upwards [hnear] with t ht

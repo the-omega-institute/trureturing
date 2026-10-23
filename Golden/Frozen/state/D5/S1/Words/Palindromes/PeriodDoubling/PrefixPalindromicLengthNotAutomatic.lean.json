@@ -1,1 +1,1 @@
-{"statement_id":"sha256:159f35fefd186e1b46d8a89ed76dfcbd964a00d565f4eedce81ff2f5ce6a6741"}
+{"statement_id":"sha256:159f35fefd186e1b46d8a89ed76dfcbd964a00d565f4eedce81ff2f5ce6a6741","declarations":[{"declaration_name_key":"ns(ns(ns(ns(ns(ns(n0,2:D5),2:S1),5:Words),11:Palindromes),14:PeriodDoubling),5:claim)","kind":"def"},{"declaration_name_key":"ns(ns(ns(ns(ns(ns(n0,2:D5),2:S1),5:Words),11:Palindromes),14:PeriodDoubling),6:result)","kind":"theorem"}]}

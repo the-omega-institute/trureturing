@@ -208,6 +208,29 @@ partial def replaceAt (e : Expr) (path : List String) (value : Expr) : M Expr :=
   | "arg" :: rest, .app f a => return .app f (← replaceAt a rest value)
   | _, _ => fail "unclassified_form:source.state_operand_path"
 
+/-- Rebuild one admitted source occurrence in its original lexical context.
+The replacement already uses that context's de Bruijn coordinates; surrounding
+binders and untouched fields retain their raw syntax without shifting. -/
+partial def replaceSourceAt (e : Expr) (path : List String) (value : Expr)
+    (depth : Nat := 0) : M Expr := do
+  debit
+  if depth > 256 then fail "incomplete_closure:E8.source_path"
+  let child := fun e rest => replaceSourceAt e rest value (depth + 1)
+  match path, e with
+  | [], _ => return value
+  | "fn" :: rest, .app f a => return .app (← child f rest) a
+  | "arg" :: rest, .app f a => return .app f (← child a rest)
+  | "domain" :: rest, .forallE n d b bi => return .forallE n (← child d rest) b bi
+  | "body" :: rest, .forallE n d b bi => return .forallE n d (← child b rest) bi
+  | "domain" :: rest, .lam n d b bi => return .lam n (← child d rest) b bi
+  | "body" :: rest, .lam n d b bi => return .lam n d (← child b rest) bi
+  | "type" :: rest, .letE n t v b nd => return .letE n (← child t rest) v b nd
+  | "value" :: rest, .letE n t v b nd => return .letE n t (← child v rest) b nd
+  | "body" :: rest, .letE n t v b nd => return .letE n t v (← child b rest) nd
+  | "body" :: rest, .proj n i b => return .proj n i (← child b rest)
+  | "body" :: rest, .mdata m b => return .mdata m (← child b rest)
+  | _, _ => fail "unclassified_form:source.absent_occurrence"
+
 partial def inContext (context : Array SourceBinder) (k : Array Expr → M α)
     (i : Nat := 0) (locals : Array Expr := #[]) : M α := do
   debit
@@ -253,7 +276,9 @@ private partial def dictionary (type : Expr) : M Bool := do
     withLocalDecl n bi d fun x => dictionary (b.instantiate1 x)
   | _ => return (← read).provenance.view.isClass (type.getAppFn.constName?.getD .anonymous)
 
-def resolve (info : ConstantInfo) (selection : SourceSelection) : M Scope := do
+/-- Resolve the original binding before optional observation selection. -/
+def resolveOriginal (info : ConstantInfo) (selection : SourceSelection)
+    (universeArguments : List Level := info.levelParams.map Level.param) : M Scope := do
   unless info.isTheorem do fail "unclassified_form:source.theorem"
   let owner ← ownerOf info.name
   unless selection.owner == owner do fail "unclassified_form:source.owner"
@@ -274,9 +299,9 @@ def resolve (info : ConstantInfo) (selection : SourceSelection) : M Scope := do
         fail "forbidden_dependency:source.definition_safety"
       unless definitionInfo.type == mkSort .zero do
         fail "unclassified_form:source.definition_type"
-      unless definitionInfo.levelParams.length == info.levelParams.length do
+      unless definitionInfo.levelParams.length == universeArguments.length do
         fail "unclassified_form:source.definition_universes"
-      let reference := mkConst selected.name (info.levelParams.map Level.param)
+      let reference := mkConst selected.name universeArguments
       let occurrence ← if selected.path.isEmpty then pure info.type
         else if selected.path == #["arg"] && info.type.isAppOfArity ``Not 1 then
           pure info.type.getAppArgs[0]!
@@ -288,9 +313,9 @@ def resolve (info : ConstantInfo) (selection : SourceSelection) : M Scope := do
             readout.path.extract 0 selected.path.size == selected.path do
           fail "unclassified_form:source.definition_readout_path"
       let value := declaration.value.instantiateLevelParams definitionInfo.levelParams
-        (info.levelParams.map Level.param)
+        universeArguments
       let type := definitionInfo.type.instantiateLevelParams definitionInfo.levelParams
-        (info.levelParams.map Level.param)
+        universeArguments
       pure (some {
         path := selected.path
         owner := definitionOwner
@@ -308,6 +333,16 @@ def resolve (info : ConstantInfo) (selection : SourceSelection) : M Scope := do
     if telescope.size ≥ 64 then fail "incomplete_closure:E8.source_binders"
     telescope := telescope.push { name := n, info := bi, domain := d : SourceBinder }
     e := b
+  return {
+    source := info.type, expanded := source, definition := definition,
+    levels := info.levelParams, selection := selection, telescope := telescope,
+    coordinates := #[], readouts := #[] }
+
+/-- Ordinary source audits require actual selected observations. -/
+def resolve (info : ConstantInfo) (selection : SourceSelection)
+    (universeArguments : List Level := info.levelParams.map Level.param) : M Scope := do
+  let scope ← resolveOriginal info selection universeArguments
+  let source := scope.expanded
   let slots := selection.coordinates
   if slots.size > 64 || selection.readouts.isEmpty || selection.readouts.size > 64 then
     fail "unclassified_form:source.selection_size"
@@ -405,14 +440,14 @@ def resolve (info : ConstantInfo) (selection : SourceSelection) : M Scope := do
         let term := observation.instantiateRev locals
         unless ← isProp term do fail "unclassified_form:source.boolean_predicate"
         return (← mkEq (← mkDecide term) (mkConst ``Bool.true)).abstract locals
-      reconstructedSource ← replaceAt reconstructedSource selected.path.toList reified
+      reconstructedSource ← replaceSourceAt reconstructedSource selected.path.toList reified
   return {
     source := info.type
     expanded := reconstructedSource
-    definition := definition
+    definition := scope.definition
     levels := info.levelParams
     selection := selection
-    telescope := telescope
+    telescope := scope.telescope
     coordinates := coordinates
     readouts := readouts }
 

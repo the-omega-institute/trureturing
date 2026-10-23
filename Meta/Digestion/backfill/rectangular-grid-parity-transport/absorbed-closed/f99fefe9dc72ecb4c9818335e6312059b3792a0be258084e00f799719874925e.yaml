@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:f99fefe9dc72ecb4c9818335e6312059b3792a0be258084e00f799719874925e
+  normalized_sha256: sha256:f99fefe9dc72ecb4c9818335e6312059b3792a0be258084e00f799719874925e
+cas_ref: sha256:f99fefe9dc72ecb4c9818335e6312059b3792a0be258084e00f799719874925e
+coverage_gids:
+  - gid: D5/S3/Combinatorics/Graph/CapacityPortParityAbsorption.actual_capacity_port_parity_absorption
+    target_statement_id: sha256:27b1bbebfd74cf42cb50825989426eb82dcbd78e837b728417427bdf834f1fd9
+receipts:
+  unresolved_subitems: []

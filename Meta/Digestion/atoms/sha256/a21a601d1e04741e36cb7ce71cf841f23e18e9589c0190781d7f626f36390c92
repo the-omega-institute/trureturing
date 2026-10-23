@@ -1,0 +1,8 @@
+黄金结构若要成为更深的跨命名迹，必须加入额外条件：
+
+* 一步局部记忆；
+* substitution covariance；
+* primitive unimodularity；
+* observer desubstitution；
+* Archimedean completion compatibility。
+

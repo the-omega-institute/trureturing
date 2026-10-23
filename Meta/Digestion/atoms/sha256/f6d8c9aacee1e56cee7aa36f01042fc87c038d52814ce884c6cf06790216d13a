@@ -1,0 +1,22 @@
+**Proof.** Substitute each finite $f_t$ in every occurrence of $\Gamma$.
+The remaining full Cartesian residual condition is exactly the fixed-power
+Presburger support supplied by [URR, Corollary 3.2][URR], so both quantified
+sentences in (SPC.56) are decidable with the displayed quantifier order.
+The combined systems and outputs satisfy Definition 13.1; Theorem 13.5
+decides the equality conjunct by four original-address language comparisons.
+The chart correspondences of [PDC, Theorem 5.2][PDC] and [NAC, Definition 5.1 and Theorem 6.1][NAC]
+then identify each cofinal record with its own complete row closure and
+supply finite realizations at every requested depth. Their whole-negative
+list, endpoint reach guards, old row, exterior, partitions, repeated names,
+classes and cross-class inequalities remain checked on each finite source.
+The supplied prefix interface makes the construction productive; raw
+unfoldings alone do not replace the joint finite completion.
+
+If cofinality is false, the same support theorem supplies a finite
+coordinate neighborhood disjoint from that chart. If equality is false,
+Theorem 13.5 supplies a finite original address with different replies.
+Either failure rejects this supplied candidate pair only; it does not reject
+another record or another distinct-label pair. The construction proves
+neither description completeness nor a search procedure over all records.
+$\square$
+

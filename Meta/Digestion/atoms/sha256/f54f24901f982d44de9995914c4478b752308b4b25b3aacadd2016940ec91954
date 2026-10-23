@@ -1,0 +1,38 @@
+**Definition 6.1 (source maps and exact history).** Define the ordered right
+comb by $C_1[v]=v$ and
+$C_k[v_1,\ldots,v_k]=\langle v_1,C_{k-1}[v_2,\ldots,v_k]\rangle$.
+Use $C=C_8$, with original hole addresses
+$q_i=R^{i-1}L$ for $1\le i\le7$ and $q_8=R^7$. Put
+
+$$
+\begin{aligned}
+A_x&=\rho x,&A_y&=\rho y,&
+B_y&=\langle\rho^2 y,\beta\rangle,&
+B_x&=\langle\rho^2 x,\beta\rangle,\\
+U(x,y,p,q)&=C[x,y,p,q,A_x,A_y,B_y,B_x].
+\end{aligned}
+\tag{NIS.19}
+$$
+
+Let $\Delta(x,y)$ be all fifteen pairwise disequalities among the six entire
+values $(x,y,A_x,A_y,B_y,B_x)$.
+Take $P=\{\varepsilon\}$ and its attained complete one-root-hole old row,
+$Q=\{q_1,\ldots,q_8\}$ and authentic $N=2$.
+The literal list contains exactly the epoch-zero branch replies at
+$R^j$, $0\le j\le6$, at $q_7,q_8$, and the epoch-zero $\beta$ replies
+at $q_7R,q_8R$. The positive history is exactly
+
+$$
+(0,q_5,1,q_1,=),\quad
+(0,q_6,1,q_2,=),\quad
+(0,q_7L,2,q_2,=),\quad
+(0,q_8L,2,q_1,=).
+\tag{NIS.20}
+$$
+
+The negative history contains exactly every epoch-zero comparison between
+distinct positions of $\{q_1,q_2,q_5,q_6,q_7,q_8\}$, with sign $\ne$.
+There are no further records in this specified input. Both endpoints must
+be reached for every positive and negative. Any additional record in a
+different input must be retained by the general construction.
+

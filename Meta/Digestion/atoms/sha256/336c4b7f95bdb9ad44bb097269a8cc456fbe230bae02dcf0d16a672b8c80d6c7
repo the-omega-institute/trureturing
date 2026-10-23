@@ -1,0 +1,9 @@
+**Proof.** At a pending boundary, common legality gives one admissible action
+set on the entire fiber. The factorized transition and the actual reply select
+one next position, so induction on events gives a unique execution on the same
+source. Strict rank decrease rules out an infinite event sequence. At a halt,
+the complete-row condition makes the installed row equal to the source's
+target row. The converse follows by the same induction: the exact predicates
+reproduce each event of the factorized word, and rank proves that its terminal
+event is reached. At no step are two source witnesses spliced together. $\square$
+

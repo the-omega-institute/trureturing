@@ -1,1 +1,1 @@
-{"statement_id":"sha256:4ced9363556cbbc98f7b88d23b91265de312aee973d6dfbff55ee50700e9e6a3"}
+{"statement_id":"sha256:4ced9363556cbbc98f7b88d23b91265de312aee973d6dfbff55ee50700e9e6a3","declarations":[{"declaration_name_key":"ns(ns(ns(ns(ns(ns(n0,2:D5),2:S3),10:Estimation),9:TimeArrow),36:SinglePeakLogLikelihoodVarianceBound),49:uniform_single_peak_log_likelihood_variance_bound)","kind":"theorem"}]}

@@ -1,0 +1,53 @@
+**Proof.** Each pair of points occurs in exactly one listed line, and
+each point occurs in three lines. Each line therefore intersects the
+other six lines once: its three points each meet two other lines, with
+no repetitions because two common points would repeat a point pair.
+Hence $\nu=1$. Two points together meet exactly $3+3-1=5$ of the seven
+lines and cannot hit all seven; a whole line does hit all of them.
+Therefore $\tau=3$. Theorem 14.3 gives the binary price, and Theorem
+14.5 gives the tuple price $2^3=8$ and the general upper bound.
+
+The three members $U=012$, $V=034$, $W=135$ have empty triple
+intersection. Theorem 14.6 gives the lower bound; its explicit vectors
+are $A=1112010$ and $B=1001100$ in the original index order. For a
+complete native unequal-positive-lag witness at $H=2$, keep $b=3$,
+the eighth age fixed to zero and all original offsets. The actual
+initial sources are
+
+$$
+\begin{aligned}
+X_A&=\mathcal B_3[T_1,T_4,T_7,T_{11},T_{12},T_{16},T_{18},T_{21}],\\
+X_B&=\mathcal B_3[T_1,T_3,T_6,T_{10},T_{13},T_{15},T_{18},T_{21}].
+\end{aligned}
+\tag{NAR.14.15}
+$$
+
+Select $S=W=135$. The histories $(X_A,\ell=1)$ and $(X_B,\ell'=2)$
+have the same full exterior
+
+$$
+\left\langle
+ \left\langle
+  \langle\square_{LLL},T_5\rangle,
+  \langle\square_{LRL},T_{12}\rangle
+ \right\rangle,
+ \left\langle
+  \langle\square_{RLL},T_{17}\rangle,
+  \langle\square_{RRL},\square_{RRR}\rangle
+ \right\rangle
+\right\rangle.
+\tag{NAR.14.16}
+$$
+
+The five hidden values, in their original hole order, are respectively
+$(T_2,T_8,T_{13},T_{19},T_{22})$ and
+$(T_3,T_8,T_{15},T_{20},T_{23})$. Within either row they are all
+unequal, every hole is reached and every reflexive comparison is true.
+All exterior labels, brackets and absent-address replies agree because
+the displayed literal trees agree. Thus these are identical entire rows,
+including every hidden disequality, at distinct strictly positive lags.
+The initial acquired row displays all seven independent ages and hides
+only slot seven; (NAR.14.6) gives the encoder its data without supplying
+an age oracle. The other clique edges are complete native witnesses by
+Reuse 14.2, not just abstract graph edges. $\square$
+

@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:0b12b6475539713e950b03f15871186b668b28e7135202dfceab830af691e23b
+  normalized_sha256: sha256:0b12b6475539713e950b03f15871186b668b28e7135202dfceab830af691e23b
+cas_ref: sha256:0b12b6475539713e950b03f15871186b668b28e7135202dfceab830af691e23b
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: theorem 59.6 完整接口、稀疏单标签与稀疏混合标签的三重分离。的证明段，仅展开该陈述的推导及说明，不另提出独立命题；本收据不替代原陈述的形式化覆盖。
+    previous_atom_id: 8d93cd35a9f18852f3d2bc9872d837a55fde47212f32b8648308288e4bed006b
+    next_atom_id: 5bde91cb11155b2a4a6bdf815c555ded4ca8e033b91bb781925a3d11e5e8cb62

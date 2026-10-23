@@ -1,0 +1,193 @@
+**Theorem 9.2 (exact owned-lift condition and strict native separation).**
+For every such refinement,
+
+$$
+\begin{aligned}
+\forall h\ J_B(h)
+&\quad\Longleftrightarrow\quad
+ \bigcap_{r\in B}\pi(C_r)\ne\varnothing\\
+&\quad\Longleftrightarrow\quad
+ \exists W\ \exists(\xi_r)_{r\in B}\in\prod_{r\in B}C_r
+       \quad\forall r\in B\ \pi(\xi_r)=W.
+\end{aligned}
+\tag{SPC.40}
+$$
+
+The lifts $\xi_r$ are separate row-specific points. They cannot in
+general be required to coincide: the entire input (SPC.38) admits
+two attained complete rows with all-depth actual finite witnesses
+and a regular finite-valued source refinement for which
+$C_0\cap C_1=\varnothing$ although
+$\pi(C_0)\cap\pi(C_1)\ne\varnothing$.
+
+Proof. The valid four-reply completion is a closed subset of the
+product of a finite discrete alphabet over all finite addresses.
+Validity is imposed by the root condition and the local conditions
+on children of branches, leaves and absent nodes. It is compact
+Hausdorff, with clopen inclusive-prefix cylinders.
+For each $h$, the union of the depth-$h$ cylinders realized by every
+$D_r$ is a finite union of clopen cylinders. These sets are nested
+and are nonempty exactly when $J_B(h)$ holds. Compactness therefore
+gives
+
+$$
+\forall h\ J_B(h)
+\quad\Longleftrightarrow\quad
+\bigcap_{r\in B}\overline{D_r}^{\,\widehat{\mathcal T}}
+ \ne\varnothing.
+\tag{SPC.41}
+$$
+
+Conversely a point in that intersection supplies, at each requested
+$h$, one finite source from each exact row in its cylinder.
+There are finitely many rows, so these choices form the required
+simultaneous tuple.
+
+The standard compact-image identity is
+
+$$
+\pi\!\left(\overline{j(D_r)}^{\,Z}\right)
+       =\overline{D_r}^{\,\widehat{\mathcal T}}.
+\tag{SPC.42}
+$$
+
+Continuity proves inclusion into the right side; compactness of
+$C_r$ and the Hausdorff target make its image closed and containing
+$D_r$, proving the reverse inclusion. This is reuse of compact-image
+topology, not a new compactness theorem. Equations (SPC.41)–(SPC.42)
+prove (SPC.40), with one preimage chosen separately for each row.
+A finite common $W$ is impossible for distinct rows: the cylinder
+displaying every leaf of a finite tree isolates that same finite
+source, whose complete target row is unique.
+
+For the strict source-faithful instance, use the already supplied
+right clock
+
+$$
+c(\alpha)=0,\quad c(\beta)=1,\quad
+c(\langle s,t\rangle)=2+c(t),\qquad
+c(\rho^k t)=c(t)+k.
+\tag{SPC.43}
+$$
+
+The last identity is [DelayedOriginalReadout,
+right_clock_iterate][CLOCK], also supplied as
+[NativePrefixIdentityReflection, kappa_iterate][KAPPA].
+Let $\chi(t)=c(t)\bmod2$. Its quotient has
+$\chi(\langle s,t\rangle)=\chi(t)$ and
+$\chi(\rho t)=1-\chi(t)$; in particular $t\ne\rho t$
+for every finite native $t$. No clock identity or its private
+one-step helper is reproved here.
+
+The two branch literals in (SPC.38) give exactly
+$u=V(x,y,z)$ with all three original holes reached. The epoch-one
+subtree at $L$ is $\rho x$, because the original root branch survives.
+Thus its positive record gives $z=\rho x$. Its negative record is
+$x\ne z$, which holds for every finite $x$ by (SPC.43), with both
+original endpoints reached. Conversely every $V(x,y,\rho x)$
+satisfies the entire old row, both literals and both guarded records.
+Hence the whole original fiber is exactly
+
+$$
+D=\{V(x,y,\rho x):x,y\in\mathcal T\}.
+\tag{SPC.44}
+$$
+
+The complete $Q$-exterior is
+$V(\square_1,\square_2,\square_3)$, with every hole reached.
+Because $x\ne\rho x$, the two selected whole rows and their exact
+fibers are
+
+$$
+\begin{aligned}
+r_0&:\{\{1,2\},\{3\}\},&
+D_0&=\{V(t,t,\rho t):t\in\mathcal T\},\\
+r_1&:\{\{1\},\{2,3\}\},&
+D_1&=\{V(t,\rho t,\rho t):t\in\mathcal T\}.
+\end{aligned}
+\tag{SPC.45}
+$$
+
+Both are attained. The remaining possible partition is all singleton
+classes, attained for example by
+$x=\alpha,y=\langle\alpha,\alpha\rangle,z=\beta$.
+It remains in $D$; no row or exterior has been discarded.
+ARH Proposition 2.1 supplies one source-total paid producer for these
+fixed public records, on the same original register through epoch one,
+conditional on its complete accessible-state cut. Each displayed
+source produces that same retained input. The traversal and comparison
+costs are sourcewise finite, with no claimed uniform bound. The common
+producer and cut remain premises and supply no extra clock port.
+
+Given an inclusive depth $h$, choose the actual finite trees
+
+$$
+t_h=T_{2h+2},\qquad
+u_h^0=V(t_h,t_h,\rho t_h),\qquad
+u_h^1=V(t_h,\rho t_h,\rho t_h).
+\tag{SPC.46}
+$$
+
+By [NLC, Lemma 3.1][NLC], both $t_h$ and
+$\rho t_h=T_{2h+3}$ have minimum leaf depth $h+1$.
+Every reply of both whole originals through depth $h$ is therefore
+branch. They lie in the two exact fibers (SPC.45), so satisfy every
+retained sign, guard and whole partition at that finite depth.
+As $h$ increases both converge in original prefixes to the all-branch
+tree $\Omega$.
+
+Define the additional finite source predicate
+
+$$
+E(u)=
+\begin{cases}
+1,&u=V(x,y,z)\text{ and }\chi(x)=\chi(y),\\
+0,&\text{otherwise}.
+\end{cases}
+\tag{SPC.47}
+$$
+
+It is an ordinary regular finite-tree test. A bottom-up state can
+store the rightmost-leaf bit $\chi$, whether its root is a branch,
+and, at a branch, the bit of its left child. At the root these
+finitely many data decide whether the right child is a branch and
+whether the bits of $x$ and $y$ agree. Thus $E$ does not depend
+on an unverified automata recognition theorem for native histories.
+It equals $1$ throughout $D_0$ and $0$ throughout $D_1$, since
+$\chi(\rho t)=1-\chi(t)$.
+
+Now let
+
+$$
+Z=\overline{\{(u,E(u)):u\in\mathcal T\}}
+          ^{\,\widehat{\mathcal T}\times\{0,1\}},
+\qquad j(u)=(u,E(u)),\qquad \pi(w,e)=w.
+\tag{SPC.48}
+$$
+
+This is a compact Hausdorff refinement. The two row closures are
+contained respectively in the disjoint closed color slices $e=1$
+and $e=0$. Thus $C_0\cap C_1=\varnothing$.
+The finite sequences (SPC.46) converge after lifting to
+$(\Omega,1)\in C_0$ and $(\Omega,0)\in C_1$, respectively.
+Both project to $\Omega$. Therefore
+
+$$
+\pi(C_0\cap C_1)=\varnothing
+\quad\text{but}\quad
+\Omega\in\pi(C_0)\cap\pi(C_1).
+\tag{SPC.49}
+$$
+
+The predicate $E$ is an auxiliary mathematical refinement, not an
+additional observed field in the acquired input (SPC.38). If such a
+field were accessible at the cut it would change that input's fiber.
+Here its two limiting values distinguish alternative originals.
+Within each original all occurrences of $x$, its update $\rho x$,
+its row equalities and the entire signed list still share their
+one source. The separation therefore refutes cross-alternative
+identification of refined points, not same-source sharing.
+In particular $\rho\Omega=\Omega$ does not invalidate the finite
+negative in (SPC.38); that negative was checked on (SPC.46), not
+at the contact. $\square$
+

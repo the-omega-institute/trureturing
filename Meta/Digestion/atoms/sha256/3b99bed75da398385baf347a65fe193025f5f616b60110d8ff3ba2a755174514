@@ -1,0 +1,165 @@
+**Proof.** First obtain the state lower bound on general shared graphs.
+For $N\ge2$ the common initial state cannot halt. Take the directed
+union of the $N$ actual finite runs, with $j$ running vertices and
+exactly $N$ terminal vertices. There are exactly $N$ because the runs
+are deterministic, their required integers differ, and each run ends
+at one fixed-output halt. Every vertex is reachable from the common
+initial vertex. Select one incoming edge along a shortest root path
+for each noninitial vertex. These distinct edges give
+
+$$
+j+N-1\le e\le4j,
+\tag{AOF.33}
+$$
+
+where $e$ counts distinct directed successor edges used by actual runs.
+The upper bound uses at most four actual replies per running state;
+two replies going to one successor can only decrease this edge count.
+This is the rooted reachable-edge method of [Transport--Memory
+Completion, Theorem 66.3][TM-Moore] and [Native Birth Provenance,
+Proposition 11.2][NBP-Moore], applied to the present one-root domain.
+It does not assume a tree-shaped controller or an acyclic union graph.
+
+If $L=0$, the two admitted sources $T_0,T_1$ return absence at every
+nonempty word. Their state paths agree until an empty-word query.
+Such a running state must be reached: without it the two runs cannot
+terminate at different correct halts. At that state the root is never
+absent on any source, so there are at most three actual successors.
+Thus $e\le4j-1$, and (AOF.33) sharpens to $N\le3j$. The empty-word
+state is required somewhere on this common path, not necessarily at
+the initial state. These inequalities give $j\ge J(L,U)$ and at
+least $N+J(L,U)$ installed states. Merges, union cycles across different
+source runs, repeated queries, early halts and unused states are all
+included. On a single stationary source, revisiting a running state
+would repeat its deterministic suffix forever; this excludes a loop
+on that run without excluding cycles in the union. When $N=1$, one
+initial halt outputting $L$ is minimal and has both other prices zero.
+
+For the upper bound use only the actual $E$ and shortest $P_t$ words
+of Definition 8.2. The following finite trees specify immutable tables,
+not runtime interval or recursion registers. For every integer $r\ge0$
+and $l\ge1$, define $\mathsf{Plus}(l,r)$ on $[l,l+3r]$. At $r=0$
+it is the halt outputting $l$. At $r\ge1$ put
+
+$$
+a=\left\lfloor\frac{r-1}{2}\right\rfloor,
+\qquad b=r-1-a,\qquad t=l+3a+1.
+\tag{AOF.34}
+$$
+
+Its root queries the materialized shortest $P_t$ word and has the four
+successors
+
+| Actual reply | Successor of $\mathsf{Plus}(l,r)$ |
+| --- | --- |
+| $\bot$ | $\mathsf{Plus}(l,a)$ |
+| $\alpha$ | Halt with fixed output $t$ |
+| $\beta$ | Halt with fixed output $t+1$ |
+| $\mathsf b$ | $\mathsf{Plus}(t+2,b)$ |
+
+Here $t\ge2$, so no nonexistent $P_1$ is used. By (AOF.24) the four
+actual cells are $[l,t-1],\{t\},\{t+1\},[t+2,l+3r]$. The tails
+have sizes $3a+1$ and $3b+1$. Induction proves sourcewise correctness,
+exactly $r$ running nodes and $3r+1$ distinct numeric halts. Each node
+and halt is reached by an actual age in this full interval.
+
+For $r\ge1$, define $\mathsf{Zero}(r)$ on $[0,3r-1]$ using the same
+$a,b$ in (AOF.34). If $a\ge1$, its root queries $P_{3a}$, with
+successors
+
+| Actual reply | Successor when $a\ge1$ |
+| --- | --- |
+| $\bot$ | $\mathsf{Zero}(a)$ |
+| $\alpha$ | Halt with fixed output $3a$ |
+| $\beta$ | Halt with fixed output $3a+1$ |
+| $\mathsf b$ | $\mathsf{Plus}(3a+2,b)$ |
+
+The corresponding cells have sizes $3a,1,1,3b+1$. If $a=0$, use
+$E$: alpha goes to the halt zero, beta to the halt one, and branch to
+$\mathsf{Plus}(2,b)$; the absent entry goes to the existing halt zero.
+The absent reply is impossible and the three actual cells have sizes
+$1,1,3b+1$. This case includes $r=1$ and $r=2$. Induction gives exactly
+$r$ running nodes and $3r$ fixed-output halts, correct throughout the
+full interval. There is exactly one $E$ node along its zero-origin
+recursion, and all other thresholds are at least three. Every submitted
+power of $R$ or $LR^s$ denotes the expanded literal word in its table.
+
+For either tree, if $r\le2^k-1$, then $a,b\le2^{k-1}-1$ at a running
+root. Induction gives depth at most $k$; a halt has depth zero, and the
+$E$ case has only its positive continuation. For $N\ge2$, set $j=J(L,U)$
+and $k=K(L,U)$. The supplied capacities (AOF.25) give
+
+$$
+\begin{aligned}
+N\le C_k&\Longleftrightarrow
+ \left\lceil(N-1)/3\right\rceil\le2^k-1,\\
+N\le A_k&\Longleftrightarrow
+ \left\lceil N/3\right\rceil\le2^k-1\quad(k\ge1).
+\end{aligned}
+\tag{AOF.35}
+$$
+
+Consequently $j\le2^k-1$. Start with $\mathsf{Plus}(L,j)$ if $L\ge1$,
+or $\mathsf{Zero}(j)$ if $L=0$. Its full source interval extends past
+$U$ by $d=3j+1-N$ or $d=3j-N$ respectively, with $0\le d\le2$.
+Keep its $j$ running states and delete only the $d$ largest output
+halts. Redirect every transition to a deleted halt to the retained halt
+with output $L$. Such an edge cannot be used on any admitted source:
+the full tree was correct, and its state path on that fixed source ends
+at that source's own retained halt. Therefore the restricted table has
+the same sourcewise state paths and outputs, $j$ running states, exactly
+$N$ halts and depth at most $k$. The lower bound already proved forces
+every one of these $j$ states to be reached, for otherwise the actual-run
+union would have fewer than $J(L,U)$ running vertices. This establishes
+(AOF.32) without a pruning or acyclicity assumption about competitors.
+Theorem 8.3's call lower bound applies to this table as to any reader,
+so its worst calls are exactly $K(L,U)$. No call-capacity formula is
+newly derived here.
+
+Finally preserve this exact counted state set while attaining the
+supplied peak. For a nonsingleton $U\ge1$, put $m=M(L,U)$ as in
+(AOF.29). For each running state $s$, apply Theorem 9.1 to its fixed
+word $p_s$, giving the fixed word $q_s$ and total reply map $\phi_s$.
+For this tree the supplied choice is explicit. If $U\le2$, use $q_s=E$
+and map its alpha, beta and branch replies to the old word's values
+at ages $0,1,2$; fill its absent entry arbitrarily. If $U\ge3$, keep
+every word of length at most $m$ with the identity map. An overlong
+tree word is a shortest $P_t$ with $t\ge2m+1$; use $q_s=R^m$ and
+
+$$
+\phi_s(\bot)=\bot,\quad
+\phi_s(\alpha)=P_t(2m),\quad
+\phi_s(\beta)=P_t(2m+1),\quad
+\phi_s(\mathsf b)=P_t(2m+2).
+$$
+
+These are fixed values of (AOF.24), the $P$ cases of Theorem 9.1's
+supplied map, not new acquisitions. Install in that same state
+
+$$
+\operatorname{addr}'(s)=q_s,\qquad
+\operatorname{next}'(s,a)=\operatorname{next}(s,\phi_s(a)).
+\tag{AOF.36}
+$$
+
+Keep the initial state, state partition and fixed halt outputs. The
+four entries of this new transition row contain the composed successor
+indices; no decoded reply, decoder state or external register is used.
+For each admitted $n$, (AOF.28) says precisely
+$r_{T_n}(p_s)=\phi_s(r_{T_n}(q_s))$. Induction along this fixed source's
+run therefore preserves its entire state sequence, halt and call count.
+One genuine paid call replaces one call, including when $q_s=E$.
+The raw reply belongs to $q_s$, and is not asserted to be a receipt at
+$p_s$. All new words have length at most $m$. Theorem 9.2's independent
+peak lower bound forces the maximum to be exactly $M(L,U)$.
+
+This uses the paid state-local response-recoding method already supplied
+by [Native Birth Provenance, Theorem 12.3 and (NBP.12.7)][NBP-Moore].
+The required native interval correspondence is (AOF.28) on every actual
+age in this interval; it is not that theorem's padded inverse-source
+correspondence. Because the map depends on the installed state alone,
+the composition is also valid for an arbitrary shared graph, regardless
+of the history reaching a state. For the constructed table it preserves
+all reached states. Thus one table attains all four displayed counts
+$J,N+J,K,M$ without combining separate optimizers. $\square$
+

@@ -1,0 +1,29 @@
+## 154. Individual equality in the public contact certificate
+
+The public contacts are [TR, (123.1)–(123.5)]. They give rank-one
+projectors $T_m=f_mf_m^\dagger$, unit vectors $f_m$, pure densities
+$P_m$, and strictly positive weights $w_m$ summing to one. The index
+$m=(r,j,\ell)$ includes both contacts $r=e,i$ and their nine phase
+pairs; repeated edge pairs represent the same three physical inputs.
+With $\omega=e^{2\pi i/3}$ these phases are
+$U_{j\ell}=\operatorname{diag}(1,\omega^j,\omega^\ell)$.
+Equations (124.2), (124.9), (124.14) and (125.6) of [TR] supply
+
+$$
+\begin{aligned}
+W&=\sum_mw_mT_m\otimes\Phi(P_m)^{\mathsf T},\qquad
+S=I\otimes Y-W\succeq0,\\
+b_{\rm test}-\operatorname{Tr}Y&=L,\qquad
+b_{\rm test}=\sum_mw_m\operatorname{Tr}(T_mP_m),\\
+S&=\tau\bigl(b|00\rangle\langle00|
++\eta|00\rangle\langle11|+\eta|11\rangle\langle00|
++a|11\rangle\langle11|\bigr)\\
+&\quad+s_{10}|10\rangle\langle10|
++s_{01}|01\rangle\langle01|+s_{02}|02\rangle\langle02|,
+\end{aligned}
+\tag{154.1}
+$$
+
+where $\tau,s_{10},s_{01},s_{02}>0$. The precise slack bounds are
+[TR, (124.13)]. All unlisted entries of $S$ vanish.
+

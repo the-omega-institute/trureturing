@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:c6ae035a0bbeafc972045a9e6e145520b8c64cb18d376e7e523819a87c923494
+  normalized_sha256: sha256:c6ae035a0bbeafc972045a9e6e145520b8c64cb18d376e7e523819a87c923494
+cas_ref: sha256:c6ae035a0bbeafc972045a9e6e145520b8c64cb18d376e7e523819a87c923494
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 定义 33.3（有限取得与相互支持）。：仅引入对象、记号及其约定条件，不断言这些条件必然实现或额外性质。
+    previous_atom_id: 2baee3cdd8be96bf5d12d72401e96f18997998c93b0be6615bd9796e46df0f05
+    next_atom_id: e5e1e8d353b842253a576602d363ffc75f88ac4e5f5b8800342948faa865e4e6

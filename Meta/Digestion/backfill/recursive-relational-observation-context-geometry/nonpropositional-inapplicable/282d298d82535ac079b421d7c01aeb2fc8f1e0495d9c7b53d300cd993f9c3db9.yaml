@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:282d298d82535ac079b421d7c01aeb2fc8f1e0495d9c7b53d300cd993f9c3db9
+  normalized_sha256: sha256:282d298d82535ac079b421d7c01aeb2fc8f1e0495d9c7b53d300cd993f9c3db9
+cas_ref: sha256:282d298d82535ac079b421d7c01aeb2fc8f1e0495d9c7b53d300cd993f9c3db9
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 定理 14.5（逐旧记录纤维的条件 ANOVA）。的证明段；本项只给出该陈述的论证及所用步骤的说明，不另立独立命题。命题陈述保留在前项。
+    previous_atom_id: 69d9662e711d5cea7046f60f1ab7e8c44ade1195fd5c9088ff9c906cd024fba8
+    next_atom_id: d3d3fb6da213d636891391cb7ee0a80fc55aabfa333391785843985c09b229a9

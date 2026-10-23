@@ -14,6 +14,13 @@ internal sealed class ConcealmentKernelNecessityRefutationDocument : IScribeDocu
         "Complete dephasing and complete depolarization on a qubit conceal every pair of finite POVMs, although their adjoint kernels on Hermitian operators are different.",
         H("Concealment does not determine the adjoint kernel"),
         Blocks(
+            Describe.Lean(DescribeId.Create("concealment-kernel-all-density-tomographically-complete"),
+                DeclarationHandle.Create(Prefix + "all_density_tomographically_complete"),
+                H("All density matrices are tomographically complete"),
+                StatementSource.FromAuthor(Disp(AllDensityFormula())),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("In every natural dimension, the set of all positive semidefinite matrices of trace one is tomographically complete. Its real span is the Hermitian operator space: a Hermitian matrix is a difference of positive semidefinite matrices, and a nonzero positive semidefinite matrix can be normalized by its positive real trace. In dimension zero both the density set and its span are empty and zero, respectively."))),
+                DescribeRole.Theorem),
             Node("povm", "Finite POVMs", PovmFormula(), "IsPOVM",
                 "For a finite outcome type Omega, a POVM consists of positive semidefinite complex d by d matrices whose sum is the identity. Zero effects are allowed. Positivity includes Hermitian symmetry."),
             Describe.Lean(DescribeId.Create("concealment-kernel-diagonal-povm"),
@@ -22,6 +29,13 @@ internal sealed class ConcealmentKernelNecessityRefutationDocument : IScribeDocu
                 StatementSource.FromAuthor(Disp(DiagonalPovmFormula())),
                 AssessedProvenance.FromRepo(),
                 Blocks(Paragraph(Text("Let d be any natural dimension and Omega a finite outcome type. Suppose the real weights p(a,i) are nonnegative for every outcome a and coordinate i in Fin d, and sum to one over a at each coordinate. The matrices M(a)=diagonal(i maps to the complex embedding of p(a,i)) form a POVM: each effect is positive semidefinite and their sum is the identity. Empty index types and zero effects are included whenever the hypotheses hold."))),
+                DescribeRole.Lemma),
+            Describe.Lean(DescribeId.Create("concealment-kernel-dual-kraus"),
+                DeclarationHandle.Create(Prefix + "dual_kraus"),
+                H("The trace dual of a finite Kraus map"),
+                StatementSource.FromAuthor(Disp(DualKrausFormula())),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("For arbitrary input and output dimensions and a finite Kraus index type kappa, the trace dual of MatrixMap.of_kraus K K sends A to the sum of K(j) adjoint A K(j). No normalization of K or positivity of A is required. The concealment counterexample uses this identity to compare its two adjoint kernels."))),
                 DescribeRole.Lemma),
             Node("compatible", "Joint measurements", CompatibleFormula(), "Compatible",
                 "Two POVMs with outcome types Omega and Lambda are compatible if a positive normalized family on Omega times Lambda has the two given marginal sums."),
@@ -124,6 +138,16 @@ internal sealed class ConcealmentKernelNecessityRefutationDocument : IScribeDocu
                 Imp(And(nonnegative, normalized), Call("IsPOVM", effects)))));
     }
 
+    private static Formula DualKrausFormula()
+    {
+        Formula din = V("din"), dout = V("dout"), kappa = V("kappa"), k = V("K"), a = V("A");
+        Formula sum = SumOver("j", kappa,
+            Mul(Mul(Adjoint(At(k, V("j"))), a), At(k, V("j"))));
+        Formula identity = Eq(Call("dual", Kraus(k), a), sum);
+        Formula operators = All("K", Fun(kappa, Rect(dout, din)), All("A", Mat(dout), identity));
+        return All("din", Field("N"), All("dout", Field("N"), Finite("kappa", operators)));
+    }
+
     private static Formula CompatibleFormula()
     {
         Formula d = V("d"), m = V("M"), n = V("N"), j = V("J");
@@ -187,5 +211,16 @@ internal sealed class ConcealmentKernelNecessityRefutationDocument : IScribeDocu
                             Imp(equivalence, Eq(Call("AdjointKernel", Kraus(k)),
                                 Call("AdjointKernel", Kraus(l))))))))))))));
         return Iff(V("claim"), body);
+    }
+
+    private static Formula Parenthesized(Formula value) => Seq(Open, value, Close);
+
+    private static Formula AllDensityFormula()
+    {
+        Formula d = V("d"), rho = V("rho");
+        Formula density = new Formula.Logic(Parenthesized(Call("PosSemidef", rho)),
+            FormulaLogicOperator.And, Parenthesized(Eq(Trace(rho), D(1))));
+        Formula densities = Seq(OpenBrace, rho, Sp, Colon, Sp, Mat(d), Sp, Bar, Sp, density, CloseBrace);
+        return All("d", Field("N"), Call("TomographicallyComplete", densities));
     }
 }

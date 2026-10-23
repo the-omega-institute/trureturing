@@ -1,0 +1,48 @@
+**Assumption 14.1 (an arbitrary public menu before encoding).** Keep the
+native ordered trees, homomorphic $\rho$, complete rows, public $P,D,H$
+and original depth-$D$ indices of Assumption 13.1. Thus $b=H+1$,
+$I=\{j:w_j\in A_D(P)\}$ and the source domain is precisely
+
+$$
+X_a=\mathcal B_D[(T_{jb+a_j})_{0\le j<2^D}],\qquad
+T_n=\rho^n\alpha,\qquad
+a\in\{0,\ldots,H\}^{I},\quad a_j=0\ (j\notin I).
+\tag{NAR.14.1}
+$$
+
+Fix a nonempty finite family $\mathcal M$ of nonempty subsets of $I$.
+Its members are possible future visible regions, not simultaneously
+acquired records. For $S\in\mathcal M$ set
+$Q_S=W_D\setminus\{w_i:i\in S\}$. The menu is public before encoding;
+its member is selected only after export and discard. The elapsed native
+update lag remains unknown and must be recovered from the supplied
+inputs. Write $\lambda_0=0$ for nonnegative lags or
+$\lambda_0=1$ for strictly positive lags, and
+$L_{\lambda_0}=\{\lambda_0,\lambda_0+1,\ldots\}$. The contract is
+
+$$
+\exists E,\mathsf{Dec}\quad\forall a\quad\forall S\in\mathcal M
+\quad\forall\ell\in L_{\lambda_0}:\qquad
+\mathsf{Dec}\bigl(S,E(R_P(X_a)),R_{Q_S}(\rho^\ell X_a)\bigr)=\ell.
+\tag{NAR.14.2}
+$$
+
+The encoder receives only the genuinely acquired initial row, exports
+one code and discards that row before selection of $S$. Every surviving
+source-bearing distinction counts as code, including source identifiers,
+epochs, clocks, sizes, logs, pointers, allocation distinctions and
+archives. The decoder receives the public constants, $S$, that code and
+exactly the complete later acquired row: its literal exterior, labels,
+brackets, reached/absent guards and every within-row hidden equality
+and disequality. No hidden value, cross-row hidden comparison or free
+source profile is supplied. Acquisition, export/discard, stationary
+capture, permissions and genuine same-source, same-root, pure-$\rho$
+continuation remain the premises of Assumptions 10.1, 11.1 and 13.1.
+
+Let $N_H(\mathcal M)$ be the minimum number of attained retained code
+values in (NAR.14.2). Its fixed-width binary representation price is
+$\lceil\log_2N_H(\mathcal M)\rceil$. These units exclude source storage,
+acquisition, decoder controls, arithmetic width, working space and
+physical elapsed time. The finite independent-age source promise is
+part of the contract, not a reduction of all native sources to ages.
+

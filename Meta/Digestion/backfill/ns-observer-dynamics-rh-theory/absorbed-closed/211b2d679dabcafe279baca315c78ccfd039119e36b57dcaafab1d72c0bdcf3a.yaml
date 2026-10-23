@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:211b2d679dabcafe279baca315c78ccfd039119e36b57dcaafab1d72c0bdcf3a
+  normalized_sha256: sha256:211b2d679dabcafe279baca315c78ccfd039119e36b57dcaafab1d72c0bdcf3a
+cas_ref: sha256:211b2d679dabcafe279baca315c78ccfd039119e36b57dcaafab1d72c0bdcf3a
+coverage_gids:
+  - gid: D5/S1/Words/Mechanical/RotationObservationCells.rotation_prefix_cell_and_decoder
+    target_statement_id: sha256:5003a91fb989ea9608d9ad640074eb753c8abbabc738e196054d4058adcf6dd7
+receipts:
+  unresolved_subitems: []

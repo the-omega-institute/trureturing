@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:091aeb716bbaee7bae9c5847aaca758f61835c9c0517cdd0cbf3a563bfd4c4ee
+  normalized_sha256: sha256:091aeb716bbaee7bae9c5847aaca758f61835c9c0517cdd0cbf3a563bfd4c4ee
+cas_ref: sha256:091aeb716bbaee7bae9c5847aaca758f61835c9c0517cdd0cbf3a563bfd4c4ee
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 56. 概念信息、余量与目标盲度：本项只作篇章导引，介绍主题、组织范围或固定参数，没有定理或性质断言。
+    previous_atom_id: 59541bdaaead634443c57de4a90b84414e2757c920b62db41568b87422b5a263
+    next_atom_id: 9c7e4e946df7e043f2652e3733861df1b11b242e3add97b3ddee6b739cf2f0eb

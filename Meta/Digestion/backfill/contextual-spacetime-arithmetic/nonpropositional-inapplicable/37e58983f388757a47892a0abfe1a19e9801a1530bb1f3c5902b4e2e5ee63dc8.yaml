@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:37e58983f388757a47892a0abfe1a19e9801a1530bb1f3c5902b4e2e5ee63dc8
+  normalized_sha256: sha256:37e58983f388757a47892a0abfe1a19e9801a1530bb1f3c5902b4e2e5ee63dc8
+cas_ref: sha256:37e58983f388757a47892a0abfe1a19e9801a1530bb1f3c5902b4e2e5ee63dc8
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 本段只证明前述每个固定因子全域不单射的结论。
+    previous_atom_id: be52ca437989db023208e16e6d049c023960c111f5cec996fd60c0ff50a80b84
+    next_atom_id: e7517f4e7459688d747b61d77eac1fd8462559c9cae87103a3f3cd7932e27418

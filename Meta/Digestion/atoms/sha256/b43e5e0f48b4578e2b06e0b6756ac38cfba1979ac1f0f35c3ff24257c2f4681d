@@ -1,0 +1,42 @@
+**Definition 13.1 (normalized closed inputs and four replies).** Use the
+closed defining subsystem of Definition 7.1, with every explicitly supplied
+ground state definition inlined and every fixed native power distributed
+through an explicit pair. A normalized expression has the finite syntax
+
+$$
+e ::= \alpha\mid\beta\mid\Omega\mid\langle e,e\rangle
+       \mid \rho^aX_i,
+\qquad a\in\mathbb N.
+\tag{SPC.50}
+$$
+
+The right side of a defining equation is a pair of expressions (or a
+finite ground after the permitted inlining), so its root is never a
+positive-power state. Every state occurrence remains below an explicit
+pair. States are nullary and repeated names denote one shared value. Outputs
+may use the same syntax, exact finite constants and $\Omega$; an output
+root need not itself be pair guarded. Negative, variable and
+parameter-recursive powers are outside this definition. The zero-state case
+is allowed.
+
+Let $\Sigma=\{L,R\}$ and
+$\mathcal R=\{\alpha,\beta,\mathsf{branch},\mathsf{absent}\}$. For a
+completed output $Z$, let $r_Z(p)$ be its exact reply at every original
+address $p\in\Sigma^*$, including the root and every absent suffix. Put
+$\mathcal L_\tau(Z)=\{p:r_Z(p)=\tau\}$. These are the same original-address
+replies used by Definitions 1.1 and 7.1; normal-code depth and an
+unlabelled reached-address trace are not substituted for them.
+
+The native identities needed below are
+
+$$
+T_0=\alpha,\qquad T_1=\beta,\qquad
+T_{n+2}=\langle T_{n+1},T_n\rangle,
+\qquad T_n=\rho^n\alpha .
+\tag{SPC.51}
+$$
+
+They follow from the leaf laws and distribution of $\rho$ through pairing.
+Thus $\rho^c\beta=T_{c+1}$, while an explicit syntax pair preserves its
+accumulated exponent when an original letter is consumed.
+

@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:2dc8166c2de03a0701cb26cfc120042b4fcb37d5a3fde5ae36a9f86f47af65f3
+  normalized_sha256: sha256:2dc8166c2de03a0701cb26cfc120042b4fcb37d5a3fde5ae36a9f86f47af65f3
+cas_ref: sha256:2dc8166c2de03a0701cb26cfc120042b4fcb37d5a3fde5ae36a9f86f47af65f3
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 章节导引「四十三、统一空间与时间后，“曲率”最好分成三个不同对象」只组织后续讨论或表格栏目，本 atom 不含独立数学命题；相邻条目的定理、公式及待证陈述不在本次结算范围内。
+    previous_atom_id: 96f76f8d11060cf8d01cdb35f43d1d4302c481a29aef85813820afef2db6cb1c
+    next_atom_id: 8af978257ddca9325dc64ace87b65684e74dfbd8e092339dc8bfb550f9ec9b37

@@ -1,1 +1,1 @@
-{"statement_id":"sha256:3f01ec885a5221b7d869c2a811561d536dcc9041b4a11cf706d771e814ba24a0"}
+{"statement_id":"sha256:fa90d7cf0f05fb5eee548e626b061350c015752a977216ee04cd18843a7ffca6","declarations":[{"declaration_name_key":"ns(ns(ns(ns(ns(ns(n0,2:D5),2:S3),13:FluidDynamics),7:Fourier),29:PeriodicGradientInterpolation),28:periodic_deriv_fourth_moment)","kind":"theorem"},{"declaration_name_key":"ns(ns(ns(ns(ns(ns(n0,2:D5),2:S3),13:FluidDynamics),7:Fourier),29:PeriodicGradientInterpolation),38:periodic_vector_gradient_fourth_moment)","kind":"theorem"}]}

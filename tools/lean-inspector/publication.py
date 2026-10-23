@@ -22,6 +22,7 @@ import tempfile
 import zipfile
 
 import materials
+import fib_analysis
 
 _selection_spec = importlib.util.spec_from_file_location('report_selection',
     Path(__file__).resolve().parent.parent / 'scripts/report/lean-report-selection.py')
@@ -211,7 +212,8 @@ def validate_input_projection(projection, module):
     for entry in projection['inputs']:
         materials.require_keys(entry, {'type', 'owner', 'name'}, 'judge input projection entry')
         if (entry['type'] not in {'LeanInformationAudit.Contract.' + name for name in
-                ('Registration', 'TemplateEnrollment', 'RootCatalog', 'Seal')}
+                ('Registration', 'TemplateEnrollment', 'RootCatalog', 'Seal')} |
+                {'LeanInformationAudit.AuricFib.Contract.Application'}
                 or entry['owner'] != module or not isinstance(entry['name'], str)
                 or not entry['name'] or entry['name'] in names):
             raise ValueError('contract.discovery:invalid_projection_entry:' + module)
@@ -255,7 +257,7 @@ def _validate_row(row, archive, available, verified_materials, identities):
     """All certificate and declaration references die at this call boundary."""
     references = {}
     keys = {'module', 'source_path', 'source_sha256', 'imports', 'declarations'}
-    keys.update(key for key in ('information_registration_errors', 'information_templates', 'utility_refutation') if key in row)
+    keys.update(key for key in ('information_registration_errors', 'information_templates', 'fib_analysis', 'utility_refutation') if key in row)
     materials.require_keys(row, keys, 'module')
     name, path, sha = row['module'], row['source_path'], row['source_sha256']
     if (not isinstance(name, str) or not name
@@ -267,6 +269,10 @@ def _validate_row(row, archive, available, verified_materials, identities):
         materials.require_sorted_strings(row['information_registration_errors'], 'registration errors')
     if 'information_templates' in row:
         materials.validate_template_evidence(row['information_templates'])
+    if 'fib_analysis' in row:
+        value = fib_analysis.validate(row['fib_analysis'])
+        if any(x['owner'] != name for x in value['applications']):
+            raise ValueError('fib.application_owner_mismatch')
     if 'utility_refutation' in row:
         evidence = materials.require_keys(row['utility_refutation'], {'claim_gid', 'claim_source_path',
             'claim_source_sha256', 'result_gid', 'is_closed_negation'}, 'utility refutation')
@@ -317,7 +323,8 @@ def _validate_row(row, archive, available, verified_materials, identities):
     return set(references)
 
 
-def validated_rows(report, archive_path, verified_materials=None, *, identities=True):
+def validated_rows(report, archive_path, verified_materials=None, *, identities=True,
+                   schema=materials.REPORT_SCHEMA):
     """Validate each module and release its certificate and reference map on advance."""
     previous = None
     paths, used = set(), set()
@@ -326,7 +333,7 @@ def validated_rows(report, archive_path, verified_materials=None, *, identities=
         if len(names) != len(set(names)):
             raise ValueError('duplicate, missing, or unreferenced material')
         available = set(names)
-        for row in report_rows(report, materials.REPORT_SCHEMA, canonical=True):
+        for row in report_rows(report, schema, canonical=True):
             name, path = row.get('module'), row.get('source_path')
             if (not isinstance(name, str) or not isinstance(path, str)
                     or previous is not None and name <= previous or path in paths):
@@ -494,7 +501,7 @@ def unpack(artifact, directory, suffixes=SUFFIXES):
 
 
 def publish(report, destination, expected, repository=None, *, mode=None, expected_hashes=None,
-            validate=True):
+            validate=True, validator=None):
     """Stage, validate and atomically publish a bundle.
 
     validate=False is only for bundle bytes whose acceptance is already
@@ -518,7 +525,7 @@ def publish(report, destination, expected, repository=None, *, mode=None, expect
         accepted = {suffix: digest(member(staged, suffix)) for suffix in SUFFIXES}
         if expected_hashes is not None and accepted != expected_hashes:
             raise ValueError('publication snapshot differs from sealed bundle')
-        validate_bundle(staged, expected, repository, check_rows=validate)
+        (validator or validate_bundle)(staged, expected, repository, check_rows=validate)
         if any(digest(member(staged, suffix)) != sha for suffix, sha in accepted.items()):
             raise ValueError('publication snapshot changed during validation')
 
@@ -563,6 +570,18 @@ def publish(report, destination, expected, repository=None, *, mode=None, expect
                 else:
                     member(destination, suffix).unlink()
             raise
+    return hashlib.sha256(materials.canonical_json(accepted)).hexdigest()
+
+
+def bundle_identity(report, suffixes=SUFFIXES):
+    """Identify every byte of a complete generation, including selected sidecars."""
+    hashes = {}
+    for suffix in suffixes:
+        path = member(report, suffix)
+        if path.is_symlink() or not path.is_file():
+            raise ValueError('bundle member is absent or nonregular: ' + suffix)
+        hashes[suffix] = digest(path)
+    return hashlib.sha256(materials.canonical_json(hashes)).hexdigest()
 
 
 def main():

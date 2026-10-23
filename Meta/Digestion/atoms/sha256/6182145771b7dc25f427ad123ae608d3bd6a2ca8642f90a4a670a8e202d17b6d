@@ -1,0 +1,42 @@
+**定义 28.3（奇偶来源律与基准共同记录）。** 在 $\mathcal W$ 上，令
+$\mu_{\rm even}$、$\mu_{\rm odd}$ 分别在 $b_1+b_3+b_5$ 为偶数、奇数的四词上
+均匀分布。全部八个词及其响应集合为
+
+| 奇偶 | 合法词 $w$ | $S(w)$ |
+| --- | --- | --- |
+| 偶 | $00000$ | $\varnothing$ |
+| 偶 | $10100$ | $AB$ |
+| 偶 | $10001$ | $AC$ |
+| 偶 | $00101$ | $BC$ |
+| 奇 | $10000$ | $A$ |
+| 奇 | $00100$ | $B$ |
+| 奇 | $00001$ | $C$ |
+| 奇 | $10101$ | $ABC$ |
+
+观察映射取三个完整局部词
+$W_1(w)=(b_1,0,b_3)$、$W_2(w)=(0,b_3,0)$、$W_3(w)=(b_3,0,b_5)$。
+目标 $F(w)=f(S(w))$ 的平均为
+$\overline F_\mu=\sum_{w\in\mathcal W}\mu(w)F(w)$。这里的观察数据指每个
+$W_j$ 各自的完整概率律；三个窗口的共同联合律是另一种数据。
+
+为解释此目标的背景响应，再固定一个共同基准随机向量
+$\xi_0\sim\mathcal N(0,\vartheta G_0)$，取
+$$
+Y_i=u_i^{\mathsf T}\xi_0+\epsilon_i,\qquad
+\epsilon_i\sim\mathcal N(0,\vartheta),\quad i\in\mathcal I,
+$$
+其中噪声彼此独立且与 $\xi_0$ 独立。$Y$ 的律不随 $\mu$ 混合，
+它不是先抽取 $S$ 再从 $\mathcal N(0,\vartheta G_S)$ 抽取的读数律。
+记控制列矩阵为 $\mathsf U=(u_A,u_B,u_C)$，完整读数协方差为
+$$
+\operatorname{Cov}(Y)=\vartheta\boldsymbol\Sigma,\qquad
+\boldsymbol\Sigma=I_3+\mathsf U^{\mathsf T}G_0\mathsf U.
+$$
+$\boldsymbol\Sigma$ 是由共同载体实现的“单位噪声加 Gram”矩阵，不是任意
+正定相关矩阵；它也不是先前的五态标签集 $\Sigma$。
+以 $\xi_0=G_0^{1/2}Z$、$Z\sim\mathcal N(0,\vartheta I_4)$ 白化后，
+观察矩阵为 $\mathsf U^{\mathsf T}G_0^{1/2}$，信号与噪声精度均为
+$\vartheta^{-1}$。这一有限观察合同复用
+[GaussianObservationLaw](../../../D5/S3/Observer/Linear/GaussianObservationLaw.lean)
+及定理 26.9 的共同基准读口。
+

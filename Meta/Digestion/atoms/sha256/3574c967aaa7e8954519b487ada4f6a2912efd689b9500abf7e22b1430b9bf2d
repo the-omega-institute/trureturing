@@ -1,0 +1,4 @@
+**定义 14.1（长窗口的指定图与任务）。** 若采用定义 5.1 的独立支持切换图，长窗口数据明确为 $V_n=F_{n+2}$、$E_n=\sum_k k\binom{n-k+1}{k}$，有符号循环维数为定理 5.2 的 $c_n=E_n-V_n+1$。若采用连续 $n$ 个三位置原生窗口，则[《金字塔关联与原生接续》§§8、13–18](AURIC_FIB_ATOM_PYRAMID_CORRELATION_AND_NATIVE_CONTINUATION.md)的对象是合法词及其共同律；词数、合法相邻表、运输图、切换图各有自己的顶点和边。未给图与边界映射时，单独一列词数不定义循环维数。
+
+有限任务的充分观察者须保留一个实际可更新的历史商：等价历史给同样合法动作与完整后续记录律，更新保持等价关系，且相应等价类在该任务域上有限。可取得性及费用须另供。[《稀疏字面历史运输》§§3–4](RECURSIVE_RELATIONAL_OBSERVATION_SPARSE_LITERAL_HISTORY_TRANSPORT.md)的有限共同像保留原来源的字面访问合同；[《成对校准可观察性》§11、§13.5](RECURSIVE_RELATIONAL_OBSERVATION_PAIRED_CALIBRATION_OBSERVABILITY.md)的紧完整律空间及有限再生具有另一合同，不自动保存给定三时刻耦合。有限图、紧参数空间或有限个均值均不单独保证有限状态的完整未来商。
+

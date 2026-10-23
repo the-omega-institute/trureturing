@@ -1,0 +1,63 @@
+**证书 12.5（一个部分校准表）。** 在同一来源与 $J=\{0,1,2\}$ 上取
+
+$$
+\begin{aligned}
+\pi&=\left(\frac{461}{2000},\frac{539}{1000},\frac{461}{2000}\right),\\
+v&=\left(\frac{17}{50},\frac{39}{100},\frac{17}{50}\right),\\
+u&=\left(\frac{33999}{100000},
+ \frac{135404266789272139}{346228952419350000},
+ \frac{33999}{100000}\right),\\
+B_{ij}&=\frac{999}{1000}\mathbf1_{i=j}+\frac{\pi_j}{1000},
+\qquad A=I_3.
+\end{aligned}
+\tag{12.27}
+$$
+
+所有发射严格在 $(a,b)$ 内。$B\mathbf1=\mathbf1$，且 $\pi_iB_{ij}=\pi_jB_{ji}$；所有 B 项正而各行不同。这里的 $\pi$ 是来源独立标签行，来源先验仍是式（11.1）。
+
+该表满足**每行两相所有完整端点盒**，并恰好满足悬置中点，但不满足 p 中点。以下证书同时给出全部词与无限结果，不能作为四条件或六条件的解。
+
+置 $\lambda_a=2/9$、$\lambda_b=6/25$，并用正对角矩阵 V 定义
+
+$$
+H_\beta=VHV^{-1}=\operatorname{diag}(v(\mathbf1-u))B.
+\tag{12.28}
+$$
+
+式（12.27）的有理数运算给出下表，每个区间同时约束该向量的全部三个分量：
+
+| 向量 | 精确有理包围区间 |
+| --- | --- |
+| $H\mathbf1$ 与 $H_\beta\mathbf1$ | $[561/2500,2377/10000]\subset[\lambda_a,\lambda_b]$ |
+| $g$ | $[371/1000,109/250]$ |
+| $Hg$ | $[11/125,49/500]$ |
+| $H^2g$ | $[209/10000,1097/50000]$ |
+| $H^3g$ | $[123/25000,199/40000]$ |
+| $Vg$ | $[181/1250,14811/100000]$ |
+| $VHg$ | $[83/2500,69/2000]$ |
+
+各包含关系可直接把式（12.27）代入 $g,Hg,H^2g,H^3g$，以正分母交叉相乘验证。最后六个区间分别包含于其对应的精确端点区间：p 的 n=0,1,2,3 型1坐标，以及悬置的 n=0,1 型1继续坐标。端点值由式（2.3）、（11.4）给出；下列矩阵比较将这些有限起点扩展到全部 n。
+
+对任意非负矩阵 M，若 $\lambda_a\mathbf1\le M\mathbf1\le\lambda_b\mathbf1$，则
+
+$$
+\ell\mathbf1\le z\le h\mathbf1
+\quad\Longrightarrow\quad
+\lambda_a\ell\mathbf1\le Mz\le\lambda_bh\mathbf1
+\qquad(0\le\ell\le h).
+\tag{12.29}
+$$
+
+p 的型0盒从 $a\mathbf1\le u\le b\mathbf1$ 用 $M=H$ 归纳，即对全部 $n\ge0$ 有
+$a\lambda_a^n\mathbf1\le H^nu\le b\lambda_b^n\mathbf1$。
+
+p 的型1盒中，a 端点在 n=0,1,2 是上端，在全部 $n\ge3$ 是下端；顺序及唯一换向已由§11.1给出。表中 $H^3g$ 的区间在
+$[G_a\lambda_a^3,G_b\lambda_b^3]$ 内。以此为起点对 H 使用式（12.29），得到全部 $n\ge3$ 的
+$G_a\lambda_a^n\mathbf1\le H^ng\le G_b\lambda_b^n\mathbf1$；n=0,1,2 由表中前三个起点处理。
+
+悬置型0继续词需用**同一表的相似矩阵** $H_\beta$，因为 $VH^n=H_\beta^nV$。从 $a^2\mathbf1\le Vu\le b^2\mathbf1$ 起，用式（12.29）得到全部 n 的
+$a^2\lambda_a^n\mathbf1\le VH^nu\le b^2\lambda_b^n\mathbf1$。悬置型1的 n=0 由 Vg 起点处理；从 n=1 起 a 是下端、b 是上端。表中 VHg 在 $[m_a\lambda_a,m_b\lambda_b]$ 内，故对 $H_\beta$ 归纳得到全部 $n\ge1$ 的
+$m_a\lambda_a^n\mathbf1\le VH^ng\le m_b\lambda_b^n\mathbf1$。悬置单词 $\beta$ 的质量 $1-v_i\in[1-b,1-a]$。
+
+完整归一化直接复用接口3.4：$u+g+H\mathbf1=\mathbf1$，$H^L\mathbf1\to0$。本表还给出较强的 $0\le H^L\mathbf1\le\lambda_b^L\mathbf1$，悬置继续尾至多 $v_i\lambda_b^L$。因此两相在原完整可数载体上归一化；合法无限结果保留且质量为零，也在零端点盒中。所有 n 的覆盖由矩阵归纳和几何尾界承担，不是有限前缀外推或条件于将来完成。
+

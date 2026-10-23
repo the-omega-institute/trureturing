@@ -1,0 +1,45 @@
+**Corollary 6.2 (Separate and common-table infima).** For $M\ge M_0$,
+define
+
+$$
+\mathfrak m_i(s,M)=\inf_{\mathcal A\in\mathfrak A_M(e^{-s},\alpha)}
+  \mathbb E_i^{\mathcal A}T,\qquad
+\mathfrak m_{\max}(s,M)=\inf_{\mathcal A\in\mathfrak A_M(e^{-s},\alpha)}
+  \max_i\mathbb E_i^{\mathcal A}T.
+\tag{6.5}
+$$
+
+On the neighborhood of Theorem 6.1, each of these three quantities belongs
+to $[C_-\Psi(s,M),C_+\Psi(s,M)]$, uniformly over every sufficient finite
+$M$. Equivalently their order is
+
+$$
+\frac{s^{-(2r+1)}}{1+\log\min\{M,1/s\}},
+\tag{6.6}
+$$
+
+up to fixed source/risk constants. These are order statements, not
+sharp constants or claims of attained exact infima.
+
+Proof. The lower holds for each mean of every competitor, and hence for
+their maximum and each infimum. The one simultaneous upper makes the
+class nonempty and bounds all three infima. No distinct source-optimized
+machines have been combined.
+
+To compare denominators, for $M\ge4$,
+$L_M\ge(cM/b)^{1/r}$, and for $M=2,3$ the bound $L_M\ge1$ applies.
+Together with (2.8), choose constants $0<c_L\le1\le C_L$ such that
+$c_LM^{1/r}\le L_M\le C_LM^{1/r}$ for every $M\ge2$.
+The logarithms of the minima with $1/s$ then differ by at most fixed
+additive constants. Both actual denominators are at least one, so they
+are comparable multiplicatively. Moreover, for $M\ge2$, $s<1$,
+
+$$
+\frac1r\bigl[1+\log\min\{M,1/s\}\bigr]
+\le1+\log\min\{M^{1/r},1/s\}
+\le1+\log\min\{M,1/s\}.
+\tag{6.7}
+$$
+
+These give (6.6). $\square$
+

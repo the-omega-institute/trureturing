@@ -1,1 +1,1 @@
-{"statement_id":"sha256:f9681743985435b88400fd8fc69b6e4852facdd28b7666b783ce097c67a33495"}
+{"statement_id":"sha256:f9681743985435b88400fd8fc69b6e4852facdd28b7666b783ce097c67a33495","declarations":[{"declaration_name_key":"ns(ns(ns(ns(ns(n0,2:D5),2:S3),4:Axis),28:MultiplicativeDigitInvariant),48:lambda_minus_is_a_multiplicative_digit_invariant)","kind":"theorem"}]}

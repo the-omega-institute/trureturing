@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:7020abb7dd2016b5fb3fc91a21387aab747223c29c6802be09f58b8daf955f64
+  normalized_sha256: sha256:7020abb7dd2016b5fb3fc91a21387aab747223c29c6802be09f58b8daf955f64
+cas_ref: sha256:7020abb7dd2016b5fb3fc91a21387aab747223c29c6802be09f58b8daf955f64
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 定义 221.1（节点化顺序采样）仅定义记号、合同字段或相应术语的判定条件，不断言条件成立或另提出性质。
+    previous_atom_id: 326c40ea5d4ab5d4d3f4087b5e44b5dda5c748acce5b4d0a9ce8b8e32e2fd49c
+    next_atom_id: c2dd17a6ac8d785bd3d768d704684598514605a23eecba368428ef88262a2869

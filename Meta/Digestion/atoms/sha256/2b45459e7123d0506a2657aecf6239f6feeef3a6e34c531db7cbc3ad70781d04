@@ -1,0 +1,40 @@
+**Assumption 58.3 (same-source aggregation and uniformly finite profiles).**
+A resource bridge declares the charged fields, units and domains, initial
+accumulator, ordered aggregation $G_\Gamma$, terminal evaluation, and source
+domain. For each original source $s$, it uses one actual trace $\tau_C(s)$
+and defines $c_C(s)=G_\Gamma(\tau_C(s))$. A recursive aggregation retains
+its initialization, all update state and inputs, and final rule; a
+nonrecursive aggregation retains its whole contracted input trace.
+Encoding, acquisition, address, preparation, update, arithmetic, memory,
+and output costs remain separate declared fields. Sourcewise bounds and
+weighted costs use these same-source values; coordinate maxima or policy
+minima taken at different witnesses are not spliced into one run. The
+same-run weighted objective and its distinction from coordinatewise maxima
+are supplied by
+[Relational IV, §§44.3--44.5, with §50's restriction](https://github.com/the-omega-institute/trureturing/blob/0cd2d8e87296269efebb3d308ff59318aab0a10a/docs/develop/theory/FIB_RELATIONAL_FIBER_CALCULUS_CONTINUATION_IV.md#50-weighted-thresholds-inherit-the-finite-profile-boundary).
+
+For integer vector costs on a nonempty domain $D$, the resource supplier uses
+$b(C)=\sup_{s\in D}c_C(s)\in(\mathbb N\cup\{\infty\})^d$ and restricts
+finite-frontier witnesses to $b(C)\in\mathbb N^d$. A mixed budget still
+requires one finite vector bounding every coordinate uniformly over all
+sources, including coordinates unconstrained by that budget. Use the
+[finite-profile alias of Relational IV, §49](https://github.com/the-omega-institute/trureturing/blob/0cd2d8e87296269efebb3d308ff59318aab0a10a/docs/develop/theory/FIB_RELATIONAL_FIBER_CALCULUS_CONTINUATION_IV.md#49-explicit-finite-feasibility-alias),
+with the bounded-profile and uniform-history or exact-acceleration
+certificates of
+[§47](https://github.com/the-omega-institute/trureturing/blob/0cd2d8e87296269efebb3d308ff59318aab0a10a/docs/develop/theory/FIB_RELATIONAL_FIBER_CALCULUS_CONTINUATION_IV.md#47-uniform-finite-profile-and-history-state-correction)
+and the exact all-infinite decision required by
+[§48](https://github.com/the-omega-institute/trureturing/blob/0cd2d8e87296269efebb3d308ff59318aab0a10a/docs/develop/theory/FIB_RELATIONAL_FIBER_CALCULUS_CONTINUATION_IV.md#48-supersession-and-the-all-infinite-query).
+Weighted thresholds inherit the same finite-profile restriction in
+[§50](https://github.com/the-omega-institute/trureturing/blob/0cd2d8e87296269efebb3d308ff59318aab0a10a/docs/develop/theory/FIB_RELATIONAL_FIBER_CALCULUS_CONTINUATION_IV.md#50-weighted-thresholds-inherit-the-finite-profile-boundary).
+
+Any proposed effective implementation must separately supply an exact
+finite controller enumeration, source-total success and complete-row
+coverage, uniform raw-event horizons or certified exact acceleration, and
+uniform boundedness decisions and finite-bound extraction in every
+coordinate. A per-source terminating rank or response-phase count is not
+that certificate. A budget-specific horizon is not a supplied
+budget-independent family horizon or boundedness decision. The resource
+supplier's finite enumeration, Presburger and Dickson arguments are cited
+there; they are not additional results of this volume and are not used in
+§59's absolute-error-radius deduction.
+

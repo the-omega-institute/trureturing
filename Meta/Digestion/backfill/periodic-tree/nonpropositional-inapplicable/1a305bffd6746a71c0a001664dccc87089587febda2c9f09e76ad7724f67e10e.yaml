@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:1a305bffd6746a71c0a001664dccc87089587febda2c9f09e76ad7724f67e10e
+  normalized_sha256: sha256:1a305bffd6746a71c0a001664dccc87089587febda2c9f09e76ad7724f67e10e
+cas_ref: sha256:1a305bffd6746a71c0a001664dccc87089587febda2c9f09e76ad7724f67e10e
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 纯定义段仅引入本节的对象、记号或术语（**定义。** 在模 $p$ 下令），没有另行断言这些对象的性质。
+    previous_atom_id: fd3bef5bbc69c33ad57c8c3d0dbca80f3a24305dd8bf76c079f5bf2917511f58
+    next_atom_id: f3e028ee4704807cf064a27e706dd23e3388667bf5ab115b7db97eea5a9c30fc

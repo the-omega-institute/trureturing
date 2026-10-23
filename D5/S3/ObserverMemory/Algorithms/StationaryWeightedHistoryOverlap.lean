@@ -6,6 +6,7 @@
    utility: none
    digest: Actual unary histories retain multiplicity in background-sensitive overlap charging. -/
 
+import Batteries.Tactic.OpenPrivate
 import D5.S3.ObserverMemory.Algorithms.StationaryHistorySlotGraph
 import Mathlib.Data.NNReal.Basic
 import Mathlib.Topology.MetricSpace.Lipschitz

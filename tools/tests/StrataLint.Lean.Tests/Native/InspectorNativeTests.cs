@@ -5,11 +5,13 @@ using StrataLint.TestSupport;
 
 namespace StrataLint.Lean.Tests;
 
+[Collection("Lean cold production integration")]
 public sealed class InspectorNativeTests(InspectorCompilerFixture compiler) : IClassFixture<InspectorCompilerFixture>
 {
     // Publication, coordinates and verification use this class's private compiler stage.
     [Theory]
     [InlineData("test_streaming")]
+    [InlineData("test_entry_regressions.EntryRegressionTests")]
     [InlineData("test_reuse")]
     [InlineData("test_local_entry")]
     [InlineData("test_guarded_command.GuardedCommandTests")]
@@ -46,12 +48,11 @@ internal static class InspectorNativeTestRunner
         var executed = clock.GetTimestamp();
         var result = TestProcessRunner.Run("env",
             [.. environment, "STRATALINT_NATIVE_COMMAND_OBSERVATION=1", "python3", "-B", "-m", "unittest", suite, "-v"],
-            Path.Combine(root, "tools/lean-inspector/tests"), TestBudgets.ReportSupervisorHangGuard, 1024 * 1024);
+            Path.Combine(root, "tools/lean-inspector/tests"), TestBudgets.ReportSupervisorHangGuard, 1024 * 1024,
+            standardOutput: Console.OpenStandardOutput(), standardError: Console.OpenStandardError());
         Console.WriteLine("NATIVE_CASE " + JsonSerializer.Serialize(new { phase = "child-exit", suite,
             utc = clock.GetUtcNow(), elapsed_ms = clock.GetElapsedTime(executed).TotalMilliseconds, raw_exit = result.ExitCode,
             stdout_bytes = result.StandardOutput.Length, stderr_bytes = result.StandardError.Length }));
-        WriteCommandObservations(result.StandardOutput);
-        WriteCommandObservations(result.StandardError);
         Assert.True(result.ExitCode == 0, Encoding.UTF8.GetString(result.StandardOutput)
             + Encoding.UTF8.GetString(result.StandardError));
     }

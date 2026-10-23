@@ -5,14 +5,48 @@ year: 2015
 title: Extremal Dependence Concepts
 doi: 10.1214/15-STS525
 url: https://arxiv.org/abs/1512.03232v3
-claim: "Bivariate distributions with fixed marginals have sharp lower and upper Frechet-Hoeffding bounds, attained by countermonotonic and comonotonic couplings."
+claim: "Bivariate distributions with fixed marginals have sharp lower and upper Frechet-Hoeffding bounds, attained by countermonotonic and comonotonic couplings. In any finite dimension, comonotonic couplings maximize mean-compatible supermodular expectations within the fixed-marginal class."
 strata_touched:
   - D5/S3/Estimation/DataProcessing/FiniteSimplexFiberPolytope
+  - D5/S3/Combinatorics/Probability/FiniteCommonMarginalSupermodular
 license: citation-only
 triage: anchor
 ---
 
 # Fixed marginals, sharp couplings and target dependence
+
+## Locator
+
+DOI: [10.1214/15-STS525](https://doi.org/10.1214/15-STS525).
+Author text: <https://arxiv.org/abs/1512.03232v3>.
+Section 2, Theorem 2.1(d), equation (2.3), states that a comonotonic
+coupling maximizes the expectation of every mean-compatible
+supermodular function over all joint laws with the prescribed
+one-dimensional marginals. The bivariate bounds used below are in
+Theorem 2.1(b), Theorem 3.1(b), equations (3.2) and (3.5).
+
+## Finite common-support comparison
+
+For four equal marginals on a nonempty finite linearly ordered support,
+the comonotonic law is the diagonal law: a scalar value with marginal
+mass m(t) is placed at (t,t,t,t). Theorem 2.1(d) therefore gives the
+finite common-marginal supermodular expectation comparison.
+
+An order-preserving embedding of the finite support into the real
+line preserves coordinatewise minimum and maximum. A monotone step
+map back to that support, fixing each embedded support value and
+clipped at the two endpoints, preserves these operations as well.
+Composing a lattice-supermodular test with this map in each coordinate
+extends it to a bounded supermodular real test. Thus mean compatibility
+is automatic on the finite support, including for signed tests.
+The joint and marginal masses may be arbitrary real probabilities;
+zero masses, repeated coordinates and singleton supports are included.
+
+This identifies the classical comparison represented by the finite
+Lean theorem. It supplies no continuum limiting passage or
+supermodularity proof for a particular test chosen in an application.
+
+## Bivariate coupling bounds
 
 Giovanni Puccetti and Ruodu Wang, *Extremal Dependence Concepts*,
 Statistical Science 30(4), 485–517. The directly consumed author text

@@ -240,3 +240,13 @@ the current low-loss source filter retains every optimizer at the same
 classical price. It does not identify the two objectives, supply a bound
 for the growing total moment, or place a CA optimizer in a prescribed
 Fibonacci residue class. No such theorem is attributed to this paper.
+
+## A direct supplier for the reciprocal family
+
+[Molnar's reciprocal-family preprint](../Factorization/molnar2026reciprocalrobin.md),
+arXiv:2610.12816v1, studies this same $b_\kappa$ and supplies the
+fixed-parameter expansions, a normalized unbounded-parameter RH
+criterion, and an unconditional normalized inequality for all
+$n>5040$ at $1<\kappa\le100000$. These statements are attributed to
+that source. The bounded parameter range neither settles classical
+Robin nor supplies the growing-$s$ error required above.

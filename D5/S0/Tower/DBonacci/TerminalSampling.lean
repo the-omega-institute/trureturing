@@ -26,6 +26,21 @@ open scoped BigOperators ENNReal
 
 abbrev Tape := ℕ → Bool
 
+noncomputable def uniformPmf (α : Type*) [Fintype α] [Nonempty α] : PMF α :=
+  PMF.ofFintype (fun _ => (Fintype.card α : ℝ≥0∞)⁻¹) (by
+    simp only [Finset.sum_const, Finset.card_univ, nsmul_eq_mul]
+    exact ENNReal.mul_inv_cancel (Nat.cast_ne_zero.mpr Fintype.card_ne_zero)
+      (ENNReal.natCast_ne_top _))
+
+private theorem uniformPmf_toOuterMeasure_apply (α : Type*) [Fintype α] [Nonempty α]
+    (s : Set α) [Fintype s] :
+    (uniformPmf α).toOuterMeasure s = Fintype.card s / Fintype.card α := by
+  classical
+  rw [PMF.toOuterMeasure_apply_fintype]
+  simp only [uniformPmf, PMF.ofFintype_apply, Set.indicator_apply]
+  rw [← Finset.sum_filter]
+  simp [Fintype.card_subtype, div_eq_mul_inv]
+
 /-- Actual completions of the native scanner, with `fuel` available consecutive ones. -/
 def completionCount (maxTrue fuel h : ℕ) : ℕ :=
   Fintype.card (BoundedRunName maxTrue fuel h)
@@ -81,7 +96,7 @@ inductive Run (maxTrue : ℕ) (tape : Tape) :
       Run maxTrue tape fuel (h + 1) cursor (Fin.cons bit tail) stop
 
 /-- The fair law gives each actual Boolean coordinate equal mass. -/
-abbrev fairBit : Measure Bool := (PMF.uniformOfFintype Bool).toMeasure
+abbrev fairBit : Measure Bool := (uniformPmf Bool).toMeasure
 
 /-- One iid tape supplies all branch choices and all retries. -/
 abbrev fairTape : Measure Tape := Measure.infinitePi (fun _ : ℕ => fairBit)
@@ -170,7 +185,7 @@ theorem terminal_sampling_execution_cylinders
     classical
     have trialLaw (width cursor : ℕ) :
         fairTape.map (fun tape t => readBlock width (cursor + t * width) tape) =
-          Measure.infinitePi (fun _ : ℕ => (PMF.uniformOfFintype (Fin (2 ^ width))).toMeasure) := by
+          Measure.infinitePi (fun _ : ℕ => (uniformPmf (Fin (2 ^ width))).toMeasure) := by
       classical
       let index : ℕ × Fin width → ℕ := fun p => cursor + p.1 * width + p.2.val
       have index_inj : Function.Injective index := by
@@ -193,7 +208,7 @@ theorem terminal_sampling_execution_cylinders
         rfl
       have decode_law :
           (Measure.infinitePi (fun _ : Fin width => fairBit)).map (blockEquiv width) =
-            (PMF.uniformOfFintype (Fin (2 ^ width))).toMeasure := by
+            (uniformPmf (Fin (2 ^ width))).toMeasure := by
         apply Measure.ext_of_singleton
         intro x
         rw [Measure.map_apply (measurable_of_finite _) (measurableSet_singleton x)]
@@ -202,7 +217,7 @@ theorem terminal_sampling_execution_cylinders
           ext f
           simp only [Set.mem_preimage, Set.mem_singleton_iff, (blockEquiv width).eq_symm_apply.symm]
         rw [pre, Measure.infinitePi_singleton_of_fintype]
-        simp [fairBit, Nat.cast_pow, ← ENNReal.inv_pow]
+        simp [fairBit, uniformPmf, Nat.cast_pow, ← ENNReal.inv_pow]
       have bits_law : fairTape.map (fun tape p => tape (index p)) =
           Measure.infinitePi (fun _ : ℕ × Fin width => fairBit) :=
         Measure.map_infinitePi_infinitePi_of_inj index_inj
@@ -220,7 +235,7 @@ theorem terminal_sampling_execution_cylinders
       simp_rw [decode_law]
   
     let Q := 2 ^ width
-    let ν : Measure (Fin Q) := (PMF.uniformOfFintype (Fin Q)).toMeasure
+    let ν : Measure (Fin Q) := (uniformPmf (Fin Q)).toMeasure
     let regions : ℕ → Set (Fin Q) := fun j =>
       if j < t then {y | bound ≤ y.val} else {x}
     have event : {tape | draw width bound cursor tape = some (t, x)} =
@@ -253,7 +268,7 @@ theorem terminal_sampling_execution_cylinders
     have region_measurable : ∀ j, MeasurableSet (regions j) :=
       fun _ => (Set.toFinite _).measurableSet
     have family_measurable : Measurable (fun tape j => readBlock width (cursor + j * width) tape) := by
-      apply measurable_pi_lambda
+      apply measurable_pi_iff.mpr
       intro j
       exact (measurable_of_finite (blockEquiv width)).comp
         (by fun_prop)
@@ -279,17 +294,18 @@ theorem terminal_sampling_execution_cylinders
         simp only [Set.mem_ofPred_eq, Set.mem_compl_iff, acceptSet]
         omega
       calc
-        _ = Fintype.card (↥(acceptSetᶜ)) := Fintype.card_congr (Equiv.setCongr he)
+        _ = Fintype.card (↥(acceptSetᶜ)) :=
+          Fintype.card_congr (Equiv.subtypeEquivRight (Set.ext_iff.mp he))
         _ = _ := by rw [Fintype.card_compl_set, Fintype.card_fin, cardAccept]
     have rejection_mass : ν {y | bound ≤ y.val} = ((Q - bound : ℕ) : ℝ≥0∞) / Q := by
       unfold ν
-      rw [PMF.toMeasure_uniformOfFintype_apply {y : Fin Q | bound ≤ y.val}
-        ((Set.toFinite _).measurableSet),
+      rw [PMF.toMeasure_apply_eq_toOuterMeasure_apply _ ((Set.toFinite _).measurableSet),
+        uniformPmf_toOuterMeasure_apply,
         cardReject, Fintype.card_fin]
     have singleton_mass : ν {x} = (Q : ℝ≥0∞)⁻¹ := by
-      simp [ν]
+      simp [ν, uniformPmf]
     have prior : ∏ j ∈ Finset.range t,
-        (PMF.uniformOfFintype (Fin Q)).toMeasure (regions j) =
+        (uniformPmf (Fin Q)).toMeasure (regions j) =
           (((Q - bound : ℕ) : ℝ≥0∞) / Q) ^ t := by
       calc
         _ = ∏ _j ∈ Finset.range t, (((Q - bound : ℕ) : ℝ≥0∞) / Q) := by
@@ -301,9 +317,9 @@ theorem terminal_sampling_execution_cylinders
           exact rejection_mass
         _ = _ := by simp
     rw [Finset.prod_range_succ, prior]
-    have last : (PMF.uniformOfFintype (Fin Q)).toMeasure (regions t) =
+    have last : (uniformPmf (Fin Q)).toMeasure (regions t) =
         (Q : ℝ≥0∞)⁻¹ := by
-      simp [regions]
+      simp [regions, uniformPmf]
     rw [last]
     simp only [Q, Nat.cast_pow, Nat.cast_ofNat, div_eq_mul_inv]
 
@@ -671,7 +687,7 @@ theorem terminal_sampling_execution_cylinders
       exact hc i (Finset.mem_Ico.mpr ⟨hlo, hhi⟩)
     rw [event, traceCylinder, fairTape,
       Measure.infinitePi_pi _ (fun _ _ => measurableSet_singleton _)]
-    simp [fairBit]
+    simp [fairBit, uniformPmf]
 
   · intro t x
     exact drawRun h (completionCount maxTrue fuel h) cursor t x tape

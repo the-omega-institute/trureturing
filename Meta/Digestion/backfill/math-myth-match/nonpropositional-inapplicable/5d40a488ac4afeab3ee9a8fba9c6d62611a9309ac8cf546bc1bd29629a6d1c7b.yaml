@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:5d40a488ac4afeab3ee9a8fba9c6d62611a9309ac8cf546bc1bd29629a6d1c7b
+  normalized_sha256: sha256:5d40a488ac4afeab3ee9a8fba9c6d62611a9309ac8cf546bc1bd29629a6d1c7b
+cas_ref: sha256:5d40a488ac4afeab3ee9a8fba9c6d62611a9309ac8cf546bc1bd29629a6d1c7b
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 证明。：该段仅论证前文命题 35.3（改变语境与容纳矛盾不同）。，不另立新的命题陈述；前文命题本身仍保留。
+    previous_atom_id: a4df6baa1fa00dd918849b406eb3957eb6e59c3e7aba922b5262c48eb96236da
+    next_atom_id: 7c70260c2370abddc830047a3756444a332a566e30dcf51e23640deb45f6bfc2

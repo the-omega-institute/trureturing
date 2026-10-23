@@ -1,0 +1,54 @@
+**Theorem 8.5 (Completed quintic instrument and all stationary cylinders).** For every $0<q<1$, let $G=Q^{1/2}$ be the positive real symmetric square root of the faithful Gramian in (8.11), and define
+
+$$
+\begin{aligned}
+b&=Gx/\sqrt{Z_5(q)},&\tau&=bb^{\mathsf T},\\
+L_A&=\sqrt q\,GAG^{-1},&L_B&=\sqrt q\,GBG^{-1},&J&=bf^{\mathsf T}G^{-1},\\
+\Phi(X)&=L_AXL_A^{\mathsf T}+L_BXL_B^{\mathsf T},&&
+\Psi(X)=JXJ^{\mathsf T}.
+\end{aligned} \tag{8.14}
+$$
+
+These real matrices constitute a complete homogeneous CP instrument on $M_4(\mathbb C)$. The zero branch has Choi rank two, with Kraus matrix ranks $4$ and $1$; the tick branch has Choi rank one and its single Kraus matrix has rank one. Each positive-probability tick resets to the pure density $\tau$, and
+
+$$
+\begin{aligned}
+L_A^{\mathsf T}L_A+L_B^{\mathsf T}L_B+J^{\mathsf T}J&=I_4,\qquad \rho(\Phi)=q,\\
+\Psi(X)&=\tau\operatorname{Tr}(J^{\mathsf T}JX),\\
+\Psi\Phi^k(\tau)&=\gamma_k\tau,\qquad
+\gamma_k=\frac{k^5q^k}{Z_5(q)}\quad(k\ge0).
+\end{aligned} \tag{8.15}
+$$
+
+With $S_a=\sum_{j\ge a}\gamma_j$ and $\mu=\sum_{k\ge0}(k+1)\gamma_k=1+Z_6(q)/Z_5(q)$, the actual stationary initialization is
+
+$$
+\rho_*^{(5)}=\frac1\mu\sum_{a\ge0}\Phi^a(\tau)>0,\qquad
+\operatorname{Tr}\Phi^a(\tau)=S_a. \tag{8.16}
+$$
+
+For every $r\ge1$ and $a,b,g_1,\ldots,g_{r-1},N\ge0$, its actual binary cylinders are
+
+$$
+\begin{aligned}
+P(0^a1\,0^{g_1}1\cdots0^{g_{r-1}}1\,0^b)
+&=\frac{S_aS_b}{\mu}\prod_{i=1}^{r-1}\gamma_{g_i},\\
+P(0^N)&=\frac1\mu\sum_{a\ge0}S_{N+a}
+=\frac1\mu\sum_{j\ge N}(j-N+1)\gamma_j.
+\end{aligned} \tag{8.17}
+$$
+
+Proof. The precise inputs to Theorem 2.1 are $d=4$, two raw Kraus matrices $K_A=\sqrt q A,K_B=\sqrt q B$, one detector column $f=e_0$, $F=ff^{\mathsf T}\ne0$, and raw reset vector $x=e_3\ne0$. Theorem 8.4 proves its full-superoperator stability premise and its full-memory Gramian premise. The theorem's $S,z,b$ correspond to $G,Z_5(q),b$ here. Real symmetric positivity gives an invertible real $G$, and $b^{\mathsf T}b=1$. In particular the Stein identity gives the full operator equality
+
+$$
+G^{-1}\big(qA^{\mathsf T}QA+qB^{\mathsf T}QB+F\big)G^{-1}=I_4. \tag{8.18}
+$$
+
+Its three terms are the three effects in (8.15). These are Kraus conjugations on the full complex algebra, so the CP and completeness assertions include complex inputs with nonreal coherences and every matrix amplification. They are not restricted to the real positive cone. Similarity by $X\mapsto GXG$ gives $\rho(\Phi)=q$, and (8.11) and Theorem 2.1 give the normalized gap law and reset formula for every $k$.
+
+The matrix $A$ is invertible and $B=|(v,0)\rangle\langle e_3|$ is nonzero of rank one with zero diagonal. Thus $A,B$ are complex-linearly independent; invertible similarity preserves their matrix ranks and independence. This proves the zero Choi rank and the individual Kraus ranks. Since $b,f$ are nonzero, $J$ is nonzero of rank one, giving the tick Choi rank one.
+
+For Theorem 5.1 the remaining premises are the exact law (1.1) with $n=5$ and full zero-word reachability from $b$. The latter follows from $L_wb=q^{|w|/2}Gwx/\sqrt{Z_5(q)}$ and the four spanning raw words of Theorem 8.4. The first moment is finite because $0<q<1$. Theorem 5.1 therefore gives (8.16)–(8.17), invariance under $\Phi+\Psi$, and faithfulness on all four dimensions. This invocation uses the actual ordered instrument probabilities (5.2). At $r=1$ the product is empty; at $N=0$ the all-zero formula equals one because $\sum_aS_a=\mu$. It includes every finite all-zero word and has $P(0^N)\to0$, with no extra all-zero stationary component.
+
+The raw source coordinate $x$ is not an asserted stationary initialization: the normalized pure reset is $b=Gx/\sqrt{Z_5(q)}$, whereas $\rho_*^{(5)}$ is faithful and mixed. In particular $\operatorname{Tr}\Psi(\tau)=\gamma_0=0$ and $\operatorname{Tr}\Psi(\rho_*^{(5)})=1/\mu>0$. All three target coordinates and the source coordinate are counted in $D=4$. The two zero Kraus labels are summed within $\Phi$ and are not retained as a persistent record; the tick uses just $J$. No additional persistent classical or quantum register is used. $\square$
+

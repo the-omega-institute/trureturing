@@ -612,7 +612,7 @@ theorem result : ¬ claim := by
       CFC.sqrt (pureDensity v hv).operator = InnerProductSpace.rankOne ℂ v v := by
     apply CFC.sqrt_unique
     · exact InnerProductSpace.isIdempotentElem_rankOne_self hv
-    · exact (ContinuousLinearMap.nonneg_iff_isPositive _).mpr
+    · exact (ContinuousLinearMap.nonneg_iff_isPositive (f := _)).mpr
         (InnerProductSpace.isPositive_rankOne_self v)
   have h_FockAttChannel_outputVector_pure (η : ℝ) (hη : η ∈ Set.Icc (0 : ℝ) 1)
       (p : ProbabilityVector) (v : (lp (fun _ : ℕ => ℂ) 2)) (hv : ‖v‖ = 1) (n m l : ℕ) :
@@ -641,7 +641,7 @@ theorem result : ¬ claim := by
     simp only [outputVector, norm_smul, mul_pow, hsqrt]
     rfl
   have h_FockAttChannel_densitySqrt_squared (ρ : DensityOperator) : CFC.sqrt ρ.operator * CFC.sqrt ρ.operator = ρ.operator := CFC.sqrt_mul_sqrt_self ρ.operator
-      ((ContinuousLinearMap.nonneg_iff_isPositive _).mpr ρ.positive)
+      ((ContinuousLinearMap.nonneg_iff_isPositive (f := _)).mpr ρ.positive)
   have h_FockAttChannel_densitySqrt_selfAdjoint (ρ : DensityOperator) : IsSelfAdjoint (CFC.sqrt ρ.operator) := (CFC.sqrt_nonneg ρ.operator).isSelfAdjoint
   have h_FockAttChannel_densitySqrt_norm_sq (ρ : DensityOperator) (v : (lp (fun _ : ℕ => ℂ) 2)) :
       ‖CFC.sqrt ρ.operator v‖ ^ 2 = (inner ℂ v (ρ.operator v)).re := by

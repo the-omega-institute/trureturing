@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:64c8d008698cb0769de26ff7511f881e493bad6de8f7cbce6daa01452519bd25
+  normalized_sha256: sha256:64c8d008698cb0769de26ff7511f881e493bad6de8f7cbce6daa01452519bd25
+cas_ref: sha256:64c8d008698cb0769de26ff7511f881e493bad6de8f7cbce6daa01452519bd25
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 定义49.10只引入Carmichael supernatural闭包迭代和阈值记号，不断言最小性或连续幂性质。
+    previous_atom_id: dc0a9da6446af5822317a2fa638fa63edb80c7f97053899652fdc0ad256d1691
+    next_atom_id: 9b350b6b1409f84421448fc26434d60ab9dcad784c1b6d39336d427b6ba2ff24

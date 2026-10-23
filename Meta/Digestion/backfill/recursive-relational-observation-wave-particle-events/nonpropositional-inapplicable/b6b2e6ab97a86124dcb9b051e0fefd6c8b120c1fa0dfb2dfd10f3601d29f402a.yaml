@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:b6b2e6ab97a86124dcb9b051e0fefd6c8b120c1fa0dfb2dfd10f3601d29f402a
+  normalized_sha256: sha256:b6b2e6ab97a86124dcb9b051e0fefd6c8b120c1fa0dfb2dfd10f3601d29f402a
+cas_ref: sha256:b6b2e6ab97a86124dcb9b051e0fefd6c8b120c1fa0dfb2dfd10f3601d29f402a
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 定义 242.1（主动全息边界）仅定义记号、合同字段或相应术语的判定条件，不断言条件成立或另提出性质。
+    previous_atom_id: 9ce57cccfb933fb4e96922ce91685a7fe7fbb2a634270db1de79df7bc52e7faa
+    next_atom_id: 2a53c57cb5a92b4418f064343fd1ed5949be80d534e3deed64019e355a50ff42

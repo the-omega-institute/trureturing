@@ -1,0 +1,5 @@
+source_id = "fib-real-renewal-instruments-and-detector-rank"
+path = "docs/develop/theory/FIB_REAL_RENEWAL_INSTRUMENTS_AND_DETECTOR_RANK.md"
+atomizer = "generic-v1"
+genre_registry_check = "no-registry"
+unregistered_genres = []

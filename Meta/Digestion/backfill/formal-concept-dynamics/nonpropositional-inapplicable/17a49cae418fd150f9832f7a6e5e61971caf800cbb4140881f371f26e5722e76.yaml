@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:17a49cae418fd150f9832f7a6e5e61971caf800cbb4140881f371f26e5722e76
+  normalized_sha256: sha256:17a49cae418fd150f9832f7a6e5e61971caf800cbb4140881f371f26e5722e76
+cas_ref: sha256:17a49cae418fd150f9832f7a6e5e61971caf800cbb4140881f371f26e5722e76
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 清单片段“习惯”仅列举主题、接口组成或考虑维度；本片段不陈述性质、存在性或推论。
+    previous_atom_id: c858e3af7d48d5cd3a84bbc8f3c953af597e55bbe8c7d5ef7815e7587c18f5c8
+    next_atom_id: 62d994ab62a182621ce70e58450e31f66315c40a684c0d7877393f31745b2616

@@ -1,0 +1,10 @@
+**Definition 42.2 (independent event bound).** For a controller bound $K$ and
+budget $B$, an *event horizon* is an independently certified finite number
+$T_K(B)$ such that every successful run of every $K$-position controller within
+budget $B$ has $|H(\pi)|\le T_K(B)$. The certificate is separate from the
+response-phase count. As an alternative, a *certified regular history encoding*
+is a finite automaton for the exact ordered histories together with an effective
+well-founded-rank or exact acceleration certificate that decides termination,
+terminal rows, and resource maxima. Plain regularity without this certificate
+does not provide a finite synthesis problem.
+

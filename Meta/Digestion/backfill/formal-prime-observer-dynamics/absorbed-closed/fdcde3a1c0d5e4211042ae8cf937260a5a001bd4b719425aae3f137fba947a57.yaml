@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:fdcde3a1c0d5e4211042ae8cf937260a5a001bd4b719425aae3f137fba947a57
+  normalized_sha256: sha256:fdcde3a1c0d5e4211042ae8cf937260a5a001bd4b719425aae3f137fba947a57
+cas_ref: sha256:fdcde3a1c0d5e4211042ae8cf937260a5a001bd4b719425aae3f137fba947a57
+coverage_gids:
+  - gid: D5/S3/Observer/Budget/MinimumCompleteSetCover.finite_budget_injective_iff_cover
+    target_statement_id: sha256:093ef812cc6e68c36f1af55a601d2e9f296174b20458dea89ed517cb616bc8a3
+receipts:
+  unresolved_subitems: []

@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:d69df8fefab30964e84d0500a7fcf9d851e590110f7470850e19c57b65d222d8
+  normalized_sha256: sha256:d69df8fefab30964e84d0500a7fcf9d851e590110f7470850e19c57b65d222d8
+cas_ref: sha256:d69df8fefab30964e84d0500a7fcf9d851e590110f7470850e19c57b65d222d8
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 证明段（**证明。** 两式分别给出 $t=-d_L$ 与 $t=-d_{L+r}$，从而要求 $D_{L,r}=d_L-d_{L+r}=0$，这与…）只展开前文定理或命题的论证，式子和中间推导不另提出独立陈述。
+    previous_atom_id: 227a8b29e0b0984fce53d62c73ae06e7c329ac9e14a7cc1526c2e0d39099b8ec
+    next_atom_id: 6bfcbe5343b5f6e2ecbccfcf31e8ff85b714d9839d9353208e679859c096a686

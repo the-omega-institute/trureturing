@@ -7,6 +7,41 @@ namespace StrataLint.Scribe.Tests;
 public sealed class FileMapManifestTests
 {
     [Fact]
+    public void ExcludedSubsetsAgreeAcrossReadersAndSurviveCanonicalSerialization()
+    {
+        var source = DataKeyedRunLocalEntry() + "exclude = [\"Generated/partitions/reader.md\"]\n";
+        var bytes = Encoding.UTF8.GetBytes(source);
+        var manifest = FileMapLoader.Parse(bytes, "fixture.toml");
+        var admission = AdmissionPlaneFileMapLoader.Parse(bytes, "fixture.toml");
+        foreach (var path in new[] { "Generated/partitions/future.md", "Generated/partitions/reader.md", "elsewhere.md" })
+        {
+            var expected = path.EndsWith("future.md", StringComparison.Ordinal) ? 1 : 0;
+            Assert.Equal(expected, manifest.Match(path).Length);
+            Assert.Equal(expected, admission.Match(path).Length);
+            Assert.Equal(expected, FileMapLoader.Parse(FileMapCanonicalWriter.Write(manifest).AsSpan(),
+                "canonical.toml").Match(path).Length);
+        }
+        Assert.NotEqual(FileMapCanonicalWriter.Write(FileMapLoader.Parse(
+            Encoding.UTF8.GetBytes(DataKeyedRunLocalEntry()), "original.toml")).ToArray(),
+            FileMapCanonicalWriter.Write(manifest).ToArray());
+        Assert.Contains("except Generated/partitions/reader.md", Encoding.UTF8.GetString(
+            FileMapProjectionWriter.Write(manifest).AsSpan()), StringComparison.Ordinal);
+    }
+    [Theory]
+    [InlineData("[]")]
+    [InlineData("[42]")]
+    [InlineData("[\"z/*\", \"a/*\"]")]
+    [InlineData("[\"a/*\", \"a/*\"]")]
+    [InlineData("[\"../outside\"]")]
+    [InlineData("[\"x/?\"]")]
+    public void InvalidExclusionsAreRejectedByEveryPolicyReader(string value)
+    {
+        var bytes = Encoding.UTF8.GetBytes(DataKeyedRunLocalEntry() + "exclude = " + value + "\n");
+        Assert.ThrowsAny<FormatException>(() => FileMapLoader.Parse(bytes, "fixture.toml"));
+        Assert.ThrowsAny<FormatException>(() => AdmissionPlaneFileMapLoader.Parse(bytes, "fixture.toml"));
+        Assert.ThrowsAny<FormatException>(() => FileMapSymlinkPolicy.Parse(bytes, "fixture.toml"));
+    }
+    [Fact]
     public void TableArrayAndInlineTableArrayDecodeIdentically()
     {
         var tableArray = FileMapLoader.Parse(
@@ -27,7 +62,6 @@ public sealed class FileMapManifestTests
             FileMapProjectionWriter.Write(tableArray).ToArray(),
             FileMapProjectionWriter.Write(inlineTableArray).ToArray());
     }
-
     [Theory]
     [InlineData("files = []\n", "at least one entry")]
     [InlineData("files = [42]\n", "only tables")]
@@ -49,7 +83,6 @@ public sealed class FileMapManifestTests
 
         Assert.Contains(expected, exception.Message, StringComparison.Ordinal);
     }
-
     [Fact]
     public void FilesArrayRejectsNullElements()
     {
@@ -207,7 +240,7 @@ public sealed class FileMapManifestTests
     private const string GeneratedPath = "Artifacts/Ring.md";
     private const string FormalPath = "D5/S0/Carrier/Ring.lean";
     private const string FrozenLedgerPath =
-        "Golden/Frozen/accepted/aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa.json";
+        "Ledger/Fixture.json";
     private const string RuleCatalogPath =
         "tools/StrataLint.Engine/Rules/RuleCatalog.cs";
 
@@ -245,11 +278,11 @@ public sealed class FileMapManifestTests
             artifact_id = "none"
 
             [[files]]
-            pattern = "Golden/Frozen/accepted/*.json"
+            pattern = "Ledger/*.json"
             kind = "ledger"
             admission_plane = "content"
-            produced_by = "FrozenLedgerCanonicalWriter"
-            consumed_by = ["FrozenLedger"]
+            produced_by = "FixtureLedgerWriter"
+            consumed_by = ["FixtureLedgerReader"]
             verified_by = ["SL-008"]
             runtime_disposition = "committed-ledger"
             artifact_id = "none"

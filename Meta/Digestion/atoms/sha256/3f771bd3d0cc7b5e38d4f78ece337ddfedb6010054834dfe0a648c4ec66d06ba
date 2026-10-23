@@ -1,0 +1,10 @@
+**Definition 55.1 (common-seed acquisition kernel).** Let $(U,\mathcal U,\mu)$
+be one seed probability space. A source-uniform acquisition is a measurable map
+that, after fixing $u\in U$, applies one deterministic visible-response rule
+to every source. Its output law and resource variables may depend on the source,
+but the seed space, action rule, and response history semantics are common.
+
+For a source $s$, write $K_s$ for the induced law on finite output and resource
+records. The record includes nonhandoff branches and the ordered requested
+addresses; it is not replaced by a mixture over sources.
+

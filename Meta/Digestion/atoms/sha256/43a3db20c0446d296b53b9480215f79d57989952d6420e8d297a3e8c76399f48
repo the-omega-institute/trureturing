@@ -1,0 +1,62 @@
+**Definition 58.18 (finite-vector versus ordinary mixed feasibility).**
+Fix $d\ge1$, a nonempty source domain $D$, and an admissible controller class
+$\mathcal C$. Let $\mathcal C_{\mathrm{ok}}$ consist of controllers that are
+legal, defined, terminating and correct on every source. For such $C$, the
+same-source resource contract gives $c_C(s)\in\mathbb N^d$. Define
+
+$$
+b_i(C)=\sup_{s\in D}c_{C,i}(s)\in\mathbb N\cup\{\infty\},
+\qquad
+\mathcal F=\{x\in\mathbb N^d:\exists C\in\mathcal C_{\mathrm{ok}},\
+                         b(C)\le x\}.
+$$
+
+For $B\in(\mathbb N\cup\{\infty\})^d$, distinguish
+
+$$
+\begin{aligned}
+\operatorname{MixFeas}(B)
+  &\Longleftrightarrow
+       \exists C\in\mathcal C_{\mathrm{ok}},\ b(C)\le B,\\
+\operatorname{FinBox}(B)
+  &\Longleftrightarrow
+       \exists x\in\mathcal F,\ x\le B\\
+  &\Longleftrightarrow
+       \exists C\in\mathcal C_{\mathrm{ok}},\
+          b(C)\in\mathbb N^d,\ b(C)\le B.
+\end{aligned}
+$$
+
+The last equivalence follows by using $b(C)$ itself as $x$, or by taking
+the controller witnessing $x$. Thus $\operatorname{FinBox}(B)$ implies
+$\operatorname{MixFeas}(B)$, and they coincide when every coordinate of
+$B$ is finite. An infinite coordinate of $B$ imposes no uniform finite
+bound on that coordinate in $\operatorname{MixFeas}$.
+
+For a nonempty finite $A\subseteq\mathcal F$ with $0\notin A$, choose for
+each $v\in A$ a coordinate $f(v)$ with $v_{f(v)}>0$, and put
+
+$$
+B_i^f=\min\{v_i-1:v\in A,\ f(v)=i\},
+\qquad \min\varnothing=\infty.
+$$
+
+For a finite vector $x$, being outside $\uparrow A$ means that for every
+$v\in A$ at least one coordinate of $x$ is smaller than that of $v$.
+Choosing such a coordinate places $x$ in one of these mixed boxes.
+Conversely, membership in any such box gives a strict coordinate inequality
+against every $v\in A$.
+Consequently the valid identity is
+
+$$
+\exists x\in\mathcal F\setminus\uparrow A
+\quad\Longleftrightarrow\quad
+\bigvee_f\operatorname{FinBox}(B^f).
+$$
+
+If $0\in A$, the left side is false. If $A$ is empty, it is equivalent to
+$\mathcal F\ne\varnothing$. A decision/extraction oracle for
+$\operatorname{FinBox}$ must explicitly return a finite vector with a
+uniformly bounded controller witness, or decide that none exists.
+An oracle for $\operatorname{MixFeas}$ has a different contract.
+

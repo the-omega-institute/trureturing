@@ -1,0 +1,18 @@
+### 35.15 数学来源、应用归属与解释界限
+
+数学引文。下表只说明本章推导使用的原料与精确对应；已有一般结果不在本章重新取得新定理身份。
+
+| 来源 | 本章消费与对应 |
+| --- | --- |
+| [Ashtekar–Schilling，Geometrical Formulation of Quantum Mechanics](../../../Library/Geometry/ashtekar1997geometrical.md)，[原文](https://arxiv.org/abs/gr-qc/9706069)；本卷 §1.3 | 射影 Kähler 纯态及 Hamilton 量子背景；本章负指数相位、直线面积 $2\pi$ 和模式占位须按 §35.3 明确选择 |
+| [Cannas da Silva，Lectures on Symplectic Geometry](https://people.math.ethz.ch/~acannas/Papers/lsg.pdf)，§§1、8、定理 23.1、定义 28.1、定理 28.2 | 非退化二形式与 Darboux 局部配对；自由正则矩层上的辛约化；紧致光滑半维环面作用的 Delzant 条件。§35.5 的自由性由本五权重的整子式检查承担 |
+| [Delzant，Hamiltoniens périodiques et images convexes de l’application moment](https://www.numdam.org/articles/10.24033/bsmf.2100/) | §35.2 六维 toric 实现的简单顶点必要条件；不用于排除八维的 $T^3$ 非半维完成 |
+| [HiddenRelations C-13.2、C-13.3](AURIC_FIB_ATOM_HIDDEN_RELATIONS_STATISTICS_PHASE_AND_SEAMS.md#13-固定均值的五态相位商与复关系坐标) | 完整周期相位商、复回路与闭纤维球面拓扑；$(u,\Phi)=(\eta,-\chi)$，旧振幅角为新角的负数 |
+| [HiddenRelations C-4.6、C-14.1–C-14.3](AURIC_FIB_ATOM_HIDDEN_RELATIONS_STATISTICS_PHASE_AND_SEAMS.md) | 对数四角比导数、商度量及墙上端点；$(\vartheta,\mathcal I)=(\tau,I)$，本章度量为原度量两倍，圆周周期相同，锥角不变 |
+| [HiddenRelations C-29.2](AURIC_FIB_ATOM_HIDDEN_RELATIONS_STATISTICS_PHASE_AND_SEAMS.md) | 全输入三占位保持 CPTP 通道必保持全部五标签概率；用于 §35.9 排除非零四次交换的固定线性实现，不重新发表较弱刚性结果 |
+| [SecondOrder 假设 61.1、定理 61.2、定理 60.1](AURIC_FIB_SECOND_ORDER_RELATION_COMPLETION.md) | $(N,2,3,5,25)$ 对应 $(0,1,2,3,13)$，另供 $\mathbb C^5$ 与八实维纯射线；$Q_F(a,b)=Q_{\rm gold}(U,V)$，$a=U,b=V$ |
+| [FibonacciAtomicRelationGeneration §296、式 (296.3)](FIBONACCI_ATOMIC_RELATION_GENERATION.md#296-fib-atom-与哈密顿结构离散作用量及因果响应) | $M$ 的反辛符号与两步保辛；§35.10 将它用于 $S=M^3$ 和固定仿射位移 |
+| [《静态接缝、转换循环与 Fibonacci 翻转环》§30](AURIC_FIB_ATOM_STATIC_SEAMS_TRANSITION_CIRCULATION_AND_FIBONACCI_TOGGLE_CYCLES.md#30-稀疏共享中窗的循环盲点与原生接口对应) | 纤维宽度坐标积分 $1/24$，$\ell=w$；本章将其用于归一化 Liouville 推前，区别于该卷欧氏嵌入体积 |
+| [《基础公式》§§12.1–12.2、数学引文 13.2、定义 11.6](AURIC_FIB_ATOM_PYRAMID_FOUNDATIONAL_FORMULAS_AND_RELATIONS.md) | 整数区间 $(U,V,W,k)=(mX,mY,mZ,m\kappa)$；谱投影 $R_f=B/\sqrt5$、$P_\pm=(I\pm R_f)/2$；同一接缝、吸收拒绝及实际空窗更新 |
+| [《金字塔关联与原生接续》§23.1–23.2](AURIC_FIB_ATOM_PYRAMID_CORRELATION_AND_NATIVE_CONTINUATION.md) | 同一五模式数量与平方矩；路径关系矩、双向 Möbius 反演及各阶计数；本章用其对偶坐标配上完整周期差分角 |
+| 本卷 §1.1 | 一般离散余切提升；§35.12 直接代入固定原生分支 $F(C)=SC+\delta_\sigma$ |

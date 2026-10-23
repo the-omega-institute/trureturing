@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:46ac087f6035903f98c2f6ab503a18efc3b09284ca6cc1dd1c944d12dcaa2b83
+  normalized_sha256: sha256:46ac087f6035903f98c2f6ab503a18efc3b09284ca6cc1dd1c944d12dcaa2b83
+cas_ref: sha256:46ac087f6035903f98c2f6ab503a18efc3b09284ca6cc1dd1c944d12dcaa2b83
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 定义段只引入名称、记号或集合/映射公式，没有附带性质断言。
+    previous_atom_id: 3c2cbb835bd96378b0590d577f1b3a1e0ef85933e2d5b82a16a04f059756f450
+    next_atom_id: b5e387fc6214b85bb6486b7674c879c32cdd34283b67fde98caffbbb1cb30955

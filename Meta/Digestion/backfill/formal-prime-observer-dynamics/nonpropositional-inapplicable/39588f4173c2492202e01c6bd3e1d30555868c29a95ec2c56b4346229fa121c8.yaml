@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:39588f4173c2492202e01c6bd3e1d30555868c29a95ec2c56b4346229fa121c8
+  normalized_sha256: sha256:39588f4173c2492202e01c6bd3e1d30555868c29a95ec2c56b4346229fa121c8
+cas_ref: sha256:39588f4173c2492202e01c6bd3e1d30555868c29a95ec2c56b4346229fa121c8
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 非命题文本：288. 受益与受损概率的尖锐 Fréchet 界：仅为节标题及导引或设定适用条件；本片段未陈述后续命题的结论。
+    previous_atom_id: 14c7aa57e5520effe16cfd1ee67d0aacb0267e05ec20791f8402b623193d93f0
+    next_atom_id: 61e40f17df125d6b39b9888dddf573468ebb35c252e2795ad5372496fbe473b6

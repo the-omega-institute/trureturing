@@ -1,0 +1,14 @@
+#### I.18.2 — 2. FIB–Partition Closure Isomorphism
+
+
+正式建立：
+
+$$
+\mathbb R[x,y,z]/(x^2-x,y^2-y,z^2-z,xz,yz)
+\cong
+\mathbb R[a,b,c]/(a^2-a,b^2-b,c^2-c,ab=ac=bc).
+$$
+
+
+这将冲突图语言、划分格语言和 Gram 矩阵语言合成同一个代数对象。
+

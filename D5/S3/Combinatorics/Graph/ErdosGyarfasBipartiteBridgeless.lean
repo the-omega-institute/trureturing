@@ -81,7 +81,7 @@ theorem result : claim := by
   induction e using Sym2.ind with
   | h u v =>
     have hadj : G.Adj u v := G.mem_edgeSet.mp he
-    apply hconn.connected_delete_edge_of_not_isBridge
+    apply hconn.preconnected.connected_deleteEdges_of_not_isBridge
     intro hb
     let H := ErdosGyarfasBridgeContraction.contraction G u v
     have hH : IsBipCounterexample H := by

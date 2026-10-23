@@ -1,0 +1,19 @@
+fingerprints:
+  raw_sha256: sha256:02cf1bd95d42290548f6fa5f6476f2a92b885974740f0ffbe188b7eb98d26230
+  normalized_sha256: sha256:02cf1bd95d42290548f6fa5f6476f2a92b885974740f0ffbe188b7eb98d26230
+cas_ref: sha256:02cf1bd95d42290548f6fa5f6476f2a92b885974740f0ffbe188b7eb98d26230
+coverage_gids:
+  - gid: D5/S3/Weil/ZetaLinear/FullRankInertiaPullback.inertia_conj_eq_of_rightInverse
+    target_statement_id: sha256:1c8f646e69bfc315e72998911c40f3460c37ebe48394ce4f7046554aad3926eb
+  - gid: D5/S3/Weil/ZetaLinear/FullRankInertiaPullback.negIndex_conj_le
+    target_statement_id: sha256:181326ff0f0aeb5c55829e5947b45f7be1d25f25a83bd0c383a443a50b070ed1
+  - gid: D5/S3/Weil/ZetaLinear/Inertia.posIndex_conj_le
+    target_statement_id: sha256:2b686ac579eec25a17506839031e30e53f45aa41ee203c424cd070056156a26e
+  - gid: D5/S3/Weil/ZetaLinear/Sylvester.finrank_le_posIndex_of_posDefOn
+    target_statement_id: sha256:4023381bebb1f77a0b3e8b945940391a07ca17ea527ff01fcdf521cd667ba4d7
+  - gid: D5/S3/Weil/ZetaLinear/Sylvester.hermForm_conj
+    target_statement_id: sha256:87a5417bdee8a95a407df9e263d64180bfa443761672fae4c373afbe5b9178af
+  - gid: D5/S3/Weil/ZetaLinear/Sylvester.posIndex_eq_max_finrank_posDefOn
+    target_statement_id: sha256:467d1b9bcbdbfef1cfd6650abc01ce9aa08fa1f8022a2ef1cff5827a7d68ab55
+receipts:
+  unresolved_subitems: []

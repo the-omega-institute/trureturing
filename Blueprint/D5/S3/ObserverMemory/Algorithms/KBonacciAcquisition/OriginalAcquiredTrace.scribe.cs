@@ -160,5 +160,11 @@ internal sealed class OriginalAcquiredTraceDocument : IScribeDocumentDefinition
             "The selected physical suffix and its decoder also require donor-compensated rows, "
             + "separate safety proofs for both seam alternatives, endpoint-code correspondence, "
             + "and a stop after exactly d blocks. These properties are distinct from the trace equivalence. "
-            + "No optimal price, adaptive lower bound, constant or binary price, or GLOBAL policy follows from this equivalence.")))));
+            + "No optimal price, adaptive lower bound, constant or binary price, or GLOBAL policy follows from this equivalence.")),
+            Describe.Lean(
+                DescribeId.Create("archive-length"),
+                DeclarationHandle.Create(Owner + "archive_length"),
+                H("Every issued archive entry contains one complete m-bit word"),
+                StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("For every m and chronological archive, the length of archiveWords is exactly archive.length times m. The flattening includes all bits of every issued complete word, even zeros, clearing, waits and the remainder of a word rejected internally. Combining this identity with a stopped PaidTrace transfers the exact block fee to the emitted-bit fee."))), DescribeRole.Theorem))));
 }

@@ -1,0 +1,8 @@
+**定理 3.3（无偶圈的掩码子图）。** 在定理 3.1 的设定下,若 $C\subseteq[N]$ 使 $H_t[C]$ 不含偶圈(例如 $C$ 是 $H_t$ 的一个不含偶圈的连通分支的顶点集),则
+
+$$
+\operatorname{rank}_FM_t[C]=\operatorname{rank}_{\mathbb F_2}\Gamma^{\pi_t}[C]=2\,\nu(H_t[C]),
+$$
+
+特别地 $\delta_C(t)=0$。$H_t[C]$ 为森林时,其中 $\operatorname{rank}_{\mathbb F_2}\Gamma^{\pi_t}[C]=2\nu(H_t[C])$ 是已知的森林邻接阵秩公式的特例(先例与定位见第 9 节),本卷不主张其新颖性。
+

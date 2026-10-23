@@ -1,1 +1,1 @@
-{"statement_id":"sha256:955e05b67add1f7b3eba0113ecc6f0656f36acb5c913a4a698ff082d7943802d"}
+{"statement_id":"sha256:955e05b67add1f7b3eba0113ecc6f0656f36acb5c913a4a698ff082d7943802d","declarations":[{"declaration_name_key":"ns(ns(ns(ns(ns(ns(n0,2:D5),2:S3),5:Arith),14:GoldenResource),24:ReferencePrefixDominance),34:log_geom_prefix_lt_harmonic_prefix)","kind":"theorem"}]}

@@ -1,0 +1,8 @@
+For $d=0$ there is
+only the empty tail. For $d=k$, $S=C$ is fixed and the tail is exactly
+the whole prefix. At $k=n$, the allowed $d$-tails for $S$ are its full
+words, so $\operatorname{Pref}_d(S)=S$. Finally nonempty $C\subseteq A^0$
+forces $C=\{\epsilon\}$. These are the nonlinear endpoint applications
+of the same bounded contract as the linear volume's Theorems 2.3 and
+3.2. $\square$
+

@@ -1,0 +1,53 @@
+**Proposition 126.1 (scaled removal with explicit errors).** For any feasible pair (U.1), including $q=0$, define
+
+$$
+\begin{gathered}
+t_i=\operatorname{Tr}(V_i\sqrt P),\qquad E_i=t_i\sqrt P,
+\qquad E=[E_0;E_1],\qquad\widehat V=V-E,\\
+e=\sqrt{2p\tau},\qquad U=\frac{\widehat V}{1+e},
+\qquad\delta=\frac{2e}{1+e}.
+\end{gathered}
+\tag{U.97}
+$$
+
+The $E_i$ here are trace-removal blocks, distinct from the physical constraint matrices of (U.2). Then $U$ is a contraction, $\tau(U)=0$, and all quantities compared below use the same $P$:
+
+$$
+\begin{gathered}
+\|U-V\|_{\mathrm{op}}\leq\delta,\quad
+\|U^TU-V^TV\|_{\mathrm{op}}\leq2\delta,\quad
+\|UU^T-VV^T\|_{\mathrm{op}}\leq2\delta,\\
+\|A(U)-A(V)\|_{\mathrm{op}}\leq2p\delta,\quad
+|\lambda(U)-\lambda(V)|\leq2p\delta,\quad
+|N(U)-N(V)|\leq\sqrt{p\delta},\\
+|R(V)-R(U)+\tau(V)|\leq2p\delta,\\
+\Theta(V)\leq\Theta(U)+\sqrt{p\delta}
++\frac12\sqrt{[2p\delta-\tau(V)]_+},\qquad [x]_+=\max\{x,0\}.
+\end{gathered}
+\tag{U.98}
+$$
+
+Proof. Since $\operatorname{Tr}P=1$, each $\operatorname{Tr}(\widehat V_i\sqrt P)=t_i-t_i\operatorname{Tr}P=0$. Direct multiplication gives
+
+$$
+E^TE=2\tau P,\qquad
+\widehat V^T\widehat V=V^TV-V^TE-E^TV+2\tau P.
+\tag{U.99}
+$$
+
+Hence $\|E\|_{\mathrm{op}}=e$ and $\|\widehat V\|_{\mathrm{op}}\leq1+e$. Scaling proves $U^TU\preceq I_2$ and $\tau(U)=0$. Also
+$U-V=-(E+eV)/(1+e)$, giving its distance bound, including $e=0$. Both $U$ and $V$ have norm at most one. Expanding their two Gram differences, for example
+$U^TU-V^TV=U^T(U-V)+(U-V)^TV$, bounds each by $2\delta$. Sandwiching the left Gram difference by $D$, with $\|D\|_{\mathrm{op}}^2=p$, proves the $A$ bound. Sandwiching the right one by $\sqrt P$ gives $\|B(U)-B(V)\|_{\mathrm{op}}\leq2p\delta$. The variational eigenvalue inequality proves the bound for $\lambda$.
+
+For the trace square root, let $a_j,b_j\geq0$, $j=1,\dots,4$, be the ordered eigenvalues of $A(U),A(V)$. The same variational inequality gives $|a_j-b_j|\leq2p\delta$. Since $|\sqrt x-\sqrt y|\leq\sqrt{|x-y|}$ for nonnegative scalars,
+
+$$
+|N(U)-N(V)|\leq\frac1{4\sqrt2}\sum_{j=1}^4\sqrt{2p\delta}
+=\sqrt{p\delta}.
+$$
+
+This estimate includes rank changes. Since $\tau(U)=0$, the exact residual difference is
+$R(V)-R(U)+\tau(V)=\lambda(U)-\lambda(V)$.
+Both residuals are nonnegative by Proposition 109.3. It follows that
+$R(V)\leq R(U)+[2p\delta-\tau(V)]_+$, and square-root subadditivity, together with the $N$ bound, proves the last line of (U.98). The comparison has explicit nonnegative losses and does not transfer a zero-penalty bound without paying them. Theorem 125.1 does not depend on this comparison. $\square$
+

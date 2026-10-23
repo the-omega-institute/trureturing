@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:6b30a01e5b2d3711c4f4179b66b6e85d2a1eebd8dcebd679f9dd40c08bbeece3
+  normalized_sha256: sha256:6b30a01e5b2d3711c4f4179b66b6e85d2a1eebd8dcebd679f9dd40c08bbeece3
+cas_ref: sha256:6b30a01e5b2d3711c4f4179b66b6e85d2a1eebd8dcebd679f9dd40c08bbeece3
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 定义 427.1（准入满射）：本段仅约定名称、符号及其判定条件；不主张满足条件的对象存在，也不追加性质定理。
+    previous_atom_id: 6e682fa939f90dd83815f012a402f3bf883bf730152837f6871e951ed2c4a8be
+    next_atom_id: 1cc0cdfc850554392ebec3b9408931a40f099c751be5e1fd4b03e428a1eb913c

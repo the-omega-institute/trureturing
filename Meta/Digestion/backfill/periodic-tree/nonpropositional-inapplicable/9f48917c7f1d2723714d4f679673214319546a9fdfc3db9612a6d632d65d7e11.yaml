@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:9f48917c7f1d2723714d4f679673214319546a9fdfc3db9612a6d632d65d7e11
+  normalized_sha256: sha256:9f48917c7f1d2723714d4f679673214319546a9fdfc3db9612a6d632d65d7e11
+cas_ref: sha256:9f48917c7f1d2723714d4f679673214319546a9fdfc3db9612a6d632d65d7e11
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 证明段（**证明。** 非零性由 $\omega\ne0$ 与 GC5 得到；递推式由 $D_{L+1,r}=-\alpha D_{L,r}$ 得到…）只展开前文定理或命题的论证，式子和中间推导不另提出独立陈述。
+    previous_atom_id: 6bfcbe5343b5f6e2ecbccfcf31e8ff85b714d9839d9353208e679859c096a686
+    next_atom_id: 36ca9c2c715d5dad4bcfffc79993929e9060265082a2a9fb14b3a8c1c9262a57

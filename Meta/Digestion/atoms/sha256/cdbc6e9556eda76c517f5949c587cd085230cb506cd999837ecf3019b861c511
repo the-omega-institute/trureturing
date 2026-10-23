@@ -1,0 +1,14 @@
+**Definition 2.2 (one-residual homogeneous syntax).** A homogeneous $H(X)$
+is a finite ordered pair expression with frontier occurrences $\rho^b X$,
+fixed $b\ge0$, an explicit pair at its root, no ground and no second
+residual. Put
+
+$$
+A_{a,H}\quad\Longleftrightarrow\quad H(\alpha)=T_a.
+\tag{SFS.7}
+$$
+
+This is automatically decidable: evaluate $H(\alpha)$ in the normal atomic
+codes of [ABC, Theorems 2.2–2.3][ABC], using smart pairing, and compare with
+$[a]$. No atomic certificate is supplied as input.
+

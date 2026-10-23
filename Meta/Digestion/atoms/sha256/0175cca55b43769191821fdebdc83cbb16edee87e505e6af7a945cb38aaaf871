@@ -1,0 +1,89 @@
+**Proposition 213.12 (A unit input requiring a change of early baseline).**
+At $L=5$ define Y by A=0, T=12 and the following actual rows.
+All unlisted coefficients are zero.
+
+| Word | P | C in Y | C in V |
+| --- | --- | --- | --- |
+| $01000$ | $1$ | $0$ | $3/13$ |
+| $01001$ | $4$ | $0$ | $3/13$ |
+| $01010$ | $3$ | $3$ | $0$ |
+| $01011$ | $5$ | $0$ | $3/13$ |
+| $01100$ | $0$ | $0$ | $12/13$ |
+| $01101$ | $0$ | $0$ | $6/13$ |
+| $01110$ | $2$ | $0$ | $12/13$ |
+| $01111$ | $5$ | $0$ | $0$ |
+| $10000$ | $1$ | $0$ | $0$ |
+| $10001$ | $1$ | $0$ | $0$ |
+| $10011$ | $1$ | $0$ | $0$ |
+| $10100$ | $4$ | $0$ | $0$ |
+| $10101$ | $2$ | $0$ | $0$ |
+| $10110$ | $4$ | $0$ | $0$ |
+| $11000$ | $0$ | $7$ | $0$ |
+| $11011$ | $0$ | $0$ | $7$ |
+| $11100$ | $0$ | $0$ | $5$ |
+| $11101$ | $0$ | $12$ | $7$ |
+| $11110$ | $0$ | $9$ | $9$ |
+
+V retains P and T and uses the last column. It is exactly (213.14)
+and the threshold construction: $E_1=3,E_2=0,S_2=13$.
+Both scores have $\gamma=(3,0,7,12,9)$, $S=33$, $W=48$, $K=76$.
+Their complete supports are
+
+| Pair | $B_N(Y)$ on pair | $B_O(Y)$ on pair | $B_N(V)=B_O(V)$ on pair |
+| --- | --- | --- | --- |
+| $12$ | $48$ | $48$ | $48$ |
+| $13$ | $52$ | $52$ | $52$ |
+| $14$ | $52$ | $52$ | $52$ |
+| $15$ | $48$ | $48$ | $48$ |
+| $23$ | $48$ | $48$ | $594/13$ |
+| $24$ | $52$ | $52$ | $52$ |
+| $25$ | $48$ | $48$ | $48$ |
+| $34$ | $53$ | $51$ | $51$ |
+| $35$ | $47$ | $45$ | $45$ |
+| $45$ | $51$ | $45$ | $45$ |
+
+For both scores the empty support is 45 and the singleton supports
+are $(48,45,45,45,45)$. In particular their costs are $(5,4)$ and
+$(4,4)$, and $(V/4,0)$ certifies the actual unit-O input $Y/4$.
+
+No certificate for $Y/4$ can retain its A,P,T and all early C, even
+if all late C totals, suffixes, unaries and the signed residual are free.
+
+**Proof.** Each entry is the sum of maxima over all six labels on
+the displayed finite rows. For example at $34$ the N maxima change
+from $(7,11,12,23)$ to $(7,9,12,23)$. This gives all supports in
+the table; short supports finish the catalogs. Thus the upper witness
+is one actual score, not separately attainable cell data.
+
+For the obstruction retain the unscaled baseline and choose arbitrary
+late C totals $\eta_3,\eta_4,\eta_5$, obtaining $\widetilde V$.
+The full tables $(1,3;1,1,3,0)$ and $(3,4;0,1,4,0)$ earn at
+least $45+\eta_3$ and $41+\eta_4$, respectively. In the second,
+the earlier unqueried label 1 collects the original C at $01010$.
+Since the anchor stays 48,
+$\Delta_N(\widetilde V)\ge\eta_3-3,\eta_4-7$.
+If a single scaled budget existed, there would be $\vartheta\ge0$
+with
+$\Delta_N(\widetilde V)+\vartheta\le4$ and
+$\sigma_H(Q(Y)-Q(\widetilde V))\le\vartheta$.
+It would force $\eta_3\le7-\vartheta$,
+$\eta_4\le11-\vartheta$, hence
+$R_4=19-\eta_3-\eta_4\ge1+2\vartheta$.
+At the required hull vertex $v_4=(1,1,1,1,2/5;2/5)$ the residual
+is exactly $(3/5)R_4\ge3/5+6\vartheta/5>\vartheta$.
+This contradiction includes the $\theta=1$ endpoint and zero-cost
+candidates in that fixed-baseline class. It makes no assertion that
+$v_4\in H_N$.
+
+The two nontrivial early-00 branches can be exercised on the same data:
+add $P_{00101}=2$ and $C_{10010}=c$. For c=1, the original costs
+are $(4,3)$ and (213.14)'s output costs are $(3,3)$; here $E_2<S_0$.
+For c=3 they are $(4,2)$ and $(2,2)$, with $E_2>S_0$.
+In either case the output is explicitly determined by (213.14) and
+the finitely many threshold intervals; all P and T are retained.
+Padding every displayed zero word by ones gives the same readings
+at larger L, while every extra label and unscored word remains legal.
+This is a baseline-restriction failure with a changed-baseline repair.
+The theorem leaves the strip $\max(0,\mu-\delta)\le t<\mu$ and
+inputs with general A or late P outside its domain. $\square$
+

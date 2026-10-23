@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:a9f5e9c57cb7bb9bbf21173613f341501fe15819bc0d8433dd46c5b176b038b6
+  normalized_sha256: sha256:a9f5e9c57cb7bb9bbf21173613f341501fe15819bc0d8433dd46c5b176b038b6
+cas_ref: sha256:a9f5e9c57cb7bb9bbf21173613f341501fe15819bc0d8433dd46c5b176b038b6
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 定义 132.2　导数权重只规定模型对象、符号、协议或适用条件；附文限定这些定义的含义，没有另立性质断言。
+    previous_atom_id: dc60ee3340a077c1e4df891104fb075d1a423b06934107774ca14d234d69f7cb
+    next_atom_id: 44c246854518f805dbc74de0f4305b27803a88cb42d56c18017e82b28fecb57e

@@ -1,1 +1,1 @@
-{"statement_id":"sha256:c03f2135dc36b542c7cab4dd04ca0a56c5f1e553987399fb120428c93758bccb"}
+{"statement_id":"sha256:c03f2135dc36b542c7cab4dd04ca0a56c5f1e553987399fb120428c93758bccb","declarations":[{"declaration_name_key":"ns(ns(ns(ns(ns(ns(n0,2:D5),2:S1),5:Digit),13:Admissibility),29:FiniteProductThresholdPruning),24:exists_threshold_pruning)","kind":"theorem"}]}

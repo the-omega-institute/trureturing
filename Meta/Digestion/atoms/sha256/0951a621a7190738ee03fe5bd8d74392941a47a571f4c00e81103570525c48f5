@@ -1,0 +1,2 @@
+**Proof (the high-image upper bound).** If $M>H$, use the $2d-1$-block literal GLOBAL construction of Theorem 33.2. It is selected without knowledge of $v$ and therefore is admissible for the adaptive contract. This gives the first upper bound.
+

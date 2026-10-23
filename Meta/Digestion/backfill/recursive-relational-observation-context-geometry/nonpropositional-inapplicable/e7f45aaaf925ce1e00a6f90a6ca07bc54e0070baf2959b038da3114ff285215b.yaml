@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:e7f45aaaf925ce1e00a6f90a6ca07bc54e0070baf2959b038da3114ff285215b
+  normalized_sha256: sha256:e7f45aaaf925ce1e00a6f90a6ca07bc54e0070baf2959b038da3114ff285215b
+cas_ref: sha256:e7f45aaaf925ce1e00a6f90a6ca07bc54e0070baf2959b038da3114ff285215b
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 定理 15.5（概率单纯形上的目标最小最坏误差）。的证明段；本项只给出该陈述的论证及所用步骤的说明，不另立独立命题。命题陈述保留在前项。
+    previous_atom_id: 2d692ffe76dbbc06875925eb5656ce1efbc25ff1884af7cd713d9dc754837e2f
+    next_atom_id: c5bebd18b5b07e448b4c929170ab47696d8ad3b770a612a8a9847c8281d98c5b

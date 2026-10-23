@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:51bbed67ce517ee7533b2068ffa8d7d97fb595012e955e2dce6d476c4f374383
+  normalized_sha256: sha256:51bbed67ce517ee7533b2068ffa8d7d97fb595012e955e2dce6d476c4f374383
+cas_ref: sha256:51bbed67ce517ee7533b2068ffa8d7d97fb595012e955e2dce6d476c4f374383
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 本 atom 是前邻已陈述命题的证明，展开构造、有限优化或估计并解释所需假设；没有另立新陈述。
+    previous_atom_id: 67928a65bdc35340628eed88232c68376bc2fce93134e2d907eb874b5dcbb42e
+    next_atom_id: d853d6278d15517092e9e67b861eb9528e9c0a1677c1b5da41df3e2588758c7b

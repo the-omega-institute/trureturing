@@ -1,0 +1,72 @@
+**Theorem 11.6 (attained retained-value price and advance knowledge).** If
+$r>0$, the least number of retained code values on
+$\mathcal F_{P,D,H}$ sufficient for the finite-family task of Definition
+11.4 is exactly
+
+$$
+(H+1)^r.
+\tag{NAR.11.12}
+$$
+
+If a sole index $i\in I$ and its future cut $Q_i$ are public before
+encoding, the corresponding least number is exactly $H+1$. The least
+fixed-width binary widths are respectively
+
+$$
+\left\lceil r\log_2(H+1)\right\rceil
+\quad\text{and}\quad
+\left\lceil\log_2(H+1)\right\rceil.
+\tag{NAR.11.13}
+$$
+
+**Proof.** Suppose two different age vectors received the same code in
+the delayed-cut task. Choose a differing coordinate $i$. The decoder
+would receive the same public $P,D,Q_i$, the same code and the same entire
+$Y_i$ from Theorem 11.5, but the two required outputs $H-a_i$ differ.
+No deterministic decoder can satisfy both. Every pair of vectors is
+separated in this way, so the encoder is injective on the family's
+$(H+1)^r$ distinct first rows. The code cannot access the chosen $i$ or
+lag during encoding. This applies ordinary answer counting to the
+actual entire-row witnesses, not to a scalar substitute for their input.
+
+For attainment, the already sufficient code of Theorem 11.3 has, on
+this family, the coordinates
+
+$$
+J^c_{w_i}(X_a)=s(w_i)+ib+a_i\qquad(i\in I).
+\tag{NAR.11.14}
+$$
+
+All frontier slots are reached, so this follows from the definition and
+$c(T_n)=n$. These coordinates take exactly $(H+1)^r$ different vector
+values. Under the finite-family promise one can equivalently subtract
+the public offsets, enumerate $I$ as $i_0,\ldots,i_{r-1}$, and encode
+
+$$
+M(a)=\sum_{h=0}^{r-1}a_{i_h}b^h,\qquad 0\le M(a)<b^r.
+\tag{NAR.11.15}
+$$
+
+For $b\ge2$, successive Euclidean division by $b$ recovers the unique
+$r$ digits, and every integer in this interval occurs. For $b=1$ all
+ages are zero and the sole code is zero. Recovering the vector permits
+(NAR.11.8) for every allowed $Q$, at every lag, not just the selected
+lower-bound rows.
+
+When $Q_i$ is known before encoding, only $a_i$ needs to be retained.
+The initial exterior gives it by (NAR.11.14), and the later entire row
+exposes the literal slot $i$ with clock $ib+a_i+k$. Subtract $ib+a_i$
+to obtain $k$. This works at all $k\ge0$, regardless of other ages.
+Conversely, vary $a_i$ through its $H+1$ choices with all other ages
+fixed. At lags $H-a_i$, Theorem 11.5 gives the same complete $Y_i$ and
+$H+1$ different outputs, forcing $H+1$ codes. Knowledge of the sole
+index before encoding is the changed quantifier that permits this price.
+
+A $B$-bit fixed-width code has at most $2^B$ values; conversely $N$
+values fit in $\lceil\log_2 N\rceil$ bits by numbering them. Substituting
+$N=b^r$ proves the first width in (NAR.11.13). It is a joint width,
+not $r\lceil\log_2b\rceil$ separately rounded registers. For instance
+$r=2,H=2$ needs nine values and four joint bits, while $r=3,H=2$
+needs 27 values and five joint bits, rather than six. The $H=0$ case
+has one value and zero bits. $\square$
+

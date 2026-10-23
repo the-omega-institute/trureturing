@@ -1,0 +1,117 @@
+## 8. 八、静态 \(\kappa\)、动态计数与边界义务不能直接拼成一个无条件直积
+
+当前动态未来商文档在这里作了重要限定。
+
+在指定的非单例 Fibonacci 深度先验下，若：
+
+$$
+r_k=\frac{\operatorname{Fib}_{k+1}}{\operatorname{Fib}_{k+3}}
+$$
+
+$$
+s_k=\frac{\operatorname{Fib}_{k+2}}{\operatorname{Fib}_{k+3}}
+$$
+
+则历史 $h$ 的深度后验满足：
+
+$$
+\nu_h(k)
+\propto
+\mu(k)\,
+r_k^{A_h}\,
+s_k^{B_h}
+$$
+
+其中：
+
+- $A_h$ 是历史中 $\alpha$ 的取得次数；
+- $B_h$ 是历史中 $\beta$ 的取得次数；
+- $a(h)\in\{p,\beta\}$ 是当前 phase。
+
+在该声明的活动域和非单例先验下，项目给出的未来等价关系为：
+
+$$
+h\sim_{\mathrm{Fut}}h'
+\iff
+\bigl(a(h),A_h,B_h\bigr)=
+\bigl(a(h'),A_{h'},B_{h'}\bigr)
+$$
+
+这意味着：
+
+$$
+\sigma(h)=\bigl(a(h),A_h,B_h\bigr)
+$$
+
+是该特定完整 future law 的最小精确摘要。
+
+但它一般不是有限状态摘要，因为：
+
+$$
+A_h,B_h\in\mathbb N
+$$
+
+是无界的。
+
+取一族历史：
+
+$$
+h_j=(\alpha\alpha)^j h_\ast
+$$
+
+则它们可以保持相同 phase，却具有：
+
+$$
+(A_{h_j},B_{h_j})=(2j+A_\ast,B_\ast)
+$$
+
+不同 $j$ 给出不同 future law，因此未来等价类无限。
+
+所以：
+
+$$
+\boxed{
+\text{有限维坐标}
+\neq
+\text{有限状态}
+\neq
+\text{有限比特}
+}
+$$
+
+现在可以定义更谨慎的分层状态：
+
+$$
+\mathcal S=
+\left(
+\kappa,\,
+a,\,
+A,\,
+B,\,
+\tau,\,
+e
+\right)
+$$
+
+其中：
+
+- $\kappa$：静态五态联合关系；
+- $a,A,B$：特定动态先验下的 future quotient；
+- $\tau$：边界义务，如 active、pending、delivered；
+- $e$：来源 epoch 或原始历史身份。
+
+但是不能无条件宣称：
+
+$$
+\mathcal S=
+\kappa\times(a,A,B)\times\tau\times e
+$$
+
+就是普适最小状态。因为 $\kappa$ 与深度后验是否共同出现，取决于：
+
+- 同一来源；
+- 联合概率律；
+- 同一 response kernel；
+- 同一取得记录；
+- 同一未来操作合同。
+

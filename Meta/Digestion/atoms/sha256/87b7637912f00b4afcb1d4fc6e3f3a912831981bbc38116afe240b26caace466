@@ -1,0 +1,48 @@
+**Proposition 14.6 (zero-information preparation obstruction).**
+Let $m=|F[\mathcal U_*]|=|G_*[\Theta_*]|\ge1$.
+In Definition 14.2, zero preparation calls force one actual
+export value, independently of the permitted $r,H,K$.
+If both phase call budgets are zero, feasibility is exactly
+$m=1$, for every $r,H,K\ge1$ and arbitrary nonnegative
+literal upper budgets. If the root is not cut, zero
+preparation literal budget also forces a constant actual code,
+even with an arbitrary finite preparation-call upper budget.
+
+More generally, if two actual sources give identical replies
+along the common preparation path, they reach the same code.
+If their reader replies from that code also agree along the
+reader path, a correct pair must give them the same whole target.
+The corresponding statement holds on the root task.
+
+**Proof.** At zero preparation calls the common initial state
+must already be a terminal latch on the nonempty domain;
+otherwise a required run invokes its running-state word.
+Its code is fixed. At zero reader calls the common exported
+code must already be a reader halt and gives one fixed output.
+Thus correctness on the entire fiber requires $m=1$.
+Conversely its one whole target, one common code latch and
+one fixed-output halt suffice, with zero native costs and
+one actual paid handoff.
+
+With the root uncut, the complete fixed exterior determines
+the current root constructor on every source of the fiber.
+A zero literal sum allows only empty-word invocations.
+Their replies are therefore constant. Induction from the
+common start makes all preparation state paths identical
+and their terminal code constant. Repeating a zero-length
+word costs another call but adds no distinction.
+
+For the general statement, determinism gives equal next
+states from equal current states and equal replies, first
+through preparation and then from the identical code
+through reading. A terminating identical reader path has
+one fixed whole output, so the targets must agree.
+This also proves the finite-root version.
+If the root is cut, prefix freedom gives
+$P=\{\varepsilon\}$ and the whole target is constant by
+Corollary 10.10; a zero-length call can then distinguish
+current root types but is still charged.
+These claims neither deny positive-information paid
+preparation nor transfer AG's different-port impossibility.
+$\square$
+

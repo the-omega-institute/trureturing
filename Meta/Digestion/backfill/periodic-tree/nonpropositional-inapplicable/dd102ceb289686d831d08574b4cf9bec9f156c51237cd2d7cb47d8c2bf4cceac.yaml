@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:dd102ceb289686d831d08574b4cf9bec9f156c51237cd2d7cb47d8c2bf4cceac
+  normalized_sha256: sha256:dd102ceb289686d831d08574b4cf9bec9f156c51237cd2d7cb47d8c2bf4cceac
+cas_ref: sha256:dd102ceb289686d831d08574b4cf9bec9f156c51237cd2d7cb47d8c2bf4cceac
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 英文证明段（**Proof.** Put m=p^(k+1) and n=p^k. BOTH indices are odd. The Catalan …）仅给出前文命题的推导或证明方向，不另提出独立结论。
+    previous_atom_id: e744d0c6b08b30f98963f6dff061fd224f3b20665699aa86acdefaa0d2297705
+    next_atom_id: 0e31cc73903afbc405bbb8fb9229e8aefc41da8cd27b2f7b00e858d5cb519262

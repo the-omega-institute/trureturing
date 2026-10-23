@@ -1,0 +1,30 @@
+**Assumption 15.1 (intersection order on the separated-age family).** Retain
+Assumption 14.1, the complete-row equivalence (NAR.14.3), the native conflict
+relation (NAR.14.4) and the acquired-row factor (NAR.14.6). Put
+$q=H+1$ and $A_H=\{0,\ldots,H\}^{I}$. A finite menu $\mathcal M$ is
+$q$-wise intersecting when every nonempty subfamily of at most $q$ members
+has nonempty intersection. Equivalently, every $q$-tuple of menu members,
+with repetitions allowed, has nonempty intersection. Repetitions are part of
+the definition: they make the condition meaningful when the menu has fewer
+than $q$ members.
+
+The encoder uses the genuinely acquired initial row and exports the code
+before the future member $S$ and lag are chosen, then discards that row.
+The only later inputs are
+the code, the public controls and $S$, and the complete later row specified
+in Assumption 14.1. Its guards and hidden equality/disequality partition are
+included. All surviving source-bearing distinctions count toward the code;
+there is no additional Read, hidden-value, source or epoch oracle. Both lag
+conventions and the genuine same-source pure-$\rho$ histories of that
+assumption remain in force. A code's labels have no prescribed order.
+
+For $a,b\in A_H$, write $a\mathrel{\to_+}b$ when some $S\in\mathcal M$
+and some integer $d>0$ satisfy $b_i-a_i=d$ for every $i\in S$. Write
+$a\mathrel{\to_<}b$ when some $S\in\mathcal M$ satisfies $a_i<b_i$ for every
+$i\in S$. These are relations between alternative initial age profiles. They
+are not the evolution of one actual source under $\rho$: a path may reset
+coordinates outside its witnessing region, whereas actual $\rho$ advances
+every original slot. The relation $\to_+$ is contained in $\to_<$. Without
+pairwise intersection the relations are directed graphs and may contain both
+opposite arcs.
+

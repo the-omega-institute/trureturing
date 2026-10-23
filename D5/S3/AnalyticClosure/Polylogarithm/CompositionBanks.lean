@@ -6,6 +6,7 @@
    utility: none
    digest: Endpoint limits and strict conjugate banks for the actual positive-composition branch. -/
 
+import Batteries.Tactic.OpenPrivate
 import D5.S3.AnalyticClosure.Polylogarithm.CompositionBoundary
 import D5.S3.AnalyticClosure.Polylogarithm.CompositionBanksIntegralControl
 import D5.S3.AnalyticClosure.Polylogarithm.CompositionBanksLeadingTransport

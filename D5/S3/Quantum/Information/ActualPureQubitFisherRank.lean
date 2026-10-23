@@ -6,7 +6,9 @@
    utility: none
    digest: Spectral Fisher lower bounds and the rank alternative for pure-qubit readouts. -/
 
+import D5.S3.Weil.ZetaLinear.RankTrace
 import D5.S3.Quantum.Information.ActualPureQubitGeometry
+import D5.S3.Quantum.Information.SLDSpectralEnergy
 open scoped InnerProductSpace ComplexOrder Matrix.Norms.Elementwise Topology
 open Matrix Set Filter Finset
 open D5.S3.Quantum.Foundation.FiniteStateChannel
@@ -135,92 +137,6 @@ theorem actual_fisher : ∀ {n ι : Type} [Fintype n] [DecidableEq n] [Fintype �
           simp only [M, mul_smul_comm, smul_mul_assoc, ← Matrix.mul_assoc, hu, one_mul]
           simp only [Matrix.mul_assoc, hu, mul_one]
 
-  have spectral_energy {n : Type} [Fintype n] [DecidableEq n] (rho B L : Matrix n n ℂ) (hp : rho.PosSemidef)
-      (hL : L.IsHermitian) (hsolve : L * rho + rho * L = (2 : ℂ) • B) :
-      (L * rho * L).trace.re = spectralQFI rho B hp := by
-    classical
-    let U := hp.isHermitian.eigenvectorUnitary
-    let d : n → ℂ := fun i => (hp.isHermitian.eigenvalues i : ℂ)
-    let M := star (U : Matrix n n ℂ) * B * U
-    let N := star (U : Matrix n n ℂ) * L * U
-    have hs : rho = (U : Matrix n n ℂ) * diagonal d * star (U : Matrix n n ℂ) := by
-      simpa [U, d, Unitary.conjStarAlgAut_apply, Function.comp_def] using hp.isHermitian.spectral_theorem
-    have hN : N.IsHermitian := Matrix.isHermitian_conjTranspose_mul_mul _ hL
-    have hu : star (U : Matrix n n ℂ) * (U : Matrix n n ℂ) = 1 := U.property.1
-    have hu' : (U : Matrix n n ℂ) * star (U : Matrix n n ℂ) = 1 := U.property.2
-    have hdiag : star (U : Matrix n n ℂ) * rho * (U : Matrix n n ℂ) = diagonal d := by
-      rw [hs]
-      simp only [← Matrix.mul_assoc, hu, one_mul]
-      simp only [Matrix.mul_assoc, hu, mul_one]
-    have hentry (i j : n) : N i j * (d i + d j) = 2 * M i j := by
-      have he := congrArg (fun X : Matrix n n ℂ =>
-        (star (U : Matrix n n ℂ) * X * (U : Matrix n n ℂ)) i j) hsolve
-      have heq : star (U : Matrix n n ℂ) * (L * rho + rho * L) * U =
-          N * diagonal d + diagonal d * N := by
-        rw [← hdiag]
-        dsimp only [N]
-        simp only [mul_add, add_mul, Matrix.mul_assoc, ← mul_assoc (U : Matrix n n ℂ), hu', one_mul]
-      rw [heq] at he
-      change (N * diagonal d + diagonal d * N) i j = _ at he
-      simp only [Matrix.add_apply, mul_diagonal, diagonal_mul, Matrix.mul_smul,
-        Matrix.smul_mul, Matrix.smul_apply, smul_eq_mul] at he
-      change N i j * d j + d i * N i j = 2 * M i j at he
-      linear_combination he
-    have hterm (i j : n) :
-        2 * Complex.normSq (M i j) /
-          (hp.isHermitian.eigenvalues i + hp.isHermitian.eigenvalues j) =
-        (hp.isHermitian.eigenvalues i + hp.isHermitian.eigenvalues j) / 2 *
-          Complex.normSq (N i j) := by
-      have he := hentry i j
-      have hm : M i j = ((d i + d j) / 2) * N i j := by linear_combination -he / 2
-      rw [hm, map_mul]
-      have hd : (d i + d j) / 2 =
-          (((hp.isHermitian.eigenvalues i + hp.isHermitian.eigenvalues j) / 2 : ℝ) : ℂ) := by
-        simp [d]
-      rw [hd, Complex.normSq_ofReal]
-      by_cases hz : hp.isHermitian.eigenvalues i + hp.isHermitian.eigenvalues j = 0
-      · simp [hz]
-      · field_simp
-        <;> ring
-    have heTrace : (L * rho * L).trace = (N * diagonal d * N).trace := by
-      rw [← hdiag]
-      dsimp only [N]
-      simp only [Matrix.mul_assoc, ← mul_assoc (U : Matrix n n ℂ), hu', one_mul]
-      rw [trace_mul_comm (star (U : Matrix n n ℂ))]
-      simp only [Matrix.mul_assoc, hu', mul_one]
-    have heSum : (L * rho * L).trace.re =
-        ∑ i, ∑ j, hp.isHermitian.eigenvalues j * Complex.normSq (N i j) := by
-      rw [heTrace]
-      simp only [Matrix.trace, Matrix.diag]
-      simp only [Matrix.mul_apply (M := N * diagonal d) (N := N), mul_diagonal, Complex.re_sum]
-      apply Finset.sum_congr rfl
-      intro i _
-      apply Finset.sum_congr rfl
-      intro j _
-      have hn : N j i = star (N i j) := by simpa using (hN.apply j i).symm
-      rw [hn]
-      have : N i j * d j * star (N i j) = d j * (Complex.normSq (N i j) : ℂ) := by
-        rw [Complex.normSq_eq_conj_mul_self]
-        change _ = d j * (star (N i j) * N i j)
-        ring
-      rw [this]
-      simp [d]
-    have hswap : (∑ i, ∑ j, hp.isHermitian.eigenvalues i * Complex.normSq (N i j)) =
-        ∑ i, ∑ j, hp.isHermitian.eigenvalues j * Complex.normSq (N i j) := by
-      rw [Finset.sum_comm]
-      apply Finset.sum_congr rfl
-      intro i _
-      apply Finset.sum_congr rfl
-      intro j _
-      rw [← hN.apply i j]
-      simp only [Complex.star_def, Complex.normSq_conj]
-    rw [heSum]
-    unfold spectralQFI
-    change _ = ∑ i, ∑ j, 2 * Complex.normSq (M i j) / _
-    simp_rw [hterm, add_div, add_mul]
-    simp only [Finset.sum_add_distrib, div_mul_eq_mul_div, ← Finset.sum_div]
-    rw [hswap]
-    ring
 
   intro n ι instN instD instI N rho p v hN hNsum hp hd hpos hread
   classical
@@ -273,7 +189,7 @@ theorem actual_fisher : ∀ {n ι : Type} [Fintype n] [DecidableEq n] [Fintype �
   have hsum := Finset.sum_le_sum (fun j (_ : j ∈ Finset.univ) => hterm j)
   have heq : (∑ j, (trace (N j*(L*rho 0*L))).re) = (trace (L*rho 0*L)).re := by
     rw [← Complex.re_sum, ← trace_sum, ← Finset.sum_mul, hNsum, one_mul]
-  rw [heq, spectral_energy (rho 0) D L hpos.self_of_nhds hL hSLD] at hsum
+  rw [heq, D5.S3.Quantum.Information.SLDSpectralEnergy.spectral_energy (rho 0) D L hpos.self_of_nhds hL hSLD] at hsum
   exact hsum
 
 theorem actual_rank_alternative : ∀ {m : ℕ}
@@ -339,34 +255,8 @@ theorem actual_rank_alternative : ∀ {m : ℕ}
   have matrix_bloch_geometry (M : Matrix (Fin 2) (Fin 2) ℂ)
       (hM : M.IsHermitian) :
       M = blochMatrix (Matrix.trace M).re (bloch M) ∧
-      (Matrix.trace M = 1 → M * M = M → ‖bloch M‖ = 1) := by
-    have h00 : (M 0 0).im = 0 := by
-      have h := congrArg Complex.im (hM.apply 0 0)
-      simp at h
-      linarith
-    have h11 : (M 1 1).im = 0 := by
-      have h := congrArg Complex.im (hM.apply 1 1)
-      simp at h
-      linarith
-    have h10r : (M 1 0).re = (M 0 1).re := by
-      have h := congrArg Complex.re (hM.apply 1 0)
-      simpa using h.symm
-    have h10i : (M 1 0).im = -(M 0 1).im := by
-      have h := congrArg Complex.im (hM.apply 1 0)
-      simpa using h.symm
-    constructor
-    · ext i j
-      fin_cases i <;> fin_cases j <;> apply Complex.ext <;>
-        simp [blochMatrix, bloch, Matrix.trace, Fin.sum_univ_two, h00, h11, h10r, h10i] <;> ring
-    · intro ht hp
-      have htr := congrArg Complex.re ht
-      have hsq := congrArg (fun X : Matrix (Fin 2) (Fin 2) ℂ => (Matrix.trace X).re) hp
-      simp [Matrix.trace, Matrix.mul_apply, Fin.sum_univ_two, h00, h11, h10r, h10i] at htr hsq
-      have hnorm : ‖bloch M‖ ^ 2 = 1 := by
-        rw [EuclideanSpace.real_norm_sq_eq]
-        simp [bloch, Fin.sum_univ_succ]
-        nlinarith [hsq, sq_nonneg ((M 0 0).re - (M 1 1).re)]
-      nlinarith [norm_nonneg (bloch M)]
+      (Matrix.trace M = 1 → M * M = M → ‖bloch M‖ = 1) :=
+    bloch_geometry_of_isHermitian M hM
 
   have trace_bloch_pairing (M N : Matrix (Fin 2) (Fin 2) ℂ)
       (hM : M.IsHermitian) (hN : N.IsHermitian) :
@@ -459,11 +349,8 @@ theorem actual_rank_alternative : ∀ {m : ℕ}
       apply Matrix.IsHermitian.ext
       intro i j
       fin_cases i <;> fin_cases j <;> apply Complex.ext <;> simp [blochMatrix]
-    have ht : Matrix.trace (blochMatrix a r) = (a : ℂ) := by
-      apply Complex.ext <;> simp [blochMatrix, Matrix.trace, Fin.sum_univ_two] <;> ring
-    have hb : bloch (blochMatrix a r) = r := by
-      ext i
-      fin_cases i <;> simp [bloch, blochMatrix] <;> ring
+    have ht : Matrix.trace (blochMatrix a r) = (a : ℂ) := blochMatrix_trace a r
+    have hb : bloch (blochMatrix a r) = r := bloch_blochMatrix a r
     have hd : (Matrix.det (blochMatrix a r)).re = (a^2 - ‖r‖^2)/4 := by
       rw [EuclideanSpace.real_norm_sq_eq]
       simp [blochMatrix, Matrix.det_fin_two, Fin.sum_univ_three]
@@ -471,12 +358,8 @@ theorem actual_rank_alternative : ∀ {m : ℕ}
     refine ⟨hh, ht, hb, hd, ?_⟩
     constructor
     · intro hp
-      have htpos := (Complex.nonneg_iff.mp hp.trace_nonneg).1
-      have hdpos := (Complex.nonneg_iff.mp hp.det_nonneg).1
-      rw [ht] at htpos
-      rw [hd] at hdpos
-      simp only [Complex.ofReal_re] at htpos
-      nlinarith [norm_nonneg r]
+      simpa only [ht, hb, Complex.ofReal_re] using
+        norm_bloch_le_trace_of_posSemidef (blochMatrix a r) hp
     · intro hbound
       apply hh.posSemidef_iff_eigenvalues_nonneg.mpr
       have hs := congrArg Complex.re hh.trace_eq_sum_eigenvalues

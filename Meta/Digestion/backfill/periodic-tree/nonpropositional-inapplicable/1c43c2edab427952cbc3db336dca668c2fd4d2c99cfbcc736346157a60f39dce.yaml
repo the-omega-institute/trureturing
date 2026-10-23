@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:1c43c2edab427952cbc3db336dca668c2fd4d2c99cfbcc736346157a60f39dce
+  normalized_sha256: sha256:1c43c2edab427952cbc3db336dca668c2fd4d2c99cfbcc736346157a60f39dce
+cas_ref: sha256:1c43c2edab427952cbc3db336dca668c2fd4d2c99cfbcc736346157a60f39dce
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 英文证明段（**Proof.** Apply QR6 to D_r, then use the classification in Appendix F…）仅给出前文命题的推导或证明方向，不另提出独立结论。
+    previous_atom_id: abbbb271cb42aabe9193ac9ae1daf5ddbc7af63bb2c0f0f018cfb96fc5f7927c
+    next_atom_id: c1a5cb2d8f3a3114f88b1b03d9f5b4cc7a4221a75d8f6f5c351eea0d9887eb4b

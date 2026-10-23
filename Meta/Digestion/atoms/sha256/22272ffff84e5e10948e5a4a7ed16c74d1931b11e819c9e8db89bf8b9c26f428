@@ -1,0 +1,11 @@
+### 75.11 数学来源、术语对应及结论范围
+
+七位达到者、四原类穷尽障碍、全部短探针归纳、全策略下界及额外恢复结论，采用内部未发表数学材料111的完整连贯论证。材料109是唯一固定 $C_1$–$C_{50}$ 编号和转移供应；材料110和第74章供应既有两探针及十一位充分事实。这里的数学结算是这组已给材料中的取得费用增量，不作全球新颖性断言。
+
+成熟术语只作下面的有界对应，不供应常数七的定理。
+
+| 来源 | 定义对应 | 使用边界 |
+| --- | --- | --- |
+| [AutomataLib CharacterizingSets](https://learnlib.github.io/automatalib/maven-site/0.11.0/apidocs/net/automatalib/util/automaton/equivalence/CharacterizingSets.html) 的全自动机及单状态定义 | 对每一可区别状态对，特征词族内有一个词给不同响应；对应恢复式响应向量的分离 | $\forall$ 状态对 $\exists$ 词不变成一个统一单词，也不授予原检查点恢复或价格 |
+| Frohme，[Active Automata Learning with Adaptive Distinguishing Sequences](https://arxiv.org/html/1902.01139)，第7节 | 状态识别问实验前状态；PDS预先固定一个词，ADS按可见历史逐位分支 | 本章另有恢复节点及首次终端禁令，不能把普通可继续输出的 Mealy 接口完整性移入终端之后；存在性和复杂度定理不移作本机结果 |
+| 同文第8.1节 | symbol query继续当前系统；reset无返回并回到学习接口的初始状态 | 学习接口的通常根重置不证明能保留任意原未知检查点；查询次数与实际执行位数分别计量 |

@@ -21,7 +21,7 @@ identity to divisibility of each summand in the triangular equation.
 Strong induction then proves that e(n) divides the nth coefficient.
 The slope-two instance proves only the divisibility conjecture of A395833;
 the distinct mod-three clause is not asserted here.
-Source: `Library/ArithSums/hanna2026a395833div.md`.
+Source: `Library/ArithSums/hanna2026a395833.md`.
 -/
 
 open PowerSeries

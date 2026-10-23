@@ -23,19 +23,19 @@ open D5.S3.Quantum.Decoherence.ProjectedUnistochasticDynamics
 namespace D5.S3.Quantum.Information.CoherentCopyCorrelationTax
 variable {n : Type*} [Fintype n] [DecidableEq n]
 
-private def copyIsometry : Matrix (n × n) n ℂ :=
+def copyIsometry : Matrix (n × n) n ℂ :=
   fun a i => if a.1 = a.2 then (1 : Matrix n n ℂ) a.1 i else 0
 
-private theorem copyIsometry_star_mul :
+theorem copyIsometry_star_mul :
     (copyIsometry (n := n))ᴴ * (copyIsometry (n := n)) = 1 := by
   ext i j
   simp [Matrix.mul_apply, copyIsometry, Fintype.sum_prod_type,
     Matrix.conjTranspose_apply, Matrix.one_apply, eq_comm]
 
-private def copyMatrix (M : Matrix n n ℂ) : Matrix (n × n) (n × n) ℂ :=
+def copyMatrix (M : Matrix n n ℂ) : Matrix (n × n) (n × n) ℂ :=
   (copyIsometry (n := n)) * M * (copyIsometry (n := n))ᴴ
 
-private theorem copyMatrix_entry (M : Matrix n n ℂ) (a b : n × n) :
+theorem copyMatrix_entry (M : Matrix n n ℂ) (a b : n × n) :
     copyMatrix M a b = if a.1 = a.2 then if b.1 = b.2 then M a.1 b.1 else 0 else 0 := by
   rcases a with ⟨a₁,a₂⟩
   rcases b with ⟨c,d⟩
@@ -62,7 +62,7 @@ theorem coherentCopyState_correlated_entry (rho : DensityState n) (i j : n) :
     (coherentCopyState rho).1 (i,i) (j,j) = rho.1 i j := by
   exact (copyMatrix_entry rho.1 (i,i) (j,j)).trans (by simp)
 
-private theorem partialTraceRight_copyMatrix (M : Matrix n n ℂ) :
+theorem partialTraceRight_copyMatrix (M : Matrix n n ℂ) :
     partialTraceRight (copyMatrix M) = Matrix.diagonal (fun i => M i i) := by
   ext i j
   by_cases h : i = j
@@ -195,6 +195,5 @@ theorem coherent_copy_correlation_tax (rho : DensityState n) :
   have h := pinching_entropy_identity rho
   linarith
 
-#print axioms coherent_copy_correlation_tax
 
 end D5.S3.Quantum.Information.CoherentCopyCorrelationTax

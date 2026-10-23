@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:dea10d2b543fcd6d11aaebdc8e4f1da287c3eb3b2faae995bc25200bea335b37
+  normalized_sha256: sha256:dea10d2b543fcd6d11aaebdc8e4f1da287c3eb3b2faae995bc25200bea335b37
+cas_ref: sha256:dea10d2b543fcd6d11aaebdc8e4f1da287c3eb3b2faae995bc25200bea335b37
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 定理 15.3（预测坐标、正锥与支撑内更新）。的证明段；本项只给出该陈述的论证及所用步骤的说明，不另立独立命题。命题陈述保留在前项。
+    previous_atom_id: 13d18b5f6db11656f8715d3fd3d801929f369c185b7a15b94a87117d27705920
+    next_atom_id: 0e4d5c919ee5dfc366b575ae400a712190bfeb2faaffff0259ce5803b6d3ab14

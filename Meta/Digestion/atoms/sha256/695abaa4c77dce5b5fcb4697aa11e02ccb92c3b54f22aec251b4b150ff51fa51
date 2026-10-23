@@ -1,0 +1,28 @@
+**Definition 8.1 (unknown age and the two new prices).** Use the native
+finite ordered trees and actual constructor port of Assumption 1.1,
+and $T_n=\rho^n\alpha$ of Definition 2.1. This section has a separate
+entry contract: the source is one unknown $T_n$ with public finite
+integer endpoints $0\le L\le n\le U$. The reader initially knows only
+those endpoints and common controls. It must output $n$ correctly on
+every source in $[L,U]$ using stationary literal $\mathsf{Read}$ alone.
+There is no certified current age, acquired distinguishing history,
+subtree or epoch oracle, and no source update. Every submitted finite
+$L/R$ word costs one chronological call, including repetitions and the
+root word $\varepsilon$. A nonempty suffix at a leaf returns $\bot$.
+
+For a deterministic reader $A$ terminating on this entire finite interval,
+let $q_A(n)$ be its chronological calls and let $p_A(n)$ be the maximum
+submitted relative word length, with value zero for no submissions. Set
+
+$$
+K(L,U)=\min_A\max_{L\le n\le U}q_A(n),\qquad
+M(L,U)=\min_A\max_{L\le n\le U}p_A(n).
+\tag{AOF.23}
+$$
+
+These are separate worst-case coordinates on the same source domain.
+Their maxima need not occur on the same source. The peak in (AOF.23)
+is not the sum $\ell$ in (AOF.2); no expected, randomized, total-length,
+workspace or physical-time objective is imposed. Acquisition and local
+work are not source queries supplied by this interval contract.
+

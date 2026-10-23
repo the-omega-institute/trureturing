@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:53141233bfaaa957db7667df81f8be4470560bba3a2df8f4acffb86107c804ff
+  normalized_sha256: sha256:53141233bfaaa957db7667df81f8be4470560bba3a2df8f4acffb86107c804ff
+cas_ref: sha256:53141233bfaaa957db7667df81f8be4470560bba3a2df8f4acffb86107c804ff
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 证明段或其连续推导片段（**证明（有理包络）。** [支撑区间证据](../../reports/quantized-gh/actual-5040-fixed-box-0910.md#i35-fixed-…）只论证所在节前文的结论，不另列新的独立命题。
+    previous_atom_id: 41c90b2b5c7115b4bc7e0eb679094e9050882b92862d486665a3e2c34e2faa42
+    next_atom_id: 345aa293198f1d1c2ee2e137897f44e3c87cbd69ffa5e80af5c1ae7a23a0bf71

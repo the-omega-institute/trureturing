@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:19b5f45b6d5b89c4cf72790bd2031a2a92b8bff4105c9725c1518476426df546
+  normalized_sha256: sha256:19b5f45b6d5b89c4cf72790bd2031a2a92b8bff4105c9725c1518476426df546
+cas_ref: sha256:19b5f45b6d5b89c4cf72790bd2031a2a92b8bff4105c9725c1518476426df546
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 非命题文本：15.1 Gaussian 观察轴：仅为节标题及导引或设定适用条件；本片段未陈述后续命题的结论。
+    previous_atom_id: 1064eb5f3375967fcc3a813e5b530065bf5beb85f373b5a5320972f95ed01d8e
+    next_atom_id: 9c535655301d950ca8e1499866f7a57d3fac410c3cfdb2142cd4b7852bb5e7f9

@@ -1,0 +1,35 @@
+**Proposition 107.4 (a two-dimensional leakage witness).**
+
+Let $V=\mathbb R^2$,
+
+$$
+A=\begin{pmatrix}1&0\\0&2\end{pmatrix},
+\qquad
+C(x_1,x_2)=x_1,
+\qquad
+T(x_1,x_2)=(x_2,x_1).
+\tag{107.5}
+$$
+
+Then
+
+$$
+K_{\mathrm{stat}}=\mathbb R(0,1),
+\qquad
+K_{\mathrm{fut}}=\{0\}.
+\tag{107.6}
+$$
+
+In fact $q=(0,1)$ is invisible to every passive response,
+
+$$
+C e^{-tA}q=0\quad(t\ge0),
+$$
+
+but after one intervention it is visible:
+
+$$
+C e^{-tA}Tq=e^{-t}\ne0.
+\tag{107.7}
+$$
+

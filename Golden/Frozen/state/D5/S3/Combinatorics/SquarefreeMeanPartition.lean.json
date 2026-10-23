@@ -1,1 +1,1 @@
-{"statement_id":"sha256:140a1a6386bae9c44e068681c06cf16021707935b90907de3753883153430494"}
+{"statement_id":"sha256:140a1a6386bae9c44e068681c06cf16021707935b90907de3753883153430494","declarations":[{"declaration_name_key":"ns(ns(ns(ns(ns(n0,2:D5),2:S3),13:Combinatorics),23:SquarefreeMeanPartition),5:claim)","kind":"def"},{"declaration_name_key":"ns(ns(ns(ns(ns(n0,2:D5),2:S3),13:Combinatorics),23:SquarefreeMeanPartition),6:result)","kind":"theorem"}]}

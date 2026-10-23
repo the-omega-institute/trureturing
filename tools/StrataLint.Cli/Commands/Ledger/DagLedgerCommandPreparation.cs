@@ -1,170 +1,10 @@
 using System.Collections.Immutable;
-using System.Security.Cryptography;
-using System.Text;
-using System.Text.Json;
 using StrataLint.Engine;
 
 namespace StrataLint.Cli;
 
-internal sealed record DagLedgerCommandContext(
-    string LedgerPath,
-    ImmutableArray<RepositoryFile> BaselineFiles,
-    FrozenLedgerConsistent Baseline,
-    FrozenLedgerBaseView BaseView,
-    FrozenMaterialCatalog Catalog,
-    LeanAxiomReport Report,
-    RepositorySnapshot Snapshot);
-
-internal sealed record DagLedgerCandidateMaterial(
-    string LedgerPath,
-    FrozenLedgerBaseView BaseView,
-    ImmutableArray<RepositoryFile> BaselineFiles,
-    FrozenMaterialCatalog Catalog,
-    LeanAxiomReport Report,
-    RawChangeSet Changes,
-    RepositorySnapshot Snapshot);
-
 internal static class DagLedgerCommandPreparation
 {
-    internal static DagLedgerCommandContext Prepare(
-        string repositoryRoot,
-        IRepositoryGateway repository,
-        string candidateLeanReport,
-        ImmutableArray<RepositoryFile> trustedBaselineFiles = default) =>
-        Prepare(
-            repositoryRoot,
-            repository,
-            new FileLeanReportSource(candidateLeanReport),
-            trustedBaselineFiles);
-
-    /// Same preparation, with the raw report supplied by the caller rather than read from a path.
-    /// Callers that already hold an ILeanReportSource (the CLI environment does) get the
-    /// authoritative FrozenLedgerConsistent without a second copy of this assembly line.
-    internal static DagLedgerCommandContext Prepare(
-        string repositoryRoot,
-        IRepositoryGateway repository,
-        ILeanReportSource leanReportSource,
-        ImmutableArray<RepositoryFile> trustedBaselineFiles = default)
-    {
-        var candidate = PrepareCandidate(
-            repositoryRoot,
-            repository,
-            leanReportSource,
-            trustedBaselineFiles);
-        var baseline = candidate.BaseView.ToWriterBaseline();
-        return new DagLedgerCommandContext(
-            candidate.LedgerPath,
-            candidate.BaselineFiles,
-            baseline,
-            candidate.BaseView,
-            candidate.Catalog,
-            candidate.Report,
-            candidate.Snapshot);
-    }
-
-    internal static DagLedgerCandidateMaterial PrepareCandidate(
-        string repositoryRoot,
-        IRepositoryGateway repository,
-        ILeanReportSource leanReportSource,
-        ImmutableArray<RepositoryFile> trustedBaselineFiles = default)
-    {
-        var ledgerPath = Path.Combine(
-            repositoryRoot,
-            FrozenLedgerChangeClassifier.AcceptedRoot.Replace('/', Path.DirectorySeparatorChar));
-        var baselineFiles = ReadLedgerDirectoryFiles(ledgerPath);
-        var trustedFiles = trustedBaselineFiles.IsDefault
-            ? baselineFiles
-            : trustedBaselineFiles;
-        var baseView = FrozenLedgerBaseViewReader.Read(RepositorySnapshot.Create(
-            trustedFiles.ToImmutableDictionary(static file => file.Path)));
-        var truth = BuildLeanTruth(repository, leanReportSource);
-        var snapshot = truth.Snapshot;
-        var report = truth.Report;
-        var lean = truth.Lean;
-        var changes = Ask(repository.ReadCurrentChanges);
-        var catalog = BuildWriterCatalog(
-            snapshot,
-            lean,
-            baseView,
-            changes,
-            Ask(repository.ResolveCurrentRevision));
-
-        return new DagLedgerCandidateMaterial(
-            ledgerPath,
-            baseView,
-            baselineFiles,
-            catalog,
-            report,
-            changes,
-            snapshot);
-    }
-
-    /// Reads the repository, validates the Lean closure and builds the truth DAG -- the part of
-    /// Prepare that any DAG consumer needs, without the frozen-ledger work. Callers that only want
-    /// the graph (the DAG projection command) share this assembly line rather than growing a
-    /// second, drifting copy of it.
-    /// Builds material only for candidate-affected Closed paths. The DAG still carries the complete
-    /// candidate Closed path set so writers can detect additions and removals without recomputing
-    /// identities already trusted from the base ledger.
-    internal static FrozenMaterialCatalog BuildWriterCatalog(
-        RepositorySnapshot snapshot,
-        AcceptedLeanClosure lean,
-        FrozenLedgerBaseView baseView,
-        RawChangeSet changes,
-        FrozenRevisionIdentity currentIdentity)
-    {
-        _ = currentIdentity;
-        var states = LeanTruthStates.Resolve(snapshot, lean);
-        var adjacency = LeanImportAdjacency.Build(snapshot, lean);
-        var closedPaths = states
-            .Where(static item => item.Value is TruthState.Closed)
-            .Select(static item => item.Key)
-            .ToImmutableArray();
-        var changedPaths = changes.Paths.ToImmutableHashSet();
-        var selectedPaths = closedPaths
-            .Where(path => !baseView.ActiveByPath.TryGetValue(path, out var entry)
-                || changedPaths.Contains(path))
-            .ToHashSet();
-        foreach (var path in LeanImportAdjacency.DependenciesFirst(closedPaths, adjacency)
-            .Where(path => states.TryGetValue(path, out var state) && state is TruthState.Closed))
-        {
-            if (adjacency[path].Any(selectedPaths.Contains))
-            {
-                selectedPaths.Add(path);
-            }
-        }
-
-        return FrozenContentAddress.BuildAdmissionCatalog(
-            snapshot,
-            lean,
-            states,
-            adjacency,
-            selectedPaths,
-            baseView.ActiveByPath);
-    }
-
-    /// Builds material for every Closed module. Strict read-model consumers need the complete
-    /// catalog so ValidateHistory can reconcile the entire active frozen set, not only a changed
-    /// candidate scope.
-    internal static FrozenMaterialCatalog BuildCompleteCatalog(
-        RepositorySnapshot snapshot,
-        AcceptedLeanClosure lean,
-        ImmutableDictionary<RepoPath, TruthState> states,
-        ImmutableDictionary<RepoPath, ImmutableArray<RepoPath>> adjacency,
-        FrozenLedgerBaseView baseView,
-        FrozenRevisionIdentity currentIdentity)
-    {
-        _ = baseView;
-        _ = currentIdentity;
-        return FrozenContentAddress.Build(snapshot, lean, states, adjacency) switch
-        {
-            FrozenMaterialOutcome.Accepted accepted => accepted.Capability,
-            FrozenMaterialOutcome.Rejected rejected => throw new InvalidOperationException(
-                "complete frozen catalog build failed: " + rejected.Message),
-            _ => throw new InvalidOperationException("unknown frozen material outcome"),
-        };
-    }
-
     internal static TruthContext BuildTruth(
         IRepositoryGateway repository,
         ILeanReportSource leanReportSource)
@@ -174,13 +14,14 @@ internal static class DagLedgerCommandPreparation
         return BuildTruth(snapshot, report, lean);
     }
 
-    private static TruthContext BuildLeanTruth(
+    internal static TruthContext BuildTruthScoped(
         IRepositoryGateway repository,
-        ILeanReportSource leanReportSource)
+        ILeanReportSource leanReportSource,
+        IReadOnlyCollection<RepoPath> requestedTargets)
     {
         var snapshot = Decode(Ask(() => repository.ReadCurrentProjection(TruthExportCommand.IsTruthInput)));
-        var (report, lean) = LoadLean(snapshot, leanReportSource);
-        return new TruthContext(snapshot, lean, report);
+        var report = LeanReportSourceScope.Load(leanReportSource, snapshot, requestedTargets);
+        return BuildTruth(snapshot, report, ValidateLean(snapshot, report));
     }
 
     internal static TruthContext BuildTruth(
@@ -253,87 +94,9 @@ internal static class DagLedgerCommandPreparation
     {
         public LeanAxiomReport Load(RepositorySnapshot snapshot) =>
             RawLeanReportArtifact.ReadFile(path, snapshot);
-    }
 
-    internal static ImmutableArray<DagLedgerFileEvent> LoadLedgerDirectory(
-        string directory,
-        string label) =>
-        LoadLedgerFiles(ReadLedgerDirectoryFiles(directory), label);
-
-    internal static ImmutableArray<RepositoryFile> ReadLedgerDirectoryFiles(string directory) =>
-        Directory.EnumerateFiles(directory, "*.json")
-            .Select(path => CreateLedgerRepositoryFile(
-                path,
-                ImmutableArray.CreateRange(File.ReadAllBytes(path))))
-            .ToImmutableArray();
-
-    internal static RepositoryFile CreateLedgerRepositoryFile(
-        string path,
-        ImmutableArray<byte> bytes) =>
-        new(
-            RepoPath.CreateKnown(
-                $"{FrozenLedgerChangeClassifier.AcceptedRoot}/{Path.GetFileName(path)}"),
-            bytes,
-            Encoding.UTF8.GetString(bytes.AsSpan()));
-
-    internal static ImmutableArray<DagLedgerFileEvent> LoadLedgerFiles(
-        IEnumerable<RepositoryFile> files,
-        string label) =>
-        LoadLedgerFiles(files, label, trustRecordedHashes: false);
-
-    internal static ImmutableArray<DagLedgerFileEvent> LoadTrustedLedgerFiles(
-        IEnumerable<RepositoryFile> files,
-        string label) =>
-        LoadLedgerFiles(files, label, trustRecordedHashes: true);
-
-    private static ImmutableArray<DagLedgerFileEvent> LoadLedgerFiles(
-        IEnumerable<RepositoryFile> files,
-        string label,
-        bool trustRecordedHashes)
-    {
-        var events = (trustRecordedHashes
-            ? DagLedgerLoader.LoadTrustedFiles(files)
-            : DagLedgerLoader.LoadFiles(files)) switch
-        {
-            DagLedgerFilesLoadOutcome.Loaded loaded => loaded.Events,
-            DagLedgerFilesLoadOutcome.Invalid invalid => throw new InvalidOperationException(
-                label + " syntax is invalid: " + invalid.Message),
-            _ => throw new InvalidOperationException("unknown ledger files load outcome"),
-        };
-        if (!DagLedgerLoader.TryOrderClosedDag(
-                events,
-                ImmutableArray<string>.Empty,
-                out var ordered))
-        {
-            throw new InvalidOperationException(label + " does not form a closed dependency DAG");
-        }
-
-        return ordered;
-    }
-
-    internal static ImmutableArray<DagLedgerFileEvent> ValidateGeneratedEventFiles(
-        FrozenLedgerBaseView baseView,
-        ImmutableArray<RepositoryFile> files,
-        string label)
-    {
-        var events = DagLedgerLoader.LoadFiles(files) switch
-        {
-            DagLedgerFilesLoadOutcome.Loaded loaded => loaded.Events,
-            DagLedgerFilesLoadOutcome.Invalid invalid => throw new InvalidOperationException(
-                label + " syntax is invalid: " + invalid.Message),
-            _ => throw new InvalidOperationException("unknown ledger files load outcome"),
-        };
-        if (!DagLedgerLoader.TryOrderIncrementalDag(
-                events,
-                baseView.EventIdentities,
-                baseView.EventHashes,
-                out var ordered))
-        {
-            throw new InvalidOperationException(
-                label + " does not extend the trusted frozen-ledger dependency DAG");
-        }
-
-        return ordered;
+        public LeanAxiomReport Load(LeanReportScope scope) =>
+            RawLeanReportArtifact.ReadFileForScopeOrFull(path, scope);
     }
 
     /// Bytes that will not decode are a fault in the repository we were handed, not a verdict about

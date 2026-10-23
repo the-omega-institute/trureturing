@@ -106,6 +106,7 @@ The source expression uses eigenvalues and the literal partialTraceRight.
 -/
 
 import D5.S3.Quantum.Information.SeparableStateLocalUnitaryStabilizerObstruction
+import D5.S3.Quantum.Divergence.ConditionalHockeyStickOrthogonalReduction
 import Mathlib.Analysis.Normed.Module.Normalize
 import D5.S3.Quantum.Fibers.PhysicalFiber
 import D5.S3.Quantum.CloningMachine
@@ -355,7 +356,7 @@ theorem qubit_entropy_det (τ : Matrix (Fin 2) (Fin 2) ℂ)
     rw [entropy_formula]
     rw [Real.binEntropy_eq_negMulLog_add_negMulLog_one_sub,show 1-b=a by linarith,add_comm]
 
-private theorem qubit_det_bounds (τ : Matrix (Fin 2) (Fin 2) ℂ)
+theorem qubit_det_bounds (τ : Matrix (Fin 2) (Fin 2) ℂ)
     (hτ : τ.PosSemidef) (ht : τ.trace = 1) : 0 ≤ τ.det.re ∧ τ.det.re ≤ 1/4 := by
   let a : ℝ := hτ.1.eigenvalues 0
   let b : ℝ := hτ.1.eigenvalues 1
@@ -433,11 +434,10 @@ private theorem bloch_sq {τ : Matrix (Fin 2) (Fin 2) ℂ} (hτ : τ ∈ {τ : M
 
 private theorem bloch_mem {τ : Matrix (Fin 2) (Fin 2) ℂ} (hτ : τ ∈ {τ : Matrix (Fin 2) (Fin 2) ℂ | IsDensity τ}) :
     ‖bloch τ‖ ∈ Icc 0 1 := by
-  have hd := qubit_det_bounds τ hτ.1 hτ.2
-  have hs := bloch_sq hτ
   constructor
-  · positivity
-  · nlinarith [norm_nonneg (bloch τ)]
+  · exact norm_nonneg _
+  · simpa only [hτ.2, Complex.one_re] using
+      D5.S3.Quantum.Information.ActualPureQubitCostInfimum.norm_bloch_le_trace_of_posSemidef τ hτ.1
 
 private theorem entropy_bloch {τ : Matrix (Fin 2) (Fin 2) ℂ} (hτ : τ ∈ {τ : Matrix (Fin 2) (Fin 2) ℂ | IsDensity τ}) :
     S τ = g ‖bloch τ‖ := by
@@ -637,7 +637,7 @@ end D5.S3.Quantum.Entanglement.GraphDensity.FormationBounds.Witness
 
 namespace D5.S3.Quantum.Entanglement.GraphDensity.FormationBounds.Direct
 open D5.S3.Quantum.Entanglement.GraphDensity.FormationBounds D5.S3.Quantum.Entanglement.GraphDensity.FormationBounds.Analytic D5.S3.Quantum.Entanglement.GraphDensity.FormationBounds.Witness
-private theorem pure_det (ψ : ((Fin 2 × Fin 2) → ℂ)) : (partialTraceRight (rankOneDensity ψ)).det.re = (‖(Matrix.of (Function.curry ψ)).det‖)^2 := by
+theorem pure_det (ψ : ((Fin 2 × Fin 2) → ℂ)) : (partialTraceRight (rankOneDensity ψ)).det.re = (‖(Matrix.of (Function.curry ψ)).det‖)^2 := by
   rw [D5.S3.Quantum.Information.SeparableStateLocalUnitaryStabilizerObstruction.marginal_amplitude,
     Matrix.det_mul, Matrix.det_conjTranspose]
   simp [Complex.mul_conj, Complex.normSq_eq_norm_sq, ← Complex.ofReal_pow]
@@ -857,9 +857,8 @@ private theorem marginal_branch_mixture {q k : ℕ} (part : Fin q → Fin k) (ψ
   apply Finset.sum_congr rfl
   intro j _
   rw [branch_outer part j ψ]
-  ext a a'
-  simp [partialTraceRight,D5.S3.Quantum.Information.PartialTraceMutualInformation.partialTraceRight,
-    Matrix.smul_apply,Finset.mul_sum,Complex.real_smul]
+  exact
+    D5.S3.Quantum.Divergence.ConditionalHockeyStickOrthogonalReduction.partialTraceRight_smul _ _
 
 private theorem pure_measurement_entropy {q k : ℕ} (part : Fin q → Fin k) (ψ : ((Fin 2 × Fin q) → ℂ))
     (hψ : ∑ x, ‖ψ x‖^2=1) :

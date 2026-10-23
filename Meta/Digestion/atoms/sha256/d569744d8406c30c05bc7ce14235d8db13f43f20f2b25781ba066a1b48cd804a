@@ -1,0 +1,39 @@
+**Definition 10.1 (one stationary finite table for a declared interval).**
+Keep exactly Definition 8.1: public integers $0\le L\le U$, one unknown
+stationary actual $T_n$ with $n\in[L,U]$, literal four-valued
+$\mathsf{Read}$ alone, and required complete numeric answer $n$.
+A finite Moore controller has a disjoint state set $\mathcal K=Q\sqcup H$,
+one common initial state $s_0\in\mathcal K$, and fixed tables
+
+$$
+\begin{aligned}
+\operatorname{addr}&:Q\longrightarrow\{L,R\}^*,\\
+\operatorname{next}&:Q\times\mathcal A\longrightarrow\mathcal K,
+&\mathcal A&=\{\alpha,\beta,\mathsf b,\bot\},\\
+\operatorname{out}&:H\longrightarrow\mathbb N.
+\end{aligned}
+\tag{AOF.30}
+$$
+
+At a running state $s$ it submits the one fixed fully materialized word
+$\operatorname{addr}(s)$, receives its actual reply $a$, and changes to
+$\operatorname{next}(s,a)$. The transition table is total on all four
+replies. A halt returns its fixed complete integer $\operatorname{out}(s)$,
+without another source call. Every installed state counts, including
+unused states, redundant halts and unreachable transition destinations.
+The current state is the entire changing accessible configuration.
+There is no separate address, reply, age, phase, interval, clock, counter,
+history or payload register and no source-dependent output decoder.
+In particular two different answers require two different halting states.
+
+The same table and initial state serve every age in this one interval.
+Literal addresses, transitions and outputs may depend on the declared
+endpoints. Their representation, static storage, installation, address
+transmission and complete output production have separate costs. This
+contract counts abstract states, chronological calls and peak submitted
+literal length, rather than total physical memory or elapsed time.
+Write $J_{\min}(L,U)$ and $S_{\min}(L,U)$ for the minimum running and
+total state counts among controllers terminating correctly throughout
+the interval. The call and peak coordinates keep (AOF.23)'s conventions,
+including one paid empty-word call and zero peak for no submissions.
+

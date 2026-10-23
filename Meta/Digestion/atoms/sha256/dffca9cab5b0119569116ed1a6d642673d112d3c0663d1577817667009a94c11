@@ -1,0 +1,20 @@
+**定义 2.1（自由原子树与纯替换过程）。** 令 $\mathcal T$ 是非空有限有序满二叉树的自由代数：
+
+$$
+t::=\alpha\mid\beta\mid\langle s,t\rangle .
+$$
+
+左右次序、每一次出现和括号结构都属于相等关系。定义唯一的替换算子
+$\rho:\mathcal T\to\mathcal T$：
+
+$$
+\rho(\alpha)=\beta,
+\qquad
+\rho(\beta)=\langle\beta,\alpha\rangle,
+\qquad
+\rho(\langle s,t\rangle)=\langle\rho(s),\rho(t)\rangle .
+$$
+
+本卷的合法操作只有恒等和非负次迭代 $\rho^k$。不免费加入逆替换、重新配对、交换、
+移根、子树编辑、隐藏档案或额外控制端口；加入其中任何一项都产生新的任务合同。
+

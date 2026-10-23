@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:5db546aa6938e58326e6a9fc7e9c26dde8a38ef41c7f028121e2006b1d8d46d5
+  normalized_sha256: sha256:5db546aa6938e58326e6a9fc7e9c26dde8a38ef41c7f028121e2006b1d8d46d5
+cas_ref: sha256:5db546aa6938e58326e6a9fc7e9c26dde8a38ef41c7f028121e2006b1d8d46d5
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 证明段（**证明。** 在 R15 中取 $x=\varphi^{r_p}$、$y=\varphi^{n_p}$、$k=n_p$、$l=r_p$；等…）只展开前文定理或命题的论证，式子和中间推导不另提出独立陈述。
+    previous_atom_id: 5604dd288e43d5cd29ad38674cf7d7395df0d7b908c150880475a125133d8751
+    next_atom_id: a36812c95bee5f0831950f91a041229a9cf600acc66cfbb084497a58cb829b43

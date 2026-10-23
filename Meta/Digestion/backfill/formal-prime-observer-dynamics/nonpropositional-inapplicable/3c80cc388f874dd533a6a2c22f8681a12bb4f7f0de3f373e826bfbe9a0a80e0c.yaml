@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:3c80cc388f874dd533a6a2c22f8681a12bb4f7f0de3f373e826bfbe9a0a80e0c
+  normalized_sha256: sha256:3c80cc388f874dd533a6a2c22f8681a12bb4f7f0de3f373e826bfbe9a0a80e0c
+cas_ref: sha256:3c80cc388f874dd533a6a2c22f8681a12bb4f7f0de3f373e826bfbe9a0a80e0c
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 非命题文本：F.2 初始机械范围勘正：仅解释记号或说明阅读、证明状态边界，不提出新的数学断言。
+    previous_atom_id: c0c8d9fb79ccc2281119bca8ca884f1a115a8771d0f6b6bf1f2b561d1ddb709f
+    next_atom_id: a8346d17b90f98d7c0bfb301714b065d556be8ca114a7aecccfed3037a318121

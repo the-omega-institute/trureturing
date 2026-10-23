@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:e60b9a34a4f265120bb29b91cb36706d82fbb71ccd3520577a11368bef950987
+  normalized_sha256: sha256:e60b9a34a4f265120bb29b91cb36706d82fbb71ccd3520577a11368bef950987
+cas_ref: sha256:e60b9a34a4f265120bb29b91cb36706d82fbb71ccd3520577a11368bef950987
+coverage_gids:
+  - gid: D5/S3/ConceptDynamics/ObservationOrder/MutualNondisturbanceOrderIndependence.mutual_nondisturbance_order_independence
+    target_statement_id: sha256:785757e61e36a735166ae0fb7037278416e2af51ced48a28fa9596588665be13
+receipts:
+  unresolved_subitems: []

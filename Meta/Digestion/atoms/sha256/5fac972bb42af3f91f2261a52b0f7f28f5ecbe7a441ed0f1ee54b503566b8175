@@ -1,0 +1,46 @@
+**Theorem 38.2 (Uniform false-output control bounds finite output on $B_\beta$).** For every procedure satisfying Definition 38.1 and every common $\delta\in[0,1]$, suppose
+
+$$
+\mu(F_y)\le\delta\qquad\text{for every }y\in X.
+\tag{38.2}
+$$
+
+Then, for every $x\in B_\beta$,
+
+$$
+\mu(H_x)\le\delta,\qquad
+\mu(U_x)\ge1-\delta,\qquad
+\mu(S_x)\le\delta-\mu(F_x)\le\delta.
+\tag{38.3}
+$$
+
+There is no uniform query-depth or execution-horizon assumption. At $\delta=0$, (38.3) asserts almost-sure absence of finite output at each obstructed source, without asserting absence on every declared tape. In particular, for $\delta<1$ no such procedure returns a finite upper proposal almost surely at every source. The obstructing set is the same procedure-independent $B_\beta$ as in Section 37, which has unbounded target in every finite probe cylinder by Theorem 37.2.
+
+**Proof.** Fix $x\in B_\beta$. Enumerate all primes increasingly as $p_1,p_2,\ldots$ and put $P_m=\{p_1,\ldots,p_m\}$ for $m\ge1$. On the common tape space define
+
+$$
+A_m=\{\theta\in H_x:\tau_x(\theta)\le m,\ Q_x(\theta)\subseteq P_m,\ C_x(\theta)\le m\}.
+\tag{38.4}
+$$
+
+These are measurable increasing events and $\bigcup_{m\ge1}A_m=H_x$: each execution producing a finite proposal has finite length, finitely many queried primes and a finite real output. This exhaustion does not bound these quantities uniformly over tapes or sources.
+
+For each $m$, persistent unboundedness gives one source
+
+$$
+y_m\in J_\beta(x,P_m),\qquad \Omega(y_m)>m.
+\tag{38.5}
+$$
+
+This $y_m$ depends on $x,m$ but not on the tape. For every $\theta\in A_m$, run both sources with that very same tape. They have the same advice, and every prime queried along the run at $x$ lies in $P_m$, on which their answers agree. The deterministic finite-execution transport used in Corollary 37.3 therefore makes the run at $y_m$ terminate with exactly $C_x(\theta)\le m<\Omega(y_m)$. This is the same-history transport of [PassivePolicyNormalization, `execute_transfer`](../../../D5/S3/ConceptDynamics/Experiment/PassivePolicyNormalization.lean), with tape and advice fixed; no new generic transport assertion is needed. Consequently
+
+$$
+A_m\subseteq F_{y_m},\qquad
+\mu(A_m)\le\mu(F_{y_m})\le\delta.
+\tag{38.6}
+$$
+
+Continuity from below now yields $\mu(H_x)=\lim_m\mu(A_m)\le\delta$. Taking complements and using $H_x=S_x\sqcup F_x$ proves (38.3). The proof selects one actual source for the entire event $A_m$, not a different source for each tape. Both inclusion and probability comparison use the common law $\mu$; merely finding a bad source separately for each tape would not establish (38.6).
+
+The source-specific probability bridge is a `repo-derived` deduction from persistent unboundedness and finite-path transport, with ordinary probability continuity. The every-pattern arithmetic supplier remains Theorem 35.2 through Sections 36–37. No Lean/kernel verification or literature priority is claimed. Established confidence-impossibility background includes the Gleser–Hwang theorem as presented by [Moss, *Infinite Diameter Confidence Sets in Hedges' Publication Bias Model*, Theorem 4](https://arxiv.org/pdf/1912.09180v3), and [Bertanha–Moreira, *Impossible Inference in Econometrics: Theory and Applications*, Theorem 3](https://arxiv.org/pdf/1612.02024v5). Moss assumes pointwise convergence of dominated densities to a density, support inclusion and diverging parameter size; Bertanha–Moreira use a common weak limit of convex mixtures from each parameter class and specified boundary-continuity conditions. Those hypotheses are not imported here. These results provide context; (38.4)–(38.6) supply the prime-query argument.
+

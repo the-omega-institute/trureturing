@@ -1,0 +1,25 @@
+**Proposition 214.7 (an explicit same-seed continuous companion).** Let
+$s\in[5/11,5/9]$ and $e=2s/5$. For a finite $L\ge4$ set
+
+$$
+b=(1-s/5,6s/5,6s/5,s,e,\ldots,e).
+$$
+
+There are four distinct objects in this construction. The deterministic anchor kernel is $R=(1,2;1,2,0)$. The nonnegative dual score $V_\star$ has
+$C_{1100}=C_{1101}=C_{1110}=1$, $P_{0101}=P_{1000}=1$, $T=1$, with positive padding and every other row zero. The conic acquisition measure is
+
+$$
+\lambda_s=\frac{s}{5}\bigl[\delta_{(13;130)}+\delta_{(13;134)}+
+\delta_{(23;030)}+\delta_{(23;034)}+\delta_{(34;040)}\bigr],\qquad
+M=\lambda_s(\mathcal D_O)=s.
+$$
+
+Finally the normalized probability-vector kernel is
+
+$$
+p_s=(1-s)p_R+\sum_D\lambda_s(D)p_D.
+\tag{214.7}
+$$
+
+Here $(ij;xyz)$ is a deterministic stopped table with schedule $(i,j)$ and outputs $(x,y,z)$ in cells $0,10,11$, and $p_D$ is its output law. The nonnegative weights in (214.7) sum to one. One source-independent uniform seed selects the entire table before any answer, by a partition of $[0,1)$ into these six weights. The $O$ rule stops at its first queried zero; its $N$ completion obtains both preselected replies and ignores any reply not used by the stopped table. These use the same seed and output the same original mark, with at most two actual requests and finite handoff.
+

@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:14045b7778a5dfefeb3ba0216511ef3b7023339c5a1149080b34c7db4cd05405
+  normalized_sha256: sha256:14045b7778a5dfefeb3ba0216511ef3b7023339c5a1149080b34c7db4cd05405
+cas_ref: sha256:14045b7778a5dfefeb3ba0216511ef3b7023339c5a1149080b34c7db4cd05405
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 定义 121.1　有限局域结构只规定模型对象、符号、协议或适用条件；附文限定这些定义的含义，没有另立性质断言。
+    previous_atom_id: c762a5ae32958bda823d198c93f2abf0b78cfe9cd7200201da9483cebda7c1ba
+    next_atom_id: 8f242cf9473158af8175bdc821752d024facc6a7e74559b4126c0ee39858cade

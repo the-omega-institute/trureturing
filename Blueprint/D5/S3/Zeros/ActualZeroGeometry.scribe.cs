@@ -10,6 +10,16 @@ internal sealed class ActualZeroGeometryDocument : IScribeDocumentDefinition
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "Dictionaries for actual xi zeros and standard Mathlib RiemannHypothesis; no assertion of RH.",
         H("Actual zero geometry"), Blocks(
+            Paragraph(Text(
+                "Application to HyperbolicUpperHalfSpace: at the height-one base point (0,1), "
+                    + "horizontal translation by Re(rho)-1/2 has displacement "
+                    + "2*arsinh(abs(Re(rho)-1/2)/2). The existing fixed-point criterion "
+                    + "and metric separation make zero displacement equivalent to Re(rho)=1/2. "
+                    + "CriticalCenterCoordinate gives Re(rho)-1/2=-Im(centralCoord(rho)). "
+                    + "Combining these substitutions with the nontrivial-zero dictionary below "
+                    + "rewrites RH as vanishing of all such displacements. This supplies a "
+                    + "coordinate interpretation; it supplies no estimate forcing the "
+                    + "displacements to vanish and no curvature or spectral theorem.")),
             Describe.Lean(DescribeId.Create("rh-iff-nontrivial-zeros-on-line"),
                 DeclarationHandle.Create(Prefix + "rh_iff_nontrivial_zeros_on_line"), H("A001: the nontrivial-zero dictionary"),
                 StatementSource.FromAuthor(Iff(RH, OnLine)), AssessedProvenance.FromRepo(),

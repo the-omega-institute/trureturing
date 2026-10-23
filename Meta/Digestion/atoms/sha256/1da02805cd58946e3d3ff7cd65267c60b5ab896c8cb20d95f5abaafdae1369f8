@@ -1,0 +1,12 @@
+**定义 33.6（有序阈值树及其收费实现）。** 一棵适当阈值树以原区间 $I_v=[a_v,c_v)$ 为节点，内节点选择 $a_v<k_v<c_v$，两子区间为 $[a_v,k_v)$、$[k_v,c_v)$，叶为单来源。根区间为 $[0,P)$。其高度计每条路径的 Read 数。不同节点的全部 Advance 与 Read 位置使用不交控制状态，叶分别使用 $H_r$。这称为不共享的阈值树类。
+
+根的端点参数为 $p_v=P$、父查询事件为零；其他内节点取 $p_v=k_{\mathrm{parent}(v)}$。最早正向等待及查询事件为
+
+$$
+\delta_v=(p_v-k_v)\bmod P\in\{1,\ldots,P-1\},
+\qquad N_v=N_{\mathrm{parent}(v)}+\delta_v,
+\qquad \nu_v=(b+\lfloor N_v/P\rfloor)\bmod2.
+$$
+
+根的 $N_v=\delta_v$。取状态 $q_{v,s}$（$0\le s\le\delta_v$），$s>0$ 发 Advance 并在 Ack 后转到 $q_{v,s-1}$；$q_{v,0}$ 发 Read。实际比特 $y$ 以 $e=(y+\nu_v)\bmod2$ 选择下、上子节点的第一状态，或对应的字面 Halt。初态为根的 $q_{v,\delta_v}$。所有不可能响应补到既有状态。这里的 $N_v,\nu_v,k_v$ 是各已收费表行的静态常量。
+

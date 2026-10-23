@@ -14,6 +14,9 @@ internal sealed class TwoPositiveTransitionTraceDocument : IScribeDocumentDefini
         "TwoPositiveTransitionTrace for the spectral bound of conditionally two-positive maps.",
         H("TwoPositiveTransitionTrace"),
         Blocks(
+            Node("trace-rank-one", "Trace against a rank-one matrix", "trace_rank_one",
+                TraceRankOneFormula(),
+                "For any finite complex matrix X and vector v, the trace of X times the rank-one matrix of v equals the scalar product of star v with X applied to v.", DescribeRole.Lemma, Repo()),
             Node("minrespectrum", "minReSpectrum", "minReSpectrum",
                 Disp(Seq(Forall, Sp, Parenthesized(Seq(Named("d"), Sp, Colon, Sp, Seq(Mathbb, Grp(F.Id("N"))))), Sp, Parenthesized(Seq(Named("L"), Sp, Colon, Sp, Parenthesized(Seq(Named("Matrix"), Sp, Parenthesized(Seq(Named("Fin"), Sp, Named("d"))), Sp, Parenthesized(Seq(Named("Fin"), Sp, Named("d"))), Sp, Seq(Mathbb, Grp(F.Id("C"))), Sp, new Formula.Subscript(To, Seq(F.Id("l"), OpenBracket, Seq(Mathbb, Grp(F.Id("C"))), CloseBracket)), Sp, Named("Matrix"), Sp, Parenthesized(Seq(Named("Fin"), Sp, Named("d"))), Sp, Parenthesized(Seq(Named("Fin"), Sp, Named("d"))), Sp, Seq(Mathbb, Grp(F.Id("C"))))))), Sp, Comma, Sp, Named("minReSpectrum"), Sp, Named("L"), Sp, Eq, Sp, Named("sInf"), Sp, Parenthesized(Seq(Named("Set"), Sp, Dot, Sp, Named("image"), Sp, Named("Complex"), Sp, Dot, Sp, Named("re"), Sp, Parenthesized(Seq(OpenBrace, Seq(Named("z"), Sp, Colon, Sp, Seq(Mathbb, Grp(F.Id("C"))), Sp, Bar, Sp, Named("z"), Sp, InMacro, Sp, Named("L"), Sp, Dot, Sp, Named("charpoly"), Sp, Dot, Sp, Named("roots")), CloseBrace)))))),
                 "The displayed statement gives the hypotheses and conclusion for minReSpectrum. Matrices are complex matrices of the displayed finite dimension; LinearMap.trace denotes the endomorphism trace. All sums over Fin d run over its full finite universe.", DescribeRole.Definition, Lit()),
@@ -104,6 +107,25 @@ internal sealed class TwoPositiveTransitionTraceDocument : IScribeDocumentDefini
             Node("supertrace-continuous", "superTrace continuous", "superTrace_continuous",
                 Disp(Seq(Forall, Sp, Parenthesized(Seq(Named("d"), Sp, Colon, Sp, Seq(Mathbb, Grp(F.Id("N"))))), Sp, Comma, Sp, Named("Continuous"), Sp, Parenthesized(Seq(LambdaLower, Sp, Named("L"), Sp, Colon, Sp, Parenthesized(Seq(Named("Matrix"), Sp, Parenthesized(Seq(Named("Fin"), Sp, Named("d"))), Sp, Parenthesized(Seq(Named("Fin"), Sp, Named("d"))), Sp, Seq(Mathbb, Grp(F.Id("C"))), Sp, new Formula.Subscript(To, Seq(F.Id("L"), OpenBracket, Seq(Mathbb, Grp(F.Id("C"))), CloseBracket)), Sp, Named("Matrix"), Sp, Parenthesized(Seq(Named("Fin"), Sp, Named("d"))), Sp, Parenthesized(Seq(Named("Fin"), Sp, Named("d"))), Sp, Seq(Mathbb, Grp(F.Id("C"))))), Sp, Mapsto, Sp, Parenthesized(Seq(Named("LinearMap"), Sp, Dot, Sp, Named("trace"), Sp, Seq(Mathbb, Grp(F.Id("C"))), Sp, Parenthesized(Seq(Named("Matrix"), Sp, Parenthesized(Seq(Named("Fin"), Sp, Named("d"))), Sp, Parenthesized(Seq(Named("Fin"), Sp, Named("d"))), Sp, Seq(Mathbb, Grp(F.Id("C"))))), Sp, Named("L"), Sp, Dot, Sp, Named("toLinearMap"))))))),
                 "The displayed statement gives the hypotheses and conclusion for superTrace_continuous. Matrices are complex matrices of the displayed finite dimension; LinearMap.trace denotes the endomorphism trace. All sums over Fin d run over its full finite universe.", DescribeRole.Theorem, Repo()))));
+
+    private static Formula TraceRankOneFormula()
+    {
+        Formula n = Named("n"), x = Named("X"), v = Named("v");
+        Formula matrix = new Formula.Apply(Named("Matrix"), [n, n, Seq(Mathbb, Grp(F.Id("C")))]);
+        Formula starred = new Formula.Apply(Named("star"), [v]);
+        Formula rankOne = new Formula.Apply(Seq(Named("Matrix"), Dot, Named("vecMulVec")), [v, starred]);
+        Formula product = new Formula.Binary(x, FormulaBinaryOperator.Multiply, rankOne);
+        Formula trace = new Formula.Apply(Seq(Named("Matrix"), Dot, Named("trace")), [product]);
+        Formula applied = new Formula.Apply(Seq(Named("Matrix"), Dot, Named("mulVec")), [x, v]);
+        Formula scalar = new Formula.Apply(Named("dotProduct"), [starred, applied]);
+        Formula equality = new Formula.Relation(trace, FormulaRelationOperator.Equal, scalar);
+        Formula vectors = new Formula.TypeArrow(n, Seq(Mathbb, Grp(F.Id("C"))));
+        return Disp(new Formula.Bind(FormulaQuantifier.ForAll, FormulaIdentifier.Create("n"), Named("Type"),
+            Seq(OpenBracket, new Formula.Apply(Named("Fintype"), [n]), CloseBracket, Sp,
+                OpenBracket, new Formula.Apply(Named("DecidableEq"), [n]), CloseBracket, Sp,
+                new Formula.Bind(FormulaQuantifier.ForAll, FormulaIdentifier.Create("X"), matrix,
+                    new Formula.Bind(FormulaQuantifier.ForAll, FormulaIdentifier.Create("v"), vectors, equality)))));
+    }
 
     private static AssessedProvenance Lit() => AssessedProvenance.FromLiterature(Source);
     private static AssessedProvenance Repo() => AssessedProvenance.FromRepo(Source);

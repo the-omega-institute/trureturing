@@ -1,0 +1,27 @@
+**Theorem 3.2 (conditional predecessor, old set and current class).** On
+actual transitions $t=\rho v$, conditional on the current complete row
+$R$, the three data $R_P(v)$, $O=H_P(v)$ and $A=A_P(t)$ mutually determine
+one another. In particular,
+
+$$
+O=H\setminus
+ \{qd\in H:d\in\{L,R\},\ \operatorname{Alpha}_C(qR,A)\}.
+\tag{NBP.3.1}
+$$
+
+The root, if cut, remains in $O$. Conversely, $A$ is the current class of
+any newborn right hole; it is $\bot$ if there is no such hole.
+
+For any nonempty subset $\mathcal U$ of actual predecessor sources with
+common current row $R$, its exact number of predecessor rows is
+
+$$
+m(R;\mathcal U)
+=\left|\{A_P(\rho v):v\in\mathcal U\}\right|
+\le k+1.
+\tag{NBP.3.2}
+$$
+
+The subsets may impose additional jointly compatible acquired evidence.
+No arbitrary subset of $H$ is assumed attainable.
+

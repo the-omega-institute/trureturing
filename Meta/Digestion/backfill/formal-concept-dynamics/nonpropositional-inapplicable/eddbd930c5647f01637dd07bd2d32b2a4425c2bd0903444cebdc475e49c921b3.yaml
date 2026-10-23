@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:eddbd930c5647f01637dd07bd2d32b2a4425c2bd0903444cebdc475e49c921b3
+  normalized_sha256: sha256:eddbd930c5647f01637dd07bd2d32b2a4425c2bd0903444cebdc475e49c921b3
+cas_ref: sha256:eddbd930c5647f01637dd07bd2d32b2a4425c2bd0903444cebdc475e49c921b3
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 定义 217.1（结构无新增泄漏）：本段仅约定名称、符号及其判定条件；不主张满足条件的对象存在，也不追加性质定理。
+    previous_atom_id: faa4d927e4fc126c82bdd2b7674e50c3021f3978a8ad6881a637433e53a72dc6
+    next_atom_id: dc8ffd9f9e2fe86b108a3f4a23744e8c40ec3442b0f798ab5f9b693689bc56c3

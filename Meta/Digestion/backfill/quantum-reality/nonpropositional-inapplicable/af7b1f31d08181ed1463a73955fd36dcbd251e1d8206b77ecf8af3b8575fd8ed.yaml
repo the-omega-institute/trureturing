@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:af7b1f31d08181ed1463a73955fd36dcbd251e1d8206b77ecf8af3b8575fd8ed
+  normalized_sha256: sha256:af7b1f31d08181ed1463a73955fd36dcbd251e1d8206b77ecf8af3b8575fd8ed
+cas_ref: sha256:af7b1f31d08181ed1463a73955fd36dcbd251e1d8206b77ecf8af3b8575fd8ed
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 定义328.1　离散采样效果空间只规定模型对象、符号、协议或适用条件；附文限定这些定义的含义，没有另立性质断言。
+    previous_atom_id: 945bfa2472825b31b4f69684e1e6812ee5d95a03823447ade34f215313176aa7
+    next_atom_id: 4a957675accb1c0d756cc1be34e20eeb3a105d6afa61e8bd94cff945b7a6984c

@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:387fcf6add6e578abe01a98f181fd2e4409781d55e1e325839ac2c9ec099779c
+  normalized_sha256: sha256:387fcf6add6e578abe01a98f181fd2e4409781d55e1e325839ac2c9ec099779c
+cas_ref: sha256:387fcf6add6e578abe01a98f181fd2e4409781d55e1e325839ac2c9ec099779c
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 证明段：仅论证相邻已述结论及说明证明适用边界，不另提出待覆盖命题。
+    previous_atom_id: 414a0bb22df8849a5253fc35ce53f875cece882c57856d96cbcca0910e721217
+    next_atom_id: c233c0d44005a32e456dbafdf502d1047bf2fe4a19e0e5b73968de493f488e6d

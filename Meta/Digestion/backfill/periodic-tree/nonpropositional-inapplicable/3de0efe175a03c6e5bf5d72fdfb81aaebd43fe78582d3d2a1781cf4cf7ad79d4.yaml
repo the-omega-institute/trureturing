@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:3de0efe175a03c6e5bf5d72fdfb81aaebd43fe78582d3d2a1781cf4cf7ad79d4
+  normalized_sha256: sha256:3de0efe175a03c6e5bf5d72fdfb81aaebd43fe78582d3d2a1781cf4cf7ad79d4
+cas_ref: sha256:3de0efe175a03c6e5bf5d72fdfb81aaebd43fe78582d3d2a1781cf4cf7ad79d4
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 证明段（**证明。** 若 $\overline Bv=0$，R12 给出 $5a^2v=0$；$5a^2$ 可逆，故 $v=0$。R7 给出 $Q…）只展开前文定理或命题的论证，式子和中间推导不另提出独立陈述。
+    previous_atom_id: a4b6a9e241fda60368eb1650cb5d156fc53be7fc88a7df02cdf90cd75ceef9d3
+    next_atom_id: 0f9de547fce520731baa29096a86c9fbe80990566f41bddfedde5fea2becc488

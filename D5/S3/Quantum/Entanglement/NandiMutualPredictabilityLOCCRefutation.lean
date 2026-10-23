@@ -12,7 +12,7 @@ proof_shape (definitions): Setting, prodVec, I2, I2max, branch, claimFixed, clai
 proof_shape (theorems, same-delivery helpers inlined): result is bind-only — the explicit
   d = 2 state, instrument and computational/Hadamard setting are evaluated from unitarity,
   finite-sum expansion and complex arithmetic, and the supremum is compared through
-  `ciSup_le` / `le_ciSup`. Every private theorem is bind-only and is used on the proof path of
+  `ciSup_le` / `le_ciSup`. Every helper theorem is bind-only and is used on the proof path of
   result (CLAUDE.md §3.2, consumed helpers): col_norm_sq, row_norm_sq, rho0_mulVec,
   rho0_expect, i2_rho0, hadamard_eq, half_sqrt_two_sq, hadamard_unitary, hadamard_mub,
   branch_first, branch_second, rhoP_mulVec, rhoP_expect, i2_standard_branch,
@@ -20,6 +20,12 @@ proof_shape (theorems, same-delivery helpers inlined): result is bind-only — t
   normSq_entry_le_one, i2_rhoP_le_two, i2max_rho0, i2max_rhoP_ge, not_claimOptimized.
 escape_witness: none.
 admission_basis: open-problem-resolution (#13804; Refuted)
+hadamard_unitary: proof_shape: bind-only; escape_witness: none; consumers: standardSetting, H_unitary.
+hadamard_unitary Direct frozen dependencies:
+  D5/S3/Quantum/Information/BinaryStabilizerLocalInequivalence.hadamard [sha256:d28d3fee83d154e42cf2331eba2ffeb942edeed66e1ff8e9221f10b0b991ddc4]
+  D5/S3/Quantum/Entanglement/NandiMutualPredictabilityLOCCRefutation.hadamard_eq [sha256:1da164ace534af9c5a7efd6d9059b71f36765109945e20933f9de7361014b455]
+  D5/S3/Quantum/Entanglement/NandiMutualPredictabilityLOCCRefutation.half_sqrt_two_sq [sha256:70c1b53dcec77377712b2ca72440af20e571c209cda05423cadd61c525b65dbb]
+Escape audit unfinished: https://github.com/the-omega-institute/trureturing/issues/15443.
 Direct frozen dependencies:
   D5/S3/Weil/ZetaLinear/VonNeumann.RHLinalg.normSqMatrix_mem_doublyStochastic_of_unitary
     statement_id: sha256:10d84d7748c4e7f110f57a63c8faf31b2da6ecba24f5cdf67b5b36281d5a0757
@@ -147,10 +153,10 @@ private lemma hadamard_eq :
     simp [D5.S3.Quantum.Information.BinaryStabilizerLocalInequivalence.hadamard,
       D5.S3.Quantum.Information.BinaryStabilizerLocalInequivalence.s2, pauliMatrix, qubitX, qubitZ]
 
-private lemma half_sqrt_two_sq : (Real.sqrt 2 / 2) * (Real.sqrt 2 / 2) = (1 / 2 : ℝ) := by
+lemma half_sqrt_two_sq : (Real.sqrt 2 / 2) * (Real.sqrt 2 / 2) = (1 / 2 : ℝ) := by
   nlinarith [Real.sq_sqrt (by norm_num : (0 : ℝ) ≤ 2)]
 
-private lemma hadamard_unitary : hadamard₂ ∈ Matrix.unitaryGroup (Fin 2) ℂ := by
+lemma hadamard_unitary : hadamard₂ ∈ Matrix.unitaryGroup (Fin 2) ℂ := by
   rw [Matrix.mem_unitaryGroup_iff', hadamard_eq, Matrix.star_eq_conjTranspose]
   have hq := half_sqrt_two_sq
   generalize Real.sqrt 2 / 2 = q at hq ⊢

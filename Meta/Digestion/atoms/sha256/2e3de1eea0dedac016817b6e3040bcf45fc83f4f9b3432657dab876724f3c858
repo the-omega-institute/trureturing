@@ -1,0 +1,39 @@
+**Convention 59.4 (scope, degeneracies, and provenance).** If $a_n=0$ at
+some finite $n$ with $q_n>0$, even the zero-radius report is shared and
+$R_n(0)\ge q_n/2$. The theorem takes no logarithm of $a_n$, presumes no
+strictly positive finite-$n$ old curve gap, and supplies no noiseless
+reconstruction algorithm.
+
+The exponent in (59.5) is necessary for the declared dyadic **absolute-error
+radius** under this common channel. It is not a sufficient precision
+algorithm or a storage optimum: it counts neither representations of an
+entire curve nor acquired index metadata. It supplies no physical energy or
+duration law. The observation cutoff $a_0$ and successor readout time $s$
+are fixed positive comparison times; the proof supplies no uniform bound
+as $a_0\downarrow0$, and no conclusion is drawn for observation times tending
+to zero with $n$.
+
+Normalization is part of the target. With ordinary unnormalized successor
+root evaluation on the same unit counting-norm inputs and map $\mathcal A_n$,
+$g_{n,s}(x_n)$ is divided by $\sqrt{N_{n+1}}$ and tends to zero, as in
+Holographic IV §110.5. That target does not have the fixed positive gap used
+in (59.3)--(59.5). Changing instead to the pointwise fields
+$\sqrt{N_n}x_n$ changes the input scale and its noise contract; it is not
+an unchanged precision claim.
+
+This is `repo-derived` source-specific composition of Holographic IV
+§§110.3--110.5 with the cited `literature-attested` optimal-recovery
+ingredient; no claim of originality is made for the composition. The
+uncertainty here is between signed homogeneous preparations, not between
+two native root-query replies or two separate source-size experiments.
+Native preparation of these signed fields and realization of heat, both
+centering projections, ancestry transfer, and real root ports through $\mathsf{Read}$ and
+$\mathsf{ApplyRho}$ remain unproved. A bridge would have to preserve the
+same actual source and joint action history, immutable target, epoch and
+presence guards, permissions and refusals, absorbing Stop, and every
+declared preparation, acquisition, address, update, arithmetic, memory, and
+output cost required by Holographic IV §110.5. Comparison time remains
+separate from physical duration until that correspondence is proved.
+These are ordinary paper statements, without a Lean/kernel-verification
+claim.
+

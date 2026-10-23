@@ -1,0 +1,17 @@
+### 73.4 条件边界与保留义务
+
+本章只给固定有限 $P_{\max}$、式(73.4)词形、全部四对及实预算 $0\le\beta<\lambda$ 的纸面条件性补充。一般实预算下的有限图仍是给定前提；没有新的端点构造，也没有供应使全部准入同时成立的共同输入或任何完整正实例。辅助内部点不被当作实际全路径极值，负斜率不单独供应交错或侧别交换。
+
+在完整准入前提下，所得仅为完整原顶点 $v_0=v_{3p}$、已有长 $p$ 原返回及gcd整除 $p$；不宣称精确gcd，不排除这些词在其他规模或其他gcd的SCC中存在，不独立判定外部(63.15)。单向外出继续允许。
+
+域外任何正实现，仍须在同一个 $\beta,B,G_B,R,T,a,b,p,h$ 中联合供应实际来源、两个实际guard、合法预算和根域、整个原片与原共同闭色、原端点归属及全部原边；逐位置证明全部(63.11)，给出 $h+2$ 个不同完整配对顶点，按整个原承载片检查所有完整内部边的(63.13)，并对所有 $n\ge0$ 证明完整图的(63.15)。第60章适用联合限制及各先修原局部预算域继续承担。强制端点全未命中、容量通过、独立点可达或两返回本身均不能替代这些义务。
+
+本章不主张剩余词域或全部奇周期rival的分类、更大SCC排除、全局非存在、初始可达、任意端点规则下的实际噪声取得、物理识别、Lean／kernel核验或外部原创性。
+
+[73源基础]: https://github.com/the-omega-institute/trureturing/blob/014620adb78f60f75c02071f5c53f0465dfb503c/docs/develop/theory/FIB_SOURCE_COMPLETION_DYNAMICS.md#L8290
+[73源63]: https://github.com/the-omega-institute/trureturing/blob/2c9fec822e934ea32e630cc82611e160c48a49a7/docs/develop/theory/FIB_SOURCE_COMPLETION_DYNAMICS.md#L26396
+[73源64]: https://github.com/the-omega-institute/trureturing/blob/3ad8668d7caadf586f2814f72aa8f8ac7e4594e9/docs/develop/theory/FIB_SOURCE_COMPLETION_DYNAMICS.md#L26748
+[73源6566]: https://github.com/the-omega-institute/trureturing/blob/3550c68a45907ef4225113c296b7c79a525ed8cb/docs/develop/theory/FIB_SOURCE_COMPLETION_DYNAMICS.md#L26893
+[73源70]: https://github.com/the-omega-institute/trureturing/blob/4b8062ad7ab599e6548a0e4cb24b9de2c81097ff/docs/develop/theory/FIB_SOURCE_COMPLETION_DYNAMICS.md#L28572
+[73源6572]: https://github.com/the-omega-institute/trureturing/blob/8e41661f8284ede0bc4e19b93324548ba1348361/docs/develop/theory/FIB_SOURCE_COMPLETION_DYNAMICS.md
+

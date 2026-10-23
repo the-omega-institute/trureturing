@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:1ea51939b743e2fbe2beb3f42d84b7cbc496c7633e32370146cae04125f7fcf9
+  normalized_sha256: sha256:1ea51939b743e2fbe2beb3f42d84b7cbc496c7633e32370146cae04125f7fcf9
+cas_ref: sha256:1ea51939b743e2fbe2beb3f42d84b7cbc496c7633e32370146cae04125f7fcf9
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 定义 256.1（制度身份稳定）：本段仅约定名称、符号及其判定条件；不主张满足条件的对象存在，也不追加性质定理。
+    previous_atom_id: bbe8615a5880ff3590dfd94435c7f4693f0e652c321e1358c9b9270c8e6ef7d8
+    next_atom_id: d72dc4bba0d2e275ef9f19cd633f465fc451a4578a2c5a6b2aa3ef2df17cb52f

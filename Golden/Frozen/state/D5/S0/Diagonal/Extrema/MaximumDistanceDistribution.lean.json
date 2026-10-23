@@ -1,1 +1,1 @@
-{"statement_id":"sha256:2571d20766bbace131ec0cdf11efb282a3e8891daae86d10da7f1b9a3d2c64ec"}
+{"statement_id":"sha256:2571d20766bbace131ec0cdf11efb282a3e8891daae86d10da7f1b9a3d2c64ec","declarations":[{"declaration_name_key":"ns(ns(ns(ns(ns(ns(n0,2:D5),2:S0),8:Diagonal),7:Extrema),27:MaximumDistanceDistribution),20:maximum_distance_cdf)","kind":"theorem"}]}

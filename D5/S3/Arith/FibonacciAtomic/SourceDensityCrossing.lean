@@ -641,7 +641,7 @@ theorem result (k : ℕ) (hk : 1 ≤ k) (j : ℕ) :
         dsimp [n]
         nlinarith only [hL3, mul_le_mul_of_nonneg_left ht1 hℓ.le, mul_nonneg hδ.le hj]
       have hp1 : rising (a k j t + 1) (E k) ≤ n k j t ^ E k := by
-        have h := Finset.prod_le_prod (s := Finset.range (E k))
+        have h := Finset.prod_le_prod₀ (s := Finset.range (E k))
           (f := fun i : ℕ => a k j t + 1 + (i : ℝ)) (g := fun _ : ℕ => n k j t)
           (fun i _ => by positivity) (by
             intro i hi
@@ -650,7 +650,7 @@ theorem result (k : ℕ) (hk : 1 ≤ k) (j : ℕ) :
             linarith only [hi', hbE, hab])
         simpa only [rising, Finset.prod_const, Finset.card_range] using h
       have hp2 : rising (b k j t + 1) (A k) ≤ n k j t ^ A k := by
-        have h := Finset.prod_le_prod (s := Finset.range (A k))
+        have h := Finset.prod_le_prod₀ (s := Finset.range (A k))
           (f := fun i : ℕ => b k j t + 1 + (i : ℝ)) (g := fun _ : ℕ => n k j t)
           (fun i _ => by positivity) (by
             intro i hi
@@ -662,7 +662,7 @@ theorem result (k : ℕ) (hk : 1 ≤ k) (j : ℕ) :
         rw [hδeq, pow_add]
         exact mul_le_mul hp1 hp2 (rising_pos _ (by linarith) _).le (by positivity)
       have hden : n k j t ^ D k < (4 : ℝ) ^ D k * rising (n k j t - 1 / 2) (D k) := by
-        have h := Finset.prod_lt_prod_of_nonempty
+        have h := Finset.prod_lt_prod_of_nonempty₀
           (s := Finset.range (D k)) (f := fun _ : ℕ => n k j t)
           (g := fun i : ℕ => 4 * (n k j t - 1 / 2 + i))
           (fun _ _ => by linarith)

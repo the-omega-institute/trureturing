@@ -1,0 +1,2 @@
+**Q3 (Part I §§4–7; Part II §§4, 14.1):** Active, pending$_0$, pending$_1$, and delivered are distinct boundary domains. Pending states retain their mandatory original Stop and forbid Read; delivered has empty future. An unbounded exact quotient differs from finite coordinate dimension, realization rank, finite states, and finite bits. Counters in an implementation record do not by themselves make pending states minimal coordinates.
+- 

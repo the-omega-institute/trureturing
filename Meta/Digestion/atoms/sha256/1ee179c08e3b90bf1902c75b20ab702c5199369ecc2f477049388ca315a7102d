@@ -1,0 +1,60 @@
+**Theorem 6.1 (Uniform critical frontier).** There are $s_0\in(0,1)$,
+$C_-,C_+>0$ and a finite integer $M_0$, depending only on the fixed
+$(r,c,\alpha)$, with the following quantifiers:
+
+$$
+\begin{gathered}
+\forall\,0<s<s_0\quad\forall\,M\ge2\quad
+\forall\,\mathcal A\in\mathfrak A_M(e^{-s},\alpha)\quad
+\forall\,i\in\{0,1\}:\quad
+\mathbb E_i^{\mathcal A}T\ge C_-\Psi(s,M),\\[1mm]
+\forall\,0<s<s_0\quad\forall\,M\ge M_0\quad
+\exists\,\mathcal A_{s,M}\in\mathfrak A_M(e^{-s},\alpha):\quad
+\max_i\mathbb E_i^{\mathcal A_{s,M}}T\le C_+\Psi(s,M).
+\end{gathered}
+\tag{6.1}
+$$
+
+The lower line of reasoning is inherited (2.5); the new simultaneous upper
+is the counted construction. No budget-dependent shrinking of $s_0$ is
+permitted or needed.
+
+Proof. Keep $K,\eta$ and the constants of Theorem 5.1. Choose
+$M_0=\lceil K2^r\rceil$ and shrink a single $s_0$ inside the source,
+upper and lower neighborhoods, with $s_0\le\eta/2$. These choices all
+precede $M$. For every $M\ge M_0$ and $s<s_0$ set
+
+$$
+y=\min\{(M/K)^{1/r},\eta/s\},\qquad
+J=\lfloor\log_2 y\rfloor.
+\tag{6.2}
+$$
+
+Then $y\ge2$, $J\ge1$, $2^J\le\eta/s$ and
+$K2^{rJ}\le M$. Theorem 5.1 gives the required common compliant table.
+Here $J$ is a cap selected for the immutable table; it is never a runtime
+epoch, read or gap counter.
+
+Put $x=\min\{M^{1/r},1/s\}$ and
+$C_0=\max\{K^{1/r},\eta^{-1}\}\ge1$. Each argument of this minimum is
+at most $C_0$ times its counterpart in $y$, so $x\le C_0y$.
+Equation (2.8) implies
+
+$$
+\min\{L_M,1/s\}\le C_Lx\le C_LC_0y<C_LC_0\,2^{J+1}.
+\tag{6.3}
+$$
+
+Therefore, using $J\ge1$,
+
+$$
+1+\log\min\{L_M,1/s\}
+ \le 1+\log(C_LC_0)+(J+1)\log2\le C_3J
+\tag{6.4}
+$$
+
+for a fixed positive $C_3$. The upper $Cs^{-(2r+1)}/J$ from (5.6)
+is consequently at most $CC_3\Psi(s,M)$. Take $C_+=CC_3$ and retain
+$C_-=A_-$ from (2.5). This covers the entire capped and uncapped budget
+range, without an assumption of small $sM^{1/r}$. $\square$
+

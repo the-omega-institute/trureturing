@@ -1,0 +1,1 @@
+| [NativeFullSourceProducer](../../../D5/S3/Arith/FibonacciAtomic/Observer/NativeFullSourceProducer.lean) 与 [NativeEffectiveSourceProducer](../../../D5/S3/Arith/FibonacciAtomic/Observer/NativeEffectiveSourceProducer.lean) | 来源无关栈生产器、每节点一次原 Read、每分支两 localStep、数字 workspace 有效 selector；只作 §16 消费者的供应 

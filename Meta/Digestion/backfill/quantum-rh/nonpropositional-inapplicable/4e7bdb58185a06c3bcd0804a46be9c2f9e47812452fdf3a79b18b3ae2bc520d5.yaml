@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:4e7bdb58185a06c3bcd0804a46be9c2f9e47812452fdf3a79b18b3ae2bc520d5
+  normalized_sha256: sha256:4e7bdb58185a06c3bcd0804a46be9c2f9e47812452fdf3a79b18b3ae2bc520d5
+cas_ref: sha256:4e7bdb58185a06c3bcd0804a46be9c2f9e47812452fdf3a79b18b3ae2bc520d5
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: Proof of preceding local-factor formulas (9)-(10) by ordering tuples and summing integer gaps.
+    previous_atom_id: e41bb44798fa070677fd726bb5135a01b1b6872e6d6d05e23a62838d3a729de2
+    next_atom_id: e6232e4ac125713f913f4f728b9021d0f59da414803c9a0ba20aea463d47b3e5

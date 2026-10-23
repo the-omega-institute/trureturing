@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:fa0d07d6f0ea434c25e2665e0d86de47e5955bd8819af8dc86cad1caea552a8c
+  normalized_sha256: sha256:fa0d07d6f0ea434c25e2665e0d86de47e5955bd8819af8dc86cad1caea552a8c
+cas_ref: sha256:fa0d07d6f0ea434c25e2665e0d86de47e5955bd8819af8dc86cad1caea552a8c
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: Explains the meaning of the ledger input symbol.
+    previous_atom_id: ac4f01ef17951a550f6d978b81a42c34afd80fa368ff354e69f77e38a795467a
+    next_atom_id: 4e7c98e66c577faf8ef3f6b56cece530d02770e27b46fea9002b8f120acf52cd

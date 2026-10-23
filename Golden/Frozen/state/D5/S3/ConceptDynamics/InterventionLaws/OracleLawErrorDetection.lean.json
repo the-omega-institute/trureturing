@@ -1,1 +1,1 @@
-{"statement_id":"sha256:55edb1f0ddd8f6ed76130bd5d70e236b434c542c0ee4278e1de8512b770fd3eb"}
+{"statement_id":"sha256:55edb1f0ddd8f6ed76130bd5d70e236b434c542c0ee4278e1de8512b770fd3eb","declarations":[{"declaration_name_key":"ns(ns(ns(ns(ns(ns(n0,2:D5),2:S3),15:ConceptDynamics),16:InterventionLaws),23:OracleLawErrorDetection),27:interventionMinimumDistance)","kind":"def"},{"declaration_name_key":"ns(ns(ns(ns(ns(ns(n0,2:D5),2:S3),15:ConceptDynamics),16:InterventionLaws),23:OracleLawErrorDetection),39:oracle_intervention_law_error_detection)","kind":"theorem"}]}

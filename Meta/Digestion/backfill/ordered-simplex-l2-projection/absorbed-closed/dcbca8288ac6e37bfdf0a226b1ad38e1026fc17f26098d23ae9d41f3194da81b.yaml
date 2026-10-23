@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:dcbca8288ac6e37bfdf0a226b1ad38e1026fc17f26098d23ae9d41f3194da81b
+  normalized_sha256: sha256:dcbca8288ac6e37bfdf0a226b1ad38e1026fc17f26098d23ae9d41f3194da81b
+cas_ref: sha256:dcbca8288ac6e37bfdf0a226b1ad38e1026fc17f26098d23ae9d41f3194da81b
+coverage_gids:
+  - gid: D5/S3/Fourier/CharacterSelection/SimplexTwoCochainL2Projection.tetra_defect_energy_eq_and_optimal
+    target_statement_id: sha256:627aed402e0ffabaadaac36e1d0b285e21c8fedfc642a8e9ee4403bad98a06f5
+receipts:
+  unresolved_subitems: []

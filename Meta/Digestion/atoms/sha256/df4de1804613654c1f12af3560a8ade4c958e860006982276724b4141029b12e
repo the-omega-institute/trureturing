@@ -1,0 +1,52 @@
+### 119.2 同一实际纤维上的输入
+
+The original mapping is unchanged. Chapter 68.2 fixes M=2^floor(phi Q^3/(beta log2)), k_0=floor(a Q^3), l_0=Q^3-k_0, z_0=k_0 log(1+r)+l_0 log(1-r), and q=floor(M exp(-z_0)). Complete groups lie on(k_0+jQ,l_0+jP) within the original full truncation. The mu_j are exact full-q marginal sums. Chapter 68.5 gives the exact scalar relation in(119.3), and Chapter 71.3 defines the finite Gaussian-mixture posterior. Count multiplicities remain inside every powered mass.
+
+For clarity the original profile constants are
+$$
+ a=(1+r)/2,\quad b=(1-r)/2,\quad
+ \theta=\frac{\log(1+r)}{-\log(1-r)},\quad
+ \kappa=1/a+\theta^2/b,
+$$
+$$
+ \rho(s)=\rho_0e^{-\kappa s^2/2},\quad
+ \rho_0=(4\pi\sqrt{ab})^{-1},\quad
+ \gamma=\int\rho,\quad \nu=2\int\rho^2.
+\tag{119.7}
+$$
+The bare letter b in(119.7) is unrelated to b_alpha.
+
+We use the original-data good-event estimates of Chapter 117, with all quantities taken from the same actual model:
+$$
+ m_Q:=\#\{j:C_j>0\}\le C Q^2=C\delta^{-4},\quad
+ \log q=c_qQ^3+O(1),\quad N_J=\sum_jC_j\le C B^2,
+$$
+$$
+ V\to\gamma>0,\quad v_*/\delta\to\rho_0>0,\quad
+ \delta^{-1}\sum_jv_j^2\to\nu/2,\quad
+ \max_j|p_j-1/2|=O_{\mathbb P}(q^{-1/2}).
+\tag{119.8}
+$$
+A core block of order1/delta indices has v_j comparable to delta. The coordinatewise original Chapter 69.10 bound is
+$$
+ |e_j|\le C\sqrt{v_j}\,e_M,\qquad
+ \|e\|\le C\sqrt V\,e_M,\qquad
+ e_M=O_{\mathbb P}(\delta^5+q^{-1/2}).
+\tag{119.9}
+$$
+It is used coordinatewise when dividing by v_j, not weakened to only a total norm bound.
+
+For the auxiliary calibrated product count law Q_x=product_j Bin(C_j,p_j), the exact full-q law satisfies
+$$
+ P_x(n)=e^{\ell(n)}Q_x(n),\qquad
+ \mathcal D(n)=B^{-1}\sum_j(n_j-C_jp_j),
+$$
+$$
+ |\ell(n)|\le C\delta^5(1+\mathcal D(n)^2),\qquad
+ \ell(n)\le C\delta^5
+\tag{119.10}
+$$
+on the entire feasible count box. These are the original Chapter 70.6–70.8 bounds with B^2/q=delta^5. No normal lower bound for the selection density is asserted at every extreme tuple.
+
+All deterministic estimates below are uniform after bounding the tight constants in(119.8)–(119.10), bounding V,v_*/delta away from zero and imposing the already established core profile conditions. Exhausting these common good events yields support-uniform actual probability convergence. Auxiliary independence is only used after conditioning on the actual fiber; actual path rows and the full-q posterior are not assumed independent.
+

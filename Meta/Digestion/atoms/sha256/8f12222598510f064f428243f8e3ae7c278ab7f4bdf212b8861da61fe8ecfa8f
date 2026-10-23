@@ -1,0 +1,61 @@
+**定理 29.4（同一接地图的四种未来端口任务）。** 在定义 29.3 上取零初态、
+任意实际标量 $L^1_{\rm loc}$ 输入，同一个向量 $b$ 作为注入和读出。
+各任务的核变换与精确最小实 LTI 维数为
+
+| $b$ | $R_b(s)$，$s\ge0$ | 最小维数 |
+| --- | --- | ---: |
+| $e_T$ | $1/(s+1)$ | $1$ |
+| $e_J$ | $(s+2)/(s^2+4s+2)$ | $2$ |
+| $e_L$ 或 $e_R$ | $(s+1)(s+3)/((s+2)(s^2+4s+2))$ | $3$ |
+| $e_L+e_T$ | $(s+1)(s+3)/((s+2)(s^2+4s+2))+1/(s+1)$ | $4$ |
+
+证明。为比较这四个完整未来任务，使用既有
+[Hankel 因子分解与秩公式](../../../D5/S3/Observer/Hankel/HankelRankMinimality.lean)
+的 `finiteHankel_eq_observability_comp_controllability`、
+`hankel_rank_eq_reachable_dim_sub_inter_unobservable_dim`，以及
+[最小状态维数](../../../D5/S3/Observer/Hankel/HankelMinimalStateDimension.lean)
+的 `hankel_rank_lower_bound_and_quotient_attainment`、
+`canonical_reachable_observable_quotient_descent`。
+[Oymak–Ozay §§2、5.1–5.2](../../../Library/Dynamics/oymakozay2019lti.md)
+供应相应经典实现方法；这里不消费其统计识别保证。
+
+精确参数桥为 $A=-K,G=B,C=B^{\mathsf T}$。设
+
+$$
+S_k=B^{\mathsf T}K^kB,\quad
+C_\ell=[B,KB,\ldots,K^\ell B]\in\mathbb R^{n\times r(\ell+1)},\quad
+H_\ell=[S_{i+j}]_{i,j=0}^{\ell}=C_\ell^{\mathsf T}C_\ell.
+$$
+
+$H_\ell$ 是 $r(\ell+1)$ 阶正半定 Gram 矩阵，其秩是这些实际可达方向的维数。
+$V=\operatorname{span}_{j\ge0}K^j\operatorname{im}B$ 在 $K$ 下不变，
+在有限维中最迟到 $j=n-1$ 饱和；其正交补也不变且对 $B^{\mathsf T}$ 不可见。
+于是既有可达可观商在这里就是 $V$ 上的正交限制，维数 $q=\dim V$。
+相邻 Krylov 空间一旦相等便永久稳定的步骤亦由
+[`observable_krylov_once_stable_permanently`](../../../D5/S3/ObserverMemory/Dynamics/ObservableKrylovPermanentStability.lean)
+供应。
+
+对定义 29.1 的一般竞争者，常输入 $u(t)=v$ 的右端初值比较迫使 $Fv=0$
+对所有 $v$ 成立，故 $F=0$。然后对这些阶跃响应求导，得到相同的解析核，
+进而 $CA^kG=(-1)^kS_k$。所以竞争者的导数 Hankel 为
+$D_\ell H_\ell D_\ell$，其中
+$D_\ell=\operatorname{diag}(I_r,-I_r,\ldots,(-1)^\ell I_r)$。
+此符号合同使所引实线性因子分解的秩下界适用；不能把 $S_k$ 直接当成
+$CA^kG$ 而漏掉符号。因此该中间工具在本任务给 $q$ 的下界及正交限制的达到。
+按不同 $\lambda$ 的谱投影作多项式插值，此处可计算的同一个维数是
+
+$$
+q=\sum_{\lambda\in\Lambda}\operatorname{rank}(B^{\mathsf T}P_\lambda B).
+$$
+
+重复率只贡献其整个残差矩阵的秩；$B=0$ 时 $V=0,q=0$，允许零维实现。
+这些是所引实现工具在对称输入输出模型中的参数对应，不另立一般实现定理。
+
+现在 $T$ 是率 $1$ 的方向，$L-R$ 是率 $2$ 的方向；其余对称二维块为
+$\left(\begin{smallmatrix}2&-\sqrt2\\-\sqrt2&2\end{smallmatrix}\right)$，
+率为 $2\pm\sqrt2$。分别在这些块求 $(sI+K_G)^{-1}$ 的端口元即得表。
+显示的极点互异、残差均为正，各标量残差的秩为一，故维数依次为 $1,2,3,4$。
+$e_L$ 的前六矩是 $1,2,5,14,42,132$；由三个实际方向的加权 Gram，
+$\det H_0=\det H_1=\det H_2=1$，$\det H_3=0$。
+改变的是允许注入与读出的整个任务，不能以五个模式标签数替代这个维数。∎
+

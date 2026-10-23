@@ -1,0 +1,123 @@
+**Definition 18.1 (original acquired-row dispersion).** Fix one installed
+finite or countable prior $\mu$ with $\mu(1),\mu(2)>0$ and at least one
+supported $k\ge3$. Retain every supported target and exactly the source,
+complete carriers, original interface and COMPLETE convention of
+Definition 16.1. In particular, one $K$ supplies all paid Reads; both seeds,
+paid rejections and partial parses, all finite returns, original records,
+write-before-latch, permissions, completion and matching Stop remain.
+Let $M$ be any original finite observer, including its installed semantic
+emitter $\mathsf e$ and source-independent acquired updates. No regularity,
+determinism, recurrence, native-mixture representation or defect bound is
+assumed of $M$.
+
+Write $D_z=\operatorname{fullLaw}(M,\mathsf e,z)$ for its own complete
+configuration law, $T_h^\mu=\operatorname{fullTarget}(M,\mu,h,c(h))$ for
+the original target, and $\rho_h=\operatorname{row}(M,h)$ for its actual
+ordered acquired row. Define, on the full positive-history phase domains,
+
+$$
+\begin{aligned}
+R_{{\rm conf},s}(M)&=\sup_{h\in\mathcal H_s}
+ \sum_z\rho_h(z)\operatorname{TV}(D_z,T_h^\mu),\qquad s=p,\beta,\\
+e(M)&=\max\{R_{{\rm conf},p}(M)-\rho_p,
+                 R_{{\rm conf},\beta}(M)-\rho_\beta\}.
+\end{aligned}
+\tag{18.1}
+$$
+
+Here the constants $\rho_p,\rho_\beta$ are those of (16.8), distinct from
+the row $\rho_h$. These are configuration-before-TV risks: TV is taken
+separately for each configuration, then averaged, then maximized over
+histories. The supplied separate phase minima give $e(M)\ge0$.
+
+For the diagnostic only, use the seed-1, marker-100 held-record fibre
+reached by $S=\beta\alpha\mid\beta\beta\alpha\alpha$ as in
+[PAID, Lemma 14.1](RECURSIVE_RELATIONAL_OBSERVATION_EFFECTIVE_PAID_HISTORY_CERTIFICATES.md).
+Let $X,Y$ be the original configurations reachable with positive probability
+after some positive finite history on this fibre at p and suspension.
+Let $B_{xy}$ be the actual acquired p-beta update and $A_{yx}$ the actual
+acquired suspended-alpha update. They include the original operation
+blocks. Source independence gives $\rho_{h\beta}=\rho_hB$ and
+$\rho_{h\beta\alpha}=\rho_hBA$. Since every supported source rate lies in
+$[1/3,2/5]$, these two extensions are positive actual histories whenever
+$h$ is a positive p history. Thus every positive successor of a reachable
+configuration is in the indicated reachable set, and these are stochastic
+rows on $X,Y$.
+
+Pull $D_x,D_y$ back through their current full-record renderers to the
+common complete raw carriers, and call the resulting own laws $Q_x,W_y$.
+They include $\infty_p,\infty_\beta$, with no completion conditioning.
+Set $u_x=Q_x(\{\alpha\})$ and $v_y=1-W_y(\{\beta\})$; the installed
+first-block recursion identifies these coordinates with the corresponding
+synthetic alpha probabilities on the two phase fibres.
+Put
+
+$$
+\begin{aligned}
+L_x&=\sum_yB_{xy}W_y,&
+ b_B(x)&=\sum_yB_{xy}\operatorname{TV}(W_y,L_x),\\
+J_y&=\sum_xA_{yx}Q_x,&
+ b_A(y)&=\sum_xA_{yx}\operatorname{TV}(Q_x,J_y),\\
+\operatorname{Br}_{\rm orig}(M)
+ &=\sup_{h\in\mathcal H_p^{100,1}}
+ \left\{\sum_x\rho_h(x)b_B(x)
+       +\sum_y\rho_{h\beta}(y)b_A(y)\right\}.
+\end{aligned}
+\tag{18.2}
+$$
+
+$\mathcal H_p^{100,1}$ comprises all positive actual p histories on this
+held-record fibre, including arbitrary paid seed histories and finite
+returns. Each sum inside the supremum uses the same $h$ and its actual
+noncompleting beta extension. Each row barycentre is a normalized law
+because its acquired row is stochastic, even if the synthetic probability
+of that operation is zero. In particular $L_x$ at $u_x=1$ and $J_y$ at
+$v_y=0$ are not defined by conditioning a null synthetic event. The
+unconditional own-law equations remain
+$Q_x=u_x\delta_\alpha+(1-u_x)\beta L_x$ and
+$W_y=(1-v_y)\delta_\beta+v_y\alpha J_y$.
+
+The statistic lies in $[0,2]$. A row has zero dispersion precisely when
+its positive successors have one common complete law; their labels can
+still be random. This distinguishes (18.2) from label count, transition
+entropy, return-weight dispersion, variation of $L_x,J_y$ across inputs,
+normalized conditional residual error and the diameter of all reachable
+laws. All entries in (18.2) belong to the original $M$, before comparison.
+
+The native correspondence is literal. In
+[NativeObserverJointLaw](https://github.com/the-omega-institute/trureturing/blob/9622561ab8abd128c4fcd573e5224f809437d233/D5/S3/Observer/ProbabilisticClosure/TrajectoryLaws/NativeObserverJointLaw.lean),
+`Observer`, `advance`, `row`, `ordered_history_factorization`,
+`conditional_history_product` and `actual_row_refines` give precisely these
+source-independent rows and append identities on the original finite $Z$.
+The private `advance_append` and `history_rectangle` identify the ordered
+product and the entire conditional private row; no configuration is
+selected before conditioning on the actual history.
+In [NativeInstalledFullLaw](https://github.com/the-omega-institute/trureturing/blob/9622561ab8abd128c4fcd573e5224f809437d233/D5/S3/Observer/ProbabilisticClosure/TrajectoryLaws/NativeInstalledFullLaw.lean),
+`InstalledEmitter`, `markedRow`, `fullLaw`, `tailLaw`,
+`installed_configuration_identity` and `installed_first_block_recursion`
+construct these own laws and their unconditional generation equations.
+The private `marked_regenerate`, `decoded_mark_irrelevance`, `decode_first`
+and `marked_some_mass` prove the recursion before any division; zero
+emissions and positive noncompletion mass are allowed. `pending_emission`
+and `delivered_law` retain matching Stop and delivery.
+
+For each actual history, the renderer in
+[NativeFullResidual](https://github.com/the-omega-institute/trureturing/blob/9622561ab8abd128c4fcd573e5224f809437d233/D5/S3/Observer/ProbabilisticClosure/TrajectoryLaws/NativeFullResidual.lean)
+retains its complete fields and event blocks. `full_renderer_all_paths`,
+`full_renderer_readback`, the private `readback_left`, and
+`full_renderer_tv` give a measurable left inverse and TV equality, including
+noncompletion; `full_delete_block` removes exactly one original block.
+Thus rendering a row barycentre commutes with its finite mixture and
+preserves each TV in (18.2). In NativeObserverJointLaw, `sameK_private_tail`
+and the private `fullTarget_eq`, `rawTarget_words`, `rawTarget_probability`
+identify the target as the normalized posterior mixture for that same
+once-sampled $K$. Its `native_history_risk_transport` and the private
+`history_risk` in NativeInstalledFullLaw identify (18.1) with the raw
+own-law risks used in [PAIRED, Section 2](RECURSIVE_RELATIONAL_OBSERVATION_PAIRED_CALIBRATION_OBSERVABILITY.md).
+Both laws in each distance are probability measures, so the native
+nonnegative extended-real risks are bounded by one and have these ordinary
+real values; on the countable carrier TV is half the $\ell^1$ distance.
+None of these statements equates an own law with its target. Installed
+semantic probabilities are not an executable exact-real sampler, and marked
+paths, histories and rows are analysis data, not extra COMPLETE memory.
+

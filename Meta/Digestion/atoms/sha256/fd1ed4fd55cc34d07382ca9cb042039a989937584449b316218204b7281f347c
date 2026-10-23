@@ -1,0 +1,32 @@
+**命题 36.9（原生组成的非零切向返回方向）。** 对奇素数 $p$，定义
+
+$$
+R_p=\frac{T^{d_p}-I}{p^{e_p}}\pmod p.
+$$
+
+存在唯一非零 $c_p\in\mathbb F_p$ 使 $R_p=c_pD$。对每个 $C\in\mathcal C_p$，
+
+$$
+\nabla Q(C)\cdot R_pC=0,\qquad R_pC\ne0.
+$$
+
+故在首次非平凡提升精度，旧周期后的偏移沿该点的全部一维切向，而非沿任意选定的欧氏方向。
+
+证明。$T^{d_p}$ 是 $M$ 的多项式，$M^2=M+I$ 将其化为 $a'I+b'M$。从差矩阵的非对角项和左上项可见 $a',b'$ 在减去 $I$ 后均被 $p^{e_p}$ 整除，故整数商也在 $\mathbb Z I+\mathbb Z M$ 内。这也是 $M$ 的中心化子：若矩阵 $X$ 与 $M$ 交换，比较四个条目即得 $X=\left(\begin{smallmatrix}a&b\\b&a+b\end{smallmatrix}\right)$。
+
+写整数商为 $B=aI+bM$。$\det(T^{d_p})=1$ 给
+
+$$
+1=\det(I+p^{e_p}B)
+=1+p^{e_p}\operatorname{tr}B+p^{2e_p}\det B,
+\qquad 2a+b=0\pmod p.
+$$
+
+二可逆，故 $B\equiv(b/2)(2M-I)$；商非零保证 $b/2\ne0$。另一方面直接代入
+
+$$
+DC=(-U+2V,\,2U+V)^{\mathsf T}
+$$
+
+得梯度内积为零。若 $p\ne5$，$D^2=5I$ 保证 $D$ 可逆，而范数一点非零。若 $p=5$，$DC=0$ 强迫 $U=2V$，从而 $Q(C)=0$，也不可能。因此切向量非零，张成命题 36.4 的一维差空间。证毕。
+

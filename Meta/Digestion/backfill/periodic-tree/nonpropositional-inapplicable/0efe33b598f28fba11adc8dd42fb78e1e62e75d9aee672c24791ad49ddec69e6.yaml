@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:0efe33b598f28fba11adc8dd42fb78e1e62e75d9aee672c24791ad49ddec69e6
+  normalized_sha256: sha256:0efe33b598f28fba11adc8dd42fb78e1e62e75d9aee672c24791ad49ddec69e6
+cas_ref: sha256:0efe33b598f28fba11adc8dd42fb78e1e62e75d9aee672c24791ad49ddec69e6
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 证明段（**证明。** 从 (EMW-F1) 选有限 \(T\subset\mathcal R_1(M_0)\)，使  \[ \sum_{r\in\…）只展开前文定理或命题的论证，式子和中间推导不另提出独立陈述。
+    previous_atom_id: 42d095cbaccd1497eb739897dbb78d46be3321f895ca0d69c0161e8050d19de9
+    next_atom_id: 45cb391c04dc163afe59c73e4ce792bf45f71b582e1cf80cbd05382db3409799

@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:5df1994d880653f01652cc9ef9531853d6d0b4afd73dd0522ae3782ab287bb85
+  normalized_sha256: sha256:5df1994d880653f01652cc9ef9531853d6d0b4afd73dd0522ae3782ab287bb85
+cas_ref: sha256:5df1994d880653f01652cc9ef9531853d6d0b4afd73dd0522ae3782ab287bb85
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 本 atom 只给出小历史宽度行列式下界引理的证明及证明方法说明，不另立独立命题；其所证明的原陈述保留自身状态。
+    previous_atom_id: 983c804dbd8a847852de8910fac6e9702a31040ec86415def14516a225851762
+    next_atom_id: 6a165db94e3421d6636acaa5496825d31d07f93f1f248f7c53dfbe537b308e4b

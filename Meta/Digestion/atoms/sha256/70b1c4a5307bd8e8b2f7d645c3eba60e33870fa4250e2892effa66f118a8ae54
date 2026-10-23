@@ -1,0 +1,10 @@
+**Theorem 8.3 (exact fixed-$T_8$ slice).** With the original fixed $T_8$, entries and $L=2$, FULL validation equals UNIVERSAL validation on size-eligible well-formed inputs, and is coNP-complete as a language rejecting malformed inputs. If an optional state cap is included, conjoin its deterministic check.
+
+Proof. Lemma 8.2 shows that UNIVERSAL implies BOTH, so the two properties coincide on the indicated inputs. Their coNP upper bound follows from Proposition 5.2.
+
+For hardness compile a preparer with four mode Reads $V_1,\ldots,V_4$ at $p_{b_1},\ldots,p_{b_4}$, the occurrence graph $\operatorname{Eval}(\phi;D,Z_0)$, loop $D$ at $\varepsilon$ with all four successors $D$, and bit Halts $Z_0,Z_1$. At $V_1$ alpha enters that evaluator and the other three replies go to $V_2$. At $V_2$ alpha goes to $Z_0$ and other replies to $V_3$. At $V_3$ alpha goes to $Z_1$ and other replies to $V_4$. At $V_4$ alpha goes to $Z_1$ and other replies to $Z_0$. Install all $M_\phi+7$ records and set binary $P=4+M_\phi$; if needed set the state cap to that exact count.
+
+On every actual source this preparer is the verified baseline except that $\Pi_1$ enters a loop exactly for a true $\phi$ assignment. If $\phi$ is unsatisfiable every source follows the baseline and terminates within $P$, and serving succeeds by Lemma 8.2. If it is satisfiable an actual satisfying $\Pi_1$ source loops by Lemma 6.1, violating UNIVERSAL and FULL. Independently, $\Pi_2$ always supplies zero and $\Pi_3$ always supplies one. Thus both target properties are equivalent to well-formed UNSAT. A malformed formula maps to the fixed valid loop preparer, making the reduction total. This proves coNP-hardness and the stated completeness.
+
+An unrestricted DP upper bound does not establish DP hardness for this slice. Indeed a DP-hard language in coNP would put NP, a subclass of DP, inside coNP by reduction closure; taking complements then gives NP=coNP. The independent SAT/UNSAT gates of §7 are proved for the separately specified $T_{10}$. No transition of $T_8$ is replaced in the present theorem. $\square$
+

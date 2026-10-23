@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:89812ac1776d03fabbb79ffc07a02ed58eae20f2e58a45eae54f2c3805212b82
+  normalized_sha256: sha256:89812ac1776d03fabbb79ffc07a02ed58eae20f2e58a45eae54f2c3805212b82
+cas_ref: sha256:89812ac1776d03fabbb79ffc07a02ed58eae20f2e58a45eae54f2c3805212b82
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 计算完成：只引入本段使用的对象、记号、计算定义或术语约定，不追加存在、唯一性或性质结论。
+    previous_atom_id: 0c3650d6377ef4e856129cca735e4730758a035faf20b946f0218a86f8ed7dab
+    next_atom_id: 2ce0d79f18fa9e161fc73108c53c33d4cb7f6d2d0451ef52c2f7584a497d79e7

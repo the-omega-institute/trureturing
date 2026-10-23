@@ -1,0 +1,24 @@
+**Proof (all-action fixed-value GLOBAL lower bound).** Fix either free value and suppose some arbitrary preset controller finishes on the whole fibre in at most two blocks. The preceding full-source root argument forces its first word to start zero. The current tail after it is common to every source, independent of INITIAL phase and inherited tail. Its preset second word therefore either succeeds on every source that continues or rejects all of them; legality depends only on this common tail and the literal bits. A rejecting word supplies one absorbing outcome on a reached archive, and no later distinction can be recovered. A successful word supplies at most two scalar outcomes. A first-endpoint stop supplies just one label.
+
+The binary-leaf argument used in Corollary 19.3, JOINT Theorem 8.1 and FULL POSITIVE Theorem 81.2 thus bounds each first-endpoint child by two distinct labels with one remaining block. Since there are four nonempty labels altogether, equality is necessary: both first children contain two labels, their label images are disjoint, neither child can stop, and both must split into two successful terminal archives. Hence every phase must actually continue safely through the same second word. Early stopping would leave at most three distinct-label leaves; uniform rejection would leave fewer. Four labels saturate the four successful two-bit codes, so each label has exactly one code, even if it occurs at several phases or tails. This establishes the successful two-coordinate representation for an arbitrary alleged controller, without granting it an unissued observation.
+
+The first full window is $W_0=\{0,\ldots,m\}$. Its exterior contains phase $m+1$ with label $C$ and phase $m+2$ with label $A$. Their first charge is zero for every root word by (31.5). Code uniqueness and saturation therefore force the first code coordinate of both $A,C$ to be zero and that of $B,D$ to be one.
+
+The second full window and its exterior are
+
+$$
+ W_1=\{m,m+1,\ldots,2m-2,0,1\},
+ \qquad U=P\setminus W_1=\{2,\ldots,m-1\}.
+\tag{31.9}
+$$
+
+Because $m\ge5$, $U$ contains phase two with label $A$ and phase $m-2$ with label $B$. Every second literal charge vanishes on these actual sources. Thus $A,B$ have second coordinate zero. Saturation now gives $A=00$, $B=10$, $C=01$ and $D=11$. In particular the entire second charge support is forced to be
+
+$$
+ \operatorname{supp}q_1=\lambda^{-1}(\{C,D\})
+ =\{0,1,m+1\}\subset W_1.
+\tag{31.10}
+$$
+
+This has odd cardinality, contradicting the full-path even charge in INITIAL Interface 1.4. There is no nonactual vertex or omitted source to absorb the parity: every vertex of $W_1$ is an actual INITIAL phase, and all four-label sources had to continue. This rules out every two-block preset controller in the fixed-value fibre. It includes zero waits, all-one words, other arbitrary literal words, rejecting attempts and endpoint stops: they were admitted in the capacity argument, and every emitted word still occupies its charged chronological index. Therefore $C_{\rm pre}^{v}\ge3$ separately for $v=0$ and $v=1$.
+

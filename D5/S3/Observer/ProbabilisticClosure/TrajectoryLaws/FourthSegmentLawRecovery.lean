@@ -179,7 +179,7 @@ private theorem infinite_beta_native_active (r : Registers) (S : ℕ) (C : Count
     rw [show n+1=1+n by omega,drive_append,hfirst]
     simp [infinite_beta_shift,hd]
 
-private theorem infinite_tail_native_noncompletion (c : AcquiredNativeState) (s : ActivePhase)
+theorem infinite_tail_native_noncompletion (c : AcquiredNativeState) (s : ActivePhase)
     (hs : c.source.finiteFields.control = .fourth (.active s)) :
     stoppedReadWord s (infiniteTail s) = none ∧
     ∀ n : ℕ, ¬ ∃ ops d paid,
@@ -232,7 +232,7 @@ private theorem family_last (s : ActivePhase) (b : Letter) (w : List Letter)
       · change ((0 :: loopWord j) ++ [1,1]).getLast?.getD 0 = 1
         rw [List.getLast?_append_of_ne_nil _ (by simp)]; rfl
 
-private theorem native_renderer_eq (c : AcquiredNativeState) (s : ActivePhase)
+theorem native_renderer_eq (c : AcquiredNativeState) (s : ActivePhase)
     (hs : c.source.finiteFields.control = .fourth (.active s)) (ω : Stream) :
     nativeStopped c s ω = nativeRenderer c (stoppedReadWord s ω) := by
   cases hw : stoppedReadWord s ω with
@@ -249,7 +249,7 @@ def wordLaw (μ : PMF Depth) (h : List Operation) (c : AcquiredNativeState)
 def wordMixture (ν : PMF Depth) (s : ActivePhase) : Measure RawTail :=
   Measure.sum fun k => ν k • explicitStoppedWordLaw s (rate k)
 
-private theorem posterior_word_law (μ : PMF Depth) (h : List Operation)
+theorem posterior_word_law (μ : PMF Depth) (h : List Operation)
     (c : AcquiredNativeState) (hc : run h = some c) (s : ActivePhase) :
     wordLaw μ h c s = wordMixture (posterior μ h c hc) s := by
   have hs : Measurable (fun z : Depth × Stream =>
@@ -265,7 +265,7 @@ private theorem posterior_word_law (μ : PMF Depth) (h : List Operation)
   rw [Measure.map_sum hw.aemeasurable]
   apply congrArg Measure.sum
   funext k
-  rw [Measure.map_smul,Measure.map_map hw (by fun_prop)]
+  rw [Measure.map_smul _ hw.aemeasurable,Measure.map_map hw (by fun_prop)]
   exact congrArg (fun m => posterior μ h c hc k • m)
     (actual_fourth_segment_stopped_word_law (rate k) s).2
 
@@ -277,7 +277,7 @@ open D5.S3.Observer.ProbabilisticClosure.TrajectoryLaws.NativeConditionalControl
 
 def xi (k : Depth) : ℝ := (rate k : ℝ)*(1-(rate k : ℝ))
 
-private theorem rate_bounds (k : Depth) : (1/3:ℝ) ≤ (rate k : ℝ) ∧ (rate k : ℝ) ≤ 2/5 := by
+theorem rate_bounds (k : Depth) : (1/3:ℝ) ≤ (rate k : ℝ) ∧ (rate k : ℝ) ≤ 2/5 := by
   have hb : (Nat.fib k.val : ℝ) ≤ Nat.fib (k.val+1) := by
     exact_mod_cast Nat.fib_mono (show k.val ≤ k.val+1 by omega)
   have ha : (Nat.fib (k.val+1) : ℝ) ≤ 2*Nat.fib k.val := by
@@ -304,7 +304,7 @@ private theorem fib_gap_coprime (k : Depth) :
   rw [show k.val+3 = (k.val+1)+2 by omega,Nat.fib_add_two,Nat.coprime_self_add_right]
   exact h
 
-private theorem rate_injective : Function.Injective (fun k : Depth => (rate k : ℝ)) := by
+theorem rate_injective : Function.Injective (fun k : Depth => (rate k : ℝ)) := by
   intro k l he
   have hd (i : Depth) : 0 < (Nat.fib (i.val+3) : ℤ) := by
     exact_mod_cast Nat.fib_pos.mpr (by omega : 0 < i.val+3)
@@ -322,7 +322,7 @@ private theorem rate_injective : Function.Injective (fun k : Depth => (rate k : 
   apply Subtype.ext
   exact Nat.add_right_cancel hi
 
-private theorem xi_bounds (k : Depth) : (2/9:ℝ) ≤ xi k ∧ xi k ≤ 6/25 := by
+theorem xi_bounds (k : Depth) : (2/9:ℝ) ≤ xi k ∧ xi k ≤ 6/25 := by
   obtain ⟨hl,hu⟩ := rate_bounds k
   have hlp : 0 ≤ ((rate k:ℝ)-1/3)*(2/3-(rate k:ℝ)) :=
     mul_nonneg (by linarith) (by linarith)
@@ -373,7 +373,7 @@ private theorem posterior_length_law (μ : PMF Depth) (h : List Operation)
   rw [actual_length_projection,posterior_word_law μ h c hc]
   rfl
 
-private theorem p_kernel_atoms (r : unitInterval) (j : ℕ) :
+theorem p_kernel_atoms (r : unitInterval) (j : ℕ) :
     ((explicitStoppedWordLaw .p r).map lengthProjection) {some (2*j+1)} =
       alphaMass r*(alphaMass r*betaMass r)^j ∧
     ((explicitStoppedWordLaw .p r).map lengthProjection) {some (2*j+2)} =
@@ -412,7 +412,8 @@ private theorem length_mixture_singleton (ν : PMF Depth) (s : ActivePhase) (n :
       ((explicitStoppedWordLaw s (rate k)).map lengthProjection) {n} := by
   unfold lengthMixture wordMixture
   rw [Measure.map_sum (measurable_of_countable lengthProjection).aemeasurable]
-  simp [Measure.sum_apply,Measure.map_smul]
+  simp [Measure.sum_apply,
+    Measure.map_smul _ (measurable_of_countable lengthProjection).aemeasurable]
 
 private theorem five_atoms (ν : PMF Depth) (j : ℕ) :
     lengthMixture ν .p {some (2*j+1)} =
@@ -449,7 +450,7 @@ private theorem mass_finite (k : Depth) : alphaMass (rate k) ≠ ∞ ∧ betaMas
   simp [alphaMass,betaMass]
 private theorem pmf_real_sum (ν : PMF Depth) : (∑' k,(ν k).toReal) = 1 := by
   rw [← ENNReal.tsum_toReal_eq (ν.apply_ne_top),ν.tsum_coe,ENNReal.toReal_one]
-private theorem pmf_real_summable (ν : PMF Depth) : Summable (fun k => (ν k).toReal) :=
+theorem pmf_real_summable (ν : PMF Depth) : Summable (fun k => (ν k).toReal) :=
   ENNReal.summable_toReal (by rw [ν.tsum_coe]; exact ENNReal.one_ne_top)
 
 def mean (ν : PMF Depth) : ℝ := ∑' k,(ν k).toReal*(rate k:ℝ)
@@ -650,7 +651,7 @@ def transcriptLaw (μ : PMF Depth) (h : List Operation) (c : AcquiredNativeState
   (ProbabilityTheory.cond (jointLaw μ) (nativeEvent h c)).map
     (fun z => transcript c (rawTail z.2 (readLetters h).length))
 
-private theorem drive_prefix_input (c : AcquiredNativeState) (ω ω' : Stream) (n : ℕ)
+theorem drive_prefix_input (c : AcquiredNativeState) (ω ω' : Stream) (n : ℕ)
     (hp : ∀ i : ℕ,i < n → ω i = ω' i) : nativeDrive c ω n = nativeDrive c ω' n := by
   induction n generalizing c ω ω' with
   | zero => rfl
@@ -672,11 +673,11 @@ private theorem drive_prefix_input (c : AcquiredNativeState) (ω ω' : Stream) (
       have hc : readCost z.1 ≤ 1 := by cases z.1 <;> simp [readCost]
       omega
 
-private theorem word_stream_prefix (w : List Letter) : Prefix (wordStream w) w := by
+theorem word_stream_prefix (w : List Letter) : Prefix (wordStream w) w := by
   unfold Prefix readPrefix
   simpa [wordStream] using List.ofFn_get w
 
-private theorem prefix_agrees (ω ω' : Stream) (w : List Letter)
+theorem prefix_agrees (ω ω' : Stream) (w : List Letter)
     (hp : Prefix ω w) (hq : Prefix ω' w) (i : ℕ) (hi : i < w.length) : ω i = ω' i := by
   have he : readPrefix ω w.length = readPrefix ω' w.length := hp.trans hq.symm
   have hx := congrArg (fun v : List Letter => v[i]?) he
@@ -772,7 +773,7 @@ private theorem transcript_count_measurable : Measurable transcriptCount := by
       (fun t : H => t.property)
   exact Measurable.dite hf measurable_const hH
 
-private theorem terminal_index (c : AcquiredNativeState) (s : ActivePhase)
+theorem terminal_index (c : AcquiredNativeState) (s : ActivePhase)
     (hs : c.source.finiteFields.control = .fourth (.active s)) (ω : Stream)
     (w : List Letter) (hw : stoppedReadWord s ω = some w) (n : ℕ) :
     deliveredAt (transcript c ω) n ↔ n = w.length+1 := by

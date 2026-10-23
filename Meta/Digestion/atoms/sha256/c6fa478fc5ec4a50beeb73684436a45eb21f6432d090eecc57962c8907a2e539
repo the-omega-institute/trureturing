@@ -1,0 +1,6 @@
+优点：
+
+* 直接产生正交零点采样；
+* 产生有限 rational inner approximants；
+* 连接 CMV 与 Schur 算法。
+

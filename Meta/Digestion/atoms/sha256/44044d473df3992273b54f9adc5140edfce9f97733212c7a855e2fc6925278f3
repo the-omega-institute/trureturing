@@ -1,0 +1,26 @@
+**假设 16.1（严格内部、迁移率与共同钟）。** 固定合法边界，令 $r=1-Z>0$、$0<X,Y<r$，取
+
+$$
+I=(\max(0,X+Y-r),\min(X,Y)),\qquad
+\kappa_0=XY/r,\qquad \kappa_{\rm init}\in I.
+$$
+
+采用数学引文 1.2 的 $p_\kappa$ 及[《环流读出、控制接口、KL 作用量与 toric 关系》Q4–Q5、定理 3.1–3.2](AURIC_FIB_ATOM_CIRCULATION_CONTROL_KL_ACTION_AND_TORIC_RELATIONS.md)的共同支持 KL 量 $\mathcal A(\kappa)=D(p_\kappa\Vert p_{\kappa_0})$。所引结论为四格内部的
+
+$$
+\mathcal A'(\kappa)=\log\frac{p_0p_{13}}{p_1p_3},\qquad
+\mathcal A''(\kappa)=\frac1{p_0}+\frac1{p_1}+\frac1{p_3}+\frac1{p_{13}}>0.
+$$
+
+四个变动格严格正；固定格 $p_2=Z$ 可为零，零格对 KL 的贡献按共同支持取零。退化纤维或端点不沿用这些有限导数。此统计凸性和数学引文 1.4 的二阶矩均不等于路径的二阶参数导数。
+
+在 $I$ 上另给正 $C^1$ 函数 $\mu,N$，规定
+
+$$
+\frac{d\kappa}{d\lambda}=-\mu(\kappa)\mathcal A'(\kappa),\qquad
+\kappa(0)=\kappa_{\rm init},\qquad
+\tau(\lambda)=\int_0^\lambda N(\kappa(u))\,du.
+$$
+
+$\mu$ 是所选迁移率，$N$ 是整条律轨迹共用的确定钟率，尚未指定成样本状态依赖的随机换钟。再给非负连续函数 $\beta(\lambda)$，在每个有限区间有界。它指定在必需交通之外添加多少循环，不能由 KL 曲率决定。
+

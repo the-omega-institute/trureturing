@@ -1,1 +1,1 @@
-{"statement_id":"sha256:af0fb2a2de4e839e640124966515c4e73bb180ba7e48273dfa599b779faffc09"}
+{"statement_id":"sha256:af0fb2a2de4e839e640124966515c4e73bb180ba7e48273dfa599b779faffc09","declarations":[{"declaration_name_key":"ns(ns(ns(ns(ns(ns(n0,2:D5),2:S3),4:Weil),15:WeilObservables),29:FiniteWeilObservableMixedForm),39:every_reduced_mixed_pairing_is_realized)","kind":"theorem"},{"declaration_name_key":"ns(ns(ns(ns(ns(ns(n0,2:D5),2:S3),4:Weil),15:WeilObservables),29:FiniteWeilObservableMixedForm),54:truncated_mixed_pairing_independent_of_representatives)","kind":"theorem"}]}

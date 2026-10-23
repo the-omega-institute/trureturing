@@ -1,0 +1,20 @@
+**References 8.1 (owning repository contracts at the supplier pin).** The source
+map below states what is consumed; source inspection does not prove a newly
+compiled theorem or application.
+
+| Owning source | Exact supplied domain and use |
+| --- | --- |
+| [ARH, §§1–3][ARH] | Entire same-original signed input, both reached guards, complete paid producer correspondence, old-row and original-prefix frames, authentic-register prefix/service existence bridge. Physical complete-state factoring is a separate premise. |
+| [NSF, Lemma 5.1 and Theorem 5.2][NSF] | Fixed-observation, guarded sign and full-row compilation with both original-source directions; finite existential feasibility, not a universal all-depth stopping algorithm. |
+| [NPL, §4 and Theorem 5.3][NPL] | Exact finite coordinate and source images with hidden witnesses, complete finite lists, and entire full-row image. An infinite image alone does not prove simultaneous minimum-depth escape. |
+| [NLC, Theorem 4.1 and Corollary 4.2][NLC] | Joint designated minimum-depth EMPTY/DEEP/BARRIER decision and actual finite witnesses with the entire native predicate. The present canonical test is the explicit equivalence (FFM.12), not a marginal relaxation. |
+| [SJM, Definition 2.1 and Theorem 2.2][SJM] | Minimum complete conditional field cardinality under paid acquisition and complete state, covering static and arbitrary adaptive serial services. Its general effective optimizer gap is closed here only under whole-image admission. |
+| [ABC, Theorems 2.2–2.3][ABC] and [URR, Definition 2.1][URR] | Normal-code mutual inverse, rank translation and constructor mass used to prove the six-hole atomic-anchor exclusion. The normality domain and joint source constraints are retained. |
+| [AAB, §§2–4][AAB] and [PAC, Assumption 2.1][PAC] | Entire residual-free atomic-output anchor hypotheses; source mass proves that no entire six-hole stratum meets those hypotheses. |
+| [SPC, §§3–4][SPC] | Actually acquired complete-row strata, finite signed approximants and their unique non-rational contact, establishing the precise admission boundary. |
+| [SourceTransportCentralizer][CENTRALIZER] | Public `source_transport_centralizer`, first conjunct, and its local `hinj`/`classify` proof: finite-native stability is exactly the atomic orbit. No completion classification is imported. |
+| [NativeCutFibers][CUT] | `legal_values_row`, `rowFiberEquiv`, and private `recover_fill`/`fill_injective`: inverse old-class/original-source maps with all distinct classes retained. |
+| [NativeDepthPatterns][DEPTH] | `depthEquiv`, private `fill_decompose`/`decompose_fill`, and `original_prefix_locality`: exact patterns and all-epoch four-valued locality. |
+| [NativeHistoryCells][HISTORY] | `historyCellEquiv`, `cell_feasibility_exact`, and private `syntax_iff_ground`: exact literal-history cell interfaces. Signed whole comparisons here use ARH/NSF; the formal history type is not silently enlarged. |
+| [NativeSymbolicRecutting][RECUT] | `symbolic_recut_exact` and private `termAt_fill`/`exterior_commute`: reached ordering, whole exterior and every partition pair after filling. |
+| [DelayedOriginalReadout][DELAY] | `original_decoder_correct`, `original_decoder_service` and query bounds: at most two actual current reads per original reply, including absence, with authentic $N$ and the same source/register/root. |

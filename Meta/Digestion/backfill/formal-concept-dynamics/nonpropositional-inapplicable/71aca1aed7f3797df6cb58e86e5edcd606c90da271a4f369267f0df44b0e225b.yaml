@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:71aca1aed7f3797df6cb58e86e5edcd606c90da271a4f369267f0df44b0e225b
+  normalized_sha256: sha256:71aca1aed7f3797df6cb58e86e5edcd606c90da271a4f369267f0df44b0e225b
+cas_ref: sha256:71aca1aed7f3797df6cb58e86e5edcd606c90da271a4f369267f0df44b0e225b
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 定义 37.4（理由响应）：本段仅约定名称、符号及其判定条件；不主张满足条件的对象存在，也不追加性质定理。
+    previous_atom_id: e2f27d056d59579aae2b26e7422bacd41d979a0837952704a75df2baa08881db
+    next_atom_id: 6c0c2eee4f988993b96d9d11cddd0818cfcc5931a4b6ac3184789cb087e9d8fc

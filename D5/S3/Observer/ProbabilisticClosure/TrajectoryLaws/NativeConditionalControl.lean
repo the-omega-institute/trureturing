@@ -43,7 +43,7 @@ theorem erase_reads (w : List Letter) (v : List Operation) :
 @[simp] private theorem erase_reads_only (w : List Letter) : readLetters (reads w) = w := by
   simpa only [List.append_nil, readLetters] using erase_reads w []
 
-private theorem word_counts (r : unitInterval) (w : List Letter) :
+theorem word_counts (r : unitInterval) (w : List Letter) :
     wordMass r w = alphaMass r ^ w.count 0 * betaMass r ^ w.count 1 := by
   have hm (x : Letter) : (bernoulliMeasure (0 : Letter) 1 r) {x} =
       (if x = 0 then alphaMass r else 1) * (if x = 1 then betaMass r else 1) := by
@@ -99,12 +99,12 @@ instance joint_probability (μ : PMF Depth) : IsProbabilityMeasure (jointLaw μ)
 def nativeEvent (h : List Operation) (c : AcquiredNativeState) : Set (Depth × Stream) :=
   {z | nativeDrive initial z.2 h.length = some (h,c,(readLetters h).length)}
 
-private theorem event_eq (h : List Operation) (c : AcquiredNativeState) (hc : run h = some c) :
+theorem event_eq (h : List Operation) (c : AcquiredNativeState) (hc : run h = some c) :
     nativeEvent h c = Prod.snd ⁻¹' prefixCylinder (readLetters h) := by
   ext z
   exact (native_acquired_prefix_cylinder h c z.2 _).trans (by simp [hc, prefixCylinder])
 
-private theorem event_measurable (h : List Operation) (c : AcquiredNativeState) :
+theorem event_measurable (h : List Operation) (c : AcquiredNativeState) :
     MeasurableSet (nativeEvent h c) := by
   by_cases hc : run h = some c
   · rw [event_eq h c hc]
@@ -117,7 +117,7 @@ private theorem event_measurable (h : List Operation) (c : AcquiredNativeState) 
 def likelihood (h : List Operation) (k : Depth) : ℝ≥0∞ := wordMass (rate k) (readLetters h)
 def normalizer (μ : PMF Depth) (h : List Operation) : ℝ≥0∞ := ∑' k, μ k * likelihood h k
 
-private theorem history_mass (μ : PMF Depth) (h : List Operation) (c : AcquiredNativeState)
+theorem history_mass (μ : PMF Depth) (h : List Operation) (c : AcquiredNativeState)
     (hc : run h = some c) : jointLaw μ (nativeEvent h c) = normalizer μ h := by
   rw [event_eq h c hc]
   simp only [jointLaw, Measure.sum_apply_of_countable, Measure.smul_apply, smul_eq_mul]
@@ -126,7 +126,7 @@ private theorem history_mass (μ : PMF Depth) (h : List Operation) (c : Acquired
   rw [Measure.map_apply (by fun_prop) ((measurable_cylinder _).preimage measurable_snd)]
   exact congrArg (μ k * ·) (cylinder_mass (rate k) (readLetters h))
 
-private theorem likelihood_pos (h : List Operation) (k : Depth) : 0 < likelihood h k := by
+theorem likelihood_pos (h : List Operation) (k : Depth) : 0 < likelihood h k := by
   rw [likelihood, word_counts]
   rw [ENNReal.mul_pos_iff]
   constructor <;> apply ENNReal.pow_pos
@@ -136,12 +136,12 @@ private theorem likelihood_pos (h : List Operation) (k : Depth) : 0 < likelihood
     change 0 < 1 - (rate k : ℝ)
     exact sub_pos.mpr (ratio_interior k).2
 
-private theorem normalizer_bounds (μ : PMF Depth) (h : List Operation) (c : AcquiredNativeState)
+theorem normalizer_bounds (μ : PMF Depth) (h : List Operation) (c : AcquiredNativeState)
     (hc : run h = some c) : 0 < normalizer μ h ∧ normalizer μ h ≤ 1 := by
   constructor
   · obtain ⟨k,hk⟩ := μ.support_nonempty
     apply lt_of_lt_of_le (ENNReal.mul_pos hk (ne_of_gt (likelihood_pos h k)))
-    exact ENNReal.le_tsum k
+    exact ENNReal.le_tsum (f := fun k => μ k * likelihood h k) k
   · rw [← history_mass μ h c hc]
     calc
       jointLaw μ (nativeEvent h c) ≤ jointLaw μ Set.univ := measure_mono (Set.subset_univ _)
@@ -181,7 +181,7 @@ open D5.S3.Observer.ProbabilisticClosure.TrajectoryLaws
 open FourthSegmentStoppedLaw NativeAcquiredPrefixState NativeAcquiredPrefixCylinder
 open D5.S3.Observer.ProbabilisticClosure.TrajectoryLaws.NativeConditionalControl.DepthLaw
 
-private theorem prefix_tail_factorization (r : unitInterval) (w : List Letter) (s : Set Stream)
+theorem prefix_tail_factorization (r : unitInterval) (w : List Letter) (s : Set Stream)
     (hs : MeasurableSet s) :
     rawReadLaw r (prefixCylinder w ∩ (fun ω => rawTail ω w.length) ⁻¹' s) =
       wordMass r w * rawReadLaw r s := by

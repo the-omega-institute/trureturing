@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:f6034b81fa188c2119b6972104e13416ab64c2519b61ca52ba824d264bf95b35
+  normalized_sha256: sha256:f6034b81fa188c2119b6972104e13416ab64c2519b61ca52ba824d264bf95b35
+cas_ref: sha256:f6034b81fa188c2119b6972104e13416ab64c2519b61ca52ba824d264bf95b35
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 非命题文本：J.2 separation-density bridge：仅为导引、项目安排、来源条目或记号清单，不提出数学命题。
+    previous_atom_id: 2668e97679f1a185222b49bd07c3d5214e248ad4c16aece30a5f37ccccf5d7cf
+    next_atom_id: f37d7917c779704bd502564d9b5309c0419af542657ec2cb00cf3a7ca06db0e3

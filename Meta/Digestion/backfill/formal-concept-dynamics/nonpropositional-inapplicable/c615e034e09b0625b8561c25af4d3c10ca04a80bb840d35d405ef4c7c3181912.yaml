@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:c615e034e09b0625b8561c25af4d3c10ca04a80bb840d35d405ef4c7c3181912
+  normalized_sha256: sha256:c615e034e09b0625b8561c25af4d3c10ca04a80bb840d35d405ef4c7c3181912
+cas_ref: sha256:c615e034e09b0625b8561c25af4d3c10ca04a80bb840d35d405ef4c7c3181912
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 清单片段“保险”仅列举主题、接口组成或考虑维度；本片段不陈述性质、存在性或推论。
+    previous_atom_id: b15521fbcf3ea5a861e91cb779300bb80350bf2fa1791bdc0382061d9539c57a
+    next_atom_id: b243973ac97b3d6735e64fa1f28ddc059a72e954ab5c1f85456c456d41b69204

@@ -1,0 +1,48 @@
+## 3. 实际 Gamma 权重的高频下界及尺度导数
+
+由 DLMF 5.7.6，令 b_j=2j+1/2，则
+
+\[
+W(\xi):=1+\gamma(\xi)-\gamma_0
+=1+\sum_{j\ge0}\frac{2\xi^2}{b_j(b_j^2+\xi^2)}\ge1.
+\tag{SC2}
+\]
+
+级数在有界频率上绝对且局部一致收敛。新 Lean 的 `gammaShiftPartial J xi` 是其前 J 项加一，未定义第二个 gamma 函数。当 |xi|>=2J 时，b_j<=|xi| 且 b_j<=2(j+1)，每个 summand >=1/[2(j+1)]，故
+
+\[
+\boxed{W(\xi)\ge W_J(\xi)\ge1+H_J/2\quad(|\xi|\ge2J).}
+\tag{SC3}
+\]
+
+其中 H_J 是复用的标准 harmonic number。结合 |cos(s xi)-cos(t xi)|<=min(2,|s-t||xi|)，新主声明 `gamma_controlled_cosine_difference` 证明更强的有限和版本
+
+\[
+\boxed{|\cos(s\xi)-\cos(t\xi)|
+\le\left(2J|s-t|+\frac2{1+H_J/2}\right)W_J(\xi).}
+\tag{SC4}
+\]
+
+J=0、xi=0 和两个方向的实位移均包含。没有预先供应平移连续性或未知符号高频下界。
+
+对 log-frequency 求导，非零 t 给出
+
+\[
+t\gamma'(t)=\sum_{j\ge0}\frac{4b_jt^2}{(b_j^2+t^2)^2}.
+\]
+
+初项 b_0=1/2 至多为 2，由 2(t^2+1/4)^2-2t^2=2(t^2-1/4)^2>=0。其余 b=2j+5/2 在 u∈[b-1,b] 上满足
+
+\[
+\frac{4bt^2}{(b^2+t^2)^2}\le\frac53\frac{4ut^2}{(u^2+t^2)^2}.
+\]
+
+这就是新 Lean `gamma_log_scale_derivative_term`。这些单位区间互不相交，右侧未乘 5/3 的函数在 (0,infinity) 上积分为 2，原函数为 -2t^2/(u^2+t^2)。因此整个和 <=2+10/3<6。微分级数在有界 t 区间以 O(b_j^-3) 局部一致收敛，逐项求导合法；t=0 单独为零。沿对数坐标积分得到
+
+\[
+\boxed{|\gamma(\xi/a)-\gamma(\xi/b)|\le6|\log(a/b)|\quad(a,b>0).}
+\tag{SC5}
+\]
+
+该界不假定 digamma 整体单调，也不依赖数值拟合。它还给出 W(xi)=O(1+log(1+|xi|)) 的上界。
+

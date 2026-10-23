@@ -210,14 +210,14 @@ theorem positive_functional_vector_series_of_finite_rank_tightness
     have hx : 0 ≤ φ (rankOne ℂ x x) :=
       φ.map_nonneg
         ((ContinuousLinearMap.nonneg_iff_isPositive
-          (rankOne ℂ x x)).2
+          (f := (rankOne ℂ x x))).2
           (isPositive_rankOne_self x))
     exact
       ⟨Complex.conj_eq_iff_re.mp hx.star_eq,
        (Complex.nonneg_iff.mp hx).1⟩
 
   have hρ : 0 ≤ ρ :=
-    (ContinuousLinearMap.nonneg_iff_isPositive ρ).2
+    (ContinuousLinearMap.nonneg_iff_isPositive (f := ρ)).2
       hρpositive
 
   let T : Op := CFC.sqrt ρ
@@ -339,7 +339,7 @@ theorem positive_functional_vector_series_of_finite_rank_tightness
   have hψnonneg (S : Op) (hS : 0 ≤ S) :
       0 ≤ ψL S := by
     have hpositive : S.IsPositive :=
-      (ContinuousLinearMap.nonneg_iff_isPositive S).1 hS
+      (ContinuousLinearMap.nonneg_iff_isPositive (f := S)).1 hS
     have hterm (i : w) :
         0 ≤ inner ℂ (v i) (S (v i)) :=
       hpositive.inner_nonneg_right (v i)

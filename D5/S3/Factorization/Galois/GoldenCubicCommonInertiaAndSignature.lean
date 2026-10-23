@@ -65,7 +65,8 @@ namespace D5.S3.Factorization.Galois.GoldenCubicBlockCommonDiscriminants
 
 universe u v w
 
-set_option maxHeartbeats 200000
+set_option maxHeartbeats 800000
+set_option synthInstance.maxHeartbeats 100000
 theorem actual_common_cubic_three_prime_orbits (J : ℕ) :
     ∃ hN : NumberField (complexTower J), letI := hN
     ∃ c : complexTower J ≃ₐ[ℚ] complexTower J,
@@ -539,7 +540,8 @@ theorem actual_common_cubic_rational_degree_and_signature (J : ℕ) :
   have hreal (x : F) : star (x : ℂ) = (x : ℂ) := by
     rcases x with ⟨x, hx⟩
     exact IntermediateField.adjoin_induction ℚ
-      (p := fun z _ => star z = z)
+      (s := D5.S3.Factorization.Galois.GoldenCubicBlockPositiveRootTower.rootSet J)
+      (motive := fun z _ => star z = z)
       (by rintro z ⟨j, hj, hjJ, rfl⟩; simp [positiveRoot])
       (by intro r; simp)
       (by intro x y hx hy hxr hyr; simp [map_add, hxr, hyr])

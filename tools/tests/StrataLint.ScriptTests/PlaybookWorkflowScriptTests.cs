@@ -24,19 +24,14 @@ public sealed class PlaybookWorkflowScriptTests
             [
                 "make:lean-report",
                 "make:emit",
-                "git:diff --diff-filter=A --name-only -z synthetic-base...HEAD -- Golden/Frozen/accepted/*.json",
-                "git:ls-files --others --exclude-standard -z -- Golden/Frozen/accepted/*.json",
                 "dotnet:ledger-align --list-closed --candidate-lean-report .lake/build/stratalint/raw-lean-report.json",
-                "dotnet:ledger-align --candidate-lean-report .lake/build/stratalint/raw-lean-report.json",
                 $"make:gate BASE=synthetic-base",
-                "git:diff --diff-filter=A --name-only -z synthetic-base...HEAD -- Golden/Frozen/accepted/*.json",
-                "git:ls-files --others --exclude-standard -z -- Golden/Frozen/accepted/*.json",
             ],
             fixture.Calls());
     }
 
     [Fact]
-    public void DeliverCheckRegistersClosedModuleAbsentFromStateAndAccepted()
+    public void DeliverCheckRegistersClosedModuleAbsentFromState()
     {
         if (OperatingSystem.IsWindows()) return;
         using var fixture = new PlaybookFixture();
@@ -46,34 +41,43 @@ public sealed class PlaybookWorkflowScriptTests
         var result = fixture.Run("deliver-check", "synthetic-base");
 
         Assert.Equal(0, result.ExitCode);
+        Assert.Contains("make:lean-report-scoped LEAN_TARGETS=D5.S0.Carrier.NewClosed", fixture.Calls());
         Assert.Contains(
             $"dotnet:ledger-align --add {module} --candidate-lean-report "
-                + ".lake/build/stratalint/raw-lean-report.json",
+                + ".lake/build/stratalint/scoped-lean-report.json",
             fixture.Calls());
+        Assert.DoesNotContain("dotnet:ledger-align --candidate-lean-report .lake/build/stratalint/raw-lean-report.json", fixture.Calls());
         Assert.True(StateFragmentExists(fixture, module));
-        Assert.True(AcceptedEventMentions(fixture, module));
     }
 
     [Fact]
-    public void DeliverCheckAddsOnlyClosedModulesWithoutAcceptedSelectors()
+    public void DeliverCheckAddsOnlyClosedModulesWithoutStateRecords()
     {
         if (OperatingSystem.IsWindows()) return;
         using var fixture = new PlaybookFixture();
         const string frozen = "D5/S0/Carrier/A.lean";
         const string uncommitted = "D5/S0/Carrier/B.lean";
         WriteClosedModules(fixture, [frozen, uncommitted]);
+        ScriptHarnessScratch.EnsureDirectory(Path.Combine(fixture.Temporary.Path, "Golden/Frozen/state/D5/S0/Carrier"));
         ScriptHarnessScratch.WriteScratchText(Path.Combine(fixture.Temporary.Path,
-            "Golden/Frozen/accepted/fixture.json"), JsonSerializer.Serialize(new
-            {
-                event_type = "Freeze", schema_version = 5,
-                payload = new { descriptor_selector = frozen },
-            }));
+            "Golden/Frozen/state/" + frozen + ".json"),
+            "{\"statement_id\":\"sha256:" + new string('1', 64) + "\",\"declarations\":[]}\n");
+        var frozenPath = Path.Combine(fixture.Temporary.Path, "Golden/Frozen/state/" + frozen + ".json");
+        var frozenBytes = File.ReadAllBytes(frozenPath);
 
         var result = fixture.Run("deliver-check", "synthetic-base");
 
         Assert.True(result.ExitCode == 0, Diagnostics(result));
-        Assert.Contains($"dotnet:ledger-align --add {uncommitted} --candidate-lean-report .lake/build/stratalint/raw-lean-report.json", fixture.Calls());
+        Assert.Contains("make:lean-report-scoped LEAN_TARGETS=D5.S0.Carrier.B", fixture.Calls());
+        Assert.Contains($"dotnet:ledger-align --add {uncommitted} --candidate-lean-report .lake/build/stratalint/scoped-lean-report.json", fixture.Calls());
         Assert.DoesNotContain(fixture.Calls(), call => call.Contains($"--add {frozen}", StringComparison.Ordinal));
+        Assert.Equal(
+            [
+                "dotnet:ledger-align --list-closed --candidate-lean-report .lake/build/stratalint/raw-lean-report.json",
+                $"dotnet:ledger-align --add {uncommitted} --candidate-lean-report .lake/build/stratalint/scoped-lean-report.json",
+            ],
+            fixture.Calls().Where(call => call.StartsWith("dotnet:ledger-align", StringComparison.Ordinal)));
+        Assert.Equal(frozenBytes, File.ReadAllBytes(frozenPath));
     }
 
     [Fact]
@@ -151,21 +155,6 @@ public sealed class PlaybookWorkflowScriptTests
             "state",
             module + ".json")).Exists;
 
-    private static bool AcceptedEventMentions(PlaybookFixture fixture, string module) =>
-        new DirectoryInfo(Path.Combine(
-                fixture.Temporary.Path,
-                "Golden",
-                "Frozen",
-                "accepted"))
-            .GetFiles("*.json")
-            .Any(file => ReadAcceptedEvent(file).Contains(module, StringComparison.Ordinal));
-
-    private static string ReadAcceptedEvent(FileInfo file)
-    {
-        using var reader = file.OpenText();
-        return reader.ReadToEnd();
-    }
-
     private sealed class PlaybookFixture : IDisposable
     {
         private readonly TemporaryDirectory temporary = new();
@@ -180,7 +169,7 @@ public sealed class PlaybookWorkflowScriptTests
             ScriptHarnessScratch.EnsureDirectory(binPath);
             var scriptTarget = Path.Combine(temporary.Path, ScriptPath);
             ScriptHarnessScratch.CopyScriptInto(Path.Combine(root, ScriptPath), scriptTarget);
-            Directory.CreateDirectory(Path.Combine(temporary.Path, "Golden", "Frozen", "accepted"));
+            Directory.CreateDirectory(Path.Combine(temporary.Path, "Golden", "Frozen", "state"));
             WriteEmptyTruthGraph(this);
             WriteExecutable("make", "printf 'make:%s\\n' \"$*\" >> \"$PLAYBOOK_TEST_CALLS\"");
             WriteExecutable(
@@ -228,9 +217,7 @@ public sealed class PlaybookWorkflowScriptTests
                 + "for ((i=1; i<${#parts[@]}; i++)); do "
                 + "if [[ ${parts[i]} == --add ]]; then module=${parts[i+1]}; "
                 + "state=Golden/Frozen/state/${module}.json; mkdir -p \"$(dirname \"$state\")\"; "
-                + "printf '{\"statement_id\":\"sha256:%064d\"}\\n' 1 > \"$state\"; "
-                + "event=Golden/Frozen/accepted/$(printf '%064d' 2).json; "
-                + "printf '{\"event_hash\":\"sha256:%064d\",\"event_type\":\"Freeze\",\"payload\":{\"declaration_statement_ids\":[],\"descriptor_selector\":\"%s\",\"prerequisite_frozen_node_ids\":[],\"statement_id\":\"sha256:%064d\"},\"schema_version\":5}\\n' 2 \"$module\" 1 > \"$event\"; "
+                + "printf '{\"statement_id\":\"sha256:%064d\",\"declarations\":[]}\\n' 1 > \"$state\"; "
                 + "fi; done");
         }
 

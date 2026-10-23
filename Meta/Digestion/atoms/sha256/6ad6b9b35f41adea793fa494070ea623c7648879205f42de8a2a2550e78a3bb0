@@ -1,0 +1,29 @@
+**定义 41.3（共享 $t+1$ 片 $\beta$ 的完整行标记族）。** 固定整数 $t\ge3$、$k\ge1$。直接使用[定义 40.5 的右梳 $\mathcal R_T$ 和 $b=\langle\beta,\alpha\rangle$](#40-历史残余-β-资源三-β-共享来源与两次超额系数)，以及式（40.2）的完整块 $A,C,B$；这里的树 $b$ 不表示定理 41.2 的整数预算。参数集合 $\Theta_{k,t}$ 由
+
+$$
+1\le\ell\le t+1,\qquad
+r_j\in\mathbb N_0,\qquad
+\sum_{j=1}^{\ell}r_j=k,\qquad
+S_j\subseteq\{1,\ldots,r_j\},\qquad
+\ell+\sum_{j=1}^{\ell}|S_j|=t+1
+\tag{41.11}
+$$
+
+定义；每个零长度行的槽集为空，允许初始、末端和连续零长度行。对 $\theta=(\ell,\boldsymbol r,\boldsymbol S)\in\Theta_{k,t}$，设
+
+$$
+\begin{aligned}
+d_{j,h}&=\begin{cases}b,&h\in S_j,\\\alpha,&h\notin S_j,\end{cases}
+&D_{j,h}&=\begin{cases}B,&h\in S_j,\\A,&h\notin S_j,\end{cases}\\
+h_j&=\mathcal R_\beta(d_{j,1},\ldots,d_{j,r_j}),
+&T_j&=\mathcal R_C(D_{j,1},\ldots,D_{j,r_j}),\\
+Q_\theta&=\mathcal R_\alpha(h_1,\ldots,h_\ell),
+&P_\theta&=\mathcal R_A(T_1,\ldots,T_\ell),\\
+F_{k,t}&=\{P_\theta:\theta\in\Theta_{k,t}\},
+&n_{k,t}&=3k+5t+8.
+\end{aligned}
+\tag{41.12}
+$$
+
+每个式子描述整棵带括号、左右次序和叶标签的树。末端 $\beta$ 与标记槽共享同一前像资源，不把各行当作独立费用最优族。
+

@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:4ee9ab205eddb83170688b7609d7b4efaec28879ff9e7c9ccede89efe8c6d03b
+  normalized_sha256: sha256:4ee9ab205eddb83170688b7609d7b4efaec28879ff9e7c9ccede89efe8c6d03b
+cas_ref: sha256:4ee9ab205eddb83170688b7609d7b4efaec28879ff9e7c9ccede89efe8c6d03b
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 定义 11.1（固定单 Kraus 未点击接口）仅规定模型数据、记号或术语的使用条件，不另断言所定义对象的性质。
+    previous_atom_id: b48c4cbd72b580903db02e09b242653d4b5552ae0d20baeeef24cf61f1fa45dd
+    next_atom_id: 54809ce2e0d503d7426e4781149f4d033098010abf08c2a2de53c2b6afd21423

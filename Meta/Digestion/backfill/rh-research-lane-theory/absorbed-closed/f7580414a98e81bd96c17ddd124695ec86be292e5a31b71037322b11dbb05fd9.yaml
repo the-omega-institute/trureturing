@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:f7580414a98e81bd96c17ddd124695ec86be292e5a31b71037322b11dbb05fd9
+  normalized_sha256: sha256:f7580414a98e81bd96c17ddd124695ec86be292e5a31b71037322b11dbb05fd9
+cas_ref: sha256:f7580414a98e81bd96c17ddd124695ec86be292e5a31b71037322b11dbb05fd9
+coverage_gids:
+  - gid: D5/S3/Observer/AgencyHolonomy/PairCalibratedSecondMagnusObservability.pair_calibrated_second_magnus_energy_eq_four_holonomy
+    target_statement_id: sha256:fa8614ab89475f74f1333c6912ec131f259d8a027425fcfc4d9a1a64b0e0033f
+receipts:
+  unresolved_subitems: []

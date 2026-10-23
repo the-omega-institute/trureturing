@@ -1,0 +1,6 @@
+**Theorem 46.6 (sound finite synthesis after the correction).** Under the
+finite chart, action and reply assumptions of Theorem 44.2, if a
+source-total horizon or certified regular-history certificate is supplied,
+and all predicates above are Presburger-definable, finite-budget feasibility
+and the finite Pareto basis are decidable by the stated finite enumeration.
+

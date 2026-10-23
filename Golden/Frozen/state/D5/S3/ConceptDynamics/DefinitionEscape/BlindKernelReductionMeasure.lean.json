@@ -1,1 +1,1 @@
-{"statement_id":"sha256:b6f72ca75b67b31db2179cf7507a2b94db18bfec7988899fd85222d299e79b85"}
+{"statement_id":"sha256:b6f72ca75b67b31db2179cf7507a2b94db18bfec7988899fd85222d299e79b85","declarations":[{"declaration_name_key":"ns(ns(ns(ns(ns(ns(n0,2:D5),2:S3),15:ConceptDynamics),16:DefinitionEscape),27:BlindKernelReductionMeasure),27:blindKernelReductionMeasure)","kind":"def"},{"declaration_name_key":"ns(ns(ns(ns(ns(ns(n0,2:D5),2:S3),15:ConceptDynamics),16:DefinitionEscape),27:BlindKernelReductionMeasure),30:blind_kernel_reduction_measure)","kind":"theorem"}]}

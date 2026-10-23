@@ -1,0 +1,52 @@
+**Theorem 11.3 (Uniform real instrument with one resetting detector).** For the data of Theorem 11.2 let $G=Q^{1/2}$ be the positive real symmetric square root, and define
+
+$$
+\begin{aligned}
+\xi&=Gx/\sqrt{Z_n(q)},&\tau&=\xi\xi^{\mathsf T},\\
+L_A&=\sqrt q\,GAG^{-1},&L_B&=\sqrt q\,GBG^{-1},
+&J&=\xi f^{\mathsf T}G^{-1},\\
+\Phi(X)&=L_AXL_A^{\mathsf T}+L_BXL_B^{\mathsf T},&&
+\Psi(X)=JXJ^{\mathsf T}.
+\end{aligned} \tag{11.10}
+$$
+
+They form a homogeneous complete CP instrument on all of $M_D(\mathbb C)$, with real entries, and satisfy
+
+$$
+\begin{aligned}
+L_A^{\mathsf T}L_A+L_B^{\mathsf T}L_B+J^{\mathsf T}J&=I_D,
+\qquad \rho(\Phi)=q,\\
+\Psi(X)&=\tau\operatorname{Tr}(J^{\mathsf T}JX),\\
+\Psi\Phi^k(\tau)&=\gamma_k\tau,\qquad
+\gamma_k=\frac{k^nq^k}{Z_n(q)}\quad(k\ge0).
+\end{aligned} \tag{11.11}
+$$
+
+The zero branch has Choi rank exactly two; the displayed zero Kraus matrix ranks are $D$ and one. The tick branch has Choi rank exactly one and one nonzero rank-one Kraus matrix. Every positive-probability tick has normalized actual output $\tau$, a fixed pure density.
+
+Proof. The parameter mapping into Theorem 2.1 is its dimension $d=D=m+2$, raw family $K_A=\sqrt q A,K_B=\sqrt q B$, sole detector column $f=e_0$, and raw reset $x=e_{m+1}$. Both vectors are nonzero, $F=ff^{\mathsf T}\ne0$, the raw family is finite, and Theorem 11.2 establishes the required full-algebra radius $q<1$ and faithful Gramian. Its normalization is exactly $z=Z_n(q)>0$. The square root called $S$ in that theorem is $G$ here, and its normalized vector $b$ is $\xi$. All raw entries are real. The real positive-square-root conclusion of Theorem 2.1 thus applies, and $\xi^{\mathsf T}\xi=x^{\mathsf T}Qx/z=1$.
+
+In particular the Stein identity and the effects are
+
+$$
+\begin{aligned}
+Q-qA^{\mathsf T}QA-qB^{\mathsf T}QB&=F,\\
+J^{\mathsf T}J&=G^{-1}FG^{-1},\\
+L_A^{\mathsf T}L_A+L_B^{\mathsf T}L_B+J^{\mathsf T}J
+&=G^{-1}\big(qA^{\mathsf T}QA+qB^{\mathsf T}QB+F\big)G^{-1}=I_D.
+\end{aligned} \tag{11.12}
+$$
+
+These are operator equalities on the complex memory. The displayed real Kraus matrices act by their usual complex adjoints, equal to their transposes; their tensor amplifications preserve positivity for arbitrary complex positive inputs. Completeness makes each branch trace nonincreasing on such inputs. No restriction to real input densities is used.
+
+Writing $\Gamma(X)=GXG$, one has $\Phi=\Gamma\mathcal T_q\Gamma^{-1}$, so $\rho(\Phi)=q$ and
+
+$$
+\Phi^k(\tau)=\frac{G\mathcal T_q^k(xx^{\mathsf T})G}{Z_n(q)}.
+\tag{11.13}
+$$
+
+Theorem 2.1 and (11.7) therefore give the actual law and properness $\sum_{k\ge0}\gamma_k=1$. The outer-product form of $J$ gives the reset identity for every input matrix, hence the operator form $\Psi\Phi^k(\tau)=\gamma_k\tau$. In particular $\gamma_0=0$; the index is the number of preceding zeros, without a shift to duration $k+1$.
+
+The matrix $A$ is invertible, while $B=|(v,0)\rangle\langle e_{m+1}|$ is nonzero, rank one and nilpotent. They are linearly independent over $\mathbb C$: a nonzero scalar multiple of $A$ is invertible and cannot equal $B$. Nonzero scaling and invertible similarity preserve their ranks and independence. The dimension of their completed Kraus span is therefore exactly two. Equivalently, the zero Choi matrix is a sum of the two outer products of their vectorizations and has rank two. Both factors of $J=\xi f^{\mathsf T}G^{-1}$ are nonzero, so $J$ has matrix rank one and its single-vectorization Choi matrix has rank one. This proves the stated ranks and the pure actual reset. $\square$
+

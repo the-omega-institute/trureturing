@@ -1,1 +1,1 @@
-{"statement_id":"sha256:96b0488332245a53a56af9d1bb2a1a93f6e0f5c825fbcf434250861bcb5d5d86"}
+{"statement_id":"sha256:96b0488332245a53a56af9d1bb2a1a93f6e0f5c825fbcf434250861bcb5d5d86","declarations":[{"declaration_name_key":"ns(ns(n0,7:CWSolid),23:mappingConeCoproductIso)","kind":"def"},{"declaration_name_key":"ns(ns(n0,7:CWSolid),26:complexDiagramAsFunctorIso)","kind":"def"}]}

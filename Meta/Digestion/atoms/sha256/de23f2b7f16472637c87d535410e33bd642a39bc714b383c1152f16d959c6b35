@@ -1,0 +1,28 @@
+**定义 6.1（conditional ambiguity and retained code）。** For an anchored row define
+
+$$
+M_R=\max_{\theta}|V_R(\theta)|.
+\tag{RDR.11}
+$$
+
+This is finite because the pattern set and the finite state model are
+finite. A *refined code handoff* is a separate producer contract:
+the same full-acquisition producer computes a finite complete field
+$E(u)$ before handoff and exposes $(R,E(u))$. For the fixed row $R$,
+the set of complete field values
+\[
+\mathcal E_R=\{E(u):u\in U_R\}
+\]
+is finite, and its cardinality is the conditional code size; an
+arbitrary unbounded string is not a finite alphabet. Every
+source-dependent field accessible to the code-assisted consumer factors
+through $(R,E)$, including handles, lengths, control positions, archives
+and timing. There is no hidden old tree, reference, source label or other
+source-dependent selector. The consumer receives $(R,E)$ and common
+installed data, and may make the same static native reads as in
+Definition 1.3. A code-assisted row-uniform service has one deterministic
+entry and one finite bound $K_R^E$ such that it halts for every
+$u\in U_R$ and makes at most $K_R^E$ new reads. Thus the code is a
+recoverable declaration from the same acquired source, not evidence
+silently borrowed from another source or from the old row-only state.
+

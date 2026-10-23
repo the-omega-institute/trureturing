@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:b6cca9f3d6ff3e887da7587c6b3aa3467778a2466e487e42e76f88e9ab55e5a2
+  normalized_sha256: sha256:b6cca9f3d6ff3e887da7587c6b3aa3467778a2466e487e42e76f88e9ab55e5a2
+cas_ref: sha256:b6cca9f3d6ff3e887da7587c6b3aa3467778a2466e487e42e76f88e9ab55e5a2
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 英文证明段（**Proof.** The preceding theorem gives the reverse inclusion; the othe…）仅给出前文命题的推导或证明方向，不另提出独立结论。
+    previous_atom_id: 0e64e295bfe70dc6e5425dbf39fbaf9c6fa7bbc083278dedd2bb93630df678e8
+    next_atom_id: 2477820f6c327b530729f01ef0c84fb4ee55521e8e1dfc9c58e67d7673a716b0

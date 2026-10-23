@@ -67,7 +67,7 @@ private theorem observable_kernel_pair_le
         ((Kernel.map K q) candidate.1.1)
         ((Kernel.map K q) candidate.1.2)) pair
 
-private theorem measurable_total_variation_map_le
+theorem measurable_total_variation_map_le
     {B C : Type*} [MeasurableSpace B] [MeasurableSpace C]
     (mu nu : Measure B) (r : B -> C) (hr : Measurable r) :
     measurableTotalVariation (mu.map r) (nu.map r) <=

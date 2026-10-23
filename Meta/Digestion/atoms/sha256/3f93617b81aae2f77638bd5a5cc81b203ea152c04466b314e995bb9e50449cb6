@@ -1,0 +1,30 @@
+**Theorem 7.3 (terminating concrete-source membership with a terminal stamp).**
+Under Assumption 7.1, membership $u_*\in\mathcal S_{P,b}$ is decidable
+for every supplied concrete finite source $u_*$. Compute
+$M=K-\ell(u_*)$; reject if negative; otherwise perform Lemma 7.2 with
+cap $M$ and accept exactly when one terminal boundary is literally the
+entire $b$.
+
+Proof of completeness. For any actual run from $u_*$ returning $b$,
+
+$$
+K=\ell(U_v)=\ell(u_*)+e_v,
+\qquad e_v=M.
+\tag{NASF.13}
+$$
+
+Every prevalidation event, including the first observation and all failed
+attempts, has count at most $M$. Keep every observer step and every writer
+update through $v$. Delete only writer updates strictly after $v$, retaining
+all observer computation through Return. By the source-free suffix promise,
+induction preserves its whole accessible state, including cleanup. The
+Return boundary is still $b$, although its actual Return register can
+differ. This normalized execution has at most $M$ total updates and is
+enumerated by Lemma 7.2. No pre-first-validation condition was dropped.
+
+Proof of soundness. Every enumerated execution is a real legal history
+from $u_*$. Equality of its entire boundary to $b$ gives a witness of
+membership. Authenticity further forces its final observation count to
+be $M$; other returned boundaries need not have that count. Liveness
+ensures that exploration terminates on negative candidates too. $\square$
+

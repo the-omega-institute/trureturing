@@ -1,0 +1,14 @@
+**例 373.6（同一支撑上的不同联合场）。** 固定含边 $\{x,y\}$ 的同一有限支撑，无外场、无禁配，只给该边势 $-J\sigma_x\sigma_y$，其余耦合为零。对配置求和得到
+
+$$
+Z_n=2^{|V_n|}\cosh(\beta J),
+\qquad
+\langle\sigma_x\rangle=\langle\sigma_y\rangle=0,
+\qquad
+C_{xy}=\tanh(\beta J).
+\tag{373.14}
+$$
+
+改变 $J$ 就改变相关，而 FIB 递归、路径和原子组成不变。Gibbs 比较接口可参见 Rebeschini 与 van Handel 的 [Gibbs 测度比较定理](https://arxiv.org/abs/1308.4117)。压力非解析、多 Gibbs 相和相关长度发散是不同性质，在具体无限模型中须分别建立关系。能量、温度、概率、观测、动力学、物理距离和极限解释均属于外加层；FIB 接缝递推提供求和结构，不单独证明相变或临界普适性。
+
+

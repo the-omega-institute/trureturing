@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:1c3e99635e3d3e3eaef074c1e5a1a0ec0883872f995ad0808b6c7c4d5c7a49d6
+  normalized_sha256: sha256:1c3e99635e3d3e3eaef074c1e5a1a0ec0883872f995ad0808b6c7c4d5c7a49d6
+cas_ref: sha256:1c3e99635e3d3e3eaef074c1e5a1a0ec0883872f995ad0808b6c7c4d5c7a49d6
+coverage_gids:
+  - gid: D5/S3/Factorization/Embeddings/DirichletUnitCompletion.unitCompletionMulEquiv
+    target_statement_id: sha256:8688125181bd5a89872d983fb43ebdf08581d2007394196d9884da81783f56de
+  - gid: D5/S3/Factorization/Embeddings/DirichletUnitCompletion.unit_rank_eq_real_add_complex_sub_one
+    target_statement_id: sha256:21532ce3c35a9616fcf8aecf4d570ce75c65ccf8ca385bedc0d80461f48c8120
+receipts:
+  unresolved_subitems: []

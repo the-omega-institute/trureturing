@@ -1,1 +1,1 @@
-{"statement_id":"sha256:190651875ba1d30f1cbb5c1aec6d3da53112902028e0076c3d10a802af01d27f"}
+{"statement_id":"sha256:17a72e77e6585af1e04b9e31740b9fda93944800e465d7fd209c6996e50b3ef4","declarations":[{"declaration_name_key":"ns(n0,16:deriv_conj_conj\u0027)","kind":"theorem"},{"declaration_name_key":"ns(n0,17:logDerivZeta_conj)","kind":"theorem"},{"declaration_name_key":"ns(n0,18:logDerivZeta_conj\u0027)","kind":"theorem"},{"declaration_name_key":"ns(n0,21:intervalIntegral_conj)","kind":"theorem"},{"declaration_name_key":"ns(n0,22:deriv_riemannZeta_conj)","kind":"theorem"}]}

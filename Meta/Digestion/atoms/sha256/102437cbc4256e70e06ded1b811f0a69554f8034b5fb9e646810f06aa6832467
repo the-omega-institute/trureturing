@@ -1,0 +1,28 @@
+**定义 391.1（实际 Hilbert 目标与残差）。** 在 $\mathscr H=L^2((0,\infty),dx)$ 中，取
+
+$$
+\chi=\mathbf1_{(0,1]},\qquad
+\varrho_n(x)=\left\{\frac1{nx}\right\},\qquad
+(U_df)(x)=f(dx)\quad(d,n\ge1).
+\tag{391.1}
+$$
+
+这里 $\varrho_n$ 是分数部分探针，不是 FIB 原始替换 $\rho$。直接使用同一实际 $\beta_d=\log(1-(-q)^d)$、$\gamma=\beta^{-1}$、$e=\mu*\beta$，定义
+
+$$
+\mathscr B_\beta=\sum_{d\ge1}\beta_dU_d,\qquad
+\mathscr B_\gamma=\sum_{d\ge1}\gamma_dU_d,\qquad
+\Phi_\beta=\mathscr B_\beta\chi.
+\tag{391.2}
+$$
+
+对整数 $N\ge0$，空和按零解释，置
+
+$$
+E_N^\mu=\chi+\sum_{m=1}^N\mu(m)\varrho_m,\qquad
+E_N^{\rm Fib}=\Phi_\beta+\sum_{n=1}^Ne_n\varrho_n.
+\tag{391.3}
+$$
+
+$E_0^\mu=\chi$、$E_0^{\rm Fib}=\Phi_\beta$ 是本节逼近残差的零截断约定；它们不是 §386 的算术零项 $e_0=H_0=0$。残差的加号对应文献自然前缀趋近 $-\chi$ 的符号。
+

@@ -1,0 +1,78 @@
+**Proof, static contraction within the native-to-root direction.**
+Take a feasible native table on $\mathcal K=Q\sqcup Z$ and its actual
+normalized export $\tau$. Let $B\subseteq Q$ consist of all installed
+states whose word, when traversed in $C_*$, never enters a reached hole.
+For $b\in B$ the complete exterior determines a reply $z_b$ on every
+actual current tree in the fiber. Visible ancestors of holes, concrete
+leaves, blocked cones and absent extensions of concrete leaves are
+included. Put $f(b)=\operatorname{next}(b,z_b)$.
+
+There is at least one installed halt: a nonempty fiber and a terminating
+correct run supply one. Fix such a halt $z_0$. Define a single map
+
+$$
+g:\mathcal K\longrightarrow\mathcal K\setminus B
+\tag{NBP.13.4}
+$$
+
+as follows. Outside $B$ it is the identity. Starting inside $B$, follow
+$f$ until first leaving $B$ and take that exit as $g(b)$. If the
+successor sequence never leaves $B$, take $g(b)=z_0$. Finiteness makes
+the latter case exactly eventual entry into a cycle contained in $B$;
+the same completion is used for its whole basin.
+
+No actual initialized run can reach that basin. Every reply while in
+$B$ is its fixed $z_b$, so such a run would follow the forced cycle
+forever, contradicting termination on that same origin. This excludes
+only forced constant cycles on required runs, not cycles in the union
+of transitions from different sources. It also covers initial states
+in $B$: their forced sequence must exit on every actual use.
+
+Install the following reduced native table:
+
+$$
+\begin{aligned}
+\mathcal K'&=(Q\setminus B)\sqcup Z,\\
+\operatorname{addr}'(b)&=\operatorname{addr}(b)
+                       &&(b\in Q\setminus B),\\
+\operatorname{next}'(b,z)&=g(\operatorname{next}(b,z)),\\
+\operatorname{out}'&=\operatorname{out},\qquad
+\tau'(u)=g(\tau(u)).
+\end{aligned}
+\tag{NBP.13.5}
+$$
+
+All original halts, their fixed whole outputs and all unused surviving
+states remain installed and counted. No state is added. The finite map
+$g$ is substituted into the common transition table. Before the cut,
+the producer computes and actually exports the new initial-state code
+$g(\tau(u))$ from its acquired data, using the supplied lawful entry.
+The original export is not retained as an additional field. If the
+forced initial sequence exits at a halt, this code initializes that
+halt directly. No silent transition, phase, cache or table selection
+is executed after entry.
+
+Fix one actual $u$. Delete its $B$-visits from the original finite state
+path. Between consecutive remaining states there is either an original
+edge or a finite forced $B$-segment. Formula (NBP.13.5) sends the earlier
+state directly to the later one. The initial code skips precisely the
+initial forced segment. The original terminal halt is retained.
+Induction on the remaining visits therefore gives the reduced run and
+the same complete output. Its calls and submitted words are exactly
+the surviving calls and words of this one original run. Hence
+
+$$
+\begin{aligned}
+|\tau'[\mathcal U_*]|&\le|\tau[\mathcal U_*]|,&
+|\mathcal K'|&\le|\mathcal K|,\\
+q_{N'}(u)&\le q_N(u),&
+\ell_{N'}(u)&\le\ell_N(u).
+\end{aligned}
+\tag{NBP.13.6}
+$$
+
+The arbitrary completion of a forced-cycle basin is used only on
+initial codes or edges that no required actual run takes. It cannot
+change these inequalities. This contraction is an intermediate step
+of the full-fiber theorem, not a new general epsilon-removal theorem.
+

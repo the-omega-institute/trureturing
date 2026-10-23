@@ -1,0 +1,30 @@
+**Proof, root-to-native on every actual origin.** Given a root table
+and coloring, retain its entire installed state set, partition,
+transitions and complete halting outputs. Replace coordinate $d$ by
+the native word $a_d$. The supplier in (NBP.13.1) changes a physical
+representative, not its canonical class identity. Every $a_d$ is
+reached on every current tree in the original fixed-row fiber and has
+reply $\theta_x(d)$ for every actual valuation $x\in\mathcal X_*$.
+
+From its genuinely acquired class values the producer inspects the
+roots, computes $\theta_x$ and actually exports $c(\theta_x)$ before
+the cut. Local inspection of acquired terms is not a fresh invocation.
+Proposition 10.2 makes every type attained, so this actual code range
+equals $c[\Theta_*]$. The new code itself is recoverable from the
+initial state; no discarded value or separate color register survives.
+
+For an arbitrary original $u_x$, state induction identifies its native
+run with the root run on $\theta_x$. Every call is genuine, its word
+has exactly length $\lambda(d)$, and repetitions are counted again.
+The call counts and literal sums agree on this actual source. The halt
+returns $G_*(\theta_x)=F(u_x)$, including inverse exterior, canonical
+restricted partition, all disequalities and every predecessor guard.
+No padded-witness restriction appears in this direction.
+
+If $D=\varnothing$, Proposition 10.2 gives one empty type and
+Theorem 10.4 gives one whole target. On either side, one halt with that
+complete output and its one actually exported initial code uses
+$r=K=1$ and $q=\ell=0$. There is no running state or nonexistent
+coordinate to recode. These resources satisfy every stated upper
+budget. This proves (NBP.13.3) in all cases. $\square$
+

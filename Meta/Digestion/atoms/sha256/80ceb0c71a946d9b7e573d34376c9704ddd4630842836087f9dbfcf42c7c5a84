@@ -1,0 +1,19 @@
+**Theorem 46.4 (corrected mixed-box test).** The Dickson/Pareto construction
+in Theorem 44.2 applies to $\mathcal F_K^{\mathrm{fin}}$ and uses
+$\operatorname{Feas}^{\mathrm{fin}}_K$ in every mixed box. For a finite current
+basis $A\subseteq\mathcal F_K^{\mathrm{fin}}$, the negative test is
+
+$$
+\exists x\in\mathcal F_K^{\mathrm{fin}}\setminus\uparrow A
+\quad\Longleftrightarrow\quad
+\bigvee_f\operatorname{Feas}^{\mathrm{fin}}_K(B^f).
+$$
+
+The assertion is about finite Pareto points only. A controller with profile
+$b(C)=(0,\infty)$ can satisfy an uncorrected mixed predicate while
+contributing no vector to $\mathcal F_K^{\mathrm{fin}}$; it must not make the
+negative test true. For example, on $D=\mathbb N$ a source can require
+$n+1$ legal events before a final read, giving finite cost per source but an
+unbounded worst cost. This is a valid termination behavior and still lies
+outside the finite frontier.
+

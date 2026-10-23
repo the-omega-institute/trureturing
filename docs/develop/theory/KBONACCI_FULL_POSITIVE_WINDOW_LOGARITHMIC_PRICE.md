@@ -4807,3 +4807,94 @@ These are repo-derived ordinary-theory proofs, without Lean/kernel verification.
 The original objective remains ACTIVE: exact minimum worst-branch ACTUAL emitted-complete-block fees for every attainable immutable INITIAL target, every original $k\ge2,m\ge1$, separately adaptive and ONE GLOBAL preset stream per fixed target under both original alphabets. General GLOBAL compatibility, arbitrary whole-target numerical minima even within (91.1), other gaps and gcds, mixed INITIAL tail targets and unspecified history factorization remain unresolved. Different $d$ describe different finite readers and fixed targets.
 
 ## 追加锚（本行以下为增补区）
+## 92. Proper positive children at critical narrow width
+
+**定义 92.1（Actual proper-positive child and its local prices）。** Retain [IC, Definitions 1.1–1.4], the original joint complete-history prior, immutable INITIAL records, free remembered value or independent absorbing bottom, endpoint-only observations, and the complete-block fee. Assume
+
+$$
+m\ge3\text{ odd},\qquad k=m+1,\qquad T=m+2,\qquad \gcd(m,T)=1.
+\tag{92.1}
+$$
+
+Fix a free initial value, an archive of length $a$, a prior endpoint $v$, and a parent word $P$ whose recorded positive endpoint is the actual archive
+
+$$
+C=\operatorname{archive}\mathbin{+\!\!+}[(P,\operatorname{some}(v+1))].
+\tag{92.2}
+$$
+
+Let
+
+$$
+A=\operatorname{initialSupport}_{\mathrm{alphabet},\,\mathrm{free}}(k,m,C)\subsetneq W_a,\qquad
+W_a=[am,(a+1)m]\pmod T,
+\tag{92.3}
+$$
+
+be nonempty, where the subscript records the chosen original alphabet and remembered free value. Require the exact INITIAL phase-label law on the whole actual acquired-pair set: there is a function $\lambda:A\to Y$ such that every actual pair in the fixed free-value fibre of $C$ has $-\theta_{\rm INITIAL}\in A$ and immutable target value $\lambda(-\theta_{\rm INITIAL})$. Put $n=|\lambda[A]|\ge3$. Let $D_{\rm ad}(C)$ be the least additional worst-branch adaptive fee after the paid prefix of $C$, and let $D_{\rm child\text{-}pre}(C)$ be the corresponding fee when this child alone must use one fixed literal suffix, with its own endpoint stopping and decoding.
+
+**定理 92.2（Exact proper-positive local price）。** Every child of Definition 92.1, under either original control alphabet, has
+
+$$
+\boxed{
+D_{\rm ad}(C)=D_{\rm child\text{-}pre}(C)=\left\lceil\log_2 n\right\rceil.}
+\tag{92.4}
+$$
+
+This is an additional fee: the complete chronological prefix in (92.2) has already been paid. The assertion is local to this actual child and imposes no stream compatibility on another child or free-value fibre.
+
+**证明（common tail and the all-adaptive lower bound）。** Since $n\ge3$, $P$ cannot be the all-one word. Indeed, the original charge identity gives the all-one word positive support only at the two endpoints of $W_a$; it cannot contain three surviving phase labels. Thus $P$ contains a zero. Every successful source in (92.2) therefore exits $P$ with the same terminal tail $\sigma=\rho(P)\le m-1$, independent of its incoming tail. Its current scalar is the common positive endpoint value $v+1$.
+
+Consider any original literal continuation from this common-value, common-tail archive. A complete word either succeeds on every candidate or rejects every candidate, because safety depends only on the common current tail and the word's leading run. Uniform rejection gives one absorbing endpoint and cannot resolve a nonconstant INITIAL label map. A successful word has only its binary scalar difference as an endpoint outcome; every wait, padding, attempted repair and endpoint stop is included in this statement. The common-tail binary bound [S10, Lemma 3.2] consequently gives at most $2^h$ distinct-label leaves for any adaptive continuation of worst additional fee $h$. The actual support supplies one jointly actual source for every label in $\lambda[A]$, so correctness requires $n\le2^h$. Hence
+
+$$
+D_{\rm ad}(C)\ge d,\qquad D_{\rm child\text{-}pre}(C)\ge d,\qquad d=\lceil\log_2n\rceil.
+\tag{92.5}
+$$
+
+**证明（extension to a full table and one actual suffix）。** Translate phases by $u=am\pmod T$ for the construction only, and write $A_0=A-u\subsetneq\{0,\ldots,m\}$. Since $A_0$ is nonempty, choose $L_0\in\lambda[A]$ and extend the actual table to the whole physical window by
+
+$$
+\bar\lambda(x)=
+\begin{cases}
+\lambda(u+x),&x\in A_0,\\
+L_0,&x\notin A_0.
+\end{cases}
+\tag{92.6}
+$$
+
+The extension has exactly the same $n$ labels. Because $n\le|A|\le m$ and $m$ is odd, the elementary bound used in (73.4) gives
+
+$$
+d\le\frac{m+1}{2},\qquad e_r=m+1-2r,\qquad s_r=e_r+1=m+2-2r
+\quad(1\le r\le d).
+\tag{92.7}
+$$
+
+Apply Lemma 73.3 to the full table $\bar\lambda$ and dimension $d$. It gives an injective label code $c:\bar\lambda[\{0,\ldots,m\}]\to\{0,1\}^d$ satisfying the missed-coordinate and first-bit clauses of (73.5), together with either its regular adjacent-seam clause or the displayed four-label alternative (73.8). Use the same actual-row prescription (73.10) and literal inverse (73.11) of Construction 73.4, then undo the phase translation. The resulting words $B_1,\ldots,B_d$ are issued at the actual indices $a+1,\ldots,a+d$.
+
+For an actual phase $x\in A_0$, the next window omits at most the single vertex $e_r$. If $x\ne e_r$, the charge of $B_r$ at $u+x$ is $c_r(\bar\lambda(x))=c_r(\lambda(u+x))$. If $x=e_r$, (73.5) makes that same code coordinate zero, exactly as the inverse prescribes at the omitted vertex. Thus every actual source's successive endpoint differences are its own label code
+
+$$
+\bigl(c_1(\lambda(u+x)),\ldots,c_d(\lambda(u+x))\bigr).
+\tag{92.8}
+$$
+
+The virtual values assigned in (92.6) are only compensated physical charges; they add no source, observation or borrowed archive. Injectivity of $c$ decodes the actual INITIAL label, including repeated labels at several phases.
+
+The first word supplied by Lemma 73.5 begins with zero. It therefore clears the actual incoming tail $\sigma\le m-1$. The same lemma proves every internal and cross-block seam of these very words, including its $d=2$, four-label alternative and the boundary $m=3$. Since $m<k$, every individual word is internally legal. No wait, repair, padding or final cleanup is inserted. Issuing the displayed suffix is consequently one fixed child-local stream of $d$ paid complete blocks, and it gives
+
+$$
+D_{\rm child\text{-}pre}(C)\le d,\qquad D_{\rm ad}(C)\le d.
+\tag{92.9}
+$$
+
+Combining (92.5) and (92.9) proves (92.4). The actual histories used in the lower bound are the histories already present in the definition of $A$; no product of separately reachable phase, value and tail coordinates is used. ∎
+
+**数学引文 92.3（Suppliers, exact coverage and limits）。** [IC, Definitions 1.1–1.4 and Interface 1.4; S1, Sections 1–4; S10, Interface 2.1 and Lemma 3.2; S15, Sections 1–4] supply the original literal updates, jointly actual histories, charge rows, endpoint observations, immutable INITIAL factorization, irreversible rejection and the common-tail binary lower bound. Lemma 73.3, Construction 73.4 and Lemma 73.5 are reused exactly for finite code selection, compensated full rows, literal inversion and strict seams; extending missing phases by one already present label is the sole new bridge from their full-support table to (92.3). The native WindowChargeInverse.short_window_charge_inverse, PhysicalWindowDecoder.donor_rows_inverse and PhysicalWindowDecoder.regular_rows_safe, together with their private row and seam declarations, agree with this same inverse-and-seam interface. The native FullPositiveWindowPrice declarations and private helpers inspected at the pinned revision prove the full-support application; they do not themselves state (92.4) for a proper support. Chapter 65's arbitrary-support statement settles only its zero/one-block boundary, and Open Problem 75.3 explicitly leaves smaller supports outside its exact law.
+
+The ordinary comparison with van den Bos and Vaandrager, *State Identification for Labeled Transition Systems with Inputs and Outputs*, arXiv:1907.11034v2, is limited to completed endpoint tests and irreversible first-action merging. It supplies no KBonacci charge, seam or emitted-block price. This chapter is a repo-derived ordinary application with no Lean, kernel, axiom, literature-priority or exhaustive-absence claim. Effective code selection requires the finite label equality presentation already required by the cited Hall application; offline matching, memory and representation costs are separate.
+
+**边界 92.4（What remains open）。** Equation (92.4) covers only actual nonempty proper supports in (92.3), odd $m\ge3$, $k=m+1$, exact phase-only INITIAL labels on every actual acquired pair, and $n\ge3$. It does not price the mixed-tail all-one children with at most two labels, arbitrary zero children, one GLOBAL stream across unrelated siblings or free-value fibres, other widths or $k$, a target lacking the stated INITIAL factorization, or the unchanged all-parameter whole-target objective. All new assertions in this chapter remain ordinary mathematical and formally OPEN.
+
+## 追加锚（本行以下为增补区）

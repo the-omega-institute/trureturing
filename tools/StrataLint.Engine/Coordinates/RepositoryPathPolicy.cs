@@ -13,7 +13,9 @@ internal static partial class RepositoryPathPolicy
     internal const string SpecRootPath = "docs/develop/spec/";
     internal const string ReportsRootPath = "docs/reports/";
     internal const string AssumptionRegistryPath = "D5/X_Assumptions/REGISTRY.md";
-    // 缓存发布 workflow（#2542）。`.github` 下是白名单而非通配，新增控制工件必须在此具名登记。
+    // Cache control artifacts have explicit paths under the .github allowlist.
+    internal const string CacheProductionActionPath =
+        ".github/actions/lean-cache-produce/action.yml";
     internal const string CachePublicationWorkflowPath =
         ".github/workflows/lean-cache-publish.yml";
     // Persistent truth-release publisher. `.github` remains an explicit allowlist.
@@ -162,7 +164,7 @@ internal static partial class RepositoryPathPolicy
             or "Library/queries.yaml" or AssumptionRegistryPath
             or "D5/X_Frontier/HeartsAuthorizations.md"
             or "Golden/values-kernels.toml" or "Golden/gate-authority-roots.toml"
-            or "Meta/Digestion/atomizers.toml"
+            or CacheProductionActionPath
             or CachePublicationWorkflowPath
             or TruthReleasePublicationWorkflowPath
             or PublicationVerificationWorkflowPath
@@ -173,7 +175,6 @@ internal static partial class RepositoryPathPolicy
             || DigestionCasStore.IsCanonicalPath(value)
             || BackfillInventoryLoader.IsCanonicalPath(value)
             || ProblemPoolPaths.IsCanonicalPath(value)
-            || FrozenLedgerChangeClassifier.IsAcceptedEventPath(value)
             || FrozenStatePath.TryToModulePath(value, out _)
             || value.StartsWith("skills/", StringComparison.Ordinal)
             || value.StartsWith(".codex/skills/", StringComparison.Ordinal)

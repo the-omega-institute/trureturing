@@ -1,0 +1,39 @@
+**定义 374.2（信息熵、相对熵与形式自由能）。** 对离散窗口，取自然对数与 $0\log0=0$，定义
+
+$$
+H_n(P_n)=-\sum_{\omega\in\Omega_n}P_n(\omega)\log P_n(\omega).
+$$
+
+对另给的参考测度 $\nu_n$，若 $P_n\ll\nu_n$，且对数密度可积，可定义参考熵
+
+$$
+H_{\nu_n}(P_n)=-\int\log\!\left(\frac{dP_n}{d\nu_n}\right)dP_n.
+\tag{374.3}
+$$
+
+它依赖参考测度，不能不加说明地替代离散 Shannon 熵。对同一可测空间上的概率律 $P,Q$，相对熵为 $D(P\Vert Q)=\int\log(dP/dQ)\,dP$；若 $P\not\ll Q$，取 $+\infty$。
+
+另给可测能量 $E_n$、参考测度 $\nu_n$ 和 $\beta>0$，并要求
+
+$$
+0<Z_n(\beta)=\int e^{-\beta E_n}\,d\nu_n<\infty,
+\qquad
+\gamma_{\beta,n}(d\omega)=Z_n(\beta)^{-1}e^{-\beta E_n(\omega)}\nu_n(d\omega).
+\tag{374.4}
+$$
+
+在 $P_n\ll\nu_n$、能量与对数密度绝对可积的比较类内，
+
+$$
+\begin{aligned}
+D(P_n\Vert\gamma_{\beta,n})
+&=\beta\mathbb E_{P_n}E_n-H_{\nu_n}(P_n)+\log Z_n(\beta),\\
+F_{\beta,n}(P_n)
+&:=\mathbb E_{P_n}E_n-\beta^{-1}H_{\nu_n}(P_n)\\
+&=-\beta^{-1}\log Z_n(\beta)+\beta^{-1}D(P_n\Vert\gamma_{\beta,n}).
+\end{aligned}
+\tag{374.5}
+$$
+
+因相对熵非负，若 $\gamma_{\beta,n}$ 也属于该有限量比较类，它使形式自由能最小。能量或熵发散时，不能以无定义的无穷量相减沿用此式。这是相对于外加三元组 $(\nu_n,E_n,\beta)$ 的变分关系；物理自由能还需要能量单位、逆温标定和热平衡实现。
+

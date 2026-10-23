@@ -1,0 +1,29 @@
+**定理 26.12（距离比较的精确域与余项）。** 在假设 26.11 外加
+$R>\sqrt{d_0}$，其中
+$d_0=c_0^2/((1+\alpha)(1+\beta))$，基准四角自由能为
+$$
+J_F(R)=\frac{\vartheta}{2}\log\left(1-\frac{d_0}{R^2}\right),
+\qquad
+-\frac{dJ_F}{dR}
+=-\frac{\vartheta d_0}{R^3(1-d_0/R^2)}.
+$$
+若 $x=d_0/R^2\le\rho<1$，则
+$$
+\left|J_F(R)+\frac{\vartheta d_0}{2R^2}\right|
+\le\frac{\vartheta d_0^2}{4(1-\rho)R^4},
+$$
+$$
+\left|-\frac{dJ_F}{dR}+\frac{\vartheta d_0}{R^3}\right|
+\le\frac{\vartheta d_0^2}{(1-\rho)R^5}.
+$$
+若 $c_0=0$，则 $d_0=0$ 且两项恒为零。负号这里只是所定义的
+$-J_F'(R)$；没有给出空间、力或重力解释。
+
+**证明。** $R_{\min}$ 使所给平方根为实，且
+$R>\sqrt{d_0}$ 使对数的自变量为正。把假设 26.11 的四个核代入
+定理 26.9 证明所引用的行列式恒等式，即得 $J_F$；对它求导得第二式。用
+$-\log(1-x)-x=\sum_{m\ge2}x^m/m$ 并以
+$\sum_{m\ge2}x^m/m\le x^2/(2(1-x))$ 控制第一余项；第二式由
+$1/(1-x)-1=x/(1-x)$ 直接得到。这里的等价阶为 $R^{-3}$，仅在
+$d_0>0$ 时是非零主项。证毕。
+

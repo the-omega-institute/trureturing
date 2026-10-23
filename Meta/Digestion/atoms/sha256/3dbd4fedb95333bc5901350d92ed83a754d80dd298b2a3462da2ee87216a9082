@@ -1,0 +1,18 @@
+## 47. 任意尺度的四元字面梳乘积与两额外地址的加性
+
+本节固定第 28 章的两组四行块。记 $I=[4]$，并对 $k\ge1$ 用第 26.5 节的字面右梳
+
+$$
+B_1(x_1)=x_1,\qquad B_k(x_1,\ldots,x_k)=\langle x_1,B_{k-1}(x_2,\ldots,x_k)\rangle .
+$$
+
+其第 $j$ 个孔地址仍为 $p_j^{(k)}=\mathtt R^{j-1}\mathtt L$（$j<k$）及
+$p_k^{(k)}=\mathtt R^{k-1}$。对 $x\in\{\mathrm b,\mathrm p\}$，定义
+
+$$
+F_k^x(s)=B_k(P_{s_1}^x,\ldots,P_{s_k}^x),\qquad
+Q_k^x(s)=B_k(Q_{s_1}^x,\ldots,Q_{s_k}^x)\quad(s=(s_1,\ldots,s_k)\in I^k).
+$$
+
+这里的 $P_i^x,Q_i^x$ 恰是定义 28.2、式（28.5）的已发表块和完整三步前像；没有替换块、补孔或改变原始地址合同。以下 $L(T)$ 表示带标签叶地址集，费用仍是原合同中真实缓存后的不同地址数。
+

@@ -5,9 +5,10 @@ year: 2026
 title: "On the structural properties of Lie algebras via associated labeled directed graphs"
 doi: 10.48550/arXiv.2601.16161
 url: https://arxiv.org/abs/2601.16161v1
-claim: "Conjecture 83 states that a minimal-graph-admissible Lie algebra with trivial center either has no proper non-empty vertex subset with the ideal-graph-property in its minimal graph, or is a direct sum of centerless components each of whose minimal graphs has no such subset."
+claim: "Conjecture 80 states that a minimal-graph-admissible Lie algebra with nonzero center has a proper non-empty vertex subset of its minimal graph with the ideal-graph-property that spans a solvable ideal. Conjecture 83 states that a minimal-graph-admissible Lie algebra with trivial center either has no proper non-empty vertex subset with the ideal-graph-property in its minimal graph, or is a direct sum of centerless components each of whose minimal graphs has no such subset."
 strata_touched:
   - D5/S3/Quantum/Algebra/HeibBruschiCenterlessIdealGraphRefutation
+  - D5/S3/Quantum/Algebra/HeibBruschiHiddenCenterRefutation
 license: citation-only
 triage: anchor
 ---
@@ -24,7 +25,7 @@ DOI: 10.48550/arXiv.2601.16161.
 Primary version: https://arxiv.org/abs/2601.16161v1 (the only version).
 The TeX source `pr09_arXiv_01.tex` of v1 and the v1 PDF supply §I (conventions),
 Definition 16 and Eq. (7) in §II.A, Algorithm 1 and the minimal-graph definition in §II,
-and Definition 75 and Conjecture 83 (p. 48) in §IV.D.
+Definition 75, Conjecture 80 (p. 46) and Conjecture 83 (p. 48) in §IV.D.
 
 ## Source statements
 
@@ -50,6 +51,13 @@ by \(v_k\)." A graph associated with \(\mathfrak g\) "is a minimal graph if
 Definition 75 (§IV.D): "A subset \(W\subseteq V\) is said to satisfy the ideal-graph-property if
 and only if no edge \(e\in E\) points from a vertex \(w\in W\) to a vertex
 \(v\in V\setminus W\)."
+
+Conjecture 80 (§IV.D, p. 46): "Let \(\mathfrak g\) be a finite-dimensional minimal-graph-admissible
+Lie algebra associated with the minimal graph \(G(V,E)\). If \(\mathfrak g\) has a non-zero
+center \(\mathcal{Z}(\mathfrak g)\), then there exists a proper non-empty subset
+\(W\subsetneq V\) that satisfies the ideal-graph-property and spans a solvable ideal of
+\(\mathfrak g\)." The paper adds that "this reasoning confirms the validity of Conjecture 80 in the case where
+\(\dim(\mathfrak g)=3\)" and that "all attempts to construct counterexamples have failed".
 
 Conjecture 83 (§IV.D, p. 48): "Let \(\mathfrak g\) be a minimal-graph-admissible Lie
 algebra associated with the minimal graph \(G(V,E)\). Suppose the center of

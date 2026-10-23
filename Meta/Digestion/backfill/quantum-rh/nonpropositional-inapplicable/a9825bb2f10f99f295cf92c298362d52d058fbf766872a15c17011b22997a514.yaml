@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:a9825bb2f10f99f295cf92c298362d52d058fbf766872a15c17011b22997a514
+  normalized_sha256: sha256:a9825bb2f10f99f295cf92c298362d52d058fbf766872a15c17011b22997a514
+cas_ref: sha256:a9825bb2f10f99f295cf92c298362d52d058fbf766872a15c17011b22997a514
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 随机细化路径的定义只规定尺度、分支变量、递推过程与历史信息；鞅性质及方差分解在下一 atom 单独陈述。
+    previous_atom_id: 102ce887e1d6068e19a166f2726d8309f56a3a1f7eae1217732c5f766be2872e
+    next_atom_id: b8175bf1f571e9d05c91572f23d33e198441592bd8dde3550dff93fafc85a87a

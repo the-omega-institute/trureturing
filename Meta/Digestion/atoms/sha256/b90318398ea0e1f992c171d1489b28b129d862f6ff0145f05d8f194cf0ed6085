@@ -1,0 +1,17 @@
+## 46. The independent M obligation
+
+The full target requires some $p\ne24,v$ and independently distinct
+pairs $W_0\ne W_1$, $W_2\ne W_3$ in the same entire $C(p,v)$, with
+$a(W_0)=a(W_1)$ and $m(W_2)=m(W_3)$. Pair overlap is allowed, and
+the two common terminal answers need not coincide.
+
+The two worlds proved above supply the first pair. Their unequal M
+readings prevent using this displayed pair as the second pair. No
+exhaustion of the constructed child or absence of another M pair is
+asserted. Existence of the independent M pair in this child, and the
+original combined target, remain unresolved.
+
+Lagrange interpolation, Sylvester's resultant identity, the mean value
+inequality and Banach's contraction theorem are the classical tools
+used in these proofs.
+

@@ -1,0 +1,25 @@
+**Proposition 10.2 (exact type feasibility and exact filling test).**
+For every injective actual finite valuation $x$, with
+$\theta_x(d)=\operatorname{rt}(x_d)$,
+
+$$
+\mathscr F_*(x)\in\mathcal I
+\quad\Longleftrightarrow\quad
+\left(\forall d\text{ with }\theta_x(d)=\mathsf{br},\
+ x_d\in\mathcal I\right)
+\land\operatorname{im}^{\theta_x}(C_*).
+\tag{NBP.10.6}
+$$
+
+Moreover,
+
+$$
+\Theta_*=\{\theta_x:x\in\mathcal X_*\}.
+\tag{NBP.10.7}
+$$
+
+Thus the chart decides whether a prescribed complete class-root assignment
+has an actual-image realization, for any fixed exterior and complete
+partition. Root type alone does not certify image membership of an
+arbitrary branch-valued filling.
+

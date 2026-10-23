@@ -1,0 +1,18 @@
+### 定理 381.3（预览字段可以严格降低因果成本）
+
+在定理 379.5 的例子中，令粗过滤在 \(n=0\) 只包含恒等信息；再定义一个预览细化，使
+
+$$
+\mathcal F'_0=\sigma(X_1).
+$$
+
+则
+
+$$
+\boxed{
+W_{\mathcal F\to\mathcal G}(P,Q)=\frac{1+\lambda}{2},
+\qquad
+W_{\mathcal F'\to\mathcal G}(P,Q)=\frac{\lambda}{2}.
+}
+$$
+

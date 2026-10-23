@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:4a5b7540ac89bba3654b5dee1ce7c05f361ee51f8316ff80a801b0d88c750f7b
+  normalized_sha256: sha256:4a5b7540ac89bba3654b5dee1ce7c05f361ee51f8316ff80a801b0d88c750f7b
+cas_ref: sha256:4a5b7540ac89bba3654b5dee1ce7c05f361ee51f8316ff80a801b0d88c750f7b
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 定义 46.3（歧义）：本段仅约定名称、符号及其判定条件；不主张满足条件的对象存在，也不追加性质定理。
+    previous_atom_id: d05a6c3d4d47832ca088f824070779b6e28eebd2fa58616ea7794b3e57d03e84
+    next_atom_id: f8e5338cf121e303e54defe5dc10f99a99868fb6cbb38da1e659da11278f612f

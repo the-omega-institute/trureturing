@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:eff5844b1426c1988ce90c10a7d6f1551cd3d8180f43a4e7ad12f78bf4d9fc12
+  normalized_sha256: sha256:eff5844b1426c1988ce90c10a7d6f1551cd3d8180f43a4e7ad12f78bf4d9fc12
+cas_ref: sha256:eff5844b1426c1988ce90c10a7d6f1551cd3d8180f43a4e7ad12f78bf4d9fc12
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 本 atom 论证三个合并切片正半定性的必要充分条件，附文只解释该结论；不另立独立新命题，原陈述保留自身状态。
+    previous_atom_id: f00571cdc2a69c25cf050185dd4d2b3cb366d39dc5372f8921d94c26744775e1
+    next_atom_id: a86e2f35d758dabc71550c007e6da1ae73591bdbc2d0ff05ed77571239b0a94a

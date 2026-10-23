@@ -1,0 +1,67 @@
+**Proposition 3.2 (conditional recovery and supplier application).**
+At a fixed type the earlier residual is recoverable from $(E,t)$ for
+every actual prefix exactly when every realized $h(E,t)$ equals one,
+equivalently when $\partial_t$ is injective on
+
+$$
+\{S\in\mathcal R_{k-d}:\partial_tS\ne\varnothing\}
+$$
+
+for each attainable $t$. Given $(E,t)$, the least supplemental alphabet
+recovering the entire anchored boundary has size
+
+$$
+H_{\rm tail}(k,d)=
+\max_{(E,t)\in\phi_{k,d}(Q_{k,d})}h(E,t).
+\tag{3.1}
+$$
+
+Given only $E$, its least supplemental alphabet has size
+
+$$
+H_{\rm forward}(k,d)=
+\max_{E\in\mathcal R_k}\sum_{t\in A^d}h(E,t).
+\tag{3.2}
+$$
+
+In particular
+
+$$
+N_{k,d}=\sum_{E\in\mathcal R_k}\sum_{t\in A^d}h(E,t).
+\tag{3.3}
+$$
+
+A fixed-length binary supplement requires respectively
+$\lceil\log_2H_{\rm tail}\rceil$ or
+$\lceil\log_2H_{\rm forward}\rceil$ bits. These supplements restore
+behavioral boundary points, not necessarily literal prefixes.
+
+Proof. The actual fiber of $\phi$ above $(E,t)$ is in bijection with
+$\mathcal P(E,t)$ by $S\mapsto(S,t)$. The fiber of $\psi$ above $E$ is
+the disjoint union of these fibers over $t$. This proves their exact
+sizes and (3.3); the fibers need not be uniform.
+
+Apply
+[ExactRollbackInjectivityCriterion](../../../D5/S3/ConceptDynamics/Reversibility/ExactRollbackInjectivityCriterion.lean),
+declaration `exact_rollback_iff_joint_record_injective`, with nonempty
+$X=Q_{k,d}$, $U=\phi$ and a constant extra record. An inverse for $\phi$
+is exactly recovery of $(S,t)$; since $t$ is already known it is
+equivalent to recovery of $S$. The supplier's injectivity condition
+is precisely the singleton-fiber condition above.
+
+Apply
+[MinimumRollbackAlphabet](../../../D5/S0/History/Coding/MinimumRollbackAlphabet.lean),
+declaration `minimum_rollback_alphabet`, with finite $X=Q_{k,d}$ and $U=\phi$,
+then with $U=\psi$. Take the respective finite actual target images
+as its enumerated $Y$. Their largest fibers are (3.1) and (3.2), so
+the supplier gives both the lower bounds and attaining fiberwise
+labels. Labels on prefixes are obtained by pulling them back along
+$B$. Conversely one prefix representative per boundary point yields
+the same lower bound for any prefix-dependent labeling. All source
+and target images here are finite and nonempty.
+
+This applies the existing inverse and coding results to the displayed
+predecessor relation; it supplies no additional general inverse or
+minimal-alphabet theorem. Label existence also supplies no channel
+by which an observer has acquired the label. $\square$
+

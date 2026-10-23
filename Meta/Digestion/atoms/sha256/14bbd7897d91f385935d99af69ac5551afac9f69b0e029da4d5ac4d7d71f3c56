@@ -1,0 +1,18 @@
+**Theorem 14.2 (decidable supplied-record certificate and productive
+finite witnesses).** For records $d_i,d_j$ in two distinct complete row
+charts, define
+
+$$
+\operatorname{Accept}(d_i,d_j)\Longleftrightarrow
+\operatorname{Cof}_i(d_i)\land\operatorname{Cof}_j(d_j)\land
+Y_i(d_i)=Y_j(d_j),
+\tag{SPC.57}
+$$
+
+where each $Y$ is the chart output obtained from the record, with fixed
+source-template exponents and all shared references preserved. The predicate
+(SPC.57) is decidable. If it holds, then for every inclusive depth $h$ there
+are finite $u_h,v_h$ in the entire acquired domain with their prescribed,
+distinct complete rows and $u_h\equiv_hv_h$. The witnesses and their finite
+coordinate tuples may vary independently with $h.
+

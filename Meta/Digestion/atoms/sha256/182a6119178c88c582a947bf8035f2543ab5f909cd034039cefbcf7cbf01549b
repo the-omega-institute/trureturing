@@ -1,0 +1,49 @@
+**Corollary 21.2 (M2: actual shared-base joint boundary exclusion).**
+There is no tuple $(t,W,J_0,J_1)$ with the guards of Theorem 21.1,
+$W\in C(p_R(t),v_R(t))$, $f_{MM}(W)=m_R(t)$, and
+
+$$
+J_0,J_1\in C(p_R(t),v_R(t)),\qquad
+J_0\ne J_1,\qquad f_{MJ}(J_0)=f_{MJ}(J_1).
+$$
+
+The $J$ pair may share or not share the actual $M$ companion, and
+its terminal common value is unrestricted.
+
+**Proof.** Theorem 21.1 forces $t=t_*$, $W=W_*=B(0)$ and
+$(p_R,v_R)=(p_*,v_*)=q(0)$ in Section 15's notation.
+Theorem 15.4 states that the entire actual child at that base consists
+exactly of $B(0),Q(0)$, whose $J$ values lie respectively in
+$(268,271),(221,223)$. Hence the alleged actual distinct $J$ pair
+cannot exist anywhere in that child.
+
+For the uniform consumer needed for limits, the centre $(p_c,v_c)$
+is exactly that of Definition 15.1, with denominator $10^{95}$ and
+numerators
+
+$$
+\begin{gathered}
+367068393378998395246026571982456711245305890922162694264197866224863529619880873392282957453850\\
+5679629840728084907886878607821919633308547340517015332315858757685186396688860630206243979276432.
+\end{gathered}
+$$
+
+On the full sixth isolating interval, exact rational bounds are
+
+$$
+-36837<10^{100}(p_R-p_c)<-36772,\qquad
+32621<10^{100}(v_R-v_c)<33162.
+$$
+
+These follow without dependency overestimation: $P'q-Pq'$ and
+$V'q-Vq'$ are strictly positive there, so both rational responses
+are increasing. Exact evaluation at the two endpoints gives,
+in order, the respective enclosing pairs
+$(-36813,-36812),(-36797,-36796)$ for $10^{100}(p_R-p_c)$,
+and $(32846,32847),(32937,32938)$ for $10^{100}(v_R-v_c)$.
+Thus $|p_*-p_c|,|v_*-v_c|<10^{-90}<10^{-65}$.
+The survivor base lies strictly inside $\mathcal B_0$.
+Theorem 15.3 and Corollary 15.5 give
+$\mathcal B_0\cap D_J=\varnothing$, using injectivity on each
+entire actual child, including unused or exceptional worlds. ∎
+

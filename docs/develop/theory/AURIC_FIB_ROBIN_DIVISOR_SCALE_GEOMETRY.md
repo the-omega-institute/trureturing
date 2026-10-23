@@ -841,3 +841,398 @@ $$
 [GammaNote]: https://github.com/the-omega-institute/trureturing/blob/05149fa5456f6eb47259bab8138572902863368e/Library/Analytic/nist2026asymptotic.md
 
 ## 追加锚（本行以下为增补区）
+
+## 13. Robin margin 坐标的开域与连续折返
+
+本节只给一个连续坐标图的严格接口。它不产生新的整数 Robin 反例，也不把
+零 Jacobian 单独解释成非单射。
+
+**定义 13.1（开扩展的 margin 图）。** 固定与三个互异选定素数
+$p_1,p_2,p_3$ 互素的 $m>5040$，令
+
+$$
+\ell(u)=\log m+u_1+u_2+u_3,
+$$
+
+$$
+\mathcal U=\{u\in\mathbb R^3:\ell(u)>1,\ p_i e^{u_i}>1\ (i=1,2,3)\}.
+$$
+
+$\mathcal U$ 是包含非负指数图内部的开域。在其上定义
+完整地址保留为 $(m;p_1,p_2,p_3;u_1,u_2,u_3)$，不把连续坐标折返压成一个
+无地址的标量声明。
+
+$$
+\widetilde C(u)=\gamma+\log\log\ell(u)-\log Z(m)
+-\sum_{i=1}^3\log\!\left(
+\frac{1-e^{-u_i}/p_i}{1-1/p_i}\right),
+$$
+
+其中 $Z(m)=\sigma(m)/m$ 使用本卷假设 2.2 的正约数比。固定 $u_1,u_2$ 时的坐标图为
+$F(u)=(u_1,u_2,\widetilde C(u))$。
+
+当 $u_i=a_i\log p_i$、$a_i\in\mathbb Z_{\ge0}$，令
+$n=m\prod_{i=1}^3p_i^{a_i}$。互素条件与命题 3.2 的约数乘积式给出
+$\ell(u)=\log n$ 及 $Z(n)=Z(m)\prod_{i=1}^3(1-p_i^{-(a_i+1)})/(1-p_i^{-1})$，
+故 $\widetilde C(u)=\gamma+\log\log\log n-\log Z(n)=-\log R(n)$，
+其中 $R$ 仍为定义 7.1 的归一化比值。因此该地址上的 $\widetilde C(u)>0$
+恰等价于 $Z(n)<e^\gamma\log\log n$。
+
+**命题 13.2（局部逆与严格转折）。** 在 $\mathcal U$ 上
+
+$$
+\det DF(u)=\frac{\partial\widetilde C}{\partial u_3}
+=\frac1{\ell(u)\log\ell(u)}-\frac1{p_3e^{u_3}-1}.
+$$
+
+只要 $p_3e^{u_3}\ne1+\ell(u)\log\ell(u)$，隐函数定理给出 $F$ 的局部
+$C^1$ 逆。为见到一个真实的连续折返，取
+
+$$
+m=3^6\cdot7=5103,\qquad (p_1,p_2,p_3)=(5,11,2),\qquad u_1=u_2=0.
+$$
+
+在 $u_3=0$ 处，$\ell\log\ell>1$，故导数严格小于零。取
+$u_3=10\log2$ 时，$p_3e^{u_3}-1=2047$；并且
+$5103\cdot2^{10}<e^{16}$、$e^3>16$ 给出 $\ell<16$、
+$\ell\log\ell<48<2047$，故导数严格大于零。
+
+上述两项指数不等式可由指数级数的正项截断得到；例如
+$e<11/4$ 由 $e=\sum_{k\ge0}1/k!$ 的尾项几何上界给出，从而
+$e^8<(11/4)^8<5103$，用于 $u_3=0$ 的第一项严格不等式；而
+
+$$
+e^{16}>\sum_{k=0}^{17}\frac{16^k}{k!}>5103\cdot2^{10},\qquad
+e^3>\sum_{k=0}^{4}\frac{3^k}{k!}>16
+$$
+
+直接给出第二端点的两个严格界。
+因此这里没有使用浮点曲率或脚本计数。
+
+导数在这条线段上连续，故两端符号相反时存在临界点。限制
+$t\mapsto\widetilde C(0,0,t)$ 在 $[0,10\log2]$ 上，起点处递减、终点
+邻域递增；连续性使其在内部取得严格低于两端的最小值，故该水平值上方的
+足够小水平线有两个原像。于是这是一个连续 margin 报告的非全局单射折返，
+而不是把 $\det DF=0$ 单独当作非单射证明。
+
+非负整数指数边界只在 $\mathcal U$ 的闭子域中使用；局部逆断言取开域中的点。
+换用其他 chart 必须重新检查其自身导数和同一完整纤维地址。上述折返不结算
+任意全整数 Robin 延拓、RH 或任何物理实现。
+
+## 追加锚（本行以下为增补区）
+
+## 14. 二幂首次秩允许支撑上的尺度盒统一饱和
+
+**定义 14.1（允许支撑与实际轴）。** 取 $F_0=0,F_1=1$ 的 Fibonacci 数列，
+$L_0=2,L_1=1$ 的 Lucas 数列。对素数 $p$ 令
+
+$$
+r_p=\min\{r\ge1:p\mid F_r\},\qquad
+\mathcal B_d=\{p\text{ 素数}:r_p=d\},\qquad
+\mathcal P_{\rm sq}=\bigcup_{k\ge2}\mathcal B_{2^k}.
+$$
+
+正最小秩的存在由既有 [rankWitness][RankWitness14] 供应；给定正零点及其最小性后，
+[fibonacci_entry_point][RankEntry14] 供应 $p\mid F_n\iff r_p\mid n$，包括 $n=0$。
+经典出处为 [Lengyel，§3 Theorem A][Lengyel14]，亦见已有 [文献注释][LengyelNote14]。
+$F_1=F_2=1$ 给 $r_p\ge3$；每层是 $F_d$ 的有限素支撑子集，层间不交。
+
+本节的对象是定义 3.1 中所有满足 $\mathcal P(n)\subseteq\mathcal P_{\rm sq}$ 的有限盒
+$\mathcal Q_n$，其中 $n\ge1$，轴仍为同一个实际整数的 $(p,a_p)$，$a_p=v_p(n)$。
+对整数 $K\ge3$，保留其低秩轴所得整数为
+
+$$
+n_{<K}=\prod_{\substack{p\mid n\\r_p<2^K}}p^{a_p},\qquad
+T_K=6\,2^{1-K}\bigl(1+(K+1)\log2\bigr).
+$$
+
+空支撑沿用零维体积 $1$。秩只为已有素数轴分组，重复窗口中的同一个素数只计一次。
+
+**命题 14.2（轴数可增长的统一饱和与尾轴预算）。** 下列无序乘积存在且有限：
+
+$$
+C_{\rm sq}
+:=\sup_{\substack{P\subseteq\mathcal P_{\rm sq}\\P\text{ 有限}}}
+       \prod_{p\in P}\frac p{p-1}
+=\exp\!\left(\sum_{k=2}^{\infty}
+       \sum_{p\in\mathcal B_{2^k}}\log\frac p{p-1}\right)
+<\frac{17}{5}.
+$$
+
+对定义 14.1 的每一个实际盒，同时有
+
+$$
+1\le\operatorname{Vol}_{\omega(n)}(\mathcal Q_n)=Z(n)<C_{\rm sq},
+\qquad
+\sup_{\substack{n\ge1\\\mathcal P(n)\subseteq\mathcal P_{\rm sq}}}Z(n)=C_{\rm sq},
+$$
+
+$$
+0\le\log\frac{Z(n)}{Z(n_{<K})}
+=\sum_{\substack{p\mid n\\r_p\ge2^K}}\log S_p(a_p)
+\le T_K\longrightarrow0\quad(K\longrightarrow\infty).
+$$
+
+尾界对全部这些 $n$ 一致。其盒维数没有统一上界：令
+$S_0=3,S_{j+1}=S_j^2-2$，则 $n_h=\prod_{j=0}^hS_j$ 属于该族，且
+$\omega(n_h)\ge h+1$。因此命题 8.2 的固定有限支持饱和值在这一个允许支撑上
+有共同上界，同时命题 3.3 所需的实际方向增长仍然发生。
+
+证明。先把允许支撑接到平方分支。经典 Fibonacci–Lucas 倍增式
+$F_{2m}=F_mL_m$、$L_{2m}=L_m^2-2(-1)^m$ 在此只作中间供应：
+[Flórez–McAnally–Mukherjee，§2、命题 3(6),(10),(12)][Poly14] 中取
+$d=g=\alpha=1$、Lucas 初值 $2,1$，即得到这些式子。
+相邻 Fibonacci 项互素及 $L_m=F_m+2F_{m-1}$ 给 $\gcd(F_m,L_m)\mid2$。
+故对奇素数 $p$、$m\ge1$，
+
+$$
+p\mid L_m\iff r_p\mid2m\ \text{且}\ r_p\nmid m.
+$$
+
+这正是 [FIB 原卷 §168.1][FibRank14] 所消费的奇素数关系；素数 $2$ 不在该合同内。
+倍增式和初值 $L_2=3$ 给 $S_j=L_{2^{j+1}}$。
+递推使每个 $S_j$ 都是大于 $1$ 的奇数；因此全部素因子均可应用上述判据。
+对 $m=2^{j+1}$，$r_p\mid2^{j+2}$ 且 $r_p\nmid2^{j+1}$ 恰好强制
+$r_p=2^{j+2}$；反向由同一判据成立。于是是完整对应
+
+$$
+\{p\text{ 素数}:p\mid S_j\}=\mathcal B_{2^{j+2}},\qquad
+\mathcal P_{\rm sq}=\bigcup_{j\ge0}\{p\text{ 素数}:p\mid S_j\}.
+$$
+
+对固定 $i$，后项 $S_{i+1},S_{i+2},\ldots$ 模 $S_i$ 依次为 $-2,2,2,\ldots$。
+奇性给 $\gcd(S_i,S_j)=1$（$i<j$）。每项至少贡献一个不同素数，故上述
+$n_h$ 确有至少 $h+1$ 个实际轴；这不要求任何后续 $S_j$ 本身为素数。
+这里的 $r_2=3,r_5=5$ 均不属二幂秩族，也没有假定首次素数赋值为一。
+
+接着使用 [FIB 原卷引理 163.1][FibRank14] 的完整层界。其准确源接口
+[FibonacciRankEulerTail.result][RankEuler14] 对自然数 $d>5$ 给出
+
+$$
+0\le\sum_{p\in\mathcal B_d}\log\frac p{p-1}
+\le\frac{6H_d}{d}\le\frac{6(1+\log d)}d,
+\qquad H_d=\sum_{i=1}^d\frac1i.
+$$
+
+该接口的 `rankBucket d` 是 $F_d$ 的全部素因子中排除每个较早正零点所得的
+有限集合，因而恰为 $\mathcal B_d$；没有素数大小截断。非负性由 $p/(p-1)>1$ 得到。
+这是一层的有限和估计。令 $E_k=\sum_{p\in\mathcal B_{2^k}}\log(p/(p-1))$，
+则对 $N\ge K\ge3$，
+
+$$
+0\le\sum_{k=K}^N E_k
+\le6\sum_{k=K}^N\frac{1+k\log2}{2^k}
+\le6\,2^{1-K}\bigl(1+(K+1)\log2\bigr)=T_K.
+$$
+
+最后一步使用几何级数及其一次矩
+$\sum_{k\ge K}2^{-k}=2^{1-K}$、
+$\sum_{k\ge K}k2^{-k}=(K+1)2^{1-K}$。
+非负部分和递增有界，故收敛并保留此尾界；$T_K\to0$。
+$\mathcal B_4=\{3\}$ 给有限初项。不同层不交，每个有限素数子集包含于某个
+有限层并，反之有限层并本身也是有限素数子集，故层部分和与全部有限子集和
+有相同上确界。这说明无序素数和的意义，并由指数连续性得到所声明的乘积；
+任何不重复且穷尽该支撑的枚举顺序都有同一极限。
+
+严格常数使用完整的五项前缀：
+
+$$
+S_0=3,\quad S_1=7,\quad S_2=47,\quad S_3=2207,\quad
+S_4=4870847=1087\cdot4481.
+$$
+
+下表给出各因子的有限素性及秩证书。每行的 $b$ 满足
+$b^2\le p<(b+1)^2$ 且 $\gcd(p,b!)=1$，排除了全部可能的小素因子，故 $p$ 为素数。
+$F_r\equiv0$、$F_{r/2}\not\equiv0\pmod p$ 与首次秩整除律、二幂的因子链给出最小秩 $r$。
+
+| $p$ | $b$ | $\gcd(p,b!)$ | $r$ | $F_r\bmod p$ | $F_{r/2}\bmod p$ |
+| ---: | ---: | ---: | ---: | ---: | ---: |
+| 3 | 1 | 1 | 4 | 0 | 1 |
+| 7 | 2 | 1 | 8 | 0 | 3 |
+| 47 | 6 | 1 | 16 | 0 | 21 |
+| 2207 | 46 | 1 | 32 | 0 | 987 |
+| 1087 | 32 | 1 | 64 | 0 | 1048 |
+| 4481 | 66 | 1 | 64 | 0 | 543 |
+
+精确乘积重建每个 $S_j$，结合完整支撑对应，表中素数恰好覆盖 $k=2,\ldots,6$，
+没有未付费的余因子。其饱和积为
+
+$$
+P_6=\frac{505248088463}{282119516160}<\frac95,
+\qquad
+9\cdot282119516160-5\cdot505248088463=12835203125>0.
+$$
+
+$K=7$ 的尾给 $T_7=3/32+(3/4)\log2$。
+指数正项级数逐项严格比较于几何级数，得到
+$e^{3/32}<1/(1-3/32)=32/29<10/9$；最后的有理差为 $2/261$。
+又 $(17/10)^4-8=3521/10000>0$，故 $2^{3/4}<17/10$。于是
+
+$$
+C_{\rm sq}=P_6\exp\!\left(\sum_{k=7}^\infty E_k\right)
+\le P_6e^{T_7}
+<\frac95\frac{10}{9}\frac{17}{10}=\frac{17}{5}.
+$$
+
+最后回到原盒而不更换轴。命题 3.2、4.2 对每个实际 $(p,a_p)$ 给
+
+$$
+\operatorname{Vol}(\mathcal Q_n)=Z(n)
+=\prod_{p\mid n}\frac{1-p^{-(a_p+1)}}{1-p^{-1}}.
+$$
+
+$n>1$ 时每个实际因子严格小于 $p/(p-1)$，故 $Z(n)<C_{\rm sq}$；
+$n=1$ 时由 $C_{\rm sq}\ge3/2$ 也有严格不等式。
+任给有限非空 $P\subseteq\mathcal P_{\rm sq}$，令 $n_a=\prod_{p\in P}p^a$、$a\to\infty$，
+则同一有限盒族的体积趋于命题 8.2 的 $C_P=\prod_{p\in P}p/(p-1)$。
+对有限 $P$ 再取上确界就得到 $\sup Z=C_{\rm sq}$。
+从 $n$ 到 $n_{<K}$ 只去掉高秩轴，低秩指数原样保留，因而
+
+$$
+0\le\log\frac{Z(n)}{Z(n_{<K})}
+\le\sum_{\substack{p\mid n\\r_p\ge2^K}}\log\frac p{p-1}
+\le\sum_{k\ge K}E_k\le T_K.
+$$
+
+这给同一个实际盒的可趋零尾轴预算；它同时控制高秩新方向及其任意有限指数深度。
+无限操作只用于对有限盒的数值上界和上确界，$C_{\rm sq}$ 不定义无限整数或
+无限维体积，更不赋予物理空间维数、时间或能量。
+
+作为适用范围比较，$r_2=3$ 使本族整数全部为奇数。
+[Choie–Lichiardopol–Moree–Solé，定理 1.2][OddRobin14] 已证明除 $1,3,5,9$ 外
+所有奇正整数满足 Robin；因此本族 $n>5040$ 的安全性已有该文献覆盖。
+本命题消费的是尺度盒的统一饱和及尾轴估计，不增加 Robin 覆盖域。
+所有秩层的包络 $\sum_{d>5}(1+\log d)/d$ 发散，不能由它取得全素数预算；
+[带秩权重的尾定理][Weighted14] 控制的是 $1/(p r_p)$，也不能删去权重替代这里的
+Euler 对数尾。故本允许支撑的结论不推出全整数 Robin 或 RH。证毕。
+
+[RankWitness14]: ../../../D5/S3/Arith/Primes/FiniteFibonacciRankClosure.lean
+[RankEntry14]: ../../../D5/S3/Arith/FibonacciRank.lean
+[RankEuler14]: ../../../D5/S3/Arith/Robin/FibonacciRankEulerTail.lean
+[Weighted14]: ../../../D5/S3/Arith/Robin/FibonacciRankWeightedPrimeTail.lean
+[FibRank14]: https://github.com/the-omega-institute/trureturing/blob/c4d6f165a9132b5c2e2cf76df9f00a6d848cac13/docs/develop/theory/FIBONACCI_ATOMIC_RELATION_GENERATION.md
+[Lengyel14]: https://fq.math.ca/Scanned/33-3/lengyel.pdf
+[LengyelNote14]: ../../../Library/Factorization/lengyel1995fibonacciorder.md
+[Poly14]: https://arxiv.org/abs/1702.01855v2
+[OddRobin14]: https://www.numdam.org/item/10.5802/jtnb.591.pdf
+
+## 追加锚（本行以下为增补区）
+
+## 15. 双项 Fibonacci 来源在增长最小公倍数乘子下的统一 Robin 余量
+
+**定义 15.1（来源与增长乘子）。** 令 $F_0=0$、$F_1=1$、$F_{j+2}=F_{j+1}+F_j$，$\varphi=(1+\sqrt5)/2$。对整数 $a>b\ge2$，记
+
+$$
+k=a-b,\qquad g=\gcd(a,b),\qquad q=\log a,\qquad
+Y_a=\lfloor q^2\rfloor,\qquad
+C_a=\operatorname{lcm}(1,\ldots,Y_a).
+$$
+
+只在 $a$ 足够大、$Y_a\ge1$ 时使用 $C_a$。设 $k\ge3$ 为奇数，并存在奇数 $d$ 满足
+
+$$
+d\ge5,\qquad d\mid k,\qquad\gcd(d,g)=1,\qquad
+d\le\frac{\log\log a}{\log\varphi}.
+\tag{15.1}
+$$
+
+对任意正约数 $c\mid C_a$，令 $V=F_a+F_b$、$n=cV$。这里 $c$ 随 $a,b,d$ 变化；所有约数响应仍按命题 3.2、4.2 在同一实际整数 $n$ 上取值。
+
+**命题 15.2（增长乘子全族的统一严格估计）。** 在 [Axler 作者稿 v3 式（3.4）—（3.5）][Axler15] 的 totient 包络下，存在与 $b,d,c$ 无关的 $A$，使定义 15.1 的全部参数在 $a\ge A$ 时满足
+
+$$
+\boxed{
+\frac{Z(c(F_a+F_b))}{e^\gamma\log\log(c(F_a+F_b))}
+<1-\frac1{4(\log a)^3}<1.}
+\tag{15.2}
+$$
+
+证明。[FIB 原卷式（442.3）][Fib44215] 已将 §175.1 的指标秩排除用于同一对 $a,b$：可选奇素数 $p\mid F_d$，满足
+
+$$
+p\nmid V,\qquad p<\varphi^d\le q.
+\tag{15.3}
+$$
+
+这一排除只依赖 $a,b,d$，不要求乘子固定。令 $J=v_p(c)=v_p(n)$。由 $c\mid C_a$ 及最小公倍数的实际素数赋值，
+
+$$
+p^J\le Y_a\le q^2.
+\tag{15.4}
+$$
+
+$J=0$ 时同样成立。将本卷命题 8.1 的精确加层倍率用于真实整数 $np$，得到
+
+$$
+\frac{Z(np)}{Z(n)}
+=1+\frac{(1-p^{-1})p^{-J-1}}{1-p^{-J-1}}
+\ge1+\frac1{2p^{J+1}}
+\ge1+\frac1{2q^3}.
+\tag{15.5}
+$$
+
+这里没有向 $n/\varphi(n)$ 的素因子乘积加入缺失方向。
+
+对全部 $c\mid C_a$，初等界 $C_a\le Y_a^{Y_a}$ 给
+$0\le\log c\le Y_a\log Y_a=O(q^2\log q)$。标准 Binet 增长在全部 $2\le b<a$ 上一致给
+
+$$
+\log n=a\log\varphi+O(q^2\log q),\qquad
+\Lambda_n:=\log\log n
+=q+\log\log\varphi+O\!\left(\frac{q^2\log q}{a}\right).
+\tag{15.6}
+$$
+
+因此真实 $m=np$ 一致趋于无穷，最终超过 Axler 包络的固定阈值。由 $p\le q$，
+
+$$
+0<\Lambda_m-\Lambda_n
+=\log\!\left(1+\frac{\log p}{\log n}\right)
+=O\!\left(\frac{\log q}{a}\right).
+$$
+
+记 $a_0=0.0094243$。直接复用同一 $m$ 上的已发表输入
+$Z(m)\le m/\varphi(m)<e^\gamma(\Lambda_m+a_0/\Lambda_m^2)$，并保留式（15.6）的统一性，得到
+
+$$
+\frac{\Lambda_m+a_0/\Lambda_m^2}{\Lambda_n}
+=1+\frac{a_0+o(1)}{q^3}
+\le1+\frac1{8q^3}
+\tag{15.7}
+$$
+
+对充分大 $a$ 共同成立；最后一步使用 $a_0<1/8$。$o(1)$ 对所有满足定义的 $b,d,c$ 一致，而不是固定 $c$ 后的余项。结合式（15.5）与（15.7），当 $q^3>1$ 时有
+
+$$
+\frac{Z(n)}{e^\gamma\Lambda_n}
+<\frac{1+1/(8q^3)}{1+1/(2q^3)}
+=1-\frac3{8q^3+4}
+<1-\frac1{4q^3}.
+$$
+
+这证明式（15.2）。证毕。 $\square$
+
+**命题 15.3（最大乘子下固定有限局部乘积的统一饱和）。** 在定义 15.1 中取 $c=C_a$。对任意固定非空有限素数集 $P$ 和任意固定 $0<T<1$，沿全部允许来源一致有
+
+$$
+\prod_{r\in P}\left(1-r^{-v_r(n)-1}\right)\longrightarrow1
+\qquad(a\longrightarrow\infty).
+\tag{15.8}
+$$
+
+因此该乘积最终大于 $T$，同时式（15.2）仍成立。
+
+证明。对每个固定 $r\in P$，当 $Y_a\ge r$ 时，最小公倍数给
+
+$$
+v_r(n)\ge v_r(C_a)
+=\left\lfloor\frac{\log Y_a}{\log r}\right\rfloor
+\longrightarrow\infty.
+$$
+
+每个局部因子均趋于一，且其下界与 $b,d$ 无关；固定有限乘积保留统一收敛，得到（15.8）。证毕。 $\square$
+
+[Axler15]: https://arxiv.org/pdf/2110.13478v3
+[Fib44215]: https://github.com/the-omega-institute/trureturing/blob/2c92ab86e8f97b901a52c16cbb46a73d5a6c3ce0/docs/develop/theory/FIBONACCI_ATOMIC_RELATION_GENERATION.md#442-异奇偶双项的可变小约数切面与完整-robin-尾段
+
+## 追加锚（本行以下为增补区）

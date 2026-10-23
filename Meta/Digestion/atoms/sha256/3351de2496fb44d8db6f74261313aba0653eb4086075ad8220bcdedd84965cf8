@@ -1,0 +1,145 @@
+**Theorem 59.3 (the FIB future-readout noise and precision transfer).**
+For the preparations, fixed times, normalization, and common report channel
+of Definitions 59.1--59.2, there are $K>0$ and $n_0\ge2$, independent of
+$n$, such that
+
+$$
+a_n\le\frac{K}{\sqrt{N_n}}\quad(n\ge n_0).
+\tag{59.1}
+$$
+
+For every $n\ge2$ and $E\ge0$ with $2E\ge a_n$,
+
+$$
+R_n(E)\ge\frac{q_n}{2}.
+\tag{59.2}
+$$
+
+Consequently, the vanishing choice $E_n=a_n/2$ satisfies
+
+$$
+E_n\longrightarrow0,\qquad
+\liminf_{n\to\infty}R_n(E_n)\ge\frac{|D(s)|}{2}>0.
+\tag{59.3}
+$$
+
+Every radius sequence with $E_n\ge K/(2\sqrt{N_n})$ for all sufficiently
+large $n$ has the same lower bound on its limiting inferior risk.
+
+If $0\le\delta<|D(s)|/2$, any family of predictors guaranteeing worst error
+at most $\delta$ on both preparations and every allowed report for all
+sufficiently large $n$ must satisfy, eventually,
+
+$$
+2E_n<a_n\le\frac{K}{\sqrt{N_n}}.
+\tag{59.4}
+$$
+
+In particular, for the dyadic absolute-error radius $E_n=2^{-p_n}$,
+
+$$
+p_n>\frac12\log_2N_n+1-\log_2K,\qquad
+\liminf_{n\to\infty}\frac{p_n}{n}\ge\frac12\log_2\varphi,
+\quad \varphi=\frac{1+\sqrt5}{2}.
+\tag{59.5}
+$$
+
+The overlap bounds also hold for any supplied finite bank in Definition
+59.1 under its common maximum-norm error contract, since the bank separation
+is no greater than $a_n$. Thus (59.5) remains a necessary condition for such
+a bank to give the same guarantee; the bank can require still finer error.
+
+Proof. The source-specific input is Holographic IV (110.16), which gives at
+the fixed time $a_0/2$ constants $M>0$ and $n_0\ge2$ such that
+
+$$
+\|S_n(a_0/2)x_n\|
+ \le M\left(\frac{2n}{a_0N_n}+\frac1{\sqrt{N_n}}\right)
+ \quad(n\ge n_0).
+\tag{59.6}
+$$
+
+For the root port, its (110.11) supplies the finite uniform constant
+
+$$
+\|\mathcal C_nS_n(t)\|\le B_t=\frac{V}{\sqrt{2et}},\qquad
+V=\sup_j\|v_j^{\mathrm e}\|<\infty\quad(t>0),
+$$
+
+where $v_j^{\mathrm e}$ is the supplier's common-edge-carrier vector. The
+positive semidefinite closed Laplacian makes $S_n$ a contraction on the
+centered counting space. For every $a\ge a_0$, split the heat at $a_0/2$:
+
+$$
+\begin{aligned}
+|\mathcal C_nS_n(a)x_n|
+ &\le \|\mathcal C_nS_n(a_0/2)\|\,
+         \|S_n(a-a_0/2)x_n\|\\
+ &\le B_{a_0/2}\,\|S_n(a_0/2)x_n\|\\
+ &\le \frac{B_{a_0/2}M}{\sqrt{N_n}}
+          \left(1+\frac{2n}{a_0\sqrt{N_n}}\right).
+\end{aligned}
+\tag{59.7}
+$$
+
+The second inequality uses
+$S_n(a-a_0/2)=S_n(a-a_0)S_n(a_0/2)$ and $a-a_0\ge0$.
+It therefore covers the entire unbounded interval $[a_0,\infty)$, without
+assuming that the supplier's compact-interval convergence is already
+uniform there. Binet's formula and $N_n=2F_{n+1}-1$ give
+
+$$
+H:=\sup_{n\ge n_0}\frac{n}{\sqrt{N_n}}<\infty,
+\qquad \frac{\log_2N_n}{n}\longrightarrow\log_2\varphi.
+$$
+
+Choose any positive $K\ge B_{a_0/2}M(1+2H/a_0)$ and take the supremum
+in (59.7). Since $\eta_n(0)=0$, this proves (59.1), derived from the
+supplier's state relaxation and root smoothing rather than assumed.
+The constant depends on $a_0$ and the fixed supplier family, not on $n$.
+
+For the noise step, the bounded continuous midpoint curve
+
+$$
+y_n^*=\frac{\eta_n(x_n)+\eta_n(0)}2
+$$
+
+has distance exactly $a_n/2$ from both true curves. When $2E\ge a_n$ it
+is an allowed report for both preparations. Any predictor therefore assigns
+the same number $z=\widehat g_n(y_n^*)$ to two targets separated by $q_n$.
+The triangle inequality gives
+
+$$
+q_n\le |z-g_{n,s}(0)|+|z-g_{n,s}(x_n)|
+ \le 2\max_{f\in\{0,x_n\}}|z-g_{n,s}(f)|.
+$$
+
+Taking the allowed-report supremum and then the infimum over predictor maps
+proves (59.2). This midpoint/radius-of-information step is a classical
+optimal-recovery ingredient; see Micchelli and Rivlin, *A Survey of Optimal
+Recovery*, in *Optimal Estimation in Approximation Theory*,
+[doi:10.1007/978-1-4684-2388-4_1](https://doi.org/10.1007/978-1-4684-2388-4_1),
+and the bounded-error optimal-recovery setting of Foucart and Liao,
+*Optimal Recovery from Inaccurate Data in Hilbert Spaces: Regularize, But
+What of the Parameter?*,
+[doi:10.1007/s00365-022-09590-5](https://doi.org/10.1007/s00365-022-09590-5).
+The same two-consistent-input triangle-inequality step appears explicitly in
+the proof of Theorem 1 of Foucart, *Learning the maximum of a Hölder function
+from inexact data*,
+[doi:10.1090/proc/17456](https://doi.org/10.1090/proc/17456).
+Only that lower-bound ingredient is used: no sufficient recovery theorem,
+Hilbert-space regularization rule, or Hölder-model hypothesis is transferred
+to the curve carrier. The displayed argument proves the needed step directly.
+
+Equation (59.1) implies $a_n\to0$, whereas the supplier's fixed-$s$ limit
+gives $q_n\to|D(s)|>0$. Substituting $E_n=a_n/2$ proves (59.3).
+If $E_n\ge K/(2\sqrt{N_n})$, (59.1) also implies $2E_n\ge a_n$.
+For a fixed $\delta<|D(s)|/2$, eventually $q_n>2\delta$.
+Then overlapping report balls would contradict a worst-error guarantee of
+$\delta$ by (59.2), proving (59.4). With $E_n=2^{-p_n}$, (59.4) gives
+$2^{1-p_n}<K/\sqrt{N_n}$. Taking logarithms of these positive quantities,
+then using the Fibonacci growth limit, proves (59.5).
+For a finite bank its projected midpoint is again allowed at both
+preparations, and its separation is bounded by the full-curve separation;
+the same argument applies. $\square$
+

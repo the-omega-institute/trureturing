@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:029ddd50f3707088e130ea91e53e96c30a082a63f78d068ecee5b4ace4e40f1c
+  normalized_sha256: sha256:029ddd50f3707088e130ea91e53e96c30a082a63f78d068ecee5b4ace4e40f1c
+cas_ref: sha256:029ddd50f3707088e130ea91e53e96c30a082a63f78d068ecee5b4ace4e40f1c
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: Forward proof of preceding theorem U2, expanding the kernel as a positive Gram sum.
+    previous_atom_id: b407682500faaa6d8da43ce0ed7505d8350c1352ad449a548751bce1b62cd783
+    next_atom_id: 09d9e2e5a6a9d1cf99c81c073b0d101b7594dc4abd852ece7921f290bd1fc427

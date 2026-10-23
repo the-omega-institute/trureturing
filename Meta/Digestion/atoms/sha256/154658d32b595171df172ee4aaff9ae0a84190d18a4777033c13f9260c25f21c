@@ -1,0 +1,41 @@
+**Definition 9.1 (a finite-depth metric row bridge).** Let \(A=f(D)\) be the
+finite whole-image row set of Definition 5.1. For an attained prefix \(p\) at
+depth \(h\), retain
+
+$$
+S_h(p)=\{r\in A:\exists u\in D_r,\ p_h(u)=p\},\qquad
+m_h=\max_p |S_h(p)|.
+$$
+
+Fix a metric space \((X,d_X)\) and a source-state map
+\(\chi:D\to X\). A bridge certificate at depth \(h\) consists of numbers
+\(R_h\ge0\), \(\delta_h>0\), and, for every \(p\) with \(S_h(p)\ne\varnothing\),
+a centre \(c_{h,p}\in X\) and one representative
+
+$$
+x_{h,p,r}\in\chi\bigl(\{u\in D_r:p_h(u)=p\}\bigr)
+\qquad(r\in S_h(p))
+$$
+
+such that
+
+$$
+d_X(x_{h,p,r},c_{h,p})\le R_h,\qquad
+d_X(x_{h,p,r},x_{h,p,s})>\delta_h\quad(r\ne s).
+\tag{FFM.30}
+$$
+
+The first condition is the declared observation-cell radius and the second
+condition is a row-separation claim. Neither follows from equality of native
+prefixes or from the existence of a complete field. Define the carrier
+packing number
+
+$$
+\mathsf P_X(R,\delta)=\sup_{c\in X}\sup\left\{
+n:\exists x_1,\ldots,x_n\in B_X(c,R),\
+d_X(x_i,x_j)>\delta\ (i\ne j)\right\}.
+\tag{FFM.31}
+$$
+
+The supremum is allowed to be infinite; no properness is silently assumed.
+

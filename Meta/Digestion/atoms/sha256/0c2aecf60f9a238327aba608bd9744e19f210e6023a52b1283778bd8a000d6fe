@@ -1,0 +1,25 @@
+**Definition 3.1 (shifted constructor family).** Let $C$ be any finite
+original constructor context with exactly one hole at address $w$,
+of length $d\ge1$. All other parts are fixed finite native trees.
+Fix $a\ge1$, and put
+
+$$
+F(y)=C[\rho^a y],\qquad
+U(x,y)=\langle x,\langle y,F(y)\rangle\rangle.
+\tag{SPC.12}
+$$
+
+Use the old root cut $P=\{\varepsilon\}$ and its complete one-hole row.
+Retain epoch-zero branch literals at $\varepsilon,R$, and at every
+displayed branch of $C$ prefixed by $RR$. Retain the exact epoch-zero
+label at every displayed concrete leaf of $C$, also prefixed by $RR$.
+The hole $RRw$ has no literal. Retain both records
+
+$$
+(a,RL,0,RRw,=),\qquad (0,RL,0,RR,\ne).
+\tag{SPC.13}
+$$
+
+All listed occurrences, including repetitions, remain in the input.
+The target cut is $Q=\{L,RL,RR\}$.
+

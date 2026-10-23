@@ -1,1 +1,1 @@
-{"statement_id":"sha256:133ed34172791612591a759b997fd06c02c0ca80b08d7c0e055601e842a2adbf"}
+{"statement_id":"sha256:133ed34172791612591a759b997fd06c02c0ca80b08d7c0e055601e842a2adbf","declarations":[{"declaration_name_key":"ns(ns(ns(ns(ns(ns(n0,2:D5),2:S3),13:Combinatorics),14:PackingDomatic),22:PackingDomaticPathDefs),16:IsPackingDomatic)","kind":"def"},{"declaration_name_key":"ns(ns(ns(ns(ns(ns(n0,2:D5),2:S3),13:Combinatorics),14:PackingDomatic),22:PackingDomaticPathDefs),5:claim)","kind":"def"}]}

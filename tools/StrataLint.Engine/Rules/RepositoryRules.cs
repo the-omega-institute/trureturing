@@ -171,14 +171,6 @@ internal static partial class RepositoryRules
             "Scribe narrative provenance",
             new RepositoryRule(ScribeDefinitionScoped, null, ScribeSourceAffected, ScribeNarrativeProvenance)),
         Register(
-            33,
-            "Frozen state and accepted Freeze pairing",
-            new RepositoryRule(
-                (artifact, _) => FrozenPairRule.IsPairPath(artifact.Path.Value),
-                null,
-                FrozenPairRule.IsAffectedBy,
-                FrozenPairRule.Evaluate)),
-        Register(
             34,
             "Closed Lean modules missing frozen state",
             new RepositoryRule(

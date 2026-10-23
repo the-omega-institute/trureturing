@@ -1,0 +1,13 @@
+**Theorem 11.1 (exact eight-label joint image and field threshold).** On the entire unchanged
+FFM §6 source fiber, the row-only theorem has $M_*=4$ on this same fiber,
+
+$$
+\boxed{f_{\rm joint}(D)=A\times\{0,1\},\qquad
+M_{\rm joint}=8.}
+\tag{FFM.40}
+$$
+
+The minimum is the same for static and serial-forward consumers. For every $h\ge0$, one
+attained inclusive $p_h$-fiber contains all eight joint labels, so the result is not a
+cardinality assertion on a restricted witness domain.
+

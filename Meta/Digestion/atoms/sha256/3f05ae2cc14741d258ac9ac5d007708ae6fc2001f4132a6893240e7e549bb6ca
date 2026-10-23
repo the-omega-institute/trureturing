@@ -1,0 +1,7 @@
+**定理 4.2（Cartesian 积可加）。** 对任意有限图 $G,H$，
+
+$$
+\kappa(G\mathbin{\square}H)=\kappa(G)+\kappa(H).
+\tag{4.1}
+$$
+

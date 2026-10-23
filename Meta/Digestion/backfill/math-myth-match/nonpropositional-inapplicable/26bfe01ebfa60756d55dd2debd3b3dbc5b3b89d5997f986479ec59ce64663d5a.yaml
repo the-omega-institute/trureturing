@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:26bfe01ebfa60756d55dd2debd3b3dbc5b3b89d5997f986479ec59ce64663d5a
+  normalized_sha256: sha256:26bfe01ebfa60756d55dd2debd3b3dbc5b3b89d5997f986479ec59ce64663d5a
+cas_ref: sha256:26bfe01ebfa60756d55dd2debd3b3dbc5b3b89d5997f986479ec59ce64663d5a
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 证明。：该段仅论证前文定理 52.2（共同可行行动交集判据）。，不另立新的命题陈述；前文命题本身仍保留。
+    previous_atom_id: 30edcc26001156089bcd06e1e000b47b4f2818af3df2747c8e0b80b7c5bf93fb
+    next_atom_id: d30b56b86d94fdf52a8a629119e7a69b200f5ba1f32fa13d8bb3e15ad506f055

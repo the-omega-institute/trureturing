@@ -1,1 +1,1 @@
-{"statement_id":"sha256:8650677c15bc1ad1f72673343a9e687b4e321976a87e420b8e6f22a6cf0b7364"}
+{"statement_id":"sha256:8650677c15bc1ad1f72673343a9e687b4e321976a87e420b8e6f22a6cf0b7364","declarations":[{"declaration_name_key":"ns(ns(ns(ns(ns(ns(n0,2:D5),2:S3),8:Observer),17:MeasureSeparation),32:FiniteExpectationTableSeparation),35:finite_expectation_table_separation)","kind":"theorem"}]}

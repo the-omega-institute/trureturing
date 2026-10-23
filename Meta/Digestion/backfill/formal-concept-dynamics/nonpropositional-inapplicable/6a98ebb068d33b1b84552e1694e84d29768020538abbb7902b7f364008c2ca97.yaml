@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:6a98ebb068d33b1b84552e1694e84d29768020538abbb7902b7f364008c2ca97
+  normalized_sha256: sha256:6a98ebb068d33b1b84552e1694e84d29768020538abbb7902b7f364008c2ca97
+cas_ref: sha256:6a98ebb068d33b1b84552e1694e84d29768020538abbb7902b7f364008c2ca97
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: `D5/S3/ObserverMemory/Prediction/ItineraryCompletion.lean`：未来读出 itinerary 与预测商：本项为主题、操作、组成或文献入口的列举片段，不单独提出性质结论。
+    previous_atom_id: 22c3b447c568451a822d9beb427897ee2836edd728417e2a6c9fc44b22090a8a
+    next_atom_id: 13084da3ab54c9d6588589dd430d09a45bb75063e94c8087df8934081d866bbb

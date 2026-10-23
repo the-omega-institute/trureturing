@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:72e24feb1a8835a0274eef82431df809d488ed1a91db93da751fc5a997ad4816
+  normalized_sha256: sha256:72e24feb1a8835a0274eef82431df809d488ed1a91db93da751fc5a997ad4816
+cas_ref: sha256:72e24feb1a8835a0274eef82431df809d488ed1a91db93da751fc5a997ad4816
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 定义 167.1 只列模型假设并引入双标签输入接口，不断言估计。
+    previous_atom_id: fd0a0b0e1ea2c4ab876209d189393528e43ec2cc8b7313ae1139a5abe32d0839
+    next_atom_id: 1cd3469a1d6bf67034b5892f68b6f66a8653acd53e9ab6c8aff42a96190647b4

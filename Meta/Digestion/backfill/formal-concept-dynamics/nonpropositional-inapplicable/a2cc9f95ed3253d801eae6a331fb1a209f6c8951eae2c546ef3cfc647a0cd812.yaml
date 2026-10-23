@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:a2cc9f95ed3253d801eae6a331fb1a209f6c8951eae2c546ef3cfc647a0cd812
+  normalized_sha256: sha256:a2cc9f95ed3253d801eae6a331fb1a209f6c8951eae2c546ef3cfc647a0cd812
+cas_ref: sha256:a2cc9f95ed3253d801eae6a331fb1a209f6c8951eae2c546ef3cfc647a0cd812
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 清单片段“公平”仅列举主题、接口组成或考虑维度；本片段不陈述性质、存在性或推论。
+    previous_atom_id: 3ba019918878630f5a39435719c2b90abed0b59158025812c88cfa2ec88284be
+    next_atom_id: 5ce92a08f8ef0c476b79061f21fe7900961a24076a2ac38d31ad5b32216fcccc

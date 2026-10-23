@@ -1,0 +1,18 @@
+fingerprints:
+  raw_sha256: sha256:d16f16562ab4657dcfed1df73d3d571ac3b55cd7e6a9c99b1f9138d39323b879
+  normalized_sha256: sha256:d16f16562ab4657dcfed1df73d3d571ac3b55cd7e6a9c99b1f9138d39323b879
+cas_ref: sha256:d16f16562ab4657dcfed1df73d3d571ac3b55cd7e6a9c99b1f9138d39323b879
+coverage_gids:
+  - gid: D5/S3/Factorization/Combinatorics/MixedPrimeHistoryCount.history_recurrence
+    target_statement_id: sha256:c93ce9288a3507ee7ae7ad0f83fa9aa2b616cb6004e6f573cdd5f9c936eebf75
+  - gid: D5/S3/Factorization/Combinatorics/MixedPrimeHistoryCount.length_recurrence
+    target_statement_id: sha256:7f6d6d64cf700e77f7132de7f2617afdf5e2b2b371751a90d9b132997c4e0191
+  - gid: D5/S3/Factorization/Combinatorics/MixedPrimeHistoryCount.reachable_finite
+    target_statement_id: sha256:2c9b006ca46fb258833c797117f4db399a8b65ec17e154fcf58cd4a712e5b057
+  - gid: D5/S3/Factorization/Combinatorics/MixedPrimeHistoryGenerating.sharp_length_bound
+    target_statement_id: sha256:d2ebc712adaa02063bccfd105de8a16d5e24b58ecee10539aeb757a0237f0ed6
+receipts:
+  unresolved_subitems: []
+  chain_atoms:
+    - 445d20f14286ee561a4c3171ae113d5c5049fa04a8c44f18206eee4ca40a5250
+    - fcc0e7dc49526029b5d05a4104fe56e550b3ee78382f8c3eed1f1262a85f4305

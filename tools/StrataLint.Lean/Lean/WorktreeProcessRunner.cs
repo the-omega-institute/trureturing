@@ -32,14 +32,34 @@ internal interface IWorktreeProcessRunner
     }
 }
 
-internal sealed class ProductionWorktreeProcessRunner(CancellationToken cancellationToken = default) : IWorktreeProcessRunner
+internal sealed class ProductionWorktreeProcessRunner(CancellationToken cancellationToken = default,
+    LeanCacheCommandObservation? observation = null,
+    IReadOnlyDictionary<string, string>? environment = null) : IWorktreeProcessRunner
 {
+    internal ProductionWorktreeProcessRunner WithEnvironment(IReadOnlyDictionary<string, string> variables) =>
+        new(cancellationToken, observation, variables);
+
     public ProcessOutput Run(
         string fileName, IReadOnlyList<string> arguments, string workingDirectory, TimeSpan timeout,
-        Stream? standardOutput, Stream? standardError) =>
-        BoundedProcessRunner.Run(fileName, arguments, workingDirectory, timeout,
-            64 * 1024 * 1024, standardOutput: standardOutput, standardError: standardError,
-            cancellationToken: cancellationToken);
+        Stream? standardOutput, Stream? standardError)
+    {
+        observation?.Boundary("cache-child", "start", fileName, arguments, workingDirectory);
+        try
+        {
+            var result = BoundedProcessRunner.Run(fileName, arguments, workingDirectory, timeout,
+                64 * 1024 * 1024, environment: environment,
+                standardOutput: observation?.Output(standardOutput) ?? standardOutput,
+                standardError: observation?.Error(standardError) ?? standardError, cancellationToken: cancellationToken);
+            observation?.Boundary("cache-child", "finish", fileName, arguments, workingDirectory, result.ExitCode);
+            return result;
+        }
+        catch (Exception error)
+        {
+            observation?.Boundary("cache-child", "finish", fileName, arguments, workingDirectory,
+                error: error.GetType().FullName + ": " + error.Message);
+            throw;
+        }
+    }
 
     public StreamedProcessOutput<T> RunStreaming<T>(
         string fileName,
@@ -48,17 +68,12 @@ internal sealed class ProductionWorktreeProcessRunner(CancellationToken cancella
         TimeSpan timeout,
         Func<Stream, CancellationToken, Task<T>> readStandardOutput) =>
         BoundedProcessRunner.RunStreaming(fileName, arguments, workingDirectory, timeout,
-            64 * 1024 * 1024, readStandardOutput, cancellationToken: cancellationToken);
+            64 * 1024 * 1024, readStandardOutput, environment: environment, cancellationToken: cancellationToken);
 
     public ProcessOutput Run(
         string fileName,
         IReadOnlyList<string> arguments,
         string workingDirectory,
         TimeSpan timeout) =>
-        BoundedProcessRunner.Run(
-            fileName,
-            arguments,
-            workingDirectory,
-            timeout,
-            64 * 1024 * 1024, cancellationToken: cancellationToken);
+        Run(fileName, arguments, workingDirectory, timeout, null, null);
 }

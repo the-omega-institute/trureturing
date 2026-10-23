@@ -1,0 +1,63 @@
+**Proposition 13.5 (one right hole separates length feasibility from
+unchanged-path recoding).** Take $P=\{R\}$ and the complete current
+row with exterior $\langle\beta,\square_R\rangle$ and its singleton
+reached class $d$. Its full actual origin fiber and two entire targets
+are
+
+$$
+\begin{aligned}
+\mathcal U_*&=\{\beta\}\ \cup\
+                    \{\langle\alpha,z\rangle:z\in\mathcal T\},\\
+F(\beta)&=Y_0=(\beta,\varnothing),\\
+F(\langle\alpha,z\rangle)&=
+ Y_1=(\langle\alpha,\square_R\rangle,\{\{R\}\}).
+\end{aligned}
+\tag{NBP.13.10}
+$$
+
+Here $Y_0$ has $R$ blocked at its concrete root beta, and $Y_1$ has
+$R$ reached; their complete partitions and guards are as displayed.
+The chart attains all three types of $d$, and $\lambda(d)=1$.
+The four-budget problem is feasible at $(1,3,1,1)$ and infeasible
+with $r=1,\ell=0$ for every $K,q$. A native table feasible at
+$(1,4,2,1)$ can nevertheless have literal cost two after Theorem
+12.3's unchanged-path paid constant-query recoding.
+
+**Proof.** A current tree with this complete row is exactly
+$\langle\beta,x\rangle$. For a leaf origin, only $\beta$ works:
+its image is $E=\langle\beta,\alpha\rangle$. For a paired origin
+$\langle s,z\rangle$, the left image must be beta. The image inverse
+(RA.2207) forces $s=\alpha$, and every finite $z$ then works.
+This proves the entire fiber in (NBP.13.10), not a finite selection.
+Its predecessor rows follow directly from the cut definition.
+
+The right current value is alpha at origin beta and $\rho z$ on every
+paired origin. It is respectively beta or branch when $z=\alpha$ or
+$z=\beta$, so all three root types are attained. On every paired
+origin it is never alpha, by the image grammar. One running state
+querying $R$ therefore goes to the complete halt $Y_0$ on alpha and
+to $Y_1$ on beta or branch; give its absent edge any existing halt.
+A constant actual initial code and these two halts use three states,
+one call and literal sum one on the entire fiber.
+
+If $r=1$ and the literal budget is zero, every actually invoked word
+must be $\varepsilon$. Its reply is branch on every tree of this
+fiber. The common initial state and deterministic stationary rule
+then give the identical state path and output on origins beta and
+$\langle\alpha,\alpha\rangle$, whose required rows differ.
+Termination cannot repair this contradiction, for any $K,q$.
+This proves the strict length-budget obstruction directly.
+
+Finally insert an initial running state querying $\varepsilon$ and
+going on every reply to the running $R$-state just constructed.
+All four installed states are reached on some actual input. Every
+run has two calls and literal sum $0+1=1$. In Theorem 12.3 the sole
+available root coordinate is $d$: its first paid query is ignored
+through the constant response map, and the second queries $d$ again.
+Both have price one, so the unchanged path has sum two. The static
+contraction in Theorem 13.2 removes the initial exterior-constant
+state and exports the surviving state's code; the three-state,
+one-call table again has sum one. Thus the stronger unchanged-path
+literal domination fails, while the joint upper-budget correspondence
+holds. $\square$
+

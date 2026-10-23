@@ -1,0 +1,59 @@
+**Claim status: open.**
+
+把五态分布写成
+$$
+p=(p_{\mathrm{null}},p_1,p_2,p_3,p_{13})
+$$
+并定义
+$$
+X=p_1+p_{13},\qquad
+Y=p_3+p_{13},\qquad
+Z=p_2,\qquad
+\kappa=p_{13}.
+$$
+则
+$$
+p_\kappa=
+\left(
+1-X-Y-Z+\kappa,\,
+X-\kappa,\,
+Z,\,
+Y-\kappa,\,
+\kappa
+\right),
+$$
+其可行条件为
+$$
+0\le\kappa\le\min(X,Y),\qquad
+1-X-Y-Z+\kappa\ge0.
+$$
+固定 $(X,Y,Z)$ 时，唯一隐藏方向是
+$$
+d=(1,-1,0,-1,1),
+\qquad
+p_{\kappa+t}=p_\kappa+t\,d.
+$$
+若
+$$
+\mathcal B=\operatorname{span}\{1,x,y,z\}\subseteq\mathbb R^S
+$$
+且
+$$
+J_f=f(F[1,3])-f(F[1])-f(F[3])+f(F[\mathrm{null}]),
+$$
+则
+$$
+d\cdot1=d\cdot x=d\cdot y=d\cdot z=0,\qquad d\cdot f=J_f.
+$$
+因而
+$$
+\dim\mathcal B=4,\qquad
+\mathcal B^\perp=\operatorname{span}\{d\},
+$$
+并且
+$$
+f\in\mathcal B\Longleftrightarrow J_f=0.
+$$
+
+这表明三均值商遗忘的不是任意方向，而是唯一的共选择 seam $\kappa=E[xy]$。
+

@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:045dbb1c6cf096af2a3af78bea916f0d927f53cc1c368a6e9aea293123ff87ba
+  normalized_sha256: sha256:045dbb1c6cf096af2a3af78bea916f0d927f53cc1c368a6e9aea293123ff87ba
+cas_ref: sha256:045dbb1c6cf096af2a3af78bea916f0d927f53cc1c368a6e9aea293123ff87ba
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 本段只证明前述电荷实际像及最小事件数公式。
+    previous_atom_id: 17fc612a5f7a00991a979cd25f0166333bcb6fcd6194bdf338355472adc71336
+    next_atom_id: 8ccf8e14020ece3dd03f18912d248afb478b1addf286fa760effdb9526fceccf

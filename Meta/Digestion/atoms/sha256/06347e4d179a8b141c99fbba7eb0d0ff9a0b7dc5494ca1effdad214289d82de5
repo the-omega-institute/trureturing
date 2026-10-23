@@ -1,0 +1,6 @@
+**推论 46.3（有限维路径律的有序插入公式）。** 取 \(0<t_1<\cdots<t_q\le T\) 和有界连续状态测试函数 \(\phi_\ell\)，并令 \(M_{\phi_\ell}\) 为乘法算子。对存活至 \(T\) 的路径，有
+\[
+\mathbb E_x\!\left[
+\prod_{\ell=1}^{q}\phi_\ell(Z(t_\ell));\tau>T
+\right]
+=

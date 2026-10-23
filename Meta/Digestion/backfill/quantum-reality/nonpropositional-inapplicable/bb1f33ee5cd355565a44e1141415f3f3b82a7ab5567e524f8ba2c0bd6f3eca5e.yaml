@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:bb1f33ee5cd355565a44e1141415f3f3b82a7ab5567e524f8ba2c0bd6f3eca5e
+  normalized_sha256: sha256:bb1f33ee5cd355565a44e1141415f3f3b82a7ab5567e524f8ba2c0bd6f3eca5e
+cas_ref: sha256:bb1f33ee5cd355565a44e1141415f3f3b82a7ab5567e524f8ba2c0bd6f3eca5e
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 定义271.2　只读取四条轴只规定模型对象、符号、协议或适用条件；附文限定这些定义的含义，没有另立性质断言。
+    previous_atom_id: 2110ad5704db09ad24ded0d2471deed5fad1f4bdb3d193a98da82feb28d0dbf1
+    next_atom_id: 5b28faad37c3958cde3c8b9e996b510f749df7e15fc270d75fcfbb851ff78ad4

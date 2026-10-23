@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:0b0fbfaeccf3724bb2f019ce8bc2c26f773532e5a47f47a0bf873ec2b6f3a8c5
+  normalized_sha256: sha256:0b0fbfaeccf3724bb2f019ce8bc2c26f773532e5a47f47a0bf873ec2b6f3a8c5
+cas_ref: sha256:0b0fbfaeccf3724bb2f019ce8bc2c26f773532e5a47f47a0bf873ec2b6f3a8c5
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 定义 311.2（固定原事件的重新评价）。：仅引入对象、记号及其约定条件，不断言这些条件必然实现或额外性质。
+    previous_atom_id: cc226937e6d42edc29399d464ccb331e22311b478a5b7d23fec1d11c1030eb6c
+    next_atom_id: 139bbc56cff8c0eb36c0b7b2b76f8e72e416589e4df19ca3c1467d27de295152

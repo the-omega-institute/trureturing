@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:df8633fdb178a5b67c8b3edb2fe982986a73a9ba77cb707bb44316df21d1529a
+  normalized_sha256: sha256:df8633fdb178a5b67c8b3edb2fe982986a73a9ba77cb707bb44316df21d1529a
+cas_ref: sha256:df8633fdb178a5b67c8b3edb2fe982986a73a9ba77cb707bb44316df21d1529a
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 非命题文本：193. 建议新增模块：仅为导引、项目安排、来源条目或记号清单，不提出数学命题。
+    previous_atom_id: afaa256221593587c8aab4a8d9a859c73db9387aab97cc2b8813910d271b221a
+    next_atom_id: efc2831adc9f4bc1c1d204bf177c2aaf8b03ffa101e60cca20a76ccd8c916289

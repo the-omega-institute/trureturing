@@ -1,0 +1,9 @@
+3. Every deterministic policy that terminates correctly on every source,
+   begins with source-independent memory and uses only the declared
+   observations needs at least $h$ Reads on **each** source. This remains
+   true with arbitrary deterministic internal computation and memory,
+   arbitrary finite literal addresses, adaptive numbers of Updates and
+   adaptive stopping. The lower-bound method is the original-cone
+   separation of SLH §32.3 and [Graph Resource Separation][GRS] §6.3.
+4. Any complete-word controller recovering the full target satisfies
+

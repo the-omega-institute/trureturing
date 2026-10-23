@@ -1,1 +1,1 @@
-{"statement_id":"sha256:08994fb2b1bfdd76a98ac166137bfd1acf09966e876f2767f6c5d2bb7c34a9a9"}
+{"statement_id":"sha256:08994fb2b1bfdd76a98ac166137bfd1acf09966e876f2767f6c5d2bb7c34a9a9","declarations":[{"declaration_name_key":"ns(ns(ns(ns(ns(ns(n0,2:D5),2:S3),13:Combinatorics),8:Geometry),29:CrownOrderPolytopeEnumeration),23:crownGeometricFaceCount)","kind":"def"},{"declaration_name_key":"ns(ns(ns(ns(ns(ns(n0,2:D5),2:S3),13:Combinatorics),8:Geometry),29:CrownOrderPolytopeEnumeration),26:crownGeometricFaceCount_eq)","kind":"theorem"}]}

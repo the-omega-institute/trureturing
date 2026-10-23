@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:36d2fef86bebb255b7c3934e4c81d4bd5f00e02fd7d89c9eba75783b1827eea3
+  normalized_sha256: sha256:36d2fef86bebb255b7c3934e4c81d4bd5f00e02fd7d89c9eba75783b1827eea3
+cas_ref: sha256:36d2fef86bebb255b7c3934e4c81d4bd5f00e02fd7d89c9eba75783b1827eea3
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 证明。：该段仅论证前文命题 3.4（容纳与关联的分离）。，不另立新的命题陈述；前文命题本身仍保留。
+    previous_atom_id: ba4cd2a28a4d7d32601a47b0a1a644ccb1850fe1e46eabef3bb11588919c8c32
+    next_atom_id: 8570069f54ce5b9736f9c6449d359f556427a0b1d66354c0c094e93bdfb11f6f

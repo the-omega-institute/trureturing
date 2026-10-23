@@ -1,0 +1,28 @@
+**Proposition 9.4 (all-address binary bridge).** On the five fixed current
+trees $(t_h)_{h=0}^4$ from (NBP.9.6), every finite native address has at
+most two different replies. At each of the two occurrences of $a$, a
+query can separate the group $\{1,2\}$ from its complement; for $c$ the
+corresponding group is $\{3,4\}$. At a $b_j$ occurrence, any nonconstant
+query separates only $j$. These are statements about actual native
+replies on these witnesses, not about the number of replies on the
+whole fiber.
+
+**Proof.** An address $v$ of length less than three is at a common skeleton
+branch, and has constant reply $\mathsf{branch}$. Every address of length
+at least three has a unique decomposition $v=pw$ with $p\in P$ and
+finite suffix $w$. Write $d=[p]_{\pi_*}$. Native descent into the actual
+filled hole gives the exact equality
+
+$$
+r_{t_h}(pw)=r_{x_d^{(h)}}(w).
+\tag{NBP.9.7}
+$$
+
+The possible subtree values in this equation are the following two fixed
+finite trees, with the stated sets of exceptional indices:
+
+| Class $d$ | Default subtree | Exceptional indices | Exceptional subtree |
+| --- | --- | --- | --- |
+| $a$ | $A$ | $1,2$ | $\beta$ |
+| $c$ | $C$ | $3,4$ | $\beta$ |
+| $b_j$ | $D_j$ | $j$ | $\alpha$ |

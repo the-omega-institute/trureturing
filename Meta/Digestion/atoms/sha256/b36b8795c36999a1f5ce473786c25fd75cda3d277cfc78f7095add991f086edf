@@ -1,0 +1,20 @@
+**命题 45.1。** 有 `a+b+r=1`，且
+
+```math
+\boxed{\sqrt a(1-a)\le4\sqrt{br}+2\sqrt d\,r,\qquad
+\sqrt b(1-b)\le4\sqrt{ar}+2\sqrt d\,r.}
+```
+
+特别地，在六维令 `alpha=alpha_S(C)=2a`、`beta=alpha_S(D)=2b`，则
+
+```math
+\boxed{ab\le22r,\qquad
+\alpha\beta\le44(2-\alpha-\beta).}
+```
+
+这两个乘积不等式在 `r>0` 时严格，并且总有
+
+```math
+\boxed{\min\{\alpha,\beta\}<\sqrt{2024}-44<\frac{989}{1000}.}
+```
+

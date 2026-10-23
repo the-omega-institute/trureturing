@@ -1,1 +1,1 @@
-{"statement_id":"sha256:4d77d525199a3d0f482a0d2404d6c4171de9fc13762bb64eea784444b53c77af"}
+{"statement_id":"sha256:4d77d525199a3d0f482a0d2404d6c4171de9fc13762bb64eea784444b53c77af","declarations":[{"declaration_name_key":"ns(ns(ns(ns(ns(n0,2:D5),2:S1),7:Deficit),28:PullbackReflectionCoordinate),12:qcReflection)","kind":"def"},{"declaration_name_key":"ns(ns(ns(ns(ns(n0,2:D5),2:S1),7:Deficit),28:PullbackReflectionCoordinate),30:pullback_reflection_coordinate)","kind":"theorem"}]}

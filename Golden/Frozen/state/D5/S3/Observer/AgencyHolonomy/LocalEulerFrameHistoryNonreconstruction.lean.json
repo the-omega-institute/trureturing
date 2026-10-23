@@ -1,1 +1,1 @@
-{"statement_id":"sha256:e30b58a734e07fc5752260e5e38a5cd008e1b8c3c4c86253e2ddc3da7eaaf0a0"}
+{"statement_id":"sha256:e30b58a734e07fc5752260e5e38a5cd008e1b8c3c4c86253e2ddc3da7eaaf0a0","declarations":[{"declaration_name_key":"ns(ns(ns(ns(ns(ns(n0,2:D5),2:S3),8:Observer),14:AgencyHolonomy),39:LocalEulerFrameHistoryNonreconstruction),57:local_euler_determinants_do_not_reconstruct_frame_history)","kind":"theorem"}]}

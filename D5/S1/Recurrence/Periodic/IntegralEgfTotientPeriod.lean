@@ -38,7 +38,7 @@ open scoped PowerSeries.WithPiTopology
 
 namespace D5.S1.Recurrence.Periodic.IntegralEgfTotientPeriod
 
-private theorem exp_shift_power (n k : ℕ) :
+theorem exp_shift_power (n k : ℕ) :
     (n.factorial : ℚ) * coeff n ((exp ℚ - 1) ^ k) =
       (k.factorial : ℚ) * (Nat.stirlingSecond n k : ℚ) := by
   have he : (exp ℚ - 1) ^ k = ∑ j ∈ range (k + 1),

@@ -1,0 +1,53 @@
+**Proof: all-depth attained construction.** Define the two pure-$\alpha$ base trees
+
+$$
+\begin{aligned}
+S_1&=\langle\langle\langle\alpha,\alpha\rangle,\alpha\rangle,
+                 \langle\alpha,\alpha\rangle\rangle,
+ &\operatorname{coordinates}(S_1)&=[1,2,6,1],\\
+S_0&=\langle\langle\alpha,\langle\alpha,\alpha\rangle\rangle,
+                 \langle\alpha,\alpha\rangle\rangle,
+ &\operatorname{coordinates}(S_0)&=[2,1,6,1].
+\end{aligned}
+\tag{FFM.41}
+$$
+
+Thus $S_1$ has its first two leaves as a complete cherry and $S_0$ does not. Let
+$B_0(t)=t$, $B_{j+1}(t)=\langle B_j(t),B_j(t)\rangle$, and set
+
+$$
+ x_c=B_{h+1}(S_c),\qquad c\in\{0,1\}.
+\tag{FFM.42}
+$$
+
+Doubling preserves the first ancestor-area coordinate. Both $x_c$ are pure-$\alpha$ branches,
+so neither is an atomic orbit tree $\rho^n\alpha$; their common initial branch depth grows
+with $h$. For each $c$, use the four entire-fiber sources
+
+$$
+\begin{aligned}
+ u_{c,x}&=U(\alpha,x_c,x_c),&
+ u_{c,F}&=U(\alpha,x_c,\rho^2x_c),\\
+ u_{c,G}&=U(\alpha,x_c,\langle\rho x_c,x_c\rangle),&
+ u_{c,o}&=U(\alpha,x_c,\rho^3x_c).
+\end{aligned}
+\tag{FFM.43}
+$$
+
+They all lie in the exact D of (FFM.24): the old literals and guarded signed records are
+those of Lemma 6.2, $x_c$ is outside the atomic orbit, and the fourth tail is distinct
+from $\alpha,x_c,\rho^2x_c,\langle\rho x_c,x_c\rangle$ by the existing right-spine
+clock and the $F\ne G$ guard. Lemma 6.3 assigns them respectively the four rows
+$r_x,r_F,r_G,r_o$. Equation (FFM.39) and (FFM.41)--(FFM.42) give
+$b(u_{c,*})=c$, so the eight labels are all attained.
+
+For the chosen $h$, both base copies agree as branches through the required prefix; all
+four tails in (FFM.43) retain that agreement because native substitution preserves reached
+branches. The fixed $a=\alpha$, the same six-hole skeleton, and the tail addresses occur
+below that common branch prefix. Hence all eight $u_{c,*}$ have one identical inclusive
+$p_h$, while their $f_{\rm joint}$-values are the eight distinct pairs in
+$A\times\{0,1\}$. This construction uses the full actual fiber, not a relaxed marginal
+projection, and works for every $h$. It also exhibits the concrete failed direction:
+$u_{0,x}$ and $u_{1,x}$ have the same $I$, the same row $r_x$, and the same
+arbitrarily deep $p_h$, but opposite $b$.
+

@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:95448d7856969a7c809f394b8a23fd7d0adac9df98a0805accf3b2eec0e48168
+  normalized_sha256: sha256:95448d7856969a7c809f394b8a23fd7d0adac9df98a0805accf3b2eec0e48168
+cas_ref: sha256:95448d7856969a7c809f394b8a23fd7d0adac9df98a0805accf3b2eec0e48168
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 清单片段“合同”仅列举主题、接口组成或考虑维度；本片段不陈述性质、存在性或推论。
+    previous_atom_id: 902d0b203e16a47602c8a7a88921ebf5f06d59379c900221b0d6425f1d6052c4
+    next_atom_id: b15521fbcf3ea5a861e91cb779300bb80350bf2fa1791bdc0382061d9539c57a

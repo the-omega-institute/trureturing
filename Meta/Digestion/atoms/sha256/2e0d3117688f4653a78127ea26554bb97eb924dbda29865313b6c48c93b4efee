@@ -1,0 +1,30 @@
+**Theorem 7.1 (sharp saturation and the predecessor off-by-one).** Put
+
+$$
+\tau_P(u)=\max(\{0\}\cup\{b_u(p):p\in P\}),\qquad
+T_P=\max(\{0\}\cup\{T_p:p\in P\}).
+\tag{NBP.7.1}
+$$
+
+Then $\tau_P(u)\le T_P\le2D$, and $T_P$ is the exact worst-source time
+at which all cut addresses have appeared. Source alpha attains every
+coordinate maximum simultaneously. On a step whose predecessor epoch
+$j$ is already saturated, $\operatorname{Back}_P(R_{j+1},P)$ needs no
+extra old-set record. Uniformly over origins, this guarantee applies
+at current epochs $n\ge T_P+1$, not merely at $n=T_P$.
+
+**Proof.** Theorem 5.4 gives the upper bound; the atomic formula for alpha
+is $b_\alpha(p)=T_p$ for nonroot $p$, with root birth zero. This proves
+worst-source attainment, also for empty/root cuts. Monotonicity yields
+$H_j=P$ exactly when $j\ge\tau_P(u)$. Hence Theorem 2.2 can use the
+known old set $P$ on the next step. Its uniform current-epoch condition
+is $n-1\ge T_P$.
+
+Current saturation alone cannot justify $O=P$. At $P=\{L,R\}$ and
+$n=2=T_P$, the origins alpha and beta in (NBP.6.4) have the same
+saturated current row. Their predecessor rows are beta and $D_{\ne}$,
+and their previous reached sets are $\varnothing$ and $P$. Even after
+all later steps are individually mask-free, the early three histories
+in Theorem 6.3 remain different and require their early provenance.
+$\square$
+

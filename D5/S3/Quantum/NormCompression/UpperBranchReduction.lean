@@ -15,8 +15,7 @@ and selects a boundary weight with a nondecreasing convex objective.
 admission_basis: escape-witness
 Direct frozen dependencies: D5/S3/Weil/ZetaLinear/PosIndex;
 RHLinalg.sum_eigenvalues_reindex;
-statement_id: sha256:44735eecb5fa2fcff2a5c87a00623ee55b92a49196ae105de44a7f861b8dfd47.
-Information-escape registration is paused under CLAUDE.md section 3.9.
+statement_id: sha256:6b94f504c13b3cb2a488b3b76999fcdce585f849bd38cfd344cbd8dd96c8b478.
 proof_shape: expectation_eq_eigenvalue_sum: bind-only; consumer: diagonal_power_le_eigenvalue_power.
 proof_shape: diagonal_power_le_eigenvalue_power: bind-only; consumer: eigenPow_mix_le.
 proof_shape: eigenPow_sq: bind-only; consumer: schattenPow_eq_eigenPow.
@@ -65,6 +64,7 @@ proof_shape: selected_compressionGram: bind-only; consumer: upper_three_columns.
 import Mathlib.Analysis.InnerProductSpace.SingularValues
 import D5.S3.Weil.ZetaLinear.PosIndex
 import Mathlib.Data.Matrix.ColumnRowPartitioned
+import Mathlib.Analysis.Matrix.Order
 
 noncomputable section
 namespace D5.S3.Quantum.NormCompression.UpperBranchReduction
@@ -88,7 +88,7 @@ section LinearMap
 variable {E : Type*} [NormedAddCommGroup E] [InnerProductSpace ℂ E]
   [FiniteDimensional ℂ E]
 /-- A spectral expansion of the quadratic expectation. -/
-private lemma expectation_eq_eigenvalue_sum {T : E →ₗ[ℂ] E} (hT : T.IsSymmetric)
+lemma expectation_eq_eigenvalue_sum {T : E →ₗ[ℂ] E} (hT : T.IsSymmetric)
     {n : ℕ} (hn : Module.finrank ℂ E = n) (x : E) :
     (⟪x, T x⟫_ℂ).re =
       ∑ j : Fin n, ‖⟪hT.eigenvectorBasis hn j, x⟫_ℂ‖ ^ 2 * hT.eigenvalues hn j := by
@@ -111,7 +111,7 @@ private lemma expectation_eq_eigenvalue_sum {T : E →ₗ[ℂ] E} (hT : T.IsSymm
   rw [← inner_conj_symm x (b j), RCLike.norm_conj]
   ring
 /-- Jensen's inequality bounds the sum of diagonal powers in every orthonormal basis. -/
-private theorem diagonal_power_le_eigenvalue_power {T : E →ₗ[ℂ] E} (hT : T.IsPositive)
+theorem diagonal_power_le_eigenvalue_power {T : E →ₗ[ℂ] E} (hT : T.IsPositive)
     {n : ℕ} (hn : Module.finrank ℂ E = n) (b : OrthonormalBasis (Fin n) ℂ E)
     {q : ℝ} (hq : 1 ≤ q) :
     (∑ i : Fin n, (⟪b i, T (b i)⟫_ℂ).re ^ q) ≤
@@ -264,7 +264,7 @@ private lemma sum_eigenvalues_gram (A : Matrix m n ℂ) (f : ℝ → ℝ) (hf : 
     (Matrix.isHermitian_conjTranspose_mul_self A).roots_charpoly_eq_eigenvalues] at hr
   have hs := congrArg (fun s : Multiset ℂ => (s.map (fun z => f z.re)).sum) hr
   simpa [Multiset.map_map, Function.comp_def, Multiset.map_nsmul, Multiset.sum_nsmul, hf] using hs
-private lemma schattenPow_eq_columnGram (p : ℝ) (hp : 0 < p) (A : Matrix m n ℂ) :
+lemma schattenPow_eq_columnGram (p : ℝ) (hp : 0 < p) (A : Matrix m n ℂ) :
     schattenPow p A = ∑ i : n,
       ((Matrix.isHermitian_conjTranspose_mul_self A).eigenvalues i) ^ (p / 2) := by
   let T := Matrix.toEuclideanLin A
@@ -315,7 +315,7 @@ private lemma schattenPow_eq_eigenPow (p : ℝ) (hp : 0 < p) (A : Matrix n n ℂ
     (hA : A.PosSemidef) : schattenPow p A = eigenPow p A := by
   rw [schattenPow_eq_eigenPow_columnGram p hp A]
   exact eigenPow_sq hA p
-private lemma schattenPow_nonneg (p : ℝ) (A : Matrix m n ℂ) : 0 ≤ schattenPow p A := by
+lemma schattenPow_nonneg (p : ℝ) (A : Matrix m n ℂ) : 0 ≤ schattenPow p A := by
   exact Finset.sum_nonneg (fun i _ =>
     Real.rpow_nonneg ((Matrix.toEuclideanLin A).singularValues_nonneg i) p)
 private lemma schattenPow_zero_iff (p : ℝ) (hp : 0 < p) (A : Matrix m n ℂ) :
@@ -349,7 +349,7 @@ private lemma schattenPow_sqrt_smul (p : ℝ) (hp : 0 < p) (w : ℝ) (hw : 0 ≤
     ((Matrix.isHermitian_conjTranspose_mul_self A).smul (by change star (w : ℂ) = (w : ℂ); simp)) (· ^ (p / 2))]
   simp_rw [Real.mul_rpow hw (Matrix.eigenvalues_conjTranspose_mul_self_nonneg A _)]
   rw [← Finset.mul_sum, schattenPow_eq_columnGram p hp]
-private lemma schattenNorm_nonneg (p : ℝ) (A : Matrix m n ℂ) : 0 ≤ schattenNorm p A :=
+lemma schattenNorm_nonneg (p : ℝ) (A : Matrix m n ℂ) : 0 ≤ schattenNorm p A :=
   Real.rpow_nonneg (schattenPow_nonneg p A) _
 private lemma schattenNorm_zero_iff (p : ℝ) (hp : 0 < p) (A : Matrix m n ℂ) :
     schattenNorm p A = 0 ↔ A = 0 := by
@@ -482,7 +482,7 @@ private lemma schattenNorm_smul {q t : ℝ} (hq : 0 < q) (ht : 0 ≤ t)
   rw [hcast]
   simpa only [Real.sqrt_sq ht] using
     schattenNorm_sqrt_smul q hq (t ^ (2 : ℕ)) (sq_nonneg t) A
-private lemma schattenNorm_rpow {q : ℝ} (hq : 0 < q) (A : Matrix n n ℂ) :
+lemma schattenNorm_rpow {q : ℝ} (hq : 0 < q) (A : Matrix n n ℂ) :
     schattenNorm q A ^ q = schattenPow q A := by
   unfold schattenNorm
   rw [← Real.rpow_mul (schattenPow_nonneg q A)]

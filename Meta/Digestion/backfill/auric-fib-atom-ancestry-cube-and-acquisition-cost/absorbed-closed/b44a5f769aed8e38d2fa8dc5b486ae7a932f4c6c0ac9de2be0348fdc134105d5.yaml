@@ -1,0 +1,13 @@
+fingerprints:
+  raw_sha256: sha256:b44a5f769aed8e38d2fa8dc5b486ae7a932f4c6c0ac9de2be0348fdc134105d5
+  normalized_sha256: sha256:b44a5f769aed8e38d2fa8dc5b486ae7a932f4c6c0ac9de2be0348fdc134105d5
+cas_ref: sha256:b44a5f769aed8e38d2fa8dc5b486ae7a932f4c6c0ac9de2be0348fdc134105d5
+coverage_gids:
+  - gid: D5/S3/Arith/FibonacciAtomic/Geometry/AncestorAreaInstability.result
+    target_statement_id: sha256:4869366701208c864d1686ff92503ffa549399dfc2a8581f2c2dabaa43c376a2
+  - gid: D5/S3/Arith/FibonacciAtomic/Geometry/NativeAncestryDefectCube.native_area_cube
+    target_statement_id: sha256:e1da4929b9f9397d45d60b1264ab847776ee8a0284f46a8d210bb98b5b8540a8
+  - gid: D5/S3/Arith/FibonacciAtomic/Geometry/NativeAncestryDefectCube.normalized_cube_diameter
+    target_statement_id: sha256:60839e21e3e6f09f6422d69d3a0d0b99097f4d3bc9859346ed967258eeaf4ad3
+receipts:
+  unresolved_subitems: []

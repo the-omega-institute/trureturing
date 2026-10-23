@@ -1,0 +1,7 @@
+`JointLaw.lean` 中已有的概率分离定理构造了两种 full-support 概率律 $P_+$ 与 $P_-$，使得：
+
+- 所有 proper coordinate marginals 相同；
+- 所有 proper seam-conditioned marginals 相同；
+- 所有固定线性 prefix readout 的期望相同；
+- 总体 exact reply expectation 也相同；
+

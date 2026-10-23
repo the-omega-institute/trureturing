@@ -38,6 +38,7 @@
   finite parent and dual identities certify the attaining tuple inside that proof.
 -/
 
+import D5.S3.Weil.ZetaLinear.RankTrace
 import D5.S3.Quantum.Measurement.FourQubitParentConstruction
 
 set_option autoImplicit false

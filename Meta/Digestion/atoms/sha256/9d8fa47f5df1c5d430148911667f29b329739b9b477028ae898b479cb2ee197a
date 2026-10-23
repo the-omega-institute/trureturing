@@ -1,0 +1,37 @@
+**定义 407.1（同一实际阻尼的中心频率）。** 对 §404 的实际 $\mathcal B$，记
+
+$$
+\mathscr G_\varepsilon(z)
+=\frac{\mathcal B(z+\varepsilon)}{\mathcal B(z)}
+\frac{-\zeta'(z)}{z\zeta(z+\varepsilon)}.
+\tag{407.1}
+$$
+
+对 $x\ge e$ 保留共同日程
+
+$$
+\ell=\log x,\qquad
+\varepsilon=\varepsilon_x=\frac{e^{-\ell/2}}\ell,
+\qquad z_\tau=1-\varepsilon/2+i\tau.
+\tag{407.2}
+$$
+
+将（404.9）的完整积分准确分成
+
+$$
+\begin{aligned}
+\mathfrak A_x&=\frac1{2\pi}
+\int_{-\varepsilon/2}^{\varepsilon/2}
+\mathscr G_\varepsilon(z_\tau)\widetilde w_x(z_\tau)d\tau,\\
+\mathfrak C_x&=\frac1{2\pi}
+\int_{|\tau|>\varepsilon/2}
+\mathscr G_\varepsilon(z_\tau)\widetilde w_x(z_\tau)d\tau,\\
+\mathfrak L_x&=\frac1{2\pi}
+\int_{-\varepsilon/2}^{\varepsilon/2}
+|\mathscr G_\varepsilon(z_\tau)\widetilde w_x(z_\tau)|d\tau.
+\end{aligned}
+\tag{407.3}
+$$
+
+两个有符号量均为实数，且 $I_{\varepsilon_x}(x)=\mathfrak A_x+\mathfrak C_x$。它们来自同一实际系数与共同积分线，不是两个可以分别实现的最优配置。
+

@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:e6a3e0c2956898979289922dd06003e95d34982113cf4c15df331e4769c85bec
+  normalized_sha256: sha256:e6a3e0c2956898979289922dd06003e95d34982113cf4c15df331e4769c85bec
+cas_ref: sha256:e6a3e0c2956898979289922dd06003e95d34982113cf4c15df331e4769c85bec
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 定义 262.2 只规定保持正谱隙的二维曲线类及对易比较类。
+    previous_atom_id: 1fe47bb5050aeb52dd6f64de46ba0a7c567740e5e6c3391006b702282d7102aa
+    next_atom_id: 533634034829525b7cceccace11338ad61bed4db8e42320fd4a02a7ac520503d

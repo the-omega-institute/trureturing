@@ -567,7 +567,10 @@ theorem arakelovMulHeight_comap_piEquiv_dualAnnihilator (V : Submodule K (ι →
     rwa [exteriorPower.ιMulti_family, nativeSource21, Function.comp_id] at h)))
   let nativeSource23 := (open Module exteriorPower in (fun {K : Type _} [instSource1 : Field K] {ι : Type _} [instSource3 : Fintype ι] [instSource4 : LinearOrder ι] {k : ℕ} {V : Submodule K (ι → K)} (hV : Module.finrank K V = k) (b b' : Module.Basis (Fin k) K V) => (show ∃ c : K, exteriorPower.plucker k (fun i ↦ ((b' i : ι → K))) = c • exteriorPower.plucker k fun i ↦ ((b i : ι → K)) from by
     classical
-    have h1 : Module.finrank K (⋀[K]^k V) = 1 := by rw [exteriorPower.finrank_eq, hV, Nat.choose_self]
+    letI : Module.Free K V := Module.Free.of_basis b
+    letI : Module.Finite K V := Module.Finite.of_basis b
+    have h1 : Module.finrank K (⋀[K]^k V) = 1 := by
+      rw [exteriorPower.finrank_eq (R := K) (M := V) (n := k), hV, Nat.choose_self]
     obtain ⟨c, hc⟩ := (finrank_eq_one_iff_of_nonzero' (exteriorPower.ιMulti K k ⇑b)
       (nativeSource22 b.linearIndependent)).1 h1 (exteriorPower.ιMulti K k ⇑b')
     refine ⟨c, (nativeSource20 ..).2 ?_⟩
@@ -576,7 +579,10 @@ theorem arakelovMulHeight_comap_piEquiv_dualAnnihilator (V : Submodule K (ι →
   let nativeSource24 := (open Module exteriorPower in (fun {K : Type _} [instSource1 : Field K] {ι : Type _} [instSource3 : Fintype ι] [instSource4 : LinearOrder ι] {k : ℕ} {V : Submodule K (ι → K)} (hV : Module.finrank K V = k) (b : Module.Basis (Fin k) K V)
       (hb : exteriorPower.plucker k (fun i ↦ ((b i : ι → K))) ≠ 0) => (show Submodule.pluckerPoint V hV = Projectivization.mk K (exteriorPower.plucker k fun i ↦ ((b i : ι → K))) hb from by
     classical
-    obtain ⟨c, hc⟩ := nativeSource23 hV b (Module.finBasisOfFinrankEq K V hV)
+    letI : Module.Free K V := Module.Free.of_basis b
+    letI : Module.Finite K V := Module.Finite.of_basis b
+    obtain ⟨c, hc⟩ := nativeSource23 (K := K) (ι := ι) (k := k) (V := V)
+      hV b (Module.finBasisOfFinrankEq K V hV)
     refine ((Projectivization.mk_eq_mk_iff' K _ _ _ hb).2 ⟨c, hc.symm⟩))))
   let nativeSource27 := (open Module in (fun {k : ℕ} {v : Fin k → (ι → K)} (hv : LinearIndependent K v) => (show exteriorPower.plucker k v ≠ 0 from by
     classical

@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:76ae85210ef2064f41047e0afb68be8f7f7f5265028207e345113d885b01ab1d
+  normalized_sha256: sha256:76ae85210ef2064f41047e0afb68be8f7f7f5265028207e345113d885b01ab1d
+cas_ref: sha256:76ae85210ef2064f41047e0afb68be8f7f7f5265028207e345113d885b01ab1d
+coverage_gids:
+  - gid: D5/S3/Arith/GoldenPrimeSplitting.golden_prime_of_mod_five_eq_two_or_three
+    target_statement_id: sha256:68a7fed4750303d892f80f25753e7b89f3b1f974d24cd2a6578e3e4078e2d02a
+receipts:
+  unresolved_subitems: []

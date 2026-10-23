@@ -1,0 +1,17 @@
+**Theorem 12.4 (exact joint three-budget feasibility transfer).** Under
+the supplied operational premises in Definition 12.1, for every
+nonempty full actual one-image row fiber and every integer
+$r\ge1,K\ge1,q\ge0$,
+
+$$
+\mathsf{MooreInvFeas}_*(r,K,q)
+\quad\Longleftrightarrow\quad
+\mathsf{MooreRootFeas}_*(r,K,q).
+\tag{NBP.12.8}
+$$
+
+The same upper budgets charge actual exported initial distinctions,
+all installed running and halting states, and every invocation. The
+native side retains every actual finite origin and every legal finite
+native address.
+

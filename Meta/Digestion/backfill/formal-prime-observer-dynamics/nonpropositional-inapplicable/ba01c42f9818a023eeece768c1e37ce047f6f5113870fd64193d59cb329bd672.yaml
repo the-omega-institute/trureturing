@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:ba01c42f9818a023eeece768c1e37ce047f6f5113870fd64193d59cb329bd672
+  normalized_sha256: sha256:ba01c42f9818a023eeece768c1e37ce047f6f5113870fd64193d59cb329bd672
+cas_ref: sha256:ba01c42f9818a023eeece768c1e37ce047f6f5113870fd64193d59cb329bd672
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 非命题文本：224. 有限前缀似然比鞅：仅为节标题及导引或设定适用条件；本片段未陈述后续命题的结论。
+    previous_atom_id: e3f7a3f3c2b176357f8b8e50308d9b7cdcdc10d853657ba1e9288d18fdc00052
+    next_atom_id: 5a1211c1ffb58d8a36a182325492da17f01db2e73958d88ce364db04185e17b9

@@ -1,0 +1,13 @@
+fingerprints:
+  raw_sha256: sha256:597d4d24327cf3d11f5bec227711084b123b7ad42f1772cfec5b45d95440430d
+  normalized_sha256: sha256:597d4d24327cf3d11f5bec227711084b123b7ad42f1772cfec5b45d95440430d
+cas_ref: sha256:597d4d24327cf3d11f5bec227711084b123b7ad42f1772cfec5b45d95440430d
+coverage_gids:
+  - gid: D5/S1/Dynamics/UniversalSolenoidCoordinate.nsmul_coordinate_eq_zero
+    target_statement_id: sha256:094141dead04c10103beeea032b61f0417b1cc1aab7dbc00f2f8ec6bc3861c96
+  - gid: D5/S1/Solenoid/RealFlowInjectivity.realFlow_eq_zero_iff
+    target_statement_id: sha256:f998fd7f15fe7000bee9f47b894d5b0198284ba4224757438ef92d9cfe38f33d
+  - gid: D5/S3/Factorization/SolenoidProfiniteKernel.universal_solenoid_profinite_exact
+    target_statement_id: sha256:3bd373d54c28837e0f4520bfb31d7d69e50ea43c80ae62cfea1bf4506847b4fc
+receipts:
+  unresolved_subitems: []

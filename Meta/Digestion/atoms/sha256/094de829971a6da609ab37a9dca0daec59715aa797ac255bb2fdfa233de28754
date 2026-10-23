@@ -1,0 +1,25 @@
+**Definition 2.1 (moving anchor and exact image).** At a type $(k,d)$
+uniquely write $u=vt$ with $|v|=k-d$ and $|t|=d$. Define
+
+$$
+B_{k,d}(u)=(R(v),t),\qquad Q_{k,d}=B_{k,d}(P_k),\qquad N_{k,d}=|Q_{k,d}|.
+$$
+
+The anchor is the earliest prefix reachable by spending all currently
+remaining credit. It advances on append and stays fixed on delete. Its
+actual image is
+
+$$
+Q_{k,d}
+=\{(S,t):S\in\mathcal R_{k-d},\ t\in A^d,\
+                  \partial_tS\ne\varnothing\},
+\qquad
+N_{k,d}=\sum_{S\in\mathcal R_{k-d}}|\operatorname{Pref}_d(S)|.
+\tag{2.1}
+$$
+
+For the image identity, choose $v$ representing $S$. The condition
+$\partial_tS\ne\varnothing$ is exactly $vt\in P_k$, so every displayed
+pair is realized. Conversely every actual prefix satisfies that
+condition. Thus (2.1) does not replace a joint image by a free product.
+

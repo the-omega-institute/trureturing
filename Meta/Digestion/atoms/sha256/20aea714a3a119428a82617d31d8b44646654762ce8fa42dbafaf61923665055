@@ -1,0 +1,93 @@
+### 12.2 可逆二次型与匹配发射的分析比较
+
+记 $\mathbb E_\pi x=\sum_i\pi_ix_i$、$\langle x,y\rangle_\pi=\sum_i\pi_ix_iy_i$，向量乘法与平方均逐项进行。详细平衡与行随机性给出
+
+$$
+\mathcal E_B(x,y):=\frac12\sum_{i,j}\pi_iB_{ij}(x_i-x_j)(y_i-y_j)
+=\langle x,(I-B)y\rangle_\pi.
+\tag{12.4}
+$$
+
+因此 B 自伴，$\mathcal E_B(x,x)\ge0$。逐行 Jensen 再用 $\pi B=\pi$ 得 $\|Bx\|_\pi^2\le\|x\|_\pi^2$，于是
+
+$$
+\|(I-B)x\|_\pi^2
+=\|x\|_\pi^2+\|Bx\|_\pi^2-2\langle x,Bx\rangle_\pi
+\le2\mathcal E_B(x,x).
+\tag{12.5}
+$$
+
+这些恒等式和不等式不依赖不可约性或特征值的符号。
+
+先只在分析中把 u 改为 v，保持**同一 $\pi,B,v$**。以 $P_0,S_0$ 记此比较表的事件量，置
+
+$$
+x=\mathbf1-v,\qquad h=vx,\qquad y=h(Bx),\qquad
+f(v)=x^2(1+h+h^2),\quad s(v)=x+vx^2.
+\tag{12.6}
+$$
+
+$f,s$ 右边按各个 v 分量求值。将 $H_0=\operatorname{diag}(x)B\operatorname{diag}(v)$、$g_0=x(Bx)$ 代入式（12.1），并逐次用 B 自伴，得到
+
+$$
+\begin{aligned}
+P_0&=\langle x,Bx\rangle_\pi
+     +\mathbb E_\pi[h(Bx)^2]+\langle y,By\rangle_\pi,\\
+S_0&=\mathbb E_\pi x+\langle h,Bx\rangle_\pi.
+\end{aligned}
+\tag{12.7}
+$$
+
+例如中项由 $\langle x,B(hBx)\rangle_\pi=\langle Bx,hBx\rangle_\pi$ 得到，末项由 $\langle Bx,hB(hBx)\rangle_\pi=\langle y,By\rangle_\pi$ 得到。比较没有把 B 改为 I；$f,s$ 只是用来估计该同一 B 的标量参照曲线。此比较不授权物理来源重置、运行表替换或重新采样 K。
+
+此时 $x_i\in[3/5,2/3]$、$0<h_i\le6/25$，且 $\mathcal E_B(x,x)=J$。令 $z=Bx-x$，式（12.5）给出 $\mathbb E_\pi z^2\le2J$。第一项精确为
+
+$$
+\langle x,Bx\rangle_\pi=\mathbb E_\pi x^2-J.
+\tag{12.8}
+$$
+
+对 $\psi(x)=x^2(1-x)=hx$，有 $\psi'(x)=x(2-3x)\ge0$，所以 $\mathcal E_B(\psi(x),x)\ge0$。展开第二项得到
+
+$$
+\begin{aligned}
+\mathbb E_\pi[h(Bx)^2]-\mathbb E_\pi[hx^2]
+&=-2\mathcal E_B(\psi(x),x)+\mathbb E_\pi[hz^2]\\
+&\le\frac{12}{25}J.
+\end{aligned}
+\tag{12.9}
+$$
+
+对 $q(x)=x^3(1-x)^2=h^2x$，其二阶导数为 $q''(x)=2x(3-12x+10x^2)<0$：括号中的凸二次式在区间两端均负，故在全区间负。于是 $q'$ 递减且 $q'(x)\ge q'(2/3)=-4/81$。逐边的割线斜率下界给出 $\mathcal E_B(q(x),x)\ge-(4/81)J$。又由 $\mathcal E_B(y,y)\ge0$ 得 $\langle y,By\rangle_\pi\le\mathbb E_\pi y^2$，故
+
+$$
+\begin{aligned}
+\langle y,By\rangle_\pi-\mathbb E_\pi[h^2x^2]
+&\le-2\mathcal E_B(q(x),x)+\mathbb E_\pi[h^2z^2]\\
+&\le\left(\frac8{81}+\frac{72}{625}\right)J.
+\end{aligned}
+\tag{12.10}
+$$
+
+合并三项，即
+
+$$
+P_0\le\mathbb E_\pi f(v)-\frac{15493}{50625}J.
+\tag{12.11}
+$$
+
+悬置事件则由式（12.4）直接得到
+
+$$
+\begin{aligned}
+S_0
+&=\mathbb E_\pi s(v)-\mathcal E_B(h,x)\\
+&=\mathbb E_\pi s(v)
+ +\frac12\sum_{i,j}\pi_iB_{ij}(v_i-v_j)^2(1-v_i-v_j)\\
+&\ge\mathbb E_\pi s(v)+\frac15J,
+\end{aligned}
+\tag{12.12}
+$$
+
+因为 $1-v_i-v_j\ge1-2b=1/5$。负谱不改变任何一步的方向。
+

@@ -1,0 +1,38 @@
+**Corollary 22.1 (Inherited local boundary for the independent-pair problem).**
+After possibly reducing $\eta$ in Theorem 21.1, every
+$p\in(p_0,p_0+\eta)$ has
+
+$$
+(p,\gamma(p))\in D_J\setminus D_M.
+\tag{22.1}
+$$
+
+This uses the existing complete-child exclusion and supplies no new
+global exclusion.
+
+Proof. SVII, Theorem 25.2 and its proof in Section 30, give an open
+neighborhood $V_1$ of $(p_0,v_0)$, off $24$, such that $m$ is
+injective on every entire original child over $V_1$. The germ base
+tends to $(p_0,v_0)$ and therefore lies in $V_1$ after reducing its
+interval. Theorem 21.1 supplies a distinct equal-$J$ pair there,
+whereas injectivity excludes every distinct equal-$M$ pair anywhere
+in that child. This proves (22.1). ∎
+
+Unequal $M$ values for the two selected $J$ endpoints in (21.3)
+alone would not exclude a separately chosen $M$ pair. The exclusion
+in Corollary 22.1 concerns all worlds of the entire child, by the
+attributed SVII theorem. Its neighborhood contains the sufficiently
+small germ even when potential $M$ endpoints are not chosen near
+the displayed $J$ endpoints.
+
+The full target (18.3) remains **OPEN**. A positive solution needs
+one actual off-$24$ common base supporting both independently
+selected within-pair-distinct pairs, with their unrelated common
+terminal values and their separate original drifts and whole gains.
+A negative solution needs an exclusion on the whole original
+domain, including singular parent alternatives, all gain strata
+and unbounded source coordinates. Neither maximal continuation of
+this germ, a later crossing with $D_M$, a distinct $M$ pair, nor
+an exhaustive exclusion outside the inherited neighborhood is
+established here.
+

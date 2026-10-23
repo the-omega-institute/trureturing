@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:9d6fff925ee464337df0d8c8f822fa376a97e35b9a7684939a7a4a3e7937672b
+  normalized_sha256: sha256:9d6fff925ee464337df0d8c8f822fa376a97e35b9a7684939a7a4a3e7937672b
+cas_ref: sha256:9d6fff925ee464337df0d8c8f822fa376a97e35b9a7684939a7a4a3e7937672b
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 约定34.7仅说明本桥梁的对象范围、既有结果归属及不在本节结论内的接口，不提出新的数学陈述。
+    previous_atom_id: 4355de3eec371423c10980c635a1881931116391370a721c20a6989ca309da34
+    next_atom_id: 5a4bbc2b0a640f86eded283726c213fba3e19454fb3a5a2a8557a95de812e723

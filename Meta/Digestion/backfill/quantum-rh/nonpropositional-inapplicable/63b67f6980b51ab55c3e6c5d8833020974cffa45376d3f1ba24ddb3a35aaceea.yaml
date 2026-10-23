@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:63b67f6980b51ab55c3e6c5d8833020974cffa45376d3f1ba24ddb3a35aaceea
+  normalized_sha256: sha256:63b67f6980b51ab55c3e6c5d8833020974cffa45376d3f1ba24ddb3a35aaceea
+cas_ref: sha256:63b67f6980b51ab55c3e6c5d8833020974cffa45376d3f1ba24ddb3a35aaceea
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: Opening proof fragment for the preceding theorem G3, checking parameter signs and the root sum; next atom continues the root-product check. This atom has no clause chain.
+    previous_atom_id: 8ef6b9257471235dae81e95cd49a82d8589c77b60cfb90cd4d4355ed0ae75092
+    next_atom_id: 7085b2742fccbdb882984c5b236eaa6d65d684143c62e5eaddbd12ed1af427b9

@@ -1,0 +1,36 @@
+**Definition 46.1 (all-action reply factorization).** Put
+
+$$
+O_\bot=O\sqcup\{\bot\}.
+$$
+
+For every primitive action, including read, passive, intervention, update and
+any other non-halt action, write its response as
+
+$$
+\operatorname{Reply}_{e,a}(s,j)\in O_\bot.
+$$
+
+The value $\bot$ is the declared response of a silent action; it is not an
+unobserved side channel. For every legal action there must be a single map
+
+$$
+\delta_{e,a}:O_\bot\to E
+$$
+
+such that
+
+$$
+\operatorname{Next}_{e,a}(s,j)
+   =\delta_{e,a}(\operatorname{Reply}_{e,a}(s,j)).
+$$
+
+Thus the controller position after *every* action factors through the actual
+visible response, with silent actions factoring through $\bot$. Legality is
+constant on a complete boundary fiber, and the reply, successor, resource
+increment, epoch update, stop flag and terminal row are all evaluated on the
+same source and ordered event. This all-action condition supersedes the
+read-only restriction in Definition 41.3. A source-dependent update of the
+hidden physical state is allowed only when it does not make the controller
+position or its next instruction source-dependent.
+

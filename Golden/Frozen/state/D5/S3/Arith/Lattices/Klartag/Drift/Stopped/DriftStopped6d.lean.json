@@ -1,1 +1,1 @@
-{"statement_id":"sha256:233b59e75fcf51a1f406f1753545a07cda49ac2ad448a8117146197594c136c7"}
+{"statement_id":"sha256:233b59e75fcf51a1f406f1753545a07cda49ac2ad448a8117146197594c136c7","declarations":[{"declaration_name_key":"ns(ns(ns(ns(ns(ns(ns(ns(ns(n0,2:D5),2:S3),5:Arith),8:Lattices),7:Klartag),5:Drift),7:Stopped),14:DriftStopped6d),5:c3_eq)","kind":"theorem"},{"declaration_name_key":"ns(ns(ns(ns(ns(ns(ns(ns(ns(n0,2:D5),2:S3),5:Arith),8:Lattices),7:Klartag),5:Drift),7:Stopped),14:DriftStopped6d),8:c3eta_le)","kind":"theorem"}]}

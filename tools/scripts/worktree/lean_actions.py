@@ -78,6 +78,49 @@ def output_archive_paths(layer, paths):
     print(key + "=" + json.dumps(paths, separators=(",", ":")))
 
 
+def elan_key(root):
+    system, arch = binary_platform()
+    return f"elan-pinned-{system}-{arch}-{hashlib.sha256((root / 'lean-toolchain').read_bytes()).hexdigest()}"
+
+
+def manual_source_is_valid() -> bool:
+    """Accept cache writes from a workflow dispatch only after its source pin was checked.
+
+    The workflow performs the protected-branch/API check before setting the marker.  This
+    second, local check binds the writer to the exact workflow ref and checked-out SHA and
+    keeps an unvalidated dispatch from silently becoming a branch writer.
+    """
+    if os.environ.get("GITHUB_EVENT_NAME") != "workflow_dispatch":
+        return False
+    if os.environ.get("STRATALINT_CACHE_SOURCE_VALIDATED") != "true":
+        return False
+    source_ref = os.environ.get("STRATALINT_CACHE_SOURCE_REF", "")
+    source_commit = os.environ.get("STRATALINT_CACHE_SOURCE_COMMIT", "")
+    if not re.fullmatch(r"refs/heads/(?:dev|integration-[A-Za-z0-9._/-]+)", source_ref):
+        return False
+    if source_ref != os.environ.get("GITHUB_REF", ""):
+        return False
+    if not re.fullmatch(r"[0-9a-f]{40}", source_commit) or source_commit == "0" * 40:
+        return False
+    return source_commit == os.environ.get("STRATALINT_CACHE_CHECKED_OUT_SHA", "")
+
+
+def preparation_source_is_valid() -> bool:
+    """Bind isolated continuation writes to a validated PR at its protected runtime."""
+    source_ref = os.environ.get("STRATALINT_CACHE_SOURCE_REF", "")
+    target_ref = os.environ.get("STRATALINT_CACHE_TARGET_REF", "")
+    source_commit = os.environ.get("STRATALINT_CACHE_SOURCE_COMMIT", "")
+    return (os.environ.get("GITHUB_EVENT_NAME") == "workflow_dispatch"
+            and os.environ.get("GITHUB_REF_PROTECTED") == "true"
+            and os.environ.get("STRATALINT_CACHE_PR_SOURCE_VALIDATED") == "true"
+            and re.fullmatch(r"refs/pull/[1-9][0-9]*/merge", source_ref) is not None
+            and re.fullmatch(r"refs/heads/(?:dev|integration-[A-Za-z0-9._/-]+)", target_ref) is not None
+            and target_ref == os.environ.get("GITHUB_REF")
+            and re.fullmatch(r"[0-9a-f]{40}", source_commit) is not None
+            and source_commit != "0" * 40
+            and source_commit == os.environ.get("STRATALINT_CACHE_CHECKED_OUT_SHA"))
+
+
 def actions_keys(root: pathlib.Path) -> dict:
     revision = resolved_mathlib(root)
     system, machine = binary_platform()
@@ -88,12 +131,16 @@ def actions_keys(root: pathlib.Path) -> dict:
     event, ref = os.environ.get("GITHUB_EVENT_NAME"), os.environ.get("GITHUB_REF", "")
     push_writer = event == "push" and (ref == "refs/heads/dev" or ref.startswith("refs/heads/integration-"))
     pr_writer = event == "pull_request" and re.fullmatch(r"refs/pull/[1-9][0-9]*/merge", ref) is not None
-    writer_allowed = (push_writer or pr_writer) and os.environ.get("STRATALINT_CACHE_WRITES") == "true"
+    dispatch_writer = manual_source_is_valid()
+    writer_allowed = (push_writer or pr_writer or dispatch_writer) and os.environ.get("STRATALINT_CACHE_WRITES") == "true"
     result = {
         "mathlib_revision": revision, "os": system, "arch": machine,
         "partition": partition_path(root),
         "save_allowed": writer_allowed and os.environ.get("STRATALINT_CHECK_SUCCEEDED") == "true",
-        "project_save_allowed": push_writer and os.environ.get("STRATALINT_CACHE_WRITES") == "true"
+        "producer_save_allowed": os.environ.get("STRATALINT_CACHE_WRITES") == "true"
+        and (((push_writer or dispatch_writer) and os.environ.get("GITHUB_REF_PROTECTED") == "true")
+             or preparation_source_is_valid()),
+        "project_save_allowed": (push_writer or dispatch_writer) and os.environ.get("STRATALINT_CACHE_WRITES") == "true"
         and os.environ.get("STRATALINT_REPORT_SUCCEEDED") == "true",
         "release_prefix": f"lean-cache-v2-{revision}-{system}-{machine}-",
     }
@@ -229,15 +276,32 @@ def project_restore_key(keys):
     repository = os.environ.get("GITHUB_REPOSITORY", "")
     event = os.environ.get("GITHUB_EVENT_NAME", "")
     base = os.environ.get("GITHUB_BASE_REF", "")
-    ref = ("refs/heads/" + base if base else "") if event == "pull_request" else (
-        os.environ.get("GITHUB_REF", "") if event == "push" else "")
+    ref = os.environ.get("GITHUB_REF", "")
+    refs = []
+    if event == "pull_request" and base:
+        if re.fullmatch(r"refs/pull/[1-9][0-9]*/merge", ref):
+            refs.append(ref)
+        refs.append("refs/heads/" + base)
+    elif event == "push" and ref:
+        refs.append(ref)
+
+    def preferred_seed():
+        for candidate_ref in refs:
+            try:
+                key = lookup_project_seed(spec, candidate_ref, token, repository, api)
+                return candidate_ref, key
+            except SeedLookupUnavailable as error:
+                if str(error) != "lookup-no-eligible-seed":
+                    raise
+        raise SeedLookupUnavailable("lookup-no-eligible-seed")
+
     reason = "lookup-not-configured"
     try:
-        if not token or not repository or not ref:
+        if not token or not repository or not refs:
             raise SeedLookupUnavailable(reason)
         api = os.environ.get("GITHUB_API_URL", "https://api.github.com").rstrip("/")
-        preferred = guarded_seed_lookup(lambda: lookup_project_seed(spec, ref, token, repository, api))
-        receipt("project", "restore-preference", base_ref=ref, requested_key=preferred)
+        selected_ref, preferred = guarded_seed_lookup(preferred_seed)
+        receipt("project", "restore-preference", base_ref=selected_ref, requested_key=preferred)
         return preferred
     except SeedLookupUnavailable as error:
         reason = str(error)
@@ -245,7 +309,7 @@ def project_restore_key(keys):
         reason = "lookup-http-error"
     except Exception:
         reason = "lookup-request-failed"
-    receipt("project", "restore-preference-fallback", base_ref=ref, requested_key=fallback, reason=reason)
+    receipt("project", "restore-preference-fallback", base_ref=refs[-1] if refs else "", requested_key=fallback, reason=reason)
     return fallback
 
 
@@ -331,13 +395,145 @@ def restore_native(root, keys, layer, key, outcome):
         return False
 
 
+def adoption_record(root):
+    """Invocation-local acceptance, outside every transported native path."""
+    path = root / "build/lean-cache/pr-adopted.json"
+    try:
+        if path.is_symlink():
+            return None
+        value = json.loads(path.read_text())
+        checkout = os.environ.get("STRATALINT_CACHE_CHECKED_OUT_SHA", os.environ.get("GITHUB_SHA"))
+        if (value["run"] != os.environ.get("GITHUB_RUN_ID")
+                or value["attempt"] != os.environ.get("GITHUB_RUN_ATTEMPT")
+                or value["repository"] != str(root.resolve()) or value["checkout"] != checkout
+                or value["ref"] != os.environ.get("GITHUB_REF")
+                or type(value["artifact"]) is not int or value["artifact"] <= 0
+                or type(value["merged"]) is not bool):
+            return None
+        return value
+    except (OSError, ValueError, TypeError, KeyError):
+        return None
+
+
 def restore(root, keys, matched, layers=LAYERS, *, outcomes=None):
+    if adoption_record(root) is not None:
+        receipt("project", "preparation-retained", reason="validated PR artifact already adopted")
+        return
     seeded = False
     for layer in layers:
         accepted = restore_native(root, keys, layer, matched.get(layer, ""), (outcomes or {}).get(layer, "success"))
         seeded |= layer == "project" and accepted
     if "project" in layers:
         output({"STRATALINT_ACTIONS_CACHE_SEEDED": "1" if seeded else "0"}, "GITHUB_ENV")
+
+
+def resume_marker(root):
+    return root / ".lake/build/lean-inspector/producer-resume.json"
+
+
+def resume_record(root):
+    # This invocation fact is deliberately outside every transported cache path.
+    return root / "build/lean-cache/producer-resume-restored.json"
+
+
+def read_resume_record(path):
+    def unique(pairs):
+        result = {}
+        for key, value in pairs:
+            if key in result:
+                raise ValueError("duplicate resume field")
+            result[key] = value
+        return result
+    if path.is_symlink():
+        raise ValueError("resume record is a symlink")
+    value = json.loads(path.read_text(), object_pairs_hook=unique)
+    if not isinstance(value, dict):
+        raise ValueError("resume record is not an object")
+    return value
+
+
+def resume_spec(root):
+    keys = actions_keys(root)
+    if not keys["producer_save_allowed"]:
+        raise ValueError("producer resume requires an authorized protected branch or isolated preparation")
+    repository = os.environ.get("GITHUB_REPOSITORY", "")
+    if not re.fullmatch(r"[A-Za-z0-9_.-]+/[A-Za-z0-9_.-]+", repository):
+        raise ValueError("producer repository is unavailable")
+    binding = {
+        "repository": repository, "ref": (os.environ["STRATALINT_CACHE_SOURCE_REF"]
+            if preparation_source_is_valid() else os.environ["GITHUB_REF"]),
+        "inputs": dependency_inputs(root), "mathlib": keys["mathlib_revision"],
+        "os": keys["os"], "arch": keys["arch"],
+    }
+    if preparation_source_is_valid():
+        binding["target_ref"] = os.environ["STRATALINT_CACHE_TARGET_REF"]
+    identity = hashlib.sha256(json.dumps(binding, sort_keys=True, separators=(",", ":")).encode()).hexdigest()
+    prefix = f"lean-producer-resume-v1-{keys['mathlib_revision']}-{keys['os']}-{keys['arch']}-{identity}-"
+    paths = native_archive_paths(root, LAYERS)
+    return {"identity": identity, "restore_prefix": prefix,
+            "key": prefix + os.environ["GITHUB_RUN_ID"] + "-" + os.environ["GITHUB_RUN_ATTEMPT"],
+            "paths": sorted(set(path for group in paths.values() for path in group))}
+
+
+def resume_key_matches(spec, key):
+    return re.fullmatch(re.escape(spec["restore_prefix"]) + r"[1-9][0-9]*-[1-9][0-9]*", key) is not None
+
+
+def resume_snapshot(root, spec):
+    for layer in LAYERS:
+        target = root / (".lake/packages" if layer == "dependency" else ".lake/build")
+        if target.is_symlink() or not target.is_dir():
+            receipt("resume", "save-disabled", reason="native-material-unavailable")
+            output({"resume_ready": False})
+            return
+    write_small_record(resume_marker(root), {
+        "schema_version": 1, "identity": spec["identity"], "key": spec["key"]})
+    receipt("resume", "snapshot", key=spec["key"], complete=False)
+    output({"resume_ready": True})
+
+
+def resume_restore(root, spec, key, outcome):
+    resume_record(root).unlink(missing_ok=True)
+    # A lookup miss skips extraction; every attempted restore must supply its key.
+    if outcome in ("", "skipped"):
+        receipt("resume", "miss", reason="Actions supplied no continuation")
+        return
+    try:
+        if outcome != "success" or not resume_key_matches(spec, key):
+            raise ValueError("resume transport failed or identity is incompatible")
+        marker = read_resume_record(resume_marker(root))
+        if (set(marker) != {"schema_version", "identity", "key"}
+                or type(marker["schema_version"]) is not int or marker["schema_version"] != 1
+                or marker["identity"] != spec["identity"] or marker["key"] != key):
+            raise ValueError("resume metadata does not match the selected source")
+        for path in (root / ".lake/packages", root / ".lake/build"):
+            if path.is_symlink() or not path.is_dir():
+                raise ValueError("resume native material is unavailable")
+        stamp_restored_dependency(root, actions_keys(root))
+        write_small_record(resume_record(root), {
+            "schema_version": 1, "identity": spec["identity"],
+            "snapshot_key": spec["key"], "matched_key": key})
+        receipt("resume", "restored", key=key, complete=False)
+    except (OSError, ValueError, TypeError, KeyError) as error:
+        # Actions may already have extracted part of an incompatible archive.
+        for path in (root / ".lake/packages", root / ".lake/build"):
+            if path.is_symlink() or path.is_file():
+                path.unlink()
+            elif path.exists():
+                shutil.rmtree(path)
+        receipt("resume", "miss", reason=str(error))
+
+
+def resume_verified(root):
+    try:
+        spec = resume_spec(root)
+        value = read_resume_record(resume_record(root))
+        return (set(value) == {"schema_version", "identity", "snapshot_key", "matched_key"}
+                and type(value["schema_version"]) is int and value["schema_version"] == 1
+                and value["identity"] == spec["identity"] and value["snapshot_key"] == spec["key"]
+                and resume_key_matches(spec, value["matched_key"]))
+    except (OSError, ValueError, TypeError, KeyError):
+        return False
 
 
 def project_work(root):
@@ -372,7 +568,14 @@ def project_publication(root):
     work = project_work(root)
     if work is None:
         return False, "build-work-unknown", work
+    adopted = adoption_record(root)
+    if adopted is not None and adopted["merged"]:
+        return True, "adopted-merged-preparation", work
     if work == 0:
+        if os.environ.get("STRATALINT_RELEASE_CACHE_SEEDED") == "1" and manual_source_is_valid():
+            return True, "accepted-explicit-release-seed", work
+        if os.environ.get("STRATALINT_CACHE_PRODUCER_COMPLETE") == "true" and resume_verified(root):
+            return True, "validated-producer-resume", work
         return False, "no-build-work", work
     return True, "built-project-artifacts", work
 
@@ -387,7 +590,7 @@ def snapshot(root, keys, layers=LAYERS):
                 allowed, reason, work = project_publication(root)
                 if not allowed:
                     receipt(layer, "save-disabled", reason=reason)
-                    output({layer + "_ready": False})
+                    output({layer + "_ready": False, "project_skip_reason": reason})
                     continue
             if not keys["project_save_allowed" if layer == "project" else "save_allowed"]:
                 receipt(layer, "save-disabled")
@@ -419,10 +622,12 @@ def snapshot(root, keys, layers=LAYERS):
 
 def main():
     parser = argparse.ArgumentParser()
-    parser.add_argument("command", choices=("keys", "restore", "snapshot"))
+    parser.add_argument("command", choices=("keys", "restore", "snapshot", "resume-keys", "resume-restore", "resume-snapshot"))
     parser.add_argument("--repository", required=True, type=pathlib.Path)
     parser.add_argument("--layers", choices=LAYERS, nargs="+")
     parser.add_argument("--project-restore-key", default="")
+    parser.add_argument("--resume-key", default="")
+    parser.add_argument("--resume-outcome", default="", choices=("", "success", "failure", "cancelled", "skipped"))
     for layer in LAYERS:
         parser.add_argument("--" + layer + "-key", default="")
         parser.add_argument("--" + layer + "-outcome", default="", choices=("", "success", "failure", "cancelled", "skipped"))
@@ -431,13 +636,21 @@ def main():
     try:
         root = args.repository.resolve()
         keys = actions_keys(root)
-        if args.command == "keys":
+        if args.command.startswith("resume-"):
+            spec = resume_spec(root)
+            if args.command == "resume-keys":
+                output({"resume_key": spec["key"], "resume_restore_prefix": spec["restore_prefix"]})
+                output_archive_paths("resume", spec["paths"])
+            elif args.command == "resume-restore":
+                resume_restore(root, spec, args.resume_key, args.resume_outcome)
+            else:
+                resume_snapshot(root, spec)
+        elif args.command == "keys":
             archive_paths = native_archive_paths(root, args.layers)
             if "project" in args.layers:
                 keys["project"]["restore_key"] = project_restore_key(keys)
             values = {key: keys[key] for key in ("mathlib_revision", "os", "arch", "partition", "save_allowed", "release_prefix")}
-            system, arch = binary_platform()
-            values["elan_key"] = f"elan-pinned-{system}-{arch}-{hashlib.sha256((root / 'lean-toolchain').read_bytes()).hexdigest()}"
+            values["elan_key"] = elan_key(root)
             for layer in args.layers:
                 values.update({layer + "_" + key: value for key, value in keys[layer].items()})
             output(values)

@@ -1,0 +1,27 @@
+**Theorem 114.1 (Exact feasibility when the first amplitude is one).**
+For every sequence (110.2) with $a_1=1$, and every
+$0<\varepsilon\le1$, the following conditions are equivalent:
+
+$$
+\begin{aligned}
+&\exists N\in\mathcal N_2:\ e_a(N)\le\varepsilon;\\
+&\exists O\in\mathcal O_2:\ e_a(O)\le\varepsilon;\\
+&\mathcal F_N(a,\varepsilon)\cap\mathscr C_L\ne\varnothing;\\
+&D_3(a,\varepsilon)\le3\varepsilon.
+\end{aligned}
+\tag{114.1}
+$$
+
+No condition of a unit plateau, summability or bounded active length
+is imposed. The comparison concerns replacement by some stopped
+kernel in the cap slice, not preservation of every preselected
+kernel's output law.
+
+**Proof.** Theorem 113.2 with $a_1=1$ gives the last condition
+from original preselected feasibility, using Theorem 110.2.
+Theorem 113.3 gives an original stopped rule from that condition.
+Stopped feasibility implies preselected feasibility by Proposition
+90.2, and Theorem 110.2 equates stopped feasibility to the displayed
+intersection. The constructions also cover $L=0,1,2$ and
+$\varepsilon=1$. $\square$
+

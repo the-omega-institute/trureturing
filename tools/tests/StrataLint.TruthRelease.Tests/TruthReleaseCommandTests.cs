@@ -2,6 +2,7 @@ using System.Collections.Immutable;
 using System.Text;
 using System.Text.Json;
 using System.Security.Cryptography;
+using System.Text.RegularExpressions;
 using StrataLint.Cli;
 using StrataLint.Engine;
 using StrataLint.Scribe;
@@ -20,7 +21,7 @@ public sealed partial class TruthReleaseCommandTests
         "{\"packages\":[{\"name\":\"mathlib\",\"rev\":\"4444444444444444444444444444444444444444\"}],\"version\":\"1.1.0\"}\n";
 
     [Fact]
-    public void CommandProducesAndVerifiesAllSixArtifactsEndToEnd()
+    public void CommandProducesAndVerifiesAllFiveArtifactsEndToEnd()
     {
         using var fixture = CreateFixture();
         using var output = new TemporaryDirectory();
@@ -44,20 +45,21 @@ public sealed partial class TruthReleaseCommandTests
         Assert.Equal(ProducerRepository, verified.Manifest.Producer.PackageRepo);
         Assert.Equal(fixture.ReportBytes.ToArray(), File.ReadAllBytes(
             Path.Combine(output.Path, TruthReleaseBundleWriter.RawLeanReportFileName)));
-        Assert.Equal(6, verified.Manifest.Artifacts.GetType().GetProperties().Length);
+        Assert.Equal(5, verified.Manifest.Artifacts.GetType().GetProperties().Length);
         Assert.False(File.Exists(Path.Combine(output.Path, "echo-residual-summary.md")));
+        Assert.False(File.Exists(Path.Combine(output.Path, "frozen-ledger-head.json")));
+        using (var manifest = JsonDocument.Parse(File.ReadAllBytes(
+            Path.Combine(output.Path, TruthReleaseBundleWriter.ManifestFileName))))
+        {
+            Assert.Equal("truth-release", manifest.RootElement.GetProperty("schema").GetString());
+        }
         using (var sourceSnapshot = JsonDocument.Parse(File.ReadAllBytes(
             Path.Combine(output.Path, TruthReleaseBundleWriter.SourceSnapshotFileName))))
         {
+            Assert.Equal("source-snapshot", sourceSnapshot.RootElement.GetProperty("schema").GetString());
             Assert.False(sourceSnapshot.RootElement.TryGetProperty("residual_frontier_sha256", out _));
-        }
-        using (var head = JsonDocument.Parse(File.ReadAllBytes(
-            Path.Combine(output.Path, TruthReleaseBundleWriter.FrozenLedgerHeadFileName))))
-        {
-            Assert.Equal(fixture.FrozenLedgerHeadHash,
-                head.RootElement.GetProperty("head_hash").GetString());
-            Assert.Equal(fixture.FrozenLedgerSequence,
-                head.RootElement.GetProperty("sequence").GetInt32());
+            Assert.False(sourceSnapshot.RootElement.TryGetProperty("frozen_ledger_head_hash", out _));
+            Assert.False(sourceSnapshot.RootElement.TryGetProperty("frozen_ledger_sequence", out _));
         }
         using (var index = JsonDocument.Parse(File.ReadAllBytes(
             Path.Combine(output.Path, TruthReleaseBundleWriter.BlueprintIndexFileName))))
@@ -70,6 +72,29 @@ public sealed partial class TruthReleaseCommandTests
                 entry.GetProperty("filemap").GetProperty("projection").GetProperty("kind").GetString());
         }
         Assert.Equal(0, fixture.MutableLeanReportSource.CallCount);
+    }
+
+    [Fact]
+    public void FrozenStateThatDisagreesWithTheReportFailsClosedWithoutWritingABundle()
+    {
+        using var fixture = CreateFixture(mismatchedFrozenState: true);
+        using var output = new TemporaryDirectory();
+
+        var (exitCode, console) = Run(fixture, output.Path, GreenTrustArguments());
+
+        Assert.Equal(2, exitCode);
+        Assert.Contains("TRUTH_RELEASE_REJECTED frozen state does not match current report",
+            console.Error, StringComparison.Ordinal);
+        Assert.Empty(Directory.EnumerateFileSystemEntries(output.Path));
+    }
+
+    [Fact]
+    public void IssuanceRejectsMalformedArgumentsWithoutReadingTheRepository()
+    {
+        var gateway = new FakeRepositoryGateway(RawChangeSet.Create([]), RawRepositorySnapshot.Create([]), null);
+
+        Assert.Equal(1, global::StrataLint.Cli.TruthReleaseCommand.Run(gateway, null, []).ExitCode);
+        Assert.Equal(0, gateway.ReadCount);
     }
 
     [Fact]
@@ -208,7 +233,7 @@ public sealed partial class TruthReleaseCommandTests
     ];
 
     private static Fixture CreateFixture(bool receiptIntegrityMismatch = false, bool productionVerifier = false,
-        bool additionalLocalSource = false, bool largeDigestionBodies = false)
+        bool additionalLocalSource = false, bool largeDigestionBodies = false, bool mismatchedFrozenState = false)
     {
         var repositoryRoot = TestRepositoryLayout.FindRoot();
         var blueprintSourcePath = $"Blueprint/{BlueprintGid}.scribe.cs";
@@ -236,8 +261,6 @@ public sealed partial class TruthReleaseCommandTests
                     repositoryRoot,
                     "Golden/Projection/statement-projection-expansion-v1.json"),
                 Encoding.UTF8),
-            [TheoryAtomizerDataLoader.DataPath] =
-                Encoding.UTF8.GetString(DigestionTestSupport.RulesBytes),
             ["Meta/FILEMAP.toml"] = FileMap(),
             ["Meta/Digestion/backfill/fixture-source/source.toml"] =
                 "source_id = \"fixture-source\"\n"
@@ -303,7 +326,6 @@ public sealed partial class TruthReleaseCommandTests
         CommitAll(gitRoot, "fixture source");
         var originCommit = GitObject(gitRoot, "HEAD");
         var originTree = GitObject(gitRoot, "HEAD^{tree}");
-        var generatorBlob = GitObject(gitRoot, "HEAD:lakefile.toml");
         var states = LeanTruthStates.Resolve(snapshotWithoutLedger, lean);
         var adjacency = LeanImportAdjacency.Build(snapshotWithoutLedger, lean);
         var realCatalog = Assert.IsType<FrozenMaterialOutcome.Accepted>(
@@ -312,25 +334,20 @@ public sealed partial class TruthReleaseCommandTests
                 lean,
                 states,
                 adjacency)).Capability;
-        var ledgerFiles = EventFiles(realCatalog, "git-sha1:" + generatorBlob);
-        AddLedgerFiles(files, ledgerFiles);
-        WriteFiles(
-            gitRoot,
-            files.Where(static pair => pair.Key.StartsWith(
-                FrozenLedgerChangeClassifier.AcceptedRoot + "/",
-                StringComparison.Ordinal)));
-        CommitAll(gitRoot, "fixture frozen ledger");
+        AddLedgerFiles(files, StateFiles(realCatalog));
+        if (mismatchedFrozenState)
+        {
+            var statePath = FrozenStatePath.FromModulePath(RepoPathFor("Dependency")).Value;
+            files[statePath] = Regex.Replace(files[statePath], "sha256:[0-9a-f]{64}", "sha256:" + new string('0', 64));
+        }
+        WriteFiles(gitRoot, files.Where(static pair => FrozenStatePath.IsUnderRoot(pair.Key)));
+        CommitAll(gitRoot, "fixture frozen state");
         var sourceCommit = GitObject(gitRoot, "HEAD");
         var sourceTree = GitObject(gitRoot, "HEAD^{tree}");
         var gateway = new GitRepositoryGateway(gitRoot);
         var rawRevision = gateway.ReadRevision(sourceCommit);
         var revisionSnapshot = Assert.IsType<SnapshotDecodeOutcome.Decoded>(
             SnapshotDecoder.Decode(rawRevision)).Snapshot;
-        var ledgerPrefix = FrozenLedgerChangeClassifier.AcceptedRoot + "/";
-        var ledgerView = FrozenLedgerBaseViewReader.Read(RepositorySnapshot.Create(
-            revisionSnapshot.Files.Values
-                .Where(file => file.Path.Value.StartsWith(ledgerPrefix, StringComparison.Ordinal))
-                .ToImmutableDictionary(static file => file.Path)));
         var reportPath = Path.Combine(temporary.Path, "candidate-lean-report.json");
         RawLeanReportArtifact.WriteFile(reportPath, revisionSnapshot, report);
         var reportBytes = ImmutableArray.CreateRange(File.ReadAllBytes(reportPath));
@@ -353,9 +370,7 @@ public sealed partial class TruthReleaseCommandTests
             reportPath,
             reportBytes,
             sourceCommit,
-            sourceTree,
-            ledgerView.EventSetRoot(),
-            ledgerView.EventCount);
+            sourceTree);
     }
 
     private static void AddReceiptIntegrityMismatch(IDictionary<string, string> files)
@@ -371,7 +386,7 @@ public sealed partial class TruthReleaseCommandTests
         var entry = new DigestionLedgerEntry(
             "fixture-source",
             sourcePath,
-            AtomizerRegistry.NoAtomizerId,
+            AtomizerRegistry.GenericId,
             "receipt-mismatch",
             fingerprints,
             [new DigestionCoverageEdge(
@@ -381,7 +396,7 @@ public sealed partial class TruthReleaseCommandTests
             status,
             captured.Reference);
         var document = DigestionTestSupport.Document(
-            AtomizerRegistry.NoAtomizerId,
+            AtomizerRegistry.GenericId,
             [entry],
             "fixture-source",
             sourcePath,
@@ -476,9 +491,7 @@ public sealed partial class TruthReleaseCommandTests
         string reportPath,
         ImmutableArray<byte> reportBytes,
         string sourceCommit,
-        string sourceTree,
-        string frozenLedgerHeadHash,
-        int frozenLedgerSequence) : IDisposable
+        string sourceTree) : IDisposable
     {
         internal static Fixture Create(bool receiptIntegrityMismatch = false) =>
             CreateFixture(receiptIntegrityMismatch);
@@ -498,10 +511,6 @@ public sealed partial class TruthReleaseCommandTests
         internal string SourceCommit { get; } = sourceCommit;
 
         internal string SourceTree { get; } = sourceTree;
-
-        internal string FrozenLedgerHeadHash { get; } = frozenLedgerHeadHash;
-
-        internal int FrozenLedgerSequence { get; } = frozenLedgerSequence;
 
         public void Dispose() => temporary.Dispose();
     }

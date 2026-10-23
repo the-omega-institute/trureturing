@@ -1,1 +1,1 @@
-{"statement_id":"sha256:ce8772032378abffec751bde90bee39dfb2e20b1cd8080c2e410f90750e40937"}
+{"statement_id":"sha256:ce8772032378abffec751bde90bee39dfb2e20b1cd8080c2e410f90750e40937","declarations":[{"declaration_name_key":"ns(ns(ns(n0,8:Quotient),10:liftOn\u2082\u0027),10:congr_simp)","kind":"theorem"},{"declaration_name_key":"ns(ns(ns(ns(ns(ns(n0,2:D5),2:S3),8:Observer),14:VisibleDescent),21:RowColumnObserverCore),24:row_column_observer_core)","kind":"theorem"}]}

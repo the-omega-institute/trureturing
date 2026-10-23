@@ -1,0 +1,43 @@
+**Proposition 29.4 (A uniform four-label boundary parity consumer).** For every nonempty proper $S\subset U$, put
+
+$$
+ H_0=S\cup\{1\},\qquad H_1=S\cup\{m\}.
+\tag{29.24}
+$$
+
+On the full original source of Definition 29.1,
+
+$$
+ (C_{\rm ad},C_{\rm pre})=
+ \begin{cases}(1,2),&|S|\text{ odd},\\(2,3),&|S|\text{ even}.
+ \end{cases}
+\tag{29.25}
+$$
+
+Actual common attaining streams are
+
+$$
+ \begin{cases}
+ \mathcal I_0(S\cup\{1\})\mid1^m,&|S|\text{ odd},\\
+ \mathcal I_0(S)\mid1^m\mid0^{m-1}1,&|S|\text{ even}.
+ \end{cases}
+\tag{29.26}
+$$
+
+Proof. The internal labels are $o,11$, both actually occurring, and the two boundary labels are $10,01$. Thus (29.6) makes two blocks possible exactly when $|S|$ is odd. More explicitly, four-code saturation forces base code $00$, internal nonbase code $10$, and distinct boundary codes $01,11$; root even charge then requires $|S|+1$ even. This is an obstruction to every two-block GLOBAL controller for even $|S|$. Both supports have size $|S|+1$, giving (29.8)'s adaptive fees.
+
+For odd $|S|$, the first stream has codes $10$ on $S$, $00$ on its internal complement and $R$, $11$ at phase one and $01$ at phase $m$. Decode $10,11,01,00$ as membership pairs $11,10,01,00$. For even $|S|$, the third word has actual support $\{m,m+1\}$; codes $100,010,011$ mean respectively $11,10,01$, while $000,001$ both mean $o$. In particular the donor $m+1$ is retained and correctly decoded. The root begins and ends zero. In the odd case the last all-one run has length $m<k$; in the even case the final block starts zero and clears the actual tail $m$ left by the all-one middle. Hence the entire concatenation is safe for all inherited tails, not merely its two seams considered separately. Each source uses its own endpoint differences and then its free-value component.
+
+Two explicit non-dyadic members are
+
+$$
+\begin{array}{c|c|c|c|c|c}
+ m&k&H_0&H_1&(C_{\rm ad},C_{\rm pre})&\text{one GLOBAL stream}\\ \hline
+ 5&8&\{1,2\}&\{2,5\}&(1,2)&01000\mid11111\\
+ 5&8&\{1,2,3\}&\{2,3,5\}&(2,3)&00100\mid11111\mid00001.
+\end{array}
+\tag{29.27}
+$$
+
+Their charge supports are respectively $(\{1,2\},\{1,5\})$ and $(\{2,3\},\{1,5\},\{5,6\})$, exactly the codes above. Every value, phase and inherited tail is jointly supplied by (29.9), and all displayed complete blocks are actually paid. $\square$
+

@@ -1,0 +1,44 @@
+**Proposition 5.5 (Mixed exact reset separates purity from approximate dead time).** In every $D\ge2$, arbitrarily small positive early error and a late weight tending to one can coexist with exact global reset, a rank-one effect, and a mixed actual post-tick density of rank two. The tick Choi rank is two.
+
+Proof. Put $n=D-1$, use the shift $S$ of (4.28), and choose $0<s<1$. Let
+
+$$
+\begin{aligned}
+L_0&=\sqrt{1-s}\,|e_0\rangle\langle e_n|,
+\qquad L_1=\sqrt s\,|e_n\rangle\langle e_n|,\\
+\Phi(X)&=SXS^\dagger,
+\qquad \Psi(X)=L_0XL_0^\dagger+L_1XL_1^\dagger,
+\qquad \rho_0=P_n.
+\end{aligned} \tag{5.35}
+$$
+
+The tick effect is $F=P_n$, with $S^\dagger S+F=I$, proving completeness on all complex inputs. The initializer gives actual $\nu=1$ and
+
+$$
+\tau=(1-s)P_0+sP_n,\qquad
+\Psi(X)=\tau X_{nn}=\tau\operatorname{Tr}(FX)\quad\text{for every }X.
+\tag{5.36}
+$$
+
+Hence $E=0$. Both eigenvalues $1-s,s$ on the support of $\tau$ are positive, so its rank is two, while $F$ has rank one. The Choi identity is
+
+$$
+J(\Psi)=\tau\otimes P_n^{\mathsf T}.
+\tag{5.37}
+$$
+
+Its two positive eigenvalues are $1-s,s$, giving Choi rank two. Equivalently the displayed tick matrices are independent. Each individually has matrix rank one, unlike the rank-two single Kraus matrix and Choi-rank-one map in Theorem 5.1.
+
+The zero powers and entire actual gap law are
+
+$$
+\begin{aligned}
+\Phi^k(\tau)&=(1-s)P_k\quad(1\le k\le n),&
+\Phi^{n+1}(\tau)&=0,\\
+w_0&=s,&w_k&=0\quad(1\le k<n),\\
+w_n&=1-s,&w_k&=0\quad(k>n).
+\end{aligned} \tag{5.38}
+$$
+
+The law is proper and its early maximum is $s$, including in dimension two. Every tick resets to the same mixed density, yet no positive $s$ makes that density pure or its tick Choi rank one. Also $w_0=s>0$ removes the exact forbidden early support. Together with Theorem 5.1, this separates approximate map control from exact purity, exact ranks, exact support, exact reset and exact renewal independence. $\square$
+

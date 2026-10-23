@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:e5d60cf3adc8ae12cfa486cd2da7410b2399ea10753f80fe649a51c250805755
+  normalized_sha256: sha256:e5d60cf3adc8ae12cfa486cd2da7410b2399ea10753f80fe649a51c250805755
+cas_ref: sha256:e5d60cf3adc8ae12cfa486cd2da7410b2399ea10753f80fe649a51c250805755
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 'Nonpropositional proof-plan and validation instructions for M1-a: dependency choices, expected compilation or axiom behavior, and handling of failed attempts. The separately stated theorem obligation has existing frozen coverage; this receipt does not certify a historical implementation forecast as a mathematical theorem.'
+    previous_atom_id: 0a79291ed56c2c0181526e940a0752b78dffcde57950b5bd4f8ddc49001b2c76
+    next_atom_id: a14e5e02278e62ab070f77e9e27bc2de004bdb2ea0b226fc7be39839c267b8d3

@@ -1,1 +1,1 @@
-{"statement_id":"sha256:0c837483b4ac1cec7a7a1e99630227b9623f9352e7cd424261ded1ce7fe6bd3c"}
+{"statement_id":"sha256:0c837483b4ac1cec7a7a1e99630227b9623f9352e7cd424261ded1ce7fe6bd3c","declarations":[{"declaration_name_key":"ns(ns(ns(ns(ns(n0,2:D5),2:S1),11:FixedPoints),17:FiniteSplitBudget),51:strict_refinement_count_le_card_sub_initial_classes)","kind":"theorem"}]}

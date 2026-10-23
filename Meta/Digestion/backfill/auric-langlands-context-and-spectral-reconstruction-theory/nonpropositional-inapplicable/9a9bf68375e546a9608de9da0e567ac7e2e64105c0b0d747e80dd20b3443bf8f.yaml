@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:9a9bf68375e546a9608de9da0e567ac7e2e64105c0b0d747e80dd20b3443bf8f
+  normalized_sha256: sha256:9a9bf68375e546a9608de9da0e567ac7e2e64105c0b0d747e80dd20b3443bf8f
+cas_ref: sha256:9a9bf68375e546a9608de9da0e567ac7e2e64105c0b0d747e80dd20b3443bf8f
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: Defines observational kernels and contextual invisibility, assuming the stated linearity and closure contract. Maximality and quotient structure are the separate Theorem 3.2 atom.
+    previous_atom_id: 0c5f369c5d78bde398cbdfae93971526aff018021d00473ccd26d18347fb5a35
+    next_atom_id: a148371a369244d0571be7109d990ef3bfa9dce6f0f5b8550dcc5ec4a738f66e

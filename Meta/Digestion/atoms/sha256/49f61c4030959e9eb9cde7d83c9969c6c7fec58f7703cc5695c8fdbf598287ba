@@ -1,0 +1,17 @@
+**定理 2.2（全等式、全不等式下的 class-summary correspondence）。** A tuple $((a_b,e_b))_{b\in B}\in(\mathbb N_0\times\{0,1\})^B$ is realized by pairwise distinct class trees exactly when
+
+$$
+ b\ne c,\ e_b=e_c=1\ \Longrightarrow\ a_b\ne a_c.
+\tag{RDR.3}
+$$
+
+Consequently the exact attainable root-depth spectrum is
+
+$$
+\Sigma_R=\{\nu(u):u\in U_R\}
+ =\{\operatorname{first}(E_C((a_b,e_b)_b)):\text{(RDR.3) holds}\}.
+\tag{RDR.4}
+$$
+
+**证明。** Every atomic summary $(n,1)$ is the single tree $T_n$, so two distinct classes cannot share it; this proves necessity. For sufficiency, assign $T_{a_b}$ to every flag-one class. For a flag-zero class choose a nonleaf all-$\alpha$ primitive tree $p_b$; distinct classes at equal depth use distinct shapes, and assign $z_b=\rho^{a_b}(p_b)$. Primitive-ray uniqueness makes values with different depths unequal, injectivity of $\rho$ keeps distinct seeds unequal at equal depth, and a primitive endpoint cannot equal the atomic endpoint $\alpha$. Repeated occurrences reuse the selected value. The exact row-fiber correspondence then fills one actual source of the same producer, with every required disequality. Evaluating its root by the supplied pair law gives (RDR.4). This is a joint realization of one source, not independent evidence pasted together. $\square$
+

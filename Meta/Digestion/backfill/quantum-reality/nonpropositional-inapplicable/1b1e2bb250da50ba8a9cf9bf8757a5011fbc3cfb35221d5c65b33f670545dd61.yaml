@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:1b1e2bb250da50ba8a9cf9bf8757a5011fbc3cfb35221d5c65b33f670545dd61
+  normalized_sha256: sha256:1b1e2bb250da50ba8a9cf9bf8757a5011fbc3cfb35221d5c65b33f670545dd61
+cas_ref: sha256:1b1e2bb250da50ba8a9cf9bf8757a5011fbc3cfb35221d5c65b33f670545dd61
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 第 280 节本片段只把几何编程语言对象定义为元组并引出组成表，不断言该对象的性质。
+    previous_atom_id: eea5baa1b41f47e43404bbc50a6a11c110709fbfcaa26461ea8b1ede9d5e2b3c
+    next_atom_id: 8a774e5a25b20934aab86474f5ca9c78add542032bbf8581cd59afdec7f6b418

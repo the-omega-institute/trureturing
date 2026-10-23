@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:ec0f9207f5c8ef0d9c41e059ff4235a43087e7ed1967e03b90a33a3ae5501fbb
+  normalized_sha256: sha256:ec0f9207f5c8ef0d9c41e059ff4235a43087e7ed1967e03b90a33a3ae5501fbb
+cas_ref: sha256:ec0f9207f5c8ef0d9c41e059ff4235a43087e7ed1967e03b90a33a3ae5501fbb
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 假设 171.1 指定有限系统、允许循环控制类与平均功的定义，不含被动性或功界的结论。
+    previous_atom_id: 18555a0027b77556ea54e956ca1c491b026f1f0e3483038fdd8b7ee41b91d5e2
+    next_atom_id: 839db756a6fa6d33bbb0129175de7977f9fcce46842b070917af10c3aecd9dd4

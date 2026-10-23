@@ -1,0 +1,34 @@
+**Definition 3.3 (POC encodings and exact languages).** Use POC §3's full explicit binary arrays of numbered state records, with delimited or length-prefixed fields. A Read stores its tag, literal length, every literal letter and four successor indices. Preparatory Halts store their original bits; serving Halts store entire row exteriors with addressed holes, concrete leaves and canonical names in reached order. Support, first-member names and guards must agree with the exterior. Include common start and distinct original entries; check tags, lengths, indices, rows and delimiters. Invalid encodings are rejected. A syntactically valid serving output outside the five required rows is permitted as a table record but is wrong whenever issued on this domain.
+
+Budgets $P,L\in\mathbb N_0$ use ordinary positional binary fields, with zero encoded as $0$. Their numeric values need not be polynomial in their bit lengths. An optional installed-state bound $N$ is checked against every installed preparer record; explicit validation needs no unary-$N$ promise. In witness bounds $s$ is the complete explicit input bit length, including the tables, entries and any supplied vectors, row and budget fields. Thus total literal letters and installed state counts are at most $s$. The signature, cut and five required rows are fixed constants.
+
+For any tables, successful or otherwise, define their full attained relation
+
+$$
+\mathcal J(A,T)=\left\{\left(
+(r_{t_u}(a_A(q)))_{q\in Q_A},\,
+(r_{t_u}(a_T(q)))_{q\in Q_T},\,F(u)\right):u\in\mathcal U_*\right\}.
+\tag{FTC.9}
+$$
+
+Both vectors are in installed state order. Duplicate and unused Reads remain separate coordinates. One actual source determines both vectors and the target together. With one apparatus absent use an empty observation menu. These vectors are mathematical data, never runtime payloads.
+
+The exact POC languages are as follows.
+
+| Language | Variable input and acceptance condition |
+| --- | --- |
+| JOINT-ATTAIN | Explicit $A,T$ and a proposed pair of full reply vectors and entire target; some one actual source realizes that joint element |
+| BOTH-PREPARER | Explicit $A,P$; actual within-$P$ runs attain original bit zero and original bit one, without universal or serving requirements |
+| UNIVERSAL-TWO-STAGE | Explicit $A,T,e_0,e_1,P,L$; on every actual source preparation halts within $P$ and its actual selected entry returns all of $F(u)$ within $L$; BOTH is not required |
+| FULL-FINITE-TABLE-VALIDATION | UNIVERSAL-TWO-STAGE and BOTH-PREPARER, with any specified $|K_A|\le N$ check |
+| SOME-LAWFUL-ACQUIRED-CODE | Explicit $T,e_0,e_1,L$ under the separate acquired-data contract of §9; existence of a lawful total both-attained code selecting a good entry everywhere |
+
+All reject malformed encodings. Write
+
+$$
+\mathrm{DP}:=\{X\cap Y:X\in\mathrm{NP},\ Y\in\mathrm{coNP}\}.
+\tag{FTC.10}
+$$
+
+DP here is a class of intersections of languages, not the intersection of the two classes NP and coNP. Completeness throughout uses deterministic polynomial many-one reductions on binary strings.
+

@@ -1,1 +1,1 @@
-{"statement_id":"sha256:572b48eedf939fa3ff05b3a31cc9613c72ec1bbd976107695ca89b6126f6638f"}
+{"statement_id":"sha256:572b48eedf939fa3ff05b3a31cc9613c72ec1bbd976107695ca89b6126f6638f","declarations":[{"declaration_name_key":"ns(ns(ns(ns(ns(ns(n0,2:D5),2:S1),5:Words),11:Palindromes),14:PeriodDoubling),21:diagonal_exact_family)","kind":"theorem"}]}

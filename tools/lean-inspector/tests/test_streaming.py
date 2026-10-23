@@ -16,6 +16,7 @@ sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 import materials
 import publication
 import native
+import fib_analysis
 
 
 def manifest_fixture(root):
@@ -34,6 +35,51 @@ def evidence_fixture():
 
 
 class EvidenceFormatTests(unittest.TestCase):
+    def test_fib_partition_is_optional_unversioned_and_strict(self):
+        with tempfile.TemporaryDirectory() as directory:
+            with patch.object(fib_analysis.subprocess, 'run', side_effect=AssertionError('unexpected analysis')):
+                self.assertIsNone(fib_analysis.produce({'module': 'X'}, Path(directory) / 'absent.zip', None))
+            value = {'applications': []}
+            self.assertEqual(fib_analysis.validate(value), value)
+            for bad in (None, {}, {'applications': None}, dict(value, schema_version=1),
+                        dict(value, extra=True), {'applications': [{}]}):
+                with self.subTest(value=bad), self.assertRaisesRegex(ValueError, 'fib.invalid_'):
+                    fib_analysis.validate(bad)
+
+    def test_fib_reuses_only_unchanged_compiled_inputs_and_rejects_old_partition(self):
+        leaf = dict(application='Reg.X.application', owner='Reg.X', target='X.theorem',
+            target_module='X', target_type_identity='a' * 64, input_identity='b' * 64,
+            request={'arena': 'other'}, unavailable_reason='', reading=fib_analysis.unavailable('fixture'))
+        sibling = dict(leaf, application='Reg.X.sibling')
+        old = {'module': 'Reg.X', 'fib_analysis': {'applications': [leaf, sibling]}}
+        with tempfile.TemporaryDirectory() as directory:
+            previous = Path(directory) / 'previous.zip'
+            def write_old():
+                with zipfile.ZipFile(previous, 'w') as bundle:
+                    bundle.writestr('raw-lean-report.json', json.dumps(
+                        {'schema': materials.REPORT_SCHEMA, 'modules': [old]}))
+                    bundle.writestr('raw-lean-report.json.provenance.json', '{}')
+            write_old()
+            row = {'module': 'Reg.X', 'fib_analysis': {'applications': [dict(leaf, reading=None)]}}
+            with patch.object(publication, 'check_origin'), patch.object(fib_analysis.subprocess, 'run') as run:
+                stats = fib_analysis.produce(row, previous, 'unused')
+                self.assertEqual(stats, dict(extracted=1, generated=0, reused=1, unavailable=0,
+                    **{'analysis-invocations': 0, 'analysis-ns': 0}))
+                run.assert_not_called()
+                changed = dict(leaf, input_identity='c' * 64, reading=None)
+                run.return_value = subprocess.CompletedProcess([], 0, json.dumps([leaf['reading']]), '')
+                row['fib_analysis']['applications'] = [changed, dict(sibling, reading=None)]
+                with patch.object(fib_analysis.time, 'monotonic_ns', side_effect=[100, 157]):
+                    stats = fib_analysis.produce(row, previous, 'analyzer')
+                self.assertEqual(stats, dict(extracted=2, generated=1, reused=1, unavailable=0,
+                    **{'analysis-invocations': 1, 'analysis-ns': 57}))
+                run.assert_called_once()
+                self.assertEqual(json.loads(run.call_args.kwargs['input']), [leaf['request']])
+                old['fib_analysis']['schema_version'] = 1
+                write_old()
+                with self.assertRaisesRegex(ValueError, '^fib.invalid_partition$'):
+                    fib_analysis.produce(row, previous, 'analyzer')
+
     def test_module_evidence_has_no_global_versions(self):
         with tempfile.TemporaryDirectory() as directory:
             manifest = manifest_fixture(Path(directory))
@@ -200,6 +246,30 @@ class ReportLifetimeTests(unittest.TestCase):
 
 
 class StreamingTests(unittest.TestCase):
+    def test_compiler_digest_frames_preserve_material_sequence(self):
+        payload = bytes(range(256)) * 513
+        frames = (b'sha256 0\n' + f'sha256 {len(payload)}\n'.encode() + payload
+                  + b'chunks\n3\nabc0\nsha256 3\nabc' + b'done\n')
+        with tempfile.TemporaryDirectory() as directory:
+            result = subprocess.run([sys.executable, '-I', materials.__file__,
+                                     'stream', directory], input=frames, capture_output=True,
+                                    check=False, timeout=30)
+            self.assertEqual(result.returncode, 0, result.stderr)
+            self.assertEqual(result.stdout.decode().splitlines(), [
+                hashlib.sha256(b'').hexdigest(), hashlib.sha256(payload).hexdigest(),
+                'ok', hashlib.sha256(b'abc').hexdigest(), 'done'])
+            self.assertEqual(sorted(p.name for p in Path(directory).iterdir()), ['0.statement.gz'])
+            self.assertEqual(materials.read_material(Path(directory) / '0.statement.gz'), b'abc')
+
+    def test_truncated_compiler_digest_frame_fails_without_material(self):
+        with tempfile.TemporaryDirectory() as directory:
+            result = subprocess.run([sys.executable, '-I', materials.__file__,
+                                     'stream', directory], input=b'sha256 4\nabc',
+                                    capture_output=True, check=False, timeout=30)
+            self.assertNotEqual(result.returncode, 0)
+            self.assertIn(b'truncated compiler digest frame', result.stderr)
+            self.assertEqual(list(Path(directory).iterdir()), [])
+
     def test_chunked_spool_preserves_material_bytes(self):
         data = ('λ😀' * 40000).encode()
         chunks = [data[i:i + materials.BUFFER_BYTES] for i in range(0, len(data), materials.BUFFER_BYTES)]
@@ -696,7 +766,7 @@ raise SystemExit(37)
             path.chmod(0o755)
             return path
 
-        for name in ['inspect.sh', 'native.py', 'reuse.py', 'materials.py', 'publication.py']:
+        for name in ['inspect.sh', 'native.py', 'reuse.py', 'materials.py', 'fib_analysis.py', 'publication.py']:
             path = 'tools/lean-inspector/' + name
             write(path, (repository / path).read_text())
         write('tools/scripts/lib/resource-observation-lib.sh', 'resource_observe() { :; }\n')
@@ -760,29 +830,48 @@ class EntryPointTests(unittest.TestCase):
                              [str(binary), 'lean-utility-input'])
             prepared = root / '.lake/build/lean-inspector/inputs/Trureturing.json'
             previous = prepared.read_bytes()
+            aggregate = root / '.lake/build/lean-inspector/inputs.json'
+            previous_aggregate = aggregate.read_bytes()
+            with patch.dict(os.environ, environment), patch.object(publication, 'coordinates') as coordinates:
+                native.prepare(root, 'module-records')
+            coordinates.assert_not_called()
+            deferred = json.loads((root / '.lake/build/lean-inspector/module-inputs.json').read_text())
+            self.assertEqual(deferred['records']['Trureturing'].encode('ascii'), previous)
+            self.assertEqual(prepared.read_bytes(), previous)
+            with patch.object(publication, 'coordinates', return_value={}):
+                native.aggregate_inputs(root)
+            self.assertEqual(aggregate.read_bytes(), previous_aggregate)
             for invalid in ('relative.dll', str(root / 'absent.dll')):
                 with self.subTest(producer=invalid), patch.dict(os.environ,
                         dict(environment, STRATALINT_LEAN_PRODUCER_DLL=invalid)):
                     with self.assertRaisesRegex(ValueError, 'existing absolute path'):
                         native.prepare(root)
                 self.assertEqual(prepared.read_bytes(), previous)
-            with patch.dict(os.environ, dict(environment, UTILITY_EXIT='37')):
-                with self.assertRaises(subprocess.CalledProcessError) as failure:
-                    native.prepare(root)
-            self.assertEqual(failure.exception.returncode, 37)
+            for scope in ('full', 'module-records'):
+                with patch.dict(os.environ, dict(environment, UTILITY_EXIT='37')):
+                    with self.assertRaises(subprocess.CalledProcessError) as failure:
+                        native.prepare(root, scope)
+                self.assertEqual(failure.exception.returncode, 37)
             self.assertEqual(prepared.read_bytes(), previous)
 
     def test_failed_phase_preserves_public_bundle_and_propagates_exit(self):
+        from test_reuse import ReuseTests
         # A built producer serves every later step, exactly as a prebuilt one does.
         ensure = 'ensure candidate producer.dll'
         cases = [('inputs', 2, [], False), ('producer-build', 37, ['build'], False),
                  ('ensure', 38, ['build', ensure], False),
                  ('report', 39, ['build', ensure, 'report'], False),
+                 ('fib-regressions', 41, ['build', ensure, 'report', 'fib-regressions'], False),
                  ('publish', 40, ['build', ensure, 'report', 'publish'], False),
-                 ('report', 39, [ensure, 'report'], True)]
+                 ('report', 39, [ensure, 'report'], True),
+                 ('fib-regressions', 41, [ensure, 'report', 'fib-regressions'], True),
+                 ('publish', 40, [ensure, 'report', 'publish'], True)]
         for phase, status, calls, prebuilt in cases:
-            with self.subTest(phase=phase, prebuilt=prebuilt), tempfile.TemporaryDirectory() as directory:
-                root = Path(directory)
+            fixture = ReuseTests()
+            fixture.setUp()
+            self.addCleanup(fixture.doCleanups)
+            with self.subTest(phase=phase, prebuilt=prebuilt):
+                root = fixture.root
                 def write(name, text):
                     path = root / name
                     path.parent.mkdir(parents=True, exist_ok=True)
@@ -790,17 +879,25 @@ class EntryPointTests(unittest.TestCase):
                     path.chmod(0o755)
                 repository = Path(publication.__file__).resolve().parents[2]
                 for name in ['tools/lean-inspector/inspect.sh', 'tools/lean-inspector/reuse.py',
-                             'tools/lean-inspector/materials.py', 'tools/lean-inspector/publication.py',
+                             'tools/lean-inspector/materials.py', 'tools/lean-inspector/fib_analysis.py',
+                             'tools/lean-inspector/build_work.py', 'tools/lean-inspector/publication.py',
                              'tools/scripts/report/lean-report-selection.py']:
                     write(name, (repository / name).read_text())
-                write('Trureturing.lean', 'def x : Nat := 1\n')
-                paths = lambda *names: dict(include=[dict(pattern=n, optional=False) for n in names], exclude=[])
-                write('lean-report-inputs.json', json.dumps(dict(schema_version=1,
-                    report_modules=paths('Trureturing.lean'), inspector_sources=paths(), config_inputs=paths(),
-                    producer_scopes={'lean-report': paths('lean-report-inputs.json',
-                        'tools/scripts/report/lean-report-selection.py'), 'scribe-content': paths()})))
-                def shell_phase(name, label, exit_code):
-                    write(name, '#!/bin/sh\nprintf "%s\\n" ' + label + ' >> "$CALLS"\nexit ' + str(exit_code) + '\n')
+                # Use the shared no-Application bundle fixture for both generations.
+                # No success receipt is installed; the actual regression consumer
+                # reads the produced archive before the failing publication boundary.
+                fixture.bundle()
+                report = fixture.report
+                before = {suffix: publication.member(report, suffix).read_bytes() for suffix in publication.SUFFIXES}
+                fixture.write('D5/A.lean', 'def a := 2\n')
+                fixture.report = root / 'produced' / publication.RAW
+                fixture.report.parent.mkdir()
+                fixture.bundle()
+                self.assertNotEqual(report.read_bytes(), fixture.report.read_bytes())
+                with zipfile.ZipFile(root / 'produced-report.zip', 'w') as archive:
+                    for suffix in publication.SUFFIXES:
+                        member = publication.member(fixture.report, suffix)
+                        archive.write(member, member.name)
                 write('bin/dotnet', '#!/bin/sh\nprintf "%s\\n" build >> "$CALLS"\n'
                     + 'printf "%s\\n" "$PWD/candidate producer.dll"\nexit '
                     + str(37 if phase == 'producer-build' else 0) + '\n')
@@ -808,22 +905,28 @@ class EntryPointTests(unittest.TestCase):
                 write('tools/scripts/worktree/lean-cache-ensure.sh', '#!/bin/sh\n'
                     + 'printf "ensure %s\\n" "${STRATALINT_LEAN_PRODUCER_DLL##*/}" >> "$CALLS"\nexit '
                     + str(38 if phase == 'ensure' else 0) + '\n')
-                shell_phase('bin/lake', 'report', 39 if phase == 'report' else 0)
+                write('bin/lake', '#!/bin/sh\n'
+                    + 'if [ "${1:-}" = --version ]; then printf "fixture lake 1\\n"; exit 0; fi\n'
+                    + 'printf "%s\\n" report >> "$CALLS"\n'
+                    + ('exit 39\n' if phase == 'report' else
+                       'mkdir -p .lake/build/lean-inspector\n'
+                       + 'cp produced-report.zip .lake/build/lean-inspector/report.zip\n'))
+                write('bin/make', '#!/bin/sh\n'
+                    + '[ "$#" -eq 3 ] && [ "$1" = -C ] && [ "$2" = "$PWD" ] '
+                    + '&& [ "$3" = compiled-fib-test ] || exit 97\n'
+                    + 'printf "%s\\n" fib-regressions >> "$CALLS"\nexit 41\n')
+
                 write('tools/scripts/worktree/lean-cache-run.sh', '#!/bin/sh\nexec "$@"\n')
                 write('tools/scripts/lib/resource-observation-lib.sh', 'resource_observe() { :; }\n')
                 write('tools/lean-inspector/native.py',
                     'import os\nfrom pathlib import Path\nwith Path(os.environ["CALLS"]).open("a") as out: out.write("publish\\n")\nraise SystemExit(40)\n')
                 if phase == 'inputs':
                     (root / 'lean-report-inputs.json').unlink()
-                report = root / 'public/report.json'
-                report.parent.mkdir()
-                before = {suffix: ('previous' + suffix).encode() for suffix in publication.SUFFIXES}
-                for suffix, data in before.items():
-                    publication.member(report, suffix).write_bytes(data)
                 record = root / 'calls'
                 env = dict(os.environ, PATH=str(root / 'bin') + os.pathsep + os.environ['PATH'],
                     CALLS=str(record), LAKE_BIN=str(root / 'bin/lake'), STRATALINT_INSPECTOR_SUPERVISED='1',
                     STRATALINT_LEAN_BUILD_TARGETS='[]',
+                    STRATALINT_FIB_REGRESSIONS_SELECTED='true' if phase == 'fib-regressions' else 'false',
                     STRATALINT_LEAN_PRODUCER_DLL=str(root / 'candidate producer.dll') if prebuilt else '')
                 result = subprocess.run(['bash', str(root / 'tools/lean-inspector/inspect.sh'),
                     '--repository', str(root), '--output', str(report)], env=env, capture_output=True, text=True, timeout=30)
@@ -831,6 +934,8 @@ class EntryPointTests(unittest.TestCase):
                 self.assertIn(f'LEAN_INSPECTOR_FAILED phase={phase} exit={status}', result.stderr)
                 self.assertEqual(record.read_text().splitlines() if record.exists() else [], calls)
                 self.assertEqual(before, {suffix: publication.member(report, suffix).read_bytes() for suffix in publication.SUFFIXES})
+                if phase == 'fib-regressions':
+                    self.assertIn('LEAN_INSPECTOR_FIB_REGRESSIONS changed=false selected=true', result.stderr)
 
 
 if __name__ == '__main__':

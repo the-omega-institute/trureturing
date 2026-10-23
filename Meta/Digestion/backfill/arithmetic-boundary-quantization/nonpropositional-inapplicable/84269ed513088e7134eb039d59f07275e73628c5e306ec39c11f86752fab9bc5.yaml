@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:84269ed513088e7134eb039d59f07275e73628c5e306ec39c11f86752fab9bc5
+  normalized_sha256: sha256:84269ed513088e7134eb039d59f07275e73628c5e306ec39c11f86752fab9bc5
+cas_ref: sha256:84269ed513088e7134eb039d59f07275e73628c5e306ec39c11f86752fab9bc5
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 证明段或其连续推导片段（**证明。** 加法、正数倍、最小值、最大值及非负轴上的平方、平方根都逐变量递增；…）只论证所在节前文的结论，不另列新的独立命题。
+    previous_atom_id: 86dd05bb0a3edb24f6fc6cedbe5cef5ab918e9726467370be6848b9625e48bee
+    next_atom_id: 41c90b2b5c7115b4bc7e0eb679094e9050882b92862d486665a3e2c34e2faa42

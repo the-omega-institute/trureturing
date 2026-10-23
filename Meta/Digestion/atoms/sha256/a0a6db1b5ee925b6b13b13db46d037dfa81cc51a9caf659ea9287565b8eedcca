@@ -1,0 +1,37 @@
+**定理 16.2（下降律的全部非负交通及尖锐钟活动）。** 假设 16.1 的解对全部 $\lambda\ge0$ 存在，留在 $\kappa_{\rm init}$ 与 $\kappa_0$ 之间的闭线段，并趋于 $\kappa_0$。令
+
+$$
+s=-\mu(\kappa)\mathcal A'(\kappa),\qquad
+s_+=\max(s,0),\quad s_-=\max(-s,0).
+$$
+
+在本五边图上，全部满足 $Bf=s\mathbf d$ 的非负交通恰为
+
+$$
+f=(s_-,s_+,s_-,s_+,0)+\beta\mathbf c,\qquad \beta\ge0.
+$$
+
+以此给定的 $\beta(\lambda)$、方形边率 $q_{ij}=f_{ij}/p_i$、叶边率零及负行和对角项，得到每个有限区间上非爆炸的有限状态非齐次 Markov 实现，其边缘律为 $p_{\kappa(\lambda)}$。对实际每次跳跃成本一的累计计数 $J$，
+
+$$
+\begin{aligned}
+\frac{d\mathbb EJ}{d\lambda}&=2\mu|\mathcal A'|+4\beta,&
+\frac{d\mathcal A}{d\lambda}&=-\mu(\mathcal A')^2,\\
+\frac{d\mathbb EJ}{d\tau}&=\frac{2\mu|\mathcal A'|+4\beta}{N},&
+\frac{d\mathcal A}{d\tau}&=-\frac\mu N(\mathcal A')^2.
+\end{aligned}
+$$
+
+其中 $J$ 在第二行按共同参数逆函数重参数。最小期望跳跃活动由 $\beta=0$ 达到，且
+
+$$
+a_{\min}=\frac{2\mu|\mathcal A'|}{N},\qquad
+a_{\min}^2=4\frac\mu N\left(-\frac{d\mathcal A}{d\tau}\right).
+$$
+
+这个最小交通亦为定理 15.2 在任意正电导下的非负最小能量提升。一般交通 $f$ 的规范系数为 $\gamma=\beta+\max(sQ/R,-sP/R)$，所以 $\beta$ 与加权正交分解的 $\gamma$ 是两个不同的坐标。在平衡处，$\beta>0$ 仍可累积跳跃钟；此时的自由度正是定理 3.2、命题 3.3 的平稳循环机制。
+
+证明。所引 KL 严格凸性给 $\mathcal A'(\kappa_0)=0$，漂移在该点左边为正、右边为负。$C^1$ 漂移的唯一性使初态和平衡之间的闭线段正向不变；该线段紧含于 $I$，因此漂移有界，解不能在有限参数处终止。解单调且有界；若极限异于 $\kappa_0$，正迁移率和非零连续漂移在极限附近有严格的单向下界，与收敛矛盾。线段上 $N$ 亦有正下界和有限上界，故 $\tau$ 是到 $[0,\infty)$ 的正则递增换元。
+
+由定理 2.2 的全部提升，$f=(a,a+s,a,a+s,0)$；非负性等价于 $a=s_-+\beta$、$\beta\ge0$。四个方形起点质量在线段上有共同正下界，故所规定率在每个有限区间有界连续。直接应用定理 2.4 的 Poisson 候选及前向方程唯一性构造，初律取 $p_{\kappa_{\rm init}}$，得到宣称的边缘；当 $Z=0$ 时状态 $2$ 不可达且吸收，不需除以 $p_2$。期望实际跳数导数为 $\sum_ef_e=2|s|+4\beta$，KL 导数由链式法则给出，随后除以 $N$。最小值及平方恒等式直接代入。加权系数由定理 15.2 比较首坐标取得。叶边被迫无流，不能把这一实现说成每条合法弧都严格活动；期望计数也不等于任一个样本历史。∎
+

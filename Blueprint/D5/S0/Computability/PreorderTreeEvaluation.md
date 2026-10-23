@@ -1,0 +1,79 @@
+# PreorderTreeEvaluation
+
+## Abstract
+
+Fixed preorder tree coding and evaluation
+
+Constructor words use the existing finite-list coding of Option tokens. A concrete explicit stack processes them from right to left, rejecting missing children and non-singleton final stacks. Structural correctness is proved for every finite nonempty ordered full tree; parser soundness also rejects extra tokens. The numeric encoding is precisely the encoding of word, and its image recognizer is primitive recursive. The native client uses this fixed instance for LiteralRow, not an arbitrary equivalence or chosen encoding.
+
+The matching Reg mirror proves whole-family reconstruction, variation, sensitivity and observational dependence for preorder_codec over every leaf carrier, including empty ones. The evaluator and fold still require audit parameterization of every primitive codable carrier and constructor operation. Contract source-selection coordinates and raw source-occurrence binding remain unregistered for all four theorems. No validated four-slot audit status is claimed.
+
+Duplicate elimination follows the pinned rightmost-occurrence convention; insertion sort uses the supplied decidable relation. The primitive recursive list interface reuses the pinned finite-list equations and recursors. Its full polymorphic theorem is consumed by the native class-name and structural variable-key factories. Its four-slot audit still requires the full carrier, coding, equality and relation parameters.
+
+**Theorem 1.1 (primitive list algorithms).**
+
+Lean statement: `D5/S0/Computability/PreorderTreeEvaluation.primitive_list_algorithms`
+
+*Proof.* Machine-checked in Lean as `D5/S0/Computability/PreorderTreeEvaluation.primitive_list_algorithms` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+For every primitive codable carrier with decidable equality, duplicate elimination is primitive recursive. For every decidable primitive recursive relation on that carrier, relation-based insertion sorting is primitive recursive, with the insertion element remaining an ordinary runtime input. The native class-name factory uses both operations and the structural variable-key factory uses duplicate elimination. These operations reuse the pinned dedup, orderedInsert and insertionSort equations.
+
+**Definition 1.2 (treePrimcodable).**
+
+Lean statement: `D5/S0/Computability/PreorderTreeEvaluation.treePrimcodable`
+
+*Formalization.* `D5/S0/Computability/PreorderTreeEvaluation.treePrimcodable` (`✓ std3`).
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+Fixed constructor-word coding with a primitive recursive image recognizer; the decoder rejects malformed words.
+
+**Theorem 1.3 (uniform preorder evaluation).**
+
+Lean statement: `D5/S0/Computability/PreorderTreeEvaluation.uniform_preorder_evaluation`
+
+*Proof.* Machine-checked in Lean as `D5/S0/Computability/PreorderTreeEvaluation.uniform_preorder_evaluation` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+For arbitrary primitive codable leaf, result and parameter types, primitive recursive leaf and binary node operations give one primitive recursive evaluator before all parameter and tree quantifiers. On word t it returns exactly the free-magma fold. The stack invariant is established by structural induction and consumed by the exact parser and fold clients.
+
+**Theorem 1.4 (preorder codec).**
+
+Lean statement: `D5/S0/Computability/PreorderTreeEvaluation.preorder_codec`
+
+*Proof.* Machine-checked in Lean as `D5/S0/Computability/PreorderTreeEvaluation.preorder_codec` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+For every word w and finite ordered tree t, parse w equals some t if and only if w equals word t. Soundness uses the concatenated pending-stack-word invariant. This theorem supplies treePrimcodable and the actual native common-input decoder.
+
+**Theorem 1.5 (uniform tree fold).**
+
+Lean statement: `D5/S0/Computability/PreorderTreeEvaluation.uniform_tree_fold`
+
+*Proof.* Machine-checked in Lean as `D5/S0/Computability/PreorderTreeEvaluation.uniform_tree_fold` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+Under the fixed structural tree coding, every fold with primitive recursive parameterized constructor operations is primitive recursive. Its live proof uses the exact evaluator/fold equality from uniform_preorder_evaluation and is consumed by NativeUniformInput.row_names_primrec.
+
+## References
+
+- Truth anchor: `D5/S0/Computability/PreorderTreeEvaluation.preorder_codec`
+- Truth anchor: `D5/S0/Computability/PreorderTreeEvaluation.primitive_list_algorithms`
+- Truth anchor: `D5/S0/Computability/PreorderTreeEvaluation.treePrimcodable`
+- Truth anchor: `D5/S0/Computability/PreorderTreeEvaluation.uniform_preorder_evaluation`
+- Truth anchor: `D5/S0/Computability/PreorderTreeEvaluation.uniform_tree_fold`

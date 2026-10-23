@@ -34,7 +34,7 @@ theorem directed_positive_net_strong_of_isLUB
   classical
   have hupper (j : J) : X j ≤ U := hU.1 ⟨j, rfl⟩
   have hnorm (j : J) : ‖X j‖ ≤ ‖U‖ :=
-    CStarAlgebra.norm_le_norm_of_nonneg_of_le (hpos j) (hupper j)
+    CStarAlgebra.norm_le_norm_of_le_of_nonneg (hupper j) (hpos j)
   -- The positive square estimate is used on actual differences X k - X i.
   have square_estimate (D : H →L[ℂ] H) (hD : 0 ≤ D) (v : H) :
       ‖D v‖ ^ 2 ≤ ‖D‖ * (⟪D v, v⟫_ℂ).re := by
@@ -42,7 +42,7 @@ theorem directed_positive_net_strong_of_isLUB
     have hRpos : 0 ≤ R := CFC.sqrt_nonneg D
     have hRR : R * R = D := CFC.sqrt_mul_sqrt_self D hD
     have hRsa : star R = R := (IsSelfAdjoint.of_nonneg hRpos).star_eq
-    have hRsym := ((ContinuousLinearMap.nonneg_iff_isPositive R).mp hRpos).isSymmetric
+    have hRsym := ((ContinuousLinearMap.nonneg_iff_isPositive (f := R)).mp hRpos).isSymmetric
     have hRnorm : ‖R‖ ^ 2 = ‖D‖ := by
       rw [pow_two, ← CStarRing.norm_star_mul_self, hRsa, hRR]
     have hRv : ‖R v‖ ^ 2 = (⟪D v, v⟫_ℂ).re := by
@@ -60,7 +60,7 @@ theorem directed_positive_net_strong_of_isLUB
   let q : H → J → ℝ := fun v j => (⟪X j v, v⟫_ℂ).re
   have qmono (v : H) : Monotone (q v) := by
     intro i j hij
-    have h := ((ContinuousLinearMap.nonneg_iff_isPositive (X j - X i)).mp
+    have h := ((ContinuousLinearMap.nonneg_iff_isPositive (f := (X j - X i))).mp
       (sub_nonneg.mpr (hmono hij))).re_inner_nonneg_left v
     change 0 ≤ (⟪(X j - X i) v, v⟫_ℂ).re at h
     simpa only [sub_apply, inner_sub_left, Complex.sub_re,
@@ -68,7 +68,7 @@ theorem directed_positive_net_strong_of_isLUB
   have qbdd (v : H) : BddAbove (Set.range (q v)) := by
     refine ⟨(⟪U v, v⟫_ℂ).re, ?_⟩
     rintro _ ⟨j, rfl⟩
-    have h := ((ContinuousLinearMap.nonneg_iff_isPositive (U - X j)).mp
+    have h := ((ContinuousLinearMap.nonneg_iff_isPositive (f := (U - X j))).mp
       (sub_nonneg.mpr (hupper j))).re_inner_nonneg_left v
     change 0 ≤ (⟪(U - X j) v, v⟫_ℂ).re at h
     simpa only [sub_apply, inner_sub_left, Complex.sub_re,
@@ -99,7 +99,7 @@ theorem directed_positive_net_strong_of_isLUB
       have hDU : D ≤ U := by
         exact (sub_le_self _ (hpos i)).trans (hupper k)
       have hDn : ‖D‖ ≤ C :=
-        (CStarAlgebra.norm_le_norm_of_nonneg_of_le hD hDU).trans
+        (CStarAlgebra.norm_le_norm_of_le_of_nonneg hDU hD).trans
           (by dsimp [C]; linarith)
       have hDq : (⟪D v, v⟫_ℂ).re = q v k - q v i := by
         simp only [D, q, sub_apply, inner_sub_left, Complex.sub_re]
@@ -150,7 +150,7 @@ theorem directed_positive_net_strong_of_isLUB
   have positive_strong_limit (F : J → H →L[ℂ] H) (V : H →L[ℂ] H)
       (hF : ∀ v, Tendsto (fun j => F j v) atTop (𝓝 (V v)))
       (hFpos : ∀ᶠ j in atTop, 0 ≤ F j) : 0 ≤ V := by
-    apply (ContinuousLinearMap.nonneg_iff_isPositive V).mpr
+    apply (ContinuousLinearMap.nonneg_iff_isPositive (f := V)).mpr
     apply (ContinuousLinearMap.isPositive_iff_complex V).mpr
     intro v
     have hclosed : IsClosed {z : ℂ | 0 ≤ z} := CStarAlgebra.isClosed_nonneg
@@ -159,7 +159,7 @@ theorem directed_positive_net_strong_of_isLUB
     have hscalar : 0 ≤ ⟪V v, v⟫_ℂ := by
       exact hclosed.mem_of_tendsto ht
         (hFpos.mono fun j hj =>
-          ((ContinuousLinearMap.nonneg_iff_isPositive (F j)).mp hj).inner_nonneg_left v)
+          ((ContinuousLinearMap.nonneg_iff_isPositive (f := (F j))).mp hj).inner_nonneg_left v)
     have hr := Complex.nonneg_iff.mp hscalar
     exact ⟨Complex.ext (by simp) (by simpa using hr.2), hr.1⟩
   have hSLUB : IsLUB (Set.range X) S := by

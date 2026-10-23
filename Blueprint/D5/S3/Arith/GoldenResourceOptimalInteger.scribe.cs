@@ -14,21 +14,6 @@ internal sealed class GoldenResourceOptimalIntegerDocument : IScribeDocumentDefi
         H("Golden Resource Optimal Integer"),
         Blocks(
             Describe.Lean(
-                DescribeId.Create("golden-resource-objective"),
-                DeclarationHandle.Create(Prefix + "goldenResourceObjective"),
-                H("The resource objective"),
-                StatementSource.FromAuthor(ObjectiveDefinition()),
-                AssessedProvenance.FromRepo(),
-                Blocks(Paragraph(Text(
-                    "This is J_lambda(n) = W(n) - lambda E(n) from theorem 11.1 of "
-                        + "ZECKENDORF_EULER_5040, with the volume's definitions "
-                        + "W(n) = ln(sum of reciprocal divisors) and E(n) = ln(n) expanded. "
-                        + "The function is defined on all natural numbers; the optimum theorem "
-                        + "uses positive natural numbers. Here divisors is Nat.divisors, log "
-                        + "is Real.log, and natural numbers inside logarithms and fractions "
-                        + "are coerced to real numbers. All displayed fractions denote real division."))),
-                DescribeRole.Definition),
-            Describe.Lean(
                 DescribeId.Create("golden-layer-marginal"),
                 DeclarationHandle.Create(Prefix + "goldenLayerMarginal"),
                 H("The marginal benefit per logarithmic unit"),
@@ -50,19 +35,6 @@ internal sealed class GoldenResourceOptimalIntegerDocument : IScribeDocumentDefi
                         + "smaller marginal benefit. Prime denotes Nat.Prime. The proof compares "
                         + "the two geometric quotients over positive denominators, then applies "
                         + "strict monotonicity of the real logarithm."))),
-                DescribeRole.Lemma),
-            Describe.Lean(
-                DescribeId.Create("golden-resource-sigma-identity"),
-                DeclarationHandle.Create(Prefix + "golden_resource_sigma_identity"),
-                H("The divisor-sum expression"),
-                StatementSource.FromAuthor(SigmaFormula()),
-                AssessedProvenance.FromRepo(),
-                Blocks(Paragraph(Text(
-                    "Here sigma is ArithmeticFunction.sigma; sigma(1,n) is the sum of the "
-                        + "positive divisors of n. The divisor-complement bijection identifies "
-                        + "the reciprocal divisor sum with sigma(1,n)/n. This named companion "
-                        + "connects the source definition to the multiplicative sigma API used "
-                        + "in the proof of the unique optimum."))),
                 DescribeRole.Lemma),
             Describe.Lean(
                 DescribeId.Create("golden-resource-unique-optimum"),
@@ -89,20 +61,6 @@ internal sealed class GoldenResourceOptimalIntegerDocument : IScribeDocumentDefi
                             + "or compression objectives."))),
                 DescribeRole.Theorem))));
 
-    private static Formula ObjectiveDefinition()
-    {
-        Formula lambda = F.Id("lambda");
-        Formula n = F.Id("n");
-        Formula d = F.Id("d");
-        Formula reciprocalSum = Seq(
-            new Formula.Subscript(Sum,
-                Relation(d, FormulaRelationOperator.MemberOf, Call("divisors", n))),
-            Sp, new Formula.Fraction(D(1), d));
-        return Disp(ForAll([Bound("lambda", Reals()), Bound("n", Naturals())],
-            Equal(Call("goldenResourceObjective", lambda, n),
-                Subtract(Call("log", reciprocalSum), Product(lambda, Call("log", n))))));
-    }
-
     private static Formula MarginalDefinition()
     {
         Formula p = F.Id("p");
@@ -125,16 +83,6 @@ internal sealed class GoldenResourceOptimalIntegerDocument : IScribeDocumentDefi
             [Bound("p", Naturals()), Bound("a", Naturals()), Bound("b", Naturals())],
             Implies(Parenthesized(And(Call("Prime", p), And(Le(D(1), a), Lt(a, b)))),
                 Lt(Call("goldenLayerMarginal", p, b), Call("goldenLayerMarginal", p, a)))));
-    }
-
-    private static Formula SigmaFormula()
-    {
-        Formula lambda = F.Id("lambda");
-        Formula n = F.Id("n");
-        return Disp(ForAll([Bound("lambda", Reals()), Bound("n", Naturals())],
-            Implies(Le(D(1), n), Equal(Call("goldenResourceObjective", lambda, n),
-                Subtract(Call("log", new Formula.Fraction(Call("sigma", D(1), n), n)),
-                    Product(lambda, Call("log", n)))))));
     }
 
     private static Formula OptimumFormula()
@@ -166,8 +114,6 @@ internal sealed class GoldenResourceOptimalIntegerDocument : IScribeDocumentDefi
         new Formula.Binary(left, FormulaBinaryOperator.Add, right);
     private static Formula Subtract(Formula left, Formula right) =>
         new Formula.Binary(left, FormulaBinaryOperator.Subtract, right);
-    private static Formula Product(Formula left, Formula right) =>
-        new Formula.Binary(left, FormulaBinaryOperator.Multiply, right);
     private static Formula And(Formula left, Formula right) =>
         new Formula.Logic(left, FormulaLogicOperator.And, right);
     private static Formula Implies(Formula left, Formula right) =>
@@ -175,5 +121,4 @@ internal sealed class GoldenResourceOptimalIntegerDocument : IScribeDocumentDefi
     private static Formula Parenthesized(Formula value) =>
         Seq(Open, value, Close);
     private static Formula Naturals() => Seq(Mathbb, Grp(F.Id("N")));
-    private static Formula Reals() => Seq(Mathbb, Grp(F.Id("R")));
 }

@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:788869220073ecf5b1c2061f5b43ae0e98cfa9ff0f6eb414c2383c8c397d56f8
+  normalized_sha256: sha256:788869220073ecf5b1c2061f5b43ae0e98cfa9ff0f6eb414c2383c8c397d56f8
+cas_ref: sha256:788869220073ecf5b1c2061f5b43ae0e98cfa9ff0f6eb414c2383c8c397d56f8
+coverage_gids:
+  - gid: D5/S3/ConceptDynamics/Reversibility/WaitingValueReversibility.waiting_value_from_information_and_option_preservation
+    target_statement_id: sha256:bf9c398066dd40de27d6ba8544648b7bcce9d75d498872760782a98f71c1a3e8
+receipts:
+  unresolved_subitems: []

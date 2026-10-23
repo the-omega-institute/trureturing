@@ -1,0 +1,10 @@
+**Corollary 35.3 (No finite upper certificate on a probe fibre).** For every finite $S\subset\mathbb P$ and every $b\in\{0,1\}^{S}$, the fibre $W_{S,b}$ is nonempty and
+
+$$
+\sup_{n\in W_{S,b}}\rho_S(n)
+=\sup_{n\in W_{S,b}}\omega(n)=+\infty.
+\tag{35.10}
+$$
+
+Let $U:\{0,1\}^{S}\to\mathbb R\cup\{+\infty\}$ be a sound upper certificate, meaning that $\omega(n)\le U(d_S(n))$ for every $n\in W$. Then $U(b)=+\infty$ for every pattern $b$. The same conclusion holds for a sound upper certificate for $\rho_S$.
+

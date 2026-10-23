@@ -1,1 +1,1 @@
-{"statement_id":"sha256:35feafb69d86d3539a9202710bcafb6b66e45485669abf76106bdf2303f30110"}
+{"statement_id":"sha256:35feafb69d86d3539a9202710bcafb6b66e45485669abf76106bdf2303f30110","declarations":[{"declaration_name_key":"ns(ns(ns(ns(ns(n0,2:D5),2:S3),14:TotalVariation),23:HellingerDataProcessing),23:hellinger_sq_channel_le)","kind":"theorem"},{"declaration_name_key":"ns(ns(ns(ns(ns(n0,2:D5),2:S3),14:TotalVariation),23:HellingerDataProcessing),24:bhattacharyya_channel_le)","kind":"theorem"}]}

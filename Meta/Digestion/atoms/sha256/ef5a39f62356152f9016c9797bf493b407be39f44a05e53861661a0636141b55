@@ -1,0 +1,80 @@
+**Theorem 114.2 (Attained optimum for every saturated vanishing
+profile).** For every sequence (110.2) with $a_1=1$, put
+
+$$
+S_m=\sum_{i=3}^m a_i\quad(m\ge3),\qquad
+r(a)=\max_{m\ge3}\frac{S_m}{m+1}.
+\tag{114.2}
+$$
+
+The maximum exists at a finite index and $0<r(a)<1$. With the
+original infima of Acquisition Resources, Definition 90.1,
+
+$$
+E_{\mathcal N}(2;a)=E_{\mathcal O}(2;a)=r(a).
+\tag{114.3}
+$$
+
+Both infima are attained by original acquisitions with the same
+source-independent seed law, and the stopped attainer is the rule
+of Theorem 113.3 at $\varepsilon=r(a)$. In particular the optimum
+does not depend on $a_2$ within its allowed monotone range.
+
+**Proof.** By monotonicity the positive terms $a_i-\varepsilon$
+form a prefix, with a finite last index for each positive cap.
+Consequently
+
+$$
+D_3(a,\varepsilon)=
+\max\left\{0,\sup_{m\ge3}
+             \bigl(S_m-(m-2)\varepsilon\bigr)\right\}.
+\tag{114.4}
+$$
+
+If $L\ge3$, the expression is maximized at $m=L$, possibly also
+at subsequent indices whose amplitudes equal the cap. If $L\le2$,
+all its summands are nonpositive and the outer maximum is zero.
+It follows that
+
+$$
+D_3(a,\varepsilon)\le3\varepsilon
+\quad\Longleftrightarrow\quad
+S_m\le(m+1)\varepsilon\quad\hbox{for every }m\ge3.
+\tag{114.5}
+$$
+
+The ratios in (114.2) tend to zero. Indeed, for any $t>0$, choose
+$M\ge3$ with $a_i\le t$ for $i>M$; then for $m>M$,
+$S_m/(m+1)\le S_M/(m+1)+t(m-M)/(m+1)$, whose limit superior
+is at most $t$. Since $a_3/4>0$, a tail of these ratios is below
+half that positive value. Their positive supremum is therefore
+the maximum of a finite initial set. At its maximizing index,
+$S_m/(m+1)\le(m-2)/(m+1)<1$, so $0<r(a)<1$.
+
+At $\varepsilon=r(a)$ all inequalities in (114.5) hold. At a
+maximizing index $m$, one has
+$S_m-(m-2)r(a)=3r(a)$, so (114.4) also proves
+
+$$
+D_3(a,r(a))=3r(a).
+\tag{114.6}
+$$
+
+The active length at this positive cap is finite and at least three.
+Theorem 113.3 constructs the stopped rule, with error exactly
+$r(a)$ in every active first-absence class and at most $r(a)$
+at every actual tail. Each such class has an actual source by the
+finite-pattern supplier in Definition 110.1. Thus its uniform
+error is $r(a)$. Complete its schedule as in Proposition 90.2
+using the same seed to obtain a preselected attainer of the same
+error, still counting every acquired reply.
+
+If an original preselected rule had uniform error less than $r(a)$,
+choose a positive cap strictly between that error and $r(a)$.
+Theorem 114.1 and (114.5) would then contradict a maximizing
+prefix in (114.2). Stopped rules are included among preselected
+law families, so neither infimum can be smaller. This proves
+(114.3), including attainment. The argument uses vanishing, not
+summability, and every original amplitude remains part of the
+selected target family. $\square$
+

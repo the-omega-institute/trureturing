@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:c1a71231d801b9847d96d144e10e4895eb0252b9487ad61c52fedbc3ab20a642
+  normalized_sha256: sha256:c1a71231d801b9847d96d144e10e4895eb0252b9487ad61c52fedbc3ab20a642
+cas_ref: sha256:c1a71231d801b9847d96d144e10e4895eb0252b9487ad61c52fedbc3ab20a642
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 证明段（**证明。** GP31 给出  $$ v_p(F_{3^{j+1}})=v_p(C_j). $$  又由 GP33，$3^{j+1}=\a…）只展开前文定理或命题的论证，式子和中间推导不另提出独立陈述。
+    previous_atom_id: cec68cc7f837c7f559b317a1b44dc3dc3502245c0cdf00ecafd3440c06ed3d4e
+    next_atom_id: 9fffec421f622e423fdfa79f114d3797f06c42d94170535aae7ad0388884be5e

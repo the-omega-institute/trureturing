@@ -1,0 +1,47 @@
+**Assumption 58.11 (conditional finite synthesis and effectivity).** The
+finite feasibility and effective-frontier conclusions invoked from
+Continuation IV §§41--44 require the following hypotheses, in addition to
+the tagged, completed, observation-based, and $\Gamma$-preserving contracts
+above.
+
+1. There is a nonempty source-total domain covered by the specified finitely
+   many chart types, with Presburger-definable parameter admission. Fix a
+   finite controller-size bound $K$, finite action and response types, and a
+   finite effectively enumerable family of controller tables, including the
+   allowed instruction and terminal-output choices. A claim covering all
+   controllers of size at most $K$ requires completeness of this enumeration.
+2. Common-boundary legality, source-independent response-indexed control
+   updates, and exact same-source semantics hold for the full ordered action
+   language, including passive actions, interventions, and silent events.
+   Complete target-row equality and correctness are preserved.
+3. For each finite or mixed budget in
+   $(\mathbb N\cup\{\infty\})^d$ with a constrained coordinate, an independently
+   certified effective raw-event horizon $T_K(B)$ covers every successful
+   budget-feasible candidate. Alternatively, supply the certified regular
+   history encoding of Continuation IV §42.2 with an effective rank or exact
+   acceleration procedure deciding termination, complete terminal rows, and
+   resource maxima. Response-phase bounds and plain regularity are insufficient.
+4. Admission, replies, legality, definedness, successors, epoch updates,
+   exact event costs, complete-row equality, and the pathwise resource
+   thresholds for the chosen $\Gamma$ are effectively Presburger-definable,
+   or the certified alternative supplies the same exact decisions.
+5. For effective extraction of a finite-budget Pareto basis, supply a feasible
+   controller with a certified finite uniform resource vector, or the exact
+   all-infinite synthesis extractor with the required finite-bound witness
+   or emptiness decision. A finite controller or sourcewise finite
+   termination alone does not supply a finite uniform resource bound.
+   Use the upward-closed integer-vector feasibility contract for a Pareto
+   conclusion; arbitrary resource objectives need their own effectivity
+   argument.
+
+Under these assumptions, the finite graph/path enumeration and exact
+same-source predicates of Continuation IV §§41--44, under its corrected
+finite-profile, source-total and effective-horizon contract (in particular
+§44.2), decide the stated budget feasibility. Its effective mixed-budget
+negative tests and Dickson argument
+give the stated finite Pareto basis when applicable. These are conditional
+applications of that synthesis argument. Neither finite alphabets, a
+semantic greatest quotient, nor existence of a finite residual quotient
+alone proves effective synthesis, effective quotient computation, or an
+unconditional decidability theorem.
+

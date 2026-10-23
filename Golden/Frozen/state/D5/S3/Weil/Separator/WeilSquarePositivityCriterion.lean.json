@@ -1,1 +1,1 @@
-{"statement_id":"sha256:e779e34319ef218e03c18979e75b07b2f8e2cc586f7de462d7cea780dfbf4fda"}
+{"statement_id":"sha256:e779e34319ef218e03c18979e75b07b2f8e2cc586f7de462d7cea780dfbf4fda","declarations":[{"declaration_name_key":"ns(ns(ns(ns(ns(ns(n0,2:D5),2:S3),4:Weil),9:Separator),29:WeilSquarePositivityCriterion),27:rh_iff_weilSquarePositivity)","kind":"theorem"},{"declaration_name_key":"ns(ns(ns(ns(ns(ns(n0,2:D5),2:S3),4:Weil),9:Separator),29:WeilSquarePositivityCriterion),31:weilSquarePositivity_implies_rh)","kind":"theorem"}]}

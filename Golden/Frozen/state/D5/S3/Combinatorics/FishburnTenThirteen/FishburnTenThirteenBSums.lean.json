@@ -1,1 +1,1 @@
-{"statement_id":"sha256:1f05faf0f09afbb0377cccaf7c9f2eb8b83047dddb7e9cabcddc6fb9bdc2d311"}
+{"statement_id":"sha256:1f05faf0f09afbb0377cccaf7c9f2eb8b83047dddb7e9cabcddc6fb9bdc2d311","declarations":[{"declaration_name_key":"ns(ns(ns(ns(ns(ns(n0,2:D5),2:S3),13:Combinatorics),19:FishburnTenThirteen),24:FishburnTenThirteenBSums),18:crossing_sum_sites)","kind":"theorem"}]}

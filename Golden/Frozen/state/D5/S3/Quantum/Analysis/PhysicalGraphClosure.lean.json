@@ -1,1 +1,1 @@
-{"statement_id":"sha256:486b635fd43dffcdfd9997d8aeab01df666b92fce703a04a0354dbbfadb8eaad"}
+{"statement_id":"sha256:fa5bff45fdce84f71d1a32abead064269167159c428fd5f1b5a08df6c8137793","declarations":[{"declaration_name_key":"ns(ns(ns(ns(ns(ns(n0,2:D5),2:S3),7:Quantum),8:Analysis),20:PhysicalGraphClosure),22:physical_graph_closure)","kind":"theorem"}]}

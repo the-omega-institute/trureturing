@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:a2e0c29fb6e82e211d9608d5ccd2e672d41cb8b7a53eaa02212074376c8c727e
+  normalized_sha256: sha256:a2e0c29fb6e82e211d9608d5ccd2e672d41cb8b7a53eaa02212074376c8c727e
+cas_ref: sha256:a2e0c29fb6e82e211d9608d5ccd2e672d41cb8b7a53eaa02212074376c8c727e
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 定义139.13只定义完整候选、后缀和语法状态组成的记忆，不断言后继闭合或存储界。
+    previous_atom_id: 671c8bf03d8b862eab41d81de9c50dc77234d9ace9c1b43cd78852bd1216f78d
+    next_atom_id: 5676f5fe1ec8e788aeaf369eecd5e9c6b7c91c1ede0bc44248227b77dcddfb6f

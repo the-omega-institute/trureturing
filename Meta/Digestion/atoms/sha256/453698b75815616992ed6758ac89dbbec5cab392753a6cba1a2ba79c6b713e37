@@ -1,0 +1,58 @@
+**Theorem 5.2 (classification with universal finite-interference liveness).**
+As $P$ and a designated finite cleaned boundary $b$ vary, the possible
+source sets $\mathcal S_{P,b}$ are exactly the computably enumerable
+backward-closed subsets of $\mathcal T$, even when producers must be
+record-sound on every returning history and terminate on every source
+under every progressing finite-interference schedule. If $b$ must be
+actually attained, they are exactly the nonempty such subsets.
+
+Proof of necessity. Corollary 3.6 supplies computable enumerability.
+If an execution from $\rho^j u$ returns $b$, start instead at $u$, insert
+$j$ writer updates before the first observer event, then execute the same
+subsequent interleaving. The observer still has $c_a$ and the register is
+now precisely the earlier run's invocation tree. Induction preserves
+every Read, local state, permission and final byte of $b$. This is a
+finite legal schedule, proving (NASF.8). It uses unprotected entry and
+source-independent initialization, not liveness. Attainment gives a
+source witness.
+
+Proof of sufficiency. Fix an effective enumerator of $A$. Let $E(q)$
+be the finite list of completed tree encodings emitted in its first $q$
+machine steps. This is a total finite simulation; an unfinished encoding
+is not an emitted tree. No decision procedure for $A$ is assumed.
+Construct this one finite observer:
+
+1. Use RA$\ell$ with empty cut to acquire a full description $t=U_v$.
+   Keep $t$ across the next capture.
+2. Use RA$\ell$ with root cut to acquire its row and $k=\ell(U_w)$
+   at a later validation $w$.
+3. Simulate the enumerator for exactly $k$ steps. Select tag `yes` iff
+   $t$ equals a tree in $E(k)$; otherwise select `no`. Accompany either
+   tag by the acquired root row of $U_w$.
+4. Retain only the tag, root cut, constant row and canonical common
+   state. Clear and retract $t$, $k$, enumerator tape, guards, counters,
+   reply latches and all remaining nonoutput regions before Return.
+
+Only paid native Reads in the supplied captures and effective computation
+on acquired finite data are used. This program never waits for a writer
+update or an enumeration success. Under every progressing finite-interference
+schedule both captures terminate, $k$ is finite, finite simulation and
+comparison finish, and cleanup finishes. Every returned row is true at $w$.
+
+Let $b$ be the fixed `yes` boundary. If returned, $t\in A$ and
+$t=\rho^{e_v}u$, so backward closure gives $u\in A$. Conversely, if
+$u\in A$, choose an enumeration stage $q$ that emits it. Keep the first
+capture quiescent from invocation, so $t=u$. Insert $j$ updates between
+captures with $\ell(u)+j\ge q$, then keep the second capture quiescent.
+Its authentic stamp is $k=\ell(u)+j$, so simulation sees $u$ and returns
+exactly $b$. The writer can halt thereafter. This proves both inclusions
+without source-size advice, a schedule bound, source-specific installation
+or a free clock. If $A$ is empty, `yes` is unattained; otherwise any member
+gives an actual finite witness. $\square$
+
+The existence direction chooses one enabling schedule. It does not say
+all schedules return `yes` on members of $A$: a short quiescent second
+capture can give too small a budget and return `no`. All these schedules
+still terminate, and all returned rows are sound. Universal liveness and
+existential possible-output support are distinct quantifiers.
+

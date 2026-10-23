@@ -1,0 +1,74 @@
+**Theorem 5.2 (conditional minimum).** The minimum supplemental state count is
+
+$$
+m(R,\mathcal U)=
+\begin{cases}
+1,&L_C=\varnothing,\\
+|M_{\mathcal U}|,&L_C\ne\varnothing.
+\end{cases}
+\tag{NAR.5.2}
+$$
+
+On the full unrestricted row fiber,
+
+$$
+M_{\mathcal U_R}=B\cup\{\bot\},\qquad
+m(R,\mathcal U_R)=
+\begin{cases}
+1,&L_C=\varnothing,\\
+k+1,&L_C\ne\varnothing.
+\end{cases}
+\tag{NAR.5.3}
+$$
+
+These formulas include $k=0$. A conditional fixed-width binary supplement
+requires exactly $\lceil\log_2 m(R,\mathcal U)\rceil$ bits.
+Extraction without extra queries has the producer-data condition of §4.
+
+**Proof.** With no left birth, Theorem 3.1 gives one common sufficient
+supplement; a nonempty domain cannot use zero states.
+With a left birth, sources with different feasible alpha labels have
+different next rows by Theorem 3.1. They therefore cannot share a
+supplemental state with the same $P,R,h$. This gives the lower bound
+$|M_{\mathcal U}|$. Retaining the feasible alpha label attains it and,
+by the same theorem, determines all future rows. This is a count on the
+actual retained fiber, with all its joint restrictions.
+
+For the full fiber, let $c_0=\beta$ and
+$c_{j+1}=\langle\beta,c_j\rangle$. These are mutually distinct non-alpha
+finite trees. Assign distinct members to every old class to realize
+$\bot$. For any $b\in B$, assign $\alpha$ to $b$ and distinct $c_j$ to
+all other classes. The supplied legal-filling bijection (NAR.1.4) realizes
+the same row and label $b$. There are no other possible labels by
+Definition 1.3. For $k=0$ only the empty filling and label $\bot$ exist.
+
+A fixed-width string of length $d$ has $2^d$ configurations, so at least
+$m$ configurations require $d\ge\lceil\log_2 m\rceil$. Naming the finite
+feasible labels in canonical order gives a code of that length.
+For an arbitrary declared $\mathcal U$, this cardinal minimum presupposes
+that its feasible alphabet is specified to the decoder; it does not
+supply a feasibility algorithm for arbitrary kinds of extra information.
+The full-fiber code is explicit from $R$, and §4 computes its actual
+label from acquired values. $\square$
+
+The finite cardinal comparison reuses
+[CompletionStateCardinality](../../../D5/S3/ObserverMemory/Prediction/CompletionStateCardinality.lean),
+`completion_state_cardinality_mono`: a sufficient finite supplement maps
+onto the feasible next-row image and cannot have fewer elements.
+The native work is identifying that image by the conditional alpha labels
+and supplying the source-level recurrence and acquired extraction,
+not a new general finite-state counting principle.
+
+For finite truthful literal constraints
+$H=((n_j,q_j,c_j))$, the exact joint fiber and its effective feasibility
+test are supplied by
+[Sparse History Theorems 60.2 and 61.1](RECURSIVE_RELATIONAL_OBSERVATION_SPARSE_LITERAL_HISTORY_TRANSPORT.md).
+Their existing test also determines the finite feasible alphabet in
+(NAR.5.1): label $b$ is feasible precisely when adding the constraint
+$(0,p_b,\alpha)$ leaves a nonempty joint fiber. The label $\bot$ is feasible
+precisely when at least one simultaneous choice of replies beta or branch
+at all $(0,p_b)$ leaves a nonempty fiber. There are finitely many such
+choices; $k=0$ gives the empty choice. These are feasibility constraints,
+not invented read events or selected fillings asserted to be the actual
+source. No new general solver is needed for this restricted computation.
+

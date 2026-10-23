@@ -1,0 +1,32 @@
+**Definition 95.1 (the combs, the grafts and the observed table).**
+For $m,h\in\mathbb N_0$, let
+
+$$
+K_0=\alpha,\qquad K_{m+1}=\langle K_m,\alpha\rangle,
+\qquad W_0(t)=t,\qquad W_{h+1}(t)=\langle W_h(t),\alpha\rangle.
+\tag{95.1}
+$$
+
+The $W_h$ are exactly the finite binary grafts in Continuation III,
+(91.8), now applied to these specified native sources. One $t$ is
+retained once, not copied or identified with another occurrence.
+$N_{K_m}=2m+1$, and $N_{W_h(t)}=N_t+2h$.
+For every address $a\in\{L,R\}^*$ of length at most $h$, retain
+the full four-reply observation
+
+$$
+p_h(t)(a)=
+\begin{cases}
+\alpha,&a\text{ is an alpha leaf},\\
+\beta,&a\text{ is a beta leaf},\\
+\mathsf{branch},&a\text{ is a pair occurrence},\\
+\mathsf{absent},&a\text{ is not an occurrence}.
+\end{cases}
+\tag{95.2}
+$$
+
+This is the original-root table (91.1), including all addresses below
+early terminal leaves and their absence replies. Its domain is
+$\mathcal T$ with arbitrary finite source size unless an explicit
+source cap or domain promise is imposed.
+

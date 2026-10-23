@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:ed04f8b8de1f8fd99822b9ebfa2ac953ecdaf42c917a52a2db21f51bda589171
+  normalized_sha256: sha256:ed04f8b8de1f8fd99822b9ebfa2ac953ecdaf42c917a52a2db21f51bda589171
+cas_ref: sha256:ed04f8b8de1f8fd99822b9ebfa2ac953ecdaf42c917a52a2db21f51bda589171
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 53. 有限维先验可以把整条事件时间律压进有限个精确截止读数 是章节标题及导引，只说明本节的研究任务、来源或模型范围，不另陈述具体性质、公式或反例。
+    previous_atom_id: 494d86ec907b538d5aab98319ad321942fe412012da6fb66f17edc2e8171dac9
+    next_atom_id: 9b9ec1125ce74bee5bc93306f716158b8e0a8c5abe5f5ac6febdca991244dac5

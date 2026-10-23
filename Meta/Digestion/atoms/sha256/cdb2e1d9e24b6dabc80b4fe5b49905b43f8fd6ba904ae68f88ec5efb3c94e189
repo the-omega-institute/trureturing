@@ -1,0 +1,83 @@
+## theorem 2.2: 平均核闭合不足的两步反例
+
+**Claim status: open.**
+
+定义第一步输出为
+$$
+o_1=x(s),
+$$
+并令
+$$
+T(s)=
+\begin{cases}
+F[1],&y(s)=1,\\
+F[\mathrm{null}],&y(s)=0.
+\end{cases}
+$$
+第二步输出下一状态的 $x$ 值，因此 $o_2=y(s)$。两步记录为
+$$
+F[\mathrm{null}]\mapsto00,\quad
+F[1]\mapsto10,\quad
+F[2]\mapsto00,\quad
+F[3]\mapsto01,\quad
+F[1,3]\mapsto11.
+$$
+于是
+$$
+\Pr(00)=1-X-Y+\kappa,\quad
+\Pr(10)=X-\kappa,\quad
+\Pr(01)=Y-\kappa,\quad
+\Pr(11)=\kappa.
+$$
+单独的两次边缘读数为
+$$
+\Pr(o_1=1)=X,\qquad \Pr(o_2=1)=Y,
+$$
+而联合记录精确恢复
+$$
+\Pr(o_1=1,o_2=1)=\kappa.
+$$
+
+令 $M_1$、$M_0$ 为输出 $1$、$0$ 的子核，则
+$$
+M_1 1=x,\qquad
+M_1x=xy,\qquad
+M_0x=y-xy,
+$$
+从而
+$$
+M_1M_1 1=xy.
+$$
+但平均核
+$$
+K=M_0+M_1
+$$
+满足
+$$
+K1=1,\qquad Kx=y,\qquad Ky=0,\qquad Kz=0,
+$$
+因此
+$$
+K\mathcal B\subseteq\mathcal B
+$$
+而
+$$
+M_1x=xy\notin\mathcal B,\qquad
+M_0x=y-xy\notin\mathcal B.
+$$
+在商空间
+$$
+Q=\mathbb R^S/\mathcal B
+$$
+中，
+$$
+[M_1x]=[xy],\qquad [M_0x]=-[xy],\qquad [(M_0+M_1)x]=0.
+$$
+所以
+$$
+K\mathcal B\subseteq\mathcal B
+\not\Rightarrow
+M_{a,o}\mathcal B\subseteq\mathcal B\quad\text{逐输出成立}.
+$$
+完整未来闭包必须保留输出标签。
+

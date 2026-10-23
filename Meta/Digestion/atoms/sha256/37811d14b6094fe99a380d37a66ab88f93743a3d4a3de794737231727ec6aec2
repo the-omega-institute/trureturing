@@ -1,0 +1,25 @@
+**定义 1641.1（变化中的有限状态来源模型）。** 固定非空有限集合 $X$，记 $m=|X|$。允许通道集合 $\mathcal C\subseteq\Delta(X)$ 非空、紧，并包含所有点质量。沿用第 1621 节，以
+
+$$
+F_\alpha(P,\delta;\mathcal C)
+=\min\left\{H_\alpha(w):
+Q=\sum_jw_jq_j,\ q_j\in\mathcal C,
+\operatorname{TV}(P,Q)\le\delta\right\}
+$$
+
+表示有限来源的最小标签熵，$\delta\ge0$，对数为自然对数，零权重不计作正标签。阶零、一与无穷分别采用支撑数的对数、Shannon 熵与最大权重的负对数。第 1626 节的逐阶支撑缩减与达到结论适用，故每个固定阶均有至多 $m$ 个槽位的最优来源；不同阶不必选同一来源。
+
+给两套这样的通道集合定义总变差 Hausdorff 距离
+
+$$
+h(\mathcal C,\mathcal D)
+=\max\left\{
+\sup_{q\in\mathcal C}\inf_{r\in\mathcal D}\operatorname{TV}(q,r),
+\sup_{r\in\mathcal D}\inf_{q\in\mathcal C}\operatorname{TV}(q,r)
+\right\}.
+$$
+
+这里比较的是同一有限状态空间上的允许概率通道。状态空间已经固定，距离也已经选定；它没有自动把两种哲学或宗教的概念安排变成同一概率模型。
+
+第 777–779 节已处理固定乘积来源集合的紧性与距离，第 785、1243 节已处理固定集合下准确来源成本的连续性。本批复用这些方法；新增的问题是通道集合本身也发生变化时，哪些结论继续成立。
+

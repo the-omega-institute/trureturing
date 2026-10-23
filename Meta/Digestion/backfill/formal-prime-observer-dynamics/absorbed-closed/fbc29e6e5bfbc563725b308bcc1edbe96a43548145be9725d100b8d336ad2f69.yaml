@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:fbc29e6e5bfbc563725b308bcc1edbe96a43548145be9725d100b8d336ad2f69
+  normalized_sha256: sha256:fbc29e6e5bfbc563725b308bcc1edbe96a43548145be9725d100b8d336ad2f69
+cas_ref: sha256:fbc29e6e5bfbc563725b308bcc1edbe96a43548145be9725d100b8d336ad2f69
+coverage_gids:
+  - gid: D5/S3/Analytic/ZetaObservation/MinimalSufficientRelation.sample_product_is_minimal_sufficient_relation
+    target_statement_id: sha256:f92bf087d2d422f750dd93fe3152cd4209f524b08fce7481bbada631f17ad17a
+  - gid: D5/S3/Analytic/ZetaObservation/MinimalSufficientRelation.total_log_energy_eq_log_sample_product
+    target_statement_id: sha256:58bb78ff8ab57b11327c4344f2f879d651a99ba0aa3c43d452abc7679cee226d
+receipts:
+  unresolved_subitems: []

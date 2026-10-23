@@ -6,7 +6,31 @@ An oriented circular word with no repeated initial labels cannot reverse by dele
 
 An oriented circular word is a finite list modulo rotation, using the native Cycle carrier. The quotient identifies rotations; it does not additionally identify reversal. Restriction filters a chosen set of labels before taking the rotation class. Deleting x is restriction to labels different from x. A deletion step between C and D requires that deleting x from both gives exactly the same oriented residual circle. DeleteWalk records a finite sequence of these steps and its omission word xs; repeated omissions and omissions outside the initial support are allowed.
 
-**Theorem 1.1 (Untouched Circular Restrictions Are Preserved).**
+**Lemma 1.1 (Restriction Commutes with Reversal).**
+
+$$\forall A \in \mathrm{Type},\; \forall p \in A \to \mathrm{Bool},\; \forall C \in \mathrm{Cycle}\left(A\right),\; \mathrm{restrict}\left(p, \mathrm{reverse}\left(C\right)\right) = \mathrm{reverse}\left(\mathrm{restrict}\left(p, C\right)\right)$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/CircularWords/CircularDeletionTransport.restrict_reverse` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+For every label type A, Boolean predicate p and oriented circle C, restricting reverse(C) equals reversing restrict(p,C). Choose a list representative of C. Filtering its reversal equals reversing its filtered list, and this equality descends to the rotation quotient. The label type may be infinite; the theorem requires no equality decision on A.
+
+**Lemma 1.2 (Successive Restrictions Compose).**
+
+$$\forall A \in \mathrm{Type},\; \forall p \in A \to \mathrm{Bool},\; \forall q \in A \to \mathrm{Bool},\; \forall C \in \mathrm{Cycle}\left(A\right),\; \mathrm{restrict}\left(p, \mathrm{restrict}\left(q, C\right)\right) = \mathrm{restrict}\left((y \mapsto \mathrm{BoolAnd}\left(p\left(y\right), q\left(y\right)\right)), C\right)$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/CircularWords/CircularDeletionTransport.restrict_restrict` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+For every label type A, Boolean predicates p and q and oriented circle C, restriction by q followed by p is restriction by the Boolean conjunction of their values. BoolAnd in the displayed formula denotes Lean's Boolean conjunction, and the arrow expression denotes a function of y. Choose a list representative of C. Filtering it twice equals filtering once by that Boolean conjunction, and the equality descends to the rotation quotient.
+
+**Theorem 1.3 (Untouched Circular Restrictions Are Preserved).**
 
 $$\forall A \in \mathrm{Type},\; [\mathrm{DecidableEq}\left(A\right)] \forall xs \in \mathrm{List}\left(A\right),\; \forall C \in \mathrm{Cycle}\left(A\right),\; \forall D \in \mathrm{Cycle}\left(A\right),\; \forall p \in A \to \mathrm{Bool},\; (\mathrm{DeleteWalk}\left(xs, C, D\right)) \Rightarrow ((\forall x \in A,\; (x \in xs) \Rightarrow (p\left(x\right) = \mathrm{false})) \Rightarrow (\mathrm{restrict}\left(p, C\right) = \mathrm{restrict}\left(p, D\right)))$$
 
@@ -18,7 +42,7 @@ $$\forall A \in \mathrm{Type},\; [\mathrm{DecidableEq}\left(A\right)] \forall xs
 
 For every Boolean predicate p that excludes every omitted label, restriction to p is the same at both ends of a deletion walk. Filtering commutes with rotation, so restriction is independent of the chosen list representative. If p excludes x, filtering after deleting x equals filtering directly. Applying that equality to each deletion step and composing along the walk proves preservation.
 
-**Theorem 1.2 (Negative Transport Omits All but Two Initial Labels).**
+**Theorem 1.4 (Negative Transport Omits All but Two Initial Labels).**
 
 $$\forall A \in \mathrm{Type},\; [\mathrm{DecidableEq}\left(A\right)] \forall xs \in \mathrm{List}\left(A\right),\; \forall C \in \mathrm{Cycle}\left(A\right),\; (\mathrm{DeleteWalk}\left(xs, C, \mathrm{reverse}\left(C\right)\right)) \Rightarrow ((\mathrm{Nodup}\left(C\right)) \Rightarrow (\mathrm{card}\left(\mathrm{toFinset}\left(C\right)\right) \le \mathrm{card}\left(\mathrm{toFinset}\left(xs\right)\right) + 2))$$
 
@@ -35,4 +59,6 @@ If C has no repeated labels and contains all n labels, the bound gives at least 
 ## References
 
 - Truth anchor: `D5/S3/Combinatorics/CircularWords/CircularDeletionTransport.negative_walk_support_bound`
+- Truth anchor: `D5/S3/Combinatorics/CircularWords/CircularDeletionTransport.restrict_restrict`
+- Truth anchor: `D5/S3/Combinatorics/CircularWords/CircularDeletionTransport.restrict_reverse`
 - Truth anchor: `D5/S3/Combinatorics/CircularWords/CircularDeletionTransport.restrict_walk`

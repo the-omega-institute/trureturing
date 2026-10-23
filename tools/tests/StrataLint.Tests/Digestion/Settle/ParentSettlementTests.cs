@@ -82,6 +82,7 @@ public sealed class ParentSettlementTests
                 BackfillInventoryWriter.WriteSourceMetadata(source)),
             RawRepositoryEntry.FromText(moved.SourcePath, before + Encoding.UTF8.GetString(rawChild.AsSpan()) + after),
         }));
+        fixture.CaptureContext();
         using var temporary = new TemporaryDirectory();
         SettleAtomCommandTests.WriteFiles(temporary.Path, fixture.Current);
         var beforeImage = SettleAtomCommandTests.Image(temporary);
@@ -116,6 +117,7 @@ public sealed class ParentSettlementTests
         }));
         var target = DecomposeFixture.Entry(After);
         fixture.Add(target, After);
+        fixture.CaptureContext("foreign");
         var context = AtomContextCommand.Run(fixture.Gateway, ["--atom-id", target.AtomId, "--source", "probe"]);
         Assert.True(context.Success, context.Error);
         Assert.Contains($"PREVIOUS atom_id={lastChild} state={State}\n", context.Output, StringComparison.Ordinal);
@@ -138,10 +140,10 @@ public sealed class ParentSettlementTests
     [InlineData("unresolved", "CHAIN_INCOMPLETE")]
     [InlineData("forged-terminal", "CHAIN_INCOMPLETE")]
     [InlineData("missing-entry", "OCCURRENCE_MISSING")]
-    [InlineData("missing-cas", "INFRASTRUCTURE")]
-    [InlineData("missing-parent-cas", "INFRASTRUCTURE")]
-    [InlineData("corrupt-parent-cas", "INFRASTRUCTURE")]
-    [InlineData("corrupt-cas", "INFRASTRUCTURE")]
+    [InlineData("missing-cas", "OCCURRENCE_MISSING")]
+    [InlineData("missing-parent-cas", "OCCURRENCE_MISSING")]
+    [InlineData("corrupt-parent-cas", "OCCURRENCE_MISSING")]
+    [InlineData("corrupt-cas", "OCCURRENCE_MISSING")]
     [InlineData("identity", "OCCURRENCE_MISSING")]
     [InlineData("overlap", "OCCURRENCE_MISSING")]
     [InlineData("reordered", "OCCURRENCE_MISSING")]
@@ -149,7 +151,6 @@ public sealed class ParentSettlementTests
     [InlineData("nested-corrupt", "OCCURRENCE_MISSING")]
     [InlineData("wrong-descendant-context", "CONTEXT_MISMATCH")]
     [InlineData("wrong-parent-context", "CONTEXT_MISMATCH")]
-    [InlineData("missing-occurrence", "OCCURRENCE_MISSING")]
     [InlineData("duplicate-entry", "OCCURRENCE_MISSING")]
     public void InvalidDescendantOrContextFailsBeforeWrites(string fault, string code)
     {
@@ -262,6 +263,7 @@ public sealed class ParentSettlementTests
         }
         ReplaceFile(fixture, "docs/probe.md", Before + ParentText + After
             + (repeated ? ParentText + Before : ""));
+        fixture.CaptureContext();
         using var temporary = new TemporaryDirectory();
         SettleAtomCommandTests.WriteFiles(temporary.Path, fixture.Current);
         var order = fixture.Document.RequireDigestionEntries().Where(e => e.AtomId != fixture.Parent.AtomId)

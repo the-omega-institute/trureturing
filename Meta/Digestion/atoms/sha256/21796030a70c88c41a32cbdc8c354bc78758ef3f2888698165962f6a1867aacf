@@ -1,0 +1,6 @@
+若另有 $c>0$、$\nu\ge1$ 满足 $\|p\alpha\|_{\mathbb T}\ge c p^{-\nu}$ 对全部正整数 $p$ 成立，则
+\[
+ H<s+\frac{a_\varepsilon}{c}s^{\nu+1}.
+\]
+这些结论对允许任意复数输出常数的预测器仍成立。
+

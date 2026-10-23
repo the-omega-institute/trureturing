@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:ce645f3cd706ba8efc8e93da510c59330042382ab6df03331bbc31cbbe39f891
+  normalized_sha256: sha256:ce645f3cd706ba8efc8e93da510c59330042382ab6df03331bbc31cbbe39f891
+cas_ref: sha256:ce645f3cd706ba8efc8e93da510c59330042382ab6df03331bbc31cbbe39f891
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: Model specification of required correctness and permitted intermediate states, not a claim that such an algorithm exists.
+    previous_atom_id: 582b37bf36721da720dd9ae4d77bf6435e0f2bc016b9eb3f067c8e575ff1a2a2
+    next_atom_id: 083b7658fb28ffb6609e6c46923ebd4e8c9c27dc3813f06187a0aa23c398e7d4

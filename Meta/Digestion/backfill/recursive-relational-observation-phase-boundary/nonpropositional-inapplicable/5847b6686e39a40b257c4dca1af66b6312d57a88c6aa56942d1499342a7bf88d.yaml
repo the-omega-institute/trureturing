@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:5847b6686e39a40b257c4dca1af66b6312d57a88c6aa56942d1499342a7bf88d
+  normalized_sha256: sha256:5847b6686e39a40b257c4dca1af66b6312d57a88c6aa56942d1499342a7bf88d
+cas_ref: sha256:5847b6686e39a40b257c4dca1af66b6312d57a88c6aa56942d1499342a7bf88d
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 结构性小标题：仅标示三维达到构造与精确容量这一论证主题，无陈述正文。
+    previous_atom_id: e5f5fdd7b25f78ed3ba30512afbfc13df708731970f937e1f43bcb2ba9f1a593
+    next_atom_id: d5d0ac1675d7042798cf1b58af8dc6ec2900cc5e1513d1456218031015af6747

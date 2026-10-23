@@ -66,7 +66,7 @@ private theorem bernstein_linearIndependent_aux (n k : Nat) (h : k <= n + 1) :
       · intro a x _ hx
         simp [hx]
 
-private theorem bernstein_linearIndependent_complex (n : Nat) :
+theorem bernstein_linearIndependent_complex (n : Nat) :
     LinearIndependent Complex fun nu : Fin (n + 1) =>
       bernsteinPolynomial Complex n nu :=
   bernstein_linearIndependent_aux n (n + 1) le_rfl

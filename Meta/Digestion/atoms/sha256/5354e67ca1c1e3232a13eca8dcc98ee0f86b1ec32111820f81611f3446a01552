@@ -1,0 +1,43 @@
+**Theorem 6.4 (safe echo-only acquisition obstruction).** Fix one initial
+type and a nonempty finite set of compatible initial prefixes with the
+same acquired record. Consider a deterministic adaptive protocol whose
+only subsequent outputs are successful public types and supplied
+action labels. Require every requested action to be legal for every
+still-compatible realization, and allow stopping as a controller
+decision. Every finite transcript, stopping decision and returned
+answer is identical across those initial prefixes. Such a protocol
+cannot recover any target of the initial prefix that is nonconstant
+on this initial family.
+
+For $C_m$, even if initialization supplies $(\{x\},0)$ at the
+selector, the compatible prefixes $xj0$ have $M$ different initial
+anchor residuals. No protocol of the stated kind can acquire the
+missing initial residual.
+
+Proof. Initial records and types agree. If transcripts agree through
+one stage, the deterministic protocol either stops identically or
+requests the same named action. Safety gives a successful edge in
+each compatible realization. Its label is that common supplied
+input, and its target type depends only on the common old type
+and action. Thus the next transcripts again agree. Induction gives
+the assertion at every finite stage, including the terminal answer.
+A single answer cannot equal two different target values.
+
+In the selector family the $M$ values $S_{xj}=\{0x,1j\}$ are distinct
+but have the same derivative $\{x\}$ and retained bit $0$.
+For a concrete safe common prefix of an experiment, execute $-0,+1$.
+All states reach $xj1$ with credit zero, and the unknown forward
+residual becomes $\{j\}$. Since $j$ ranges over all binary $m$-words,
+neither next append value is legal for every candidate. No information
+about $j$ has been returned. Appending the known selected block along
+the original branch can instead make current boundaries coincide;
+that changes the later task and does not recover the initial anchor.
+
+The pairwise separating words of Theorem 4.3 certify unequal legal
+domains. They are not uniformly safe identification experiments.
+Observing an illegal-request response, a timeout encoding legality,
+or an enabled-action query would add an output absent from Definition
+1.2. Static optimal labels in Proposition 3.2 and retained labels
+in Theorem 6.3 are consequently different acquisition assertions.
+$\square$
+

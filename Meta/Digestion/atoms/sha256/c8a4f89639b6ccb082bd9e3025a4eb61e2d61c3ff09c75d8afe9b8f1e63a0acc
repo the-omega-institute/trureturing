@@ -1,0 +1,55 @@
+**Theorem 4.2 (auxiliary-free exact native binary realization).** For
+every $d,n\ge1$ and every complete template $\Theta$,
+
+$$
+c(C_\Theta)=\{z\in\mathcal A^V:z\models\mathcal N_\Theta\}.
+\tag{CBN.17}
+$$
+
+This is a bijective representation with one array per original tuple,
+including when the solution set is empty. In addition to $n$ root and
+$n(a_d-1)$ parent-child constraints, at most
+
+$$
+n\bigl((d-1)2^d+1\bigr)
+\tag{CBN.18}
+$$
+
+target constraints suffice. Every relation is unary or binary on the
+same four-element domain $\mathcal A$; all relation types belong to a
+fixed finite collection independent of $d,n$.
+
+Proof. First restrict to legal arrays by the root and parent-child
+constraints. Theorem 2.2 then supplies a unique $x\in S_d^n$ with
+$z=c(x)$. Consider one donor equation, and fix its actual donor reply
+$y=z_{(j,a)}$. Its compiled constraints say exactly
+
+$$
+r_{x_i}(v)\in P_{q,v}(\delta(y))\quad(v\preceq q).
+$$
+
+Theorem 3.2 makes this equivalent to
+$\Gamma_q(x_i)=\delta(y)$, the original equation. If a reference
+coincides with the donor, the diagonal restriction substitutes the same
+value $y$ and expresses that very same condition. No independently
+chosen copy of $y$ is introduced. For a constant target the unary
+constraints are equivalent to its original constant equation by the
+same theorem. Conjoining all targets proves both directions of
+(CBN.17). Reconstruction is unique, so there is no existential
+multiplicity affecting counts.
+
+A target word of length $l$ contributes $l+1$ conditions. There are
+$2^l$ such words, and
+
+$$
+\sum_{l=0}^{d-1}(l+1)2^l=(d-1)2^d+1.
+$$
+
+Induction on $d$ verifies the identity, starting with one at $d=1$.
+The rooted binary menu has $a_d-1$ parent-child incidences. These give
+the stated counts. There are only $2^4$ unary and $2^{16}$ binary
+relations on $\mathcal A$, so the available relation collection is
+finite without any depth-dependent domain enlargement. The donor
+indices and decoder choices remain part of the specified template.
+$\square$
+

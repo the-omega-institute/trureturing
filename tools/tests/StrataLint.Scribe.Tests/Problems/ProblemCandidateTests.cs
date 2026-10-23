@@ -420,7 +420,7 @@ public sealed partial class ProblemCandidateTests
                 TemporaryFileSystem.Directory.CreateDirectory(Path.GetDirectoryName(path)!);
                 TemporaryFileSystem.File.WriteAllText(
                     path,
-                    "{\"statement_id\":\"sha256:" + new string('d', 64) + "\"}\n",
+                    "{\"statement_id\":\"sha256:" + new string('d', 64) + "\",\"declarations\":[]}\n",
                     encoding);
             }
 

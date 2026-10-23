@@ -1,1 +1,1 @@
-{"statement_id":"sha256:58cec1c19ee03b29105edf8ee7fcd5296eced431d03b4df9078aceea60dbc7f7"}
+{"statement_id":"sha256:58cec1c19ee03b29105edf8ee7fcd5296eced431d03b4df9078aceea60dbc7f7","declarations":[{"declaration_name_key":"ns(ns(ns(ns(ns(ns(n0,2:D5),2:S1),5:Depth),18:ContinuedFractions),16:GaussInverseStep),36:gauss_inverse_step_recovers_quotient)","kind":"theorem"}]}

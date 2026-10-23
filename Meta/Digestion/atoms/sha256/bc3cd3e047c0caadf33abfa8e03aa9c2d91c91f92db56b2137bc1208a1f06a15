@@ -1,0 +1,42 @@
+**Definition 8.4 (effective lower-convergence obligation for the original rate).**
+With the unchanged native quantities, FMR supplies
+
+$$
+\begin{aligned}
+\sigma_d&=\inf_{n\ge1}\frac{\log_2K_d(n)}n,
+\qquad \lambda=\sup_{d\ge1}2^{-d}\sigma_d,\\
+0&\le\lambda-2^{-d}\sigma_d\le2^{-d}\phi,\qquad
+\phi=\lim_{h\to\infty}2^{-h}\log_2U_h,\quad
+U_0=1,\ U_{h+1}=1+U_h^2.
+\end{aligned}
+\tag{CBN.34}
+$$
+
+Theorem 5.2 preserves these optima over every length. It leaves open
+an explicit effective error
+
+$$
+\sigma_d\ge\frac{\log_2K_d(n)}n-\eta_d(n),\qquad
+\eta_d(n)\longrightarrow0,
+\tag{CBN.35}
+$$
+
+or a complete effective all-template lower hierarchy with certified
+approximation error. At fixed $d,n$, finite enumeration computes cover
+optima and network masses. A finite $K_d(n)$ bounds its defining
+infimum from above. Finite maximal masses bound an all-length supremum
+from below; they cannot certify the upper bound needed in (CBN.32).
+No reversal of these inequalities follows from an exact recoding.
+The constructor correspondence alone does not establish completeness
+of product-weight certificates for $\sigma_d$.
+
+The general exact $M_1(D)$, sharp $\lambda$ and broader recovery
+programme therefore retain their original goals. A relation requiring
+further control is the all-size family of complete native constructor
+networks with their owned block potentials, or a lawful alternative
+with a proved uniform loss. The strict example in Proposition 5.3
+does not give such a loss estimate. NDR's bounded-original-block
+obstruction does not exclude lawful finer cuts or global recoloring.
+No noncomputability, physical geometry, causal realization or universal
+two-body sufficiency follows from this constructor representation.
+

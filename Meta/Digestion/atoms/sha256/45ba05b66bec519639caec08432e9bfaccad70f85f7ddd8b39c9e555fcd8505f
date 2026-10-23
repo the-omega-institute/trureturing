@@ -1,0 +1,22 @@
+- 因此局部闭包与完整 continuation 不交换。
+
+形式上：
+
+$$
+\operatorname{Continuation}
+\circ
+\operatorname{Marginalization}
+\neq
+\operatorname{Marginalization}
+\circ
+\operatorname{Continuation}.
+$$
+
+而在五态 FIB ATOM 层，最小的高阶方向就是 $xy$，也就是
+
+$$
+E[xy]=\kappa.
+$$
+
+因此可以把 $\kappa$ 看成三位窗口的第一阶“高阶信息逃逸坐标”：
+

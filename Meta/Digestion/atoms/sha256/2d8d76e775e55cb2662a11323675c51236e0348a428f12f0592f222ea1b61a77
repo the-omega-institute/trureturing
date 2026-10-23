@@ -1,0 +1,8 @@
+\[
+d_\varphi(x)
+=
+\left\lceil
+\log_\varphi\frac1x
+\right\rceil.
+\]
+

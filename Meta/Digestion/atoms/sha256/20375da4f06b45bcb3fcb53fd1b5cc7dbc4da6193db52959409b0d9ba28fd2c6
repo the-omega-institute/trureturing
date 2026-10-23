@@ -1,0 +1,78 @@
+**命题 100.8（固定条件精度需要此方案的近线性种子）。** 固定 $\ell\ge2$ 和 $0<\delta<1$，置
+
+$$
+\Lambda_\delta
+=\frac{(1-\delta)(1-p_\ell)}{\delta p_\ell}.
+\tag{100.24}
+$$
+
+对于定义100.3的均匀单点方案，$\Delta_{\ell,q}\le\delta$ 的准确判据为 $\beta_{\ell,q}\le1/\Lambda_\delta$。因此
+
+$$
+\begin{aligned}
+\Delta_{\ell,q}\le\delta&\ \Longrightarrow\ q\ge\Lambda_\delta,\\
+q\ge(\ell-1)\Lambda_\delta&\ \Longrightarrow\ \Delta_{\ell,q}\le\delta.
+\end{aligned}
+\tag{100.25}
+$$
+
+$q$ 只取不小于2的二次幂。前一行是必要条件，后一行是充分条件，二者不被断言为同一个充要域规模。更显式地，必要、充分条件分别可写为
+
+$$
+\begin{aligned}
+q&\ge\frac{1-\delta}{\delta}
+\left(\frac{2^\ell}{2\ell+1}-1\right)
+\quad\text{（必要）},\\
+q&\ge(\ell-1)\frac{1-\delta}{\delta}(2^\ell-1)
+\quad\text{（充分）}.
+\end{aligned}
+\tag{100.26}
+$$
+
+对固定 $\delta$，满足条件精度的种子位数必须有 $d\ge\ell-O(\log\ell)$，而可用 $d\le\ell+O(\log\ell)$ 保证此精度。这些是本方案的种子规模界，不是任意随机档案器的下界。
+
+证明。式（100.18）的分母严格为正，通分并移项得到
+
+$$
+\Delta_{\ell,q}\le\delta
+\quad\Longleftrightarrow\quad
+(1-\delta)(1-p_\ell)\beta_{\ell,q}\le\delta p_\ell
+\quad\Longleftrightarrow\quad
+\beta_{\ell,q}\le\frac1{\Lambda_\delta}.
+\tag{100.27}
+$$
+
+若精度达标，（100.21）的下界 $1/q\le\beta$ 迫使 $q\ge\Lambda_\delta$。若 $q\ge(\ell-1)\Lambda_\delta$，同式的上界给 $\beta\le(\ell-1)/q\le1/\Lambda_\delta$，所以精度达标。必要界用的是实际强制根，不能从根数上界倒推必要性。
+
+二项系数相邻比为 $(2\ell-j)/(j+1)$，故 $\binom{2\ell}{\ell}$ 是 $2\ell+1$ 个系数中的最大项；这些系数之和为 $4^\ell$，于是
+
+$$
+\frac{4^\ell}{2\ell+1}
+\le\binom{2\ell}{\ell}\le4^\ell,\qquad
+\frac{1-p_\ell}{p_\ell}
+=\frac{\binom{2\ell}{\ell}}{2^\ell}-1.
+\tag{100.28}
+$$
+
+把两侧分别代入（100.25），得到（100.26）。
+
+写 $c_\delta=(1-\delta)/\delta>0$。当 $\ell$ 足够大，$2^\ell/(2\ell+1)\ge2$，必要界进一步给
+
+$$
+d=\log_2q
+\ge\ell-\log_2(2\ell+1)+\log_2(c_\delta/2).
+\tag{100.29}
+$$
+
+另一方面，公开取
+
+$$
+d_{\rm suff}
+=\max\left\{1,
+\left\lceil\log_2\bigl((\ell-1)c_\delta(2^\ell-1)\bigr)\right\rceil
+\right\}
+\tag{100.30}
+$$
+
+就满足（100.26）的充分界；由向上取整至多加1，且 $2^\ell-1\le2^\ell$，有 $d_{\rm suff}\le\ell+O(\log\ell)$。结合（100.29）即得所列近线性范围。证毕。
+

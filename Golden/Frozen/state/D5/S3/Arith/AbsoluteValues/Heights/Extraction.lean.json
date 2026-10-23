@@ -1,1 +1,1 @@
-{"statement_id":"sha256:0e1e2760925d1f2b36104d49133a2ece6e46c78e8f1607af003d404986addaa6"}
+{"statement_id":"sha256:783605d330c30898c1d1cd4175f43ea8d488b2a1b14057eb31ab7b68ba0207c9","declarations":[{"declaration_name_key":"ns(n0,48:exists_linearIndependent_comp_of_lt_finrank_span)","kind":"theorem"},{"declaration_name_key":"ns(ns(n0,17:LinearIndependent),40:fintype_card_le_finrank_mul_finrank_span)","kind":"theorem"},{"declaration_name_key":"ns(ns(n0,17:LinearIndependent),41:exists_linearIndependent_comp_finrank_mul)","kind":"theorem"}]}

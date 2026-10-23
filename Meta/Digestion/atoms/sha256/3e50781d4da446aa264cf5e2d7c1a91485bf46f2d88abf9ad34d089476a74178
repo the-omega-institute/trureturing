@@ -1,0 +1,11 @@
+因此 $\dim\ker(A_nB_n)=c_n+h_n$，且
+
+$$
+\begin{aligned}
+E_n&=\sum_{k=0}^{K_n}kN_{n,k},\\
+h_n&=\sum_{k=2}^{K_n}N_{n,k},\\
+c_n&=E_n-V_n+1=\sum_{k=2}^{K_n}(k-1)N_{n,k},\\
+c_n-h_n&=\sum_{k=3}^{K_n}(k-2)N_{n,k}.
+\end{aligned}
+$$
+

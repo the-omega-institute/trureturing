@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:17b7f5bf8c800c49096b38ea66677f38ae91fd3acc00b6ef8dfae5fc14dccae8
+  normalized_sha256: sha256:17b7f5bf8c800c49096b38ea66677f38ae91fd3acc00b6ef8dfae5fc14dccae8
+cas_ref: sha256:17b7f5bf8c800c49096b38ea66677f38ae91fd3acc00b6ef8dfae5fc14dccae8
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 纯定义段仅引入本节的对象、记号或术语（**定义。** 对整数二阶矩阵 $A$ 与自然数 $n$，采用列向量约定，定义返回模），没有另行断言这些对象的性质。
+    previous_atom_id: 03876cd9f45f4bd560aa5a37ee16e1a34919490b63040cff6ed598a875f43550
+    next_atom_id: beda794232fe2398cd5cccf34c48baca9822f75acfef14812c071e650440a209

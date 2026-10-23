@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:0a2f02904e927cd09f04be8412eb9c3e5716431061d050ce0d2ed31871da1895
+  normalized_sha256: sha256:0a2f02904e927cd09f04be8412eb9c3e5716431061d050ce0d2ed31871da1895
+cas_ref: sha256:0a2f02904e927cd09f04be8412eb9c3e5716431061d050ce0d2ed31871da1895
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 定义66.21引入读取态、终止态、等待态与后继表的记号，仅规定控制器语法，不提出正确性或容量命题。
+    previous_atom_id: 56ec8775ae1548e304af2a5b687ae003949f1e2fc1090d24eb7ce388a86d49a0
+    next_atom_id: c0e6fe9b53c4646689c394f606d0ee7f5e821fa060ccce555588a7de71477be3

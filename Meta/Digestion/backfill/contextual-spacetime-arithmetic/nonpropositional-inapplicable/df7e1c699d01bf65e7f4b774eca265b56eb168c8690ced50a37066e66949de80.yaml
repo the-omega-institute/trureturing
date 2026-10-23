@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:df7e1c699d01bf65e7f4b774eca265b56eb168c8690ced50a37066e66949de80
+  normalized_sha256: sha256:df7e1c699d01bf65e7f4b774eca265b56eb168c8690ced50a37066e66949de80
+cas_ref: sha256:df7e1c699d01bf65e7f4b774eca265b56eb168c8690ced50a37066e66949de80
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 本段只推导前述来源联合分箱的运算公式，不另立命题。
+    previous_atom_id: a29622f89d6515a16264b4892e91b9d461cf0fdf332162e770a5158c4b109c7d
+    next_atom_id: 97332a136467ee4c358c3dcb28ea40065b2528ce0eb5db1f70d717ba904a1704

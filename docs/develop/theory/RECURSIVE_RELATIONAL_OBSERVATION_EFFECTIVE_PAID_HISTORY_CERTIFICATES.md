@@ -1557,3 +1557,493 @@ The result is a source-specific obstruction and a necessary continuation-dispers
 
 
 ## 追加锚（本行以下为增补区）
+
+## 16. Compact complete-law circulation and finite own-law regeneration
+
+Fix the original once-$K$ source of Definitions 1.1–1.3, with one installed finite or countable prior $\mu$, positive endpoint masses, and at least one supported depth $k\ge3$. All supported interior depths are retained. Write
+
+$$
+R_\mu=\overline{\{r_k:\mu(k)>0\}}\subset[1/3,2/5].
+$$
+
+This is the parameter support closure; $\mathfrak S_\mu$ continues to denote the class of finite regular stationary tables in Corollary 2.3. The objective uses configuration-before-TV on the complete carrier, with the supremum over all original positive paid histories; law-order comparisons are auxiliary. The raw-law notation removes only the deterministic current-record rendering $I_c$; it does not remove Reads, records, permissions, completion, matching Stop or delivery. The stationary realization, parameter continuity, finite cells and two-phase contraction of §§2, 5 and 9 are reused. The additional bridge is from arbitrary feasible complete-law edge measures to actual finite tables.
+
+**Definition 16.1 (complete law spaces and the two actual edges).** Let $\Omega_p,\Omega_\beta$ be the two complete countable raw carriers of Definition 1.2, including their respective infinite noncompletion outcomes $\infty_p,\infty_\beta$. Prefixing $\beta:\Omega_\beta\to\Omega_p\setminus\{\alpha\}$ and $\alpha:\Omega_p\to\Omega_\beta\setminus\{\beta\}$ includes these outcomes. Put $\lambda=4/15$, and for integers $L\ge0$ set
+
+$$
+\begin{aligned}
+T_{p,L}&=\{w_{j,b}:j\ge L,\ b=0,1\}\cup\{\infty_p\},\\
+T_{\beta,L}&=\{\alpha w_{j,b}:j\ge L,\ b=0,1\}\cup\{\infty_\beta\}.
+\end{aligned}
+\tag{16.1}
+$$
+
+Define spaces of normalized probability laws, with the full TV metric, by
+
+$$
+\begin{aligned}
+\mathcal K_p&=\{q:u(q):=q(\alpha)\in[1/3,2/5],\quad
+                  q(T_{p,L})\le\lambda^L\ (L\ge0)\},\\
+\mathcal K_\beta&=\{w:v(w):=1-w(\beta)\in[1/3,2/5],\quad
+                  w(T_{\beta,L})\le(2/5)\lambda^L\ (L\ge0)\}.
+\end{aligned}
+\tag{16.2}
+$$
+
+The infinite atoms are present, although these bounds force their mass to zero. Let $\mathcal K=\mathcal K_p\times\mathcal K_\beta$. Use two separately normalized Borel probability measures $\gamma,\zeta$ on $\mathcal K$, with shared marginals
+
+$$
+\gamma_p=\zeta_p=\sigma_p,\qquad
+\gamma_\beta=\zeta_\beta=\sigma_\beta.
+\tag{16.3}
+$$
+
+The coordinates of $\gamma$ are the current p law and successor suspended law on the acquired p-$\beta$ edge. The coordinates of $\zeta$ are the successor p law and current suspended law on the acquired suspended-$\alpha$ edge. Their coordinate order is the same, but their conditional equations condition on different coordinates. Neither edge is weighted by a synthetic emission probability. Define
+
+$$
+\begin{aligned}
+\mathcal E_{B,z}(q,w)&=q(\beta z)-(1-u(q))w(z),&&z\in\Omega_\beta,\\
+\mathcal E_{A,t}(q,w)&=w(\alpha t)-v(w)q(t),&&t\in\Omega_p.
+\end{aligned}
+\tag{16.4}
+$$
+
+A pair is feasible when (16.3) holds and, for every indicated complete outcome and every real continuous state test,
+
+$$
+\int f(q)\mathcal E_{B,z}(q,w)\,d\gamma=0
+\quad(f\in C(\mathcal K_p)),\qquad
+\int g(w)\mathcal E_{A,t}(q,w)\,d\zeta=0
+\quad(g\in C(\mathcal K_\beta)).
+\tag{16.5}
+$$
+
+Write $\mathcal F$ for these pairs. Their configuration losses and value are
+
+$$
+\begin{aligned}
+\Phi_\mu(\gamma,\zeta)
+ &=\max\left\{\sup_{r\in R_\mu}\left[\int\operatorname{TV}(q,P_{p,r})\,d\sigma_p-\rho_p\right],
+ \sup_{r\in R_\mu}\left[\int\operatorname{TV}(w,P_{\beta,r})\,d\sigma_\beta-\rho_\beta\right]\right\},\\
+V_\mu&=\min_{(\gamma,\zeta)\in\mathcal F}\Phi_\mu(\gamma,\zeta).
+\end{aligned}
+\tag{16.6}
+$$
+
+The minimum notation is justified next. These measures are analysis objects, not an installed infinite configuration carrier or an online probability register. In particular (16.5) is a family of conditional complete-measure constraints, not merely an equality of the two marginalized forecasts.
+
+**Lemma 16.2 (compactness and attained complete-law value).** The spaces $\mathcal K_p,\mathcal K_\beta$ are nonempty compact convex spaces in full TV and contain the individual complete laws of every regular stationary table. The feasible set $\mathcal F$ is nonempty, compact and convex in the weak topology of the two edge probability measures. Its objective is continuous and convex, has nonnegative value, and attains the minimum (16.6). No compactness in TV of the edge probability measures is asserted.
+
+Proof. Normalization, nonnegativity, the emission intervals and each tail bound in (16.2) are closed convex conditions in the countable $\ell^1$ probability simplex. That simplex is complete in TV. Collapse $T_{s,L}$ onto one fixed finite outcome at level $L$, keeping every earlier complete outcome. The resulting laws lie in a finite-dimensional simplex, and the full TV displacement is at most $\lambda^L$ at p and $(2/5)\lambda^L$ at suspension. These bounds tend uniformly to zero. Finite-dimensional total boundedness therefore gives total boundedness of each $\mathcal K_s$. Closedness and completeness give compactness. The tails decrease to the infinite atom; continuity from above gives zero mass there without conditioning on completion.
+
+For a finite regular table the p return matrix is
+$\operatorname{diag}(1-u)B\operatorname{diag}(v)A\le\lambda BA$ entrywise. Thus survival of $L$ returns from each label is at most $\lambda^L$. A suspended law first returns with probability at most $2/5$. These are exactly (16.2), with the infinite outcomes retained. The endpoint native laws in (1.2) are examples, since $a_r\le6/25<\lambda$ and $r\le2/5$.
+
+Borel probability measures on a compact metric space form a compact space for weak convergence; this is the compact-space case of Prokhorov's theorem [BILL16, §5]. Hence $\operatorname{Prob}(\mathcal K)^2$ is compact. Each integrand in (16.5) is bounded continuous: individual atom coordinates and $u,v$ are continuous in full TV. Marginal agreement can be expressed by integrals of all continuous functions of each coordinate, so it too is a closed affine condition. The intersection is compact and convex. For nonemptiness take
+
+$$
+\gamma=\zeta=\tfrac12\delta_{(P_{p,r_1},P_{\beta,r_1})}
+                    +\tfrac12\delta_{(P_{p,r_2},P_{\beta,r_2})}.
+\tag{16.7}
+$$
+
+Both source-law generator identities hold at each of its points, so this is equality-feasible. It is not asserted to meet the interior risk bounds.
+
+For a fixed $r$, the configuration loss is an integral of a continuous function, and is continuous in the weak marginal. The supplied parameter estimate (2.4) gives, uniformly in a candidate law,
+
+$$
+|\operatorname{TV}(D,P_{s,r})-\operatorname{TV}(D,P_{s,t})|
+\le L_s|r-t|.
+$$
+
+Given weak convergence of marginals, a finite parameter net in compact $R_\mu$ reduces uniform convergence of the losses to convergence at finitely many parameters, with a uniformly vanishing net error. Consequently their suprema are continuous. Each fixed-parameter loss is affine in its marginal, so its supremum, and then the maximum of the two suprema, is convex. Continuity also shows that the supremum over the actual supported parameters equals that over $R_\mu$, including for a countable prior. In each phase the two endpoint losses have sum at least $\operatorname{TV}(P_{s,r_1},P_{s,r_2})=2\rho_s$; their maximum is at least $\rho_s$. Thus $\Phi_\mu\ge0$. Compactness and continuity now prove attainment. ∎
+
+**Theorem 16.3 (Borel-cell regeneration and the exact regular value).** For every feasible pair and every rational $0<t\le1$, there is one actual finite regular stationary table with at most $N_p(t),N_\beta(t)$ labels of (9.2). It has both acquired flows exactly, and its individual complete laws are generated by its own installed emissions and acquired kernels. With $a_s(t)$ as in (9.4), its losses against every complete target $T$ satisfy
+
+$$
+\begin{aligned}
+-(t+a_s(t))&\le \widehat L_{{\rm conf},s}(T)-L_{{\rm conf},s}(T)\le a_s(t),\\
+|\widehat L_{{\rm law},s}(T)-L_{{\rm law},s}(T)|&\le a_s(t),
+\end{aligned}
+\tag{16.8}
+$$
+
+where $L_{{\rm conf},p}(T)=\int\operatorname{TV}(q,T)\,d\sigma_p$ and
+$L_{{\rm law},p}(T)=\operatorname{TV}(\int q\,d\sigma_p,T)$, with the suspended analogues. Hats denote the finite table with its actual stationary row. The same inequalities hold after any common finite future partition. In particular,
+
+$$
+V_\mu=J(\mathfrak S_\mu)=J(\mathfrak E_\mu),\qquad
+\frac{11}{61}V_\mu\le J(\mathfrak M_\mu)\le V_\mu.
+\tag{16.9}
+$$
+
+For general marginal support the construction is finite approximation. Separately, when both marginals are finitely supported, singleton law cells give exact finite realization with one label per distinct marginal law; that exact realization has no asserted tolerance-dependent label bound. No equality with the original arbitrary-observer value, finite optimizer, effective sampler or resource-preserving replacement is claimed.
+
+Proof. First extend (16.5) to every Borel state cell. For $z\in\Omega_\beta$ define a finite signed Borel measure on $\mathcal K_p$ by
+
+$$
+\nu_z(E)=\int_{E\times\mathcal K_\beta}\mathcal E_{B,z}(q,w)\,d\gamma.
+\tag{16.10}
+$$
+
+Its density is bounded, so its variation is finite. Equation (16.5) says $\int f\,d\nu_z=0$ for all continuous $f$. To see explicitly that this determines every Borel set, for a closed set $F$ use the continuous functions
+$f_n(q)=\max\{0,1-n\operatorname{dist}(q,F)\}$, with the empty-set case zero. They converge pointwise to $1_F$ and are bounded by one. Dominated convergence against $|\nu_z|$ gives $\nu_z(F)=0$. The class of sets on which $\nu_z$ vanishes contains the whole space, is closed under complements and countable disjoint unions, and contains the closed sets, which form a generating intersection-closed family. The pi-lambda theorem therefore gives $\nu_z(E)=0$ for every Borel $E$. Apply the same argument on $\mathcal K_\beta$ to
+$\int_{\mathcal K_p\times E}\mathcal E_{A,t}\,d\zeta$. This is the continuous-test uniqueness principle for finite signed measures (Rudin, *Real and Complex Analysis*, Chapters 2 and 6), applied separately to both edges and every complete outcome.
+
+All law integrals used here exist in $\ell^1$: the coordinate maps are measurable, the carriers are countable and every integrand law has norm one. Tonelli gives normalization of their integrals, and bounded coefficients give absolutely summable signed integrals. Thus equality of every complete atom coordinate, including infinity, is equality of the whole signed measure. There is no finite-word proxy at this step.
+
+Use the finite level-$L$ floor bins of Definition 9.1 on the law spaces themselves, with $L,G,\xi$ as in (9.1). They are Borel cells. Two p partition vectors in one cell have TV at most $(L+1/2)\xi$, and two suspended vectors at most $(L+1)\xi$. Refining their residual cell increases TV by at most its smaller mass. The uniform residual bounds (16.2), $\lambda^L\le t/2$ and $G\ge(2L+2)/t$ therefore give full-law diameter at most $t$ in either phase. There are at most the numbers of cells in (9.2). The emission coordinate $q(\alpha)$, or $w(\beta)$, is among the binned coordinates, so the emission range in each cell has width at most $\xi$.
+
+Retain only cells $C,D$ with positive marginal weight, and define
+
+$$
+\begin{aligned}
+\pi_C&=\sigma_p(C),&\tau_D&=\sigma_\beta(D),\\
+B_{CD}&=\gamma(C\times D)/\pi_C,&
+A_{DC}&=\zeta(C\times D)/\tau_D,\\
+\bar q_C&=\pi_C^{-1}\int_Cq\,d\sigma_p,&
+\bar w_D&=\tau_D^{-1}\int_Dw\,d\sigma_\beta,\\
+\bar u_C&=\pi_C^{-1}\int_Cu(q)\,d\sigma_p,&
+\bar v_D&=\tau_D^{-1}\int_Dv(w)\,d\sigma_\beta.
+\end{aligned}
+\tag{16.11}
+$$
+
+Zero-marginal cells have zero incident mass in both nonnegative edge measures. Separate normalization and shared marginals give stochastic rows and, exactly,
+
+$$
+\sum_C\pi_CB_{CD}=\tau_D,\qquad
+\sum_D\tau_DA_{DC}=\pi_C.
+\tag{16.12}
+$$
+
+The averaged emissions remain regular. Each member law is within $t$ of its own cell centroid by convexity. The Borel identities proved above give the complete centroid equations
+
+$$
+\begin{aligned}
+\bar q_C&=\bar u_C\delta_\alpha+
+ \beta\,\pi_C^{-1}\int_{C\times\mathcal K_\beta}(1-u(q))w\,d\gamma,\\
+\bar w_D&=(1-\bar v_D)\delta_\beta+
+ \alpha\,\tau_D^{-1}\int_{\mathcal K_p\times D}v(w)q\,d\zeta.
+\end{aligned}
+\tag{16.13}
+$$
+
+These are analysis identities; the centroids are not installed as decoders.
+
+For the first equation replace the successor $w$ by $\bar w_{D(w)}$. This costs at most $(2/3)t$ in TV. Under the conditional edge probability $\gamma|_{C\times\mathcal K_\beta}/\pi_C$, the mean of $e=1-u(q)$ is $1-\bar u_C$. For any joint distribution of a scalar $e$ of range width at most $\xi$ and a probability law $H$, without independence,
+
+$$
+\left\|\mathbb E[(e-\mathbb Ee)H]\right\|_{\rm TV}
+\le\tfrac12\mathbb E|e-\mathbb Ee|\le\xi/4.
+\tag{16.14}
+$$
+
+The signed measure has total mass zero; its half-$\ell^1$ norm is bounded by the first expression. The mean absolute deviation bound is the interval calculation in (9.14). Taking $H=\bar w_{D(w)}$ accounts for the emission–successor covariance. Its unweighted mean is exactly $\sum_DB_{CD}\bar w_D$. The first centroid has generator residual at most $(2/3)t+\xi/4$. On the second edge, replace $q$ by $\bar q_{C(q)}$ and take $e=v(w)$ under $\zeta|_{\mathcal K_p\times D}/\tau_D$. Its mean is $\bar v_D$, its unweighted successor mean is $\sum_CA_{DC}\bar q_C$, and the residual is at most $(2/5)t+\xi/4$.
+
+Install the finite table (16.11), and denote its own generated complete laws by $\widehat q_C,\widehat w_D$. Regular return survival gives normalized laws, zero infinite mass, and uniqueness: agreement of the generator equations determines every complete finite word, while a remainder after $L$ returns has mass tending uniformly to zero. Equivalently, the two-phase generator map contracts after a full return by $\lambda<1$. Put
+$d_p=\max_C\operatorname{TV}(\widehat q_C,\bar q_C)$ and
+$d_\beta=\max_D\operatorname{TV}(\widehat w_D,\bar w_D)$. Prefixing is a TV isometry and mixing contracts it, so
+
+$$
+d_p\le\tfrac23t+\xi/4+\tfrac23d_\beta,\qquad
+d_\beta\le\tfrac25t+\xi/4+\tfrac25d_p.
+\tag{16.15}
+$$
+
+Solving, with $1-(2/3)(2/5)=11/15$, gives $d_p\le a_p(t)$ and $d_\beta\le a_\beta(t)$, the existing constants (9.4). Jensen bounds the centroid configuration loss by the original marginal configuration loss. The regenerated centroid comparison therefore increases that loss by at most $a_s(t)$. Conversely every member law is within $t+a_s(t)$ of the regenerated law of its cell, which bounds the decrease by $t+a_s(t)$. The marginal barycenter changes by at most $a_s(t)$, giving the law-order estimate. Pushing every law to a common finite partition preserves all these bounds. This proves (16.8).
+
+The installation is precisely Lemma 2.1.1: retain the entire original $C_0$, synthesize fair letters before the latch, and sample $\pi$ independently after the original third record write and latch within that same update. Use $B$ on acquired p-$\beta$ and $A$ on acquired suspended-$\alpha$, with those identical kernels in synthesis. Completing letters clear private labels and enable only the matching original Stop. Both seeds, all paid equal-pair rejections, marker triples, records, permissions, finite returns and delivery remain. Induction from (16.12) keeps the actual private row $\pi$ or $\tau$ at every fourth history; acquired letters are not reweighted by synthetic emissions. Every current-record law is rendered through its own $I_c$.
+
+At an original positive history the unchanged target is the countable posterior mixture (1.3). TV convexity, with the stationary private row, carries a uniform supported-pure-target bound to that mixture. The reverse supremum equality is the paid rejection-history exposure in (2.3), not a reset experiment or a restriction to the first fourth cut. Thus applying (16.8) to each pure target and taking the full phase suprema gives a table of excess at most $\Phi_\mu(\gamma,\zeta)+a_p(t)$.
+
+In the other value direction, any finite stationary regular table pushes its two actual edge arrays forward as
+
+$$
+\gamma=\sum_{x,y}\pi_xB_{xy}\delta_{(Q_x,W_y)},\qquad
+\zeta=\sum_{y,x}\tau_yA_{yx}\delta_{(Q_x,W_y)}.
+\tag{16.16}
+$$
+
+Their masses are separately one, and (2.1) gives both shared marginals. Multiplying each individual complete generator equation by $f(Q_x)$ or $g(W_y)$ and summing its own outgoing edges gives (16.5). Duplicate law values just add their masses; their emissions are determined by the law and their conditional equations still hold. Configuration loss pushes forward exactly, so $V_\mu\le J(\mathfrak S_\mu)$. Apply the finite regeneration to a minimizer and let $t\downarrow0$. Since $\xi\le t/4$, $a_p(t)\to0$, giving $J(\mathfrak S_\mu)\le V_\mu$. Corollary 2.3 supplies the remaining assertions (16.9), including its risk-only original-class factor and the periodic-to-stationary equality. Original zero/unit emissions and positive noncompletion mass are handled by that supplied extraction and clipping comparison, not by membership in (16.2).
+
+Finally, when both marginals have finite support, both edges are supported on their finite Cartesian product. Use the Borel identities with singleton law cells. Equations (16.11)–(16.13) then have no cell diameter or covariance error: emissions are constant in each conditioning cell. The given laws satisfy the exact finite generator equations and regular uniqueness identifies them with the generated laws. This proves exact realization in this case. General compact minimizers need not have finite marginal support. ∎
+
+## 17. Complete endpoint projection and the zero-value alternatives
+
+**Theorem 17.1 (complete endpoint boxes and necessary near-zero rates).** For either phase let $P_1=P_{s,r_1},P_2=P_{s,r_2}$ on its entire countable carrier, and define
+
+$$
+\begin{aligned}
+l(z)&=\min\{P_1(z),P_2(z)\},&h(z)&=\max\{P_1(z),P_2(z)\},\\
+\mathcal B_s&=\{D':D'\text{ is a normalized law},\ l\le D'\le h\},\\
+a(D)&=\sum_z(l(z)-D(z))_+,&b(D)&=\sum_z(D(z)-h(z))_+.
+\end{aligned}
+\tag{17.1}
+$$
+
+The infinite noncompletion coordinate is included. For every normalized complete law $D$,
+
+$$
+\min_{D'\in\mathcal B_s}\operatorname{TV}(D,D')=\max\{a(D),b(D)\},
+\tag{17.2}
+$$
+
+and a normalized minimizer exists. Now let $M$ be one finite regular stationary table and put $e=\max_s\{R_{{\rm conf},s}(M)-\rho_s\}$. Project each of its complete laws $Q_x,W_y$ to minimizers $Q'_x,W'_y$ in the two boxes. Retain its original $\pi,\tau,B,A$. Then
+
+$$
+E_p:=\sum_x\pi_x\operatorname{TV}(Q_x,Q'_x)\le2e,\qquad
+E_\beta:=\sum_y\tau_y\operatorname{TV}(W_y,W'_y)\le2e.
+\tag{17.3}
+$$
+
+Their two full residual barycenter errors, with the unchanged actual flow, obey
+
+$$
+\begin{aligned}
+d'_B&:=\sum_x\pi_x\operatorname{TV}\left(\operatorname{res}_\beta Q'_x,
+                                     \sum_yB_{xy}W'_y\right)
+       \le\tfrac53E_p+E_\beta\le16e/3,\\
+d'_A&:=\sum_y\tau_y\operatorname{TV}\left(\operatorname{res}_\alpha W'_y,
+                                     \sum_xA_{yx}Q'_x\right)
+       \le3E_\beta+E_p\le8e.
+\end{aligned}
+\tag{17.4}
+$$
+
+The residual deletes the indicated future operation and its original event block. These projections are candidate laws and necessary conditions for a near-zero family. They are not assigned decoders, need not be native mixtures, and do not assert existence of that family.
+
+Proof. Every normalized replacement must add at least $a(D)$ mass on the lower-violation coordinates and remove at least $b(D)$ on the upper-violation coordinates. Its total addition and removal are equal and each equals its TV displacement. Thus (17.2) has the stated lower bound.
+
+For attainment clip coordinatewise to $c(z)=\min\{h(z),\max\{l(z),D(z)\}\}$. Its total mass is $1+a-b$. All relevant sums are finite, since $l,h,c$ are summable. If $a\ge b$, put $\delta=a-b$ and $M_-=\sum_z(c(z)-l(z))$. Since $\sum l\le1$, $M_-\ge\delta$. If $\delta>0$, set
+
+$$
+D'(z)=c(z)-\frac{\delta}{M_-}(c(z)-l(z));
+\tag{17.5}
+$$
+
+if $\delta=0$, take $D'=c$. This countable redistribution is well-defined, remains in the box and has total mass one. No mass is removed from a lower violation because there $c=l$. The initial additions still total $a$, while the removals total $b+\delta=a$. Thus its TV distance is $a$. If $b\ge a$, use $\delta=b-a$, $M_+=\sum_z(h(z)-c(z))\ge\delta$ and
+$D'=c+\delta(h-c)/M_+$ when $\delta>0$. Additions occur only where $c<h$, so no upper-violation removal is undone. Both total changes are $b$. This proves (17.2), including countably many coordinates and the noncompletion atom.
+
+The complete coordinate triangle identity is
+
+$$
+\operatorname{TV}(D,P_1)+\operatorname{TV}(D,P_2)
+=\operatorname{TV}(P_1,P_2)+a(D)+b(D).
+\tag{17.6}
+$$
+
+It follows by summing the scalar absolute-value identity, as in (12.5); all summands are absolutely summable. The endpoint configuration losses of the same stationary row are each at most $\rho_s+e$ by (2.3). Their sum and $\operatorname{TV}(P_1,P_2)=2\rho_s$ give an expected outside-box mass $\mathbb E(a+b)\le2e$. Formula (17.2) gives (17.3). This is a bound on configuration averages before TV, not an inference from a marginal forecast. The projected infinite mass is zero because both endpoint masses there are zero. Their immediate completion coordinates lie in the endpoint interval, so their emissions are regular and their continuation probabilities are positive.
+
+For completeness, if normalized laws $P,Q$ have positive masses $m,n$ on a continuation event $E$, then
+
+$$
+\max\{m,n\}\operatorname{TV}(P(\cdot\mid E),Q(\cdot\mid E))
+\le\operatorname{TV}(P,Q).
+\tag{17.7}
+$$
+
+If $m\ge n$, write their conditional laws as $p,q$. The variation on $E$ is at least $m\|p-q\|_1-(m-n)$, while that on the complement is at least $m-n$. Add and divide by two. Interchange the laws for $n\ge m$. Deleting a common operation block preserves this estimate. In the old and projected p laws, the p-$\beta$ continuation has mass at least $3/5$, giving the factor $5/3$; in the suspended laws the $\alpha$ continuation has mass at least $1/3$, giving the factor 3. The original own-law equations identify the old residuals as $\sum_yB_{xy}W_y$ and $\sum_xA_{yx}Q_x$. Triangle inequality, mixture convexity, $\pi B=\tau$ and $\tau A=\pi$ now give (17.4). Any construction from these candidate laws still owes exact own-law generation, or a proved regeneration error; the full-measure finite coupling/repair criterion does not remove that obligation. ∎
+
+**Theorem 17.2 (zero-risk normal form and finite versus arbitrary support).** Use the endpoint-positive events of §12,
+
+$$
+E_p=\{w_{0,1},w_{1,1},w_{2,1}\},\qquad
+E_\beta=\{\beta,\alpha w_{0,1}\},
+$$
+
+and their midpoint constants
+
+$$
+C_p=11758471/22781250,\qquad C_\beta=5261/6750.
+\tag{17.8}
+$$
+
+A feasible pair has $\Phi_\mu=0$ if and only if its marginals satisfy all three conditions:
+
+1. $\sigma_s$ is concentrated on $\mathcal K_s\cap\mathcal B_s$ in each phase.
+2. $\int q(E_p)\,d\sigma_p=C_p$ and $\int w(E_\beta)\,d\sigma_\beta=C_\beta$.
+3. For every actually supported interior depth $k\ge3$, its two configuration losses are at most $\rho_p,\rho_\beta$, respectively.
+
+Consequently a finite common endpoint observer in the original class exists if and only if a zero-risk feasible pair exists with **both** marginals finitely supported. The original unrestricted infimum is zero if and only if **some** zero-risk feasible pair exists, with arbitrary marginal support. A strictly positive unrestricted gap is equivalent to absence of every such zero-risk pair. An unattained zero infimum requires both existence of a zero-risk pair and exclusion of every pair with both marginals finitely supported.
+
+Proof. Suppose $\Phi_\mu=0$. Both endpoint configuration losses in either phase are at most $\rho_s$. Integrate (17.6). Its nonnegative outside-box term must have expectation zero, so $a(D)+b(D)=0$ almost surely, proving complete box membership. In this box the positive endpoint-1 difference event gives
+
+$$
+\operatorname{TV}(D,P_{s,r_1})=P_{s,r_1}(E_s)-D(E_s),\qquad
+\operatorname{TV}(D,P_{s,r_2})=D(E_s)-P_{s,r_2}(E_s).
+\tag{17.9}
+$$
+
+Indeed $D$ lies coordinatewise between the two endpoints, and the sign of their difference is fixed on each coordinate. The endpoint-positive events are exactly those listed above; §12 gives their probabilities and their difference $2\rho_s$. The two averaged inequalities in (17.9) force the midpoint identity. Every supported interior inequality is also part of $\Phi_\mu=0$. Conversely box membership and the midpoint identity give both endpoint losses exactly $\rho_s$. Together with every supported interior inequality, continuity extends the bounds to $R_\mu$ and gives $\Phi_\mu\le0$. Lemma 16.2 gives equality. No finite diagnostic interior set can replace condition 3 for an unspecified countable support.
+
+If both marginals have finite support, both edge measures are concentrated on their finite Cartesian product. The singleton-cell exact realization at the end of Theorem 16.3 gives a finite regular stationary table with those exact complete laws and configuration losses. Equation (2.3) turns them into the same all-positive-history risks. The separate phase minima make both endpoint bounds equalities. Conversely a finite regular stationary endpoint table gives a zero-risk finite-support pair by (16.16). Corollary 2.3 supplies the exact endpoint equivalence with the original arbitrary finite class; this assertion is stronger than, and separately included alongside, its numerical infimum sandwich. Thus finite attainment has the stated finite-marginal-support characterization.
+
+By Lemma 16.2, $V_\mu\ge0$ is attained. Hence $V_\mu=0$ exactly when some zero-risk pair exists. By (16.9) this is equivalent to $J(\mathfrak M_\mu)=0$, and absence of every zero-risk pair is equivalent to $V_\mu>0$ and to a positive original gap. Conditional on a zero-risk pair, Theorem 16.3 supplies actual finite tables of excess at most $a_p(t)\to0$; that is the required finite approximation, rather than installation of the compact minimizer. It does not make any one table exact. Finally an infinite-support zero pair does not exclude a different finite-support zero pair. Zero value and absence of all finite-support zero pairs are both needed to conclude nonattainment. ∎
+
+## 18. Whole-product certificates and finite rational verification
+
+The existence of some finite positive-gap certificate is already supplied by §10. The following form instead tests inequalities on the complete-law product, without first fixing a label count. Its use of convex separation and polynomial approximation is mature machinery; the source-specific content is its compatibility with both actual edges and the value bridge of Theorem 16.3.
+
+**Theorem 18.1 (whole-product certificate and strict positive-gap completeness).** Choose finite sets $S_p,S_\beta\subset\{r_k:\mu(k)>0\}$, possibly empty in one phase, and weights
+
+$$
+\theta_{s,r}\ge0,\qquad
+\sum_{r\in S_p}\theta_{p,r}+\sum_{r\in S_\beta}\theta_{\beta,r}=1.
+\tag{18.1}
+$$
+
+Define the weighted losses, distinct from the midpoint constants $C_s$ of (17.8), by
+
+$$
+H_p(q)=\sum_{r\in S_p}\theta_{p,r}[\operatorname{TV}(q,P_{p,r})-\rho_p],\qquad
+H_\beta(w)=\sum_{r\in S_\beta}\theta_{\beta,r}[\operatorname{TV}(w,P_{\beta,r})-\rho_\beta].
+\tag{18.2}
+$$
+
+Let $a\in C(\mathcal K_p),b\in C(\mathcal K_\beta)$, and choose finitely many state tests $f_i\in C(\mathcal K_p),g_j\in C(\mathcal K_\beta)$ with complete outcomes $z_i\in\Omega_\beta,t_j\in\Omega_p$. Empty test lists are allowed. Set
+
+$$
+\begin{aligned}
+G_B(q,w)&=H_p(q)+a(q)+b(w)+\sum_i f_i(q)\mathcal E_{B,z_i}(q,w),\\
+G_A(q,w)&=H_\beta(w)-a(q)-b(w)+\sum_j g_j(w)\mathcal E_{A,t_j}(q,w).
+\end{aligned}
+\tag{18.3}
+$$
+
+If, on the **whole** product $\mathcal K_p\times\mathcal K_\beta$,
+
+$$
+G_B\ge c_B-\delta_B,\qquad G_A\ge c_A-\delta_A,\qquad
+\delta_B,\delta_A\ge0,
+\tag{18.4}
+$$
+
+then every original finite observer satisfies
+
+$$
+e(M):=\max_s\{R_{{\rm conf},s}(M)-\rho_s\}
+\ge\frac{11}{61}\max\{0,c_B+c_A-\delta_B-\delta_A\}.
+\tag{18.5}
+$$
+
+Conversely, $V_\mu>0$ if and only if finite data of this form exist with exact inequalities $\delta_B=\delta_A=0$ and $c_B+c_A>0$. This is existence of a finite strict certificate, not attainment of an optimal dual or a supplied numerical margin. Restricting (18.4) to endpoint boxes, native mixtures, one finite shape or sampled points does not give this conclusion.
+
+Proof. Integrate $G_B$ against $\gamma$ and $G_A$ against $\zeta$ for a feasible pair. Shared p and suspended marginals cancel $a$ and $b$, separately. Each conditional generator term vanishes by (16.5). What remains is
+
+$$
+\sum_{s,r}\theta_{s,r}
+\left[\int\operatorname{TV}(D,P_{s,r})\,d\sigma_s(D)-\rho_s\right]
+\le\Phi_\mu(\gamma,\zeta).
+\tag{18.6}
+$$
+
+The last inequality uses nonnegative weights jointly summing to one and losses from this same feasible pair. Since the two edge measures each have mass one, (18.4) lower-bounds the left side by $m=c_B+c_A-\delta_B-\delta_A$. Minimize over feasible pairs and use $V_\mu\ge0$ and (16.9). Then $e(M)\ge J(\mathfrak M_\mu)\ge(11/61)\max\{0,m\}$, proving (18.5). In particular an exact positive certificate implies $V_\mu>0$.
+
+For the converse choose $0<d<V_\mu$. On the compact convex space
+$\mathcal U=\operatorname{Prob}(\mathcal K)^2$ of two unconstrained, separately normalized edge measures, impose all marginal equalities tested by continuous functions, all equations (16.5), and every actually supported loss inequality at threshold $d$. Before marginal agreement is imposed, define these losses specifically as
+
+$$
+\ell_{p,r}(\gamma,\zeta)=\int\operatorname{TV}(q,P_{p,r})\,d\gamma_p-\rho_p,\qquad
+\ell_{\beta,r}(\gamma,\zeta)=\int\operatorname{TV}(w,P_{\beta,r})\,d\zeta_\beta-\rho_\beta.
+\tag{18.7}
+$$
+
+This choice is essential for the separated two-edge functional. All conditions are closed in $\mathcal U$. Their full intersection is empty: otherwise marginal agreement would identify the losses with (16.6), and continuity in the parameter would give a feasible value at most $d$ on $R_\mu$. By the finite intersection property, finitely many equality conditions and finitely many of these supported loss inequalities already have empty intersection.
+
+Let $X\subset\mathbb R^{h+m}$ be the image of $\mathcal U$ under their equality-coordinate and loss-coordinate integrals. This is a compact convex set, because all coordinates are continuous affine functions. It is disjoint from the closed convex set
+
+$$
+Y=\{(0,y):y_i\le d\ (1\le i\le m)\}.
+\tag{18.8}
+$$
+
+Finite-dimensional strict separation of a compact convex set from a disjoint closed convex set gives coefficients $\lambda_0,\theta_0$ with
+
+$$
+\inf_{(x,y)\in X}(\lambda_0\cdot x+\theta_0\cdot y)
+>\sup_{(0,y)\in Y}\theta_0\cdot y
+=d\sum_i\theta_{0,i}.
+\tag{18.9}
+$$
+
+Unbounded negative directions in $Y$ force every $\theta_{0,i}\ge0$. They cannot all be zero: the equality-feasible endpoint-tag pair (16.7) gives an element of $X$ with equality coordinates zero, contradicting a strict lower bound greater than zero if $\theta_0=0$. Thus divide the whole separating functional by $\sum_i\theta_{0,i}>0$. This gives joint normalization (18.1), combining repeated loss coordinates if needed.
+
+The equality multipliers for p-marginal agreement combine into one $a(q)$; those for suspended-marginal agreement combine into one $b(w)$. The remaining equality multipliers combine into finitely many $f_i\mathcal E_{B,z_i}$ and $g_j\mathcal E_{A,t_j}$, with their signs absorbed into the tests. Equation (18.7) then makes the separating functional exactly
+$\int G_B\,d\gamma+\int G_A\,d\zeta$. Over the unconstrained product $\mathcal U$ its minimum is
+
+$$
+\min_{(q,w)\in\mathcal K}G_B(q,w)
++\min_{(q,w)\in\mathcal K}G_A(q,w)>d.
+\tag{18.10}
+$$
+
+Indeed the two probability measures vary independently, so point masses can minimize the two continuous integrands separately. Choose constants slightly below these two minima, retaining a positive sum. They give the finite certificate. Only compactness and finite strict separation were used; no relative-interiority or optimal-dual-attainment hypothesis is needed. Convex separation is the mature principle behind transport duality [GRST18, §9.2], rather than a new duality theorem here. ∎
+
+**Theorem 18.2 (rational finite-coordinate certificates on exact projection polytopes).** Whenever $V_\mu>0$, a certificate of Theorem 18.1 can be chosen with rational jointly normalized $\theta$, rational finite-coordinate polynomial potentials and state tests, finite complete outcomes, rational lower constants of positive combined margin, and weighted level-$T$ partition losses in place of the full losses. Such a specified certificate is a finite universal semialgebraic assertion on the exact projection polytopes below. Its validity directly lower-bounds full configuration risk. No degree, partition level, actual positive margin, runtime bound, support oracle or optimizer is supplied by this existence statement.
+
+Proof. Begin with a strict certificate, of combined lower margin $m>0$. The algebra of polynomials in finitely many complete finite-atom coordinates contains constants and separates points of each compact $\mathcal K_s$. Infinite coordinates are identically zero there, so they are not needed to separate laws. The real Stone–Weierstrass theorem (Rudin, *Principles of Mathematical Analysis*, Chapter 7) uniformly approximates each of the finitely many continuous potentials and state tests by these polynomials. Coordinate values lie in $[0,1]$, so sufficiently close rational coefficients preserve the approximation. Every generator residual in (16.4) is bounded in absolute value by one. Hence the total error in each $G$ is bounded by the sum of its finitely many uniform approximation errors. Terms with an infinite test outcome vanish identically on $\mathcal K$ and can be deleted.
+
+Approximate the finite vector of weights **within** its nonnegative sum-one simplex by rational vectors. For example, round all but one coordinate down to multiples of $1/n$ and put the remainder into the last coordinate; the total error tends to zero and normalization and nonnegativity hold exactly. Each loss $\operatorname{TV}(D,P_{s,r})-\rho_s$ has absolute value at most one, so this perturbation too has uniformly vanishing effect. Every selected parameter is an actual Fibonacci ratio, hence rational; no possibly irrational closure parameter has been inserted into the certificate. Take all these errors sufficiently small that the integrands with polynomial potentials and tests still have lower bounds of positive combined margin.
+
+Let $\Pi_{s,T}$ be the level-$T$ partition of Definition 5.1, with one residual cell containing all later completions and noncompletion. For any normalized complete $D$,
+
+$$
+\begin{aligned}
+0&\le\operatorname{TV}(D,P_{p,r})-
+ \operatorname{TV}((\Pi_{p,T})_*D,(\Pi_{p,T})_*P_{p,r})\le(6/25)^T,\\
+0&\le\operatorname{TV}(D,P_{\beta,r})-
+ \operatorname{TV}((\Pi_{\beta,T})_*D,(\Pi_{\beta,T})_*P_{\beta,r})\le(2/5)(6/25)^T.
+\end{aligned}
+\tag{18.11}
+$$
+
+This is the residual-cell estimate in Theorem 5.2: refinement increases TV by at most the smaller residual mass, and the target masses are $a_r^T$ and $ra_r^T$. It is uniform over the candidate law; it does not need the candidate to be native or generated by a particular finite table. Replace the losses in (18.2) by these partition losses. The sum of the two possible downward errors is at most
+
+$$
+(6/25)^T\left(\sum_r\theta_{p,r}+(2/5)\sum_r\theta_{\beta,r}\right)\le(6/25)^T.
+\tag{18.12}
+$$
+
+Choose $T$ large enough to retain a positive combined margin, and choose rational constants below the resulting minima, still with positive sum. Denote the resulting integrands by $\widetilde G_B,\widetilde G_A$. Since the weights are nonnegative, the corresponding full-loss integrands are pointwise at least these partition-loss integrands. A proved lower bound for the latter is therefore already a valid lower bound for full risk by Theorem 18.1. No further tail subtraction is owed after the certificate has been stated with these lower losses.
+
+It remains to describe the whole finite verification domain exactly. Choose $N\ge1$ with $N\ge T$, large enough that **every** atom occurring in a polynomial, an unprefixed test coordinate, and a prefixed coordinate $q(\beta z_i)$ or $w(\alpha t_j)$ is distinguished before level $N$. In particular if $z_i=\alpha w_{j,b}$ then its p prefix is $w_{j+1,b}$, so that higher level must be included. The coordinate $q(\alpha)$ and the standalone suspended $w(\beta)$ are included as well. Residual partition coordinates are linear combinations of the retained coordinates and the single level-$N$ residual; they are not infinite-atom coordinates.
+
+Write the p projection vector as $(q_{j,b}:j<N;R_p)$, where $q_{j,b}=q(w_{j,b})$, and the suspended vector as $(z_\star;z_{j,b}:j<N;R_\beta)$, where $z_\star=w(\beta)$ and $z_{j,b}=w(\alpha w_{j,b})$. All entries are nonnegative. Their exact projection sets $\mathcal P_{p,N},\mathcal P_{\beta,N}$ are the rational polytopes defined by
+
+$$
+\begin{aligned}
+\sum_{j<N,b}q_{j,b}+R_p&=1,&q_{0,0}&\in[1/3,2/5],\\
+\sum_{L\le j<N,b}q_{j,b}+R_p&\le\lambda^L&&(0\le L\le N),\\[2pt]
+z_\star+\sum_{j<N,b}z_{j,b}+R_\beta&=1,&1-z_\star&\in[1/3,2/5],\\
+\sum_{L\le j<N,b}z_{j,b}+R_\beta&\le(2/5)\lambda^L&&(0\le L\le N).
+\end{aligned}
+\tag{18.13}
+$$
+
+Every law in $\mathcal K_s$ projects into this polytope by its tail bounds. Conversely, for any p vector in the polytope keep its distinguished coordinates, put its residual $R_p$ at the complete atom $w_{N,0}$, and put zero at every other later atom and at $\infty_p$. Since $N\ge1$, the emission coordinate is unchanged. All tail totals for $L\le N$ are exactly the ones in (18.13), and those for $L>N$ are zero. This normalized law belongs to $\mathcal K_p$. For a suspended vector put $R_\beta$ at $\alpha w_{N,0}$, leaving $z_\star$ unchanged and putting zero at all other later outcomes and at $\infty_\beta$. The same argument proves membership in $\mathcal K_\beta$. Thus these are the exact projection sets, not outer relaxations or sampled grids.
+
+All coordinates used by $\widetilde G_B,\widetilde G_A$ lie in these vectors. Their generator terms are polynomials and their partition losses are finite sums of absolute values of affine coordinate differences with rational target probabilities. Universal inequalities on $\mathcal K$ are consequently equivalent to the finite statements
+
+$$
+\forall(q^N,w^N)\in\mathcal P_{p,N}\times\mathcal P_{\beta,N},\qquad
+\widetilde G_B(q^N,w^N)\ge c_B,\qquad
+\widetilde G_A(q^N,w^N)\ge c_A.
+\tag{18.14}
+$$
+
+Finite sign cases, or auxiliary variables with their exact absolute-value equations, express these as first-order statements over the real closed field with rational coefficients. Real quantifier elimination supplies in-principle decision for specified represented data [TAR18]. This verifies a universal lower-bound certificate. It does not infer equality of complete generated laws from finite coordinates, find a certificate of any prescribed size, or decide whether the full value is zero. For an opaque countable prior the existence argument still selects finitely many actually supported parameters mathematically, but effective selection or enumeration of admissible targets requires additional support data. ∎
+
+The complete-law spaces, separate acquired edge normalization, Borel-cell extension and finite regeneration establish the source-specific value bridge. The compact zero-value alternatives and the endpoint-box rates are its direct consumers; the whole-product certificate is another. Original-domain installation, phase minima, target parameter continuity, full-tail estimates, cell covariance and two-phase contraction are supplied by §§1–2, 5 and 9. The error-corrected bounded-shape certificates and their positive-gap completeness in §10 are reused capabilities, not a second claim of new dual existence. The finite complete-measure coupling criterion is consistent with the singleton-cell case of Theorem 16.3; no native-tail rigidity result or restricted-mixture obstruction is needed for this append.
+
+The mature machinery has a precise role. Billingsley's compact-space weak compactness applies because the **law** spaces have already been proved compact in full TV. Continuous functions determine finite signed Borel measures, and Stone–Weierstrass applies to a unital coordinate algebra separating those compact spaces. Gozlan, Roberto, Samson and Tetali [GRST18, §9.2, Theorem 9.7] state Fenchel–Legendre duality for lower-semicontinuous convex functions on Hausdorff locally convex spaces; the certificate here uses only finite-dimensional strict separation after compactness, and asserts no optimal dual attainment. Finite-dimensional martingale-coupling criteria, when used for a specified finite collection of full laws, need an injective full-measure embedding; no unchecked infinite-dimensional extension of such a criterion is invoked here. Real quantifier elimination applies only to the finitely represented rational polytopes and expressions in (18.14). These attributions locate established tools; they make no global priority claim for the source-specific synthesis.
+
+No zero-risk pair, finite common optimizer, actual vanishing-excess family or explicit positive-margin certificate is provided by §§16–18. Theorem 17.2 states exactly what each would have to supply or exclude. The compact analysis space is not an infinite observer installation, and its attained minimum is not a finite-table attainment theorem. Theorems 16.3 and 18.1 compare risk on the same once-$K$ source and all its original positive paid histories; they preserve no prescribed hard marginalized-defect, COMPLETE-state, precision, program, workspace, acquisition, fee or total-work budget. Abstract real finite entries remain mathematical stochastic rules. Effective sampling needs separately represented data and charged service states. Physical realization, chronology recovery and original optimization completion do not follow from these ordinary mathematical proofs.
+
+[BILL16]: https://doi.org/10.1002/9780470316962
+[GRST18]: https://arxiv.org/html/1412.7480v4
+[TAR18]: https://www.rand.org/pubs/reports/R109.html
+
+The references are P. Billingsley, *Convergence of Probability Measures*, second edition, Wiley, §5; W. Rudin, *Real and Complex Analysis*, third edition, McGraw–Hill, Chapters 2 and 6, and *Principles of Mathematical Analysis*, third edition, McGraw–Hill, Chapter 7; N. Gozlan, C. Roberto, P.-M. Samson and P. Tetali, *Kantorovich duality for general transport costs and applications*, §9.2; and A. Tarski, *A Decision Method for Elementary Algebra and Geometry*, RAND report R-109. The proofs above are ordinary mathematical proofs; no Lean/kernel verification or effective observer synthesis is asserted.
+
+## 追加锚（本行以下为增补区）

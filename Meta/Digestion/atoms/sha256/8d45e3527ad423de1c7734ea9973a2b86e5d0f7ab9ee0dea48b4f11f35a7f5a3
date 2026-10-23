@@ -1,0 +1,40 @@
+**Assumption 10.6 (paid acquisition, actual export and complete entry).**
+Exactly one authenticated genuine $\rho$ update binds the origin
+$u\in\mathcal U_*$ to the stationary current register $t=\rho u$.
+The complete row is lawfully acquired. Before a complete access cut,
+the producer possesses actually acquired same-source, same-version
+finite data: either the lossless current tree or $R_*$ and one acquired
+finite subtree value for every class in $D$. It may perform finite
+local computation and compare these acquired terms, computes the
+supplement, and actually exports its complete value with $R_*$ before
+losing access to the acquired values. Equality in the complete partition
+comes from acquired values, not an unknown-subtree equality service.
+
+A supplied common lawful reader entry exposes exactly $P,R_*$, the
+exported supplement and common source-independent controls, from which
+these inputs are recoverable. Its entire accessible initial state is
+determined by these inputs. No other source-dependent identity, old row,
+alpha label, value, trace, cache, archive, pointer, control, acquisition
+order or count, length, meter, timing or update packet is available.
+A field determined by the retained payload adds no new distinction;
+any further accessible field changes this contract. Authentication
+certifies continuity and the one update without selecting an origin
+inside the fiber.
+
+The same current register stays stationary during fresh reading.
+Every finite address is legal and returns its native four-reply value.
+Every invocation counts, including repeats, absences and addresses
+already used in acquisition. No further update, equality, image,
+provenance, pointer, physical inverse or other source port is supplied.
+The reader must terminate with the whole $F(u)$ for every origin in
+the full fiber. Common installation, lawful new entry after any
+absorbing producer stop, acquisition, local computation, export and
+access isolation are supplied and paid premises, not consequences
+of the row identity. This is Assumption 9.2 for the general row.
+
+For $r\ge1,q\ge0$, define $\mathsf{InvFeas}_*(r,q)$ by joint existence
+of a deterministic acquired/exported supplement with at most $r$
+distinct actual complete values on $\mathcal X_*$ and a deterministic
+reader with at most $q$ fresh invocations on every $u\in\mathcal U_*$.
+The supplement may depend on all acquired values, not just root types.
+

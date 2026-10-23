@@ -8,6 +8,7 @@
 
 import D5.S1.Digit.Infinite.SuccessorContinuity
 import D5.S1.Words.AdmissibleWords.AdmissibleCount
+import Mathlib
 import Mathlib.Topology.MetricSpace.PiNat
 import Mathlib.Data.Nat.Fib.Basic
 import Mathlib.Data.Fintype.Card

@@ -1,0 +1,42 @@
+**Citation 2.1 (acquisition and records).** [ARH, Assumption 1.3][ARH]
+requires the exact source fiber as a premise, explicitly including
+source-dependent choices and all accessible state. Its Proposition 2.1
+constructs both directions for public finite coordinate lists and a fixed
+serial epoch schedule. It does not discharge that premise for arbitrary
+adaptive concurrent programs. Its guarded endpoints can be any actually
+reached addressed subtrees. [NCE, Definition 1.2][NCE] instead requires
+signed endpoints to be reached holes of the supplied complete rows.
+
+[CNA, Theorems 2.2, 3.3, 4.2 and 5.2][CNA] supplies genuine concurrent whole-tree
+capture, equal-leaf validation, safety on returning histories and termination
+under unknown finite interference. [CWS, Definition 2.4 and Theorems
+3.3–4.4][CWS] supplies complete-row acquisition RA using rereading workspace.
+[CAB, Theorem 2.2][CAB] supplies RA$\ell$ and an authentic stamp at its
+final validation Read $v$:
+
+$$
+\ell(\alpha)=0,\quad\ell(\beta)=1,\quad
+\ell(\langle x,y\rangle)=1+\ell(x),\qquad
+\ell(\rho^j t)=\ell(t)+j.
+\tag{NASF.4}
+$$
+
+Thus it can return $(R_Q(U_v),\ell(U_v))$ with no extra Read beyond the
+same RA capture. In particular $Q=\varnothing$ provides a paid entire
+description of $U_v$. These descriptions are acquired finite data, not
+cloned source registers. [AAR, Definitions 1.3–1.4 and Proposition 2.3][AAR]
+keeps the acquired reference, calibration and complete-state obligations.
+None of these suppliers identifies an unprotected invocation source just
+by rebasing coordinates at the first validation.
+
+When composing captures below, inline their finite programs as private
+subroutines of one invocation. Replace each subroutine success exit by
+the caller continuation, transferring its acquired output into the
+caller's paid finite region. Other caller regions stay inaccessible to
+the capture routine and unchanged by its cleanup. Only the outer program
+performs the final external Return. Thus two captures do not presume
+reentry after an absorbing halt, and no intermediate private output is
+an unaccounted public archive. The all-source safety and liveness proofs
+apply to each suffix from its actual finite starting register; unknown
+writer updates remain legal between every expanded local step.
+

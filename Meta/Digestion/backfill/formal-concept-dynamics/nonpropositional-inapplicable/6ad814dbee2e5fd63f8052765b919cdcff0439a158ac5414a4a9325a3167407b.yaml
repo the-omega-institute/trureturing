@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:6ad814dbee2e5fd63f8052765b919cdcff0439a158ac5414a4a9325a3167407b
+  normalized_sha256: sha256:6ad814dbee2e5fd63f8052765b919cdcff0439a158ac5414a4a9325a3167407b
+cas_ref: sha256:6ad814dbee2e5fd63f8052765b919cdcff0439a158ac5414a4a9325a3167407b
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 证明材料清单项只作结构标记，不陈述可真可假的新事实。
+    previous_atom_id: bf96b77ba5eebc8421f311c0dc86018bcf36494a4346f1096f579444f41ea2ca
+    next_atom_id: 5fc6e66e5bd0ab9570001572959a294a7955014e40c25180b01ce3781e341c19

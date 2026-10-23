@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:62957d00613f7b5f7d137dbd58b542b36312e0e29b5e13e6cc38d9ad75a07161
+  normalized_sha256: sha256:62957d00613f7b5f7d137dbd58b542b36312e0e29b5e13e6cc38d9ad75a07161
+cas_ref: sha256:62957d00613f7b5f7d137dbd58b542b36312e0e29b5e13e6cc38d9ad75a07161
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: QI-D6 只定义准入补全域、扩展签名及商关系，不断言性质。
+    previous_atom_id: ab655ddde8b5c990af9760b7dd21f74f4637c2b158d8f2c02c6cbd5367f0175d
+    next_atom_id: aa98b2ed5dda4293d4851c03f5c1deb44fcc519deefbdabba4ef68bba6872012

@@ -1,0 +1,2 @@
+**Theorem 35.6 (Finite adaptive transcripts cannot certify a finite upper bound).** Consider a deterministic observation-only procedure on an unknown $n\in W$. At each step it may query whether a selected prime divides $n$; the next prime, the stopping decision and the output depend only on its preceding query-answer transcript and fixed parameters common to all $n\in W$. No finite transcript realized by such a procedure can soundly output a finite upper bound for $\omega(n)$, or certify $\omega(n)\le B$ for a finite $B$.
+

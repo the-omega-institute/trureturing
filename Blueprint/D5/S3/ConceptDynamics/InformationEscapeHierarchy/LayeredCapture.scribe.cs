@@ -13,6 +13,48 @@ internal sealed class LayeredCaptureDocument : IScribeDocumentDefinition
         "Certified kernel chains partition a finite arena into ordered captures and a final unresolved set.",
         H("Layered Capture"),
         Blocks(
+            Paragraph(Text(
+                "A finite native instance has State=Window, all five initialized one-window histories. "
+                    + "The reader ImmediateWindowStateCapacity.rawMachine(0) starts with seam false "
+                    + "and composition zero. Each letter carries its actual derived continuation state. "
+                    + "The catalog consists of four singleton bundles: atom identity, the actual "
+                    + "post-first-window seam, acceptance of the same-state high suffix, and its total "
+                    + "Option integer reply. The last field includes none for rejection. "
+                    + "NullReplyFiber.native_execution supplies the natural-history realization; "
+                    + "the first and suffix states are evaluations of [a] and [a,high] by the same reader. "
+                    + "Information kernels and proof escape remain distinct contracts.")),
+            Paragraph(Text(
+                "In the order null, low, high, ends, middle the first quantities are 0,2,5,7,3; "
+                    + "the new seams are false,true,false,true,false; the high-suffix replies are "
+                    + "some(5),none,some(26),none,some(18). Initial acceptance is constant true. "
+                    + "Suffix acceptance is the complement of the new seam. The joint code "
+                    + "(atom,seam,guard,reply) is injective, so the complete catalog has zero escape. "
+                    + "Removing atom leaves exactly (low,ends) and (ends,low). The atom unique count "
+                    + "is two, and every other unique count is zero. With N=5 the ordered denominator "
+                    + "is N*(N-1)=20, giving atom gain 1/10. Catalog.theoremGainRate_eq gives the "
+                    + "leave-one-out rate identity, and the FusedCorrectness full, unique and without "
+                    + "identities apply to the complete five-letter enumeration.")),
+            Paragraph(Text(
+                "The sixteen selections generate exactly four relation-extensional nodes: total "
+                    + "indistinguishability, the seam partition, the suffix-reply partition, and equality. "
+                    + "Guard and seam generate the same node. The seam partition has blocks of size "
+                    + "three and two, leaving eight ordered distinct pairs; the reply partition leaves "
+                    + "only the two low/ends pairs. For the schedule seam,guard,reply,atom, with an "
+                    + "explicit empty-selection initial kernel, layeredCaptureSpectrum is (0,12,0,6,2) "
+                    + "and the final unresolved count is zero. The initial zero is this library's "
+                    + "capture before the first listed kernel. Successor layer j is the transition "
+                    + "from K(j-1) to K(j); the collapsed guard addition is kept with count zero. "
+                    + "An atom-first schedule captures all twenty pairs at its first successor and "
+                    + "all later additions collapse. LayerChain.layeredCapture_partition assigns each off-diagonal "
+                    + "pair to its first separating layer or to the final unresolved set.")),
+            Paragraph(Text(
+                "Exact rates require a finite arena with at least two states. The formulas do not "
+                    + "assign a finite rate to an unbounded history domain; a zero denominator calls "
+                    + "for a degenerate-domain disposition. The finite letter alphabet does not make "
+                    + "the family of all real probability laws a finite arena. Geometry, generated "
+                    + "kernel refinement, information capture, proof content and acquisition cost "
+                    + "remain different objects. Zero unique capture is a catalog fact and says "
+                    + "nothing by itself about proof substance or research value.")),
             Definition("catalog-id", "CatalogId", "Catalog identity",
                 "A catalog projection has a stable Lean name."),
             Definition("catalog-kind", "CatalogKind", "Catalog kind",

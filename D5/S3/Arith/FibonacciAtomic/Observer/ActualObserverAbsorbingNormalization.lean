@@ -138,17 +138,17 @@ private theorem scan_stable (N : Nat) (M : Observer E) {n : Nat} (large : Fintyp
       rw [h] at found
       contradiction
 
-private theorem skip_retained (N : Nat) (M : Observer E) {e : E}
+theorem skip_retained (N : Nat) (M : Observer E) {e : E}
     (hit : retained N M e = true) : skip N M e = some e :=
   skip_hit N M (j := 0) hit
 
-private theorem skip_removed (N : Nat) (M : Observer E) {e : E}
+theorem skip_removed (N : Nat) (M : Observer E) {e : E}
     (removed : retained N M e ≠ true) :
     skip N M e = skip N M (M.transition e .absent) := by
   have stable := scan_stable N M (n := Fintype.card E + 1) (by omega) e
   simpa [scan, absentStep, removed, skip] using stable.symm
 
-private theorem skip_exact (N : Nat) (M : Observer E) (e : E) :
+theorem skip_exact (N : Nat) (M : Observer E) (e : E) :
     (skip N M e = none ↔ ¬ ∃ j, retained N M ((absentStep N M)^[j] e) = true) ∧
     ∀ s, skip N M e = some s → ∃ j < Fintype.card E,
       (absentStep N M)^[j] e = s ∧ retained N M s = true ∧

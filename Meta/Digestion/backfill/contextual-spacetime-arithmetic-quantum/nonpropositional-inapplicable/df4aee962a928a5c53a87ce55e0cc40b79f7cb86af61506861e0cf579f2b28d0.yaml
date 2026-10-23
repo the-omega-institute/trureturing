@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:df4aee962a928a5c53a87ce55e0cc40b79f7cb86af61506861e0cf579f2b28d0
+  normalized_sha256: sha256:df4aee962a928a5c53a87ce55e0cc40b79f7cb86af61506861e0cf579f2b28d0
+cas_ref: sha256:df4aee962a928a5c53a87ce55e0cc40b79f7cb86af61506861e0cf579f2b28d0
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 定义 174.1 只规定相邻视界、启动态和有限记忆空间的合同。
+    previous_atom_id: 5aefe6a15e79166e8a0beb7ed452f1d7878c20966989d87a8e8d28ff03adec33
+    next_atom_id: 9e3d9ebe3a5f282ca8ecd04c5a7b7391a1e6de348131e885d125d4dfe7bcd827

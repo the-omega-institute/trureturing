@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:3c4c330e9ee1a6c3861cd9e5c6131bd7b0eb9314544497b70a22dab400540baa
+  normalized_sha256: sha256:3c4c330e9ee1a6c3861cd9e5c6131bd7b0eb9314544497b70a22dab400540baa
+cas_ref: sha256:3c4c330e9ee1a6c3861cd9e5c6131bd7b0eb9314544497b70a22dab400540baa
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 清单片段“历史选择”仅列举主题、接口组成或考虑维度；本片段不陈述性质、存在性或推论。
+    previous_atom_id: a394f9c11b577959c336acf8c3e704c94a35747fbb0a9628ca2d9477daece318
+    next_atom_id: fde4b5170e2456ffdb78e973624d91d43edabe06786b3640c43c95ff7b8abfcb

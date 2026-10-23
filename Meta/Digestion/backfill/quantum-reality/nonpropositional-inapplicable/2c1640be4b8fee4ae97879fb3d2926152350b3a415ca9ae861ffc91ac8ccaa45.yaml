@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:2c1640be4b8fee4ae97879fb3d2926152350b3a415ca9ae861ffc91ac8ccaa45
+  normalized_sha256: sha256:2c1640be4b8fee4ae97879fb3d2926152350b3a415ca9ae861ffc91ac8ccaa45
+cas_ref: sha256:2c1640be4b8fee4ae97879fb3d2926152350b3a415ca9ae861ffc91ac8ccaa45
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 定义 56.1　三 qutrit 编码只引入对象、记号或适用条件；附文解释这些记号的范围，不另断言需证明的性质。
+    previous_atom_id: 21647c852a8d56897cb959144d9875e85f6eb5e1b551a029735d3abc0ccde62a
+    next_atom_id: 64a4fb196ca2599c9415622a45672e701fd23262b2d3eef4903247347cb3dd17

@@ -1,1 +1,1 @@
-{"statement_id":"sha256:ab81ca801b45f37c4e87ca8d33cb641a666bae075b671216f2f34bde7c92985a"}
+{"statement_id":"sha256:ab81ca801b45f37c4e87ca8d33cb641a666bae075b671216f2f34bde7c92985a","declarations":[{"declaration_name_key":"ns(ns(ns(ns(ns(ns(n0,2:D5),2:S3),5:Arith),5:Robin),30:FibonacciRankWeightedPrimeTail),6:result)","kind":"theorem"},{"declaration_name_key":"ns(ns(ns(ns(ns(ns(n0,2:D5),2:S3),5:Arith),5:Robin),30:FibonacciRankWeightedPrimeTail),6:weight)","kind":"def"}]}

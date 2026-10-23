@@ -1,0 +1,28 @@
+**Definition 132.1 (The eight-facet ratio polytope).** Let $P\subset\mathbb R^3$
+be the intersection $N_f\cdot(t,u,v)\le b_f$ of these eight half-spaces;
+facet indices and vertex indices start at zero.
+
+| Facet f | Normal N_f | Upper b_f |
+| --- | --- | --- |
+| 0 | (-1,1,0) | 0 |
+| 1 | (0,-1,1) | 0 |
+| 2 | (-35,7,7) | -32 |
+| 3 | (-1,6,-23) | -15 |
+| 4 | (1,-6,-6) | -14 |
+| 5 | (-18,-8,21) | -9 |
+| 6 | (19,-27,2) | -5 |
+| 7 | (15,-3,-3) | 22 |
+
+Its nine vertices and their active facets are:
+
+| Vertex | (t,u,v) | Active facets |
+| --- | --- | --- |
+| R0 | (10/7,9/7,9/7) | (1,2,4,5,6) |
+| R1 | (10/7,10/7,8/7) | (0,2,4) |
+| R2 | (3/2,3/2,10/7) | (0,2,5) |
+| R3 | (8/5,8/5,1) | (0,3,4) |
+| R4 | (9/5,9/5,9/5) | (0,1,5) |
+| R5 | (2,5/3,1) | (3,4,6,7) |
+| R6 | (19/9,19/9,10/9) | (0,3,7) |
+| R7 | (20/9,17/9,17/9) | (1,6,7) |
+| R8 | (22/9,22/9,22/9) | (0,1,7) |

@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:e676408863261c1c270e84fd38aad5fe3a752552f8aa5f60d9b21c863faccaf9
+  normalized_sha256: sha256:e676408863261c1c270e84fd38aad5fe3a752552f8aa5f60d9b21c863faccaf9
+cas_ref: sha256:e676408863261c1c270e84fd38aad5fe3a752552f8aa5f60d9b21c863faccaf9
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 本段只证明前述结果像保持的等价条件。
+    previous_atom_id: 95af9aff346656d61ba1e80bc1e26a98ee6d4746e00ebffa93af7340a947126c
+    next_atom_id: 7bf4db526c07aa9d2acbdc1f0e36322b1f926a8951253f85c6741b7b8873f7a9

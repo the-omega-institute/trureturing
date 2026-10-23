@@ -1,0 +1,21 @@
+**Definition 4.1 (an effective exclusion depth).** For an admitted frame and
+selected $B$, let $\mathcal L_{\eta,\mathbf f,r}$ be the complete source list of a
+finite slice, including the empty list. Compute
+
+$$
+\begin{aligned}
+H_B=\max\bigl(&\{d,0\}\ \cup\
+ \{|p_{\eta,i}|+\operatorname{ht}(t)+1:
+       \eta,\ i\in F_\eta,\ t\in A_{\eta,i}\}\\
+ &\cup\{\operatorname{ht}(u)+1:
+       \eta,\ \mathbf f\in\mathcal F_\eta,\ r\in B,
+       \ D_{\eta,\mathbf f,r}\text{ finite},\
+       u\in\mathcal L_{\eta,\mathbf f,r}\}\bigr).
+\end{aligned}
+\tag{FFM.13}
+$$
+
+Empty contributions add no values; all maxima and lists are finite. The extra
+one makes the isolation bounds deliberately conservative. $H_B$ need not be the
+least exclusion depth.
+

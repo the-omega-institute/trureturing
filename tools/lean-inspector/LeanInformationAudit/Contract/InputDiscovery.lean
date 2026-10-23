@@ -12,6 +12,9 @@ open Lean
   let mut inputs := #[]
   for (name, info) in constants.toArray.qsort (fun a b => a.1.toString < b.1.toString) do
     let head := info.type.getAppFn.constName?.getD .anonymous
+    if info.type.getForallBody.getAppFn.isConstOf `LeanInformationAudit.AuricFib.Contract.Application then
+      inputs := inputs.push (Json.mkObj [("type", toJson "LeanInformationAudit.AuricFib.Contract.Application"),
+        ("owner", toJson moduleName), ("name", toJson name.toString)])
     unless LeanInformationAudit.Contract.SourceAudit.isInput info do continue
     discard <| IO.ofExcept (LeanInformationAudit.Contract.SourceAudit.checkInputDefinition info)
     if head == `LeanInformationAudit.Contract.ExpectedDeclaration then

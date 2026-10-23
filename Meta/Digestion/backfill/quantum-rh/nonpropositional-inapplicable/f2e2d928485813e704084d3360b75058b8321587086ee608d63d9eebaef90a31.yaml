@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:f2e2d928485813e704084d3360b75058b8321587086ee608d63d9eebaef90a31
+  normalized_sha256: sha256:f2e2d928485813e704084d3360b75058b8321587086ee608d63d9eebaef90a31
+cas_ref: sha256:f2e2d928485813e704084d3360b75058b8321587086ee608d63d9eebaef90a31
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 章节导引「九、当前应当怎样理解“整体”？」只组织后续讨论或表格栏目，本 atom 不含独立数学命题；相邻条目的定理、公式及待证陈述不在本次结算范围内。
+    previous_atom_id: fe61581756f116b609de2f4dbe0c67113e3bd2a5bde8e26c45578ed0ec494db4
+    next_atom_id: f0124c897fedf8f463a148647c517523193134a81bc1c40df4182f607dde8190

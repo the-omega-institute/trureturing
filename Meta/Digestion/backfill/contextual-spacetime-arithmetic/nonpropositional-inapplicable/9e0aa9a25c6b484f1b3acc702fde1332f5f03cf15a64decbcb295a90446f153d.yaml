@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:9e0aa9a25c6b484f1b3acc702fde1332f5f03cf15a64decbcb295a90446f153d
+  normalized_sha256: sha256:9e0aa9a25c6b484f1b3acc702fde1332f5f03cf15a64decbcb295a90446f153d
+cas_ref: sha256:9e0aa9a25c6b484f1b3acc702fde1332f5f03cf15a64decbcb295a90446f153d
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 本段只论证前述位置阈值推论与正常形的回接，不另提出命题。
+    previous_atom_id: 7b46468639485e6c276f69416a9ed408f1db2721dc3e5726b7aaaeecb9918d6d
+    next_atom_id: 73e1d30ab4477ae44c1d87487302aa6e45883b021f4a5c7e5ea90460e345920c

@@ -1,0 +1,38 @@
+#### definition 26.1: 定义 1：模式响应向量
+
+Claim status: open.（供文 III 原第 2 节「定义 1」；保留纸面论证及其边界。）
+
+
+令 $\mathcal V$ 是一个实向量空间。它可以是：
+
+- $\mathbb R$，表示一个标量概率；
+- $\mathbb R^m$，表示有限个未来事件的联合响应；
+- 所有合法未来事件的函数空间；
+- 概率测度组成的线性空间。
+
+给每个五态模式一个响应向量：
+
+$$
+L_{\mathrm{null}},\quad
+L_1,\quad
+L_2,\quad
+L_3,\quad
+L_{13}
+\in\mathcal V.
+$$
+
+对混合分布 $p$，定义平均响应
+
+$$
+\overline L(p) =
+p_{\mathrm{null}}L_{\mathrm{null}}
++p_1L_1
++p_2L_2
++p_3L_3
++p_{13}L_{13}.
+$$
+
+如果 $L_I$ 是完整未来概率律，那么 $\overline L(p)$ 就是五态混合后的完整 future law。
+
+---
+

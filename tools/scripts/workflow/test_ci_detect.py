@@ -176,6 +176,11 @@ class CiDetectTests(unittest.TestCase):
         self.changed.write_bytes(b"src/x")
         self.assert_error(self.detect("[alpha]\nsrc/*\n"), "NUL-terminated")
 
+    def test_non_relative_or_non_normalized_paths_reject(self):
+        for path in ("", "/absolute", "../outside", "src/../x", "src//x", "./src"):
+            with self.subTest(path=path):
+                self.assert_error(self.detect("[alpha]\n*\n", [path]), "invalid changed path")
+
 
 if __name__ == "__main__":
     unittest.main()

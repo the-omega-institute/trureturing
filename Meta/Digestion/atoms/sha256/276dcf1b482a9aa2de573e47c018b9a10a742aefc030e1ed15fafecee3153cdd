@@ -1,0 +1,38 @@
+## theorem 2.3: 记录事件的 Bayes 可辨识性
+
+**Claim status: open.**
+
+把 $\kappa$ 看作先验 $\Pi$ 下的参数。对记录事件 $E=(\omega,g)$ 令
+$$
+\ell_E=M_\omega g,\qquad
+Q_E(\kappa)=p_\kappa\ell_E=Q_0+\kappa c_E,
+$$
+其中
+$$
+c_E=d\ell_E.
+$$
+则
+$$
+\Pi(d\kappa\mid E)
+\propto
+(Q_0+\kappa c_E)\Pi(d\kappa),
+$$
+并且
+$$
+\Pi(\cdot\mid E)=\Pi
+\Longleftrightarrow
+c_E=0.
+$$
+若
+$$
+\operatorname{Var}_\Pi(\kappa)>0,
+$$
+则
+$$
+E[\kappa\mid E]-E[\kappa]
+=
+\frac{c_E\operatorname{Var}_\Pi(\kappa)}
+{E_\Pi[Q_E(\kappa)]}.
+$$
+这里刻画的是记录对隐藏参数 $\kappa$ 的可辨识性；固定 $\kappa$ 下状态条件后验是另一对象，不能混同。
+

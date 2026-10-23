@@ -137,7 +137,7 @@ private theorem le_re_inner_apply_self_of_mem_spanIndices
   · exact mul_le_mul_of_nonneg_right (hc i hp) (sq_nonneg _)
   · rw [repr_zero_of_mem_span b hx hp]; simp
 
-private theorem exists_unit_vector_re_inner_le_eigenvalue
+theorem exists_unit_vector_re_inner_le_eigenvalue
     (hT : T.IsSymmetric) (hn : finrank ℂ E = n) (k : Fin n)
     (V : Submodule ℂ E) (hV : finrank ℂ V = (k : ℕ) + 1) :
     ∃ x ∈ V, ‖x‖ = 1 ∧ RCLike.re ⟪T x, x⟫_ℂ ≤ hT.eigenvalues hn k := by
@@ -169,7 +169,7 @@ private theorem exists_unit_vector_re_inner_le_eigenvalue
           (fun _ hik => hT.eigenvalues_antitone hn (by simpa using hik)) hxW
     _ = hT.eigenvalues hn k := by rw [hnx]; ring
 
-private theorem exists_submodule_forall_unit_eigenvalue_le_re_inner
+theorem exists_submodule_forall_unit_eigenvalue_le_re_inner
     (hT : T.IsSymmetric) (hn : finrank ℂ E = n) (k : Fin n) :
     ∃ V : Submodule ℂ E, finrank ℂ V = (k : ℕ) + 1 ∧
       ∀ x ∈ V, ‖x‖ = 1 → hT.eigenvalues hn k ≤ RCLike.re ⟪T x, x⟫_ℂ := by
@@ -209,7 +209,7 @@ private theorem eigenvalues_sub_le
     _ ≤ ‖(S - T) x‖ * ‖x‖ := hcs
     _ ≤ ε := hbnd
 
-private theorem abs_eigenvalue_sub_eigenvalue_le
+theorem abs_eigenvalue_sub_eigenvalue_le
     (hT : T.IsSymmetric) (hS : S.IsSymmetric) (hn : finrank ℂ E = n)
     {ε : ℝ} (hε : ∀ x : E, ‖(T - S) x‖ ≤ ε * ‖x‖) (k : Fin n) :
     |hT.eigenvalues hn k - hS.eigenvalues hn k| ≤ ε := by

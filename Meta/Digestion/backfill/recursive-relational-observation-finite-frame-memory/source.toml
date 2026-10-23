@@ -1,0 +1,5 @@
+source_id = "recursive-relational-observation-finite-frame-memory"
+path = "docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION_FINITE_FRAME_MEMORY.md"
+atomizer = "generic-v1"
+genre_registry_check = "no-registry"
+unregistered_genres = []

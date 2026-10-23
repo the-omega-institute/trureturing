@@ -6,6 +6,10 @@
    utility: none
    digest: Triangular negative-power diagonals prove Hanna's mod-two and mod-three clauses. -/
 
+/- Escape audit unfinished: https://github.com/the-omega-institute/trureturing/issues/19133 -/
+
+/- Escape audit unfinished: https://github.com/the-omega-institute/trureturing/issues/19951. -/
+
 import Mathlib.RingTheory.PowerSeries.Substitution
 import Mathlib.RingTheory.PowerSeries.Inverse
 import Mathlib.RingTheory.PowerSeries.WellKnown
@@ -211,7 +215,7 @@ theorem generating_unique (p : ℕ) (B : PowerSeries ℤ) (h0 : coeff 0 B = 1)
     B = generatingSeries p :=
   fixed_unique p ((equation_iff p B).mp ⟨h0, h1, he⟩) (generating_fixed p)
 
-private theorem map_inverse {S : Type*} [CommRing S] (hom : R →+* S)
+theorem map_inverse {S : Type*} [CommRing S] (hom : R →+* S)
     (A : PowerSeries R) (hA : constantCoeff A = 1) :
     (invOfUnit A 1).map hom = invOfUnit (A.map hom) 1 := by
   have hz : constantCoeff (A.map hom) = 1 := by
@@ -297,12 +301,5 @@ theorem hanna_conjecture_a266489 (n : ℕ) (hn : 2 ≤ n) : (2 : ℤ) ∣ a 2 n 
 theorem hanna_conjecture_a395833 (n : ℕ) (hn : 2 ≤ n) : (3 : ℤ) ∣ a 3 n :=
   diagonal_conjecture_general 3 Nat.prime_three n hn
 
-#print axioms a
-#print axioms generatingSeries
-#print axioms generating_equation
-#print axioms generating_unique
-#print axioms diagonal_conjecture_general
-#print axioms hanna_conjecture_a266489
-#print axioms hanna_conjecture_a395833
 
 end D5.S1.Recurrence.Residue.NegativePowerDiagonalModPrime

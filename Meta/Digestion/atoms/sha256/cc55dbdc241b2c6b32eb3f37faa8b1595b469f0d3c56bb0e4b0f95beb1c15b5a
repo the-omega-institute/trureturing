@@ -1,0 +1,60 @@
+**Theorem 213.18 (One water-level score attains both full minima).**
+For every $L\ge n\ge3$ and $c_1,c_2,g,B\ge0$, put
+$E=c_1+c_2$, $c_{\min}=\min(c_1,c_2)$, $c_{\max}=\max(c_1,c_2)$,
+
+$$
+\begin{aligned}
+q&=(c_1,c_2,0,\ldots,0,g\text{ at }n,0,\ldots,0;E+g+B),\\
+R_n&=\min\left(B,\frac{n-2}{n-1}(B+c_{\min}),
+                         \frac{n-2}{n}(B+E)\right),\qquad
+D=(g-R_n)_+.
+\end{aligned}
+$$
+
+Over the entire fiber $\mathcal F(q)=\{V\ge0:Q(V)=q\}$ of full
+scores, including arbitrary A and all correct cancellations, late P,
+unaries, correlations and T,
+
+$$
+\min_{\mathcal F(q)}\Delta_N=
+\min_{\mathcal F(q)}\Delta_O=D.
+\tag{213.21}
+$$
+
+Both minima are attained by the same actual score. Explicitly, let
+$a\ge0$ be the unique solution
+
+$$
+(a-c_1)_++(a-c_2)_++(n-2)a=B.
+\tag{213.22}
+$$
+
+Writing $W_0=E+B$, its branches are
+
+$$
+a=
+\begin{cases}
+W_0/n,&c_{\max}\le W_0/n,\\
+(B+c_{\min})/(n-1),&c_{\max}>W_0/n,\quad
+ c_{\min}\le(B+c_{\min})/(n-1),\\
+B/(n-2),&\text{otherwise}.
+\end{cases}
+$$
+
+Branch equalities give the same value. Let $w(Z)$ denote the full
+word whose zero set is Z. Set
+
+$$
+\begin{gathered}
+p_1=(a-c_1)_+,\quad p_2=(a-c_2)_+,\quad
+p_i=a\quad(3\le i<n),\\
+P_{w(\{i,n\})}=p_i\quad(1\le i<n),\qquad
+C_{w(\{1,n\})}=c_1,\quad C_{w(\{2,n\})}=c_2,\quad
+C_{w(\{n\})}=g,\qquad T=a,\qquad A=0.
+\tag{213.23}
+$$
+
+This one score has Q=q, W=$W_0$, and both costs D, including all
+zero and closed-branch cases. In particular every actual unit-O input
+in this full quotient fiber has the certificate (213.23) with $\theta=0$.
+

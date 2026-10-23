@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:98cd18c0b4a89ccd5650948b2415cd0c192343da468b65cda27fc3379208b6f1
+  normalized_sha256: sha256:98cd18c0b4a89ccd5650948b2415cd0c192343da468b65cda27fc3379208b6f1
+cas_ref: sha256:98cd18c0b4a89ccd5650948b2415cd0c192343da468b65cda27fc3379208b6f1
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: Proof of the reverse implication in the preceding theorem two via an interior boundary contact and maximum-modulus contradiction; final prose interprets that proof.
+    previous_atom_id: 3b0b60ad62127ad9ca46772bd2db9af9ecae1ac01116f1776eba6c2be09407ff
+    next_atom_id: 6f725a53688d7521d014ba885840d3d46d6bb75682c5b5a28c1e9d606db0f553

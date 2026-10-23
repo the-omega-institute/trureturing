@@ -1,0 +1,124 @@
+**定理 29.8（端点精确未来与有限边界第一次返回）。** 定义 29.7 的
+$K_\infty$ 是有界自伴算子，$I\le K_\infty\le5I$，
+$\|e^{-tK_\infty}\|\le e^{-t}$。对每个 $s\ge0$，$sI+K_\infty$
+有有界逆，因此局部可积输入的零初态响应存在，且
+
+$$
+\begin{aligned}
+M_\infty(t)&=\langle e_1,e^{-tK_\infty}e_1\rangle,\\
+r(s)=R_\infty(s)&=\langle e_1,(sI+K_\infty)^{-1}e_1\rangle
+ =\frac{s+3-\sqrt{(s+3)^2-4}}2.
+\end{aligned}
+$$
+
+若 $F_0=0,F_1=1,F_{k+2}=F_{k+1}+F_k$，
+$\varphi=(1+\sqrt5)/2$，则有限响应及其极限满足
+
+$$
+R_n(0)=\frac{F_{2n}}{F_{2n+2}}\longrightarrow r(0)=\varphi^{-2},
+\qquad M_n(t)\uparrow M_\infty(t),\quad R_n(s)\uparrow r(s).
+$$
+
+对数学时间矩 $S_k^{(n)}=\langle e_1,K_n^ke_1\rangle$、
+$S_k^{(\infty)}=\langle e_1,K_\infty^ke_1\rangle$，
+
+$$
+S_k^{(n)}=S_k^{(\infty)}\quad(0\le k<2n),\qquad
+S_{2n}^{(\infty)}-S_{2n}^{(n)}=1.
+$$
+
+相应 $H_\ell=[S_{i+j}]_{i,j=0}^\ell$ 有
+
+$$
+\det H_\ell^{(\infty)}=1\quad(\ell\ge0),\qquad
+\det H_\ell^{(n)}=1\quad(0\le\ell<n),\qquad
+\det H_n^{(n)}=0.
+$$
+
+所以有限链的端点任务恰需 $n$ 个实 LTI 状态，而这个指定半无限端点任务
+没有有限实 LTI 精确实现。
+
+证明。$\|S\|=1$，故自伴 $A_\infty$ 的范数至多二；对二次型估计
+$|\langle v,A_\infty v\rangle|\le2\|v\|^2$ 即得算子区间。
+使用 [Teschl §1.1、§2.1、§2.5](../../../Library/Dynamics/teschl2000jacobi.md)
+的有界自伴 Jacobi 演算，对应 $a=-1,b=3,z=-s$ 和左端 Dirichlet 边界。
+谱位于 $[1,5]$ 给逆的范数至多 $1/(s+1)$ 及指数衰减。
+有界生成元的指数级数与变参数积分给任意 $L^1_{\rm loc}$ 输入的唯一
+局部绝对连续状态；有限链同理。这已经固定一个实际半无限模型，
+无需从有限维数无界推断其存在。
+
+把第一坐标与其后同构的尾空间分开，经典 Jacobi Schur 公式给
+
+$$
+r(s)=\frac1{s+3-r(s)},\qquad 0<r(s)\le\frac1{s+1}\le1.
+$$
+
+二次方程两根均为正，较大根严格大于一，上述逆范数界才选出显示的小根。
+其值随 $s\ge0$ 递减，所以 $0<r(s)\le r(0)=\varphi^{-2}<1$。
+
+有限链消费 [Lanczos §§VII–VIII](../../../Library/Dynamics/lanczos1950iteration.md)
+的精确对称三项递归。一般单端口 $b\ne0$ 从
+$q_{-1}=0,\beta_0=0,q_0=b/\|b\|$ 开始，
+$\alpha_j=\langle q_j,Kq_j\rangle$，
+$\beta_{j+1}=\|Kq_j-\alpha_jq_j-\beta_jq_{j-1}\|$，仅在此值非零时归一化。
+第一次 $\beta_q=0$ 对应 $q_0,\ldots,q_{q-1}$ 的循环子空间闭合；
+若 $b=0$ 则先返回零维、零响应，根本没有归一化起始方向。
+此工具的 exact breakdown 不给浮点停止或误差保证。
+本链中的实际对应为
+
+$$
+q_j=(-1)^je_{j+1}\ (0\le j<n),\qquad
+\alpha_j=3,\quad \beta_j=1\ (1\le j<n),\quad \beta_0=\beta_n=0.
+$$
+
+所以 Jacobi 连分数的每个内部平方系数是 $\beta_j^2=1$，末端终止。
+使用 [Teschl 的端点 resolvent 递推](../../../Library/Dynamics/teschl2000jacobi.md)，
+令 $D_n(s)=\det(sI+K_n)$，则
+
+$$
+D_0=1,\quad D_1=s+3,\quad D_n=(s+3)D_{n-1}-D_{n-2},\qquad
+R_n(s)=\frac{D_{n-1}(s)}{D_n(s)}.
+$$
+
+这是经典三对角余子式在此端口的代入。
+$F_{2n+2}=3F_{2n}-F_{2n-2}$ 及初值 $1,3$ 给
+$D_n(0)=F_{2n+2}$，例如 $R_1(0)=1/3,R_2(0)=3/8,R_3(0)=8/21$。
+这些递推和 Fibonacci 比值作为本端点任务的计算工具使用。
+
+为了连接有限和无限的**时间**响应，改用非负邻接路径展开
+
+$$
+M_n(t)=e^{-3t}\sum_{k=0}^\infty\frac{t^k}{k!}(A_n^k)_{11}.
+$$
+
+每项是端点闭路数，随 $n$ 非减，对固定 $k$ 最终等于半无限值；
+它至多 $2^k$。级数由 $e^{-3t}e^{2t}=e^{-t}$ 支配，故得到
+$M_n(t)\uparrow M_\infty(t)$，并由可积支配得到对所有 $s\ge0$ 的
+$R_n(s)\uparrow r(s)$。任意 $t>0$ 的有限边界差严格正，因为最短缺失闭路
+贡献一个正级数项。此处没有从带交错符号的 $K$ 幂级数推核序。
+
+另一方面，比较 $K^k$ 的矩时，路径允许权三的原地步和权负一的邻接步。
+一条从 $1$ 到达缺失点 $n+1$ 再回到 $1$ 的路径至少长 $2n$；
+长度恰 $2n$ 时只有一直向右再一直向左的路径，权为 $(-1)^{2n}=1$。
+因此矩的阈值和第一差为显示值。这个第一次返回也给阶跃差在零点的首项
+$t^{2n+1}/(2n+1)!$，使相同有限矩不等于相同实际未来。
+
+所有一值 Hankel 使用既有
+[`hankelDet_transfer` 与 `motzkin_triangle`](../../../D5/S3/Combinatorics/MotzkinHankel/CiglerMotzkinHankelTransfer.lean)
+及 [Cigler 的带权路径定义](../../../Library/Combinatorics/cigler2022motzkin.md)。
+精确普通数学桥为：取该声明的 `shift=0`、`size=ell+1`，在多项式权
+$s=t=3$ 求值；三角阵对角一，给行列式一。
+为避免与 Laplace 参数混淆，这里的 $s,t$ 只指该路径多项式的两项横步权。
+高度零和正高度横步都权三，上下步权一。
+交错符号等距算子 $Ue_j=(-1)^{j-1}e_j$ 满足
+$UK_\infty U^{-1}=3I+A_\infty$ 且 $Ue_1=e_1$，所以路径矩恰是
+$S_k^{(\infty)}$。这用到了同一个端点，未把任意谱矩等同于 Motzkin 数。
+有限 $\ell<n$ 的全部所需矩阶数不超过 $2\ell<2n$，因而给相同的行列式；
+$H_n^{(n)}$ 是 $n+1$ 个 $n$ 维向量的 Gram，故奇异。
+
+最后消费定理 29.4 证明中已映射的实 Hankel 最小实现工具：有限链由
+$H_{n-1}$ 的秩 $n$ 给下界，原链达到。若半无限响应有某个 $d$ 维实 LTI
+实现，则相同常输入先排除 $F\ne0$，相同解析核给相同的导数矩；其任意
+Hankel 秩至多 $d$。但这里 $H_d$ 的秩是 $d+1$，矛盾。
+这一步是有限竞争者的下界，不对无限系统套用有限维可达商定理。∎
+

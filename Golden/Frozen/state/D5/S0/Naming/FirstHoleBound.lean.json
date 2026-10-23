@@ -1,1 +1,1 @@
-{"statement_id":"sha256:976e80a5cd7831b9421fbeb500d0e11efe9ab03b939e554189ef7dc0f9134ed2"}
+{"statement_id":"sha256:976e80a5cd7831b9421fbeb500d0e11efe9ab03b939e554189ef7dc0f9134ed2","declarations":[{"declaration_name_key":"ns(ns(ns(ns(ns(n0,2:D5),2:S0),6:Naming),14:FirstHoleBound),15:firstHole_range)","kind":"theorem"},{"declaration_name_key":"ns(ns(ns(ns(ns(n0,2:D5),2:S0),6:Naming),14:FirstHoleBound),28:firstHole_le_card_and_eq_iff)","kind":"theorem"},{"declaration_name_key":"ns(ns(ns(ns(ns(n0,2:D5),2:S0),6:Naming),14:FirstHoleBound),9:firstHole)","kind":"def"}]}

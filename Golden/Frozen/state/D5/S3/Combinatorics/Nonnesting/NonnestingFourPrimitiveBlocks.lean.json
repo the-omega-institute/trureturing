@@ -1,1 +1,1 @@
-{"statement_id":"sha256:085ed46745e5274a7ba23262c6c5fca35b7f49486dd4f197e9965eb56074a802"}
+{"statement_id":"sha256:085ed46745e5274a7ba23262c6c5fca35b7f49486dd4f197e9965eb56074a802","declarations":[{"declaration_name_key":"ns(ns(ns(ns(ns(ns(n0,2:D5),2:S3),13:Combinatorics),10:Nonnesting),29:NonnestingFourPrimitiveBlocks),19:later_inversion_cut)","kind":"theorem"},{"declaration_name_key":"ns(ns(ns(ns(ns(ns(n0,2:D5),2:S3),13:Combinatorics),10:Nonnesting),29:NonnestingFourPrimitiveBlocks),21:primitive_later_order)","kind":"theorem"}]}

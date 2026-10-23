@@ -1,1 +1,1 @@
-{"statement_id":"sha256:99e75da7e53b91c59b049b4cc23884fdd7b40edc1c425068a89ce6a765ed4509"}
+{"statement_id":"sha256:99e75da7e53b91c59b049b4cc23884fdd7b40edc1c425068a89ce6a765ed4509","declarations":[{"declaration_name_key":"ns(ns(ns(ns(ns(ns(n0,2:D5),2:S1),10:Recurrence),7:Residue),30:IterateExponentialFiveModThree),6:result)","kind":"theorem"}]}

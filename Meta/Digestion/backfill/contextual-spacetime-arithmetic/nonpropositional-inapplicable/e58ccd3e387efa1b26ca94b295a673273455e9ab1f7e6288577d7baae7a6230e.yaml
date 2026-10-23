@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:e58ccd3e387efa1b26ca94b295a673273455e9ab1f7e6288577d7baae7a6230e
+  normalized_sha256: sha256:e58ccd3e387efa1b26ca94b295a673273455e9ab1f7e6288577d7baae7a6230e
+cas_ref: sha256:e58ccd3e387efa1b26ca94b295a673273455e9ab1f7e6288577d7baae7a6230e
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 本段只证明前述 Tail 条件的必要方向。
+    previous_atom_id: 9b2af4c7c0d723e8b92b25dea9d4998169323ac4e444d1a72429483943bb5ea7
+    next_atom_id: 3709f2921a1dfd4c14c2d2a20333b551a05e4289a75b4a2d001e9aaef6eed311

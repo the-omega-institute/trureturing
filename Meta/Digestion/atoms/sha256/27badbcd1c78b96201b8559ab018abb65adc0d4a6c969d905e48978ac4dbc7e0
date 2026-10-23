@@ -1,0 +1,55 @@
+**Definition 9.1 (unpadded source, unknown entry and complete control).**
+Fix a public finite full ordered binary skeleton $S$ with exactly $h\ge1$
+leaves, in a fixed order with addresses $q_1,\ldots,q_h$. Every leaf is
+independently labelled: for $x\in\{0,1\}^h$ put
+
+$$
+u_x=S[T_{x_1},\ldots,T_{x_h}],\qquad
+E(x,t)=\rho^t u_x=S[T_{t+x_1},\ldots,T_{t+x_h}],\qquad
+\pi(x)=\bigoplus_{i=1}^h x_i.
+\tag{SLHC.23}
+$$
+
+Here $T_n=\rho^n\alpha$, with the conventions of Calculation 3.1.
+All $2^h$ originals are admitted. The original root remains fixed.
+Entry lag $t$ is unknown; a bounded installation is given only the
+source-independent promise $0\le t\le T$, for an installed integer
+$T\ge0$. It receives neither the actual $t$ nor an acquired old record.
+The output is one fixed-bit Halt with the original $\pi(x)$.
+This changes Definition 1.2's source contract: $S$ need not be complete
+or balanced, and there are no spare known-$\alpha$ leaves. In particular,
+its actual leaf depths cannot be replaced by $\lceil\log_2h\rceil$.
+Establishing and certifying this promise is a separate service, as in
+SLH §§31.1–31.3; the promise itself is not an observation history.
+
+Use precisely Definition 1.1's fully materialized literal Read with
+four raw replies and same-source genuine Update with constant
+acknowledgement, and Definition 1.3's immediate response contract.
+One fixed-length no-$11$ word contains all mutable instruction choice,
+phase, progress, retained reply information, accumulator and halts.
+All installed words count, including unreachable ones. Every typed
+response row chooses a hold or one bit change, and discards the raw
+reply. No external PC, epoch, address buffer, latch, history or counter
+is available. The constructions below have only Read, Update and Halt
+rows, with no internal instructions. An ignored root Read is still an
+actual Read. For lower bounds the comparison class may additionally
+use deterministic internal rows with finitely many actual steps on
+each successful run, provided their entire mutable state is counted,
+they obtain no source input, and each query word still selects one
+fixed literal. Static means zero actual Updates on every promised run;
+unreachable installed Update rows do not change that definition.
+
+Write
+
+$$
+K=\lceil T/2\rceil,\quad M=h(K+1),\quad
+ d_i=|q_i|,\quad D=\max_i d_i,\quad A_S=\sum_i d_i,
+\quad c(x,t)=\sum_i\bigl((t\bmod2)\mathbin\oplus x_i\bigr).
+\tag{SLHC.24}
+$$
+
+The integer $c$ is an analysis coordinate, not a stored count. Immutable
+literals and tables, preparation and growth of the source, compilation,
+initialization, lookup, address delivery, native operation execution,
+response writing and final output remain separate paid services.
+

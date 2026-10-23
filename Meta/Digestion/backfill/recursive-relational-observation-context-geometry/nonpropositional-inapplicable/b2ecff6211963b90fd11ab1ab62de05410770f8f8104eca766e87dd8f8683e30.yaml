@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:b2ecff6211963b90fd11ab1ab62de05410770f8f8104eca766e87dd8f8683e30
+  normalized_sha256: sha256:b2ecff6211963b90fd11ab1ab62de05410770f8f8104eca766e87dd8f8683e30
+cas_ref: sha256:b2ecff6211963b90fd11ab1ab62de05410770f8f8104eca766e87dd8f8683e30
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 第47.4节开场只引入全层误差模量符号及其取值公式，不断言模量的性质。
+    previous_atom_id: 42c6fe63b72958a25c929ad5f6b22ee61bf97b21e5e47f30538179ed6867e278
+    next_atom_id: e946bb4880bdf2a1d6d35c77c119656719b573468720a6677a8ab961f74e078f

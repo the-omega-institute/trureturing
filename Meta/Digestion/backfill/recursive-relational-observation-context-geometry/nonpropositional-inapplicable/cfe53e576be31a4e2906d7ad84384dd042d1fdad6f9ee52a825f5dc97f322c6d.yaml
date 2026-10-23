@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:cfe53e576be31a4e2906d7ad84384dd042d1fdad6f9ee52a825f5dc97f322c6d
+  normalized_sha256: sha256:cfe53e576be31a4e2906d7ad84384dd042d1fdad6f9ee52a825f5dc97f322c6d
+cas_ref: sha256:cfe53e576be31a4e2906d7ad84384dd042d1fdad6f9ee52a825f5dc97f322c6d
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 第58节标题及导言交代同一执行中的研究对象、证明安排与范围，不另立命题。
+    previous_atom_id: e1684e3ad7eb6f5fb240d05b4f6143276828e5f3ff41f18e9c1bd95708e5fcfd
+    next_atom_id: 21b8ef027bcd3ff0c6582ffccc4eba71612080ade42822829d6e9429806db75f

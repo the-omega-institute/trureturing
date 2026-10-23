@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:b93351610c43bb1d97a6ec434749887099b061ac73737f247336a8be0caad05d
+  normalized_sha256: sha256:b93351610c43bb1d97a6ec434749887099b061ac73737f247336a8be0caad05d
+cas_ref: sha256:b93351610c43bb1d97a6ec434749887099b061ac73737f247336a8be0caad05d
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 这是定理 370.1 的“假设”清单片段，仅规定所给控制词记录的准入条件，不含定理结论。
+    previous_atom_id: eebb9ff8b688f20055de3b14af9b4ba6e6dc2015cfac613ee8b828d8c05a504a
+    next_atom_id: 5ecaadeeb7a57b77622f5a5326495967d04c7fdc50530d3a5a65e9024f29d01d

@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:9c5d613f79135e6ccc85651fcb2d683ba6efc407674d53cc4b2c13eaab4f2d54
+  normalized_sha256: sha256:9c5d613f79135e6ccc85651fcb2d683ba6efc407674d53cc4b2c13eaab4f2d54
+cas_ref: sha256:9c5d613f79135e6ccc85651fcb2d683ba6efc407674d53cc4b2c13eaab4f2d54
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 定义 217.1　反复记录 \(Z\) 的刷新协议只规定模型对象、符号、协议或适用条件；附文限定这些定义的含义，没有另立性质断言。
+    previous_atom_id: 9d6fd31f5d973e2b7b341db9807d04e489716108b70477ecf3aee2e9f4279b8c
+    next_atom_id: 8b3bd77d438041b58dbcd99bcfab3b1f6d7ffa006dc62a62498c0156fb197ba4

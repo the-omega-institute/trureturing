@@ -1,0 +1,21 @@
+- $\mathcal Q_{\mathrm{recover}}$：观察者能否从记录恢复 $\kappa,\Delta$ 或原始来源。
+
+于是：
+
+$$
+\text{光}
+=
+\text{内部关系到边界的传播};
+$$
+
+
+$$
+\text{信息不可恢复}
+=
+\mathcal Q_{\mathrm{recover}}
+\text{在允许协议下失败}.
+$$
+
+
+---
+

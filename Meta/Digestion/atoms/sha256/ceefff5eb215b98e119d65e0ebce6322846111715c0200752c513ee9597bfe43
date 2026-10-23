@@ -1,0 +1,72 @@
+## theorem 2.1: 输出分辨未来闭包定理
+
+**Claim status: open.**
+
+设有限状态集为 $S$，动作集为 $A$，输出字母表为 $O$。对每个 $(a,o)$ 定义子仪器
+$$
+M_{a,o}(s,t)
+=
+\Pr(o,\text{下一状态}=t\mid \text{当前状态}=s,\text{动作}=a).
+$$
+对输出记录词
+$$
+\omega=((a_1,o_1),\ldots,(a_m,o_m))
+$$
+令
+$$
+M_\omega=M_{a_1,o_1}\cdots M_{a_m,o_m}.
+$$
+给定末端测试空间 $G$，定义
+$$
+V_0=\operatorname{span}(G),
+$$
+$$
+V_{m+1}
+=
+V_m+
+\operatorname{span}\{M_{a,o}f:a\in A,o\in O,f\in V_m\},
+$$
+以及
+$$
+V_\infty=\bigcup_{m\ge0}V_m.
+$$
+则
+$$
+V_m
+=
+\operatorname{span}\{M_\omega g:|\omega|\le m,\ g\in G\}.
+$$
+因此两个初始分布 $p,q$ 对所有长度不超过 $m$ 的记录和末端测试给出相同结果，当且仅当
+$$
+(p-q)f=0\qquad\forall f\in V_m.
+$$
+
+若 $G\subseteq\mathcal B$ 且
+$$
+M_{a,o}\mathcal B\subseteq\mathcal B
+\qquad\forall(a,o),
+$$
+则
+$$
+V_\infty\subseteq\mathcal B,
+$$
+所以任何 $p-q\in\mathcal B^\perp$ 的分布对所有未来输出记录都不可区分。
+
+令
+$$
+d=p_{\kappa+1}-p_\kappa.
+$$
+定义隐藏 seam 的最早暴露深度
+$$
+\rho_{\mathcal M}(d)
+=
+\min\{m:\exists\omega,g,\ |\omega|=m,\ dM_\omega g\ne0\},
+$$
+若不存在则取 $\infty$。所有小于该长度的记录都看不见 $\kappa$；达到该长度时至少有一个记录对 $\kappa$ 敏感。任意记录事件 $E=(\omega,g)$ 的概率均可写成
+$$
+\Pr_{p_\kappa}(E)=A_E+\kappa B_E,
+\qquad B_E=dM_\omega g.
+$$
+
+有限状态 $|S|=N$ 时，$\dim V_m\le N$；因此局部五态模型的可暴露 seam 若存在，至多在长度 $4$ 内出现。这个上界只适用于有限局部状态，不适用于含 Fibonacci 深度、计数、phase 和边界的无限动态空间。
+

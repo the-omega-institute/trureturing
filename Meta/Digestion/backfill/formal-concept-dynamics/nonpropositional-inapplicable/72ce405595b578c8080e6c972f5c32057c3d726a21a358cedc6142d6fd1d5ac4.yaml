@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:72ce405595b578c8080e6c972f5c32057c3d726a21a358cedc6142d6fd1d5ac4
+  normalized_sha256: sha256:72ce405595b578c8080e6c972f5c32057c3d726a21a358cedc6142d6fd1d5ac4
+cas_ref: sha256:72ce405595b578c8080e6c972f5c32057c3d726a21a358cedc6142d6fd1d5ac4
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 清单片段“权利重新定义”仅列举主题、接口组成或考虑维度；本片段不陈述性质、存在性或推论。
+    previous_atom_id: c36b6a5b8ab48ecda7dc1aa2ba221976dc040f5fa5cc9a05baee9c1e26f046ef
+    next_atom_id: 0d22289de6257f99353426f92b05544ed0bf670cdac98118ed4b850a3b309951

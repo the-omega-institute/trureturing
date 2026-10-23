@@ -1,0 +1,26 @@
+**Definition 1.3 (birth sets and alpha label).** For a realized exterior $C$ set
+
+$$
+\begin{aligned}
+L_C&=\{aL\in P:C\text{ has a concrete }\beta\text{ leaf at }a\},\\
+D_C&=\{aR\in P:C\text{ has a concrete }\beta\text{ leaf at }a\}.
+\end{aligned}
+\tag{NAR.1.5}
+$$
+
+The letter $D$ denotes right births, and is unrelated to the class set $B$.
+Define the alpha label
+
+$$
+A_P(u)=
+\begin{cases}
+b,&z_b=\alpha\text{ for some }b\in B,\\
+\bot,&z_b\ne\alpha\text{ for every }b\in B.
+\end{cases}
+\tag{NAR.1.6}
+$$
+
+Distinct class values ensure uniqueness. The semantic symbol $\bot$ is a
+label for no alpha class, not an absent-address reply. It is not a query
+answer supplied with a literal row.
+

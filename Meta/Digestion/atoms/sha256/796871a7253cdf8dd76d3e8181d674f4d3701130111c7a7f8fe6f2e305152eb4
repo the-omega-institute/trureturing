@@ -1,0 +1,60 @@
+**Proposition 119.3 (restriction of energy does not give free descent).**
+The counting-metric gradient flow of the energy
+$\tfrac12g^{\mathsf T}L_{\mathrm{closed},n}g$, constrained to
+$g=U_nf$, is
+
+$$
+M_n\dot f=-Kf.
+\tag{119.7}
+$$
+
+For the inherited killed energy it is instead
+$M_n\dot f=-(K+D_n)f$. At every finite $n$, neither free closed heat
+nor free killed heat preserves $\mathcal C_n$. The constraint has
+algebraic rank $N_n-8$; this number is not a native action count or
+physical maintenance price.
+
+Proof. Testing the constrained velocity against $U_nh$ gives
+$h^{\mathsf T}M_n\dot f=-h^{\mathsf T}Kf$ for every $h$; use (119.4)
+for either boundary choice. In particular $M_n$ cannot be dropped when
+the form is written in class-value coordinates. For an explicit failure
+of free invariance, take $f=\mathbf1_{\{1\}}$ and $g=U_nf$. The two
+actual addresses $\varepsilon$ and $111110$ both lie in class 0, but
+
+$$
+(L_{\mathrm{closed},n}g)(\varepsilon)=-1,\qquad
+(L_{\mathrm{closed},n}g)(111110)=0.
+\tag{119.8}
+$$
+
+The root's children have values $1,0$. The beta-block root $111110$
+has value zero, its parent is in class 4, and any born children remain
+in class 0; every incident difference there is zero. Both tested
+amplitudes are zero, so the diagonal killing term also vanishes at
+these addresses. This proves the same witness for $L_{\mathrm{kill},n}$.
+Differentiating free heat at time zero therefore takes $g$ out of
+$\mathcal C_n$. This is the invariant-range distinction already present
+in VI Theorems 115.2 and 116.2, now witnessed inside these cube fibres.
+
+For precision about equality maintenance, the orthogonal projection is
+$P_n=U_nM_n^{-1}U_n^{\mathsf T}$. Writing $L$ for either stage operator,
+the constrained ambient equation is
+
+$$
+\dot g=-Lg+R_n,\qquad R_n=(I-P_n)LU_nf,\qquad g=U_nf.
+\tag{119.9}
+$$
+
+This defines a mathematical reaction; the native menu supplies neither
+its actuation permission nor its physical price. Choose one actual
+representative of each nonempty fibre. The equations equating each
+other amplitude to its representative are independent, numbering
+$N_n-8$. Independence is linear algebra and assigns no resource tariff.
+
+The use of the induced norm is the ordinary quadratic-form restriction
+principle. For comparison of graph conventions, [Chung, *Spectral Graph
+Theory*, Chapter 1, §§1.2 and 1.4](https://fanchung.ucsd.edu/research/cb/ch1.pdf)
+keeps the vertex weights in the normalized Rayleigh quotient. Here the
+weights are the actual fibre counts $M_n$, rather than cube degrees.
+No normalized graph formula replaces these counts. $\square$
+

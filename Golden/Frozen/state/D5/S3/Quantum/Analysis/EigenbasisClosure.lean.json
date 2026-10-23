@@ -1,1 +1,1 @@
-{"statement_id":"sha256:63fb5d32a14720bf61ff3ce03ccc435ec027d485b598d4b94ae54c6edbdcc693"}
+{"statement_id":"sha256:c953b7c20ae465705af21c480042ee2c999dc4dcb3553c3331384ff48cee750a","declarations":[{"declaration_name_key":"ns(ns(ns(ns(ns(ns(n0,2:D5),2:S3),7:Quantum),8:Analysis),17:EigenbasisClosure),31:eigenbasis_closable_selfAdjoint)","kind":"theorem"}]}

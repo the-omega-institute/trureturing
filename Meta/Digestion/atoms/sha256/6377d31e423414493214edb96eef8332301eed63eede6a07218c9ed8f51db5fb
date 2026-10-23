@@ -1,0 +1,29 @@
+**Construction 11.5 (all counted fields and source rows).** Encode an
+intermediate control $z$ using the following $k(e)$ ordinary bits in
+the displayed order. Binary integers use a fixed common significance
+order; path bits are $L=0,R=1$, followed by zero padding.
+
+| Field | Bits | Meaning |
+| --- | --- | --- |
+| $p$ | $h-1$ | Current virtual address, padded after its length |
+| $s$ | $d$ | Path length $0\le s<h$ |
+| $b,l$ | $2c$ | Branches and leaves already visited in this trial |
+| $j$ | $e$ | Candidate index |
+| $a$ | $1$ | XOR of leaves already visited |
+| $\mu$ | $3$ | VALUE, GUARD, POLL, UPDATE, HALT0, HALT1, ERROR |
+
+Use mode codes $0,\ldots,6$ in that order. HALT0, HALT1 and ERROR have
+all other fields zero. POLL and UPDATE also have all other fields zero
+and are available only in the active $T\ge1$ case. In the static case
+$N=j$ and $j\le T$; in the active case use (SLHC.11.6) and
+$j\le2h-1$. GUARD requires $N>0$ and $p\ne\varepsilon$.
+Normal fields obey $b<h$, $l\le h$ and the displayed bounds; nonzero
+path padding, code 7 or a violated condition is invalid.
+
+Here is the entire intermediate instruction/response rule, denoted
+by instruction $I(z)$ and successor $\delta(z,r)$. This table is an
+installation specification, not permission to execute wide writes.
+
+- POLL uses Construction 11.4: absent goes to UPDATE, $\alpha$ starts
+  a fresh root VALUE trial with $j=0$, and the other replies go to ERROR.
+  UPDATE executes Update and its $\star$ goes to POLL.

@@ -1,0 +1,13 @@
+**Definition 21.5 (The limiting two-gap law).** Fix $h\ge2$ and $0\le\alpha<1$, put $\beta=1-\alpha>0$, and let
+
+$$
+\gamma^*(1)=\alpha,\qquad \gamma^*(h)=\beta,\qquad \gamma^*(k)=0\ (k\notin\{1,h\}),
+$$
+
+with $S^*(a)=\sum_{k\ge a}\gamma^*(k)$ and
+
+$$
+\mu^*=2\alpha+(h+1)\beta.
+\tag{21.18}
+$$
+

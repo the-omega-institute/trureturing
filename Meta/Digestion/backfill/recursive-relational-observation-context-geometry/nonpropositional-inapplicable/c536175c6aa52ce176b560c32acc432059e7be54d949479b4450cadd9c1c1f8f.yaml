@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:c536175c6aa52ce176b560c32acc432059e7be54d949479b4450cadd9c1c1f8f
+  normalized_sha256: sha256:c536175c6aa52ce176b560c32acc432059e7be54d949479b4450cadd9c1c1f8f
+cas_ref: sha256:c536175c6aa52ce176b560c32acc432059e7be54d949479b4450cadd9c1c1f8f
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 定义58.7只规定忠实原子执行树的节点数据、分支规则及驻定闭合等价关系的准入条件，不断言实现存在或容量性质。
+    previous_atom_id: 4c3e2942ae331183b2c87089a95bb6451433b527fbbb50cebd2b9f14a52e782e
+    next_atom_id: cbd685db3d32f3c32c3e74f34adcc44bbb8c4b0924d140ddb0e46dd367fa86a0

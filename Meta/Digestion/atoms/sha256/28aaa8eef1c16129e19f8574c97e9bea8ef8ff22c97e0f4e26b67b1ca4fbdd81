@@ -1,0 +1,54 @@
+**Definition 20.1 (Separator and its polynomial identities).** For the
+complete world $W_i(r,p)$ of Definition 19.1, with $i\in\{-,+\}$,
+$0<r<1$ and $p\in I$, write
+
+$$
+u_i(r,p)=d+(2U+n)g_i(6;r,p),\qquad
+m_i(r,p)=d+(3U+2n)g_i(7;r,p),\qquad
+F_i(r,p)=m_i(r,p)-6u_i(r,p)+216.
+\tag{20.1}
+$$
+
+At $p=p_J$, these are exactly $\mathcal U(i,r)$ and
+$\mathcal M(i,r)$ of (19.3). Retain the rational functions
+$A_5,K_5,\Lambda$ of (19.1), with $j=X/b$, $n=N/b$, and put
+
+$$
+\begin{aligned}
+L_6&=10-36/j+45/T-20/n,\\
+L_7&=20-70/j+84/T-35/n,\\
+F_0&=96+(3U+2n)\left(480-\frac{2268}{5T}\right)
+       -6(2U+n)\left(240-\frac{243}{T}\right),\\
+F_1&=-5+(3U+2n)L_7-6(2U+n)L_6,\\
+C_5&=bTXNA_5,\\
+Q_{\rm sep}&=5b^2TXN\{A_5F_0+F_1(p-24-K_5)\},\\
+P_{\rm sep}&=\frac{N_m-6N_u+216D_m}{3}.
+\end{aligned}
+\tag{20.2}
+$$
+
+Here $N_u,N_m,D_m$ are exactly those of Section 14.
+The last three expressions are integer polynomials, of coordinate
+degrees at most $(6,7)$, $(8,8,1)$ and $(6,7)$ in $(r,b)$,
+$(r,b,p)$ and $(r,b)$, respectively. In particular
+
+$$
+\begin{aligned}
+P_{\rm sep}={}&1522b^7+(10063-7900r)b^6
+ +(6956r^2-6049r+2591)b^5\\
+&+(11704r^3-19624r^2+9588r-694)b^4\\
+&+(-9500r^4+21057r^3-14714r^2+2813r)b^3\\
+&+(-2364r^5+3105r^4+256r^3-303r^2-694r)b^2\\
+&+(1182r^6-3090r^5+3116r^4-1690r^3+482r^2)b
+ +228r^3(1-r)^3.
+\end{aligned}
+\tag{20.3}
+$$
+
+For a closed rational box $B$, write $\underline\beta_{n,B}(G)$
+for the minimum of the degree-$n$ tensor Bernstein coefficients of
+$G$ after mapping $[0,1]^d$ affinely onto $B$, using exactly (14.4).
+The degrees, including zero padding, are part of each use below.
+This is the coefficient operation of Section 14, not a new sign
+criterion; its convex-hull implication is (14.5).
+

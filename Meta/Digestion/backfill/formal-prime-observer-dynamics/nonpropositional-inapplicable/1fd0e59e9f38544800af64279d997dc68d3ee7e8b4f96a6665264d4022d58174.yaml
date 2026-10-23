@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:1fd0e59e9f38544800af64279d997dc68d3ee7e8b4f96a6665264d4022d58174
+  normalized_sha256: sha256:1fd0e59e9f38544800af64279d997dc68d3ee7e8b4f96a6665264d4022d58174
+cas_ref: sha256:1fd0e59e9f38544800af64279d997dc68d3ee7e8b4f96a6665264d4022d58174
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 非命题文本：291. 反事实目标商：仅为节标题及导引或设定适用条件；本片段未陈述后续命题的结论。
+    previous_atom_id: 2a77f1ccedc8081f34c3e32f0fc8bbe04e08f3d7062a571978e33818a29b995b
+    next_atom_id: 6d8317a66cf6a78c5002d7180a7f542c34cb17b302bd511a5b91e0c3282b93a3

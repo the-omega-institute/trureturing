@@ -1,0 +1,19 @@
+**Definition 23.1 (Closed output region and whole arc region).** In the
+ambient parent $\mathcal H$, with $p=24$ retained, define
+
+$$
+\begin{aligned}
+K_+&=\{W\in\mathcal H:10\le p(W)\le34,
+\ v(W)\ge\ell(p(W))-1/25\},\\
+K_J&=\{W\in\mathcal H:10\le p(W)\le34,
+\ v(W)=v_J(p(W))\}.
+\end{aligned}
+\tag{23.1}
+$$
+
+At each $p\ne24$ the latter fibre is the entire actual
+$C(p,v_J(p))$ of F, Definition 30.1. At $p=24$ it means the same
+complete-world equations in $\mathcal H$, without importing an
+off-$24$ restriction into this ambient definition. All companions,
+including unused or singular ones, are included.
+

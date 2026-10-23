@@ -1,0 +1,9 @@
+**Theorem 30.2 (Exact near-critical full-INITIAL grid law).** For every target in Definition 30.1, under each original alphabet,
+
+$$
+ \boxed{C_{\rm ad}(f)=2r-1,\qquad C_{\rm pre}(f)=4r-1.}
+\tag{30.5}
+$$
+
+The exact worst emitted-bit fees are $m(2r-1)$ and $m(4r-1)$. The adaptive upper bound is attained by selecting one literal stream from the free INITIAL value and then issuing its fixed prefix. It establishes no advantage attributable to actions chosen from subsequent paid feedback. The lower bounds permit all such feedback-dependent actions, arbitrary early stopping, rejecting attempts and charged waits.
+

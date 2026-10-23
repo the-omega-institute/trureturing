@@ -4,6 +4,20 @@
 
 Binary words with no two consecutive ones are counted by a Fibonacci number.
 
+## Fixed-length zero words and weighted patterns
+
+At length three the admissible words are exactly 000, 100, 010, 001, and 101. Assigning weights two, three, and five to the three positions gives occupied sets empty, {2}, {3}, {5}, and {2,5}, with respective sums zero, two, three, five, and seven. The zero word is still a three-letter history, distinct from the empty word. Word length is retained by the Fin-indexed carrier and is not recovered from the occupied-weight sum.
+
+The values at lengths zero and one are one and two, and wcount_succ_succ gives the recurrence a(n+2) = a(n+1)+a(n). Thus admissibleWord_card_eq_fib counts the complete fixed-length word set, including leading and trailing zeros.
+
+## Reconstruction from consecutive three-letter windows
+
+Let n+1 consecutive windows of width three be given, so at least one window is present. Suppose adjacent windows agree on their common two positions and each window has no adjacent ones. Their positions cover a word of length n+3. Any two overlapping windows have starting positions differing by at most two: equality on the overlap follows directly for neighboring windows and through the intervening window when the difference is two.
+
+Gluing these functions on their position sets gives a unique word. Every adjacent pair of positions lies in one of the windows, so its two bits cannot both be one. This proves legality of the entire glued word. The support-covered gluing argument applies here with adjacent pairs as constraint supports.
+
+A final window does not determine total length: for every n the all-zero word of length n+3 ends in the same three zeros. Different values of n give different complete words. A window records a local pattern, not an erased prefix or a free clock.
+
 **Theorem 1.1 (The number of length-m admissible words is F(m+2)).**
 
 $$\operatorname{card} {w : Fin m \Rightarrow Bool \mid \operatorname{Adm} m w} = F_{m+2}$$
@@ -18,7 +32,7 @@ A binary word w of length m is Zeckendorf-admissible when it has no two consecut
 
 The proof is a bijective recurrence. Splitting an admissible word of length m+2 on its first letter gives a bijection with the admissible words of length m+1 (when the first letter is false) and the admissible words of length m (when the first two letters are true then false — the second forced false by admissibility). Taking cardinalities yields the Fibonacci recurrence count(m+2) = count(m+1) + count(m), and a two-step induction closes it to F(m+2).
 
-Only this counting clause is recorded here. The identification of the count with the dimension of a Fibonacci-anyon fusion space, the coprimality of consecutive Fibonacci numbers, and the wider observer-algebra content of the source are not covered by this statement.
+The carrier retains every position of a fixed-length binary word. Identifying its cardinality with the dimension of another space requires an additional bijection or basis theorem for that space.
 
 ## References
 

@@ -221,17 +221,20 @@ theorem exists_card_idealSet_residue_real_le_dvd {K : Type*} [Field K] [NumberFi
     refine (contDiff_expMapBasis).comp (contDiff_pi.mpr fun w ↦ ?_)
     by_cases hw : w = w₀
     · simpa only [dif_pos hw] using contDiff_const
-    · simpa only [dif_neg hw] using contDiff_apply ℝ ℝ _
+    · simpa only [dif_neg hw] using
+        contDiff_apply ℝ (fun _ : {w : InfinitePlace K // w ≠ w₀} => ℝ) _
 
   have contDiff_faceMapSide (i : {w : InfinitePlace K // w ≠ w₀}) (a : ℝ) :
       ContDiff ℝ 1 (faceMapSide i a) := by
-    refine (contDiff_apply ℝ ℝ i).smul ((contDiff_expMapBasis).comp (contDiff_pi.mpr fun w ↦ ?_))
+    refine (contDiff_apply ℝ (fun _ : {w : InfinitePlace K // w ≠ w₀} => ℝ) i).smul
+      ((contDiff_expMapBasis).comp (contDiff_pi.mpr fun w ↦ ?_))
     by_cases hw : w = w₀
     · simpa only [dif_pos hw] using contDiff_const
     · simp only [dif_neg hw]
       by_cases hi : (⟨w, hw⟩ : {w // w ≠ w₀}) = i
       · simpa only [if_pos hi] using contDiff_const
-      · simpa only [if_neg hi] using contDiff_apply ℝ ℝ _
+      · simpa only [if_neg hi] using
+          contDiff_apply ℝ (fun _ : {w : InfinitePlace K // w ≠ w₀} => ℝ) _
 
   have expMapBasis_mem_iUnion_faceMapSide
       {y : realSpace K} {w : InfinitePlace K} (hwe : w ≠ w₀) (hw₀ : y w₀ ≤ 0)

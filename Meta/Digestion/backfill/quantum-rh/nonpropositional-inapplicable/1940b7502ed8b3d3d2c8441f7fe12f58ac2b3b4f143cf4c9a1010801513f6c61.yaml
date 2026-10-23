@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:1940b7502ed8b3d3d2c8441f7fe12f58ac2b3b4f143cf4c9a1010801513f6c61
+  normalized_sha256: sha256:1940b7502ed8b3d3d2c8441f7fe12f58ac2b3b4f143cf4c9a1010801513f6c61
+cas_ref: sha256:1940b7502ed8b3d3d2c8441f7fe12f58ac2b3b4f143cf4c9a1010801513f6c61
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: This paragraph states the interpretation and applicability limit of the preceding closed principal-block and unchanged-weight obstruction. Its preceding theorem atom is already absorbed-closed. It introduces no separate numerical certificate or additional mathematical proposition, and does not assert nonexistence of a final trace-class operator.
+    previous_atom_id: 58eeba7918700004906ade4ecd3bcafba5aa69542a4c06e891e4304b6bd6b7d9
+    next_atom_id: 70d9073580482bf4e87a81d6a767835858c950d8f3c167ebfab835af019a1a62

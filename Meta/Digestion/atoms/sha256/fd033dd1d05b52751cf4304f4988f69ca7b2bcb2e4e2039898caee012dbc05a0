@@ -1,0 +1,22 @@
+**定义 43.1（完整来源、入口与任务扇区）。** 固定[串行完整行价格卷](RECURSIVE_RELATIONAL_OBSERVATION_SERIAL_COMPLETE_ROW_PRICE.md)（以下称 SCR）定义7.1的原接口：$P=\{\varepsilon\}$ 的单根孔旧行、$H_0=((0,RL,\mathsf{absent}))$、当前实际纪元 $N=0$ 及任务 $Q=\{L\}$。来源和 $\rho$ 逐字取 SCR 假设1.1，故原树为任意非空有限有序满二叉树。SCR 定理7.2给准确全纤维分解
+
+$$
+\begin{aligned}
+D&=D_\alpha\sqcup D_\beta\sqcup D_{L\alpha}\sqcup D_{L\beta},\\
+D_\alpha&=\{\alpha\},\quad D_\beta=\{\beta\},\quad
+D_{Lb}=\{\langle x,b\rangle:x\in\mathcal T\}\quad(b\in\{\alpha,\beta\}).
+\end{aligned}
+\tag{43.1}
+$$
+
+记 $i(u)\in I=\{\alpha,\beta,L\alpha,L\beta\}$ 为所在扇区；$r_i$ 是 SCR 定义7.1对应的四个互异完整原 $Q$ 行。$i(u)$ 是证明索引，不是控制器的额外输入。特别地，$x$ 不受大小、深度或共同模板界限制。
+
+每条实际运行始终固定原见证 $u\in D$，当前根寄存器为 $\rho^N u$。允许动作取原真实 $\mathsf{Read}(p)$、$\mathsf{ApplyRho}$、$\mathsf{Stop}(r)$，所有有限地址读取合法，停止吸收。记真实事件
+
+$$
+\mathsf R_n(p,c),\qquad \mathsf U_{n,n+1},\qquad \mathsf S_n(r),
+\tag{43.2}
+$$
+
+其增量资源向量依次为 $(1,0),(0,1),(0,0)$；累计向量记为 $v=(q,m)$，分别数新 raw 调用和真实更新。停止的零向量只表示没有新的这两类调用；输出及停止的其他成本仍须供应。$H_0$ 的取得不重复计入入口后的向量，也不免除旧取得成本。
+

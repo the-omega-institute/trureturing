@@ -1,0 +1,6 @@
+**Proposition 11.2 (exact fixed-table thresholds).** For the original $T_8$ entries the acquired-selector threshold is two. For the separately specified $T_{10}$ entries it is four.
+
+Proof. On any $\Pi_2$ source, entry zero of $T_8$ needs two calls to reach $H_2$, while entry one emits the wrong $R_4$. Thus at caps zero or one Coverage fails. At cap two the baseline of Lemma 8.2 is a lawful acquired computation of the root types, selects good entries everywhere and attains both bits. Monotonicity gives exactly the threshold two.
+
+On any $\Pi_4$ source both $T_{10}$ entries need four paid calls to reach $H_4$. At smaller caps neither is good, so Coverage fails. At four both are good everywhere by Lemma 7.2. Choose any two actual distinct tuples, for example the $Z_*$ witness and a $\Pi_1$ witness, and assign the two bits by whole-tuple exceptions with a good default. Theorem 9.3 supplies a lawful both-attained acquired computation. Thus the threshold is exactly four. These are fixed-table consequences of the displayed transitions, not additional independent novelty claims. $\square$
+

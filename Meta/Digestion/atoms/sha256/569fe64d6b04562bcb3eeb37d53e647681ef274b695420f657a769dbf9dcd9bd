@@ -1,0 +1,9 @@
+# 2026-09-07：真实 prolate 的完整算子残差、对数端点积分与图范数误差
+
+Lean：`D5/S3/Weil/ZetaBridge/WeilGammaResidualEndpoint.lean`，配套同名 Scribe。
+执行源：`research/weil_ground_mode/certify_prime3_prolate_operator_residual.py`。
+主结果：`prime3_prolate_operator_residual_certificate.json`。
+开发检查：`test_prolate_operator_residual.py` 与 `prolate_operator_residual_regression.json`。
+
+本节从前一节已经认证的完整 Rayleigh 值，推进到同一个真实 prolate 模型的完整未加权 L2 算子残差。核心是先证明分段 C1 误差在实际 Gamma 算子图范数中受控，再认证平方残差积分中的全部对数端点。前者适用于任意有限窗口，后者有按精度收敛的解析构造；本次实际数值实例仍是 lambda=sqrt(3)。没有用有限 Fourier 残差代替完整残差，也没有仅凭 L2 误差声称无界算子作用连续。
+

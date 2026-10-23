@@ -5,7 +5,7 @@ internal static class HangGuardRouting
     internal static IReadOnlyList<string> FindUnroutedHangGuardCalls(string repositoryRoot)
     {
         var offenders = new List<string>();
-        foreach (var file in StrataLint.Engine.GitIndexRepositoryFiles.Enumerate(repositoryRoot))
+        foreach (var file in GitIndexRepositoryFiles.Enumerate(repositoryRoot))
         {
             if (!file.RelativePath.StartsWith("tools/tests/", StringComparison.Ordinal)
                 || !file.RelativePath.EndsWith(".cs", StringComparison.Ordinal)

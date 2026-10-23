@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:b298d17301a18587d19a767681e587c5a0c5b02eb6e24165ba4c117a49b6cad5
+  normalized_sha256: sha256:b298d17301a18587d19a767681e587c5a0c5b02eb6e24165ba4c117a49b6cad5
+cas_ref: sha256:b298d17301a18587d19a767681e587c5a0c5b02eb6e24165ba4c117a49b6cad5
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 定义 425.1（共同策略下的两个路径律）。：仅引入对象、记号及其约定条件，不断言这些条件必然实现或额外性质。
+    previous_atom_id: 612dbd6aa4d88a9ff30cc02828c513a3b91a71741edcee6c4092ddf15a127d9f
+    next_atom_id: c54f59b5afebc3ef261933871809bafb50347324c1bf2de56e3e566c4dbbe3d8

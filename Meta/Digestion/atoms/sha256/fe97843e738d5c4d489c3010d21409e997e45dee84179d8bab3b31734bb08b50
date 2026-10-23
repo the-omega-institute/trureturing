@@ -1,0 +1,28 @@
+**Theorem 110.2 (Class-preserving feasibility transport).** For every
+sequence (110.2) and every $0<\varepsilon\le1$,
+
+$$
+\begin{aligned}
+\exists N\in\mathcal N_2:\ e_a(N)\le\varepsilon
+ &\quad\Longleftrightarrow\quad
+             \mathcal F_N(a,\varepsilon)\ne\varnothing,\\
+\exists O\in\mathcal O_2:\ e_a(O)\le\varepsilon
+ &\quad\Longleftrightarrow\quad
+             \mathcal F_N(a,\varepsilon)\cap\mathscr C_L\ne\varnothing.
+\end{aligned}
+\tag{110.7}
+$$
+
+In particular any globally cap-feasible finite $\mathcal N_2$ kernel
+satisfying (109.1) supplies an original $\mathcal O_2$ rule at that
+same closed cap. This rule reproduces that finite kernel's laws at
+every actual low word, and on every actual tail source its error is
+
+$$
+\max\{1-p_{1^L}(0),a_{n(x)}\}\le\varepsilon.
+\tag{110.8}
+$$
+
+The original-to-finite direction transports feasibility, without
+asserting preservation of an arbitrary original competitor's laws.
+

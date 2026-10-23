@@ -1,0 +1,63 @@
+**引理 13.2（三值分组与守恒比较表）。** 固定任意实数 $t>0$。对§13.1的同一原表，存在一份分析比较表 $(\pi,\widehat B,\widehat A,\widehat u,\widehat v)$，其中 $\widehat A=I$、$\widehat v=v$、$\widehat u\in[a,b]^3$，$\widehat B$ 非负行随机且对同一 $\pi$ 可逆，每条正 $\widehat B$ 边保持 $\widehat u$。令
+
+$$
+M=\sum_i\pi_i|u_i-\widehat u_i|,\qquad
+q_i=\operatorname{TV}(B_i,\widehat B_i),\qquad
+q=\sum_i\pi_iq_i.
+$$
+
+则
+
+$$
+M\le t,\qquad q\le\frac{2J_u}{t^2},\qquad
+\widehat J_u:=\frac12\sum_{i,j}\pi_i\widehat B_{ij}
+ (\widehat u_i-\widehat u_j)^2=0.
+\tag{13.4}
+$$
+
+证明：按真实发射值排序标签，记 $u_{i_1}\le u_{i_2}\le u_{i_3}$；相同值任意排序。仅在相邻间隙严格大于 t 时断开，得到连续的标签块 $C$。一个块至多有两个未断开的相邻间隙，每个间隙至多 t。因此
+
+$$
+\max_{i\in C}u_i-\min_{i\in C}u_i\le2t.
+\tag{13.5}
+$$
+
+置 $\widehat u_i=(\min_{j\in C}u_j+\max_{j\in C}u_j)/2$，$i\in C$。这是块内常数，且仍在闭区间 $[a,b]$。其中每个点距中点至多半个跨度，即 $|u_i-\widehat u_i|\le t$。按归一化 $\pi$ 平均就得 $M\le t$；单点块的误差为零。相邻间隙恰等于 t 时不分块，重合值也不分块。
+
+以 $C(i)$ 记 i 所在块，令 $q_i^*=\sum_{j\notin C(i)}B_{ij}$，并定义
+
+$$
+\widehat B_{ij}=
+\begin{cases}
+B_{ij},&j\in C(i),\ j\ne i,\\
+B_{ii}+q_i^*,&j=i,\\
+0,&j\notin C(i).
+\end{cases}
+\tag{13.6}
+$$
+
+每行仅把跨块质量搬到本行自环，故非负且行和仍为1。块内不同标签的详细平衡保持原样；跨块两个方向均为零；对角项的详细平衡自动成立。因此 $\pi_i\widehat B_{ij}=\pi_j\widehat B_{ji}$，并且
+
+$$
+(\pi\widehat B)_j=\sum_i\pi_i\widehat B_{ij}
+=\pi_j\sum_i\widehat B_{ji}=\pi_j.
+\tag{13.7}
+$$
+
+这保留的是原来的同一个 $\pi$，没有重新选择分量权。正 $\widehat B$ 边只在一个块内或为自环，故保持 $\widehat u$，得到 $\widehat J_u=0$。
+
+一行被删除的总质量是 $q_i^*$，自环增加的质量也是 $q_i^*$，其余坐标不变，所以半 $\ell^1$ 行距离恰为 $q_i=q_i^*$。若 i、j 在不同块，它们之间至少有一个被断开的排序间隙；非负的其余间隙使 $|u_i-u_j|>t$。故
+
+$$
+\begin{aligned}
+q&=\sum_{i,j:\,C(i)\ne C(j)}\pi_iB_{ij}\\
+&\le\frac1{t^2}\sum_{i,j}\pi_iB_{ij}(u_i-u_j)^2
+=\frac{2J_u}{t^2}.
+\end{aligned}
+\tag{13.8}
+$$
+
+式（13.2）的因子 $1/2$ 正是最后的因子2来源。这里用真实值的精确间隙，而不是参数网格或抽样推断。$\square$
+
+比较表是证明中的另一份数学表；原表与比较表各自用自己的同一更新生成两相律。分块及改流不是实际机器中的新操作，不在运行配置中提供 u 值查询、后验、K、概率行、历史标签、档案、时钟、额外 Read 或来源重置；也不主张原表可在运行时免费改装为比较表。任意实数表的分析构造不提供它们的有限精确采样器或资源预算保持。
+

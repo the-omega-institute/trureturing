@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:573362ec88d674d4fba6f3a91d9927eac1132f01372f069046cc68ee2ded824e
+  normalized_sha256: sha256:573362ec88d674d4fba6f3a91d9927eac1132f01372f069046cc68ee2ded824e
+cas_ref: sha256:573362ec88d674d4fba6f3a91d9927eac1132f01372f069046cc68ee2ded824e
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 定理 13.8（边下降与可观察方块的充要性）。的证明段；本项只给出该陈述的论证及所用步骤的说明，不另立独立命题。命题陈述保留在前项。
+    previous_atom_id: ccc85021db2d09a632e4202b02ced165479f77fc4dff2f631b75b49f6c758f98
+    next_atom_id: f437350b6d62fc32304bf73143c2f4489877b47b780953269bd4d8cd8d5227ff

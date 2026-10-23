@@ -1,0 +1,10 @@
+- $p$ 标记 pending 或 complete。
+
+`Same` 比较整个 $Y$，而不是单个掩码、某一行字段或目标候选集。
+
+若合同给出固定的 phase bound $B=qr+1$，则 $H$ 的形状集合是有限的；其
+具体事件值仍由 `Reply` 逐项确定。这个 bound 是合同输入，不由有限 descriptor
+type 自动推出。
+
+---
+

@@ -1,0 +1,20 @@
+**Corollary 7.2 (A declared full-scale budget and its limitation).**
+For all sufficiently small $s$, taking
+$J_s=\lfloor\log_2(\eta/s)\rfloor$ in Definition 5.1 gives exactly
+$M_{J_s}$ listed configurations, at most $K(\eta/s)^r$, and both means
+$O(s^{-(2r+1)}/\log(e/s))$. Also, for every fixed $\gamma>0$, an
+available budget $M(s)=\lceil s^{-\gamma}\rceil$ eventually permits the
+same paid order, with an upper constant allowed to depend on $\gamma$.
+The sufficient exponent $r$ of the full-scale construction is not a
+necessary exponent.
+
+Proof. For small $s$, $J_s\ge1$, $s2^{J_s}\le\eta$ and
+$J_s\asymp\log(e/s)$. Theorem 5.1 gives the first assertion and its
+exact count. The polynomial budget satisfies condition 3 of Theorem 7.1
+with any fixed $\varepsilon<\gamma$, giving the second assertion by its
+budget-selected table (6.2). Since arbitrarily small fixed $\gamma>0$
+are allowed, no positive exponent such as $r$ is forced when the paid
+upper constant is free to depend on the family. Fixed sufficient budgets
+have no full logarithmic gain, in agreement with the inherited fixed-
+budget critical order. $\square$
+

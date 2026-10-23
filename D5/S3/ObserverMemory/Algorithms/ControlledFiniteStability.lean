@@ -126,7 +126,7 @@ private theorem controlledForget_surjective
   obtain ⟨y, rfl⟩ := Quotient.exists_rep state
   exact ⟨Quotient.mk _ y, rfl⟩
 
-private theorem controlledClassCount_mono
+theorem controlledClassCount_mono
     {Y : Type*} {U O : Type u} [Fintype Y] [Finite U] [Finite O]
     [Nonempty Y] [Nonempty U] [Nonempty O]
     (update : U -> Y -> Y) (readout : Y -> O)
@@ -137,7 +137,7 @@ private theorem controlledClassCount_mono
     (controlledForget update readout hreadout depth)
     (controlledForget_surjective update readout hreadout depth)
 
-private theorem controlled_setoid_eq_of_class_count_eq
+theorem controlled_setoid_eq_of_class_count_eq
     {Y : Type*} {U O : Type u} [Fintype Y] [Finite U] [Finite O]
     [Nonempty Y] [Nonempty U] [Nonempty O]
     (update : U -> Y -> Y) (readout : Y -> O)
@@ -270,7 +270,7 @@ private theorem controlled_limit_fixed
       update readout input pair hp
 
 /-- The complete relation is the greatest fixed point of the source operator. -/
-private theorem controlled_limit_eq_gfp
+theorem controlled_limit_eq_gfp
     {Y : Type*} {U O : Type u}
     (update : U -> Y -> Y) (readout : Y -> O) :
     controlledLimitRelation update readout =
@@ -293,7 +293,7 @@ private theorem controlled_limit_eq_gfp
         exact hp
       exact Set.mem_iInter.mp hp'.2 input
 
-private theorem controlled_stable_relation_eq_limit
+theorem controlled_stable_relation_eq_limit
     {Y : Type*} {U O : Type u}
     (update : U -> Y -> Y) (readout : Y -> O) (depth : Nat)
     (stable : controlledDepthRelation update readout depth =
@@ -330,7 +330,7 @@ def commonStableEquivalences {Y : Type*} {U O : Type u}
       forall input pair, pair ∈ relation ->
         (update input pair.1, update input pair.2) ∈ relation}
 
-private theorem controlled_limit_is_greatest_stable_equivalence
+theorem controlled_limit_is_greatest_stable_equivalence
     {Y : Type*} {U O : Type u}
     (update : U -> Y -> Y) (readout : Y -> O) :
     IsGreatest (commonStableEquivalences update readout)

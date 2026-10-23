@@ -14,7 +14,7 @@ public sealed partial class DigestionLedgerTests
     private static readonly string TestModuleStatementId = FrozenStatementReceiptTestData.Id('a');
 
     private static (string Path, byte[] Bytes)[] FrozenLedgerFiles(string modulePath, params string[] selectors) =>
-        FrozenStatementReceiptTestData.LedgerFiles(new FrozenStatementReceiptTestData.Module(
+        FrozenStatementReceiptTestData.LedgerFiles(out _, new FrozenStatementReceiptTestData.Module(
             modulePath, TestModuleStatementId, selectors.Select(selector =>
                 new FrozenStatementReceiptTestData.Declaration(selector, FrozenStatementReceiptTestData.Id('b')))
                 .ToImmutableArray()));
@@ -202,9 +202,19 @@ public sealed partial class DigestionLedgerTests
         var parent = Target(fixture);
         var context = DigestionAtomContextProjection.Resolve(fixture.Snapshot, fixture.Document, parent.AtomId);
         var policy = new RuleFixture();
-        fixture.Current = RawRepositorySnapshot.Create(fixture.Current.Entries.Concat(
+        fixture.Current = RawRepositorySnapshot.Create(fixture.Current.Entries
+            .Where(entry => entry.Path != FileMapLoader.RelativePath).Concat(
             policy.Files.Where(e => e.Key is "Meta/registry.yaml" or "Meta/domains.yaml" or "Meta/FILEMAP.toml")
                 .Select(e => RawRepositoryEntry.FromText(e.Key, e.Value))));
+        var fileMap = FileMapLoader.Parse(Encoding.UTF8.GetBytes(TestFileMap.Canonical), "fixture");
+        var sourcePolicy = fileMap.Entries.Single(entry => entry.Pattern == "docs/GOVERNANCE.md");
+        var entries = fileMap.Entries.Where(entry => entry != sourcePolicy).Append(new FileMapEntry(
+            "docs/probe.md", sourcePolicy.Kind, sourcePolicy.AdmissionPlane, sourcePolicy.ProducedBy,
+            sourcePolicy.ConsumedBy, sourcePolicy.VerifiedBy, false, sourcePolicy.ArtifactId,
+            sourcePolicy.Mode, sourcePolicy.RuntimeDisposition, sourcePolicy.HistoryRequirement, null, true))
+            .OrderBy(entry => entry.Pattern, StringComparer.Ordinal).ToImmutableArray();
+        ReplaceFile(fixture, "Meta/FILEMAP.toml", Encoding.UTF8.GetString(FileMapCanonicalWriter.Write(
+            new FileMapManifest(fileMap.ResidencePolicy, entries, fileMap.ArtifactKinds)).AsSpan()));
         ReplaceFile(fixture, EngineeringRegistrationFixture.Path, EngineeringRegistrationFixture.Manifest());
         using var temporary = new TemporaryDirectory();
         SettleAtomCommandTests.WriteFiles(temporary.Path, fixture.Current);

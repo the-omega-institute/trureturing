@@ -1,1 +1,1 @@
-{"statement_id":"sha256:46adbbf7b95f24a4d45bf1bc0088da3d4ab663c140783402e6f8d82653a89e76"}
+{"statement_id":"sha256:46adbbf7b95f24a4d45bf1bc0088da3d4ab663c140783402e6f8d82653a89e76","declarations":[{"declaration_name_key":"ns(ns(ns(ns(ns(ns(n0,2:D5),2:S1),5:Words),11:ReturnWords),16:GoldenPhaseShift),16:golden_phase_add)","kind":"theorem"}]}

@@ -1,1 +1,1 @@
-{"statement_id":"sha256:ab8e142a41289997f828902679ba8ea3e4f89cb2217a7c616514743c4455869d"}
+{"statement_id":"sha256:ab8e142a41289997f828902679ba8ea3e4f89cb2217a7c616514743c4455869d","declarations":[{"declaration_name_key":"ns(ns(ns(ns(ns(n0,2:D5),2:S3),7:Quantum),17:ChannelFixedState),26:channel_fixed_state_exists)","kind":"theorem"}]}

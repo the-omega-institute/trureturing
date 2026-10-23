@@ -1,0 +1,65 @@
+**Theorem 2.2 (strict anchored specialization).** For every admissible
+type and $u,u'\in P_k$,
+
+$$
+\mathcal L(k,d,u)=\mathcal L(k,d,u')
+\quad\Longleftrightarrow\quad
+B_{k,d}(u)=B_{k,d}(u').
+\tag{2.2}
+$$
+
+On the actual images the append guard is
+$k<n$ and $\partial_{ta}S\ne\varnothing$. Its boundary update is
+
+$$
+\begin{aligned}
+(S,\epsilon)&\xrightarrow{+a}(\partial_aS,\epsilon),&&d=0,\\
+(S,cw)&\xrightarrow{+a}(\partial_cS,wa),&&d>0,
+\end{aligned}
+\tag{2.3}
+$$
+
+where $c$ is the first symbol of the current tail. The delete guard is
+$d>0$ and $t=wa$, and its update is
+
+$$
+(S,wa)\xrightarrow{-a}(S,w).
+\tag{2.4}
+$$
+
+The target types are respectively $(k+1,d)$ and $(k-1,d-1)$.
+Consequently $Q_{k,d}$ is the exact behavioral boundary for this contract.
+Every exact representation's actual image maps uniquely onto $Q_{k,d}$
+by sending $a_{k,d}(u)$ to $B_{k,d}(u)$, and $N_{k,d}$ is its least
+conditional width.
+
+Proof. For append, $vta$ has a completion exactly when
+$\partial_{ta}S\ne\varnothing$. When $d>0$, the new anchor is $vc$ and
+the new $d$-tail is $wa$; $R(vc)=\partial_cS$. When $d=0$ the new
+anchor is the entire $ua$. For delete the shorter prefix is extendable
+because a completion of $va$ supplies a completion beginning with $a$
+for $v$. Its anchor length stays fixed, since
+$(k-1)-(d-1)=k-d$. These formulas preserve each guard, missing edge,
+label and successor on the actual images. Induction on action-word
+length gives the forward implication from boundary equality to response
+equality, including arbitrary legal interleavings.
+
+For the converse, unequal tails can be separated by deleting symbols
+of one tail in reverse order until the first disagreement from the
+right. This uses at most $d$ credits; the first state has every requested
+edge and the other misses the disagreeing delete edge. If the tails
+agree but the anchor residuals differ, choose a full completion
+$f\in S\mathbin{\triangle}S'$. Delete the common tail, spending exactly
+$d$ credits, and then supply the symbols of $f$ in order. The whole
+word is legal exactly on the side containing $f$: its endpoint has
+length $n$, where extendability is membership in $C$. Every intermediate
+prefix on that side is extendable.
+
+These explicit separators identify the behavioral fibers for this
+particular action contract. The stated factor and minimum then apply
+Process Geometry's cited strict quotient property; they are not a
+separate general automata-minimality principle. In particular, strict
+descent from equal $a$-values forces equal responses and hence equal
+$B$-values, making the onto map well-defined. Its uniqueness follows
+from surjectivity onto the actual $a$-image. $\square$
+

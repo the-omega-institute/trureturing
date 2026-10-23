@@ -1,0 +1,26 @@
+**Proposition 8.1 (independent replicas and generic dependence fail).**
+Neither of the following replacements is valid: treating repeated
+native replies as independent copies, or inferring constructor-pair
+saturation for an arbitrary functional-dependence problem without the
+native level-set premise.
+
+Proof. For the first assertion take the two actual sources
+$\langle\alpha,\alpha\rangle$ and $\langle\alpha,\beta\rangle$
+in $\mathcal F_1$. Their literal $R$ has the values alpha and beta.
+Two analytic occurrences of this same reply have exactly the two pairs
+$(\alpha,\alpha)$ and $(\beta,\beta)$. Independent copies permit
+four pairs, including $(\alpha,\beta)$, which no single stationary
+source realizes. Equality restores the unique lift.
+
+For the second assertion take $\{0,1\}^3$, experiments $r_j(x)=x_j$,
+target $g(x)=x_1\mathbin\oplus x_2$, and
+$B=\{x:x_3=x_1\mathbin\oplus x_2\}$. On $B$, $g=r_3$.
+All unary and binary coordinate projections are full, so its projection
+join is the whole cube. On that cube no one coordinate determines $g$:
+with $x_1$ fixed vary $x_2$, with $x_2$ fixed vary $x_1$, and with
+$x_3$ fixed vary either of the first two. Thus even a single declared
+functional dependence need not survive pair closure. The level
+$g=0$ is not a relative box in the first two coordinates. Theorem 3.2,
+together with actual-tree consistency, is the extra native premise used
+in Theorem 5.2. $\square$
+

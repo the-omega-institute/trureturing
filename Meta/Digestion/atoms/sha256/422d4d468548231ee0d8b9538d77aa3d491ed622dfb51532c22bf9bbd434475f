@@ -1,0 +1,23 @@
+**Proposition 7.3 (unknown epoch and late row-only entry).** Neither
+current row plus full births nor current row alone generally restores
+a missing elapsed epoch or omitted origin provenance.
+
+**Proof.** Fix origin alpha and $P=\{L,R\}$. At epochs two and three the
+current row is $D_{\ne}$ and the full vector is $(2,2)$ in both. The
+predecessor is beta at epoch two and $D_{\ne}$ at epoch three; the complete
+finite histories also have different lengths. Thus the inputs without
+$n$ do not determine either target.
+
+Even with known $n=2$, alpha and beta in (NBP.6.4) give the same current
+row but different full vectors and histories. A late row-only observer
+cannot manufacture the missing early table. Applying Theorem 4.2 to
+that late row as a new seed predicts births relative to the new seed;
+it gives zero for all already reached cuts and does not recover their
+first dates relative to the old origin.
+
+The intrinsic coordinate law
+[IntrinsicSubstitutionCoordinates](../../../D5/S3/Arith/FibonacciAtomic/SourceCoordinates/IntrinsicSubstitutionCoordinates.lean),
+all_source_coordinate_law, increases maximal inverse depth by $n$ from
+the origin's own depth. Since that origin need not be primitive,
+intrinsic depth is not the authenticated elapsed epoch used here. $\square$
+

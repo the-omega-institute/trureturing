@@ -1,0 +1,20 @@
+**定义 2.2（任务行为与闭边界）。** 给定当前读数 $o:\mathcal T\to Y$，定义完整的纯替换
+行为为
+
+$$
+\operatorname{Prof}_o(t)=\bigl(o(t),o(\rho t),o(\rho^2t),\ldots\bigr).
+$$
+
+记 $t\sim_o u$ 当且仅当两个行为序列相等。边界映射 $\eta:\mathcal T\to B$ 对该任务充分，
+是指存在读数 $\bar o$ 与后继 $\bar\rho$ 使
+
+$$
+o=\bar o\circ\eta,
+\qquad
+\eta\circ\rho=\bar\rho\circ\eta .
+$$
+
+在实际像上，$\mathcal T/{\sim_o}$ 是最小的任务相关边界：任何充分边界都不能合并
+行为不同的两个源，而行为相同的源可以由同一个闭后继表示。这里的“最小”只针对本节
+声明的读数和合法操作，不是对所有可能观察的绝对压缩。
+

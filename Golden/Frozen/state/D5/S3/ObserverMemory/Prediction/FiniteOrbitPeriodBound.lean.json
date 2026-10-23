@@ -1,1 +1,1 @@
-{"statement_id":"sha256:259d232d95c1ca485bdaeb0bf7eb8d9a839164d9e3964dab0743ddec9dc41953"}
+{"statement_id":"sha256:259d232d95c1ca485bdaeb0bf7eb8d9a839164d9e3964dab0743ddec9dc41953","declarations":[{"declaration_name_key":"ns(ns(ns(ns(ns(ns(n0,2:D5),2:S3),14:ObserverMemory),10:Prediction),22:FiniteOrbitPeriodBound),44:finite_orbit_and_readout_eventually_periodic)","kind":"theorem"}]}

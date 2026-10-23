@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:0dedf4d8e45909de56eb06f3fe2b4aa35b6b050498d96df1a451a421626edef5
+  normalized_sha256: sha256:0dedf4d8e45909de56eb06f3fe2b4aa35b6b050498d96df1a451a421626edef5
+cas_ref: sha256:0dedf4d8e45909de56eb06f3fe2b4aa35b6b050498d96df1a451a421626edef5
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 定理 255.2 的充分性证明第一步只准备带预算余量的背景及信息读数。
+    previous_atom_id: 38c02e3e98fc06f8fa6909fa33508ac4c1fc45569d0534548b8988f2ef7c8585
+    next_atom_id: cf8fa91d3bd131cd9e27c19d4628720f31a73531aeaeabfa43df1f245fbab5ca

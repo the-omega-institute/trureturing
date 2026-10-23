@@ -1,0 +1,49 @@
+**Theorem 214.11 (directed six-coordinate stock envelope).** Every complete score in this slice with $\Delta_O\le d$ satisfies
+
+$$
+T\ge u,\qquad
+S\ge\max\left\{\frac{13u}{4},\frac{22u+v}{7}\right\},\qquad
+B\ge u+\max\left\{\frac{13u}{4},\frac{22u+v}{7}\right\}.
+\tag{214.12}
+$$
+
+This is a necessary projection statement. It is not a full-fiber minimum and does not assert that an endpoint lift is affordable at cost $d$.
+
+**Proof.** The legal head table $(1,2;1,2,j_1)$ has reward at least $S+g$, against anchor $S+T$, and therefore gives $T\ge g-d$. Combining this with $T\ge0$ gives $T\ge(g-d)_+=u$, also when $g<d$. For each selected late class $j$, the two legal tables $(1,j;0,j,0)$ with the two early addresses have disjoint pair-loss sets, both contained in the selected zero cylinder. Each loss is at least $(\gamma_j-d)_+$, so
+
+$$
+ m_i\ge2u\ (i\le5),\qquad m_6\ge2v.
+\tag{214.13}
+$$
+
+The legal late/late table $(j_i,j_k;0,j_k,0)$ gives
+$D_{ik}\ge u$ for $1\le i<k\le5$, and $(j_i,\ell;0,\ell,0)$ gives $D_{i6}\ge v$. These are lower bounds from one full score and the same common measure; no independently funded projection is introduced. The underlying full catalog retains its independent base rows; this slice fixes their score coefficients $A$ to zero.
+
+For the first cut put
+
+$$
+P_4(z)=2z_1+z_2+\sum_{1\le i<j\le4}(1-z_i)z_j+(1-z_4)z_5.
+$$
+
+If $k=z_1+z_2+z_3$, then for $z_4=1$ it equals
+$3+(3k-k^2)/2$, and for $z_4=0$ it equals $(5k-k^2)/2+z_5$; each is at most $4$. Integrating and using (214.13) gives
+$4S\ge2m_1+m_2+\sum_{i<k\le4}D_{ik}+D_{45}\ge13u$.
+
+For the second cut put
+
+$$
+P_6(z)=3z_1+2z_2+z_3+
+\sum_{1\le i<k\le5}(1-z_i)z_k+(1-z_5)z_6.
+$$
+
+With $k=z_1+z_2+z_3+z_4$, if $z_5=0$ then
+$P_6=(7k-k^2)/2+z_6$, and if $z_5=1$ then
+$P_6=4+(5k-k^2)/2$. For $k=0,1,2,3,4$ both expressions are at most $7$. Hence
+
+$$
+7S\ge3m_1+2m_2+m_3+\sum_{1\le i<k\le5}D_{ik}+D_{56}
+\ge22u+v.
+$$
+
+The two inequalities use the same $\nu$, so adding two separately attainable stocks is not occurring. This proves (214.12). $\square$
+

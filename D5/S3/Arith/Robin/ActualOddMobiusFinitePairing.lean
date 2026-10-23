@@ -146,7 +146,7 @@ private theorem prefix_succ (N : ℕ) :
   unfold mobiusPrefix
   rw [Finset.sum_Ioc_succ_top (Nat.zero_le N)]
 
-private theorem prefix_abel (P : ℕ → ℝ) (N : ℕ) :
+theorem prefix_abel (P : ℕ → ℝ) (N : ℕ) :
     (∑ n ∈ Ioc 0 N, mobiusPrefix n*(P n-P (n+1))) =
       (∑ m ∈ Ioc 0 N, (ArithmeticFunction.moebius m : ℝ)*P m) -
         mobiusPrefix N*P (N+1) := by

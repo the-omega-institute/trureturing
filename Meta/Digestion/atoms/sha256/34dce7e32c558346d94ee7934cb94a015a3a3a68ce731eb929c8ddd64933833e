@@ -1,0 +1,18 @@
+**定理 7.3（增长常数的硬核下界）。** 对每个 $r>1$ 与每个 $n\ge1$，
+
+$$
+\kappa_n\ge g(r)\,\frac{n-2-2(r-1)^2/r}{1+\vartheta^{n+2}},\qquad \vartheta=\frac{r-1}{r}.
+\tag{7.4}
+$$
+
+因此 $c_\star\ge g(r)$ 对每个 $r>1$ 成立。多项式 $p$ 在 $(1,\infty)$ 中恰有一个根 $r_\star$，$1.4<r_\star<1.5$；$g$ 在 $(1,r_\star]$ 上严格递增、在 $[r_\star,\infty)$ 上严格递减，于是
+
+$$
+c_\star\ge\sup_{r>1}g(r)=g(r_\star),\qquad
+\frac{1800}{12559}=g\Bigl(\frac{29}{20}\Bigr)\le g(r_\star),\qquad
+0.14333115<g(r_\star)<0.14333116.
+\tag{7.5}
+$$
+
+并且对每个 $n\ge0$，$\kappa_n\ge g(r_\star)\,n\ge\frac{1800}{12559}\,n$。
+

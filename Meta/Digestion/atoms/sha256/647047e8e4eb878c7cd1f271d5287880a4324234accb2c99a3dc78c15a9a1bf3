@@ -1,0 +1,8 @@
+**Convention 4.3 (completeness of target witnesses).** A native network
+in Theorem 4.2 carries a declared valid witness for every $(i,q)$,
+together with the actual-tree constraints. Arbitrary binary relations
+on four states do not by themselves certify native admissibility.
+The graph of variable incidences is also different from a graph whose
+vertices are whole source rows. NDR §2 and FMR §7 already distinguish
+binary relations inside a fiber from pairwise confusability of rows.
+

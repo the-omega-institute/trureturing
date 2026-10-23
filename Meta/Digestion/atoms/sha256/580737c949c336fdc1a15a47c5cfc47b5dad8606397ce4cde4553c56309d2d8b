@@ -1,0 +1,95 @@
+### theorem 8.1: 定理 5：分层不可压缩定理
+
+设目标未来律为：
+
+$$
+L(\kappa,\sigma,\tau)
+$$
+
+其中：
+
+$$
+\sigma=(a,A,B)
+$$
+
+假设：
+
+1. 固定 $(\sigma,\tau)$ 后，$\kappa\mapsto L(\kappa,\sigma,\tau)$ 在实际可行纤维上是单射；
+2. 固定静态关系和 $\tau$ 后，$\sigma\mapsto L$ 在声明的动态域上是单射；
+3. 不同 $\tau$ 的边界义务产生不同合法未来；
+4. 这些坐标确实由同一个联合来源和同一个响应核生成。
+
+则任何精确预测 $L$ 的摘要，都不能在相应纤维内合并不同的 $\kappa$、$\sigma$ 或 $\tau$。
+
+若另外存在三个独立探针：
+
+$$
+P_\kappa(L)=\phi_\kappa(\kappa)
+$$
+
+$$
+P_\sigma(L)=\phi_\sigma(\sigma)
+$$
+
+$$
+P_\tau(L)=\phi_\tau(\tau)
+$$
+
+且三个 $\phi$ 都是单射，则联合坐标：
+
+$$
+(\kappa,\sigma,\tau)
+$$
+
+是完整 future law 的精确商坐标。
+
+#### 证明
+
+在固定 $(\sigma,\tau)$ 的纤维内，条件 1 直接说明不同 $\kappa$ 不能产生同一未来律。因此任何 future-sufficient 摘要必须区分这些 $\kappa$。
+
+同理，条件 2 和 3 分别给出 $\sigma$ 与 $\tau$ 的必要区分。
+
+若存在三个独立探针，则：
+
+$$
+L=L'
+$$
+
+推出：
+
+$$
+\phi_\kappa(\kappa)=\phi_\kappa(\kappa')
+$$
+
+$$
+\phi_\sigma(\sigma)=\phi_\sigma(\sigma')
+$$
+
+$$
+\phi_\tau(\tau)=\phi_\tau(\tau')
+$$
+
+由于各 $\phi$ 单射，得到：
+
+$$
+\kappa=\kappa',\qquad
+\sigma=\sigma',\qquad
+\tau=\tau'
+$$
+
+因此联合坐标是精确商。证毕。
+
+---
+
+这个定理的关键限制是：
+
+$$
+\boxed{
+\text{没有共同来源和联合响应核，不能把各层最小性自动相乘。}
+}
+$$
+
+这正是当前项目对前面“$(\kappa,a,A,B,\tau)$ 普适最小记忆”说法的修正。
+
+---
+

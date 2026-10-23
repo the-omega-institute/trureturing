@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:87602c96aa850db8d95d32436bf338ae962bb4e00f043a6f24f7a9237f7df373
+  normalized_sha256: sha256:87602c96aa850db8d95d32436bf338ae962bb4e00f043a6f24f7a9237f7df373
+cas_ref: sha256:87602c96aa850db8d95d32436bf338ae962bb4e00f043a6f24f7a9237f7df373
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 证明附引或书目定位（**定义、定理与证明（保留原有证据地位及开放限制）。**…）只给出所用来源、定位和证据地位，不提出独立数学陈述。
+    previous_atom_id: 397d24a64d30a322afd923931fd59884c3f3942af26f2b8c5ac945629777dc21
+    next_atom_id: 7ccb3bbf20a38afc101b93fa8fef582b3cc784220d128a53aa1a831cb76f8dd7

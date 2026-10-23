@@ -1,0 +1,33 @@
+**Proposition 20.4 (image rounds in a polynomially comparable clock).** Under
+Definitions 20.1 and 20.3 with (C.20.4),
+
+$$
+\frac{W_j}{p(n)q(n)}
+\le\frac{T_t}{\tau_0}\le p(n)q(n)W_j,
+\qquad
+\frac{T_t}{\tau_0}\ge
+\frac{(137^j-1)(s_0+279/136)}{p(n)q(n)}.
+\tag{C.20.5}
+$$
+
+In particular, if $T_t/\tau_0\le B(n)$ for a fixed polynomial $B\ge0$, then
+
+$$
+j\le\frac{\ln\left(1+
+ B(n)p(n)q(n)/(s_0+279/136)\right)}{\ln137}
+=O(\log(n+2)).
+\tag{C.20.6}
+$$
+
+Proof. The elementary calibrated-trace estimate recorded in
+[Cook's model-robustness note](../../../Library/ConceptDynamics/cook2006pversusnp.md#primitive-simulations-and-calibrated-execution-costs)
+is used as an intermediate step: on interval $i$, integration of
+$q(n)^{-1}\le\alpha^{-1}\le q(n)$ gives reference duration between
+$\tau_0/(pq)$ and $\tau_0pq$. Summing gives the first two-sided bound.
+Apply Proposition 20.2 for the last bound. Rearranging it under the budget
+$B$ gives (C.20.6); its asymptotic estimate uses
+$s_0+279/136\ge279/136$ and the fixed polynomial upper bound on $Bpq$.
+This limits serial literal-image rounds in the stated trace. It is not a
+lower bound on a task computed by a different trace or representation.
+$\square$
+

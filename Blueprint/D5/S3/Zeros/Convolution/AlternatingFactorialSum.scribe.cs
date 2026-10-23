@@ -15,6 +15,15 @@ internal sealed class AlternatingFactorialSumDocument : IScribeDocumentDefinitio
                 + "It supplies equation (5) for the monomial-fiber route; no matching-polynomial "
                 + "coefficient formula follows without the separate combinatorial fiber proof.")),
             Describe.Lean(
+                DescribeId.Create("real-desc-factorial"),
+                DeclarationHandle.Create(Prefix + "real_descFactorial"),
+                H("Real Descending Factorial"), StatementSource.WithoutFormula(),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text(
+                    "For natural numbers i and n with i <= n, the real value of n.descFactorial i "
+                    + "equals n! / (n - i)!."))),
+                DescribeRole.Theorem),
+            Describe.Lean(
                 DescribeId.Create("opposite-series-product"),
                 DeclarationHandle.Create(Prefix + "opposite_inv_series_mul"),
                 H("Opposite Series Product"), StatementSource.WithoutFormula(),

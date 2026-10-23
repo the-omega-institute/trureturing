@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:48d0c5fdd07f50c3f31a02200dd63c2cd5920f82dd93acd3a08af92c071ad34f
+  normalized_sha256: sha256:48d0c5fdd07f50c3f31a02200dd63c2cd5920f82dd93acd3a08af92c071ad34f
+cas_ref: sha256:48d0c5fdd07f50c3f31a02200dd63c2cd5920f82dd93acd3a08af92c071ad34f
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 章节标题「接续 ST0–ST18 的理论增订 ST19–ST26」仅作导航；正文除标题、空行及分隔线外无其他内容，不提出命题。
+    previous_atom_id: ab99a371379e53d0ad3c4f171a3b61fd19089961f2e5837f05ac986a34629730
+    next_atom_id: 36b07357f6622e09319cc2226724daad2f9b3af9afde3085c8d09c3a5381a9dd

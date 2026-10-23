@@ -1,0 +1,20 @@
+**Application 8.1 (task sufficiency uses the actual relation).** Let $b$
+be attained and $F(u,h)$ be a desired source/history quantity. A passive
+value is determined by the known program, parameters and $b$ exactly
+when $F$ is constant on $\mathcal H_{P,b}$. For tuple quantities use
+$\mathcal J_{P,b}$; for source-only quantities use $\mathcal S_{P,b}$.
+This is the supplied factor-through-fibers criterion of [PG], not new
+quotient theory. The actual acquisition promise places the real history
+in that fiber. Proposition 4.2 recovers lag one where the enlarged
+record-only set would report all positive lags. Proposition 4.1 recovers
+invocation alpha without a separately retained first reply.
+
+For a computable finite-encoded target and an attained boundary,
+constancy as an additional proved promise also gives effective recovery:
+enumerate finite native witnesses by Corollary 3.6 until one returns
+$b$, compute its target, and use constancy. The witness need not be the
+actual source or schedule. This does not decide constancy, authenticate
+a copied output or reconstruct arbitrary past microsteps. A singleton
+source projection identifies the source under the acquisition promise;
+it remains distinct from a certificate of physical provenance.
+

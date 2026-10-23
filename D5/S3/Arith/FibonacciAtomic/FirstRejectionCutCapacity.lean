@@ -8,7 +8,7 @@
 import D5.S3.Arith.FibonacciAtomic.LiteralWindowEnd
 import D5.S3.Observer.Separation.SurjectiveColumnSharpWidth
 import D5.S3.ConceptDynamics.Communication.LanguagePostprocessingObstruction
-import Mathlib.Tactic
+import Mathlib.Data.Fintype.WithTopBot import Mathlib.Tactic
 import Mathlib.Data.List.ChainOfFn
 set_option autoImplicit false
 set_option maxRecDepth 4096

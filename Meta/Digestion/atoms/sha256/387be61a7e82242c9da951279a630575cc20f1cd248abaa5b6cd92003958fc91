@@ -1,0 +1,10 @@
+**Definition 3.4 (recognized frame class and OUTSIDE).** A generated frame is
+admitted for $B$ if every slice (FFM.10), $r\in B$, is either empty, finite, or
+infinite with a positive canonical contact test in Proposition 3.3. The
+recognizer generates and tests the coarse frame first and the prefix refinement
+second, stopping at an admitted frame. If both fail it returns OUTSIDE. Every
+list and supplier call is finite and terminating. No unbounded enumeration of
+certificates or contexts is performed. OUTSIDE leaves the unrestricted
+$\forall h\ J_B(h)$ question undecided; a failed canonical test is not a proof of
+finite exclusion.
+

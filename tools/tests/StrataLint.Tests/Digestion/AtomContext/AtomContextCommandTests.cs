@@ -47,7 +47,8 @@ public sealed class AtomContextCommandTests
             + $"NEXT atom_id={Id(claims[2])} state=residual-open\n"
             + "BEGIN_PREVIOUS_TEXT\n## Before\n\nBefore.\n\nEND_PREVIOUS_TEXT\n"
             + "BEGIN_CURRENT_TEXT\n## Middle\n\nMiddle.\n\nEND_CURRENT_TEXT\n"
-            + "BEGIN_NEXT_TEXT\n## After\n\nAfter.\nEND_NEXT_TEXT\n", result.Output);
+            + "BEGIN_NEXT_TEXT\n## After\n\nAfter.\nEND_NEXT_TEXT\n"
+            + "WORK_CONTEXT relation=heading transient=true\nBEGIN_WORK_CONTEXT_TEXT\n## Middle\nEND_WORK_CONTEXT_TEXT\n", result.Output);
     }
 
     [Fact]
@@ -68,7 +69,7 @@ public sealed class AtomContextCommandTests
     {
         var fixture = Create();
         var target = Id(fixture.Atomized.Claims[1]);
-        fixture = fixture with { SourceBytes = Encoding.UTF8.GetBytes(ThreeClaims + ThreeClaims) };
+        fixture = fixture with { SourceBytes = Encoding.UTF8.GetBytes(ThreeClaims + ThreeClaims), ContextIndex = null };
         var result = fixture.Environment().AtomContext(["--atom-id", target]);
         Assert.True(result.Success, result.Error);
         Assert.Contains("occurrences=2\n", result.Output, StringComparison.Ordinal);

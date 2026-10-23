@@ -1,0 +1,19 @@
+**Proposition 2.4 (initialized images and startup).** If an initialized
+execution family supplies only $E_{k,d}\subseteq P_k$ at a type, while
+all continuations of each supplied state keep the actions of Definition
+1.2, its least conditional width is $|B_{k,d}(E_{k,d})|$. For a nonempty
+such family the full count applies exactly when this image is all
+$Q_{k,d}$. A singleton known initial state at type $(k_0,d_0)$ has only
+that state reachable again at its initial type. An empty-prefix
+initialization in the stated type range has $d=0$ forever.
+
+Proof. The sufficiency and pairwise separators of Theorem 2.2 apply to
+any subset of initial states. A return to $(k_0,d_0)$ cannot use delete,
+since credit never increases. Without delete, append strictly increases
+the cut, so only the empty path returns. At cut zero the condition
+$d\le k$ forces zero credit, and neither action can increase it.
+This restricts actual images rather than the continuation semantics,
+as in the linear volume's Theorem 3.3. Allowing positive credit at an
+empty cut would require a different type contract; no such extension
+is used here. $\square$
+

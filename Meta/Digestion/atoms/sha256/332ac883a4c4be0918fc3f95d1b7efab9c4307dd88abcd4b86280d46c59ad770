@@ -1,0 +1,36 @@
+**命题 263.4（经典协方差供应项与响应核心的精确对应）。** Anandkumar–Chaudhuri–Hsu–Kakade–Song–Zhang, *Spectral Methods for Learning Multivariate Latent Tree Structure*, [NIPS 2011 会议论文，§2.2 Conditions 1–2、§3.1 Lemma 1 与式 (1)](https://proceedings.neurips.cc/paper_files/paper/2011/file/208e43f0e45c4c78cafadb83d2888cb6-Paper.pdf)，在多变量潜树的二阶矩坐标中给出谱乘积四点关系。Conditions 1–2 位于论文第 3 页，Lemma 1 及式 (1) 位于第 5 页，模型图见第 2 页 Figure 1。这里引用的是该会议版本；线性条件均值与秩条件是其供应关系的条件，不是定义 263.1 自动满足的条件。
+
+对于定理 263.2 的双中心叶核心，在每个 $F_i$ 及 $Y$ 都可逆的子情形，存在如下人工高斯对应。取中心向量 $(h,g)$ 为均值零的联合高斯向量，协方差恰为
+
+$$
+\operatorname{Cov}(h,g)=J^{-1}
+=\begin{pmatrix}X&Y\\Y^{\mathsf T}&Z\end{pmatrix}>0.
+$$
+
+把 $h$ 定为根、$g$ 定为其子节点，则
+
+$$
+\mathbb E[g\mid h]=Y^{\mathsf T}X^{-1}h,\qquad
+\operatorname{Cov}(g\mid h)=Z-Y^{\mathsf T}X^{-1}Y>0.
+$$
+
+对 $i=a,b$ 取 $z_i=F_ih+\eta_i$，对 $i=c,d$ 取 $z_i=F_ig+\eta_i$。四个 $\eta_i$ 相互独立，均为协方差 $I_r$ 的中心高斯噪声，并独立于 $(h,g)$。由此构成同一双中心树上的条件独立模型，而且
+
+$$
+\mathbb E[z_iz_j^{\mathsf T}]=W_{ij}\quad(i\ne j).
+\tag{263.11}
+$$
+
+证明。独立噪声不贡献交叉二阶矩，代入中心协方差即得核心的三个块公式。高斯条件均值线性，$F_i$ 及 $Y$ 可逆使相应条件均值矩阵满秩，中心边的条件均值矩阵为 $Y^{\mathsf T}X^{-1}$；中心边的正定条件协方差同时给出非退化条件分布。因此取文献参数 $d=k=r$ 时，所需 Conditions 1–2 得到满足。两个隐藏中心各有度三，且 (263.7) 的中心收缩在非奇异情形严格小于一。该文 $\det_k$ 是前 $k$ 个奇异值的乘积；在这里 $d=k=r$，正好等于 $|\det W_{ij}|$。其 Lemma 1 式 (1) 对应的比值为
+
+$$
+\frac{d_{ac}d_{bd}}{d_{ab}d_{cd}}
+=\frac{d_{ad}d_{bc}}{d_{ab}d_{cd}}
+=\frac{|\det Y|^2}{\det X\det Z}<1.
+\tag{263.12}
+$$
+
+观察叶的对角协方差是 $F_iXF_i^{\mathsf T}+I_r$ 或 $F_iZF_i^{\mathsf T}+I_r$，并没有等同于响应对角块。人工协方差是 $J^{-1}$，也没有把整个 $\mathcal S_4$ 或 $\mathcal S_4^{-1}$ 宣称为协方差。星形核心可另取一个协方差为 $A^{-1}$ 的隐藏高斯向量及同样的叶噪声，直接取行列式得到三个乘积全等；不以复制同一隐藏变量的奇异双中心模型套用双中心引理。
+
+若 $F_i$ 或 $Y$ 奇异，文献满秩条件不能这样套用，定理 263.2 的直接代数仍然成立。额外端口接地、只有内块正定、原端口位于内部及空内点集，则分别由 (263.3) 与 (263.8)–(263.9) 承担。因此文献是经典协方差供应项，不是自动适用于全部实际端口响应的定理；上述完整证明也不以所引引理的补充证明为前提。□
+

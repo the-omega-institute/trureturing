@@ -1,0 +1,25 @@
+**定义 26.2（加权五边图与模式映射）。** 取定义 26.1 中的 $n=4$，在相对于 $O$ 的坐标
+$(\xi_L,\xi_T,\xi_R,\xi_J)$ 中，给五条边
+$OL,OT,OR,LJ,RJ$ 的权满足
+$$
+g_L,g_T,g_R>0,\qquad h_L,h_R\ge0,\qquad h_L+h_R>0.
+$$
+令 $K(g,h)$ 是二次型
+$$
+\tfrac12\{g_L\xi_L^2+g_T\xi_T^2+g_R\xi_R^2
++h_L(\xi_L-\xi_J)^2+h_R(\xi_R-\xi_J)^2\}
+$$
+的矩阵。零权表示相应边缺失；$h_L=h_R=0$ 不在本应用的域内。
+给定控制 $\lambda,\nu,\mu\ge0$，定义
+$$
+K_{\varnothing}=K(g,h),\quad
+K_1=K(g_L+\lambda,g_T,g_R;h),\quad
+K_2=K(g_L,g_T+\nu,g_R;h),
+$$
+$$
+K_3=K(g_L,g_T,g_R+\mu;h),\qquad
+K_{13}=K(g_L+\lambda,g_T,g_R+\mu;h),
+$$
+并取本节应用的 $q_s=c_s=0$。这里的 $(x,z,y)$ 只记录模式占据，
+而 $\xi$ 仍是场振幅；模式映射没有把五态自动变成一个连续空间。
+

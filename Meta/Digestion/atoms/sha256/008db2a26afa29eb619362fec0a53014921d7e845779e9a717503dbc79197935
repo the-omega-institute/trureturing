@@ -1,0 +1,70 @@
+### 29. 五、把当前 future law 接入四角判据
+
+Claim status: open.（供文 III 原第 5 节全文。）
+
+> 编者限定（III.5）：将 FR 接入这里仍须给出同一实际来源与未来合同；计数注入性或模式响应彼此不同，均不推出四角 $J_{\mathscr L}\ne0$。在后文联合模型中，历史后的模式混合质量为 $\widehat p_H(I)\propto p_I c_I\sum_k\mu_k r_k^{A_I}s_k^{B_I}$，一般不是原先验 $p_I$。应以当前实际模式律混合相应的条件未来核，再按其均值讨论纤维；该共同实现及非零四角响应保持 open 桥接义务。
+
+
+现在考虑最新文档 §§34–35 中的 future response。
+
+设某个固定 phase 下，历史 $h$ 已经诱导出两个 Read 计数
+
+$$
+\theta=(A,B).
+$$
+
+当前文档中的 Fibonacci 深度响应为
+
+$$
+r_k=\frac{\mathrm{Fib}_{k+1}}{\mathrm{Fib}_{k+3}},
+\qquad
+s_k=\frac{\mathrm{Fib}_{k+2}}{\mathrm{Fib}_{k+3}}.
+$$
+
+在固定隐藏深度 $k$ 时，一段历史的似然具有形式
+
+$$
+r_k^A s_k^B.
+$$
+
+如果每个五态模式 $F[I]$ 可能对应不同的历史计数
+
+$$
+\theta_I=(A_I,B_I),
+$$
+
+则可以定义每个模式的 future law：
+
+$$
+L_I =
+\mathscr L_{\mathrm{phase},A_I,B_I}.
+$$
+
+然后混合未来律为
+
+$$
+\overline{\mathscr L}(p) =
+\sum_Ip_IL_I.
+$$
+
+根据定理 1，
+
+$$
+\overline{\mathscr L}(p) =
+\mathscr L_{\mathrm{null}}
++\cdots
++J_{\mathscr L}\kappa,
+$$
+
+其中
+
+$$
+J_{\mathscr L} =
+\mathscr L_{1,3}
+-\mathscr L_1
+-\mathscr L_3
++\mathscr L_{\mathrm{null}}.
+$$
+
+这里 $J_{\mathscr L}$ 是一个未来概率律向量。
+

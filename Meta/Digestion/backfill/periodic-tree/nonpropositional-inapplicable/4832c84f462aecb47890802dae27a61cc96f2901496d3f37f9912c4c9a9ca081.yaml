@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:4832c84f462aecb47890802dae27a61cc96f2901496d3f37f9912c4c9a9ca081
+  normalized_sha256: sha256:4832c84f462aecb47890802dae27a61cc96f2901496d3f37f9912c4c9a9ca081
+cas_ref: sha256:4832c84f462aecb47890802dae27a61cc96f2901496d3f37f9912c4c9a9ca081
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 证明段（**证明。** 若 $p\ne0$ 且 $p\alpha=q\in\mathbb Z$，则 $\alpha=q/p\in\mathbb Q$…）只展开前文定理或命题的论证，式子和中间推导不另提出独立陈述。
+    previous_atom_id: 18701aeb45f1db6bca83d4ad3b7d67a9f8c6d60df336c548c57bddcfff5670ed
+    next_atom_id: d496d98a9819ad6f291f7d9f127fa951887fa84b058a7adcd338049ea9ebd6d7

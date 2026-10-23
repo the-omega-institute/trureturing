@@ -1,1 +1,1 @@
-{"statement_id":"sha256:62ff8078a7440b3ec53346dfba24e0814045a78af8b6da23dfd509f46e2cbac6"}
+{"statement_id":"sha256:62ff8078a7440b3ec53346dfba24e0814045a78af8b6da23dfd509f46e2cbac6","declarations":[{"declaration_name_key":"ns(ns(ns(ns(ns(n0,2:D5),2:S3),15:RenyiDivergence),13:OrderOneLimit),27:renyi_divergence_tendsto_kl)","kind":"theorem"}]}

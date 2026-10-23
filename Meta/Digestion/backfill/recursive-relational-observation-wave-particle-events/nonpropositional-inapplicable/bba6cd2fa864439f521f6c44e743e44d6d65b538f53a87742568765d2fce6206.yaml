@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:bba6cd2fa864439f521f6c44e743e44d6d65b538f53a87742568765d2fce6206
+  normalized_sha256: sha256:bba6cd2fa864439f521f6c44e743e44d6d65b538f53a87742568765d2fce6206
+cas_ref: sha256:bba6cd2fa864439f521f6c44e743e44d6d65b538f53a87742568765d2fce6206
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 244. 任务相对的最小全息商 是章节标题及导引，只说明本节的研究任务、来源或模型范围，不另陈述具体性质、公式或反例。
+    previous_atom_id: b93142612a7ec3c45c12520a59e7396d2a8d96df7a671a909ae82f1169a294df
+    next_atom_id: 9033a8e6c2c58043b31edc6a19789e15c8b2b8c5bf256ff5c54c1ad9bb489004

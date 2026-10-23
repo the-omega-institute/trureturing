@@ -1,1 +1,1 @@
-{"statement_id":"sha256:38c6e3fcd1eba31cf0fd3b6c9e98d28b768b7ae15e78befa3cad4bac7ef66f21"}
+{"statement_id":"sha256:38c6e3fcd1eba31cf0fd3b6c9e98d28b768b7ae15e78befa3cad4bac7ef66f21","declarations":[{"declaration_name_key":"ns(ns(ns(ns(ns(ns(n0,2:D5),2:S3),8:Observer),6:Budget),23:ResidueHeightUpperBound),26:residue_height_upper_bound)","kind":"theorem"}]}

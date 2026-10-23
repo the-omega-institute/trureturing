@@ -22,6 +22,7 @@ Information-escape registration is paused under CLAUDE.md §3.9.
 
 import D5.S3.Quantum.SpinChains.SupersymmetricFermion.JordanWigner
 import D5.S1.Words.AdmissibleWords.AdmissibleCount
+import Mathlib
 import D5.S3.Quantum.FockSpace.ForbiddenNeighbourDeterminant
 set_option linter.unusedSimpArgs false
 open scoped BigOperators Matrix Classical

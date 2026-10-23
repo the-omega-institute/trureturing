@@ -1,0 +1,39 @@
+**定义 40.5（三 β 的可变行与标记槽完整族）。** 以下记号均为本章局部记号。对任意完整树 $T$ 及有限树列，定义右梳
+
+$$
+\mathcal R_T()=T,\qquad
+\mathcal R_T(x_1,\ldots,x_r)
+ =\langle x_1,\mathcal R_T(x_2,\ldots,x_r)\rangle\quad(r\ge1),
+\qquad b=\langle\beta,\alpha\rangle.
+\tag{40.17}
+$$
+
+对每个整数 $k\ge1$，参数取
+
+$$
+\ell\in\{1,2,3\},\quad
+r_1,\ldots,r_\ell\in\mathbb N_0,\quad
+\sum_{j=1}^\ell r_j=k,\quad
+S_j\subseteq\{1,\ldots,r_j\},\quad
+\sum_{j=1}^\ell|S_j|=3-\ell.
+\tag{40.18}
+$$
+
+零长度行和空标记集均允许。设
+
+$$
+\begin{aligned}
+d_{j,t}&=\begin{cases}b,&t\in S_j,\\ \alpha,&t\notin S_j,\end{cases}
+ &D_{j,t}&=\begin{cases}B,&t\in S_j,\\ A,&t\notin S_j,\end{cases}\\
+h_j&=\mathcal R_\beta(d_{j,1},\ldots,d_{j,r_j}),
+ &T_j&=\mathcal R_C(D_{j,1},\ldots,D_{j,r_j}),\\
+Q(\ell,\boldsymbol r,\boldsymbol S)&=\mathcal R_\alpha(h_1,\ldots,h_\ell),
+ &P(\ell,\boldsymbol r,\boldsymbol S)&=\mathcal R_A(T_1,\ldots,T_\ell),\\
+F_k&=\{P(\ell,\boldsymbol r,\boldsymbol S):\text{式（40.18）成立}\},
+ &n_k&=3k+18.
+\end{aligned}
+\tag{40.19}
+$$
+
+每个 $Q$ 和 $P$ 都是保留全部括号、次序、叶标签的完整树；行边界不预设固定深度。其共享来源约束为 $\ell+\sum_j|S_j|=3$：同一份三片前像 $\beta$ 资源或用于行末，或用于标记槽 $b$。
+

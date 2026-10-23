@@ -1,1 +1,1 @@
-{"statement_id":"sha256:f37d05d9190f5de7d1bd9c677766211b8153741d970e67c11ccf1d5c2199e829"}
+{"statement_id":"sha256:f37d05d9190f5de7d1bd9c677766211b8153741d970e67c11ccf1d5c2199e829","declarations":[{"declaration_name_key":"ns(ns(ns(ns(ns(ns(n0,2:D5),2:S3),15:ConceptDynamics),10:Refinement),36:ResourceAsymmetricConceptEquivalence),56:ordinary_equivalence_does_not_imply_resource_equivalence)","kind":"theorem"}]}

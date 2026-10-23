@@ -68,7 +68,8 @@ Private declarations, each on the live path of result (consumer in brackets):
     [filtered_bound, operator_bound, degenerate_bound, tight_blochB]; form_one_kron
     [degenerate_bound, maxent_le]; ptL_conj, trace_conj_kron, kron_sub, form_conj_mul
     [filtered_bound]; ptL_sub [canonical_bound, degenerate_bound]; ptL_smul [canonical_bound,
-    filtered_bound, degenerate_bound]; ptR_sub, ptR_smul [canonical_bound];
+    filtered_bound, degenerate_bound]; ptR_sub [canonical_bound];
+    imported ConditionalHockeyStickOrthogonalReduction.partialTraceRight_smul [canonical_bound];
     form_conj [cs_form, psd_sub_rank_one]; form_real [psd_sub_rank_one, canonical_bound,
     degenerate_bound]; form_vecMulVec [psd_sub_rank_one]; trace_vecMulVec [canonical_bound,
     degenerate_bound]; halfPhase_mul [phase_max, tight_phase]; phase_max [fef_le, result];
@@ -80,9 +81,15 @@ clause for every parameter, not a finite certificate, enumeration, checker or nu
 reduction.
 -/
 
+import D5.S3.Quantum.Divergence.ConditionalHockeyStickOrthogonalReduction
+import D5.S3.Quantum.Information.ActualPureQubitGeometry
 import D5.S3.Quantum.FiniteDimensional
 import D5.S3.Quantum.Information.PartialTraceMutualInformation
 import D5.S3.Quantum.Information.StabilizerPairLocalUnitaryInequivalence
+import D5.S3.QuantumBounds.CHSHWitness
+
+open D5.S3.Quantum.Divergence.ConditionalHockeyStickOrthogonalReduction
+  (partialTraceRight_smul)
 
 set_option autoImplicit false
 noncomputable section
@@ -111,8 +118,7 @@ A maximally entangled `e` has `⟨e|1 ⊗ ρ_B|e⟩ = 1/2`. The states
 the bound on a multiple of `|00⟩ + |11⟩`.
 -/
 
-/-- Two-qubit operators; the first factor of the index is Alice's qubit. -/
-local notation "TwoQubit" => Matrix (Fin 2 × Fin 2) (Fin 2 × Fin 2) ℂ
+open D5.S3.QuantumBounds.CHSHWitness renaming TwoQubitMatrix → TwoQubit
 
 /-- The Pauli matrices `σ_x, σ_y, σ_z` indexed by `Fin 3`: the frozen `pauliMatrix` at the
 labels `X`, `Y`, `Z`. -/
@@ -154,29 +160,30 @@ def claim : Prop :=
     ∀ t : ℝ, 0 ≤ t → t ≤ 1 → ∃ ρ : TwoQubit, ρ.PosSemidef ∧ trace ρ = 1 ∧
       vlen (centre ρ) = t ∧ fef ρ = 1 - t / 2
 
-private lemma pauli_zero : pauli 0 = !![0, 1; 1, 0] := by
-  simp [pauli, pauliMatrix, qubitX]
+lemma pauli_zero : pauli 0 = !![0, 1; 1, 0] := by
+  simp [pauli.eq_def, pauliMatrix, qubitX]
 
-private lemma pauli_one : pauli 1 = !![0, -Complex.I; Complex.I, 0] := by
+lemma pauli_one : pauli 1 = !![0, -Complex.I; Complex.I, 0] := by
   ext i j; fin_cases i <;> fin_cases j <;>
-    simp [pauli, pauliMatrix, qubitX, qubitZ]
+    simp [pauli.eq_def, pauliMatrix, qubitX, qubitZ]
 
-private lemma pauli_two : pauli 2 = !![1, 0; 0, -1] := by
-  simp [pauli, pauliMatrix, qubitZ]
+lemma pauli_two : pauli 2 = !![1, 0; 0, -1] := by
+  simp [pauli.eq_def, pauliMatrix, qubitZ]
 
-private def blochVec (X : Matrix (Fin 2) (Fin 2) ℂ) (i : Fin 3) : ℝ := (trace (X * pauli i)).re
+def blochVec (X : Matrix (Fin 2) (Fin 2) ℂ) (i : Fin 3) : ℝ := (trace (X * pauli i)).re
 
 private lemma blochVec_zero (X : Matrix (Fin 2) (Fin 2) ℂ) : blochVec X 0 = (X 0 1 + X 1 0).re := by
-  simp [blochVec, pauli_zero, trace_fin_two, Matrix.mul_apply, Fin.sum_univ_two, add_comm]
+  simp [blochVec.eq_def, pauli_zero, trace_fin_two, Matrix.mul_apply, Fin.sum_univ_two, add_comm]
 
 private lemma blochVec_one (X : Matrix (Fin 2) (Fin 2) ℂ) :
     blochVec X 1 = (Complex.I * X 0 1 - Complex.I * X 1 0).re := by
-  simp [blochVec, pauli_one, trace_fin_two, Matrix.mul_apply, Fin.sum_univ_two]
+  simp [blochVec.eq_def, pauli_one, trace_fin_two, Matrix.mul_apply, Fin.sum_univ_two]
 
 private lemma blochVec_two (X : Matrix (Fin 2) (Fin 2) ℂ) : blochVec X 2 = (X 0 0 - X 1 1).re := by
-  simp [blochVec, pauli_two, trace_fin_two, Matrix.mul_apply, Fin.sum_univ_two, sub_eq_add_neg]
+  simp [blochVec.eq_def, pauli_two, trace_fin_two, Matrix.mul_apply, Fin.sum_univ_two,
+    sub_eq_add_neg]
 
-private lemma vlen_eq_norm (v : Fin 3 → ℝ) :
+lemma vlen_eq_norm (v : Fin 3 → ℝ) :
     vlen v = ‖(WithLp.toLp 2 v : EuclideanSpace ℝ (Fin 3))‖ := by
   rw [EuclideanSpace.norm_eq]; simp [vlen, Real.norm_eq_abs, sq_abs]
 
@@ -186,19 +193,19 @@ private lemma vlen_add_le (u v : Fin 3 → ℝ) : vlen (u + v) ≤ vlen u + vlen
 private lemma vlen_smul (c : ℝ) (v : Fin 3 → ℝ) : vlen (c • v) = |c| * vlen v := by
   rw [vlen_eq_norm, vlen_eq_norm, WithLp.toLp_smul, norm_smul, Real.norm_eq_abs]
 
-private lemma vlen_nonneg (v : Fin 3 → ℝ) : 0 ≤ vlen v := Real.sqrt_nonneg _
+lemma vlen_nonneg (v : Fin 3 → ℝ) : 0 ≤ vlen v := Real.sqrt_nonneg _
 
 private lemma blochVec_add (X Y : Matrix (Fin 2) (Fin 2) ℂ) :
     blochVec (X + Y) = blochVec X + blochVec Y := by
-  funext i; simp [blochVec, add_mul, trace_add]
+  funext i; simp [blochVec.eq_def, add_mul, trace_add]
 
 private lemma blochVec_sub (X Y : Matrix (Fin 2) (Fin 2) ℂ) :
     blochVec (X - Y) = blochVec X - blochVec Y := by
-  funext i; simp [blochVec, sub_mul, trace_sub]
+  funext i; simp [blochVec.eq_def, sub_mul, trace_sub]
 
 private lemma blochVec_smul (c : ℝ) (X : Matrix (Fin 2) (Fin 2) ℂ) :
     blochVec ((c : ℂ) • X) = c • blochVec X := by
-  funext i; simp [blochVec, trace_smul]
+  funext i; simp [blochVec.eq_def, trace_smul]
 
 private lemma blochVec_scalar (c : ℂ) : blochVec (c • (1 : Matrix (Fin 2) (Fin 2) ℂ)) = 0 := by
   funext i; fin_cases i
@@ -206,23 +213,23 @@ private lemma blochVec_scalar (c : ℂ) : blochVec (c • (1 : Matrix (Fin 2) (F
   · simp [blochVec_one]
   · simp [blochVec_two]
 
+/-- The Pauli trace coordinates agree with the frozen qubit Bloch geometry. -/
+theorem blochVec_eq_bloch (Z : Matrix (Fin 2) (Fin 2) ℂ) (hZ : Z.IsHermitian) :
+    WithLp.toLp 2 (blochVec Z) =
+      D5.S3.Quantum.Information.ActualPureQubitCostInfimum.bloch Z := by
+  rw [(D5.S3.Quantum.Information.ActualPureQubitCostInfimum.bloch_geometry_of_isHermitian
+    Z hZ).1]
+  rw [D5.S3.Quantum.Information.ActualPureQubitCostInfimum.bloch_blochMatrix]
+  ext i
+  fin_cases i <;>
+    simp [blochVec_zero, blochVec_one, blochVec_two,
+      D5.S3.Quantum.Information.ActualPureQubitCostInfimum.blochMatrix,
+      Complex.mul_re] <;> ring
+
 private lemma rad_le_trace {Z : Matrix (Fin 2) (Fin 2) ℂ} (hZ : Z.PosSemidef) :
     vlen (blochVec Z) ≤ (trace Z).re := by
-  have h10 : Z 1 0 = star (Z 0 1) := (hZ.isHermitian.apply 1 0).symm
-  have d0 := Complex.le_def.mp (hZ.diag_nonneg (i := 0))
-  have d1 := Complex.le_def.mp (hZ.diag_nonneg (i := 1))
-  have hdet := Complex.le_def.mp hZ.det_nonneg
-  rw [det_fin_two, h10] at hdet
-  simp only [Complex.zero_re, Complex.zero_im, Complex.sub_re, Complex.mul_re, Complex.star_def,
-    Complex.conj_re, Complex.conj_im] at d0 d1 hdet
-  have htr : 0 ≤ (trace Z).re := by rw [trace_fin_two, Complex.add_re]; linarith [d0.1, d1.1]
-  have key : ∑ i, blochVec Z i ^ 2 ≤ (trace Z).re ^ 2 := by
-    rw [Fin.sum_univ_three, blochVec_zero, blochVec_one, blochVec_two, trace_fin_two, h10]
-    simp only [Complex.add_re, Complex.sub_re, Complex.mul_re, Complex.I_re, Complex.I_im,
-      Complex.star_def, Complex.conj_re, Complex.conj_im]
-    nlinarith [hdet.1, d0.2, d1.2]
-  calc vlen (blochVec Z) ≤ Real.sqrt ((trace Z).re ^ 2) := Real.sqrt_le_sqrt key
-    _ = (trace Z).re := Real.sqrt_sq htr
+  rw [vlen_eq_norm, blochVec_eq_bloch Z hZ.isHermitian]
+  exact D5.S3.Quantum.Information.ActualPureQubitCostInfimum.norm_bloch_le_trace_of_posSemidef Z hZ
 
 private lemma rad_rank_one (w : Fin 2 × Fin 2 → ℂ) :
     vlen (blochVec (partialTraceRight (vecMulVec w (star w)))) =
@@ -234,13 +241,13 @@ private lemma rad_rank_one (w : Fin 2 × Fin 2 → ℂ) :
     Complex.I_re, Complex.I_im, Complex.star_def, Complex.conj_re, Complex.conj_im]
   ring
 
-private lemma trace_mul_kron_one (ρ : TwoQubit) (A : Matrix (Fin 2) (Fin 2) ℂ) :
+lemma trace_mul_kron_one (ρ : TwoQubit) (A : Matrix (Fin 2) (Fin 2) ℂ) :
     trace (ρ * (A ⊗ₖ (1 : Matrix (Fin 2) (Fin 2) ℂ))) = trace (partialTraceRight ρ * A) := by
   simp [Matrix.trace, Matrix.mul_apply, Fintype.sum_prod_type, Fin.sum_univ_two, partialTraceRight,
     Matrix.one_apply]
   ring
 
-private lemma trace_mul_one_kron (ρ : TwoQubit) (B : Matrix (Fin 2) (Fin 2) ℂ) :
+lemma trace_mul_one_kron (ρ : TwoQubit) (B : Matrix (Fin 2) (Fin 2) ℂ) :
     trace (ρ * ((1 : Matrix (Fin 2) (Fin 2) ℂ) ⊗ₖ B)) = trace (partialTraceLeft ρ * B) := by
   simp [Matrix.trace, Matrix.mul_apply, Fintype.sum_prod_type, Fin.sum_univ_two, partialTraceLeft,
     Matrix.one_apply]
@@ -262,7 +269,7 @@ private lemma ptL_conj (K : Matrix (Fin 2) (Fin 2) ℂ) (ρ : TwoQubit) :
     Matrix.conjTranspose_apply, Matrix.one_apply]
   ring
 
-private lemma trace_conj_kron (K A : Matrix (Fin 2) (Fin 2) ℂ) (ρ : TwoQubit) :
+lemma trace_conj_kron (K A : Matrix (Fin 2) (Fin 2) ℂ) (ρ : TwoQubit) :
     trace (((1 : Matrix (Fin 2) (Fin 2) ℂ) ⊗ₖ K) * ρ * ((1 : Matrix (Fin 2) (Fin 2) ℂ) ⊗ₖ K)ᴴ *
       (A ⊗ₖ (1 : Matrix (Fin 2) (Fin 2) ℂ))) = trace (ρ * (A ⊗ₖ (Kᴴ * K))) := by
   have h : ((1 : Matrix (Fin 2) (Fin 2) ℂ) ⊗ₖ K)ᴴ * (A ⊗ₖ (1 : Matrix (Fin 2) (Fin 2) ℂ)) *
@@ -286,10 +293,6 @@ private lemma ptR_sub (x y : TwoQubit) :
 private lemma ptL_smul (c : ℂ) (x : TwoQubit) :
     partialTraceLeft (c • x) = c • partialTraceLeft x := by
   ext b d; simp [partialTraceLeft]; ring
-
-private lemma ptR_smul (c : ℂ) (x : TwoQubit) :
-    partialTraceRight (c • x) = c • partialTraceRight x := by
-  ext b d; simp [partialTraceRight]; ring
 
 private lemma form_conj {M : TwoQubit} (hM : M.IsHermitian) (x y : Fin 2 × Fin 2 → ℂ) :
     star (star x ⬝ᵥ (M *ᵥ y)) = star y ⬝ᵥ (M *ᵥ x) := by
@@ -342,15 +345,18 @@ private lemma psd_sub_rank_one {M : TwoQubit} (hM : M.PosSemidef) (φ : Fin 2 ×
     linarith
   · simp
 
+theorem canonical_trace (σ : TwoQubit)
+    (hB : partialTraceLeft σ = (1 / 2 : ℂ) • 1) : trace σ = 1 := by
+  rw [← trace_partialTraceLeft, hB, trace_smul, trace_one]; norm_num
+
 /-- A positive semidefinite two-qubit operator whose Bob marginal is `1/2` satisfies
 `σ ⪯ (1 - |a(σ)|/2) 1`, where `a(σ)` is the Bloch vector of its Alice marginal. -/
 theorem canonical_bound (σ : TwoQubit) (hσ : σ.PosSemidef)
     (hB : partialTraceLeft σ = (1 / 2 : ℂ) • 1) (φ : Fin 2 × Fin 2 → ℂ) :
     (star φ ⬝ᵥ (σ *ᵥ φ)).re ≤ (1 - vlen (blochA σ) / 2) * (star φ ⬝ᵥ φ).re := by
   have hA : blochA σ = blochVec (partialTraceRight σ) := by
-    funext i; simp only [blochA, blochVec, trace_mul_kron_one]
-  have htrσ : trace σ = 1 := by
-    rw [← trace_partialTraceLeft, hB, trace_smul, trace_one]; norm_num
+    funext i; simp only [blochA.eq_def, blochVec.eq_def, trace_mul_kron_one]
+  have htrσ : trace σ = 1 := canonical_trace σ hB
   have hrA : vlen (blochA σ) ≤ 1 := by
     have := rad_le_trace (partialTraceRight_posSemidef hσ)
     rwa [trace_partialTraceRight, htrσ, Complex.one_re, ← hA] at this
@@ -371,7 +377,7 @@ theorem canonical_bound (σ : TwoQubit) (hσ : σ.PosSemidef)
     rw [hDdef, ptL_sub, ptL_smul, hB]
   have eA : partialTraceRight σ =
       ((t⁻¹ : ℝ) : ℂ) • partialTraceRight (vecMulVec w (star w)) + partialTraceRight D := by
-    rw [hDdef, ptR_sub, ptR_smul]; abel
+    rw [hDdef, ptR_sub, partialTraceRight_smul]; abel
   have radB : vlen (blochVec (partialTraceLeft D)) =
       t⁻¹ * vlen (blochVec (partialTraceLeft (vecMulVec w (star w)))) := by
     rw [eB, blochVec_sub, blochVec_scalar, blochVec_smul, zero_sub, ← neg_smul, vlen_smul, abs_neg,
@@ -413,15 +419,21 @@ private lemma form_conj_mul (X σ : TwoQubit) (x : Fin 2 × Fin 2 → ℂ) :
     star x ⬝ᵥ ((X * σ * Xᴴ) *ᵥ x) = star (Xᴴ *ᵥ x) ⬝ᵥ (σ *ᵥ (Xᴴ *ᵥ x)) := by
   rw [← mulVec_mulVec, ← mulVec_mulVec, dotProduct_mulVec, star_mulVec, conjTranspose_conjTranspose]
 
-private lemma kron_sub (A X Y : Matrix (Fin 2) (Fin 2) ℂ) : A ⊗ₖ (X - Y) = A ⊗ₖ X - A ⊗ₖ Y := by
+lemma kron_sub (A X Y : Matrix (Fin 2) (Fin 2) ℂ) : A ⊗ₖ (X - Y) = A ⊗ₖ X - A ⊗ₖ Y := by
   ext a b; simp [mul_sub]
 
-private lemma filtered_bound (ρ : TwoQubit) (hρ : ρ.PosSemidef) (htr : trace ρ = 1)
-    (hb : vlen (blochB ρ) < 1) (x : Fin 2 × Fin 2 → ℂ) :
-    (star x ⬝ᵥ (ρ *ᵥ x)).re ≤ (2 - vlen (centre ρ)) *
-      (star x ⬝ᵥ (((1 : Matrix (Fin 2) (Fin 2) ℂ) ⊗ₖ partialTraceLeft ρ) *ᵥ x)).re := by
+/-- Every state with a non-pure Bob marginal has a canonical state with Alice Bloch
+vector equal to its steering centre, together with a reverse Bob filter. -/
+theorem canonical_filter (ρ : TwoQubit) (hρ : ρ.PosSemidef) (htr : trace ρ = 1)
+    (hb : vlen (blochB ρ) < 1) :
+    ∃ (σ : TwoQubit) (F : Matrix (Fin 2) (Fin 2) ℂ), σ.PosSemidef ∧
+      partialTraceLeft σ = (1 / 2 : ℂ) • 1 ∧ blochA σ = centre ρ ∧
+      ρ = ((1 : Matrix (Fin 2) (Fin 2) ℂ) ⊗ₖ F) * σ *
+        ((1 : Matrix (Fin 2) (Fin 2) ℂ) ⊗ₖ F)ᴴ ∧
+      F * Fᴴ = (2 : ℂ) • partialTraceLeft ρ ∧
+      Complex.normSq (det F) = 1 - vlen (blochB ρ) ^ 2 := by
   have hbP : blochB ρ = blochVec (partialTraceLeft ρ) := by
-    funext j; simp only [blochB, blochVec, trace_mul_one_kron]
+    funext j; simp only [blochB.eq_def, blochVec.eq_def, trace_mul_one_kron]
   set P := partialTraceLeft ρ with hPdef
   have hP : P.PosSemidef := partialTraceLeft_posSemidef hρ
   have htrP : trace P = 1 := by rw [hPdef, trace_partialTraceLeft, htr]
@@ -462,7 +474,7 @@ private lemma filtered_bound (ρ : TwoQubit) (hρ : ρ.PosSemidef) (htr : trace 
   set G : Matrix (Fin 2) (Fin 2) ℂ := !![(p : ℂ), 0; star q, (u : ℂ)] with hGdef
   have H1 : H * P * Hᴴ = ((p * d : ℝ) : ℂ) • 1 := by
     rw [hPmat]; ext i j; fin_cases i <;> fin_cases j <;>
-      simp [hHdef, Matrix.mul_apply, Fin.sum_univ_two, -mul_eq_mul_left_iff,
+      norm_num [hHdef, Matrix.mul_apply, Fin.sum_univ_two, -mul_eq_mul_left_iff,
         -mul_eq_mul_right_iff, -mul_eq_zero]
     all_goals first
       | ring1
@@ -470,17 +482,17 @@ private lemma filtered_bound (ρ : TwoQubit) (hρ : ρ.PosSemidef) (htr : trace 
       | linear_combination (-(p : ℂ)) * hdC
   have H2 : G * H = ((p * u : ℝ) : ℂ) • 1 := by
     ext i j; fin_cases i <;> fin_cases j <;>
-      simp [hHdef, hGdef, Matrix.mul_apply, Fin.sum_univ_two, -mul_eq_mul_left_iff,
+      norm_num [hHdef, hGdef, Matrix.mul_apply, Fin.sum_univ_two, -mul_eq_mul_left_iff,
         -mul_eq_mul_right_iff, -mul_eq_zero]
     all_goals ring1
   have H3 : G * Gᴴ = (p : ℂ) • P := by
     rw [hPmat]; ext i j; fin_cases i <;> fin_cases j <;>
-      simp [hGdef, Matrix.mul_apply, Fin.sum_univ_two, -mul_eq_mul_left_iff,
+      norm_num [hGdef, Matrix.mul_apply, Fin.sum_univ_two, -mul_eq_mul_left_iff,
         -mul_eq_mul_right_iff, -mul_eq_zero]
     all_goals first | ring1 | linear_combination huC + hdC
   have H4 : Hᴴ * H = (p : ℂ) • (1 - P) := by
     rw [hPmat]; ext i j; fin_cases i <;> fin_cases j <;>
-      simp [hHdef, Matrix.mul_apply, Fin.sum_univ_two, -mul_eq_mul_left_iff,
+      norm_num [hHdef, Matrix.mul_apply, Fin.sum_univ_two, -mul_eq_mul_left_iff,
         -mul_eq_mul_right_iff, -mul_eq_zero]
     all_goals first
       | ring1
@@ -488,9 +500,17 @@ private lemma filtered_bound (ρ : TwoQubit) (hρ : ρ.PosSemidef) (htr : trace 
       | linear_combination (p : ℂ) * hprC
   have hbloch : (1 : Matrix (Fin 2) (Fin 2) ℂ) - P =
       (1 / 2 : ℂ) • (1 - ∑ j, ((blochVec P j : ℝ) : ℂ) • pauli j) := by
-    rw [Fin.sum_univ_three, blochVec_zero, blochVec_one, blochVec_two, pauli_zero, pauli_one,
-      pauli_two, hP10, hP00, hP11, ← hqdef, hPmat]
-    ext i j; fin_cases i <;> fin_cases j <;> simp <;> apply Complex.ext <;> simp <;> linarith
+    have he := (D5.S3.Quantum.Information.ActualPureQubitCostInfimum.bloch_geometry_of_isHermitian
+      P hP.isHermitian).1
+    rw [htrP, Complex.one_re] at he
+    conv_lhs => rw [he]
+    rw [Fin.sum_univ_three, blochVec_zero, blochVec_one, blochVec_two,
+      pauli_zero, pauli_one, pauli_two]
+    ext i j
+    fin_cases i <;> fin_cases j <;> apply Complex.ext <;>
+      simp [D5.S3.Quantum.Information.ActualPureQubitCostInfimum.blochMatrix,
+        D5.S3.Quantum.Information.ActualPureQubitCostInfimum.bloch,
+        hP10, hP00, hP11, ← hqdef] <;> linarith
   have hp2 : 0 < 2 * p * d := by positivity
   set c : ℝ := 1 / (2 * p * d) with hcdef
   set X : TwoQubit := (1 : Matrix (Fin 2) (Fin 2) ℂ) ⊗ₖ H with hXdef
@@ -515,11 +535,11 @@ private lemma filtered_bound (ρ : TwoQubit) (hρ : ρ.PosSemidef) (htr : trace 
         smul_eq_mul, smul_eq_mul, smul_eq_mul, smul_eq_mul, smul_eq_mul, ← mul_assoc]
       congr 1
       rw [hcdef]; push_cast; field_simp; ring
-    simp only [blochA]
+    simp only [blochA.eq_def]
     rw [htr_i, Complex.re_ofReal_mul, Complex.sub_re, Complex.re_sum]
     simp only [Complex.re_ofReal_mul]
     rw [hlen, ← hbP]
-    simp only [corr]
+    simp only [corr.eq_def]
     have h4d : (1 : ℝ) - (1 - 4 * d) = 4 * d := by ring
     rw [h4d]
     field_simp
@@ -538,30 +558,65 @@ private lemma filtered_bound (ρ : TwoQubit) (hρ : ρ.PosSemidef) (htr : trace 
     congr 1
     field_simp
     nlinarith [hu]
-  have hYY : Y * Yᴴ = (p : ℂ) • ((1 : Matrix (Fin 2) (Fin 2) ℂ) ⊗ₖ P) := by
-    rw [hYdef, conjTranspose_kronecker, conjTranspose_one, ← mul_kronecker_mul, Matrix.one_mul, H3,
-      kronecker_smul]
-  have hrho : ρ = ((2 / p : ℝ) : ℂ) • (Y * σ * Yᴴ) := by
-    rw [hT, smul_smul, ← Complex.ofReal_mul, show 2 / p * (p / 2) = (1 : ℝ) by field_simp,
-      Complex.ofReal_one, one_smul]
+  set v := Real.sqrt (2 / p) with hvdef
+  have hv : v ^ 2 = 2 / p := Real.sq_sqrt (by positivity)
+  set F : Matrix (Fin 2) (Fin 2) ℂ := (v : ℂ) • G with hFdef
+  have hback : ((1 : Matrix (Fin 2) (Fin 2) ℂ) ⊗ₖ F) * σ *
+      ((1 : Matrix (Fin 2) (Fin 2) ℂ) ⊗ₖ F)ᴴ = ρ := by
+    rw [hFdef, kronecker_smul, ← hYdef, conjTranspose_smul,
+      Complex.star_def, Complex.conj_ofReal]
+    simp only [Matrix.smul_mul, Matrix.mul_smul, smul_smul]
+    rw [hT, smul_smul, ← Complex.ofReal_mul, ← Complex.ofReal_mul]
+    norm_cast
+    rw [show v * v = v ^ 2 by ring, hv]
+    field_simp (discharger := first | exact_mod_cast hp.ne' | exact_mod_cast hd0.ne' | positivity)
+    norm_num
+  have hdet : Complex.normSq (det F) = 4 * d := by
+    rw [hFdef, det_smul, hGdef, det_fin_two]
+    simp only [Fintype.card_fin, Matrix.of_apply, Matrix.cons_val_zero, Matrix.cons_val_one,
+      Matrix.cons_val_fin_one, zero_mul, sub_zero, ← Complex.ofReal_mul,
+      ← Complex.ofReal_pow, Complex.normSq_ofReal]
+    calc
+      _ = (v ^ 2) ^ 2 * p ^ 2 * (u * u) := by ring
+      _ = 4 * d := by
+        rw [hv, hu]
+        field_simp (discharger :=
+          first | exact_mod_cast hp.ne' | exact_mod_cast hd0.ne' | positivity)
+        ring
+  have hFF : F * Fᴴ = (2 : ℂ) • partialTraceLeft ρ := by
+    rw [hFdef, conjTranspose_smul, Complex.star_def, Complex.conj_ofReal,
+      Matrix.smul_mul, Matrix.mul_smul, H3, smul_smul, smul_smul,
+      ← Complex.ofReal_mul, ← Complex.ofReal_mul]
+    rw [show v * v * p = v ^ 2 * p by ring, hv, div_mul_cancel₀ _ hp.ne']
+    rfl
+  exact ⟨σ, F, hσ, hσB, hσA, hback.symm, hFF, hdet.trans (by linarith [hlen])⟩
+
+private lemma filtered_bound (ρ : TwoQubit) (hρ : ρ.PosSemidef) (htr : trace ρ = 1)
+    (hb : vlen (blochB ρ) < 1) (x : Fin 2 × Fin 2 → ℂ) :
+    (star x ⬝ᵥ (ρ *ᵥ x)).re ≤ (2 - vlen (centre ρ)) *
+      (star x ⬝ᵥ (((1 : Matrix (Fin 2) (Fin 2) ℂ) ⊗ₖ partialTraceLeft ρ) *ᵥ x)).re := by
+  obtain ⟨σ, F, hσ, hσB, hσA, hback, hFF, _⟩ := canonical_filter ρ hρ htr hb
+  let Y : TwoQubit := (1 : Matrix (Fin 2) (Fin 2) ℂ) ⊗ₖ F
+  have hYY : Y * Yᴴ = (2 : ℂ) •
+      ((1 : Matrix (Fin 2) (Fin 2) ℂ) ⊗ₖ partialTraceLeft ρ) := by
+    rw [conjTranspose_kronecker, conjTranspose_one, ← mul_kronecker_mul,
+      Matrix.one_mul, hFF, kronecker_smul]
   have hF : star x ⬝ᵥ (ρ *ᵥ x) =
-      ((2 / p : ℝ) : ℂ) * (star (Yᴴ *ᵥ x) ⬝ᵥ (σ *ᵥ (Yᴴ *ᵥ x))) := by
-    conv_lhs => rw [hrho]
-    rw [smul_mulVec, dotProduct_smul, form_conj_mul, smul_eq_mul]
+      star (Yᴴ *ᵥ x) ⬝ᵥ (σ *ᵥ (Yᴴ *ᵥ x)) := by
+    conv_lhs => rw [hback]
+    exact form_conj_mul Y σ x
   have hN : star (Yᴴ *ᵥ x) ⬝ᵥ (Yᴴ *ᵥ x) =
-      (p : ℂ) * (star x ⬝ᵥ (((1 : Matrix (Fin 2) (Fin 2) ℂ) ⊗ₖ P) *ᵥ x)) := by
+      (2 : ℂ) * (star x ⬝ᵥ
+        (((1 : Matrix (Fin 2) (Fin 2) ℂ) ⊗ₖ partialTraceLeft ρ) *ᵥ x)) := by
     have h := form_conj_mul Y 1 x
     rw [Matrix.mul_one, hYY, one_mulVec] at h
     rw [← h, smul_mulVec, dotProduct_smul, smul_eq_mul]
   have hcan := canonical_bound σ hσ hσB (Yᴴ *ᵥ x)
-  rw [hσA, hN, Complex.re_ofReal_mul] at hcan
-  rw [hF, Complex.re_ofReal_mul]
-  have hp2' : 0 ≤ 2 / p := by positivity
-  calc 2 / p * (star (Yᴴ *ᵥ x) ⬝ᵥ (σ *ᵥ (Yᴴ *ᵥ x))).re
-      ≤ 2 / p * ((1 - vlen (centre ρ) / 2) *
-          (p * (star x ⬝ᵥ (((1 : Matrix (Fin 2) (Fin 2) ℂ) ⊗ₖ P) *ᵥ x)).re)) := by gcongr
-    _ = (2 - vlen (centre ρ)) * (star x ⬝ᵥ (((1 : Matrix (Fin 2) (Fin 2) ℂ) ⊗ₖ P) *ᵥ x)).re := by
-      field_simp
+  rw [hσA, hN, Complex.mul_re] at hcan
+  rw [hF]
+  simp only [Complex.re_ofNat, Complex.im_ofNat, zero_mul, sub_zero] at hcan
+  convert hcan using 1
+  ring
 
 private lemma rank_one_det (w : Fin 2 × Fin 2 → ℂ)
     (h : (star w ⬝ᵥ w).re ≤ vlen (blochVec (partialTraceLeft (vecMulVec w (star w))))) :
@@ -628,7 +683,7 @@ private lemma degenerate_bound (ρ : TwoQubit) (hρ : ρ.PosSemidef) (htr : trac
     (star x ⬝ᵥ (ρ *ᵥ x)).re ≤
       (star x ⬝ᵥ (((1 : Matrix (Fin 2) (Fin 2) ℂ) ⊗ₖ partialTraceLeft ρ) *ᵥ x)).re := by
   have hbP : blochB ρ = blochVec (partialTraceLeft ρ) := by
-    funext j; simp only [blochB, blochVec, trace_mul_one_kron]
+    funext j; simp only [blochB.eq_def, blochVec.eq_def, trace_mul_one_kron]
   set P := partialTraceLeft ρ with hPdef
   have hP : P.PosSemidef := partialTraceLeft_posSemidef hρ
   have hR0 : 0 ≤ (star x ⬝ᵥ (((1 : Matrix (Fin 2) (Fin 2) ℂ) ⊗ₖ P) *ᵥ x)).re :=
@@ -697,7 +752,7 @@ theorem operator_bound (ρ : TwoQubit) (hρ : ρ.PosSemidef) (htr : trace ρ = 1
     have hA : vlen (blochA ρ) ≤ 1 := by
       have := rad_le_trace (partialTraceRight_posSemidef hρ)
       have e : blochA ρ = blochVec (partialTraceRight ρ) := by
-        funext i; simp only [blochA, blochVec, trace_mul_kron_one]
+        funext i; simp only [blochA.eq_def, blochVec.eq_def, trace_mul_kron_one]
       rwa [trace_partialTraceRight, htr, Complex.one_re, ← e] at this
     rw [hc]
     have := degenerate_bound ρ hρ htr hb x
@@ -705,7 +760,7 @@ theorem operator_bound (ρ : TwoQubit) (hρ : ρ.PosSemidef) (htr : trace ρ = 1
   · have hle : vlen (blochB ρ) ≤ 1 := by
       have := rad_le_trace (partialTraceLeft_posSemidef hρ)
       have e : blochB ρ = blochVec (partialTraceLeft ρ) := by
-        funext j; simp only [blochB, blochVec, trace_mul_one_kron]
+        funext j; simp only [blochB.eq_def, blochVec.eq_def, trace_mul_one_kron]
       rwa [trace_partialTraceLeft, htr, Complex.one_re, ← e] at this
     exact filtered_bound ρ hρ htr (lt_of_le_of_ne hle hb) x
 
@@ -721,12 +776,12 @@ private lemma phase_max : IsMaxEntangled phase := by
   have hn : ‖halfPhase‖ ^ 2 = 1 / 2 := by
     rw [Complex.sq_norm, halfPhase]; simp [Complex.normSq_apply]; norm_num
   refine ⟨?_, ?_, ?_⟩
-  · simp [phase, Fintype.sum_prod_type, Fin.sum_univ_two, hn]
+  · simp [phase.eq_def, Fintype.sum_prod_type, Fin.sum_univ_two, hn]
     norm_num
   · ext i j; fin_cases i <;> fin_cases j <;>
-      simp [phase, partialTraceRight, vecMulVec_apply, halfPhase_mul]
+      simp [phase.eq_def, partialTraceRight, vecMulVec_apply, halfPhase_mul]
   · ext i j; fin_cases i <;> fin_cases j <;>
-      simp [phase, partialTraceLeft, vecMulVec_apply, halfPhase_mul]
+      simp [phase.eq_def, partialTraceLeft, vecMulVec_apply, halfPhase_mul]
 
 private lemma maxent_le (ρ : TwoQubit) (hρ : ρ.PosSemidef) (htr : trace ρ = 1)
     (e : Fin 2 × Fin 2 → ℂ) (he : IsMaxEntangled e) :
@@ -743,7 +798,7 @@ private lemma fef_le (ρ : TwoQubit) (hρ : ρ.PosSemidef) (htr : trace ρ = 1) 
 
 private def tv (t : ℝ) (k : Fin 2 × Fin 2) : ℝ := ![![1, 0], ![0, 1 - t]] k.1 k.2
 
-private def ev (k : Fin 2 × Fin 2) : ℝ := ![![0, 1], ![0, 0]] k.1 k.2
+def ev (k : Fin 2 × Fin 2) : ℝ := ![![0, 1], ![0, 0]] k.1 k.2
 
 private def tight (t : ℝ) : TwoQubit :=
   ((1 / (2 - t) : ℝ) : ℂ) • (vecMulVec (fun k => (tv t k : ℂ)) (star fun k => (tv t k : ℂ)) +
@@ -760,7 +815,7 @@ private lemma tight_psd (t : ℝ) (ht0 : 0 ≤ t) (ht1 : t ≤ 1) : (tight t).Po
 private lemma tight_entry (t : ℝ) (x y : Fin 2 × Fin 2) :
     tight t x y = ((1 / (2 - t) : ℝ) : ℂ) *
       ((tv t x * tv t y + t * (1 - t) * (ev x * ev y) : ℝ) : ℂ) := by
-  simp only [tight, Matrix.smul_apply, Matrix.add_apply, vecMulVec_apply, Pi.star_apply,
+  simp only [tight.eq_def, Matrix.smul_apply, Matrix.add_apply, vecMulVec_apply, Pi.star_apply,
     Complex.star_def, Complex.conj_ofReal, smul_eq_mul]
   push_cast; ring
 
@@ -769,42 +824,52 @@ private lemma tight_trace (t : ℝ) (ht1 : t ≤ 1) : trace (tight t) = 1 := by
   simp only [Matrix.trace, Matrix.diag, Fintype.sum_prod_type, Fin.sum_univ_two, tight_entry,
     ← mul_add, ← Complex.ofReal_add, ← Complex.ofReal_mul]
   rw [← Complex.ofReal_one]; congr 1
-  simp [tv, ev]
+  simp [tv.eq_def, ev.eq_def]
   field_simp
   ring
 
-private lemma vlen_e3 (s : ℝ) : vlen ![0, 0, s] = |s| := by
+lemma vlen_e3 (s : ℝ) : vlen ![0, 0, s] = |s| := by
   simp [vlen, Fin.sum_univ_three, Real.sqrt_sq_eq_abs]
 
 private lemma tight_blochB (t : ℝ) (ht1 : t ≤ 1) : blochB (tight t) = ![0, 0, t / (2 - t)] := by
   have h2' : (2 : ℝ) - t ≠ 0 := by linarith
   have e : blochB (tight t) = blochVec (partialTraceLeft (tight t)) := by
-    funext j; simp only [blochB, blochVec, trace_mul_one_kron]
+    funext j; simp only [blochB.eq_def, blochVec.eq_def, trace_mul_one_kron]
   have h2 : blochVec (partialTraceLeft (tight t)) 2 = t / (2 - t) := by
     simp only [blochVec_two, partialTraceLeft, Fin.sum_univ_two, tight_entry]
     set s : ℝ := 1 / (2 - t) with hs
-    simp [tv, ev]
+    simp only [tv.eq_def, ev.eq_def, cons_val_zero, cons_val_one, cons_val_fin_one, Fin.isValue,
+      Complex.ofReal_add, Complex.ofReal_mul,
+      Complex.ofReal_sub, Complex.ofReal_one, Complex.sub_re, Complex.add_re,
+      Complex.mul_re, Complex.ofReal_re, Complex.ofReal_im, mul_zero, sub_zero,
+      Complex.one_re, Complex.sub_im, Complex.one_im, sub_self, Complex.mul_im,
+      zero_mul, add_zero, Complex.add_im]
     rw [hs]; field_simp; ring
   rw [e]
   funext j; fin_cases j
-  · simp [blochVec_zero, partialTraceLeft, Fin.sum_univ_two, tight_entry, tv, ev]
-  · simp [blochVec_one, partialTraceLeft, Fin.sum_univ_two, tight_entry, tv, ev]
+  · simp [blochVec_zero, partialTraceLeft, Fin.sum_univ_two, tight_entry, tv.eq_def, ev.eq_def]
+  · simp [blochVec_one, partialTraceLeft, Fin.sum_univ_two, tight_entry, tv.eq_def, ev.eq_def]
   · simpa using h2
 
 private lemma tight_blochA (t : ℝ) (ht1 : t ≤ 1) :
     blochA (tight t) = ![0, 0, t * (3 - 2 * t) / (2 - t)] := by
   have h2' : (2 : ℝ) - t ≠ 0 := by linarith
   have e : blochA (tight t) = blochVec (partialTraceRight (tight t)) := by
-    funext i; simp only [blochA, blochVec, trace_mul_kron_one]
+    funext i; simp only [blochA.eq_def, blochVec.eq_def, trace_mul_kron_one]
   have h2 : blochVec (partialTraceRight (tight t)) 2 = t * (3 - 2 * t) / (2 - t) := by
     simp only [blochVec_two, partialTraceRight, Fin.sum_univ_two, tight_entry]
     set s : ℝ := 1 / (2 - t) with hs
-    simp [tv, ev]
+    simp only [tv.eq_def, ev.eq_def, cons_val_zero, cons_val_one, cons_val_fin_one, Fin.isValue,
+      Complex.ofReal_add, Complex.ofReal_mul,
+      Complex.ofReal_sub, Complex.ofReal_one, Complex.sub_re, Complex.add_re,
+      Complex.mul_re, Complex.ofReal_re, Complex.ofReal_im, mul_zero, sub_zero,
+      Complex.one_re, Complex.sub_im, Complex.one_im, sub_self, Complex.mul_im,
+      zero_mul, add_zero, Complex.add_im]
     rw [hs]; field_simp; ring
   rw [e]
   funext j; fin_cases j
-  · simp [blochVec_zero, partialTraceRight, Fin.sum_univ_two, tight_entry, tv, ev]
-  · simp [blochVec_one, partialTraceRight, Fin.sum_univ_two, tight_entry, tv, ev]
+  · simp [blochVec_zero, partialTraceRight, Fin.sum_univ_two, tight_entry, tv.eq_def, ev.eq_def]
+  · simp [blochVec_one, partialTraceRight, Fin.sum_univ_two, tight_entry, tv.eq_def, ev.eq_def]
   · simpa using h2
 
 private lemma tight_corr (t : ℝ) (ht1 : t ≤ 1) :
@@ -812,14 +877,21 @@ private lemma tight_corr (t : ℝ) (ht1 : t ≤ 1) :
       corr (tight t) 2 2 = (2 - 3 * t + 2 * t ^ 2) / (2 - t) := by
   have h2' : (2 : ℝ) - t ≠ 0 := by linarith
   refine ⟨?_, ?_, ?_⟩
-  · simp [corr, pauli_zero, pauli_two, Matrix.trace, Matrix.mul_apply, Fintype.sum_prod_type,
-      Fin.sum_univ_two, tight_entry, tv, ev]
-  · simp [corr, pauli_one, pauli_two, Matrix.trace, Matrix.mul_apply, Fintype.sum_prod_type,
-      Fin.sum_univ_two, tight_entry, tv, ev]
-  · simp only [corr, pauli_two, Matrix.trace, Matrix.diag, Matrix.mul_apply, Fintype.sum_prod_type,
-      Fin.sum_univ_two, tight_entry]
+  · simp [corr.eq_def, pauli_zero, pauli_two, Matrix.trace, Matrix.mul_apply, Fintype.sum_prod_type,
+      Fin.sum_univ_two, tight_entry, tv.eq_def, ev.eq_def]
+  · simp [corr.eq_def, pauli_one, pauli_two, Matrix.trace, Matrix.mul_apply, Fintype.sum_prod_type,
+      Fin.sum_univ_two, tight_entry, tv.eq_def, ev.eq_def]
+  · simp only [corr.eq_def, pauli_two, Matrix.trace, Matrix.diag, Matrix.mul_apply,
+      Fintype.sum_prod_type, Fin.sum_univ_two, tight_entry]
     set s : ℝ := 1 / (2 - t) with hs
-    simp [tv, ev]
+    simp only [tv.eq_def, ev.eq_def, cons_val_zero, cons_val_one, cons_val_fin_one, Fin.isValue,
+      Complex.ofReal_mul,
+      Complex.ofReal_sub, Complex.ofReal_one, kroneckerMap_apply, of_apply, cons_val',
+      mul_one, mul_zero, add_zero,
+      mul_neg, zero_add, neg_zero, neg_neg, Complex.add_re, Complex.mul_re,
+      Complex.ofReal_re, Complex.ofReal_im, sub_zero, Complex.sub_re, Complex.one_re,
+      Complex.sub_im, Complex.one_im, sub_self, Complex.mul_im, zero_mul,
+      Complex.neg_re]
     rw [hs]; field_simp; ring
 
 private lemma tight_centre (t : ℝ) (ht0 : 0 ≤ t) (ht1 : t ≤ 1) : vlen (centre (tight t)) = t := by
@@ -855,10 +927,17 @@ private lemma tight_phase (t : ℝ) (ht1 : t ≤ 1) :
   have e : star phase ⬝ᵥ (tight t *ᵥ phase) = (halfPhase * (starRingEnd ℂ) halfPhase) *
       (tight t (0, 0) (0, 0) + tight t (0, 0) (1, 1) + tight t (1, 1) (0, 0) +
         tight t (1, 1) (1, 1)) := by
-    simp [dotProduct, mulVec, Fintype.sum_prod_type, Fin.sum_univ_two, phase]; ring
+    simp [dotProduct, mulVec, Fintype.sum_prod_type, Fin.sum_univ_two, phase.eq_def]; ring
   rw [e, halfPhase_mul, tight_entry, tight_entry, tight_entry, tight_entry]
   set s : ℝ := 1 / (2 - t) with hs
-  simp [tv, ev]
+  simp only [tv.eq_def, ev.eq_def, cons_val_zero, cons_val_one, cons_val_fin_one, Fin.isValue,
+    Complex.ofReal_mul,
+    Complex.ofReal_sub, Complex.ofReal_one, Complex.mul_re, Complex.inv_re,
+    Complex.re_ofNat, Complex.normSq_ofNat, div_self_mul_self', Complex.add_re,
+    Complex.ofReal_re, Complex.ofReal_im, mul_zero, sub_zero, Complex.sub_re,
+    Complex.one_re, Complex.sub_im, Complex.one_im, sub_self, Complex.mul_im,
+    zero_mul, add_zero, Complex.add_im, Complex.inv_im, Complex.im_ofNat,
+    neg_zero, zero_div]
   rw [hs]; field_simp; ring
 
 /-- Conjecture 2 of arXiv:1404.3951 holds. -/

@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:fa36e7efac07a34f0412404e3d4b15b159ecdb65ccc4b98b4d909440949a534c
+  normalized_sha256: sha256:fa36e7efac07a34f0412404e3d4b15b159ecdb65ccc4b98b4d909440949a534c
+cas_ref: sha256:fa36e7efac07a34f0412404e3d4b15b159ecdb65ccc4b98b4d909440949a534c
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 定义 180.1（词闭包与调度闭包）仅定义记号、合同字段或相应术语的判定条件，不断言条件成立或另提出性质。
+    previous_atom_id: 522f77a007e3dabfcde4cf68c8bc95af6caa47454d0146effcf234bdabfa8a65
+    next_atom_id: 72cbeade51797f64275becad597e22826f946c8e1910a50b3f9fc9d729d92523

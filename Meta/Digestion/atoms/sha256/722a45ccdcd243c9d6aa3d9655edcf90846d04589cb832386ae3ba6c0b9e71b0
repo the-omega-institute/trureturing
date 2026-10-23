@@ -1,0 +1,40 @@
+#### 10.2 节内标题：2. 局部边缘和线性前缀矩不决定完整未来
+
+`JointLaw.lean` 中已有的概率分离定理构造了两种 full-support 概率律 $P_+$ 与 $P_-$，使得：
+
+- 所有 proper coordinate marginals 相同；
+- 所有 proper seam-conditioned marginals 相同；
+- 所有固定线性 prefix readout 的期望相同；
+- 总体 exact reply expectation 也相同；
+
+但 native null continuation 的完整 reply 分布不同。
+
+其核心是 parity law：
+
+$$
+P_\varepsilon(b) =
+2^{-n}\bigl(1+\varepsilon(-1)^{b_1+\cdots+b_n}\bigr)
+$$
+
+的所有低阶边缘相同，而全局 parity 不同。`NullReplyFiber.lean` 进一步给出：
+
+$$
+\mathrm{reply}(w)=0
+\Longleftrightarrow
+w\text{ 全部为 null}.
+$$
+
+所以全零纤维的概率在 $P_+$ 和 $P_-$ 下不同，native future 立即分离。
+
+这给出一个必须保留的非交换性：
+
+$$
+\text{先做局部边缘化，再做 continuation}
+\neq
+\text{先做完整 continuation，再做边缘化}.
+$$
+
+因此，不能从“所有局部报告都一致”直接推出“完整未来律一致”。
+
+---
+

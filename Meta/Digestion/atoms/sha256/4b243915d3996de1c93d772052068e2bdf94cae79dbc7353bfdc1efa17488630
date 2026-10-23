@@ -1,0 +1,251 @@
+**Theorem 59.3 (the FIB future-readout noise and precision transfer).**
+For the preparations, fixed times, normalization, and common report channel
+of Definitions 59.1--59.2, there are $K_{\rm sharp}>0$ and $n_0\ge3$,
+independent of $n$, such that
+
+$$
+a_n\le\frac{K_{\rm sharp}n}{N_n}\quad(n\ge n_0).
+\tag{59.1}
+$$
+
+For every $n\ge2$ and $E\ge0$, the exact risk on these two preparations is
+
+$$
+R_n(E)=
+\begin{cases}
+0,&2E<a_n,\\
+q_n/2,&2E\ge a_n.
+\end{cases}
+\tag{59.2}
+$$
+
+Consequently, the vanishing choice $E_n=a_n/2$ satisfies
+
+$$
+E_n\longrightarrow0,\qquad
+R_n(E_n)\longrightarrow\frac{|D(s)|}{2}>0.
+\tag{59.3}
+$$
+
+Every radius sequence with $E_n\ge K_{\rm sharp}n/(2N_n)$ for all
+sufficiently large $n$ has the same limiting risk.
+
+If $0\le\delta<|D(s)|/2$, any family of predictors guaranteeing worst error
+at most $\delta$ on both preparations and every allowed report for all
+sufficiently large $n$ must satisfy, eventually,
+
+$$
+2E_n<a_n\le\frac{K_{\rm sharp}n}{N_n}.
+\tag{59.4}
+$$
+
+In particular, for the dyadic absolute-error radius $E_n=2^{-p_n}$,
+
+$$
+p_n>\log_2N_n-\log_2n+1-\log_2K_{\rm sharp},\qquad
+\liminf_{n\to\infty}\frac{p_n}{n}\ge\log_2\varphi,
+\quad \varphi=\frac{1+\sqrt5}{2}.
+\tag{59.5}
+$$
+
+The overlap bounds also hold for any supplied finite bank in Definition
+59.1 under its common maximum-norm error contract, since the bank separation
+is no greater than $a_n$. Thus (59.5) remains a necessary condition for such
+a bank to give the same guarantee; the bank can require still finer error
+or have zero separation and prevent the guarantee even at zero radius.
+
+Proof. Retain the exact old-field identity of Holographic IV (109.9),
+with the witness normalization (109.7)--(109.8) and (110.2). For all
+sufficiently large $n\ge3$, it says
+
+$$
+\begin{aligned}
+x_n&=\frac{L_nH_n+P_nR_n^{\rm old}}{d_n},\\
+R_n^{\rm old}
+ &=u_{n,L}\delta_{v_{n,L}}+u_{n,R}\delta_{v_{n,R}},\\
+\|H_n\|&\le h n\sqrt{N_n},\qquad
+d_n\ge d_*\sqrt{N_n},\qquad
+|u_{n,L}|+|u_{n,R}|\le U,
+\end{aligned}
+$$
+
+for constants $h,d_*,U>0$ independent of $n$. Here $v_{n,L}$ and
+$v_{n,R}$ are the two actual old root neighbors, and their deltas are
+**node** point masses, not edge coordinates or successor vertices.
+In the supplier's notation the coefficients are
+$u_{n,L}=\alpha_nQ_{n-1}$ and $u_{n,R}=\beta_nQ_{n-2}$, where $Q_k$
+denotes its block beta-charge sum $q_k$ from (108.10), with $|Q_k|\le2$;
+this $Q_k$ is distinct from the future target gap $q_n$ here.
+The contrast constants $\alpha_n,\beta_n$ are bounded by (109.5), and
+$d_n/\sqrt{N_n}\to\sqrt{\kappa}>0$ by (109.8), where
+$\kappa=c(2-c)$ and $c=\varphi^{-1}$. The corrector is zero
+at the global root and both old subtree roots, so the two exterior root
+seams contribute zero. Thus the two-neighbor support is an exact identity
+on the old source, available eventually with $n_0\ge3$.
+Choose $n_0$ so that all displayed bounds hold for every $n\ge n_0$.
+Applying $P_n$ to (109.9) retains $P_nR_n^{\rm old}$ and uses
+$P_nL_n=L_n$; the raw residual need not be centered.
+
+Set $t=a_0/2$. The root port bound (110.11) gives
+
+$$
+\|\mathcal C_nS_n(t)\|\le B_t=\frac{V}{\sqrt{2et}},\qquad
+V=\sup_j\|v_j^{\mathrm e}\|<\infty\quad(t>0),
+$$
+
+where $v_j^{\mathrm e}$ is the supplier's common-edge-carrier vector.
+For either actual root neighbor $v$, write
+$\mathcal C_{n,v}u=\sqrt{N_n}\,u(v)$ on $P_n\mathcal V_n$.
+The unit-edge energy identity $L_n=D_n^*D_n$ of (103.1) gives, for
+every centered $u$,
+
+$$
+|u(v)-u(r)|^2
+ \le\sum_{\{w,w'\}\in E(T_n)}|u(w)-u(w')|^2
+ =\|L_n^{1/2}u\|^2.
+$$
+
+Finite spectral calculus, on this same counting space, gives
+
+$$
+\sqrt{N_n}\,\|L_n^{1/2}S_n(t)\|
+ \le\sqrt{N_n}\sup_{\lambda\ge0}
+           \sqrt\lambda\,e^{-N_nt\lambda}
+ =\frac1{\sqrt{2et}}.
+$$
+
+Consequently both neighbor ports satisfy
+
+$$
+\|\mathcal C_{n,v}S_n(t)\|
+ \le B_t+\frac1{\sqrt{2et}}
+ =\frac{V+1}{\sqrt{2et}}=:J_t.
+$$
+
+The representing vector of $\mathcal C_{n,v}$ on the centered subspace
+is $\sqrt{N_n}P_n\delta_v$. Self-adjointness of $S_n(t)$ on that
+subspace therefore yields
+
+$$
+\|S_n(t)P_n\delta_v\|
+ =\frac{\|\mathcal C_{n,v}S_n(t)\|}{\sqrt{N_n}}
+ \le\frac{J_t}{\sqrt{N_n}},\qquad
+\|S_n(t)P_nR_n^{\rm old}\|
+ \le\frac{UJ_t}{\sqrt{N_n}}.
+$$
+
+Keeping the support before smoothing supplies this extra
+$N_n^{-1/2}$ factor. Bounding only $\|R_n^{\rm old}\|$ as in (109.10)
+loses it. With $\|L_nS_n(t)\|\le1/(eN_nt)$, the exact field identity
+now gives
+
+$$
+\|S_n(t)x_n\|
+ \le\frac{\|L_nS_n(t)H_n\|
+             +\|S_n(t)P_nR_n^{\rm old}\|}{d_n}
+ \le\frac1{d_*N_n}
+           \left(\frac{hn}{et}+UJ_t\right)
+ \quad(n\ge n_0).
+\tag{59.6}
+$$
+
+The positive semidefinite closed Laplacian makes $S_n$ a contraction
+on the centered counting space. For every $a\ge a_0=2t$, split the heat:
+
+$$
+\begin{aligned}
+|\mathcal C_nS_n(a)x_n|
+ &\le\|\mathcal C_nS_n(t)\|\,\|S_n(a-t)x_n\|\\
+ &\le B_t\,\|S_n(t)x_n\|\\
+ &\le\frac{B_t}{d_*N_n}
+          \left(\frac{hn}{et}+UJ_t\right)
+ \le\frac{K_{\rm sharp}n}{N_n}.
+\end{aligned}
+\tag{59.7}
+$$
+
+The second inequality uses
+$S_n(a-t)=S_n(a-2t)S_n(t)$ and $a-2t\ge0$.
+It therefore covers the entire unbounded interval $[a_0,\infty)$, without
+assuming that the supplier's compact-interval convergence is already
+uniform there. Choose any positive
+
+$$
+K_{\rm sharp}\ge\frac{B_t}{d_*}
+              \left(\frac h{et}+\frac{UJ_t}{n_0}\right).
+$$
+
+Taking the supremum in (59.7) proves (59.1), since $\eta_n(0)=0$.
+The constants depend on $a_0$ and the fixed supplier family, not on $n$.
+These root and neighbor smoothing bounds do not hold on the full space:
+$S_n(t)$ fixes the constant mode, and the normalized ports take value $1$
+on $N_n^{-1/2}\mathbf1$. Their full-space norms are therefore at least
+$1$ for every $t$, whereas $B_t,J_t\to0$ as $t\to\infty$.
+The projection $P_n$ and centered operator domains are essential.
+
+For the noise step, the bounded continuous midpoint curve
+
+$$
+y_n^*=\frac{\eta_n(x_n)+\eta_n(0)}2
+$$
+
+has distance exactly $a_n/2$ from both true curves. When $2E\ge a_n$ it
+is an allowed report for both preparations. Any predictor therefore assigns
+the same number $z=\widehat g_n(y_n^*)$ to two targets separated by $q_n$.
+The triangle inequality gives
+
+$$
+q_n\le |z-g_{n,s}(0)|+|z-g_{n,s}(x_n)|
+ \le 2\max_{f\in\{0,x_n\}}|z-g_{n,s}(f)|.
+$$
+
+Taking the allowed-report supremum and then the infimum over predictor maps
+proves $R_n(E)\ge q_n/2$ whenever $2E\ge a_n$.
+The constant target-midpoint predictor
+$\widehat g_n(y)=[g_{n,s}(0)+g_{n,s}(x_n)]/2$ has error exactly
+$q_n/2$ on both preparations for every report, proving equality in this
+branch. When $2E<a_n$, the two full closed report balls are disjoint:
+a point in their intersection would give $a_n\le2E$ by the triangle
+inequality. On their union, assign to each report the target of its unique
+compatible preparation, and assign any value outside the union. This
+arbitrary predictor has zero error. These two branches prove (59.2)
+as an elementary classical intermediate for this source comparison;
+the decoder is not claimed measurable or effective.
+The shared-report midpoint/radius-of-information step is a classical
+optimal-recovery ingredient; see Micchelli and Rivlin, *A Survey of Optimal
+Recovery*, in *Optimal Estimation in Approximation Theory*,
+[doi:10.1007/978-1-4684-2388-4_1](https://doi.org/10.1007/978-1-4684-2388-4_1),
+and the bounded-error optimal-recovery setting of Foucart and Liao,
+*Optimal Recovery from Inaccurate Data in Hilbert Spaces: Regularize, But
+What of the Parameter?*,
+[doi:10.1007/s00365-022-09590-5](https://doi.org/10.1007/s00365-022-09590-5).
+The same two-consistent-input triangle-inequality step appears explicitly in
+the proof of Theorem 1 of Foucart, *Learning the maximum of a Hölder function
+from inexact data*,
+[doi:10.1090/proc/17456](https://doi.org/10.1090/proc/17456).
+Only that lower-bound ingredient is used: no sufficient recovery theorem,
+Hilbert-space regularization rule, or Hölder-model hypothesis is transferred
+to the curve carrier. The displayed argument proves the needed step directly.
+
+Binet's formula and $N_n=2F_{n+1}-1$ give
+
+$$
+\frac n{N_n}\longrightarrow0,\qquad
+\frac{\log_2N_n}{n}\longrightarrow\log_2\varphi,\qquad
+\frac{\log_2n}{n}\longrightarrow0.
+$$
+
+Thus (59.1) implies $a_n\to0$, whereas the supplier's fixed-$s$ limit
+gives $q_n\to|D(s)|>0$. By (59.2), substituting $E_n=a_n/2$ gives
+$R_n(E_n)=q_n/2$, proving (59.3).
+If $E_n\ge K_{\rm sharp}n/(2N_n)$, (59.1) also implies $2E_n\ge a_n$,
+so the same exact risk and limit hold eventually.
+For a fixed $\delta<|D(s)|/2$, eventually $q_n>2\delta$.
+Then overlapping report balls would contradict a worst-error guarantee of
+$\delta$ by (59.2), proving (59.4). With $E_n=2^{-p_n}$, (59.4) gives
+$2^{1-p_n}<K_{\rm sharp}n/N_n$. Taking logarithms of these positive
+quantities and using the displayed growth limits proves (59.5).
+For a finite bank its projected midpoint is again allowed at both
+preparations, and its separation is bounded by the full-curve separation;
+the same argument applies. $\square$
+

@@ -1,0 +1,12 @@
+ The bijective change of variables gives
+
+$$
+\sum_{X\in K^N}(-1)^{\operatorname{Tr}_{L/\mathbb F_2}H(X)}=|K|^{N-\rho_t}\,g^{\rho_t},\qquad g=\sum_{z\in K}(-1)^{\operatorname{Tr}_{L/\mathbb F_2}(z\bar z)}=1+(2^h+1)\sum_{a\in L^\times}(-1)^{\operatorname{Tr}_{L/\mathbb F_2}a}=-2^h,
+$$
+
+because every $a\in L^\times$ has exactly $2^h+1$ norm preimages and $\sum_{a\in L}(-1)^{\operatorname{Tr}a}=0$. Since $\rho_t$ is even, the factor is $2^{k(N-\rho_t)}2^{h\rho_t}=2^{k(N-\rho_t/2)}$, a product over the $k$ characters of $O$.
+
+*Constancy of the rank along orbits.* For every $t$, $M_{2t}$ is obtained from $M_t$ by squaring every entry, since $\lambda_u(2t)=\lambda_u(t)^2$, so $\rho_{2t}=\rho_t$; and $M_{-t}=\Lambda_t^{-1}\Gamma+\Gamma\Lambda_t^{-1}=\Lambda_t^{-1}M_t\Lambda_t^{-1}$, so $\rho_{-t}=\rho_t$. Hence in each of the three cases the factor equals $\prod_{s}2^{N-\rho_s/2}$ over the characters $s$ involved.
+
+*Conclusion.* Multiplying the factors, $\sum_x(-1)^{\Phi(x)}=2^{N|G|-\frac12\sum_{t\in G}\rho_t}$, and with $\rho_0=0$ the normalisation gives $Z_n^{(\mathtt q)}=2^{-\frac12\sum_{t\ne0}\rho_t}>0$. Substituting into Convention 2.2 with $Z_1^{(\mathtt q)}=1$ gives the formula for $S_n^{(\mathtt q)}$. ∎
+

@@ -1,0 +1,8 @@
+以下引用固定于提交 `042193cace9d54a1f78c6b4cc460b8e0592553c0`；它们的假设与本章对应如下。
+
+- [Atomic §§355–357、359–360](https://github.com/the-omega-institute/trureturing/blob/042193cace9d54a1f78c6b4cc460b8e0592553c0/docs/develop/theory/FIBONACCI_ATOMIC_RELATION_GENERATION.md)：叶积及忠实矩阵、窗口后继、联合正规形、八边充要条件、全部 Euler 词／括号对应和单位正词供给。本章直接使用这些结论，不把一般有效像编译、Euler 构造或表示变换计为新增贡献。
+- [TM §§28–30、36–38、44、46–47](https://github.com/the-omega-institute/trureturing/blob/042193cace9d54a1f78c6b4cc460b8e0592553c0/docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION_TRANSPORT_MEMORY_COMPLETION.md)：整数更新、原动作守卫、行为核、源保持生产边界、首次替换行列限制、原始目标配对、终端二分填充、全正上下文动作对应及完整认证表。这里的完整单位表使既有 TM47 输入的覆盖条件具体成立；不授予实际未知行查询。
+- [TargetRecoveryCriterion.target_recovery_criterion](https://github.com/the-omega-institute/trureturing/blob/042193cace9d54a1f78c6b4cc460b8e0592553c0/D5/S3/ConceptDynamics/Restoration/TargetRecoveryCriterion.lean)：该结论在非空状态空间上将目标因子化等价于同观察纤维内目标恒定及碰撞集为空。它供应抽象判据，不供应合法破坏性取得器。
+- [IndexedTargetSufficiency.indexed_target_sufficiency](https://github.com/the-omega-institute/trureturing/blob/042193cace9d54a1f78c6b4cc460b8e0592553c0/D5/S3/ConceptDynamics/Restoration/IndexedTargetSufficiency.lean)：该结论要求一个已供应的索引读出家族及其完整依赖读出；不证明这些读能在同一不断修改的原源上联合取得。
+- [ReachableBehaviorMinimality.finite_state_minimality](https://github.com/the-omega-institute/trureturing/blob/042193cace9d54a1f78c6b4cc460b8e0592553c0/D5/S3/ObserverMemory/PredictionFactors/ReachableBehaviorMinimality.lean)：该结论要求有限载体、幺半群动作、候选可达性和相等完整外行为，给未来行为商的最小性；当前行为相同不自动恢复不同初始目标。
+

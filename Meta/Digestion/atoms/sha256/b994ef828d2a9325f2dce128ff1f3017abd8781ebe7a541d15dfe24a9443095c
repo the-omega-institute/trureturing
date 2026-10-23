@@ -1,0 +1,65 @@
+### 35.7 隐藏概率信息、反相位与两倍尺度的关系度量
+
+数学引文与参数对应。在 §35.5 的全正固定 $b$ 纤维上，记
+
+$$
+\tau=\log\frac{p_0p_{13}}{p_1p_3},\qquad
+I=\frac1{p_0}+\frac1{p_1}+\frac1{p_3}+\frac1{p_{13}}.
+$$
+
+[HiddenRelations C-4.6](AURIC_FIB_ATOM_HIDDEN_RELATIONS_STATISTICS_PHASE_AND_SEAMS.md#4-从固定律残差到实际读口的统计信息)已给 $\tau'=I>0$；其中 $\vartheta$、$\mathcal I$ 分别对应本章 $\tau,I$。其 C-14.1、C-14.2 已给射影度量与完整位置标架的水平最小化。本章与这两条目的精确区别是
+
+$$
+g=2g_{\rm old},\qquad \theta^{\rm old}=-\theta,
+\qquad \Phi_{\rm old}=-\chi.
+$$
+
+因此与辛面积 $2\pi$ 相容的本章尺度为
+
+$$
+g=\frac12\sum_s\frac{dp_s^2}{p_s}
++2\left[\sum_sp_s\,d\theta_s^2-
+\left(\sum_sp_s\,d\theta_s\right)^2\right],
+$$
+
+其固定矩层、模去占位轨道后的水平商度量为
+
+$$
+g_{\rm red}=\frac I2\,d\kappa^2+\frac2I\,d\chi^2.
+$$
+
+这里不是另一个新的一般度量定理，而是对既有公式作相反角约定及两倍尺度的完整消费。具体的水平速度也可直接对照：令 $d\chi/dt=1$，取
+
+$$
+v_s:=\frac{d\theta_s}{dt}=\frac{d_s}{p_sI}.
+$$
+
+它满足
+
+$$
+\sum_s d_sv_s=1,\qquad \sum_sp_sv_s=0,
+\qquad
+\sum_sp_sv_s x_s=\sum_sp_sv_s y_s
+=\sum_sp_sv_s z_s=0,
+\qquad \sum_sp_sv_s^2=\frac1I.
+$$
+
+第一式使用四底角的 $d_s^2=1$ 及 $d_2=0$；余下正交式分别使用 $\sum d_s=0$ 及 $\sum d_sx_s=\sum d_sy_s=\sum d_sz_s=0$。对任意共同相位已去除、满足 $\sum d_s v_s=1$ 的代表，Cauchy–Schwarz 给 $1\le I\sum p_sv_s^2$，所选速度取等号，因而确为最短水平代表。概率方向 $dp_s=d_s\,d\kappa$ 给 $I/2$；相位方向给 $2/I$。振幅微分的概率—相位交叉内积纯虚，实度量没有 $d\kappa\,d\chi$ 交叉项。
+
+设 $\eta=\tau/2$。同一个振幅回路比为
+
+$$
+\zeta:=\frac{\psi_0\psi_{13}}{\psi_1\psi_3}
+=\exp(\eta-i\chi),\qquad
+ d\eta=\frac I2\,d\kappa,
+$$
+
+$$
+g_{\rm red}=\frac2I(d\eta^2+d\chi^2),\qquad
+\det(g_{\rm red})_{(\kappa,\chi)}=1.
+$$
+
+$\zeta$ 正是 C-13.3 的复比坐标，其 $u=\eta$、$\Phi=-\chi$；在非退化纤维内部，$\eta$ 从 $-\infty$ 严格增加到 $+\infty$，$\zeta$ 参数化 $\mathbb C^\times$。角仍按 $2\pi$ 周期识别，不能将复对数当成全局单值坐标。
+
+上述度量行列式为一，使内部 Riemann 面积等于所选辛面积元的绝对值；它是尺度与商度量的恒等式，不是物理不确定性原理。零概率处不用 $1/p_s$ 或 $\arg\psi_s$。C-14.3 的端点距离和圆周长在本章均乘 $\sqrt2$，所以单零端点锥角仍为 $2\pi$、双零端点锥角仍为 $\pi$；这一尺度变化不消除墙上的锥形限定。
+

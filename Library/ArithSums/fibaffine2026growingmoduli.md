@@ -5,7 +5,7 @@ year: 2026
 title: Growing-modulus interfaces for affine Fibonacci Robin candidates
 doi: null
 url: https://github.com/the-omega-institute/trureturing
-claim: "A parameter comparison of the cited primary sources, including Pascadi's 2025 unconditional exponent 5/8 and Bourgain–Garaev's subpower prime-modulus reciprocal cancellation: finite positive moments and unweighted cancellation do not supply the same-candidate strict Robin budget with the actual low-loss weights."
+claim: "Published maximal-order and strong-divisibility sieve inputs give fixed-rank tails and density-one whole multiplier windows; on the prime-index window, every supported multiple worsens the stated Axler envelope, leaving the actual strict Robin budget unresolved."
 strata_touched: []
 license: citation-only
 triage: anchor
@@ -13,7 +13,7 @@ triage: anchor
 
 # FIB 单位位一来源：增长模数的文献适用范围
 
-本笔记保留可以用于后续逐点研究的数学接口和原始文献条件。它不宣称 RH、FIB 本族的逐点 Robin 不等式、完整文献搜索或原创性。所列推导均为纸面数学；不提供 Lean 核验。
+本笔记保留可以用于后续逐点研究的数学接口和原始文献条件。它不宣称 RH、素指标本族的全称 Robin 不等式、完整文献搜索或原创性。所列推导均为纸面数学；不提供 Lean 核验。
 
 ## 目标与实际参数
 
@@ -437,6 +437,276 @@ $$
 令 $c=\gcd(d,C_s)$、$b=C_s/c$、$\tau=\gcd(h,b)$。已有完整补因子公式保留如下退化端点：$h=1$ 时没有新增补因子成本；$h=\tau$ 时补因子只恢复缺失的参考素幂层，没有外加素幂成本。若全部素因子很小，也不能先当作粗余因子收费。这些是必须覆盖的代数情形，尚未断言它们在一个实际未支付候选上发生。
 
 所需估计仍是 [同价价格笔记](erdosnicolas1975repartition.md)中同一个实际 $N$ 的 $D_s(N)>T_s(N)$，或直接支付 FIB §233.5 的完整低亏损与高亏损贡献。参考 $C_s$ 保留全部零成本 ties；实际素幂重数、乘积窗口、指定余类和低亏损条件须同时保留。仅在旧大除数分支证明估计、仅在 $F_r$ 另外为素数时得到消去，或只对无权逆元的整体给相对误差，都不是这个全范围结论。
+
+## 固定禁素集：直接使用 Tóth–Wirsing 的最大阶结果
+
+László Tóth, Eduard Wirsing, *The maximal order of a class of
+multiplicative arithmetical functions*, Annales Univ. Sci. Budapest.,
+Sect. Comp. 22 (2003), 353–364；
+[arXiv:math/0610360v1](https://arxiv.org/pdf/math/0610360v1)，
+Corollary 2，第4页，已经给出删去一份倒数和收敛的禁素集后的限制最大阶。
+
+其参数在这里取为 $f(n)=Z(n)$、$S=\{p:p\mid m\}$，其中 $m>1$ 固定。
+则 $\rho(p)=\sup_{\nu\ge0}Z(p^\nu)=(1-p^{-1})^{-1}$、$R_S=1$，
+且该有限 $S$ 满足 $\sum_{p\in S}1/p<\infty$。
+上界直接满足 Theorem 1 的无条件乘积收敛假设；下界可取
+$e_p=1=p^{o(1)}$，因为
+$Z(p)/\rho(p)=1-p^{-2}$，相应乘积严格为正。因此原文的推论直接给
+
+$$
+\limsup_{\substack{n\to\infty\\(n,m)=1}}
+\frac{Z(n)}{e^\gamma\log\log n}
+= c_m:=\prod_{p\mid m}\left(1-\frac1p\right)<1.
+\tag{FT.1}
+$$
+
+所以对每个固定 $m>1$，存在 $N_m$，使全部 $n>N_m$、$(n,m)=1$
+满足严格 Robin。这是已发表结论的直接后果，无须另证固定禁素集定理。
+取 $m=F_r$、$r\ge3$ 固定，由 $(1+gF_r,F_r)=1$，即得
+
+$$
+\forall r\ge3\ \exists G_r\ \forall g\ge G_r,\qquad
+Z(1+gF_r)<e^\gamma\log\log(1+gF_r).
+\tag{FT.2}
+$$
+
+允许素数 $q_1<q_2<\cdots$ 的
+$Q_k=\prod_{j\le k}q_j$、$A_k=\prod_{j\le k}q_j/(q_j-1)$，
+也由经典 Mertens 乘积及素数定理给
+$A_k/(e^\gamma\log\log Q_k)\to c_m$。
+这些是固定参数输入，不是随 $m=F_r$ 变化的统一误差。
+
+这里保留出处、参数对应和 FIB 仿射族的实际消费者，不重证该最大阶
+定理，也不把（FT.2）当成新的解析估计。它没有证明统一于 $r$ 的阈值，
+没有把阈值降到5040，也没有消除库存续卷 §462 所述的变化秩缺口。
+
+## 复用强整除筛法：密度一指标上的完整乘子窗口
+
+这里放宽指标为任意正整数 $r$，只研究实际算术族
+
+$$
+I_r=[\lceil F_r/10\rceil,\lfloor F_r/5\rfloor]\cap\mathbb Z,
+\qquad N_{r,g}=1+gF_r,
+\qquad \Delta(N)=e^\gamma\log\log N-Z(N).
+$$
+
+复合指标下的五窗口来源是否合法，仍须另查单位位和接缝；本段不由该
+算术定义自动取得规范地址证书。它也不改变上文仍以素指标为目标的
+逐点问题。
+
+### 缺失一个小素因子的统一预算
+
+设 $X\ge e^{64}$，记 $h=\log(X/4)$、$Q=\sqrt{\log X}$。若 $r>X$
+且 $F_r$ 有一个素因子 $p\le Q$，则对每个 $g\in I_r$，下面的
+纸面估计给出
+
+$$
+\Delta(N_{r,g})>\frac{e^\gamma}{2}\sqrt{\log X}.
+\tag{FW.1}
+$$
+
+其解析输入直接取 [Axler 作者版 v3](../notes/axler2023robin.md)
+式（3.4）—（3.5）的 **totient** 上界。记
+$K=999999476056$、$p_K=29996208012611$、
+$N_K=\prod_{j\le K}p_j$、$a_0=0.0094243$。当 $m\ge N_K$ 时，
+
+$$
+\frac m{\varphi(m)}
+<e^\gamma\left(\log\log m+
+\frac{a_0}{(\log\log m)^2}\right).
+\tag{FW.2}
+$$
+
+这个输入不在此重证。取 $N=N_{r,g}$、$L=\log\log N$。
+初等 Fibonacci 界 $F_r\ge2^{(r-2)/2}$ 给
+$\log N\ge(r-2)\log2-\log10>r/4$（$r\ge16$），所以
+$L>h>32$。又有
+$\log N_K\le K\log p_K<32\cdot10^{12}<e^{32}$，故 $N>N_K$。
+
+因为 $p\mid F_r$、$p\nmid N$，在同一个实际整数上有精确关系
+
+$$
+\frac N{\varphi(N)}=
+\left(1-\frac1p\right)\frac{pN}{\varphi(pN)}.
+$$
+
+将（FW.2）用在 $pN$，而非把 $Z(N)$ 的某个上界乘以缺失因子。
+令
+
+$$
+\delta=\log\left(1+\frac{\log p}{\log N}\right),
+\qquad
+ t=\frac{\delta+a_0/(L+\delta)^2}{L}.
+$$
+
+由 $Z(N)<N/\varphi(N)$，得到
+
+$$
+\frac{Z(N)}{e^\gamma L}
+<\left(1-\frac1p\right)(1+t).
+$$
+
+利用 $p\le Q\le2h$、$L>h$、$\delta\le(\log p)e^{-L}$，
+
+$$
+(p-1)t
+\le2\log(2h)e^{-h}+\frac{2a_0}{h^2}
+<\frac4{h^2}.
+$$
+
+最后一步可用 $\log(2h)\le h$、$e^h>h^3$（$h\ge32$）及 $a_0<1$。
+于是对同一完整 $Z(N)$，
+
+$$
+\frac{Z(N)}{e^\gamma L}
+<1-\frac{1-4/h^2}{p}
+\le1-\frac{1-4/h^2}{Q},
+$$
+
+从而
+
+$$
+\Delta(N)>e^\gamma\frac{h-4/h}{Q}
+>\frac{e^\gamma}{2}\sqrt{\log X}.
+$$
+
+这些估计仅用 $r>X$ 和 $g\ge F_r/10$，没有依赖 $r\le2X$，
+也没有逐个乘子的阈值。因此（FW.1）同时控制整个 $I_r$，而不是
+窗口中密度一的乘子。
+
+### 直接引用已有筛定理，不重复建立指标筛
+
+[Browning–Verzobio，arXiv:2402.19301v1](../Recurrence/browningverzobio2024sds.md)，
+Theorem 1.4，第4页，已经给出：对满足其本原素因子假设的强整除序列
+$x_n$，以及满足 $n\le f(z)\Rightarrow x_n\le z$ 的严格递增连续函数
+$f$，
+
+$$
+\#\{n\le R: p\mid x_n\Rightarrow p>z\}
+\ll\frac R{\log f(z)}+f(z)^2.
+\tag{FW.3}
+$$
+
+Fibonacci 的假设与选择
+$f(z)=\log_\varphi(\sqrt5z-1)$ 均在该文 Corollary 1.6 的证明中
+核对。小指标因子排除及其 Selberg 筛上界属于该文已有证明；这里
+直接消费（FW.3）。
+
+定义
+
+$$
+\mathcal B(R)=\{3\le r\le R:\exists g\in I_r,\quad
+N_{r,g}>5040,\ \Delta(N_{r,g})\le0\}.
+$$
+
+把（FW.1）用于 $X=\sqrt R$。除去至多 $\sqrt R$ 个小指标，
+每个 $r\in\mathcal B(R)$ 都必须使 $F_r$ 没有不超过
+$z=\sqrt{\log\sqrt R}$ 的素因子。（FW.3）随即给
+
+$$
+\#\mathcal B(R)
+\ll\sqrt R+\frac R{\log\log\log R}
+ +(\log\log R)^2
+\ll\frac R{\log\log\log R}.
+\tag{FW.4}
+$$
+
+这是已发表筛定理与缺失 Euler 因子估计的应用综合，不是新的筛法
+或新的全域 Robin 验证。它把对指标的计数接到“同一指标的全部
+乘子窗口均安全”的量词；没有把平均筛结论升级成每个指标安全。
+
+素数指标 $r>5$ 的每个素因子 $p\mid F_r$ 都有 $p\ge2r-1$，
+所以它们全部留在（FW.1）未支付的分支中。特别地，（FW.4）不排除
+素指标上的任何潜在反例，也未支付 §233.5 的完整逐点预算。
+本段没有 Lean 声明或形式核验，不作全球原创性断言。
+
+## 素指标窗口：Axler 倍数上界不能支付 Robin 预算
+
+回到 $r\ge7$ 为素数、$V=F_r$、$g\in I_r$、$N=1+gV$。
+只考察上述 Axler totient 界产生的一族上界，记
+
+$$
+h(t)=t+\frac{a_0}{t^2},\qquad a_0=0.0094243,\qquad
+U_d(N)=e^\gamma\frac{\varphi(d)}d\,h(\log\log(dN)),
+$$
+
+其中 $d$ 为正整数，全部素因子均整除 $V$。由 $(N,d)=1$，当
+$dN\ge N_K$ 时，Axler 原文式（3.4）—（3.5）合法给出
+
+$$
+Z(N)<\frac N{\varphi(N)}
+=\frac{\varphi(d)}d\frac{dN}{\varphi(dN)}<U_d(N).
+\tag{FM.1}
+$$
+
+这里必须对实际倍数 $dN$ 使用原界，因而参考大小也变成 $dN$。
+直接在 $N$ 的 $Z$ 上界上乘缺失素数因子，不由原定理支持。
+
+在本窗口，整族数值上界的唯一最小项是 $d=1$：
+
+$$
+U_d(N)>U_1(N)
+=e^\gamma\left(L+\frac{a_0}{L^2}\right)
+>e^\gamma L,\qquad L=\log\log N,\quad d>1.
+\tag{FM.2}
+$$
+
+下面是该现成上界在实际 FIB 参数下的纸面比较，不另立解析定理。
+素指标的标准秩同余给 $p\mid V\Rightarrow p\ge2r-1$。
+令 $\phi=(1+\sqrt5)/2$。又有 $N<V^2$、$V<\phi^r$、
+$\log\phi<1/2$、$N\ge27$，故 $L>1$。
+
+先令 $d$ 平方自由，且 $p\nmid d$、$dp\mid\operatorname{rad}(V)$。
+设
+
+$$
+A=\log(dN),\quad B=\log(dpN)=A+\log p,\qquad
+f(u)=\log h(\log u).
+$$
+
+因为 $dp\le V$，所以 $B\le\log(VN)<3r/2$。在 $[A,B]$ 上，
+$\log u\ge L>1$，且
+
+$$
+f'(u)=\frac{1-2a_0/(\log u)^3}
+ {u\log u\,[1+a_0/(\log u)^3]}
+>\frac{9}{10u\log u}.
+$$
+
+最后一步用 $a_0<1/100$ 和 $98/101>9/10$。积分并用
+$p\ge2r-1>3r/2$，得到
+
+$$
+f(B)-f(A)>
+\frac{(9/10)\log p}{B\log B}
+>\frac{(9/10)\log p}{(3r/2)\log(3r/2)}
+>\frac3{5r}.
+$$
+
+另一方面，$-\log(1-1/p)<1/(p-1)\le1/(2r-2)$，从而
+
+$$
+\log\frac{U_{dp}(N)}{U_d(N)}
+>\frac3{5r}-\frac1{2r-2}
+=\frac{r-6}{10r(r-1)}>0.
+\tag{FM.3}
+$$
+
+依次加入平方自由支撑即得严格增长。提高已经出现的素数幂次不改变
+$\varphi(d)/d$，同时严格增大 $\log\log(dN)$；$h$ 在 $t>1$
+严格递增。因此比较延伸到全部受支持的 $d>1$，证明（FM.2）。
+
+当 $N\ge N_K$ 时，所有 $U_d$ 都是合法上界，最优项仍高于
+Robin 预算。当 $N<N_K$ 时，只有另满足 $dN\ge N_K$ 的项可由
+（FM.1）取得；即使如此，（FM.2）仍使它们高于预算。原文对
+$5041\le N\le N_K$ 的有限验证另行适用，不能与倍数界混为一谈。
+
+所以，选择禁素因子的任意子集、加入全部禁素因子或提高其幂次，
+均不能让这套 Axler 倍数上界证明当前窗口的 Robin。不需要继续优化
+这族证书；实际 $N$ 的素幂截断损失、同价价格损失或另一解析上界
+不在此排除范围内。这个比较不判断真实 $\Delta(N)$ 的符号。
+固定 $r$、让 $g$ 任意增大时，$N<V^2$ 不再成立，因此也不反驳
+（FT.2）的已知最终安全性。以上没有 Lean 核验或全球原创性结论。
 
 ## 仍缺的联合关系
 

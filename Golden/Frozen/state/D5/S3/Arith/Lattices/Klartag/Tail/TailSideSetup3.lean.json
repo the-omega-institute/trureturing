@@ -1,1 +1,1 @@
-{"statement_id":"sha256:3bc5e81924a05287ec00eff373919e8bee6712127ab7b97fc43b59db75dfcfd5"}
+{"statement_id":"sha256:3bc5e81924a05287ec00eff373919e8bee6712127ab7b97fc43b59db75dfcfd5","declarations":[{"declaration_name_key":"ns(ns(ns(ns(ns(ns(ns(ns(n0,2:D5),2:S3),5:Arith),8:Lattices),7:Klartag),4:Tail),14:TailSideSetup3),18:tailSideHyp_of_gap)","kind":"theorem"},{"declaration_name_key":"ns(ns(ns(ns(ns(ns(ns(ns(n0,2:D5),2:S3),5:Arith),8:Lattices),7:Klartag),4:Tail),14:TailSideSetup3),23:tailSideHyp_of_rawDataR)","kind":"theorem"}]}

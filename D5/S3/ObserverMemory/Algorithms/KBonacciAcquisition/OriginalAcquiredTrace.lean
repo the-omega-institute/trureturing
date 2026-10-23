@@ -261,7 +261,7 @@ def archiveEndpoint {m : ℕ} (free : Option (ZMod 2)) : NarrowWindowCost.Archiv
   | [] => free
   | (_, reply) :: rest => archiveEndpoint reply rest
 
-private theorem archive_length {m : ℕ} (archive : NarrowWindowCost.Archive m) :
+theorem archive_length {m : ℕ} (archive : NarrowWindowCost.Archive m) :
     (archiveWords archive).length = archive.length * m := by
   induction archive with
   | nil => simp [archiveWords]

@@ -1,0 +1,21 @@
+**定义 19.1（直接上下文同态运输）。** 固定 $k\in\mathbb N$、$k\ge1$ 和
+$N=2k$，源分量关系为
+$\widehat t=\mathsf C_N(t)$。所检验的具体扩展把一个完整 Left($v$) 或
+Right($v$) 分别映成同方向的一个完整 Left($\mathsf C_Nv$) 或
+Right($\mathsf C_Nv$)，并在该编码入口使用一个预先固定的当前标量守卫 $H$。
+要求它对每个原始合法请求保留 accept/reject，并在接受时保留源后继关系。
+
+$H$ 可以依赖 $N$、历史旧守卫和共同入口已有的全部实际保留数据，但不能随着
+本次所选上下文改变；本定义不包括请求相关的预判/补偿、多次源调用、其他编码、
+不同返回解释或别的关系。Reserve 所增加的 backing $K$ 不替代语义守卫 $H$；
+编码源必须实际满足 $H,K\in\mathbb N$、$\lambda(\widehat t)\le H\le K$。拒绝的请求仍属于
+合法任务域，不把接受集合误称为所有合法请求的集合。
+
+这个运输类是检验 §15 的固定滞后 Read/Rho 关系能否直接扩展到原始整 graft
+菜单的一种具体尝试。§15 原来的四指令语言不包含此菜单，因此下述失败不推翻
+其定理。CAP 定义 1.2、定理 4.5 和 LJA 定义 4.3 是本节的源动作供应；
+[GenealogicalFiberTransport](../../../D5/S3/Arith/FibonacciAtomic/GenealogicalFiberTransport.lean)
+的 Source、substitution、composition 以及 fiberMap 内部 one_step/transport
+供应同一 FreeMagma 上的迭代同态和组成演化。不是先假设一条完整 $Q$ 模拟，
+再用其投影计算结论。
+

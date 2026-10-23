@@ -1,1 +1,1 @@
-{"statement_id":"sha256:4d8cb610ca10401018714711b996eb7561a95eb2075c94c708a598155c4f2cf6"}
+{"statement_id":"sha256:4d8cb610ca10401018714711b996eb7561a95eb2075c94c708a598155c4f2cf6","declarations":[{"declaration_name_key":"ns(ns(ns(ns(ns(ns(n0,2:D5),2:S3),7:Quantum),7:Algebra),19:WeylPhaseArithmetic),18:windowRoot_pow_mod)","kind":"theorem"},{"declaration_name_key":"ns(ns(ns(ns(ns(ns(n0,2:D5),2:S3),7:Quantum),7:Algebra),19:WeylPhaseArithmetic),22:windowRoot_pow_val_add)","kind":"theorem"}]}

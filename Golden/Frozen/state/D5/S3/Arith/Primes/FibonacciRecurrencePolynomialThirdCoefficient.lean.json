@@ -1,1 +1,1 @@
-{"statement_id":"sha256:d3cfbd261215bb33ccac1245f413ab51e523c31fa6dd34671e3c6d38500489a3"}
+{"statement_id":"sha256:f9c829bd4892526dc748231f78dc490184b87a67156d63d3e7b3e771ab7fb3c8","declarations":[{"declaration_name_key":"ns(ns(ns(ns(ns(ns(n0,2:D5),2:S3),5:Arith),6:Primes),45:FibonacciRecurrencePolynomialThirdCoefficient),49:fibonacci_recurrence_polynomial_third_coefficient)","kind":"theorem"}]}

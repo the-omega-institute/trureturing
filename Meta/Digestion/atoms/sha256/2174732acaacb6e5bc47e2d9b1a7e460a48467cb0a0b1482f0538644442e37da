@@ -1,0 +1,19 @@
+**Theorem 112.2 (Original-source exact-law obstruction).** For every
+$L\ge5$, $0<\gamma<1/3$ and tail in (111.1), let $N$ be the
+original preselected rule of Theorem 111.2. Every original
+$O\in\mathcal O_2$, with arbitrary seed-selected addresses and
+full-carrier output laws, satisfies
+
+$$
+\sup_{x\in X}\operatorname{TV}
+       (\widehat\lambda_{O,x},\widehat\lambda_{N,x})
+                      \ge\frac\gamma3.
+\tag{112.2}
+$$
+
+In particular $p^N\in\mathcal F_N(a,\varepsilon_{L,\gamma})$
+but $p^N\notin\mathscr C_L$, while
+$p^P\in\mathcal F_N(a,\varepsilon_{L,\gamma})\cap\mathscr C_L$.
+This family is an obstruction to exact-law replacement and leaves
+the cap intersection nonempty.
+

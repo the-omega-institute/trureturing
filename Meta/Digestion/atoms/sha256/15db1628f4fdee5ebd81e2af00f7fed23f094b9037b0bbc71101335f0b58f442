@@ -1,0 +1,1 @@
+| [NativeSerialMachine](../../../D5/S3/Arith/FibonacciAtomic/Observer/NativeSerialMachine.lean) | 实际 Op、Event、nativeStep、Run 的单一寄存器、完整时间顺序、旧纪元 update 标记及 stop 无事件；actual_register_execution 保实际来源与日志 

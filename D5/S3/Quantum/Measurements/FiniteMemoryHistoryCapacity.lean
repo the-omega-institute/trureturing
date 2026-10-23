@@ -5,6 +5,9 @@
    anchors: []
    digest: Perfectly distinguishable density matrices number at most the memory dimension. -/
 
+/- zero_trace_mul_eq_zero: proof_shape: bind-only; escape_witness: none;
+   consumers: zero_trace_support, D5.S3.Quantum.Measurements.BroadcastingChannelExtremaRefutation.result. -/
+
 import Mathlib.Analysis.Matrix.Order
 
 open scoped BigOperators ComplexOrder MatrixOrder InnerProductSpace
@@ -13,7 +16,7 @@ namespace D5.S3.Quantum.Measurements.FiniteMemoryHistoryCapacity
 
 open Matrix
 
-private lemma zero_trace_mul_eq_zero {d : Nat}
+lemma zero_trace_mul_eq_zero {d : Nat}
     (E rho : Matrix (Fin d) (Fin d) ℂ)
     (hE : E.PosSemidef) (hRho : rho.PosSemidef)
     (hTrace : (E * rho).trace = 0) : E * rho = 0 := by
@@ -37,7 +40,7 @@ private lemma zero_trace_mul_eq_zero {d : Nat}
       simp only [mul_assoc]
     _ = 0 := by rw [hAB, mul_zero, zero_mul]
 
-private lemma zero_trace_support {d : Nat}
+lemma zero_trace_support {d : Nat}
     (E rho : Matrix (Fin d) (Fin d) ℂ)
     (hE : E.PosSemidef) (hRho : rho.PosSemidef)
     (hTrace : (E * rho).trace = 0) :

@@ -1,0 +1,32 @@
+**Theorem 15.7 (all $k$-subsets and the exact minimum-alphabet threshold).**
+Let $I$ have $r\ge1$ positions, let $1\le k\le r$, and let
+$\mathcal M_{r,k}$ consist of every $k$-subset of $I$. For every $q\ge2$,
+
+$$
+\mathcal M_{r,k}\text{ is }q\text{-wise}
+\quad\Longleftrightarrow\quad
+q(r-k)<r.
+\tag{NAR.15.12}
+$$
+
+Consequently, for $H\ge1$ and $q=H+1$, $N_H(r,k)=q$ exactly when this
+strict inequality holds; otherwise $N_H(r,k)\ge q+1$. For $H=0$, the
+single age profile has $N_0(\mathcal M)=1$ for every nonempty menu in
+Assumption 14.1, independently of this threshold.
+
+**Proof.** The intersection of $q$ members is empty exactly when their
+complements, each of size $r-k$, cover $I$. If $q(r-k)<r$, their total
+capacity cannot cover all $r$ positions, and the same is true for fewer
+members. If $q(r-k)\ge r$ and $r-k>0$, distribute the positions among
+$q$ blocks of size at most $r-k$, then extend each block to size $r-k$
+within $I$. These extended blocks cover $I$. Their complements are menu
+members with empty intersection; repetitions can be removed, leaving at
+most $q$ members. When $k=r$, the complements are empty and the strict
+inequality holds. Formula (NAR.15.11) now supplies the native equivalence
+for every $q\ge2$.
+
+At $H=0$ there is just $a=0$. Every nonempty selected region displays
+normalized values $z_i=\ell$, so a single retained value and any public
+$i\in S$ recover the lag under either convention. This is also the
+zero-age case of Theorem 14.5. $\square$
+

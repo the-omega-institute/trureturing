@@ -35,8 +35,6 @@ internal static partial class FileMapPolicy
         "tools/StrataLint.Engine/Snapshot/RepositorySnapshot.cs";
     private const string StatementProjectionFixtureLoaderPath =
         "tools/StrataLint.Scribe/Projection/StatementProjection.cs";
-    private const string TheoryAtomizerDataLoaderPath =
-        "tools/StrataLint.Engine/Digestion/Configuration/TheoryAtomizerDataLoader.cs";
     private const string GateAuthorityRootCatalogLoaderPath =
         "tools/StrataLint.Cli/GateAuthority/GateAuthorityRootCatalogLoader.cs";
     private const string ValuesKernelLoaderPath =
@@ -56,6 +54,7 @@ internal static partial class FileMapPolicy
             ["RegisteredCheckMaterials"] = "tools/StrataLint.Engine/RepositoryIo/RegisteredCheckMaterials.cs",
             ["EngineeringProjectRegistry"] = "tools/StrataLint.Engine/RepositoryIo/EngineeringProjectRegistry.cs",
             ["BackfillInventoryLoader"] = BackfillLoaderPath,
+            ["CiUnitContract"] = "tools/scripts/workflow/ci_contract.py",
             ["FileMapLoader"] = FileMapLoaderPath,
             ["FrozenStateRecordLoader"] = FrozenStateRecordLoaderPath,
             ["GateAuthorityRootCatalogLoader"] = GateAuthorityRootCatalogLoaderPath,
@@ -71,7 +70,6 @@ internal static partial class FileMapPolicy
             ["ScribeCompiler"] = ScribeProjectPath,
             ["SnapshotDecoder"] = SnapshotDecoderPath,
             ["StatementProjectionFixtureLoader"] = StatementProjectionFixtureLoaderPath,
-            ["TheoryAtomizerDataLoader"] = TheoryAtomizerDataLoaderPath,
             ["ValuesKernelDataLoader"] = ValuesKernelLoaderPath,
             ["YamlSubsetParser"] = YamlSubsetParserPath,
         };
@@ -193,7 +191,8 @@ internal static partial class FileMapPolicy
     internal static IEnumerable<string> DocumentPaths(string repositoryRoot)
     {
         var manifest = FileMapLoader.LoadRepository(repositoryRoot);
-        foreach (var path in TrackedPaths(repositoryRoot)
+        foreach (var path in GitRepositorySnapshotReader.ReadCurrentProjection(repositoryRoot, static _ => false)
+            .PathInventory.Where(static entry => entry.EffectiveMode is not null).Select(static entry => entry.Path)
             .Where(path => path.StartsWith("Blueprint/", StringComparison.Ordinal)
                 && path.EndsWith(".scribe.cs", StringComparison.Ordinal)
                 && manifest.Entries.Any(entry => entry.Kind == FileMapKind.Data
@@ -204,7 +203,7 @@ internal static partial class FileMapPolicy
     }
 
     internal static IReadOnlyList<FileMapFinding> InspectRepository(
-        string repositoryRoot, IEnumerable<string> documentPaths, FileMapInspectionScope? scope = null)
+        string repositoryRoot, IEnumerable<string>? documentPaths = null, FileMapInspectionScope? scope = null)
     {
         FileMapManifest manifest;
         try
@@ -223,13 +222,21 @@ internal static partial class FileMapPolicy
                 exception.Message)];
         }
 
-        var paths = TrackedPaths(repositoryRoot);
+        var inventory = GitRepositorySnapshotReader.ReadCurrentProjection(repositoryRoot, static _ => false).PathInventory;
+        var present = inventory.Where(static entry => entry.EffectiveMode is not null).ToArray();
+        var paths = present.Select(static entry => entry.Path).ToArray();
+        var indexedPaths = present.Where(static entry => entry.IndexMode is not null)
+            .Select(static entry => entry.Path).ToHashSet(StringComparer.Ordinal);
+        documentPaths ??= paths.Where(path => path.StartsWith("Blueprint/", StringComparison.Ordinal)
+                && path.EndsWith(".scribe.cs", StringComparison.Ordinal)
+                && manifest.Entries.Any(entry => entry.Kind == FileMapKind.Data && entry.Matches(path)))
+            .Select(path => path[..^".scribe.cs".Length] + ".md");
         var selectedPaths = scope?.Paths?.ToHashSet(StringComparer.Ordinal);
         var selected = selectedPaths is null ? paths : paths.Where(selectedPaths.Contains).ToArray();
         var selectedManifest = selectedPaths is null ? manifest : new FileMapManifest(manifest.ResidencePolicy,
             manifest.Entries.Where(entry => selectedPaths.Any(entry.Matches)).ToImmutableArray(),
             manifest.ArtifactKinds);
-        var trackedModes = TrackedModes(repositoryRoot);
+        var candidateModes = present.ToDictionary(static entry => entry.Path, static entry => entry.EffectiveMode!, StringComparer.Ordinal);
         var dependencyFindings = InspectDependencies(
             manifest,
             paths,
@@ -259,8 +266,8 @@ internal static partial class FileMapPolicy
             .Concat(InspectGeneratedInventory(
                 manifest,
                 paths,
-                GeneratedArtifactInventory.Create(documentPaths), scope is { Inventory: true } ? null : selectedPaths, scope?.RelatedPatterns))
-            .Concat(InspectDeclaredModes(selectedManifest, trackedModes))
+                GeneratedArtifactInventory.Create(documentPaths), scope is { Inventory: true } ? null : selectedPaths, scope?.RelatedPatterns, indexedPaths))
+            .Concat(InspectDeclaredModes(selectedManifest, candidateModes))
             .Concat(InspectDirectoryKinds(manifest, selected, paths))
             .Concat(dependencyFindings)
             .Concat(InspectGitIgnore(File.ReadAllLines(Absolute(repositoryRoot, ".gitignore"))))
@@ -295,7 +302,8 @@ internal static partial class FileMapPolicy
         IEnumerable<string> trackedPaths,
         IReadOnlyList<GeneratedArtifactIdentity> inventory,
         IReadOnlySet<string>? selectedPaths = null,
-        string[]? relatedPatterns = null)
+        string[]? relatedPatterns = null,
+        IReadOnlySet<string>? indexedPaths = null)
     {
         ArgumentNullException.ThrowIfNull(manifest);
         ArgumentNullException.ThrowIfNull(trackedPaths);
@@ -339,7 +347,7 @@ internal static partial class FileMapPolicy
             }
 
             var isTracked = tracked.Contains(artifact.Path);
-            if (generated.RuntimeDisposition == "run-local" && isTracked)
+            if (generated.RuntimeDisposition == "run-local" && (indexedPaths ?? tracked).Contains(artifact.Path))
             {
                 artifactFindings.Add(new FileMapFinding(
                     "FILEMAP-RUN-LOCAL-TRACKED",
@@ -394,7 +402,7 @@ internal static partial class FileMapPolicy
             }
 
             if (generated.RuntimeDisposition == "run-local"
-                && IsDataKeyedGeneratedSet(generated))
+                && IsDataKeyedGeneratedSet(generated) && (indexedPaths ?? tracked).Contains(path))
             {
                 findings.Add(new FileMapFinding(
                     "FILEMAP-RUN-LOCAL-TRACKED",
@@ -579,8 +587,6 @@ internal static partial class FileMapPolicy
                 && kind is not FileMapKind.Generated
                 || path.StartsWith("Golden/Projection/", StringComparison.Ordinal)
                     && kind is not FileMapKind.Data
-                || FrozenLedgerChangeClassifier.IsAcceptedEventPath(path)
-                    && kind is not FileMapKind.Ledger
                 || FrozenStatePath.IsUnderRoot(path)
                     && kind is not FileMapKind.Data)
             {
@@ -756,13 +762,6 @@ internal static partial class FileMapPolicy
             .Where(path => File.Exists(Absolute(repositoryRoot, path))
                 || new FileInfo(Absolute(repositoryRoot, path)).LinkTarget is not null)
             .ToArray();
-
-    private static IReadOnlyDictionary<string, string> TrackedModes(string repositoryRoot) =>
-        GitIndexRepositoryFiles.EnumerateTracked(repositoryRoot)
-            .ToDictionary(
-                static entry => entry.RelativePath,
-                static entry => entry.Mode,
-                StringComparer.Ordinal);
 
     private static string KindName(FileMapKind kind) => kind.ToString().ToLowerInvariant();
 

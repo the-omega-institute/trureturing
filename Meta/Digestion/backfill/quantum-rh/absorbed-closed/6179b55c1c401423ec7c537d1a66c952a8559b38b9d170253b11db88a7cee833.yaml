@@ -1,0 +1,17 @@
+fingerprints:
+  raw_sha256: sha256:6179b55c1c401423ec7c537d1a66c952a8559b38b9d170253b11db88a7cee833
+  normalized_sha256: sha256:6179b55c1c401423ec7c537d1a66c952a8559b38b9d170253b11db88a7cee833
+cas_ref: sha256:6179b55c1c401423ec7c537d1a66c952a8559b38b9d170253b11db88a7cee833
+coverage_gids:
+  - gid: D5/S3/Zeros/PochhammerDeformation/LinearFactor.differential_preserves_unit_interval
+    target_statement_id: sha256:24dbb6f144b347a45fd29eb4c6414c4ca4e62f824ff4d00a92c4018396699b3d
+  - gid: D5/S3/Zeros/PochhammerDeformation/LinearFactor.lOp_linear_factor
+    target_statement_id: sha256:9b935bfdf3fa8076ff9765602165fd335a437c3fb59962002becff99cb351a9a
+  - gid: D5/S3/Zeros/PochhammerDeformation/LinearFactor.lOp_linear_factor_on_falling
+    target_statement_id: sha256:d1abab758a5d6e34190a3068e5e0f4d3851662bcee19f62102268e2d33dfddf8
+  - gid: D5/S3/Zeros/PochhammerDeformation/LinearFactor.linear_factor_preserves_unit_interval
+    target_statement_id: sha256:0e9c60b07e43206fb020d3f3d6953bfae379f434af08202a7a1874fe352d03d3
+  - gid: D5/S3/Zeros/PochhammerDeformation/QuadraticInterval.lOp_definition
+    target_statement_id: sha256:4aa523a7bdecc438b4239c9d0bda8c4d9117c36e8e9a321f0694bd19daa4614f
+receipts:
+  unresolved_subitems: []

@@ -1,0 +1,35 @@
+**Definition 21.7 (body-local input rule).** PublicCode$_B$ consists of
+this fixed apparatus's original/prior/client, changed loader, $L$ and
+$G_B$ descriptions and layout conventions. It contains neither a chosen
+$\sigma$ nor a source-dependent word, seed content, package/Image or
+completed list. Knowing the two possible earlier code constants is not
+knowing which bits were consumed.
+
+Use Definition 4.2's counted reconstruction on a body's own basic
+families0–4 and6, with this one additional matching-write row:
+
+| Actual reader | Destination derived before IN | Post-WR ordinal | Pending |
+| --- | --- | --- | --- |
+| First loader at pre-IN ordinal $j$ | The then-marked tape74 R, made backing by EX | $j+3$ | $\ell$ |
+
+For target tally $n$, if $j+3\le n$ read that body's retained binary
+symbol at the derived74 identity. Otherwise read its own matching
+occupied latch. Do not require a completed length-$e$ word at the target.
+All other fixed input sites use their stipulated original/seed or matching
+capture/second-load words; all later variable sites use Lemma 4.1's13/70
+durable/pending rule. Those sites and destinations are determined by
+the already reconstructed prestate, not by a later role annotation.
+At every step use the complete changed raw Step, including first-store
+bits, ordinary74 operations, actual service/importer rows and receipts.
+
+For S/B first invert the finite unary layout to raw $W$ and select these
+basic data. Require full reconstructed raw endpoint equality and exact
+re-encoding. For M use only its basic families to reconstruct, then fold
+ConstructionDirectory over the derived history and compare the entire
+reselected seven-family body. For T start the paid foundation and use
+only each occurrence's own optional IN bit, checking all eleven fields
+against the literal local step, then exact re-encoding. Require the
+actual tally and the binding past predicates. A service bootWitness,
+another view, package payload or saved Image is never an input that
+repairs any of these four bodies.
+

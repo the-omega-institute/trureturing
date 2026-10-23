@@ -1,0 +1,27 @@
+**Theorem 5.2 (conditional minimum).** The minimum supplemental state count is
+
+$$
+m(R,\mathcal U)=
+\begin{cases}
+1,&L_C=\varnothing,\\
+|M_{\mathcal U}|,&L_C\ne\varnothing.
+\end{cases}
+\tag{NAR.5.2}
+$$
+
+On the full unrestricted row fiber,
+
+$$
+M_{\mathcal U_R}=B\cup\{\bot\},\qquad
+m(R,\mathcal U_R)=
+\begin{cases}
+1,&L_C=\varnothing,\\
+k+1,&L_C\ne\varnothing.
+\end{cases}
+\tag{NAR.5.3}
+$$
+
+These formulas include $k=0$. A conditional fixed-width binary supplement
+requires exactly $\lceil\log_2 m(R,\mathcal U)\rceil$ bits.
+Extraction without extra queries has the producer-data condition of §4.
+

@@ -1,1 +1,1 @@
-{"statement_id":"sha256:fdbb0b7d272d70fec7cfb38bfeebdd0bf79a31a4ed083f20bbe3c1ebeece188c"}
+{"statement_id":"sha256:fdbb0b7d272d70fec7cfb38bfeebdd0bf79a31a4ed083f20bbe3c1ebeece188c","declarations":[{"declaration_name_key":"ns(ns(ns(ns(ns(ns(n0,2:D5),2:S3),5:Zeros),6:Window),17:GermWindowWitness),35:germRectangle_subset_closedBall_one)","kind":"theorem"},{"declaration_name_key":"ns(ns(ns(ns(ns(ns(n0,2:D5),2:S3),5:Zeros),6:Window),17:GermWindowWitness),35:germWindowZeroCount_le_crossing_one)","kind":"theorem"}]}

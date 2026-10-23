@@ -14,7 +14,7 @@ strata_touched: []
 The finite-index step in the degree-(8,9) Coxeter-sector construction can be made effective. For the [4,9,3] sector group W, specialize the canonical reflection representation at 2 cos(pi/4) -> 6, 2 cos(pi/9) -> 3, and 2 cos(pi/3) = 1 modulo 17.
 
 The matrices preserve the plus-type Gram form
-[[1,14,0,0],[14,1,7,0],[0,7,1,8],[0,0,8,1]], with determinant 13 = 8^2 modulo 17. Each reflection has determinant -1 and square spinor norm, so the orientation subgroup maps into Omega+_4(17). The deterministic exhaustive checker verify_cycle9_coxeter_order.cpp enumerates the six products R_iR_j and returns exactly ORDER 11985408, equal to |Omega+_4(17)| = 17^2 (17^2-1)^2/2.
+[[1,14,0,0],[14,1,7,0],[0,7,1,8],[0,0,8,1]], with determinant 13 = 8^2 modulo 17. Each reflection has determinant -1 and square spinor norm, so the orientation subgroup maps into Omega+_4(17). The deterministic exhaustive checker [verify_cycle9_coxeter_order.cpp](https://github.com/the-omega-institute/trureturing-experiments/blob/d96621ce210b8853b202a287ecb538bd7a6ae273/experiments/theory/cfmp/verify_cycle9_coxeter_order.cpp) enumerates the six products R_iR_j and returns exactly ORDER 11985408, equal to |Omega+_4(17)| = 17^2 (17^2-1)^2/2.
 
 The kernel Gamma=ker(rho|W+) is torsion-free: the local checker proves faithful images of all maximal finite special parabolics (orders 16, 12 and 18), and finite-order Coxeter elements are conjugate into finite standard parabolics. With K=<c,d> of order six, the coarsened target-tetrahedron count is N = [W:Gamma]/|K| = 2*11,985,408/6 = 3,995,136.
 

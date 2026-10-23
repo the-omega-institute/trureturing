@@ -3,6 +3,7 @@ version = "0.1.0"
 defaultTargets = ["Reg"]
 packagesDir = "../.lake/packages"
 buildDir = "../.lake/build/reg"
+weakLeanArgs = ["-j1"]
 
 [leanOptions]
 pp.unicode.fun = true

@@ -1,0 +1,5 @@
+source_id = "fib-stopping-law-rigidity-and-sharp-linear-address-radius"
+path = "docs/develop/theory/FIB_STOPPING_LAW_RIGIDITY_AND_SHARP_LINEAR_ADDRESS_RADIUS.md"
+atomizer = "generic-v1"
+genre_registry_check = "no-registry"
+unregistered_genres = []

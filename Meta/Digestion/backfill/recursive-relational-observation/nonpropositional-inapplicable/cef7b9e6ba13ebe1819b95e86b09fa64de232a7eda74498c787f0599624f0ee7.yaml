@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:cef7b9e6ba13ebe1819b95e86b09fa64de232a7eda74498c787f0599624f0ee7
+  normalized_sha256: sha256:cef7b9e6ba13ebe1819b95e86b09fa64de232a7eda74498c787f0599624f0ee7
+cas_ref: sha256:cef7b9e6ba13ebe1819b95e86b09fa64de232a7eda74498c787f0599624f0ee7
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 定义 137.1 只指定有限边界矩、Hankel 算子与正实现的条件，不断言给定矩一定存在正实现。
+    previous_atom_id: 7f2e44ecc6a0bc7cb8fa21c3343a4aaf164acde53e615f7dbbc67b6db7e7a6e5
+    next_atom_id: 552dc4acbe4ddbdf232ee19a7e4819877dd6b63f9fdfd350633d148d06d45dd5

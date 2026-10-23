@@ -7,7 +7,7 @@ PROJECT="$ROOT/tools/StrataLint.Cli/StrataLint.Cli.csproj"
 
 cd "$ROOT"
 usage() {
-  echo "USAGE: ingest.sh ingest SOURCES | mathlib-reanchor BASE" >&2
+  echo "USAGE: ingest.sh ingest SOURCES | mathlib-reanchor BASE [OLD_REPORT]" >&2
   exit 2
 }
 
@@ -28,11 +28,15 @@ case "$VERB" in
       "${ingest_args[@]}"
     ;;
   mathlib-reanchor)
-    [[ $# -eq 2 && -n "$2" ]] || usage
+    [[ ( $# -eq 2 || $# -eq 3 ) && -n "$2" ]] || usage
     make -C "$ROOT" lean-report
     base_sha="$(git -C "$ROOT" merge-base HEAD "$2")"
+    reanchor_args=(ledger-reanchor-mathlib --base "$base_sha")
+    if [[ -n "${3:-}" ]]; then
+      reanchor_args+=(--old-report "$3")
+    fi
     dotnet run --project "$PROJECT" --configuration Release -- \
-      ledger-reanchor-mathlib --base "$base_sha"
+      "${reanchor_args[@]}"
     ;;
   *)
     usage

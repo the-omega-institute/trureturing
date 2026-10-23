@@ -1,0 +1,8 @@
+**Definition 12.1 (scope of the pointwise estimate).** The domain of
+(NMF.10.3) and (NMF.10.4) is the set of finite nonempty native trees.
+No row label, acquired history, or joint original product is a parameter
+of either inequality. Simultaneous substitution by $\rho^{2n}$ therefore
+need not preserve a fixed acquired row/history fiber or carry a joint
+tuple of original sources into the same product. The estimates are
+pointwise statements about the native algebra and the frontier metric.
+

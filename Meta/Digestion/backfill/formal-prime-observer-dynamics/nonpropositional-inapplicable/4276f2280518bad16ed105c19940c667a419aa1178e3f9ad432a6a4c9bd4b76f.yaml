@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:4276f2280518bad16ed105c19940c667a419aa1178e3f9ad432a6a4c9bd4b76f
+  normalized_sha256: sha256:4276f2280518bad16ed105c19940c667a419aa1178e3f9ad432a6a4c9bd4b76f
+cas_ref: sha256:4276f2280518bad16ed105c19940c667a419aa1178e3f9ad432a6a4c9bd4b76f
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 非命题文本：174. 决策树容量下界：仅为节标题及导引或设定适用条件；本片段未陈述后续命题的结论。
+    previous_atom_id: d6b867aad6e161d84b6fd0d31adc226601c959dfb8d02ec61b21056abbaeb890
+    next_atom_id: e707775b62092016b6a360b1ae26307cc1578cb3cee75e85708ef46d59d18e22

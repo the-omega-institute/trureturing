@@ -1,0 +1,11 @@
+**Definition 9.4 (Septic target and source matrices).** Use target coordinates $e_0,e_1,e_2,e_3$ and source coordinate $x=e_4$ on $\mathbb C^5$, with $f=e_0$, $F=ff^{\mathsf T}$. Let $N_{i,i+1}=1$ for $i=0,1,2$, all other entries of the $4\times4$ matrix $N$ be zero, and $U=I_4+N$. Define
+
+$$
+u=\begin{pmatrix}s_1+s_2+s_3\\2s_2+6s_3\\6s_3\\0\end{pmatrix},\qquad
+v=\begin{pmatrix}p_0\\p_1+p_2+p_3\\2p_2+6p_3\\6p_3\end{pmatrix},\qquad
+A=\begin{pmatrix}U&u\\0&1\end{pmatrix},\qquad
+B=\begin{pmatrix}0_{4\times4}&v\\0&0\end{pmatrix}. \tag{9.13}
+$$
+
+For each $0<q<1$, set $\mathcal T_q(X)=q(AXA^{\mathsf T}+BXB^{\mathsf T})$ on $M_5(\mathbb C)$. Its two raw Kraus matrices are $\sqrt q A,\sqrt q B$; the source is part of the five-dimensional memory.
+

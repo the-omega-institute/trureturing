@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:9bd99fe02e2fa6b72a523277d458e37dcacd49164844f248df5245fab61426ff
+  normalized_sha256: sha256:9bd99fe02e2fa6b72a523277d458e37dcacd49164844f248df5245fab61426ff
+cas_ref: sha256:9bd99fe02e2fa6b72a523277d458e37dcacd49164844f248df5245fab61426ff
+coverage_gids:
+  - gid: D5/S3/ConceptDynamics/DefinitionEscape/BlindKernelObstruction.blind_kernel_obstruction
+    target_statement_id: sha256:8f588ced5304718cbc6559678d3205248ff540bd0c23afb6cb91c0d2b77817dd
+receipts:
+  unresolved_subitems: []

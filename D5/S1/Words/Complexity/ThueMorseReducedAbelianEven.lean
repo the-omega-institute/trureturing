@@ -6,6 +6,7 @@
    utility: none
    digest: All-start alternation extrema and even reduced abelian complexity. -/
 
+import Batteries.Tactic.OpenPrivate
 import D5.S1.Words.Complexity.ThueMorseReducedAbelianOdd
 import Mathlib.Order.Lattice.Nat
 import Mathlib.Algebra.BigOperators.Intervals
@@ -14,7 +15,6 @@ import Mathlib.Data.Fintype.BigOperators
 namespace D5.S1.Words.Complexity
 
 open private transition alternations alternations_le runs runs_le
-  thueMorse_zero thueMorse_two_mul thueMorse_two_mul_add_one
   transition_two_mul transition_two_mul_add_one
   alternations_double_even alternations_double_odd
   exists_complement_factor reducedAbelianCodes mem_reducedAbelianCodes_iff

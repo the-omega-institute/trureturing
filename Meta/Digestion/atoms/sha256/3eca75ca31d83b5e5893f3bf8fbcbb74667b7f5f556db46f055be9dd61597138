@@ -1,0 +1,20 @@
+**Theorem 14.1 (periodic full-box criterion).**  Let
+\[
+ B=\begin{pmatrix}0&1&0\\1&0&0\\0&0&1\end{pmatrix},
+ \qquad A=I_3,\qquad \pi=(w,w,1-2w),\quad 0<w<\frac12,
+\]
+and let \(u,v\in[a,b]^3\).  Write \(c_i=1-u_i\) and
+\[
+ \alpha=c_1v_2,\qquad \beta=c_2v_1,\qquad
+ \eta=\alpha\beta,\qquad t_3=c_3v_3.
+\]
+All p and suspended endpoint coordinate boxes on the complete carriers hold if
+and only if
+\[
+ \lambda_a^2\le\eta\le\lambda_b^2,
+ \qquad \lambda_a\le t_3\le\lambda_b,
+\tag{14.6}
+\]
+\(1-v_i\in[1-b,1-a]\), and every coordinate in (14.2) with \(0\le n\le4\)
+is in its corresponding endpoint interval.
+

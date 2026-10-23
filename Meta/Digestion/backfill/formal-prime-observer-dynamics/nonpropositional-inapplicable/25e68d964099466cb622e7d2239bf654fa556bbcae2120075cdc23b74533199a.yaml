@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:25e68d964099466cb622e7d2239bf654fa556bbcae2120075cdc23b74533199a
+  normalized_sha256: sha256:25e68d964099466cb622e7d2239bf654fa556bbcae2120075cdc23b74533199a
+cas_ref: sha256:25e68d964099466cb622e7d2239bf654fa556bbcae2120075cdc23b74533199a
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 非命题文本：定义 234.1（证据谱 measure）：只引入对象、参数、术语或记号；不附加存在性、唯一性或其他性质断言。
+    previous_atom_id: 12a1a43f326245fe20c89ba21615a54b96266cf5c93785244b4310b42e52a05a
+    next_atom_id: 7acad56ae99649116db995312b4a52727d134b6763638682fcdd7af07be02407

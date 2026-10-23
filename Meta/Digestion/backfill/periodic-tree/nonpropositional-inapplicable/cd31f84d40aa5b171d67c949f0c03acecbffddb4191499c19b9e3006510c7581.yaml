@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:cd31f84d40aa5b171d67c949f0c03acecbffddb4191499c19b9e3006510c7581
+  normalized_sha256: sha256:cd31f84d40aa5b171d67c949f0c03acecbffddb4191499c19b9e3006510c7581
+cas_ref: sha256:cd31f84d40aa5b171d67c949f0c03acecbffddb4191499c19b9e3006510c7581
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 证明段（**证明。** 将 $c_J=0$ 或 $1$ 代入 GC12 即得前三项。 $B_J=F_{J+2}>0$ 给出一奇一偶时的非零性。最后由…）只展开前文定理或命题的论证，式子和中间推导不另提出独立陈述。
+    previous_atom_id: d7ee7bca66c4b5265d98028a4b4c4bad060c1a98e58049cb5ba60875a413f9ed
+    next_atom_id: 489d523d16831d80832c45f8b4b612fc3b51e05deee386450034e11970bd189e

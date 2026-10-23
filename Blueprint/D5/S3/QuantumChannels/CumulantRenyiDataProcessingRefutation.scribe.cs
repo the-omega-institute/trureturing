@@ -14,13 +14,19 @@ internal sealed class CumulantRenyiDataProcessingRefutationDocument : IScribeDoc
         "Meunson and Deesuwan (arXiv:2606.31205) define a cumulant-based quantum relative Renyi functional for alpha > 1 and state in the abstract and conclusion that its quantum data-processing inequality under arbitrary CPTP maps remains open. For every alpha > 1 a pair of positive definite qubit states and the complete dephasing channel increase the functional, so the inequality fails at every order above one.",
         H("Data processing fails for the cumulant-based Renyi functional at every order above one"),
         Blocks(
+            Node("two-point-cfc", "Functional calculus for a self-adjoint involution", TwoPointFormula(),
+                "For a self-adjoint complex matrix H with H squared equal to the identity, the spectrum lies in {1, -1}. For every real function f and real a and b, the function of a I + b H is the sum of the mean of f(a+b) and f(a-b) times I and half their difference times H. No continuity hypothesis on f is needed because the spectrum is finite.",
+                "two_point_cfc", DescribeRole.Theorem, AssessedProvenance.FromRepo(Source)),
             Node("dephasing-action", "The action of complete dephasing",
-                Disp(All(F.Id("A"), Mat(D(2)), Equal(Apply(Call("pinchingEnd"), F.Id("A")),
-                    Call("diagonal", Call("diag", F.Id("A")))))),
+                Disp(All(F.Id("A"), Mat(D(2)), Equal(Call("pinchingEnd", F.Id("A")),
+                    Call("diagonal", Seq(Bang, OpenBracket,
+                        new Formula.Apply(F.Id("A"), [D(0), D(0)]), Comma, Sp,
+                        new Formula.Apply(F.Id("A"), [D(1), D(1)]), CloseBracket))))),
                 "For every complex two by two matrix A, complete dephasing keeps its two diagonal entries and sets the off-diagonal entries to zero.",
                 "dephase_apply", DescribeRole.Theorem, AssessedProvenance.FromRepo(Source)),
             Node("dephasing-kraus", "The Kraus representation of complete dephasing",
-                Disp(Equal(Call("pinchingEnd"), Call("ofKraus", BasisProjectors(), BasisProjectors()))),
+                Disp(Equal(Parenthesized(Seq(Named("pinchingEnd"), Sp, Colon, Sp, Map(D(2)))),
+                    Call("ofKraus", BasisProjectors(), BasisProjectors()))),
                 "For j in Fin 2, the family K(j)=single(j,j,1) consists of the two computational basis projectors. The linear map pinchingEnd is exactly their finite Kraus map, ofKraus(K,K).",
                 "pinching_kraus", DescribeRole.Theorem, AssessedProvenance.FromRepo(Source)),
             Node("functional", "The cumulant-based relative Renyi functional", FunctionalFormula(),
@@ -50,9 +56,9 @@ internal sealed class CumulantRenyiDataProcessingRefutationDocument : IScribeDoc
             Blocks(Paragraph(Text(prose))), role, resolution);
 
     private static Formula Named(string name) => Seq(Operatorname, Grp(F.Id(name)));
-    private static Formula BasisProjectors() => Seq(Open, LambdaLower, Sp, F.Id("j"), Sp,
+    private static Formula BasisProjectors() => Parenthesized(Seq(LambdaLower, Sp, F.Id("j"), Sp,
         Colon, Sp, Call("Fin", D(2)), Comma, Sp,
-        Call("single", F.Id("j"), F.Id("j"), D(1)), Close);
+        Call("single", F.Id("j"), F.Id("j"), D(1))));
     private static Formula Call(string name, params Formula[] args) =>
         new Formula.Apply(Named(name), [.. args]);
     private static Formula Parenthesized(Formula value) => Seq(Open, value, Close);
@@ -84,6 +90,25 @@ internal sealed class CumulantRenyiDataProcessingRefutationDocument : IScribeDoc
     private static Formula Map(Formula d) => Call("MatrixMap", Call("Fin", d), Call("Fin", d), Complexes());
     private static Formula Apply(Formula n, Formula a) => new Formula.Apply(n, [a]);
     private static Formula CuRenyi(Formula alpha, Formula a, Formula b) => Call("cuRenyi", alpha, a, b);
+
+    private static Formula TwoPointFormula()
+    {
+        Formula n = F.Id("n"), f = F.Id("f"), a = F.Id("a"), b = F.Id("b"), h = F.Id("H");
+        Formula matrix = Call("Matrix", n, n, Complexes());
+        Formula plus = new Formula.Binary(a, FormulaBinaryOperator.Add, b);
+        Formula fp = Apply(f, plus), fm = Apply(f, MinusOf(a, b));
+        Formula mean = new Formula.Fraction(new Formula.Binary(fp, FormulaBinaryOperator.Add, fm), D(2));
+        Formula difference = new Formula.Fraction(MinusOf(fp, fm), D(2));
+        Formula input = new Formula.Binary(Scalar(a, D(1)), FormulaBinaryOperator.Add, Scalar(b, h));
+        Formula output = new Formula.Binary(Scalar(mean, D(1)), FormulaBinaryOperator.Add, Scalar(difference, h));
+        Formula equation = Equal(Call("cfc", f, input), output);
+        Formula body = Implies(Call("IsSelfAdjoint", h), Implies(Equal(TimesOf(h, h), D(1)), equation));
+        Formula quantified = All(n, Named("Type"), Seq(OpenBracket, Call("Fintype", n), CloseBracket, Sp,
+            OpenBracket, Call("DecidableEq", n), CloseBracket, Sp,
+            All(f, new Formula.TypeArrow(Reals(), Reals()),
+                All(a, Reals(), All(b, Reals(), All(h, matrix, body))))));
+        return Disp(quantified);
+    }
 
     private static Formula FunctionalFormula()
     {

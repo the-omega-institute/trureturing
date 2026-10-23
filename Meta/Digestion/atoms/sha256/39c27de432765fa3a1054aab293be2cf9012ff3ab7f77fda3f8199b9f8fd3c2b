@@ -1,0 +1,14 @@
+## 定义 89.1（语义完成）
+
+对目标 \(T:X\to Y\)，定义：
+
+\[
+\boxed{
+\operatorname{SemComp}_T(q)
+=
+\left(x\mapsto(q_{\mathcal I}(x),T(x))\right).
+}
+\]
+
+它是保留完整既有画像并使 \(T\) 可表达的最小共同精化。
+

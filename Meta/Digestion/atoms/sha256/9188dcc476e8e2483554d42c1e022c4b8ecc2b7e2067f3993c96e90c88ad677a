@@ -1,0 +1,33 @@
+**Definition 3.1 (exact finite coordinate projections).** On either generated
+frame decide the whole projection
+
+$$
+Y_{\eta,i}=\{v_i:\Phi_\eta(\mathbf v)\},
+\qquad
+F_\eta=\{i:Y_{\eta,i}\text{ is finite}}.
+\tag{FFM.8}
+$$
+
+For $i\in F_\eta$, enumerate the exact finite native set
+$A_{\eta,i}=Y_{\eta,i}$. Discard empty cells by NSF first. The finite index list is
+
+$$
+\mathcal F_\eta=\prod_{i\in F_\eta}A_{\eta,i}.
+\tag{FFM.9}
+$$
+
+The product over no indices has one empty tuple. For $\mathbf f\in\mathcal F_\eta$
+and a full row $r$ put
+
+$$
+D_{\eta,\mathbf f,r}=
+\{W_\eta(\mathbf v):\Phi_\eta(\mathbf v),\
+ v_i=f_i\ (i\in F_\eta),\ R_Q(W_\eta(\mathbf v))=r\}.
+\tag{FFM.10}
+$$
+
+These slices retain the entire joint predicate. A tuple of individually possible
+finite coordinates can be jointly impossible; all its slices are then empty.
+Such tuples are harmless indices, not invented realizations. The finite barrier
+parameters $\eta,\mathbf f$ are chosen before any all-depth witness quantifier.
+

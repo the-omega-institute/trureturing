@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:3f70870cfa958919bbc15a00bdbff5bf736483f13f8ea9ec9f6e5d3189717329
+  normalized_sha256: sha256:3f70870cfa958919bbc15a00bdbff5bf736483f13f8ea9ec9f6e5d3189717329
+cas_ref: sha256:3f70870cfa958919bbc15a00bdbff5bf736483f13f8ea9ec9f6e5d3189717329
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 定义 25.1（分支预测误差）仅规定记号、模型接口与条件输出的使用范围，不另提出性质命题。
+    previous_atom_id: ffa9d88eccf1dec596c00465c514aeff1effbb4cd4fd03767cd9f7fb9dc2f8ce
+    next_atom_id: 8e29250f5a67f3a85018133ae50fdc56305fae9c79cf692bf413b22a0f393d81

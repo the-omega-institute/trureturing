@@ -1,0 +1,19 @@
+**引理 112.3（两个周期区间的计数）。** 对 $\rho\ne0$，置 $p=\operatorname{ord}(\rho)\le q-1$、$G_\rho=\{1,\rho,\ldots,\rho^{p-1}\}$。任一实际后缀窗口及其长 $k$ 初段至多由两个 $p$ 周期区间组成。对每个 $\gamma\in G_\rho$，该长 $k$ 初段中系数 $\gamma$ 的出现次数 $A_\gamma(k)$ 满足
+
+$$
+A_\gamma(k)\ge\left\lfloor\frac kp\right\rfloor-1.
+\tag{112.9}
+$$
+
+特别地，长 $T$ 窗口中每类大小至少 $\lfloor T/p\rfloor-1$；若 $p(s+1)\le T$，它的第 $s$ 次出现的相对位置 $k_s$ 满足 $k_s\le p(s+1)$。在确有这些出现的位置范围内，首位置至多 $2p$，相邻出现间距至多 $2p$。
+
+**证明。** 每个原半段中连续 $p$ 个系数恰遍历 $G_\rho$ 一次。长 $k$ 初段若跨过真实中点，设两区间长为 $k_1,k_2$；不跨则令第二段长0。每区间可切出 $\lfloor k_i/p\rfloor$ 个完整周期，于是每类至少出现这两数之和，而
+
+$$
+\left\lfloor\frac{k_1}p\right\rfloor+
+\left\lfloor\frac{k_2}p\right\rfloor
+\ge\left\lfloor\frac{k_1+k_2}p\right\rfloor-1.
+$$
+
+取 $k=p(s+1)$ 即至少有 $s$ 次出现，得端点界；取 $k=2p$ 得首位置界。单区间内相邻出现相距 $p$；跨重启的两次出现之间，左区间尾部未再次出现的长度至多 $p-1$，右区间的首出现距离至多 $p$，故间距至多 $2p-1$。某一短区间没有出现时，只影响首次出现或最后截断，不产生额外重启。这些界容纳真实相位重启，不假设跨中点的间距仍为 $p$。证毕。
+

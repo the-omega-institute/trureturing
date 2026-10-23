@@ -26,7 +26,6 @@ public sealed class SelfTestGovernancePolicyTests
               id: bootstrap-pr-1
               judge: open
               reason: fixture
-              genesis_event: sha256:0000000000000000000000000000000000000000000000000000000000000000
               commit: f000000000000000000000000000000000000000
               pull_request: 1
               verification: ASSUMED-UNVERIFIED

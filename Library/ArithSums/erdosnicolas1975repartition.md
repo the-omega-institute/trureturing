@@ -5,7 +5,7 @@ year: 1975
 title: Répartition des nombres superabondants
 doi: 10.24033/bsmf.1793
 url: https://www.numdam.org/item/BSMF_1975__103__65_0/
-claim: The classical benefit is the nonnegative loss relative to a colossally abundant optimizer; the FIB price-loss expression is exactly this existing quantity.
+claim: The classical CA benefit has explicit arbitrary-host thin-layer capacity bounds and a same-host signed-tail application; the joint FIB Robin budget remains unproved.
 strata_touched: []
 license: citation-only
 triage: anchor
@@ -321,6 +321,439 @@ window and source checks. An asymptotic height improvement is not an
 effective reconstruction threshold or a positive Robin margin. It does
 not prove that the actual host's gcd resources satisfy the strict budget
 in the preceding section.
+
+## An explicit thin-layer capacity for the same arbitrary host
+
+The existing [uniform inventory application CR40](../Estimation/trureturing2026pricegapconvexity.md#the-prime-interval-supplier-and-both-competitor-costs-control-actual-stock)
+already has a square-root buffer for actual core activations. The
+following is an explicit application to the arbitrary-integer benefit
+above, using a uniform short-interval prime bound. It is not a new sieve,
+quadratic-cost mechanism, or literature-priority claim. All conclusions
+here are paper derivations, without Lean verification.
+
+Let $a\ge16$, $s=a\log a$, and reuse the **maximal** reference $C=C_s$,
+including every zero-cost tied layer. For the same positive integer $n$,
+write
+
+$$
+\begin{aligned}
+\lambda_{p,j}&=\ell_{p,j}/\log p,\qquad b_p=v_p(C),\\
+\beta_a(n)&=\log Z(C)-\log Z(n)+\frac{\log n-\log C}{s},\\
+E_a(n)&=\sum_p|v_p(n)-b_p|\log p
+       =\log\frac{nC}{\gcd(n,C)^2}.
+\end{aligned}
+$$
+
+Thus $s\beta_a(n)=D_s(n)$ is the existing benefit account. Define the
+complete weak-layer capacity, including ties and all prime powers, by
+
+$$
+\mathfrak C_a(h)=
+\sum_{\substack{p\ {\rm prime},\ j\ge1\\
+                 |s\lambda_{p,j}-1|\le h}}\log p.
+$$
+
+The quantitative bound used below is
+
+$$
+\boxed{\mathfrak C_a(h)\le24ah+32\sqrt a}
+\qquad(a\ge16,\ 0\le h\le1/4).
+\tag{TC.1}
+$$
+
+Its prime input is [Yamada, arXiv:2312.16090v1](../Scale/yamada2023arbitraryintervals.md),
+Theorem 2, p.3, with modulus one. It gives, for every real $x>0$ and
+$y>1$,
+
+$$
+\pi(x+y)-\pi(x)<\frac{2y}{\log y+0.8601}<\frac{2y}{\log y}.
+$$
+
+This is used as a preprint input, not an independently verified sieve
+proof. For the higher layers use the already cited
+[Dusart bound](../Weil/dusart2010estimates.md#同一-robin-来源的有效素数幂修正)
+$\vartheta(t)<2t$ for $t\ge1$.
+
+To check the application, put $T_j=p+\cdots+p^j$. The exact marginal
+already used above satisfies
+
+$$
+\ell_{p,j}>\frac1{T_j+1}>p\ell_{p,j+1},
+\qquad T_{j+1}=p(T_j+1).
+$$
+
+Since $(1+h)/(1-h)\le5/3<2$, at most one weak layer occurs per prime.
+A weak layer with $j\ge2$ has
+$p^2\log p<(4/3)a\log a$, hence $p<2\sqrt a$. Its entire prime mass
+is at most $\vartheta(2\sqrt a)<4\sqrt a$, in particular at most
+$8\sqrt a$.
+
+For $a^{-1/2}\le h\le1/4$, the first-layer inequalities
+
+$$
+\frac1{(p+1)\log p}<\lambda_{p,1}<\frac1{p\log p}
+$$
+
+place every weak first-layer prime strictly in
+$((1-2h)a,(1+2h)a)$. On the left, $ha\ge\sqrt a\ge4$ gives
+$p+1\le(1-h)a$, contradicting
+$\lambda_{p,1}\le(1+h)/s$. On the right,
+$1/(1+2h)<1-h$ contradicts the lower weak-layer threshold.
+The interval has positive start, length $4ha\ge4\sqrt a$, and
+$\log p\le(3/2)\log a$. Its weighted prime mass is consequently at most
+
+$$
+\frac{8ha}{\log(4ha)}\frac32\log a\le24ha.
+$$
+
+Add the higher-layer allowance. For $0\le h<a^{-1/2}$, monotonicity
+bounds the entire capacity by its value at $a^{-1/2}$, which is at most
+$32\sqrt a$. This proves (TC.1), including $h=0$ and $a=16$.
+
+### A finite loss bound and the conditional near-extremal radius
+
+Set
+
+$$
+H_a(z)=\begin{cases}
+z^2/(48a),&0\le z\le6a,\\
+z/4-3a/4,&z\ge6a.
+\end{cases}
+$$
+
+For the actual layers crossed between $n$ and $C$, reuse the exact
+benefit decomposition and the finite layer-cake argument. They give
+
+$$
+\begin{aligned}
+s\beta_a(n)
+&\ge\int_0^{1/4}(E_a(n)-\mathfrak C_a(h))_+\,dh\\
+&\ge H_a\bigl((E_a(n)-32\sqrt a)_+\bigr).
+\end{aligned}
+\tag{TC.2}
+$$
+
+A tied removal contributes to $E_a(n)$ at cost zero and is already
+counted in $\mathfrak C_a(0)$; no tie is discarded. This alternative
+bound may be combined with the earlier capacity bound by taking their
+maximum. Adding both would spend the same benefit twice.
+
+For any $M>0$ and $a>\max\{16,(4M/3)^2\}$, it follows that
+
+$$
+\beta_a(n)\le\frac M{\sqrt a\log a}
+\quad\Longrightarrow\quad
+E_a(n)\le32\sqrt a+\sqrt{48M}\,a^{3/4}.
+\tag{TC.3}
+$$
+
+Indeed $s\beta_a(n)\le M\sqrt a<3a/4=H_a(6a)$ forces the quadratic
+branch in (TC.2). This is a conditional radius for every positive
+integer at the same price. It does not assert that each Robin violation
+has that benefit upper bound. At the larger increment-loss budget used
+in the preceding reconstruction application, it only recovers the
+already known $O(a/\log a)$ order; that order is not an additional result.
+The new usable version here is the explicit buffer and the conditional
+$a^{3/4}$ radius, rather than a uniform improvement of every old bound.
+
+### Retain the full signed tail and the original FIB window
+
+Use the logarithmic Robin margin
+$\Delta_{\log}(n)=\gamma+\log\log\log n-\log Z(n)$, for $n>e$.
+Let $I_\psi(a)$, $C_{\rm pp}(a)$ and $D^*(a)$ be exactly the
+[independent full-support quantities in the Polak source note](../Analytic/polak2026finiterobinca.md#directly-reusable-effective-core):
+
+$$
+\begin{aligned}
+I_\psi(a)&=\int_a^\infty(\psi(t)-t)
+                    \frac{1+\log t}{t^2\log^2t}\,dt,\\
+D^*(a)&=\sum_{p\le a}\min_{j\ge1}
+ \left\{\frac{(j-1)\log p}{a\log a}
+                   -\log(1-p^{-(j+1)})\right\}-C_{\rm pp}(a).
+\end{aligned}
+$$
+
+There is a small correction between that full-support optimizer and
+$C$. Define
+
+$$
+J(a)=\sum_{p\le a}
+ \left(\frac{\log p}{a\log a}-\log(1+1/p)\right)_+.
+$$
+
+All primes of $C$ are less than $a$, and every $p\le a-1$ has its first
+layer strictly accepted. The full-support optimizer $C^+$ therefore only
+adds a possible first layer at one prime in $(a-1,a]$. Its price-objective
+loss is exactly $J(a)$. The summand before its positive part increases
+with $p$, so
+
+$$
+0\le J(a)\le\frac1a-\log(1+1/a)<\frac1{2a^2}.
+$$
+
+The cited full-support identity at $C^+$, followed by the exact benefit
+of the unchanged integer $n$, gives, with $A=\log n$,
+
+$$
+\begin{aligned}
+\Delta_{\log}(n)&=I_\psi(a)+D^*(a)-J(a)+\beta_a(n)+\kappa_a(A),\\
+\kappa_a(A)&=\log\log A-\log\log a-\frac{A-a}{a\log a}.
+\end{aligned}
+\tag{TC.4}
+$$
+
+For the sign check, replacing $C^+$ by the unconstrained optimizer $C$
+**decreases** the full-support account by $J(a)$. Explicitly the former
+account is
+$\gamma+\log\log a-\log Z(C^+)+(\log C^+-a)/s$;
+then add $\beta_a(n)$ and the displayed tangent remainder. No CA
+property of the actual $n$ is assumed.
+
+For prime $r\ge7$, put $V=F_r$ and retain the exact original endpoints
+
+$$
+X_-=1+V\lceil V/10\rceil,\quad
+X_+=1+V\lfloor V/5\rfloor,\quad
+a=\log X_-\ge16,\quad w=\log(X_+/X_-)<\log2.
+$$
+
+Every original $N=1+Vg$ has $A\in[a,a+w]$. The decreasing positive
+curvature $(1+\log a)/(a^2\log^2a)$ of $\log\log a$ gives
+
+$$
+-\frac{w^2(1+\log a)}{2a^2\log^2a}\le\kappa_a(A)\le0.
+$$
+
+Thus (TC.2) and (TC.4) yield the same-host lower certificate
+
+$$
+\Delta_{\log}(N)\ge I_\psi(a)+D^*(a)
++\frac{H_a((E_a(N)-32\sqrt a)_+)}{a\log a}-R(a,w),
+\quad R(a,w)=\frac1{2a^2}+
+              \frac{w^2(1+\log a)}{2a^2\log^2a}.
+\tag{TC.5}
+$$
+
+The existing FIB bound $a<r$ and $p\mid V\Rightarrow p\ge2r-1$ give
+$(C,V)=1$. Writing the actual reduced ratio $N/C=u/v$ retains precisely
+
+$$
+\begin{gathered}
+u,v\in\mathbb N_{>0},\quad(u,v)=1,\quad v\mid C,\\
+Cu\equiv v\pmod V,\qquad X_-v\le Cu\le X_+v,\\
+E_a(N)=\log(uv).
+\end{gathered}
+\tag{TC.6}
+$$
+
+Conversely these conditions give the integer $N=Cu/v$ in exactly the
+original progression and multiplier window. A lower certificate from
+(TC.5) therefore has to hold on these **joint** pairs, not on separately
+optimized numerator and denominator sets.
+
+The sufficient inequality
+
+$$
+I_\psi(a)+D^*(a)+
+\frac{H_a((\log(uv)-32\sqrt a)_+)}{a\log a}>R(a,w)
+\tag{TC.7}
+$$
+
+is still unproved on the complete original candidate set. For a fixed
+$K>0$ and sufficiently large $a$, an excess edit resource
+$E_a(N)-32\sqrt a=Ka^{3/4}$ contributes
+$K^2/(48\sqrt a\log a)$, the natural core scale. No uniform distance
+of that size, signed-tail bound, or joint compensation is supplied here.
+When the actual integer is $C$ itself, its benefit and edit resource
+vanish, so this estimate adds no loss at all. It cannot replace the
+unpaid same-source signed tail in the global CA route or prove RH.
+
+### Congruence sparsity inside the conditional near-extremal set
+
+The radius in (TC.3) also gives a discrete consequence that is useful for
+future finite checks. It is a counting statement for the original source
+window, not a replacement for the signed Robin estimate.
+
+Let $V=F_r$ and keep the same $C=C_s$, $a$, and quotient conditions
+(TC.6). If a candidate satisfies $E_a(N)\le L$, then
+
+$$
+uv\le e^L.
+$$
+
+The existing Fibonacci bounds give $(C,V)=1$. Fix a divisor $v\mid C$.
+The congruence in (TC.6) determines one residue class
+
+$$
+u\equiv C^{-1}v\pmod V.
+$$
+
+Consequently, whenever $e^L<V$, the interval
+$1\le u\le e^L/v<V$ contains at most one admissible numerator for this
+fixed denominator. Therefore
+
+$$
+\boxed{
+\#\{(u,v): uv\le e^L,\ v\mid C,\ Cu\equiv v\pmod V\}
+\le \tau(C).
+}
+\tag{TC.8}
+$$
+
+This retains the denominator divisibility and the exact unit residue; it
+does not count separately optimized numerators and denominators. Combining
+(TC.3) with $a\asymp\log V$ shows that, for every fixed $M$, its conditional
+radius
+
+$$
+L=32\sqrt a+\sqrt{48M}\,a^{3/4}
+$$
+
+satisfies $L=o(\log V)$ along the Fibonacci rank family. Hence $e^L<V$
+eventually and the number of such near-extremal pairs is at most
+$\tau(C)$. The needed size estimate is available from the existing CA
+layer threshold. Every accepted prime layer has
+
+$$
+v_p(C)\log p\le\log s+O(1),
+$$
+
+as recorded in the preceding resource comparison; primes above the first
+threshold have exponent at most one. Hence for $p>\sqrt a$,
+$v_p(C)=O(1)$, while for $p\le\sqrt a$,
+$\log(v_p(C)+1)=O(\log\log a)$. The standard prime-counting bound then
+gives
+
+$$
+\log\tau(C)
+=\sum_{p\mid C}\log(v_p(C)+1)
+=O\!\left(\frac{a}{\log a}\right).
+\tag{TC.9}
+$$
+
+Since $a=2\log V+O(1)$ for $X_-=1+V\lceil V/10\rceil$,
+
+$$
+\boxed{\tau(C)=\exp O\!\left(\frac{\log V}{\log\log V}\right)=V^{o(1)}.}
+$$
+
+Thus the subpolynomial conclusion uses an existing CA threshold and a
+standard prime-counting estimate; it does not assume an unproved bound on
+$\log C$.
+
+### A sparse-exception reduction for the signed budget
+
+The two estimates above combine into a useful quantifier split. Fix $M>0$
+and take $a$ large enough that
+$\sqrt{48M}\,a^{3/4}<6a$. Define
+
+$$
+L_M(a)=32\sqrt a+\sqrt{48M}\,a^{3/4}.
+$$
+
+For a candidate satisfying $E_a(N)>L_M(a)$, monotonicity of $H_a$ gives
+
+$$
+\frac{H_a((E_a(N)-32\sqrt a)_+)}{a\log a}
+>\frac{M}{\sqrt a\log a}.
+$$
+
+Therefore (TC.5) implies the pointwise implication
+
+$$
+\boxed{
+I_\psi(a)+D^*(a)+\frac{M}{\sqrt a\log a}>R(a,w)
+\ \Longrightarrow
+\Delta_{\log}(N)>0
+}
+\tag{TC.10}
+$$
+
+for every original-window candidate with $E_a(N)>L_M(a)$. The candidates
+where this implication does not apply satisfy $E_a(N)\le L_M(a)$ and are
+bounded in number by (TC.8)--(TC.9):
+
+$$
+\boxed{
+\#\{N\text{ in the window}:E_a(N)\le L_M(a)\}
+\le \tau(C)=F_r^{o(1)}.
+}
+\tag{TC.11}
+$$
+
+Thus a proof of the signed inequality in (TC.10), together with a direct
+certificate for the exceptional set in (TC.11), would settle the complete
+Fibonacci window at that rank. This is a genuine reduction of the joint
+quantifiers: the signed input is needed uniformly for the bulk, while the
+remaining exact arithmetic work is subpolynomial. Neither ingredient is
+currently available, and the reduction concerns this Fibonacci family only;
+it is not a reduction of all integers to the family and therefore is not by
+itself a proof of RH.
+
+The conclusion only sparsifies the candidates left by the benefit bound.
+Each surviving pair still has to satisfy the window and the complete signed
+tail in (TC.5), and (TC.8) supplies neither a positive Robin margin nor a
+uniform way to verify all the remaining pairs. It is therefore a finite
+or subpolynomial reduction of the unresolved joint problem, rather than an
+RH proof.
+
+### A same-source friable-core count
+
+The large-friable-component estimate recorded in
+[the Tenenbaum--Wang interface](../Scale/tenenbaumwang2026largefriablecomponent.md)
+can be applied to the same reduced pair, rather than to a separately
+optimized integer. Keep the original-window conditions (TC.6), put
+$g_0=\gcd(N,C)=C/v$, and choose $y$ at least as large as every prime factor
+of $C$. Since $g_0\mid N$ and $g_0$ is $y$-friable,
+
+$$
+N_y\ge g_0=\frac Cv.
+$$
+
+Therefore, for any $L\ge0$,
+
+$$
+E_a(N)=\log(uv)\le L
+\quad\Longrightarrow\quad
+v\le e^L
+\quad\Longrightarrow\quad
+N_y\ge Ce^{-L}.
+$$
+
+Let $z=Ce^{-L}$ and let $x$ satisfy $X_+\le x$ and $z\le x/2$.
+Whenever
+
+$$
+\max\{2,\log z\}\le y\le z,
+$$
+
+Tenenbaum--Wang's Theorem 1 gives the independent population bound
+
+$$
+\boxed{
+\#\{N\text{ in the original window}:E_a(N)\le L\}
+\le
+\min\{\tau(C),\Theta(x,y,z)\},
+}
+\tag{TC.12}
+$$
+
+where
+
+$$
+\Theta(x,y,z)
+=x\exp\!\left(-\nu\log\!\bigl(\nu\log(3\nu)\bigr)+O(\nu)\right),
+\qquad
+\nu=\frac{\log z}{\log y}.
+$$
+
+The left-hand set still carries $Cu\equiv v\pmod V$ and the original
+multiplier window; the friable estimate only supplies a second upper bound
+on its cardinality. It does not bound the complete prime-power weight of
+that same $N$, the CA defect $D^*(a)$, or the signed Robin tail. Thus
+(TC.12) is a reusable sparse-counting refinement of (TC.11), while the
+pointwise signed condition (TC.10) remains the unresolved step needed for
+an all-candidate conclusion.
 
 ## Charge the actual removals before bounding additions
 
@@ -1830,3 +2263,390 @@ To finish FIB §233.5, the strict signed budget must still be paid for all
 qualifying branches, or the unpaid branches excluded. A finite graph,
 more residue information, and the redundant low-loss incidence condition
 do not by themselves supply that estimate or a proof of RH.
+
+## Actual strict CA products at their own-size price
+
+This is an application of the classical CA benefit and existing project
+capacity, not a new prime-distribution theorem. It continues the
+[actual strict products and pressure account ACC1–ACC9](nicolas2025comparison.md#a-complete-pressure-balance-at-the-unchanged-observation).
+The complete proofs of the external analytic suppliers are not audited
+here. No literature priority or Lean certification is claimed.
+
+For $n\ge1$ and $y>1$, use
+
+$$
+W(n)=\log\frac{\sigma(n)}n,\qquad
+s_y=y\log y,\qquad \lambda(y)=s_y^{-1},
+$$
+
+$$
+r_{p,j}=\frac1{\log p}
+ \log\frac{1-p^{-j-1}}{1-p^{-j}},\qquad
+M(q)=\max_{n\ge1}\{W(n)-q\log n\}\quad(q>0).
+$$
+
+The actual strict inventory and its own-size clock are
+
+$$
+N_x=\prod_p p^{a_p(x)},\qquad
+ a_p(x)=\#\{j\ge1:r_{p,j}>\lambda(x)\},\qquad
+ A_x=\log N_x.
+$$
+
+Every equality layer is excluded, and every positive prime-power layer
+is retained. ACC3 gives
+$W(N_x)=M(\lambda(x))+\lambda(x)A_x$. Define the full own-price defect
+
+$$
+d_A(n)=M(\lambda(A))-W(n)+\lambda(A)\log n\ge0,
+\qquad T_A=\sqrt A\log A\quad(A>1).
+$$
+
+The existing effective PNT and complete higher inventory give, for
+some fixed $a>0$,
+
+$$
+A_x=x+O(xe^{-a\sqrt{\log x}}),\qquad A_x\sim x.
+\tag{NP0}
+$$
+
+Only the full strict integer $N_x$ is used below; no independently
+optimized configurations are combined.
+
+### A finite upper benefit bound at the same strict inventory's own price
+
+The existing [arbitrary-host benefit and thin-layer capacity
+TC.1](erdosnicolas1975repartition.md#an-explicit-thin-layer-capacity-for-the-same-arbitrary-host)
+can bound the complete own-price defect of ACC's actual $N_x$.
+This applies a classical benefit calculation to two specified prices;
+it introduces no new capacity or prime-distribution theorem. The
+capacity's Yamada and Dusart inputs remain external, and this
+application has no Lean certification or literature-priority claim.
+
+Use the same strict integer $N_x$, $A=\log N_x$, $s_y=y\log y$ and
+$\lambda(y)=1/s_y$. Suppose $x>1$, $A\ge16$, and put
+
+$$
+h=\left|\frac{s_A}{s_x}-1\right|\le\frac14.
+$$
+
+Let $C_A$ be the **maximal** optimizer at $\lambda(A)$, so it includes
+every layer with $r_{p,j}\ge\lambda(A)$. The source $N_x$ includes
+exactly the layers with $r_{p,j}>\lambda(x)$. For each prime, let
+$\mathscr J$ contain exactly the positive layers lying between these
+two actual exponent counts:
+
+$$
+\mathscr J=
+\{(p,j):p\text{ prime},\
+ \min(v_p(C_A),v_p(N_x))<j\le
+ \max(v_p(C_A),v_p(N_x))\}.
+$$
+
+This is finite. If a layer belongs to $\mathscr J$, its marginal
+lies between $\lambda(A)$ and $\lambda(x)$, with the appropriate
+endpoint inclusion. Therefore every crossed layer satisfies
+
+$$
+|s_A r_{p,j}-1|\le h,\qquad
+|r_{p,j}-\lambda(A)|\le h/s_A.
+$$
+
+In particular a layer tied at $\lambda(A)$ has zero benefit cost,
+while a layer tied at $\lambda(x)$ is still inside the same weak band.
+The bound does not require $N_x$ to be superabundant, GA1, GA2,
+or optimal at its own-size price.
+
+The classical layerwise benefit identity at the **own-size** price is
+
+$$
+\begin{aligned}
+d_A(N_x)
+&=M(\lambda(A))-W(N_x)+\lambda(A)A\\
+&=\sum_{(p,j)\in\mathscr J}
+       \log p\,|r_{p,j}-\lambda(A)|.
+\end{aligned}
+$$
+
+TC.1 with parameter $a=A$ bounds the full weak-band resource by
+$24Ah+32\sqrt A$. Since $\mathscr J$ is a subset of that band,
+
+$$
+\boxed{
+0\le d_A(N_x)
+\le\frac{24Ah^2+32\sqrt A\,h}{A\log A},\qquad
+T_A d_A(N_x)\le24\sqrt A\,h^2+32h.
+}
+\tag{NPC1}
+$$
+
+This is a finite bound with an explicit hypothesis on the two actual
+prices. It accounts for every changed prime-power layer.
+
+For ACC4's unconditional family, $A\sim x$ and the mean-value theorem
+for $y\log y$ gives $h=O(e^{-a\sqrt{\log x}})$. Consequently (NPC1)
+strengthens ACC5's linear PNT allowance to
+
+$$
+d_{A_x}(N_x)=O(e^{-2a\sqrt{\log x}}/\log x).
+\tag{NPC1a}
+$$
+
+The first term of NPC1 is
+$O(e^{-2a\sqrt{\log x}}/\log x)$, and the second is
+$O(e^{-a\sqrt{\log x}}/(\sqrt x\log x))$, which is smaller.
+The PNT and the constant $a$ are the same as in ACC4. The normalized
+allowance still contains $O(\sqrt x e^{-2a\sqrt{\log x}})$;
+its growth prevents this allowance from paying a root-scale defect
+bound on the whole unconditional family. No lower bound on the
+actual defect is inferred from that growth. The original signed
+Robin integral remains unpaid.
+
+
+#### A conditional root-scale transfer for the same actual integers
+
+Let $x$ range over any unbounded family of real prices for which
+
+$$
+\delta_x:=|A_x-x|=o(x^{3/4}).
+\tag{NPC2}
+$$
+
+This condition implies $A_x\sim x$. The mean-value theorem for
+$y\log y$ on the interval with endpoints $x,A_x$ gives
+$h_x=O(\delta_x/x)$, with one common constant once
+$A_x\in[x/2,2x]$. In particular the finite hypotheses of (NPC1)
+hold eventually along the entire specified family, and
+
+$$
+0\le T_{A_x}d_{A_x}(N_x)
+=O\!\left(\frac{\delta_x^2}{x^{3/2}}+
+                 \frac{\delta_x}{x}\right)=o(1).
+\tag{NPC3}
+$$
+
+There is no substitution of $x$ for the source's own clock $A_x$ in
+the defect or its normalization. The exponent $3/4$ here comes from
+the quadratic capacity allowance; it is a sufficient condition, not
+a necessity or an optimal exponent.
+
+For $A=\log n>1$, write the logarithmic Robin margin as
+$\Delta(n)=\gamma+\log\log A-W(n)$, and put
+
+$$
+I_\psi(A)=\int_A^\infty(\psi(u)-u)
+ \frac{1+\log u}{u^2\log^2u}\,du.
+$$
+
+Use [KTO1's existing complete pressure identity and two-candidate
+reserve](nicolas2025comparison.md#keep-the-two-response-kernels-distinct)
+at $A=A_x$:
+
+$$
+M(\lambda(A))
+=\gamma+\log\log A-\frac1{\log A}-I_\psi(A)-R(A),
+\qquad
+T_AR(A)=c_R+O(1/\log A),\quad c_R=2(\sqrt2-1).
+$$
+
+Since $\lambda(A)\log N_x=1/\log A$, the same integer has the
+exact margin account
+
+$$
+\Delta(N_x)=d_A(N_x)+I_\psi(A)+R(A),\qquad A=A_x.
+$$
+
+Thus (NPC2), with the cited reserve and capacity inputs, gives
+
+$$
+\boxed{
+T_{A_x}\Delta(N_x)
+=T_{A_x}I_\psi(A_x)+c_R+o(1).
+}
+\tag{NPC4}
+$$
+
+For example, on such a family a lower bound
+$\liminf T_{A_x}I_\psi(A_x)>-c_R$ would imply eventual strict
+Robin there; an upper bound
+$\limsup T_{A_x}I_\psi(A_x)<-c_R$ would imply eventual violations
+there. Neither signed premise is supplied. An asymptotic comparison
+at equality with $-c_R$ does not decide strict Robin.
+
+ACC4's unconditional PNT allowance does not imply (NPC2): its ratio
+to $x^{3/4}$ grows. The existing full-real inventory normal form
+$A_x=\psi(x)+(\sqrt2-1)\sqrt x+o(\sqrt x)$, cited in
+[the workload note](../Analytic/mantovanelli2026primeworkload.md#the-full-real-normal-form-also-controls-strict-inventory-at-events),
+identifies (NPC2) with $\psi(x)-x=o(x^{3/4})$ on this same family.
+This gives a checkable condition on the actual prime error; it does
+not establish that condition at every large price or at the unknown
+counterexample-selected prices.
+
+The finite upper benefit estimate and this conditional transfer reuse
+the classical CA benefit, the already derived thin-layer capacity,
+and the existing reserve and inventory normal form. No new signed
+prime estimate or assumption of RH is introduced. The full original
+same-source signed budget, strict Robin for every integer above 5040,
+and RH remain unresolved; this application has no Lean verification.
+
+
+### The existing weighted prime count fixes the root-scale coefficient
+
+The finite NPC1 uses only thin-layer capacity. The stronger conclusion
+below additionally reuses the weighted short-interval PNT of
+Thorner–Zaman, *Refinements to the prime number theorem for arithmetic
+progressions*, [arXiv:2108.10878v2](https://arxiv.org/pdf/2108.10878v2),
+Theorem 1.1. Its parameter correspondence is already recorded in
+[the short-uniformity source note](../Analytic/shortuniformity2026robininterfaces.md#effective-weighted-prime-counts-in-short-intervals):
+$q=2$, residue $1$, $\varepsilon=1/60$, no exceptional character.
+It gives weighted prime mass $H(1+o(1))$ uniformly for terminal
+scale $X$ and $X^{3/5}\le H\le X$. The two-price integration below
+is an application to the same strict products; neither the generic
+quadratic threshold mechanism nor that prime theorem is new.
+
+#### Keep the exact inventory between both prices
+
+Write $A(u)=\log N_u$ for every real $u>1$, including activation
+events, and
+
+$$
+w(u)=-\lambda'(u)=\frac{1+\log u}{u^2\log^2u}.
+$$
+
+On any compact subinterval of $(1,\infty)$ only finitely many
+prime-power layers can activate. The existing layerwise pressure
+formula therefore gives a continuous, piecewise differentiable
+$M(\lambda(u))$, with
+
+$$
+\frac{d}{du}M(\lambda(u))=A(u)w(u)
+\quad\text{away from its finitely many events}.
+$$
+
+The strict choice at events changes neither this almost-everywhere
+identity nor its integral. Keep $A=A(x)$ in the endpoint term.
+ACC3 then gives the exact identity, for either ordering of $A,x$,
+
+$$
+\begin{aligned}
+d_A(N_x)
+&=\int_x^A [A(u)-A(x)]w(u)\,du\\
+&=\int_{\min(x,A)}^{\max(x,A)}
+       |A(u)-A(x)|w(u)\,du .
+\end{aligned}
+\tag{NPC5}
+$$
+
+The second equality uses monotonicity of the complete strict
+inventory $A(u)$. All higher layers and both endpoint tie choices
+remain accounted for. In particular $A=x$ gives zero.
+
+#### Apply the existing prime increment on the actual price interval
+
+Put $R=x^{2/3}$ and $\delta=|A(x)-x|=o(x)$, the latter supplied
+unconditionally by NP0. On $[x/2,2x]$, ACC4's first-layer bracket
+and complete higher inventory give
+
+$$
+A(u)=\vartheta(u)+O(\sqrt x).
+\tag{NPC6}
+$$
+
+The bracket error is $O(\log x)$, since the first active mass lies
+between $\vartheta(u-1)$ and $\vartheta(u)$. The full higher
+active mass is $O(\sqrt x)$; no fixed exponent cutoff is imposed.
+
+For $u$ between $x$ and $A(x)$ with $H=|u-x|\ge R$, apply the cited
+prime theorem at terminal endpoint $\max(u,x)$ and length $H$.
+Here both endpoints are comparable with $x$, $H=o(x)$ and
+$H\ge x^{2/3}\ge\max(u,x)^{3/5}$ eventually. Its displayed error
+tends to zero uniformly over this range. Subtract NPC6 at both
+endpoints; its $O(\sqrt x)$ error divided by $H\ge R$ also tends
+to zero. Thus
+
+$$
+|A(u)-A(x)|=H(1+o(1))
+\quad(H\ge R),
+\tag{NPC7}
+$$
+
+uniformly on the actual interval. For $|u-x|\le R$, monotonicity
+instead bounds the increment by the increments to $x-R$ and
+$x+R$. Apply the same prime theorem at length $R$ to these two
+endpoints to obtain the common bound $O(R)$. This also covers
+the entire integration interval when $\delta<R$.
+
+Finally $w(u)=(1+o(1))/(x^2\log x)$ uniformly between $x$ and $A(x)$.
+Integrate NPC7 on the part with $|u-x|\ge R$ and bound both the
+actual and comparison integrals on the remaining part by
+$O(R^2/(x^2\log x))$. There are a function $\epsilon(x)\to0$ and
+a fixed constant $C$ such that, for all sufficiently large real $x$,
+
+$$
+\left|d_{A_x}(N_x)-\frac{\delta_x^2}{2x^2\log x}\right|
+\le\epsilon(x)\frac{\delta_x^2}{x^2\log x}
+  +C\frac{x^{-2/3}}{\log x}.
+\tag{NPC8}
+$$
+
+The errors are absolute when $\delta_x$ is small, rather than an
+unsupported relative asymptotic at an activation event.
+Since $A_x\sim x$, multiplication by the unchanged own-clock
+$T_{A_x}$ gives, with another $\epsilon_1(x)\to0$ and fixed $C_1$,
+
+$$
+\boxed{
+\left|T_{A_x}d_{A_x}(N_x)
+       -\frac{\delta_x^2}{2x^{3/2}}\right|
+\le\epsilon_1(x)\frac{\delta_x^2}{x^{3/2}}
+   +C_1x^{-1/6}.}
+\tag{NPC9}
+$$
+
+The normalization has not been replaced by a different source's
+clock; its ratio to $\sqrt x\log x$ tends to one.
+
+#### What the coefficient does and does not settle
+
+For every unbounded family of these actual strict price products,
+NPC9 implies
+
+$$
+T_{A_x}d_{A_x}(N_x)\longrightarrow0
+\quad\Longleftrightarrow\quad
+|A_x-x|=o(x^{3/4}).
+\tag{NPC10}
+$$
+
+For the reverse implication, NPC9 bounds the nonnegative
+$\delta_x^2/x^{3/2}$ by the vanishing defect plus $C_1x^{-1/6}$,
+after absorbing $\epsilon_1(x)<1/4$.
+This upgrades NPC3's sufficient condition to an equivalence for
+**root-smallness of this particular defect**, using the additional
+weighted prime theorem. It is not a necessary condition for
+strict Robin, which allows compensation in its complete account.
+
+More generally, if on a specified unbounded family
+$\delta_x/x^{3/4}\to\ell<\infty$, then
+
+$$
+T_{A_x}d_{A_x}(N_x)\longrightarrow\ell^2/2,
+\qquad
+T_{A_x}\Delta(N_x)
+=T_{A_x}I_\psi(A_x)+c_R+\ell^2/2+o(1).
+\tag{NPC11}
+$$
+
+The sign of the quadratic term is positive in this pressure-defect
+account. A signed liminf greater than $-c_R-\ell^2/2$ would give
+eventual strict Robin on that family; a signed limsup smaller than
+that threshold would give eventual violations there. Neither
+premise is established, and equality is undecided.
+
+This coefficient calculation retains the same actual integer in
+the inventory, price, pressure, reserve and signed integral. It
+does not provide the signed prime estimate, establish the required
+clock displacement at every large source, or prove RH. The
+classical suppliers and elementary two-price integration are
+reused as a paper application, without Lean certification or a
+claim of literature priority.

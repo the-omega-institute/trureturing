@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:80219c0861399f41f9fdc25808de91c2283235ba99ad12cd6dc42dfc959bd733
+  normalized_sha256: sha256:80219c0861399f41f9fdc25808de91c2283235ba99ad12cd6dc42dfc959bd733
+cas_ref: sha256:80219c0861399f41f9fdc25808de91c2283235ba99ad12cd6dc42dfc959bd733
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 证明段（**证明。** 由 R2 的有限检查， $\pi(2)=3$、$\pi(4)=6$、$\pi(5)=20$。在 $\mathcal O$ 中…）只展开前文定理或命题的论证，式子和中间推导不另提出独立陈述。
+    previous_atom_id: bc58e761ffdc9b9eb2faa2b46d8251422782c6b312b67fdcc456e933165e26f6
+    next_atom_id: b46db853c0a6c24317ea112a10c10b0d3738e683dec20ff67c4ac2c29f9dfa40

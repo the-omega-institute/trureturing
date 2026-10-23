@@ -22,7 +22,7 @@ proof_shape: blockNorm_domination: bind-only; consumer: block_frobenius_bound; e
 proof_shape: block_frobenius_bound: bind-only; consumer: translation_from_block; escape_witness: none
 proof_shape: translation_from_block: bind-only; consumer: translation_gap; escape_witness: none
 proof_shape: frobSq_unitary_right: bind-only; consumer: maximizing_block_frame, translation_gap, unitary_pencil_bound; escape_witness: none
-proof_shape: frobSq_unitary_left: bind-only; consumer: maximizing_block_frame, translation_gap; escape_witness: none
+proof_shape: frobSq_unitary_left: bind-only; consumer: maximizing_block_frame, translation_gap, AntidistinguishabilityOverlapNonTight.indexSpectral_frobSq; escape_witness: none
 proof_shape: opSq_le_frobSq: bind-only; consumer: projection_K_quadratic, projection_adjoint_bound; escape_witness: none
 proof_shape: commutator_norm_bound_of_pure: bind-only; consumer: maximizing_block_frame; escape_witness: none
 proof_shape: pure_first_variance: bind-only; consumer: maximizing_block_frame; escape_witness: none
@@ -48,7 +48,11 @@ Direct frozen dependencies:
   owner GID: D5/S3/Quantum/Algebra/GramUnitaryExtension; declaration: D5.S3.Quantum.Algebra.GramUnitaryExtension.exists_unitary_mul_eq_of_conjTranspose_mul_eq
     declaration statement_id: sha256:accd04d85421c0847456ddb52626f272e79ea98e568dcf9dfeddc5035a1f2013
   Other lane imports are same-delivery prerequisites, not baseline-frozen dependencies.
-Information-escape registration is paused under CLAUDE.md section 3.9.
+Escape audit unfinished: https://github.com/the-omega-institute/trureturing/issues/15730.
+DTR reading: DTR-Unregistered for the public theorem targets in this module.
+Registration gap: exact dependent source-family reconstruction, lawful template readout,
+selection coordinates, whole-family variation, slot sensitivity and observational dependence
+are not all established by the retained registration evidence.
 -/
 
 import D5.S3.Quantum.Matrix.CartesianVariance
@@ -130,7 +134,7 @@ private theorem translated_head {n : ℕ} (A : (Matrix (Fin (n+1)) (Fin (n+1)) �
     (v : EuclideanSpace ℂ (Fin (n+1))) :
     (Matrix.toEuclideanLin (A-c•1) v) 0 =
       (A 0 0-c)*v 0 + ∑ j, A 0 j.succ * ((fun (v : EuclideanSpace ℂ (Fin (n+1))) => WithLp.toLp 2 (Fin.tail v.ofLp)) v) j := by
-  simp [Matrix.toEuclideanLin_apply,Matrix.mulVec,dotProduct,Fin.sum_univ_succ,Fin.tail]
+  simp [Matrix.toLpLin_apply,Matrix.mulVec,dotProduct,Fin.sum_univ_succ,Fin.tail]
   ring
 
 private theorem translated_tail {n : ℕ} (A : (Matrix (Fin (n+1)) (Fin (n+1)) ℂ)) (c : ℂ)
@@ -139,7 +143,7 @@ private theorem translated_tail {n : ℕ} (A : (Matrix (Fin (n+1)) (Fin (n+1)) �
       v 0 • (fun (A : Matrix (Fin (n+1)) (Fin (n+1)) ℂ) => WithLp.toLp 2 (A.col 0 ∘ Fin.succ)) A + Matrix.toEuclideanLin (A.submatrix Fin.succ Fin.succ) ((fun (v : EuclideanSpace ℂ (Fin (n+1))) => WithLp.toLp 2 (Fin.tail v.ofLp)) v) - c • (fun (v : EuclideanSpace ℂ (Fin (n+1))) => WithLp.toLp 2 (Fin.tail v.ofLp)) v := by
   ext i
   simp [Fin.tail,Matrix.col,Function.comp_apply,
-    Matrix.toEuclideanLin_apply,Matrix.mulVec,dotProduct,
+    Matrix.toLpLin_apply,Matrix.mulVec,dotProduct,
     Fin.sum_univ_succ,Finset.sum_sub_distrib,mul_comm]
 
 private theorem translated_component_bounds {n : ℕ} (A : (Matrix (Fin (n+1)) (Fin (n+1)) ℂ)) (c : ℂ)
@@ -191,7 +195,7 @@ theorem blockNorm_domination {n : ℕ} (A : (Matrix (Fin (n+1)) (Fin (n+1)) ℂ)
     have h1 := (sq_le_sq₀ (norm_nonneg _) hp).mpr hb.1
     have h2 := (sq_le_sq₀ (norm_nonneg _) hq).mpr hb.2
     simpa [EuclideanSpace.norm_sq_eq,Fin.sum_univ_two,comparisonMatrix,u,
-      Matrix.toEuclideanLin_apply,Matrix.mulVec,dotProduct,mul_comm] using add_le_add h1 h2
+      Matrix.toLpLin_apply,Matrix.mulVec,dotProduct,mul_comm] using add_le_add h1 h2
   calc
     _ ≤ ‖Matrix.toEuclideanLin (comparisonMatrix A c) u‖ :=
       (sq_le_sq₀ (norm_nonneg _) (norm_nonneg _)).mp hsq
@@ -238,7 +242,7 @@ theorem frobSq_unitary_right {n : ℕ} (A : (Matrix (Fin n) (Fin n) ℂ)) (U : M
   change (Matrix.trace ((U : Matrix (Fin n) (Fin n) ℂ)ᴴ * (Aᴴ * A) * (U : Matrix (Fin n) (Fin n) ℂ))).re = (Matrix.trace (Aᴴ * A)).re at h
   simpa only [RHLinalg.frobSq, RCLike.re_eq_complex_re, Matrix.conjTranspose_mul, Matrix.mul_assoc] using h
 
-private theorem frobSq_unitary_left {n : ℕ} (A : (Matrix (Fin n) (Fin n) ℂ)) (U : Matrix.unitaryGroup (Fin n) ℂ) :
+theorem frobSq_unitary_left {n : ℕ} (A : (Matrix (Fin n) (Fin n) ℂ)) (U : Matrix.unitaryGroup (Fin n) ℂ) :
     RHLinalg.frobSq ((U : (Matrix (Fin n) (Fin n) ℂ))*A) = RHLinalg.frobSq A := by
   unfold RHLinalg.frobSq
   have hu : (U : (Matrix (Fin n) (Fin n) ℂ))ᴴ*(U : (Matrix (Fin n) (Fin n) ℂ)) = 1 := Unitary.star_mul_self_of_mem U.property
@@ -294,7 +298,7 @@ private theorem commutator_norm_bound_of_pure {n : ℕ} (hn : 0 < n) (A : (Matri
       (sq_le_sq₀ (norm_nonneg _) (Real.sqrt_nonneg _)).mpr hh
     _ = _ := Real.sq_sqrt hc
 
-private theorem exists_unitary_first_column {n : ℕ}
+theorem exists_unitary_first_column {n : ℕ}
     (v : EuclideanSpace ℂ (Fin (n+1))) (hv : ‖v‖ = 1) :
     ∃ U : Matrix.unitaryGroup (Fin (n+1)) ℂ, ∀ i, (U : (Matrix (Fin (n+1)) (Fin (n+1)) ℂ)) i 0 = v i := by
   classical
@@ -350,7 +354,7 @@ private theorem pure_first_variance {n : ℕ} (A : (Matrix (Fin (n+1)) (Fin (n+1
     variance A ((Matrix.vecMulVec (WithLp.ofLp (EuclideanSpace.single 0 1)) (star (WithLp.ofLp (EuclideanSpace.single 0 1))))) =
       (((@norm (Matrix _ _ ℂ) Matrix.frobeniusSeminormedAddCommGroup.toNorm) ((fun (A : Matrix (Fin (n+1)) (Fin (n+1)) ℂ) => A.submatrix (fun _ : Fin 1 => (0 : Fin (n+1))) Fin.succ) A))^2+‖(fun (A : Matrix (Fin (n+1)) (Fin (n+1)) ℂ) => WithLp.toLp 2 (A.col 0 ∘ Fin.succ)) A‖^2)/2  := by
   rw [pure_variance_norms]
-  simp [EuclideanSpace.inner_eq_star_dotProduct, Matrix.toEuclideanLin_apply,
+  simp [EuclideanSpace.inner_eq_star_dotProduct, Matrix.toLpLin_apply,
     Matrix.mulVec, dotProduct, Matrix.conjTranspose_apply, Fin.sum_univ_succ,
     rectNorm_sq, EuclideanSpace.norm_sq_eq, Complex.normSq_eq_norm_sq,
     Complex.norm_conj, Complex.star_def]
@@ -430,7 +434,7 @@ private theorem maximizing_block_frame {n : ℕ} (A : (Matrix (Fin (n+1)) (Fin (
   let C := (U : (Matrix (Fin (n+1)) (Fin (n+1)) ℂ))ᴴ*A*(U : (Matrix (Fin (n+1)) (Fin (n+1)) ℂ))
   have hw : Matrix.toEuclideanLin (U : (Matrix (Fin (n+1)) (Fin (n+1)) ℂ)) (EuclideanSpace.single 0 1) = v := by
     ext i
-    simp [Matrix.toEuclideanLin_apply,Matrix.mulVec,dotProduct,hU]
+    simp [Matrix.toLpLin_apply,Matrix.mulVec,dotProduct,hU]
   have hc := commutator_norm_bound_of_pure (by omega : 0<n+1) A v
     (commutator_pure_max_bound A v hv hm)
   have he := pure_variance_conjugation A U (EuclideanSpace.single 0 1)
@@ -482,10 +486,5 @@ theorem translation_gap : (∀ n (A : (Matrix (Fin n) (Fin n) ℂ)) (c : ℂ), o
     rw [hf] at h
     exact h
 
-#print axioms blockNorm_domination
-#print axioms frobSq_unitary_right
-#print axioms opSq_le_frobSq
-#print axioms gap_nonnegative
-#print axioms translation_gap
 
 end D5.S3.Quantum.Matrix.CommutatorGap

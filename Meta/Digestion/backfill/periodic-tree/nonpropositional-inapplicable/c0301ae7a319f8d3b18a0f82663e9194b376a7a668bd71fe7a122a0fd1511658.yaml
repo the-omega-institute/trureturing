@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:c0301ae7a319f8d3b18a0f82663e9194b376a7a668bd71fe7a122a0fd1511658
+  normalized_sha256: sha256:c0301ae7a319f8d3b18a0f82663e9194b376a7a668bd71fe7a122a0fd1511658
+cas_ref: sha256:c0301ae7a319f8d3b18a0f82663e9194b376a7a668bd71fe7a122a0fd1511658
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 章节标题「9.1 黄金整数及其两个实嵌入」仅标示本节主题，不含正文命题或性质断言。
+    previous_atom_id: c7f1616fafb69b496dcc1e1c97a580a6bf0172add2e9d6f5a1fdffc8a53aa114
+    next_atom_id: d09928b2657bcee7605a01538dbdf8dbec825bb2e3a85e922fd29ab7a9ad03c2

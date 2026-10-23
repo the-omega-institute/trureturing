@@ -1,1 +1,1 @@
-{"statement_id":"sha256:b1bcaba28401bd8438d4f90abc83eed60a1bb8107fa04ac10cfd096e537c5f49"}
+{"statement_id":"sha256:b1bcaba28401bd8438d4f90abc83eed60a1bb8107fa04ac10cfd096e537c5f49","declarations":[{"declaration_name_key":"ns(ns(ns(ns(ns(ns(n0,2:D5),2:S3),7:Quantum),9:PureState),30:RecordCoherenceComplementarity),56:pure_record_distinguishability_coherence_complementarity)","kind":"theorem"}]}

@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:778c29119f5ff445f3f966246a0ba6cadf1fad9f15edacdcac8fda60423503b4
+  normalized_sha256: sha256:778c29119f5ff445f3f966246a0ba6cadf1fad9f15edacdcac8fda60423503b4
+cas_ref: sha256:778c29119f5ff445f3f966246a0ba6cadf1fad9f15edacdcac8fda60423503b4
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 定义 457.1（账本充分）：本段仅约定名称、符号及其判定条件；不主张满足条件的对象存在，也不追加性质定理。
+    previous_atom_id: 1c82c12e99c52a70475a88ab13b63943be4a34186405253cc30b4f76080c73ac
+    next_atom_id: 3d16ca54a2bcc4d501980e49aa57c43a24c8a18a8796deb877eec002e9beaf51

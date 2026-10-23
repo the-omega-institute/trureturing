@@ -65,15 +65,6 @@ internal static class TruthReleaseCompositionValidator
                 "Truth release declarations digest disagrees between source_snapshot and verified artifact bytes.");
         }
 
-        if (!string.Equals(
-                sourceSnapshot.FrozenLedgerHeadHash,
-                manifest.Artifacts.FrozenLedgerHead.Sha256,
-                StringComparison.Ordinal))
-        {
-            throw new FormatException(
-                "Truth release frozen_ledger_head digest disagrees between source_snapshot and verified artifact bytes.");
-        }
-
         // DagMdSha256 remains unbound because the bundle has no dag_md artifact. DAG.md is an external
         // derived document, so this field is self-asserted external provenance, not a bundle-coherence claim.
     }

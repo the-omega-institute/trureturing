@@ -1,0 +1,35 @@
+## 14.5. The retained decline and energy necessities
+
+For the same table and the definitions in REV, §§12--13, direct substitution
+in the original forms gives
+\[
+ \delta_- =\frac{6118400000}{2309644331783},\qquad
+ T=\frac{6060753200}{6928932995349},\qquad
+ J_v=\frac{13804640}{2309644331783},\qquad
+ J_u=\frac{492617240}{2309644331783}.
+\tag{14.22}
+\]
+Because the two directed swap edges both have weight \(w\), the last quantity
+is exactly \(J_u=w(u_1-u_2)^2\), with the factor one half in the Dirichlet
+form.  With the constants of REV, §12,
+\[
+ L=\frac{3579821}{4033125},\qquad r_0=\frac{8719}{5975},\qquad
+ \gamma=\frac{7052414}{12099375},
+\]
+\[
+ L\delta_- -r_0T-\gamma J_v
+ =\frac{25055625151472}{23385148859302875}>\frac1{1000}.
+\tag{14.23}
+\]
+This is precisely the strict decline inequality after division by positive L.
+The squared-return condition retained from REV, §13, is also satisfied:
+\[
+ J_u>
+ \frac{1331}{30375}\left(
+ \frac{14219478376}{318644812890625\cdot400000}
+ \right)^3.                                      
+\tag{14.24}
+\]
+The comparison is rational.  These are necessary conditions for the relevant
+common endpoint problem; their satisfaction supplies no converse.
+

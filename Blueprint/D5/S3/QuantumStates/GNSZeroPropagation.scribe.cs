@@ -11,6 +11,15 @@ internal sealed class GNSZeroPropagationDocument : IScribeDocumentDefinition
         H("Zero Norm Propagation for Matrix States"),
         Blocks(
             Describe.Lean(
+                DescribeId.Create("positive-matrix-functional-cross-trace-factorization"),
+                DeclarationHandle.Create("D5/S3/QuantumStates/GNSZeroPropagation.cross_trace_factorization"),
+                H("The mixed trace is a Gram pairing after multiplication by the square root"),
+                StatementSource.FromAuthor(Disp(CrossTraceFormula())),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text(
+                    "For a positive semidefinite matrix rho and arbitrary matrices h and g, the trace pairing of rho with the conjugate transpose of h times g equals the Gram trace of h times the positive square root of rho and g times that square root."))),
+                DescribeRole.Theorem),
+            Describe.Lean(
                 DescribeId.Create("positive-matrix-functional-zero-norm-propagation"),
                 DeclarationHandle.Create(
                     "D5/S3/QuantumStates/GNSZeroPropagation."
@@ -42,6 +51,37 @@ internal sealed class GNSZeroPropagationDocument : IScribeDocumentDefinition
                     Paragraph(Text(
                         "The matrix GNS identity is reused directly; the deposited statement retains positivity, normalization, and the universal mixed-value conclusion as public clauses."))),
                 DescribeRole.Theorem))));
+
+    private static Formula CrossTraceFormula()
+    {
+        Formula Name(params string[] parts) => Seq(Operatorname,
+            Grp(Seq([.. parts.SelectMany((part, index) => index == 0
+                ? new[] { F.Id(part) } : new[] { Dot, F.Id(part) })])));
+        Formula Apply(Formula function, params Formula[] arguments) =>
+            new Formula.Apply(function, [.. arguments]);
+        Formula All(string name, Formula type, Formula body) =>
+            new Formula.Bind(FormulaQuantifier.ForAll, FormulaIdentifier.Create(name), type, body);
+        Formula Product(Formula left, Formula right) =>
+            new Formula.Binary(left, FormulaBinaryOperator.Multiply, right);
+        Formula Adj(Formula matrix) => Apply(Name("Matrix", "conjTranspose"), matrix);
+        var d = F.Id("d");
+        var rho = F.Id("rho");
+        var h = F.Id("h");
+        var g = F.Id("g");
+        var matrix = Apply(Name("Matrix"), d, d, Seq(Mathbb, Grp(F.Id("C"))));
+        var root = Apply(Name("CFC", "sqrt"), rho);
+        var equation = new Formula.Relation(
+            Apply(Name("D5", "S3", "QuantumStates", "GNSZeroPropagation", "stateFunctional"),
+                rho, Product(Adj(h), g)),
+            FormulaRelationOperator.Equal,
+            Apply(Name("Matrix", "trace"), Product(Adj(Product(h, root)), Product(g, root))));
+        var implication = new Formula.Logic(Apply(Name("Matrix", "PosSemidef"), rho),
+            FormulaLogicOperator.Implies, equation);
+        return All("d", Name("Type"), Seq(
+            OpenBracket, Apply(Name("Fintype"), d), CloseBracket,
+            OpenBracket, Apply(Name("DecidableEq"), d), CloseBracket,
+            All("rho", matrix, All("h", matrix, All("g", matrix, implication)))));
+    }
 
     private static Formula Call(string name, params Formula[] arguments)
     {

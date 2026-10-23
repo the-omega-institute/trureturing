@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:d33c68d8973b4cfdcb6c25d510206feb0b350a8aa8cbb19509533ed668889d61
+  normalized_sha256: sha256:d33c68d8973b4cfdcb6c25d510206feb0b350a8aa8cbb19509533ed668889d61
+cas_ref: sha256:d33c68d8973b4cfdcb6c25d510206feb0b350a8aa8cbb19509533ed668889d61
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 非命题文本：155. 有限商观察者与有限剩余：只引入对象、参数、术语或记号；不附加存在性、唯一性或其他性质断言。
+    previous_atom_id: c0c1b081a221327dc0559a358707acaf48f2b40815972f0e5aadb4db05321191
+    next_atom_id: f4cdaa063ca21dae0a86f1d1f32b0dfc2ab400810646cb8d349aae25ed822a93

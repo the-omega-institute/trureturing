@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:725ae282be871cdd86dde9130f70ff6f305bf2c58100db8776752adfd64476cd
+  normalized_sha256: sha256:725ae282be871cdd86dde9130f70ff6f305bf2c58100db8776752adfd64476cd
+cas_ref: sha256:725ae282be871cdd86dde9130f70ff6f305bf2c58100db8776752adfd64476cd
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 本段只完成前述摘要必要性中电荷与端点的恢复证明。
+    previous_atom_id: 16344bdf663c9c2b9a43df5096593cc99aac98809c13efbe4de9b40caabf71bf
+    next_atom_id: 83e14610d56a5bb25e76924fa4a40e063866e4d24c24582f56d12c67e1c5a20d

@@ -1,0 +1,170 @@
+**Theorem 4.2 (Quantitative whole-map reset stability).** For $D\ge3$, suppose $\epsilon\ge0$, $0<p\le1$ and
+
+$$
+\max_{0\le k\le D-2}w_k\le\epsilon,\qquad w_{D-1}\ge p.
+\tag{4.4}
+$$
+
+Define
+
+$$
+A_D(p)=\frac{8D}{p^2}
+\left(\frac{8(D-1)D^{5/2}}p\right)^{2(D-2)},
+\qquad z=\min\{1,A_D(p)\epsilon\}.
+\tag{4.5}
+$$
+
+For $D=2$, assume only $w_0\le\epsilon$ with $\epsilon\ge0$, and define instead $z=\min\{1,\epsilon\}$. There is no late-probability condition in dimension two. In both cases put
+
+$$
+\begin{aligned}
+a&=(D-1)z,\\
+B_D(z,\nu)&=\min\left\{
+2(1+a),\quad
+2a+2\sqrt a+2(1+a)
+\left(\frac z\nu+\sqrt{\frac z\nu}\right)
+\right\}.
+\end{aligned} \tag{4.6}
+$$
+
+Then
+
+$$
+\lambda_2(F)\le z,\qquad E\le B_D(z,\nu)\le2D.
+\tag{4.7}
+$$
+
+In particular,
+
+$$
+\begin{aligned}
+D\ge3:\quad& E\le\min\left\{2D,\,
+8D\sqrt{\frac{A_D(p)\epsilon}{\nu}}\right\},\\
+D=2:\quad& E\le\min\left\{4,\,
+16\sqrt{\frac{\epsilon}{\nu}}\right\}.
+\end{aligned} \tag{4.8}
+$$
+
+The function $B_D$ gives a sharper valid bound; its constants are not asserted optimal.
+
+Proof. The CP map $T=\Phi^*$ has $T(I)=I-F\le I$. The trace-dual identity is
+
+$$
+\operatorname{Tr}[\tau T^k(F)]
+=\operatorname{Tr}[F\Phi^k(\tau)]=w_k.
+\tag{4.9}
+$$
+
+For $D\ge3$, Theorem 3.3 applies with $B=F$, $\sigma=\tau$, $r=2$ and $n=D-1$, giving $\lambda_2(F)\le A_D(p)\epsilon$. The effect bound also gives $\lambda_2(F)\le1$. For $D=2$, $F\ge\lambda_2(F)I$ directly gives $\lambda_2(F)\le\operatorname{Tr}(\tau F)=w_0\le\epsilon$, with no late observation.
+
+Put $s=\lambda_2(F)$ and $\lambda=\lambda_1(F)$. The actual rate $\nu>0$ implies $0<\lambda\le1$. Choose any unit top eigenvector $\eta$ and set
+
+$$
+\begin{aligned}
+P&=|\eta\rangle\langle\eta|,\qquad Q=I-P,\\
+F&=\lambda P+F_Q,\qquad F_Q=QFQ,\qquad 0\le F_Q\le sQ,\\
+a_0&=\operatorname{Tr}F_Q\le(D-1)s,\qquad
+\mu=\frac{\Psi(P)}\lambda.
+\end{aligned} \tag{4.10}
+$$
+
+The symbol $\mu$ in this proof is a density, not the interval mean in Section 1: $\operatorname{Tr}\Psi(P)=\operatorname{Tr}(FP)=\lambda$. A repeated top eigenvalue causes no exception; the remaining eigenvalues are still at most $s$. Neither $\mu$ nor $\tau$ is assumed pure.
+
+Choose finite tick Kraus matrices $L_i$. Let $W,Z$ be the column matrices with columns respectively $|L_iP\rangle\!\rangle$ and $|L_iQ\rangle\!\rangle$. Since
+
+$$
+|L_iP\rangle\!\rangle=L_i\eta\otimes\overline\eta,
+\tag{4.11}
+$$
+
+the fixed Choi convention gives
+
+$$
+WW^\dagger=\lambda\mu\otimes P^{\mathsf T},\qquad
+\|W\|_2^2=\lambda,\qquad
+\|Z\|_2^2=\sum_i\operatorname{Tr}(QL_i^\dagger L_iQ)=a_0.
+\tag{4.12}
+$$
+
+Expansion of the entire matrix yields
+
+$$
+J(\Psi)-\mu\otimes F^{\mathsf T}
+=WZ^\dagger+ZW^\dagger+
+\big(ZZ^\dagger-\mu\otimes F_Q^{\mathsf T}\big).
+\tag{4.13}
+$$
+
+The last two positive matrices each have trace $a_0$, so the trace norm of their difference is at most $2a_0$. The two cross terms each have trace norm at most $\sqrt{\lambda a_0}$ by Lemma 3.2. Hence
+
+$$
+\|J(\Psi)-\mu\otimes F^{\mathsf T}\|_1
+\le2a_0+2\sqrt{\lambda a_0}.
+\tag{4.14}
+$$
+
+This includes the Choi coherences between the input directions $P$ and $Q$. Controlling only the diagonal compressions would not prove (4.14).
+
+The density $\mu$ obtained from the top effect direction must be compared with the prescribed actual output. Form the horizontal block matrices
+
+$$
+U=[L_iP\rho_0^{1/2}]_i,\qquad
+V_0=[L_iQ\rho_0^{1/2}]_i,
+\qquad q_0=\lambda\langle\eta,\rho_0\eta\rangle,
+\qquad d=\operatorname{Tr}(F_Q\rho_0).
+\tag{4.15}
+$$
+
+The identity $P\rho_0P=\langle\eta,\rho_0\eta\rangle P$ implies
+
+$$
+UU^\dagger=q_0\mu,\qquad
+\|U\|_2^2=q_0,\qquad
+\|V_0\|_2^2=d\le s,\qquad \nu=q_0+d.
+\tag{4.16}
+$$
+
+The last equality follows by tracing $F\rho_0$ in (4.10); the effect has no $P$-$Q$ block even when the initializer has coherences. The actual calibration is the full matrix identity
+
+$$
+\nu\tau=UU^\dagger+V_0V_0^\dagger+UV_0^\dagger+V_0U^\dagger.
+\tag{4.17}
+$$
+
+Subtract $\nu\mu$. The positive terms $V_0V_0^\dagger$ and $d\mu$ have trace $d$, and the two cross terms have trace norm at most $\sqrt{q_0d}$. Therefore
+
+$$
+\begin{aligned}
+\nu\|\tau-\mu\|_1&\le2d+2\sqrt{q_0d},\\
+\|\tau-\mu\|_1&\le\frac{2s}{\nu}+2\sqrt{\frac s\nu}.
+\end{aligned} \tag{4.18}
+$$
+
+Here $q_0\le\nu$ was used. Calibration divides only by the assumed positive $\nu$. If $q_0=0$ the estimate still applies, and if $s=0$ it gives $d=0$ and $\tau=\mu$.
+
+The tensor trace-norm identity and the triangle inequality combine (4.14) and (4.18) into
+
+$$
+E\le2a_0+2\sqrt{\lambda a_0}
++2(\lambda+a_0)\left(\frac s\nu+\sqrt{\frac s\nu}\right).
+\tag{4.19}
+$$
+
+Substitute $\lambda\le1$, $s\le z$ and $a_0\le(D-1)z=a$ to get the second entry of (4.6). Independently, $J(\Psi)$ and $\tau\otimes F^{\mathsf T}$ are positive and have the same trace $\operatorname{Tr}F=\lambda+a_0$. Thus
+
+$$
+E\le2\operatorname{Tr}F\le2(1+a)\le2D.
+\tag{4.20}
+$$
+
+This supplies the other entry of (4.6) and proves (4.7).
+
+For (4.8), put $u=z/\nu$. If $0\le u\le1$, then $\nu\le1$ gives $z\le u$, $a\le(D-1)u$ and $1+a\le D$. Since $u\le\sqrt u$ on that interval, the second entry of (4.6) is at most
+
+$$
+\big(2(D-1)+2\sqrt{D-1}+4D\big)\sqrt u\le8D\sqrt u.
+\tag{4.21}
+$$
+
+The final comparison follows from $\sqrt{D-1}\le D-1$ and $D\ge2$. If $u>1$, (4.20) instead gives $E\le2D\le8D\sqrt u$. The argument includes $u=0$. Use $z\le A_D(p)\epsilon$ or, for $D=2$, $z\le\epsilon$, retaining the independent cap $2D$, to obtain (4.8). $\square$
+

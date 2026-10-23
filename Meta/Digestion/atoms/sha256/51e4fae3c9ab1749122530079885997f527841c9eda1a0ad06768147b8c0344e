@@ -1,0 +1,50 @@
+**Proposition 7.2 (joint coordinates at actual occurrences).** Suppose
+the block roots $Ra_i$ are public prefix-free, actually present
+occurrences in one stationary source, with $|a_i|\le H$. Each block
+has height at most $d$. Its canonical coordinate $(i,w)$ is acquired
+by the actual original-root literal $Ra_iw$, $w\in W_d$. A sufficient
+scan for a joint cover code uses
+
+$$
+\begin{aligned}
+T&\le n(2^d-1),\qquad Q\le H+d,\\
+A&\le n\bigl((H+1)(2^d-1)+(d-2)2^d+2\bigr).
+\end{aligned}
+\tag{CBN.30}
+$$
+
+A joint target $Ra_iq$ is served by zero Reads or one actual literal
+$Ra_jw$ of length at most $H+d$. At every such present occurrence,
+its predicted trajectory is the original source's trajectory there.
+When $H+d\le D$, these block targets are permitted original targets.
+
+Proof. Original replies at these boundary words equal the corresponding
+subtree replies, and canonicalization preserves them. There are
+$2^d-1$ suffixes per block. The prefix has length at most $H+1$;
+their suffix lengths sum to
+
+$$
+\sum_{l=0}^{d-1}l2^l=(d-2)2^d+2.
+$$
+
+This proves (CBN.30), also at $d=1$. Acquire the whole tuple and
+export its joint first-membership name, with the complete-code isolation
+of Theorem 7.1. A declared donor is then implemented by the one
+specified original-root word, without moving a subtree into a new
+register. Iterating the pairing homomorphism along present ancestors
+gives
+
+$$
+r_{\rho^kt}(Ra_iq)=r_{\rho^k(t|_{Ra_i})}(q).
+\tag{CBN.31}
+$$
+
+Here $t|_{Ra_i}$ is mathematical notation for a subtree already
+assumed present. It is not an operational input. A virtual wrapper
+$\langle\alpha,u\rangle$ has public constant replies at its root
+and left cone, and its virtual $Rw$ is implemented only by the actual
+literal at the occurrence followed by $w$, as in FMR Lemma 3.1.
+It supplies no second source port. The length inequality puts every
+$Ra_iq$, $q\in W_d$, in $\mathcal P_D$ when stated.
+$\square$
+

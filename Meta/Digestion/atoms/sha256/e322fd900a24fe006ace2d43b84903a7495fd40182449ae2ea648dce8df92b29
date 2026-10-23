@@ -1,0 +1,18 @@
+**定义 9.2（线性回路、二项式与条件行列式）。** 将质量行加到 $A$ 得配置矩阵 $C$。沿用[《环流读出、控制接口、KL 作用量与 toric 关系》§§11–12 及 Q12–Q13](AURIC_FIB_ATOM_CIRCULATION_CONTROL_KL_ACTION_AND_TORIC_RELATIONS.md)与 [Drton–Sullivant 的代数统计背景](../../../Library/Estimation/drtonsullivant2007algebraic.md)：$C\mathbf d=0$ 是列配置的 primitive circuit；在实多项式环间取单项式映射 $\mathbb R[z_0,z_1,z_2,z_3,z_{13}]\to\mathbb R[t,u,v,w]$
+
+$$
+(z_0,z_1,z_2,z_3,z_{13})\longmapsto(t,tu,tv,tw,tuw),
+$$
+
+则对应核理想由 $z_0z_{13}-z_1z_3$ 生成。评价 $z_s=p_s$ 得数值 $\Delta(p)$；一般概率律不要求该二项式为零。这里的整数格关系、多项式与数值函数各有自己的载体。
+
+固定数学引文 1.3 的四格分区，$r=1-Z>0$ 时有
+
+$$
+\Delta(p)=r\kappa-XY,\qquad
+\det\begin{pmatrix}p_0/r&p_3/r\\p_1/r&p_{13}/r\end{pmatrix}
+=\Delta(p)/r^2=\operatorname{Cov}(U,V\mid s\ne2).
+$$
+
+$\kappa=p_{13}$ 是固定状态坐标；$\Delta$ 是相对这份四格分区和独立子模型的残差，既非截面系数，也非观察者无关的不变量。交换一行或一列会变号，更换分区会更换函数；$r=0$ 时不定义该条件表。状态空间上的 $\mathbf d$ 与边空间上的 $\mathbf c$ 通过定理 2.2 关联，而不相等。
+

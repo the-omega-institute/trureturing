@@ -1,0 +1,22 @@
+**Proof, from the finite task to the full actual fiber.** Fix a coloring
+and trees witnessing $\mathsf{RootFeas}_*(r,q)$. The producer computes
+$\theta_x$ by inspecting the roots of the already acquired class
+values. No fresh source call is used for this local inspection and
+no unknown value is compared. It exports the complete finite code
+$c(\theta_x)$, using distinct installed finite values for the used
+labels. There are at most $r$ values. Every used type is actually
+attained by Proposition 10.2, so the actual code range is exactly
+the used coloring range.
+
+On entry with that code, the common reader follows its installed
+tree. At experiment $d$ it actually invokes the native port at
+$p_d$. This address is reached on every current source in the fiber,
+and its reply is exactly $\theta_x(d)$. Each traversal of a query
+vertex is one counted invocation, even if that class was queried
+before. Induction on the reply path makes execution agree with
+$E_{c(\theta_x)}$. It stops after at most $q$ calls with
+$G_*(\theta_x)=F(u_x)$ by Theorem 10.4. The output includes all
+exterior syntax, canonical restricted classes, disequalities and
+absence guards. The acquisition/export and common-entry premises
+implement the finite code without adding any source-bearing field.
+

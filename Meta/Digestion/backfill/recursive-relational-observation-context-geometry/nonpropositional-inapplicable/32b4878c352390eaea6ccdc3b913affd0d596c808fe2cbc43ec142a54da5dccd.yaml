@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:32b4878c352390eaea6ccdc3b913affd0d596c808fe2cbc43ec142a54da5dccd
+  normalized_sha256: sha256:32b4878c352390eaea6ccdc3b913affd0d596c808fe2cbc43ec142a54da5dccd
+cas_ref: sha256:32b4878c352390eaea6ccdc3b913affd0d596c808fe2cbc43ec142a54da5dccd
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 推论 9.15（平均TV界及最坏纤维的反例）。的证明段；本项只给出该陈述的论证及所用步骤的说明，不另立独立命题。命题陈述保留在前项。
+    previous_atom_id: 64250d23dd26193558331b44a34f2fcbd09019cd28ec6499ceb5821e9bf2c612
+    next_atom_id: da904161cbb86624be97fa7070a5d5e7c407850879a95431e3e2a605d00ef45b

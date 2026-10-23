@@ -1,1 +1,1 @@
-{"statement_id":"sha256:1d543e545e3f74940fa387eaffd68ddd89815b6b21b4bdad7981dc848f3e397e"}
+{"statement_id":"sha256:9770527f91e58747a4252f43b7fcbfe9bda6b14f3a96574367952b4e33ffb06c","declarations":[{"declaration_name_key":"ns(ns(ns(ns(ns(ns(n0,2:D5),2:S3),14:ObserverMemory),8:Dynamics),36:FiniteObservabilityOrthogonalDuality),44:finite_unobservable_eq_observable_orthogonal)","kind":"theorem"}]}

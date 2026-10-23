@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:2e8ddeaff1190c0f52e33a2ab07c861cdd1a7243c62d35e6e80ee30b968b0c81
+  normalized_sha256: sha256:2e8ddeaff1190c0f52e33a2ab07c861cdd1a7243c62d35e6e80ee30b968b0c81
+cas_ref: sha256:2e8ddeaff1190c0f52e33a2ab07c861cdd1a7243c62d35e6e80ee30b968b0c81
+coverage_gids:
+  - gid: D5/S3/Quantum/Algebra/WeightedLegalPathTemperleyLieb.fiberEquiv
+    target_statement_id: sha256:25c21a1e314313dc9a3cde3dfd6769292d744935abce4ca649e5ead69c933e98
+receipts:
+  unresolved_subitems: []

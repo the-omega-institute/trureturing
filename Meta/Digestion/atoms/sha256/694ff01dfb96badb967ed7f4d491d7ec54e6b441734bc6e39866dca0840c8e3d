@@ -1,0 +1,100 @@
+**Theorem 10.2 (exact state minima and one common native witness).** Put
+$N=U-L+1$ and
+
+$$
+J(L,U)=
+\begin{cases}
+0,&N=1,\\
+\left\lceil\dfrac{N-1}{3}\right\rceil,&N\ge2,\ L\ge1,\\
+\left\lceil\dfrac N3\right\rceil,&N\ge2,\ L=0.
+\end{cases}
+\tag{AOF.31}
+$$
+
+Under Definition 10.1,
+
+$$
+J_{\min}(L,U)=J(L,U),\qquad S_{\min}(L,U)=N+J(L,U).
+\tag{AOF.32}
+$$
+
+One actual controller has exactly $J(L,U)$ running states and $N$ halts
+and simultaneously attains the supplied $K(L,U)$ and $M(L,U)$ of
+Theorems 8.3 and 9.2. All its states are reached on admitted sources.
+The separate worst call and peak values need not occur on the same age.
+
+**Proof.** First obtain the state lower bound on general shared graphs.
+For $N\ge2$ the common initial state cannot halt. Take the directed
+union of the $N$ actual finite runs, with $j$ running vertices and
+exactly $N$ terminal vertices. There are exactly $N$ because the runs
+are deterministic, their required integers differ, and each run ends
+at one fixed-output halt. Every vertex is reachable from the common
+initial vertex. Select one incoming edge along a shortest root path
+for each noninitial vertex. These distinct edges give
+
+$$
+j+N-1\le e\le4j,
+\tag{AOF.33}
+$$
+
+where $e$ counts distinct directed successor edges used by actual runs.
+The upper bound uses at most four actual replies per running state;
+two replies going to one successor can only decrease this edge count.
+This is the rooted reachable-edge method of [Transport--Memory
+Completion, Theorem 66.3][TM-Moore] and [Native Birth Provenance,
+Proposition 11.2][NBP-Moore], applied to the present one-root domain.
+It does not assume a tree-shaped controller or an acyclic union graph.
+
+If $L=0$, the two admitted sources $T_0,T_1$ return absence at every
+nonempty word. Their state paths agree until an empty-word query.
+Such a running state must be reached: without it the two runs cannot
+terminate at different correct halts. At that state the root is never
+absent on any source, so there are at most three actual successors.
+Thus $e\le4j-1$, and (AOF.33) sharpens to $N\le3j$. The empty-word
+state is required somewhere on this common path, not necessarily at
+the initial state. These inequalities give $j\ge J(L,U)$ and at
+least $N+J(L,U)$ installed states. Merges, union cycles across different
+source runs, repeated queries, early halts and unused states are all
+included. On a single stationary source, revisiting a running state
+would repeat its deterministic suffix forever; this excludes a loop
+on that run without excluding cycles in the union. When $N=1$, one
+initial halt outputting $L$ is minimal and has both other prices zero.
+
+For the upper bound use only the actual $E$ and shortest $P_t$ words
+of Definition 8.2. The following finite trees specify immutable tables,
+not runtime interval or recursion registers. For every integer $r\ge0$
+and $l\ge1$, define $\mathsf{Plus}(l,r)$ on $[l,l+3r]$. At $r=0$
+it is the halt outputting $l$. At $r\ge1$ put
+
+$$
+a=\left\lfloor\frac{r-1}{2}\right\rfloor,
+\qquad b=r-1-a,\qquad t=l+3a+1.
+\tag{AOF.34}
+$$
+
+Its root queries the materialized shortest $P_t$ word and has the four
+successors
+
+| Actual reply | Successor of $\mathsf{Plus}(l,r)$ |
+| --- | --- |
+| $\bot$ | $\mathsf{Plus}(l,a)$ |
+| $\alpha$ | Halt with fixed output $t$ |
+| $\beta$ | Halt with fixed output $t+1$ |
+| $\mathsf b$ | $\mathsf{Plus}(t+2,b)$ |
+
+Here $t\ge2$, so no nonexistent $P_1$ is used. By (AOF.24) the four
+actual cells are $[l,t-1],\{t\},\{t+1\},[t+2,l+3r]$. The tails
+have sizes $3a+1$ and $3b+1$. Induction proves sourcewise correctness,
+exactly $r$ running nodes and $3r+1$ distinct numeric halts. Each node
+and halt is reached by an actual age in this full interval.
+
+For $r\ge1$, define $\mathsf{Zero}(r)$ on $[0,3r-1]$ using the same
+$a,b$ in (AOF.34). If $a\ge1$, its root queries $P_{3a}$, with
+successors
+
+| Actual reply | Successor when $a\ge1$ |
+| --- | --- |
+| $\bot$ | $\mathsf{Zero}(a)$ |
+| $\alpha$ | Halt with fixed output $3a$ |
+| $\beta$ | Halt with fixed output $3a+1$ |
+| $\mathsf b$ | $\mathsf{Plus}(3a+2,b)$ |

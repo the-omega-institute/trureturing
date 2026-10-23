@@ -139,5 +139,6 @@ Refutation of BGS Conjecture 6.7: the instance k = 32 has 128 vertices with tens
 - Truth anchor: `D5/S3/Quantum/Entanglement/GraphDensity/BraunsteinGhoshSeveriniStarRefutation.root`
 - Truth anchor: `D5/S3/Quantum/Entanglement/GraphDensity/BraunsteinGhoshSeveriniStarRefutation.sigma`
 - Truth anchor: `D5/S3/Quantum/Entanglement/GraphDensity/BraunsteinGhoshSeveriniStarRefutation.starGraph`
+- Dependency: [D5/S3/Quantum/Divergence/ConditionalHockeyStickOrthogonalReduction](../../Divergence/ConditionalHockeyStickOrthogonalReduction.md)
 - Dependency: [D5/S3/Quantum/Entanglement/GraphDensity/SelectiveFormationBounds](SelectiveFormationBounds.md)
 - Dependency: [D5/S3/Weil/Probability/FiniteGaussianSchoenberg](../../../Weil/Probability/FiniteGaussianSchoenberg.md)

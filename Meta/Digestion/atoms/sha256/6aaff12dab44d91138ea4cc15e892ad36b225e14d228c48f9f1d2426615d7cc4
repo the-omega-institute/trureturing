@@ -1,0 +1,40 @@
+### 第二部分导言：续篇：从单窗隐藏回路到多窗关系阶数
+
+Claim status: open.（供文 II 导言及其历史归属。）
+
+> 编者限定（II 导言）：续篇中“当前 dev”“最新”指供文所引 3a56aa49697ab7641b7dbe616e0424327c69d2ca 的历史材料。本卷保留组合论断和物理桥接全文；两者的纸面论证或候选解释均不在这里获得形式化、物理或优先权认证。
+
+
+当前 `dev` 的最新理论文件已经把 Auric FIB ATOM 金字塔推进到了一个更清晰的层级：
+
+$$
+\boxed{
+\text{五态选择}
+\;\longrightarrow\;
+\text{单窗统计纤维}
+\;\longrightarrow\;
+\text{双窗运输循环}
+\;\longrightarrow\;
+\text{多窗高阶关系}
+\;\longrightarrow\;
+\text{原树祖先纤维}
+\;\longrightarrow\;
+\text{相干相位与内部动态}
+}
+$$
+
+相关最新文件包括：
+
+- [AURIC FIB ATOM Pyramid Foundational Formulas and Relations](https://github.com/the-omega-institute/trureturing/blob/3a56aa49697ab7641b7dbe616e0424327c69d2ca/docs/develop/theory/AURIC_FIB_ATOM_PYRAMID_FOUNDATIONAL_FORMULAS_AND_RELATIONS.md)
+- [AURIC FIB ATOM Hidden Relations, Statistics, Phase and Seams](https://github.com/the-omega-institute/trureturing/blob/3a56aa49697ab7641b7dbe616e0424327c69d2ca/docs/develop/theory/AURIC_FIB_ATOM_HIDDEN_RELATIONS_STATISTICS_PHASE_AND_SEAMS.md)
+- [AURIC FIB ATOM Pyramid Determinant and Native Guard Continuation](https://github.com/the-omega-institute/trureturing/blob/3a56aa49697ab7641b7dbe616e0424327c69d2ca/docs/develop/theory/AURIC_FIB_ATOM_PYRAMID_DETERMINANT_AND_NATIVE_GUARD_CONTINUATION.md)
+- [AURIC FIB ATOM Pyramid Correlation and Native Continuation](https://github.com/the-omega-institute/trureturing/blob/3a56aa49697ab7641b7dbe616e0424327c69d2ca/docs/develop/theory/AURIC_FIB_ATOM_PYRAMID_CORRELATION_AND_NATIVE_CONTINUATION.md)
+- [AURIC FIB ATOM Ancestry Cube and Acquisition Cost](https://github.com/the-omega-institute/trureturing/blob/3a56aa49697ab7641b7dbe616e0424327c69d2ca/docs/develop/theory/AURIC_FIB_ATOM_ANCESTRY_CUBE_AND_ACQUISITION_COST.md)
+
+这些文件仍然明确标记为 `repo-derived` 或 `Claim status: open`。因此下面分为两层：
+
+1. 在有限组合模型中可以直接证明的定理；
+2. 由这些定理提出的物理桥接，不能直接冒充物理定律。
+
+---
+

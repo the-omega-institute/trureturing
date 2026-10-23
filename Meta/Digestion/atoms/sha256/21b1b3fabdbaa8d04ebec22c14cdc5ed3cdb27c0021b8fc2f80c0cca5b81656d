@@ -1,0 +1,93 @@
+**Theorem 6.1 (one acquired family with scalable complete-row demands).** Take
+
+$$
+\begin{gathered}
+P=\{L,R\},\quad R=(\langle\square_1,\square_2\rangle,
+                    \{\{1\},\{2\}\}),\quad H_0=\varnothing,\quad N=1,\\
+H_{\rm rel}=\{(0,\varepsilon,1,L,=),(0,RR,1,R,\ne)\},\\
+Q_d=\{LL,LR\}\cup\{R^iL:1\le i<d\}\cup\{R^d\},\qquad d\ge2.
+\end{gathered}
+\tag{AOF.16}
+$$
+
+The entire acquired fiber is $\{T_k:k\ge4\}$. Its $Q_d$ target has exactly
+$2d-3$ entire rows, indexed by the individual indices $4,\ldots,2d-1$
+and the one tail $k\ge2d$. There are actual services and all-original-
+service lower bounds given by the finite recurrences below for every $d$.
+The exact raw price is the supplied ordered-search capacity specialization
+
+$$
+\min\{h:2d-3\le3\cdot2^h-2\}
+ =\left\lceil\log_2\frac{2d-1}{3}\right\rceil.
+\tag{AOF.17}
+$$
+
+Removing only the negative record gives the entire fiber $k\ge2$, exactly
+$2d-1$ rows, and raw price $\lceil\log_2((2d+1)/3)\rceil$.
+
+Proof. The positive certificate selects $k\ge1$ by [ARH, Theorem 4.2][ARH].
+The old row selects exactly $k\ge2$: the children are $T_{k-1},T_{k-2}$
+and are different. For the negative record, $RR$ is reached originally
+exactly when $k\ge4$, whereas the epoch-one $R$ endpoint is reached when
+$k\ge1$. Once both exist, their complete values are $T_{k-4},T_{k-1}$,
+which are always different. Thus the sign, including its guard, selects
+exactly $k\ge4$. An absent endpoint cannot produce this negative record.
+The paid producer [ARH, Proposition 2.1][ARH] applies to these fixed
+coordinates, so the acquisition has both full-fiber directions and needs
+no retained index or description.
+
+The cut $Q_d$ is complete. For $k\ge2d$ all its cuts are reached, its
+exterior is its trie, and its partition is by the weights
+
+$$
+2,\ 3,\ 3,5,\ldots,2d-1,\ 2d.
+\tag{AOF.18}
+$$
+
+In particular $LR$ and $RL$ repeat the same class; no other weights repeat.
+For $2\le k<2d$, the right spine terminates at $R^{\lfloor k/2\rfloor}$
+with the concrete leaf alpha or beta according to the parity of $k$.
+That terminal position is not removed by $Q_d$. Its position and label
+identify $k$ from the exterior; the reached holes and all their equalities
+are still those of the actual tree. These rows are pairwise different
+and different from the all-holes tail. This proves the two row counts,
+including $d=2$, where the signed family has one constant row.
+
+Write $a=4$ for the signed family and $a=2$ when only the negative record
+is removed, and $b=2d$. The target index is $\min(k,b)$ on $k\ge a$.
+At epoch one, a threshold $t\ge1$ is the actual read $z(t+1)$ of length
+
+$$
+C(t)=\left\lceil\frac{t+1}{2}\right\rceil,
+\tag{AOF.19}
+$$
+
+whose four replies specify $k<t$, $k=t$, $k=t+1$, $k\ge t+2$.
+Every nonempty arbitrary address either has exactly such a partition or,
+if it ends in $L$, a coarsening at no smaller minimal length. The root and
+$L$ are constant on $k\ge2$. Theorem 3.1 removes all serial updates
+without increasing any source's costs. Theorem 4.1 gives the full-tail
+extension and worst-cost completeness. Thus no original service is omitted
+by optimizing these thresholds.
+
+On an interval $[l,r]\subseteq[a,b]$ of remaining target indices, useful
+thresholds reduce to $l-1\le t\le r-1$. Smaller ones are constant.
+A threshold $t>r$ is constant on the representatives. The partition at
+$t=r$ is refined by $t=r-1$, whose length is no greater, with any unnecessary
+extra distinction merged locally. The two potentially nonsingleton children
+are $[l,t-1]$ and $[t+2,r]$, intersected with $[l,r]$; the other two children
+halt at their individual rows. At the last tail label, all physical replies
+corresponding to $k\ge b$ select that same full row. Empty children are
+unreachable and singleton children halt without a further action.
+
+The two-singleton/two-interval capacity and its ordered-search construction
+are [SLH, Theorem 6.2][SLH]: capacity at depth $h$ is $3\cdot2^h-2$.
+Here the required thresholds have $t\ge a-1\ge1$ and are all actual
+addresses by (AOF.19), so the supplier's construction applies. Its lower
+bound applies because (AOF.8) gives at most two interval reply classes
+and two singleton reply classes, also after restriction to any surviving
+subset: a depth-$h$ tree has capacity at most twice the depth-$(h-1)$
+capacity plus two. All target labels have actual source witnesses. Together with the serial normalization this proves
+(AOF.17) against all original services. Capacity and ordered search are
+suppliers, not new standalone results. $\square$
+

@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:9cb04766ea16e982b2b23cca325bc5843c04c3404a5ff4d1e0ed1ffa07589469
+  normalized_sha256: sha256:9cb04766ea16e982b2b23cca325bc5843c04c3404a5ff4d1e0ed1ffa07589469
+cas_ref: sha256:9cb04766ea16e982b2b23cca325bc5843c04c3404a5ff4d1e0ed1ffa07589469
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 英文证明段（**Proof.** For each prime power p^e exactly dividing K, the right side…）仅给出前文命题的推导或证明方向，不另提出独立结论。
+    previous_atom_id: 01ddec77e8e9fd5255769563d52242f6df5f000fa94bd6ebbd8159f32c23dd4b
+    next_atom_id: be2f8b5af0703886a28612255c65b1d66b37956390fd1e590dca8204db4b24e8

@@ -16,6 +16,20 @@ internal sealed class CartesianVarianceDocument : IScribeDocumentDefinition
         Formula var=Sub(ReF(Trace(Mul(rho,Parenthesized(cart)))),Apply(Qualified("Complex","normSq"),Trace(Mul(rho,a))));
         Formula pq=Pure(v);
         return DocumentDefinition.Create(ScribeNode.Create("A pure vector maximizes the Cartesian matrix variance.",H("Cartesian variance"),Blocks(
+            Item("psd_entry_bound", "Positive semidefinite entry bound",
+                All([B("n",F.Id("Type"))], Seq(OpenBracket,Call("Fintype",n),CloseBracket,Sp,
+                    OpenBracket,Call("DecidableEq",n),CloseBracket,Sp,Comma,Sp,
+                    All([B("P",Call("Matrix",n,n,C)),B("i",n),B("j",n)],
+                        Imp(Apply(Qualified("Matrix","PosSemidef"),F.Id("P")),
+                            LeqF(Apply(Qualified("Complex","normSq"),Apply(F.Id("P"),i,j)),
+                                Mul(ReF(Apply(F.Id("P"),i,i)),ReF(Apply(F.Id("P"),j,j)))))))),
+                "A two-by-two principal minor bounds each squared entry modulus by the product of its diagonal entries. The estimate bounds the entries of density matrices and controls positive semidefinite summands in the incoherent cone."),
+            Item("density_eigenvalues_sum", "A density spectrum sums to one",
+                All([B("n",N),B("rho",Mat(n)),B("h",Density(rho))],
+                    Eqn(Sum("i",Fin(n),Apply(
+                        Seq(Qualified("Matrix", "IsHermitian"),Dot,F.Id("eigenvalues")),
+                        Apply(Seq(Qualified("Matrix", "PosSemidef"),Dot,F.Id("isHermitian")),Seq(F.Id("h"),Dot,Num(1))),i)),Num(1))),
+                "For a positive semidefinite trace-one complex matrix, the real eigenvalues sum to one. The Hermitian proof is the first component of h followed by Matrix.PosSemidef.isHermitian."),
             Item("frobSq_eq_sum","Frobenius square in coordinates",All([B("n",N),B("A",Mat(n))],Eqn(Frob(a),Sum("i",Fin(n),Sum("j",Fin(n),Apply(Qualified("Complex","normSq"),Apply(a,j,i)))))),
                 "The squared Frobenius norm is the sum of the squared moduli of all matrix entries."),
             Item("frobSq_nonneg","Nonnegative Frobenius square",All([B("n",N),B("A",Mat(n))],LeqF(Num(0),Frob(a))),"Every entry contributes a nonnegative square."),

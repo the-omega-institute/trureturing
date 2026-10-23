@@ -1,0 +1,8 @@
+## 部分 II：先校正当前项目状态
+
+当前 `dev` 的远端 HEAD 已经推进到 [`ae4f135`](https://github.com/the-omega-institute/trureturing/commit/ae4f135cebf29ea39c8253bf1c21016cf7cb7cfb)，时间为 2026-10-10 15:37:42（SGT），对应 PR #15026。此前使用的 `912f499` 已经只是历史基线。
+
+今天与 Auric FIB ATOM 直接相关的理论推进，主要集中在以下几组变更：
+
+| 时间 | 项目进展 | 对本问题的作用 |
+|---|---|---|

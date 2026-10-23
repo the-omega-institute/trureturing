@@ -1,0 +1,40 @@
+## 4. 精确的算子 Euler 积及 logarithmic derivative
+
+以下为纸面算子证明。令 H_a=L2([-a,a])，对正整数 d 定义零延拓后压缩的前向平移 U_d f(x)=1_I(x)f(x+log d)。它们有范数<=1，并满足 U_d U_e=U_(de)：两个位移均非负，起点和终点在 I 内时，中间点也在 I 内。U_d=0 当 log d>=2a，等号仅剩一个零测端点。对 d>=2，U_d 因而是幂零算子。此处没有使用周期平移。
+
+对复参数 s，令
+
+\[
+\mathcal D_{a,N}(s)=\sum_{d\mid N}d^{-s}U_d
+=\prod_{p^e\Vert N}\sum_{j=0}^{e}(p^{-s}U_p)^j.
+\tag{DW3}
+\]
+
+等式来自唯一素数分解和已证明的压缩平移乘法。所有局部因子为 I 加幂零算子，故对每个复 s 均可逆，其逆是有限多项式。于是负 logarithmic derivative 是合法的有界算子：
+
+\[
+\boxed{\mathcal L_{a,N}(s):=-\mathcal D'_{a,N}(s)\mathcal D_{a,N}(s)^{-1}
+=\sum_{p^e\Vert N}\log p\sum_{j\ge1}
+[1-(e+1)1_{(e+1)\mid j}]p^{-js}U_{p^j}.}
+\tag{DW4}
+\]
+
+每个看似无穷的内和实际上在 p^j>=exp(2a) 后为零。证明对 Q=p^-s U_p 使用 G_e(Q)=(I-Q^(e+1))(I-Q)^-1，并计算 -G'_e G_e^-1=log p[Q/(I-Q)-(e+1)Q^(e+1)/(I-Q^(e+1))]。所有因子交换，乘积的 logarithmic derivative 可以相加。没有在标量零点处作除法，也没有假设标量 Z_N(s) 不为零。
+
+取 f_h(x)=1_I(x)4exp(x/2)h(exp x)，则同一半密度精确给出
+
+\[
+\mathcal D_{a,N}(1/2)f_h=E_{a,N}^{\rm div}h.
+\tag{DW5}
+\]
+
+若每个可见 p^j<exp(2a) 均整除 N，(DW4) 中的所有修正位移均不可见，得到
+
+\[
+\boxed{\mathcal L_{a,N}(1/2)=
+\sum_{p^j<e^{2a}}\frac{\log p}{p^{j/2}}U_{p^j}=B_+.}
+\tag{DW6}
+\]
+
+这是与原 Weil 素数作用的精确对应。Robin 标量在 s=1 取值，本式的 s=1/2 来自原 Weil 半密度，不能混用。Gamma 和 pole 部分不在 (DW6) 内。有限 Fourier 再压缩也不必保持 U_d U_e=U_de，因此先在原 H_a 上完成对应，再使用原来的完整耦合证书；不得把有限矩阵乘法自动视为同一个乘积。
+

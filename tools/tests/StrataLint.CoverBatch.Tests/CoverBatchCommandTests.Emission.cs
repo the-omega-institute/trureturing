@@ -1,3 +1,4 @@
+using System.Collections.Immutable;
 using System.Text;
 using StrataLint.Cli;
 using StrataLint.Engine;
@@ -137,7 +138,7 @@ public sealed partial class CoverBatchCommandTests
     [InlineData(".provenance.json")]
     [InlineData(".input.attestation")]
     [InlineData("sha-drift")]
-    [InlineData("producer-drift")]
+    [InlineData("input-drift")]
     public void RealFinalEmissionRejectsBadBundlesAfterKeepingSuccessfulCoverage(string failure)
     {
         using var world = new BatchWorld { UseGitReader = true };
@@ -151,7 +152,7 @@ public sealed partial class CoverBatchCommandTests
         {
             var path = report + ".input.attestation";
             var lines = TemporaryFileSystem.File.ReadAllText(path).Split('\n');
-            lines[2] = "producer_sha256=" + new string('0', 64);
+            lines[1] = "input_sha256=" + new string('0', 64);
             TemporaryFileSystem.File.WriteAllText(path, string.Join('\n', lines));
         }
 
@@ -161,7 +162,8 @@ public sealed partial class CoverBatchCommandTests
         Assert.Equal(1, result.ExitCode);
         Assert.Equal(["applied", "applied"], Results(result).Select(item => item.Status).ToArray());
         Assert.Contains("COVER_BATCH_EMIT_FAILED", result.Error, StringComparison.Ordinal);
-        Assert.Contains(failure.StartsWith(".", StringComparison.Ordinal) ? "incomplete" : "stale",
+        Assert.Contains(failure.StartsWith(".", StringComparison.Ordinal) ? "incomplete"
+                : failure == "sha-drift" ? "SHA mismatch" : "input attestation",
             result.Error, StringComparison.Ordinal);
         Assert.Single(world.Entry(First).Coverage);
         Assert.Single(world.Entry(Second).Coverage);
@@ -185,6 +187,21 @@ public sealed partial class CoverBatchCommandTests
             path => File.ReadAllBytes(Path.Combine(repositoryRoot, path)));
         foreach (var document in documents)
             WriteScribeFixture(root, document.Path, Encoding.UTF8.GetString(document.Bytes.AsSpan()));
+        var raw = RawRepositorySnapshot.Create(documents
+            .Select(document => new RawRepositoryEntry(document.Path, document.Bytes))
+            .Concat(Directory.EnumerateFiles(Path.Combine(root, BackfillInventoryLoader.RootPath),
+                "source.toml", SearchOption.AllDirectories).Select(path => new RawRepositoryEntry(
+                    Path.GetRelativePath(root, path).Replace('\\', '/'), [.. File.ReadAllBytes(path)]))));
+        var snapshot = Assert.IsType<SnapshotDecodeOutcome.Decoded>(SnapshotDecoder.Decode(raw)).Snapshot;
+        var manifest = FileMapLoader.LoadSnapshot(snapshot);
+        var sourceEntries = BackfillInventoryLoader.LoadForDigestion(snapshot).RequireDigestionSources()
+            .Select(source => source.SourcePath).Where(path => manifest.Match(path).IsEmpty)
+            .Select(path => new FileMapEntry(path, FileMapKind.Data, FileMapAdmissionPlane.Content,
+                "none", ["reader"], ["SnapshotDecoder"], false, "none", null, "committed-source",
+                null, null, digestionSource: true));
+        WriteScribeFixture(root, FileMapLoader.RelativePath, Encoding.UTF8.GetString(FileMapCanonicalWriter.Write(
+            new FileMapManifest(manifest.ResidencePolicy, manifest.Entries.Concat(sourceEntries)
+                .OrderBy(entry => entry.Pattern, StringComparer.Ordinal).ToImmutableArray(), manifest.ArtifactKinds)).AsSpan()));
     }
 
     private static void WriteValuesInputs(string root)

@@ -54,6 +54,90 @@ class NativePublicationConsumerTests:
                          '[FAIL] traced_artifact_not_revalidated')
 
 
+    def test_old_fib_partition_retention_rejects_and_explicit_invalidation_recovers(self):
+        from test_reuse import EXECUTION
+        policy = json.loads((self.root / 'lean-report-inputs.json').read_text())
+        policy['report_execution'] = EXECUTION
+        self.write('lean-report-inputs.json', json.dumps(policy))
+        self.build()
+        state = native.state(self.root)
+        artifact = state / 'modules/D5.Alone.zip'
+        with zipfile.ZipFile(artifact) as archive:
+            entries = {entry.filename: archive.read(entry) for entry in archive.infolist()}
+        raw = publication.RAW
+        value = json.loads(entries[raw])
+        row = value['modules'][0]
+        source_sha = row['source_sha256']
+        # The former producer emitted this partition under the same raw v3.
+        row['fib_analysis'] = dict(applications=[], schema_version=1)
+        entries[raw] = materials.canonical_json(value)
+        origin = json.loads(entries[raw + '.provenance.json'])
+        origin['report_sha256'] = hashlib.sha256(entries[raw]).hexdigest()
+        entries[raw + '.provenance.json'] = materials.canonical_json(origin)
+        artifact.unlink()  # Do not mutate a possible native hard link.
+        with zipfile.ZipFile(artifact, 'w') as archive:
+            for name, data in entries.items():
+                archive.writestr(name, data)
+        previous = artifact.read_bytes()
+        self.env['LAKE_ARTIFACT_CACHE'] = 'false'
+        self.env['LAKE_RESTORE_ARTIFACTS'] = 'false'
+        # Regenerate only the aggregate, leaving the compiler/module trace warm.
+        for path in state.glob('report.zip*'):
+            path.unlink()
+        self.build()
+        self.assertEqual(previous, artifact.read_bytes())
+        self.assertEqual('sha256:' + publication.digest(self.root / row['source_path']), source_sha)
+        self.assertEqual([dict(kind='aggregate', count=1)],
+            [json.loads(line) for line in (self.root / 'activity.jsonl').read_text().splitlines()])
+        exported = self.guarded_command([sys.executable, '-B',
+            str(self.root / 'tools/lean-inspector/native.py'), 'publish', str(self.root),
+            str(self.root / 'public.json')], env=self.env)
+        self.assertEqual(0, exported.returncode, exported.stdout + exported.stderr)
+        rejected = self.guarded_command([sys.executable, '-B',
+            str(self.root / 'tools/lean-inspector/publication.py'), 'validate',
+            str(self.root / 'public.json'), '--repository', str(self.root)], env=self.env)
+        self.assertNotEqual(0, rejected.returncode)
+        self.assertIn('fib.invalid_partition', rejected.stdout + rejected.stderr)
+        # The existing explicit invalidation must not recompile native programs.
+        programs = {path: (publication.digest(path), path.stat().st_mtime_ns)
+                    for directory in ('producer', 'interface', 'reg')
+                    for path in (state / directory).rglob('*')
+                    if path.is_file() and (path.suffix == '.olean' or
+                        path.name in ('reportInspector', 'inputDiscovery'))}
+        self.assertTrue(programs)
+        self.write('activity.jsonl', '')
+        # Recover through the canonical entry while the invalid predecessor is
+        # still physically published. The real native report is rebuilt here;
+        # the suite is a counted process because these transport fixtures have
+        # no mathematical FIB library.
+        self.write('bin/make', '#!/bin/sh\n'
+            '[ "$1" = -C ] && [ "$2" = "$PWD" ] && [ "$3" = compiled-fib-test ] || exit 97\n'
+            'printf "regressions\\n" >> fib-regression-calls\n')
+        (self.root / 'bin/make').chmod(0o755)
+        recovered = self.guarded_command(['bash', 'tools/lean-inspector/inspect.sh',
+            '--repository', str(self.root), '--output', str(self.root / 'public.json'),
+            '--regenerate-report-artifacts', '1'],
+            env=dict(self.env, STRATALINT_INSPECTOR_SUPERVISED='1', STRATALINT_FIB_REGRESSIONS_SELECTED='false'))
+        self.assertEqual(recovered.returncode, 0, recovered.stdout + recovered.stderr)
+        self.assertEqual((self.root / 'fib-regression-calls').read_text(), 'regressions\n')
+        self.assertTrue(publication.member(self.root / 'public.json', '.reuse.json').exists())
+        (self.root / 'bin/make').unlink()
+        publication.validate_bundle(self.root / 'public.json', publication.coordinates(self.root), self.root)
+        self.assertEqual(programs, {path: (publication.digest(path), path.stat().st_mtime_ns)
+                                    for path in programs})
+        with zipfile.ZipFile(artifact) as archive:
+            current = json.loads(archive.read(raw))['modules'][0]
+        self.assertNotEqual(previous, artifact.read_bytes())
+        self.assertEqual(source_sha, current['source_sha256'])
+        self.assertNotIn('schema_version', current.get('fib_analysis', {}))
+        self.assertEqual(sum(json.loads(line)['count'] for line in
+            Path(str(self.root / 'public.json') + '.logs/native-work.jsonl').read_text().splitlines()
+            if json.loads(line)['kind'] == 'extract'), len(self.stamps()))
+        before = self.stamps()
+        self.build()
+        self.assertEqual(before, self.stamps())
+        self.assertEqual('', (self.root / 'activity.jsonl').read_text())
+
     def test_aggregation_concatenates_without_revalidation(self):
         self.build()
         state = native.state(self.root)

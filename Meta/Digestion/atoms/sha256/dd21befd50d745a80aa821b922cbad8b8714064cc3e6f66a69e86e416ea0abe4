@@ -1,0 +1,31 @@
+**Lemma 86.2 (finite-codimension concentration with a genuine exterior right inverse).** For every list (86.3) there exist $\rho>0$, a fixed finite family of punctured compact tests supported in $\{N>\rho\}$ giving a right inverse $J:E\to\mathcal D_0$ of $A$, and normalized $v_r\in\mathcal D_0\cap\ker A$, for all sufficiently small $r>0$, such that
+
+$$
+T[v_r]\sim A_0r^{-2},\qquad V[v_r]\sim B_0r^{-3},\qquad
+q[v_r]\longrightarrow-\infty,
+\quad A_0,B_0>0,\quad v_r\rightharpoonup0\text{ in }\mathcal H.
+\tag{86.4}
+$$
+
+The correction family has the full effective rank $k$. The choice of $\rho$ depends on the list; no assertion of full rank on an arbitrary preassigned exterior is needed. The conclusion also holds after adjoining any finite list of actual $L^2$ representers.
+
+Proof. Choose an orthonormal basis $g_1,\ldots,g_k$ of $F$. The Gram matrix of $\mathbf1_{\{N>\rho\}}g_j$ tends to the identity as $\rho\downarrow0$, by absolute continuity of the $L^2$ integrals and the null measure of $e$. For a sufficiently small positive $\rho$ it is positive definite. Thus the effective independent functionals remain independent on $L^2(\{N>\rho\})$. Compact smooth tests in this open exterior are dense there. Their image under $A$ is a linear subspace of the finite-dimensional space $E$, hence closed; density and the preceding rank show that this image is all of $E$. Choose tests whose images are a basis of $E$ and invert their image matrix. This defines $J$, with $AJ=I_E$. If $k=0$, take $J=0$. This argument is the mature finite-dimensional right-inverse construction, with its exterior rank verified here.
+
+Choose a fixed normalized $u\in\mathcal D_0$ supported in a compact annulus $0<c\le N\le C_1$, and let $u_r=r^{-5/2}u\circ\delta_{1/r}$. The §82 change of variables gives
+
+$$
+\|u_r\|_2=1,\qquad T[u_r]=A_0r^{-2},\quad
+V[u_r]=B_0r^{-3},\qquad A_0=T[u]>0,\ B_0=V[u]>0.
+\tag{86.5}
+$$
+
+For any $f\in\mathcal H$, $|\langle f,u_r\rangle|\le\|\mathbf1_{\{N\le C_1r\}}f\|_2\to0$. Consequently $Au_r\to0$ and $c_r=JAu_r\to0$ in the $L^2$, free form and $\Gamma$-weighted norms, since $J$ has a fixed finite smooth range. For $C_1r<\rho$, the supports of $u_r$ and $c_r$, and of their horizontal derivatives, are disjoint. Hence $z_r=u_r-c_r$ has $Az_r=0$ and
+
+$$
+\|z_r\|_2^2=1+\|c_r\|_2^2,quad
+T[z_r]=A_0r^{-2}+T[c_r],\quad V[z_r]=B_0r^{-3}+V[c_r].
+\tag{86.6}
+$$
+
+Set $v_r=z_r/\|z_r\|_2$. Equations (86.6) prove the two asymptotics, with no rate assumption on $Au_r$; the negative term has higher order. Weak convergence follows from that of $u_r$ and strong convergence of $c_r$ to zero. Each support is compact and avoids $e$. Adjoining finitely many $L^2$ representers simply repeats the rank argument for the enlarged effective span. $\square$
+

@@ -12,8 +12,8 @@ internal sealed class ActualPureQubitGeometryDocument : IScribeDocumentDefinitio
         "A rank-two affine measurement of a pure qubit curve has a strict arc parametrization.",
         H("Pure-qubit affine geometry"),
         Blocks(
-            Paragraph(Text("Throughout, Jm denotes the finite index set Fin m; a subscript j denotes evaluation at j. Matrices are complex, PSD means positive semidefinite, and 1n is the identity on the indicated finite index set. C1(I) means continuously differentiable on I over the reals. Preconnected means that I cannot be separated into two nonempty relatively open sets; it does not require I to be nonempty. D2 is the canonical space of positive trace-one qubit density states, and mat recovers the underlying matrix. All unspecified scalar arguments in the definitions below are real. In radiusMap and extendedCost, w is a function from the reals to the reals; in root, upperDiag and effect it is a real scalar. Division by zero and the real square root use their total real conventions: a zero denominator gives zero and the square root of a negative number is zero.")),
-            Paragraph(Text("For spectralQFI, U is the eigenvector unitary chosen for the Hermitian matrix, and the lambda entries are its eigenvalues. The positivity proof is shown after a semicolon when its quantification matters. A prime denotes the real derivative. In the rank-two statement, the orthonormal basis is indexed by Fin 3 and its coordinate isometry is denoted O with subscript B.")),
+            Paragraph(Text("All matrices, vector spaces, predicates and maps below use the indicated Lean and Mathlib objects. Fin m is the outcome index type, and EuclideanSpace over the reals on Fin 3 is the Bloch-vector space. DensityState on Fin 2 is the canonical space of positive trace-one qubit states; Subtype.val exposes its CStarMatrix value. Real scalars enter complex matrices through Complex.ofReal, and WithLp.toLp 2 equips coordinate functions with the Euclidean structure. Division by zero and the real square root use their total real conventions.")),
+            Paragraph(Text("The spectral expression specifies the chosen eigenvector unitary and eigenvalues of the positive matrix. Linear maps are determined by their typed underlying functions. The rank-two conclusion uses the coordinate isometry OrthonormalBasis.repr of the chosen basis.")),
             Describe.Lean(DescribeId.Create("spectral-sld-information"),
                 DeclarationHandle.Create(Module + "spectralQFI"), H("Spectral SLD information"),
                 StatementSource.FromAuthor(SpectralFormula()), AssessedProvenance.FromRepo(),
@@ -29,7 +29,7 @@ internal sealed class ActualPureQubitGeometryDocument : IScribeDocumentDefinitio
                 DeclarationHandle.Create(Module + "densityBridge"), H("Canonical density-state bridge"),
                 StatementSource.FromAuthor(DensityFormula()), AssessedProvenance.FromRepo(),
                 Blocks(Paragraph(Text(
-                    "The bridge constructs the canonical density state represented by the given positive trace-one matrix; its subtype includes the exact recovered-matrix equality."))),
+                    "The bridge constructs the canonical density state represented by the given positive trace-one matrix. Its state value is CStarMatrix.ofMatrix M, its positivity proof is map_nonneg CStarMatrix.ofMatrixStarAlgEquiv hM.nonneg, and its trace proof is ht. The recovered-matrix equality is reflexive."))),
                 DescribeRole.Definition),
             Describe.Lean(DescribeId.Create("actual-program-class"),
                 DeclarationHandle.Create(Module + "IsProgram"), H("Full actual program class"),
@@ -55,6 +55,22 @@ internal sealed class ActualPureQubitGeometryDocument : IScribeDocumentDefinitio
                 DeclarationHandle.Create(Module + "blochMatrix"), H("Bloch matrix"),
                 StatementSource.FromAuthor(BlochMatrixFormula()), AssessedProvenance.FromRepo(),
                 Blocks(Paragraph(Text("The Hermitian matrix with a specified real trace and Bloch vector."))), DescribeRole.Definition),
+            Describe.Lean(DescribeId.Create("blochmatrix-trace"),
+                DeclarationHandle.Create(Module + "blochMatrix_trace"), H("Trace of a Bloch matrix"),
+                StatementSource.FromAuthor(Disp(TraceBlochMatrixFormula())), AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("The scalar coordinate is the complex trace, with the real scalar embedded in the complex numbers."))), DescribeRole.Theorem),
+            Describe.Lean(DescribeId.Create("bloch-blochmatrix"),
+                DeclarationHandle.Create(Module + "bloch_blochMatrix"), H("Bloch coordinates of a Bloch matrix"),
+                StatementSource.FromAuthor(Disp(InverseBlochFormula())), AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("The Bloch map recovers the vector coordinate for every real scalar and every real three-dimensional vector."))), DescribeRole.Theorem),
+            Describe.Lean(DescribeId.Create("hermitian-bloch-geometry"),
+                DeclarationHandle.Create(Module + "bloch_geometry_of_isHermitian"), H("Hermitian Bloch geometry"),
+                StatementSource.FromAuthor(Disp(HermitianBlochFormula())), AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("A Hermitian qubit matrix is determined by its trace and Bloch vector. If it has trace one and is idempotent, its Bloch vector has norm one."))), DescribeRole.Theorem),
+            Describe.Lean(DescribeId.Create("positive-bloch-bound"),
+                DeclarationHandle.Create(Module + "norm_bloch_le_trace_of_posSemidef"), H("Positive Bloch norm bound"),
+                StatementSource.FromAuthor(Disp(PositiveBlochBoundFormula())), AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("For a positive semidefinite qubit matrix, the Bloch-vector norm is at most the real part of the trace. The determinant equals one quarter of the difference between the squared trace and the squared Bloch norm."))), DescribeRole.Theorem),
             Describe.Lean(DescribeId.Create("effectreadout"),
                 DeclarationHandle.Create(Module + "effectReadout"), H("Visible readout map"),
                 StatementSource.FromAuthor(ReadoutFormula()), AssessedProvenance.FromRepo(),
@@ -100,162 +116,257 @@ internal sealed class ActualPureQubitGeometryDocument : IScribeDocumentDefinitio
                 StatementSource.FromAuthor(RankTwoFormula()), AssessedProvenance.FromRepo(),
                 Blocks(Paragraph(Text("The basis supplies a fixed coordinate frame. The coefficients and the signed square-root coordinate satisfy exactly the conjunction below; the last bound holds for every nonnegative radius whose closed interval lies in I.")))))));
 
-    private static Formula SpectralFormula() =>
-        Disp(Seq(Begin, Grp(F.Id("aligned")), Amp, Forall, Sp, F.Id("n"), Esc, Mathrm, Grp(F.Id("finite")), Comma, Esc, Rho, Comma, F.Id("D"),
-        InMacro, Mathbb, Sp, F.Id("C"), Caret, Grp(F.Id("n"), Times, Sp, F.Id("n")), Comma, Esc, F.Id("h"), Colon, Operatorname, Grp(F.Id("PSD")), Open,
-        Rho, Close, Comma, RowBreak, Amp, F.Id("U"), Eq, F.Id("U"), Underscore, F.Id("h"), Comma, Quad, Sp, F.Id("M"), Eq, F.Id("U"), Caret, Star,
-        F.Id("D"), F.Id("U"), Comma, Quad, Operatorname, Grp(F.Id("spectralQFI")), Open, Rho, Comma, F.Id("D"), Semi, F.Id("h"), Close, Eq, Sum,
-        Underscore, Grp(F.Id("i"), InMacro, Sp, F.Id("n")), Sum, Underscore, Grp(F.Id("j"), InMacro, Sp, F.Id("n")), Frac, Grp(D(2), Bar, F.Id("M"),
-        Underscore, Grp(F.Id("i"), F.Id("j")), Bar, Caret, D(2)), Grp(LambdaLower, Underscore, F.Id("i"), Plus, LambdaLower, Underscore,
-        F.Id("j")), End, Grp(F.Id("aligned"))));
+    private static Formula TraceBlochMatrixFormula() => All("a", Reals(), All("r", BlochVectors(),
+        Equal(Trace(Call("blochMatrix", X("a"), X("r"))), OfReal(X("a")))));
 
-    private static Formula GuardedFormula() =>
-        Disp(Seq(Begin, Grp(F.Id("aligned")), Amp, Forall, Sp, F.Id("S"), Subseteq, Mathbb, Sp, F.Id("R"), Comma, Quad, Operatorname,
-        Grp(F.Id("guardedInfimum")), Open, F.Id("S"), Close, Eq, Begin, Grp(F.Id("cases")), Operatorname, Grp(F.Id("inf")), F.Id("S"), Amp,
-        F.Id("S"), Neq, Emptyset, Esc, Land, Esc, Operatorname, Grp(F.Id("BddBelow")), Open, F.Id("S"), Close, RowBreak, D(0), Amp, Mathrm,
-        Grp(F.Id("otherwise")), End, Grp(F.Id("cases")), End, Grp(F.Id("aligned"))));
+    private static Formula InverseBlochFormula() => All("a", Reals(), All("r", BlochVectors(),
+        Equal(Call("bloch", Call("blochMatrix", X("a"), X("r"))), X("r"))));
 
-    private static Formula DensityFormula() =>
-        Disp(Seq(Begin, Grp(F.Id("aligned")), Amp, Forall, Sp, F.Id("M"), InMacro, Mathbb, Sp, F.Id("C"), Caret, Grp(D(2), Times, D(2)), Comma, Esc,
-        F.Id("h"), Colon, Operatorname, Grp(F.Id("PSD")), Open, F.Id("M"), Close, Comma, Esc, F.Id("h"), Underscore, F.Id("t"), Colon,
-        Operatorname, Grp(F.Id("tr")), Open, F.Id("M"), Close, Eq, D(1), Comma, RowBreak, Amp, Operatorname, Grp(F.Id("densityBridge")), Open,
-        F.Id("M"), Comma, F.Id("h"), Comma, F.Id("h"), Underscore, F.Id("t"), Close, InMacro, OpenBrace, F.Id("r"), InMacro, Mathcal, Sp, F.Id("D"),
-        Underscore, D(2), Mid, Operatorname, Grp(F.Id("mat")), Open, F.Id("r"), Close, Eq, F.Id("M"), CloseBrace, End, Grp(F.Id("aligned"))));
+    private static Formula HermitianBlochFormula() => All("M", QubitMatrices(),
+        Implies(IsHermitian(X("M")), And(
+            Equal(X("M"), Call("blochMatrix", RealPart(Trace(X("M"))), Call("bloch", X("M")))),
+            Implies(Equal(Trace(X("M")), Num(1)),
+                Implies(Equal(Multiply(X("M"), X("M")), X("M")),
+                    Equal(new Formula.Norm(Call("bloch", X("M"))), Num(1)))))));
 
-    private static Formula ProgramFormula() =>
-        Disp(Seq(Begin, Grp(F.Id("aligned")), Amp, Forall, Sp, F.Id("m"), InMacro, Mathbb, Sp, F.Id("N"), Comma, Esc, F.Id("p"), Comma, F.Id("v"), Colon,
-        F.Id("J"), Underscore, F.Id("m"), To, Mathbb, Sp, F.Id("R"), Comma, Esc, F.Id("R"), Comma, F.Id("Q"), InMacro, Mathbb, Sp, F.Id("R"), Comma, Esc,
-        F.Id("N"), Colon, F.Id("J"), Underscore, F.Id("m"), To, Mathbb, Sp, F.Id("C"), Caret, Grp(D(2), Times, D(2)), Comma, Esc, Rho, Colon, Mathbb, Sp,
-        F.Id("R"), To, Mathbb, Sp, F.Id("C"), Caret, Grp(D(2), Times, D(2)), Comma, Esc, F.Id("I"), Subseteq, Mathbb, Sp, F.Id("R"), Comma, RowBreak,
-        Amp, Operatorname, Grp(F.Id("IsProgram")), Open, F.Id("p"), Comma, F.Id("v"), Comma, F.Id("R"), Comma, F.Id("N"), Comma, Rho, Comma,
-        F.Id("I"), Comma, F.Id("Q"), Close, Esc, Leftrightarrow, RowBreak, Amp, Operatorname, Grp(F.Id("Open")), Open, F.Id("I"), Close, Land,
-        Operatorname, Grp(F.Id("Preconnected")), Open, F.Id("I"), Close, Land, OpenBracket, Minus, F.Id("R"), Comma, F.Id("R"), CloseBracket,
-        Subseteq, Sp, F.Id("I"), RowBreak, Amp, Land, Esc, Open, Forall, Sp, F.Id("j"), InMacro, Sp, F.Id("J"), Underscore, F.Id("m"), Comma, Operatorname,
-        Grp(F.Id("PSD")), Open, F.Id("N"), Underscore, F.Id("j"), Close, Close, Land, Sum, Underscore, Grp(F.Id("j"), InMacro, Sp, F.Id("J"),
-        Underscore, F.Id("m")), F.Id("N"), Underscore, F.Id("j"), Eq, D(1), Underscore, D(2), Land, Rho, InMacro, Sp, F.Id("C"), Caret, D(1), Open,
-        F.Id("I"), Close, RowBreak, Amp, Land, Esc, Open, Forall, Sp, F.Id("u"), InMacro, Sp, F.Id("I"), Comma, Operatorname, Grp(F.Id("PSD")), Open,
-        Rho, Open, F.Id("u"), Close, Close, Land, Operatorname, Grp(F.Id("tr")), Open, Rho, Open, F.Id("u"), Close, Close, Eq, D(1), Land, Rho,
-        Open, F.Id("u"), Close, Caret, D(2), Eq, Rho, Open, F.Id("u"), Close, RowBreak, Amp, Qquad, Land, Exists, Sp, F.Id("r"), InMacro, Mathcal, Sp,
-        F.Id("D"), Underscore, D(2), Comma, Operatorname, Grp(F.Id("mat")), Open, F.Id("r"), Close, Eq, Rho, Open, F.Id("u"), Close, Close,
-        RowBreak, Amp, Land, Esc, Open, Forall, Sp, F.Id("u"), InMacro, Sp, F.Id("I"), Comma, Forall, Sp, F.Id("j"), InMacro, Sp, F.Id("J"), Underscore,
-        F.Id("m"), Comma, Operatorname, Grp(F.Id("tr")), Open, F.Id("N"), Underscore, F.Id("j"), Rho, Open, F.Id("u"), Close, Close, Eq,
-        F.Id("p"), Underscore, F.Id("j"), Plus, F.Id("u"), F.Id("v"), Underscore, F.Id("j"), Land, D(0), Lt, F.Id("p"), Underscore, F.Id("j"),
-        Plus, F.Id("u"), F.Id("v"), Underscore, F.Id("j"), Close, RowBreak, Amp, Land, Esc, Open, Forall, Sp, F.Id("h"), Colon, Operatorname,
-        Grp(F.Id("PSD")), Open, Rho, Open, D(0), Close, Close, Comma, Operatorname, Grp(F.Id("spectralQFI")), Open, Rho, Open, D(0), Close,
-        Comma, Rho, Apos, Open, D(0), Close, Semi, F.Id("h"), Close, Eq, F.Id("Q"), Close, End, Grp(F.Id("aligned"))));
+    private static Formula PositiveBlochBoundFormula() => All("M", QubitMatrices(),
+        Implies(PosSemidef(X("M")), LE(new Formula.Norm(Call("bloch", X("M"))), RealPart(Trace(X("M"))))));
 
-    private static Formula CostsFormula() =>
-        Disp(Seq(Operatorname, Grp(F.Id("costs")), Open, F.Id("p"), Comma, F.Id("v"), Comma, F.Id("R"), Close, Eq, OpenBrace, F.Id("Q"), InMacro,
-        Mathbb, Sp, F.Id("R"), Mid, Exists, Sp, F.Id("N"), Comma, Rho, Comma, F.Id("I"), Comma, Operatorname, Grp(F.Id("IsProgram")), Open, F.Id("p"),
-        Comma, F.Id("v"), Comma, F.Id("R"), Comma, F.Id("N"), Comma, Rho, Comma, F.Id("I"), Comma, F.Id("Q"), Close, CloseBrace));
+    private static Formula SpectralFormula()
+    {
+        Formula matrices = Matrices(X("n"));
+        Formula unitary = Field(Field(X("hp"), "isHermitian"), "eigenvectorUnitary");
+        Formula eigenvalues = Field(Field(X("hp"), "isHermitian"), "eigenvalues");
+        Formula matrixUnitary = Typed(X("U"), matrices);
+        return Disp(All("n", Seq(X("Type"), Star), Instances(X("n"),
+            All("rho", matrices, All("B", matrices, All("hp", PosSemidef(X("rho")),
+                Let("U", At(Qualified("Matrix", "unitaryGroup"), X("n"), Complexes()), unitary,
+                    Let("M", matrices, Multiply(Multiply(Call("star", matrixUnitary), X("B")), matrixUnitary),
+                        Equal(Call("spectralQFI", X("rho"), X("B"), X("hp")),
+                            SumOver("i", X("n"), SumOver("j", X("n"), Fraction(
+                                Multiply(Num(2), At(Qualified("Complex", "normSq"), At(X("M"), X("i"), X("j")))),
+                                Add(At(eigenvalues, X("i")), At(eigenvalues, X("j")))))))))))))));
+    }
 
-    private static Formula CtwoFormula() =>
-        Disp(Seq(F.Id("C"), Underscore, D(2), Open, F.Id("p"), Comma, F.Id("v"), Comma, F.Id("R"), Close, Eq, Operatorname,
-        Grp(F.Id("guardedInfimum")), Open, Operatorname, Grp(F.Id("costs")), Open, F.Id("p"), Comma, F.Id("v"), Comma, F.Id("R"), Close, Close));
+    private static Formula GuardedFormula() => Disp(All("S", RealSets(),
+        Equal(Call("guardedInfimum", X("S")), Call("ite",
+            And(At(Qualified("Set", "Nonempty"), X("S")), Call("BddBelow", X("S"))),
+            Call("sInf", X("S")), Num(0)))));
 
-    private static Formula BlochFormula() =>
-        Disp(Seq(Operatorname, Grp(F.Id("bloch")), Open, F.Id("M"), Close, Eq, Open, D(2), Operatorname, Grp(F.Id("Re")), F.Id("M"), Underscore,
-        Grp(D(0, 1)), Comma, Minus, D(2), Mathrm, Grp(F.Id("Im")), F.Id("M"), Underscore, Grp(D(0, 1)), Comma, Operatorname, Grp(F.Id("Re")),
-        F.Id("M"), Underscore, Grp(D(0, 0)), Minus, Operatorname, Grp(F.Id("Re")), F.Id("M"), Underscore, Grp(D(1, 1)), Close, InMacro, Mathbb, Sp,
-        F.Id("R"), Caret, D(3)));
+    private static Formula DensityFormula()
+    {
+        Formula bridge = Call("densityBridge", X("M"), X("hM"), X("ht"));
+        Formula densityType = Call("Subtype", LambdaOf("rho", DensityStates(),
+            Equal(UnderlyingMatrix(X("rho")), X("M"))));
+        Formula positiveProof = At(new Formula.Subscript(Name("map"), X("nonneg")),
+            Qualified("CStarMatrix", "ofMatrixStarAlgEquiv"), Field(X("hM"), "nonneg"));
+        Formula state = Tuple(At(Qualified("CStarMatrix", "ofMatrix"), X("M")), positiveProof, X("ht"));
+        return Disp(All("M", QubitMatrices(), All("hM", PosSemidef(X("M")),
+            All("ht", Equal(Trace(X("M")), Num(1)), And(
+                Equal(Typed(bridge, densityType), Tuple(state, X("rfl"))),
+                Equal(UnderlyingMatrix(Val(bridge)), X("M")))))));
+    }
 
-    private static Formula BlochMatrixFormula() =>
-        Disp(Seq(Operatorname, Grp(F.Id("blochMatrix")), Open, F.Id("a"), Comma, F.Id("r"), Close, Eq, Frac, D(1, 2), Begin,
-        Grp(F.Id("pmatrix")), F.Id("a"), Plus, F.Id("r"), Underscore, D(2), Amp, F.Id("r"), Underscore, D(0), Minus, Mathrm, Grp(F.Id("i")),
-        F.Id("r"), Underscore, D(1), RowBreak, Sp, F.Id("r"), Underscore, D(0), Plus, Mathrm, Grp(F.Id("i")), F.Id("r"), Underscore, D(1), Amp,
-        F.Id("a"), Minus, F.Id("r"), Underscore, D(2), End, Grp(F.Id("pmatrix")), Quad, Open, F.Id("a"), InMacro, Mathbb, Sp, F.Id("R"), Comma, Esc,
-        F.Id("r"), InMacro, Mathbb, Sp, F.Id("R"), Caret, D(3), Close));
+    private static Formula ProgramFormula()
+    {
+        Formula state = At(X("rho"), X("u"));
+        Formula affine = Add(At(X("p"), X("j")), Multiply(X("u"), At(X("v"), X("j"))));
+        Formula conditions = Conjoin(
+            Call("IsOpen", X("I")), Call("IsPreconnected", X("I")), Subset(RadiusInterval(X("R")), X("I")),
+            All("j", Fin(X("m")), PosSemidef(At(X("N"), X("j")))),
+            Equal(SumOver("j", Fin(X("m")), At(X("N"), X("j"))), Typed(Num(1), QubitMatrices())),
+            Call("ContDiffOn", Reals(), Num(1), X("rho"), X("I")),
+            AllIn("u", X("I"), Conjoin(PosSemidef(state), Equal(Trace(state), Num(1)),
+                Equal(Multiply(state, state), state), Ex("r", DensityStates(), Equal(UnderlyingMatrix(X("r")), state)))),
+            AllIn("u", X("I"), All("j", Fin(X("m")), And(
+                Equal(Trace(Multiply(At(X("N"), X("j")), state)), OfReal(affine)), LT(Num(0), affine)))),
+            All("h", PosSemidef(At(X("rho"), Num(0))), Equal(
+                Call("spectralQFI", At(X("rho"), Num(0)), Call("deriv", X("rho"), Num(0)), X("h")), X("Q"))));
+        return Disp(All("m", Naturals(), All("p", Scores(), All("v", Scores(), All("R", Reals(),
+            All("N", Effects(), All("rho", Curves(), All("I", RealSets(), All("Q", Reals(),
+                Iff(Call("IsProgram", X("p"), X("v"), X("R"), X("N"), X("rho"), X("I"), X("Q")), conditions))))))))));
+    }
 
-    private static Formula ReadoutFormula() =>
-        Disp(Seq(Operatorname, Grp(F.Id("effectReadout")), Open, F.Id("N"), Close, Colon, Mathbb, Sp, F.Id("R"), Caret, D(3), To, Mathbb, Sp, F.Id("R"),
-        Caret, Grp(F.Id("J"), Underscore, F.Id("m")), Comma, Quad, Operatorname, Grp(F.Id("effectReadout")), Open, F.Id("N"), Close, Open,
-        F.Id("r"), Close, Underscore, F.Id("j"), Eq, Frac, Grp(Langle, Operatorname, Grp(F.Id("bloch")), Open, F.Id("N"), Underscore, F.Id("j"),
-        Close, Comma, F.Id("r"), Rangle), Grp(D(2))));
+    private static Formula CostsFormula() => Disp(All("m", Naturals(), All("p", Scores(), All("v", Scores(), All("R", Reals(),
+        Equal(Call("costs", X("p"), X("v"), X("R")), Seq(OpenBrace, Typed(X("Q"), Reals()), Mid, Sp,
+            Ex("N", Effects(), Ex("rho", Curves(), Ex("I", RealSets(),
+                Call("IsProgram", X("p"), X("v"), X("R"), X("N"), X("rho"), X("I"), X("Q"))))), CloseBrace)))))));
 
-    private static Formula ReframeFormula() =>
-        Disp(Seq(Operatorname, Grp(F.Id("reframe")), Open, F.Id("O"), Comma, F.Id("M"), Close, Eq, Operatorname, Grp(F.Id("blochMatrix")), Open,
-        Operatorname, Grp(F.Id("Re")), Operatorname, Grp(F.Id("tr")), Open, F.Id("M"), Close, Comma, F.Id("O"), Open, Operatorname,
-        Grp(F.Id("bloch")), Open, F.Id("M"), Close, Close, Close, Quad, Open, F.Id("O"), Colon, Mathbb, Sp, F.Id("R"), Caret, D(3), Equiv, Mathbb, Sp,
-        F.Id("R"), Caret, D(3), Esc, Mathrm, Grp(F.Id("orthogonal")), Close));
+    private static Formula CtwoFormula() => Disp(All("m", Naturals(), All("p", Scores(), All("v", Scores(), All("R", Reals(),
+        Equal(Call("C2", X("p"), X("v"), X("R")), Call("guardedInfimum", Call("costs", X("p"), X("v"), X("R")))))))));
 
-    private static Formula BlochLinearFormula() =>
-        Disp(Seq(Operatorname, Grp(F.Id("blochLinear")), Colon, Mathbb, Sp, F.Id("C"), Caret, Grp(D(2), Times, D(2)), To, Underscore, Grp(Mathbb, Sp,
-        F.Id("R")), Mathbb, Sp, F.Id("R"), Caret, D(3), Comma, Quad, Operatorname, Grp(F.Id("blochLinear")), Open, F.Id("M"), Close, Eq,
-        Operatorname, Grp(F.Id("bloch")), Open, F.Id("M"), Close));
+    private static Formula BlochFormula() => Disp(All("M", QubitMatrices(), Equal(Call("bloch", X("M")),
+        ToLp(Vector(Multiply(Num(2), RealPart(At(X("M"), Num(0), Num(1)))),
+            Multiply(Negate(Num(2)), ImaginaryPart(At(X("M"), Num(0), Num(1)))),
+            Subtract(RealPart(At(X("M"), Num(0), Num(0))), RealPart(At(X("M"), Num(1), Num(1)))))))));
 
-    private static Formula ReframeLinearFormula() =>
-        Disp(Seq(Operatorname, Grp(F.Id("reframeLinear")), Open, F.Id("O"), Close, Colon, Mathbb, Sp, F.Id("C"), Caret, Grp(D(2), Times, D(2)), To,
-        Underscore, Grp(Mathbb, Sp, F.Id("R")), Mathbb, Sp, F.Id("C"), Caret, Grp(D(2), Times, D(2)), Comma, Quad, Operatorname,
-        Grp(F.Id("reframeLinear")), Open, F.Id("O"), Close, Open, F.Id("M"), Close, Eq, Operatorname, Grp(F.Id("reframe")), Open, F.Id("O"),
-        Comma, F.Id("M"), Close));
+    private static Formula BlochMatrixFormula() => Disp(All("a", Reals(), All("r", BlochVectors(),
+        Equal(Call("blochMatrix", X("a"), X("r")), MatrixTwo(
+            Fraction(OfReal(Add(X("a"), At(X("r"), Num(2)))), Num(2)),
+            Fraction(Subtract(OfReal(At(X("r"), Num(0))), Multiply(OfReal(At(X("r"), Num(1))), Qualified("Complex", "I"))), Num(2)),
+            Fraction(Add(OfReal(At(X("r"), Num(0))), Multiply(OfReal(At(X("r"), Num(1))), Qualified("Complex", "I"))), Num(2)),
+            Fraction(OfReal(Subtract(X("a"), At(X("r"), Num(2)))), Num(2)))))));
 
-    private static Formula RootFormula() =>
-        Disp(Seq(Operatorname, Grp(F.Id("root")), Open, F.Id("p"), Comma, F.Id("d"), Comma, Alpha, Comma, F.Id("e"), Comma, F.Id("w"), Close, Eq,
-        Frac, Grp(D(2), Open, D(1), Minus, F.Id("e"), Close, F.Id("w"), Caret, D(2), F.Id("d"), Caret, D(2)), Grp(F.Id("p"), Minus, Alpha, Sp,
-        F.Id("e"), F.Id("w"), F.Id("d"), Plus, Sqrt, Grp(Open, F.Id("p"), Minus, Alpha, Sp, F.Id("e"), F.Id("w"), F.Id("d"), Close, Caret, D(2),
-        Minus, D(4), F.Id("e"), Open, D(1), Minus, F.Id("e"), Close, F.Id("w"), Caret, D(2), F.Id("d"), Caret, D(2)))));
+    private static Formula ReadoutFormula() => Disp(All("m", Naturals(), All("N", Effects(),
+        Equal(At(Qualified("DFunLike", "coe"), Typed(Call("effectReadout", X("N")),
+                RealLinear(BlochVectors(), Scores()))),
+            LambdaOf("r", BlochVectors(), LambdaOf("j", Fin(X("m")), Fraction(
+                Seq(new Formula.Subscript(Seq(Langle, Call("bloch", At(X("N"), X("j"))), Comma, Sp, X("r"), Rangle), Reals())),
+                Num(2))))))));
 
-    private static Formula RadiusFormula() =>
-        Disp(Seq(Operatorname, Grp(F.Id("radiusMap")), Open, F.Id("B"), Comma, Alpha, Comma, F.Id("w"), Close, Open, F.Id("t"), Close, Eq, Frac,
-        Grp(Open, D(2), F.Id("t"), Sqrt, Grp(D(1), Minus, F.Id("t"), Caret, D(2)), Minus, Bar, Alpha, Bar, F.Id("t"), Caret, D(2), Close,
-        F.Id("w"), Open, F.Id("t"), Caret, D(2), Close), Grp(Open, D(1), Plus, F.Id("t"), Close, Sqrt, Sp, F.Id("B"))));
+    private static Formula ReframeFormula() => Disp(All("O", Frames(), All("M", QubitMatrices(),
+        Equal(Call("reframe", X("O"), X("M")),
+            Call("blochMatrix", RealPart(Trace(X("M"))), At(X("O"), Call("bloch", X("M"))))))));
 
-    private static Formula ExtendedFormula() =>
-        Disp(Seq(Operatorname, Grp(F.Id("extendedCost")), Open, F.Id("B"), Comma, Alpha, Comma, F.Id("w"), Close, Open, F.Id("e"), Close, Eq,
-        Frac, Grp(F.Id("B")), Grp(F.Id("w"), Open, F.Id("e"), Close, Caret, D(2)), Frac, Grp(D(4), Open, D(1), Minus, F.Id("e"), Close),
-        Grp(D(4), Open, D(1), Minus, F.Id("e"), Close, Minus, Alpha, Caret, D(2), F.Id("e"))));
+    private static Formula BlochLinearFormula() => Disp(Equal(
+        At(Qualified("DFunLike", "coe"), Typed(Name("blochLinear"), RealLinear(QubitMatrices(), BlochVectors()))), Name("bloch")));
 
-    private static Formula UpperFormula() =>
-        Disp(Seq(Operatorname, Grp(F.Id("upperDiag")), Open, F.Id("p"), Comma, F.Id("d"), Comma, Alpha, Comma, F.Id("e"), Comma, F.Id("w"),
-        Close, Eq, Frac, Grp(F.Id("p"), Minus, Alpha, Sp, F.Id("e"), F.Id("w"), F.Id("d"), Plus, Sqrt, Grp(Open, F.Id("p"), Minus, Alpha, Sp, F.Id("e"),
-        F.Id("w"), F.Id("d"), Close, Caret, D(2), Minus, D(4), F.Id("e"), Open, D(1), Minus, F.Id("e"), Close, F.Id("w"), Caret, D(2), F.Id("d"),
-        Caret, D(2))), Grp(D(2), Open, D(1), Minus, F.Id("e"), Close)));
+    private static Formula ReframeLinearFormula() => Disp(All("O", Frames(), Equal(
+        At(Qualified("DFunLike", "coe"), Typed(Call("reframeLinear", X("O")), RealLinear(QubitMatrices(), QubitMatrices()))),
+        Call("reframe", X("O")))));
 
-    private static Formula EffectFormula() =>
-        Disp(Seq(Operatorname, Grp(F.Id("effect")), Open, F.Id("p"), Comma, F.Id("d"), Comma, Alpha, Comma, F.Id("e"), Comma, F.Id("w"), Close,
-        Eq, Begin, Grp(F.Id("pmatrix")), Operatorname, Grp(F.Id("upperDiag")), Open, F.Id("p"), Comma, F.Id("d"), Comma, Alpha, Comma, F.Id("e"),
-        Comma, F.Id("w"), Close, Amp, F.Id("w"), F.Id("d"), RowBreak, Sp, F.Id("w"), F.Id("d"), Amp, Operatorname, Grp(F.Id("root")), Open,
-        F.Id("p"), Comma, F.Id("d"), Comma, Alpha, Comma, F.Id("e"), Comma, F.Id("w"), Close, End, Grp(F.Id("pmatrix"))));
+    private static Formula RootFormula() => Disp(ScalarParameters(Equal(
+        Call("root", X("p"), X("d"), X("alpha"), X("e"), X("w")),
+        Fraction(Multiply(Multiply(Multiply(Num(2), Subtract(Num(1), X("e"))), Square(X("w"))), Square(X("d"))),
+            Add(QuadraticCenter(), QuadraticRadical())))));
 
-    private static Formula ArcFormula() =>
-        Disp(Seq(Operatorname, Grp(F.Id("arc")), Open, F.Id("e"), Comma, F.Id("x"), Comma, F.Id("c"), Comma, F.Id("u"), Close, Eq, Operatorname,
-        Grp(F.Id("blochMatrix")), Open, D(1), Comma, Open, F.Id("x"), Plus, F.Id("c"), F.Id("u"), Comma, Sqrt, Grp(D(4), F.Id("e"), Open, D(1),
-        Minus, F.Id("e"), Close, Minus, Open, F.Id("x"), Plus, F.Id("c"), F.Id("u"), Close, Caret, D(2)), Comma, D(1), Minus, D(2), F.Id("e"),
-        Close, Close));
+    private static Formula RadiusFormula() => Disp(All("B", Reals(), All("alpha", Reals(), All("w", Arrow(Reals(), Reals()), All("t", Reals(),
+        Equal(Call("radiusMap", X("B"), X("alpha"), X("w"), X("t")), Fraction(
+            Multiply(Subtract(Multiply(Multiply(Num(2), X("t")), SqrtReal(Subtract(Num(1), Square(X("t"))))),
+                Multiply(new Formula.Absolute(X("alpha")), Square(X("t")))), At(X("w"), Square(X("t")))),
+            Multiply(Add(Num(1), X("t")), SqrtReal(X("B"))))))))));
 
-    private static Formula RankTwoFormula() =>
-        Disp(Seq(Begin, Grp(F.Id("aligned")), Amp, Forall, Sp, F.Id("m"), InMacro, Mathbb, Sp, F.Id("N"), Comma, Esc, F.Id("N"), Colon, F.Id("J"),
-        Underscore, F.Id("m"), To, Mathbb, Sp, F.Id("C"), Caret, Grp(D(2), Times, D(2)), Comma, Esc, Rho, Colon, Mathbb, Sp, F.Id("R"), To, Mathbb, Sp,
-        F.Id("C"), Caret, Grp(D(2), Times, D(2)), Comma, Esc, F.Id("p"), Comma, F.Id("v"), Colon, F.Id("J"), Underscore, F.Id("m"), To, Mathbb, Sp,
-        F.Id("R"), Comma, Esc, F.Id("I"), Subseteq, Mathbb, Sp, F.Id("R"), Comma, RowBreak, Amp, Operatorname, Grp(F.Id("Open")), Open, F.Id("I"),
-        Close, Land, Operatorname, Grp(F.Id("Preconnected")), Open, F.Id("I"), Close, Land, D(0), InMacro, Sp, F.Id("I"), Land, Sp, F.Id("v"), Neq, D(0),
-        RowBreak, Amp, Land, Esc, Open, Forall, Sp, F.Id("j"), InMacro, Sp, F.Id("J"), Underscore, F.Id("m"), Comma, Operatorname, Grp(F.Id("PSD")),
-        Open, F.Id("N"), Underscore, F.Id("j"), Close, Close, Land, Sum, Underscore, Grp(F.Id("j"), InMacro, Sp, F.Id("J"), Underscore, F.Id("m")),
-        F.Id("N"), Underscore, F.Id("j"), Eq, D(1), Underscore, D(2), Land, Rho, InMacro, Sp, F.Id("C"), Caret, D(1), Open, F.Id("I"), Close,
-        RowBreak, Amp, Land, Esc, Open, Forall, Sp, F.Id("u"), InMacro, Sp, F.Id("I"), Comma, Operatorname, Grp(F.Id("PSD")), Open, Rho, Open, F.Id("u"),
-        Close, Close, Land, Operatorname, Grp(F.Id("tr")), Open, Rho, Open, F.Id("u"), Close, Close, Eq, D(1), Land, Rho, Open, F.Id("u"), Close,
-        Caret, D(2), Eq, Rho, Open, F.Id("u"), Close, Close, RowBreak, Amp, Land, Esc, Open, Forall, Sp, F.Id("u"), InMacro, Sp, F.Id("I"), Comma,
-        Forall, Sp, F.Id("j"), InMacro, Sp, F.Id("J"), Underscore, F.Id("m"), Comma, Operatorname, Grp(F.Id("Re")), Operatorname, Grp(F.Id("tr")), Open,
-        F.Id("N"), Underscore, F.Id("j"), Rho, Open, F.Id("u"), Close, Close, Eq, F.Id("p"), Underscore, F.Id("j"), Plus, F.Id("u"), F.Id("v"),
-        Underscore, F.Id("j"), Close, RowBreak, Amp, Land, Operatorname, Grp(F.Id("rank")), Underscore, Grp(Mathbb, Sp, F.Id("R")), Open,
-        Operatorname, Grp(F.Id("effectReadout")), Open, F.Id("N"), Close, Close, Eq, D(2), RowBreak, Amp, Longrightarrow, Exists, Mathcal, Sp,
-        F.Id("B"), Esc, Mathrm, Grp(F.Id("orthonormal"), Esc, F.Id("basis"), Esc, F.Id("of")), Esc, Mathbb, Sp, F.Id("R"), Caret, D(3), Comma, Esc,
-        Exists, Sp, F.Id("x"), Comma, F.Id("c"), Comma, Varepsilon, Comma, F.Id("s"), InMacro, Mathbb, Sp, F.Id("R"), Comma, Esc, Exists, Sp, F.Id("A"),
-        Comma, F.Id("q"), Comma, F.Id("b"), Colon, F.Id("J"), Underscore, F.Id("m"), To, Mathbb, Sp, F.Id("R"), Comma, RowBreak, Amp, D(0), Lt,
-        F.Id("c"), Land, D(0), Lt, Varepsilon, Land, Varepsilon, Le, Frac, D(1, 2), Land, Open, F.Id("s"), Eq, D(1), Lor, Sp, F.Id("s"), Eq, Minus,
-        D(1), Close, RowBreak, Amp, Land, Esc, Open, Forall, Sp, F.Id("j"), InMacro, Sp, F.Id("J"), Underscore, F.Id("m"), Comma, Esc, D(0), Le, Sp,
-        F.Id("q"), Underscore, F.Id("j"), Land, D(0), Le, Sp, F.Id("A"), Underscore, F.Id("j"), Land, Sp, F.Id("b"), Underscore, F.Id("j"), Caret, D(2),
-        Le, Sp, F.Id("A"), Underscore, F.Id("j"), F.Id("q"), Underscore, F.Id("j"), Land, Sp, F.Id("b"), Underscore, F.Id("j"), Eq, F.Id("v"),
-        Underscore, F.Id("j"), Slash, F.Id("c"), Land, Sp, F.Id("A"), Underscore, F.Id("j"), Eq, Open, F.Id("p"), Underscore, F.Id("j"), Minus,
-        F.Id("b"), Underscore, F.Id("j"), F.Id("x"), Minus, Varepsilon, Sp, F.Id("q"), Underscore, F.Id("j"), Close, Slash, Open, D(1), Minus,
-        Varepsilon, Close, Close, RowBreak, Amp, Land, Sum, Underscore, Grp(F.Id("j"), InMacro, Sp, F.Id("J"), Underscore, F.Id("m")), F.Id("q"),
-        Underscore, F.Id("j"), Eq, D(1), RowBreak, Amp, Land, Esc, Open, Forall, Sp, F.Id("u"), InMacro, Sp, F.Id("I"), Comma, Operatorname,
-        Grp(F.Id("reframe")), Open, F.Id("O"), Underscore, Grp(Mathcal, Sp, F.Id("B")), Comma, Rho, Open, F.Id("u"), Close, Close, Eq, Operatorname,
-        Grp(F.Id("blochMatrix")), Open, D(1), Comma, Open, F.Id("x"), Plus, F.Id("c"), F.Id("u"), Comma, F.Id("s"), Sqrt, Grp(D(4), Varepsilon,
-        Open, D(1), Minus, Varepsilon, Close, Minus, Open, F.Id("x"), Plus, F.Id("c"), F.Id("u"), Close, Caret, D(2)), Comma, D(1), Minus, D(2),
-        Varepsilon, Close, Close, Close, RowBreak, Amp, Land, Esc, Open, Forall, Sp, F.Id("u"), InMacro, Sp, F.Id("I"), Comma, Open, F.Id("x"), Plus,
-        F.Id("c"), F.Id("u"), Close, Caret, D(2), Lt, D(4), Varepsilon, Open, D(1), Minus, Varepsilon, Close, Close, RowBreak, Amp, Land, Esc,
-        Open, Forall, Sp, F.Id("R"), InMacro, Mathbb, Sp, F.Id("R"), Comma, Esc, D(0), Le, Sp, F.Id("R"), Land, OpenBracket, Minus, F.Id("R"), Comma,
-        F.Id("R"), CloseBracket, Subseteq, Sp, F.Id("I"), Longrightarrow, Bar, F.Id("x"), Bar, Plus, F.Id("c"), F.Id("R"), Lt, Sqrt, Grp(D(4),
-        Varepsilon, Open, D(1), Minus, Varepsilon, Close), Close, End, Grp(F.Id("aligned"))));
+    private static Formula ExtendedFormula() => Disp(All("B", Reals(), All("alpha", Reals(), All("w", Arrow(Reals(), Reals()), All("e", Reals(),
+        Equal(Call("extendedCost", X("B"), X("alpha"), X("w"), X("e")), Fraction(
+            Multiply(Fraction(X("B"), Square(At(X("w"), X("e")))), Multiply(Num(4), Subtract(Num(1), X("e")))),
+            Subtract(Multiply(Num(4), Subtract(Num(1), X("e"))), Multiply(Square(X("alpha")), X("e"))))))))));
+
+    private static Formula UpperFormula() => Disp(ScalarParameters(Equal(
+        Call("upperDiag", X("p"), X("d"), X("alpha"), X("e"), X("w")),
+        Fraction(Add(QuadraticCenter(), QuadraticRadical()), Multiply(Num(2), Subtract(Num(1), X("e")))))));
+
+    private static Formula EffectFormula() => Disp(ScalarParameters(Equal(
+        Call("effect", X("p"), X("d"), X("alpha"), X("e"), X("w")), MatrixTwo(
+            OfReal(Call("upperDiag", X("p"), X("d"), X("alpha"), X("e"), X("w"))), OfReal(Multiply(X("w"), X("d"))),
+            OfReal(Multiply(X("w"), X("d"))), OfReal(Call("root", X("p"), X("d"), X("alpha"), X("e"), X("w")))))));
+
+    private static Formula ArcFormula() => Disp(All("e", Reals(), All("x", Reals(), All("c", Reals(), All("u", Reals(),
+        Equal(Call("arc", X("e"), X("x"), X("c"), X("u")), Call("blochMatrix", Num(1),
+            ToLp(Vector(AffineCoordinate(), SqrtReal(Subtract(ArcRadiusSquared(X("e")), Square(AffineCoordinate()))),
+                Subtract(Num(1), Multiply(Num(2), X("e"))))))))))));
+
+    private static Formula RankTwoFormula()
+    {
+        Formula state = At(X("rho"), X("u"));
+        Formula affine = Add(At(X("p"), X("j")), Multiply(X("u"), At(X("v"), X("j"))));
+        Formula hypotheses = Conjoin(
+            Call("IsOpen", X("I")), Call("IsPreconnected", X("I")), Member(Num(0), X("I")), NotEqual(X("v"), Num(0)),
+            All("j", Fin(X("m")), PosSemidef(At(X("N"), X("j")))),
+            Equal(SumOver("j", Fin(X("m")), At(X("N"), X("j"))), Typed(Num(1), QubitMatrices())),
+            Call("ContDiffOn", Reals(), Num(1), X("rho"), X("I")),
+            AllIn("u", X("I"), Conjoin(PosSemidef(state), Equal(Trace(state), Num(1)), Equal(Multiply(state, state), state))),
+            AllIn("u", X("I"), All("j", Fin(X("m")), Equal(RealPart(Trace(Multiply(At(X("N"), X("j")), state))), affine))),
+            Equal(At(Qualified("Module", "finrank"), Reals(), At(Qualified("LinearMap", "range"), Call("effectReadout", X("N")))), Num(2)));
+        Formula coefficients = All("j", Fin(X("m")), Conjoin(
+            LE(Num(0), At(X("q"), X("j"))), LE(Num(0), At(X("A"), X("j"))),
+            LE(Square(At(X("b"), X("j"))), Multiply(At(X("A"), X("j")), At(X("q"), X("j")))),
+            Equal(At(X("b"), X("j")), Fraction(At(X("v"), X("j")), X("c"))),
+            Equal(At(X("A"), X("j")), Fraction(Subtract(Subtract(At(X("p"), X("j")),
+                Multiply(At(X("b"), X("j")), X("x"))), Multiply(X("epsilon"), At(X("q"), X("j")))), Subtract(Num(1), X("epsilon"))))));
+        Formula coordinates = ToLp(Vector(AffineCoordinate(),
+            Multiply(X("s"), SqrtReal(Subtract(ArcRadiusSquared(X("epsilon")), Square(AffineCoordinate())))),
+            Subtract(Num(1), Multiply(Num(2), X("epsilon")))));
+        Formula conclusion = Ex("basis", Call("OrthonormalBasis", Fin(Num(3)), Reals(), BlochVectors()),
+            Ex("x", Reals(), Ex("c", Reals(), Ex("epsilon", Reals(), Ex("s", Reals(),
+            Ex("A", Scores(), Ex("q", Scores(), Ex("b", Scores(), Conjoin(
+                LT(Num(0), X("c")), LT(Num(0), X("epsilon")), LE(X("epsilon"), Fraction(Num(1), Num(2))),
+                Or(Equal(X("s"), Num(1)), Equal(X("s"), Negate(Num(1)))), coefficients,
+                Equal(SumOver("j", Fin(X("m")), At(X("q"), X("j"))), Num(1)),
+                AllIn("u", X("I"), Equal(Call("reframe", At(Qualified("OrthonormalBasis", "repr"), X("basis")), state),
+                    Call("blochMatrix", Num(1), coordinates))),
+                AllIn("u", X("I"), LT(Square(AffineCoordinate()), ArcRadiusSquared(X("epsilon")))),
+                All("R", Reals(), Implies(LE(Num(0), X("R")), Implies(Subset(RadiusInterval(X("R")), X("I")),
+                    LT(Add(new Formula.Absolute(X("x")), Multiply(X("c"), X("R"))), SqrtReal(ArcRadiusSquared(X("epsilon"))))))))))))))));
+        return Disp(All("m", Naturals(), All("N", Effects(), All("rho", Curves(), All("p", Scores(), All("v", Scores(), All("I", RealSets(),
+            Implies(hypotheses, conclusion))))))));
+    }
+
+    private static Formula QuadraticCenter() => Subtract(X("p"), Multiply(Multiply(Multiply(X("alpha"), X("e")), X("w")), X("d")));
+    private static Formula QuadraticRadical() => SqrtReal(Subtract(Square(QuadraticCenter()),
+        Multiply(Multiply(Multiply(Multiply(Num(4), X("e")), Subtract(Num(1), X("e"))), Square(X("w"))), Square(X("d")))));
+    private static Formula AffineCoordinate() => Add(X("x"), Multiply(X("c"), X("u")));
+    private static Formula ArcRadiusSquared(Formula e) => Multiply(Multiply(Num(4), e), Subtract(Num(1), e));
+    private static Formula ScalarParameters(Formula body) => All("p", Reals(), All("d", Reals(), All("alpha", Reals(), All("e", Reals(), All("w", Reals(), body)))));
+    private static Formula X(string name) => F.Id(name);
+    private static Formula Name(string name) => Seq(Operatorname, Grp(X(name)));
+    private static Formula Qualified(string owner, string name) => Seq(Operatorname, Grp(X(owner), Dot, X(name)));
+    private static Formula Parenthesized(Formula value) => Seq(Open, value, Close);
+    private static Formula Typed(Formula value, Formula type) => Parenthesized(Seq(value, Colon, Sp, type));
+    private static Formula Field(Formula value, string name) => Seq(Parenthesized(value), Dot, X(name));
+    private static Formula Call(string name, params Formula[] args) => At(Name(name), args);
+    private static Formula At(Formula fn, params Formula[] args) => new Formula.Apply(fn, [.. args]);
+    private static Formula Reals() => Seq(Mathbb, Grp(X("R")));
+    private static Formula Complexes() => Seq(Mathbb, Grp(X("C")));
+    private static Formula Naturals() => Seq(Mathbb, Grp(X("N")));
+    private static Formula Fin(Formula n) => Call("Fin", n);
+    private static Formula Matrices(Formula n) => Call("Matrix", n, n, Complexes());
+    private static Formula QubitMatrices() => Matrices(Fin(Num(2)));
+    private static Formula BlochVectors() => Call("EuclideanSpace", Reals(), Fin(Num(3)));
+    private static Formula RealSets() => Call("Set", Reals());
+    private static Formula Scores() => Arrow(Fin(X("m")), Reals());
+    private static Formula Effects() => Arrow(Fin(X("m")), QubitMatrices());
+    private static Formula Curves() => Arrow(Reals(), QubitMatrices());
+    private static Formula RealLinear(Formula source, Formula target) => Call("LinearMap", At(Qualified("RingHom", "id"), Reals()), source, target);
+    private static Formula Frames() => Call("LinearIsometryEquiv", At(Qualified("RingHom", "id"), Reals()), BlochVectors(), BlochVectors());
+    private static Formula DensityStates() => At(Qualified("FiniteStateChannel", "DensityState"), Fin(Num(2)));
+    private static Formula Val(Formula value) => At(Qualified("Subtype", "val"), value);
+    private static Formula UnderlyingMatrix(Formula rho) => At(Field(Qualified("CStarMatrix", "ofMatrix"), "symm"), Val(rho));
+    private static Formula Trace(Formula value) => At(Qualified("Matrix", "trace"), value);
+    private static Formula RealPart(Formula value) => At(Qualified("Complex", "re"), value);
+    private static Formula ImaginaryPart(Formula value) => At(Qualified("Complex", "im"), value);
+    private static Formula OfReal(Formula value) => At(Qualified("Complex", "ofReal"), value);
+    private static Formula ToLp(Formula value) => At(Qualified("WithLp", "toLp"), Num(2), value);
+    private static Formula SqrtReal(Formula value) => At(Qualified("Real", "sqrt"), value);
+    private static Formula PosSemidef(Formula value) => At(Qualified("Matrix", "PosSemidef"), value);
+    private static Formula IsHermitian(Formula value) => At(Qualified("Matrix", "IsHermitian"), value);
+    private static Formula RadiusInterval(Formula radius) => At(Qualified("Set", "Icc"), Negate(radius), radius);
+    private static Formula Arrow(Formula source, Formula target) => new Formula.TypeArrow(source, target);
+    private static Formula All(string name, Formula domain, Formula body) => new Formula.Bind(FormulaQuantifier.ForAll, FormulaIdentifier.Create(name), domain, body);
+    private static Formula Ex(string name, Formula domain, Formula body) => new Formula.Bind(FormulaQuantifier.Exists, FormulaIdentifier.Create(name), domain, body);
+    private static Formula AllIn(string name, Formula set, Formula body) => All(name, Reals(), Implies(Member(X(name), set), body));
+    private static Formula LambdaOf(string name, Formula domain, Formula body) => Parenthesized(Seq(Typed(X(name), domain), Sp, Mapsto, Sp, Parenthesized(body)));
+    private static Formula Let(string name, Formula type, Formula value, Formula body) =>
+        Seq(Name("let"), Sp, Typed(X(name), type), Sp, Colon, Eq, Sp, Parenthesized(value), Semi, Sp, Parenthesized(body));
+    private static Formula Instances(Formula type, Formula body) => Seq(
+        OpenBracket, Call("Fintype", type), CloseBracket, Sp, OpenBracket, Call("DecidableEq", type), CloseBracket, Sp, body);
+    private static Formula SumOver(string name, Formula domain, Formula body) => Seq(
+        new Formula.Subscript(Sum, Typed(X(name), domain)), Sp, Parenthesized(body));
+    private static Formula Vector(Formula a, Formula b, Formula c) => Seq(Bang, OpenBracket, a, Comma, Sp, b, Comma, Sp, c, CloseBracket);
+    private static Formula MatrixTwo(Formula a, Formula b, Formula c, Formula d) => Seq(
+        Begin, Grp(X("pmatrix")), a, Amp, b, RowBreak, c, Amp, d, End, Grp(X("pmatrix")));
+    private static Formula Tuple(params Formula[] values)
+    {
+        Formula result = values[0];
+        for (int i = 1; i < values.Length; i++) result = Seq(result, Comma, Sp, values[i]);
+        return Seq(Langle, result, Rangle);
+    }
+    private static Formula Conjoin(params Formula[] clauses)
+    {
+        Formula result = clauses[^1];
+        for (int i = clauses.Length - 2; i >= 0; i--) result = And(clauses[i], result);
+        return result;
+    }
+    private static Formula Equal(Formula left, Formula right) => new Formula.Relation(left, FormulaRelationOperator.Equal, right);
+    private static Formula NotEqual(Formula left, Formula right) => new Formula.Relation(left, FormulaRelationOperator.NotEqual, right);
+    private static Formula LE(Formula left, Formula right) => new Formula.Relation(left, FormulaRelationOperator.LessThanOrEqual, right);
+    private static Formula LT(Formula left, Formula right) => new Formula.Relation(left, FormulaRelationOperator.LessThan, right);
+    private static Formula Member(Formula left, Formula right) => new Formula.Relation(left, FormulaRelationOperator.MemberOf, right);
+    private static Formula Subset(Formula left, Formula right) => new Formula.Relation(left, FormulaRelationOperator.SubsetOf, right);
+    private static Formula Implies(Formula left, Formula right) => new Formula.Logic(Parenthesized(left), FormulaLogicOperator.Implies, Parenthesized(right));
+    private static Formula And(Formula left, Formula right) => new Formula.Logic(Parenthesized(left), FormulaLogicOperator.And, Parenthesized(right));
+    private static Formula Or(Formula left, Formula right) => new Formula.Logic(Parenthesized(left), FormulaLogicOperator.Or, Parenthesized(right));
+    private static Formula Iff(Formula left, Formula right) => new Formula.Logic(Parenthesized(left), FormulaLogicOperator.Iff, Parenthesized(right));
+    private static Formula Negate(Formula value) => new Formula.Negate(Parenthesized(value));
+    private static Formula Fraction(Formula numerator, Formula denominator) => new Formula.Fraction(numerator, denominator);
+    private static Formula Square(Formula value) => new Formula.Power(Parenthesized(value), Num(2));
 }

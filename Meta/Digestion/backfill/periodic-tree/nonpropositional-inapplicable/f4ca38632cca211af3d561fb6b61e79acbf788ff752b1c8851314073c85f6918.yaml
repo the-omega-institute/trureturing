@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:f4ca38632cca211af3d561fb6b61e79acbf788ff752b1c8851314073c85f6918
+  normalized_sha256: sha256:f4ca38632cca211af3d561fb6b61e79acbf788ff752b1c8851314073c85f6918
+cas_ref: sha256:f4ca38632cca211af3d561fb6b61e79acbf788ff752b1c8851314073c85f6918
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 证明段（**证明。** 对 $x^2+y^2$ 求导，两个交叉项 $2bxy$ 与 $-2bxy$ 相消。于是 $E'\leq-2\gamma E$…）只展开前文定理或命题的论证，式子和中间推导不另提出独立陈述。
+    previous_atom_id: 0811bc90e60f2c0f46d6ce4304793d0270c157bb518e5c657191285b0365918b
+    next_atom_id: 3989cd4f2b7dd139ca34187ef66b4d9cd413993811142bb28733b3b5f04a1f64

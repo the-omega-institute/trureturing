@@ -10,6 +10,20 @@ internal sealed class CHSHWitnessDocument : IScribeDocumentDefinition
         H("A Tight CHSH Witness"),
         Blocks(
             Describe.Lean(
+                DescribeId.Create("complex-sqrt-two-inverse-product"),
+                DeclarationHandle.Create("D5/S3/QuantumBounds/CHSHWitness.complex_sqrt_two_inv_mul_self"),
+                H("The inverse square root normalization"),
+                StatementSource.FromAuthor(Disp(InverseSquareRootFormula())),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text(
+                    "In the complex numbers, the product of two inverses of the positive real "
+                        + "square root of two is the inverse of two. This is the normalization "
+                        + "factor for the Bell density matrix."))),
+                DescribeRole.Theorem),
+            Paragraph(Text("The classical comparison uses four measurable sign-valued random variables on one probability space whose law is independent of the settings. The commutative CHSH inequality bounds the absolute value pointwise by two. Integrating with respect to that same probability law gives the bound for the four correlations; finite support is not required. The Bell witness uses the Pauli Z and X observables and their normalized sum and difference to attain twice the square root of two.")),
+            Paragraph(Text("For finite local positive operator-valued measurements, summing the joint trace probabilities over the second outcome replaces its effects by the identity. The first marginal therefore depends only on the first effect and the common density matrix, independently of the second setting. The argument uses normalization of each local measurement and a shared quantum state, and does not require a shared classical table of answers for all incompatible settings.")),
+
+            Describe.Lean(
                 DescribeId.Create("the-bell-density-is-a-normalized-positive-state"),
                 DeclarationHandle.Create("D5/S3/QuantumBounds/CHSHWitness.bell_density_is_state"),
                 H("The Bell density is a normalized positive state"),
@@ -97,6 +111,19 @@ internal sealed class CHSHWitnessDocument : IScribeDocumentDefinition
                         "tightness witness: it introduces no operator norm, eigenvalue classification, " +
                         "spectral order, C-star matrix instance, or second proof of the upper bound."))),
                 DescribeRole.Theorem))));
+
+    private static Formula Parenthesized(Formula value) => Seq(Open, value, Close);
+
+    private static Formula InverseSquareRootFormula()
+    {
+        Formula complexes = Seq(Mathbb, Grp(F.Id("C")));
+        Formula root = Parenthesized(Seq(Sqrt, Grp(D(2)), Sp, Colon, Sp, complexes));
+        Formula inverse = new Formula.Power(root, new Formula.Negate(D(1)));
+        Formula two = Parenthesized(Seq(D(2), Sp, Colon, Sp, complexes));
+        return new Formula.Relation(
+            new Formula.Binary(Parenthesized(inverse), FormulaBinaryOperator.Multiply, Parenthesized(inverse)),
+            FormulaRelationOperator.Equal, new Formula.Power(two, new Formula.Negate(D(1))));
+    }
 
     private static Formula Lifted(string observable, byte setting) => Seq(
         F.Id(observable), Underscore, D(setting), Caret, Grp(F.Id("L")));

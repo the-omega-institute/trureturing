@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:cf8fa91d3bd131cd9e27c19d4628720f31a73531aeaeabfa43df1f245fbab5ca
+  normalized_sha256: sha256:cf8fa91d3bd131cd9e27c19d4628720f31a73531aeaeabfa43df1f245fbab5ca
+cas_ref: sha256:cf8fa91d3bd131cd9e27c19d4628720f31a73531aeaeabfa43df1f245fbab5ca
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 定理 255.2 的充分性证明第二步只论证等待段与实主段的纤维方向。
+    previous_atom_id: 0dedf4d8e45909de56eb06f3fe2b4aa35b6b050498d96df1a451a421626edef5
+    next_atom_id: 79779cf2fe52cfea75f0293813254abd49791850f3dd1d58cdbdd4a38531bd0c

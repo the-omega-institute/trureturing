@@ -16,13 +16,20 @@ proof_shape: localPermutation_gram: bind-only; consumer: gate_mixed_rule.
 proof_shape: local_identity_fixed: bind-only; consumer: gate_mixed_rule.
 proof_shape: local_swap_fixed: bind-only; consumer: gate_mixed_rule.
 proof_shape: gate_mixed_rule: content.
+proof_shape: haarAverage_identity_fixed: bind-only; consumer: CHaarConcatenationNonmonotone.twirlTrace.
+proof_shape: haarAverage_swap_fixed: bind-only; consumer: CHaarConcatenationNonmonotone.twirlSwapTrace.
+proof_shape: haarAverage_image_span: bind-only; consumer: CHaarConcatenationNonmonotone.twirlFormula.
+proof_shape: hermitian_fixed_pairing: bind-only; consumer: CHaarConcatenationNonmonotone.twirlTrace.
+proof_shape: literalMoment_integrable: bind-only; consumer: CHaarConcatenationNonmonotone.momentOp2HaarEntries.
+proof_shape: literalMoment_vectorize: bind-only; consumer: haarAverage_identity_fixed.
+proof_shape: Commutant.replicaSwap_apply: bind-only; consumer: CHaarConcatenationNonmonotone.moment22Reindex.
 escape_witness: Commutant.two_copy_commutant, via quarter phases and a Hadamard constraint.
 admission_basis: escape-witness
 Direct frozen dependencies: none; the upstream imports are pinned Mathlib.
+Escape audit unfinished for hadamard_unitary: https://github.com/the-omega-institute/trureturing/issues/16609.
 The finite Gram and coefficient identities are consumed normalization helpers. The new
 content is a universal commutant classification and the literal Haar-average reduction;
 no bounded enumeration, checker, numerical certificate or positive finite instance is retained.
-Information-escape registration is paused under CLAUDE.md section 3.9.
 -/
 
 import Mathlib.MeasureTheory.Measure.Haar.Unique
@@ -61,6 +68,12 @@ instance haar_probability : IsProbabilityMeasure
 end D5.S3.Quantum.RandomCircuits.HaarTwoCopyTwirl
 
 namespace D5.S3.Quantum.RandomCircuits.HaarTwoCopyTwirl
+def permutationUnitary {n : Type*} [Fintype n] [DecidableEq n]
+    (e : Equiv.Perm n) : Matrix.unitaryGroup n ℂ :=
+  ⟨e.permMatrix ℂ, by
+    rw [Matrix.mem_unitaryGroup_iff]
+    simp [Matrix.star_eq_conjTranspose,← Matrix.permMatrix_mul]⟩
+
 def literalMoment {I : Type*} (U : Matrix I I ℂ) :
     Matrix (((I × I) × (I × I))) (((I × I) × (I × I))) ℂ :=
   Matrix.kronecker (Matrix.kronecker (U.map star) (U.map star))
@@ -76,7 +89,7 @@ end D5.S3.Quantum.RandomCircuits.HaarTwoCopyTwirl
 namespace D5.S3.Quantum.RandomCircuits.HaarTwoCopyTwirl.Hadamard
 variable {n : Type*} [Fintype n] [DecidableEq n]
 
-private def hadamard (a b : n) (t : ℂ) : Matrix n n ℂ :=
+def hadamard (a b : n) (t : ℂ) : Matrix n n ℂ :=
   1 + single a a (t-1) + single b b (-t-1) + single a b t + single b a t
 
 private theorem single_mul_rule (a b c d : n) (x y : ℂ) :
@@ -105,7 +118,7 @@ private theorem hadamard_square (a b : n) (hab : a≠b) (t : ℂ) (ht : 2*t^2=1)
   all_goals simp_all [Matrix.single_apply]
   all_goals ring_nf <;> norm_num [ht2]
 
-private theorem hadamard_unitary (a b : n) (hab : a≠b) (t : ℂ)
+theorem hadamard_unitary (a b : n) (hab : a≠b) (t : ℂ)
     (hreal : star t=t) (ht : 2*t^2=1) : hadamard a b t ∈ unitaryGroup n ℂ := by
   rw [mem_unitaryGroup_iff,star_eq_conjTranspose,(hadamard_hermitian a b t hreal).eq]
   exact hadamard_square a b hab t ht
@@ -187,11 +200,6 @@ private theorem entry_support (X : Matrix ((n × n)) ((n × n)) ℂ)
     · simp [phaseCount,hca,hda] at ha
       omega
 
-private def permutationUnitary (e : Equiv.Perm n) : Matrix.unitaryGroup n ℂ :=
-  ⟨e.permMatrix ℂ, by
-    rw [Matrix.mem_unitaryGroup_iff]
-    simp [Matrix.star_eq_conjTranspose,← Matrix.permMatrix_mul]⟩
-
 omit [Fintype n] in
 private theorem tensor_permutation (e : Equiv.Perm n) :
     e.permMatrix ℂ ⊗ₖ e.permMatrix ℂ = Equiv.Perm.permMatrix ℂ (e.prodCongr e) := by
@@ -203,8 +211,8 @@ private theorem tensor_permutation (e : Equiv.Perm n) :
 private theorem entry_permutation (X : Matrix ((n × n)) ((n × n)) ℂ)
     (hX : tensorCommutes X) (e : Equiv.Perm n) (r c : (n × n)) :
     X ((e.prodCongr e) r) ((e.prodCongr e) c) = X r c := by
-  have h := hX (permutationUnitary e)
-  simp only [permutationUnitary,tensor_permutation,Equiv.Perm.permMatrix,
+  have h := hX (D5.S3.Quantum.RandomCircuits.HaarTwoCopyTwirl.permutationUnitary e)
+  simp only [D5.S3.Quantum.RandomCircuits.HaarTwoCopyTwirl.permutationUnitary,tensor_permutation,Equiv.Perm.permMatrix,
     PEquiv.mul_toMatrix_toPEquiv,PEquiv.toMatrix_toPEquiv_mul] at h
   have hc := congrFun (congrFun h r) ((e.prodCongr e) c)
   rcases r with ⟨r1,r2⟩
@@ -315,7 +323,7 @@ private theorem hadamard_constraint (X : Matrix ((n × n)) ((n × n)) ℂ)
   linear_combination 2*hc
 
 omit [Fintype n] in
-private theorem replicaSwap_apply (r c : (n × n)) :
+theorem replicaSwap_apply (r c : (n × n)) :
     (Equiv.Perm.permMatrix ℂ (Equiv.prodComm n n)) r c = if r.swap=c then 1 else 0 := by
   rcases r with ⟨a,b⟩
   rcases c with ⟨c,d⟩
@@ -371,7 +379,7 @@ private theorem literalMoment_continuous (r c : ((n × n) × (n × n))) :
     (continuous_apply j).comp ((continuous_apply i).comp continuous_subtype_val)
   exact ((he _ _).star.mul (he _ _).star).mul ((he _ _).mul (he _ _))
 
-private theorem literalMoment_integrable (r c : ((n × n) × (n × n))) :
+theorem literalMoment_integrable (r c : ((n × n) × (n × n))) :
     Integrable (fun U : Matrix.unitaryGroup n ℂ => literalMoment U.val r c) ((Measure.haarMeasure (⊤ : PositiveCompacts (Matrix.unitaryGroup n ℂ)))) :=
   (literalMoment_continuous r c).integrable_of_hasCompactSupport
     (HasCompactSupport.of_compactSpace _)
@@ -399,7 +407,7 @@ private instance haar_rightInvariant : Measure.IsMulRightInvariant (Measure.haar
   constructor
   intro g
   have : IsProbabilityMeasure ((Measure.haarMeasure (⊤ : PositiveCompacts (Matrix.unitaryGroup n ℂ))).map (fun x => x * g)) :=
-    Measure.isProbabilityMeasure_map (by fun_prop)
+    inferInstance
   have : ((Measure.haarMeasure (⊤ : PositiveCompacts (Matrix.unitaryGroup n ℂ))).map (fun x => x * g)).IsHaarMeasure := by
     apply Measure.isHaarMeasure_of_isCompact_nonempty_interior _ Set.univ isCompact_univ
     · simp
@@ -409,8 +417,9 @@ private instance haar_rightInvariant : Measure.IsMulRightInvariant (Measure.haar
 
 private instance haar_invInvariant : Measure.IsInvInvariant (Measure.haarMeasure (⊤ : PositiveCompacts (Matrix.unitaryGroup n ℂ))) := by
   constructor
-  have : IsProbabilityMeasure ((Measure.haarMeasure (⊤ : PositiveCompacts (Matrix.unitaryGroup n ℂ))).inv) :=
-    Measure.isProbabilityMeasure_map (by fun_prop)
+  have : IsProbabilityMeasure ((Measure.haarMeasure (⊤ : PositiveCompacts (Matrix.unitaryGroup n ℂ))).inv) := by
+    unfold Measure.inv
+    infer_instance
   have : ((Measure.haarMeasure (⊤ : PositiveCompacts (Matrix.unitaryGroup n ℂ))).inv).IsHaarMeasure := by
     apply Measure.isHaarMeasure_of_isCompact_nonempty_interior _ Set.univ isCompact_univ
     · simp
@@ -474,7 +483,7 @@ private theorem vec_unvectorize (v : ((n × n) × (n × n)) → ℂ) : Matrix.ve
   rfl
 
 omit [DecidableEq n] in
-private theorem literalMoment_vectorize (U : Matrix n n ℂ) (X : Matrix (n×n) (n×n) ℂ) :
+theorem literalMoment_vectorize (U : Matrix n n ℂ) (X : Matrix (n×n) (n×n) ℂ) :
     (literalMoment U).mulVec (Matrix.vec X) = Matrix.vec ((U ⊗ₖ U)*X*(U ⊗ₖ U)ᴴ) := by
   have hbar : U.map star ⊗ₖ U.map star = (U ⊗ₖ U).map star := by
     ext r c
@@ -496,7 +505,7 @@ private theorem invariant_unvectorize_commutes (v : ((n × n) × (n × n)) → �
   have h := congrArg (fun X : Matrix (n×n) (n×n) ℂ => X*(U.val ⊗ₖ U.val)) hc
   simpa [mul_assoc,hs] using h.symm
 
-private theorem replicaSwap_commutes (U : Matrix n n ℂ) :
+theorem replicaSwap_commutes (U : Matrix n n ℂ) :
     (Equiv.Perm.permMatrix ℂ (Equiv.prodComm n n)) * (U ⊗ₖ U) =
       (U ⊗ₖ U)*(Equiv.Perm.permMatrix ℂ (Equiv.prodComm n n)) := by
   simp only [Equiv.Perm.permMatrix,
@@ -504,7 +513,7 @@ private theorem replicaSwap_commutes (U : Matrix n n ℂ) :
   ext ⟨a,b⟩ ⟨c,d⟩
   simp [Matrix.kroneckerMap_apply,mul_comm]
 
-private theorem haarAverage_identity_fixed : (haarAverage n).mulVec ((Matrix.vec (1 : Matrix (n×n) (n×n) ℂ))) = (Matrix.vec (1 : Matrix (n×n) (n×n) ℂ)) := by
+theorem haarAverage_identity_fixed : (haarAverage n).mulVec ((Matrix.vec (1 : Matrix (n×n) (n×n) ℂ))) = (Matrix.vec (1 : Matrix (n×n) (n×n) ℂ)) := by
   apply haarAverage_fixes_invariant
   intro U
   rw [literalMoment_vectorize]
@@ -512,7 +521,7 @@ private theorem haarAverage_identity_fixed : (haarAverage n).mulVec ((Matrix.vec
   rw [mul_one]
   exact (Matrix.kronecker_mem_unitary U.property U.property).2
 
-private theorem haarAverage_swap_fixed : (haarAverage n).mulVec ((Matrix.vec (Equiv.Perm.permMatrix ℂ (Equiv.prodComm n n)))) = (Matrix.vec (Equiv.Perm.permMatrix ℂ (Equiv.prodComm n n))) := by
+theorem haarAverage_swap_fixed : (haarAverage n).mulVec ((Matrix.vec (Equiv.Perm.permMatrix ℂ (Equiv.prodComm n n)))) = (Matrix.vec (Equiv.Perm.permMatrix ℂ (Equiv.prodComm n n))) := by
   apply haarAverage_fixes_invariant
   intro U
   rw [literalMoment_vectorize]
@@ -522,7 +531,7 @@ private theorem haarAverage_swap_fixed : (haarAverage n).mulVec ((Matrix.vec (Eq
   simp only [Matrix.star_eq_conjTranspose] at hU
   rw [hU,mul_one]
 
-private theorem haarAverage_image_span (v : ((n × n) × (n × n)) → ℂ) (a b : n) (hab : a≠b) :
+theorem haarAverage_image_span (v : ((n × n) × (n × n)) → ℂ) (a b : n) (hab : a≠b) :
     ∃ x y : ℂ, (haarAverage n).mulVec v = x • (Matrix.vec (1 : Matrix (n×n) (n×n) ℂ))+y • (Matrix.vec (Equiv.Perm.permMatrix ℂ (Equiv.prodComm n n))) := by
   have hcomm := invariant_unvectorize_commutes ((haarAverage n).mulVec v)
     (haarAverage_range_invariant v)
@@ -605,7 +614,7 @@ theorem local_swap_fixed (q : ℕ) :
   change (haarAverage ((Fin q × Fin q))).mulVec _ = _
   rw [local_swap,Matrix.mulVec_smul,haarAverage_swap_fixed]
 
-private theorem hermitian_fixed_pairing {n : Type*} [Fintype n]
+theorem hermitian_fixed_pairing {n : Type*} [Fintype n]
     (P : Matrix n n ℂ) (hP : P.IsHermitian) (u v : n → ℂ)
     (hu : P.mulVec u = u) : star u ⬝ᵥ P.mulVec v = star u ⬝ᵥ v := by
   rw [dotProduct_mulVec, ← hP.eq, vecMul_conjTranspose, star_star, hu]

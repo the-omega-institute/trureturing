@@ -1,0 +1,99 @@
+**定理 25.3（Exact dyadic family with arbitrary qualifying target images）。** Under Definition 25.1, let
+
+$$
+r\ge3,\qquad m=2^r,\qquad k=2m-2,\qquad q=r-1.
+\tag{25.9}
+$$
+
+For every pair of target tables in (25.2) such that
+
+$$
+\left|\lambda_v\bigl[\{0\}\cup\{m+r,m+r+1,\ldots,2m-2\}\bigr]\right|
+>2^{r-1}\quad\text{for some }v,
+\tag{25.10}
+$$
+
+both exact worst fees are
+
+$$
+\boxed{C_{\rm ad}(f)=C_{\rm pre}(f)=2r.}
+\tag{25.11}
+$$
+
+The exact emitted-bit fee is $2rm$ for each. This includes the full phase target and the value-phase target, with arbitrary fixed INITIAL bottom labels. At $r=3$ the full phase target has $(m,k)=(8,14)$ and exact fees $6/6$, or $48$ actually emitted bits for each. For $r\ge4$, the full phase prices themselves are already Theorem 22.1; (25.10) additionally permits noninjective phase-label tables and different tables on the two free-value fibres.
+
+The family includes a proper noninjective target as follows. Put $M=2^{r-1}$, choose distinct labels $L_1,\ldots,L_M,Z$, and, on both complete free-value fibres and all their INITIAL tails, set
+
+$$
+\lambda_v(j)=
+\begin{cases}
+Z,&j=0,\\
+L_{1+((j-m-r)\bmod M)},&m+r\le j\le2m-2,\\
+L_1,&\text{otherwise}.
+\end{cases}
+\tag{25.12}
+$$
+
+Here the remainder is in $\{0,\ldots,M-1\}$; INITIAL bottom retains any fixed label. This target also has the exact fees (25.11), on the full original prior.
+
+Proof. First reuse the literal construction (22.4)–(22.9) at its stated $r\ge4$ domain. Its upper argument also applies at $r=3$, as can be checked in the same defining formulas, without invoking Theorem 22.1 outside its domain. For completeness, the required conditions and actual decoder are explicit here. With $\beta_h(n)=\lfloor n/2^h\rfloor\bmod2$, use the blocks from (22.4),
+
+$$
+D_h=b_{h,0}\cdots b_{h,m-1},\qquad
+b_{h,0}=0,\qquad b_{h,i}=\bigoplus_{\ell=1}^{i}\beta_h(h+\ell),
+\qquad 0\le h<r,
+\tag{25.13}
+$$
+
+and the one GLOBAL literal stream $D_0\mid D_0\mid\cdots\mid D_{r-1}\mid D_{r-1}$, followed by any fixed all-zero extension. Each $\beta_h$ has period dividing $m$ and has $m/2$ ones in a full period. That number is even for $r\ge3$. Also $h<2^h$, so $\beta_h(h)=0$ and each $D_h$ ends in zero. These are the endpoint-parity conditions used in (22.6). The window comparison proving (22.9) uses $h\le r-1<m-1$, the zero $h$th bits of integers $0,\ldots,h$, and $2m\equiv1\pmod T$. All hold at $r=3$ as well. Thus the supplied charge calculation (22.6)–(22.9) gives on every actual phase
+
+$$
+\begin{aligned}
+x(j)&=\begin{cases}j,&1\le j<m,\\0,&\text{otherwise},\end{cases}\\
+z(j)&=\begin{cases}j-m,&m<j<T,\\m-1,&j=0,\\0,&1\le j\le m,\end{cases}\\
+d_{2h}&=\beta_h(x(j)),\qquad d_{2h+1}=\beta_h(z(j)),
+\qquad d_t=y_{t+1}\oplus y_t.
+\end{aligned}
+\tag{25.14}
+$$
+
+Every block starts and ends zero, and its internal run has length at most $m-2<k$. Its first bit safely clears every inherited legal tail during the paid root; every later seam is legal. No legal INITIAL source rejects, and clearing loses no distinction required by the tail-independent target (25.2). The stream is identical across all phases, tails, both free values and all endpoint archives, rather than an assembly of separately optimal branch streams.
+
+From its own $2r$ actual endpoints, a source computes the integers
+
+$$
+x=\sum_{h=0}^{r-1}2^h d_{2h},\qquad
+z=\sum_{h=0}^{r-1}2^h d_{2h+1}.
+\tag{25.15}
+$$
+
+The actual image of (25.14) is precisely
+
+$$
+\{(j,0):1\le j<m\}\ \cup\ \{(0,0)\}
+\ \cup\ \{(0,a):1\le a\le m-2\}\ \cup\ \{(0,m-1)\}.
+\tag{25.16}
+$$
+
+Its inverse returns $j=x$ when $x>0$, $j=m$ when $x=z=0$, $j=m+z$ when $1\le z\le m-2$, and $j=0$ when $z=m-1$. These alternatives describe the actual joint image, not a product of independently attainable code coordinates. Return $\lambda_{y_0}(j)$ using the remembered free INITIAL value. Initial bottom stops free with $y_\bot$. Choosing to stop all live sources at this completed code gives $C_{\rm pre}\le2r$, with every block and bit paid; no separate preparation or cleanup block occurs. This one decoder works for arbitrary $\lambda_0,\lambda_1$, including all their label coincidences.
+
+At $r=3$, (25.13) is the literal stream
+
+$$
+01100110\mid01100110\mid01000100\mid01000100\mid00101000\mid00101000.
+\tag{25.17}
+$$
+
+The same actual-image decoder (25.14)–(25.16) covers all fifteen phases, both values and all fourteen inherited legal tails. No new restriction on the prior is used to validate this endpoint witness.
+
+For the lower bound, $q=r-1$ lies in $[0,m-2]$. Hypothesis (25.10) is exactly (25.5), so Theorem 25.2 gives $C_{\rm ad}\ge2r$. This meets the one-stream upper bound. For full phase, or value-phase in either fixed-value fibre, the image in (25.10) has size $m-r$. The inequality
+
+$$
+2^r-r>2^{r-1}\qquad(r\ge3)
+\tag{25.18}
+$$
+
+holds at $r=3$ and persists on increasing $r$, since $2^{r-1}>r$ does. In particular $J_2^{\star}=\{0,11,12,13,14\}$ has five distinct phase labels, whereas a five-block controller has at most four leaves on that actual witness set. This proves the full phase and value-phase conclusions, including the six-block boundary.
+
+For (25.12), the high interval has $m-r-1\ge M$ members: equality holds at $r=3$, and the difference increases thereafter. Its image is exactly $\{L_1,\ldots,L_M\}$; adding phase zero gives the $M+1$ distinct labels required by (25.10). Other phases retain their original actual sources and label $L_1$, so this is a noninjective target on the entire prior, not a reduced-source promise. Its live image on the live INITIAL sources (equivalently, on either live value fibre) has $M+1<T$ labels; if the bottom label is fresh, the full target image can have $M+2$ labels. Multiple phases share $L_1$. The upper decoder returns these original labels on every tail and both values, while Theorem 25.2 requires $2r$ blocks. Without phase zero the displayed high interval has only $M$ labels, so that interval alone fails the strict capacity test. $\square$
+

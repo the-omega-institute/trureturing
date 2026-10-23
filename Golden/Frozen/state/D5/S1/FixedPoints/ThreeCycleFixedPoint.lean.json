@@ -1,1 +1,1 @@
-{"statement_id":"sha256:9892cf8d36c62e2a868b56a0b92befab7b301ba392cc5156509fe8fb35ae3a7b"}
+{"statement_id":"sha256:9892cf8d36c62e2a868b56a0b92befab7b301ba392cc5156509fe8fb35ae3a7b","declarations":[{"declaration_name_key":"ns(ns(ns(ns(ns(n0,2:D5),2:S1),11:FixedPoints),20:ThreeCycleFixedPoint),34:three_cycle_action_has_fixed_point)","kind":"theorem"}]}

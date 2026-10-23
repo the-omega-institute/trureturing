@@ -1,0 +1,17 @@
+**外部定理 7.3（Satake 与无分歧本征对象）。** 对 $G=Sp_4(\mathbb C)$、
+$\check G=SO_5(\mathbb C)$，几何 Satake 给出对称张量等价
+
+$$
+\operatorname{Sat}:\operatorname{Rep}(\check G)
+\simeq\operatorname{Perv}_{G(\mathcal O)}(\operatorname{Gr}_G).
+$$
+
+对满足假设 7.1 的不可约 $E$，无分歧几何朗兰兹提供非零 Hecke 本征对象
+$\mathcal F_E$ 及对表示 $R$ 的同构
+
+$$
+\varepsilon_R:H_R(\mathcal F_E)\xrightarrow{\sim}E_R\boxtimes\mathcal F_E,
+$$
+
+并要求它对表示态射、单位、张量和多点融合相容。本卷将此作为外部输入，不重证深层存在性。
+

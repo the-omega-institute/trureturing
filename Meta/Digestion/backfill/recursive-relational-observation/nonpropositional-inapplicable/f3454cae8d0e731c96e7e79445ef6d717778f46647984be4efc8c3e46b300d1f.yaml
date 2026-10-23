@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:f3454cae8d0e731c96e7e79445ef6d717778f46647984be4efc8c3e46b300d1f
+  normalized_sha256: sha256:f3454cae8d0e731c96e7e79445ef6d717778f46647984be4efc8c3e46b300d1f
+cas_ref: sha256:f3454cae8d0e731c96e7e79445ef6d717778f46647984be4efc8c3e46b300d1f
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 命题 84.4（两状态上的交换失败、校准运输与任意先验恢复障碍）。的证明段，仅展开该陈述的推导及说明，不另提出独立命题；本收据不替代原陈述的形式化覆盖。
+    previous_atom_id: 50d6390305b440b8438cc4dab1811c131694719c4c1b16ef30b4d26ac7fcced2
+    next_atom_id: 84caa6e9b70b72cc44cd08dfc42445fea1dc95c4e04fbea395559ff0f5b6d13f

@@ -1,0 +1,63 @@
+**Theorem 14.2 (Raw realization, full complex stability and two kinds of full span).** Put $D=m+2$ and use the ordered orthonormal basis $e_0,\ldots,e_m,e_s$, where $s=m+1$. On the target coordinates $e_0,\ldots,e_m$ let $N_{j,j+1}=1$ for $0\le j<m$, all other entries zero, and $U=I_{m+1}+N$. Embed $v=m!e_m$ in the target and set
+
+$$
+A=\begin{pmatrix}U&0\\0&1\end{pmatrix},\qquad
+B=ve_s^{\mathsf T},\qquad x=e_s,\qquad f=e_0,\qquad
+F_0=ff^{\mathsf T},\qquad
+\mathcal T_q(X)=q(AXA^{\mathsf T}+BXB^{\mathsf T}).
+\tag{14.4}
+$$
+
+These real matrices act on all of $M_D(\mathbb C)$. They satisfy
+
+$$
+\begin{aligned}
+\operatorname{Tr}[F_0\mathcal T_q^k(xx^{\mathsf T})]&=q^kP_m(k),\\
+\operatorname{spec}(\mathcal T_q)&=\{q\},\qquad \rho(\mathcal T_q)=q<1,\\
+Q=\sum_{k\ge0}(\mathcal T_q^*)^k(F_0)&>0,\qquad
+x^{\mathsf T}Qx=\mathcal Z_m(q)\in(0,\infty).
+\end{aligned}
+\tag{14.5}
+$$
+
+The raw reachable span from $x$ is all of $\mathbb C^D$. Moreover $P_m$ extends to a polynomial of degree $2m+1$ with leading coefficient $1/(2m+1)$, and its exact initial zero set on the nonnegative integers is $0,\ldots,m$.
+
+Proof. Since $N^{m+1}=0$, the finite binomial expansion gives $U^t=\sum_{j=0}^m\binom tjN^j$ for every nonnegative integer $t$. Therefore
+
+$$
+f^{\mathsf T}A^kx=0,\qquad
+f^{\mathsf T}A^tBA^rx=m!\binom tm=(t)_{\underline m},\qquad
+BA^rB=0
+\tag{14.6}
+$$
+
+for all $k,t,r\ge0$. Indeed $A^rx=x$, $Bx=v$, and $e_0^{\mathsf T}N^jv$ is zero except at $j=m$, where it is $m!$. The last matrix identity follows because $B$ maps into the target, $A$ preserves the target and $B$ annihilates it.
+
+In the expansion of $\mathcal T_q^k$, the all-$A$ word has zero detector amplitude. The words with exactly one $B$ are uniquely $A^tBA^{k-1-t}$, one for each $0\le t<k$, and their squared detector amplitudes are $(t)_{\underline m}^{2}$. Every word with at least two $B$ factors contains a factor $BA^rB$ and is zero. Consequently
+
+$$
+\operatorname{Tr}[F_0\mathcal T_q^k(xx^{\mathsf T})]
+=q^k\sum_{|w|=k}|f^{\mathsf T}wx|^2
+=q^k\sum_{t=0}^{k-1}(t)_{\underline m}^{2}.
+\tag{14.7}
+$$
+
+At $k=0$ the sole word is the identity and $f^{\mathsf T}x=0$, so the formula includes the empty word. The CP sum adds squared amplitudes of separate Kraus words, with no cross-word interference.
+
+The squared falling factorial vanishes for integers $0\le t<m$ and is strictly positive for $t\ge m$. Thus $P_m(0)=\cdots=P_m(m)=0$, $P_m(m+1)=(m!)^2$, and $P_m(k)>0$ for every $k\ge m+1$. To justify the polynomial assertion, the difference operator $\Delta p(t)=p(t+1)-p(t)$ maps polynomials of degree at most $2m+1$ modulo constants bijectively onto polynomials of degree at most $2m$: in monomial bases it is triangular with nonzero leading coefficients $\Delta t^j=jt^{j-1}+\text{lower terms}$. There is therefore a unique polynomial with $p(0)=0$ and $\Delta p(t)=(t)_{\underline m}^{2}$. Telescoping identifies its nonnegative integer values with $P_m(k)$, and the leading coefficient is $1/(2m+1)$. For example, $P_1(k)=k(k-1)(2k-1)/6$, since the displayed polynomial is zero at zero and its forward difference is $k^2$.
+
+Both $A$ and $B$ are upper triangular, with respective diagonals all one and all zero. Column vectorization on the full complex matrix algebra represents $\mathcal T_q$ by $q(A\otimes A+B\otimes B)$, an upper triangular $D^2$ by $D^2$ matrix with every diagonal entry $q$. This proves the spectrum assertion on the full complex space. Writing this matrix as $qI+V$ with $V^{D^2}=0$ bounds its $k$th power by a constant times a polynomial in $k$ times $q^k$. Equivalently, for each $q<a<1$ there is a constant $C_a$ with $\|\mathcal T_q^k\|\le C_aa^k$. The same bound holds for the dual, so the Gramian series converges in norm.
+
+Every term of $Q$ is real symmetric positive semidefinite. Its quadratic form on a complex vector $y=(y_T,y_s)$ is
+
+$$
+y^\dagger Qy=\sum_{k\ge0}q^k\sum_{|w|=k}|f^{\mathsf T}wy|^2.
+\tag{14.8}
+$$
+
+If this vanishes, the row $f^{\mathsf T}A^mB=m!e_s^{\mathsf T}$ forces $y_s=0$. The all-$A$ rows $f^{\mathsf T}A^j$ for $0\le j\le m$ then give $\sum_{\ell=0}^m\binom j\ell(y_T)_\ell=0$. Their coefficient matrix is lower triangular with diagonal one, so $y_T=0$. This proves $Q>0$ on complex vectors, not only on real states or the reset direction.
+
+Separately, the vectors $x,A^jBx$ for $0\le j\le m$ span the full memory. Their target components are $U^jv=\sum_{\ell=0}^m\binom j\ell N^\ell v$. The same invertible binomial coefficient matrix relates these vectors to $N^\ell v=m!e_{m-\ell}$, a target basis. The additional $x=e_s$ supplies the source direction. This is reachability from $x$, distinct from the detector observability proving $Q>0$.
+
+Finally $x^{\mathsf T}Qx=\sum_{k\ge0}q^kP_m(k)$ by (14.7). For $k\ge1$, $0\le P_m(k)\le k^{2m+1}$, since the terms below $m$ are zero and $0<(t)_{\underline m}\le t^m$ for $t\ge m$. The ratio test applied to $q^kk^{2m+1}$ proves convergence, and the $k=m+1$ term proves positivity. The same estimate with any additional fixed power of $k$ gives finite moments, in particular $\mu<\infty$ in (14.1). $\square$
+

@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:2189dce5c5884406a4fa936ffd2830d1026086308e23634323c0bc4d5847d582
+  normalized_sha256: sha256:2189dce5c5884406a4fa936ffd2830d1026086308e23634323c0bc4d5847d582
+cas_ref: sha256:2189dce5c5884406a4fa936ffd2830d1026086308e23634323c0bc4d5847d582
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 相同证据值 (b)：本项为主题、操作、组成或文献入口的列举片段，不单独提出性质结论。
+    previous_atom_id: 17edc8af34bf6b58ce52bae9be50b24e8100f6011cc270fc390c99f4b585d10d
+    next_atom_id: 5ce68a333b306794908c5fc58bd259d387567df6bbb1e117d6f6a011eb5445a6

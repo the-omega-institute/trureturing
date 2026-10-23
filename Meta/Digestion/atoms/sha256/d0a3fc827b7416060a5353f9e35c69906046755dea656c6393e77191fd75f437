@@ -1,0 +1,40 @@
+**Construction 3.2 (the actual finite control table).** For a bit string
+$s$, introduce the following mathematical names for control vertices:
+
+$$
+Q_s\quad(0\le|s|<h),\qquad
+U_s\quad(1\le|s|<h),\qquad
+Z_x\quad(|x|=h).
+$$
+
+Let $K_h$ be the disjoint union of these three vertex sets.
+
+At $Q_s$, Read $p_{|s|+1}$. Decode its two supported replies using the
+row of Calculation 3.1 for $t=|s|$. A reply decoding to $b$ leads to
+$U_{sb}$ if $|sb|<h$, and to $Z_{sb}$ otherwise. At $U_s$, execute Update
+and let $\star$ lead to $Q_s$. At $Z_x$, execute $\mathsf{Halt}(x)$.
+All other Read response rows hold the current vertex. Such rows are
+legal total completions; correctness and termination are claimed on the
+promised sources. No extra rejecting vertex is installed.
+
+Initialization is $Q_\varepsilon$ for every $u_x$. Inductively, before
+Read $i$ the current tree is $\rho^{i-1}u_x$ and the acquired prefix is
+$x_1\cdots x_{i-1}$. Calculation 3.1 recovers the next original bit.
+Read leaves the device untouched; the following Update, when present,
+acts on that very tree. The next prefix is therefore correct. Only
+vertices $Z_x$ halt, so the first halt follows the final Read, with no
+earlier output checkpoint or additional internal action.
+
+Each Update actually changes the tree, not merely its name. The supplied
+right-spine quantity
+
+$$
+\kappa(\alpha)=0,\quad\kappa(\beta)=1,\quad
+\kappa(\langle a,b\rangle)=2+\kappa(b)
+$$
+
+satisfies $\kappa(\rho u)=\kappa(u)+1$ by
+`DelayedOriginalReadout.right_clock_iterate` at one update. Equality of
+the two trees would contradict this equality. This mathematical witness
+is not an observed clock. Hence all $h-1$ updates in (SLHC.1) are genuine.
+

@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:6340d014c97826a82d0633c5628dad38c50429bd31f0264ba9906b16893d3d57
+  normalized_sha256: sha256:6340d014c97826a82d0633c5628dad38c50429bd31f0264ba9906b16893d3d57
+cas_ref: sha256:6340d014c97826a82d0633c5628dad38c50429bd31f0264ba9906b16893d3d57
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 定理 61.2（有限标签的精确有限环截断与展开证书界）。的证明段，仅展开该陈述的推导及说明，不另提出独立命题；本收据不替代原陈述的形式化覆盖。
+    previous_atom_id: 7a9b73073d7ccf21ca43eaef2c6db28edd706b2b3d2388d83a2dbeee6a722028
+    next_atom_id: 58538709df11a54463b8d173817428c4f60d606bf94479a21ecc2ce659ae9cc7

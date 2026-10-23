@@ -5,17 +5,20 @@
    anchors: []
    digest: One supported coupled equality need not identify either laws or states. -/
 
-import Mathlib.Probability.Distributions.Uniform
+import D5.S0.Diagonal.Probability.EquivariantEscape
 
-/- Library-search audit trail (2026-08-24):
+open D5.S0.Diagonal.Probability.EquivariantEscape
+  (uniformPmf)
+
+/- Library dependencies:
    * The current-tree `KernelTranscriptInvariance` theorem proves preservation
      from equal laws, but no deposited theorem supplies the converse
      countermodel required here.
    * Pinned Mathlib exact hits `PMF.map_comp`, `PMF.map_const`, and `PMF.map_id`
      prove the two marginal laws of the explicit coupling and are applied
      directly below.
-   * `PMF.support_map`, `PMF.support_pure`, and
-     `PMF.support_uniformOfFintype` prove that the equal-output sample has
+   * `PMF.support_map`, `PMF.support_pure`, `PMF.mem_support_iff`, and
+     `PMF.ofFintype_apply` prove that the equal-output sample has
      nonzero mass while the two marginal laws differ.
    * Searches found no exact theorem packaging all six public countermodel
      clauses. `loogle` and `leansearch` executables are absent from PATH. -/
@@ -39,7 +42,7 @@ theorem single_coupled_sample_does_not_determine_law_or_state :
         sample.1 = sample.2 /\
         Ne (K false) (K true) /\
         Ne false true := by
-  let rightLaw : PMF Bool := PMF.uniformOfFintype Bool
+  let rightLaw : PMF Bool := uniformPmf Bool
   let coupling : PMF (Prod Bool Bool) := rightLaw.map (fun b => (false, b))
   let K : Bool -> PMF Bool :=
     fun state => if state then rightLaw else PMF.pure false
@@ -53,11 +56,11 @@ theorem single_coupled_sample_does_not_determine_law_or_state :
     change rightLaw.map id = rightLaw
     exact PMF.map_id rightLaw
   · rw [← PMF.mem_support_iff]
-    simp [coupling, rightLaw]
+    simp [coupling, rightLaw, uniformPmf, PMF.mem_support_iff, PMF.ofFintype_apply]
   · intro h_law
     have h_support := congrArg PMF.support h_law
     have h_at_true := Set.ext_iff.mp h_support true
-    simp [K, rightLaw] at h_at_true
+    simp [K, rightLaw, uniformPmf, PMF.mem_support_iff, PMF.ofFintype_apply] at h_at_true
 
 #print axioms single_coupled_sample_does_not_determine_law_or_state
 

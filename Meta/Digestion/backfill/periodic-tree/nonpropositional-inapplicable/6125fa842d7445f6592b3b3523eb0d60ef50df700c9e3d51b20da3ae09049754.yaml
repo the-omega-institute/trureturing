@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:6125fa842d7445f6592b3b3523eb0d60ef50df700c9e3d51b20da3ae09049754
+  normalized_sha256: sha256:6125fa842d7445f6592b3b3523eb0d60ef50df700c9e3d51b20da3ae09049754
+cas_ref: sha256:6125fa842d7445f6592b3b3523eb0d60ef50df700c9e3d51b20da3ae09049754
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 证明段（**证明。** 用 Fibonacci 递推算出 $F_{60}$ 与 $F_{61}$，再施行欧几里得算法， 得到 $\gcd(F_{60…）只展开前文定理或命题的论证，式子和中间推导不另提出独立陈述。
+    previous_atom_id: 7cecd5ba2763f1d1ec8ab088bc4d97a136d76e11905c70bf4b88b53a9f30aa2c
+    next_atom_id: d202d127ed8976494d3a2d48b7d5ef0661c5e04a7e4e3ffca84caa08b60391a8

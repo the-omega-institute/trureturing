@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:232872edd0ca74f474cc5ae8b10c2ef2ca310c63484f604c211e4dcb4b649bac
+  normalized_sha256: sha256:232872edd0ca74f474cc5ae8b10c2ef2ca310c63484f604c211e4dcb4b649bac
+cas_ref: sha256:232872edd0ca74f474cc5ae8b10c2ef2ca310c63484f604c211e4dcb4b649bac
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 连读第226节父项及相邻子项：此项仅为路径依赖的解释性因素标签「冲突时保留什么」，没有量词、条件或独立数学结论；三态 revision 的四个计算与非交换结论由命题子项另行覆盖，不把该因素清单当作定理。
+    previous_atom_id: 49aa241e2688da2baa81b16d2d6909db93d780e1acf23c38dc129f09e59ff1b0
+    next_atom_id: 211ae0b120d42e7b6f17038b35e934ad1b7b0135ee8794ebef38d6e8b64f68e3

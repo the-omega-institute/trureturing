@@ -1,0 +1,10 @@
+**Proof.** Let $t$ be one of the $D$ characters and $\lambda_i=\zeta^{f_t(c_i)}$, pairwise distinct. The matrix $M_t$ is the $4\times4$ alternating matrix with $(M_t)_{12}=\lambda_1+\lambda_2$, $(M_t)_{23}=\lambda_2+\lambda_3$, $(M_t)_{34}=\lambda_3+\lambda_4$, $(M_t)_{14}=\lambda_1+\lambda_4$ and $(M_t)_{13}=(M_t)_{24}=0$. Its Pfaffian is
+
+$$
+(\lambda_1+\lambda_2)(\lambda_3+\lambda_4)+(\lambda_1+\lambda_4)(\lambda_2+\lambda_3)=(\lambda_1+\lambda_3)(\lambda_2+\lambda_4)\ne0,
+$$
+
+and $\det M_t$ is its square, so $\rho_t=4$. All four qubits lie in different blocks of $\pi_t$, so $\Gamma^{\pi_t}=\Gamma$, whose first and third rows coincide and whose first two rows are independent, so $r(\pi_t)=2$. For every other $t$, $f_t$ takes at most three values on the occupied parties $c_1,\dots,c_4$, and $\rho_t=r(\pi_t)$ by Proposition 4.1. By Theorem 3.1, $-\log_2Z_n^{(\mathtt q)}=\tfrac12\sum_{t\ne0}\rho_t=\tfrac12\sum_{t\ne0}r(\pi_t)+\tfrac12\cdot2D$.
+
+To count, recall $f_t(c)=t_c$ for $c<\mathtt q$ and $f_t(\mathtt q)=0$. If $\mathtt q$ is one of the $c_i$, the other three coordinates must take pairwise distinct nonzero values, in $(n-1)(n-2)(n-3)$ ways, and the remaining $\mathtt q-4$ coordinates of $t$ are free. Otherwise $\mathtt q\ge5$, the four coordinates $t_{c_i}$ must be pairwise distinct, in $n(n-1)(n-2)(n-3)$ ways, and the remaining $\mathtt q-5$ coordinates are free. Both counts are positive for $n\ge5$, and dividing either by $(n-1)\,n^{\mathtt q-2}$ gives $(n-2)(n-3)/n^2$. By Convention 2.2, $S_n^{(\mathtt q)}-S_n^{\mathrm{mask}}=\frac{\log2}{(n-1)\,n^{\mathtt q-2}}D$, which gives the last formula. ∎
+

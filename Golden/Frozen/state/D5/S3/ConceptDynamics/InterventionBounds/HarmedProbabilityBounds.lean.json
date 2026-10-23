@@ -1,1 +1,1 @@
-{"statement_id":"sha256:6a80ad2b16dfc3167d1bbdd3ed638a070fbcfd9a9ca23d429dabe3a6f471c911"}
+{"statement_id":"sha256:6a80ad2b16dfc3167d1bbdd3ed638a070fbcfd9a9ca23d429dabe3a6f471c911","declarations":[{"declaration_name_key":"ns(ns(ns(ns(ns(ns(n0,2:D5),2:S3),15:ConceptDynamics),18:InterventionBounds),23:HarmedProbabilityBounds),32:harmed_probability_frechet_bound)","kind":"theorem"}]}

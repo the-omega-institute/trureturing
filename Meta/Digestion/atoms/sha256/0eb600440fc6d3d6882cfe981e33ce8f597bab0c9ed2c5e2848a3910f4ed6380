@@ -1,0 +1,46 @@
+**命题 390.2（实际矩与精确中心化的经典应用）。** 实际输入满足两条绝对收敛恒等式
+
+$$
+\sum_{m\ge1}H_m u_m=0,\qquad
+\sum_{m\ge1}H_m v_m=-\mathcal B(1).
+\tag{390.3}
+$$
+
+因而对每个实数 $N\ge1$，有绝对收敛的精确式
+
+$$
+\boxed{\psi(N)-N
+=\sum_{m\ge1}H_m\left[R(N/m)-R(N/(m+1))\right].}
+\tag{390.4}
+$$
+
+**证明。** 直接复用 Nathan Ng，*The distribution of the summatory function of the Möbius function*，[作者稿，p. 5](https://www.cs.uleth.ca/~nathanng/RESEARCH/mobius2b.pdf) 所列的经典无条件定量界
+
+$$
+\mathfrak M(x)=O\!\left(x\exp[-c(\log x)^{3/5}(\log\log x)^{-1/5}]\right),\qquad c>0.
+\tag{390.5}
+$$
+
+这给每个固定 $a>0$ 的 $O_a(x/\log^a x)$。在（384.4）中将 $d\le\sqrt x$ 与 $d>\sqrt x$ 分开：前者使用 $\log(x/d)\ge\frac12\log x$，后者使用 $|\mathfrak M(x/d)|\le x/d$ 和（385.9）的指数尾。故实际 $H$ 同样满足 $H(x)=O_a(x/\log^a x)$。取 $a=4$ 足以支付下面的两个绝对矩及一次微分。定性 PNT 的 $o(x)$ 本身不承担这个绝对收敛义务。
+
+对 §385 的 $\mathcal C(s)$，部分求和身份及绝对收敛的延拓给
+
+$$
+\mathcal C(s)=\sum_{m\ge1}H_m[m^{-s}-(m+1)^{-s}],\qquad s\ge1.
+\tag{390.6}
+$$
+
+这里在每个整数区间上有 $s\int_m^{m+1}t^{-s-1}\,dt=m^{-s}-(m+1)^{-s}$，所以（385.5）中积分前的 $s$ 已被吸收到离散权重；若另记 $F(s)=\mathcal C(s)/s$，则（390.6）右侧也必须除以 $s$。
+
+$\zeta(s)=(s-1)^{-1}+\gamma+O(s-1)$ 给 $\mathcal C(1)=0$、$\mathcal C'(1)=\mathcal B(1)$。这一经典 Laurent 展开的出处见 [DLMF §25.2](https://dlmf.nist.gov/25.2)。在（390.6）中从右侧微分，导数权重在一处为 $-v_m$，即得（390.3）。除以 $s$ 也不改变这两个一处读数，因为 $\mathcal C(1)=0$。这里只应用已有 $\mathcal C=\mathcal B/\zeta$，没有另证无零性或 RH。
+
+对（390.2）的 $G$，有
+
+$$
+G(N/m)-G(N/(m+1))
+=N[(A\log N-D)u_m-Av_m].
+\tag{390.7}
+$$
+
+乘实际 $H_m$ 后求和，（390.3）使其恰为 $A\mathcal B(1)N=N$。§387 的同源有限恢复式给 $\sum_{m\ge1}H_m[K(N/m)-K(N/(m+1))]=\psi(N)$；这里 $m>N$ 的 $K$ 差为零。相减即得（390.4）。固定 $N$ 后，无限尾为（390.7）的相反数，其绝对值由常数倍的 $N(1+\log m)/m^2$ 控制；$H_m=O(m/\log^4m)$ 支付全部尾部。$\square$
+

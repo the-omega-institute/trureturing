@@ -1,1 +1,1 @@
-{"statement_id":"sha256:826a72e5d3692c187eeb72829ca7377db9c5a66892ea09fb3c1f4e7d2b19fa7b"}
+{"statement_id":"sha256:826a72e5d3692c187eeb72829ca7377db9c5a66892ea09fb3c1f4e7d2b19fa7b","declarations":[{"declaration_name_key":"ns(ns(ns(ns(ns(ns(n0,2:D5),2:S1),10:Recurrence),4:Witt),25:FiberCapacityDivisibility),15:fiberPolynomial)","kind":"def"},{"declaration_name_key":"ns(ns(ns(ns(ns(ns(n0,2:D5),2:S1),10:Recurrence),4:Witt),25:FiberCapacityDivisibility),34:one_add_x_dvd_fiber_polynomial_iff)","kind":"theorem"}]}

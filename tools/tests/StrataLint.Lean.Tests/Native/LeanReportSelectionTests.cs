@@ -190,8 +190,8 @@ public sealed class LeanReportSelectionTests
         foreach (var buildProducer in new[] { false, true })
         foreach (var unavailableClock in new[] { false, true })
         foreach (var failedPhase in buildProducer
-                     ? new[] { "", "inputs", "reuse", "capture", "producer-build", "ensure", "report", "publish", "seal" }
-                     : new[] { "", "inputs", "reuse", "capture", "ensure", "report", "publish", "seal" })
+                     ? new[] { "", "inputs", "reuse", "capture", "prepare", "producer-build", "ensure", "report", "fib-regressions", "publish" }
+                     : new[] { "", "inputs", "reuse", "capture", "prepare", "ensure", "report", "fib-regressions", "publish" })
             yield return [failedPhase, unavailableClock, buildProducer];
     }
 
@@ -217,6 +217,8 @@ public sealed class LeanReportSelectionTests
             case "$1" in
               */lean-report-selection.py) phase=inputs ;;
               */native.py) phase=publish ;;
+              */fib_analysis.py) phase=fib-regressions ;;
+              */build_work.py) exit 0 ;;
               */reuse.py) phase="$2" ;;
               *) exit 97 ;;
             esac
@@ -272,19 +274,19 @@ public sealed class LeanReportSelectionTests
         var result = TestProcessRunner.Run("env", arguments,
             temporary.Path, TestBudgets.WorkflowProcessHangGuard, 1024 * 1024);
 
+        var standardOutput = Encoding.UTF8.GetString(result.StandardOutput);
+        var error = Encoding.UTF8.GetString(result.StandardError);
         Assert.True(result.ExitCode == (failedPhase.Length == 0 ? 0 : 23),
-            $"[FAIL] inspector_phase_exit_{failedPhase}: actual={result.ExitCode}");
+            $"[FAIL] inspector_phase_exit_{failedPhase}: actual={result.ExitCode}\nstdout:\n{standardOutput}\nstderr:\n{error}");
         var allPhases = buildProducer
-            ? new[] { "inputs", "reuse", "capture", "producer-build", "ensure", "report", "publish", "seal" }
-            : new[] { "inputs", "reuse", "capture", "ensure", "report", "publish", "seal" };
+            ? new[] { "inputs", "reuse", "capture", "prepare", "producer-build", "ensure", "report", "fib-regressions", "publish" }
+            : new[] { "inputs", "reuse", "capture", "prepare", "ensure", "report", "fib-regressions", "publish" };
         var expected = failedPhase.Length == 0 ? allPhases : allPhases.Take(Array.IndexOf(allPhases, failedPhase) + 1).ToArray();
         Assert.Equal(expected, ScriptHarnessScratch.ReadRecordedCalls(phases));
-        Assert.Equal(failedPhase.Length == 0 || failedPhase == "seal", File.Exists(report));
-        var standardOutput = Encoding.UTF8.GetString(result.StandardOutput);
+        Assert.Equal(failedPhase.Length == 0, File.Exists(report));
         Assert.Equal(failedPhase.Length == 0 ? "fixture report published\n" : "", standardOutput);
         Assert.DoesNotContain("LEAN_INSPECTOR_PHASE", standardOutput, StringComparison.Ordinal);
         Assert.DoesNotContain("LEAN_INSPECTOR_FAILED", standardOutput, StringComparison.Ordinal);
-        var error = Encoding.UTF8.GetString(result.StandardError);
         var observations = error.Split('\n', StringSplitOptions.RemoveEmptyEntries)
             .Where(line => line.StartsWith("LEAN_INSPECTOR_PHASE ", StringComparison.Ordinal)).ToArray();
         Assert.Equal(expected.Length * 2, observations.Length);
@@ -351,6 +353,7 @@ public sealed class LeanReportSelectionTests
                 --output) output="$2" ;;
                 --log-dir) log_dir="$2" ;;
                 --cache-miss-policy) [[ "$2" == fetch-or-fail ]] || exit 97 ;;
+                --regenerate-report-artifacts) [[ "$2" == 0 || "$2" == 1 ]] || exit 97 ;;
                 *) exit 97 ;;
               esac
               shift 2
@@ -389,7 +392,7 @@ public sealed class LeanReportSelectionTests
         Assert.True(recorded.Length >= 4, Encoding.UTF8.GetString(result.StandardError));
         Assert.Equal(fixture, ScriptHarnessScratch.ReadScratchText(Path.Combine(recorded[1], "fixture.identity")));
         var expected = new List<string> { "--repository", recorded[1], "--output", output,
-            "--cache-miss-policy", "fetch-or-fail" };
+            "--cache-miss-policy", "fetch-or-fail", "--regenerate-report-artifacts", "0" };
         if (!string.IsNullOrEmpty(logDirectory)) expected.AddRange(["--log-dir", logDirectory]);
         Assert.Equal(expected, recorded);
         var expectedLogDirectory = string.IsNullOrEmpty(logDirectory) ? output + ".logs" : logDirectory;

@@ -1,0 +1,53 @@
+**Definition 213.3 (Threshold carrier and its cell reserves).**
+Choose any nonempty $J\subseteq\{3,\ldots,L\}$, an actual measure
+$\nu\ge0$ on $\{0,1\}^J$ of mass $S$, and arbitrary $\eta_n\ge0$
+for $n\in J$. Put $\mu=\max_{n\in J}\eta_n$ and
+
+$$
+m_j=\nu\{x_j=0\},\qquad a_{nk}=\nu\{x_n=0,x_k=1\} (n<k),
+\qquad a_{nn}=0.
+$$
+
+Use the constructor of 203.2 on these ordered selected coordinates:
+lift each atom of $\nu$ equally to prefixes $01$ and $10$ as P rows;
+set every unselected late bit to one. For each $n\in J$, push length
+measure on $[0,\eta_n)$ to C words having all earlier bits one,
+bit $n$ zero, and selected later bit $k$ one exactly when $r<a_{nk}$.
+Set $T=t$ and $A=0$, with no early C. This is one finite score $V_t$:
+interval endpoints give finitely many atoms, and threshold ties have
+zero length. It has $W=S+t$ and
+$Q=(0,0,\eta;\sum\eta+S+t)$, extending $\eta$ by zero outside $J$.
+
+Every index in the following maxima belongs to $J$. For $j\in J$ set
+
+$$
+\begin{aligned}
+u_j&=\max\bigl(0,\max_{n\le j}(\eta_n-a_{nj}-m_j/2)\bigr),\\
+r_j&=\max\bigl(\{0\}\cup\{\min(\eta_n,a_{nj}):n<j\}
+                         \cup\{\eta_n:n>j\}\bigr).
+\end{aligned}
+$$
+
+For $i<j$ in $J$ write $p_{ab}=\nu\{x_i=a,x_j=b\}$ and set
+
+$$
+\begin{aligned}
+x_{ij}&=\max\bigl(0,\max_{n\le i}
+                   (\eta_n-\max(a_{ni},a_{nj})-p_{00})\bigr),\\
+y_{ij}&=\max\bigl(0,\max_{i<n\le j}(\eta_n-a_{nj}-p_{10})\bigr),\\
+r_{ij}&=\max\bigl(\{0\}\cup
+ \{\min(\eta_n,a_{ni},a_{nj}):n<i\}\cup
+ \{\min(\eta_n,a_{nj}):i<n<j\}\cup\{\eta_n:n>j\}\bigr),\\
+\kappa&=\max\bigl(0,\max_j(\eta_j-m_j/2)_+,\
+ \max_{i<j}[(\eta_i-m_i)_++(\eta_j-p_{10})_+]\bigr),\\
+\tau&=\max\bigl(\{\mu\}\cup
+ \{u_j+r_j-(S-m_j)/2:j\in J\}\cup
+ \{x_{ij}+y_{ij}+r_{ij}-p_{11}:i<j\text{ in }J\}\bigr).
+\end{aligned}
+\tag{213.3}
+$$
+
+Absent indexed families are omitted. In particular one selected late
+coordinate and zero masses are allowed. There is no monotonicity or
+exchangeability assumption on $\eta$ or $\nu$.
+

@@ -1,0 +1,25 @@
+**定义 15.1（自适应编译控制）。** 取控制类型由以下三种状态组成：
+$\mathsf{Ready}(c)$、$\mathsf{NeedC}(p,f)$、$\mathsf{NeedG}(p,f)$。
+后两者分别记录已经实际取得的首位 $b=1$ 或非根首位 $b=0$，以及该原 Read
+尚未调用的续延 $f$。$N$ 为整个程序的固定公开参数。编译器 $\widehat\delta_N$
+依下列规则仅输出原有 Op：
+
+| 控制与原指令 | 输出的真实原生指令及续延 |
+| --- | --- |
+| Ready，$\delta(c)=\mathsf{localStep}(c')$ | $\mathsf{localStep}(\mathsf{Ready}(c'))$ |
+| Ready，$\delta(c)=\mathsf{applyRho}(c')$ | $\mathsf{applyRho}(\mathsf{Ready}(c'))$ |
+| Ready，$\delta(c)=\mathsf{stop}(o)$ | $\mathsf{stop}(o)$ |
+| Ready，$\delta(c)=\mathsf{read}(p,f)$ | Read $B_k(p)$；首位一进入 NeedC；首位零且根进入 Ready$(f(\alpha))$；首位零且非根进入 NeedG |
+| NeedC$(p,f)$ | Read $C_k(p)$；按存在位零／一进入 Ready$(f(\beta))$／Ready$(f(\mathsf{branch}))$ |
+| NeedG$(p,f)$ | Read $G_k(p)$；按存在位零／一进入 Ready$(f(\mathsf{absent}))$／Ready$(f(\alpha))$ |
+
+每个物理回复 $y$ 的续延只用 $\mathbf1_{y\ne\mathsf{absent}}$，不利用其
+$\alpha/\beta/\mathsf{branch}$ 细分。可以把 NeedG 限定为非根地址的有类型状态；
+非法手造的 NeedG 根状态另取固定来源无关默认行为，不出现在实际编译运行中。
+固定版本使用存放 $(p,f,g,b)$ 的有限相位标签，依定理 13.2 的固定列表读取后
+调用 $f$，没有更强端口。
+
+这里描述的是原 Op 的抽象一步解释器。构造字面地址、解释 $\delta$、编码相位、
+计算投影和记录的具体 evaluator 若需局部微步，这些步骤实际以 localStep 执行，
+在 §15.5 另外收费；本表不把其物理代价设为零。
+

@@ -1,1 +1,1 @@
-{"statement_id":"sha256:1b7c81db38e7f473b66069d4d6fefe36d28621269d5597e9b0f7b7b878898845"}
+{"statement_id":"sha256:07cfa172360f499aa572176be016c1deef9a650c378b6ad2091c5a273bc6222d","declarations":[{"declaration_name_key":"ns(ns(ns(ns(ns(ns(n0,2:D5),2:S3),10:PrimeForms),9:Splitting),21:ModFiveOrientationBit),18:modFiveOrientation)","kind":"def"},{"declaration_name_key":"ns(ns(ns(ns(ns(ns(n0,2:D5),2:S3),10:PrimeForms),9:Splitting),21:ModFiveOrientationBit),60:mod_five_orientation_separates_fibers_but_is_not_homomorphic)","kind":"theorem"}]}

@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:a0fde2bfc1ed124d72a0e0d824b3898b173efa5e26c70b98f99091b695e4959b
+  normalized_sha256: sha256:a0fde2bfc1ed124d72a0e0d824b3898b173efa5e26c70b98f99091b695e4959b
+cas_ref: sha256:a0fde2bfc1ed124d72a0e0d824b3898b173efa5e26c70b98f99091b695e4959b
+coverage_gids:
+  - gid: D5/S3/Observer/AgencyHolonomy/StableResidualSwapCurvatureBound.stable_residual_swap_curvature_bound
+    target_statement_id: sha256:ee5ed61719c2f834273d4ac835dea29ca6b04ecac0465ab6f3c6da990be94dd7
+receipts:
+  unresolved_subitems: []

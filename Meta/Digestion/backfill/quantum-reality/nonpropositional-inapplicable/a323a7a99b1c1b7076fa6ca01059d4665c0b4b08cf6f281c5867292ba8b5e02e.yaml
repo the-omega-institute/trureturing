@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:a323a7a99b1c1b7076fa6ca01059d4665c0b4b08cf6f281c5867292ba8b5e02e
+  normalized_sha256: sha256:a323a7a99b1c1b7076fa6ca01059d4665c0b4b08cf6f281c5867292ba8b5e02e
+cas_ref: sha256:a323a7a99b1c1b7076fa6ca01059d4665c0b4b08cf6f281c5867292ba8b5e02e
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 假设 358.1 指定局域节点基底、无相位抵消的边权约束和图距离记号，仅规定模型条件。
+    previous_atom_id: b21f78ff317fcd1bc17e429da92ef18b66ca03230042b3f9b765d798f0bfe0fc
+    next_atom_id: 48c044d1170148546fcb15e93cbe82ffe47bb11e46ae37a24c8775996e04bbb3

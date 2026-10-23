@@ -1,0 +1,4 @@
+**Theorem 4.2 (strict startup recurrence cutoff).** Write $z_k=z(B^{k+1})$. If $z_i=z_j$ for $i<j$ in an admissible unequal-holding observer, then $\delta_i<2\epsilon$. In particular $z_0,\ldots,z_{J-1}$ are distinct and never recur later on this orbit.
+
+**Proof (4.2).** Put $L=j-i$. Determinism gives $z_{i+mL}=z_i$ for every $m\ge0$. Each associated finite history is actual and positive. Since $d(G_{\delta_{i+mL}},F_d)=\delta_{i+mL}\to0$, the triangle inequality and uniform guarantee yield $d(F_d,D_{z_i})\le\epsilon$. Also $d(G_{\delta_i},D_{z_i})\le\epsilon$, so $\delta_i\le2\epsilon$. At equality the retained $B$ orbit is periodic and Lemma 4.1 applies with $D=2\epsilon<1$. It excludes equality. $\square$
+

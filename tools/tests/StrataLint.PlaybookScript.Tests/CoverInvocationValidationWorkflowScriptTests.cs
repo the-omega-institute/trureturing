@@ -15,7 +15,7 @@ public sealed partial class DepositCoverWorkflowScriptTests
         var result = fixture.RunMakeCover(includeAtomId);
 
         Assert.NotEqual(0, result.ExitCode);
-        Assert.DoesNotContain("make:lean-report", fixture.CallKinds());
+        Assert.DoesNotContain("make:lean-report-scoped", fixture.CallKinds());
         Assert.False(fixture.LeanReportExists());
     }
 

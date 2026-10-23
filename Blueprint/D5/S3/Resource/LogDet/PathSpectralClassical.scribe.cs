@@ -12,6 +12,18 @@ internal sealed class PathSpectralClassicalDocument : IScribeDocumentDefinition
         H("Path and Spectral Forms of the Log-Determinant Divergence"),
         Blocks(
             Describe.Lean(
+                DescribeId.Create("trace-cfc-eigenvalue-sum"),
+                DeclarationHandle.Create(LeanPrefix + "trace_cfc_eq_sum"),
+                H("The trace of functional calculus is the eigenvalue sum"),
+                StatementSource.FromAuthor(TraceCfcFormula()),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text(
+                    "For a Hermitian complex matrix on any finite carrier and any real-valued "
+                        + "function, the real part of the trace of its Hermitian functional "
+                        + "calculus is the sum of the function over the matrix eigenvalues. "
+                        + "Unitary diagonalization and cyclicity of trace give the identity."))),
+                DescribeRole.Theorem),
+            Describe.Lean(
                 DescribeId.Create("the-log-det-divergence-has-path-spectral-kernel-and-classical-forms"),
                 DeclarationHandle.Create(LeanPrefix + "log_det_path_spectral_classical"),
                 H("The log-det divergence has path, spectral, kernel, and classical forms"),
@@ -33,6 +45,31 @@ internal sealed class PathSpectralClassicalDocument : IScribeDocumentDefinition
                             + "uses Hermitian functional calculus for the matrix path, and applies "
                             + "the trace and determinant eigenvalue formulas for the spectral form."))),
                 DescribeRole.Theorem))));
+
+    private static Formula TraceCfcFormula()
+    {
+        Formula n = F.Id("n"), a = F.Id("A"), h = F.Id("h"), f = F.Id("f"), i = F.Id("i");
+        Formula real = F.Seq(F.Mathbb, F.Grp(F.Id("R")));
+        Formula complex = F.Seq(F.Mathbb, F.Grp(F.Id("C")));
+        Formula body = F.Seq(
+            Call("re", Call("trace", Call("cfc", f, a))), F.Sp, F.Eq, F.Sp,
+            F.Sum, F.Underscore, F.Grp(i, F.Colon, n), F.Sp,
+            new Formula.Apply(f, [Call("eigenvalues", h, i)]));
+        body = All("f", Parenthesized(F.Seq(real, F.Sp, F.To, F.Sp, real)), body);
+        body = All("h", Call("IsHermitian", a), body);
+        body = All("A", Call("Matrix", n, n, complex), body);
+        return F.Disp(All("n", F.Seq(F.Operatorname, F.Grp(F.Id("Type"))),
+            F.Seq(F.OpenBracket, Call("Fintype", n), F.CloseBracket, F.Sp,
+                F.OpenBracket, Call("DecidableEq", n), F.CloseBracket, F.Sp, body)));
+    }
+
+    private static Formula All(string name, Formula type, Formula body) =>
+        new Formula.Bind(FormulaQuantifier.ForAll, FormulaIdentifier.Create(name), type, body);
+
+    private static Formula Call(string name, params Formula[] arguments) =>
+        new Formula.Apply(F.Seq(F.Operatorname, F.Grp(F.Id(name))), [.. arguments]);
+
+    private static Formula Parenthesized(Formula value) => F.Seq(F.Open, value, F.Close);
 
     private static Formula PathSpectralClassicalFormula() => F.Disp(F.Seq(
         F.Begin, F.Grp(F.Id("gathered")),

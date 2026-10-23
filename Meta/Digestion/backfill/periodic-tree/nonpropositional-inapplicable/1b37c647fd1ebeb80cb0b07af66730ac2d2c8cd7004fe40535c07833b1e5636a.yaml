@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:1b37c647fd1ebeb80cb0b07af66730ac2d2c8cd7004fe40535c07833b1e5636a
+  normalized_sha256: sha256:1b37c647fd1ebeb80cb0b07af66730ac2d2c8cd7004fe40535c07833b1e5636a
+cas_ref: sha256:1b37c647fd1ebeb80cb0b07af66730ac2d2c8cd7004fe40535c07833b1e5636a
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 本段（### ZBD.2. Four fully exceptional blocks at a failing window）只引入对象、参数、集合或谓词记号；给出的条件是定义内容，不断言额外性质。
+    previous_atom_id: 61cad8a67ba7fdac0db0120c313054880ae6941da88a8cf2a502b644a6a60ba6
+    next_atom_id: 6dde54864773861d3205e8cdf0ee82831542120877182e9b16965ba2bbe168af

@@ -1,0 +1,19 @@
+**假设 26.3（合法域与读数）。** 所有模式共用上一条的边权、测度、
+单位和 $\vartheta$。模式律的三均值为
+$$
+X=\mathbb E_p[x],\qquad Z=\mathbb E_p[z],\qquad
+Y=\mathbb E_p[y],\qquad \kappa=\mathbb E_p[xy],
+$$
+其实际纤维满足既有五态非负性区间
+$\max(0,X+Y+Z-1)\le\kappa\le\min(X,Y)$。
+给定线性读口 $V_L,V_R$，观测噪声
+$\epsilon_L,\epsilon_R\sim\mathcal N(0,\vartheta)$
+彼此独立，且噪声向量 $(\epsilon_L,\epsilon_R)$ 独立于整个联合变量
+$(S,\xi)$。因此各模式有同一条件噪声律
+$\mathcal N(0,\vartheta I_2)$，并与该模式的场独立；在 $q_s=0$ 时
+$$
+R_L=V_L\xi+\epsilon_L,\qquad R_R=V_R\xi+\epsilon_R.
+$$
+若 $q_s\ne0$，必须先减去各模式的条件均值
+$-V K_s^{-1}q_s$；不能把有源偏移混进零均值交叉矩。
+

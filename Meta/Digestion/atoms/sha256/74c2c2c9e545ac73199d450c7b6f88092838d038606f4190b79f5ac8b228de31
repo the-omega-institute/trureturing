@@ -1,0 +1,64 @@
+**Definition 35.1 (fixed data and comparison realization).** Let
+[G](FIB_NATIVE_TWO_CONTROL_GREEN_STABILITY.md),
+[C](FIB_NATIVE_CRITICAL_CUTOFF_SPECTRAL_LIMITS.md),
+[N](AURIC_FIB_ATOM_PROBABILITY_PHASE_TRANSPORT_AND_HOLONOMY.md), and
+[F](FIB_NATIVE_FREE_DIFFUSION_QUOTIENT_RIGIDITY.md) denote the indicated
+native theories. Retain G Definition 25.1: fixed $0<Z<1$,
+$H=(1-Z)/2$, $I=(l,u)\Subset(0,H)$, $\varepsilon>0$, its exact
+probabilities and coefficients $c_\kappa=(A_\kappa,B_\kappa,b_\kappa)$
+in G (25.4), covariance $\operatorname{diag}(\varepsilon^2,1)$, raw
+measure, original clock, and killing at both height endpoints.
+Retain its $\lambda$ and positive $L^2(dk)$-normalized $\phi$ in
+G (25.5). All statements below fix these data.
+
+Choose once and for all a closed interval
+$\mathcal K=[-\kappa_*,\kappa_*]$ small enough for G (26.6), (26.12)
+and (32.2) on a slightly larger height interval. In particular all
+probabilities are positive there and the coefficient functions and
+their derivatives are uniformly bounded. This is a two-sided choice
+independent of all subsequent times. Write
+
+$$
+\mathcal C=I\times\mathbb R^3,\qquad
+q=(\theta,v,x),\qquad d\nu=dk\,dq,\qquad
+\mathscr A_\kappa=\varepsilon^2\partial_k^2+
+                 (c_\kappa(k)\cdot\partial_q)^2.
+\tag{35.1}
+$$
+
+This is the all-real-phase realization used in G §32, now considered
+at large times. Its nonnegative Dirichlet Friedrichs operator is
+$-\mathscr A_\kappa$. Let $g_\kappa^I(t;k,k';r)$ be its transition
+density relative to $dk'\,dq'$, with $r=q'-q$. Thus there is no angular
+Haar normalization in this density. Its stochastic realization, until
+$\zeta=\inf\{t:K_t\notin I\}$, is
+
+$$
+dK_t=\sqrt2\varepsilon\,dW_t^1,\qquad
+dq_t=\sqrt2c_\kappa(K_t)\,dW_t^2,
+\tag{35.2}
+$$
+
+where the two Brownian motions are independent. The coefficients have
+no phase dependence and the second field has no height component, so
+the Itô and Stratonovich equations agree. Smooth coefficients on
+the larger interval give uniqueness up to exit; closing its symmetric
+smooth-core form gives exactly (35.1), with no added drift or clock.
+The phases in (35.1) record winding. At nonzero $\kappa$, the original
+lifted coordinate is $D=\kappa x$. At zero this comparison $x$ is not
+an additional coordinate of the actual native zero leaf.
+
+The native conclusions below are `repo-derived`. The inherited scalar
+fibres and coercivity are G (26.5)--(26.12); C (32.4) supplies the
+already established one-direction perturbation method, not an
+all-phase local limit. The classical bounded-perturbation, Fourier,
+Gaussian and martingale arguments used inside the proofs are
+`literature-attested` tools. For the classical abelian-cover setting,
+Geng--Iyer, *Long time asymptotics of heat kernels and Brownian winding
+numbers on manifolds with boundary*,
+[arXiv:1804.00368](https://arxiv.org/html/1804.00368), §§1--2, assumes
+a compact Riemannian base and its Laplace--Beltrami heat operator.
+The rank-two operator (35.1) on a four-dimensional cover does not meet
+that ellipticity hypothesis; none of the limits below is imported
+from that theorem. No assertion of global literature novelty is made.
+

@@ -1,0 +1,6 @@
+**Definition 75.1 (the represented prime family).** Put
+
+$$\mathcal F(m,n)=4m^4-2m^3n+11m^2n^2+2mn^3+4n^4.$$
+
+Let $\mathcal Q$ be the set of primes $Q>5$ represented as $Q=\mathcal F(m,n)$ by integers $m,n$. This definition asserts neither infinitely many prime values nor infinitely many members in the actual golden prime supports.
+

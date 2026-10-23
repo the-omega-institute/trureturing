@@ -1,0 +1,25 @@
+**定理 12.3（擦除形状深度恰移一层）。** 对全部 $u,v\in\mathcal T$ 与
+$h\ge0$，有
+
+$$
+\boxed{
+ p_h(u)=p_h(v)
+ \iff
+ \operatorname{sh}_{\le h+1}(\rho^2u)
+ =\operatorname{sh}_{\le h+1}(\rho^2v).
+}
+\tag{ABT.32}
+$$
+
+等价地，在两步实际像上，存在位必须再支付一层：
+
+$$
+\boxed{
+ p_h(u)=p_h(v)
+ \iff
+ \operatorname{supp}_{h+2}(\rho^2u)
+ =\operatorname{supp}_{h+2}(\rho^2v).
+}
+\tag{ABT.33}
+$$
+

@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:fef247215e2485801106068c1ea8aec360464b1b820440d9cd781050881b941a
+  normalized_sha256: sha256:fef247215e2485801106068c1ea8aec360464b1b820440d9cd781050881b941a
+cas_ref: sha256:fef247215e2485801106068c1ea8aec360464b1b820440d9cd781050881b941a
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 英文证明段（**Proof.** A realization implies K|m^2+1 and hence root solvability. E…）仅给出前文命题的推导或证明方向，不另提出独立结论。
+    previous_atom_id: 45676492e322a10b6ebaf1cdca06598614ab04f65e4ee073c7585a75b73bccad
+    next_atom_id: 7c4cc5e383968ac4c89958ddacd7d06da75b0ceaea2c6976bb288dc0d3581895

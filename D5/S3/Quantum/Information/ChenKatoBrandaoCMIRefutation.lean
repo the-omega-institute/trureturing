@@ -22,8 +22,8 @@ Direct frozen dependencies:
     declaration statement_id: sha256:024ca3125b8f182e070b880d7c41840a31fa9cb0aaa89e5d81dbe4ebb3c5f287
   D5/S3/Quantum/Divergence/QuantumRelativeEntropyDefectComposition.DensityState
     declaration statement_id: sha256:b8e1957ba4f81600248989dc21f0a107bcdd5ce2e68546c38b9164c4a09ac337
-Information-escape registration is paused under CLAUDE.md section 3.9.
-Private helper classifications:
+Escape audit unfinished: https://github.com/the-omega-institute/trureturing/issues/19212.
+Helper classifications:
   family_correctable: content; whole-space commutant reduction and cyclic induction;
     consumer: result. Its content does not change result's conservative bind-only label.
   entropy_diagonal: bind-only; consumer: cmi_diagonal.
@@ -42,6 +42,7 @@ Private helper classifications:
 
 import D5.S3.Quantum.Information.PartialTraceMutualInformation
 import D5.S3.Quantum.Foundation.FiniteKrausChannel
+import D5.S3.Quantum.Divergence.QuantumRelativeEntropyDefectComposition
 
 open Matrix
 open scoped BigOperators Kronecker ComplexOrder MatrixOrder
@@ -84,7 +85,7 @@ def claim : Prop :=
       (fun i => (1 : Matrix (Fin dA × Fin dB) (Fin dA × Fin dB) ℂ) ⊗ₖ K i)) (CStarMatrix.ofMatrix.symm ρ.1)) ≤
       η * cmi (CStarMatrix.ofMatrix.symm ρ.1)
 
-private theorem entropy_diagonal (d : a → ℝ) :
+theorem entropy_diagonal (d : a → ℝ) :
     entropy (diagonal (fun i => (d i : ℂ))) = ∑ i, Real.negMulLog (d i) := by
   have hh : (diagonal (fun i => (d i : ℂ))).IsHermitian := by
     apply Matrix.isHermitian_diagonal_iff.mpr
@@ -179,7 +180,7 @@ section DiagonalMarginals
 variable {A B C : Type*} [Fintype A] [DecidableEq A]
   [Fintype B] [DecidableEq B] [Fintype C] [DecidableEq C]
 
-private theorem partialTraceRight_diagonal (r : A × B → ℝ) :
+theorem partialTraceRight_diagonal (r : A × B → ℝ) :
     partialTraceRight (diagonal (fun x => (r x : ℂ))) =
       diagonal (fun a => ((∑ b, r (a,b) : ℝ) : ℂ)) := by
   ext i j
@@ -187,7 +188,7 @@ private theorem partialTraceRight_diagonal (r : A × B → ℝ) :
   · subst j; simp [partialTraceRight, Matrix.diagonal]
   · simp [partialTraceRight, Matrix.diagonal, h]
 
-private theorem partialTraceLeft_diagonal (r : A × B → ℝ) :
+theorem partialTraceLeft_diagonal (r : A × B → ℝ) :
     partialTraceLeft (diagonal (fun x => (r x : ℂ))) =
       diagonal (fun b => ((∑ a, r (a,b) : ℝ) : ℂ)) := by
   ext i j
@@ -293,7 +294,6 @@ theorem result : ¬ claim := by
   have hp : 0 < Real.log 2 := Real.log_pos (by norm_num)
   nlinarith
 
-#print axioms result
 
 end
 end D5.S3.Quantum.Information.ChenKatoBrandaoCMIRefutation

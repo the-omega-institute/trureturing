@@ -1,0 +1,26 @@
+**Definition 41.3 (realizable ExactChart/controller).** Fix finite controller
+positions $E$, reply alphabet $O$, and primitive action alphabet $A$. A chart
+contract is *realizable* when it supplies the following data.
+
+1. At every legal read position $e$, the literal reply is
+   $\operatorname{Reply}_e(s,j)\in O$, and there is one source-independent
+   transition
+   $\delta_e:O\to E$ such that
+   $\operatorname{Next}_e(s,j)=\delta_e(\operatorname{Reply}_e(s,j))$.
+   Thus successor choice factors through the observed reply (equivalently,
+   through the observable boundary fiber), not through a hidden chart point.
+2. For every boundary fiber and action $a$, legality is common:
+   $a$ is legal for one member of $F_b$ exactly when it is legal for every
+   member. The action may still receive different legal replies; the set of
+   legal actions is the shared part.
+3. Every reply, successor, resource increment, epoch update, and terminal row
+   is evaluated on the same source $s$. All cross-source comparisons use the
+   complete $Y$, not a projection of it.
+4. The controller instruction at $e$ is a fixed primitive action or halt. Its
+   reply branches use the corresponding $\delta_e$ (and the analogous
+   source-independent factorization for any action that returns an observation).
+
+The first two clauses are the missing realizability conditions for a finite
+chart table. A finite image cover or a separately witnessed coordinate does
+not satisfy them.
+

@@ -1,0 +1,58 @@
+**Proposition 58.16 (observation-based lifting and a sound workflow).**
+Suppose a source-total exact action interface satisfies 58.2, has an actual
+action-congruent summary as in 58.3, preserves the target/correctness contract
+and $\Gamma$ on each original source, and admits a successful quotient policy.
+Require this policy to be observation-based before lifting it: its action and
+next controller memory must be selectable from the actual visible boundary
+and received response, without a hidden source or chart coordinate. If a
+quotient class is used as memory, its initialization and update must have
+this same visible factorization.
+
+Explicitly, with $h$ the available visible history, a sufficient condition
+is an available map $\chi(h)$ to the actual quotient class such that
+
+$$
+\chi(h)=[q]\ \text{for every source state }q\text{ compatible with }h,
+\qquad
+\widehat\pi(h)=\overline\pi(\chi(h)),
+$$
+
+with a source-independent update from the current visible memory, selected
+action, and observed response. If the whole class is not observable, lifting
+is still possible when the chosen action and all required memory updates
+factor through $h$ across every compatible class; these factorizations must
+be supplied. A policy allowed to inspect an unobservable quotient class
+does not lift merely because the semantic quotient exists.
+
+Under these hypotheses, the sequence
+
+$$
+\text{action-congruent quotient}
+\longrightarrow
+\text{target acquisition}
+\longrightarrow
+\text{fixed-policy controller minimization}
+\longrightarrow
+\text{resource verification}
+$$
+
+is a sound workflow. Finite controller minimization requires 58.4--58.7;
+effective fixed-budget resource decisions require 58.11, and 58.20 gives
+one sufficient package for effective finite-family frontier extraction.
+Randomized transport, when used, additionally requires 58.12--58.14.
+
+Proof. Visible factorization gives one legal first action on every compatible
+source. The observed response determines the same controller update, while
+congruence determines the correct successor class. Induction gives an exact
+same-source lift of every finite quotient run, preserving status, complete
+output, and all contracted resource labels. The stipulated successful
+termination and target contract therefore transfer to the original sources.
+Apply 58.5 to the selected completed residual and 58.10 to its aggregation;
+apply the finite synthesis argument only under 58.11.
+
+This order is not logically forced. A successful observation-based controller
+can be supplied first and then minimized and checked. Resource constraints can
+also guide acquisition or be included in the quotient labels from the start.
+These alternatives remain sound when they discharge the same factorization,
+termination, residual, and resource obligations. ∎
+

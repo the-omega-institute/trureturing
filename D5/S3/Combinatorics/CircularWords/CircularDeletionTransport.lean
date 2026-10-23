@@ -32,14 +32,14 @@ private theorem filter_rotated (p : α → Bool) {l r : List α} (h : l ~r r) :
 def restrict (p : α → Bool) : Cycle α → Cycle α :=
   Quot.map (fun l => l.filter p) (fun _ _ h => filter_rotated p h)
 
-private theorem restrict_reverse (p : α → Bool) (C : Cycle α) :
+theorem restrict_reverse (p : α → Bool) (C : Cycle α) :
     restrict p C.reverse = (restrict p C).reverse := by
   induction C using Quotient.inductionOn with
   | _ l =>
     change ((l.reverse.filter p : List α) : Cycle α) = ((l.filter p).reverse : List α)
     rw [List.filter_reverse]
 
-private theorem restrict_restrict (p q : α → Bool) (C : Cycle α) :
+theorem restrict_restrict (p q : α → Bool) (C : Cycle α) :
     restrict p (restrict q C) = restrict (fun y => p y && q y) C := by
   induction C using Quotient.inductionOn with
   | _ l =>

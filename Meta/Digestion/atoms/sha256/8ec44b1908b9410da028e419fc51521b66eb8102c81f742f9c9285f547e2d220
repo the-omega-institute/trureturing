@@ -1,0 +1,11 @@
+**Definition 1.5 (completion).** Write $\widehat{\mathcal T}$ for all valid
+finite or infinite full ordered binary trees with $\alpha/\beta$ leaves and
+the same four replies. It is the compact closed valid-tree subspace of the
+countable four-reply product and is complete for the prefix metric. A finite
+tree is isolated by its replies through its maximum leaf depth. Every finite
+valid prefix has a finite filling. The unique leafless tree is $\Omega$.
+The extended $\rho$ uses exactly (NIS.1). Fixed powers are prefix nonexpanding,
+infinite branches persist, and $\rho$ is injective on this completion
+[SFS, Lemma 2.1][SFS]. Pairing gains one agreement depth. Guarded recursion
+below uses that explicit pair gain; bare $\rho$ has no assumed contraction.
+

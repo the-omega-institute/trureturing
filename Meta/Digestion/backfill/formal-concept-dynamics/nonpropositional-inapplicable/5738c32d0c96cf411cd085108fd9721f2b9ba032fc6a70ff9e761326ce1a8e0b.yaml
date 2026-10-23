@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:5738c32d0c96cf411cd085108fd9721f2b9ba032fc6a70ff9e761326ce1a8e0b
+  normalized_sha256: sha256:5738c32d0c96cf411cd085108fd9721f2b9ba032fc6a70ff9e761326ce1a8e0b
+cas_ref: sha256:5738c32d0c96cf411cd085108fd9721f2b9ba032fc6a70ff9e761326ce1a8e0b
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 证明段只展开既有陈述的论证并以证毕结束，不提出新的独立陈述。
+    previous_atom_id: 3e7978b460acaa2a7969485a49f200ad6f4916788d6f20ace6bd3f87c98809e3
+    next_atom_id: deebaa4fef13fffa60e50ee032c2f83de3675c5f4deb9dcae916f5fb14cb0997

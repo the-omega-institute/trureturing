@@ -1,0 +1,33 @@
+**Definition 9.2 (supplier scope and remaining recovery obligation).**
+The complete-row and guarded-epoch meanings are those of
+Definitions 1.1–1.2 and [ARH, Definitions 1.1–1.2][ARH].
+The acquisition correspondence is conditional on ARH Assumption 1.3
+and uses its Proposition 2.1. [NIC, Theorems 3.2 and 4.3][NIC]
+already supply exact whole-source image normalization and reconstruction;
+the direct descriptions (NMF.8.3)–(NMF.8.4) instantiate that scope
+for this input. No missing positive residual normalizer is presumed.
+
+The finite cylinder identity and triangle inequality in the proof
+of Theorem 8.4 are standard intermediate facts. The deductions here
+are their exact all-tuple native shift-copy bound, its attaining
+three-row tuples, and its whole retained-source correspondence.
+They carry no external-priority assertion.
+
+The minimum original mismatch depth and the every-branch marker
+count of Theorem 2.5 continue to agree on these witnesses.
+The every-branch diagonal property of
+[Barozzini, Clemente, Colcombet and Parys, §4.4][BCCP44]
+counts markers on every branch of one chosen tree; it is not a
+normalized branching probability. Its safe-scheme decision in
+[§5][BCCP5] still has the exact-carrier premise of Definition 6.1.
+Corollary 9.1 refutes substitution of normalized mass for that
+depth property, and supplies no faithful safe carrier.
+
+Thus Open problem 7.3 remains the unrestricted recovery and
+classification obligation for the entire coupled original sources.
+The finite negative $y\ne Sy$ is proved on each finite source.
+It need not hold at the all-branch completion $\Omega$, where
+$\rho\Omega=\Omega$. No infinite negative, free observer port,
+acquisition cost bound, native undecidability or general stopping
+theorem follows from the mass obstruction.
+

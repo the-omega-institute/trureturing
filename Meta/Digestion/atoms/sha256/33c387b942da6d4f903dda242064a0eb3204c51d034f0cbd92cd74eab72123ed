@@ -1,0 +1,57 @@
+**Definition 1.1 (Parameters and the claimed resource order).** Fix an integer
+$r\ge1$, a real $c>0$ and a risk allowance $0<\alpha<1/2$. Set
+$d=2r-1$ and $a=d+1=2r$. All constants and endpoint neighborhoods below concern
+these fixed parameters; none is asserted uniform as they vary. Logarithms
+without a subscript are natural. The common known parameter is $q=e^{-s}$,
+where $s>0$. The positive shapes are exactly
+
+$$
+F_0(k)=k^{2r-1},\qquad
+F_1(k)=k^{2r-1}+c k^{r-1}\qquad(k\ge1).
+\tag{1.1}
+$$
+
+For an integer configuration budget $M\ge2$, put
+
+$$
+\begin{aligned}
+b&=1-2\alpha,\\
+L_M&=\max\left\{1,
+  \left\lceil\left(\frac{2c(M-2)}b\right)^{1/r}\right\rceil\right\},\\
+\Psi(s,M)&=\frac{s^{-(2r+1)}}{1+\log\min\{L_M,1/s\}}
+\qquad(0<s<1).
+\end{aligned}
+\tag{1.2}
+$$
+
+Theorem 5.1 constructs one common actual-bit observer with
+$O(2^{rJ})$ complete configurations and both paid means
+$O(s^{-(2r+1)}/J)$, simultaneously for every integer $J\ge1$ with
+$s2^J\le\eta$, on one fixed neighborhood. Theorem 6.1 matches (1.2) for
+every sufficient finite budget. Theorem 7.1 characterizes eventual budget
+growth for the full logarithmic order.
+
+The universal lower bound and its necessary budget condition are credited
+to [the public renewal source, Theorem 11.2 and Open problem 11.3][SOURCE].
+The public [critical multiscale attainment source][MULTISCALE],
+Theorems 9.1–9.2, already proves logarithmic paid attainment for this same
+positive pair and the same complete actual-bit resource contract: for
+$sL\le\eta$ it gives
+$M\le C(L+2)/(s^r\sqrt{H_L})$ and both paid means at most
+$Cs^{-(2r+1)}/H_L$, with its fixed-$\theta$ corollary. Its Section 10
+leaves minimum state and the full all-budget frontier open, and its lower
+discussion is conditional attribution. That ordinary public source is
+fallible and is not independent verification of this manuscript.
+
+The contribution retained here is the different stronger resource and
+quantifier statement: the finite phase reader and its source-normalized
+occupation estimates, the evidence rounding and complete paid
+implementation yield the explicitly counted $O(2^{rJ})$ table, a uniform
+upper for every sufficient finite budget, and the eventual
+positive-polynomial budget criterion. These are ordinary mathematical
+proofs, not Lean kernel validation. The category/lattice existence result
+from [MULTISCALE] is credited rather than claimed as a new discovery. The
+native-tree exact-rate problem and the broader minimal-relations,
+internal-observer and mutual-recovery programme retain their separate
+unresolved goals.
+

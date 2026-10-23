@@ -1,0 +1,24 @@
+**推论 3.3（有限叶切片的尖锐容量）。** 设 $\mathcal T_n$ 是恰有 $n\ge1$ 个叶的
+切片，$C_{n-1}$ 是有序满二叉括号的 Catalan 数，满足
+
+$$
+C_0=1,
+\qquad
+C_m=\sum_{i=0}^{m-1}C_iC_{m-1-i}.
+$$
+
+则三种任务在 $\mathcal T_n$ 上的行为类数分别为
+
+$$
+\boxed{
+|\mathcal T_n/{\sim_c}|=n+1,
+\qquad
+|\mathcal T_n/{\sim_w}|=2^n,
+\qquad
+|\mathcal T_n/{\sim_q}|=2^nC_{n-1}.
+}
+$$
+
+固定组成 $(a,b)$、$a+b=n$ 时，叶词类数为 $\binom na$，完整结构类数为
+$\binom na C_{n-1}$；同一叶词的结构纤维恰有 $C_{n-1}$ 个括号形状。
+

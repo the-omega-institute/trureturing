@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:e17287c870b877d00433f7cd6da4ee944028a32c69bf2143a1277471df5a5db9
+  normalized_sha256: sha256:e17287c870b877d00433f7cd6da4ee944028a32c69bf2143a1277471df5a5db9
+cas_ref: sha256:e17287c870b877d00433f7cd6da4ee944028a32c69bf2143a1277471df5a5db9
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 连读第226节父项及相邻子项：此项仅为路径依赖的解释性因素标签「哪些前提有更高优先级」，没有量词、条件或独立数学结论；三态 revision 的四个计算与非交换结论由命题子项另行覆盖，不把该因素清单当作定理。
+    previous_atom_id: cfbeb1fffde50d422e082e1afda76d8137eb4b7eac91c77c207c74aa1100a47f
+    next_atom_id: 14588e12c3a3702baca583ca98a25a828f515365b6f6630a57f0f5153995cb91

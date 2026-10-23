@@ -1,0 +1,68 @@
+**Theorem 5.2 (same-witness saturation for all native competitors).**
+For every $d,n\ge1$ and every nonempty admissible $B\subseteq S_d^n$,
+
+$$
+B\subseteq J_2(B)\subseteq J_c(B),
+\tag{CBN.21}
+$$
+
+and $J_c(B)$ is admissible with every chosen donor and every chosen
+reply-to-factor decoder of $B$ unchanged, including chosen constants.
+Moreover $J_c(J_c(B))=J_c(B)$. Every inclusion-maximal admissible set
+is constructor-pair closed, and every $C_\Theta$ is constructor-pair
+closed when nonempty. Restricting cover members to constructor-pair
+closed admissible sets leaves $K_d(n)$ and $Z_d(n)$ unchanged. The
+maximum of any nonnegative mass on $S_d^n$ over admissible sets is
+also unchanged by this restriction.
+
+Proof. Fix all the witnesses on $B$. Let $x\in J_c(B)$ and consider
+a target $(i,q)$ with donor $(j,a)$ and decoder $\delta$. Put
+$y=r_{x_j}(a)$. For each $v\preceq q$, when $(i,v)\ne(j,a)$,
+its pair projection with the donor provides a tuple $b^{(v)}\in B$
+such that
+
+$$
+r_{b^{(v)}_i}(v)=r_{x_i}(v),\qquad
+r_{b^{(v)}_j}(a)=y.
+\tag{CBN.22}
+$$
+
+The witness on $B$ gives $\Gamma_q(b^{(v)}_i)=\delta(y)$.
+Consequently $r_{x_i}(v)\in P_{q,v}(\delta(y))$. If the two references
+coincide, unary membership supplies a tuple in $B$ with that reply,
+and gives the same conclusion. Different prefixes may lift to different
+tuples $b^{(v)}$; no common lift is asserted. Their target values are
+nevertheless all the same $\delta(y)$ because they have the same donor
+reply under the same fixed decoder.
+
+Apply (CBN.12) to the actual tree $x_i$ to obtain
+$\Gamma_q(x_i)=\delta(y)$. For a constant target, unary projection
+membership alone puts every prefix reply in the corresponding fixed
+level's projection, and (CBN.12) gives that constant. Thus every
+selected original equation holds throughout $J_c(B)$.
+
+Inclusion $B\subseteq J_c(B)$ follows from its projections. If
+$x\in J_2(B)$, two constructor references in different blocks lift
+together through the corresponding whole-block pair projection. Two
+references in the same block lift through that block's unary projection.
+The constructor unary conditions follow too. This proves
+$J_2(B)\subseteq J_c(B)$, and $B\subseteq J_2(B)$ is immediate.
+
+For any $B$, enlargement to $J_c(B)$ leaves all its constructor unary
+and binary projections unchanged: the defining inclusions give one
+direction and $B\subseteq J_c(B)$ gives the other. This proves
+idempotence. Maximality now implies $B=J_c(B)$ for maximal admissible
+$B$. For nonempty $C_\Theta$, its complete chosen witnesses remain
+valid on its join by the first part. Since $C_\Theta$ already consists
+of all solutions of those equations, the join cannot add a solution
+outside it. Hence $J_c(C_\Theta)=C_\Theta$.
+
+Finally enlarge each member of any integral or fractional cover to its
+constructor join. Coverage increases, and its number or total
+coefficient does not increase; duplicate members can be combined.
+The enlarged sets are admissible, while the restricted class was already
+a subclass of all competitors. Both optimum inequalities follow.
+Every nonnegative mass is monotone under this enlargement. Since the
+universe is finite, a mass maximum exists, and the same argument proves
+its equality over the restricted class. $\square$
+

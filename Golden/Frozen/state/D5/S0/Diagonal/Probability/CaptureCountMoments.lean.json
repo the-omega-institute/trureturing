@@ -1,1 +1,1 @@
-{"statement_id":"sha256:ee7405bb63fd437fa5653986552fe06f248117e8c4571f72a33cb0cd9b2f45dd"}
+{"statement_id":"sha256:ee7405bb63fd437fa5653986552fe06f248117e8c4571f72a33cb0cd9b2f45dd","declarations":[{"declaration_name_key":"ns(ns(ns(ns(ns(ns(n0,2:D5),2:S0),8:Diagonal),11:Probability),19:CaptureCountMoments),16:instDecidable_d5)","kind":"def"},{"declaration_name_key":"ns(ns(ns(ns(ns(ns(n0,2:D5),2:S0),8:Diagonal),11:Probability),19:CaptureCountMoments),40:capture_count_second_moment_and_variance)","kind":"theorem"}]}

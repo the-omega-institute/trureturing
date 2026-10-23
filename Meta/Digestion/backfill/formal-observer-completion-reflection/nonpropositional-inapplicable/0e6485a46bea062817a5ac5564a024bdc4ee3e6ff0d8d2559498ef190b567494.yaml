@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:0e6485a46bea062817a5ac5564a024bdc4ee3e6ff0d8d2559498ef190b567494
+  normalized_sha256: sha256:0e6485a46bea062817a5ac5564a024bdc4ee3e6ff0d8d2559498ef190b567494
+cas_ref: sha256:0e6485a46bea062817a5ac5564a024bdc4ee3e6ff0d8d2559498ef190b567494
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: States philosophical scope and absence of a proof of ontic free will; no mathematical theorem asserted.
+    previous_atom_id: 941599554c647fd84ad5154b209bd7baac6b8e5ac347f535299130d4c87e4ad1
+    next_atom_id: 916fc80ca9459d93cb61643a7452b81c4febaffef24ff7f4f1c1c9c3457cb55a

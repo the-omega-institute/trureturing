@@ -1,0 +1,2 @@
+**Q8 (Part II §6):** The stability recurrence requires a nonnegative adapted integrable error, sufficient conditioning information, uniform deterministic $0\le\lambda<1$, and $\varepsilon\ge0$. It proves only the stated conditional upper bound. A passive relaxation may also satisfy $\lambda<1$; an upper bound with $a\ge1$ does not prove growth. Passive/critical/life labels remain source interpretations.
+- 

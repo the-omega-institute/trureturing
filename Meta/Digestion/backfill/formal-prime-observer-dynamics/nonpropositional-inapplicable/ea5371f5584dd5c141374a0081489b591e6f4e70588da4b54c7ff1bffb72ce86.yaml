@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:ea5371f5584dd5c141374a0081489b591e6f4e70588da4b54c7ff1bffb72ce86
+  normalized_sha256: sha256:ea5371f5584dd5c141374a0081489b591e6f4e70588da4b54c7ff1bffb72ce86
+cas_ref: sha256:ea5371f5584dd5c141374a0081489b591e6f4e70588da4b54c7ff1bffb72ce86
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 非命题文本：253. 有限结构因果模型：只引入对象、参数、术语或记号；不附加存在性、唯一性或其他性质断言。
+    previous_atom_id: 04b33144f53bb3cb04ff25e9fe6a0fd9a994cdecc0f269be35dcbf85b53234dc
+    next_atom_id: dafe1d20b7bf2b657c9080d29e2b816e277dbb07cec2dbd31e2c18de30b9d327

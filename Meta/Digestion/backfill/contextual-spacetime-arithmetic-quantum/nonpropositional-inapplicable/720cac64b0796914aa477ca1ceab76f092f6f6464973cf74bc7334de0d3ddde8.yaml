@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:720cac64b0796914aa477ca1ceab76f092f6f6464973cf74bc7334de0d3ddde8
+  normalized_sha256: sha256:720cac64b0796914aa477ca1ceab76f092f6f6464973cf74bc7334de0d3ddde8
+cas_ref: sha256:720cac64b0796914aa477ca1ceab76f092f6f6464973cf74bc7334de0d3ddde8
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 记号段只给定零初态受驱模型、下降条件和两条递推轨迹，不提出结论。
+    previous_atom_id: 50e25c7cbecea3de1750b050053b7aa4b9d7c6e1341756a43e741be3cc9628ad
+    next_atom_id: 093c58b9427b3b8b7ca6be7063bb809a0e1f5ab481df92dc9fe0b45a93d27ab1

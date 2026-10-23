@@ -1,0 +1,87 @@
+**Definition 213.1 (Complete scores and the inherited single budget).**
+Fix an integer $L\ge3$. For $w\in\{0,1\}^L\setminus\{1^L\}$ let
+$n(w)$ be its first zero and $\Omega_n=\{w:n(w)=n\}$.
+All words and all labels $0,\ldots,L$ remain. A full score $V$ has
+independent nonnegative coefficients $A_w,C_w,P_w$ and $T\ge0$, with
+
+$$
+g_V(w,\ell)=A_w\mathbf1_{\ell=0}+C_w\mathbf1_{\ell=n(w)}
+                 +P_w\mathbf1_{\ell\in\{0,n(w)\}},\qquad
+g_V(1^L,\ell)=T\mathbf1_{\ell=0}.
+$$
+
+For each cell $E$, maximize $\sum_{w\in E}g_V(w,\ell)$ over every
+label. Sum these maxima within a schedule and maximize over the complete
+catalog. The catalog has empty and singleton schedules and every distinct
+pair $i<j$; its pair cells are $00,01,10,11$ for $N$, and $0,10,11$
+for $O$, where $0$ merges $00,01$. Write the resulting supports as
+$B_N,B_O$, and their schedule versions as $B_N^{ij},B_O^{ij}$.
+Four output entries denote full-cell order; three denote stopped-cell order.
+The anchor $R=(1,2;1,2,0)$ belongs to both catalogs, with full completion
+$(1,2;1,1,2,0)$. As in 212.1, put
+
+$$
+\begin{aligned}
+W_V&=\sum_{n(w)\ge3}A_w+\sum_{n(w)\le2}C_w+\sum_wP_w+T,\\
+\Delta_{\mathcal C}(V)&=B_{\mathcal C}(V)-W_V\ge0
+                                      &&(\mathcal C=N,O),\\
+Q(V)&=(\beta,K),\quad
+\beta_n=\sum_{\Omega_n}(C_w-A_w),\quad
+K=\sum_w(A_w+C_w+P_w)+T.
+\end{aligned}
+$$
+
+The independent event demands are $1-b_n-e,b_n-e,1-e$ at every
+zero word and $1-e$ at the positive word. Negative singleton demands
+are not truncated. Zero coefficients remove no constraints. A label
+may precede both queried addresses and need not be queried: on $0100$,
+the table $(3,4;1,0,0,0)$ has event readings $(0,1,1)$, whereas
+changing its first output to zero gives $(1,0,1)$.
+
+Use the existing hull and signed support of 198.5:
+
+$$
+\begin{aligned}
+H_L=\{(b,e):\;&1\ge b_1\ge\cdots\ge b_L\ge e\ge0,\quad b_2=b_3,\\
+ &(L+1)e\le\sum_{j=3}^Lb_j,\quad
+ b_1+\sum_{j=3}^Lb_j-(L+1)e\le1\},\\
+F_q(b,e)&=\sum_j\beta_j(b_j-\alpha_j)-Ke,\quad
+\alpha=(1,1,0,\ldots,0),\quad \sigma_H(q)=\max_{H_L}F_q.
+\end{aligned}
+$$
+
+Its vertices are $o=0$, $p=(1,0,\ldots,0;0)$ and, for $3\le k\le L$,
+
+$$
+u_k=(\underbrace{1/(k-1),\ldots,1/(k-1)}_k,0,\ldots,0;0),\qquad
+v_k=(\underbrace{1,\ldots,1}_k,e_k,\ldots,e_k;e_k),\quad
+e_k=\frac{k-2}{k+1}.
+$$
+
+A complete certificate for any signed $q\in\mathbb R^{L+1}$ consists of
+one full $V\ge0$ and one $\theta\in[0,1]$ satisfying
+
+$$
+\Delta_N(V)+\theta\le1,\qquad \sigma_H(q-Q(V))\le\theta.
+\tag{213.1}
+$$
+
+Its quotient set is $E_N$ of 199.2. At $\theta=1$ every nonzero
+zero-cost score remains permitted. With $d$ the complete demand vector,
+$r=z_R=d(\alpha,0)$, $h=d-r$ and $G_N=(z_D-r)_D$, write
+$H_N=\{b\in H_L:\exists\lambda\ge0, G_N\lambda\ge h(b)\}$.
+Theorem 199.3 and Corollary 199.4 supply the alternative and clipped
+comparison; they are reused, not new assertions here. For the same full
+feasible $\lambda$ of mass $M$, (213.1) gives
+$F_q(b)\le M\Delta_N(V)+\theta\le\max(1,M)$.
+
+All measures below are proof weights on an actual finite Boolean cube.
+They are not source distributions or acquisition probabilities.
+Unspecified coefficients vanish and coincident coefficients add.
+Static reversals permute full cells and repetitions carry singleton
+information. Every short $N$ function refines into a distinct-pair
+$N$ function. These representation facts do not cancel actual requests
+and do not invent a later address for a last-coordinate stopped singleton.
+
+### 213.1 Full terminal normalization and exact threshold reserve
+

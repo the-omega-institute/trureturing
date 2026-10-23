@@ -13,6 +13,31 @@ internal sealed class EntropyProductionCoherenceDeletionIdentityDocument
         H("Entropy Production by Coherence Deletion"),
         Blocks(
             Describe.Lean(
+                DescribeId.Create("cfc-diagonal"),
+                DeclarationHandle.Create("D5/S3/Quantum/Dynamics/EntropyProductionCoherenceDeletionIdentity.cfc_diagonal"),
+                H("Finite diagonal functional calculus"), StatementSource.WithoutFormula(),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("For every real function f and every finite real diagonal, actual complex matrix CFC "
+                        + "applies f coordinatewise. The finite spectrum requires no global continuity assumption on "
+                        + "f. The existing logarithm diagonal theorem consumes this extracted proof, and the Petz "
+                        + "inverse-square-root coordinate argument also uses it. This is a shared organizing helper, "
+                        + "not a separate mathematical gain."))),
+                DescribeRole.Theorem),
+            Describe.Lean(
+                DescribeId.Create("diagonal-star-algebra-hom"),
+                DeclarationHandle.Create(
+                    "D5/S3/Quantum/Dynamics/EntropyProductionCoherenceDeletionIdentity."
+                        + "diagonalStarAlgHom"),
+                H("The diagonal star-algebra homomorphism"),
+                StatementSource.FromAuthor(DiagonalHomFormula()),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text(
+                    "On a finite decidable carrier, diagonalStarAlgHom sends each complex "
+                        + "coordinate function to its diagonal matrix. Its underlying algebra "
+                        + "homomorphism is Matrix.diagonalAlgHom, and the star law is "
+                        + "coordinatewise complex conjugation."))),
+                DescribeRole.Definition),
+            Describe.Lean(
                 DescribeId.Create("entropy-production-coherence-deletion-identity"),
                 DeclarationHandle.Create(
                     "D5/S3/Quantum/Dynamics/EntropyProductionCoherenceDeletionIdentity."
@@ -35,6 +60,30 @@ internal sealed class EntropyProductionCoherenceDeletionIdentityDocument
 
     private static Formula Sub(Formula value, Formula index) =>
         Seq(value, Underscore, Grp(index));
+
+    private static Formula DiagonalHomFormula()
+    {
+        Formula carrier = F.Id("n"), complex = Seq(Mathbb, Grp(F.Id("C")));
+        Formula coordinates = Seq(carrier, To, complex);
+        Formula matrices = Call("Matrix", carrier, carrier, complex);
+        Formula homType = Call("StarAlgHom", complex, coordinates, matrices);
+        Formula a = F.Id("a"), i = F.Id("i"), j = F.Id("j");
+        Formula entry = Seq(
+            Forall, Sp, a, Colon, Sp, coordinates, Comma, Sp,
+            Forall, Sp, i, Comma, Sp, j, Colon, Sp, carrier, Comma, Sp,
+            Call("diagonalStarAlgHom", a, i, j), Sp, Eq, Sp,
+            Call("ite", Seq(i, Eq, j), Call("apply", a, i), D(0)));
+        return Disp(Seq(
+            Forall, Sp, carrier, Colon, Sp, Call("Type"), Comma, Sp,
+            OpenBracket, Call("Fintype", carrier), CloseBracket, Sp,
+            OpenBracket, Call("DecidableEq", carrier), CloseBracket, Comma, Sp,
+            Call("diagonalStarAlgHom"), Colon, Sp, homType, Comma, RowBreak, Grp(),
+            Call("toAlgHom", Call("diagonalStarAlgHom")), Sp, Eq, Sp,
+            Call("diagonalAlgHom", complex), Sp, Land, Sp, entry, Sp, Land, RowBreak, Grp(),
+            Forall, Sp, a, Colon, Sp, coordinates, Comma, Sp,
+            Call("diagonalStarAlgHom", Call("star", a)), Sp, Eq, Sp,
+            Call("star", Call("diagonalStarAlgHom", a))));
+    }
 
     private static Formula IdentityFormula()
     {

@@ -14,6 +14,9 @@ internal sealed class PrecessionSpinOneSeparableBoundDocument : IScribeDocumentD
         "The spin-1 tensor spin-K/2 precession protocol has separable bound ½ [1 + 2^{−(K−1)} binom(K−1, (K−1)/2) (K−1)/(K+1)] for every odd K ≥ 7. This is Conjecture 2, Eq. (32), of Huynh-Vu, Zaw and Scarani (arXiv:2311.00806v2).",
         H("Spin-1 tensor spin-K/2 precession separable bound"),
         Blocks(
+            Node("entryNormSq", "Squared Frobenius mass of a rectangular matrix", EntryNormSquaredFormula(),
+                "For arbitrary finite row and column types, entryNormSq is the sum of the squared absolute values of all complex matrix entries. It is the squared Frobenius norm and is zero for an empty index type.",
+                DescribeRole.Definition, AssessedProvenance.FromRepo()),
             Node("Jplus", "Spin raising matrix", JplusFormula(),
                 "In the standard descending |j,m⟩ basis the raising matrix has entry √(j(j+1)−m(m+1)) on the one-step superdiagonal, with j = n/2, m = j−r and ℏ = 1.", DescribeRole.Definition),
             Node("Jx", "Spin x matrix", JxFormula(),
@@ -22,6 +25,8 @@ internal sealed class PrecessionSpinOneSeparableBoundDocument : IScribeDocumentD
                 "Jy is the Hermitian y component obtained from the raising matrix and its conjugate transpose.", DescribeRole.Definition),
             Node("Jz", "Spin z matrix", JzFormula(),
                 "Jz is diagonal in the standard basis with entries n/2 minus the descending index.", DescribeRole.Definition),
+            Node("spinRad", "Binomial spin radius", SpinRadFormula(),
+                "spinRad is the square root of the binomial coefficient indexed by the standard spin basis coordinate.", DescribeRole.Definition),
             Node("rotation", "Spin z rotation", RotationFormula(),
                 "The diagonal spin rotation has phase exp(-I angle (n/2-i.val)) in the descending spin basis.", DescribeRole.Definition),
             Node("total", "Total angular momentum", TotalFormula(),
@@ -101,6 +106,19 @@ internal sealed class PrecessionSpinOneSeparableBoundDocument : IScribeDocumentD
     private static Formula Instances(Formula type) => Seq(OpenBracket, Call("Fintype", type), CloseBracket, Sp,
         OpenBracket, Call("DecidableEq", type), CloseBracket, Sp);
 
+    private static Formula EntryNormSquaredFormula()
+    {
+        var i = F.Id("I"); var j = F.Id("J"); var m = F.Id("M");
+        var sum = Seq(new Formula.Subscript(Sum, Seq(F.Id("i"), Colon, Sp, i)), Sp,
+            new Formula.Subscript(Sum, Seq(F.Id("j"), Colon, Sp, j)), Sp,
+            new Formula.Power(new Formula.Norm(new Formula.Apply(m, [F.Id("i"), F.Id("j")])), D(2)));
+        var type = Seq(Type(), Star);
+        return Disp(All("I", type, All("J", type, Seq(
+            OpenBracket, Call("Fintype", i), CloseBracket, Sp,
+            OpenBracket, Call("Fintype", j), CloseBracket, Sp,
+            All("M", Call("Matrix", i, j, Complex()), Eq(Call("entryNormSq", m), sum))))));
+    }
+
     private static Formula JplusFormula()
     {
         var n = F.Id("n"); var i = F.Id("i"); var r = F.Id("r");
@@ -133,6 +151,14 @@ internal sealed class PrecessionSpinOneSeparableBoundDocument : IScribeDocumentD
         var n = F.Id("n"); var i = F.Id("i");
         var value = OfReal(Sub(Div(NatCast(n), D(2)), NatCast(Val(i))));
         return Disp(All("n", Nat(), Eq(Call("Jz", n), Call("diagonal", Lambda("i", SpinIndex(n), value)))));
+    }
+
+    private static Formula SpinRadFormula()
+    {
+        var n = F.Id("n"); var i = F.Id("i");
+        var choose = QualifiedCall("Nat", "choose", n, Val(i));
+        return Disp(All("n", Nat(), All("i", SpinIndex(n), Eq(
+            Call("spinRad", n, i), QualifiedCall("Real", "sqrt", NatCast(choose))))));
     }
 
     private static Formula RotationFormula()

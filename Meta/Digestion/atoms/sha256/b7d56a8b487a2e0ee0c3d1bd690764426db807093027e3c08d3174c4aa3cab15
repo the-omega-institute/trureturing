@@ -1,0 +1,23 @@
+**Definition 1.2 (queryable boundaries and profile distance).** Let $\mathcal H_n$ be the positive-probability visible words of length $n$, and put $\mathcal H=\{\varnothing\}\cup\bigcup_{n\ge1}\mathcal H_n$. For $h\in\mathcal H_n$, $n\ge1$, the profile $F_h=(F_h^H)_{H\ge1}$ is the conditional law of $(Y_n,\ldots,Y_{n+H-1})$ given $h$. At the empty history, $F_{\ast}$ begins with $Y_0$. A profile consists of normalized finite-word laws consistent under deletion of final symbols. Define
+
+$$
+d(F,G)=\sup_{H\ge1}\operatorname{TV}(F^H,G^H),\qquad
+\operatorname{TV}(L,Q)=\frac12\sum_{w\in\mathcal A^H}|L(w)-Q(w)|.
+$$
+
+For a current hidden distribution $\mu$, with $D_y=\operatorname{diag}(\mathbf1_{\chi(i)=y})$,
+
+$$
+F_\mu^H(y_1\cdots y_H)
+=\mu P D_{y_1}\cdots P D_{y_H}\mathbf1,\qquad F_i=F_{e_i},
+$$
+
+whereas
+
+$$
+F_{\ast}^H(y_1\cdots y_H)
+=\pi D_{y_1}P D_{y_2}\cdots P D_{y_H}\mathbf1.
+$$
+
+Column sums of $P$ are one, so $\pi P=\pi$ and $F_{\ast}=F_\pi$. This stationary identity supplies no observed prehistory and does not change the empty-query convention.
+

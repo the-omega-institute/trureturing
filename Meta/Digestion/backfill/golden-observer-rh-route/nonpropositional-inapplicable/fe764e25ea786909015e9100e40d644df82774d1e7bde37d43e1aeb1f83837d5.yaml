@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:fe764e25ea786909015e9100e40d644df82774d1e7bde37d43e1aeb1f83837d5
+  normalized_sha256: sha256:fe764e25ea786909015e9100e40d644df82774d1e7bde37d43e1aeb1f83837d5
+cas_ref: sha256:fe764e25ea786909015e9100e40d644df82774d1e7bde37d43e1aeb1f83837d5
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: Nonpropositional scope and interpretation note for G-g-5; it preserves the stated assumptions and exclusions or points back to the surrounding section. It does not assert RH, an inhabitant of ZeroData, or a new zero existence claim.
+    previous_atom_id: ca453fa45a7fcb7daec4d5f8b0bb6f923dc6bd24f7598a4cd33a33ab7a49d287
+    next_atom_id: c5fd5f8f804c127659fc9dff85ebd0cb51636764b13635863bff094787b52114

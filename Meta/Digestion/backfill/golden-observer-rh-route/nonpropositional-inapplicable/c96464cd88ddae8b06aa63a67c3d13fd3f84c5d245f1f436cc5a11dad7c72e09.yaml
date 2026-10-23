@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:c96464cd88ddae8b06aa63a67c3d13fd3f84c5d245f1f436cc5a11dad7c72e09
+  normalized_sha256: sha256:c96464cd88ddae8b06aa63a67c3d13fd3f84c5d245f1f436cc5a11dad7c72e09
+cas_ref: sha256:c96464cd88ddae8b06aa63a67c3d13fd3f84c5d245f1f436cc5a11dad7c72e09
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 'Nonpropositional proof-plan and validation instructions for G-g-1: dependency choices, expected compilation or axiom behavior, and handling of failed attempts. The separately stated theorem obligation has existing frozen coverage; this receipt does not certify a historical implementation forecast as a mathematical theorem.'
+    previous_atom_id: dd22c477033622ff464fd233689f87f2fa0039fec6ac7be4b37dbf16b00828a9
+    next_atom_id: b16e80142a05be3627a90434b278398209e86b69ee50027af4acafa470f24d35

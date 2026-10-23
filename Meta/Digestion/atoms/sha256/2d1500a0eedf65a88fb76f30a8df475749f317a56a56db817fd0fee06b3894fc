@@ -1,0 +1,28 @@
+**Corollary 12.1 (pairwise contacts do not imply a multiway contact).**
+Let $C_i=\overline{D_i}^{\,\widehat{\mathcal T}}$, for $i=0,1,2$,
+where $\widehat{\mathcal T}$ is the original four-reply completion
+of Definition 4.1. For the entire strata of Definition 11.1,
+
+$$
+C_i\cap C_j\ne\varnothing\quad(i\ne j),\qquad
+C_0\cap C_1\cap C_2=\varnothing.
+\tag{SPC.12.1}
+$$
+
+Thus the criterion requiring all selected two-row subfamilies to
+be persistent cannot replace the finite-family predicate (SPC.39).
+
+Proof. The compact-cylinder equivalence (SPC.41), already supplied
+in Theorem 9.2, applies to closures of entire finite row strata.
+Theorem 11.3 gives its pairwise nonempty intersections. If there
+were a point in the triple intersection, its inclusive depth-three
+cylinder would meet every $D_i$. Choosing one finite original from
+each intersection with that same cylinder would give $J_B(3)$,
+contrary to Theorem 11.4. This proves the empty triple intersection.
+
+Every one of the three pair predicates is true at every depth on
+this fixed full native input, whereas the required triple predicate
+already fails at depth three. Independently chosen pair tuples,
+or separate pairwise contact points, therefore do not supply the
+one simultaneous tuple required by (SPC.39). $\square$
+

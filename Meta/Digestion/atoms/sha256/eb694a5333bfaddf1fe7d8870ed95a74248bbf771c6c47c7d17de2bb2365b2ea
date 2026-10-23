@@ -1,0 +1,7 @@
+**Corollary 55.3 (deterministic and stochastic boundaries).** A deterministic
+ finite controller is the degenerate case in which $U$ is a singleton and every
+ $K_s$ is a point mass. The measurable common-seed layer and the finite
+ deterministic ExactChart layer have the same source-uniform execution
+ invariant, while their resource objectives and termination assumptions remain
+ separate contracts.
+

@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:0a2df3198a5a452fa2471ea420e80696c5d6b13032a0e07af2a6123392dc5ed3
+  normalized_sha256: sha256:0a2df3198a5a452fa2471ea420e80696c5d6b13032a0e07af2a6123392dc5ed3
+cas_ref: sha256:0a2df3198a5a452fa2471ea420e80696c5d6b13032a0e07af2a6123392dc5ed3
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 定义 210.1 只引入校准集合和一阶光滑端点的定义。
+    previous_atom_id: 9035274e032d35c7fb78ba32ecf42694e15969faa4354983ce3b3c0557fefb0f
+    next_atom_id: 536d08c3a87b601ddbeb7277e3c6348658536cadf16ccea5c4b7a43e4f920bbe

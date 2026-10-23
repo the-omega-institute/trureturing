@@ -4,7 +4,7 @@ set -euo pipefail
 ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/../../.." && pwd -P)"
 PROJECT="tools/StrataLint.Cli/StrataLint.Cli.csproj"
 REPORT=".lake/build/stratalint/raw-lean-report.json"
-FROZEN_LEDGER="Golden/Frozen/accepted"
+FROZEN_LEDGER="Golden/Frozen/state"
 COMMAND="${1:-}"
 # cover and cover-batch read nothing from git, so they take no base.
 case "$COMMAND" in
@@ -29,47 +29,33 @@ run_cli() {
 }
 
 align_delivery_ledger() {
-  local accepted_modules='[]' closed_modules module closed_query_output
-  local accepted_files=("$FROZEN_LEDGER"/*.json)
+  local closed_modules module closed_query_output targets=''
   local align_args=(ledger-align)
 
   if ! command -v jq >/dev/null 2>&1; then
-    echo "PLAYBOOK_INVALID jq is required to derive ledger additions" >&2
-    return 2
-  fi
-  if [[ ! -e "${accepted_files[0]}" ]]; then
-    accepted_files=()
-  fi
-  if [[ "${#accepted_files[@]}" -gt 0 ]] \
-      && ! accepted_modules="$(jq -sc '
-        [ .[]
-          | select(.event_type == "Freeze" and .schema_version == 5)
-          | .payload.descriptor_selector
-          | select(type == "string") ]
-        | unique
-      ' "${accepted_files[@]}" 2>&1)"; then
-    echo "PLAYBOOK_INVALID failed to read accepted module selectors: $accepted_modules" >&2
+    echo "PLAYBOOK_INVALID jq is required to read Closed module selectors" >&2
     return 2
   fi
   if ! closed_query_output="$(run_cli ledger-align --list-closed --candidate-lean-report "$REPORT")"; then
     echo "PLAYBOOK_INVALID current Closed module query failed" >&2
     return 2
   fi
-  if ! closed_modules="$(jq -r --argjson accepted "$accepted_modules" '
-      .[]
-      | . as $path
-      | select(($accepted | index($path)) == null)
-      | $path
-    ' <<< "$closed_query_output" 2>&1)"; then
-    echo "PLAYBOOK_INVALID failed to derive Closed modules from current Lean report: $closed_modules" >&2
+  if ! closed_modules="$(jq -r '.[]' <<< "$closed_query_output" 2>&1)"; then
+    echo "PLAYBOOK_INVALID failed to read Closed modules: $closed_modules" >&2
     return 2
   fi
 
   while IFS= read -r module; do
-    [[ -z "$module" ]] || align_args+=(--add "$module")
+    if [[ -n "$module" && ! -f "$FROZEN_LEDGER/$module.json" ]]; then
+      align_args+=(--add "$module")
+      targets+="${targets:+ }${module%.lean}"
+    fi
   done <<< "$closed_modules"
-  align_args+=(--candidate-lean-report "$REPORT")
-  run_cli "${align_args[@]}"
+  if [[ -n "$targets" ]]; then
+    targets="${targets//\//.}"
+    step lean-report-scoped make lean-report-scoped "LEAN_TARGETS=$targets"
+    run_cli "${align_args[@]}" --candidate-lean-report .lake/build/stratalint/scoped-lean-report.json
+  fi
 }
 
 
@@ -86,7 +72,7 @@ step() {
   local label="$1"
   shift
   begin_step "$label"
-  "$@"
+  "$@" || return $?
   complete_step passed
 }
 
@@ -139,9 +125,33 @@ require_cover_batch_arguments() {
     echo "usage: playbook-workflows.sh cover-batch ATOMS_FILE" >&2
     return 2
   fi
-
+  LEAN_TARGETS="$(run_cli cover-batch --lean-inputs --atoms "$atoms_file")"
 }
 
+prepare_cover_report() {
+  local selected
+  selected="$(run_cli cover-atom --lean-inputs --cover-atom "$ATOM_ID" --gid "$GID")" || return $?
+  if [[ "$COMMAND" != deposit || "$selected" != "${LEAN_TARGETS:-}" ]]; then
+    LEAN_TARGETS="$selected"
+    build_scoped_report
+  fi
+}
+
+build_scoped_report() {
+  [[ -n "$LEAN_TARGETS" ]] || { echo 'PLAYBOOK_INVALID cover report scope is empty' >&2; return 2; }
+  REPORT=".lake/build/stratalint/delivery-lean-report.json"
+  export STRATALINT_LEAN_REPORT="$ROOT/$REPORT"
+  step lean-report-scoped make lean-report-scoped "LEAN_TARGETS=$LEAN_TARGETS" "LEAN_REPORT=$ROOT/$REPORT"
+}
+
+emit_target() {
+  local paths status=0
+  paths="$(mktemp "${TMPDIR:-/tmp}/deposit-scribe-paths.XXXXXXXX")"
+  printf '%s\0' "$MODULE_PATH" > "$paths"
+  step emit make emit "PATHS=$paths" || status=$?
+  rm -f -- "$paths"
+  return "$status"
+}
 
 require_new_module_blueprint_mirror() {
   local mirror_path="Blueprint/${MODULE_PATH%.lean}.md"
@@ -160,7 +170,15 @@ require_new_module_blueprint_mirror() {
 
 
 freeze_exists() {
-  run_cli ledger-frozen --target "$MODULE_PATH"
+  local output status=0
+  output="$(run_cli ledger-frozen --target "$MODULE_PATH" 2>&1)" || status=$?
+  [[ -z "$output" ]] || printf '%s\n' "$output" >&2
+  # The query's absent-member result is silent. Launcher/build failures must
+  # not be interpreted as permission to write a new freeze.
+  if [[ "$status" -eq 1 && -n "$output" ]]; then
+    return 2
+  fi
+  return "$status"
 }
 
 freeze_module_if_needed() {
@@ -182,10 +200,11 @@ freeze_module_if_needed() {
 deposit_module() {
   local deposit_base_sha freeze_precheck status
   require_new_module_blueprint_mirror
-  step lean-report make lean-report
+  LEAN_TARGETS="${DOCUMENT_GID//\//.}"
+  build_scoped_report
   deposit_base_sha="$(git rev-parse --verify "${BASE}^{commit}")"
   step deposit-header-check run_cli deposit-header-check --target "$MODULE_PATH" --protected-base "$deposit_base_sha"
-  step emit make emit
+  emit_target
   if freeze_exists; then
     freeze_precheck=1
     printf 'PLAYBOOK_SKIP command=deposit detail=module-already-frozen path=%s\n' \
@@ -196,81 +215,6 @@ deposit_module() {
     freeze_precheck=0
   fi
   freeze_module_if_needed "$freeze_precheck"
-}
-
-verify_added_frozen_event_v5() {
-  local path="$1" event_type
-  if ! event_type="$(jq -er '.event_type | select(type == "string")' "$path")"; then
-    echo "PLAYBOOK_INVALID added frozen event has no valid event_type: $path; re-freeze before delivery" >&2
-    return 1
-  fi
-
-  if [[ "$event_type" == "Freeze" ]] \
-      && jq -e '
-        def exact_keys($expected): (keys | sort) == ($expected | sort);
-        exact_keys(["event_hash", "event_type", "payload", "schema_version"])
-        and .schema_version == 5
-        and (.payload | exact_keys([
-          "declaration_statement_ids",
-          "descriptor_selector",
-          "prerequisite_frozen_node_ids",
-          "statement_id"
-        ]))
-        and (.event_hash | type) == "string"
-        and (.payload.descriptor_selector | type) == "string"
-        and (.payload.statement_id | type) == "string"
-        and (.payload.declaration_statement_ids | type) == "array"
-        and all(.payload.declaration_statement_ids[];
-          type == "object"
-          and exact_keys(["declaration_name_key", "kind", "statement_id"])
-          and (.declaration_name_key | type) == "string"
-          and (.kind | type) == "string"
-          and (.statement_id | type) == "string")
-        and (.payload.prerequisite_frozen_node_ids | type) == "array"
-        and all(.payload.prerequisite_frozen_node_ids[]; type == "string")
-      ' "$path" >/dev/null; then
-    return 0
-  fi
-  echo "PLAYBOOK_INVALID added frozen event is not a v5 Freeze: $path" >&2
-  return 1
-
-}
-
-verify_added_frozen_events_v5() {
-  local added_paths path
-  added_paths="$(mktemp)"
-  if ! git diff --diff-filter=A --name-only -z "$BASE"...HEAD -- "$FROZEN_LEDGER/*.json" \
-      > "$added_paths"; then
-    rm -f -- "$added_paths"
-    echo "PLAYBOOK_INVALID cannot determine added frozen events from base $BASE" >&2
-    return 1
-  fi
-  if ! git ls-files --others --exclude-standard -z -- "$FROZEN_LEDGER/*.json" \
-      >> "$added_paths"; then
-    rm -f -- "$added_paths"
-    echo "PLAYBOOK_INVALID cannot determine untracked frozen events" >&2
-    return 1
-  fi
-  if [[ ! -s "$added_paths" ]]; then
-    rm -f -- "$added_paths"
-    return 0
-  fi
-  if ! command -v jq >/dev/null 2>&1; then
-    rm -f -- "$added_paths"
-    echo "PLAYBOOK_INVALID jq is required to verify added frozen events" >&2
-    return 2
-  fi
-
-  while IFS= read -r -d '' path; do
-    if verify_added_frozen_event_v5 "$path"; then
-      :
-    else
-      local status=$?
-      rm -f -- "$added_paths"
-      return "$status"
-    fi
-  done < "$added_paths"
-  rm -f -- "$added_paths"
 }
 
 
@@ -294,11 +238,19 @@ cover_atom_or_resume() {
 }
 
 cover_row() {
+  local status
+  if prepare_cover_report; then
+    :
+  else
+    status=$?
+    COVER_FAILURE_REASON="cover-report-exit-$status"
+    return "$status"
+  fi
   begin_step cover-atom
   if cover_atom_or_resume; then
     complete_step passed
   else
-    local status=$?
+    status=$?
     complete_step failed
     return "$status"
   fi
@@ -310,10 +262,8 @@ case "$COMMAND" in
     make lean-report
     make emit
     # Freeze last among all mutating derivations so the proposition snapshot is current.
-    verify_added_frozen_events_v5
     align_delivery_ledger
     make gate BASE="$BASE"
-    verify_added_frozen_events_v5
     ;;
   deposit)
     require_transaction_arguments
@@ -337,12 +287,11 @@ case "$COMMAND" in
     ;;
   cover)
     require_transaction_arguments
-    step lean-report make lean-report
     cover_row
     ;;
   cover-batch)
     require_cover_batch_arguments
-    step lean-report make lean-report
+    build_scoped_report
     step cover-batch run_cli cover-batch --atoms "$ATOM_ID"
     ;;
   *)

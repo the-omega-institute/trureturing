@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:141281400607cdacd1bb614e79a12cd05a289b7bd576b2ea2a8be48af7c36319
+  normalized_sha256: sha256:141281400607cdacd1bb614e79a12cd05a289b7bd576b2ea2a8be48af7c36319
+cas_ref: sha256:141281400607cdacd1bb614e79a12cd05a289b7bd576b2ea2a8be48af7c36319
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 定义 97 规定码、无序单位边、最大及总翻转费用、平均费用与字段编码；无边取零和费用分离均为计量约定，无界或极值结论。
+    previous_atom_id: 97144a6c0194785f8ec3a43ea639a1c2e8062644ce8a8842c904684bf7e404b1
+    next_atom_id: d79ed39c62953a09b1392fdc26988e2cb4e3cad02144d633cf17a3dcf7e06cbd

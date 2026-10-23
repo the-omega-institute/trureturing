@@ -1,0 +1,11 @@
+对任意 \(e\in X_{C\setminus A}\)，以下等价：
+
+1. \(e\) 满足锚定分离条件；
+2. \(\tau_{A,C;e}^F\) 是单射；
+3. \(\operatorname{Def}_{A,C;e}^F=\varnothing\)；
+4. 限制映射
+   $$
+   \operatorname{res}_e:\mathcal R_A(F)\to O^{X_{I\setminus C}}
+   $$
+   在 \(\mathcal R_A(F)\) 上是单射。
+

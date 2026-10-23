@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:ca60776fc0fa3052904096460b1386663d28e9a553ef0a49bb3a61d46d6a501e
+  normalized_sha256: sha256:ca60776fc0fa3052904096460b1386663d28e9a553ef0a49bb3a61d46d6a501e
+cas_ref: sha256:ca60776fc0fa3052904096460b1386663d28e9a553ef0a49bb3a61d46d6a501e
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 非命题文本：153. 精化等价于可观察代数包含：仅为节标题及导引或设定适用条件；本片段未陈述后续命题的结论。
+    previous_atom_id: 55bbd828daed6f6c3b88af9880abc6266277d37e4946d7074562aca424af5c0a
+    next_atom_id: e580d88fb9b1ff05c810be42fcd7493dc65134ee606b8a5a67ee7b243e3ef3ac

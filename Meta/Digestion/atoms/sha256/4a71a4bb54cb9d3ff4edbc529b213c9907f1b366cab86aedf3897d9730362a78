@@ -1,0 +1,62 @@
+**Theorem 39.1 (signed winding lift and its uniform normalization).**
+For $\kappa\ne0$ let $y=(\theta,v,D)=J_\kappa q$, where
+$J_\kappa=\operatorname{diag}(1,1,\kappa)$. Let
+$g^{\rm orig}_\kappa$ denote the all-real winding-lift kernel in
+$dk\,dy$, with coefficient vector
+$(A_\kappa,B_\kappa,\kappa b_\kappa)$. Then exactly
+
+$$
+g^{\rm orig}_\kappa(t;k,k';J_\kappa r)
+=|\kappa|^{-1}g_\kappa^I(t;k,k';r),\qquad
+\widehat M_\kappa=J_\kappa M_\kappa J_\kappa^{\mathsf T}.
+\tag{39.1}
+$$
+
+The original-coordinate phase covariance is $2\widehat M_\kappa$.
+The $13$ and $23$ entries of $\widehat M_\kappa$ are respectively
+$\kappa(M_\kappa)_{13}$ and $\kappa(M_\kappa)_{23}$, its $33$ entry
+is $\kappa^2(M_\kappa)_{33}$, and
+$\det\widehat M_\kappa=\kappa^2\det M_\kappa>0$.
+Both signs therefore have the same positive rank, with their actual
+signed cross covariances. The corresponding original-coordinate
+Gaussian density is exactly
+$\widehat\Gamma_{\kappa,s}(y)=|\kappa|^{-1}
+\Gamma_{\kappa,s}(J_\kappa^{-1}y)$, a probability density in raw $dy$.
+For each fixed nonzero parameter,
+$T^{3/2}e^{\lambda Ts}g^{\rm orig}_\kappa(Ts;k,k';\sqrt Ty)
+\to\phi(k)\phi(k')\widehat\Gamma_{\kappa,s}(y)$,
+locally uniformly in interior height endpoints, $y$, and positive $s$.
+Uniformly in the sets of Theorem 36.1,
+
+$$
+|\kappa|T^{3/2}e^{\lambda Ts}
+g^{\rm orig}_\kappa(Ts;k,k';J_\kappa\sqrt Tz)
+\longrightarrow\phi(k)\phi(k')\Gamma_{\kappa,s}(z)
+\tag{39.2}
+$$
+
+for all nonzero $\kappa\in\mathcal K$, with no rate relation at the
+wall. The path laws transform by the same $J_\kappa$. At fixed
+nonzero parameter their phase rank is three. If $\kappa(T)\to0$
+and the original coordinates are scaled by $\sqrt T$ without dividing
+$D$ by $\kappa(T)$, their Brownian path limit instead has covariance
+$2J_0M_0J_0^{\mathsf T}$ and rank two.
+
+Proof. The invertible linear map has signed third coordinate
+$D=\kappa x$ and absolute volume Jacobian $|\kappa|$. It pushes
+(35.2), its height deaths, and each of the two conditional laws to
+the stated original lift in the unchanged clock. Reducing all three
+original phases modulo $2\pi$ gives exactly G Definition 25.1's
+wrapped SDE, hence its killed law by uniqueness; no observation of
+the winding is inferred from this mathematical projection.
+Changing density
+therefore proves (39.1); changing the Gaussian covariance proves the
+congruence and its entry formulas. Equation (39.2) is the exact
+pullback of (36.3). The continuous mapping theorem applied to (38.1)
+gives the fixed-parameter path result. For a vanishing parameter,
+$J_{\kappa(T)}\to J_0$ and the resolved paths are uniformly tight;
+the same theorem with these converging linear maps gives the last
+limit. The positive upper $2\times2$ principal block of $M_0$ makes
+its rank exactly two. No uniform nondegeneracy in unnormalized
+original $D$ coordinates is asserted. $\square$
+

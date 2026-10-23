@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:0fa28724577fe42761147362eab38a96c82d4c7b0fb7721e27638836a6952045
+  normalized_sha256: sha256:0fa28724577fe42761147362eab38a96c82d4c7b0fb7721e27638836a6952045
+cas_ref: sha256:0fa28724577fe42761147362eab38a96c82d4c7b0fb7721e27638836a6952045
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: Introduces a proposed policy input/output type and one symbol description.
+    previous_atom_id: 10563ab80a12b8b9b2d2038b7622088cf6ef088490ced88040358173ecdaa0b4
+    next_atom_id: ac4f01ef17951a550f6d978b81a42c34afd80fa368ff354e69f77e38a795467a

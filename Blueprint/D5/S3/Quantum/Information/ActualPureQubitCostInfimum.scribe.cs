@@ -19,6 +19,12 @@ internal sealed class ActualPureQubitCostInfimumDocument : IScribeDocumentDefini
             Paragraph(Text("Here costs and C2 are the attainable cost set and its guarded real infimum from ActualPureQubitGeometry, with the full IsProgram predicate there. BddBelow(S) means that S has a real lower bound. IsGLB(S,c) means that c is a lower bound and every real lower bound is at most c:")),
             Paragraph(Math(Notation5Formula())),
             Paragraph(Text("All radii in the statement are real. The right limit is through every positive real radius tending to zero, and the three eventual properties hold together on one positive interval.")),
+            Describe.Lean(DescribeId.Create("actual-qubit-matrix-energy"),
+                DeclarationHandle.Create(Module + "matrix_energy"), H("Energy of a Hermitian qubit operator"),
+                StatementSource.FromAuthor(MatrixEnergyFormula()), AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text(
+                    "For every Hermitian complex two-by-two matrix M, twice the real trace of M squared is the squared real trace of M plus the squared Euclidean norm of its Bloch vector. Positivity and normalization are not required."))),
+                DescribeRole.Theorem),
             Describe.Lean(DescribeId.Create("actual-qubit-infimum-expansion"),
                 DeclarationHandle.Create(Module + "result"), H("Exact quadratic infimum coefficient"),
                 StatementSource.FromAuthor(ResultFormula()), AssessedProvenance.FromRepo(),
@@ -26,6 +32,34 @@ internal sealed class ActualPureQubitCostInfimumDocument : IScribeDocumentDefini
                     "For arbitrary finite positive probability data, a nonzero centered direction, and at least three distinct scores, the residual is positive and the normalized infimum excess tends to one quarter of that residual as real positive radii tend to zero. Repeated and zero individual scores are allowed. Cubic approximate minimizers suffice; no optimum is assumed attained. This result makes no two-score attainment or unrestricted CPTP processor equivalence claim.")),
                     Paragraph(Text(
                         "The lower bound uses the joint limit of feasible rank-two coefficients: positivity, normalization, and the spectral cost equation exclude a positive limiting transverse parameter when three scores are distinct. The remaining diagonal coefficients converge to the normalized weighted score squares. An exact matching inequality then gives the quadratic lower coefficient. The rank-one branch has a fixed positive cost gap, and a smooth family of actual programs supplies the matching upper bound.")))))));
+
+    private static Formula Parenthesized(Formula value) => Seq(Open, value, Close);
+    private static Formula Qualified(params string[] parts)
+    {
+        Formula result = Seq(Operatorname, Grp(F.Id(parts[0])));
+        for (var i = 1; i < parts.Length; i++)
+            result = Seq(result, Dot, Operatorname, Grp(F.Id(parts[i])));
+        return result;
+    }
+    private static Formula QCall(string owner, string name, params Formula[] arguments) =>
+        new Formula.Apply(Qualified([.. owner.Split('.'), name]), [.. arguments]);
+
+    private static Formula MatrixEnergyFormula()
+    {
+        Formula m = F.Id("M");
+        Formula complex = Seq(Mathbb, Grp(F.Id("C")));
+        Formula two = new Formula.FunctionCall(FormulaIdentifier.Create("Fin"), [D(2)]);
+        Formula matrices = new Formula.FunctionCall(FormulaIdentifier.Create("Matrix"), [two, two, complex]);
+        Formula trace = QCall("Complex", "re", QCall("Matrix", "trace", m));
+        Formula energy = Multiply(D(2),
+            QCall("Complex", "re", QCall("Matrix", "trace", Multiply(m, m))));
+        Formula bloch = QCall("D5.S3.Quantum.Information.ActualPureQubitCostInfimum", "bloch", m);
+        Formula identity = Equal(energy, Add(new Formula.Power(trace, D(2)),
+            new Formula.Power(new Formula.Norm(bloch), D(2))));
+        Formula implication = new Formula.Logic(Parenthesized(QCall("Matrix", "IsHermitian", m)),
+            FormulaLogicOperator.Implies, Parenthesized(identity));
+        return Disp(new Formula.Bind(FormulaQuantifier.ForAll, FormulaIdentifier.Create("M"), matrices, implication));
+    }
 
     private static Formula ResultFormula() =>
         Disp(Seq(Begin, Grp(F.Id("aligned")), Amp, Forall, Sp, F.Id("m"), InMacro, Mathbb, Sp, F.Id("N"), Comma, Esc, F.Id("p"), Comma, F.Id("v"), Colon,

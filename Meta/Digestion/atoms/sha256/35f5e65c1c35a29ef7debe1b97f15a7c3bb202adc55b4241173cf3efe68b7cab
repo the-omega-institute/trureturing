@@ -1,0 +1,40 @@
+**Corollary 4.3 (Actual input outputs and the conditional denominator).** The comparison map $\mathcal R_\tau$ is CP with the same effect $F$ as $\Psi$, and
+
+$$
+J(\mathcal R_\tau)=\tau\otimes F^{\mathsf T},\qquad
+\mathcal R_\tau(\rho_0)=\nu\tau=\Psi(\rho_0).
+\tag{4.22}
+$$
+
+Consequently $(\Phi,\mathcal R_\tau)$ is a complete binary instrument and agrees at the actual calibration input. For every density $\rho$,
+
+$$
+\|\Psi(\rho)-\tau\operatorname{Tr}(F\rho)\|_1
+\le\|\rho\|_\infty E\le E.
+\tag{4.23}
+$$
+
+If $q_\rho=\operatorname{Tr}(F\rho)>0$, then
+
+$$
+\left\|\frac{\Psi(\rho)}{q_\rho}-\tau\right\|_1
+\le\min\left\{2,\frac{\|\rho\|_\infty E}{q_\rho}\right\}
+\le\min\left\{2,\frac E{q_\rho}\right\}.
+\tag{4.24}
+$$
+
+A lower bound $q_\rho\ge q_{\min}>0$ thus gives uniform conditional control. At $q_\rho=0$ there is no normalized conditional state.
+
+Proof. Diagonalize $\tau=\sum_a t_a|u_a\rangle\langle u_a|$ and $F=\sum_b f_b|v_b\rangle\langle v_b|$. The matrices $\sqrt{t_af_b}|u_a\rangle\langle v_b|$ represent $\mathcal R_\tau$, and their effects sum to $F$ because $\sum_a t_a=1$. This proves CP and completeness with the same zero branch. Evaluation on $E_{ij}$ uses $\operatorname{Tr}(FE_{ij})=F_{ji}$, proving the Choi identity and its transpose. Evaluation at $\rho_0$ gives the calibration since $\operatorname{Tr}(F\rho_0)=\nu$.
+
+Set $\Delta=\Psi-\mathcal R_\tau$. Matrix-unit expansion gives
+
+$$
+\Delta(\rho)=\operatorname{Tr}_{\rm in}
+\left[(I\otimes\sqrt{\rho^{\mathsf T}})\,
+J(\Delta)\,(I\otimes\sqrt{\rho^{\mathsf T}})\right].
+\tag{4.25}
+$$
+
+Indeed the input trace for $E_{ij}$ is $\operatorname{Tr}(\sqrt{\rho^{\mathsf T}}E_{ij}\sqrt{\rho^{\mathsf T}})=\operatorname{Tr}(E_{ij}\rho^{\mathsf T})=\rho_{ij}$. Both the Choi difference and its sandwich are Hermitian. Equations (3.2)–(3.3) bound its output trace norm by $\|\sqrt{\rho^{\mathsf T}}\|_\infty^2\|J(\Delta)\|_1=\|\rho\|_\infty E$. A density has operator norm at most one. For positive $q_\rho$ divide by that scalar; the normalized outputs are densities, whose distance is also at most two. No division by a zero probability occurs. This gives ordinary-input consequences of the stated Choi metric, without a diamond-norm assertion. $\square$
+

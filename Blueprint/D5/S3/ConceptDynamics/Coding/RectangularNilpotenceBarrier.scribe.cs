@@ -11,6 +11,14 @@ internal sealed class RectangularNilpotenceBarrierDocument : IScribeDocumentDefi
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "Nilpotence depth cannot change by more than the number of rectangular exchanges.",
         H("Rectangular nilpotence barrier"), Blocks(
+            Describe.Lean(DescribeId.Create("exchange-chain-coupled-lag"),
+                DeclarationHandle.Create("D5/S3/ConceptDynamics/Coding/RectangularNilpotenceBarrier.exchange_chain_lag"),
+                H("Shared cumulative lag witnesses"),
+                StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
+                Blocks(
+                    Paragraph(Text("For an arbitrary universe-polymorphic semiring R and c : ExchangeChain R A B L, the same pair X of size n by m and Y of size m by n satisfies A*X=X*B, B*Y=Y*A, X*Y=A^L and Y*X=B^L. Every length including zero, Fin 0, unequal rectangular intermediate dimensions and singular vertices remain in scope.")),
+                    Paragraph(Text("This is the cumulative proof from FixedPositivePartitionSseDistance.theorem32_2, shared in the owner of ExchangeChain and rectangular_exchange_power. The nil branch chooses the two identities; a cons extends the tail pair X,Y to U*X,Y*V. Both the partition-distance lower bound and FiniteKernelLadder.Path.lag directly consume this declaration. The extraction reuses existing mathematics and receives no new mathematical-content or owner credit."))),
+                DescribeRole.Theorem),
             Describe.Lean(DescribeId.Create("nilpotence-depth-bounds-chain-length"),
                 DeclarationHandle.Create("D5/S3/ConceptDynamics/Coding/RectangularNilpotenceBarrier.chain_depth_barrier"),
                 H("A depth gap excludes short chains"),

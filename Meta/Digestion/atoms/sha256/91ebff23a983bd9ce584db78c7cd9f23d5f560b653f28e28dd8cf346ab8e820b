@@ -1,0 +1,99 @@
+## 77.4 同一返回对的仿射系数与实际凸包
+
+以下证明定理77.3.1。先设全部同图合同、实际合法性与准入成立。直接复用 (66.4)、(66.5) 和76.3的共同坐标，参数对应为其长 $p-2$ 词等于本章的 $S$，本原 rival 周期仍为同一个 $p$。令
+
+$$
+\rho=g^{p-2}>0,\qquad q=g^p\in(0,1),\qquad f_S(x)=\sigma-\rho x,
+$$
+
+$$
+\gamma=\Delta_b-\Delta_a,\qquad c_*=\Delta_b-gu,\qquad
+\alpha=\sigma-\rho c_*,\qquad z=\frac{\alpha}{1+q},
+$$
+
+$$
+L=\rho(\gamma-g),\qquad M=\rho gu.
+\tag{77.14}
+$$
+
+$\sigma$ 是该给定词的平移系数。四对标签的 $\gamma$ 依次为 $t,u,t,u$。在相对坐标 $x=z+r$ 中，既有系数恒等式给出
+
+$$
+f_A(z+r)=z-qr,\qquad
+f_{D_-}(z+r)=z+L-qr,\qquad
+f_{D_+}(z+r)=z-M-qr.
+\tag{77.15}
+$$
+
+这些是同一实际词的系数，不用于跨不相容 guard 前接任意尾。
+
+保留76.3的全部差项和估计：
+
+$$
+L-M\ge\rho g^2>0,\qquad L\le\rho u=\frac{M}{g},
+\qquad 0<M<L.
+$$
+
+由 $p\ge7$ 和 $0<g<1/4$，
+
+$$
+q(L+M)\le M g^{p-1}(1+g)
+\le M g^6(1+g)<M,
+\qquad L-q(L+M)>L-M>0.
+\tag{77.16}
+$$
+
+这些界只使用四个原标签对与周期下界，不添加预算比例或图存在前提。
+
+将 $J,K$ 的平移分别记为 $j,k$：
+
+$$
+(j,k)=
+\begin{cases}
+(L,-M),&(J,K)=(D_-,D_+),\\
+(-M,L),&(J,K)=(D_+,D_-).
+\end{cases}
+\qquad j-k=\pm(L+M).
+\tag{77.17}
+$$
+
+令 $c=j+q^2k$、$D=1-q^4>0$。按实际复合顺序，
+
+$$
+\begin{aligned}
+r&\xmapsto{K}k-qr
+\xmapsto{A}-qk+q^2r
+\xmapsto{J}j+q^2k-q^3r,\\
+f_\Pi(z+r)&=z+c-q^3r,\\
+f_U(z+r)&=z+c-q^3L+q^4r,\\
+f_W(z+r)&=z+c+q^3M+q^4r.
+\end{aligned}
+\tag{77.18}
+$$
+
+两条原返回在同一个完整基点可无限重复。定理31.4及64.4的给定图联合提升使它们的固定点与全部中间坐标落在各自原片内；第二分量保持给定 rival。解 (77.18) 的固定点方程得到
+
+$$
+\xi_-=z+\frac{c-q^3L}{D},\qquad
+\xi_+=z+\frac{c+q^3M}{D}.
+\tag{77.19}
+$$
+
+两正斜率收缩 $f_U,f_W$ 分别固定 $H_0$ 的左、右端点，且都将 $H_0$ 映入自身。纯 $U$ 与纯 $W$ 重复分别取得两个端点；任意块拼接的坐标也在 $H_0$ 内。因此其同源坐标集合的凸包正是 (77.8) 的 $H_0$，不是两个独立优化点的拼合。
+
+具体宽度为
+
+$$
+|H_0|=\frac{q^3(L+M)}{1-q^4}
+=\frac{\varepsilon_{a,b}g^{4p-1}}{1-g^{4p}}>0,
+\qquad
+\varepsilon_{a,b}=
+\begin{cases}
+2,&(a,b)=(3,0),(5,2),\\
+1,&(a,b)=(0,5),(2,25).
+\end{cases}
+\tag{77.20}
+$$
+
+此处 $L+M=\rho(\gamma-g+gu)=\rho(\gamma-gt)$，并复用原四对的 $\gamma-gt=\varepsilon_{a,b}g$。于是全部 (77.8) 的凸包非退化。由 (77.9)，每个 $H_v$ 内部没有 $B$ 端点，只能落在唯一相邻端点闭片 $P_v$ 内。根域与色边界本来也在 $B$ 中，故该整个 $P_v$ 保留所需合法根与共同色；这正是命题63.2的整片提升，不能把 $P_v$ 换成较小的 $H_v$。
+

@@ -1,0 +1,12 @@
+**Definition 52.1 (one-step completion operator).** For an equivalence relation
+$R$ on $Q$, define
+
+$$
+q\,\Psi(R)\,q'
+$$
+
+when halt rows agree and every action has equal legality, equal visible
+response, equal contracted cost, and $R$-equivalent legal successors. The
+operator is understood on the lattice of equivalence relations ordered by
+inclusion.
+

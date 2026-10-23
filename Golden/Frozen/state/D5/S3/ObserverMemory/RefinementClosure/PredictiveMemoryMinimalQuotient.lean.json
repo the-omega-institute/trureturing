@@ -1,1 +1,1 @@
-{"statement_id":"sha256:32eff58d40c4b153a53aaf92fdcc908f550ea4cf1172f8bbd904470027c09f25"}
+{"statement_id":"sha256:32eff58d40c4b153a53aaf92fdcc908f550ea4cf1172f8bbd904470027c09f25","declarations":[{"declaration_name_key":"ns(ns(ns(ns(ns(ns(n0,2:D5),2:S3),14:ObserverMemory),17:RefinementClosure),31:PredictiveMemoryMinimalQuotient),34:predictive_memory_minimal_quotient)","kind":"theorem"}]}

@@ -1,0 +1,23 @@
+**Theorem 10.1 (presence-only equality for the full-image field).** Under exactly those
+existing hypotheses,
+
+$$
+\boxed{M_{\rm pres}(D,Q)=M(D,Q)=M_*.}
+\tag{FFM.36}
+$$
+
+The equality also holds for the existing adaptive serial-forward service class. There is a
+presence-only consumer with
+
+$$
+\boxed{
+q\le2(2^{H_A+1}-1),\qquad
+\max |p|\le H_A+k+1,\qquad a=0,
+}
+\tag{FFM.37}
+$$
+
+where $q$ counts every submitted occurrence, including repeated and absent replies, the
+word bound is the maximum literal address length, and $a$ is the number of post-entry
+forward updates.
+

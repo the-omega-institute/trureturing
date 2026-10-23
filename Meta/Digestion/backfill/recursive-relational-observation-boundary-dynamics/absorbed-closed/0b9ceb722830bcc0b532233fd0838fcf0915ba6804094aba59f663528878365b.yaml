@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:0b9ceb722830bcc0b532233fd0838fcf0915ba6804094aba59f663528878365b
+  normalized_sha256: sha256:0b9ceb722830bcc0b532233fd0838fcf0915ba6804094aba59f663528878365b
+cas_ref: sha256:0b9ceb722830bcc0b532233fd0838fcf0915ba6804094aba59f663528878365b
+coverage_gids:
+  - gid: D5/S3/ConceptDynamics/Completion/TargetClosureOperator.target_closure_equivalent_iff_target_sufficient
+    target_statement_id: sha256:61105c511c35e592ba45a2269d48a65801e9f4d54896a623963828068a8bdd25
+  - gid: D5/S3/ObserverMemory/Refinement/PredictionCompletionIdempotence.prediction_completion_idempotent
+    target_statement_id: sha256:0bcc081d79b8ed5df5e4001519237a530e9d3c80afaaa2684b17120fcbd4c8b1
+receipts:
+  unresolved_subitems: []

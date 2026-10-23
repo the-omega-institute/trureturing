@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:1a761f7bb0c68722280b20a497c206a80a76e942596ff97674ad19d64592d597
+  normalized_sha256: sha256:1a761f7bb0c68722280b20a497c206a80a76e942596ff97674ad19d64592d597
+cas_ref: sha256:1a761f7bb0c68722280b20a497c206a80a76e942596ff97674ad19d64592d597
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 引理 141.4（统一混合与后缀尾）。的证明段，仅展开该陈述的推导及说明，不另提出独立命题；本收据不替代原陈述的形式化覆盖。
+    previous_atom_id: 3c92a20bf1f77baee95914c7c2d3991dba5f14c0a3b8cd1422766da0d95f3573
+    next_atom_id: 25be8f76e89a846ceac470396ef80b8843aba7c9a355a6d6000ad86a84d3814b

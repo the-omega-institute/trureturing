@@ -1,0 +1,45 @@
+**Assumption 14.1 (same-register paid preparation and actual handoff).**
+Fix precisely the nonempty full actual fiber $\mathcal U_*$,
+class valuations $\mathcal X_*$, attained root chart $\Theta_*$ and
+whole predecessor target $F(u)=G_*(\theta_x)$ of Definitions
+10.1--10.3 and Theorem 10.4. Write $H_*$ for the fixed reached-hole
+support denoted $H$ there; $H$ below is a preparation-state budget.
+Retain the finite ordered source grammar,
+the single authenticated actual update $t=\rho u$, every repetition,
+different-class disequality and absent-cut guard, and every finite
+origin in that fiber. Keep the complete $P,R_*$ lawfully acquired.
+There is no restriction on source size, depth, rank or hidden values.
+
+Replace only the full-value-possession premise of Assumption 10.6:
+a new preparation begins from one fixed source-independent state,
+depending on $P,R_*$ and common installed tables. Neither the current
+tree nor any class subtree value is an input to that state. Any archive
+used to acquire the complete row is inaccessible to this preparation.
+Preparation is now explicitly permitted to invoke the same authenticated
+four-reply native register before the access cut. Every finite word is
+legal. The register is stationary throughout preparation, handoff and
+reading; there is no intervening update, change of root or source
+replacement. This pre-cut permission is an added operational premise,
+not a consequence of the old acquired-value contract.
+
+Preparation obtains its source distinctions only from these actual
+paid replies. It reaches a complete code latch, actually exports its
+code and stops. A supplied paid handoff makes all preparation state and
+material inaccessible, and lawfully enters the reader with that code
+as its entire mutable accessible state. The old stop is absorbing;
+reader entry is a new supplied invocation, not an action by a stopped
+producer. Authentication and public entry controls select no origin
+within $\mathcal U_*$. The reader has the common row, cut and installed
+tables, but no other source-bearing field: no values, archive, handle,
+pointer, transcript, acquisition order, counter, timing, code length,
+meter or source-dependent table selection. Inaccessible material need
+not be physically erased.
+
+The actual handoff transfers exactly one complete reader-state code.
+No source call or source-dependent computation intervenes between the
+latch and entry. Export, isolation and lawful entry are paid services,
+with their own declared prices, even for a constant code and an immediate
+reader halt. No generation, equality, image, provenance or inverse
+port is supplied. The ordinary inverse parser and complete output rows
+remain common finite mathematical data, not physical inverse actions.
+

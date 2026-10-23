@@ -346,15 +346,17 @@ private lemma diag_im_zero (A : Matrix (Fin 2) (Fin 2) ℂ) (h : A.IsHermitian) 
   have hi := congrArg Complex.im (h.apply i i)
   change -(A i i).im = (A i i).im at hi; linarith
 private lemma hermitian_trace_coordinates (A : Matrix (Fin 2) (Fin 2) ℂ) (h : A.IsHermitian) : A = ((Matrix.trace A).re/2 : ℂ) • (1:(Matrix (Fin 2) (Fin 2) ℂ)) + spin (A 0 1).re (-(A 0 1).im) ((A 0 0).re-(Matrix.trace A).re/2) := by
-  have hd0 := diag_im_zero A h 0
-  have hd1 := diag_im_zero A h 1
-  have hr01 := congrArg Complex.re (h.apply 1 0)
-  have hi01 := congrArg Complex.im (h.apply 1 0)
-  change (A 0 1).re = (A 1 0).re at hr01; change -(A 0 1).im = (A 1 0).im at hi01; ext i j
-  fin_cases i <;> fin_cases j <;> apply Complex.ext <;>
-    simp [spin,Matrix.trace,Matrix.diag_apply,Fin.sum_univ_two,Complex.mul_re,Complex.mul_im] <;>
-    linarith
-private lemma density_coordinates (A : Matrix (Fin 2) (Fin 2) ℂ) (h : A.IsHermitian) (ht : Matrix.trace A=1) : A=(blochMatrix 1 (WithLp.toLp 2 ![(2*(A 0 1).re),(-2*(A 0 1).im),(2*(A 0 0).re-1)])) := by
+  calc
+    A = blochMatrix (Matrix.trace A).re
+        (D5.S3.Quantum.Information.ActualPureQubitCostInfimum.bloch A) :=
+      (D5.S3.Quantum.Information.ActualPureQubitCostInfimum.bloch_geometry_of_isHermitian A h).1
+    _ = _ := by
+      ext i j
+      fin_cases i <;> fin_cases j <;> apply Complex.ext <;>
+        simp [blochMatrix, D5.S3.Quantum.Information.ActualPureQubitCostInfimum.bloch,
+          spin, Matrix.trace, Matrix.diag_apply, Fin.sum_univ_two] <;> ring
+
+lemma density_coordinates (A : Matrix (Fin 2) (Fin 2) ℂ) (h : A.IsHermitian) (ht : Matrix.trace A=1) : A=(blochMatrix 1 (WithLp.toLp 2 ![(2*(A 0 1).re),(-2*(A 0 1).im),(2*(A 0 0).re-1)])) := by
   conv_lhs => rw [hermitian_trace_coordinates A h,ht]
   ext i j
   fin_cases i <;> fin_cases j <;> apply Complex.ext <;>

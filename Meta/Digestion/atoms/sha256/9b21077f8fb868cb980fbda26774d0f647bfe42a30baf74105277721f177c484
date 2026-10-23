@@ -1,0 +1,26 @@
+**定义 15.1（余链、电流与所配源的类型）。** 在假设 10.2 的参考定向图上，只保留正电导边，取顶点质量矩阵 $M_V=\operatorname{diag}(m_v)$、$m_v>0$ 和电导矩阵 $W_E=\operatorname{diag}(w_e)$、$w_e>0$。顶点内积为 $u^{\mathsf T}M_Vv$，边余链内积为 $a^{\mathsf T}W_Eb$。记 $\delta_0=B^{\mathsf T}$，则
+
+$$
+\delta_0^*=M_V^{-1}BW_E,\qquad
+L_M=\delta_0^*\delta_0=M_V^{-1}BW_EB^{\mathsf T}.
+$$
+
+这里 $\delta_0$ 是算子，状态 seam 向量仍写 $\mathbf d$。余链 $a$ 在形式反向上变号；电流 $j=W_Ea$ 使用内积 $j^{\mathsf T}W_E^{-1}k$。向内散度为 $M_V^{-1}Bj$，向外散度为其负数。因此对下坡余链 $a_\varphi=-B^{\mathsf T}\varphi$ 及电流 $j_\varphi=W_Ea_\varphi$，
+
+$$
+\delta_0^*a_\varphi=-L_M\varphi=\sigma_{\rm in},\qquad
+\operatorname{div}_{\rm out}j_\varphi=L_M\varphi=-\sigma_{\rm in}.
+$$
+
+在 $M_V=I$ 时，假设 10.2 的 $s$ 等于 $-\sigma_{\rm in}$。方程 $-L_M\varphi=\sigma_{\rm in}$ 的相容条件是每个正电导分量上 $\sum_vm_v\sigma_{{\rm in},v}=0$；源取密度减去分量的 $m_v$ 加权均值时满足此条件。势的常数规范和解的存在沿用 [von Luxburg 的核结论](../../../Library/Geometry/vonluxburg2007spectralclustering.md)，对该方程先左乘 $M_V$ 即可。正负源的名称取决于所声明的散度，不赋予作用力方向。
+
+[加权 Hodge 分解，Jiang–Lim–Yao–Ye，定义 4.2–4.3、定理 4.7、5.1](../../../Library/Geometry/jianglimyaoye2011hodge.md)在没有二维胞腔的图上提供中间工具
+
+$$
+a=B^{\mathsf T}\psi+h,\quad BW_Eh=0,
+\qquad
+j=W_EB^{\mathsf T}\psi+k,\quad Bk=0.
+$$
+
+两式分别在 $W_E$ 与 $W_E^{-1}$ 内积下正交，$k=W_Eh$；一般不能把 $h$ 当作 $\ker B$ 中的电流。若势 $\varphi$ 已由另一份密度指定，则 $j-j_\varphi$ 是循环的充要条件为 $Bj=M_V\sigma_{\rm in}$，因为 $B(j-j_\varphi)=Bj-M_V\sigma_{\rm in}$。即使底层是树，也只有边界匹配时任意给定场才等于这份指定梯度。密度读口及其 seam 敏感性采用假设 12.1、定理 12.2 和命题 13.2 的合同；中心化及熵碰撞仍保留。观察误差需要另给观察空间、映射和误差数据，例如 $y=Ra+\varepsilon$，并指定该空间的范数；上述正交分解不自动产生第三个“观察误差”项。非负合法交通则另要求 $j_e\ge0$ 及定义 2.3 的概率实现条件。
+

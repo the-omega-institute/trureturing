@@ -1,0 +1,8 @@
+**Theorem 3.1 (Odd replica rank formula).** Let $n\ge3$ be odd and $\mathtt q\ge2$. For every normalized pure qubit stabilizer state $\psi$ on $N$ qubits, every graph form $\Gamma$ of $\psi$ and every colouring $\mathrm{col}:[N]\to[\mathtt q]$, empty parties allowed, $Z_n^{(\mathtt q)}$ is a positive real number and
+
+$$
+Z_n^{(\mathtt q)}=2^{-\frac12\sum_{0\ne t\in G}\operatorname{rank}_F\left(\Lambda_t\Gamma+\Gamma\Lambda_t\right)},\qquad S_n^{(\mathtt q)}=\frac{\log2}{2(n-1)\,n^{\mathtt q-2}}\sum_{0\ne t\in G}\rho_t .
+$$
+
+Stance: suspected-novel (§8) for odd $n\ge5$ together with $\mathtt q\ge4$; literature-attested for the values when $\mathtt q\le3$, including, for $\mathtt q=3$, their masked-rank form through Corollary 4.2 (Iizuka and Lin, Eq. (64), combined with GHZ extraction); repo-derived for $n=3$; as recorded in §8. The general method of Czech, Feng, Wu and Xie expresses $Z_n^{(\mathtt q)}$ through the $\mathbb F_2$-rank and an Arf invariant of an adjacency matrix of size $N n^{\mathtt q-1}$ (§8); Theorem 3.1 evaluates that rank and sign for odd $n$ by a Fourier decomposition into $N\times N$ matrices over $F$, an evaluation not contained in that source.
+

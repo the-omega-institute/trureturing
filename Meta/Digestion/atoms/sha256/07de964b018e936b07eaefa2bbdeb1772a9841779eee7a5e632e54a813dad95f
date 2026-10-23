@@ -1,0 +1,30 @@
+**Corollary 21.1 (C1 companions and the whole-child J rectangle).**
+The unique companion base satisfies
+
+$$
+\begin{gathered}
+(p_*,v_*)\in\operatorname{int}\mathcal K,\qquad
+\mathcal K=[56,58]\times[304,305],\\
+p_*\in[56979139,56979140]/10^6,\qquad
+v_*\in[304497370,304497371]/10^6.
+\end{gathered}
+\tag{21.1}
+$$
+
+No distinct equal-$J$ pair exists anywhere in $C(p_*,v_*)$.
+In particular a C1 terminal-$M$ companion relation cannot coexist
+with an independently selected actual equal-$J$ pair in its child,
+even when cross-pair overlap is permitted.
+
+Proof. The bounds are row $4$ of Theorem 19.3 and are strictly
+inside $\mathcal K$. Apply
+[SV](FIB_STRICT_REAL_JOINT_INCIDENCE_SUPPORT_V.md), Theorem 1.1,
+which gives terminal-$J$ injectivity on every entire actual child
+above $\mathcal K$. Theorem 20.2 says that this is the only base
+where the C1 mixed companion relation occurs. The cited theorem
+concerns all actual companions, so the selection and overlap of
+the four original labels do not affect the conclusion.
+The auxiliary tuple $\widehat W_1(t_*)$ has $r=1$ and is outside
+$C(p_*,v_*)$; its relation to $W_*$ is consequently not itself a
+distinct strict equal-$M$ pair. ∎
+

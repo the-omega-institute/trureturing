@@ -96,12 +96,185 @@ def physicalEnergy (x : E n) : ℝ := (∑ i, (x i) ^ 2) / 2
 def physicalFreeEnergy (β : ℝ) (μ : Measure (E n)) : ℝ := (∫ x, physicalEnergy x ∂μ) - β⁻¹ * differentialEntropy μ
 
 def mutualInformation (M : Matrix p n ℝ) (β τ : ℝ) : ℝ≥0∞ := InformationTheory.klDiv (jointLaw M β τ) ((jointLaw M β τ).fst.prod (jointLaw M β τ).snd)
+/- Existing local suppliers moved once; law telescope unchanged. -/
+theorem translate_gaussian {d : Type} [Fintype d] [DecidableEq d] (m c : E d) (S : Matrix d d ℝ) : (multivariateGaussian m S).map (fun x => c + x) =
+      multivariateGaussian (c + m) S := by
+  unfold multivariateGaussian
+  rw [Measure.map_map (by fun_prop) (by fun_prop)]
+  congr 1
+  funext x
+  exact (add_assoc c m _).symm
+theorem precision_posDef (M : Matrix p n ℝ) (β τ : ℝ) (hβ : 0 < β) (hτ : 0 ≤ τ) :
+    (precision M β τ).PosDef := by
+  have hg : (M.transpose * M).PosSemidef := by
+    simpa only [Matrix.conjTranspose_eq_transpose_of_trivial] using
+      Matrix.posSemidef_conjTranspose_mul_self M
+  exact (Matrix.PosDef.one.smul hβ).add_posSemidef (hg.smul hτ)
+instance inputLaw_probability (β τ : ℝ) :
+    IsProbabilityMeasure (inputLaw (n := n) (p := p) β τ) := by
+  unfold inputLaw
+  infer_instance
+instance dataLaw_probability (M : Matrix p n ℝ) (β τ : ℝ) :
+    IsProbabilityMeasure (dataLaw M β τ) := by
+  unfold dataLaw
+  infer_instance
+instance translatedKernel_markov (K : E p →L[ℝ] E n) (ν : Measure (E n))
+    [IsProbabilityMeasure ν] : IsMarkovKernel (translatedKernel K ν) := by
+  unfold translatedKernel
+  exact Kernel.IsMarkovKernel.map _ (by fun_prop)
+theorem translatedKernel_apply (K : E p →L[ℝ] E n) (ν : Measure (E n))
+    [IsProbabilityMeasure ν] (y : E p) :
+    translatedKernel K ν y = ν.map (fun r => K y + r) := by
+  have hm : Measurable (fun z : E p × E n => K z.1 + z.2) := by fun_prop
+  ext s hs
+  rw [translatedKernel, Kernel.map_apply' _ hm _ hs, Kernel.id_prod_apply' _ _ (hm hs), Kernel.const_apply,
+    Measure.map_apply (by fun_prop) hs]
+  rfl
+instance posteriorKernel_markov (M : Matrix p n ℝ) (β τ : ℝ) :
+    IsMarkovKernel (posteriorKernel M β τ) := by
+  unfold posteriorKernel
+  infer_instance
+theorem action_apply {d a : Type} [Fintype d] [DecidableEq d] [Fintype a] [DecidableEq a] (M : Matrix a d ℝ) (x : E d) : action M x = toLp 2 (M.mulVec (ofLp x)) := rfl
+theorem action_adjoint {d a : Type} [Fintype d] [DecidableEq d] [Fintype a] [DecidableEq a] (M : Matrix a d ℝ) :
+    (action M).adjoint = action M.transpose := by
+  unfold action
+  rw [← LinearMap.adjoint_toContinuousLinearMap, ← Matrix.toEuclideanLin_conjTranspose_eq_adjoint, Matrix.conjTranspose_eq_transpose_of_trivial]
+theorem transpose_pairing {d a b : Type} [Fintype d] [DecidableEq d] [Fintype a] [DecidableEq a] [Fintype b] [DecidableEq b] (L : Matrix a d ℝ) (S : Matrix d d ℝ)
+    (R : Matrix b d ℝ) (u : a → ℝ) (v : b → ℝ) : L.transpose.mulVec u ⬝ᵥ S.mulVec (R.transpose.mulVec v) =
+      u ⬝ᵥ (L * S * R.transpose).mulVec v := by
+  rw [dotProduct_comm (L.transpose.mulVec u), ← Matrix.dotProduct_transpose_mulVec L.transpose]
+  simp only [Matrix.transpose_transpose, Matrix.mulVec_mulVec, Matrix.mul_assoc]
+theorem map_gaussian {d a : Type} [Fintype d] [DecidableEq d] [Fintype a] [DecidableEq a] (m : E d) (S : Matrix d d ℝ) (hS : S.PosSemidef) (L : Matrix a d ℝ) :
+    (multivariateGaussian m S).map (action L) =
+      multivariateGaussian (action L m) (L * S * L.transpose) := by
+  have hLS : (L * S * L.transpose).PosSemidef := by
+    simpa using hS.mul_mul_conjTranspose_same L
+  apply IsGaussian.ext
+  · change (∫ x, x ∂(multivariateGaussian m S).map (action L)) = ∫ x, x ∂multivariateGaussian (action L m) (L * S * L.transpose)
+    rw [(action L).integral_id_map IsGaussian.integrable_id]
+    simp only [integral_id_multivariateGaussian]
+  · ext u v
+    rw [covarianceBilin_map IsGaussian.memLp_two_id, covarianceBilin_multivariateGaussian hS, covarianceBilin_multivariateGaussian hLS, action_adjoint]
+    exact transpose_pairing L S L (ofLp u) (ofLp v)
 
+/-- The existing standard Gaussian product density, used in affine density transport. -/
+theorem std_gaussian_density {n : Type} [Fintype n] [DecidableEq n] : stdGaussian (EuclideanSpace ℝ n) = (volume : Measure (EuclideanSpace ℝ n)).withDensity
+    (fun x => ENNReal.ofReal (∏ i, gaussianPDFReal 0 1 (x i))) := by
+  classical
+  have hPi : Measure.pi (fun _ : n => gaussianReal 0 1) = (volume : Measure (n → ℝ)).withDensity
+        (fun x => ENNReal.ofReal (∏ i, gaussianPDFReal 0 1 (x i))) := by
+    refine Measure.pi_eq fun s hs => ?_
+    rw [withDensity_apply _ (MeasurableSet.univ_pi hs)]
+    rw [volume_pi, Measure.restrict_pi_pi]
+    have hInt : Integrable (fun x : n → ℝ => ∏ i, gaussianPDFReal 0 1 (x i)) (Measure.pi (fun i => (volume : Measure ℝ).restrict (s i))) :=
+      Integrable.fintype_prod (fun i => (integrable_gaussianPDFReal 0 1).restrict)
+    rw [← ofReal_integral_eq_lintegral_ofReal hInt (ae_of_all _ (fun x => Finset.prod_nonneg (fun i _ => gaussianPDFReal_nonneg 0 1 (x i))))]
+    rw [integral_fintype_prod_eq_prod]
+    rw [ENNReal.ofReal_prod_of_nonneg (fun i _ => integral_nonneg (fun x => gaussianPDFReal_nonneg 0 1 x))]
+    exact Finset.prod_congr rfl (fun i _ => (gaussianReal_apply_eq_integral 0 (v := 1) one_ne_zero (s i)).symm)
+  have hG : stdGaussian (EuclideanSpace ℝ n) = (volume : Measure (EuclideanSpace ℝ n)).withDensity
+        (fun x => ENNReal.ofReal (∏ i, gaussianPDFReal 0 1 (x i))) := by
+    rw [← map_pi_eq_stdGaussian, hPi]
+    refine Measure.ext fun s hs => ?_
+    rw [Measure.map_apply (PiLp.volume_preserving_toLp n).measurable hs, withDensity_apply _ ((PiLp.volume_preserving_toLp n).measurable hs), withDensity_apply _ hs]
+    exact (PiLp.volume_preserving_toLp n).setLIntegral_comp_preimage_emb
+      (MeasurableEquiv.toLp 2 (n → ℝ)).measurableEmbedding
+      (fun x : EuclideanSpace ℝ n => ENNReal.ofReal (∏ i, gaussianPDFReal 0 1 (x i))) s
+  exact hG
 
-theorem gaussian_observation_law {n p : Type} [Fintype n] [DecidableEq n] [Fintype p] [DecidableEq p]
+/-- The existing affine Gaussian density, used by the observation law's logarithm and likelihood proofs. -/
+theorem multivariate_gaussian_density {n : Type} [Fintype n] [DecidableEq n]
+    (m : EuclideanSpace ℝ n) (S : Matrix n n ℝ) (hS : S.PosDef) : ∃ c : ℝ≥0∞, 0 < c ∧ c ≠ ∞ ∧
+      multivariateGaussian m S = (volume : Measure (EuclideanSpace ℝ n)).withDensity
+        (fun y => c * ENNReal.ofReal (∏ i, gaussianPDFReal 0 1 (((Matrix.toEuclideanCLM (𝕜 := ℝ)) (CFC.sqrt S)⁻¹) (y - m) i))) ∧
+      c = ENNReal.ofReal
+        |(LinearMap.det ((Matrix.toEuclideanCLM (𝕜 := ℝ)) (CFC.sqrt S)).toLinearMap)⁻¹| := by
+  classical
+  let A := CFC.sqrt S
+  let L := (Matrix.toEuclideanCLM (𝕜 := ℝ)) A
+  let R := (Matrix.toEuclideanCLM (𝕜 := ℝ)) A⁻¹
+  let f : EuclideanSpace ℝ n → EuclideanSpace ℝ n := fun x => m + L x
+  let finv : EuclideanSpace ℝ n → EuclideanSpace ℝ n := fun y => R (y - m)
+  let d : EuclideanSpace ℝ n → ℝ≥0∞ := fun x => ENNReal.ofReal (∏ i, gaussianPDFReal 0 1 (x i))
+  have hd : Measurable d := by
+    dsimp [d]
+    exact (Finset.measurable_prod _ fun i _ => (measurable_gaussianPDFReal 0 1).comp ((measurable_pi_apply i).comp (WithLp.measurable_ofLp 2 (n → ℝ)))).ennreal_ofReal
+  have hAdet : A.det ≠ 0 := by
+    dsimp [A]
+    rw [hS.posSemidef.det_sqrt]
+    simpa only [RCLike.sqrt_real] using (Real.sqrt_pos.2 hS.det_pos).ne'
+  have hAunit : IsUnit A := A.isUnit_iff_isUnit_det.mpr (isUnit_iff_ne_zero.mpr hAdet)
+  have hRL (x : EuclideanSpace ℝ n) : R (L x) = x := by
+    calc
+      R (L x) = (((Matrix.toEuclideanCLM (𝕜 := ℝ)) A⁻¹).comp ((Matrix.toEuclideanCLM (𝕜 := ℝ)) A)) x := rfl
+      _ = (Matrix.toEuclideanCLM (𝕜 := ℝ)) (A⁻¹ * A) x := by
+        rw [map_mul]
+        rfl
+      _ = x := by
+        rw [Matrix.nonsing_inv_mul A (A.isUnit_iff_isUnit_det.mp hAunit)]
+        rw [map_one]
+        rfl
+  have hleft (x : EuclideanSpace ℝ n) : finv (f x) = x := by
+    simp only [finv, f, add_sub_cancel_left]
+    exact hRL x
+  have hLinDet : LinearMap.det L.toLinearMap ≠ 0 := by
+    change (Matrix.toLpLin 2 2 A).det ≠ 0
+    rw [LinearMap.det_toLpLin]
+    exact hAdet
+  let c : ℝ≥0∞ := ENNReal.ofReal |(LinearMap.det L.toLinearMap)⁻¹|
+  have hc : 0 < c := by
+    dsimp [c]
+    exact ENNReal.ofReal_pos.mpr (abs_pos.mpr (inv_ne_zero hLinDet))
+  have hcfin : c ≠ ∞ := ENNReal.ofReal_ne_top
+  have hvolL : (volume : Measure (EuclideanSpace ℝ n)).map L.toLinearMap = c • volume := by
+    simpa only [c] using
+      (Measure.map_linearMap_addHaar_eq_smul_addHaar (volume : Measure (EuclideanSpace ℝ n)) hLinDet)
+  have hvolL' : (volume : Measure (EuclideanSpace ℝ n)).map L = c • volume := by
+    have hfun : (⇑L.toLinearMap : EuclideanSpace ℝ n → EuclideanSpace ℝ n) = (⇑L : EuclideanSpace ℝ n → EuclideanSpace ℝ n) := by
+      funext x
+      rfl
+    simpa only [hfun] using hvolL
+  have hf : Measurable f := by fun_prop
+  have hfinv : Measurable finv := by fun_prop
+  have hvolf : (volume : Measure (EuclideanSpace ℝ n)).map f = c • volume := by
+    calc
+      (volume : Measure (EuclideanSpace ℝ n)).map f =
+          ((volume : Measure (EuclideanSpace ℝ n)).map L).map (fun x => m + x) := by
+        rw [Measure.map_map (by fun_prop) (by fun_prop)]
+        rfl
+      _ = (c • (volume : Measure (EuclideanSpace ℝ n))).map (fun x => m + x) := by rw [hvolL']
+      _ = c • volume := by
+        rw [Measure.map_smul c (by fun_prop), map_add_left_eq_self (volume : Measure (EuclideanSpace ℝ n)) m]
+  have htransport : ((volume : Measure (EuclideanSpace ℝ n)).withDensity d).map f =
+      ((volume : Measure (EuclideanSpace ℝ n)).map f).withDensity (fun y => d (finv y)) := by
+    ext s hs
+    rw [Measure.map_apply hf hs, withDensity_apply _ (hs.preimage hf), withDensity_apply _ hs]
+    change (∫⁻ a in f ⁻¹' s, d a ∂(volume : Measure (EuclideanSpace ℝ n))) = ∫⁻ a in s, (d ∘ finv) a ∂((volume : Measure (EuclideanSpace ℝ n)).map f)
+    rw [setLIntegral_map hs (hd.comp hfinv) hf]
+    apply lintegral_congr_ae
+    filter_upwards [] with x
+    change d x = d (finv (f x))
+    rw [hleft x]
+  have hlaw : multivariateGaussian m S = (stdGaussian (EuclideanSpace ℝ n)).map f := by
+    dsimp [f, L, A]
+    rfl
+  refine ⟨c, hc, hcfin, ?_, rfl⟩
+  calc
+    multivariateGaussian m S = ((volume : Measure (EuclideanSpace ℝ n)).withDensity d).map f := by
+      rw [hlaw, std_gaussian_density]
+    _ = ((volume : Measure (EuclideanSpace ℝ n)).map f).withDensity (fun y => d (finv y)) := htransport
+    _ = (c • (volume : Measure (EuclideanSpace ℝ n))).withDensity (fun y => d (finv y)) := by
+      rw [hvolf]
+    _ = (volume : Measure (EuclideanSpace ℝ n)).withDensity (fun y => c * d (finv y)) := by
+      rw [withDensity_smul_measure]
+      change c • (volume : Measure (EuclideanSpace ℝ n)).withDensity (d ∘ finv) = (volume : Measure (EuclideanSpace ℝ n)).withDensity (c • (d ∘ finv))
+      exact (withDensity_smul c (hd.comp hfinv)).symm
+    _ = (volume : Measure (EuclideanSpace ℝ n)).withDensity (fun y => c * ENNReal.ofReal (∏ i, gaussianPDFReal 0 1 (((Matrix.toEuclideanCLM (𝕜 := ℝ)) (CFC.sqrt S)⁻¹) (y - m) i))) := rfl
+
+theorem gaussian_observation_law_complete {n p : Type} [Fintype n] [DecidableEq n] [Fintype p] [DecidableEq p]
     (M : Matrix p n ℝ) (β σ : ℝ) (hβ : 0 < β) (hσ : 0 < σ ^ 2) :
   let τ := (σ ^ 2)⁻¹
-  mutualInformation M β τ ≠ ∞ ∧
+  (mutualInformation M β τ ≠ ∞ ∧
     Integrable
       (llr (((inputLaw (n := n) (p := p) β τ).map (fun z => (action (observation M) z, action (signal (n := n) (p := p)) z))))
         ((((inputLaw (n := n) (p := p) β τ).map (fun z => (action (observation M) z, action (signal (n := n) (p := p)) z)))).fst.prod (((inputLaw (n := n) (p := p) β τ).map (fun z => (action (observation M) z, action (signal (n := n) (p := p)) z)))).snd))
@@ -127,7 +300,9 @@ theorem gaussian_observation_law {n p : Type} [Fintype n] [DecidableEq n] [Finty
       multivariateGaussian 0 (β⁻¹ • (1 : Matrix n n ℝ)) ∧
     (inputLaw (n := n) (p := p) β τ).map (action noise) =
       multivariateGaussian 0 (τ⁻¹ • (1 : Matrix p p ℝ)) ∧
-    IndepFun (action (signal (n := n) (p := p))) (action noise) (inputLaw β τ)) := by
+    IndepFun (action (signal (n := n) (p := p))) (action noise) (inputLaw β τ))) ∧
+    Integrable (fun y : E p => physicalFreeEnergy β (posteriorKernel M β τ y))
+      (dataLaw M β τ) := by
   classical
   let transportedGaussianDensity (c : ℝ≥0∞) (S : Matrix n n ℝ)
       (m x : E n) : ℝ≥0∞ :=
@@ -136,7 +311,6 @@ theorem gaussian_observation_law {n p : Type} [Fintype n] [DecidableEq n] [Finty
 
   intro τ
   have hτ : 0 < τ := inv_pos.mpr hσ
-  have action_apply {d a : Type} [Fintype d] [DecidableEq d] [Fintype a] [DecidableEq a] (M : Matrix a d ℝ) (x : E d) : action M x = toLp 2 (M.mulVec (ofLp x)) := rfl
   have action_comp {d a b : Type} [Fintype d] [DecidableEq d] [Fintype a] [DecidableEq a] [Fintype b] [DecidableEq b] (M : Matrix a b ℝ) (N : Matrix b d ℝ) :
       (action M).comp (action N) = action (M * N) := by
     ext x
@@ -149,33 +323,12 @@ theorem gaussian_observation_law {n p : Type} [Fintype n] [DecidableEq n] [Finty
       ⟪action M x, y⟫_ℝ = ⟪x, action M.transpose y⟫_ℝ := by
     simpa only [EuclideanSpace.inner_eq_star_dotProduct, action_apply, ofLp_toLp, star_trivial, dotProduct_comm] using
       (Matrix.dotProduct_transpose_mulVec M (ofLp x) (ofLp y)).symm
-  have action_adjoint {d a : Type} [Fintype d] [DecidableEq d] [Fintype a] [DecidableEq a] (M : Matrix a d ℝ) :
-      (action M).adjoint = action M.transpose := by
-    unfold action
-    rw [← LinearMap.adjoint_toContinuousLinearMap, ← Matrix.toEuclideanLin_conjTranspose_eq_adjoint, Matrix.conjTranspose_eq_transpose_of_trivial]
-  have transpose_pairing {d a b : Type} [Fintype d] [DecidableEq d] [Fintype a] [DecidableEq a] [Fintype b] [DecidableEq b] (L : Matrix a d ℝ) (S : Matrix d d ℝ)
-      (R : Matrix b d ℝ) (u : a → ℝ) (v : b → ℝ) : L.transpose.mulVec u ⬝ᵥ S.mulVec (R.transpose.mulVec v) =
-        u ⬝ᵥ (L * S * R.transpose).mulVec v := by
-    rw [dotProduct_comm (L.transpose.mulVec u), ← Matrix.dotProduct_transpose_mulVec L.transpose]
-    simp only [Matrix.transpose_transpose, Matrix.mulVec_mulVec, Matrix.mul_assoc]
   have action_cross_covariance {d a b : Type} [Fintype d] [DecidableEq d] [Fintype a] [DecidableEq a] [Fintype b] [DecidableEq b] (m : E d) (S : Matrix d d ℝ) (hS : S.PosSemidef)
       (L : Matrix a d ℝ) (R : Matrix b d ℝ) (u : E a) (v : E b) : cov[fun z => ⟪u, action L z⟫_ℝ, fun z => ⟪v, action R z⟫_ℝ;
         multivariateGaussian m S] = u ⬝ᵥ (L * S * R.transpose).mulVec v := by
     simp_rw [← ContinuousLinearMap.adjoint_inner_left, action_adjoint]
     rw [← covarianceBilin_apply_eq_cov IsGaussian.memLp_two_id, covarianceBilin_multivariateGaussian hS]
     exact transpose_pairing L S R (ofLp u) (ofLp v)
-  have map_gaussian {d a : Type} [Fintype d] [DecidableEq d] [Fintype a] [DecidableEq a] (m : E d) (S : Matrix d d ℝ) (hS : S.PosSemidef) (L : Matrix a d ℝ) :
-      (multivariateGaussian m S).map (action L) =
-        multivariateGaussian (action L m) (L * S * L.transpose) := by
-    have hLS : (L * S * L.transpose).PosSemidef := by
-      simpa using hS.mul_mul_conjTranspose_same L
-    apply IsGaussian.ext
-    · change (∫ x, x ∂(multivariateGaussian m S).map (action L)) = ∫ x, x ∂multivariateGaussian (action L m) (L * S * L.transpose)
-      rw [(action L).integral_id_map IsGaussian.integrable_id]
-      simp only [integral_id_multivariateGaussian]
-    · ext u v
-      rw [covarianceBilin_map IsGaussian.memLp_two_id, covarianceBilin_multivariateGaussian hS, covarianceBilin_multivariateGaussian hLS, action_adjoint]
-      exact transpose_pairing L S L (ofLp u) (ofLp v)
   have independent_actions {d a b : Type} [Fintype d] [DecidableEq d] [Fintype a] [DecidableEq a] [Fintype b] [DecidableEq b] (m : E d) (S : Matrix d d ℝ) (hS : S.PosSemidef)
       (L : Matrix a d ℝ) (R : Matrix b d ℝ) (hcross : L * S * R.transpose = 0) :
       IndepFun (action L) (action R) (multivariateGaussian m S) := by
@@ -184,19 +337,6 @@ theorem gaussian_observation_law {n p : Type} [Fintype n] [DecidableEq n] [Finty
     apply hpair.indepFun_of_covariance_inner
     intro u v
     rw [action_cross_covariance m S hS L R, hcross, Matrix.zero_mulVec, dotProduct_zero]
-  have translate_gaussian {d : Type} [Fintype d] [DecidableEq d] (m c : E d) (S : Matrix d d ℝ) : (multivariateGaussian m S).map (fun x => c + x) =
-        multivariateGaussian (c + m) S := by
-    unfold multivariateGaussian
-    rw [Measure.map_map (by fun_prop) (by fun_prop)]
-    congr 1
-    funext x
-    exact (add_assoc c m _).symm
-  have precision_posDef (M : Matrix p n ℝ) (β τ : ℝ) (hβ : 0 < β) (hτ : 0 ≤ τ) :
-      (precision M β τ).PosDef := by
-    have hg : (M.transpose * M).PosSemidef := by
-      simpa only [Matrix.conjTranspose_eq_transpose_of_trivial] using
-        Matrix.posSemidef_conjTranspose_mul_self M
-    exact (Matrix.PosDef.one.smul hβ).add_posSemidef (hg.smul hτ)
   have ambientCov_posDef (β τ : ℝ) (hβ : 0 < β) (hτ : 0 < τ) :
       (ambientCov (n := n) (p := p) β τ).PosDef := by
     have hd : ambientCov (n := n) (p := p) β τ =
@@ -243,10 +383,6 @@ theorem gaussian_observation_law {n p : Type} [Fintype n] [DecidableEq n] [Finty
     rw [signal_reconstruction M β τ hβ hτ, Matrix.transpose_add, Matrix.transpose_mul, Matrix.mul_add, ← Matrix.mul_assoc,
       innovation_data_covariance_zero M β τ hβ hτ, Matrix.zero_mul, zero_add] at h
     exact h
-  letI inputLaw_probability (β τ : ℝ) :
-      IsProbabilityMeasure (inputLaw (n := n) (p := p) β τ) := by
-    unfold inputLaw
-    infer_instance
   have input_factors (β τ : ℝ) (hβ : 0 < β) (hτ : 0 < τ) : (inputLaw (n := n) (p := p) β τ).map (action signal) = multivariateGaussian 0 (β⁻¹ • (1 : Matrix n n ℝ)) ∧
       (inputLaw (n := n) (p := p) β τ).map (action noise) = multivariateGaussian 0 (τ⁻¹ • (1 : Matrix p p ℝ)) ∧
       IndepFun (action (signal (n := n) (p := p))) (action noise) (inputLaw β τ) := by
@@ -258,22 +394,6 @@ theorem gaussian_observation_law {n p : Type} [Fintype n] [DecidableEq n] [Finty
         map_gaussian (0 : E (n ⊕ p)) (ambientCov β τ) hd (noise (n := n) (p := p))
     · apply independent_actions 0 (ambientCov β τ) hd
       simp [signal, noise, ambientCov, Matrix.transpose_fromCols, Matrix.fromCols_mul_fromBlocks, Matrix.fromCols_mul_fromRows]
-  letI dataLaw_probability (M : Matrix p n ℝ) (β τ : ℝ) :
-      IsProbabilityMeasure (dataLaw M β τ) := by
-    unfold dataLaw
-    exact (inputLaw β τ).isProbabilityMeasure_map (by fun_prop)
-  letI translatedKernel_markov (K : E p →L[ℝ] E n) (ν : Measure (E n))
-      [IsProbabilityMeasure ν] : IsMarkovKernel (translatedKernel K ν) := by
-    unfold translatedKernel
-    exact Kernel.IsMarkovKernel.map _ (by fun_prop)
-  have translatedKernel_apply (K : E p →L[ℝ] E n) (ν : Measure (E n))
-      [IsProbabilityMeasure ν] (y : E p) :
-      translatedKernel K ν y = ν.map (fun r => K y + r) := by
-    have hm : Measurable (fun z : E p × E n => K z.1 + z.2) := by fun_prop
-    ext s hs
-    rw [translatedKernel, Kernel.map_apply' _ hm _ hs, Kernel.id_prod_apply' _ _ (hm hs), Kernel.const_apply,
-      Measure.map_apply (by fun_prop) hs]
-    rfl
   have translatedKernel_compProd (K : E p →L[ℝ] E n) (μ : Measure (E p)) (ν : Measure (E n))
       [IsProbabilityMeasure μ] [IsProbabilityMeasure ν] : μ ⊗ₘ translatedKernel K ν =
         (μ.prod ν).map (fun z : E p × E n => (z.1, K z.1 + z.2)) := by
@@ -289,16 +409,12 @@ theorem gaussian_observation_law {n p : Type} [Fintype n] [DecidableEq n] [Finty
       (X : Ω → E n) (Y : Ω → E p) (R : Ω → E n) (hY : Measurable Y) (hR : Measurable R) (K : E p →L[ℝ] E n) (ν : Measure (E n)) [IsProbabilityMeasure ν]
       (hind : IndepFun Y R P) (hlaw : P.map R = ν) (hX : ∀ ω, X ω = K (Y ω) + R ω) : P.map (fun ω => (Y ω, X ω)) =
         (P.map Y) ⊗ₘ translatedKernel K ν := by
-    letI : IsProbabilityMeasure (P.map Y) := P.isProbabilityMeasure_map hY.aemeasurable
+    letI : IsProbabilityMeasure (P.map Y) := inferInstance
     rw [translatedKernel_compProd, ← hlaw, ← hind.map_prod_eq_prod_map_map hY.aemeasurable hR.aemeasurable,
       Measure.map_map (by fun_prop) (hY.prodMk hR)]
     congr 1
     funext ω
     exact Prod.ext rfl (hX ω)
-  letI posteriorKernel_markov (M : Matrix p n ℝ) (β τ : ℝ) :
-      IsMarkovKernel (posteriorKernel M β τ) := by
-    unfold posteriorKernel
-    infer_instance
   have posterior_disintegration (M : Matrix p n ℝ) (β τ : ℝ) (hβ : 0 < β) (hτ : 0 < τ) :
       jointLaw M β τ = (dataLaw M β τ) ⊗ₘ posteriorKernel M β τ := by
     have hd := (ambientCov_posDef β τ hβ hτ).posSemidef
@@ -316,116 +432,6 @@ theorem gaussian_observation_law {n p : Type} [Fintype n] [DecidableEq n] [Finty
     intro z
     have hm := congrArg (fun A : Matrix n (n ⊕ p) ℝ => action A z) (signal_reconstruction M β τ hβ hτ)
     simpa only [action_add, ContinuousLinearMap.add_apply, ← action_comp, ContinuousLinearMap.comp_apply] using hm
-  have hStd : stdGaussian (EuclideanSpace ℝ n) = (volume : Measure (EuclideanSpace ℝ n)).withDensity
-      (fun x => ENNReal.ofReal (∏ i, gaussianPDFReal 0 1 (x i))) := by
-    have hPi : Measure.pi (fun _ : n => gaussianReal 0 1) = (volume : Measure (n → ℝ)).withDensity
-          (fun x => ENNReal.ofReal (∏ i, gaussianPDFReal 0 1 (x i))) := by
-      refine Measure.pi_eq fun s hs => ?_
-      rw [withDensity_apply _ (MeasurableSet.univ_pi hs)]
-      rw [volume_pi, Measure.restrict_pi_pi]
-      have hInt : Integrable (fun x : n → ℝ => ∏ i, gaussianPDFReal 0 1 (x i)) (Measure.pi (fun i => (volume : Measure ℝ).restrict (s i))) :=
-        Integrable.fintype_prod (fun i => (integrable_gaussianPDFReal 0 1).restrict)
-      rw [← ofReal_integral_eq_lintegral_ofReal hInt (ae_of_all _ (fun x => Finset.prod_nonneg (fun i _ => gaussianPDFReal_nonneg 0 1 (x i))))]
-      rw [integral_fintype_prod_eq_prod]
-      rw [ENNReal.ofReal_prod_of_nonneg (fun i _ => integral_nonneg (fun x => gaussianPDFReal_nonneg 0 1 x))]
-      exact Finset.prod_congr rfl (fun i _ => (gaussianReal_apply_eq_integral 0 (v := 1) one_ne_zero (s i)).symm)
-    have hG : stdGaussian (EuclideanSpace ℝ n) = (volume : Measure (EuclideanSpace ℝ n)).withDensity
-          (fun x => ENNReal.ofReal (∏ i, gaussianPDFReal 0 1 (x i))) := by
-      rw [← map_pi_eq_stdGaussian, hPi]
-      refine Measure.ext fun s hs => ?_
-      rw [Measure.map_apply (PiLp.volume_preserving_toLp n).measurable hs, withDensity_apply _ ((PiLp.volume_preserving_toLp n).measurable hs), withDensity_apply _ hs]
-      exact (PiLp.volume_preserving_toLp n).setLIntegral_comp_preimage_emb
-        (MeasurableEquiv.toLp 2 (n → ℝ)).measurableEmbedding
-        (fun x : EuclideanSpace ℝ n => ENNReal.ofReal (∏ i, gaussianPDFReal 0 1 (x i))) s
-    exact hG
-
-  have hDensity
-      (m : EuclideanSpace ℝ n) (S : Matrix n n ℝ) (hS : S.PosDef) : ∃ c : ℝ≥0∞, 0 < c ∧ c ≠ ∞ ∧
-        multivariateGaussian m S = (volume : Measure (EuclideanSpace ℝ n)).withDensity
-          (fun y => c * ENNReal.ofReal (∏ i, gaussianPDFReal 0 1 (((Matrix.toEuclideanCLM (𝕜 := ℝ)) (CFC.sqrt S)⁻¹) (y - m) i))) ∧
-        c = ENNReal.ofReal
-          |(LinearMap.det ((Matrix.toEuclideanCLM (𝕜 := ℝ)) (CFC.sqrt S)).toLinearMap)⁻¹| := by
-    let A := CFC.sqrt S
-    let L := (Matrix.toEuclideanCLM (𝕜 := ℝ)) A
-    let R := (Matrix.toEuclideanCLM (𝕜 := ℝ)) A⁻¹
-    let f : EuclideanSpace ℝ n → EuclideanSpace ℝ n := fun x => m + L x
-    let finv : EuclideanSpace ℝ n → EuclideanSpace ℝ n := fun y => R (y - m)
-    let d : EuclideanSpace ℝ n → ℝ≥0∞ := fun x => ENNReal.ofReal (∏ i, gaussianPDFReal 0 1 (x i))
-    have hd : Measurable d := by
-      dsimp [d]
-      exact (Finset.measurable_prod _ fun i _ => (measurable_gaussianPDFReal 0 1).comp ((measurable_pi_apply i).comp (WithLp.measurable_ofLp 2 (n → ℝ)))).ennreal_ofReal
-    have hAdet : A.det ≠ 0 := by
-      dsimp [A]
-      rw [hS.posSemidef.det_sqrt]
-      simpa only [RCLike.sqrt_real] using (Real.sqrt_pos.2 hS.det_pos).ne'
-    have hAunit : IsUnit A := A.isUnit_iff_isUnit_det.mpr (isUnit_iff_ne_zero.mpr hAdet)
-    have hRL (x : EuclideanSpace ℝ n) : R (L x) = x := by
-      calc
-        R (L x) = (((Matrix.toEuclideanCLM (𝕜 := ℝ)) A⁻¹).comp ((Matrix.toEuclideanCLM (𝕜 := ℝ)) A)) x := rfl
-        _ = (Matrix.toEuclideanCLM (𝕜 := ℝ)) (A⁻¹ * A) x := by
-          rw [map_mul]
-          rfl
-        _ = x := by
-          rw [Matrix.nonsing_inv_mul A (A.isUnit_iff_isUnit_det.mp hAunit)]
-          rw [map_one]
-          rfl
-    have hleft (x : EuclideanSpace ℝ n) : finv (f x) = x := by
-      simp only [finv, f, add_sub_cancel_left]
-      exact hRL x
-    have hLinDet : LinearMap.det L.toLinearMap ≠ 0 := by
-      change (Matrix.toLpLin 2 2 A).det ≠ 0
-      rw [LinearMap.det_toLpLin]
-      exact hAdet
-    let c : ℝ≥0∞ := ENNReal.ofReal |(LinearMap.det L.toLinearMap)⁻¹|
-    have hc : 0 < c := by
-      dsimp [c]
-      exact ENNReal.ofReal_pos.mpr (abs_pos.mpr (inv_ne_zero hLinDet))
-    have hcfin : c ≠ ∞ := ENNReal.ofReal_ne_top
-    have hvolL : (volume : Measure (EuclideanSpace ℝ n)).map L.toLinearMap = c • volume := by
-      simpa only [c] using
-        (Measure.map_linearMap_addHaar_eq_smul_addHaar (volume : Measure (EuclideanSpace ℝ n)) hLinDet)
-    have hvolL' : (volume : Measure (EuclideanSpace ℝ n)).map L = c • volume := by
-      have hfun : (⇑L.toLinearMap : EuclideanSpace ℝ n → EuclideanSpace ℝ n) = (⇑L : EuclideanSpace ℝ n → EuclideanSpace ℝ n) := by
-        funext x
-        rfl
-      simpa only [hfun] using hvolL
-    have hf : Measurable f := by fun_prop
-    have hfinv : Measurable finv := by fun_prop
-    have hvolf : (volume : Measure (EuclideanSpace ℝ n)).map f = c • volume := by
-      calc
-        (volume : Measure (EuclideanSpace ℝ n)).map f =
-            ((volume : Measure (EuclideanSpace ℝ n)).map L).map (fun x => m + x) := by
-          rw [Measure.map_map (by fun_prop) (by fun_prop)]
-          rfl
-        _ = (c • (volume : Measure (EuclideanSpace ℝ n))).map (fun x => m + x) := by rw [hvolL']
-        _ = c • volume := by
-          rw [Measure.map_smul, map_add_left_eq_self (volume : Measure (EuclideanSpace ℝ n)) m]
-    have htransport : ((volume : Measure (EuclideanSpace ℝ n)).withDensity d).map f =
-        ((volume : Measure (EuclideanSpace ℝ n)).map f).withDensity (fun y => d (finv y)) := by
-      ext s hs
-      rw [Measure.map_apply hf hs, withDensity_apply _ (hs.preimage hf), withDensity_apply _ hs]
-      change (∫⁻ a in f ⁻¹' s, d a ∂(volume : Measure (EuclideanSpace ℝ n))) = ∫⁻ a in s, (d ∘ finv) a ∂((volume : Measure (EuclideanSpace ℝ n)).map f)
-      rw [setLIntegral_map hs (hd.comp hfinv) hf]
-      apply lintegral_congr_ae
-      filter_upwards [] with x
-      change d x = d (finv (f x))
-      rw [hleft x]
-    have hlaw : multivariateGaussian m S = (stdGaussian (EuclideanSpace ℝ n)).map f := by
-      dsimp [f, L, A]
-      rfl
-    refine ⟨c, hc, hcfin, ?_, rfl⟩
-    calc
-      multivariateGaussian m S = ((volume : Measure (EuclideanSpace ℝ n)).withDensity d).map f := by
-        rw [hlaw, hStd]
-      _ = ((volume : Measure (EuclideanSpace ℝ n)).map f).withDensity (fun y => d (finv y)) := htransport
-      _ = (c • (volume : Measure (EuclideanSpace ℝ n))).withDensity (fun y => d (finv y)) := by
-        rw [hvolf]
-      _ = (volume : Measure (EuclideanSpace ℝ n)).withDensity (fun y => c * d (finv y)) := by
-        rw [withDensity_smul_measure]
-        change c • (volume : Measure (EuclideanSpace ℝ n)).withDensity (d ∘ finv) = (volume : Measure (EuclideanSpace ℝ n)).withDensity (c • (d ∘ finv))
-        exact (withDensity_smul c (hd.comp hfinv)).symm
-      _ = (volume : Measure (EuclideanSpace ℝ n)).withDensity (fun y => c * ENNReal.ofReal (∏ i, gaussianPDFReal 0 1 (((Matrix.toEuclideanCLM (𝕜 := ℝ)) (CFC.sqrt S)⁻¹) (y - m) i))) := rfl
-
   have hLog
       (m : E n) (S : Matrix n n ℝ) (hS : S.PosDef) : ∃ c : ℝ≥0∞, 0 < c ∧ c ≠ ∞ ∧
         multivariateGaussian m S = (volume : Measure (E n)).withDensity
@@ -436,7 +442,7 @@ theorem gaussian_observation_law {n p : Type} [Fintype n] [DecidableEq n] [Finty
         (∫ y : E n, Real.log ((c * ENNReal.ofReal (∏ i, ProbabilityTheory.gaussianPDFReal 0 1 ((action (CFC.sqrt S)⁻¹) (y - m) i))).toReal) ∂multivariateGaussian m S) =
           -Real.log S.det / 2 - (Fintype.card n : ℝ) *
             (Real.log (Real.sqrt (2 * Real.pi)) + 1 / 2) := by
-    obtain ⟨c, hc, hcfin, hLaw, hcDet⟩ := hDensity m S hS
+    obtain ⟨c, hc, hcfin, hLaw, hcDet⟩ := multivariate_gaussian_density m S hS
     change c = ENNReal.ofReal |(LinearMap.det (action (CFC.sqrt S)).toLinearMap)⁻¹| at hcDet
     have hwhite : Integrable (fun y : E n => Real.log (∏ i, ProbabilityTheory.gaussianPDFReal 0 1 ((action (CFC.sqrt S)⁻¹) (y - m) i))) (multivariateGaussian m S) ∧
       (∫ y : E n, Real.log (∏ i, ProbabilityTheory.gaussianPDFReal 0 1 ((action (CFC.sqrt S)⁻¹) (y - m) i)) ∂multivariateGaussian m S) = -(Fintype.card n : ℝ) *
@@ -564,9 +570,12 @@ theorem gaussian_observation_law {n p : Type} [Fintype n] [DecidableEq n] [Finty
     rw [integral_congr_ae (Filter.Eventually.of_forall hlog), integral_add (integrable_const _) hwhiteInt, integral_const, hwhiteMean, hlogDet]
     simp only [probReal_univ, one_smul]
     ring
-  have hFree (M : Matrix p n ℝ) (β τ : ℝ) (hβ : 0 < β) (hτ : 0 < τ) : (∫ y : E p, physicalFreeEnergy β (posteriorKernel M β τ y) ∂dataLaw M β τ) -
+  have hFree (M : Matrix p n ℝ) (β τ : ℝ) (hβ : 0 < β) (hτ : 0 < τ) :
+      Integrable (fun y : E p => physicalFreeEnergy β (posteriorKernel M β τ y))
+        (dataLaw M β τ) ∧
+      ((∫ y : E p, physicalFreeEnergy β (posteriorKernel M β τ y) ∂dataLaw M β τ) -
         physicalFreeEnergy β (multivariateGaussian 0 (β⁻¹ • (1 : Matrix n n ℝ))) = β⁻¹ * (Real.log ((β⁻¹ • (1 : Matrix n n ℝ)).det) / 2 -
-          Real.log ((covariance M β τ).det) / 2) := by
+          Real.log ((covariance M β τ).det) / 2)) := by
     let prior : Measure (E n) := multivariateGaussian 0 (β⁻¹ • (1 : Matrix n n ℝ))
     have hprior : (jointLaw M β τ).snd = prior := by
       unfold jointLaw Measure.snd prior
@@ -653,6 +662,7 @@ theorem gaussian_observation_law {n p : Type} [Fintype n] [DecidableEq n] [Finty
         (dataLaw M β τ) := by
       simp_rw [hpostEntropy]
       exact integrable_const _
+    refine ⟨by simpa only [physicalFreeEnergy] using hEouter.sub' hEntropyOuter, ?_⟩
     change (∫ y : E p, (∫ x, physicalEnergy x ∂posteriorKernel M β τ y) - β⁻¹ * differentialEntropy (posteriorKernel M β τ y) ∂dataLaw M β τ) -
       ((∫ x, physicalEnergy x ∂prior) - β⁻¹ * differentialEntropy prior) = _
     rw [integral_sub hEouter hEntropyOuter, hTower, hpriorEntropy]
@@ -684,8 +694,8 @@ theorem gaussian_observation_law {n p : Type} [Fintype n] [DecidableEq n] [Finty
       intro i
       exact inv_pos.mpr hβ
     have hCov : (covariance M β τ).PosDef := (precision_posDef M β τ hβ hτ.le).inv
-    obtain ⟨cprior, hcprior, hcpriorFin, hpriorLaw, hcpriorDet⟩ := hDensity (0 : E n) (β⁻¹ • (1 : Matrix n n ℝ)) hpriorPD
-    obtain ⟨cpost, hcpost, hcpostFin, _, hcpostDet⟩ := hDensity (0 : E n) (covariance M β τ) hCov
+    obtain ⟨cprior, hcprior, hcpriorFin, hpriorLaw, hcpriorDet⟩ := multivariate_gaussian_density (0 : E n) (β⁻¹ • (1 : Matrix n n ℝ)) hpriorPD
+    obtain ⟨cpost, hcpost, hcpostFin, _, hcpostDet⟩ := multivariate_gaussian_density (0 : E n) (covariance M β τ) hCov
     let dprior : E n → ℝ≥0∞ := transportedGaussianDensity cprior (β⁻¹ • (1 : Matrix n n ℝ)) 0
     let dpost : E p → E n → ℝ≥0∞ := fun y =>
       transportedGaussianDensity cpost (covariance M β τ) (action (gain M β τ) y)
@@ -722,7 +732,7 @@ theorem gaussian_observation_law {n p : Type} [Fintype n] [DecidableEq n] [Finty
       exact ENNReal.mul_ne_top hcpriorFin ENNReal.ofReal_ne_top
     have hpostLaw (y : E p) :
         posteriorKernel M β τ y = (volume : Measure (E n)).withDensity (dpost y) := by
-      obtain ⟨cy, _, _, hcyLaw, hcyDet⟩ := hDensity (action (gain M β τ) y) (covariance M β τ) hCov
+      obtain ⟨cy, _, _, hcyLaw, hcyDet⟩ := multivariate_gaussian_density (action (gain M β τ) y) (covariance M β τ) hCov
       have hcy : cy = cpost := hcyDet.trans hcpostDet.symm
       rw [hcy] at hcyLaw
       have hm : posteriorKernel M β τ y =
@@ -900,7 +910,7 @@ theorem gaussian_observation_law {n p : Type} [Fintype n] [DecidableEq n] [Finty
     exact withDensity_absolutelyContinuous _ _
   letI : IsProbabilityMeasure joint := by
     dsimp [joint, jointLaw]
-    exact (inputLaw β τ).isProbabilityMeasure_map (by fun_prop)
+    infer_instance
   letI : IsProbabilityMeasure product := by
     dsimp [product]
     infer_instance
@@ -948,11 +958,43 @@ theorem gaussian_observation_law {n p : Type} [Fintype n] [DecidableEq n] [Finty
         ring
       _ = Real.log ((1 + (τ / β) • (M.transpose * M)).det) := congrArg Real.log hdetFactor
     all_goals rfl
+  refine ⟨?_, (hFree M β τ hβ hτ).1⟩
   refine ⟨InformationTheory.klDiv_ne_top hAC hllrInt, hllrInt, hllrMean, hMICov, ?_, ?_, posterior_disintegration M β τ hβ hτ, input_factors β τ hβ hτ⟩
   · rw [hMICov, hlogdet]
   · change ((∫ y : E p, physicalFreeEnergy β (posteriorKernel M β τ y) ∂dataLaw M β τ) - physicalFreeEnergy β (multivariateGaussian 0 (β⁻¹ • (1 : Matrix n n ℝ)))) =
       β⁻¹ * (mutualInformation M β τ).toReal
-    rw [hFree M β τ hβ hτ, hMICov]
+    rw [(hFree M β τ hβ hτ).2, hMICov]
     ring
+theorem gaussian_observation_law {n p : Type} [Fintype n] [DecidableEq n] [Fintype p] [DecidableEq p]
+    (M : Matrix p n ℝ) (β σ : ℝ) (hβ : 0 < β) (hσ : 0 < σ ^ 2) :
+  let τ := (σ ^ 2)⁻¹
+  mutualInformation M β τ ≠ ∞ ∧
+    Integrable
+      (llr (((inputLaw (n := n) (p := p) β τ).map (fun z => (action (observation M) z, action (signal (n := n) (p := p)) z))))
+        ((((inputLaw (n := n) (p := p) β τ).map (fun z => (action (observation M) z, action (signal (n := n) (p := p)) z)))).fst.prod (((inputLaw (n := n) (p := p) β τ).map (fun z => (action (observation M) z, action (signal (n := n) (p := p)) z)))).snd))
+      (((inputLaw (n := n) (p := p) β τ).map (fun z => (action (observation M) z, action (signal (n := n) (p := p)) z)))) ∧
+    (∫ z : E p × E n,
+      llr (((inputLaw (n := n) (p := p) β τ).map (fun z => (action (observation M) z, action (signal (n := n) (p := p)) z))))
+        ((((inputLaw (n := n) (p := p) β τ).map (fun z => (action (observation M) z, action (signal (n := n) (p := p)) z)))).fst.prod (((inputLaw (n := n) (p := p) β τ).map (fun z => (action (observation M) z, action (signal (n := n) (p := p)) z)))).snd) z
+        ∂((inputLaw (n := n) (p := p) β τ).map (fun z => (action (observation M) z, action (signal (n := n) (p := p)) z)))) =
+      (Real.log ((β⁻¹ • (1 : Matrix n n ℝ)).det) -
+        Real.log ((covariance M β τ).det)) / 2 ∧
+    (mutualInformation M β τ).toReal =
+      (Real.log ((β⁻¹ • (1 : Matrix n n ℝ)).det) -
+        Real.log ((covariance M β τ).det)) / 2 ∧
+    (mutualInformation M β τ).toReal =
+      Real.log ((1 + (τ / β) • (M.transpose * M)).det) / 2 ∧
+    ((∫ y : E p, physicalFreeEnergy β (posteriorKernel M β τ y)
+        ∂((inputLaw (n := n) (p := p) β τ).map (action (observation M)))) -
+      physicalFreeEnergy β
+        (multivariateGaussian 0 (β⁻¹ • (1 : Matrix n n ℝ)))) =
+      β⁻¹ * (mutualInformation M β τ).toReal ∧
+    ((inputLaw (n := n) (p := p) β τ).map (fun z => (action (observation M) z, action (signal (n := n) (p := p)) z))) = ((inputLaw (n := n) (p := p) β τ).map (action (observation M))) ⊗ₘ posteriorKernel M β τ ∧
+    ((inputLaw (n := n) (p := p) β τ).map (action signal) =
+      multivariateGaussian 0 (β⁻¹ • (1 : Matrix n n ℝ)) ∧
+    (inputLaw (n := n) (p := p) β τ).map (action noise) =
+      multivariateGaussian 0 (τ⁻¹ • (1 : Matrix p p ℝ)) ∧
+    IndepFun (action (signal (n := n) (p := p))) (action noise) (inputLaw β τ)) := by
+  exact (gaussian_observation_law_complete M β σ hβ hσ).1
 
 end D5.S3.Observer.Linear.GaussianObservationLaw

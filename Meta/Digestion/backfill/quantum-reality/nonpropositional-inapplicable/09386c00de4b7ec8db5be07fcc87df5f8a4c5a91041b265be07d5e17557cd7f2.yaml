@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:09386c00de4b7ec8db5be07fcc87df5f8a4c5a91041b265be07d5e17557cd7f2
+  normalized_sha256: sha256:09386c00de4b7ec8db5be07fcc87df5f8a4c5a91041b265be07d5e17557cd7f2
+cas_ref: sha256:09386c00de4b7ec8db5be07fcc87df5f8a4c5a91041b265be07d5e17557cd7f2
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 定义339.1　离散尺度交比只规定模型对象、符号、协议或适用条件；附文限定这些定义的含义，没有另立性质断言。
+    previous_atom_id: f8bc0a2280a0a13053783a6186e9d4a804b479fdbbd0b3f60cfe0a05464bede0
+    next_atom_id: 75da9ccc91806e3920c26671ce9e316618ff3824abe75245052dd8a4ee1dbb89

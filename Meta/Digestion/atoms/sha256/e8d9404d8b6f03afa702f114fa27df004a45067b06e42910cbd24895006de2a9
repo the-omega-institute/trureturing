@@ -1,0 +1,10 @@
+**推论 40.2（有限噪声的可行集合）。** 对连续观测曲线 $g$，令
+
+$$
+\mathcal U_\varepsilon(g)=\left\{q\in\mathcal Q_\beta:
+\|\mathcal A_S(q)-g\|_\infty\le\varepsilon
+\right\}.
+$$
+
+若此集合非空，则任意两个可行参数的 $d_*$ 距离不超过 $\omega_\beta(2\varepsilon)$。这是整个固定参数类上的弱误差控制；它不给出 $\omega_\beta$ 的计算方法、幂率、总变差界或从有限频点恢复完整曲线的算法。集合为空表示观测与给定误差和参数类不相容，不能据此任意增大误差或改写初态条件。
+

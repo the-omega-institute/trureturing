@@ -1,0 +1,57 @@
+## 10.5 黄金、素数频率、色散与拓扑的精确关系
+
+当前路线里有两个已冻结但尚未同一化的黄金位置。
+
+第一，黄金记忆稳定特征值：
+
+\[
+a=-\varphi^{-1}.
+\]
+
+它进入 \(C_{p,q}\)，控制历史注入的收缩和运输。
+
+第二，黄金尺度圆的基本频率：
+
+\[
+\Omega_\varphi=\frac{\pi}{\log\varphi},
+\qquad
+\omega_k=k\Omega_\varphi.
+\]
+
+将黄金 Fourier modes 代入新核可得：
+
+\[
+K_{k,\ell}(t_1,t_2)
+=
+-2i e^{-i(t_1+t_2)(k+\ell)\Omega_\varphi/2}
+\sin\left(
+\frac{(t_1-t_2)(k-\ell)\pi}{2\log\varphi}
+\right).
+\]
+
+而 zeta 的 prime frequencies 是：
+
+\[
+\omega_p=\log p.
+\]
+
+仓库当前没有证明 \(\log p\in\Omega_\varphi\mathbb Z\)，该关系通常也不成立。黄金 Fourier lattice 与 prime log-frequency set 是两套坐标。后续需要明确的 sampling、projection、aliasing 或 Poisson 型运输定理，才能把它们接入同一 RH 桥梁。
+
+拓扑层面，定义：
+
+\[
+v_{p,q}(t)=
+\bigl(\chi_{\omega_p}(t),\chi_{\omega_q}(t)\bigr)\in\mathbb C^2.
+\]
+
+则：
+
+\[
+K_{p,q}(t_1,t_2)
+=
+v_{p,q}(t_1)\wedge v_{p,q}(t_2)
+\in\Lambda^2\mathbb C^2.
+\]
+
+\(K=0\) 是 evaluation map 的 rank-drop locus，\(K\ne0\) 表示两个时间切片张成有向二维单元。当前只获得 exterior-algebra 与 rank-locus 结构。尚未构造 coboundary、cohomology class、Chern class 或全局 bundle invariant。
+

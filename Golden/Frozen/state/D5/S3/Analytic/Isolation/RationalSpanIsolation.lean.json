@@ -1,1 +1,1 @@
-{"statement_id":"sha256:5e195a1ec2720d2882de95a627a731d1a6f5f990efb22e9a90dccbf2346f2bc0"}
+{"statement_id":"sha256:5e195a1ec2720d2882de95a627a731d1a6f5f990efb22e9a90dccbf2346f2bc0","declarations":[{"declaration_name_key":"ns(ns(ns(ns(ns(ns(n0,2:D5),2:S3),8:Analytic),9:Isolation),21:RationalSpanIsolation),34:rational_span_level_set_codiscrete)","kind":"theorem"}]}

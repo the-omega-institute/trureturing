@@ -11,6 +11,22 @@ internal sealed class EventualCycleAverageDocument : IScribeDocumentDefinition
         H("Eventual Cycle Average"),
         Blocks(
             Describe.Lean(
+                DescribeId.Create("exact-cycle-block-remainder"),
+                DeclarationHandle.Create(
+                    "D5/S3/ObserverMemory/Prediction/EventualCycleAverage."
+                    + "sum_cycle_mod_eq_blocks_remainder"),
+                H("Exact complete blocks and remainder"),
+                StatementSource.FromAuthor(CycleSumFormula()),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text(
+                    "For every positive natural period p, real-valued cycle v on Fin p, "
+                    + "and natural horizon n, the sum of v at indices modulo p is exactly "
+                    + "the natural quotient n divided by p times one full cycle sum, plus "
+                    + "the sum over the remainder n modulo p. No sign or orbit assumption "
+                    + "is required. Casting natural weights to real values lets this same "
+                    + "identity supply exact update counts for periodic fixed-response paths."))),
+                DescribeRole.Theorem),
+            Describe.Lean(
                 DescribeId.Create("eventually-cyclic-orbits-have-the-cycle-average"),
                 DeclarationHandle.Create(
                     "D5/S3/ObserverMemory/Prediction/EventualCycleAverage."
@@ -30,14 +46,15 @@ internal sealed class EventualCycleAverageDocument : IScribeDocumentDefinition
                             + "into its fixed prefix, complete cycle blocks, and one bounded "
                             + "remainder block.")),
                     Paragraph(Text(
-                        "Loogle found the exact pinned-library limits "
-                            + "tendsto_mod_div_atTop_nhds_zero_nat and "
-                            + "tendsto_natCast_div_add_atTop; both are imported and applied. "
-                            + "LeanSearch returned the convergent-sequence averaging theorem, "
-                            + "fixed-point orbit averages, and bounded shift differences, but "
-                            + "no nonconstant periodic-orbit average theorem. Repository and "
-                            + "formalization searches found no duplicate. A one-state Boolean "
-                            + "orbit witnesses satisfiable hypotheses."))),
+                        "The limit theorem tendsto_mod_div_atTop_nhds_zero_nat makes the "
+                            + "remainder length divided by the horizon tend to zero. The "
+                            + "remainder sum is bounded in absolute value by the sum of the "
+                            + "absolute cycle values, so tendsto_bdd_div_atTop_nhds_zero makes "
+                            + "its normalized contribution vanish. The same bounded-division "
+                            + "theorem makes the fixed prefix contribution vanish, while "
+                            + "tendsto_natCast_div_add_atTop makes the ratio n / (n + mu) "
+                            + "tend to one. Thus adding the finite prefix preserves the cycle "
+                            + "average. A one-state Boolean orbit witnesses satisfiable hypotheses."))),
                 DescribeRole.Theorem))));
 
     private static Formula Apply(Formula function, Formula argument) =>
@@ -48,6 +65,22 @@ internal sealed class EventualCycleAverageDocument : IScribeDocumentDefinition
 
     private static Formula CycleAt(Formula index) =>
         Seq(F.Id("p"), Underscore, Grp(index));
+
+    private static Formula CycleSumFormula()
+    {
+        Formula p = F.Id("p"), n = F.Id("n"), i = F.Id("i"), v = F.Id("v");
+        Formula Mod(Formula x) => Seq(x, Sp, Operatorname, Grp(F.Id("mod")), Sp, p);
+        Formula SumTo(Formula limit) => Seq(Sum, Underscore, Grp(i, Eq, D(0)),
+            Caret, Grp(limit, Minus, D(1)), Sp, Apply(v, Mod(i)));
+        return Disp(Seq(Forall, Sp, p, InMacro, Sp, Mathbb, Grp(F.Id("N")), Comma, Sp,
+            D(0), Sp, Lt, Sp, p, Comma, Esc,
+            Forall, Sp, v, Colon, Sp, Operatorname, Grp(F.Id("Fin")), Open, p, Close,
+            Sp, To, Sp, Mathbb, Grp(F.Id("R")), Comma, Sp,
+            n, InMacro, Sp, Mathbb, Grp(F.Id("N")), Comma, Esc,
+            SumTo(n), Sp, Eq, Sp,
+            Lfloor, Frac, Grp(n), Grp(p), Rfloor, Sp, Cdot, Sp, SumTo(p),
+            Sp, Plus, Sp, SumTo(Mod(n))));
+    }
 
     private static Formula EventualCycleFormula()
     {

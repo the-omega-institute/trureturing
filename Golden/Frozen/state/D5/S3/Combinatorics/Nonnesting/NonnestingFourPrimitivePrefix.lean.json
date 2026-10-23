@@ -1,1 +1,1 @@
-{"statement_id":"sha256:66be0d587b6dea0a69af47fbc82a68af15af00e22ec99db0e1729e0e528c2c7d"}
+{"statement_id":"sha256:66be0d587b6dea0a69af47fbc82a68af15af00e22ec99db0e1729e0e528c2c7d","declarations":[{"declaration_name_key":"ns(ns(ns(ns(ns(ns(n0,2:D5),2:S3),13:Combinatorics),10:Nonnesting),29:NonnestingFourPrimitivePrefix),22:prefix_nesting_reduces)","kind":"theorem"},{"declaration_name_key":"ns(ns(ns(ns(ns(ns(n0,2:D5),2:S3),13:Combinatorics),10:Nonnesting),29:NonnestingFourPrimitivePrefix),22:prefix_pattern_reduces)","kind":"theorem"}]}

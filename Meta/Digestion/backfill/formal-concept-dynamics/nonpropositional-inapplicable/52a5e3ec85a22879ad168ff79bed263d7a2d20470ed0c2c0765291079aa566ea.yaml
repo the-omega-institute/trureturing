@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:52a5e3ec85a22879ad168ff79bed263d7a2d20470ed0c2c0765291079aa566ea
+  normalized_sha256: sha256:52a5e3ec85a22879ad168ff79bed263d7a2d20470ed0c2c0765291079aa566ea
+cas_ref: sha256:52a5e3ec85a22879ad168ff79bed263d7a2d20470ed0c2c0765291079aa566ea
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 定义 142.1（自然规律）：本段仅约定名称、符号及其判定条件；不主张满足条件的对象存在，也不追加性质定理。
+    previous_atom_id: 1a87632a29b3f5812cf63ce525f8f2de839d5be69ea001d80461c028cf1f50e9
+    next_atom_id: 141360af3014c95c309589f39b4f71d46f56fedf6107698f20bb749aa7f06279

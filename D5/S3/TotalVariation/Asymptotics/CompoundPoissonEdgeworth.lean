@@ -116,10 +116,12 @@ theorem result (p q a b : ℝ) (hp : 0<p) (hq : 0<q)
       haveI : IsProbabilityMeasure (pairLaw (Real.toNNReal (w^2*p))
           (Real.toNNReal (w^2*q)) a b) := by
         unfold pairLaw
-        exact Measure.isProbabilityMeasure_map (measurable_of_countable _).aemeasurable
-      haveI : IsProbabilityMeasure (centeredLaw (w^2) p q a b) :=
-        Measure.isProbabilityMeasure_map (by fun_prop)
-      exact Measure.isProbabilityMeasure_map (by fun_prop)
+        exact inferInstance
+      haveI : IsProbabilityMeasure (centeredLaw (w^2) p q a b) := by
+        unfold centeredLaw
+        infer_instance
+      dsimp only [P, normalizedLaw]
+      infer_instance
     have hexpr (w u : ℝ) : charFun (P w) u-charFunDensity (qD w) u =
         scaledError p q a b w u := by
       have hfun : (fun z : ℝ => z/w) = (fun z => w⁻¹*z) := by funext z; ring
@@ -475,7 +477,7 @@ theorem result (p q a b : ℝ) (hp : 0<p) (hq : 0<q)
       linarith
     let μ := (rateCountLaw lam p q).map (rateScore lam p q a b)
     haveI : IsProbabilityMeasure (rateCountLaw lam p q) := by dsimp [rateCountLaw]; infer_instance
-    haveI : IsProbabilityMeasure μ := Measure.isProbabilityMeasure_map (measurable_of_countable _).aemeasurable
+    haveI : IsProbabilityMeasure μ := inferInstance
     have hCDF (t : ℝ) : μ.real (Iic t)=rateCDF lam p q a b t := by
       simp only [μ,Measure.real,Measure.map_apply (measurable_of_countable _) measurableSet_Iic,rateCDF]
       rfl
@@ -548,7 +550,7 @@ theorem result (p q a b : ℝ) (hp : 0<p) (hq : 0<q)
     intro x
     let μ := (rateCountLaw lam p q).map (rateScore lam p q a b)
     haveI : IsProbabilityMeasure (rateCountLaw lam p q) := by dsimp [rateCountLaw]; infer_instance
-    haveI : IsProbabilityMeasure μ := Measure.isProbabilityMeasure_map (measurable_of_countable _).aemeasurable
+    haveI : IsProbabilityMeasure μ := inferInstance
     have hw : 0<Real.sqrt lam := Real.sqrt_pos.mpr (zero_lt_one.trans_le hlam)
     have hG : Continuous (rateEdgeworthCDF lam p q a b) := by
       have hc : Continuous (fun x : ℝ => (gaussianReal 0 1).real (Iic x)) := by

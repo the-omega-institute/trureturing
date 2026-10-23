@@ -1,1 +1,1 @@
-{"statement_id":"sha256:1df7cb6e937fe398edf5205ce7d0258773550ed1ebefe3e8e914c9a99d1b82c5"}
+{"statement_id":"sha256:1df7cb6e937fe398edf5205ce7d0258773550ed1ebefe3e8e914c9a99d1b82c5","declarations":[{"declaration_name_key":"ns(ns(ns(ns(ns(n0,2:D5),2:S3),14:ObserverMemory),19:FiniteReadoutKernel),35:finite_readout_quotient_equiv_range)","kind":"theorem"}]}

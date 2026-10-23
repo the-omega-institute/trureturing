@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:942d12c809733721b15217602ca8f9b20114919d9638b61f04fd0858439b4d8a
+  normalized_sha256: sha256:942d12c809733721b15217602ca8f9b20114919d9638b61f04fd0858439b4d8a
+cas_ref: sha256:942d12c809733721b15217602ca8f9b20114919d9638b61f04fd0858439b4d8a
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 章节标题「9.8 返回映射与规范尺度不存在共同单射共轭」仅标示本节主题，不含正文命题或性质断言。
+    previous_atom_id: f5b0d371ae864901d1421c286bf3d9398e83f8de7a5846c02c159a3ceb5d0187
+    next_atom_id: 220dafc120a920bc6a36389d48d05e03ee98ce998c0efb794b232318a96db50c

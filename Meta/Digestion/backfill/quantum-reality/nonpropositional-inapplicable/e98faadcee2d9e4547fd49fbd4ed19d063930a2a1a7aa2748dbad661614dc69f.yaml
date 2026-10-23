@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:e98faadcee2d9e4547fd49fbd4ed19d063930a2a1a7aa2748dbad661614dc69f
+  normalized_sha256: sha256:e98faadcee2d9e4547fd49fbd4ed19d063930a2a1a7aa2748dbad661614dc69f
+cas_ref: sha256:e98faadcee2d9e4547fd49fbd4ed19d063930a2a1a7aa2748dbad661614dc69f
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 定义 181.1　内部结构与运动空间只规定模型对象、符号、协议或适用条件；附文限定这些定义的含义，没有另立性质断言。
+    previous_atom_id: bdfb2e39b61cc7cd14d114a5d54462de794007940ca971e10d032e931fe436ce
+    next_atom_id: 6c14c7f2dba046fe4ef2b99de05050e160d71b7f54aa3cedf29cee48818cfc67

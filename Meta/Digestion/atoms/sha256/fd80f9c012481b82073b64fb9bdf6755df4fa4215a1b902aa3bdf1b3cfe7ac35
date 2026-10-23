@@ -1,0 +1,27 @@
+**Theorem 94.1 (noncommuting centered limits on the native Fibonacci family).**
+For $R_\lambda$ in (92.2), both iterated limits exist, and
+
+$$
+\lim_{\lambda\downarrow0}\lim_{n\to\infty}R_\lambda(T_n)=1,
+\qquad
+\lim_{n\to\infty}\lim_{\lambda\downarrow0}R_\lambda(T_n)
+ =\frac{\sqrt5}{2}.
+\tag{94.1}
+$$
+
+In particular, zero-screening passage is not uniform on this source
+family. Quantitatively, for every $\lambda>0$,
+
+$$
+\sup_{n\ge0}|C_n-R_\lambda(T_n)|
+ \ge\frac{\sqrt5}{2}-b_\lambda,
+\qquad
+\liminf_{\lambda\downarrow0}
+ \sup_{n\ge0}|C_n-R_\lambda(T_n)|
+ \ge\frac{\sqrt5}{2}-1>0.
+\tag{94.2}
+$$
+
+This failure coexists with the uniform prefix certificate at every
+fixed strictly positive $\lambda$.
+

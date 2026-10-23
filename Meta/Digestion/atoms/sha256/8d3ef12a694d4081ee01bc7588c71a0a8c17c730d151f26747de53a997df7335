@@ -1,0 +1,55 @@
+**Theorem 54.4 (linear all-policy necessity).** With
+
+$$
+\gamma=\frac{7-3\sqrt3}{11}=0.163986143390306\ldots,
+\qquad B(h)=\gamma h+O(1),
+\qquad A_U(H)\ge\gamma h-O(1).
+\tag{TM.5414}
+$$
+
+The absolute error is uniform over all four cap residues.
+
+**Proof.** Write $\lambda=L/h$. The row and column degrees in Lemma 54.2 differ by a bounded amount, independent of $h$, from $h$ times the profiles
+
+$$
+G(x)=\begin{cases}
+2x-1,&1/2\le x\le2/3,\\
+x/2,&2/3\le x\le1,\\
+0,&\text{otherwise},
+\end{cases}
+\qquad
+W(y)=\begin{cases}
+3y-1,&1/3\le y\le1/2,\\
+1-y,&1/2\le y\le1,\\
+0,&\text{otherwise}.
+\end{cases}
+\tag{TM.5415}
+$$
+
+For example, $w-a_w$ is $\min(\lceil w/2\rceil-1,2w-h-1)$ before clipping, while the row degree is the clipped difference in (TM.5409); their floor and strict-endpoint discrepancies are bounded by constants. For $0\le\lambda\le1/3$, integrate at the clipping points:
+
+$$
+\begin{aligned}
+\int_0^1[G(x)-\lambda]_+\,dx
+&=\int_{(1+\lambda)/2}^{2/3}(2x-1-\lambda)\,dx
+ +\int_{2/3}^{1}(x/2-\lambda)\,dx\\
+&=\frac16-\frac\lambda2+\frac{\lambda^2}{4},\\
+\int_0^1\min(\lambda,W(y))\,dy
+&=\int_{1/3}^{(1+\lambda)/3}(3y-1)\,dy
+ +\lambda\left(1-\lambda-\frac{1+\lambda}{3}\right)
+ +\int_{1-\lambda}^{1}(1-y)\,dy\\
+&=\frac{2\lambda}{3}-\frac{2\lambda^2}{3}.
+\end{aligned}
+\tag{TM.5416}
+$$
+
+Clipping by positive part or minimum is 1-Lipschitz. Each profile has finitely many pieces with bounded slopes, and a bounded jump at an endpoint contributes only a bounded Riemann-sum error. Thus floor errors summed over $O(h)$ entries and Riemann-sum errors both contribute $O(h)$ to the unnormalized sums, uniformly in $\lambda$. Replacing $L$ by $L-\epsilon_z$ on the row side changes that side by at most $h$. The difference between the two sides of (TM.5412) is therefore
+
+$$
+\sum_w[f_w-L]_+-\sum_z\min(d_z,L-\epsilon_z)
+=\frac{h^2}{12}(11\lambda^2-14\lambda+2)+O(h).
+\tag{TM.5417}
+$$
+
+The smaller root of $11\lambda^2-14\lambda+2$ is $\gamma$; its derivative there is $-6\sqrt3\ne0$. This polynomial decreases on $[0,1/3]$. A fixed sufficiently large constant $C$ makes (TM.5417) positive for $L\le\gamma h-C$ and negative for $L\ge\gamma h+C$ in a neighborhood of the root, for all sufficiently large $h$. Monotonicity of the exact finite inequality then gives $B(h)=\gamma h+O(1)$. Finitely many remaining $h$ are absorbed in the constant. If a competing alphabet has $L/h>1/3$, the claimed lower bound is already immediate. Theorem 54.3 proves necessity in every other case. None of this calculation asserts sufficiency of the count. $\square$
+

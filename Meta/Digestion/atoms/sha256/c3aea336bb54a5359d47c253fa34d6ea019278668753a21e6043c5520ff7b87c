@@ -1,0 +1,20 @@
+## 定义 282.1（干预 image defect）
+
+观测到的 law family \(L=(L_a)_a\) 的缺陷为：
+
+\[
+\boxed{
+\operatorname{ImageDefect}(L)
+=
+\left[
+L
+\notin
+\operatorname{Im}
+\left(
+\Lambda_{\mathcal A}^{\mathrm{int}}
+\mid_{\mathfrak M_0}
+\right)
+\right].
+}
+\]
+

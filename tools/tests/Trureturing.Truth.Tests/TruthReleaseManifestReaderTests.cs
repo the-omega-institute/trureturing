@@ -12,7 +12,7 @@ public sealed class TruthReleaseManifestReaderTests
 
     private const string ValidManifest = """
         {
-          "schema": "truth-release.v2",
+          "schema": "truth-release",
           "source": {
             "source_repo": "the-omega-institute/trureturing",
             "source_commit": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
@@ -32,12 +32,11 @@ public sealed class TruthReleaseManifestReaderTests
             "read_only": true
           },
           "artifacts": {
-            "source_snapshot":    { "file": "source-snapshot.v1.json", "sha256": "sha256:1111111111111111111111111111111111111111111111111111111111111111" },
-            "truth_graph":        { "file": "truth-graph.v1.json",     "sha256": "sha256:2222222222222222222222222222222222222222222222222222222222222222" },
-            "raw_lean_report":    { "file": "raw-lean-report.json",    "sha256": "sha256:3333333333333333333333333333333333333333333333333333333333333333" },
-            "truth_export":       { "file": "truth-export.v1.json",    "sha256": "sha256:4444444444444444444444444444444444444444444444444444444444444444" },
-            "blueprint_index":    { "file": "blueprint-index.v1.json", "sha256": "sha256:5555555555555555555555555555555555555555555555555555555555555555" },
-            "frozen_ledger_head": { "file": "frozen-ledger-head.json", "sha256": "sha256:6666666666666666666666666666666666666666666666666666666666666666" }
+            "source_snapshot": { "file": "source-snapshot.v1.json", "sha256": "sha256:1111111111111111111111111111111111111111111111111111111111111111" },
+            "truth_graph":     { "file": "truth-graph.v1.json",     "sha256": "sha256:2222222222222222222222222222222222222222222222222222222222222222" },
+            "raw_lean_report": { "file": "raw-lean-report.json",    "sha256": "sha256:3333333333333333333333333333333333333333333333333333333333333333" },
+            "truth_export":    { "file": "truth-export.v1.json",    "sha256": "sha256:4444444444444444444444444444444444444444444444444444444444444444" },
+            "blueprint_index": { "file": "blueprint-index.v1.json", "sha256": "sha256:5555555555555555555555555555555555555555555555555555555555555555" }
           },
           "sha256sums_digest": "sha256:8888888888888888888888888888888888888888888888888888888888888888",
           "produced_at": "2026-08-20T00:00:00Z"
@@ -45,7 +44,7 @@ public sealed class TruthReleaseManifestReaderTests
         """;
 
     [Fact]
-    public void ParsesAValidV2Manifest()
+    public void ParsesAValidManifest()
     {
         var m = TruthReleaseManifestReader.Read(ValidManifest);
 
@@ -133,10 +132,24 @@ public sealed class TruthReleaseManifestReaderTests
         Assert.Throws<FormatException>(() => TruthReleaseManifestReader.Read(nonHex));
     }
 
-    [Fact]
-    public void RejectsWrongSchemaTag()
+    [Theory]
+    [InlineData("truth-release.v1")]
+    [InlineData("truth-release.v2")]
+    public void RejectsWrongSchemaTag(string schema)
     {
-        var bad = ValidManifest.Replace("truth-release.v2", "truth-release.v1", StringComparison.Ordinal);
+        var bad = ValidManifest.Replace("\"truth-release\"", "\"" + schema + "\"", StringComparison.Ordinal);
+        Assert.Throws<FormatException>(() => TruthReleaseManifestReader.Read(bad));
+    }
+
+    [Fact]
+    public void RejectsTheRetiredFrozenLedgerHeadArtifact()
+    {
+        var bad = ValidManifest.Replace(
+            "\"artifacts\": {",
+            "\"artifacts\": { \"frozen_ledger_head\": { \"file\": \"frozen-ledger-head.json\", \"sha256\": \"sha256:"
+                + new string('6', 64) + "\" },",
+            StringComparison.Ordinal);
+
         Assert.Throws<FormatException>(() => TruthReleaseManifestReader.Read(bad));
     }
 

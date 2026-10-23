@@ -1,0 +1,25 @@
+**Proof.** On the exposed indices define the two actual age vectors
+
+$$
+B_i=\mathbf1_V(i),\qquad
+A_i=\begin{cases}
+B_i+1,&i\in W,\\
+1,&i\in U\setminus W,\\
+0,&i\notin U\cup W.
+\end{cases}
+\tag{NAR.14.12}
+$$
+
+All entries lie in $\{0,1,2\}$. For $i\in U\cap W$, the empty
+triple intersection gives $i\notin V$, so $A_i=1$. Thus $A=1$ on
+$U$, $B=1$ on $V$, and $A-B=1$ on $W$. Alongside $A,B$ take the $H$
+constant vectors $C_t$, $t\in\{0,\ldots,H\}\setminus\{1\}$.
+They are all distinct: $A$ and $B$ take value one on nonempty $U$ and
+$V$, and $A-B=1$ on nonempty $W$. Any two constants conflict on any
+menu member; $A$ conflicts with each $C_t$ on $U$ by displacement
+$1-t$, and $B$ with each $C_t$ on $V$ by the same displacement.
+Finally $A$ and $B$ conflict on $W$. These are $H+2$ pairwise adjacent
+vectors. Equation (NAR.14.1) realizes each as a finite native source,
+and (NAR.14.3)--(NAR.14.5) realize every edge with complete equal rows
+at unequal legal lags. The clique forces (NAR.14.11). $\square$
+

@@ -1,0 +1,15 @@
+### 9.1 统一迁移表
+
+| 原正文 | 在本主卷的对应位置 |
+|---|---|
+| `SYMPLECTIC_PREDICTIVE_COMPLETION.md` v1 §1–3 | §1.1–1.3 |
+| 同卷 §4–8、§10–11 | §2.1–2.5 |
+| 同卷 §9 | §3.5 |
+| `PREDICTIVE_OBSERVABILITY_TIME_WINDOWS.md` §1–8、§10 | §3.1–3.6，相关余量在 §2.4 |
+| 同卷 §12–20 | §5.1–5.6 |
+| `NORMAL_POWER_FRAME_TIME_INVARIANCE.md` | §4 的完整证明与实例 |
+| `ELECTROMAGNETIC_PREDICTIVE_GEOMETRY.md` | §7 |
+| #8899 `PREDICTIVE_THERMODYNAMIC_SUFFICIENCY.md` §2 | §2.3 |
+| #8899 §3–4 | §6 |
+| #8899 §5–6 | §3.3–3.5 |
+| 本次共同推导 | §8 |

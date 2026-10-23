@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:8680019a848b24d5f5b45ec80a3fde31380fb34fa272dcbcb63ca8e0e2ab227b
+  normalized_sha256: sha256:8680019a848b24d5f5b45ec80a3fde31380fb34fa272dcbcb63ca8e0e2ab227b
+cas_ref: sha256:8680019a848b24d5f5b45ec80a3fde31380fb34fa272dcbcb63ca8e0e2ab227b
+coverage_gids:
+  - gid: D5/S3/Quantum/Entanglement/SequentialRegisterCircuit.circuit_initialized_coefficients
+    target_statement_id: sha256:c12fa2d04d5c3558aa82dc82a90bf720307ea7bd5b132adcf2dbc57f7afb65d1
+  - gid: D5/S3/Quantum/Measurement/FiniteKrausInstrumentBornMarginal.finite_kraus_instrument_born_marginal
+    target_statement_id: sha256:51cff6cab228bcdc5b9dfabab3a7fc8c9ff155746d897bec6be868e49caf4e71
+receipts:
+  unresolved_subitems: []

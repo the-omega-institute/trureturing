@@ -1,0 +1,90 @@
+**Theorem 3.2 (Uniform discounted phase occupation).** For each fixed
+integer $m\ge0$ there are explicit positive constants
+
+$$
+b_m=\frac{3e^{-6}}{2^{m+3}},\qquad
+B_m=e(m+1)!2^{m+1}
+\tag{3.4}
+$$
+
+with this property. In the uncapped phase chain, let $\mathcal T_1=0$
+and $\mathcal T_j$ be its entrance zero count into phase $j$.
+For $j\ge1$, define
+
+$$
+A_j^{(m)}(s)=\mathbb E
+  \sum_{k=\max\{1,\mathcal T_j\}}^{\mathcal T_{j+1}-1}
+    k^m e^{-sk}.
+\tag{3.5}
+$$
+
+If $s2^j\le\eta\le1$, then
+
+$$
+b_m2^{j(m+1)}\le A_j^{(m)}(s)
+  \le B_m2^{j(m+1)}.
+\tag{3.6}
+$$
+
+The bounds are independent of $s,j,J$; the capped chain has these same
+occupations for all its live phases $j\le J$.
+
+Proof. Only for describing the phase-chain law, let $W_u$ be independent
+geometric variables on $\{1,2,\ldots\}$ with success probability $2^{-u}$.
+Then $\mathcal T_j=\sum_{u<j}W_u$ and
+$\mathcal T_{j+1}=\mathcal T_j+W_j$. Fresh per-zero coins give exactly
+this holding-time law. The observer does not draw or store a countdown
+$W_u$; its only phase state is the current member of $\mathcal Z_J$.
+
+Write $\ell=2^j$. Since
+$\mathbb E\mathcal T_j=\sum_{u<j}2^u=\ell-2\le\ell$,
+Markov's inequality gives
+$\mathsf P(\mathcal T_j\le4\ell)\ge3/4$.
+Independently,
+
+$$
+\mathsf P(W_j\ge\ell)=(1-1/\ell)^{\ell-1}\ge e^{-1}.
+\tag{3.7}
+$$
+
+For the last inequality, integrate $1/(1-x)$ to obtain
+$\log(1-x)\ge-x/(1-x)$ at $x=1/\ell$.
+On the intersection of these two events, the $\ell/2$ integers
+
+$$
+\mathcal T_j+\ell/2,\ldots,\mathcal T_j+\ell-1
+\tag{3.8}
+$$
+
+are in phase $j$, are at least one, and lie between $\ell/2$ and
+$5\ell$. Each contributes at least $(\ell/2)^m e^{-5\eta}$.
+The expected sum is therefore at least
+$(3/4)e^{-1}(\ell/2)^{m+1}e^{-5\eta}$, proving the stated lower constant
+uniformly for $\eta\le1$. This argument also covers $j=1$ and $m=0$.
+
+For the upper bound, let $p=m+1\ge1$. A geometric variable with mean
+$\ell_u=2^u$ satisfies, for $t\ge0$,
+
+$$
+\mathsf P(W_u>t)=(1-1/\ell_u)^{\lfloor t\rfloor}
+  \le e\,e^{-t/\ell_u}.
+\tag{3.9}
+$$
+
+The tail integral gives
+$\mathbb EW_u^p\le e p!\ell_u^p$.
+The triangle inequality in $L^p$ yields
+
+$$
+\|\mathcal T_{j+1}\|_p
+ \le(e p!)^{1/p}\sum_{u=1}^j2^u
+ \le2(e p!)^{1/p}\ell.
+\tag{3.10}
+$$
+
+The nonnegative sum in (3.5) is at most
+$\mathcal T_{j+1}^{m+1}$ after dropping the exponential. Thus (3.10)
+proves its upper constant. Capping changes only what follows phase $J$;
+it changes none of the events of occupying a phase $j\le J$ after $k$
+zeros. $\square$
+

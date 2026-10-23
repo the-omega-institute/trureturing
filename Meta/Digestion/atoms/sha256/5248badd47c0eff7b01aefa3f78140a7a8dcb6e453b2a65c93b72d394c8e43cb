@@ -1,0 +1,83 @@
+### 证明第一步：精确有符号 Laplace 密度
+
+令 \(\Lambda=\log x\)，\(r=\log s\ge\Lambda\)，\(u=r-\Lambda\ge0\)。§429.2 给
+
+\[
+-\frac{d}{ds}P_x^\eta(s)=\frac{G_{\eta,x}(\log s)}{s^2},
+\]
+
+\[
+\begin{aligned}
+G_{\eta,x}(\Lambda+u)
+={}&(\Lambda+u)\log(1+u/\Lambda)-u
++u/\Lambda-\log(1+u/\Lambda)\\
+&-\frac1{\Lambda+u}-\frac1{(\Lambda+u)^2}
++\int_1^\infty\frac{\eta(y)}{y^2}
+h(\Lambda+u+\log y)\,dy,\\
+h(r)&=r^{-1}+2r^{-2}+2r^{-3}.
+\end{aligned}
+\tag{SL.4}
+\]
+
+阶乘夹逼提供 \(|\eta(y)|\le1+\log y\) 对全部 \(y\ge1\) 成立。
+定义
+
+\[
+\mathcal A_\eta(t)=\int_1^\infty\eta(y)y^{-2-t}\,dy,\qquad
+D_\eta(t)=(1+t)^2\mathcal A_\eta(t)-(1+t),\quad t\ge0.
+\]
+
+这给足以支付全部高商的简单界
+
+\[
+|\mathcal A_\eta(t)|\le\frac1{1+t}+\frac1{(1+t)^2},\qquad
+\boxed{|D_\eta(t)|\le3+2t.}
+\tag{SL.5}
+\]
+
+对任意固定有限平方自由 \(P\)，记
+
+\[
+\mathcal G_{P,x}(r)=\sum_{d\mid P}\frac{\mu(d)}d
+G_{\eta,x}(r+\log d),\qquad
+K(t)=e^{-ut}E_P(1+t).
+\]
+
+则 \(K(0)=E_P(1)\)、\(K'(0)=E_P(1)(S_P-u)\)，且精确有
+
+\[
+\boxed{\displaystyle
+\mathcal G_{P,x}(\Lambda+u)=
+\int_0^\infty e^{-\Lambda t}
+\left\{[K(t)-K(0)-tK'(0)](t^{-2}+t^{-1})
++K(t)D_\eta(t)\right\}\,dt.}
+\tag{SL.6}
+\]
+
+证明这个身份只用有限和与以下普通 Laplace 公式：
+
+\[
+\begin{aligned}
+(\Lambda+b)\log(1+b/\Lambda)-b
+&=\int_0^\infty e^{-\Lambda t}
+\frac{e^{-bt}-1+bt}{t^2}\,dt,\\
+b/\Lambda-\log(1+b/\Lambda)
+&=\int_0^\infty e^{-\Lambda t}
+\frac{e^{-bt}-1+bt}{t}\,dt,\\
+h(r)&=\int_0^\infty e^{-rt}(1+t)^2\,dt.
+\end{aligned}
+\]
+
+这里 \(b=u+\log d\ge0\)，加权有限和的 \(e^{-bt}\) 项恰为 \(K(t)\)；常数项和一次项也全部保留。高商积分的绝对交换由（SL.5）和上述 Laplace 指数衰减支付。于是（SL.6）包括原公式的低商、\(-1/r-1/r^2\) 和完整高商，并没有删除某个有符号余项。
+
+对该同一 \(P\)，有限换元给
+
+\[
+\boxed{\displaystyle
+J_x^{\eta_P}(n)=\int_n^{n+1}\frac{\mathcal G_{P,x}(\log s)}{s^2}\,ds,
+\qquad n\ge x.}
+\tag{SL.7}
+\]
+
+\(n=x\) 下端按 §398 的右侧连续延拓处理。后面用这条完整纤维积分运输所有真实整数，而非只取一个密度点值。
+

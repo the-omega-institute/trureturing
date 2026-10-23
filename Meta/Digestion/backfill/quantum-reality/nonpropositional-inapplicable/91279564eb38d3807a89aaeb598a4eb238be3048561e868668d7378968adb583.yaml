@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:91279564eb38d3807a89aaeb598a4eb238be3048561e868668d7378968adb583
+  normalized_sha256: sha256:91279564eb38d3807a89aaeb598a4eb238be3048561e868668d7378968adb583
+cas_ref: sha256:91279564eb38d3807a89aaeb598a4eb238be3048561e868668d7378968adb583
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 模型数据、记号、标签分配或前置条件的约定；只指定本节使用的对象，不断言对象具有额外性质。
+    previous_atom_id: 8a774e5a25b20934aab86474f5ca9c78add542032bbf8581cd59afdec7f6b418
+    next_atom_id: d4ee923f65aba57879883076174b41b6deaa11ac60bf101e08b86252b0dcb29c

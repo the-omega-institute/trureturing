@@ -1,0 +1,61 @@
+**Theorem 4.1 (sharp binary local bound).** Let $A=\{0,1\}$ and
+$1\le k\le n$, and prescribe forward width $N=|\mathcal R_k|$.
+Every $E\in\mathcal R_k$ satisfies
+
+$$
+|\psi_{k,1}^{-1}(E)|\le2(N+1),\qquad
+N_{k,1}\le2N(N+1).
+\tag{4.1}
+$$
+
+With the last bit also given, every realized $h(E,b)\le N+1$.
+If both append values are legal at every prefix in $P_{k-1}$, these
+three upper bounds improve to $2N$, $2N^2$ and $N$, respectively.
+For every integer $N\ge1$ there is a fixed-length binary relation
+attaining all three unrestricted bounds, and another attaining all
+three full-branching bounds.
+
+Proof. Every earlier residual is determined by its derivative pair:
+
+$$
+S=0\,\partial_0S\ \mathbin{\dot\cup}\ 1\,\partial_1S.
+\tag{4.2}
+$$
+
+Each component is either empty or a member of $\mathcal R_k$.
+Fixing $\partial_bS=E$ leaves at most $N+1$ choices for the other
+component. Sum over two bits for a fiber of $\psi$, and then over
+the $N$ current residuals for the total. Under the full-branching
+hypothesis neither component is empty, so there are only $N$ choices.
+
+For sharpness choose $N$ distinct binary words $f_1,\ldots,f_N$ of
+one length $r$. Put $T_0=\varnothing$ and $T_i=\{f_i\}$ for $i>0$.
+Choose distinct anchors $v_{ij}$ of one length $\ell$ for all
+$(i,j)\in\{0,\ldots,N\}^2\setminus\{(0,0)\}$, taking
+$2^\ell\ge(N+1)^2-1$ and $2^r\ge N$. Define the one actual relation
+
+$$
+C_N=
+\{v_{ij}0f_i:i>0\}\ \cup\
+\{v_{ij}1f_j:j>0\},
+\tag{4.3}
+$$
+
+where the pairs range over that anchor set. At cut $k=\ell+1$ its
+current residuals are exactly $T_1,\ldots,T_N$, while the earlier
+residuals are exactly all nonzero pairs $0T_i\cup1T_j$.
+For a fixed $T_s$ and fixed last bit there are $N+1$ such predecessors;
+for $T_s$ without the bit there are $2(N+1)$ fine points.
+Thus the total is $2N(N+1)$. Restrict the anchor index set to
+$\{1,\ldots,N\}^2$. Then both branches are present and the same
+calculation gives $N$, $2N$ and $2N^2$.
+
+Every tuple in these counts has an explicit source prefix in (4.3).
+Theorem 2.2 supplies its bounded-deletion separators. Sharpness is
+therefore about actual behavioral images, rather than formal derivative
+tuples without representatives. Lengths may vary with $N$; no claim
+of attainment at every prescribed pair of lengths is made.
+The counting deduction concerns this operation contract and does not
+assert literature priority over general reversible-automaton or
+trellis results. $\square$
+

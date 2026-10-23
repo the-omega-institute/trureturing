@@ -1,0 +1,47 @@
+**Reuse 16.2 (the acquired factors and the complete later-record supplier).**
+On (NAR.16.1), the right clock $c$ supplied by `right_clock_iterate`
+satisfies $c(T_n)=n$. The initial acquired literal row therefore computes
+
+$$
+a_j=c(X_a|_{w_j})-jq,\qquad j\in I.
+\tag{NAR.16.4}
+$$
+
+Thus any finite function $e(a)$ can be encoded from the initial row,
+without access to an unacquired age profile. For every displayed slot,
+local parsing of the later acquired literal tree gives
+
+$$
+z_i=c(Y(a,\ell)|_{w_i})-iq=\ell+a_i,\qquad i\in S.
+\tag{NAR.16.5}
+$$
+
+Reuse Theorem 13.3, or (NAR.14.3), separately for each $S$:
+
+$$
+V_S(a,\ell)=V_S(b,\ell')
+\quad\Longleftrightarrow\quad
+ a_i+\ell=b_i+\ell'\quad(i\in S).
+\tag{NAR.16.6}
+$$
+
+This is equality of the whole row. Every original depth-$D$ slot is
+reached, including leaf fillings. Within either history the exponent
+bands $[jq+\ell,jq+H+\ell]$ are disjoint at different $j$, so every
+hidden partition is discrete. Equality of displayed literals fixes the
+entire exterior, all guards and every hidden comparison. A scalar
+collision without this complete-record supplier would be insufficient.
+The inherited zero-read conflict relation is
+
+$$
+a\sim_{\mathcal M}b
+\quad\Longleftrightarrow\quad
+\exists S\in\mathcal M\ \exists d\ne0:\quad a_i-b_i=d\quad(i\in S).
+\tag{NAR.16.7}
+$$
+
+By the existing finite candidate decoder in §13.3 and Reuse 14.2,
+zero-extra-read recovery for $e$ is equivalent to separating every edge
+of (NAR.16.7). This graph principle is reused; the current-port and
+address conclusions below require additional native arguments.
+

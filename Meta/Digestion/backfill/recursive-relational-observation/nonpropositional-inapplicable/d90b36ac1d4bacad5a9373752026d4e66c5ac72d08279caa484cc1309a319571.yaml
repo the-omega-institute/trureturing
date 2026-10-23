@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:d90b36ac1d4bacad5a9373752026d4e66c5ac72d08279caa484cc1309a319571
+  normalized_sha256: sha256:d90b36ac1d4bacad5a9373752026d4e66c5ac72d08279caa484cc1309a319571
+cas_ref: sha256:d90b36ac1d4bacad5a9373752026d4e66c5ac72d08279caa484cc1309a319571
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: theorem 51.12 (正整数生成元的自然点提升处处不连续).的证明段，仅展开该陈述的推导及说明，不另提出独立命题；本收据不替代原陈述的形式化覆盖。
+    previous_atom_id: 5a3a6e59ace27ccebc872ae44e471862c45da2d8d04545d9d24a22ce57d41cc2
+    next_atom_id: 5800cb7598034290bc6a0cd00a8bf6689bf79c47ff19ad731e6709137bc7ec8b

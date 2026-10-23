@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:0f2ea370396c0bb252191ca9f449ad76cfcdd6e2559213f57a6d86292e8aaf49
+  normalized_sha256: sha256:0f2ea370396c0bb252191ca9f449ad76cfcdd6e2559213f57a6d86292e8aaf49
+cas_ref: sha256:0f2ea370396c0bb252191ca9f449ad76cfcdd6e2559213f57a6d86292e8aaf49
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: Proof fragment giving the immediate second-to-third implication of preceding theorem two.
+    previous_atom_id: 4d0031ac1fb56550f9459cc1ee3560b7263d7c71b6964d34cd0dd13591ee9aab
+    next_atom_id: 3fe3cc486f66d6a1993e053f954b1f84b393ccf7cc30cf8c6d12c4d78b82f8c9

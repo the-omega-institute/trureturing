@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:b47ba6634908bea0048533a3522a8ad6ed48cc4362698908ff481b66d8b9ab01
+  normalized_sha256: sha256:b47ba6634908bea0048533a3522a8ad6ed48cc4362698908ff481b66d8b9ab01
+cas_ref: sha256:b47ba6634908bea0048533a3522a8ad6ed48cc4362698908ff481b66d8b9ab01
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 定义 39.1 只引入求值族、数字测试、分离性用语及拓扑约定，不断言任一指定族具有分离性。
+    previous_atom_id: bed98ea26518228158aa7d2c0ec89b75b829b2b8def92f26c56de3a2109d1e74
+    next_atom_id: 5fdf49eb6750e1b4060b6c5e09db5aa3f5da2877b8300cb5697e528d50725311

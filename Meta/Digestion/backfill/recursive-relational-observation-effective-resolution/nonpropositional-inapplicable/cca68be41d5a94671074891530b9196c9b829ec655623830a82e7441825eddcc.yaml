@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:cca68be41d5a94671074891530b9196c9b829ec655623830a82e7441825eddcc
+  normalized_sha256: sha256:cca68be41d5a94671074891530b9196c9b829ec655623830a82e7441825eddcc
+cas_ref: sha256:cca68be41d5a94671074891530b9196c9b829ec655623830a82e7441825eddcc
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 注 1.25 仅解释既有结论的任务口径及未结算范围，不增加数值例子、独立断言或新命题。
+    previous_atom_id: e80839f55cca631588c0e144fdbb4120ab47c0431d41a84e0bd71f33a958ea01
+    next_atom_id: 36a2d45d652c253196478c58c27a5e6d6324bae4b025b1d8da64cc7d932a212e

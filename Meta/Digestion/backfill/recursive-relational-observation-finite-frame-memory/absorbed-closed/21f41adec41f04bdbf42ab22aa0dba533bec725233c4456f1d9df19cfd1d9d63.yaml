@@ -1,0 +1,17 @@
+fingerprints:
+  raw_sha256: sha256:21f41adec41f04bdbf42ab22aa0dba533bec725233c4456f1d9df19cfd1d9d63
+  normalized_sha256: sha256:21f41adec41f04bdbf42ab22aa0dba533bec725233c4456f1d9df19cfd1d9d63
+cas_ref: sha256:21f41adec41f04bdbf42ab22aa0dba533bec725233c4456f1d9df19cfd1d9d63
+coverage_gids:
+  - gid: D5/S3/Arith/FibonacciAtomic/Observer/NativeCutFibers.legal_values_row
+    target_statement_id: sha256:bfd00a4dc5e9fbd7b890e7584f92ee06b9b175750401ca657e4325840a2cf22f
+  - gid: D5/S3/Arith/FibonacciAtomic/Observer/NativeCutFibers.rowFiberEquiv
+    target_statement_id: sha256:d35334c42c11e68af264446bc44b6e62028554cec0de82b9f8a95f91e1282736
+  - gid: D5/S3/Arith/FibonacciAtomic/Observer/NativeDepthPatterns.original_present_transport
+    target_statement_id: sha256:3f2e95e7c30e629b171eb0ce11c4734e628812ee15eaff5191bb1f07ae32d3f6
+  - gid: D5/S3/Arith/FibonacciAtomic/Observer/NativePayloadHistoryInstallation.payload_history_exact
+    target_statement_id: sha256:b47607b321f7b0b3b32917f8ba5ceabefd634ba212ba3f659d0ba788c74cf27b
+  - gid: D5/S3/Arith/FibonacciAtomic/SourceTransportCentralizer.source_transport_centralizer
+    target_statement_id: sha256:fdf57ae6bf601a321edde9b135cd7caecedbb1c467553e952dbd43ff0d7749cf
+receipts:
+  unresolved_subitems: []

@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:fabe92e49251efe31f12a8e3680100666bbd8a0b978bcbbdfeb7b698ffb385db
+  normalized_sha256: sha256:fabe92e49251efe31f12a8e3680100666bbd8a0b978bcbbdfeb7b698ffb385db
+cas_ref: sha256:fabe92e49251efe31f12a8e3680100666bbd8a0b978bcbbdfeb7b698ffb385db
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 说明 34.4（本批所连接的边界） 只说明文献或卷内条目的使用范围、工作主题与证据边界，不另提出数学命题。
+    previous_atom_id: ba6090385e0087c8ffa7480b4aaac8ba853deb281ec6e52e7896f387e6c95596
+    next_atom_id: eed787d87673963711c7afebf46d18c8f35c92a93e8004035abe109a80d41962

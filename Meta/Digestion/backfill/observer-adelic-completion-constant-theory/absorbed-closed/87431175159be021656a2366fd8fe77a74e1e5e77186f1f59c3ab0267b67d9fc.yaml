@@ -1,0 +1,13 @@
+fingerprints:
+  raw_sha256: sha256:87431175159be021656a2366fd8fe77a74e1e5e77186f1f59c3ab0267b67d9fc
+  normalized_sha256: sha256:87431175159be021656a2366fd8fe77a74e1e5e77186f1f59c3ab0267b67d9fc
+cas_ref: sha256:87431175159be021656a2366fd8fe77a74e1e5e77186f1f59c3ab0267b67d9fc
+coverage_gids:
+  - gid: D5/S3/VertexAlgebra/PolynomialFockDerivativePowerOPE.derivative_power_state_coefficients
+    target_statement_id: sha256:11618379c64b2a8894a5ea04028d16cd33048eaeb452e76ee3fdd34742bf6007
+receipts:
+  unresolved_subitems: []
+  chain_atoms:
+    - e3520a7529057e9a44041a8cba3faa17b3582dcad8489c361bfd463108823f11
+    - 349de3842130d4b670493aa47b2670e0befead5e55131c65e570925d1ff96240
+    - b5523619d4af42c9474ad60bb3b56fdd43280868896efb79e2089ba8815b7f1f

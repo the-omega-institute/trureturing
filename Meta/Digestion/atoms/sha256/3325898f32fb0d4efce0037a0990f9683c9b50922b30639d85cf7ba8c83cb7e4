@@ -1,0 +1,10 @@
+**证明。** 将 $Z_s=e^{-\mathcal F_s/\vartheta}$ 代入加权
+Jensen 不等式 $\log\sum_sp_se^{-\mathcal F_s/\vartheta}
+\ge-\overline{\mathcal F}_p/\vartheta$ 即得。严格性为 Jensen 严格性。
+最后一式是四角差
+$(\mathcal F_{13}+\mathcal F_{\varnothing}
+-\mathcal F_1-\mathcal F_3)/2$。定义 26.7 中的共同归一化项在四角差中抵消，
+定理 26.6 的行列式给出比值 $12\cdot4/(7\cdot7)=48/49$，因而
+$\mathcal F_{13}-\mathcal F_1-\mathcal F_3+\mathcal F_{\varnothing}
+=\vartheta\log(48/49)/2$。证毕。
+

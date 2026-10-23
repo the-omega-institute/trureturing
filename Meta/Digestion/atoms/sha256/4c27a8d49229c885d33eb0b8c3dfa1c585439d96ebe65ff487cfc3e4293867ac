@@ -1,0 +1,17 @@
+**Definition 1.2 (entire acquired input).** Use [ARH, Definitions 1.1–1.2
+and Assumption 1.3][ARH]. Finite original cuts $P,Q$ are prefix-free.
+A complete row retains its entire concrete exterior, reached holes and
+whole-subtree equality partition. Every old repeated class and every
+different-class disequality remains imposed, including off-task classes.
+The entire fiber is
+
+$$
+D=\{u\in\mathcal T:R_P(u)=R,\ H_0(u),\ H_{\rm rel}(u)\}.
+\tag{SPC.2}
+$$
+
+A record $(a,s,b,t,\bowtie)$, with $\bowtie\in\{=,\ne\}$, requires
+both endpoints to be reached in $\rho^a u,\rho^b u$ and compares their
+entire subtrees. Absence invalidates either sign. Histories are finite
+lists, with repetitions, all concerning the same original source.
+

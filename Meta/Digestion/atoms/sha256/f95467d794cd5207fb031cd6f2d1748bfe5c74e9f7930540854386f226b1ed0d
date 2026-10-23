@@ -1,0 +1,8 @@
+**Proposition 13.6 (native edge cases and the three-position contrast).**
+The binary conclusions include $r=1,k=1$, all $k=r$ and all $k=1$.
+Their exact alphabet sizes are respectively $2$, $2$ and $2^r$. A native
+$r=3,k=2$ menu needs one bit, whereas the section 11 task on the same
+binary source family needs three fixed-width bits when singleton
+exposures remain allowed. This saving concerns the changed visibility
+requirement, not an extra acquired source statistic.
+

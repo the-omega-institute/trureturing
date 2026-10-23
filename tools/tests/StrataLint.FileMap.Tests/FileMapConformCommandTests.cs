@@ -5,6 +5,48 @@ namespace StrataLint.FileMap.Tests;
 
 public sealed class FileMapConformCommandTests
 {
+    [Fact]
+    public void CandidateDocumentInventoryIncludesUntrackedScribeAndExcludesDeletedSource()
+    {
+        using var fixture = new TemporaryDirectory();
+        Directory.CreateDirectory(Path.Combine(fixture.Path, "Meta"));
+        File.WriteAllText(Path.Combine(fixture.Path, "Meta/FILEMAP.toml"),
+            TestFileMap.Canonical.Replace("kind = \"program\"", "kind = \"data\"", StringComparison.Ordinal));
+        Directory.CreateDirectory(Path.Combine(fixture.Path, "Blueprint"));
+        var source = Path.Combine(fixture.Path, "Blueprint/New.scribe.cs");
+        TestGit.Run(fixture.Path, "init");
+        File.WriteAllText(source, "// source\n");
+        Assert.Equal(new[] { "Blueprint/New.md" }, FileMapPolicy.DocumentPaths(fixture.Path));
+        TestGit.Run(fixture.Path, "add", ".");
+        Assert.Equal(new[] { "Blueprint/New.md" }, FileMapPolicy.DocumentPaths(fixture.Path));
+        File.Delete(source);
+        Assert.Empty(FileMapPolicy.DocumentPaths(fixture.Path));
+    }
+
+    [Fact]
+    public void UntrackedCandidateHasTheSameCoverageAsIndexedBytesAndDeletionRemovesIt()
+    {
+        using var fixture = new TemporaryDirectory();
+        Directory.CreateDirectory(Path.Combine(fixture.Path, "Meta"));
+        File.WriteAllText(Path.Combine(fixture.Path, "Meta/FILEMAP.toml"), TestFileMap.Canonical);
+        File.WriteAllText(Path.Combine(fixture.Path, "Meta/domains.yaml"), TestFileMap.Domains);
+        File.WriteAllText(Path.Combine(fixture.Path, ".gitignore"), ".caller-review-prompt.md\n.echo-review.md\n.sshx-*\n");
+        TestGit.Run(fixture.Path, "init");
+        TestGit.Run(fixture.Path, "add", ".");
+        var path = Path.Combine(fixture.Path, "global.json");
+        File.WriteAllText(path, "{}\n");
+        var untracked = FileMapConformCommand.Run([], fixture.Path);
+        Assert.Empty(untracked.Error);
+        Assert.DoesNotContain("FILEMAP-PATTERN-EMPTY global.json:", untracked.Output, StringComparison.Ordinal);
+        TestGit.Run(fixture.Path, "add", "global.json");
+        Assert.Equal(untracked, FileMapConformCommand.Run([], fixture.Path));
+        File.Delete(path);
+        var deleted = FileMapConformCommand.Run([], fixture.Path);
+        Assert.Contains("FILEMAP-PATTERN-EMPTY global.json:", deleted.Output, StringComparison.Ordinal);
+        File.WriteAllText(Path.Combine(fixture.Path, "unregistered.json"), "{}\n");
+        Assert.Contains("unregistered.json:", FileMapConformCommand.Run([], fixture.Path).Output, StringComparison.Ordinal);
+    }
+
     [Theory]
     [InlineData("global.json", "global.*")]
     [InlineData("agents/adversary.md", "agents/adversary.*")]

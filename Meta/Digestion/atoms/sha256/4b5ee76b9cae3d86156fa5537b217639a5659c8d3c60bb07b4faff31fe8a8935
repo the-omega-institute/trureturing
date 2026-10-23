@@ -1,0 +1,33 @@
+**候签定理 25.2（失败证书可嵌入一条嵌套共尾序列）。** 在候签定理 25.1 的合同下，同一个固定 $f$ 存在有限素数集序列
+
+$$
+S_1\subset S_2\subset\cdots,\qquad
+\bigcup_nS_n=\{\infty\}\cup\{\text{全部素数}\},
+$$
+
+使得每个 $n\ge1$ 都有
+
+$$
+\sigma_{S_n}(f)-D_{\mathrm{lin},S_n}(f)-E_{S_n}^+(f)<-n,
+\qquad Q_{\mathrm{full}}(f)=q_0\ge0.
+$$
+
+证明。对任意固定有限基集合 $\mathcal B$，将候签定理 25.1 证明中的 $h_0$ 换成
+
+$$
+h_{\mathcal B}=\mathscr F^{-1}
+\bigl[m_{\{\infty\}\cup\mathcal B}\widehat f(-t)\bigr].
+$$
+
+它仍有 $L^2$ 范数 $\sqrt M$，频率一阶矩仍为 $J_1$。选择 $L>\log\max(\mathcal B\cup\{1\})$ 的同类素数簇，使 $\mathcal P_L\cap\mathcal B=\varnothing$，并继续增大 $L$ 满足以下阈值。所有相位误差和负半轴窗口论证原样适用，常数 $A$ 和最终阈值允许依赖当前 $\mathcal B$。加入簇后的普通条件数满足
+
+$$
+\chi_{\mathcal B\cup\mathcal P_L}\le e^{1/4}\chi_{\mathcal B},
+$$
+
+所以该步骤的正迹有与 $L$ 无关的上界 $e^{1/4}\chi_{\mathcal B}\mathcal T_0$，而 $E_S^+$ 仍至少为 $\varepsilon^2ML/32$。取 $L$ 足够大即可使差额小于 $-n$。递归地让每个新基集合包含前一步集合及所有 $p\le n$，再加一个这样的远簇，即得嵌套且遍历全部素数的序列。$\square$
+
+条件数小于 $2$、正迹与实际 $N_S$ 的统一有界性只用于候签定理 25.1 的非嵌套簇族；候签定理 25.2 不宣称这些统一界。后一结论给出一条失败的共尾选择，不宣称所有共尾选择都会失败。
+
+固定乘法区间的 PNT、Fourier 平移、普通加权度量界、已发表谱配对与 CC 小支撑正性均是复用前置；本章的候选综合内容是实际非活跃素数簇对正角预算的失效以及被它强迫的大量配对抵消，不认证世界原创性。该构造使用超出当前测试活跃支撑的大素数，因此没有决定第 22 节 $\mathcal P_{\mathcal R}^{\mathrm{act}}\subseteq\mathcal P\subseteq\{p:p\le e^{\mathcal R}\}$ 的扩张族，也没有排除精心选择有限素数集或直接保留 $E_S^+-E_S^-$ 的方法。完整 constrained 同一测试正性、FIB 来源到实际素数伸缩的交织及 Robin 的全整数估计均未由此构造解决。
+

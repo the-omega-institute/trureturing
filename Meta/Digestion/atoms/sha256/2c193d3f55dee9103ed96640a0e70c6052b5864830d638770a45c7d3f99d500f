@@ -1,0 +1,25 @@
+**Definition 1.1 (source, update and literal address).** Use the actual finite
+nonempty ordered algebra
+[GenealogicalFiberTransport](../../../D5/S3/Arith/FibonacciAtomic/GenealogicalFiberTransport.lean),
+$\mathrm{Source}=\mathrm{FreeMagma}\ \mathrm{Bool}$, and its native substitution
+$\rho$:
+
+$$
+\mathcal T::=\alpha\mid\beta\mid\langle\mathcal T,\mathcal T\rangle,
+\qquad
+\rho\alpha=\beta,\quad
+\rho\beta=E:=\langle\beta,\alpha\rangle,\quad
+\rho\langle s,t\rangle=\langle\rho s,\rho t\rangle.
+\tag{NBP.1.1}
+$$
+
+Native true is alpha and false is beta. Addresses are finite words in $L,R$,
+with root $\varepsilon$; native address letters false,true mean $L,R$,
+respectively. Write $\operatorname{Pos}(u)$ for actual node occurrences
+and $u|_p$ for an existing subtree. Different addresses remain different
+occurrences even if their subtrees are equal. The actual
+[ActualTreeReadoutAcquisition](../../../D5/S3/Arith/FibonacciAtomic/ActualTreeReadoutAcquisition.lean)
+readout has four replies $\alpha,\beta,\mathsf{branch},\mathsf{absent}$.
+A nonempty continuation at a leaf is absent. Every finite address is
+a legal query. No quotient removes brackets, order or leaf labels.
+

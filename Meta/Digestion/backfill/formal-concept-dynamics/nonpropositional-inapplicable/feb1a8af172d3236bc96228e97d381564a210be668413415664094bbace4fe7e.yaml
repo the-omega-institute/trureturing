@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:feb1a8af172d3236bc96228e97d381564a210be668413415664094bbace4fe7e
+  normalized_sha256: sha256:feb1a8af172d3236bc96228e97d381564a210be668413415664094bbace4fe7e
+cas_ref: sha256:feb1a8af172d3236bc96228e97d381564a210be668413415664094bbace4fe7e
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 定义 272.1（规则约束）：本段仅约定名称、符号及其判定条件；不主张满足条件的对象存在，也不追加性质定理。
+    previous_atom_id: fa9b1b88779b6d183c95b997ffdc718c13703b3955b15a28e096beeed4fb94a0
+    next_atom_id: 9b2f1aef44228380509602cba3049b97b1c3cc67d6fceae2da4ee7bd0c9011f3

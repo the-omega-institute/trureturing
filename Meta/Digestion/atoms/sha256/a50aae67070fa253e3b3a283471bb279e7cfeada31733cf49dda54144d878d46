@@ -1,0 +1,120 @@
+**Theorem 58.20 (effective frontier for a certified finite candidate family).**
+Use 58.18's nonempty source domain and integer resource contract. Suppose:
+
+1. The admissible family $\mathcal C$ is finite and effectively listed,
+   with exact deterministic observation-based same-source semantics.
+2. For every candidate, whether it is legal, defined, terminating and
+   complete target-row correct on every source is decidable.
+3. For every successful candidate and every coordinate, existence of a finite
+   uniform bound is decidable; whenever bounded, its exact least uniform
+   bound $b_i(C)$ can be computed.
+
+Then the finite-budget feasible region, including emptiness, has an effectively
+computable minimal basis. Decide success of every candidate, discard the
+unsuccessful candidates and every successful candidate with any unbounded
+coordinate, and compute the vectors of the remaining candidates. If
+$\mathcal V$ is the resulting finite set, return
+
+$$
+\mathcal B=\{v\in\mathcal V:
+       \nexists w\in\mathcal V,\ w\le v,\ w\ne v\}.
+$$
+
+Then $\mathcal F=\uparrow\mathcal B$. For every mixed box,
+$\operatorname{FinBox}(B)$ is decided by testing $v\le B$ for
+$v\in\mathcal B$, with a retained controller as witness when true.
+This conclusion is relative to the listed candidate family. It applies
+to a larger controller class only with a separately proved complete
+enumeration for that class.
+
+Proof. The three hypotheses make every step terminate. An unsuccessful
+candidate witnesses no element of $\mathcal F$. A successful candidate
+with an unbounded coordinate fits no finite vector either. For every
+remaining candidate, exact coordinatewise bounds give
+
+$$
+b(C)\le x
+\quad\Longleftrightarrow\quad
+\forall s\in D,\ \forall i,\ c_{C,i}(s)\le x_i.
+$$
+
+Thus $\mathcal F=\uparrow\mathcal V$. Every vector in the finite set
+$\mathcal V$ dominates one of its minimal vectors, so removing strict
+dominators and duplicate vectors gives $\uparrow\mathcal B=\uparrow\mathcal V$.
+The same observation and 58.18 give the asserted exact finite-box test.
+Different coordinates of $b(C)$ may be attained at different sources;
+the argument concerns coordinatewise budget bounds, not a same-source
+weighted objective.
+
+Here is one sufficient effective Presburger package for hypotheses 2--3.
+In addition to 58.11's finite family and exact semantics, require an
+independently certified computable $H_*$ such that every run of every
+source-total successful candidate in that family has at most $H_*$
+raw events, including halt, irrespective of its resource vector.
+This is one budget-independent horizon for the whole successful family.
+Require effectively constructed Presburger path predicates, with finite
+tuples of auxiliary variables, for every candidate path of length at most
+$H_*$. They must describe exactly its legal, defined same-source execution
+from the initial boundary, its halt row, and its full aggregated integer
+cost vector. Any aggregation used here must have this Presburger graph;
+Presburger event prices alone do not certify an arbitrary aggregation.
+
+For candidate $C$, let $P_{C,p}(s,\xi)$ be such a terminal-path predicate,
+where $\xi$ includes the terminal row and the cost vector. Its correct
+terminal-path coverage condition is the Presburger sentence
+
+$$
+\forall s\,
+\left(D(s)\Longrightarrow
+  \bigvee_{p:\,|p|\le H_*}
+     \exists\xi\,\bigl(P_{C,p}(s,\xi)
+                     \land \operatorname{Row}(\xi)=g(s)\bigr)\right).
+$$
+
+Every path includes its halt, and paths after a halt are not admitted.
+On a finite union of chart types the formula is formed separately for
+each chart and conjoined. Determinism and exactness ensure that its
+witnesses are the actual source runs. The sentence therefore implies
+source-total success. Conversely, success and the $H_*$ certificate
+supply a witness for every source. It decides hypothesis 2, rejecting
+nontermination and other failures through lack of correct terminal coverage.
+
+For a successful $C$, project the finite disjunction of its correct
+terminal-path predicates to the cost vector:
+
+$$
+\Phi_C(t)\Longleftrightarrow
+ \bigvee_{p:\,|p|\le H_*}\exists s,\xi\,
+ \bigl(D(s)\land P_{C,p}(s,\xi)
+       \land\operatorname{Row}(\xi)=g(s)
+       \land \operatorname{Cost}(\xi)=t\bigr).
+$$
+
+This is a Presburger formula defining exactly the nonempty set
+$\{c_C(s):s\in D\}$. For coordinate $i$, decide the sentence
+
+$$
+\exists M\in\mathbb N\ \forall t\in\mathbb N^d,\
+       \bigl(\Phi_C(t)\Longrightarrow t_i\le M\bigr).
+$$
+
+If it is false, that coordinate is unbounded and the candidate is discarded.
+If it is true, test $m=0,1,2,\ldots$ until
+$\neg\exists t\,(\Phi_C(t)\land t_i>m)$ holds. This search terminates
+because boundedness has already been decided. The first such $m$ is
+the exact least uniform bound $b_i(C)$. A nonempty bounded subset of
+$\mathbb N$ has a maximum, so this value is attained in that coordinate;
+a Presburger witness can also identify a source/path attaining it.
+This proves hypothesis 3 using the prior Presburger decision method cited
+in 58.17, without invoking ordinary mixed feasibility.
+
+An exact termination and resource-range decision procedure from a certified
+regular encoding or acceleration may instead supply hypotheses 2--3.
+Its uniform boundedness decision and bound extraction must be part of
+the certificate, not inferred from regularity. In particular, knowing
+$T_K(B)$ for each constrained budget does not, without an additional
+argument, supply $H_*$ or a decision of
+$\exists M\,\forall s\,c_{C,i}(s)\le M$. Proposition 58.19 meets the
+stronger horizon package: this algorithm discards $C_a$ and returns
+$\mathcal B=\{(2,2)\}$. ∎
+

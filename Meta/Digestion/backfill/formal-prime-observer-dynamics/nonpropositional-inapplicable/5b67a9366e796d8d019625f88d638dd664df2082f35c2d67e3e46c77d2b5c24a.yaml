@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:5b67a9366e796d8d019625f88d638dd664df2082f35c2d67e3e46c77d2b5c24a
+  normalized_sha256: sha256:5b67a9366e796d8d019625f88d638dd664df2082f35c2d67e3e46c77d2b5c24a
+cas_ref: sha256:5b67a9366e796d8d019625f88d638dd664df2082f35c2d67e3e46c77d2b5c24a
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 非命题文本：定义 260.2（完全模型识别与目标识别）：只引入对象、参数、术语或记号；不附加存在性、唯一性或其他性质断言。
+    previous_atom_id: 928e1f0c81378b288268bc1bc8641e6dbad25057c702731b8b6cf8870b9541a9
+    next_atom_id: dfe4f42a9d8e3525f63a6f2ff59e3664bc00d0b5ca67c209421c918a16ec3a10

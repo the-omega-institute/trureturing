@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:4da62d05cd378c0ea835f62de98c872cb43410ba1195c42cc911df00be1ecef1
+  normalized_sha256: sha256:4da62d05cd378c0ea835f62de98c872cb43410ba1195c42cc911df00be1ecef1
+cas_ref: sha256:4da62d05cd378c0ea835f62de98c872cb43410ba1195c42cc911df00be1ecef1
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 本 atom 为定理 P5 的高斯矩上界的证明及证明解释，不另立新命题；原陈述保留自身状态。
+    previous_atom_id: 10f086b0306c55830d4a16268948883d503cc3e347c5ebb45d89be2a6927fe3a
+    next_atom_id: 709bb3e38f1babf5f3ed6107cb056c7730afbd23d8317c5b85ed3005ae4340e3

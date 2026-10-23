@@ -6,6 +6,8 @@
    utility: none
    digest: Constant blocks with distinct sums are realizable as distinct maximal run sums. -/
 
+-- Escape audit unfinished for split_replicates: https://github.com/the-omega-institute/trureturing/issues/14898
+
 import Mathlib.Combinatorics.Enumerative.Partition.Basic
 import Mathlib.Data.List.SplitBy
 import Mathlib.Data.Finset.Max
@@ -244,7 +246,7 @@ private theorem replicate_chain (n v : ℕ) :
     | succ n => simpa only [List.replicate_succ, List.isChain_cons_cons, beq_self_eq_true,
         true_and] using ih
 
-private theorem split_replicates (l : List (ℕ × ℕ))
+theorem split_replicates (l : List (ℕ × ℕ))
     (hp : ∀ b ∈ l, 0 < b.2) (hc : (l.map Prod.fst).IsChain (· ≠ ·)) :
     ((l.map (fun b => List.replicate b.2 b.1)).flatten).splitBy (· == ·) =
       l.map (fun b => List.replicate b.2 b.1) := by

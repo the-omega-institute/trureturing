@@ -1,0 +1,52 @@
+**Theorem 17.2 (one joint comparison, conditional barycentres and all targets).**
+For every pair $(\Gamma_B,\Gamma_A)\in\mathfrak C$, there is a pair
+$(\widehat\Gamma_B,\widehat\Gamma_A)\in\mathfrak C_{\rm det}$ and
+one stationary sequence of quadruples
+$(Q_t,W_t,\widehat Q_t,\widehat W_t)_{t\ge0}$ such that
+
+$$
+\begin{aligned}
+\operatorname{Law}(Q_t,W_t)&=\Gamma_B,&
+\operatorname{Law}(W_t,Q_{t+1})&=\Gamma_A,\\
+\operatorname{Law}(\widehat Q_t,\widehat W_t)&=\widehat\Gamma_B,&
+\operatorname{Law}(\widehat W_t,\widehat Q_{t+1})&=\widehat\Gamma_A.
+\end{aligned}
+\tag{17.2}
+$$
+
+Both new flows share new unweighted phase marginals
+$\widehat\nu_p,\widehat\nu_\beta$. One such comparison is the
+construction (17.6)--(17.8) below. On this coupling,
+
+$$
+\begin{aligned}
+\mathbb E[\widehat Q_t\mid Q_t]&=Q_t,&
+\mathbb E[\widehat W_t\mid W_t]&=W_t,\\
+u(\widehat Q_t)&=u(Q_t),&v(\widehat W_t)&=v(W_t),\\
+\mathbb E\operatorname{TV}(\widehat Q_t,Q_t)&\le c_p,&
+\mathbb E\operatorname{TV}(\widehat W_t,W_t)&\le c_\beta.
+\end{aligned}
+\tag{17.3}
+$$
+
+The first row is equality of conditional complete probability measures,
+on every coordinate including noncompletion. With configuration TV still
+inside the integrals, the same comparison satisfies, simultaneously for
+every complete probability target at either phase,
+
+$$
+\begin{aligned}
+0&\le\widehat{\mathcal L}_p(T)-\mathcal L_p(T)\le c_p,\\
+0&\le\widehat{\mathcal L}_\beta(T)-\mathcal L_\beta(T)\le c_\beta.
+\end{aligned}
+\tag{17.4}
+$$
+
+Here $\widehat{\mathcal L}_s$ uses $\widehat\nu_s$. In particular, for
+the one original installed prior and every one of its supported targets,
+
+$$
+\mathcal J\le\widehat{\mathcal J}\le\mathcal J+c_*.
+\tag{17.5}
+$$
+

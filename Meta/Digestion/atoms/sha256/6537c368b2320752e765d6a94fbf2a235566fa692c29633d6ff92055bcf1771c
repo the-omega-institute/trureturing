@@ -1,0 +1,21 @@
+**约定 32.2（可达计数与原结果的适用范围）。** 令 $Q_{\mathrm{act}}$ 为全部允许原来源的实际成功执行中访问到的控制状态，包含初态和 Halt 状态；令
+
+$$
+K=|Q_{\mathrm{act}}|,\qquad U=|Q\setminus Q_{\mathrm{act}}|,
+\qquad K_{\mathrm{nom}}=|Q|=K+U.
+$$
+
+下文精确普查的 $K$ 计完整可达控制状态，不是标签字母表。竞争域保留所有有限 $Q$，包括 $U>0$ 的表；其名义状态数另加 $U$。可以删去不可达状态，把允许执行中不出现的响应转移补到一个保留状态，得到名义状态数恰为 $K$ 的控制器。这个删减不删任何实际程序、等待或输出位置。因此按名义完整状态数取最小值，与按完整可达状态数取最小值相同。表上的不可能响应仍可形成循环；它们不作为额外的实际执行。
+
+本节复用以下固定来源正文及对应 Blueprint，地址均取同一个 [公开修订](https://github.com/the-omega-institute/trureturing/tree/33737f6da740e282bb67a6d17b4359513cb86abf)：
+
+| 32 节供应接口 | 原声明与实际用途 |
+| --- | --- |
+| 32·AcquisitionTrace（[源码](https://github.com/the-omega-institute/trureturing/blob/33737f6da740e282bb67a6d17b4359513cb86abf/D5/S3/ConceptDynamics/Coding/ActualDyadicAcquisitionTrace.lean)，[Blueprint](https://github.com/the-omega-institute/trureturing/blob/33737f6da740e282bb67a6d17b4359513cb86abf/Blueprint/D5/S3/ConceptDynamics/Coding/ActualDyadicAcquisitionTrace.md)） | 原 `Record`、`Action`、`Execution`、`rawSensor`；`actual_continuation_capacity_and_saturation`、`actual_next_read_decomposition`、`actual_dyadic_interval_trace` 给出实际容量、共同下一查询及强制中点迹，`actual_pair_common_final_query` 保留兄弟来源的共同末查询。 |
+| 32·RepairCapacity（[源码](https://github.com/the-omega-institute/trureturing/blob/33737f6da740e282bb67a6d17b4359513cb86abf/D5/S3/ConceptDynamics/Coding/ActualDyadicCausalPrefixRepairCapacity.lean)，[Blueprint](https://github.com/the-omega-institute/trureturing/blob/33737f6da740e282bb67a6d17b4359513cb86abf/Blueprint/D5/S3/ConceptDynamics/Coding/ActualDyadicCausalPrefixRepairCapacity.md)） | `ReachedRecord`、`acquiredPrefix` 和 `actual_acquired_prefix_and_final_query` 给出真实预末历史、取得的 $\lfloor r/2\rfloor$ 及原始末比特。`OperationalRepairFeasible` 与 `actual_causal_closed_error_recovery` 计给定接口下的补充标签；闭相位球交叠复用 `ClosedPhaseBallOverlap`，不改变该标签定理的公开陈述。 |
+| 32·DeadlineSupport（[源码](https://github.com/the-omega-institute/trureturing/blob/33737f6da740e282bb67a6d17b4359513cb86abf/D5/S3/Observer/Budget/ActualDyadicDeadlineSupport.lean)，[Blueprint](https://github.com/the-omega-institute/trureturing/blob/33737f6da740e282bb67a6d17b4359513cb86abf/Blueprint/D5/S3/Observer/Budget/ActualDyadicDeadlineSupport.md)） | `DeadlineObservation`、`actualDeadlineFamily` 的 $D$ 只约束字面末查询的累计 Advance 数，允许报告晚于查询。`actual_final_time_normal_form`、`actual_deadline_time_support`、`actual_raw_clock_quotient` 保留 $E(t)+P\tau$ 及实际商奇偶；支持跨全部合格策略取并集。 |
+| 32·DeadlineLabelSupport（[源码](https://github.com/the-omega-institute/trureturing/blob/33737f6da740e282bb67a6d17b4359513cb86abf/D5/S3/Observer/Budget/ActualDyadicDeadlineLabelSupport.lean)，[Blueprint](https://github.com/the-omega-institute/trureturing/blob/33737f6da740e282bb67a6d17b4359513cb86abf/Blueprint/D5/S3/Observer/Budget/ActualDyadicDeadlineLabelSupport.md)） | `CommonRepairFeasible` 的 writer 接收策略与实际预末记录；一个不见策略、时钟和旧读数的 receiver 对全部策略及闭误差共用。`actualLabelSupport`、`actual_all_history_coloring_iff` 处理全部实现历史上的标签支持，不是物理控制状态；其带误差相位输入没有加入本节的 Read 响应。 |
+| 32·DeadlineRepairMinimum（[源码](https://github.com/the-omega-institute/trureturing/blob/33737f6da740e282bb67a6d17b4359513cb86abf/D5/S3/Observer/Budget/ActualDyadicDeadlineRepairMinimum.lean)，[Blueprint](https://github.com/the-omega-institute/trureturing/blob/33737f6da740e282bb67a6d17b4359513cb86abf/Blueprint/D5/S3/Observer/Budget/ActualDyadicDeadlineRepairMinimum.md)） | `supportedTypeRankEquiv` 保留实际商奇偶；`original_operational_minimum` 在其 $j\ge2$、误差壳与分解假设下给共同 decoder 的最小标签容量，不给完整 $c,u,v$ 的状态数，也不覆盖这些附加假设之外的参数。 |
+
+有限控制器到原记录策略的对应只用于证明复用。对一个实际取得的记录 $\langle N,\mathrm{past}\rangle$，从固定 $q_*$ 重放各读数时间之前的单位 Ack、相应原始比特及最后的剩余单位 Ack，可唯一重建控制状态。指令选择取其 $u$；不一致记录任意补全。归纳证明每条实际控制执行给出原 `Execution`，Read 不改变装置，Advance 恰增加一个事件，Stop 输出同一个 $r$。控制器实际仍只使用 $q$ 和一次响应；这个证明用的记录重放不增设免费档案或时钟。
+

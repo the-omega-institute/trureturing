@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:d2f7ff519ce41693088a10c65df175cb702c1cedc5b112ce9ae9455d7ce8f427
+  normalized_sha256: sha256:d2f7ff519ce41693088a10c65df175cb702c1cedc5b112ce9ae9455d7ce8f427
+cas_ref: sha256:d2f7ff519ce41693088a10c65df175cb702c1cedc5b112ce9ae9455d7ce8f427
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 本段（**Definition.** A residue-only rejection rule at modulus M is called sound for nonpowerfulness if it rejects a residue class only when every positive integer in that class is nonpowerful.）只引入对象、参数、集合或谓词记号；给出的条件是定义内容，不断言额外性质。
+    previous_atom_id: 2545db60542d584f5bc59ba4e93ca2e0d25d4ddb29038c9cf32562fb29a3c36a
+    next_atom_id: 4456745256cf5f11198ad2e2f516e90674183001c513e10582488827e6f0f63e

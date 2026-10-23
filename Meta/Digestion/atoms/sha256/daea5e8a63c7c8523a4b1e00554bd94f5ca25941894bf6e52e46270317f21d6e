@@ -1,0 +1,21 @@
+**Definition 123.1 (Amplitude coordinates).** On the face put
+
+$$
+h=a_1-a_2,\quad x=a_3-a_4,\quad y=a_4-a_5,
+\quad z=3a_5-x-2y-4\delta/3,
+\quad g=z+4x+5y+13\delta/3.
+\tag{123.1}
+$$
+
+The affine inverse is
+
+$$
+\begin{aligned}
+a_2&=1-\delta,&a_1&=1-\delta+h,\\
+a_5&=(z+x+2y+4\delta/3)/3,&a_4&=a_5+y,
+ &a_3&=a_5+y+x,\\
+\varepsilon&=z/6+x/3+2y/3+\delta/9.
+\end{aligned}
+\tag{123.2}
+$$
+

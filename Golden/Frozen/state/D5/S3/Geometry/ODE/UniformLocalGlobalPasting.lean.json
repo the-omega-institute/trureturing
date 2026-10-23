@@ -1,1 +1,1 @@
-{"statement_id":"sha256:d91a9dcee4ebcfb2e0b7938d8cb625c6629a21bc5d9757c99857adfc6916aeff"}
+{"statement_id":"sha256:ffff654cbe7c839c4c49ddf7c71ad43bb7cbf850532754439d0e680705564329","declarations":[{"declaration_name_key":"ns(ns(ns(ns(ns(ns(n0,2:D5),2:S3),8:Geometry),3:ODE),25:UniformLocalGlobalPasting),39:exists_global_solution_of_uniform_local)","kind":"theorem"}]}

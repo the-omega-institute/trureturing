@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:709f31661d7f37483a4e959c4184f0cd78b8fdc88c83201f28010bf0daf7a002
+  normalized_sha256: sha256:709f31661d7f37483a4e959c4184f0cd78b8fdc88c83201f28010bf0daf7a002
+cas_ref: sha256:709f31661d7f37483a4e959c4184f0cd78b8fdc88c83201f28010bf0daf7a002
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 证明段（**证明。** $\alpha$ 的等式由定义平方后化简得到，且正根的取值给出 $0<\alpha<1$。矩阵幂公式由 Fibonacci …）只展开前文定理或命题的论证，式子和中间推导不另提出独立陈述。
+    previous_atom_id: 1496d152d79d52a5eb472c4ac8cc26f7337d2f78517e66b9d5ee75989070a3de
+    next_atom_id: 0c6225e4972496b13735f7d5671c150225befb78ce7f1ca278a8760f53938eff

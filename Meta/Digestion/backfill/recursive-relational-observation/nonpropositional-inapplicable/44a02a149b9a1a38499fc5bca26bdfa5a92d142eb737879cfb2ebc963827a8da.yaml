@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:44a02a149b9a1a38499fc5bca26bdfa5a92d142eb737879cfb2ebc963827a8da
+  normalized_sha256: sha256:44a02a149b9a1a38499fc5bca26bdfa5a92d142eb737879cfb2ebc963827a8da
+cas_ref: sha256:44a02a149b9a1a38499fc5bca26bdfa5a92d142eb737879cfb2ebc963827a8da
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 定义 53.7 只定义有限诱导检验性质、候选集合 A_p 及允许取无穷的 k(p)，其有限性另由后项定理承担。
+    previous_atom_id: 3a1ae60ea04ba7148ba82c8396af87c1135ac9a109494329d2ae80b9a4191ea9
+    next_atom_id: 2faf60c74f13ff94fb8d3817526114364f6335dda1a4a6abb7c57a96c7595c4f

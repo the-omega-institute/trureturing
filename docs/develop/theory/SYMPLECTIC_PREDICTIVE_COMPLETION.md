@@ -3366,3 +3366,1406 @@ $$
 GNS、Riesz 表示、正平方根、Hilbert 基、Parseval、有限投影展开与可数支集提供上述各个基础步骤。这里从实际泛函构造 $\rho$ 与向量族，由所给有限秩紧性确定其总质量，再由压缩误差极限确定整个有界算子泛函。本条件定理没有从原定理 2.4 的位置或动量上界推出有限秩紧性，也没有识别一阶算子域、建立协方差或完成原定理 2.4。
 
 ## 追加锚（本行以下为增补区）
+
+## 34. 原始闭合假设下的 O-适配正则坐标
+
+本节展开第 2.3 节定理 2.4 所用的有限维代数构造，保留同一物理辛符号与观测映射。
+
+**相容坐标的显式关系。** 上述有限维代数构造只需 $S\succ0$、$O$ 满行秩、$OA=KO$ 及物理约定 $J=\left(\begin{smallmatrix}0&I\\-I&0\end{smallmatrix}\right)$。设 $0<r<2n$。由 $P\succ0$、$OL=I$ 及 $A=JS$ 可逆，
+$$
+K(OA^{-1}L)=OA A^{-1}L=I.
+$$
+所以 $K$ 可逆，结合 $KP=J_r$ 得到 $J_r$ 可逆。这里 $J_r$ 的非退化性是结论。第 2.2 节的矩阵恒等式进一步给出
+$$
+L^TS=P^{-1}O,\qquad L^TJ=-J_r^{-1}O,
+\qquad L^TSL=P^{-1},\qquad L^TJL=-J_r^{-1}.
+$$
+令 $U=\operatorname{im}L$、$V=\ker O$。每个 $z$ 唯一分解为 $LOz+(z-LOz)$，两项分别属于 $U,V$；上式同时证明两块的 $S$ 正交性和 $J$ 正交性。更精确地，$z\in U^{\perp_J}$ 等价于 $L^TJz=0$，继而等价于 $Oz=0$，故 $U^{\perp_J}=V$。由直和与全空间辛形式非退化，两块限制形式均非退化。
+
+在 $U,V$ 上应用 [Darboux 基构造](../../../D5/S3/QuadraticForms/SymplecticBasis.lean)，得到维数 $2k,2h$ 及基矩阵 $T_v,T_h$，其中 $r=2k$、$n=k+h$、$k,h>0$。记 $J_k,J_h$ 为同一物理符号约定的标准矩阵，$T=[T_v\ T_h]$，则
+$$
+T^TJT=J_b:=\operatorname{diag}(J_k,J_h),\qquad
+T_v^TST_h=0.
+$$
+$O|_U$ 以 $L$ 为逆，因此 $B:=OT_v$ 可逆，且
+$$
+OT_h=0,\qquad T_v=LB,\qquad OT=[B\ 0].
+$$
+基矩阵 $T$ 可逆，由 $T^TJT=J_b$ 及 $J^2=J_b^2=-I$ 得 $TJ_bT^T=J$。所以同一组坐标满足
+$$
+J_r=BJ_kB^T,\qquad
+S_v:=T_v^TST_v=B^TP^{-1}B,\qquad
+KB=BJ_kS_v.
+$$
+最后一式由 $K=J_rP^{-1}$ 直接代入。$S_v$ 与 $S_h:=T_h^TST_h$ 都正定，故可分别应用 [正定 Williamson 定理](../../../D5/S3/QuadraticForms/PositiveDefiniteWilliamson.lean)。这两个库构造均允许零维空间；这里的严格维数范围只负责排除空的可见块与隐藏块。
+
+总坐标的次序须与块次序一同记录。$T$ 的列按 $(q_v,p_v,q_h,p_h)$ 排列，而全空间标准次序是 $(q_v,q_h,p_v,p_h)$。令置换矩阵 $\Pi$ 把后者重排为前者，则 $\Pi^TJ_b\Pi=J$，实际的全空间辛矩阵为 $T_{\mathrm{paired}}=T\Pi$，满足 $T_{\mathrm{paired}}^TJT_{\mathrm{paired}}=J$。这一步保留了全局位置、动量配对与可见、隐藏分块的区别。
+
+## 35. AURIC FIB-ATOM 的辛完成：联合概率、共轭相位与 Fibonacci 递归
+
+### 35.1 同一五模式、概率回路与表示合同
+
+**定义 35.1（本章的对象与对应）。** 固定模式次序
+
+$$
+\Sigma=(0,1,2,3,13)
+=(F[\mathrm{null}],F[1],F[2],F[3],F[1,3]).
+$$
+
+位置占位按低端 $x$、高端 $y$、中位 $z$ 排列；印刷位串仍按低、中、高排列。本章的下标 $1,2,3,13$ 指位置集合，不指印字的数量。
+
+| 本章模式 | 输出标签 | 印刷位串 | 占位权重 $v_s=(x_s,y_s,z_s)$ | 数量 $f_s$ |
+| --- | --- | --- | --- | ---: |
+| $0$ | $[null]$ | $000$ | $(0,0,0)$ | $0$ |
+| $1$ | $[2]$ | $100$ | $(1,0,0)$ | $2$ |
+| $2$ | $[3]$ | $010$ | $(0,0,1)$ | $3$ |
+| $3$ | $[5]$ | $001$ | $(0,1,0)$ | $5$ |
+| $13$ | $[2,5]$ | $101$ | $(1,1,0)$ | $7$ |
+
+数学引文。[《基础公式》定义 2.1、数学引文 3.2、§四](AURIC_FIB_ATOM_PYRAMID_FOUNDATIONAL_FORMULAS_AND_RELATIONS.md)与[《金字塔关联与原生接续》§23.1](AURIC_FIB_ATOM_PYRAMID_CORRELATION_AND_NATIVE_CONTINUATION.md#231-单窗位置与实际读序的参数对应)供应此模式表、均值像和全部概率反演。其 $(0,2,3,5,25)$ 分量在本章分别是 $(0,1,2,3,13)$；关联卷的 $(O,L,T,R,J)$ 分别是这同一五模式。对非负归一化律 $p$，对应坐标为
+
+$$
+X=p_1+p_{13},\qquad Y=p_3+p_{13},\qquad Z=p_2,
+\qquad \kappa=p_{13}.
+$$
+
+已有均值像和反解在这一次序下写成
+
+$$
+\mathcal P=\{(X,Y,Z):X,Y,Z\ge0,\ X+Z\le1,\ Y+Z\le1\},
+$$
+
+$$
+p_\kappa=(1-X-Y-Z+\kappa,\ X-\kappa,\ Z,\ Y-\kappa,\ \kappa),
+$$
+
+$$
+\kappa_-:=\max(0,X+Y+Z-1),\qquad
+\kappa_+:=\min(X,Y),\qquad \kappa_-\le\kappa\le\kappa_+.
+$$
+
+因此每个固定可见均值 $b=(X,Y,Z)$ 的非退化概率纤维是闭区间；其切向量为
+
+$$
+d=\frac{dp_\kappa}{d\kappa}=(1,-1,0,-1,1),\qquad
+\sum_s d_s=0,\qquad \sum_s d_sv_s=0.
+$$
+
+这里消费的是已有关系 $v_0-v_1-v_3+v_{13}=0$，不将概率反演重新立为新定理。顶点 $v_2$ 在底面之外；增加它没有消除底面回路，正是[HiddenRelations C-2.2](AURIC_FIB_ATOM_HIDDEN_RELATIONS_STATISTICS_PHASE_AND_SEAMS.md#2-仿射回路概率纤维与完整函数边界)的本五模式应用。归一化不可省略：只固定三个均值、不固定总质量时，还有空模式质量方向。
+
+以下分清三个对象：五模式概率律；另供复振幅的射影状态；原生有接缝及拒绝的整数读者。辛完成是在第二个对象上选择几何，在第三个对象的实组成扩展上给出一项连续表示；这些选择不由第一种概率数据唯一决定。
+
+### 35.2 可见金字塔的局部配对与全局障碍
+
+**命题 35.2（此可见像的两项辛实现限制）。** 在 $\mathcal P$ 的三维内部不存在非退化二形式。若要求一个紧致、连通、光滑、实六维的辛流形，配以有效 Hamilton $T^3$ 作用，则它的矩多面体不能是 $\mathcal P$。第二项不禁止局部的三组均值—角坐标，也不禁止非紧、奇异或更高维的实现。
+
+证明。辛形式是闭且逐点非退化的二形式；Darboux 定理在实维 $2N$ 的局部坐标中将它写成 $\sum_{j=1}^N dq_j\wedge dp_j$。这些是经典中间工具，见 Cannas da Silva《Lectures on Symplectic Geometry》§§1、8。三维点上的二形式矩阵 $K$ 满足 $K^{\mathsf T}=-K$，故
+
+$$
+\det K=\det(-K^{\mathsf T})=(-1)^3\det K=-\det K=0.
+$$
+
+非退化性已不可能，是否闭不能弥补它。给内部另加三个角，确可局部取 $\sum d\vartheta_j\wedge db_j$，但这是六维新载体。
+
+对所述紧致六维有效 $T^3$ Hamilton 系统，Delzant 分类要求矩多面体简单、整有理且在顶点满足整光滑条件；此处只需简单性这一必要条件。经典出处是 [Delzant《Hamiltoniens périodiques et images convexes de l’application moment》](https://www.numdam.org/articles/10.24033/bsmf.2100/)，亦见 Cannas da Silva 定义 28.1、定理 28.2。三维简单多面体的每个顶点恰接三条棱。本章顶点 $v_2=(0,0,1)$ 分别连接底面四角 $v_0,v_1,v_3,v_{13}$，接四条不同棱，因而非简单。局部三组配对、共六个实坐标，不能推出上述全局紧致光滑 toric 完成。证毕。
+
+这项障碍适用于三维可见像的半维环面作用。下一节的八维完成仍有一个 $T^3$ 可见作用，但该作用不再半维，所以不受这项六维 toric 排除的结论限制。
+
+### 35.3 五模式振幅、局部原始形式与最小维数
+
+**假设 35.3（振幅及辛尺度）。** 在同标签正交基上另供
+
+$$
+\psi_s=\sqrt{p_s}\,e^{-i\theta_s},\qquad
+\sum_s|\psi_s|^2=1,\qquad \theta_s\in\mathbb R/2\pi\mathbb Z,
+$$
+
+并将共同相位相同的向量识别为一条射线。空模式是一个单位基向量，不是零向量。这精确消费[SecondOrder 假设 61.1、定理 61.2](AURIC_FIB_SECOND_ORDER_RELATION_COMPLETION.md#61-五模式的独立量子支撑)：其基 $(N,2,3,5,25)$ 对应本章 $(0,1,2,3,13)$，载体为 $\mathbb C^5$，纯射线为实八维 $\mathbb{CP}^4$。本章的负指数相位与其复振幅公设相容，只改变角的记号。
+
+选择 Fubini–Study 辛尺度，使每条复射影直线的辛面积为 $2\pi$，并始终取
+
+$$
+\iota_{X_H}\omega=dH.
+$$
+
+射影 Kähler 几何及 Schrödinger 的 Hamilton 表述是经典原料，见本卷 §1.3 和 [Ashtekar–Schilling 文献条目](../../../Library/Geometry/ashtekar1997geometrical.md)，原文 [arXiv:gr-qc/9706069](https://arxiv.org/abs/gr-qc/9706069)。概率本身没有强迫这一振幅、相位或尺度；这些 $\theta_s$ 也不自动等于原生自动机的相位。
+
+在全部 $p_s>0$ 的归一化相位图中，形式的具体对应为
+
+$$
+\lambda=\sum_s p_s\,d\theta_s,\qquad
+\omega=\sum_s d\theta_s\wedge dp_s=-d\lambda.
+$$
+
+归一化切向量满足 $\sum_sdp_s=0$，因此共同相位方向 $\sum_s\partial_{\theta_s}$ 是该归一化图上二形式的核。模去这一个方向后，四组独立概率—相对角配对非退化。选择 $\theta_0=0$ 的局部截面，得到射影图上的 $\lambda$；更换共同相位截面 $\theta_s\mapsto\theta_s+\alpha$ 时，$\lambda\mapsto\lambda+d\alpha$，而 $\omega$ 不变。由标准 Fubini–Study 构造，这些局部二形式延伸到整个 $\mathbb{CP}^4$。
+
+$\lambda$ 是局部势，不是射影空间上的全局一形式。具体取只含两个模式的射影直线，其内部坐标为一个概率 $p\in(0,1)$ 和一个相对角 $\theta\bmod2\pi$，限制形式为 $d\theta\wedge dp$，故面积为 $2\pi$。若存在全局 $\lambda$ 且 $\omega=-d\lambda$，Stokes 定理会令该闭直线上的积分为零，与此面积矛盾。端点的相位角不可定义，却不妨碍二形式光滑延伸。
+
+在这个完成的正概率图中，固定四个相对角的概率子流形实维四，限制 $\omega$ 为零，故是 Lagrangian 子流形。这是开单纯形的固定相位实现；包含零概率面和角点的整个闭概率单纯形不在此声明为光滑 Lagrangian 流形。
+
+本模型的八维也满足一个局部下界：若任何辛实现中四个独立概率函数在一点附近微分独立且彼此 Poisson 对易，则对应四个 Hamilton 向量场独立，并满足
+
+$$
+\omega(X_{p_i},X_{p_j})=0.
+$$
+
+其张成空间 $W$ 为四维各向同性空间。辛非退化给 $\dim W^{\perp_\omega}=\dim M-\dim W$，由 $W\subseteq W^{\perp_\omega}$ 得 $\dim M\ge8$。在本章正图上四个非空模式概率确为独立坐标且彼此对易，所以 $\mathbb{CP}^4$ 达到该下界。下界依赖局部独立性及对易性，不适用于任意编码或支撑降维的边界点。
+
+### 35.4 同一整数回路的均值—角配对
+
+**命题 35.4（本五模式的完整周期坐标与矩映射）。** 在全正概率图中定义
+
+$$
+\vartheta_X=\theta_1-\theta_0,\qquad
+\vartheta_Y=\theta_3-\theta_0,\qquad
+\vartheta_Z=\theta_2-\theta_0,\qquad
+\chi=\theta_0-\theta_1-\theta_3+\theta_{13}.
+$$
+
+这些角与共同角 $\theta_0$ 给完整整周期变换。模去共同相位后，$\omega$ 为
+
+$$
+\omega=d\vartheta_X\wedge dX+d\vartheta_Y\wedge dY
++d\vartheta_Z\wedge dZ+d\chi\wedge d\kappa.
+$$
+
+可见占位作用 $T^3$ 是有效 Hamilton 作用，其矩映射为 $\mu=(X,Y,Z)$，像为 $\mathcal P$。
+
+证明。整数逆变换为
+
+$$
+\theta_1=\theta_0+\vartheta_X,\quad
+\theta_3=\theta_0+\vartheta_Y,\quad
+\theta_2=\theta_0+\vartheta_Z,\quad
+\theta_{13}=\theta_0+\vartheta_X+\vartheta_Y+\chi.
+$$
+
+正逆变换均为整数矩阵，因而在全部 $2\pi$ 周期环面上互逆，没有仅对无穷小角成立的限制。代入本节的局部归一化势得到
+
+$$
+\lambda=d\theta_0+X\,d\vartheta_X+Y\,d\vartheta_Y
++Z\,d\vartheta_Z+\kappa\,d\chi.
+$$
+
+取 $-d$ 即得所述二形式，亦显示同一关系向量 $d$ 同时决定概率核与隐藏角。本式的 $d\theta_0$ 属于局部共同相位截面，不能据此将 $\lambda$ 宣称为全局原始形式。
+
+具体作用为
+
+$$
+\theta_s\longmapsto\theta_s+x_st_X+y_st_Y+z_st_Z,
+\qquad (t_X,t_Y,t_Z)\in(\mathbb R/2\pi\mathbb Z)^3.
+$$
+
+在新坐标中它分别平移三个 $\vartheta$，保持 $\chi$。若它在全部射影状态上恒等，模式 $0$ 固定共同相位，而模式 $1,3,2$ 分别强制 $t_X,t_Y,t_Z=0\bmod2\pi$，故作用有效。收缩公式
+
+$$
+\iota_{\partial_{\vartheta_X}}\omega=dX,\qquad
+\iota_{\partial_{\vartheta_Y}}\omega=dY,\qquad
+\iota_{\partial_{\vartheta_Z}}\omega=dZ
+$$
+
+给出所选 Hamilton 符号下的矩映射。它的像是全部五权重的凸组合，恰为 §35.1 消费的 $\mathcal P$。证毕。
+
+这里的完整相位商已有所有者：[HiddenRelations C-13.2](AURIC_FIB_ATOM_HIDDEN_RELATIONS_STATISTICS_PHASE_AND_SEAMS.md#13-固定均值的五态相位商与复关系坐标)。其振幅约定为 $c_s=\sqrt{p_s}e^{i\theta_s^{\rm old}}$，同一物理振幅的精确对应是
+
+$$
+\theta_s^{\rm old}=-\theta_s,\qquad
+\Phi_{\rm old}=\theta_0^{\rm old}+\theta_{13}^{\rm old}
+-\theta_1^{\rm old}-\theta_3^{\rm old}=-\chi.
+$$
+
+该条目已给整周期唯一余角及无剩余有限规范类；本命题消费该结论，并将它与本章的概率配对及矩映射连接。
+
+### 35.5 固定可见均值后的真正辛约化
+
+**命题 35.5（全正圆柱及正则闭纤维）。** 设
+
+$$
+0<Z<1,\qquad 0<X,Y<1-Z.
+$$
+
+则全正部分的固定矩层模去 $T^3$ 后为
+
+$$
+\mu^{-1}(b)_{>0}/T^3
+\simeq(\kappa_-,\kappa_+)\times S^1,
+\qquad \omega_{\rm red}=d\chi\wedge d\kappa.
+$$
+
+若进一步有 $X\ne Y$ 及 $X+Y+Z\ne1$，则整个闭矩层上的作用自由，$b$ 是正则值，约化是光滑紧致辛曲面，拓扑为 $S^2$，辛面积为
+
+$$
+\operatorname{Area}_\omega(b)=2\pi w(b),\qquad
+w(b)=\kappa_+-\kappa_-
+=\min\{X,Y,1-Z-X,1-Z-Y\}.
+$$
+
+证明。固定 $b$ 后概率正性恰给开区间，§35.4 的三个可见角可全周期除去，只剩 $\chi$。在矩层的切向量上 $dX=dY=dZ=0$，故限制二形式正是 $d\chi\wedge d\kappa$，且沿轨道为零。这是局部约化形式的直接计算。固定矩层实维 $8-3=5$；还要除去三维轨道，约化才为 $8-3-3=2$。仅固定均值不会自动得到二维曲面。
+
+令 $r=1-Z$。下端在 $X+Y<r$ 时仅 $p_{13}=0$，在 $X+Y>r$ 时仅 $p_0=0$。上端在 $X<Y$ 时仅 $p_1=0$，在 $Y<X$ 时仅 $p_3=0$。附加两项非墙条件确保各端只失去一个底角，另外三个底角及中模式均正。
+
+自由性可用实际整权重检查。设 $W$ 的五行依次为 $(1,x_s,y_s,z_s)$。按原行次序，删去各底角行的四阶行列式为
+
+| 删除的行 | $0$ | $1$ | $3$ | $13$ |
+| --- | ---: | ---: | ---: | ---: |
+| $\det W_{\Sigma\setminus\{s\}}$ | $-1$ | $-1$ | $-1$ | $-1$ |
+
+这些整数单位行列式意味着剩余四相位的共同相位及三个占位角可整周期唯一消去。若群元固定该射线，其四个权重方程只有零群元解，因此没有连续或有限稳定子。内部全支撑也自由，因为它包含上述任一个四行子系统。由辛非退化，三个独立作用向量场对应的 $dX,dY,dZ$ 独立，故整个层为正则层。
+
+对阿贝尔群 $T^3$ 将矩映射平移为 $\mu_b=\mu-b$，其零层正是本层，平移保持 Hamilton 与等变性质。应用经典辛约化定理（Cannas da Silva 定理 23.1：紧群在零矩层上自由作用），商为光滑流形，存在唯一约化辛形式。球面拓扑直接消费 [HiddenRelations C-13.3](AURIC_FIB_ATOM_HIDDEN_RELATIONS_STATISTICS_PHASE_AND_SEAMS.md#13-固定均值的五态相位商与复关系坐标)：圆柱两端各将相位圆压成一点。整周期和自由性保证每端只塌缩一次，而不是遗留有限覆盖。面积由内部形式积分得 $2\pi(\kappa_+-\kappa_-)$，两端为零面积点。
+
+最后，若 $X+Y\le r$，宽度为 $\min(X,Y)$；若 $X+Y\ge r$，宽度为 $\min(r-X,r-Y)$。两种情况统一为所述四项最小值。证毕。
+
+本节的全正层要求 $Z>0$；$Z=0$ 时没有五模式全正点，须在删去中模式的实际支撑重新定义。墙 $X=Y$ 或 $X+Y+Z=1$ 可令一个端点双零，边界可令宽度零，均未包含在本节的光滑正则闭曲面结论内。拓扑球面不意味着标准圆球度量；[HiddenRelations C-14.3](AURIC_FIB_ATOM_HIDDEN_RELATIONS_STATISTICS_PHASE_AND_SEAMS.md#14-残差倒数成为相位水平线元)的双零锥角与支撑限定仍适用。
+
+### 35.6 选择的辛体积先验与整数概率格
+
+**命题 35.6（本完成的可见体积密度）。** 对 §35.3 选定尺度的 $\mathbb{CP}^4$，将 Liouville 体积 $\omega^4/4!$ 归一化为概率，再沿 $\mu$ 推前，则相对于可见坐标 $dX\,dY\,dZ$ 的密度为
+
+$$
+f_{\rm vis}(X,Y,Z)=24w(X,Y,Z),\qquad (X,Y,Z)\in\mathcal P.
+$$
+
+这是该辛完成选择的先验，不是经典五态律或均值数据所强迫的概率先验。
+
+证明。全正图在 $\mathbb{CP}^4$ 中的补集为各模式零的复超平面之并，对八维体积为零。独立相对角各周期 $2\pi$，概率图的 Liouville 密度常数。由
+
+$$
+(p_1,p_2,p_3,p_{13})=(X-\kappa,Z,Y-\kappa,\kappa)
+$$
+
+得概率变换的 Jacobian 绝对值为一；相对角变换也为整单位行列式。因此积分全部角后，概率四维坐标密度仍为常数，固定 $b$ 的剩余概率长度为 $w(b)$。
+
+此长度积分的已有所有者是[《静态接缝、转换循环与 Fibonacci 翻转环》§30](AURIC_FIB_ATOM_STATIC_SEAMS_TRANSITION_CIRCULATION_AND_FIBONACCI_TOGGLE_CYCLES.md)。其中 $\ell=w$，$r=1-Z$，坐标体积为 $1/24$；其欧氏单纯形体积 $\sqrt5/24$ 使用了不同的嵌入体积尺子。将该条目的层积分代入本完成，具体为
+
+$$
+\{(X,Y):w(X,Y,Z)\ge t\}=[t,r-t]^2,
+\qquad 0\le t\le r/2,
+$$
+
+$$
+\int_{[0,r]^2}w\,dX\,dY
+=\int_0^{r/2}(r-2t)^2dt=\frac{r^3}{6},
+\qquad
+\int_{\mathcal P}w\,dX\,dY\,dZ
+=\int_0^1\frac{(1-Z)^3}{6}dZ=\frac1{24}.
+$$
+
+故总辛体积为 $(2\pi)^4/24$，归一化推前密度正是 $24w$。在正则区域它也可读作与约化面积 $2\pi w$ 成正比；归一化则由整个概率图积分给出，不需要把所有墙都宣称为正则。证毕。
+
+数学引文（同一宽度的整数应用）。[《基础公式》定义 12.1、数学引文 12.2、命题 12.3](AURIC_FIB_ATOM_PYRAMID_FOUNDATIONAL_FORMULAS_AND_RELATIONS.md)已给全部整数提升。令 $m\ge1$ 为整数，$b\in\mathcal P$ 且 $mX,mY,mZ$ 为整数。与该卷参数的对应为
+
+$$
+(U,V,W,k)=(mX,mY,mZ,m\kappa),
+$$
+
+$$
+(n_0,n_1,n_2,n_3,n_{13})
+=(m-U-V-W+k,U-k,W,V-k,k).
+$$
+
+允许整数恰为
+
+$$
+\max(0,U+V+W-m)\le k\le\min(U,V).
+$$
+
+两端均为整数，故同一可见点的完整概率格配置数为
+
+$$
+1+\min(U,V)-\max(0,U+V+W-m)=1+mw(b).
+$$
+
+这是已有整数区间计数在本章的精确对应。正则层上 $m\operatorname{Area}_\omega(b)/(2\pi)=mw(b)$，只表达同一宽度的两种数学读法；计数包括闭端点，面积的光滑约化解释受 §35.5 条件约束。这里未将 $m$、$2\pi$ 或坐标尺度识别为 Planck 常数或物理量子化规则。
+
+### 35.7 隐藏概率信息、反相位与两倍尺度的关系度量
+
+数学引文与参数对应。在 §35.5 的全正固定 $b$ 纤维上，记
+
+$$
+\tau=\log\frac{p_0p_{13}}{p_1p_3},\qquad
+I=\frac1{p_0}+\frac1{p_1}+\frac1{p_3}+\frac1{p_{13}}.
+$$
+
+[HiddenRelations C-4.6](AURIC_FIB_ATOM_HIDDEN_RELATIONS_STATISTICS_PHASE_AND_SEAMS.md#4-从固定律残差到实际读口的统计信息)已给 $\tau'=I>0$；其中 $\vartheta$、$\mathcal I$ 分别对应本章 $\tau,I$。其 C-14.1、C-14.2 已给射影度量与完整位置标架的水平最小化。本章与这两条目的精确区别是
+
+$$
+g=2g_{\rm old},\qquad \theta^{\rm old}=-\theta,
+\qquad \Phi_{\rm old}=-\chi.
+$$
+
+因此与辛面积 $2\pi$ 相容的本章尺度为
+
+$$
+g=\frac12\sum_s\frac{dp_s^2}{p_s}
++2\left[\sum_sp_s\,d\theta_s^2-
+\left(\sum_sp_s\,d\theta_s\right)^2\right],
+$$
+
+其固定矩层、模去占位轨道后的水平商度量为
+
+$$
+g_{\rm red}=\frac I2\,d\kappa^2+\frac2I\,d\chi^2.
+$$
+
+这里不是另一个新的一般度量定理，而是对既有公式作相反角约定及两倍尺度的完整消费。具体的水平速度也可直接对照：令 $d\chi/dt=1$，取
+
+$$
+v_s:=\frac{d\theta_s}{dt}=\frac{d_s}{p_sI}.
+$$
+
+它满足
+
+$$
+\sum_s d_sv_s=1,\qquad \sum_sp_sv_s=0,
+\qquad
+\sum_sp_sv_s x_s=\sum_sp_sv_s y_s
+=\sum_sp_sv_s z_s=0,
+\qquad \sum_sp_sv_s^2=\frac1I.
+$$
+
+第一式使用四底角的 $d_s^2=1$ 及 $d_2=0$；余下正交式分别使用 $\sum d_s=0$ 及 $\sum d_sx_s=\sum d_sy_s=\sum d_sz_s=0$。对任意共同相位已去除、满足 $\sum d_s v_s=1$ 的代表，Cauchy–Schwarz 给 $1\le I\sum p_sv_s^2$，所选速度取等号，因而确为最短水平代表。概率方向 $dp_s=d_s\,d\kappa$ 给 $I/2$；相位方向给 $2/I$。振幅微分的概率—相位交叉内积纯虚，实度量没有 $d\kappa\,d\chi$ 交叉项。
+
+设 $\eta=\tau/2$。同一个振幅回路比为
+
+$$
+\zeta:=\frac{\psi_0\psi_{13}}{\psi_1\psi_3}
+=\exp(\eta-i\chi),\qquad
+ d\eta=\frac I2\,d\kappa,
+$$
+
+$$
+g_{\rm red}=\frac2I(d\eta^2+d\chi^2),\qquad
+\det(g_{\rm red})_{(\kappa,\chi)}=1.
+$$
+
+$\zeta$ 正是 C-13.3 的复比坐标，其 $u=\eta$、$\Phi=-\chi$；在非退化纤维内部，$\eta$ 从 $-\infty$ 严格增加到 $+\infty$，$\zeta$ 参数化 $\mathbb C^\times$。角仍按 $2\pi$ 周期识别，不能将复对数当成全局单值坐标。
+
+上述度量行列式为一，使内部 Riemann 面积等于所选辛面积元的绝对值；它是尺度与商度量的恒等式，不是物理不确定性原理。零概率处不用 $1/p_s$ 或 $\arg\psi_s$。C-14.3 的端点距离和圆周长在本章均乘 $\sqrt2$，所以单零端点锥角仍为 $2\pi$、双零端点锥角仍为 $\pi$；这一尺度变化不消除墙上的锥形限定。
+
+### 35.8 目标的四角差与隐藏角的 Hamilton 响应
+
+**命题 35.8（同一目标缺口的相位读法）。** 给任意实五模式函数 $f=(f_0,f_1,f_2,f_3,f_{13})$，令
+
+$$
+H_f([\psi])=\sum_sp_sf_s,\qquad
+J_f=f_0-f_1-f_3+f_{13}.
+$$
+
+在本章坐标和 Hamilton 符号下，
+
+$$
+H_f=f_0+(f_1-f_0)X+(f_3-f_0)Y+(f_2-f_0)Z+J_f\kappa,
+$$
+
+$$
+\dot\chi=J_f,\qquad \dot\kappa=0.
+$$
+
+因此在任一正宽度均值纤维上，三个可见均值能决定 $\mathbb E_p f$，当且仅当 $J_f=0$，也当且仅当此 Hamilton 流不转动隐藏角。
+
+证明。五函数展开和四角可识别条件已由[《基础公式》数学引文 2.2、§七](AURIC_FIB_ATOM_PYRAMID_FOUNDATIONAL_FORMULAS_AND_RELATIONS.md)及[《金字塔关联与原生接续》§23.1–23.2](AURIC_FIB_ATOM_PYRAMID_CORRELATION_AND_NATIVE_CONTINUATION.md)供应。其目标系数 $c_{xy}$ 对应 $J_f$，联合矩 $\mu_{13}$ 对应 $\kappa$，其低、中、高均值分别对应 $X,Z,Y$。应用此展开给 $H_f$ 的首式。
+
+由 §35.4 的 $\omega$，任意 Hamilton 函数的隐藏方程为 $\dot\chi=\partial_\kappa H$、$\dot\kappa=-\partial_\chi H$；对 $H_f$ 即得所述两式。可见均值固定且宽度正时，取内部两点 $\kappa\ne\kappa'$，期望差为 $J_f(\kappa-\kappa')$，故非零 $J_f$ 连任意均值后处理都不能消去此缺口。零宽度纤维上不存在此两点必要性，不能将正宽度结论无条件延伸过去。证毕。
+
+具体消费原生单窗数量 $f=(0,2,3,5,7)$，有 $J_f=0$，故
+
+$$
+H_f=2X+3Z+5Y,\qquad \dot\chi=0.
+$$
+
+同一数量的平方为 $f^2=(0,4,9,25,49)$，其 $J_{f^2}=49-4-25=20$，所以
+
+$$
+H_{f^2}=4X+9Z+25Y+20\kappa,\qquad \dot\chi=20.
+$$
+
+原有平方矩表达式仍归关联卷 §23.1；本节新增的连接是其隐藏系数恰为共轭角的 Hamilton 速度。这里的流参数无量纲，没有从原生数量取得物理能量或时钟。
+
+### 35.9 四次相互作用与同均值概率交换
+
+**命题 35.9（五模式回路的光滑非线性交换）。** 给实数 $g_0$，在归一化振幅上定义
+
+$$
+H_{\rm int}=2g_0\operatorname{Re}
+\left(\psi_0\psi_{13}\overline{\psi_1}\,\overline{\psi_3}\right).
+$$
+
+该函数光滑下降到整个 $\mathbb{CP}^4$，对占位 $T^3$ 不变，故其 Hamilton 流保持 $X,Y,Z$。在固定全正 $b$ 的图内，置
+
+$$
+R_b(\kappa)=\sqrt{(1-X-Y-Z+\kappa)(X-\kappa)(Y-\kappa)\kappa}
+=\sqrt{p_0p_1p_3p_{13}},
+$$
+
+则
+
+$$
+H_{\rm int}|_b=2g_0R_b(\kappa)\cos\chi,
+\qquad
+\dot\kappa=2g_0R_b\sin\chi,
+\qquad
+\dot\chi=2g_0R_b'\cos\chi,
+\qquad \dot p=\dot\kappa\,d.
+$$
+
+若 $g_0\ne0$，该交换不能由一个对所有初态都保持三占位期望的固定五阶 Hermitian Schrödinger Hamiltonian 实现。
+
+证明。归一化球上的四次表达式是实光滑多项式，共同相位在两正与两共轭因子之间抵消。对任意非零、未归一化向量 $a$，等价射影表达式为
+
+$$
+2g_0\operatorname{Re}
+\left(a_0a_{13}\overline{a_1}\,\overline{a_3}\right)
+\Big/\left(\sum_s|a_s|^2\right)^2.
+$$
+
+它对非零复数倍不变，分母在射影图上严格正，故下降函数在包括零分量的所有射影点光滑。占位重相位因 $v_0+v_{13}=v_1+v_3$ 抵消，因而 $T^3$ 不变。
+
+在全正坐标中，完整 Hamilton 函数为
+
+$$
+H_{\rm int}(X,Y,Z,\kappa,\chi)
+=2g_0\sqrt{(1-X-Y-Z+\kappa)(X-\kappa)(Y-\kappa)\kappa}\cos\chi.
+$$
+
+它依赖 $X,Y,Z,\kappa,\chi$，但独立于 $\vartheta_X,\vartheta_Y,\vartheta_Z$。故保持三可见动量的理由是对三个可见角的独立性，绝不是对三个可见概率坐标的独立性；可见角本身一般仍随 $\partial_XH,\partial_YH,\partial_ZH$ 演化。只有固定 $b$ 后才将根号记成单变量 $R_b(\kappa)$。
+
+应用 $\dot\kappa=-\partial_\chi H$、$\dot\chi=\partial_\kappa H$ 给两式。其中导数始终在固定 $b$ 下取，具体为
+
+$$
+R_b'=\frac{R_b}{2}
+\left(\frac1{p_0}-\frac1{p_1}-\frac1{p_3}+\frac1{p_{13}}\right).
+$$
+
+三个均值守恒及已有反解给 $\dot p=\dot\kappa d$。角图到零概率边界时这些根号导数不再是普通全局坐标表达式，但原射影 Hamilton 函数仍光滑；图上的奇异不等于向量场奇异。
+
+固定线性量子实现的排除直接消费更强的 [HiddenRelations 定理 C-29.2](AURIC_FIB_ATOM_HIDDEN_RELATIONS_STATISTICS_PHASE_AND_SEAMS.md#29-同一五模式的全输入保真方形记录与稳定子块)：同五标签、对所有密度初态保持三个占位的 CPTP 通道必为 Schur 通道，保持全部五个 $p_s$，故保持 $\kappa$。其标签 $(O,L,T,R,J)$ 与本章 $(0,1,2,3,13)$ 一一对应，三个对角占位算子也正是本章的 $x,y,z$。固定 Hermitian $K$ 的每个 $e^{-itK}$ 通道是此合同的特例，不允许非零 $\dot\kappa$。
+
+同一结论的 infinitesimal 对应为：对所有单位向量保持 $N_x,N_y,N_z$ 的期望，求 $t=0$ 导数得 $i[K,N_a]=0$。共同对角特征三元组正是五个互异权重，故对 $s\ne t$ 至少有一个 $a$ 满足 $(a_s-a_t)K_{st}=0$ 且 $a_s\ne a_t$，于是 $K_{st}=0$。所以 $K$ 对角、每个模式概率不动。这只是 C-29.2 在固定酉动力学内的具体对应，不重立较弱的通道分类。
+
+本交换确可非零：五概率均为 $1/5$，取 $\theta_0=\theta_1=\theta_2=\theta_3=0$、$\theta_{13}=\pi/2$，则 $\chi=\pi/2$、$R_b=1/25$，给 $\dot\kappa=2g_0/25$。因此 $g_0\ne0$ 时违反固定线性全初态占位保持所要求的 $\dot\kappa=0$。证毕。
+
+概率方向可象征写作
+
+$$
+F[\mathrm{null}]+F[1,3]\ \longleftrightarrow\ F[1]+F[3].
+$$
+
+它表示四角质量交换：空模式参与，中模式不参与；两边总质量、三占位和单窗数量相同。它不是有序树语法中的加法等式，不是两份事件相同，也没有从合法模式语法获得一个可执行的物理交换仪器。非线性 Hamilton 完成与线性五能级 Schrödinger 模型的差别，正由上述全初态保持合同及非零交换见证确定。
+
+### 35.10 原生守卫、固定仿射分支与反辛符号
+
+数学引文（原生更新的准确范围）。[《基础公式》数学引文 1.2、定义 11.6](AURIC_FIB_ATOM_PYRAMID_FOUNDATIONAL_FORMULAS_AND_RELATIONS.md)及关联卷约定 23.1 供应
+
+$$
+M=\begin{pmatrix}0&1\\1&1\end{pmatrix},\qquad
+S=M^3=\begin{pmatrix}1&2\\2&3\end{pmatrix},\qquad
+C'=SC+\delta_\sigma.
+$$
+
+此处把组成位移记为 $\delta_\sigma$，以免与概率回路向量 $d$ 混同；按本章模式次序，它依次为
+
+$$
+\delta_0=(0,0)^{\mathsf T},\quad
+\delta_1=(1,0)^{\mathsf T},\quad
+\delta_2=(0,1)^{\mathsf T},\quad
+\delta_3=(1,1)^{\mathsf T},\quad
+\delta_{13}=(2,1)^{\mathsf T}.
+$$
+
+实际 HIGH-to-LOW 读者的状态为 $(s,C)$，$s\in\{0,1\}$、$C=(U,V)^{\mathsf T}\in\mathbb N_0^2$。合法条件和接缝更新是
+
+$$
+s\,y(\sigma)=0,\qquad s'=x(\sigma).
+$$
+
+非法输入进入并保持吸收错误态 $\bot$，不同于合法数量零；不能删去接缝、拒绝质量或中间回复，继续称作同一个读者。空窗口总合法，并执行 $C'=SC,s'=0$，不是恒等操作或停止。
+
+另将组成扩展到 $C\in\mathbb R^2$，人为选择
+
+$$
+\omega_C=dU\wedge dV,\qquad
+J=\begin{pmatrix}0&1\\-1&0\end{pmatrix}.
+$$
+
+二维矩阵恒等式 $L^{\mathsf T}JL=(\det L)J$ 与 $M^{\mathsf T}JM=-J$、两步保持，已有所有者是 [FibonacciAtomicRelationGeneration §296、式 (296.3)](FIBONACCI_ATOMIC_RELATION_GENERATION.md#296-fib-atom-与哈密顿结构离散作用量及因果响应)。以 $L=S=M^3$ 消费该结论，得
+
+$$
+\det M=\det S=-1,\qquad
+M^*\omega_C=S^*\omega_C=-\omega_C,
+\qquad (M^2)^*\omega_C=(S^2)^*\omega_C=\omega_C.
+$$
+
+固定 $\delta_\sigma$ 不改变微分，因此每个固定实仿射分支 $C\mapsto SC+\delta_\sigma$ 仍反辛。两个固定、实际可接受分支的组成在实扩展上为
+
+$$
+C\longmapsto S^2C+S\delta_{\sigma_1}+\delta_{\sigma_2},
+$$
+
+其线性部分保持 $\omega_C$。这只对应已固定分支的组成变换，既不将整数读者变成光滑流形，也不证明分支选择、拒绝或接缝遗忘可逆。
+
+单步保绝对面积，但反转辛形式；绝对面积保持与辛保持有区别。Hamilton 流满足 $\mathcal L_{X_H}\omega=d(\iota_{X_H}\omega)=d^2H=0$，所以同一个 $\omega_C$ 下，单步 $M$ 或 $S$ 都不能是 Hamilton 流的时间一映射。此既有符号边界是下一节选择两次空窗口的必要条件。
+
+### 35.11 两次实际空窗口端点的精确 Hamilton 插值
+
+**定理 35.11（两空窗口实组成端点的 Hamilton 表示）。** 取 $\varphi=(1+\sqrt5)/2$，在实组成平面 $(U,V)$ 及 $\omega_C=dU\wedge dV$ 上令
+
+$$
+Q_{\rm gold}(U,V)=U^2+UV-V^2,\qquad
+H_{\rm fib}=-\frac{6\log\varphi}{\sqrt5}Q_{\rm gold}.
+$$
+
+按 $\iota_{X_H}\omega_C=dH$，该完整线性 Hamilton 流的时间一映射恰为
+
+$$
+C\longmapsto M^6C=S^2C,
+\qquad
+M^6=S^2=\begin{pmatrix}5&8\\8&13\end{pmatrix}.
+$$
+
+它表示两个实际空窗口在实组成上的组合端点；其连续时间中点不是原生第一空窗口的变换 $S$，整个流也没有包含接缝、拒绝及逐窗输出。
+
+证明。$Q_{\rm gold}$ 的所有者是 [SecondOrder 定理 60.1](AURIC_FIB_SECOND_ORDER_RELATION_COMPLETION.md#60-fib-不定型代数范数与方块拼接)，参数对应为 $(a,b)=(U,V)$、$Q_F=Q_{\rm gold}$。该条目已给 $Q_F(MC)=-Q_F(C)$，故三步 $S$ 仍反号、六步保持；这里不重立原生二次型符号定理。
+
+记 $c=6\log\varphi/\sqrt5$。Hamilton 方程具体为
+
+$$
+\dot U=\partial_VH_{\rm fib}=c(-U+2V),\qquad
+\dot V=-\partial_UH_{\rm fib}=c(2U+V).
+$$
+
+因此向量场矩阵为
+
+$$
+A=cB,\qquad
+B=2M-I=\begin{pmatrix}-1&2\\2&1\end{pmatrix},
+\qquad B^2=5I.
+$$
+
+其流 $e^{tA}$ 对所有实 $t$ 存在。矩阵谱投影直接消费[《基础公式》数学引文 13.2](AURIC_FIB_ATOM_PYRAMID_FOUNDATIONAL_FORMULAS_AND_RELATIONS.md)：其 $R_f=B/\sqrt5$，$P_\pm=(I\pm B/\sqrt5)/2$。因此
+
+$$
+M=\varphi P_+-\varphi^{-1}P_-,\qquad
+M^6=\varphi^6P_++\varphi^{-6}P_-,
+$$
+
+$$
+e^{tA}=\varphi^{6t}P_++\varphi^{-6t}P_-
+=\cosh(6t\log\varphi)I+
+\frac{\sinh(6t\log\varphi)}{\sqrt5}B.
+$$
+
+时间一的等式是精确代数等式：$\varphi^3=2+\sqrt5$，所以 $\varphi^6=9+4\sqrt5$、$\varphi^{-6}=9-4\sqrt5$，从而
+
+$$
+\cosh(6\log\varphi)=9,\qquad
+\frac{\sinh(6\log\varphi)}{\sqrt5}=4,
+\qquad
+ e^A=9I+4B=\begin{pmatrix}5&8\\8&13\end{pmatrix}=S^2.
+$$
+
+原生空模式的位移 $\delta_0=0$。对任一未拒绝状态 $(s,C)$，连续读两次实际空窗口，接缝均合法，实际状态依次为
+
+$$
+(s,C)\longmapsto(0,SC)\longmapsto(0,S^2C).
+$$
+
+因此上述流确匹配所述实组成端点。它没有构造全状态 $(s,C)$ 的连续流：接缝重置及错误态没有加入此实平面。
+
+在时间中点，连续映射为
+
+$$
+e^{A/2}=\varphi^3P_++\varphi^{-3}P_-
+=\sqrt5 I+\frac2{\sqrt5}B,
+$$
+
+其两个特征值均正；原生一步窗口矩阵则为
+
+$$
+S=M^3=\varphi^3P_+-\varphi^{-3}P_-.
+$$
+
+$S$ 有一个负特征值，故 $e^{A/2}\ne S$。还可在同一原生组成 $C=(1,0)^{\mathsf T}$ 上直接区别：第一空窗口给 $(1,2)^{\mathsf T}$，连续中点给 $(3,4)^{\mathsf T}/\sqrt5$，两空窗口最终给 $(5,8)^{\mathsf T}$。连续中点非整数，且整个 Hamilton 流保持 $Q_{\rm gold}$，原生第一步将它反号。零点或特殊输入的偶合不改变两映射不同的结论。证毕。
+
+此插值的参数是选择的连续参数，不给物理时钟，不要求中间实组成对应合法整数树，不保留第一窗口的原生数量回复。单步反辛符号和 golden 型均为既有结果；本节的具体应用是以同一二次型构造两空窗口组合端点的精确实 Hamilton 插值。
+
+### 35.12 固定原生仿射分支的余切提升
+
+数学引文与分支对应。本卷 §1.1 已给一般可逆离散映射的余切提升。将其中 $x=C$、$F(C)=SC+\delta_\sigma$，限制在一个固定、实际合法的分支，并在实扩展上另供共轭协向量 $\Pi\in\mathbb R^2$，得到
+
+$$
+\widetilde F_\sigma(C,\Pi)
+=(SC+\delta_\sigma,S^{-\mathsf T}\Pi),
+\qquad
+\omega_{\rm cot}=dU\wedge d\Pi_U+dV\wedge d\Pi_V.
+$$
+
+本原生矩阵的 $\det S=-1$ 仍允许可逆余切提升；具体有
+
+$$
+S^{-\mathsf T}=\begin{pmatrix}-3&2\\2&-1\end{pmatrix}.
+$$
+
+将既有保持律应用于该分支，计算是
+
+$$
+\widetilde F_\sigma^*(\Pi^{\mathsf T}dC)
+=(S^{-\mathsf T}\Pi)^{\mathsf T}d(SC+\delta_\sigma)
+=\Pi^{\mathsf T}dC,
+\qquad
+\omega_{\rm cot}=-d(\Pi^{\mathsf T}dC).
+$$
+
+故此四维提升保持辛形式，尽管其二维基映射反辛。新增的是协向量及四维载体，不是把原生 $C$ 的单步反辛符号改成保辛。固定 $\sigma$ 是调用 §1.1 的必要对应：若把多个分支合并、删去旧接缝或保留吸收错误态，整个读者未必可逆，也不自动成为上述微分同胚。可逆分支的对偶拉回不能替代拒绝、遗忘及实际输出的联合状态完成。
+
+### 35.13 长路径关系矩与共轭差分相位
+
+**定义 35.12（路径支撑的振幅完成）。** 令 $n\ge1$，$\Gamma_n$ 为路径 $[n]$ 上无相邻位置的全部独立集，包括空集。在标签 $I\in\Gamma_n$ 上另供复振幅
+
+$$
+\psi_I=\sqrt{p_I}e^{-i\theta_I},\qquad
+\sum_{I\in\Gamma_n}p_I=1,
+$$
+
+模去共同相位，得到 $\mathbb{CP}^{|\Gamma_n|-1}$，仍取射影直线辛面积 $2\pi$。Fibonacci 限制决定合法支撑，复振幅和辛配对仍是额外结构。
+
+数学引文（原有矩与反演）。[《金字塔关联与原生接续》§23.2](AURIC_FIB_ATOM_PYRAMID_CORRELATION_AND_NATIVE_CONTINUATION.md#232-层析及奇偶应用所用的已有观察坐标)及其具名 HiddenRelations 前置已给
+
+$$
+\mu_T=\sum_{I\supseteq T}p_I,\qquad
+\mu_\varnothing=1,\qquad
+p_I=\sum_{T\supseteq I}(-1)^{|T|-|I|}\mu_T,
+\qquad I,T\in\Gamma_n.
+$$
+
+其反演方向 $D_T(I)=(-1)^{|T|-|I|}\mathbf1_{I\subseteq T}$ 与本章相同。概率正性仍须每个逆坐标非负；不能把任意矩数组当成概率律。每个合法 $T$ 的所有子集合法，故包含区间是 Boolean 区间；当 $n=1$ 时，$\Gamma_1=\{\varnothing,\{1\}\}$ 是 Boolean 格；当 $n\ge2$ 时，相邻单点集 $\{1\}$ 与 $\{2\}$ 在合法 $\Gamma_n$ 中没有共同上界，故 $\Gamma_n$ 不是 Boolean 格。这里沿用既有 Möbius 反演，不主张新的反演理论。
+
+**命题 35.13（低阶关系约化后的高阶共轭对）。** 在全部 $p_I>0$ 的图中定义完整相位变换
+
+$$
+\Phi_T=\sum_{I\subseteq T}(-1)^{|T|-|I|}\theta_I,
+\qquad \Phi_\varnothing=\theta_\varnothing.
+$$
+
+则局部归一化势及射影辛形式为
+
+$$
+\lambda=\sum_{T\in\Gamma_n}\mu_T\,d\Phi_T,
+\qquad
+\omega=\sum_{\substack{T\in\Gamma_n\\T\ne\varnothing}}
+ d\Phi_T\wedge d\mu_T.
+$$
+
+取整数 $0\le r\le\lceil n/2\rceil$，固定全部 $|T|\le r$ 的矩，包含归一化，并在含有全正律的可行层上除去相应非空低阶矩的 Hamilton 相位平移，得到实维
+
+$$
+2D_{n,r},\qquad
+D_{n,r}=\sum_{k=r+1}^{\lceil n/2\rceil}\binom{n-k+1}{k}
+$$
+
+的正部分辛约化；其辛形式正是余下 $|T|>r$ 的配对和。
+
+证明。记 $N=|\Gamma_n|$。按包含关系延伸成的同一全序，整数 zeta 矩阵为对角一的三角矩阵，逆为上述整数 Möbius 矩阵。因此相位变换在整个周期环面上为 unimodular 变换，整数逆式为
+
+$$
+\theta_I=\sum_{T\subseteq I}\Phi_T\pmod{2\pi}.
+$$
+
+将此式代入 $\lambda=\sum_Ip_I\,d\theta_I$，有限换序给
+
+$$
+\lambda=\sum_Ip_I\sum_{T\subseteq I}d\Phi_T
+=\sum_T\left(\sum_{I\supseteq T}p_I\right)d\Phi_T
+=\sum_T\mu_T\,d\Phi_T.
+$$
+
+共同相位只改变 $\Phi_\varnothing$，而 $\mu_\varnothing=1$，取 $-d\lambda$ 并模去共同相位即得 $\omega$。这里仍是局部势；不能从此表达式推出整个射影空间有全局原始一形式。
+
+完整非空矩是正概率图的独立坐标，完整 $\Phi_T$ 是独立周期角；$\mu_T$ 的 Hamilton 向量场为 $\partial_{\Phi_T}$。在原相位上的对应作用为
+
+$$
+\theta_I\longmapsto\theta_I+
+\sum_{\substack{\varnothing\ne T\subseteq I\\|T|\le r}}t_T,
+\qquad t_T\in\mathbb R/2\pi\mathbb Z.
+$$
+
+允许全部非空 $T$ 的参数时，这正是完整的有效相位环面 $T^{N-1}$；其 Hamilton 矩为全部非空 $\mu_T$，周期均为 $2\pi$。低阶作用是该环面的坐标子群。整变换保证其有效性；在全正图上它直接平移不同 $\Phi_T$，所以自由。归一化常数没有新的相位生成元：它只对应已除去的共同相位，不能再计一次约束与轨道。
+
+非空低阶矩数为 $L=\sum_{k=1}^r\binom{n-k+1}{k}$。这些矩微分独立，固定它们从 $2(N-1)$ 减去 $L$ 维，除去相位轨道再减 $L$ 维，得到 $2(N-1-L)$。固定低阶矩后，高阶矩的可行正域由已有概率逆式的严格正不等式给出，是一个非空开凸域；其角为剩余 $D_{n,r}=N-1-L$ 个完整周期角。限制和下降二形式后只剩高阶配对。
+
+独立集阶数计数直接消费关联卷 §23.2：合法 $k$ 元组 $i_1<\cdots<i_k$ 通过 $i_j\mapsto i_j-(j-1)$ 对应 $[n-k+1]$ 的 $k$ 元组，故其数为 $\binom{n-k+1}{k}$，且 $N=F_{n+2}$。将这既有计数代入 $N-1-L$ 即为所述公式，空和给零维。证毕。
+
+当 $n=3,r=1$ 时，$\mu_{\{1\}}=X$、$\mu_{\{2\}}=Z$、$\mu_{\{3\}}=Y$、$\mu_{\{1,3\}}=\kappa$，对应 $\Phi_{\{1\}}=\vartheta_X$、$\Phi_{\{2\}}=\vartheta_Z$、$\Phi_{\{3\}}=\vartheta_Y$、$\Phi_{\{1,3\}}=\chi$，本命题回到 §35.4–35.5 的一组隐藏配对。
+
+当 $n=9,r=2$ 时，已有逐阶数为
+
+$$
+1,9,\binom82=28,\binom73=35,\binom64=15,\binom55=1,
+\qquad N=89.
+$$
+
+固定行包括质量，共 $1+9+28=38$ 行，其中只有 $37$ 个非空相位生成元。原振幅射线实维 $176$，约化后为
+
+$$
+176-2\cdot37=102=2(35+15+1).
+$$
+
+所以此处是 $51$ 个高阶概率—角对；不是 $102$ 维时空，也不是取得这些角的仪器数。公式只在存在全正律的正部分层及相应自由作用上成立；零支撑、端点紧化、稳定子和奇异层须分别分析，不能沿用全正维数。Fibonacci 在此提供合法独立集和计数，配对原理本身是一般有限状态振幅完成中的整关联变换。
+
+### 35.14 条件化不是固定矩后的辛约化
+
+**命题 35.14（本五模式的事件投影与降秩）。** 对实际事件 $E\subseteq\Sigma$，令 $P_E$ 为对应模式的正交投影。射影条件化映射
+
+$$
+[\psi]\longmapsto[P_E\psi]
+$$
+
+仅在 $P_E\psi\ne0$ 的域上定义，其概率为
+
+$$
+p_s\longmapsto\frac{\mathbf1_{s\in E}p_s}{\sum_{t\in E}p_t}.
+$$
+
+若 $1\le\ell:=|E|<5$，则此映射的目标为 $\mathbb{CP}^{\ell-1}$，微分秩至多 $2\ell-2<8$，所以它不是任何八维开域的辛嵌入，也不是同一八维状态空间内可逆 Hamilton 演化。
+
+证明。事件概率正时，归一化 $P_E\psi/\|P_E\psi\|$ 的模平方给所列条件律；事件概率零则投影为零，不能定义射线。目标只有 $\ell$ 个模式，其射线实维 $2\ell-2$，故秩不超过此数。辛嵌入需要微分单射：若 $DF(v)=0$ 且 $F^*\omega_{\rm target}=\omega_{\rm source}$，则对任意 $w$ 有 $\omega_{\rm source}(v,w)=0$，由非退化得 $v=0$。此处从八维开域到严格低维目标不能满足此条件，Hamilton 时间映射的可逆性同样不成立。证毕。
+
+条件化选择并归一化一个实际事件；§35.5 则先固定连续矩值，再将位置相位轨道识别。两者的域、等价关系和结果不同。前者没有要求固定 $X,Y,Z$，后者也没有以事件后验替代原概率律；即使某个输出维数偶合，也不能把它们当作同一种操作。若 $E=\Sigma$，投影为恒等；若 $E=\varnothing$，域为空。
+
+测量记录、日志标签及环境的可逆完成需要另供联合载体和实际操作。将它们明确加入后可能研究更大空间的幺正或 Hamilton 实现，但本事件投影的降秩证明没有给出那一构造，亦没有把经典条件化本身变成可逆流。
+
+### 35.15 数学来源、应用归属与解释界限
+
+数学引文。下表只说明本章推导使用的原料与精确对应；已有一般结果不在本章重新取得新定理身份。
+
+| 来源 | 本章消费与对应 |
+| --- | --- |
+| [Ashtekar–Schilling，Geometrical Formulation of Quantum Mechanics](../../../Library/Geometry/ashtekar1997geometrical.md)，[原文](https://arxiv.org/abs/gr-qc/9706069)；本卷 §1.3 | 射影 Kähler 纯态及 Hamilton 量子背景；本章负指数相位、直线面积 $2\pi$ 和模式占位须按 §35.3 明确选择 |
+| [Cannas da Silva，Lectures on Symplectic Geometry](https://people.math.ethz.ch/~acannas/Papers/lsg.pdf)，§§1、8、定理 23.1、定义 28.1、定理 28.2 | 非退化二形式与 Darboux 局部配对；自由正则矩层上的辛约化；紧致光滑半维环面作用的 Delzant 条件。§35.5 的自由性由本五权重的整子式检查承担 |
+| [Delzant，Hamiltoniens périodiques et images convexes de l’application moment](https://www.numdam.org/articles/10.24033/bsmf.2100/) | §35.2 六维 toric 实现的简单顶点必要条件；不用于排除八维的 $T^3$ 非半维完成 |
+| [HiddenRelations C-13.2、C-13.3](AURIC_FIB_ATOM_HIDDEN_RELATIONS_STATISTICS_PHASE_AND_SEAMS.md#13-固定均值的五态相位商与复关系坐标) | 完整周期相位商、复回路与闭纤维球面拓扑；$(u,\Phi)=(\eta,-\chi)$，旧振幅角为新角的负数 |
+| [HiddenRelations C-4.6、C-14.1–C-14.3](AURIC_FIB_ATOM_HIDDEN_RELATIONS_STATISTICS_PHASE_AND_SEAMS.md) | 对数四角比导数、商度量及墙上端点；$(\vartheta,\mathcal I)=(\tau,I)$，本章度量为原度量两倍，圆周周期相同，锥角不变 |
+| [HiddenRelations C-29.2](AURIC_FIB_ATOM_HIDDEN_RELATIONS_STATISTICS_PHASE_AND_SEAMS.md) | 全输入三占位保持 CPTP 通道必保持全部五标签概率；用于 §35.9 排除非零四次交换的固定线性实现，不重新发表较弱刚性结果 |
+| [SecondOrder 假设 61.1、定理 61.2、定理 60.1](AURIC_FIB_SECOND_ORDER_RELATION_COMPLETION.md) | $(N,2,3,5,25)$ 对应 $(0,1,2,3,13)$，另供 $\mathbb C^5$ 与八实维纯射线；$Q_F(a,b)=Q_{\rm gold}(U,V)$，$a=U,b=V$ |
+| [FibonacciAtomicRelationGeneration §296、式 (296.3)](FIBONACCI_ATOMIC_RELATION_GENERATION.md#296-fib-atom-与哈密顿结构离散作用量及因果响应) | $M$ 的反辛符号与两步保辛；§35.10 将它用于 $S=M^3$ 和固定仿射位移 |
+| [《静态接缝、转换循环与 Fibonacci 翻转环》§30](AURIC_FIB_ATOM_STATIC_SEAMS_TRANSITION_CIRCULATION_AND_FIBONACCI_TOGGLE_CYCLES.md#30-稀疏共享中窗的循环盲点与原生接口对应) | 纤维宽度坐标积分 $1/24$，$\ell=w$；本章将其用于归一化 Liouville 推前，区别于该卷欧氏嵌入体积 |
+| [《基础公式》§§12.1–12.2、数学引文 13.2、定义 11.6](AURIC_FIB_ATOM_PYRAMID_FOUNDATIONAL_FORMULAS_AND_RELATIONS.md) | 整数区间 $(U,V,W,k)=(mX,mY,mZ,m\kappa)$；谱投影 $R_f=B/\sqrt5$、$P_\pm=(I\pm R_f)/2$；同一接缝、吸收拒绝及实际空窗更新 |
+| [《金字塔关联与原生接续》§23.1–23.2](AURIC_FIB_ATOM_PYRAMID_CORRELATION_AND_NATIVE_CONTINUATION.md) | 同一五模式数量与平方矩；路径关系矩、双向 Möbius 反演及各阶计数；本章用其对偶坐标配上完整周期差分角 |
+| 本卷 §1.1 | 一般离散余切提升；§35.12 直接代入固定原生分支 $F(C)=SC+\delta_\sigma$ |
+
+上述一般辛几何、射影量子背景、整关联反演及已具名的仓内公式作为 literature-attested 或既有仓内原料使用。本章的 repo-derived 内容是这些原料在声明的五模式关系与原生组成合同中的具体连接：正则约化及选择的可见体积先验、目标缺口的隐藏角响应、光滑四次同均值交换、两空窗口组合端点的精确 Hamilton 插值，以及低阶关系约化后的高阶共轭配对。本章不据这些综合应用主张文献首次性。
+
+辛完成保留了联合概率方向，并另供与它共轭的相位；取得、操作或认证该相位仍需要实际资源。有限模式数、概率回路、无量纲度量行列式和路径阶数都不指定时空维数、物理时钟、Planck 尺度或实验控制菜单。原生读者的整数状态、接缝与拒绝合同不由连续表示取代；条件化与辛约化不由同名的“商”合并。这些界限与每一具体推导的正支撑、正则值、周期和固定分支假设共同约束其结论。
+
+## 追加锚（本行以下为增补区）
+
+## 36. Auric FIB ATOM：素数精度下的切向残差、周期提升与原生接续
+
+### 36.1 同一原生组成的黄金代数与五模式探针
+
+**定义 36.1（带接缝的组成及三种推进）。** 沿用本卷 §35.10 的 HIGH-to-LOW 读向。实际未拒绝状态为 $(s,C)$，其中 $s\in\{0,1\}$，$C=(U,V)^{\mathsf T}\in\mathbb N_0^2$；模式集合为 $\Sigma=\{0,1,2,3,13\}$。令
+
+$$
+M=\begin{pmatrix}0&1\\1&1\end{pmatrix},\qquad
+T=M^2=\begin{pmatrix}1&1\\1&2\end{pmatrix},\qquad
+S=M^3=\begin{pmatrix}1&2\\2&3\end{pmatrix}.
+$$
+
+一个实际窗口的守卫及更新为
+
+$$
+s\,y(\sigma)=0,\qquad
+(s,C)\longmapsto\bigl(x(\sigma),SC+\delta_\sigma\bigr).
+$$
+
+非法窗口进入吸收错误态 $\bot$；$\bot$ 不与合法数量零合并。模式坐标 $x,y$ 分别是 LOW、HIGH 占位。下表的数量是该模式增量的线性读数 $q_0\delta_\sigma$，$q_0=(2,3)$，不是代数范数。
+
+| 模式 $\sigma$ | $x(\sigma)$ | $y(\sigma)$ | $\delta_\sigma$ | $q_0\delta_\sigma$ | $Q(\delta_\sigma)$ |
+| --- | ---: | ---: | --- | ---: | ---: |
+| $0$ | 0 | 0 | $(0,0)$ | 0 | 0 |
+| $1$ | 1 | 0 | $(1,0)$ | 2 | 1 |
+| $2$ | 0 | 0 | $(0,1)$ | 3 | $-1$ |
+| $3$ | 0 | 1 | $(1,1)$ | 5 | 1 |
+| $13$ | 1 | 1 | $(2,1)$ | 7 | 5 |
+
+这里
+
+$$
+R=\mathbb Z[\theta]/(\theta^2-\theta-1),\qquad
+\bar\theta=1-\theta,\qquad
+\alpha(C)=U+V\theta,
+\qquad Q(C)=\alpha(C)\overline{\alpha(C)}=U^2+UV-V^2.
+$$
+
+在基 $(1,\theta)$ 中，乘 $\theta$ 正是 $M$。黄金范数及其反号律来自 [SecondOrder 定理 60.1](AURIC_FIB_SECOND_ORDER_RELATION_COMPLETION.md#60-fib-不定型代数范数与方块拼接)：$Q(MC)=-Q(C)$，所以 $Q(SC)=-Q(C)$，而 $Q(TC)=Q(C)$。这不把 $Q$ 解释为欧氏长度。
+
+**命题 36.2（联合模式的乘法探针与实际窗口不同）。** 在上述同一组成坐标中，令
+
+$$
+D=2M-I=\begin{pmatrix}-1&2\\2&1\end{pmatrix},\qquad
+G=2I+M=\begin{pmatrix}2&1\\1&3\end{pmatrix}.
+$$
+
+$G$ 是乘 $\alpha(\delta_{13})=2+\theta$ 的矩阵，满足 $D^2=5I$、$G^2=5T$、$\det G=5$。故 $G$ 模素数 $p\ne5$ 可逆；模五时 $G$ 是非零平方零矩阵，且
+
+$$
+\operatorname{im}G=\ker G
+=\mathbb F_5(2,1)^{\mathsf T}.
+$$
+
+这个退化探针不等于原生输入 $13$ 的迭代。
+
+证明。由 $\theta^2=\theta+1$，有
+
+$$
+(2\theta-1)^2=5,\qquad
+2+\theta=\theta(2\theta-1),\qquad
+(2+\theta)^2=5\theta^2.
+$$
+
+取乘法矩阵得所列恒等式，取范数得 $\det G=N(2+\theta)=5$。模五的 $G$ 非零、行列式零，故秩一；$G^2=0$ 给像包含核，二者维数均一，代入 $(2,1)$ 得指定直线。$D$ 模五也非零、平方零且有同一像核。表中的联合数量是 $2\cdot2+3\cdot1=7$，范数却是 $4+2-1=5$，两种读数不能互换。
+
+实际输入 $13$ 的更新为 $C\mapsto SC+(2,1)^{\mathsf T}$，是仿射平移分支，并非 $C\mapsto GC$。它接受时须旧接缝为零，接受后新接缝为一；紧接另一个 $13$ 使 $1\cdot1\ne0$，被拒绝。因此 $(13,13)$ 不是循环合法词，也不能用 $G^2=5T$ 为重复输入赋予合法性。证毕。
+
+### 36.2 模范数一读口的全部精度纤维
+
+**定义 36.3（组成余数上的范数一层）。** 对整数 $n\ge2$，置
+
+$$
+R_n=R/nR,\qquad
+\mathcal C_n=\{(U,V)\in(\mathbb Z/n\mathbb Z)^2:Q(U,V)=1\}.
+$$
+
+这是实际组成余数中满足指定方程的层，也可独立研究为整个余数平面的代数子集。研究整个集合不假定它的每一点都由某个另行固定的原生初始化取得。$T$ 在该集合上是置换；一个实际空窗口使用 $S$，两个实际空窗口才使用 $S^2=T^3$。
+
+**命题 36.4（精度增加一位时的切向自由度）。** 对每个素数 $p$ 和每个整数 $m\ge1$，约化
+
+$$
+\mathcal C_{p^{m+1}}\longrightarrow\mathcal C_{p^m}
+$$
+
+满射，且每个纤维恰有 $p$ 个点。给定粗点的整数代表 $C=(U,V)$，令
+
+$$
+c=\frac{Q(C)-1}{p^m}\pmod p.
+$$
+
+它的提升恰为 $C+p^m(a,b)$，其中 $(a,b)\in\mathbb F_p^2$ 满足
+
+$$
+(2U+V)a+(U-2V)b=-c\pmod p.
+$$
+
+因此同一纤维的两提升之差属于 $p^m\ker\nabla Q(C)$；这里的切向是有限域线性化的核。
+
+证明。二次型的精确展开为
+
+$$
+Q(C+p^m(a,b))
+=Q(C)+p^m\bigl((2U+V)a+(U-2V)b\bigr)+p^{2m}Q(a,b).
+$$
+
+因 $2m\ge m+1$，模 $p^{m+1}$ 的方程正是所列仿射直线。其梯度不为零：奇 $p$ 时 Euler 等式
+
+$$
+U(2U+V)+V(U-2V)=2Q(C)=2\pmod p
+$$
+
+排除两个系数同时为零，连 $p=5$ 也包括在内。$p=2$ 时梯度为 $(V,U)$，若为零则 $Q(C)=0$，仍矛盾。非零线性泛函 $\mathbb F_p^2\to\mathbb F_p$ 满射，每个纤维大小为 $p$，故每个粗点都有恰好 $p$ 个提升。
+
+更换整数代表会改变 $c$ 和提升参数的原点，不改变实际提升集合及差空间。此处没有为有限域指定欧氏角度或弧长，不能把这些 $p$ 个点称为实圆上相邻的切线点。证毕。
+
+### 36.3 精度层的状态数与模五的平行线
+
+**命题 36.5（同一范数读口在各素数精度的容量）。** 对素数 $p$、整数 $m\ge1$，
+
+$$
+|\mathcal C_{p^m}|=
+\begin{cases}
+3\cdot2^{m-1},&p=2,\\
+2\cdot5^m,&p=5,\\
+p^{m-1}\bigl(p-\epsilon_p\bigr),&p\ne2,5,
+\end{cases}
+\qquad \epsilon_p=\left(\frac5p\right).
+$$
+
+特别地，联合模式的乘法探针在模五退化，并不使范数一读口的精度提升退化。
+
+证明。使用 [DLMF §27.9](https://dlmf.nist.gov/27.9) 的 Legendre 符号约定；这里只把二次特征求和作为这个指定读口的计数工具。奇 $p\ne5$ 时可逆换元 $Y=2U+V$、$Z=V$ 给
+
+$$
+Y^2-5Z^2=4.
+$$
+
+令 $\chi$ 为二次特征并置 $\chi(0)=0$。对于非零 $a\in\mathbb F_p$，数等式 $z^2-y^2=a$ 的解：$(z-y)(z+y)=a$ 中第一个因子可取任意非零值，第二个由它唯一决定；二可逆，故共有 $p-1$ 对。按 $z$ 计数又为 $p+\sum_z\chi(z^2-a)$，所以该和为 $-1$。取 $a=-4/5$，得到
+
+$$
+|\mathcal C_p|
+=p+\sum_Z\chi(5Z^2+4)
+=p+\chi(5)\sum_Z\chi(Z^2+4/5)
+=p-\epsilon_p.
+$$
+
+模二时，$(1,0),(0,1),(1,1)$ 是全部范数一点，共三个。模五时有
+
+$$
+4Q(U,V)=(2U+V)^2-5V^2,
+\qquad Q=1\iff2U+V=2\ \text{或}\ -2.
+$$
+
+两条平行直线互不相交，每条五点，故共有十点。沿命题 36.4 每增加一位精度，点数乘 $p$，得全部公式。
+
+退化发生在 $R_5$ 的判别式及 $G$ 的乘法核上；范数一层上的梯度仍非零。尤其 $\ker G$ 上 $U=2V$，给 $Q=5V^2=0\pmod5$，它不与 $\mathcal C_5$ 相交。证毕。
+
+### 36.4 空输入组成的周期、延迟与逐层分叉
+
+**命题 36.6（范数一状态将矩阵阶变成点周期）。** 对 $n\ge2$ 令 $d_n=\operatorname{ord}_n(T)$。每个 $C\in\mathcal C_n$ 的 $T$ 点周期都恰为 $d_n$。更一般地，$\alpha(C)$ 在 $R_n$ 中为单位，足以保证这一结论；单位不是满周期的必要条件。
+
+证明。$\alpha(C)\overline{\alpha(C)}=1$，故范数一元素可逆。若 $T^kC=C$，则 $(\theta^{2k}-1)\alpha(C)=0$，乘逆元得 $\theta^{2k}=1$。乘法正则表示在基 $(1,\theta)$ 中忠实，所以这等价于 $T^k=I$，从而最小正 $k=d_n$。反向显然。作为必要性的反例，模十一取 $C=(1,4)$，它的范数为零，却是 $M$ 的特征值四的特征向量；$T$ 在此直线乘五，而五模十一的阶为五。$T$ 的两个特征值为五、九，均阶五，故 $d_{11}=5$，这个非单位也有满 $T$ 周期。证毕。
+
+**命题 36.7（指定组成时钟的准确提升深度）。** 对奇素数 $p$ 定义
+
+$$
+e_p=\min_{i,j}v_p\bigl((T^{d_p}-I)_{ij}\bigr),\qquad v_p(0)=+\infty.
+$$
+
+则 $1\le e_p<\infty$，并对所有 $m\ge1$ 有
+
+$$
+d_{p^m}=d_p\,p^{\max(0,m-e_p)}.
+$$
+
+奇素数 $p\ne5$ 的范数一循环数因此是
+
+$$
+\frac{p-\epsilon_p}{d_p}\,p^{\min(m-1,e_p-1)}.
+$$
+
+从第 $m$ 层提升到第 $m+1$ 层时，若 $m<e_p$，每个粗循环分成 $p$ 个同长度循环；若 $m\ge e_p$，每个粗循环的全部提升合成一个长度乘 $p$ 的循环。
+
+证明。约化给 $e_p\ge1$；$T^{d_p}$ 的正非对角项不为零，故差矩阵不是零矩阵，$e_p$ 有限。写 $T^{d_p}=I+p^{e_p}B$，其中 $B\not\equiv0\pmod p$。
+
+这里消费 [PERIODIC_TREE 附录 R.13–R.17](PERIODIC_TREE.md#附录-rfibonacci-回归谱与素数幂提升) 的整数二项式提升工具，在当前 $T$ 时钟上对应如下。对奇 $p$、$r\ge1$ 及 $B\not\equiv0\pmod p$，
+
+$$
+(I+p^rB)^p=I+p^{r+1}(B+pB_1).
+$$
+
+对 $2\le j\le p-1$，$v_p\bigl(\binom pj p^{rj}\bigr)\ge rj+1\ge r+2$；最高项有 $rp\ge r+2$。所以新括号模 $p$ 仍为 $B$，至少一个矩阵条目的准确赋值升一。反复使用给
+
+$$
+\min_{i,j}v_p\bigl(((I+p^rB)^{p^t}-I)_{ij}\bigr)=r+t.
+$$
+
+若正整数 $u$ 与 $p$ 互素，则 $(I+p^rB)^u-I$ 的一次项为 $up^rB$，高次项均被 $p^{r+1}$ 整除，故准确赋值仍为 $r$。将任意正整数 $k$ 写成 $p^tu$，得到 $T^{d_pk}-I$ 的准确深度为 $e_p+v_p(k)$。
+
+模 $p^m$ 的任何返回指数降模后都被 $d_p$ 整除；在这些倍数中，最小使深度达到 $m$ 的倍数就是所列 $p$ 幂，故阶公式是准确值。由命题 36.6，每个点周期相同；点数除以周期即得循环数。一个长度 $d_{p^m}$ 的粗循环恰有 $p\,d_{p^m}$ 个提升点，提升循环的长度要么相同、要么乘 $p$，上述两种分叉遂分别成立。证毕。
+
+数学引文与参数对应。已有 [GoldenPrimePowerOrder](../../../D5/S3/Arith/GoldenPrimePowerOrder.lean) 及其 [Blueprint](../../../Blueprint/D5/S3/Arith/GoldenPrimePowerOrder.md) 的工具假设为素数 $p$、准确深度 $r>0$、$r+2\le pr$，对奇素数自动成立，对二须 $r\ge2$。已有 [GoldenPrimePowerMatrixPeriod](../../../D5/S3/Arith/Primes/GoldenPrimePowerMatrixPeriod.lean) 及其 [Blueprint](../../../Blueprint/D5/S3/Arith/Primes/GoldenPrimePowerMatrixPeriod.md) 给的是 $p>5$ 的一般 Fibonacci 矩阵周期及首次秩赋值，不能直接把其域扩大到二、三、五。它使用 $\widehat M=\left(\begin{smallmatrix}1&1\\1&0\end{smallmatrix}\right)$；本章用坐标交换 $J=\left(\begin{smallmatrix}0&1\\1&0\end{smallmatrix}\right)$，有 $M=J\widehat M J$，而 $T=M^2$。上述证明明确处理当前时钟及所需小素数。
+
+**命题 36.8（两种特殊精度塔）。** 全部 $m\ge1$ 满足
+
+$$
+d_{5^m}=10\cdot5^{m-1},\qquad
+d_{2^m}=3\cdot2^{\max(0,m-2)}.
+$$
+
+证明。模五令 $N=M-3I$，有 $N^2=0$、$N\ne0$，且 $I,N$ 线性无关。因此
+
+$$
+T^k=M^{2k}=3^{2k}I+2k\,3^{2k-1}N\pmod5
+$$
+
+为 $I$ 当且仅当 $k$ 偶且 $5\mid k$，最小为十。整数矩阵
+
+$$
+T^{10}-I=
+\begin{pmatrix}4180&6765\\6765&10945\end{pmatrix}
+$$
+
+的最小五赋值为一，故 $e_5=1$，命题 36.7 给五进塔。模二的 $T$ 循环置换三个非零向量，阶为三；又
+
+$$
+T^3=\begin{pmatrix}5&8\\8&13\end{pmatrix}
+=I+4\begin{pmatrix}1&2\\2&3\end{pmatrix}=I+4S.
+$$
+
+故模四的阶也为三。对 $r\ge2$，平方展开给
+
+$$
+(I+2^rB)^2=I+2^{r+1}(B+2^{r-1}B^2),
+$$
+
+括号模二不变；奇次幂保持准确深度。因此从深度二起每层阶倍增，得到二进公式。范数一层在五进塔始终只有一个 $T$ 循环；二进第一层一个循环，第二层两个循环，此后仍两个。证毕。
+
+对 $p\ne2,5$，$e_p>1$ 表示首次返回在更高精度仍为恒等的延迟。令 $\pi(p)=\operatorname{ord}_p(M)$，则 $d_p=\pi(p)/2$，且 $T^{d_p}=M^{\pi(p)}$：奇特征中行列式迫使 $\pi(p)$ 偶。因此这里的延迟恰对应普通 Fibonacci 的 Wall–Sun–Sun 型周期延迟。Bragman–Rowland [arXiv:2202.00704v2，§3](https://arxiv.org/html/2202.00704v2#S3) 讨论 Wall 指数；Saha–Karthik [arXiv:1102.1636v2，§3](https://arxiv.org/html/1102.1636v2#S3) 给相关等价表述；Medina–Rowland [arXiv:0910.2907v4，定理 1.4](https://arxiv.org/html/0910.2907v4) 陈述 Lengyel 的赋值公式及其限制。它们作为延迟与赋值的文献背景，不提供所有素数均 $e_p=1$ 的前提。后续关于具体 Fibonacci 素数的无延迟结论另有专门的准确系数证明。
+
+### 36.5 返回残差在同一纤维上的切向作用
+
+**命题 36.9（原生组成的非零切向返回方向）。** 对奇素数 $p$，定义
+
+$$
+R_p=\frac{T^{d_p}-I}{p^{e_p}}\pmod p.
+$$
+
+存在唯一非零 $c_p\in\mathbb F_p$ 使 $R_p=c_pD$。对每个 $C\in\mathcal C_p$，
+
+$$
+\nabla Q(C)\cdot R_pC=0,\qquad R_pC\ne0.
+$$
+
+故在首次非平凡提升精度，旧周期后的偏移沿该点的全部一维切向，而非沿任意选定的欧氏方向。
+
+证明。$T^{d_p}$ 是 $M$ 的多项式，$M^2=M+I$ 将其化为 $a'I+b'M$。从差矩阵的非对角项和左上项可见 $a',b'$ 在减去 $I$ 后均被 $p^{e_p}$ 整除，故整数商也在 $\mathbb Z I+\mathbb Z M$ 内。这也是 $M$ 的中心化子：若矩阵 $X$ 与 $M$ 交换，比较四个条目即得 $X=\left(\begin{smallmatrix}a&b\\b&a+b\end{smallmatrix}\right)$。
+
+写整数商为 $B=aI+bM$。$\det(T^{d_p})=1$ 给
+
+$$
+1=\det(I+p^{e_p}B)
+=1+p^{e_p}\operatorname{tr}B+p^{2e_p}\det B,
+\qquad 2a+b=0\pmod p.
+$$
+
+二可逆，故 $B\equiv(b/2)(2M-I)$；商非零保证 $b/2\ne0$。另一方面直接代入
+
+$$
+DC=(-U+2V,\,2U+V)^{\mathsf T}
+$$
+
+得梯度内积为零。若 $p\ne5$，$D^2=5I$ 保证 $D$ 可逆，而范数一点非零。若 $p=5$，$DC=0$ 强迫 $U=2V$，从而 $Q(C)=0$，也不可能。因此切向量非零，张成命题 36.4 的一维差空间。证毕。
+
+**命题 36.10（模七点上全部七个精度提升）。** 模七有 $d_7=8$、$e_7=1$，并且
+
+$$
+T^8=\begin{pmatrix}610&987\\987&1597\end{pmatrix}
+\equiv I+7\begin{pmatrix}3&1\\1&4\end{pmatrix}\pmod{49}.
+$$
+
+在 $\mathcal C_{49}$ 中，反复作八次 $T$ 推进，粗点 $(1,0)\in\mathcal C_7$ 上的纤维依次为
+
+$$
+(1,0),(22,7),(43,14),(15,21),(36,28),(8,35),(29,42),(1,0).
+$$
+
+证明。$T^4\equiv-I\pmod7$ 且 $T^8\equiv I$；八的真约数都整除四，故阶八。差矩阵除七的条目为 $87,141,141,228$，模七分别为 $3,1,1,4$，所以深度一。
+
+记该残差为 $R$。模四十九有 $(I+7R)^k=I+7kR$，因为所有二次以上项都含 $49$。作用在 $(1,0)$ 得
+
+$$
+C_k=(1+21k,7k)\pmod{49},\qquad k=0,\ldots,6.
+$$
+
+这些点模七都为 $(1,0)$；直接展开 $Q(1+21k,7k)=1+49k+539k^2$，故范数一。七点互异，命题 36.4 说明纤维也只有七点，所以列表穷尽。此例是同一粗点的提升循环，不是七条不同初始化历史已经被取得的断言。证毕。
+
+### 36.6 两次实际空窗口的抽样与接缝返回
+
+**命题 36.11（真实空窗口时钟的循环分解）。** 令 $E=S^2=M^6=T^3$。在 $\mathcal C_n$ 上，每个 $T$ 循环拆成 $\gcd(d_n,3)$ 个 $E$ 循环，每个长度
+
+$$
+\operatorname{ord}_n(E)=\frac{d_n}{\gcd(d_n,3)}.
+$$
+
+这描述两个实际空窗口的组成端点。若还要求完整原生余数状态的接缝返回，初始接缝必须为零。
+
+证明。将一个长度 $d_n$ 的 $T$ 循环按时间标为 $\mathbb Z/d_n\mathbb Z$，$E$ 对应加三。它生成的子群大小为 $d_n/\gcd(d_n,3)$，其陪集数为所列 gcd。所有范数一点有同一个 $T$ 周期，所以此公式也给整个 $E$ 置换的阶。
+
+原生空模式 $0$ 总合法，其真实状态路径为
+
+$$
+(s,C)\longmapsto(0,SC)\longmapsto(0,EC).
+$$
+
+每次两空窗口都将接缝置零。若开始 $s=0$，组成返回同时给完整余数状态返回；若开始 $s=1$，以后接缝恒零，不能返回该初始状态。证毕。
+
+**命题 36.12（精度增长与原生抽样可互相抵消）。** 下表是同一范数一层的准确循环数据。
+
+| 模数 $n$ | $|\mathcal C_n|$ | $T$ 周期 $d_n$ | 两空窗口 $E$ 周期 | $E$ 循环数 |
+| ---: | ---: | ---: | ---: | ---: |
+| 3 | 4 | 4 | 4 | 1 |
+| 9 | 12 | 12 | 4 | 3 |
+| 27 | 36 | 36 | 12 | 3 |
+| 7 | 8 | 8 | 8 | 1 |
+| 49 | 56 | 56 | 56 | 1 |
+| 16 | 24 | 12 | 4 | 6 |
+
+证明。模三有 $T^2=-I$、$T^4=I$，且
+
+$$
+T^4-I=\begin{pmatrix}12&21\\21&33\end{pmatrix}
+$$
+
+的最小三赋值为一，故 $d_3=4,e_3=1$，命题 36.7 给九、二十七两行。七及四十九由命题 36.10；十六由命题 36.8。状态数用命题 36.5，各行 $E$ 周期及循环数由命题 36.11 与点数相除取得。
+
+三到九的 $T$ 周期确实乘三，但 $\gcd(d_n,3)$ 同时从一变三，所以 $E$ 周期仍为四。仅凭两空窗口观测中的这个平台，不能判定 $e_3>1$，更不能把它解释成 Wall–Sun–Sun 延迟。证毕。
+
+### 36.7 共同组成的 CRT 接口与 5040 模数
+
+**命题 36.13（同一来源的多素数精度组合）。** 若整数 $a,b\ge2$ 互素，则逐坐标约化给
+
+$$
+\mathcal C_{ab}\simeq\mathcal C_a\times\mathcal C_b,
+\qquad d_{ab}=\operatorname{lcm}(d_a,d_b).
+$$
+
+该双射交织 $T$ 及两空窗口 $E$ 的作用。对 $5040=16\cdot9\cdot5\cdot7$，有
+
+$$
+|\mathcal C_{5040}|=24\cdot12\cdot10\cdot8=23040,\qquad
+d_{5040}=\operatorname{lcm}(12,12,10,8)=120.
+$$
+
+故 $T$ 有 $192$ 个长度 $120$ 的循环；$E$ 有 $576$ 个长度 $40$ 的循环。
+
+证明。使用 [DLMF §27.15](https://dlmf.nist.gov/27.15) 的中国剩余定理，两个坐标的约化是环的乘积同构。整数多项式 $Q-1$ 在模 $ab$ 为零，当且仅当分别模 $a,b$ 为零；同样，整数矩阵幂是单位矩阵当且仅当在两个分量都是单位矩阵，给最小公倍数。矩阵与约化交换，所以作用也被交织。代入前述点数及周期，$23040/120=192$，而 $120/\gcd(120,3)=40$，故 $23040/40=576$。
+
+若余数来自实际原生读者，四个分量必须是同一 $(s,C)$、同一输入词的投影，不能把不同历史的分量拼成一条已取得历史。CRT 给余数存在唯一性，不给固定初始化下的可达性。此处 $5040$ 的作用仅是共同模数；没有使用约数和不等式，也没有推出 Robin 判据或黎曼猜想的结论。证毕。
+
+### 36.8 循环合法词的仿射返回与累计输入
+
+**定义 36.14（带原生接缝的非空循环词）。** 令 $\ell\ge1$，$w=(\sigma_1,\ldots,\sigma_\ell)\in\Sigma^\ell$，下标循环解释。要求
+
+$$
+x(\sigma_j)y(\sigma_{j+1})=0\quad(1\le j\le\ell),
+\qquad \sigma_{\ell+1}=\sigma_1.
+$$
+
+初始接缝取 $s=x(\sigma_\ell)$。这保证每个窗口合法且词末接缝返回，因此可无限重复该词。若另取兼容的初始接缝，只能保证首遍合法，未必返回原接缝。空词如需使用，单独定义为完整状态上的恒等，不使用不存在的“最后字母”。
+
+**命题 36.15（原生词在余数平面的全局仿射阶）。** 对 $n\ge2$ 及上述循环词，组成更新在整个 $(\mathbb Z/n\mathbb Z)^2$ 上为置换
+
+$$
+F_w(C)=A_wC+b_w,\qquad
+A_w=S^\ell,\qquad
+b_w=\sum_{j=1}^{\ell}S^{\ell-j}\delta_{\sigma_j}.
+$$
+
+设 $d=\operatorname{ord}_n(A_w)$，并令
+
+$$
+\eta_w=\sum_{j=0}^{d-1}A_w^jb_w\pmod n.
+$$
+
+则这个全余数平面置换的阶恰为
+
+$$
+\operatorname{ord}(F_w)
+=d\,\frac{n}{\gcd(n,\eta_{w,1},\eta_{w,2})}.
+$$
+
+取任意整数代表计算 gcd，结果不变。特别地，模素数 $p$ 的全局阶只能是 $d$ 或 $pd$；个别点的周期仍可更短。
+
+证明。逐窗展开给 $A_w,b_w$；$\det S=-1$ 保证线性部分模任意 $n$ 可逆，故仿射映射为置换。归纳有
+
+$$
+F_w^k(C)=A_w^kC+\sum_{j=0}^{k-1}A_w^jb_w.
+$$
+
+若此映射在整个平面为恒等，先代 $C=0$ 消去平移，再代两个标准基向量，得 $A_w^k=I$，故 $d\mid k$。而 $F_w^d$ 正是平移 $C\mapsto C+\eta_w$，所以 $F_w^{dr}$ 为恒等当且仅当 $r\eta_w=0$。
+
+单坐标 $\eta_i$ 在 $\mathbb Z/n\mathbb Z$ 的加法阶为 $n/\gcd(n,\eta_i)$；两个坐标的同时归零时间是两阶的最小公倍数，即 $n/\gcd(n,\eta_1,\eta_2)$。这也可逐素数比较最大所需赋值得到。故乘积公式既给返回又排除更短的全局返回。素数模下非零向量的加法阶为 $p$，得两种可能。证毕。
+
+该置换是非负整数原生过程的余数投影之代数延拓，不说整数过程可逆，不保证整个余数平面可由指定初始化访问。一般 $b_w\ne0$，$F_w$ 不保持 $\mathcal C_n$；不能把全平面仿射阶直接当成范数一循环阶。
+
+### 36.9 同长度合法词的不同返回与中心化条件
+
+**命题 36.16（累计输入造成的额外素数因子）。** 模三取长度八的模式词
+
+$$
+w_0=(0,0,0,0,0,0,0,0),\qquad
+w_1=(1,0,0,0,0,0,0,0),
+$$
+
+两者从接缝零出发均循环合法，且
+
+$$
+S^8=I\pmod3,\qquad
+F_{w_0}(C)=C,\qquad
+F_{w_1}(C)=C+(0,2)^{\mathsf T}\pmod3.
+$$
+
+它们的全局仿射阶分别为一、三。这个额外三因子由输入累计而来，既没有提高模精度，也没有改变词长或线性步长。
+
+证明。$\operatorname{ord}_3(M)=8$，由 $M^4=-I\pmod3$ 及 $M^8=I$ 可见，故 $S^8=M^{24}=I$。非零增量只在首位出现，所以
+
+$$
+b_{w_1}=S^7(1,0)^{\mathsf T}
+=M^{21}(1,0)^{\mathsf T}
+\equiv M^5(1,0)^{\mathsf T}=(3,5)^{\mathsf T}
+\equiv(0,2)^{\mathsf T}\pmod3.
+$$
+
+所有 $y$ 均零，内部及首尾接缝都合法，最后字母的 $x$ 为零。零平移阶一，非零模三平移阶三。证毕。
+
+**命题 36.17（存在中心时的范数返回）。** 对同一循环合法词，若 $I-A_w$ 模 $n$ 可逆，则唯一
+
+$$
+c=(I-A_w)^{-1}b_w
+$$
+
+满足 $F_w(c)=c$，平移 $C\mapsto C-c$ 将 $F_w$ 共轭到 $A_w$。当 $\ell$ 偶时，$F_w$ 保持 $Q(C-c)$。若 $I-A_w$ 不可逆，只有 $b_w\in\operatorname{im}(I-A_w)$ 时才存在中心，且不保证唯一。
+
+证明。固定点方程正是 $(I-A_w)c=b_w$；在它成立时
+
+$$
+F_w(C)-c=A_w(C-c),\qquad
+Q(A_w(C-c))=(-1)^{3\ell}Q(C-c)=(-1)^\ell Q(C-c).
+$$
+
+偶长给保持律，奇长给反号律。可逆时解唯一，非可逆时按线性方程的像判定存在性。命题 36.16 的非零纯平移满足 $I-A_w=0$、$b_w\ne0$，所以根本没有中心。证毕。
+
+### 36.10 相容精度树与原生返回的统一边界
+
+**定义 36.18（范数读口的逆极限）。** 对固定素数 $p$，令
+
+$$
+\mathcal C_{p^\infty}=\varprojlim_{m\ge1}\mathcal C_{p^m}
+=\{(C_m)_{m\ge1}:C_{m+1}\bmod p^m=C_m\}.
+$$
+
+相异两点的共同精度 $k$ 是它们相同的最大层号；第一层已经不同则 $k=0$。定义距离 $p^{-k}$，相同点的距离为零。约化边定义精度树；每个第一层点以上，每个顶点恰有 $p$ 个子点。每层的 $T$、$E$ 循环是同层置换的轨道，不能与树的父子边混为一谈。
+
+**命题 36.19（同一原生对象上的三种返回机制）。** 相容序列的上述距离为超度量，$T,E$ 在逆极限上逐层良定。对同一实际来源、同一 HIGH-to-LOW 守卫及指定初始接缝，精度提升、两空窗口抽样和循环输入的返回分别受以下数据控制：
+
+| 比较任务 | 固定的数据 | 决定返回的量 | 不能由该量替代的内容 |
+| --- | --- | --- | --- |
+| $p^m\to p^{m+1}$ 的范数一组成 | 同一 $T$ 与约化 | $e_p$、非零切向残差 $R_pC$ | 实际空窗口的三倍抽样 |
+| 两个实际空窗口重复 | 同一模数、$s=0$ | $d_n/\gcd(d_n,3)$ | 非空输入的累计平移 |
+| 非空循环合法词重复 | 同一模数、同一词、$s=x(\sigma_\ell)$ | $A_w,b_w,\eta_w$ | 范数一不变性与初始化可达性 |
+
+证明。若两个序列各与第三个序列在前 $k$ 层相同，它们也在前 $k$ 层相同，所以距离满足 $d(A,B)\le\max(d(A,C),d(C,B))$。矩阵更新与约化交换，因而保持相容性；命题 36.4 给树的分支数。表中第一行由命题 36.7、36.9，第二行由命题 36.11，第三行由命题 36.15；模三到九的平台及两个长度八词提供了区分这三种机制的具体实例。
+
+这里的“精度无限增加”是相容的 $p$ 进组成，而非平面上越来越细的弦或欧氏圆。整数来源映入该逆极限时，所有精度共同相同可辨认整数坐标；单个模数相同只说明坐标差被它整除。组成即使完全相同，也未必保留树的叶序、括号或生成史。特别是空输入下，非零非负 $C$ 满足 $EC-C=(4U+8V,8U+12V)$ 两分量都正，故其有限模返回不是整数返回；$C=0$ 是独立的固定点例外。接缝一也不能通过空输入返回接缝一。
+
+这些结论消费 [Observer 第 19、22–23 章](AURIC_FIB_ATOM_OBSERVER_AND_ARITHMETIC_RELATIONS.md) 的实际像、同源余数及未来任务边界。它们把既有范数、周期工具应用于同一守卫读者，不补造任何未给的初始化、输入权、完整历史逆映射或欧氏测量。证毕。
+
+## 追加锚（本行以下为增补区）
+
+## 37. 五模式可见损失的不变量与关系敏感的学习方向
+
+**定义 37.1（同一正域上的学习合同）。** 沿用 §35 的模式次序 $(0,1,2,3,13)$、负相位振幅及辛尺度，置
+
+$$
+p=(1-X-Y-Z+\kappa,\ X-\kappa,\ Z,\ Y-\kappa,\ \kappa),\qquad
+\nu=(1,-1,0,-1,1).
+$$
+
+以下五个概率均正，$\tau=\log(p_0p_{13}/p_1p_3)$，$\chi=\theta_0-\theta_1-\theta_3+\theta_{13}$，
+
+$$
+\zeta=\frac{\psi_0\psi_{13}}{\psi_1\psi_3}=e^{\tau/2-i\chi},\qquad
+I=\frac1{p_0}+\frac1{p_1}+\frac1{p_3}+\frac1{p_{13}}.
+$$
+
+概率几何取 $g^F(v,w)=\sum_s v_sw_s/p_s$；射影几何取水平向量上的 $g(v,w)=2\operatorname{Re}\langle v,w\rangle$。
+后者为通常 Fubini–Study 度量的两倍，与 §35 及 HiddenRelations 续卷 C-79.1 的尺度一致。
+固定三个均值并除去三个占位相位轨道后的度量是
+
+$$
+g_{\rm red}=\frac I2\,d\kappa^2+\frac2I\,d\chi^2,
+\qquad \omega_{\rm red}=d\chi\wedge d\kappa.
+$$
+
+这些约化公式直接使用 [HiddenRelations 续卷 C-74.2、C-79.1](AURIC_FIB_ATOM_HIDDEN_RELATIONS_STATISTICS_PHASE_AND_SEAMS_CONTINUATION.md)。
+量子态与约化几何是额外供应；概率完成区间不是向量空间，$\mathbb R\nu$ 才是正域上的垂直切线。
+
+**命题 37.2（可见损失对隐藏关系的精确保留）。** 设 $\ell$ 光滑，$L(p)=\ell(X,Y,Z)$。
+完整 Fisher 负梯度流在正域上保持 $\tau$。
+令 $a_s=\ell_Xx_s+\ell_Yy_s+\ell_Zz_s$，每步在当前点计算该分数，则任意有限步长 $\epsilon$ 的更新
+
+$$
+p_s^+=\frac{p_se^{-\epsilon a_s}}{\sum_u p_ue^{-\epsilon a_u}}
+$$
+
+也精确保留 $\tau$。对量子损失 $L([\psi])=\ell(\langle N_x\rangle,\langle N_y\rangle,\langle N_z\rangle)$，
+完整射影负梯度流保持复坐标 $\zeta$。
+
+证明。归一化切向量 $v$ 满足
+
+$$
+d\tau(v)=\sum_s\frac{\nu_sv_s}{p_s}=g^F(\nu,v),\qquad dL(\nu)=0.
+$$
+
+因此 $d\tau(-\operatorname{grad}_{g^F}L)=-dL(\nu)=0$。
+这具体消费 [信息逃逸动力学定理 14.2](AURIC_FIB_PYRAMID_INFORMATION_ESCAPE_DYNAMICS_THERMODYNAMIC_ACTION.md)
+的 Fisher 水平分布；该卷坐标次序 $(X,Z,Y)$ 在此换为 $(X,Y,Z)$，该卷的对数优势比对应这里的 $\tau$，不是相位 $\chi$。
+离散更新的四角对数中归一化常数抵消，而且 $a_0-a_1-a_3+a_{13}=0$，故对数优势比不变。
+
+量子部分令 $K=\ell_XN_x+\ell_YN_y+\ell_ZN_z$。由
+$dL(v)=2\operatorname{Re}\langle v,K\psi\rangle$，所选度量下的水平负梯度是
+
+$$
+\dot\psi=-(K-\langle K\rangle)\psi.
+$$
+
+在四角振幅非零时对 $\zeta$ 取对数导数，四个 $K$ 特征值的混合差分为零，归一化项亦抵消，故 $\dot\zeta=0$。
+概率满足 $\dot p_s=-2p_s(a_s-\sum_up_ua_u)$，即经典 Fisher 流的两倍速度；两种时钟不混用。证毕。
+
+数学引文。自然梯度与量子几何张量的标准定义见 [Stokes 等](../../../Library/QuantumContext/stokes2020naturalgradient.md)。
+这里的新增推导是该流在指定五模式上的 $\tau,\zeta$ 不变量，不是自然梯度方法的提出。
+结论限定于所列完整度量流与指数更新；任意优化器、Euler 步进或参数受限流均须另验。
+
+**命题 37.3（关系缺陷的局部梯度收缩与可读出接口）。** 固定具有全正补全的三个均值，置 $r=1-Z>0$，
+
+$$
+h=|\psi_1\psi_3-\psi_0\psi_{13}|^2,\quad
+\kappa_*=XY/r,\quad u=\kappa-\kappa_*,\quad I_*=I(\kappa_*).
+$$
+
+在 $\chi=0$ 的局部角图与该正约化空间上，负梯度方程为
+
+$$
+\dot\kappa=-\frac2I\,\partial_\kappa h,\qquad
+\dot\chi=-\frac I2\,\partial_\chi h.
+$$
+
+它满足
+
+$$
+\dot h=-\frac2I(\partial_\kappa h)^2-\frac I2(\partial_\chi h)^2\le0,
+\qquad
+\binom{\dot u}{\dot\chi}=-r\binom u\chi+O((|u|+|\chi|)^2).
+$$
+
+所以该平衡点局部渐近稳定；对任意 $0<\gamma<r$，足够近的初态以至多常数倍 $e^{-\gamma t}$ 的距离趋近。
+
+证明。耗散式由链式法则得到。[循环控制卷命题 23.9](AURIC_FIB_ATOM_CIRCULATION_CONTROL_KL_ACTION_AND_TORIC_RELATIONS.md)
+已经给出同一相位、尺度下的展开
+
+$$
+h=\frac r2\left(\frac{I_*}2u^2+\frac2{I_*}\chi^2\right)+O((|u|+|\chi|)^3).
+$$
+
+代入逆度量，线性化恰为 $-rI_2$，光滑余项为二阶。
+在足够小的坐标球中，若 $q=(u,\chi)$，则 $q\cdot\dot q\le-\gamma\|q\|^2$，积分得到所述局部界。
+同一函数的 Hamilton 流则由该卷给出虚特征值 $\pm ir$；这是两种不同的更新规则。证毕。
+
+测量接口直接复用 [HiddenRelations 续卷命题 C-78.3](AURIC_FIB_ATOM_HIDDEN_RELATIONS_STATISTICS_PHASE_AND_SEAMS_CONTINUATION.md)：
+其归一化四项向量 $|\Omega\rangle=(|0,13\rangle+|13,0\rangle-|1,3\rangle-|3,1\rangle)/2$ 满足
+
+$$
+h=\operatorname{Tr}\!\left[|\Omega\rangle\langle\Omega|\,\rho_\psi^{\otimes2}\right].
+$$
+
+这是两次独立制备同一纯态后的一个概率，已有先例、归一化及非选择性总占位守恒由该条目承担。
+它不测出有向 $\chi$；实施投影、重新制备、样本和梯度取得另有成本。
+几何梯度流本身不是已实现的固定量子门；§35.9 的全输入均值保持障碍仍适用。
+这里的局部收缩也不供应任意初态的全局收敛或精度复杂度。
+
+**命题 37.4（联合相位对占位相位模型的新增方向）。** 在定义 37.1 的全正态处，
+旧模型仅允许共同相位与三个占位相位旋转；追加 $e^{-i\alpha N_xN_y}$。
+它增加一个实射影切方向，环境度量长度平方为 $2\kappa(1-\kappa)$。
+去除旧模型相位方向后的残差长度平方为 $2/I>0$。
+
+证明。一般 Hermitian 生成元 $G$ 的射影速度是 $-i(G-\langle G\rangle)\psi$，长度平方为 $2\operatorname{Var}_\psi(G)$；
+这条标准量子几何公式及实切空间判据见 [Stokes 文献注](../../../Library/QuantumContext/stokes2020naturalgradient.md)。
+这里 $G=N_xN_y$ 是联合模式投影，$\langle G\rangle=\kappa$，故方差为 $\kappa(1-\kappa)$。
+它的五点值的混合差分为一，而旧三个占位及常数的混合差分均零；全正支撑保证逐振幅比较合法，故新方向独立。
+追加门使 $\dot\chi=1,\dot\kappa=0$，在相位商上的长度由定义 37.1 的 $g_{\rm red}$ 给出 $2/I$。证毕。
+
+这只是对所指定旧模型的秩增结论；若旧模型已经包含该方向，则无此新增。
+一般门增长用旧参数微分的实像比较，不以参数个数或非零方差代替独立性。
+[Grimsley 等](../../../Library/QuantumContext/grimsley2019adaptive.md)给出按任务响应逐项扩展算子序列的先例；
+此处没有给任意待用生成元一个免费连续控制原语。
+特别地，联合相位虽扩展模型方向，仍保持全部概率，对仅依赖均值的损失没有直接下降信号。
+
+## 追加锚（本行以下为增补区）

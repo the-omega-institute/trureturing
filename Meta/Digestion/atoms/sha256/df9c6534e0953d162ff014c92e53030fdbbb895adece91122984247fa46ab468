@@ -1,0 +1,33 @@
+**Definition 1.1 (native tree and observations).** Use the free algebra
+of finite nonempty ordered full binary trees
+
+$$
+\mathcal T::=\alpha\mid\beta\mid\langle\mathcal T,\mathcal T\rangle,
+\qquad
+\rho\alpha=\beta,\quad
+\rho\beta=\langle\beta,\alpha\rangle,\quad
+\rho\langle a,b\rangle=\langle\rho a,\rho b\rangle.
+$$
+
+An address is a word in $\{L,R\}^{*}$, read from the original root;
+$\varepsilon$ is the root address. The total observation $r_u(p)$ reports
+the root constructor at an empty remaining address, follows the selected
+child at a branch, and reports $\mathsf{absent}$ whenever a nonempty
+remaining address is submitted at a leaf. Thus its alphabet is
+$\mathcal A=\{\alpha,\beta,\mathsf{branch},\mathsf{absent}\}$.
+In particular, an absent address is a legal query, and a branch reply is
+different from a leaf label.
+
+The two source primitives, as in SLH §1.3, are
+
+$$
+\mathsf{Read}(p):u\longmapsto(u,r_u(p)),\qquad
+\mathsf{Update}:u\longmapsto(\rho u,\star).
+$$
+
+The acknowledgement $\star$ is independent of $u$. Operations are serial
+on the same current tree. The interface supplies no reset, copy, move of
+the root, inverse update, whole-subtree observation, old-version access,
+or observation of size, duration or execution cost. Halt ends the run.
+These are logical operation contracts; their physical supply is separate.
+

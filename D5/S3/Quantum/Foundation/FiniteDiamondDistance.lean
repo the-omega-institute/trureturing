@@ -29,7 +29,7 @@ open D5.S3.Quantum.Foundation.FiniteTraceDistance
 open Matrix Module
 open scoped BigOperators CStarAlgebra ComplexOrder MatrixOrder Kronecker
 
-private def blockEquiv (r a : Type*) [Fintype r] [DecidableEq r]
+def blockEquiv (r a : Type*) [Fintype r] [DecidableEq r]
     [Fintype a] [DecidableEq a] :
     CStarMatrix r r (CStarMatrix a a ℂ) ≃⋆ₐ[ℂ]
       CStarMatrix (r × a) (r × a) ℂ :=
@@ -254,8 +254,8 @@ theorem result {a b : Type u} [Fintype a] [DecidableEq a] [Fintype b] [Decidable
     let col (j : a) : L.range :=
       ⟨L (EuclideanSpace.single j 1), ⟨EuclideanSpace.single j 1, rfl⟩⟩
     have hcol (j : a) (x : R) : (col j : EuclideanSpace ℂ R) x = A x j := by
-      simp [col, L, Matrix.toEuclideanLin_apply, Matrix.mulVec, dotProduct,
-        EuclideanSpace.single_apply]
+      simp [col, L, Matrix.toEuclideanLin, Matrix.toLpLin_apply, Matrix.mulVec, dotProduct,
+        PiLp.single_apply]
     let V : Matrix R (Fin r) ℂ := fun x i => (basis i : EuclideanSpace ℂ R) x
     let U : Matrix (Fin r) a ℂ := fun i j => basis.repr (col j) i
     have hortho : Orthonormal ℂ (fun i : Fin r => (basis i : EuclideanSpace ℂ R)) :=

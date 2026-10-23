@@ -50,22 +50,14 @@ internal static class LeanCacheProvisioner
         PreExisting,
     }
 
-    /// The value and its policy-override declaration live in
-    /// <see cref="LeanCacheBudgetPolicy"/>. Keeping the declaration beside the constant
-    /// pushed this file past the 800-line limit once dev added to it, and shortening the
-    /// declaration to fit would trade an audited statement for a line count.
     /// <summary>
-    /// clamp 下界(300s),只在调用方显式设置 `STRATALINT_LEAN_CACHE_TIMEOUT_SECONDS` 时参与
-    /// clamp;默认路径不经过它(无旋钮或旋钮非法即直接取 <see cref="MaxProvisionBudgetSeconds"/>)。
-    /// 此处曾写「数不出模块就取 clamp 上界的兜底」——那段描述的是已于 #3119 删除的树规模派生路径,
-    /// 与本常数的实际角色(下界)不符,#4122 第二轮评审勘正。
+    /// Configured per-command cutoff floor (300s); absent or invalid configuration uses
+    /// the ceiling. Value, provenance and selected scope live in <see cref="LeanCacheBudgetPolicy"/>.
     /// </summary>
     internal const int MinProvisionBudgetSeconds = LeanCacheBudgetPolicy.MinimumConfigurableBudgetSeconds;
 
     /// <summary>
-    /// clamp 上界 = <see cref="LeanCacheBudgetPolicy.DefaultProvisionBudgetSeconds"/>(policy-override,
-    /// 首次收口 #2535,2026-08-30 经 #4120 重新收口)。此处曾记「派生式约 2225 模块时算到此值」,
-    /// 该派生式已于 #3119 删除,那段文字随之作废;上界现直接取自该声明,不再有派生。
+    /// Fixed default and clamp ceiling; a bounded admitted attempt, not a cold-completion promise.
     /// </summary>
     internal const int MaxProvisionBudgetSeconds = LeanCacheBudgetPolicy.DefaultProvisionBudgetSeconds;
     private const int MissingOleanSampleLimit = 5;
@@ -74,16 +66,9 @@ internal static class LeanCacheProvisioner
          TimeSpan.FromMilliseconds(1000), TimeSpan.FromMilliseconds(2000)];
     private static readonly UTF8Encoding StrictUtf8 = new(false, true);
 
-    // Cold provisioning spans package clones plus olean download and extraction. The five
-    // minute floor permits useful fail-fast runs; the ceiling is the declared default itself
-    // (six hours since #4120; two hours under #2535). Historical note: while the default was
-    // 1800s the clamp ceiling was a separate 7200s literal, i.e. 4x the default — that
-    // second literal is gone, so a hang is bounded by the one declared value.
     /// <summary>
-    /// 本次预算。**不再按树规模派生**(派生式已于 #3119 删除):环境旋钮
-    /// `STRATALINT_LEAN_CACHE_TIMEOUT_SECONDS` 若可解析则 clamp 到 [下界, 上界],否则取上界
-    /// (= <see cref="LeanCacheBudgetPolicy.DefaultProvisionBudgetSeconds"/>)。
-    /// 名字里的 ForTree 是派生时代的遗留,保留只为不动调用点。
+    /// Compatibility accessor for the configured finite command cutoff. No tree census
+    /// or cache-closure validation participates in this value.
     /// </summary>
     internal static TimeSpan ProvisionBudgetForTree() => ProvisionBudgetFor();
 
@@ -102,27 +87,19 @@ internal static class LeanCacheProvisioner
         return TimeSpan.FromSeconds(MaxProvisionBudgetSeconds);
     }
 
-    // 以下两个名字**同值**,但继承是显式且带依据的 —— 这正是 #2535 所指「宽域」的收口:
-    // 病不在「四个点共用一个数」,而在「共用是隐式的、无人说得出为什么」。
-    //
-    // 两点的实际发生数(2026-08-23,本会话 47 条 ensure 收据):
-    //   lake cache get  3 次,离预算差两个数量级(ensure 端到端 13 秒)
-    //   任意 Lake 命令  常走,是唯一会接近该值的点
-    //
-    // 故按第 20″ 条「防的必须是发生过的事」,不为依赖供给另造一个独立裸数。
-
     /// <summary>
-    /// 承重点:`worktree with-cache-writer` 包裹的任意 Lake 命令。**该值就是为它定的**,
-    /// 须清过最贵的重建。实测有界工作量:全量内容层冷建 **3388s**(本机 28 核,含并发);
-    /// `S0/Tower` 全族 **6305s**(ubuntu-24.04-arm 跨机复测,run 32493250519)。
-    /// 分类与退出条件见 <see cref="LeanCacheBudgetPolicy"/> 的 policy-override 声明(案号 #2535)。
+    /// Cutoff forwarded to each command admitted by with-cache-reader / with-cache-writer.
+    /// Known Project Cold needs exact consent, either probe failure refuses, and known
+    /// Project Warm remains incremental without consent. Warmth is only an any-olean probe;
+    /// neither admission nor this cutoff certifies current closure or successful completion.
+    /// Policy scope, historical readings and review conditions are in <see cref="LeanCacheBudgetPolicy"/>.
     /// </summary>
     internal static TimeSpan LeanCommandBudget => ProvisionBudgetForTree();
 
     /// <summary>
-    /// `lake exe cache get`,依赖层公共供给。**继承 <see cref="LeanCommandBudget"/>,不是独立取值**:
-    /// 实测走到 3 次,耗时离该预算差两个数量级(ensure 端到端 13 秒),故它从不是该值的约束方。
-    /// 若某次该命令的耗时进入同一量级,该继承即失去依据,须单独收口并带新案号。
+    /// Cache get explicitly inherits the command cutoff rather than a separate capacity promise.
+    /// Historical #2535 readings observed three fetches and a 13s end-to-end ensure, not a
+    /// current dependency-fetch benchmark. Review inheritance if actual fetches approach the cap.
     /// </summary>
     internal static TimeSpan DependencyFetchBudget => LeanCommandBudget;
 

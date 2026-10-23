@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:c7cdc2be2b620a5bb9c3c2757e9c32fbdb9c4ec93a7ad558f8f21e8a763c1b4a
+  normalized_sha256: sha256:c7cdc2be2b620a5bb9c3c2757e9c32fbdb9c4ec93a7ad558f8f21e8a763c1b4a
+cas_ref: sha256:c7cdc2be2b620a5bb9c3c2757e9c32fbdb9c4ec93a7ad558f8f21e8a763c1b4a
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 本 atom 是第 1.1 节标题及计数主题、来源和适用范围的导引，不另立具体计数公式或定理。
+    previous_atom_id: f900afff9254f93d6f3090ba44cfc01a5ab5dc0f3cecc7a7447e9e2531eb5c62
+    next_atom_id: bd51f7f104945b9f3d28127f400a863a0e25951466bff3280be189a1a4fd3e2d

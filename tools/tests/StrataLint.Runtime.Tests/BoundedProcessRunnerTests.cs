@@ -6,6 +6,27 @@ namespace StrataLint.Runtime.Tests;
 public sealed class BoundedProcessRunnerTests
 {
     [Fact]
+    public void InterruptionHookDrainsSettlementAndPreservesTheDeadlineFailure()
+    {
+        if (OperatingSystem.IsWindows()) return;
+        using var stdout = new MemoryStream();
+        using var stderr = new MemoryStream();
+        var interrupted = false;
+        var exception = Assert.Throws<TimeoutException>(() => BoundedProcessRunner.Run("/bin/sh",
+            ["-c", "trap 'printf settled; printf retained >&2; exit 0' TERM; " +
+                "printf ready; while :; do :; done"], Path.GetTempPath(), TimeSpan.FromSeconds(1), 4096,
+            standardOutput: stdout, standardError: stderr, interruptBeforeKill: process =>
+            {
+                interrupted = true;
+                TestProcessRunner.InterruptPythonFixture(process);
+            }));
+        Assert.True(interrupted);
+        Assert.Contains("timed out after 1 seconds", exception.Message, StringComparison.Ordinal);
+        Assert.Equal("readysettled", System.Text.Encoding.UTF8.GetString(stdout.ToArray()));
+        Assert.Equal("retained", System.Text.Encoding.UTF8.GetString(stderr.ToArray()));
+    }
+
+    [Fact]
     public void StartupSeamPreservesArgumentsWorkingDirectoryAndExplicitEnvironment()
     {
         var previous = BoundedProcessRunner.StartProcess.Value;

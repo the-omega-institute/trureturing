@@ -40,7 +40,103 @@ $$\forall c: \mathbb{C}, \operatorname{Phase}\left(c\right) \Leftrightarrow ((c 
 
 The allowed scalar phases are 1, -1, i and -i; i is the imaginary unit.
 
-**Definition 1.4 (The Pauli group).**
+**Definition 1.4 (Pauli product labels).**
+
+$$\forall p: \operatorname{Pauli}, \forall q: \operatorname{Pauli}, \operatorname{letterProduct}\left(p, q\right) = \operatorname{Pauli.rec}\left(q, \operatorname{Pauli.rec}\left(\operatorname{Pauli.X}, \operatorname{Pauli.I}, \operatorname{Pauli.Z}, \operatorname{Pauli.Y}, q\right), \operatorname{Pauli.rec}\left(\operatorname{Pauli.Y}, \operatorname{Pauli.Z}, \operatorname{Pauli.I}, \operatorname{Pauli.X}, q\right), \operatorname{Pauli.rec}\left(\operatorname{Pauli.Z}, \operatorname{Pauli.Y}, \operatorname{Pauli.X}, \operatorname{Pauli.I}, q\right), p\right)$$
+
+*Formalization.* `D5/S3/Quantum/Measurement/StabilizerPovmMaximalEntanglementRefutation.letterProduct` (`✓ std3`).
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+The product label discards the scalar phase: equal nonidentity letters multiply to I, while two distinct nonidentity letters give the remaining letter. I is the identity label.
+
+**Definition 1.5 (Pauli product phases).**
+
+$$\forall p: \operatorname{Pauli}, \forall q: \operatorname{Pauli}, \operatorname{letterPhase}\left(p, q\right) = \operatorname{Pauli.rec}\left(1, \operatorname{Pauli.rec}\left(1, 1, \operatorname{Complex.I}, -\operatorname{Complex.I}, q\right), \operatorname{Pauli.rec}\left(1, -\operatorname{Complex.I}, 1, \operatorname{Complex.I}, q\right), \operatorname{Pauli.rec}\left(1, \operatorname{Complex.I}, -\operatorname{Complex.I}, 1, q\right), p\right)$$
+
+*Formalization.* `D5/S3/Quantum/Measurement/StabilizerPovmMaximalEntanglementRefutation.letterPhase` (`✓ std3`).
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+The cyclic products XY, YZ and ZX have phase i; their reversals have phase -i. Identity products and squares have phase one.
+
+**Definition 1.6 (Binary coordinates of a Pauli label).**
+
+$$((\operatorname{bellInput}\left(\operatorname{Pauli.I}\right) = (0,0)) \land (\operatorname{bellInput}\left(\operatorname{Pauli.X}\right) = (0,1))) \land ((\operatorname{bellInput}\left(\operatorname{Pauli.Y}\right) = (1,1)) \land (\operatorname{bellInput}\left(\operatorname{Pauli.Z}\right) = (1,0)))$$
+
+*Formalization.* `D5/S3/Quantum/Measurement/StabilizerPovmMaximalEntanglementRefutation.bellInput` (`✓ std3`).
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+The first bit records the Z component and the second bit records the X component: I gives (0,0), X gives (0,1), Y gives (1,1), and Z gives (1,0).
+
+**Theorem 1.7 (The Pauli multiplication table).**
+
+$$\forall p: \operatorname{Pauli}, \forall q: \operatorname{Pauli}, \operatorname{pauliMatrix}\left(p\right) \cdot \operatorname{pauliMatrix}\left(q\right) = \operatorname{SMul.smul}\left(\operatorname{letterPhase}\left(p, q\right), \operatorname{pauliMatrix}\left(\operatorname{letterProduct}\left(p, q\right)\right)\right)$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/Quantum/Measurement/StabilizerPovmMaximalEntanglementRefutation.letter_mul` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+Multiplying two Pauli matrices gives the matrix of letterProduct, multiplied by letterPhase. This separates the label and scalar parts of each product.
+
+**Lemma 1.8 (Multiplication of Pauli words).**
+
+$$\forall n: \mathbb{N}, \forall v: \operatorname{Fin}\left(n\right) \to \operatorname{Pauli}, \forall w: \operatorname{Fin}\left(n\right) \to \operatorname{Pauli}, \operatorname{wordOp}\left(v\right) \cdot \operatorname{wordOp}\left(w\right) = \operatorname{SMul.smul}\left(\prod_{i: \operatorname{Fin}\left(n\right)} \operatorname{letterPhase}\left(v\left(i\right), w\left(i\right)\right), \operatorname{wordOp}\left(\lambda i: \operatorname{Fin}\left(n\right), \operatorname{letterProduct}\left(v\left(i\right), w\left(i\right)\right)\right)\right)$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/Quantum/Measurement/StabilizerPovmMaximalEntanglementRefutation.word_mul` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+For any number n of qubits, multiplication is letterwise multiplication with the product of the one-letter phases as a scalar.
+
+**Lemma 1.9 (Signed commutation of Pauli letters).**
+
+$$\forall p: \operatorname{Pauli}, \forall q: \operatorname{Pauli}, \operatorname{pauliMatrix}\left(p\right) \cdot \operatorname{pauliMatrix}\left(q\right) = \operatorname{SMul.smul}\left((\operatorname{Int.cast}\left(\operatorname{sgn}\left(p, q\right)\right): \mathbb{C}), \operatorname{pauliMatrix}\left(q\right) \cdot \operatorname{pauliMatrix}\left(p\right)\right)$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/Quantum/Measurement/StabilizerPovmMaximalEntanglementRefutation.letter_comm` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+The integer sign sgn(p,q) is minus one exactly when p and q anticommute; its complex cast multiplies the reversed matrix product.
+
+**Lemma 1.10 (Signed commutation of Pauli words).**
+
+$$\forall n: \mathbb{N}, \forall v: \operatorname{Fin}\left(n\right) \to \operatorname{Pauli}, \forall w: \operatorname{Fin}\left(n\right) \to \operatorname{Pauli}, \operatorname{wordOp}\left(v\right) \cdot \operatorname{wordOp}\left(w\right) = \operatorname{SMul.smul}\left(\prod_{i: \operatorname{Fin}\left(n\right)} (\operatorname{Int.cast}\left(\operatorname{sgn}\left(v\left(i\right), w\left(i\right)\right)\right): \mathbb{C}), \operatorname{wordOp}\left(w\right) \cdot \operatorname{wordOp}\left(v\right)\right)$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/Quantum/Measurement/StabilizerPovmMaximalEntanglementRefutation.word_comm_sign` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+For any number n of qubits, the commutation sign is the product of the complex casts of the one-letter integer signs.
+
+**Lemma 1.11 (Trace orthogonality of Pauli words).**
+
+$$\forall n: \mathbb{N}, \forall v: \operatorname{Fin}\left(n\right) \to \operatorname{Pauli}, \forall w: \operatorname{Fin}\left(n\right) \to \operatorname{Pauli}, \operatorname{Matrix.trace}\left(\operatorname{wordOp}\left(v\right) \cdot \operatorname{wordOp}\left(w\right)\right) = \operatorname{ite}\left(v = w, (2: \mathbb{C})^{n}, 0\right)$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/Quantum/Measurement/StabilizerPovmMaximalEntanglementRefutation.word_trace_pair` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+The trace of the product of two n-qubit Pauli words is 2 to the power n when the words agree, and zero otherwise. This includes n = 0.
+
+**Definition 1.12 (The Pauli group).**
 
 $$\forall n: \mathbb{N}, \forall u: (\operatorname{Operator}\left(n\right))^{\times}, u \in \operatorname{pauliGroup}\left(n\right) \Leftrightarrow (\exists c: \mathbb{C}, (\operatorname{Phase}\left(c\right)) \land (\exists w: (\operatorname{Fin}\left(n\right)) \to Pauli, (\operatorname{val}\left(u\right): \operatorname{Operator}\left(n\right)) = c \cdot \operatorname{wordOp}\left(w\right)))$$
 
@@ -52,7 +148,7 @@ $$\forall n: \mathbb{N}, \forall u: (\operatorname{Operator}\left(n\right))^{\ti
 
 Appendix A, PDF page 15: "The n-qubit Pauli group Pₙ is the group generated by the n-fold tensor products of the single-qubit Pauli matrices, {I, X, Y, Z}, along with multiplicative factors of ±1, ±i." The displayed membership gives the literal subgroup of matrix units, including its scalar phases.
 
-**Definition 1.5 (Stabilizer groups).**
+**Definition 1.13 (Stabilizer groups).**
 
 $$\forall n: \mathbb{N}, \operatorname{StabilizerGroup}\left(n\right) = \{S: \operatorname{Subgroup}\left((\operatorname{Operator}\left(n\right))^{\times}\right) \mid (S \le \operatorname{pauliGroup}\left(n\right)) \land ((\forall x: (\operatorname{Operator}\left(n\right))^{\times}, (x \in S) \Rightarrow \forall y: (\operatorname{Operator}\left(n\right))^{\times}, (y \in S) \Rightarrow x \cdot y = y \cdot x) \land ((\neg (-\operatorname{one}\left((\operatorname{Operator}\left(n\right))^{\times}\right) \in S)) \land (\forall T: \operatorname{Subgroup}\left((\operatorname{Operator}\left(n\right))^{\times}\right), (T \le \operatorname{pauliGroup}\left(n\right)) \Rightarrow \left((\forall x: (\operatorname{Operator}\left(n\right))^{\times}, (x \in T) \Rightarrow \forall y: (\operatorname{Operator}\left(n\right))^{\times}, (y \in T) \Rightarrow x \cdot y = y \cdot x) \Rightarrow \left((\neg (-\operatorname{one}\left((\operatorname{Operator}\left(n\right))^{\times}\right) \in T)) \Rightarrow \left((S \le T) \Rightarrow T = S\right)\right)\right))))\}$$
 
@@ -64,7 +160,7 @@ $$\forall n: \mathbb{N}, \operatorname{StabilizerGroup}\left(n\right) = \{S: \op
 
 Section II, PDF page 4: "Equivalently, a stabilizer group can be defined as a maximal Abelian subgroup of Pₙ that does not contain −I." StabilizerGroup n is the record of a subgroup S and proofs of precisely the displayed conditions. Maximality is among Abelian Pauli subgroups excluding the negative identity, not among all Abelian subgroups.
 
-**Definition 1.6 (Common eigenvectors).**
+**Definition 1.14 (Common eigenvectors).**
 
 $$\forall n: \mathbb{N}, \forall S: \operatorname{StabilizerGroup}\left(n\right), \forall v: \operatorname{State}\left(n\right), \operatorname{CommonEigenvector}\left(S, v\right) \Leftrightarrow (\forall u: (\operatorname{Operator}\left(n\right))^{\times}, (u \in \operatorname{subgroup}\left(S\right)) \Rightarrow \exists e: \mathbb{C}, \operatorname{mulVec}\left((\operatorname{val}\left(u\right): \operatorname{Operator}\left(n\right)), v\right) = e \cdot v)$$
 
@@ -76,7 +172,7 @@ $$\forall n: \mathbb{N}, \forall S: \operatorname{StabilizerGroup}\left(n\right)
 
 A vector is a common eigenvector if every matrix unit of S has an eigenvalue on that vector. The definition itself allows zero vectors; the stabilizer basis record imposes orthonormality.
 
-**Definition 1.7 (Pure normalized ancillas).**
+**Definition 1.15 (Pure normalized ancillas).**
 
 $$\forall m: \mathbb{N}, \operatorname{UnitState}\left(m\right) = \{\psi: \operatorname{EuclideanSpace}\left(\mathbb{C}, (\operatorname{Fin}\left(m\right)) \to \operatorname{Fin}\left(2\right)\right) \mid \Vert\psi\Vert = 1\}$$
 
@@ -88,7 +184,7 @@ $$\forall m: \mathbb{N}, \operatorname{UnitState}\left(m\right) = \{\psi: \opera
 
 A pure ancilla is represented by a vector of Hilbert norm one. EuclideanSpace uses the sum-of-squared-moduli norm, rather than the maximum coordinate norm.
 
-**Definition 1.8 (The ancilla isometry).**
+**Definition 1.16 (The ancilla isometry).**
 
 $$\forall n: \mathbb{N}, \forall m: \mathbb{N}, \forall \psi: \operatorname{UnitState}\left(m\right), \operatorname{ancillaEmbedding}\left(\psi\right) = \operatorname{Matrix.of}\left(\lambda z: (\operatorname{Fin}\left(n + m\right)) \to \operatorname{Fin}\left(2\right), \lambda x: (\operatorname{Fin}\left(n\right)) \to \operatorname{Fin}\left(2\right), \operatorname{ite}\left(\operatorname{Prod.fst}\left(\operatorname{Equiv.symm}\left(\operatorname{Fin.appendEquiv}\left(n, m\right)\right)\left(z\right)\right) = x, \operatorname{val}\left(\psi\right)\left(\operatorname{Prod.snd}\left(\operatorname{Equiv.symm}\left(\operatorname{Fin.appendEquiv}\left(n, m\right)\right)\left(z\right)\right)\right), 0\right)\right)$$
 
@@ -100,7 +196,7 @@ $$\forall n: \mathbb{N}, \forall m: \mathbb{N}, \forall \psi: \operatorname{Unit
 
 The frame I tensor ket psi inserts the normalized ancilla and preserves the data inner product. It uses Matrix.kronecker with the identity and Matrix.replicateCol, reindexed by Fin.appendEquiv. Compression uses IsometricCompression.compress(U,A)=U* A U, where U* is the conjugate transpose. Val denotes the underlying UnitState vector.
 
-**Definition 1.9 (Compression to the data system).**
+**Definition 1.17 (Compression to the data system).**
 
 $$\forall n: \mathbb{N}, \forall m: \mathbb{N}, \forall \psi: \operatorname{UnitState}\left(m\right), \forall A: \operatorname{Operator}\left(n + m\right), \operatorname{compress}\left(\operatorname{ancillaEmbedding}\left(\psi\right), A\right) = \operatorname{conjTranspose}\left(\operatorname{ancillaEmbedding}\left(\psi\right)\right) \cdot A \cdot \operatorname{ancillaEmbedding}\left(\psi\right)$$
 
@@ -114,7 +210,7 @@ $$\forall n: \mathbb{N}, \forall m: \mathbb{N}, \forall \psi: \operatorname{Unit
 
 IsometricCompression.compress is U* A U, with U* the conjugate transpose. Here U is ancillaEmbedding(psi)=I tensor ket psi, so this is the source's matrix compression.
 
-**Definition 1.10 (Stabilizer bases).**
+**Definition 1.18 (Stabilizer bases).**
 
 $$\forall n: \mathbb{N}, \forall m: \mathbb{N}, \operatorname{StabilizerBasis}\left(n, m\right) = \{(G: \operatorname{StabilizerGroup}\left(n + m\right), v: ((\operatorname{Fin}\left(n + m\right)) \to \operatorname{Fin}\left(2\right)) \to \operatorname{State}\left(n + m\right)) \mid (\forall i: (\operatorname{Fin}\left(n + m\right)) \to \operatorname{Fin}\left(2\right), \forall j: (\operatorname{Fin}\left(n + m\right)) \to \operatorname{Fin}\left(2\right), \sum_{x: (\operatorname{Fin}\left(n + m\right)) \to \operatorname{Fin}\left(2\right)} (\operatorname{star}\left(v\left(i, x\right)\right) \cdot v\left(j, x\right)) = \operatorname{ite}\left(i = j, 1, 0\right)) \land ((\forall i: (\operatorname{Fin}\left(n + m\right)) \to \operatorname{Fin}\left(2\right), \operatorname{CommonEigenvector}\left(G, v\left(i\right)\right)) \land (\operatorname{span}\left(\mathbb{C}, \operatorname{range}\left(v\right)\right) = \operatorname{top}\left(\operatorname{Submodule}\left(\mathbb{C}, \operatorname{State}\left(n + m\right)\right)\right)))\}$$
 
@@ -126,7 +222,7 @@ $$\forall n: \mathbb{N}, \forall m: \mathbb{N}, \operatorname{StabilizerBasis}\l
 
 Section II, PDF page 4: "We will instead talk of a stabilizer basis to refer to an orthonormal basis of pure (stabilizer) states that are the common eigenvectors of some stabilizer group." The record consists of G, the vector family v, and the three displayed proof fields. Its 2^(n+m) vectors are indexed by binary functions on Fin(n+m).
 
-**Definition 1.11 (Effective POVM elements).**
+**Definition 1.19 (Effective POVM elements).**
 
 $$\forall n: \mathbb{N}, \forall m: \mathbb{N}, \forall \psi: \operatorname{UnitState}\left(m\right), \forall v: \operatorname{State}\left(n + m\right), \operatorname{\mu}\left(\psi, v\right) = \operatorname{compress}\left(\operatorname{ancillaEmbedding}\left(\psi\right), \operatorname{rankOneDensity}\left(v\right)\right)$$
 
@@ -138,7 +234,7 @@ $$\forall n: \mathbb{N}, \forall m: \mathbb{N}, \forall \psi: \operatorname{Unit
 
 Section II, equation (1), PDF page 3: "μ_b = Tr_R[U† P_{Φ′_b} U (𝕀 ⊗ ρ_R)] = (I ⊗ ⟨ψ|) P_{Φ_b} (I ⊗ |ψ⟩)", with "P_{Φ_b} ≡ |Φ_b⟩⟨Φ_b|". Here v is Φ_b, the Heisenberg-evolved joint vector; rankOneDensity is the existing outer product v v*; the unitary is absorbed in v, and μ(psi,v) is precisely the second expression.
 
-**Definition 1.12 (The information dimension).**
+**Definition 1.20 (The information dimension).**
 
 $$\forall n: \mathbb{N}, \forall m: \mathbb{N}, \forall \psi: \operatorname{UnitState}\left(m\right), \forall B: \operatorname{StabilizerBasis}\left(n, m\right), \operatorname{smu}\left(\psi, B\right) = \operatorname{finrank}\left(\mathbb{C}, \operatorname{span}\left(\mathbb{C}, \operatorname{range}\left(\lambda b: (\operatorname{Fin}\left(n + m\right)) \to \operatorname{Fin}\left(2\right), \operatorname{\mu}\left(\psi, \operatorname{vectors}\left(B\right)\left(b\right)\right)\right)\right)\right)$$
 
@@ -150,7 +246,7 @@ $$\forall n: \mathbb{N}, \forall m: \mathbb{N}, \forall \psi: \operatorname{Unit
 
 Section II, PDF page 3: "s_μ ≡ dim span({μ_b}_{b=1}^{n_out})". The displayed smu denotes s_μ. The dimension is the complex finrank of the linear span of the 2^(n+m) effective matrices, allowing repeated or zero effects.
 
-**Definition 1.13 (Support in a set of qubits).**
+**Definition 1.21 (Support in a set of qubits).**
 
 $$\forall n: \mathbb{N}, \forall J: \operatorname{Set}\left(\operatorname{Fin}\left(n\right)\right), \forall u: (\operatorname{Operator}\left(n\right))^{\times}, u \in \operatorname{supportedPauliGroup}\left(n, J\right) \Leftrightarrow (\exists c: \mathbb{C}, (\operatorname{Phase}\left(c\right)) \land (\exists w: (\operatorname{Fin}\left(n\right)) \to Pauli, ((\operatorname{val}\left(u\right): \operatorname{Operator}\left(n\right)) = c \cdot \operatorname{wordOp}\left(w\right)) \land (\forall i: \operatorname{Fin}\left(n\right), (\neg i \in J) \Rightarrow w\left(i\right) = \operatorname{Pauli.I})))$$
 
@@ -162,7 +258,7 @@ $$\forall n: \mathbb{N}, \forall J: \operatorname{Set}\left(\operatorname{Fin}\l
 
 A phased Pauli word is supported in J exactly when every letter outside J is I. Support ignores the scalar phase and is defined by this literal subgroup of matrix units.
 
-**Definition 1.14 (Support only on the data qubits).**
+**Definition 1.22 (Support only on the data qubits).**
 
 $$\forall n: \mathbb{N}, \forall m: \mathbb{N}, \forall S: \operatorname{StabilizerGroup}\left(n + m\right), \operatorname{dataSubgroup}\left(n, m, S\right) = \operatorname{inf}\left(\operatorname{subgroup}\left(S\right), \operatorname{supportedPauliGroup}\left(n + m, \{i: \operatorname{Fin}\left(n + m\right) \mid \operatorname{val}\left(i\right) < n\}\right)\right)$$
 
@@ -174,7 +270,7 @@ $$\forall n: \mathbb{N}, \forall m: \mathbb{N}, \forall S: \operatorname{Stabili
 
 Section IV, PDF page 7: "Sₙ, Sₘ ≤ S the subgroups of operators with support only on Hₙ and Hₘ, respectively". Sₙ is the intersection of S with the Pauli subgroup supported in positions whose natural index is less than n.
 
-**Definition 1.15 (Support only on the ancilla qubits).**
+**Definition 1.23 (Support only on the ancilla qubits).**
 
 $$\forall n: \mathbb{N}, \forall m: \mathbb{N}, \forall S: \operatorname{StabilizerGroup}\left(n + m\right), \operatorname{ancillaSubgroup}\left(n, m, S\right) = \operatorname{inf}\left(\operatorname{subgroup}\left(S\right), \operatorname{supportedPauliGroup}\left(n + m, \{i: \operatorname{Fin}\left(n + m\right) \mid n \le \operatorname{val}\left(i\right)\}\right)\right)$$
 
@@ -186,7 +282,7 @@ $$\forall n: \mathbb{N}, \forall m: \mathbb{N}, \forall S: \operatorname{Stabili
 
 Section IV, PDF page 7: "Sₙ, Sₘ ≤ S the subgroups of operators with support only on Hₙ and Hₘ, respectively". Sₘ is the intersection with the Pauli subgroup supported in positions whose natural index is at least n.
 
-**Definition 1.16 (Binary dimension of the data subgroup).**
+**Definition 1.24 (Binary dimension of the data subgroup).**
 
 $$\forall n: \mathbb{N}, \forall m: \mathbb{N}, \forall S: \operatorname{StabilizerGroup}\left(n + m\right), \operatorname{dimData}\left(n, m, S\right) = \operatorname{Nat.log}\left(2, \operatorname{Nat.card}\left(\operatorname{dataSubgroup}\left(n, m, S\right)\right)\right)$$
 
@@ -198,7 +294,7 @@ $$\forall n: \mathbb{N}, \forall m: \mathbb{N}, \forall S: \operatorname{Stabili
 
 The F₂-dimension of the finite elementary Abelian support subgroup is the base-two natural logarithm of its cardinality. Nat.log is the floor logarithm; on these power-of-two subgroup orders it is the exact binary dimension.
 
-**Definition 1.17 (Binary dimension of the ancilla subgroup).**
+**Definition 1.25 (Binary dimension of the ancilla subgroup).**
 
 $$\forall n: \mathbb{N}, \forall m: \mathbb{N}, \forall S: \operatorname{StabilizerGroup}\left(n + m\right), \operatorname{dimAncilla}\left(n, m, S\right) = \operatorname{Nat.log}\left(2, \operatorname{Nat.card}\left(\operatorname{ancillaSubgroup}\left(n, m, S\right)\right)\right)$$
 
@@ -210,7 +306,7 @@ $$\forall n: \mathbb{N}, \forall m: \mathbb{N}, \forall S: \operatorname{Stabili
 
 The ancilla support subgroup uses the same base-two natural logarithm convention.
 
-**Definition 1.18 (Entanglement parameter).**
+**Definition 1.26 (Entanglement parameter).**
 
 $$\forall n: \mathbb{N}, \forall m: \mathbb{N}, \forall S: \operatorname{StabilizerGroup}\left(n + m\right), \operatorname{entanglementP}\left(n, m, S\right) = \frac{(\operatorname{Nat.cast}\left(n\right): \mathbb{Q}) + (\operatorname{Nat.cast}\left(m\right): \mathbb{Q}) - (\operatorname{Nat.cast}\left(\operatorname{dimData}\left(n, m, S\right)\right): \mathbb{Q}) - (\operatorname{Nat.cast}\left(\operatorname{dimAncilla}\left(n, m, S\right)\right): \mathbb{Q})}{2}$$
 
@@ -222,7 +318,7 @@ $$\forall n: \mathbb{N}, \forall m: \mathbb{N}, \forall S: \operatorname{Stabili
 
 Section IV, PDF page 7: "The parameter p quantifies the entanglement of the states and satisfies 2p = n + m − dim(Sₙ) − dim(Sₘ) and 0 ≤ p ≤ min(n, m)." The definition uses rational arithmetic for the half-difference; each natural dimension is explicitly cast to Q.
 
-**Definition 1.19 (Maximal entanglement).**
+**Definition 1.27 (Maximal entanglement).**
 
 $$\forall n: \mathbb{N}, \forall m: \mathbb{N}, \forall B: \operatorname{StabilizerBasis}\left(n, m\right), \operatorname{MaximallyEntangled}\left(B\right) \Leftrightarrow (\operatorname{entanglementP}\left(n, m, \operatorname{group}\left(B\right)\right) = (\operatorname{Nat.cast}\left(\operatorname{min}\left(n, m\right)\right): \mathbb{Q}))$$
 
@@ -234,7 +330,7 @@ $$\forall n: \mathbb{N}, \forall m: \mathbb{N}, \forall B: \operatorname{Stabili
 
 Section IV, PDF page 7: "States are separable for p = 0 and maximally entangled for p = min(n, m)." The basis is maximally entangled exactly when its group's rational parameter equals the natural minimum, cast to Q.
 
-**Definition 1.20 (Conjecture 1).**
+**Definition 1.28 (Conjecture 1).**
 
 $$claim \Leftrightarrow (\forall n: \mathbb{N}, \forall m: \mathbb{N}, \forall \psi: \operatorname{UnitState}\left(m\right), \exists B: \operatorname{StabilizerBasis}\left(n, m\right), (\operatorname{MaximallyEntangled}\left(B\right)) \land (\forall B': \operatorname{StabilizerBasis}\left(n, m\right), \operatorname{smu}\left(\psi, B'\right) \le \operatorname{smu}\left(\psi, B\right)))$$
 
@@ -246,7 +342,7 @@ $$claim \Leftrightarrow (\forall n: \mathbb{N}, \forall m: \mathbb{N}, \forall \
 
 Conjecture 1, Section IV, PDF page 8: "For any pure |ψ⟩, the maximal value of s_μ can be obtained with maximally entangled S." The encoding fixes n data qubits, m ancillas and a unit vector psi, and asks for a maximally entangled stabilizer basis B whose information dimension dominates that of every stabilizer basis B′ for the same psi.
 
-**Theorem 1.21 (A pure-state refutation).**
+**Theorem 1.29 (A pure-state refutation).**
 
 $$\neg claim$$
 
@@ -276,16 +372,24 @@ For n = m = 3 take psi = (1-i, 1+i, -2, -2, 2, 2, 2+2i, 2-2i)/6 in computational
 - Truth anchor: `D5/S3/Quantum/Measurement/StabilizerPovmMaximalEntanglementRefutation.UnitState`
 - Truth anchor: `D5/S3/Quantum/Measurement/StabilizerPovmMaximalEntanglementRefutation.ancillaEmbedding`
 - Truth anchor: `D5/S3/Quantum/Measurement/StabilizerPovmMaximalEntanglementRefutation.ancillaSubgroup`
+- Truth anchor: `D5/S3/Quantum/Measurement/StabilizerPovmMaximalEntanglementRefutation.bellInput`
 - Truth anchor: `D5/S3/Quantum/Measurement/StabilizerPovmMaximalEntanglementRefutation.claim`
 - Truth anchor: `D5/S3/Quantum/Measurement/StabilizerPovmMaximalEntanglementRefutation.dataSubgroup`
 - Truth anchor: `D5/S3/Quantum/Measurement/StabilizerPovmMaximalEntanglementRefutation.dimAncilla`
 - Truth anchor: `D5/S3/Quantum/Measurement/StabilizerPovmMaximalEntanglementRefutation.dimData`
 - Truth anchor: `D5/S3/Quantum/Measurement/StabilizerPovmMaximalEntanglementRefutation.entanglementP`
+- Truth anchor: `D5/S3/Quantum/Measurement/StabilizerPovmMaximalEntanglementRefutation.letterPhase`
+- Truth anchor: `D5/S3/Quantum/Measurement/StabilizerPovmMaximalEntanglementRefutation.letterProduct`
+- Truth anchor: `D5/S3/Quantum/Measurement/StabilizerPovmMaximalEntanglementRefutation.letter_comm`
+- Truth anchor: `D5/S3/Quantum/Measurement/StabilizerPovmMaximalEntanglementRefutation.letter_mul`
 - Truth anchor: `D5/S3/Quantum/Measurement/StabilizerPovmMaximalEntanglementRefutation.mu`
 - Truth anchor: `D5/S3/Quantum/Measurement/StabilizerPovmMaximalEntanglementRefutation.pauliGroup`
 - Truth anchor: `D5/S3/Quantum/Measurement/StabilizerPovmMaximalEntanglementRefutation.result`
 - Truth anchor: `D5/S3/Quantum/Measurement/StabilizerPovmMaximalEntanglementRefutation.smu`
 - Truth anchor: `D5/S3/Quantum/Measurement/StabilizerPovmMaximalEntanglementRefutation.supportedPauliGroup`
+- Truth anchor: `D5/S3/Quantum/Measurement/StabilizerPovmMaximalEntanglementRefutation.word_comm_sign`
+- Truth anchor: `D5/S3/Quantum/Measurement/StabilizerPovmMaximalEntanglementRefutation.word_mul`
+- Truth anchor: `D5/S3/Quantum/Measurement/StabilizerPovmMaximalEntanglementRefutation.word_trace_pair`
 - Truth anchor: `D5/S3/Quantum/Reduction/IsometricCompression.compress`
 - Dependency: [D5/S3/Quantum/Information/SignedPauliSumNormRefutation](../Information/SignedPauliSumNormRefutation.md)
 - Dependency: [D5/S3/Quantum/PureState/PureStateHandshake](../PureState/PureStateHandshake.md)

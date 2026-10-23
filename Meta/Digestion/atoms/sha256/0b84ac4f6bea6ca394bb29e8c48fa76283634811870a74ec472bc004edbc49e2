@@ -1,0 +1,36 @@
+## 3. Ordinary/exceptional refinements
+
+For \(q\in\mathbb R\), set
+
+$$
+c_O(p,v,q)=|\mathcal R(p,v,q)|,\qquad
+c_E(p,v,q)=|\mathcal E(p,v,q)|.
+$$
+
+Theorem 5.2 gives
+
+$$
+c_E(p,v,q)\le2,
+$$
+
+and, whenever \(c_E(p,v,q)>0\),
+
+$$
+c_O(p,v,q)\le5;
+$$
+
+otherwise \(c_O(p,v,q)\le7\). For a fixed type vector
+\(\tau=(\tau_0,\tau_1,\tau_2,\tau_3)\), the corresponding raw endpoint
+count is bounded by
+
+$$
+\prod_{i=0}^{3}c_{\tau_i}(p,v,m_i),
+\qquad m_2=m_3=m.
+$$
+
+In the \(\kappa=2\) stratum, equal endpoints also require equal type
+labels. In the \(\kappa=1\) stratum, the shared pair has the same label,
+and the remaining labels are unconstrained except by their own layer
+membership. These are finite-count refinements of Proposition 2.1; they do
+not assert that every \(O/E\) pattern occurs.
+

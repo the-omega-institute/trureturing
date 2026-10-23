@@ -1,0 +1,36 @@
+**Lemma 2.4 (Actual response enclosures).** Each $r_\sigma$ lies in
+the interior of $J_\sigma$, and
+
+$$
+s_\sigma(p_J)\in\operatorname{int}V_\sigma.
+\tag{2.5}
+$$
+
+More generally (2.2) applied to (2.4) on the full $J_\sigma\times K$
+gives positive $j,n$, the following $A_5$ guards, and an interval
+strictly inside $V_\sigma$ for $s$.
+
+| $\sigma$ | Strict enclosing interval for $A_5$ | Enclosure for $s$ |
+| --- | --- | --- |
+| $-$ | $(-908/1000,-907/1000)$ | $\operatorname{int}V_-$ |
+| $+$ | $(-5217/1000,-5216/1000)$ | $\operatorname{int}V_+$ |
+
+Proof. Descending-power rational evaluation of the quartic (1.6) at
+the two endpoints of each interval (2.3) gives the signs in its
+table. These intervals lie strictly inside O (4.6); O, Theorem 4.2,
+identifies their interior roots with the designated $r_-,r_+$.
+
+For the interval inclusions, substitute the two rational endpoints
+from (2.3) into the rules (2.2), in the order (2.4). The intervals
+are inside $(0,1)$, so $j=1/8+8t(1-t)>0$ and $n=j+t>0$; the same
+interval operations also give positive lower endpoints. Compute
+$A_5$ before $e$. Its resulting interval is strictly between the
+endpoints displayed in the corresponding row, and excludes zero.
+Use its uncoarsened interval in $e$, then compute $a_6$ and $s$.
+The resulting lower endpoint exceeds $v_{c,\sigma}-10^{-32}$ and
+the upper endpoint is less than $v_{c,\sigma}+10^{-32}$. Equations
+(2.1)–(2.4) and the integers in Definition 2.3 specify all the
+rational operations and strict comparisons in these inclusions.
+Specialize at the unchanged $p_J\in K$ and $t=r_\sigma$ to obtain
+(2.5). ∎
+

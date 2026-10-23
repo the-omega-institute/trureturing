@@ -1,0 +1,20 @@
+**Proposition 5.1 (The four-cycle).** Let $n\ge5$ be odd and $\mathtt q\ge4$. Let $\Gamma$ be the adjacency matrix of the four-cycle on qubits $1,2,3,4$ with edges $\{1,2\},\{2,3\},\{3,4\},\{4,1\}$, and let $\mathrm{col}$ place the four qubits in four distinct parties $c_1,c_2,c_3,c_4$. Let
+
+$$
+D=\#\{t\in G:\ f_t(c_1),f_t(c_2),f_t(c_3),f_t(c_4)\ \text{pairwise distinct}\}.
+$$
+
+Then $\rho_t=4$ and $r(\pi_t)=2$ for each of these $D$ characters, $\rho_t=r(\pi_t)$ for every other $t$, and
+
+$$
+-\log_2Z_n^{(\mathtt q)}=-\log_2Z_n^{\mathrm{mask}}+D,\qquad D=\begin{cases}(n-1)(n-2)(n-3)\,n^{\mathtt q-4}, & \mathtt q\in\{c_1,c_2,c_3,c_4\},\\ n(n-1)(n-2)(n-3)\,n^{\mathtt q-5}, & \text{otherwise}.\end{cases}
+$$
+
+In both cases $D>0$ and
+
+$$
+S_n^{(\mathtt q)}-S_n^{\mathrm{mask}}=\frac{(n-2)(n-3)}{n^2}\,\log2 .
+$$
+
+In particular the masked-rank expression differs from $Z_n^{(\mathtt q)}$ for every odd $n\ge5$ and every $\mathtt q\ge4$. Stance: suspected-novel (§8).
+

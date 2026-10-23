@@ -1,1 +1,1 @@
-{"statement_id":"sha256:125e54a33058720dff8abe68dd098848af5d0ce78c2a26a6c6114989e5ef7f2e"}
+{"statement_id":"sha256:125e54a33058720dff8abe68dd098848af5d0ce78c2a26a6c6114989e5ef7f2e","declarations":[{"declaration_name_key":"ns(ns(ns(ns(ns(ns(n0,2:D5),2:S3),5:Arith),6:Primes),25:LucasSquareClassification),28:lucas_square_classifications)","kind":"theorem"}]}

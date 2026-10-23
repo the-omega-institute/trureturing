@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:5d278f74afa9fe584f22af957d59a27450612d6fa71bb62957ad1880b8811f10
+  normalized_sha256: sha256:5d278f74afa9fe584f22af957d59a27450612d6fa71bb62957ad1880b8811f10
+cas_ref: sha256:5d278f74afa9fe584f22af957d59a27450612d6fa71bb62957ad1880b8811f10
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 定义 144.1（观察仪器）：只引入本段使用的对象、记号、计算定义或术语约定，不追加存在、唯一性或性质结论。
+    previous_atom_id: 3a0bccee95f050bc6441bd7fb878b623ff261930cca0dff9b878a665b90bd42d
+    next_atom_id: 968e8a65f431773fa6763d52590cba2974055578753c8f1799fd0c785962dcb4

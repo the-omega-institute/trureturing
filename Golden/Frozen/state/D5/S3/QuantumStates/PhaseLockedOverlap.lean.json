@@ -1,1 +1,1 @@
-{"statement_id":"sha256:a9a068c585f43a7aa355619c8fc899910e973d9b857f76930d832b94cb89b559"}
+{"statement_id":"sha256:a9a068c585f43a7aa355619c8fc899910e973d9b857f76930d832b94cb89b559","declarations":[{"declaration_name_key":"ns(ns(ns(ns(ns(n0,2:D5),2:S3),13:QuantumStates),18:PhaseLockedOverlap),36:phase_locked_overlap_is_rotated_real)","kind":"theorem"}]}

@@ -43,7 +43,7 @@ private theorem signed_measure_distribution_apply
       VectorMeasure.integral_sub_vectorMeasure hpos hneg]
   simp
 
-private theorem iterated_deriv_delta_apply (j : ℕ) (b : ℝ) (test : 𝓢(ℝ, ℂ)) :
+theorem iterated_deriv_delta_apply (j : ℕ) (b : ℝ) (test : 𝓢(ℝ, ℂ)) :
     ((TemperedDistribution.derivCLM ℂ)^[j] (TemperedDistribution.delta b)) test =
       (-1 : ℂ) ^ j * ((SchwartzMap.derivCLM ℂ ℂ)^[j] test) b := by
   induction j generalizing test with
@@ -111,7 +111,7 @@ private theorem eval_eq_sum_hasseDeriv_mul_sub_pow
           simpa [Polynomial.mem_support_iff] using hj
         rw [← Polynomial.taylor_coeff, hjzero, zero_mul]
 
-private theorem iterated_deriv_eq_zero_of_notMem_tsupport
+theorem iterated_deriv_eq_zero_of_notMem_tsupport
     (j : ℕ) (test : 𝓢(ℝ, ℂ)) (x : ℝ) (hx : x ∉ tsupport test) :
     ((SchwartzMap.derivCLM ℂ ℂ)^[j] test) x = 0 := by
   have hsupport : tsupport ((SchwartzMap.derivCLM ℂ ℂ)^[j] test) ⊆ tsupport test := by
@@ -142,8 +142,6 @@ private theorem signed_measure_integral_polynomial_eq_sum
   have hterm (j : ℕ) : VectorMeasure.Integrable epsilon
       (fun u => (Polynomial.hasseDeriv j p).eval b * (u - b) ^ j) := by
     convert (hpower j).smul ((Polynomial.hasseDeriv j p).eval b) using 1
-    ext u
-    simp only [Pi.smul_apply, smul_eq_mul]
   calc
     (∫ᵛ u, p.eval u ∂<•epsilon) =
         ∫ᵛ u, ∑ j ∈ Finset.range (K + 1),
@@ -236,7 +234,7 @@ private theorem corrected_distribution_apply
   rw [map_smul, hdelta]
   simp only [smul_eq_mul]
 
-private theorem weilTest_tsupport_subset_Ioo
+theorem weilTest_tsupport_subset_Ioo
     (L : ℝ) (f h : ℝ → ℂ)
     (hfCompact : HasCompactSupport f) (hhCompact : HasCompactSupport h)
     (hfSupport : tsupport f ⊆ Ioo (-L) L)

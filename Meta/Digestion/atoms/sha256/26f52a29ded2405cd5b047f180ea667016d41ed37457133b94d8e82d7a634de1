@@ -1,0 +1,12 @@
+**Theorem 56.1 (quotient, acquisition, and implementation).** Under a finite
+source-total ExactChart contract with a declared resource objective:
+
+1. $R_\infty$ is the greatest action-closed quotient preserving all allowed
+   behaviour;
+2. a successful policy on the quotient lifts to a successful policy on the
+   original contract when all-action factorization and same-source updates hold;
+3. a fixed lifted policy has a minimal finite controller given by its
+   policy-relative future quotient;
+4. finite profile bounds and a uniform horizon or exact acceleration are still
+   required for finite resource decidability.
+

@@ -1,0 +1,14 @@
+**定义 3.1（指定有向边的累计成本）。** 沿用[《观察者相对局部模型与未来可识别性》§10](AURIC_FIB_ATOM_OBSERVER_RELATIVE_LOCAL_MODELS_AND_FUTURE_IDENTIFIABILITY.md)的非负可加路径钟，将本图每条合法有向边的成本指定为有限实数 $\ell_i\ge0$。有限走法的钟为
+
+$$
+\Theta_\ell(\gamma)=\sum_{k=1}^m\ell(s_{k-1}\to s_k),
+$$
+
+空走法取零，拼接时相加。对非爆炸跃迁过程 $S_t$，累计钟为
+
+$$
+J_t=\sum_{0<s\le t}\ell(S_{s-}\to S_s).
+$$
+
+每条样本路径上的 $J_t$ 非减。状态统计 $\langle K,p(t)\rangle$ 则使用[《局部源分裂与读出几何》命题 5.3](AURIC_FIB_ATOM_LOCAL_SOURCE_SPLITTING_AND_READOUT_GEOMETRY.md)的不同合同：其变化积分只给端点差，一般不非减。
+

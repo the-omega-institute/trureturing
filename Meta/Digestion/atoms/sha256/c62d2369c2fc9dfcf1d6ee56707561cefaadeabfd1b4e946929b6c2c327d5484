@@ -1,0 +1,31 @@
+**定理 6.2（指定矩对的统一小时间窗分离）。** 对每个 (6.1) 的矩形，(6.2)–(6.3) 在共同路径空间上定义平稳、有限率、非爆炸的概率律族，并允许第 6.3 节所定的参数无关完整记录映射。取
+
+$$
+\boxed{T_* = \frac{15\epsilon^3}{28g_{\max}}>0.}
+\tag{6.5}
+$$
+
+则对每一个 $0<T\le T_*$，映射
+
+$$
+\mathcal M_T:\Theta\longrightarrow\mathbb R^2,\qquad
+\mathcal M_T(\kappa,\gamma)
+=\left(\mathbb E_\theta N_{01}(T),
+\mathbb E_\theta[W(S_0)N_{01}(T)]\right)
+\tag{6.6}
+$$
+
+在整个 $\Theta$ 上单射。更具体地，令第二坐标为 $H_T(\kappa,\gamma)$，则
+
+$$
+\mathbb E_\theta N_{01}(T)=\gamma T,
+\qquad
+\partial_\kappa H_T(\kappa,\gamma)
+\le -5\gamma^2T^2\le-5g_{\min}^2T^2<0
+\tag{6.7}
+$$
+
+对上述全部参数与时间同时成立。端点导数由开域 $0<\kappa<2/5$ 上的光滑公式限制而来。
+
+量词是“任取矩形，存在同一个显式 $T_*$，对全部 $T\in(0,T_*]$ 和任意两参数成立”，不是每点各有一个邻域或时间。常数 (6.5) 仅为充分界，不声称最优，也不判定更长时间的原矩对是否单射。完整记录的识别与平方矩比较在任意已知 $T>0$ 成立，见第 6.6 节；它们不替代 (6.6) 的证明。
+

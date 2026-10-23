@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:4e0e8383869a9578f929831fa1b067cc98d3a2a3fcafbdce3e70baf65ad04341
+  normalized_sha256: sha256:4e0e8383869a9578f929831fa1b067cc98d3a2a3fcafbdce3e70baf65ad04341
+cas_ref: sha256:4e0e8383869a9578f929831fa1b067cc98d3a2a3fcafbdce3e70baf65ad04341
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 证明段（**证明。** 波矢 $(-2k,2)$ 与幅向量 $(1,k)$ 正交，故散度和对流项消失。坐标二阶导数之和为 $-4(k^2+1)u_a…）只展开前文定理或命题的论证，式子和中间推导不另提出独立陈述。
+    previous_atom_id: c38879e048af7644991e1ba5d77e64d39aa7f0138e09f359b5a5d8fe90df60a1
+    next_atom_id: 145e907ad022b63cd2857fecde0635b1d3269eb91a6b24fcbd28b4d65624dcbe

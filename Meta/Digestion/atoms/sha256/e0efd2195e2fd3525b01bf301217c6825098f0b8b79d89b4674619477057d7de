@@ -1,0 +1,27 @@
+\[
+U_\beta(\beta,A,B)
+=
+\mathrm{pending}_1(A,B+1).
+\]
+
+Stop 操作继续更新为：
+
+\[
+\mathrm{Stop}_0:
+\mathrm{pending}_0\to\mathrm{delivered},
+\]
+
+\[
+\mathrm{Stop}_1:
+\mathrm{pending}_1\to\mathrm{delivered}.
+\]
+
+而 delivered 状态没有后续 Read：
+
+\[
+\mathrm{delivered}\not\to
+\text{Read}.
+\]
+
+因此，活动摘要的动态更新可以写成：
+

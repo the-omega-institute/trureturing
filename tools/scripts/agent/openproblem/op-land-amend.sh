@@ -48,14 +48,13 @@ git commit -q --amend --no-edit
 echo "AMEND_EXIT=$? HEAD=$(git rev-parse HEAD)"
 git show --stat --format='%h %s' HEAD | tail -9
 
-EVENT=$(git show --name-only --format='' HEAD | grep '^Golden/Frozen/accepted/' | head -1)
-if [ -n "$EVENT" ]; then
+STATE=$(git show --name-only --format='' HEAD | grep '^Golden/Frozen/state/' | head -1)
+if [ -n "$STATE" ]; then
   python3 -c "
 import json,sys
 d=json.load(open(sys.argv[1]))
-print('EVENT_HASH='+str(d.get('event_hash')))
-p=d.get('payload',d)
+p=d
 print('STATEMENT_ID='+str(p.get('statement_id')))
-" "$EVENT"
+" "$STATE"
 fi
 echo "AMEND_END=$(date +%T)"

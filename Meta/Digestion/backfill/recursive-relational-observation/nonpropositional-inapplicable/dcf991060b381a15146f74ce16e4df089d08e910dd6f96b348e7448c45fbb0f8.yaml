@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:dcf991060b381a15146f74ce16e4df089d08e910dd6f96b348e7448c45fbb0f8
+  normalized_sha256: sha256:dcf991060b381a15146f74ce16e4df089d08e910dd6f96b348e7448c45fbb0f8
+cas_ref: sha256:dcf991060b381a15146f74ce16e4df089d08e910dd6f96b348e7448c45fbb0f8
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 定义73.1只引入指定参考的反向映射和对数约定，不断言通道性质或右逆公式。
+    previous_atom_id: f530bef925a012a2b2defc794be953bc5a9b450c92bd33f915d97248731c9743
+    next_atom_id: be0ee5852fc4d40ef7915bb4e836938d9f56aa12b304aca2d89d2156c428d848

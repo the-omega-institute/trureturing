@@ -104,7 +104,7 @@ theorem trace_B_mul (a b : (EuclideanSpace ℝ (Fin 3))) : Matrix.trace (B a * B
     simp [B_formula, Matrix.trace, Matrix.mul_apply, Fin.sum_univ_two,
       PiLp.inner_apply, Fin.sum_univ_three, Complex.mul_re, Complex.mul_im] <;> ring
 def scalarB (t : ℝ) (a : (EuclideanSpace ℝ (Fin 3))) : (Matrix (Fin 2) (Fin 2) ℂ) := (t : ℂ) • (1 : (Matrix (Fin 2) (Fin 2) ℂ)) + B a
-private theorem scalarB_hermitian (t : ℝ) (a : (EuclideanSpace ℝ (Fin 3))) : (scalarB t a).IsHermitian := by
+theorem scalarB_hermitian (t : ℝ) (a : (EuclideanSpace ℝ (Fin 3))) : (scalarB t a).IsHermitian := by
   apply Matrix.IsHermitian.ext
   intro i j
   fin_cases i <;> fin_cases j <;> apply Complex.ext <;>
@@ -127,14 +127,20 @@ theorem scalarB_posSemidef_iff (t : ℝ) (a : (EuclideanSpace ℝ (Fin 3))) :
     (scalarB t a).PosSemidef ↔ ‖a‖ ≤ t := by
   constructor
   · intro h
-    have hd := (Complex.nonneg_iff.mp h.det_nonneg).1
-    rw [scalarB_det] at hd
-    simp only [Complex.ofReal_re] at hd
-    have h0 := (Complex.nonneg_iff.mp (h.diag_nonneg (i := 0))).1
-    have h1 := (Complex.nonneg_iff.mp (h.diag_nonneg (i := 1))).1
-    simp [scalarB, B_formula] at h0 h1
-    have ht : 0 ≤ t := by linarith
-    nlinarith [norm_nonneg a]
+    have he : scalarB t a =
+        D5.S3.Quantum.Information.ActualPureQubitCostInfimum.blochMatrix
+          (2 * t) ((2 : ℝ) • a) := by
+      ext i j
+      fin_cases i <;> fin_cases j <;>
+        simp [scalarB, B_formula,
+          D5.S3.Quantum.Information.ActualPureQubitCostInfimum.blochMatrix] <;> ring
+    rw [he] at h
+    have hb :=
+      D5.S3.Quantum.Information.ActualPureQubitCostInfimum.norm_bloch_le_trace_of_posSemidef _ h
+    rw [D5.S3.Quantum.Information.ActualPureQubitCostInfimum.blochMatrix_trace,
+      D5.S3.Quantum.Information.ActualPureQubitCostInfimum.bloch_blochMatrix] at hb
+    norm_num [norm_smul, Real.norm_eq_abs] at hb
+    linarith
   · intro h
     have hr := norm_nonneg a
     have hP : (scalarB ‖a‖ a).PosSemidef := by
@@ -170,27 +176,25 @@ theorem half_scalarB_posSemidef_iff (t : ℝ) (a : (EuclideanSpace ℝ (Fin 3)))
     exact ((scalarB_posSemidef_iff t a).mpr h).smul
       (by apply Complex.nonneg_iff.mpr; norm_num [Complex.div_re, Complex.div_im] :
         (0 : ℂ) ≤ 1 / 2)
-private theorem hermitian_decomposition (A : (Matrix (Fin 2) (Fin 2) ℂ)) (h : A.IsHermitian) :
+theorem hermitian_decomposition (A : (Matrix (Fin 2) (Fin 2) ℂ)) (h : A.IsHermitian) :
     A = scalarB ((Matrix.trace A).re / 2) (((1 / 2 : ℝ) • bloch A)) := by
-  have hd0 := congrArg Complex.im (h.apply 0 0)
-  have hd1 := congrArg Complex.im (h.apply 1 1)
-  have hr01 := congrArg Complex.re (h.apply 1 0)
-  have hi01 := congrArg Complex.im (h.apply 1 0)
-  change -(A 0 0).im = (A 0 0).im at hd0
-  change -(A 1 1).im = (A 1 1).im at hd1
-  change (A 0 1).re = (A 1 0).re at hr01
-  change -(A 0 1).im = (A 1 0).im at hi01
-  ext i j
-  fin_cases i <;> fin_cases j <;> apply Complex.ext <;>
-    simp [scalarB, B_formula, bloch, Matrix.trace, Fin.sum_univ_two,
-      Complex.mul_re, Complex.mul_im] <;> linarith
-private theorem half_scalarB_double (t : ℝ) (a : (EuclideanSpace ℝ (Fin 3))) :
+  calc
+    A = D5.S3.Quantum.Information.ActualPureQubitCostInfimum.blochMatrix
+        (Matrix.trace A).re (bloch A) :=
+      (D5.S3.Quantum.Information.ActualPureQubitCostInfimum.bloch_geometry_of_isHermitian A h).1
+    _ = scalarB ((Matrix.trace A).re / 2) (((1 / 2 : ℝ) • bloch A)) := by
+      ext i j
+      fin_cases i <;> fin_cases j <;>
+        simp [scalarB, B_formula,
+          D5.S3.Quantum.Information.ActualPureQubitCostInfimum.blochMatrix] <;> ring
+
+theorem half_scalarB_double (t : ℝ) (a : (EuclideanSpace ℝ (Fin 3))) :
     (1 / 2 : ℂ) • scalarB (2 * t) ((2 : ℝ) • a) = scalarB t a := by
   ext i j
   fin_cases i <;> fin_cases j <;> apply Complex.ext <;>
     simp [scalarB, B_formula, Complex.mul_re, Complex.mul_im,
       Complex.div_re, Complex.div_im] <;> ring
-private theorem half_scalarB_complement (t : ℝ) (a : (EuclideanSpace ℝ (Fin 3))) :
+theorem half_scalarB_complement (t : ℝ) (a : (EuclideanSpace ℝ (Fin 3))) :
     (1 / 2 : ℂ) • scalarB (2 - t) (-a) =
       (1 : (Matrix (Fin 2) (Fin 2) ℂ)) - (1 / 2 : ℂ) • scalarB t a := by
   ext i j
@@ -447,8 +451,6 @@ private theorem sum_antipodal {A : Type*} [AddCommMonoid A] (f : (Fin 4 → Bool
   rw [← Equiv.sum_comp pairEquiv]
   rw [Fintype.sum_prod_type]
   simp [pairEquiv, Fintype.sum_bool]
-private theorem sign_not (b : Bool) : sgn (!b) = -sgn b := by
-  cases b <;> norm_num [sgn]
 private def p (b : (Fin 3 → Bool) → (EuclideanSpace ℝ (Fin 3))) (ε : (Fin 3 → Bool)) : ℝ :=
   ‖b ε‖ + (1 - ∑ η, ‖b η‖) / 8
 private theorem p_ge_norm (b : (Fin 3 → Bool) → (EuclideanSpace ℝ (Fin 3))) (hb : ∑ ε, ‖b ε‖ ≤ 1) (ε : (Fin 3 → Bool)) :
@@ -490,14 +492,14 @@ private theorem sum_a (b : (Fin 3 → Bool) → (EuclideanSpace ℝ (Fin 3))) : 
 private theorem signed_sum_t (b : (Fin 3 → Bool) → (EuclideanSpace ℝ (Fin 3))) (i : Fin 4) :
      ∑ δ, sgn (δ i) * t b δ = 0 := by
   rw [sum_antipodal]
-  simp only [t_rep, t_negRep, negRep, sign_not]
+  simp only [t_rep, t_negRep, negRep, D5.S3.Combinatorics.IsingUniquenessSets.sgn_not]
   simp_rw [show ∀ x y : ℝ, x * y + -x * y = 0 by intros; ring]
   simp
 private theorem signed_sum_a (b : (Fin 3 → Bool) → (EuclideanSpace ℝ (Fin 3))) (i : Fin 4) :
      ∑ δ, sgn (δ i) • a b δ =
        ∑ ε, sgn (rep ε i) • b ε := by
   rw [sum_antipodal]
-  simp only [a_rep, a_negRep, negRep, sign_not, smul_smul, ← add_smul]
+  simp only [a_rep, a_negRep, negRep, D5.S3.Combinatorics.IsingUniquenessSets.sgn_not, smul_smul, ← add_smul]
   congr 1
   funext ε
   congr 1

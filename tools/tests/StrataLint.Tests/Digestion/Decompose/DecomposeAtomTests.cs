@@ -22,7 +22,7 @@ public sealed class DecomposeAtomTests
     }
 
     [Fact]
-    public void DeclaredDialectWritesExactBoldClauseChain()
+    public void GenericWritesExactBoldClauseChain()
     {
         var f = new DecomposeFixture();
         var result = DecomposeAtomCommand.Run("synthetic", f.Gateway, f.Args(), f.Apply);
@@ -42,7 +42,7 @@ public sealed class DecomposeAtomTests
     {
         var f = new DecomposeFixture(DecomposeFixture.Eight);
         var plan = DigestionDecomposition.Plan(f.Parent, DecomposeFixture.Atom(DecomposeFixture.Eight).RawBytes,
-            AtomizerRegistry.Require(DecomposeFixture.Dialect).Atomize, f.Rules);
+            AtomizerRegistry.Require(DecomposeFixture.Dialect).Atomize);
         Assert.Equal(8, plan.Children.Length);
         Assert.All(plan.Segments, s => Assert.Equal(DigestionSegmentKind.Claim, s.Kind));
         Assert.Equal(DecomposeFixture.Eight, Encoding.UTF8.GetString(
@@ -59,7 +59,7 @@ public sealed class DecomposeAtomTests
     [Fact]
     public void NestedChainChildCanBeDecomposedAndAlignerValidatesBothLevels()
     {
-        const string nested = "**Theorem 1.1** First assertion.\n\n**Bundle**\n\nPreamble.\n\n- alpha\n- beta\n";
+        const string nested = "**Theorem 1.1** First assertion.\n\n## Items\n\n- alpha\n- beta\n";
         var f = new DecomposeFixture(nested);
         var first = DecomposeAtomCommand.Run("synthetic", f.Gateway, f.Args(), f.Apply);
         Assert.True(first.Success, first.Error);
@@ -82,13 +82,13 @@ public sealed class DecomposeAtomTests
     [InlineData("corrupt-cas", "CAS_MISMATCH")]
     [InlineData("single", "NO_CLAUSE_PLAN")]
     [InlineData("ambiguous", "AMBIGUOUS")]
-    [InlineData("unknown-dialect", "Unknown declared dialect")]
+    [InlineData("unknown-dialect", "Unknown atomizer id")]
     public void InvalidParentsFailWithoutWrites(string defect, string code)
     {
         var text = defect switch
         {
             "single" => "**Theorem 1.1** Single assertion.\n",
-            "ambiguous" => "**Theorem 1.1**\n\n- repeated\n- repeated\n",
+            "ambiguous" => "## Items\n\n- repeated\n- repeated\n",
             _ => DecomposeFixture.Bold,
         };
         var f = new DecomposeFixture(text, defect == "unknown-dialect" ? "dialect:missing" : DecomposeFixture.Dialect);
@@ -122,7 +122,7 @@ public sealed class DecomposeAtomTests
     public void InvalidPlansFailWithoutWrites(string defect)
     {
         var f = new DecomposeFixture();
-        TheoryAtomizer malformed = (bytes, rules) =>
+        TheoryAtomizer malformed = (bytes) =>
         {
             var parent = DigestionAtom.FromFrozenCas([.. bytes]);
             var first = parent with { EndByte = 20, RawBytes = parent.RawBytes[..20] };
@@ -302,7 +302,6 @@ public sealed class DecomposeAtomTests
         var second = first with { SourceId = "b-bundle", SourcePath = "docs/bundle.md" };
         var raw = RawRepositorySnapshot.Create(
         [
-            RawRepositoryEntry.FromText(TheoryAtomizerDataLoader.DataPath, DecomposeFixture.RulesText),
             RawRepositoryEntry.FromText("docs/single.md", shared),
             RawRepositoryEntry.FromText("docs/bundle.md", shared + other),
             new RawRepositoryEntry("Meta/Digestion/backfill/a-single/source.toml",
@@ -332,7 +331,7 @@ public sealed class DecomposeAtomTests
     [Fact]
     public void NestedChildrenCanBeDecomposed()
     {
-        const string nested = "**Theorem 1.1** First assertion.\n\n**Bundle**\n\nPreamble.\n\n- alpha\n- beta\n";
+        const string nested = "**Theorem 1.1** First assertion.\n\n## Items\n\n- alpha\n- beta\n";
         var f = new DecomposeFixture(nested);
         Assert.True(DecomposeAtomCommand.Run("synthetic", f.Gateway, f.Args(), f.Apply).Success);
         var child = Assert.Single(f.Document.RequireDigestionEntries(), e => e.AtomId != f.Parent.AtomId
@@ -344,8 +343,8 @@ public sealed class DecomposeAtomTests
     [Fact]
     public void ContextBoundAtomizerDecomposesFrozenCas()
     {
-        const string text = "**\u5b9a\u7406 1.1 (Fixture)[\u8bc1]\u3002**\n\n- alpha\n- beta\n";
-        var f = new DecomposeFixture(text, AtomizerRegistry.ConeId);
+        const string text = "**\u5b9a\u7406 1.1 (Fixture)[\u8bc1]\u3002**\n\n**Independent** Separate claim.\n";
+        var f = new DecomposeFixture(text, AtomizerRegistry.GenericId);
         f.Current = RawRepositorySnapshot.Create(f.Current.Entries.Select(entry => entry.Path == "docs/probe.md"
             ? RawRepositoryEntry.FromText("docs/probe.md", "# Cone\n\n## \u7b2c\u4e00\u7ae0\n\n" + text)
             : entry));
@@ -358,10 +357,10 @@ public sealed class DecomposeAtomTests
     [Fact]
     public void UnicodeAndCrLfRangesReassembleImmutableCasExactly()
     {
-        const string text = "**Theorem 1.1**\r\n\r\nPreamble \u03b1.\r\n\r\n- first \u03b2\r\n- second \u03b3\r\n";
+        const string text = "**Theorem 1.1** Preamble \u03b1.\r\n\r\n**Independent** Second \u03b3.\r\n";
         var f = new DecomposeFixture(text);
         var plan = DigestionDecomposition.Plan(f.Parent, DecomposeFixture.Atom(text).RawBytes,
-            AtomizerRegistry.Require(DecomposeFixture.Dialect).Atomize, f.Rules);
+            AtomizerRegistry.Require(DecomposeFixture.Dialect).Atomize);
         Assert.Equal(Encoding.UTF8.GetBytes(text), plan.Segments.SelectMany(s => s.Atom.RawBytes).ToArray());
         Assert.Equal(2, plan.Children.Length);
         Assert.Null(DigestionDecomposition.IntegrityFailure(plan));

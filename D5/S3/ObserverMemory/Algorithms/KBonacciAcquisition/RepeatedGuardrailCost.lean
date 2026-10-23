@@ -7,7 +7,7 @@
    digest: Guarded INITIAL phase labels have exact paid repeated-query cost. -/
 
 import D5.S3.ObserverMemory.Algorithms.KBonacciAcquisition.OriginalNarrowCost
-import D5.S3.Observer.Budget.WorstCaseDepthInformationLowerBound
+import D5.S3.ObserverMemory.Algorithms.KBonacciAcquisition.OriginalCommonTailCompression
 set_option autoImplicit false
 open D5.S0.Tower.DBonacci.Names
 open D5.S0.Tower.DBonacciGeneral.UniformBaseGap
@@ -309,101 +309,8 @@ theorem original_repeated_guardrail_cost {Y : Type z} (g u h rho : ℕ) (hg : 2 
             q ≤ r ∧ Function.Injective (adaptiveTranscript protocol) := by
       classical
       intro Y X pi v target inj r theta silent words s hs records correct; let count (t b : ℕ) : ℕ := ∑ i ∈ Finset.range b, if h ∣ t+i then 1 else 0
-      have countStep (t b : ℕ) : count t (b+1)= (if h ∣ t then 1 else 0)+count (t+1) b := by
-        dsimp only [count]; rw [Finset.sum_range_succ']; simp only [Nat.add_zero,Nat.add_assoc,Nat.add_left_comm,Nat.add_comm]
-      have observed (w : List Bool) : output k (by omega) w= endpointReading (OriginalRecord k (by omega) w) := by
-        unfold output OriginalRecord
-        cases (scanner k (by omega)).eval w <;> rfl
-      have compress : ∀ (b t : ℕ), t+b ≤ r*h → ∀ (S : Set X) (ws : X → List Bool) (z : ZMod 2) (tail : ℕ), tail<k → ∀ archive : Archive m,
-          (∀ x ∈ S, OriginalRecord k (by omega) (ws x)= some ⟨z,theta x+((t*m : ℕ) : ZMod (k+1)),tail⟩) →
-          (∀ x ∈ S, ∃ c, execute k (by omega) pi b (ws x) (some v) archive= some (target x,c)) → ∃ P : AdaptiveProtocol X 2 (count t b),
-            ∀ x ∈ S, ∀ y ∈ S,
-              adaptiveTranscript P x=adaptiveTranscript P y → target x=target y := by
-        intro b; induction b with
-        | zero =>
-          intro t bound S ws z tail tailBound archive same success; refine ⟨.leaf,?_⟩; intro x hx y hy _; obtain ⟨cx,ex⟩ := success x hx
-          obtain ⟨cy,ey⟩ := success y hy
-          have equal : execute k (by omega) pi 0 (ws x) (some v) archive= execute k (by omega) pi 0 (ws y) (some v) archive := rfl
-          rw [ex,ey] at equal; exact (Prod.mk.inj (Option.some.inj equal)).1
-        | succ b ih =>
-          intro t bound S ws z tail tailBound archive same success; cases selected : pi (some v) archive with
-          | inl label =>
-            refine ⟨.leaf,?_⟩
-            intro x hx y hy _; obtain ⟨cx,ex⟩ := success x hx; obtain ⟨cy,ey⟩ := success y hy
-            simp only [execute,selected] at ex ey; exact ((Prod.mk.inj (Option.some.inj ex)).1.symm).trans
-              (Prod.mk.inj (Option.some.inj ey)).1
-          | inr B =>
-            let ws' : X → List Bool := fun x => ws x++List.ofFn B
-            have nextRecords (x : X) (hx : x ∈ S) : OriginalRecord k (by omega) (ws' x)= if runAdmissible (k-1) (k-1-tail) m B then
-                    some ⟨z+wordIncrement k (theta x+((t*m : ℕ) : ZMod (k+1))) B,
-                      theta x+(((t+1)*m : ℕ) : ZMod (k+1)),tailAfter tail B⟩
-                  else none := by
-              dsimp only [ws']; rw [bridge.2.1,same x hx,(literal_block_execution k hkl m B z _ tail tailBound).1]
-              congr 1
-              push_cast
-              congr 1
-              ring
-            by_cases safe : runAdmissible (k-1) (k-1-tail) m B=true
-            · have nextTail : tailAfter tail B<k := (literal_block_execution k hkl m B z 0 tail tailBound).2 safe
-              have nextRecordsSafe (x : X) (hx : x ∈ S) : OriginalRecord k (by omega) (ws' x)= some ⟨z+wordIncrement k (theta x+((t*m : ℕ) : ZMod (k+1))) B,
-                      theta x+(((t+1)*m : ℕ) : ZMod (k+1)),tailAfter tail B⟩ := by
-                rw [nextRecords x hx,if_pos safe]
-              have advance (q : ZMod 2) (S' : Set X) (sub : S' ⊆ S)
-                  (valueEq : ∀ x ∈ S', z+wordIncrement k (theta x+((t*m : ℕ) : ZMod (k+1))) B=q) : ∃ P : AdaptiveProtocol X 2 (count (t+1) b),
-                    ∀ x ∈ S', ∀ y ∈ S', adaptiveTranscript P x=adaptiveTranscript P y → target x=target y := by
-                apply ih (t+1) (by omega) S' ws' q (tailAfter tail B) nextTail
-                  (archive++[(B,some q)])
-                · intro x hx
-                  rw [nextRecordsSafe x (sub hx),valueEq x hx]
-                · intro x hx
-                  obtain ⟨c,ex⟩ := success x (sub hx)
-                  have reply : output k (by omega) (ws' x)=some q := by rw [observed,nextRecordsSafe x (sub hx),valueEq x hx]; rfl
-                  simp only [execute,selected] at ex
-                  change (execute k (by omega) pi b (ws' x) (some v)
-                    (archive++[(B,output k (by omega) (ws' x))])).map (fun x => (x.1,x.2+1))= some (target x,c) at ex
-                  rw [reply] at ex
-                  obtain ⟨out,eout,eq⟩ := Option.map_eq_some_iff.mp ex
-                  exact ⟨out.2,by rw [eout]; exact congrArg some (by
-                    apply Prod.ext
-                    · exact (Prod.mk.inj eq).1
-                    · rfl)⟩
-              by_cases active : h ∣ t
-              · let question (x : X) : Fin 2 := ⟨(z+wordIncrement k (theta x+((t*m : ℕ) : ZMod (k+1))) B).val,
-                    ZMod.val_lt _⟩
-                let branch (a : Fin 2) : Set X := {x | x ∈ S ∧ question x=a}
-                have branchAdvance (a : Fin 2) : ∃ P : AdaptiveProtocol X 2 (count (t+1) b),
-                      ∀ x ∈ branch a, ∀ y ∈ branch a,
-                        adaptiveTranscript P x=adaptiveTranscript P y → target x=target y := by
-                  apply advance (a.val : ZMod 2) (branch a) (fun _ hx => hx.1)
-                  intro x hx; have e := congrArg Fin.val hx.2; dsimp only [question] at e
-                  apply ZMod.val_injective 2
-                  rw [ZMod.val_natCast,Nat.mod_eq_of_lt a.isLt]; exact e
-                let next (a : Fin 2) : AdaptiveProtocol X 2 (count (t+1) b) := Classical.choose (branchAdvance a)
-                have ncount : count t (b+1)=count (t+1) b+1 := by rw [countStep,if_pos active]; omega
-                rw [ncount]
-                refine ⟨.query question next,?_⟩
-                intro x hx y hy eq; change question x::adaptiveTranscript (next (question x)) x= question y::adaptiveTranscript (next (question y)) y at eq
-                have parts := List.cons.inj eq
-                have ey : y ∈ branch (question x) := ⟨hy,parts.1.symm⟩
-                apply Classical.choose_spec (branchAdvance (question x)) x ⟨hx,rfl⟩ y ey
-                simpa only [parts.1] using parts.2
-              · have zero (x : X) : wordIncrement k (theta x+((t*m : ℕ) : ZMod (k+1))) B=0 := silent t (by omega) active x B
-                have ncount : count t (b+1)=count (t+1) b := by rw [countStep,if_neg active,zero_add]
-                rw [ncount]; exact advance z S (fun _ hx => hx) (fun x _ => by rw [zero x,add_zero])
-            · refine ⟨.leaf,?_⟩
-              intro x hx y hy _; have rx : OriginalRecord k (by omega) (ws' x)=none := by rw [nextRecords x hx,if_neg safe]
-              have ry : OriginalRecord k (by omega) (ws' y)=none := by rw [nextRecords y hy,if_neg safe]
-              have ox : output k (by omega) (ws' x)=none := by rw [observed,rx]; rfl
-              have oy : output k (by omega) (ws' y)=none := by rw [observed,ry]; rfl
-              have eq : execute k (by omega) pi (b+1) (ws x) (some v) archive= execute k (by omega) pi (b+1) (ws y) (some v) archive := by
-                simp only [execute,selected]
-                change (execute k (by omega) pi b (ws' x) (some v)
-                  (archive++[(B,output k (by omega) (ws' x))])).map _ = (execute k (by omega) pi b (ws' y) (some v)
-                  (archive++[(B,output k (by omega) (ws' y))])).map _
-                rw [ox,oy,bridge.2.2.2 m b pi _ _ _ _ (rx.trans ry.symm)]
-              obtain ⟨cx,ex⟩ := success x hx
-              obtain ⟨cy,ey⟩ := success y hy
-              rw [ex,ey] at eq; exact (Prod.mk.inj (Option.some.inj eq)).1
+      have compress := OriginalCommonTailCompression.compress k m hkl pi (some v)
+        target theta h (r*h) silent
       obtain ⟨P,Pexact⟩ := compress (r*h) 0 (by omega) Set.univ words v s hs []
         (fun x _ => by simpa using records x) (fun x _ => correct x)
       have countBound : count 0 (r*h) ≤ r := by

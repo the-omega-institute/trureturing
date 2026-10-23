@@ -16,7 +16,21 @@ $$\forall b \in \operatorname{Bool},\; \operatorname{sgn}\left(b\right) = \opera
 
 A point of the cube is a function from Fin k to Bool; the value true stands for +1 and false for -1.
 
-**Definition 1.2 (Walsh functions).**
+**Theorem 1.2 (Negation reverses the coordinate sign).**
+
+$$\forall b \in \operatorname{Bool},\; \operatorname{sgn}\left(\operatorname{Bool.not}\left(b\right)\right) = -(\operatorname{sgn}\left(b\right))$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/IsingUniquenessSets.sgn_not` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Acknowledgement.* Tomasz Skalski, Tomasz Stroiński (2025). *Level sets and maximum likelihood estimation for the Ising model*. DOI: [10.48550/arXiv.2511.20925](https://doi.org/10.48550/arXiv.2511.20925). URL: <https://arxiv.org/abs/2511.20925v1>.
+
+*Commentary.*
+
+For every Boolean b, the sign of its negation is the negative of its sign. The Walsh identities in the uniqueness theorem use this identity when reversing coordinates.
+
+**Definition 1.3 (Walsh functions).**
 
 $$\forall k \in \mathbb{N},\; \forall L \in \operatorname{Finset}\left(\operatorname{Fin}\left(k\right)\right),\; \forall x \in \operatorname{Fin}\left(k\right) \to \operatorname{Bool},\; \operatorname{walsh}\left(L, x\right) = \prod_{j \in L} (\operatorname{sgn}\left(x\left(j\right)\right))$$
 
@@ -28,7 +42,7 @@ $$\forall k \in \mathbb{N},\; \forall L \in \operatorname{Finset}\left(\operator
 
 For a finite set L of coordinates, the Walsh function is the product of the coordinate signs over L; the empty product is the constant function one.
 
-**Definition 1.3 (The space spanned by Walsh functions of bounded degree).**
+**Definition 1.4 (The space spanned by Walsh functions of bounded degree).**
 
 $$\forall k \in \mathbb{N},\; \forall q \in \mathbb{N},\; \operatorname{walshSpace}\left(k, q\right) = \operatorname{Submodule.span}\left(\mathbb{R}, \{\operatorname{walsh}\left(L\right) \mid L \in \operatorname{Finset}\left(\operatorname{Fin}\left(k\right)\right), \operatorname{card}\left(L\right) \le q\}\right)$$
 
@@ -40,7 +54,7 @@ $$\forall k \in \mathbb{N},\; \forall q \in \mathbb{N},\; \operatorname{walshSpa
 
 The real linear span of the Walsh functions indexed by sets of at most q coordinates; for q = 2 it is the Ising space of constants, fields and pair couplings.
 
-**Definition 1.4 (Sets of uniqueness for the nonnegative cone).**
+**Definition 1.5 (Sets of uniqueness for the nonnegative cone).**
 
 $$\forall k \in \mathbb{N},\; \forall q \in \mathbb{N},\; \forall U \in \operatorname{Finset}\left(\operatorname{Fin}\left(k\right) \to \operatorname{Bool}\right),\; \operatorname{IsSetOfUniqueness}\left(k, q, U\right) \Leftrightarrow (\forall phi \in \operatorname{walshSpace}\left(k, q\right),\; (\forall x \in \operatorname{Fin}\left(k\right) \to \operatorname{Bool},\; 0 \le phi\left(x\right)) \Rightarrow ((\forall x \in U,\; phi\left(x\right) = 0) \Rightarrow (phi = 0)))$$
 
@@ -52,7 +66,7 @@ $$\forall k \in \mathbb{N},\; \forall q \in \mathbb{N},\; \forall U \in \operato
 
 A finite set U of points is a set of uniqueness for the nonnegative cone of the Walsh space when every nonnegative function of the space that vanishes on U is the zero function.
 
-**Definition 1.5 (The smallest size of a set of uniqueness).**
+**Definition 1.6 (The smallest size of a set of uniqueness).**
 
 $$\forall k \in \mathbb{N},\; \forall q \in \mathbb{N},\; \operatorname{minUniqueness}\left(k, q\right) = \operatorname{sInf}\left(\{n \in \mathbb{N} \mid \exists U \in \operatorname{Finset}\left(\operatorname{Fin}\left(k\right) \to \operatorname{Bool}\right),\; (\operatorname{card}\left(U\right) = n) \land (\operatorname{IsSetOfUniqueness}\left(k, q, U\right))\}\right)$$
 
@@ -64,7 +78,7 @@ $$\forall k \in \mathbb{N},\; \forall q \in \mathbb{N},\; \operatorname{minUniqu
 
 The infimum of the sizes of the sets of uniqueness; the whole cube is always one, so the infimum is attained.
 
-**Definition 1.6 (The conjecture u(k, 2) = k + 1).**
+**Definition 1.7 (The conjecture u(k, 2) = k + 1).**
 
 $$claim \Leftrightarrow ((\forall k \in \mathbb{N},\; \forall U \in \operatorname{Finset}\left(\operatorname{Fin}\left(k\right) \to \operatorname{Bool}\right),\; (\operatorname{IsSetOfUniqueness}\left(k, 2, U\right)) \Rightarrow ((k) + (1) \le \operatorname{card}\left(U\right))) \land ((\forall k \in \mathbb{N},\; (3 \le k) \Rightarrow (\operatorname{minUniqueness}\left(k, 2\right) = (k) + (1))) \land (\operatorname{minUniqueness}\left(2, 2\right) = 4)))$$
 
@@ -76,7 +90,7 @@ $$claim \Leftrightarrow ((\forall k \in \mathbb{N},\; \forall U \in \operatornam
 
 The first conjunct is the clause that no set of uniqueness has at most k points, for every k. The second is the equality u(k, 2) = k + 1 for every k at least three. The third records u(2, 2) = 4: for k = 2 the Walsh space of degree two is the whole function space, so only the whole square is a set of uniqueness.
 
-**Theorem 1.7 (No set of uniqueness has at most k points).**
+**Theorem 1.8 (No set of uniqueness has at most k points).**
 
 $$(\forall k \in \mathbb{N},\; \forall U \in \operatorname{Finset}\left(\operatorname{Fin}\left(k\right) \to \operatorname{Bool}\right),\; (\operatorname{IsSetOfUniqueness}\left(k, 2, U\right)) \Rightarrow ((k) + (1) \le \operatorname{card}\left(U\right))) \land ((\forall k \in \mathbb{N},\; (3 \le k) \Rightarrow (\operatorname{minUniqueness}\left(k, 2\right) = (k) + (1))) \land (\operatorname{minUniqueness}\left(2, 2\right) = 4))$$
 
@@ -101,5 +115,6 @@ Lower bound: if U has at most k points, the evaluation map sending v in R^(k+1) 
 - Truth anchor: `D5/S3/Combinatorics/IsingUniquenessSets.minUniqueness`
 - Truth anchor: `D5/S3/Combinatorics/IsingUniquenessSets.result`
 - Truth anchor: `D5/S3/Combinatorics/IsingUniquenessSets.sgn`
+- Truth anchor: `D5/S3/Combinatorics/IsingUniquenessSets.sgn_not`
 - Truth anchor: `D5/S3/Combinatorics/IsingUniquenessSets.walsh`
 - Truth anchor: `D5/S3/Combinatorics/IsingUniquenessSets.walshSpace`

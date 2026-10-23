@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:7ce62b0b6285871875fb0f88376018a2ce0ec8caa8ce6e75dfa937dc6691751f
+  normalized_sha256: sha256:7ce62b0b6285871875fb0f88376018a2ce0ec8caa8ce6e75dfa937dc6691751f
+cas_ref: sha256:7ce62b0b6285871875fb0f88376018a2ce0ec8caa8ce6e75dfa937dc6691751f
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: Notation block introducing the Pochhammer basis transformation L_a and the class U_n, without asserting properties of their members beyond the defining predicate.
+    previous_atom_id: 411e6a24256907dfc7f552cccd815d343532e14f893fc35d8fda3728b2216236
+    next_atom_id: cc928d1adfb93c30841f6b0669d38c8beabe2acc12c48b4ba619c4b59e23ae5f

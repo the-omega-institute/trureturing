@@ -8,13 +8,13 @@ internal sealed class ExponentialSquareWeightCatalanParityDocument : IScribeDocu
 {
     private const string Prefix = "D5/S1/Recurrence/Residue/ExponentialSquareWeightCatalanParity.";
     private static readonly LibraryNoteRef Source =
-        LibraryNoteRef.Create("D5/L/Recurrence/hanna2026a397242");
+        LibraryNoteRef.Create("D5/L/Recurrence/hanna2026a397242b");
 
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "The coefficients of OEIS A397242 are odd exactly one below a power of two.",
         H("Exponential Square Weights and Catalan Parity"),
         Blocks(
-            Paragraph(Text("The first conjecture in hanna2026a397242 concerns the equation "
+            Paragraph(Text("The first conjecture in hanna2026a397242b concerns the equation "
                 + "A=exp(L), where L=x+Sum (n^2-1)a(n)x^n/n^2 for n>=2. Its formal "
                 + "differential reading is A(0)=1 and X A'=M A, with M=X L'. "
                 + "The differential identity and rational uniqueness below use exactly "
@@ -57,7 +57,7 @@ internal sealed class ExponentialSquareWeightCatalanParityDocument : IScribeDocu
             Node("coeff_M_rat", "The exact rational weights", RationalShapeFormula(),
                 "For n>=2, substitution of a(n)=n d(n) and cancellation of the nonzero "
                 + "rational n gives coefficient (n^2-1)a(n)/n. This is coefficient n "
-                + "of X L' for the exponent in hanna2026a397242."),
+                + "of X L' for the exponent in hanna2026a397242b."),
             Node("generating_unique", "Uniqueness among rational solutions", UniqueFormula(),
                 "Strong induction compares the two differential equations. Every interior "
                 + "convolution term agrees at smaller indices. Degree one is forced to "

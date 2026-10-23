@@ -1,0 +1,25 @@
+**定义 253.1（完整世界、基点和局部图）。** 取[支持卷 VII §§1–2](FIB_STRICT_REAL_JOINT_INCIDENCE_SUPPORT_VII.md#1-complete-worlds-and-the-original-joint-question) 的全部严格完整世界
+
+$$
+W=(P(r,b),g,d)\in\mathcal H,\qquad
+P(r,b)=\begin{pmatrix}r&b\\r(1-r)/b&1-r\end{pmatrix},
+$$
+
+其中 $0<r<1$、$b>0$、$0\ne g\in\mathbb R[t]$、$\deg g\le3$、$d\in\mathbb R$，并保留该来源最初五个固定读数和原时钟。记
+
+$$
+\pi(W)=(p(W),v(W)),\qquad
+\Gamma(W)=\Psi_J(W)=(p(W),v(W),a(W)).
+\tag{253.1}
+$$
+
+$a$ 是同一完整世界的第七时钟 $J$ 响应；$g,d$ 不随目标更换。为避免与世界的 drift $d$ 混淆，本节不用 $d$ 表示维数。[支持卷 VII 定理 24.1 及推论 24.2](FIB_STRICT_REAL_JOINT_INCIDENCE_SUPPORT_VII.md#24-complete-augmented-j-critical-classification-and-the-nonnegative-p-consequence) 供应
+
+$$
+p(W)\ge0\quad\Longrightarrow\quad
+\operatorname{rank}d\Gamma_W=2
+\tag{253.2}
+$$
+
+在完整二维解析 parent 上成立，包括奇异来源；它不是固定 drift 切片的秩断言。[支持卷 VIII §§28–29](FIB_STRICT_REAL_JOINT_INCIDENCE_SUPPORT_VIII.md#29-a-vanishing-drift-coefficient-and-a-multiple-carrier-root) 的实际 $J$ 弧点满足 $\alpha=\zeta=0$、$F_0\ne0$、$\Lambda_H\ne0$ 且投影载体根为重根；这否定该点的非零线性漂移消元图，不改变 (253.2)，其中负 $b$ 的代数提升 $G$ 也不是严格完整世界。
+

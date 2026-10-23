@@ -1,0 +1,20 @@
+**Theorem 6.2 (Regular critical exclusion on the full response window).**
+For every strict regular complete world with $10\le p\le34$,
+
+$$
+\operatorname{rank}D\Psi_M<2\quad\Longleftrightarrow\quad W=W_c.
+\tag{6.6}
+$$
+
+In particular every such world with $p\ne24$ has rank two, uniformly
+for all real $v$ and every permitted entire gain and fixed drift.
+
+Proof. Lemma 3.2 converts criticality into a common zero of the three
+$E_i$. Lemma 4.3 leaves only $b=1/8$ or a lifted positive $F$ root.
+Every positive $F$ root is excluded from this strict response window
+by Lemma 5.2. Lemma 6.1 treats $b=1/8$ and proves both directions
+of (6.6). This argument never bounds $v$ and never divides by drift,
+a gain coefficient, a sampled gain or a root difference. The separate
+SII, Theorem 27.2 is consistent with (6.6) and additionally covers
+all noncentral singular $p=24$ worlds on the full parent. ∎
+

@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:64dde063956685322ca0e67dcbfe64895ba3edeb018f97b9bc2dbdf86b092415
+  normalized_sha256: sha256:64dde063956685322ca0e67dcbfe64895ba3edeb018f97b9bc2dbdf86b092415
+cas_ref: sha256:64dde063956685322ca0e67dcbfe64895ba3edeb018f97b9bc2dbdf86b092415
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 定义 161.1（水平见证素数复杂度）：只引入对象、参数、术语或记号；不附加存在性、唯一性或其他性质断言。
+    previous_atom_id: 4fccce4d946b3e2df523afe7dcd99526dfa7b2479a8e3911aef46db97665eed6
+    next_atom_id: 5332041022657db2a0d793c073d7d3e22d5e3777f34b51b76c2b7bcfc1ca2214

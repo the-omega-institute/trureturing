@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:5b1831ee9a623dc0435b4e8110135dcf2263264ba90754111969b8150645eb6b
+  normalized_sha256: sha256:5b1831ee9a623dc0435b4e8110135dcf2263264ba90754111969b8150645eb6b
+cas_ref: sha256:5b1831ee9a623dc0435b4e8110135dcf2263264ba90754111969b8150645eb6b
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 定义10.1只固定有限维量子载体、CPTP用语、熵、根保真度、半迹距离及恢复映射类型，不断言恢复界。
+    previous_atom_id: 9aac35d50a301847bdba4670fb136f6286f240d9550cde7cb9cb5bf44706ca86
+    next_atom_id: 5a9862d9745bbe8855ae7d6dc06ebdc9d903dff3729341d86575990ed88bdf11

@@ -1,1 +1,1 @@
-{"statement_id":"sha256:de526edf0cafc9f591f1063685a6eb522b12212fe95021dc01d0a82ffb167dd3"}
+{"statement_id":"sha256:de526edf0cafc9f591f1063685a6eb522b12212fe95021dc01d0a82ffb167dd3","declarations":[{"declaration_name_key":"ns(ns(ns(ns(ns(ns(n0,2:D5),2:S3),8:Observer),10:Separation),19:ConeResidualWitness),14:coneProjection)","kind":"def"},{"declaration_name_key":"ns(ns(ns(ns(ns(ns(n0,2:D5),2:S3),8:Observer),10:Separation),19:ConeResidualWitness),30:cone_residual_observer_duality)","kind":"theorem"}]}

@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:3ef54a8cd622b88f07898b7f0a75880f227fe41a4783b8d3e962639080fa49d8
+  normalized_sha256: sha256:3ef54a8cd622b88f07898b7f0a75880f227fe41a4783b8d3e962639080fa49d8
+cas_ref: sha256:3ef54a8cd622b88f07898b7f0a75880f227fe41a4783b8d3e962639080fa49d8
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: Interpretive caution against naming a product a spacetime gap without a coupling model.
+    previous_atom_id: 44ad71c6b156d358c53cd113c0a5b490b7b6ab2d5d046844c7829875d4c3f5c4
+    next_atom_id: 6e35d3e0d86ac4117ecb491d21a9daab86d0ffd37dded09f80d45c11ff883f81

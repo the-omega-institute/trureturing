@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:d600c02ec20446cc223466ce8a2b2aee3995021b0e83e35545b76485606386e9
+  normalized_sha256: sha256:d600c02ec20446cc223466ce8a2b2aee3995021b0e83e35545b76485606386e9
+cas_ref: sha256:d600c02ec20446cc223466ce8a2b2aee3995021b0e83e35545b76485606386e9
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 证明。：该段仅论证前文命题 714.1（空核心的非平衡族）。，不另立新的命题陈述；前文命题本身仍保留。
+    previous_atom_id: 034cffe5183e13a1cb93cb27b1dd7843774093c6222a25ed19d4e289f0456c85
+    next_atom_id: 64e6105c24df3c9e6b977eae100d1633ce2beb6c610ceaf506e8661ffc541c27

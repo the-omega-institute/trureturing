@@ -1,0 +1,13 @@
+fingerprints:
+  raw_sha256: sha256:2af431c6b78948a44785bdcf2ae54b243de12d91fa25847c2f21713f84940bfc
+  normalized_sha256: sha256:2af431c6b78948a44785bdcf2ae54b243de12d91fa25847c2f21713f84940bfc
+cas_ref: sha256:2af431c6b78948a44785bdcf2ae54b243de12d91fa25847c2f21713f84940bfc
+coverage_gids:
+  - gid: D5/S3/ObserverMemory/Algorithms/KBonacciAcquisition/DonorCorrection.original_uniform_paid_feedback_bound
+    target_statement_id: sha256:c6b4357962821257602723a42aeada5cde5330f03a90fb79008de6f6e15b42df
+  - gid: D5/S3/ObserverMemory/Algorithms/KBonacciAcquisition/FourLabelPaidFeedback.original_four_label_paid_feedback
+    target_statement_id: sha256:2c2f5aab89ec65b05c724d750bfd2912a55494f3d03fb2ba94c1f7c4c24eb531
+  - gid: D5/S3/ObserverMemory/Algorithms/KBonacciAcquisition/OriginalAcquiredTrace.archive_length
+    target_statement_id: sha256:f544e9f452f50fcea119d8f8f8cc563b3025e03839a5c2b8c1d0ec2ab0b6b3ca
+receipts:
+  unresolved_subitems: []

@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:58e8e8dcf782c2237766be4501939507f0c9f2d2e0a9a7b1ddcacf0c07b18ed6
+  normalized_sha256: sha256:58e8e8dcf782c2237766be4501939507f0c9f2d2e0a9a7b1ddcacf0c07b18ed6
+cas_ref: sha256:58e8e8dcf782c2237766be4501939507f0c9f2d2e0a9a7b1ddcacf0c07b18ed6
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 证明续段只完成第 3.5 条等距提升的上界构造，未提出独立新陈述。
+    previous_atom_id: 5ba512b4c496815504c37dbcf8fea98b10925534ebbd109771a74de0f97919ad
+    next_atom_id: 57ce647b34e090df44da907b351ad9be98b7733840d59b8d7a64bc85ae62c43b

@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:19330fb67ba1835c92919f3b0e19986ebc095c3859be725f87097d306440daf2
+  normalized_sha256: sha256:19330fb67ba1835c92919f3b0e19986ebc095c3859be725f87097d306440daf2
+cas_ref: sha256:19330fb67ba1835c92919f3b0e19986ebc095c3859be725f87097d306440daf2
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 章节导引「十、这套几何怎样真正接回项目的局部—整体问题？」只组织后续讨论或表格栏目，本 atom 不含独立数学命题；相邻条目的定理、公式及待证陈述不在本次结算范围内。
+    previous_atom_id: 55f094e9dd1d36a8679bad105868fac4da135788fc35a98c00a6d796baf8015d
+    next_atom_id: 561f9cc8e8080a3b14d8f437ada317f41ca079492462aac1cf49e7b2434e246e

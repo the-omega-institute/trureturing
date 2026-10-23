@@ -1,9 +1,0 @@
-fingerprints:
-  raw_sha256: sha256:b1c7ba1587e021cf2465091fe277bbb5a10e59b89eaf02021c60dd3e0469b570
-  normalized_sha256: sha256:b1c7ba1587e021cf2465091fe277bbb5a10e59b89eaf02021c60dd3e0469b570
-cas_ref: sha256:b1c7ba1587e021cf2465091fe277bbb5a10e59b89eaf02021c60dd3e0469b570
-coverage_gids:
-  - gid: D5/S3/ObserverMemory/ProObjects/ConceptAnchorHomAsymmetry.concept_anchor_hom_asymmetry
-    target_statement_id: sha256:5826430c176969dabc9899e6ce1e439f16d9a3c6c2ab0ada5c10622f13045323
-receipts:
-  unresolved_subitems: []

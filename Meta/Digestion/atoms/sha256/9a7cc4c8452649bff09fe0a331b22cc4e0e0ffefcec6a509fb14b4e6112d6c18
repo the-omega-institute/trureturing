@@ -1,0 +1,16 @@
+**定理 5.1（不交并的修正和）。** 设 $n\ge3$ 为奇数,$\mathtt q\ge2$,$[N]=Q_1\sqcup\cdots\sqcup Q_s$,$\Gamma$ 在不同的 $Q_j$ 之间没有边,$\Gamma_j=\Gamma[Q_j]$,$\mathrm{col}$ 是任一着色。记 $\Delta_j=\Delta(\Gamma_j,\mathrm{col}|_{Q_j},n)$,它按约定 2.2 对同一个 $\mathtt q$ 与同一个 $G$ 计算。则:
+
+(a) $\Delta=\sum_{j=1}^s\Delta_j$。
+
+(b) 若 $\Gamma_j$ 不含偶圈,或 $Q_j$ 中的量子比特至多占据三个方,则 $\Delta_j=0$。
+
+(c) 若 $\Gamma_j$ 是长度 $L\ge4$ 的偶圈,则 $\Delta_j$ 的每个求和项属于 $\{0,2\}$,从而 $\Delta_j\ge0$;若另有 $n\ge5$,且这 $L$ 个量子比特位于 $L$ 个两两不同的方(从而 $\mathtt q\ge L$),则 $\Delta_j>0$。
+
+(d) 若 $|Q_j|=4$,且这四个量子比特位于四个两两不同的方 $c_1,c_2,c_3,c_4$(从而 $\mathtt q\ge4$),则
+
+$$
+\Delta_j=\begin{cases}2D, & \mathrm{pm}(\Gamma_j)=2,\\ -2D, & \Gamma_j=K_4,\\ 0, & \text{其余情形},\end{cases}
+$$
+
+其中 $D=(n-1)(n-2)(n-3)\,n^{\mathtt q-4}$ 如 (2.2)。
+

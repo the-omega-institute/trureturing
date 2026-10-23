@@ -1,0 +1,13 @@
+**Proof.** The absence guard supplier of Definition 1.2 exposes $f$;
+prefix freedom prevents an opaque hole from covering its path. The first
+leaf encountered on that path is unique. Since $p$ is still absent,
+monotonicity of positions shows that it has never appeared before $n$.
+Apply the existing leaf-sector formula
+[Transport--Memory Completion, Proposition 24.1, (RA.2403)](RECURSIVE_RELATIONAL_OBSERVATION_TRANSPORT_MEMORY_COMPLETION.md)
+to the concrete leaf of the current seed $t_n$. The number of further
+updates to its nonempty suffix $s$ is exactly
+$2-\eta(t_n|_f)+w(s^-)$. Adding the already executed $n$ proves (NBP.4.3).
+The computation reads only retained leaf labels and address letters,
+not the hidden class values. It predicts continuation; it does not
+acquire an event at the predicted time. $\square$
+

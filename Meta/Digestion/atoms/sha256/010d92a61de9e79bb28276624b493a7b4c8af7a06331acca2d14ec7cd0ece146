@@ -1,0 +1,15 @@
+**Theorem 5.2 (Uniform noncollapse).** For every real
+$p\in\mathcal P$ and every real $v$, $R_{18}(r,p,v)$ is not the
+zero polynomial in $r$.
+
+**Proof.** If $R_{18}$ were identically zero in $r$, its leading
+coefficient $750a(p,v)$ and its constant coefficient
+$4\ell(p,v)^2q_2(p,v)q_3(p,v)$ would both vanish.  The latter forces
+one of $\ell,q_2,q_3$ to vanish at the same complex pair $(p,v)$,
+contradicting Lemma 5.1.  Thus $R_{18}$ is nonzero for every real
+$(p,v)$ in the stated domain. ∎
+
+The argument does not require $v$ to lie in the previously published
+finite necessary response set.  It also does not assert that a root of
+$R_{18}$ is real, strict, or liftable.
+

@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:5228d05221283fb69505a79b24211173d1eded64b62cd2543e7f620492ffe110
+  normalized_sha256: sha256:5228d05221283fb69505a79b24211173d1eded64b62cd2543e7f620492ffe110
+cas_ref: sha256:5228d05221283fb69505a79b24211173d1eded64b62cd2543e7f620492ffe110
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 第44节的标题及导言，只交代证明安排、假设范围与来源定位，不另立数学命题。
+    previous_atom_id: c0492b00dbeea819b33c5605780f7e15acbb3b24fd632587f3a5e5cd8cfa9d6c
+    next_atom_id: e999b2005751783b7ff6358fc305fe903009e77e7ad4082284222b6988cc8663

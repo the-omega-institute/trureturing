@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:79bc2ebc17cd5c8a204b04807f0c8d54b025bf65292b4effdcaf80d0e695c1df
+  normalized_sha256: sha256:79bc2ebc17cd5c8a204b04807f0c8d54b025bf65292b4effdcaf80d0e695c1df
+cas_ref: sha256:79bc2ebc17cd5c8a204b04807f0c8d54b025bf65292b4effdcaf80d0e695c1df
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 本项承接「这不排除」所列的全局解析函数并重申仅排除最直接的有限线性递推；是结论范围说明，不断言所列生成构造存在。
+    previous_atom_id: 2b14f46ad9e4d0a95407e23424d8e1d8a158647f461519aeaf3bd9051fe64e5d
+    next_atom_id: cd2055f2c0b060e13fb848af32415fb4712adb442a12c7441e1212482b2e072b

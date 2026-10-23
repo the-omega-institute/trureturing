@@ -36,6 +36,7 @@ public sealed partial class WorktreeCommandTests
         using var repository = new TemporaryDirectory();
         InitializeRepository(repository.Path);
         StampCache(repository.Path);
+        _ = ProjectOleanFixture.Write(repository.Path, "ExistingProject");
         var runner = new RecordingWorktreeProcessRunner { FailWrappedLake = true };
 
         var result = WorktreeCommand.Run(
@@ -44,6 +45,7 @@ public sealed partial class WorktreeCommandTests
             runner);
 
         Assert.False(result.Success);
+        Assert.Equal(1, result.ExitCode);
         Assert.Contains("wrapped lake command failed", result.Error, StringComparison.Ordinal);
         Assert.Contains(
             runner.Invocations,
@@ -56,6 +58,7 @@ public sealed partial class WorktreeCommandTests
         using var repository = new TemporaryDirectory();
         InitializeRepository(repository.Path);
         StampCache(repository.Path);
+        _ = ProjectOleanFixture.Write(repository.Path, "ExistingProject");
         bool? concurrentWriterAcquired = null;
         var runner = new RecordingWorktreeProcessRunner
         {

@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:37779975384252fe3c56b61ea111ec5682cac4ae8a18516eb89bd3b45252e422
+  normalized_sha256: sha256:37779975384252fe3c56b61ea111ec5682cac4ae8a18516eb89bd3b45252e422
+cas_ref: sha256:37779975384252fe3c56b61ea111ec5682cac4ae8a18516eb89bd3b45252e422
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: Proof of the preceding theorem ten using the already stated spectral identities (62); the remaining prose cites an existing related finite model.
+    previous_atom_id: c065f7644c8b8d44f5767af287bb12f4796c8ceb072375347866d7c9f9b21771
+    next_atom_id: 848869c0bfe2d0eb3bf8264bc03100912feac8653f68eeb968026514a0b1d47c

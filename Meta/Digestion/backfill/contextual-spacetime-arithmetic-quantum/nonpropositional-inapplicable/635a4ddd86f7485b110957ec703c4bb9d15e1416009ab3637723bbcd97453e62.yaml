@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:635a4ddd86f7485b110957ec703c4bb9d15e1416009ab3637723bbcd97453e62
+  normalized_sha256: sha256:635a4ddd86f7485b110957ec703c4bb9d15e1416009ab3637723bbcd97453e62
+cas_ref: sha256:635a4ddd86f7485b110957ec703c4bb9d15e1416009ab3637723bbcd97453e62
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 定义 241.1 只规定随任务变化的预算分配及对应峰值和积分代价。
+    previous_atom_id: ae3ef4eb8dff77c7e0969d1ba834703a0f636fc77a6effb9a8f8f494897c1eec
+    next_atom_id: 6c7760a3eb2dc57696f22964b4f32a4a28ff15d508733ee1eedccbe529519e72

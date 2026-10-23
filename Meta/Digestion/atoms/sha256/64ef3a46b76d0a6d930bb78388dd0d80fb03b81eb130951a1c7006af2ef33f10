@@ -1,0 +1,5 @@
+这是一条精确的 multiplicative Fibonacci rapidity recurrence。
+
+- 当 $\delta=0$ 时，$|R_k|=1$，得到圆周 phase tower；
+- 当 $\delta\ne0$ 时，$|R_k|=e^{\delta F_k\Delta\omega}$，得到 hyperbolic radial tower。
+

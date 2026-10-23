@@ -1,0 +1,98 @@
+**Theorem 5.1 (finite-state annotation followed by faithful pruning).**
+For each fixed finite $m\ge2$ there are effectively specified
+linear finite tree transducers $\mathsf A_m,\mathsf P_m$ and a
+linear tree homomorphism $\mathsf H$ such that, on every valid
+unequal convolution,
+
+$$
+\mathsf A_m(V(\mathbf u))=\{\operatorname{ann}(V(\mathbf u))\},
+\quad
+\mathsf P_m(\operatorname{ann}(V(\mathbf u)))=\{F(\mathbf u)\},
+\quad
+\mathsf H(F(\mathbf u))=K(\mathbf u).
+\tag{NMF.19}
+$$
+
+$\mathsf A_m$ has no output on valid convolutions of identical
+tuples. Here linear means precisely the rule condition in
+Barozzini, Clemente, Colcombet and Parys, *Cost Automata, Safe
+Schemes, and Downward Closures*, [§4.2, “Transductions”][BCCP42]:
+each input child occurs in at most one recursive state call in
+any right-hand side. These transducers do not test membership
+in $D_i$ or synthesize the convolution language from raw packets.
+
+Proof. For $\mathsf A_m$ take states $E,D$, initial state $D$,
+and an annotated alphabet with labels $(v,s)$ of rank zero or
+$(v,s,s_L,s_R)$ of rank two. Its rank-zero rule is
+
+$$
+(s,v)\longrightarrow(v,s)
+\quad\text{exactly when}\quad
+(s=E\ \Longleftrightarrow\ v\text{ is constant}).
+$$
+
+For rank two, include exactly the finitely many rules
+
+$$
+(s,v(x_L,x_R))\longrightarrow
+(v,s,s_L,s_R)((s_L,x_L),(s_R,x_R))
+\tag{NMF.20}
+$$
+
+for which
+
+$$
+s=E\quad\Longleftrightarrow\quad
+v\text{ is constant and }s_L=s_R=E.
+$$
+
+The right-hand $(s_i,x_i)$ are recursive state calls, not
+alphabet labels. The vector alphabet and the two flags are finite,
+so this is a finite rule set obtained by exhaustive finite cases.
+Every input child is traversed exactly once. There are no
+epsilon-transitions, variable tests or hidden subtree comparisons.
+
+By bottom-up induction on the supplied finite input, exactly one
+flag at each node permits successful rules throughout its subtree,
+namely the flag of Definition 2.4. At rank zero this is the rule
+condition. At rank two the induction fixes both child flags and
+the displayed equivalence fixes the parent. All successfully
+guessed child annotations are therefore the unique correct ones.
+Starting in $D$ accepts precisely unequal valid convolutions.
+In particular all children below a root disagreement are still
+checked by this first transducer.
+
+The second transducer has one state $p$, initial state $p$.
+On a certified $D$ label with nonconstant vector it outputs $e$
+and deletes its children. On a constant vector its only rules are
+
+$$
+\begin{aligned}
+(p,(v,D,D,D)(x_L,x_R))
+ &\longrightarrow b(a_L((p,x_L)),a_R((p,x_R))),\\
+(p,(v,D,D,E)(x_L,x_R))
+ &\longrightarrow a_L((p,x_L)),\\
+(p,(v,D,E,D)(x_L,x_R))
+ &\longrightarrow a_R((p,x_R)).
+\end{aligned}
+\tag{NMF.21}
+$$
+
+It has no rule on $E$ labels. The annotated rank-zero or rank-two
+nonconstant cases have right side $e$. Its input domain here is
+the certified output of $\mathsf A_m$, so no unchecked $D,E,E$
+case is accepted. The first transducer checked deleted children;
+deleting them in the second cannot make a false annotation succeed.
+Each retained child occurs once and each deleted child zero times.
+Thus both transducers satisfy the published linearity definition,
+including its “at most one” allowance for deletion. Their rules
+are exactly the pruning recursion, so induction gives the middle
+equality of (NMF.19).
+
+Finally $\mathsf H$ has rules $a_s(x)\mapsto a(x)$ for each
+$s$, $b(x,y)\mapsto b(x,y)$, and $e\mapsto e$, understood with
+one recursive homomorphism call on each displayed child. It is
+also a linear FTT of §4.2. This proves the last equality. Every
+rule is well typed by the displayed input and output ranks:
+$a_s,a$ are unary, $b$ binary and $e$ nullary. $\square$
+

@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:c7f1616fafb69b496dcc1e1c97a580a6bf0172add2e9d6f5a1fdffc8a53aa114
+  normalized_sha256: sha256:c7f1616fafb69b496dcc1e1c97a580a6bf0172add2e9d6f5a1fdffc8a53aa114
+cas_ref: sha256:c7f1616fafb69b496dcc1e1c97a580a6bf0172add2e9d6f5a1fdffc8a53aa114
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 证明段（**证明。** 由 8.7 的递推计数，二者之差为 $43-34=9\ne0$。  ---…）只展开前文定理或命题的论证，式子和中间推导不另提出独立陈述。
+    previous_atom_id: 7f50b34edee9a57579ec16c99434fdce340ae786ec9cd2367ced0f980e86ebba
+    next_atom_id: c0301ae7a319f8d3b18a0f82663e9194b376a7a668bd71fe7a122a0fd1511658

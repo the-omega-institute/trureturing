@@ -1,0 +1,39 @@
+**Proof.** The whole initial tree is the acquired empty-cut row. The
+intrinsic coordinate law (NAR.10.4), with its finite parser, makes
+$\nu(v)-\nu(u)=k$ when $v=\rho^k u$. The right-clock supplier similarly
+gives $c(v)-c(u)=k$. Both encoders are effective on every finite source
+and retain just their respective integer.
+
+For the actual trees $\alpha$, $p=\langle\alpha,\alpha\rangle$ and
+$T_2=\langle\beta,\alpha\rangle$, the values are
+
+$$
+\begin{array}{c|ccc}
+u&\alpha&p&T_2\\\hline
+(\nu(u),c(u))&(0,0)&(0,2)&(2,2).
+\end{array}
+\tag{NAR.11.18}
+$$
+
+Alpha has no predecessor and $p$ is primitive by the supplied image
+parser; $T_2=\rho^2\alpha$ has depth two by the intrinsic law. The right
+clocks follow directly from their recurrence. Any equivalence coarser
+than $\ker E_\nu$ merges $\alpha$ with $p$; any one coarser than
+$\ker E_c$ merges $p$ with $T_2$. Transitivity then merges $\alpha$ and
+$T_2$. But the identical later full tree $T_2$ requires lag two from
+$\alpha$ and lag zero from $T_2$. With positive lags use the identical
+later $T_3$, requiring three and one. A merged code fails on these
+actual same-root pure-$\rho$ histories. This excludes even an
+ineffective sufficient common coarsening. A coarsest sufficient
+relation would have to be such a common coarsening, so none exists.
+
+This obstruction is localized to this all-source lag task with later
+whole-tree side information. It does not assert the same failure for
+every $P,D$ or source restriction. The generic side-information
+separation/coloring principle is already proved in
+[Transport--Memory Completion, §8.2](RECURSIVE_RELATIONAL_OBSERVATION_TRANSPORT_MEMORY_COMPLETION.md).
+Conditional distinguishability need not be an equivalence whose
+transitive closure remains sufficient. That observation does not
+invalidate a task-specific stable behavioral quotient proved under its
+own action, observation and target contract. $\square$
+

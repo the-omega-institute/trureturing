@@ -1,0 +1,14 @@
+**证明。** The finite-state realization in Theorem 3.3 proves (RDR.6).
+A template $T_j$ has height at most $j\le K$. Its complete four-reply
+table through depth $K$ can agree with the table of a source only when
+that source is $T_j$: a mismatch in an internal constructor or label is
+seen at its address, and a matching template leaf has reply
+$\mathsf{abs}$ below it, so an extra descendant is also seen. Comparing
+the representative table with the finitely many templates decides
+whether its class is $j$ or $*$. Repeated classes need one representative
+only. There are $2^t$ suffixes of length $t$, so their submitted suffix
+letters sum to $\sum_{t=0}^K t2^t=(K-1)2^{K+1}+2$ for every $K\ge0$.
+Adding the repeated prefix lengths gives (RDR.7) and (RDR.8). If
+$K=0$, an anchored row is the concrete root $\alpha$, so $B=\varnothing$
+and the menu is empty. $\square$
+

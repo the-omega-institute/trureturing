@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:4e9667b78eadc95f0c597dbda1bcd019d9a3ebe5a993a838a194d586ed2217aa
+  normalized_sha256: sha256:4e9667b78eadc95f0c597dbda1bcd019d9a3ebe5a993a838a194d586ed2217aa
+cas_ref: sha256:4e9667b78eadc95f0c597dbda1bcd019d9a3ebe5a993a838a194d586ed2217aa
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 章节标题「9.6 规范黄金截面与返回锚定」仅标示本节主题，不含正文命题或性质断言。
+    previous_atom_id: 21876fd1946f4d69f046f7cae98c946d46f72836765e5b6c421acef2f204213b
+    next_atom_id: 5d66f66faafbab638d2bb41cde4736c83586211a2d7c4cc4124e0349f3363dd0

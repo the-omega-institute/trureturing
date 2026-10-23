@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:e23ddf269944bd7d497b18bc8798fe5fd5fb0ba354c54cbcb086b8d7cd23bea9
+  normalized_sha256: sha256:e23ddf269944bd7d497b18bc8798fe5fd5fb0ba354c54cbcb086b8d7cd23bea9
+cas_ref: sha256:e23ddf269944bd7d497b18bc8798fe5fd5fb0ba354c54cbcb086b8d7cd23bea9
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 章节标题「8.2 全整数格点与定向相位窗口」仅标示本节主题，不含正文命题或性质断言。
+    previous_atom_id: bb1207edddcd871d53c8a9730f018d1151d4fb99194a72b9272172d72e3f92df
+    next_atom_id: 73bcc55a70a2ffcd88ef7ce4186321c14c459e1c083fa04e39b17702cb9fd453

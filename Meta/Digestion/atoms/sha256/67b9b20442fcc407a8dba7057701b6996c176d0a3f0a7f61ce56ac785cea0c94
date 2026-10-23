@@ -1,0 +1,31 @@
+**Definition 1.1 (Fixed monomial-geometric renewal law).** Fix an integer $n\ge1$ and a real parameter $0<q<1$. Throughout, $k\ge0$ is the number of zeros preceding the next tick, whose visible symbol is one. The interevent duration is $k+1$. Set
+
+$$
+Z_n(q)=\sum_{k=0}^{\infty}k^nq^k,\qquad
+\gamma_k=\frac{k^nq^k}{Z_n(q)},\qquad
+D_n=\left\lceil\frac n2\right\rceil+1. \tag{1.1}
+$$
+
+The term $0^n$ is zero. These are the parameters of [Chapter 35, equations (35.1)–(35.2)](FIB_LEGAL_EDGE_LOAD_PRODUCT_UPPER_EDGE_FIELD_STABILITY_AND_PHASE_CUT_RANK.md#35-exact-monomial-geometric-laws-and-the-memory-comparison). The ratio test gives a finite positive $Z_n(q)$ and finite moments of every order. In particular,
+
+$$
+\gamma_0=0,\quad \gamma_k>0\ (k\ge1),\quad
+\sum_{k\ge0}\gamma_k=1,\quad
+S_a=\sum_{j\ge a}\gamma_j,\quad
+\mu=\sum_{k\ge0}(k+1)\gamma_k
+=1+\frac{Z_{n+1}(q)}{Z_n(q)},\quad \nu=\mu^{-1}. \tag{1.2}
+$$
+
+The stationary renewal law meant here is specified on every finite binary word. For a word with $r\ge1$ ones, its unique decomposition into boundary zero runs and internal gaps has probabilities
+
+$$
+\begin{aligned}
+P(0^a1\,0^{g_1}1\cdots0^{g_{r-1}}1\,0^b)
+&=\frac{S_aS_b}{\mu}\prod_{i=1}^{r-1}\gamma_{g_i},\\
+P(0^N)&=\frac1\mu\sum_{a\ge0}S_{N+a}
+=\frac1\mu\sum_{j\ge N}(j-N+1)\gamma_j.
+\end{aligned} \tag{1.3}
+$$
+
+Here $a,b,g_i,N$ are nonnegative integers; the product is one when $r=1$, and $N=0$ is the empty word. The construction below proves that these are the actual instrument probabilities, including the boundary tails, rather than merely identifying a conditional gap distribution.
+

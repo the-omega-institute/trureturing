@@ -32,6 +32,7 @@ internal static class FileMapCanonicalWriter
         {
             text.Append("[[files]]\n");
             Field("pattern", entry.Pattern);
+            if (!entry.Exclude.IsEmpty) List("exclude", entry.Exclude);
             Field("kind", entry.Kind.ToString().ToLowerInvariant());
             Field("admission_plane", entry.AdmissionPlane.ToString().ToLowerInvariant());
             Field("produced_by", entry.ProducedBy);

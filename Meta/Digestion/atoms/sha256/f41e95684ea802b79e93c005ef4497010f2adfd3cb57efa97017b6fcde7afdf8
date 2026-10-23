@@ -1,0 +1,101 @@
+**引理 13.3（全词、全尾的联合比较）。** 用引理13.2的单一比较表生成 $\widehat Q_i,\widehat W_i$。置
+
+$$
+\widehat H=\operatorname{diag}(\mathbf1-\widehat u)
+ \widehat B\operatorname{diag}(v),\qquad
+\widehat g=\operatorname{diag}(\mathbf1-\widehat u)
+ \widehat B(\mathbf1-v).
+\tag{13.9}
+$$
+
+它的全部词质量分别为 $(\widehat H^n\widehat u)_i$、$(\widehat H^n\widehat g)_i$ 及式（3.3）中的共同 v 前缀。仅在本节以 $d_i=\operatorname{TV}(Q_i,\widehat Q_i)$ 表示律距离，发射补量均显式写为 $1-u_i$。令
+
+$$
+D_p=\sum_i\pi_id_i,\qquad
+D_\beta=\sum_i\pi_i\operatorname{TV}(W_i,\widehat W_i).
+$$
+
+则完整概率律满足
+
+$$
+d_i\le|u_i-\widehat u_i|+(1-\widehat u_i)
+\left[q_i+\sum_j\widehat B_{ij}v_jd_j\right],
+\tag{13.10}
+$$
+
+$$
+D_p\le\frac{15M+10q}{11}
+\le\frac{15t+20J_u/t^2}{11},\qquad
+D_\beta=\sum_i\pi_iv_id_i\le\frac25D_p.
+\tag{13.11}
+$$
+
+证明先说明全部测度及其尾。原表与比较表均有非负返回矩阵，且
+
+$$
+\begin{gathered}
+H\mathbf1\le\lambda\mathbf1,\qquad
+\widehat H\mathbf1\le\lambda\mathbf1,\qquad \lambda=\frac4{15},\\
+u+g+H\mathbf1=\mathbf1,\qquad
+\widehat u+\widehat g+\widehat H\mathbf1=\mathbf1.
+\end{gathered}
+\tag{13.12}
+$$
+
+因为每个 p 继续概率至多 $2/3$、每个悬置返回概率至多 $2/5$，第一行成立；第二行由两份 B 的行随机性成立。对每个整数 $L\ge1$，非负矩阵归纳及望远镜求和给出
+
+$$
+\begin{aligned}
+0\le H^L\mathbf1&\le\lambda^L\mathbf1,&
+\sum_{n=0}^{L-1}H^n(u+g)&=\mathbf1-H^L\mathbf1,\\
+0\le\widehat H^L\mathbf1&\le\lambda^L\mathbf1,&
+\sum_{n=0}^{L-1}\widehat H^n(\widehat u+\widehat g)
+ &=\mathbf1-\widehat H^L\mathbf1.
+\end{aligned}
+\tag{13.13}
+$$
+
+故两个 Q 都在原完整可数载体上归一化；两份 W 的总质量均为 $(1-v_i)+v_i=1$。所有合法无限不完成结果仍保留，质量均为零。p 在 L 次返回后仍继续的质量至多 $\lambda^L$；悬置初始 $\alpha$ 后 L 次返回的质量至多 $v_i\lambda^L\le(2/5)\lambda^L$。
+
+也可保留前 L 个返回层级（$0\le n<L$）的完成词，将其余合法未来并成一个剩余原子。对两份 p 律，完整 TV 与这个有限划分的 TV 之差非负，且至多两份剩余质量之和 $2\lambda^L$；悬置相有相应的更小界。这由半 $\ell^1$ 公式及尾部绝对值三角不等式直接得到。令 $L\to\infty$，就回到完整律的 TV。因此下列一字母分解及比较可以直接作用于全词；若从有限划分建立，尾部误差也确实趋零。没有条件于完成，没有删掉合法无限结果，也没有由固定有限前缀推断完整尾。
+
+用 $\beta_*W$ 表示给悬置未来加上首字母 $\beta$，$\alpha_*Q$ 类似；两个映射都包含无限结果，且在各自载体上是注入。完整同一更新分解为
+
+$$
+\begin{aligned}
+Q_i&=u_i\delta_\alpha+(1-u_i)\beta_*\sum_jB_{ij}W_j,\\
+\widehat Q_i&=\widehat u_i\delta_\alpha
+ +(1-\widehat u_i)\beta_*\sum_j\widehat B_{ij}\widehat W_j,\\
+W_i&=(1-v_i)\delta_\beta+v_i\alpha_*Q_i,\\
+\widehat W_i&=(1-v_i)\delta_\beta+v_i\alpha_*\widehat Q_i.
+\end{aligned}
+\tag{13.14}
+$$
+
+由于单词 $\beta$ 与全部 $\alpha$ 前缀未来不交，最后两行与半 $\ell^1$ 公式给出精确等式
+
+$$
+\operatorname{TV}(W_i,\widehat W_i)=v_id_i.
+\tag{13.15}
+$$
+
+在前两行之间插入两个中间概率律：先把即时发射 u 改为 $\widehat u$，保留原 B 与原 W；再把 B 改为 $\widehat B$，仍保留原 W。第一步的即时 $\alpha$ 与 $\beta$ 继续支持不交、继续律总质量为1，故 TV 恰为 $|u_i-\widehat u_i|$。第二步应用同一个概率核 $j\mapsto W_j$，其 TV 至多 $(1-\widehat u_i)\operatorname{TV}(B_i,\widehat B_i)=(1-\widehat u_i)q_i$。最后把各 $W_j$ 改为 $\widehat W_j$，TV 凸性与式（13.15）使这一项至多 $(1-\widehat u_i)\sum_j\widehat B_{ij}v_jd_j$。三角不等式遂给出式（13.10）。
+
+由 $1-\widehat u_i\le2/3$、$v_j\le2/5$，它进一步给出
+
+$$
+d_i\le|u_i-\widehat u_i|+\frac23q_i
+ +\frac4{15}\sum_j\widehat B_{ij}d_j.
+\tag{13.16}
+$$
+
+这些都是已经归一化的完整律距离，$0\le d_i\le1$。按同一个 $\pi$ 平均，使用 $\pi\widehat B=\pi$，得到
+
+$$
+D_p\le M+\frac23q+\frac4{15}D_p,
+\qquad \frac{11}{15}D_p\le M+\frac23q.
+\tag{13.17}
+$$
+
+这证明式（13.11）的 p 界；悬置界由式（13.15）平均即得。两相从头到尾来自同一比较表，不能分别选择不同的改流核或不同的标签权。$\square$
+

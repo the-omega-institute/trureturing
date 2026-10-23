@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:408e523c7dfd998d62c90b2aa806fe5137cf370cd96944c88f4255ed6c697f2e
+  normalized_sha256: sha256:408e523c7dfd998d62c90b2aa806fe5137cf370cd96944c88f4255ed6c697f2e
+cas_ref: sha256:408e523c7dfd998d62c90b2aa806fe5137cf370cd96944c88f4255ed6c697f2e
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: Lower-bound proof step of the preceding finite-history threshold theorem using an operator difference estimate.
+    previous_atom_id: 78f6a2108eaba02cfbe8c76ca6e12034335c4c1e4129bde2a2affd123bf56568
+    next_atom_id: 6cf13138f9aaf1d55165f6741df130efb77dadf1f270c0202d9c7b8d7d1d2a81

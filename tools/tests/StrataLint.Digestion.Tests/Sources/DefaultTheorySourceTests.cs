@@ -19,7 +19,7 @@ public sealed class DefaultTheorySourceTests
     private static ReportFreeDigestionIngestPlan PlanWith(params (string Path, byte[] Bytes)[] extraFiles)
     {
         var declaredBytes = Encoding.UTF8.GetBytes("# 已声明卷\n\n## 定理 9.9\n\n证。\n");
-        var declared = GenericAtomizer.Atomize(declaredBytes, TheoryAtomizerRules.None);
+        var declared = GenericAtomizer.Atomize(declaredBytes);
         var atom = Assert.Single(declared.Claims);
         var capture = DigestionCasStore.Capture(atom.RawBytes.AsSpan());
         var entry = DigestionTestSupport.Entry(
@@ -95,26 +95,12 @@ public sealed class DefaultTheorySourceTests
                 .ToArray());
     }
 
-    /// <summary>
-    /// Not Markdown, so the default atomizer finds no claim in it. That is the one case the
-    /// existing coarse fallback is for, and it must still land there — accounted as one
-    /// whole-file atom with a stated reason, never silently skipped.
-    /// </summary>
     [Fact]
-    public void ANonMarkdownTheoryFileIsRegisteredAndFallsBackToOneWholeFileAtom()
+    public void NonMarkdownTheoryInputsRemainIneligibleForAutomaticRegistration()
     {
-        var sourceBytes = Encoding.UTF8.GetBytes("{\"a\":1}\n{\"a\":2}\n");
-        var plan = PlanWith((
-            "docs/develop/theory/VOLUME_registry.jsonl",
-            sourceBytes));
-
-        var fallback = Assert.Single(plan.Fallbacks);
-        Assert.Equal("volume-registry", fallback.SourceId);
-        var registered = plan.Document.RequireDigestionSources()
-            .Single(static source => source.SourceId == "volume-registry");
-        Assert.Equal(
-            [DigestionFingerprint.Compute(sourceBytes).RawSha256],
-            registered.Entries.Select(static entry => entry.Fingerprints.RawSha256).ToArray());
+        var plan = PlanWith(("docs/develop/theory/VOLUME_registry.jsonl", Encoding.UTF8.GetBytes("{}\n")));
+        Assert.Empty(plan.Fallbacks);
+        Assert.Equal(["declared"], plan.Document.RequireDigestionSources().Select(source => source.SourceId));
     }
 
     /// <summary>

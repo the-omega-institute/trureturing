@@ -1,0 +1,26 @@
+**Assumption 106.3 (original-reply acquisition and distinct times).**
+When a native execution supplies an original reply or exact index
+to this consumer, retain the existing authenticated stationary epoch,
+original-presence guard, chronological original-address reads and
+absorbing Stop conditions of Assumption 97.1 and
+[Continuation III, Assumption 91.6](FIB_ATOM_RECURSIVE_HOLOGRAPHIC_BOUNDARY_GEOMETRY_CONTINUATION_III.md).
+The existing guarded original-reply/index suppliers are used only
+under their own original-source, guard and resource contracts:
+[DelayedOriginalReadout](../../../D5/S3/Arith/FibonacciAtomic/Observer/DelayedOriginalReadout.lean),
+[Atomic Boundary Trichotomy, §§12–17](RECURSIVE_RELATIONAL_OBSERVATION_ATOMIC_BOUNDARY_TRICHOTOMY.md),
+[Acquired Intrinsic Depth Calibration, §6](RECURSIVE_RELATIONAL_OBSERVATION_ACQUIRED_INTRINSIC_DEPTH_CALIBRATION.md)
+and [Finite Frame Memory](RECURSIVE_RELATIONAL_OBSERVATION_FINITE_FRAME_MEMORY.md),
+together with
+[ActualTreeReadoutAcquisition](../../../D5/S3/Arith/FibonacciAtomic/ActualTreeReadoutAcquisition.lean).
+Actual address length, distinct-address fees, retained full control
+memory, installed data, preparation, arithmetic and output remain
+separate resources. Defining (104.1) grants no observation of $N_n$.
+
+Comparison time in (106.1), source-substitution epoch, acquisition
+chronology and physical time remain distinct.
+Neither a duplicate search or decoder, a pointer walk nor an added
+Poisson clock supplies a native occurrence-transport correspondence.
+An optional acquired-query sampling law is an additional unverified
+premise. The native occurrence actuator and physical-time realization
+remain outside Assumption 106.1.
+

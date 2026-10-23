@@ -20,8 +20,6 @@ public sealed class SettleAtomCommandTests(Xunit.Abstractions.ITestOutputHelper 
     [InlineData("CONTEXT_MISMATCH", "next")]
     [InlineData("CONTEXT_MISMATCH", "previous-boundary")]
     [InlineData("CONTEXT_MISMATCH", "next-boundary")]
-    [InlineData("ATOMIZER_NONE")]
-    [InlineData("SOURCE_MISSING")]
     [InlineData("OCCURRENCE_MISSING")]
     [InlineData("OCCURRENCE_INDEX_REQUIRED")]
     [InlineData("REQUEST_KEYS_INVALID")]
@@ -42,12 +40,12 @@ public sealed class SettleAtomCommandTests(Xunit.Abstractions.ITestOutputHelper 
             "QUARANTINE_PRESENT" => target with { Receipts = target.Receipts with { Quarantine = new("blocked", "supply witness", "missing-prerequisite") } },
             "COVER_DISPOSITION_PRESENT" => target with { Receipts = target.Receipts with { CoverDisposition = new(new(DigestionMigrationState.Partial, DigestionTruthState.Closed), ["D5/S0/Carrier/Probe"], []) } },
             "UNRESOLVED_SUBITEMS_PRESENT" => target with { Receipts = target.Receipts with { UnresolvedSubitems = ["live obligation"] } },
-            "ATOMIZER_NONE" => target with { Atomizer = AtomizerRegistry.NoAtomizerId },
+            "ATOMIZER_UNSUPPORTED" => target with { Atomizer = "none" },
             _ => target,
         };
         fixture = fixture.WithEntries(fixture.Ledger.RequireDigestionEntries().Select(entry => entry == target ? updated : entry));
-        if (code == "ATOMIZER_NONE") fixture = fixture with { Ledger = fixture.Ledger.WithDigestionSources([
-            fixture.Ledger.RequireDigestionSources().Single() with { Atomizer = AtomizerRegistry.NoAtomizerId }]) };
+        if (code == "ATOMIZER_UNSUPPORTED") fixture = fixture with { Ledger = fixture.Ledger.WithDigestionSources([
+            fixture.Ledger.RequireDigestionSources().Single() with { Atomizer = "none" }]) };
         if (code == "ATOM_AMBIGUOUS")
         {
             var source = fixture.Ledger.RequireDigestionSources().Single();
@@ -55,7 +53,7 @@ public sealed class SettleAtomCommandTests(Xunit.Abstractions.ITestOutputHelper 
                 source with { SourceId = "second", Entries = [target with { SourceId = "second" }] }]) };
         }
         if (code == "OCCURRENCE_MISSING") fixture = fixture with { SourceBytes = Encoding.UTF8.GetBytes("Other text.\n") };
-        if (code == "OCCURRENCE_INDEX_REQUIRED") fixture = fixture with { SourceBytes = fixture.SourceBytes.Concat(fixture.SourceBytes).ToArray() };
+        if (code == "OCCURRENCE_INDEX_REQUIRED") fixture = fixture with { SourceBytes = fixture.SourceBytes.Concat(fixture.SourceBytes).ToArray(), ContextIndex = null };
         request = code switch
         {
             "ATOM_ABSENT" => request.Replace(target.AtomId, new string('f', 64), StringComparison.Ordinal),
@@ -93,7 +91,7 @@ public sealed class SettleAtomCommandTests(Xunit.Abstractions.ITestOutputHelper 
     {
         var fixture = AtomContextFixture.Create();
         var target = fixture.Ledger.RequireDigestionEntries().Single(entry => entry.AtomId == AtomContextFixture.Id(fixture.Atomized.Claims[1]));
-        fixture = fixture with { SourceBytes = fixture.SourceBytes.Concat(fixture.SourceBytes).ToArray() };
+        fixture = fixture with { SourceBytes = fixture.SourceBytes.Concat(fixture.SourceBytes).ToArray(), ContextIndex = null };
         var context = DigestionAtomContextProjection.ResolveOccurrences(fixture.Snapshot(), fixture.Ledger, target.AtomId)[1];
         var request = $"atom_id = '{target.AtomId}'\njustification = '{Reason}'\nprevious_atom_id = '{context.Previous!.Value.AtomId}'\nnext_atom_id = '{context.Next!.Value.AtomId}'\noccurrence_index = 2\n";
         using var temporary = new TemporaryDirectory();
@@ -108,7 +106,7 @@ public sealed class SettleAtomCommandTests(Xunit.Abstractions.ITestOutputHelper 
     {
         var fixture = AtomContextFixture.Create();
         var target = fixture.Ledger.RequireDigestionEntries().Single(entry => entry.AtomId == AtomContextFixture.Id(fixture.Atomized.Claims[1]));
-        fixture = fixture with { SourceBytes = fixture.SourceBytes.Concat(fixture.SourceBytes).ToArray() };
+        fixture = fixture with { SourceBytes = fixture.SourceBytes.Concat(fixture.SourceBytes).ToArray(), ContextIndex = null };
         var request = $"atom_id = '{target.AtomId}'\njustification = '{Reason}'\nprevious_atom_id = '{AtomContextFixture.Id(fixture.Atomized.Claims[0])}'\nnext_atom_id = '{AtomContextFixture.Id(fixture.Atomized.Claims[2])}'\noccurrence_index = 99\n";
         var result = Run("/synthetic", fixture.RawSnapshot(), request);
         Assert.False(result.Success);
@@ -120,7 +118,7 @@ public sealed class SettleAtomCommandTests(Xunit.Abstractions.ITestOutputHelper 
     {
         var fixture = AtomContextFixture.Create();
         var target = fixture.Ledger.RequireDigestionEntries().Single(entry => entry.AtomId == AtomContextFixture.Id(fixture.Atomized.Claims[1]));
-        fixture = fixture with { SourceBytes = fixture.SourceBytes.Concat(fixture.SourceBytes).ToArray() };
+        fixture = fixture with { SourceBytes = fixture.SourceBytes.Concat(fixture.SourceBytes).ToArray(), ContextIndex = null };
         var request = $"atom_id = '{target.AtomId}'\njustification = '{Reason}'\nprevious_atom_id = '{new string('f', 64)}'\nnext_atom_id = '{AtomContextFixture.Id(fixture.Atomized.Claims[2])}'\noccurrence_index = 2\n";
         using var temporary = new TemporaryDirectory();
         var raw = fixture.RawSnapshot();
@@ -255,7 +253,7 @@ public sealed class SettleAtomCommandTests(Xunit.Abstractions.ITestOutputHelper 
             TemporaryFileSystem.File.ReadAllBytes(Path.Combine(temporary.Path, path))));
         if (clear)
             Assert.DoesNotContain(gateway.ScopedCurrentReads.SelectMany(paths => paths),
-                path => path == TheoryAtomizerDataLoader.DataPath || path.EndsWith(AtomContextFixture.SourcePath, StringComparison.Ordinal));
+                path => path == FileMapLoader.RelativePath || path.EndsWith(AtomContextFixture.SourcePath, StringComparison.Ordinal));
     }
 
     [Fact]

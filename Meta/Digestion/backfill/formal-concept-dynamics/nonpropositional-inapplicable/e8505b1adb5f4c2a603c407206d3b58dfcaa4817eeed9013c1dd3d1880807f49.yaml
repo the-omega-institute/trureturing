@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:e8505b1adb5f4c2a603c407206d3b58dfcaa4817eeed9013c1dd3d1880807f49
+  normalized_sha256: sha256:e8505b1adb5f4c2a603c407206d3b58dfcaa4817eeed9013c1dd3d1880807f49
+cas_ref: sha256:e8505b1adb5f4c2a603c407206d3b58dfcaa4817eeed9013c1dd3d1880807f49
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 524. 随机预测完成：只引入本段使用的对象、记号、计算定义或术语约定，不追加存在、唯一性或性质结论。
+    previous_atom_id: 1a73c37d57737d1d235bf7807a5acfac8f2af0c2ffc9df679195446824ed832b
+    next_atom_id: cba499a2be699981e75b185a7445e747725393800fc9a94f305696b8fea2418e

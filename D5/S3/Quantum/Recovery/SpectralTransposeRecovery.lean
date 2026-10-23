@@ -94,16 +94,13 @@ theorem spectral_support_on_kraus (E : s → Matrix n d ℂ) (a : s) :
   exact (sub_eq_zero.mp (by
     simpa only [Matrix.sub_mul, Matrix.one_mul] using ha)).symm
 
-/-- Any finite CP branch, without division by its probability, supplies an explicit canonical CPTP recovery candidate. -/
-theorem spectral_transpose_candidate (E : s → Matrix n d ℂ) (v : d) :
+/-- The existing spectral decoder normalization facts, shared by the two completion choices. -/
+theorem spectral_decoder_normalization (E : s → Matrix n d ℂ) :
     let Q := ∑ a, E a * (E a)ᴴ
     let P := spectralSupport Q
     let W := spectralInverseSqrt Q
-    ∃ recovery : QuantumChannel n d, ∀ X : Matrix n n ℂ,
-      CStarMatrix.ofMatrix.symm
-        (recovery.toCompletelyPositiveMap (CStarMatrix.ofMatrix X)) =
-      (∑ a, (E a)ᴴ * W * X * W * E a) +
-        Matrix.trace ((1 - P) * X) • Matrix.single v v 1 := by
+    Wᴴ = W ∧ Pᴴ = P ∧ P * P = P ∧
+      (∑ a, ((E a)ᴴ * W)ᴴ * ((E a)ᴴ * W)) = P := by
   dsimp only
   let Q := ∑ a, E a * (E a)ᴴ
   let P := spectralSupport Q
@@ -167,6 +164,28 @@ theorem spectral_transpose_candidate (E : s → Matrix n d ℂ) (v : d) :
                 (if hQ.isHermitian.eigenvalues i = 0 then 0 else 1)
               rw [if_neg h]
               field_simp [hs] <;> nlinarith [Real.sq_sqrt hx]
+  exact ⟨hW, hP, hPP, hK⟩
+
+-- The shared spectral facts keep their cfc definitions during channel type elaboration.
+set_option maxHeartbeats 1000000 in
+/-- Any finite CP branch, without division by its probability, supplies an explicit canonical CPTP recovery candidate. -/
+theorem spectral_transpose_candidate (E : s → Matrix n d ℂ) (v : d) :
+    let Q := ∑ a, E a * (E a)ᴴ
+    let P := spectralSupport Q
+    let W := spectralInverseSqrt Q
+    ∃ recovery : QuantumChannel n d, ∀ X : Matrix n n ℂ,
+      CStarMatrix.ofMatrix.symm
+        (recovery.toCompletelyPositiveMap (CStarMatrix.ofMatrix X)) =
+      (∑ a, (E a)ᴴ * W * X * W * E a) +
+        Matrix.trace ((1 - P) * X) • Matrix.single v v 1 := by
+  dsimp only
+  let Q := ∑ a, E a * (E a)ᴴ
+  let P := spectralSupport Q
+  let W := spectralInverseSqrt Q
+  have hdata : Wᴴ = W ∧ Pᴴ = P ∧ P * P = P ∧
+      (∑ a, ((E a)ᴴ * W)ᴴ * ((E a)ᴴ * W)) = P :=
+    spectral_decoder_normalization E
+  obtain ⟨hW, hP, hPP, hK⟩ := hdata
   obtain ⟨recovery, hr⟩ := complete_quantum_channel (fun a => (E a)ᴴ * W) P v hP hPP hK
   refine ⟨recovery, fun X => ?_⟩
   simpa only [Matrix.conjTranspose_mul, Matrix.conjTranspose_conjTranspose,

@@ -1,0 +1,14 @@
+### 10. 十、Lean 中已存在的两个重要边界结果
+
+Claim status: open.（供文 I 原第 10 节全文。）
+
+> 编者限定（I.10）：所引 native_reply_injective 以已知固定长度、合法初始化来源和实际追加 null 为域，读数是精确自然数 reply；单次 reply、reply 的完整概率律与其一阶期望是三种观察，亦不推出未知长度、模数或噪声解码。proper seam 条件报告须有正条件质量，分别保存的边缘报告不等于共同配对样本档案。非交换式是解释性简写，除非另行给出两边可组合的算子、定义域及边缘对象上的 continuation。
+
+
+当前仓库已有的 Lean 文件：
+
+- [`JointLaw.lean`](https://github.com/the-omega-institute/trureturing/blob/dev/D5/S3/Arith/FibonacciAtomic/NativeContinuation/JointLaw.lean)
+- [`NullReplyFiber.lean`](https://github.com/the-omega-institute/trureturing/blob/dev/D5/S3/Arith/FibonacciAtomic/NativeContinuation/NullReplyFiber.lean)
+
+给出了两类与本轮分析直接相关的结果。
+

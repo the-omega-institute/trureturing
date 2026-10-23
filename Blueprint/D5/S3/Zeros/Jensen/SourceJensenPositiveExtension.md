@@ -24,6 +24,12 @@ The previous roots lambda_i are assumed distinct and strictly positive, and sati
 
 The proof binds Mathlib's Schur determinant formula and Lagrange interpolation to this arrow matrix, then uses Hermitian characteristic polynomial factorization and the positive eigenvalue criterion. The converse residue sign uses the upstream split-polynomial logarithmic derivative, differentiation of its finite sum, and nonnegativity of squares. There is no factor induction or additional analytic estimate.
 
+A reciprocal application retains the unchanged fixed theta-moment source. Write J_n(X)=sourceP(n)(-X), Q_n=sourceQ(n), alpha=n/(n+1), and b(k)=(-1)^k sourceThetaCoefficient(k). Define G_n by the exact shifted coefficients (k+1)b(k+1); coefficient embedding identifies J_n and G_n with their canonical normalized Jensen rows. For n>=1, a nonzero real J_n node t with J_n'(t)!=0 satisfies Q_n(x)=x^n J_n(1/x) for nonzero x and Q_n'(1/t)=-(1/t)^n t^2 J_n'(t).
+
+Differentiating the complete canonical derivative transport gives sourceCoupling(n+1,alpha/t)=alpha^2/t^3 J_(n+1)(t/alpha)/J_n'(t) =[n/((n+1)^2 t^2)] G_n(t)/J_n'(t). The final prefactor is positive for either sign of nonzero real t. Coupling nonnegativity is therefore exactly J_n'(t)G_n(t)>=0. This equivalence pays the coordinate change and exact coefficient shift; it does not pay the individual favorable signs.
+
+Under the preceding row's complete distinct positive roots and the stated source normalization, the existing positive-extension criterion consequently asks for these signs at every corresponding node. Zero couplings and repeated roots of the next row remain permitted. The aggregate fourth-cumulant coupling sum does not establish the separate nodal signs. The fixed theta-moment source remains distinct from literal xiSquareSource jets until their analytic coefficient correspondence is proved. These identities establish no global original-core real-rootedness, RH or strict Robin for every integer above 5040.
+
 ## References
 
 - Truth anchor: `D5/S3/Zeros/Jensen/SourceJensenPositiveExtension.source_jensen_positive_extension`

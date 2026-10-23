@@ -1,0 +1,20 @@
+**定义 421.1（按奇核性质切分完整前缀）。** 保留 §§382、384、419 的实际 $q=\varphi^{-2}=(3-\sqrt5)/2$、$\beta_d=\log(1-(-q)^d)$、$e=\mu*\beta$ 和 $H_{\rm raw}(X)=\sum_{n\le X}e_n$，其中 $X\ge2$ 是整数原子索引截止。$e_1=\beta_1$ 仍保留。沿用 §419 的 $P_A(m)$ 和最大合法深度 $A_X(m)$，定义
+
+$$
+\begin{aligned}
+U_q(X)&=P_{A_X(1)}(1)=\beta_{2^{\lfloor\log_2X\rfloor}},\\
+\mathcal P_q(X)&=\sum_{\substack{p\le X\\p\ {\rm 为奇素数}}}P_{A_X(p)}(p),\\
+\mathcal C_q(X)&=\sum_{\substack{3\le m\le X\\m\ {\rm 为奇合数}}}P_{A_X(m)}(m).
+\end{aligned}
+\tag{421.1}
+$$
+
+这是同一数组、同一截止的分区，故 §419 的既有有限恒等式直接给
+
+$$
+H_{\rm raw}(X)=U_q(X)+\mathcal P_q(X)+\mathcal C_q(X).
+\tag{421.2}
+$$
+
+这里的素核是索引的奇数部分；它不等于 Robin 宿主整数的全部素因子，也没有把 $e_n$ 改成约数倒数权重。
+

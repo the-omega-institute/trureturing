@@ -25,6 +25,12 @@ internal sealed class CompositionalIterateCongruenceDocument : IScribeDocumentDe
                 + "series from its coefficient function; mk(1) uses the constant function one. "
                 + "Rescaling multiplies coefficient n by the nth power of its parameter. "
                 + "The final remainder is integer remainder, and all indices are natural numbers.")),
+            Node("Agree", "Agreement below a degree", AgreeFormula(),
+                "Two series agree below degree d when their coefficients coincide at every smaller natural index.",
+                DescribeRole.Definition),
+            Node("agree_subst", "Substitution preserves finite agreement", AgreeSubstFormula(),
+                "If the outer series agree below degree d and the inner zero-constant series do too, "
+                + "their substitutions agree below degree d."),
             Node("iterate", "Compositional iteration", IterateFormula(),
                 "The zeroth iterate is the identity series X. Each successor substitutes "
                 + "the original series into the previous iterate. On zero-constant series "
@@ -58,6 +64,16 @@ internal sealed class CompositionalIterateCongruenceDocument : IScribeDocumentDe
                 "This series is X times the geometric series with parameter c, equivalently "
                 + "X/(1-cX). The denominator has constant term one and is a unit over every "
                 + "commutative ring; no field division is assumed.", DescribeRole.Definition),
+            Node("geometric_inverse", "The geometric inverse over a commutative ring", GeometricInverseFormula(),
+                "For every commutative ring R and parameter in R, rescaling the series "
+                + "with every coefficient equal to one gives an inverse of the linear "
+                + "denominator 1-C(parameter)X. "
+                + "The identity is used by mobius_denominator and by "
+                + "PathCHSNormClosedForm.geometric_mul_linear."),
+            Node("mobius_denominator", "The geometric denominator identity", MobiusDenominatorFormula(),
+                "Multiplying the geometric family by its linear denominator gives X."),
+            Node("mobius_zero", "The geometric family has zero constant coefficient", MobiusZeroFormula(),
+                "Every member of the geometric family has zero constant coefficient."),
             Node("mobius_iterate", "Iterating the geometric family", MobiusIterateFormula(),
                 "Rescaling Mathlib's geometric-series identity gives the denominator identity. "
                 + "Apply substitution to it and multiply by the inner denominator to prove "
@@ -85,6 +101,39 @@ internal sealed class CompositionalIterateCongruenceDocument : IScribeDocumentDe
         Describe.Lean(DescribeId.Create("a396807-" + name.Replace('_', '-').ToLowerInvariant()),
             DeclarationHandle.Create(Prefix + name), H(title), StatementSource.FromAuthor(formula),
             provenance ?? AssessedProvenance.FromRepo(), Blocks(Paragraph(Text(prose))), role, claim);
+
+    private static Formula Agreement(Formula d, Formula left, Formula right) =>
+        Call("Agree", d, left, right);
+    private static Formula RingParameters() => Seq(Bound("R", F.Id("Type")),
+        OpenBracket, Call("CommRing", Ring()), CloseBracket, Sp);
+    private static Formula AgreeFormula()
+    {
+        var d = F.Id("d");
+        var left = F.Id("left");
+        var right = F.Id("right");
+        var i = F.Id("i");
+        var body = Seq(Bound("i", Naturals()), Implication(Seq(i, Sp, Lt, Sp, d),
+            Equal(Call("coeff", i, left), Call("coeff", i, right))));
+        return Disp(Seq(RingParameters(), Bound("d", Naturals()),
+            Bound("left", Series(Ring())), Bound("right", Series(Ring())),
+            Parenthesized(Agreement(d, left, right)), Sp, Iff, Sp, Parenthesized(body)));
+    }
+    private static Formula AgreeSubstFormula()
+    {
+        var d = F.Id("d");
+        var left = F.Id("left");
+        var right = F.Id("right");
+        var inner = F.Id("inner");
+        var other = F.Id("other");
+        return Disp(Seq(RingParameters(), Bound("d", Naturals()),
+            Bound("left", Series(Ring())), Bound("right", Series(Ring())),
+            Bound("inner", Series(Ring())), Bound("other", Series(Ring())),
+            Implication(Equal(Call("constantCoeff", inner), D(0)),
+                Implication(Equal(Call("constantCoeff", other), D(0)),
+                    Implication(Agreement(d, left, right),
+                        Implication(Agreement(d, inner, other),
+                            Agreement(d, Call("subst", left, inner), Call("subst", right, other))))))));
+    }
 
     private static Formula Ring() => F.Id("R");
     private static Formula Naturals() => Seq(Mathbb, Grp(F.Id("N")));
@@ -163,6 +212,22 @@ internal sealed class CompositionalIterateCongruenceDocument : IScribeDocumentDe
     private static Formula MobiusFormula() => Disp(Seq(Context(), Bound("parameter", Ring()),
         Equal(Mobius(Ring(), F.Id("parameter")),
             Mul(X(), Call("rescale", F.Id("parameter"), Call("mk", D(1)))))));
+
+    private static Formula GeometricInverseFormula() => Disp(Seq(
+        Context(), Bound("parameter", Ring()),
+        Equal(Mul(Call("rescale", F.Id("parameter"), Call("mk", D(1))),
+            Parenthesized(new Formula.Binary(D(1), FormulaBinaryOperator.Subtract,
+                Mul(Call("C", F.Id("parameter")), X())))), D(1))));
+
+    private static Formula MobiusDenominatorFormula() => Disp(Seq(
+        Context(), Bound("parameter", Ring()),
+        Equal(Mul(Mobius(Ring(), F.Id("parameter")),
+            new Formula.Binary(D(1), FormulaBinaryOperator.Subtract,
+                Mul(Call("C", F.Id("parameter")), X()))), X())));
+
+    private static Formula MobiusZeroFormula() => Disp(Seq(
+        Context(), Bound("parameter", Ring()),
+        Equal(Call("constantCoeff", Mobius(Ring(), F.Id("parameter"))), D(0))));
 
     private static Formula MobiusIterateFormula() => Disp(new Formula.Aligned([
         Seq(Context(), Bound("parameter", Ring()), Bound("count", Naturals())),

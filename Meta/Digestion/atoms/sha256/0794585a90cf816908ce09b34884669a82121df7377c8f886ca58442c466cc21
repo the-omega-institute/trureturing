@@ -1,0 +1,66 @@
+**Construction 11.5 (all counted fields and source rows).** Encode an
+intermediate control $z$ using the following $k(e)$ ordinary bits in
+the displayed order. Binary integers use a fixed common significance
+order; path bits are $L=0,R=1$, followed by zero padding.
+
+| Field | Bits | Meaning |
+| --- | --- | --- |
+| $p$ | $h-1$ | Current virtual address, padded after its length |
+| $s$ | $d$ | Path length $0\le s<h$ |
+| $b,l$ | $2c$ | Branches and leaves already visited in this trial |
+| $j$ | $e$ | Candidate index |
+| $a$ | $1$ | XOR of leaves already visited |
+| $\mu$ | $3$ | VALUE, GUARD, POLL, UPDATE, HALT0, HALT1, ERROR |
+
+Use mode codes $0,\ldots,6$ in that order. HALT0, HALT1 and ERROR have
+all other fields zero. POLL and UPDATE also have all other fields zero
+and are available only in the active $T\ge1$ case. In the static case
+$N=j$ and $j\le T$; in the active case use (SLHC.11.6) and
+$j\le2h-1$. GUARD requires $N>0$ and $p\ne\varepsilon$.
+Normal fields obey $b<h$, $l\le h$ and the displayed bounds; nonzero
+path padding, code 7 or a violated condition is invalid.
+
+Here is the entire intermediate instruction/response rule, denoted
+by instruction $I(z)$ and successor $\delta(z,r)$. This table is an
+installation specification, not permission to execute wide writes.
+
+- POLL uses Construction 11.4: absent goes to UPDATE, $\alpha$ starts
+  a fresh root VALUE trial with $j=0$, and the other replies go to ERROR.
+  UPDATE executes Update and its $\star$ goes to POLL.
+- GUARD reads (SLHC.11.5); an accepted guard changes only the mode to
+  VALUE. A rejected guard goes to ERROR.
+- VALUE reads $p$ at $N=0$, and $pR^{\lceil N/2\rceil}$ otherwise.
+  Decode by Lemma 11.3. An invalid virtual absent goes to ERROR.
+- On a decoded branch, if $b+1=h$, reject the trial: increment $j$,
+  reset $p,s,b,l,a$ to zero and use root VALUE. If the candidate range
+  would be exceeded, go to ERROR. Otherwise, for $b+1<h$, increment
+  $b$, replace $p$ by $pL$, increment $s$, and use GUARD when $N>0$
+  or VALUE when $N=0$. A path overflow goes to ERROR.
+- On a decoded leaf bit $x$, if $l=h$ go to ERROR; otherwise put
+  $l'=l+1$, $a'=a\oplus x$. If $p$ contains an $L$, take its rightmost
+  $L$, replace it by $R$, and delete everything after it. Set $s$ to
+  the new length and zero the discarded path padding. This is the next
+  preorder node; preserve $b,j$, store $l',a'$, and use GUARD
+  when $N>0$ or VALUE when $N=0$. If $p$ has no $L$, traversal is
+  complete: go to the canonical HALT$a'$ exactly when
+  $l'=h$ and $b=h-1$, and otherwise go to ERROR.
+- HALT0 and HALT1 have the respective fixed-bit Halt instructions.
+  ERROR and every invalid code read $\varepsilon$ and send every
+  raw reply to the canonical ERROR.
+
+These rules specify every typed reply, including replies outside
+actual supports. Every nonhalting intermediate instruction is an
+actual source primitive. The next-address rule is precisely preorder:
+a branch opens its left child; completion of a subtree finds the
+deepest ancestor whose right child is pending. Its pending ancestors
+are encoded by the $L$ positions of $p$, so no stack of subtrees is
+retained. This is a consumer of the published source-total traversal,
+not a claim that its full acquired-tree workspace has width $O(h)$.
+
+The common initial $z$ is root VALUE with zero fields for static or
+$T=0$, and canonical POLL for active $T\ge1$. Every actual transition
+in the preceding proof is one of these rows. The branch cutoff bounds
+every actual path by $h-1$; the counter bounds and the exact completion
+test follow from the pending-slot invariant. Trial resets and the
+possibly long path truncation remain to be implemented and charged.
+

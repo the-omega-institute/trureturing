@@ -1,0 +1,20 @@
+### 证明
+
+平方根嵌入给出非负性、对称性和三角不等式；若距离为零，则每个平方根坐标相等，故 \(P=Q\)。由 Cauchy–Schwarz，
+
+$$
+\begin{aligned}
+\mathsf A(KP,KQ)
+&=
+\sum_y
+\sqrt{\sum_xK(y\mid x)P(x)}
+\sqrt{\sum_xK(y\mid x)Q(x)}\\
+&\ge
+\sum_{y,x}
+K(y\mid x)\sqrt{P(x)Q(x)}
+=\mathsf A(P,Q).
+\end{aligned}
+$$
+
+这里使用 \(\sum_yK(y\mid x)=1\)。亲和度增加等价于 Hellinger 距离不增加。证毕。
+

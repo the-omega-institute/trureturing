@@ -1,1 +1,1 @@
-{"statement_id":"sha256:b63d798391c4f445412d661d5e3d8eaa260cb74f0e11560594375f14b167a039"}
+{"statement_id":"sha256:b63d798391c4f445412d661d5e3d8eaa260cb74f0e11560594375f14b167a039","declarations":[{"declaration_name_key":"ns(ns(ns(ns(ns(n0,2:D5),2:S3),5:Arith),19:PrimesNotSemilinear),36:primes_union_one_not_isSemilinearSet)","kind":"theorem"},{"declaration_name_key":"ns(ns(ns(ns(ns(nn(ns(ns(ns(ns(ns(n0,8:_private),2:D5),2:S3),5:Arith),19:PrimesNotSemilinear),0),2:D5),2:S3),5:Arith),19:PrimesNotSemilinear),40:primes_union_one_not_ultimately_periodic)","kind":"theorem"}]}

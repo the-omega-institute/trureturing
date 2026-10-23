@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:a44f80921914117a9ac9acb0fca01ccfe9befc2e9bded407272abe3ff8a4b00d
+  normalized_sha256: sha256:a44f80921914117a9ac9acb0fca01ccfe9befc2e9bded407272abe3ff8a4b00d
+cas_ref: sha256:a44f80921914117a9ac9acb0fca01ccfe9befc2e9bded407272abe3ff8a4b00d
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 定理 19.3 的证明续段，仅完成同一既定结论的论证，不另提出命题。
+    previous_atom_id: 2ded8b2f00a369d155ca5e7186af328585f9daccf39304725212190e8617831b
+    next_atom_id: a6a292d75e59660d5901d6a9eebdc7204e08b4db3e36770772b9f785994d8762

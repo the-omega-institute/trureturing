@@ -1,0 +1,24 @@
+## N.3 定理状态矩阵
+
+| 结论 | 当前状态 | 主要依赖 |
+|---|---|---|
+| law equality is the statistical kernel | Paper / finite direct | kernel extensionality |
+| Blackwell postprocessing monotonicity | Classical + finite anchors | Markov kernel composition |
+| Hellinger data processing | Lean-closed finite | `HellingerDataProcessing` |
+| KL product additivity | Lean-closed finite positive | `ProductAdditivity` |
+| Le Cam exact finite total-error floor | Lean-closed finite | `LeCamTight` |
+| Bhattacharyya i.i.d. exponent | Lean-closed finite | `BhattacharyyaExponent` |
+| Kakutani product dichotomy | Classical / Open Lean bridge | countable products, RN densities |
+| finite pairwise singular classifier | Paper direct | finite measurable intersections |
+| countable pairwise singular classifier | Paper | dominating mixture, RN theorem |
+| Bernoulli local evidence formulas | Finite certificate / Lean target | two-point arithmetic |
+| prime signal \(\alpha=1/2\) threshold | Paper | Kakutani + prime Dirichlet series |
+| noisy residue evidence criterion | Paper schema | product criterion |
+| belief is universal Bayes state | Classical / finite Lean target | conditional distributions |
+| belief Bellman contraction | Paper + analogous Lean anchor | bounded functions, kernels |
+| static MI submodularity | Classical / finite Lean target | entropy chain rule, CI |
+| greedy \(1-1/e\) | Classical | finite submodular optimization |
+| adaptive-submodularity failure witness | Finite certificate | three-state enumeration |
+| adaptive expected-cost advantage | Finite certificate | decision-tree calculation |
+| robust common-kernel lower bound | Paper direct | law quotient saturation |
+

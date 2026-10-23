@@ -1,1 +1,1 @@
-{"statement_id":"sha256:1ba6f5de6c36a7223bf4e48223e0bc5ef0257068c2af8f97a510358a93de39a7"}
+{"statement_id":"sha256:1ba6f5de6c36a7223bf4e48223e0bc5ef0257068c2af8f97a510358a93de39a7","declarations":[{"declaration_name_key":"ns(ns(ns(ns(ns(ns(n0,2:D5),2:S3),5:Arith),14:GoldenResource),25:CoarseGrainShiftInjective),17:b_shift_injective)","kind":"theorem"}]}

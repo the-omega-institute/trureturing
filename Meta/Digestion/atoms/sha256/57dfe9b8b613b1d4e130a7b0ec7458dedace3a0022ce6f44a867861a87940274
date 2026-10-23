@@ -1,0 +1,75 @@
+**Proposition 9.3 (updated native witnesses and all-address correspondence).**
+Put $H=B\cup\{\bot\}$. There is a family
+$(u_i)_{i\in H}\subseteq\mathcal U_R$ with $A_P(u_i)=i$ such that every
+finite native address on $(\rho u_i)_{i\in H}$ has a constant reply or a
+reply differing from one common value at at most one index $b\in B$.
+If $L_C\ne\varnothing$, the required entire next rows
+$(R_P(\rho u_i))_{i\in H}$ are pairwise distinct. These statements include
+$k=0$, when the family has one member.
+
+**Proof.** Use the mutually distinct non-alpha trees from Theorem 5.2,
+$c_0=\beta$ and $c_{j+1}=\langle\beta,c_j\rangle$. Choose from this
+sequence a distinct tree $t_b$ for each canonically named $b\in B$.
+Define class tuples by
+
+$$
+z_c^{\bot}=t_c,\qquad
+z_c^b=
+\begin{cases}
+\alpha,&c=b,\\
+t_c,&c\ne b,
+\end{cases}
+\qquad
+u_i=C[(z_{[p]}^i)_{p\in O}].
+\tag{NAR.9.2}
+$$
+
+Every tuple has distinct values on distinct classes, since the assigned trees are
+distinct and none is alpha. All occurrences of the same class use the
+same value. Thus (NAR.1.4), supplied by
+[NativeCutFibers](../../../D5/S3/Arith/FibonacciAtomic/Observer/NativeCutFibers.lean),
+`legal_values_row` and `rowFiberEquiv`, makes these actual original sources
+with exactly the same complete row, including its disequalities and
+absent-cut guards. Their alpha labels are exactly their indices. For
+$k=0$ the empty filling gives $u_{\bot}=C$.
+
+Fix any finite address $a$. If no old hole address is a prefix of $a$,
+the native descent never enters a replaced value. Substitution changes
+only the fixed concrete part along that descent, so its reply is the
+same for all $i$. In particular, every strict ancestor of an old hole
+remains a branch, while a descent blocked in the transported concrete
+exterior is blocked identically for every candidate. This is the
+hole-exterior case of
+[Sparse History Definition 60.1 and Theorem 60.2](RECURSIVE_RELATIONAL_OBSERVATION_SPARSE_LITERAL_HISTORY_TRANSPORT.md).
+
+Otherwise prefix-freeness gives a unique $p\in O$ and suffix $w$ with
+$a=pw$. Put $b=[p]$. The actual old-hole transport and the defining
+native descent give
+
+$$
+r_{\rho u_i}(pw)=r_{\rho z_b^i}(w)=
+\begin{cases}
+r_{\beta}(w),&i=b,\\
+r_{\rho t_b}(w),&i\ne b.
+\end{cases}
+\tag{NAR.9.3}
+$$
+
+This uses the actual
+[native four-reply `readout`](../../../D5/S3/Arith/FibonacciAtomic/ActualTreeReadoutAcquisition.lean),
+not an extra comparison port. There is no depth or existence restriction
+on $w$: the first value is beta for the empty suffix and absent for every
+nonempty suffix; the other value is whatever the fixed tree $\rho t_b$
+really returns. If the two values agree the query is constant, and if
+they differ it separates only candidate $b$. Multiple occurrences of
+$b$ obey the same equation, but one address enters only one old hole
+cone. Thus repeated occurrences, repeated queries, deep and absent
+addresses, and strict ancestors give no missing case.
+
+When a left birth $\ell\in L_C$ exists, Theorem 2.1 says that in the next
+partition it is equal to old representative $p_b$ exactly on source
+$u_b$. On $u_{\bot}$ it is unequal to every old class. Hence the complete
+next partitions, and therefore next rows, are distinct for all indices.
+Equivalently this is Theorem 3.1's exact conditional distinction.
+For the one-member family the distinction is vacuous. $\square$
+

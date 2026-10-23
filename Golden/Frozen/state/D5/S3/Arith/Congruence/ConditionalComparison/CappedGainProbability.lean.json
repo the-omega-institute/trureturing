@@ -1,1 +1,1 @@
-{"statement_id":"sha256:87a0cec98b2bfea236a57a0520640b322e36ac38cc7fe91b48589399a18eb763"}
+{"statement_id":"sha256:87a0cec98b2bfea236a57a0520640b322e36ac38cc7fe91b48589399a18eb763","declarations":[{"declaration_name_key":"ns(ns(ns(n0,6:Erdos7),9:FiniteLaw),24:one_le_sum_prob_of_cover)","kind":"theorem"},{"declaration_name_key":"ns(ns(ns(n0,6:Erdos7),9:FiniteLaw),25:prob_exists_finset_le_sum)","kind":"theorem"},{"declaration_name_key":"ns(ns(ns(n0,6:Erdos7),9:FiniteLaw),9:prob_mono)","kind":"theorem"}]}

@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:4796702dcdeb88dbea756fa5379d1c2f0b5eb45012a50abf932f0648ebfd0a41
+  normalized_sha256: sha256:4796702dcdeb88dbea756fa5379d1c2f0b5eb45012a50abf932f0648ebfd0a41
+cas_ref: sha256:4796702dcdeb88dbea756fa5379d1c2f0b5eb45012a50abf932f0648ebfd0a41
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: theorem 62.5（单素数幂的精确最优平均费用与最优树结构）。的证明段，仅展开该陈述的推导及说明，不另提出独立命题；本收据不替代原陈述的形式化覆盖。
+    previous_atom_id: e133b66f084229050e19c05259a9a10d3473cfe438c5bdb2aa99de6d25c36720
+    next_atom_id: c2911bff18725388f6cd963acc3ae7880b6ae4478493a6255262bbbe03d3d4e0

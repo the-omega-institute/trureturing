@@ -1,1 +1,1 @@
-{"statement_id":"sha256:6a92423f9753f22dcb3238a08f3499597a911046ac7128f81bd62340e42ba589"}
+{"statement_id":"sha256:3fb50ecd34b4bfb838c93448dc6fb76f67f958682bc2f86de0428a3bf356aa30","declarations":[{"declaration_name_key":"ns(ns(ns(ns(ns(n0,2:D5),2:S3),5:Arith),30:DivisorCountRadicalCoincidence),31:radical_eq_card_divisors_of_dvd)","kind":"theorem"},{"declaration_name_key":"ns(ns(ns(ns(ns(n0,2:D5),2:S3),5:Arith),30:DivisorCountRadicalCoincidence),46:primeFactors_card_le_cardFactors_card_divisors)","kind":"theorem"}]}

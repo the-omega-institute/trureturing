@@ -1,0 +1,51 @@
+**Proof.**
+On $K_m$, the $m$ left-spine edges have below-edge masses
+$1,3,\ldots,2m-1$, and the $m$ right leaf edges each have mass one.
+Using (92.9), including the empty sums at $m=0$, gives
+
+$$
+C(K_m)=\frac{\sum_{j=0}^{m-1}(2j+1)^2+m}{(2m+1)^2}
+      =\frac{4m^3+2m}{3(2m+1)^2},
+\qquad
+\lim_{m\to\infty}\frac{C(K_m)}m=\frac13.
+\tag{95.5}
+$$
+
+For an arbitrary fixed native $t$ with $N=N_t$, its old internal
+below-edge masses are unchanged by wrapping. The added spine edges
+have masses $N,N+2,\ldots,N+2h-2$, and there are $h$ added
+right leaf edges. Hence
+
+$$
+C(W_h(t))
+ =\frac{N^2C(t)+\sum_{j=0}^{h-1}[(N+2j)^2+1]}{(N+2h)^2}
+ \ge\left(\frac{N}{N+2h}\right)^2 C(t).
+\tag{95.6}
+$$
+
+For fixed $h$, substitute $t=K_m$. The squared prefactor tends
+to one and (95.5) diverges, so $C(W_h(K_m))\to+\infty$.
+
+Every $K_m$ for $m\ge1$ has a branch root. The common table on
+the wrapped sources is explicitly
+
+$$
+p_h^*(a)=
+\begin{cases}
+\mathsf{branch},&a=L^j,\ 0\le j\le h,\\
+\alpha,&a=L^jR,\ 0\le j<h,\\
+\mathsf{absent},&\text{every other }a\text{ with }|a|\le h.
+\end{cases}
+\tag{95.7}
+$$
+
+The branch at $L^h$ is the retained seed root. No strict descendant
+of that root is within the observation depth. Every other reached
+side leaf is the specified alpha leaf; all its strict extensions are
+absent. The beta reply from the four-reply contract occurs nowhere
+in this particular fibre, and no reply type is discarded or merged.
+Thus (95.3) holds even at $h=0$, when the table contains only the
+branch root. Finally $E(p_h^*)$ is one finite real number,
+independent of $m$. The unbounded sequence of target values makes
+its absolute errors unbounded, proving (95.4). $\square$
+

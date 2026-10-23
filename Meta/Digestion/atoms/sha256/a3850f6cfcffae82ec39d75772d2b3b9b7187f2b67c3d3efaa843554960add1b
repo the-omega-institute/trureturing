@@ -1,0 +1,57 @@
+**Definition 1.1 (native source and complete retained input).** Use the
+finite nonempty ordered native algebra of [NSF, Definition 1.1][NSF]:
+
+$$
+\mathcal T::=\alpha\mid\beta\mid\langle\mathcal T,\mathcal T\rangle,
+\qquad
+\rho\alpha=\beta,
+\quad \rho\beta=\langle\beta,\alpha\rangle,
+\quad \rho\langle x,y\rangle=\langle\rho x,\rho y\rangle.
+$$
+
+An address is a word in $\{L,R\}^*$, with root $\varepsilon$.
+Write $\operatorname{Pos}(u)$ for reached addresses, $u|_p$ for a
+reached whole subtree, and $r_u(p)$ for its four-valued reply in
+$\mathcal A=\{\alpha,\beta,\mathsf{branch},\mathsf{absent}\}$.
+Below a leaf all replies are absent.
+
+For a finite prefix-free cut $A$, the complete row $R_A(u)$ consists
+of its ordered reached set, the entire concrete exterior with numbered
+holes at those reached addresses, and the full equality partition of
+their whole subtrees. An erased hole's former value is not an exterior
+label. The empty cut has exterior $u$ and no holes; the root cut has
+one reached hole, one class and no concrete exterior node.
+
+Fix a complete input $I=(P,R,H_0,H_{\rm rel},Q,N)$ as in
+[ARH, Definitions 1.1–1.2 and Assumption 1.3][ARH]. Its entire fiber is
+
+$$
+\begin{aligned}
+D(I)=\{u\in\mathcal T:\;&R_P(u)=R,\\
+&r_{\rho^a u}(p)=c\quad\text{for every }(a,p,c)\in H_0,\\
+&p\in\operatorname{Pos}(\rho^a u),\quad
+ t\in\operatorname{Pos}(\rho^b u),\quad
+ (\rho^a u)|_p\ \bowtie\ (\rho^b u)|_t
+ \text{for every }(a,p,b,t,\bowtie)\in H_{\rm rel}\}.
+\end{aligned}
+\tag{NMF.1}
+$$
+
+Each sign $\bowtie\in\{=,\ne\}$ requires both endpoints reached.
+The old exterior, old absent-address conditions, repeated old classes,
+every old cross-class disequality, and all off-task records remain.
+Every occurrence within one source uses that same whole source.
+All listed epochs and native powers are supplied fixed numerals;
+there is no bound on their values across inputs. If the presentation
+also carries native image, preimage or rank conditions, they remain
+conjuncts of its entire fiber, with their owning variables and guards.
+They are not replaced by independent marginal choices.
+
+The actual paid acquisition and complete-state factoring contract of
+ARH Assumption 1.3 is a premise: the retained records are actual-epoch
+records, the one register has authentically reached $\rho^N u$, and
+the complete accessible state has exactly fiber (NMF.1). No additional
+source-bearing field narrows that fiber. This premise is retained in
+the examples below; a description of a fiber does not establish an
+acquisition implementation.
+

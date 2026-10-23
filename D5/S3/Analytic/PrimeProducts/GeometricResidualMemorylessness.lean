@@ -29,7 +29,7 @@ namespace D5.S3.Analytic.PrimeProducts.GeometricResidualMemorylessness
 
 open MeasureTheory ProbabilityTheory Set
 
-private lemma geometric_tail_mass (success : unitInterval)
+lemma geometric_tail_mass (success : unitInterval)
     (success_ne_zero : success ≠ 0) (k : Nat) :
     geometricMeasure success (Set.Ici k) =
       ENNReal.ofReal ((1 - success : Real) ^ k) := by

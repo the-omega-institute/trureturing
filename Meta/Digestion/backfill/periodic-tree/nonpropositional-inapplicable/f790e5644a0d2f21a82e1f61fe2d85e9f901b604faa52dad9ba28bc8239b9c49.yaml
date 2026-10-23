@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:f790e5644a0d2f21a82e1f61fe2d85e9f901b604faa52dad9ba28bc8239b9c49
+  normalized_sha256: sha256:f790e5644a0d2f21a82e1f61fe2d85e9f901b604faa52dad9ba28bc8239b9c49
+cas_ref: sha256:f790e5644a0d2f21a82e1f61fe2d85e9f901b604faa52dad9ba28bc8239b9c49
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 证明段（**证明。** 写 \(r=\rho(p)\)、\(N=p-(5/p)=kr\)，并在黄金整数中写  \[ \varphi^r=a+b\va…）只展开前文定理或命题的论证，式子和中间推导不另提出独立陈述。
+    previous_atom_id: 69e03b60fd265267af6b1b8d047ef0a0e4aa4b5aca8736bf32812f8100b8176a
+    next_atom_id: 55f70b677e30b59aa0269073872f50bbda814133bdffdfb74baca5c926afb689

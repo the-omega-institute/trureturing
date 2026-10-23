@@ -1,0 +1,57 @@
+**Proposition 2.3 (Faithfulness on the strict-real locus).** Real zeros of
+$I_{\rm raw}$ are precisely slack lifts of the original joint witnesses,
+up to the nonuniqueness of slack choices.
+
+Proof. Suppress a world label. The real slacks give $r=tb\in(0,1)$ and
+$b>0$. Hence $c=t(1-tb)>0$, $j=b+c>0$, $n=j+r>0$, $T>1$, $U>1$.
+The sample equations force
+
+$$
+q=\left(-24-e,-\frac e j,\frac{27/5-e}{T},-\frac e n\right),
+\qquad d=24+e.
+$$
+
+The interpolant $g_q$ is one entire polynomial, and its first four
+readings are $0,24,147/5,24$. It cannot be identically zero, since those
+first two readings differ. Put
+
+$$
+\Lambda=1+\frac6T+\frac1U-\frac4j-\frac4n,\qquad
+\mathcal H=e\Lambda+\frac{6(8b-1)(5b+2)}{5TU}.
+$$
+
+Using $TU+6U+T=2(b^2+8b+4)$ gives the exact identities
+
+$$
+P^{\rm raw}=5TUjn\,\mathcal H,\qquad
+B_4(q)-\frac{-6-e}{U}=\mathcal H.
+$$
+
+Thus the raw parent equation gives exactly $y_4=18$, with no division by
+$\Lambda$. All later response equations are the literal traces of Lemma
+1.3. Conversely every complete world gives these variables, the positive
+square-slack choices and the inverse guards.
+
+For completeness, unequal sources are equivalent to unequal complete
+worlds within a fixed child. At a fixed source with $\Lambda\ne0$, the
+parent fixes $e$. If $\Lambda=0$, the undivided parent forces $b=1/8$;
+then $T=9/8,U=5/4$ and $1/j+1/n=107/60$. The coefficient of $e$ in
+$p$ is
+
+$$
+A_5=1+(n+5/4)\left(\frac{71}{18}-\frac5j\right).
+$$
+
+Since $n>j>0$, one has $1/j>107/120$ and $n>120/107$, so
+
+$$
+A_5<1-\left(\frac{120}{107}+\frac54\right)\frac{37}{72}
+=-\frac{6739}{30816}<0.
+$$
+
+The fixed value of $p$ again fixes $e$, and the samples fix the whole
+gain and drift. This includes the singular source stratum. Since $b>0$,
+$(t,b)$ and $(r,b)$ determine each other, and the real sum-of-squares
+inverse excludes exactly equal sources. The terminal equations therefore
+express precisely the independent-pair predicate of Definition 1.2. ∎
+

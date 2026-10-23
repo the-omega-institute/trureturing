@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:1db5c23b417b7f00c0ddd8392f156962f7164b004e8287300bca819f6f452bd7
+  normalized_sha256: sha256:1db5c23b417b7f00c0ddd8392f156962f7164b004e8287300bca819f6f452bd7
+cas_ref: sha256:1db5c23b417b7f00c0ddd8392f156962f7164b004e8287300bca819f6f452bd7
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 英文证明段（**Proof.** Apply IP1 to IP9 and use multiplicativity in $\mathcal C_n=…）仅给出前文命题的推导或证明方向，不另提出独立结论。
+    previous_atom_id: 97659ee1a97b20ff615d2fb6b0fa5b490832f0bb787cb1edc36ae81594e8bf05
+    next_atom_id: 2060e1f32506727a2d74bee4e8d4fab0f143f057f3ef390122d069533fb33688

@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:01a6aed4c1ce2d68073c0707366a356b934cf7323f4af15bbac9b34e16704d37
+  normalized_sha256: sha256:01a6aed4c1ce2d68073c0707366a356b934cf7323f4af15bbac9b34e16704d37
+cas_ref: sha256:01a6aed4c1ce2d68073c0707366a356b934cf7323f4af15bbac9b34e16704d37
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 证明。：该段仅论证前文命题 738.1（两段值公式）。，不另立新的命题陈述；前文命题本身仍保留。
+    previous_atom_id: 5f0fbb30887c59e7efd1b7e9c555a18344985f36c31c596385ba115100f9778b
+    next_atom_id: 156ca0599911942f04967e5b690c5c5da92e92c6d9474db5a31736be2961360c

@@ -1,0 +1,40 @@
+**Definition 1.3 (mixed pieces and a prescribed pair).** Use the mixed
+grammar of [NIC, Definition 1.2][NIC]:
+
+$$
+A::=g\mid T_{n_i+c}\mid\rho^a z_j\mid\langle A,A\rangle,
+\qquad T_n=\rho^n\alpha,\qquad a,c\in\mathbb N.
+\tag{SPC.3}
+$$
+
+Here $g$ is fixed and finite, and arguments range over the entire
+$\mathbb N^k\times\mathcal T^m$. Named occurrences share values.
+All comparisons are after native expansion.
+
+Fix different complete finite $Q$-row labels $r_0,r_1$ and supplied
+pieces $(U_i,C_i)$ such that
+
+$$
+C_i(\theta_i)\Longrightarrow
+U_i(\theta_i)\in D\ \land\ R_Q(U_i(\theta_i))=r_i.
+\tag{SPC.4}
+$$
+
+Each $U_i$ is mixed. Each $C_i$ is a finite Boolean combination of
+Presburger conditions, mixed native equalities and supplied fixed
+navigation or complete-row tests, retaining the entire old input,
+both signed guards and every exact new row bit. [NIC, Theorem 4.3][NIC]
+supplies such pieces with a finite cover of each stratum. A directly
+proved exact stratum description also supplies (SPC.4). Define
+
+$$
+J(h)\iff\exists\theta_0,\theta_1\quad
+C_0(\theta_0)\land C_1(\theta_1)\land
+U_0(\theta_0)\equiv_h U_1(\theta_1).
+\tag{SPC.5}
+$$
+
+The two tuples are independent here. A witness description may couple
+them without changing either source domain. They are mathematical
+parameters, not observations available to a physical service.
+

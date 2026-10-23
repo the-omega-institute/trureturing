@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:9fa141e5c42c3ff4a6fd39857df39991aa457cc32ccf06e612fc7433ba919eea
+  normalized_sha256: sha256:9fa141e5c42c3ff4a6fd39857df39991aa457cc32ccf06e612fc7433ba919eea
+cas_ref: sha256:9fa141e5c42c3ff4a6fd39857df39991aa457cc32ccf06e612fc7433ba919eea
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 定义13.7只指定各合法割的载体、边界满射、合法更新及边界任务的含义，不断言下降或路径无关性。
+    previous_atom_id: e99714d7cf85c075d538a3c648bc51f759fda673e0c7d4646e648fae8b1cb8b5
+    next_atom_id: ccc85021db2d09a632e4202b02ced165479f77fc4dff2f631b75b49f6c758f98

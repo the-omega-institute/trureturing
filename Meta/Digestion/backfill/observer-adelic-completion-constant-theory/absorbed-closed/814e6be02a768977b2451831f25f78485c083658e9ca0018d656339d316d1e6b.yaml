@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:814e6be02a768977b2451831f25f78485c083658e9ca0018d656339d316d1e6b
+  normalized_sha256: sha256:814e6be02a768977b2451831f25f78485c083658e9ca0018d656339d316d1e6b
+cas_ref: sha256:814e6be02a768977b2451831f25f78485c083658e9ca0018d656339d316d1e6b
+coverage_gids:
+  - gid: D5/S3/Observer/Tomography/ToeplitzFlatFloorMultiplicity.toeplitz_flat_floor_multiplicity
+    target_statement_id: sha256:96ab3be12fda167cf27a575d694f68962eaa71ee72cf1ef408eb8c77faf0b109
+receipts:
+  unresolved_subitems: []

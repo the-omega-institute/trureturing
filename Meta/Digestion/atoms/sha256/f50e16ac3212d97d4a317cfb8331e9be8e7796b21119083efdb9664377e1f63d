@@ -1,0 +1,14 @@
+**Corollary 15.6 (the universal minimum-alphabet classification).** For
+all $H\ge1$, with $q=H+1$,
+
+$$
+N_H(\mathcal M)=q
+\quad\Longleftrightarrow\quad
+\mathcal M\text{ is }q\text{-wise intersecting}.
+\tag{NAR.15.11}
+$$
+
+If the intersection condition fails, $N_H(\mathcal M)\ge q+1$. This
+necessity quantifies all retained encoders, without requiring their labels
+to increase along either oriented relation of Assumption 15.1.
+

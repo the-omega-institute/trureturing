@@ -1,353 +1,71 @@
 using System.Collections.Immutable;
-using System.Text.Json;
 using StrataLint.Engine;
 
 namespace StrataLint.Cli;
 
 internal static class DagLedgerMathlibReanchorWriter
 {
-    internal static CommandResult Reanchor(
-        string repositoryRoot,
-        IRepositoryGateway repository,
-        ILeanReportSource leanReportSource,
-        IReadOnlyList<string> arguments)
+    internal static CommandResult Reanchor(string root, IRepositoryGateway repository,
+        ILeanReportSource source, IReadOnlyList<string> arguments)
     {
         try
         {
-            var protectedBaseName = ParseArguments(arguments);
-            var protectedBase = Decode(DagLedgerCommandPreparation.Ask(
-                () => repository.ReadRevisionProjection(protectedBaseName, TruthExportCommand.IsTruthInput)));
-            var truth = DagLedgerCommandPreparation.BuildTruth(repository, leanReportSource);
-            var currentLedgerFiles = ReadCurrentLedgerFiles(repositoryRoot);
-            var protectedLedgerFiles = protectedBase.Files.Values
-                .Where(static file =>
-                    FrozenLedgerChangeClassifier.IsAcceptedEventPath(file.Path.Value))
-                .ToImmutableArray();
-
-            var baseView = FrozenLedgerBaseViewReader.Read(protectedBase);
+            if (arguments.Count is not (2 or 4) || arguments[0] != "--base" || string.IsNullOrWhiteSpace(arguments[1])
+                || arguments.Count == 4 && (arguments[2] != "--old-report" || string.IsNullOrWhiteSpace(arguments[3])))
+                throw new InvalidOperationException("USAGE: StrataLint ledger-reanchor-mathlib --base REV [--old-report PATH]");
+            var oldWitness = arguments.Count == 4
+                ? RawLeanReportArtifact.ReadFrozenWitnessFile(Path.GetFullPath(arguments[3], root)) : null;
+            var protectedBase = Decode(DagLedgerCommandPreparation.Ask(() =>
+                repository.ReadRevisionProjection(arguments[1], TruthExportCommand.IsTruthInput)));
+            var state = FrozenStateCatalog.Load(protectedBase);
+            var current = Decode(DagLedgerCommandPreparation.Ask(() =>
+                repository.ReadCurrentProjection(TruthExportCommand.IsTruthInput)));
+            var currentState = FrozenStateCatalog.Load(current);
+            var retained = state.Selectors.Where(currentState.Records.ContainsKey).ToImmutableArray();
+            if (retained.IsEmpty) return new(true, "MATHLIB_REANCHOR replacement_modules=0 drift_seed_modules=0 recognition=not-required\n", string.Empty);
+            var report = LeanReportSourceScope.Load(source, current, retained);
+            var truth = DagLedgerCommandPreparation.BuildTruth(current, report);
             var states = LeanTruthStates.Resolve(truth.Snapshot, truth.Lean);
-            var adjacency = LeanImportAdjacency.Build(truth.Snapshot, truth.Lean);
-            var selectedPaths = baseView.ActiveByPath.Keys.ToImmutableHashSet();
-            var completeCatalog = FrozenContentAddress.Build(
-                truth.Snapshot,
-                truth.Lean,
-                states,
-                adjacency) switch
+            var planned = retained.ToDictionary(static path => path, path =>
+                truth.Report.Files.TryGetValue(path, out var module) && states.TryGetValue(path, out var status) && status is TruthState.Closed
+                    ? FrozenStateRecord.FromReport(path, module)
+                    : throw new InvalidOperationException("canonical Lean report cannot materialize active Closed module: " + path.Value));
+            var drift = retained.Where(path => state.Records[path].StatementId != planned[path].StatementId
+                || !state.Records[path].Declarations.SequenceEqual(planned[path].Declarations)).ToImmutableHashSet();
+            if (drift.IsEmpty) return new(true, "MATHLIB_REANCHOR replacement_modules=0 drift_seed_modules=0 recognition=not-required\n", string.Empty);
+            var failures = MathlibUpgradePropositionSourceDiagnostics.FindFailures(protectedBase, truth.Snapshot, drift, state, truth.Report, oldWitness);
+            var authorized = new MathlibUpgradeFrozenLedgerReplacementAuthorization(protectedBase, truth.Snapshot, oldWitness)
+                .IsAuthorized(drift, state, truth.Report);
+            var output = $"MATHLIB_REANCHOR replacement_modules={drift.Count}\nMATHLIB_REANCHOR drift_seed_modules={drift.Count}\n"
+                + $"AUTHORIZATION proposition_source_equivalent={(failures.IsEmpty ? "pass" : "fail")} failed_modules={failures.Length}\n"
+                + $"AUTHORIZATION overall={(authorized ? "pass" : "fail")}\n"
+                + string.Concat(failures.Select(static path => $"PROPOSITION_SOURCE_FAILURE {path.Value}\n"));
+            if (!authorized) return new(false, output, "MATHLIB_REANCHOR_FAILED authorization failed; frozen state was not published\n");
+            var backups = drift.ToDictionary(static path => path, path => FrozenStateWriter.ReadCurrentBytes(root, path));
+            try
             {
-                FrozenMaterialOutcome.Accepted accepted => accepted.Capability,
-                FrozenMaterialOutcome.Rejected rejected => throw new InvalidOperationException(
-                    "complete frozen catalog build failed: " + rejected.Message),
-                _ => throw new InvalidOperationException("unknown frozen material outcome"),
-            };
-            var driftPaths = baseView.ActiveByPath
-                .Where(item => !completeCatalog.ByPath.TryGetValue(item.Key, out var candidate)
-                    || candidate.StatementId != item.Value.Material.StatementId)
-                .Select(static item => item.Key)
-                .OrderBy(static path => path.Value, StringComparer.Ordinal)
-                .ToImmutableArray();
-            if (driftPaths.IsEmpty)
-            {
-                return new CommandResult(
-                    true,
-                    "MATHLIB_REANCHOR replacement_modules=0 drift_seed_modules=0 "
-                        + "recognition=not-required\n",
-                    string.Empty);
+                foreach (var path in drift.OrderBy(static path => path.Value, StringComparer.Ordinal))
+                    _ = FrozenStateWriter.Write(root, path, planned[path].StatementId, planned[path].Declarations);
             }
-
-            var reanchoredPaths = FrozenLedgerReplacementClosure.DescendantsFrom(
-                    baseView,
-                    driftPaths)
-                .OrderBy(static path => path.Value, StringComparer.Ordinal)
-                .ToImmutableArray();
-            var missing = reanchoredPaths
-                .Where(path => !completeCatalog.ByPath.ContainsKey(path))
-                .ToImmutableArray();
-            if (!missing.IsEmpty)
+            catch
             {
-                throw new InvalidOperationException(
-                    "canonical Lean report cannot materialize active Closed modules: "
-                    + string.Join(", ", missing.Select(static path => path.Value)));
+                foreach (var (path, bytes) in backups) FrozenStateWriter.Restore(root, path, bytes);
+                throw;
             }
-
-            var newEventFiles = BuildReanchoredEventFiles(
-                baseView,
-                completeCatalog,
-                adjacency,
-                reanchoredPaths);
-            var replacementFiles = BuildReplacementFiles(
-                baseView,
-                protectedLedgerFiles,
-                reanchoredPaths,
-                newEventFiles);
-            var prospective = ReplaceLedgerSnapshot(truth.Snapshot, replacementFiles);
-            var candidateView = FrozenLedgerBaseViewReader.Read(prospective);
-            var candidateCatalog = FrozenContentAddress.BuildAdmissionCatalog(
-                prospective,
-                truth.Lean,
-                states,
-                adjacency,
-                selectedPaths,
-                candidateView.ActiveByPath);
-            var changes = BuildProspectiveChanges(
-                DagLedgerCommandPreparation.Ask(() => repository.ReadChanges(protectedBaseName)),
-                baseView,
-                newEventFiles,
-                reanchoredPaths);
-            var deltaEvents = DagLedgerCommandPreparation.ValidateGeneratedEventFiles(
-                baseView,
-                newEventFiles,
-                "generated mathlib reanchor events");
-            var recognition = FrozenLedgerIncrementalReplacementRecognition.Recognize(
-                baseView,
-                prospective,
-                changes,
-                deltaEvents,
-                candidateCatalog) ?? throw new InvalidOperationException(
-                    "generated replacement was rejected by FrozenLedgerReplacementRecognition");
-
-            var context = new FrozenLedgerReplacementAuthorizationContext(
-                recognition,
-                baseView,
-                candidateCatalog);
-            var pinChanged = EffectiveLeanPins.TryRead(protectedBase, out var basePins)
-                && EffectiveLeanPins.TryRead(prospective, out var candidatePins)
-                && basePins != candidatePins;
-            var propositionFailures = MathlibUpgradePropositionSourceDiagnostics.FindFailures(
-                protectedBase,
-                prospective,
-                recognition.ChangedStatementModulePaths,
-                baseView,
-                candidateCatalog);
-            var closureStatementFailures =
-                MathlibUpgradeFrozenLedgerReplacementAuthorization
-                    .FindChangedClosureOnlyStatements(context, recognition);
-            var axiomFailures = recognition.ReanchoredModulePaths
-                .Where(path => !candidateCatalog.ByPath.TryGetValue(path, out var material)
-                    || material.AxiomClosure.Any(axiom => !LeanAxiomFacts.IsStandard(axiom)))
-                .OrderBy(static path => path.Value, StringComparer.Ordinal)
-                .ToImmutableArray();
-            var authorized = new MathlibUpgradeFrozenLedgerReplacementAuthorization(
-                protectedBase,
-                prospective).IsAuthorized(context);
-            var diagnosedAuthorization = pinChanged
-                && propositionFailures.IsEmpty
-                && closureStatementFailures.IsEmpty
-                && axiomFailures.IsEmpty;
-            if (authorized != diagnosedAuthorization)
-            {
-                throw new InvalidOperationException(
-                    "authorization diagnostics disagree with the canonical authorization result");
-            }
-
-            var output = RenderResult(
-                driftPaths,
-                reanchoredPaths,
-                pinChanged,
-                propositionFailures,
-                closureStatementFailures,
-                axiomFailures,
-                authorized);
-            if (!authorized)
-            {
-                return new CommandResult(
-                    false,
-                    output,
-                    "MATHLIB_REANCHOR_FAILED authorization failed; frozen ledger was not published\n");
-            }
-
-            FrozenLedgerPublication.PublishSnapshot(
-                repositoryRoot,
-                LedgerPath(repositoryRoot),
-                replacementFiles,
-                currentLedgerFiles,
-                deltaEvents,
-                [],
-                "ledger-reanchor-mathlib");
-            return new CommandResult(
-                true,
-                output,
-                string.Empty);
+            return new(true, output, string.Empty);
         }
-        catch (Exception exception) when (
-            exception is ArgumentException
-                or FormatException
-                or IOException
-                or InvalidOperationException
-                or JsonException
-                or KeyNotFoundException
-                or UnauthorizedAccessException
-                or DagLedgerCommandPreparation.LeanReportUnusableException
-                or DagLedgerCommandPreparation.RepositoryUnavailableException)
+        catch (Exception exception) when (exception is ArgumentException or FormatException or IOException
+            or InvalidOperationException or UnauthorizedAccessException
+            or DagLedgerCommandPreparation.LeanReportUnusableException or DagLedgerCommandPreparation.RepositoryUnavailableException)
         {
-            return new CommandResult(
-                false,
-                string.Empty,
-                DagLedgerAppendWriter.RenderFailure("MATHLIB_REANCHOR_FAILED", exception));
+            return new(false, string.Empty, "MATHLIB_REANCHOR_FAILED " + exception.Message
+                + (exception.InnerException is null ? string.Empty : " Cause: " + exception.InnerException.Message) + "\n");
         }
     }
 
-    private static string ParseArguments(IReadOnlyList<string> arguments)
+    private static RepositorySnapshot Decode(RawRepositorySnapshot raw) => SnapshotDecoder.Decode(raw) switch
     {
-        if (arguments.Count != 2
-            || arguments[0] != "--base"
-            || string.IsNullOrWhiteSpace(arguments[1]))
-        {
-            throw new InvalidOperationException(
-                "USAGE: StrataLint ledger-reanchor-mathlib --base REV");
-        }
-
-        return arguments[1];
-    }
-
-    private static ImmutableArray<RepositoryFile> BuildReanchoredEventFiles(
-        FrozenLedgerBaseView baseView,
-        FrozenMaterialCatalog completeCatalog,
-        ImmutableDictionary<RepoPath, ImmutableArray<RepoPath>> adjacency,
-        ImmutableArray<RepoPath> reanchoredPaths)
-    {
-        var reanchoredSet = reanchoredPaths.ToImmutableHashSet();
-        var eventHashes = new Dictionary<RepoPath, string>();
-        var files = ImmutableArray.CreateBuilder<RepositoryFile>();
-        foreach (var path in LeanImportAdjacency.DependenciesFirst(reanchoredPaths, adjacency)
-            .Where(reanchoredSet.Contains))
-        {
-            var candidate = completeCatalog.ByPath[path];
-            var prerequisites = adjacency[path]
-                .Select(dependency => eventHashes.TryGetValue(dependency, out var eventHash)
-                    ? FrozenNodeId.Create(eventHash)
-                    : baseView.ActiveByPath.TryGetValue(dependency, out var active)
-                        ? FrozenNodeId.Create(active.EventHash)
-                        : throw new InvalidOperationException(
-                            $"reanchored module {path.Value} depends on non-active "
-                            + dependency.Value))
-                .OrderBy(static identity => identity.Value, StringComparer.Ordinal)
-                .ToImmutableArray();
-            var material = candidate with
-            {
-                FrozenNodeId = FrozenContentAddress.ComputeFrozenNodeId(
-                    path,
-                    candidate.StatementId,
-                    prerequisites),
-                PrerequisiteFrozenNodeIds = prerequisites,
-            };
-            var file = DagLedgerAppendWriter.BuildNewEventFiles(
-                [new FrozenLedgerDraft(
-                    "Freeze",
-                    FrozenLedgerCanonicalWriter.FreezeElement(
-                        FrozenLedgerCanonicalWriter.FreezePayload(material)))])[0];
-            var ledgerEvent = DagLedgerLoader.LoadFiles([file]) switch
-            {
-                DagLedgerFilesLoadOutcome.Loaded loaded => loaded.Events[0],
-                DagLedgerFilesLoadOutcome.Invalid invalid => throw new InvalidOperationException(
-                    $"generated mathlib reanchor event for {path.Value} is invalid: "
-                    + invalid.Message),
-                _ => throw new InvalidOperationException("unknown ledger files load outcome"),
-            };
-            eventHashes.Add(path, ledgerEvent.EventHash);
-            files.Add(file);
-        }
-
-        return files.ToImmutable();
-    }
-
-    private static ImmutableArray<RepositoryFile> BuildReplacementFiles(
-        FrozenLedgerBaseView baseView,
-        ImmutableArray<RepositoryFile> baselineFiles,
-        ImmutableArray<RepoPath> reanchoredPaths,
-        ImmutableArray<RepositoryFile> newEventFiles)
-    {
-        var reanchoredSet = reanchoredPaths.ToImmutableHashSet();
-        var replacedEventPaths = baseView.Events
-            .Where(item => item.FreezePayload is not null
-                && reanchoredSet.Contains(
-                    RepoPath.CreateKnown(item.FreezePayload.DescriptorSelector)))
-            .Select(static item => item.SourcePath)
-            .ToImmutableHashSet();
-        return baselineFiles
-            .Where(file => !replacedEventPaths.Contains(file.Path))
-            .Concat(newEventFiles)
-            .OrderBy(static file => file.Path.Value, StringComparer.Ordinal)
-            .ToImmutableArray();
-    }
-
-    private static RawChangeSet BuildProspectiveChanges(
-        RawChangeSet sourceChanges,
-        FrozenLedgerBaseView baseView,
-        ImmutableArray<RepositoryFile> newEventFiles,
-        ImmutableArray<RepoPath> reanchoredPaths)
-    {
-        var reanchoredSet = reanchoredPaths.ToImmutableHashSet();
-        var ledgerChanges = baseView.Events
-            .Where(item => item.FreezePayload is not null
-                && reanchoredSet.Contains(
-                    RepoPath.CreateKnown(item.FreezePayload.DescriptorSelector)))
-            .Select(static item => (item.SourcePath.Value, RawChangeKind.Deleted))
-            .Concat(newEventFiles.Select(static file =>
-                (file.Path.Value, RawChangeKind.Added)));
-        return RawChangeSet.CreateWithKinds(sourceChanges.Entries
-            .Where(static item =>
-                !FrozenLedgerChangeClassifier.IsAcceptedEventPath(item.Path.Value))
-            .Select(static item => (item.Path.Value, item.Kind))
-            .Concat(ledgerChanges));
-    }
-
-    private static RepositorySnapshot ReplaceLedgerSnapshot(
-        RepositorySnapshot snapshot,
-        ImmutableArray<RepositoryFile> replacementFiles) =>
-        RepositorySnapshot.Create(snapshot.Files
-            .Where(static item =>
-                !FrozenLedgerChangeClassifier.IsAcceptedEventPath(item.Key.Value))
-            .Select(static item => item.Value)
-            .Concat(replacementFiles)
-            .ToImmutableDictionary(static file => file.Path));
-
-    private static string RenderResult(
-        ImmutableArray<RepoPath> driftPaths,
-        ImmutableArray<RepoPath> reanchoredPaths,
-        bool pinChanged,
-        ImmutableArray<RepoPath> propositionFailures,
-        ImmutableArray<RepoPath> closureStatementFailures,
-        ImmutableArray<RepoPath> axiomFailures,
-        bool authorized)
-    {
-        var output = "MATHLIB_REANCHOR replacement_modules=" + reanchoredPaths.Length + "\n"
-            + "MATHLIB_REANCHOR drift_seed_modules=" + driftPaths.Length + "\n"
-            + "AUTHORIZATION incremental_replacement=pass\n"
-            + $"AUTHORIZATION effective_lean_pins_changed={PassFail(pinChanged)}\n"
-            + "AUTHORIZATION proposition_source_equivalent="
-            + $"{PassFail(propositionFailures.IsEmpty)} failed_modules={propositionFailures.Length}\n"
-            + "AUTHORIZATION closure_statement_identity_unchanged="
-            + $"{PassFail(closureStatementFailures.IsEmpty)} "
-            + $"failed_modules={closureStatementFailures.Length}\n"
-            + "AUTHORIZATION standard_axiom_closure="
-            + $"{PassFail(axiomFailures.IsEmpty)} failed_modules={axiomFailures.Length}\n"
-            + $"AUTHORIZATION overall={PassFail(authorized)}\n";
-        output += string.Concat(propositionFailures.Select(static path =>
-            $"PROPOSITION_SOURCE_FAILURE {path.Value}\n"));
-        output += string.Concat(closureStatementFailures.Select(static path =>
-            $"CLOSURE_STATEMENT_IDENTITY_FAILURE {path.Value}\n"));
-        output += string.Concat(axiomFailures.Select(static path =>
-            $"AXIOM_CLOSURE_FAILURE {path.Value}\n"));
-        return output;
-    }
-
-    private static string PassFail(bool value) => value ? "pass" : "fail";
-
-    private static ImmutableArray<RepositoryFile> ReadCurrentLedgerFiles(string repositoryRoot) =>
-        DagLedgerCommandPreparation.ReadLedgerDirectoryFiles(LedgerPath(repositoryRoot));
-
-    private static string LedgerPath(string repositoryRoot) =>
-        Path.Combine(
-            repositoryRoot,
-            FrozenLedgerChangeClassifier.AcceptedRoot.Replace(
-                '/',
-                Path.DirectorySeparatorChar));
-
-    private static RepositorySnapshot Decode(RawRepositorySnapshot raw) =>
-        SnapshotDecoder.Decode(raw) switch
-        {
-            SnapshotDecodeOutcome.Decoded decoded => decoded.Snapshot,
-            SnapshotDecodeOutcome.InfrastructureFailure failure => throw new InvalidOperationException(
-                failure.Message),
-        };
+        SnapshotDecodeOutcome.Decoded decoded => decoded.Snapshot,
+        SnapshotDecodeOutcome.InfrastructureFailure failure => throw new InvalidOperationException(failure.Message),
+    };
 }

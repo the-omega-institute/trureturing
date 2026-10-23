@@ -14,6 +14,15 @@ triage: anchor
 
 # Discrete conditioning fibers and positive probability ratios
 
+## Verified locator
+
+The DOI 10.48550/arXiv.math/0703609 resolves to the arXiv abstract page of this
+preprint. The versioned locator https://arxiv.org/abs/math/0703609v1 shows the
+title "Algebraic statistical models", the authors Mathias Drton and Seth Sullivant,
+and the version 1 date 2007-03-20. The statements below cite that version.
+
+## Consumed statements
+
 The consumed primary text is
 [Algebraic Statistical Models, arXiv:math/0703609v1](https://arxiv.org/pdf/math/0703609v1).
 Section 3.2, Example 16, PDF p. 13, states that

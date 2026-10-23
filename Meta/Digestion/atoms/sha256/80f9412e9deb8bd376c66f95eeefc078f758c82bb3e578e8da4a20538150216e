@@ -1,0 +1,23 @@
+**Proof.** The first branch must be tested first. Rank at least one means that some
+three-subset is entirely positive, equivalently at most one zero. Rank at
+least two further requires the two witnessing three-subsets to intersect
+only at positions of age two; their intersection has at least two positions.
+Conversely, if at most one age is zero and at least two ages are two, choose
+a positive three-subset containing two such positions and a second
+three-subset whose intersection with it is exactly those two. These are the
+two suffix conditions in (NAR.15.2). This proves (NAR.15.13), and Theorem
+15.2 supplies its native decoder.
+
+The lower median does not supply this code: $a=(1,0,1,1)$ and
+$b=(0,1,2,2)$ both have lower median $1$, whereas (NAR.15.13) gives $1$ and
+$2$. The upper median also fails: $a=(1,0,0,1)$ and
+$b=(0,1,1,2)$ both have upper median $1$, whereas their codes are $0$ and
+$1$. In both examples $b-a=(-1,1,1,1)$, so the displacement is $1$ throughout
+the selected triple $S=\{1,2,3\}$. With original offsets $0,3,6,9$, the two
+actual histories at
+lags $2$ and $1$ have equal normalized selected values and therefore equal
+complete later rows by (NAR.14.3), including their hidden partition. These
+are native collisions, not merely equal summaries of four numbers. The
+failure is a failure of the median rules, while the three-label encoder
+remains valid. $\square$
+

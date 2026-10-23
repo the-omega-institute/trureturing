@@ -1,0 +1,40 @@
+**推论 460.2（平衡点与完整能量的严格比较）。** 在定理 460.1 的同一条件和有界共同成本下，取 $U\asymp K$、$D=N=\sqrt K$、$L=K^\ell$。若固定 $\ell>0$ 满足共同 Gram 范围，则
+
+$$
+\begin{aligned}
+Q_{\rho,L}(b)&\ll_\varepsilon\mathcal N^2K^\varepsilon
+ (K^{15/8}L^{2/3}+K^2L^{5/3}),\\
+\|P_LAb\|_2^2&\ll_\varepsilon
+ \mathcal N^2K^{2+5\ell/3+\varepsilon}.
+\end{aligned}
+\tag{460.16}
+$$
+
+若同时满足定理 459.1，使用一次共同包络 $\mathcal H\ge\max\{\mathcal N,\mathcal C\}$。当
+
+$$
+0<\ell<\frac{25-10\sqrt6}{20},
+\tag{460.17}
+$$
+
+当前全部标记投影的幂次上界严格小于从（459.3）直接得到的 $\kappa_{\mathrm{joint}}$；差额为
+
+$$
+\kappa_{\mathrm{joint}}-(2+5\ell/3)
+=\frac{25-10\sqrt6}{12}-\frac{5\ell}3>0.
+\tag{460.18}
+$$
+
+最终 $\varepsilon$ 取小于这个正差额；所有组合成本由上述同一个 $\mathcal H$ 支付。改进的对象是由（459.3）整体能量直接继承的该投影界。
+
+证明。把平衡尺度代入（460.3）；第一项的 $K$ 幂为 $1/3+5/3-1/8=15/8$，第二项为 $2$，余项为 $K^2L^{3/2}$。因 $K,L\ge1$，前者和余项都被 $K^2L^{5/3}$ 吸收，得到（460.16）。再直接比较（459.2）的幂次即得（460.18）。证毕。
+
+在相同固定或 polylog 次幂成本合同下，（460.3）保留全部六次幂自由标签，但其 $2+5\ell/3$ 仍高于 $2$。既有定理 457.1 对指定素标签的更强结论不被替换。原恒等式
+
+$$
+\|Ab\|_2^2=\|P_LAb\|_2^2+\|(I-P_L)Ab\|_2^2
+\tag{460.19}
+$$
+
+仍需对同一完整补空间给出更强上界；（459.3）对它的 $K^{\kappa_{\mathrm{joint}}+\varepsilon}$ 预算没有因本条而降低。其他原长度、高度、growing-height allowance、F4 的不同列二次型及 signed Robin restoration 也不由（460.3）推出。
+

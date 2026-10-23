@@ -1,0 +1,58 @@
+**Proof.** Every cell indicator is a multilinear polynomial of degree
+at most two. Conversely the empty cell gives the constant moment,
+singletons give $w_i$, and the stopped $11$ cell at $i<j$ gives
+$w_iw_j$. Applying these observations separately to label zero and
+each numerical label proves both reading equivalences. This uses
+the polynomial cell observation of 206.5 with aggregate label rewards,
+rather than preserving each event/class measure separately.
+
+The empty numerical reading fixes $|v_n|$; fixed $\beta_n$ therefore
+fixes $s_n$. The empty zero-label reading fixes $|u|$, so
+$T_z=|u|-\sum_ns_n=t$ for every member of the fiber.
+Given such $z$, choose $x_n=\mathcal M((A_z+P_z)|_{\Omega_n})$
+and $p_n=\mathcal M(P_z|_{\Omega_n})$; they satisfy (213.9).
+Conversely, choose actual representing measures for $p_n$, $x_n-p_n$
+and $v_n-p_n$, and use them as P, A and C. The chosen P measure is
+shared once by both rewards; independent representations of the two
+residual cone vectors are legitimate. Their moments are precisely
+$x_n$ and $v_n$, and the aggregate equation supplies $u$. Thus these
+are exactly all feasible reward data, not just necessary pair tests.
+
+The original $y$ proves nonemptiness. Fixed nonnegative reward totals
+bound each individual score coefficient. Closed linear reading constraints
+therefore make the fiber compact. The moment-variable feasible set is
+also compact: its nonnegative representing measures have bounded masses
+$s_n$ and $|v_n|$, so it is a linear image of a closed bounded set of
+such measures. A zero-mass cone vector is zero. Every table reward
+is fixed, hence so are its maximum and the anchor. For every representative,
+
+$$
+K_z=|u|+\sum_n|v_n|-\sum_wP^z_w.
+$$
+
+Maximizing the final term over (213.9) proves (213.10) and attainment.
+This is finite compact linear optimization, with no relaxation of
+Boolean realizability.
+
+Always $|p_n|\le\min(s_n,|v_n|)$, which gives the floor. Equality
+of the sum requires equality at every class. If $s_n\le|v_n|$, the
+zero-mass cone vector $x_n-p_n$ is zero; if $s_n\ge|v_n|$, the
+zero-mass vector $v_n-p_n$ is zero. These give (213.11).
+Conversely take $p_n=x_n$ in the first case and $p_n=v_n$ in the
+second. The prescribed cone differences give actual residual A or C
+measures, and the same aggregate equation makes every choice coexist.
+This attains the floor and proves the claimed row elimination.
+
+Choose a minimizer $y^\#$ and put $D=K_y-K_{\min}(y)\ge0$.
+It has $Q(y^\#)=(\beta,K_y-D)$ and
+$F_{Q(y^\#)}=F_{Q(y)}+De$. Normalizing any output V in its own fiber
+keeps $\Delta_N$ and changes the residual reading by $-D_Ve\le0$.
+The same $\theta$, including $\theta=1$, still works in (213.1).
+For inputs, $y^\#$ is still unit O and
+$F_{Q(y)}\le F_{Q(y^\#)}$ on H, so a certificate for $y^\#$ also
+certifies $y$. Restricting the universal assertion in the other direction
+is immediate. This argument is one-way for an individual input; it
+does not equate the membership of its two quotients. Neither input-output
+fiber equality nor preservation of the input's unaries is required of
+a general certificate. $\square$
+

@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:205700fc1358ee9940595828bac837c75423bb4851283049dced86f47e448f0e
+  normalized_sha256: sha256:205700fc1358ee9940595828bac837c75423bb4851283049dced86f47e448f0e
+cas_ref: sha256:205700fc1358ee9940595828bac837c75423bb4851283049dced86f47e448f0e
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 清单片段“结果粒度”仅列举主题、接口组成或考虑维度；本片段不陈述性质、存在性或推论。
+    previous_atom_id: f613f722b70e9b0aa7a294dd9eb25085a7b25e3175239fdc05269a882d8f687f
+    next_atom_id: 116c7841ccc2374854e7bba0dd8fa22800aa064720e662c0d4f19cf8f4dd482a

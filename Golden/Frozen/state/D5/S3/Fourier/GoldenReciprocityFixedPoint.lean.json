@@ -1,1 +1,1 @@
-{"statement_id":"sha256:d326c4c30c651487d590394361ab98509e77a938fef2e8b2b2d38224bde3a5b8"}
+{"statement_id":"sha256:d326c4c30c651487d590394361ab98509e77a938fef2e8b2b2d38224bde3a5b8","declarations":[{"declaration_name_key":"ns(ns(ns(ns(ns(n0,2:D5),2:S3),7:Fourier),27:GoldenReciprocityFixedPoint),30:golden_reciprocity_fixed_point)","kind":"theorem"}]}

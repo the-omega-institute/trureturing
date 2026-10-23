@@ -47,7 +47,7 @@ private lemma abs_cos_sum_periodic (d : ℕ) (hd : 0 < d) :
   simp only [Nat.cast_add, Nat.cast_one, Nat.cast_zero, mul_zero, add_zero] at h
   exact (add_right_cancel h).symm
 
-private lemma abs_cos_sum_le (d : ℕ) (hd : 2 ≤ d) (s : ℝ) :
+lemma abs_cos_sum_le (d : ℕ) (hd : 2 ≤ d) (s : ℝ) :
     ∑ y ∈ Finset.range d, |Real.cos (s + Real.pi / d * y)| ≤
       1 / Real.sin (Real.pi / (2 * (d : ℝ))) := by
   have hd0 : 0 < d := by omega

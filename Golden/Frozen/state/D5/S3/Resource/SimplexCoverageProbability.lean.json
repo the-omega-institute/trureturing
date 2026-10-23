@@ -1,1 +1,1 @@
-{"statement_id":"sha256:27fa595631490b520039e02e1f481ef0a1adbf21c2f8b321fbb1f8d611805680"}
+{"statement_id":"sha256:ea17575f454b3ed179128e67238973336219dc71a1266dbbbe9e36e66fa93aaf","declarations":[{"declaration_name_key":"ns(ns(ns(ns(ns(n0,2:D5),2:S3),8:Resource),26:SimplexCoverageProbability),28:uniformSamples_recovered_top)","kind":"theorem"}]}

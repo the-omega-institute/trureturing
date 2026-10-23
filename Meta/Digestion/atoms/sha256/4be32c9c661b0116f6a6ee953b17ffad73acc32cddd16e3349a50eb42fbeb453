@@ -1,0 +1,18 @@
+## 实例化表:本仓作为定义 1.1–1.5 的**拟议**模型(`ASSUMED-UNVERIFIED`)
+
+| 理论对象 | 本仓的拟议对应物(未证明满足定义;见表后说明) |
+|---|---|
+| $\mathcal P$、$\Pi$、$K$ | Lean 4 命题、证明项、kernel |
+| $\mathfrak A$ | `{propext, Classical.choice, Quot.sound}`(母仓公理白名单) |
+| $\mathrm{refs}$ | 声明的常量依赖(Lean `getUsedConstants`,须固定环境与直接/传递口径,见评审席读数) |
+| $N$、$w$ | 拟议:状态片存在的模块中**每条 theorem 声明**及其证明项;模块不是命题、源文件不是 $N\to\Pi$ 的选择,故须由 inspector 报告的声明级数据投影,且要处理 def/inductive 等非命题常量与依赖强连通分量——此映射**未构造** |
+| $O$ | `X_Frontier` 的 `open` 标记与消化账本的 `residual-open` 条目 |
+| $\mathfrak M$ | 拟议:经三 required check 合入 dev 的 PR 中**实际保持 $N,E,w$** 者;PR 作为工程转移不是对所有账本定义的全函数,须限定适用域并总化——**未构造** |
+| $\mathrm{Err}_u$ | 勘误 / revocation 协议(母仓第 1.3 条) |
+| 主张记录 $\mathcal U$ | 拟议:PR / issue 正文与判词的**不可变事件快照序列**;可编辑正文本身不满足定义 3.1 的前缀只追加(母仓第 5.2 条已明写正文可编辑),标 unverified 不能修复序列性质 |
+| 读数 | 命令 + 窗口 + 口径(母仓第 2.9 条) |
+| $\mathrm{Adm}$ | 三 required check(不读提交者身份) |
+
+
+**说明**:上表是候选对应,不是模型证明。已核实的只有两项局部事实:公理白名单与状态片路径。把本仓当作定理 1.15、4.11 等的实例使用时,须先构造声明级投影并证明引用闭合与无环——这是路线图第 6 轮的题目,在此之前一律 `ASSUMED-UNVERIFIED`。
+

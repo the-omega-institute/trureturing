@@ -1,0 +1,54 @@
+# Historical Survivor Transport and Rational Search
+
+## Abstract
+
+Actual historical survivor transport and a rational certificate independent of the target law.
+
+Histories are complete finite words over an actual finite alphabet. NormalizedRows means nonnegative rows summing to one. The trajectoryLaw begins at the empty-history row and thereafter reads its own observed full prefix. wordCylinder fixes precisely the coordinates of its finite word. deletedSet is the union of these cylinders, and its complement is the final survivor event. Legal means prefix freedom, exclusion of the empty word and the prescribed cardinality bound at every depth. The target law may be noncomputable.
+
+**Theorem 1.1 (Finite clopen comparison with the second original law's tail).**
+
+$$\forall (A:\operatorname{Type}\left(\right)), [\operatorname{Fintype}\left(A\right)] [\operatorname{DecidableEq}\left(A\right)] [\operatorname{MeasurableSpace}\left(A\right)] [\operatorname{MeasurableSingletonClass}\left(A\right)] \forall (\delta:\operatorname{Real}\left(\right)), \forall (q_{0}:\operatorname{List}\left(A\right) \to A \to \operatorname{Real}\left(\right)), \forall (q_{1}:\operatorname{List}\left(A\right) \to A \to \operatorname{Real}\left(\right)), \forall (h_{0}:\operatorname{NormalizedRows}\left(q_{0}\right)), \forall (h_{1}:\operatorname{NormalizedRows}\left(q_{1}\right)), \forall (c:\operatorname{Real}\left(\right)), \forall (b:\operatorname{Nat}\left(\right) \to \operatorname{Nat}\left(\right)), \forall (F:\operatorname{Set}\left(\operatorname{List}\left(A\right)\right)), \forall (a:\operatorname{Real}\left(\right)), \forall (N:\operatorname{Nat}\left(\right)), ((0 < \delta) \land (2 \leq \operatorname{card}\left(A\right)) \land (\delta \leq \frac{1}{\operatorname{card}\left(A\right)}) \land (\forall (v:\operatorname{List}\left(A\right)), \forall (z:A), \delta \leq \operatorname{apply}\left(q_{1}, v, z\right)) \land (0 \leq c) \land (\forall (v:\operatorname{List}\left(A\right)), \forall (z:A), \operatorname{apply}\left(q_{0}, v, z\right) \leq c \operatorname{apply}\left(q_{1}, v, z\right)) \land (\operatorname{Legal}\left(b, F\right)) \land (0 \leq a) \land (\forall (k:\operatorname{Nat}\left(\right)), (N < k) \Rightarrow (\operatorname{apply}\left(b, k\right) \leq (a)^{k})) \land (a (1 - (\operatorname{card}\left(A\right) - 1) \delta) < 1)) \Rightarrow (\operatorname{toReal}\left(\operatorname{apply}\left(\operatorname{trajectoryLaw}\left(q_{0}, h_{0}\right), \operatorname{compl}\left(\operatorname{deletedSet}\left(F\right)\right)\right)\right) \leq (c)^{N} \operatorname{toReal}\left(\operatorname{apply}\left(\operatorname{trajectoryLaw}\left(q_{1}, h_{1}\right), \operatorname{compl}\left(\operatorname{deletedSet}\left(F\right)\right)\right)\right) + \frac{a (1 - (\operatorname{card}\left(A\right) - 1) \delta) (c a (1 - (\operatorname{card}\left(A\right) - 1) \delta))^{N}}{1 - a (1 - (\operatorname{card}\left(A\right) - 1) \delta)})$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/Observer/ProbabilisticClosure/TrajectoryLaws/EffectiveRationalTransportTail.historical_survivor_transport` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+Write r = 1 - (card(A)-1) delta and rho = a r. The row comparison is a comparison of entries at the same actual history. Only the second law needs the common lower bound delta. Its normalization then bounds each entry above by r. Both laws are the actual normalized trajectory measures.
+
+At depth N, take all words without a forbidden ancestor of length at most N. Their cylinders are disjoint and their union is exactly the finite survivor clopen. The row comparison bounds each of those cylinder masses by c to the power N times its mass under the second law. Group the remaining forbidden words by their actual lengths N+1+k. The budget and the path bound give a geometric majorant rho to the power N+1+k under that same second law. Subadditivity and summation supply its original-law tail.
+
+The finite survivor is contained in the union of the final survivor and the remaining deletion event. Combining these two comparisons gives the displayed full-law inequality. The proof assumes neither infinite-law absolute continuity nor a positive survivor gap. Horizon zero, empty codes and zero budgets are included. The inequality itself does not require c rho to be less than one; that extra condition is used by the searches.
+
+**Definition 1.2 (General-budget and one-word rational certificates).**
+
+$$\forall (d:\operatorname{Nat}\left(\right)), \forall (\delta:\operatorname{Rat}\left(\right)), \forall (b:\operatorname{Nat}\left(\right) \to \operatorname{Nat}\left(\right)), \forall (nu:\operatorname{Rat}\left(\right) \to \operatorname{Nat}\left(\right)), \forall (oneWord:\operatorname{Bool}\left(\right)), ((2 \leq d) \land (0 < \delta) \land (\delta \leq \frac{1}{d}) \land (\forall (t:\operatorname{Rat}\left(\right)), (1 < t) \Rightarrow (\forall (n:\operatorname{Nat}\left(\right)), (\operatorname{apply}\left(nu, t\right) \leq n) \Rightarrow (\operatorname{apply}\left(b, n\right) \leq (t)^{n}))) \land (\operatorname{budgetSum}\left(d, b\right) < 1) \land ((oneWord = \operatorname{true}\left(\right)) \Rightarrow ((3 \leq d) \land (\forall (n:\operatorname{Nat}\left(\right)), \operatorname{apply}\left(b, n\right) = 1)))) \Rightarrow (\operatorname{let} \gamma:= \operatorname{value}\left(\operatorname{qFreeHistoricalRationalCertificate}\left(d, \delta, b, nu, oneWord\right)\right), (0 < \gamma) \land (\forall (q:\operatorname{List}\left(\operatorname{Fin}\left(d\right)\right) \to \operatorname{Fin}\left(d\right) \to \operatorname{Real}\left(\right)), \forall (h:\operatorname{NormalizedRows}\left(q\right)), (\forall (v:\operatorname{List}\left(\operatorname{Fin}\left(d\right)\right)), \forall (z:\operatorname{Fin}\left(d\right)), \delta \leq \operatorname{apply}\left(q, v, z\right)) \Rightarrow (\forall (F:\operatorname{Set}\left(\operatorname{List}\left(\operatorname{Fin}\left(d\right)\right)\right)), (\operatorname{Legal}\left(b, F\right)) \Rightarrow (\gamma \leq \operatorname{toReal}\left(\operatorname{apply}\left(\operatorname{trajectoryLaw}\left(q, h\right), \operatorname{compl}\left(\operatorname{deletedSet}\left(F\right)\right)\right)\right)))) \land (\gamma \leq \operatorname{historicalGap}\left(\delta, b\right)) \land ((oneWord = \operatorname{true}\left(\right)) \Rightarrow (\forall (p:\operatorname{Fin}\left(d\right) \to \operatorname{Real}\left(\right)), ((\forall (z:\operatorname{Fin}\left(d\right)), \delta < \operatorname{apply}\left(p, z\right)) \land (\operatorname{coordinateSum}\left(p\right) = 1)) \Rightarrow (\gamma < \operatorname{eta}\left(p\right)))))$$
+
+*Formalization.* `D5/S3/Observer/ProbabilisticClosure/TrajectoryLaws/EffectiveRationalTransportTail.q_free_historical_rational_certificate` (`✓ std3`).
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+The finite alphabet is represented by Fin(d) with its full discrete measurable structure. Runtime inputs are the natural d, positive rational delta at most 1/d, and total functions b and nu supplied by executable programs. The modulus contract is that b(n) is at most t to the power n whenever rational t is greater than one and n is at least nu(t). The Boolean oneWord selects the general branch when false. B is the real sum of b(n+1)/d to the power n+1. Strict B less than one is a promise, not a decision test.
+
+In the general branch choose r = 1-(d-1)delta, a = (1+1/r)/2, rho = a r, c = (1+1/rho)/2 and J = floor(1/((c-1)delta))+1. These are exact rational operations and a natural floor. They satisfy a,c greater than one, rho and c rho less than one, and 1+1/(J delta) less than c.
+
+The initial search tests N at least nu(a) and B(N)+(a/d) to the power N+1 divided by (1-a/d) less than one, where B(N) is the finite budget sum. The positive complement is gamma(0). Each of J subsequent steps searches N at least max(1,nu(a)) until rho(c rho) to the power N divided by (1-rho) is less than gamma/2, then replaces gamma by gamma divided by 2 c to the power N. Nat.find carries out these decidable exact rational searches; its existence proofs are erased from execution.
+
+The initial upper bounds converge to B and bound it above, so the strict promise terminates the first search. Geometric decay terminates each later search. For the proof, interpolate the rows by Q(j,v,z)=(1-j/J)/d+(j/J)q(v,z). Their normalization, lower bounds and successive row ratios are derived from the original row hypotheses. Induction using actual survivor transport reaches Q(J)=q. The frozen attained extremum converts the universal survivor bound to historicalGap.
+
+In both branches the returned rational is strictly positive and at most the joint historical gap. No q, forbidden code, probability-name oracle or positive-gap assumption enters its runtime input. The input functions are executable higher-order Lean values; this declaration does not supply an encoding of arbitrary machine indices or a separate Partrec index theorem. It asserts no speed bound or decision outside the promise.
+
+The true branch retains the one-word construction of theorem 5.3.2 in the same certificate definition. Its contract requires d at least three and b(n)=1. Put delta=ell; the source inputs have 0<ell<1/d and ell<p(z) at every coordinate, with p summing to one. The formal construction also permits ell=1/d when only the non-strict historical conclusion is requested. This branch sets a=1, rho=r and c=1+ell, so c rho=1-(d-2)ell-(d-1)ell squared is less than one. Its same floor choice of J is greater than ell to the power minus two. Initial gamma is exactly (d-2)/(d-1). Each depth search starts at one and uses r(rc) to the power N divided by 1-r. The recurrence is unchanged and the output is exactly gamma(J)/2. This path does not query b or nu; they can be fixed to the constant programs one and zero.
+
+For iid p with all coordinates greater than ell, prefix freedom makes the actual deleted cylinders disjoint. The frozen exact cylinder law identifies their sum with codeMass(p,F). The frozen iid optimizer attains its supremum. Thus the halved output is strictly less than eta(p), defined as one minus the supremum of real code masses over Legal(constant one,F). The proof uses the original target iid law; its interpolation is confined to the erased soundness proof.
+
+## References
+
+- Truth anchor: `D5/S3/Observer/ProbabilisticClosure/TrajectoryLaws/EffectiveRationalTransportTail.historical_survivor_transport`
+- Truth anchor: `D5/S3/Observer/ProbabilisticClosure/TrajectoryLaws/EffectiveRationalTransportTail.q_free_historical_rational_certificate`
+- Dependency: [D5/S0/Computability/Coding/DepthBudgetIidGreedyOptimality](../../../../S0/Computability/Coding/DepthBudgetIidGreedyOptimality.md)
+- Dependency: [D5/S3/Observer/ProbabilisticClosure/TrajectoryLaws/HistoricalDepthBudgetJointExtremum](HistoricalDepthBudgetJointExtremum.md)

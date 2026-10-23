@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:f4f79e8a4dfb3ce1c22278cb4f8689f88c02dbf75ff696461b3e34b01779cc2e
+  normalized_sha256: sha256:f4f79e8a4dfb3ce1c22278cb4f8689f88c02dbf75ff696461b3e34b01779cc2e
+cas_ref: sha256:f4f79e8a4dfb3ce1c22278cb4f8689f88c02dbf75ff696461b3e34b01779cc2e
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 清单片段“未声明副作用”仅列举主题、接口组成或考虑维度；本片段不陈述性质、存在性或推论。
+    previous_atom_id: b8a9620f0228b40a76ce337433325ad89d14e9765ffc0dae241940f23a90b9d3
+    next_atom_id: 40346018478bc92961ee0f12a4a65d3e5aba5e2d75737e6246ee0aae0de430bf

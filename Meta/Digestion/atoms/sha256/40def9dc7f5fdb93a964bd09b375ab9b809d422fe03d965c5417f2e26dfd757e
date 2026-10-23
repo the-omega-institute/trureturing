@@ -1,0 +1,20 @@
+**Lemma 2.2 (finite partitions of first exits).** For any coherent profile $Q$, let $q(n,j)$ be the probability of prefix $B^n j$, $n\ge0$, $j\in\{0,1,3\}$, and put $q_\infty=\lim_{H\to\infty}Q^H(B^H)$. These numbers form a normalized countable distribution. The TV of the first-exit distribution of any two profiles is at most their profile distance. If both profiles exit almost surely and, conditional on each exit prefix $B^n j$, have the same complete continuation, their first-exit TV equals their profile distance.
+
+**Proof (2.2).** Coherence gives
+
+$$
+\sum_{n=0}^{H-1}\sum_j q(n,j)+Q^H(B^H)=1.
+$$
+
+The survivor probability decreases, so its limit exists and the identity yields normalization. Coarsen an $H$-word into exits before $H$ and one survivor atom. Summing probabilities over fibers contracts the half-$\ell^1$ norm by the triangle inequality. As $H$ increases, the exit sums converge absolutely, and the survivor difference tends to the difference of the infinity masses. Thus countable first-exit TV is bounded by the profile distance.
+
+Under common conditional continuations, partition full words into $B^n j$ branches and $B^H$. On each exit branch the difference is its prefix-coefficient difference times one normalized continuation law. Its $\ell^1$ contribution is exactly the absolute coefficient difference. Hence
+
+$$
+\operatorname{TV}(L^H,Q^H)
+=\frac12\left[\sum_{n<H,j}|l(n,j)-q(n,j)|
++|L^H(B^H)-Q^H(B^H)|\right].
+$$
+
+Marginalization shows finite-horizon TV is nondecreasing in $H$. If both survivor masses tend to zero, its limit is exactly the full exit TV. The infinity atom is a limit used for analysis, never an acquired infinite history. $\square$
+

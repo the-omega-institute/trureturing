@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:0679cf9d198e0ebaaed9613c73019c828b0132a324bc506ffa4051ac216af8bb
+  normalized_sha256: sha256:0679cf9d198e0ebaaed9613c73019c828b0132a324bc506ffa4051ac216af8bb
+cas_ref: sha256:0679cf9d198e0ebaaed9613c73019c828b0132a324bc506ffa4051ac216af8bb
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 定义 46.1　辐射对落入历史的记忆能力只引入对象、记号或适用条件；附文解释这些记号的范围，不另断言需证明的性质。
+    previous_atom_id: 92e347292ed2268462c92de2e2202ed8009c7008b8abc40a34d1909945fabe8d
+    next_atom_id: 1fb6e78a2f4c05f8abee141f1e7983e806493ac0de6eac1a1aa0b316fe84d373

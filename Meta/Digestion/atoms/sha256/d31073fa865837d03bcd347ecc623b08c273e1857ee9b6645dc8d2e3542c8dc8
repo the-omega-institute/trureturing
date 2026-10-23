@@ -1,0 +1,6 @@
+**来源 1060.1（边界几何与普通推导）。** 非负秩二模型的四分支、闭性、六类切片代数边界及零格边界覆盖，依据 Allman、Rhodes、Sturmfels、Zwiernik，[*Tensors of Nonnegative Rank Two*](https://arxiv.org/abs/1305.0539)，本批核对 v1 的定理 1.1、1.2、第二节的二元三阶特例及边界证明。文献的模型成员和边界结论并未提供本批全变差投影公式。
+
+第 1043 节给出带正格和严格其余面条件的局部残差限制；第 1044–1048 节继续本卷已有实际二来源子族，准确归约其有限代数最小值并比较三格、四格构造；第 1049–1054 节用共同重叠和面乘积约束给出全局下界、闭包奇偶端点的准确距离与内部渐近分支排除。这些普通解析推导与文献工具不作原创申报。未将其他目标下的边界优化公式迁移为当前全变差答案。
+
+项目源码对应为 `D5/S3/Observer/MetricGeometryLaws/ClosedConvexDistanceWitnessDuality.lean` 与 `D5/S3/ConceptDynamics/Identifiability/IdentifiabilityEstimabilityComputation.lean`。前者的紧凸假设、后者的目标纤维条件在第 1055、1057 节分别保留；读取源码不等于当前编译了本批应用。
+

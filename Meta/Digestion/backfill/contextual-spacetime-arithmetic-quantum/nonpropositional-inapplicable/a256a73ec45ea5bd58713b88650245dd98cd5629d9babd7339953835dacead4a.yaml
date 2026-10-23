@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:a256a73ec45ea5bd58713b88650245dd98cd5629d9babd7339953835dacead4a
+  normalized_sha256: sha256:a256a73ec45ea5bd58713b88650245dd98cd5629d9babd7339953835dacead4a
+cas_ref: sha256:a256a73ec45ea5bd58713b88650245dd98cd5629d9babd7339953835dacead4a
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 定义 236.1 只引入临界矩阵系数、二次型比值及单截面的实路径长度。
+    previous_atom_id: 88a7d2be23601f085c0b795c1ab53888a60fe1d5d09a667a968a167185384306
+    next_atom_id: dee14ffd35f77f6501e97fcc45d338685648758e8667f42d73aa443e360b9a0e

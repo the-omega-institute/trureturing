@@ -1125,3 +1125,303 @@ I0^j\longrightarrow V_j\longrightarrow\text{迹、秩、差异纤维}
 | A-L7 | Mateus Araújo、Adrien Feix、Fabio Costa、Časlav Brukner，*Quantum circuits cannot control unknown operations*，arXiv:1309.7976，2014-02-03 修订正文，[论文](https://arxiv.org/abs/1309.7976v2)，New Journal of Physics 16, 093026 (2014), [DOI](https://doi.org/10.1088/1367-2630/16/9/093026) | 任意未知酉在标准黑盒电路内的一次调用不能普遍构造受控酉；物理子空间实现可给额外信息，未禁止本卷已供应比较门 |
 
 ## 追加锚（本行以下为增补区）
+
+## 24. 吸收秩父图的定量世代
+
+**定义 A-24.1（秩父图与吸收根）。** 对素数 $p$，以 $z(p)$ 表示第九节的首次秩 $r_p$。原秩父图以全体素数为顶点，边 $p\to q$ 当且仅当 $q$ 为 $z(p)$ 的素因子。令 $B=\{2,3,5\}$；删除所有起点属于 $B$ 的边，所得有向图称为吸收秩父图。路径长度为边数，$g(p)$ 为从 $p$ 出发的有向路径的最大长度。第十二节已给有限秩闭包，此处的 $g$ 只度量该依赖关系的高度。素因子父关系有 Luca–Tron §4 的 Pratt–Fibonacci trees 先例，见[文献注](../../../Library/Factorization/lucatron2015selffibonacci.md)；本定义按素数值识别重复节点并吸收 $B$，不把该父关系作为新构造。
+
+**定理 A-24.2（世代的对数界；`repo-derived`）。** 吸收秩父图无有向环，每个顶点的后继闭包有限，$g$ 良定义且满足
+
+```math
+g(p)=0\quad(p\in B),\qquad
+g(p)=1+\max_{q\mid z(p),\ q\ {\rm prime}}g(q)\quad(p>5),
+```
+
+```math
+2^{g(p)}\le p-1,\qquad
+g(p)\le\lfloor\log_2(p-1)\rfloor.
+```
+
+原秩父图的简单有向环只有 $2\to3\to2$ 和 $5\to5$。该图容许一个顶点有多个父点，故一般不是树。
+
+**证明。** 所用经典秩整除关系为本卷 A-8.2、A-9.2 的
+
+```math
+z(p)\mid p-\varepsilon_p,\qquad
+\varepsilon_p=(p/5)\in\{-1,1\}\qquad(p\ne2,5),
+```
+
+这里 $(p/5)$ 为 Legendre 符号；其文献背景见 A-L3、A-L4。Luca–Tron Theorem 2.2 的证明也已使用大于 $5$ 的最大素因子严格下降；本条的新增结论是吸收图的定量高度界。
+
+若 $p>5$，则 $p-\varepsilon_p$ 是大于 $2$ 的偶数。因此其任一素因子 $q$ 至多为 $(p-\varepsilon_p)/2$，从而
+
+```math
+q\mid z(p)\quad\Longrightarrow\quad
+q\le\frac{p+1}{2}<p,
+\qquad q-1\le\frac{p-1}{2}.
+```
+
+在非根点出发的每条边上，素数严格减小。每个点只有有限多个父点，且所有后继都不大于起点，所以后继闭包有限，吸收图无环，最大路径长度存在。$z(p)>1$，故 $p>5$ 时父点集合非空，最大路径长度满足所述递推式。
+
+对素数的大小作强归纳。根点处 $2^{g(p)}=1\le p-1$。非根点选取达到最大世代的父点 $q$，则
+
+```math
+2^{g(p)}=2\,2^{g(q)}\le2(q-1)\le p-1.
+```
+
+取以 $2$ 为底的对数，得到整数高度界。
+
+最后，A-9.4 给出 $z(2)=3$、$z(3)=4$、$z(5)=5$。原图中根点只能在 $B$ 内转移，所有其余边严格下降，因此没有别的简单有向环。又由同表 $z(11)=10$、$z(31)=30$，$11$ 与 $31$ 都有父点 $2$ 和 $5$。吸收图的底层无向图因而含有圈 $2-11-5-31-2$，所以它也不是无向树；有向图本身仍无环。证毕。
+
+## 25. 首次秩的 AURIC 纤维与模五限制
+
+**定义 A-25.1（秩坐标）。** 对每个素数 $p$，唯一分解
+
+```math
+z(p)=2^{a_2(p)}3^{a_3(p)}5^{a_5(p)}7^{a_7(p)}E(p),
+\qquad \gcd(E(p),210)=1,
+```
+
+其中各 $a_r(p)$ 为非负整数，$E(p)$ 为正整数。定义
+
+```math
+X(p)=a_2(p)+a_7(p),\qquad
+Y(p)=a_5(p)+a_7(p),\qquad
+Z(p)=a_3(p),\qquad \kappa(p)=a_7(p).
+```
+
+此处的 $(X,Y,Z)$ 对应[《Robin 约数尺度几何》§6](https://github.com/the-omega-institute/trureturing/blob/53e40fe0314f4d531ab10a37f3e30b859034b2cb/docs/develop/theory/AURIC_FIB_ROBIN_DIVISOR_SCALE_GEOMETRY.md)的 $(u,w,v)$，采用低位、高位、中位的次序。纤维指保持 $(X,Y,Z)$ 相同的素数集合；不要求 $E$ 相同，也不由这些坐标恢复 $E$。
+
+**命题 A-25.2（纤维较低隐坐标的剩余类；`repo-derived`）。** 若素数 $p_1,p_2$ 的 $(X,Y,Z)$ 相同，而 $\kappa(p_1)<\kappa(p_2)$，则
+
+```math
+a_5(p_1)\ge1,\qquad p_1\equiv1\pmod5.
+```
+
+该结论按 $\kappa$ 排序，不要求 $p_1<p_2$。
+
+**证明。** 由定义，对于任一实际坐标，
+
+```math
+0\le\kappa\le\min(X,Y),\qquad
+a_2=X-\kappa,\quad a_5=Y-\kappa,\quad a_3=Z.
+```
+
+故
+
+```math
+a_5(p_1)=Y-\kappa(p_1)
+\ge\kappa(p_2)-\kappa(p_1)\ge1.
+```
+
+若 $p_1=2$，则 $z(2)=3$，与 $5\mid z(p_1)$ 矛盾。若 $p_1=5$，则 $z(5)=5$，于是 $X=0$，迫使同纤维全部 $\kappa=0$，仍矛盾。因此可应用 A-8.2 的经典秩整除关系，得
+
+```math
+5\mid z(p_1)\mid p_1-(p_1/5).
+```
+
+若 $(p_1/5)=-1$，则 $p_1\equiv-1\equiv4\pmod5$；但 $4$ 是模 $5$ 的非零平方，要求 $(p_1/5)=1$，矛盾。所以 $(p_1/5)=1$，且 $p_1\equiv1\pmod5$。
+
+以下只以具体参数说明本命题的条件与结论方向。A-9.4 的既有秩表中，$(11,13)$ 和 $(41,29)$ 分别给出同一纤维 $(X,Y,Z)=(1,1,0)$ 和 $(2,1,0)$，两对均为 $\kappa=0,1$；这些是该表在 A-25.1 下的直接代入。两对的素数大小次序相反，因而 $\kappa$ 的次序不能改写成素数的大小次序。
+
+同一命题也有两个隐坐标均非零的实例：$71,97$ 的秩分别为 $70,49$，均落在 $(X,Y,Z)=(2,2,0)$，而 $\kappa=1,2$。所需的具体秩在此作为本命题的中间步骤证明。$71,97$ 都不被不超过其平方根的素数 $2,3,5,7$ 整除，所以均为素数。Fibonacci 递推及加倍恒等式给出以下整数余数：
+
+| 模数 | $F_7$ | $F_{10}$ | $F_{14}$ | $F_{24}$ | $F_{25}$ | $F_{35}$ | $F_{36}$ |
+| --- | --- | --- | --- | --- | --- | --- | --- |
+| $71$ | $13$ | $55$ | $22$ | $5$ | $49$ | $21$ | $46$ |
+| $97$ | $13$ | $55$ | $86$ | $2$ | $44$ | $49$ | $15$ |
+
+具体地，$F_7=13$、$F_{10}=55$、$F_{14}=377$、$F_{24}=46368$、$F_{25}=75025$、$F_{35}=9227465$、$F_{36}=14930352$；这些整数由 $F_0=0,F_1=1,F_{r+2}=F_{r+1}+F_r$ 给出。于是
+
+```math
+F_{70}=F_{35}(2F_{36}-F_{35})
+\equiv21(2\cdot46-21)=21\cdot71\equiv0\pmod{71},
+```
+
+```math
+F_{49}=F_{25}^2+F_{24}^2
+\equiv44^2+2^2=20\cdot97\equiv0\pmod{97}.
+```
+
+由 A-9.2，$z(71)\mid70$。若不等于 $70$，它必整除 $70/\ell$，其中某个素数 $\ell\mid70$。但 $F_{35},F_{14},F_{10}$ 模 $71$ 均非零，排除 $\ell=2,5,7$。故 $z(71)=70$。由已证的 $F_{49}\equiv0\pmod{97}$ 及 A-9.2，$z(97)\mid49$，而 $F_7\not\equiv0\pmod{97}$，故 $z(97)=49$。
+
+分解 $70=2\cdot5\cdot7$、$49=7^2$ 并代入 A-25.1，即得所述共同坐标及两个 $\kappa$。证毕。
+
+## 26. 固定秩素因子支撑的计数界
+
+**定义 A-26.1（固定支撑的秩族）。** 固定非空有限素数集 $S$，记 $s=|S|$，并令
+
+```math
+\mathcal H_S=\left\{\prod_{r\in S}r^{e_r}:e_r\in\mathbb Z_{\ge0}\right\},
+\qquad
+N_S(x)=\#\{p\le x:p\text{ 为素数且 }z(p)\in\mathcal H_S\}.
+```
+
+等价地，$N_S(x)$ 要求 $\operatorname{supp}z(p)\subseteq S$；$1\in\mathcal H_S$。以下 $\log$ 为自然对数，$O_S$ 的常数只依赖固定的 $S$。
+
+**定理 A-26.2（固定秩支撑的平方根计数界；`repo-derived`）。** 当 $x\to\infty$ 时，
+
+```math
+N_S(x)=O_S\!\left(\sqrt{x}(\log x)^{s-1}\right).
+```
+
+因此此素数集合在全部素数中具有相对自然密度零，即 $N_S(x)/\pi(x)\to0$。
+
+**证明。** 先估计本定义中的指数格点。固定 $r_0\in S$。若 $d\in\mathcal H_S\cap(t,2t]$，$t\ge1$，则除 $r_0$ 外每个指数均有 $O_S(1+\log t)$ 种选择。固定这些指数后，$e_{r_0}\log r_0$ 落在长度 $\log2$ 的区间内，故剩余指数只有有界多个选择。因此
+
+```math
+\#(\mathcal H_S\cap(t,2t])
+=O_S((1+\log t)^{s-1}).\tag{26.1}
+```
+
+该论证也包括 $s=1$：此时不需要预先选择任何指数。按二进区间求和，得到对 $y\ge2$ 的三个界
+
+```math
+\sum_{\substack{d\le y\\d\in\mathcal H_S}}d
+=O_S(y(1+\log y)^{s-1}),\tag{26.2}
+```
+
+```math
+\sum_{\substack{d>y\\d\in\mathcal H_S}}\frac1d
+=O_S\!\left(\frac{(1+\log y)^{s-1}}y\right),\tag{26.3}
+```
+
+```math
+\#(\mathcal H_S\cap[1,y])=O_S((1+\log y)^s).\tag{26.4}
+```
+
+为明确求和方向，(26.2) 在 $(y/2^{j+1},y/2^j]$ 上用 $d\le y/2^j$ 与 (26.1)，再单独计入 $d=1$；所得几何级数收敛。(26.3) 在 $(2^jy,2^{j+1}y]$ 上用 $1/d\le2^{-j}/y$；其总和由
+
+```math
+\frac{(1+\log y)^{s-1}}y
+\sum_{j\ge0}2^{-j}(1+j\log2)^{s-1}
+```
+
+的常数倍控制。(26.4) 也可由每个指数至多 $\log y/\log r$ 直接得到。
+
+现在固定 $2\le y\le x$，按 $z(p)\le y$ 和 $z(p)>y$ 分开计数。小秩部分中的每个不同素数都整除正整数
+
+```math
+P_S(y)=\prod_{\substack{d\le y\\d\in\mathcal H_S}}F_d.
+```
+
+因为 $F_d\le2^d$（由递推归纳即得），一个有 $k$ 个不同素因子的正整数至少为 $2^k$，所以小秩素数的数目不超过
+
+```math
+\frac{\log P_S(y)}{\log2}
+\le\sum_{\substack{d\le y\\d\in\mathcal H_S}}d
+=O_S(y(1+\log y)^{s-1}).\tag{26.5}
+```
+
+若乘积等于 $1$，其素因子集合为空，同一不等式仍成立。
+
+大秩部分先单独计入至多两个例外素数 $2,5$。对其余素数，A-8.2 的经典整除关系给出
+
+```math
+d=z(p)\mid p-(p/5),\qquad d\le x+1,\qquad p\equiv1\text{ 或 }-1\pmod d.
+```
+
+每个固定 $d$ 的这两个整数剩余类在 $[1,x]$ 内至多有 $2x/d+2$ 个元素；以整数总数上界素数数目，利用 (26.3)–(26.4)，大秩部分至多为
+
+```math
+2+\sum_{\substack{y<d\le x+1\\d\in\mathcal H_S}}
+\left(\frac{2x}{d}+2\right)
+=O_S\!\left(\frac{x}{y}(1+\log y)^{s-1}+(1+\log x)^s\right).\tag{26.6}
+```
+
+合并 (26.5)–(26.6)，取 $y=\sqrt x$，并用 $\log x=O(\sqrt x)$，即得所述计数界。这里没有把不同秩的可达性当作共同可达，也没有使用等差数列素数渐近。
+
+最后引用经典的 $\pi(x)>x/\log x$（$x\ge17$），来源为 Rosser–Schoenfeld，*Approximate formulas for some functions of prime numbers*，Corollary 1、式 (3.5)，见[文献注](https://github.com/the-omega-institute/trureturing/blob/53e40fe0314f4d531ab10a37f3e30b859034b2cb/Library/Arith/rosser1962approximate.md)。于是
+
+```math
+0\le\frac{N_S(x)}{\pi(x)}
+=O_S\!\left(\frac{(\log x)^s}{\sqrt x}\right)\longrightarrow0.
+```
+
+该经典素数下界仅用于相对密度的最后一步；平方根计数界由上述秩分桶与固定支撑指数格点估计给出。证毕。
+
+## 追加锚（本行以下为增补区）
+
+## 27. 共同指标的三十五周期联合方向与四十周期角色
+
+**定义 A-27.1（共同周期来源）。** 对有限非空素数集 $P$，复用 A-9.1–A-9.2 的首次秩 $r_p$，取 $\Lambda=\operatorname{lcm}_{p\in P}r_p$。本章实际样本是同一个 $m\in\{1,\ldots,\Lambda\}$，初始律为均匀律；置 $A_p(m)=\mathbf1_{r_p\mid m}$。分别抽样两个指标或任意倾斜后的律不继承下面的均匀计数结论。角色采用 A-9.2 的低、中、高 Fibonacci 整除及 Lucas 整除；$O$ 表示四个非空角色均未命中，不是恒真事件 $p\mid0$。
+
+**定理 A-27.2（秩三十五的联合信息及其固定条件 Fisher 族）。** 令 $N=141961$。有 $F_{35}=5\cdot13\cdot N$，$N$ 是素数、$r_N=35$，且对所有 $m\ge0$，
+
+$$
+A_N(m)=A_5(m)A_{13}(m).
+$$
+
+在定义 A-27.1 的均匀三十五周期，$(A_5,A_{13})$ 的四格 $00,10,01,11$ 大小为 $(24,6,4,1)$。完整联合记录决定 $A_N$，只有两个边际均值则不能决定它。其三参数倾斜给三维四结果饱和族，提升到三十五原子后条件律固定、Fisher 信息完全相同。
+
+证明。Fibonacci 递推给整数分解。以下 Lucas–Pocklington 是本实例的素性中间工具，采用 Menezes–van Oorschot–Vanstone，*Handbook of Applied Cryptography*，§4.3.2 Fact4.40 的完整 $N-1$ 分解特例。$N-1=2^3\cdot3\cdot5\cdot7\cdot13^2$，取 $g=31$。逐次平方模 $N$ 给 $g^{N-1}\equiv1$，而指数 $(N-1)/q$ 对 $q=2,3,5,7,13$ 的余数依次为
+
+$$
+141960,\quad98230,\quad33279,\quad46276,\quad69566.
+$$
+
+每个余数减一与 $N$ 的 gcd 都为一。任取素因子 $\ell\mid N$，$g$ 在模 $\ell$ 的阶整除 $N-1$，上述 gcd 条件使每个 $q$ 的指数不能减少，故阶为 $N-1\le\ell-1$，迫使 $\ell=N$，证明素性。依 A-9.2，$r_N\mid35$；其真因子为 $1,5,7$，相应 Fibonacci 数 $1,5,13$ 均不被 $N$ 整除，故 $r_N=35$。A-9.4 给 $r_5=5,r_{13}=7$，互素使秩事件的乘积正是秩三十五事件。
+
+对任意定义 A-27.1 的秩对 $r,s>1$，共同周期中的倍数计数给
+
+$$
+\mathbb EA_r=1/r,\quad \mathbb EA_rA_s=1/\operatorname{lcm}(r,s),\quad
+\operatorname{Cov}(A_r,A_s)=\frac{\gcd(r,s)-1}{rs}.
+$$
+
+置 $H_r=(rA_r-1)/\sqrt{r-1}$，其内积为 $(\gcd(r,s)-1)/\sqrt{(r-1)(s-1)}$。经典 totient 除数分解 $\sum_{d\mid n}\varphi_E(d)=n$ 将此 Gram 实现为 $v_r(d)=\sqrt{\varphi_E(d)/(r-1)}\mathbf1_{d\mid r}$（$d\ge2$）。等式由按 gcd 分组 $1,\ldots,n$ 证明；背景见 H. J. S. Smith，*On the Value of a Certain Arithmetical Determinant*，DOI [10.1112/plms/s1-7.1.208](https://doi.org/10.1112/plms/s1-7.1.208)。本实例明确给
+
+$$
+v_{35}=\frac{2e_5+\sqrt6e_7+2\sqrt6e_{35}}{\sqrt{34}},\qquad
+H_{35}=\frac{2H_5+\sqrt6H_7+2\sqrt6H_5H_7}{\sqrt{34}}.
+$$
+
+后式清根号后是 $35AB-1=(5A-1)+(7B-1)+(5A-1)(7B-1)$；独立且中心化使三个右侧方向正交归一。$AB$ 不在 $\operatorname{span}(1,A,B)$：在 $00,10,01$ 三格评价迫使全部系数零，而 $11$ 格矛盾。按四格赋严格正律 $(49,11,7,3)/70$ 与 $(47,13,9,1)/70$，两者均值同为 $(1/5,1/7)$，联合均值却是 $3/70,1/70$。各格内均匀提升得到两份真实三十五指标原子律。若保留同样本 $(A,B)$，$AB$ 是确定函数，$\sigma(A,B,AB)=\sigma(A,B)$；上述遗漏相对于边际接口而非完整联合记录。
+
+在同一指标域以特征 $(A,B,AB)$ 倾斜，有限和直接给
+
+$$
+\Psi(\alpha,\beta,\gamma)=\log\frac{24+6e^\alpha+4e^\beta+e^{\alpha+\beta+\gamma}}{35},\quad
+P_\theta(m)=q_{ab}/n_{ab},\quad n=(24,6,4,1).
+$$
+
+任意正四格 $q$ 唯一对应
+
+$$
+\alpha=\log(4q_{10}/q_{00}),\quad\beta=\log(6q_{01}/q_{00}),\quad
+\gamma=\log\frac{q_{11}q_{00}}{q_{10}q_{01}}.
+$$
+
+条件 $P(m\mid a,b)=1/n_{ab}$ 固定，故 $\sum_m dP(m)^2/P(m)=\sum_{ab}dq_{ab}^2/q_{ab}$。三维族不等于全部三十五原子律的三十四维单纯形。有限指数族的经典工具采用 Wainwright–Jordan，*Graphical Models, Exponential Families, and Variational Inference*，出版版 §3.2、Propositions3.1–3.2，DOI [10.1561/2200000001](https://doi.org/10.1561/2200000001)；这里固定有限支持、参数域 $\mathbb R^3$、全部正权重及四格仿射独立实际供应其条件。
+
+在 $\gamma=0$ 时分子因式分解为 $(4+e^\alpha)(6+e^\beta)$。以 $a=e^\alpha/(4+e^\alpha),b=e^\beta/(6+e^\beta)$ 表示，独立二维子族度量为
+
+$$
+ds^2=\frac{da^2}{a(1-a)}+\frac{db^2}{b(1-b)}=du^2+dv^2,
+\quad u=2\arcsin\sqrt a,\quad v=2\arcsin\sqrt b.
+$$
+
+完整正四格的 $2\sqrt q$ 则是半径二三球面的开正象限，截面曲率 $1/4$，采用本卷 A-2 与 Hidden C-4.6 的 Fisher 归一化。比较的是不同维子族。在零参数，直接协方差给
+
+$$
+g=\begin{pmatrix}4/25&0&4/175\\0&6/49&6/245\\4/175&6/245&34/1225\end{pmatrix},
+\quad \det g=576/1500625>0,
+$$
+
+第三方向的 Schur 余量为 $24/1225$。例如 $(e^\alpha,e^\beta,e^\gamma)=(2,3,5)$ 给 $q=(24,12,12,30)/78$，提升的条件仍固定为上述 $1/n_{ab}$。
+
+更一般，在完整 $\Lambda$ 周期以有限特征 $A_{r_i}$ 倾斜，有限微分给 Hessian 等于协方差和 Fisher。互异 $r_i>1$ 使其正定：若 $\sum c_iA_{r_i}=b$ 恒定，取 $m=1$ 得 $b=0$；按递增秩在 $m=r_j\le\Lambda$ 评价，整除关联矩阵下三角且对角一，故 $c_i=0$。重复秩时核恰为每个秩组内系数和零，秩为不同秩数。减少指标支持须重算仿射秩。$37,113$ 同秩十九，零参数二特征矩阵为 $(18/361)\left(\begin{smallmatrix}1&1\\1&1\end{smallmatrix}\right)$；这不合并整数素数身份或 Euler 因子 $37/36,113/112$。
+
+**命题 A-27.3（四十周期的实际角色与素数身份信息）。** 对 $7,11$ 的秩 $8,10$，共同均匀周期四十上的五角色联合计数按 $(O,L,T,R,J)$ 为
+
+$$
+\begin{pmatrix}12&2&2&2&2\\2&1&0&1&1\\4&0&1&0&0\\2&1&0&1&1\\4&0&1&0&0\end{pmatrix}.
+$$
+
+总和四十、正格十七，$TT$ 概率 $1/40\ne1/(8\cdot10)$。证明。复用 A-9.2 的整周期及半周期规则：秩八各角色的偶／奇类数为 $(2,2),(0,1),(1,0),(0,1),(1,0)$；秩十为 $(4,2),(0,1),(1,0),(0,1),(0,1)$。广义 CRT 仅拼接同奇偶的类，每格等于偶计数乘积加奇计数乘积，给矩阵。该 CRT 中间步骤由 $Mu-rv=b-a$ 的 Bézout 可解性得到：模 $M,r$ 的一对类可共同实现 iff 模 $\gcd(M,r)$ 相同，每个兼容对在模 lcm 中唯一；均匀完整余数独立 iff gcd 一，粗化角色不继承这个 iff，倾斜律也不继承均匀独立。
+
+单个奇素数的完整秩周期五角色概率是 $(r_p-3-\delta_p,1,1,1,\delta_p)/r_p$，$\delta_p=\mathbf1_{2\mid r_p}$，由 A-9.2–A-9.4 各相异命中类计数得到；$3,5,13,7$ 分别给 $(0,1,1,1,1)/4,(2,1,1,1,0)/5,(4,1,1,1,0)/7,(4,1,1,1,1)/8$。奇秩没有 $J$，二不在此互斥五角色合同内。Lucas 角色的编码 $xy$ 不是两个 Fibonacci 端点同时整除。
+
+对于另行声明的随机素数 $\{37,113\}$，概率 $(1/2,1/2)$ 及切向量 $(1,-1)$ 给素数 Fisher 四，而唯一秩十九的边际 Fisher 零。采用《信息逃逸与热力学作用》§8 的同源条件分解：固定有限正支持 $p_{st}=P_sQ_{t|s}$ 的 $dp$ 平方展开，交叉项由 $\sum_t dQ_{t|s}=0$ 消去，得 $g_{\rm joint}=\sum_s(dP_s)^2/P_s+\sum_sP_s\sum_t(dQ_{t|s})^2/Q_{t|s}$，等号 iff 本方向的全部条件变化零。具体 $p=(1,2,3,4)/10$、$dp=(1,-2,3,-2)/100$ 给 $7/1000=1/2100+137/21000$。这类随机素数源与一个指标同时命中多素数的事件源不同。
+
+## 追加锚（本行以下为增补区）

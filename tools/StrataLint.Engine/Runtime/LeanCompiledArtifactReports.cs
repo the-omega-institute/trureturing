@@ -17,8 +17,43 @@ public static class LeanCompiledArtifactReports
                 + "--output .lake/build/stratalint/raw-lean-report.json` first.");
         }
 
-        // Report validation reads managed modules, registration modules and their
-        // refutation claim sources. Other repository files are not report inputs.
+        return RawLeanReportArtifact.ReadFile(artifactPath, ReadSources(root));
+    }
+
+    public static LeanAxiomReport ReadScopedRepositoryFiles(
+        string repositoryRoot, IEnumerable<string> targetPaths, string? reportPath = null)
+    {
+        ArgumentException.ThrowIfNullOrWhiteSpace(repositoryRoot);
+        ArgumentNullException.ThrowIfNull(targetPaths);
+        var root = Path.GetFullPath(repositoryRoot);
+        var artifactPath = reportPath is null ? ResolveReportPath(root) : Path.GetFullPath(reportPath, root);
+        var scope = LeanReportScope.Create(ReadScopedSources(root), targetPaths.Select(RepoPath.CreateKnown));
+        var report = RawLeanReportArtifact.ReadFileForScope(artifactPath, scope, validateMaterials: true);
+        return LeanClosureValidator.Validate(scope.SourceSnapshot, report) switch
+        {
+            LeanValidationOutcome.Accepted => report,
+            LeanValidationOutcome.InfrastructureFailure failure => throw new InvalidOperationException(failure.Message),
+            _ => throw new InvalidOperationException("Unknown scoped Lean validation outcome."),
+        };
+    }
+
+    // Source indexing does not compile or extract unselected modules.
+    private static RepositorySnapshot ReadScopedSources(string root)
+    {
+        if (!File.Exists(Path.Combine(root, ReportProducerScope.InputManifest))) return ReadSources(root);
+        var projected = SnapshotDecoder.Decode(GitRepositorySnapshotReader.ReadCurrentProjection(root,
+            static path => path.EndsWith(".lean", StringComparison.Ordinal)
+                || path == ReportProducerScope.InputManifest));
+        return projected switch
+        {
+            SnapshotDecodeOutcome.Decoded scopedDecoded => scopedDecoded.Snapshot,
+            SnapshotDecodeOutcome.InfrastructureFailure scopedFailure => throw new InvalidOperationException(
+                "Repository snapshot for Lean inspection is unavailable: " + scopedFailure.Message),
+        };
+    }
+
+    private static RepositorySnapshot ReadSources(string root)
+    {
         var paths = new[] { "D5", "Reg" }
             .Select(directory => Path.Combine(root, directory))
             .Where(Directory.Exists)
@@ -35,9 +70,7 @@ public static class LeanCompiledArtifactReports
                 $"Repository snapshot for Lean inspection is unavailable: {failure.Message}");
         }
 
-        return RawLeanReportArtifact.ReadFile(
-            artifactPath,
-            ((SnapshotDecodeOutcome.Decoded)decoded).Snapshot);
+        return ((SnapshotDecodeOutcome.Decoded)decoded).Snapshot;
     }
 
     internal static string ResolveReportPath(string repositoryRoot)

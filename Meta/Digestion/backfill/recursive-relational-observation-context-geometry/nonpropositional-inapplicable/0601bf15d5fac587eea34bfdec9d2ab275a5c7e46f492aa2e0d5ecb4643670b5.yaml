@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:0601bf15d5fac587eea34bfdec9d2ab275a5c7e46f492aa2e0d5ecb4643670b5
+  normalized_sha256: sha256:0601bf15d5fac587eea34bfdec9d2ab275a5c7e46f492aa2e0d5ecb4643670b5
+cas_ref: sha256:0601bf15d5fac587eea34bfdec9d2ab275a5c7e46f492aa2e0d5ecb4643670b5
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 定义24.7只规定单个高位传感器和固定连续读取协议及其样点计数，不提出识别性或误差性质。
+    previous_atom_id: 0cb14d341bd74053acc3106b4841a7ccdea24bacec01dcad1828d4ca6459dfb9
+    next_atom_id: ad5e7c3cb6344cb69d18b64996860df998f24459a133675b978500830436d4bc

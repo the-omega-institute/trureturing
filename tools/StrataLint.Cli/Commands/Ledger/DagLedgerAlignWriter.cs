@@ -7,718 +7,128 @@ namespace StrataLint.Cli;
 
 internal static class DagLedgerAlignWriter
 {
-    private const string AliasNotice =
-        "ledger-append is an alias of ledger-align --add <module> "
-        + "(expand phase; removed at contract)\n";
-
-    internal static CommandResult Align(
-        string repositoryRoot,
-        IRepositoryGateway repository,
-        IReadOnlyList<string> arguments) =>
-        Execute(repositoryRoot, repository, arguments, appendAlias: false);
-
-    internal static CommandResult AppendAlias(
-        string repositoryRoot,
-        IRepositoryGateway repository,
-        IReadOnlyList<string> arguments) =>
-        Execute(repositoryRoot, repository, arguments, appendAlias: true);
-
-    private static CommandResult Execute(
-        string repositoryRoot,
-        IRepositoryGateway repository,
-        IReadOnlyList<string> arguments,
-        bool appendAlias)
+    internal static CommandResult Align(string root, IRepositoryGateway repository, IReadOnlyList<string> arguments)
     {
-        var prefix = appendAlias ? AliasNotice : string.Empty;
         try
         {
-            var options = ParseArguments(arguments, appendAlias);
-            var result = options.ListClosed
-                ? ListClosed(repository, options.ReportPath!)
-                : options.FromAccepted
-                ? MaterializeAccepted(repositoryRoot)
-                : AlignFromReport(repositoryRoot, repository, options, appendAlias);
-            return result with { Output = prefix + result.Output };
-        }
-        catch (Exception exception) when (
-            exception is ArgumentException
-                or FormatException
-                or IOException
-                or InvalidOperationException
-                or JsonException
-                or KeyNotFoundException
-                or UnauthorizedAccessException
-                or DagLedgerCommandPreparation.LeanReportUnusableException
-                or DagLedgerCommandPreparation.RepositoryUnavailableException)
-        {
-            return new CommandResult(
-                false,
-                prefix + RenderSummary(0, 0, 0, 0, 1),
-                DagLedgerAppendWriter.RenderFailure("LEDGER_ALIGN_FAILED", exception));
-        }
-    }
-
-    private static CommandResult ListClosed(IRepositoryGateway repository, string reportPath)
-    {
-        var truth = DagLedgerCommandPreparation.BuildTruth(repository,
-            new DagLedgerCommandPreparation.FileLeanReportSource(reportPath));
-        var paths = LeanTruthStates.Resolve(truth.Snapshot, truth.Lean)
-            .Where(static item => item.Value is TruthState.Closed)
-            .Select(static item => item.Key.Value)
-            .Order(StringComparer.Ordinal);
-        return new CommandResult(true, JsonSerializer.Serialize(paths) + "\n", string.Empty);
-    }
-
-    private static CommandResult MaterializeAccepted(string repositoryRoot)
-    {
-        var ledgerPath = LedgerPath(repositoryRoot);
-        var acceptedFiles = DagLedgerCommandPreparation.ReadLedgerDirectoryFiles(ledgerPath);
-        var accepted = LoadAcceptedPins(
-            LoadEvents(acceptedFiles, "accepted frozen ledger"));
-        var state = ReadStateCatalog(repositoryRoot);
-        var conflicts = accepted
-            .Where(entry => state.Records.TryGetValue(entry.DescriptorPath, out var record)
-                && record.StatementId != entry.StatementId)
-            .ToImmutableArray();
-        var stateBefore = state.Records.Count;
-        if (!conflicts.IsEmpty)
-        {
-            var output = RenderAcceptedCounts(
-                    accepted.Length,
-                    stateBefore,
-                    stateBefore,
-                    written: 0,
-                    conflicts.Length)
-                + RenderSummary(
-                    accepted.Length,
-                    changed: 0,
-                    added: 0,
-                    unchanged: accepted.Count(entry =>
-                        state.Records.TryGetValue(entry.DescriptorPath, out var record)
-                        && record.StatementId == entry.StatementId),
-                    conflicts.Length);
-            var names = string.Join(
-                ", ",
-                conflicts.Select(static entry => entry.DescriptorPath.Value));
-            return new CommandResult(
-                false,
-                output,
-                $"LEDGER_ALIGN_FAILED state/event statement_id conflicts: {names}\n");
-        }
-
-        var missing = accepted
-            .Where(entry => !state.Records.ContainsKey(entry.DescriptorPath))
-            .Select(static entry => entry.Event)
-            .ToImmutableArray();
-        if (!missing.IsEmpty)
-        {
-            FrozenLedgerPublication.PublishSnapshot(
-                repositoryRoot,
-                ledgerPath,
-                acceptedFiles,
-                acceptedFiles,
-                missing,
-                [],
-                "ledger-align --from-accepted");
-        }
-
-        return new CommandResult(
-            true,
-            RenderAcceptedCounts(
-                accepted.Length,
-                stateBefore,
-                stateBefore + missing.Length,
-                missing.Length,
-                conflicts: 0)
-            + RenderSummary(
-                accepted.Length,
-                changed: 0,
-                added: missing.Length,
-                unchanged: accepted.Length - missing.Length,
-                conflicts: 0),
-            string.Empty);
-    }
-
-    private static CommandResult AlignFromReport(
-        string repositoryRoot,
-        IRepositoryGateway repository,
-        AlignOptions options,
-        bool appendAlias)
-    {
-        var truth = DagLedgerCommandPreparation.BuildTruth(
-            repository,
-            new DagLedgerCommandPreparation.FileLeanReportSource(options.ReportPath!));
-        var states = LeanTruthStates.Resolve(truth.Snapshot, truth.Lean);
-        ValidateRequestedPaths(options, truth.Snapshot, states);
-
-        var adjacency = LeanImportAdjacency.Build(truth.Snapshot, truth.Lean);
-        var catalog = FrozenContentAddress.Build(
-            truth.Snapshot,
-            truth.Lean,
-            states,
-            adjacency) switch
-        {
-            FrozenMaterialOutcome.Accepted accepted => accepted.Capability,
-            FrozenMaterialOutcome.Rejected rejected => throw new InvalidOperationException(
-                "complete frozen catalog build failed: " + rejected.Message),
-            _ => throw new InvalidOperationException("unknown frozen material outcome"),
-        };
-        var ledgerPath = LedgerPath(repositoryRoot);
-        var acceptedFiles = DagLedgerCommandPreparation.ReadLedgerDirectoryFiles(ledgerPath);
-        _ = LoadEvents(acceptedFiles, "accepted frozen ledger");
-        var baseView = ReadView(acceptedFiles);
-        var state = ReadStateCatalog(repositoryRoot);
-        var retirements = options.Retirements.ToImmutableHashSet();
-        ValidateRetirements(retirements, truth, state, baseView);
-        var retirementClosure = retirements.IsEmpty
-            ? ImmutableHashSet<RepoPath>.Empty
-            : DescendantClosure(
-                FrozenLedgerReplacementClosure.DescendantsFrom(baseView, retirements),
-                baseView.ActiveByPath.Keys,
-                adjacency).Except(retirements);
-
-        var addPaths = appendAlias
-            ? catalog.ClosedNodes
-                .Where(node => !baseView.ActiveByPath.ContainsKey(node.RepoPath))
-                .Select(static node => node.RepoPath)
-                .ToImmutableArray()
-            : options.Adds;
-        var selected = options.Selectors.IsEmpty
-            ? state.Records.Keys.Except(retirements).ToImmutableArray()
-            : options.Selectors;
-        foreach (var selector in options.Selectors)
-        {
-            if (!state.Records.ContainsKey(selector))
+            var options = ParseArguments(arguments);
+            var source = new DagLedgerCommandPreparation.FileLeanReportSource(options.ReportPath);
+            if (options.ListClosed)
             {
-                throw new InvalidOperationException(
-                    $"selector {selector.Value} is not a registered frozen-state member");
+                var all = DagLedgerCommandPreparation.BuildTruth(repository, source);
+                return new(true, JsonSerializer.Serialize(LeanTruthStates.Resolve(all.Snapshot, all.Lean)
+                    .Where(static pair => pair.Value is TruthState.Closed).Select(static pair => pair.Key.Value)
+                    .Order(StringComparer.Ordinal)) + "\n", string.Empty);
             }
-        }
-
-        var considered = selected
-            .Concat(addPaths)
-            .Concat(retirementClosure)
-            .Distinct()
-            .OrderBy(static path => path.Value, StringComparer.Ordinal)
-            .ToImmutableArray();
-        ValidateClosed(considered, truth.Snapshot, states);
-
-        var consistencyConflicts = considered
-            .Where(path => state.Records.TryGetValue(path, out var record)
-                && (!baseView.ActiveByPath.TryGetValue(path, out var active)
-                    || active.Material.StatementId != record.StatementId))
-            .ToImmutableArray();
-        if (!consistencyConflicts.IsEmpty)
-        {
-            return ConflictResult(considered.Length, consistencyConflicts);
-        }
-
-        var addedPaths = addPaths
-            .Where(path => !state.Records.ContainsKey(path))
-            .Distinct()
-            .ToImmutableHashSet();
-        var changedPaths = considered
-            .Where(path => state.Records.TryGetValue(path, out var record)
-                && record.StatementId != catalog.ByPath[path].StatementId)
-            .ToImmutableHashSet();
-        // Resolve edges from the current report: dangling recorded identities cannot
-        // identify their former dependency paths or seed a ledger reverse traversal.
-        var prerequisiteRepairs = considered
-            .Where(path => baseView.ActiveByPath.TryGetValue(path, out var active)
-                && active.Material.StatementId == catalog.ByPath[path].StatementId
-                && !DagLedgerLoader.DependenciesPlaced(
-                    active.Material.PrerequisiteFrozenNodeIds.Select(static identity => identity.Value),
-                    baseView.EventIdentities))
-            .ToImmutableHashSet();
-        var repairClosure = DescendantClosure(
-            prerequisiteRepairs,
-            baseView.ActiveByPath.Keys,
-            adjacency);
-        ValidateClosed(repairClosure, truth.Snapshot, states);
-        foreach (var path in repairClosure.OrderBy(static path => path.Value, StringComparer.Ordinal))
-        {
-            var recorded = baseView.ActiveByPath[path].Material;
-            var candidate = catalog.ByPath[path];
-            if (recorded.StatementId != candidate.StatementId
-                || !recorded.DeclarationStatementIds.SequenceEqual(candidate.DeclarationStatementIds)
-                || !candidate.AxiomClosure.All(LeanAxiomFacts.IsStandard)
-                || !state.Records.TryGetValue(path, out var pin)
-                || pin.StatementId != recorded.StatementId)
+            var selected = options.Selectors.Concat(options.Adds).Distinct().OrderBy(static path => path.Value, StringComparer.Ordinal).ToArray();
+            var truth = selected.Length > 0
+                ? DagLedgerCommandPreparation.BuildTruthScoped(repository, source, selected)
+                : DagLedgerCommandPreparation.BuildTruth(repository, source);
+            var states = LeanTruthStates.Resolve(truth.Snapshot, truth.Lean);
+            var planned = new List<(RepoPath Path, FrozenStateRecord Record, bool Added)>();
+            foreach (var path in selected)
             {
-                throw new InvalidOperationException(
-                    "AUTHORIZATION overall=fail prerequisite repair requires unchanged "
-                    + $"statement/declaration identities and matching frozen state: {path.Value}");
+                var current = FrozenStateWriter.ReadCurrentBytes(root, path);
+                if (options.Selectors.Contains(path) && current is null)
+                    throw new InvalidOperationException($"selector {path.Value} is not a registered frozen-state member");
+                if (current is { } bytes)
+                    _ = FrozenStateRecordLoader.Load(new(FrozenStatePath.FromModulePath(path), bytes, Encoding.UTF8.GetString(bytes.AsSpan())));
+                if (!truth.Snapshot.Files.ContainsKey(path)) throw new InvalidOperationException($"module {path.Value} does not exist");
+                if (!states.TryGetValue(path, out var state) || state is not TruthState.Closed)
+                    throw new InvalidOperationException($"module {path.Value} has TruthState={state}, expected Closed");
+                if (!truth.Report.Files.TryGetValue(path, out var report))
+                    throw new InvalidOperationException($"module {path.Value} has no current Lean report");
+                planned.Add((path, FrozenStateRecord.FromReport(path, report), current is null));
             }
-        }
-        var initialRegeneration = considered
-            .Where(path => !baseView.ActiveByPath.TryGetValue(path, out var active)
-                || active.Material.StatementId != catalog.ByPath[path].StatementId
-                || !active.Material.DeclarationStatementIds.SequenceEqual(
-                    catalog.ByPath[path].DeclarationStatementIds))
-            .ToImmutableHashSet()
-            .Union(prerequisiteRepairs)
-            .Union(retirementClosure);
-        var regeneration = DescendantClosure(
-            initialRegeneration,
-            baseView.ActiveByPath.Keys,
-            adjacency);
-        ValidateClosed(regeneration, truth.Snapshot, states);
-        var newEventFiles = BuildAlignedEventFiles(
-            regeneration,
-            catalog,
-            adjacency,
-            baseView);
-        var replacementFiles = ReplaceEvents(
-            acceptedFiles,
-            baseView,
-            regeneration.Union(retirements),
-            newEventFiles);
-        var replacementEvents = LoadEvents(
-            replacementFiles,
-            "aligned frozen ledger");
-        _ = ReadView(replacementFiles);
-        if ((!prerequisiteRepairs.IsEmpty || !retirements.IsEmpty)
-            && !DagLedgerLoader.TryOrderClosedDag(replacementEvents, [], out _))
-        {
-            throw new InvalidOperationException(
-                "aligned frozen ledger does not form a closed dependency DAG");
-        }
-        var stateWritePaths = changedPaths
-            .Union(addedPaths)
-            .OrderBy(static path => path.Value, StringComparer.Ordinal)
-            .ToImmutableArray();
-        var replacementByPath = replacementEvents.ToImmutableDictionary(
-            static item => item.DescriptorPath);
-        var stateEvents = stateWritePaths
-            .Select(path => replacementByPath[path])
-            .ToImmutableArray();
-
-        var result = new CommandResult(
-            true,
-            RenderSummary(
-                considered.Length,
-                changedPaths.Count,
-                addedPaths.Count,
-                considered.Length - changedPaths.Count - addedPaths.Count,
-                conflicts: 0)
-            + (prerequisiteRepairs.IsEmpty ? string.Empty
-                : $"LEDGER_REPAIR seed_modules={prerequisiteRepairs.Count} "
-                    + $"reattested_modules={repairClosure.Count}\nAUTHORIZATION overall=pass\n"),
-            string.Empty);
-        if (!retirements.IsEmpty)
-        {
-            result = result with
+            if (!options.Retirements.IsEmpty)
             {
-                Output = result.Output + $"LEDGER_RETIRE registrations={retirements.Count} "
-                    + $"retained_descendants={retirementClosure.Count}\n",
-            };
-        }
-        if (newEventFiles.IsEmpty && stateEvents.IsEmpty && retirements.IsEmpty)
-        {
-            return result;
-        }
-
-        FrozenLedgerPublication.PublishSnapshot(
-            repositoryRoot,
-            ledgerPath,
-            replacementFiles,
-            acceptedFiles,
-            stateEvents,
-            retirements,
-            "ledger-align");
-        return result;
-    }
-
-    private static void ValidateRetirements(
-        ImmutableHashSet<RepoPath> retirements,
-        TruthContext truth,
-        FrozenStateCatalog state,
-        FrozenLedgerBaseView baseView)
-    {
-        foreach (var path in retirements.OrderBy(static path => path.Value, StringComparer.Ordinal))
-        {
-            if (!path.Value.StartsWith("D5/", StringComparison.Ordinal))
-                throw new InvalidOperationException($"registration retirement requires a D5 module: {path.Value}");
-            if (truth.Snapshot.Files.ContainsKey(path))
-                throw new InvalidOperationException($"cannot retire existing module {path.Value}");
-            if (!state.Records.TryGetValue(path, out var pin))
-                throw new InvalidOperationException(
-                    $"selector {path.Value} is not a registered frozen-state member");
-            if (!baseView.ActiveByPath.TryGetValue(path, out var active)
-                || pin.StatementId != active.Material.StatementId)
-                throw new InvalidOperationException($"state/event statement_id conflict: {path.Value}");
-        }
-
-        foreach (var path in state.Records.Keys.Concat(baseView.ActiveByPath.Keys).Distinct()
-            .OrderBy(static path => path.Value, StringComparer.Ordinal))
-        {
-            if (!truth.Snapshot.Files.ContainsKey(path) && !retirements.Contains(path))
-                throw new InvalidOperationException(
-                    $"module {path.Value} does not exist; missing registrations require explicit --retire-registration");
-        }
-        if (retirements.IsEmpty) return;
-
-        // Adjacency contains only current managed paths, so a missing import would
-        // disappear from it. Check the report's imports before using that projection.
-        var retiredModules = retirements.ToDictionary(LeanImportClosure.ModuleName, StringComparer.Ordinal);
-        foreach (var (path, report) in truth.Report.Files.OrderBy(static item => item.Key.Value, StringComparer.Ordinal))
-        {
-            foreach (var import in report.Imports)
-            {
-                if (retiredModules.TryGetValue(import, out var retired))
-                    throw new InvalidOperationException(
-                        $"module {path.Value} still imports retired registration {retired.Value}");
-            }
-        }
-    }
-
-    private static void ValidateRequestedPaths(
-        AlignOptions options,
-        RepositorySnapshot snapshot,
-        IReadOnlyDictionary<RepoPath, TruthState> states)
-    {
-        ValidateClosed(options.Adds, snapshot, states);
-    }
-
-    private static void ValidateClosed(
-        IEnumerable<RepoPath> paths,
-        RepositorySnapshot snapshot,
-        IReadOnlyDictionary<RepoPath, TruthState> states)
-    {
-        foreach (var path in paths.Distinct())
-        {
-            if (!snapshot.Files.ContainsKey(path))
-            {
-                throw new InvalidOperationException($"module {path.Value} does not exist");
-            }
-
-            if (!states.TryGetValue(path, out var state) || state is not TruthState.Closed)
-            {
-                var rendered = states.TryGetValue(path, out state) ? state.ToString() : "Unmanaged";
-                throw new InvalidOperationException(
-                    $"module {path.Value} has TruthState={rendered}, expected Closed");
-            }
-        }
-    }
-
-    private static ImmutableHashSet<RepoPath> DescendantClosure(
-        ImmutableHashSet<RepoPath> initial,
-        IEnumerable<RepoPath> activePaths,
-        IReadOnlyDictionary<RepoPath, ImmutableArray<RepoPath>> adjacency)
-    {
-        var closure = initial.ToHashSet();
-        var changed = true;
-        while (changed)
-        {
-            changed = false;
-            foreach (var path in activePaths)
-            {
-                if (!closure.Contains(path)
-                    && adjacency.TryGetValue(path, out var dependencies)
-                    && dependencies.Any(closure.Contains))
+                foreach (var file in Directory.EnumerateFiles(Path.Combine(root, FrozenStatePath.Root), "*", SearchOption.AllDirectories))
                 {
-                    closure.Add(path);
-                    changed = true;
+                    var statePath = Path.GetRelativePath(root, file).Replace('\\', '/');
+                    if (!FrozenStatePath.TryToModulePath(statePath, out var module)) throw new FormatException("invalid frozen state path: " + statePath);
+                    if (!truth.Snapshot.Files.ContainsKey(module) && !options.Retirements.Contains(module))
+                        throw new InvalidOperationException($"module {module.Value} does not exist; missing registrations require explicit --retire-registration");
                 }
             }
-        }
-
-        return closure.ToImmutableHashSet();
-    }
-
-    private static ImmutableArray<RepositoryFile> BuildAlignedEventFiles(
-        ImmutableHashSet<RepoPath> paths,
-        FrozenMaterialCatalog catalog,
-        IReadOnlyDictionary<RepoPath, ImmutableArray<RepoPath>> adjacency,
-        FrozenLedgerBaseView baseView)
-    {
-        var eventHashes = new Dictionary<RepoPath, string>();
-        var files = ImmutableArray.CreateBuilder<RepositoryFile>();
-        foreach (var path in LeanImportAdjacency.DependenciesFirst(paths, adjacency)
-            .Where(paths.Contains))
-        {
-            if (!catalog.ByPath.TryGetValue(path, out var candidate))
+            foreach (var retired in options.Retirements)
             {
-                throw new InvalidOperationException(
-                    $"canonical Lean report cannot materialize Closed module {path.Value}");
+                if (!retired.Value.StartsWith("D5/", StringComparison.Ordinal))
+                    throw new InvalidOperationException($"registration retirement requires a D5 module: {retired.Value}");
+                if (truth.Snapshot.Files.ContainsKey(retired)) throw new InvalidOperationException($"cannot retire existing module {retired.Value}");
+                var pin = FrozenStateWriter.ReadCurrentBytes(root, retired)
+                    ?? throw new InvalidOperationException($"selector {retired.Value} is not a registered frozen-state member");
+                _ = FrozenStateRecordLoader.Load(new(FrozenStatePath.FromModulePath(retired), pin, Encoding.UTF8.GetString(pin.AsSpan())));
+                foreach (var (path, report) in truth.Report.Files)
+                    if (report.Imports.Contains(LeanImportClosure.ModuleName(retired)))
+                        throw new InvalidOperationException($"module {path.Value} still imports retired registration {retired.Value}");
+                foreach (var file in truth.Snapshot.Files.Values.Where(static file => LeanClosureValidator.IsReportLean(file.Path.Value)))
+                    if (LeanSourceCatalog.ParseFileImports(file).Contains(LeanImportClosure.ModuleName(retired)))
+                        throw new InvalidOperationException($"module {file.Path.Value} still imports retired registration {retired.Value}");
             }
-
-            var prerequisites = ResolvePrerequisites(path, adjacency, baseView, eventHashes);
-            var material = candidate with
+            var backups = planned.Select(static item => item.Path).Concat(options.Retirements)
+                .ToDictionary(static path => path, path => FrozenStateWriter.ReadCurrentBytes(root, path));
+            var changed = 0;
+            var added = 0;
+            try
             {
-                FrozenNodeId = FrozenContentAddress.ComputeFrozenNodeId(
-                    path,
-                    candidate.StatementId,
-                    prerequisites),
-                PrerequisiteFrozenNodeIds = prerequisites,
-            };
-            var file = DagLedgerAppendWriter.BuildNewEventFiles(
-                [new FrozenLedgerDraft(
-                    "Freeze",
-                    FrozenLedgerCanonicalWriter.FreezeElement(
-                        FrozenLedgerCanonicalWriter.FreezePayload(material)))])[0];
-            var generated = FrozenAcceptedEventLoader.LoadFiles([file]) switch
-            {
-                DagLedgerFilesLoadOutcome.Loaded loaded => loaded.Events[0],
-                DagLedgerFilesLoadOutcome.Invalid invalid => throw new FormatException(
-                    $"generated event for {path.Value} is invalid: {invalid.Message}"),
-                _ => throw new InvalidOperationException("unknown frozen event load outcome"),
-            };
-            eventHashes.Add(path, generated.EventHash);
-            files.Add(file);
-        }
-
-        return files.ToImmutable();
-    }
-
-    private static ImmutableArray<FrozenNodeId> ResolvePrerequisites(
-        RepoPath path,
-        IReadOnlyDictionary<RepoPath, ImmutableArray<RepoPath>> adjacency,
-        FrozenLedgerBaseView baseView,
-        IReadOnlyDictionary<RepoPath, string>? eventHashes = null) =>
-        adjacency[path]
-            .Select(dependency => eventHashes is not null
-                && eventHashes.TryGetValue(dependency, out var eventHash)
-                    ? FrozenNodeId.Create(eventHash)
-                    : baseView.ActiveByPath.TryGetValue(dependency, out var active)
-                        ? FrozenNodeId.Create(active.EventHash)
-                        : throw new InvalidOperationException(
-                            $"module {path.Value} dependency {dependency.Value} has no accepted Freeze"))
-            .OrderBy(static identity => identity.Value, StringComparer.Ordinal)
-            .ToImmutableArray();
-
-    private static ImmutableArray<RepositoryFile> ReplaceEvents(
-        ImmutableArray<RepositoryFile> acceptedFiles,
-        FrozenLedgerBaseView baseView,
-        ImmutableHashSet<RepoPath> paths,
-        ImmutableArray<RepositoryFile> replacements)
-    {
-        var removed = baseView.Events
-            .Where(item => item.FreezePayload is not null
-                && paths.Contains(RepoPath.CreateKnown(item.FreezePayload.DescriptorSelector)))
-            .Select(static item => item.SourcePath)
-            .ToImmutableHashSet();
-        return acceptedFiles
-            .Where(file => !removed.Contains(file.Path))
-            .Concat(replacements)
-            .OrderBy(static file => file.Path.Value, StringComparer.Ordinal)
-            .ToImmutableArray();
-    }
-
-    private static FrozenLedgerBaseView ReadView(IEnumerable<RepositoryFile> files) =>
-        FrozenLedgerBaseViewReader.Read(RepositorySnapshot.Create(
-            files.ToImmutableDictionary(static file => file.Path)));
-
-    private static ImmutableArray<DagLedgerFileEvent> LoadEvents(
-        IEnumerable<RepositoryFile> files,
-        string label)
-    {
-        return FrozenAcceptedEventLoader.LoadFiles(files) switch
-        {
-            DagLedgerFilesLoadOutcome.Loaded accepted => accepted.Events,
-            DagLedgerFilesLoadOutcome.Invalid invalid => throw new FormatException(
-                $"{label} is invalid: {invalid.Message}"),
-            _ => throw new InvalidOperationException("unknown frozen event load outcome"),
-        };
-    }
-
-    private static ImmutableArray<AcceptedPin> LoadAcceptedPins(
-        ImmutableArray<DagLedgerFileEvent> events)
-    {
-        var bySelector = new Dictionary<RepoPath, AcceptedPin>();
-        var contradictions = new HashSet<RepoPath>();
-        foreach (var item in events)
-        {
-            var statementId = StatementId.Create(
-                item.Payload.GetProperty("statement_id").GetString()
-                    ?? throw new FormatException("Freeze statement_id is null."));
-            var pin = new AcceptedPin(item.DescriptorPath, statementId, item);
-            if (bySelector.TryGetValue(pin.DescriptorPath, out var previous))
-            {
-                if (previous.StatementId != pin.StatementId)
-                {
-                    contradictions.Add(pin.DescriptorPath);
-                }
-
-                continue;
+                foreach (var item in planned)
+                    if (FrozenStateWriter.Write(root, item.Path, item.Record.StatementId, item.Record.Declarations))
+                    {
+                        if (item.Added) added++; else changed++;
+                    }
+                foreach (var path in options.Retirements) _ = FrozenStateWriter.Delete(root, path);
             }
-
-            bySelector.Add(pin.DescriptorPath, pin);
-        }
-
-        if (contradictions.Count > 0)
-        {
-            var names = string.Join(
-                ", ",
-                contradictions.Select(static path => path.Value).Order(StringComparer.Ordinal));
-            throw new FormatException(
-                $"accepted frozen ledger has contradictory statement_id pins for selectors: {names}");
-        }
-
-        return bySelector.Values
-            .OrderBy(static pin => pin.DescriptorPath.Value, StringComparer.Ordinal)
-            .ToImmutableArray();
-    }
-
-    private static FrozenStateCatalog ReadStateCatalog(string repositoryRoot)
-    {
-        var stateRoot = Path.Combine(
-            repositoryRoot,
-            FrozenStatePath.Root.Replace('/', Path.DirectorySeparatorChar));
-        if (!Directory.Exists(stateRoot))
-        {
-            return FrozenStateCatalog.Load(RepositorySnapshot.Create(
-                ImmutableDictionary<RepoPath, RepositoryFile>.Empty));
-        }
-
-        var files = Directory
-            .EnumerateFiles(stateRoot, "*.json", SearchOption.AllDirectories)
-            .Select(path =>
+            catch
             {
-                var relative = Path.GetRelativePath(repositoryRoot, path).Replace('\\', '/');
-                if (!RepoPath.TryCreate(relative, out var repoPath))
-                {
-                    throw new FormatException($"Frozen state path is not canonical: {relative}");
-                }
-
-                var bytes = File.ReadAllBytes(path);
-                return new RepositoryFile(
-                    repoPath,
-                    ImmutableArray.CreateRange(bytes),
-                    Encoding.UTF8.GetString(bytes));
-            })
-            .ToImmutableDictionary(static file => file.Path);
-        return FrozenStateCatalog.Load(RepositorySnapshot.Create(files));
+                foreach (var (path, bytes) in backups) FrozenStateWriter.Restore(root, path, bytes);
+                throw;
+            }
+            return new(true, Summary(selected.Length, changed, added, selected.Length - changed - added)
+                + (options.Retirements.IsEmpty ? string.Empty : $"LEDGER_RETIRE registrations={options.Retirements.Length}\n"), string.Empty);
+        }
+        catch (Exception exception) when (exception is ArgumentException or FormatException or IOException
+            or InvalidOperationException or JsonException or UnauthorizedAccessException
+            or DagLedgerCommandPreparation.LeanReportUnusableException or DagLedgerCommandPreparation.RepositoryUnavailableException)
+        {
+            return new(false, Summary(0, 0, 0, 0, 1), "LEDGER_ALIGN_FAILED " + exception.Message
+                + (exception.InnerException is null ? string.Empty : " Cause: " + exception.InnerException.Message) + "\n");
+        }
     }
 
-    private sealed record AcceptedPin(
-        RepoPath DescriptorPath,
-        StatementId StatementId,
-        DagLedgerFileEvent Event);
-
-    private static AlignOptions ParseArguments(
-        IReadOnlyList<string> arguments,
-        bool appendAlias)
+    private static AlignOptions ParseArguments(IReadOnlyList<string> arguments)
     {
         string? report = null;
         var selectors = ImmutableArray.CreateBuilder<RepoPath>();
         var adds = ImmutableArray.CreateBuilder<RepoPath>();
         var retirements = ImmutableArray.CreateBuilder<RepoPath>();
-        var fromAccepted = false;
-        var listClosed = false;
+        var list = false;
         for (var index = 0; index < arguments.Count; index++)
-        {
             switch (arguments[index])
             {
-                case "--candidate-lean-report" when ++index < arguments.Count && report is null:
-                    report = arguments[index];
-                    break;
-                case "--selector" when !appendAlias && ++index < arguments.Count:
-                    selectors.Add(ParseModulePath(arguments[index]));
-                    break;
-                case "--add" when !appendAlias && ++index < arguments.Count:
-                    adds.Add(ParseModulePath(arguments[index]));
-                    break;
-                case "--retire-registration" when !appendAlias && ++index < arguments.Count:
-                    retirements.Add(ParseModulePath(arguments[index]));
-                    break;
-                case "--from-accepted" when !appendAlias && !fromAccepted:
-                    fromAccepted = true;
-                    break;
-                case "--list-closed" when !appendAlias && !listClosed:
-                    listClosed = true;
-                    break;
-                default:
-                    throw Usage(appendAlias);
+                case "--candidate-lean-report" when ++index < arguments.Count && report is null: report = arguments[index]; break;
+                case "--selector" when ++index < arguments.Count: selectors.Add(Module(arguments[index])); break;
+                case "--add" when ++index < arguments.Count: adds.Add(Module(arguments[index])); break;
+                case "--retire-registration" when ++index < arguments.Count: retirements.Add(Module(arguments[index])); break;
+                case "--list-closed" when !list: list = true; break;
+                default: throw Usage();
             }
-        }
-
-        if (fromAccepted)
-        {
-            if (report is not null || selectors.Count != 0 || adds.Count != 0 || retirements.Count != 0 || listClosed)
-            {
-                throw Usage(appendAlias);
-            }
-        }
-        else if (string.IsNullOrWhiteSpace(report))
-        {
-            throw Usage(appendAlias);
-        }
-        if (listClosed && (selectors.Count != 0 || adds.Count != 0 || retirements.Count != 0))
-            throw Usage(appendAlias);
-
-        foreach (var group in selectors.Concat(adds).Concat(retirements).GroupBy(static path => path))
-        {
-            if (group.Count() != 1)
-                throw new InvalidOperationException($"duplicate or conflicting module selector: {group.Key.Value}");
-        }
-
-        return new AlignOptions(
-            report,
-            selectors.ToImmutable(),
-            adds.ToImmutable(),
-            retirements.ToImmutable(),
-            fromAccepted,
-            listClosed);
+        var selectionCount = selectors.Count + adds.Count + retirements.Count;
+        if (string.IsNullOrWhiteSpace(report) || (list ? selectionCount != 0 : selectionCount == 0)) throw Usage();
+        if (selectors.Concat(adds).Concat(retirements).GroupBy(static path => path).Any(static group => group.Count() != 1))
+            throw new InvalidOperationException("duplicate or conflicting module selector");
+        return new(report, selectors.ToImmutable(), adds.ToImmutable(), retirements.ToImmutable(), list);
     }
 
-    private static RepoPath ParseModulePath(string value)
+    private static RepoPath Module(string value)
     {
-        if (!RepoPath.TryCreate(value, out var path))
-        {
-            throw new InvalidOperationException($"module selector is not canonical: {value}");
-        }
-
+        if (!RepoPath.TryCreate(value, out var path)) throw new FormatException("module selector is not canonical: " + value);
         _ = FrozenStatePath.FromModulePath(path);
         return path;
     }
-
-    private static InvalidOperationException Usage(bool appendAlias) => new(
-        appendAlias
-            ? "USAGE: StrataLint ledger-append --candidate-lean-report FILE"
-            : "USAGE: StrataLint ledger-align --candidate-lean-report FILE "
-                + "[--selector D5/.../X.lean]... [--add D5/.../X.lean]... "
-                + "[--retire-registration D5/.../Missing.lean]... "
-                + "| ledger-align --from-accepted "
-                + "| ledger-align --list-closed --candidate-lean-report FILE");
-
-    private static CommandResult ConflictResult(
-        int considered,
-        ImmutableArray<RepoPath> conflicts) =>
-        new(
-            false,
-            RenderSummary(considered, 0, 0, considered - conflicts.Length, conflicts.Length),
-            "LEDGER_ALIGN_FAILED state/event statement_id conflicts: "
-                + string.Join(", ", conflicts.Select(static path => path.Value))
-                + "\n");
-
-    private static string RenderAcceptedCounts(
-        int acceptedSelectors,
-        int stateBefore,
-        int stateAfter,
-        int written,
-        int conflicts) =>
-        $"accepted_selectors={acceptedSelectors} state_before={stateBefore} "
-        + $"state_after={stateAfter} written={written} conflicts={conflicts}\n";
-
-    private static string RenderSummary(
-        int selectorsConsidered,
-        int changed,
-        int added,
-        int unchanged,
-        int conflicts) =>
-        $"LEDGER_ALIGN selectors_considered={selectorsConsidered} changed={changed} "
-        + $"added={added} unchanged={unchanged} conflicts={conflicts}\n";
-
-    private static string LedgerPath(string repositoryRoot) => Path.Combine(
-        repositoryRoot,
-        FrozenLedgerChangeClassifier.AcceptedRoot.Replace('/', Path.DirectorySeparatorChar));
-
-    private sealed record AlignOptions(
-        string? ReportPath,
-        ImmutableArray<RepoPath> Selectors,
-        ImmutableArray<RepoPath> Adds,
-        ImmutableArray<RepoPath> Retirements,
-        bool FromAccepted,
-        bool ListClosed);
+    private static InvalidOperationException Usage() => new("USAGE: StrataLint ledger-align --candidate-lean-report FILE "
+        + "(--list-closed | (--selector MODULE | --add MODULE | --retire-registration MODULE)...)");
+    private static string Summary(int considered, int changed, int added, int unchanged, int conflicts = 0) =>
+        $"LEDGER_ALIGN selectors_considered={considered} changed={changed} added={added} unchanged={unchanged} conflicts={conflicts}\n";
+    private sealed record AlignOptions(string ReportPath, ImmutableArray<RepoPath> Selectors,
+        ImmutableArray<RepoPath> Adds, ImmutableArray<RepoPath> Retirements, bool ListClosed);
 }

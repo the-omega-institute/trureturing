@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:58528e4640774599b71af9f68be453dc6005fb8a896a5981cb9b61ab58c06f78
+  normalized_sha256: sha256:58528e4640774599b71af9f68be453dc6005fb8a896a5981cb9b61ab58c06f78
+cas_ref: sha256:58528e4640774599b71af9f68be453dc6005fb8a896a5981cb9b61ab58c06f78
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 清单片段“一个模型中的实际锚点”仅列举主题、接口组成或考虑维度；本片段不陈述性质、存在性或推论。
+    previous_atom_id: 1e76ded536e1add5a33e2e6dc8ef1a8102393236c8174a213667798eaf3d0666
+    next_atom_id: 97b0c98b4786f2027d14b46adca970fd9da0950bacfa6f5f261d4e48e2f1a062

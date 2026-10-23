@@ -1,0 +1,17 @@
+**Theorem 32.2 (Uniform finite paid-feedback excess on the full family).** For every $m\ge5$ and every target in Definition 32.1, under either original alphabet,
+
+$$
+ C_{\rm ad}(f_\lambda)\le C_{\rm pre}(f_\lambda)
+ \le C_{\rm ad}(f_\lambda)+4<\infty.
+\tag{32.3}
+$$
+
+Consequently the unchanged same-table family has
+
+$$
+ 1\le\sup_{m\ge5,\,Y,\,\lambda:P\to Y}D_m(\lambda)\le4.
+\tag{32.4}
+$$
+
+The upper constant four is not asserted to be sharp. The emitted-bit excess is bounded by $4m$; this is not a uniform four-bit bound and gives no lower growth law for emitted-bit excess.
+

@@ -1,1 +1,1 @@
-{"statement_id":"sha256:560d12f0ba35877aa655038e89219766a30b81a6ef2c9aaeabf9ea01e7fb8146"}
+{"statement_id":"sha256:560d12f0ba35877aa655038e89219766a30b81a6ef2c9aaeabf9ea01e7fb8146","declarations":[{"declaration_name_key":"ns(ns(ns(ns(ns(n0,2:D5),2:S3),20:StatisticalMechanics),27:FallingFactorialMomentBound),5:claim)","kind":"def"},{"declaration_name_key":"ns(ns(ns(ns(ns(n0,2:D5),2:S3),20:StatisticalMechanics),27:FallingFactorialMomentBound),6:result)","kind":"theorem"}]}

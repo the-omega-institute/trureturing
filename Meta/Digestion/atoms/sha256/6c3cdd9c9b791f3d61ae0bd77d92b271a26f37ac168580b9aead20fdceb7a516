@@ -1,0 +1,21 @@
+- A same-source observer starts with acquired $H_0$ and, through
+  consecutive authenticated epochs, acquires each reached set and
+  retains its first-appearance table. An epoch's current complete row
+  is also lawfully acquired when it is used for recovery.
+
+The first route can be owned by the existing origin-row producer or by a
+consumer that already possesses that row. It does not require another
+full-source acquisition merely to compute births. The second route requires
+enough acquisition to establish first appearances, including initial
+presence. First-observed dates from skipped sampling do not supply this
+exact table without additional evidence.
+
+The current row, the chosen supplement and public conditions are handed
+to a legally continuing consumer. Its complete accessible base is
+Definition 6.1; if intended to contain only the declared row and common
+fields, it satisfies the value-forgetting condition of Sparse History
+Assumption 59.3. No discarded tree, old output, trace, readable pointer,
+source-specific length or timing supplies an uncounted distinction.
+Old physical archives may remain inaccessible; their exclusion from
+this information fiber does not assert physical erasure.
+

@@ -115,13 +115,20 @@ internal sealed record GenreRegistryProjection
         ?? throw new InvalidOperationException("genre registry projection is unavailable");
 }
 
+internal enum DigestionDefaultDispatch
+{
+    Eligible,
+    Excluded,
+}
+
 internal sealed record DigestionLedgerSource(
     string SourceId,
     string SourcePath,
     string Atomizer,
     ImmutableArray<string> AcknowledgedStale,
     GenreRegistryProjection GenreRegistryProjection,
-    ImmutableArray<DigestionLedgerEntry> Entries)
+    ImmutableArray<DigestionLedgerEntry> Entries,
+    DigestionDefaultDispatch DefaultDispatch = DigestionDefaultDispatch.Eligible)
 {
     internal GenreRegistryCheck GenreRegistryCheck => GenreRegistryProjection.RequireAvailable();
 }

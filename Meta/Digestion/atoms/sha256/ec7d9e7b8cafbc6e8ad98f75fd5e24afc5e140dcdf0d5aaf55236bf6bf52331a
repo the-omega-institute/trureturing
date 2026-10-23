@@ -1,0 +1,15 @@
+## 214. Simultaneous late coordinates: signed cones, fixed fibers, and a necessary stock envelope
+
+This increment uses the full score and catalog inherited from Definition 210.1. Words use the literal answer bits: $0$ means a zero answer, $1$ means a positive answer, $n(w)$ is the first literal zero, and $1^L$ is the all-positive word. Thus $w(Z)$ has literal zeros exactly at $Z$. The separate zero indicators in §214.4 are $z_i=1-w_{j_i}$, with $j_6=\ell$. Every word, including multiple-zero words and the all-positive word, remains in the domain. A score has independent nonnegative rows $A,C,P$ on zero words and terminal mass $T$ on the all-positive word. Its quotient is
+
+$$
+Q(V)=(\beta,K),\qquad \beta_j=\sum_{\Omega_j}(C-A),\qquad
+K=\sum_w(A_w+C_w+P_w)+T,
+$$
+
+and its excess is the complete all-label support minus its anchor. Empty schedules, singleton schedules, increasing pairs, reversed pairs, repeated addresses, arbitrary labels (including earlier and unqueried labels), and the independent pair row are always included. The finite statements below are statements about this full catalog; a listed table is only a detector or a supplier inside that catalog.
+
+The original universal implication remains the surrounding question:
+$\mathcal F_N(a,\varepsilon)\ne\varnothing$ should imply
+$\mathcal F_N(a,\varepsilon)\cap\mathscr C_L\ne\varnothing$ at every positive closed cap, or else a same-realization separator must be supplied. None of the four results below settles that implication.
+

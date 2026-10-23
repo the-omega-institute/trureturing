@@ -1,0 +1,10 @@
+形式规格中的 trial 并非普通有限向量。它使用：
+
+* Poisson count；
+* dyadic intensity；
+* finite weighted fragment measures；
+* 四十坐标 product physical measure；
+* 有限 angular signatures；
+* 次数不超过六的 radial polynomials；
+* `trialIH` 与若干 \(J\)-型 source integrals。
+

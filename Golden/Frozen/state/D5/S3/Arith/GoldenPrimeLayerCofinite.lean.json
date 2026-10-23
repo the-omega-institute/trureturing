@@ -1,1 +1,1 @@
-{"statement_id":"sha256:c937581d080c13e9de6b98fc352a9a2af3cb510b37fc8f9bb59c4f499041cdd0"}
+{"statement_id":"sha256:c937581d080c13e9de6b98fc352a9a2af3cb510b37fc8f9bb59c4f499041cdd0","declarations":[{"declaration_name_key":"ns(ns(ns(ns(ns(n0,2:D5),2:S3),5:Arith),24:GoldenPrimeLayerCofinite),36:golden_layer_marginal_lt_of_prime_le)","kind":"theorem"},{"declaration_name_key":"ns(ns(ns(ns(ns(nn(ns(ns(ns(ns(ns(n0,8:_private),2:D5),2:S3),5:Arith),24:GoldenPrimeLayerCofinite),0),2:D5),2:S3),5:Arith),24:GoldenPrimeLayerCofinite),18:inv_pow_div_log_lt)","kind":"theorem"}]}

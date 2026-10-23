@@ -1,0 +1,9 @@
+**Theorem 214.2 (full signed one-pivot minimum).** Over all nonnegative full scores $V$ with $Q(V)=q$,
+
+$$
+\min_{Q(V)=q}\Delta_N(V)=\min_{Q(V)=q}\Delta_O(V)=D_* .
+\tag{214.1}
+$$
+
+One and the same score attains both minima. If every late coordinate is nonpositive, the value is $D$, with no pivot required. All zero masses, ties, $n=L=3$, $K=\sum|\beta_j|$, and the closed value $D_*=1$ are included. The theorem allows arbitrary signed early coordinates, arbitrary late pair rows, changed anchors and unaries, and simultaneous negative late coordinates. It does not cover two positive late coordinates.
+

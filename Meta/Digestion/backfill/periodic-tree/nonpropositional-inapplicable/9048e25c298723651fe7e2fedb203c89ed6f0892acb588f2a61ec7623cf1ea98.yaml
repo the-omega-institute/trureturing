@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:9048e25c298723651fe7e2fedb203c89ed6f0892acb588f2a61ec7623cf1ea98
+  normalized_sha256: sha256:9048e25c298723651fe7e2fedb203c89ed6f0892acb588f2a61ec7623cf1ea98
+cas_ref: sha256:9048e25c298723651fe7e2fedb203c89ed6f0892acb588f2a61ec7623cf1ea98
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 证明段（**证明。** 含因子 $61$ 的 $32$ 个约数均有周期 $60$。不含 $61$ 时，周期的最小公倍数 等于 $60$ 的情形按 $…）只展开前文定理或命题的论证，式子和中间推导不另提出独立陈述。
+    previous_atom_id: 404fe5ab80434ff86503d2b0cabca4df57225a1d2eefc68014d86de5d6063cce
+    next_atom_id: 644ebc0c53c74042d8854815e737c21d8166da9bc5fc4a63763ac9391f906007

@@ -1,0 +1,31 @@
+**边界 373.4（有限解析性与无限 Gibbs 规格）。** 固定有限支撑、非空允许集和边界，若各允许配置的能量在参数开域内有限且实解析，则 $Z_n^\eta$ 为正的有限解析和。对 $0<\beta<\infty$，$\log Z_n^\eta$、有界观测均值及 $f_n^\eta=-\log Z_n^\eta/(\beta|V_n|)$ 实解析。响应峰或双峰分布不能单独证明热力学非解析相变；零温、参数依赖禁配和非解析势不在此解析接口内。
+
+无限体积需要另给可数支撑 $V_\infty$、相容嵌入和耗尽序列 $V_n\uparrow V_\infty$。在共同空间 $\Omega=\mathcal S^{V_\infty}$ 及其柱集 $\sigma$ 代数上，先取无硬禁配的软势，把单点项也纳入相互作用，并要求
+
+$$
+\sup_{x\in V_\infty}\sum_{i:x\in A_i}\|\Phi_i\|_\infty<\infty.
+\tag{373.7}
+$$
+
+对每个有限区域 $\Lambda$，条件能量包含全部与 $\Lambda$ 相交的作用；条件核 $\gamma_\Lambda$ 保持外部配置不变。绝对可和势给出连续条件核，其规格一致性及 Gibbs 条件为
+
+$$
+\int\gamma_\Lambda(B\mid\omega)\gamma_\Delta(d\omega\mid\eta)
+=\gamma_\Delta(B\mid\eta)\quad(\Lambda\subseteq\Delta),
+$$
+
+$$
+\mu(B)=\int\gamma_\Lambda(B\mid\eta)\mu(d\eta)
+\quad\text{对所有可测 }B\text{ 和所有有限 }\Lambda.
+\tag{373.8}
+$$
+
+在有限自旋、绝对可和软势及上述相容规格下，有限区域 Gibbs 律延拓到共同配置空间后的弱收敛子列可给出 Gibbs 测度。存在不保证唯一、完整序列收敛或压力
+
+$$
+p(\beta,\theta)=\lim_{n\to\infty}\frac{\log Z_n^\eta}{|V_n|}
+\tag{373.9}
+$$
+
+存在并与边界无关。压力还须对实际耗尽序列控制边界与归一化；递归树的边界占比不自动趋零。有限体积律也不自动满足逐层边缘相等，消去外层会改变内层有效势。硬约束模型需重新检查可容许边界、核的定义域及极限传递。
+

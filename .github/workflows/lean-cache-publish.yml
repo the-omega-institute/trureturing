@@ -1,16 +1,226 @@
 name: Lean build cache publication
 
+# Scheduled runs keep the protected-dev Release publication contract. Manual
+# runs share the cache core with PR labels and automatic protected pushes.
+# Dispatch on the exact protected branch ref with a reachable 40-hex commit, and
+# allow up to the GitHub-hosted 360-minute job limit.  Example:
+# gh workflow run lean-cache-publish.yml --ref dev \
+#   -f source_ref=refs/heads/dev -f source_sha="$(git rev-parse dev)"
 on:
+  pull_request:
+    branches: [dev, 'integration-**']
+    types: [opened, reopened, synchronize, labeled]
   schedule:
     - cron: '0 */6 * * *'
+  workflow_dispatch:
+    inputs:
+      source_ref:
+        description: 'Protected build source or PR cache target (refs/heads/dev or refs/heads/integration-...)'
+        required: true
+        type: string
+        default: refs/heads/dev
+      source_sha:
+        description: 'Build: reachable protected commit; PR: exact unmerged candidate M'
+        required: true
+        type: string
 
-permissions:
-  contents: write
+      operation:
+        description: 'Build a protected commit or pinned PR candidate'
+        type: choice
+        options: [build, pr]
+        default: build
+      release_seed_tag:
+        description: 'Optional exact local candidate Release for the long build'
+        type: string
+      release_seed_producer:
+        description: 'Immutable producer commit of release_seed_tag'
+        type: string
+      regenerate_report_artifacts:
+        description: 'Explicitly regenerate all report artifacts, retaining compiled Lean/dependencies'
+        type: boolean
+        default: false
+      runner_diagnostics:
+        description: 'PR only: observe Linux Worker signal provenance and cgroup memory'
+        type: boolean
+        default: false
+      pr_source:
+        description: 'PR only: immutable event PR/head/merge/base/run/attempt/target identity'
+        type: string
+
+permissions: {}
 
 jobs:
+  manual-producer:
+    name: Produce the protected branch Lean cache
+    permissions:
+      contents: write
+      actions: write
+      pull-requests: read
+    if: github.event_name == 'workflow_dispatch' && inputs.operation == 'build'
+    runs-on: ubuntu-24.04-arm
+    timeout-minutes: 360
+    concurrency:
+      group: lean-cache-branch-${{ github.ref }}
+      cancel-in-progress: false
+    env:
+      STRATALINT_CACHE_WRITES: 'true'
+    steps:
+      - uses: actions/checkout@v5
+        with:
+          ref: ${{ github.event_name == 'workflow_dispatch' && inputs.source_sha || github.sha }}
+          fetch-depth: 2
+          persist-credentials: false
+      - name: Validate the manual source ref and immutable pin
+        if: github.event_name == 'workflow_dispatch'
+        env:
+          GH_TOKEN: ${{ github.token }}
+          SOURCE_REF: ${{ inputs.source_ref }}
+          SOURCE_SHA: ${{ inputs.source_sha }}
+          WORKFLOW_REF: ${{ github.ref }}
+          REPOSITORY: ${{ github.repository }}
+        run: |
+          set -euo pipefail
+          [[ "$SOURCE_REF" == "$WORKFLOW_REF" ]] || {
+            echo "CACHE_SOURCE_ERROR source_ref must equal the workflow dispatch ref" >&2
+            exit 2
+          }
+          [[ "$SOURCE_REF" =~ ^refs/heads/(dev|integration-[A-Za-z0-9._/-]+)$ ]] || {
+            echo "CACHE_SOURCE_ERROR source ref is outside dev/integration protected scope" >&2
+            exit 2
+          }
+          git check-ref-format "$SOURCE_REF" >/dev/null || {
+            echo "CACHE_SOURCE_ERROR source ref is not a valid Git ref" >&2
+            exit 2
+          }
+          [[ "$SOURCE_SHA" =~ ^[0-9a-f]{40}$ && "$SOURCE_SHA" != "$(printf '%040d' 0)" ]] || {
+            echo "CACHE_SOURCE_ERROR source_sha must be a nonzero 40-hex SHA" >&2
+            exit 2
+          }
+          branch="${SOURCE_REF#refs/heads/}"
+          protected="$(gh api "repos/$REPOSITORY/branches/$branch" --jq '.protected')"
+          [[ "$protected" == true ]] || {
+            echo "CACHE_SOURCE_ERROR source branch is not protected" >&2
+            exit 2
+          }
+          merge_base="$(gh api "repos/$REPOSITORY/compare/$SOURCE_SHA...$branch" --jq '.merge_base_commit.sha')"
+          [[ "$merge_base" == "$SOURCE_SHA" ]] || {
+            echo "CACHE_SOURCE_ERROR source_sha is not an ancestor of the protected branch" >&2
+            exit 2
+          }
+          {
+            echo "STRATALINT_CACHE_SOURCE_REF=$SOURCE_REF"
+            echo "STRATALINT_CACHE_SOURCE_COMMIT=$SOURCE_SHA"
+            echo "STRATALINT_CACHE_CHECKED_OUT_SHA=$SOURCE_SHA"
+            echo "STRATALINT_CACHE_SOURCE_VALIDATED=true"
+          } >> "$GITHUB_ENV"
+      - name: Validate candidate and strip checkout remote
+        env:
+          CI_HIT_PATHS: '*'
+          CI_PUSH_BEFORE: ${{ github.event.before }}
+        run: |
+          if [[ "$GITHUB_EVENT_NAME" == workflow_dispatch ]]; then
+            export GITHUB_SHA="$STRATALINT_CACHE_CHECKED_OUT_SHA"
+          fi
+          bash tools/scripts/workflow/ci-entry.sh
+      - name: Produce the Actions cache
+        uses: ./.github/actions/lean-cache-produce
+        with:
+          regenerate-report-artifacts: ${{ inputs.regenerate_report_artifacts }}
+          release-seed-tag: ${{ inputs.release_seed_tag }}
+          release-seed-producer: ${{ inputs.release_seed_producer }}
+
+  pr-dispatch:
+    name: Dispatch the PR cache build to its target
+    if: github.event_name == 'pull_request' && contains(github.event.pull_request.labels.*.name, 'lean-cache-produce') && (github.event.action != 'labeled' || github.event.label.name == 'lean-cache-produce')
+    runs-on: ubuntu-24.04-arm
+    timeout-minutes: 5
+    permissions:
+      contents: read
+      actions: write
+      pull-requests: read
+    steps:
+      - uses: actions/checkout@v5
+        with:
+          ref: ${{ github.sha }}
+          fetch-depth: 2
+          persist-credentials: false
+      - name: Validate the PR merge candidate and strip checkout remote
+        env:
+          CI_HIT_PATHS: '*'
+          CI_PR_HEAD: ${{ github.event.pull_request.head.sha }}
+        run: bash tools/scripts/workflow/ci-entry.sh
+      - name: Dispatch the single long build and report its exact run ID
+        env:
+          GH_TOKEN: ${{ github.token }}
+          STRATALINT_RUNNER_DIAGNOSTICS: ${{ contains(github.event.pull_request.labels.*.name, 'lean-cache-diagnostics') }}
+        run: python3 tools/scripts/worktree/lean_pr_cache.py dispatch --repository "$GITHUB_WORKSPACE"
+
+  pr-producer:
+    name: Prepare the PR Lean cache artifact
+    if: github.event_name == 'workflow_dispatch' && inputs.operation == 'pr'
+    runs-on: ubuntu-24.04-arm
+    timeout-minutes: 360
+    permissions:
+      contents: read
+      actions: read
+      pull-requests: read
+    concurrency:
+      group: lean-cache-pr-${{ fromJSON(inputs.pr_source).pr }}
+      cancel-in-progress: true
+    env:
+      LEAN_NUM_THREADS: '1'
+      STRATALINT_CACHE_WRITES: 'true'
+      STRATALINT_RUNNER_DIAGNOSTICS: ${{ inputs.runner_diagnostics }}
+      PR_SOURCE: ${{ inputs.pr_source }}
+      SOURCE_REF: ${{ inputs.source_ref }}
+      SOURCE_SHA: ${{ inputs.source_sha }}
+    steps:
+      - uses: actions/checkout@v5
+        with:
+          ref: ${{ inputs.source_sha }}
+          fetch-depth: 2
+          persist-credentials: false
+      - name: Validate the unmerged source and protected workflow runtime
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: python3 tools/scripts/worktree/lean_pr_cache.py prepare --repository "$GITHUB_WORKSPACE"
+      - name: Validate candidate and strip checkout remote
+        env:
+          CI_HIT_PATHS: '*'
+        run: |
+          GITHUB_SHA="$STRATALINT_CACHE_CHECKED_OUT_SHA" bash tools/scripts/workflow/ci-entry.sh
+      - name: Build and validate the isolated preparation
+        uses: ./.github/actions/lean-cache-produce
+        with:
+          preparation-only: 'true'
+          regenerate-report-artifacts: ${{ inputs.regenerate_report_artifacts }}
+          release-seed-tag: ${{ inputs.release_seed_tag }}
+          release-seed-producer: ${{ inputs.release_seed_producer }}
+      - id: pack
+        name: Package the registered native cache paths
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: python3 tools/scripts/worktree/lean_pr_cache.py pack --repository "$GITHUB_WORKSPACE" --directory "$RUNNER_TEMP/pr-preparation"
+      - id: preparation
+        uses: actions/upload-artifact@v6
+        with:
+          name: ${{ steps.pack.outputs.artifact_name }}
+          path: ${{ steps.pack.outputs.artifact_path }}/
+          if-no-files-found: error
+          compression-level: 0
+          overwrite: true
+      - name: Confirm the immutable preparation artifact and source identity
+        env:
+          GH_TOKEN: ${{ github.token }}
+          ARTIFACT_ID: ${{ steps.preparation.outputs.artifact-id }}
+        run: python3 tools/scripts/worktree/lean_pr_cache.py confirm --repository "$GITHUB_WORKSPACE" --artifact-id "$ARTIFACT_ID"
+
   publish:
     name: Publish the Lean build cache
-    if: github.ref == 'refs/heads/dev'
+    if: github.event_name == 'schedule' && github.ref == 'refs/heads/dev'
+    permissions:
+      contents: write
+      actions: write
     runs-on: ubuntu-24.04-arm
     timeout-minutes: 120
     env:
@@ -19,17 +229,20 @@ jobs:
       - uses: actions/checkout@v5
         with:
           ref: ${{ github.sha }}
+          fetch-depth: 2
           persist-credentials: false
       - name: Validate candidate and strip checkout remote
         env:
           CI_HIT_PATHS: '*'
-          CI_PUSH_BEFORE: ${{ github.event.before }}
         run: bash tools/scripts/workflow/ci-entry.sh
       - uses: actions/setup-dotnet@v5
         with:
           global-json-file: global.json
-      - run: make -C tools dotnet DOTNET_PROJECT=tools/StrataLint.Lean/StrataLint.Lean.csproj
+      - name: Build the scheduled Release producer
+        run: make -C tools dotnet DOTNET_PROJECT=tools/StrataLint.Lean/StrataLint.Lean.csproj
       - id: keys
+        env:
+          GH_TOKEN: ${{ github.token }}
         run: python3 tools/scripts/worktree/lean_actions.py keys --repository "$GITHUB_WORKSPACE"
       - id: elan
         if: steps.keys.outputs.elan_key != ''
@@ -62,7 +275,7 @@ jobs:
           DEPENDENCY_OUTCOME: ${{ steps.dependency.outcome }}
           PROJECT_OUTCOME: ${{ steps.project.outcome }}
         run: python3 tools/scripts/worktree/lean_actions.py restore --repository "$GITHUB_WORKSPACE" --dependency-key "$DEPENDENCY_KEY" --project-key "$PROJECT_KEY" --dependency-outcome "$DEPENDENCY_OUTCOME" --project-outcome "$PROJECT_OUTCOME"
-      - name: Build once and publish the successful snapshot
+      - name: Publish the protected-dev Release snapshot
         env:
           GH_TOKEN: ${{ github.token }}
         run: make lean-cache-to-github-without-mathlib

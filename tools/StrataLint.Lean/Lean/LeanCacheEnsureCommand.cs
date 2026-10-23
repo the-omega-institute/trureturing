@@ -14,8 +14,6 @@ internal static partial class LeanCacheEnsureCommand
         OleanWarmthInspection Mathlib,
         OleanWarmthInspection Project)
     {
-        internal bool AllCold => !Mathlib.IsWarm && !Project.IsWarm;
-
         internal bool HasProbeFailure => Mathlib.State == OleanWarmth.ProbeFailed
             || Project.State == OleanWarmth.ProbeFailed;
 
@@ -132,129 +130,6 @@ internal static partial class LeanCacheEnsureCommand
             out _, donorRepository);
     }
 
-    internal static CommandResult RunWithWriter(
-        string repositoryRoot,
-        IReadOnlyList<string> arguments,
-        IWorktreeProcessRunner runner,
-        IDirectoryCloner cloner, Stream? standardOutput = null, Stream? standardError = null) =>
-        RunWithWriter(
-            repositoryRoot,
-            arguments,
-            runner,
-            cloner,
-            FileSystemLeanCacheStateProbe.Instance,
-            Environment.GetEnvironmentVariable, standardOutput, standardError);
-
-    internal static CommandResult RunWithWriter(
-        string repositoryRoot,
-        IReadOnlyList<string> arguments,
-        IWorktreeProcessRunner runner,
-        IDirectoryCloner cloner,
-        ILeanCacheStateProbe stateProbe,
-        Func<string, string?> readEnvironment,
-        Stream? standardOutput = null, Stream? standardError = null)
-    {
-        ArgumentNullException.ThrowIfNull(cloner);
-        ArgumentNullException.ThrowIfNull(stateProbe);
-        ArgumentNullException.ThrowIfNull(readEnvironment);
-        if (!TryParseWriter(repositoryRoot, arguments, out var root, out var command, out var donorRepository))
-        {
-            return new CommandResult(false, string.Empty, WriterUsage + "\n");
-        }
-
-        var pins = LeanPinSet.TryReadWorktree(root, out var pinReason);
-        if (pins is null)
-        {
-            return FailureReceipt(
-                "failed",
-                root,
-                donor: null,
-                method: "none",
-                pinSha256: null,
-                reason: pinReason ?? "Lean pin files are unavailable");
-        }
-
-        using var guard = LeanCacheWriterGuard.TryAcquire(Path.Combine(root, ".lake"));
-        if (guard is null)
-        {
-            return FailureReceipt(
-                "busy",
-                root,
-                donor: null,
-                method: "none",
-                pins.Sha256,
-                "canonical cache writer guard is busy");
-        }
-
-        var ensured = EnsureLocked(
-            root,
-            pins,
-            command[0],
-            runner,
-            cloner,
-            guard,
-            removePartial: null,
-            continueOnCacheGetFailure: true,
-            stateProbe,
-            out var cacheState, donorRepository);
-        if (!ensured.Success) return ensured;
-
-        var receipt = ensured.Output;
-        if (cacheState is null)
-        {
-            return new CommandResult(
-                false,
-                receipt,
-                "cold-build guard did not receive a cache state from ensure\n");
-        }
-        if (cacheState.AllCold)
-        {
-            var consent = string.Equals(
-                readEnvironment(ColdBuildConsentVariable),
-                "1",
-                StringComparison.Ordinal);
-            if (!consent)
-            {
-                var refusal = cacheState.HasProbeFailure
-                    ? "COLD_BUILD_REFUSED cache warmth probe failed and was treated as cold (fail-closed): "
-                        + cacheState.ProbeFailureDescription
-                    : "COLD_BUILD_REFUSED mathlib and project olean caches are both cold.";
-                var target = ShellQuote(root);
-                return new CommandResult(
-                    false,
-                    receipt,
-                    refusal + "\n"
-                    + $"Fetch caches with: make -C {target} lean-cache-ensure\n"
-                    + "To accept this cold build once, run: "
-                    + $"{ColdBuildConsentVariable}=1 make -C {target} lean\n");
-            }
-            receipt = RecordColdBuildConsent(receipt);
-        }
-
-        try
-        {
-            if (standardOutput is not null)
-            {
-                standardOutput.Write(Encoding.UTF8.GetBytes(receipt));
-                standardOutput.Flush();
-            }
-            var invoked = runner.Run(
-                command[0],
-                command.Skip(1).ToArray(),
-                root,
-                LeanCacheProvisioner.LeanCommandBudget, standardOutput, standardError);
-            return new CommandResult(
-                invoked.ExitCode == 0,
-                standardOutput is null ? receipt + Encoding.UTF8.GetString(invoked.StandardOutput) : string.Empty,
-                standardError is null ? Encoding.UTF8.GetString(invoked.StandardError) : string.Empty, invoked.ExitCode);
-        }
-        catch (OperationCanceledException) { throw; }
-        catch (Exception exception)
-        {
-            return new CommandResult(false, standardOutput is null ? receipt : string.Empty, exception.Message + "\n");
-        }
-    }
-
     private static CommandResult EnsureLocked(
         string root,
         LeanPinSet pins,
@@ -266,7 +141,8 @@ internal static partial class LeanCacheEnsureCommand
         bool continueOnCacheGetFailure,
         ILeanCacheStateProbe stateProbe,
         out CacheState? cacheState,
-        string? donorRepository)
+        string? donorRepository,
+        bool refreshWarmArchive = true)
     {
         cacheState = null;
         var archive = LeanArchiveAttempt.Skipped("not reached");
@@ -342,7 +218,10 @@ internal static partial class LeanCacheEnsureCommand
                         root,
                         projectWarmth,
                         stateProbe,
-                        out cacheState, writerGuard, runner);
+                        out cacheState, writerGuard, runner,
+                        // A wrapped build can use Lake's dependency traces to update a
+                        // matching warm cache; age alone does not require an archive.
+                        refreshWarmArchive: refreshWarmArchive);
                 }
 
                 if (stamp.State == LeanCacheStampState.Mismatch)
@@ -899,12 +778,17 @@ internal static partial class LeanCacheEnsureCommand
         ILeanCacheStateProbe stateProbe,
         out CacheState? cacheState,
         LeanCacheWriterGuard writerGuard,
-        IWorktreeProcessRunner runner)
+        IWorktreeProcessRunner runner,
+        bool refreshWarmArchive = true)
     {
         // Every successful donor/provision path meets here while holding the
         // writer lock, including a warm donor that bypassed cold-cache fallback.
         const string prefix = "LEAN_CACHE ";
         var payload = JsonNode.Parse(result.Output[prefix.Length..])!.AsObject();
+        // Wrapped warm-cache reuse and its receipt share one observation.
+        // Other ensure/provision paths retain their post-installation probe.
+        var mathlibWarmth = refreshWarmArchive
+            ? null : stateProbe.ProbeOleans(MathlibOleanRoot(Path.Combine(root, ".lake")));
         var location = GitWorktreeInventory.Locate(root, runner);
         if (location.IsLinked)
         {
@@ -916,7 +800,8 @@ internal static partial class LeanCacheEnsureCommand
             payload["archive_workflow_run_id"] = null;
             result = result with { Output = prefix + payload.ToJsonString() + "\n" };
         }
-        else if (projectWarmth.IsWarm && payload["archive_status"]?.GetValue<string>() == "not_attempted")
+        else if ((refreshWarmArchive || !mathlibWarmth!.IsWarm) && projectWarmth.IsWarm
+            && payload["archive_status"]?.GetValue<string>() == "not_attempted")
         {
             try
             {
@@ -931,7 +816,10 @@ internal static partial class LeanCacheEnsureCommand
                     payload["archive_producer_commit_sha"] = refresh.ProducerCommitSha;
                     payload["archive_workflow_run_id"] = refresh.WorkflowRunId;
                     if (refresh.Outcome == LeanArchiveOutcome.Unpacked)
+                    {
                         projectWarmth = stateProbe.ProbeOleans(ProjectOleanRoot(Path.Combine(root, ".lake")));
+                        mathlibWarmth = null;
+                    }
                 }
             }
             catch (Exception error) when (error is IOException or UnauthorizedAccessException)
@@ -943,7 +831,7 @@ internal static partial class LeanCacheEnsureCommand
         if (RetireRootJudgeOutputs(root, writerGuard))
             projectWarmth = stateProbe.ProbeOleans(ProjectOleanRoot(Path.Combine(root, ".lake")));
         cacheState = new CacheState(
-            stateProbe.ProbeOleans(MathlibOleanRoot(Path.Combine(root, ".lake"))),
+            mathlibWarmth ?? stateProbe.ProbeOleans(MathlibOleanRoot(Path.Combine(root, ".lake"))),
             projectWarmth);
         return result with { Output = RecordCacheState(result.Output, cacheState) };
     }
@@ -952,10 +840,35 @@ internal static partial class LeanCacheEnsureCommand
     /// Bounds Release archive retrieval so the main-checkout producer retains time to finish.
     /// Linked-worktree ensure paths never consume this budget because archive retrieval is disabled.
     /// </summary>
-    private static TimeSpan ArchiveBudget =>
-        TimeSpan.FromMinutes(
-            LeanCacheBudgetPolicy.LeanInspectJobBudgetMinutes
-                - LeanCacheBudgetPolicy.PostArchiveReserveMinutes);
+    private const string ReleaseTransportTimeoutVariable =
+        "STRATALINT_LEAN_CACHE_RELEASE_TIMEOUT_SECONDS";
+    private const int ReleaseTransportTimeoutMaximumSeconds = 21600;
+    private const int ReleaseEnclosingHeadroomSeconds = 120;
+
+    /// <summary>
+    /// Resolve the optional Release transport policy only inside the archive fetch
+    /// failure boundary. The default remains 45 minutes minus its two-minute
+    /// post-archive reserve; an explicit transport extension receives bounded
+    /// headroom so the enclosing process does not cut it off first.
+    /// </summary>
+    private static TimeSpan ArchiveBudget()
+    {
+        var defaultSeconds = (LeanCacheBudgetPolicy.LeanInspectJobBudgetMinutes
+            - LeanCacheBudgetPolicy.PostArchiveReserveMinutes) * 60;
+        var raw = Environment.GetEnvironmentVariable(ReleaseTransportTimeoutVariable);
+        if (raw is null) return TimeSpan.FromSeconds(defaultSeconds);
+        if (!int.TryParse(raw, System.Globalization.NumberStyles.None,
+                System.Globalization.CultureInfo.InvariantCulture, out var configured)
+            || configured < 1 || configured > ReleaseTransportTimeoutMaximumSeconds)
+        {
+            throw new InvalidOperationException(
+                $"{ReleaseTransportTimeoutVariable} must be 1..{ReleaseTransportTimeoutMaximumSeconds}");
+        }
+
+        return TimeSpan.FromSeconds(Math.Max(
+            defaultSeconds,
+            configured + ReleaseEnclosingHeadroomSeconds));
+    }
 
     private static string RecordColdBuildConsent(string receipt)
     {

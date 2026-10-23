@@ -1,0 +1,12 @@
+**定义 42.1（连续速度 Green 算子）。** 取 \(v\in C([0,1])\) 满足
+\[
+0<v_-\le v(u)\le v_+<\infty.
+\]
+在固定的反射—吸收连续模型中定义
+\[
+(\mathsf T_v f)(x)
+ =\frac1D\int_0^1(1-\max(x,y))v(y)f(y)\,dy,
+\qquad f\in C([0,1]).
+\]
+相应的加权 Hilbert 空间为 \(L^2([0,1],v(y)\,dy)\)。
+

@@ -1,0 +1,16 @@
+**Theorem 5.1 (inherited paid-service obstruction).** Under ARH
+Assumption 1.3 on the entire $D_C$, no deterministic effective legal
+source-total service for $R_Q$ has a uniform finite new-read bound,
+including adaptive arbitrary-finite-word reads, same-register forward
+updates and variable absorbing halt.
+
+Proof. Such a service would give a finite inclusive original determining
+depth by [ARH, (ARH.2.3)][ARH]. Theorem 3.3's finite counterpair at that
+depth has the same prefix and different exact complete rows in the same
+entire acquired fiber, a contradiction. All supplier hypotheses are
+retained: one original root, authentic $N\ge a$, paid acquisition and
+complete accessible-state cut. The witness iteration is offline
+mathematical counterinput production. It gives the service no rank,
+chart, equality, reset, clone, reroot or identity port. This is a
+supplier application, not a new action/resource optimum. $\square$
+

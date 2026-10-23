@@ -1,0 +1,24 @@
+**Proof.** The implication 1 to 3 is Theorem 15.2, and 3 to 2 follows from
+$\to_+\subseteq\to_<$. For the converse, choose $t\le q$ menu members
+$S_1,\ldots,S_t$ with empty intersection and pad the list by repetition to
+$R_1,\ldots,R_q$. Define $x^0=0$ and, for $1\le k\le q$,
+
+$$
+x^k_i=\max\{r\in\{0,\ldots,k\}:i\in R_{k-r+1},\ldots,R_k\},
+\tag{NAR.15.5}
+$$
+
+where the empty run has length zero. If $i\in R_k$, then
+$x^k_i=x^{k-1}_i+1$; otherwise it is reset to zero. No coordinate has a run
+of length $q$, because the padded $q$-fold intersection is empty, so every
+$x^k$ lies in $A_H$. Consequently
+$x^0\to_+x^1\to_+\cdots\to_+x^q$ is a $q$-edge walk. A strictly increasing
+map into $q$ ordered values cannot exist. Repeat the padded list periodically.
+Every coordinate is reset at least once per period. After the first period,
+its terminal consecutive-membership run therefore depends only on the
+periodic region list, so $x^{2q}=x^q$. All run lengths are at most $q-1$,
+and the next period gives a closed directed walk in $A_H$. Extracting a
+simple cycle is legitimate, but no chromatic conclusion follows merely
+from its existence.
+$\square$
+

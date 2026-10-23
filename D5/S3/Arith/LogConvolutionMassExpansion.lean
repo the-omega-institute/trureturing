@@ -29,7 +29,7 @@ Released under Apache 2.0 license as described in the upstream LICENSE:
 https://github.com/leanprover-community/mathlib4/blob/0826a5e4ff8877949060d03ce8955545bfb2b47f/LICENSE
 Authors of the three scalar supplier proofs: Terence Tao.
 
-The next three private scalar suppliers are minimal Apache-2.0 ports of
+The next three scalar suppliers are minimal Apache-2.0 ports of
 Terence Tao's Mathlib/Analysis/SpecialFunctions/Log/Sum.lean at immutable
 commit 0826a5e4ff8877949060d03ce8955545bfb2b47f (copyright 2026 Terence Tao).
 Source: https://github.com/leanprover-community/mathlib4/blob/0826a5e4ff8877949060d03ce8955545bfb2b47f/Mathlib/Analysis/SpecialFunctions/Log/Sum.lean
@@ -58,7 +58,7 @@ private theorem sum_log_floor_upper {x : ℝ} (hx : 1 ≤ x) :
       exact ae_restrict_of_forall_mem measurableSet_Ioc fun _ hy ↦ (log_nonneg hy.1.le)
     _ = _ := by grind [integral_log, log_one]
 
-private theorem sum_log_floor_lower {x : ℝ} (hx : 1 ≤ x) :
+theorem sum_log_floor_lower {x : ℝ} (hx : 1 ≤ x) :
     x * Real.log x - x - Real.log x + 1 ≤ ∑ n ∈ Ioc 0 ⌊x⌋₊, Real.log n := by
   have : 1 ≤ ⌊x⌋₊ := by simpa
   calc

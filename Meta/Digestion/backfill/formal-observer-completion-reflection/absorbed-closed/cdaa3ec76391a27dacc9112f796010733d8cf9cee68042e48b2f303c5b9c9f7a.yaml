@@ -1,0 +1,13 @@
+fingerprints:
+  raw_sha256: sha256:cdaa3ec76391a27dacc9112f796010733d8cf9cee68042e48b2f303c5b9c9f7a
+  normalized_sha256: sha256:cdaa3ec76391a27dacc9112f796010733d8cf9cee68042e48b2f303c5b9c9f7a
+cas_ref: sha256:cdaa3ec76391a27dacc9112f796010733d8cf9cee68042e48b2f303c5b9c9f7a
+coverage_gids:
+  - gid: D5/S3/Entropy/EntropyNonneg.conditional_entropy_nonneg
+    target_statement_id: sha256:8e9a24b9e689033875b300934327dc2f85ed23f76dd7189184ed361a2496c448
+  - gid: D5/S3/Entropy/Observation/AuthorInformationDecomposition.author_information_decomposition
+    target_statement_id: sha256:3e5d5c41d32ceb24deacbd9b6cf268664c333af3e8d99532af994a60dfb5312a
+  - gid: D5/S3/Entropy/Submodularity/ConditionalMutualInformation.conditional_mutual_information_nonneg
+    target_statement_id: sha256:f76780509f5a59f682d9c37122003f97d5c5cb676c5ba76ce6d5c233b116f1ea
+receipts:
+  unresolved_subitems: []

@@ -1,0 +1,48 @@
+**定理 84.3（有限能量下精确标签的一致错误上确界）。** 若 $S<\infty$，取任意一个共同、来源独立的可测概率核 $Q:\Omega_r\to\operatorname{Prob}(\mathcal M)$，其中 $\mathcal M=\{2,3,\ldots\}\cup\{\bot\}$ 取离散可测结构。记解码输出为 $D$，其来源 $m$ 下的分布为 $\mu_m^rQ$，并把拒答和不终止都记为 $\bot$、计入无条件错误。则
+
+$$
+\begin{aligned}
+\Pr_m(D=m)&\longrightarrow0, &\Pr_m(D\ne m)&\longrightarrow1,\\
+\sup_{m\ge2}\Pr_m(D\ne m)&=1,&
+\inf_D\sup_{m\ge2}\Pr_m(D\ne m)&=1.
+\end{aligned}
+\tag{84.13}
+$$
+
+下确界遍历上述全部共同核，包含确定性规则以及使用共同独立种子的随机规则，且允许读取整个无限四格档案。上确界不必由某个有限 $m$ 取得，结论也不声称每个固定来源的错误率都是 $1$。
+
+**证明。** 在同一个比较律下置 $\nu_\infty=\mu_\infty^rQ$，并令 $f_m(\omega)=Q(\omega,\{m\})\in[0,1]$。核的可测性使 $\{f_m>t\}$ 是共同原始可测事件。对 $[0,1]$ 上的层蛋糕积分，直接复用 TV 的事件界：
+
+$$
+\begin{aligned}
+\left|\int f_m\,d\mu_m^r-\int f_m\,d\mu_\infty^r\right|
+&=\left|\int_0^1\bigl[\mu_m^r\{f_m>t\}-\mu_\infty^r\{f_m>t\}\bigr]\,dt\right|\\
+&\le\operatorname{TV}(\mu_m^r,\mu_\infty^r).
+\end{aligned}
+\tag{84.14}
+$$
+
+这是证明内部的普通 TV 数据处理步骤，不另立通用核定理。正确输出事件随 $m$ 变化，但 TV 对全部共同可测事件的一致界仍适用。因此
+
+$$
+\Pr_m(D=m)
+\le\nu_\infty(\{m\})+\frac4{\sqrt3}\frac{\sqrt S}m
+\longrightarrow0,
+\qquad
+\sum_{m\ge2}\nu_\infty(\{m\})\le1.
+\tag{84.15}
+$$
+
+可和的非负原子质量趋于零，故右端两项都趋于零。原子项不能丢掉；这里不给每个解码器一个普遍的 $O(1/m)$ 成功率界。错误率为 $1-\Pr_m(D=m)$，于是每个共同核的错误上确界等于 $1$；再对全部核取下确界，仍为 $1$。证毕。
+
+共同独立种子 $s\sim\lambda$ 和共同可测输出 $d(\omega,s)$ 诱导同一个核 $Q(\omega,C)=\lambda\{s:d(\omega,s)\in C\}$。对停止规则，每个有限停止输出事件可测，且
+
+$$
+\{d(\omega,s)=m\}
+=\bigcup_{t\ge0}\{\tau=t,\ \widehat m=m\};
+\qquad d(\omega,s)=\bot\ \text{于永不停止或拒答时}.
+\tag{84.16}
+$$
+
+这给出全域可测输出和共同核，即使该规则在 $\mu_\infty^r$ 下不几乎必然停止也成立。共同种子不得改成携带 $m$ 的建议或来源依赖种子。因此有限能量障碍涵盖随机停止程序、确定性规则与全档案程序，也涵盖任何先把四格压缩为异色位的规则。
+

@@ -1,1 +1,1 @@
-{"statement_id":"sha256:e8c451dac06fbab838d71aa91401e817ba400060731d8e07cf9b2177e990ca85"}
+{"statement_id":"sha256:e8c451dac06fbab838d71aa91401e817ba400060731d8e07cf9b2177e990ca85","declarations":[{"declaration_name_key":"ns(ns(ns(ns(ns(n0,2:D5),2:S1),10:Recurrence),22:PellPartialSumMaxIndex),10:partialSum)","kind":"def"},{"declaration_name_key":"ns(ns(ns(ns(ns(n0,2:D5),2:S1),10:Recurrence),22:PellPartialSumMaxIndex),6:result)","kind":"theorem"}]}

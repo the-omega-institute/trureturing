@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:2bc951136ae7b2eb85914ad353eb7542b6c191477f1ae16e8c55f3aecfe40603
+  normalized_sha256: sha256:2bc951136ae7b2eb85914ad353eb7542b6c191477f1ae16e8c55f3aecfe40603
+cas_ref: sha256:2bc951136ae7b2eb85914ad353eb7542b6c191477f1ae16e8c55f3aecfe40603
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 定义99.1只规定隐藏链的假设、输出词律及矩阵记号，不断言有限反序截止。
+    previous_atom_id: 390c5fb0fd3d768d8277e495c7050c2c669dd43f67a32225c692ad573d61110e
+    next_atom_id: ad54a8a2832f600e0e5ba3eee0dcbcf3ceda54d7ea5372362034719223f3f845

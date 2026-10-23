@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:797af5fbb54d3c6bd8635d5e73ae100fb93c9e290274df685720be02f667c83b
+  normalized_sha256: sha256:797af5fbb54d3c6bd8635d5e73ae100fb93c9e290274df685720be02f667c83b
+cas_ref: sha256:797af5fbb54d3c6bd8635d5e73ae100fb93c9e290274df685720be02f667c83b
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 定理 43.5（幂图、零次幂、一次幂与重复坐标）。的证明段，仅展开该陈述的推导及说明，不另提出独立命题；本收据不替代原陈述的形式化覆盖。
+    previous_atom_id: a22c7b3f0bda1cfc77f1641a44d5fc8a8f7432c5da7402c2cca8b20c69dcd095
+    next_atom_id: 2ebe55786a343bd4525e657f48caa8efbc4bf805de0f86df6ef639ea6ae57e05

@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:f821db54d41c36f794ba64ad1ab29a17209471f3e78f4ca28ad0a26c03852018
+  normalized_sha256: sha256:f821db54d41c36f794ba64ad1ab29a17209471f3e78f4ca28ad0a26c03852018
+cas_ref: sha256:f821db54d41c36f794ba64ad1ab29a17209471f3e78f4ca28ad0a26c03852018
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 证明段（**证明。** 令 $e=u-v$。前述负裕量和 Cauchy--Schwarz 不等式给出  $$ \langle e,e'\rangle…）只展开前文定理或命题的论证，式子和中间推导不另提出独立陈述。
+    previous_atom_id: 0f9c3840359637d73c919bbc7f3f97cf7f63fd6b4ba191bbd7d31238eea64f26
+    next_atom_id: 1d2ecbac4099ef59e5c7e635ba6185d271879f3118e50f6dcf466ec4ff8ecdba

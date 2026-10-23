@@ -1,0 +1,14 @@
+**Proposition 10.5 (sharp coefficient at the atomic pair).** For every
+rational $0<q<1/2$,
+
+$$
+D_q(\rho^2\alpha,\rho^2\beta)
+=2q
+=2q\,D_q(\alpha,\beta).
+\tag{NMF.10.5}
+$$
+
+Hence no constant smaller than $2q$ can replace $2q$ in
+(NMF.10.3) uniformly over finite native inputs. This is exact equality
+at $(s,t)=(\alpha,\beta)$, not an asymptotic estimate.
+

@@ -1,0 +1,39 @@
+**定理 78.3.1（含 A 的原边短闭路障碍）。** 对每个偶数 $m\ge2$、每个奇数 $p>1$、每个 $S\in\Lambda^{p-2}$、全部四对 $(a,b)$、每个实预算 $0\le\beta<\lambda$，固定78.1的同一个已给有限逆闭合 $B$、完整原 $G_B$ 及同图实际本原 typed singleton rival。选择
+
+$$
+C_0,\ldots,C_{m-2}\in\{A,D_-,D_+\},\qquad
+\mathcal I_A=\{i:C_i=A\}\ne\varnothing,
+$$
+
+$$
+\Pi=C_0\cdots C_{m-2},\qquad
+T=\Pi S,\qquad U=\Pi D_-,\quad W=\Pi D_+,
+\qquad h=mp.
+\tag{78.16}
+$$
+
+只量化这两条完整词逐步实际合法且第一 guard 从零返回零的输入。若全部命名位置通过(78.9)，令 $j_*=(m-1)p$，则对每个 $i\in\mathcal I_A$ 有
+
+$$
+H_{ip}\subseteq\operatorname{int}H_{j_*},\qquad
+P_{ip}=P_{j_*}\quad\text{作为整个标量原片},
+\tag{78.17}
+$$
+
+且完整原图中已经有一条配对边 $v_{j_*}\to v_{ip+1}$。这条边与已有共同链闭合为长度
+
+$$
+d_i=(m-1-i)p,\qquad 0<d_i<h
+\tag{78.18}
+$$
+
+的原配对闭游走。若 $\mathcal S$ 是包含命名核心的原 SCC，$k_{\mathcal S}$ 为其非空返回长度 gcd，则
+
+$$
+k_{\mathcal S}\mid h,\qquad k_{\mathcal S}\mid d_i\quad(i\in\mathcal I_A),\qquad
+k_{\mathcal S}\mid p\,\gcd\bigl(m,\{m-1-i:i\in\mathcal I_A\}\bigr).
+\tag{78.19}
+$$
+
+因此不能完成指定 gcd $h$、$h+2$ 个不同完整命名顶点的整个原最小目标。只断言整除，不断言精确 gcd。式(78.17)不宣称不同 incoming guard 下的完整第一节点相等；完整边转移的类型核对是证明的一部分。78.8的旧域扣除限定计入内容，不是定理的附加前提。
+

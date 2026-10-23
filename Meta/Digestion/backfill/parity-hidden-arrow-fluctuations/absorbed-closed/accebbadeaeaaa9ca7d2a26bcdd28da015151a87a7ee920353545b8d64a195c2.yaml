@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:accebbadeaeaaa9ca7d2a26bcdd28da015151a87a7ee920353545b8d64a195c2
+  normalized_sha256: sha256:accebbadeaeaaa9ca7d2a26bcdd28da015151a87a7ee920353545b8d64a195c2
+cas_ref: sha256:accebbadeaeaaa9ca7d2a26bcdd28da015151a87a7ee920353545b8d64a195c2
+coverage_gids:
+  - gid: D5/S3/Estimation/SequentialDecisionRisk/FiniteWeightedSubsetNegativeAssociation.weighted_slice_negative_association
+    target_statement_id: sha256:815adc8587ca0637efb114170a934956e33de0f9e12e5ba45ea40e7cad11f36a
+receipts:
+  unresolved_subitems: []

@@ -1,0 +1,20 @@
+**定义 48.3（共同历史的实际剩余）。** 固定同一公共初始化、有效族及已经实际达到的共同有限记录 $\omega$，使用 §45 定义 45.2 的字段
+
+$$
+\mathsf B_\omega=(j,U,V,P,Q,I,(z_i)_{i\in I},r_0,\ldots,r_{j+1}).
+\tag{TM.4806}
+$$
+
+$j$ 是完整接受 $\rho$ 次数；$P,Q$ 是已知有序外因子；$I\subseteq\{0,1,2\}$ 只保存由真实当前读规范化取得的初始窗。$r_k$ 是相应 Fibonacci 方向的最大非负拒绝下界。令
+
+$$
+\lambda_k=F_{k+1}a+F_{k+2}b,
+\qquad
+\Psi_\omega=V_H\wedge\Phi\wedge(\lambda_j\le H-U)
+ \wedge\bigwedge_{k=0}^{j+1}(\lambda_k\ge r_k+1)
+ \wedge\bigwedge_{i\in I}(E_i=z_i).
+\tag{TM.4807}
+$$
+
+三重代数单位只表示尚无外材料，不属于可调用的空来源。输入的真实历史、上下文身份及系数解析费用另计；压缩字段不声称重建任意旧程序状态。实际非空节点有 $j\le J_H=\max\{j:F_{j+1}\le H\}=O(B_H)$，$0\le U\le V\le2U$、$U\le H-1$、$r_k\in[0,H]$，均复用 §§45、47。取 $L$ 为族、多面体条件、$H$ 和紧凑字段的总位长；完整来源描述、原始系数响应及字面档案不计入这个压缩输入。Fibonacci 系数按指标生成，或全部显式列出，均有 $L=O(s+B_H^2)$ 的充分表示界。
+

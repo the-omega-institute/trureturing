@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:d07e87f4147ba1ee74aa496ac95afb41d3b452f4f356f72b9495a42a4cd0167d
+  normalized_sha256: sha256:d07e87f4147ba1ee74aa496ac95afb41d3b452f4f356f72b9495a42a4cd0167d
+cas_ref: sha256:d07e87f4147ba1ee74aa496ac95afb41d3b452f4f356f72b9495a42a4cd0167d
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 定义 438.1（模 declassification 非干扰）：本段仅约定名称、符号及其判定条件；不主张满足条件的对象存在，也不追加性质定理。
+    previous_atom_id: da738fd44776b669208e77e10e9141b4405e0683903268eaf1e1a74a24812986
+    next_atom_id: 719608d9d50d7e9ef251f9d1b1e5cb58e74d45669e996a7e8507cf8cb497a739

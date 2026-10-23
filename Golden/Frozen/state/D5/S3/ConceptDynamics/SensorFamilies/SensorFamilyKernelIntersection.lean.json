@@ -1,1 +1,1 @@
-{"statement_id":"sha256:35b5168b689330136ad13923cb9f78b3868c42be4db5c6ddf0e2b24ab7caee5c"}
+{"statement_id":"sha256:35b5168b689330136ad13923cb9f78b3868c42be4db5c6ddf0e2b24ab7caee5c","declarations":[{"declaration_name_key":"ns(ns(ns(ns(ns(ns(n0,2:D5),2:S3),15:ConceptDynamics),14:SensorFamilies),30:SensorFamilyKernelIntersection),30:joint_readout_kernel_eq_iInter)","kind":"theorem"}]}

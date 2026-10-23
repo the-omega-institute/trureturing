@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:43c707b49f9cddabc2e5e1935c0fafe889ad4ef229a914b8800e5965f11c6625
+  normalized_sha256: sha256:43c707b49f9cddabc2e5e1935c0fafe889ad4ef229a914b8800e5965f11c6625
+cas_ref: sha256:43c707b49f9cddabc2e5e1935c0fafe889ad4ef229a914b8800e5965f11c6625
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 定义9.4只规定候选恢复核、无旁路输入约束及所得联合律的记号，不提出恢复成功或误差界命题。
+    previous_atom_id: 3d90c1b424ee12594fa3d57fc7a74ddfa08e99c5c4d0c295016a992873b9d1e3
+    next_atom_id: 0432f016d101621362cd90f019138b968360657277b187616193b15b1fd31a6f

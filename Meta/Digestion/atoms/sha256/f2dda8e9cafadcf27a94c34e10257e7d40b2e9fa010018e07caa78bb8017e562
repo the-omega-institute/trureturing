@@ -1,0 +1,21 @@
+**Proof.** Apply Theorem 3.2 directly to the actual image
+$t=\mathscr F_*(x)=\rho u_x$. Its current alpha label is $A_{\theta_x}$,
+so (NBP.3.1) gives exactly the first equality in (NBP.10.9).
+At a visible parent of a reached cut, an alpha right child forces the
+whole parent to be $E$ by the image grammar; its two children were born
+from a predecessor beta leaf. Other reached cut occurrences are old.
+Every currently blocked member of $P\setminus H$ was also absent in
+the predecessor because old positions persist.
+
+Theorem 2.2 applied to this same transition gives
+$\operatorname{Back}_P(R_*,O_{\theta_x})=R_P(u_x)$. Its occurrence
+repair preserves old holes even when an old and a newborn occurrence
+share one current class; it canonically renames the restricted classes
+and retains all their equalities and disequalities. Its inverse exterior
+has the concrete beta parent of every newborn child, hence the complete
+guards for predecessor-blocked cuts, together with the guards for cuts
+already blocked in $C_*$. This is the whole row in the second equality,
+not just its newborn mask or alpha label. Proposition 10.2 makes every
+$\theta$ attained, and Theorem 3.2 supplies the stated target-label
+bijection. $\square$
+

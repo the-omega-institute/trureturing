@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:869bbbe40897ba88f8c68d101ac886a0a670fce096484867392cacff6e5dca75
+  normalized_sha256: sha256:869bbbe40897ba88f8c68d101ac886a0a670fce096484867392cacff6e5dca75
+cas_ref: sha256:869bbbe40897ba88f8c68d101ac886a0a670fce096484867392cacff6e5dca75
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 清单片段“顺序规则”仅列举主题、接口组成或考虑维度；本片段不陈述性质、存在性或推论。
+    previous_atom_id: ad8d891b3e2401d1ad1b2c9720c55bbd1c940273a88c265416834561d6856769
+    next_atom_id: 11ab58a585b96d8185af0872d7786f80b9931801e6823e677f843e97979d43b8

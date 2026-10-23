@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:28b1aad7621c32034591dd11fcb761a61119018dabc356e8951342b46e7373f5
+  normalized_sha256: sha256:28b1aad7621c32034591dd11fcb761a61119018dabc356e8951342b46e7373f5
+cas_ref: sha256:28b1aad7621c32034591dd11fcb761a61119018dabc356e8951342b46e7373f5
+coverage_gids:
+  - gid: D5/S3/Analytic/Interpolation/FractionalBranchGeometry.residual_distance_geometry
+    target_statement_id: sha256:a8e3cbe133fb556aacb00ab63caed346143d9cf2442fce99be647131c8c242d8
+receipts:
+  unresolved_subitems: []

@@ -1,1 +1,1 @@
-{"statement_id":"sha256:707635bf94087a07fbfb20d9b154a204759ff44d9bfd0154186f1c13d60630de"}
+{"statement_id":"sha256:707635bf94087a07fbfb20d9b154a204759ff44d9bfd0154186f1c13d60630de","declarations":[{"declaration_name_key":"ns(ns(ns(ns(ns(n0,2:D5),2:S0),11:Conventions),16:GeometricWeights),48:no_geometric_weights_match_zeckendorf_singletons)","kind":"theorem"}]}

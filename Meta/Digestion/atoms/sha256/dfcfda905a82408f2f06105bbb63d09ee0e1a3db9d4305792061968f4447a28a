@@ -1,0 +1,27 @@
+**Proof.**
+Variation of constants gives
+$u_n(t)=N_n\int_0^te^{-N_nsL_n}g_nf(t-s)\,ds$.
+Taking the readout and using (103.12) proves (106.2).
+For fixed $t>0$, the bounded test
+$\phi_t(s)=f(t-s)\mathbf1_{[0,t]}(s)$ has at most a discontinuity
+at $s=t$, where $\nu$ has no atom.
+Weak convergence (104.4) gives (106.3), with $f(t)$ supplied by
+the mass-one atom at zero.
+
+When $f(0)=0$, extend $f$ by zero to negative times.
+The tests $s\mapsto f(t-s)$ for $t\in[0,T]$ form a uniformly
+bounded equicontinuous family supported in $[0,T]$.
+A finite time net, weak convergence and bounded measure masses
+give uniform convergence of their integrals.
+Otherwise split $f(u)=f(0)+(f(u)-f(0))$ on $[0,T]$.
+The second part satisfies the preceding argument.
+For the first use convergence of the distribution functions
+$\nu_n([0,t])$ to $\nu([0,t])$ on $[\epsilon,T]$:
+monotonicity and continuity of the limiting distribution there
+give uniform convergence by a finite partition.
+The slow convolution tends to zero as $t\downarrow0$ by
+integrability of $k$, while $f(t)\to f(0)$.
+A nonzero initial state adds
+$\langle g_n,e^{-N_ntL_n}u_n(0)\rangle$ to (106.2);
+the zero-initial assumption is precisely what omits it. $\square$
+

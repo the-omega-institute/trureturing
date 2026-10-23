@@ -1,1 +1,1 @@
-{"statement_id":"sha256:f810b9f3f1bae1fe45ec254d6a0963e022b5617abb96d1e40c45373665e6ab73"}
+{"statement_id":"sha256:f810b9f3f1bae1fe45ec254d6a0963e022b5617abb96d1e40c45373665e6ab73","declarations":[{"declaration_name_key":"ns(ns(ns(ns(ns(n0,2:D5),2:S0),12:Certificates),35:CiglerConjectureSevenFiveRefutation),5:claim)","kind":"def"},{"declaration_name_key":"ns(ns(ns(ns(ns(n0,2:D5),2:S0),12:Certificates),35:CiglerConjectureSevenFiveRefutation),6:result)","kind":"theorem"}]}

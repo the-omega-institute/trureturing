@@ -1,0 +1,16 @@
+## 1. 目标与已经存在的接口
+
+令 G_(m,n)=P_m square P_n。可行代表对 (T,M) 由匹配 M 和与其端点不交的集合 T 构成；每个 t in T 在 A=T union V(M) 中最多有一个邻居。Omega(G) 是 |T|+|M| 的最大值。源文献 [S] 的代表选择给出 beta_2(G)<=psi_sq(G)<=Omega(G)。完整矩形的目标为三者等于
+
+\[
+F(m,n)=\max\left\{
+\left\lceil m/2\right\rceil\left\lceil2n/3\right\rceil+\left\lfloor m/2\right\rfloor\left\lfloor n/3\right\rfloor,
+\left\lceil n/2\right\rceil\left\lceil2m/3\right\rceil+\left\lfloor n/2\right\rfloor\left\lfloor m/3\right\rfloor
+\right\}.
+\]
+
+[G] 已有 beta_2 的全尺寸纸面证明、单方向代表匹配的全尺寸公式，以及偶数乘偶数矩形上的 4|T|+3|M|<=2mn。混合方向的系数一上界仍未证明。
+
+以下实际复用的仓库接口为：
+
+- `Blueprint/D5/S3/Combinatorics/Graph/HypercubeSubQuorum.md`：来源忠实的部分着色及单点/边代表选择。

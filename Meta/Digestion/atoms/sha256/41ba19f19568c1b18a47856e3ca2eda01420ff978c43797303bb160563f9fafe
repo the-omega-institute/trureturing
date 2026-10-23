@@ -1,0 +1,56 @@
+**Theorem 6.2 (exact all-source row-only maintenance criterion).** The following
+are equivalent:
+
+1. $G(P)$.
+2. There is a common effective finite-row function $F_P$ such that
+   $R_P(\rho u)=F_P(R_P(u))$ for every $u\in\mathcal T$.
+3. A current row alone determines every future same-$P$ row, effectively
+   in the finite-epoch response sense of Definition 3.2.
+
+Under the complete row-only handoff and separately supplied operation
+conditions, these are also equivalent to zero-new-query next-row service
+on every finite native source.
+
+**Proof.** Suppose $G(P)$. If a row has a left birth at $aL$, the concrete
+beta leaf at $a$ blocks every cut strictly below $a$. Condition $G(P)$
+puts every $q\in P$ below $a$, and $q=a$ is impossible since it would
+be a prefix of $aL\in P$. Thus there were no reached old holes: $k=0$.
+The only old alpha label is then $\bot$. If the row has no left birth,
+no label is needed. In both cases Theorem 2.1 computes the next row
+from the current row alone. It also computes the next alpha label from
+right births; Theorem 3.1 consequently gives the effective future
+procedure. This proves $1\Rightarrow2,3$ without assuming that each
+new row stores its old marker.
+
+For the converse, suppose $G(P)$ fails. Choose $aL,q\in P$ with
+$a\npreceq q$. The words $a,q$ are incomparable: if $q\preceq a$, then
+$q$ would be a distinct prefix of $aL$, contradicting prefix-freeness.
+Let $T=\{p\in P:a\npreceq p\}$. Every member of $T$ is incomparable
+with $a$, and $q\in T$. Construct the finite trie whose distinguished
+leaves are $a$ and the words in $T$; at each required internal node
+supply both children, filling any unused child by a concrete alpha leaf.
+Put a concrete beta at $a$ and one hole at each $p\in T$.
+All public cuts under $a$ are blocked by its beta leaf; every cut outside
+that cone is a reached hole. The result is one $P$-admissible exterior.
+
+Give its holes singleton classes. Fill $q$ by alpha in one source and
+beta in the other; fill the remaining holes in both sources by distinct
+branch trees. These values are distinct from both leaves and from each
+other, so (NAR.1.4) realizes the same old row in both sources.
+There is a left birth at $aL$, whose value is beta.
+The transported $q$ value is beta in the first source and a branch in
+the second. Their next partitions differ. This excludes any next-row
+factor, effective or otherwise, and any common future procedure.
+Thus $2\Rightarrow1$ and $3\Rightarrow1$; the next row is also an
+evaluation of the future procedure at one.
+
+A zero-query service from a complete row-only handoff has identical
+accessible initial state on the two sources, so its deterministic
+calculation must give the same output. Authentication and the permitted
+update supply no distinguishing label; its outputs cannot be correct
+on both constructed sources. Conversely the explicit finite
+calculation above supplies the zero-query value service when $G(P)$
+holds, with actual entry and update permissions separately supplied.
+The output is a row value, not a declaration of a new acquisition event.
+$\square$
+

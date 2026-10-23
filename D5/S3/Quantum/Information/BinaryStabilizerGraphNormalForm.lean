@@ -472,12 +472,12 @@ private lemma tensor_one {N : ℕ} :
     rw [if_neg h]
     exact Finset.prod_eq_zero (Finset.mem_univ i) (by simp [hi])
 
-private lemma tensor_adj {N : ℕ} (A : Fin N → Matrix (Fin 2) (Fin 2) ℂ) :
+lemma tensor_adj {N : ℕ} (A : Fin N → Matrix (Fin 2) (Fin 2) ℂ) :
     (tensorOp A)ᴴ = tensorOp (fun i => (A i)ᴴ) := by
   ext x y
   simp [tensorOp, Matrix.conjTranspose_apply]
 
-private lemma tensor_unitary {N : ℕ} (A : Fin N → Matrix (Fin 2) (Fin 2) ℂ)
+lemma tensor_unitary {N : ℕ} (A : Fin N → Matrix (Fin 2) (Fin 2) ℂ)
     (hA : ∀ i, A i ∈ Matrix.unitaryGroup (Fin 2) ℂ) :
     tensorOp A ∈ Matrix.unitaryGroup (Fin N → Fin 2) ℂ := by
   apply Matrix.mem_unitaryGroup_iff'.mpr
@@ -488,13 +488,13 @@ private lemma tensor_unitary {N : ℕ} (A : Fin N → Matrix (Fin 2) (Fin 2) ℂ
   rw [he]
   exact tensor_one
 
-private lemma tensor_smul {N : ℕ} (r : Fin N → ℂ)
+lemma tensor_smul {N : ℕ} (r : Fin N → ℂ)
     (A : Fin N → Matrix (Fin 2) (Fin 2) ℂ) :
     tensorOp (fun i => r i • A i) = (∏ i, r i) • tensorOp A := by
   ext x y
   simp [tensorOp, Finset.prod_mul_distrib]
 
-private lemma tensor_weyl {N : ℕ} (v : ((Fin N → ZMod 2) × (Fin N → ZMod 2))) (f : (Fin N → ZMod 2)
+lemma tensor_weyl {N : ℕ} (v : ((Fin N → ZMod 2) × (Fin N → ZMod 2))) (f : (Fin N → ZMod 2)
   → ℂ) :
     tensorOp (fun i => wmat (v.1 i) (v.2 i)) *ᵥ f = weyl v f := by
   classical
@@ -572,7 +572,7 @@ private lemma stabilizer_weyl {N : ℕ} (ψ : (Fin N → ZMod 2) → ℂ)
   simpa only [hop] using hline'
 
 
-private def gate (h : Bool) (d : ZMod 2) : Matrix (Fin 2) (Fin 2) ℂ :=
+def gate (h : Bool) (d : ZMod 2) : Matrix (Fin 2) (Fin 2) ℂ :=
   (if d = 0 then 1 else !![1, 0; 0, Complex.I]) *
     (if h then BinaryStabilizerLocalInequivalence.hadamard else 1)
 
@@ -588,7 +588,7 @@ private lemma wmat_unitary (a b : ZMod 2) :
       Matrix.mul_apply, Fin.sum_univ_two,
       Matrix.star_eq_conjTranspose, Matrix.conjTranspose_apply]
 
-private lemma gate_unitary (h : Bool) (d : ZMod 2) :
+lemma gate_unitary (h : Bool) (d : ZMod 2) :
     gate h d ∈ Matrix.unitaryGroup (Fin 2) ℂ := by
   have hs : s2 ^ 2 = 1 / 2 := by
     simp only [s2]

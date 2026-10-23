@@ -1,0 +1,11 @@
+**Proof.** A completed ordered labelled tree is determined by its reply at
+every finite address, so equality is equivalent to equality of its four
+reply languages. Theorem 13.4 gives (SPC.55)'s machine languages. The
+supplier's Appendix explicitly transfers decidability from its normalized
+presentation to this classical final-state convention. Apply it separately
+to the four finite machine pairs. No real-time-only, empty-counter-only or
+unlabelled-trace convention is used, and the supplier's NL classification is
+not transferred to a compact-input complexity claim for these native
+expressions. $\square$
+
+

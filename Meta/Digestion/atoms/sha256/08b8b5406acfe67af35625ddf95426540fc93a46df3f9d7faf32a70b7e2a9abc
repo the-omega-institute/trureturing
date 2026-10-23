@@ -1,0 +1,42 @@
+**Proof (literal responses and safe two-block feedback attainment).** Use the physical charge paths and inverse of (27.3)–(27.5), equivalently [INITIAL Interface 1.4](KBONACCI_INITIAL_TARGET_COST_THEORY.md#1-one-reader-one-joint-prior-and-one-fee). Block index $t=0$ means the first block actually issued after INITIAL. For any successful literal word $x=x_0\cdots x_{m-1}$,
+
+$$
+ q_t(j)=\bigoplus_{i=0}^{m-1}x_i c_{-j+tm+i},\qquad
+ W_t=[tm,tm+m]\pmod T.
+\tag{31.5}
+$$
+
+Its support is contained in the full ordered path $W_t$ and has even total charge there. All its vertices are actual in (31.1). This parity is on the entire physical path, before restriction to a reached archive.
+
+Consider the following complete literal words; the same word at a different chronological index need not have the same support.
+
+$$
+ R=0\,1^{m-3}0\,1,\qquad
+ X=0\,1^{m-2}0,\qquad
+ Y=0^{m-1}1,\qquad Z=1^m.
+\tag{31.6}
+$$
+
+Each has exactly $m$ bits. Direct substitution in the supplied path-charge formula gives
+
+$$
+ \begin{aligned}
+ \operatorname{supp}q_0^R&=\{1,m-2,m-1,m\},\\
+ \operatorname{supp}q_1^X&=\{m+1,0\},\\
+ \operatorname{supp}q_1^Y&=\{0,1\},\\
+ \operatorname{supp}q_2^Z&=\{1,m+1\}.
+ \end{aligned}
+\tag{31.7}
+$$
+
+For example, $X$ has its two transitions at physical vertices $m+1$ and $2m-1\equiv0$; $Y$ has them at $2m-1\equiv0$ and $2m\equiv1$. These supports are full-path charges of actual words, with their safety checked below.
+
+Let $y_0=v$ and let $y_{t+1}$ be this source's scalar endpoint after its $(t+1)$st issued block. On a successful prefix define $\Delta_t=y_{t+1}\oplus y_t$. Issue $R$. If its first paid difference is zero, issue $X$ and return $A$ or $C$ according as the second difference is zero or one. If the first paid difference is one, issue $Y$ and return $B$ or $D$ according as the second difference is zero or one. The two-block codes are
+
+$$
+ A:00,\qquad C:01,\qquad B:10,\qquad D:11.
+\tag{31.8}
+$$
+
+The root first zero clears every inherited tail, including $k-1$, and $R$ ends with current tail one. Both possible second words start zero and clear that tail; their internal one-runs have lengths $m-2$ and one, respectively, all strictly below $k$. The root's internal run has length $m-3<k$. Therefore both entire issued prefixes are safe on all phases, both values and every inherited legal tail under both alphabets. Each live source acquires its own two endpoints and stops immediately there; there is no preparation, extra clearing block or terminal cleanup. Initial bottom instead returns $y_\bot$ freely. Together with the supplied lower bound, this proves $C_{\rm ad}^{v}=C_{\rm ad}=2$.
+

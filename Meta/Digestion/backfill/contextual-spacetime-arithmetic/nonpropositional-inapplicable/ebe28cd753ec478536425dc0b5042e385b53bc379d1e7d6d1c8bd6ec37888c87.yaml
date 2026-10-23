@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:ebe28cd753ec478536425dc0b5042e385b53bc379d1e7d6d1c8bd6ec37888c87
+  normalized_sha256: sha256:ebe28cd753ec478536425dc0b5042e385b53bc379d1e7d6d1c8bd6ec37888c87
+cas_ref: sha256:ebe28cd753ec478536425dc0b5042e385b53bc379d1e7d6d1c8bd6ec37888c87
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 本段只证明前述上下文等价刻画的充分方向。
+    previous_atom_id: 556be43ffe882a05a2aafb6fd18df584d4004118c76b9a90521b0a6c4f5b22f3
+    next_atom_id: 96f6b48dfc2e77188314cf2ee1ac3fd8e2da65a4570b3bc450516615721b97de

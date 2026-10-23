@@ -1,0 +1,110 @@
+### 72.1 给定完整原图与四倍周期目标
+
+本章使用[原实际地址、规范片与整条来源提升][72源原图]、[第60章的最小结构和联合必要限制][72源60]、[第63章的命名返回判据][72源63]、[第64章的类型和预算范围][72源64]及[第65章的第六位置锁定][72源6566]。第65—71章的其他已覆盖情形按72.3直接复用。本章只处理一个有限竞争来源族在同一个原图中的条件性排除。
+
+一个时间步删除一个三位窗口，$0$ 是单个空窗标签，$25$ 是单个标签。置
+
+$$
+g=\sqrt5-2,\qquad g^2+4g=1,\qquad
+ t=\frac{1+g}{2},\qquad u=\frac{1-g}{2}=t^2,\qquad
+\phi=1+t,\qquad \lambda=\frac{u}{10},\qquad
+0\le\beta<\lambda,\qquad \delta=\lambda-\beta>0.
+\tag{72.1}
+$$
+
+实际状态地址域为 $A_0=\Omega$、$A_1=\{\omega\in\Omega:\omega_0=0\}$，状态区间为 $I_0=[-1,\phi]$、$I_1=[-1,t]$。实际前接分支、逆分支和全部合法 guard 为
+
+$$
+f_a(x)=\Delta_a-gx,\qquad F_a(x)=\frac{\Delta_a-x}{g},\qquad
+(\Delta_3,\Delta_0,\Delta_5,\Delta_2,\Delta_{25})=(-t,0,u,1,2-t),
+$$
+
+$$
+0\to0:3,0,2;\qquad 0\to1:5,25;\qquad
+1\to0:3,0;\qquad 1\to1:5.
+\tag{72.2}
+$$
+
+词的复合为 $f_{a_0\cdots a_{d-1}}=f_{a_0}\circ\cdots\circ f_{a_{d-1}}$。标签 $3,0,5,2,25$ 的根像按空间次序分别是 $[-1,-u],[-u,g],[g,t],[t,2t],[2t,\phi]$；guard 一只允许前三块，在闭端点 $t$ 允许 $5$ 而不允许 $2$。incoming guard 始终来自给定实际路径的前一标签输出，初始 guard 单独声明，不能由当前标签重选。
+
+为避免与有限端点集 $B$ 混淆，记临界色端点为
+
+$$
+\begin{aligned}
+A_c&=\frac{3(g-1)}5,&B_c&=\frac{11g-1}{10},&C_c&=\frac{6g-1}5,&D_c&=\frac{3+7g}{10},\\
+E_c&=\frac{1+4g}5,&H_3&=\frac{7+13g}{10},&L_4&=\frac{3+7g}5,&H_4&=\frac{11+9g}{10}.
+\end{aligned}
+$$
+
+六个原闭色为
+
+$$
+\begin{aligned}
+E_0^\beta&=[-1,-u-\delta],&E_1^\beta&=[A_c+\delta,B_c-\delta],\\
+E_2^\beta&=[C_c+\delta,D_c-\delta],&E_3^\beta&=[E_c+\delta,H_3-\delta],\\
+E_4^\beta&=[L_4+\delta,H_4-\delta],&E_5^\beta&=[2t+\delta,\phi].
+\end{aligned}
+\tag{72.3}
+$$
+
+固定已经给定的有限端点集 $B\subseteq I_0$。它包含全部原观察、guard 和合法根域端点，并满足每个原标签的域过滤逆闭合：$e\in B$ 且 $F_a(e)\in I_0$ 时，$F_a(e)\in B$。每个 $B_s=B\cap I_s$ 的全部端点单点和相邻端点之间的整个闭片均保留。完整原来源边恰按
+
+$$
+(s,P)\xrightarrow a(s',Q)
+\quad\Longleftrightarrow\quad
+s\xrightarrow a s'\text{ 合法},\qquad
+P\subseteq f_a(I_{s'}),\qquad f_a(Q)\subseteq P
+\tag{72.4}
+$$
+
+取全部边；最后一个包含等价于 $Q\subseteq F_a(P)$。原配对图 $G_B$ 保留两个原节点的完整身份、两个实际 guard、两片及共同原闭色资格。共同色 $c$ 要求整个第一片和第二片都包含于 $E_c^\beta$，出发顶点选色，路径终端不重复观察。原端点归属固定不变。这里不更换 $B$、重新划片或删去原边。
+
+固定一个同图已供应的相干实际本原 typed singleton rival，其相位节点为 $(u_r,\{y_r\})$，周期为奇数 $p>1$；全部 singleton 及其实际周期边已经属于这同一个原图。共同链及两条命名返回取为
+
+$$
+U=Ta3,\qquad W=Tb0,\qquad |T|=h-2,\qquad h=4p,
+\qquad (a,b)\in\{(3,0),(0,5),(5,2),(2,25)\}.
+\tag{72.5}
+$$
+
+每一步实际 guard 合法，第一 guard 均从零返回零。共同链位置为 $i=0,\ldots,h-3$，分叉后的两类为 $D_\pm,E_\pm$，命名相位分别为 $i,h-2,h-1$。第二相位为 $r_*+\operatorname{ph}(v)\pmod p$，$r_*$ 只表示给定来源的索引起点。改变索引记号不改变实际来源、坐标、guard、原节点或边。
+
+完整最小目标采用定理63.3的全部条件，并按64.1—64.5解释。具体地，$H_v$ 是第63章式(63.3)—(63.8)由同一个基点任意实际 $U,W$ 块拼接形成的位置凸包；逐位置要求
+
+$$
+\begin{aligned}
+& H_v\subseteq I_{s_v}\text{，且位于给定实际首标签的合法根域};\\
+& B\cap\operatorname{int}H_v=\varnothing;\\
+& \exists c_v\in\{0,\ldots,5\},\quad
+H_v\cup\{y_{r(v)}\}\subseteq E_{c_v}^\beta.
+\end{aligned}
+\tag{72.6}
+$$
+
+这是全部(63.11)，不能改为单点相交。由命题63.2，它供应非退化原承载片 $P_v\supseteq H_v$、整个 $P_v$ 的共同色资格和所有拟议原全包含边。$h+2$ 个命名位置必须给出 $h+2$ 个不同完整配对顶点
+
+$$
+\bigl((s_v,P_v),(u_{r(v)},\{y_{r(v)}\})\bigr).
+$$
+
+记其集合为 $\mathcal C$。完整 $G_B$ 中每条 $v,w\in\mathcal C$ 的内部边都必须满足
+
+$$
+\operatorname{ph}(w)=\operatorname{ph}(v)+1\pmod h.
+\tag{72.7}
+$$
+
+外部路径仍在完整原图中定义，令
+
+$$
+X_0=\operatorname{Succ}(\mathcal C)\setminus\mathcal C,\qquad
+X_{n+1}=X_n\cup\bigl(\operatorname{Succ}(X_n)\setminus\mathcal C\bigr);
+\qquad
+\operatorname{Succ}(X_n)\cap\mathcal C=\varnothing\quad(n\ge0).
+\tag{72.8}
+$$
+
+式(72.7)、(72.8)分别保留(63.13)、全部(63.15)。它们与不同顶点、全部准入共同保证 $\mathcal C$ 是整个原 SCC，实际非空返回长度的 gcd 为 $h$，第一投影返回不相干，第二投影为上述相干 singleton rival。等价地，可直接假设定理63.3(1)的整个 period-$h$、$h+2$ 顶点命名实现。本章只在这个完整目标下使用60.2—60.6和65.2.1；仅有两条长 $h$ 返回不够。
+
+第60章适用的整片条带、后继限制、同源返回点间距、点界、宽度界及八行偏移／失配中的适用一行继续联合承担。各先修的原局部预算域保持各自条件，不能独立优化后拼接，也不能把不同局部域合并为同一许可。对全部实 $0\le\beta<\lambda$，有限图是已经给定的前提；31.2的数域端点构造不被扩大为任意实预算的有限图存在断言。
+

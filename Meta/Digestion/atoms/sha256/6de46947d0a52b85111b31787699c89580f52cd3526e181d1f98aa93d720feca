@@ -1,0 +1,24 @@
+## —Action-closed quotients, task controllers, and source-uniform kernels
+
+> **Machine contract.** This is a `generic-v1` theory reference volume. The
+> definitions and results below are ordinary mathematical prose, not Lean
+> declarations. They make no kernel-verification claim. The volume is an
+> append-only source and ends with an append anchor.
+
+**来源。** Author kind: mixed user-supplied material; original author and
+model unknown. Receipt date: 2026-10-13. 来源标识为本会话供文
+`fib-relational-fiber-calculus-continuation-v`。本卷是纯理论参考输入；其
+数学真值不取代 Lean 声明、证明项及其经内核核验的公理闭包。
+
+Continuation IV supplied an executable ExactChart boundary and a finite
+resource frontier. The next distinction is between two different minimization
+problems. A quotient that predicts every allowed future action is canonical;
+a controller minimized for one target may choose one of several incompatible
+strategies and therefore need not have a unique coarsest quotient.
+
+Continuation IV §107 in the current development branch gives the corresponding
+finite-dimensional boundary: one common action interface is transported to
+actual sources, while source-dependent outputs and resource tails remain in the
+same-source record. This volume first treats deterministic finite contracts,
+then states the source-uniform kernel extension and its limits.
+

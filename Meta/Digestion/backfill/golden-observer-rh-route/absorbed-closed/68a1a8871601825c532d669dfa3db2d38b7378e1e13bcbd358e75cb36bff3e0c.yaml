@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:68a1a8871601825c532d669dfa3db2d38b7378e1e13bcbd358e75cb36bff3e0c
+  normalized_sha256: sha256:68a1a8871601825c532d669dfa3db2d38b7378e1e13bcbd358e75cb36bff3e0c
+cas_ref: sha256:68a1a8871601825c532d669dfa3db2d38b7378e1e13bcbd358e75cb36bff3e0c
+coverage_gids:
+  - gid: D5/S3/Analytic/Isolation/RiemannZetaPositiveRealSign.riemannZeta_ofReal_sign
+    target_statement_id: sha256:dbaa4a12cccc9e2097ddad13fc2795f2abdb7548e864c5bf12af3214b8f4f0e9
+  - gid: D5/S3/Weil/ZetaBridge/AlternatingZetaContinuation.tendsto_alternating_partialSums_eta_of_ne_one
+    target_statement_id: sha256:ca0f0c4ac775854035cd9431b07120d20178091c50687140b45dc2e94fc9bd9c
+receipts:
+  unresolved_subitems: []

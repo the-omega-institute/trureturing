@@ -160,7 +160,19 @@ $$(claim: Prop) := \forall (\theta: \mathbb{R}), \theta \in \operatorname{Icc}(0
 
 Feasibility for every angle in [0, pi/2] consists of positive semidefiniteness of the six complex images and the four displayed affine equations. The map uses the standard real-to-complex inclusion; the identity is the real 2 by 2 identity matrix. Positive semidefiniteness requires nonnegative determinants.
 
-**Theorem 1.14 (Feasibility throughout the closed interval).**
+**Theorem 1.14 (Positive semidefiniteness from trace and determinant).**
+
+$$\forall (u: \mathbb{R}), \forall (v: \mathbb{R}), \forall (w: \mathbb{R}), ((0 < u + w) \land (0 \leq u \cdot w - v^{2})) \Rightarrow ((\begin{pmatrix}u & v\\v & w\end{pmatrix}).\operatorname{map}(ofReal): \operatorname{Matrix}(\operatorname{Fin}(2), \operatorname{Fin}(2), \mathbb{C})).PosSemidef$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/Quantum/Measurement/FreeSpectrahedronFeasibilityWitness.posSemidef_of_trace_det` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+A real symmetric two by two matrix whose trace is positive and determinant is nonnegative becomes positive semidefinite after entrywise inclusion into the complex numbers.
+
+**Theorem 1.15 (Feasibility throughout the closed interval).**
 
 $$claim$$
 
@@ -191,5 +203,6 @@ The six matrices satisfy the four affine identities. A real symmetric 2 by 2 mat
 - Truth anchor: `D5/S3/Quantum/Measurement/FreeSpectrahedronFeasibilityWitness.beta`
 - Truth anchor: `D5/S3/Quantum/Measurement/FreeSpectrahedronFeasibilityWitness.claim`
 - Truth anchor: `D5/S3/Quantum/Measurement/FreeSpectrahedronFeasibilityWitness.gamma`
+- Truth anchor: `D5/S3/Quantum/Measurement/FreeSpectrahedronFeasibilityWitness.posSemidef_of_trace_det`
 - Truth anchor: `D5/S3/Quantum/Measurement/FreeSpectrahedronFeasibilityWitness.result`
 - Dependency: [D5/S3/Constants/Radicals/SqrtThreeThreshold](../../Constants/Radicals/SqrtThreeThreshold.md)

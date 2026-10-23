@@ -1,0 +1,74 @@
+## 17. 五、FIB 隐藏关系的 Bayes 形式
+
+把 $\kappa$ 看作一个待推断参数，并令其先验为非退化分布 $\Pi$。
+
+对任意记录事件 $E=(\omega,g)$，定义
+
+$$
+\ell_E=M_\omega g.
+$$
+
+其似然为
+
+$$
+Q_E(\kappa)=
+p_\kappa\ell_E=
+Q_0+\kappa c_E,
+$$
+
+其中
+
+$$
+c_E=d\ell_E.
+$$
+
+因此后验为
+
+$$
+\Pi(d\kappa\mid E)
+\propto
+(Q_0+\kappa c_E)\Pi(d\kappa).
+$$
+
+于是得到：
+
+$$
+\boxed{
+\Pi(\cdot\mid E)=\Pi
+\quad\Longleftrightarrow\quad
+c_E=0.
+}
+$$
+
+也就是：
+
+$$
+\boxed{
+\text{记录事件能够更新 }\kappa
+\quad\Longleftrightarrow\quad
+dM_\omega g\neq0.
+}
+$$
+
+若先验方差为 $\operatorname{Var}_\Pi(\kappa)>0$，则后验均值变化为
+
+$$
+\mathbb E[\kappa\mid E]-\mathbb E[\kappa]=
+\frac{
+c_E\operatorname{Var}_\Pi(\kappa)
+}{
+\mathbb E_\Pi[Q_E(\kappa)]
+}.
+$$
+
+这给出了“隐藏关系何时进入未来预测”的严格判据。
+
+需要区分两种后验：
+
+1. $\Pi(\kappa\mid E)$：参数 $\kappa$ 的后验；
+2. $p_\kappa(s\mid E)$：固定 $\kappa$ 下状态 $s$ 的条件后验。
+
+上面的 $dM_\omega g\neq0$ 精确刻画的是第一种，即未来事件对隐藏参数的可辨识性。
+
+---
+

@@ -1,0 +1,6 @@
+对正定 Hamilton $A$，两正间隔之比无理时，混合词闭包
+$$
+\operatorname{span}\{(F_1^T)^k(F_2^T)^\ell W_0:k,\ell\ge0\}
+$$
+等于连续闭包。
+

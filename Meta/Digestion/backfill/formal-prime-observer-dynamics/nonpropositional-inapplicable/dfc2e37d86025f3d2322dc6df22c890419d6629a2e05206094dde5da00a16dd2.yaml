@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:dfc2e37d86025f3d2322dc6df22c890419d6629a2e05206094dde5da00a16dd2
+  normalized_sha256: sha256:dfc2e37d86025f3d2322dc6df22c890419d6629a2e05206094dde5da00a16dd2
+cas_ref: sha256:dfc2e37d86025f3d2322dc6df22c890419d6629a2e05206094dde5da00a16dd2
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 12. 最小素数传感器与集合覆盖：仅为节标题及导引或设定适用条件；本片段未陈述后续命题的结论。
+    previous_atom_id: 5cffa14cae31dca18f7f5814b83cd0eccf8d60ef0636150b74b7fc6f0fd1611b
+    next_atom_id: 10ae899bf7127f615acd6ba7c09bd65d5dfa33f80d94821308da520e9dd8dd84

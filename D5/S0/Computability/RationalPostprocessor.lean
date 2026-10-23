@@ -197,6 +197,7 @@ private def normalizeRun (state : PostControl) (xs : List Bool) :
       simp only [binaryWord, List.map_cons, List.map_nil, bitSymbol]
       dsimp [postMachine, TM2.stepAux, postCfg, postStacks, binaryWord, bitSymbol,
           isSymbol, symbolEq, readSymbol, clearSymbol, haltList]
+      dsimp only [cond]
       congr 1
       funext k
       cases k <;> rfl
@@ -211,6 +212,7 @@ private def normalizeRun (state : PostControl) (xs : List Bool) :
         simp only [binaryWord, List.map_cons, List.map_nil, bitSymbol]
         dsimp [postMachine, TM2.stepAux, postCfg, postStacks, binaryWord, bitSymbol,
           isSymbol, symbolEq, readSymbol, clearSymbol, haltList]
+        dsimp only [cond]
         congr 1
         funext k
         cases k <;> rfl
@@ -223,6 +225,7 @@ private def normalizeRun (state : PostControl) (xs : List Bool) :
         simp only [binaryWord, List.map_cons, List.map_nil, bitSymbol]
         dsimp [postMachine, TM2.stepAux, postCfg, postStacks, binaryWord, bitSymbol,
           isSymbol, symbolEq, readSymbol, clearSymbol, haltList]
+        dsimp only [cond]
         congr 1
         funext k
         cases k <;> rfl
@@ -247,6 +250,7 @@ private def reverseRun (state : PostControl) (xs out : List Bool) :
       simp only [binaryWord, List.map_cons, List.map_nil, bitSymbol]
       dsimp [postMachine, TM2.stepAux, postCfg, postStacks, binaryWord, bitSymbol,
           isSymbol, symbolEq, readSymbol, clearSymbol, haltList]
+      dsimp only [cond]
       congr 1
       funext k
       cases k <;> rfl
@@ -267,6 +271,7 @@ private def reverseRun (state : PostControl) (xs out : List Bool) :
         simp only [binaryWord, List.map_cons, List.map_nil, bitSymbol] <;>
         dsimp [postMachine, TM2.stepAux, postCfg, postStacks, binaryWord, bitSymbol,
           isSymbol, symbolEq, readSymbol, clearSymbol, haltList] <;>
+        dsimp only [cond] <;>
         congr 1 <;>
         funext k <;>
         cases k <;> rfl
@@ -302,6 +307,7 @@ private def shiftRun (state : PostControl) (xs : List Bool) (k : Nat) :
       apply congrArg some
       dsimp [postMachine, TM2.stepAux, postCfg, postStacks, isSymbol, symbolEq,
         readSymbol, clearSymbol]
+      dsimp only [cond]
       congr 1
       funext j
       cases j <;> rfl
@@ -323,6 +329,7 @@ private def shiftRun (state : PostControl) (xs : List Bool) (k : Nat) :
         simp only [binaryWord, List.map_nil, List.replicate_succ]
         dsimp [postMachine, TM2.stepAux, postCfg, postStacks, isSymbol, symbolEq,
           readSymbol, clearSymbol]
+        dsimp only [cond]
         congr 1
         funext j
         cases j <;> rfl
@@ -332,6 +339,7 @@ private def shiftRun (state : PostControl) (xs : List Bool) (k : Nat) :
           simp only [binaryWord, List.map_cons, List.replicate_succ] <;>
           dsimp [postMachine, TM2.stepAux, postCfg, postStacks, bitSymbol,
             isSymbol, symbolEq, readSymbol, clearSymbol] <;>
+          dsimp only [cond] <;>
           congr 1 <;>
           funext j <;>
           cases j <;> rfl
@@ -367,6 +375,7 @@ def denominatorZerosRun (state : PostControl) (xs : List Bool) (k t : Nat) :
       apply congrArg some
       dsimp [postMachine, TM2.stepAux, postCfg, postStacks, isSymbol, symbolEq,
         readSymbol, clearSymbol]
+      dsimp only [cond]
       congr 1
       funext j
       cases j <;> rfl
@@ -388,6 +397,7 @@ def denominatorZerosRun (state : PostControl) (xs : List Bool) (k t : Nat) :
       simp only [List.replicate_succ]
       dsimp [postMachine, TM2.stepAux, postCfg, postStacks, isSymbol, symbolEq,
         readSymbol, clearSymbol]
+      dsimp only [cond]
       congr 1
       funext j
       cases j <;> rfl
@@ -430,6 +440,7 @@ private def numeratorRun (state : PostControl) (xs quotient : List Bool)
         simp only [binaryWord, List.map_cons, List.cons_append] <;>
         dsimp [postMachine, TM2.stepAux, postCfg, postStacks, bitSymbol, advance, isSymbol,
           isSymbol, symbolEq, readSymbol, clearSymbol] <;>
+        dsimp only [cond] <;>
         congr 1 <;>
         funext j <;>
         cases j <;> rfl
@@ -467,6 +478,7 @@ def denominatorRun (state : PostControl) (q : List Bool) (e : Nat)
     apply congrArg some
     dsimp [postMachine, TM2.stepAux, postCfg, postStacks, isSymbol, symbolEq,
       readSymbol, clearSymbol]
+    dsimp only [cond]
     congr 1
     funext j
     cases j <;> rfl
@@ -486,6 +498,7 @@ def denominatorRun (state : PostControl) (q : List Bool) (e : Nat)
       simp only [binaryWord, List.map_cons]
       dsimp [postMachine, TM2.stepAux, postCfg, postStacks, isSymbol, symbolEq,
         bitSymbol, readSymbol, clearSymbol]
+      dsimp only [cond]
       congr 1
       funext j
       cases j <;> rfl
@@ -626,6 +639,7 @@ theorem dyadic_response_run (xs : List Bool) (e : Nat)
     simp only [responseWord, binaryWord, List.map_cons, List.map_nil, List.cons_append]
     dsimp [postMachine, TM2.stepAux, initList, postCfg, postStacks, bitSymbol,
       isSymbol, symbolEq, readSymbol, clearSymbol]
+    dsimp only [cond]
     congr 1
     funext j
     cases j <;> rfl

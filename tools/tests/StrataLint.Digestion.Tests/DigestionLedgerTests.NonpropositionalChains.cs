@@ -23,7 +23,7 @@ public sealed partial class DigestionLedgerTests
             DigestionFingerprint.Compute(emission).RawSha256);
         var complete = Assert.Single(Ledger(atom, DigestionMigrationState.Absorbed, DigestionTruthState.Closed,
             gid, new(gid, TestModuleStatementId),
-            atomizer: AtomizerRegistry.NoAtomizerId).RequireDigestionEntries()) with { SourceId = "source" };
+            atomizer: AtomizerRegistry.GenericId).RequireDigestionEntries()) with { SourceId = "source" };
         var childIds = Enumerable.Range(1, 5).Select(index => new string((char)('a' + index), 64)).ToImmutableArray();
         var children = childIds.Select((id, index) => (index < 2 ? complete : settled) with { AtomId = id }).ToArray();
         var parent = complete with { AtomId = new string('a', 64), Coverage = [],
@@ -38,7 +38,7 @@ public sealed partial class DigestionLedgerTests
         var snapshot = Snapshot(files.ToArray());
         DigestionEntryEvaluation EvaluateParent(DigestionLedgerEntry candidate, IEnumerable<DigestionLedgerEntry> dependencies)
         {
-            var document = Document(AtomizerRegistry.NoAtomizerId, [candidate, .. dependencies]);
+            var document = Document(AtomizerRegistry.GenericId, [candidate, .. dependencies]);
             return DigestionStatusEvaluator.Evaluate(DigestionEvaluationScope.FullScan, document, snapshot,
                 AcceptedLean(targetPath))
                 .Entries.Single(item => item.Entry.AtomId == parent.AtomId);

@@ -1,1 +1,1 @@
-{"statement_id":"sha256:35821bd41329eb9c78baf49217fc0ea84b27e61cef1f3c6b79816dfb5cbda6c6"}
+{"statement_id":"sha256:35821bd41329eb9c78baf49217fc0ea84b27e61cef1f3c6b79816dfb5cbda6c6","declarations":[{"declaration_name_key":"ns(ns(ns(ns(ns(ns(n0,2:D5),2:S3),15:ConceptDynamics),17:RefinementAlgebra),26:CanonicalAllowedReasonMeet),54:meet_closed_allowed_reasons_have_unique_coarsest_ratio)","kind":"theorem"}]}

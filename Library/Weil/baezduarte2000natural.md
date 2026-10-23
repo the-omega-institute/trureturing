@@ -91,3 +91,117 @@ dilation, convolution and convergence facts, not a new Nyman–Beurling
 theorem or a claim of priority. The literature obstruction is used
 directly. It does not settle actual FIB critical growth, a signed Robin
 remainder or RH.
+
+## Published coefficient functionals and restricted dictionaries
+
+In $\mathscr H=L^2((0,\infty),dx)$, write
+$\rho_n(x)=\{1/(nx)\}$ for positive integer $n$.
+For approximants with freely varying finite coefficients, use the
+continuous arithmetic functionals already supplied by Michel Balazard,
+[*An arithmetical function related to Baez-Duarte's criterion for the
+Riemann hypothesis*, arXiv:1812.04309v1](https://arxiv.org/pdf/1812.04309v1),
+Proposition 4, printed p.5, with the definitions on pp.1--2.
+The source works in $\mathcal K=L^2((0,\infty),t^{-2}dt)$ and its closed
+arithmetic subspace $D$. The unitary change of variables
+$Vf(t)=f(1/t)$ sends $\rho_n$ to $\{t/n\}$ and $\chi$ to
+$\eta_1=\mathbf1_{[1,\infty)}$. Its functionals $w(m;\cdot)$ have
+bounded pullbacks $\ell_m$ to $V^{-1}D$, with
+
+$$
+\ell_m(\rho_n)=-\mathbf1_{m=n},\qquad
+\ell_m(\chi)=\mu(m),\qquad
+\ell_m(K_d\chi)=\mathbf1_{d\mid m}\mu(m/d).
+\tag{C1}
+$$
+
+For the last normalization, $VK_d\chi=\eta_d=\mathbf1_{[d,\infty)}$
+has arithmetic jump function $u(j;\eta_d)=\mathbf1_{j=d}$;
+apply the source's definition $w=\mu*u$. Thus $p_j=\sum_n a_{j,n}\rho_n
+\to f$ in the half-line norm forces $a_{j,m}\to-\ell_m(f)$ for each
+fixed $m$. There is no fixed-coefficient or nested-support assumption.
+This reuses the published continuous functionals, without repeating
+triangular coefficient recovery or constructing a new dual system.
+
+For comparison, the untransported target has the existing classification
+
+$$
+\chi\in W_A\quad\Longleftrightarrow\quad
+\mathrm{RH}\ \text{and}\ \{m:\mu(m)\ne0\}\subseteq A,
+\qquad
+W_A=\overline{\operatorname{span}}\{\rho_n:n\in A\},
+\quad A\subseteq\mathbb N_{>0}.
+\tag{C2}
+$$
+
+The necessary support follows from (C1); membership in the complete
+natural closure implies RH by the
+[existing natural-dilation criterion](baezduarte2002nyman.md).
+The squarefree sufficient dictionary is already explicit in Bhaskar
+Bagchi, [arXiv:math/0607733v1](https://arxiv.org/pdf/math/0607733v1),
+Remarks 4 and 8, printed pp.142 and 145. His balanced generators are
+$\rho_l-\rho_1/l$ on $(0,1)$ and vanish on $x>1$, so squarefree $l$
+and the squarefree index $1$ suffice in this half-line dictionary.
+Equation (C2) is a direct combination of those known results, without
+a new criterion or priority claim.
+
+## Apply the functionals to the actual transported FIB target
+
+Retain the actual $\beta$, $e=\mu*\beta$ and $\Phi_\beta$ above.
+Each $K_d\chi$ lies in the closed subspace $V^{-1}D$.
+The operator-norm convergence in FIB equation (391.4) and continuity of (C1) give
+
+$$
+\ell_m(\Phi_\beta)
+=\sum_{d\mid m}\beta_d\mu(m/d)=e_m.
+\tag{C3}
+$$
+
+The same FIB volume's existing (240.a), using the strict bounds in
+§382.3 and the unit correction, already gives $e_m\ne0$ for every
+positive integer $m$. Reuse that full-support result directly.
+Consequently, for this actual target,
+
+$$
+\boxed{\quad
+\Phi_\beta\in W_A
+\quad\Longleftrightarrow\quad
+\mathrm{RH}\ \text{and}\ A=\mathbb N_{>0}.
+\quad}
+\tag{C4}
+$$
+
+Indeed, if $\Phi_\beta\in W_A$, coefficient continuity forces every
+index into $A$. The full natural closed space $W_{\mathbb N_{>0}}$
+is preserved by each $K_d$, because $K_d\rho_n=\rho_{dn}$.
+It is therefore preserved by the existing operator-norm sums
+$\mathscr B_\beta$ and $\mathscr B_\gamma$. Applying the inverse gives
+$\chi=\mathscr B_\gamma\Phi_\beta\in W_{\mathbb N_{>0}}$, hence RH.
+Conversely, RH and $A=\mathbb N_{>0}$ give $\chi\in W_A$, and applying
+$\mathscr B_\beta$ gives $\Phi_\beta\in W_A$.
+
+There is also an immediate quantitative separation when $m\notin A$:
+
+$$
+\operatorname{dist}(\Phi_\beta,W_A)
+\ge\frac{|e_m|}{\|\ell_m\|}>0.
+\tag{C5}
+$$
+
+The functional norm is taken on $V^{-1}D$; it is finite by Proposition 4
+and positive by $\ell_m(\rho_m)=-1$. Thus squarefree-only pruning,
+although sufficient for $\chi$ under RH, fails for the actual target.
+Invertibility of the complete transport does not preserve arbitrary
+restricted subspaces. No new norm computation or finite Gram scan is
+needed for this application.
+
+The five occupancy patterns still encode every natural index. Equations
+(C3)--(C5) constrain schemes that permanently omit a generator; they do
+not exclude finite approximants whose available indices exhaust all
+naturals, changing coefficients, or compressed representations retaining
+the necessary probes. The full-prefix divergence above remains about
+its particular coefficients. These applications specify a support
+obligation for the actual FIB target, supply no unconditional
+approximation rate or signed Robin estimate, and have not been Lean
+compiled. The cited source statements and parameter correspondence were
+inspected; no independent recertification of their full proofs or
+originality claim is made.

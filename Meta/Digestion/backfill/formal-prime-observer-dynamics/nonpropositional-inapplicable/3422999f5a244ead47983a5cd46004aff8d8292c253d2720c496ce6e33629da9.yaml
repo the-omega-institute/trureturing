@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:3422999f5a244ead47983a5cd46004aff8d8292c253d2720c496ce6e33629da9
+  normalized_sha256: sha256:3422999f5a244ead47983a5cd46004aff8d8292c253d2720c496ce6e33629da9
+cas_ref: sha256:3422999f5a244ead47983a5cd46004aff8d8292c253d2720c496ce6e33629da9
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 非命题文本：105. 预测商的乘积定理：仅为节标题及导引或设定适用条件；本片段未陈述后续命题的结论。
+    previous_atom_id: a550396195656d1290da8cb67ae4879791f9bcd31bed98aac7327f42fa7b2714
+    next_atom_id: 8184a8738467b13b9d0c33eba24d1ea5ad2f8c951732baefdabe17e669ae8713

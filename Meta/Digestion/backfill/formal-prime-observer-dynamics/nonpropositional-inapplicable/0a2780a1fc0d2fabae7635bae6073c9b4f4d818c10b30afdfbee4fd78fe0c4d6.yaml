@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:0a2780a1fc0d2fabae7635bae6073c9b4f4d818c10b30afdfbee4fd78fe0c4d6
+  normalized_sha256: sha256:0a2780a1fc0d2fabae7635bae6073c9b4f4d818c10b30afdfbee4fd78fe0c4d6
+cas_ref: sha256:0a2780a1fc0d2fabae7635bae6073c9b4f4d818c10b30afdfbee4fd78fe0c4d6
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 非命题文本：公式片段 \operatorname{ObsRes}：\[：只引入对象、参数、术语或记号；不附加存在性、唯一性或其他性质断言。
+    previous_atom_id: 721c996cb40680871933e3e48e1cbf19ab9575ddb4cf9e0e692508966fcdf6f3
+    next_atom_id: 09e91d8984d689a61d31ab4a8f48168d72648e979844331a3c131555693041af

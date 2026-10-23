@@ -7,7 +7,6 @@
    digest: Construct mutually inverse balancing coordinates from two positive definite Gramians. -/
 
 import Mathlib.Analysis.Matrix.Order
-import Mathlib.Tactic
 
 noncomputable section
 set_option autoImplicit false
@@ -51,7 +50,7 @@ theorem gramianRoot_spec (P : Matrix ι ι ℝ) (hP : P.PosDef) :
   have hu : IsUnit L := (Matrix.isUnit_iff_isUnit_det L).mpr (isUnit_iff_ne_zero.mpr hd)
   exact ⟨hn.posDef_iff_isUnit.mpr hu, hn.isHermitian, hs⟩
 
-private theorem diagonal_scalings (w : ι → ℝ) (hw : ∀ i, 0 < w i) :
+theorem diagonal_scalings (w : ι → ℝ) (hw : ∀ i, 0 < w i) :
     let D := diagonal w
     let H := diagonal (fun i => Real.sqrt (w i))
     let I := diagonal (fun i => (Real.sqrt (w i))⁻¹)

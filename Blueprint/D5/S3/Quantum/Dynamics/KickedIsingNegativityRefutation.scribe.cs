@@ -13,6 +13,7 @@ internal sealed class KickedIsingNegativityRefutationDocument : IScribeDocumentD
         "Pathak's generic-state negativity identity fails on a four-site kicked Ising chain.",
         H("A generic-state counterexample in the kicked Ising chain"),
         Blocks(
+            Paragraph(Text("For arbitrary local index types, partialTranspose sends the entry at ((a,b),(c,d)) to the input entry at ((a,d),(c,b)). It is definitionally equal to Bipartite.partialTranspose on the same complex matrix domain.")),
             Node("hIsing", "Ising Hamiltonian", IsingFormula(),
                 "Equation (1), p. 1, defines H_I = J ∑ᵢ σᶻᵢσᶻᵢ₊₁ + ∑ᵢ hᵢσᶻᵢ. The source states: \"We specifically consider J = π/4, b = −π/4 for our analysis.\" Sites use Fin L, with finRotate L as the periodic successor; ↑ and ↓ are 0 and 1. The frozen localOp embeds a qubit matrix at its site, and qubitZ is the Pauli Z matrix. Real coefficients enter ℂ through ofReal; smul is scalar multiplication."),
             Node("hKick", "Kick Hamiltonian", KickFormula(),
@@ -31,8 +32,6 @@ internal sealed class KickedIsingNegativityRefutationDocument : IScribeDocumentD
                 "The coordinates x, y and z lie on A, B and the complement of A ∪ B. The dependent conditional dite supplies membership proofs hA and hB to Subtype.mk. In the final branch hA and hB are nonmembership hypotheses, and Finset.notMem_union.mpr ⟨hA, hB⟩ proves membership in the complement. Outside is the frozen complement subtype. On disjoint blocks these assignments combine to one chain configuration, as used in the partial-trace expression on p. 2."),
             Node("reducedAB", "Joint reduced density matrix", ReducedFormula(),
                 "Page 2 defines ρ_AB(t) = tr_C(|ψ(t)⟩⟨ψ(t)|). The coordinate function inside vecMulVec is the same ψ expressed on the product of the retained blocks and the complement. Its star is complex conjugation, so vecMulVec forms the rank-one density matrix. The frozen partialTraceRight sums over the complement."),
-            Node("partialTranspose", "Partial transposition", TransposeFormula(),
-                "Equation (5), p. 2, uses partial transposition with respect to B. It swaps the two B indices while preserving the A indices. This definition allows different subsystem dimensions; the existing partialTransposeB is used directly for the equal two-qubit matrix in the proof."),
             Node("evolved", "Integer-time evolution", EvolvedFormula(),
                 "The source evolves the initial state with U_KI[h]^t (supplement, p. 6). The exponent is an integer power of the literal Floquet matrix, and Matrix.mulVec is its action on the amplitude vector. The counterexample uses t = 1."),
             Node("logNegativity", "Logarithmic negativity", NegativityFormula(),
@@ -41,6 +40,22 @@ internal sealed class KickedIsingNegativityRefutationDocument : IScribeDocumentD
                 "Equation (9), p. 2: I_{A:B}^(α)(t) = S_A^(α)(t) + S_B^(α)(t) − S_AB^(α)(t). Here α = 1/2, partialTraceRight retains A and partialTraceLeft retains B."),
             Node("claim", "Pathak's Conjecture 1 at half order", ClaimFormula(),
                 "Conjecture 1, p. 3, states verbatim: \"2𝓔(t) = I_{A:B}^{(α)}(t), hold for generic states at all times t.\" This is its α = 1/2 specialization, quantified over the chain length, real fields, product-state angles, contiguous tripartition and integer time. Each allowed tripartition has nonempty blocks. The specific fields are hᵢ = 1, with phases φᵢ = 0, for the counterexample."),
+            Node("trace_conjugate_right", "Partial trace under a right unitary", TraceConjugateRightFormula(),
+                "For arbitrary finite index types a and b with decidable equality, conjugating a complex bipartite operator by the identity on a and a matrix V on b with V adjoint times V equal to the identity leaves the partial trace over b unchanged.",
+                true, id: "trace-conjugate-right"),
+            Node("trace_conjugate_left", "Partial trace under left conjugation", TraceConjugateLeftFormula(),
+                "For arbitrary finite index types a and b with decidable equality, conjugating a complex bipartite operator by U on a and the identity on b conjugates its partial trace over b by U. The matrix U is arbitrary.",
+                true, id: "trace-conjugate-left"),
+            Node("trace_local_right", "Partial trace under local conjugation", TraceLocalRightFormula(),
+                "For arbitrary finite index types a and b with decidable equality, conjugation by U tensor V acts on the partial trace over b as conjugation by U whenever V adjoint times V equals the identity. The operator rho and the matrix U are arbitrary complex matrices of the displayed sizes.",
+                true, id: "trace-local-right"),
+            Node("trace_local_left", "The left partial trace under local conjugation", TraceLocalLeftFormula(),
+                "For arbitrary finite index types a and b with decidable equality, conjugation by U tensor V acts on the partial trace over a as conjugation by V whenever U adjoint times U equals the identity. The operator rho and the matrix V are arbitrary complex matrices of the displayed sizes.",
+                true, id: "trace-local-left"),
+            Node("partialTransposeB_kronecker_conj", "Partial transpose under local conjugation",
+                PartialTransposeKroneckerConjFormula(),
+                "For every complex two-qubit matrix rho and arbitrary complex two-by-two matrices U and V, partial transposition on the second factor carries conjugation by U tensor V to conjugation by U tensor the entrywise complex conjugate of V. No Hermitian or unitary hypothesis is required.",
+                true, id: "partial-transpose-kronecker-conj"),
             Node("result", "Refutation", Disp(new Formula.Not(F.Id("claim"))),
                 "Take L = 4, A = {0}, B = {1}, C = {2,3}, t = 1, hᵢ = 1 and φᵢ = 0. The initial state is |+⟩|+⟩|r⟩|r⟩, where |r⟩ = (2|0⟩+|1⟩)/√5, encoded by θ = (π/2,π/2,2 arctan(1/2),2 arctan(1/2)). It is generic. Factoring the commuting kick exponentials and the diagonal Ising exponential gives U = −W^{⊗4}G, with W a single-qubit unitary and G the periodic product of controlled-Z gates. The local unitaries preserve both measures. Before their action, the reduced density matrix has spectrum {16/25,4/25,4/25,1/25}; its partial transpose has spectrum {23/50,17/50,17/50,−7/50}, and both marginals are 1/2 times the identity. Hence 2𝓔(1) = log(1024/625) and I_{A:B}^(1/2)(1) = log(100/81). Strict injectivity of the logarithm on positive reals and the unequal rational arguments contradict the asserted equality. These finite-chain values do not settle a thermodynamic-limit identity at early times.",
                 true, new OpenProblemResolutionClaim(
@@ -49,8 +64,8 @@ internal sealed class KickedIsingNegativityRefutationDocument : IScribeDocumentD
         []));
 
     private static DocumentBlock Node(string name, string title, Formula formula, string prose, bool derived = false,
-        OpenProblemResolutionClaim? resolution = null) =>
-        Describe.Lean(DescribeId.Create("pathak-" + name.ToLowerInvariant()), DeclarationHandle.Create(Prefix + name),
+        OpenProblemResolutionClaim? resolution = null, string? id = null) =>
+        Describe.Lean(DescribeId.Create("pathak-" + (id ?? name.ToLowerInvariant())), DeclarationHandle.Create(Prefix + name),
             H(title), StatementSource.FromAuthor(formula),
             derived ? AssessedProvenance.FromRepo(Source) : AssessedProvenance.FromLiterature(Source),
             Blocks(Paragraph(Text(prose))), derived ? DescribeRole.Theorem : DescribeRole.Definition, resolution);
@@ -86,7 +101,6 @@ internal sealed class KickedIsingNegativityRefutationDocument : IScribeDocumentD
     private static Formula Sites(Formula l) => Fin(l);
     private static Formula Configurations(Formula l) => Arrow(Sites(l), Fin(Num(2)));
     private static Formula Cartesian(Formula a, Formula b) => Seq(Parenthesized(a), Times, Parenthesized(b));
-    private static Formula Pair(Formula a, Formula b) => Parenthesized(Seq(a, Comma, b));
     private static Formula Union(Formula a, Formula b) => Seq(a, Sp, Cup, Sp, b);
     private static Formula SubtypeOf(Formula a, Formula l) => Call("Subtype", Lambda("i", Sites(l), Mem(F.Id("i"), a)));
     private static Formula MatrixType(Formula n) => Call("Matrix", n, n, Complex());
@@ -99,6 +113,72 @@ internal sealed class KickedIsingNegativityRefutationDocument : IScribeDocumentD
         OpenBracket, Call("Fintype", a), CloseBracket, Sp, OpenBracket, Call("Fintype", b), CloseBracket, Sp,
         OpenBracket, Call("DecidableEq", a), CloseBracket, Sp, OpenBracket, Call("DecidableEq", b), CloseBracket, Sp, body);
     private static Formula Smul(Formula a, Formula b) => Call("smul", a, b);
+
+    private static Formula RightMarginal(Formula matrix) => Apply(
+        Seq(F.Id("D5"), Dot, F.Id("S3"), Dot, F.Id("Quantum"), Dot, F.Id("Information"), Dot,
+            F.Id("PartialTraceMutualInformation"), Dot, F.Id("partialTraceRight")), matrix);
+    private static Formula Kron(Formula left, Formula right) => QCall("Matrix", "kronecker", left, right);
+    private static Formula Adjoint(Formula matrix) => QCall("Matrix", "conjTranspose", matrix);
+
+    private static Formula PartialTransposeKroneckerConjFormula()
+    {
+        Formula rho = F.Id("rho"), u = F.Id("U"), v = F.Id("V");
+        Formula local = Kron(u, v);
+        Formula conjugate = Kron(u, QCall("Matrix", "map", v, F.Id("star")));
+        Formula Pt(Formula matrix) => Apply(
+            Seq(F.Id("D5"), Dot, F.Id("S3"), Dot, F.Id("Quantum"), Dot,
+                F.Id("Entanglement"), Dot, F.Id("StructuredNegativityCoincidenceRefutation"), Dot,
+                F.Id("partialTransposeB")), matrix);
+        return Disp(All("rho", MatrixType(Cartesian(Fin(Num(2)), Fin(Num(2)))),
+            All("U", MatrixType(Fin(Num(2))), All("V", MatrixType(Fin(Num(2))),
+                Eqn(Pt(Mul(Mul(local, rho), Adjoint(local))),
+                    Mul(Mul(conjugate, Pt(rho)), Adjoint(conjugate)))))));
+    }
+
+    private static Formula TraceConjugateRightFormula()
+    {
+        Formula a = F.Id("a"), b = F.Id("b"), rho = F.Id("rho"), v = F.Id("V");
+        Formula local = Kron(Num(1), v);
+        Formula conclusion = Eqn(RightMarginal(Mul(Mul(local, rho), Adjoint(local))), RightMarginal(rho));
+        return Disp(All("a", F.Id("Type"), All("b", F.Id("Type"), BiInstances(a, b,
+            All("rho", MatrixType(Cartesian(a, b)), All("V", MatrixType(b),
+                Implies(Eqn(Mul(Adjoint(v), v), Num(1)), conclusion)))))));
+    }
+
+    private static Formula TraceConjugateLeftFormula()
+    {
+        Formula a = F.Id("a"), b = F.Id("b"), rho = F.Id("rho"), u = F.Id("U");
+        Formula local = Kron(u, Num(1));
+        Formula conclusion = Eqn(RightMarginal(Mul(Mul(local, rho), Adjoint(local))),
+            Mul(Mul(u, RightMarginal(rho)), Adjoint(u)));
+        return Disp(All("a", F.Id("Type"), All("b", F.Id("Type"), BiInstances(a, b,
+            All("rho", MatrixType(Cartesian(a, b)), All("U", MatrixType(a), conclusion))))));
+    }
+
+    private static Formula TraceLocalRightFormula()
+    {
+        Formula a = F.Id("a"), b = F.Id("b"), rho = F.Id("rho"), u = F.Id("U"), v = F.Id("V");
+        Formula local = Kron(u, v);
+        Formula conclusion = Eqn(RightMarginal(Mul(Mul(local, rho), Adjoint(local))),
+            Mul(Mul(u, RightMarginal(rho)), Adjoint(u)));
+        return Disp(All("a", F.Id("Type"), All("b", F.Id("Type"), BiInstances(a, b,
+            All("rho", MatrixType(Cartesian(a, b)), All("U", MatrixType(a), All("V", MatrixType(b),
+                Implies(Eqn(Mul(Adjoint(v), v), Num(1)), conclusion))))))));
+    }
+
+    private static Formula TraceLocalLeftFormula()
+    {
+        Formula a = F.Id("a"), b = F.Id("b"), rho = F.Id("rho"), u = F.Id("U"), v = F.Id("V");
+        Formula LeftMarginal(Formula matrix) => Apply(
+            Seq(F.Id("D5"), Dot, F.Id("S3"), Dot, F.Id("Quantum"), Dot, F.Id("Information"), Dot,
+                F.Id("PartialTraceMutualInformation"), Dot, F.Id("partialTraceLeft")), matrix);
+        Formula local = Kron(u, v);
+        Formula conclusion = Eqn(LeftMarginal(Mul(Mul(local, rho), Adjoint(local))),
+            Mul(Mul(v, LeftMarginal(rho)), Adjoint(v)));
+        return Disp(All("a", F.Id("Type"), All("b", F.Id("Type"), BiInstances(a, b,
+            All("rho", MatrixType(Cartesian(a, b)), All("U", MatrixType(a), All("V", MatrixType(b),
+                Implies(Eqn(Mul(Adjoint(u), u), Num(1)), conclusion))))))));
+    }
 
     private static Formula IsingFormula()
     {
@@ -168,12 +248,6 @@ internal sealed class KickedIsingNegativityRefutationDocument : IScribeDocumentD
         Formula amplitudes = Lambda("p", coordinates, Apply(psi, Call("joinParts", A, B, Call("fst", Call("fst", p)), Call("snd", Call("fst", p)), Call("snd", p))));
         return Disp(All("L", Nat(), All("A", Call("Finset", Sites(l)), All("B", Call("Finset", Sites(l)), All("psi", Arrow(Configurations(l), Complex()),
             Eqn(Call("reducedAB", A, B, psi), Call("partialTraceRight", QCall("Matrix", "vecMulVec", amplitudes, Call("star", amplitudes)))))))));
-    }
-    private static Formula TransposeFormula()
-    {
-        Formula A = F.Id("A"), B = F.Id("B"), rho = F.Id("rho"), p = F.Id("p"), q = F.Id("q"), pair = Cartesian(A, B);
-        return Disp(All("A", F.Id("Type"), All("B", F.Id("Type"), All("rho", MatrixType(pair), All("p", pair, All("q", pair,
-            Eqn(Apply(Call("partialTranspose", rho), p, q), Apply(rho, Pair(Call("fst", p), Call("snd", q)), Pair(Call("fst", q), Call("snd", p))))))))));
     }
     private static Formula EvolvedFormula()
     {

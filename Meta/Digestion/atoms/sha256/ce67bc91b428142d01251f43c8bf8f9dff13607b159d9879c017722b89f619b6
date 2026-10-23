@@ -1,0 +1,17 @@
+**数学引文 19.1（列概率下的闭合及未来范围）。** 固定一个非负列随机矩阵 $T$，即 $\mathbf1^{\mathsf T}T=\mathbf1^{\mathsf T}$，作用为 $p'=Tp$。[基础卷定义 14.4、命题 14.5](AURIC_FIB_ATOM_PYRAMID_FOUNDATIONAL_FORMULAS_AND_RELATIONS.md)用行随机矩阵 $T_{\rm row}$，这里明确取 $T=T_{\rm row}^{\mathsf T}$，并交换其占据的第二、三坐标。于是该既有四角条件在全 $\Delta_4$ 上为 $PTh=0$。满足时唯一下降的仿射映射 $F:Q\to Q$ 为
+
+$$
+F(X,Z,Y)=v_0+(v_2-v_0)X+(v_3-v_0)Z+(v_5-v_0)Y,
+\qquad v_s=PT\delta_s.
+$$
+
+单有总质量保持只给仿射映射到 $\mathbb R^3$；非负随机性才保证像留在 $Q$。对实际限制域 $D\subseteq\Delta_4$，采用[《局部钟因果场与纤维动力学》Q1、Q5–Q6](AURIC_FIB_ATOM_LOCAL_CLOCK_CAUSAL_FIELD_AND_FIBER_DYNAMICS.md)的纤维条件：
+
+$$
+PT(p'-p)=0\quad\text{对所有 }p,p'\in D\text{ 且 }Pp=Pp'.
+$$
+
+只有 $D$ 中存在非零同纤维差时，该条件才强制 $PTh=0$；若投影在 $D$ 上单射，一步集合下降自动成立。固定域上的迭代还需 $T(D)\subseteq D$，或逐步指定可达域链。
+
+在全单纯形上满足 $PTh=0$ 的同一个固定 $T$ 下，质量保持和既有一维核给 $Th=\lambda h$；随机矩阵的 $\ell^1$ 收缩给 $|\lambda|\le1$。因此同一初始占据纤维内的两个律满足 $T^n(p'-p)=\lambda^n(p'-p)$，其 $\kappa$ 差按同一因子缩放。这里控制的是差，不是绝对 $\kappa_n$；也不比较不同可见初值或不同更新规则。所断言的闭合只涉及未条件化的终点均值。完整记录和按记录继续的充分合同仍用基础卷命题 14.6 的输出—更新共同核、正概率条件化和守卫，不用均值闭合代替。
+

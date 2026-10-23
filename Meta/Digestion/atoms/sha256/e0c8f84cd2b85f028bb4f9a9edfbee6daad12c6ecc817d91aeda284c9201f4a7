@@ -1,0 +1,28 @@
+### 6.5. 统一导数余项与全局单射证明
+
+对列向量取最大值范数，对矩阵取其诱导范数
+
+$$
+\|B\|_\infty=\max_i\sum_j|B_{ij}|.
+$$
+
+由 (6.17) 和 $p'_{\kappa,i}\in\{1,-1\}$（循环状态），整个矩形上均有
+
+$$
+\|L_\kappa\|_\infty\le\frac2\epsilon,
+\qquad \|L'_\kappa\|_\infty\le\frac2{\epsilon^2}.
+\tag{6.21}
+$$
+
+注意状态 $2$ 对这两个范数的贡献都是零。$L_\kappa$ 的矩阵指数是随机矩阵，理由与 (6.10) 相同，故对 $u\ge0$，
+
+$$
+\|e^{uL_\kappa}\|_\infty=1,
+\qquad
+\|e^{uL_\kappa}-I\|_\infty
+\le u\|L_\kappa\|_\infty.
+\tag{6.22}
+$$
+
+第二式由 $e^{uL}-I=\int_0^u e^{vL}L\,dv$ 得到。
+

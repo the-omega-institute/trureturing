@@ -1,0 +1,134 @@
+**Theorem 37.2 (exact survival, finite-horizon correspondence and endpoint laws).**
+For every $k\in I$ and $t>0$,
+
+$$
+S_k(t)=\sum_{n=1}^\infty e^{-n^2\lambda t}\phi_n(k)J_n,
+\qquad
+J_n=\begin{cases}2\sqrt{2(u-l)}/(n\pi)&n\text{ odd},\\0&n\text{ even}.
+\end{cases}
+\tag{37.3}
+$$
+
+The series is absolutely convergent, independent of $\kappa$, and
+
+$$
+S_k(t)=e^{-\lambda t}\phi(k)J_\phi
+       [1+O(e^{-8\lambda t})]\qquad(t\ge1)
+\tag{37.4}
+$$
+
+uniformly in $k\in I$. The Q-process is conservative; its height has
+invariant probability $\phi^2dk$. The full process is symmetric with
+infinite invariant reference measure $\mu^Q$, and has no invariant
+probability on $\mathcal C$.
+
+For every $0\le r\le T$ the exact change of measure on $\mathcal F_r$
+is
+
+$$
+\left.\frac{d\mathbb P_{k,q}^{\kappa,T}}
+              {d\mathbb Q_{k,q}^{\kappa}}\right|_{\mathcal F_r}
+=\frac{e^{-\lambda r}\phi(k)S_{K_r}(T-r)}
+       {\phi(K_r)S_k(T)}.
+\tag{37.5}
+$$
+
+At $r=T$ this is
+$w_T=\phi(K_T)^{-1}/\mathbb E_k^Q[\phi(K_T)^{-1}]$.
+For each fixed finite $r$, (37.5) tends to one uniformly as
+$T\to\infty$; in particular the fixed-prefix laws converge in total
+variation to Q. This fixed-prefix statement is separate from the
+whole-moving-horizon theorem in §38.
+
+The terminal heights satisfy, in total variation uniformly in $k$,
+
+$$
+\mathcal L_{\mathbb Q_k}(K_T)\longrightarrow\phi(k')^2dk',\qquad
+\mathcal L_{\mathbb P_k^{\kappa,T}}(K_T)
+\longrightarrow\frac{\phi(k')}{J_\phi}\,dk'.
+\tag{37.6}
+$$
+
+The second is the Yaglom height law, distinct from the first. For
+initial heights in interior compact sets, the endpoint densities obey
+the following locally uniform limits in $(k',z)\in I\times\mathbb R^3$,
+uniformly in $\kappa\in\mathcal K$:
+
+$$
+\begin{aligned}
+T^{3/2}p^{Q,\nu}_\kappa(T;(k,q),(k',q+\sqrt Tz))
+ &\longrightarrow\phi(k')^2\Gamma_\kappa(z),\\
+\frac{T^{3/2}g_\kappa^I(T;k,k';\sqrt Tz)}{S_k(T)}
+ &\longrightarrow\frac{\phi(k')}{J_\phi}\Gamma_\kappa(z).
+\end{aligned}
+\tag{37.7}
+$$
+
+Proof. Integrating (35.2) over phases leaves exactly killed Brownian
+height. Integrating its sine kernel proves (37.3). The bound
+$|\phi_n|\le n\phi$ and $J_n=J_\phi/n$ for odd $n$ bounds the
+relative remainder by $\sum_{n\ge3,\ n\mathrm{\ odd}}
+e^{-(n^2-1)\lambda t}$, proving (37.4). No survival probability or
+height prior has been chosen by adjusting the phase tensor.
+
+Since $\int h_I(t;k,k')\phi(k')dk'=e^{-\lambda t}\phi(k)$,
+the first density in (37.2) integrates to one. Its semigroup identity
+follows by cancellation of the middle $\phi$ factors. This constructs
+the conservative Markov law; equivalently on each finite interval its
+Radon--Nikodym derivative relative to the killed law, restricted to
+survival, is $e^{\lambda t}\phi(K_t)/\phi(k)$. These consistent
+finite-interval laws have continuous paths and no boundary hit in
+finite time. On compact interior sets their generator is the product
+calculation (37.2). They can also be realized by
+
+$$
+dK_t=\sqrt2\varepsilon\,d\widetilde W_t^1
+       +2\varepsilon^2(\phi'/\phi)(K_t)dt,\qquad
+dq_t=\sqrt2c_\kappa(K_t)dW_t^2,
+\tag{37.8}
+$$
+
+where $W^2$ remains independent of the complete height path: the
+finite-horizon change of measure depends only on height. Thus the
+transform changes the height drift, not the two-control covariance.
+Symmetry of $g$ makes $p^{Q,\mu}$ symmetric; conservativity and Tonelli
+then make $\mu^Q$ invariant. The height process has normalized
+invariant measure $\phi^2dk$; the full reference measure is its product
+with infinite phase Lebesgue measure. The projection of that full
+infinite measure onto height is not a probability marginal.
+
+For the height alone its density relative to $\phi(k')^2dk'$ is
+
+$$
+R_t(k,k')=\frac{e^{\lambda t}h_I(t;k,k')}{\phi(k)\phi(k')}
+=\sum_{n\ge1}e^{-(n^2-1)\lambda t}
+             \frac{\phi_n(k)}{\phi(k)}
+             \frac{\phi_n(k')}{\phi(k')},\qquad
+\sup_{k,k'}|R_t-1|\le Ce^{-3\lambda t}\quad(t\ge1).
+\tag{37.9}
+$$
+
+This follows from the same sine bound, now summing
+$n^2e^{-(n^2-1)\lambda t}$. It proves the first height limit and
+uniqueness of that invariant height probability. Dividing the raw
+height kernel by (37.4) proves the second, including its total
+variation claim. The two limiting densities differ because the sine
+$\phi$ is nonconstant on $I$.
+
+For the full cover, integrating (36.6) in frequency gives
+$p^{Q,\mu}_\kappa(t;y,y')\le Ct^{-3/2}$ for $t\ge1$, uniformly in
+both points: the integral of $e^{-ct\Psi(|\eta|)}$ is at most
+$Ct^{-3/2}$, by splitting $|\eta|\le1$ and its complement or by
+(36.10). If $\pi$ were an invariant probability and $E$ had finite
+$\mu^Q$ measure, then
+$\pi(E)=\int Q_t(y,E)\pi(dy)\le Ct^{-3/2}\mu^Q(E)$, so $\pi(E)=0$.
+A countable exhaustion by such sets contradicts $\pi(\mathcal C)=1$.
+
+The Markov property of the killed law on $\mathcal F_r$ gives its
+survivor density $\mathbf1_{\{\zeta>r\}}S_{K_r}(T-r)/S_k(T)$.
+Dividing by the Q density yields (37.5), including the endpoint
+formula with $S_{K_T}(0)=1$. Formula (37.4) proves its fixed-prefix
+uniform convergence; no terminal-horizon approximation has been made.
+Finally (36.3), (37.2), (37.4) give (37.7), with their exact raw
+density factors. $\square$
+

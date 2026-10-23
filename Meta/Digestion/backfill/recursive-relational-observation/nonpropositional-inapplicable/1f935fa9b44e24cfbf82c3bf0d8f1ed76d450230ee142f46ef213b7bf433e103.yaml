@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:1f935fa9b44e24cfbf82c3bf0d8f1ed76d450230ee142f46ef213b7bf433e103
+  normalized_sha256: sha256:1f935fa9b44e24cfbf82c3bf0d8f1ed76d450230ee142f46ef213b7bf433e103
+cas_ref: sha256:1f935fa9b44e24cfbf82c3bf0d8f1ed76d450230ee142f46ef213b7bf433e103
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: theorem 54.16（完整局部程序的等价形式）.的证明段，仅展开该陈述的推导及说明，不另提出独立命题；本收据不替代原陈述的形式化覆盖。
+    previous_atom_id: 654e87af40cf33b08da098e8479d8628dc8fe8f2071eb5063386050312f137c8
+    next_atom_id: 601e9b49f640c552514a1e6bf396374d8a02a80190a0bf3e2de7f1e6b3aa0ab1

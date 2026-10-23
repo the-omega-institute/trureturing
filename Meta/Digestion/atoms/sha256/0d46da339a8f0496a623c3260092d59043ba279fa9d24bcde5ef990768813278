@@ -1,0 +1,11 @@
+**Proposition 10.3 (the proved direction of joint support).** Assume the
+charts in Definition 10.1 are exact. Joint signed support implies
+
+$$
+\forall h\in\mathbb N\;J_B(h),
+\tag{NIS.39}
+$$
+
+where $J_B(h)$ has exactly the meaning in (NIS.5). The witnesses here also
+share the displayed prefix of the datum's $W$.
+

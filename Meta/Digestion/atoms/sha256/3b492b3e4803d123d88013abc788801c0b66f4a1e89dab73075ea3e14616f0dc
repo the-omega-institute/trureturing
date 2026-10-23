@@ -1,0 +1,10 @@
+**Proposition 6.2 (initialized maintenance).** In this contract an exact
+monitor exists precisely when
+
+$$
+I(u)=I(u')\quad\Longrightarrow\quad
+B_{k_0,d_0}(u)=B_{k_0,d_0}(u')
+\qquad(u,u'\in E_0).
+\tag{6.1}
+$$
+

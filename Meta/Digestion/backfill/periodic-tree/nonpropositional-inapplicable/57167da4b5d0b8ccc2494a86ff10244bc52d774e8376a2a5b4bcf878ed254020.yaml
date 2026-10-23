@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:57167da4b5d0b8ccc2494a86ff10244bc52d774e8376a2a5b4bcf878ed254020
+  normalized_sha256: sha256:57167da4b5d0b8ccc2494a86ff10244bc52d774e8376a2a5b4bcf878ed254020
+cas_ref: sha256:57167da4b5d0b8ccc2494a86ff10244bc52d774e8376a2a5b4bcf878ed254020
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 英文证明段（**Proof.** Absorb 2H(X) in the rightmost lower bound of ZBD3 and apply…）仅给出前文命题的推导或证明方向，不另提出独立结论。
+    previous_atom_id: 05e3594c817b4aba7a44583f6c9704685c564733b02684a5755f44f7028535ce
+    next_atom_id: 6f4e3cc2d220b41487e69c7e330a67c520f84307e9723b677cb34f06b3b06f15

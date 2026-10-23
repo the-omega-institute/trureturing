@@ -1,1 +1,1 @@
-{"statement_id":"sha256:cf04ced35cd29035dad0d326d6ef9477c578485756e1b5971ea76a8b7536d4eb"}
+{"statement_id":"sha256:cf04ced35cd29035dad0d326d6ef9477c578485756e1b5971ea76a8b7536d4eb","declarations":[{"declaration_name_key":"ns(ns(ns(ns(ns(ns(n0,2:D5),2:S3),13:Combinatorics),13:CrosswordGrid),24:SkewMergedRookCenterless),15:centerless_cuts)","kind":"theorem"}]}

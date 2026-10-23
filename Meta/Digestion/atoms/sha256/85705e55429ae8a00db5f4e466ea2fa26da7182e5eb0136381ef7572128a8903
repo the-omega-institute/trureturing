@@ -1,0 +1,30 @@
+**定义 2.3（COMPLETE 与配置先取 TV）。** 观察者使用固定有限完整配置、来源独立初始化与时间齐次的来源独立字母更新。解码器只读取一个实际配置。COMPLETE 计入 $C_0$、私有标签、程序与表选择器、安装描述、采样工作区、地址、输出索引、许可及持久随机性。没有免费时钟、档案、建议、连续寄存器、来源相关种子或可读分布向量。
+
+每个配置 $z$ 的解码律 $D_z$，由该配置的合成字母概率和实际取得字母时所用的**同一个更新核**生成；合成不调用实际来源。在同一实际历史 $h$，将实际配置概率行记为 $\zeta_h$，目标为
+
+$$
+T_h^\mu=(I_{C_0(h)})_*\sum_k\nu_h(k)P_{s,r_k},\qquad
+\nu_h(k)=\frac{\mu(k)r_k^{N_\alpha(h)}(1-r_k)^{N_\beta(h)}}
+{\sum_j\mu(j)r_j^{N_\alpha(h)}(1-r_j)^{N_\beta(h)}}.
+\tag{2.4}
+$$
+
+两个计数包括全部付费拒绝、载荷和部分解析。后验及配置行均为分析坐标，不能供运行机器读取。本卷的风险是
+
+$$
+e_{\mathrm{conf}}(h)=\sum_z\zeta_h(z)\operatorname{TV}(D_z,T_h^\mu),
+\qquad R_{\mathrm{conf},s}=\sup_{h\in\mathcal H_s}e_{\mathrm{conf}}(h).
+\tag{2.5}
+$$
+
+TV 取事件差上确界，在可数载体上等于半个 $\ell^1$ 距离。$\operatorname{TV}(\sum_z\zeta_h(z)D_z,T_h^\mu)$ 是另一风险次序；实际历史平均也不是式（2.5）。ST 的完整尾半径为
+
+$$
+\rho_p=\frac{1116529}{22781250},\qquad
+\rho_\beta=\frac{239}{6750},\qquad
+\operatorname{TV}(P_{s,a},P_{s,b})=2\rho_s.
+\tag{2.6}
+$$
+
+最终标记与 Stop 投影的半径 $13/266,9/266$ 不能替换这些完整尾半径。
+

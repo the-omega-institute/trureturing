@@ -28,6 +28,9 @@ internal sealed class AbsoluteReciprocalGeometricParityDocument : IScribeDocumen
                 + "contain X to a power greater than N and contribute zero at degree N. "
                 + "The map intCast(ZMod(2)) denotes Int.castRingHom(ZMod(2)); map(h,F) "
                 + "applies h to every coefficient of F.")),
+            Node("agree_inv", "Agree inv",
+                Disp(Seq(Forall, Sp, F.Id("R"), Colon, Sp, F.Id("Type"), Comma, Sp, Seq(OpenBracket, Call("CommRing", F.Id("R")), CloseBracket, Comma, Sp, Seq(Forall, Sp, F.Id("d"), Colon, Sp, Seq(Mathbb, Grp(F.Id("N"))), Comma, Sp, Seq(Forall, Sp, F.Id("f"), Colon, Sp, Call("PowerSeries", F.Id("R")), Comma, Sp, Seq(Forall, Sp, F.Id("g"), Colon, Sp, Call("PowerSeries", F.Id("R")), Comma, Sp, Seq(Parenthesized(Seq(Call("constantCoeff", F.Id("f")), Sp, Eq, Sp, D(1))), Sp, Implies, Sp, Parenthesized(Seq(Parenthesized(Seq(Call("constantCoeff", F.Id("g")), Sp, Eq, Sp, D(1))), Sp, Implies, Sp, Parenthesized(Seq(Parenthesized(Seq(Forall, Sp, F.Id("j"), Colon, Sp, Naturals(), Comma, Sp, Parenthesized(Seq(F.Id("j"), Sp, Lt, Sp, F.Id("d"))), Sp, Implies, Sp, Parenthesized(Seq(Call("coeff", F.Id("j"), F.Id("f")), Sp, Eq, Sp, Call("coeff", F.Id("j"), F.Id("g")))))), Sp, Implies, Sp, Parenthesized(Seq(Forall, Sp, F.Id("j"), Colon, Sp, Naturals(), Comma, Sp, Parenthesized(Seq(F.Id("j"), Sp, Lt, Sp, F.Id("d"))), Sp, Implies, Sp, Parenthesized(Seq(Call("coeff", F.Id("j"), Call("invOfUnit", F.Id("f"), D(1))), Sp, Eq, Sp, Call("coeff", F.Id("j"), Call("invOfUnit", F.Id("g"), D(1)))))))))))))))))),
+                "The unit inverses of normalized agreeing series agree through the same degree.", DescribeRole.Theorem, AssessedProvenance.FromRepo()),
             Node("absSeries", "Coefficientwise absolute value", AbsoluteFormula(),
                 "The coefficient function is replaced by its integer absolute value.",
                 DescribeRole.Definition),

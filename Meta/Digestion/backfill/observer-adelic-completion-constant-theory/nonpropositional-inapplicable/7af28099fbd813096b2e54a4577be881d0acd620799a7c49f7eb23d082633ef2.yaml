@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:7af28099fbd813096b2e54a4577be881d0acd620799a7c49f7eb23d082633ef2
+  normalized_sha256: sha256:7af28099fbd813096b2e54a4577be881d0acd620799a7c49f7eb23d082633ef2
+cas_ref: sha256:7af28099fbd813096b2e54a4577be881d0acd620799a7c49f7eb23d082633ef2
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 建议形式化的模块清单与既有基础的工程复用说明；证书迁移明确为未执行的工作要求，没有把预印本断言当成已证。
+    previous_atom_id: 7a1beb2050eb470f374906342fa936def5c48fe4a6ccb8646df6de584106631a
+    next_atom_id: 0b5dfe4a4cdde0ac94783dbf4b5c0232efc5bfef141fa92609ea9cdce621acac

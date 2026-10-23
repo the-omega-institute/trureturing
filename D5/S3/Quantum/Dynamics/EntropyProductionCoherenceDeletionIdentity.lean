@@ -45,7 +45,7 @@ private lemma densityMatrix_posSemidef (rho : DensityState n) :
   rw [← Matrix.nonneg_iff_posSemidef]
   exact map_nonneg CStarMatrix.ofMatrixStarAlgEquiv.symm rho.2.1
 
-private def diagonalStarAlgHom : (n -> ℂ) →⋆ₐ[ℂ] Matrix n n ℂ where
+def diagonalStarAlgHom : (n -> ℂ) →⋆ₐ[ℂ] Matrix n n ℂ where
   toAlgHom := Matrix.diagonalAlgHom ℂ
   map_star' a := by
     ext i j
@@ -54,9 +54,9 @@ private def diagonalStarAlgHom : (n -> ℂ) →⋆ₐ[ℂ] Matrix n n ℂ where
       simp [Matrix.star_apply]
     · simp [Matrix.star_apply, hij, Ne.symm hij]
 
-lemma cfc_log_diagonal (a : n -> ℝ) :
-    CFC.log (Matrix.diagonal fun i => (a i : ℂ)) =
-      Matrix.diagonal fun i => (Real.log (a i) : ℂ) := by
+lemma cfc_diagonal (f : ℝ → ℝ) (a : n -> ℝ) :
+    cfc f (Matrix.diagonal fun i => (a i : ℂ)) =
+      Matrix.diagonal fun i => (f (a i) : ℂ) := by
   letI : ContinuousFunctionalCalculus ℝ (n -> ℂ) IsSelfAdjoint :=
     IsSelfAdjoint.instContinuousFunctionalCalculus
   let z : n -> ℂ := fun i => (a i : ℂ)
@@ -65,30 +65,35 @@ lemma cfc_log_diagonal (a : n -> ℝ) :
     simp [z, Pi.star_apply]
   have hDiagonal : IsSelfAdjoint (diagonalStarAlgHom z) := by
     exact hz.map (diagonalStarAlgHom (n := n))
-  have hLog : ContinuousOn Real.log (spectrum ℝ z) := by
+  have hLog : ContinuousOn f (spectrum ℝ z) := by
     rw [Pi.spectrum_eq]
     apply Set.Finite.continuousOn
     exact Set.finite_iUnion fun i =>
       (Set.finite_singleton (a i)).subset
         (CFC.spectrum_algebraMap_subset (A := ℂ) (a i))
   have hmap := (diagonalStarAlgHom (n := n)).map_cfc
-    (R := ℝ) Real.log z hLog
+    (R := ℝ) f z hLog
     (diagonalStarAlgHom (n := n)).toLinearMap.continuous_of_finiteDimensional hz hDiagonal
-  rw [CFC.log]
-  change cfc Real.log (diagonalStarAlgHom z) = _
+  change cfc f (diagonalStarAlgHom z) = _
   rw [← hmap]
-  change diagonalStarAlgHom (cfc Real.log z) = _
-  have hLogPi : ContinuousOn Real.log (⋃ i, spectrum ℝ (z i)) := by
+  change diagonalStarAlgHom (cfc f z) = _
+  have hLogPi : ContinuousOn f (⋃ i, spectrum ℝ (z i)) := by
     rwa [Pi.spectrum_eq] at hLog
-  rw [cfc_map_pi (S := ℂ) Real.log z hLogPi hz (fun i => by
+  rw [cfc_map_pi (S := ℂ) f z hLogPi hz (fun i => by
     change star (a i : ℂ) = (a i : ℂ)
     simp)]
   ext i j
   by_cases hij : i = j
   · subst j
     simp only [diagonalStarAlgHom, Matrix.diagonal_apply_eq]
-    simpa [z] using (cfc_algebraMap (R := ℝ) (A := ℂ) (a i) Real.log)
+    simpa [z] using (cfc_algebraMap (R := ℝ) (A := ℂ) (a i) f)
   · simp [diagonalStarAlgHom, hij]
+
+
+lemma cfc_log_diagonal (a : n -> ℝ) :
+    CFC.log (Matrix.diagonal fun i => (a i : ℂ)) =
+      Matrix.diagonal fun i => (Real.log (a i) : ℂ) := by
+  exact cfc_diagonal Real.log a
 
 private lemma diagonal_entry_eq_real (rho : DensityState n) (i : n) :
     densityMatrix rho i i = ((densityMatrix rho i i).re : ℂ) := by

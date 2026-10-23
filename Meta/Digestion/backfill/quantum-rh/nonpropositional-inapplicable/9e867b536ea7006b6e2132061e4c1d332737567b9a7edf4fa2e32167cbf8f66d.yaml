@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:9e867b536ea7006b6e2132061e4c1d332737567b9a7edf4fa2e32167cbf8f66d
+  normalized_sha256: sha256:9e867b536ea7006b6e2132061e4c1d332737567b9a7edf4fa2e32167cbf8f66d
+cas_ref: sha256:9e867b536ea7006b6e2132061e4c1d332737567b9a7edf4fa2e32167cbf8f66d
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 章节导引「十、这轮对共同量子核的实际推进」只组织后续讨论或表格栏目，本 atom 不含独立数学命题；相邻条目的定理、公式及待证陈述不在本次结算范围内。
+    previous_atom_id: 15f5cc9a6cd68576f1ebaac673ae4c667c83c34c8b65dcbda090b231e62157ca
+    next_atom_id: 6e3edfa4d900231dbf369acaa6f73fc8b6e76c9db32f90c204ecf549839329f8

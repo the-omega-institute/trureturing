@@ -1,0 +1,82 @@
+**定理 462.1（保留原列相位的完整尾部）。** 沿用（458.1）的原卷积 $b$、同一个行算子 $A$、good sixth-power-free 物理行及其固定有限 ray 表示。令
+
+$$
+\mathfrak x(h)=\prod_{v_{\mathfrak p}(h)=1}\mathfrak p,
+\qquad
+\mathfrak c(h)=\prod_{v_{\mathfrak p}(h)\ge2}
+ \mathfrak p^{v_{\mathfrak p}(h)},
+\qquad h=\mathfrak c(h)\mathfrak x(h).
+$$
+
+两因子互素，$\mathfrak c(h)$ 为 powerful 理想。对 $1\le X\le K$，在取行范数之前限制原列向量：
+
+$$
+b_{\le X}(h)=b(h)\mathbf1_{q_{\mathfrak x(h)}\le X}.
+\tag{462.1}
+$$
+
+假设 de Faveri [Theorem 1.1](https://arxiv.org/abs/2610.04045v1) 的解析输入成立，沿用其到原有限物理表示的既有修正。令 $\mathcal P_b\ge1$ 控制原卷积及所需 profile 导数的除数型系数包络，$\mathcal P_A\ge1$ 控制加权筛的范数成本，$\mathcal P_F\ge1$ 控制固定有限修正及本条所需分离费用。一次取组合包络 $\mathcal P\ge\mathcal P_b\mathcal P_A\mathcal P_F$，不以三个成本的最大值代替乘积。则
+
+$$
+\|A b_{\le X}\|_2^2
+\ll_\varepsilon (UK)^\varepsilon\mathcal P^2
+ \Psi_6(U,K)\sqrt{KX}.
+\tag{462.2}
+$$
+
+这里 $\Psi_6$ 为（458.1）的同一个四项筛界。负 orientation 整体共轭，原零值保持。$\mathcal P$ 不按重复部分或行重新选择；不扩张原有高度合同。本条是 `repo-derived` 的原系数消费，直接复用原稿 `prop:sextic-row-count` 证明中的 powerful 理想计数、原列的除数界及既有有限字符修正，不将这些结果另立为新定理。
+
+**证明。** 按唯一分解 $h=a r^6$ 分组，其中 $a$ 为 sixth-power-free 理想，且不要求 $(a,r)=1$。固定 $r$ 后，提取 $a$ 在 $r$ 的素支撑上的完整部分：
+
+$$
+e=\prod_{\mathfrak p\mid r}\mathfrak p^{v_{\mathfrak p}(a)},
+\quad e\mid\operatorname{rad}(r)^5,
+\quad a=e c_0x,\quad(c_0x,r)=1.
+\tag{462.3}
+$$
+
+其中 $c_0$ 为 powerful，$x$ 为平方自由且 $(c_0,x)=1$。由于 $r$ 的每个素因子在 $h$ 中的重数至少为六，恰有 $x=\mathfrak x(h)$；即使某素因子在 $a$ 中的重数为一，也不能把它从 $e$ 移入 $x$。这保留了全部 sixth-power 重合情况。
+
+记 $Y\asymp K/q_r^6$ 为原 annulus 对 $q_a$ 的上界尺度。直接复用原稿的 $O(V^{1/2})$ powerful 理想计数及固定域理想计数，固定 $r$ 并按全部允许的 $e$ 求和，有
+
+$$
+\begin{aligned}
+\#\{a\ {\rm sixth\ power\ free}:q_a\ll Y,\ q_{\mathfrak x(ar^6)}\le X\}
+&\ll \sum_{e\mid\operatorname{rad}(r)^5}
+ \sum_{q_x\le X}\left(\frac{Y}{q_eq_x}\right)^{1/2}\\
+&\ll_\delta q_r^\delta\sqrt{YX}.
+\end{aligned}
+\tag{462.4}
+$$
+
+内和只含 $Y/(q_eq_x)\gg1$ 的非空范围；扩大为所示正和不会缩小上界。除数界支付 $e$ 的选择，部分求和给出 $\sum_{q_x\le X}q_x^{-1/2}\ll\sqrt X$。不在有符号和里移除互素条件。
+
+原 $b(h)$ 及本条使用的每个有限阶 profile 导数均为 $\mathcal P_b K^\delta$ 的除数型上界，故固定 $r$ 的真实列向量满足
+
+$$
+\sum_{a\ {\rm sixth\ power\ free}}|b_{\le X}(ar^6)|^2
+\ll_\delta \mathcal P_b^2 K^{2\delta}
+ q_r^{-3+\delta}\sqrt{KX}.
+\tag{462.5}
+$$
+
+原符号的精确零延拓给出
+
+$$
+\chi_{ar^6}^{\rm raw}(z)
+=\chi_a^{\rm raw}(z)\mathbf1_{(r,z)=1}.
+\tag{462.6}
+$$
+
+固定 $r$ 后先保留这个行限制；只在正行范数中扩大行集。既有固定有限 Kummer/ray 修正使 Theorem 1.1 可以用于同一个列向量，其实际列长为 $O(K/q_r^6)$。当该长度为有界 subunit 时作固定 annular 扩大。筛界的四项单调，因此由 $\Psi_6(U,K)$ 统一控制。Minkowski 在原行 Hilbert 空间中求和，得到
+
+$$
+\|A b_{\le X}\|_2
+\ll (UK)^{\delta'}\mathcal P\,
+ \Psi_6(U,K)^{1/2}(KX)^{1/4}
+ \sum_r q_r^{-3/2+\delta/2}.
+\tag{462.7}
+$$
+
+最后的理想级数在足够小 $\delta>0$ 下收敛。按最终 $\varepsilon$ 分配所有内部损失，并在有限物理表示之间使用原合同的有限范数不等式，得（462.2）。每次筛调用的系数均与行无关；原有 smooth/Sobolev 恢复仅在同一有限阶费用可支付的范围使用。证毕。
+

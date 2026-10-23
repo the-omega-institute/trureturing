@@ -62,7 +62,7 @@ theorem trace_addresses (U : Source) (u : Address) :
       List.append_nil]
 
 
-private theorem nodes_nodup (U : Source) : (nodes U).Nodup := by
+theorem nodes_nodup (U : Source) : (nodes U).Nodup := by
   induction U with
   | of b => simp [nodes]
   | mul s t ihs iht =>
@@ -470,7 +470,7 @@ theorem pure_joint_price (N : Nat) (positive : 1 ≤ N) (tau : Address → ℝ) 
     rw [pure_max_fee, pure_node_fee N positive tau U allowed] at attained
     exact ⟨U, allowed, attained⟩
 
-private theorem nodes_length (U : Source) (q : Address) (member : q ∈ nodes U) :
+theorem nodes_length (U : Source) (q : Address) (member : q ∈ nodes U) :
     q.length + 1 ≤ U.length := by
   induction U generalizing q with
   | of b =>

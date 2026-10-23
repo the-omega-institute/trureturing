@@ -26,6 +26,9 @@ internal sealed class GaussianThermometryJointMeasurementRefutationDocument : IS
             Node("IsGaussianMeasurementCov", "Physical Gaussian measurement covariance", PhysicalFormula(),
                 "A real symmetric σᴹ is admissible when σᴹ + iΩ is positive semidefinite. The symplectic form is the interleaved-coordinate submatrix of -Matrix.J: even coordinates map to Sum.inl and odd coordinates to Sum.inr, both indexed by Nat.div(Fin.val(x),2). Nat.div is integer division; modulo is Nat.mod. Mapping this real form by Complex.ofReal equals the complex Matrix.J expression. Complex.I and SMul.smul give the complex scalar action.",
                 "IsGaussianMeasurementCov", DescribeRole.Definition, AssessedProvenance.FromLiterature(Source)),
+            Node("physical-data", "One-mode physical covariance bounds", PhysicalDataFormula(),
+                "For one mode, a physical Gaussian measurement covariance is positive semidefinite and has determinant at least one. The uncertainty matrix supplies determinant nonnegativity, and its quadratic form on real vectors supplies positive semidefiniteness of the real covariance.",
+                "physical_data", DescribeRole.Theorem, AssessedProvenance.FromRepo(Source)),
             Node("fisherC", "Gaussian-measurement Fisher information", FisherFormula(),
                 "With zero displacement, arXiv:2110.02098v4, p. 6 §3.2.2, Eq. (36) is Fᶜ(σ;σᴹ) = 1/2 tr[((σ + σᴹ)⁻¹ ∂Tσ)²].",
                 "fisherC", DescribeRole.Definition, AssessedProvenance.FromLiterature(Source)),
@@ -148,6 +151,13 @@ internal sealed class GaussianThermometryJointMeasurementRefutationDocument : IS
         Formula body = Iff(Call("IsGaussianMeasurementCov", σM),
             And(Call("IsSymm", σM), psd));
         return Disp(All("m", Naturals(), All("sigmaM", Matrix(Twice(m)), body)));
+    }
+
+    private static Formula PhysicalDataFormula()
+    {
+        Formula n = F.Id("N");
+        Formula conclusion = And(Call("Matrix.PosSemidef", n), Le(D(1), Call("Matrix.det", n)));
+        return Disp(All("N", Matrix(D(2)), Imp(Call("IsGaussianMeasurementCov", n), conclusion)));
     }
 
     private static Formula FisherFormula()

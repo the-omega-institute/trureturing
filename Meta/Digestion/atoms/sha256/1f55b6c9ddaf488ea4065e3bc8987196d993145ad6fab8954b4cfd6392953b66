@@ -1,0 +1,36 @@
+**Definition 8.3 (Quintic raw memory and Newton correspondence).** On the ordered real coordinates $e_0,e_1,e_2,e_3$ inside $\mathbb C^4$, use target coordinates $e_0,e_1,e_2$ and source coordinate $x=e_3$. Put $f=e_0$, $F=ff^{\mathsf T}$ and
+
+$$
+A=\begin{pmatrix}
+1&1&0&\alpha(1-\eta)\\
+0&1&1&2\alpha\\
+0&0&1&0\\
+0&0&0&1
+\end{pmatrix},\qquad
+B=\begin{pmatrix}
+0&0&0&p_0\\
+0&0&0&p_1+p_2\\
+0&0&0&2p_2\\
+0&0&0&0
+\end{pmatrix}. \tag{8.7}
+$$
+
+In target-source blocks, $A=\left(\begin{smallmatrix}U&u\\0&1\end{smallmatrix}\right)$ and $B=\left(\begin{smallmatrix}0&v\\0&0\end{smallmatrix}\right)$, where $U=I_3+N$, $N_{01}=N_{12}=1$, all other entries of $N$ are zero, and
+
+$$
+u=(\alpha(1-\eta),2\alpha,0)^{\mathsf T},\qquad
+v=(p_0,p_1+p_2,2p_2)^{\mathsf T}. \tag{8.8}
+$$
+
+The coefficients are finite differences, with $\delta a(t)=a(t+1)-a(t)$:
+
+$$
+\begin{aligned}
+p(t)&=p_0+(p_1+p_2)\binom t1+2p_2\binom t2,\\
+\delta s(t)&=\alpha(1-\eta)+2\alpha\binom t1,\\
+s(k)&=\alpha(1-\eta)\binom k1+2\alpha\binom k2.
+\end{aligned} \tag{8.9}
+$$
+
+For any fixed $0<q<1$, the raw CP map is $\mathcal T_q(X)=q(AXA^{\mathsf T}+BXB^{\mathsf T})$ on the full complex matrix algebra, with Kraus matrices $\sqrt q A,\sqrt q B$.
+

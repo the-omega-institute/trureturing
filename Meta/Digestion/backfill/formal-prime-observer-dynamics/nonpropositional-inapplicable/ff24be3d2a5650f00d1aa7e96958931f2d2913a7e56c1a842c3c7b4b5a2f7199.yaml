@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:ff24be3d2a5650f00d1aa7e96958931f2d2913a7e56c1a842c3c7b4b5a2f7199
+  normalized_sha256: sha256:ff24be3d2a5650f00d1aa7e96958931f2d2913a7e56c1a842c3c7b4b5a2f7199
+cas_ref: sha256:ff24be3d2a5650f00d1aa7e96958931f2d2913a7e56c1a842c3c7b4b5a2f7199
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 非命题文本：定义 274.1（干预 Markov 等价）：只引入对象、参数、术语或记号；不附加存在性、唯一性或其他性质断言。
+    previous_atom_id: 5b09b35bc3bce9b78e4511b7f4508219caa1aad189b42455a7976ca0a634b681
+    next_atom_id: 64abd59156858bca82e7f60b07adfc77385701d635fa1817fe0dd99cf1b549d1

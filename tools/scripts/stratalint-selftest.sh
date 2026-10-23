@@ -11,7 +11,9 @@ cleanup() {
 trap cleanup EXIT HUP INT TERM
 
 cd "$ROOT"
-dotnet run --project "$PROJECT" --configuration Release -- selftest > "$RUNS/first.txt"
-dotnet run --project "$PROJECT" --configuration Release -- selftest > "$RUNS/second.txt"
+restore_args=()
+[[ "${CI_DOTNET_PREPARED:-0}" != 1 ]] || restore_args=(--no-restore)
+dotnet run --project "$PROJECT" ${restore_args[@]+"${restore_args[@]}"} --configuration Release -- selftest > "$RUNS/first.txt"
+dotnet run --project "$PROJECT" ${restore_args[@]+"${restore_args[@]}"} --configuration Release -- selftest > "$RUNS/second.txt"
 cmp "$RUNS/first.txt" "$RUNS/second.txt"
 cat "$RUNS/first.txt"

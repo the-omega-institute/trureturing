@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:0447752c1d8d664ac933a81f05849b423cefa6913842f031296bc94f1e69bbb4
+  normalized_sha256: sha256:0447752c1d8d664ac933a81f05849b423cefa6913842f031296bc94f1e69bbb4
+cas_ref: sha256:0447752c1d8d664ac933a81f05849b423cefa6913842f031296bc94f1e69bbb4
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 非命题文本：- `D5/S3/ConceptDynamics/ConceptJoinUniversal.lean`：联合概念的普适性质；：仅为导引、项目安排、来源条目或记号清单，不提出数学命题。
+    previous_atom_id: 1b8d78bb9f98dded97024f69923e3288723154d1c039fb8b3b6582c0dccef838
+    next_atom_id: ebaead945988e2244ca747d9bb18089148db8339a637c9d278486f808a082641

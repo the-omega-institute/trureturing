@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:030d9b8b685eec58f06bb120ca12d37d77b8481e9d057ae8f68e572e88c57c9a
+  normalized_sha256: sha256:030d9b8b685eec58f06bb120ca12d37d77b8481e9d057ae8f68e572e88c57c9a
+cas_ref: sha256:030d9b8b685eec58f06bb120ca12d37d77b8481e9d057ae8f68e572e88c57c9a
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 定义142.0只规定窗口输出与初始化运输两类合同和缺陷记号，不断言恢复率或缺陷界。
+    previous_atom_id: 9d94781090c185b4c669395ca1d11835387fe4e0f06b049f46ddf10c4418ee4d
+    next_atom_id: c598f77c6ebd2ab20c5d0e2f6971b9e20ac4a624589675d1983f62983079c333

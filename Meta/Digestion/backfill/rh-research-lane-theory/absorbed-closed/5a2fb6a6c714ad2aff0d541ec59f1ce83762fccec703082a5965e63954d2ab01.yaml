@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:5a2fb6a6c714ad2aff0d541ec59f1ce83762fccec703082a5965e63954d2ab01
+  normalized_sha256: sha256:5a2fb6a6c714ad2aff0d541ec59f1ce83762fccec703082a5965e63954d2ab01
+cas_ref: sha256:5a2fb6a6c714ad2aff0d541ec59f1ce83762fccec703082a5965e63954d2ab01
+coverage_gids:
+  - gid: D5/S3/Observer/GoldenPrimeCircle/GoldenSecondMagnusSampling.golden_scale_fourier_phase_phi_even_pow_mul
+    target_statement_id: sha256:35643131401aac39acc022c85d66e76ab3830f78de8f3a8e3cbb050678edf83f
+receipts:
+  unresolved_subitems: []

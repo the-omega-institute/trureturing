@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:3804188653ae8cc828229c84dd4e42c95a1517fb8534d0f83a359b58b9b123df
+  normalized_sha256: sha256:3804188653ae8cc828229c84dd4e42c95a1517fb8534d0f83a359b58b9b123df
+cas_ref: sha256:3804188653ae8cc828229c84dd4e42c95a1517fb8534d0f83a359b58b9b123df
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 章节标题「9.5 全部分辨率共同不变窗口的锐利范围」仅标示本节主题，不含正文命题或性质断言。
+    previous_atom_id: 108e11877773e0d800b47d5deb828f6c4604cfb042c6d1d410bbfc43a0678a79
+    next_atom_id: edce143234e44941ba80ab132a05738d9ae432cfa5935f6d974de5a68a0d2f90

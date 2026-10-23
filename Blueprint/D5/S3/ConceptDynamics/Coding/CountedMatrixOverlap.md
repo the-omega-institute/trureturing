@@ -6,7 +6,7 @@ A nonnegative matrix records numbered parallel edges. Lexicographic fiber ranks 
 
 **Theorem 1.1 (Recover both numbered half-edges).**
 
-$$\forall n \in Nat, m \in Nat, U \in \operatorname{CountMat}\left(n, m\right), V \in \operatorname{CountMat}\left(m, n\right), a \in \operatorname{Edge}\left(U\right), b \in \operatorname{Edge}\left(V\right), h \in \operatorname{target}\left(a\right) = \operatorname{source}\left(b\right),\; \operatorname{split}\left(U, V, \operatorname{join}\left(U, V, a, b, h\right)\right) = \operatorname{pair}\left(a, b\right)$$
+$$\forall n \in Nat, m \in Nat, p \in Nat, U \in \operatorname{CountMat}\left(n, m\right), V \in \operatorname{CountMat}\left(m, p\right), a \in \operatorname{Edge}\left(U\right), b \in \operatorname{Edge}\left(V\right), h \in \operatorname{target}\left(a\right) = \operatorname{source}\left(b\right),\; \operatorname{split}\left(U, V, \operatorname{join}\left(U, V, a, b, h\right)\right) = \operatorname{pair}\left(a, b\right)$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/ConceptDynamics/Coding/CountedMatrixOverlap.split_join` (`✓ std3`). ∎
 
@@ -18,7 +18,7 @@ The product edge number is the lexicographic rank of its middle vertex and both 
 
 **Theorem 1.2 (Recover the original matrix edge).**
 
-$$\forall n \in Nat, m \in Nat, U \in \operatorname{CountMat}\left(n, m\right), V \in \operatorname{CountMat}\left(m, n\right), a \in \operatorname{Edge}\left(\operatorname{product}\left(U, V\right)\right),\; \operatorname{join}\left(U, V, \operatorname{first}\left(\operatorname{split}\left(U, V, a\right)\right), \operatorname{second}\left(\operatorname{split}\left(U, V, a\right)\right)\right) = a$$
+$$\forall n \in Nat, m \in Nat, p \in Nat, U \in \operatorname{CountMat}\left(n, m\right), V \in \operatorname{CountMat}\left(m, p\right), a \in \operatorname{Edge}\left(\operatorname{product}\left(U, V\right)\right),\; \operatorname{join}\left(U, V, \operatorname{first}\left(\operatorname{split}\left(U, V, a\right)\right), \operatorname{second}\left(\operatorname{split}\left(U, V, a\right)\right)\right) = a$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/ConceptDynamics/Coding/CountedMatrixOverlap.join_split` (`✓ std3`). ∎
 

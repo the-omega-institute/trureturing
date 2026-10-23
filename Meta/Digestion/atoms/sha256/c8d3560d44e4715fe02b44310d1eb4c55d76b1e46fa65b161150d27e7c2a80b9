@@ -1,0 +1,20 @@
+\[
+\Pi_{\mathrm{leaf}}(B)
+=
+\Pi_{\mathrm{leaf}}(D)
+\]
+
+但：
+
+\[
+B\neq D
+\]
+
+要恢复括号，必须增加 ancestor area 向量：
+
+\[
+\mathcal A(V)
+\]
+
+项目给出的变化为：
+

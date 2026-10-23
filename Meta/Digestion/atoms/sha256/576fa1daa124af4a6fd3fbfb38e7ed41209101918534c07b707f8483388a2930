@@ -1,0 +1,23 @@
+**定义 4.1（闭前缀和像阶段）。** 沿用《Transport Memory Completion》定义 23.3 的
+$P_d$：它记录所有 $|p|\le d$ 的地址标签，值域为
+$\{\alpha,\beta,\mathsf{branch},\mathsf{absent}\}$。记
+
+$$
+I_n=\rho^n[\mathcal T],
+\qquad
+V_{d,n}=P_d(I_n),
+\qquad
+K_{d,n}=|V_{d,n}|.
+$$
+
+已有前缀自然性 $P_d\rho=f_dP_d$ 使 $V_{d,n}$ 在 $f_d$ 下前向闭合；因此 $V_{d,n}$ 是
+“来源已知属于第 $n$ 个纯替换像、观察半径为 $d$”这一任务的精确边界像。
+
+令
+
+$$
+a_0=3,quad b_0=2,
+\qquad
+a_{j+1}=a_j^2+2,quad b_{j+1}=b_j^2+2.
+$$
+

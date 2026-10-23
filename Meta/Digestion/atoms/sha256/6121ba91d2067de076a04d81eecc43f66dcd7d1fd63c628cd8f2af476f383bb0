@@ -1,0 +1,31 @@
+**Definition 1.2 (the entire acquired fiber).** Fix
+$I=(P,R,H_0,H_{\rm rel},Q,N)$ as in [ARH, Definitions 1.1–1.2][ARH]. The cuts
+$P,Q$ are finite prefix-free sets of original addresses. The complete row $R_A(u)$
+at a cut $A$ has the ordered reached subset $A\cap\operatorname{Pos}(u)$, the
+whole concrete numbered-hole exterior, and the complete equality partition of the
+whole reached subtrees. Empty cuts and the root cut are allowed. The old row $R$
+is attained. A literal $(a,p,c)$ requires $r_{\rho^a u}(p)=c$. A signed record
+$e=(a,p,b,q,\bowtie)$ requires
+
+$$
+\operatorname{Rel}_e(u)\iff
+p\in\operatorname{Pos}(\rho^a u)\ \land\ q\in\operatorname{Pos}(\rho^b u)
+\ \land\ (\rho^a u)|_p\ \bowtie\ (\rho^b u)|_q,
+\qquad \bowtie\in\{=,\ne\}.
+\tag{FFM.3}
+$$
+
+Both endpoints must be reached for either sign. Lists retain repetitions. Every
+record within one realization concerns that same original $u$ at its stated
+actual epoch. Set
+
+$$
+D=\{u\in\mathcal T:R_P(u)=R,\ H_0(u),\ H_{\rm rel}(u)\},
+\qquad f(u)=R_Q(u),\qquad D_r=\{u\in D:f(u)=r\}.
+\tag{FFM.4}
+$$
+
+Every old equality, cross-class and off-task disequality, absent-address
+constraint and concrete exterior remains imposed. The target is the full original
+$Q$-row, including its entire exterior; it is not selected partition bits.
+

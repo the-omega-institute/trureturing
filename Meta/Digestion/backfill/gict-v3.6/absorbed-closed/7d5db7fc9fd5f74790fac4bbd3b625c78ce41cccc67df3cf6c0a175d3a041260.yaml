@@ -1,9 +1,0 @@
-fingerprints:
-  raw_sha256: sha256:7d5db7fc9fd5f74790fac4bbd3b625c78ce41cccc67df3cf6c0a175d3a041260
-  normalized_sha256: sha256:7d5db7fc9fd5f74790fac4bbd3b625c78ce41cccc67df3cf6c0a175d3a041260
-cas_ref: sha256:7d5db7fc9fd5f74790fac4bbd3b625c78ce41cccc67df3cf6c0a175d3a041260
-coverage_gids:
-  - gid: D5/S1/Eigenstructure/UnitJordanDrift.unit_jordan_iterate_eq_linear_drift
-    target_statement_id: sha256:0e1aaaab32a46054593ea0f7603b11592c50beb45c8c90b4badc9493da63f2c7
-receipts:
-  unresolved_subitems: []

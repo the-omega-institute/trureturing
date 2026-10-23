@@ -399,34 +399,20 @@ theorem actual_shared_label_support_rigidity (P : ActualProtocol Y) (r : ℝ) (h
       have hz : (trace M).re = 0 ↔ M = 0 := by
         rw [← hM.trace_eq_zero_iff]
         simp [Complex.ext_iff, hi]
-      have h00 := Complex.conj_eq_iff_im.mp (hM.isHermitian.apply 0 0)
-      have h11 := Complex.conj_eq_iff_im.mp (hM.isHermitian.apply 1 1)
-      have h10r : (M 1 0).re = (M 0 1).re := by
-        simpa using (congrArg Complex.re (hM.isHermitian.apply 1 0)).symm
-      have h10i : (M 1 0).im = -(M 0 1).im := by
-        simpa using (congrArg Complex.im (hM.isHermitian.apply 1 0)).symm
-      have determinant : (det M).re = ((trace M).re^2 - ‖bloch M‖^2)/4 := by
-        rw [EuclideanSpace.real_norm_sq_eq]
-        simp [Matrix.det_fin_two, trace, Fin.sum_univ_two, Fin.sum_univ_three,
-          bloch,h00,h11,h10r,h10i]
-        ring
-      have hb : ‖bloch M‖ ≤ (trace M).re := by
-        have hd := (Complex.nonneg_iff.mp hM.det_nonneg).1
-        rw [determinant] at hd
-        nlinarith only [hd,ht,norm_nonneg (bloch M)]
+      have hb : ‖bloch M‖ ≤ (trace M).re := norm_bloch_le_trace_of_posSemidef M hM
       refine ⟨ht,hz,?_,?_⟩
       · rw [norm_smul, Real.norm_eq_abs, abs_of_nonneg (inv_nonneg.mpr ht)]
         exact (mul_le_mul_of_nonneg_left hb (inv_nonneg.mpr ht)).trans
           (by by_cases h : (trace M).re = 0 <;> simp [h])
       · by_cases h : (trace M).re = 0
         · simp [hz.mp h,h,rho]
-        · simp only [trace, Fin.sum_univ_two, Matrix.diag_apply, Complex.add_re] at h
-          ext i j
-          fin_cases i <;> fin_cases j <;> apply Complex.ext <;>
-            simp [rho, blochMatrix, bloch, trace, Fin.sum_univ_two,
-              h00, h11, h10r, h10i, Complex.mul_re, Complex.mul_im,
-              Complex.normSq_apply] <;>
-            field_simp [h, (add_comm (M 0 0).re (M 1 1).re) ▸ h] <;> ring
+        · calc
+            M = blochMatrix (trace M).re (bloch M) :=
+              (bloch_geometry_of_isHermitian M hM.isHermitian).1
+            _ = _ := by
+              ext i j
+              fin_cases i <;> fin_cases j <;>
+                simp [rho, blochMatrix] <;> field_simp [h]
     have single {d : Fin 2 → ℕ} (F : LocalFactors InputDimensions d) (a : Fin 2) :
         0 ≤ localTrace F a ∧
         (localTrace F a = 0 ↔ inputGram (F.matrix a) = 0) ∧
@@ -871,17 +857,18 @@ theorem actual_shared_label_support_rigidity (P : ActualProtocol Y) (r : ℝ) (h
           (localTrace F 1 : ℂ) ≠ 0))
         exact (local_laws 1).2.2.2.symm.trans gy
       have pure (v : Bloch) (z : Fin 2 → ℂ) (hz : rho v = vecMulVec z (star z)) : ‖v‖ = 1 := by
-        have hd : (rho v).det = 0 := by
-          rw [hz]
-          simp [Matrix.det_fin_two,Matrix.vecMulVec_apply]
-          ring
-        have he : (rho v).det.re = (1-‖v‖^2)/4 := by
-          rw [EuclideanSpace.real_norm_sq_eq]
-          simp [rho,blochMatrix,Matrix.det_fin_two,Fin.sum_univ_three]
-          ring
-        rw [hd] at he
-        simp only [Complex.zero_re] at he
-        nlinarith [norm_nonneg v]
+        have ht : trace (vecMulVec z (star z)) = 1 := by
+          rw [← hz]
+          exact blochMatrix_trace 1 v
+        have hn : star z ⬝ᵥ z = (1 : ℂ) := by
+          rw [dotProduct_comm, ← trace_vecMulVec]
+          exact ht
+        have hp : vecMulVec z (star z) * vecMulVec z (star z) = vecMulVec z (star z) := by
+          rw [vecMulVec_mul_vecMulVec, hn, one_smul]
+        have hg := (bloch_geometry_of_isHermitian _
+          (posSemidef_vecMulVec_self_star z).isHermitian).2 ht hp
+        rw [← hz] at hg
+        simpa only [rho, bloch_blochMatrix] using hg
       have qform : Q (localBloch F 0) (localBloch F 1) =
           vecMulVec (productVector x y) (star (productVector x y)) := by
         ext i j

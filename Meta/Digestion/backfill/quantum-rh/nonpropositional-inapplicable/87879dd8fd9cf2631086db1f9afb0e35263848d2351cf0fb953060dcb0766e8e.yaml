@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:87879dd8fd9cf2631086db1f9afb0e35263848d2351cf0fb953060dcb0766e8e
+  normalized_sha256: sha256:87879dd8fd9cf2631086db1f9afb0e35263848d2351cf0fb953060dcb0766e8e
+cas_ref: sha256:87879dd8fd9cf2631086db1f9afb0e35263848d2351cf0fb953060dcb0766e8e
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 本 atom 只给出定理 L3 的正向蕴含的证明及证明方法说明，不另立独立命题；其所证明的原陈述保留自身状态。
+    previous_atom_id: 0d2c6e9ed518bfcee93cc1f4b71877666e729b3db0f05d06a2b43bbf53e86984
+    next_atom_id: a7413b0787ae4d9b0dc6300f389b9ace7b635713b61ed0c740d60f33349c6bfe

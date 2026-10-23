@@ -1,0 +1,86 @@
+**Proof.** Apply PAID Lemma 14.1 on that fibre. It supplies one finite
+support-closed stationary table with the original acquired kernels $B,A$,
+positive rows $\pi,\tau$, copied complete laws, and
+$\pi B=\tau$, $\tau A=\pi$. On these same rows both phase losses against
+every supported target are bounded by the corresponding original risks.
+For countable priors this simultaneous statement uses that lemma's summable
+likelihood-ratio domination along finite paid histories; it does not extract
+a different observer or different rows for each target.
+
+Every retained positive-row label is an original reachable configuration.
+Moreover nonnegative flow implies that no retained label has a positive
+transition to a deleted zero-row label. Determinism therefore survives
+restriction: there are maps $b_*:X\to Y$ and $a_*:Y\to X$ with
+$B_{xy}=\mathbf1_{\{y=b_*(x)\}}$ and
+$A_{yx}=\mathbf1_{\{x=a_*(y)\}}$ on the retained support.
+This remains true if the original synthetic continuation probability at a
+state was zero, since the acquired update was still installed and the actual
+source continuation has positive probability.
+
+Clip the two emissions on these same rows and kernels to $[a,b]$ and
+regenerate their complete laws $\widehat Q_x,\widehat W_y$.
+[PAIRED, Section 6, (6.2)](RECURSIVE_RELATIONAL_OBSERVATION_PAIRED_CALIBRATION_OBSERVABILITY.md),
+using [CLIP, Theorem 3.1](RECURSIVE_RELATIONAL_OBSERVATION_RISK_CONTROLLED_EMISSION_MOMENT_FEASIBILITY.md),
+gives the same-table estimate $\widehat e\le61e(M)/11$ for the maximum
+of the two all-supported configuration excesses. It includes arbitrary
+original zero/unit emissions and original noncompletion mass. No new
+periodicization or change of acquired kernels is made here.
+
+To verify explicitly the passage from deterministic labels to complete
+residual graphs, the regenerated same-update laws obey
+
+$$
+\widehat Q_x=\widehat u_x\delta_\alpha+
+ (1-\widehat u_x)\beta\widehat W_{b_*(x)},\qquad
+\widehat W_y=(1-\widehat v_y)\delta_\beta+
+ \widehat v_y\alpha\widehat Q_{a_*(y)}.
+\tag{16.32}
+$$
+
+These are equalities of complete measures, including infinity, obtained by
+conditioning the first step of this very generator. The regular survival
+bound $(4/15)^n$ gives normalized complete laws in (16.1). Since
+$1-\widehat u_x\ge3/5$ and $\widehat v_y\ge1/3$, division yields
+
+$$
+\mathcal R_B(\widehat Q_x)=\widehat W_{b_*(x)},\qquad
+\mathcal R_A(\widehat W_y)=\widehat Q_{a_*(y)}.
+\tag{16.33}
+$$
+
+If two input labels have the same complete law, (16.2) gives the same unique
+residual law, even if their successor labels differ. Thus merging labels
+only by their full laws cannot create law-level dispersion. The exact
+pushforwards
+
+$$
+\widehat\Gamma_B=\sum_x\pi_x
+ \delta_{(\widehat Q_x,\widehat W_{b_*(x)})},\qquad
+\widehat\Gamma_A=\sum_y\tau_y
+ \delta_{(\widehat W_y,\widehat Q_{a_*(y)})}
+\tag{16.34}
+$$
+
+have the shared unweighted marginals by the two flow balances, satisfy every
+full residual test by (16.33), and have $d_A=d_B=0$. Hence they belong to
+$\mathfrak C_{\rm det}$. Their objective equals $\widehat e$ because
+pushing labels to laws preserves each configuration-before-TV integral.
+As the minimum (16.28) has no box constraint, it applies to this possibly
+positive-loss clipped pair. Therefore
+$j_{\rm det}\le\widehat e\le61e(M)/11$, which proves (16.31).
+
+For the original-history interpretation, PAIRED Section 11.4 and
+CLIP Proposition 2.3 identify a stationary table's phase risks with these
+supported-target suprema. Their upper bound applies target convexity at
+each configuration to the normalized posterior mixture from that same
+paid history; their lower bound uses finite paid histories concentrating at
+each supported depth, including the countable-prior case above. Restoring
+the full-record renderer preserves TV, noncompletion, original records and
+matching Stop. The same source-independent latch construction, after the
+original third write and latch, uses the same acquired and synthetic $B,A$
+on both seeds and all record fibres. No posterior or distribution vector is
+made readable. COMPLETE still counts every label, program, selector,
+installation, workspace and persistent random state. This comparison proves
+a necessary original-risk bound; it preserves neither a preassigned hard
+resource budget nor a marginalized coherence-defect budget. $\square$
+

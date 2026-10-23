@@ -4,13 +4,13 @@
 
 A rank-two affine measurement of a pure qubit curve has a strict arc parametrization.
 
-Throughout, Jm denotes the finite index set Fin m; a subscript j denotes evaluation at j. Matrices are complex, PSD means positive semidefinite, and 1n is the identity on the indicated finite index set. C1(I) means continuously differentiable on I over the reals. Preconnected means that I cannot be separated into two nonempty relatively open sets; it does not require I to be nonempty. D2 is the canonical space of positive trace-one qubit density states, and mat recovers the underlying matrix. All unspecified scalar arguments in the definitions below are real. In radiusMap and extendedCost, w is a function from the reals to the reals; in root, upperDiag and effect it is a real scalar. Division by zero and the real square root use their total real conventions: a zero denominator gives zero and the square root of a negative number is zero.
+All matrices, vector spaces, predicates and maps below use the indicated Lean and Mathlib objects. Fin m is the outcome index type, and EuclideanSpace over the reals on Fin 3 is the Bloch-vector space. DensityState on Fin 2 is the canonical space of positive trace-one qubit states; Subtype.val exposes its CStarMatrix value. Real scalars enter complex matrices through Complex.ofReal, and WithLp.toLp 2 equips coordinate functions with the Euclidean structure. Division by zero and the real square root use their total real conventions.
 
-For spectralQFI, U is the eigenvector unitary chosen for the Hermitian matrix, and the lambda entries are its eigenvalues. The positivity proof is shown after a semicolon when its quantification matters. A prime denotes the real derivative. In the rank-two statement, the orthonormal basis is indexed by Fin 3 and its coordinate isometry is denoted O with subscript B.
+The spectral expression specifies the chosen eigenvector unitary and eigenvalues of the positive matrix. Linear maps are determined by their typed underlying functions. The rank-two conclusion uses the coordinate isometry OrthonormalBasis.repr of the chosen basis.
 
 **Definition 1.1 (Spectral SLD information).**
 
-$$\begin{aligned}&\forall n\ \mathrm{finite},\ \rho,D\in\mathbb C^{n\times n},\ h:\operatorname{PSD}(\rho),\\&U=U_h,\quad M=U^*DU,\quad\operatorname{spectralQFI}(\rho,D;h)=\sum_{i\in n}\sum_{j\in n}\frac{2|M_{ij}|^2}{\lambda_i+\lambda_j}\end{aligned}$$
+$$\forall n \in Type*,\; [\operatorname{Fintype}\left(n\right)] [\operatorname{DecidableEq}\left(n\right)] \forall rho \in \operatorname{Matrix}\left(n, n, \mathbb{C}\right),\; \forall B \in \operatorname{Matrix}\left(n, n, \mathbb{C}\right),\; \forall hp \in \operatorname{Matrix.PosSemidef}\left(rho\right),\; \operatorname{let} (U: \operatorname{Matrix.unitaryGroup}\left(n, \mathbb{C}\right)) := (((hp).isHermitian).eigenvectorUnitary); (\operatorname{let} (M: \operatorname{Matrix}\left(n, n, \mathbb{C}\right)) := (\operatorname{star}\left((U: \operatorname{Matrix}\left(n, n, \mathbb{C}\right))\right) \cdot B \cdot (U: \operatorname{Matrix}\left(n, n, \mathbb{C}\right))); (\operatorname{spectralQFI}\left(rho, B, hp\right) = \sum_{(i: n)} (\sum_{(j: n)} (\frac{2 \cdot \operatorname{Complex.normSq}\left(M\left(i, j\right)\right)}{((hp).isHermitian).eigenvalues\left(i\right) + ((hp).isHermitian).eigenvalues\left(j\right)}))))$$
 
 *Formalization.* `D5/S3/Quantum/Information/ActualPureQubitGeometry.spectralQFI` (`✓ std3`).
 
@@ -22,7 +22,7 @@ The spectral expression uses the chosen Hermitian eigenbasis and assigns zero to
 
 **Definition 1.2 (Guarded real infimum).**
 
-$$\begin{aligned}&\forall S\subseteq\mathbb R,\quad\operatorname{guardedInfimum}(S)=\begin{cases}\operatorname{inf}S&S\neq\emptyset\ \land\ \operatorname{BddBelow}(S)\\0&\mathrm{otherwise}\end{cases}\end{aligned}$$
+$$\forall S \in \operatorname{Set}\left(\mathbb{R}\right),\; \operatorname{guardedInfimum}\left(S\right) = \operatorname{ite}\left((\operatorname{Set.Nonempty}\left(S\right)) \land (\operatorname{BddBelow}\left(S\right)), \operatorname{sInf}\left(S\right), 0\right)$$
 
 *Formalization.* `D5/S3/Quantum/Information/ActualPureQubitGeometry.guardedInfimum` (`✓ std3`).
 
@@ -34,7 +34,7 @@ Real infimum with explicit nonempty and bounded-below guard.
 
 **Definition 1.3 (Canonical density-state bridge).**
 
-$$\begin{aligned}&\forall M\in\mathbb C^{2\times2},\ h:\operatorname{PSD}(M),\ h_t:\operatorname{tr}(M)=1,\\&\operatorname{densityBridge}(M,h,h_t)\in\{r\in\mathcal D_2\mid\operatorname{mat}(r)=M\}\end{aligned}$$
+$$\forall M \in \operatorname{Matrix}\left(\operatorname{Fin}\left(2\right), \operatorname{Fin}\left(2\right), \mathbb{C}\right),\; \forall hM \in \operatorname{Matrix.PosSemidef}\left(M\right),\; \forall ht \in \operatorname{Matrix.trace}\left(M\right) = 1,\; ((\operatorname{densityBridge}\left(M, hM, ht\right): \operatorname{Subtype}\left(((rho: \operatorname{FiniteStateChannel.DensityState}\left(\operatorname{Fin}\left(2\right)\right)) \mapsto ((\operatorname{CStarMatrix.ofMatrix}).symm\left(\operatorname{Subtype.val}\left(rho\right)\right) = M))\right)) = \langle\langle\operatorname{CStarMatrix.ofMatrix}\left(M\right), \left(\operatorname{map}_{nonneg}\right)\left(\operatorname{CStarMatrix.ofMatrixStarAlgEquiv}, (hM).nonneg\right), ht\rangle, rfl\rangle) \land ((\operatorname{CStarMatrix.ofMatrix}).symm\left(\operatorname{Subtype.val}\left(\operatorname{Subtype.val}\left(\operatorname{densityBridge}\left(M, hM, ht\right)\right)\right)\right) = M)$$
 
 *Formalization.* `D5/S3/Quantum/Information/ActualPureQubitGeometry.densityBridge` (`✓ std3`).
 
@@ -42,11 +42,11 @@ $$\begin{aligned}&\forall M\in\mathbb C^{2\times2},\ h:\operatorname{PSD}(M),\ h
 
 *Commentary.*
 
-The bridge constructs the canonical density state represented by the given positive trace-one matrix; its subtype includes the exact recovered-matrix equality.
+The bridge constructs the canonical density state represented by the given positive trace-one matrix. Its state value is CStarMatrix.ofMatrix M, its positivity proof is map_nonneg CStarMatrix.ofMatrixStarAlgEquiv hM.nonneg, and its trace proof is ht. The recovered-matrix equality is reflexive.
 
 **Definition 1.4 (Full actual program class).**
 
-$$\begin{aligned}&\forall m\in\mathbb N,\ p,v:J_m\to\mathbb R,\ R,Q\in\mathbb R,\ N:J_m\to\mathbb C^{2\times2},\ \rho:\mathbb R\to\mathbb C^{2\times2},\ I\subseteq\mathbb R,\\&\operatorname{IsProgram}(p,v,R,N,\rho,I,Q)\ \Leftrightarrow\\&\operatorname{Open}(I)\land\operatorname{Preconnected}(I)\land[-R,R]\subseteq I\\&\land\ (\forall j\in J_m,\operatorname{PSD}(N_j))\land\sum_{j\in J_m}N_j=1_2\land\rho\in C^1(I)\\&\land\ (\forall u\in I,\operatorname{PSD}(\rho(u))\land\operatorname{tr}(\rho(u))=1\land\rho(u)^2=\rho(u)\\&\qquad\land\exists r\in\mathcal D_2,\operatorname{mat}(r)=\rho(u))\\&\land\ (\forall u\in I,\forall j\in J_m,\operatorname{tr}(N_j\rho(u))=p_j+uv_j\land0<p_j+uv_j)\\&\land\ (\forall h:\operatorname{PSD}(\rho(0)),\operatorname{spectralQFI}(\rho(0),\rho'(0);h)=Q)\end{aligned}$$
+$$\forall m \in \mathbb{N},\; \forall p \in \operatorname{Fin}\left(m\right) \to \mathbb{R},\; \forall v \in \operatorname{Fin}\left(m\right) \to \mathbb{R},\; \forall R \in \mathbb{R},\; \forall N \in \operatorname{Fin}\left(m\right) \to \operatorname{Matrix}\left(\operatorname{Fin}\left(2\right), \operatorname{Fin}\left(2\right), \mathbb{C}\right),\; \forall rho \in \mathbb{R} \to \operatorname{Matrix}\left(\operatorname{Fin}\left(2\right), \operatorname{Fin}\left(2\right), \mathbb{C}\right),\; \forall I \in \operatorname{Set}\left(\mathbb{R}\right),\; \forall Q \in \mathbb{R},\; (\operatorname{IsProgram}\left(p, v, R, N, rho, I, Q\right)) \Leftrightarrow ((\operatorname{IsOpen}\left(I\right)) \land ((\operatorname{IsPreconnected}\left(I\right)) \land ((\operatorname{Set.Icc}\left(-(R), R\right) \subseteq I) \land ((\forall j \in \operatorname{Fin}\left(m\right),\; \operatorname{Matrix.PosSemidef}\left(N\left(j\right)\right)) \land ((\sum_{(j: \operatorname{Fin}\left(m\right))} (N\left(j\right)) = (1: \operatorname{Matrix}\left(\operatorname{Fin}\left(2\right), \operatorname{Fin}\left(2\right), \mathbb{C}\right))) \land ((\operatorname{ContDiffOn}\left(\mathbb{R}, 1, rho, I\right)) \land ((\forall u \in \mathbb{R},\; (u \in I) \Rightarrow ((\operatorname{Matrix.PosSemidef}\left(rho\left(u\right)\right)) \land ((\operatorname{Matrix.trace}\left(rho\left(u\right)\right) = 1) \land ((rho\left(u\right) \cdot rho\left(u\right) = rho\left(u\right)) \land (\exists r \in \operatorname{FiniteStateChannel.DensityState}\left(\operatorname{Fin}\left(2\right)\right),\; (\operatorname{CStarMatrix.ofMatrix}).symm\left(\operatorname{Subtype.val}\left(r\right)\right) = rho\left(u\right)))))) \land ((\forall u \in \mathbb{R},\; (u \in I) \Rightarrow (\forall j \in \operatorname{Fin}\left(m\right),\; (\operatorname{Matrix.trace}\left(N\left(j\right) \cdot rho\left(u\right)\right) = \operatorname{Complex.ofReal}\left(p\left(j\right) + u \cdot v\left(j\right)\right)) \land (0 < p\left(j\right) + u \cdot v\left(j\right)))) \land (\forall h \in \operatorname{Matrix.PosSemidef}\left(rho\left(0\right)\right),\; \operatorname{spectralQFI}\left(rho\left(0\right), \operatorname{deriv}\left(rho, 0\right), h\right) = Q)))))))))$$
 
 *Formalization.* `D5/S3/Quantum/Information/ActualPureQubitGeometry.IsProgram` (`✓ std3`).
 
@@ -58,7 +58,7 @@ The predicate quantifies the full finite measurement and pure-curve data. The in
 
 **Definition 1.5 (Attainable actual costs).**
 
-$$\operatorname{costs}(p,v,R)=\{Q\in\mathbb R\mid\exists N,\rho,I,\operatorname{IsProgram}(p,v,R,N,\rho,I,Q)\}$$
+$$\forall m \in \mathbb{N},\; \forall p \in \operatorname{Fin}\left(m\right) \to \mathbb{R},\; \forall v \in \operatorname{Fin}\left(m\right) \to \mathbb{R},\; \forall R \in \mathbb{R},\; \operatorname{costs}\left(p, v, R\right) = \{(Q: \mathbb{R})\mid \exists N \in \operatorname{Fin}\left(m\right) \to \operatorname{Matrix}\left(\operatorname{Fin}\left(2\right), \operatorname{Fin}\left(2\right), \mathbb{C}\right),\; \exists rho \in \mathbb{R} \to \operatorname{Matrix}\left(\operatorname{Fin}\left(2\right), \operatorname{Fin}\left(2\right), \mathbb{C}\right),\; \exists I \in \operatorname{Set}\left(\mathbb{R}\right),\; \operatorname{IsProgram}\left(p, v, R, N, rho, I, Q\right)\}$$
 
 *Formalization.* `D5/S3/Quantum/Information/ActualPureQubitGeometry.costs` (`✓ std3`).
 
@@ -70,7 +70,7 @@ The set ranges over all actual programs in the preceding class.
 
 **Definition 1.6 (Cost infimum).**
 
-$$C_2(p,v,R)=\operatorname{guardedInfimum}(\operatorname{costs}(p,v,R))$$
+$$\forall m \in \mathbb{N},\; \forall p \in \operatorname{Fin}\left(m\right) \to \mathbb{R},\; \forall v \in \operatorname{Fin}\left(m\right) \to \mathbb{R},\; \forall R \in \mathbb{R},\; \operatorname{C2}\left(p, v, R\right) = \operatorname{guardedInfimum}\left(\operatorname{costs}\left(p, v, R\right)\right)$$
 
 *Formalization.* `D5/S3/Quantum/Information/ActualPureQubitGeometry.C2` (`✓ std3`).
 
@@ -82,7 +82,7 @@ C2 applies the guarded infimum to the attainable cost set; when the guard fails 
 
 **Definition 1.7 (Bloch vector).**
 
-$$\operatorname{bloch}(M)=(2\operatorname{Re}M_{01},-2\mathrm{Im}M_{01},\operatorname{Re}M_{00}-\operatorname{Re}M_{11})\in\mathbb R^3$$
+$$\forall M \in \operatorname{Matrix}\left(\operatorname{Fin}\left(2\right), \operatorname{Fin}\left(2\right), \mathbb{C}\right),\; \operatorname{bloch}\left(M\right) = \operatorname{WithLp.toLp}\left(2, ![2 \cdot \operatorname{Complex.re}\left(M\left(0, 1\right)\right), -(2) \cdot \operatorname{Complex.im}\left(M\left(0, 1\right)\right), \operatorname{Complex.re}\left(M\left(0, 0\right)\right) - \operatorname{Complex.re}\left(M\left(1, 1\right)\right)]\right)$$
 
 *Formalization.* `D5/S3/Quantum/Information/ActualPureQubitGeometry.bloch` (`✓ std3`).
 
@@ -94,7 +94,7 @@ The three real Bloch coordinates of a two by two matrix.
 
 **Definition 1.8 (Bloch matrix).**
 
-$$\operatorname{blochMatrix}(a,r)=\frac12\begin{pmatrix}a+r_2&r_0-\mathrm{i}r_1\\ r_0+\mathrm{i}r_1&a-r_2\end{pmatrix}\quad(a\in\mathbb R,\ r\in\mathbb R^3)$$
+$$\forall a \in \mathbb{R},\; \forall r \in \operatorname{EuclideanSpace}\left(\mathbb{R}, \operatorname{Fin}\left(3\right)\right),\; \operatorname{blochMatrix}\left(a, r\right) = \begin{pmatrix}\frac{\operatorname{Complex.ofReal}\left(a + r\left(2\right)\right)}{2}&\frac{\operatorname{Complex.ofReal}\left(r\left(0\right)\right) - \operatorname{Complex.ofReal}\left(r\left(1\right)\right) \cdot \operatorname{Complex.I}}{2}\\\frac{\operatorname{Complex.ofReal}\left(r\left(0\right)\right) + \operatorname{Complex.ofReal}\left(r\left(1\right)\right) \cdot \operatorname{Complex.I}}{2}&\frac{\operatorname{Complex.ofReal}\left(a - r\left(2\right)\right)}{2}\end{pmatrix}$$
 
 *Formalization.* `D5/S3/Quantum/Information/ActualPureQubitGeometry.blochMatrix` (`✓ std3`).
 
@@ -104,9 +104,57 @@ $$\operatorname{blochMatrix}(a,r)=\frac12\begin{pmatrix}a+r_2&r_0-\mathrm{i}r_1\
 
 The Hermitian matrix with a specified real trace and Bloch vector.
 
-**Definition 1.9 (Visible readout map).**
+**Theorem 1.9 (Trace of a Bloch matrix).**
 
-$$\operatorname{effectReadout}(N):\mathbb R^3\to\mathbb R^{J_m},\quad\operatorname{effectReadout}(N)(r)_j=\frac{\langle\operatorname{bloch}(N_j),r\rangle}{2}$$
+$$\forall a \in \mathbb{R},\; \forall r \in \operatorname{EuclideanSpace}\left(\mathbb{R}, \operatorname{Fin}\left(3\right)\right),\; \operatorname{Matrix.trace}\left(\operatorname{blochMatrix}\left(a, r\right)\right) = \operatorname{Complex.ofReal}\left(a\right)$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/Quantum/Information/ActualPureQubitGeometry.blochMatrix_trace` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+The scalar coordinate is the complex trace, with the real scalar embedded in the complex numbers.
+
+**Theorem 1.10 (Bloch coordinates of a Bloch matrix).**
+
+$$\forall a \in \mathbb{R},\; \forall r \in \operatorname{EuclideanSpace}\left(\mathbb{R}, \operatorname{Fin}\left(3\right)\right),\; \operatorname{bloch}\left(\operatorname{blochMatrix}\left(a, r\right)\right) = r$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/Quantum/Information/ActualPureQubitGeometry.bloch_blochMatrix` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+The Bloch map recovers the vector coordinate for every real scalar and every real three-dimensional vector.
+
+**Theorem 1.11 (Hermitian Bloch geometry).**
+
+$$\forall M \in \operatorname{Matrix}\left(\operatorname{Fin}\left(2\right), \operatorname{Fin}\left(2\right), \mathbb{C}\right),\; (\operatorname{Matrix.IsHermitian}\left(M\right)) \Rightarrow ((M = \operatorname{blochMatrix}\left(\operatorname{Complex.re}\left(\operatorname{Matrix.trace}\left(M\right)\right), \operatorname{bloch}\left(M\right)\right)) \land ((\operatorname{Matrix.trace}\left(M\right) = 1) \Rightarrow ((M \cdot M = M) \Rightarrow (\left\lVert \operatorname{bloch}\left(M\right) \right\rVert = 1))))$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/Quantum/Information/ActualPureQubitGeometry.bloch_geometry_of_isHermitian` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+A Hermitian qubit matrix is determined by its trace and Bloch vector. If it has trace one and is idempotent, its Bloch vector has norm one.
+
+**Theorem 1.12 (Positive Bloch norm bound).**
+
+$$\forall M \in \operatorname{Matrix}\left(\operatorname{Fin}\left(2\right), \operatorname{Fin}\left(2\right), \mathbb{C}\right),\; (\operatorname{Matrix.PosSemidef}\left(M\right)) \Rightarrow (\left\lVert \operatorname{bloch}\left(M\right) \right\rVert \le \operatorname{Complex.re}\left(\operatorname{Matrix.trace}\left(M\right)\right))$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/Quantum/Information/ActualPureQubitGeometry.norm_bloch_le_trace_of_posSemidef` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+For a positive semidefinite qubit matrix, the Bloch-vector norm is at most the real part of the trace. The determinant equals one quarter of the difference between the squared trace and the squared Bloch norm.
+
+**Definition 1.13 (Visible readout map).**
+
+$$\forall m \in \mathbb{N},\; \forall N \in \operatorname{Fin}\left(m\right) \to \operatorname{Matrix}\left(\operatorname{Fin}\left(2\right), \operatorname{Fin}\left(2\right), \mathbb{C}\right),\; \operatorname{DFunLike.coe}\left((\operatorname{effectReadout}\left(N\right): \operatorname{LinearMap}\left(\operatorname{RingHom.id}\left(\mathbb{R}\right), \operatorname{EuclideanSpace}\left(\mathbb{R}, \operatorname{Fin}\left(3\right)\right), \operatorname{Fin}\left(m\right) \to \mathbb{R}\right))\right) = ((r: \operatorname{EuclideanSpace}\left(\mathbb{R}, \operatorname{Fin}\left(3\right)\right)) \mapsto (((j: \operatorname{Fin}\left(m\right)) \mapsto (\frac{\langle\operatorname{bloch}\left(N\left(j\right)\right), r\rangle_{\mathbb{R}}}{2}))))$$
 
 *Formalization.* `D5/S3/Quantum/Information/ActualPureQubitGeometry.effectReadout` (`✓ std3`).
 
@@ -116,9 +164,9 @@ $$\operatorname{effectReadout}(N):\mathbb R^3\to\mathbb R^{J_m},\quad\operatorna
 
 The linear part of the finite measurement readout sends a Bloch vector to its pairings with the effect vectors.
 
-**Definition 1.10 (Orthogonal change of Bloch coordinates).**
+**Definition 1.14 (Orthogonal change of Bloch coordinates).**
 
-$$\operatorname{reframe}(O,M)=\operatorname{blochMatrix}(\operatorname{Re}\operatorname{tr}(M),O(\operatorname{bloch}(M)))\quad(O:\mathbb R^3\equiv\mathbb R^3\ \mathrm{orthogonal})$$
+$$\forall O \in \operatorname{LinearIsometryEquiv}\left(\operatorname{RingHom.id}\left(\mathbb{R}\right), \operatorname{EuclideanSpace}\left(\mathbb{R}, \operatorname{Fin}\left(3\right)\right), \operatorname{EuclideanSpace}\left(\mathbb{R}, \operatorname{Fin}\left(3\right)\right)\right),\; \forall M \in \operatorname{Matrix}\left(\operatorname{Fin}\left(2\right), \operatorname{Fin}\left(2\right), \mathbb{C}\right),\; \operatorname{reframe}\left(O, M\right) = \operatorname{blochMatrix}\left(\operatorname{Complex.re}\left(\operatorname{Matrix.trace}\left(M\right)\right), O\left(\operatorname{bloch}\left(M\right)\right)\right)$$
 
 *Formalization.* `D5/S3/Quantum/Information/ActualPureQubitGeometry.reframe` (`✓ std3`).
 
@@ -128,9 +176,9 @@ $$\operatorname{reframe}(O,M)=\operatorname{blochMatrix}(\operatorname{Re}\opera
 
 An orthogonal change of the Bloch vector preserves the trace coordinate.
 
-**Definition 1.11 (Linear Bloch map).**
+**Definition 1.15 (Linear Bloch map).**
 
-$$\operatorname{blochLinear}:\mathbb C^{2\times2}\to_{\mathbb R}\mathbb R^3,\quad\operatorname{blochLinear}(M)=\operatorname{bloch}(M)$$
+$$\operatorname{DFunLike.coe}\left((\operatorname{blochLinear}: \operatorname{LinearMap}\left(\operatorname{RingHom.id}\left(\mathbb{R}\right), \operatorname{Matrix}\left(\operatorname{Fin}\left(2\right), \operatorname{Fin}\left(2\right), \mathbb{C}\right), \operatorname{EuclideanSpace}\left(\mathbb{R}, \operatorname{Fin}\left(3\right)\right)\right))\right) = \operatorname{bloch}$$
 
 *Formalization.* `D5/S3/Quantum/Information/ActualPureQubitGeometry.blochLinear` (`✓ std3`).
 
@@ -140,9 +188,9 @@ $$\operatorname{blochLinear}:\mathbb C^{2\times2}\to_{\mathbb R}\mathbb R^3,\qua
 
 The Bloch coordinates form a real linear map on complex matrices.
 
-**Definition 1.12 (Linear change of matrix coordinates).**
+**Definition 1.16 (Linear change of matrix coordinates).**
 
-$$\operatorname{reframeLinear}(O):\mathbb C^{2\times2}\to_{\mathbb R}\mathbb C^{2\times2},\quad\operatorname{reframeLinear}(O)(M)=\operatorname{reframe}(O,M)$$
+$$\forall O \in \operatorname{LinearIsometryEquiv}\left(\operatorname{RingHom.id}\left(\mathbb{R}\right), \operatorname{EuclideanSpace}\left(\mathbb{R}, \operatorname{Fin}\left(3\right)\right), \operatorname{EuclideanSpace}\left(\mathbb{R}, \operatorname{Fin}\left(3\right)\right)\right),\; \operatorname{DFunLike.coe}\left((\operatorname{reframeLinear}\left(O\right): \operatorname{LinearMap}\left(\operatorname{RingHom.id}\left(\mathbb{R}\right), \operatorname{Matrix}\left(\operatorname{Fin}\left(2\right), \operatorname{Fin}\left(2\right), \mathbb{C}\right), \operatorname{Matrix}\left(\operatorname{Fin}\left(2\right), \operatorname{Fin}\left(2\right), \mathbb{C}\right)\right))\right) = \operatorname{reframe}\left(O\right)$$
 
 *Formalization.* `D5/S3/Quantum/Information/ActualPureQubitGeometry.reframeLinear` (`✓ std3`).
 
@@ -152,9 +200,9 @@ $$\operatorname{reframeLinear}(O):\mathbb C^{2\times2}\to_{\mathbb R}\mathbb C^{
 
 A fixed orthogonal Bloch frame induces a real linear map on matrices.
 
-**Definition 1.13 (Small quadratic root).**
+**Definition 1.17 (Small quadratic root).**
 
-$$\operatorname{root}(p,d,\alpha,e,w)=\frac{2(1-e)w^2d^2}{p-\alpha ewd+\sqrt{(p-\alpha ewd)^2-4e(1-e)w^2d^2}}$$
+$$\forall p \in \mathbb{R},\; \forall d \in \mathbb{R},\; \forall alpha \in \mathbb{R},\; \forall e \in \mathbb{R},\; \forall w \in \mathbb{R},\; \operatorname{root}\left(p, d, alpha, e, w\right) = \frac{2 \cdot \left(1 - e\right) \cdot (w)^{2} \cdot (d)^{2}}{p - alpha \cdot e \cdot w \cdot d + \operatorname{Real.sqrt}\left((p - alpha \cdot e \cdot w \cdot d)^{2} - 4 \cdot e \cdot \left(1 - e\right) \cdot (w)^{2} \cdot (d)^{2}\right)}$$
 
 *Formalization.* `D5/S3/Quantum/Information/ActualPureQubitGeometry.root` (`✓ std3`).
 
@@ -164,9 +212,9 @@ $$\operatorname{root}(p,d,\alpha,e,w)=\frac{2(1-e)w^2d^2}{p-\alpha ewd+\sqrt{(p-
 
 The rationalized small root gives the lower diagonal effect coefficient, including zero individual scores.
 
-**Definition 1.14 (Radius map).**
+**Definition 1.18 (Radius map).**
 
-$$\operatorname{radiusMap}(B,\alpha,w)(t)=\frac{(2t\sqrt{1-t^2}-|\alpha|t^2)w(t^2)}{(1+t)\sqrt B}$$
+$$\forall B \in \mathbb{R},\; \forall alpha \in \mathbb{R},\; \forall w \in \mathbb{R} \to \mathbb{R},\; \forall t \in \mathbb{R},\; \operatorname{radiusMap}\left(B, alpha, w, t\right) = \frac{\left(2 \cdot t \cdot \operatorname{Real.sqrt}\left(1 - (t)^{2}\right) - \left|alpha\right| \cdot (t)^{2}\right) \cdot w\left((t)^{2}\right)}{\left(1 + t\right) \cdot \operatorname{Real.sqrt}\left(B\right)}$$
 
 *Formalization.* `D5/S3/Quantum/Information/ActualPureQubitGeometry.radiusMap` (`✓ std3`).
 
@@ -176,9 +224,9 @@ $$\operatorname{radiusMap}(B,\alpha,w)(t)=\frac{(2t\sqrt{1-t^2}-|\alpha|t^2)w(t^
 
 This real function converts an arc parameter into a radius for the effect-family statement.
 
-**Definition 1.15 (Extended family cost).**
+**Definition 1.19 (Extended family cost).**
 
-$$\operatorname{extendedCost}(B,\alpha,w)(e)=\frac{B}{w(e)^2}\frac{4(1-e)}{4(1-e)-\alpha^2e}$$
+$$\forall B \in \mathbb{R},\; \forall alpha \in \mathbb{R},\; \forall w \in \mathbb{R} \to \mathbb{R},\; \forall e \in \mathbb{R},\; \operatorname{extendedCost}\left(B, alpha, w, e\right) = \frac{\frac{B}{(w\left(e\right))^{2}} \cdot 4 \cdot \left(1 - e\right)}{4 \cdot \left(1 - e\right) - (alpha)^{2} \cdot e}$$
 
 *Formalization.* `D5/S3/Quantum/Information/ActualPureQubitGeometry.extendedCost` (`✓ std3`).
 
@@ -188,9 +236,9 @@ $$\operatorname{extendedCost}(B,\alpha,w)(e)=\frac{B}{w(e)^2}\frac{4(1-e)}{4(1-e
 
 The cost formula extends through the zero transverse parameter for the normalization branch.
 
-**Definition 1.16 (Upper diagonal coefficient).**
+**Definition 1.20 (Upper diagonal coefficient).**
 
-$$\operatorname{upperDiag}(p,d,\alpha,e,w)=\frac{p-\alpha ewd+\sqrt{(p-\alpha ewd)^2-4e(1-e)w^2d^2}}{2(1-e)}$$
+$$\forall p \in \mathbb{R},\; \forall d \in \mathbb{R},\; \forall alpha \in \mathbb{R},\; \forall e \in \mathbb{R},\; \forall w \in \mathbb{R},\; \operatorname{upperDiag}\left(p, d, alpha, e, w\right) = \frac{p - alpha \cdot e \cdot w \cdot d + \operatorname{Real.sqrt}\left((p - alpha \cdot e \cdot w \cdot d)^{2} - 4 \cdot e \cdot \left(1 - e\right) \cdot (w)^{2} \cdot (d)^{2}\right)}{2 \cdot \left(1 - e\right)}$$
 
 *Formalization.* `D5/S3/Quantum/Information/ActualPureQubitGeometry.upperDiag` (`✓ std3`).
 
@@ -200,9 +248,9 @@ $$\operatorname{upperDiag}(p,d,\alpha,e,w)=\frac{p-\alpha ewd+\sqrt{(p-\alpha ew
 
 The complementary quadratic root determines the upper diagonal effect coefficient.
 
-**Definition 1.17 (Actual effect matrix).**
+**Definition 1.21 (Actual effect matrix).**
 
-$$\operatorname{effect}(p,d,\alpha,e,w)=\begin{pmatrix}\operatorname{upperDiag}(p,d,\alpha,e,w)&wd\\ wd&\operatorname{root}(p,d,\alpha,e,w)\end{pmatrix}$$
+$$\forall p \in \mathbb{R},\; \forall d \in \mathbb{R},\; \forall alpha \in \mathbb{R},\; \forall e \in \mathbb{R},\; \forall w \in \mathbb{R},\; \operatorname{effect}\left(p, d, alpha, e, w\right) = \begin{pmatrix}\operatorname{Complex.ofReal}\left(\operatorname{upperDiag}\left(p, d, alpha, e, w\right)\right)&\operatorname{Complex.ofReal}\left(w \cdot d\right)\\\operatorname{Complex.ofReal}\left(w \cdot d\right)&\operatorname{Complex.ofReal}\left(\operatorname{root}\left(p, d, alpha, e, w\right)\right)\end{pmatrix}$$
 
 *Formalization.* `D5/S3/Quantum/Information/ActualPureQubitGeometry.effect` (`✓ std3`).
 
@@ -212,9 +260,9 @@ $$\operatorname{effect}(p,d,\alpha,e,w)=\begin{pmatrix}\operatorname{upperDiag}(
 
 The two diagonal coefficients and the normalized direction determine each effect matrix.
 
-**Definition 1.18 (Pure-state arc).**
+**Definition 1.22 (Pure-state arc).**
 
-$$\operatorname{arc}(e,x,c,u)=\operatorname{blochMatrix}(1,(x+cu,\sqrt{4e(1-e)-(x+cu)^2},1-2e))$$
+$$\forall e \in \mathbb{R},\; \forall x \in \mathbb{R},\; \forall c \in \mathbb{R},\; \forall u \in \mathbb{R},\; \operatorname{arc}\left(e, x, c, u\right) = \operatorname{blochMatrix}\left(1, \operatorname{WithLp.toLp}\left(2, ![x + c \cdot u, \operatorname{Real.sqrt}\left(4 \cdot e \cdot \left(1 - e\right) - (x + c \cdot u)^{2}\right), 1 - 2 \cdot e]\right)\right)$$
 
 *Formalization.* `D5/S3/Quantum/Information/ActualPureQubitGeometry.arc` (`✓ std3`).
 
@@ -224,9 +272,9 @@ $$\operatorname{arc}(e,x,c,u)=\operatorname{blochMatrix}(1,(x+cu,\sqrt{4e(1-e)-(
 
 The Bloch curve has one affine coordinate, one square-root coordinate, and one constant coordinate.
 
-**Theorem 1.19 (Actual rank-two arc and feasible coefficients).**
+**Theorem 1.23 (Actual rank-two arc and feasible coefficients).**
 
-$$\begin{aligned}&\forall m\in\mathbb N,\ N:J_m\to\mathbb C^{2\times2},\ \rho:\mathbb R\to\mathbb C^{2\times2},\ p,v:J_m\to\mathbb R,\ I\subseteq\mathbb R,\\&\operatorname{Open}(I)\land\operatorname{Preconnected}(I)\land0\in I\land v\neq0\\&\land\ (\forall j\in J_m,\operatorname{PSD}(N_j))\land\sum_{j\in J_m}N_j=1_2\land\rho\in C^1(I)\\&\land\ (\forall u\in I,\operatorname{PSD}(\rho(u))\land\operatorname{tr}(\rho(u))=1\land\rho(u)^2=\rho(u))\\&\land\ (\forall u\in I,\forall j\in J_m,\operatorname{Re}\operatorname{tr}(N_j\rho(u))=p_j+uv_j)\\&\land\operatorname{rank}_{\mathbb R}(\operatorname{effectReadout}(N))=2\\&\longrightarrow\exists\mathcal B\ \mathrm{orthonormal\ basis\ of}\ \mathbb R^3,\ \exists x,c,\varepsilon,s\in\mathbb R,\ \exists A,q,b:J_m\to\mathbb R,\\&0<c\land0<\varepsilon\land\varepsilon\le\frac12\land(s=1\lor s=-1)\\&\land\ (\forall j\in J_m,\ 0\le q_j\land0\le A_j\land b_j^2\le A_jq_j\land b_j=v_j/c\land A_j=(p_j-b_jx-\varepsilon q_j)/(1-\varepsilon))\\&\land\sum_{j\in J_m}q_j=1\\&\land\ (\forall u\in I,\operatorname{reframe}(O_{\mathcal B},\rho(u))=\operatorname{blochMatrix}(1,(x+cu,s\sqrt{4\varepsilon(1-\varepsilon)-(x+cu)^2},1-2\varepsilon)))\\&\land\ (\forall u\in I,(x+cu)^2<4\varepsilon(1-\varepsilon))\\&\land\ (\forall R\in\mathbb R,\ 0\le R\land[-R,R]\subseteq I\longrightarrow|x|+cR<\sqrt{4\varepsilon(1-\varepsilon)})\end{aligned}$$
+$$\forall m \in \mathbb{N},\; \forall N \in \operatorname{Fin}\left(m\right) \to \operatorname{Matrix}\left(\operatorname{Fin}\left(2\right), \operatorname{Fin}\left(2\right), \mathbb{C}\right),\; \forall rho \in \mathbb{R} \to \operatorname{Matrix}\left(\operatorname{Fin}\left(2\right), \operatorname{Fin}\left(2\right), \mathbb{C}\right),\; \forall p \in \operatorname{Fin}\left(m\right) \to \mathbb{R},\; \forall v \in \operatorname{Fin}\left(m\right) \to \mathbb{R},\; \forall I \in \operatorname{Set}\left(\mathbb{R}\right),\; ((\operatorname{IsOpen}\left(I\right)) \land ((\operatorname{IsPreconnected}\left(I\right)) \land ((0 \in I) \land ((v \ne 0) \land ((\forall j \in \operatorname{Fin}\left(m\right),\; \operatorname{Matrix.PosSemidef}\left(N\left(j\right)\right)) \land ((\sum_{(j: \operatorname{Fin}\left(m\right))} (N\left(j\right)) = (1: \operatorname{Matrix}\left(\operatorname{Fin}\left(2\right), \operatorname{Fin}\left(2\right), \mathbb{C}\right))) \land ((\operatorname{ContDiffOn}\left(\mathbb{R}, 1, rho, I\right)) \land ((\forall u \in \mathbb{R},\; (u \in I) \Rightarrow ((\operatorname{Matrix.PosSemidef}\left(rho\left(u\right)\right)) \land ((\operatorname{Matrix.trace}\left(rho\left(u\right)\right) = 1) \land (rho\left(u\right) \cdot rho\left(u\right) = rho\left(u\right))))) \land ((\forall u \in \mathbb{R},\; (u \in I) \Rightarrow (\forall j \in \operatorname{Fin}\left(m\right),\; \operatorname{Complex.re}\left(\operatorname{Matrix.trace}\left(N\left(j\right) \cdot rho\left(u\right)\right)\right) = p\left(j\right) + u \cdot v\left(j\right))) \land (\operatorname{Module.finrank}\left(\mathbb{R}, \operatorname{LinearMap.range}\left(\operatorname{effectReadout}\left(N\right)\right)\right) = 2)))))))))) \Rightarrow (\exists basis \in \operatorname{OrthonormalBasis}\left(\operatorname{Fin}\left(3\right), \mathbb{R}, \operatorname{EuclideanSpace}\left(\mathbb{R}, \operatorname{Fin}\left(3\right)\right)\right),\; \exists x \in \mathbb{R},\; \exists c \in \mathbb{R},\; \exists epsilon \in \mathbb{R},\; \exists s \in \mathbb{R},\; \exists A \in \operatorname{Fin}\left(m\right) \to \mathbb{R},\; \exists q \in \operatorname{Fin}\left(m\right) \to \mathbb{R},\; \exists b \in \operatorname{Fin}\left(m\right) \to \mathbb{R},\; (0 < c) \land ((0 < epsilon) \land ((epsilon \le \frac{1}{2}) \land (((s = 1) \lor (s = -(1))) \land ((\forall j \in \operatorname{Fin}\left(m\right),\; (0 \le q\left(j\right)) \land ((0 \le A\left(j\right)) \land (((b\left(j\right))^{2} \le A\left(j\right) \cdot q\left(j\right)) \land ((b\left(j\right) = \frac{v\left(j\right)}{c}) \land (A\left(j\right) = \frac{p\left(j\right) - b\left(j\right) \cdot x - epsilon \cdot q\left(j\right)}{1 - epsilon}))))) \land ((\sum_{(j: \operatorname{Fin}\left(m\right))} (q\left(j\right)) = 1) \land ((\forall u \in \mathbb{R},\; (u \in I) \Rightarrow (\operatorname{reframe}\left(\operatorname{OrthonormalBasis.repr}\left(basis\right), rho\left(u\right)\right) = \operatorname{blochMatrix}\left(1, \operatorname{WithLp.toLp}\left(2, ![x + c \cdot u, s \cdot \operatorname{Real.sqrt}\left(4 \cdot epsilon \cdot \left(1 - epsilon\right) - (x + c \cdot u)^{2}\right), 1 - 2 \cdot epsilon]\right)\right))) \land ((\forall u \in \mathbb{R},\; (u \in I) \Rightarrow ((x + c \cdot u)^{2} < 4 \cdot epsilon \cdot \left(1 - epsilon\right))) \land (\forall R \in \mathbb{R},\; (0 \le R) \Rightarrow ((\operatorname{Set.Icc}\left(-(R), R\right) \subseteq I) \Rightarrow (\left|x\right| + c \cdot R < \operatorname{Real.sqrt}\left(4 \cdot epsilon \cdot \left(1 - epsilon\right)\right))))))))))))$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Quantum/Information/ActualPureQubitGeometry.actual_rank_two_parameters` (`✓ std3`). ∎
 
@@ -245,12 +293,16 @@ The basis supplies a fixed coordinate frame. The coefficients and the signed squ
 - Truth anchor: `D5/S3/Quantum/Information/ActualPureQubitGeometry.bloch`
 - Truth anchor: `D5/S3/Quantum/Information/ActualPureQubitGeometry.blochLinear`
 - Truth anchor: `D5/S3/Quantum/Information/ActualPureQubitGeometry.blochMatrix`
+- Truth anchor: `D5/S3/Quantum/Information/ActualPureQubitGeometry.blochMatrix_trace`
+- Truth anchor: `D5/S3/Quantum/Information/ActualPureQubitGeometry.bloch_blochMatrix`
+- Truth anchor: `D5/S3/Quantum/Information/ActualPureQubitGeometry.bloch_geometry_of_isHermitian`
 - Truth anchor: `D5/S3/Quantum/Information/ActualPureQubitGeometry.costs`
 - Truth anchor: `D5/S3/Quantum/Information/ActualPureQubitGeometry.densityBridge`
 - Truth anchor: `D5/S3/Quantum/Information/ActualPureQubitGeometry.effect`
 - Truth anchor: `D5/S3/Quantum/Information/ActualPureQubitGeometry.effectReadout`
 - Truth anchor: `D5/S3/Quantum/Information/ActualPureQubitGeometry.extendedCost`
 - Truth anchor: `D5/S3/Quantum/Information/ActualPureQubitGeometry.guardedInfimum`
+- Truth anchor: `D5/S3/Quantum/Information/ActualPureQubitGeometry.norm_bloch_le_trace_of_posSemidef`
 - Truth anchor: `D5/S3/Quantum/Information/ActualPureQubitGeometry.radiusMap`
 - Truth anchor: `D5/S3/Quantum/Information/ActualPureQubitGeometry.reframe`
 - Truth anchor: `D5/S3/Quantum/Information/ActualPureQubitGeometry.reframeLinear`

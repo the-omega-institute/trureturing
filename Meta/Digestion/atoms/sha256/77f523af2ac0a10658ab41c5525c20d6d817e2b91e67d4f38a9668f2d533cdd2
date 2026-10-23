@@ -1,0 +1,17 @@
+**Definition 5.1 (actual retained fiber and supplement).** Fix a realized
+$R=(C,\pi)$ and all other actually accessible retained inputs $h$.
+Let $\varnothing\ne\mathcal U\subseteq\mathcal U_R$ be exactly their
+compatible source set and put
+
+$$
+M_{\mathcal U}=\{A_P(u):u\in\mathcal U\}\subseteq B\cup\{\bot\}.
+\tag{NAR.5.1}
+$$
+
+A supplement is an additional source-dependent state $\sigma(u)$ retained
+from acquired evidence, from which a common decoder with inputs $P,R,h$
+computes the next whole row, or equivalently the future-row responses,
+without new source information. Its conditional state count is the number
+of values of $\sigma$ actually used on $\mathcal U$.
+This definition counts only the supplement, not the existing row or $h$.
+

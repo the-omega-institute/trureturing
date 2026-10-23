@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:04dfd585c5610a7fd681a3c613e08aae02a033395283a21a25d0e6d602cde851
+  normalized_sha256: sha256:04dfd585c5610a7fd681a3c613e08aae02a033395283a21a25d0e6d602cde851
+cas_ref: sha256:04dfd585c5610a7fd681a3c613e08aae02a033395283a21a25d0e6d602cde851
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 定义286.1　有限能量寄存器只规定模型对象、符号、协议或适用条件；附文限定这些定义的含义，没有另立性质断言。
+    previous_atom_id: 037743b5207f040360165c06932bd84a82da90774c96c506c36fb29550fcb736
+    next_atom_id: 9093fd7a9cb4b3ae8752e3c891cc98c06b33119efa4df1d21a00b3caaf794b61

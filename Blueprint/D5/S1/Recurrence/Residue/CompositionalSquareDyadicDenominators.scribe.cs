@@ -28,6 +28,28 @@ internal sealed class CompositionalSquareDyadicDenominatorsDocument : IScribeDoc
                 + "compatible approximations P_n. The map iota sends integers to rationals. "
                 + "All indices are natural numbers; subtraction in an exponent is natural "
                 + "subtraction. The operation div below is integer division.")),
+            Paragraph(Text("PowerSeries.subst(Q,P) denotes P(Q(X)); its first argument is the inner series.")),
+            Node("Agree", "Agreement below a degree", PublishedAgree(),
+                "Two series agree below d when their coefficients coincide at every natural index less than d.",
+                DescribeRole.Definition, AssessedProvenance.FromRepo()),
+            Node("agree_subst", "Substitution preserves coefficient agreement", PublishedSubst(),
+                "If both inner series have zero constant coefficient and both pairs agree below d, their substitutions agree below d.",
+                DescribeRole.Theorem, AssessedProvenance.FromRepo()),
+            Node("composition_top", "The first differing coefficient of a compositional square", PublishedTop(),
+                "For series tangent to X and agreeing below d, the difference of the degree-d coefficients of their compositional squares is twice their degree-d difference.",
+                DescribeRole.Theorem, AssessedProvenance.FromRepo()),
+            Node("residual", "The compositional-square residual", PublishedResidual(),
+                "Subtract X and four times X times p from the compositional square of p.",
+                DescribeRole.Definition, AssessedProvenance.FromRepo()),
+            Node("C_dvd_iff_coeff", "Constant divisibility coefficient by coefficient", PublishedDivisibility(),
+                "A constant series divides p exactly when its scalar divides every coefficient of p.",
+                DescribeRole.Theorem, AssessedProvenance.FromRepo()),
+            Node("residual_four", "An even displacement gives a residual divisible by four", PublishedFour(),
+                "Over the integers, a zero-constant series differing from X by a multiple of C(2) has residual divisible by C(4).",
+                DescribeRole.Theorem, AssessedProvenance.FromRepo()),
+            Node("coeff_subst_sum", "Coefficients of a substitution with zero inner constant", PublishedCoefficientSubstitution(),
+                "When p has zero constant coefficient, the degree-n coefficient of f(p) is the sum over k less than n+1 of the degree-k coefficient of f times the degree-n coefficient of p to the power k.",
+                DescribeRole.Theorem, AssessedProvenance.FromRepo()),
             Node("generatingSeries", "Construction by compatible integral approximations",
                 ConstructionFormula(),
                 "Set E(P)=P(P(X))-X-4XP. Starting with P_0=X, correct degree n+2 "
@@ -76,6 +98,74 @@ internal sealed class CompositionalSquareDyadicDenominatorsDocument : IScribeDoc
         DescribeId.Create("a381670-" + name.Replace('_', '-').ToLowerInvariant()),
         DeclarationHandle.Create(Prefix + name), H(title), StatementSource.FromAuthor(formula),
         provenance, Blocks(Paragraph(Text(prose))), role, claim);
+
+    private static Formula Blackboard(string name) => Seq(Mathbb, Grp(F.Id(name)));
+    private static Formula PublishedSeries() => Call("PowerSeries", F.Id("R"));
+    private static Formula PublishedAll(string name, Formula type, Formula body) =>
+        Seq(Forall, Sp, F.Id(name), Colon, Sp, type, Comma, Sp, body);
+    private static Formula PublishedRing(Formula body) => PublishedAll("R", Named("Type"),
+        Seq(OpenBracket, Call("CommRing", F.Id("R")), CloseBracket, Comma, Sp, body));
+    private static Formula PublishedArrow(Formula premise, Formula body) =>
+        Seq(Parenthesized(premise), Sp, Implies, Sp, Parenthesized(body));
+    private static Formula PublishedDvd(Formula a, Formula b) => Seq(a, Sp, Mid, Sp, b);
+    private static Formula PublishedSubstitution(Formula inner, Formula outer) =>
+        new Formula.Apply(Seq(Named("PowerSeries"), Dot, Named("subst")), [inner, outer]);
+    private static Formula PublishedAgree() => Disp(PublishedRing(
+        PublishedAll("d", Blackboard("N"), PublishedAll("f", PublishedSeries(),
+        PublishedAll("g", PublishedSeries(), Equal(Call("Agree", F.Id("d"), F.Id("f"), F.Id("g")),
+            Parenthesized(PublishedAll("n", Blackboard("N"), PublishedArrow(
+                Seq(F.Id("n"), Sp, Lt, Sp, F.Id("d")),
+                Equal(Call("coeff", F.Id("n"), F.Id("f")), Call("coeff", F.Id("n"), F.Id("g"))))))))))));
+    private static Formula PublishedSubst()
+    {
+        var d = F.Id("d"); var f = F.Id("f"); var g = F.Id("g");
+        var u = F.Id("u"); var v = F.Id("v");
+        return Disp(PublishedRing(PublishedAll("d", Blackboard("N"),
+            PublishedAll("f", PublishedSeries(), PublishedAll("g", PublishedSeries(),
+            PublishedAll("u", PublishedSeries(), PublishedAll("v", PublishedSeries(),
+            PublishedArrow(Equal(Call("constantCoeff", u), D(0)),
+            PublishedArrow(Equal(Call("constantCoeff", v), D(0)),
+            PublishedArrow(Call("Agree", d, f, g), PublishedArrow(Call("Agree", d, u, v),
+                Call("Agree", d, PublishedSubstitution(u, f), PublishedSubstitution(v, g)))))))))))));
+    }
+    private static Formula PublishedTop()
+    {
+        var d = F.Id("d"); var f = F.Id("f"); var g = F.Id("g");
+        return Disp(PublishedRing(PublishedAll("d", Blackboard("N"),
+            PublishedAll("f", PublishedSeries(), PublishedAll("g", PublishedSeries(),
+            PublishedArrow(Equal(Call("constantCoeff", f), D(0)),
+            PublishedArrow(Equal(Call("constantCoeff", g), D(0)),
+            PublishedArrow(Equal(Call("coeff", D(1), f), D(1)),
+            PublishedArrow(Equal(Call("coeff", D(1), g), D(1)),
+            PublishedArrow(Call("Agree", d, f, g),
+                Equal(Subtract(Call("coeff", d, PublishedSubstitution(f, f)), Call("coeff", d, PublishedSubstitution(g, g))),
+                    Mul(D(2), Parenthesized(Subtract(Call("coeff", d, f), Call("coeff", d, g)))))))))))))));
+    }
+    private static Formula PublishedResidual() => Disp(PublishedRing(
+        PublishedAll("p", PublishedSeries(), Equal(Call("residual", F.Id("p")),
+            Subtract(Subtract(PublishedSubstitution(F.Id("p"), F.Id("p")), X()),
+                Mul(Mul(D(4), X()), F.Id("p")))))));
+    private static Formula PublishedDivisibility() => Disp(PublishedRing(
+        PublishedAll("a", F.Id("R"), PublishedAll("p", PublishedSeries(),
+            Seq(Parenthesized(PublishedDvd(Call("C", F.Id("a")), F.Id("p"))), Sp, Iff, Sp,
+                Parenthesized(PublishedAll("n", Blackboard("N"),
+                    PublishedDvd(F.Id("a"), Call("coeff", F.Id("n"), F.Id("p"))))))))));
+    private static Formula PublishedCoefficientSubstitution()
+    {
+        var p = F.Id("p"); var f = F.Id("f"); var n = F.Id("n"); var k = F.Id("k");
+        var range = new Formula.Apply(Seq(Named("Finset"), Dot, Named("range")), [Add(n, D(1))]);
+        var sum = Seq(new Formula.Subscript(Seq(Sum), Seq(k, Sp, InMacro, Sp, range)), Sp,
+            Mul(Call("coeff", k, f), Call("coeff", n, Power(p, k))));
+        return Disp(PublishedRing(PublishedAll("p", PublishedSeries(),
+            PublishedArrow(Equal(Call("constantCoeff", p), D(0)),
+                PublishedAll("f", PublishedSeries(), PublishedAll("n", Blackboard("N"),
+                    Equal(Call("coeff", n, PublishedSubstitution(p, f)), sum)))))));
+    }
+    private static Formula PublishedFour() => Disp(PublishedAll("p", Call("PowerSeries", Blackboard("Z")),
+        PublishedArrow(Equal(Call("constantCoeff", F.Id("p")), D(0)),
+            PublishedArrow(PublishedDvd(Call("C", Parenthesized(Seq(D(2), Colon, Sp, Blackboard("Z")))),
+                Subtract(F.Id("p"), X())), PublishedDvd(Call("C", Parenthesized(Seq(D(4), Colon, Sp, Blackboard("Z")))),
+                    Call("residual", F.Id("p")))))));
 
     private static Formula ConstructionFormula()
     {

@@ -15,15 +15,17 @@ export PATH="$HOME/.elan/bin:$HOME/.dotnet:/opt/homebrew/bin:/usr/local/bin:/usr
 
 WT="${1:?worktree path}"; MOD="${2:?module path without .lean}"; BR="${3:?branch}"
 TITLE="${4:?commit title}"; TRAILER="${5:-}"
+# Resolve the helper before entering the target tree, so the base check is the clone that holds this script.
+HERE=$(CDPATH= cd -- "$(dirname -- "$0")" && pwd -P) || { echo "LAND_FAIL_SCRIPT_DIR $0"; exit 9; }
 cd "$WT" || { echo "LAND_FAIL_CD $WT"; exit 9; }
 
 # A report run on a worktree of a second clone builds a cache that is never shared with the
 # base, and nothing downstream reports the cost. Refuse before producing one.
-bash "$(dirname "$0")/op-require-base.sh" "$WT" "${OP_BASE_GIT:-$HOME/Desktop/omega/trureturing/.git}" \
+bash "$HERE/op-require-base.sh" "$WT" "${OP_BASE_GIT:-}" \
   || { echo "LAND_ABORT_FOREIGN_CLONE"; exit 7; }
 
 PROJECT="tools/StrataLint.Cli/StrataLint.Cli.csproj"
-REPORT=".lake/build/stratalint/raw-lean-report.json"
+REPORT=".lake/build/stratalint/scoped-lean-report.json"
 STATE="Golden/Frozen/state/$MOD.lean.json"
 
 echo "LAND_START=$(date +%T) HEAD0=$(git rev-parse --short HEAD) BRANCH=$(git rev-parse --abbrev-ref HEAD)"
@@ -34,7 +36,7 @@ git merge-base --is-ancestor origin/dev HEAD \
   && echo "BASE_IS_ANCESTOR=yes" \
   || { echo "BASE_IS_ANCESTOR=no"; exit 4; }
 
-make lean-report > /tmp/op-land-report-$$.log 2>&1
+make lean-report-scoped "LEAN_TARGETS=${MOD//\//.}" > /tmp/op-land-report-$$.log 2>&1
 echo "LEAN_REPORT_EXIT=$?"
 ls -la "$REPORT" | cut -c1-120
 
@@ -82,16 +84,15 @@ git commit -q -F /tmp/op-land-msg-$$.txt
 echo "COMMIT_EXIT=$? HEAD=$(git rev-parse HEAD)"
 git show --stat --format='%h %s' HEAD | head -20
 
-EVENT=$(git show --name-only --format='' HEAD | grep '^Golden/Frozen/accepted/' | head -1)
-echo "ACCEPTED_EVENT=$EVENT"
-if [ -n "$EVENT" ]; then
+STATE=$(git show --name-only --format='' HEAD | grep '^Golden/Frozen/state/' | head -1)
+echo "ACCEPTED_STATE=$STATE"
+if [ -n "$STATE" ]; then
   python3 -c "
 import json,sys
 d=json.load(open(sys.argv[1]))
-print('EVENT_HASH='+str(d.get('event_hash')))
-p=d.get('payload',d)
+p=d
 print('STATEMENT_ID='+str(p.get('statement_id')))
-" "$EVENT" 2>/dev/null
+" "$STATE" 2>/dev/null
 fi
 
 GIT_TERMINAL_PROMPT=0 git -c credential.helper='!gh auth git-credential' \

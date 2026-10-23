@@ -1,1 +1,1 @@
-{"statement_id":"sha256:b7815f55e0289b6640ec89210dffb52754c083b08f907f1244d5a6c690163549"}
+{"statement_id":"sha256:b7815f55e0289b6640ec89210dffb52754c083b08f907f1244d5a6c690163549","declarations":[{"declaration_name_key":"ns(ns(ns(ns(ns(ns(n0,2:D5),2:S3),8:Observer),6:Hankel),21:ProjectedExactDescent),21:outputs_eq_of_descent)","kind":"theorem"},{"declaration_name_key":"ns(ns(ns(ns(ns(ns(n0,2:D5),2:S3),8:Observer),6:Hankel),21:ProjectedExactDescent),28:projectedState_eq_of_descent)","kind":"theorem"}]}

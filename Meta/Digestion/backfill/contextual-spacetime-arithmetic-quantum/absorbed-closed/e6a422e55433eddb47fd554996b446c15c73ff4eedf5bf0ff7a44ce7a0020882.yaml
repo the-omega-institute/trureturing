@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:e6a422e55433eddb47fd554996b446c15c73ff4eedf5bf0ff7a44ce7a0020882
+  normalized_sha256: sha256:e6a422e55433eddb47fd554996b446c15c73ff4eedf5bf0ff7a44ce7a0020882
+cas_ref: sha256:e6a422e55433eddb47fd554996b446c15c73ff4eedf5bf0ff7a44ce7a0020882
+coverage_gids:
+  - gid: D5/S3/Quantum/Fibers/CenteredEffectTowerStability.heisenberg_tower_once_stable_permanently
+    target_statement_id: sha256:8beadb728e206a3c8b09a310e574e5bb2ba4a6651cb0cacc0e29be7a29a94295
+  - gid: D5/S3/Quantum/PredictionDepth/CenteredEffectStabilityDepthBound.centered_effect_stability_depth_bound
+    target_statement_id: sha256:ea8c44d97667cb0b4fed6363b3f11064e35e3d62b09e7fa55886e952a51dffb0
+receipts:
+  unresolved_subitems: []

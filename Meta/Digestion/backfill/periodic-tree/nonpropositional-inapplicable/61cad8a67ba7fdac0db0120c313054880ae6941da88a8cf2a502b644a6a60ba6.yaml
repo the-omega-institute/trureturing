@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:61cad8a67ba7fdac0db0120c313054880ae6941da88a8cf2a502b644a6a60ba6
+  normalized_sha256: sha256:61cad8a67ba7fdac0db0120c313054880ae6941da88a8cf2a502b644a6a60ba6
+cas_ref: sha256:61cad8a67ba7fdac0db0120c313054880ae6941da88a8cf2a502b644a6a60ba6
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 英文证明段（**Proof.** The classical Fibonacci square classification gives F_n squ…）仅给出前文命题的推导或证明方向，不另提出独立结论。
+    previous_atom_id: cc93ff3901391eddb87966cb3c65e23480d82da493b2f1552e4a9fe2c70a60e4
+    next_atom_id: 1b37c647fd1ebeb80cb0b07af66730ac2d2c8cd7004fe40535c07833b1e5636a

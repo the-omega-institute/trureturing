@@ -1,1 +1,1 @@
-{"statement_id":"sha256:2c363d80b3dd842a68f7bf5839e35449caef385785b88c442db7872afb167004"}
+{"statement_id":"sha256:2c363d80b3dd842a68f7bf5839e35449caef385785b88c442db7872afb167004","declarations":[{"declaration_name_key":"ns(ns(ns(ns(ns(n0,2:D5),2:S3),13:VertexAlgebra),25:MonsterFanoReconstruction),23:complement_symmDiff_mem)","kind":"theorem"},{"declaration_name_key":"ns(ns(ns(ns(ns(n0,2:D5),2:S3),13:VertexAlgebra),25:MonsterFanoReconstruction),25:block_intersection_le_one)","kind":"theorem"}]}

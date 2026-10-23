@@ -1,0 +1,95 @@
+# Cyclic Prime-Power Split Extensions
+
+## Abstract
+
+Actual cyclic split extensions have an exact whole-lattice and inner-conjugacy enumeration.
+
+**Theorem 1.1 (The cardinality of a cyclic residue group).**
+
+$$\forall m \in \mathbb{N},\; [NeZero\left(m\right)] \operatorname{Nat.card}\left(Cyclic\left(m\right)\right) = m$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/FiniteGroups/CyclicPrimePowerAction.cyclic_card` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+For a nonzero natural number m, the multiplicative cyclic group Cyclic m has cardinality m.
+
+**Theorem 1.2 (The power kernel has the prescribed prime-power cardinality).**
+
+$$\forall P \in Type*,\; [CommGroup\left(P\right)] [IsCyclic\left(P\right)] [Finite\left(P\right)] \forall q \in \mathbb{N},\; \forall s \in \mathbb{N},\; \operatorname{Nat.card}\left(P\right) = q^{s} \Rightarrow \left(\forall j \in Fin\left(s+1\right),\; \operatorname{Nat.card}\left(ker\left((powMonoidHom\left(q^{val\left(j\right)}\right) : P\to*P)\right)\right) = q^{val\left(j\right)}\right)$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/FiniteGroups/CyclicPrimePowerAction.kernel_power_card` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+For a finite cyclic commutative group P of cardinality q^s, the kernel of x ↦ x^(q^j) has cardinality q^j for every j from zero through s. Here Type* denotes a carrier in an arbitrary universe, as in Lean.
+
+**Definition 1.3 (An actual action of exact prime order).**
+
+$$\forall p \in Naturals,\; \forall q \in Naturals,\; \forall s \in Naturals,\; Prime\left(p\right) \to \left(Prime\left(q\right) \to \left(Divides\left(q, p-1\right) \to \left(0<s \to ActionData\left(p, q, s\right)\right)\right)\right)$$
+
+*Formalization.* `D5/S3/FiniteGroups/CyclicPrimePowerAction.actionData` (`✓ std3`).
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+Cyclic m means Multiplicative (ZMod m), with generator the additive residue of one. ActionData p q s contains a homomorphism from Cyclic (q^s) to MulAut (Cyclic p), together with the assertion that the image of the generator has order exactly q. For primes p and q with q dividing p−1 and positive s, the automorphism group has order p−1. Cauchy's theorem supplies an automorphism of order q. Its order divides q^s, so the cyclic-generator extension constructs the homomorphism. SplitGroup A is the actual semidirect product for this action, with multiplication (x,u)(y,v) = (x A(u)(y), uv). finiteSplitGroup packages that group and its finite carrier; it assumes no subgroup-count formula.
+
+**Definition 1.4 (The entire cyclic subgroup lattice).**
+
+$$\forall P \in Typeu,\; CommGroup\left(P\right) \to \left(IsCyclic\left(P\right) \to \left(Finite\left(P\right) \to \left(\forall q \in Naturals,\; \forall s \in Naturals,\; Prime\left(q\right) \to \left(card\left(P\right)=power\left(q, s\right) \to Equiv\left(Subgroup\left(P\right), Fin\left(s+1\right)\right)\right)\right)\right)\right)$$
+
+*Formalization.* `D5/S3/FiniteGroups/CyclicPrimePowerAction.cyclicSubgroupEquiv` (`✓ std3`).
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+For a finite cyclic commutative group P of order q^s, each subgroup has order q^j for a unique j in Fin (s+1). A subgroup H equals the kernel of the homomorphism x ↦ x^(card H): inclusion follows from the element-order theorem, and the cyclic kernel-cardinality theorem gives equality. Conversely the kernel of x ↦ x^(q^j) has order q^j. These constructions are inverse bijections, covering every subgroup.
+
+**Theorem 1.5 (Every subgroup belongs to one of three families).**
+
+$$\forall p \in Naturals,\; \forall q \in Naturals,\; \forall s \in Naturals,\; Fact\left(Prime\left(p\right)\right) \to \left(Fact\left(Prime\left(q\right)\right) \to \left(NeZero\left(power\left(q, s\right)\right) \to \left(\forall A \in ActionData\left(p, q, s\right),\; 0<s \to \left(Coprime\left(p, q\right) \to \left(\forall H \in Subgroup\left(SplitGroup\left(A\right)\right),\; (\exists B \in Subgroup\left(Cyclic\left(power\left(q, s\right)\right)\right),\; H=comap\left(B, rightHom\left(A\right)\right))\lor (\exists B \in Subgroup\left(Cyclic\left(power\left(q, s\right)\right)\right),\; B\neq top\left(\right)\land H=map\left(B, inr\left(A\right)\right))\lor (\exists x \in Cyclic\left(p\right),\; H=map\left(range\left(inr\left(A\right)\right), conjugation\left(inl\left(A, x\right)\right)\right))\right)\right)\right)\right)\right)$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/FiniteGroups/CyclicPrimePowerAction.subgroup_classification` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+Write N = Cyclic p and P = Cyclic (q^s), with A an actual ActionData. For every subgroup H, the inverse image along the embedding of N is trivial or all of N, since N has prime order. In the latter case H is the inverse image of its projection to P.
+
+In the former case projection is injective on H. Every proper subgroup B of P has order q^j with j < s. It lies in the subgroup generated by the qth power of the generator, so A acts trivially on B. If H has proper projection, its left coordinate defines a homomorphism on H. Its element orders divide p and q^s, which are coprime. The left coordinate is therefore always one, and H is exactly the embedded copy of its projected subgroup.
+
+If the projection is all of P, choose in H a lift of the generator. A nonidentity automorphism of a prime-order group has no nonidentity fixed point: such a point would generate the group and force the automorphism to be the identity. Hence x ↦ x/A(generator)(x) is bijective on N. Solving this equation expresses the chosen lift as the conjugate of the embedded generator by some x in N. Projection injectivity shows that this lift generates H. Thus H is the corresponding conjugate of the full complement.
+
+**Theorem 1.6 (Exact lattice and orbit counts).**
+
+$$\forall p \in Naturals,\; \forall q \in Naturals,\; \forall s \in Naturals,\; Fact\left(Prime\left(p\right)\right) \to \left(Fact\left(Prime\left(q\right)\right) \to \left(NeZero\left(power\left(q, s\right)\right) \to \left(\forall A \in ActionData\left(p, q, s\right),\; 0<s \to \left(Coprime\left(p, q\right) \to latticeCount\left(SplitGroup\left(A\right)\right)=2*s+p+1\land classCount\left(SplitGroup\left(A\right)\right)=2*s+2\right)\right)\right)\right)$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/FiniteGroups/CyclicPrimePowerAction.split_counts` (`✓ std3`). ∎
+
+*Citation.* Mihai-Silviu Lazorec and Marius Tărnăuceanu (2025). *On the number of conjugacy classes of subgroups of a finite group*. DOI: [10.48550/arXiv.2508.14267](https://doi.org/10.48550/arXiv.2508.14267). URL: <https://arxiv.org/html/2508.14267v2>.
+
+*Commentary.*
+
+subgroupEnumeration is a bijection to Subgroup P plus the proper subgroups of P plus N. Projection and intersection with N distinguish these three families. The inverse-image and embedded labels are unique. Distinct x in N give distinct complements, by injectivity of the same fixed-point-free commutator map. The family sizes are s+1, s, and p, giving latticeCount = 2s+p+1.
+
+Every inverse-image subgroup is normal because P is commutative. Every proper embedded subgroup is central, since its action on N is trivial and P is commutative. Each therefore gives a singleton inner-conjugacy class. All p complements are conjugate to the embedded P, giving one further class. classesEnumeration is a bijection from the quotient of the entire lattice to Subgroup P plus its proper subgroups plus Unit. Thus classCount = 2s+2.
+
+These counts are stated in the proof of Proposition 2.2(ii) of Lazorec and Tărnăuceanu, arXiv:2508.14267v2, equation S2.Ex12. Under n = s+1, N = Cyclic p and P = Cyclic (q^s), they are 2n+p−1 and 2n. The generator action has exact order q, so it is nontrivial and its qth power is trivial; hence the Frattini subgroup of P acts trivially on N, as in Lemma 2.1(ii). The Lean proof establishes the published counts for every actual ActionData in the displayed scope. Positive s includes s=1, corresponding to n=2. The source count formulas are known mathematics; their formal proof here is not a mathematical priority claim.
+
+## References
+
+- Truth anchor: `D5/S3/FiniteGroups/CyclicPrimePowerAction.actionData`
+- Truth anchor: `D5/S3/FiniteGroups/CyclicPrimePowerAction.cyclicSubgroupEquiv`
+- Truth anchor: `D5/S3/FiniteGroups/CyclicPrimePowerAction.cyclic_card`
+- Truth anchor: `D5/S3/FiniteGroups/CyclicPrimePowerAction.kernel_power_card`
+- Truth anchor: `D5/S3/FiniteGroups/CyclicPrimePowerAction.split_counts`
+- Truth anchor: `D5/S3/FiniteGroups/CyclicPrimePowerAction.subgroup_classification`
+- Dependency: [D5/S3/FiniteGroups/SubgroupConjugacyRatio](SubgroupConjugacyRatio.md)

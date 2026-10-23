@@ -9,6 +9,59 @@ import tempfile
 
 BUILT = re.compile(r'^[^\s]+ \[[0-9]+/[0-9]+\](?: \(Optional\))? Built ([^\s:]+)')
 COMPLETED = re.compile(r'^Build completed successfully \([0-9]+ jobs?\)\.$', re.MULTILINE)
+FIB_KINDS = ('extracted', 'generated', 'reused', 'unavailable',
+             'analysis-invocations', 'analysis-ns')
+
+
+def observations(logs, phases):
+    """Current direct observations, independent of Lake's replayable output.
+
+    Reused artifacts were not extracted or analyzed by this invocation. Their
+    population is deliberately not counted as invocation-local reused work.
+    """
+    counts = dict.fromkeys(FIB_KINDS, 0)
+    try:
+        if 'report' in phases:
+            if (logs / 'report.exit.log').read_text().strip() != '0':
+                raise ValueError('incomplete report activity')
+            for line in (logs / 'native-work.jsonl').read_text().splitlines():
+                row = json.loads(line)
+                if not isinstance(row, dict):
+                    raise ValueError('invalid native build activity')
+                if row.get('kind', '').startswith('fib-'):
+                    key = row['kind'][4:]
+                    if key not in counts or type(row.get('count')) is not int or row['count'] < 0:
+                        raise ValueError('invalid FIB activity')
+                    counts[key] += row['count']
+        scope = 'invocation-local'
+    except (OSError, ValueError, TypeError, AttributeError):
+        counts = dict.fromkeys(FIB_KINDS)
+        scope = 'unavailable'
+    print('LEAN_INSPECTOR_FIB_WORK ' + json.dumps(dict(scope=scope, **counts), sort_keys=True), flush=True)
+    try:
+        timing = {}
+        path = logs / 'native-phases.jsonl'
+        if 'report' in phases and not path.is_file():
+            raise ValueError('missing native phase activity')
+        for line in path.read_text().splitlines() if path.exists() else ():
+            row = json.loads(line)
+            boundary = row['boundary']
+            if boundary not in ('duration', 'start', 'finish'):
+                continue
+            item = timing.setdefault(row['phase'], dict(started=0, finished=0, elapsed_ns=0))
+            if boundary == 'duration':
+                item['started'] += 1
+                item['finished'] += 1
+                item['elapsed_ns'] += row['elapsed_ns']
+            elif boundary in ('start', 'finish'):
+                item['started' if boundary == 'start' else 'finished'] += 1
+                item['elapsed_ns'] += row['monotonic_ms'] * 1_000_000 * (-1 if boundary == 'start' else 1)
+        for item in timing.values():
+            if item['started'] != item['finished'] or item['elapsed_ns'] < 0:
+                item['elapsed_ns'] = None
+        print('LEAN_INSPECTOR_TIMING ' + json.dumps(timing, sort_keys=True), flush=True)
+    except (OSError, ValueError, KeyError, TypeError):
+        print('LEAN_INSPECTOR_TIMING_UNAVAILABLE', flush=True)
 
 
 def output_names(directory):
@@ -55,6 +108,7 @@ def phase_work(root, logs, phase, project_names):
 
 
 def record(root, logs, destination, *phases):
+    observations(logs, phases)
     from functools import lru_cache
     @lru_cache(maxsize=1)
     def names():
@@ -67,10 +121,13 @@ def record(root, logs, destination, *phases):
         activity = logs / 'native-work.jsonl'
         for line in activity.read_text().splitlines():
             row = json.loads(line)
-            if (not isinstance(row, dict) or row.get('kind') not in ('extract', 'aggregate')
+            if (not isinstance(row, dict) or row.get('kind') not in
+                    ('extract', 'aggregate', *('fib-' + key for key in FIB_KINDS))
                     or type(row.get('count')) is not int or row['count'] < 0):
                 raise ValueError('invalid native build activity')
-            if row['count'] > 0:
+            if row['kind'].startswith('fib-'):
+                continue
+            elif row['count'] > 0:
                 value['report'] = (value['report'] or 0) + row['count']
     destination.parent.mkdir(parents=True, exist_ok=True)
     descriptor, name = tempfile.mkstemp(prefix='.build-work-', dir=destination.parent)
@@ -87,7 +144,10 @@ def record(root, logs, destination, *phases):
 
 if __name__ == '__main__':
     try:
-        record(*(Path(argument) for argument in sys.argv[1:4]), *sys.argv[4:])
+        if sys.argv[1:2] == ['--observations']:
+            observations(Path(sys.argv[2]), sys.argv[3:])
+        else:
+            record(*(Path(argument) for argument in sys.argv[1:4]), *sys.argv[4:])
     except (OSError, ValueError, TypeError) as error:
         print('LEAN_BUILD_WORK_UNKNOWN ' + str(error), file=sys.stderr)
         sys.exit(2)

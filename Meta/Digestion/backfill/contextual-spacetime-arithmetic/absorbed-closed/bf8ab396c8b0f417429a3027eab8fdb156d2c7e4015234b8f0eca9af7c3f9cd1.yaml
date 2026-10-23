@@ -1,0 +1,15 @@
+fingerprints:
+  raw_sha256: sha256:bf8ab396c8b0f417429a3027eab8fdb156d2c7e4015234b8f0eca9af7c3f9cd1
+  normalized_sha256: sha256:bf8ab396c8b0f417429a3027eab8fdb156d2c7e4015234b8f0eca9af7c3f9cd1
+cas_ref: sha256:bf8ab396c8b0f417429a3027eab8fdb156d2c7e4015234b8f0eca9af7c3f9cd1
+coverage_gids:
+  - gid: D5/S3/ConceptDynamics/Spacetime/SpatialConvolutionEquation.coefficient_multiplication
+    target_statement_id: sha256:efe1d0dc384f60d6ad6287e55603e102070a24fd9730ed34ad3dc68b5c7a3eae
+  - gid: D5/S3/ConceptDynamics/Spacetime/SpatialEquationCriterion.principalMultiples_sub
+    target_statement_id: sha256:cf48bb5100889337af8547cc0971211acd162a07642f47642918825255ba0798
+  - gid: D5/S3/ConceptDynamics/Spacetime/SpatialEquationCriterion.principalMultiples_zero
+    target_statement_id: sha256:0a825748fd30934353692621d11901953d403cc4e3dcb3975c9fd35c166e258a
+  - gid: D5/S3/ConceptDynamics/SpacetimeArithmetic/CumulativeInverse.profileCumulativeEquiv
+    target_statement_id: sha256:8fed972c03393f57c0264ca45c8ad6c10b283cf3f84fe0b660ee7d792b2b3249
+receipts:
+  unresolved_subitems: []

@@ -1,0 +1,13 @@
+**Proposition 13.7 (ternary multiset obstruction and a four-source clique).**
+At $H=2,r=3,k=2$, a code depending only on the multiset of the initial
+ages is insufficient. In particular the median, every fixed order
+statistic, any tuple of quantiles and the entire sorted age list cannot
+by themselves be a sufficient retained code. Independently,
+
+$$
+4\le N_2(3,2)\le9.
+\tag{NAR.13.17}
+$$
+
+Neither assertion determines the exact ternary optimum.
+

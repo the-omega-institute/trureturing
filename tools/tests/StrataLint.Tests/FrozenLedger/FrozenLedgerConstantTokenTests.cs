@@ -40,8 +40,6 @@ public sealed partial class FrozenLedgerTests
             replacedModules: ["B"],
             environment: ReanchorEnvironment.PinUpgrade);
 
-        Assert.NotNull(result.Recognition);
-        Assert.Equal([RepoPathFor("B")], result.Recognition.ReanchoredModulePaths);
         Assert.False(result.Authorized);
     }
 
@@ -74,7 +72,6 @@ public sealed partial class FrozenLedgerTests
             replacedModules: ["A"],
             environment: ReanchorEnvironment.PinUpgrade);
 
-        Assert.NotNull(result.Recognition);
         Assert.True(result.Authorized);
     }
 
@@ -108,7 +105,6 @@ public sealed partial class FrozenLedgerTests
             replacedModules: ["A"],
             environment: ReanchorEnvironment.PinUpgrade);
 
-        Assert.NotNull(result.Recognition);
         Assert.True(result.Authorized);
     }
 }

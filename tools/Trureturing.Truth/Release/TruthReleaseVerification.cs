@@ -12,7 +12,7 @@ namespace Trureturing.Truth;
 /// independently by verifying the commit's protected checks
 /// and re-deriving the bundle. This reader does not query CI or certify release eligibility.
 /// <para>
-/// The bytes that SHA256SUMS covers (the six artifacts) are fully bound. The manifest's own bytes are
+/// The bytes that SHA256SUMS covers (the five artifacts) are fully bound. The manifest's own bytes are
 /// NOT bound (it cannot list its own SHA256SUMS digest and be inside SHA256SUMS), so its trust / producer /
 /// produced_at remain producer self-assertions. Its source identity is composition-checked against the
 /// SHA-covered source snapshot and truth export, but authenticity still requires independently checking
@@ -57,7 +57,7 @@ public static class TruthReleaseVerification
         }
 
         // 4. SHA256SUMS must cover EXACTLY the manifest's artifact files — no fewer, no extra, no
-        //    duplicates. (A mere count check lets six manifest slots collapse onto one filename while
+        //    duplicates. (A mere count check lets five manifest slots collapse onto one filename while
         //    five unrelated SHA256SUMS entries go unverified.)
         var artifacts = ListArtifacts(manifest.Artifacts);
         var files = new List<string>(artifacts.Count);
@@ -144,7 +144,6 @@ public static class TruthReleaseVerification
             artifacts.RawLeanReport,
             artifacts.TruthExport,
             artifacts.BlueprintIndex,
-            artifacts.FrozenLedgerHead,
         };
 
     private static Dictionary<string, string> ParseSha256Sums(string text)

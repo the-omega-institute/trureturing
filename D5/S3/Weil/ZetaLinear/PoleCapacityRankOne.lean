@@ -5,6 +5,19 @@
    anchors: []
    digest: A positive rank-one pole update removes at most one negative direction. -/
 
+/-
+proof_shape: negDefOn_range_hermNegPart: bind-only; consumer: LocallyPositiveSpectrum.local_psd_negIndex
+proof_shape: rank_hermNegPart_eq_negIndex: bind-only; consumer: LocallyPositiveSpectrum.local_psd_negIndex
+escape_witness: negDefOn_range_hermNegPart: none
+escape_witness: rank_hermNegPart_eq_negIndex: none
+Escape audit unfinished: https://github.com/the-omega-institute/trureturing/issues/15730.
+DTR reading: DTR-Unregistered for the public theorem targets in this module.
+Registration gap: exact dependent source-family reconstruction, lawful template readout,
+selection coordinates, whole-family variation, slot sensitivity and observational dependence
+are not all established by the retained registration evidence.
+-/
+
+
 import D5.S3.Weil.ZetaLinear.Inertia
 import Mathlib.LinearAlgebra.Matrix.Rank
 
@@ -32,7 +45,7 @@ open RHLinalg
 
 variable {K n : Type*} [RCLike K] [Fintype n] [DecidableEq n]
 
-private lemma rank_hermNegPart_eq_negIndex {A : Matrix n n K} (hA : A.IsHermitian) :
+lemma rank_hermNegPart_eq_negIndex {A : Matrix n n K} (hA : A.IsHermitian) :
     (hermNegPart hA).rank = negIndex hA := by
   unfold hermNegPart negIndex
   rw [rank_specMap]
@@ -41,7 +54,7 @@ private lemma rank_hermNegPart_eq_negIndex {A : Matrix n n K} (hA : A.IsHermitia
   simp only [mem_filter, mem_univ, true_and, ne_eq, negPart_eq_zero, not_le]
 
 open Unitary in
-private theorem negDefOn_range_hermNegPart {A : Matrix n n K} (hA : A.IsHermitian) :
+theorem negDefOn_range_hermNegPart {A : Matrix n n K} (hA : A.IsHermitian) :
     PosDefOn (-A) (LinearMap.range (hermNegPart hA).mulVecLin) := by
   rintro _ ⟨y, rfl⟩ hne
   set U : Matrix n n K := ↑hA.eigenvectorUnitary
@@ -234,6 +247,5 @@ theorem pole_capacity_rank_one {F0 : Matrix n n ℂ} (hF0 : F0.IsHermitian) (p :
     have hzero : negIndex hF = 0 := negIndex_eq_zero_of_posSemidef hFpsd
     simpa [hzero] using hF0le
 
-#print axioms pole_capacity_rank_one
 
 end D5.S3.Weil.ZetaLinear.PoleCapacityRankOne

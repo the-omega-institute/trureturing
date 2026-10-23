@@ -1,0 +1,57 @@
+**Mathematical citation 15.4 (comparison with the unrestricted face).** Write
+$\Sigma=2J_p+2J_\beta+M_B+M_A$ for PAIRED's four-moment defect, retaining
+its definitions on the two full-law flows. For (15.5) these terms specialize to
+
+$$
+\begin{aligned}
+J_p&=\sum_i\pi_i(u_i-a)(b-u_i),&
+J_\beta&=\sum_i\pi_i(v_i-a)(b-v_i),\\
+M_B&=\sum_i\pi_i(u_i-v_{\sigma(i)})^2,&
+M_A&=\sum_i\pi_i(v_i-u_i)^2.
+\end{aligned}
+\tag{15.27}
+$$
+
+[PAIRED, Theorem 14.2] bounds all normalized complete-target losses by
+those of one common endpoint weight, with errors $(540/11)\Sigma$ and
+$(1395/22)\Sigma$. Its Corollary 14.4 gives
+$\mathcal J+(540/11)\Sigma\ge\eta_{\rm nat}/4$ when a nonendpoint is
+supported. It leaves $\Sigma$ free. Theorem 15.2 supplies the distinct
+implication that $D=0$ inside Definition 15.1 forces matched endpoint
+components, hence $\Sigma=0$ by (15.27). In particular, imposing both
+event midpoints in this class forces that supplied endpoint boundary.
+Corollary 15.3 consumes its existing native loss obstruction with the sharper
+fair-weight bound $\eta_{\rm nat}/2$; it does not assert that bound away
+from the two midpoint equality tables.
+
+The supplied singleton inequality is Lemma 11.4; the two-label block of
+Section 11.4 has a different kernel from (15.1). Theorem 14.1 supplies the
+complete-box characterization, and Section 14.6 supplies the fixed-N
+mixture identity. The source-specific additional inference here is the joint
+two-cross-rate interval (15.7), its monotone two-variable envelope and the
+evaluated sign and equality certificate (15.13)--(15.22), consumed by
+Corollary 15.3. The Bernstein-basis tool is attributed in the proof; no
+general polynomial-positivity or native-gap theorem is added.
+
+The coarse interface in [Acquired-kernel blind directions, Conventions
+1.1--1.2 and Theorems 5.1, 6.3](RECURSIVE_RELATIONAL_OBSERVATION_ACQUIRED_KERNEL_BLIND_DIRECTIONS_AFTER_PAIRED_CALIBRATION.md)
+omits B and compares finite configured transcript prefixes. Definition 15.1
+instead fixes B and uses its entire own laws in both residual equations.
+The blind-direction construction therefore supplies neither a counterexample
+to Theorem 15.2 nor a zero-level pair for the full compact domain.
+
+The unrestricted criterion remains that of [PAIRED, Definition 11.2,
+Theorem 11.5 and Section 11.8]: both full-descriptor residual equations,
+shared unweighted marginals, the original endpoint boxes and midpoint means,
+and every supported complete configuration-loss bound must hold jointly.
+The domain allows arbitrary compatible Borel pairs, with no reversibility,
+fixed label count, common geometric rate, native-mixture or zero-variation
+restriction. This chapter evaluates the sign only on (15.1), and supplies no
+value of the unrestricted $j_c$, zero-level pair, vanishing family or strict
+unrestricted separation. Finite atomicity and permitted finitely represented
+exact sampling remain separate attainment requirements, with the one-sided
+finite-support criteria retaining precisely their hypotheses in [PAIRED,
+Chapter 13]. The free return-variation term in [Acquired-return variation,
+Theorem 10.2] is not bounded here by risk alone. No hard-resource preservation
+or fixed-resource optimum follows from the original-history correspondence.
+

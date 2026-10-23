@@ -1,0 +1,37 @@
+**Definition 9.1 (separate resource coordinates).** For actual submitted
+words $p_i$, keep
+
+$$
+T=\#\text{Reads},\qquad A=\sum_i|p_i|,\qquad
+Q=\max(\{0\}\cup\{|p_i|\}),
+\tag{NASF.15}
+$$
+
+separate from whole-tree and subtree comparisons, address construction,
+local simulation/arithmetic, workspace, acquired operand payload,
+inter-capture memory, final payload, validation failures, writer work
+and cleanup. Binary counters cost their bit lengths; each literal delivery
+costs its length. An offline proof/search history is not a free live
+observer transcript.
+
+Theorems 5.2 and 6.2 use two real captures. The first empty-cut capture
+pays for its whole tree and retains that description across the second.
+Enumeration comparisons and recognizing $E_e$ use that paid description.
+The root capture pays guard search and validation; its stamp is acquired,
+not chosen as external fuel. A $k$-step abstract simulation requires its
+finite implementation work and workspace, not one unit because $k$ has
+a binary encoding. Each failed attempt and discarded candidate is charged.
+Finite interference makes total cost finite on each execution without
+a common all-source/schedule bound. Constant final payload refunds none
+of this work or memory.
+
+Retaining the stamp from the same final RA$\ell$ capture adds zero Reads
+and address traffic by CAB; encoding, framing and local computation remain
+paid. CAB's gamma code for $K+1$ has
+$2\lfloor\log_2(K+1)\rfloor+1$ payload bits. If later source observations
+follow that capture, acquiring a new terminal stamp is a different
+operation: it adds guard/body/validation traffic, possible failures,
+workspace and cleanup, and may be delayed by unknown finite interference.
+The added capture must leave a genuinely source-free suffix. Timing or
+allocator telemetry cannot be hidden in that phrase.
+

@@ -1,1 +1,1 @@
-{"statement_id":"sha256:a537e18fa2927a68c8d2232307607e1ff26e2f55877d1c495e10a917db397ebd"}
+{"statement_id":"sha256:a537e18fa2927a68c8d2232307607e1ff26e2f55877d1c495e10a917db397ebd","declarations":[{"declaration_name_key":"ns(ns(ns(ns(ns(ns(n0,2:D5),2:S3),7:Quantum),12:Entanglement),29:FiniteSectorChannelOptimality),6:result)","kind":"theorem"},{"declaration_name_key":"ns(ns(ns(ns(ns(ns(ns(n0,2:D5),2:S3),7:Quantum),12:Entanglement),21:SectorSchmidtEncoding),14:sourceEncoding),10:congr_simp)","kind":"theorem"}]}

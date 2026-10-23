@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:2683e2b938eb4fbf44fbd44aef5e1b4c067e035cdfc6d7e733e2085a4c8d2cbe
+  normalized_sha256: sha256:2683e2b938eb4fbf44fbd44aef5e1b4c067e035cdfc6d7e733e2085a4c8d2cbe
+cas_ref: sha256:2683e2b938eb4fbf44fbd44aef5e1b4c067e035cdfc6d7e733e2085a4c8d2cbe
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 观察载体类别清单中的“模形式”类别名；本片不含观察完备性结论。
+    previous_atom_id: 2f3282ed18dec42a1c2953b520ed4530e0995e40f33529e2e1ad0ae8d7651f01
+    next_atom_id: 836381d47b2bfebb038fd8c2b69b2219a435c12ef2926189a2c418a5c6249f7b

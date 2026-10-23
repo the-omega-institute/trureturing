@@ -5,20 +5,21 @@ export LC_ALL=C
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd -P)"
 REPOSITORY="" OUTPUT="" LOG_DIR=""
 CACHE_MISS_POLICY=reuse-or-build
+REGENERATE_REPORT_ARTIFACTS=0
 BUILD_TARGETS=()
 PROGRAM_BUILD_PENDING=0
-PRESERVE_RECEIPT=0
 BUILD_PHASES=()
 ACTIVE_PHASE=""
 while [[ $# -gt 0 ]]; do
   case "$1" in
-    --repository|--output|--log-dir|--cache-miss-policy)
+    --repository|--output|--log-dir|--cache-miss-policy|--regenerate-report-artifacts)
       [[ $# -ge 2 && -n "$2" ]] || { echo "inspect.sh: $1 requires a value" >&2; exit 2; }
       case "$1" in
         --repository) REPOSITORY="$2" ;;
         --output) OUTPUT="$2" ;;
         --log-dir) LOG_DIR="$2" ;;
         --cache-miss-policy) CACHE_MISS_POLICY="$2" ;;
+        --regenerate-report-artifacts) REGENERATE_REPORT_ARTIFACTS="$2" ;;
       esac
       shift 2 ;;
     *) echo "inspect.sh: unknown argument '$1'" >&2; exit 2 ;;
@@ -27,6 +28,11 @@ done
 case "$CACHE_MISS_POLICY" in
   reuse-or-build|fetch-or-fail|build) ;;
   *) echo 'inspect.sh: --cache-miss-policy requires reuse-or-build, fetch-or-fail or build' >&2; exit 2 ;;
+esac
+case "$REGENERATE_REPORT_ARTIFACTS" in
+  0) ;;
+  1) CACHE_MISS_POLICY=build ;;
+  *) echo 'inspect.sh: --regenerate-report-artifacts requires 0 or 1' >&2; exit 2 ;;
 esac
 [[ -n "$REPOSITORY" && -d "$REPOSITORY" && -n "$OUTPUT" ]] \
   || { echo 'inspect.sh: --repository ROOT --output FILE are required' >&2; exit 2; }
@@ -39,7 +45,7 @@ if [[ "${STRATALINT_INSPECTOR_SUPERVISED:-0}" != 1 ]]; then
   exec "$SCRIPT_DIR/../scripts/report/report-supervisor.sh" --role lean-producer --lean-slot -- \
     env STRATALINT_INSPECTOR_SUPERVISED=1 \
     "$SCRIPT_DIR/inspect.sh" --repository "$REPOSITORY" --output "$OUTPUT" --log-dir "$LOG_DIR" \
-    --cache-miss-policy "$CACHE_MISS_POLICY"
+    --cache-miss-policy "$CACHE_MISS_POLICY" --regenerate-report-artifacts "$REGENERATE_REPORT_ARTIFACTS"
 fi
 BUILD_WORK_FILE="${STRATALINT_LEAN_BUILD_WORK_FILE:-$REPOSITORY/build/lean-cache/build-work.json}"
 # Work facts live outside the restored project tree and start empty every call.
@@ -54,13 +60,11 @@ LOG_DIR="$STARTUP_LOG_DIR"
 finish() {
   local rc=$?
   trap - EXIT
-  if [[ "$PRESERVE_RECEIPT" == 0 && ( "$rc" != 0 || "$PROGRAM_BUILD_PENDING" == 1 ) ]]; then
-    rm -f -- "${OUTPUT}.reuse.json"
-  fi
   if [[ "$rc" == 0 && "$PROGRAM_BUILD_PENDING" == 0 ]]; then
     python3 -B "$SCRIPT_DIR/build_work.py" "$REPOSITORY" "$LOG_DIR" "$BUILD_WORK_FILE" ${BUILD_PHASES[@]+"${BUILD_PHASES[@]}"} || true
   fi
   if [[ "$rc" != 0 ]]; then
+    python3 -B "$SCRIPT_DIR/build_work.py" --observations "$LOG_DIR" ${BUILD_PHASES[@]+"${BUILD_PHASES[@]}"} || true
     if [[ -n "$ACTIVE_PHASE" ]]; then
       printf 'LEAN_INSPECTOR_INTERRUPTED phase=%s exit=%s\n' "$ACTIVE_PHASE" "$rc" >&2 || true
       cat "$LOG_DIR/$ACTIVE_PHASE.stdout.log" "$LOG_DIR/$ACTIVE_PHASE.stderr.log" >&2 || true
@@ -89,7 +93,16 @@ run_phase() {
   printf 'LEAN_INSPECTOR_PHASE phase=%s status=started clock=shell-seconds start_seconds=%s\n' \
     "$phase" "$phase_started" >&2 || true
   ACTIVE_PHASE="$phase"
-  (cd "$REPOSITORY" && "$@") > "$LOG_DIR/$phase.stdout.log" 2> "$LOG_DIR/$phase.stderr.log" || status=$?
+  local budget=()
+  if [[ -n "${STRATALINT_CI_COMPUTE_BUDGET:-}" && "${STRATALINT_CI_COMPUTE_ACTIVE:-0}" != 1 ]]; then
+    case "$phase" in
+      # Native report/program commands are charged by the cache reader after
+      # its own lazy provisioning. These phases must not be charged twice.
+      toolchain|producer-restore|ensure|reuse|report|programs) ;;
+      *) budget=(python3 "$REPOSITORY/tools/scripts/workflow/ci_compute.py" run --) ;;
+    esac
+  fi
+  (cd "$REPOSITORY" && ${budget[@]+"${budget[@]}"} "$@") > "$LOG_DIR/$phase.stdout.log" 2> "$LOG_DIR/$phase.stderr.log" || status=$?
   ACTIVE_PHASE=""
   phase_finished="${SECONDS:-unavailable}"
   [[ "$phase_finished" =~ ^[0-9]+$ ]] || phase_finished=unavailable
@@ -105,6 +118,11 @@ run_phase() {
     printf 'LEAN_INSPECTOR_FAILED phase=%s exit=%s\n' "$phase" "$status" >&2
     cat "$LOG_DIR/$phase.stdout.log" "$LOG_DIR/$phase.stderr.log" >&2
     return "$status"
+  fi
+  if [[ "$phase" == fib-regressions ]]; then
+    # The consumer flushes its decision before tests can emit nested decisions.
+    grep -m 1 -E '^LEAN_INSPECTOR_FIB_REGRESSIONS changed=(true|false) selected=(true|false)$' \
+      "$LOG_DIR/$phase.stdout.log" >&2 || true
   fi
 }
 
@@ -156,13 +174,21 @@ require_lake() {
 # instead of refreshing the project through `dotnet run`.
 require_producer() {
   [[ -z "${STRATALINT_LEAN_PRODUCER_DLL:-}" ]] || return 0
+  local restore_args=()
+  if [[ -n "${STRATALINT_CI_COMPUTE_BUDGET:-}" && "${STRATALINT_CI_COMPUTE_ACTIVE:-0}" != 1 ]]; then
+    run_phase producer-restore dotnet restore "$SCRIPT_DIR/../StrataLint.Lean/StrataLint.Lean.csproj" --locked-mode
+    restore_args=(--no-restore)
+  fi
   run_phase producer-build dotnet build "$SCRIPT_DIR/../StrataLint.Lean/StrataLint.Lean.csproj" \
-    --configuration Release --nologo --verbosity quiet -t:Build -getProperty:TargetPath
+    ${restore_args[@]+"${restore_args[@]}"} --configuration Release --nologo --verbosity quiet -t:Build -getProperty:TargetPath
   local producer
   producer="$(tail -n 1 "$LOG_DIR/producer-build.stdout.log")"
   [[ "$producer" == /* && -f "$producer" ]] \
     || { echo 'inspect.sh: the producer build reported no existing absolute DLL' >&2; return 2; }
   export STRATALINT_LEAN_PRODUCER_DLL="$producer"
+  if [[ -n "${STRATALINT_CI_COMPUTE_BUDGET:-}" && "${STRATALINT_CI_COMPUTE_ACTIVE:-0}" != 1 && -n "${GITHUB_ENV:-}" ]]; then
+    printf 'STRATALINT_LEAN_PRODUCER_DLL=%s\n' "$producer" >> "$GITHUB_ENV"
+  fi
 }
 # The local guard runs before provisioning or any selected program build.
 # Direct inspect callers retain reuse-or-build unless they select the local policy.
@@ -182,10 +208,12 @@ open_logs() {
 }
 reuse_report() {
   local status=0
+  local budget=()
+  [[ -z "${STRATALINT_CI_COMPUTE_BUDGET:-}" || "${STRATALINT_CI_COMPUTE_ACTIVE:-0}" == 1 ]] || budget=(python3 "$REPOSITORY/tools/scripts/workflow/ci_compute.py" run --)
   if [[ "$CACHE_MISS_POLICY" == build ]]; then
     status=3
   else
-    python3 -B "$SCRIPT_DIR/reuse.py" reuse --repository "$REPOSITORY" \
+    ${budget[@]+"${budget[@]}"} python3 -B "$SCRIPT_DIR/reuse.py" reuse --repository "$REPOSITORY" \
       --report "${STRATALINT_LEAN_REPORT_REUSE:-$OUTPUT}" --output "$OUTPUT" \
       --cache-miss-policy "$CACHE_MISS_POLICY" || status=$?
   fi
@@ -194,11 +222,8 @@ reuse_report() {
   if [[ "$status" == 0 || "$status" == 3 ]]; then return 0; fi
   return "$status"
 }
-# A rejected local guard has not claimed the output and cannot erase another
-# cache writer's successful receipt, including when its lock is busy.
-if [[ "$CACHE_MISS_POLICY" == fetch-or-fail ]]; then PRESERVE_RECEIPT=1; fi
 run_phase reuse reuse_report
-PRESERVE_RECEIPT=0
+cat "$LOG_DIR/reuse.stdout.log"
 if [[ "$(cat "$STARTUP_LOG_DIR/reuse.status")" == 0 ]]; then
   if [[ "$CACHE_MISS_POLICY" == fetch-or-fail && ${#BUILD_TARGETS[@]} -gt 0 ]]; then
     require_lake
@@ -209,18 +234,24 @@ if [[ "$(cat "$STARTUP_LOG_DIR/reuse.status")" == 0 ]]; then
   if [[ ${#BUILD_TARGETS[@]} -gt 0 ]]; then
     PROGRAM_BUILD_PENDING=1
     run_phase programs "$REPOSITORY/tools/scripts/worktree/lean-cache-run.sh" \
-      "$LAKE" "${workspace[@]}" build "${BUILD_TARGETS[@]}"
+      "$LAKE" --log-level=error "${workspace[@]}" build "${BUILD_TARGETS[@]}"
     PROGRAM_BUILD_PENDING=0
   fi
-  cat "$LOG_DIR/reuse.stdout.log"
+  if [[ "${STRATALINT_FIB_REGRESSIONS_SELECTED:-false}" != false ]]; then
+    run_phase fib-regressions python3 -B "$SCRIPT_DIR/fib_analysis.py" "$OUTPUT" \
+      --regressions "$REPOSITORY" --previous "$OUTPUT" \
+      --selected "$STRATALINT_FIB_REGRESSIONS_SELECTED"
+  else
+    # Accepted identical inputs and no explicit selection need no FIB consumer.
+    printf 'LEAN_INSPECTOR_FIB_REGRESSIONS changed=false selected=false\n' >&2 || true
+  fi
   exit 0
 fi
-cat "$LOG_DIR/reuse.stdout.log"
 require_lake
 run_phase capture python3 -B "$SCRIPT_DIR/reuse.py" capture --repository "$REPOSITORY" \
-  --snapshot "$STARTUP_LOG_DIR/entry-inputs.json"
+  --report "$OUTPUT" --snapshot "$STARTUP_LOG_DIR/entry-inputs.json"
 # A failed new default/report run must not leave an apparent successful seal.
-rm -f -- "${OUTPUT}.reuse.json"
+run_phase prepare python3 -B "$SCRIPT_DIR/reuse.py" prepare --repository "$REPOSITORY" --report "$OUTPUT"
 if [[ ${#BUILD_TARGETS[@]} == 0 || "$CACHE_MISS_POLICY" == fetch-or-fail ]]; then
   require_producer
   run_phase ensure /bin/bash "$REPOSITORY/tools/scripts/worktree/lean-cache-ensure.sh"
@@ -228,9 +259,20 @@ fi
 open_logs
 # The package facet owns report modules; explicit targets own program checks.
 # The writer owns the private clonefile-seeded .lake through the native build.
-run_phase report "$REPOSITORY/tools/scripts/worktree/lean-cache-run.sh" "$LAKE" "${workspace[@]}" build :report \
+REPORT_COMMAND=()
+if [[ "$REGENERATE_REPORT_ARTIFACTS" == 1 ]]; then
+  # Ensure and the existing writer guard enclose cleanup and the native build.
+  REPORT_COMMAND=(python3 -B "$SCRIPT_DIR/native.py" regenerate "$REPOSITORY")
+fi
+run_phase report "$REPOSITORY/tools/scripts/worktree/lean-cache-run.sh" ${REPORT_COMMAND[@]+"${REPORT_COMMAND[@]}"} "$LAKE" --log-level=error "${workspace[@]}" build :report \
   ${BUILD_TARGETS[@]+"${BUILD_TARGETS[@]}"}
-run_phase publish python3 "$SCRIPT_DIR/native.py" publish "$REPOSITORY" "$OUTPUT"
-run_phase seal python3 -B "$SCRIPT_DIR/reuse.py" seal --repository "$REPOSITORY" \
-  --report "$OUTPUT" --snapshot "$LOG_DIR/entry-inputs.json"
+# The writer has returned. Complete regressions before replacing the published
+# report, sharing one invocation with explicit compiler/analyzer unit coverage.
+run_phase fib-regressions env REGENERATE_REPORT_ARTIFACTS="$REGENERATE_REPORT_ARTIFACTS" \
+  python3 -B "$SCRIPT_DIR/fib_analysis.py" \
+  "$REPOSITORY/.lake/build/lean-inspector/report.zip" --regressions "$REPOSITORY" \
+  --previous "$OUTPUT" --selected "${STRATALINT_FIB_REGRESSIONS_SELECTED:-false}"
+# Publication and seal share one canonical cache guard.
+run_phase publish python3 -B "$SCRIPT_DIR/native.py" publish "$REPOSITORY" "$OUTPUT" \
+  "$LOG_DIR/entry-inputs.json"
 cat "$LOG_DIR/publish.stdout.log"

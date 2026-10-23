@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:0cafa5ef0dec41db0cd71601f668873fd960d8e6b53e763b082f91238157dd3c
+  normalized_sha256: sha256:0cafa5ef0dec41db0cd71601f668873fd960d8e6b53e763b082f91238157dd3c
+cas_ref: sha256:0cafa5ef0dec41db0cd71601f668873fd960d8e6b53e763b082f91238157dd3c
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: Proof of the preceding finite-clock impossibility using unbounded norms of repeated polynomial translation; the final prose explains this same obstruction.
+    previous_atom_id: 10896e31080f9c99f5fa57f55de8ef4929faadfb951a59b00c742ed012ff4711
+    next_atom_id: 84ac41596c7655ac83e5b93234680f5af56bad3475f0af47fedfbf41e94f3d18

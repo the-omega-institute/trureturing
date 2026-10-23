@@ -1,1 +1,1 @@
-{"statement_id":"sha256:8c52662f3724920b95b6d7b0ddc046a96d2e79dd1e3d5956a734c3c2e67cf209"}
+{"statement_id":"sha256:8c52662f3724920b95b6d7b0ddc046a96d2e79dd1e3d5956a734c3c2e67cf209","declarations":[{"declaration_name_key":"ns(ns(ns(ns(ns(ns(n0,2:D5),2:S3),8:Observer),10:Refinement),28:BiaxialObservationRefinement),30:biaxial_observation_refinement)","kind":"theorem"}]}

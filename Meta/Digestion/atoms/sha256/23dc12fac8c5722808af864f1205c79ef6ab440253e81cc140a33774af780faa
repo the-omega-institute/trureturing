@@ -1,0 +1,62 @@
+**Theorem 11.5 (one fixed entire later row for each exposed index).** For
+$i\in I$, $Q_i$ is an allowed future cut and there is one fixed entire
+row $Y_i$, independent of every age in (NAR.11.9), such that
+
+$$
+R_{Q_i}(\rho^{H-a_i}X_a)=Y_i
+\qquad\text{for every allowed age vector }a.
+\tag{NAR.11.10}
+$$
+
+The initial $P$ rows of all these sources are distinct. The displayed
+later equality includes every visible label and bracket, every reached
+or absent guard, and every equality/disequality partition bit.
+
+**Proof.** The cut $Q_i$ consists of distinct words of length $D$, hence
+is prefix-free, including the empty cut when $D=0$. The ray through
+$w_i$ has no prefix in $P$, and its only length-$D$ prefix is omitted
+from $Q_i$. Thus $P\cup Q_i$ is noncovering.
+
+Homomorphism leaves the full skeleton's brackets in place and sends its
+slot $j$ at a common lag $k$ to $T_{jb+a_j+k}$. All depth-$D$ addresses
+are reached, including at lag zero and when a filling is alpha. At
+$k=H-a_i$, the only visible slot of the $Q_i$ exterior is exactly
+$T_{ib+H}$. Every other slot is the address-marked hole at $w_j$.
+Consequently the entire exterior is fixed, not merely one scalar
+response. All $Q_i$ cut guards are reached; none is absent. The visible
+slot is the same literal finite tree, so its internal labels, brackets
+and absent-address replies agree as well.
+
+To check the hidden partition, (NAR.10.11) gives $c(T_n)=n$, hence
+$T_n=T_{n'}$ implies $n=n'$. At any common lag $k$, every slot index lies
+in the interval
+
+$$
+[jb+k,jb+H+k].
+\tag{NAR.11.11}
+$$
+
+For $j<j'$, the latter interval's minimum exceeds the former's maximum
+by $(j'-j)b-H\ge1$. The actual slot trees are therefore pairwise
+different after every common update, including slots whose ages were
+fixed to zero under $P$. This proves all off-diagonal disequalities
+between $Q_i$ holes and their reflexive equalities. Their partition is
+always discrete, in public hole order. Different alternative histories
+may use different common lags, but each has this same discrete partition.
+Thus $Y_i$ is exactly the skeleton with slot $i$ filled by $T_{ib+H}$,
+all other slots replaced by their holes, and that discrete partition.
+For $D=0$ its partition is empty and $Y_0$ is the full tree $T_H$.
+Definition 1.2 now proves (NAR.11.10) as an entire-row equality.
+
+If two age vectors differ, choose a differing index $i\in I$. No $P$
+cut contains or descends below $w_i$, so the initial exterior displays
+the entire $T_{ib+a_i}$ there. Distinct indices give different displayed
+trees by $c(T_n)=n$; therefore the initial $P$ rows differ. Every $P$
+address is also reached in the skeleton. Its hidden subtrees consist
+solely of slots under that cut, all with fixed age zero, so their whole
+partition is constant across age vectors; it need not be discrete.
+No lower-bound premise requires it to be discrete. The family comprises
+$(H+1)^r$ sources and distinct initial rows. Each comparison uses its
+own fixed original $X_a$ and its pure-$\rho$ trajectory; no history is
+spliced and no mid-history source replacement is used. $\square$
+

@@ -1,0 +1,15 @@
+fingerprints:
+  raw_sha256: sha256:89c73264cde70cc755bbf6f2da9ad1c5cd39e8abd5cf38fc9970254547a33315
+  normalized_sha256: sha256:89c73264cde70cc755bbf6f2da9ad1c5cd39e8abd5cf38fc9970254547a33315
+cas_ref: sha256:89c73264cde70cc755bbf6f2da9ad1c5cd39e8abd5cf38fc9970254547a33315
+coverage_gids:
+  - gid: D5/S0/Conventions/WDigits.wEncoding
+    target_statement_id: sha256:a21cdbccd79847d85c30d61e2928a0de9f1170e1dbb4ed768dfa3068a8e70ea9
+  - gid: D5/S0/History/Spacetime/AllSetZeckendorfEncoding.enc_injective_and_left_inverse
+    target_statement_id: sha256:ca366470801b4da4f911d6bce2506fc8830071ebde48d80c0c48748ef4b327b8
+  - gid: D5/S3/Factorization/ExponentCoordinates/PrimeExponentBijection.prime_exponent_language_bijection
+    target_statement_id: sha256:a21e69796f2f64c03d16b923b8cc2ed1f1caae074967144ef86e9a2dd3e1ea83
+  - gid: D5/S3/Factorization/ExponentCoordinates/PrimeExponentBijection.prime_exponent_product_formula
+    target_statement_id: sha256:6b0924fd266b4abdf50baa6098d602188e2a2c1c2c1ba447f31c2ef60dfbef9a
+receipts:
+  unresolved_subitems: []

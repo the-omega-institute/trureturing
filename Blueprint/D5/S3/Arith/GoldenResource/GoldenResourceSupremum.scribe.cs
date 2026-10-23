@@ -13,6 +13,18 @@ internal sealed class GoldenResourceSupremumDocument : IScribeDocumentDefinition
         H("Golden Resource Supremum"),
         Blocks(
             Describe.Lean(
+                DescribeId.Create("golden-prime-local-original-layer-sum"),
+                DeclarationHandle.Create(Prefix + "local_eq_layer_sum"),
+                H("Original prime-local telescoping identity"),
+                StatementSource.FromAuthor(LocalLayerSumFormula()),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("The original generic private proof is exposed in place for "
+                    + "ActualReservePrimeMask. For every real price, actual prime and natural exponent, "
+                    + "the local objective is the sum over k in Icc 1 a of log p times "
+                    + "(goldenLayerMarginal p k - lambda). Exponent zero gives an empty sum. "
+                    + "This visibility change preserves the original statement and proof."))),
+                DescribeRole.Theorem),
+            Describe.Lean(
                 DescribeId.Create("golden-objective-at-optimal-positive-part-sum"),
                 DeclarationHandle.Create(Prefix + "objective_at_optimal_eq_positive_part_sum"),
                 H("The objective at the minimal-count configuration"),
@@ -46,7 +58,58 @@ internal sealed class GoldenResourceSupremumDocument : IScribeDocumentDefinition
                             + "positive-index prime layers have zero positive part. This finite "
                             + "support presentation expresses the positive-part double sum. "
                             + "The hypothesis lambda greater than zero is essential. No claim "
-                            + "about nonpositive prices or the RH boundary is made."))),
+                            + "about nonpositive prices or the RH boundary is made.")),
+                    Paragraph(Text(
+                        "A finite prime mask gives a useful actual-reserve application of these "
+                            + "existing results. Fix a real x > 1 and set lambda_x = 1/(x log x). "
+                            + "For a prime p let v_p(x) = max {k : p^k <= x}; this cutoff is inclusive. "
+                            + "Write u_p(a) = log(sum from k=0 to a of p^(-k)) - lambda_x a log p, "
+                            + "Q_p(a) = sum from k=1 to a of 1/(k p^k), and "
+                            + "H_p(a) = Q_p(a) - lambda_x a log p. Define the complete finite "
+                            + "reference F(x) = sum over primes p <= x of H_p(v_p(x)), "
+                            + "J_x(n) = log(sigma(n)/n) - lambda_x log n for every n >= 1, "
+                            + "and Psi(x) = sup over all n >= 1 of J_x(n). "
+                            + "For a finite set S of primes put "
+                            + "D(S) = sum over p in S of [1/p - log(1+1/p)] and "
+                            + "L(S) = sum over p in S of 1/[2p(p+1)].")),
+                    Paragraph(Text(
+                        "Assume p+1 <= x and 2x <= p^2 for every p in S. The first-layer "
+                            + "price condition follows from lambda_x log p <= 1/x <= 1/(p+1) "
+                            + "<= log(1+1/p). For the next layer, GoldenLayerMarginalDecay gives "
+                            + "marginal(p,2) <= p^(-2)/log p <= lambda_x: indeed "
+                            + "log x <= 2 log p and 2x <= p^2 imply x log x <= p^2 log p. "
+                            + "GoldenLocalThreshold then gives u_p(a) <= u_p(1) for every "
+                            + "natural exponent a. The same mask conditions give v_p(x)=1. "
+                            + "Thus H_p(v_p(x))-u_p(a) >= 1/p-log(1+1/p). "
+                            + "PrefixDeficitKernel.result at a=1 and z=1/p gives "
+                            + "1/[2p(p+1)] <= 1/p-log(1+1/p).")),
+                    Paragraph(Text(
+                        "The entire complement is retained. ReferencePrefixDominance gives "
+                            + "u_p(a) <= H_p(a). The increment of H_p at layer k is "
+                            + "1/(k p^k)-lambda_x log p; log monotonicity makes it nonnegative "
+                            + "for p^k <= x and nonpositive above that inclusive cutoff. "
+                            + "Consequently H_p(a) <= H_p(v_p(x)) for every prime and exponent. "
+                            + "For any positive integer n, sum on the finite union of its prime "
+                            + "support with the reference primes p <= x. Reference terms outside "
+                            + "that reference set vanish because v_p(x)=0 there. "
+                            + "GoldenResourceObjectiveFactorization identifies the actual sum "
+                            + "with J_x(n), and every complementary prime contributes "
+                            + "nonnegatively. This yields D(S) <= F(x)-J_x(n) for all n >= 1, "
+                            + "without any assumption that the prime support of n is contained in S.")),
+                    Paragraph(Text(
+                        "The positive price lambda_x has an attained unrestricted optimizer by "
+                            + "GoldenResourceOptimalLayerCount. Applying the preceding bound at "
+                            + "that optimizer gives L(S) <= D(S) <= R(x), where "
+                            + "R(x)=F(x)-Psi(x). For every positive integer the remaining "
+                            + "optimizer deficit d_n(x)=Psi(x)-J_x(n) is nonnegative, and "
+                            + "F(x)-J_x(n)=R(x)+d_n(x). This application pays an explicit "
+                            + "actual reserve using the project's 5040 objective machinery; "
+                            + "it is a combined application of existing results. "
+                            + "In a Robin explicit-formula argument at x=log n, the signed "
+                            + "condition I_psi(x)+R(x)+d_n(x)>0 is still required. "
+                            + "The mask estimate controls neither the sign nor the size of "
+                            + "I_psi, and does not justify dropping d_n. It proves no new "
+                            + "Robin counterexample floor or full Riemann hypothesis."))),
                 DescribeRole.Theorem),
             Describe.Lean(
                 DescribeId.Create("golden-resource-equality-price-invariance"),
@@ -61,6 +124,21 @@ internal sealed class GoldenResourceSupremumDocument : IScribeDocumentDefinition
                         + "of that layer. This companion is a direct application of the frozen "
                         + "single-layer delta to the equality-price clause."))),
                 DescribeRole.Theorem))));
+
+    private static Formula LocalLayerSumFormula()
+    {
+        Formula lambda = F.Id("lambda");
+        Formula p = F.Id("p");
+        Formula a = F.Id("a");
+        Formula k = F.Id("k");
+        Formula sum = Seq(Sum, Underscore,
+            Grp(Seq(k, InMacro, Sp, Call("Icc", D(1), a))), Sp,
+            Product(Call("log", p), Seq(Open, Subtract(Marginal(p, k), lambda), Close)));
+        return Disp(ForAll(
+            [Bound("lambda", Reals()), Bound("p", Naturals()), Bound("a", Naturals())],
+            Implies(Call("Prime", p),
+                Equal(Call("goldenPrimeLocalObjective", lambda, p, a), sum))));
+    }
 
     private static Formula ActiveSum(Formula lambda)
     {

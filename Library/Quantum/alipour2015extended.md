@@ -32,3 +32,8 @@ The source does not supply the channel-specific original-dimension spectral
 necessity, the simultaneous sharp-calibration construction, its exact
 minimal support dimension, or its capacity transition. Those conclusions
 require the additional proofs in §§213–215.
+
+## Locator
+
+Journal DOI: 10.1103/PhysRevA.91.042104.
+Stable preprint URL: https://arxiv.org/abs/1403.8033v2.

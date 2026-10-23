@@ -1,7 +1,7 @@
 name: CI
 
 # The one CI workflow. `detect` lists the changed paths once and decides from
-# the unit patterns written below which units the change hits; every unit is a
+# the unit patterns in Meta/ci-units.json which units the change hits; every unit is a
 # job that runs only when hit, and `required` is the one required check: it is
 # green when detection succeeded and every unit ran exactly when hit and passed.
 # Detection validates and routes the complete changed-path list without a path-count cutoff.
@@ -16,6 +16,7 @@ on:
 permissions:
   contents: read
   actions: read
+  pull-requests: read
 
 concurrency:
   group: ci-${{ github.event_name }}-${{ github.event.pull_request.number || github.run_id }}
@@ -27,6 +28,9 @@ jobs:
     timeout-minutes: 10
     outputs:
       hits: ${{ steps.detect.outputs.hits }}
+      report: ${{ steps.detect.outputs.report }}
+      delta: ${{ steps.detect.outputs.delta }}
+      theory: ${{ steps.detect.outputs.theory }}
     steps:
       # Commits and trees only, and only the entry scripts in the working tree.
       - uses: actions/checkout@v5
@@ -34,9 +38,12 @@ jobs:
           ref: ${{ github.sha }}
           fetch-depth: 2
           filter: blob:none
-          sparse-checkout: tools/scripts/workflow
+          sparse-checkout: |
+            tools/scripts/workflow
+            Meta/ci-units.json
           persist-credentials: false
-      - name: Verify the candidate and list the changed paths
+      - id: entry
+        name: Verify the candidate and list the changed paths
         env:
           CI_HIT_PATHS: '*'
           CI_PR_HEAD: ${{ github.event.pull_request.head.sha }}
@@ -46,1612 +53,24 @@ jobs:
       - id: detect
         name: Decide which units the change hits
         env:
-          # One section per unit job below, named by its job id; [*] applies to
-          # every unit. `*` also matches `/`, `?` matches one character and a
-          # leading `!` excludes a path from that unit.
-          CI_UNITS: |
-            # Shared candidate-entry and routing inputs. Project and runtime
-            # inputs belong to each actual consumer below.
-            [*]
-            .github/workflows/ci-current.yml
-            .github/workflows/ci-unit.yml
-            tools/scripts/workflow/ci-entry.sh
-            tools/scripts/workflow/ci_detect.py
-            tools/scripts/workflow/ci_required.py
-            [banned-api-proof]
-            tools/Makefile
-            tools/StrataLint.TestEvidence/*
-            tools/StrataLint.Engineering/*
-            tools/StrataLint.Runtime/*
-            tools/tests/Directory.Build.*
-            tools/tests/BannedApiCompileFailProof/*
-            .editorconfig
-            .globalconfig
-            Directory.Build.*
-            Directory.Packages.props
-            NuGet.Config
-            NuGet.config
-            nuget.config
-            global.json
-            tools/Architecture/BannedSymbols.txt
-            tools/Architecture/BannedSymbols.Determinism.txt
-            tools/Architecture/BannedSymbols.Guid.txt
-            [capability-proof]
-            tools/Makefile
-            tools/StrataLint.TestEvidence/*
-            tools/StrataLint.Engineering/*
-            tools/StrataLint.Runtime/*
-            tools/tests/Directory.Build.*
-            tools/tests/CompileFailProof/*
-            .editorconfig
-            .globalconfig
-            Directory.Build.*
-            Directory.Packages.props
-            NuGet.Config
-            NuGet.config
-            nuget.config
-            global.json
-            tools/StrataLint.Engine/*
-            tools/Trureturing.Truth/*
-            tools/Architecture/BannedSymbols.txt
-            tools/Architecture/BannedSymbols.Determinism.txt
-            tools/Architecture/BannedSymbols.Guid.txt
-            [current]
-            tools/StrataLint.Engineering/*
-            tools/StrataLint.Runtime/*
-            *
-            !README.md
-            !docs/VISION.md
-            !docs/assets/inquiry-cycle.svg
-            !docs/develop/spec/lean_single_compile_intrinsic_information_escape_theory_and_spec.md
-            !docs/develop/spec/trureturing_engineering_optimization_v1.md
-            !docs/reports/*
-            !tools/TestSupport/StrataLint.RuleTestSupport/*
-            !tools/lean-inspector/README.md
-            !tools/scripts/agent/openproblem/README.md
-            !tools/scripts/agent/openproblem/SCREENED-OUT*.md
-            !tools/scripts/agent/prime_slabs/CPU.md
-            .editorconfig
-            .globalconfig
-            Directory.Build.*
-            Directory.Packages.props
-            NuGet.Config
-            NuGet.config
-            nuget.config
-            global.json
-            tools/StrataLint.Engine/*
-            tools/Trureturing.Truth/*
-            tools/StrataLint.Cli/*
-            tools/StrataLint.Configuration/*
-            tools/StrataLint.FileMap/*
-            tools/StrataLint.Lean/*
-            tools/StrataLint.Scribe/*
-            tools/StrataLint.TestEvidence/*
-            tools/Architecture/BannedSymbols.txt
-            tools/Architecture/BannedSymbols.Determinism.txt
-            tools/Architecture/BannedSymbols.Guid.txt
-            Makefile
-            tools/Makefile
-            tools/Architecture/BannedSymbols*.txt
-            tools/Architecture/ScribeScriptAllowlist.txt
-            [filemap]
-            tools/StrataLint.Engineering/*
-            tools/StrataLint.Runtime/*
-            *
-            !README.md
-            !docs/VISION.md
-            !docs/assets/inquiry-cycle.svg
-            !docs/develop/spec/lean_single_compile_intrinsic_information_escape_theory_and_spec.md
-            !docs/develop/spec/trureturing_engineering_optimization_v1.md
-            !docs/develop/theory/*
-            !docs/reports/*
-            !tools/TestSupport/StrataLint.RuleTestSupport/*
-            !tools/lean-inspector/README.md
-            !tools/scripts/agent/openproblem/README.md
-            !tools/scripts/agent/openproblem/SCREENED-OUT*.md
-            !tools/scripts/agent/prime_slabs/CPU.md
-            .editorconfig
-            .globalconfig
-            Directory.Build.*
-            Directory.Packages.props
-            NuGet.Config
-            NuGet.config
-            nuget.config
-            global.json
-            tools/StrataLint.Engine/*
-            tools/Trureturing.Truth/*
-            tools/Architecture/BannedSymbols.txt
-            tools/Architecture/BannedSymbols.Determinism.txt
-            tools/Architecture/BannedSymbols.Guid.txt
-            Makefile
-            tools/Makefile
-            [selftest]
-            tools/Makefile
-            tools/scripts/stratalint-selftest.sh
-            Meta/FILEMAP.toml
-            Meta/FILEMAP.*.toml
-            .editorconfig
-            .globalconfig
-            Directory.Build.*
-            Directory.Packages.props
-            NuGet.Config
-            NuGet.config
-            nuget.config
-            global.json
-            tools/StrataLint.Engine/*
-            tools/Trureturing.Truth/*
-            tools/StrataLint.Cli/*
-            tools/StrataLint.Configuration/*
-            tools/StrataLint.FileMap/*
-            tools/StrataLint.Lean/*
-            tools/StrataLint.Scribe/*
-            tools/StrataLint.TestEvidence/*
-            tools/StrataLint.Engineering/*
-            tools/StrataLint.Runtime/*
-            tools/Architecture/BannedSymbols.txt
-            tools/Architecture/BannedSymbols.Determinism.txt
-            tools/Architecture/BannedSymbols.Guid.txt
-            tools/Architecture/BannedSymbols*.txt
-            tools/Architecture/ScribeScriptAllowlist.txt
-            Meta/domains.yaml
-            Meta/engineering-projects.json
-            tools/TOWER.yaml
-            tools/*.cs
-            tools/*.csproj
-            [tests-architecture]
-            # ProductionTestOnlyTypePolicy reads every tracked C# source;
-            # topology readers inspect all tracked projects, and ColdBuildBudget
-            # counts all tracked D5 modules. These scopes belong to this unit.
-            *.cs
-            *.csproj
-            D5/*.lean
-            tools/StrataLint.Engineering/*
-            tools/StrataLint.Runtime/*
-            tools/StrataLint.Cli/*
-            tools/StrataLint.Configuration/*
-            tools/StrataLint.FileMap/*
-            tools/StrataLint.Lean/*
-            tools/StrataLint.Scribe/*
-            tools/TestSupport/*
-            tools/lean-inspector/InformationSourceFixture.lean
-            tools/lean-inspector/Inspector.lean
-            tools/lean-inspector/LeanInformationAudit/*
-            tools/lean-inspector/LeanInformationAuditRegAnalysis/*
-            tools/lean-inspector/LeanInformationAuditRegTests/*
-            tools/scripts/agent/*/*.py
-            tools/scripts/agent/atom_dedup.sh
-            tools/scripts/agent/await.sh
-            tools/scripts/agent/bindonly-probe.sh
-            tools/scripts/agent/clean-runlocal.sh
-            tools/scripts/agent/collect_lane.sh
-            tools/scripts/agent/contribution_queue.py
-            tools/scripts/agent/cover-gid-check.py
-            tools/scripts/agent/cover_loop.sh
-            tools/scripts/agent/deposit-evidence/*
-            tools/scripts/agent/digestion/*
-            tools/scripts/agent/frozen/*
-            tools/scripts/agent/gen-judge-surface-git-options.py
-            tools/scripts/agent/germ_jet_certificate.py
-            tools/scripts/agent/headroom.sh
-            tools/scripts/agent/inflight_mods.sh
-            tools/scripts/agent/integration-mirror.sh
-            tools/scripts/agent/land.sh
-            tools/scripts/agent/lane_brief.sh
-            tools/scripts/agent/lane_free.sh
-            tools/scripts/agent/merge-gate.sh
-            tools/scripts/agent/oeis-prior-art.py
-            tools/scripts/agent/oom-guard.sh
-            tools/scripts/agent/openproblem/fetch-journal.sh
-            tools/scripts/agent/openproblem/lane.sh
-            tools/scripts/agent/openproblem/op-addendum-ingest-v3.sh
-            tools/scripts/agent/openproblem/op-file-pull.sh
-            tools/scripts/agent/openproblem/op-file-push.sh
-            tools/scripts/agent/openproblem/op-fold-anchor-cover.sh
-            tools/scripts/agent/openproblem/op-governance-pr.sh
-            tools/scripts/agent/openproblem/op-ingest-new-noalign.sh
-            tools/scripts/agent/openproblem/op-ingest-noalign.sh
-            tools/scripts/agent/openproblem/op-land-amend.sh
-            tools/scripts/agent/openproblem/op-land.sh
-            tools/scripts/agent/openproblem/op-require-base.sh
-            tools/scripts/agent/openproblem/op-resume-seat.sh
-            tools/scripts/agent/openproblem/op-seat-run.sh
-            tools/scripts/agent/openproblem/op-sync-dev.sh
-            tools/scripts/agent/openproblem/prereg-readings.sh
-            tools/scripts/agent/pick_atom.sh
-            tools/scripts/agent/prime_pick.sh
-            tools/scripts/agent/prime_slab_cpu.py
-            tools/scripts/agent/prime_slab_search.py
-            tools/scripts/agent/prior-art.sh
-            tools/scripts/agent/refresh_exclusions.sh
-            tools/scripts/agent/scan-template-check.py
-            tools/scripts/agent/scope-freeze-delta.sh
-            tools/scripts/agent/scribe_gap.sh
-            tools/scripts/agent/seat/*
-            tools/scripts/agent/section-context.sh
-            tools/scripts/agent/selfaudit.sh
-            tools/scripts/agent/serial-lean.sh
-            tools/scripts/agent/settle-context-check.sh
-            tools/scripts/agent/sl010_check.sh
-            tools/scripts/agent/sl030-real-surface.sh
-            tools/scripts/agent/test_prime_slab_search.py
-            tools/scripts/agent/test_xi_quantization.py
-            tools/scripts/agent/xi_quantization.py
-            tools/scripts/clean-lanes.sh
-            tools/scripts/dotnet-build.sh
-            tools/scripts/ingest.sh
-            tools/scripts/lean-report-pair.sh
-            tools/scripts/lib/*
-            tools/scripts/local-harness-gate.sh
-            tools/scripts/report/*
-            tools/scripts/scribe.sh
-            tools/scripts/stratalint-selftest.sh
-            tools/scripts/update-renderer-contract.sh
-            tools/scripts/workflow/install-lean-toolchain.sh
-            tools/scripts/workflow/math-gate.sh
-            tools/scripts/workflow/playbook-workflows.sh
-            tools/scripts/workflow/scribe-content-checks.sh
-            tools/scripts/worktree-init.sh
-            tools/scripts/host-cleanup.py
-            tools/scripts/worktree/*
-            tools/tests/BannedApiCompileFailProof/*
-            tools/tests/CompileFailProof/*
-            tools/tests/StrataLint.ArchitectureTests/*
-            tools/tests/StrataLint.Cache.Native.Tests/*
-            tools/tests/StrataLint.Cache.Release.Tests/*
-            tools/tests/StrataLint.Cache.Tests/*
-            tools/tests/StrataLint.CliIntegration.Tests/*
-            tools/tests/StrataLint.Configuration.Tests/*
-            tools/tests/StrataLint.CoverBatch.Tests/*
-            tools/tests/StrataLint.DeclaredTemplate.Tests/*
-            tools/tests/StrataLint.Digestion.Tests/*
-            tools/tests/StrataLint.Engine.Tests/*
-            tools/tests/StrataLint.FileMap.Tests/*
-            tools/tests/StrataLint.HeaderScript.Tests/*
-            tools/tests/StrataLint.InstructionContract.Tests/*
-            tools/tests/StrataLint.Lean.Tests/*
-            tools/tests/StrataLint.LeanCacheScript.Tests/*
-            tools/tests/StrataLint.LeanReportScript.Tests/*
-            tools/tests/StrataLint.PlaybookScript.Tests/*
-            tools/tests/StrataLint.PrScript.Tests/*
-            tools/tests/StrataLint.ReportSupervisor.Tests/*
-            tools/tests/StrataLint.RepositoryConfiguration.Tests/*
-            tools/tests/StrataLint.RepositoryContract.Tests/*
-            tools/tests/StrataLint.RepositoryFileMap.Tests/*
-            tools/tests/StrataLint.RepositoryTopology.Tests/*
-            tools/tests/StrataLint.ResourceObservation.Tests/*
-            tools/tests/StrataLint.Rules.Tests/*
-            tools/tests/StrataLint.Scribe.Tests/*
-            tools/tests/StrataLint.SourceAtomizer.Tests/*
-            tools/tests/StrataLint.ScriptTests/*
-            tools/tests/StrataLint.Tests/*
-            tools/tests/StrataLint.TruthRelease.Tests/*
-            tools/tests/StrataLint.WorkflowScript.Tests/*
-            tools/tests/StrataLint.WorktreeContract.Tests/*
-            tools/tests/Trureturing.Truth.Tests/*
-            .editorconfig
-            .globalconfig
-            Directory.Build.*
-            Directory.Packages.props
-            NuGet.Config
-            NuGet.config
-            nuget.config
-            global.json
-            tools/Makefile
-            tools/scripts/dotnet-test.sh
-            Meta/engineering-projects.json
-            tools/StrataLint.TestEvidence/*
-            tools/tests/Directory.Build.*
-            tools/Architecture/BannedSymbols.Determinism.txt
-            tools/StrataLint.Engine/*
-            tools/Trureturing.Truth/*
-            tools/Architecture/BannedSymbols*.txt
-            tools/Architecture/ScribeScriptAllowlist.txt
-            tools/StrataLint.sln
-            tools/Architecture/*
-            tools/ARCHITECTURE.md
-            tools/TOWER.yaml
-            Meta/FILEMAP.toml
-            Meta/FILEMAP.*.toml
-            Meta/ci-checks.json
-            Golden/gate-authority-roots.toml
-            tools/*.cs
-            tools/*.csproj
-            tools/Architecture/BannedSymbols.txt
-            tools/Architecture/BannedSymbols.Guid.txt
-            [tests-cache]
-            tools/StrataLint.Engineering/*
-            tools/StrataLint.Runtime/*
-            tools/scripts/workflow/elan-cache-inventory.sh
-            tools/scripts/worktree/lean-cache-input.sh
-            Meta/ci-cache-paths.json
-            tools/tests/StrataLint.ScriptTests/Fixtures/lean_input_contract.py
-            tools/tests/StrataLint.ScriptTests/Fixtures/lean_seed_support.py
-            tools/TestSupport/StrataLint.ScriptProcessTestSupport/*
-            tools/TestSupport/StrataLint.TestSupport/*
-            tools/lean-inspector/LeanInformationAuditRegAnalysis/*
-            tools/lean-inspector/LeanInformationAuditRegTests/*
-            tools/lean-inspector/tests/packages/*
-            tools/lean-inspector/tests/test_native_records.py
-            tools/scripts/worktree/cache_material.py
-            tools/scripts/worktree/lean_actions.py
-            tools/scripts/worktree/lean_cache.py
-            tools/scripts/worktree/lean_cache_release.py
-            tools/tests/StrataLint.Cache.Tests/*
-            .editorconfig
-            .globalconfig
-            Directory.Build.*
-            Directory.Packages.props
-            NuGet.Config
-            NuGet.config
-            nuget.config
-            global.json
-            tools/Makefile
-            tools/scripts/dotnet-test.sh
-            Meta/engineering-projects.json
-            tools/StrataLint.TestEvidence/*
-            tools/tests/Directory.Build.*
-            tools/Architecture/BannedSymbols.Determinism.txt
-            tools/Architecture/BannedSymbols.txt
-            tools/Architecture/BannedSymbols.Guid.txt
-            tools/tests/StrataLint.ScriptTests/Fixtures/cache_snapshot_contract.py
-            tools/tests/StrataLint.ScriptTests/Fixtures/cache_fixture.py
-            [tests-cache-native]
-            Meta/FILEMAP.toml
-            tools/StrataLint.Engineering/*
-            tools/StrataLint.Runtime/*
-            Meta/ci-cache-paths.json
-            tools/TestSupport/StrataLint.ScriptProcessTestSupport/*
-            tools/TestSupport/StrataLint.TestSupport/*
-            tools/scripts/workflow/install-lean-toolchain.sh
-            tools/scripts/worktree/cache_material.py
-            tools/scripts/worktree/lean_actions.py
-            tools/scripts/worktree/lean_cache.py
-            tools/tests/StrataLint.Cache.Native.Tests/*
-            .editorconfig
-            .globalconfig
-            Directory.Build.*
-            Directory.Packages.props
-            NuGet.Config
-            NuGet.config
-            nuget.config
-            global.json
-            tools/Makefile
-            tools/scripts/dotnet-test.sh
-            Meta/engineering-projects.json
-            tools/StrataLint.TestEvidence/*
-            tools/tests/Directory.Build.*
-            tools/Architecture/BannedSymbols.Determinism.txt
-            lean-toolchain
-            lake-manifest.json
-            tools/Architecture/BannedSymbols.txt
-            tools/Architecture/BannedSymbols.Guid.txt
-            [tests-cache-release]
-            tools/tests/StrataLint.ScriptTests/Fixtures/lean_seed_*.py
-            tools/tests/StrataLint.ScriptTests/Fixtures/lean_release_*.py
-            # Release contracts execute the report receipt and input readers.
-            tools/lean-inspector/reuse.py
-            tools/lean-inspector/publication.py
-            tools/lean-inspector/materials.py
-            tools/scripts/report/lean-report-selection.py
-            tools/StrataLint.Engineering/*
-            tools/StrataLint.Runtime/*
-            Meta/ci-cache-paths.json
-            tools/TestSupport/StrataLint.ScriptProcessTestSupport/*
-            tools/TestSupport/StrataLint.TestSupport/*
-            tools/scripts/worktree/cache_material.py
-            tools/scripts/worktree/lean-cache-input.sh
-            tools/scripts/worktree/lean-cache-publish.sh
-            tools/scripts/worktree/lean_cache.py
-            tools/scripts/worktree/lean_cache_release.py
-            tools/tests/StrataLint.Cache.Release.Tests/*
-            .editorconfig
-            .globalconfig
-            Directory.Build.*
-            Directory.Packages.props
-            NuGet.Config
-            NuGet.config
-            nuget.config
-            global.json
-            tools/Makefile
-            tools/scripts/dotnet-test.sh
-            Meta/engineering-projects.json
-            tools/StrataLint.TestEvidence/*
-            tools/tests/Directory.Build.*
-            tools/Architecture/BannedSymbols.Determinism.txt
-            tools/Architecture/BannedSymbols.txt
-            tools/Architecture/BannedSymbols.Guid.txt
-            Makefile
-            tools/tests/StrataLint.ScriptTests/Fixtures/lean_seed_contract.py
-            tools/tests/StrataLint.ScriptTests/Fixtures/lean_seed_support.py
-            tools/tests/StrataLint.ScriptTests/Fixtures/lean_seed_transport.py
-            tools/tests/StrataLint.ScriptTests/Fixtures/lean_release_verification.py
-            tools/tests/StrataLint.ScriptTests/Fixtures/lean_release_legacy.py
-            tools/scripts/worktree/lean-cache-run.sh
-            tools/scripts/worktree/lean-cache-ensure.sh
-            [tests-ci-entry]
-            tools/scripts/workflow/ci-entry-test.sh
-            tools/scripts/workflow/ci_detect.py
-            tools/scripts/workflow/ci_required.py
-            tools/scripts/workflow/test_ci_detect.py
-            tools/scripts/workflow/test_ci_required.py
-            [tests-cli]
-            # WorktreeMakeWorkflowTests copies the root dispatch table.
-            Makefile
-            tools/StrataLint.Engineering/*
-            tools/StrataLint.Runtime/*
-            Golden/Projection/*
-            Meta/ci-cache-paths.json
-            tools/StrataLint.Cli/*
-            tools/StrataLint.Configuration/*
-            tools/StrataLint.FileMap/*
-            tools/StrataLint.Lean/*
-            tools/StrataLint.Scribe/*
-            tools/TestSupport/StrataLint.AdmissionTestSupport/*
-            tools/TestSupport/StrataLint.CliTestSupport/*
-            tools/TestSupport/StrataLint.ConfigurationTestSupport/*
-            tools/TestSupport/StrataLint.CoverTestSupport/*
-            tools/TestSupport/StrataLint.DeclaredTemplateTestSupport/*
-            tools/TestSupport/StrataLint.DigestionTestSupport/*
-            tools/TestSupport/StrataLint.LeanTestSupport/*
-            tools/TestSupport/StrataLint.ProcessTestSupport/*
-            tools/TestSupport/StrataLint.RegistrationTestSupport/*
-            tools/TestSupport/StrataLint.RuleTestSupport/*
-            tools/TestSupport/StrataLint.TestSupport/*
-            tools/lean-inspector/Inspector.lean
-            tools/lean-inspector/LeanInformationAuditRegAnalysis/*
-            tools/lean-inspector/LeanInformationAuditRegTests/*
-            tools/scripts/local-harness-gate.sh
-            tools/scripts/workflow/install-lean-toolchain.sh
-            tools/scripts/workflow/playbook-workflows.sh
-            tools/scripts/worktree-init.sh
-            tools/scripts/host-cleanup.py
-            tools/scripts/worktree/cache_material.py
-            tools/scripts/worktree/lean-cache-ensure.sh
-            tools/scripts/worktree/lean-cache-run.sh
-            tools/scripts/worktree/lean_actions.py
-            tools/scripts/worktree/lean_cache.py
-            tools/scripts/worktree/lean_cache_release.py
-            tools/tests/StrataLint.Tests/*
-            .editorconfig
-            .globalconfig
-            Directory.Build.*
-            Directory.Packages.props
-            NuGet.Config
-            NuGet.config
-            nuget.config
-            global.json
-            tools/Makefile
-            tools/scripts/dotnet-test.sh
-            Meta/engineering-projects.json
-            tools/StrataLint.TestEvidence/*
-            tools/tests/Directory.Build.*
-            tools/Architecture/BannedSymbols.Determinism.txt
-            tools/StrataLint.Engine/*
-            tools/Trureturing.Truth/*
-            tools/Architecture/BannedSymbols*.txt
-            tools/Architecture/ScribeScriptAllowlist.txt
-            Meta/FILEMAP.toml
-            Meta/FILEMAP.*.toml
-            Meta/domains.yaml
-            Meta/ci-checks.json
-            Meta/Digestion/atomizers.toml
-            Golden/gate-authority-roots.toml
-            tools/StrataLint.sln
-            tools/scripts/workflow/scribe-scope-paths.sh
-            lean-toolchain
-            lake-manifest.json
-            lakefile.toml
-            Reg/lakefile.toml
-            Reg/lake-manifest.json
-            lean-report-inputs.json
-            Meta/ReportProducers/*
-            tools/lean-inspector-interface/*
-            tools/lean-inspector-reg/*
-            tools/lean-inspector/*.py
-            tools/lean-inspector/*.json
-            tools/lean-inspector/lakefile.lean
-            tools/Architecture/BannedSymbols.txt
-            tools/Architecture/BannedSymbols.Guid.txt
-            [tests-cli-integration]
-            tools/StrataLint.Engineering/*
-            tools/StrataLint.Runtime/*
-            tools/StrataLint.Cli/*
-            tools/StrataLint.Configuration/*
-            tools/StrataLint.FileMap/*
-            tools/StrataLint.Lean/*
-            tools/StrataLint.Scribe/*
-            tools/TestSupport/StrataLint.AdmissionTestSupport/*
-            tools/TestSupport/StrataLint.CliTestSupport/*
-            tools/TestSupport/StrataLint.ConfigurationTestSupport/*
-            tools/TestSupport/StrataLint.DigestionTestSupport/*
-            tools/TestSupport/StrataLint.ProcessTestSupport/*
-            tools/TestSupport/StrataLint.RegistrationTestSupport/*
-            tools/TestSupport/StrataLint.RuleTestSupport/*
-            tools/TestSupport/StrataLint.TestSupport/*
-            tools/scripts/workflow/scribe-content-checks.sh
-            tools/tests/StrataLint.CliIntegration.Tests/*
-            .editorconfig
-            .globalconfig
-            Directory.Build.*
-            Directory.Packages.props
-            NuGet.Config
-            NuGet.config
-            nuget.config
-            global.json
-            tools/Makefile
-            tools/scripts/dotnet-test.sh
-            Meta/engineering-projects.json
-            tools/StrataLint.TestEvidence/*
-            tools/tests/Directory.Build.*
-            tools/Architecture/BannedSymbols.Determinism.txt
-            tools/StrataLint.Engine/*
-            tools/Trureturing.Truth/*
-            tools/Architecture/BannedSymbols*.txt
-            tools/Architecture/ScribeScriptAllowlist.txt
-            Meta/Digestion/atomizers.toml
-            tools/Architecture/BannedSymbols.txt
-            tools/Architecture/BannedSymbols.Guid.txt
-            [tests-configuration]
-            tools/StrataLint.Engineering/*
-            tools/StrataLint.Runtime/*
-            tools/StrataLint.Configuration/*
-            tools/TestSupport/StrataLint.ConfigurationTestSupport/*
-            tools/TestSupport/StrataLint.TestSupport/*
-            tools/tests/StrataLint.Configuration.Tests/*
-            .editorconfig
-            .globalconfig
-            Directory.Build.*
-            Directory.Packages.props
-            NuGet.Config
-            NuGet.config
-            nuget.config
-            global.json
-            tools/Makefile
-            tools/scripts/dotnet-test.sh
-            Meta/engineering-projects.json
-            tools/StrataLint.TestEvidence/*
-            tools/tests/Directory.Build.*
-            tools/Architecture/BannedSymbols.Determinism.txt
-            tools/StrataLint.Engine/*
-            tools/Trureturing.Truth/*
-            tools/Architecture/BannedSymbols.txt
-            tools/Architecture/BannedSymbols.Guid.txt
-            [tests-cover-batch]
-            # ProducerInputFixture copies registered inspector/dependency sources.
-            tools/lean-inspector/*.lean
-            tools/lean-inspector/native_image.c
-            tools/lean-inspector/inspect.sh
-            lakefile.lean
-            tools/StrataLint.Engineering/*
-            tools/StrataLint.Runtime/*
-            D5/S3/Constants/Values.lean
-            D5/X_Frontier/ValuesProducer.lean
-            Golden/values-kernels.toml
-            tools/StrataLint.Cli/*
-            tools/StrataLint.Configuration/*
-            tools/StrataLint.FileMap/*
-            tools/StrataLint.Lean/*
-            tools/StrataLint.Scribe/*
-            tools/TestSupport/StrataLint.AdmissionTestSupport/*
-            tools/TestSupport/StrataLint.CliTestSupport/*
-            tools/TestSupport/StrataLint.ConfigurationTestSupport/*
-            tools/TestSupport/StrataLint.CoverTestSupport/*
-            tools/TestSupport/StrataLint.DigestionTestSupport/*
-            tools/TestSupport/StrataLint.ProcessTestSupport/*
-            tools/TestSupport/StrataLint.RegistrationTestSupport/*
-            tools/TestSupport/StrataLint.RuleTestSupport/*
-            tools/TestSupport/StrataLint.TestSupport/*
-            tools/lean-inspector/InformationSourceFixture.lean
-            tools/lean-inspector/Inspector.lean
-            tools/lean-inspector/LeanInformationAudit/*
-            tools/scripts/lean-report-pair.sh
-            tools/scripts/lib/resource-observation-lib.sh
-            tools/scripts/report/lean-report-input.sh
-            tools/scripts/report/lean-report-selection.py
-            tools/scripts/report/lean-report.sh
-            tools/scripts/report/report-consumer.sh
-            tools/scripts/report/report-supervisor.sh
-            tools/scripts/workflow/install-lean-toolchain.sh
-            tools/scripts/workflow/scribe-content-checks.sh
-            tools/scripts/worktree/cache_material.py
-            tools/scripts/worktree/lean-cache-ensure.sh
-            tools/scripts/worktree/lean-cache-input.sh
-            tools/scripts/worktree/lean-cache-publish.sh
-            tools/scripts/worktree/lean-cache-run.sh
-            tools/scripts/worktree/lean_cache.py
-            tools/tests/StrataLint.CoverBatch.Tests/*
-            .gitignore
-            .editorconfig
-            .globalconfig
-            Directory.Build.*
-            Directory.Packages.props
-            NuGet.Config
-            NuGet.config
-            nuget.config
-            global.json
-            tools/Makefile
-            tools/scripts/dotnet-test.sh
-            Meta/engineering-projects.json
-            tools/StrataLint.TestEvidence/*
-            tools/tests/Directory.Build.*
-            tools/Architecture/BannedSymbols.Determinism.txt
-            tools/StrataLint.Engine/*
-            tools/Trureturing.Truth/*
-            tools/Architecture/BannedSymbols*.txt
-            tools/Architecture/ScribeScriptAllowlist.txt
-            Meta/FILEMAP.toml
-            Meta/FILEMAP.*.toml
-            lakefile.toml
-            lake-manifest.json
-            Reg/lakefile.toml
-            Reg/lake-manifest.json
-            lean-toolchain
-            lean-report-inputs.json
-            Meta/ReportProducers/*
-            tools/lean-inspector-interface/*
-            tools/lean-inspector-reg/*
-            tools/lean-inspector/*.py
-            tools/lean-inspector/*.json
-            tools/lean-inspector/lakefile.lean
-            Meta/Digestion/atomizers.toml
-            tools/Architecture/BannedSymbols.txt
-            tools/Architecture/BannedSymbols.Guid.txt
-            [tests-declared-template]
-            # The ordinary native facets run LeanUtilityInputCommand over D5
-            # and validate the complete registered module and producer scopes.
-            # Include their actual readers and compiler imports in this unit.
-            D5/*
-            Reg/*.lean
-            Trureturing.lean
-            Meta/FILEMAP.*.toml
-            tools/StrataLint.Lean/*
-            tools/lean-inspector/*.lean
-            tools/lean-inspector/build_work.py
-            tools/lean-inspector/inspect.sh
-            tools/lean-inspector/reuse.py
-            tools/scripts/report/lean-report-selection.py
-            tools/scripts/report/lean-report.sh
-            tools/scripts/report/lean-report-input.sh
-            tools/scripts/report/report-consumer.sh
-            tools/scripts/report/report-supervisor.sh
-            tools/scripts/lean-report-pair.sh
-            tools/scripts/lib/resource-observation-lib.sh
-            tools/scripts/worktree/lean-cache-input.sh
-            tools/scripts/worktree/lean-cache-ensure.sh
-            tools/scripts/worktree/lean-cache-publish.sh
-            Meta/FILEMAP.toml
-            tools/StrataLint.Engineering/*
-            tools/StrataLint.Runtime/*
-            tools/scripts/worktree/lean-cache-run.sh
-            Meta/Digestion/atomizers.toml
-            Meta/ci-cache-paths.json
-            tools/StrataLint.Configuration/*
-            tools/TestSupport/StrataLint.ConfigurationTestSupport/*
-            tools/TestSupport/StrataLint.DeclaredTemplateTestSupport/*
-            tools/TestSupport/StrataLint.RegistrationTestSupport/*
-            tools/TestSupport/StrataLint.RuleTestSupport/*
-            tools/TestSupport/StrataLint.TestSupport/*
-            tools/scripts/workflow/install-lean-toolchain.sh
-            tools/scripts/worktree/cache_material.py
-            tools/scripts/worktree/lean_actions.py
-            tools/scripts/worktree/lean_cache.py
-            tools/tests/StrataLint.DeclaredTemplate.Tests/*
-            .editorconfig
-            .globalconfig
-            Directory.Build.*
-            Directory.Packages.props
-            NuGet.Config
-            NuGet.config
-            nuget.config
-            global.json
-            tools/Makefile
-            tools/scripts/dotnet-test.sh
-            Meta/engineering-projects.json
-            tools/StrataLint.TestEvidence/*
-            tools/tests/Directory.Build.*
-            tools/Architecture/BannedSymbols.Determinism.txt
-            tools/StrataLint.Engine/*
-            tools/Trureturing.Truth/*
-            lean-toolchain
-            lake-manifest.json
-            tools/lean-inspector-reg/*
-            tools/lean-inspector-interface/*
-            tools/lean-inspector/native.py
-            tools/lean-inspector/publication.py
-            tools/lean-inspector/materials.py
-            tools/lean-inspector/native_image.c
-            tools/lean-inspector/lake-manifest.json
-            lakefile.toml
-            Reg/lakefile.toml
-            Reg/lake-manifest.json
-            lean-report-inputs.json
-            tools/Architecture/BannedSymbols.txt
-            tools/Architecture/BannedSymbols.Guid.txt
-            [tests-digestion]
-            tools/StrataLint.Engineering/*
-            tools/StrataLint.Runtime/*
-            tools/StrataLint.Configuration/*
-            tools/TestSupport/StrataLint.ConfigurationTestSupport/*
-            tools/TestSupport/StrataLint.DigestionTestSupport/*
-            tools/TestSupport/StrataLint.RegistrationTestSupport/*
-            tools/TestSupport/StrataLint.RuleTestSupport/*
-            tools/TestSupport/StrataLint.TestSupport/*
-            tools/tests/StrataLint.Digestion.Tests/*
-            .editorconfig
-            .globalconfig
-            Directory.Build.*
-            Directory.Packages.props
-            NuGet.Config
-            NuGet.config
-            nuget.config
-            global.json
-            tools/Makefile
-            tools/scripts/dotnet-test.sh
-            Meta/engineering-projects.json
-            tools/StrataLint.TestEvidence/*
-            tools/tests/Directory.Build.*
-            tools/Architecture/BannedSymbols.Determinism.txt
-            tools/StrataLint.Engine/*
-            tools/Trureturing.Truth/*
-            Meta/Digestion/atomizers.toml
-            tools/Architecture/BannedSymbols.txt
-            tools/Architecture/BannedSymbols.Guid.txt
-            [tests-engine]
-            tools/StrataLint.Engineering/*
-            tools/StrataLint.Runtime/*
-            tools/TestSupport/StrataLint.ProcessTestSupport/*
-            tools/TestSupport/StrataLint.RegistrationTestSupport/*
-            tools/TestSupport/StrataLint.TestSupport/*
-            tools/tests/StrataLint.Engine.Tests/*
-            .editorconfig
-            .globalconfig
-            Directory.Build.*
-            Directory.Packages.props
-            NuGet.Config
-            NuGet.config
-            nuget.config
-            global.json
-            tools/Makefile
-            tools/scripts/dotnet-test.sh
-            Meta/engineering-projects.json
-            tools/StrataLint.TestEvidence/*
-            tools/tests/Directory.Build.*
-            tools/Architecture/BannedSymbols.Determinism.txt
-            tools/StrataLint.Engine/*
-            tools/Trureturing.Truth/*
-            Meta/FILEMAP.toml
-            Meta/FILEMAP.*.toml
-            tools/TOWER.yaml
-            tools/Architecture/BannedSymbols.txt
-            tools/Architecture/BannedSymbols.Guid.txt
-            [tests-filemap]
-            tools/StrataLint.Engineering/*
-            tools/StrataLint.Runtime/*
-            tools/StrataLint.Configuration/*
-            tools/StrataLint.FileMap/*
-            tools/StrataLint.Engine/*
-            tools/TestSupport/StrataLint.ConfigurationTestSupport/*
-            tools/TestSupport/StrataLint.TestSupport/*
-            tools/TestSupport/StrataLint.ProcessTestSupport/*
-            tools/tests/StrataLint.FileMap.Tests/*
-            .editorconfig
-            .globalconfig
-            Directory.Build.*
-            Directory.Packages.props
-            NuGet.Config
-            NuGet.config
-            nuget.config
-            global.json
-            tools/Makefile
-            tools/scripts/dotnet-test.sh
-            Meta/engineering-projects.json
-            tools/StrataLint.TestEvidence/*
-            tools/tests/Directory.Build.*
-            tools/Architecture/BannedSymbols.Determinism.txt
-            tools/Trureturing.Truth/*
-            Meta/FILEMAP.toml
-            Meta/FILEMAP.*.toml
-            tools/Architecture/BannedSymbols.txt
-            tools/Architecture/BannedSymbols.Guid.txt
-            [tests-header-script]
-            # The fixture copies this owner's bytes to obtain the hard limit.
-            tools/StrataLint.Engine/Rules/RepositoryRules.Structure.cs
-            tools/StrataLint.Engineering/*
-            tools/StrataLint.Runtime/*
-            tools/TestSupport/StrataLint.ScriptProcessTestSupport/*
-            tools/TestSupport/StrataLint.TestSupport/*
-            tools/scripts/agent/header-check.sh
-            tools/tests/StrataLint.HeaderScript.Tests/*
-            .editorconfig
-            .globalconfig
-            Directory.Build.*
-            Directory.Packages.props
-            NuGet.Config
-            NuGet.config
-            nuget.config
-            global.json
-            tools/Makefile
-            tools/scripts/dotnet-test.sh
-            Meta/engineering-projects.json
-            tools/StrataLint.TestEvidence/*
-            tools/tests/Directory.Build.*
-            tools/Architecture/BannedSymbols.Determinism.txt
-            tools/Architecture/BannedSymbols.txt
-            tools/Architecture/BannedSymbols.Guid.txt
-            [tests-instruction-contract]
-            tools/StrataLint.Engineering/*
-            tools/StrataLint.Runtime/*
-            CLAUDE.md
-            D5/*
-            skills/codex-theory-ingest/*
-            skills/formal-thinking-and-answer/*
-            tools/TestSupport/StrataLint.TestSupport/*
-            tools/scripts/agent/batch_pr.sh
-            tools/tests/StrataLint.InstructionContract.Tests/*
-            .editorconfig
-            .globalconfig
-            Directory.Build.*
-            Directory.Packages.props
-            NuGet.Config
-            NuGet.config
-            nuget.config
-            global.json
-            tools/Makefile
-            tools/scripts/dotnet-test.sh
-            Meta/engineering-projects.json
-            tools/StrataLint.TestEvidence/*
-            tools/tests/Directory.Build.*
-            tools/Architecture/BannedSymbols.Determinism.txt
-            tools/StrataLint.Engine/*
-            tools/Trureturing.Truth/*
-            tools/Architecture/BannedSymbols.txt
-            tools/Architecture/BannedSymbols.Guid.txt
-            [tests-integration-mirror]
-            tools/scripts/agent/integration-mirror-test.sh
-            tools/scripts/agent/integration-mirror.sh
-            [tests-lean]
-            # NativeTestSupport stages the real compiler and package configuration;
-            Makefile
-            Reg/lakefile.toml
-            Reg/lake-manifest.json
-            tools/lean-inspector/lakefile.lean
-            tools/lean-inspector/native_image.c
-            tools/lean-inspector/inspect.sh
-            Meta/FILEMAP.toml
-            tools/StrataLint.Engineering/*
-            tools/StrataLint.Runtime/*
-            tools/lean-inspector/build_work.py
-            Meta/ci-cache-paths.json
-            tools/StrataLint.Lean/*
-            tools/TestSupport/StrataLint.ProcessTestSupport/*
-            tools/TestSupport/StrataLint.TestSupport/*
-            tools/lean-inspector/Inspector.lean
-            tools/lean-inspector/LeanInformationAudit/*
-            tools/lean-inspector/LeanInformationAuditRegAnalysis/*
-            tools/lean-inspector/LeanInformationAuditRegTests/*
-            tools/lean-inspector/tests/*
-            tools/scripts/lib/resource-observation-lib.sh
-            tools/scripts/report/lean-report-input.sh
-            tools/scripts/report/lean-report-selection.py
-            tools/scripts/report/lean-report.sh
-            tools/scripts/report/report-supervisor.sh
-            tools/scripts/workflow/install-lean-toolchain.sh
-            tools/scripts/worktree/*
-            tools/tests/StrataLint.Lean.Tests/*
-            .editorconfig
-            .globalconfig
-            Directory.Build.*
-            Directory.Packages.props
-            NuGet.Config
-            NuGet.config
-            nuget.config
-            global.json
-            tools/Makefile
-            tools/scripts/dotnet-test.sh
-            Meta/engineering-projects.json
-            tools/StrataLint.TestEvidence/*
-            tools/tests/Directory.Build.*
-            tools/Architecture/BannedSymbols.Determinism.txt
-            tools/StrataLint.Engine/*
-            tools/Trureturing.Truth/*
-            lean-toolchain
-            lake-manifest.json
-            tools/scripts/worktree/lean_actions.py
-            tools/scripts/worktree/cache_material.py
-            tools/scripts/worktree/lean_cache.py
-            lean-report-inputs.json
-            lakefile.toml
-            tools/lean-inspector/*.py
-            tools/lean-inspector/*.json
-            tools/lean-inspector-interface/*
-            tools/lean-inspector-reg/*
-            tools/Architecture/BannedSymbols.txt
-            tools/Architecture/BannedSymbols.Guid.txt
-            [tests-lean-cache-script]
-            # The lock fixture executes the copied make lean entry.
-            Makefile
-            tools/StrataLint.Engineering/*
-            tools/StrataLint.Runtime/*
-            tools/StrataLint.Lean/*
-            tools/TestSupport/StrataLint.ProcessTestSupport/*
-            tools/TestSupport/StrataLint.TestSupport/*
-            tools/scripts/worktree/lean-cache-run.sh
-            tools/tests/StrataLint.LeanCacheScript.Tests/*
-            .editorconfig
-            .globalconfig
-            Directory.Build.*
-            Directory.Packages.props
-            NuGet.Config
-            NuGet.config
-            nuget.config
-            global.json
-            tools/Makefile
-            tools/scripts/dotnet-test.sh
-            Meta/engineering-projects.json
-            tools/StrataLint.TestEvidence/*
-            tools/tests/Directory.Build.*
-            tools/Architecture/BannedSymbols.Determinism.txt
-            tools/StrataLint.Engine/*
-            tools/Trureturing.Truth/*
-            tools/Architecture/BannedSymbols.txt
-            tools/Architecture/BannedSymbols.Guid.txt
-            [tests-lean-report-script]
-            tools/StrataLint.Engineering/*
-            tools/StrataLint.Runtime/*
-            tools/scripts/workflow/judge-lean-producer.sh
-            tools/lean-inspector/build_work.py
-            tools/TestSupport/StrataLint.LeanTestSupport/*
-            tools/TestSupport/StrataLint.ProcessTestSupport/*
-            tools/TestSupport/StrataLint.TestSupport/*
-            tools/scripts/lean-report-pair.sh
-            tools/scripts/lib/resource-observation-lib.sh
-            tools/scripts/report/lean-report-input.sh
-            tools/scripts/report/lean-report-selection.py
-            tools/scripts/report/report-supervisor.sh
-            tools/scripts/worktree/lean-cache-input.sh
-            tools/scripts/worktree/lean-cache-publish.sh
-            tools/tests/StrataLint.LeanReportScript.Tests/*
-            .editorconfig
-            .globalconfig
-            Directory.Build.*
-            Directory.Packages.props
-            NuGet.Config
-            NuGet.config
-            nuget.config
-            global.json
-            tools/Makefile
-            tools/scripts/dotnet-test.sh
-            Meta/engineering-projects.json
-            tools/StrataLint.TestEvidence/*
-            tools/tests/Directory.Build.*
-            tools/Architecture/BannedSymbols.Determinism.txt
-            tools/StrataLint.Engine/*
-            tools/Trureturing.Truth/*
-            tools/Architecture/BannedSymbols.txt
-            tools/Architecture/BannedSymbols.Guid.txt
-            tools/tests/StrataLint.ScriptTests/Fixtures/build_work_contract.py
-            tools/tests/StrataLint.ScriptTests/Fixtures/judge_producer_contract.py
-            tools/lean-inspector/inspect.sh
-            tools/lean-inspector/native.py
-            tools/lean-inspector/publication.py
-            tools/lean-inspector/materials.py
-            [tests-playbook-script]
-            tools/StrataLint.Engineering/*
-            tools/StrataLint.Runtime/*
-            tools/TestSupport/StrataLint.AdmissionTestSupport/*
-            tools/TestSupport/StrataLint.ProcessTestSupport/*
-            tools/TestSupport/StrataLint.TestSupport/*
-            tools/scripts/workflow/playbook-workflows.sh
-            Makefile
-            tools/tests/StrataLint.PlaybookScript.Tests/*
-            .editorconfig
-            .globalconfig
-            Directory.Build.*
-            Directory.Packages.props
-            NuGet.Config
-            NuGet.config
-            nuget.config
-            global.json
-            tools/Makefile
-            tools/scripts/dotnet-test.sh
-            Meta/engineering-projects.json
-            tools/StrataLint.TestEvidence/*
-            tools/tests/Directory.Build.*
-            tools/Architecture/BannedSymbols.Determinism.txt
-            tools/StrataLint.Engine/*
-            tools/Trureturing.Truth/*
-            tools/Architecture/BannedSymbols.txt
-            tools/Architecture/BannedSymbols.Guid.txt
-            [tests-pr-script]
-            tools/StrataLint.Engineering/*
-            tools/StrataLint.Runtime/*
-            tools/TestSupport/StrataLint.ProcessTestSupport/*
-            tools/TestSupport/StrataLint.TestSupport/*
-            tools/scripts/pr.sh
-            Makefile
-            tools/tests/StrataLint.PrScript.Tests/*
-            .editorconfig
-            .globalconfig
-            Directory.Build.*
-            Directory.Packages.props
-            NuGet.Config
-            NuGet.config
-            nuget.config
-            global.json
-            tools/Makefile
-            tools/scripts/dotnet-test.sh
-            Meta/engineering-projects.json
-            tools/StrataLint.TestEvidence/*
-            tools/tests/Directory.Build.*
-            tools/Architecture/BannedSymbols.Determinism.txt
-            tools/StrataLint.Engine/*
-            tools/Trureturing.Truth/*
-            tools/Architecture/BannedSymbols.txt
-            tools/Architecture/BannedSymbols.Guid.txt
-            [tests-report-supervisor]
-            tools/StrataLint.Engineering/*
-            tools/StrataLint.Runtime/*
-            tools/TestSupport/StrataLint.ProcessTestSupport/*
-            tools/TestSupport/StrataLint.TestSupport/*
-            tools/scripts/lib/resource-observation-lib.sh
-            tools/scripts/report/report-consumer.sh
-            tools/scripts/report/report-supervisor.sh
-            tools/tests/StrataLint.ReportSupervisor.Tests/*
-            .editorconfig
-            .globalconfig
-            Directory.Build.*
-            Directory.Packages.props
-            NuGet.Config
-            NuGet.config
-            nuget.config
-            global.json
-            tools/Makefile
-            tools/scripts/dotnet-test.sh
-            Meta/engineering-projects.json
-            tools/StrataLint.TestEvidence/*
-            tools/tests/Directory.Build.*
-            tools/Architecture/BannedSymbols.Determinism.txt
-            tools/StrataLint.Engine/*
-            tools/Trureturing.Truth/*
-            tools/Architecture/BannedSymbols.txt
-            tools/Architecture/BannedSymbols.Guid.txt
-            [tests-repository-configuration]
-            tools/StrataLint.Engineering/*
-            tools/StrataLint.Runtime/*
-            Meta/domains.yaml
-            tools/StrataLint.Configuration/*
-            tools/TestSupport/StrataLint.ConfigurationTestSupport/*
-            tools/TestSupport/StrataLint.TestSupport/*
-            tools/tests/StrataLint.RepositoryConfiguration.Tests/*
-            .editorconfig
-            .globalconfig
-            Directory.Build.*
-            Directory.Packages.props
-            NuGet.Config
-            NuGet.config
-            nuget.config
-            global.json
-            tools/Makefile
-            tools/scripts/dotnet-test.sh
-            Meta/engineering-projects.json
-            tools/StrataLint.TestEvidence/*
-            tools/tests/Directory.Build.*
-            tools/Architecture/BannedSymbols.Determinism.txt
-            tools/StrataLint.Engine/*
-            tools/Trureturing.Truth/*
-            Meta/FILEMAP.toml
-            Meta/FILEMAP.*.toml
-            tools/Architecture/BannedSymbols.txt
-            tools/Architecture/BannedSymbols.Guid.txt
-            [tests-repository-contract]
-            # CliVerbLinkage reads every shell caller recursively in these roots.
-            tools/scripts/*.sh
-            .github/scripts/*.sh
-            tools/StrataLint.Engineering/*
-            tools/StrataLint.Runtime/*
-            tools/StrataLint.Cli/*
-            tools/StrataLint.Configuration/*
-            tools/StrataLint.FileMap/*
-            tools/StrataLint.Lean/*
-            tools/StrataLint.Scribe/*
-            tools/TestSupport/StrataLint.TestSupport/*
-            tools/tests/StrataLint.RepositoryContract.Tests/*
-            .editorconfig
-            .globalconfig
-            Directory.Build.*
-            Directory.Packages.props
-            NuGet.Config
-            NuGet.config
-            nuget.config
-            global.json
-            tools/Makefile
-            Meta/engineering-projects.json
-            tools/StrataLint.TestEvidence/*
-            tools/tests/Directory.Build.*
-            tools/Architecture/BannedSymbols.Determinism.txt
-            tools/StrataLint.Engine/*
-            tools/Trureturing.Truth/*
-            tools/Architecture/BannedSymbols*.txt
-            tools/Architecture/ScribeScriptAllowlist.txt
-            Meta/FILEMAP.toml
-            Meta/FILEMAP.*.toml
-            tools/Architecture/BannedSymbols.txt
-            tools/Architecture/BannedSymbols.Guid.txt
-            Makefile
-            [tests-repository-filemap]
-            tools/StrataLint.Engineering/*
-            tools/StrataLint.Runtime/*
-            *
-            .editorconfig
-            .globalconfig
-            Directory.Build.*
-            Directory.Packages.props
-            NuGet.Config
-            NuGet.config
-            nuget.config
-            global.json
-            tools/Makefile
-            tools/scripts/dotnet-test.sh
-            Meta/engineering-projects.json
-            tools/StrataLint.TestEvidence/*
-            tools/tests/Directory.Build.*
-            tools/Architecture/BannedSymbols.Determinism.txt
-            tools/StrataLint.Engine/*
-            tools/Trureturing.Truth/*
-            tools/Architecture/BannedSymbols.txt
-            tools/Architecture/BannedSymbols.Guid.txt
-            [tests-repository-topology]
-            tools/StrataLint.Engineering/*
-            tools/StrataLint.Runtime/*
-            *
-            !Blueprint/*
-            !D5/*
-            !Evidence/*
-            !Golden/Frozen/*
-            !Library/*
-            !Meta/Digestion/*
-            !Problems/*
-            !Reg/D5/*
-            !docs/*
-            .editorconfig
-            .globalconfig
-            Directory.Build.*
-            Directory.Packages.props
-            NuGet.Config
-            NuGet.config
-            nuget.config
-            global.json
-            tools/Makefile
-            tools/scripts/dotnet-test.sh
-            Meta/engineering-projects.json
-            tools/StrataLint.TestEvidence/*
-            tools/tests/Directory.Build.*
-            tools/Architecture/BannedSymbols.Determinism.txt
-            tools/StrataLint.Engine/*
-            tools/Trureturing.Truth/*
-            tools/StrataLint.Cli/*
-            tools/StrataLint.Configuration/*
-            tools/StrataLint.FileMap/*
-            tools/StrataLint.Lean/*
-            tools/StrataLint.Scribe/*
-            tools/Architecture/BannedSymbols*.txt
-            tools/Architecture/ScribeScriptAllowlist.txt
-            tools/Architecture/BannedSymbols.txt
-            tools/Architecture/BannedSymbols.Guid.txt
-            [tests-resource-observation]
-            tools/StrataLint.Engineering/*
-            tools/StrataLint.Runtime/*
-            tools/TestSupport/StrataLint.ProcessTestSupport/*
-            tools/TestSupport/StrataLint.TestSupport/*
-            tools/scripts/lib/resource-observation-lib.sh
-            tools/tests/StrataLint.ResourceObservation.Tests/*
-            .editorconfig
-            .globalconfig
-            Directory.Build.*
-            Directory.Packages.props
-            NuGet.Config
-            NuGet.config
-            nuget.config
-            global.json
-            tools/Makefile
-            tools/scripts/dotnet-test.sh
-            Meta/engineering-projects.json
-            tools/StrataLint.TestEvidence/*
-            tools/tests/Directory.Build.*
-            tools/Architecture/BannedSymbols.Determinism.txt
-            tools/StrataLint.Engine/*
-            tools/Trureturing.Truth/*
-            tools/Architecture/BannedSymbols.txt
-            tools/Architecture/BannedSymbols.Guid.txt
-            [tests-rules]
-            tools/StrataLint.Engineering/*
-            tools/StrataLint.Runtime/*
-            tools/StrataLint.Configuration/*
-            tools/TestSupport/StrataLint.ConfigurationTestSupport/*
-            tools/TestSupport/StrataLint.RegistrationTestSupport/*
-            tools/TestSupport/StrataLint.RuleTestSupport/*
-            tools/TestSupport/StrataLint.TestSupport/*
-            tools/tests/StrataLint.Rules.Tests/*
-            Meta/Digestion/atomizers.toml
-            .editorconfig
-            .globalconfig
-            Directory.Build.*
-            Directory.Packages.props
-            NuGet.Config
-            NuGet.config
-            nuget.config
-            global.json
-            tools/Makefile
-            tools/scripts/dotnet-test.sh
-            Meta/engineering-projects.json
-            tools/StrataLint.TestEvidence/*
-            tools/tests/Directory.Build.*
-            tools/Architecture/BannedSymbols.Determinism.txt
-            tools/StrataLint.Engine/*
-            tools/Trureturing.Truth/*
-            tools/Architecture/BannedSymbols.txt
-            tools/Architecture/BannedSymbols.Guid.txt
-            [tests-scribe]
-            # FileMapEmitterTests copies the resolved repository manifest documents.
-            Meta/FILEMAP.toml
-            Meta/FILEMAP.*.toml
-            tools/StrataLint.Engineering/*
-            tools/StrataLint.Runtime/*
-            tools/StrataLint.Scribe/*
-            tools/TestSupport/StrataLint.RegistrationTestSupport/*
-            tools/TestSupport/StrataLint.TestSupport/*
-            tools/tests/StrataLint.Scribe.Tests/*
-            .editorconfig
-            .globalconfig
-            Directory.Build.*
-            Directory.Packages.props
-            NuGet.Config
-            NuGet.config
-            nuget.config
-            global.json
-            tools/Makefile
-            tools/scripts/dotnet-test.sh
-            Meta/engineering-projects.json
-            tools/StrataLint.TestEvidence/*
-            tools/tests/Directory.Build.*
-            tools/Architecture/BannedSymbols.Determinism.txt
-            tools/StrataLint.Engine/*
-            tools/Trureturing.Truth/*
-            tools/Architecture/BannedSymbols*.txt
-            tools/Architecture/ScribeScriptAllowlist.txt
-            tools/Architecture/BannedSymbols.txt
-            tools/Architecture/BannedSymbols.Guid.txt
-            Blueprint/*.scribe.cs
-            Golden/Projection/*
-            CLAUDE.md
-            lakefile.toml
-            [tests-source-atomizer]
-            tools/StrataLint.Engineering/*
-            tools/StrataLint.Runtime/*
-            Meta/Digestion/atoms/sha256/ecd939e3d6a40f5626c00cc22c4584169e449dcd8e76d971c7f9ade9b1d4f901
-            Meta/Digestion/backfill/periodic-tree-registry/*
-            docs/develop/theory/INTERFACE_PAPER.md
-            docs/develop/theory/INTERFACE_PHILOSOPHY.md
-            docs/develop/theory/PERIODIC_TREE_registry.jsonl
-            tools/StrataLint.Cli/*
-            tools/StrataLint.Configuration/*
-            tools/StrataLint.FileMap/*
-            tools/StrataLint.Lean/*
-            tools/StrataLint.Scribe/*
-            tools/TestSupport/StrataLint.CliTestSupport/*
-            tools/TestSupport/StrataLint.DigestionTestSupport/*
-            tools/TestSupport/StrataLint.RegistrationTestSupport/*
-            tools/TestSupport/StrataLint.TestSupport/*
-            tools/tests/StrataLint.SourceAtomizer.Tests/*
-            .editorconfig
-            .globalconfig
-            Directory.Build.*
-            Directory.Packages.props
-            NuGet.Config
-            NuGet.config
-            nuget.config
-            global.json
-            tools/Makefile
-            tools/scripts/dotnet-test.sh
-            Meta/engineering-projects.json
-            tools/StrataLint.TestEvidence/*
-            tools/tests/Directory.Build.*
-            tools/Architecture/BannedSymbols.Determinism.txt
-            tools/StrataLint.Engine/*
-            tools/Trureturing.Truth/*
-            tools/Architecture/BannedSymbols*.txt
-            tools/Architecture/ScribeScriptAllowlist.txt
-            Meta/Digestion/atomizers.toml
-            tools/Architecture/BannedSymbols.txt
-            tools/Architecture/BannedSymbols.Guid.txt
-            [tests-engineering]
-            tools/StrataLint.Engineering/*
-            tools/StrataLint.Runtime/*
-            tools/TestSupport/StrataLint.TestSupport/*
-            tools/tests/StrataLint.Engineering.Tests/*
-            .editorconfig
-            .globalconfig
-            Directory.Build.*
-            Directory.Packages.props
-            NuGet.Config
-            NuGet.config
-            nuget.config
-            global.json
-            tools/Makefile
-            tools/scripts/dotnet-test.sh
-            Meta/engineering-projects.json
-            tools/StrataLint.TestEvidence/*
-            tools/tests/Directory.Build.*
-            tools/Architecture/BannedSymbols.Determinism.txt
-            tools/Architecture/BannedSymbols.txt
-            tools/Architecture/BannedSymbols.Guid.txt
-            [tests-runtime]
-            tools/StrataLint.Engineering/*
-            tools/StrataLint.Runtime/*
-            tools/TestSupport/StrataLint.TestSupport/*
-            tools/TestSupport/StrataLint.ProcessTestSupport/*
-            tools/tests/StrataLint.Runtime.Tests/*
-            .editorconfig
-            .globalconfig
-            Directory.Build.*
-            Directory.Packages.props
-            NuGet.Config
-            NuGet.config
-            nuget.config
-            global.json
-            tools/Makefile
-            tools/scripts/dotnet-test.sh
-            Meta/engineering-projects.json
-            tools/StrataLint.TestEvidence/*
-            tools/tests/Directory.Build.*
-            tools/Architecture/BannedSymbols.Determinism.txt
-            tools/Architecture/BannedSymbols.txt
-            tools/Architecture/BannedSymbols.Guid.txt
-            [tests-test-evidence]
-            tools/StrataLint.Engineering/*
-            tools/StrataLint.Runtime/*
-            tools/TestSupport/StrataLint.TestSupport/*
-            tools/tests/StrataLint.TestEvidence.Tests/*
-            .editorconfig
-            .globalconfig
-            Directory.Build.*
-            Directory.Packages.props
-            NuGet.Config
-            NuGet.config
-            nuget.config
-            global.json
-            tools/Makefile
-            tools/scripts/dotnet-test.sh
-            Meta/engineering-projects.json
-            tools/StrataLint.TestEvidence/*
-            tools/tests/Directory.Build.*
-            tools/Architecture/BannedSymbols.Determinism.txt
-            tools/Architecture/BannedSymbols.txt
-            tools/Architecture/BannedSymbols.Guid.txt
-            [tests-truth]
-            tools/Trureturing.Truth/*
-            tools/StrataLint.Engineering/*
-            tools/StrataLint.Runtime/*
-            tools/tests/Trureturing.Truth.Tests/*
-            .editorconfig
-            .globalconfig
-            Directory.Build.*
-            Directory.Packages.props
-            NuGet.Config
-            NuGet.config
-            nuget.config
-            global.json
-            tools/Makefile
-            tools/scripts/dotnet-test.sh
-            Meta/engineering-projects.json
-            tools/StrataLint.TestEvidence/*
-            tools/tests/Directory.Build.*
-            tools/Architecture/BannedSymbols.Determinism.txt
-            tools/Architecture/BannedSymbols.txt
-            tools/Architecture/BannedSymbols.Guid.txt
-            [tests-truth-release]
-            tools/StrataLint.Engineering/*
-            tools/StrataLint.Runtime/*
-            Blueprint/D5/S3/Midline/GoldenSpectralMarker.md
-            Blueprint/D5/S3/Midline/GoldenSpectralMarker.scribe.cs
-            D5/S3/Midline/GoldenSpectralMarker.lean
-            Golden/Projection/*
-            tools/StrataLint.Cli/*
-            tools/StrataLint.Configuration/*
-            tools/StrataLint.FileMap/*
-            tools/StrataLint.Lean/*
-            tools/StrataLint.Scribe/*
-            tools/TestSupport/StrataLint.CliTestSupport/*
-            tools/TestSupport/StrataLint.ConfigurationTestSupport/*
-            tools/TestSupport/StrataLint.DigestionTestSupport/*
-            tools/TestSupport/StrataLint.ProcessTestSupport/*
-            tools/TestSupport/StrataLint.RegistrationTestSupport/*
-            tools/TestSupport/StrataLint.TestSupport/*
-            tools/tests/StrataLint.TruthRelease.Tests/*
-            .editorconfig
-            .globalconfig
-            Directory.Build.*
-            Directory.Packages.props
-            NuGet.Config
-            NuGet.config
-            nuget.config
-            global.json
-            tools/Makefile
-            tools/scripts/dotnet-test.sh
-            Meta/engineering-projects.json
-            tools/StrataLint.TestEvidence/*
-            tools/tests/Directory.Build.*
-            tools/Architecture/BannedSymbols.Determinism.txt
-            tools/StrataLint.Engine/*
-            tools/Trureturing.Truth/*
-            tools/Architecture/BannedSymbols*.txt
-            tools/Architecture/ScribeScriptAllowlist.txt
-            Meta/Digestion/atomizers.toml
-            tools/Architecture/BannedSymbols.txt
-            tools/Architecture/BannedSymbols.Guid.txt
-            [tests-workflow-script]
-            tools/StrataLint.Engineering/*
-            tools/StrataLint.Runtime/*
-            tools/TestSupport/StrataLint.ProcessTestSupport/*
-            tools/TestSupport/StrataLint.TestSupport/*
-            tools/scripts/agent/test_xi_quantization.py
-            tools/scripts/agent/xi_quantization.py
-            tools/scripts/clean-lanes.sh
-            tools/scripts/ingest.sh
-            tools/scripts/local-harness-gate.sh
-            tools/scripts/report/lean-report.sh
-            tools/scripts/report/report-consumer.sh
-            tools/scripts/scribe.sh
-            tools/scripts/update-renderer-contract.sh
-            tools/scripts/workflow/math-gate.sh
-            tools/scripts/workflow/playbook-workflows.sh
-            tools/scripts/workflow/scribe-content-checks.sh
-            tools/scripts/worktree-init.sh
-            tools/scripts/host-cleanup.py
-            tools/scripts/worktree/cache_material.py
-            tools/scripts/worktree/lean-cache-ensure.sh
-            tools/scripts/worktree/warm-donor.sh
-            tools/tests/StrataLint.WorkflowScript.Tests/*
-            .editorconfig
-            .globalconfig
-            Directory.Build.*
-            Directory.Packages.props
-            NuGet.Config
-            NuGet.config
-            nuget.config
-            global.json
-            tools/Makefile
-            tools/scripts/dotnet-test.sh
-            Meta/engineering-projects.json
-            tools/StrataLint.TestEvidence/*
-            tools/tests/Directory.Build.*
-            tools/Architecture/BannedSymbols.Determinism.txt
-            tools/scripts/scribe-release.sh
-            tools/StrataLint.Engine/*
-            tools/Trureturing.Truth/*
-            tools/Architecture/BannedSymbols.txt
-            tools/Architecture/BannedSymbols.Guid.txt
-            Makefile
-            tools/lean-inspector/inspect.sh
-            tools/scripts/report/report-supervisor.sh
-            tools/scripts/report/lean-report-input.sh
-            tools/scripts/lean-report-pair.sh
-            tools/scripts/worktree/lean-cache-run.sh
-            [tests-worktree-contract]
-            # WorktreeCacheStrategyTests scans this executable-tooling scope.
-            .github/scripts/*
-            tools/StrataLint.Engineering/*
-            tools/StrataLint.Runtime/*
-            *.lean
-            Blueprint/*.scribe.cs
-            docs/reports/*.c
-            docs/reports/*.cpp
-            docs/reports/*.h
-            docs/reports/*.mjs
-            docs/reports/*.py
-            tools/*
-            .editorconfig
-            .globalconfig
-            Directory.Build.*
-            Directory.Packages.props
-            NuGet.Config
-            NuGet.config
-            nuget.config
-            global.json
-            tools/Makefile
-            tools/scripts/dotnet-test.sh
-            Meta/engineering-projects.json
-            tools/StrataLint.TestEvidence/*
-            tools/tests/Directory.Build.*
-            tools/Architecture/BannedSymbols.Determinism.txt
-            Makefile
-            tools/Architecture/BannedSymbols.txt
-            tools/Architecture/BannedSymbols.Guid.txt
-            [tests-script]
-            # Release contracts execute the report receipt and input readers.
-            tools/lean-inspector/reuse.py
-            tools/lean-inspector/publication.py
-            tools/scripts/report/lean-report-selection.py
-            tools/tests/StrataLint.ScriptTests/*
-            tools/TestSupport/StrataLint.AdmissionTestSupport/*
-            tools/TestSupport/StrataLint.LeanTestSupport/*
-            tools/TestSupport/StrataLint.ProcessTestSupport/*
-            tools/TestSupport/StrataLint.RegistrationTestSupport/*
-            tools/TestSupport/StrataLint.TestSupport/*
-            Makefile
-            Meta/FILEMAP.toml
-            Meta/FILEMAP.*.toml
-            Meta/domains.yaml
-            Meta/ci-cache-paths.json
-            lean-toolchain
-            tools/lean-inspector/Inspector.lean
-            tools/lean-inspector/materials.py
-            tools/lean-inspector-reg/lake-manifest.json
-            tools/lean-inspector/LeanInformationAuditAnalysis/run-analysis-fixtures.sh
-            tools/scripts/report/lean-report-input.sh
-            tools/scripts/agent/contribution_queue.py
-            tools/scripts/agent/test_xi_quantization.py
-            tools/scripts/agent/xi_quantization.py
-            tools/scripts/workflow/playbook-workflows.sh
-            tools/scripts/workflow/scribe-content-checks.sh
-            tools/scripts/workflow/scribe-scope-paths.sh
-            tools/scripts/worktree/warm-donor.sh
-            tools/scripts/worktree/lean-cache-run.sh
-            tools/scripts/worktree/lean-cache-ensure.sh
-            tools/scripts/worktree/lean-cache-input.sh
-            tools/scripts/worktree/lean-cache-publish.sh
-            tools/scripts/worktree/cache_material.py
-            tools/scripts/worktree/lean_actions.py
-            tools/scripts/worktree/lean_cache.py
-            tools/scripts/worktree/lean_cache_release.py
-            .editorconfig
-            .globalconfig
-            Directory.Build.*
-            Directory.Packages.props
-            NuGet.Config
-            NuGet.config
-            nuget.config
-            global.json
-            tools/Makefile
-            tools/scripts/dotnet-test.sh
-            Meta/engineering-projects.json
-            tools/StrataLint.TestEvidence/*
-            tools/StrataLint.Engineering/*
-            tools/StrataLint.Runtime/*
-            tools/tests/Directory.Build.*
-            tools/Architecture/BannedSymbols.Determinism.txt
-            tools/StrataLint.Engine/*
-            tools/Trureturing.Truth/*
-            tools/StrataLint.Cli/*
-            tools/StrataLint.Configuration/*
-            tools/StrataLint.FileMap/*
-            tools/StrataLint.Lean/*
-            tools/StrataLint.Scribe/*
-            tools/Architecture/BannedSymbols*.txt
-            tools/Architecture/ScribeScriptAllowlist.txt
-            lake-manifest.json
-            tools/scripts/workflow/install-lean-toolchain.sh
-            tools/Architecture/BannedSymbols.txt
-            tools/Architecture/BannedSymbols.Guid.txt
-        run: python3 tools/scripts/workflow/ci_detect.py --changed "$RUNNER_TEMP/changed-paths"
+          CI_BASE: ${{ steps.entry.outputs.base }}
+        run: python3 tools/scripts/workflow/ci_detect.py --contract --changed "$RUNNER_TEMP/changed-paths"
 
-  # Lean report, current-tree rules and Scribe checks; on pull requests also the
-  # delta rules against B = first parent of the event merge commit. The report is
-  # built once and consumed by both rule sets inside this one job.
-  current:
+  # A phase of selected current, not another CI_UNITS entry. Native Actions
+  # releases independent units after this narrow source prerequisite completes.
+  source:
     needs: detect
     if: fromJSON(needs.detect.outputs.hits || '{}').current
     runs-on: ubuntu-24.04-arm
-    timeout-minutes: 180
+    timeout-minutes: 360
+    outputs:
+      source_status: ${{ steps.prefix.outputs.source_status }}
+      continuation: ${{ steps.prefix.outputs.continuation }}
+      judge_key: ${{ steps.judge_key.outputs.key }}
+      compute_remaining: ${{ steps.remainder.outputs.compute_remaining }}
     env:
-      # This job writes project seeds only on dev/integration pushes.
-      # Dependency and elan writes also use the PR's own merge-ref scope.
       CACHE_WRITES: ${{ (github.event_name == 'push' && (github.ref == 'refs/heads/dev' || startsWith(github.ref, 'refs/heads/integration-'))) || github.event_name == 'pull_request' }}
-      REPORT: .lake/build/stratalint/raw-lean-report.json
-      CLI: tools/StrataLint.Cli/bin/Release/net10.0/StrataLint.dll
-      SCRIBE: tools/StrataLint.Scribe/bin/Release/net10.0/StrataLint.Scribe.dll
-      # The judge build recipe: the build step runs it and the judge cache key hashes it.
-      JUDGE_BUILD_ARGS: tools/StrataLint.Cli/StrataLint.Cli.csproj --configuration Release -p:RestoreLockedMode=true -nologo
+      CI_PUSH_BEFORE: ${{ github.event.before }}
     steps:
       - uses: actions/checkout@v5
         with:
@@ -1665,35 +84,6 @@ jobs:
           CI_PUSH_BEFORE: ${{ github.event.before }}
           CI_CHANGED_PATHS_FILE: ${{ runner.temp }}/changed-paths
         run: bash tools/scripts/workflow/ci-entry.sh
-      - id: delta_entry
-        name: Check delta inputs
-        if: github.event_name == 'pull_request'
-        env:
-          CI_PR_HEAD: ${{ github.event.pull_request.head.sha }}
-          CI_HIT_PATHS: |
-            *
-            !Blueprint/*
-            !Evidence/*
-            !Golden/Projection/*.json
-            !Library/*/*.md
-            !Problems/*
-            !README.md
-            !docs/VISION.md
-            !docs/assets/inquiry-cycle.svg
-            !docs/develop/spec/lean_single_compile_intrinsic_information_escape_theory_and_spec.md
-            !docs/develop/spec/trureturing_engineering_optimization_v1.md
-            !docs/reports/*
-            !tools/TestSupport/StrataLint.RuleTestSupport/*
-            !tools/lean-inspector/README.md
-            !tools/scripts/agent/openproblem/README.md
-            !tools/scripts/agent/openproblem/SCREENED-OUT*.md
-            !tools/scripts/agent/prime_slabs/CPU.md
-        run: bash tools/scripts/workflow/ci-entry.sh
-      - name: Validate the delta entry result
-        if: github.event_name == 'pull_request'
-        env:
-          DELTA_HIT: ${{ steps.delta_entry.outputs.hit }}
-        run: case "$DELTA_HIT" in true|false) ;; *) echo "CI_ENTRY_ERROR delta hit output is '$DELTA_HIT'" >&2; exit 2 ;; esac
       # The judge cache key binds the resolved SDK, the build recipe and the
       # paths and blob ids of the tracked judge compile inputs listed in
       # JUDGE_INPUTS (git glob pathspecs: the project directories of the CLI
@@ -1729,6 +119,7 @@ jobs:
             tools/Architecture/BannedSymbols*.txt
             tools/Architecture/ScribeScriptAllowlist.txt
             tools/StrataLint.Scribe/Vendor/Katex/katex.min.js
+            tools/scripts/worktree/worktree_*.py
             tools/StrataLint.Cli/**/*.cs
             tools/StrataLint.Cli/*.csproj
             tools/StrataLint.Cli/packages.lock.json
@@ -1802,7 +193,7 @@ jobs:
         run: |
           sdk="$(dotnet --version)"
           [[ "$sdk" =~ ^[0-9]+\.[0-9]+\.[0-9]+ ]] || { echo "unexpected SDK version '$sdk'" >&2; exit 2; }
-          recipe="$(printf '%s' "$JUDGE_BUILD_ARGS" | sha256sum | cut -c1-16)"
+          recipe="$(python3 tools/scripts/workflow/ci_checks.py judge-recipe | sha256sum | cut -c1-16)"
           specs=()
           while IFS= read -r spec; do [[ -n "$spec" ]] && specs+=(":(glob)$spec"); done <<< "$JUDGE_INPUTS"
           listing="$RUNNER_TEMP/judge-inputs"
@@ -1818,7 +209,104 @@ jobs:
             tools/StrataLint.Cli/bin/Release/net10.0
             tools/StrataLint.Scribe/bin/Release/net10.0
           key: ${{ steps.judge_key.outputs.key }}
+      - id: compute_budget
+        name: Initialize the cumulative current compute allowance
+        run: |
+          budget="$RUNNER_TEMP/current-compute-seconds"
+          python3 tools/scripts/workflow/ci_compute.py init "$budget" 120
+          echo "STRATALINT_CI_COMPUTE_BUDGET=$budget" >> "$GITHUB_ENV"
+      - id: prefix
+        name: Check the selected source prerequisite
+        env:
+          JUDGE_HIT: ${{ steps.judge.outputs.cache-hit }}
+        run: python3 tools/scripts/workflow/ci_checks.py current prerequisite
+      # Handoff only to a continuation that still consumes the judge.
+      - if: ${{ !cancelled() && env.CACHE_WRITES == 'true' && steps.prefix.outputs.continuation == 'true' && (needs.detect.outputs.report == 'true' || steps.prefix.outputs.source_status != 'accepted') && steps.prefix.outputs.judge_ready == 'true' && steps.judge.outputs.cache-hit != 'true' }}
+        continue-on-error: true
+        uses: actions/cache/save@v5
+        with:
+          path: |
+            tools/StrataLint.Cli/bin/Release/net10.0
+            tools/StrataLint.Scribe/bin/Release/net10.0
+          key: ${{ steps.judge_key.outputs.key }}
+      - id: remainder
+        name: Carry the remaining current compute allowance
+        if: ${{ !cancelled() && steps.compute_budget.outcome == 'success' }}
+        run: python3 tools/scripts/workflow/ci_compute.py export-current "$STRATALINT_CI_COMPUTE_BUDGET" >> "$GITHUB_OUTPUT"
+
+  # Lean report, current-tree rules and Scribe checks; on pull requests also the
+  # delta rules against B = first parent of the event merge commit. The report is
+  # built once and consumed by both rule sets inside this one job.
+  current:
+    needs: [detect, source]
+    if: ${{ !cancelled() && needs.detect.result == 'success' && fromJSON(needs.detect.outputs.hits || '{}').current && needs.source.outputs.continuation == 'true' }}
+    runs-on: ubuntu-24.04-arm
+    # Platform wall-clock cap, separate from the shared 120-minute compute allowance.
+    timeout-minutes: 360
+    outputs:
+      lean_required: ${{ needs.detect.outputs.report }}
+      unit: ${{ steps.checked.outputs.unit }}
+      project_seed_available: ${{ steps.project_published.outcome == 'success' || (steps.lean_report.outcome == 'success' && steps.project_snapshot_push.outcome == 'success' && steps.project_snapshot_push.outputs.project_skip_reason == 'no-build-work' && env.STRATALINT_ACTIONS_CACHE_SEEDED == '1') }}
+    env:
+      # This job writes project seeds only on dev/integration pushes.
+      # Dependency and elan writes also use the PR's own merge-ref scope.
+      CACHE_WRITES: ${{ (github.event_name == 'push' && (github.ref == 'refs/heads/dev' || startsWith(github.ref, 'refs/heads/integration-'))) || github.event_name == 'pull_request' }}
+      REPORT: .lake/build/stratalint/raw-lean-report.json
+      CLI: tools/StrataLint.Cli/bin/Release/net10.0/StrataLint.dll
+      SCRIBE: tools/StrataLint.Scribe/bin/Release/net10.0/StrataLint.Scribe.dll
+      # The judge build recipe: the build step runs it and the judge cache key hashes it.
+      CI_PUSH_BEFORE: ${{ github.event.before }}
+    steps:
+      - uses: actions/checkout@v5
+        with:
+          ref: ${{ github.sha }}
+          fetch-depth: 2
+          persist-credentials: false
+      - name: Verify the candidate and list the changed paths
+        env:
+          CI_HIT_PATHS: '*'
+          CI_PR_HEAD: ${{ github.event.pull_request.head.sha }}
+          CI_PUSH_BEFORE: ${{ github.event.before }}
+          CI_CHANGED_PATHS_FILE: ${{ runner.temp }}/changed-paths
+        run: bash tools/scripts/workflow/ci-entry.sh
+      # The judge cache key binds the resolved SDK, the build recipe and the
+      # paths and blob ids of the tracked judge compile inputs listed in
+      # JUDGE_INPUTS (git glob pathspecs: the project directories of the CLI
+      # and its references, explicit copied/embedded runtime inputs, analyzer
+      # files and inherited build configuration). It is taken before anything is
+      # built; an exact hit skips the build.
+      - uses: actions/setup-dotnet@v5
+        with:
+          global-json-file: global.json
+          cache: true
+          cache-dependency-path: |
+            tools/StrataLint.Cli/packages.lock.json
+            tools/StrataLint.Configuration/packages.lock.json
+            tools/StrataLint.Engine/packages.lock.json
+            tools/StrataLint.Engineering/packages.lock.json
+            tools/StrataLint.Runtime/packages.lock.json
+            tools/StrataLint.FileMap/packages.lock.json
+            tools/StrataLint.Lean/packages.lock.json
+            tools/StrataLint.Scribe/packages.lock.json
+            tools/StrataLint.TestEvidence/packages.lock.json
+            tools/Trureturing.Truth/packages.lock.json
+      - id: judge
+        if: needs.detect.outputs.report == 'true' || needs.source.outputs.source_status != 'accepted'
+        continue-on-error: true
+        uses: actions/cache/restore@v5
+        with:
+          path: |
+            tools/StrataLint.Cli/bin/Release/net10.0
+            tools/StrataLint.Scribe/bin/Release/net10.0
+          key: ${{ needs.source.outputs.judge_key }}
+      - id: prepared
+        name: Adopt a matching PR preparation for this event
+        if: needs.detect.outputs.report == 'true'
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: python3 tools/scripts/worktree/lean_pr_cache.py adopt --repository "$GITHUB_WORKSPACE"
       - id: keys
+        if: needs.detect.outputs.report == 'true'
         env:
           GH_TOKEN: ${{ github.token }}
         run: python3 tools/scripts/worktree/lean_actions.py keys --repository "$GITHUB_WORKSPACE"
@@ -1830,9 +318,10 @@ jobs:
           path: ~/.elan
           key: ${{ steps.keys.outputs.elan_key }}
       - id: toolchain
+        if: needs.detect.outputs.report == 'true'
         run: tools/scripts/workflow/install-lean-toolchain.sh lean-toolchain --github-path "$GITHUB_PATH"
       - id: dependency
-        if: steps.keys.outputs.dependency_key != ''
+        if: steps.prepared.outputs.adopted != 'true' && steps.keys.outputs.dependency_key != ''
         continue-on-error: true
         uses: actions/cache/restore@v5
         with:
@@ -1840,7 +329,7 @@ jobs:
           key: ${{ steps.keys.outputs.dependency_key }}
           restore-keys: ${{ steps.keys.outputs.dependency_restore_prefix }}
       - id: project
-        if: steps.keys.outputs.project_key != ''
+        if: steps.prepared.outputs.adopted != 'true' && steps.keys.outputs.project_key != ''
         continue-on-error: true
         uses: actions/cache/restore@v5
         with:
@@ -1848,6 +337,7 @@ jobs:
           key: ${{ steps.keys.outputs.project_restore_key }}
           restore-keys: ${{ steps.keys.outputs.project_restore_prefix }}
       - id: lean_seeds
+        if: needs.detect.outputs.report == 'true'
         name: Restore optional Lean build seeds
         env:
           DEPENDENCY_KEY: ${{ steps.dependency.outputs.cache-matched-key }}
@@ -1856,38 +346,72 @@ jobs:
           DEPENDENCY_OUTCOME: ${{ steps.dependency.outcome }}
           PROJECT_OUTCOME: ${{ steps.project.outcome }}
         run: python3 tools/scripts/worktree/lean_actions.py restore --repository "$GITHUB_WORKSPACE" --dependency-key "$DEPENDENCY_KEY" --project-key "$PROJECT_KEY" --project-restore-key "$PROJECT_RESTORE_KEY" --dependency-outcome "$DEPENDENCY_OUTCOME" --project-outcome "$PROJECT_OUTCOME"
-      - name: Build the judge
-        if: steps.judge.outputs.cache-hit != 'true'
-        run: dotnet build $JUDGE_BUILD_ARGS
-      # The judge outputs are a function of the keyed sources, so they are saved
-      # as soon as the build succeeds.
-      - if: ${{ success() && env.CACHE_WRITES == 'true' && steps.judge.outputs.cache-hit != 'true' }}
+      - id: compute_budget
+        name: Resume the cumulative current compute allowance
+        env:
+          COMPUTE_REMAINING: ${{ needs.source.outputs.compute_remaining }}
+        run: |
+          budget="$RUNNER_TEMP/current-compute-seconds"
+          python3 tools/scripts/workflow/ci_compute.py resume-current "$budget" "$COMPUTE_REMAINING"
+          echo "STRATALINT_CI_COMPUTE_BUDGET=$budget" >> "$GITHUB_ENV"
+      - id: current_prepare
+        name: Prepare judge and selected test dependencies
+        if: needs.detect.outputs.report == 'true' || needs.source.outputs.source_status != 'accepted'
+        env:
+          JUDGE_HIT: ${{ steps.judge.outputs.cache-hit }}
+        run: python3 tools/scripts/workflow/ci_checks.py current prepare
+      - id: build_judge
+        name: Build the judge
+        if: ${{ !cancelled() && (needs.detect.outputs.report == 'true' || needs.source.outputs.source_status != 'accepted') && steps.compute_budget.outcome == 'success' && steps.judge.outputs.cache-hit != 'true' }}
+        run: python3 tools/scripts/workflow/ci_checks.py current build-judge
+      - name: Theory-only file and capacity checks
+        if: needs.detect.outputs.report == 'false' && needs.source.outputs.source_status != 'accepted'
+        env:
+          CI_PUSH_BEFORE: ${{ github.event.before }}
+        run: python3 tools/scripts/workflow/ci_checks.py current check-delta
+      - id: lean_report
+        name: Build the Lean report
+        if: ${{ !cancelled() && steps.lean_seeds.outcome == 'success' && steps.compute_budget.outcome == 'success' }}
+        env:
+          GH_TOKEN: ${{ github.token }}
+          # This supervisor also encloses preparation; compute phases share the file above.
+          STRATALINT_BUILD_TIMEOUT_SECONDS: '21600'
+          STRATALINT_FIB_REGRESSIONS_SELECTED: ${{ fromJSON(needs.detect.outputs.hits || '{}')['tests-fib'] }}
+        run: |
+          rc=0
+          python3 tools/scripts/workflow/ci_checks.py current lean-report || rc=$?
+          if [[ "$rc" != 0 ]]; then
+            echo "::error title=Lean report failed::Inspect the preceding error. A missing compatible native seed requires the independent lean-cache-produce long job; wait for its successful exact-head production and retry."
+          fi
+          exit "$rc"
+      - name: Verify production source binding artifacts
+        if: ${{ !cancelled() && needs.detect.outputs.report == 'true' && steps.lean_report.outcome == 'success' && (steps.judge.outputs.cache-hit == 'true' || steps.build_judge.outcome == 'success') && steps.current_prepare.outcome == 'success' && fromJSON(needs.detect.outputs.hits || '{}')['tests-declared-template'] }}
+        env:
+          CI_DOTNET_PREPARED: '1'
+          FOURIER_BRIDGE_SOURCE_ARTIFACTS: ${{ github.workspace }}/.lake/build/lean-inspector/modules
+        run: python3 tools/scripts/workflow/ci_checks.py current source-evidence
+      - name: Scribe content
+        if: ${{ !cancelled() && needs.detect.outputs.report == 'true' && steps.lean_report.outcome == 'success' && (steps.judge.outputs.cache-hit == 'true' || steps.build_judge.outcome == 'success') }}
+        run: python3 tools/scripts/workflow/ci_checks.py current scribe
+      - name: Current-tree rules
+        if: ${{ !cancelled() && needs.detect.outputs.report == 'true' && steps.lean_report.outcome == 'success' && (steps.judge.outputs.cache-hit == 'true' || steps.build_judge.outcome == 'success') }}
+        run: python3 tools/scripts/workflow/ci_checks.py current check-current
+      - name: Delta rules
+        if: ${{ !cancelled() && needs.detect.outputs.report == 'true' && needs.detect.outputs.delta == 'true' && steps.lean_report.outcome == 'success' && (steps.judge.outputs.cache-hit == 'true' || steps.build_judge.outcome == 'success') }}
+        run: python3 tools/scripts/workflow/ci_checks.py current check-delta
+      - name: Run the compiled audit checks
+        if: ${{ !cancelled() && needs.detect.outputs.report == 'true' && steps.lean_report.outcome == 'success' && (steps.judge.outputs.cache-hit == 'true' || steps.build_judge.outcome == 'success') && fromJSON(needs.detect.outputs.hits || '{}')['tests-lean'] }}
+        run: python3 tools/scripts/workflow/ci_checks.py current compiled-audit
+      # A successful judge build can be published after ready diagnostics,
+      # independently of their verdicts or report validity.
+      - if: ${{ !cancelled() && steps.build_judge.outcome == 'success' && env.CACHE_WRITES == 'true' && steps.judge.outputs.cache-hit != 'true' }}
         continue-on-error: true
         uses: actions/cache/save@v5
         with:
           path: |
             tools/StrataLint.Cli/bin/Release/net10.0
             tools/StrataLint.Scribe/bin/Release/net10.0
-          key: ${{ steps.judge_key.outputs.key }}
-      - id: lean_report
-        name: Build the Lean report
-        if: ${{ !cancelled() && steps.lean_seeds.outcome == 'success' }}
-        env:
-          GH_TOKEN: ${{ github.token }}
-          STRATALINT_ACCEPT_COLD_BUILD: '1'
-        run: |
-          producer="$(bash tools/scripts/workflow/judge-lean-producer.sh "$GITHUB_WORKSPACE/tools/StrataLint.Cli/bin/Release/net10.0")"
-          if [[ -n "$producer" ]]; then
-            export STRATALINT_LEAN_PRODUCER_DLL="$producer"
-          else
-            unset STRATALINT_LEAN_PRODUCER_DLL
-          fi
-          make compiled-judge-test
-          make lean-report LEAN_REPORT_CACHE_MISS_POLICY=reuse-or-build
-      - name: Verify production source binding artifacts
-        env:
-          FOURIER_BRIDGE_SOURCE_ARTIFACTS: ${{ github.workspace }}/.lake/build/lean-inspector/modules
-        run: make -C tools test TEST_PROJECT=tools/tests/StrataLint.DeclaredTemplate.Tests/StrataLint.DeclaredTemplate.Tests.csproj TEST_FILTER="FullyQualifiedName~FourierBridgeSourceEvidenceTests"
+          key: ${{ needs.source.outputs.judge_key }}
       - id: project_snapshot_push
         name: Prepare the project seed
         if: ${{ !cancelled() && env.CACHE_WRITES == 'true' && steps.lean_report.outcome == 'success' }}
@@ -1896,33 +420,28 @@ jobs:
           STRATALINT_CACHE_WRITES: ${{ env.CACHE_WRITES }}
           STRATALINT_REPORT_SUCCEEDED: 'true'
         run: python3 tools/scripts/worktree/lean_actions.py snapshot --repository "$GITHUB_WORKSPACE" --layers project
-      - name: Publish the push project seed
+      - id: project_save
+        name: Publish the push project seed
         if: ${{ !cancelled() && steps.project_snapshot_push.outcome == 'success' && steps.project_snapshot_push.outputs.project_ready == 'true' }}
         continue-on-error: true
         uses: actions/cache/save@v5
         with:
           path: ${{ steps.keys.outputs.project_archive_path }}
           key: ${{ steps.keys.outputs.project_key }}
-      - name: Prepare the Scribe scope
-        run: tools/scripts/workflow/scribe-scope-paths.sh "$RUNNER_TEMP/changed-paths" > "$RUNNER_TEMP/scribe-paths"
-      - name: Current-tree rules
-        run: dotnet "$CLI" check-current --candidate-lean-report "$REPORT" --scribe-paths-from "$RUNNER_TEMP/scribe-paths"
-      - name: Scribe content
-        if: ${{ !cancelled() }}
+      - id: project_published
+        name: Confirm the push seed is available to automatic production
+        if: ${{ !cancelled() && github.event_name == 'push' && steps.project_snapshot_push.outputs.project_ready == 'true' && steps.project_save.outcome == 'success' }}
+        continue-on-error: true
         env:
-          SCRIBE_PATHS: ${{ runner.temp }}/scribe-paths
-        run: tools/scripts/workflow/scribe-content-checks.sh "$REPORT" "$SCRIBE" "$SCRIBE_PATHS"
-      - name: Delta rules
-        if: ${{ !cancelled() && steps.delta_entry.outputs.hit == 'true' }}
+          GH_TOKEN: ${{ github.token }}
+          CACHE_KEY: ${{ steps.keys.outputs.project_key }}
         run: |
-          rc=0
-          dotnet "$CLI" check-delta --protected-base "$(git rev-parse HEAD^1)" --candidate-lean-report "$REPORT" || rc=$?
-          # Exit 3: protected-surface change (SL-022) with every content check passed.
-          if [ "$rc" -eq 3 ]; then echo "::notice title=SL-022::protected surface change; content checks passed"; exit 0; fi
-          exit "$rc"
+          saved="$(gh api --method GET "repos/$GITHUB_REPOSITORY/actions/caches" -f key="$CACHE_KEY" -f ref="$GITHUB_REF")"
+          jq -e --arg key "$CACHE_KEY" --arg ref "$GITHUB_REF" \
+            'any(.actions_caches[]; .key == $key and .ref == $ref)' <<< "$saved" >/dev/null
       # Dependency and elan caches follow successful checks.
       - id: snapshot
-        if: ${{ success() && env.CACHE_WRITES == 'true' }}
+        if: ${{ success() && needs.detect.outputs.report == 'true' && env.CACHE_WRITES == 'true' }}
         continue-on-error: true
         env:
           STRATALINT_CACHE_WRITES: ${{ env.CACHE_WRITES }}
@@ -1945,758 +464,363 @@ jobs:
           path: ~/.elan
           key: ${{ steps.keys.outputs.elan_key }}
 
+      - id: checked
+        name: Confirm selected current checks succeeded
+        run: echo 'unit=current' >> "$GITHUB_OUTPUT"
+
+  # Reuse a validated seed when no build work occurred, or publish the increment.
+  # Missing usable seeds still get the long producer outside required checks.
+  cache-producer:
+    name: Produce the protected push Lean cache
+    needs: current
+    if: ${{ !cancelled() && github.event_name == 'push' && github.ref_protected && (github.ref == 'refs/heads/dev' || startsWith(github.ref, 'refs/heads/integration-')) && needs.current.outputs.lean_required == 'true' && needs.current.outputs.project_seed_available != 'true' }}
+    runs-on: ubuntu-24.04-arm
+    timeout-minutes: 360
+    permissions:
+      contents: read
+      actions: read
+      pull-requests: read
+    concurrency:
+      group: lean-cache-branch-${{ github.ref }}
+      cancel-in-progress: false
+    env:
+      STRATALINT_CACHE_WRITES: 'true'
+    steps:
+      - uses: actions/checkout@v5
+        with:
+          ref: ${{ github.sha }}
+          fetch-depth: 2
+          persist-credentials: false
+      - name: Validate the protected push and strip checkout remote
+        env:
+          CI_HIT_PATHS: '*'
+          CI_PUSH_BEFORE: ${{ github.event.before }}
+        run: bash tools/scripts/workflow/ci-entry.sh
+      - name: Produce the Actions cache
+        uses: ./.github/actions/lean-cache-produce
+
   banned-api-proof:
-    needs: detect
-    if: fromJSON(needs.detect.outputs.hits || '{}')['banned-api-proof']
+    needs: [detect, source]
+    if: ${{ !cancelled() && needs.detect.result == 'success' && (!fromJSON(needs.detect.outputs.hits || '{}').current || needs.source.outputs.continuation == 'true') && fromJSON(needs.detect.outputs.hits || '{}')['banned-api-proof'] }}
     uses: ./.github/workflows/ci-unit.yml
     with:
-      command: make -C tools compile-proof PROOF=banned-api-proof
-      cache-dependency-path: |
-        tools/StrataLint.TestEvidence/packages.lock.json
-        tools/StrataLint.Engineering/packages.lock.json
-        tools/StrataLint.Runtime/packages.lock.json
-        tools/tests/BannedApiCompileFailProof/packages.lock.json
+      unit: banned-api-proof
 
   capability-proof:
-    needs: detect
-    if: fromJSON(needs.detect.outputs.hits || '{}')['capability-proof']
+    needs: [detect, source]
+    if: ${{ !cancelled() && needs.detect.result == 'success' && (!fromJSON(needs.detect.outputs.hits || '{}').current || needs.source.outputs.continuation == 'true') && fromJSON(needs.detect.outputs.hits || '{}')['capability-proof'] }}
     uses: ./.github/workflows/ci-unit.yml
     with:
-      command: make -C tools compile-proof PROOF=capability-proof
-      cache-dependency-path: |
-        tools/StrataLint.TestEvidence/packages.lock.json
-        tools/StrataLint.Engineering/packages.lock.json
-        tools/StrataLint.Runtime/packages.lock.json
-        tools/StrataLint.Engine/packages.lock.json
-        tools/Trureturing.Truth/packages.lock.json
-        tools/tests/CompileFailProof/packages.lock.json
+      unit: capability-proof
 
   filemap:
-    needs: detect
-    if: fromJSON(needs.detect.outputs.hits || '{}')['filemap']
+    needs: [detect, source]
+    if: ${{ !cancelled() && needs.detect.result == 'success' && (!fromJSON(needs.detect.outputs.hits || '{}').current || needs.source.outputs.continuation == 'true') && fromJSON(needs.detect.outputs.hits || '{}')['filemap'] }}
     uses: ./.github/workflows/ci-unit.yml
     with:
-      command: make filemap-conform
-      cache-dependency-path: |
-        tools/StrataLint.FileMap/packages.lock.json
-        tools/StrataLint.Configuration/packages.lock.json
-        tools/StrataLint.Engine/packages.lock.json
-        tools/StrataLint.Engineering/packages.lock.json
-        tools/StrataLint.Runtime/packages.lock.json
-        tools/Trureturing.Truth/packages.lock.json
+      unit: filemap
 
   selftest:
-    needs: detect
-    if: fromJSON(needs.detect.outputs.hits || '{}')['selftest']
+    needs: [detect, source]
+    if: ${{ !cancelled() && needs.detect.result == 'success' && (!fromJSON(needs.detect.outputs.hits || '{}').current || needs.source.outputs.continuation == 'true') && fromJSON(needs.detect.outputs.hits || '{}')['selftest'] }}
     uses: ./.github/workflows/ci-unit.yml
     with:
-      command: make -C tools selftest
-      cache-dependency-path: |
-        tools/StrataLint.Cli/packages.lock.json
-        tools/StrataLint.Configuration/packages.lock.json
-        tools/StrataLint.Engine/packages.lock.json
-        tools/StrataLint.Engineering/packages.lock.json
-        tools/StrataLint.Runtime/packages.lock.json
-        tools/StrataLint.FileMap/packages.lock.json
-        tools/StrataLint.Lean/packages.lock.json
-        tools/StrataLint.Scribe/packages.lock.json
-        tools/StrataLint.TestEvidence/packages.lock.json
-        tools/Trureturing.Truth/packages.lock.json
+      unit: selftest
 
   tests-architecture:
-    needs: detect
-    if: fromJSON(needs.detect.outputs.hits || '{}')['tests-architecture']
+    needs: [detect, source]
+    if: ${{ !cancelled() && needs.detect.result == 'success' && (!fromJSON(needs.detect.outputs.hits || '{}').current || needs.source.outputs.continuation == 'true') && fromJSON(needs.detect.outputs.hits || '{}')['tests-architecture'] }}
     uses: ./.github/workflows/ci-unit.yml
     with:
-      project: tools/tests/StrataLint.ArchitectureTests/StrataLint.ArchitectureTests.csproj
-      cache-dependency-path: |
-        tools/tests/StrataLint.ArchitectureTests/packages.lock.json
-        tools/StrataLint.Cli/packages.lock.json
-        tools/StrataLint.Configuration/packages.lock.json
-        tools/StrataLint.Engine/packages.lock.json
-        tools/StrataLint.Engineering/packages.lock.json
-        tools/StrataLint.Runtime/packages.lock.json
-        tools/StrataLint.FileMap/packages.lock.json
-        tools/StrataLint.Lean/packages.lock.json
-        tools/StrataLint.Scribe/packages.lock.json
-        tools/StrataLint.TestEvidence/packages.lock.json
-        tools/Trureturing.Truth/packages.lock.json
-        tools/TestSupport/StrataLint.ConfigurationTestSupport/packages.lock.json
-        tools/TestSupport/StrataLint.AdmissionTestSupport/packages.lock.json
-        tools/TestSupport/StrataLint.ProcessTestSupport/packages.lock.json
-        tools/TestSupport/StrataLint.RegistrationTestSupport/packages.lock.json
-        tools/TestSupport/StrataLint.TestSupport/packages.lock.json
+      unit: tests-architecture
 
   tests-cache:
-    needs: detect
-    if: fromJSON(needs.detect.outputs.hits || '{}')['tests-cache']
+    needs: [detect, source]
+    if: ${{ !cancelled() && needs.detect.result == 'success' && (!fromJSON(needs.detect.outputs.hits || '{}').current || needs.source.outputs.continuation == 'true') && fromJSON(needs.detect.outputs.hits || '{}')['tests-cache'] }}
     uses: ./.github/workflows/ci-unit.yml
     with:
-      project: tools/tests/StrataLint.Cache.Tests/StrataLint.Cache.Tests.csproj
-      cache-dependency-path: |
-        tools/tests/StrataLint.Cache.Tests/packages.lock.json
-        tools/StrataLint.TestEvidence/packages.lock.json
-        tools/StrataLint.Engineering/packages.lock.json
-        tools/StrataLint.Runtime/packages.lock.json
-        tools/TestSupport/StrataLint.ScriptProcessTestSupport/packages.lock.json
-        tools/TestSupport/StrataLint.TestSupport/packages.lock.json
+      unit: tests-cache
 
   tests-cache-native:
-    needs: detect
-    if: fromJSON(needs.detect.outputs.hits || '{}')['tests-cache-native']
+    needs: [detect, source]
+    if: ${{ !cancelled() && needs.detect.result == 'success' && (!fromJSON(needs.detect.outputs.hits || '{}').current || needs.source.outputs.continuation == 'true') && fromJSON(needs.detect.outputs.hits || '{}')['tests-cache-native'] }}
     uses: ./.github/workflows/ci-unit.yml
     with:
-      project: tools/tests/StrataLint.Cache.Native.Tests/StrataLint.Cache.Native.Tests.csproj
-      lean: toolchain
-      cache-dependency-path: |
-        tools/tests/StrataLint.Cache.Native.Tests/packages.lock.json
-        tools/StrataLint.TestEvidence/packages.lock.json
-        tools/StrataLint.Engineering/packages.lock.json
-        tools/StrataLint.Runtime/packages.lock.json
-        tools/TestSupport/StrataLint.ScriptProcessTestSupport/packages.lock.json
-        tools/TestSupport/StrataLint.TestSupport/packages.lock.json
+      unit: tests-cache-native
 
   tests-cache-release:
-    needs: detect
-    if: fromJSON(needs.detect.outputs.hits || '{}')['tests-cache-release']
+    needs: [detect, source]
+    if: ${{ !cancelled() && needs.detect.result == 'success' && (!fromJSON(needs.detect.outputs.hits || '{}').current || needs.source.outputs.continuation == 'true') && fromJSON(needs.detect.outputs.hits || '{}')['tests-cache-release'] }}
     uses: ./.github/workflows/ci-unit.yml
     with:
-      project: tools/tests/StrataLint.Cache.Release.Tests/StrataLint.Cache.Release.Tests.csproj
-      cache-dependency-path: |
-        tools/tests/StrataLint.Cache.Release.Tests/packages.lock.json
-        tools/StrataLint.TestEvidence/packages.lock.json
-        tools/StrataLint.Engineering/packages.lock.json
-        tools/StrataLint.Runtime/packages.lock.json
-        tools/TestSupport/StrataLint.ScriptProcessTestSupport/packages.lock.json
-        tools/TestSupport/StrataLint.TestSupport/packages.lock.json
+      unit: tests-cache-release
 
   tests-ci-entry:
-    needs: detect
-    if: fromJSON(needs.detect.outputs.hits || '{}')['tests-ci-entry']
+    needs: [detect, source]
+    if: ${{ !cancelled() && needs.detect.result == 'success' && (!fromJSON(needs.detect.outputs.hits || '{}').current || needs.source.outputs.continuation == 'true') && fromJSON(needs.detect.outputs.hits || '{}')['tests-ci-entry'] }}
     uses: ./.github/workflows/ci-unit.yml
     with:
-      command: >-
-        bash tools/scripts/workflow/ci-entry-test.sh &&
-        python3 -m unittest tools/scripts/workflow/test_ci_detect.py tools/scripts/workflow/test_ci_required.py
-      dotnet: false
+      unit: tests-ci-entry
 
   tests-cli:
-    needs: detect
-    if: fromJSON(needs.detect.outputs.hits || '{}')['tests-cli']
+    needs: [detect, source]
+    if: ${{ !cancelled() && needs.detect.result == 'success' && (!fromJSON(needs.detect.outputs.hits || '{}').current || needs.source.outputs.continuation == 'true') && fromJSON(needs.detect.outputs.hits || '{}')['tests-cli'] }}
     uses: ./.github/workflows/ci-unit.yml
     with:
-      project: tools/tests/StrataLint.Tests/StrataLint.Tests.csproj
-      lean: toolchain
-      cache-dependency-path: |
-        tools/tests/StrataLint.Tests/packages.lock.json
-        tools/StrataLint.Cli/packages.lock.json
-        tools/StrataLint.Configuration/packages.lock.json
-        tools/StrataLint.Engine/packages.lock.json
-        tools/StrataLint.Engineering/packages.lock.json
-        tools/StrataLint.Runtime/packages.lock.json
-        tools/StrataLint.FileMap/packages.lock.json
-        tools/StrataLint.Lean/packages.lock.json
-        tools/StrataLint.Scribe/packages.lock.json
-        tools/StrataLint.TestEvidence/packages.lock.json
-        tools/Trureturing.Truth/packages.lock.json
-        tools/TestSupport/StrataLint.CoverTestSupport/packages.lock.json
-        tools/TestSupport/StrataLint.DeclaredTemplateTestSupport/packages.lock.json
-        tools/TestSupport/StrataLint.DigestionTestSupport/packages.lock.json
-        tools/TestSupport/StrataLint.RuleTestSupport/packages.lock.json
-        tools/TestSupport/StrataLint.ConfigurationTestSupport/packages.lock.json
-        tools/TestSupport/StrataLint.CliTestSupport/packages.lock.json
-        tools/TestSupport/StrataLint.AdmissionTestSupport/packages.lock.json
-        tools/TestSupport/StrataLint.LeanTestSupport/packages.lock.json
-        tools/TestSupport/StrataLint.ProcessTestSupport/packages.lock.json
-        tools/TestSupport/StrataLint.RegistrationTestSupport/packages.lock.json
-        tools/TestSupport/StrataLint.TestSupport/packages.lock.json
+      unit: tests-cli
 
   tests-cli-integration:
-    needs: detect
-    if: fromJSON(needs.detect.outputs.hits || '{}')['tests-cli-integration']
+    needs: [detect, source]
+    if: ${{ !cancelled() && needs.detect.result == 'success' && (!fromJSON(needs.detect.outputs.hits || '{}').current || needs.source.outputs.continuation == 'true') && fromJSON(needs.detect.outputs.hits || '{}')['tests-cli-integration'] }}
     uses: ./.github/workflows/ci-unit.yml
     with:
-      project: tools/tests/StrataLint.CliIntegration.Tests/StrataLint.CliIntegration.Tests.csproj
-      cache-dependency-path: |
-        tools/tests/StrataLint.CliIntegration.Tests/packages.lock.json
-        tools/StrataLint.Cli/packages.lock.json
-        tools/StrataLint.Configuration/packages.lock.json
-        tools/StrataLint.Engine/packages.lock.json
-        tools/StrataLint.Engineering/packages.lock.json
-        tools/StrataLint.Runtime/packages.lock.json
-        tools/StrataLint.FileMap/packages.lock.json
-        tools/StrataLint.Lean/packages.lock.json
-        tools/StrataLint.Scribe/packages.lock.json
-        tools/StrataLint.TestEvidence/packages.lock.json
-        tools/Trureturing.Truth/packages.lock.json
-        tools/TestSupport/StrataLint.RuleTestSupport/packages.lock.json
-        tools/TestSupport/StrataLint.ConfigurationTestSupport/packages.lock.json
-        tools/TestSupport/StrataLint.CliTestSupport/packages.lock.json
-        tools/TestSupport/StrataLint.AdmissionTestSupport/packages.lock.json
-        tools/TestSupport/StrataLint.DigestionTestSupport/packages.lock.json
-        tools/TestSupport/StrataLint.ProcessTestSupport/packages.lock.json
-        tools/TestSupport/StrataLint.RegistrationTestSupport/packages.lock.json
-        tools/TestSupport/StrataLint.TestSupport/packages.lock.json
+      unit: tests-cli-integration
 
   tests-configuration:
-    needs: detect
-    if: fromJSON(needs.detect.outputs.hits || '{}')['tests-configuration']
+    needs: [detect, source]
+    if: ${{ !cancelled() && needs.detect.result == 'success' && (!fromJSON(needs.detect.outputs.hits || '{}').current || needs.source.outputs.continuation == 'true') && fromJSON(needs.detect.outputs.hits || '{}')['tests-configuration'] }}
     uses: ./.github/workflows/ci-unit.yml
     with:
-      project: tools/tests/StrataLint.Configuration.Tests/StrataLint.Configuration.Tests.csproj
-      cache-dependency-path: |
-        tools/tests/StrataLint.Configuration.Tests/packages.lock.json
-        tools/StrataLint.TestEvidence/packages.lock.json
-        tools/StrataLint.Engineering/packages.lock.json
-        tools/StrataLint.Runtime/packages.lock.json
-        tools/StrataLint.Engine/packages.lock.json
-        tools/Trureturing.Truth/packages.lock.json
-        tools/StrataLint.Configuration/packages.lock.json
-        tools/TestSupport/StrataLint.ConfigurationTestSupport/packages.lock.json
-        tools/TestSupport/StrataLint.TestSupport/packages.lock.json
+      unit: tests-configuration
 
   tests-cover-batch:
-    needs: detect
-    if: fromJSON(needs.detect.outputs.hits || '{}')['tests-cover-batch']
+    needs: [detect, source]
+    if: ${{ !cancelled() && needs.detect.result == 'success' && (!fromJSON(needs.detect.outputs.hits || '{}').current || needs.source.outputs.continuation == 'true') && fromJSON(needs.detect.outputs.hits || '{}')['tests-cover-batch'] }}
     uses: ./.github/workflows/ci-unit.yml
     with:
-      project: tools/tests/StrataLint.CoverBatch.Tests/StrataLint.CoverBatch.Tests.csproj
-      cache-dependency-path: |
-        tools/tests/StrataLint.CoverBatch.Tests/packages.lock.json
-        tools/StrataLint.Cli/packages.lock.json
-        tools/StrataLint.Configuration/packages.lock.json
-        tools/StrataLint.Engine/packages.lock.json
-        tools/StrataLint.Engineering/packages.lock.json
-        tools/StrataLint.Runtime/packages.lock.json
-        tools/StrataLint.FileMap/packages.lock.json
-        tools/StrataLint.Lean/packages.lock.json
-        tools/StrataLint.Scribe/packages.lock.json
-        tools/StrataLint.TestEvidence/packages.lock.json
-        tools/Trureturing.Truth/packages.lock.json
-        tools/TestSupport/StrataLint.CoverTestSupport/packages.lock.json
-        tools/TestSupport/StrataLint.CliTestSupport/packages.lock.json
-        tools/TestSupport/StrataLint.AdmissionTestSupport/packages.lock.json
-        tools/TestSupport/StrataLint.ConfigurationTestSupport/packages.lock.json
-        tools/TestSupport/StrataLint.DigestionTestSupport/packages.lock.json
-        tools/TestSupport/StrataLint.RegistrationTestSupport/packages.lock.json
-        tools/TestSupport/StrataLint.RuleTestSupport/packages.lock.json
-        tools/TestSupport/StrataLint.ProcessTestSupport/packages.lock.json
-        tools/TestSupport/StrataLint.TestSupport/packages.lock.json
+      unit: tests-cover-batch
 
   tests-declared-template:
-    needs: detect
-    if: fromJSON(needs.detect.outputs.hits || '{}')['tests-declared-template']
+    needs: [detect, source]
+    if: ${{ !cancelled() && needs.detect.result == 'success' && (!fromJSON(needs.detect.outputs.hits || '{}').current || needs.source.outputs.continuation == 'true') && fromJSON(needs.detect.outputs.hits || '{}')['tests-declared-template'] }}
     uses: ./.github/workflows/ci-unit.yml
     with:
-      command: make -C tools test TEST_PROJECT=tools/tests/StrataLint.DeclaredTemplate.Tests/StrataLint.DeclaredTemplate.Tests.csproj TEST_FILTER="FullyQualifiedName!~FourierBridgeSourceEvidenceTests"
-      lean: build
-      cache-dependency-path: |
-        tools/tests/StrataLint.DeclaredTemplate.Tests/packages.lock.json
-        tools/StrataLint.TestEvidence/packages.lock.json
-        tools/StrataLint.Engineering/packages.lock.json
-        tools/StrataLint.Runtime/packages.lock.json
-        tools/StrataLint.Lean/packages.lock.json
-        tools/StrataLint.Engine/packages.lock.json
-        tools/Trureturing.Truth/packages.lock.json
-        tools/StrataLint.Configuration/packages.lock.json
-        tools/TestSupport/StrataLint.DeclaredTemplateTestSupport/packages.lock.json
-        tools/TestSupport/StrataLint.RuleTestSupport/packages.lock.json
-        tools/TestSupport/StrataLint.ConfigurationTestSupport/packages.lock.json
-        tools/TestSupport/StrataLint.RegistrationTestSupport/packages.lock.json
-        tools/TestSupport/StrataLint.TestSupport/packages.lock.json
+      unit: tests-declared-template
 
   tests-digestion:
-    needs: detect
-    if: fromJSON(needs.detect.outputs.hits || '{}')['tests-digestion']
+    needs: [detect, source]
+    if: ${{ !cancelled() && needs.detect.result == 'success' && (!fromJSON(needs.detect.outputs.hits || '{}').current || needs.source.outputs.continuation == 'true') && fromJSON(needs.detect.outputs.hits || '{}')['tests-digestion'] }}
     uses: ./.github/workflows/ci-unit.yml
     with:
-      project: tools/tests/StrataLint.Digestion.Tests/StrataLint.Digestion.Tests.csproj
-      cache-dependency-path: |
-        tools/tests/StrataLint.Digestion.Tests/packages.lock.json
-        tools/StrataLint.TestEvidence/packages.lock.json
-        tools/StrataLint.Engineering/packages.lock.json
-        tools/StrataLint.Runtime/packages.lock.json
-        tools/StrataLint.Engine/packages.lock.json
-        tools/Trureturing.Truth/packages.lock.json
-        tools/StrataLint.Configuration/packages.lock.json
-        tools/TestSupport/StrataLint.ConfigurationTestSupport/packages.lock.json
-        tools/TestSupport/StrataLint.DigestionTestSupport/packages.lock.json
-        tools/TestSupport/StrataLint.RegistrationTestSupport/packages.lock.json
-        tools/TestSupport/StrataLint.RuleTestSupport/packages.lock.json
-        tools/TestSupport/StrataLint.TestSupport/packages.lock.json
+      unit: tests-digestion
 
   tests-engine:
-    needs: detect
-    if: fromJSON(needs.detect.outputs.hits || '{}')['tests-engine']
+    needs: [detect, source]
+    if: ${{ !cancelled() && needs.detect.result == 'success' && (!fromJSON(needs.detect.outputs.hits || '{}').current || needs.source.outputs.continuation == 'true') && fromJSON(needs.detect.outputs.hits || '{}')['tests-engine'] }}
     uses: ./.github/workflows/ci-unit.yml
     with:
-      project: tools/tests/StrataLint.Engine.Tests/StrataLint.Engine.Tests.csproj
-      cache-dependency-path: |
-        tools/tests/StrataLint.Engine.Tests/packages.lock.json
-        tools/StrataLint.TestEvidence/packages.lock.json
-        tools/StrataLint.Engineering/packages.lock.json
-        tools/StrataLint.Runtime/packages.lock.json
-        tools/StrataLint.Engine/packages.lock.json
-        tools/Trureturing.Truth/packages.lock.json
-        tools/TestSupport/StrataLint.ProcessTestSupport/packages.lock.json
-        tools/TestSupport/StrataLint.RegistrationTestSupport/packages.lock.json
-        tools/TestSupport/StrataLint.TestSupport/packages.lock.json
+      unit: tests-engine
 
   tests-filemap:
-    needs: detect
-    if: fromJSON(needs.detect.outputs.hits || '{}')['tests-filemap']
+    needs: [detect, source]
+    if: ${{ !cancelled() && needs.detect.result == 'success' && (!fromJSON(needs.detect.outputs.hits || '{}').current || needs.source.outputs.continuation == 'true') && fromJSON(needs.detect.outputs.hits || '{}')['tests-filemap'] }}
     uses: ./.github/workflows/ci-unit.yml
     with:
-      project: tools/tests/StrataLint.FileMap.Tests/StrataLint.FileMap.Tests.csproj
-      cache-dependency-path: |
-        tools/tests/StrataLint.FileMap.Tests/packages.lock.json
-        tools/StrataLint.TestEvidence/packages.lock.json
-        tools/StrataLint.Engineering/packages.lock.json
-        tools/StrataLint.Runtime/packages.lock.json
-        tools/StrataLint.Engine/packages.lock.json
-        tools/Trureturing.Truth/packages.lock.json
-        tools/StrataLint.Configuration/packages.lock.json
-        tools/StrataLint.FileMap/packages.lock.json
-        tools/TestSupport/StrataLint.ProcessTestSupport/packages.lock.json
-        tools/TestSupport/StrataLint.ConfigurationTestSupport/packages.lock.json
-        tools/TestSupport/StrataLint.TestSupport/packages.lock.json
+      unit: tests-filemap
 
   tests-header-script:
-    needs: detect
-    if: fromJSON(needs.detect.outputs.hits || '{}')['tests-header-script']
+    needs: [detect, source]
+    if: ${{ !cancelled() && needs.detect.result == 'success' && (!fromJSON(needs.detect.outputs.hits || '{}').current || needs.source.outputs.continuation == 'true') && fromJSON(needs.detect.outputs.hits || '{}')['tests-header-script'] }}
     uses: ./.github/workflows/ci-unit.yml
     with:
-      project: tools/tests/StrataLint.HeaderScript.Tests/StrataLint.HeaderScript.Tests.csproj
-      cache-dependency-path: |
-        tools/tests/StrataLint.HeaderScript.Tests/packages.lock.json
-        tools/StrataLint.TestEvidence/packages.lock.json
-        tools/StrataLint.Engineering/packages.lock.json
-        tools/StrataLint.Runtime/packages.lock.json
-        tools/TestSupport/StrataLint.ScriptProcessTestSupport/packages.lock.json
-        tools/TestSupport/StrataLint.TestSupport/packages.lock.json
+      unit: tests-header-script
 
   tests-instruction-contract:
-    needs: detect
-    if: fromJSON(needs.detect.outputs.hits || '{}')['tests-instruction-contract']
+    needs: [detect, source]
+    if: ${{ !cancelled() && needs.detect.result == 'success' && (!fromJSON(needs.detect.outputs.hits || '{}').current || needs.source.outputs.continuation == 'true') && fromJSON(needs.detect.outputs.hits || '{}')['tests-instruction-contract'] }}
     uses: ./.github/workflows/ci-unit.yml
     with:
-      project: tools/tests/StrataLint.InstructionContract.Tests/StrataLint.InstructionContract.Tests.csproj
-      cache-dependency-path: |
-        tools/tests/StrataLint.InstructionContract.Tests/packages.lock.json
-        tools/StrataLint.TestEvidence/packages.lock.json
-        tools/StrataLint.Engineering/packages.lock.json
-        tools/StrataLint.Runtime/packages.lock.json
-        tools/StrataLint.Engine/packages.lock.json
-        tools/Trureturing.Truth/packages.lock.json
-        tools/TestSupport/StrataLint.TestSupport/packages.lock.json
+      unit: tests-instruction-contract
 
   tests-integration-mirror:
-    needs: detect
-    if: fromJSON(needs.detect.outputs.hits || '{}')['tests-integration-mirror']
+    needs: [detect, source]
+    if: ${{ !cancelled() && needs.detect.result == 'success' && (!fromJSON(needs.detect.outputs.hits || '{}').current || needs.source.outputs.continuation == 'true') && fromJSON(needs.detect.outputs.hits || '{}')['tests-integration-mirror'] }}
     uses: ./.github/workflows/ci-unit.yml
     with:
-      command: bash tools/scripts/agent/integration-mirror-test.sh
-      dotnet: false
+      unit: tests-integration-mirror
+
+  tests-fib:
+    needs: [detect, source, current]
+    if: ${{ !cancelled() && needs.detect.result == 'success' && needs.source.outputs.continuation == 'true' && fromJSON(needs.detect.outputs.hits || '{}')['tests-fib'] }}
+    runs-on: ubuntu-24.04-arm
+    outputs:
+      unit: ${{ steps.ack.outputs.unit }}
+    steps:
+      - uses: actions/checkout@v5
+        with:
+          ref: ${{ github.sha }}
+          fetch-depth: 1
+          filter: blob:none
+          sparse-checkout: |
+            tools/scripts/workflow
+            Meta/ci-units.json
+          persist-credentials: false
+      - id: ack
+        name: Require the selected report consumer's FIB regressions
+        env:
+          CI_CURRENT_RESULT: ${{ needs.current.result }}
+          CI_CURRENT_UNIT: ${{ needs.current.outputs.unit }}
+        run: python3 tools/scripts/workflow/ci_checks.py unit tests-fib --current-result "$CI_CURRENT_RESULT" --current-unit "$CI_CURRENT_UNIT"
 
   tests-lean:
-    needs: detect
-    if: fromJSON(needs.detect.outputs.hits || '{}')['tests-lean']
+    needs: [detect, source]
+    if: ${{ !cancelled() && needs.detect.result == 'success' && (!fromJSON(needs.detect.outputs.hits || '{}').current || needs.source.outputs.continuation == 'true') && fromJSON(needs.detect.outputs.hits || '{}')['tests-lean'] }}
     uses: ./.github/workflows/ci-unit.yml
     with:
-      project: tools/tests/StrataLint.Lean.Tests/StrataLint.Lean.Tests.csproj
-      lean: toolchain
-      cache-dependency-path: |
-        tools/tests/StrataLint.Lean.Tests/packages.lock.json
-        tools/StrataLint.TestEvidence/packages.lock.json
-        tools/StrataLint.Engineering/packages.lock.json
-        tools/StrataLint.Runtime/packages.lock.json
-        tools/StrataLint.Engine/packages.lock.json
-        tools/Trureturing.Truth/packages.lock.json
-        tools/StrataLint.Lean/packages.lock.json
-        tools/TestSupport/StrataLint.ProcessTestSupport/packages.lock.json
-        tools/TestSupport/StrataLint.TestSupport/packages.lock.json
+      unit: tests-lean
 
   tests-lean-cache-script:
-    needs: detect
-    if: fromJSON(needs.detect.outputs.hits || '{}')['tests-lean-cache-script']
+    needs: [detect, source]
+    if: ${{ !cancelled() && needs.detect.result == 'success' && (!fromJSON(needs.detect.outputs.hits || '{}').current || needs.source.outputs.continuation == 'true') && fromJSON(needs.detect.outputs.hits || '{}')['tests-lean-cache-script'] }}
     uses: ./.github/workflows/ci-unit.yml
     with:
-      project: tools/tests/StrataLint.LeanCacheScript.Tests/StrataLint.LeanCacheScript.Tests.csproj
-      cache-dependency-path: |
-        tools/tests/StrataLint.LeanCacheScript.Tests/packages.lock.json
-        tools/StrataLint.TestEvidence/packages.lock.json
-        tools/StrataLint.Engineering/packages.lock.json
-        tools/StrataLint.Runtime/packages.lock.json
-        tools/StrataLint.Engine/packages.lock.json
-        tools/Trureturing.Truth/packages.lock.json
-        tools/StrataLint.Lean/packages.lock.json
-        tools/TestSupport/StrataLint.ProcessTestSupport/packages.lock.json
-        tools/TestSupport/StrataLint.TestSupport/packages.lock.json
+      unit: tests-lean-cache-script
 
   tests-lean-report-script:
-    needs: detect
-    if: fromJSON(needs.detect.outputs.hits || '{}')['tests-lean-report-script']
+    needs: [detect, source]
+    if: ${{ !cancelled() && needs.detect.result == 'success' && (!fromJSON(needs.detect.outputs.hits || '{}').current || needs.source.outputs.continuation == 'true') && fromJSON(needs.detect.outputs.hits || '{}')['tests-lean-report-script'] }}
     uses: ./.github/workflows/ci-unit.yml
     with:
-      project: tools/tests/StrataLint.LeanReportScript.Tests/StrataLint.LeanReportScript.Tests.csproj
-      cache-dependency-path: |
-        tools/tests/StrataLint.LeanReportScript.Tests/packages.lock.json
-        tools/StrataLint.TestEvidence/packages.lock.json
-        tools/StrataLint.Engineering/packages.lock.json
-        tools/StrataLint.Runtime/packages.lock.json
-        tools/StrataLint.Engine/packages.lock.json
-        tools/Trureturing.Truth/packages.lock.json
-        tools/TestSupport/StrataLint.LeanTestSupport/packages.lock.json
-        tools/TestSupport/StrataLint.ProcessTestSupport/packages.lock.json
-        tools/TestSupport/StrataLint.TestSupport/packages.lock.json
+      unit: tests-lean-report-script
 
   tests-playbook-script:
-    needs: detect
-    if: fromJSON(needs.detect.outputs.hits || '{}')['tests-playbook-script']
+    needs: [detect, source]
+    if: ${{ !cancelled() && needs.detect.result == 'success' && (!fromJSON(needs.detect.outputs.hits || '{}').current || needs.source.outputs.continuation == 'true') && fromJSON(needs.detect.outputs.hits || '{}')['tests-playbook-script'] }}
     uses: ./.github/workflows/ci-unit.yml
     with:
-      project: tools/tests/StrataLint.PlaybookScript.Tests/StrataLint.PlaybookScript.Tests.csproj
-      cache-dependency-path: |
-        tools/tests/StrataLint.PlaybookScript.Tests/packages.lock.json
-        tools/StrataLint.TestEvidence/packages.lock.json
-        tools/StrataLint.Engineering/packages.lock.json
-        tools/StrataLint.Runtime/packages.lock.json
-        tools/StrataLint.Engine/packages.lock.json
-        tools/Trureturing.Truth/packages.lock.json
-        tools/TestSupport/StrataLint.AdmissionTestSupport/packages.lock.json
-        tools/TestSupport/StrataLint.ProcessTestSupport/packages.lock.json
-        tools/TestSupport/StrataLint.TestSupport/packages.lock.json
+      unit: tests-playbook-script
 
   tests-pr-script:
-    needs: detect
-    if: fromJSON(needs.detect.outputs.hits || '{}')['tests-pr-script']
+    needs: [detect, source]
+    if: ${{ !cancelled() && needs.detect.result == 'success' && (!fromJSON(needs.detect.outputs.hits || '{}').current || needs.source.outputs.continuation == 'true') && fromJSON(needs.detect.outputs.hits || '{}')['tests-pr-script'] }}
     uses: ./.github/workflows/ci-unit.yml
     with:
-      project: tools/tests/StrataLint.PrScript.Tests/StrataLint.PrScript.Tests.csproj
-      cache-dependency-path: |
-        tools/tests/StrataLint.PrScript.Tests/packages.lock.json
-        tools/StrataLint.TestEvidence/packages.lock.json
-        tools/StrataLint.Engineering/packages.lock.json
-        tools/StrataLint.Runtime/packages.lock.json
-        tools/StrataLint.Engine/packages.lock.json
-        tools/Trureturing.Truth/packages.lock.json
-        tools/TestSupport/StrataLint.ProcessTestSupport/packages.lock.json
-        tools/TestSupport/StrataLint.TestSupport/packages.lock.json
+      unit: tests-pr-script
 
   tests-report-supervisor:
-    needs: detect
-    if: fromJSON(needs.detect.outputs.hits || '{}')['tests-report-supervisor']
+    needs: [detect, source]
+    if: ${{ !cancelled() && needs.detect.result == 'success' && (!fromJSON(needs.detect.outputs.hits || '{}').current || needs.source.outputs.continuation == 'true') && fromJSON(needs.detect.outputs.hits || '{}')['tests-report-supervisor'] }}
     uses: ./.github/workflows/ci-unit.yml
     with:
-      project: tools/tests/StrataLint.ReportSupervisor.Tests/StrataLint.ReportSupervisor.Tests.csproj
-      cache-dependency-path: |
-        tools/tests/StrataLint.ReportSupervisor.Tests/packages.lock.json
-        tools/StrataLint.TestEvidence/packages.lock.json
-        tools/StrataLint.Engineering/packages.lock.json
-        tools/StrataLint.Runtime/packages.lock.json
-        tools/StrataLint.Engine/packages.lock.json
-        tools/Trureturing.Truth/packages.lock.json
-        tools/TestSupport/StrataLint.ProcessTestSupport/packages.lock.json
-        tools/TestSupport/StrataLint.TestSupport/packages.lock.json
+      unit: tests-report-supervisor
 
   tests-repository-configuration:
-    needs: detect
-    if: fromJSON(needs.detect.outputs.hits || '{}')['tests-repository-configuration']
+    needs: [detect, source]
+    if: ${{ !cancelled() && needs.detect.result == 'success' && (!fromJSON(needs.detect.outputs.hits || '{}').current || needs.source.outputs.continuation == 'true') && fromJSON(needs.detect.outputs.hits || '{}')['tests-repository-configuration'] }}
     uses: ./.github/workflows/ci-unit.yml
     with:
-      project: tools/tests/StrataLint.RepositoryConfiguration.Tests/StrataLint.RepositoryConfiguration.Tests.csproj
-      cache-dependency-path: |
-        tools/tests/StrataLint.RepositoryConfiguration.Tests/packages.lock.json
-        tools/StrataLint.TestEvidence/packages.lock.json
-        tools/StrataLint.Engineering/packages.lock.json
-        tools/StrataLint.Runtime/packages.lock.json
-        tools/StrataLint.Engine/packages.lock.json
-        tools/Trureturing.Truth/packages.lock.json
-        tools/StrataLint.Configuration/packages.lock.json
-        tools/TestSupport/StrataLint.ConfigurationTestSupport/packages.lock.json
-        tools/TestSupport/StrataLint.TestSupport/packages.lock.json
+      unit: tests-repository-configuration
 
   tests-repository-contract:
-    needs: detect
-    if: fromJSON(needs.detect.outputs.hits || '{}')['tests-repository-contract']
+    needs: [detect, source]
+    if: ${{ !cancelled() && needs.detect.result == 'success' && (!fromJSON(needs.detect.outputs.hits || '{}').current || needs.source.outputs.continuation == 'true') && fromJSON(needs.detect.outputs.hits || '{}')['tests-repository-contract'] }}
     uses: ./.github/workflows/ci-unit.yml
     with:
-      project: tools/tests/StrataLint.RepositoryContract.Tests/StrataLint.RepositoryContract.Tests.csproj
-      cache-dependency-path: |
-        tools/tests/StrataLint.RepositoryContract.Tests/packages.lock.json
-        tools/StrataLint.Cli/packages.lock.json
-        tools/StrataLint.Configuration/packages.lock.json
-        tools/StrataLint.Engine/packages.lock.json
-        tools/StrataLint.Engineering/packages.lock.json
-        tools/StrataLint.Runtime/packages.lock.json
-        tools/StrataLint.FileMap/packages.lock.json
-        tools/StrataLint.Lean/packages.lock.json
-        tools/StrataLint.Scribe/packages.lock.json
-        tools/StrataLint.TestEvidence/packages.lock.json
-        tools/Trureturing.Truth/packages.lock.json
-        tools/TestSupport/StrataLint.TestSupport/packages.lock.json
+      unit: tests-repository-contract
 
   tests-repository-filemap:
-    needs: detect
-    if: fromJSON(needs.detect.outputs.hits || '{}')['tests-repository-filemap']
+    needs: [detect, source]
+    if: ${{ !cancelled() && needs.detect.result == 'success' && (!fromJSON(needs.detect.outputs.hits || '{}').current || needs.source.outputs.continuation == 'true') && fromJSON(needs.detect.outputs.hits || '{}')['tests-repository-filemap'] }}
     uses: ./.github/workflows/ci-unit.yml
     with:
-      project: tools/tests/StrataLint.RepositoryFileMap.Tests/StrataLint.RepositoryFileMap.Tests.csproj
-      cache-dependency-path: |
-        tools/tests/StrataLint.RepositoryFileMap.Tests/packages.lock.json
-        tools/StrataLint.TestEvidence/packages.lock.json
-        tools/StrataLint.Engineering/packages.lock.json
-        tools/StrataLint.Runtime/packages.lock.json
-        tools/StrataLint.Engine/packages.lock.json
-        tools/Trureturing.Truth/packages.lock.json
-        tools/StrataLint.Configuration/packages.lock.json
-        tools/StrataLint.FileMap/packages.lock.json
-        tools/StrataLint.Lean/packages.lock.json
-        tools/TestSupport/StrataLint.ConfigurationTestSupport/packages.lock.json
-        tools/TestSupport/StrataLint.ProcessTestSupport/packages.lock.json
-        tools/TestSupport/StrataLint.TestSupport/packages.lock.json
+      unit: tests-repository-filemap
 
   tests-repository-topology:
-    needs: detect
-    if: fromJSON(needs.detect.outputs.hits || '{}')['tests-repository-topology']
+    needs: [detect, source]
+    if: ${{ !cancelled() && needs.detect.result == 'success' && (!fromJSON(needs.detect.outputs.hits || '{}').current || needs.source.outputs.continuation == 'true') && fromJSON(needs.detect.outputs.hits || '{}')['tests-repository-topology'] }}
     uses: ./.github/workflows/ci-unit.yml
     with:
-      project: tools/tests/StrataLint.RepositoryTopology.Tests/StrataLint.RepositoryTopology.Tests.csproj
-      cache-dependency-path: |
-        tools/tests/StrataLint.RepositoryTopology.Tests/packages.lock.json
-        tools/StrataLint.Cli/packages.lock.json
-        tools/StrataLint.Configuration/packages.lock.json
-        tools/StrataLint.Engine/packages.lock.json
-        tools/StrataLint.Engineering/packages.lock.json
-        tools/StrataLint.Runtime/packages.lock.json
-        tools/StrataLint.FileMap/packages.lock.json
-        tools/StrataLint.Lean/packages.lock.json
-        tools/StrataLint.Scribe/packages.lock.json
-        tools/StrataLint.TestEvidence/packages.lock.json
-        tools/Trureturing.Truth/packages.lock.json
-        tools/TestSupport/StrataLint.CliTestSupport/packages.lock.json
-        tools/TestSupport/StrataLint.DigestionTestSupport/packages.lock.json
-        tools/TestSupport/StrataLint.RegistrationTestSupport/packages.lock.json
-        tools/TestSupport/StrataLint.ProcessTestSupport/packages.lock.json
-        tools/TestSupport/StrataLint.TestSupport/packages.lock.json
+      unit: tests-repository-topology
 
   tests-resource-observation:
-    needs: detect
-    if: fromJSON(needs.detect.outputs.hits || '{}')['tests-resource-observation']
+    needs: [detect, source]
+    if: ${{ !cancelled() && needs.detect.result == 'success' && (!fromJSON(needs.detect.outputs.hits || '{}').current || needs.source.outputs.continuation == 'true') && fromJSON(needs.detect.outputs.hits || '{}')['tests-resource-observation'] }}
     uses: ./.github/workflows/ci-unit.yml
     with:
-      project: tools/tests/StrataLint.ResourceObservation.Tests/StrataLint.ResourceObservation.Tests.csproj
-      cache-dependency-path: |
-        tools/tests/StrataLint.ResourceObservation.Tests/packages.lock.json
-        tools/StrataLint.TestEvidence/packages.lock.json
-        tools/StrataLint.Engineering/packages.lock.json
-        tools/StrataLint.Runtime/packages.lock.json
-        tools/StrataLint.Engine/packages.lock.json
-        tools/Trureturing.Truth/packages.lock.json
-        tools/TestSupport/StrataLint.ProcessTestSupport/packages.lock.json
-        tools/TestSupport/StrataLint.TestSupport/packages.lock.json
+      unit: tests-resource-observation
 
   tests-rules:
-    needs: detect
-    if: fromJSON(needs.detect.outputs.hits || '{}')['tests-rules']
+    needs: [detect, source]
+    if: ${{ !cancelled() && needs.detect.result == 'success' && (!fromJSON(needs.detect.outputs.hits || '{}').current || needs.source.outputs.continuation == 'true') && fromJSON(needs.detect.outputs.hits || '{}')['tests-rules'] }}
     uses: ./.github/workflows/ci-unit.yml
     with:
-      project: tools/tests/StrataLint.Rules.Tests/StrataLint.Rules.Tests.csproj
-      cache-dependency-path: |
-        tools/tests/StrataLint.Rules.Tests/packages.lock.json
-        tools/StrataLint.TestEvidence/packages.lock.json
-        tools/StrataLint.Engineering/packages.lock.json
-        tools/StrataLint.Runtime/packages.lock.json
-        tools/StrataLint.Engine/packages.lock.json
-        tools/Trureturing.Truth/packages.lock.json
-        tools/StrataLint.Configuration/packages.lock.json
-        tools/TestSupport/StrataLint.ConfigurationTestSupport/packages.lock.json
-        tools/TestSupport/StrataLint.RegistrationTestSupport/packages.lock.json
-        tools/TestSupport/StrataLint.RuleTestSupport/packages.lock.json
-        tools/TestSupport/StrataLint.TestSupport/packages.lock.json
+      unit: tests-rules
 
   tests-scribe:
-    needs: detect
-    if: fromJSON(needs.detect.outputs.hits || '{}')['tests-scribe']
+    needs: [detect, source]
+    if: ${{ !cancelled() && needs.detect.result == 'success' && (!fromJSON(needs.detect.outputs.hits || '{}').current || needs.source.outputs.continuation == 'true') && fromJSON(needs.detect.outputs.hits || '{}')['tests-scribe'] }}
     uses: ./.github/workflows/ci-unit.yml
     with:
-      project: tools/tests/StrataLint.Scribe.Tests/StrataLint.Scribe.Tests.csproj
-      cache-dependency-path: |
-        tools/tests/StrataLint.Scribe.Tests/packages.lock.json
-        tools/StrataLint.TestEvidence/packages.lock.json
-        tools/StrataLint.Engineering/packages.lock.json
-        tools/StrataLint.Runtime/packages.lock.json
-        tools/StrataLint.Engine/packages.lock.json
-        tools/Trureturing.Truth/packages.lock.json
-        tools/StrataLint.Scribe/packages.lock.json
-        tools/TestSupport/StrataLint.RegistrationTestSupport/packages.lock.json
-        tools/TestSupport/StrataLint.TestSupport/packages.lock.json
+      unit: tests-scribe
 
   tests-script:
-    needs: detect
-    if: fromJSON(needs.detect.outputs.hits || '{}')['tests-script']
+    needs: [detect, source]
+    if: ${{ !cancelled() && needs.detect.result == 'success' && (!fromJSON(needs.detect.outputs.hits || '{}').current || needs.source.outputs.continuation == 'true') && fromJSON(needs.detect.outputs.hits || '{}')['tests-script'] }}
     uses: ./.github/workflows/ci-unit.yml
     with:
-      project: tools/tests/StrataLint.ScriptTests/StrataLint.ScriptTests.csproj
-      lean: toolchain
-      cache-dependency-path: |
-        tools/tests/StrataLint.ScriptTests/packages.lock.json
-        tools/StrataLint.Cli/packages.lock.json
-        tools/StrataLint.Configuration/packages.lock.json
-        tools/StrataLint.Engine/packages.lock.json
-        tools/StrataLint.Engineering/packages.lock.json
-        tools/StrataLint.Runtime/packages.lock.json
-        tools/StrataLint.FileMap/packages.lock.json
-        tools/StrataLint.Lean/packages.lock.json
-        tools/StrataLint.Scribe/packages.lock.json
-        tools/StrataLint.TestEvidence/packages.lock.json
-        tools/Trureturing.Truth/packages.lock.json
-        tools/TestSupport/StrataLint.AdmissionTestSupport/packages.lock.json
-        tools/TestSupport/StrataLint.LeanTestSupport/packages.lock.json
-        tools/TestSupport/StrataLint.ProcessTestSupport/packages.lock.json
-        tools/TestSupport/StrataLint.RegistrationTestSupport/packages.lock.json
-        tools/TestSupport/StrataLint.TestSupport/packages.lock.json
+      unit: tests-script
 
   tests-source-atomizer:
-    needs: detect
-    if: fromJSON(needs.detect.outputs.hits || '{}')['tests-source-atomizer']
+    needs: [detect, source]
+    if: ${{ !cancelled() && needs.detect.result == 'success' && (!fromJSON(needs.detect.outputs.hits || '{}').current || needs.source.outputs.continuation == 'true') && fromJSON(needs.detect.outputs.hits || '{}')['tests-source-atomizer'] }}
     uses: ./.github/workflows/ci-unit.yml
     with:
-      project: tools/tests/StrataLint.SourceAtomizer.Tests/StrataLint.SourceAtomizer.Tests.csproj
-      cache-dependency-path: |
-        tools/tests/StrataLint.SourceAtomizer.Tests/packages.lock.json
-        tools/StrataLint.Cli/packages.lock.json
-        tools/StrataLint.Configuration/packages.lock.json
-        tools/StrataLint.Engine/packages.lock.json
-        tools/StrataLint.Engineering/packages.lock.json
-        tools/StrataLint.Runtime/packages.lock.json
-        tools/StrataLint.FileMap/packages.lock.json
-        tools/StrataLint.Lean/packages.lock.json
-        tools/StrataLint.Scribe/packages.lock.json
-        tools/StrataLint.TestEvidence/packages.lock.json
-        tools/Trureturing.Truth/packages.lock.json
-        tools/TestSupport/StrataLint.CliTestSupport/packages.lock.json
-        tools/TestSupport/StrataLint.DigestionTestSupport/packages.lock.json
-        tools/TestSupport/StrataLint.RegistrationTestSupport/packages.lock.json
-        tools/TestSupport/StrataLint.TestSupport/packages.lock.json
+      unit: tests-source-atomizer
 
   tests-engineering:
-    needs: detect
-    if: fromJSON(needs.detect.outputs.hits || '{}')['tests-engineering']
+    needs: [detect, source]
+    if: ${{ !cancelled() && needs.detect.result == 'success' && (!fromJSON(needs.detect.outputs.hits || '{}').current || needs.source.outputs.continuation == 'true') && fromJSON(needs.detect.outputs.hits || '{}')['tests-engineering'] }}
     uses: ./.github/workflows/ci-unit.yml
     with:
-      project: tools/tests/StrataLint.Engineering.Tests/StrataLint.Engineering.Tests.csproj
-      cache-dependency-path: |
-        tools/tests/StrataLint.Engineering.Tests/packages.lock.json
-        tools/StrataLint.TestEvidence/packages.lock.json
-        tools/StrataLint.Engineering/packages.lock.json
-        tools/StrataLint.Runtime/packages.lock.json
-        tools/TestSupport/StrataLint.TestSupport/packages.lock.json
+      unit: tests-engineering
 
   tests-runtime:
-    needs: detect
-    if: fromJSON(needs.detect.outputs.hits || '{}')['tests-runtime']
+    needs: [detect, source]
+    if: ${{ !cancelled() && needs.detect.result == 'success' && (!fromJSON(needs.detect.outputs.hits || '{}').current || needs.source.outputs.continuation == 'true') && fromJSON(needs.detect.outputs.hits || '{}')['tests-runtime'] }}
     uses: ./.github/workflows/ci-unit.yml
     with:
-      project: tools/tests/StrataLint.Runtime.Tests/StrataLint.Runtime.Tests.csproj
-      cache-dependency-path: |
-        tools/tests/StrataLint.Runtime.Tests/packages.lock.json
-        tools/StrataLint.TestEvidence/packages.lock.json
-        tools/StrataLint.Engineering/packages.lock.json
-        tools/StrataLint.Runtime/packages.lock.json
-        tools/TestSupport/StrataLint.ProcessTestSupport/packages.lock.json
-        tools/TestSupport/StrataLint.TestSupport/packages.lock.json
+      unit: tests-runtime
 
   tests-test-evidence:
-    needs: detect
-    if: fromJSON(needs.detect.outputs.hits || '{}')['tests-test-evidence']
+    needs: [detect, source]
+    if: ${{ !cancelled() && needs.detect.result == 'success' && (!fromJSON(needs.detect.outputs.hits || '{}').current || needs.source.outputs.continuation == 'true') && fromJSON(needs.detect.outputs.hits || '{}')['tests-test-evidence'] }}
     uses: ./.github/workflows/ci-unit.yml
     with:
-      project: tools/tests/StrataLint.TestEvidence.Tests/StrataLint.TestEvidence.Tests.csproj
-      cache-dependency-path: |
-        tools/tests/StrataLint.TestEvidence.Tests/packages.lock.json
-        tools/StrataLint.TestEvidence/packages.lock.json
-        tools/StrataLint.Engineering/packages.lock.json
-        tools/StrataLint.Runtime/packages.lock.json
-        tools/TestSupport/StrataLint.TestSupport/packages.lock.json
+      unit: tests-test-evidence
 
   tests-truth:
-    needs: detect
-    if: fromJSON(needs.detect.outputs.hits || '{}')['tests-truth']
+    needs: [detect, source]
+    if: ${{ !cancelled() && needs.detect.result == 'success' && (!fromJSON(needs.detect.outputs.hits || '{}').current || needs.source.outputs.continuation == 'true') && fromJSON(needs.detect.outputs.hits || '{}')['tests-truth'] }}
     uses: ./.github/workflows/ci-unit.yml
     with:
-      project: tools/tests/Trureturing.Truth.Tests/Trureturing.Truth.Tests.csproj
-      cache-dependency-path: |
-        tools/tests/Trureturing.Truth.Tests/packages.lock.json
-        tools/StrataLint.TestEvidence/packages.lock.json
-        tools/StrataLint.Engineering/packages.lock.json
-        tools/StrataLint.Runtime/packages.lock.json
-        tools/Trureturing.Truth/packages.lock.json
+      unit: tests-truth
 
   tests-truth-release:
-    needs: detect
-    if: fromJSON(needs.detect.outputs.hits || '{}')['tests-truth-release']
+    needs: [detect, source]
+    if: ${{ !cancelled() && needs.detect.result == 'success' && (!fromJSON(needs.detect.outputs.hits || '{}').current || needs.source.outputs.continuation == 'true') && fromJSON(needs.detect.outputs.hits || '{}')['tests-truth-release'] }}
     uses: ./.github/workflows/ci-unit.yml
     with:
-      project: tools/tests/StrataLint.TruthRelease.Tests/StrataLint.TruthRelease.Tests.csproj
-      cache-dependency-path: |
-        tools/tests/StrataLint.TruthRelease.Tests/packages.lock.json
-        tools/StrataLint.Cli/packages.lock.json
-        tools/StrataLint.Configuration/packages.lock.json
-        tools/StrataLint.Engine/packages.lock.json
-        tools/StrataLint.Engineering/packages.lock.json
-        tools/StrataLint.Runtime/packages.lock.json
-        tools/StrataLint.FileMap/packages.lock.json
-        tools/StrataLint.Lean/packages.lock.json
-        tools/StrataLint.Scribe/packages.lock.json
-        tools/StrataLint.TestEvidence/packages.lock.json
-        tools/Trureturing.Truth/packages.lock.json
-        tools/TestSupport/StrataLint.CliTestSupport/packages.lock.json
-        tools/TestSupport/StrataLint.DigestionTestSupport/packages.lock.json
-        tools/TestSupport/StrataLint.RegistrationTestSupport/packages.lock.json
-        tools/TestSupport/StrataLint.ConfigurationTestSupport/packages.lock.json
-        tools/TestSupport/StrataLint.ProcessTestSupport/packages.lock.json
-        tools/TestSupport/StrataLint.TestSupport/packages.lock.json
+      unit: tests-truth-release
 
   tests-workflow-script:
-    needs: detect
-    if: fromJSON(needs.detect.outputs.hits || '{}')['tests-workflow-script']
+    needs: [detect, source]
+    if: ${{ !cancelled() && needs.detect.result == 'success' && (!fromJSON(needs.detect.outputs.hits || '{}').current || needs.source.outputs.continuation == 'true') && fromJSON(needs.detect.outputs.hits || '{}')['tests-workflow-script'] }}
     uses: ./.github/workflows/ci-unit.yml
     with:
-      project: tools/tests/StrataLint.WorkflowScript.Tests/StrataLint.WorkflowScript.Tests.csproj
-      cache-dependency-path: |
-        tools/tests/StrataLint.WorkflowScript.Tests/packages.lock.json
-        tools/StrataLint.TestEvidence/packages.lock.json
-        tools/StrataLint.Engineering/packages.lock.json
-        tools/StrataLint.Runtime/packages.lock.json
-        tools/TestSupport/StrataLint.ProcessTestSupport/packages.lock.json
-        tools/TestSupport/StrataLint.TestSupport/packages.lock.json
-        tools/StrataLint.Engine/packages.lock.json
-        tools/Trureturing.Truth/packages.lock.json
-
+      unit: tests-workflow-script
 
   tests-worktree-contract:
-    needs: detect
-    if: fromJSON(needs.detect.outputs.hits || '{}')['tests-worktree-contract']
+    needs: [detect, source]
+    if: ${{ !cancelled() && needs.detect.result == 'success' && (!fromJSON(needs.detect.outputs.hits || '{}').current || needs.source.outputs.continuation == 'true') && fromJSON(needs.detect.outputs.hits || '{}')['tests-worktree-contract'] }}
     uses: ./.github/workflows/ci-unit.yml
     with:
-      project: tools/tests/StrataLint.WorktreeContract.Tests/StrataLint.WorktreeContract.Tests.csproj
-      cache-dependency-path: |
-        tools/tests/StrataLint.WorktreeContract.Tests/packages.lock.json
-        tools/StrataLint.Engine/packages.lock.json
-        tools/StrataLint.Engineering/packages.lock.json
-        tools/StrataLint.Runtime/packages.lock.json
-        tools/StrataLint.TestEvidence/packages.lock.json
-        tools/Trureturing.Truth/packages.lock.json
-        tools/TestSupport/StrataLint.TestSupport/packages.lock.json
-        tools/TestSupport/StrataLint.ProcessTestSupport/packages.lock.json
-
+      unit: tests-worktree-contract
 
   # The one required check. It always runs, so a failed or cancelled unit, or a
   # failed detection, is red rather than skipped.
   required:
     if: always()
-    needs: [detect, banned-api-proof, capability-proof, current, filemap, selftest, tests-architecture, tests-cache, tests-cache-native, tests-cache-release, tests-ci-entry, tests-cli, tests-cli-integration, tests-configuration, tests-cover-batch, tests-declared-template, tests-digestion, tests-engine, tests-filemap, tests-header-script, tests-instruction-contract, tests-integration-mirror, tests-lean, tests-lean-cache-script, tests-lean-report-script, tests-playbook-script, tests-pr-script, tests-report-supervisor, tests-repository-configuration, tests-repository-contract, tests-repository-filemap, tests-repository-topology, tests-resource-observation, tests-rules, tests-scribe, tests-script, tests-source-atomizer, tests-engineering, tests-runtime, tests-test-evidence, tests-truth, tests-truth-release, tests-workflow-script, tests-worktree-contract]
+    needs: [detect, source, banned-api-proof, capability-proof, current, filemap, selftest, tests-architecture, tests-cache, tests-cache-native, tests-cache-release, tests-ci-entry, tests-cli, tests-cli-integration, tests-configuration, tests-cover-batch, tests-declared-template, tests-digestion, tests-engine, tests-fib, tests-filemap, tests-header-script, tests-instruction-contract, tests-integration-mirror, tests-lean, tests-lean-cache-script, tests-lean-report-script, tests-playbook-script, tests-pr-script, tests-report-supervisor, tests-repository-configuration, tests-repository-contract, tests-repository-filemap, tests-repository-topology, tests-resource-observation, tests-rules, tests-scribe, tests-script, tests-source-atomizer, tests-engineering, tests-runtime, tests-test-evidence, tests-truth, tests-truth-release, tests-workflow-script, tests-worktree-contract]
     runs-on: ubuntu-24.04-arm
     timeout-minutes: 10
     steps:
@@ -2705,7 +829,9 @@ jobs:
           ref: ${{ github.sha }}
           fetch-depth: 1
           filter: blob:none
-          sparse-checkout: tools/scripts/workflow
+          sparse-checkout: |
+            tools/scripts/workflow
+            Meta/ci-units.json
           persist-credentials: false
       - env:
           NEEDS: ${{ toJSON(needs) }}

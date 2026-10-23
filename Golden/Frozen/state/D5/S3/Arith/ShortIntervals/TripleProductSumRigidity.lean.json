@@ -1,1 +1,1 @@
-{"statement_id":"sha256:7d290992749a5fb461c30ea3e494122e2986e45620c445f8a7af7ed44fedde79"}
+{"statement_id":"sha256:7d290992749a5fb461c30ea3e494122e2986e45620c445f8a7af7ed44fedde79","declarations":[{"declaration_name_key":"ns(ns(ns(ns(ns(ns(n0,2:D5),2:S3),5:Arith),14:ShortIntervals),24:TripleProductSumRigidity),27:triple_product_sum_rigidity)","kind":"theorem"}]}

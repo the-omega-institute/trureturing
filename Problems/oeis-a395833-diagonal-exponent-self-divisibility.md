@@ -1,6 +1,6 @@
 ---
 slug: oeis-a395833-diagonal-exponent-self-divisibility
-bibkey: hanna2026a395833div
+bibkey: hanna2026a395833
 doi: null
 url: https://oeis.org/A395833
 triage: theorem

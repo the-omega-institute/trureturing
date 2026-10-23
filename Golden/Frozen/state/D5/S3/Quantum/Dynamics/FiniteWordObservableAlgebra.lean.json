@@ -1,1 +1,1 @@
-{"statement_id":"sha256:b0df5d04c84f93de246f65af055c248a917d6c01dfcccfd5e6c49b53c26c61d8"}
+{"statement_id":"sha256:4bf64f144221d0cbc0fc2f9cc9cc2eb18637dfcd3b18e76e67d6d8279a8ffc32","declarations":[{"declaration_name_key":"ns(ns(ns(ns(ns(ns(n0,2:D5),2:S3),7:Quantum),8:Dynamics),27:FiniteWordObservableAlgebra),30:finite_word_observable_algebra)","kind":"theorem"},{"declaration_name_key":"ns(ns(ns(ns(ns(ns(n0,2:D5),2:S3),7:Quantum),8:Dynamics),27:FiniteWordObservableAlgebra),32:finiteWordObservableAlgebraEquiv)","kind":"def"}]}

@@ -1,0 +1,7 @@
+\boxed{
+\mathcal F(z,w)
+:=
+\left|
+\langle\widehat k_z,\widehat k_w\rangle
+\right|^2
+=========

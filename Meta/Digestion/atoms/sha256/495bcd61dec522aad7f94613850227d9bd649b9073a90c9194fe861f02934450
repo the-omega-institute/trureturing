@@ -1,0 +1,27 @@
+**Assumption 58.7 (finite task-policy comparison).** For finite task
+optimization, specify a nonempty finite family $\Pi_{\mathrm{fin}}$ of
+admissible successful deterministic observation-based policies. For every
+$\pi\in\Pi_{\mathrm{fin}}$, require a finite deterministic completed
+$K_\pi^{\mathrm c}$ or, more generally, finite residual index
+
+$$
+n_\pi=\bigl|K_\pi^{\mathrm c}/\mathord{\equiv_\pi}\bigr|<\infty.
+$$
+
+Then $\min_{\pi\in\Pi_{\mathrm{fin}}}n_\pi$ is attained. An effective minimum
+additionally requires effective presentation of the family and exact effective
+residual equality or a certified finite quotient. A minimum over this family
+is a global task minimum only if completeness for the intended controller
+class has separately been proved. If success is not known in advance, start
+with a finite candidate family and decide success under 58.11; its successful
+subfamily must be nonempty before using this minimum.
+
+Finite chart types and finite action/reply alphabets do not imply any of these
+memory or index conditions. For example, after observing an initial unary
+encoding of an arbitrary $n$, a policy may perform $n$ silent ticks and halt.
+Its countdown states have distinct residuals, distinguished by the number of
+ticks before halt, although its action and response alphabets are finite and
+every actual countdown terminates. Finite graph size, finite residual index,
+finite policy enumeration, and finite sourcewise resource bounds are separate
+hypotheses.
+

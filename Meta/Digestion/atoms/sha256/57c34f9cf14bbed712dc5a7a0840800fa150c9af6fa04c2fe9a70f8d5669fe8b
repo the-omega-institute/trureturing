@@ -1,0 +1,46 @@
+**Proof, the two coding directions and effectivity.** Initial $P$ rows
+are distinct and display each exposed slot, by Theorem 11.5. The encoder
+can compute its age from that acquired literal subtree alone:
+
+$$
+a_i=c(X_a|_{w_i})-ib
+     =\gamma_{P,w_i}(R_P(X_a))-s(w_i)-ib.
+\tag{NAR.13.9}
+$$
+
+Thus every code on the finite age domain is realizable from the actual
+initial row without an age oracle. If a sufficient encoder gave the same
+code to adjacent $a,a'$, (NAR.13.8) would present its decoder with the
+same public $S$, the same code and the same entire later row, but different
+required outputs. Necessity follows.
+
+For sufficiency, parse the received later exterior at the selected slots
+and subtract their public offsets to obtain
+
+$$
+z_i=c((\rho^\ell X_a)|_{w_i})-ib=a_i+\ell\qquad(i\in S).
+\tag{NAR.13.10}
+$$
+
+Enumerate the finitely many vectors $u$ with the received code. Fix one
+$i_0\in S$, set $h=z_{i_0}-u_{i_0}$ in $\mathbb Z$, and retain the
+candidate if $h\in L$ and $z_i-u_i=h$ for all $i\in S$. This is a finite
+procedure on acquired finite trees. One may also construct its finite
+$R_{Q_S}(\rho^hX_u)$ and compare the complete literal record; on promised
+inputs (NAR.13.5) makes this an equivalent test. The genuine source is
+among the candidates. Two surviving candidates with different $h$ would
+have a common nonzero displacement on $S$, contradicting properness.
+All surviving candidates therefore have one and the same lag. Return
+that lag. Several different initial vectors at the same lag are harmless.
+Malformed or unpromised inputs may return failure.
+
+This is the single-shot zero-error side-information bridge already proved
+in [Transport--Memory Completion §8.2](RECURSIVE_RELATIONAL_OBSERVATION_TRANSPORT_MEMORY_COMPLETION.md#82-标签恰须切开可能混淆的前缀),
+instantiated with the native entire-row collision just established.
+Numbering the colors gives (NAR.13.6); the generic coloring principle is
+not additional mathematical content here. Overlapping possible later
+inputs are not the fibers of one deterministic source readout. For
+example, when $H=1,r=3,k=2$, the pairs $000,110$ and $110,001$ are edges,
+while $000,001$ is not. Replacing this graph by connected components
+would introduce a false separation obligation. $\square$
+

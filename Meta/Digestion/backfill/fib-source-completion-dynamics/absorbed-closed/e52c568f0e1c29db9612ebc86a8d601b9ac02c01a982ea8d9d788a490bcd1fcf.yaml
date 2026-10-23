@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:e52c568f0e1c29db9612ebc86a8d601b9ac02c01a982ea8d9d788a490bcd1fcf
+  normalized_sha256: sha256:e52c568f0e1c29db9612ebc86a8d601b9ac02c01a982ea8d9d788a490bcd1fcf
+cas_ref: sha256:e52c568f0e1c29db9612ebc86a8d601b9ac02c01a982ea8d9d788a490bcd1fcf
+coverage_gids:
+  - gid: D5/S3/ConceptDynamics/Coding/FibonacciFactorCompletion/Bilateral.bilateral_past_state
+    target_statement_id: sha256:3c463864a7afdca00e72ac91f429fab2c1112a81fb77dde15ce64835e453683a
+receipts:
+  unresolved_subitems: []

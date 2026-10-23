@@ -1,0 +1,25 @@
+**引理 1044.2（只剩三个目标分支）。** 对可行 $C$，有 $\Phi-b\le\Phi/(1+C)$；当 $C>1$ 时还有 $\overline x=b/C$。因此固定 $C$ 的最佳目标仅需下列三个表达式：
+
+$$
+\begin{aligned}
+s_a(C)&=\frac{CM-a}{1+C}-aC-D,
+&&C<1,\ \Phi\le a(1+C),\\
+s_\Phi(C)&=\frac{(1+C^2)(CM-a)}{C(1+C)^2}-a-D,
+&&C<1,\ \Phi\ge a(1+C),\\
+s_b(C)&=\frac bC-b+\frac{CM-a}{1+C}-a-D,
+&&C>1.
+\end{aligned}
+$$
+
+在 $C=1$，目标不依赖可行 $x$，由原式取值。
+
+**证明。** 可行性给出 $\Phi-b\le b/C$，这恰等价于 $\Phi-b\le\Phi/(1+C)$。又有
+
+$$
+\frac bC\le\Phi-\frac DC
+\quad\Longleftrightarrow\quad
+C\ge\frac{3-r-k}{3-r+k},
+$$
+
+右侧阈值严格小于一，所以 $C>1$ 时上端点确为 $b/C$。目标关于 $x$ 的系数为 $1-C$，分别取下端或上端即可。特别地，中间分支代入后系数为 $(1+C^2)/(1+C)$，不得把它改成 $2C/(1+C)$；这种改写会改变驻点结构。
+

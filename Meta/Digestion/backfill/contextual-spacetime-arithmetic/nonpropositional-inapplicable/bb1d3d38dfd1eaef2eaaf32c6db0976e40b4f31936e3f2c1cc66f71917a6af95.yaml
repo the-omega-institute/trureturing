@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:bb1d3d38dfd1eaef2eaaf32c6db0976e40b4f31936e3f2c1cc66f71917a6af95
+  normalized_sha256: sha256:bb1d3d38dfd1eaef2eaaf32c6db0976e40b4f31936e3f2c1cc66f71917a6af95
+cas_ref: sha256:bb1d3d38dfd1eaef2eaaf32c6db0976e40b4f31936e3f2c1cc66f71917a6af95
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 本段只证明前述 D10 子类的历史轨道与分拆计数。
+    previous_atom_id: bff5616ebb3580055920ce319b090d729113ca37a331becf961108ce2b169ebc
+    next_atom_id: 080c34b5a726922efc8fe21e1c545ec6464fa5fce51b7c4675a91a5c02213606

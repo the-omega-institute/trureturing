@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:adf19c68546a5d15cedcc85b12c43d6f8a53be4fec4e751ecb9f62ff21926a3b
+  normalized_sha256: sha256:adf19c68546a5d15cedcc85b12c43d6f8a53be4fec4e751ecb9f62ff21926a3b
+cas_ref: sha256:adf19c68546a5d15cedcc85b12c43d6f8a53be4fec4e751ecb9f62ff21926a3b
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 定义 71.1（固定接口中的不终止距离）仅引入名称、记号或相应谓词的定义条件，不断言该条件成立或另给性质命题。
+    previous_atom_id: 91d1f7b3f0d172a9547e0b2b74bd603e885fc4dad7ad6bf8a3b1e91ff06e7800
+    next_atom_id: eb945ee482be4b4ad17e9e5821177627812d65acba8aec63fc50747adad9f1bb

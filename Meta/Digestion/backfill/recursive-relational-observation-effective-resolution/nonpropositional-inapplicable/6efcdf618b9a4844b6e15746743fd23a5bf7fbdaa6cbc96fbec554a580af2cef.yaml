@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:6efcdf618b9a4844b6e15746743fd23a5bf7fbdaa6cbc96fbec554a580af2cef
+  normalized_sha256: sha256:6efcdf618b9a4844b6e15746743fd23a5bf7fbdaa6cbc96fbec554a580af2cef
+cas_ref: sha256:6efcdf618b9a4844b6e15746743fd23a5bf7fbdaa6cbc96fbec554a580af2cef
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 本 atom 仅指定模 24 例子的已用模数、剩余模数和一次使用约定，并列出表头；实际余数行及反例性质由邻接 atom 承载。
+    previous_atom_id: bf21ae04c9250fa4cc7ab989e7aeed1efc612b2fe94a884b7667d373fddb5bd8
+    next_atom_id: 00222c32d4763cec6576a817037b748ac9af07bfc062f92843149bd50efd40d4

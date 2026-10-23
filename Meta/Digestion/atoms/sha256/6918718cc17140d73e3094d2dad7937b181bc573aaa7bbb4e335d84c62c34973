@@ -1,0 +1,34 @@
+**Definition 29.2 (The closed two-block boundary relation).** For $n=3$ define
+
+$$
+ \Pi_3\quad\Longleftrightarrow\quad
+ r\le2\ \text{ and }\ (m\text{ is odd or }x\ne o\text{ or }y\ne o).
+\tag{29.4}
+$$
+
+For $n=4$, let $N_z=|\{j\in P:\ell(j)=z\}|$ for each $z\in L$. The odd total $T$ implies that either one or three of the four $N_z$ are odd. Let $d$ be the unique label whose multiplicity parity differs from the other three. Define
+
+$$
+ \Pi_4\quad\Longleftrightarrow\quad
+ |K\setminus\{d\}|\le1\ \text{ and }\ (o\notin K\text{ or }d=o).
+\tag{29.5}
+$$
+
+These multiplicities count each actual phase once, not its inherited tails or the histories realizing it. Equivalently, the four-label relation has the following boundary form:
+
+$$
+\begin{array}{c|c}
+ \text{internal image}&\Pi_4\\ \hline
+ r=1&\text{true}\\
+ r\ge3&\text{false}\\
+ K=\{o,z\},\ z\ne o
+   &|\{j\in U:\ell(j)=z\}|\text{ odd}\\
+ r=2,\ o\notin K
+   &m-1+\mathbf1_{\{x\notin K\}}+\mathbf1_{\{y\notin K\}}
+       \text{ even}.
+\end{array}
+\tag{29.6}
+$$
+
+The equivalence is proved with the classification below. Neither relation requires a search through words or a choice of a different second word on different archives.
+

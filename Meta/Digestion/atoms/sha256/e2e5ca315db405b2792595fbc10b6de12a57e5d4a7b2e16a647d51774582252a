@@ -1,0 +1,34 @@
+**条件接口 378.3（量子马尔可夫半群与 Lindblad 演化）。** FIB 步数 $n$、递归层级 $j$ 与物理时间 $t$ 是三个不同指标。若外加每条边的时间长度为 $\Delta t_e\ge0$，且所有边共享同一时间齐次生成元 $\mathcal L$，则可定义量子马尔可夫半群
+
+$$
+\mathcal T_t=e^{t\mathcal L},
+\qquad
+\mathcal T_0=\operatorname{id},
+\qquad
+\mathcal T_{s+t}=\mathcal T_s\circ\mathcal T_t,
+\tag{378.6}
+$$
+
+并令 $\Phi_e=\mathcal T_{\Delta t_e}$。在有限维 Hilbert 空间中，连续且完全正迹保持的半群生成元具有 GKSL 形式
+
+$$
+\mathcal L(\rho)=-i[H,\rho]
++\sum_k\left(
+L_k\rho L_k^*
+-\frac12\{L_k^*L_k,\rho\}
+\right),
+\tag{378.7}
+$$
+
+其中 $H=H^*$ 与 $L_k$ 均为外加算子。若边的生成元依赖层级或路径位置，应改写为时间有序传播
+
+$$
+\Phi_\gamma=\mathcal T\exp\!\left(\int_0^{\tau(\gamma)}
+\mathcal L_{\gamma}(t)\,dt\right),
+\tag{378.8}
+$$
+
+并另外给出分段定义域、可积性和完全正性条件。只有当同一生成元成立且 $\tau(\gamma)=\sum_{e\in\gamma}\Delta t_e$ 时，路径通道才仅依赖总时间；一般情形还依赖边的次序与接缝。无限维空间中，$H$ 或 $L_k$ 可能无界，式（378.7）不能不加定义域、闭性和生成半群条件地直接使用。
+
+若 FIB 只是一棵有限展开树，下降路径会在叶端终止；它本身不能提供任意长时间的平稳半群。要讨论 $t\to\infty$，必须给出相容的无限路径、循环或吸收延拓，以及相应拓扑下的极限。递归层数增长也不能替代物理时间增长，Fibonacci 叶数的指数率更不能直接解释为衰减率、能量或温度。
+

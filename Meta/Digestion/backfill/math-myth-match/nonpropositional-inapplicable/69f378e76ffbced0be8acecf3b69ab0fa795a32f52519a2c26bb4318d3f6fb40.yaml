@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:69f378e76ffbced0be8acecf3b69ab0fa795a32f52519a2c26bb4318d3f6fb40
+  normalized_sha256: sha256:69f378e76ffbced0be8acecf3b69ab0fa795a32f52519a2c26bb4318d3f6fb40
+cas_ref: sha256:69f378e76ffbced0be8acecf3b69ab0fa795a32f52519a2c26bb4318d3f6fb40
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 章节 80. 众多视角共同充分，与每个视角各自映照整体：仅为章节题名，指示讨论主题；无独立命题陈述。
+    previous_atom_id: 64f993252222bbb1bc2ae7cddb54ca9ddcd45db7e452b6e31f6a13f7101e5116
+    next_atom_id: ced5f6a4469413237ba5e4433fb17bedfa087ca92335ddd576ad4346d5a0bf7e

@@ -1,0 +1,37 @@
+{
+  "repository": "https://github.com/TauCetiProject/TauCeti",
+  "revision": "d8fd630a6d98d0e5933f51cb0819ef09f28fa2b4",
+  "files": {
+    "LICENSE": {
+      "sha256": "b40930bbcf80744c86c46a12bc9da056641d722716c378f5659b9e555ef833e1",
+      "url": "https://raw.githubusercontent.com/TauCetiProject/TauCeti/d8fd630a6d98d0e5933f51cb0819ef09f28fa2b4/LICENSE"
+    },
+    "lean-toolchain": {
+      "sha256": "bc84812c94489d1e3e191baa1dc10d5eb684382d7fe9d2a5ab085e72c1c67e47",
+      "url": "https://raw.githubusercontent.com/TauCetiProject/TauCeti/d8fd630a6d98d0e5933f51cb0819ef09f28fa2b4/lean-toolchain"
+    },
+    "lake-manifest.json": {
+      "sha256": "a673a6651af206ebb3d8ca4e1900b70591852599a3b77c444469d72e9696fffe",
+      "url": "https://raw.githubusercontent.com/TauCetiProject/TauCeti/d8fd630a6d98d0e5933f51cb0819ef09f28fa2b4/lake-manifest.json"
+    },
+    "TauCeti/Analysis/Matrix/UnitaryGroup/Basic.lean": {
+      "sha256": "035da15c06911fd22cbb002fa12db0347ab3c108ad553b9cc0b72eebfb1e8f2f",
+      "url": "https://raw.githubusercontent.com/TauCetiProject/TauCeti/d8fd630a6d98d0e5933f51cb0819ef09f28fa2b4/TauCeti/Analysis/Matrix/UnitaryGroup/Basic.lean"
+    }
+  },
+  "notice_paths": [],
+  "tree_truncated": false,
+  "upstream_toolchain": "leanprover/lean4:v4.35.0-rc3",
+  "repository_toolchain": "leanprover/lean4:v4.33.0",
+  "upstream_mathlib": "1b5006ca00888f8aaafa8939b28787d423e44bba",
+  "repository_mathlib": "db584cd6d46c92f209a44c0f1c829460d327499d",
+  "transplant": {
+    "owner": "D5/S3/Quantum/Algebra/TraceKernelFunctionPolarization",
+    "copyright": "Copyright (c) 2026 The Tau Ceti contributors. All rights reserved.",
+    "authors": "The Tau Ceti contributors",
+    "license": "Apache-2.0",
+    "adaptations": "Specialize SU-circle content proof at Fin N and inline Circle.coe_mem_unitary within single polarization theorem; no named supplier or bind-only companion retained.",
+    "retirement": "On our own pinned Mathlib, locate an equivalent Matrix.exists_circle_smul_mem_specialUnitaryGroup, verify the full type and compile its direct Fin N application, then delete local transplant and cite that declaration.",
+    "new_mathematical_credit": false
+  }
+}

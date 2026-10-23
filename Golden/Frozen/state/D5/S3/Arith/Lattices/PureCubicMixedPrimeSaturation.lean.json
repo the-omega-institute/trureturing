@@ -1,1 +1,1 @@
-{"statement_id":"sha256:f85e7d5a08cd16d795386f40de7c7a7b5a7afcc2b5b262385e44c143d9b41127"}
+{"statement_id":"sha256:c0586e28b0488ba2a37448d3115634bc16c2c08132c627ff623d2183812cd0e1","declarations":[{"declaration_name_key":"ns(ns(ns(n0,10:PowerBasis),13:ofAdjoinEqTop),10:congr_simp)","kind":"theorem"},{"declaration_name_key":"ns(ns(ns(ns(ns(ns(n0,2:D5),2:S3),5:Arith),8:Lattices),29:PureCubicMixedPrimeSaturation),33:pure_cubic_mixed_prime_saturation)","kind":"theorem"}]}

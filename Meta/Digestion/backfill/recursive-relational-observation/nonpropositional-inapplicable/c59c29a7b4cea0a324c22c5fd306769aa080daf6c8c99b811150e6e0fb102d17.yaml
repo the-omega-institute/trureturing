@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:c59c29a7b4cea0a324c22c5fd306769aa080daf6c8c99b811150e6e0fb102d17
+  normalized_sha256: sha256:c59c29a7b4cea0a324c22c5fd306769aa080daf6c8c99b811150e6e0fb102d17
+cas_ref: sha256:c59c29a7b4cea0a324c22c5fd306769aa080daf6c8c99b811150e6e0fb102d17
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: theorem 65.1（引理：两个局部查询的精确纤维）。的证明段，仅展开该陈述的推导及说明，不另提出独立命题；本收据不替代原陈述的形式化覆盖。
+    previous_atom_id: d77f558e07084423e76101d1d8e37c88bfb57748df504c1597cd7acf2f474940
+    next_atom_id: e5ec126754b747208fbfda132ef18757a5b376f036cd84108da72aadb0769eca

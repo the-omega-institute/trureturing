@@ -1,0 +1,11 @@
+若要构造真正的 inverse-limit phase completion，需要：
+
+* 使用整除有向的全部模数；
+* 或使用：
+
+  $$
+  \operatorname{lcm}(F_2,\ldots,F_N)
+  $$
+
+  形成整除塔。
+

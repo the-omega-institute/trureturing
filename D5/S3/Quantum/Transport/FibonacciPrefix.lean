@@ -99,6 +99,96 @@ def diagonalAlgebra (d : ℕ) [NeZero d] : Subalgebra ℂ
     (Matrix (ZMod d × ZMod d) (ZMod d × ZMod d) ℂ) :=
   (Matrix.diagonalAlgHom (n := ZMod d × ZMod d) (α := ℂ) ℂ).range
 
+/- The following proof sources are shared by the prefix and endpoint results.
+   They live here because this module owns the native trajectories and their
+   moving pullback.  The endpoint theorem consumes these declarations directly
+   instead of rebuilding equivalent local proofs. -/
+
+def low_power (r m : ℕ) :
+    lowTrajectory r m =
+      D5.S3.Quantum.Algebra.CarryTransport.FibonacciOutputAlgebra.fibonacci r ^ m := by
+  induction m with
+  | zero => rfl
+  | succ m ih =>
+    rw [pow_succ', ← ih]
+    simp [lowTrajectory, Equiv.Perm.mul_def]
+
+def joint_power (d e : ℕ) [NeZero d] [NeZero e]
+    (hd : 2 ≤ d) (he : 2 ≤ e) (m : ℕ) :
+    jointTrajectory d e m =
+      D5.S3.Quantum.Algebra.CarryTransport.FibonacciOutputAlgebra.transport d e ^ m := by
+  have hact :=
+    (D5.S3.Quantum.Algebra.CarryTransport.FibonacciOutputAlgebra.result d e hd he).1
+  induction m with
+  | zero => apply Equiv.ext; intro x; rfl
+  | succ m ih =>
+    rw [pow_succ', ← ih]
+    apply Equiv.ext
+    rintro ⟨a,h⟩
+    simp [jointTrajectory, lowTrajectory, fibreTrajectory, Equiv.Perm.mul_apply,
+      Equiv.trans_apply, hact, carryHistory]
+
+def matrix_conjugation {X : Type*} [Fintype X] [DecidableEq X]
+    (q : Equiv.Perm X) (B : Matrix X X ℂ) :
+    q.permMatrix ℂ * B * Equiv.Perm.permMatrix ℂ q.symm = B.submatrix q q := by
+  rw [Equiv.Perm.permMatrix, PEquiv.toMatrix_toPEquiv_mul,
+    Equiv.Perm.permMatrix, PEquiv.mul_toMatrix_toPEquiv]
+  rfl
+
+def matrix_pullback {X : Type*} [Fintype X] [DecidableEq X]
+    (q : Equiv.Perm X) (B : Matrix X X ℂ) :
+    (Matrix.permMatrixHom (R := ℂ) q)ᴴ * B * Matrix.permMatrixHom q =
+      B.submatrix q q := by
+  simpa only [Matrix.permMatrixHom_apply, Matrix.conjTranspose_permMatrix,
+    inv_inv, Equiv.Perm.inv_def, Equiv.symm_symm] using matrix_conjugation q B
+
+def movingPullback_mem_iff (d e t : ℕ) [NeZero d] [NeZero e]
+    (B : Matrix (ZMod d × ZMod d) (ZMod d × ZMod d) ℂ) :
+    movingPullback d e t B ∈
+        (D5.S3.Quantum.Algebra.CarryTransport.FibonacciOutputAlgebra.lowTensor d e).range ↔
+      ∀ a b, B a b ≠ 0 → fibreTrajectory d e a t = fibreTrajectory d e b t := by
+  have hentry (a b : ZMod d × ZMod d) (h h' : ZMod e × ZMod e) :
+      movingPullback d e t B (a,h) (b,h') =
+        if fibreTrajectory d e a t h = fibreTrajectory d e b t h' then B a b else 0 := by
+    simp [movingPullback, Matrix.reindex_apply, jointTrajectory,
+      D5.S3.Quantum.Algebra.CarryTransport.FibonacciOutputAlgebra.lowTensor,
+      Matrix.one_apply, mul_ite]
+  have hlowentry (C : Matrix (ZMod d × ZMod d) (ZMod d × ZMod d) ℂ)
+      (a b : ZMod d × ZMod d) (h h' : ZMod e × ZMod e) :
+      D5.S3.Quantum.Algebra.CarryTransport.FibonacciOutputAlgebra.lowTensor d e C (a,h) (b,h') =
+        if h = h' then C a b else 0 := by
+    simp [D5.S3.Quantum.Algebra.CarryTransport.FibonacciOutputAlgebra.lowTensor,
+      Matrix.one_apply, mul_ite]
+  constructor
+  · rintro ⟨C, hC⟩ a b hB
+    change D5.S3.Quantum.Algebra.CarryTransport.FibonacciOutputAlgebra.lowTensor d e C =
+      movingPullback d e t B at hC
+    apply Equiv.ext
+    intro h
+    let h' := (fibreTrajectory d e b t).symm (fibreTrajectory d e a t h)
+    have hh : h' = h := by
+      by_contra hne
+      have heq := congrArg (fun X => X (a,h) (b,h')) hC
+      rw [hentry, hlowentry] at heq
+      have hneq : h ≠ h' := Ne.symm hne
+      have himg : fibreTrajectory d e a t h = fibreTrajectory d e b t h' := by
+        simp [h']
+      rw [if_neg hneq, if_pos himg] at heq
+      exact hB heq.symm
+    have himg : fibreTrajectory d e b t h' = fibreTrajectory d e a t h := by simp [h']
+    rw [hh] at himg
+    exact himg.symm
+  · intro h
+    refine ⟨B, ?_⟩
+    change D5.S3.Quantum.Algebra.CarryTransport.FibonacciOutputAlgebra.lowTensor d e B =
+      movingPullback d e t B
+    ext ⟨a,u⟩ ⟨b,v⟩
+    rw [hentry, hlowentry]
+    by_cases hB : B a b = 0
+    · simp [hB]
+    · rw [h a b hB]
+      simp only [Equiv.apply_eq_iff_eq]
+
 /-- Integer prefix evolution, collision bound, period rigidity and strict threshold. -/
 theorem fibonacci_prefix_transport (d e : ℕ) [NeZero d] [NeZero e]
     (hd : 2 ≤ d) (he : 2 ≤ e) :
@@ -381,37 +471,8 @@ theorem fibonacci_prefix_transport (d e : ℕ) [NeZero d] [NeZero e]
       (a b : ZMod d × ZMod d) (h h' : ZMod e × ZMod e) :
       D5.S3.Quantum.Algebra.CarryTransport.FibonacciOutputAlgebra.lowTensor d e B (a,h) (b,h') = if h = h' then B a b else 0 := by
     simp [D5.S3.Quantum.Algebra.CarryTransport.FibonacciOutputAlgebra.lowTensor, Matrix.one_apply, mul_ite]
-  have htime (t : ℕ) (B : Matrix (ZMod d × ZMod d) (ZMod d × ZMod d) ℂ) :
-      movingPullback d e t B ∈ (D5.S3.Quantum.Algebra.CarryTransport.FibonacciOutputAlgebra.lowTensor d e).range ↔
-        ∀ a b, B a b ≠ 0 → fibreTrajectory d e a t = fibreTrajectory d e b t := by
-    constructor
-    · rintro ⟨C, hC⟩ a b hB
-      change D5.S3.Quantum.Algebra.CarryTransport.FibonacciOutputAlgebra.lowTensor d e C = movingPullback d e t B at hC
-      apply Equiv.ext
-      intro h
-      let h' := (fibreTrajectory d e b t).symm (fibreTrajectory d e a t h)
-      have hh : h' = h := by
-        by_contra hne
-        have heq := congrArg (fun X => X (a,h) (b,h')) hC
-        rw [hentry, hlowentry] at heq
-        have hneq : h ≠ h' := Ne.symm hne
-        have himg : fibreTrajectory d e a t h = fibreTrajectory d e b t h' := by
-          simp [h']
-        rw [if_neg hneq, if_pos himg] at heq
-        exact hB heq.symm
-      have himg : fibreTrajectory d e b t h' = fibreTrajectory d e a t h := by
-        simp [h']
-      rw [hh] at himg
-      exact himg.symm
-    · intro h
-      refine ⟨B, ?_⟩
-      change D5.S3.Quantum.Algebra.CarryTransport.FibonacciOutputAlgebra.lowTensor d e B = movingPullback d e t B
-      ext ⟨a,u⟩ ⟨b,v⟩
-      rw [hentry, hlowentry]
-      by_cases hB : B a b = 0
-      · simp [hB]
-      · rw [h a b hB]
-        simp only [Equiv.apply_eq_iff_eq]
+  have htime (t : ℕ) (B : Matrix (ZMod d × ZMod d) (ZMod d × ZMod d) ℂ) :=
+    movingPullback_mem_iff d e t B
   have hmem (N : ℕ) (B : Matrix (ZMod d × ZMod d) (ZMod d × ZMod d) ℂ) :
       B ∈ prefixAlgebra d e N ↔
         ∀ t, 1 ≤ t → t ≤ N → movingPullback d e t B ∈ (D5.S3.Quantum.Algebra.CarryTransport.FibonacciOutputAlgebra.lowTensor d e).range := by
@@ -491,30 +552,18 @@ theorem fibonacci_prefix_transport (d e : ℕ) [NeZero d] [NeZero e]
       apply (hsupport N B).2
       intro a b hab
       exact (hdiag B).1 hB a b (fun heq => hab (congrArg (carryPrefix d N) heq))
-  have hlowpow : ∀ t, lowTrajectory d t = (lowTrajectory d 1) ^ t := by
-    intro t
-    induction t with
-    | zero => rfl
-    | succ t ih =>
-      rw [pow_succ', ← ih]
-      simp [lowTrajectory, Equiv.Perm.mul_def]
-  have hjointstep (t : ℕ) :
-      jointTrajectory d e (t + 1) = jointTrajectory d e 1 * jointTrajectory d e t := by
-    apply Equiv.ext
-    rintro ⟨a,h⟩
-    simp [jointTrajectory, lowTrajectory, fibreTrajectory, carryHistory,
-      Equiv.Perm.mul_def, Equiv.trans_apply]
-  have hjointpow : ∀ t, jointTrajectory d e t = (jointTrajectory d e 1) ^ t := by
-    intro t
-    induction t with
-    | zero => apply Equiv.ext; intro x; rfl
-    | succ t ih => rw [pow_succ', ← ih, hjointstep]
-  have hconjugate {X : Type} [Fintype X] [DecidableEq X]
-      (q : Equiv.Perm X) (B : Matrix X X ℂ) :
-      q.permMatrix ℂ * B * Equiv.Perm.permMatrix ℂ q.symm = B.submatrix q q := by
-    rw [Equiv.Perm.permMatrix, PEquiv.toMatrix_toPEquiv_mul,
-      Equiv.Perm.permMatrix, PEquiv.mul_toMatrix_toPEquiv]
-    rfl
+  have hlowpow (t : ℕ) : lowTrajectory d t = (lowTrajectory d 1) ^ t := by
+    calc
+      lowTrajectory d t =
+        D5.S3.Quantum.Algebra.CarryTransport.FibonacciOutputAlgebra.fibonacci d ^ t :=
+        low_power d t
+      _ = (lowTrajectory d 1) ^ t := by rw [hsource_low]
+  have hjointpow (t : ℕ) : jointTrajectory d e t = (jointTrajectory d e 1) ^ t := by
+    calc
+      jointTrajectory d e t =
+        D5.S3.Quantum.Algebra.CarryTransport.FibonacciOutputAlgebra.transport d e ^ t :=
+        joint_power d e hd he t
+      _ = (jointTrajectory d e 1) ^ t := by rw [hsource_joint]
   have hmatrix_old (t : ℕ) (B : Matrix (ZMod d × ZMod d) (ZMod d × ZMod d) ℂ) :
       movingPullback d e t B =
         ((Matrix.permMatrixHom (R := ℂ) (jointTrajectory d e 1)) ^ t)ᴴ *
@@ -536,9 +585,14 @@ theorem fibonacci_prefix_transport (d e : ℕ) [NeZero d] [NeZero e]
       Equiv.Perm.permMatrix ℂ (jointTrajectory d e t).symm
     rw [Matrix.conjTranspose_permMatrix, Matrix.conjTranspose_permMatrix]
     simp only [Equiv.Perm.inv_def, Equiv.symm_symm]
-    have hlowconj := hconjugate (lowTrajectory d t).symm B
-    simp only [Equiv.symm_symm] at hlowconj
-    rw [hconjugate (jointTrajectory d e t), hlowconj]
+    rw [matrix_conjugation (jointTrajectory d e t)]
+    have hlowconj :
+        (Equiv.Perm.permMatrix ℂ (lowTrajectory d t).symm) * B *
+            Equiv.Perm.permMatrix ℂ (lowTrajectory d t) =
+          B.submatrix (lowTrajectory d t).symm (lowTrajectory d t).symm := by
+      simpa only [Equiv.symm_symm] using
+        (matrix_conjugation (lowTrajectory d t).symm B)
+    rw [hlowconj]
     rfl
   have hmatrix (t : ℕ) (B : Matrix (ZMod d × ZMod d) (ZMod d × ZMod d) ℂ) :
       movingPullback d e t B =

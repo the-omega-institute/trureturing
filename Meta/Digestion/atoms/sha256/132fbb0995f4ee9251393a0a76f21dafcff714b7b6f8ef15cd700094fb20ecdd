@@ -1,0 +1,7 @@
+## —Action-closed quotients, task controllers, and source-uniform kernels
+
+> **Machine contract.** This is a `generic-v1` theory reference volume. The
+> definitions and results below are ordinary mathematical prose, not Lean
+> declarations. They make no kernel-verification claim. The volume is an
+> append-only source and ends with an append anchor.
+

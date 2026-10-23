@@ -1,0 +1,6 @@
+## 47. Uniform finite-profile and history-state correction
+
+The finite-profile restriction in Definition 46.3 must also be present in the
+certificate used to decide mixed feasibility. Per-source finite termination
+alone is insufficient on an infinite source domain.
+

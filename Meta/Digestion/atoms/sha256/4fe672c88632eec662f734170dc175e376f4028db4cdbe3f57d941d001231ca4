@@ -1,0 +1,19 @@
+**证明。** 记 $z=\zeta$,这时 $z$ 是 $\mathbb F_{16}$ 中的本原 $5$ 次单位根,满足 $1+z+z^2+z^3+z^4=0$。$\lambda_1=1$,$\lambda_2=\lambda_3=z$,$\lambda_4,\lambda_5,\lambda_6=z^2,z^3,z^4$;七条边的端点取值都不同,故 $H_t=\Gamma$。按 $\{1,2,3\},\{4,5,6\}$ 排序,$M_t=\begin{pmatrix}0&W\\ W^{\mathsf T}&0\end{pmatrix}$、$\Gamma^{\pi_t}=\begin{pmatrix}0&B\\ B^{\mathsf T}&0\end{pmatrix}$,其中 $B$ 的行依次为 $(1,1,1)$、$(1,0,1)$、$(1,1,0)$,$W_{xy}=B_{xy}(\lambda_x+\lambda_y)$。故 $\rho_t=2\operatorname{rank}_FW$,$r(\pi_t)=2\operatorname{rank}_{\mathbb F_2}B$。使 $\prod_xB_{x\sigma(x)}=1$ 的双射 $\sigma:\{1,2,3\}\to\{4,5,6\}$ 恰有三个:$(2,3,1)\mapsto(4,5,6)$、$(2,3,1)\mapsto(6,4,5)$、$(2,3,1)\mapsto(6,5,4)$。于是 $\det_{\mathbb F_2}B=3\bmod2=1$,$r(\pi_t)=6$;而在特征 $2$ 中
+
+$$
+\det W=T_1+T_2+T_3,\qquad
+\begin{aligned}
+T_1&=(z+z^2)(z+z^3)(1+z^4)=z^2(1+z)^7,\\
+T_2&=(z+z^4)(z+z^2)(1+z^3)=z^2(1+z)(1+z^3)^2,\\
+T_3&=(z+z^4)(z+z^3)(1+z^2)=z^2(1+z)^4(1+z^3),
+\end{aligned}
+$$
+
+这里用了 $z+z^4=z(1+z^3)$、$1+z^2=(1+z)^2$、$1+z^4=(1+z)^4$。令 $s=1+z\ne0$ 与 $g=1+z+z^2$,则 $1+z^3=sg$,
+
+$$
+\frac{T_1+T_2+T_3}{z^2s^3}=s^4+g^2+s^2g=(1+z^4)+(1+z^2+z^4)+(1+z^2)(1+z+z^2)=1+z+z^2+z^3+z^4=0 .
+$$
+
+故 $\det W=0$。$W$ 的第 $2,3$ 行与第 $4,5$ 列构成的子式为 $W_{24}W_{35}-W_{25}W_{34}=W_{24}W_{35}\ne0$($W_{25}=0$),所以 $\operatorname{rank}_FW=2$,$\rho_t=4$。∎
+

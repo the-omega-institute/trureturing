@@ -7,6 +7,7 @@
    digest: The convex hull of admissible binary path words equals the bounded edge polytope. -/
 
 import D5.S1.Words.AdmissibleWords.AdmissibleCount
+import Mathlib
 
 set_option autoImplicit false
 noncomputable section

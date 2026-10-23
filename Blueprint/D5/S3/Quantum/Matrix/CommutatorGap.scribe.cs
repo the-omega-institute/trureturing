@@ -34,7 +34,8 @@ internal sealed class CommutatorGapDocument : IScribeDocumentDefinition
             Item("frobSq_unitary_right","Right unitary invariance",All([B("n",N),B("A",Mat(n)),B("U",Unit(n))],Eqn(Frob(Mul(a,Call("val",u))),fs)),"Trace cycling cancels the unitary and its conjugateTranspose."),
             Item("opSq_le_frobSq","Operator square is at most Frobenius square",All([B("n",N),B("A",Mat(n))],LeqF(Call("opSq",a),fs)),"The Frobenius multiplication inequality bounds every Euclidean input."),
             Item("gap_nonnegative","Nonnegative commutator gap",All([B("n",N),B("A",Mat(n))],LeqF(Num(0),gg)),"A maximizing pure vector provides a unitary block frame and a nonnegative lower bound. The empty dimension is included."),
-            Item("translation_gap","Uniform scalar translation bound",All([B("n",N),B("A",Mat(n)),B("c",C)],scalarTranslation),"A maximizing block frame controls the real comparison matrix by its two-by-two Frobenius norm. Unitary covariance transfers the estimate to A."))));
+            Item("translation_gap","Uniform scalar translation bound",All([B("n",N),B("A",Mat(n)),B("c",C)],scalarTranslation),"A maximizing block frame controls the real comparison matrix by its two-by-two Frobenius norm. Unitary covariance transfers the estimate to A."),
+            Publication0())));
     }
 
     private static Formula Call(string name, params Formula[] args) =>
@@ -70,4 +71,12 @@ internal sealed class CommutatorGapDocument : IScribeDocumentDefinition
             DeclarationHandle.Create(Owner + name), H(title), StatementSource.FromAuthor(Disp(formula)),
             provenance ?? AssessedProvenance.FromRepo(), Blocks(Paragraph(Text(explanation))),
             definition ? DescribeRole.Definition : DescribeRole.Theorem);
+
+    private static DocumentBlock Publication0() =>
+        Describe.Lean(DescribeId.Create("publication-frobsq-unitary-left"),
+            DeclarationHandle.Create("D5/S3/Quantum/Matrix/CommutatorGap.frobSq_unitary_left"), H("frobSq unitary left"),
+            StatementSource.FromAuthor(Disp(PublicationFormula0())), AssessedProvenance.FromRepo(),
+            Blocks(Paragraph(Text("Left multiplication by a unitary preserves the squared Frobenius norm."))), DescribeRole.Theorem);
+    private static Formula PublicationFormula0() =>
+        Seq(Forall, Sp, Parenthesized(Seq(F.Id("n"), Sp, Colon, Sp, Seq(Mathbb, Grp(F.Id("N"))))), Sp, Parenthesized(Seq(F.Id("A"), Sp, Colon, Sp, F.Id("Matrix"), Sp, Parenthesized(Seq(F.Id("Fin"), Sp, F.Id("n"))), Sp, Parenthesized(Seq(F.Id("Fin"), Sp, F.Id("n"))), Sp, Seq(Mathbb, Grp(F.Id("C"))))), Sp, Parenthesized(Seq(F.Id("U"), Sp, Colon, Sp, F.Id("Matrix"), Sp, Dot, Sp, F.Id("unitaryGroup"), Sp, Parenthesized(Seq(F.Id("Fin"), Sp, F.Id("n"))), Sp, Seq(Mathbb, Grp(F.Id("C"))))), Sp, Comma, Sp, F.Id("RHLinalg"), Sp, Dot, Sp, F.Id("frobSq"), Sp, Parenthesized(Seq(Parenthesized(Seq(F.Id("U"), Sp, Colon, Sp, F.Id("Matrix"), Sp, Parenthesized(Seq(F.Id("Fin"), Sp, F.Id("n"))), Sp, Parenthesized(Seq(F.Id("Fin"), Sp, F.Id("n"))), Sp, Seq(Mathbb, Grp(F.Id("C"))))), Sp, Cdot, Sp, F.Id("A"))), Sp, Eq, Sp, F.Id("RHLinalg"), Sp, Dot, Sp, F.Id("frobSq"), Sp, F.Id("A"));
 }

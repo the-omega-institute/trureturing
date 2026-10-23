@@ -1,0 +1,24 @@
+**Proof.** In (NAR.16.13), $t\le L+\lfloor K/2\rfloor\le U$ when
+$K\ge2$, so $s\le\lfloor U/2\rfloor$. Every later interval is a
+subinterval of the initial one. For the first-slot search its original
+upper endpoint $c_0+z=\ell+a_0+a_i$ is at most $\ell+2H$.
+The word has $D+s$ literal letters. Multiply its bound by the already
+established call bound. For a hidden $j$ in Theorem 16.5 the upper
+endpoint is $jq+z+H\le jq+\ell+2H$, and $j\le r-1$, giving
+(NAR.16.22). Label attainment and representation follow from Theorem
+16.4. No optimum for summed or maximum addresses follows from an upper
+bound on this particular construction.
+
+The acquired rows can themselves grow with the lag. Parsing their
+literal syntax, computing clocks and interval endpoints, constructing
+and transmitting long words, and enumerating compatible profiles have
+costs outside the retained-label and raw-call coordinates. The integer
+output has unbounded size as $\ell$ ranges without bound; its usual
+binary representation has $\lceil\log_2(\ell+1)\rceil$ bits for
+$\ell\ge1$, with a separate representation convention at zero.
+A public table for a fixed $e$ is common control data, while a
+source-dependent pre-discard table choice would count as retained code.
+No total or peak memory, running-time, execution, acquisition-cost or
+physical-time bound is established by (NAR.16.21)--(NAR.16.22).
+$\square$
+

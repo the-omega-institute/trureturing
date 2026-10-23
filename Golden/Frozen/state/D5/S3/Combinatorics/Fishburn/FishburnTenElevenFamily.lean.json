@@ -1,1 +1,1 @@
-{"statement_id":"sha256:0865f667ab6cf0daee7322acfe182dbe8d0acacf9bd0cf7f3f7bdf1fc467e203"}
+{"statement_id":"sha256:0865f667ab6cf0daee7322acfe182dbe8d0acacf9bd0cf7f3f7bdf1fc467e203","declarations":[{"declaration_name_key":"ns(ns(ns(ns(ns(ns(n0,2:D5),2:S3),13:Combinatorics),8:Fishburn),23:FishburnTenElevenFamily),15:pairPermutation)","kind":"def"},{"declaration_name_key":"ns(ns(ns(ns(ns(ns(n0,2:D5),2:S3),13:Combinatorics),8:Fishburn),23:FishburnTenElevenFamily),17:pair_construction)","kind":"theorem"}]}

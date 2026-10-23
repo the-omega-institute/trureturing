@@ -1,0 +1,24 @@
+**定义 31.5（半周期根签名与合法公开延迟）。** 对 $y\in\mathbb Z_m$，以 $[y]_m\in\{0,\ldots,m-1\}$ 表示标准整数代表，定义
+
+$$
+\lambda(y)=\begin{cases}0,&[y]_m<k,\\1,&k\le[y]_m<m.\end{cases}
+\qquad \lambda(y+k)=\lambda(y)+1\quad\text{于 }\mathbb Z_2.
+$$
+
+对实际首快照 $A=(a,t,(u_i)_{i=2}^r)$ 定义根签名
+
+$$
+\sigma(A)=\bigl(\lambda(\zeta(u_3)),\ldots,\lambda(\zeta(u_r))\bigr)
+\in\Sigma=\mathbb Z_2^{r-2}.
+$$
+
+这是从实际首读数计算的签名，不是免费取得隐藏发送者比特。其字母表含 $Q$ 个元素。
+
+合法公开延迟是一个固定函数 $D:\mathbb Z_m\to\mathbb N_{>0}$，满足
+
+$$
+f(z+D(z))\ne f(z)\qquad\forall z\in\mathbb Z_m.
+$$
+
+记 $\mathcal D=\operatorname{range}D$、$D_{\max}=\max_zD(z)$。$D(z)$ 是实际单位命令数；不只保存它的模 $m$ 余数。允许 $D(z)\ge m$，合法性仍由上述实际循环终点检验。非恒定 $f$ 的 $D=\delta$ 合法，恒定 $f$ 没有合法 $D$。
+

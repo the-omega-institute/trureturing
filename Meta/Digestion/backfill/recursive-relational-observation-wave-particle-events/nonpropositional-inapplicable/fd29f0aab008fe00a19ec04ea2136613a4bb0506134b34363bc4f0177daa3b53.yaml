@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:fd29f0aab008fe00a19ec04ea2136613a4bb0506134b34363bc4f0177daa3b53
+  normalized_sha256: sha256:fd29f0aab008fe00a19ec04ea2136613a4bb0506134b34363bc4f0177daa3b53
+cas_ref: sha256:fd29f0aab008fe00a19ec04ea2136613a4bb0506134b34363bc4f0177daa3b53
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 243. 实验精化序与边界的单调收缩 是章节标题及导引，只说明本节的研究任务、来源或模型范围，不另陈述具体性质、公式或反例。
+    previous_atom_id: 861123c0cf03710ef20f2bfa55064b34d3e05c30250b223aba6dcb8aa3ea6c67
+    next_atom_id: e887d894666bf3f88f3306fc97a5ff2ab21151200fecd3f468ce083e6a846952

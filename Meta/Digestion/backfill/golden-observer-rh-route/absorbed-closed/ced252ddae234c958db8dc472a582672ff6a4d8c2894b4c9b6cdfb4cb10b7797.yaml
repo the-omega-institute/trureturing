@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:ced252ddae234c958db8dc472a582672ff6a4d8c2894b4c9b6cdfb4cb10b7797
+  normalized_sha256: sha256:ced252ddae234c958db8dc472a582672ff6a4d8c2894b4c9b6cdfb4cb10b7797
+cas_ref: sha256:ced252ddae234c958db8dc472a582672ff6a4d8c2894b4c9b6cdfb4cb10b7797
+coverage_gids:
+  - gid: D5/S3/Weil/Separator/ArchimedeanConvergence.archimedeanConvergent_of_weilTestFunction
+    target_statement_id: sha256:686b2d2ac8ec9c3bc18656b5965808c78e0fcc2e8aa1d7569d93b6a7dd352aee
+receipts:
+  unresolved_subitems: []

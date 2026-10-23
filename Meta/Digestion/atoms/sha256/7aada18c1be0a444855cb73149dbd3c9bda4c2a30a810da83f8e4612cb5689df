@@ -1,0 +1,28 @@
+**命题 44.6（§107 顺序边界的三维泄漏见证）。** 取
+
+$$
+A=\begin{pmatrix}
+1&0&0\\
+0&2&1\\
+0&1&2
+\end{pmatrix},
+\qquad C(x)=x_1,
+$$
+
+并令 $T$ 交换 $e_1,e_3$ 而固定 $e_2$。则在 §107 的顺序合同下
+
+$$
+K_{\mathrm{stat}}=\operatorname{span}(e_2,e_3),
+\qquad
+K_{\mathrm{fut}}=\operatorname{span}(e_2),
+$$
+
+但交错词先做 $A$ 再做 $T$ 时有
+
+$$
+C T A e_2=1.
+\tag{44.6}
+$$
+
+所以 $e_2$ 对 §107 的未来核不可见，却不属于混合未来核。
+

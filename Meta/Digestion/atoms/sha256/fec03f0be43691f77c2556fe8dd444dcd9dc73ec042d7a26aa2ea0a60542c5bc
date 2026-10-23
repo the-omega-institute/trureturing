@@ -1,0 +1,24 @@
+**Corollary 14.3 (one controller's exact native resource witness).** For
+one fixed regime let $C^I_{h,T}$ denote the complete intermediate table
+and let $\widehat C_{h,T}$ be Theorem 14.2's realization. On each same
+allowed $(u,t)$,
+
+$$
+Q_{\widehat C}(u,t)=Q_I(u,t),\qquad
+U_{\widehat C}(u,t)=U_I(u,t),\qquad
+b_{\widehat C}(u,t)=Q_I(u,t)+U_I(u,t).
+\tag{SLHC.14.3}
+$$
+
+Every actual ordered literal and reply is unchanged. In particular,
+decoder guards and second Reads remain separate paid calls even when their
+addresses coincide. Polling includes every absent reply before an Update
+and the final $\alpha$ reply. All counts stop at first Halt.
+The following bounds hold simultaneously for this one realization in each
+row, with $P,A_*$ as in §11.1:
+
+| Original regime | Exact or bounded calls | Submitted literal bounds | Complete width and installed words |
+| --- | --- | --- | --- |
+| $T=0$, every $h$ | $Q=2h-1$, $U=0$ | $P=h-1$, $A\le(2h-1)(h-1)$ | $\ell_0$, $M_0$, with $e=0$ |
+| Static, even $h$, $T\ge1$ | $U=0$, $Q\le(T+1)(4h-2)=H$ | $P=h-1+\lceil T/2\rceil$, $A\le HP$ | $\ell_0$, $M_0$, with $e=\lambda(T+1)$ |
+| Active, even $h$, $T\ge1$ | $U=B-t-\kappa(u)$, $Q\le U+1+2h(4h-2)$ | $P=h-1+B/2$, $A\le(B+1)B/2+2h(4h-2)P$ | $\ell_0$, $M_0$, with $e=\lambda(2h)$ |

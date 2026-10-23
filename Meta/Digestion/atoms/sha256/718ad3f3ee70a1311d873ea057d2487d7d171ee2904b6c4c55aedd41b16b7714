@@ -1,0 +1,17 @@
+**Proof.** Formula (NAR.11.6) gives, for every word $w$,
+
+$$
+J^c_w(T_n)=J^c_w(\alpha)+n.
+\tag{NAR.11.19}
+$$
+
+Choose any public $w\in A_D(P)$ initially. The first exterior factor
+recovers $n$ by subtracting the public $J^c_w(\alpha)$, which is zero.
+After $Q$ is learned, select any common exposed depth-$D$ word $v$ as
+in Theorem 11.3. Its later factor is $J^c_v(\alpha)+n+k$; subtract
+the public initial-alpha constant and the retained $n$. This works
+also before $v$ becomes reached. All the frontier coordinates on this
+orbit equal $n$ and cannot vary independently. The separated-age
+skeleton family belongs to the larger all-finite-source domain; its
+$r$-age lower bound is not inferred from this one orbit. $\square$
+

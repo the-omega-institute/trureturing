@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:d868bab51a45cc60864589e604a6a4e8a5b04761f779573225d4511568ce3689
+  normalized_sha256: sha256:d868bab51a45cc60864589e604a6a4e8a5b04761f779573225d4511568ce3689
+cas_ref: sha256:d868bab51a45cc60864589e604a6a4e8a5b04761f779573225d4511568ce3689
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 证明。：该段仅论证前文命题 25.5（模型内的条件性后果与应用失配）。，不另立新的命题陈述；前文命题本身仍保留。
+    previous_atom_id: 001adb293281bf4c11668a929cca812f1092d60bbf09459a68da19ed58ec2f37
+    next_atom_id: c04937a9b06f028c97710da184b1d59a9eddffcb6b3c67a1084466329cf3c360

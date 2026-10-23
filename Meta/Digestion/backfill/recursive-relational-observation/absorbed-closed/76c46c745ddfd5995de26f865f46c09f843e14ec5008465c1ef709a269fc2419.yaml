@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:76c46c745ddfd5995de26f865f46c09f843e14ec5008465c1ef709a269fc2419
+  normalized_sha256: sha256:76c46c745ddfd5995de26f865f46c09f843e14ec5008465c1ef709a269fc2419
+cas_ref: sha256:76c46c745ddfd5995de26f865f46c09f843e14ec5008465c1ef709a269fc2419
+coverage_gids:
+  - gid: D5/S0/Diagonal/Lawvere/TheoryIsConsequenceFixedPoint.consequenceClosure_isLeast_fixedPoint_above
+    target_statement_id: sha256:a8f4888272c422fabfb6d13e41a821767e2e6221af056c0fc46c6f199358ce84
+  - gid: D5/S0/Diagonal/Lawvere/TheoryIsConsequenceFixedPoint.fixedPoints_closed_under_sInf
+    target_statement_id: sha256:0542e994c677f52ef04f9def5572384b500782d52c3df6ec73125b3e3e56a545
+receipts:
+  unresolved_subitems: []

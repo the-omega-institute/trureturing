@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:830a9f6f0497f7fbb56b3c367c9775eedea26f52fecee9c7a175824b31983e5b
+  normalized_sha256: sha256:830a9f6f0497f7fbb56b3c367c9775eedea26f52fecee9c7a175824b31983e5b
+cas_ref: sha256:830a9f6f0497f7fbb56b3c367c9775eedea26f52fecee9c7a175824b31983e5b
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 证明附引或书目定位（**Proof reference.** 35.3-35.18. The remaining statements specify the scope…）只给出所用来源、定位和证据地位，不提出独立数学陈述。
+    previous_atom_id: e7967618bd2ddd9e03ca3e35a86e5d8a9254d1ccce8ce949326f7b78c7b750f2
+    next_atom_id: null

@@ -234,7 +234,7 @@ private theorem push_outside {X Y : Type*} [Fintype X]
   intro x _
   simp only [if_neg (fun h => hy ⟨x, h⟩)]
 
-private theorem push_sum {X Y : Type*} [Fintype X] [Fintype Y]
+theorem push_sum {X Y : Type*} [Fintype X] [Fintype Y]
     (f : X → Y) (p : X → ℝ) : (∑ y, pushforward f p y) = ∑ x, p x := by
   classical
   simp only [pushforward]

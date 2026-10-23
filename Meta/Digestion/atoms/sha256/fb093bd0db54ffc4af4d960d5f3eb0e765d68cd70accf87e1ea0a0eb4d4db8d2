@@ -1,0 +1,24 @@
+**Proof.** In every tuple exactly one of $a,c$ is beta, the other is
+its fixed branch image, and the remaining four coordinates are distinct
+branch images except for the possible one alpha at $b_j$. The six
+coordinates are pairwise distinct. For $0_a$ and $0_c$ all are images,
+and for $j$ the alpha has exactly its forced beta partner. Proposition
+9.3 supplies the actual finite inverse and the stated complete outputs.
+All six current trees and origins are fixed at once; no run changes its
+source in response to a query.
+
+For every address of length at least three write it uniquely as $pw$
+with $p\in P$. The actual occurrence identity (NBP.9.7) gives
+$r_{t_z}(pw)=r_{x_{[p]}^{(z)}}(w)$. In an $a$ cone the only subtree
+values are beta and $A$, constant on the two groups; in a $c$ cone they
+are $C$ and beta, constant on the same two groups. In a $b_j$ cone the
+only subtree values are alpha at $j$ and $D_j$ otherwise. Evaluating
+these two fixed finite trees at any suffix gives either equal replies
+or the indicated partition. A suffix may continue beyond a leaf or
+beyond the finite subtree; absent is the ordinary native reply and
+changes none of this argument. Shorter addresses are common skeleton
+branches. One address enters one occurrence cone even when a class
+occurs twice. Thus the table covers all finite native addresses without
+restricting the query menu or replacing actual replies by an extra
+experiment port. $\square$
+

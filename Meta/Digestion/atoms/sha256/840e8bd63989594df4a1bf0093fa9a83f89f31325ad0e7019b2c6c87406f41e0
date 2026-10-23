@@ -1,0 +1,18 @@
+**Definition 9.2 (Precision and physical realization boundary).** The
+actual abstract model authorizes immutable real probabilities, including
+the $q$-dependent midpoint $\theta$, adjacent-grid probabilities and
+arbitrarily small positive edges. Their calibration, description length,
+effective design computation, exact-coin realization and physical storage
+or arithmetic costs are separate resources. No finite-precision or
+physical implementation theorem follows from counting configurations.
+Conversely those unpriced resources cannot be imposed as extra
+restrictions on the present competitor class. Known-$q$ retuning is used
+explicitly; unknown-$q$ adaptation and one $q$-independent table are
+different questions.
+
+The evidence grid is finite, not a real-valued persistent score. A table
+with $M_J$ configurations can be indexed by
+$\lceil\log_2M_J\rceil$ mutable bits, but that encoding does not measure
+physical spacetime or price immutable probability precision. Proof
+indices, holding times and final overshoots never become observer inputs.
+

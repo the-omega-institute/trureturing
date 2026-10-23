@@ -20,12 +20,37 @@ internal sealed class ChenKatoBrandaoCMIRefutationDocument : IScribeDocumentDefi
             Node("entropy", "Eigenvalue entropy, including zero eigenvalues", EntropyFormula(),
                 "Section I, PDF p. 3, equation (1): “where S(A)_ρ = -tr ρ_A log₂ ρ_A is the von Neumann entropy of the reduced state on A.” The eigenvalue expression is the finite spectral form of this definition. Real.negMulLog(t) is -t log(t), including value zero at t = 0. The definition extends by zero off Hermitian matrices; density matrices and their marginals use only its Hermitian branch. All logarithms in the encoding are natural. Changing from the source's base two divides all four entropy terms by the same positive log(2), so preserves the equality and every proposed contraction inequality.",
                 DescribeRole.Definition, AssessedProvenance.FromLiterature(Source)),
+            Describe.Lean(DescribeId.Create("ckb-entropy-diagonal"),
+                DeclarationHandle.Create(Prefix + "entropy_diagonal"),
+                H("Entropy of an arbitrary real diagonal matrix"),
+                StatementSource.FromAuthor(EntropyDiagonalFormula()),
+                AssessedProvenance.FromRepo(Source),
+                Blocks(Paragraph(Text("For every real diagonal, including negative and zero entries, the totalized spectral entropy is the sum of Real.negMulLog over its entries."))),
+                DescribeRole.Theorem),
             Node("cmi", "Literal conditional mutual information", CmiFormula(),
                 "Section I, PDF p. 3, equation (1), verbatim: “The CMI I(A:C|B)_ρ is a function defined for a tripartite state ρ_ABC as I(A:C|B)_ρ = S(AB)_ρ + S(BC)_ρ - S(B)_ρ - S(ABC)_ρ.” The input order is (A times B) times C. The local let-bound map R only reassociates indices; N is the literal submatrix with R in both positions. partialTraceRight traces the right factor and partialTraceLeft the left factor. Thus the displayed four terms are precisely the AB, BC, B and ABC entropies, with no rank assumption.",
                 DescribeRole.Definition, AssessedProvenance.FromLiterature(Source)),
             Node("claim", "Chen–Kato–Brandão Conjecture III.1", ClaimFormula(),
                 "Section III.C, PDF p. 16, Conjecture III.1, verbatim: “For any channel ℰ: C → C′ with trivial correctable algebra 𝒜(ℰ) = ℂ I, there exists a constant η < 1 such that for any tripartite system ABC and any state ρ_ABC, it holds that I(A:C′|B)_ℰ(ρ) ≤ η I(A:C|B)_ρ.” The dimensions n, nPrime, dA and dB range over all natural numbers; Fin gives zero-based coordinates. The finite Kraus index type iota and family K are arbitrary. Normalization is the literal sum of K adjoint times K. DensityState is the existing carrier of positive semidefinite trace-one matrices and permits singular states. The let-bound L is I_AB kronecker K. ofKraus is the landed spelling for FiniteKrausChannel.PhyslibLeaf.MatrixMap.of_kraus: ofKraus(L,L,X) is literally the sum of L_i X L_i adjoint. CStarMatrix.ofMatrix.symm(val(rho)) exposes the same density matrix in Matrix coordinates. The strict upper bound eta < 1 is uniform over all ancillary dimensions and states for the fixed channel.",
                 DescribeRole.Definition, AssessedProvenance.FromLiterature(Source)),
+            Describe.Lean(
+                DescribeId.Create("ckb-partial-trace-right-diagonal"),
+                DeclarationHandle.Create(Prefix + "partialTraceRight_diagonal"),
+                H("Tracing the right factor of a real diagonal matrix"),
+                StatementSource.FromAuthor(DiagonalMarginalFormula(true)),
+                AssessedProvenance.FromRepo(Source),
+                Blocks(Paragraph(Text(
+                    "For arbitrary finite index types A and B and any real function r on A × B, tracing out B sums the diagonal weights over B. The real weights and their real sums are embedded in ℂ. No sign or normalization condition is imposed on r."))),
+                DescribeRole.Theorem),
+            Describe.Lean(
+                DescribeId.Create("ckb-partial-trace-left-diagonal"),
+                DeclarationHandle.Create(Prefix + "partialTraceLeft_diagonal"),
+                H("Tracing the left factor of a real diagonal matrix"),
+                StatementSource.FromAuthor(DiagonalMarginalFormula(false)),
+                AssessedProvenance.FromRepo(Source),
+                Blocks(Paragraph(Text(
+                    "For arbitrary finite index types A and B and any real function r on A × B, tracing out A sums the diagonal weights over A. The remaining matrix is diagonal on B, with the real marginal sums embedded in ℂ. The weights may be negative."))),
+                DescribeRole.Theorem),
             Node("result", "A four-dimensional channel refutes the conjecture", Disp(new Formula.Not(F.Id("claim"))),
                 "For 0 < p < 1, take Kraus matrices K_(j,false) = sqrt(1-p) Matrix.single(j,j,1) and K_(j,true) = sqrt(p) Matrix.single(j+1,j,1), with cyclic Fin(n) addition. Their adjoint products include nonzero multiples of every diagonal matrix unit, forcing a commuting matrix to be diagonal. The adjacent cross-products force consecutive diagonal entries to agree; induction makes the whole matrix scalar. Specialize to n = 4 and p = 1/2. With dA = 2 and dB = 1, the input diagonal has weight 1/2 at ((0,0),0) and ((1,0),2), and zero elsewhere. The output has weight 1/4 at ((0,0),0), ((0,0),1), ((1,0),2) and ((1,0),3). The two conditional mutual informations are exactly log(2) > 0. Substitution into the asserted inequality gives log(2) <= eta log(2), contradicting eta < 1. The bit survives because the two selected inputs have disjoint output supports, although all globally correctable observables are scalar.",
                 DescribeRole.Theorem, AssessedProvenance.FromRepo(Source),
@@ -118,6 +143,14 @@ internal sealed class ChenKatoBrandaoCMIRefutationDocument : IScribeDocumentDefi
             Equal(Call("entropy", m), value)), a)));
     }
 
+    private static Formula EntropyDiagonalFormula()
+    {
+        Formula a = F.Id("a"), d = F.Id("d"), i = F.Id("i");
+        Formula diagonal = Call("Matrix.diagonal", LambdaOf(i, a, Call("Complex.ofReal", Apply(d, i))));
+        return Disp(All("a", Named("Type"), Instances(All("d", new Formula.TypeArrow(a, Reals),
+            Equal(Call("entropy", diagonal), SumOver(i, a, Call("Real.negMulLog", Apply(d, i))))), a)));
+    }
+
     private static Formula CmiFormula()
     {
         Formula a = F.Id("A"), b = F.Id("B"), c = F.Id("C"), m = F.Id("M"),
@@ -134,6 +167,26 @@ internal sealed class ChenKatoBrandaoCMIRefutationDocument : IScribeDocumentDefi
         return Disp(All("A", Named("Type"), All("B", Named("Type"), All("C", Named("Type"),
             Instances(All("M", MatrixOf(abc, abc), body), a, b, c)))));
     }
+
+    private static Formula DiagonalMarginalFormula(bool traceRight)
+    {
+        Formula aType = F.Id("A"), bType = F.Id("B"), r = F.Id("r"),
+            x = F.Id("x"), a = F.Id("a"), b = F.Id("b");
+        Formula diagonal = Call("Matrix.diagonal", LambdaOf(x, Product(aType, bType),
+            DiagonalTyped(Apply(r, x), Complexes)));
+        Formula sum = traceRight
+            ? SumOver(b, bType, Apply(r, Pair(a, b)))
+            : SumOver(a, aType, Apply(r, Pair(a, b)));
+        Formula marginal = Call("Matrix.diagonal", LambdaOf(traceRight ? a : b,
+            traceRight ? aType : bType, DiagonalTyped(DiagonalTyped(sum, Reals), Complexes)));
+        Formula equation = Equal(Call("PartialTraceMutualInformation." +
+            (traceRight ? "partialTraceRight" : "partialTraceLeft"), diagonal), marginal);
+        return Disp(All("A", Named("Type"), All("B", Named("Type"),
+            Instances(All("r", new Formula.TypeArrow(Product(aType, bType), Reals), equation), aType, bType))));
+    }
+
+    private static Formula DiagonalTyped(Formula value, Formula type) =>
+        Parenthesized(Seq(value, Colon, Sp, type));
 
     private static Formula ClaimFormula()
     {

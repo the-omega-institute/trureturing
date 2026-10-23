@@ -1,0 +1,18 @@
+异质律下的实际类质量为
+
+$$
+\pi_{1,\tau}=H_pL_q,\qquad
+\pi_{2,\tau}=(H_q-H_pt_q)L_r,
+$$
+
+从而
+
+$$
+\mathbb EC_\tau=\pi_{1,\tau}+2\pi_{2,\tau},\quad
+\mathbb EC_\tau^2=\pi_{1,\tau}+4\pi_{2,\tau},\quad
+\mathbb Ef_\tau^2=1-H_pL_q.
+\tag{58.13}
+$$
+
+这些量通常随候选变化。尖锐分离没有使用共同候选矩。
+

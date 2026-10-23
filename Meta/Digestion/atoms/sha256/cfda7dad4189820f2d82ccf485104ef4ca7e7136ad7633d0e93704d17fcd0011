@@ -1,0 +1,17 @@
+**引理 3.1（调和项的变分式）。** 对一切 $s,t\ge0$，下列结论成立。
+
+(i) $\min_{\alpha\in[0,1]}\bigl[s\alpha^2+t(1-\alpha)^2\bigr]=h(s,t)$；若 $s+t>0$，最小点唯一，等于 $\alpha=t/(s+t)$。
+
+(ii) $0\le h(s,t)\le\min\{s,t\}$；$h$ 在 $[0,\infty)^2$ 上连续且凹；对每个 $\gamma\ge0$ 有 $h(\gamma s,\gamma t)=\gamma\,h(s,t)$。
+
+**证明。** 若 $s+t>0$，展开可得恒等式
+
+$$
+s\alpha^2+t(1-\alpha)^2=(s+t)\left(\alpha-\frac{t}{s+t}\right)^2+\frac{st}{s+t}\qquad(\alpha\in\mathbb R).
+\tag{3.1}
+$$
+
+右边第一项非负，且仅在 $\alpha=t/(s+t)\in[0,1]$ 处为零，故 (i) 成立。若 $s=t=0$，目标恒为零，等于 $h(0,0)$。
+
+(ii) 取 $\alpha=0$ 与 $\alpha=1$ 得目标值 $t$ 与 $s$，故 $h\le\min\{s,t\}$；非负性显然。由 (i)，$h$ 是一族关于 $(s,t)$ 的线性函数 $(s,t)\mapsto s\alpha^2+t(1-\alpha)^2$（$\alpha\in[0,1]$）的逐点最小值，故凹。在 $\{s+t>0\}$ 上 $h$ 是连续函数之商；在原点，$0\le h(s,t)\le\min\{s,t\}$ 给出连续性。$\gamma=0$ 时两边都为零；$\gamma>0$ 时直接代入定义得齐次性。
+

@@ -1,0 +1,44 @@
+**Proof.**
+Repeated right descent in (92.3) gives the first terminal on the
+rightmost path at depth $j=\lfloor n/2\rfloor$. Its label is
+alpha for $n=2j$, and beta for $n=2j+1$; all earlier rightmost
+addresses are branches. If $j\le h$, the four-reply table therefore
+determines $j$ and the parity, hence $n$. This includes $n=0,1$
+at depth zero. When $n\ge2h+2$, every address through depth $h$
+is a branch, by the proof of Theorem 93.2. The same table has no
+leaf, whereas each $n\le2h+1$ has its rightmost terminal in the
+table. The tail and all the identified indices are consequently
+disjoint prefix classes.
+
+The exact finite values in the first branches of (97.1) and (97.3)
+are mathematical functions of the identified $n$: use (92.4) for
+$C_n$ and (93.3) with initial values $1/\lambda$ for
+$G_\lambda(T_0)=G_\lambda(T_1)$, and then (92.2).
+This makes both estimates single-valued without adding an
+observation field. In the unresolved tail, the estimates use
+only the stated constants and require no exact node count.
+
+All errors in (97.1) vanish for the identified indices, giving the
+equality in (97.2). The convergence (92.5) says that for each
+$\delta>0$ there exists $n_0$ with
+$|C_n-\sqrt5/2|<\delta$ for every $n\ge n_0$.
+Taking $2h+2\ge n_0$ proves $\epsilon_h\to0$.
+Boundedness of $C_n$ makes every tail supremum finite.
+
+For $n\ge2h+2$, (93.2) and the exact subtraction give
+
+$$
+|R_\lambda(T_n)-b_\lambda|
+ \le|G_\lambda(T_n)-b_\lambda|+\frac1{N_n\lambda}
+ \le\lambda^{-1}q_\lambda^{2h+3}
+      +\frac1{\lambda N_{2h+2}}.
+\tag{97.5}
+$$
+
+The counts are nondecreasing and
+$N_{2h+2}=2F_{2h+3}-1\to\infty$, while $q_\lambda<1$
+for each fixed positive $\lambda$. This proves (97.4).
+The unrestricted comb witnesses in Theorems 95.2 and 96.2 are
+outside the promised Fibonacci-only input domain; the estimates
+do not extend those restricted guarantees to them. $\square$
+

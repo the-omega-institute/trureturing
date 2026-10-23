@@ -361,3 +361,237 @@ negative-power limit. Their axiom closures contain only `propext`,
 declarations. The kernel and sector arguments above are paper
 derivations; the improper integrals, the zero-density theorem and the
 actual-zeta bridge are not Lean-formalized here.
+
+## Retaining the two-sided error in the sub-threshold allowance
+
+This application connects the cited interval estimate to the original
+forward response in [the Nicolas note, CW4](../ArithSums/nicolas2025comparison.md#the-exact-forward-successor-on-the-same-original-integer).
+It uses the upper and lower interval bounds together. The existing
+[finite band-compensation theorem](../../D5/S3/Arith/Robin/ActualVonMangoldtBandCompensation.lean)
+uses a lower increment bound and keeps a short-range allowance without
+an error coefficient. The argument here applies directly to the forward
+kernel; it does not identify that kernel with the centered dilation
+kernel. It is an application of existing interval and kernel calculus,
+not a new short-interval theorem or a Lean-certified Robin estimate.
+
+Let $A>1$, $h\ge H>0$, $0\le\epsilon<1$, and
+$D=\max\{h,2H\}$. Suppose a nondecreasing, locally bounded cumulative
+function $M$ obeys, for all real $u<v$ in $[A,A+D]$,
+
+$$
+v-u\ge H\quad\Longrightarrow\quad
+(1-\epsilon)(v-u)\le M(v)-M(u)\le(1+\epsilon)(v-u).
+\tag{F1}
+$$
+
+Write $w(t)=(1+\log t)/(t^2\log^2t)$, the existing positive decreasing
+price derivative, and $\rho_A(r)=w(A+r)/w(A)$. The forward quantity is
+
+$$
+\mathcal T_M(A,h)=\int_0^h
+[M(A+r)-M(A)-r]\rho_A(r)\,dr.
+\tag{F2}
+$$
+
+For $0\le r<H$, use the two intervals of respective lengths $H+r$
+and $H$, with the same upper endpoint $A+H+r$. Subtraction gives
+
+$$
+\begin{aligned}
+M(A+r)-M(A)
+&=[M(A+H+r)-M(A)]-[M(A+H+r)-M(A+r)]\\
+&\ge(1-\epsilon)r-2\epsilon H.
+\end{aligned}
+\tag{F3}
+$$
+
+Every endpoint lies in the specified domain, since $H+r\le2H\le D$.
+For $H\le r\le h$, use (F1) directly to obtain the same inequality
+without the last term. Since $0<\rho_A(r)\le1$, integration yields
+
+$$
+\mathcal T_M(A,h)
+\ge-\epsilon\int_0^h r\rho_A(r)\,dr
+   -2\epsilon H\int_0^H\rho_A(r)\,dr
+\ge-\frac{\epsilon h^2}{2}-2\epsilon H^2.
+\tag{F4}
+$$
+
+All increments retain the convention $M(v)-M(u)$, corresponding to
+$(u,v]$ for a right-continuous cumulative measure. In particular no
+initial atom is added by the interval subtraction. The proof also
+permits atoms and requires no differentiation of $M$.
+
+For the actual reference, take $M=\vartheta$. The higher-prime-power
+cumulative function $\psi-\vartheta$ is nondecreasing, so
+$\mathcal T_\psi\ge\mathcal T_\vartheta$ on the same interval.
+No upper bound for higher prime powers is needed for this lower
+comparison. Thus (F4) supplies the sufficient bound
+
+$$
+\frac{\mathcal T_\psi(A,h)}{h^2/\sqrt A}
+\ge-\epsilon\sqrt A
+       \left(\frac12+2\frac{H^2}{h^2}\right).
+\tag{F5}
+$$
+
+To match the actual supplier at $h=A^{4/5}$, fix its exponent
+$17/30+1/60=7/12$ and take $H=(2A)^{7/12}$.
+Eventually $D=h< A$; for all starting points $u\in[A,A+D]$,
+$H\ge u^{7/12}$, while every required length is at most
+$h\le u^{0.99}$. These inequalities retain the moving starting point
+in Corollary 1.3. Converting its count to logarithmic prime mass gives
+(F1), eventually, with some fixed $C>0$ and
+
+$$
+\epsilon(A)=C\log(2A)\exp[-(\log A)^{1/4}]+\frac{2h}{A}
+\longrightarrow0.
+\tag{F6}
+$$
+
+Indeed, all primes counted in $(u,v]$ have logarithms between
+$\log u$ and $\log v$; the logarithm ratio contributes at most
+$h/(A\log A)$, bounded by the second term of (F6), and the count
+error contributes $O(\log(2A)\exp[-(\log A)^{1/4}])$.
+The harmless enlarged constant pays their product for sufficiently
+large $A$. The start remains the supplier's unknown common start.
+
+The lower-only short-range term $H^2/(h^2/\sqrt A)$ would grow as
+$A^{1/15}$. Equations (F3)–(F5) replace that term by one carrying
+$\epsilon(A)$; discarding the upper half of the supplier loses this
+improvement. The leading allowance still contains
+$\epsilon(A)\sqrt A/2$, which diverges for (F6).
+Changing the power of $h$ can reduce the cutoff term but does not
+remove that leading factor. For the existing full-$Q$ forward consumer,
+one still needs a same-source lower coefficient strictly smaller than
+$c_Q=(\sqrt2-1)/4$; (F5)–(F6) do not supply it. A diverging allowance
+is not a lower bound on the actual error or a Robin violation.
+
+## Reuse the existing pulse model for the forward limitation
+
+The preceding allowance alone does not prove that the interval premise
+is insufficient: a nonsharp allowance may miss a stronger consequence.
+The [existing FIB model, §261](../../docs/develop/theory/FIBONACCI_ATOMIC_RELATION_GENERATION.md#261-精确-fibonacci-采样的相位盲区与单调脉冲模型),
+already supplies a single global positive pulse source with stronger
+increment and global-error bounds. The application here supplies its original
+forward response and a companion logarithmically weighted count; it
+neither re-proves the source's construction nor claims a new
+prime-distribution result or Lean-verified refutation.
+
+Let $M=\Psi^*=\lfloor B\rfloor$ be that source on $[X,\infty)$,
+with $X$ as in §261.1. Retain its existing definitions
+
+$$
+\begin{gathered}
+\omega=\pi/\log\varphi,\quad
+\Theta(t)=\omega\left(\log t+\frac{\log5}{2}\right),\\
+B(t)=t+t^{3/4}a(\log t),\qquad
+C_*=\omega^2+2\omega+2.
+\end{gathered}
+\tag{F7}
+$$
+
+Here $a$ is the explicit function named $A(L)$ in (261.2); it is
+renamed only to distinguish it from the forward starting point $A$.
+The source is nondecreasing and right-continuous, with locally finite
+unit positive jumps. Reuse (261.5)–(261.6): for every $u\ge X$, $r\ge0$,
+
+$$
+|M(u+r)-M(u)-r|\le C_*ru^{-1/4}+1,\qquad
+|M(u)-u|\le(1+\omega)u^{3/4}+1.
+\tag{F8}
+$$
+
+Consequently (F1) holds on every finite domain starting at $A\ge X$
+with $\epsilon=C_*A^{-1/4}+H^{-1}$, eventually less than one, for
+all lengths at least $H=(2A)^{7/12}$. This error is smaller than (F6).
+The global error in (F8) is also smaller than
+$u\exp[-c(\log u)^{3/5}(\log\log u)^{-1/5}]$ for every fixed $c>0$,
+eventually. Both are properties of the same existing source.
+
+For a companion count set
+$\Pi(x)=\int_{(X,x]}(\log t)^{-1}\,dM(t)$.
+Positive mass and the endpoint logarithm bounds give
+
+$$
+\frac{M(u+r)-M(u)}{\log(u+r)}
+\le\Pi(u+r)-\Pi(u)
+\le\frac{M(u+r)-M(u)}{\log u}.
+$$
+
+Together with (F8), this yields
+
+$$
+\left|\Pi(u+r)-\Pi(u)-\frac r{\log u}\right|
+\le\frac{C_*ru^{-1/4}+1}{\log u}
+    +\frac{r^2}{u\log^2u}.
+\tag{F9}
+$$
+
+After division by $r\exp[-(\log u)^{1/4}]$, the bound tends to zero
+uniformly for $u^{7/12}\le r\le u^{99/100}$. Thus $\Pi$ has the
+cited count estimate's numerical accuracy, with $dM=\log t\,d\Pi$.
+Its atoms have weights $1/\log t$, not unit prime counts; it is not the
+actual $\pi$.
+
+To evaluate the forward response, take the exact even Fibonacci prices
+$A_j=F_{2j}\to\infty$ and $h_j=A_j^{4/5}$. The existing Binet phase
+estimate (261.13) gives $\Theta(A_j)=2j\pi+o(1)$. The explicit source
+formula and (261.8) give
+
+$$
+B'(t)-1=t^{-1/4}\left[
+\left(\omega^2+\frac3{16}\right)\sin\Theta(t)
+-\frac\omega2\cos\Theta(t)
++O\left(\frac1{\log t}\right)\right].
+\tag{F10}
+$$
+
+Uniformly for $A_j\le t\le A_j+h_j$, the phase changes by
+$O(h_j/A_j)=o(1)$ and $t/A_j\to1$. Hence
+$B'(t)-1=-(\omega/2+o(1))A_j^{-1/4}$ throughout the window.
+Integration gives the same slope for the centered increment, while
+$M=\lfloor B\rfloor$ changes each increment by less than one.
+The original kernel satisfies $\rho_{A_j}(r)=1+o(1)$ uniformly.
+Therefore the complete signed response is
+
+$$
+\begin{aligned}
+\mathcal T_M(A_j,h_j)
+&=-\left(\frac\omega4+o(1)\right)h_j^2A_j^{-1/4}+O(h_j),\\
+\frac{\mathcal T_M(A_j,A_j^{4/5})}{A_j^{11/10}}
+&=-\left(\frac\omega4+o(1)\right)A_j^{1/4}
+  +O(A_j^{-3/10})\longrightarrow-\infty.
+\end{aligned}
+\tag{F11}
+$$
+
+This forward application uses the existing model's source and
+increment facts; its previously proved tail and sampling obstruction
+remain in §261. It shows that monotonicity and the specified
+interval/count accuracy estimates alone cannot imply any fixed finite
+eventual lower coefficient for all admissible cumulative functions.
+It does not supply a deficit at every starting point: the divergence
+here is along the displayed subsequence.
+
+The model events are not actual prime powers and there is no Euler
+product or CA own-price source. Even though the prices $A_j$ are
+Fibonacci numbers, $M$ is not the actual response of those integers.
+This is neither an arithmetic counterexample nor a refutation of the
+cofinal selected-source obligation in CW5. The application is a paper
+derivation without new Lean declarations; an argument using additional
+same-source arithmetic relations remains outside its scope.
+
+
+## General density also pays the same original mask relative to source height
+
+The [same-source all-zero application](../Estimation/trureturing2026pricegapconvexity.md#the-retained-source-height-pays-every-zero-in-the-same-frequency-mask)
+combines Theorem 1.2's density exponent with the already recorded
+Ingham exponent, the complete original compensated coefficient and
+the original positive source height. For the originally supplied
+$1-\Theta<\eta<9/28$, it pays all zeros in the unchanged SIH1
+real-part and frequency mask, including non-half-isolated zeros at
+$\Theta=1$, relative to the same complete response. It preserves the
+remaining-head lower margin. The application does not improve a density
+theorem, assert an absolute $o(M_XL_X)$ allowance, or supply the
+complementary signed upper estimate, Robin, RH or Lean certification.

@@ -110,11 +110,26 @@ $$\operatorname{SourceTheorem1Goal}$$
 
 Theorem 1, page 4, arXiv:2506.02145v1: "Let Φ ∈ L(ℂ^{d×d}) be a 2-positive and trace-preserving linear map. Then" tr(Φ) ≤ d min ℜ(σ(Φ)) + (d² − d). SourceTheorem1Goal states this for every positive dimension. The weighted Hilbert–Schmidt symmetric part supplies a real eigenvalue no larger than the real part of any original eigenvalue. Diagonalization then gives the transition estimate; depolarizing approximation removes faithfulness of the invariant state.
 
+**Definition 1.9 (depolarized).**
+
+$$\forall (\operatorname{d} : \mathbb{N}) ,\forall (\operatorname{Phi} : ((\operatorname{Matrix} (\operatorname{Fin} \operatorname{d}) (\operatorname{Fin} \operatorname{d}) \mathbb{C}) \to_{l[\mathbb{C}]} (\operatorname{Matrix} (\operatorname{Fin} \operatorname{d}) (\operatorname{Fin} \operatorname{d}) \mathbb{C}))) ,\forall (\varepsilon : \mathbb{R}) ,\operatorname{depolarized} \operatorname{Phi} \varepsilon = ((((1-\varepsilon) : \mathbb{R}) : \mathbb{C})) \cdot (\operatorname{Phi}) + (((\frac{\varepsilon}{\operatorname{d}} : \mathbb{R}) : \mathbb{C})) \cdot (((\operatorname{Matrix} . \operatorname{traceLinearMap} (\operatorname{Fin} \operatorname{d}) \mathbb{C} \mathbb{C}) . \operatorname{smulRight} (1 : (\operatorname{Matrix} (\operatorname{Fin} \operatorname{d}) (\operatorname{Fin} \operatorname{d}) \mathbb{C}))))$$
+
+*Formalization.* `D5/S3/Quantum/QuantumChannels/TracePreservingEigenvalueBound.depolarized` (`✓ std3`).
+
+*Source.* Repository-derived.
+
+*Acknowledgement.* F. vom Ende, D. Chruściński, G. Kimura, P. Muratore-Ginanneschi (2025). *Universal Bound on the Eigenvalues of 2-Positive Trace-Preserving Maps*. DOI: [10.1016/j.laa.2025.10.022](https://doi.org/10.1016/j.laa.2025.10.022). URL: <https://arxiv.org/abs/2506.02145v1>.
+
+*Commentary.*
+
+This is the depolarized channel (1−ε)Φ + ε Tr(·)I/d; the real coefficients are cast to ℂ, with Matrix.traceLinearMap and LinearMap.smulRight supplying the trace-times-identity term.
+
 ## References
 
 - Truth anchor: `D5/S3/Quantum/QuantumChannels/TracePreservingEigenvalueBound.SourceTheorem1Bound`
 - Truth anchor: `D5/S3/Quantum/QuantumChannels/TracePreservingEigenvalueBound.SourceTheorem1Goal`
 - Truth anchor: `D5/S3/Quantum/QuantumChannels/TracePreservingEigenvalueBound.congrEquiv`
+- Truth anchor: `D5/S3/Quantum/QuantumChannels/TracePreservingEigenvalueBound.depolarized`
 - Truth anchor: `D5/S3/Quantum/QuantumChannels/TracePreservingEigenvalueBound.extrema_conj`
 - Truth anchor: `D5/S3/Quantum/QuantumChannels/TracePreservingEigenvalueBound.extrema_hsAdjoint`
 - Truth anchor: `D5/S3/Quantum/QuantumChannels/TracePreservingEigenvalueBound.faithful_fourth_roots`

@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:e998c45bd7ae4a5b69d95f9bf088df412f1d541301b4e18d9a91f21c85999b5e
+  normalized_sha256: sha256:e998c45bd7ae4a5b69d95f9bf088df412f1d541301b4e18d9a91f21c85999b5e
+cas_ref: sha256:e998c45bd7ae4a5b69d95f9bf088df412f1d541301b4e18d9a91f21c85999b5e
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 证明附引或书目定位（**数学引文。** Boyd/Vandenberghe [Convex functions](https://web.stanford.edu/class/ee364a/lectu…）只给出所用来源、定位和证据地位，不提出独立数学陈述。
+    previous_atom_id: 2a2f111a19707795c46343b33dc80613c71873769f5cd9327f50b57233370a15
+    next_atom_id: f55a59179ebc4004804f07f4da0c9bf61b9463126dead26f3c1086402a232698

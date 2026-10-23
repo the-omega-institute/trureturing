@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:c274a01954e1e86d5067e09dfc733ab25ed72c227298e6df3eff38f01dc6c654
+  normalized_sha256: sha256:c274a01954e1e86d5067e09dfc733ab25ed72c227298e6df3eff38f01dc6c654
+cas_ref: sha256:c274a01954e1e86d5067e09dfc733ab25ed72c227298e6df3eff38f01dc6c654
+coverage_gids:
+  - gid: D5/S3/Observer/AgencyHolonomy/GoldenScalarDihedralBlindness.golden_scalar_dihedrally_blind
+    target_statement_id: sha256:11b3eb51b6353d07384b7e002679c0f23b2f5001d8cd47b6b90ae73a23cc089d
+receipts:
+  unresolved_subitems: []

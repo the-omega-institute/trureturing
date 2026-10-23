@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:c66e58659e6294d00003221610b061b3e0aefabf86f96878a718410734b981bf
+  normalized_sha256: sha256:c66e58659e6294d00003221610b061b3e0aefabf86f96878a718410734b981bf
+cas_ref: sha256:c66e58659e6294d00003221610b061b3e0aefabf86f96878a718410734b981bf
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 非命题文本：公式片段 \operatorname{ObsAlg}(q)：\[：只引入对象、参数、术语或记号；不附加存在性、唯一性或其他性质断言。
+    previous_atom_id: 5364e2667948d6393f1c4d2674156a89432cfa305ea28087064a41fd7cc74fd9
+    next_atom_id: f79d9ef99a8aaed16af9232a810a3aaa00ac88db08c436dcc74d164c86e66908

@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:e695457c26a909a6897df5ee864dc36ef539fa9b28eff549fb7552d98258c18a
+  normalized_sha256: sha256:e695457c26a909a6897df5ee864dc36ef539fa9b28eff549fb7552d98258c18a
+cas_ref: sha256:e695457c26a909a6897df5ee864dc36ef539fa9b28eff549fb7552d98258c18a
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 清单片段“适用于 \(B\) 的准入规则”仅列举主题、接口组成或考虑维度；本片段不陈述性质、存在性或推论。
+    previous_atom_id: 7106ab4b534e8703e9a91b805c82ee2c26f4262373815715073127f61a263b08
+    next_atom_id: ae57c9418f78a7ab577822cee7fa030a788f652ff00014e4e583efffdc4a5648

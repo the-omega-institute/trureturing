@@ -1,0 +1,18 @@
+**Definition 15.1 (Anchored residual data and the actual comparison law).** Fix an integer $m\ge2$, put $n=2m+1$ and $D=m+2$, and take real polynomials $P,S$ with $P$ monic of degree $m$, $\deg S\le m$, and $S(0)=0$. Define
+
+$$
+\begin{aligned}
+e(t)&=P(t)^2+\Delta(S^2)(t)-\frac{\Delta(t^n)}n
+=\sum_{j=0}^{n-2}E_jt^j,\\
+H(k)&=k^n+n\sum_{t=0}^{k-1}e(t)
+=n\left(S(k)^2+\sum_{t=0}^{k-1}P(t)^2\right)
+\quad(k\in\mathbb Z_{\ge0}),\\
+Z_H(q)&=\sum_{k\ge0}H(k)q^k,\qquad
+\widehat\gamma_k=\frac{H(k)q^k}{Z_H(q)}\quad(0<q<1).
+\end{aligned} \tag{15.1}
+$$
+
+Empty sums are zero. The second expression for $H$ follows by telescoping and the anchor. The top coefficients of $P^2$ and $\Delta(t^n)/n$ are both one, while $\deg\Delta(S^2)\le2m-1$; thus $\deg e\le n-2$. Discrete antidifferentiation makes $H$ a monic polynomial of degree $n$ with $H(0)=0$. On the nonnegative integers it is nonnegative by the square expression, and it is positive for all $k\ge m+1$: a degree-$m$ monic polynomial cannot vanish at all of $0,\ldots,m$. Consequently $Z_H(q)$ is positive and finite, and $\widehat\gamma$ has every finite moment. No vanishing-residual hypothesis is included in this definition.
+
+The reference law remains $\gamma_k=k^nq^k/Z_n(q)$ from (1.1), with its full stationary law (1.3). Theorem 10.2 supplies its exact amplitude pair, changing the sign of $p$ if necessary to obtain $P=p/\sqrt n$ monic, and taking $S=s/\sqrt n$. That pair has $e=0$. General data in (15.1) instead specify their own exact law $\widehat\gamma$; comparison to the reference law is a further conclusion under a scalar envelope below.
+

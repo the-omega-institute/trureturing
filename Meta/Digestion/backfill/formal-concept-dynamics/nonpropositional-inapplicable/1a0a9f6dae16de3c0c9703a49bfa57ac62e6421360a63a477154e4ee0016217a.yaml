@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:1a0a9f6dae16de3c0c9703a49bfa57ac62e6421360a63a477154e4ee0016217a
+  normalized_sha256: sha256:1a0a9f6dae16de3c0c9703a49bfa57ac62e6421360a63a477154e4ee0016217a
+cas_ref: sha256:1a0a9f6dae16de3c0c9703a49bfa57ac62e6421360a63a477154e4ee0016217a
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 定义 30.5（动态涌现）：本段仅约定名称、符号及其判定条件；不主张满足条件的对象存在，也不追加性质定理。
+    previous_atom_id: c38177177a36d4f462a5471fe7f47198385d541819f3963b971d0e88a1105439
+    next_atom_id: 905d84e9e70cf742cc3519964feecb03bd6e302339d4bdbc46084efb0ead7105

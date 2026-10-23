@@ -1,0 +1,38 @@
+**Theorem 104.2 (the complete scaled time measure).**
+The complete finite spectral projections of Theorem 103.2 give
+
+$$
+\begin{aligned}
+k_n(s)
+ &=\sum_{\lambda>0}N_n\rho_{n,\lambda}e^{-N_n\lambda s}
+ =\int x^{-1}e^{-s/x}\,d\eta_n(x)\quad(s>0),\\
+\nu_n([0,\infty))&=C_n=\|v_n\|^2,\\
+\int_0^\infty e^{-\tau s}\,d\nu_n(s)
+ &=R_{\tau/N_n}(T_n)\quad(\tau>0).
+\end{aligned}
+\tag{104.3}
+$$
+
+As finite Borel measures on $[0,\infty)$,
+
+$$
+\nu_n\Longrightarrow\nu:=\delta_0+k(s)\,ds.
+\tag{104.4}
+$$
+
+The slow density is finite and strictly positive for every $s>0$, and
+
+$$
+\int_0^\infty k(s)\,ds=\frac{\sqrt5}{2}-1,\qquad
+\nu(\{0\})=1,\qquad \nu([0,\infty))=\frac{\sqrt5}{2}.
+\tag{104.5}
+$$
+
+No mass escapes to infinite scaled time. More precisely, for
+$V_*=\sup_n\|v_n\|^2<\infty$,
+
+$$
+\nu_n([S,\infty))\le V_*e^{-S/M_*}\quad(S>0).
+\tag{104.6}
+$$
+

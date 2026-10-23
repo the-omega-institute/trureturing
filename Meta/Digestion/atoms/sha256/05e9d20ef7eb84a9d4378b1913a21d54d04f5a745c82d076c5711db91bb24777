@@ -1,0 +1,96 @@
+#### theorem 27.1: 定理 1：未来响应的纤维分解定理
+
+Claim status: open.（供文 III 原第 3 节「定理 1」；保留纸面论证及其边界。）
+
+> 编者限定（III.3，原定理 1）：五个 $L_I$ 须固定在同一实向量空间或共同未来域的有符号测度空间中，$p$ 是该边界的当前实际模式律。在此条件下讨论沿 $J_L$ 的实标量差，不是除以一个向量，也不是从先验与后验的不同核间直接转移注入性。
+
+
+对任意模式响应向量 $L_I$，有
+
+$$
+\begin{aligned}
+\overline L(p)
+={}&
+L_{\mathrm{null}}
++(L_1-L_{\mathrm{null}})X\\
+&+(L_3-L_{\mathrm{null}})Y
++(L_2-L_{\mathrm{null}})Z
++J_L\kappa.
+\end{aligned}
+$$
+
+因此，在原始占用均值 $P=(X,Y,Z)$ 固定时：
+
+1. 若
+
+   $$
+   J_L\neq0,
+   $$
+
+   则 $\overline L(p)$ 能够唯一恢复 $\kappa$；
+
+2. 若
+
+   $$
+   J_L=0,
+   $$
+
+   则 $\overline L(p)$ 在整条 $\kappa$-纤维上恒定，任何仅依赖该响应的未来预测都无法区分这条纤维中的不同分布。
+
+##### 27.1 证明（III 原定理 1）
+
+将
+
+$$
+p_{\mathrm{null}}=1-X-Y-Z+\kappa,
+$$
+
+$$
+p_1=X-\kappa,\qquad
+p_2=Z,\qquad
+p_3=Y-\kappa,\qquad
+p_{13}=\kappa
+$$
+
+代入
+
+$$
+\overline L(p)=\sum_Ip_IL_I.
+$$
+
+得到
+
+$$
+\begin{aligned}
+\overline L(p)
+={}&
+(1-X-Y-Z+\kappa)L_{\mathrm{null}}\\
+&+(X-\kappa)L_1
++ZL_2
++(Y-\kappa)L_3
++\kappa L_{13}.
+\end{aligned}
+$$
+
+整理后得到
+
+$$
+\begin{aligned}
+\overline L(p)
+={}&L_{\mathrm{null}}
++(L_1-L_{\mathrm{null}})X\\
+&+(L_3-L_{\mathrm{null}})Y
++(L_2-L_{\mathrm{null}})Z\\
+&+\kappa
+(L_{13}-L_1-L_3+L_{\mathrm{null}}).
+\end{aligned}
+$$
+
+最后一项就是 $J_L\kappa$。
+
+如果 $J_L\neq0$，则在向量空间中沿 $J_L$ 的方向可以唯一解出 $\kappa$。
+
+如果 $J_L=0$，则 $\overline L(p)$ 完全不含 $\kappa$，因此所有具有相同 $(X,Y,Z)$ 的分布都产生相同响应。证毕。
+
+---
+

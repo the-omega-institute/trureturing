@@ -1,0 +1,9 @@
+## 21. Third-target source polynomials and their fixed normalizations
+
+Retain the complete parent of Definition 2.1, the original independent-pair
+relation (16.6), and the exact critical world $W_3$ of Definition 13.1.
+Write $y_3=(p_3,v_3)=\Phi(W_3)$. By Lemma 13.2,
+$y_3\in\operatorname{int}K_3$ and $p_3\ne24$. For $y\in\widehat K_3$,
+let $Z(y)$ be the actual complete world supplied by Theorem 18.1, and put
+$Z_3=Z(y_3)$. In particular $Z_3$ is strictly inside the source square $R$.
+

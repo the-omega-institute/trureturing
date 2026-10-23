@@ -8,6 +8,7 @@
 
 import D5.S3.Arith.GoldenLayerMarginalDecay
 import D5.S3.Arith.GoldenResourceObjectiveFactorization
+import D5.S3.Arith.GoldenLocalThreshold
 
 /- Library-search audit trail (2026-09-06):
    * Repository searches for `5040`, inverse optimality, price thresholds, the golden resource
@@ -36,7 +37,7 @@ open D5.S3.Arith.GoldenResourceOptimalInteger
 
 noncomputable section
 
-private def targetExponent5040 (p : ℕ) : ℕ :=
+def targetExponent5040 (p : ℕ) : ℕ :=
   if p = 2 then 4 else if p = 3 then 2 else if p = 5 then 1 else if p = 7 then 1 else 0
 
 private theorem layer_ratio_pos {p a : ℕ} (hp : p.Prime) (ha : 1 ≤ a) :
@@ -48,7 +49,7 @@ private theorem layer_ratio_pos {p a : ℕ} (hp : p.Prime) (ha : 1 ≤ a) :
   exact div_pos (sub_pos.mpr (pow_lt_one₀ hpInvPos.le hpInvLt (by omega)))
     (sub_pos.mpr (pow_lt_one₀ hpInvPos.le hpInvLt (by omega)))
 
-private theorem one_div_nat_lt_golden_layer_marginal {p a k : ℕ} (hp : p.Prime)
+theorem one_div_nat_lt_golden_layer_marginal {p a k : ℕ} (hp : p.Prime)
     (_ha : 1 ≤ a) (hk : 0 < k)
     (hpow : (p : ℝ) <
       ((1 - (p : ℝ)⁻¹ ^ (a + 1)) / (1 - (p : ℝ)⁻¹ ^ a)) ^ k) :
@@ -64,7 +65,7 @@ private theorem one_div_nat_lt_golden_layer_marginal {p a k : ℕ} (hp : p.Prime
     _ < Real.log ((1 - (p : ℝ)⁻¹ ^ (a + 1)) / (1 - (p : ℝ)⁻¹ ^ a)) :=
       (div_lt_iff₀ hkR).2 (by simpa [mul_comm] using hlog)
 
-private theorem golden_layer_marginal_lt_one_div_nat {p a k : ℕ} (hp : p.Prime)
+theorem golden_layer_marginal_lt_one_div_nat {p a k : ℕ} (hp : p.Prime)
     (ha : 1 ≤ a) (hk : 0 < k)
     (hpow : ((1 - (p : ℝ)⁻¹ ^ (a + 1)) / (1 - (p : ℝ)⁻¹ ^ a)) ^ k <
       (p : ℝ)) :
@@ -218,7 +219,8 @@ private theorem golden_prime_local_objective_diff {p : ℕ} (hp : p.Prime)
   field_simp [hpLog.ne']
   ring
 
-private theorem golden_prime_local_objective_unique_maximal_of_strict_threshold
+/-- Generic strict-threshold uniqueness, exposed for unrestricted reserve masks. -/
+theorem golden_prime_local_objective_unique_maximal_of_strict_threshold
     {p a : ℕ} (hp : p.Prime) (lambda : ℝ)
     (hupper : goldenLayerMarginal p (a + 1) < lambda)
     (hlower : a = 0 ∨ lambda < goldenLayerMarginal p a) :
@@ -260,7 +262,7 @@ private theorem golden_prime_local_objective_unique_maximal_of_strict_threshold
   · intro hba
     rw [hba]
 
-private theorem target_exponent_eq_factorization_5040 (p : ℕ) :
+theorem target_exponent_eq_factorization_5040 (p : ℕ) :
     targetExponent5040 p = (5040 : ℕ).factorization p := by
   rw [show (5040 : ℕ) = 2 ^ 4 * 3 ^ 2 * 5 ^ 1 * 7 ^ 1 by norm_num]
   rw [Nat.factorization_mul (by norm_num) (by norm_num),

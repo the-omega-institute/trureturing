@@ -15,9 +15,7 @@ internal static class SourceSnapshotAssembler
         ImmutableArray<byte> truthGraphBytes,
         ImmutableArray<byte> rawLeanReportBytes,
         ImmutableArray<byte> dagMarkdownBytes,
-        ImmutableArray<byte> truthExportBytes,
-        ImmutableArray<byte> frozenLedgerHeadBytes,
-        int frozenLedgerSequence)
+        ImmutableArray<byte> truthExportBytes)
     {
         ArgumentNullException.ThrowIfNull(snapshot);
         ArgumentNullException.ThrowIfNull(identity);
@@ -25,7 +23,7 @@ internal static class SourceSnapshotAssembler
         ArgumentException.ThrowIfNullOrWhiteSpace(producerPackageCommit);
 
         return new SourceSnapshotModel(
-            "source-snapshot.v2",
+            SourceSnapshotJsonReader.Schema,
             sourceRepository,
             identity.Revision,
             Bare(identity.TreeOid),
@@ -35,9 +33,7 @@ internal static class SourceSnapshotAssembler
             Digest(truthGraphBytes),
             Digest(rawLeanReportBytes),
             Digest(dagMarkdownBytes),
-            Digest(truthExportBytes),
-            Digest(frozenLedgerHeadBytes),
-            frozenLedgerSequence);
+            Digest(truthExportBytes));
     }
 
     private static string LeanToolchain(RepositorySnapshot snapshot)

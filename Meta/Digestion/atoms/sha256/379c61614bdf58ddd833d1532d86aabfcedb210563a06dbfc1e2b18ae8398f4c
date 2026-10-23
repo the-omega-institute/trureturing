@@ -1,0 +1,3 @@
+**定理 4.8(不可判者的唯一善处置)**〔证〕。若 $P\in F^{0}(L)$(Gödel 边界),则诚实主体对 $P$ 的最新主张只能是 $(P,\mathsf{open})$ 或 $(P,\mathsf{unverified})$;尤其「等待某人裁决」不是一个可账平的主张。
+*证明*。$s_L(P)=\mathsf{open}$,由定义 3.2 只允许 $\sigma\in\{\mathsf{open},\mathsf{unverified}\}$;「等待裁决」不在 $\sigma$ 的取值域中(推论 2.6)。∎
+

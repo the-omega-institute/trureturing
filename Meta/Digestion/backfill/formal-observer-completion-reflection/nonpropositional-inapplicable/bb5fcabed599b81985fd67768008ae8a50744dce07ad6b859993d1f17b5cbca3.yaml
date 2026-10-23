@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:bb5fcabed599b81985fd67768008ae8a50744dce07ad6b859993d1f17b5cbca3
+  normalized_sha256: sha256:bb5fcabed599b81985fd67768008ae8a50744dce07ad6b859993d1f17b5cbca3
+cas_ref: sha256:bb5fcabed599b81985fd67768008ae8a50744dce07ad6b859993d1f17b5cbca3
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: Introduces the observer readout and its domain and codomain.
+    previous_atom_id: e361b4b19fad7007a47c4b3acc6017a8e9e2c237fc5c48948c47ca06043bdfde
+    next_atom_id: 119c9b04fdf8a6d670cfbe972df70469823a66a9d8920499111086f46badaff6

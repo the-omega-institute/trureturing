@@ -1,0 +1,9 @@
+- `RECURSIVE_RELATIONAL_OBSERVATION_UNIFORM_DESCRIPTOR_BOUNDARY.md`：有限
+  descriptor type、全 epoch `Reply/Same`、阶段界和 Presburger 边界判定的抽象接口。
+- `FIB_RELATIONAL_FIBER_CALCULUS.md`：来源、观察纤维、组合、连续实现和证明
+  闭合的基础演算。
+- `FIB_RELATIONAL_FIBER_CALCULUS_CONTINUATION.md`：有限取得、候选关系、控制
+  记忆和秩证书。
+- `FIB_RELATIONAL_FIBER_CALCULUS_CONTINUATION_II.md`：固定 native 菜单、双资源
+  边界和交错动作顺序的具体反例；该引用不把其有限菜单结论推广为全地址结论。
+

@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:e93db5ec38ea1d7feaa56dc3fb72773be98776c485f12819065eb1bf1193a23f
+  normalized_sha256: sha256:e93db5ec38ea1d7feaa56dc3fb72773be98776c485f12819065eb1bf1193a23f
+cas_ref: sha256:e93db5ec38ea1d7feaa56dc3fb72773be98776c485f12819065eb1bf1193a23f
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 命题 13.15（相同事件计数不保证更新方块）。的证明段；本项只给出该陈述的论证及所用步骤的说明，不另立独立命题。命题陈述保留在前项。
+    previous_atom_id: 81b8bfc656fff0c6f1f55b8fb2b892d337824b42585707070bdce7a1b3218777
+    next_atom_id: ecc3887c8cf6f161f7f137dcbbf1ebceb103f6652a1f43d43223cd00746b55f0

@@ -1,0 +1,47 @@
+**定义 285.2（偏置参考合同与实际条件核）。** 对整数 $d\ge1,M\ge1$，置
+
+$$
+\tau=\frac{M}{M+d},\qquad
+\nu=\frac{\tau}{1+\tau}=\frac{M}{2M+d},\qquad
+\eta_0=1-2\nu=\frac{d}{2M+d},
+$$
+
+并令 $\mathsf Q_{d,M}$ 为全部 $d$ 个独立 $\operatorname{Bernoulli}(\nu)$ 位条件于
+$h\equiv M\pmod2$ 的律。独立性属于未条件参考采样；条件后的全部位不称为独立，也不称为原 $U(a,b)$ 的奇偶律。条件事件概率和单向量质量为
+
+$$
+p_e=\frac{1+(-1)^M\eta_0^d}{2}>0,\qquad
+\mathsf Q_{d,M}(\xi)=
+\frac{\nu^h(1-\nu)^{d-h}}{p_e}
+\mathbf1_{\{h\equiv M\pmod2\}}.
+\tag{285.3}
+$$
+
+实际弱组成计数给出
+
+$$
+\mathsf R_{d,M}(\xi)=
+\frac{\displaystyle\binom{(M-h)/2+d-1}{d-1}}
+{\displaystyle\binom{M+d-1}{d-1}}
+\mathbf1_{\{h\equiv M\pmod2,\ h\le M\}};
+\tag{285.4}
+$$
+
+指示条件不成立时质量为零，不对非整数或负参数解释组合数。对实际合法的完整 $\xi$，令 $s_\xi=(M-h)/2$。给定 $\xi$ 后，$r=2T+\xi$ 的实际条件核为
+
+$$
+\mathbb P(T=t\mid\xi)=
+\frac{\mathbf1_{\{t_i\in\mathbb Z_{\ge0},\ \sum_i t_i=s_\xi\}}}
+{\displaystyle\binom{s_\xi+d-1}{d-1}}.
+\tag{285.5}
+$$
+
+这是 (284.2)、(284.10) 已用的奇偶分解与均匀弱组成计数。$M\ge d$ 时，每个终端合法的 $\xi$ 都有 $s_\xi\ge0$，因而可以定义参考树律 $\widetilde U(a,b)$：先抽 $\xi\sim\mathsf Q_{d,M}$，再使用同一个实际核 (285.5) 抽 $T$，置 $r=2T+\xi$，按定义 285.1 的指定方向形成原叶词，最后均匀选择全部 $\operatorname{Cat}_{n-1}$ 种原有序括号。每一步均生成 $\mathcal F(a,b)$ 中的实际树。该律仅重加权实际奇偶纤维，属于额外参考合同；它的单树质量为
+
+$$
+\widetilde U(a,b)(t)=
+\frac{\mathsf Q_{d,M}(\xi(t))}
+{\operatorname{Cat}_{n-1}\displaystyle\binom{s_{\xi(t)}+d-1}{d-1}}.
+\tag{285.6}
+$$
+

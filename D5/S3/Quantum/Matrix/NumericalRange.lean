@@ -96,12 +96,17 @@ private theorem convex_bloch_sphere_image (L : EuclideanSpace ℝ (Fin 3) →ₗ
   exact convex_sphere_image L k hk hLk
 
 private theorem blochPure_norm (v : (EuclideanSpace ℂ (Fin 2))) (hv : ‖v‖ = 1) : ‖(fun (v : EuclideanSpace ℂ (Fin 2)) => bloch (Matrix.vecMulVec v.ofLp (star v.ofLp))) v‖ = 1 := by
-  have hsq : ‖(fun (v : EuclideanSpace ℂ (Fin 2)) => bloch (Matrix.vecMulVec v.ofLp (star v.ofLp))) v‖^2 = (‖v‖^2)^2 := by
-    rw [EuclideanSpace.real_norm_sq_eq,EuclideanSpace.norm_sq_eq]
-    simp [bloch,Matrix.vecMulVec,Fin.sum_univ_succ,Complex.sq_norm,Complex.normSq_apply]
-    ring
-  rw [hv] at hsq
-  nlinarith [norm_nonneg ((fun (v : EuclideanSpace ℂ (Fin 2)) => bloch (Matrix.vecMulVec v.ofLp (star v.ofLp))) v)]
+  have hn : star v.ofLp ⬝ᵥ v.ofLp = (1 : ℂ) := by
+    calc
+      star v.ofLp ⬝ᵥ v.ofLp = inner ℂ v v := dotProduct_comm _ _
+      _ = 1 := by rw [inner_self_eq_norm_sq_to_K, hv]; norm_num
+  have ht : Matrix.trace (Matrix.vecMulVec v.ofLp (star v.ofLp)) = 1 := by
+    rw [Matrix.trace_vecMulVec, dotProduct_comm, hn]
+  have hp : Matrix.vecMulVec v.ofLp (star v.ofLp) *
+      Matrix.vecMulVec v.ofLp (star v.ofLp) = Matrix.vecMulVec v.ofLp (star v.ofLp) := by
+    rw [Matrix.vecMulVec_mul_vecMulVec, hn, one_smul]
+  exact (bloch_geometry_of_isHermitian _
+    (Matrix.posSemidef_vecMulVec_self_star v.ofLp).isHermitian).2 ht hp
 
 private theorem blochPure_surjective (r : (EuclideanSpace ℝ (Fin 3))) (hr : ‖r‖ = 1) :
     ∃ v : (EuclideanSpace ℂ (Fin 2)), ‖v‖ = 1 ∧ (fun (v : EuclideanSpace ℂ (Fin 2)) => bloch (Matrix.vecMulVec v.ofLp (star v.ofLp))) v = r := by
@@ -157,7 +162,7 @@ private theorem bloch_expectation (A : (Matrix (Fin 2) (Fin 2) ℂ)) (v : (Eucli
     apply Complex.ext <;>
       simp [blochCenter,Matrix.trace,Matrix.diag,blochReadout,bloch,Matrix.vecMulVec,dotProduct,
         Matrix.mulVec,Fin.sum_univ_two,Complex.sq_norm,Complex.normSq_apply] <;> ring
-  simpa [hv,Matrix.toEuclideanLin_apply,EuclideanSpace.inner_eq_star_dotProduct,
+  simpa [hv,Matrix.toLpLin_apply,EuclideanSpace.inner_eq_star_dotProduct,
     dotProduct_comm] using hid
 
 private theorem qubit_numericalRange_eq_bloch_image (A : (Matrix (Fin 2) (Fin 2) ℂ)) :
@@ -207,7 +212,7 @@ private theorem one_dimensional_numericalRange (A : (Matrix (Fin 1) (Fin 1) ℂ)
       have h := EuclideanSpace.norm_sq_eq v
       simpa [hv,←Complex.normSq_eq_norm_sq] using h.symm
     simp only [mem_singleton_iff]
-    simp [Matrix.toEuclideanLin_apply,EuclideanSpace.inner_eq_star_dotProduct,
+    simp [Matrix.toLpLin_apply,EuclideanSpace.inner_eq_star_dotProduct,
       Matrix.mulVec,dotProduct,Fin.sum_univ_succ]
     have hstar : star (v 0) * v 0 = 1 := by
       have h := Complex.normSq_eq_conj_mul_self (z := v 0)
@@ -219,7 +224,7 @@ private theorem one_dimensional_numericalRange (A : (Matrix (Fin 1) (Fin 1) ℂ)
   · rintro rfl
     refine ⟨WithLp.toLp 2 (fun _ => 1), ?_, ?_⟩
     · simp [EuclideanSpace.norm_eq,Fin.sum_univ_succ]
-    · simp [Matrix.toEuclideanLin_apply,EuclideanSpace.inner_eq_star_dotProduct,
+    · simp [Matrix.toLpLin_apply,EuclideanSpace.inner_eq_star_dotProduct,
       Matrix.mulVec,dotProduct,Fin.sum_univ_succ]
 
 private theorem small_matrix_numericalRange_convex {n : ℕ} (hn : n ≤ 2) (A : (Matrix (Fin n) (Fin n) ℂ)) :

@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:da549b394e4beb087127c11022ca3cbbcaaa3cb347f03ad34fed3b4c20080be7
+  normalized_sha256: sha256:da549b394e4beb087127c11022ca3cbbcaaa3cb347f03ad34fed3b4c20080be7
+cas_ref: sha256:da549b394e4beb087127c11022ca3cbbcaaa3cb347f03ad34fed3b4c20080be7
+coverage_gids:
+  - gid: D5/S3/Observer/ProbabilisticClosure/TrajectoryLaws/GeometricPhaseOccupation.uniform_discounted_phase_occupation
+    target_statement_id: sha256:d2d7c828ebf90172f2ca94c527e976f7f71f709b64308c41e2be5e3f823e529d
+receipts:
+  unresolved_subitems: []

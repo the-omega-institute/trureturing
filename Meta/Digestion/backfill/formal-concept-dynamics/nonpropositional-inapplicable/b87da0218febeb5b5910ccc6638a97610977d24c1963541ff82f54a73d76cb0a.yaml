@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:b87da0218febeb5b5910ccc6638a97610977d24c1963541ff82f54a73d76cb0a
+  normalized_sha256: sha256:b87da0218febeb5b5910ccc6638a97610977d24c1963541ff82f54a73d76cb0a
+cas_ref: sha256:b87da0218febeb5b5910ccc6638a97610977d24c1963541ff82f54a73d76cb0a
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 清单片段“可执行合同集合”仅列举主题、接口组成或考虑维度；本片段不陈述性质、存在性或推论。
+    previous_atom_id: 0a450347afb6dd499361e13122e21653b42b1e2e9982e03a05ccc8c10e2d085d
+    next_atom_id: f7d2b3727796f46cc39e0207425ef66aa690f3deeecda06d83da90c15f4b0f47

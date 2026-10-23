@@ -1,0 +1,14 @@
+fingerprints:
+  raw_sha256: sha256:13907cc7e3fa7e531384d902b18101363a47810fd4beaed85b5afcc002246ac7
+  normalized_sha256: sha256:13907cc7e3fa7e531384d902b18101363a47810fd4beaed85b5afcc002246ac7
+cas_ref: sha256:13907cc7e3fa7e531384d902b18101363a47810fd4beaed85b5afcc002246ac7
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 'Pinned upstream reuse only; mathlib db584cd6d46c92f209a44c0f1c829460d327499d. No frozen project GID supplies the complete statement at its full generality. Bindings: isCompact_Icc, IsCompact.exists_isMinOn, Finset.single_le_sum, le_csInf, csInf_le, norm_sub_sq_real, inner_sum, inner_smul_right, real_inner_smul_left, real_inner_le_norm, Finset.sum_sub_distrib, Finset.sum_nonneg, Finset.sum_eq_zero_iff_of_nonneg, mul_eq_zero, norm_eq_zero, sub_eq_zero, inner_eq_one_iff_of_norm_eq_one, Finset.sum_smul, Finset.sum_eq_zero, Finset.sum_ite_eq, norm_add_eq_sqrt_iff_real_inner_eq_zero, Real.sq_sqrt, Real.sqrt_nonneg, norm_add_sq_real, norm_smul, Fin.sum_univ_two. Single-sample radial floor, attainment, alignment iff, a single optimal coordinate and all nonnegative repeated-entry splittings. Parameters and premise discharge: Compact box Icc 0 (constant norm(x)^2/(2*lambda)) contains zero. Finite-coordinate energy is continuous. isCompact_Icc and exists_isMinOn give a minimizer; outside-box codes cost more than energy(0) by single_le_sum. Thus the feasible infimum is attained, including the empty-index case. norm_sub_sq_real, inner_sum and inner_smul give radial excess = half squared residual + lambda*sum c_i*(1-inner(e,D_i)); all terms nonnegative by real_inner_le_norm and unit norms. Zero excess forces each active D_i=e by sum_eq_zero_iff_of_nonneg and inner_eq_one_iff_of_norm_eq_one; residual zero forces total mass n-lambda. Conversely any such nonnegative splitting attains the floor. Positive mass forces an aligned entry; a single supported coordinate gives the converse. Empty dictionaries have neither aligned entry nor radial equality.'
+    previous_atom_id: 4ca51baac33f6105742de2ab4b8a9f8245b4ed6b6b3e3e4a13581fb425c139ef
+    next_atom_id: 45394457bc4b777a868c1c6f7dd8bcbfdd40fd29121b618130bd6c5ce28d40a6
+  chain_atoms:
+    - d3c49759a3565a55690780b5704b3fe0c8853e6d8aba7bda28359f15fb3ac106
+    - dfb187eeed41e53a6232046ca5f7ae695100f87e316a14a42f42d397a119c5ed

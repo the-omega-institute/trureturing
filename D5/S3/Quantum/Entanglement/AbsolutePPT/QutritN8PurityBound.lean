@@ -677,7 +677,7 @@ private theorem certificate_identity (l : Fin 24 → ℝ) :
   simp only [QReal, NReal, A1_2Real, A1_3Real, A1_4Real, A1_5Real, A1_6Real, A1_7Real, A1_8Real, A1_9Real, A1_10Real, A1_11Real, A1_12Real, A1_13Real, A1_14Real, A1_15Real, A1_16Real, A1_17Real, A1_18Real, A1_19Real, A1_20Real, A1_21Real, A1_22Real, A1_23Real, A2_1Real, A2_2Real, A2_3Real, A2_4Real, A2_5Real, A2_6Real, A2_7Real, A2_8Real, A2_9Real, A2_10Real, A2_11Real, A2_12Real, A2_13Real, A2_14Real, A2_15Real, A2_16Real, A2_17Real, A2_18Real, A2_19Real, A2_20Real, A2_21Real, A2_22Real, A2_23Real,gap,K1,K2,Matrix.trace,Matrix.diag,Matrix.mul_apply,Fin.sum_univ_succ, Fin.sum_univ_zero, Matrix.of_apply, Matrix.cons_val_zero, Matrix.cons_val_succ, Matrix.head_cons, Matrix.tail_cons, Matrix.cons_val, Fin.succ, Fin.val_zero, Fin.val_succ, Nat.succ_eq_add_one, Nat.reduceAdd, Fin.reduceFinMk]
   ring
 
-private theorem certificate_bound (l : Fin 24 → ℝ) (horder : Antitone l)
+theorem certificate_bound (l : Fin 24 → ℝ) (horder : Antitone l)
     (hnonneg : 0 ≤ l 23) (htrace : ∑ i, l i=1)
     (h1 : (QutritSpectralReduction.K1 (QutritSpectralReduction.boundaryValues 5 l)).PosSemidef) (h2 : (QutritSpectralReduction.K2 (QutritSpectralReduction.boundaryValues 5 l)).PosSemidef) :
     ∑ i, (l i)^2 ≤ (32 : ℝ)/(26)^2  := by

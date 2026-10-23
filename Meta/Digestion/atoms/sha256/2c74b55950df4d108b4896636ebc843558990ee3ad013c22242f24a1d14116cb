@@ -1,0 +1,24 @@
+**Corollary 15.3 (fixed-N exclusion and the supported-loss consumer).** On
+the locus $S_{\rm evt}=M_\beta=5261/6750$ in Definition 15.1, one has
+$P\le M_p=11758471/22781250$. Equality occurs at exactly two tables:
+$w=1/4$, with the swap and fixed components assigned opposite matched
+endpoints in (15.3). Consequently:
+
+1. There is no strictly positive fixed-N companion in this class for
+   (14.28). A configuration mixture with positive weight on both the fixed
+   table N of (14.25) and a table E in Definition 15.1 cannot satisfy both
+   endpoint-event midpoint equations.
+2. For every fixed finite or countable installed prior with
+   $\mu(1),\mu(2)>0$ and at least one supported $k\ge3$, no table of
+   Definition 15.1 attains all original two-phase configuration-risk
+   budgets. More precisely, either of the two midpoint equality tables has,
+   for every such actually supported k,
+
+$$
+\sum_i\pi_i\operatorname{TV}(Q_i,P_{p,r_k})
+\ge\rho_p+\frac{14219478376}{637289625781250}>\rho_p.
+\tag{15.23}
+$$
+
+This numerical lower bound is asserted for the two equality tables only.
+

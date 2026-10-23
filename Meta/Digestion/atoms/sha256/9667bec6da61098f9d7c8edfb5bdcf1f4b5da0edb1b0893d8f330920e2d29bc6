@@ -1,0 +1,34 @@
+**Proof.** Condition 3 implies condition 1. If condition 2 fails,
+Theorem 16.3 realizes a same-code pair with the identical whole current
+tree at positive distinct lags, refuting condition 1.
+
+For condition 2 implying condition 3, choose any public $i\in S$ and
+parse $z=z_i$. Set $A_\ell=\max(\lambda_0,z-H)$ and $B_\ell=z$.
+For every hidden slot $j\notin S$, its unknown exponent
+$n_j=jq+a_j+\ell$ lies in
+
+$$
+[jq+A_\ell,\ jq+B_\ell+H],
+\qquad B_\ell+H-A_\ell+1\le2H+1.
+\tag{NAR.16.16}
+$$
+
+Use exactly the native interval procedure (NAR.16.12)--(NAR.16.14)
+at $w_jR^s$ for each hidden slot. Visible $n_j$ are already parsed
+from their acquired literals. This obtains the whole normalized vector
+$x_j=n_j-jq$ with the fresh-call bound (NAR.16.15). It acquires clock
+values through finite native replies, without traversing whole trees.
+
+Enumerate the finite age cube using the fixed source-independent table
+for $e$. For each $b$ with the received code, let $h=x_i-b_i$ and keep
+it exactly when $h\ge\lambda_0$ and $x_j=b_j+h$ for every $j\in I$.
+The actual $a$ with $h=\ell$ survives. If two survivors $b,b'$ gave
+different $h,h'$, then $b-b'=(h'-h)\mathbf1$ would be a same-code
+nonzero common translation, contrary to condition 2. Return their unique
+common lag; uniqueness of the initial profile is unnecessary.
+This finite enumeration and interval search terminate on promised inputs.
+The intervals contain a uniformly bounded number of integers even when
+their endpoints, tree sizes and query words grow with $\ell$.
+Pointwise finite full-tree traversal alone would not have supplied this
+uniform raw-call conclusion. $\square$
+

@@ -198,6 +198,18 @@ For odd m at least three and k=m+1, one shared original positive archive with fu
 
 The selected physical suffix and its decoder also require donor-compensated rows, separate safety proofs for both seam alternatives, endpoint-code correspondence, and a stop after exactly d blocks. These properties are distinct from the trace equivalence. No optimal price, adaptive lower bound, constant or binary price, or GLOBAL policy follows from this equivalence.
 
+**Theorem 1.17 (Every issued archive entry contains one complete m-bit word).**
+
+Lean statement: `D5/S3/ObserverMemory/Algorithms/KBonacciAcquisition/OriginalAcquiredTrace.archive_length`
+
+*Proof.* Machine-checked in Lean as `D5/S3/ObserverMemory/Algorithms/KBonacciAcquisition/OriginalAcquiredTrace.archive_length` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+For every m and chronological archive, the length of archiveWords is exactly archive.length times m. The flattening includes all bits of every issued complete word, even zeros, clearing, waits and the remainder of a word rejected internally. Combining this identity with a stopped PaidTrace transfers the exact block fee to the emitted-bit fee.
+
 ## References
 
 - Truth anchor: `D5/S3/ObserverMemory/Algorithms/KBonacciAcquisition/OriginalAcquiredTrace.AcquiredPairs`
@@ -209,6 +221,7 @@ The selected physical suffix and its decoder also require donor-compensated rows
 - Truth anchor: `D5/S3/ObserverMemory/Algorithms/KBonacciAcquisition/OriginalAcquiredTrace.actual_positive_coordinates`
 - Truth anchor: `D5/S3/ObserverMemory/Algorithms/KBonacciAcquisition/OriginalAcquiredTrace.archiveEndpoint`
 - Truth anchor: `D5/S3/ObserverMemory/Algorithms/KBonacciAcquisition/OriginalAcquiredTrace.archiveWords`
+- Truth anchor: `D5/S3/ObserverMemory/Algorithms/KBonacciAcquisition/OriginalAcquiredTrace.archive_length`
 - Truth anchor: `D5/S3/ObserverMemory/Algorithms/KBonacciAcquisition/OriginalAcquiredTrace.execute_paid_trace`
 - Truth anchor: `D5/S3/ObserverMemory/Algorithms/KBonacciAcquisition/OriginalAcquiredTrace.full_positive_history_trace`
 - Truth anchor: `D5/S3/ObserverMemory/Algorithms/KBonacciAcquisition/OriginalAcquiredTrace.full_positive_parent`

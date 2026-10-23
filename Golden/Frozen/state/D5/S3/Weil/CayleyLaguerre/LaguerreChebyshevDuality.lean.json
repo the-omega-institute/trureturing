@@ -1,1 +1,1 @@
-{"statement_id":"sha256:dbe1b8e24ba1842e457fb07e0fac6efd946141285cdc53610e50dbf7747941a5"}
+{"statement_id":"sha256:cbbbc86b6d0058baf047596ccef7bcad82fa8d9256ac76c9acfe8acfde8b3647","declarations":[{"declaration_name_key":"ns(ns(ns(ns(ns(ns(n0,2:D5),2:S3),4:Weil),14:CayleyLaguerre),24:LaguerreChebyshevDuality),26:laguerre_chebyshev_duality)","kind":"theorem"}]}

@@ -1,0 +1,171 @@
+**Theorem 7.2 (native two-argument grammar comparison).** The subsystem
+(SPC.21) has a unique completed valuation $\mathbf K$. Every expression
+in that valuation has an effective finite ground initial term in one
+finite deterministic first-order grammar. Its action semantics preserves
+every original-address reply, including absence. Equality of any two
+such expressions is decidable. For each fixed compiled grammar and
+fixed pair of initial terms one can compute a depth $H$ such that
+unequal native values already disagree at an original address of length
+at most $H$.
+
+Proof. The guarded existence and uniqueness argument is the one used
+in Theorem 4.2, now on a finite product. Matching original prefixes
+remain matching under every fixed native power. Pairing gains one
+level, so simultaneous iteration stabilizes every finite prefix
+independently of the seed and yields exactly one valuation. This is
+reuse of guarded interpreted recursion, not a new fixed-point principle.
+
+For completed native $a,b,t$, let $H_{a,b}(t)$ replace each alpha leaf
+of $t$ by $a$, each beta leaf by $b$, and preserve its ordered branches
+and infinite paths. Define finite two-variable constructor terms
+
+$$
+P_0(a,b)=a,\qquad P_1(a,b)=b,\qquad
+P_{k+2}(a,b)=\langle P_{k+1}(a,b),P_k(a,b)\rangle.
+\tag{SPC.22}
+$$
+
+In particular $P_k(\alpha,\beta)=T_k$. The two actual leaf laws,
+distribution through ordered pairs and composition of leaf replacement
+give
+
+$$
+H_{a,b}(\rho^k t)
+ =H_{P_k(a,b),P_{k+1}(a,b)}(t).
+\tag{SPC.23}
+$$
+
+For finite $t$ this follows by structural induction, with
+$H_{a,b}(\rho\alpha)=b$ and
+$H_{a,b}(\rho\beta)=\langle b,a\rangle$ as its two leaf cases.
+Iterating these cases gives (SPC.22). For a completed $t$, fill its
+successively deeper frontiers by finite leaves. Each fixed original
+prefix of either side stabilizes to the same reply as the corresponding
+finite replacement: neither native update nor leaf replacement changes
+an already specified branch prefix. Thus (SPC.23) holds also on infinite
+branches and on mixed finite/infinite trees. In particular
+$H_{a,b}(\Omega)=\Omega$. This identity is an intermediate operation
+correspondence, not a separate leaf-language representation result.
+
+Use ranked grammar symbols $\mathsf P$ of arity two, $G_i$ of arity
+two, and $\mathsf a,\mathsf b,\mathsf O,\mathsf D$ of arity zero.
+Translate expressions with two formal variables $a,b$ by
+
+$$
+\begin{aligned}
+\tau_{a,b}(\alpha)&=a,&
+\tau_{a,b}(\beta)&=b,&
+\tau_{a,b}(\Omega)&=\mathsf O,\\
+\tau_{a,b}(\langle A,B\rangle)
+ &=\mathsf P(\tau_{a,b}(A),\tau_{a,b}(B)),\\
+\tau_{a,b}(\rho^kX_j)
+ &=G_j(P_k(a,b),P_{k+1}(a,b)).
+\end{aligned}
+\tag{SPC.24}
+$$
+
+Here and below the $P_k$ in grammar terms use $\mathsf P$ in place
+of native pairing; a finite ground is translated by its finite tree.
+Introduce the rules
+
+$$
+\begin{aligned}
+G_i(a,b)&\xrightarrow{L}\tau_{a,b}(E_i),&
+G_i(a,b)&\xrightarrow{R}\tau_{a,b}(F_i),\\
+\mathsf P(a,b)&\xrightarrow{L}a,&
+\mathsf P(a,b)&\xrightarrow{R}b,\\
+\mathsf O&\xrightarrow{L}\mathsf O,&
+\mathsf O&\xrightarrow{R}\mathsf O,\\
+\mathsf a&\xrightarrow{o_\alpha}\mathsf D,&
+\mathsf b&\xrightarrow{o_\beta}\mathsf D.
+\end{aligned}
+\tag{SPC.25}
+$$
+
+The sink $\mathsf D$ has no rules. There are no other rules.
+The initial term for $A$ is
+$S_A=\tau_{\mathsf a,\mathsf b}(A)$.
+All powers are fixed before translation, so every $P_k$, rule and
+initial term is finite. Expanding (SPC.22) is sufficient for this
+finiteness assertion; no succinctness bound is required.
+
+To verify the semantics, interpret $\mathsf P$ as pairing,
+$\mathsf a,\mathsf b$ as the two leaves, $\mathsf O$ as $\Omega$,
+and $G_i(A,B)$ as $H_{\llbracket A\rrbracket,\llbracket B\rrbracket}(K_i)$.
+Identity (SPC.23) gives
+$\llbracket\tau_{a,b}(E)\rrbracket=H_{a,b}(E(\mathbf K))$
+after substituting any interpreted arguments. Consequently each $L$
+or $R$ rule returns exactly the corresponding whole native subtree.
+The only configurations reachable by $L,R$ from an initial term have
+either a branch with enabled actions $\{L,R\}$, an alpha leaf with
+enabled action $\{o_\alpha\}$, or a beta leaf with enabled action
+$\{o_\beta\}$. The sink is reached only after an observation marker.
+
+Induction on an address $p$ now proves: an $L,R$ path labelled $p$
+exists exactly when the native node at $p$ is reached, and its
+configuration has exactly that node's native label. If a leaf blocks
+the path, $p$ and all its extensions are absent. Thus the correspondence
+includes all four replies, rather than just reached leaf labels.
+The order of $L,R$ is fixed, and every occurrence of $X_i$ still uses
+the same $K_i$, even when its two leaf-image arguments differ.
+
+The grammar has the precise rule format of [Jančar, §2, (3)][FOG]:
+$A(x_1,\ldots,x_n)\xrightarrow{c}E$, with finite ranked alphabet,
+finite action alphabet, finite right side, and no variable outside
+$x_1,\ldots,x_n$. For each symbol and action there is at most one
+rule. The relevant labelled transition system is his action-based
+$\mathcal L^{\mathsf a}_{\mathcal G}$, which is deterministic here.
+All initial terms and all configurations reached in finitely many
+steps are finite ground terms. They are therefore regular syntactic
+terms in the sense required by his theorem. Unused arguments are
+permitted: the remark on shortest sink words in his §2 explicitly
+states that the proof needs no normalization making every argument
+reachable.
+
+Write $\sim_k$ for his $k$-round bisimulation approximants, with
+$\sim_0$ universal, and
+$\operatorname{el}(S,T)=\max\{k:S\sim_kT\}$, taking value $\omega$
+for bisimilar terms. In this grammar, for every $k\ge0$,
+
+$$
+S_A\sim_kS_B
+\quad\Longleftrightarrow\quad
+\forall |p|<k\quad r_{A(\mathbf K)}(p)=r_{B(\mathbf K)}(p).
+\tag{SPC.26}
+$$
+
+For $k=0$ both conditions are vacuous. At the next round the enabled
+actions distinguish the three reached labels. At equal branches their
+unique child transitions require the previous-round conditions on both
+children. At equal leaves the same observation marker reaches the same
+dead sink, while all native descendants are absent. This proves (SPC.26)
+by induction. A first discrepancy cannot be an absent/reached pair
+without an earlier ancestor discrepancy. Hence a first native mismatch
+at depth $d$ gives $\operatorname{el}(S_A,S_B)=d$, not $d+1$.
+Inclusive agreement through $h$ is $S_A\sim_{h+1}S_B$.
+Jančar's special convention for open variable terms is irrelevant:
+these configurations are ground.
+
+For completeness, let $n=\operatorname{Size}(S_A,S_B)$ be the number
+of nodes in their joint least syntactic graph presentation, allowing
+shared subterms. [Jančar, §3, Theorem 7][FOG] gives grammar-dependent
+computable numbers $c,\mathcal E$ such that
+
+$$
+S_A\not\sim S_B\quad\Longrightarrow\quad
+\operatorname{el}(S_A,S_B)
+ \le c\bigl(\mathcal E n+n^2\bigr).
+\tag{SPC.27}
+$$
+
+His term “small” for $c$ explicitly includes computability from the
+grammar; $\mathcal E$ is also computable. Thus one may take the integer
+ceiling of the right side for $H$. Any computable upper bound on $n$,
+such as the total size of the two finite syntax trees, also suffices.
+Agreement through inclusive $H$ forces equality, since it gives
+$\operatorname{el}\ge H+1$. Otherwise the finite prefix evaluator finds
+a discrepancy at depth at most $H$. Equivalently, [Corollary 8][FOG]
+decides bisimilarity directly, and the correspondence above transfers
+its answer to native equality. Neither computation presupposes
+rationality of the native output. $\square$
+

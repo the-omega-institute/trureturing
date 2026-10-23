@@ -1,0 +1,20 @@
+**定理 6.2（显式分配与增长常数上界）。** 令 $t=\sqrt2-1$。对 $n\ge1$，在 $\Gamma_n$ 的每条边 $\{b,b+e_i\}$ 上取
+
+$$
+a_{b+e_i\leftarrow b}=t,\qquad a_{b\leftarrow b+e_i}=1-t,
+$$
+
+则每个顶点的负载为 $L_b^{\Gamma_n}(a)=(3-2\sqrt2)\bigl(u(b)+2k(b)\bigr)$，最大负载等于 $(3-2\sqrt2)\max_b(u(b)+2k(b))$，奇数 $n$ 时恰为 $(3-2\sqrt2)(n+1)$。于是
+
+$$
+\kappa_n\le(3-2\sqrt2)(n+1)\quad(n\ge0),\qquad c_\star\le3-2\sqrt2=0.17157\ldots,
+\tag{6.2}
+$$
+
+并且当且仅当 $n\ge5$ 时有
+
+$$
+(3-2\sqrt2)(n+1)<\max\Bigl\{\frac{49n}{256},\ \frac n4-\frac{47}{256}\Bigr\}.
+\tag{6.3}
+$$
+

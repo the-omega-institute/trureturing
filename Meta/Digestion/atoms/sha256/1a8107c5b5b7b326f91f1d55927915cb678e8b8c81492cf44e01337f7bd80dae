@@ -1,0 +1,53 @@
+### 定理 5：选择性逆衰变稳定定理
+
+若：
+
+\[
+\mathbb E[e_{t+1}\mid S_t]
+\le
+\lambda e_t+\varepsilon
+\]
+
+其中 \(0\le\lambda<1\)，则：
+
+\[
+\mathbb E[e_t]
+\le
+\lambda^t e_0
++
+\varepsilon\frac{1-\lambda^t}{1-\lambda}
+\]
+
+因此：
+
+\[
+\limsup_{t\to\infty}\mathbb E[e_t]
+\le
+\frac{\varepsilon}{1-\lambda}
+\]
+
+#### 证明
+
+对条件不等式取全期望：
+
+\[
+\mathbb E[e_{t+1}]
+\le
+\lambda\mathbb E[e_t]+\varepsilon
+\]
+
+递推得到：
+
+\[
+\mathbb E[e_t]
+\le
+\lambda^t e_0
++
+\varepsilon
+\left(
+1+\lambda+\cdots+\lambda^{t-1}
+\right)
+\]
+
+使用等比数列公式：
+

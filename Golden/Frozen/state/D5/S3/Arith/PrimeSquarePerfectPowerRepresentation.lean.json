@@ -1,1 +1,1 @@
-{"statement_id":"sha256:f90f14feb594d1d6abc474734d495f7bfe01c88e8084aa65cee0b459b2cb3a1d"}
+{"statement_id":"sha256:f90f14feb594d1d6abc474734d495f7bfe01c88e8084aa65cee0b459b2cb3a1d","declarations":[{"declaration_name_key":"ns(ns(ns(ns(ns(n0,2:D5),2:S3),5:Arith),37:PrimeSquarePerfectPowerRepresentation),6:result)","kind":"theorem"}]}

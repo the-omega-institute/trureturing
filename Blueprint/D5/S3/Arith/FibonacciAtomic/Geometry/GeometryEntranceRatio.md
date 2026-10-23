@@ -102,7 +102,31 @@ Lean statement: `D5/S3/Arith/FibonacciAtomic/Geometry/GeometryEntranceRatio.sigm
 
 sigma(w) is the concatenation of letter(c) for every letter occurrence c of w, in order.
 
-**Definition 1.9 (Word cardinality).**
+**Theorem 1.9 (Length on Every Actual Geometry Fiber).**
+
+$$\forall g: \operatorname{Five}\left(\right), (\forall t: \operatorname{TreeFiber}\left(g\right), (\operatorname{ell}\left(\operatorname{val}\left(t\right)\right) = \operatorname{N}\left(g\right)))$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/Arith/FibonacciAtomic/Geometry/GeometryEntranceRatio.tree_length` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+Every actual source in the entire geometry fiber has leaf count N(g). The statement includes every ordered shape and word with that exact G; an empty fiber has no members.
+
+**Theorem 1.10 (Exact Whole-Word Substitution).**
+
+$$\forall t: \operatorname{Source}\left(\right), (\operatorname{wd}\left(\operatorname{rho}\left(t\right)\right) = \operatorname{sigma}\left(\operatorname{wd}\left(t\right)\right))$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/Arith/FibonacciAtomic/Geometry/GeometryEntranceRatio.wd_substitution` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+The literal ordered word of each substituted actual source is sigma of its complete original labelled word. Here ell is FreeMagma.length and Source is the actual FreeMagma Bool carrier.
+
+**Definition 1.11 (Word cardinality).**
 
 Lean statement: `D5/S3/Arith/FibonacciAtomic/Geometry/GeometryEntranceRatio.m`
 
@@ -114,7 +138,7 @@ Lean statement: `D5/S3/Arith/FibonacciAtomic/Geometry/GeometryEntranceRatio.m`
 
 m(g)=Nat.card(WordFiber(g)). The actual word carrier is proved finite before this definition.
 
-**Definition 1.10 (Tree cardinality).**
+**Definition 1.12 (Tree cardinality).**
 
 Lean statement: `D5/S3/Arith/FibonacciAtomic/Geometry/GeometryEntranceRatio.M`
 
@@ -126,7 +150,7 @@ Lean statement: `D5/S3/Arith/FibonacciAtomic/Geometry/GeometryEntranceRatio.M`
 
 M(g)=Nat.card(TreeFiber(g)). The actual ordered tree carrier is proved finite before this definition.
 
-**Definition 1.11 (Entrance cardinality).**
+**Definition 1.13 (Entrance cardinality).**
 
 Lean statement: `D5/S3/Arith/FibonacciAtomic/Geometry/GeometryEntranceRatio.H`
 
@@ -138,7 +162,7 @@ Lean statement: `D5/S3/Arith/FibonacciAtomic/Geometry/GeometryEntranceRatio.H`
 
 H(g)=Nat.card(EntranceFiber(g)). Finiteness follows from a proved cutoff k<2N(g) for every legal entrance, together with finite current trees and finite possible source trees.
 
-**Definition 1.12 (Pure-word geometry).**
+**Definition 1.14 (Pure-word geometry).**
 
 Lean statement: `D5/S3/Arith/FibonacciAtomic/Geometry/GeometryEntranceRatio.pure`
 
@@ -150,7 +174,7 @@ Lean statement: `D5/S3/Arith/FibonacciAtomic/Geometry/GeometryEntranceRatio.pure
 
 pure(true,n)=(n,0,0,0,0), and pure(false,n)=(0,n,0,0,0). These are exactly the geometries of the corresponding repeated-letter words.
 
-**Definition 1.13 (Sharp bound).**
+**Definition 1.15 (Sharp bound).**
 
 Lean statement: `D5/S3/Arith/FibonacciAtomic/Geometry/GeometryEntranceRatio.B`
 
@@ -162,7 +186,7 @@ Lean statement: `D5/S3/Arith/FibonacciAtomic/Geometry/GeometryEntranceRatio.B`
 
 B(n) is three at n=2, five halves at n=3, and two otherwise. In particular B(1)=2 and B(n)=2 for n>=4.
 
-**Definition 1.14 (Two-leaf maximizer).**
+**Definition 1.16 (Two-leaf maximizer).**
 
 Lean statement: `D5/S3/Arith/FibonacciAtomic/Geometry/GeometryEntranceRatio.ba`
 
@@ -174,7 +198,7 @@ Lean statement: `D5/S3/Arith/FibonacciAtomic/Geometry/GeometryEntranceRatio.ba`
 
 ba=(1,1,-1,1,-1) is the exact geometry of [false,true].
 
-**Definition 1.15 (Three-leaf maximizer).**
+**Definition 1.17 (Three-leaf maximizer).**
 
 Lean statement: `D5/S3/Arith/FibonacciAtomic/Geometry/GeometryEntranceRatio.bab`
 
@@ -186,7 +210,7 @@ Lean statement: `D5/S3/Arith/FibonacciAtomic/Geometry/GeometryEntranceRatio.bab`
 
 bab=(1,2,0,2,2) is the exact geometry of [false,true,false].
 
-**Definition 1.16 (Prefix odd moment).**
+**Definition 1.18 (Prefix odd moment).**
 
 Lean statement: `D5/S3/Arith/FibonacciAtomic/Geometry/GeometryEntranceRatio.prefixMoment`
 
@@ -198,7 +222,7 @@ Lean statement: `D5/S3/Arith/FibonacciAtomic/Geometry/GeometryEntranceRatio.pref
 
 prefixMoment([])=0 and prefixMoment(a::l)=a+prefixMoment(l)+2 sum(l). For the reverse of the original descending rows, it is the sum of (2j-1)x(j) over the same word's ascending prefix counts.
 
-**Definition 1.17 (Same-word arithmetic guards).**
+**Definition 1.19 (Same-word arithmetic guards).**
 
 Lean statement: `D5/S3/Arith/FibonacciAtomic/Geometry/GeometryEntranceRatio.SourceGuards`
 
@@ -210,7 +234,7 @@ Lean statement: `D5/S3/Arith/FibonacciAtomic/Geometry/GeometryEntranceRatio.Sour
 
 SourceGuards(g) asserts one actual nonempty word w in WordFiber(g) and natural numbers k,q,t. They are, respectively, the sum of its original rows, the sum of the squared rows, and prefixMoment of the reverse rows. It includes k<=count(true,w) count(false,w), N(g)>0, g.u=count(true,w), g.v=count(false,w), and simultaneous integer d,e,f representing g.d,g.e,g.f. It also includes (g.d+g.u g.v)/2=k, (g.e+6g.u k-g.u^2 g.v)/6=q, and (g.f+6g.v k+g.u g.v^2)/6=t. Thus endpoints and all joint-moment guards belong to the same word, including pure words.
 
-**Definition 1.18 (Whole-fiber maximizer at every size).**
+**Definition 1.20 (Whole-fiber maximizer at every size).**
 
 Lean statement: `D5/S3/Arith/FibonacciAtomic/Geometry/GeometryEntranceRatio.upper`
 
@@ -222,7 +246,7 @@ Lean statement: `D5/S3/Arith/FibonacciAtomic/Geometry/GeometryEntranceRatio.uppe
 
 upper(n)=ba at n=2, bab at n=3, and pure(false,n) otherwise.
 
-**Theorem 1.19 (Actual Count Factorization and Recursion).**
+**Theorem 1.21 (Actual Count Factorization and Recursion).**
 
 $$\forall g: \operatorname{Five}\left(\right), (((0 < \operatorname{N}\left(g\right)) \implies (\operatorname{M}\left(g\right) = \operatorname{Cat}\left(\operatorname{N}\left(g\right) - 1\right) \cdot \operatorname{m}\left(g\right))) \land (\operatorname{H}\left(g\right) = \operatorname{M}\left(g\right) + \operatorname{H}\left(\operatorname{Linv}\left(g\right)\right)) \land (\operatorname{m}\left(\operatorname{Linv}\left(g\right)\right) \leq \operatorname{m}\left(g\right)) \land (\operatorname{M}\left(g\right) \leq \operatorname{H}\left(g\right)))$$
 
@@ -234,7 +258,7 @@ $$\forall g: \operatorname{Five}\left(\right), (((0 < \operatorname{N}\left(g\ri
 
 For every real candidate g, positive N gives the full ordered-shape factor Cat(N-1) times the whole word count. Independently of candidate validity, the all-entrance count splits into depth zero and the inverse candidate's all-entrance count. Applying sigma injects that inverse candidate's whole word fiber into the current one. Empty carriers contribute zero.
 
-**Theorem 1.20 (Uniform Bounds on Entire Actual Fibers).**
+**Theorem 1.22 (Uniform Bounds on Entire Actual Fibers).**
 
 $$\forall g: \operatorname{Five}\left(\right), ((\operatorname{M}\left(g\right) \leq \operatorname{H}\left(g\right)) \land ((\operatorname{N}\left(g\right) = 1) \implies (\operatorname{H}\left(g\right) \leq 2 \cdot \operatorname{M}\left(g\right))) \land ((\operatorname{N}\left(g\right) = 2) \implies (\operatorname{H}\left(g\right) \leq 3 \cdot \operatorname{M}\left(g\right))) \land ((\operatorname{N}\left(g\right) = 3) \implies (2 \cdot \operatorname{H}\left(g\right) \leq 5 \cdot \operatorname{M}\left(g\right))) \land ((4 \leq \operatorname{N}\left(g\right)) \implies (\operatorname{H}\left(g\right) \leq 2 \cdot \operatorname{M}\left(g\right))) \land (\operatorname{H}\left(g\right) \leq 3 \cdot \operatorname{M}\left(g\right)))$$
 
@@ -248,7 +272,7 @@ The inequalities hold for all real candidates, hence for every nonempty actual g
 
 The induction uses literal entrance recursion and injection of actual whole word fibers. A pure beta fiber has the same leaf count as its pure alpha inverse and has twice its tree count in entrances. Every other nonempty inverse has fewer leaves. The two distinct endpoint terms of the nonnegative Catalan recurrence show that adjacent positive indices at least double, leaving only the one-, two- and three-leaf inverse cases for direct arithmetic comparison.
 
-**Theorem 1.21 (Complete Sharp Ratios and Full-Fiber Attainment).**
+**Theorem 1.23 (Complete Sharp Ratios and Full-Fiber Attainment).**
 
 $$(\forall g: \operatorname{Five}\left(\right), ((\operatorname{Nonempty}\left(\operatorname{TreeFiber}\left(g\right)\right)) \implies ((\operatorname{SourceGuards}\left(g\right)) \land (0 < \operatorname{N}\left(g\right)) \land (0 < \operatorname{M}\left(g\right)) \land (1 \leq \frac{\operatorname{H}\left(g\right)}{\operatorname{M}\left(g\right)}) \land (\frac{\operatorname{H}\left(g\right)}{\operatorname{M}\left(g\right)} \leq \operatorname{B}\left(\operatorname{N}\left(g\right)\right)) \land (\operatorname{M}\left(g\right) \leq \operatorname{H}\left(g\right)) \land (\operatorname{H}\left(g\right) \leq 3 \cdot \operatorname{M}\left(g\right))))) \land (\forall n: \mathbb{N}, ((0 < n) \implies ((\operatorname{Nonempty}\left(\operatorname{TreeFiber}\left(\operatorname{pure}\left(true, n\right)\right)\right)) \land (\operatorname{Nonempty}\left(\operatorname{TreeFiber}\left(\operatorname{pure}\left(false, n\right)\right)\right)) \land (\operatorname{N}\left(\operatorname{pure}\left(true, n\right)\right) = n) \land (\operatorname{N}\left(\operatorname{pure}\left(false, n\right)\right) = n) \land (\operatorname{m}\left(\operatorname{pure}\left(true, n\right)\right) = 1) \land (\operatorname{m}\left(\operatorname{pure}\left(false, n\right)\right) = 1) \land (\operatorname{M}\left(\operatorname{pure}\left(true, n\right)\right) = \operatorname{Cat}\left(n - 1\right)) \land (\operatorname{H}\left(\operatorname{pure}\left(true, n\right)\right) = \operatorname{M}\left(\operatorname{pure}\left(true, n\right)\right)) \land (\operatorname{M}\left(\operatorname{pure}\left(false, n\right)\right) = \operatorname{Cat}\left(n - 1\right)) \land (\operatorname{H}\left(\operatorname{pure}\left(false, n\right)\right) = 2 \cdot \operatorname{M}\left(\operatorname{pure}\left(false, n\right)\right)) \land (\frac{\operatorname{H}\left(\operatorname{pure}\left(true, n\right)\right)}{\operatorname{M}\left(\operatorname{pure}\left(true, n\right)\right)} = 1) \land (\frac{\operatorname{H}\left(\operatorname{pure}\left(false, n\right)\right)}{\operatorname{M}\left(\operatorname{pure}\left(false, n\right)\right)} = 2) \land (\operatorname{Nonempty}\left(\operatorname{TreeFiber}\left(\operatorname{upper}\left(n\right)\right)\right)) \land (\operatorname{N}\left(\operatorname{upper}\left(n\right)\right) = n) \land (\frac{\operatorname{H}\left(\operatorname{upper}\left(n\right)\right)}{\operatorname{M}\left(\operatorname{upper}\left(n\right)\right)} = \operatorname{B}\left(n\right))))) \land ((\operatorname{Nonempty}\left(\operatorname{TreeFiber}\left(\operatorname{ba}\left(\right)\right)\right)) \land (\operatorname{N}\left(\operatorname{ba}\left(\right)\right) = 2) \land (\forall w: \operatorname{WordFiber}\left(\operatorname{ba}\left(\right)\right), (\operatorname{val}\left(w\right) = [false, true])) \land (\operatorname{m}\left(\operatorname{ba}\left(\right)\right) = 1) \land (\operatorname{M}\left(\operatorname{ba}\left(\right)\right) = 1) \land (\operatorname{H}\left(\operatorname{ba}\left(\right)\right) = 3) \land (\operatorname{Nonempty}\left(\operatorname{TreeFiber}\left(\operatorname{bab}\left(\right)\right)\right)) \land (\operatorname{N}\left(\operatorname{bab}\left(\right)\right) = 3) \land (\forall w: \operatorname{WordFiber}\left(\operatorname{bab}\left(\right)\right), (\operatorname{val}\left(w\right) = [false, true, false])) \land (\operatorname{m}\left(\operatorname{bab}\left(\right)\right) = 1) \land (\operatorname{M}\left(\operatorname{bab}\left(\right)\right) = 2) \land (\operatorname{H}\left(\operatorname{bab}\left(\right)\right) = 5)) \land (\forall c: \mathbb{R}, ((\forall g: \operatorname{Five}\left(\right), ((\operatorname{Nonempty}\left(\operatorname{TreeFiber}\left(g\right)\right)) \implies (\frac{\operatorname{H}\left(g\right)}{\operatorname{M}\left(g\right)} \leq c))) \implies (3 \leq c)))$$
 
@@ -283,7 +307,9 @@ At each positive n, the complete pure alpha and pure beta fibers each have one l
 - Truth anchor: `D5/S3/Arith/FibonacciAtomic/Geometry/GeometryEntranceRatio.pure`
 - Truth anchor: `D5/S3/Arith/FibonacciAtomic/Geometry/GeometryEntranceRatio.sharp_geometry_entrance_ratio`
 - Truth anchor: `D5/S3/Arith/FibonacciAtomic/Geometry/GeometryEntranceRatio.sigma`
+- Truth anchor: `D5/S3/Arith/FibonacciAtomic/Geometry/GeometryEntranceRatio.tree_length`
 - Truth anchor: `D5/S3/Arith/FibonacciAtomic/Geometry/GeometryEntranceRatio.uniform_actual_entrance_estimate`
 - Truth anchor: `D5/S3/Arith/FibonacciAtomic/Geometry/GeometryEntranceRatio.upper`
+- Truth anchor: `D5/S3/Arith/FibonacciAtomic/Geometry/GeometryEntranceRatio.wd_substitution`
 - Dependency: [D5/S3/Arith/FibonacciAtomic/SourceTransportCentralizer](../SourceTransportCentralizer.md)
 - Dependency: [D5/S3/Combinatorics/Partitions/WordPartitionInverse](../../../Combinatorics/Partitions/WordPartitionInverse.md)

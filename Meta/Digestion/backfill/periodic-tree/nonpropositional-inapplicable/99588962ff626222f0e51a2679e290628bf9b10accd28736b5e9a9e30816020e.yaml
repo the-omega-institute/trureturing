@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:99588962ff626222f0e51a2679e290628bf9b10accd28736b5e9a9e30816020e
+  normalized_sha256: sha256:99588962ff626222f0e51a2679e290628bf9b10accd28736b5e9a9e30816020e
+cas_ref: sha256:99588962ff626222f0e51a2679e290628bf9b10accd28736b5e9a9e30816020e
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 章节标题「PBC.2. Prime-index completeness and the least counterexample」仅标示本节主题，不含正文命题或性质断言。
+    previous_atom_id: 17e10c1c8d7ebccc3761e1b7514d7aca320b693cc42c6069d178419c29e6f3ef
+    next_atom_id: 6844b1ef2bb010137f047e3589e9e050bdc831124f4066c778012f4bccaafafb

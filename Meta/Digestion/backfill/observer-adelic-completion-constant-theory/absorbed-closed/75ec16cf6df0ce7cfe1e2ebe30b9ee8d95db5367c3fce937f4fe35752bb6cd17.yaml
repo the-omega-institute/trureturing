@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:75ec16cf6df0ce7cfe1e2ebe30b9ee8d95db5367c3fce937f4fe35752bb6cd17
+  normalized_sha256: sha256:75ec16cf6df0ce7cfe1e2ebe30b9ee8d95db5367c3fce937f4fe35752bb6cd17
+cas_ref: sha256:75ec16cf6df0ce7cfe1e2ebe30b9ee8d95db5367c3fce937f4fe35752bb6cd17
+coverage_gids:
+  - gid: D5/S1/Dynamics/UniversalSolenoidCoordinate.nsmul_coordinate_eq_projection
+    target_statement_id: sha256:2d35fcd9650e03ccdbd3c316f46da8cb94b44309ce82c07683567fa32ecbcd78
+receipts:
+  unresolved_subitems: []

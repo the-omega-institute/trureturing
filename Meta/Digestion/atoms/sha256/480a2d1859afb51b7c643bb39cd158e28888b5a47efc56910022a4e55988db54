@@ -1,0 +1,10 @@
+**Definition 53.1 (target and successful policy).** Let $g:Q\to Z$ be the
+original target row and let a deterministic policy choose a legal action from
+each nonterminal controller state as a function of its visible history. The
+policy is successful when every admitted source reaches a halt with output
+$g(q_0)$.
+
+The policy induces a reachable controller graph $K_\pi$. Its states include
+the policy program counter and every memory value used to choose the next
+action; hidden source coordinates are not controller inputs.
+

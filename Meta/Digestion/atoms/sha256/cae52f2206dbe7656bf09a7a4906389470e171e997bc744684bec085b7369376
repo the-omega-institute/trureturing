@@ -1,0 +1,5 @@
+诊断源码 SHA-256：`1912d84a162e5328ac588487d17d0cc163265b26342d18dc4208aa27d1d48fad`；结果 SHA-256：`c197242b343bded46173e6286a745266d4fec049f769ecfdc0091481169f3662`。上一轮交付 ZIP 内的原诊断已另行重跑，JSON 与原包逐字节一致。研究产物保持在本 PR 的 Lean、配套 Scribe 和本卷追加；没有修改 CI 或冻结登记。
+
+- https://arxiv.org/abs/2607.23850 , primary abstract only; output-specific
+  adjoint estimation as a methodological comparison, without its PDE premises.
+

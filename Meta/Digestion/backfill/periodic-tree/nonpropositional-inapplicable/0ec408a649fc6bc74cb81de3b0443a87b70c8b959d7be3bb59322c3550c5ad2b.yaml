@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:0ec408a649fc6bc74cb81de3b0443a87b70c8b959d7be3bb59322c3550c5ad2b
+  normalized_sha256: sha256:0ec408a649fc6bc74cb81de3b0443a87b70c8b959d7be3bb59322c3550c5ad2b
+cas_ref: sha256:0ec408a649fc6bc74cb81de3b0443a87b70c8b959d7be3bb59322c3550c5ad2b
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 本段（**Definition.** For a prime q>5 and P=pi(q), let S(q) be the set of residues a modulo P such that q divides Euler's totient tot(F_m) for every positive integer m congruent to a modulo P. Only positive indices are used, so tot(F_0) is never invoked.）只引入对象、参数、集合或谓词记号；给出的条件是定义内容，不断言额外性质。
+    previous_atom_id: 50905759aac4babe7c441fa82721c06a9eaf6a6f8511b6120409cd9f44580941
+    next_atom_id: 721c122ccf3d1ef072a249010b2b310ed114bfd013bbdb487ce28dbbf7800c11

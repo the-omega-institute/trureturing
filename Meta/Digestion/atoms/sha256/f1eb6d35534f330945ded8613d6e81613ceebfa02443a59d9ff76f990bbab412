@@ -1,0 +1,23 @@
+**Lemma 28.2 (The graph lies in one derived compact strip).** Every
+strict positive root of $G(r,\cdot)$ satisfies
+
+$$
+1<t<2.
+\tag{28.10}
+$$
+
+Proof. In the degree-six Bernstein basis in $r$ the coefficient vectors
+of $G(r,1)$ and $G(r,2)$ are respectively
+
+$$
+\begin{aligned}
+&(-2,-17/2,-343/15,-459/10,-1024/15,-227/3,-68),\\
+&(88,640/3,5512/15,302,160/3,4/3,32).
+\end{aligned}
+\tag{28.11}
+$$
+
+The Bernstein weights are nonnegative and sum to one on $0\le r\le1$.
+Thus $G(r,1)<0<G(r,2)$ there. O, Theorem 13.2, supplies exactly one
+positive root for every strict $r$, so that root lies in $(1,2)$. ∎
+

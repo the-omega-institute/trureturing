@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:fead71c08802eca1515442bc5048e4623207efa777d322f35e71653913499c3a
+  normalized_sha256: sha256:fead71c08802eca1515442bc5048e4623207efa777d322f35e71653913499c3a
+cas_ref: sha256:fead71c08802eca1515442bc5048e4623207efa777d322f35e71653913499c3a
+coverage_gids:
+  - gid: D5/S3/ObserverMemory/ProObjects/CompactObservationFactorization.compact_observation_factorization
+    target_statement_id: sha256:19b6af0df2aa714e572de679a544e37b43eecbe928cb90a74530d3d270030ee1
+receipts:
+  unresolved_subitems: []

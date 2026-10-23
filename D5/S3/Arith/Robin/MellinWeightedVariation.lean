@@ -24,7 +24,7 @@ namespace D5.S3.Arith.Robin.MellinWeightedVariation
 noncomputable def weight (t : ℝ) : ℝ :=
   (Real.log t + 1) / (t ^ 2 * (Real.log t) ^ 2)
 
-private lemma weight_nonneg {t : ℝ} (ht : 1 < t) : 0 ≤ weight t := by
+lemma weight_nonneg {t : ℝ} (ht : 1 < t) : 0 ≤ weight t := by
   unfold weight
   positivity [Real.log_pos ht]
 
@@ -109,7 +109,7 @@ private lemma scaleWeight_nonneg {s y : ℝ} (hs : 0 < s) (hy : 0 < y) (hsy : 1 
   unfold scaleWeight
   positivity [Real.log_pos hsy]
 
-private lemma scaleWeight_antitone {x y a b : ℝ} (hx : 1 < x) (hy : 0 < y)
+lemma scaleWeight_antitone {x y a b : ℝ} (hx : 1 < x) (hy : 0 < y)
     (ha : 0 < a) (hab : a ≤ b) (hxa : x ≤ a * y) : scaleWeight b y ≤ scaleWeight a y := by
   have hd : ∀ s ∈ Icc a b, HasDerivAt (fun r => scaleWeight r y) (scaleDerivative s y) s := by
     intro s hs

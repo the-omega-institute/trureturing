@@ -78,7 +78,7 @@ public sealed class RuleEngineTests
 
         Assert.Equal("fixture-source", source.SourceId);
         Assert.Equal(RuleFixture.FixtureDigestionSourcePath, source.SourcePath);
-        Assert.Equal(AtomizerRegistry.NoAtomizerId, source.Atomizer);
+        Assert.Equal(AtomizerRegistry.GenericId, source.Atomizer);
         Assert.Equal(RuleFixture.FixtureAtomId, entry.AtomId);
         Assert.Equal(RuleFixture.FixtureCasReference, entry.Fingerprints.RawSha256);
         Assert.Equal(RuleFixture.FixtureCasReference, entry.CasRef);
@@ -338,11 +338,9 @@ public sealed class RuleEngineTests
         InstallFrozenStatement(fixture.Files, targetPath, FrozenStatementReceiptTestData.Id('b'));
         InstallFrozenStatement(fixture.Baseline, targetPath, baselineStatementId);
         var currentFrozenPaths = fixture.Files.Keys
-            .Where(static path => FrozenLedgerChangeClassifier.IsAcceptedEventPath(path)
-                || FrozenStatePath.IsUnderRoot(path));
+            .Where(static path => FrozenStatePath.IsUnderRoot(path));
         var baselineFrozenPaths = fixture.Baseline.Keys
-            .Where(static path => FrozenLedgerChangeClassifier.IsAcceptedEventPath(path)
-                || FrozenStatePath.IsUnderRoot(path));
+            .Where(static path => FrozenStatePath.IsUnderRoot(path));
         var frozenChanges = currentFrozenPaths
             .Except(baselineFrozenPaths, StringComparer.Ordinal)
             .Concat(baselineFrozenPaths.Except(currentFrozenPaths, StringComparer.Ordinal))
@@ -534,7 +532,6 @@ public sealed class RuleEngineTests
               id: bootstrap-pr-1
               judge: open
               reason: "Godel boundary."
-              genesis_event: sha256:fc2ee6be0dd3cabb9b6a9118592671c9d5a81f691b7b4ad07674d9c3037ce262
               commit: f3f471846dd81cfcc39ecaa386966fcf0b058464
               pull_request: 1
               verification: ASSUMED-UNVERIFIED
@@ -563,7 +560,6 @@ public sealed class RuleEngineTests
               id: bootstrap-pr-1
               judge: open
               reason: "Godel boundary."
-              genesis_event: sha256:fc2ee6be0dd3cabb9b6a9118592671c9d5a81f691b7b4ad07674d9c3037ce262
               commit: f3f471846dd81cfcc39ecaa386966fcf0b058464
               pull_request: 1
               verification: ASSUMED-UNVERIFIED

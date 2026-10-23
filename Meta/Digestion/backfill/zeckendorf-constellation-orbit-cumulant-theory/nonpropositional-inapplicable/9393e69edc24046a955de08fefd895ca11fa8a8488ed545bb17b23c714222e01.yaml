@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:9393e69edc24046a955de08fefd895ca11fa8a8488ed545bb17b23c714222e01
+  normalized_sha256: sha256:9393e69edc24046a955de08fefd895ca11fa8a8488ed545bb17b23c714222e01
+cas_ref: sha256:9393e69edc24046a955de08fefd895ca11fa8a8488ed545bb17b23c714222e01
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: Pure upstream closure; 仓内无 GID (no available frozen project GID). Mathlib pin db584cd6d46c92f209a44c0f1c829460d327499d supplies every proposition of section 122. For every prime p, every finite index set of pairwise distinct residues r in ZMod p, and every real source vector u, uniform expectation is the finite sum divided by p (ZMod.card). At a=r_j injectivity gives the exponent sum_i u_i-u_j; outside the image it is sum_i u_i. Real.exp_add, Finset.sum_sub_distrib, Finset.sum_ite_eq, Finset.sum_ite_eq', Finset.sum_comm and Finset.mul_sum, followed by field normalization, give Z=exp(sum u)*(1+(1/p)*sum_j(exp(-u_j)-1)). Fintype.card_pos, Real.exp_pos and finite-sum positivity imply Z>0 and positivity of the bracket for all u. Real.log_mul and Real.log_exp therefore give K=log Z=sum u+log(1+(1/p)*sum_j(exp(-u_j)-1)). The final generating-function sentence uses connected cumulants as derivatives of this displayed log-mgf, as specified by section 123; finite exponential sums and Real.contDiffAt_log at the positive Z supply all derivative orders. This does not assert an identification with the undefined jointCumulant interface of section 484. No new Lean declaration or coverage GID is introduced.
+    previous_atom_id: fcd3f3f1864ad351a274f225d5bca074b8d626929405e19d98fd9a773bb2948a
+    next_atom_id: b781d67334ce70a1a8b4fac2ff04e33bc20fc294e5e4a807f2f97b3535f4c0d6

@@ -82,7 +82,7 @@ private def matrixCone (m n : ℕ) : PointedCone ℝ (CompositeMatrix m n) where
   add_mem' := separableCone_add
   smul_mem' c _ h := separableCone_smul c.2 h
 
-private theorem generator_separable {S : CompositeMatrix m n}
+theorem generator_separable {S : CompositeMatrix m n}
     (h : S ∈ sourceGenerators m n) : separableCone S := by
   obtain ⟨A, B, hA, hB, rfl⟩ := h
   exact ⟨1, fun _ => A, fun _ => B, fun _ => ⟨hA, hB⟩, by simp⟩

@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:71fd0f19cbddbc71e2d1e5b3f6e034a1fe0e75240482c7893d4944f43d7b76e7
+  normalized_sha256: sha256:71fd0f19cbddbc71e2d1e5b3f6e034a1fe0e75240482c7893d4944f43d7b76e7
+cas_ref: sha256:71fd0f19cbddbc71e2d1e5b3f6e034a1fe0e75240482c7893d4944f43d7b76e7
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 证明。：该段仅论证前文定理 400.2（纤维预算到有限经历预算的连接）。，不另立新的命题陈述；前文命题本身仍保留。
+    previous_atom_id: f591fd0e3515097c66f83dd694fa1c6c5d751ebd01f5fc5c525a1d0115a906ac
+    next_atom_id: ea11f66a587f66862aa50aa59bf98e473926efd6712a52814b4cfedd427bb2d3

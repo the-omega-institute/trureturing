@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:6d55be3fbb52298425de9ea516d61f93ac045fcd58dd30f4a6bd7d010700b4e6
+  normalized_sha256: sha256:6d55be3fbb52298425de9ea516d61f93ac045fcd58dd30f4a6bd7d010700b4e6
+cas_ref: sha256:6d55be3fbb52298425de9ea516d61f93ac045fcd58dd30f4a6bd7d010700b4e6
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 定义 245.1（关于 (K) 的精确知情）：本段仅约定名称、符号及其判定条件；不主张满足条件的对象存在，也不追加性质定理。
+    previous_atom_id: d8cee7c236e06b118710a6f1dcb5513152e1743741a194dab42afab5f68e43e1
+    next_atom_id: 04ab77c2f9b2908a81a6c27fffa46aceb29d33926c8d966095e81988d08f6dde

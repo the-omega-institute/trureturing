@@ -175,7 +175,7 @@ public sealed class DigestionEvaluationScopeTests
             (targetPath, target),
             CasFile(atom),
             ("docs/source.md", sourceBytes),
-            .. FrozenStatementReceiptTestData.LedgerFiles(
+            .. FrozenStatementReceiptTestData.LedgerFiles(out _,
                 new FrozenStatementReceiptTestData.Module(
                     targetPath,
                     FrozenStatementReceiptTestData.Id('a'),
@@ -201,7 +201,7 @@ public sealed class DigestionEvaluationScopeTests
         var entry = DigestionTestSupport.Entry(
             atom,
             "scope-probe",
-            AtomizerRegistry.NoAtomizerId,
+            AtomizerRegistry.GenericId,
             migration,
             truth,
             [],
@@ -215,7 +215,7 @@ public sealed class DigestionEvaluationScopeTests
                     : [],
         };
         return DigestionTestSupport.Document(
-            AtomizerRegistry.NoAtomizerId,
+            AtomizerRegistry.GenericId,
             [entry],
             sourceId: "scope-probe");
     }

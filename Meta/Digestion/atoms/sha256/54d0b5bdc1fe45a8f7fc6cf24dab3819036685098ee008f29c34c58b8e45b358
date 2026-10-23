@@ -1,0 +1,23 @@
+**Definition 3.1 (observer skeleton).** A skeleton $\tau$ is a finite
+source-blind execution of the microstep program from $c_a$ to Return.
+At each Read supply one of the four possible replies; compute the address
+and every subsequent local state by the actual program. Keep all local
+steps, retry decisions, descriptions, selected cuts, validations, cleanup
+and the final accessible encoding. Enumerate finite skeletons by
+breadth-first exploration of microsteps, branching four ways only at a
+Read. Retain in $\mathcal L_{P,b}$ exactly those terminal skeletons whose
+whole accessible state is $b$.
+
+The enumeration is effective even if hypothetical reply paths compute
+forever: it never waits for an unbounded source-free segment to finish
+before advancing other finite prefixes. This is not a finite decision-tree
+restriction. Addresses are concrete finite words on each skeleton, with
+no common length or number bound across skeletons.
+
+For $s$ observer events in $\tau$, including Return, introduce
+$0\le e_1\le\cdots\le e_s$ and $e_0=0$. Insert $e_i-e_{i-1}$
+writer updates immediately before observer event $i$. Write
+$\operatorname{expand}(u,\tau,\mathbf e)$ for the resulting active
+word with register states determined by (NASF.2). This insertion is a
+replay schedule to be proved legal, not a claim about the actual schedule.
+

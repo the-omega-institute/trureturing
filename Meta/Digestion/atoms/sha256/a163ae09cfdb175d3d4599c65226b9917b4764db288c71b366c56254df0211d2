@@ -1,0 +1,69 @@
+**Theorem 4.1 (Stopping-tree rigidity from law alone).** Fix any single allowed $p$ and $k\ge1$. Let $Q$ be any lawful total-cap-$k$ rule on the given independent seed space with the same full $(u,H_j,O,D,N)$ law as $W_{k,j}$. At almost every seed, its normalized deterministic tree has one continuing all-zero branch of $k$ calls. Each such call has parity $\psi$; a reply one returns $a_1$ at that paid depth, and the final zero child returns $a_0$. Its $k$ zero-branch spin edges are distinct, form one consecutive path, and have no vertex at the unchanged target index $q$.
+
+Proof. Lemma 2.2 supplies a full-measure set of good seeds at which the deterministic source law is exactly (3.4). Fix one such seed. Conditional on phase $\psi$, denoted phase $B$ in this proof, the required event $O=a_1,N=i$ has positive mass $d_i$ for every $1\le i\le k$. In the opposite phase, denoted phase $A$, the required output and count are $a_0,k$ with probability one. These phase-conditional statements follow from the preserved endpoint classes $b$ and $a$ in (3.4); phase access is not an operation of $Q$. Both phases have $D=1$ almost surely and no mass at $N=0$.
+
+First derive the stopping structure by induction. The root must read: a return there has count zero, and internal nonreturn has $D=0$. Suppose the first $i-1$ calls on the zero branch have parity $\psi$ and their one children have already returned $a_1$ at their own paid depths. This is vacuous for $i=1$. Phase $A$ surely follows those separator-zero replies, so it must make call $i$ when $i\le k$, since its prescribed count is $k$.
+
+If call $i$ had the opposite parity, its phase-$B$ reply would be identically zero. All earlier one branches have stopped. Thus the positive prescribed phase-$B$ event $O=a_1,N=i$ would force the zero child's next event to be a finite return of $a_1$. Any extra read would increase the count; internal continuation forever would not return. In phase $A$, however, the prior calls impose no spin conditions because they were separators. This new active edge has a zero reply with probability
+
+$$
+c=\pi_0^2+\pi_1^2>0.
+\tag{4.1}
+$$
+
+The very same zero child would return $a_1$ on that positive-mass phase-$A$ event, contradicting its required output $a_0$. Hence call $i$ has parity $\psi$.
+
+Its zero child is now reached surely in phase $A$, so it cannot return $a_1$. The positive phase-$B$ mass $O=a_1,N=i$ must come from its one child, forcing that child's next event to be a finite $a_1$ return at count $i$. For $i<k$, the zero child must lead to a further read: a return or internal nonreturn would violate the phase-$A$ law. At $i=k$ its zero child must return $a_0$. This proves the structure, including $k=1$, from the law itself. No record or tree-shape preservation was assumed.
+
+Let $t'_i$ be these zero-branch addresses and define their spin-edge left endpoints and zero cylinders by
+
+$$
+e_i=\frac{t'_i-\psi}{2},\qquad
+C_r=\{S_{e_i}=S_{e_i+1}:1\le i\le r\},\qquad C_0=\Omega.
+\tag{4.2}
+$$
+
+Within phase $B$, for $1\le r<k$, the cylinder $C_r$ is precisely the event $N>r$. Summing (3.4), conditionally on the positive-probability source event $\varphi=\psi,S_q=s$, yields
+
+$$
+\begin{aligned}
+J_p(C_r\mid\varphi=\psi,S_q=s)
+&=\sum_{i=r+1}^k d_i+T_{k+1}=T_{r+1}.
+\end{aligned}
+\tag{4.3}
+$$
+
+For $r=k$, $C_k$ is precisely the $a_0$ output event in phase $B$, and has the same conditional value $T_{k+1}$. Thus (4.3) holds for every $1\le r\le k$ and both spin values. Averaging over $s$ also gives
+
+$$
+J_p(C_r\mid\varphi=\psi)=T_{r+1}.
+\tag{4.4}
+$$
+
+These are ordinary conditionings on finite source events of positive mass, not on singleton seeds. They explicitly retain the dependence on the actual endpoint spin.
+
+Next prove the path geometry. The first edge is one consecutive one-edge path. Suppose the first $i-1$ edges, for $2\le i\le k$, are distinct and form a consecutive path. Their zero constraint has probability $T_i$. An additional integer-line edge either repeats an existing edge, extends an end of this path, or is vertex-disjoint from it. These are exhaustive: a new edge meeting the path can only add an outside neighbor at an end, since every internal edge of a consecutive path is present.
+
+A repetition leaves probability $T_i$ unchanged, contradicting the prescribed smaller $T_{i+1}$. An extension forces one extra independent spin into the constant block and gives exactly $T_{i+1}$. A disjoint edge would instead give $cT_i$, by independence of its two new spins. Put $a=\max(p,1-p)$ and $b=\min(p,1-p)$, so $a>b>0$, $a+b=1$, and $c=a^2+b^2$. Since $a-c=b(a-b)$ and $b-c=-a(a-b)$,
+
+$$
+\begin{aligned}
+T_{i+1}-cT_i
+&=a^i(a-c)+b^i(b-c)\\
+&=ab(a-b)(a^{i-1}-b^{i-1})>0
+\qquad(i\ge2).
+\end{aligned}
+\tag{4.5}
+$$
+
+So a disjoint edge cannot have the required probability either. Every step extends the path. There are exactly $k$ distinct consecutive edges and $k+1$ consecutive spin vertices. This strict comparison is valid at the one fixed allowed $p$; it uses no polynomial-identity argument obtained by varying $p$.
+
+Finally suppose the actual target index $q$ were one of those vertices. The event $C_k$ would force every other one of the $k$ spins in the path to equal $S_q$. Independence would give
+
+$$
+J_p(C_k\mid\varphi=\psi,S_q=s)=\pi_s^k.
+\tag{4.6}
+$$
+
+But (4.3) requires the same value $T_{k+1}$ for both $s=0,1$, whereas $\pi_0^k\ne\pi_1^k$ because $k\ge1$ and $p\ne1/2$. This contradiction proves detachment from $q$. The argument infers detachment from the full target law rather than imposing a signature or a samplewise coupling. $\square$
+

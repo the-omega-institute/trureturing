@@ -1,0 +1,16 @@
+**Proposition 9.2 (decisive finite falsifiers).** These concrete finite
+cases refute the indicated overclaims without an empirical batch:
+
+- Invocation beta satisfies Proposition 4.1's displayed root row but has
+  no same-program lift to that complete output.
+- $(\alpha,0,2)$ satisfies Proposition 4.2's root rows and negative link
+  but has no same-program lift with those capture counts.
+- An absent endpoint is rejected by (NASF.5) for either signed relation;
+  an invented default subtree cannot supply a negative observation.
+- In an accepting run of Theorem 6.2 insert one writer update after final
+  validation and before Return. The whole boundary is unchanged but
+  Return source/count changes. A validation stamp is not a Return bound.
+
+The missing conditions are selection, exact capture lag, reachedness and
+the separate Return event. None disputes truthful records at validation.
+

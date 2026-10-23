@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:89b1aa2edd2b6ed5671737ef01a433b83a6aa9bbc12d20de4fc5873aa67be7a1
+  normalized_sha256: sha256:89b1aa2edd2b6ed5671737ef01a433b83a6aa9bbc12d20de4fc5873aa67be7a1
+cas_ref: sha256:89b1aa2edd2b6ed5671737ef01a433b83a6aa9bbc12d20de4fc5873aa67be7a1
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 定理 14.10（合法次序决定显露时刻而不改变最终空间）。的证明段；本项只给出该陈述的论证及所用步骤的说明，不另立独立命题。命题陈述保留在前项。
+    previous_atom_id: 45b764b609ed46d1ef278457abd9007a98eb42802402bd176aaf1e99a61a8f4b
+    next_atom_id: 04d7c3bfc326d3506c9af8875ac95eaf47285fabf69820c832279ec14b654f32

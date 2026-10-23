@@ -1,0 +1,9 @@
+**Claim status: open.**
+
+对有向图 $G=(V,E)$，存在
+$$
+\tau:V\to\mathbb Z,\qquad
+u\to v\Longrightarrow\tau(v)>\tau(u)
+$$
+当且仅当 $G$ 无有向环。无环时取拓扑序或最长路径长度；有环时只能先取强连通分量的 condensation DAG，在该商图上定义严格时间。这个结果支持转移偏序、循环和强连通分量构成的“时间形状”模型，但不证明广义相对论或任何物理时间定律。
+

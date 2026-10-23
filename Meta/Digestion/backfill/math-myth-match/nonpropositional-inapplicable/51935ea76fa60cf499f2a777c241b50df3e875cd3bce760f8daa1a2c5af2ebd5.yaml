@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:51935ea76fa60cf499f2a777c241b50df3e875cd3bce760f8daa1a2c5af2ebd5
+  normalized_sha256: sha256:51935ea76fa60cf499f2a777c241b50df3e875cd3bce760f8daa1a2c5af2ebd5
+cas_ref: sha256:51935ea76fa60cf499f2a777c241b50df3e875cd3bce760f8daa1a2c5af2ebd5
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 定义 369.1（未来轨迹作为读数）。：仅引入对象、记号及其约定条件，不断言这些条件必然实现或额外性质。
+    previous_atom_id: 00544f0bdd743014877bacbabf536cf397a62f15b3794242fa2f472c436d777c
+    next_atom_id: 9aeaa1f140e012c24b0b864b099116211b367ef3af8885894e423af9d05be0e8

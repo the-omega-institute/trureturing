@@ -1,0 +1,8 @@
+**Proposition 11.2 (bounds without a tree-shaped controller assumption).**
+Every successful controller of Definition 11.1 satisfies
+
+$$
+r2^q\ge5,\qquad K\ge5,\qquad K\ge10-r.
+\tag{NBP.11.2}
+$$
+

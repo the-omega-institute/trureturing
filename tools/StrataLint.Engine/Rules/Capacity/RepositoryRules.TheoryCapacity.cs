@@ -10,15 +10,18 @@ internal static partial class RepositoryRules
         path.StartsWith(DigestionOpaquePathPolicy.TheoryRootPath, StringComparison.Ordinal)
         && path.EndsWith(".md", StringComparison.OrdinalIgnoreCase);
 
-    private static ImmutableArray<RuleFinding> TheoryCapacity(DeltaRuleContext context)
+    internal static bool IsTheoryOnlyChange(RawChangeSet changes) =>
+        !changes.Paths.IsEmpty && changes.Paths.All(DigestionOpaquePathPolicy.IsTheoryDocument);
+
+    internal static ImmutableArray<RuleFinding> TheoryCapacity(RepositorySnapshot current, RawChangeSet changes)
     {
         var findings = ImmutableArray.CreateBuilder<RuleFinding>();
-        foreach (var change in context.Changes.Entries.Where(static change =>
+        foreach (var change in changes.Entries.Where(static change =>
             change.Kind is RawChangeKind.Added or RawChangeKind.Modified
             && IsTheoryDocument(change.Path.Value)))
         {
             var path = change.Path;
-            if (!context.Current.Files.TryGetValue(path, out var file))
+            if (!current.Files.TryGetValue(path, out var file))
                 continue;
 
             // Theory inputs remain opaque; count line separators in the original bytes.

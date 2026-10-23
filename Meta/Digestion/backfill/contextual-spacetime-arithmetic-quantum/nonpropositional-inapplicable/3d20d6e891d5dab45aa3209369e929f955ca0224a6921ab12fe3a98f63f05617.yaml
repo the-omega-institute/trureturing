@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:3d20d6e891d5dab45aa3209369e929f955ca0224a6921ab12fe3a98f63f05617
+  normalized_sha256: sha256:3d20d6e891d5dab45aa3209369e929f955ca0224a6921ab12fe3a98f63f05617
+cas_ref: sha256:3d20d6e891d5dab45aa3209369e929f955ca0224a6921ab12fe3a98f63f05617
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 本段只证明前述 Hermitian 配对、仪器概率与目标读数充分性判据。
+    previous_atom_id: 0d19715f1989d898c7ea62c3e02914d8fe9446e9356db327fc15ed19ed4cacf5
+    next_atom_id: 871860121f45d4d58825562f10d74276a27b601a79b0ee339439264c537d6ff6

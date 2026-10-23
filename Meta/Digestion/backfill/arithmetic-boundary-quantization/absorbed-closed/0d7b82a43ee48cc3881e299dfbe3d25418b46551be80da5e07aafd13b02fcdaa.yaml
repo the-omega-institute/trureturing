@@ -1,0 +1,33 @@
+fingerprints:
+  raw_sha256: sha256:0d7b82a43ee48cc3881e299dfbe3d25418b46551be80da5e07aafd13b02fcdaa
+  normalized_sha256: sha256:0d7b82a43ee48cc3881e299dfbe3d25418b46551be80da5e07aafd13b02fcdaa
+cas_ref: sha256:0d7b82a43ee48cc3881e299dfbe3d25418b46551be80da5e07aafd13b02fcdaa
+coverage_gids:
+  - gid: D5/S3/Analytic/Interpolation/EnvelopeKMonotone.psiK_strictMono_mean
+    target_statement_id: sha256:91a819d05136b849bee7248cca5d6ae5ea22fbec5a17d6e47895746440d92aeb
+  - gid: D5/S3/Analytic/Interpolation/EnvelopeKMonotone.radius_envelope_hasDerivAt
+    target_statement_id: sha256:03eaff88cb9e4c8321e283bdd71fed9befa984d660a9f5d32480e7dee2825734
+  - gid: D5/S3/Analytic/Interpolation/EnvelopeKMonotone.radius_envelope_strictAnti
+    target_statement_id: sha256:353ae0d380175102de2f2210216eefc8001476afa926e5da74a9d4967f0d2be5
+  - gid: D5/S3/Analytic/Interpolation/LogOneSubExpDerivatives.log_one_sub_exp_derivatives
+    target_statement_id: sha256:baf75f495e116a3231c6f4fa767198ed0335aba4c158eb3410ee5b1dc815b89b
+  - gid: D5/S3/Analytic/Interpolation/QuadraticMajorantEnvelope.weighted_quadratic_sum
+    target_statement_id: sha256:8f82a20eac1c651faab2fa8298552aaa7b2e138f9144cc988fd7d102a262fd5c
+  - gid: D5/S3/Analytic/Knapsack/FractionalKnapsackDual.greedy_attains_duality
+    target_statement_id: sha256:475e472b126c424b48b0e9ddd9f28f95a0319e31c310ca11d9ad25a17847d615
+  - gid: D5/S3/ArithSums/CenteredEuclideanEndpoint.center_eq_zero_iff_constant
+    target_statement_id: sha256:3f71ba73ca7d12562578cc8c30fe54f03b681f680cbf3b5ba419c6d1a17d2607
+  - gid: D5/S3/ArithSums/CenteredEuclideanEndpoint.lower_add_single_sub
+    target_statement_id: sha256:c0e6d8f0880fd9b8c480ec6d27203c0cacc546a9ffe7032d4a35c351388456d6
+  - gid: D5/S3/ArithSums/CenteredEuclideanEndpoint.lower_le_add_single
+    target_statement_id: sha256:3aeb3108e8bfd14190cb3525ed37840b09a588fb1e5be3f162b645ec91521fb6
+  - gid: D5/S3/ArithSums/CenteredEuclideanEndpoint.lower_le_of_pointwise_le
+    target_statement_id: sha256:4558a65345337f181cb666140889e6449107594d7392604503801958e8a3e563
+  - gid: D5/S3/ArithSums/CenteredEuclideanEndpoint.norm_center_single_div
+    target_statement_id: sha256:559ead4175247e5970cbc349c641f1ea7ecd665ae806cb45a3c8783091dda0b3
+  - gid: D5/S3/ArithSums/CenteredEuclideanEndpoint.norm_center_single_sq
+    target_statement_id: sha256:008b70d4481beca0bfa08e72d5d765749d7480a7528f7fe8312de30f7a8e5443
+  - gid: D5/S3/ArithSums/TwoPointSlabSupport.pair_distance_spec
+    target_statement_id: sha256:b1bb2656403a31a2ecf70018b9daffc4863b9a17477d18df6d044c3625f2c74e
+receipts:
+  unresolved_subitems: []

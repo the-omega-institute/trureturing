@@ -1,12 +1,14 @@
 import Lake
 import Lake.CLI.Build
 import Lake.Util.StoreInsts
+import Std.Sync.Mutex
 open Lake DSL System
 open Lean (Json)
 
 package leanInspector where
   packagesDir := "../../.lake/packages"
   buildDir := "../../.lake/build/lean-inspector/producer"
+  weakLeanArgs := #["-j1"]
   leanOptions := #[⟨`pp.unicode.fun, true⟩, ⟨`relaxedAutoImplicit, false⟩,
     ⟨`weak.linter.mathlibStandardSet, true⟩, ⟨`maxSynthPendingDepth, 3⟩]
 
@@ -26,6 +28,9 @@ lean_exe reportInspector where
 lean_exe inputDiscovery where
   root := `LeanInformationAudit.Contract.InputDiscovery
 
+lean_exe dependencyReadout where
+  root := `DependencyReadoutMain
+
 -- Resolve Lake's current package at runtime; copied config oleans contain no host root.
 private partial def repositoryDir (pkg : Package) : IO FilePath := do
   let rec ascend (dir : FilePath) : IO FilePath := do
@@ -41,22 +46,26 @@ private def nativeCommand (pkg : Package) (args : Array String) : IO IO.Process.
   return {
     cmd := "python3", args := #[(root / "tools/lean-inspector/native.py").toString] ++ args
     cwd := some root }
--- Direct phase observations survive a cache-writer process that buffers Lake's
--- output. They never participate in traces, reuse or admission decisions.
+-- Direct observations survive buffered process output. They never participate
+-- in traces, reuse or admission decisions, and cannot replace a build outcome.
 private def observePhase (phase boundary : String) : IO Unit := do
   if let some path ← IO.getEnv "STRATALINT_INSPECTOR_PHASES" then
-    let now ← IO.monoMsNow
-    IO.FS.withFile path .append fun out => out.putStrLn <| (Lean.Json.mkObj [
-      ("phase", Lean.toJson phase), ("boundary", Lean.toJson boundary),
-      ("monotonic_ms", Lean.toJson now)]).compress
+    try
+      let now ← IO.monoMsNow
+      IO.FS.withFile path .append fun out => out.putStrLn <| (Lean.Json.mkObj [
+        ("phase", Lean.toJson phase), ("boundary", Lean.toJson boundary),
+        ("monotonic_ms", Lean.toJson now)]).compress
+    catch error =>
+      try IO.eprintln s!"LEAN_INSPECTOR_DIAGNOSTIC_UNAVAILABLE lake phase: {error}" catch _ => pure ()
 
 private structure ReportState where
   started : IO.Ref Lean.NameSet
   batch : IO.Ref (Option (Lean.NameSet × Job Unit))
   sourcePaths : IO.Ref (Std.HashMap String (Option String))
+  graphFetch : Std.Mutex Unit
 
 package_facet reportBatch (_pkg : Package) : ReportState := do
-  Job.async do return ⟨← IO.mkRef {}, ← IO.mkRef none, ← IO.mkRef {}⟩
+  Job.async do return ⟨← IO.mkRef {}, ← IO.mkRef none, ← IO.mkRef {}, ← Std.Mutex.new ()⟩
 
 -- A compiler import is shared by many report targets. Resolve its source path
 -- once in this Lake invocation, including paths excluded from the whitelist.
@@ -75,8 +84,8 @@ private def reportSourcePath (root : FilePath)
 This job deliberately has no content trace: each module traces its own record. -/
 package_facet reportInputs (pkg : Package) : FilePath := do
   Job.async do
-    proc (← nativeCommand pkg #["prepare", (← repositoryDir pkg).toString])
-    return (← repositoryDir pkg) / ".lake/build/lean-inspector" / "inputs.json"
+    proc (← nativeCommand pkg #["prepare", (← repositoryDir pkg).toString, "module-records"])
+    return (← repositoryDir pkg) / ".lake/build/lean-inspector" / "module-inputs.json"
 
 private def readJson (path : FilePath) : IO Json := do
   IO.ofExcept (Json.parse (← IO.FS.readFile path))
@@ -92,9 +101,68 @@ private def writeBinFileIfChanged (path : FilePath) (contents : ByteArray) : IO 
 private def strings (json : Json) (key : String) : IO (Array String) :=
   IO.ofExcept (json.getObjValAs? (Array String) key)
 
+/-- Discover scope from Lake's current module graph, without building report
+or package default targets. The caller supplies independent roots and the
+registered report population; target utility inputs add their import closure. -/
+script reportScope args do
+  let [requestPath, outputPath] := args
+    | throw <| IO.userError "reportScope requires request and output paths"
+  let request ← readJson requestPath
+  let roots ← strings request "roots"
+  if roots.isEmpty then throw <| IO.userError "reportScope requires nonempty roots"
+  let names ← strings request "modules"
+  let registered := names.foldl (fun set name => set.insert name.toName) ({} : Lean.NameSet)
+  let utilities ← IO.ofExcept (request.getObjValAs? (Array Json) "utilities")
+  let utilityInputs ← IO.ofExcept (request.getObjValAs? (Array Json) "utility_inputs")
+  let root ← repositoryDir (← getWorkspace).root
+  let graph ← runBuild do
+    let mut queue := roots
+    let mut visited : Lean.NameSet := {}
+    let mut dependencies : Array Json := #[]
+    let mut selected : Array Json := #[]
+    let mut index := 0
+    while index < queue.size do
+      let name := queue[index]!
+      index := index + 1
+      if visited.contains name.toName then continue
+      let some mod := (← getWorkspace).findModule? name.toName
+        | error s!"scoped report module is not in the Lake workspace: {name}"
+      let closure ← (← mod.transImports.fetch).await
+      for dependency in #[mod] ++ closure do
+        if visited.contains dependency.name then continue
+        visited := visited.insert dependency.name
+        let path := (relPathFrom root (← IO.FS.realPath dependency.leanFile)).toString
+        if path.startsWith ".lake/" || path.startsWith "../" then continue
+        let header ← (← dependency.input.fetch).await
+        let imports := ((header.imports.foldl (fun set imp => set.insert imp.module)
+          ({} : Lean.NameSet)).toArray.map Lean.Name.toString).qsort (· < ·)
+        let row := Json.mkObj [("module", Lean.toJson dependency.name.toString),
+          ("source_path", Lean.toJson path), ("imports", Lean.toJson imports)]
+        dependencies := dependencies.push row
+        if registered.contains dependency.name then
+          selected := selected.push row
+          if roots.contains dependency.name.toString then
+            for input in utilityInputs do
+              let owner ← IO.ofExcept (input.getObjValAs? String "modulePath")
+              if owner == path then
+                queue := queue ++ (← strings input "inputModules")
+          for utility in utilities do
+            let owner ← IO.ofExcept (utility.getObjValAs? String "modulePath")
+            if owner == path then
+              queue := queue.push (← IO.ofExcept (utility.getObjValAs? String "claimModule"))
+    let key (row : Json) := (row.getObjValAs? String "module").toOption.getD ""
+    return Job.pure <| Json.mkObj [("roots", Lean.toJson roots),
+      ("modules", Lean.toJson (selected.qsort (fun a b => key a < key b))),
+      ("dependencies", Lean.toJson (dependencies.qsort (fun a b => key a < key b)))]
+  IO.FS.writeFile outputPath (graph.compress ++ "\n")
+  return 0
+
+package_facet reportInputData (pkg : Package) : Json := do
+  (← fetch <| pkg.facet `reportInputs).mapM fun path => readJson path
+
 package_facet reportSourceModules (pkg : Package) : Lean.NameSet := do
-  (← fetch <| pkg.facet `reportInputs).mapM fun path => do
-    let names ← strings (← readJson path) "modules"
+  (← fetch <| pkg.facet `reportInputData).mapM fun config => do
+    let names ← strings config "modules"
     return names.foldl (fun set name => set.insert name.toName) {}
 
 /-- Validate registered inputs without tracing producer implementation.
@@ -111,19 +179,23 @@ module_facet judgeInputs (mod : Module) : FilePath := withCurrPackage mod.pkg do
   discard <| (← fetch <| pkg.facet `reportInputs).await
   let root ← repositoryDir pkg
   let deps ← fetch <| pkg.facet `reportProducer
+  observePhase "lake-compiler-inputs" "start"
   let exportJob ← mod.exportInfo.fetch
   let discovery ← inputDiscovery.fetch
   (deps.add exportJob |>.add discovery).mapM fun _ => do
     let info ← exportJob.await
+    observePhase "lake-compiler-inputs" "finish"
     addTrace (info.allArtsTrace.mix info.legacyTransTrace)
     let file := root / ".lake/build/lean-inspector" / "judge-inputs" / s!"{mod.name}.json"
     buildFileUnlessUpToDate' file do
+      observePhase "lake-input-discovery" "start"
       IO.FS.createDirAll file.parent.get!
       proc {
         cmd := (← discovery.await).toString,
         args := #[mod.name.toString, mod.oleanFile.toString, file.toString],
         cwd := some root,
         env := (← getWorkspace).augmentedEnvVars }
+      observePhase "lake-input-discovery" "finish"
       pure PUnit.unit
     return file
 
@@ -165,42 +237,45 @@ module_data inspectorPreparedReport : PreparedArtifact
 module_data inspectorModuleReport : ReportArtifact
 
 private def prepareNativeModuleReport (mod : Module) : FetchM (Job PreparedArtifact) := withCurrPackage mod.pkg do
+  observePhase "lake-module-inputs" "start"
   let pkg := (← getWorkspace).root
   discard <| (← fetch <| pkg.facet `reportInputs).await
   let root ← repositoryDir pkg
   let utility := root / ".lake/build/lean-inspector" / "inputs" / s!"{mod.name}.json"
-  let record ← readJson utility
+  let config ← (← fetch <| pkg.facet `reportInputData).await
+  let records ← IO.ofExcept (config.getObjVal? "records")
+  let encoded ← IO.ofExcept (records.getObjValAs? String mod.name.toString)
+  IO.FS.createDirAll utility.parent.get!
+  writeBinFileIfChanged utility encoded.toUTF8
+  let record ← IO.ofExcept (Json.parse encoded)
   let claims ← strings record "claims"
-  let mut deps ← fetch <| pkg.facet `reportProducer
-  let projection ← fetch <| mod.facet `judgeInputs
-  let inputs ← readJson (← projection.await)
-  let ownInputs ← IO.ofExcept (inputs.getObjValAs? (Array Json) "inputs")
-  unless ownInputs.isEmpty do
-    -- Fetch the shared program obligation in Lake's dependency graph. Awaiting
-    -- it without mixing its trace preserves implementation-independent reuse.
-    let some registry := (← getWorkspace).findModule? `LeanInformationAudit.TemplateEnrollment
-      | error "IE-C050 reason=incomplete_closure rule=dtr.report_producer"
-    deps := deps.add (← registry.exportInfo.fetch)
-  deps := deps.mix (← inputBinFile mod.leanFile)
-  deps := deps.mix (← inputBinFile utility)
-  let mut exports := #[(← mod.exportInfo.fetch)]
-  let mut sourceModules := #[mod]
-  for name in claims do
-    let some claim := (← getWorkspace).findModule? name.toName
-      | error s!"utility claim module is not in the Lake workspace: {name}"
-    exports := exports.push (← claim.exportInfo.fetch)
-    sourceModules := sourceModules.push claim
+  let reportState ← (← fetch <| pkg.facet `reportBatch).await
+  -- Lake's lookup/create/store is not atomic. Serialize graph registration,
+  -- while compiler jobs and input classification continue asynchronously.
+  let (deps, projection, inspector, exports, sourceModules, closures, reported) ←
+      reportState.graphFetch.atomically fun _ => do
+    let deps ← fetch <| pkg.facet `reportProducer
+    let projection ← fetch <| mod.facet `judgeInputs
+    let inspector ← reportInspector.fetch
+    let mut exports := #[(← mod.exportInfo.fetch)]
+    let mut sourceModules := #[mod]
+    for name in claims do
+      let some claim := (← getWorkspace).findModule? name.toName
+        | error s!"utility claim module is not in the Lake workspace: {name}"
+      exports := exports.push (← claim.exportInfo.fetch)
+      sourceModules := sourceModules.push claim
+    let closures ← sourceModules.mapM (·.transImports.fetch)
+    let reported ← fetch <| pkg.facet `reportSourceModules
+    return (deps, projection, inspector, exports, sourceModules, closures, reported)
   -- Only production consumes this source whitelist. Warm artifacts still trace
   -- the complete compiler exports below. Missing artifacts prepare the same
   -- Lake-owned closure before extraction; no dependency parser or additional
   -- cache chooses its members.
   let prepareProduction : JobM Unit := do
-    let reported ← (← JobM.runFetchM <| fetch <| pkg.facet `reportSourceModules).await
-    let reportState ← (← JobM.runFetchM <| fetch <| pkg.facet `reportBatch).await
+    let reported ← reported.await
     let mut dependencies := #[]
-    for source in sourceModules do
-      dependencies := dependencies.push source ++
-        (← (← JobM.runFetchM source.transImports.fetch).await)
+    for source in sourceModules, closure in closures do
+      dependencies := dependencies.push source ++ (← closure.await)
     let mut sourcePaths : Array String := #[]
     for dependency in dependencies do
       if dependency.name != mod.name && reported.contains dependency.name then continue
@@ -208,37 +283,61 @@ private def prepareNativeModuleReport (mod : Module) : FetchM (Job PreparedArtif
         sourcePaths := sourcePaths.push path
     writeBinFileIfChanged (utility.addExtension "sources.json")
       (String.toUTF8 (Lean.toJson sourcePaths).compress)
-  -- Await without mixing: recompilation must succeed, but its implementation
-  -- identity is not a report-semantic dependency.
-  let inspector ← reportInspector.fetch
-  let workspace ← getWorkspace
-  let env := workspace.augmentedEnvVars
-  let file := root / ".lake/build/lean-inspector" / "modules" / s!"{mod.name}.zip"
-  (deps.add (Job.mixArray exports) |>.add projection |>.add inspector).mapM fun _ => do
-    -- The compiler reader consumes transitive private values, also
-    -- through public imports. Lake's legacy trace follows that same closure;
-    -- allTransTrace follows each import's visibility and can omit those values.
-    -- Apply this to the module and every external utility claim.
-    for exportJob in exports do
-      let info ← exportJob.await
-      addTrace (info.allArtsTrace.mix info.legacyTransTrace)
-    let format ← inputBinFile (root / ".lake/build/lean-inspector" / "report-format")
-    discard <| format.await
-    addTrace format.getTrace
-    let executable ← inspector.await
-    let args := #[root.toString, mod.name.toString, (← IO.FS.realPath mod.leanFile).toString,
-      utility.toString, executable.toString, file.toString]
-    let build := do
-      prepareProduction
-      proc { (← nativeCommand pkg (#["module"] ++ args)) with env }
-      pure PUnit.unit
-    let inputTrace ← getTrace
-    let artifact? ← probeArtifact file build
-    return ⟨file, args, env, inputTrace, artifact?, prepareProduction⟩
+  (Job.nil.add projection).bindM fun _ => do
+    let projectionPath ← projection.await
+    let inputs ← readJson projectionPath
+    observePhase "lake-module-inputs" "finish"
+    let ownInputs ← IO.ofExcept (inputs.getObjValAs? (Array Json) "inputs")
+    let fibInputs := ownInputs.filter fun entry =>
+      (entry.getObjValAs? String "type").toOption ==
+        some "LeanInformationAudit.AuricFib.Contract.Application"
+    let analyzer := if fibInputs.isEmpty then "" else
+      (root / "tools/scripts/auric-fib-analysis.sh").toString
+    let mut deps := deps
+    unless ownInputs.size == fibInputs.size do
+      let some registry := (← getWorkspace).findModule? `LeanInformationAudit.TemplateEnrollment
+        | error "IE-C050 reason=incomplete_closure rule=dtr.report_producer"
+      let enrollment ← reportState.graphFetch.atomically fun _ =>
+        JobM.runFetchM registry.exportInfo.fetch
+      deps := deps.add enrollment
+    deps := deps.mix (← inputBinFile mod.leanFile)
+    deps := deps.mix (← inputBinFile utility)
+    -- Await without mixing: recompilation must succeed, but its implementation
+    -- identity is not a report-semantic dependency.
+    observePhase "lake-report-programs" "start"
+    let workspace ← getWorkspace
+    let env := workspace.augmentedEnvVars
+    let file := root / ".lake/build/lean-inspector" / "modules" / s!"{mod.name}.zip"
+    (deps.add (Job.mixArray exports) |>.add projection |>.add inspector).mapM fun _ => do
+      observePhase "lake-report-programs-callback" "start"
+      -- The compiler reader consumes transitive private values, also
+      -- through public imports. Lake's legacy trace follows that same closure;
+      -- allTransTrace follows each import's visibility and can omit those values.
+      -- Apply this to the module and every external utility claim.
+      for exportJob in exports do
+        let info ← exportJob.await
+        addTrace (info.allArtsTrace.mix info.legacyTransTrace)
+      let format ← inputBinFile (root / ".lake/build/lean-inspector" / "report-format")
+      discard <| format.await
+      addTrace format.getTrace
+      let executable ← inspector.await
+      observePhase "lake-report-inspector" "ready"
+      observePhase "lake-report-programs" "finish"
+      let args := #[root.toString, mod.name.toString, (← IO.FS.realPath mod.leanFile).toString,
+        utility.toString, executable.toString, file.toString,
+        analyzer]
+      let build := do
+        prepareProduction
+        proc { (← nativeCommand pkg (#["module"] ++ args)) with env }
+        pure PUnit.unit
+      let inputTrace ← getTrace
+      let artifact? ← probeArtifact file build
+      return ⟨file, args, env, inputTrace, artifact?, prepareProduction⟩
 
 private def preparedModuleReport (mod : Module) : FetchM (Job PreparedArtifact) := do
   let key := (mod.facet `inspectorPreparedReport).key
   let job : Job (BuildData key) ← fetchOrCreate key do
+    observePhase "lake-module-report" "start"
     let job ← prepareNativeModuleReport mod
     return cast (by simp [key]) job
   return cast (by simp [key]) job
@@ -257,17 +356,51 @@ private def buildNativeModuleReport (mod : Module) : FetchM (Job ReportArtifact)
       setTrace row.outputTrace
       return row
     let pending := request.file.addExtension "pending"
-    let build := if batch?.isSome then do
+    -- Lake removes a stale output before invoking the build callback. Retain
+    -- the existing module transaction only for FIB leaves that can reuse it.
+    -- This is a transient rename, never a second cache or a freshness key.
+    let previous := request.file.addExtension "fib-previous"
+    if !request.args[6]!.isEmpty && (← previous.pathExists) && !(← request.file.pathExists) then
+      IO.FS.rename previous request.file
+    let batched := batch?.isSome && request.args[6]!.isEmpty
+    let preserve := !batched && !request.args[6]!.isEmpty && (← request.file.pathExists)
+    if preserve then IO.FS.rename request.file previous
+    let args := request.args.push (if preserve then previous.toString else "")
+    let build := if batched then do
         IO.FS.rename pending request.file
         pure PUnit.unit
       else do
         request.prepareProduction
-        proc { (← nativeCommand pkg (#["module"] ++ request.args)) with env := request.env }
+        if request.args[6]!.isEmpty then
+          proc { (← nativeCommand pkg (#["module"] ++ args)) with env := request.env }
+        else IO.FS.withTempDir fun directory => do
+          let staged := args.push directory.toString
+          proc { (← nativeCommand pkg (#["module-stage"] ++ staged)) with env := request.env }
+          let work ← readJson (directory / "fib-work.json")
+          let work ← IO.ofExcept work.getArr?
+          unless work.size == 1 do error "fib.analysis_incomplete"
+          let generated ← IO.ofExcept (work[0]!.getObjValAs? Nat "generated")
+          let needed := generated > 0
+          if needed then
+            let workspace ← getWorkspace
+            let some analyzer := workspace.findModule? `LeanInformationAuditRegAnalysis.AuricFib.Main
+              | error "fib.analysis_program_missing"
+            observePhase "lake-analyzer-await" "start"
+            let analyzerJob ← reportState.graphFetch.atomically fun _ =>
+              JobM.runFetchM analyzer.exportInfo.fetch
+            discard <| analyzerJob.await
+            observePhase "lake-analyzer-await" "finish"
+          proc { (← nativeCommand pkg (#["module-finish"] ++ staged)) with env := request.env }
         pure PUnit.unit
     try
-      buildArtifact request.file build
+      let result ← buildArtifact request.file build
+      if preserve then removeFileIfExists previous
+      return result
+    catch error =>
+      if preserve then IO.FS.rename previous request.file
+      throw error
     finally
-      if batch?.isSome then removeFileIfExists pending
+      if batched then removeFileIfExists pending
 
 private def nativeModuleReport (mod : Module) : FetchM (Job ReportArtifact) := do
   let key := (mod.facet `inspectorModuleReport).key
@@ -279,6 +412,7 @@ private def nativeModuleReport (mod : Module) : FetchM (Job ReportArtifact) := d
 module_facet report (mod : Module) : FilePath := withCurrPackage mod.pkg do
   (← nativeModuleReport mod).mapM fun row => do
     setTrace row.outputTrace
+    observePhase "lake-module-report" "finish"
     return row.path
 
 private def runBatch (pkg : Package) (requests : Array (String × Array String)) : JobM Unit := do
@@ -315,14 +449,9 @@ private def collectModuleJobs {α : Type} (jobs : Array (Job α)) : Job (Array �
     level := next
   return level[0]?.getD (Job.collectArray #[])
 
-package_facet report (owner : Package) : FilePath := withCurrPackage owner do
-  let pkg := (← getWorkspace).root
-  observePhase "lake-inputs" "start"
+private def collectNativeReports (pkg : Package) (names : Array String) :
+    FetchM (Job (Array ReportArtifact)) := do
   let reportState ← (← fetch <| pkg.facet `reportBatch).await
-  let inputs ← (← fetch <| pkg.facet `reportInputs).await
-  let config ← readJson inputs
-  let names ← strings config "modules"
-  observePhase "lake-inputs" "finish"
   -- The report owns registered modules. The caller supplies program targets
   -- from its resource selection in the same Lake invocation.
   -- Shared native dependency jobs compose continuations; no per-miss promise
@@ -332,6 +461,14 @@ package_facet report (owner : Package) : FilePath := withCurrPackage owner do
   let mut prepared := #[]
   observePhase "lake-prepare" "start"
   try observePhase "lake-prepare-register" "start" catch _ => pure ()
+  -- Start every compiler projection before awaiting classifications below.
+  -- This keeps compilation parallel while shared graph registration is serial.
+  reportState.graphFetch.atomically fun _ => do
+    for name in names do
+      let some mod := (← getWorkspace).findModule? name.toName
+        | error s!"registered report module is not in the Lake workspace: {name}"
+      unless alreadyStarted.contains mod.name do
+        discard <| fetch <| mod.facet `judgeInputs
   for name in names do
     let some mod := (← getWorkspace).findModule? name.toName
       | error s!"registered report module is not in the Lake workspace: {name}"
@@ -343,7 +480,7 @@ package_facet report (owner : Package) : FilePath := withCurrPackage owner do
     observePhase "lake-prepare" "finish"
     try observePhase "lake-source-whitelists" "start" catch _ => pure ()
     let requests ← artifacts.filterMapM fun request => do
-      if request.artifact?.isSome then return none
+      if request.artifact?.isSome || !request.args[6]!.isEmpty then return none
       request.prepareProduction
       return some ("produce", request.args.set! 5 (request.file.addExtension "pending").toString)
     try observePhase "lake-source-whitelists" "finish" catch _ => pure ()
@@ -356,8 +493,27 @@ package_facet report (owner : Package) : FilePath := withCurrPackage owner do
     let some mod := (← getWorkspace).findModule? name.toName
       | error s!"registered report module is not in the Lake workspace: {name}"
     rows := rows.push (← nativeModuleReport mod)
+  return collectModuleJobs rows
+
+-- The scoped caller supplies complete membership through reportInputData and
+-- owns its own aggregation/publication. Never write the whole-report bundle.
+package_facet moduleReports (owner : Package) : Array FilePath := withCurrPackage owner do
+  let pkg := (← getWorkspace).root
+  let config ← (← fetch <| pkg.facet `reportInputData).await
+  return (← collectNativeReports pkg (← strings config "modules")).map (·.map (·.path))
+
+package_facet report (owner : Package) : FilePath := withCurrPackage owner do
+  let pkg := (← getWorkspace).root
+  observePhase "lake-inputs" "start"
+  let config ← (← fetch <| pkg.facet `reportInputData).await
+  let root ← repositoryDir pkg
+  proc (← nativeCommand pkg #["aggregate-inputs", root.toString])
+  let inputs := root / ".lake/build/lean-inspector" / "inputs.json"
+  let names ← strings config "modules"
+  observePhase "lake-inputs" "finish"
+  let rows ← collectNativeReports pkg names
   let membership ← inputBinFile inputs
-  ((collectModuleJobs rows).zipWith (fun artifacts _ => artifacts) membership).mapM fun artifacts => do
+  (rows.zipWith (fun artifacts _ => artifacts) membership).mapM fun artifacts => do
     let root ← repositoryDir pkg
     let file := root / ".lake/build/lean-inspector" / "report.zip"
     let mut trace := BuildTrace.nil "<collection>"

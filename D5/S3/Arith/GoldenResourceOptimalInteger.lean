@@ -6,6 +6,7 @@
    utility: kind=certified-instance; basis=terminal=atom:3b3e9c081bebcc4bed7568427decd41d64802ba7e03c60402e44a5454d643a19
    digest: The unique positive integer maximizing divisor benefit at cost 1/25 is 5040. -/
 
+import D5.S3.Arith.GoldenResource.ObjectiveCore
 import Mathlib.Algebra.BigOperators.Field
 import Mathlib.Analysis.SpecialFunctions.Log.Basic
 import Mathlib.Data.Nat.Cast.Field
@@ -17,10 +18,6 @@ import Mathlib.Tactic.NormNum.Prime
 namespace D5.S3.Arith.GoldenResourceOptimalInteger
 
 open Finset
-
-/-- Divisor free energy minus the logarithmic resource cost. -/
-noncomputable def goldenResourceObjective (lambda : ℝ) (n : ℕ) : ℝ :=
-  Real.log (∑ d ∈ n.divisors, (d : ℝ)⁻¹) - lambda * Real.log n
 
 /-- Marginal benefit per logarithmic unit for the positive prime layer `a`. -/
 noncomputable def goldenLayerMarginal (p a : ℕ) : ℝ :=
@@ -202,23 +199,6 @@ private theorem local_unique_max {p : ℕ} (hp : p.Prime) (a : ℕ) :
   · exact ⟨le_rfl, iff_of_true rfl rfl⟩
   · have hs := down (by simp) h.le h
     exact ⟨hs.le, ⟨fun heq => (hs.ne heq).elim, fun heq => by rw [heq]⟩⟩
-
-private theorem reciprocal_divisor_sum {n : ℕ} (hn : 1 ≤ n) :
-    (∑ d ∈ n.divisors, (d : ℝ)⁻¹) = (ArithmeticFunction.sigma 1 n : ℝ) / n := by
-  have hn0 : (n : ℝ) ≠ 0 := by exact_mod_cast (by omega : n ≠ 0)
-  rw [ArithmeticFunction.sigma_one_apply, Nat.cast_sum, ← Nat.sum_div_divisors n
-    (fun d => (d : ℝ)), sum_div]
-  apply sum_congr rfl
-  intro d hd
-  have hd0 : (d : ℝ) ≠ 0 := by exact_mod_cast (Nat.pos_of_mem_divisors hd).ne'
-  rw [Nat.cast_div (Nat.dvd_of_mem_divisors hd) hd0]
-  field_simp
-
-/-- The resource objective agrees with the divisor-sum ratio expression. -/
-theorem golden_resource_sigma_identity (lambda : ℝ) {n : ℕ} (hn : 1 ≤ n) :
-    goldenResourceObjective lambda n =
-      Real.log ((ArithmeticFunction.sigma 1 n : ℝ) / n) - lambda * Real.log n := by
-  rw [goldenResourceObjective, reciprocal_divisor_sum hn]
 
 private theorem local_sigma {p : ℕ} (hp : p.Prime) (a : ℕ) :
     Real.log (ArithmeticFunction.sigma 1 (p ^ a) : ℝ) -

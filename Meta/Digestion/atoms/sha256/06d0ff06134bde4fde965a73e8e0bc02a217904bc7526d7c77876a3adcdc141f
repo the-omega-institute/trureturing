@@ -1,0 +1,8 @@
+所以：
+
+- $\sinh^2$ 读取 $\mathbb R$-charge difference；
+- $\sin^2$ 读取 circle/solenoid phase difference；
+- 两者来自同一个 complex determinant；
+- 前者在 $\delta\ne0$ 时提供与 phase 无关的正底；
+- 后者可以因 compact recurrence 反复归零。
+

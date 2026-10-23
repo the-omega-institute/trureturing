@@ -1,1 +1,1 @@
-{"statement_id":"sha256:5c30908da526155e283c121621404a341f22f7639d11efe80785fe277a972a20"}
+{"statement_id":"sha256:5c30908da526155e283c121621404a341f22f7639d11efe80785fe277a972a20","declarations":[{"declaration_name_key":"ns(ns(ns(ns(ns(ns(n0,2:D5),2:S1),5:Words),11:Palindromes),14:PeriodDoubling),31:cut_representation_completeness)","kind":"theorem"},{"declaration_name_key":"ns(ns(ns(ns(ns(ns(n0,2:D5),2:S1),5:Words),11:Palindromes),14:PeriodDoubling),6:classS)","kind":"def"}]}

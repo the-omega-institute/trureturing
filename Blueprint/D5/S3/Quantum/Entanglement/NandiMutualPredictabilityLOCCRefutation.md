@@ -100,7 +100,33 @@ $$claim \Leftrightarrow (claimFixed \lor claimOptimized)$$
 
 The conjecture is read as the disjunction of the fixed and the optimized meaning of the quantity I2.
 
-**Theorem 1.9 (The conjecture fails in both readings).**
+**Lemma 1.9 (The Hadamard matrix is unitary).**
+
+$$\operatorname{BinaryStabilizerLocalInequivalence}.\operatorname{hadamard} \in \operatorname{Matrix}.\operatorname{unitaryGroup}\left(\operatorname{Fin}\left(2\right), \mathbb{C}\right)$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/Quantum/Entanglement/NandiMutualPredictabilityLOCCRefutation.hadamard_unitary` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Acknowledgement.* S. Nandi (2025). *Genuine multipartite entanglement detection with mutually unbiased bases (MUBs)*. DOI: [10.48550/arXiv.2509.24045](https://doi.org/10.48550/arXiv.2509.24045). URL: <https://arxiv.org/abs/2509.24045v1>.
+
+*Commentary.*
+
+The Hadamard matrix of BinaryStabilizerLocalInequivalence lies in the complex two-dimensional unitary group.
+
+**Lemma 1.10 (The square of the Hadamard coefficient).**
+
+$$(\frac{\operatorname{Real}.\operatorname{sqrt}\left(2\right)}{2}) \cdot (\frac{\operatorname{Real}.\operatorname{sqrt}\left(2\right)}{2}) = \frac{1}{2}$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/Quantum/Entanglement/NandiMutualPredictabilityLOCCRefutation.half_sqrt_two_sq` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+The real coefficient sqrt(2)/2 has square 1/2.
+
+**Theorem 1.11 (The conjecture fails in both readings).**
 
 $$\neg claim$$
 
@@ -125,6 +151,8 @@ Take d = 2, ρ = (1/2) I ⊗ |0⟩⟨0|, and Alice's instrument E₁ = |0⟩⟨0
 - Truth anchor: `D5/S3/Quantum/Entanglement/NandiMutualPredictabilityLOCCRefutation.claim`
 - Truth anchor: `D5/S3/Quantum/Entanglement/NandiMutualPredictabilityLOCCRefutation.claimFixed`
 - Truth anchor: `D5/S3/Quantum/Entanglement/NandiMutualPredictabilityLOCCRefutation.claimOptimized`
+- Truth anchor: `D5/S3/Quantum/Entanglement/NandiMutualPredictabilityLOCCRefutation.hadamard_unitary`
+- Truth anchor: `D5/S3/Quantum/Entanglement/NandiMutualPredictabilityLOCCRefutation.half_sqrt_two_sq`
 - Truth anchor: `D5/S3/Quantum/Entanglement/NandiMutualPredictabilityLOCCRefutation.prodVec`
 - Truth anchor: `D5/S3/Quantum/Entanglement/NandiMutualPredictabilityLOCCRefutation.result`
 - Dependency: [D5/S3/Quantum/Information/BinaryStabilizerLocalInequivalence](../Information/BinaryStabilizerLocalInequivalence.md)

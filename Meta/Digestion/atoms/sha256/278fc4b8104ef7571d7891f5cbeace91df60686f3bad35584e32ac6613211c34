@@ -1,0 +1,27 @@
+**Theorem 20.4 (Effective deterministic deadlines on supplied compact bands).** Supply rational $0<a<b<1$ and promise that the true parameter lies in $[a,b]$ under either label, still independently across the two hypotheses. Define
+
+$$
+\begin{aligned}
+\eta_{a,b}&=\min_{i=0,1}\frac{C_i a^4}{Z_i(b)^2}>0,&
+\overline\mu_b&=\max_i\mu_i(b),&\overline\beta_b&=\max_i\beta_i(b),\\
+\mathcal B_{a,b}&=1+\overline\beta_b+
+\frac{2\overline\mu_b M}{\eta_{a,b}},&
+W_{a,b}&=\left\lceil\frac{2\mathcal B_{a,b}}\alpha\right\rceil.
+\end{aligned} \tag{20.12}
+$$
+
+Run Theorem 20.3 with at most $W_{a,b}$ reads; if unfinished, emit a fixed default label. This deterministic rule has each family-wise error at most $\alpha$ uniformly on the supplied band. Every quantity in (20.12) is computable by finite rational arithmetic from $a,b,H,\alpha$.
+
+Proof. Positivity of the values $F_i(k)$ implies $Z_i(q)\le Z_i(b)$ for $q\le b$, regardless of signs in the monomial coefficient description of $H$. Thus $\eta_i(q)\ge\eta_{a,b}$ on the band. Differentiating an expectation under weights $w_kq^k$ with respect to $\log q$ gives $\operatorname{Var}(K)$ when the observable is $K$; all differentiations are justified by polynomial-geometric domination on compact subintervals of $(0,1)$. Apply this first with $w_k=F_i(k)$ to see that $\mu_i$ is nondecreasing. Apply it with $w_k=(k+1)F_i(k)$ to see that
+
+$$
+\beta_i(q)=\frac12
+\frac{\sum_{k\ge1}k(k+1)F_i(k)q^k}
+{\sum_{k\ge1}(k+1)F_i(k)q^k}
+\tag{20.13}
+$$
+
+is nondecreasing too. Equation (20.9) now gives $\mathbb E_{i,q}L\le\mathcal B_{a,b}$. A wrong capped decision is contained in the union of a wrong uncapped decision and $\{L>W_{a,b}\}$. Markov's inequality bounds the latter probability by $\mathcal B_{a,b}/W_{a,b}\le\alpha/2$. This argument does not condition retained marks on finishing before the deadline. It includes no initial tick, an unfinished rejected pair, and an unfinished final gap at timeout.
+
+For effectivity, writing each fixed $F_i$ in monomials expresses $Z_i$, $\sum kF_i(k)q^k$ and $\sum k^2F_i(k)q^k$ as finite rational combinations of $Z_j(q)$ for $j\le11$. Recurrence (19.8) evaluates them exactly at rational $b$. Their normalizers are positive by Definition 20.1. Rational maxima, minima and ceilings then compute (20.12). The true parameter itself need not be rational or represented. $\square$
+

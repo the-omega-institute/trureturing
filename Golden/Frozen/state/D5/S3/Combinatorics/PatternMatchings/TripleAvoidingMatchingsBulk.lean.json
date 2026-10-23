@@ -1,1 +1,1 @@
-{"statement_id":"sha256:6f8f4766b1bdccaa3a0107d4cf313c45bb0512da88fdecb592ffa188d309fffd"}
+{"statement_id":"sha256:6f8f4766b1bdccaa3a0107d4cf313c45bb0512da88fdecb592ffa188d309fffd","declarations":[{"declaration_name_key":"ns(ns(ns(ns(ns(ns(n0,2:D5),2:S3),13:Combinatorics),16:PatternMatchings),23:TripleAvoidingMatchings),16:bulk_enumeration)","kind":"theorem"}]}

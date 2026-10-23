@@ -1,1 +1,1 @@
-{"statement_id":"sha256:e72d5c50f293097207af4ec6a15a23d5fa9daacbcbca16bb1049e43043d42419"}
+{"statement_id":"sha256:e72d5c50f293097207af4ec6a15a23d5fa9daacbcbca16bb1049e43043d42419","declarations":[{"declaration_name_key":"ns(ns(ns(ns(ns(ns(n0,2:D5),2:S3),13:Combinatorics),19:FishburnTenThirteen),24:FishburnTenThirteenSites),21:interval_active_sites)","kind":"theorem"},{"declaration_name_key":"ns(ns(ns(ns(ns(ns(n0,2:D5),2:S3),13:Combinatorics),19:FishburnTenThirteen),30:FishburnTenThirteenSiteUpdates),21:interval_site_updates)","kind":"theorem"}]}

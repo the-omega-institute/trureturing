@@ -1,0 +1,1 @@
+{"statement_id":"sha256:38fd4744e67a113ab4eb776639d54fae0fed2d91fde5c37cb31c4d1173df2cfb","declarations":[{"declaration_name_key":"ns(ns(ns(n0,12:NikolovSegal),14:UnitaryRankTwo),15:coordinateEquiv)","kind":"def"},{"declaration_name_key":"ns(ns(ns(n0,12:NikolovSegal),14:UnitaryRankTwo),24:coordinateEquiv_backward)","kind":"theorem"}]}

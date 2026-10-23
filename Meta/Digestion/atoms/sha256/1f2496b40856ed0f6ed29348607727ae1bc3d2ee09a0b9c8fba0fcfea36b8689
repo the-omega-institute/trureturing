@@ -1,0 +1,41 @@
+**命题 17.2（五边终点值、seam 钟响应与离散换钟）。** 在定义 2.1 的图上指定终点 $2$、五条边成本全为一。按本卷的状态序和边序，有
+
+$$
+V=(1,4,0,2,3),\qquad
+\varepsilon=(4,0,0,0,0),\qquad
+ g_B=-B^{\mathsf T}V=(-3,1,1,1,1).
+$$
+
+从 $0$ 出发绕方形 $m\in\mathbb Z_{\ge0}$ 周再去 $2$，路径成本为 $4m+1$；方形上值降的总和零而残差总和四。特别是合法边 $0\to1$ 提高 $V$，合法路径不必处处使值下降。
+
+另取 $\alpha,N_{\rm ref}>0$，定义状态钟读口 $N_s=N_{\rm ref}e^{-\alpha V_s}$。记 $z=e^{-\alpha}\in(0,1)$，则
+
+$$
+\Delta_{\mathbf d}N
+=N_{\rm ref}(z-z^4-z^2+z^3)
+=N_{\rm ref}z(1-z)(1+z^2)>0.
+$$
+
+所以在任一固定非退化概率纤维上，该钟读口的精确期望按数学引文 1.4 的四角准则单射地区分 $\kappa$。这里 $V$ 由同一终点任务固定，概率变化不重新求解 $V$。
+
+对实际有限路径 $s_0,\ldots,s_m$，指定 $h>0$、$\lambda_n=nh$、$N_n=N_{s_n}$，以及左端点累计 $\tau_{n+1}-\tau_n=hN_n$。对 $0\le n\le m-2$，令 $g_{B,n}=V(s_n)-V(s_{n+1})$，则精确式为
+
+$$
+\tau_{n+2}-2\tau_{n+1}+\tau_n
+=hN_n\bigl(e^{\alpha g_{B,n}}-1\bigr).
+$$
+
+若另指定 $C^1$ 插值 $\widetilde V(\lambda)$ 并定义 $\widetilde N=N_{\rm ref}e^{-\alpha\widetilde V}$、$\widetilde\tau=\int\widetilde N\,d\lambda$，则在该连续模型内
+
+$$
+\widetilde\tau''=-\alpha\widetilde N\,\widetilde V'
+=\alpha\widetilde N\,\widetilde g_B,\qquad
+\widetilde g_B=-\widetilde V'.
+$$
+
+即使插值在节点处吻合，连续积分也不自动等于离散左端点累计，$\widetilde g_B$ 也不等于未除步长的一步值降。
+
+证明。从 $0$ 到终点的直接边给值一；其余方形状态沿唯一前进方向依次到达 $0$，得 $V_3=2,V_{13}=3,V_1=4$，额外循环增加四不能改进最小值。逐边代入给 $\varepsilon$ 和 $g_B$，路径式消费假设 17.1 的望远镜和。钟读口的四角配对由所列五个值直接给出并因式分解；固定纤维的期望差因此是 $N_{\rm ref}z(1-z)(1+z^2)(\kappa'-\kappa)$，精确律与样本的范围沿用数学引文 1.4。
+
+离散累计二次差等于 $h(N_{n+1}-N_n)$，而 $N_{n+1}/N_n=e^{\alpha g_{B,n}}$，得指数式，不能将 $e^{\alpha g_B}-1$ 精确替换成 $\alpha g_B$。连续式则是定义 15.3 的链式法则。比如一段非零值降上取线性插值，其钟积分为 $hN_n(e^{\alpha g_{B,n}}-1)/(\alpha g_{B,n})$，不等于 $hN_n$；分段线性插值在斜率跳变的顶点不提供 $C^1$ 合同。图上对数比仍是 $-\alpha B^{\mathsf T}V$ 的恰当余链，正的累计钟使用另一规则。这些构造区分终点优化、精确律读口和实际路径累计，并不从静态值函数推出运动律或物理时间。∎
+

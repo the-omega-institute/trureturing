@@ -1,1 +1,1 @@
-{"statement_id":"sha256:afc05462fc0d374939d973a71bde8dda91d18cde698a39b6e787dbc7196798bf"}
+{"statement_id":"sha256:afc05462fc0d374939d973a71bde8dda91d18cde698a39b6e787dbc7196798bf","declarations":[{"declaration_name_key":"ns(ns(ns(ns(ns(n0,2:D5),2:S3),10:ArithUnits),15:PrimeModInverse),21:prime_not_dvd_is_unit)","kind":"theorem"}]}

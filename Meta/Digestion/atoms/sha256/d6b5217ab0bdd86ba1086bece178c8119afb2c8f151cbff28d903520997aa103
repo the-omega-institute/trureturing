@@ -1,0 +1,5 @@
+**Theorem 8.2 (fixed-cut closure preserves neither arbitrary queries nor changed cuts).**
+Even in a left-birth geometry, two sources can have identical conditional
+augmentations and identical same-$P$ rows at every epoch, but different
+native raw replies and different rows for another cut at the next epoch.
+

@@ -1,0 +1,107 @@
+**Construction 11.6 (the complete installed word).** For the particular
+table of Construction 11.5 let $k=k(e)$. The logical word has two
+$k$-bit banks $A,B'$, five one-hot reply flags
+$f_\alpha,f_\beta,f_{\mathsf{branch}},f_{\mathsf{absent}},f_\star$,
+and three phase bits. Its logical length is $m=2k+8$.
+The source-independent initial word has phase 000, bank $A=z_{\rm init}$,
+bank $B'=0^k$ and zero flags. No bank, phase or flag exists outside this
+word. The actual physical word is
+
+$$
+J(x_1\cdots x_m)=x_1\,0\,x_2\,0\,\cdots\,0\,x_m,
+\qquad W=J(\{0,1\}^m),\qquad \ell=2m-1=4k+15.
+\tag{SLHC.11.9}
+$$
+
+All $2^m$ such words are installed. The inserted zeros never change.
+The following rows give their fixed instruction and typed responses.
+A deterministic row always executes Read$(\varepsilon)$, ignores
+which of its four raw replies arrived, and makes the single stated
+bit change. It is not an internal instruction. "Least" refers to the
+fixed bit order of the bank.
+
+| Phase and word condition | Instruction | Immediate response action |
+| --- | --- | --- |
+| 000, flags zero, $B'=0$ | $I(A)$ | For Read reply $r$, set $f_r$; for Update acknowledgement, set $f_\star$; a Halt outputs its fixed bit |
+| 000, exactly one flag $f_r$, $r$ typed for $I(A)$ | Root Read | If $B'\ne\delta(A,r)$, flip the least differing bit of $B'$; otherwise change phase to 001 |
+| 001, exactly one flag | Root Read | If $A\ne0$, clear its least one; otherwise change phase to 011 |
+| 011, $A=0$, exactly one flag | Root Read | Clear that flag |
+| 011, $A=0$, flags zero | Root Read | Change phase to 010 |
+| 010, flags zero, $A=0$ | $I(B')$ | For Read reply $r$, set $f_r$; for Update acknowledgement, set $f_\star$; a Halt outputs its fixed bit |
+| 010, exactly one flag $f_r$, $r$ typed for $I(B')$ | Root Read | If $A\ne\delta(B',r)$, flip the least differing bit of $A$; otherwise change phase to 110 |
+| 110, exactly one flag | Root Read | If $B'\ne0$, clear its least one; otherwise change phase to 111 |
+| 111, $B'=0$, exactly one flag | Root Read | Clear that flag |
+| 111, $B'=0$, flags zero | Root Read | Change phase to 101 |
+| 101, $B'=0$, flags zero | Root Read | Change phase to 100 |
+| 100, $B'=0$, flags zero | Root Read | Change phase to 000 |
+| Any remaining installed word | Root Read | Hold the word for each of the four replies |
+
+For a Halt, no reply is typed; its flagged case therefore does not
+match a filling row. The phase cycle is
+
+$$
+000,\ 001,\ 011,\ 010,\ 110,\ 111,\ 101,\ 100,\ 000,
+\tag{SLHC.11.10}
+$$
+
+whose adjacent terms differ in one bit, including the final edge.
+The table treats the letters of $I(z)$ and all values $\delta(z,r)$
+as fixed finite data expanded at installation. In particular,
+$\delta$ and least-bit selection are not an uncharged runtime
+algorithm or a second mutable controller: each entire word has one
+already installed literal instruction and each typed response has one
+already installed hold/flip choice.
+
+To verify a transfer, begin in phase 000 with $(A,B')=(z,0)$ and no
+flag. One actual $I(z)$ response sets exactly one counted flag; the
+raw response is then discarded. The $A$ bank and flag retain precisely
+what selects $\delta(z,r)$ until $B'$ equals that target. Each root
+Read reduces the number of differing destination bits by one. After
+phase 001 clears $A$, phase 011 clears the flag and enters 010.
+The ready state is now $(0,\delta(z,r))$. The reverse transfer follows
+the last half of the table and returns to phase 000 with
+$(\delta(z,r),0)$. All source changes occur only at the selected
+intermediate Update; every extra instruction is a source-preserving
+root Read. No intermediate phase halts.
+
+If $|z|_1$ is a bank's Hamming weight, the exact primitive counts for
+these two transfers, including the original source instruction, are
+
+$$
+c_{A\to B'}(z,r)=|z|_1+|\delta(z,r)|_1+5,\qquad
+c_{B'\to A}(z,r)=|z|_1+|\delta(z,r)|_1+7.
+\tag{SLHC.11.11}
+$$
+
+The constants count the reply-flag setting, phase changes and flag
+clearing. Both are at most $2k+7$. Resetting counters or addresses,
+setting the output, filling a zero target, and erasing a bank are all
+covered by this formula. Every actual nonhalting row changes one
+logical bit, hence one physical bit. Every other typed row either
+holds or changes one bit as well. Zero interleaving proves no-$11$
+for every installed word and every successor, without an assumption
+about which rows are reachable.
+
+The ready-state correspondence, proved transfer by transfer, matches
+Construction 11.5's controls and the actual current source. It yields
+exactly its first Halt and fixed output. Its raw chronology additionally
+contains all the charged root Reads; it is not claimed to equal the
+intermediate chronology. FIB §47's unchanged-instruction finite-prefix
+refinement alone would not give this width or this chronology.
+
+For FIB §§26–27, let $C_w$ contain exactly the pairs
+$(\pi(u),y)$ actually reachable at word $w$ from the promised entries.
+Every actual primitive is legal, the typed rows give same-source
+successor closure, and the two halt instructions have the proved
+original target on their supports. Lemma 11.3 and Construction 11.4
+prove finite intermediate termination, and (SLHC.11.11) proves finite
+routing between ready states. Thus the deterministic future from each
+reachable $(y,w)$ has a finite number of primitive calls left. Take
+that number as the natural rank on $C_w$; it decreases by one at every
+call and is zero at Halt. If two histories yield the same $(y,w)$,
+their futures coincide, so the rank is well defined. Supports and rank
+are proof data, never selector inputs. This supplies the precise
+complete-control obligations of FIB §27.2 and the explicit adjacency
+required by §45, rather than inferring a one-write implementation from
+a count of names.
+

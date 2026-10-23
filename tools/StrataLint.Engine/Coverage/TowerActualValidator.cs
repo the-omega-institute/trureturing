@@ -202,18 +202,6 @@ internal static class TowerActualValidator
         ImmutableArray<TowerFinding>.Builder findings,
         ImmutableArray<TowerCheck>.Builder checks)
     {
-        var found = snapshot.Files.Values
-            .Where(item => FrozenLedgerChangeClassifier.IsAcceptedEventPath(item.Path.Value))
-            .Any(item => IsLedgerAnchor(item.Text.TrimEnd('\n'), bootstrap.GenesisEvent));
-        if (!found)
-        {
-            findings.Add(new TowerFinding("TOWER-GENESIS", bootstrap.Id, "declared genesis event is absent"));
-        }
-        else
-        {
-            checks.Add(new TowerCheck(bootstrap.Id, "verified", $"genesis event {bootstrap.GenesisEvent}"));
-        }
-
         if (bootstrap.Verification != "ASSUMED-UNVERIFIED"
             || bootstrap.PullRequest != 1
             || bootstrap.Commit.Length != 40
@@ -269,17 +257,4 @@ internal static class TowerActualValidator
                 : string.Join(", ", values.Take(Cap)) + $", … (+{values.Length - Cap} more)";
     }
 
-    private static bool IsLedgerAnchor(string line, string expectedHash)
-    {
-        try
-        {
-            using var document = JsonDocument.Parse(line);
-            return document.RootElement.GetProperty("event_type").GetString() == "Freeze"
-                && document.RootElement.GetProperty("event_hash").GetString() == expectedHash;
-        }
-        catch (JsonException)
-        {
-            return false;
-        }
-    }
 }

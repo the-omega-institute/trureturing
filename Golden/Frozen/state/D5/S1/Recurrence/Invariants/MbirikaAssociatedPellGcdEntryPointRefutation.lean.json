@@ -1,1 +1,1 @@
-{"statement_id":"sha256:3bb5cc24f868f61c2bbd3d043e753e05f5430cadfc09f02ead549b25e1a80338"}
+{"statement_id":"sha256:3bb5cc24f868f61c2bbd3d043e753e05f5430cadfc09f02ead549b25e1a80338","declarations":[{"declaration_name_key":"ns(ns(ns(ns(ns(ns(n0,2:D5),2:S1),10:Recurrence),10:Invariants),44:MbirikaAssociatedPellGcdEntryPointRefutation),5:claim)","kind":"def"},{"declaration_name_key":"ns(ns(ns(ns(ns(ns(n0,2:D5),2:S1),10:Recurrence),10:Invariants),44:MbirikaAssociatedPellGcdEntryPointRefutation),6:result)","kind":"theorem"}]}

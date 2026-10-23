@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:054d7f90c1d0d5387f6ac1aeb07e44219c1347fc13c56e8e2fe42e17ce179d4b
+  normalized_sha256: sha256:054d7f90c1d0d5387f6ac1aeb07e44219c1347fc13c56e8e2fe42e17ce179d4b
+cas_ref: sha256:054d7f90c1d0d5387f6ac1aeb07e44219c1347fc13c56e8e2fe42e17ce179d4b
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 本段只引用前述 Tail 构造证明复制语言充分方向。
+    previous_atom_id: 1de5750ab858184c256b174185a03e911b949664a34379793740158e403751d1
+    next_atom_id: 3e0a06186297960d1ff6a6f0de82207edf6e11f9a1d36fff258f1912be05231f

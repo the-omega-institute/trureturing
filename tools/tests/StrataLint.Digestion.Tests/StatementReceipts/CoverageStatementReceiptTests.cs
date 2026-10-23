@@ -16,13 +16,16 @@ public sealed class CoverageStatementReceiptTests
         "sha256:3550644baaf9611be033c032903cdd16576de334d42f76ee9a3d673ad7e336f0";
 
     [Fact]
-    public void ModuleGidResolutionTracksFrozenStatePin()
+    public void ModuleGidResolutionTracksFrozenStatePinWithCurrentReport()
     {
         var firstPin = FrozenStatementReceiptTestData.Id('1');
         var secondPin = FrozenStatementReceiptTestData.Id('2');
         Assert.True(Gid.TryParse(ModuleGid, out var gid));
         var report = LeanAxiomReport.Create(
-            new Dictionary<string, LeanFileReport>(StringComparer.Ordinal));
+            new Dictionary<string, LeanFileReport>(StringComparer.Ordinal)
+            {
+                [ModulePath] = new LeanFileReport([], []),
+            });
 
         var first = FrozenStatementIndex.Create(
             FrozenStateCatalog.Load(StateSnapshot(firstPin)),
@@ -60,7 +63,10 @@ public sealed class CoverageStatementReceiptTests
         var present = FrozenStatementIndex.Create(state, report);
         var missing = FrozenStatementIndex.Create(
             state,
-            LeanAxiomReport.Create(new Dictionary<string, LeanFileReport>(StringComparer.Ordinal)));
+            LeanAxiomReport.Create(new Dictionary<string, LeanFileReport>(StringComparer.Ordinal)
+            {
+                [ModulePath] = new LeanFileReport([], []),
+            }));
 
         Assert.True(present.TryResolve(gid, out var statementId, out var message), message);
         Assert.Equal(ExpectedDeclarationStatementPin, statementId!.Value);
@@ -80,7 +86,7 @@ public sealed class CoverageStatementReceiptTests
         var entry = new DigestionLedgerEntry(
             "source",
             "docs/source.md",
-            AtomizerRegistry.NoAtomizerId,
+            AtomizerRegistry.GenericId,
             new string('a', 64),
             fingerprints,
             [
@@ -90,7 +96,7 @@ public sealed class CoverageStatementReceiptTests
             new DigestionReceipts([], [], null),
             new DigestionStatus(DigestionMigrationState.Partial, DigestionTruthState.Closed),
             fingerprints.RawSha256);
-        var document = Document(AtomizerRegistry.NoAtomizerId, [entry]);
+        var document = Document(AtomizerRegistry.GenericId, [entry]);
         var source = Assert.Single(document.RequireDigestionSources());
         var files = new Dictionary<string, string>(StringComparer.Ordinal)
         {
@@ -100,7 +106,7 @@ public sealed class CoverageStatementReceiptTests
                 Encoding.UTF8.GetString(BackfillInventoryWriter.WriteAtom(entry).AsSpan()),
             [ModulePath] = TargetSource("by trivial"),
         };
-        FrozenStatementReceiptTestData.AddLedger(
+        var report = FrozenStatementReceiptTestData.AddLedger(
             files,
             new FrozenStatementReceiptTestData.Module(
                 ModulePath,
@@ -109,8 +115,8 @@ public sealed class CoverageStatementReceiptTests
         var raw = RawRepositorySnapshot.Create(files.Select(static item =>
             RawRepositoryEntry.FromText(item.Key, item.Value)));
         var snapshot = Assert.IsType<SnapshotDecodeOutcome.Decoded>(
-            SnapshotDecoder.Decode(raw)).Snapshot;
-        var frozenStatements = FrozenStatementReceiptTestData.Index(snapshot);
+            SnapshotDecoder.Decode(DigestionTestSupport.WithSourcePolicy(raw))).Snapshot;
+        var frozenStatements = FrozenStatementReceiptTestData.Index(snapshot, report);
         var mismatches = BackfillInventoryLoader.Load(snapshot)
             .RequireDigestionEntries()
             .SelectMany(static entry => entry.Coverage.Select(receipt =>
@@ -237,7 +243,7 @@ public sealed class CoverageStatementReceiptTests
     }
 
     [Fact]
-    public void FrozenLedgerChangeRechecksStatementReceipt()
+    public void FrozenStateChangeRechecksReceiptWithoutReplayingUnchangedStatus()
     {
         var previousStatementId = FrozenStatementReceiptTestData.Id('4');
         var evaluation = Evaluate(
@@ -246,12 +252,12 @@ public sealed class CoverageStatementReceiptTests
             FrozenStatementReceiptTestData.Id('5'),
             FrozenStatementReceiptTestData.Id('2'),
             TargetSource("by trivial"),
-            FrozenLedgerChangeClassifier.AcceptedRoot + "/changed.json");
+            FrozenStatePath.FromModulePath(RepoPath.CreateKnown(ModulePath)).Value);
 
         Assert.Contains(
             evaluation.Entries.Single().Gaps,
             static gap => gap.Code == "coverage-target-mismatch");
-        Assert.Contains(
+        Assert.DoesNotContain(
             evaluation.Findings,
             static finding => finding.Contains(
                 "handwritten status",
@@ -265,7 +271,7 @@ public sealed class CoverageStatementReceiptTests
         {
             [ModulePath] = TargetSource("by trivial"),
         };
-        FrozenStatementReceiptTestData.AddLedger(
+        var report = FrozenStatementReceiptTestData.AddLedger(
             files,
             new FrozenStatementReceiptTestData.Module(
                 ModulePath,
@@ -282,7 +288,7 @@ public sealed class CoverageStatementReceiptTests
             (item.Key, Encoding.UTF8.GetBytes(item.Value))).ToArray());
         Assert.True(Gid.TryParse(DeclarationGid, out var gid));
 
-        var resolved = FrozenStatementReceiptTestData.Index(snapshot).TryResolve(
+        var resolved = FrozenStatementReceiptTestData.Index(snapshot, report).TryResolve(
             gid,
             out var statementId,
             out var message);
@@ -295,7 +301,7 @@ public sealed class CoverageStatementReceiptTests
     [Fact]
     public void UnfrozenHostPathDoesNotResolveStatement()
     {
-        var snapshot = Snapshot(FrozenStatementReceiptTestData.LedgerFiles(
+        var snapshot = Snapshot(FrozenStatementReceiptTestData.LedgerFiles(out var report,
             new FrozenStatementReceiptTestData.Module(
                 "D5/S0/Carrier/Other.lean",
                 FrozenStatementReceiptTestData.Id('8'),
@@ -304,7 +310,7 @@ public sealed class CoverageStatementReceiptTests
                     FrozenStatementReceiptTestData.Id('9'))])));
         Assert.True(Gid.TryParse(DeclarationGid, out var gid));
 
-        var resolved = FrozenStatementReceiptTestData.Index(snapshot).TryResolve(
+        var resolved = FrozenStatementReceiptTestData.Index(snapshot, report).TryResolve(
             gid,
             out var statementId,
             out var message);
@@ -317,7 +323,7 @@ public sealed class CoverageStatementReceiptTests
     [Fact]
     public void NoncanonicalFrozenDeclarationNameKeyDoesNotResolve()
     {
-        var snapshot = Snapshot(FrozenStatementReceiptTestData.LedgerFiles(
+        var snapshot = Snapshot(FrozenStatementReceiptTestData.LedgerFiles(out var report,
             new FrozenStatementReceiptTestData.Module(
                 ModulePath,
                 FrozenStatementReceiptTestData.Id('8'),
@@ -327,7 +333,7 @@ public sealed class CoverageStatementReceiptTests
                     EncodedNameKey: "ns(ns(n0,4:1bad),6:target)")])));
         Assert.True(Gid.TryParse(DeclarationGid, out var gid));
 
-        var resolved = FrozenStatementReceiptTestData.Index(snapshot).TryResolve(
+        var resolved = FrozenStatementReceiptTestData.Index(snapshot, report).TryResolve(
             gid,
             out var statementId,
             out var message);
@@ -340,7 +346,7 @@ public sealed class CoverageStatementReceiptTests
     [Fact]
     public void TrailingGarbageInFrozenDeclarationNameKeyDoesNotResolve()
     {
-        var snapshot = Snapshot(FrozenStatementReceiptTestData.LedgerFiles(
+        var snapshot = Snapshot(FrozenStatementReceiptTestData.LedgerFiles(out var report,
             new FrozenStatementReceiptTestData.Module(
                 ModulePath,
                 FrozenStatementReceiptTestData.Id('8'),
@@ -355,7 +361,7 @@ public sealed class CoverageStatementReceiptTests
                 ])));
         Assert.True(Gid.TryParse(DeclarationGid, out var gid));
 
-        var resolved = FrozenStatementReceiptTestData.Index(snapshot).TryResolve(
+        var resolved = FrozenStatementReceiptTestData.Index(snapshot, report).TryResolve(
             gid,
             out var statementId,
             out var message);
@@ -369,7 +375,7 @@ public sealed class CoverageStatementReceiptTests
     public void GeneratedPrivateDeclarationDoesNotBlockCanonicalTargetResolution()
     {
         var targetStatementId = FrozenStatementReceiptTestData.Id('9');
-        var snapshot = Snapshot(FrozenStatementReceiptTestData.LedgerFiles(
+        var snapshot = Snapshot(FrozenStatementReceiptTestData.LedgerFiles(out var report,
             new FrozenStatementReceiptTestData.Module(
                 ModulePath,
                 FrozenStatementReceiptTestData.Id('8'),
@@ -384,7 +390,7 @@ public sealed class CoverageStatementReceiptTests
                 ])));
         Assert.True(Gid.TryParse(DeclarationGid, out var gid));
 
-        var resolved = FrozenStatementReceiptTestData.Index(snapshot).TryResolve(
+        var resolved = FrozenStatementReceiptTestData.Index(snapshot, report).TryResolve(
             gid,
             out var statementId,
             out var message);
@@ -414,7 +420,7 @@ public sealed class CoverageStatementReceiptTests
         var entry = Entry(
             atom,
             "statement-receipt",
-            AtomizerRegistry.NoAtomizerId,
+            AtomizerRegistry.GenericId,
             DigestionMigrationState.Absorbed,
             DigestionTruthState.Closed,
             [],
@@ -422,7 +428,7 @@ public sealed class CoverageStatementReceiptTests
         {
             Coverage = [receipt],
         };
-        var document = Document(AtomizerRegistry.NoAtomizerId, [entry]);
+        var document = Document(AtomizerRegistry.GenericId, [entry]);
         var files = new Dictionary<string, string>(StringComparer.Ordinal)
         {
             ["docs/source.md"] = Encoding.UTF8.GetString(sourceBytes),

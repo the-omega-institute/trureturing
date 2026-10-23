@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:69df159e047d9515cebaaa30a8820e62057536e334cd7f59c389e2b61bbe352e
+  normalized_sha256: sha256:69df159e047d9515cebaaa30a8820e62057536e334cd7f59c389e2b61bbe352e
+cas_ref: sha256:69df159e047d9515cebaaa30a8820e62057536e334cd7f59c389e2b61bbe352e
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 非命题文本：- `D5/S3/ObserverMemory/Prediction/ItineraryCompletion.lean`：有限系统的未来 itinerary、逆极限与有限稳定深度；：仅为导引、项目安排、来源条目或记号清单，不提出数学命题。
+    previous_atom_id: ebaead945988e2244ca747d9bb18089148db8339a637c9d278486f808a082641
+    next_atom_id: aa90f59e01ed6c6cb00c392f8ea9c8e0135dfb29b8e7f951dd1361eb4fe8c38a

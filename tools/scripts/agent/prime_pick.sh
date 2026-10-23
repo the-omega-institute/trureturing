@@ -14,7 +14,7 @@
 # 本器只排序,不下「可做」的结论(第 4 条不冒领):CLEAN 不排除异名覆盖,高分不蕴含非 bind-only。
 # 席位仍须走 SKILL 步骤 1→3(权威原文 / 回声 / 先库后证)与 CLAUDE.md 5⁗ 的逃逸见证判定。
 #
-# usage: prime_pick.sh REPO OUT.tsv [EXCLUDE.txt]
+# usage: prime_pick.sh REPO OUT.tsv [EXCLUDE.txt] [--pool POOL.tsv]
 #   EXCLUDE.txt = 每行一个 atom_id(见 refresh_exclusions.sh / inflight_mods.sh)
 # 哨兵: PRIME_PICK_OK ranked=<n> scanned=<n> excluded=<n>
 set -euo pipefail
@@ -22,11 +22,19 @@ set -euo pipefail
 [ -d "$1/.git" ] || [ -f "$1/.git" ] || { echo "PRIME_PICK_BAD_REPO=$1" >&2; exit 65; }
 [ -d "$1/Meta/Digestion/backfill" ] || { echo "PRIME_PICK_NO_BACKFILL=$1" >&2; exit 66; }
 [ -d "$1/Meta/Digestion/atoms/sha256" ] || { echo "PRIME_PICK_NO_CAS=$1" >&2; exit 67; }
-[ $# -lt 3 ] || [ -f "$3" ] || { echo "PRIME_PICK_BAD_EXCLUDE=$3" >&2; exit 68; }
-python3 -X utf8 - "$@" <<'PY'
-import re, sys, pathlib
+[ $# -lt 3 ] || [ "$3" = --pool ] || [ -f "$3" ] || { echo "PRIME_PICK_BAD_EXCLUDE=$3" >&2; exit 68; }
+python3 -B -X utf8 - "$@" <<'PY'
+import re, sys, pathlib, csv
+sys.path.insert(0, str(pathlib.Path(sys.argv[1]) / "tools/scripts/agent"))
+from default_dispatch_filter import eligible_atoms
 repo, out = sys.argv[1:3]
-excl_path = sys.argv[3] if len(sys.argv) > 3 else None
+args = sys.argv[3:]
+excl_path = args.pop(0) if args and args[0] != "--pool" else None
+pool = None
+if args:
+    if len(args) != 2 or args[0] != "--pool":
+        raise SystemExit("PRIME_PICK_USAGE: expected --pool POOL.tsv")
+    pool = pathlib.Path(args[1])
 R = pathlib.Path(repo)
 cas = R / "Meta/Digestion/atoms/sha256"
 
@@ -47,7 +55,7 @@ PROOF = re.compile(r'###\s*证明|证明[:：]|∎')
 
 scanned = 0
 rows = []
-for vol in sorted((R / "Meta/Digestion/backfill").iterdir()):
+for vol in ([] if pool else sorted((R / "Meta/Digestion/backfill").iterdir())):
     ro = vol / "residual-open"
     if not ro.is_dir():
         continue
@@ -80,6 +88,19 @@ for vol in sorted((R / "Meta/Digestion/backfill").iterdir()):
         rows.append((good * 2 + proof * 6 - heavy * 3, good, heavy, proof,
                      math, len(lines), y.stem, vol.name, title[:70]))
 
+if pool:
+    with pool.open(encoding="utf-8", newline="") as fh:
+        cached = csv.reader(fh, delimiter="\t")
+        if next(cached, None) != ["score", "good", "heavy", "proof", "math", "lines", "atom_id", "source_id", "title"]:
+            raise SystemExit("PRIME_PICK_INVALID_POOL")
+        for row in cached:
+            if len(row) != 9:
+                raise SystemExit("PRIME_PICK_INVALID_POOL")
+            scanned += 1
+            if row[6] not in excluded:
+                rows.append(tuple(map(int, row[:6])) + tuple(row[6:]))
+eligible = eligible_atoms(R, [row[6] for row in rows])
+rows = [row for row in rows if row[6] in eligible]
 rows.sort(key=lambda r: (-r[0], -r[4]))
 with open(out, "w", encoding="utf-8") as fh:
     fh.write("score\tgood\theavy\tproof\tmath\tlines\tatom_id\tsource_id\ttitle\n")

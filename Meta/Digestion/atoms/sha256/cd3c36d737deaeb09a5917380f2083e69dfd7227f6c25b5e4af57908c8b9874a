@@ -1,0 +1,17 @@
+**Theorem 9.2 (canonical coding).** Collapsing every maximal finite atomic
+subtree and retaining every other ordered pair gives a bijection
+
+$$
+B:\widehat{\mathcal T}\longrightarrow \mathscr C_{\mathbb N}^{\rm red}
+$$
+
+such that
+
+$$
+\llbracket B(u)\rrbracket=u,
+\qquad B(\rho^k u)=\sigma^kB(u)\quad(k\in\mathbb N).
+\tag{NIS.31}
+$$
+
+In particular, the only code for the leafless completion is $\Omega$.
+

@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:1a916f3b6ea5127dd5a36a715f76b964ef0883f10c71b26cf2c46605066c52b4
+  normalized_sha256: sha256:1a916f3b6ea5127dd5a36a715f76b964ef0883f10c71b26cf2c46605066c52b4
+cas_ref: sha256:1a916f3b6ea5127dd5a36a715f76b964ef0883f10c71b26cf2c46605066c52b4
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 定义 264.1（精确回滚日志）：本段仅约定名称、符号及其判定条件；不主张满足条件的对象存在，也不追加性质定理。
+    previous_atom_id: b9af2f3c0ab277d1681284e8fbe1950f04c2cd22d435b33bdcc37170cc11cd69
+    next_atom_id: 70b40fe3e4dcb1c0599205eef81a06762132c7ea3c7e4ea1dca444ddab30e6e8

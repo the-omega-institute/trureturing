@@ -126,9 +126,9 @@ internal static partial class CoverWorld
         sources.Add(new DigestionLedgerSource(
             "fixture-source",
             RuleFixture.FixtureDigestionSourcePath,
-            SyntheticNumberedAtomizer.Id,
+            AtomizerRegistry.GenericId,
             [],
-            GenreRegistryProjection.Available(GenreRegistryCheck.Collected([])),
+            GenreRegistryProjection.Available(GenreRegistryCheck.NoGenreRegistry),
             entries.ToImmutable()));
 
         if (includeOtherAtom
@@ -139,9 +139,9 @@ internal static partial class CoverWorld
             sources.Add(new DigestionLedgerSource(
                 "fixture-sibling-source",
                 otherSourcePath,
-                SyntheticNumberedAtomizer.Id,
+                AtomizerRegistry.GenericId,
                 [],
-                GenreRegistryProjection.Available(GenreRegistryCheck.Collected([])),
+                GenreRegistryProjection.Available(GenreRegistryCheck.NoGenreRegistry),
                 [
                     Entry(
                         "fixture-sibling-source",
@@ -170,9 +170,9 @@ internal static partial class CoverWorld
             sources.Add(new DigestionLedgerSource(
                 "fixture-unrelated-source",
                 unrelatedSourcePath,
-                SyntheticNumberedAtomizer.Id,
+                AtomizerRegistry.GenericId,
                 [],
-                GenreRegistryProjection.Available(GenreRegistryCheck.Collected([])),
+                GenreRegistryProjection.Available(GenreRegistryCheck.NoGenreRegistry),
                 [
                     Entry(
                         "fixture-unrelated-source",
@@ -218,7 +218,7 @@ internal static partial class CoverWorld
         return new DigestionLedgerEntry(
             sourceId,
             sourcePath,
-            SyntheticNumberedAtomizer.Id,
+            AtomizerRegistry.GenericId,
             atomId,
             fingerprints,
             coverageEdges,
@@ -280,7 +280,7 @@ internal static partial class CoverWorld
 
                 return new FrozenStatementReceiptTestData.Module(
                     file.Key.Value,
-                    FrozenStatementReceiptTestData.Id('b'),
+                    FrozenContentAddress.ComputeModuleStatementId(file.Key, file.Value).Value,
                     declarations.ToImmutableArray());
             })
             .ToArray();

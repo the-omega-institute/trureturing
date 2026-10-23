@@ -1,0 +1,30 @@
+**定义 3.2（finite anchored state model）。** Assume $C$ has a concrete
+leaf, so $K<\infty$; call such a row *anchored*. Use states
+
+$$
+A_j\ (0\le j\le K),\qquad D_j\ (0\le j<K),\qquad H.
+$$
+
+Give the states the following total denotation:
+\[
+\begin{aligned}
+\llbracket A_j\rrbracket&=\{T_j\},\\
+\llbracket D_j\rrbracket&=\{t:\nu(t)=j\text{ and }t\ne T_j\},\\
+\llbracket H\rrbracket&=\{t:\nu(t)\ge K\text{ and }t\notin\{T_0,\ldots,T_K\}\}
+                       \cup\{T_j:j>K\}.
+\end{aligned}
+\]
+Thus every actual tree has exactly one state: low atomic values are $A_j$,
+low non-atomic values are $D_j$, and $H$ contains both all non-atomic
+values of depth at least $K$ and every high atomic value. Give $A_j,D_j$
+level $j$ and $H$ level $K$. Concrete $\alpha$ is $A_0$; concrete $\beta$
+is $A_1$ only when $K\ge1$, and is $H$ when $K=0$.
+
+Define $\otimes_K$ on these states. For $A_i,A_j$ with $i=j+1$, return
+$A_{j+2}$ when $j+2\le K$ and return $H$ otherwise. In every other
+case return $D_m$ when $m=\min(\ell(x),\ell(y))<K$, and return $H$ when
+$m=K$, where $\ell$ is the state level. In particular
+$H\otimes_K A_K=H$ and $H\otimes_K H=H$; these cases include the
+exceptional pairs $(T_{K+1},T_K)$ and all higher exceptional pairs.
+Evaluate $C$ with one shared state per equality class.
+

@@ -1,0 +1,57 @@
+### 证明第二步：有限 Euler 比率的共同极限
+
+令
+
+\[
+F_z(v)=\frac{E_z(1+v/L)}{E_{z,0}},\qquad s_z=S_z/L.
+\]
+
+有限 Euler 乘积的对数微分给
+
+\[
+\frac{d}{dv}\log F_z(v)
+=\frac1L\sum_{p\le z}\frac{\log p}{p^{1+v/L}-1}.
+\tag{SL.8}
+\]
+
+将分母换成 \(p^{1+v/L}\) 的误差，对全部 \(v\ge0\) 至多为
+
+\[
+\frac1L\sum_{p\le z}\frac{\log p}{p(p-1)}=O(L^{-1}).
+\]
+
+设 \(A(t)=\sum_{p\le t}\log p/p\)。对其作保留两端的 Abel 求和，使用 \(A(t)=\log t+O(1)\)，得到对每个固定有限 \(W\)，共同于 \(0\le v\le W\) 的
+
+\[
+\frac1L\sum_{p\le z}\frac{\log p}{p}e^{-v\log p/L}
+=\int_0^1e^{-vb}\,db+O_W(L^{-1}).
+\tag{SL.9}
+\]
+
+确切地，主项由 \(L^{-1}\int_1^z e^{-v\log t/L}dt/t\) 给出；有界 Abel 余项的端点和积分分别为 \(O(L^{-1})\) 和 \(O_W(L^{-1})\)。在（SL.8）中积分并用 \(F_z(0)=1\)，可得
+
+\[
+\boxed{F_z(v)\longrightarrow\varphi(v)}
+\tag{SL.10}
+\]
+
+对每个 \(v\) 紧区间共同成立，因
+\(\int_0^v\int_0^1e^{-wb}db\,dw=\int_0^1(1-e^{-vb})db/b\)。
+
+另一方面，\((\log E_P)'(1+t)\) 随 \(t\ge0\) 递减且非负，因此
+
+\[
+1\le F_z(v)\le e^{s_zv},\qquad s_z\longrightarrow1.
+\tag{SL.11}
+\]
+
+此外 \(T_z/L^2\) 有界。对 \(E_z\) 作第二次对数微分可知，给定有限 \(V\)，所有充分大 \(z\)、\(a\in[0,V]\)、\(v\in[0,1]\) 满足
+
+\[
+\left|\frac{d^2}{dv^2}[e^{-av}F_z(v)]\right|\le C_{\sigma,V}<\infty.
+\tag{SL.12}
+\]
+
+因为该导数等于 \(e^{-av}F_z(v)\) 乘
+\( [S_z(1+v/L)/L-a]^2-T_z(1+v/L)/L^2\)，而这些 \(S,T\) 随其实参数增大不增。这里 \(\sigma\) 只用于选择一个固定 \(s_z\) 上界，并未引入新输入假设。
+

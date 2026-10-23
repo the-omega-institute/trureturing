@@ -1,0 +1,30 @@
+**Theorem 11.1 (Image and analytic inverse).** The image in Theorem 7.1 is
+
+$$
+\Omega_J=\{(p,a):p<-216/5,\ L_J(p)<a<U_J(p)\}.
+\tag{11.4}
+$$
+
+For every such $p$, $L_J(p)<U_J(p)$. Neither boundary is included
+as a legal source. The map from the entire original negative world
+sheet with $b\ge1$ to $\Omega_J$ is a real analytic diffeomorphism.
+
+**Proof.** The function $A_p$ extends analytically to local
+neighborhoods of $r=0,1$ by Lemma 10.1 and the implicit-function
+theorem. The signs in (10.3) hold also at those auxiliary endpoints.
+It is therefore continuous and strictly decreasing on $[0,1]$,
+with endpoint values $U_J(p)$ and $L_J(p)$. The intermediate value
+theorem makes its image on $(0,1)$ exactly the open interval between
+them, with each value attained once. This proves (11.4), its strict
+boundary order and global bijectivity.
+
+The Jacobian of $(r,b)\mapsto(p,a)$ is $E_J/H^3>0$ everywhere
+on $\mathcal S_-$. The real analytic inverse-function theorem [5]
+gives an analytic local inverse at every image point. Global
+bijectivity makes these local inverses agree, giving one analytic
+inverse on the open set $\Omega_J$. Finally (2.2) lifts each source
+analytically to the entire gain coefficients and drift, and projection
+onto the entries $r,b$ of $P$ recovers its source. This proves the
+claimed diffeomorphism for complete worlds and completes Theorem 7.1.
+$\square$
+

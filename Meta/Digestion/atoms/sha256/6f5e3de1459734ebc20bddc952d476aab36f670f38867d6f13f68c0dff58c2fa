@@ -1,0 +1,19 @@
+**Corollary 25.3 (uniform constructor/membership response exclusion).**
+No formula of Definition 25.2 can agree on every actual $z_{e,h}$ of
+Theorem 24.2 with the released original acceptance label. Consequently a
+complete-original-response representation in this class cannot be both
+exact on that family and have an in-language projection to its included
+accept/refuse label. The exclusion holds even when its off-promise
+behavior is unspecified.
+
+Proof. [NCE, Theorem 10.2][ABT-NCE] eliminates the jointly existential
+native variables at the identical full scalar tuple $(e,h,\mathbf s)$,
+including arbitrary supplied fixed regular memberships. Its output is
+Presburger. Existentially project $\mathbf s$, and take the finite label
+branch or its definable projection. The result would be a Presburger
+$A(e,h)$ satisfying (ABT.91), contrary to Theorem 25.1. Any allegedly
+complete response has to retain this existing label; when its projection
+is expressed in the stated class the same contradiction applies. This
+argument does not replace the complete response by the label as a task,
+or infer what its other fields are. $\square$
+

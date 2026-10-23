@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:68bae1a3123d315e67568a69a723807dad06e728e2486f6c28147fad8d3e9f9e
+  normalized_sha256: sha256:68bae1a3123d315e67568a69a723807dad06e728e2486f6c28147fad8d3e9f9e
+cas_ref: sha256:68bae1a3123d315e67568a69a723807dad06e728e2486f6c28147fad8d3e9f9e
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: Proof. 为前邻定理、命题或推论的证明段，仅展开论证，不另立待覆盖陈述。
+    previous_atom_id: f9b6a506b9a74d69b4ef169ef894fbb909f957c69d3c8654d3bf552314a3faae
+    next_atom_id: 3a6cd90573afae26c01dee5ab1ef71cd3facd2b1734216f265a264404cee63d2

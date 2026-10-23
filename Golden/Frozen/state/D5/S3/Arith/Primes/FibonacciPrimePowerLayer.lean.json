@@ -1,1 +1,1 @@
-{"statement_id":"sha256:7c43dad53d5775a89e4268698a44a8fc25fea5b6bf5afa9905bbc6cf0a643a1c"}
+{"statement_id":"sha256:7c43dad53d5775a89e4268698a44a8fc25fea5b6bf5afa9905bbc6cf0a643a1c","declarations":[{"declaration_name_key":"ns(ns(ns(ns(ns(ns(n0,2:D5),2:S3),5:Arith),6:Primes),24:FibonacciPrimePowerLayer),27:fibonacci_prime_power_layer)","kind":"theorem"}]}

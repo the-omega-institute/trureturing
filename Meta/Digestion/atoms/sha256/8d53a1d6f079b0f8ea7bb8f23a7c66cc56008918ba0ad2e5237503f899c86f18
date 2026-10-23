@@ -1,0 +1,13 @@
+**Theorem 6.2 (exact all-source row-only maintenance criterion).** The following
+are equivalent:
+
+1. $G(P)$.
+2. There is a common effective finite-row function $F_P$ such that
+   $R_P(\rho u)=F_P(R_P(u))$ for every $u\in\mathcal T$.
+3. A current row alone determines every future same-$P$ row, effectively
+   in the finite-epoch response sense of Definition 3.2.
+
+Under the complete row-only handoff and separately supplied operation
+conditions, these are also equivalent to zero-new-query next-row service
+on every finite native source.
+

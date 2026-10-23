@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:9113fceba79d0bac2bf13be5128b0bed45522decaeb556f67da6b82ce9b4cf2a
+  normalized_sha256: sha256:9113fceba79d0bac2bf13be5128b0bed45522decaeb556f67da6b82ce9b4cf2a
+cas_ref: sha256:9113fceba79d0bac2bf13be5128b0bed45522decaeb556f67da6b82ce9b4cf2a
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 命题 18.4（三节点端口的完整可见与不可见参数）。的证明段；本项只给出该陈述的论证及所用步骤的说明，不另立独立命题。命题陈述保留在前项。
+    previous_atom_id: 4357a8ad18b96fb6703518b302b62034a6519ed3e124f64ea48bbc2a0e4a6410
+    next_atom_id: ca2bd476794cf67eac18f37ce7771abf21562170b57cc3790db0dc0498df8ae5

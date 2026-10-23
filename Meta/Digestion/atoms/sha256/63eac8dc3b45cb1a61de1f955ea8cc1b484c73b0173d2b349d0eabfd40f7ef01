@@ -1,0 +1,18 @@
+**Theorem 213.19 (Sharp necessity of intermediate pair stock).**
+For every $L\ge n\ge4$ let
+$I_n(V)=\sum_{3\le n(w)<n}P_w$.
+For all $g,B\ge0$ and every full score with
+$Q(V)=(g e_n,g+B)$,
+
+$$
+\Delta_O(V)\ge g-\frac{n-2}{2n-3}(B+I_n(V)),
+\qquad \Delta_N(V)\ge\Delta_O(V).
+\tag{213.27}
+$$
+
+For every $d,r\ge0$, at $g=d+(n-2)r$ and $B=nr$, the exact least
+$I_n(V)$ over all such full exact-Q scores with $\Delta_N(V)\le d$
+is $(n-3)r$. The same score (213.23), with $c_1=c_2=0$ and a=r,
+attains this mass and both costs d. This includes nonzero zero-cost
+cores when d=0 and r>0.
+

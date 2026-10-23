@@ -1,0 +1,20 @@
+**Proof.**
+Equation (103.3) gives the exact identity in (103.7).
+By (98.6), choose $M_*>0$ bounding $\|\Sigma_n\|$ and $\|\Sigma\|$
+for every $n$. For fixed $s>0$, $F_s$ is continuous on $[0,M_*]$;
+polynomial approximation and covariance norm convergence prove
+(103.7). Uniformity on $[\epsilon,S]$ follows from a finite parameter
+net and $|\partial_sF_s(x)|\le(e\epsilon)^{-1}$.
+Apply this operator limit to the convergent initial vectors.
+Reciprocal extreme eigenvalues give (103.8).
+The covariance is nonzero because the increment at $L$ has
+variance $a(1-a)>0$.
+
+Spectral calculus gives the inverse generator on $\mathscr K$.
+Dominated convergence of its multipliers proves the first limit
+in (103.9). Every fixed address is an actual edge for all sufficiently
+large $n$ by (98.4), proving $Q_n\to I$ strongly.
+Theorem 99.1 supplies the nonzero kernel vector $q$.
+Changing node spaces have been transported only by the finite maps
+specified in Definition 103.1. $\square$
+

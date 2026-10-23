@@ -1,0 +1,60 @@
+### 22. 十、如果加入相干层，还会出现隐藏相位 $\Phi$
+
+Claim status: open.（供文 II 原第 10 节全文。）
+
+> 编者限定（II.10）：振幅矩阵另行假定 $r=1-Z>0$、归一化纯二量子比特实现及允许的局部相位标架；四个相位循环的解释需要四个正振幅和共同相位参考。经典五概率本身不供给该纯态、干涉端口或物理纠缠。纯态矩阵中的 $\det A=0$ 条件不能不加状态类型地应用于经典对角混合态或任意混合量子态。
+
+
+概率 $\kappa$ 和行列式 $\Delta$ 只描述经典概率关系。如果允许端点记录具有相干振幅，还要加入相位。
+
+定义：
+
+$$
+A=
+\frac1{\sqrt r}
+\begin{pmatrix}
+\sqrt{p_{\mathrm{null}}}e^{i\theta_0}
+&
+\sqrt{p_3}e^{i\theta_3}
+\\
+\sqrt{p_1}e^{i\theta_1}
+&
+\sqrt{p_{13}}e^{i\theta_{13}}
+\end{pmatrix}.
+$$
+
+剩余规范不变量为：
+
+$$
+\boxed{
+\Phi =
+\theta_0+\theta_{13}-\theta_1-\theta_3
+\pmod{2\pi}.
+}
+$$
+
+则：
+
+$$
+\boxed{
+\begin{aligned}
+r^2|\det A|^2
+={}&
+\left(
+\sqrt{p_{\mathrm{null}}p_{13}}
+-
+\sqrt{p_1p_3}
+\right)^2
+\\
+&+
+4\sqrt{
+p_{\mathrm{null}}p_1p_3p_{13}
+}
+\sin^2\frac{\Phi}{2}.
+\end{aligned}
+}
+$$
+
+因此：
+
+- $\Delta$ 描述概率幅度之间的关联；

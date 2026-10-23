@@ -1,0 +1,10 @@
+## 167. Primary suppliers and exact reuse scopes
+
+- **[J] Qubit--qudit absolute separability.** Nathaniel Johnston,
+  *Separability from Spectrum for Qubit--Qudit States*, Physical Review A
+  **88**, 062330 (2013), DOI
+  [10.1103/PhysRevA.88.062330](https://doi.org/10.1103/PhysRevA.88.062330),
+  arXiv:1309.2006v1, Theorem 1, PDF p. 1.  It supplies the equivalence
+  between all-global-unitary separability, all-global-unitary PPT, and
+  the ordered $2\times n$ spectral inequality.
+

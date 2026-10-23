@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:b9c5c039b2eeaeb4b07e849d45cec4d0afc162b5032dd38e57208fdf1d2175ea
+  normalized_sha256: sha256:b9c5c039b2eeaeb4b07e849d45cec4d0afc162b5032dd38e57208fdf1d2175ea
+cas_ref: sha256:b9c5c039b2eeaeb4b07e849d45cec4d0afc162b5032dd38e57208fdf1d2175ea
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 本 atom 为定理 Q1 的 Turán 不等式的证明及证明解释，不另立新命题；原陈述保留自身状态。
+    previous_atom_id: fb59b24ac5caf7f843daafe640a109f5656d2c90a088f47e404bc07f5425aefc
+    next_atom_id: e3be045529a2782c2b547f3c3d4a5130a5c67c0aabe9aeca7f468c068f9caaca

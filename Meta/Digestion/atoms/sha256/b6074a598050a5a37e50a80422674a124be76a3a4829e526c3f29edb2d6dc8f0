@@ -1,0 +1,12 @@
+**Theorem 12.3 (effective recovery within each component).** Under
+Assumption 12.1, the entire vector
+
+$$
+\bigl(n_i-n_{r_{C(i)}}\bigr)_{0\le i<m}
+\tag{NAR.12.3}
+$$
+
+is uniformly effectively recoverable. In particular a connected graph
+permits recovery of $(n_i)_{0\le i<m}$. No single direction need be
+visible in every capture.
+

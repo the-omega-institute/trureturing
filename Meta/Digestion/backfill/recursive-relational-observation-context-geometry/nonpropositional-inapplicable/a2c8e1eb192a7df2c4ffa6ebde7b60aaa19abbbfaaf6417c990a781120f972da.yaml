@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:a2c8e1eb192a7df2c4ffa6ebde7b60aaa19abbbfaaf6417c990a781120f972da
+  normalized_sha256: sha256:a2c8e1eb192a7df2c4ffa6ebde7b60aaa19abbbfaaf6417c990a781120f972da
+cas_ref: sha256:a2c8e1eb192a7df2c4ffa6ebde7b60aaa19abbbfaaf6417c990a781120f972da
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 定义11.18只规定历史误差比较所用类型、旗标、参考与资源合同，未给出新的数学性质。
+    previous_atom_id: 4d7637a4c6a18e36a35497487a4f92b8c2f947b49a599f81f604dba55cff2cb0
+    next_atom_id: a81947e6766f5918b948a801610c40f324d9464d4c63675f14f399cbe5836f34

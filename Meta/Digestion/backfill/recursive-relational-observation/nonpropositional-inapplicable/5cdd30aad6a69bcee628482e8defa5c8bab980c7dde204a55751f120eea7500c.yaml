@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:5cdd30aad6a69bcee628482e8defa5c8bab980c7dde204a55751f120eea7500c
+  normalized_sha256: sha256:5cdd30aad6a69bcee628482e8defa5c8bab980c7dde204a55751f120eea7500c
+cas_ref: sha256:5cdd30aad6a69bcee628482e8defa5c8bab980c7dde204a55751f120eea7500c
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 定义144.2只规定有限子矩阵及全幺模性的判据、空矩阵约定，不断言端点矩阵满足判据。
+    previous_atom_id: a14297f2ea681deb859d605b7b6ae7787a91292f1b49689ab6bfec71b3199ed7
+    next_atom_id: 125d1cf15062bee5a3d90d168c4799ca2ac7eb31783390383120ee83d0f4683d

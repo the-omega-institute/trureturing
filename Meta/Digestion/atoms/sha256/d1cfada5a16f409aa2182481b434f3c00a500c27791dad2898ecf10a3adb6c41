@@ -1,0 +1,31 @@
+**Definition 2.1 (Zero-safe parent and regularity).** Put
+
+$$
+\begin{gathered}
+c=r(1-r)/b,\quad j=b+c,\quad n=j+r,\quad T=1+b,\quad U=1+2b,\\
+\Lambda=1+6/T+1/U-4/j-4/n,\qquad
+\kappa=6/T-2/U=2(2+5b)/(TU)>0,\\
+e=d-24,\qquad H(r,b,e)=e\Lambda+\frac{24}{5}(b-1/8)\kappa.
+\end{gathered}
+\tag{2.1}
+$$
+
+The parent is $H=0$ in $0<r<1,b>0,e\in\mathbb R$. A world is
+regular when $\Lambda\ne0$, and singular when $\Lambda=0$; this
+terminology concerns the reconstruction chart. Singular-source worlds
+are smooth points of the full parent by III, Lemma 11.2.
+
+For a parent triple the whole gain is the unique degree-at-most-three
+interpolant of
+
+$$
+(G_0,G_1,G_2,G_3)=
+\left(-24-e,-\frac e j,\frac{27/5-e}{T},-\frac e n\right)
+\tag{2.2}
+$$
+
+at the fixed nodes $0,1,2,3$. The inverse of this reconstruction reads
+$r=P_{11}$, $b=P_{12}$ and $e=d-24$. In particular it identifies the
+parent topology with the topology of all four gain coefficients padded
+through degree three. No gain value or coefficient is divided out.
+

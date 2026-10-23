@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:8e3e451d7a502eef6699af4ba49556fd6b8b8c2e6ee4f3ce370e73ceb684ffc8
+  normalized_sha256: sha256:8e3e451d7a502eef6699af4ba49556fd6b8b8c2e6ee4f3ce370e73ceb684ffc8
+cas_ref: sha256:8e3e451d7a502eef6699af4ba49556fd6b8b8c2e6ee4f3ce370e73ceb684ffc8
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 章节及表格导引：正文只说明接下来讨论的范围、固定的背景或表格栏目，不另给出需证明的性质。
+    previous_atom_id: 4e3ad7b452ece6868a1e839770ea29264cac061dc222dcaa41343c4316cd07b0
+    next_atom_id: 0d7123bde318a62566b0daf59a03d1ced98634cefed82b699ede4597a68c35e6

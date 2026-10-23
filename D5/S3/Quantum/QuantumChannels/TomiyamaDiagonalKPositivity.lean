@@ -528,7 +528,7 @@ private theorem ranktwo_boundary (k d : ℕ) (hk : 2 ≤ k) (hkd : k ≤ d)
   rw [add_mul, div_mul_cancel₀ _ (ne_of_gt hD)] at this
   nlinarith
 
-private theorem trace_rank_bound (k d : ℕ) (U W : Matrix (Fin k) (Fin d) ℂ) :
+theorem trace_rank_bound (k d : ℕ) (U W : Matrix (Fin k) (Fin d) ℂ) :
     Complex.normSq (trace (Uᴴ * W)) ≤
       (k : ℝ) * ∑ i, ∑ j, Complex.normSq ((Uᴴ * W) i j) := by
   classical

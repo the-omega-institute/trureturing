@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:b484d8f8ce9ab838929fccc8508355871bdd6378197d161ee578f97573df07b3
+  normalized_sha256: sha256:b484d8f8ce9ab838929fccc8508355871bdd6378197d161ee578f97573df07b3
+cas_ref: sha256:b484d8f8ce9ab838929fccc8508355871bdd6378197d161ee578f97573df07b3
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 章节标题「R.8 平方零系数的一阶幂律」仅标示本节主题，不含正文命题或性质断言。
+    previous_atom_id: 8b32c8d36b73948d5cba90200e99bdd2757cd1f0cbbfd7a4e6b65110326bd15b
+    next_atom_id: 6304588b5d516ee00fcf86d7e218c2863481f091425feca43aefa96b335e9e1a

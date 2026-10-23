@@ -1,0 +1,12 @@
+**Definition 9.1 (separate acquired-data language).** Under the FCS/POC acquired-data contract a producer genuinely possesses either the entire finite current tree or $R_*$ and all six same-source, same-version class terms. Local structural descent and whole-term equality on those acquired terms are permitted. A lawful code is a specified total finite deterministic computation on this finite acquired representation, whose complete original bit is actually exported under the separate isolation, handoff and faithful-entry services. Producer constants, workspace and computation have no bound here. These acquired terms are unavailable to native preparation.
+
+For an explicit immutable $T,e_0,e_1$ and binary $L$ define
+
+$$
+\operatorname{Good}_z(u)\iff
+T\text{ from }e_z\text{ returns the entire }F(u)\text{ within }L\text{ calls}.
+\tag{FTC.20}
+$$
+
+SOME-LAWFUL-ACQUIRED-CODE asks for some lawful total code attaining both original bits and choosing a good entry on every actual source. There is no variable preparer $A$, native-preparation budget or arbitrary prescribed program text in its input.
+

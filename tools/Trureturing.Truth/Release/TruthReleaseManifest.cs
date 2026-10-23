@@ -28,17 +28,16 @@ public sealed record TruthReleaseTrust(
 /// <summary>The package that assembled the bundle; it only packages base-owned outputs (read-only).</summary>
 public sealed record TruthReleaseProducer(string PackageRepo, string PackageCommit, bool ReadOnly);
 
-/// <summary>The six required release artifacts, each a sibling file bound by SHA256SUMS.</summary>
+/// <summary>The five required release artifacts, each a sibling file bound by SHA256SUMS.</summary>
 public sealed record TruthReleaseArtifacts(
     TruthReleaseArtifact SourceSnapshot,
     TruthReleaseArtifact TruthGraph,
     TruthReleaseArtifact RawLeanReport,
     TruthReleaseArtifact TruthExport,
-    TruthReleaseArtifact BlueprintIndex,
-    TruthReleaseArtifact FrozenLedgerHead);
+    TruthReleaseArtifact BlueprintIndex);
 
 /// <summary>
-/// The parsed, shape-validated <c>release-manifest.v1.json</c> (schema "truth-release.v2"). This is a
+/// The parsed, shape-validated <c>release-manifest.v1.json</c> (schema "truth-release"). This is a
 /// plain READ model — parsing it proves nothing about provenance; it only records what the producer
 /// listed. Authority still comes from independently re-deriving the bundle from <see cref="TruthReleaseSource"/>.
 /// </summary>
@@ -51,7 +50,7 @@ public sealed record TruthReleaseManifest(
     string ProducedAt);
 
 /// <summary>
-/// Fail-closed reader for <c>release-manifest.v1.json</c>. It enforces the truth-release.v2 schema shape
+/// Fail-closed reader for <c>release-manifest.v1.json</c>. It enforces the truth-release schema shape
 /// exactly: the schema tag, the required fields and their patterns, <c>additionalProperties:false</c> on
 /// every object, <c>producer.read_only == true</c>, and a nonempty set of uniquely named checks each with
 /// conclusion "success". It never repairs or defaults a malformed manifest. Shape only — it does NOT judge
@@ -60,6 +59,9 @@ public sealed record TruthReleaseManifest(
 /// </summary>
 public static class TruthReleaseManifestReader
 {
+    /// <summary>The manifest schema tag; the reader accepts no other tag.</summary>
+    public const string Schema = "truth-release";
+
     private static readonly ImmutableArray<string> RootKeys = ImmutableArray.Create(
         "schema", "source", "trust", "producer", "artifacts", "sha256sums_digest", "produced_at");
 
@@ -80,7 +82,7 @@ public static class TruthReleaseManifestReader
 
     private static readonly ImmutableArray<string> ArtifactKeys = ImmutableArray.Create(
         "source_snapshot", "truth_graph", "raw_lean_report", "truth_export",
-        "blueprint_index", "frozen_ledger_head");
+        "blueprint_index");
 
 
     public static TruthReleaseManifest Read(string json)
@@ -101,9 +103,9 @@ public static class TruthReleaseManifestReader
         {
             var root = RequireObject(document.RootElement, "release-manifest");
             RequireKeys(root, RootKeys, ImmutableArray<string>.Empty, "release-manifest");
-            if (RequireString(root, "schema") != "truth-release.v2")
+            if (RequireString(root, "schema") != Schema)
             {
-                throw new FormatException("release-manifest schema tag is not truth-release.v2.");
+                throw new FormatException($"release-manifest schema tag is not {Schema}.");
             }
 
             var sourceElement = RequireObject(RequireProperty(root, "source"), "source");
@@ -142,8 +144,7 @@ public static class TruthReleaseManifestReader
                 ReadArtifact(artifactsElement, "truth_graph"),
                 ReadArtifact(artifactsElement, "raw_lean_report"),
                 ReadArtifact(artifactsElement, "truth_export"),
-                ReadArtifact(artifactsElement, "blueprint_index"),
-                ReadArtifact(artifactsElement, "frozen_ledger_head"));
+                ReadArtifact(artifactsElement, "blueprint_index"));
 
             return new TruthReleaseManifest(
                 source,

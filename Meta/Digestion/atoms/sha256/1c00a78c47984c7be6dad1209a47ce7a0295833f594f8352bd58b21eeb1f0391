@@ -1,0 +1,16 @@
+**Proof.** The right-to-left implication of (NIS.41) is Proposition 10.3.
+The left-to-right implication is exactly the separately assumed simultaneous
+completion interface, with reconstruction in the original coordinates.
+If $\mathsf{DecJoint}(I,B)=1$, (NIS.43) and the right-to-left implication
+give $J_B(h)$ for every $h$; running $\mathsf{Depth}(I,B,h)$ returns its
+finite witnesses. If $\mathsf{DecJoint}(I,B)=0$, completeness in (NIS.43)
+and the left-to-right implication give $\neg\forall h\,J_B(h)$, hence a
+finite $h_0$ with $\neg J_B(h_0)$. Run the total exact depth procedure at
+$h=0,1,2,\ldots$ in order. It reaches the first failed depth in finitely
+many terminating calls and returns the stipulated sound exclusion certificate.
+This uses the global decision to select a terminating branch of the
+alternative; successive depth tests alone do not provide a positive global
+verdict. No effective evaluation of an arbitrary semantic code, elimination
+of guarded-tree assignments, or arithmetic reduction is inferred from the
+finite graph. $\square$
+

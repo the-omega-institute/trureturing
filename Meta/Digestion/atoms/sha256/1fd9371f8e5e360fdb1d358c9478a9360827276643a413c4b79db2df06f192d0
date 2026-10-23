@@ -1,0 +1,50 @@
+## 4. 已提交 Lean：保留两个边界矩的耦合余项
+
+对支撑于 |n|<=N 的任意有限复向量 v，记
+
+\[
+a_0(v)=\sum v_n,\qquad b_0(v)=\sum s_c(n)v_n,
+\qquad d_m(v)=\sum_{|n|\le N}A_{nm}v_n.
+\]
+
+每个 |m|>N 都满足
+
+\[
+\boxed{
+d_m(v)=\frac{b_0(v)-s_c(m)a_0(v)}{\pi m}+R_m(v),
+\quad
+|R_m(v)|\le\frac{2B_cN}{\pi|m|(|m|-N)}\sum|v_n|.
+}
+\tag{AC5}
+\]
+
+其承重恒等式是
+
+\[
+\frac{s_n-s_m}{\pi(m-n)}-\frac{s_n-s_m}{\pi m}
+=\frac{(s_n-s_m)n}{\pi m(m-n)}.
+\]
+
+Lean 主声明 `arithmetic_coupling_first_jet_error` 对任意有限整数索引集和复系数证明该误差。内部半径 N 可以是任意非负实数，外部没有有限上截止。两个边界矩没有被强行置零。
+
+对整数 M>N，将 (AC5) 平方求和，保留边界矩，得到纸面结论
+
+\[
+\boxed{
+\sum_{|m|>M}|d_m(v)|^2
+\le\frac8{\pi^2M}\left(|b_0(v)|^2+B_c^2|a_0(v)|^2\right)
++\epsilon_{N,M}\|v\|^2,
+}
+\tag{AC6}
+\]
+
+\[
+\boxed{
+\epsilon_{N,M}=\frac{16B_c^2N^2(2N+1)}{\pi^2(1-N/M)^2M^3}.
+}
+\]
+
+这里分别使用 |x+y|^2<=2|x|^2+2|y|^2、sum_{m>M}m^-2<=1/M，以及 sum_{m>M}m^-4<=M^-2*sum m^-2<=M^-3。没有使用更小的 1/(3M^3) 常数。有限 Cauchy–Schwarz 给出 (sum|v_n|)^2<=(2N+1)||v||^2。
+
+因此，全部无限耦合的剩余 Gram 块有一个显式正的秩至多二修正和一个三次衰减的标量余量。它有参数 c,N,M，可以用于无界尺度族；本节并未证明所得全尺度有限矩阵均满足所需强制性。
+

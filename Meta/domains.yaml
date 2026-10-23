@@ -182,6 +182,9 @@ domains:
   Recurrence:
     stratum: S1
     definition: Linear recurrence solution spaces, shift eigenstructure, and self-similar weight lifts.
+  RecurrenceComposition:
+    stratum: S1
+    definition: Composition, iteration, and functional equations of recurrence generating series.
   RenyiDivergence:
     stratum: S3
     definition: Finite Renyi divergences of order alpha, their pinning identities against the Bhattacharyya coefficient and the classical divergence, and their monotonicity in the order.
@@ -197,9 +200,15 @@ domains:
   Rewriting:
     stratum: S0
     definition: Abstract terminating rewrite relations, confluence, and canonical normal forms.
+  RibbonEmbeddings:
+    stratum: S3
+    definition: Combinatorial ribbon embeddings of finite graphs, facial boundary walks, and local band surgery.
   Scale:
     stratum: S1
     definition: Real embeddings and logarithmic scales of golden integers.
+  Semigroups:
+    stratum: S3
+    definition: Associative nonunital multiplication, semigroup conjugacy relations, congruence quotients, and finite-semigroup structure such as idempotent powers.
   Solenoid:
     stratum: S1
     definition: The universal solenoid carrier, its visible projection, and hidden fiber structure.
@@ -212,6 +221,9 @@ domains:
   StatisticalMechanics:
     stratum: S3
     definition: Hard-core lattice gas on grids and trees — mask data, branching potentials and the clamped certificates that bound their message maps.
+  Topology:
+    stratum: S3
+    definition: General topology of compact and uniform spaces, continuous selections, and inverse limits.
   TotalVariation:
     stratum: S3
     definition: Finite total-variation distance between mass functions and its comparison inequalities against the classical divergence, including Pinsker-type bounds.

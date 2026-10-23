@@ -1,0 +1,77 @@
+**Theorem 11.3 (persistence of every selected pair).** For each
+two-element $A\subseteq\{r_0,r_1,r_2\}$ and every $h\in\mathbb N$,
+
+$$
+J_A(h).
+\tag{SPC.11.10}
+$$
+
+Here $J_A$ is (SPC.39) on the entire strata (SPC.11.6).
+All witnesses are finite originals satisfying the entire input
+of Definition 11.1.
+
+Proof. For $r_0,r_1$, put $y_t=F^t(\beta)$.
+The native prefix estimate (SPC.9), followed by the proper
+context's one-edge guard, gives
+
+$$
+\delta(F(s),F(t))\ge\delta(s,t)+1.
+$$
+
+This is the guarded-prefix supplier used in Theorem 3.3 with
+$C[z]=\langle\alpha,z\rangle$ and $a=1$.
+Since $\delta(\beta,F(\beta))=0$, its iteration gives
+$\delta(y_t,y_{t+1})\ge t$. The two sources
+
+$$
+U_*(y_t,y_t)\in D_0,\qquad
+U_*(y_{t+1},y_t)\in D_1
+\tag{SPC.11.11}
+$$
+
+share their entire right subtree. Their only differences occur
+below the original $L$ hole, so their first discrepancy has depth
+at least $t+1$. Taking $t=h+1$ proves $J_{\{r_0,r_1\}}(h)$.
+
+For $r_0,r_2$, put $z_t=G^t(\beta)$.
+The same supplier with shift two gives
+
+$$
+\delta(G(s),G(t))\ge\delta(s,t)+2,
+\qquad
+\delta(z_t,z_{t+1})\ge2t.
+$$
+
+The finite sources $U_*(z_t,z_t)\in D_0$ and
+$U_*(z_{t+1},z_t)\in D_2$ again have an identical complete
+right part. Their discrepancy depth is at least $1+2t$.
+The choice $t=h+1$ proves $J_{\{r_0,r_2\}}(h)$.
+
+For $r_1,r_2$, take $y=T_{2h+2}$, where $T_n=\rho^n\alpha$.
+The existing atomic-depth formula [NLC, Lemma 3.1][NLC] gives
+
+$$
+\mu(\rho y)=\mu(T_{2h+3})=h+1,\qquad
+\mu(\rho^2y)=\mu(T_{2h+4})=h+2.
+\tag{SPC.11.12}
+$$
+
+Both trees therefore reply branch at every relative address of
+length at most $h$, and so $\rho y\equiv_h\rho^2y$.
+The sources
+
+$$
+U_*(F(y),y)\in D_1,\qquad
+U_*(G(y),y)\in D_2
+\tag{SPC.11.13}
+$$
+
+share their entire right subtree. Inside their left subtree they
+share the alpha child; only the right children $\rho y,\rho^2y$
+can differ. Those children are at original address $LR$, so the
+sources agree at least through depth $h+2$, and hence through $h$.
+Every membership assertion here is Theorem 11.2 on actual finite
+whole values. In particular its three retained negatives continue
+to hold for every iterate and every atomic choice; no negative
+is inferred from a completed limit. $\square$
+

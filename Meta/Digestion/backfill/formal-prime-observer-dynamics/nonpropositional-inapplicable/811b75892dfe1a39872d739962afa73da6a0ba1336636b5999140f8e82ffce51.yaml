@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:811b75892dfe1a39872d739962afa73da6a0ba1336636b5999140f8e82ffce51
+  normalized_sha256: sha256:811b75892dfe1a39872d739962afa73da6a0ba1336636b5999140f8e82ffce51
+cas_ref: sha256:811b75892dfe1a39872d739962afa73da6a0ba1336636b5999140f8e82ffce51
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 非命题文本：定义 259.1（干预语言饱和）：只引入对象、参数、术语或记号；不附加存在性、唯一性或其他性质断言。
+    previous_atom_id: 60735e65a5324d7b5c598cb6d994267c1e902c4962cad1c14c9e88580cba1820
+    next_atom_id: 11d6999ca2750ca177cb86e2ced8316b3ffbd0d5b1ca434c9dfeb803ce5f9b7c

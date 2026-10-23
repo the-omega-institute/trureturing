@@ -1,1 +1,1 @@
-{"statement_id":"sha256:649a3bdf7b5a706832afeba87c5eaa5541b693448be6da983a3742a44aa8003e"}
+{"statement_id":"sha256:649a3bdf7b5a706832afeba87c5eaa5541b693448be6da983a3742a44aa8003e","declarations":[{"declaration_name_key":"ns(ns(ns(ns(ns(ns(n0,2:D5),2:S3),14:ObserverMemory),17:RefinementClosure),33:BehaviorCompletionUniqueStability),45:behavior_completion_has_unique_induced_update)","kind":"theorem"}]}

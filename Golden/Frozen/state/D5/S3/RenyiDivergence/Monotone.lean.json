@@ -1,1 +1,1 @@
-{"statement_id":"sha256:19f3082ae3a5fa342e4fdd6fa9463ff623b2307e09582fbaa7597237a553af3f"}
+{"statement_id":"sha256:19f3082ae3a5fa342e4fdd6fa9463ff623b2307e09582fbaa7597237a553af3f","declarations":[{"declaration_name_key":"ns(ns(ns(ns(n0,2:D5),2:S3),15:RenyiDivergence),35:renyi_divergence_monotone_of_lt_one)","kind":"theorem"},{"declaration_name_key":"ns(ns(ns(ns(n0,2:D5),2:S3),15:RenyiDivergence),35:renyi_divergence_monotone_of_one_lt)","kind":"theorem"}]}

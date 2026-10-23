@@ -1,0 +1,17 @@
+**Proposition 35.7 (Pointwise exhaustion is not uniform calibration).** Let $S_1\subseteq S_2\subseteq\cdots$ be finite prime sets with $\bigcup_{j\ge1}S_j=\mathbb P$. For each fixed $n\in W$, there is $J(n)$ such that $\rho_{S_j}(n)=0$ for all $j\ge J(n)$. Nevertheless, for every finite $j$ and every $b\in\{0,1\}^{S_j}$,
+
+$$
+\sup_{n\in W_{S_j,b}}\rho_{S_j}(n)=+\infty,
+\qquad
+\sup_{n\in W}\rho_{S_j}(n)=+\infty.
+\tag{35.14}
+$$
+
+**Proof.** The fixed integer $n$ has finitely many distinct prime divisors. Exhaustion and monotonicity of the sets $S_j$ put all of them in one $S_{J(n)}$, after which the residual is zero. At each finite stage, Corollary 35.3 applies to $S_j$ and every one of its patterns, proving (35.14). Thus the order of quantifiers matters: every fixed source is eventually exhausted, while at each finite stage other sources in the same observation fibre have arbitrarily large residual. This is pointwise, non-uniform calibration, not an observation-only certificate that the actual residual has reached zero.
+
+**Mathematical citation and scope 35.8 (Supplied method and the exact strengthening).** The cited current-dev supplier file FIBONACCI_ATOMIC_RELATION_GENERATION, Section 258.6b, supplies unbounded $\omega$ in the canonical window union and the entry-rank/CRT/interval construction. The Fibonacci entry-rank criterion, the Chinese remainder theorem and infinitude of primes are reused classical ingredients. The added deduction is (35.3): every exact finite bit pattern, including its zero coordinates, has at least $K$ unobserved prime divisors in every prime-index window beyond one pattern-independent threshold. The fibre certificates, matched pairs, adaptive-transcript obstruction and non-uniform exhaustion are consequences of this strengthened statement. These are `repo-derived` ordinary mathematical deductions, not a claim of literature priority or of a new CRT or entry-rank theorem.
+
+The restriction to sufficiently large prime indices is essential to this proof. If a queried prime $p$ divides $F_r$, then every $1+F_rg$ is $1$ modulo $p$, so that coordinate is forced to zero throughout that window. Small windows can also be empty. The threshold (35.5) excludes these obstructions for the selected finite set $S\cup T$; it does not assert every pattern in every small window. Each individual window remains finite, with a finite maximum of $\omega$ when it is nonempty. Increasing $K$ may require increasing the window index; no fixed finite window has unbounded prime support.
+
+The constructed integer has at least $K$ distinct prime divisors outside $S$. Nothing here asserts that it is prime, has exactly $K$ prime divisors in total or outside $S$, is squarefree, satisfies or violates Robin's inequality, or is colossally abundant (CA) or superabundant (SA). The numerical comparison with $5040$ has only the baseline role stated in Proposition 35.5. No uniform low-$\omega$ witness for all patterns, same-window low-$\omega$ companion, or bound on computational, query or physical resources for constructing or recognizing the witnesses is asserted. The information obstruction is for finitely many prime-divisibility bits on the whole family $W$, not arbitrary predicates or all arithmetic observations. The argument is ordinary theory prose and asserts no Lean/kernel verification.
+

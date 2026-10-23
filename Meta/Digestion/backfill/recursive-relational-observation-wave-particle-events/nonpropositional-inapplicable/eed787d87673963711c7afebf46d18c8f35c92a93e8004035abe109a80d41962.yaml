@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:eed787d87673963711c7afebf46d18c8f35c92a93e8004035abe109a80d41962
+  normalized_sha256: sha256:eed787d87673963711c7afebf46d18c8f35c92a93e8004035abe109a80d41962
+cas_ref: sha256:eed787d87673963711c7afebf46d18c8f35c92a93e8004035abe109a80d41962
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 35. 仪器校准误差怎样进入有限事件历史 是章节标题及导引，只说明本节的研究任务、来源或模型范围，不另陈述具体性质、公式或反例。
+    previous_atom_id: fabe92e49251efe31f12a8e3680100666bbd8a0b978bcbbdfeb7b698ffb385db
+    next_atom_id: 83b1260d58ac6cac356e938ca1a706cb728a798bea9d8605d1140f0dc1ca31c9

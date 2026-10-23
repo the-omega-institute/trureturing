@@ -1,0 +1,36 @@
+**引理 1345.1（真实余量的两项约束）。** 对任一准确来源，若其主权重为 $w_1=a-\delta$ 并满足前两节的维数条件，且 $\delta$ 足够小、$N$ 足够大，则记 $z_j=\prod_i m_{ji}$、$R=P-w_1q_1$，有
+
+$$
+0\le\sum_{j\ge2}w_j(1-z_j)\le2\delta,
+$$
+
+以及对每个正奇偶顶点 $x$，
+
+$$
+R(x)\le2^{-N}(2\kappa+B\delta),
+\qquad B=1+aK.
+$$
+
+上述条件可取 $K\delta\le1/2$、$N\ge\max\{N_0,\lceil K\rceil,2\}$。
+
+**证明。** 准确生成的完整矩为 $\kappa$，故
+
+$$
+\sum_jw_j(1-z_j)=1-\kappa=a,
+\quad
+\sum_{j\ge2}w_j(1-z_j)=\delta+w_1z_1.
+$$
+
+每项非负。第 1344 节给 $|z_1|\le(K\delta/N)^N\le\delta$，后一界由 $K/N\le1$ 与 $K\delta/N\le1$ 得到；而 $w_1\le1$，所以总和至多为 $2\delta$。
+
+正奇偶格的目标值为 $2^{-N}(1+\kappa)$。由主通道的逐点下界，
+
+$$
+2^NR(x)\le1+\kappa-(a-\delta)(1-K\delta)
+\le2\kappa+(1+aK)\delta.
+$$
+
+这给第二项。证毕。
+
+余量仍然是同一准确来源中其余通道的非负和。这一点使其格上限与奇偶缺口能共同限制尾权重；不能用另一个不相干的余量最优者替换其中任意一项。
+

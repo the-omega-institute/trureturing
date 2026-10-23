@@ -1,0 +1,64 @@
+**Example 10.5 (finite disequality is a witness condition).** Under the
+finite-rank prefix relation of [SFS, Lemma 2.1][SFS] and
+[PAC, Definition 3.1, (PAC.8)][PAC], set
+
+$$
+ u_h^{=} = \langle T_{2h+2},T_{2h+2}\rangle,
+\qquad
+ u_h^{\ne} = \langle T_{2h+3},T_{2h+2}\rangle.
+\tag{NIS.40}
+$$
+
+The two trees have the same inclusive $h$-prefix, while their two child values
+are respectively equal and unequal. Their leafless prefix limit is
+$\langle\Omega,\Omega\rangle=\Omega$. Hence a row disequality can hold at every
+finite witness while failing at the completed contact. This is why
+$\Delta^-$ remains in (NIS.38) and is never evaluated at $W$.
+
+**Conditional theorem 10.6 (semantic and effective interfaces for the
+unrestricted alternative).** Assume the exact complete charts of Definition
+10.1 and a finite branch family retaining all original-coordinate
+reconstructions and guarded equations. Assume, as a separate future completion
+interface, that $\forall h\,J_B(h)$ implies the existence of a branch datum
+with (NIS.38), as required by Proposition 10.4, item 2. Then the semantic
+equivalence
+
+$$
+\forall h\;J_B(h)
+\quad\Longleftrightarrow\quad
+\bigvee_{\boldsymbol\tau}\exists\text{ branch datum }\mathfrak d\;
+\bigl(\mathfrak d\text{ has joint signed support}\bigr)
+\tag{NIS.41}
+$$
+
+holds. For an effective alternative, additionally assume the total global
+decision (NIS.43), with both soundness and completeness, and the total exact
+fixed-depth decision and finite witness/certificate interface in Proposition
+10.4, item 6. All descriptions required by those procedures must be computably
+supplied on the original finite input; a proposed saturation that supplies them
+must discharge item 3's slot closure and scheduling obligations.
+
+Under these additional assumptions, a positive global verdict supplies finite
+actual simultaneous realizations at every requested depth. A negative global
+verdict yields a terminating search for the first failed depth and its finite
+exclusion certificate. The semantic completion interface, global support
+decision and exact finite-depth interfaces are all open here for arbitrary
+complete acquired signed-native inputs. This conditional consequence closes
+none of those obligations and does not solve Open problem 7.3.
+
+**Proof.** The right-to-left implication of (NIS.41) is Proposition 10.3.
+The left-to-right implication is exactly the separately assumed simultaneous
+completion interface, with reconstruction in the original coordinates.
+If $\mathsf{DecJoint}(I,B)=1$, (NIS.43) and the right-to-left implication
+give $J_B(h)$ for every $h$; running $\mathsf{Depth}(I,B,h)$ returns its
+finite witnesses. If $\mathsf{DecJoint}(I,B)=0$, completeness in (NIS.43)
+and the left-to-right implication give $\neg\forall h\,J_B(h)$, hence a
+finite $h_0$ with $\neg J_B(h_0)$. Run the total exact depth procedure at
+$h=0,1,2,\ldots$ in order. It reaches the first failed depth in finitely
+many terminating calls and returns the stipulated sound exclusion certificate.
+This uses the global decision to select a terminating branch of the
+alternative; successive depth tests alone do not provide a positive global
+verdict. No effective evaluation of an arbitrary semantic code, elimination
+of guarded-tree assignments, or arithmetic reduction is inferred from the
+finite graph. $\square$
+

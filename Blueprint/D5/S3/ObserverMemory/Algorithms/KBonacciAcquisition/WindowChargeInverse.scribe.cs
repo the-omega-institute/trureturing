@@ -69,6 +69,11 @@ internal sealed class WindowChargeInverseDocument : IScribeDocumentDefinition
         var first = Apply(word, Index(D(0), m));
         var last = Apply(word, Index(Subtract(m, D(1)), m));
         var w = F.Id("w");
+        var tailLength = F.Id("n");
+        var lastFalseTail = All("n", nat,
+            All("w", Arrow(Call("Fin", Add(tailLength, D(1))), bit), All("s", nat,
+                Imp(Equal(Apply(w, Call("FinLast", tailLength)), F.Id("false")),
+                    Equal(Call("tailAfter", s, w), D(0))))));
         var unique = All("w", Arrow(Call("Fin", m), bit),
             Imp(All("j", phase, Equal(Call("wordIncrement", k,
                 new Formula.Negate(j), w), Call("windowCharge", k, m, q, j))), Equal(w, word)));
@@ -124,6 +129,14 @@ internal sealed class WindowChargeInverseDocument : IScribeDocumentDefinition
                 StatementSource.WithoutFormula(),
                 AssessedProvenance.FromRepo(),
                 Blocks(Paragraph(Text("For k at least two and m less than k, every complete m-bit word is DBonacciAdmissible. Both the exceptional first-zero execution and the fixed suffix use this internal admissibility."))),
+                DescribeRole.Theorem),
+            Describe.Lean(
+                DescribeId.Create("charge-inverse-last-false-tail"),
+                DeclarationHandle.Create(Owner + "last_false_tail"),
+                H("A terminal zero clears any inherited tail"),
+                StatementSource.FromAuthor(Disp(lastFalseTail)),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("For every n, every word w of length n+1 and every inherited tail s, a false final literal bit gives tailAfter(s,w)=0. FinLast(n) is the final element of Fin(n+1). The clearing word in the two-block binary exception is an all-false word of positive length."))),
                 DescribeRole.Theorem),
             Describe.Lean(
                 DescribeId.Create("charge-inverse-short-safe-execution"),

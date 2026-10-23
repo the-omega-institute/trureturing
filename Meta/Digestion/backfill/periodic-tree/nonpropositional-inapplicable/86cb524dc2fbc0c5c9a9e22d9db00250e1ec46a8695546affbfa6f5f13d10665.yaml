@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:86cb524dc2fbc0c5c9a9e22d9db00250e1ec46a8695546affbfa6f5f13d10665
+  normalized_sha256: sha256:86cb524dc2fbc0c5c9a9e22d9db00250e1ec46a8695546affbfa6f5f13d10665
+cas_ref: sha256:86cb524dc2fbc0c5c9a9e22d9db00250e1ec46a8695546affbfa6f5f13d10665
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 证明段（**证明。** 在 Rayleigh 商中取非零向量 $(-k,1)$。TR.12 的二次型等于 $1/4$，而该向量的欧氏长度平方为 $k…）只展开前文定理或命题的论证，式子和中间推导不另提出独立陈述。
+    previous_atom_id: 0feeb32de9a0e4c4ee0ccae47d6e4f6dec94f2db44e820c73edc570134272a18
+    next_atom_id: 4572587ee852631a1216da2fcdfa4b9ee79a0232e4b2fd66487d34c8cccac659

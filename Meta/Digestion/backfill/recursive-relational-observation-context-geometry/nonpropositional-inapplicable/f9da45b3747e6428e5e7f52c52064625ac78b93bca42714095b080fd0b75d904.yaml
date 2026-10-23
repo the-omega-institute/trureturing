@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:f9da45b3747e6428e5e7f52c52064625ac78b93bca42714095b080fd0b75d904
+  normalized_sha256: sha256:f9da45b3747e6428e5e7f52c52064625ac78b93bca42714095b080fd0b75d904
+cas_ref: sha256:f9da45b3747e6428e5e7f52c52064625ac78b93bca42714095b080fd0b75d904
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 命题 14.11（相同最终任务的两种显露分配与联合读数）。的证明段；本项只给出该陈述的论证及所用步骤的说明，不另立独立命题。命题陈述保留在前项。
+    previous_atom_id: 04d7c3bfc326d3506c9af8875ac95eaf47285fabf69820c832279ec14b654f32
+    next_atom_id: 2f1c4086095ff2ac053d5922702d2da089633dbcf5e2e107f584ac4981e46994

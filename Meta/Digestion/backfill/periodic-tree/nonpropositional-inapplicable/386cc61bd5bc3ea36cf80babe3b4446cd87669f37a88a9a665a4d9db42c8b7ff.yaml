@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:386cc61bd5bc3ea36cf80babe3b4446cd87669f37a88a9a665a4d9db42c8b7ff
+  normalized_sha256: sha256:386cc61bd5bc3ea36cf80babe3b4446cd87669f37a88a9a665a4d9db42c8b7ff
+cas_ref: sha256:386cc61bd5bc3ea36cf80babe3b4446cd87669f37a88a9a665a4d9db42c8b7ff
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 章节标题「8.1 黄金支、Fibonacci 矩阵与返回映射」仅标示本节主题，不含正文命题或性质断言。
+    previous_atom_id: 1b0e83da90e8b04fda37c0c092a0bec421f4d3e80a3c815c70fc77808297ac5b
+    next_atom_id: 53025758ec857087611f11efdae8862ad7b410c2b58b19f4f7f45fe7cceffff2

@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:b22049dea586752d3f109617d0e75d5fb3b99a26bed51bb5d836caa09401dbb4
+  normalized_sha256: sha256:b22049dea586752d3f109617d0e75d5fb3b99a26bed51bb5d836caa09401dbb4
+cas_ref: sha256:b22049dea586752d3f109617d0e75d5fb3b99a26bed51bb5d836caa09401dbb4
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 非命题文本：公式片段 \operatorname{Sep}_q(x,y)：\[：只引入对象、参数、术语或记号；不附加存在性、唯一性或其他性质断言。
+    previous_atom_id: 31d6516fee0e27e9cdf1ad8366b0bcfb8fa0e2c712ca6702016f5b6ecccbb014
+    next_atom_id: 45a760bda9d7344f5f65977edbe324ff2ada689731d3f8ffaf647eac51993350

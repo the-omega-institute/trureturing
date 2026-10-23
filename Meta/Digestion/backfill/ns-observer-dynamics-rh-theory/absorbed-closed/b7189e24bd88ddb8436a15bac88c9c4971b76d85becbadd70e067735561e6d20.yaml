@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:b7189e24bd88ddb8436a15bac88c9c4971b76d85becbadd70e067735561e6d20
+  normalized_sha256: sha256:b7189e24bd88ddb8436a15bac88c9c4971b76d85becbadd70e067735561e6d20
+cas_ref: sha256:b7189e24bd88ddb8436a15bac88c9c4971b76d85becbadd70e067735561e6d20
+coverage_gids:
+  - gid: D5/S1/Words/Mechanical/MechanicalPhaseCalibration.joint_phase_calibration_law
+    target_statement_id: sha256:46ab84fc00f32e087739c4648260bfde5b9e5b16a6b25ed0fa6ee6b92f10a371
+receipts:
+  unresolved_subitems: []

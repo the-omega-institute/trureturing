@@ -1,1 +1,1 @@
-{"statement_id":"sha256:434b36fb0ac6c5a99e8190710724e7661376314297e875579b2c817cba9fbea2"}
+{"statement_id":"sha256:434b36fb0ac6c5a99e8190710724e7661376314297e875579b2c817cba9fbea2","declarations":[{"declaration_name_key":"ns(ns(ns(ns(ns(ns(n0,2:D5),2:S3),14:ObserverMemory),10:Refinement),24:InterfaceKernelCriterion),41:interface_refinement_iff_kernel_inclusion)","kind":"theorem"}]}

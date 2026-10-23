@@ -1,1 +1,1 @@
-{"statement_id":"sha256:388632521580864e7b4e55f7a930b027e078a9edf5dc298f198af2b718011b92"}
+{"statement_id":"sha256:388632521580864e7b4e55f7a930b027e078a9edf5dc298f198af2b718011b92","declarations":[{"declaration_name_key":"ns(ns(n0,3:PSW),11:evenIndices)","kind":"def"},{"declaration_name_key":"ns(ns(n0,3:PSW),13:prefixIndices)","kind":"def"},{"declaration_name_key":"ns(ns(n0,3:PSW),18:principalPermanent)","kind":"def"},{"declaration_name_key":"ns(ns(n0,3:PSW),3:TNN)","kind":"def"},{"declaration_name_key":"ns(ns(n0,3:PSW),8:monomial)","kind":"def"}]}

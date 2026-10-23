@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:3a7de08cee3e5a08b01f04f46191270ffff68598a8620195393832418b755e58
+  normalized_sha256: sha256:3a7de08cee3e5a08b01f04f46191270ffff68598a8620195393832418b755e58
+cas_ref: sha256:3a7de08cee3e5a08b01f04f46191270ffff68598a8620195393832418b755e58
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 非命题文本：15.3 Golden 观察轴：仅为节标题及导引或设定适用条件；本片段未陈述后续命题的结论。
+    previous_atom_id: 4bc105fa30a58d08e7641723042c8523272b606396e1e7ed9a79018522b9a965
+    next_atom_id: 47db4d2a9c3d672460b599982a796fc7fcacba2343b6bc447cb457fc3f5fe4b8

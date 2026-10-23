@@ -41,6 +41,9 @@ internal sealed class SeparableConeResidualWitnessDocument : IScribeDocumentDefi
     private static Formula All(Formula body, params string[] names) =>
         new Formula.BindMany(FormulaQuantifier.ForAll,
             [.. names.Select(name => new Formula.BoundVariable(FormulaIdentifier.Create(name), V("Mat")))], body);
+    private static Formula Bound(string name, Formula type, Formula body) =>
+        new Formula.BindMany(FormulaQuantifier.ForAll,
+            [new Formula.BoundVariable(FormulaIdentifier.Create(name), type)], body);
 
     public DocumentDefinition Create()
     {
@@ -110,6 +113,17 @@ internal sealed class SeparableConeResidualWitnessDocument : IScribeDocumentDefi
                     Blocks(Paragraph(Text("A ranges over Matrix (Fin m) (Fin m) Complex and B over "
                         + "Matrix (Fin n) (Fin n) Complex, independently. G denotes sourceGenerators m n."))),
                     DescribeRole.Definition),
+                Describe.Lean(DescribeId.Create("generator-separable"), DeclarationHandle.Create(Prefix + "generator_separable"),
+                    H("Every PSD product generator is separable"),
+                    StatementSource.FromAuthor(F.Disp(Bound("m", F.Seq(F.Mathbb, F.Grp(V("N"))),
+                        Bound("n", F.Seq(F.Mathbb, F.Grp(V("N"))),
+                            Bound("S", Call("CompositeMatrix", V("m"), V("n")),
+                                Implies(F.Seq(s, F.Sp, F.InMacro, F.Sp,
+                                    Call("sourceGenerators", V("m"), V("n"))), Sep(s))))))),
+                    AssessedProvenance.FromRepo(),
+                    Blocks(Paragraph(Text("Each source generator is a Kronecker product of independent "
+                        + "positive semidefinite factors. The single product is a one-term separable sum."))),
+                    DescribeRole.Theorem),
                 Describe.Lean(DescribeId.Create("closed-conic-hull"), DeclarationHandle.Create(Prefix + "closed_conic_hull_eq_separable"),
                     H("Closed nonnegative conic hull is SEP"),
                     StatementSource.FromAuthor(F.Disp(Eq(Call("closure", Call("nonnegativeConicHull", V("G"))),

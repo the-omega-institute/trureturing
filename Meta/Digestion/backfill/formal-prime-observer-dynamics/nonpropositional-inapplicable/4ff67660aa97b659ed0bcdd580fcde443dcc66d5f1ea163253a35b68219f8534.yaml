@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:4ff67660aa97b659ed0bcdd580fcde443dcc66d5f1ea163253a35b68219f8534
+  normalized_sha256: sha256:4ff67660aa97b659ed0bcdd580fcde443dcc66d5f1ea163253a35b68219f8534
+cas_ref: sha256:4ff67660aa97b659ed0bcdd580fcde443dcc66d5f1ea163253a35b68219f8534
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 非命题文本：209. 四种成对证据几何：只引入对象、参数、术语或记号；不附加存在性、唯一性或其他性质断言。
+    previous_atom_id: 2c1ebbce6a4226ea1e6cbff44477c84cc88dac52e544e689fbbb872ae41f7732
+    next_atom_id: 4cdd3e9343a1440f32b90c63bbb15f16e935d43c6d571a15de407d9bf44817f1

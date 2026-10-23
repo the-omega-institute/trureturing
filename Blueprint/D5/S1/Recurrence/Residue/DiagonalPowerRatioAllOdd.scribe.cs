@@ -9,14 +9,14 @@ internal sealed class DiagonalPowerRatioAllOddDocument : IScribeDocumentDefiniti
     private const string Prefix =
         "D5/S1/Recurrence/Residue/DiagonalPowerRatioAllOdd.";
     private static readonly LibraryNoteRef Source =
-        LibraryNoteRef.Create("D5/L/Recurrence/hanna2026a397241");
+        LibraryNoteRef.Create("D5/L/Recurrence/hanna2026a397241b");
 
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "Every coefficient of the normalized series in OEIS A397241 is odd.",
         H("Diagonal Power Ratios and Odd Coefficients"),
         Blocks(
             Paragraph(Text("The generating equation and oddness conjecture are recorded in "
-                + "hanna2026a397241. Write A for generatingSeries and P(r) for approximation(r). "
+                + "hanna2026a397241b. Write A for generatingSeries and P(r) for approximation(r). "
                 + "The coefficients a(n), the series A, the approximations P(r), and the "
                 + "comparison series B are over the integers. Indices and exponents are "
                 + "natural numbers. Multipliers such as n-1 are integer subtraction after "
@@ -27,6 +27,9 @@ internal sealed class DiagonalPowerRatioAllOddDocument : IScribeDocumentDefiniti
                 + "Int.castRingHom(ZMod(2)). Both sides of the reduction identity are series "
                 + "over ZMod(2), and the constant function in its right-hand side takes value "
                 + "one in ZMod(2).")),
+            Node("diagonal_multiplier", "The first differing power coefficient", PublishedDiagonalMultiplier(),
+                "For two unit-constant series agreeing below degree n, the difference in the "
+                + "degree-n coefficient of the m-th powers is m times the original difference."),
             Node("a", "Construction of the integer coefficients", CoefficientDefinition(),
                 "Starting from the constant series one, each approximation fixes coefficients "
                 + "zero and one at one and subtracts the diagonal equation residual at every "
@@ -144,5 +147,30 @@ internal sealed class DiagonalPowerRatioAllOddDocument : IScribeDocumentDefiniti
             Implication(Equal(Coefficient(D(0), b), D(1)),
                 Implication(Equal(Coefficient(D(1), b), D(1)),
                     Implication(Equation(b), Equal(b, A()))))));
+    }
+    private static Formula PubAll(string name, Formula type, Formula body) =>
+        Seq(Forall, Sp, F.Id(name), Colon, Sp, type, Comma, Sp, Parenthesized(body));
+    private static Formula PubImp(Formula premise, Formula conclusion) =>
+        Seq(Parenthesized(premise), Sp, Implies, Sp, Parenthesized(conclusion));
+
+    private static Formula PublishedDiagonalMultiplier()
+    {
+        var r = F.Id("R");
+        var n = F.Id("n");
+        var a = F.Id("A");
+        var b = F.Id("B");
+        var m = F.Id("m");
+        var k = F.Id("k");
+        Formula Pow(Formula f) => new Formula.Power(Parenthesized(f), m);
+        return Disp(Seq(Bound("R", Named("Type")), OpenBracket, Call("CommRing", r), CloseBracket, Sp,
+            PubAll("n", Naturals(), PubAll("A", Call("PowerSeries", r),
+            PubAll("B", Call("PowerSeries", r),
+            PubImp(Equal(Call("constantCoeff", a), D(1)),
+            PubImp(Equal(Call("constantCoeff", b), D(1)),
+            PubImp(PubAll("k", Naturals(), PubImp(Less(k, n),
+                Equal(Coefficient(k, a), Coefficient(k, b)))),
+            PubAll("m", Naturals(), Equal(Subtract(Coefficient(n, Pow(a)), Coefficient(n, Pow(b))),
+                Mul(Parenthesized(Seq(m, Colon, Sp, r)),
+                    Subtract(Coefficient(n, a), Coefficient(n, b)))))))))))));
     }
 }

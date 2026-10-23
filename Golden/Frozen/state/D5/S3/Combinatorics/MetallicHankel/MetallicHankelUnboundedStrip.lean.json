@@ -1,1 +1,1 @@
-{"statement_id":"sha256:49650434ac8eded828c0f139d52876d8cae9bcfba36079f47ecac5b20bb34e04"}
+{"statement_id":"sha256:680eeb7d7ef41fd197a54392f7c7c051760fd500ca44658ea692206465507854","declarations":[{"declaration_name_key":"ns(ns(ns(n0,13:AbsoluteValue),3:abs),10:congr_simp)","kind":"theorem"},{"declaration_name_key":"ns(ns(ns(ns(ns(ns(n0,2:D5),2:S3),13:Combinatorics),14:MetallicHankel),28:MetallicHankelUnboundedStrip),13:bounded_strip)","kind":"theorem"}]}

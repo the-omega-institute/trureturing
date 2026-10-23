@@ -4,7 +4,31 @@
 
 Conical two-design concurrence bounds have a uniform ratio ordering.
 
-**Definition 1.1 (The literal tensor swap).**
+**Theorem 1.1 (Nonnegative homogeneity of the trace norm).**
+
+$$\forall (n : Type*), [\operatorname{Fintype}\left(n\right)] [\operatorname{DecidableEq}\left(n\right)] \forall (X : \operatorname{Matrix}\left(n, n, \mathbb{C}\right)), \forall (c : \mathbb{R}), (0 \le c) \Rightarrow \operatorname{traceNorm}\left(\operatorname{smul}\left((c : \mathbb{C}), X\right)\right) = c \cdot \operatorname{traceNorm}\left(X\right)$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/Quantum/Entanglement/ConicalDesignConcurrenceComparability.traceNorm_smul_nonneg` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+Multiplication of a complex matrix by a nonnegative real scalar multiplies its trace norm by the same scalar. This includes zero and allows convex trace-norm estimates to pass from pure states to mixtures.
+
+**Theorem 1.2 (Rectangular isometries preserve the trace norm).**
+
+$$\forall (M : Type*), \forall (N : Type*), [\operatorname{Fintype}\left(M\right)] [\operatorname{DecidableEq}\left(M\right)] [\operatorname{Fintype}\left(N\right)] [\operatorname{DecidableEq}\left(N\right)], \forall (V : \operatorname{Matrix}\left(M, N, \mathbb{C}\right)), (\operatorname{Matrix}.\operatorname{conjTranspose}\left(V\right) \cdot V = (1 : \operatorname{Matrix}\left(N, N, \mathbb{C}\right))) \Rightarrow \forall (X : \operatorname{Matrix}\left(N, N, \mathbb{C}\right)), \operatorname{traceNorm}\left(V \cdot X \cdot \operatorname{Matrix}.\operatorname{conjTranspose}\left(V\right)\right) = \operatorname{traceNorm}\left(X\right)$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/Quantum/Entanglement/ConicalDesignConcurrenceComparability.traceNorm_isometry` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+For finite index types M and N, a complex rectangular matrix V with adjoint times V equal to the identity preserves the trace norm under X mapped to V X V adjoint. The square matrix X is arbitrary. This invariance is used in the normal form of the concurrence bound and in the projection dilation.
+
+**Definition 1.3 (The literal tensor swap).**
 
 $$\forall (d : \mathbb{N}), \operatorname{swap}\left(d\right) = \operatorname{Matrix}.\operatorname{submatrix}\left((1 : \operatorname{Matrix}\left((\operatorname{Fin}\left(d\right) \times \operatorname{Fin}\left(d\right)), (\operatorname{Fin}\left(d\right) \times \operatorname{Fin}\left(d\right)), \mathbb{C}\right)), id, \operatorname{Prod}.\operatorname{swap}\right)$$
 
@@ -16,7 +40,7 @@ $$\forall (d : \mathbb{N}), \operatorname{swap}\left(d\right) = \operatorname{Ma
 
 The flip F in Siudzinska's Section 2, Eq. (9), p. 2, sends the computational-basis pair (a,b) to (b,a). The identity matrix is reindexed in its columns by Prod.swap, so its (p,q) entry is 1 exactly when p=(q.2,q.1). Scalars are complex.
 
-**Definition 1.2 (A finite conical two-design).**
+**Definition 1.4 (A finite conical two-design).**
 
 $$\forall (d : \mathbb{N}), \forall (m : \mathbb{N}), \forall (E : (\operatorname{Fin}\left(m\right) \to \operatorname{Matrix}\left(\operatorname{Fin}\left(d\right), \operatorname{Fin}\left(d\right), \mathbb{C}\right))), \forall (alpha : \mathbb{R}), \forall (beta : \mathbb{R}), \forall (positive : (\forall (i : \operatorname{Fin}\left(m\right)), (E\left(i\right)).PosSemidef)), \forall (betaPos : 0 < beta), \forall (betaLeAlpha : beta \le alpha), \forall (tensorIdentity : (\sum_{i \in \operatorname{Fin}\left(m\right)} \operatorname{Matrix}.\operatorname{kronecker}\left(E\left(i\right), E\left(i\right)\right) = (alpha : \mathbb{C}) \cdot (1 : \operatorname{Matrix}\left((\operatorname{Fin}\left(d\right) \times \operatorname{Fin}\left(d\right)), (\operatorname{Fin}\left(d\right) \times \operatorname{Fin}\left(d\right)), \mathbb{C}\right)) + (beta : \mathbb{C}) \cdot \operatorname{swap}\left(d\right))), (\operatorname{Design}.\operatorname{mk}\left(E, alpha, beta, positive, betaPos, betaLeAlpha, tensorIdentity\right) : \operatorname{Design}\left(d, m\right))$$
 
@@ -28,7 +52,7 @@ $$\forall (d : \mathbb{N}), \forall (m : \mathbb{N}), \forall (E : (\operatornam
 
 Section 2, Eq. (9), p. 2: "By definition, `\mathcal{P}` is a conical 2-design if" the displayed identity is `\sum_{\alpha=1}^N\sum_{k=1}^{M_\alpha}P_{\alpha,k}\otimes P_{\alpha,k}=\kappa_+I_d\otimes I_d+\kappa_-F_d`, "where `\kappa_+\geq\kappa_->0`". The constructor below lists all data and proof fields: the positive effects, real alpha and beta, positivity of beta, beta at most alpha, and the tensor identity. Measurement labels are flattened to Fin m. No POVM normalization or fixed number of outcomes is added. The complex casts of alpha and beta are explicit.
 
-**Definition 1.3 (The measurement correlation matrix).**
+**Definition 1.5 (The measurement correlation matrix).**
 
 $$\forall (d : \mathbb{N}), \forall (m : \mathbb{N}), \forall (E : \operatorname{Design}\left(d, m\right)), \forall (rho : \operatorname{Matrix}\left((\operatorname{Fin}\left(d\right) \times \operatorname{Fin}\left(d\right)), (\operatorname{Fin}\left(d\right) \times \operatorname{Fin}\left(d\right)), \mathbb{C}\right)), \forall (i : \operatorname{Fin}\left(m\right)), \forall (j : \operatorname{Fin}\left(m\right)), \left(P_{E}\right)\left(E, rho\right)\left(i, j\right) = \operatorname{Matrix}.\operatorname{trace}\left(rho \cdot \operatorname{Matrix}.\operatorname{kronecker}\left(E.E\left(i\right), E.E\left(j\right)\right)\right)$$
 
@@ -40,7 +64,7 @@ $$\forall (d : \mathbb{N}), \forall (m : \mathbb{N}), \forall (E : \operatorname
 
 Section 6, Eq. (59), p. 9: "The elements of `\mathcal{B}(\rho)` in the basis of `\omega_{\alpha,k}` form the correlation matrix `\mathcal{B}_{\alpha,k;\beta,\ell}=\operatorname{Tr}[\rho(P_{\alpha,k}\otimes P_{\beta,\ell})]`." P_E is this complex square matrix, with flattened labels and the same design on both tensor factors. Its input is any bipartite complex matrix; the final claim restricts it to density states. Theorem 6 refers to Eq. (60); the defining operator expression is Eq. (59).
 
-**Definition 1.4 (The dimension factor).**
+**Definition 1.6 (The dimension factor).**
 
 $$\forall (d : \mathbb{N}), \operatorname{c}\left(d\right) = \operatorname{Real}.\operatorname{sqrt}\left(\frac{2}{(d : \mathbb{R}) \cdot ((d : \mathbb{R}) - 1)}\right)$$
 
@@ -52,7 +76,7 @@ $$\forall (d : \mathbb{N}), \operatorname{c}\left(d\right) = \operatorname{Real}
 
 Section 7, Theorem 6, Eq. (74), p. 10: `\eta=\frac{1}{S}\sqrt{\frac{2}{d(d-1)}},\qquad\xi=\mathcal{C}_{\max}`. The factor c isolates the square root. Both appearances of d are real casts, and the division is real division. The final comparison assumes d at least 2.
 
-**Definition 1.5 (The concurrence lower bound).**
+**Definition 1.7 (The concurrence lower bound).**
 
 $$\forall (d : \mathbb{N}), \forall (m : \mathbb{N}), \forall (E : \operatorname{Design}\left(d, m\right)), \forall (rho : \operatorname{Matrix}\left((\operatorname{Fin}\left(d\right) \times \operatorname{Fin}\left(d\right)), (\operatorname{Fin}\left(d\right) \times \operatorname{Fin}\left(d\right)), \mathbb{C}\right)), \left(B_{E}\right)\left(E, rho\right) = \frac{\operatorname{c}\left(d\right) \cdot (\operatorname{traceNorm}\left(\left(P_{E}\right)\left(E, rho\right)\right) - E.alpha - E.beta)}{E.beta}$$
 
@@ -64,7 +88,7 @@ $$\forall (d : \mathbb{N}), \forall (m : \mathbb{N}), \forall (E : \operatorname
 
 Section 7, Theorem 6, Eq. (73), p. 10: "The concurrence of a mixed bipartite state `\rho` is lower bounded by" `\mathcal{N}_{\min}(\rho)=\eta\Big[\|\mathcal{B}(\rho)\|_{\tr}-\xi\Big]`. Here S=beta and C_max=alpha+beta. The frozen traceNorm is the real trace of the positive square root of X.conjTranspose times X, equivalently the sum of singular values. The expression is not truncated at zero.
 
-**Definition 1.6 (The Wang–Zhou–Chen–Fei conjecture).**
+**Definition 1.8 (The Wang–Zhou–Chen–Fei conjecture).**
 
 $$claim \Leftrightarrow (\forall (d : \mathbb{N}), (2 \le d) \Rightarrow \forall (m : \mathbb{N}), \forall (n : \mathbb{N}), \forall (E : \operatorname{Design}\left(d, m\right)), \forall (G : \operatorname{Design}\left(d, n\right)), (\forall (rho : \operatorname{DensityState}\left((\operatorname{Fin}\left(d\right) \times \operatorname{Fin}\left(d\right))\right)), \left(B_{E}\right)\left(G, \operatorname{CStarMatrix}.\operatorname{ofMatrix}.symm\left(rho.1\right)\right) \le \left(B_{E}\right)\left(E, \operatorname{CStarMatrix}.\operatorname{ofMatrix}.symm\left(rho.1\right)\right)) \lor (\forall (rho : \operatorname{DensityState}\left((\operatorname{Fin}\left(d\right) \times \operatorname{Fin}\left(d\right))\right)), \left(B_{E}\right)\left(E, \operatorname{CStarMatrix}.\operatorname{ofMatrix}.symm\left(rho.1\right)\right) \le \left(B_{E}\right)\left(G, \operatorname{CStarMatrix}.\operatorname{ofMatrix}.symm\left(rho.1\right)\right)))$$
 
@@ -76,7 +100,7 @@ $$claim \Leftrightarrow (\forall (d : \mathbb{N}), (2 \le d) \Rightarrow \forall
 
 Section IV, p. 8, after Theorem 2, verbatim: "The lower bounds of concurrence induced by arbitrary two distinct conical 2-designs are comparable." For each d at least 2 and each pair of finite designs, one ordering holds for every bipartite state. DensityState is the canonical positive semidefinite trace-one CStarMatrix; CStarMatrix.ofMatrix.symm takes its underlying Matrix. Equal designs are also included. The state quantifier lies inside each branch, so the choice of ordering is independent of the state.
 
-**Theorem 1.7 (Uniform comparison by the ratio alpha over beta).**
+**Theorem 1.9 (Uniform comparison by the ratio alpha over beta).**
 
 $$claim$$
 
@@ -103,4 +127,6 @@ Vectorize each effect as A_ip=(E_i)_(p.2,p.1). The tensor identity gives A.conjT
 - Truth anchor: `D5/S3/Quantum/Entanglement/ConicalDesignConcurrenceComparability.claim`
 - Truth anchor: `D5/S3/Quantum/Entanglement/ConicalDesignConcurrenceComparability.result`
 - Truth anchor: `D5/S3/Quantum/Entanglement/ConicalDesignConcurrenceComparability.swap`
+- Truth anchor: `D5/S3/Quantum/Entanglement/ConicalDesignConcurrenceComparability.traceNorm_isometry`
+- Truth anchor: `D5/S3/Quantum/Entanglement/ConicalDesignConcurrenceComparability.traceNorm_smul_nonneg`
 - Dependency: [D5/S3/Quantum/Foundation/FiniteTraceDistance](../Foundation/FiniteTraceDistance.md)

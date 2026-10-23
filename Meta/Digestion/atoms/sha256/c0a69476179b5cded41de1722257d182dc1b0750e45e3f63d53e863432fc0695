@@ -1,0 +1,89 @@
+**Theorem 8.2 (Two designated branch crossings).** Let
+
+$$
+\alpha=\frac{1+\sqrt5}{4},\quad
+B_x=\left(\frac{143750631793}{10^9},\frac{143750631794}{10^9}\right),
+\quad
+B_y=\left(\frac{145067443732}{10^9},\frac{145067443733}{10^9}\right).
+\tag{8.3}
+$$
+
+For each $p\in K$ there is exactly one $v_x(p)\in B_x$ with
+$r_2(p,v_x(p))=\alpha$, and exactly one $v_y(p)\in B_y$ with
+$r_3(p,v_y(p))=\alpha$. Both are roots of the actual $Q(p,v)$.
+At $p=p_J$ they are real algebraic numbers, distinct from each
+other and from the old $v_\star$. Their entire actual children
+contain no distinct terminal-M collision pair.
+
+Proof. At fixed $p$, differentiating $F(z)=(p,v)$ gives
+
+$$
+\frac{\partial z}{\partial v}=(I-E_0)^{-1}L,\qquad
+\left\|\frac{\partial z}{\partial v}-L\right\|_\infty
+\le\frac q{1-q}\|L\|_\infty.
+\tag{8.4}
+$$
+
+Every lift cell has $|L_0|>q\|L\|_\infty/(1-q)$ on the positive
+branches, with $L_0<0$ for branches 2 and 3. These are explicit
+companion inequalities. Both $r_2,r_3$ therefore strictly decrease
+with $v$ throughout the strip, using the compatible differentiable
+branches of Lemma 7.1.
+
+The two event cells in companion Section 7 use the closed endpoints
+of $B_x,B_y$. Set
+
+$$
+\alpha_L=\frac{809016994374947424102293417182}{10^{30}},
+\qquad \alpha_U=\alpha_L+10^{-30}.
+\tag{8.5}
+$$
+
+The exact signs of $\Psi_2$ give $\alpha_L<\alpha<\alpha_U$.
+For the designated branch in each event cell its affine box gives,
+uniformly on $K$,
+
+$$
+m_r+L_0(v_L-v_c)-\rho>\alpha_U,\qquad
+m_r+L_0(v_U-v_c)+\rho<\alpha_L.
+\tag{8.6}
+$$
+
+Continuity and strict decrease prove existence and uniqueness of the
+specified crossings. This is uniqueness of those branch crossings;
+it does not isolate every zero of $Q$ in either bracket.
+
+At either crossing the actual source has $b>0$, $D\ne0$,
+$\mathsf A=\mathsf B=0$ and $r=\alpha$. At the same $r,p,v$,
+Lemma 4.2 supplies the distinct common root $b=-1/2$ with $D=0$.
+Lemma 4.3 gives $R(\alpha,p,v)=0$, including this base projection
+coincidence. For the actual matrix $S_1$ in (4.3), the two
+independent evaluation vectors $(t^{12},\ldots,t,1)^{\mathsf T}$
+at these two $b$ roots lie in its kernel. Its rank is at most
+eleven, so all $12$ by $12$ minors vanish, in particular
+$\Delta_1,\Delta_0$. Because
+$72900\alpha^6(\alpha-1)^4\ne0$, the precise quotient (4.3) gives
+$\mathcal L_1(\alpha,p,v)=0$.
+
+Thus $R,\mathcal L_1$ have a finite common $r$ root. Its evaluation
+vector annihilates the fixed padded Sylvester matrix in $E_1$,
+so $E_1(p,v)=0$ and $Q(p,v)=0$. No division by $\mathcal L_1$ or
+differently normalized subresultant is used.
+
+Now specialize to the unchanged algebraic $p_J$. The leading
+$b$ coefficient of $\mathsf A(\alpha,b,p_J)$ is $5p_J+216>0$.
+This nonzero polynomial over the algebraic numbers makes its
+crossing $b$ algebraic. The actual response $N_u/D_m$, with nonzero
+denominator, is algebraic as well. The two brackets are disjoint,
+and both are disjoint from
+
+$$
+\left(\frac{144397245334493}{10^{12}},
+\frac{144397245371500}{10^{12}}\right),
+\tag{8.7}
+$$
+
+which contains the old $v_\star$ by owning Theorem 19.1.
+Both new responses lie in $[142,150]$, so Theorem 1.3 excludes a
+terminal-M pair in each entire child, not just in a chosen support. ∎
+

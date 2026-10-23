@@ -19,7 +19,7 @@ public sealed partial class WorktreeCommandTests
     [InlineData("checkout-timeout")]
     [InlineData("checkout-nonzero")]
     [InlineData("checkout-index-lock")]
-    public void InterruptedInitializationRemovesOwnedStateAndAllowsSameNameRetry(string failure)
+    public void InterruptedInitializationPreservesRecoveryAndAllowsAlternateContinuation(string failure)
     {
         if (failure == "add-prepared" && OperatingSystem.IsWindows()) return;
         using var repository = new TemporaryDirectory();
@@ -27,28 +27,26 @@ public sealed partial class WorktreeCommandTests
         var target = Path.Combine(repository.Path, "interrupted-init");
         var branch = $"{WorktreeCommand.CreationNamespace}/math/interrupted-init";
         var runner = new InitializationFailureRunner(target, failure);
-
         var result = WorktreeCommand.Run(repository.Path, InitializationArguments(target), runner);
-
         Assert.False(result.Success);
         Assert.Contains("simulated initialization", result.Error, StringComparison.Ordinal);
-        using var receipt = JsonDocument.Parse(result.Error["WORKTREE_FAILED ".Length..]);
-        Assert.Equal(JsonValueKind.Null, receipt.RootElement.GetProperty("cleanup_error").ValueKind);
-        Assert.False(Directory.Exists(target));
-        Assert.False(Directory.Exists(WorktreeMetadataPath(repository.Path, target)));
-        var inventory = WorktreeHookFixture.RunGit(repository.Path, "worktree", "list", "--porcelain");
-        Assert.DoesNotContain($"worktree {LeanCacheGuard.PhysicalPath(target)}\n", inventory, StringComparison.Ordinal);
-        Assert.DoesNotContain($"branch refs/heads/{branch}\n", inventory, StringComparison.Ordinal);
-        Assert.Equal(1, GitExit(repository.Path, "show-ref", "--verify", "--quiet", $"refs/heads/{branch}"));
-
-        var retryRunner = new InitializationFailureRunner(target, "none");
-        var retry = WorktreeCommand.Run(repository.Path, InitializationArguments(target), retryRunner);
-
+        var createdTree = failure.StartsWith("checkout", StringComparison.Ordinal)
+            || failure is "add-prepared" or "add-timeout" or "add-nonzero";
+        Assert.Equal(createdTree, Directory.Exists(target));
+        Assert.Equal(createdTree, Directory.Exists(WorktreeMetadataPath(repository.Path, target)));
+        Assert.Equal(failure == "branch-rejected" ? 1 : 0,
+            GitExit(repository.Path, "show-ref", "--verify", "--quiet", $"refs/heads/{branch}"));
+        if (createdTree)
+            Assert.True(File.Exists(Path.Combine(WorktreeMetadataPath(repository.Path, target), "locked")));
+        var alternate = Path.Combine(repository.Path, "alternate-init");
+        var arguments = InitializationArguments(alternate)
+            .Select(argument => argument == "interrupted-init" ? "alternate-init" : argument).ToArray();
+        var retry = WorktreeCommand.Run(repository.Path, arguments,
+            new InitializationFailureRunner(alternate, "none"));
         Assert.True(retry.Success, retry.Error);
-        AssertRegisteredAndUsable(repository.Path, target, branch);
-        WorktreeFixtureFile.AssertContent(Path.Combine(target, "README.md"), "# worktree fixture\n");
-        Assert.False(File.Exists(Path.Combine(WorktreeMetadataPath(repository.Path, target), "locked")));
-        Assert.NotEqual(runner.CreationToken, retryRunner.CreationToken);
+        AssertRegisteredAndUsable(repository.Path, alternate,
+            $"{WorktreeCommand.CreationNamespace}/math/alternate-init");
+        WorktreeFixtureFile.AssertContent(Path.Combine(alternate, "README.md"), "# worktree fixture\n");
     }
 
     [Theory]
@@ -80,61 +78,34 @@ public sealed partial class WorktreeCommandTests
     }
 
     [Theory]
-    [InlineData("branch-changed", "initialization branch changed")]
-    [InlineData("cleanup-branch-changed", "initialization branch changed")]
-    [InlineData("cleanup-branch-race", "cannot lock ref")]
-    [InlineData("cleanup-branch-recreated", "initialization branch ownership changed")]
-    [InlineData("cleanup-branch-symbolic", "initialization branch changed")]
-    public void BranchRollbackPreservesConcurrentRefUpdates(string failure, string cleanupError)
+    [InlineData("branch-changed")]
+    [InlineData("cleanup-branch-changed")]
+    [InlineData("cleanup-branch-recreated")]
+    [InlineData("cleanup-branch-symbolic")]
+    public void InitializationFailurePreservesConcurrentRefUpdates(string failure)
     {
         using var repository = new TemporaryDirectory();
         InitializeRepository(repository.Path);
         var target = Path.Combine(repository.Path, "interrupted-init");
         var branchRef = $"refs/heads/{WorktreeCommand.CreationNamespace}/math/interrupted-init";
         var runner = new InitializationFailureRunner(target, failure);
-
         var result = WorktreeCommand.Run(repository.Path, InitializationArguments(target), runner);
-
         Assert.False(result.Success);
-        using var receipt = JsonDocument.Parse(result.Error["WORKTREE_FAILED ".Length..]);
-        Assert.Contains("simulated initialization", receipt.RootElement.GetProperty("reason").GetString(), StringComparison.Ordinal);
-        Assert.Contains(cleanupError, receipt.RootElement.GetProperty("cleanup_error").GetString(), StringComparison.Ordinal);
-        Assert.False(Directory.Exists(target));
-        Assert.False(Directory.Exists(WorktreeMetadataPath(repository.Path, target)));
+        Assert.Contains("simulated initialization", result.Error, StringComparison.Ordinal);
         Assert.NotNull(runner.ChangedBranchOid);
         Assert.Equal(runner.ChangedBranchOid,
             WorktreeHookFixture.RunGit(repository.Path, "rev-parse", "--verify", branchRef).Trim());
-    }
-
-    [Theory]
-    [InlineData("branch-receipt-error", "simulated branch receipt lookup failure")]
-    [InlineData("cleanup-branch-timeout", "simulated branch cleanup timeout")]
-    [InlineData("cleanup-branch-rejected", "simulated branch cleanup rejection")]
-    public void BranchRollbackReportsFailureWithoutMaskingInitializationError(string failure, string cleanupError)
-    {
-        using var repository = new TemporaryDirectory();
-        InitializeRepository(repository.Path);
-        var target = Path.Combine(repository.Path, "interrupted-init");
-        var branchRef = $"refs/heads/{WorktreeCommand.CreationNamespace}/math/interrupted-init";
-        var runner = new InitializationFailureRunner(target, failure);
-
-        var result = WorktreeCommand.Run(repository.Path, InitializationArguments(target), runner);
-
-        Assert.False(result.Success);
-        using var receipt = JsonDocument.Parse(result.Error["WORKTREE_FAILED ".Length..]);
-        Assert.Contains("simulated initialization", receipt.RootElement.GetProperty("reason").GetString(), StringComparison.Ordinal);
-        Assert.Contains(cleanupError, receipt.RootElement.GetProperty("cleanup_error").GetString(), StringComparison.Ordinal);
-        Assert.False(Directory.Exists(target));
-        Assert.False(Directory.Exists(WorktreeMetadataPath(repository.Path, target)));
-        Assert.Equal(WorktreeHookFixture.RunGit(repository.Path, "rev-parse", "HEAD"),
-            WorktreeHookFixture.RunGit(repository.Path, "rev-parse", "--verify", branchRef));
+        Assert.DoesNotContain(runner.Inner.Invocations, call => call.FileName == "git"
+            && (call.Arguments.Contains("-d", StringComparer.Ordinal)
+                || call.Arguments.Take(2).SequenceEqual(["worktree", "remove"])));
+        Assert.Equal(failure != "branch-changed", Directory.Exists(target));
     }
 
     [Theory]
     [InlineData("foreign-elsewhere")]
     [InlineData("foreign-detached")]
     [InlineData("foreign-elsewhere-prepared")]
-    public void BranchRollbackPreservesSurvivingRegistrations(string failure)
+    public void InitializationFailurePreservesSurvivingRegistrations(string failure)
     {
         if (failure.EndsWith("prepared", StringComparison.Ordinal) && OperatingSystem.IsWindows()) return;
         using var repository = new TemporaryDirectory();
@@ -148,7 +119,7 @@ public sealed partial class WorktreeCommandTests
         Assert.False(result.Success);
         using var receipt = JsonDocument.Parse(result.Error["WORKTREE_FAILED ".Length..]);
         Assert.Contains("simulated concurrent creator", receipt.RootElement.GetProperty("reason").GetString(), StringComparison.Ordinal);
-        Assert.Contains("registered worktree", receipt.RootElement.GetProperty("cleanup_error").GetString(), StringComparison.Ordinal);
+        Assert.DoesNotContain(runner.Inner.Invocations, call => call.Arguments.Take(2).SequenceEqual(["worktree", "remove"]));
         WorktreeFixtureFile.AssertContent(Path.Combine(foreignTarget, "keep.txt"), "concurrent work\n");
         WorktreeFixtureFile.AssertContent(Path.Combine(WorktreeMetadataPath(repository.Path, foreignTarget), "locked"),
             InitializationFailureRunner.ForeignLock + "\n");
@@ -254,28 +225,20 @@ public sealed partial class WorktreeCommandTests
         WorktreeFixtureFile.AssertContent(Path.Combine(foreign.Path, ".git", "HEAD"), "ref: refs/heads/dev\n");
     }
 
-    [Theory]
-    [InlineData("cleanup-timeout", "simulated cleanup timeout")]
-    [InlineData("cleanup-ownership-changed", "initialization ownership changed")]
-    public void InitializationFailureReportsCleanupExceptionWithoutMaskingOriginalError(string failure, string cleanupError)
+    [Fact]
+    public void InitializationFailureNeverRunsDestructiveCleanup()
     {
         using var repository = new TemporaryDirectory();
         InitializeRepository(repository.Path);
         var target = Path.Combine(repository.Path, "interrupted-init");
-        var runner = new InitializationFailureRunner(target, failure);
-
+        var runner = new InitializationFailureRunner(target, "add-timeout");
         var result = WorktreeCommand.Run(repository.Path, InitializationArguments(target), runner);
-
         Assert.False(result.Success);
-        using var receipt = JsonDocument.Parse(result.Error["WORKTREE_FAILED ".Length..]);
-        Assert.Contains("simulated initialization", receipt.RootElement.GetProperty("reason").GetString(), StringComparison.Ordinal);
-        Assert.Contains(cleanupError, receipt.RootElement.GetProperty("cleanup_error").GetString(), StringComparison.Ordinal);
+        Assert.Contains("simulated initialization", result.Error, StringComparison.Ordinal);
         Assert.True(Directory.Exists(target));
-        Assert.Equal(0, GitExit(repository.Path, "show-ref", "--verify", "--quiet",
-            $"refs/heads/{WorktreeCommand.CreationNamespace}/math/interrupted-init"));
-        if (failure == "cleanup-ownership-changed")
-            WorktreeFixtureFile.AssertContent(Path.Combine(WorktreeMetadataPath(repository.Path, target), "locked"),
-                InitializationFailureRunner.ForeignLock + "\n");
+        Assert.DoesNotContain(runner.Inner.Invocations, call => call.FileName == "git"
+            && (call.Arguments.Take(2).SequenceEqual(["worktree", "remove"])
+                || call.Arguments.Contains("-d", StringComparer.Ordinal)));
     }
 
     [Theory]
@@ -283,7 +246,7 @@ public sealed partial class WorktreeCommandTests
     [InlineData("sha256", 64, false)]
     [InlineData("sha1", 40, true)]
     [InlineData("sha256", 64, true)]
-    public void InitializationRunsPostCheckoutOnceWithCreationArgumentsAndRollsBackHookFailure(
+    public void InitializationRunsPostCheckoutOnceAndPreservesHookFailure(
         string objectFormat, int oidLength, bool failHook)
     {
         using var repository = new TemporaryDirectory();
@@ -313,13 +276,11 @@ public sealed partial class WorktreeCommandTests
         {
             Assert.False(result.Success);
             Assert.Contains("simulated initialization hook failure", result.Error, StringComparison.Ordinal);
-            using var receipt = JsonDocument.Parse(result.Error["WORKTREE_FAILED ".Length..]);
-            Assert.Equal(JsonValueKind.Null, receipt.RootElement.GetProperty("cleanup_error").ValueKind);
-            Assert.False(Directory.Exists(target));
-            Assert.False(Directory.Exists(WorktreeMetadataPath(repository.Path, target)));
-            Assert.Equal(1, GitExit(repository.Path, "show-ref", "--verify", "--quiet", $"refs/heads/{branch}"));
-            File.Delete(hook);
-            result = WorktreeCommand.Run(repository.Path, InitializationArguments(target));
+            Assert.True(Directory.Exists(target));
+            Assert.True(Directory.Exists(WorktreeMetadataPath(repository.Path, target)));
+            Assert.Equal(0, GitExit(repository.Path, "show-ref", "--verify", "--quiet", $"refs/heads/{branch}"));
+            Assert.True(File.Exists(Path.Combine(WorktreeMetadataPath(repository.Path, target), "locked")));
+            return;
         }
         Assert.True(result.Success, result.Error);
         AssertRegisteredAndUsable(repository.Path, target, branch);
@@ -526,6 +487,8 @@ public sealed partial class WorktreeCommandTests
                 return FailInitialization(failure);
             }
             if (add && result.ExitCode == 0 && failure == "cleanup-branch-changed") MoveBranch(workingDirectory, branchRef);
+            if (add && result.ExitCode == 0 && failure is "cleanup-branch-recreated" or "cleanup-branch-symbolic")
+                ReplaceBranch(workingDirectory, branchRef, failure == "cleanup-branch-symbolic");
             if (add && result.ExitCode == 0 && failure.StartsWith("add-invalid-", StringComparison.Ordinal))
                 File.WriteAllText(Path.Combine(GitWorktreeDirectory.Read(target)!, failure["add-invalid-".Length..]),
                     foreignPath + "\n");

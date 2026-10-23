@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:a7e90e10e8aded3ff31cddf76b2ecfedabd4fd98904cc6b292c7edd379da1a58
+  normalized_sha256: sha256:a7e90e10e8aded3ff31cddf76b2ecfedabd4fd98904cc6b292c7edd379da1a58
+cas_ref: sha256:a7e90e10e8aded3ff31cddf76b2ecfedabd4fd98904cc6b292c7edd379da1a58
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 证明。：该段仅论证前文命题 15.2（对称性本身不能选出唯一伦理）。，不另立新的命题陈述；前文命题本身仍保留。
+    previous_atom_id: 839a77a9ee7d5e5d3210b78dcf449467fb34abd9639c6822e5b6fdf7b4749836
+    next_atom_id: 32874329ed7856e023616ab11ba04866348b8d3d1570b302d9bf249107cd9fd3

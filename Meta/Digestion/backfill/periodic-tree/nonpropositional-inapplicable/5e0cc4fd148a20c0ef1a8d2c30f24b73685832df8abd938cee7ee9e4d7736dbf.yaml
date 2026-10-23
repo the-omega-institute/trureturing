@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:5e0cc4fd148a20c0ef1a8d2c30f24b73685832df8abd938cee7ee9e4d7736dbf
+  normalized_sha256: sha256:5e0cc4fd148a20c0ef1a8d2c30f24b73685832df8abd938cee7ee9e4d7736dbf
+cas_ref: sha256:5e0cc4fd148a20c0ef1a8d2c30f24b73685832df8abd938cee7ee9e4d7736dbf
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 证明段（**证明。** 降模同态给出左侧整除。令 $D=pB$；在模 $p^2$ 下有 $D^2=0$ 与 $pD=0$。由 R7 和前一定理， $…）只展开前文定理或命题的论证，式子和中间推导不另提出独立陈述。
+    previous_atom_id: 26006f68221bfcc99145d76a6f4440ed186518b50aa5c93f29f675a39ab730e7
+    next_atom_id: d1fbacf2c6d19094fa5a347381ff7b1363e0cba69fb55d8d70882adc1b43984f

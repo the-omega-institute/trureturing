@@ -1,0 +1,18 @@
+**命题 1526.1（最优观察律的边缘及间距）。** 在正偏置形式下，
+
+$$
+\mathbb E_{Q_\delta^+}X_1
+=\mathbb E_{Q_\delta^+}X_2=\delta,\qquad
+\mathbb E_{Q_\delta^+}(X_1X_2)=\kappa-2\delta.
+$$
+
+负偏置形式的两个边缘均值为 $-\delta$，完整矩仍为 $\kappa-2\delta$，且
+
+$$
+\operatorname{TV}(Q_\delta^+,Q_\delta^-)=\delta.
+$$
+
+**证明。** 从第 1523 节四格概率直接相加，两个边缘均值都是 $b-(b-\delta)=\delta$。正类质量减负类质量为 $\kappa-2\delta$。全局翻转使边缘符号改变而保留完整矩；两张表只在两个正顶点相差 $\delta$ 与 $-\delta$，故总变差为 $\delta$。证毕。
+
+$\delta=0$ 时两种来源生成同一个目标律，却有不同潜在表示；$\delta>0$ 时连最优生成的观察律也有两种，成本仍相同。最优数值唯一、观察律唯一与来源表示唯一，分别需要自己的条件。
+

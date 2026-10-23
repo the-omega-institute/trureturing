@@ -1,0 +1,93 @@
+**Definition 7.2 (mathematical dependencies and ownership).** NSF
+Theorem 4.3, Lemma 5.1 and Theorem 5.2 supply finite signed
+feasibility, guarded observation compilation and reconstruction
+of original sources. NIC Theorems 3.2–3.3 and 4.3 supply entire
+positive images, original-native signed pullbacks and exact
+complete row strata. They are not new decision or image-cover
+claims here. NLC's minimum leaf-depth statistic supplies the
+minimum-versus-maximum depth distinction used in §2 and the
+perfect-tree calculation in §4. [SPC][SPCEXT]'s entire productive family,
+its finite witnesses, closed comparison results and §§7–10
+representation and lifting boundaries retain their separate
+scope. In particular no rational-contact, closed-value or
+topological criterion replaces the finite tuples of (NMF.2).
+
+The source definitions correspond to the existing declarations
+$\mathsf{readout}$ in [ActualTreeReadoutAcquisition][READOUT],
+$\mathsf{literalRecord}$ and
+$\mathsf{canonicalRow\_record\_iff}$ in
+[ActualCutPartitionDecoder][ROWS], and the whole-row
+$\mathsf{rowFiberEquiv}$ in [NativeCutFibers][FIBERS]. The
+private reconstruction and injectivity lemmas
+$\mathsf{recover\_fill}$ and $\mathsf{fill\_injective}$ belong
+to that last supplied correspondence. The reached-prefix decomposition is
+$\mathsf{depthEquiv}$ in [NativeDepthPatterns][DEPTH], with
+its private $\mathsf{fill\_decompose}$ and
+$\mathsf{decompose\_fill}$ inverse helpers. These addresses
+identify the meanings being reused; the proofs in this volume
+are the mathematical arguments stated here.
+
+The external decision supplier is Barozzini, Clemente, Colcombet
+and Parys, *Cost Automata, Safe Schemes, and Downward Closures*,
+arXiv:2004.12187v6, also published in *Fundamenta Informaticae*,
+DOI [10.3233/FI-222145][BCCPDOI]. Its §4.2 supplies the precise
+linear FTT rule class, §4.4 the every-branch diagonal definition,
+and §5 the safe-scheme diagonal decision, WCMSO decision and
+safety-preserving transduction closure. The section titles fix
+the cited results without relying on the HTML's theorem counters.
+The Kraft inequality is the attributed intermediate in Theorem
+3.2. The finite native address pruning, its exact correspondence,
+the joint mass equivalence, the complete native counterexamples
+and their conditional consumer are deductions from the definitions
+and those suppliers. No external originality or absolute
+minimality assertion is attached to them.
+
+**Open problem 7.3 (unrestricted faithful safe source-convolution
+construction).** For arbitrary complete signed-native $I$ and
+arbitrary finite distinct attained $B$ with $|B|\ge2$, construct
+effectively a faithful safe carrier satisfying (NMF.23), or supply
+a different terminating exact mechanism for the original
+alternative (NMF.2). All exteriors, full partitions, reached
+guards, actual epochs, multiple positive constraints, finite
+negatives, shared values and image/rank correlations must remain.
+No such unrestricted carrier construction is supplied by the
+transducers of §5.
+
+A finite zipper on a chosen tuple is not a proof that a whole
+signed tuple language has a finite safe convolution scheme.
+An eager whole-value generator can preserve sharing and still
+be unsafe: an order-$k$ argument containing a free variable of
+order less than $k$ fails the safety condition of Definition 6.1.
+The transduction theorem here starts from an already safe exact
+convolution carrier and does not repair that failure. Likewise,
+ordinary finite-packet equality checking does not give effective
+safe-scheme closure under all original signed constraints.
+
+The mathematical obligation remaining before an unconditional
+decision is therefore specific: provide both whole-source
+directions for that constrained convolution and prove its safety,
+or prove another exact stopping theorem. Once those premises
+are supplied, (NMF.19), (NMF.24) and (NMF.25) already give the
+faithful every-path cost and its decision consumer. Cardinality,
+a long branch, matched-leaf endpoints and a critical balanced
+sequence do not discharge that obligation, by Theorems 4.1,
+4.2, 5.3 and 6.4.
+
+[ARH]: RECURSIVE_RELATIONAL_OBSERVATION_ACQUIRED_RELATION_HISTORY.md
+[NSF]: RECURSIVE_RELATIONAL_OBSERVATION_NATIVE_SIGNED_FEASIBILITY.md
+[NIC]: RECURSIVE_RELATIONAL_OBSERVATION_NATIVE_IMAGE_COVER_AND_PREFIX_COST.md
+[NLC]: RECURSIVE_RELATIONAL_OBSERVATION_NATIVE_LEAF_DEPTH_CONTACT.md
+[SPC]: RECURSIVE_RELATIONAL_OBSERVATION_NATIVE_SIGNED_PRODUCTIVE_CONTACT.md
+[SPCEXT]: https://github.com/the-omega-institute/trureturing/blob/db23810980530aea4b6fc2a056615460c8cbecb9/docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION_NATIVE_SIGNED_PRODUCTIVE_CONTACT.md
+[READOUT]: ../../../D5/S3/Arith/FibonacciAtomic/ActualTreeReadoutAcquisition.lean
+[ROWS]: ../../../D5/S3/Arith/FibonacciAtomic/Observer/ActualCutPartitionDecoder.lean
+[FIBERS]: ../../../D5/S3/Arith/FibonacciAtomic/Observer/NativeCutFibers.lean
+[DEPTH]: ../../../D5/S3/Arith/FibonacciAtomic/Observer/NativeDepthPatterns.lean
+[KRAFT]: https://doi.org/10.1002/047174882X
+[BCCP]: https://arxiv.org/html/2004.12187v6
+[BCCP42]: https://arxiv.org/html/2004.12187v6#S4.SS2
+[BCCP44]: https://arxiv.org/html/2004.12187v6#S4.SS4
+[BCCP5]: https://arxiv.org/html/2004.12187v6#S5
+[BCCPDOI]: https://doi.org/10.3233/FI-222145
+[BP]: https://arxiv.org/html/2311.16607v1
+

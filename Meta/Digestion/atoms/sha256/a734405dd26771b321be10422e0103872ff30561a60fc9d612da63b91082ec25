@@ -1,0 +1,36 @@
+**Proposition 4.1 (a selected root row identifies the invocation source).**
+There is an all-source record-sound producer with universal
+finite-interference liveness whose completely cleaned root-row output
+has source support exactly $\{\alpha\}$, although that row alone admits
+every finite source.
+
+Proof. First Read $\varepsilon$. If the reply is alpha choose
+$Q=\{\varepsilon\}$; otherwise choose $Q=\{L,R\}$. Execute the supplied
+RA capture on that selected cut. Retain only the selected cut and its
+complete row, with common ready control and permissions; perform the
+complete cleanup. The initial reply, branch latch, guard and attempt
+state are inaccessible. Once the actual reply selects its finite cut,
+RA's all-cut proof applies from the current register. Thus safety and
+liveness hold under arbitrary legal interleavings.
+
+Let $b$ be the root cut and its constant row. Reaching this cut requires
+that the first Read saw alpha. By `no_alpha` in [ISC], no positive iterate
+has root alpha; a tree with that root is alpha itself. Hence $u=\alpha$
+and there were zero updates before this first Read. Conversely a
+quiescent invocation on alpha returns $b$. More generally, insert any
+$j\ge0$ updates after the first Read and before a quiescent RA capture.
+Its validation source is $T_j=\rho^j\alpha$, with the same whole $b$.
+
+The concrete quiescent pair is: alpha gives first reply alpha and returns
+the root row; beta gives first reply beta and returns the two-address cut
+with literal exterior beta and both blocking guards. Beta satisfies the
+proposed root-row semantics at every epoch but cannot return $b$ under
+this program at any schedule. The cut already reveals the selected
+branch. A redundant saved branch transcript is unnecessary. $\square$
+
+The first-validation rebase $t=U_v$ gives only
+$t\in\{T_j:j\ge0\}$, not arbitrary $t\in\mathcal T$. The first Read
+preceded that validation. Relabelling $v$ as relative epoch zero cannot
+remove its restriction. This does not strengthen CAB's origin claim:
+the information comes from this program's earlier Read and selected output.
+

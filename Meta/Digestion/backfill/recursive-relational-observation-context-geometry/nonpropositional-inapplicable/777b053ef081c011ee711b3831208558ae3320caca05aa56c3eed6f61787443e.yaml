@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:777b053ef081c011ee711b3831208558ae3320caca05aa56c3eed6f61787443e
+  normalized_sha256: sha256:777b053ef081c011ee711b3831208558ae3320caca05aa56c3eed6f61787443e
+cas_ref: sha256:777b053ef081c011ee711b3831208558ae3320caca05aa56c3eed6f61787443e
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 命题 15.2（全部词的有限不变张成）。的证明段；本项只给出该陈述的论证及所用步骤的说明，不另立独立命题。命题陈述保留在前项。
+    previous_atom_id: 7c5ad98843584ca6d5b26241dd40ff516c83fa1d8257f091e059bfe01fc09c17
+    next_atom_id: 13d18b5f6db11656f8715d3fd3d801929f369c185b7a15b94a87117d27705920

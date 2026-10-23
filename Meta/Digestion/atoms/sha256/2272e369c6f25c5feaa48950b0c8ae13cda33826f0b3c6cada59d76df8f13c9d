@@ -1,0 +1,7 @@
+This note develops the logical layer behind the causal sharp-bounds lane. The aim is to separate four questions that are often conflated:
+
+1. what causal or statistical assumptions define the admissible counterfactual worlds;
+2. how those worlds become a feasible coupling set;
+3. how a query is bounded over that set;
+4. what is required to call the resulting bounds sharp.
+

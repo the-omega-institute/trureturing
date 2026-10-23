@@ -1,0 +1,21 @@
+**定理 26.12（距离比较的精确域与余项）。** 在假设 26.11 外加
+$R>\sqrt{d_0}$，其中
+$d_0=c_0^2/((1+\alpha)(1+\beta))$，基准四角自由能为
+$$
+J_F(R)=\frac{\vartheta}{2}\log\left(1-\frac{d_0}{R^2}\right),
+\qquad
+-\frac{dJ_F}{dR}
+=-\frac{\vartheta d_0}{R^3(1-d_0/R^2)}.
+$$
+若 $x=d_0/R^2\le\rho<1$，则
+$$
+\left|J_F(R)+\frac{\vartheta d_0}{2R^2}\right|
+\le\frac{\vartheta d_0^2}{4(1-\rho)R^4},
+$$
+$$
+\left|-\frac{dJ_F}{dR}+\frac{\vartheta d_0}{R^3}\right|
+\le\frac{\vartheta d_0^2}{(1-\rho)R^5}.
+$$
+若 $c_0=0$，则 $d_0=0$ 且两项恒为零。负号这里只是所定义的
+$-J_F'(R)$；没有给出空间、力或重力解释。
+

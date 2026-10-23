@@ -1,1 +1,1 @@
-{"statement_id":"sha256:0b2c1f7bce67a4f37d8a60fe567bc37afe40720157733b387c1e9a11b9b71259"}
+{"statement_id":"sha256:2d3d3324dc2d13af6700091c94ff1c007d31f7296d1e401505f6f9d8a00d792c","declarations":[{"declaration_name_key":"ns(ns(ns(n0,10:Homeomorph),8:addRight),10:congr_simp)","kind":"theorem"},{"declaration_name_key":"ns(ns(ns(ns(ns(ns(n0,2:D5),2:S3),7:Quantum),8:Analysis),27:TranslationDomainWeakStrong),22:translation_domain_iff)","kind":"theorem"}]}

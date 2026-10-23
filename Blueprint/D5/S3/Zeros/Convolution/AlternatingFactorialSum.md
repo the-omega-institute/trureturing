@@ -6,7 +6,19 @@ The alternating factorial convolution for every pair of natural parameters.
 
 The source is restored byte-for-byte from the archived matching-SOS report. It supplies equation (5) for the monomial-fiber route; no matching-polynomial coefficient formula follows without the separate combinatorial fiber proof.
 
-**Theorem 1.1 (Opposite Series Product).**
+**Theorem 1.1 (Real Descending Factorial).**
+
+Lean statement: `D5/S3/Zeros/Convolution/AlternatingFactorialSum.real_descFactorial`
+
+*Proof.* Machine-checked in Lean as `D5/S3/Zeros/Convolution/AlternatingFactorialSum.real_descFactorial` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+For natural numbers i and n with i <= n, the real value of n.descFactorial i equals n! / (n - i)!.
+
+**Theorem 1.2 (Opposite Series Product).**
 
 Lean statement: `D5/S3/Zeros/Convolution/AlternatingFactorialSum.opposite_inv_series_mul`
 
@@ -18,7 +30,7 @@ Lean statement: `D5/S3/Zeros/Convolution/AlternatingFactorialSum.opposite_inv_se
 
 Over every commutative ring, the two opposite negative-binomial series multiply to the series obtained by substituting the squared variable.
 
-**Theorem 1.2 (Alternating Choose Convolution).**
+**Theorem 1.3 (Alternating Choose Convolution).**
 
 Lean statement: `D5/S3/Zeros/Convolution/AlternatingFactorialSum.alternating_choose_convolution`
 
@@ -30,7 +42,7 @@ Lean statement: `D5/S3/Zeros/Convolution/AlternatingFactorialSum.alternating_cho
 
 Coefficient extraction gives the alternating binomial convolution for arbitrary natural d and h over the rationals.
 
-**Theorem 1.3 (Alternating Factorial Identity).**
+**Theorem 1.4 (Alternating Factorial Identity).**
 
 Lean statement: `D5/S3/Zeros/Convolution/AlternatingFactorialSum.alternating_factorial_sum`
 
@@ -47,3 +59,4 @@ The sum over ell from zero to 2h of (-1)^ell choose(2h,ell) (d+ell)! (d+2h-ell)!
 - Truth anchor: `D5/S3/Zeros/Convolution/AlternatingFactorialSum.alternating_choose_convolution`
 - Truth anchor: `D5/S3/Zeros/Convolution/AlternatingFactorialSum.alternating_factorial_sum`
 - Truth anchor: `D5/S3/Zeros/Convolution/AlternatingFactorialSum.opposite_inv_series_mul`
+- Truth anchor: `D5/S3/Zeros/Convolution/AlternatingFactorialSum.real_descFactorial`

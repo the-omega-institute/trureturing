@@ -1,0 +1,6 @@
+并输出至少三种证书：
+
+1. 基础稳定集不等式失败；
+2. transfer product 无闭合支持；
+3. loop-coupling polytope 为空。
+

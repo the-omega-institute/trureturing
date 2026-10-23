@@ -1,1 +1,1 @@
-{"statement_id":"sha256:e3e7e2ee51f709949ff56482b195d4b322a794dbc912b5204a700976130aef33"}
+{"statement_id":"sha256:4b361829f809f63381f2625c38d18c62177694455ec222a71290a3ca50ab3c8a","declarations":[{"declaration_name_key":"ns(ns(ns(ns(ns(ns(n0,2:D5),2:S3),4:Weil),13:TestFunctions),30:FiniteAtomicBudgetedCompletion),33:finite_atomic_budgeted_completion)","kind":"theorem"}]}

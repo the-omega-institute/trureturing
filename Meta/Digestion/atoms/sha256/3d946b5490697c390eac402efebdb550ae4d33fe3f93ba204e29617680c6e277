@@ -1,0 +1,8 @@
+**命题 7.1（bounded target range with unbounded native price）。** Let the exterior be $C=(\beta,\square)$ with one class and a cut $P=\{R\}$ at the hole. Then
+
+$$
+\Sigma_R=\{0,1,2\},
+$$
+
+but every exact source-total row-only service has unbounded new calls, unbounded phase-distinct queried addresses, unbounded maximum address length, and unbounded total submitted address length.
+

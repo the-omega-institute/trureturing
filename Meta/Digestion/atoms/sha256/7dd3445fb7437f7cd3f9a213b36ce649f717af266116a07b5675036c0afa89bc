@@ -1,0 +1,22 @@
+**Definition 58.1 (complete tagged action boundary).** A complete semantic
+state $q\in Q$ retains the original source, current source state, controller
+position and memory, authenticated epoch, ordered history, guards and
+permissions, contracted resource accumulators, and immutable target row.
+Its status distinguishes pending, halt, deadlock, illegal, and undefined
+cases. A halt carries the complete terminal output; non-halts have a
+distinguished absent output. Halt is absorbing and deadlock permits no
+progress. For every primitive action the interface records legality and
+definedness separately, and, on a legal defined action, its actual visible
+response, contracted event fields, and successor. A silent action has an
+explicit response $\bot$. Illegal and undefined cases have distinct tags
+and absent response, cost, and successor fields; a legal but undefined
+operation is a contract failure. Silence, absence, failure, and termination
+are separate labels.
+
+The underlying same-source boundary and all-action response factorization
+are supplied by
+[Relational IV, Definitions 41.2--41.3 and 46.1, with §47's history-state correction](https://github.com/the-omega-institute/trureturing/blob/0cd2d8e87296269efebb3d308ff59318aab0a10a/docs/develop/theory/FIB_RELATIONAL_FIBER_CALCULUS_CONTINUATION_IV.md#47-uniform-finite-profile-and-history-state-correction).
+The full tagging above is an explicit requirement on a proposed extension,
+including cases that are not successful runs. Source/chart coordinates
+remain semantic descriptions, not online source-identity inputs.
+

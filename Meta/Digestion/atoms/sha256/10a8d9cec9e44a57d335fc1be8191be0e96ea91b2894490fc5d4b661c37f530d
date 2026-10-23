@@ -1,0 +1,11 @@
+**Assumption 97.1 (supplied prefix and a Fibonacci-only original input).**
+The original unknown finite source is promised to be exactly one
+$T_n$ of Definition 92.2, with $n\ge0$, and its inclusive table
+$p_h(T_n)$ is supplied. If interpreted as a native acquisition,
+this supply has the additional source/version authentication,
+epoch, refusal and absorbing Stop premises of Continuation III,
+Assumption 91.6. The supplied data concern the original root of
+the immutable source, not a current root after substitution.
+The promise restricts the possible original inputs; it is not
+a permission to prepare, compare or retain a family of new INITIALs.
+

@@ -1,0 +1,45 @@
+**Theorem 9.2 (joint call and peak attainment).** Under Definition 8.1,
+singletons have $K(L,L)=M(L,L)=0$. For $L<U$,
+
+$$
+M(L,U)=\left\lfloor\frac{U-1}{2}\right\rfloor,
+\tag{AOF.29}
+$$
+
+and one finite reader simultaneously attains (AOF.26) and (AOF.29).
+For a nonsingleton interval, call budget $k$ and peak budget $d$ are
+jointly feasible precisely when $U\le2d+2$ and the appropriate
+capacity inequality of Theorem 8.3 holds.
+
+**Proof.** By the supplied guarded table, any word of length at most
+$d$ gives branch on every age $n\ge2d+2$: its weight is at most $2d$,
+and its last-edge guard and branch threshold have already been crossed.
+The root has the same property, including $d=0$. If
+$d<\lfloor(U-1)/2\rfloor$, both $U-1$ and $U$ lie in this common
+branch tail. Deterministic adaptive queries of length at most $d$
+therefore choose the same subsequent words and receive identical
+histories on these two fixed sources, however many calls are allowed.
+They cannot output both ages correctly. This proves the peak lower bound.
+
+Apply Theorem 9.1 at every node of the actual call-optimal finite tree
+of Theorem 8.3. For each old query, submit the replacement literal
+word once and feed its mapped reply into the old control. Induction
+on a run on each fixed $T_n$ proves the same simulated replies,
+choices and final output; neither the source nor its age changes.
+Calls do not increase, and every submitted word has length at most
+$m=\lfloor(U-1)/2\rfloor$. The independent call and peak lower bounds
+force this one reader's two worst coordinates to be exactly $K$ and
+$M$. For $U\le2$ a nonsingleton is separated by one paid root call
+with peak zero. A singleton outputs its public age without a query.
+The joint-budget characterization follows from the two lower bounds
+and their common attaining reader, since $M\le d$ is equivalent to
+$U\le2d+2$.
+
+In particular, $[0,3]$ needs two calls while $[1,4]$ needs one.
+On $[2,5]$, the mixed literal word $LR=P_3$ gives the four different
+replies in one call. A pure-right one-call reader cannot do so: the
+root is constant, $R$ merges four/five, $RR$ merges two/three, and
+$R^s$ for $s\ge3$ is constantly absent. Two pure-right calls suffice
+by $R$ and then $RR$ on branch. Thus the allowed mixed query is a
+real resource distinction. $\square$
+

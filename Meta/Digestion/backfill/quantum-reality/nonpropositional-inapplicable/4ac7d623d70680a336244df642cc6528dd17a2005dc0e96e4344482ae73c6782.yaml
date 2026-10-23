@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:4ac7d623d70680a336244df642cc6528dd17a2005dc0e96e4344482ae73c6782
+  normalized_sha256: sha256:4ac7d623d70680a336244df642cc6528dd17a2005dc0e96e4344482ae73c6782
+cas_ref: sha256:4ac7d623d70680a336244df642cc6528dd17a2005dc0e96e4344482ae73c6782
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 定义 203.1　双路径与量子记录只规定模型对象、符号、协议或适用条件；附文限定这些定义的含义，没有另立性质断言。
+    previous_atom_id: 1f955790881309162a3ff0d8b623921da983167a72ef90095599d9257328e956
+    next_atom_id: 9e17bb9caa4b4c3bba613c170a6d28cf4e4707772fbda0a6f2438c1f6a4b56ef

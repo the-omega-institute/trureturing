@@ -1,0 +1,12 @@
+**Theorem 7.1 (native weak stability iff both walls).** For every fixed
+choice of means, interior cylinder, source, smooth positive density and SPD
+horizontal covariance in Definition 1.3, the following are equivalent:
+
+1. There is a nonempty interval $(0,g_0)$ such that for every
+   $g\in(0,g_0)$ the full killed form $q_{A,g}$ is closed and semibounded on
+   exactly $\mathcal F_A$, has equivalent shifted form norms and compact
+   resolvent, and its normalized minimum is attained.
+2. Both native walls $E_-$ and $E_+$ hold, so the current-ray dimension is
+   $3$, the direct rank is $2$, the growth vector is $(2,3)$, and the native
+   volume exponent is $4$.
+

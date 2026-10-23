@@ -1,1 +1,1 @@
-{"statement_id":"sha256:078558facaaa60f941e1f63d1bf088551930375380ed655253f522957ed0b173"}
+{"statement_id":"sha256:078558facaaa60f941e1f63d1bf088551930375380ed655253f522957ed0b173","declarations":[{"declaration_name_key":"ns(ns(ns(ns(ns(ns(n0,2:D5),2:S3),13:Combinatorics),8:Geometry),29:CrownOrderPolytopeEnumeration),24:crownAuxiliaryPolynomial)","kind":"def"},{"declaration_name_key":"ns(ns(ns(ns(ns(ns(n0,2:D5),2:S3),13:Combinatorics),8:Geometry),29:CrownOrderPolytopeEnumeration),34:crownAuxiliaryPolynomial_chebyshev)","kind":"theorem"}]}

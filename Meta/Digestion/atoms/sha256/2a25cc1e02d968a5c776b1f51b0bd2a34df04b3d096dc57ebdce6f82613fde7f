@@ -1,0 +1,25 @@
+## 1. 同一算术对象与平移探针
+
+令
+
+\[
+C(f,g)(s)=\int_{\mathbb R}f(x)\overline{g(x-s)}\,dx,
+\qquad W(f,g)=\operatorname{literatureRHS}(C(f,g)).
+\]
+
+直接使用 `Zeta23.EF.weilTest` 与 `Zeta23.EF.literatureRHS`，保留实际 von Mangoldt 素数幂系数、两个极点项和 `gammaBracket`。这里的原始相关函数载体允许一般复值函数。已有 `WeilTestFunction` 的偶性约束不能代替完整奇偶空间上的最低模态论证。
+
+Fourier 约定为 `hat f(z)=integral f(x)*exp(i*z*x) dx`。固定 `t>0`，定义
+
+\[
+S_tf(x)=f(x-t)+f(x+t),\qquad B=S_t-\alpha I.
+\]
+
+对归一化候选 `k`，取实数 `alpha=<S_t k,k>`，则 `|alpha|<=2` 且 `Bk` 与 `k` 正交。相关函数满足精确恒等式
+
+\[
+C(Bf,g)=C(f,Bg),\qquad C(Bk,Bk)=C(k,B^2k).
+\]
+
+这些等式在作用整个 `literatureRHS` 之前成立，因此不会丢掉 prime、pole 和 Gamma 项之间的抵消。
+

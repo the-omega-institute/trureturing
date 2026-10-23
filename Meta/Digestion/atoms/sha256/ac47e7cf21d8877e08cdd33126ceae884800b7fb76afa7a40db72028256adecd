@@ -1,0 +1,16 @@
+## 命题 B：`FutureSummaryClosed`
+
+形式化四个更新：
+
+\[
+U_\alpha(p,A,B),
+\quad
+U_\beta(p,A,B),
+\quad
+U_\alpha(\beta,A,B),
+\quad
+U_\beta(\beta,A,B),
+\]
+
+并证明 future quotient 对合法操作闭合。
+

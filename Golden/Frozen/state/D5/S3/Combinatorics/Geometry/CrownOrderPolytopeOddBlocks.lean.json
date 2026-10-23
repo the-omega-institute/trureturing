@@ -1,1 +1,1 @@
-{"statement_id":"sha256:52283b7ed00aaf91726ab1b860e73970b9b13bacdc12537f2a48dae503655017"}
+{"statement_id":"sha256:52283b7ed00aaf91726ab1b860e73970b9b13bacdc12537f2a48dae503655017","declarations":[{"declaration_name_key":"ns(ns(ns(ns(ns(ns(n0,2:D5),2:S3),13:Combinatorics),8:Geometry),29:CrownOrderPolytopeEnumeration),22:crownOddBlock_geometry)","kind":"theorem"},{"declaration_name_key":"ns(ns(ns(ns(ns(ns(n0,2:D5),2:S3),13:Combinatorics),8:Geometry),29:CrownOrderPolytopeEnumeration),24:crownBlockParityVertices)","kind":"def"}]}

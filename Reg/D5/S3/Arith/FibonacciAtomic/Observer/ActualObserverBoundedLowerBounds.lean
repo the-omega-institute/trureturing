@@ -176,4 +176,83 @@ noncomputable def registration : Contract.Registration.{_, _, _, 0, 0, 0, u+1, 0
 #print axioms family
 #print axioms registration
 
+abbrev spectrumArena : Arena where
+  signature := signature.{u}
+  Law R := ∀ {E : Type u} [Fintype E] (M : Observer E) (U : Source), Legal M U →
+    ∀ {e : E} {h : RawHistory}, ActualPrefix M U e h →
+      paid (M.decoder e) = paid h ∧
+      (R.readout () ⟨E, inferInstance, M⟩ h).card = (paid h).card + 1 ∧
+      ∀ c ∈ R.readout () ⟨E, inferInstance, M⟩ h, paid c ⊆ paid h
+
+theorem spectrum_bridge : (type_of% (@prefix_cache_spectrum.{u})) ↔
+    spectrumArena.{u}.Law actual.{u} := Iff.rfl
+
+theorem spectrum_law : spectrumArena.{u}.Law actual.{u} := @prefix_cache_spectrum.{u}
+
+theorem spectrum_bad : ¬ spectrumArena.{u}.Law bad.{u} := by
+  intro law
+  have count := law negativeObserver (.of false)
+    (negative_admissible.legal (.of false) le_rfl) ActualPrefix.initial
+  simpa [bad, realize, paid] using count.2.1
+
+theorem spectrum_variation : Variation spectrumArena.{u} actual.{u} :=
+  ⟨spectrum_law, bad, spectrum_bad⟩
+
+theorem spectrum_sensitivity : Sensitivity spectrumArena.{u} actual.{u} := by
+  constructor
+  · intro i
+    refine ⟨bad, ?_, ?_, spectrum_bad⟩
+    · intro j different
+      exact (different (Subsingleton.elim j i)).elim
+    · funext e
+      cases e
+  · intro e
+    cases e
+
+noncomputable def spectrumFamily : Registration spectrumArena.{u}
+    (type_of% (@prefix_cache_spectrum.{u})) where
+  actual := actual
+  bridge := spectrum_bridge
+  variation := spectrum_variation
+  sensitivity := spectrum_sensitivity
+  dependence := dependence
+
+#print axioms spectrum_bridge
+#print axioms spectrum_law
+#print axioms spectrumFamily
+
+noncomputable def spectrumRegistration : LeanInformationAudit.Contract.Registration.{_, _, _, 0, 0, 0, u+1, 0, 0, 0, 0, 0}
+    (@prefix_cache_spectrum.{u}) (Realization signature.{u}) Unit Unit := {
+  unitName := `Reg.D5.S3.Arith.FibonacciAtomic.Observer.ActualObserverBoundedLowerBounds.spectrumUnit
+  realizationName := `Reg.D5.S3.Arith.FibonacciAtomic.Observer.ActualObserverBoundedLowerBounds.spectrumFamily
+  realizationSource := none
+  generated := false
+  arena := .source ⟨spectrumArena.{u}⟩
+  objectArena := .source ⟨spectrumArena.{u}⟩
+  catalog := Lean.Name.anonymous
+  localNames := true
+  realization := .source spectrumArena.{u} ⟨spectrumFamily⟩
+  correspondence := { stage := .evidence, objectStage := .evidence }
+  bundleNonempty := .evidence ⟨(True.intro : True)⟩ True.intro
+  readout := some (realize signature.{u} actual.{u}.readout actual.{u}.anchor)
+  variation := .evidence ⟨(True.intro : True)⟩ True.intro
+  sensitivity := .evidence ⟨(True.intro : True)⟩ True.intro
+  partialSensitivity := none
+  escapeFrom := none
+  sourceSelection := some {
+    owner := `D5.S3.Arith.FibonacciAtomic.Observer.ActualObserverBoundedLowerBounds
+    definition := none
+    coordinates := #[0, 1, 2]
+    readouts := #[{
+      path := #["body", "body", "body", "body", "body", "body", "body", "body", "arg", "fn", "arg", "fn", "arg", "arg"]
+      stateBinder := 6
+      functionOperand := false
+      stateOperand := none
+      booleanPredicate := false }] }
+  continuation := .unknown
+  familyRecord := none
+  options := #[] }
+
+#print axioms spectrumRegistration
+
 end Reg.D5.S3.Arith.FibonacciAtomic.Observer.ActualObserverBoundedLowerBounds

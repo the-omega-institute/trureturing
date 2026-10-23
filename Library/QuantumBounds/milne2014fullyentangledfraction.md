@@ -5,9 +5,10 @@ year: 2014
 title: "Quantum correlations of two-qubit states with one maximally mixed marginal"
 doi: 10.1103/PhysRevA.90.024302
 url: https://arxiv.org/abs/1404.3951v2
-claim: "Let rho be a general two-qubit state with steering ellipsoid centred at c. The fully entangled fraction is tightly bounded as f(rho) <= 1 - c/2 (Conjecture 2, Section V; c is the length of the centre vector)."
+claim: "Let rho be a general two-qubit state with steering ellipsoid centred at c. The CHSH nonlocality is tightly bounded as beta(rho) <= max[2 sqrt(2(1 - c)), 2] (Conjecture 1, Section V), and the fully entangled fraction is tightly bounded as f(rho) <= 1 - c/2 (Conjecture 2, Section V); c is the length of the centre vector."
 strata_touched:
   - D5/S3/Quantum/Entanglement/SteeringEllipsoidFullyEntangledFraction
+  - D5/S3/Quantum/Entanglement/SteeringEllipsoidCHSH
 license: citation-only
 triage: anchor
 ---
@@ -66,3 +67,16 @@ The repository formalization uses exactly these conventions:
 $\vec c=(\boldsymbol a-T\boldsymbol b)/(1-|\boldsymbol b|^2)$ when
 $|\boldsymbol b|\ne1$ and $\vec c=\boldsymbol a$ when $|\boldsymbol b|=1$,
 with the Euclidean length on $\mathbb R^3$.
+
+## The CHSH bound (Conjecture 1)
+
+Section II defines the CHSH nonlocality:
+
+> Define the operator $\mathcal B = \boldsymbol\alpha\cdot\boldsymbol\sigma\otimes(\boldsymbol\beta+\boldsymbol\beta')\cdot\boldsymbol\sigma+\boldsymbol\alpha'\cdot\boldsymbol\sigma\otimes(\boldsymbol\beta-\boldsymbol\beta')\cdot\boldsymbol\sigma$. The maximal CHSH violation gives a measure of Bell nonlocality and is given by $\beta(\tilde\rho)=\max_{\mathcal B}|\mathrm{tr}(\tilde\rho\mathcal B)|$, where the maximisation is performed over all directions $\boldsymbol\alpha,\boldsymbol\alpha',\boldsymbol\beta,\boldsymbol\beta'$.
+
+Section V, Conjecture 1:
+
+> Let $\rho$ be a general two-qubit state with $\mathcal{E}$ centred at $\vec c$. The CHSH nonlocality is tightly bounded as $\beta(\rho)\leq\max[2\sqrt{2(1-c)},2]$.
+
+The conjecture is restated, still open, as Conjecture 6.4 of A. Milne, *Quantum steering ellipsoids*, PhD thesis, Imperial College London (2016), https://doi.org/10.25560/44111.
+

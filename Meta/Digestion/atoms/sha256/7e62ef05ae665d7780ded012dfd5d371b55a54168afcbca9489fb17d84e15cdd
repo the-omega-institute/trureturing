@@ -1,0 +1,78 @@
+**Theorem 51.2 (sign, exact zero set and finite-time fourth cumulant).**
+For all $\kappa\in\mathcal K$ and $e\in\mathbb R^3$,
+
+$$
+\begin{aligned}
+\mathcal B_\kappa(e)
+ &=\langle f_e,\mathcal R f_e\rangle_\pi
+  =\int_0^\infty\langle f_e,e^{-s\mathcal L}f_e\rangle_\pi ds\\
+ &=\sum_{n\ge2}
+ \frac{\left(\int_I\phi_n(k)\phi(k)a_e(k)^2dk\right)^2}
+      {(n^2-1)\lambda}\ \ge0,\\
+\mathcal B_\kappa(e)=0
+ &\quad\Longleftrightarrow\quad e\in\mathcal A_\kappa.
+\end{aligned}
+\tag{51.3}
+$$
+
+In particular $e=(0,0,1)$ gives a strictly positive native coefficient
+uniformly bounded away from zero on $\mathcal K$.
+For $Y_t=e\cdot(q_t-q_0)$ under the stationary-height Q law, all odd
+cumulants vanish, and its second and fourth cumulants are exactly
+
+$$
+\begin{aligned}
+\operatorname{cum}_2(Y_t)&=2m_e t,\\
+\operatorname{cum}_4(Y_t)
+ &=24\int_0^t(t-s)\langle f_e,e^{-s\mathcal L}f_e\rangle_\pi ds\\
+ &=24\left[t\mathcal B_\kappa(e)
+ -\langle f_e,\mathcal R^2(1-e^{-t\mathcal L})f_e\rangle_\pi\right].
+\end{aligned}
+\tag{51.4}
+$$
+
+For $t>0$ the fourth cumulant is strictly positive exactly off the
+autonomous line. At a fixed finite time the general cumulant law is
+
+$$
+\operatorname{cum}_{2n}(Y_t)
+ =\frac{(2n)!}{n!}\operatorname{cum}_n
+       \left(\int_0^t a_e(K_s)^2ds\right),\qquad n\ge1.
+\tag{51.5}
+$$
+
+It is an identity of derivatives at zero, not a globally convergent
+logarithm at all complex frequencies.
+
+Proof. Centering gives $F_e(l)=F_e(u)=0$. Near either face $\phi^2$
+is comparable to the squared distance and $F_e$ is of order at least
+the cubed distance. Define $h'$ by
+$h'=-F_e/(\varepsilon^2\phi^2)$, and choose the additive constant
+so that $\pi(h)=0$. This gives a bounded smooth-interior corrector
+with derivative tending to zero at both faces. The identity
+$-\varepsilon^2(\phi^2h')'=\phi^2f_e$ and integration by parts,
+or its unitary Dirichlet formulation, put $h$ in $D(\mathcal L)$
+and give $h=\mathcal R f_e$. Its energy is precisely the last
+integral in (51.2). The height spectral decomposition gives the other
+expressions in (51.3); all sums and integrals converge by the gap.
+The inverse is strictly positive on the centered subspace, so its
+quadratic form is zero exactly when $f_e=0$. Theorem 50.1 classifies
+that condition completely. The coefficient $b_\kappa$ is positive
+and strictly decreasing on the fixed interval by G (12.9), hence its
+square is nonconstant. Continuity and compactness give the asserted
+strict uniform positivity for $e=(0,0,1)$.
+
+Conditional on the complete height history, $Y_t$ is a centered
+Gaussian of variance $2S_t$, where $S_t=\int_0^t a_e(K_s)^2ds$.
+Since $S_t$ is bounded at fixed $t$, its exponential moments exist
+near zero and
+$\mathbb E e^{rY_t}=\mathbb E e^{r^2S_t}$ there. Comparing derivatives
+of their logarithms proves (51.5). In particular
+$\operatorname{cum}_4(Y_t)=12\operatorname{Var}(S_t)$.
+Stationarity and reversibility give
+$\operatorname{Var}(S_t)=2\int_0^t(t-s)
+\langle f_e,e^{-s\mathcal L}f_e\rangle_\pi ds$.
+Integrating each positive spectral term proves (51.4) and its strict
+sign. The same positive spectrum shows why there is no cancellation
+of a nonzero quartic coefficient in a nonautonomous direction. $\square$
+

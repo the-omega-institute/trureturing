@@ -1,0 +1,34 @@
+### 定义 3.2：未来观察闭包
+
+给定末端测试函数空间 $G$，定义
+
+$$
+V_0=\operatorname{span}(G),
+$$
+
+$$
+V_{m+1}=
+V_m+
+\operatorname{span}
+\left\{
+M_{a,o}f:
+a\in A,\ o\in O,\ f\in V_m
+\right\}.
+$$
+
+定义
+
+$$
+V_\infty=\bigcup_{m\ge0}V_m.
+$$
+
+当只记录输出词而没有额外末端测试时，取
+
+$$
+G=\{1\},
+\qquad
+V_0=\operatorname{span}\{1\}.
+$$
+
+---
+

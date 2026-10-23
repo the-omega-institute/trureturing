@@ -1,1 +1,1 @@
-{"statement_id":"sha256:668f0decbd8eec6bca806168b96d67a6f81bfd069e118390f0dae5c4050e869f"}
+{"statement_id":"sha256:668f0decbd8eec6bca806168b96d67a6f81bfd069e118390f0dae5c4050e869f","declarations":[{"declaration_name_key":"ns(ns(ns(ns(ns(ns(n0,2:D5),2:S3),13:Factorization),13:Combinatorics),35:MixedPrimeHistoryPrimeEndpointBound),26:prime_endpoint_count_bound)","kind":"theorem"},{"declaration_name_key":"ns(ns(ns(ns(ns(ns(ns(n0,2:D5),2:S3),13:Factorization),13:Combinatorics),35:MixedPrimeHistoryPrimeEndpointBound),26:prime_endpoint_count_bound),9:match_1_4)","kind":"def"}]}

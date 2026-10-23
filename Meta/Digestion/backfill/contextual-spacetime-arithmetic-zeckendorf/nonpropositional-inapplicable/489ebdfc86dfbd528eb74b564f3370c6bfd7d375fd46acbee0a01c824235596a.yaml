@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:489ebdfc86dfbd528eb74b564f3370c6bfd7d375fd46acbee0a01c824235596a
+  normalized_sha256: sha256:489ebdfc86dfbd528eb74b564f3370c6bfd7d375fd46acbee0a01c824235596a
+cas_ref: sha256:489ebdfc86dfbd528eb74b564f3370c6bfd7d375fd46acbee0a01c824235596a
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: Proof exposition for section 378.8. The mathematical statement is supplied by D5/S0/History/Spacetime/AllSetZeckendorfEncoding.enc_injective_and_left_inverse. The paragraph explains that same statement and its displayed substitutions or definitional consequences; it is not an independent theorem obligation. b_D:D≃C_D、b_Y:Y≃C_Y 给 h 与 e 两个提升的精确逆域；逐边 Pack/语义 pair 分别编码原图、数字图。 部分联合域取 C_D=(b₁×b₂)[D] 并限制双射；已有有效码仍作为对象再次 Enc，零边及失败标签不合并。
+    previous_atom_id: a8e1d428e5e58f3ab6fed54c1ed5a0154d1f7d56342601a37395096d7a43653b
+    next_atom_id: df1b385b4af4f935ffee944ebeddef97d964dd467c26bcbdd9b5af86c4bcdf13

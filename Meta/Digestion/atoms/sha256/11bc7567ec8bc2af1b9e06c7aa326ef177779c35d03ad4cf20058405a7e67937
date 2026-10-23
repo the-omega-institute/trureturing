@@ -1,0 +1,38 @@
+**Proposition 5.3 (strict one-block separation from the whole-block join).**
+There is a native admissible $B\subset S_3$ with
+
+$$
+|B|=|J_2(B)|=4,\qquad |J_c(B)|=8.
+\tag{CBN.23}
+$$
+
+All eight trees use the same donor and decoder witnesses as the four.
+
+Proof. Put $\operatorname{bit}(0)=\alpha$,
+$\operatorname{bit}(1)=\beta$, and
+
+$$
+u_{a,b,c}=\langle\langle\operatorname{bit}(a),\operatorname{bit}(b)\rangle,
+                \langle\operatorname{bit}(c),\alpha\rangle\rangle,
+\qquad
+B=\{u_{a,b,c}:a\mathbin\oplus b\mathbin\oplus c=0\}.
+\tag{CBN.24}
+$$
+
+These height-two trees belong to $S_3$. The targets
+$\varepsilon,L,R$ are constantly branch. Each of $LL,LR,RL$ is
+served by its own literal, mapping alpha to $(2,1)$ and beta to
+$(1,0)$. The target $RR$ is constantly $(2,1)$. Thus all seven
+native targets have witnesses, and (CBN.4) answers every authentic count.
+
+Exactly the three constructor coordinates $LL,LR,RL$ vary. Every unary
+projection of their bits is full, and every binary projection is the
+full two-bit square: prescribing two bits determines one
+parity-completing third bit. All other coordinates are fixed by unary
+projections. The legal constructor join therefore consists exactly of
+the eight $u_{a,b,c}$ with unrestricted bits. It has no additional
+shapes or labels because those fixed unary projections already fix all
+other constructors. The same constant and own-reply witnesses work on
+these eight trees. For one whole-block coordinate the unary projection
+in (CBN.20) is $B$ itself, so $J_2(B)=B$. $\square$
+

@@ -37,6 +37,7 @@ Direct frozen dependencies:
   Mathlib constants are pinned upstream dependencies, not frozen repository nodes.
 -/
 
+import D5.S3.Quantum.Matrix.TwoPointFunctionalCalculus
 import D5.S3.QuantumChannels.CoPRelativeQuantumnessRefutation
 import D5.S3.Quantum.Dynamics.EntropyProductionCoherenceDeletionIdentity
 import D5.S3.QuantumChannels.ProjectionDiagnostics.StaticDynamicScalarSeparation
@@ -74,37 +75,15 @@ def claim : Prop := ∃ α : ℝ, 1 < α ∧ QDPI α
 private theorem involution_spectrum {n : Type} [Fintype n] [DecidableEq n]
     (H : Matrix n n ℂ) (hH : IsSelfAdjoint H) (hHH : H * H = 1)
     {x : ℝ} (hx : x ∈ spectrum ℝ H) : x = 1 ∨ x = -1 := by
-  have hc : cfc (fun x : ℝ => x * x) H = cfc (fun _ : ℝ => 1) H := by
-    rw [cfc_mul (fun x : ℝ => x) (fun x : ℝ => x) H, cfc_id' ℝ H hH,
-      cfc_const 1 H hH, Algebra.algebraMap_eq_smul_one]
-    simpa using hHH
-  have hsq := eqOn_of_cfc_eq_cfc hc (ha := hH) (by fun_prop) (by fun_prop) hx
-  dsimp at hsq
-  rcases eq_or_eq_neg_of_sq_eq_sq x 1 (by nlinarith) with h | h
-  · exact Or.inl h
-  · exact Or.inr h
+  exact QuantumTwoPointFunctionalCalculus.involution_spectrum H hH hHH hx
 
-private theorem two_point_cfc {n : Type} [Fintype n] [DecidableEq n]
+theorem two_point_cfc {n : Type} [Fintype n] [DecidableEq n]
     (f : ℝ → ℝ) (a b : ℝ) (H : Matrix n n ℂ)
     (hH : IsSelfAdjoint H) (hHH : H * H = 1) :
     cfc f (a • (1 : Matrix n n ℂ) + b • H) =
       ((f (a+b) + f (a-b))/2) • (1 : Matrix n n ℂ) +
       ((f (a+b) - f (a-b))/2) • H := by
-  have haff : cfc (fun x : ℝ => a + b*x) H = a • (1 : Matrix n n ℂ) + b • H := by
-    rw [cfc_const_add a (fun x : ℝ => b*x) H (by fun_prop) hH,
-      cfc_const_mul_id b H hH, Algebra.algebraMap_eq_smul_one]
-  rw [← haff, ← cfc_comp f (fun x : ℝ => a+b*x) H hH
-    ((H.finite_real_spectrum.image _).continuousOn _) (by fun_prop)]
-  calc
-    cfc (fun x : ℝ => f (a+b*x)) H =
-      cfc (fun x : ℝ => (f (a+b)+f (a-b))/2 + ((f (a+b)-f (a-b))/2)*x) H := by
-      apply cfc_congr
-      intro x hx
-      rcases involution_spectrum H hH hHH hx with rfl | rfl <;> dsimp <;>
-        simp only [mul_one, mul_neg_one, ← sub_eq_add_neg] <;> ring
-    _ = _ := by
-      rw [cfc_const_add _ (fun x : ℝ => ((f (a+b)-f (a-b))/2)*x) H (by fun_prop) hH,
-        cfc_const_mul_id _ H hH, Algebra.algebraMap_eq_smul_one]
+  exact QuantumTwoPointFunctionalCalculus.two_point_cfc f a b H hH hHH
 
 private theorem affine_posDef {n : Type} [Fintype n] [DecidableEq n]
     (a b : ℝ) (H : Matrix n n ℂ) (hH : IsSelfAdjoint H) (hHH : H * H = 1)

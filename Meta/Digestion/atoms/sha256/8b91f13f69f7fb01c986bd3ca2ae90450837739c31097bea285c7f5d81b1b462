@@ -1,0 +1,148 @@
+### theorem 15.1: 定理 3：输出分辨未来闭包定理
+
+对有限状态 instrument，有：
+
+#### 结论一：$V_m$ 精确描述长度不超过 $m$ 的全部记录
+
+$V_m$ 正好由所有长度不超过 $m$ 的记录词拉回函数张成：
+
+$$
+V_m=
+\operatorname{span}
+\left\{
+M_\omega g:
+|\omega|\le m,\ g\in G
+\right\}.
+$$
+
+因此，对两个初始分布 $p,q$，有
+
+$$
+pM_\omega g=qM_\omega g
+$$
+
+对所有 $|\omega|\le m$ 成立，当且仅当
+
+$$
+(p-q)f=0
+\qquad
+\forall f\in V_m.
+$$
+
+#### 结论二：若 $\mathcal B$ 对每个 $M_{a,o}$ 都不变，则 $\mathcal B$ 是未来充分的
+
+如果
+
+$$
+G\subseteq\mathcal B
+$$
+
+且
+
+$$
+M_{a,o}\mathcal B\subseteq\mathcal B
+\qquad
+\forall(a,o),
+$$
+
+则
+
+$$
+V_\infty\subseteq\mathcal B.
+$$
+
+因此任意满足
+
+$$
+p-q\in\mathcal B^\perp
+$$
+
+的两个分布，所有未来记录概率都相同。
+
+#### 结论三：隐藏 seam 的最早暴露深度
+
+令
+
+$$
+d=p_{\kappa+1}-p_\kappa.
+$$
+
+定义
+
+$$
+\rho_{\mathcal M}(d)=
+\min
+\left\{
+m:
+\exists\omega,g,\ |\omega|=m,\ 
+dM_\omega g\neq0
+\right\}.
+$$
+
+如果不存在这样的词，则令
+
+$$
+\rho_{\mathcal M}(d)=\infty.
+$$
+
+那么：
+
+- 所有长度小于 $\rho_{\mathcal M}(d)$ 的记录都看不见 $\kappa$；
+- 长度等于 $\rho_{\mathcal M}(d)$ 时，至少有一个记录事件对 $\kappa$ 敏感；
+- 对任意记录事件 $E=(\omega,g)$，其概率为
+
+  $$
+  \Pr_{p_\kappa}(E)=
+  A_E+\kappa B_E,
+  $$
+
+  其中
+
+  $$
+  B_E=dM_\omega g.
+  $$
+
+#### 证明
+
+对 $V_m$ 的表达式用 $m$ 归纳。
+
+当 $m=0$ 时，$V_0=\operatorname{span}(G)$。
+
+若 $V_m$ 已由长度不超过 $m$ 的词张成，则对每个 $f=M_\omega g\in V_m$，
+
+$$
+M_{a,o}f=
+M_{a,o}M_\omega g
+$$
+
+对应长度增加一的记录。因此 $V_{m+1}$ 正好由长度不超过 $m+1$ 的词张成。
+
+若 $\mathcal B$ 包含 $G$，且每个 $M_{a,o}$ 保持 $\mathcal B$，归纳可得
+
+$$
+V_m\subseteq \mathcal B
+$$
+
+对所有 $m$ 成立，因而
+
+$$
+V_\infty\subseteq\mathcal B.
+$$
+
+最后，由
+
+$$
+p_\kappa=p_0+\kappa d
+$$
+
+直接得到
+
+$$
+p_\kappa M_\omega g=
+p_0M_\omega g+\kappa(dM_\omega g).
+$$
+
+证毕。
+
+---
+

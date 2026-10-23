@@ -14,13 +14,7 @@ internal static class DirectoryLedgerTestSupport
         RemoveLedger(result);
         foreach (var source in ledger.RequireDigestionSources())
         {
-            var projectedSource = source.Atomizer == AtomizerRegistry.NoAtomizerId
-                ? source
-                : source with
-                {
-                    GenreRegistryProjection = GenreRegistryProjection.Available(
-                        GenreRegistryCheck.Collected([])),
-                };
+            var projectedSource = source;
             result[$"{BackfillInventoryLoader.RootPath}{source.SourceId}/source.toml"] =
                 Encoding.UTF8.GetString(BackfillInventoryWriter.WriteSourceMetadata(projectedSource).AsSpan());
             foreach (var entry in source.Entries)
@@ -46,13 +40,7 @@ internal static class DirectoryLedgerTestSupport
             .ToList();
         foreach (var source in ledger.RequireDigestionSources())
         {
-            var projectedSource = source.Atomizer == AtomizerRegistry.NoAtomizerId
-                ? source
-                : source with
-                {
-                    GenreRegistryProjection = GenreRegistryProjection.Available(
-                        GenreRegistryCheck.Collected([])),
-                };
+            var projectedSource = source;
             entries.Add(new RawRepositoryEntry(
                 $"{BackfillInventoryLoader.RootPath}{source.SourceId}/source.toml",
                 BackfillInventoryWriter.WriteSourceMetadata(projectedSource)));
@@ -75,12 +63,12 @@ internal static class DirectoryLedgerTestSupport
         var raw = RawRepositorySnapshot.Create(files.Select(static pair =>
             RawRepositoryEntry.FromText(pair.Key, pair.Value)));
         return Assert.IsType<SnapshotDecodeOutcome.Decoded>(
-            SnapshotDecoder.Decode(raw)).Snapshot;
+            SnapshotDecoder.Decode(DigestionTestSupport.WithSourcePolicy(raw))).Snapshot;
     }
 
     private static RepositorySnapshot Decode(RawRepositorySnapshot snapshot) =>
         Assert.IsType<SnapshotDecodeOutcome.Decoded>(
-            SnapshotDecoder.Decode(snapshot)).Snapshot;
+            SnapshotDecoder.Decode(DigestionTestSupport.WithSourcePolicy(snapshot))).Snapshot;
 
     internal static void ReplaceWithProjection(
         IDictionary<string, string> files,
@@ -145,6 +133,36 @@ internal static class DirectoryLedgerTestSupport
                 + "\0"
                 + Convert.ToBase64String(TemporaryFileSystem.File.ReadAllBytes(path))
                 + "\n"));
+    }
+
+    internal static void AssertContextOnlyAdditions(string before, string after)
+    {
+        static Dictionary<string, byte[]> Parse(string image) => image.Split('\n', StringSplitOptions.RemoveEmptyEntries)
+            .Select(line => line.Split('\0')).ToDictionary(parts => parts[0], parts => Convert.FromBase64String(parts[1]));
+        var prior = Parse(before);
+        var current = Parse(after);
+        foreach (var (path, bytes) in prior) Assert.Equal(bytes, current[path]);
+        var raw = RawRepositorySnapshot.Create(current.Select(pair => new RawRepositoryEntry(pair.Key, [.. pair.Value])));
+        foreach (var path in current.Keys.Except(prior.Keys))
+            Assert.True(DigestionContextPointerStore.IsCanonicalPath(path) || DigestionCasStore.IsCanonicalPath(path), path);
+        AssertContextCasReferenced(raw, current.Keys.Except(prior.Keys).Where(DigestionCasStore.IsCanonicalPath));
+    }
+
+    internal static void AssertContextCasReferenced(RawRepositorySnapshot raw, IEnumerable<string> paths)
+    {
+        var refs = raw.Entries.Where(file => DigestionContextPointerStore.IsCanonicalPath(file.Path))
+            .SelectMany(file => DigestionContextPointerStore.ParseVersions(file.Bytes,
+                file.Path[BackfillInventoryLoader.RootPath.Length..].Split('/')[0], Path.GetFileNameWithoutExtension(file.Path)))
+            .SelectMany(version => version.Entries).SelectMany(entry => entry.Occurrences
+                .SelectMany(occurrence => new[] { entry.AtomId, occurrence.PreviousAtomId, occurrence.NextAtomId }
+                    .Concat(occurrence.GoverningContext.Select(scope => scope.AtomId))))
+            .OfType<string>().ToHashSet(StringComparer.Ordinal);
+        foreach (var path in paths)
+        {
+            var body = raw.Entries.Single(file => file.Path == path).Bytes;
+            Assert.Contains(path[DigestionCasStore.RootPath.Length..], refs);
+            Assert.Equal(path, DigestionCasStore.Capture(body.AsSpan()).RelativePath);
+        }
     }
 
     internal static RawRepositorySnapshot ReadRepository(TemporaryDirectory repository) =>

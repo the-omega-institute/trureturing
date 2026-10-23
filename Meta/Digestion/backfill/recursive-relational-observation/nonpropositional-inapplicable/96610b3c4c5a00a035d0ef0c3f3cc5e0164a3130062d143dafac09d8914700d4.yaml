@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:96610b3c4c5a00a035d0ef0c3f3cc5e0164a3130062d143dafac09d8914700d4
+  normalized_sha256: sha256:96610b3c4c5a00a035d0ef0c3f3cc5e0164a3130062d143dafac09d8914700d4
+cas_ref: sha256:96610b3c4c5a00a035d0ef0c3f3cc5e0164a3130062d143dafac09d8914700d4
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 定义124.1只引入具有相等边界的相容对集合，并区分候选相容对与真实实现的像，不断言拼接存在。
+    previous_atom_id: 6e464691d6077d0d06309683ad7ee0dd0962e2d18865ecdd2584cbae33c18d66
+    next_atom_id: ff078466980f453f57037e3d612f70a263e459ea5bd97f25541b4108bcb59ea6

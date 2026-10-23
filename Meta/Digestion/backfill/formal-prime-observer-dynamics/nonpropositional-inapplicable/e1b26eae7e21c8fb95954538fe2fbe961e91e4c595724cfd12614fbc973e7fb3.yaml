@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:e1b26eae7e21c8fb95954538fe2fbe961e91e4c595724cfd12614fbc973e7fb3
+  normalized_sha256: sha256:e1b26eae7e21c8fb95954538fe2fbe961e91e4c595724cfd12614fbc973e7fb3
+cas_ref: sha256:e1b26eae7e21c8fb95954538fe2fbe961e91e4c595724cfd12614fbc973e7fb3
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 非命题文本：证明：本片段仅论证相邻的既有陈述，不另行提出命题。
+    previous_atom_id: c640f12c733824cc33f0a736f0d8c3aee6ed01d2d3250d16654bf512781c5460
+    next_atom_id: 2ca4b38ca652f4fdd9da6e3267ff1130634e22f82bbc0967b8c420eb684585be

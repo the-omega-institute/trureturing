@@ -1,1 +1,1 @@
-{"statement_id":"sha256:39cb10ad3241c605faee71f0a138d980f68e24606ed097efd4b37c8420705bfb"}
+{"statement_id":"sha256:39cb10ad3241c605faee71f0a138d980f68e24606ed097efd4b37c8420705bfb","declarations":[{"declaration_name_key":"ns(ns(ns(ns(ns(n0,2:D5),2:S3),13:Combinatorics),39:ArcherCyclicPadovanRecurrenceUniqueness),24:triple_recurrence_unique)","kind":"theorem"}]}

@@ -1,0 +1,35 @@
+**Proof.** Enumerate the at most $3^k$ type assignments and test
+(NBP.10.5); Proposition 10.2 makes this an exact finite table of
+attained types. Compute $G_*$ using (NBP.10.8), Theorems 2.2 and
+3.2. Enumerate the finitely many colorings. On each nonempty
+colored subtable, the finite unit-call recurrence (SLH.69.17)
+terminates and gives its exact optimal experiment tree: equal
+complete menu replies give equal type and hence equal target.
+Its constant-target case gives zero calls. Its nonconstant-target
+case chooses an actual class-root experiment splitting the table.
+Thus it supplies exactly the trees of Definition 10.7, not a
+new unrestricted partition action. Theorem 10.8 proves
+(NBP.10.13), and its first direction installs the finite encoder
+and trees on the full actual fiber. The encoder inspects only
+actually acquired terms; the online reader calls only $p_d$.
+There are no source-feasibility or equality queries at run time.
+$\square$
+
+This directly reuses the bounded literal-task, class-coordinate
+and finite protocol methods of Sparse Literal History Transport
+§§69.1--69.4 and its existing minimax recurrence (SLH.69.17);
+Theorem 74.4 supplies the separate whole-row determining-prefix
+framework. The finite unrolling and actual terminal-output
+discipline are the suppliers in Native Signed Feasibility
+§§7.1--7.3. Its supplied-word-length finite-box enumeration by
+itself would not justify (NBP.10.13): it would only test successive
+word bounds. Here Proposition 10.5 and Theorem 10.8 replace
+arbitrary-address joint feasibility by the finite installed menu
+of class roots. This is a source-specific delta with the actual
+consumer (NBP.10.13), not a new generic unbounded-word decision
+method: SLH §69 already owns unrestricted-depth bounded
+literal-task finite decision. The delta is the one-image
+admissibility correspondence, simultaneous actual image padding,
+and joint acquired/exported advice transfer for the whole
+predecessor target.
+

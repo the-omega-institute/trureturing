@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:3c3c913984941c2cb15f125d5a3773622634433660f213c4d8a4bb47e4c460b2
+  normalized_sha256: sha256:3c3c913984941c2cb15f125d5a3773622634433660f213c4d8a4bb47e4c460b2
+cas_ref: sha256:3c3c913984941c2cb15f125d5a3773622634433660f213c4d8a4bb47e4c460b2
+coverage_gids:
+  - gid: D5/S3/Analytic/Isolation/PositiveFredholmLimitZeros.positive_fredholm_limit_zeros
+    target_statement_id: sha256:1cfade66b371f8c5d99c6dc9db29d5349406f6fbbf47c424489539f0e899c44a
+receipts:
+  unresolved_subitems: []

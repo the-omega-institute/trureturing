@@ -1,0 +1,28 @@
+## 14.8. Mathematical boundary and citations
+
+The conclusion of this chapter is exactly the conjunction of Theorem 14.1 and
+the rational implications (14.13), (14.18)--(14.24), and (14.26)--(14.29).
+It proves that complete endpoint boxes, the suspended midpoint, both complete
+interior budgets, the retained decline condition, and the retained positive
+squared-return condition do not imply the complementary p event inequality.
+It also supplies the finite periodic full-tail characterization.  It does not
+prove a positive companion, a whole-domain chord inequality, exclusion of all
+reversible or nondeterministic tables, a zero or positive unrestricted
+infimum, exact attainment, or an optimum under a fixed resource budget.
+The table R is therefore a nonattainer for the six-condition common endpoint
+problem because its p-a inequality fails.
+The quantities \(J_u,J_v,T,\delta_-\), return variation, complete-law dispersion,
+and configuration risk remain distinct.
+
+The full-source realization and all-history correspondence are reused from
+[PAID, Lemma 2.1.1 and formula (2.3)] and [CLIP, Proposition 2.3].  The paired
+indexed-array and complete-law regeneration correspondence is [PAIRED, Theorem
+4.1, Corollary 4.2, and Chapter 11]; midpoint means do not replace its paired
+arrays.  The endpoint geometry, six risk identities, decline budget, and
+squared-return necessity are [REV, §§3--4, 11--13].  Complete-tail acquired
+return and common-row restrictions are [ACQUIRED-RETURN, Theorems 3.1, 9.2,
+and 9.3].  The comparisons use only detailed balance, finite parity, TV
+convexity, geometric summation, and elementary rational arithmetic in the
+stated domains.  These citations supply their own hypotheses; no conclusion is
+transported beyond them.
+

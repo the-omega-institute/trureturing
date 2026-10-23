@@ -1,0 +1,46 @@
+**Corollary 118.1 (explicit constants).** Every feasible pair with
+
+$$
+\frac12\leq p\leq\frac9{10},\qquad
+\chi_{\mathrm{err}}:=s_2+\sqrt{2\tau}\leq\frac{s_1}{5000}
+\tag{U.57}
+$$
+
+satisfies
+
+$$
+\Theta(P,V)\leq r-\frac{s_1^2}{10000}.
+\tag{U.58}
+$$
+
+Proof. For $s=s_1>0$ we have $q\geq1/10$, $m\geq q$, $1-\eta\leq s^2$, and (U.49). Hence
+
+$$
+E\leq\frac{\sqrt{p/q}}{2\sqrt2}s\chi_{\mathrm{err}}
+\leq\frac98s\chi_{\mathrm{err}}.
+$$
+
+The last comparison uses $p/q\leq9$ and $3/(2\sqrt2)<9/8$. Concavity of the square root at $R_0\geq p>0$ gives
+
+$$
+\frac{\sqrt R-\sqrt{R_0}}2
+\leq\frac{\delta-\tau}{4\sqrt{R_0}}
+\leq\frac{\sigma^2}{2},\qquad \sigma=s_2.
+$$
+
+Here (U.51) and $R_0\geq1/2$ justify the coarser final constant, regardless of the sign of the root difference. Also, since $r<1$,
+
+$$
+\sqrt{c-s^2/1440}\leq r-\frac{s^2}{2880}.
+$$
+
+This follows either from the supporting line at $c$ or from rationalizing the difference, whose denominator is at most $2r<2$. Applying (U.54), and then (U.57) and $\sigma\leq\chi_{\mathrm{err}}$, gives
+
+$$
+\Theta\leq r-\frac{s^2}{2880}
++\frac98s\chi_{\mathrm{err}}+\frac{\sigma^2}{2}
+\leq r-s^2\left(\frac1{2880}-\frac9{40000}-\frac1{50000000}\right).
+$$
+
+The excess of the parenthesized coefficient over $1/10000$ is exactly $9991/450000000>0$. If $s_1=0$, feasibility forces $V=0$ and (U.45) gives (U.58) directly, without dividing by $s_1$. The neighborhood and its margin both scale with $s_1$; no fixed positive gap is asserted near the equality point $V=0,p=c$. $\square$
+

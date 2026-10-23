@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:3356e003f6ba70862753f7a003db01aae59cdb84dc1f31615a2391378c4ea860
+  normalized_sha256: sha256:3356e003f6ba70862753f7a003db01aae59cdb84dc1f31615a2391378c4ea860
+cas_ref: sha256:3356e003f6ba70862753f7a003db01aae59cdb84dc1f31615a2391378c4ea860
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 本 atom 为定理 Q3 的反向蕴含的证明及证明解释，不另立新命题；原陈述保留自身状态。
+    previous_atom_id: 2d48d91330e433438c348f49bcc9a44ddf54dde790428a441fbda810af8d9c2c
+    next_atom_id: dc8f40cdfd4ca8f4483838bf23ef60678fbf7ea1b16591ff53c1bd31b5ecfe36

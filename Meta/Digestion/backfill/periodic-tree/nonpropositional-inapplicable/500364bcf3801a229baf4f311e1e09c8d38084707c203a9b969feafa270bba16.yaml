@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:500364bcf3801a229baf4f311e1e09c8d38084707c203a9b969feafa270bba16
+  normalized_sha256: sha256:500364bcf3801a229baf4f311e1e09c8d38084707c203a9b969feafa270bba16
+cas_ref: sha256:500364bcf3801a229baf4f311e1e09c8d38084707c203a9b969feafa270bba16
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 英文证明段（**Proof.** Assertion (A) implies (B), since no prime at least seven be…）仅给出前文命题的推导或证明方向，不另提出独立结论。
+    previous_atom_id: 6844b1ef2bb010137f047e3589e9e050bdc831124f4066c778012f4bccaafafb
+    next_atom_id: 7837e2ec43710528378a783955d1daea63ed5cd72c98cb53ed8cdc3dd7acc279

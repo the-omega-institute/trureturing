@@ -1,0 +1,10 @@
+**命题 4.1（路与圈的带权秩）。** 设 $K$ 是特征 $2$ 的域,$A\in K^{m\times m}$ 是交错阵,其支撑图 $H(A)$ 恰为下列图之一(即 $A_{uv}\ne0$ 当且仅当 $uv$ 是该图的边)。
+
+(i) 若 $H(A)$ 是 $m\ge1$ 个顶点的路,则 $\operatorname{rank}_KA=2\lfloor m/2\rfloor$。
+
+(ii) 若 $H(A)$ 是长度 $L$ 为奇数的圈($m=L\ge3$),则 $\operatorname{rank}_KA=L-1$。
+
+(iii) 若 $H(A)$ 是长度 $L$ 为偶数的圈 $Z$($m=L\ge4$),则当 $\prod_{uv\in Z^{(1)}}A_{uv}\ne\prod_{uv\in Z^{(2)}}A_{uv}$ 时 $\operatorname{rank}_KA=L$,否则 $\operatorname{rank}_KA=L-2$。
+
+特别地,偶圈 $C_L$ 的邻接矩阵在 $\mathbb F_2$ 上的秩为 $L-2$;并且在定理 3.1 的设定下,若某个 $t$ 使 $H_t$ 的一个分支 $C$ 恰为偶圈 $Z$,则 $\delta_C(t)=2$ 当 $\alpha_t(Z)\ne1$,$\delta_C(t)=0$ 当 $\alpha_t(Z)=1$。边权全为 $1$ 的情形,即路与圈的邻接阵在 $\mathbb F_2$ 上的秩,是已知结果(先例与定位见第 9 节),本卷不主张其新颖性;本命题的新内容是任意非零边权的特征 $2$ 形式。
+

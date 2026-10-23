@@ -1,0 +1,29 @@
+**Definition 3.1 (natural views).** For an actual prefix $h$ of the
+incidence run define separately:
+
+| View | Independent meaning | Canonical body |
+| --- | --- | --- |
+| $S(h)$ | Root-relative L/R child support of the actual storage tree. | CYCLE Definition 3.3's preorder two-bit child masks. |
+| $B(h)$ | Actual root paths whose two child slots are empty. | CYCLE Definition 3.4's contour of that terminal antichain. |
+| $T(h)$ | Actual ordered $\Pi_{\mathrm{gc}}$ patch occurrences from the paid entrance, including operands, probes, updates, births, head changes, labels and receipts. | CYCLE Definition 5.3's eleven-field chronological records. |
+| $M_J(h)$ | UAS's selected actual retained backing, construction relations, frontier and current rights. | CYCLE Definition 6.1's seven-family records, with the role directory of Definition 2.2. |
+
+Support and terminality concern child incidence, process order concerns
+reaction occurrence, and memory concerns existing resources and relations.
+They are not defined by $Q$, a manifest, an Image, $k$, a completed list or
+four copies of a transcript. In particular joint memory can include
+producer/input-owner material that A cannot currently read. Its body is
+produced from an acquired representation, not by probing that material.
+
+For clarity the seven memory families are: (0) actual acquired seed and
+its delivery/boot binding; (1) constructed initial code/69 prefix and
+finite installation fields; (2) actual13 ingress and17 dependencies,
+including partial/preallocated material; (3) actual70 ingress and68
+descriptors, including the separate mode block; (4) actual input frontier,
+relevant raw scratch, PC/version/roles and the occupied input latch;
+(5) actual71/73 callable backing, copies and invocation/read/mailbox
+relations, including partial unavailable objects; (6) actual meter and
+selected current rights. Cells are identified by port and creation
+position; repeated references retain identity. Descriptors of CAP and
+RCA keep their distinct grammars and ordinal conventions.
+

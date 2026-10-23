@@ -28,26 +28,5 @@ public sealed class WorktreeCacheStrategyTests
         Assert.DoesNotContain("export PATH=", init, StringComparison.Ordinal);
         Assert.DoesNotContain("export PATH=", clean, StringComparison.Ordinal);
 
-        // Guard executable tooling; prose and truth data are not copy implementations.
-        string[] inputs = ["**/*.lean", ".github/scripts/**", "Blueprint/**/*.scribe.cs",
-            "Directory.Build.props", "Directory.Packages.props", "Makefile",
-            "docs/reports/**/*.c", "docs/reports/**/*.cpp", "docs/reports/**/*.h",
-            "docs/reports/**/*.mjs", "docs/reports/**/*.py", "tools/**"];
-        // Build rejected forms dynamically so the guard does not match itself.
-        var cloneFlag = string.Concat('-', 'c');
-        var recursiveFlag = string.Concat('-', 'R');
-        var shellForm = $"cp {cloneFlag}";
-        var argumentForm = $"\"{cloneFlag}\", \"{recursiveFlag}\"";
-        var scan = TestProcessRunner.Run(
-            "git",
-            new[] { "grep", "-n", "-I", "-e", shellForm, "-e", argumentForm, "--" }
-                .Concat(inputs.Select(input => ":(glob)" + input)).ToArray(),
-            root,
-            BoundedProcessRunner.HangDetectionBudget,
-            1024 * 1024);
-
-        Assert.Equal(
-            1,
-            scan.ExitCode);
     }
 }

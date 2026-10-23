@@ -1,0 +1,17 @@
+**Proposition 13.6 (diagnostics and the exact presentation boundary).** The
+one-counter correspondence has the following concrete checks.
+
+1. Pair traversal keeps the whole exponent: the $L$ subtree of
+   $\rho^2\langle\alpha,\alpha\rangle$ is $T_2$, hence a branch, rather
+   than $T_1=\beta$.
+2. A beta leaf entered with counter $c$ has rank $c+1$, because
+   $\rho^c\beta=T_{c+1}$.
+3. $T_2=\langle\beta,\alpha\rangle$ replies $\alpha$ at $R$ and
+   $\mathsf{absent}$ at $RL$.
+4. If reply labels are erased, the total reached-address traces of
+   $\alpha$ and $\beta$ coincide, so the four labelled languages are
+   necessary for equality.
+5. If the pair guard is removed, the equation $X=\rho X$ yields an
+   infinite $J$-chain; the finite-administration and correspondence claims
+   therefore do not extend to that unguarded syntax.
+

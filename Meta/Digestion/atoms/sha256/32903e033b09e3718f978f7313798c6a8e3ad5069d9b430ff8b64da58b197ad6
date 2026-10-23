@@ -1,0 +1,93 @@
+## 14.3. The rational table and its complete boxes
+
+Define the rational table \(R\) by
+\[
+ w=\frac{956000000000}{2309644331783},\qquad
+ \pi=\frac{(956000000000,956000000000,397644331783)}{2309644331783},
+\]
+\[
+ B=\begin{pmatrix}0&1&0\\1&0&0\\0&0&1\end{pmatrix},\quad A=I_3,\quad
+ u=\left(\frac{1941}{5000},\frac{731}{2000},\frac13\right),\quad
+ v=\left(\frac{3757}{10000},\frac{3719}{10000},\frac13\right).
+\tag{14.9}
+\]
+The two swap weights agree, so detailed balance holds, and the fixed label has
+positive mass.  Direct rational multiplication gives
+\[
+ H=\begin{pmatrix}
+ 0&11376421/50000000&0\\
+ 4767633/20000000&0&0\\
+ 0&0&2/9
+ \end{pmatrix},\qquad
+ g=\left(\frac{19213579}{50000000},
+ \frac{7922367}{20000000},\frac49\right),
+\]
+\[
+ \eta=\frac{54238600181493}{10^{15}},\qquad
+ \lambda_a^2<\eta<\lambda_b^2,\qquad
+ \eta<\left(\frac{15}{64}\right)^2.             
+\tag{14.10}
+\]
+The indexed arrays from (14.3) are
+\[
+ f=\left(
+ \frac{24762105744861880093447}{50000000000000000000000},
+ \frac{10184130961974194153931}{20000000000000000000000},
+ \frac{412}{729}\right),
+\]
+\[
+ h=\left(\frac{384335416303}{500000000000},
+ \frac{155083282873}{200000000000},\frac{22}{27}\right).
+\tag{14.11}
+\]
+Their exact means are
+\[
+ S=\pi h=\frac{5261}{6750},\qquad
+ P=\pi f=
+ \frac{21596346117609589569290488819}
+ {42093267946745175000000000000}.
+\tag{14.12}
+\]
+In particular,
+\[
+ P-M_p=-\frac{4813429587342128337389303}
+ {1559009923953525000000000000}<0,
+ \qquad M_p=\frac{11758471}{22781250},
+ \qquad S=M_\beta=\frac{5261}{6750}.       
+\tag{14.13}
+\]
+
+For a finite arithmetic certificate, let \([L,U]\), with \(L<U\), be the
+ordered endpoint interval for a swap-label coordinate \(x\).  Define its
+normalized lower and upper endpoint slacks by
+\[
+ \sigma_L(x;L,U)=\frac{x-L}{U-L},\qquad
+ \sigma_U(x;L,U)=\frac{U-x}{U-L}.
+\]
+Both slacks are nonnegative exactly when \(x\in[L,U]\).  For each displayed
+family and index n, each entry below is a lower bound for both slacks on both
+swap labels, with the displayed integer divided by 1000.  These bounds follow
+by substitution of (14.10) and (14.7) and cross multiplication of positive
+denominators:
+\[
+\begin{array}{c|cc|cc}
+ n&H^nu&H^ng&VH^nu&VH^ng\\ \hline
+0&177&287&289&89\\
+1&157&301&290&300\\
+2&301&87&350&310\\
+3&272&82&347&391\\
+4&359&263&391&381
+\end{array}
+\tag{14.14}
+\]
+The minimum of all 80 normalized swap-label endpoint slacks is
+\[
+ \frac{53836941709094477408822760489}
+ {651735040000000000000000000000}>\frac1{20}.
+\tag{14.15}
+\]
+It occurs at p type 1, \(n=3\), label 2.  The fixed label is the native
+\(a\)-law.  Theorem 14.1 now extends the finite tests to every word and both
+infinite outcomes; no finite-prefix replacement of the complete carriers is
+being made.
+

@@ -1,1 +1,1 @@
-{"statement_id":"sha256:a048d0f8f2e48532b123a34d09896a4c8c9fa37c8593b4180fbd456051160753"}
+{"statement_id":"sha256:a048d0f8f2e48532b123a34d09896a4c8c9fa37c8593b4180fbd456051160753","declarations":[{"declaration_name_key":"ns(ns(ns(ns(ns(n0,2:D5),2:S3),14:TotalVariation),35:IndependentSamplingExponentialBound),38:independent_sampling_exponential_bound)","kind":"theorem"}]}

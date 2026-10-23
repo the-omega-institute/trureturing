@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:5e2f55f7f97ca595d8f88f4de7d1ce52960fdaeaf6ef4599efcdc26dabd0ce2f
+  normalized_sha256: sha256:5e2f55f7f97ca595d8f88f4de7d1ce52960fdaeaf6ef4599efcdc26dabd0ce2f
+cas_ref: sha256:5e2f55f7f97ca595d8f88f4de7d1ce52960fdaeaf6ef4599efcdc26dabd0ce2f
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: Reverse proof of preceding theorem V4 using finite Pick interpolation and a normal-family limit.
+    previous_atom_id: aa5cd38b006363cdb7e06406c7428a882ca7a4283cf53ea10440d8306909a62d
+    next_atom_id: 303c576edacf284f05ba87d940de643540e2f39337efb176ba9104c117e6f982

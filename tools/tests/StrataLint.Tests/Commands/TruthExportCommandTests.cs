@@ -38,7 +38,7 @@ public sealed class TruthExportCommandTests
     [Fact]
     public void ClosedQueryReadsUncommittedCurrentModulesInsteadOfHead()
     {
-        ModuleSpec[] current = [Module("A"), Module("B", imports: ["A"]),
+        ModuleSpec[] current = [Module("A"), Module("B", source: "import D5.S0.Carrier.A\ntheorem b : True := by trivial\n", imports: ["A"]),
             Module("C", axioms: ["sorryAx"])];
         using var fixture = FixtureFromLedger([], [Module("A")], workingModules: current);
         var snapshot = Assert.IsType<SnapshotDecodeOutcome.Decoded>(
@@ -95,7 +95,7 @@ public sealed class TruthExportCommandTests
         var unrelatedFullPath = Path.Combine(repository.Path, unrelatedPath);
         Directory.CreateDirectory(Path.GetDirectoryName(unrelatedFullPath)!);
         File.WriteAllBytes(unrelatedFullPath, [0xff]);
-        ModuleSpec[] current = [Module("A"), Module("B", imports: ["A"])];
+        ModuleSpec[] current = [Module("A"), Module("B", source: "import D5.S0.Carrier.A\ntheorem b : True := by trivial\n", imports: ["A"])];
         File.WriteAllText(Path.Combine(repository.Path, PathFor("B")), current[1].Source);
         var snapshot = Assert.IsType<SnapshotDecodeOutcome.Decoded>(
             SnapshotDecoder.Decode(RawSnapshot(RepositoryFiles(current)))).Snapshot;
@@ -136,8 +136,7 @@ public sealed class TruthExportCommandTests
         var model = ParseExport(output);
         Assert.Equal("TruthExportCommand", model.Producer);
 
-        var expected = Assert.IsType<FrozenLedgerValidationOutcome.Accepted>(
-            ValidateHistory(fixture.LedgerFiles, fixture.FinalCatalog)).Capability.ActiveFrozenNodes;
+        var expected = fixture.FinalCatalog.ClosedNodes;
 
         Assert.Equal(
             expected.Select(static node => node.RepoPath.Value).Order(StringComparer.Ordinal),
@@ -164,8 +163,8 @@ public sealed class TruthExportCommandTests
     public void ClosedModuleWithoutAFreezeExportsProvenTruthWithHonestFreezeStatus()
     {
         var genesisCatalog = BuildCatalog(Module("A"));
-        var ledgerFiles = EventFiles(genesisCatalog);
-        using var fixture = FixtureFromLedger(ledgerFiles, [Module("A"), Module("B", imports: ["A"])],
+        var ledgerFiles = StateFiles(genesisCatalog);
+        using var fixture = FixtureFromLedger(ledgerFiles, [Module("A"), Module("B", source: "import D5.S0.Carrier.A\ntheorem b : True := by trivial\n", imports: ["A"])],
             stateModules: [Module("A")]);
         using var output = new TemporaryDirectory();
 
@@ -202,18 +201,12 @@ public sealed class TruthExportCommandTests
     }
 
     [Theory]
-    [InlineData(true, false, "proven-not-yet-frozen")]
-    [InlineData(false, true, "frozen")]
-    [InlineData(true, true, "frozen")]
-    [InlineData(false, false, "proven-not-yet-frozen")]
-    public void FreezeStatusUsesRevisionStateMembership(
-        bool hasAcceptedEvent, bool hasState, string expectedStatus)
+    [InlineData(true, "frozen")]
+    [InlineData(false, "proven-not-yet-frozen")]
+    public void FreezeStatusUsesRevisionStateMembership(bool hasState, string expectedStatus)
     {
         var module = Module("A");
-        var catalog = BuildCatalog(module);
-        var ledgerFiles = hasAcceptedEvent ? EventFiles(catalog) : [];
-        using var fixture = FixtureFromLedger(ledgerFiles, [module],
-            stateModules: hasState ? [module] : []);
+        using var fixture = FixtureFromLedger([], [module], stateModules: hasState ? [module] : []);
         using var output = new TemporaryDirectory();
 
         var (exitCode, console) = Run(fixture, output.Path);
@@ -232,7 +225,7 @@ public sealed class TruthExportCommandTests
     [InlineData(false)]
     public void UnfrozenPublicationStillRejectsUnboundSourceOrBrokenClosure(bool unboundSource)
     {
-        using var fixture = FixtureFromLedger(EventFiles(BuildCatalog(Module("A"))),
+        using var fixture = FixtureFromLedger(StateFiles(BuildCatalog(Module("A"))),
             [Module("A"), Module("B")]);
         using var output = new TemporaryDirectory();
         var files = RepositoryFiles([Module("A"), Module("B", source: "-- other source\n")]);
@@ -261,7 +254,7 @@ public sealed class TruthExportCommandTests
     [Fact]
     public void UnfrozenPublicationStillRejectsChangedFrozenIdentity()
     {
-        using var fixture = FixtureFromLedger(EventFiles(BuildCatalog(Module("A"))),
+        using var fixture = FixtureFromLedger(StateFiles(BuildCatalog(Module("A"))),
             [Module("A") with { StatementMaterial = "False" }, Module("B")]);
         using var output = new TemporaryDirectory();
 
@@ -269,20 +262,20 @@ public sealed class TruthExportCommandTests
 
         Assert.Equal(2, exitCode);
         Assert.Contains("TRUTH_EXPORT_REJECTED", console.Error, StringComparison.Ordinal);
-        Assert.Contains("statement identity changed", console.Error, StringComparison.Ordinal);
+        Assert.Contains("frozen state does not match current report", console.Error, StringComparison.Ordinal);
         Assert.Empty(Directory.GetFileSystemEntries(output.Path));
     }
 
     [Fact]
     public void UnfrozenPublicationStillRejectsFrozenModuleOutsideClosedCatalog()
     {
-        using var fixture = FixtureFromLedger(EventFiles(BuildCatalog(Module("A"))), [Module("B")]);
+        using var fixture = FixtureFromLedger(StateFiles(BuildCatalog(Module("A"))), [Module("B")]);
         using var output = new TemporaryDirectory();
 
         var (exitCode, console) = Run(fixture, output.Path);
 
         Assert.Equal(2, exitCode);
-        Assert.Contains("outside the current Closed catalog", console.Error, StringComparison.Ordinal);
+        Assert.Contains("frozen state does not match current report", console.Error, StringComparison.Ordinal);
         Assert.Empty(Directory.GetFileSystemEntries(output.Path));
     }
 
@@ -290,7 +283,7 @@ public sealed class TruthExportCommandTests
     public void MissingCandidateLeanReportFileFailsClosedWithNoOutput()
     {
         var genesisCatalog = BuildCatalog(Module("A"));
-        var ledgerFiles = EventFiles(genesisCatalog);
+        var ledgerFiles = StateFiles(genesisCatalog);
         using var fixture = FixtureFromLedger(ledgerFiles, [Module("A")]);
         using var output = new TemporaryDirectory();
         File.Delete(fixture.ReportPath);
@@ -312,7 +305,7 @@ public sealed class TruthExportCommandTests
         var committed = Module("A", source: "theorem a : True := by trivial\n");
         var working = Module("A", source: "-- mutable working bytes\ntheorem a : True := by trivial\n");
         var catalog = BuildCatalog(committed);
-        var ledgerFiles = EventFiles(catalog);
+        var ledgerFiles = StateFiles(catalog);
         using var fixture = FixtureFromLedger(
             ledgerFiles,
             [committed],
@@ -341,7 +334,7 @@ public sealed class TruthExportCommandTests
     {
         var module = Module("A", source: "theorem a : True := by trivial\n");
         var catalog = BuildCatalog(module);
-        using var fixture = FixtureFromLedger(EventFiles(catalog), [module]);
+        using var fixture = FixtureFromLedger(StateFiles(catalog), [module]);
         using var repository = new TemporaryDirectory();
         using var output = new TemporaryDirectory();
         TestGit.Run(repository.Path, "init");
@@ -454,7 +447,7 @@ public sealed class TruthExportCommandTests
         var moduleC = Module("C");
 
         var finalCatalog = BuildCatalog(originalA, moduleC);
-        var ledgerFiles = EventFiles(finalCatalog);
+        var ledgerFiles = StateFiles(finalCatalog);
         var fixture = FixtureFromLedger(ledgerFiles, [originalA, moduleC]);
         fixture.LedgerFiles = ledgerFiles;
         fixture.FinalCatalog = finalCatalog;
@@ -476,7 +469,7 @@ public sealed class TruthExportCommandTests
             var path = RepoPath.CreateKnown(PathFor(module.Name));
             revisionFiles[FrozenStatePath.FromModulePath(path).Value] = Encoding.UTF8.GetString(
                 FrozenStateRecord.Encode(
-                    FrozenContentAddress.ComputeModuleStatementId(path, ReportFor(module))).AsSpan());
+                    FrozenContentAddress.ComputeModuleStatementId(path, ReportFor(module)), FrozenStateRecord.Project(ReportFor(module))).AsSpan());
         }
         var revisionReports = Reports(revisionModules);
         var immutableRevision = RawSnapshot(revisionFiles);

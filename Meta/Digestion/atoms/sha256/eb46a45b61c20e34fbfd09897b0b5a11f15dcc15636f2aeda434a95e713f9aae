@@ -1,0 +1,95 @@
+**Theorem 2.2 (verification and actual finite witnesses).** Validity of
+Definition 2.1, with the fixed input and pieces of Definition 1.3,
+has a terminating mathematical decision. A valid
+certificate supplies a finite seed $\theta^*$ such that
+
+$$
+\theta_h=S^{r(h+1)}\theta^*
+\tag{SPC.8}
+$$
+
+witnesses $J(h)$ for every $h\ge0$. Both complete signed predicates and
+both exact finite row labels hold at every iterate. No completeness
+of this sufficient certificate language is asserted.
+
+Proof. Fixed powers distribute through pairing, act on finite grounds,
+send $T_{n_i+c}$ to $T_{n_i+c+a}$ and add their fixed exponents on
+residual occurrences. Substitution by $S$ therefore preserves mixed
+syntax; natural increments preserve Presburger formulas. Navigation
+and row tests still use supplied finite addresses and cuts.
+
+The source/row inclusions (SPC.4), if not supplied by the owning
+piece theorem, are themselves checked by the counterqueries
+$C_i(\theta_i)\land[U_i(\theta_i)\notin D]$ and
+$C_i(\theta_i)\land[R_Q(U_i(\theta_i))\ne r_i]$.
+The whole predicate (SPC.2) and the fixed complete row are finite
+tests of the same language after substitution. This checks the
+needed forward inclusions; no completeness of a proposed whole
+cover is required for a sufficient witness certificate.
+
+The seed query, the preservation counterquery
+$I(\theta)\land\neg I(S\theta)$, and every intertwining counterquery
+$I(\theta)\land[A_j(S\theta)\ne H_j(\theta;\mathbf A(\theta))]$
+or its $B$ counterpart are finite native queries with designated
+natural scalars. Apply [NSF, Lemma 5.1 and Theorem 5.2][NSF],
+the scalar-preserving extension in [URR, Corollary 3.2, proof][URR],
+and the variable-rank navigation cases of [NIC, Proposition 5.3,
+proof][NIC]. Explicit atomic definitions retain the designated scalars
+through the finite branches; auxiliary ranks are existentially
+quantified in the resulting Presburger systems. The supplier reconstructs
+finite native witnesses. This uses its parameter-preserving query
+decision, not a Cartesian-domain assumption on $I$. Complements of
+guarded predicates and native negative records retain their different
+meanings. Only finitely many queries and a finite zero-edge cycle test
+are required.
+
+For prefix growth use [NLC, Lemma 3.1][NLC]:
+$\mu(T_n)=\lfloor n/2\rfloor$, where $\mu$ is minimum leaf depth.
+Every $\rho^a t$ has no leaf above depth $\lfloor a/2\rfloor$:
+its original leaves expand to $T_a$ or $T_{a+1}$ under their original
+paths. Consequently
+
+$$
+\delta(\rho^a s,\rho^a t)\ge\delta(s,t)+\lfloor a/2\rfloor.
+\tag{SPC.9}
+$$
+
+Indeed a first discrepancy of finite depth $D$ cannot have an absent
+endpoint, since that would give an earlier leaf/branch discrepancy
+at an ancestor. Before $D$, common original branches and leaves match.
+Common leaves expand identically, including identical absent descendants.
+At depth-$D$ reached discrepancies, both expanded subtrees have only
+branches at depths less than $\lfloor a/2\rfloor$. No discrepancy
+can therefore occur before $D+\lfloor a/2\rfloor$. Equal inputs
+give equal expansions, with $\infty+c=\infty$.
+
+Identical coefficients in (SPC.6) contribute no discrepancy. A hole
+path adds its displayed depth, so
+
+$$
+\delta(H_j(\theta;\mathbf s),H_j(\theta;\mathbf t))
+\ge\min_{e:j\to k}(w_e+\delta(s_k,t_k)).
+\tag{SPC.10}
+$$
+
+An empty minimum is $\infty$. Put $\theta_t=S^t\theta^*$ and
+$D_j(t)=\delta(A_j(\theta_t),B_j(\theta_t))$. Invariance proves
+$I(\theta_t)$ by induction. The intertwining identities give
+
+$$
+D_j(t+1)\ge\min_{e:j\to k}(w_e+D_k(t)).
+\tag{SPC.11}
+$$
+
+Initially every $D_j(0)\ge0$. Iteration bounds $D_0(t)$ below by
+the minimum weight of a length-$t$ walk from $0$, or $\infty$
+if no such walk exists. Every block of $r$ edges contains a
+positive-weight edge: otherwise its $r+1$ vertices would repeat a
+vertex among $r$ possibilities and yield a zero-weight directed cycle.
+Integer nonnegative weights thus give $D_0(t)\ge\lfloor t/r\rfloor$.
+At $t=r(h+1)$ this is greater than the inclusive $h$. Both complete
+$C_i$ hold at that finite assignment; (SPC.4) reconstructs sources
+in the unchanged entire $D$ with exactly $r_0,r_1$. All signed
+records, guards, old class relations and row bits hold on each finite
+source. No sign is inferred from an infinite limit. $\square$
+

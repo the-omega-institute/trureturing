@@ -8,6 +8,37 @@ namespace StrataLint.Tests;
 public sealed partial class CleanLanesCommandTests
 {
     [Fact]
+    public void UnknownOrphanAncestryRetainsRefWithNamedReason()
+    {
+        using var fixture = new CleanLanesFixture();
+        const string branch = "harness/unknown-orphan-merge";
+        fixture.AddOrphan(branch, merged: true);
+        var runner = fixture.CreateRunner((file, args, _) => file == "git"
+            && args.Take(2).SequenceEqual(["merge-base", "--is-ancestor"])
+                ? GitFailure("ancestry unavailable") : null);
+
+        var result = fixture.RunWithRaw(runner, "--force");
+
+        Assert.True(result.Success, result.Error);
+        Assert.True(fixture.BranchExists(branch));
+        AssertItemProperty(ReadItems(result.Output), "branch", branch, "reason", "merged_state_unknown");
+    }
+
+    [Fact]
+    public void OrphanMergeJudgmentUsesDevInsteadOfAlternateBase()
+    {
+        using var fixture = new CleanLanesFixture();
+        const string branch = "harness/orphan-alternate-base";
+        fixture.AddOrphan(branch, merged: false);
+
+        var result = fixture.RunWithBase(branch, "--force");
+
+        Assert.True(result.Success, result.Error);
+        Assert.True(fixture.BranchExists(branch));
+        AssertItemProperty(ReadItems(result.Output), "branch", branch, "reason", "unmerged");
+    }
+
+    [Fact]
     public void BranchDeletedAfterEnumerationIsSkippedAndScanContinues()
     {
         using var fixture = new CleanLanesFixture();

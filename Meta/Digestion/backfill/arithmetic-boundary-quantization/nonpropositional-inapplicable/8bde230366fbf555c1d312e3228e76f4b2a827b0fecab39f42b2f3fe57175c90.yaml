@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:8bde230366fbf555c1d312e3228e76f4b2a827b0fecab39f42b2f3fe57175c90
+  normalized_sha256: sha256:8bde230366fbf555c1d312e3228e76f4b2a827b0fecab39f42b2f3fe57175c90
+cas_ref: sha256:8bde230366fbf555c1d312e3228e76f4b2a827b0fecab39f42b2f3fe57175c90
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 证明段或其连续推导片段（严格负号来自 \(f''<0\):\(f(H_0)-f(L_0)=\int_{L_0}^{H_0}f'(t)\,dt<f'(L_0)(H_0-L_0)\)。…）只论证所在节前文的结论，不另列新的独立命题。
+    previous_atom_id: 091a5e1dcd08fcfdbc3e3b6e3731b4221d87d2df5ce5774ad1a135385fe59ed5
+    next_atom_id: c02a5171947b0f7a6193a0c1dd9b918243eaeb55b27ea23bb94b6b1c8fea818b

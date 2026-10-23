@@ -1,0 +1,50 @@
+## 2. 归一化与具体 Gamma 尾项
+
+令窗口为 `[-L/2,L/2]`，`L=2a=log c>0`，有限素数幂 cutoff 为 `c=exp L`。定义
+
+\[
+\rho=\frac{2\pi}{L},\qquad b=\rho N,
+\qquad \gamma(t)=\Re\psi_\Gamma(1/4+it/2)-\log\pi.
+\]
+
+这里 `gamma` 直接是仓库已有 `Zeta23.EF.gammaBracket`。Fourier 仍取
+
+\[
+\widehat f(t)=\int_{\mathbb R}f(x)e^{itx}\,dx.
+\]
+
+在零延拓的偶子空间上，取正交归一基
+
+\[
+\varphi_0=L^{-1/2}\mathbf1_I,\qquad
+\varphi_k=(-1)^k\sqrt{2/L}\cos(\rho kx)\mathbf1_I\quad(k\ge1),
+\qquad I=[-L/2,L/2].
+\]
+
+相位 `(-1)^k` 是坐标约定的一部分。删掉它会改变后面的 Cauchy 响应。令 `sigma_0=1`，`sigma_k=sqrt(2)` 对 `k>0`，并设
+
+\[
+f_v=\sum_{k=0}^Nv_k\varphi_k,\qquad
+R_v(t)=\sum_{k=0}^N\frac{\sigma_kv_k}{1-(\rho k/t)^2}.
+\]
+
+逐项积分给出，对 `t>b`，
+
+\[
+\widehat f_v(t)=\frac2{\sqrt L}\frac{\sin(Lt/2)}tR_v(t).
+\]
+
+于是从 `|t|>T` 省略的真实 Gamma 能量矩阵为
+
+\[
+\boxed{v^*E_Tv=\int_T^\infty w_L(t)|R_v(t)|^2\,dt,}
+\]
+
+其中
+
+\[
+\boxed{w_L(t)=\frac{2\rho}{\pi^2}\gamma(t)\frac{\sin^2(Lt/2)}{t^2}.}
+\]
+
+这个公式也由上述 Cauchy Gram 密度经过等距偶嵌入得到。此处只处理 Gamma 积分尾项，prime 与 pole 块保持完整。真实 Weil 形式的其他部分没有被改成正核。
+

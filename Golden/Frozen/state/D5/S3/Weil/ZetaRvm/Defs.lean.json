@@ -1,1 +1,1 @@
-{"statement_id":"sha256:ff57e0f9dd641328fcacab0ed8e7d1c998f1e576c2cea775dd211bcc88efcbd4"}
+{"statement_id":"sha256:ff57e0f9dd641328fcacab0ed8e7d1c998f1e576c2cea775dd211bcc88efcbd4","declarations":[{"declaration_name_key":"ns(ns(ns(n0,6:Zeta23),3:RvM),10:GoodHeight)","kind":"def"},{"declaration_name_key":"ns(ns(ns(n0,6:Zeta23),3:RvM),11:halfContour)","kind":"def"},{"declaration_name_key":"ns(ns(ns(n0,6:Zeta23),3:RvM),15:halfContour_add)","kind":"theorem"}]}

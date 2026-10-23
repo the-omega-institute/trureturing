@@ -1,0 +1,66 @@
+# Original BDR Proposition 3.4
+
+## Abstract
+
+The original numbered-path alignment gives both balances at the same fixed lag.
+
+**Theorem 1.1 (From the original alignment to both balances).**
+
+Lean statement: `D5/S3/ConceptDynamics/Coding/OriginalAlignedBalanced.originalBDRProposition3_4`
+
+*Proof.* Machine-checked in Lean as `D5/S3/ConceptDynamics/Coding/OriginalAlignedBalanced.originalBDRProposition3_4` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+This is BDR, arXiv:2411.05598v1, Proposition 3.4, on the original data. Let A and B be essential square matrices over the natural numbers on Fin n and Fin k, let R and S be arbitrary rectangular matrices of sizes n by k and k by n, and fix m > 0. An edge from i to j is its actual number in Fin(A i j). A finite path of length d is an endpoint-indexed sequence of these numbered edges; no multiplicity is replaced by a Boolean adjacency relation.
+
+EdgePair(X,Y,i,w) is the dependent sum over middle vertices j of Fin(X i j) times Fin(Y j w). The four supplied endpoint-preserving bijections are phiR: AR ≃ RB, phiS: BS ≃ SA, psiA: RS ≃ A-paths of length m, and psiB: SR ≃ B-paths of length m. These are chosen bijections, not merely equalities of matrix products. Every conclusion uses these very same four maps.
+
+AlignedA is the following literal local identity. Given numbered a in A(i,j), r in R(j,z) and s in S(z,w), write phiR(i,z)(j,a,r)=(t,r1,b) and phiS(t,w)(z,b,s)=(u,s1,a1). Then appending a1 to psiA(i,u)(t,r1,s1) equals the path with first edge a followed by psiA(j,w)(z,r,s). AlignedB is the same assertion after interchanging A with B, R with S, phiR with phiS and psiA with psiB. In particular, its phiR input middle vertex is j.
+
+For paths of lengths d and e, IncomingLiftAmbiguityCriterion.concatenate_paths constructs a length d+e path whose numbered word is the concatenation of the two words and whose incoming lift is the composition of the two lifts. In this construction the vertex lift is the identity.
+
+The inverse to concatenation cuts a length d+e path after its first d edges and retains the middle vertex in a dependent sum. Induction on the actual path proves word_cut. Equality of numbered words with a fixed start and length recovers both the dependent endpoint and the path: at a cons node the first edge determines its target and its Fin edge number, then the tail induction applies. This proves word_endpoint_injective and split_word_injective, including zero-length paths and empty fibers. Thus concatenateEquiv has both inverse equations on the actual paths.
+
+For arbitrary d, sweep phiR moves an R edge backwards through an A path alpha; sweep phiS then moves the S edge through the resulting B path. Write the whole dependent output as (t,r1,u,s1,gamma). The invariant is word(psiA(i,u)(t,r1,s1)) ++ word(gamma) = word(alpha) ++ word(psiA(j,w)(z,r,s)). The lag of psiA remains the original fixed m for every d.
+
+The proof of whole_word_invariant inducts on the complete Sigma-valued path input and retains both intermediate vertices and every numbered edge. The empty path is immediate. In the cons case the induction hypothesis treats the tail, the original AlignedA identity handles the first edge, and word_appendPath plus associativity of list append joins the two equalities. The local hFR, hGS and hword facts only normalize the same sweep outputs; they introduce no shorter-lag hypothesis.
+
+Encoding the double-sweep output applies the same psiA to its RS pair and concatenates that m-path with gamma. The invariant identifies this encoded path with alpha concatenated with psiA of the original RS pair. The latter has length d+m, so lengthCast transports it along d+m=m+d before the inverse encoding cuts at m. This proves composition_fixed_lag on complete numbered paths, not on counts, endpoints alone or a scalar summary.
+
+At d=m the cast m+m=m+m is the identity. Cutting the concatenation after m edges recovers alpha itself, so decoding with the original psiA inverse gives BalancedA. Explicitly, if psiA(i,j) inverse of alpha is (t0,r0,s0), the double sweep outputs (t0,r0,j,s0,psiA(j,w)(z,r,s)). Repeating the same argument with A,B and R,S exchanged gives BalancedB using the original psiB and the same phiS and phiR. The public theorem returns both balances as a conjunction.
+
+Essentiality of A and B and positivity of m are assumptions of the proposition; the implication uses the alignment identities. For arbitrary R and S and the fixed m, the conclusion is BalancedA and BalancedB for the same four supplied bijections, with all numbered edges and degenerate fibers retained.
+
+Application of the same balanced tuple: compatibility and the exchange chain.
+
+Continue with exactly the matrices, positive lag m and four numbered bijections above. Essential means that every row and every column of A and B contains a nonzero entry; no positivity of every entry, nonempty vertex type, or extra condition on the rectangular R and S is imposed. Assume both BalancedA(phiR,phiS,psiA) and BalancedB(phiR,phiS,psiB). For the original aligned tuple, originalBDRProposition3_4 supplies these balances with the same parameter tuple. The balanced-to-compatible implication in BDR, arXiv:2411.05598v1, Theorem 3.5, yields the two compatibility equations below for these maps, and applying compatible_exchange_chain_bound to the resulting certificate gives the exchange-chain conclusion.
+
+For every i,j in Fin n, z in Fin k, actual alpha : FinitePath A m i j and numbered r in Fin(R j z), put (t,r0,s0) = psiA(i,j) inverse of alpha. The full R compatibility equation is sweep(phiR,alpha,r) = (t,r0,psiB(t,z)(j,s0,r)). This equality retains the middle vertex, the R edge number and the entire endpoint-indexed B path of length m. For every t,z in Fin k, w in Fin n, beta : FinitePath B m t z and numbered s in Fin(S z w), put (i,s0,r0) = psiB(t,z) inverse of beta. The full S compatibility equation is sweep(phiS,beta,s) = (i,s0,psiA(i,w)(z,r0,s)). Both equations concern the same original choices, not newly chosen bijections.
+
+Here is the boundary argument. A nonzero row of A supplies an actual outgoing numbered edge by choosing a nonzero entry and edge number zero. Repeating this d times gives a length-d path from each vertex, with the empty path when d=0. Applying the inverse of psiA at d=m yields an R edge out of each A vertex; the same argument with B and psiB yields an S edge out of each B vertex. These path constructions use only the row hypotheses and the supplied path bijections, so their existence requires no certificate hypothesis.
+
+Fix alpha and r in the R equation and choose an S edge s from z to some w using the preceding row witness. Write psiA(i,j) inverse of alpha as (u,r0,s0), sweep(phiR,alpha,r) as (t,r1,beta), and sweep(phiS,beta,s) as (v,s1,gamma). BalancedA identifies the complete dependent output (t,r1,v,s1,gamma) with (u,r0,j,s0,psiA(j,w)(z,r,s)). Project the dependent equality in order: t=u, then r1=r0, then v=j, then s1=s0, and finally gamma=psiA(j,w)(z,r,s). Substitution transports every edge number and path along its endpoint equality; none of these conclusions is an equality of counts alone.
+
+For any length-m A path eta and terminal R edge q, the same BalancedA equality, extended by any outgoing S edge at the target of q, shows that the first boundary pair of sweep(phiR,eta,q) is the first pair of psiA inverse of eta. Choose now an R edge r2 from w to some x and write sweep(phiR,gamma,r2)=(y,r3,delta). Apply this boundary observation to gamma=psiA(j,w)(z,r,s). The inverse law for psiA gives (y,r3)=(z,r), including the actual numbered r.
+
+Apply BalancedB to beta, s and r2. Its double sweep is now (j,s0,z,r,delta). If psiB(t,z) inverse of beta is (a,s2,r4), BalancedB identifies that dependent output with (a,s2,z,r4,psiB(z,x)(w,s,r2)). Projecting in order gives a=j, s2=s0 and r4=r. Thus psiB(t,z) inverse of beta=(j,s0,r), and the inverse law yields beta=psiB(t,z)(j,s0,r). Together with t=u and r1=r0 this is the full R equation. No additional property of delta is needed.
+
+Apply this very argument after the simultaneous interchange (A,B,R,S,phiR,phiS,psiA,psiB) ↦ (B,A,S,R,phiS,phiR,psiB,psiA), interchanging the two essentiality assumptions and the two balances while keeping m fixed. BalancedB is exactly the first balance of that swapped tuple, and BalancedA is its second. This gives the displayed S equation on every actual beta and s, with no independent certificate assumption and no change of the original maps.
+
+Define CompatibleCertificate A B R S m using the original positive-lag and essentiality assumptions, the maps phiR, psiA and psiB, and the R compatibility equation. The S equation is an additional consequence, while the certificate requires only the R equation. Then CompatibleResponseForgettingBound.compatible_exchange_chain_bound gives Nonempty (ExchangeChain ℕ A B (2*m-1)). The chain consists of successive rectangular factor exchanges over the natural numbers, starts at A and ends at B, and has length 2*m-1. When m=1 there is one exchange; for m≥2 the response-chain construction gives the stated length.
+
+For the original aligned input, originalBDRProposition3_4 first supplies the two balances at this same m. Its arbitrary-d concatenation argument above still transports length d+m to m+d and cuts at m; specializing d=m retains the actual numbered paths and the four original maps. The boundary argument then forms the same certificate, so the preceding exchange-chain bound applies. The proof of the boundary equations only needs outgoing rows and the path bijections, but this application keeps both row and column essentiality and m>0 as in the original input and in the chain bound.
+
+All quantifiers remain over the original finite vertex types and all actual numbered edge and path fibers. Empty vertex types and empty fibers are not discarded or replaced by singleton models; the universal assertions on them retain their usual meaning. The auxiliary path construction includes d=0, while the chain application assumes m>0 and makes no lag-zero assertion. No extra nondegeneracy or uniform edge bound has been introduced.
+
+This application establishes the original-input chain-existence consequence only. Uniform essentiality of every intermediate matrix, intermediate dimensions and entries, ordinary exchange-factor and diamond-factor bounds for this very same chain, a sharper Lambda bound and an executable algorithm remain OPEN. The full quantitative SSE objective remains OPEN. These resource and algorithmic claims do not follow merely from the existence and length of the supplied chain.
+
+## References
+
+- Truth anchor: `D5/S3/ConceptDynamics/Coding/OriginalAlignedBalanced.originalBDRProposition3_4`
+- Dependency: [D5/S3/ConceptDynamics/Coding/CommonNilpotencyForgettingBound](CommonNilpotencyForgettingBound.md)
+- Dependency: [D5/S3/ConceptDynamics/Coding/CompatibleResponseForgetting](CompatibleResponseForgetting.md)
+- Dependency: [D5/S3/ConceptDynamics/Coding/IncomingLiftAmbiguityCriterion](IncomingLiftAmbiguityCriterion.md)

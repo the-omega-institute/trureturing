@@ -1,0 +1,19 @@
+fingerprints:
+  raw_sha256: sha256:2d0a7d84e2393cfe98ff7c8f7a03ab07ceecd5b7655bf42486b847d0b5370fc9
+  normalized_sha256: sha256:2d0a7d84e2393cfe98ff7c8f7a03ab07ceecd5b7655bf42486b847d0b5370fc9
+cas_ref: sha256:2d0a7d84e2393cfe98ff7c8f7a03ab07ceecd5b7655bf42486b847d0b5370fc9
+coverage_gids:
+  - gid: D5/S3/ConceptDynamics/TimeProjection/FiniteTimeEscapeDecidability.prediction_escape_iff_finset_scan
+    target_statement_id: sha256:e54fd528697e66d3349a29c1c2e28c0be7c92e340028336579316d489d7e448f
+  - gid: D5/S3/ConceptDynamics/TimeProjection/FiniteTimeEscapeDecidability.time_expansion_escape_iff_finset_scans
+    target_statement_id: sha256:6e8407f2c9b541a6081d4a6c1acdbe6af2bca1b3cb72f62f5c953e38e4a1db1b
+  - gid: D5/S3/ConceptDynamics/TimeProjection/FiniteTimeEscapeDecidability.time_projection_eq_iff_finset_scan
+    target_statement_id: sha256:8cd4b79b777813e645c8b4986593b019fe95f1708852f116350e26b8d3fcad34
+  - gid: D5/S3/ConceptDynamics/TimeProjection/FiniteTimeProjectionRestrictionLaws.finite_time_projection_expansion_and_restriction_laws
+    target_statement_id: sha256:b761682c244d8cd5d0d0c5db4ec8c76582acf183dd69e421c9e7279cc929d1eb
+  - gid: D5/S3/ConceptDynamics/TimeProjection/PredictionExpansionEscape.prediction_escape_iff_expansion_escape
+    target_statement_id: sha256:bdfee52eb94e36b569b4d859b2ee023a624d7e02510e62f44f6cb91c47ec38c0
+  - gid: D5/S3/ConceptDynamics/TimeProjection/TimeExpansionEscape.time_expansion_escape_iff_expansion_escape
+    target_statement_id: sha256:930763f6003dce48a2e19276fc03afe94576f327e7f9a0b0b06d6e8d9748c728
+receipts:
+  unresolved_subitems: []

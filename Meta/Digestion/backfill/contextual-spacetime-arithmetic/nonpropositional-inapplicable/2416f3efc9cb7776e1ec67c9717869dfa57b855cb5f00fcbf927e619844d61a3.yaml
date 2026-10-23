@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:2416f3efc9cb7776e1ec67c9717869dfa57b855cb5f00fcbf927e619844d61a3
+  normalized_sha256: sha256:2416f3efc9cb7776e1ec67c9717869dfa57b855cb5f00fcbf927e619844d61a3
+cas_ref: sha256:2416f3efc9cb7776e1ec67c9717869dfa57b855cb5f00fcbf927e619844d61a3
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 本段只论证前述有时间下界区域的观察表达式。
+    previous_atom_id: 21a545703acf7e49b7833c063fdc35fe0382328807afb20ffa0190b0b39a6a32
+    next_atom_id: 8c212b6665d71a867bf5084c9d2328816ae371771f5ba8064afb5d7f522f6c37

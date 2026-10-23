@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:d4c50e354b569396f9b569befb92e5172674c5d91917a8c9ee3e84e244079f4f
+  normalized_sha256: sha256:d4c50e354b569396f9b569befb92e5172674c5d91917a8c9ee3e84e244079f4f
+cas_ref: sha256:d4c50e354b569396f9b569befb92e5172674c5d91917a8c9ee3e84e244079f4f
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 非命题文本：269. 独立乘积 SCM 的干预分解：仅为节标题及导引或设定适用条件；本片段未陈述后续命题的结论。
+    previous_atom_id: bcadb577c49e61df1094acd78f4acfba62aae34830b4c9d042d8019290178f5b
+    next_atom_id: 91fd04459440f1d6fe4ae6c5c68bab6febb8f01bee593e3f12eab2c7e0b15b0b

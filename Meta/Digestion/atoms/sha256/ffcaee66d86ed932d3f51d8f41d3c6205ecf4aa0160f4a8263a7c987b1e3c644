@@ -1,0 +1,44 @@
+**Theorem 23.2 (Compactness in the original complete-world space).**
+Both $K_+$ and $K_J$ are compact in $(b,r,e)$ and in the full
+source/drift/padded-gain coordinates. No positivity of gains, full
+gain degree, nonzero drift, all-world regularity or positive
+within-pair separation is a hypothesis.
+
+*Proof.* Take any sequence in $K_+$. Lemma 20.2 first bounds $b$,
+then invokes bounded-$b,p$ coercivity to bound $c,d$, all gain
+coefficients and $v,a,m$. In particular $v$ is bounded before a finite
+boundary output is extracted. Pass to a convergent full tuple, and
+write its output limit as $(p_*,v_*)$. The closed output inequalities
+give
+
+$$
+10\le p_*\le34,\qquad v_*\ge\ell(p_*)-1/25.
+\tag{23.2}
+$$
+
+An unbounded-$b$ subsequence has already been excluded by the uniform
+infinity value $p=-216/5$. If the limiting source were nonstrict,
+Lemma 20.2 and SII, Lemma 14.2 would identify its finite output with a
+nonpole face or corner. Theorem 21.2 would give
+$v_*<\ell(p_*)-1/25$, contradicting (23.2), including when $p_*=24$.
+Thus the limiting source is strict.
+
+The parent equation and original clock equations pass to this interior
+limit by continuity. Equation (20.2) implies
+$Tg(2)-g(0)=147/5$, which excludes an identically zero limiting gain.
+The limit is therefore a complete world in $\mathcal H$, and (23.2)
+puts it in $K_+$. This proves sequential compactness in the finite
+source/drift/gain coordinates, hence compactness by the classical
+finite-dimensional compactness criterion. The coordinate projection
+to $(b,r,e)$ and reconstruction (20.2) give compactness there as well.
+The zero-safe formula (20.4) also explicitly bounds drift on any of
+the resulting compact interior source sets with bounded $p$.
+
+By Theorem 22.3, $K_J\subset K_+$; the difference between the arc
+threshold and the boundary threshold is
+$1/2+1/25=27/50$. The analytic function $v_J$ is continuous on
+$[10,34]$, so $W\mapsto v(W)-v_J(p(W))$ is continuous on $K_+$.
+Its zero set is exactly $K_J$. Hence $K_J$ is a closed subset of a
+compact set and is compact. This uses the entire fibre, not a bound
+for only the selected $H,L$ worlds. ∎
+

@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:549d4efd0e7d075099b1575c47134158fda566bbae687a7973c8c846408ccc01
+  normalized_sha256: sha256:549d4efd0e7d075099b1575c47134158fda566bbae687a7973c8c846408ccc01
+cas_ref: sha256:549d4efd0e7d075099b1575c47134158fda566bbae687a7973c8c846408ccc01
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 证明段或其连续推导片段（**证明。** 由指数函数严格单调,它们分别等价于 cutoff、\(c_i<M_0/4\)、…）只论证所在节前文的结论，不另列新的独立命题。
+    previous_atom_id: 1a630a54dfd30c03f84eaf5d813b72e367820439994d30fe203c3ee6630b2c41
+    next_atom_id: ceebbfd110870c571b8ff3ba0cb2f4c46ebe3835b63568a59e6bac99810a62f6

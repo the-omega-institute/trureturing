@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:5a150b6a58d4201c770727b9fed497160e69d5de5f684eeecc9ae8f13cf62f8d
+  normalized_sha256: sha256:5a150b6a58d4201c770727b9fed497160e69d5de5f684eeecc9ae8f13cf62f8d
+cas_ref: sha256:5a150b6a58d4201c770727b9fed497160e69d5de5f684eeecc9ae8f13cf62f8d
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 定义 155.1（非齐次扇区核）仅引入名称、记号或相应谓词的定义条件，不断言该条件成立或另给性质命题。
+    previous_atom_id: 8e70aec708b56d53daf3de2a50ee1f76a7d0fd31a47323f956550984dddeb7e5
+    next_atom_id: 90889bd202fd5a92333f0086b6e786e851d3c706edbf8a6b17049e5c8e55d5a8

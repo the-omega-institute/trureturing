@@ -1,6 +1,7 @@
 using System.Collections.Concurrent;
 using System.Collections.Immutable;
 using System.IO.Compression;
+using System.Runtime.InteropServices;
 using System.Security.Cryptography;
 using System.Text;
 using System.Text.Json;
@@ -8,9 +9,10 @@ using Trureturing.Truth;
 
 namespace StrataLint.Engine;
 
-internal static class RawLeanReportArtifact
+internal static partial class RawLeanReportArtifact
 {
     internal const string Schema = "stratalint-raw-lean-report-v3";
+    internal const string ScopedSchema = "stratalint-scoped-lean-report-v1";
     internal const string DefaultRelativePath = ".lake/build/stratalint/raw-lean-report.json";
     internal static readonly AsyncLocal<Action?> Reading = new();
 
@@ -20,20 +22,87 @@ internal static class RawLeanReportArtifact
         ArgumentException.ThrowIfNullOrWhiteSpace(path);
         var fullPath = Path.GetFullPath(path);
         var bytes = File.ReadAllBytes(fullPath);
-        return Read(bytes, snapshot, MaterialsPath(fullPath), validateMaterials);
+        return Read(bytes, snapshot, MaterialsPath(fullPath), validateMaterials, scope: null);
+    }
+
+    /// Reads the report once and returns the exact bytes that were validated.
+    internal static LeanAxiomReport ReadFile(string path, RepositorySnapshot snapshot, out ImmutableArray<byte> bytes)
+    {
+        ArgumentException.ThrowIfNullOrWhiteSpace(path);
+        var fullPath = Path.GetFullPath(path);
+        var read = File.ReadAllBytes(fullPath);
+        bytes = ImmutableCollectionsMarshal.AsImmutableArray(read);
+        return Read(read, snapshot, MaterialsPath(fullPath), validateMaterials: false, scope: null);
+    }
+
+    internal static LeanAxiomReport ReadFile(
+        string path,
+        RepositorySnapshot snapshot,
+        out ImmutableArray<byte> bytes,
+        bool validateMaterials = false)
+    {
+        ArgumentException.ThrowIfNullOrWhiteSpace(path);
+        var fullPath = Path.GetFullPath(path);
+        var read = File.ReadAllBytes(fullPath);
+        bytes = ImmutableCollectionsMarshal.AsImmutableArray(read);
+        return Read(read, snapshot, MaterialsPath(fullPath), validateMaterials, scope: null);
     }
 
     internal static LeanAxiomReport Read(ReadOnlySpan<byte> bytes, RepositorySnapshot snapshot)
-        => Read(bytes, snapshot, materialPath: null);
+        => Read(bytes, snapshot, materialPath: null, validateMaterials: false, scope: null);
 
-    private static LeanAxiomReport Read(
-        ReadOnlySpan<byte> bytes,
-        RepositorySnapshot snapshot,
-        string? materialPath,
+    internal static LeanAxiomReport ReadFileForScope(
+        string path,
+        LeanReportScope scope,
         bool validateMaterials = false)
     {
-        ArgumentNullException.ThrowIfNull(snapshot);
-        Reading.Value?.Invoke();
+        ArgumentException.ThrowIfNullOrWhiteSpace(path);
+        ArgumentNullException.ThrowIfNull(scope);
+        var fullPath = Path.GetFullPath(path);
+        return Read(
+            File.ReadAllBytes(fullPath),
+            scope.SourceSnapshot,
+            MaterialsPath(fullPath),
+            validateMaterials,
+            scope);
+    }
+
+    internal static LeanAxiomReport ReadFileForScopeOrFull(string path, LeanReportScope scope)
+    {
+        ArgumentException.ThrowIfNullOrWhiteSpace(path);
+        ArgumentNullException.ThrowIfNull(scope);
+        var fullPath = Path.GetFullPath(path);
+        var bytes = File.ReadAllBytes(fullPath);
+        bool isFull;
+        try
+        {
+            using var document = JsonDocument.Parse(bytes);
+            isFull = RequiredString(document.RootElement, "schema") == Schema;
+        }
+        catch (JsonException exception)
+        {
+            throw new FormatException("Raw Lean report is not valid JSON.", exception);
+        }
+        if (!isFull) return Read(bytes, scope.SourceSnapshot, MaterialsPath(fullPath), validateMaterials: true, scope);
+        var full = Read(bytes, scope.SourceSnapshot, MaterialsPath(fullPath), validateMaterials: true, scope: null);
+        var selected = full.Files.Where(item => scope.Paths.Contains(item.Key))
+            .ToDictionary(static item => item.Key.Value, static item => item.Value, StringComparer.Ordinal);
+        foreach (var (sourcePath, report) in selected)
+            ValidateScopedImports(scope.SourceSnapshot.Files[RepoPath.CreateKnown(sourcePath)], report.Imports);
+        ValidateScopedStatementIdentities(selected);
+        return LeanAxiomReport.CreateScoped(selected);
+    }
+
+    internal static LeanAxiomReport ReadForScope(
+        ReadOnlySpan<byte> bytes,
+        LeanReportScope scope)
+    {
+        ArgumentNullException.ThrowIfNull(scope);
+        return Read(bytes, scope.SourceSnapshot, materialPath: null, validateMaterials: false, scope);
+    }
+
+    private static JsonDocument ReadCanonicalDocument(ReadOnlySpan<byte> bytes)
+    {
         var text = StrictUtf8.GetString(bytes);
         ImmutableArray<byte> canonical;
         try
@@ -54,15 +123,31 @@ internal static class RawLeanReportArtifact
                 + $"actual {ByteAt(bytes, mismatch)}.");
         }
 
-        using var document = JsonDocument.Parse(text);
+        return JsonDocument.Parse(text);
+    }
+
+    private static LeanAxiomReport Read(
+        ReadOnlySpan<byte> bytes,
+        RepositorySnapshot snapshot,
+        string? materialPath,
+        bool validateMaterials,
+        LeanReportScope? scope)
+    {
+        ArgumentNullException.ThrowIfNull(snapshot);
+        Reading.Value?.Invoke();
+        using var document = ReadCanonicalDocument(bytes);
         var root = document.RootElement;
-        RequireProperties(root, ["modules", "schema"], "raw Lean report");
-        if (RequiredString(root, "schema") != Schema)
+        RequireProperties(root, ["modules", "schema"], scope is null ? "raw Lean report" : "scoped Lean report");
+        var expectedSchema = scope is null ? Schema : ScopedSchema;
+        if (RequiredString(root, "schema") != expectedSchema)
         {
-            throw new FormatException($"Raw Lean report schema must be {Schema}.");
+            throw new FormatException($"Lean report schema must be {expectedSchema}.");
         }
 
-        var expected = ExpectedModules(snapshot);
+        var expected = scope is null
+            ? ExpectedModules(snapshot)
+            : ExpectedModules(snapshot).Where(item => scope.Paths.Contains(item.Value.Path))
+                .ToDictionary(static item => item.Key, static item => item.Value, StringComparer.Ordinal);
         var reports = new Dictionary<string, LeanFileReport>(StringComparer.Ordinal);
         var materialArchive = materialPath is null
             ? null
@@ -76,6 +161,7 @@ internal static class RawLeanReportArtifact
         {
             var moduleProperties = new List<string> { "declarations", "imports", "module", "source_path", "source_sha256" };
             if (moduleElement.TryGetProperty("information_templates", out _)) moduleProperties.Add("information_templates");
+            if (moduleElement.TryGetProperty("fib_analysis", out _)) moduleProperties.Add("fib_analysis");
             if (moduleElement.TryGetProperty("utility_refutation", out _)) moduleProperties.Add("utility_refutation");
             if (moduleElement.TryGetProperty("information_registration_errors", out _)) moduleProperties.Add("information_registration_errors");
             RequireProperties(moduleElement, moduleProperties, "raw Lean module");
@@ -101,6 +187,7 @@ internal static class RawLeanReportArtifact
             }
 
             var imports = ReadSortedStrings(RequiredArray(moduleElement, "imports"), "imports");
+            if (scope is not null) ValidateScopedImports(source.File, imports);
             var declarations = ReadDeclarations(
                 RequiredArray(moduleElement, "declarations"),
                 materialArchive);
@@ -109,6 +196,8 @@ internal static class RawLeanReportArtifact
                     Refutation = ReadRefutation(moduleElement, source.File, snapshot),
                     InformationTemplates = moduleElement.TryGetProperty("information_templates", out var templates)
                         ? templates.Clone() : null,
+                    FibAnalysis = moduleElement.TryGetProperty("fib_analysis", out var fib)
+                        ? fib.Clone() : null,
                     InformationRegistrationErrors = moduleElement.TryGetProperty("information_registration_errors", out _)
                         ? ReadSortedStrings(RequiredArray(moduleElement, "information_registration_errors"), "information_registration_errors")
                         : null,
@@ -129,8 +218,34 @@ internal static class RawLeanReportArtifact
                 "Raw Lean report is missing modules: " + string.Join(", ", missing));
         }
 
-        if (validateMaterials) materialArchive!.ValidateAll();
-        return LeanAxiomReport.Create(reports);
+        if (validateMaterials)
+        {
+            materialArchive!.ValidateAll();
+            if (scope is not null) ValidateScopedStatementIdentities(reports);
+        }
+        return scope is null
+            ? LeanAxiomReport.Create(reports)
+            : LeanAxiomReport.CreateScoped(reports);
+    }
+
+    private static void ValidateScopedImports(RepositoryFile source, ImmutableArray<string> imports)
+    {
+        var sourceImports = LeanSourceCatalog.ParseFileImports(source, includeImplicitInit: true)
+            .Order(StringComparer.Ordinal).ToImmutableArray();
+        if (!imports.SequenceEqual(sourceImports))
+            throw new FormatException($"Scoped Lean report imports do not match source for {source.Path.Value}.");
+    }
+
+    private static void ValidateScopedStatementIdentities(IEnumerable<KeyValuePair<string, LeanFileReport>> reports)
+    {
+        foreach (var (path, report) in reports)
+        foreach (var declaration in report.Declarations)
+        {
+            var actual = CanonicalStatementWriter.DeclarationStatementId(RepoPath.CreateKnown(path),
+                declaration with { PrecomputedStatementId = null });
+            if (!string.Equals(actual, declaration.PrecomputedStatementId, StringComparison.Ordinal))
+                throw new InvalidDataException($"Scoped Lean report statement identity does not match material: {path}:{declaration.Name}.");
+        }
     }
 
     internal static ImmutableArray<byte> Write(RepositorySnapshot snapshot, LeanAxiomReport report)
@@ -171,6 +286,7 @@ internal static class RawLeanReportArtifact
                                 statement_id = DeclarationStatementId(item.Value.Path, declaration),
                                 type_sha256 = declaration.StatementTypeAddress,
                             }),
+                        fib_analysis = fileReport.FibAnalysis,
                         imports = fileReport.Imports
                             .Distinct(StringComparer.Ordinal)
                             .Order(StringComparer.Ordinal),

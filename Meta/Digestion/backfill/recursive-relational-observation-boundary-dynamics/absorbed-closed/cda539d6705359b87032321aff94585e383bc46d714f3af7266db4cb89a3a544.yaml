@@ -1,0 +1,15 @@
+fingerprints:
+  raw_sha256: sha256:cda539d6705359b87032321aff94585e383bc46d714f3af7266db4cb89a3a544
+  normalized_sha256: sha256:cda539d6705359b87032321aff94585e383bc46d714f3af7266db4cb89a3a544
+cas_ref: sha256:cda539d6705359b87032321aff94585e383bc46d714f3af7266db4cb89a3a544
+coverage_gids:
+  - gid: D5/S3/Entropy/MutualInformationEntropy.mutual_information_eq_entropy_sub
+    target_statement_id: sha256:98ab32347056de7fdcca6963b5de51deedc923c1a62a59098952f17fb0f946a5
+  - gid: D5/S3/Entropy/Relabeling/InjectiveInvariance.shannonEntropy_extend_injective
+    target_statement_id: sha256:8205044855aa2f782c1cf2f69550bb1fe272cee1629a2559683853c1b122879c
+  - gid: D5/S3/ObserverMemory/Algorithms/SharedControlBitStorageBound.shared_control_bit_storage_bound
+    target_statement_id: sha256:5cb55503f03dc4e9923ddee1fd5bd277a4dc7520d120578dcbb935fdae8cdc92
+  - gid: D5/S3/ObserverMemory/Refinement/EffectiveImageKernelCriterion.refinement_iff_kernel_inclusion_on_effective_images
+    target_statement_id: sha256:193d220cc6a5d27164608f594fb595513c2d11228a0cd00502a9141b88531525
+receipts:
+  unresolved_subitems: []

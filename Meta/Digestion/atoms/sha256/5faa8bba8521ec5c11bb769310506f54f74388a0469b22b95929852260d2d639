@@ -1,0 +1,38 @@
+**推论 19.3（加权反向场的时间非齐次 Markov 表示）。** 令
+
+$$
+Y_v(s)=X_v(1-s)=w(s)Y(s),\qquad w(s)=v(1-s).
+$$
+
+对任意连续正函数 $v$，确定性的逐时缩放 $y\mapsto w(s)y$ 都可逆，所以 $Y_v$ 仍具有连续路径的时间非齐次 Markov 表示。具体地，对 $0\le s<s+h\le1$、$z\ge0$，其转移核满足
+
+$$
+\mathbb E\!\left[e^{-zY_v(s+h)}\mid Y_v(s)=y\right]
+=
+\left(1+\frac{z w(s+h)h}{D}\right)^{-1}
+\exp\!\left(
+-\frac{y\,z\,w(s+h)/w(s)}{1+z w(s+h)h/D}
+\right).
+$$
+
+这直接由第 18.2 节的条件变换与 $Y(s)=Y_v(s)/w(s)$ 得到，不要求 $v$ 可微。
+
+若进一步有 $v\in C^1([0,1])$，才可对乘积使用 Itô 公式，将同一辅助表示写成含 $w'/w$ 的 SDE：
+
+$$
+dY_v(s)
+=
+\left(\frac{w'(s)}{w(s)}Y_v(s)+\frac{w(s)}D\right)ds
++\sqrt{\frac{2w(s)Y_v(s)}D}\,dW(s),
+\qquad Y_v(0)=0.
+$$
+
+当 $v\equiv c>0$ 时，该场具有同类齐次平方贝塞尔律，但有效参数为
+
+$$
+D'=\frac Dc,\qquad
+dY_c(s)=\frac1{D'}\,ds+\sqrt{\frac{2Y_c(s)}{D'}}\,dW(s).
+$$
+
+只有 $c=1$ 时，这个参数及其转移律才逐字等于第 18 节。一般连续正 $v$ 的 Markov 表示仍成立；$C^1$ 假设只用于上述导数形式的随机微分方程。
+

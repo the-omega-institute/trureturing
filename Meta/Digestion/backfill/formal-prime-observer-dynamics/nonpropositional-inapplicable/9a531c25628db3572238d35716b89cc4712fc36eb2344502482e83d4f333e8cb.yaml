@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:9a531c25628db3572238d35716b89cc4712fc36eb2344502482e83d4f333e8cb
+  normalized_sha256: sha256:9a531c25628db3572238d35716b89cc4712fc36eb2344502482e83d4f333e8cb
+cas_ref: sha256:9a531c25628db3572238d35716b89cc4712fc36eb2344502482e83d4f333e8cb
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 定义 22.2（动态素数等价）：只引入对象、参数、术语或记号；不附加存在性、唯一性或其他性质断言。
+    previous_atom_id: 5dd410cabc005abc12f7b2dda7fe475d01b91a1023c50f48a9732d4053b3283a
+    next_atom_id: 7f0c107bd73298d80d16fb2287b9fd98ca31198e26f0e8529c241e880f719509

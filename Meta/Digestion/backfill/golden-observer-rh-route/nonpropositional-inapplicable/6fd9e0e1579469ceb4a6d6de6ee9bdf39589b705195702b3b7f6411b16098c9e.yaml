@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:6fd9e0e1579469ceb4a6d6de6ee9bdf39589b705195702b3b7f6411b16098c9e
+  normalized_sha256: sha256:6fd9e0e1579469ceb4a6d6de6ee9bdf39589b705195702b3b7f6411b16098c9e
+cas_ref: sha256:6fd9e0e1579469ceb4a6d6de6ee9bdf39589b705195702b3b7f6411b16098c9e
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 'The negative-radius boundary is supplied only by pinned Mathlib image_eq_zero_of_notMem_tsupport and Set.mem_Icc: tsupport f subset [-L,L] with L<0 forces f=0. Unfolding l2Mass, translationEnergy, archimedeanJumpEnergy and arithmeticJumpEnergy and applying integral_zero and Finset.sum_eq_zero makes the displayed inequality 0<=0. No project frozen GID states this boundary independently. The remaining text only restricts interpretation of the RH equivalence.'
+    previous_atom_id: e62ee800bcf0daa9f2c14a5d8f34f361bd75be814f14def44931a65980424aae
+    next_atom_id: 017b87f12502ebd2b46e1559ded61b58f3969b0e41fd0ab6ce201559f826b7dc

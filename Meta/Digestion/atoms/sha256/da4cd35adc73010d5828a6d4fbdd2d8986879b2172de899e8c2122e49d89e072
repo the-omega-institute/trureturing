@@ -1,0 +1,116 @@
+**Theorem 4.2 (many nodes and a long branch with a fixed failed prefix).**
+There is a second complete acquired native input, retaining a
+nontrivial old full partition and both signed histories, with two
+distinct attained complete rows such that $J_B(0)$ holds and
+$J_B(1)$ fails. Nevertheless their entire product contains tuple
+prunings with arbitrarily many markers and arbitrarily long
+marker paths, and sources with arbitrarily many native nodes.
+
+Proof. Set $P=\{L,RL,RR\}$, $N=1$ and $Q=\{RL,RR\}$.
+The old row has reached set $P$, entire exterior
+$\langle\square_1,\langle\square_2,\square_3\rangle\rangle$,
+and full partition $\{\{1\},\{2,3\}\}$. Retain exactly
+
+$$
+\begin{aligned}
+H_0=\{&(0,\varepsilon,\mathsf{branch}),(0,R,\mathsf{branch}),
+       (1,\varepsilon,\mathsf{branch}),(1,R,\mathsf{branch})\},\\
+H_{\rm rel}=\{&(0,RL,0,RR,=),(1,RL,1,RR,=),\\
+              &(0,L,0,RL,\ne),(0,\varepsilon,0,L,\ne)\}.
+\end{aligned}
+\tag{NMF.15}
+$$
+
+The old row alone gives, in both directions,
+
+$$
+D=\{\langle x,\langle y,y\rangle\rangle:
+          x,y\in\mathcal T,\ x\ne y\}.
+\tag{NMF.16}
+$$
+
+It fixes the complete constructor exterior, makes all three holes
+reached, repeats the identical value $y$, and makes the first
+old class different from the second. In particular both old
+cross-class pairs are still unequal, including the pair $L,RR$
+not separately repeated in the history.
+
+Every source in (NMF.16) satisfies all four literals. The first
+positive record compares $y$ to $y$; the second compares
+$\rho y$ to $\rho y$ at its two reached epoch-one endpoints.
+The first negative compares the reached $x,y$ and passes exactly
+the old cross-class condition. The off-task root/left negative
+passes because the root has $\ell(x)+2\ell(y)>\ell(x)$ leaves.
+Thus adding every record in (NMF.15) leaves exactly (NMF.16),
+without dropping any record or reached guard. There are no further
+retained constraints.
+
+Let $r_\alpha$ and $r_\beta$ have reached set $Q$, full one-class
+partition $\{\{1,2\}\}$ and respective entire exteriors
+
+$$
+\langle\alpha,\langle\square_1,\square_2\rangle\rangle,
+\qquad
+\langle\beta,\langle\square_1,\square_2\rangle\rangle.
+$$
+
+Because $L$ is outside $Q$, these alpha and beta leaves are actual
+uncut exterior nodes. They are not values distinguished inside
+an erased hole. The exact entire strata are
+
+$$
+\begin{aligned}
+D_\alpha&=\{\langle\alpha,\langle y,y\rangle\rangle:
+                         y\in\mathcal T, y\ne\alpha\},\\
+D_\beta&=\{\langle\beta,\langle z,z\rangle\rangle:
+                         z\in\mathcal T, z\ne\beta\}.
+\end{aligned}
+\tag{NMF.17}
+$$
+
+Reading the complete exterior and partition from a source proves
+one direction of each equality; filling the displayed repeated
+holes with any permitted whole value proves the other. Other
+complete rows of (NMF.16) remain in the original input fiber.
+Neither source stratum is substituted for the whole input.
+
+For $n\ge1$ use the perfect trees from Theorem 4.1 and the tuple
+
+$$
+\mathbf v_n=(\langle\alpha,\langle A_n,A_n\rangle\rangle,
+              \langle\beta,\langle B_n,B_n\rangle\rangle).
+$$
+
+Since $A_n$ and $B_n$ are branches, they meet both disequalities
+in (NMF.17). This proves attainment. Every cross-stratum tuple
+agrees at the root branch and differs at original address $L$.
+Thus its minimum mismatch depth is one, independently of its
+other values. This gives $J_B(0)$ and the exact failed depth
+$H=1$ for $B=(r_\alpha,r_\beta)$.
+
+For the displayed tuples the entire frontier is
+
+$$
+\Delta(\mathbf v_n)=\{L\}\ \cup
+\{RLw:|w|=n\}\ \cup\ \{RRw:|w|=n\}.
+\tag{NMF.18}
+$$
+
+The shortest marker path of $K(\mathbf v_n)$ therefore has
+one marker, while its longest has $n+2$. There are $2^{n+1}+1$
+frontier leaves. The first two convolution levels retain both
+children and contribute four markers. The two remaining perfect
+height-$n$ address tries each contribute
+$2+4+\cdots+2^n=2^{n+1}-2$ markers. Hence the total marker
+count is $2^{n+2}$. Each original source has
+$2^{n+2}+1$ native nodes, by counting the root, its left leaf,
+its right branch and the two perfect subtrees. All three growth
+claims are unbounded, with the same fixed first disagreement.
+Indeed their frontier mass is
+$W_q(\mathbf v_n)=q+2q^2(2q)^n\ge q$.
+
+The old full row, reached sets, actual-epoch records, off-task
+negative and within-source sharing have all been checked on each
+actual finite source. The complete handoff and paid-source contract
+remains the supplied premise at $N=1$. $\square$
+

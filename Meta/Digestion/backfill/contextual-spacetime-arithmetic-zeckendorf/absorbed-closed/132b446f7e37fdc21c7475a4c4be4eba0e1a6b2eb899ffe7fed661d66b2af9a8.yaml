@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:132b446f7e37fdc21c7475a4c4be4eba0e1a6b2eb899ffe7fed661d66b2af9a8
+  normalized_sha256: sha256:132b446f7e37fdc21c7475a4c4be4eba0e1a6b2eb899ffe7fed661d66b2af9a8
+cas_ref: sha256:132b446f7e37fdc21c7475a4c4be4eba0e1a6b2eb899ffe7fed661d66b2af9a8
+coverage_gids:
+  - gid: D5/S3/Factorization/Combinatorics/MixedPrimeHistoryAsymptotics.result
+    target_statement_id: sha256:4c7809274ef5df3aca1b87711509392a0679eed962765a0fcd0995ad81e4fdb7
+receipts:
+  unresolved_subitems: []

@@ -36,11 +36,11 @@ public sealed class FrozenStateTests
 
     public static TheoryData<string> InvalidRecords => new()
     {
-        { $"{{\"statement_id\":\"{Pin}\",\"event_hash\":\"{Pin}\"}}\n" },
+        { $"{{\"statement_id\":\"{Pin}\",\"event_hash\":\"{Pin}\",\"declarations\":[]}}\n" },
         { "{}\n" },
         { "{\"statement_id\":\"sha256:ABC\"}\n" },
-        { $"{{\"statement_id\":\"{Pin}\"}}\n{{}}\n" },
-        { $"\uFEFF{{\"statement_id\":\"{Pin}\"}}\n" },
+        { $"{{\"statement_id\":\"{Pin}\",\"declarations\":[]}}\n{{}}\n" },
+        { $"\uFEFF{{\"statement_id\":\"{Pin}\",\"declarations\":[]}}\n" },
     };
 
     [Theory]
@@ -57,11 +57,11 @@ public sealed class FrozenStateTests
     [Fact]
     public void CatalogLoadsSelectorToPinAndRejectsIllegalPathsUnderTheRoot()
     {
-        var valid = RepositoryStateFile(StatePath, Encoding.UTF8.GetBytes($"{{\"statement_id\":\"{Pin}\"}}\n"));
+        var valid = RepositoryStateFile(StatePath, Encoding.UTF8.GetBytes($"{{\"statement_id\":\"{Pin}\",\"declarations\":[]}}\n"));
         const string rootStatePath = "Golden/Frozen/state/Trureturing.lean.json";
         var root = RepositoryStateFile(
             rootStatePath,
-            Encoding.UTF8.GetBytes($"{{\"statement_id\":\"{Pin}\"}}\n"));
+            Encoding.UTF8.GetBytes($"{{\"statement_id\":\"{Pin}\",\"declarations\":[]}}\n"));
         var catalog = FrozenStateCatalog.Load(Snapshot(valid, root));
 
         Assert.Equal(2, catalog.Records.Count);
@@ -69,7 +69,7 @@ public sealed class FrozenStateTests
         Assert.Equal(Pin, catalog.Records[RepoPath.CreateKnown("Trureturing.lean")].StatementId.Value);
 
         const string invalidPath = "Golden/Frozen/state/not-a-module.json";
-        var invalid = RepositoryStateFile(invalidPath, Encoding.UTF8.GetBytes($"{{\"statement_id\":\"{Pin}\"}}\n"));
+        var invalid = RepositoryStateFile(invalidPath, Encoding.UTF8.GetBytes($"{{\"statement_id\":\"{Pin}\",\"declarations\":[]}}\n"));
         var exception = Assert.Throws<FormatException>(() => FrozenStateCatalog.Load(Snapshot(invalid)));
         Assert.Contains(invalidPath, exception.Message, StringComparison.Ordinal);
     }
@@ -84,7 +84,7 @@ public sealed class FrozenStateTests
         Assert.True(FrozenStateWriter.Write(temporary.Path, module, statement));
         var absolute = Path.Combine(temporary.Path, StatePath.Replace('/', Path.DirectorySeparatorChar));
         var first = File.ReadAllBytes(absolute);
-        Assert.Equal($"{{\"statement_id\":\"{Pin}\"}}\n", Encoding.UTF8.GetString(first));
+        Assert.Equal($"{{\"statement_id\":\"{Pin}\",\"declarations\":[]}}\n", Encoding.UTF8.GetString(first));
 
         Assert.False(FrozenStateWriter.Write(temporary.Path, module, statement));
         Assert.Equal(first, File.ReadAllBytes(absolute));

@@ -1,0 +1,11 @@
+**Convention 7.3 (variable shapes and separate resource coordinates).**
+Proposition 7.2 assumes presence; it never transports an absent slot as
+a subtree. Theorem 7.1, using the full boundary of the original source,
+handles every variable shape without a separately exported cut descriptor.
+Its constructor arrays and table membership computation are preparation
+workspace isolated at handoff. A finite predictor factor $(b,c)$ has
+$0\le b\le2D$, $c\in\{0,1\}$ and can use at most
+$\lceil\log_2(2D+1)\rceil+1$ bits, separately from the retained name
+and authentic count. Theorems 7.1–7.2 impose no bound on combined
+installation, work, workspace, isolation or physical-time efficiency.
+

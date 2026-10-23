@@ -1,0 +1,41 @@
+**Proposition 10.5 (the cost of withholding the supplied shape).**
+For an exact-$h$ supplied shape, §9.2's same parity target has
+minimum active width $\Theta(\log(h+1))$ and static width
+$\Theta(\log(h+1)+\log(T+1))$ in the same positive regimes.
+Withholding the shape and requiring a common installation for all
+shapes gives (SLHC.10.2). These are conditional mutable-width
+comparisons, not total-storage or acquisition optima.
+
+Proof. Section 9 uses every independent original label on exactly
+$h$ leaves, with no padding or reference label. Its formulas apply
+to any fixed full shape; supplying its literal addresses is precisely
+the additional initial information absent here. Theorem 10.2 takes
+the union over all possible comb tips, which one shape need not
+support. The lower and upper bounds of the two sections therefore
+compare the same target under the two stated source-information
+contracts. Native Discovery and Retained Context §§1–4, 7.1
+separately distinguish unknown-shape full-tree discovery from its
+known-shape benchmark; their full-tree factor-two acquisition theorem
+is not a parity or complete-width theorem and is not transferred.
+
+Sections 2 and 8 retain their distinct full-vector and parity tasks.
+For positive unknown entry even-$h$ parity is constant on ABT's
+exact history fibers, whereas the full original label vector and
+actual entry can differ on the uniform doubletons. No parity output
+recovers those missing distinctions, old records or inverse action.
+The current-tree fiber does determine the original shape by ABT;
+this identifiability does not supply its addresses to the observer
+at initialization. Shape acquisition, parity acquisition, certification
+and physical realization remain different services. $\square$
+
+The new quantitative composition is Theorems 10.2–10.3 together with
+Section 11's licensed trials and paid native realization. Shape and
+leaf-cone support remain owned by FIB II §§38.40–38.42, Joint Moment
+Fibers §§40.1–40.3 and SLH §§31–32; SLH §55's delayed leaf certificate
+is a known-template supplier, not a free unknown-shape selector.
+No classifier, support theorem or general compiler is newly asserted.
+The mature encoding and control suppliers are attributed at their
+points of use in Section 11. These are repo-derived ordinary
+conditional statements, not additional kernel-verified applications
+or a worldwide originality claim.
+

@@ -1,0 +1,68 @@
+**定义与供应 26.1（同一个来源域与五模式坐标）。** 固定整数 $n\ge5$，
+所有位置属于 $\mathbb Z_n$，第 $i$ 个三位窗口读取
+$(U_i,U_{i+1},U_{i+2})$。沿用本卷定义 14.1 的模式顺序
+
+$$
+\Sigma=(000,100,010,001,101)
+\longleftrightarrow
+(F[\mathrm{null}],F[1],F[2],F[3],F[1,3]).
+\tag{26.1}
+$$
+
+每窗给定非负且和一的向量 $p_i$，在非法模式上延为零。局部可行集是
+
+$$
+\mathscr L_n=\left\{p\in\operatorname{Prob}(\Sigma)^n:
+\sum_{a\in\{0,1\}}p_i(abc)
+=\sum_{d\in\{0,1\}}p_{i+1}(bcd)
+\quad\forall i,b,c\right\}.
+\tag{26.2}
+$$
+
+这里匹配完整二位重叠边缘，包括恒为零的 $11$ 项。真实来源域仍然是
+
+$$
+B_n^{\mathrm{cyc}}
+=\{u\in\{0,1\}^{\mathbb Z_n}:u_iu_{i+1}=0\quad\forall i\},
+\qquad
+\mathscr C_n=\left\{p:
+\exists P\in\operatorname{Prob}(B_n^{\mathrm{cyc}}),\
+p_i(\sigma)=\sum_uP(u)\mathbf1\{(u_i,u_{i+1},u_{i+2})=\sigma\}
+\right\}.
+\tag{26.3}
+$$
+
+同一份 $P$ 必须同时给出全部窗口，故 $\mathscr C_n\subseteq\mathscr L_n$。
+没有附加旋转不变性、Markov 性、有理权重或“最小周期恰为 $n$”条件；
+字的最小周期可以整除 $n$。特别是 $0^n$ 始终属于来源域。
+延长成 $2n$、$3n$ 或 $6n$ 位的来源只可作为分解材料，不能替代 (26.3)。
+
+直接由局部数据定义
+
+$$
+q_i=p_i(100)+p_i(101),\qquad \kappa_i=p_i(101).
+\tag{26.4}
+$$
+
+本卷命题 14.2 给出完整重叠下的反解
+
+$$
+p_i=(1-q_i-q_{i+1}-q_{i+2}+\kappa_i,
+q_i-\kappa_i,q_{i+1},q_{i+2}-\kappa_i,\kappa_i).
+\tag{26.5}
+$$
+
+这一步无需假设共同来源存在。原有金字塔的坐标次序是左、右、中，
+而印刷位序是左、中、右，所以本卷 §§1、14 的参数对应严格为
+
+$$
+(x,z,y)=(U_i,U_{i+1},U_{i+2}),\qquad
+(X_i,Y_i,Z_i,\kappa_i)=(q_i,q_{i+2},q_{i+1},\kappa_i).
+\tag{26.6}
+$$
+
+$F[1],F[2],F[3]$ 的数值输出名分别是 $[2],[3],[5]$，不把它们当作环位置。
+局部隐藏纤维的区间为
+$\max(0,q_i+q_{i+1}+q_{i+2}-1)\le\kappa_i\le\min(q_i,q_{i+2})$；
+这只保证 (26.5) 非负，尚不保证 (26.3)。
+

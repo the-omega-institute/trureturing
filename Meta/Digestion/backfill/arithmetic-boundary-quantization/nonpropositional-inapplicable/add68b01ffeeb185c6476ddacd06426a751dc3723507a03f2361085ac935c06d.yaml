@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:add68b01ffeeb185c6476ddacd06426a751dc3723507a03f2361085ac935c06d
+  normalized_sha256: sha256:add68b01ffeeb185c6476ddacd06426a751dc3723507a03f2361085ac935c06d
+cas_ref: sha256:add68b01ffeeb185c6476ddacd06426a751dc3723507a03f2361085ac935c06d
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 证明段或其连续推导片段（**证明。** 唯一分解保证 16 个不同 mask 的乘积互异。原始可容许域准确为…）只论证所在节前文的结论，不另列新的独立命题。
+    previous_atom_id: 2c82eb6f13bfdb3fafa4db7d8800e2c0fdcf0dcb583b5f1bb211778a32e9ad44
+    next_atom_id: 3efe6e4b0dec5a44586e7fe730d4e31f80b581d989cc0f3989c917a68a4282dd

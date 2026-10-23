@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:b21754bcce4a7f31e9dbe6568a743173d09e29145e31a8f4c8843dcdfc3d69e1
+  normalized_sha256: sha256:b21754bcce4a7f31e9dbe6568a743173d09e29145e31a8f4c8843dcdfc3d69e1
+cas_ref: sha256:b21754bcce4a7f31e9dbe6568a743173d09e29145e31a8f4c8843dcdfc3d69e1
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 定义 277.1 只引入达到指定误差的实输出编码之最小维数。
+    previous_atom_id: 099866c5d6e637bf1b25ae10baacf312242abd62b2fa15fe9bc7e9958b5307b4
+    next_atom_id: 657688e3eb180257506925da0e0150366aa2e04a1c7302b27d565d96cd92b5a2

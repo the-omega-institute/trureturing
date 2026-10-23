@@ -1,0 +1,118 @@
+**Theorem 9.2 (exact positive-drift completed region split).** For every fixed
+scalar mode and cycle of Definition 9.1, each solution of $\mathscr E$ lies
+in exactly one of the following alternatives on the full region $V$:
+
+$$
+\begin{aligned}
+\mathrm F:&\quad X=T_{q_X}\quad(X\in V),\qquad q_X\in\mathbb N,\\
+\mathrm I:&\quad X=\Omega\quad(X\in V).
+\end{aligned}
+\tag{SFS.25}
+$$
+
+The finite ranks are unique. Their parameter domain is all natural numbers;
+any restrictions are imposed by the retained equations. Substitute each
+alternative into every original equation, retaining all scalar guards,
+reconstruction expressions and any additional completed-domain predicates.
+The resulting two systems give exactly the original solution set, in both
+directions. Either system can be inconsistent. Equations on untouched
+variables and restrictions involving them remain obligations. Acquired signed
+predicates stay in their original finite-source charts; (SFS.25) imposes no
+negative predicate or finite row partition on a completed point.
+
+Proof. Reuse Lemma 2.1 for completed injectivity, persistence of infinite
+branches, the unique preimage of $\Omega$, preservation of the existence of
+a leaf, and the leaf-depth estimate (SFS.6). Original-present subtree
+transport holds on completed trees by the same induction on a finite address
+as on finite trees: every traversed original branch distributes $\rho$ to
+its two children. If an epoch address crosses an original leaf, any reached
+subtree beyond that leaf lies in its finite replacement tree and is finite.
+This distinction supplies the reach guards below.
+
+If one cycle vertex is finite, its head image is finite. Every residual
+occurrence on its right side must be finite, since a fixed power and
+containment in a pair preserve an infinite branch. Finiteness propagates
+around the cycle and then throughout $V$. Apply the finite mass argument of
+[CAR, Theorem 2.2][CAR-CYCLE] to these finite values. On an occurrence edge,
+$\gamma(X)\ge\gamma(Y)$, strictly when the edge is strict and
+$\gamma(Y)>0$. The masses agree around the cycle, so its strict edge forces
+mass zero there. Every forward mass is then zero. Mass zero is precisely
+the finite atomic orbit, with a unique index by [ABC, Theorems 2.2–2.3][ABC].
+This is alternative F and reuses the finite atomicity theorem.
+
+Otherwise every cycle vertex is infinite. Number the chosen edges by
+$i=0,\ldots,t-1$, with $X_t=X_0$, head powers $a_i$, occurrence powers $b_i$
+and addresses $s_i$. In a solution,
+
+$$
+(\rho^{a_i}X_i)|_{s_i}=\rho^{b_i}X_{i+1}.
+\tag{SFS.26}
+$$
+
+The right side is infinite. Thus $s_i$ cannot cross an original leaf of
+$X_i$: it is originally reached, its subtree is infinite, and transport gives
+$\rho^{a_i}(X_i|_{s_i})=\rho^{b_i}X_{i+1}$. This also covers empty $s_i$.
+
+These relations compose on the same completed trees. For $1\le j\le t$ put
+$S_j=s_0\cdots s_{j-1}$, $A_j=\sum_{i<j}a_i$ and
+$B_j=\sum_{i<j}b_i$. Inductively maintain original reach of $S_j$, infinity
+of $X_0|_{S_j}$, and
+
+$$
+\rho^{A_j}(X_0|_{S_j})=\rho^{B_j}X_j.
+\tag{SFS.27}
+$$
+
+The first edge proves the base case. Apply $\rho^{a_j}$ to (SFS.27) and
+navigate $s_j$. On the right, original transport and (SFS.26) give the
+infinite subtree $\rho^{B_j+b_j}X_{j+1}$. On the left, that infinite endpoint
+cannot be born below an original leaf of $X_0|_{S_j}$. Hence $S_js_j$ is
+originally reached in $X_0$, and transport gives the next identity with
+$A_{j+1},B_{j+1}$. No separately chosen subtree witnesses are combined.
+
+At the cycle end, $S=S_t$ is nonempty because an edge is strict, and
+$A_t=B_t+d$. Completed injectivity cancels $\rho^{B_t}$, giving
+
+$$
+X_0=\rho^d(X_0|_S).
+\tag{SFS.28}
+$$
+
+Write $Y=X_0|_S$, which is infinite. Navigating $S$ in $X_0=\rho^dY$ has
+infinite result $Y$, so $S$ is originally reached in $Y$ as well.
+Transport yields $Y=\rho^d(Y|_S)$. Repeating this argument retains every
+original reach guard and proves
+
+$$
+X_0=\rho^{kd}(X_0|_{S^k})\qquad(k\ge1).
+\tag{SFS.29}
+$$
+
+If $X_0$ had a leaf, each displayed preimage would have a leaf, and (SFS.6)
+would give $\mu(X_0)\ge\lfloor kd/2\rfloor$ for every $k$. This is
+impossible for fixed finite $\mu(X_0)$ and $d>0$. Thus $X_0$ is leafless,
+hence $\Omega$.
+
+Whenever an exposed head is $\Omega$, its right side equals $\Omega$.
+Every syntactic subtree occurrence there therefore evaluates to $\Omega$.
+For an occurrence $\rho^bY$, Lemma 2.1 forces $Y=\Omega$. Propagate around
+the cycle and along every edge in its full forward region. This proves I.
+A finite ground or finite atomic token on a right side with such a head
+makes that branch inconsistent; it is not deleted. Likewise a divergent
+token on a right side whose head is finite makes branch F inconsistent.
+
+The alternatives are disjoint and exhaust all solutions. Conversely, any
+valuation satisfying one substituted system and all retained predicates
+reconstructs a solution of $\mathscr E$ by literal substitution. This proves
+both solution directions, including multiple-head constraints. In branch F,
+comparisons involving only the replaced region, finite grounds and finite
+atomic parameters have the exact Presburger interpretation of
+[CAR, Lemma 4.1][CAR-CYCLE] and PAC Lemma 3.2. Mixed comparisons remain.
+
+Positive drift is essential to the infinite argument. The equation
+$X=\langle X,\alpha\rangle$ has a pair-guarded leafful infinite solution
+and a strict zero-weight cycle. Its finite prefixes are obtained by successive
+pairing and stabilize at each depth; guarded uniqueness follows from the
+one-level agreement gain. Thus a strict cycle without positive total weight
+does not justify alternative I.
+

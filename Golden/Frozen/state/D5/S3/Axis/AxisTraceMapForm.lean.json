@@ -1,1 +1,1 @@
-{"statement_id":"sha256:28b934e7d3dcf095a92f8f354e25350fa5c05cff700d2f8d3c6bdc8738d065e0"}
+{"statement_id":"sha256:28b934e7d3dcf095a92f8f354e25350fa5c05cff700d2f8d3c6bdc8738d065e0","declarations":[{"declaration_name_key":"ns(ns(ns(ns(ns(n0,2:D5),2:S3),4:Axis),16:AxisTraceMapForm),13:orbitMap_form)","kind":"theorem"},{"declaration_name_key":"ns(ns(ns(ns(ns(n0,2:D5),2:S3),4:Axis),16:AxisTraceMapForm),27:axis_trace_map_form_package)","kind":"theorem"}]}

@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:5dd410cabc005abc12f7b2dda7fe475d01b91a1023c50f48a9732d4053b3283a
+  normalized_sha256: sha256:5dd410cabc005abc12f7b2dda7fe475d01b91a1023c50f48a9732d4053b3283a
+cas_ref: sha256:5dd410cabc005abc12f7b2dda7fe475d01b91a1023c50f48a9732d4053b3283a
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 非命题文本：公式片段 \operatorname{PTr}_J(x)(i,n)：只引入对象、参数、术语或记号；不附加存在性、唯一性或其他性质断言。
+    previous_atom_id: 11b8e8791aca0d9e42f6dae077f99eafbb4e62ea479b4153a0104891d1837daf
+    next_atom_id: 9a531c25628db3572238d35716b89cc4712fc36eb2344502482e83d4f333e8cb

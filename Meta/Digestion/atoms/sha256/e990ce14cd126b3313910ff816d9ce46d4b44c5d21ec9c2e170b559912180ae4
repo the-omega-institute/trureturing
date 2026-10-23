@@ -1,0 +1,13 @@
+**定理 311.2（任务相对合并的充要性）。** 记录合并 $g$ 对 $\mathcal T$ 安全，当且仅当对任意 $s,t\in S$，
+
+$$
+g(r(s))=g(r(t))
+\quad\Longrightarrow\quad
+O_\phi(s)=O_\phi(t)
+\qquad\forall\phi\in\mathcal T.
+$$
+
+### 证明
+
+若存在因子化映射 $\overline O_\phi$，则相同的 $g(r(\cdot))$ 必给出相同的 $O_\phi$，得到必要性。反之，在 $Z$ 的每个非空纤维上任选代表状态；假设保证 $O_\phi$ 在该纤维上取值恒定，于是把该常值定义为 $\overline O_\phi(z)$。对不落在 $g\circ r$ 像中的 $z$ 任意定义，便有 $O_\phi=\overline O_\phi\circ g\circ r$。证毕。
+

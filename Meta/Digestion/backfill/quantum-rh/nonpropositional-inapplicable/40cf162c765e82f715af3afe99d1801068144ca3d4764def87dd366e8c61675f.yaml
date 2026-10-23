@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:40cf162c765e82f715af3afe99d1801068144ca3d4764def87dd366e8c61675f
+  normalized_sha256: sha256:40cf162c765e82f715af3afe99d1801068144ca3d4764def87dd366e8c61675f
+cas_ref: sha256:40cf162c765e82f715af3afe99d1801068144ca3d4764def87dd366e8c61675f
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 本 atom 是定理 B3 的一步正延拓判据的证明段，只论证前文已陈述的结论，不提出独立新命题；原命题 atom 保留其自身状态。
+    previous_atom_id: 2bc63109d666c92a11aa641dbeae45bc08e3f4f939bc5ce4406a75e5d86d03b6
+    next_atom_id: 6b08a689db2b69eb73ecc61d392e6b3d66d37abedb3f0965b92ca20713f8a8b1

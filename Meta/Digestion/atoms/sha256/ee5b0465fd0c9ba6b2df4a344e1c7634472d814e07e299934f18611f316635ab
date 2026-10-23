@@ -1,0 +1,21 @@
+**Theorem 18.2 (original paired-history branching necessity).** For every
+$M$ of Definition 18.1, with exactly the symbolic minimum $j_{\rm det}(\mu)$
+of (16.8) and Corollary 16.3,
+
+$$
+1911e(M)+110\operatorname{Br}_{\rm orig}(M)
+ \ge121j_{\rm det}(\mu)>0.
+\tag{18.3}
+$$
+
+Consequently, if a sequence of original finite observers for this same
+fixed prior, source and interface satisfies $e(M_n)\to0$, then
+
+$$
+\liminf_n\operatorname{Br}_{\rm orig}(M_n)
+ \ge\frac{11}{10}j_{\rm det}(\mu).
+\tag{18.4}
+$$
+
+The sequence assertion is conditional on existence of such a sequence.
+

@@ -1,1 +1,1 @@
-{"statement_id":"sha256:e5afdb8321ae59bcf060b8776bde533e475598cb3d49dd4dfda339cd743c438d"}
+{"statement_id":"sha256:e5afdb8321ae59bcf060b8776bde533e475598cb3d49dd4dfda339cd743c438d","declarations":[{"declaration_name_key":"ns(ns(ns(ns(ns(n0,2:D5),2:S3),13:Combinatorics),35:ArcherCyclicTetranacciDecomposition),13:decomposition)","kind":"theorem"},{"declaration_name_key":"ns(ns(ns(ns(ns(n0,2:D5),2:S3),13:Combinatorics),35:ArcherCyclicTetranacciDecomposition),5:words)","kind":"def"}]}

@@ -1,0 +1,52 @@
+**Proposition 58.21 (fixed-budget decision and basis existence under the published repair).**
+Under 58.11, feasibility of each specified finite budget is decidable.
+A mixed finite-profile budget is decidable when its certificate also decides
+the existence of a finite uniform bound in every coordinate, as in IV
+§§47--49. An ordinary mixed query, if separately requested, uses
+$\operatorname{MixFeas}$ and requires its own exact horizon or decision
+certificate; it is not the effective IV frontier predicate. Independently, for any
+controller class with the source-total integer semantics of 58.18 and
+fixed finite $d$, the finite-budget region has a finite minimal basis,
+possibly empty. The latter is an existence result, not an effective
+frontier algorithm under 58.11 alone.
+
+Proof. For a fixed budget $B$, enumerate the finite candidate family and
+its exact terminal paths up to $T_K(B)$. For each candidate, form the
+universal source-coverage sentence used in 58.20, now conjoining the
+path's cost bounds in every constrained coordinate. Presburger
+decidability decides this sentence; a finite disjunction over candidates
+decides feasibility and selects a candidate when true. Exact paths and
+universal source coverage prove soundness. The independent horizon
+covering every successful budget-feasible candidate proves completeness.
+The certified alternative must supply the same exact decision, including
+termination. For a mixed finite-profile query, constrained pathwise bounds
+alone do not enforce boundedness in unconstrained coordinates; the
+$\operatorname{FinBox}$ certificate must provide that additional exact
+decision. No all-infinite decision follows from horizons specified only for
+budgets with a constrained coordinate. Relational IV §48 explicitly requires
+this decision as an additional hypothesis, and 58.20 supplies it for its
+certified finite family.
+
+For basis existence, $\mathcal F\subseteq\mathbb N^d$ is upward closed by
+its definition: a controller fitting $x$ also fits every larger vector.
+Its minimal elements form an antichain, which is finite by the classical
+Dickson principle cited in 58.17. Every $x\in\mathcal F$ has a minimal
+element below it: the nonempty set
+$\{y\in\mathcal F:y\le x\}$ lies in a finite lower box, and any minimal
+element there is also globally minimal. Hence
+
+$$
+\mathcal F=\uparrow\operatorname{Min}(\mathcal F).
+$$
+
+If $\mathcal F=\varnothing$, the basis is empty. This proof does not
+decide emptiness, locate the minimal elements, or provide an exact
+outside-closure test. It requires neither a finite seed nor a finite
+candidate family for existence. The effective conclusion for a finite
+family uses the additional decisions in 58.20; 58.19 rules out replacing
+them by the historical uncorrected mixed test in IV §44.2. The active
+finite-profile predicate and weighted restriction remain those of IV
+§§47--50. These are paper proofs under the
+declared mathematical premises, with no Lean/kernel verification or
+unconditional general signed-fiber construction. ∎
+

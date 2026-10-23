@@ -1,0 +1,237 @@
+name: Produce the Lean Actions cache
+description: Resume long builds separately and publish only complete validated Lean seeds, completing dependency-scoped FIB regressions required by report production.
+inputs:
+  release-seed-tag:
+    description: Exact local candidate Release to restore before the long build
+    default: ''
+  release-seed-producer:
+    description: Immutable commit that produced the selected local Release
+    default: ''
+  preparation-only:
+    description: Build for isolated PR artifact transport without ordinary cache publication
+    default: 'false'
+  regenerate-report-artifacts:
+    description: 'Explicitly re-extract all reports while retaining compiled Lean and dependencies'
+    default: 'false'
+outputs:
+  project-key:
+    description: 'Newly published or accepted restored project seed'
+    value: ${{ steps.project_snapshot.outputs.project_ready == 'true' && steps.keys.outputs.project_key || steps.project.outputs.cache-matched-key }}
+  dependency-key:
+    description: 'Newly published or retained dependency seed'
+    value: ${{ steps.dependency_snapshot.outputs.dependency_ready == 'true' && steps.keys.outputs.dependency_key || steps.dependency.outputs.cache-matched-key }}
+  elan-key:
+    description: 'Existing platform and toolchain pin key'
+    value: ${{ steps.keys.outputs.elan_key }}
+runs:
+  using: composite
+  steps:
+    - name: Reserve time to save producer progress
+      shell: bash
+      run: echo "STRATALINT_CACHE_PRODUCER_DEADLINE_AT=$(( $(date +%s) + 18000 ))" >> "$GITHUB_ENV"
+    - uses: actions/setup-dotnet@v5
+      with:
+        global-json-file: global.json
+    - name: Build the Lean producer for the cache seed
+      shell: bash
+      run: make -C tools dotnet DOTNET_PROJECT=tools/StrataLint.Cli/StrataLint.Cli.csproj
+    - id: prepared
+      if: inputs.preparation-only != 'true'
+      env:
+        GH_TOKEN: ${{ github.token }}
+      shell: bash
+      run: python3 tools/scripts/worktree/lean_pr_cache.py adopt --repository "$GITHUB_WORKSPACE"
+    - id: keys
+      env:
+        GH_TOKEN: ${{ github.token }}
+      shell: bash
+      run: python3 tools/scripts/worktree/lean_actions.py keys --repository "$GITHUB_WORKSPACE"
+    - id: elan
+      if: steps.keys.outputs.elan_key != ''
+      continue-on-error: true
+      uses: actions/cache/restore@v5
+      with:
+        path: ~/.elan
+        key: ${{ steps.keys.outputs.elan_key }}
+    - shell: bash
+      run: tools/scripts/workflow/install-lean-toolchain.sh lean-toolchain --github-path "$GITHUB_PATH"
+    - id: dependency
+      if: steps.prepared.outputs.adopted != 'true' && steps.keys.outputs.dependency_key != ''
+      continue-on-error: true
+      uses: actions/cache/restore@v5
+      with:
+        path: ${{ steps.keys.outputs.dependency_archive_path }}
+        key: ${{ steps.keys.outputs.dependency_key }}
+        restore-keys: ${{ steps.keys.outputs.dependency_restore_prefix }}
+    - id: project
+      if: steps.prepared.outputs.adopted != 'true' && inputs.release-seed-tag == '' && steps.keys.outputs.project_key != ''
+      continue-on-error: true
+      uses: actions/cache/restore@v5
+      with:
+        path: ${{ steps.keys.outputs.project_archive_path }}
+        key: ${{ steps.keys.outputs.project_restore_key }}
+        restore-keys: ${{ steps.keys.outputs.project_restore_prefix }}
+    - name: Restore optional validated seeds
+      env:
+        DEPENDENCY_KEY: ${{ steps.dependency.outputs.cache-matched-key }}
+        PROJECT_KEY: ${{ steps.project.outputs.cache-matched-key }}
+        PROJECT_RESTORE_KEY: ${{ steps.keys.outputs.project_restore_key }}
+        DEPENDENCY_OUTCOME: ${{ steps.dependency.outcome }}
+        PROJECT_OUTCOME: ${{ steps.project.outcome }}
+      shell: bash
+      run: python3 tools/scripts/worktree/lean_actions.py restore --repository "$GITHUB_WORKSPACE" --dependency-key "$DEPENDENCY_KEY" --project-key "$PROJECT_KEY" --project-restore-key "$PROJECT_RESTORE_KEY" --dependency-outcome "$DEPENDENCY_OUTCOME" --project-outcome "$PROJECT_OUTCOME"
+    - id: release
+      name: Restore the explicitly selected local Release
+      if: steps.prepared.outputs.adopted != 'true' && (inputs.release-seed-tag != '' || inputs.release-seed-producer != '')
+      env:
+        GH_TOKEN: ${{ github.token }}
+        RELEASE_TAG: ${{ inputs.release-seed-tag }}
+        RELEASE_PRODUCER: ${{ inputs.release-seed-producer }}
+      shell: bash
+      run: make lean-cache-from-github-without-mathlib LEAN_CACHE_MODE=candidate LEAN_CACHE_TAG="$RELEASE_TAG" LEAN_CACHE_SOURCE_COMMIT="$RELEASE_PRODUCER"
+    - id: resume_keys
+      name: Select the producer continuation
+      shell: bash
+      run: python3 tools/scripts/worktree/lean_actions.py resume-keys --repository "$GITHUB_WORKSPACE"
+    - id: resume_lookup
+      name: Find the producer continuation without extracting
+      if: steps.prepared.outputs.adopted != 'true' && env.STRATALINT_ACTIONS_CACHE_SEEDED != '1' && steps.release.outputs.restored != 'true'
+      continue-on-error: true
+      uses: actions/cache/restore@v5
+      with:
+        path: ${{ steps.resume_keys.outputs.resume_archive_path }}
+        key: ${{ steps.resume_keys.outputs.resume_key }}
+        restore-keys: ${{ steps.resume_keys.outputs.resume_restore_prefix }}
+        lookup-only: true
+    - id: resume
+      if: steps.resume_lookup.outputs.cache-matched-key != ''
+      continue-on-error: true
+      uses: actions/cache/restore@v5
+      with:
+        path: ${{ steps.resume_keys.outputs.resume_archive_path }}
+        key: ${{ steps.resume_lookup.outputs.cache-matched-key }}
+        fail-on-cache-miss: true
+    - name: Validate the producer continuation
+      if: steps.prepared.outputs.adopted != 'true' && env.STRATALINT_ACTIONS_CACHE_SEEDED != '1' && steps.release.outputs.restored != 'true'
+      env:
+        RESUME_KEY: ${{ steps.resume.outputs.cache-matched-key }}
+        RESUME_OUTCOME: ${{ steps.resume.outcome }}
+      shell: bash
+      run: python3 tools/scripts/worktree/lean_actions.py resume-restore --repository "$GITHUB_WORKSPACE" --resume-key "$RESUME_KEY" --resume-outcome "$RESUME_OUTCOME"
+    - id: build
+      name: Build the report and cacheable audit programs
+      continue-on-error: true
+      env:
+        GH_TOKEN: ${{ github.token }}
+        STRATALINT_ACCEPT_COLD_BUILD: '1'
+        REGENERATE_REPORTS: ${{ inputs.regenerate-report-artifacts }}
+        STRATALINT_BUILD_TIMEOUT_SECONDS: '21600'
+        # Include ordinary audit programs in the same measured Lake invocation.
+        STRATALINT_LEAN_BUILD_TARGETS: '["leanInspector/LeanInformationAudit","leanInspector/reportInspector","leanInspectorInterface/LeanInformationAuditInterface","reg/Reg","regInspector/LeanInformationAuditRegAnalysis.AuricFib.Main","regInspector/LeanInformationAuditRegTests","regInspector/auricFibAnalysis","regInspector/compiledJudgeTests"]'
+      shell: bash
+      run: |
+        producer="$(bash tools/scripts/workflow/judge-lean-producer.sh "$GITHUB_WORKSPACE/tools/StrataLint.Cli/bin/Release/net10.0")"
+        if [[ -n "$producer" ]]; then
+          export STRATALINT_LEAN_PRODUCER_DLL="$producer"
+        else
+          unset STRATALINT_LEAN_PRODUCER_DLL
+        fi
+        case "$REGENERATE_REPORTS" in
+          true) regenerate=1 ;;
+          false) regenerate=0 ;;
+          *) echo "CACHE_SEED_ERROR invalid report regeneration input" >&2; exit 2 ;;
+        esac
+        export PREFLIGHT_DEADLINE_AT="$STRATALINT_CACHE_PRODUCER_DEADLINE_AT"
+        status=0
+        python3 tools/scripts/report/runner-diagnostics.py -- \
+          bash tools/scripts/report/report-supervisor.sh --role lean-cache-slice -- \
+          env -u PREFLIGHT_DEADLINE_AT make lean-report LEAN_REPORT_CACHE_MISS_POLICY=reuse-or-build REGENERATE_REPORT_ARTIFACTS="$regenerate" || status=$?
+        if [[ "$status" == 0 ]]; then
+          python3 tools/lean-inspector/publication.py validate .lake/build/stratalint/raw-lean-report.json --repository "$GITHUB_WORKSPACE" || status=$?
+        fi
+        echo "exit_code=$status" >> "$GITHUB_OUTPUT"
+        exit "$status"
+    - id: resume_snapshot
+      name: Prepare producer progress
+      # A tolerated nonzero build has a successful step conclusion.
+      if: ${{ !cancelled() && steps.build.conclusion == 'success' && (steps.build.outcome != 'success' || inputs.preparation-only == 'true') }}
+      shell: bash
+      run: python3 tools/scripts/worktree/lean_actions.py resume-snapshot --repository "$GITHUB_WORKSPACE"
+    - name: Save producer progress
+      if: ${{ !cancelled() && steps.resume_snapshot.outputs.resume_ready == 'true' }}
+      uses: actions/cache/save@v5
+      with:
+        path: ${{ steps.resume_keys.outputs.resume_archive_path }}
+        key: ${{ steps.resume_keys.outputs.resume_key }}
+    - name: Require a complete producer report
+      if: steps.build.outcome != 'success'
+      env:
+        BUILD_EXIT: ${{ steps.build.outputs.exit_code }}
+      shell: bash
+      run: |
+        if [[ "$BUILD_EXIT" == 124 ]]; then
+          echo "CACHE_PRODUCER_INCOMPLETE build slice ended; rerun the producer with the same dependency pins to continue" >&2
+        else
+          echo "CACHE_PRODUCER_FAILED build exit=$BUILD_EXIT; saved progress does not validate the report" >&2
+        fi
+        exit 1
+    - id: project_snapshot
+      if: inputs.preparation-only != 'true'
+      name: Prepare the project seed
+      env:
+        STRATALINT_CACHE_WRITES: 'true'
+        STRATALINT_REPORT_SUCCEEDED: 'true'
+        STRATALINT_CACHE_PRODUCER_COMPLETE: 'true'
+      shell: bash
+      run: python3 tools/scripts/worktree/lean_actions.py snapshot --repository "$GITHUB_WORKSPACE" --layers project
+    - name: Require a usable project seed
+      if: inputs.preparation-only != 'true'
+      env:
+        READY: ${{ steps.project_snapshot.outputs.project_ready }}
+        SKIP_REASON: ${{ steps.project_snapshot.outputs.project_skip_reason }}
+      shell: bash
+      run: |
+        if [[ "$READY" != true ]] && [[ "${STRATALINT_ACTIONS_CACHE_SEEDED:-0}" != 1 || "$SKIP_REASON" != no-build-work ]]; then
+          echo "CACHE_SEED_ERROR build produced no accepted project seed" >&2
+          exit 1
+        fi
+    - name: Publish the project seed
+      if: steps.project_snapshot.outputs.project_ready == 'true'
+      uses: actions/cache/save@v5
+      with:
+        path: ${{ steps.keys.outputs.project_archive_path }}
+        key: ${{ steps.keys.outputs.project_key }}
+    - id: dependency_snapshot
+      if: inputs.preparation-only != 'true'
+      name: Prepare the dependency seed
+      env:
+        STRATALINT_CACHE_WRITES: 'true'
+        STRATALINT_CHECK_SUCCEEDED: 'true'
+      shell: bash
+      run: python3 tools/scripts/worktree/lean_actions.py snapshot --repository "$GITHUB_WORKSPACE" --layers dependency
+    - name: Verify the project cache was published
+      if: steps.project_snapshot.outputs.project_ready == 'true'
+      env:
+        GH_TOKEN: ${{ github.token }}
+        CACHE_KEY: ${{ steps.keys.outputs.project_key }}
+      shell: bash
+      run: |
+        set -euo pipefail
+        saved="$(gh api --method GET "repos/$GITHUB_REPOSITORY/actions/caches" -f key="$CACHE_KEY" -f ref="$GITHUB_REF")"
+        jq -e --arg key "$CACHE_KEY" --arg ref "$GITHUB_REF" \
+          'any(.actions_caches[]; .key == $key and .ref == $ref)' <<< "$saved" >/dev/null || {
+            echo "CACHE_SEED_ERROR project cache was not published to the producer ref" >&2
+            exit 1
+          }
+    - name: Publish the dependency seed
+      if: steps.dependency_snapshot.outputs.dependency_ready == 'true'
+      uses: actions/cache/save@v5
+      with:
+        path: ${{ steps.keys.outputs.dependency_archive_path }}
+        key: ${{ steps.keys.outputs.dependency_key }}
+    - name: Publish the toolchain seed
+      if: inputs.preparation-only != 'true' && steps.elan.outputs.cache-hit != 'true'
+      uses: actions/cache/save@v5
+      with:
+        path: ~/.elan
+        key: ${{ steps.keys.outputs.elan_key }}

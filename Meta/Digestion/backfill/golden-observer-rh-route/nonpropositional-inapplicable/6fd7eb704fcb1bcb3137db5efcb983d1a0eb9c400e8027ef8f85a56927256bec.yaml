@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:6fd7eb704fcb1bcb3137db5efcb983d1a0eb9c400e8027ef8f85a56927256bec
+  normalized_sha256: sha256:6fd7eb704fcb1bcb3137db5efcb983d1a0eb9c400e8027ef8f85a56927256bec
+cas_ref: sha256:6fd7eb704fcb1bcb3137db5efcb983d1a0eb9c400e8027ef8f85a56927256bec
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: Nonpropositional section heading identifying G-g-5 and its intended module; the mathematical obligation is the separate following clause. The heading supplies no additional quantified assertion.
+    previous_atom_id: 64e3b080fed36d27531bfc8da2892bb54b6af11aec94a625142852e976ba183d
+    next_atom_id: 9b725bdd02a4695767502a69eb623c76f7d7d668e0ac4773e733adbeff847e0c

@@ -1,0 +1,23 @@
+**推论 62.6（转移熵是滤波预测的 KL 差）。** 在平稳模型中，令
+\[
+\mathcal Y_-=\sigma(Y_{-\infty:-1}),\qquad
+\mathcal U_-=\sigma(U_{-\infty:-1}),
+\]
+并定义
+\[
+\beta=\Pr(X_0\in\cdot\mid\mathcal Y_-),\qquad
+\beta^U=\Pr(X_0\in\cdot\mid\mathcal Y_-,\mathcal U_-).
+\]
+若 \(U_t=g(X_t)\)，则
+\[
+T_{U\to Y}^{(\infty)}
+=\mathbb E\,D_{\rm KL}
+\!\left(\bar O_{\beta^U}\middle\|\bar O_\beta\right)\ge0.
+\]
+并且
+\[
+T_{U\to Y}^{(\infty)}
+\le I(X_0;Y_0\mid\mathcal Y_-).
+\]
+等号需要 \(U\) 的过去保留 \(X_0\) 对 \(Y_0\) 的全部相关预测信息，一般不成立。
+

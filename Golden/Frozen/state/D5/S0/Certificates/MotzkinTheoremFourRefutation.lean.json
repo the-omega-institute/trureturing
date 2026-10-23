@@ -1,1 +1,1 @@
-{"statement_id":"sha256:b39284e2b3e5d414895a7f753ffd9e5128923b24a29adf87ce546bc70d1d404f"}
+{"statement_id":"sha256:b39284e2b3e5d414895a7f753ffd9e5128923b24a29adf87ce546bc70d1d404f","declarations":[{"declaration_name_key":"ns(ns(ns(ns(ns(n0,2:D5),2:S0),12:Certificates),28:MotzkinTheoremFourRefutation),5:claim)","kind":"def"},{"declaration_name_key":"ns(ns(ns(ns(ns(n0,2:D5),2:S0),12:Certificates),28:MotzkinTheoremFourRefutation),6:result)","kind":"theorem"}]}

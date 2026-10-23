@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:61d82a251d1e9492108d155c54034132d3d224a902fe109d74e439cae642973f
+  normalized_sha256: sha256:61d82a251d1e9492108d155c54034132d3d224a902fe109d74e439cae642973f
+cas_ref: sha256:61d82a251d1e9492108d155c54034132d3d224a902fe109d74e439cae642973f
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 证明段（**证明。** 第一式由 $x'=-ax+by$ 解出 $y$。第二式将重建误差写成  $$ \frac{(\widehat v-x')+a…）只展开前文定理或命题的论证，式子和中间推导不另提出独立陈述。
+    previous_atom_id: 3989cd4f2b7dd139ca34187ef66b4d9cd413993811142bb28733b3b5f04a1f64
+    next_atom_id: eaf4ad49832c61581c442a9d16440fe975100319d0f001660664d21fb5d91cd4

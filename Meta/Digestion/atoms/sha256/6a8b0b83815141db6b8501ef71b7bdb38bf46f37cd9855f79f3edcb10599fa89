@@ -1,0 +1,11 @@
+## 45. Adapter boundary and verification status
+
+This adapter is distinct from [Native Resource Frontier](RECURSIVE_RELATIONAL_OBSERVATION_NATIVE_RESOURCE_FRONTIER.md): that volume assumes the supplied native tree correspondence, fixed `Read/ApplyRho/Halt` tables, and its native paid-length horizon. It is also distinct from [CRF](RECURSIVE_RELATIONAL_OBSERVATION_CONSTRUCTOR_RESOURCE_FRONTIER.md): CRF assumes an accepted constructor-elimination family and its inherited chart bijection. The present interface supplies neither native-tree identities nor constructor elimination, and it permits the full passive/intervention action language. Those volumes can discharge the present hypotheses in their own scopes; this adapter does not replace their proofs.
+
+Constructing a realizable ExactChart with source-total charts, common legality,
+same-source ordered histories, full terminal rows, and Presburger exact costs
+for a general signed FIB fiber remains open. In particular, finite image covers,
+constant replies, or a proof of $\forall h\,\exists\delta_h$ do not establish a
+single all-epoch controller. The statements above are ordinary mathematics and
+have no Lean/kernel verification in this volume.
+

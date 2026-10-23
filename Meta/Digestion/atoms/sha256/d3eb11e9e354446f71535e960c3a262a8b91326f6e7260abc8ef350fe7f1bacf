@@ -1,0 +1,23 @@
+**定理 4.2（Cartesian 积可加）。** 对任意有限图 $G,H$，
+
+$$
+\kappa(G\mathbin{\square}H)=\kappa(G)+\kappa(H).
+\tag{4.1}
+$$
+
+**证明。** 上界：$G\mathbin{\square}H$ 的边集是 $G$ 型边集 $E_G$ 与 $H$ 型边集 $E_H$ 的不交并，二者共用顶点集 $V(G)\times V(H)$。图 $(V(G)\times V(H),E_G)$ 是 $|V(H)|$ 个 $G$ 的副本之不交并，由定理 4.1(iii) 其 $\kappa$ 等于 $\kappa(G)$；同理 $(V(G)\times V(H),E_H)$ 的 $\kappa$ 等于 $\kappa(H)$。定理 4.1(ii) 给出 $\kappa(G\mathbin{\square}H)\le\kappa(G)+\kappa(H)$。
+
+下界：取 $\Phi_G$ 的最大点 $\mu$ 与 $\Phi_H$ 的最大点 $\nu$，令 $\pi_{(g,x)}=\mu_g\nu_x$，则 $\pi\in\mathcal P(V(G)\times V(H))$。按边的两种类型分开求和，并用引理 3.1(ii) 的齐次性：
+
+$$
+\begin{aligned}
+\Phi_{G\square H}(\pi)
+&=\sum_{x\in V(H)}\sum_{\{g,g'\}\in E(G)}h(\mu_g\nu_x,\mu_{g'}\nu_x)
++\sum_{g\in V(G)}\sum_{\{x,x'\}\in E(H)}h(\mu_g\nu_x,\mu_g\nu_{x'})\\
+&=\sum_{x}\nu_x\,\Phi_G(\mu)+\sum_{g}\mu_g\,\Phi_H(\nu)
+=\kappa(G)+\kappa(H).
+\end{aligned}
+$$
+
+由定理 3.2(iii)，$\kappa(G\mathbin{\square}H)\ge\Phi_{G\square H}(\pi)$。两向合并得 (4.1)。
+

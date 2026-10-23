@@ -58,7 +58,7 @@ $$\forall (z : \operatorname{Fin}\left(16\right) \to \operatorname{Complex}), (\
 
 *Formalization.* `D5/S3/Quantum/Entanglement/HiguchiSudbery/HS4Assembly.averageEntropy` (`✓ std3`).
 
-*Citation.* A. Higuchi; A. Sudbery (2000). *How entangled can two couples get?*. DOI: [10.1016/S0375-9601(00)00506-4](https://doi.org/10.1016/S0375-9601(00)00506-4). URL: <https://arxiv.org/abs/quant-ph/0005013>.
+*Citation.* A. Higuchi; A. Sudbery (2000). *How entangled can two couples get?*. DOI: [10.1016/S0375-9601(00)00480-1](https://doi.org/10.1016/S0375-9601(00)00480-1). URL: <https://arxiv.org/abs/quant-ph/0005013>.
 
 *Commentary.*
 

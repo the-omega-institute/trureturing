@@ -1,0 +1,51 @@
+**Proposition 213.12 (A unit input requiring a change of early baseline).**
+At $L=5$ define Y by A=0, T=12 and the following actual rows.
+All unlisted coefficients are zero.
+
+| Word | P | C in Y | C in V |
+| --- | --- | --- | --- |
+| $01000$ | $1$ | $0$ | $3/13$ |
+| $01001$ | $4$ | $0$ | $3/13$ |
+| $01010$ | $3$ | $3$ | $0$ |
+| $01011$ | $5$ | $0$ | $3/13$ |
+| $01100$ | $0$ | $0$ | $12/13$ |
+| $01101$ | $0$ | $0$ | $6/13$ |
+| $01110$ | $2$ | $0$ | $12/13$ |
+| $01111$ | $5$ | $0$ | $0$ |
+| $10000$ | $1$ | $0$ | $0$ |
+| $10001$ | $1$ | $0$ | $0$ |
+| $10011$ | $1$ | $0$ | $0$ |
+| $10100$ | $4$ | $0$ | $0$ |
+| $10101$ | $2$ | $0$ | $0$ |
+| $10110$ | $4$ | $0$ | $0$ |
+| $11000$ | $0$ | $7$ | $0$ |
+| $11011$ | $0$ | $0$ | $7$ |
+| $11100$ | $0$ | $0$ | $5$ |
+| $11101$ | $0$ | $12$ | $7$ |
+| $11110$ | $0$ | $9$ | $9$ |
+
+V retains P and T and uses the last column. It is exactly (213.14)
+and the threshold construction: $E_1=3,E_2=0,S_2=13$.
+Both scores have $\gamma=(3,0,7,12,9)$, $S=33$, $W=48$, $K=76$.
+Their complete supports are
+
+| Pair | $B_N(Y)$ on pair | $B_O(Y)$ on pair | $B_N(V)=B_O(V)$ on pair |
+| --- | --- | --- | --- |
+| $12$ | $48$ | $48$ | $48$ |
+| $13$ | $52$ | $52$ | $52$ |
+| $14$ | $52$ | $52$ | $52$ |
+| $15$ | $48$ | $48$ | $48$ |
+| $23$ | $48$ | $48$ | $594/13$ |
+| $24$ | $52$ | $52$ | $52$ |
+| $25$ | $48$ | $48$ | $48$ |
+| $34$ | $53$ | $51$ | $51$ |
+| $35$ | $47$ | $45$ | $45$ |
+| $45$ | $51$ | $45$ | $45$ |
+
+For both scores the empty support is 45 and the singleton supports
+are $(48,45,45,45,45)$. In particular their costs are $(5,4)$ and
+$(4,4)$, and $(V/4,0)$ certifies the actual unit-O input $Y/4$.
+
+No certificate for $Y/4$ can retain its A,P,T and all early C, even
+if all late C totals, suffixes, unaries and the signed residual are free.
+

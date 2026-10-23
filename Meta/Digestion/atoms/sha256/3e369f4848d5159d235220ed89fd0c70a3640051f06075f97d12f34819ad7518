@@ -1,0 +1,23 @@
+### 33.6 正三角实际子家族的精确操作容量
+
+对 $K=\lceil H/8\rceil$，取引理 32.5（TM.3223）的实际词，并让指标遍历正三角区域
+
+$$
+T_{k,r}=\beta^{2(k+r)}\alpha\beta^{2(k-r)}
+\alpha^{H-8k-1},\qquad 0\le r\le k<K,
+\tag{TM.3331}
+$$
+
+并令 $\mathcal P_H$ 为这些实际来源的家族。它有 $K(K+1)/2$ 个不同初始目标，且
+
+$$
+\begin{aligned}
+c(T_{k,r})&=(H-8k,4k),&
+E_0(T_{k,r})&=A^H,&
+E_1(T_{k,r})&=S^{4r}B^H,\\
+\lambda _1(T_{k,r})&=H,&
+\lambda _2(T_{k,r})&>H.
+\end{aligned}
+\tag{TM.3332}
+$$
+

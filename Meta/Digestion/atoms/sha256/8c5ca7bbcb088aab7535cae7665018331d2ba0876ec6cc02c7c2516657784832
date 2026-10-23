@@ -1,0 +1,32 @@
+**Definition 1.1 (source and address port).** Use the actual finite nonempty ordered
+tree algebra from [GenealogicalFiberTransport](../../../D5/S3/Arith/FibonacciAtomic/GenealogicalFiberTransport.lean),
+`Source := FreeMagma Bool`, with `true` denoting $\alpha$ and `false` denoting
+$\beta$. Its native `substitution` is the homomorphic map
+
+$$
+\mathcal T::=\alpha\mid\beta\mid\langle\mathcal T,\mathcal T\rangle,
+\qquad
+\rho\alpha=\beta,\quad
+\rho\beta=\langle\beta,\alpha\rangle,\quad
+\rho\langle s,t\rangle=\langle\rho s,\rho t\rangle.
+\tag{NAR.1.1}
+$$
+
+Addresses are finite words in $L,R$, with root $\varepsilon$; $L$ corresponds to
+`false` and $R$ to `true` in the native address list. Write $a\preceq p$ for
+the prefix relation, $\operatorname{Pos}(u)$ for actual node addresses and
+$u|_p$ for an existing subtree. The native
+[ActualTreeReadoutAcquisition](../../../D5/S3/Arith/FibonacciAtomic/ActualTreeReadoutAcquisition.lean)
+`readout` returns precisely
+
+$$
+r_u(p)\in\{\alpha,\beta,\mathsf{branch},\mathsf{absent}\}.
+\tag{NAR.1.2}
+$$
+
+It reports the root constructor when the address ends, descends through a
+branch according to the next letter, and reports absence if a nonempty suffix
+remains at a leaf. Every finite address is a legal query, including absent
+addresses. Pairing, labels, order and occurrences are literal; no equations
+identify different trees.
+

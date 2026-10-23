@@ -8,6 +8,7 @@
 
 /-
 admission_basis: escape-witness
+proof_shape: psd_entry_bound: bind-only; consumer: D5.S3.Quantum.QuantumChannels.QubitWassersteinCouplings.state_entry_norm_le_one, D5.S3.Quantum.QuantumChannels.QubitWassersteinCouplings.diag_overlap_le, D5.S3.Quantum.QuantumChannels.WassersteinComplexityNonconvex.pure_diag_coupling, D5.S3.Quantum.Measurement.IncoherentCone.psd_entry_bound_of_trace, D5.S3.Quantum.Measurement.AntidistinguishabilityOverlapNonTight.quantitative_spectral_condition; escape_witness: none
 proof_shape: frobSq_eq_sum: bind-only; consumer: frobSq_block, frobSq_columns, vectorize_norm_sq; escape_witness: none
 proof_shape: frobSq_nonneg: bind-only; consumer: commutatorDensity_density, commutator_norm_bound_of_pure, commutator_pure_max_bound, commutator_variance_bound, defect_lower_bound, frobSq_project_le, gap_nonnegative, projection_K_quadratic, projection_adjoint_bound, projection_channel_from_translation, translation_gap, two_level_from_projection_gap; escape_witness: none
 proof_shape: vectorize_norm_sq: bind-only; consumer: commutator_norm_bound_of_pure, frobSq_eq_zero_iff, gap_bound, trace_product_cauchy; escape_witness: none
@@ -53,7 +54,8 @@ Direct frozen dependencies:
   baseline-frozen owner GID: D5/S3/Quantum/Entanglement/UniversalReplacementCapacityGrowth; public declaration: D5.S3.Quantum.Entanglement.UniversalReplacementCapacityGrowth.pure_trace
     declaration statement_id (producing Lean report): sha256:10a7dafe6e7a6b1cf2bcce71b142fca1562280cfd40a3330284db5fc95180878
   Other lane imports are same-delivery prerequisites, not baseline-frozen dependencies.
-Information-escape registration is paused under CLAUDE.md section 3.9.
+Escape audit unfinished: https://github.com/the-omega-institute/trureturing/issues/15730.
+The typed dependent-family registration for psd_entry_bound has an unresolved observational-dependence proof; source-selection and template validation remain unverified.
 -/
 
 import D5.S3.Quantum.Matrix.NumericalRange
@@ -69,6 +71,23 @@ namespace D5.S3.Quantum.Matrix.CartesianVariance
 open D5.S3.Quantum.Matrix.NumericalRange
 open D5.S3.Quantum.Information.ActualPureQubitCostInfimum
 open D5.S3.Quantum.Fibers.PhysicalFiber
+
+theorem psd_entry_bound {n : Type*} [Fintype n] [DecidableEq n]
+    {P : Matrix n n ℂ} (hp : P.PosSemidef) (i j : n) :
+    Complex.normSq (P i j) ≤ (P i i).re * (P j j).re := by
+  let e : Fin 2 → n := ![i,j]
+  have hd := (hp.submatrix e).det_nonneg
+  have hh := hp.1.apply j i
+  have hi := hp.diag_nonneg (i := i)
+  have hj := hp.diag_nonneg (i := j)
+  have hd' := hd.1
+  simp only [Matrix.det_fin_two, Matrix.submatrix_apply, e, Matrix.cons_val_zero,
+    Matrix.cons_val_one, Matrix.head_cons] at hd'
+  rw [← hh] at hd'
+  simp only [Complex.sub_re, Complex.zero_re, Complex.mul_re, Complex.star_def,
+    Complex.conj_re, Complex.conj_im, hi.2.symm, hj.2.symm] at hd'
+  simp only [Complex.normSq_apply]
+  nlinarith
 
 variable {E : Type*} [NormedAddCommGroup E] [InnerProductSpace ℂ E]
   [FiniteDimensional ℂ E]
@@ -211,7 +230,7 @@ private theorem hermitian_spectral_sum {n : ℕ} (ρ : (Matrix (Fin n) (Fin n) �
     Matrix.IsHermitian.eigenvectorUnitary_apply]
   ring
 
-private theorem density_eigenvalues_sum {n : ℕ} (ρ : (Matrix (Fin n) (Fin n) ℂ)) (hρ : ((ρ).PosSemidef ∧ Matrix.trace ρ = 1)) :
+theorem density_eigenvalues_sum {n : ℕ} (ρ : (Matrix (Fin n) (Fin n) ℂ)) (hρ : ((ρ).PosSemidef ∧ Matrix.trace ρ = 1)) :
     ∑ i, hρ.1.isHermitian.eigenvalues i = 1 := by
   have h := hρ.1.isHermitian.trace_eq_sum_eigenvalues.symm.trans hρ.2
   simpa using congrArg Complex.re h
@@ -431,15 +450,5 @@ theorem commutator_pure_max_bound {n : ℕ} (A : (Matrix (Fin n) (Fin n) ℂ))
   · have hb := commutator_variance_bound A B hB
     exact hb.trans (mul_le_mul_of_nonneg_left (hm _ (commutatorDensity_density B hB))
       (mul_nonneg (by norm_num) (frobSq_nonneg B)))
-
-#print axioms frobSq_eq_sum
-#print axioms frobSq_nonneg
-#print axioms vectorize_norm_sq
-#print axioms D5.S3.Quantum.BlockNorm.EssentiallyHermitian.outer_pairing_trace
-#print axioms pure_variance_maximizer
-#print axioms matrix_pairing
-#print axioms frobSq_star
-#print axioms trace_product_cauchy
-#print axioms commutator_pure_max_bound
 
 end D5.S3.Quantum.Matrix.CartesianVariance

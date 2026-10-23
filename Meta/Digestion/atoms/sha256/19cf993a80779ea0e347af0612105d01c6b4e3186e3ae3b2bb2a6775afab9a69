@@ -1,0 +1,25 @@
+**Theorem 111.2 (Exact selected-target error on all words and tails).**
+For every parameter and every original tail in (111.1), there is one
+original $N\in\mathcal N_2$ with laws (111.3), finite handoff at
+every actual source and seed, exactly two actual requests per seed,
+and maximum requested index at most $L$. It satisfies
+
+$$
+e_a(N)=\varepsilon_{L,\gamma}.
+\tag{111.4}
+$$
+
+More precisely, at a low word with first zero $n\le L$,
+
+$$
+\operatorname{TV}(\nu^N_b,\lambda_n)
+       =\varepsilon_{L,\gamma}-\gamma p^R_b(n),\qquad
+\nu^N_b=\sum_{j=0}^Lp^N_b(j)\delta_{\theta_j},
+\tag{111.5}
+$$
+
+and at every actual source with $n(x)>L$ its error is exactly
+$\varepsilon_{L,\gamma}$. An original $\mathcal O_2$ rule is also
+feasible at this same cap: the supplied $P_{L,2}$ has
+$e_a(P_{L,2})\le\varepsilon_{L,\gamma}$.
+

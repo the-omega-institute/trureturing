@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:75e770edd4360e0696534cb3be299ebda417aa3b93fc004a970c31b21032cfa0
+  normalized_sha256: sha256:75e770edd4360e0696534cb3be299ebda417aa3b93fc004a970c31b21032cfa0
+cas_ref: sha256:75e770edd4360e0696534cb3be299ebda417aa3b93fc004a970c31b21032cfa0
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 章节导引「九、这些结果怎样真正接回项目？」只组织后续讨论或表格栏目，本 atom 不含独立数学命题；相邻条目的定理、公式及待证陈述不在本次结算范围内。
+    previous_atom_id: dc299b745b2c82b036ad705284037261f629990969de06b185ee2f919c94918d
+    next_atom_id: 8cc0ff46267eef905eae90e0dfddd8b5abc855fa5650811b19e5cab38d8c032e

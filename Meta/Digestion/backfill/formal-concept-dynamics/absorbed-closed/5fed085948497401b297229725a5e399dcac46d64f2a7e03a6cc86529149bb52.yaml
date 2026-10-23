@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:5fed085948497401b297229725a5e399dcac46d64f2a7e03a6cc86529149bb52
+  normalized_sha256: sha256:5fed085948497401b297229725a5e399dcac46d64f2a7e03a6cc86529149bb52
+cas_ref: sha256:5fed085948497401b297229725a5e399dcac46d64f2a7e03a6cc86529149bb52
+coverage_gids:
+  - gid: D5/S3/ConceptDynamics/Identity/StrictIdentityBranchImpossibility.strict_identity_branch_impossible
+    target_statement_id: sha256:aef2d630a8cb7f744c569e3a701b2b68837a222d9e4bdaee655fae9266744501
+receipts:
+  unresolved_subitems: []

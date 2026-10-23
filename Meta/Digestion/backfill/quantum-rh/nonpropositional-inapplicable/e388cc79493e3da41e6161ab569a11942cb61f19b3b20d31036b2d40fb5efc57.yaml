@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:e388cc79493e3da41e6161ab569a11942cb61f19b3b20d31036b2d40fb5efc57
+  normalized_sha256: sha256:e388cc79493e3da41e6161ab569a11942cb61f19b3b20d31036b2d40fb5efc57
+cas_ref: sha256:e388cc79493e3da41e6161ab569a11942cb61f19b3b20d31036b2d40fb5efc57
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 本 atom 是定理 D3 的反向蕴含的证明段，只论证前文已陈述的结论，不提出独立新命题；原命题 atom 保留其自身状态。
+    previous_atom_id: ce6bb8779eed5482195cfa742c746441c79bbd40952ba1cade80a2adcb691c9b
+    next_atom_id: 05b75c5acaa75fe331836f54ad24bfad7079ff261e1c3db2521354f9539746fb

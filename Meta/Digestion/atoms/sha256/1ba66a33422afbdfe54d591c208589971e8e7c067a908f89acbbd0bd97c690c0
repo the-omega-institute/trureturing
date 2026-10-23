@@ -1,0 +1,52 @@
+**Theorem 10.3 (matching widths on the original all-shape task).**
+Under Definition 10.1's conditional native services, for all $h\ge1$
+and finite $T$ with $T=0$ or even $h$,
+
+$$
+\begin{aligned}
+\ell_{\rm act}^{\min}(h,T)&=\Theta(h),\\
+\ell_{\rm stat}^{\min}(h,T)&=\Theta\bigl(h+\log_2(T+1)\bigr).
+\end{aligned}
+\tag{SLHC.10.2}
+$$
+
+The constants are independent of $h,T$; for example each lower
+inequality holds with constant $1/4$ and each upper inequality with
+constant $64$. The attaining complete native observers are exactly
+Constructions 11.4–11.6, with all of Theorem 11.2's actual Read,
+Update, response-change and literal-length bounds and §11.6's
+installation and source bills. Their native-call bounds are
+$O(hT+h^3)$ active and
+$O(h(T+1)(h+\log_2(T+1)))$ static. These are polynomial in $h+T$,
+not in the encoded length $\log(T+1)$. At $T=0$ both can use the
+same direct traversal and zero Updates, for every $h$.
+
+Proof. For the upper bounds apply Theorem 11.2 on precisely
+Definition 10.1's source family and parity target. Lemma 11.3
+licenses every delayed decoder invocation by induction inside an
+actual substitution image. The active root-clock alignment leaves
+at most $2h$ licensed candidates without retaining a poll count or
+absolute epoch. Construction 11.5 retains the path and parity;
+Construction 11.6 implements every response, reset and address
+change by its complete two-bank table and paid root Reads.
+Its first Halt is the original parity, and every typed row is
+installed and immediately one-bit legal. No other realization or
+contracted intermediate transition is assumed here.
+
+Using the notation of (SLHC.11.1), the widths are $4k(0)+15$ at
+$T=0$, $4k(\lambda(2h))+15$ for active positive $T$, and
+$4k(\lambda(T+1))+15$ for static positive $T$.
+For $h\ge2$, $\lambda(h)\le h-1$, $\lambda(h+1)\le h$ and
+$\lambda(2h)\le h$; also $\lambda(T+1)\le\log_2(T+1)+1$.
+These inequalities give the asserted upper constant. The remaining
+$h=1,T=0$ case has $k(0)=6$ and width $39$.
+
+For necessity, $F_{\ell+2}\le2^\ell$ and (SLHC.10.1) give
+$\ell\ge h-1$ in the active case and
+$\ell\ge x-1-\log_2 3$ in the static case, where
+$x=h+\log_2(T+1)$. At least three installed words always imply
+$\ell\ge2$. If $x\ge4$ then $x-1-\log_2 3\ge x/4$;
+if $x<4$ use $\ell\ge2$. The same two-case estimate gives
+$\ell\ge h/4$ actively. This proves uniform constants and both
+matching orders. $\square$
+

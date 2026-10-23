@@ -46,7 +46,19 @@ $$\forall nf:PrefixForm, (\operatorname{PrefixFacts}(nf,\operatorname{reconstruc
 
 Induction over the independent payload form gives accumulated returns, the two paid-count equations, the original completed count and the actual writer fold. The arbitrary-length marker invariant supplies every seed and selected triple, including all-equal triples, the post-write latch and held records; the four-slot bound restores exact natural weight. Each local segment invokes the exact first-completion language theorem. At the third latch e=0 and t=3, so A=4-w+2p+J and B=1+2w+2q+J. No selected count bank or receiver delivery is assumed.
 
-**Theorem 1.4 (The full native prefix theorem).**
+**Theorem 1.4 (Execution commutes with finite projection).**
+
+$$\forall c:AcquiredNativeState, (\forall ops:\operatorname{List}(Operation), (\operatorname{map}(pi,\operatorname{execute}(c,ops))=\operatorname{executeFinite}(\operatorname{pi}(c),ops)))$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/Observer/ProbabilisticClosure/TrajectoryLaws/NativeAcquiredPrefixReconstruction.execute_finite_projection` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+For every acquired native state c and finite operation list ops, mapping the actual partial execute result by pi(d)=d.source.finiteFields equals executeFinite(pi(c),ops). The result includes illegal words on both sides as none, as well as all lawful seed, marker, fourth, pending and delivered prefixes. It follows by composing finite_projection_commutes through the original execute fold. The native reconstruction and installed full-law decoder consume this projection identity; no condition on counts or payloadReturns is added.
+
+**Theorem 1.5 (The full native prefix theorem).**
 
 $$\forall ops:\operatorname{List}(Operation), ((\operatorname{Legal}(ops)\Leftrightarrow(\exists! nf:PrefixForm, \operatorname{render}(nf)=ops))\land\forall nf:PrefixForm, ((\operatorname{render}(nf)=ops)\Rightarrow(\operatorname{run}(ops)=\operatorname{some}(\operatorname{reconstruct}(nf))\land\operatorname{PrefixFacts}(nf,\operatorname{reconstruct}(nf))\land\operatorname{finiteRun}(ops)=\operatorname{some}(\operatorname{pi}(\operatorname{reconstruct}(nf))))))$$
 
@@ -62,6 +74,7 @@ The finite fields share completed t and fixed-selector latch status with origina
 
 ## References
 
+- Truth anchor: `D5/S3/Observer/ProbabilisticClosure/TrajectoryLaws/NativeAcquiredPrefixReconstruction.execute_finite_projection`
 - Truth anchor: `D5/S3/Observer/ProbabilisticClosure/TrajectoryLaws/NativeAcquiredPrefixReconstruction.native_acquired_prefix_reconstruction`
 - Truth anchor: `D5/S3/Observer/ProbabilisticClosure/TrajectoryLaws/NativeAcquiredPrefixReconstruction.reconstruct_append_form`
 - Truth anchor: `D5/S3/Observer/ProbabilisticClosure/TrajectoryLaws/NativeAcquiredPrefixReconstruction.reconstruction_invariants`

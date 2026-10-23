@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:3abf57a92627aafc2031836e264dc3ab43024777a27585bc2dcb44fa3bf51db4
+  normalized_sha256: sha256:3abf57a92627aafc2031836e264dc3ab43024777a27585bc2dcb44fa3bf51db4
+cas_ref: sha256:3abf57a92627aafc2031836e264dc3ab43024777a27585bc2dcb44fa3bf51db4
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 证明段或其连续推导片段（于是两个分数行端点都不在 \(I\)。它们不能同在左侧:若 \(d<\mu_0\),则 \(|s|=\mu-z>\mu-d\ge\mu_0-d\ge v\);也不能同在右侧:若 \…）只论证所在节前文的结论，不另列新的独立命题。
+    previous_atom_id: 28b1aad7621c32034591dd11fcb761a61119018dabc356e8951342b46e7373f5
+    next_atom_id: 050915cc8c85f8b95ddac360db28f80763a5abba2fed2655bb4bff1a441ed78d

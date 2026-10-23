@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:01d268e05bb9bfc2ffb2b5e29be59ff02aa87a1fc481c84db6d5b0a1796a6776
+  normalized_sha256: sha256:01d268e05bb9bfc2ffb2b5e29be59ff02aa87a1fc481c84db6d5b0a1796a6776
+cas_ref: sha256:01d268e05bb9bfc2ffb2b5e29be59ff02aa87a1fc481c84db6d5b0a1796a6776
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 定义60.5仅指定三进九点共享表的读取态、等待链长度、数字后继及终止规则，不断言该表正确性、最优性或读取上界。
+    previous_atom_id: 378712eedf3d7778bde80147d9d20a268a4774430bbec5cc7431caeb11bc59f3
+    next_atom_id: e4702a0b006243af8012931b1106941e232b7332d3013bba310404ba08c262c7

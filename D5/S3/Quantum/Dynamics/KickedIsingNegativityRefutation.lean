@@ -29,12 +29,14 @@ Direct frozen dependencies:
 Information-escape registration is paused under CLAUDE.md §3.9.
 -/
 
+import D5.S3.Quantum.Entanglement.AbsolutePPT.UniformSchmidtCorner
 import D5.S3.Quantum.Entanglement.FourQubitResidualSumMonotoneRefutation
 import D5.S3.Quantum.Entanglement.StructuredNegativityCoincidenceRefutation
 import D5.S3.Quantum.Foundation.FiniteTraceDistance
 
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
+set_option linter.style.longLine false
 
 namespace D5.S3.Quantum.Dynamics.KickedIsingNegativityRefutation
 open Matrix
@@ -102,10 +104,6 @@ noncomputable def reducedAB {L : ℕ} (A B : Finset (Fin L))
     (star (fun p : ((A → Fin 2) × (B → Fin 2)) × (Outside (A ∪ B) → Fin 2) =>
       ψ (joinParts A B p.1.1 p.1.2 p.2))))
 
-/-- Partial transposition on the B factor, allowing unequal factor dimensions. -/
-def partialTranspose {A B : Type*} (ρ : Matrix (A × B) (A × B) ℂ) :
-    Matrix (A × B) (A × B) ℂ := fun p q => ρ (p.1,q.2) (q.1,p.2)
-
 /-- The state after integer Floquet time t. -/
 noncomputable def evolved {L : ℕ} (h θ φ : Fin L → ℝ) (t : ℤ) :
     (Fin L → Fin 2) → ℂ := (floquet h ^ t) *ᵥ initial θ φ
@@ -165,7 +163,94 @@ private noncomputable def singlePair :
 
 private noncomputable def psiGraph : (Fin 4 → Fin 2) → ℂ := graphOp *ᵥ psiInitial
 
+theorem trace_conjugate_right {a b : Type} [Fintype a] [Fintype b]
+    [DecidableEq a] [DecidableEq b]
+    (ρ : Matrix (a × b) (a × b) ℂ) (V : Matrix b b ℂ) (hV : Vᴴ * V = 1) :
+    partialTraceRight (((1 : Matrix a a ℂ) ⊗ₖ V) * ρ *
+      ((1 : Matrix a a ℂ) ⊗ₖ V)ᴴ) = partialTraceRight ρ := by
+  ext i j
+  have htr : trace (V * (ρ.submatrix (fun k => (i,k)) (fun k => (j,k))) * Vᴴ) =
+      trace (ρ.submatrix (fun k => (i,k)) (fun k => (j,k))) := by
+    let W : Matrix.unitaryGroup b ℂ := ⟨V, Matrix.mem_unitaryGroup_iff'.mpr
+      (by simpa only [Matrix.star_eq_conjTranspose] using hV)⟩
+    have h := Matrix.trace_units_conj (Unitary.toUnits W)
+      (ρ.submatrix (fun k => (i,k)) (fun k => (j,k)))
+    change trace (V * (ρ.submatrix (fun k => (i,k)) (fun k => (j,k))) * star V) =
+      trace (ρ.submatrix (fun k => (i,k)) (fun k => (j,k))) at h
+    simpa only [Matrix.star_eq_conjTranspose] using h
+  simpa [partialTraceRight, Matrix.trace, Matrix.mul_apply,
+    Matrix.conjTranspose_kronecker, Matrix.one_apply, Fintype.sum_prod_type] using htr
+
+-- The decidable instances are part of this interface.
+set_option linter.unusedDecidableInType false in
+theorem trace_conjugate_left {a b : Type} [Fintype a] [Fintype b]
+    [DecidableEq a] [DecidableEq b]
+    (ρ : Matrix (a × b) (a × b) ℂ) (U : Matrix a a ℂ) :
+    partialTraceRight ((U ⊗ₖ (1 : Matrix b b ℂ)) * ρ *
+      (U ⊗ₖ (1 : Matrix b b ℂ))ᴴ) = U * partialTraceRight ρ * Uᴴ := by
+  ext i j
+  simp only [partialTraceRight, Matrix.mul_apply, Matrix.conjTranspose_kronecker,
+    Matrix.kronecker_apply, Fintype.sum_prod_type, Matrix.one_apply,
+    Matrix.conjTranspose_one, mul_ite, mul_one, mul_zero]
+  simp only [Finset.sum_ite_eq', Finset.mem_univ, if_true, Finset.sum_mul,
+    Finset.mul_sum]
+  rw [Finset.sum_comm]
+  congr 1
+  funext k
+  rw [Finset.sum_comm]
+  congr 1
+  funext l
+  congr 1
+  funext m
+  simp only [ite_mul, Finset.sum_ite_eq, Finset.mem_univ, if_true, zero_mul]
+
+-- The decidable instances are part of this interface.
+set_option linter.unusedDecidableInType false in
+theorem trace_local_right {a b : Type} [Fintype a] [Fintype b]
+    [DecidableEq a] [DecidableEq b]
+    (ρ : Matrix (a × b) (a × b) ℂ) (U : Matrix a a ℂ) (V : Matrix b b ℂ)
+    (hV : Vᴴ * V = 1) :
+    partialTraceRight ((U ⊗ₖ V) * ρ * (U ⊗ₖ V)ᴴ) =
+      U * partialTraceRight ρ * Uᴴ := by
+  have hf : U ⊗ₖ V = (U ⊗ₖ (1 : Matrix b b ℂ)) * ((1 : Matrix a a ℂ) ⊗ₖ V) := by
+    rw [← Matrix.mul_kronecker_mul, Matrix.mul_one, Matrix.one_mul]
+  rw [hf,Matrix.conjTranspose_mul]
+  have he : (((U ⊗ₖ (1 : Matrix b b ℂ)) * ((1 : Matrix a a ℂ) ⊗ₖ V)) * ρ) *
+      (((1 : Matrix a a ℂ) ⊗ₖ V)ᴴ * (U ⊗ₖ (1 : Matrix b b ℂ))ᴴ) =
+      (U ⊗ₖ (1 : Matrix b b ℂ)) *
+        (((1 : Matrix a a ℂ) ⊗ₖ V) * ρ * ((1 : Matrix a a ℂ) ⊗ₖ V)ᴴ) *
+          (U ⊗ₖ (1 : Matrix b b ℂ))ᴴ := by simp only [Matrix.mul_assoc]
+  rw [he,trace_conjugate_left,trace_conjugate_right ρ V hV]
+
+-- The decidable instances are part of this interface.
+set_option linter.unusedDecidableInType false in
+theorem trace_local_left {a b : Type} [Fintype a] [Fintype b]
+    [DecidableEq a] [DecidableEq b]
+    (ρ : Matrix (a × b) (a × b) ℂ) (U : Matrix a a ℂ) (V : Matrix b b ℂ)
+    (hU : Uᴴ * U = 1) :
+    partialTraceLeft ((U ⊗ₖ V) * ρ * (U ⊗ₖ V)ᴴ) =
+      V * partialTraceLeft ρ * Vᴴ := by
+  let F := Matrix.reindexAlgEquiv ℂ ℂ (Equiv.prodComm a b)
+  have hp (M : Matrix (a × b) (a × b) ℂ) :
+      partialTraceLeft M = partialTraceRight (F M) := by ext i j; rfl
+  have hv : F (U ⊗ₖ V) = V ⊗ₖ U := by
+    ext ⟨i,j⟩ ⟨k,l⟩
+    change U j l * V i k = V i k * U j l
+    ring
+  have hs (M : Matrix (a × b) (a × b) ℂ) : F Mᴴ = (F M)ᴴ := rfl
+  rw [hp,map_mul,map_mul,hs,hv,trace_local_right _ V U hU,← hp]
+
+theorem partialTransposeB_kronecker_conj (ρ : Matrix (Fin 2 × Fin 2) (Fin 2 × Fin 2) ℂ)
+    (U V : Matrix (Fin 2) (Fin 2) ℂ) :
+    partialTransposeB ((U ⊗ₖ V) * ρ * (U ⊗ₖ V)ᴴ) =
+      (U ⊗ₖ V.map star) * partialTransposeB ρ * (U ⊗ₖ V.map star)ᴴ := by
+  ext ⟨a,b⟩ ⟨c,d⟩
+  simp [partialTransposeB, Matrix.mul_apply, Matrix.conjTranspose_apply,
+    Fintype.sum_prod_type, Fin.sum_univ_two]
+  ring
+
 set_option maxHeartbeats 4000000 in
+-- The four-site spectral certificates expand finite matrix products and exponentials.
 /-- The four-site generic product state violates Conjecture 1 at α = 1/2. -/
 theorem result : ¬ claim := by
   classical
@@ -193,10 +278,10 @@ theorem result : ¬ claim := by
       rw [Real.sqrt_div (by norm_num), show Real.sqrt (4 : ℝ) = 2 by norm_num]
     have hc : Real.cos (Real.arctan (1/2 : ℝ)) = 2 / Real.sqrt 5 := by
       rw [Real.cos_arctan]
-      norm_num [Real.sqrt_div] <;> ring
+      norm_num [Real.sqrt_div]
     have hs : Real.sin (Real.arctan (1/2 : ℝ)) = 1 / Real.sqrt 5 := by
       rw [Real.sin_arctan]
-      norm_num [Real.sqrt_div] <;> ring
+      norm_num [Real.sqrt_div]; ring
     simp only [one_div] at hc hs
     have hsq2 : (Real.sqrt 2 : ℂ) ^ 2 = 2 := by
       exact_mod_cast Real.sq_sqrt (by norm_num : (0:ℝ) ≤ 2)
@@ -219,7 +304,7 @@ theorem result : ¬ claim := by
     ext x
     simp only [initial,Fin.prod_univ_four,hcos,hsin]
     by_cases h2 : x 2 = 0 <;> by_cases h3 : x 3 = 0 <;>
-      simp [psiInitial,h2,h3] <;> push_cast <;> field_simp <;>
+      simp [psiInitial,h2,h3] <;> field_simp <;>
       ring_nf <;> norm_num [hsq2,hsq5]
   have tensor_mul {n : ℕ} (M N : Fin n → Matrix (Fin 2) (Fin 2) ℂ) :
       tensorOp M * tensorOp N = tensorOp (fun i => M i * N i) := by
@@ -288,7 +373,7 @@ theorem result : ¬ claim := by
     }
   have exp_local {n : ℕ} (j : Fin n) (A : Matrix (Fin 2) (Fin 2) ℂ) :
       NormedSpace.exp (localOp j A) = localOp j (NormedSpace.exp A) := by
-    letI : NormedAlgebra ℚ (Matrix (Fin 2) (Fin 2) ℂ) :=
+    let : NormedAlgebra ℚ (Matrix (Fin 2) (Fin 2) ℂ) :=
       NormedAlgebra.restrictScalars ℚ ℂ _
     exact (NormedSpace.map_exp (siteHom j)
       ((siteHom j).toLinearMap.continuous_of_finiteDimensional) A).symm
@@ -315,7 +400,7 @@ theorem result : ¬ claim := by
       NormedSpace.exp (-Complex.I • hKick 4) =
         tensorOp (fun _ : Fin 4 => NormedSpace.exp
           ((((Real.pi / 4 : ℝ) : ℂ) * Complex.I) • qubitX)) := by
-    letI : NormedAlgebra ℚ (Matrix (Fin 4 → Fin 2) (Fin 4 → Fin 2) ℂ) :=
+    let : NormedAlgebra ℚ (Matrix (Fin 4 → Fin 2) (Fin 4 → Fin 2) ℂ) :=
       NormedAlgebra.restrictScalars ℚ ℂ _
     set K := (((Real.pi / 4 : ℝ) : ℂ) * Complex.I) • qubitX
     have heq : -Complex.I • hKick 4 =
@@ -392,9 +477,7 @@ theorem result : ¬ claim := by
     generalize x 0 = a, x 1 = b, x 2 = c, x 3 = d
     fin_cases a <;> fin_cases b <;> fin_cases c <;> fin_cases d <;>
       norm_num [Fin.sum_univ_four, Fin.prod_univ_four, zValue, graphPhase, rotate4,
-        Matrix.cons_val_two, Matrix.cons_val_three, hplus,hminus] <;>
-        first | exact hplus | exact hminus |
-          (ring_nf; simp [mul_comm, Complex.exp_neg_pi_mul_I, Complex.exp_pi_mul_I])
+        Matrix.cons_val_two, Matrix.cons_val_three, hplus,hminus]
   have ising_factor :
       NormedSpace.exp (-Complex.I • hIsing (fun _ : Fin 4 => (1 : ℝ))) =
         -tensorOp (fun _ : Fin 4 => NormedSpace.exp (-Complex.I • qubitZ) * qubitZ) *
@@ -413,10 +496,9 @@ theorem result : ¬ claim := by
       ext x y
       by_cases h : x = y
       · subst y
-        simp [tensorOp,Matrix.diagonal,zValue,← Complex.exp_eq_exp_ℂ]
-        apply Finset.prod_congr rfl
-        intro i _
-        by_cases hx : x i = 0 <;> simp [hx]
+        simp only [tensorOp, Matrix.diagonal, Matrix.of_apply, ite_true,
+          ← Complex.exp_eq_exp_ℂ, neg_smul, Pi.coe_exp, Pi.neg_apply, Pi.smul_apply,
+          smul_eq_mul, neg_mul]
       · obtain ⟨i,hi⟩ : ∃ i, x i ≠ y i := by
           by_contra hc
           exact h (funext fun i => not_not.1 fun hi => hc ⟨i,hi⟩)
@@ -428,9 +510,6 @@ theorem result : ¬ claim := by
     congr 1
     funext x
     rw [Pi.coe_exp, ← Complex.exp_eq_exp_ℂ]
-    change Complex.exp (-Complex.I *
-      (((Real.pi / 4 : ℝ) : ℂ) * (∑ i, zValue (x i) * zValue (x (finRotate 4 i))) +
-        ∑ i, zValue (x i))) = _
     have hf : Complex.exp (-Complex.I * (∑ i : Fin 4, zValue (x i))) =
         ∏ i : Fin 4, Complex.exp (-Complex.I * zValue (x i)) := by
       rw [Finset.mul_sum, Complex.exp_sum]
@@ -454,7 +533,7 @@ theorem result : ¬ claim := by
         hself.smul_mem_skewAdjoint (by
           change star (((Real.pi / 4 : ℝ) : ℂ) * Complex.I) =
             -(((Real.pi / 4 : ℝ) : ℂ) * Complex.I)
-          simp [Complex.star_def])
+          simp)
       exact (Unitary.mem_iff.mp (NormedSpace.exp_mem_unitary_of_mem_skewAdjoint hsk)).1
     have hF : (NormedSpace.exp (-Complex.I • qubitZ))ᴴ *
         NormedSpace.exp (-Complex.I • qubitZ) = 1 := by
@@ -462,7 +541,7 @@ theorem result : ¬ claim := by
       have hsk : -Complex.I • qubitZ ∈ skewAdjoint (Matrix (Fin 2) (Fin 2) ℂ) :=
         hself.smul_mem_skewAdjoint (by
           change star (-Complex.I) = -(-Complex.I)
-          simp [Complex.star_def])
+          simp)
       exact (Unitary.mem_iff.mp (NormedSpace.exp_mem_unitary_of_mem_skewAdjoint hsk)).1
     have hZ : qubitZᴴ * qubitZ = 1 := by
       rw [show qubitZᴴ = qubitZ from qubit_weyl_star.2.2.1,← pow_two]
@@ -572,11 +651,11 @@ theorem result : ¬ claim := by
     have hsqrt (a : ℝ) (ha : 0 ≤ a) : Real.sqrt (a ^ 2) = a := by
       rw [Real.sqrt_sq ha]
     have hroot16 : Real.sqrt (16/25 : ℝ) = 4/5 := by
-      convert hsqrt (4/5) (by norm_num) using 1 <;> norm_num
+      convert hsqrt (4/5) (by norm_num) using 1; norm_num
     have hroot4 : Real.sqrt (4/25 : ℝ) = 2/5 := by
-      convert hsqrt (2/5) (by norm_num) using 1 <;> norm_num
+      convert hsqrt (2/5) (by norm_num) using 1; norm_num
     have hroot1 : Real.sqrt (1/25 : ℝ) = 1/5 := by
-      convert hsqrt (1/5) (by norm_num) using 1 <;> norm_num
+      convert hsqrt (1/5) (by norm_num) using 1; norm_num
     have hmarg : renyiHalf (diagonal (fun _ : Fin 2 => (1/2 : ℂ))) = Real.log 2 := by
       rw [renyi_spectrum, hsp]
       simp only [Multiset.insert_eq_cons, Multiset.map_cons, Multiset.map_singleton,
@@ -637,14 +716,6 @@ theorem result : ¬ claim := by
       traceNorm (V * A * Vᴴ) = traceNorm A := by
     rw [traceNorm_spectrum _ (Matrix.isHermitian_mul_mul_conjTranspose V hA),
       traceNorm_spectrum A hA, spectrum_conjugate A V hA hV]
-  have pt_local (ρ : Matrix (Fin 2 × Fin 2) (Fin 2 × Fin 2) ℂ)
-      (U V : Matrix (Fin 2) (Fin 2) ℂ) :
-      partialTransposeB ((U ⊗ₖ V) * ρ * (U ⊗ₖ V)ᴴ) =
-        (U ⊗ₖ V.map star) * partialTransposeB ρ * (U ⊗ₖ V.map star)ᴴ := by
-    ext ⟨a,b⟩ ⟨c,d⟩
-    simp [partialTransposeB, Matrix.mul_apply, Matrix.conjTranspose_apply,
-      Fintype.sum_prod_type, Fin.sum_univ_two]
-    ring
   have conjugate_unitary {n : Type} [Fintype n] [DecidableEq n]
       (U : Matrix n n ℂ) (hU : Uᴴ * U = 1) :
       (U.map star)ᴴ * U.map star = 1 := by
@@ -661,67 +732,6 @@ theorem result : ¬ claim := by
       (U ⊗ₖ V)ᴴ * (U ⊗ₖ V) = 1 := by
     rw [Matrix.conjTranspose_kronecker, ← Matrix.mul_kronecker_mul, hU, hV,
       Matrix.one_kronecker_one]
-  have trace_conjugate_right {a b : Type} [Fintype a] [Fintype b]
-      [DecidableEq a] [DecidableEq b]
-      (ρ : Matrix (a × b) (a × b) ℂ) (V : Matrix b b ℂ) (hV : Vᴴ * V = 1) :
-      partialTraceRight (((1 : Matrix a a ℂ) ⊗ₖ V) * ρ *
-        ((1 : Matrix a a ℂ) ⊗ₖ V)ᴴ) = partialTraceRight ρ := by
-    ext i j
-    have htr : trace (V * (ρ.submatrix (fun k => (i,k)) (fun k => (j,k))) * Vᴴ) =
-        trace (ρ.submatrix (fun k => (i,k)) (fun k => (j,k))) := by
-      rw [Matrix.trace_mul_comm, ← Matrix.mul_assoc, hV, Matrix.one_mul]
-    simpa [partialTraceRight, Matrix.trace, Matrix.mul_apply,
-      Matrix.conjTranspose_kronecker, Matrix.one_apply, Fintype.sum_prod_type] using htr
-  have trace_conjugate_left {a b : Type} [Fintype a] [Fintype b]
-      [DecidableEq a] [DecidableEq b]
-      (ρ : Matrix (a × b) (a × b) ℂ) (U : Matrix a a ℂ) :
-      partialTraceRight ((U ⊗ₖ (1 : Matrix b b ℂ)) * ρ *
-        (U ⊗ₖ (1 : Matrix b b ℂ))ᴴ) = U * partialTraceRight ρ * Uᴴ := by
-    ext i j
-    simp only [partialTraceRight, Matrix.mul_apply, Matrix.conjTranspose_kronecker,
-      Matrix.kronecker_apply, Fintype.sum_prod_type, Matrix.one_apply,
-      Matrix.conjTranspose_one, mul_ite, mul_one, mul_zero]
-    simp only [Finset.sum_ite_eq', Finset.mem_univ, if_true, Finset.sum_mul,
-      Finset.mul_sum]
-    rw [Finset.sum_comm]
-    congr 1
-    funext k
-    rw [Finset.sum_comm]
-    congr 1
-    funext l
-    congr 1
-    funext m
-    simp only [ite_mul, Finset.sum_ite_eq, Finset.sum_ite_eq', Finset.mem_univ, if_true, zero_mul]
-  have trace_local_right {a b : Type} [Fintype a] [Fintype b]
-      [DecidableEq a] [DecidableEq b]
-      (ρ : Matrix (a × b) (a × b) ℂ) (U : Matrix a a ℂ) (V : Matrix b b ℂ)
-      (hV : Vᴴ * V = 1) :
-      partialTraceRight ((U ⊗ₖ V) * ρ * (U ⊗ₖ V)ᴴ) =
-        U * partialTraceRight ρ * Uᴴ := by
-    have hf : U ⊗ₖ V = (U ⊗ₖ (1 : Matrix b b ℂ)) * ((1 : Matrix a a ℂ) ⊗ₖ V) := by
-      rw [← Matrix.mul_kronecker_mul, Matrix.mul_one, Matrix.one_mul]
-    rw [hf,Matrix.conjTranspose_mul]
-    have he : (((U ⊗ₖ (1 : Matrix b b ℂ)) * ((1 : Matrix a a ℂ) ⊗ₖ V)) * ρ) *
-        (((1 : Matrix a a ℂ) ⊗ₖ V)ᴴ * (U ⊗ₖ (1 : Matrix b b ℂ))ᴴ) =
-        (U ⊗ₖ (1 : Matrix b b ℂ)) *
-          (((1 : Matrix a a ℂ) ⊗ₖ V) * ρ * ((1 : Matrix a a ℂ) ⊗ₖ V)ᴴ) *
-            (U ⊗ₖ (1 : Matrix b b ℂ))ᴴ := by simp only [Matrix.mul_assoc]
-    rw [he,trace_conjugate_left,trace_conjugate_right ρ V hV]
-  have trace_local_left {a b : Type} [Fintype a] [Fintype b]
-      [DecidableEq a] [DecidableEq b]
-      (ρ : Matrix (a × b) (a × b) ℂ) (U : Matrix a a ℂ) (V : Matrix b b ℂ)
-      (hU : Uᴴ * U = 1) :
-      partialTraceLeft ((U ⊗ₖ V) * ρ * (U ⊗ₖ V)ᴴ) =
-        V * partialTraceLeft ρ * Vᴴ := by
-    let F := Matrix.reindexAlgEquiv ℂ ℂ (Equiv.prodComm a b)
-    have hp (M : Matrix (a × b) (a × b) ℂ) :
-        partialTraceLeft M = partialTraceRight (F M) := by ext i j; rfl
-    have hv : F (U ⊗ₖ V) = V ⊗ₖ U := by
-      ext ⟨i,j⟩ ⟨k,l⟩
-      change U j l * V i k = V i k * U j l
-      ring
-    have hs (M : Matrix (a × b) (a × b) ℂ) : F Mᴴ = (F M)ᴴ := rfl
-    rw [hp,map_mul,map_mul,hs,hv,trace_local_right _ V U hU,← hp]
   have local_invariance (ρ : Matrix (Fin 2 × Fin 2) (Fin 2 × Fin 2) ℂ)
       (U V : Matrix (Fin 2) (Fin 2) ℂ) (hρ : ρ.IsHermitian)
       (hU : Uᴴ * U = 1) (hV : Vᴴ * V = 1) :
@@ -748,7 +758,7 @@ theorem result : ¬ claim := by
       intro i _
       exact hρ.apply (i,a) (i,b)
     refine ⟨?_,?_,?_,?_⟩
-    · rw [pt_local]
+    · rw [partialTransposeB_kronecker_conj]
       exact norm_conjugate _ _ hpt (tensor_pair_unitary U (V.map star) hU
         (conjugate_unitary V hV))
     · exact renyi_conjugate ρ _ hρ (tensor_pair_unitary U V hU hV)
@@ -788,7 +798,7 @@ theorem result : ¬ claim := by
           ((outEquiv 0 1 2 3 (by decide) (by decide) (by decide)
             (by intro i hi; fin_cases i <;> simp_all)).symm (c,d)) = ![a,b,c,d] := by
       funext i
-      fin_cases i <;> simp [joinParts,singleEquiv,outEquiv,Equiv.symm_mk] <;> rfl
+      fin_cases i <;> simp [joinParts,singleEquiv,outEquiv,Equiv.symm_mk]
     have hs (a b : Fin 2) : singlePair.symm (a,b) =
         ((singleEquiv 0).symm a,(singleEquiv 1).symm b) := rfl
     simp only [hs,Pi.star_apply,hk,blockEquiv_symm,Fintype.sum_prod_type]
@@ -805,7 +815,7 @@ theorem result : ¬ claim := by
       simpa [realSpectrum,hA,hB,Multiset.map_map,Function.comp_def] using hr
     · have hB : ¬ (reindex e e A).IsHermitian := by
         simpa only [Matrix.isHermitian_reindex_iff] using hA
-      simp [realSpectrum,hA,hB]
+      simp [realSpectrum,hA]
   have renyi_reindex {n m : Type} [Fintype n] [Fintype m]
       [DecidableEq n] [DecidableEq m] (e : n ≃ m) (A : Matrix n n ℂ) :
       renyiHalf (reindex e e A) = renyiHalf A := by

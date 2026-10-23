@@ -1,0 +1,36 @@
+**Theorem 15.2 (uniform intersection reference and its effective decoder).**
+If $\mathcal M$ is $q$-wise intersecting, then the minimum retained alphabet is
+
+$$
+N_H(\mathcal M)=q.
+\tag{NAR.15.1}
+$$
+
+Both $\to_+$ and $\to_<$ are acyclic. Their longest-path ranks agree, and
+the common rank is the following finite expression:
+
+$$
+E(a)=\max\left(\{0\}\cup
+ \left\{m\in\{1,\ldots,H\}:\begin{array}{l}
+ \exists S_1,\ldots,S_m\in\mathcal M\text{ such that for every }1\le j\le m,\\[-2pt]
+ \displaystyle\bigcap_{h=m-j+1}^{m}S_h
+ \subseteq\{i\in I:a_i\ge j\}
+ \end{array}\right\}\right).
+\tag{NAR.15.2}
+$$
+
+The encoder is $e(a)=E(a)$, with labels $0,\ldots,H$. It factors through the
+acquired initial row by (NAR.14.6). Given a code value, a selected
+$S\in\mathcal M$ and a complete later row, the decoder of Reuse 14.2
+enumerates the finitely many $u\in A_H$ with $E(u)=e(a)$, computes the
+normalized displayed values $z_i$, and retains precisely those candidates for
+which
+
+$$
+h=z_{i_0}-u_{i_0}\ge\lambda_0,\qquad z_i-u_i=h\quad(i\in S),
+\tag{NAR.15.3}
+$$
+
+for one public $i_0\in S$. Every surviving candidate gives the same $h$, and
+that $h$ is the recovered lag.
+

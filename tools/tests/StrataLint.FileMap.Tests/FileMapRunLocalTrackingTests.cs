@@ -40,6 +40,18 @@ public sealed class FileMapRunLocalTrackingTests
     }
 
     [Fact]
+    public void CandidatePresencePreservesTheSeparateIndexRestriction()
+    {
+        const string path = "Generated/partitions/source-a.md";
+        var untracked = FileMapPolicy.InspectGeneratedInventory(Parse(DataKeyedRunLocalEntry), [path], [],
+            indexedPaths: new HashSet<string>(StringComparer.Ordinal));
+        Assert.DoesNotContain(untracked, finding => finding.Code == "FILEMAP-RUN-LOCAL-TRACKED");
+        var indexed = FileMapPolicy.InspectGeneratedInventory(Parse(DataKeyedRunLocalEntry), [path], [],
+            indexedPaths: new HashSet<string>([path], StringComparer.Ordinal));
+        Assert.Contains(indexed, finding => finding.Code == "FILEMAP-RUN-LOCAL-TRACKED");
+    }
+
+    [Fact]
     public void TrackedDataKeyedCommittedSourceSetHasNoRunLocalFinding()
     {
         var findings = FileMapPolicy.InspectGeneratedInventory(

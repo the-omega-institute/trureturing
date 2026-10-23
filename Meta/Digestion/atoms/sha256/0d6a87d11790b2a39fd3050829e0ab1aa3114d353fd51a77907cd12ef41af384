@@ -1,0 +1,39 @@
+**定义 15.3（长度积分、路径阶数与光滑钟参数）。** 给每条保留边长度 $\ell_e>0$，记 $D_\ell=\operatorname{diag}(\ell_e)$；这些长度是另给数据，不与定义 3.1 的钟成本自动相同。长度梯度为 $G=D_\ell^{-1}B^{\mathsf T}$；边内积改用 $D_\ell W_ED_\ell$ 时，其伴随及 Laplacian 为
+
+$$
+G^*=M_V^{-1}BW_ED_\ell,\qquad G^*G=L_M.
+$$
+
+对 $g=-G\varphi$，电流为 $j=W_ED_\ell g$，向内散度为 $G^*g=-L_M\varphi$。沿有符号边链 $z$ 积分使用 $z^{\mathsf T}D_\ell g$，不是 $z^{\mathsf T}g$。定理 15.2 的指数钟满足
+
+$$
+\log(N_{\operatorname{head}(e)}/N_{\operatorname{tail}(e)})
+=\alpha\ell_eg_e.
+$$
+
+这是同一正校准 $N_{\rm ref}$ 下的公式；改变势的常数只共同缩放钟率，若同时调整 $N_{\rm ref}$ 则可保持各率。任意逐节点独立校准会添加自己的对数差，不能省略。非负路径成本使用定义 3.1、假设 11.1，不同于这些可正可负的对数增量。
+
+图的 coboundary 采用所引 Hodge 文献引理 4.4：一维图的二阶余链空间为零；即使另填二维胞腔，仍有 $\delta_1\delta_0=0$。这不是 Hessian。对路径上三次采样 $u,v,w$，若参数步长为 $h_-,h_+>0$，规定二阶除差为
+
+$$
+\mathcal D^2\varphi(u,v,w)=\frac{2}{h_-+h_+}
+\left(\frac{\varphi(w)-\varphi(v)}{h_+}-\frac{\varphi(v)-\varphi(u)}{h_-}\right).
+$$
+
+相同步长 $h$ 才化为 $(\varphi(w)-2\varphi(v)+\varphi(u))/h^2$。例如沿本图 $0\to1\to13$ 取参数 $0,1,3$ 及同值的势，原始二次差为一，而所规定除差为零。该算子依赖路径和步长，不由顶点邻接独自定义 Hessian 或曲率。
+
+若另给光滑流形及联络 $\nabla$、$C^2$ 函数 $\varphi$ 和 $C^2$ 路径 $\eta(\lambda)$，Hessian 指 $\nabla d\varphi$。另给沿路径的 $C^1$ 函数 $N(\lambda)>0$，令 $d\tau=N\,d\lambda$，普通链式法则在此合同下给
+
+$$
+\begin{aligned}
+D_\tau(\varphi\circ\eta)&=N^{-1}d\varphi(\dot\eta),\\
+D_\tau^2(\varphi\circ\eta)&=N^{-2}\left[
+(\nabla d\varphi)(\dot\eta,\dot\eta)
++d\varphi(\nabla_{\dot\eta}\dot\eta)
+-\frac{d\log N}{d\lambda}d\varphi(\dot\eta)\right],\\
+\frac{d^2\tau}{d\lambda^2}&=\frac{dN}{d\lambda}.
+\end{aligned}
+$$
+
+第二式直接将 $N^{-1}d/d\lambda$ 作用于第一式；不将外微分 $d(d\varphi)=0$ 换成 $\nabla d\varphi$。若取 $N=N_{\rm ref}e^{-\alpha\varphi\circ\eta}$ 且 $N_{\rm ref}$ 恒定，最后一式成为 $-\alpha N\,d(\varphi\circ\eta)/d\lambda$。只有模型让 $N$ 自由时，才允许同势而任意比较 $N$ 与 $2N$；固定构成律与校准后不再有这种自由。图、长度、概率矩及 KL 对 $\kappa$ 的导数均不供应该光滑几何，也不把这些参数导数识别成几何曲率。
+

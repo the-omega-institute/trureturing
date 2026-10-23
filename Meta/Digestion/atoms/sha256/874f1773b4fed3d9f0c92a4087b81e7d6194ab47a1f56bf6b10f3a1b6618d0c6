@@ -1,0 +1,11 @@
+**Assumption 1.3 (Public supplier interfaces).** The following existing
+ordinary mathematical results are used at exactly their owning scopes.
+
+| Owner | Interface used |
+| --- | --- |
+| O, Definitions 1.1–1.3 and Theorem 2.1 | Equations (1.1)–(1.10), with one whole gain and the full zero-safe converse. Its $\epsilon$ is $e$ here; its sixth-$M$ response is $v$ here. |
+| S, Corollary 11.4, using its Theorems 7.4, 11.2 and 11.3 | There are finite $B,C>0$ such that $(p,v)\in D_J\cup D_M$ implies $b(W)\le B,c(W)\le C$ for every $W\in C(p,v)$, including unused companions. No bound on $p$ is assumed. |
+| S, Theorem 12.1 | For every $L,P_*>0$, a full parent world with $b\le L,|p|\le P_*$ has bounded $c,d$, all four padded coefficients of the whole gain, and $v,a,m$, with a bound depending only on $L,P_*$. This includes singular sources, degree drops and $p=24$. |
+| SII, Theorem 14.3 | For every $P_*>0$, one $\varepsilon(P_*)>0$ gives $\max\{\delta(W),\delta(W')\}\ge\varepsilon(P_*)$ for every selected actual $J$ or $M$ pair with $|p|\le P_*$, where $\delta(W)=\min\{r,1-r,b,c\}$. |
+| SII, Theorem 15.1 | For bounded $p$, one endpoint of each selected joint pair can be put in one compact strict-parent set; above a compact off-$24$ base set this can be taken inside the off-$24$ parent. The two anchors may coincide. |
+| SII, Theorem 29.1 and Corollary 29.2 | There is $\epsilon>0$, uniform in all real $v$, for which $0<|p-24|<\epsilon$ excludes every distinct actual $M$ pair, and hence every original joint configuration. |

@@ -1,1 +1,1 @@
-{"statement_id":"sha256:a60b16a51a5acbf306995a7b311652b686b8d5a6b6605e9558493928f122dcea"}
+{"statement_id":"sha256:a60b16a51a5acbf306995a7b311652b686b8d5a6b6605e9558493928f122dcea","declarations":[{"declaration_name_key":"ns(ns(ns(ns(ns(ns(n0,2:D5),2:S3),4:Weil),8:ZeroData),28:ExplicitLargeHeightZeroCount),25:half_count_large_explicit)","kind":"theorem"},{"declaration_name_key":"ns(ns(ns(ns(ns(ns(n0,2:D5),2:S3),4:Weil),8:ZeroData),28:ExplicitLargeHeightZeroCount),35:zetaZeroConfig_large_count_explicit)","kind":"theorem"}]}

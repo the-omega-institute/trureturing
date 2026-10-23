@@ -1,0 +1,15 @@
+## §3 熵–素数–概率词典(压缩;全文另卷 Entropy-Primes-Probability-Survey)
+
+| 条目 | 内容 | 分型/审计 |
+|---|---|---|
+| Euler 积 = 独立性 | zeta 分布下 v_p 独立几何分布;唯一分解的概率化身 | 定理级【检:Lin–Hu, Bernoulli 2001;Golomb 1970】 |
+| primon 气体 | ε_p = ln p;玻色 Z = ζ(β);费米 Z = ζ(β)/ζ(2β);μ = 费米宇称,Σμ(n)n^{−β} = 1/ζ = Witten 指标 | 定理级(词典为构造)【训:Julia 1990;Spector 1990】 |
+| 极点 = 相变 | 态密度 e^E ⟹ S(E)=E ⟹ Hagedorn 于 β=1;Bost–Connes 1995:配分函数 ζ 之 C*-系统于 β=1 自发破缺,对称群 Gal(ℚ^ab/ℚ) | 定理级【训】 |
+| 熵证 Chebyshev | 均匀整数不可压 + 分解次可加 ⟹ Σ_{p≤n}(ln p)/p ~ ln n | 定理级【检:Kontoyiannis arXiv:0710.4076;Billingsley 1973】 |
+| 粒子数 CLT | Erdős–Kac 1940:(ω(n)−ln ln n)/√(ln ln n) → N(0,1) | 定理级【训】 |
+| 短区间 Poisson | Gallagher 1976,依 Hardy–Littlewood | 条件级【训】 |
+| 独立性汇率 | Mertens e^{−γ};Maier 1985 短区间失效;Granville 修正 | 定理级【训】 |
+| RH ⟺ 硬币 | Littlewood 1912:RH ⟺ M(x)=O(x^{1/2+ε});Denjoy 1931 读法;Littlewood 1914 Ω 兜底 | 定理级+读法级【训】 |
+| 零点对数气体 | Montgomery 1973 对关联;GUE = Coulomb 对数气体 β=2 Gibbs 测度(Dyson);素数近最大熵 vs 零点亚泊松刚性,显式公式为 Fourier 桥 | 定理/数值级;并置为读法【训】 |
+| 热流形变 | de Bruijn 1950–Newman 1976 常数 Λ;RH ⟺ Λ≤0;Rodgers–Tao 2018/2020:Λ≥0;Polymath15:Λ≤0.22 | 定理级【训】 |
+| Sarnak 熵分界 | μ ⟂ 一切零拓扑熵系统(猜想);Matomäki–Radziwiłł、Tao 对数二点等进展 | open【训】 |

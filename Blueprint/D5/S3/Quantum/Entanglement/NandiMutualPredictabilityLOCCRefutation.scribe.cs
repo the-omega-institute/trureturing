@@ -39,6 +39,15 @@ internal sealed class NandiMutualPredictabilityLOCCRefutationDocument : IScribeD
             Node("claim", "The conjecture in either reading", "claim", ClaimFormula(),
                 "The conjecture is read as the disjunction of the fixed and the optimized meaning of the quantity I2.",
                 DescribeRole.Definition, AssessedProvenance.FromLiterature(Source)),
+            Node("hadamard-unitary", "The Hadamard matrix is unitary", "hadamard_unitary",
+                Disp(Member(Qualified("BinaryStabilizerLocalInequivalence", "hadamard"),
+                    new Formula.Apply(Qualified("Matrix", "unitaryGroup"), [FinD(D(2)), C()]))),
+                "The Hadamard matrix of BinaryStabilizerLocalInequivalence lies in the complex two-dimensional unitary group.",
+                DescribeRole.Lemma, AssessedProvenance.FromRepo(Source)),
+            Node("half-sqrt-two-squared", "The square of the Hadamard coefficient", "half_sqrt_two_sq",
+                HalfSqrtTwoSquaredFormula(),
+                "The real coefficient sqrt(2)/2 has square 1/2.",
+                DescribeRole.Lemma, AssessedProvenance.FromRepo()),
             Node("result", "The conjecture fails in both readings", "result", ResultFormula(),
                 "Take d = 2, ρ = (1/2) I ⊗ |0⟩⟨0|, and Alice's instrument E₁ = |0⟩⟨0|, E₂ = |0⟩⟨1|, which measures and resets outcome 1 to |0⟩. Both branches equal (1/2)|00⟩⟨00|. For every setting I2 of ρ is 1, because each basis term is the sum over i of (1/2)|⟨b_i|0⟩|², which is 1/2 by unitarity of Bob's basis; hence I2max of ρ is 1. In the computational/Hadamard setting each branch has I2 = (1/2)(1 + 1/2) = 3/4, so the branches sum to 3/2 > 1, and the same lower bound holds for I2max.",
                 DescribeRole.Theorem, AssessedProvenance.FromRepo(),
@@ -54,6 +63,8 @@ internal sealed class NandiMutualPredictabilityLOCCRefutationDocument : IScribeD
             DescribeId.Create(id), DeclarationHandle.Create(Prefix + declaration), H(title),
             StatementSource.FromAuthor(formula), provenance, Blocks(Paragraph(Text(prose))), role, resolution);
 
+    private static Formula Qualified(string owner, string name) =>
+        Seq(Operatorname, Grp(F.Id(owner)), Dot, Operatorname, Grp(F.Id(name)));
     private static Formula V(string name) => F.Id(name);
     private static Formula N() => Seq(Mathbb, Grp(V("N")));
     private static Formula C() => Seq(Mathbb, Grp(V("C")));
@@ -160,4 +171,12 @@ internal sealed class NandiMutualPredictabilityLOCCRefutationDocument : IScribeD
         Disp(IffOf(V("claim"), Parenthesized(Or(V("claimFixed"), V("claimOptimized")))));
 
     private static Formula ResultFormula() => Disp(Not(V("claim")));
+
+    private static Formula HalfSqrtTwoSquaredFormula()
+    {
+        Formula q = new Formula.Fraction(new Formula.Apply(Qualified("Real", "sqrt"), [D(2)]), D(2));
+        return Disp(new Formula.Relation(
+            new Formula.Binary(Parenthesized(q), FormulaBinaryOperator.Multiply, Parenthesized(q)),
+            FormulaRelationOperator.Equal, new Formula.Fraction(D(1), D(2))));
+    }
 }

@@ -1,0 +1,22 @@
+非根守卫直接复用 DelayedOriginalReadout.original_presence_guard：在偶数
+$N=2k$ 时，guardAccept 恰是原付费 Read 的非 absence 位。因此该声明
+在本章参数上的确切结论为
+
+$$
+g=1\quad\Longleftrightarrow\quad r_u(p)\ne\mathsf{absent}.
+\tag{ABT.42}
+$$
+
+它不要求 $a$ 原来存在；整个证明中的原叶、子树和原树都只是证明参数，
+不是运行时 advice。该守卫连同引理 13.1 和已有标签表给出完整的同源表：
+
+| 原四值回复 $r_u(p)$ | $g$（非根） | $b$ | $c$ |
+| --- | --- | --- | --- |
+| $\mathsf{absent}$ | $0$ | $0$ | $0$ |
+| $\alpha$ | $1$ | $0$ | $0$ |
+| $\beta$ | $1$ | $1$ | $0$ |
+| $\mathsf{branch}$ | $1$ | $1$ | $1$ |
+
+根没有 absence 一行。这里三个位同属一个实际 $\rho^{2k}u$，不使用独立块、
+各自最优来源或可以重置的多个样本。
+

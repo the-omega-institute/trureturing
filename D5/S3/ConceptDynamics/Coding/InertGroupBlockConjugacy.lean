@@ -222,7 +222,7 @@ theorem uniform_power_mono (A : GroupMat H n n) {a k : ℕ}
   rw [← Nat.add_sub_of_le hak, pow_add]
   exact uniformMatrix_mul_right (A^a) (A^(k-a)) ha
 
-private theorem positiveTau_spec (A : GroupMat H n n) (hA : Uniformizes A) :
+theorem positiveTau_spec (A : GroupMat H n n) (hA : Uniformizes A) :
     0 < positiveTau A hA ∧ UniformMatrix (A^(positiveTau A hA)) := by
   classical
   exact Nat.find_spec hA
@@ -629,7 +629,7 @@ def block (W : RationalDecomposition H) (l : Fin W.count) :
   (Matrix.compRingEquiv (Fin n) (Fin (W.order l)) (W.DivisionAlgebra l)).toRingHom.comp
     (((component W l).comp naturalToRational).mapMatrix)
 
-private theorem natural_cast_uniform_iff (x : MonoidAlgebra ℕ H) :
+theorem natural_cast_uniform_iff (x : MonoidAlgebra ℕ H) :
     RationalUniform (naturalToRational x) ↔ NaturalUniform x := by
   constructor
   · intro hx g

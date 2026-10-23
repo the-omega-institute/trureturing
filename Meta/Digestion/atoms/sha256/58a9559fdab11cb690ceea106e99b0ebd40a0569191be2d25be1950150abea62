@@ -1,0 +1,102 @@
+**Theorem 10.8 (exact full-fiber joint feasibility reduction).** Under
+Assumption 10.6, for every integer $r\ge1,q\ge0$,
+
+$$
+\mathsf{InvFeas}_*(r,q)\quad\Longleftrightarrow\quad
+\mathsf{RootFeas}_*(r,q).
+\tag{NBP.10.11}
+$$
+
+Both sides have the same supplement capacity and the same fresh
+invocation upper budget. The left side includes every finite actual
+origin, every legal finite address and every full-value-dependent
+acquired/exported supplement permitted by the contract.
+
+**Proof, from the finite task to the full actual fiber.** Fix a coloring
+and trees witnessing $\mathsf{RootFeas}_*(r,q)$. The producer computes
+$\theta_x$ by inspecting the roots of the already acquired class
+values. No fresh source call is used for this local inspection and
+no unknown value is compared. It exports the complete finite code
+$c(\theta_x)$, using distinct installed finite values for the used
+labels. There are at most $r$ values. Every used type is actually
+attained by Proposition 10.2, so the actual code range is exactly
+the used coloring range.
+
+On entry with that code, the common reader follows its installed
+tree. At experiment $d$ it actually invokes the native port at
+$p_d$. This address is reached on every current source in the fiber,
+and its reply is exactly $\theta_x(d)$. Each traversal of a query
+vertex is one counted invocation, even if that class was queried
+before. Induction on the reply path makes execution agree with
+$E_{c(\theta_x)}$. It stops after at most $q$ calls with
+$G_*(\theta_x)=F(u_x)$ by Theorem 10.4. The output includes all
+exterior syntax, canonical restricted classes, disequalities and
+absence guards. The acquisition/export and common-entry premises
+implement the finite code without adding any source-bearing field.
+
+**Proof, from an arbitrary full-fiber protocol to the finite task.**
+Fix a feasible supplement $\sigma$ and reader; enumerate their $a$
+actually used complete supplement values as $s_1,\ldots,s_a$, where
+$1\le a\le r$. For each value, unroll only reachable native reply
+histories of the reader. At a reachable history its common initial
+state, complete supplement and previous replies determine its next
+local segment, finite query word or halt, and any halt output.
+Some actual origin realizes that history. Source-total termination
+on that origin makes the determined local segment finite. The
+uniform bound $q$ leaves only finitely many reachable histories:
+for each advice value there are at most
+$1+4+\cdots+4^q$ reply words. Replace unreachable children by
+immediate arbitrary halts. Thus there are finitely many fixed
+query words over all these finite trees. This is the bounded
+unrolling used in Native Signed Feasibility Theorem 7.3, with no
+new update and with advice values as finitely many separate entries.
+
+Let $L$ be the maximum length of these query words, taking $L=0$
+if there are none. No source-size bound has been introduced:
+$L$ bounds the finitely many words of this fixed comparator.
+Use Proposition 10.5 at this common $L$, obtaining one actual
+padded origin $u^\theta$ for every $\theta\in\Theta_*$. Define
+$c(\theta)=i$ precisely when the actual export on this origin is
+$\sigma(x^\theta)=s_i$. This coloring is a finite table with at
+most $r$ labels, even though the original $\sigma$ can depend on
+all acquired values and can vary among sources of one root type.
+
+Transform the finite reader tree for $s_i$ into a root-experiment
+tree as follows. A query at $v$ not entering an exterior hole has
+the constant reply determined by $C_*$, so select that child
+without an experiment. A query entering any occurrence of class $d$ with empty suffix
+asks $d$ and forwards its type reply. A query entering an occurrence
+of class $d$ with nonempty suffix asks $d$, forwards
+$\mathsf{absent}$ on either leaf type and $\mathsf{branch}$ on
+branch type. The third case uses (NBP.10.10). Every transformed
+vertex therefore uses zero or one root experiment for one original
+native invocation. All original words are within $L$. The
+transformation is on the finite tree, so its depth is at most $q$;
+retaining repeated questions is legal, and skipping known constants
+only decreases the count.
+
+For $\theta$ with $c(\theta)=i$, induction along the transformed
+tree reproduces exactly the original reader path on the one fixed
+actual origin $u^\theta$ with its truthful acquired/exported value
+$s_i$. Every such path was reachable and hence was included in
+the unrolling. The original reader returns
+$F(u^\theta)=G_*(\theta)$, so the transformed root tree returns
+that complete row. Doing this for every $\theta$ proves
+$\mathsf{RootFeas}_*(r,q)$.
+
+The padded origins are alternative actual sources, each fixed
+through its own run. They are used only for necessity; sufficiency
+above covers all actual origins. Selecting them does not assert
+that an arbitrary prescribed supplement is constant on type cells.
+The new acquired encoder in the first direction can export the
+finite coloring found in the second, rather than preserve the
+original encoder pointwise. This is exactly why joint existence,
+rather than fixed-advice performance, is the invariant. $\square$
+
+The argument is an existence proof of a finite certificate from
+a promised correct bounded comparator. It is not an algorithm
+that extracts all reachable histories or a useful word bound from
+arbitrary program text. No trace, full native behavior, total
+controller state count or physical resource correspondence is
+preserved by the two directions.
+

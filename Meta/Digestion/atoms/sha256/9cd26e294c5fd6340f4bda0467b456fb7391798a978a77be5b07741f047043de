@@ -1,0 +1,8 @@
+Once the
+boundary is initialized, any injective encoding of its relevant
+actual image at each type admits deterministic exact updates. A
+common internal alphabet of size the maximum of those image sizes
+suffices when the public type is separately available.
+
+Proof. At time zero, equal acquired records yield equal initialized
+memory and hence equal decoded boundaries, proving necessity.

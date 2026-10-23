@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:3a127cf5d87917ca9501a09838da4101404f8d2aae7530aec4ba0304c1687775
+  normalized_sha256: sha256:3a127cf5d87917ca9501a09838da4101404f8d2aae7530aec4ba0304c1687775
+cas_ref: sha256:3a127cf5d87917ca9501a09838da4101404f8d2aae7530aec4ba0304c1687775
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 非命题文本：Part XI：追加式第二阶段——表达饱和、角色秩与观察语言边界：仅为节标题及导引或设定适用条件；本片段未陈述后续命题的结论。
+    previous_atom_id: b07228ab13fa9b44b0be2874ef0be2b25142d8e92f0926b690df8d6f889105c3
+    next_atom_id: 98512cd23958568a8db5f23e69196afc484b78fa4b04a23a60640c80f27ae8ea

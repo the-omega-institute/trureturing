@@ -1,0 +1,25 @@
+**Corollary 104.4 (screening parameters remain distinct from times).**
+If $\tau_n\ge0$, $\tau_n/N_n\to0$ and
+$\tau_n\to\tau\in[0,\infty]$, then
+
+$$
+\int e^{-\tau_ns}\,d\nu_n(s)\longrightarrow
+\begin{cases}
+\sqrt5/2,&\tau=0,\\
+H(\tau),&0<\tau<\infty,\\
+1,&\tau=\infty.
+\end{cases}
+\tag{104.10}
+$$
+
+Here $\tau_n$ is a Laplace parameter, not the time $s_n$
+of Theorem 104.3. The finite-source value at zero is $C_n$.
+
+**Proof.**
+For positive $\tau_n$ use (104.3) and Theorem 100.2 with
+$\lambda_n=\tau_n/N_n$. At zero or on zero subsequences use
+(92.5) and the uniform bounded-parameter assertion (100.3).
+The simultaneous condition $\tau_n/N_n\to0$ is retained at the
+unbounded Laplace endpoint; it is not needed for the density
+statements. $\square$
+

@@ -19,7 +19,7 @@ internal sealed record RuleRegistration(
     IRepositoryRule Rule,
     bool RecheckOnImplementationChange = true);
 
-public sealed class RuleCatalog
+public sealed partial class RuleCatalog
 {
     private static readonly Lazy<RuleCatalog> DefaultCatalog = new(CreateDefault);
 
@@ -57,8 +57,6 @@ public sealed class RuleCatalog
         RuleId.CreateKnown(30),
         // SL-032 has no timing measurement: scan Scribe text in the delta last.
         RuleId.CreateKnown(32),
-        // SL-033 checks only selectors reached by the frozen pair delta.
-        RuleId.CreateKnown(33),
         // SL-034 checks only newly added D5 Lean modules.
         RuleId.CreateKnown(34),
     ];
@@ -153,6 +151,35 @@ public sealed class RuleCatalog
     internal RuleExecutionOutcome ExecuteDelta(DeltaRuleContext delta, RuleEvaluationMeasure? measureRule = null) =>
         ExecuteInOrder(delta.CurrentFacts, delta, ExecutionOrder, measureRule, null, includeCurrent: false);
 
+    internal RuleExecutionOutcome ExecuteTheoryDelta(RepositorySnapshot current, ValidatedPolicy policy,
+        RawChangeSet changes, RuleEvaluationMeasure? measureRule = null)
+    {
+        // Copy sources are provenance, not changed endpoints.
+        changes = RawChangeSet.CreateWithKinds(changes.Entries
+            .Where(static change => change.Kind is not RawChangeKind.Copied)
+            .Select(static change => (change.Path.Value, change.Kind)));
+        if (!RepositoryRules.IsTheoryOnlyChange(changes))
+            return new RuleExecutionOutcome.InfrastructureFailure(
+                "Report-free check-delta requires a nonempty theory-only change; other changes require --candidate-lean-report.");
+        foreach (var change in changes.Entries.Where(static change => change.Kind is not RawChangeKind.Deleted))
+            if (!current.Files.TryGetValue(change.Path, out var file) || !file.ContentWasRead)
+                return new RuleExecutionOutcome.InfrastructureFailure(
+                    $"Required theory input was not read: {change.Path.Value}.");
+
+        var capacity = RegistrationFor(RuleId.CreateKnown(3)).Descriptor;
+        var paths = RegistrationFor(RuleId.CreateKnown(15)).Descriptor;
+        var findings = measureRule is null ? RepositoryRules.TheoryCapacity(current, changes)
+            : measureRule(capacity.Id, capacity.AdmissionEffect, () => RepositoryRules.TheoryCapacity(current, changes));
+        var diagnostics = RepositoryPathPolicy.Evaluate(current, policy, paths,
+            changes.ContainsPath).AddRange(Stamp(capacity, findings));
+        var executed = ImmutableArray.Create(capacity.Id, paths.Id);
+        return new RuleExecutionOutcome.Completed(CompletedRuleSet.Create(diagnostics,
+            Descriptors.Where(static descriptor => descriptor.Lifecycle is RuleLifecycle.Deferred)
+                .Select(static descriptor => new DeferredRule(descriptor.Id, descriptor.DeferredCase!, descriptor.Title))
+                .ToImmutableArray(), executed,
+            ExecutionOrder.Where(id => !executed.Contains(id)).ToImmutableArray()));
+    }
+
     internal ImmutableArray<RuleDescriptor> ApplicableTo(
         RepositoryFile artifact,
         RuleApplicabilityContext context)
@@ -195,7 +222,6 @@ public sealed class RuleCatalog
                 .Append(30)
                 .Append(31)
                 .Append(32)
-                .Append(33)
                 .Append(34)
                 .Select(RuleId.CreateKnown)
                 .ToImmutableArray();

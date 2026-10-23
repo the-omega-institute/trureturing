@@ -1,0 +1,15 @@
+**Definition 101.1 (uncentered response and capacity).**
+For $0<\tau<\infty$ define
+
+$$
+U(\tau)=\frac1\tau+H(\tau),\qquad
+Y(\tau)=\frac1{U(\tau)}
+       =\frac{\tau}{1+\tau H(\tau)}.
+\tag{101.1}
+$$
+
+Use the extended endpoints
+$U(0)=+\infty$, $Y(0)=0$, $U(\infty)=Y(\infty)=1$.
+On a finite original source write
+$Y_n(\lambda)=G_\lambda(T_n)^{-1}$.
+

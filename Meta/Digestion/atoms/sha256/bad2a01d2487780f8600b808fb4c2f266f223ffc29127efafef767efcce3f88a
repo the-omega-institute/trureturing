@@ -1,0 +1,17 @@
+# AURIC FIB ATOM Dynamic Future Quotient and Future-Closed Memory
+
+**Reference-input status.** This volume is an open theory reference input assembled from two complete user-supplied source parts. It is not Lean-verified, frozen truth, a physical law, a biological theorem, or an experiment report. Lean declarations and their kernel-checked axiom closures remain the repository's mathematical truth source.
+
+**Provenance.** Author kind: mixed user-supplied material; original author and model are unknown. Receipt date: 2026-10-10. The source state cites the historical project snapshots [`912f4990050451866c2bb1cf71e33151a637d4b7`](https://github.com/the-omega-institute/trureturing/commit/912f4990050451866c2bb1cf71e33151a637d4b7) and [`3a56aa49697ab7641b7dbe616e0424327c69d2ca`](https://github.com/the-omega-institute/trureturing/commit/3a56aa49697ab7641b7dbe616e0424327c69d2ca). Current/latest statements from the supplied parts are retained as attributed historical claims.
+
+**Dictionary fixed throughout both source parts.**
+
+$$
+F[\mathrm{null}]=\mathrm{null},\qquad F[1]=[2],\qquad F[2]=[3],\qquad F[3]=[5],\qquad F[1,3]=[2,5].
+$$
+
+The symbols $x,y,z$ mean occupancy at positions $1,3,2$, respectively. A probability vector $p$, a phase symbol $p$, and the response variable $y$ are distinct by context.
+
+**Editorial qualification matrix.** The following notes are scope qualifications for the supplied source claims; they do not replace or silently rewrite the source text.
+
+- 

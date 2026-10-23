@@ -8,9 +8,9 @@ internal sealed class ShiftedIterateFixedPointCongruenceDocument : IScribeDocume
 {
     private const string Prefix = "D5/S1/Recurrence/Parity/ShiftedIterateFixedPointCongruence.";
     private static readonly LibraryNoteRef SourceFive =
-        LibraryNoteRef.Create("D5/L/Recurrence/hanna2024a378575");
+        LibraryNoteRef.Create("D5/L/RecurrenceComposition/hanna2024a378575");
     private static readonly LibraryNoteRef SourceSix =
-        LibraryNoteRef.Create("D5/L/Recurrence/hanna2024a378576");
+        LibraryNoteRef.Create("D5/L/RecurrenceComposition/hanna2024a378576");
 
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "For r and m at least two with m dividing r-1, the shifted compositional fixed point has all positive coefficients equal to one modulo m.",

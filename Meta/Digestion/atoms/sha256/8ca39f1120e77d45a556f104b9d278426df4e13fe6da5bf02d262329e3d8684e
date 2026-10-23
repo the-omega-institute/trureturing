@@ -1,0 +1,8 @@
+**Dictionary fixed throughout both source parts.**
+
+$$
+F[\mathrm{null}]=\mathrm{null},\qquad F[1]=[2],\qquad F[2]=[3],\qquad F[3]=[5],\qquad F[1,3]=[2,5].
+$$
+
+The symbols $x,y,z$ mean occupancy at positions $1,3,2$, respectively. A probability vector $p$, a phase symbol $p$, and the response variable $y$ are distinct by context.
+

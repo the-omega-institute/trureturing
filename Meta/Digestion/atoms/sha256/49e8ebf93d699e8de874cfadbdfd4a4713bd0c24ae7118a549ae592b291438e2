@@ -1,0 +1,23 @@
+令 $E_p[x]$ 为沿 $p$ 建立的原分支脊，每个不在脊上的兄弟原子均为
+$\alpha$，终点放 $x$；明确递归为
+
+$$
+E_\varepsilon[x]=x,\qquad
+E_{Lz}[x]=\langle E_z[x],\alpha\rangle,\qquad
+E_{Rz}[x]=\langle\alpha,E_z[x]\rangle.
+\tag{ABT.45}
+$$
+
+这仅构造下界中的实际来源，不授予解码器一个新的源构造端口。
+对固定 $p$，三个来源
+$E_p[\alpha],E_p[\beta],E_p[\langle\alpha,\alpha\rangle]$
+都使 $p$ 原来存在，三种原回复不同。配对分配律使其当前支撑只在 $p$ 以下
+发生差别。由 (ABT.44)，任何区分其中两个的探针长度至少为
+
+$$
+D=|p|+k+1.
+\tag{ABT.46}
+$$
+
+特别地，短词即使不以 $p$ 为前缀，也不能取得额外的来源区别。
+

@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:10fd8d83232b3d3d71fab82deaae002ffb881ab8ccd00eb718cd9c68547ed5bc
+  normalized_sha256: sha256:10fd8d83232b3d3d71fab82deaae002ffb881ab8ccd00eb718cd9c68547ed5bc
+cas_ref: sha256:10fd8d83232b3d3d71fab82deaae002ffb881ab8ccd00eb718cd9c68547ed5bc
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 46. 语言意义作为语境索引概念：本项只作篇章导引，介绍主题、组织范围或固定参数，没有定理或性质断言。
+    previous_atom_id: 197cc4c4dcfa84bab191cf7f5733309c6a2dd4e3e3c8b7c94901a88795f46c12
+    next_atom_id: bc64f81c45ba5b597de02330c96332c73f7f39385394ab82a76c6cc3d934078f

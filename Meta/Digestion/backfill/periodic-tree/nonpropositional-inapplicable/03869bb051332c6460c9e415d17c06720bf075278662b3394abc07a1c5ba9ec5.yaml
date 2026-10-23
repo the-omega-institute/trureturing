@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:03869bb051332c6460c9e415d17c06720bf075278662b3394abc07a1c5ba9ec5
+  normalized_sha256: sha256:03869bb051332c6460c9e415d17c06720bf075278662b3394abc07a1c5ba9ec5
+cas_ref: sha256:03869bb051332c6460c9e415d17c06720bf075278662b3394abc07a1c5ba9ec5
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 证明段（**证明。** 因 $Q^r\equiv I\pmod p$，取行列式得 $(-1)^r\equiv1\pmod p$。奇素数下 $1\no…）只展开前文定理或命题的论证，式子和中间推导不另提出独立陈述。
+    previous_atom_id: 0c31312f242953208f095d9b1d5c39d48fd9e317f98e612bc870253b88c97c97
+    next_atom_id: da6f0ae518531aa9a9b4eaae84c8dcffde99e4b235fa0b10e3dbea8d5153d421

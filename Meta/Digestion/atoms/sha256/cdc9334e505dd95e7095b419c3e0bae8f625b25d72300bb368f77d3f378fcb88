@@ -1,0 +1,11 @@
+**Lemma 2.3 (finite trees are isolated by inclusive prefixes).** If a finite
+tree $t$ and a finite or infinite valid native tree $s$ have the same replies
+through $\operatorname{ht}(t)$, then $s=t$. If $t$ is the actual subtree of $u$
+at a reached original address $p$, agreement of $u,v$ through
+$|p|+\operatorname{ht}(t)$ forces $v|_p=t$.
+
+Proof. At every leaf of $t$, the common reply specifies that same leaf label;
+valid trees have no descendants there. At every branch it specifies both reached
+children. Induction on $t$ determines the whole tree. Prefix agreement at $p$
+first gives its reached ancestors and then this entire subtree table. $\square$
+

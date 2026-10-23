@@ -1,0 +1,56 @@
+**Proof of the lift calculations.** In selected-pair order
+$12,13,14,15,16,23,24,25,26,34,35,36,45,46,56$, the thresholds $a_{j_i j_k}=m_i-m_k+D_{ik}$ of the two endpoints are respectively
+
+$$
+\begin{aligned}
+a^{(1)}&=(1,1,3/4,1/2,3/4,1,3/4,1/2,3/4,3/4,1/2,1/2,3/4,3/4,1),\\
+a^{(2)}&=(1,1,5/7,5/7,2/7,1,5/7,5/7,2/7,5/7,5/7,2/7,1,3/7,3/7).
+\end{aligned}
+$$
+
+For each selected class split $[0,\gamma_n)$ at these thresholds, clipped to that interval. On each subinterval the raw correct word is constant and its coefficient is the subinterval length. In each catalog cell $E$, maximize
+
+$$
+\max\left\{\sum_E(A+P)+T\mathbf1_{1^L\in E},\
+       \max_{1\le a\le L}\sum_{E\cap\Omega_a}(C+P)\right\}.
+$$
+
+This includes every earlier and unqueried label. The resulting support totals for both $N$ and $O$ are in the following complete schedule-class table. Here $a\in\{1,2\}$ is an early address and $i,k$ are selected-index positions, not raw answer bits.
+
+$$
+\begin{array}{c|cc}
+\text{schedule class}&\text{first endpoint}&\text{second endpoint}\\\hline
+\varnothing\text{ or any active singleton}&17/4&30/7\\
+(1,2)&21/4&37/7\\
+(a,j_i),\ 1\le i\le4&45/8&79/14\\
+(a,j_5)&43/8&79/14\\
+(a,\ell)&39/8&34/7\\
+(j_i,j_k),\ 1\le i<k\le3&6&6\\
+(j_i,j_4),\ 1\le i\le3&6&6\\
+(j_i,j_5),\ 1\le i\le3&23/4&6\\
+(j_4,j_5)&6&44/7\\
+(j_i,\ell),\ i=1,2&5&36/7\\
+(j_3,\ell)&21/4&36/7\\
+(j_i,\ell),\ i=4,5&21/4&37/7
+\end{array}
+$$
+
+For example at $(j_4,j_5)$ the first lift has raw pair-cell masses
+$(3/2,3/4,1,0)$. Its correct class $j_5$ gives $2$ in cell $10$ and the unqueried class $\ell$ gives $7/4$ in cell $11$, yielding the displayed four maxima. The merged stopped cell $0$ collects $9/4$. At the second endpoint the pair masses are $(9/7,1,1,0)$; the four maxima are $(9/7,1,2,2)$ and the merged zero-cell maximum is $16/7$. Thus the largest entries in the table are attained, giving (214.16) and (214.17).
+
+At each endpoint $m_i\ge\gamma_{j_i}$. For an inactive address $k>j_i$ the raw projection has $w_k=1$ throughout, so $a_{j_i k}=m_i\ge\gamma_{j_i}$ and the threshold construction also keeps that bit one. Inactive bits before a correct class are one by construction. Thus all gap and padding coordinates are one on every scored word; their queries coarsen to one of the listed empty, singleton or pair observations. Their output labels have zero reward, while all active labels were already included in every cell maximum. Reversed $N$ pairs permute cells; repetitions provide singleton information, with the actual requests still counted. This proves the full-catalog bounds for arbitrary ordered selected late addresses, including gaps.
+
+These are fixed-lift calculations, not lower bounds against every exact-$Q$ representative. Both lifts exceed $d=1$ and therefore are not affordable full scores, acquisition laws, universal obstructions, or original separators. $\square$
+
+The endpoint atoms may be embedded into actual finite source words by the finite-pattern supplier for the original prime-divisibility source. The weights are proof weights, not a source distribution. For a full score in the slice with $\Delta_O\le d$, first discard every unselected late $C$ row, retaining all $P,T$ and the six selected correct classes. The anchor $W=B=S+T$ is unchanged and every table reward, hence full support, can only decrease. If the removed correct mass is $G_{\rm out}$, the original charge $K=5g+h+G_{\rm out}+B$ becomes exactly $K^\sharp=5g+h+B$; one cannot remove its amplitude contribution while silently retaining or dropping its charge. Pair the resulting score with an actual normalized cap-feasible $O$ acquisition transported by Theorem 110.2. Its complete rows give expected reward at least
+$W+g\sum_{r=1}^5a_{j_r}+ha_\ell-K^\sharp\varepsilon$,
+while its support is at most $W+d$. Consequently
+
+$$
+ g\sum_{r=1}^{5}a_{j_r}+h a_\ell
+ \le d+(5g+h+B)\varepsilon,
+\tag{214.18}
+$$
+
+for the selected active addresses. This implication is conditional on the existence of the full score and acquisition; the projection endpoint by itself supplies neither.
+

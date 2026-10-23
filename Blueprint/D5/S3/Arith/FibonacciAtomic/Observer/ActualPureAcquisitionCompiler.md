@@ -102,7 +102,19 @@ Lean statement: `D5/S3/Arith/FibonacciAtomic/Observer/ActualPureAcquisitionCompi
 
 For every original source U and address prefix u, mapping Sigma.fst over acquisitionTrace u U gives nodes U with u prepended to each address. Tree induction preserves the root, left and right preorder. At the root, its paid Finset is exactly (nodes U).toFinset; the addresses are duplicate-free.
 
-**Definition 1.9 (Source-independent empty row).**
+**Theorem 1.9 (Distinct actual node addresses).**
+
+$$\forall U: Source, (\operatorname{Nodup}\left(\operatorname{nodes}\left(U\right)\right))$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/Arith/FibonacciAtomic/Observer/ActualPureAcquisitionCompiler.nodes_nodup` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+The preorder lists each real node once. Left and right child addresses have different first directions, and neither can equal the empty root address.
+
+**Definition 1.10 (Source-independent empty row).**
 
 Lean statement: `D5/S3/Arith/FibonacciAtomic/Observer/ActualPureAcquisitionCompiler.emptyRow`
 
@@ -114,7 +126,7 @@ Lean statement: `D5/S3/Arith/FibonacciAtomic/Observer/ActualPureAcquisitionCompi
 
 For N at least one, the empty coarse prefix belongs to the carrier and its unique compatible cache is empty. The initial row depends only on N and its positivity proof, with no source, source size, oracle or externally readable history.
 
-**Definition 1.10 (Original raw cache decoder).**
+**Definition 1.11 (Original raw cache decoder).**
 
 Lean statement: `D5/S3/Arith/FibonacciAtomic/Observer/ActualPureAcquisitionCompiler.rowDecoder`
 
@@ -126,7 +138,7 @@ Lean statement: `D5/S3/Arith/FibonacciAtomic/Observer/ActualPureAcquisitionCompi
 
 Decode the compatible raw lift of the installed row. Addresses are distinct at every nominal row, including every ghost row.
 
-**Definition 1.11 (Exact history row).**
+**Definition 1.12 (Exact history row).**
 
 Lean statement: `D5/S3/Arith/FibonacciAtomic/Observer/ActualPureAcquisitionCompiler.rowOfHistory`
 
@@ -138,7 +150,7 @@ Lean statement: `D5/S3/Arith/FibonacciAtomic/Observer/ActualPureAcquisitionCompi
 
 A raw history whose coarse projection belongs to coarsePrefixes is packed without changing its raw reports. This constructor is used in the proof of actual execution; the runtime has no history input.
 
-**Definition 1.12 (Coarse-only installed action).**
+**Definition 1.13 (Coarse-only installed action).**
 
 Lean statement: `D5/S3/Arith/FibonacciAtomic/Observer/ActualPureAcquisitionCompiler.pureAction`
 
@@ -150,7 +162,7 @@ Lean statement: `D5/S3/Arith/FibonacciAtomic/Observer/ActualPureAcquisitionCompi
 
 At a row with coarse prefix g, the action is acquisitionPolicy (encodeHistory g). The sink action is Halt(false). Raw cache lifts cannot influence this action. A faithful finite table installs these values at all nominal rows.
 
-**Definition 1.13 (Coarse-only row or sink selection).**
+**Definition 1.14 (Coarse-only row or sink selection).**
 
 Lean statement: `D5/S3/Arith/FibonacciAtomic/Observer/ActualPureAcquisitionCompiler.appendRow`
 
@@ -162,7 +174,7 @@ Lean statement: `D5/S3/Arith/FibonacciAtomic/Observer/ActualPureAcquisitionCompi
 
 After query q and raw report y, append (q,kappa y) to the coarse prefix. Membership of that new prefix alone selects a row or the sink. A selected row packs the exact original cacheUpdate, which preserves the first raw value on a repeated hit. No raw contradiction test selects a control branch. In this pure acquisition carrier every retained extension has a fresh address; a repeated query extension is outside the prefix carrier regardless of its raw report.
 
-**Definition 1.14 (Total raw transition).**
+**Definition 1.15 (Total raw transition).**
 
 Lean statement: `D5/S3/Arith/FibonacciAtomic/Observer/ActualPureAcquisitionCompiler.pureTransition`
 
@@ -174,7 +186,7 @@ Lean statement: `D5/S3/Arith/FibonacciAtomic/Observer/ActualPureAcquisitionCompi
 
 A query row takes appendRow; a halt row absorbs every raw response. The sink is absorbing. All four raw reply columns are defined at every installed row.
 
-**Definition 1.15 (Original finite observer).**
+**Definition 1.16 (Original finite observer).**
 
 Lean statement: `D5/S3/Arith/FibonacciAtomic/Observer/ActualPureAcquisitionCompiler.pureObserver`
 
@@ -186,7 +198,7 @@ Lean statement: `D5/S3/Arith/FibonacciAtomic/Observer/ActualPureAcquisitionCompi
 
 The complete original Observer uses the empty row, coarse-only action, total raw transition and exact decoder. Its decoded_nodup field holds on every nominal configuration.
 
-**Definition 1.16 (Coarse control projection).**
+**Definition 1.17 (Coarse control projection).**
 
 Lean statement: `D5/S3/Arith/FibonacciAtomic/Observer/ActualPureAcquisitionCompiler.control`
 
@@ -198,7 +210,7 @@ Lean statement: `D5/S3/Arith/FibonacciAtomic/Observer/ActualPureAcquisitionCompi
 
 control returns the coarse-prefix index for a row and none for the sink. Raw cache lifts are forgotten.
 
-**Theorem 1.17 (Unrestricted coarse factorization).**
+**Theorem 1.18 (Unrestricted coarse factorization).**
 
 $$\forall N: Nat, (\forall p: 1 \leq N, (\operatorname{FactorsThrough}\left(\operatorname{historyAction}\left(\operatorname{M}\left(N, p\right)\right), kappaHist\right)))$$
 
@@ -210,7 +222,7 @@ $$\forall N: Nat, (\forall p: 1 \leq N, (\operatorname{FactorsThrough}\left(\ope
 
 Induction on the original PairReach relation preserves equality of control for every pair of raw responses with equal kappa. Both action and row-versus-sink selection factor through this control. The frozen pairActionInvariant_iff_allHistoryFactorization criterion yields action factorization on all raw histories, including inconsistent reports, repeated or wrong address labels and reports after halt. No actual-source or cache-truth premise restricts this proof.
 
-**Theorem 1.18 (Exact original acquisition run).**
+**Theorem 1.19 (Exact original acquisition run).**
 
 $$\forall N: Nat, (\forall p: 1 \leq N, (\forall U: Source, ((\operatorname{Allowed}\left(N, U\right)) \implies (\exists f: \operatorname{PureState}\left(N\right), (\operatorname{Run}\left(\operatorname{M}\left(N, p\right), U, \operatorname{eZero}\left(\operatorname{M}\left(N, p\right)\right), \operatorname{Trace}\left(U\right), f, \operatorname{finiteDecision}\left(U\right)\right))))))$$
 
@@ -222,7 +234,7 @@ $$\forall N: Nat, (\forall p: 1 \leq N, (\forall U: Source, ((\operatorname{Allo
 
 For every allowed original U, execute_to_run converts the original acquisition execution into an original Run with exactly acquisitionTrace [] U and finiteDecision U. Actual prefixes fix encodeHistory representatives, and truthful cache replies reproduce the same original source report. No query-all bounded-address baseline is substituted.
 
-**Theorem 1.19 (Every actual prefix has the original cache).**
+**Theorem 1.20 (Every actual prefix has the original cache).**
 
 $$\forall N: Nat, (\forall p: 1 \leq N, (\forall U: Source, (\forall e: \operatorname{PureState}\left(N\right), (\forall h: RawHistory, (((\operatorname{Allowed}\left(N, U\right)) \land (\operatorname{ActualPrefix}\left(\operatorname{M}\left(N, p\right), U, e, h\right))) \implies ((\operatorname{IsPrefix}\left(h, \operatorname{Trace}\left(U\right)\right)) \land (\operatorname{decoder}\left(\operatorname{M}\left(N, p\right), e\right) = h) \land (\operatorname{CacheTruth}\left(h, U\right))))))))$$
 
@@ -234,7 +246,7 @@ $$\forall N: Nat, (\forall p: 1 \leq N, (\forall U: Source, (\forall e: \operato
 
 Every actual prefix h is a prefix of the exact original trace. Its decoded cache is literally h and is truthful on the same U. Pure acquisition has no repeated actual address, so this literal prefix equals its ordered first-occurrence cache. The proof retains a remaining original execute continuation at every prefix; the sink is never reached on an allowed source. Truth is asserted on actual prefixes, not on arbitrary ghost rows.
 
-**Theorem 1.20 (Complete bounded admissibility).**
+**Theorem 1.21 (Complete bounded admissibility).**
 
 $$\forall N: Nat, (\forall p: 1 \leq N, (\operatorname{Admissible}\left(N, \operatorname{M}\left(N, p\right)\right)))$$
 
@@ -246,7 +258,7 @@ $$\forall N: Nat, (\forall p: 1 \leq N, (\operatorname{Admissible}\left(N, \oper
 
 The original Admissible contract follows from empty initial cache, actual-prefix truth and exact cacheUpdate, original finiteDecision correctness, exact finite acquisition runs and the separate unrestricted factorization theorem.
 
-**Theorem 1.21 (Exact actual-node fee).**
+**Theorem 1.22 (Exact actual-node fee).**
 
 $$\forall N: Nat, (\forall p: 1 \leq N, (\forall tau: Address \Rightarrow Real, (\forall U: Source, ((\operatorname{Allowed}\left(N, U\right)) \implies (\operatorname{Fee}\left(\operatorname{M}\left(N, p\right), tau, U\right) = \sum_{q \in \operatorname{nodeSet}\left(U\right)} \operatorname{tau}\left(q\right))))))$$
 
@@ -258,7 +270,7 @@ $$\forall N: Nat, (\forall p: 1 \leq N, (\forall tau: Address \Rightarrow Real, 
 
 Original fee_run and the exact paid address identity give Fee(M,tau,U) equal to the sum of tau over (nodes U).toFinset for every allowed source. This identity holds for arbitrary real address prices.
 
-**Definition 1.22 (Attained original node maximum).**
+**Definition 1.23 (Attained original node maximum).**
 
 Lean statement: `D5/S3/Arith/FibonacciAtomic/Observer/ActualPureAcquisitionCompiler.nodeMax`
 
@@ -270,7 +282,7 @@ Lean statement: `D5/S3/Arith/FibonacciAtomic/Observer/ActualPureAcquisitionCompi
 
 nodeMax N p tau is the finite sup over the exact allowedSources N of the sum of tau over each source's original nodes. Its domain is nonempty for N at least one.
 
-**Theorem 1.23 (Exact source38.10 baseline).**
+**Theorem 1.24 (Exact source38.10 baseline).**
 
 $$\forall N: Nat, (\forall p: 1 \leq N, (\forall tau: Address \Rightarrow Real, (\forall c: Real, ((\operatorname{Joint}\left(N, \operatorname{M}\left(N, p\right), tau, c\right) = c \cdot \operatorname{nominalCard}\left(N\right)+\operatorname{nodeMax}\left(N, p, tau\right)) \land (\exists U: Source, ((\operatorname{Allowed}\left(N, U\right)) \land (\operatorname{nodeMax}\left(N, p, tau\right) = \sum_{q \in \operatorname{nodeSet}\left(U\right)} \operatorname{tau}\left(q\right))))))))$$
 
@@ -282,7 +294,19 @@ $$\forall N: Nat, (\forall p: 1 \leq N, (\forall tau: Address \Rightarrow Real, 
 
 The original J_N of the compiled observer is c times its exact full nominal count plus nodeMax. An original allowed source attains that node maximum. Both statements hold for arbitrary real tau and c; later domination and cutoff arguments additionally require nonnegative tau and strictly positive c.
 
-**Definition 1.24 (Faithful lawful baseline table).**
+**Theorem 1.25 (Original node depth).**
+
+Lean statement: `D5/S3/Arith/FibonacciAtomic/Observer/ActualPureAcquisitionCompiler.nodes_length`
+
+*Proof.* Machine-checked in Lean as `D5/S3/Arith/FibonacciAtomic/Observer/ActualPureAcquisitionCompiler.nodes_length` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+For every original source U and every literal q in nodes U, q.length + 1 is at most U.length. Each descent leaves a nonempty sibling subtree, so its path requires at least one additional leaf per level. This original node geometry supplies bounded-address membership for the pure table and the routed completion horizon.
+
+**Definition 1.26 (Faithful lawful baseline table).**
 
 Lean statement: `D5/S3/Arith/FibonacciAtomic/Observer/ActualPureAcquisitionCompiler.lawfulPureTable`
 
@@ -307,6 +331,8 @@ For nonnegative tau and positive c, the existing ActualObserverFiniteTable appli
 - Truth anchor: `D5/S3/Arith/FibonacciAtomic/Observer/ActualPureAcquisitionCompiler.emptyRow`
 - Truth anchor: `D5/S3/Arith/FibonacciAtomic/Observer/ActualPureAcquisitionCompiler.lawfulPureTable`
 - Truth anchor: `D5/S3/Arith/FibonacciAtomic/Observer/ActualPureAcquisitionCompiler.nodeMax`
+- Truth anchor: `D5/S3/Arith/FibonacciAtomic/Observer/ActualPureAcquisitionCompiler.nodes_length`
+- Truth anchor: `D5/S3/Arith/FibonacciAtomic/Observer/ActualPureAcquisitionCompiler.nodes_nodup`
 - Truth anchor: `D5/S3/Arith/FibonacciAtomic/Observer/ActualPureAcquisitionCompiler.nominalCard`
 - Truth anchor: `D5/S3/Arith/FibonacciAtomic/Observer/ActualPureAcquisitionCompiler.pureAction`
 - Truth anchor: `D5/S3/Arith/FibonacciAtomic/Observer/ActualPureAcquisitionCompiler.pureObserver`

@@ -1,0 +1,46 @@
+**Theorem 10.1 (presence-only equality for the full-image field).** Under exactly those
+existing hypotheses,
+
+$$
+\boxed{M_{\rm pres}(D,Q)=M(D,Q)=M_*.}
+\tag{FFM.36}
+$$
+
+The equality also holds for the existing adaptive serial-forward service class. There is a
+presence-only consumer with
+
+$$
+\boxed{
+q\le2(2^{H_A+1}-1),\qquad
+\max |p|\le H_A+k+1,\qquad a=0,
+}
+\tag{FFM.37}
+$$
+
+where $q$ counts every submitted occurrence, including repeated and absent replies, the
+word bound is the maximum literal address length, and $a$ is the number of post-entry
+forward updates.
+
+**Proof.** Use the existing ABT Proposition 12.4 and its decoder (ABT.36)--(ABT.37) as a
+supplier. For every original address $p$ with $|p|\le H_A$, query the two current
+addresses $pR^{k-1}LL$ and $pR^{k-1}RL$, and issue child queries only after the decoded
+ancestor is a branch. The decoded inclusive table is $p_{H_A}(u)$; the attained list of
+full rows and the existing rank encoder $E^*$ then return $f(u)$. There are at most
+$2^{H_A+1}-1$ original addresses in the complete binary prefix, so (FFM.37) follows,
+including $a=0$ and the address length $H_A+k+1$. Every call is a paid current-register
+call; no original-read, equality, selector, reset, reroot, clone or clock port is added.
+
+This gives $M_{\rm pres}\le M_*$. The reverse inequality is exactly the lower-bound half
+of the existing whole-image theorem (Theorem 5.4, supplied by [SJM, Theorem 2.2]) applied
+to the smaller presence-only policy class: every such policy is a legal four-reply policy,
+so its complete field cannot use fewer values than $M(D,Q)=M_*$. No new lower-bound
+repackaging is being asserted here. The same inclusion of policy classes proves the serial
+statement. The bound is uniform for this fixed finite-image input; original acquisition,
+field installation, working control, archives, local computation, retention and physical
+time remain separate charges. $\square$
+
+The decoder is sourcewise finite even when the admitted source domain has unbounded tree
+size. Thus the displayed $q$ is a fixed task-depth bound, not a claim of uniformly bounded
+source traversal or total memory. The operation $a=0$ concerns only post-entry updates and
+does not erase any preparation or complete-state cost.
+

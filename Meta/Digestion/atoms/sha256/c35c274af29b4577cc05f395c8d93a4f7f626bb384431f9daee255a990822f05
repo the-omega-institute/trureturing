@@ -1,0 +1,16 @@
+**定理 331.2（经典落点边界的精确因子化判据）。** 以下条件等价：
+1. 对所有 \(\rho\)、\(U\in\mathcal U\) 和 \(E\in\mathcal E\)，
+\[
+\operatorname{Tr}(E\,U\rho U^\dagger)
+=
+\operatorname{Tr}(E\,U\Delta_Z(\rho)U^\dagger);
+\]
+2. 每个 \(F\in\mathcal V_{\mathcal U,\mathcal E}\) 都满足
+\[
+F=\Delta_Z^*(F)
+=
+\sum_x|x\rangle\langle x|F|x\rangle\langle x|;
+\]
+3. \(\mathcal V_{\mathcal U,\mathcal E}\) 全部属于模式对角代数。
+
+### 证明

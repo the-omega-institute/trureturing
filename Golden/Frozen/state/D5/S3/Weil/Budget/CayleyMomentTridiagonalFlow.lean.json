@@ -1,1 +1,1 @@
-{"statement_id":"sha256:10f2b1c947f7a869c9e281dff69dc3b3f8253ada31b47d75ab9fddccd2058d22"}
+{"statement_id":"sha256:e1d4f0fee0c646d6dafb5bdb33698a6f0b6399708134f9fd023f43796aa32fbd","declarations":[{"declaration_name_key":"ns(ns(ns(ns(ns(ns(n0,2:D5),2:S3),4:Weil),6:Budget),27:CayleyMomentTridiagonalFlow),23:tridiagonal_moment_flow)","kind":"theorem"}]}

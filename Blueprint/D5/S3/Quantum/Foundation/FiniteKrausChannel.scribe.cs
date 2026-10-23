@@ -35,7 +35,23 @@ internal sealed class FiniteKrausChannelDocument : IScribeDocumentDefinition
                     + "transports its Kronecker amplification to canonical CStarMatrix amplification. "
                     + "The retained closure retires when equivalent declarations enter pinned Mathlib. "
                     + "The concrete shifted-record realization consumes this bridge."))),
-            DescribeRole.Theorem))));
+            DescribeRole.Theorem),
+            Describe.Lean(
+                DescribeId.Create("finite-kraus-add-kron"),
+                DeclarationHandle.Create("D5/S3/Quantum/Foundation/FiniteKrausChannel.add_kron"),
+                H("Kronecker amplification distributes over addition"),
+                StatementSource.FromAuthor(AddKronFormula()),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("MatrixMap.kron is additive in its first matrix map over a commutative semiring. The finite coordinate types A, B, C and D may be empty. This identity gives the addition closure of MatrixMap.IsCompletelyPositive."))),
+                DescribeRole.Theorem),
+            Describe.Lean(
+                DescribeId.Create("finite-kraus-cp-add"),
+                DeclarationHandle.Create("D5/S3/Quantum/Foundation/FiniteKrausChannel.add"),
+                H("Completely positive maps are closed under addition"),
+                StatementSource.FromAuthor(AddCpFormula()),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("For finite A and B and an RCLike scalar R, the sum of two completely positive matrix maps is completely positive. At every finite amplification, add_kron expresses the image as the sum of two positive semidefinite images. IptPptSquaredEquivalence.gamma_cp uses this closure to combine the four branches of the flag lift."))),
+                DescribeRole.Theorem))));
 
     private static Formula Call(string name, params Formula[] args) =>
         new Formula.FunctionCall(FormulaIdentifier.Create(name), [.. args]);
@@ -48,6 +64,41 @@ internal sealed class FiniteKrausChannelDocument : IScribeDocumentDefinition
     private static Formula Conj(Formula a) => Seq(a, Caret, Grp(Star));
     private static Formula All(Formula.BoundVariable[] vars, Formula body) =>
         new Formula.BindMany(FormulaQuantifier.ForAll, [.. vars], body);
+
+    private static Formula Named(string name) => Seq(Operatorname, Grp(F.Id(name)));
+    private static Formula Qualified(string owner, string name) => Seq(Named(owner), Dot, Named(name));
+    private static Formula Apply(Formula head, params Formula[] args) => new Formula.Apply(head, [.. args]);
+    private static Formula Add(Formula left, Formula right) =>
+        new Formula.Binary(left, FormulaBinaryOperator.Add, right);
+    private static Formula Instance(string cls, Formula arg) =>
+        Seq(OpenBracket, Call(cls, arg), CloseBracket, Sp);
+    private static Formula MatrixMapOf(Formula a, Formula b, Formula r) => Call("MatrixMap", a, b, r);
+    private static Formula AddKronFormula()
+    {
+        Formula a = F.Id("A"), b = F.Id("B"), c = F.Id("C"), d = F.Id("D"), r = F.Id("R");
+        Formula ml1 = F.Id("ML1"), ml2 = F.Id("ML2"), mr = F.Id("MR");
+        Formula Kron(Formula left) => Apply(Qualified("MatrixMap", "kron"), left, mr);
+        Formula statement = All([Bound("ML1", MatrixMapOf(a, b, r)),
+            Bound("ML2", MatrixMapOf(a, b, r)), Bound("MR", MatrixMapOf(c, d, r))],
+            Eqn(Kron(Add(ml1, ml2)), Add(Kron(ml1), Kron(ml2))));
+        return Disp(All([Bound("A", Named("Type")), Bound("B", Named("Type")),
+            Bound("C", Named("Type")), Bound("D", Named("Type")), Bound("R", Named("Type"))],
+            Seq(Instance("Fintype", a), Instance("DecidableEq", a), Instance("Fintype", b),
+                Instance("Fintype", c), Instance("Fintype", d), Instance("DecidableEq", c),
+                Instance("CommSemiring", r), statement)));
+    }
+
+    private static Formula AddCpFormula()
+    {
+        Formula a = F.Id("A"), b = F.Id("B"), r = F.Id("R"), m1 = F.Id("M1"), m2 = F.Id("M2");
+        Formula Cp(Formula map) => Apply(Qualified("MatrixMap", "IsCompletelyPositive"), map);
+        Formula implication = new Formula.Logic(Cp(m1), FormulaLogicOperator.Implies,
+            new Formula.Logic(Cp(m2), FormulaLogicOperator.Implies, Cp(Add(m1, m2))));
+        return Disp(All([Bound("A", Named("Type")), Bound("B", Named("Type")), Bound("R", Named("Type"))],
+            Seq(Instance("Fintype", a), Instance("DecidableEq", a), Instance("Fintype", b),
+                Instance("RCLike", r), All([Bound("M1", MatrixMapOf(a, b, r)),
+                    Bound("M2", MatrixMapOf(a, b, r))], implication))));
+    }
 
     private static Formula TheoremFormula()
     {

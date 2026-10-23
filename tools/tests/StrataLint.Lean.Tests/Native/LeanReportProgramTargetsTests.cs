@@ -9,17 +9,19 @@ public sealed class LeanReportProgramTargetsTests
     [Theory]
     [InlineData("valid", "both", 0, 0,
         "ensure|build leanInspector/LeanInformationAudit leanInspector/reportInspector", true, true, null)]
+    [InlineData("valid", "fib", 0, 0,
+        "ensure|build regInspector/LeanInformationAuditRegAnalysis.AuricFib.Main", true, true, null)]
     [InlineData("valid", "audit", 42, 42,
-        "ensure|build leanInspector/LeanInformationAudit", false, false, null)]
+        "ensure|build leanInspector/LeanInformationAudit", true, true, null)]
     [InlineData("missing", "both", 42, 42,
         "ensure|build :report leanInspector/LeanInformationAudit leanInspector/reportInspector", false, false, null)]
     [InlineData("valid", "none", 0, 0, "", true, true, null)]
     [InlineData("corrupt", "audit", 42, 42,
         "ensure|build :report leanInspector/LeanInformationAudit", false, false, null)]
-    [InlineData("valid", "invalid", 0, 2, "", false, true, "lean_targets requires", true)]
+    [InlineData("valid", "invalid", 0, 2, "", true, true, "lean_targets requires", true)]
     [InlineData("valid", "invalid", 0, 2, "", false, false, "lean_targets requires")]
-    [InlineData("valid", "malformed", 0, 2, "", false, true, "JSONDecodeError", true)]
-    [InlineData("valid", "non-list", 0, 2, "", false, true, "lean_targets requires", true)]
+    [InlineData("valid", "malformed", 0, 2, "", true, true, "JSONDecodeError", true)]
+    [InlineData("valid", "non-list", 0, 2, "", true, true, "lean_targets requires", true)]
     [InlineData("valid", "invalid-registered", 0, 0,
         "ensure|build leanInspector/LeanInformationAudit leanInspector/reportInspector leanInspectorInterface/LeanInformationAuditInterface reg/Reg", true, true, null, true)]
     [InlineData("valid", "registered", 0, 0,
@@ -27,7 +29,7 @@ public sealed class LeanReportProgramTargetsTests
     [InlineData("valid", "both", 0, 0,
         "ensure|build leanInspector/LeanInformationAudit leanInspector/reportInspector", true, true, null, true)]
     [InlineData("valid", "none", 0, 0, "", true, true, null, true)]
-    [InlineData("valid", "audit", 42, 42, "ensure|build leanInspector/LeanInformationAudit", false, true, null, true)]
+    [InlineData("valid", "audit", 42, 42, "ensure|build leanInspector/LeanInformationAudit", true, true, null, true)]
     [InlineData("corrupt", "audit", 42, 42,
         "ensure|build :report leanInspector/LeanInformationAudit", false, true, null, true)]
     public void ReportEntryHonorsRegisteredProgramObligations(
@@ -48,6 +50,7 @@ public sealed class LeanReportProgramTargetsTests
             try:
                 targets = {
                     'both': ['leanInspector/LeanInformationAudit', 'leanInspector/reportInspector'],
+                    'fib': ['regInspector/LeanInformationAuditRegAnalysis.AuricFib.Main'],
                     'audit': ['leanInspector/LeanInformationAudit'], 'none': [],
                     'invalid': ['--invalid-build-option'], 'registered': None,
                     'malformed': '[', 'non-list': '{}', 'invalid-registered': None,
@@ -79,7 +82,7 @@ public sealed class LeanReportProgramTargetsTests
         var lake = value.GetProperty("lake").GetString();
         var workspace = value.GetProperty("workspace").GetString();
         var calls = expectedCalls.Length == 0 ? [] : expectedCalls.Split('|')
-            .Select(call => call == "ensure" ? call : lake + " -d " + workspace + " " + call).ToArray();
+            .Select(call => call == "ensure" ? call : lake + " --log-level=error -d " + workspace + " " + call).ToArray();
         Assert.Equal(calls, value.GetProperty("calls").EnumerateArray().Select(call => call.GetString()));
         Assert.True(value.GetProperty("seed_unchanged").GetBoolean(), text);
         Assert.True(receiptExists == value.GetProperty("receipt_exists").GetBoolean(),

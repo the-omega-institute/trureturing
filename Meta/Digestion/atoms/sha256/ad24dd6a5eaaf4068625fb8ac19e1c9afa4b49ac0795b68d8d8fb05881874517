@@ -1,0 +1,33 @@
+**Lemma 3.2 (literal navigation as finite native constraints).** Given a
+concrete word $p$, a tree expression $V$, and a reply $c$, the condition
+$r_V(p)=c$ has an effective finite existential-tree formula using only
+native constructors and equality. So does the condition that $p$ is
+reached with whole subtree $X$.
+
+Proof. Construct a path context $D_p(Z;\mathbf y)$ by putting $Z$ at
+$p$, a fresh sibling variable at every ancestor, and the required ordered
+pairs along the path. For the empty word it is $Z$. Then
+
+$$
+\begin{aligned}
+V|_p=X\text{ and }p\in\operatorname{Pos}(V)
+ &\Longleftrightarrow\exists\mathbf y\ V=D_p(X;\mathbf y),\\
+r_V(p)=\alpha
+ &\Longleftrightarrow\exists\mathbf y\ V=D_p(\alpha;\mathbf y),\\
+r_V(p)=\beta
+ &\Longleftrightarrow\exists\mathbf y\ V=D_p(\beta;\mathbf y),\\
+r_V(p)=\mathsf{branch}
+ &\Longleftrightarrow\exists\mathbf y,x,z\
+                      V=D_p(\langle x,z\rangle;\mathbf y).
+\end{aligned}
+\tag{NASF.5}
+$$
+
+The inverse reads the actual sibling subtrees along that path. For absence,
+take the finite disjunction over strict prefixes $q$ of $p$ and both
+leaf labels $\lambda$ of $V=D_q(\lambda;\mathbf y)$. A missing address
+in a full tree encounters a first leaf at such a prefix; a leaf there
+blocks the remaining nonempty suffix. For $p=\varepsilon$ this disjunction
+is false. The witnesses reconstruct exactly $V$, preserving the same
+tree in both directions. $\square$
+

@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:c9b0ac961089315a280f15190b6f5f7554eb0442a8c62358242c0e82f9f7bb97
+  normalized_sha256: sha256:c9b0ac961089315a280f15190b6f5f7554eb0442a8c62358242c0e82f9f7bb97
+cas_ref: sha256:c9b0ac961089315a280f15190b6f5f7554eb0442a8c62358242c0e82f9f7bb97
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 证明段（**证明，充分性。** 若 $3u\mid2^t-1$，则降模到 $3$ 可知 $t$ 为偶数。对任意 $n\ge a$，$2^a\mid2…）只展开前文定理或命题的论证，式子和中间推导不另提出独立陈述。
+    previous_atom_id: 01db6a96f6dd0dcf57c81c08eb752ed7bbb58ddd7df77f6471a901859ca6d17a
+    next_atom_id: bcbbbf211fded57119d814a329d4b5a97d39db6d366b7cd7cbf6d576c955829a

@@ -1,0 +1,12 @@
+### 定理 376.2（确定映射的 Wasserstein 收缩）
+
+对任意 \(P,Q\in\Delta(X)\)，有
+
+$$
+\boxed{
+W_{d_Y}(f_\#P,f_\#Q)
+\le
+L\,W_{d_X}(P,Q).
+}
+$$
+

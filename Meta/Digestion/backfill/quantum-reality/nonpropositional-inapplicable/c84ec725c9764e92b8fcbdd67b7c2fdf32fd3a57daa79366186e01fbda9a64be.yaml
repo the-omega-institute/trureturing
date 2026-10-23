@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:c84ec725c9764e92b8fcbdd67b7c2fdf32fd3a57daa79366186e01fbda9a64be
+  normalized_sha256: sha256:c84ec725c9764e92b8fcbdd67b7c2fdf32fd3a57daa79366186e01fbda9a64be
+cas_ref: sha256:c84ec725c9764e92b8fcbdd67b7c2fdf32fd3a57daa79366186e01fbda9a64be
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 假设 17.1 规定 Gibbs 制备、温度参数和相关谱记号，限定本节状态范围；仅设定模型条件，不提出推导结论。
+    previous_atom_id: f7cadd47d3adffe5f10533d11473a23a9b782834ca316f260d0b5d78ca5f8991
+    next_atom_id: 54363c3c636b9588bf33d1c467d8ecd972e561fa44de593d181de82877f78117

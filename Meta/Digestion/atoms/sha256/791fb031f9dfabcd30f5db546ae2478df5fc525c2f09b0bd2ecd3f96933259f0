@@ -1,0 +1,12 @@
+- 不允许的 post-Stop Read 被排除。
+
+定义未来等价关系
+
+\[
+h\sim_{\mathrm{Fut}}h'
+\quad\Longleftrightarrow\quad
+\mathscr L_h=\mathscr L_{h'}.
+\]
+
+---
+

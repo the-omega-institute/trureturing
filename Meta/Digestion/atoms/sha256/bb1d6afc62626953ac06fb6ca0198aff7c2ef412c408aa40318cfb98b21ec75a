@@ -1,0 +1,20 @@
+**定义 38.10（原树接口）。** 来源 $\mathsf S$ 是非空有限有序满二叉树 `FreeMagma Bool`；叶标签 $\alpha=\mathrm{true}$、$\beta=\mathrm{false}$，括号 $(V,W)$ 保留左右顺序。原替换 $\sigma$ 是满足
+
+$$
+\sigma(\alpha)=\beta,\qquad \sigma(\beta)=(\beta,\alpha),\qquad
+\sigma((V,W))=(\sigma V,\sigma W)
+\tag{38.1}
+$$
+
+的同态，目标始终是字面命题 $P(U)\iff\exists V\in\mathsf S,\ \sigma^3V=U$。来源 $U$ 在整个运行中固定。地址 $\mathsf A=\{0,1\}^{<\omega}$ 是原有限字，$0$ 向左、$1$ 向右，$\varepsilon$ 为根；每个字都可请求，包括不存在的地址。唯一来源操作是请求 $q$ 得到 $r(q,U)\in\mathsf Y=\{\alpha,\beta,\mathsf{branch},\mathsf{absent}\}$：实际叶返回标签，实际内点返回 branch，越过叶返回 absent。停止操作是 $\mathsf{Halt}(b)$，$b\in\mathbb B$。没有来源身份、大小、坐标、前像或目标值读端口，也没有来源更新。
+
+记 $\ell(U)$ 为叶数，$L(U)$ 为原叶地址集，$\operatorname{Nd}(U)$ 为原节点地址集。历史 $h$ 是按顺序排列的请求—原响应对，$A(h)$ 是其中不同地址的集合。粗映射 $\chi$ 保留 $\alpha,\beta$，把 branch、absent 合并为 $\bot$；$\chi_H$ 逐项作用，保留字面地址、顺序及重复。策略的全历史粗因子化指
+
+$$
+\chi_H(h)=\chi_H(h')\ \Longrightarrow\ \pi(h)=\pi(h')
+\quad\text{对所有有限原历史 }h,h',
+\tag{38.2}
+$$
+
+包括不真实、不一致及不可达的历史。它不声称粗响应能还原原缓存。
+

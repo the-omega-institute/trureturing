@@ -1,1 +1,1 @@
-{"statement_id":"sha256:2db8db80086cc74a00f7790b03fa816cf5370942897b731cb20ed5ab75f42008"}
+{"statement_id":"sha256:2db8db80086cc74a00f7790b03fa816cf5370942897b731cb20ed5ab75f42008","declarations":[{"declaration_name_key":"ns(ns(ns(ns(ns(ns(n0,2:D5),2:S3),5:Arith),12:DivisorGibbs),23:FullWindowDivisorBridge),1:M)","kind":"def"},{"declaration_name_key":"ns(ns(ns(ns(ns(ns(n0,2:D5),2:S3),5:Arith),12:DivisorGibbs),23:FullWindowDivisorBridge),21:finite_divisor_bridge)","kind":"theorem"}]}

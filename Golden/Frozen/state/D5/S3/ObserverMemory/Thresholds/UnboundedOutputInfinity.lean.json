@@ -1,1 +1,1 @@
-{"statement_id":"sha256:1bf8094a1b99760c9bdb822766886909c4b36041d0cc93c1dea1b3dae0a292ad"}
+{"statement_id":"sha256:1bf8094a1b99760c9bdb822766886909c4b36041d0cc93c1dea1b3dae0a292ad","declarations":[{"declaration_name_key":"ns(ns(ns(ns(ns(ns(n0,2:D5),2:S3),14:ObserverMemory),10:Thresholds),23:UnboundedOutputInfinity),33:unbounded_output_implies_infinite)","kind":"theorem"}]}

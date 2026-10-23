@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:ca13d30cb318cf66b370aa1d1db03815b73508f4a4361d8074407ebbbd134744
+  normalized_sha256: sha256:ca13d30cb318cf66b370aa1d1db03815b73508f4a4361d8074407ebbbd134744
+cas_ref: sha256:ca13d30cb318cf66b370aa1d1db03815b73508f4a4361d8074407ebbbd134744
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 定理 23.5（零切片下降与双侧平均恒等式）。的证明段，仅展开该陈述的推导及说明，不另提出独立命题；本收据不替代原陈述的形式化覆盖。
+    previous_atom_id: 9fdb9980cfa5821c1dfe9cd3a97ecda0e0a145dd2123b3c8e9f7c754022f866a
+    next_atom_id: fe55b28e0dbbb841bf79eb9df20b82b14573a02c0a5dc2d0b1c79109e56bd8e3

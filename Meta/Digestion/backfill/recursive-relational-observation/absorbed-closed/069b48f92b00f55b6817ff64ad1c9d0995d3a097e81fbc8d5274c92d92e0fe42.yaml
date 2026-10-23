@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:069b48f92b00f55b6817ff64ad1c9d0995d3a097e81fbc8d5274c92d92e0fe42
+  normalized_sha256: sha256:069b48f92b00f55b6817ff64ad1c9d0995d3a097e81fbc8d5274c92d92e0fe42
+cas_ref: sha256:069b48f92b00f55b6817ff64ad1c9d0995d3a097e81fbc8d5274c92d92e0fe42
+coverage_gids:
+  - gid: D5/S3/HomologicalAlgebra/IntegerMatrixInnerInverse.exists_integer_inner_inverse
+    target_statement_id: sha256:3556e99a026107245dfa43f81716cbd4fce7cdc506e90e653d9c27c98a5f92a0
+receipts:
+  unresolved_subitems: []

@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:78c3433d57fea51ddbc15f956292ddf89d6d7bb84a0dc4385f76f5d8c15693e7
+  normalized_sha256: sha256:78c3433d57fea51ddbc15f956292ddf89d6d7bb84a0dc4385f76f5d8c15693e7
+cas_ref: sha256:78c3433d57fea51ddbc15f956292ddf89d6d7bb84a0dc4385f76f5d8c15693e7
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 清单片段“制度能力扩张”仅列举主题、接口组成或考虑维度；本片段不陈述性质、存在性或推论。
+    previous_atom_id: f78eee71f03cdd7b6dff9d7e81c27d24507703b6454718924b1c6f216ccb2ad3
+    next_atom_id: 31d61fe132b9f83244e12be960b1d369034d12805dc0c80cd9ece974c6597dd1

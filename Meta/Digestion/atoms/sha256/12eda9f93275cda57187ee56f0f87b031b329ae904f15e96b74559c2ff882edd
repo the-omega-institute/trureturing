@@ -1,0 +1,114 @@
+**Proposition 115.3 (Identical residual summaries with different
+feasibility).** At $\varepsilon=1/10$, let two sequences $a^A,a^B$
+share
+
+$$
+a_1=\frac{17}{20},\quad a_3=\frac7{20},\quad a_4=\frac14,\qquad
+a_i=\frac1{10\cdot2^{i-4}}\quad(i\ge5),
+\tag{115.5}
+$$
+
+and set $a^A_2=4/5$, $a^B_2=17/20$. Both satisfy (110.2),
+have $L=4$, and have the same summary (115.4), with
+$D_3=2/5\le3\varepsilon+1-a_1=9/20$. Nevertheless
+
+$$
+\begin{aligned}
+\mathcal F_N(a^A,\varepsilon)\cap\mathscr C_4
+   &\ne\varnothing,\\
+\mathcal F_N(a^B,\varepsilon)&=\varnothing.
+\end{aligned}
+\tag{115.6}
+$$
+
+This is failure of the summary to determine general feasibility,
+not a separation of preselected and stopped cap feasibility.
+
+**Proof.** The shared residuals are $d_3=1/4,d_4=3/20$;
+the shared tail begins at $a_5=1/20$. All assertions about the
+sequence hypotheses and its summary follow directly.
+
+For an explicit stopped witness for $a^A$, write
+$[i;T_0,T_1]$ for querying coordinate $i$, followed by the zero
+or one branch, and write a label for its original output mark.
+Use the six seed-fixed tables with these common weights:
+
+$$
+\begin{array}{c|l}
+\text{weight}&\text{table}\\\hline
+3/5 &[1;1,[2;2,0]]\\
+1/20 &[1;1,[2;2,3]]\\
+1/20 &[1;1,[2;2,4]]\\
+1/10 &[1;1,[3;3,0]]\\
+1/10 &[2;0,[3;3,0]]\\
+1/10 &[3;0,[4;4,0]]
+\end{array}
+\tag{115.7}
+$$
+
+Every table preselects an increasing pair and stops at its first
+queried zero or at exhaustion. The unqueried outputs in its last
+cell are permitted by Definition 90.1. The weights sum to one.
+For every word in $B_4$ the mixed law has the following masses;
+free suffix bits in the first two rows are unrestricted:
+
+$$
+\begin{array}{c|c|c|c}
+\text{first zero}&p_b(n)&p_b(0)&p_b(0)+p_b(n)\\\hline
+1&4/5&
+  1/5-\tfrac1{10}b_2(1-b_3)-\tfrac1{10}b_3(1-b_4)&\ge9/10\\
+2&7/10&1/5+\tfrac1{10}b_3b_4&\ge9/10\\
+3&1/4&7/10&19/20\\
+4&3/20&4/5&19/20\\
+\text{none}&\text{--}&9/10&\text{--}
+\end{array}
+\tag{115.8}
+$$
+
+To obtain the first row, the first four tables contribute $4/5$
+to label one. The remaining two can output a nonbase label only
+on $b_2=1,b_3=0$ and on $b_3=1,b_4=0$, respectively. These
+events are disjoint, proving the lower base mass $1/10$ and the
+pair bound. In the second row the first three tables contribute
+$7/10$ to label two. The fifth always emits base, the fourth
+emits base when $b_3=1$, and the sixth emits base when $b_3=0$
+or $b_4=1$, giving its displayed base formula. The last three
+rows follow by substituting $110b_4$, $1110$ and $1111$ into
+the same tables.
+
+Thus for each first-zero class the correct singleton has mass at
+least $a^A_n-1/10$, the base singleton has mass at least
+$1-a^A_n-1/10$, and the pair has mass at least $9/10$. The
+all-positive row has base mass $9/10$. These are all the TV rows
+(110.6), including every multiple-zero word. The error equals
+$1/10$, for example in first-zero class two, whose correct-label
+deficit is $1/10$. Partitioning one uniform seed into the six
+weight intervals realizes the tables on the same actual source
+with at most two requests and finite handoff for every seed.
+Theorems 109.1 and 110.2 place its kernel in the first
+intersection in (115.6). Every actual tail has error
+$\max\{1/10,a_{n(x)}\}=1/10$ by (110.9).
+
+For $a^B$, use the weighted seven-event necessary certificate of
+Acquisition Resources, Lemma 97.2, specifically (97.5)--(97.7).
+It already includes arbitrary-address and full-carrier original
+competitors and yields
+
+$$
+a_2+2a_3+2a_4-1\le10\varepsilon.
+\tag{115.9}
+$$
+
+Its left side for $a^B$ is $21/20>1=10\varepsilon$, so no
+original preselected rule meets the cap. Equivalently the required
+weighted score is $121/20$, exceeding the supplied upper score
+six. Theorem 110.2 gives the second line of (115.6); containment
+also excludes a stopped attainer there. The lost joint relation
+can be written with $h=(a_3+a_4-5\varepsilon)_+=1/10$ as
+$a_2\le1-2h=4/5$, the restriction in Acquisition Resources,
+Corollary 96.3. Sequence $a^A$ meets it at equality and $a^B$
+violates it. Therefore even adjoining $a_3,a_4$ to the residual
+summary cannot recover this relation. The two restricted classes
+agree on each sequence's feasibility; (115.6) does not distinguish
+them. $\square$
+

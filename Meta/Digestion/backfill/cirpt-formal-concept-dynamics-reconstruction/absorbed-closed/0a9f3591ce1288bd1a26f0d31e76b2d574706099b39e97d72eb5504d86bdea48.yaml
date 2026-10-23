@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:0a9f3591ce1288bd1a26f0d31e76b2d574706099b39e97d72eb5504d86bdea48
+  normalized_sha256: sha256:0a9f3591ce1288bd1a26f0d31e76b2d574706099b39e97d72eb5504d86bdea48
+cas_ref: sha256:0a9f3591ce1288bd1a26f0d31e76b2d574706099b39e97d72eb5504d86bdea48
+coverage_gids:
+  - gid: D5/S3/ConceptDynamics/Fibers/ObserverConceptReadoutCorrespondence.observer_concept_readout_correspondence
+    target_statement_id: sha256:23f18ce2e563b286c3fc601e735cc97c365035561f097533f37f8192cbcac04c
+receipts:
+  unresolved_subitems: []

@@ -9,13 +9,13 @@ internal sealed class DiagonalExponentSelfDivisibilityDocument : IScribeDocument
     private const string Prefix =
         "D5/S1/Recurrence/Residue/DiagonalExponentSelfDivisibility.";
     private static readonly LibraryNoteRef Source =
-        LibraryNoteRef.Create("D5/L/ArithSums/hanna2026a395833div");
+        LibraryNoteRef.Create("D5/L/ArithSums/hanna2026a395833");
 
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "Affine vanishing-diagonal exponents divide their own integer coefficients.",
         H("Exponent Divisibility for Vanishing Diagonals"),
         Blocks(
-            Paragraph(Text("The note hanna2026a395833div quotes Hanna's A395833 "
+            Paragraph(Text("The note hanna2026a395833 quotes Hanna's A395833 "
                 + "generating equation and divisibility conjecture. Write a(p,n) for "
                 + "NegativePowerDiagonalModPrime.a(p,n), the coefficient of its unique "
                 + "normalized integer series A(p). The normalization is a(p,0)=a(p,1)=1, "

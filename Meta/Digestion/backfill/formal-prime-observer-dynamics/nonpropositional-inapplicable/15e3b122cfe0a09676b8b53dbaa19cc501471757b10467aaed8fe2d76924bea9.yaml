@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:15e3b122cfe0a09676b8b53dbaa19cc501471757b10467aaed8fe2d76924bea9
+  normalized_sha256: sha256:15e3b122cfe0a09676b8b53dbaa19cc501471757b10467aaed8fe2d76924bea9
+cas_ref: sha256:15e3b122cfe0a09676b8b53dbaa19cc501471757b10467aaed8fe2d76924bea9
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 非命题文本：- `D5/S3/PrimeForms/Crossing/ExactPropagation.lean`：正锥 sandwich 的精确 winding-phase 传播；：仅为导引、项目安排、来源条目或记号清单，不提出数学命题。
+    previous_atom_id: 448ba84093b4ec65be246fdb4968de923342cee4b49c7daa5edd434f1463ab1a
+    next_atom_id: b1de986cbe2ab4521295e24ebf686abbb86bdad8a8448b546910f50ff87eb5ff

@@ -6,6 +6,9 @@
    utility: kind=certified-instance; basis=refutes=gid:D5/S3/Quantum/QuantumChannels/ConcealmentKernelNecessityRefutation.claim; result=D5/S3/Quantum/QuantumChannels/ConcealmentKernelNecessityRefutation.result; claim=D5/S3/Quantum/QuantumChannels/ConcealmentKernelNecessityRefutation.claim
    digest: Dephasing and depolarization conceal all POVM pairs with unequal adjoint kernels. -/
 
+/- dual_kraus: proof_shape: bind-only; escape_witness: none;
+   consumers: result, D5.S3.Quantum.Measurements.BroadcastingChannelExtremaRefutation.result. -/
+
 import D5.S3.Quantum.QuantumChannels.PositiveFilterTransposeRefutation
 import D5.S3.QuantumChannels.CumulantRenyiDataProcessingRefutation
 import D5.S3.Quantum.Information.StabilizerPairLocalUnitaryInequivalence
@@ -75,7 +78,7 @@ def claim : Prop :=
     AdjointKernel (MatrixMap.of_kraus K₁ K₁) = AdjointKernel (MatrixMap.of_kraus K₂ K₂)
 
 /-- The trace dual of a Kraus map is its Heisenberg Kraus sum. -/
-private theorem dual_kraus {din dout : ℕ} {κ : Type} [Fintype κ]
+theorem dual_kraus {din dout : ℕ} {κ : Type} [Fintype κ]
     (K : κ → Matrix (Fin dout) (Fin din) ℂ) (A : Matrix (Fin dout) (Fin dout) ℂ) :
     (MatrixMap.of_kraus K K).dual A = ∑ j, (K j)ᴴ * A * K j := by
   apply Matrix.ext_iff_trace_mul_left.mpr
@@ -88,7 +91,7 @@ private theorem dual_kraus {din dout : ℕ} {κ : Type} [Fintype κ]
   simpa only [Matrix.mul_assoc] using Matrix.trace_mul_comm (K j) (X * ((K j)ᴴ * A))
 
 /-- All density matrices span the Hermitian operator space over the reals. -/
-private theorem all_density_tomographically_complete (d : ℕ) :
+theorem all_density_tomographically_complete (d : ℕ) :
     TomographicallyComplete {ρ : Matrix (Fin d) (Fin d) ℂ | IsDensity ρ} := by
   refine ⟨fun _ h => h, le_antisymm ?_ ?_⟩
   · apply Submodule.span_le.mpr

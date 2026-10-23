@@ -1,0 +1,23 @@
+## 经典定理 101.1（分式理想的素理想坐标分解）
+
+\[
+\boxed{
+I
+=
+\prod_{\mathfrak p}
+\mathfrak p^{v_{\mathfrak p}(I)},
+}
+\]
+
+且只有有限多个指数非零，分解唯一。
+
+因此：
+
+\[
+\boxed{
+\operatorname{FracId}(A)
+\simeq
+\bigoplus_{\mathfrak p}\mathbb Z.
+}
+\]
+

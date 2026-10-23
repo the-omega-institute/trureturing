@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:92454555eca85faa00ce2db38d6b6de428ea8e2f829a6a85ecebe99f4a8727e5
+  normalized_sha256: sha256:92454555eca85faa00ce2db38d6b6de428ea8e2f829a6a85ecebe99f4a8727e5
+cas_ref: sha256:92454555eca85faa00ce2db38d6b6de428ea8e2f829a6a85ecebe99f4a8727e5
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 393. 合同 refinement 的方向：只引入本段使用的对象、记号、计算定义或术语约定，不追加存在、唯一性或性质结论。
+    previous_atom_id: 656820a09156d807027994377f1d44678398e35d50deea95ac70d5787bcac0b4
+    next_atom_id: 2c97e43df78e05bf50edc192653b6b25cea8c0a8c16746168335f81b584b2952

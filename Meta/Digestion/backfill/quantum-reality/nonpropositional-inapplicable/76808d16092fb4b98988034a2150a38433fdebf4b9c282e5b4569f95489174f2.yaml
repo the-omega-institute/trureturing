@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:76808d16092fb4b98988034a2150a38433fdebf4b9c282e5b4569f95489174f2
+  normalized_sha256: sha256:76808d16092fb4b98988034a2150a38433fdebf4b9c282e5b4569f95489174f2
+cas_ref: sha256:76808d16092fb4b98988034a2150a38433fdebf4b9c282e5b4569f95489174f2
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 框架映射或证明层次清单，只说明角色所指对象与工作范围，不断言新的数学性质。
+    previous_atom_id: 6e46f9a19d3892a653d5dad4e105fb1adc38eb53af0bbb3153056d3c1f1a27b0
+    next_atom_id: 8c009aeeee060322887047162b5e2060f5979f789b803ef6ea96a712ce2fecaf

@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:80477213f35532e29afb5134aef71d108a5dde60890f2c4b83287c8e4a561334
+  normalized_sha256: sha256:80477213f35532e29afb5134aef71d108a5dde60890f2c4b83287c8e4a561334
+cas_ref: sha256:80477213f35532e29afb5134aef71d108a5dde60890f2c4b83287c8e4a561334
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 274. 私人影响的结构见证：本项只作篇章导引，介绍主题、组织范围或固定参数，没有定理或性质断言。
+    previous_atom_id: 8961c9708cbb96236ff2b77164d50855aa2996cb881d341f3b8feb8da1a8d977
+    next_atom_id: 4686d67064322c1b662eabe783f025abc7922c5aa024e846c234c2a7f5843d17

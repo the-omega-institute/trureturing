@@ -1,0 +1,58 @@
+**Theorem 5.1 (universal full-carrier peak comparison).** Put
+$r_k=|\mathcal R_k|$. For every type,
+
+$$
+N_{k,d}\le q^d r_{k-d}.
+\tag{5.1}
+$$
+
+For a prescribed maximal credit $0\le D\le n$, define the full-carrier
+conditional peaks
+
+$$
+K_0=\max_{0\le k\le n}r_k,\qquad
+K_D=\max_{\substack{0\le k\le n\\0\le d\le\min(D,k)}}N_{k,d}.
+$$
+
+Then
+
+$$
+K_0\le K_D\le q^D K_0.
+\tag{5.2}
+$$
+
+If types are counted as part of a single disjoint state alphabet, put
+
+$$
+T_0=\sum_{k=0}^n r_k,\qquad
+T_D=\sum_{d=0}^D\sum_{k=d}^nN_{k,d}.
+$$
+
+The corresponding comparison is
+
+$$
+T_0\le T_D\le\left(\sum_{d=0}^Dq^d\right)T_0.
+\tag{5.3}
+$$
+
+Thus a binary one-credit design has conditional peak factor at most
+two and total typed factor at most three. For $n=0$, both available
+counts are one and there is no positive-credit type.
+
+Proof. The actual image in (2.1) is a subset of
+$\mathcal R_{k-d}\times A^d$, giving (5.1). Take maxima and use
+$d\le D$ for the upper bound in (5.2); the included $d=0$ types give
+its lower bound. For the sum, reindex $h=k-d$:
+
+$$
+\sum_{k=d}^nN_{k,d}
+\le q^d\sum_{h=0}^{n-d}r_h
+\le q^dT_0.
+$$
+
+Summing proves (5.3). None of these inequalities compares
+$N_{k,1}$ to $r_k$ at the same cut. They compare complete full-carrier
+profiles, conditional on public type in (5.2) and including that type
+in (5.3). Restricted initialized images must instead be counted as in
+Proposition 2.4. $\square$
+

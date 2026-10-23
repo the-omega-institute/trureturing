@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:a6f101a8ce7b8b71cd26bb583bfff2ce751860cd05a3ad1957f30c6979687857
+  normalized_sha256: sha256:a6f101a8ce7b8b71cd26bb583bfff2ce751860cd05a3ad1957f30c6979687857
+cas_ref: sha256:a6f101a8ce7b8b71cd26bb583bfff2ce751860cd05a3ad1957f30c6979687857
+coverage_gids:
+  - gid: D5/S3/Observer/AgencyHolonomy/GoldenCharacterQuotient.holFive_perm
+    target_statement_id: sha256:e1bfb51a9943de8777fba24326e2c09bd0afd37fc0f5edc68a14b641b5171157
+receipts:
+  unresolved_subitems: []

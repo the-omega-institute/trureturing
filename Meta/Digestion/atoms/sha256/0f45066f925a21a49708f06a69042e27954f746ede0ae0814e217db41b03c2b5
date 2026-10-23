@@ -1,0 +1,22 @@
+**Theorem 93.2 (screened Fibonacci limit without an infinite source).**
+For every fixed $\lambda>0$,
+
+$$
+\lim_{n\to\infty}G_\lambda(T_n)
+ =\lim_{k\to\infty}g_k(\lambda)
+ =b_\lambda
+ :=\frac{2}{\lambda+1+\sqrt{\lambda^2+6\lambda+1}}.
+\tag{93.1}
+$$
+
+More precisely, for every $h\ge0$ and every $n\ge2h+2$,
+
+$$
+|G_\lambda(T_n)-b_\lambda|
+ \le\lambda^{-1}\left(\frac3{3+\lambda}\right)^{2h+3}.
+\tag{93.2}
+$$
+
+All operators in this assertion are the original finite-source operators.
+No infinite-source operator realization is assumed.
+

@@ -1,9 +1,0 @@
-fingerprints:
-  raw_sha256: sha256:508af1d902f329c48e0ca5ad02a8085f98a0921fbe3e8043a068e2603c01f38d
-  normalized_sha256: sha256:508af1d902f329c48e0ca5ad02a8085f98a0921fbe3e8043a068e2603c01f38d
-cas_ref: sha256:508af1d902f329c48e0ca5ad02a8085f98a0921fbe3e8043a068e2603c01f38d
-coverage_gids:
-  - gid: D5/S3/PrimeForms/FixedFormDiscriminant.det_neg_one_fixed_form_disc
-    target_statement_id: sha256:7038ba3d5af889c766a443d0aa318bb66cc154127fd1851011a6d774f45cd222
-receipts:
-  unresolved_subitems: []

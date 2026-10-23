@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:ba193b0347d9dc981c0005cf4773e4d3597a531a9233bb92280487ea25712146
+  normalized_sha256: sha256:ba193b0347d9dc981c0005cf4773e4d3597a531a9233bb92280487ea25712146
+cas_ref: sha256:ba193b0347d9dc981c0005cf4773e4d3597a531a9233bb92280487ea25712146
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: Explanatory proof of Theorem 359.3. Restriction to the finite active set and extension by zero are inverse, supplying B=X and the product cardinality. The finite Hausdorff coordinate product is discrete, and adjoining probes preserves discreteness. Each singleton is compact and open and generates the neighbourhood filter. The empty active set gives one total zero function on the natural numbers. There is no additional specified construction or stronger quantifier range.
+    previous_atom_id: cbc08fe63ee533996db4fa0ae141a9bafe24cff113e98cc9dd82f942fe49019c
+    next_atom_id: f1b6b920667c598df096847744375656c074dd7b6f7a1999ebe056a63fb7648a

@@ -1,0 +1,54 @@
+**Theorem 3.4 (exact adaptive execution and native-constraint correspondence).**
+For every effective $P$ of Definition 1.2, without a liveness assumption,
+every $u$, every $\tau\in\mathcal L_{P,b}$ and every chronological
+$\mathbf e$,
+
+$$
+C_\tau(u,\mathbf e)
+\quad\Longleftrightarrow\quad
+\operatorname{expand}(u,\tau,\mathbf e)
+\text{ is a legal execution returning the entire }b.
+\tag{NASF.6}
+$$
+
+Every $(u,h)\in\mathcal H_{P,b}$ arises this way. Therefore
+
+$$
+\mathcal S_{P,b}
+ =\bigcup_{\tau\in\mathcal L_{P,b}}
+   \{u:\exists\mathbf e\ C_\tau(u,\mathbf e)\},
+\tag{NASF.7}
+$$
+
+and retaining the designated coordinates of $\mathbf e$ gives exactly
+$\mathcal J_{P,b}$. Retaining the expanded word gives the full active
+raw-history relation. This is an effective countable family of finite
+native constraints with unknown unbounded epochs, not a finite formula.
+
+Proof. Erase writer updates from a legal returning history. The observer
+starts in $c_a$. Each local transition is the public program's transition,
+and each Read has one of the four supplied replies, so the erased word
+is enumerated. Every actual local state is preserved, including retained
+allocation or output distinctions; its terminal state is exactly $b$.
+The actual counts are chronological. Equation (NASF.2) gives each Read
+condition; Lemma 3.2 supplies subtrees of these same actual iterates as
+witnesses. Thus $C_\tau$ holds without replacing $u$.
+
+Conversely fix a satisfying $u,\mathbf e$. Start the one register at
+$u$ and the observer at $c_a$. Before event $i$ execute the indicated
+finite burst. Induct on $i$. Its register is $\rho^{e_i}u$ and observer
+state agrees with the skeleton because all earlier replies and local
+steps agree. At a Read, its materialized address is exactly $p_i$, even
+if computed by arbitrary earlier adaptive code. Lemma 3.2 and $C_\tau$
+give the actual reply $c_i$. A local step changes only observer state.
+The same induction covers failed validations, retries, selected operands,
+successful validations and cleanup. At Return it gives the entire $b$,
+not just its rows. All bursts and steps are finite, so this is a legal
+finite history, extendible with a halted writer.
+
+Erasure and insertion recover the original active word, including update
+placement relative to every local step and Return. A richer history with
+idle waiting or writer housekeeping projects to this word; this theorem
+does not recover those actual additional values. Projecting now proves
+(NASF.7) and the assertion about $\mathcal J_{P,b}$. $\square$
+

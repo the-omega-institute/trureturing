@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:49c42e93634d5a50c66928f8cd9c0ecb70ffbc182a70ce683061b30195533034
+  normalized_sha256: sha256:49c42e93634d5a50c66928f8cd9c0ecb70ffbc182a70ce683061b30195533034
+cas_ref: sha256:49c42e93634d5a50c66928f8cd9c0ecb70ffbc182a70ce683061b30195533034
+coverage_gids:
+  - gid: D5/S3/Combinatorics/Graph/Walks/FourVertexRank.actual_matching_count
+    target_statement_id: sha256:688f1eac6b4ed63fd164055c3526565c9548859952564733ef11f16ce4c09d1c
+receipts:
+  unresolved_subitems: []

@@ -1,1 +1,1 @@
-{"statement_id":"sha256:96fc4135c58bd5b74230251e5b47cf400196c262e9a86a319c2cdc6f513eb9d3"}
+{"statement_id":"sha256:96fc4135c58bd5b74230251e5b47cf400196c262e9a86a319c2cdc6f513eb9d3","declarations":[{"declaration_name_key":"ns(ns(ns(ns(ns(ns(n0,2:D5),2:S3),14:ObserverMemory),22:PredictionCertificates),31:FiniteHistoryPermanentStability),38:finite_history_relation_stable_forever)","kind":"theorem"}]}

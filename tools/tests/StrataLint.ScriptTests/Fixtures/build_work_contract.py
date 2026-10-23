@@ -14,12 +14,12 @@ REPO = Path(__file__).resolve().parents[4]
 
 
 class BuildWorkContracts(unittest.TestCase):
-    def invoke(self, reused=True, targets=True, output="Build completed successfully (1 jobs).\n", failure=0, stale_logs=False, native_work=False, missing_phase_log=False, recorder_failure=False, interrupted=False):
+    def invoke(self, reused=True, targets=True, output="Build completed successfully (1 jobs).\n", failure=0, stale_logs=False, native_work=False, missing_phase_log=False, recorder_failure=False, interrupted=False, ci_budget=False, fib_failure=0, fib_selected=False):
         temp = tempfile.TemporaryDirectory(prefix="build-work-contract-")
         self.addCleanup(temp.cleanup)
         root = Path(temp.name)
         for name in ("tools/lean-inspector/inspect.sh", "tools/scripts/lib/resource-observation-lib.sh",
-                     "tools/lean-inspector/build_work.py"):
+                     "tools/lean-inspector/build_work.py", "tools/scripts/workflow/ci_compute.py"):
             dest = root / name
             dest.parent.mkdir(parents=True, exist_ok=True)
             if (REPO / name).exists(): shutil.copyfile(REPO / name, dest)
@@ -35,16 +35,17 @@ class BuildWorkContracts(unittest.TestCase):
         script("tools/lean-inspector/native.py", "import sys\nfrom pathlib import Path\n" +
                ("(Path(sys.argv[3] + '.logs') / 'report.exit.log').unlink()\n" if missing_phase_log else "") +
                "sys.exit(0)\n")
+        script("tools/lean-inspector/fib_analysis.py", "import sys\nsys.exit(" + str(fib_failure) + ")\n")
         script("tools/scripts/worktree/lean-cache-ensure.sh", "#!/bin/bash\nexit 0\n")
         script("tools/scripts/worktree/lean-cache-run.sh",
-               "#!/bin/bash\ncat <<'LOG'\n" + output + "LOG\nexit " + str(failure) + "\n")
+               "#!/bin/bash\nprintf '%s\\n' \"$@\" > \"$LAKE_ARGUMENTS\"\ncat <<'LOG'\n" + output + "LOG\nexit " + str(failure) + "\n")
         if interrupted:
             script("tools/scripts/worktree/lean-cache-run.sh",
                    "#!/bin/bash\n" +
                    "printf '%s\\n' 'partial Lake output'\n" +
                    "printf '%s\\n' 'partial Lake error' >&2\n" +
                    "printf '%s\\n' '{\"phase\":\"native-inspect\",\"boundary\":\"start\",\"monotonic_ms\":1}' >> \"$STRATALINT_INSPECTOR_PHASES\"\n" +
-                   "kill -TERM \"$PPID\"\nexit 143\n")
+                   "kill -TERM \"$BUILD_WORK_TEST_INSPECTOR_PID\"\nexit 143\n")
         lake = script("fake-lake", "#!/bin/bash\nexit 0\n")
         producer = root / "producer.dll"
         producer.touch()
@@ -70,13 +71,65 @@ class BuildWorkContracts(unittest.TestCase):
             script("tools/lean-inspector/build_work.py",
                    "import sys\nprint('LEAN_BUILD_WORK_UNKNOWN recorder unavailable', file=sys.stderr)\nsys.exit(2)\n")
         env = dict(os.environ, STRATALINT_INSPECTOR_SUPERVISED="1", LAKE_BIN=str(lake),
+                   LAKE_ARGUMENTS=str(root / "lake-arguments"),
                    STRATALINT_LEAN_PRODUCER_DLL=str(producer), GITHUB_RUN_ID="17", GITHUB_RUN_ATTEMPT="2",
                    STRATALINT_LEAN_BUILD_WORK_FILE=str(fact),
+                   STRATALINT_FIB_REGRESSIONS_SELECTED='true' if fib_selected else 'false',
                    STRATALINT_LEAN_BUILD_TARGETS='["Probe"]' if targets else '[]')
-        result = subprocess.run(["bash", str(root / "tools/lean-inspector/inspect.sh"),
-                                 "--repository", str(root), "--output", str(root / "report.json")],
+        if ci_budget:
+            budget = root / "compute-seconds"
+            budget.write_text("1800")
+            env.update(STRATALINT_CI_COMPUTE_BUDGET=str(budget), STRATALINT_CI_COMPUTE_ACTIVE="0",
+                       BOUNDARIES=str(root / "boundaries"), PATH=str(root) + os.pathsep + os.environ['PATH'])
+            env.pop('STRATALINT_LEAN_PRODUCER_DLL')
+            script("dotnet", "#!/bin/bash\nprintf '%s:%s\\n' \"$1\" \"${STRATALINT_CI_COMPUTE_ACTIVE:-0}\" >> \"$BOUNDARIES\"\n"
+                   + "if [[ $1 == build ]]; then printf '%s\\n' '" + str(producer) + "'; fi\n")
+            for name, label in (("tools/scripts/worktree/lean-cache-ensure.sh", "ensure"),
+                                ("tools/scripts/worktree/lean-cache-run.sh", "native-entry")):
+                path = root / name
+                path.write_text(path.read_text().replace("#!/bin/bash\n", "#!/bin/bash\n"
+                    + "printf '" + label + ":%s\\n' \"${STRATALINT_CI_COMPUTE_ACTIVE:-0}\" >> \"$BOUNDARIES\"\n"))
+            for name in ("tools/lean-inspector/reuse.py", "tools/lean-inspector/native.py"):
+                path = root / name
+                path.write_text("import os, sys\nwith open(os.environ['BOUNDARIES'], 'a') as stream:\n"
+                                "    stream.write(sys.argv[1] + ':' + os.environ.get('STRATALINT_CI_COMPUTE_ACTIVE', '0') + '\\n')\n"
+                                + path.read_text())
+        entry = ["bash", str(root / "tools/lean-inspector/inspect.sh"),
+                 "--repository", str(root), "--output", str(root / "report.json")]
+        if interrupted:
+            # Signal the invocation itself; report commands can have a subshell parent.
+            entry = ["bash", "-c", 'export BUILD_WORK_TEST_INSPECTOR_PID=$$; exec "$@"',
+                     "interrupted-inspector", *entry]
+        result = subprocess.run(entry,
                                 env=env, capture_output=True, text=True)
         return result, fact, root
+
+    def test_lake_output_filter_preserves_build_failure_and_default_failure_threshold(self):
+        for reused in (True, False):
+            for failure in (0, 23):
+                with self.subTest(reused=reused, failure=failure):
+                    result, _, root = self.invoke(reused=reused, failure=failure)
+                    self.assertEqual(failure, result.returncode, result.stderr)
+                    arguments = (root / "lake-arguments").read_text().splitlines()
+                    self.assertEqual("--log-level=error", arguments[1])
+                    self.assertFalse(any(arg.startswith("--fail-level") for arg in arguments))
+
+    def test_ci_report_charges_compute_and_keeps_nested_preparation_outside(self):
+        for reused in (True, False):
+            with self.subTest(reused=reused):
+                result, _, root = self.invoke(reused=reused, ci_budget=True)
+                self.assertEqual(0, result.returncode, result.stderr)
+                boundaries = (root / "boundaries").read_text().splitlines()
+                self.assertIn("restore:0", boundaries)
+                self.assertIn("build:1", boundaries)
+                self.assertIn("ensure:0", boundaries)
+                self.assertIn("reuse:1", boundaries)
+                # The real cache reader charges only the command after ensure;
+                # this entry must not start an enclosing compute timer.
+                self.assertIn("native-entry:0", boundaries)
+                if not reused:
+                    for phase in ("capture", "prepare", "publish"):
+                        self.assertIn(phase + ":1", boundaries)
 
     def recorder_inputs(self, output="Build completed successfully (1 jobs).\n", activity=()):
         temp = tempfile.TemporaryDirectory(prefix="build-work-contract-")
@@ -126,6 +179,55 @@ class BuildWorkContracts(unittest.TestCase):
                 self.assertIn("LEAN_BUILD_WORK_UNKNOWN invalid native build activity", result.stderr)
                 self.assertNotIn("LEAN_BUILD_WORK ", result.stdout)
                 self.assertEqual(previous, fact.read_bytes())
+
+    def test_fib_leaf_work_preserves_project_publication_work_schema(self):
+        root, logs, fact = self.recorder_inputs(activity=(
+            {"kind": "extract", "count": 1}, {"kind": "aggregate", "count": 1},
+            {"kind": "fib-generated", "count": 2}, {"kind": "fib-reused", "count": 7},
+            {"kind": "fib-unavailable", "count": 3}))
+        result = self.run_recorder(root, logs, fact)
+        self.assertEqual(0, result.returncode, result.stderr)
+        value = json.loads(fact.read_text())
+        self.assertEqual(set(value), {"schema_version", "run_id", "run_attempt",
+                                     "repository", "report", "programs"})
+        self.assertEqual((2, 0), (value['report'], value['programs']))
+        reading = next(line.removeprefix('LEAN_INSPECTOR_FIB_WORK ') for line in
+                       result.stdout.splitlines() if line.startswith('LEAN_INSPECTOR_FIB_WORK '))
+        self.assertEqual(json.loads(reading), {'scope': 'invocation-local', 'extracted': 0,
+            'generated': 2, 'reused': 7, 'unavailable': 3,
+            'analysis-invocations': 0, 'analysis-ns': 0})
+
+    def test_fib_zero_is_current_activity_not_replayed_output(self):
+        root, logs, fact = self.recorder_inputs(output=(
+            'LEAN_INSPECTOR_FIB module=Old generated=99 reused=77 unavailable=3\n'
+            'Build completed successfully (1 jobs).\n'))
+        result = self.run_recorder(root, logs, fact)
+        self.assertEqual(result.returncode, 0, result.stderr)
+        row = json.loads(next(x.split(' ', 1)[1] for x in result.stdout.splitlines()
+                              if x.startswith('LEAN_INSPECTOR_FIB_WORK ')))
+        self.assertEqual(row.pop('scope'), 'invocation-local')
+        self.assertTrue(all(value == 0 for value in row.values()), row)
+        (logs / 'native-work.jsonl').unlink()
+        result = self.run_recorder(root, logs, fact)
+        row = json.loads(next(x.split(' ', 1)[1] for x in result.stdout.splitlines()
+                              if x.startswith('LEAN_INSPECTOR_FIB_WORK ')))
+        self.assertEqual(row.pop('scope'), 'unavailable')
+        self.assertTrue(all(value is None for value in row.values()), row)
+
+    def test_direct_phase_durations_include_batch_and_unknown_boundaries(self):
+        root, logs, fact = self.recorder_inputs()
+        rows = [dict(phase='native-inspect', boundary='start', monotonic_ms=100),
+                dict(phase='native-inspect', boundary='finish', monotonic_ms=140),
+                dict(phase='fib-extract', boundary='duration', elapsed_ns=23),
+                dict(phase='native-materials', boundary='start', monotonic_ms=150)]
+        (logs / 'native-phases.jsonl').write_text(''.join(json.dumps(x) + '\n' for x in rows))
+        result = self.run_recorder(root, logs, fact)
+        self.assertEqual(result.returncode, 0, result.stderr)
+        row = json.loads(next(x.split(' ', 1)[1] for x in result.stdout.splitlines()
+                              if x.startswith('LEAN_INSPECTOR_TIMING ')))
+        self.assertEqual(row['native-inspect']['elapsed_ns'], 40_000_000)
+        self.assertEqual(row['fib-extract']['elapsed_ns'], 23)
+        self.assertIsNone(row['native-materials']['elapsed_ns'])
 
     def test_extensionless_executable_captions_resolve_project_and_package_outputs(self):
         for caption, expected in (("projectProbe", 1), ("fixture/projectProbe:exe", 1),
@@ -231,6 +333,15 @@ class BuildWorkContracts(unittest.TestCase):
         self.assertEqual(1, json.loads(fact.read_text())["report"])
         self.assertEqual(0, json.loads(fact.read_text())["programs"])
 
+    def test_failed_selected_fib_consumer_propagates_on_reused_and_new_reports(self):
+        for reused in (True, False):
+            with self.subTest(reused=reused):
+                result, fact, root = self.invoke(reused=reused, fib_selected=True, fib_failure=23)
+                self.assertEqual(23, result.returncode, result.stderr)
+                self.assertIn('LEAN_INSPECTOR_FAILED phase=fib-regressions exit=23', result.stderr)
+                self.assertFalse(fact.exists())
+                self.assertFalse((root / 'report.json.logs/publish.exit.log').exists())
+
     def test_replays_and_dependency_only_builds_are_zero_project_work(self):
         for output in ("ℹ [1/1] Replayed Probe\n", "✔ [1/1] Built Mathlib.Probe (2ms)\n", ""):
             with self.subTest(output=output):
@@ -275,7 +386,8 @@ class BuildWorkContracts(unittest.TestCase):
         result, fact, _ = self.invoke(reused=False, targets=False, interrupted=True)
         self.assertEqual(143, result.returncode, result.stderr)
         self.assertFalse(fact.exists())
-        self.assertIn("LEAN_INSPECTOR_INTERRUPTED phase=report exit=143", result.stderr)
+        self.assertIn("LEAN_INSPECTOR_INTERRUPTED phase=report exit=143", result.stderr,
+                      "[FAIL] interrupted_inspector_must_expose_phase_evidence")
         self.assertIn("partial Lake output", result.stderr)
         self.assertIn("partial Lake error", result.stderr)
         self.assertIn('"phase":"native-inspect","boundary":"start"', result.stderr)

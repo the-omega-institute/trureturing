@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:49e8ebf93d699e8de874cfadbdfd4a4713bd0c24ae7118a549ae592b291438e2
+  normalized_sha256: sha256:49e8ebf93d699e8de874cfadbdfd4a4713bd0c24ae7118a549ae592b291438e2
+cas_ref: sha256:49e8ebf93d699e8de874cfadbdfd4a4713bd0c24ae7118a549ae592b291438e2
+coverage_gids:
+  - gid: D5/S3/Arith/FibonacciAtomic/Observer/NativeAlphaSpineObservation.native_alpha_spine_observation
+    target_statement_id: sha256:dd20d96247f33650cdd0db569a3a0eecc0ddbf4715315357d6c5ffa83a4bee96
+receipts:
+  unresolved_subitems: []

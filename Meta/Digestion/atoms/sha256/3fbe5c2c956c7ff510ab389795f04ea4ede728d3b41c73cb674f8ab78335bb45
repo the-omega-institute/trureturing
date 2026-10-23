@@ -1,0 +1,59 @@
+**Theorem 16.8 (Faithful stationary density, all tails and all cylinders).** For (16.22), the series
+
+$$
+R_0=\sum_{a\ge0}\Phi^a(\tau),\qquad \rho_*=R_0/\mu
+\tag{16.26}
+$$
+
+defines a real faithful mixed density invariant under $\Phi+\Psi$. Its actual ordered-word traces give exactly (16.16), including the empty word, and define a proper stationary renewal law with tick rate $1/\mu$ and no all-zero stationary component. Its visible support consists exactly of finite words with at least $h$ zeros between successive ones. This is exactly the no-adjacent-one Fibonacci language if and only if $d(0)>0$.
+
+Proof. Stability gives norm convergence of $R_0$. Nonnegative summation and (16.23) give
+
+$$
+\operatorname{Tr}R_0=\sum_{a\ge0}S_a
+=\sum_{j\ge0}(j+1)\gamma_j=\mu<\infty,\qquad
+\Phi(R_0)=R_0-\tau,\qquad \Psi(R_0)=\tau.
+\tag{16.27}
+$$
+
+Thus $\rho_*$ is normalized, invariant and has tick rate $1/\mu$. For each raw word $w$ in $A,B$, its completed word satisfies $L_w\xi=q^{|w|/2}Gwx/\sqrt Z$. Invertible $G$ and positive $q$ preserve the full reachable span of Theorem 16.6. For complex $y$,
+
+$$
+y^\dagger R_0y=\sum_{a\ge0}\sum_{|w|=a}|y^\dagger L_w\xi|^2.
+\tag{16.28}
+$$
+
+Vanishing forces orthogonality to that full span, hence $y=0$. This proves faithfulness. The summands are real symmetric, and full rank in dimension $D\ge2$ makes $\rho_*$ mixed. Its tick probability $1/\mu>0$ differs from $\operatorname{Tr}\Psi(\tau)=\gamma_0=0$, so it is distinct from the pure post-tick state.
+
+For an initial run of $a$ zeros and its first tick, the actual unnormalized output is
+
+$$
+\Psi\Phi^a(\rho_*)
+=\frac1\mu\sum_{c\ge0}\Psi\Phi^{a+c}(\tau)
+=\frac{S_a}{\mu}\tau.
+\tag{16.29}
+$$
+
+Each following gap $g_i$ and tick multiplies this density by $\gamma_{g_i}$ and returns it to $\tau$. The final $b$ zeros have trace $S_b$ from that reset. Taking the trace proves the first line of (16.16) for every number of ticks. With no tick, applying $\Phi^N$ directly to (16.26) gives
+
+$$
+\operatorname{Tr}\Phi^N(\rho_*)
+=\frac1\mu\sum_{a\ge0}S_{N+a}
+=\frac1\mu\sum_{j\ge N}(j-N+1)\gamma_j.
+\tag{16.30}
+$$
+
+At $N=0$ this is one by (16.27). These cases exhaust all words. Summing the last symbol uses trace preservation and gives right consistency; summing the first uses invariance and gives left consistency. The finite-alphabet consistent cylinders consequently define a stationary process. After any positive-probability tick history the memory is $\tau$, so the joint law of any finite sequence of subsequent complete gaps is the product of their $\gamma$ values. Their normalization proves a proper next gap at each renewal. Also
+
+$$
+0\le\mathbb P_{d,q}(0^N)
+\le\frac1\mu\sum_{j\ge N}(j+1)\gamma_j\longrightarrow0,
+\tag{16.31}
+$$
+
+excluding an infinite all-zero future of positive probability and hence any all-zero stationary component.
+
+All $S_a$ and all finite all-zero cylinders are positive, since $\gamma_k>0$ for every $k\ge h$. The first cylinder formula is positive exactly when each internal gap is at least $h$. By (16.6), $h=1$ exactly when $d(0)>0$; if $h>1$, even the no-adjacent-one word $101$ has probability zero. This proves the exact support assertion.
+
+The stationary convention is that of [Monras–Beige–Wiesner, *Hidden Quantum Markov Models and non-adaptive read-out of many-body states*, arXiv:1002.2337v2, equations (25)–(27)](https://arxiv.org/pdf/1002.2337v2): a fixed point of the sum of the symbol operations supplies ordered trace probabilities. Equations (16.27)–(16.31) derive the new law's renewal factors, mean and boundary tails using the summation mechanism of Sections 5 and 14. The monomial hypotheses of Theorem 5.1 do not themselves quantify over Definition 16.5. $\square$
+

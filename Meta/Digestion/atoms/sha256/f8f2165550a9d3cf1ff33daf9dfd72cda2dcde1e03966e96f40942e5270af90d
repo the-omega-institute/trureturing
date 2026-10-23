@@ -1,0 +1,13 @@
+**Definition 42.1 (phase count and raw event history).** For a run $\pi$, let
+$q_r(\pi)$ count response-producing phases. The notation $q_r+1$ includes the
+terminal phase. The raw history is instead the ordered word
+
+$$
+H(\pi)=h_1h_2\cdots h_m
+$$
+
+over events carrying their action, epoch, reply (when present), and resource
+increment. It includes passive actions and interventions, repeated reads,
+zero-reply events, and the complete terminal event. In general
+$q_r(\pi)+1$ is only a projection of $H(\pi)$.
+

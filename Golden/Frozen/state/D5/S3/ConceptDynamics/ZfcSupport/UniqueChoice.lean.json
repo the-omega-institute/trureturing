@@ -1,1 +1,1 @@
-{"statement_id":"sha256:8e94b0590b4edeb5d806d4bf7c27d7098ee28d570650f50d295cf66a50c8f8a1"}
+{"statement_id":"sha256:8e94b0590b4edeb5d806d4bf7c27d7098ee28d570650f50d295cf66a50c8f8a1","declarations":[{"declaration_name_key":"ns(ns(n0,9:Classical),11:choose_uniq)","kind":"theorem"},{"declaration_name_key":"ns(ns(n0,9:Classical),12:choose!_spec)","kind":"theorem"},{"declaration_name_key":"ns(ns(n0,9:Classical),20:choose!_eq_iff_right)","kind":"theorem"},{"declaration_name_key":"ns(ns(n0,9:Classical),7:choose!)","kind":"def"}]}

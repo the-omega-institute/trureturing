@@ -1,0 +1,1039 @@
+using static StrataLint.Scribe.DefinitionDsl;
+using static StrataLint.Scribe.FormulaDsl;
+using F = StrataLint.Scribe.FormulaDsl;
+
+namespace StrataLint.Scribe.Blueprint.D5.S3.ConceptDynamics.Coding.FibonacciFactorCompletion;
+
+internal sealed class BilateralDocument : IScribeDocumentDefinition
+{
+    private const string Prefix = "D5/S3/ConceptDynamics/Coding/FibonacciFactorCompletion/Bilateral.";
+    private static Formula.BoundVariable B(string name, Formula type) =>
+        new(FormulaIdentifier.Create(name), type);
+    private static Formula All(Formula body, params Formula.BoundVariable[] variables) =>
+        new Formula.BindMany(FormulaQuantifier.ForAll, [.. variables], body);
+    private static Formula And(params Formula[] clauses)
+    {
+        var result = clauses[^1];
+        for (var i = clauses.Length - 2; i >= 0; --i)
+            result = new Formula.Logic(clauses[i], FormulaLogicOperator.And, result);
+        return result;
+    }
+    private static Formula I(string name) => F.Id(name);
+    private static Formula Returns => Call("List", I("Return"));
+    private static Formula Add(Formula a, Formula b) => Call("add", a, b);
+    private static Formula Sub(Formula a, Formula b) => Call("subtract", a, b);
+    private static Formula Mul(Formula a, Formula b) => Call("multiply", a, b);
+    private static Formula Pow(Formula a, Formula b) => Call("power", a, b);
+
+    private static Formula CompleteParser()
+    {
+        var a = I("a"); var xs = I("xs"); var model = I("model");
+        var word = Call("executionWord", Call("cons", a, xs));
+        var r = Call("r", a); var m = Call("m", a);
+        return Disp(And(
+            All(Equal(Call("takeWhile", word, I("isC")), Call("replicate", r, I("c"))),
+                B("a", I("Return")), B("xs", Returns)),
+            All(Equal(Call("takeWhile", Call("drop", word, r), I("isU")),
+                Call("replicate", m, I("u"))), B("a", I("Return")), B("xs", Returns)),
+            Call("Injective", I("executionWord")),
+            All(Equal(Call("wordWeight", Call("executionWord", xs)), Call("listWeight", xs)),
+                B("xs", Returns)),
+            All(Call("Injective", Call("history", model)), B("model", I("Model")))));
+    }
+
+    private static Formula BilateralPast()
+    {
+        var omega = I("omega"); var nu = I("nu"); var i = I("i"); var n = I("N");
+        var x = I("x"); var y = I("y"); var z = I("z"); var k = I("k");
+        var h = Call("hSide", I("high"));
+        var words = new Formula.TypeArrow(I("Int"), I("CuLetter"));
+        Formula State(Formula w, Formula at) => Call("pastState", w, at);
+        Formula Past(Formula w, Formula seed) => Call("finitePast", w, i, n, seed);
+        Formula At(Formula w, Formula at) => Call("apply", w, at);
+        Formula Imp(Formula a, Formula b) => new Formula.Logic(a, FormulaLogicOperator.Implies, b);
+        Formula Bounds(Formula value) => And(Call("le", D(0), value), Call("le", value, h));
+        var power = Pow(I("g"), Call("pastWeight", omega, i, n));
+        var previous = Sub(Sub(i, D(1)), k);
+        return Disp(And(
+            All(Equal(Sub(Past(omega, y), Past(omega, x)), Mul(power, Sub(y, x))),
+                B("omega", words), B("i", I("Int")), B("N", I("Nat")), B("x", I("Real")), B("y", I("Real"))),
+            All(And(Call("le", D(0), power), Call("le", power, Pow(I("rho"), n))),
+                B("omega", words), B("i", I("Int")), B("N", I("Nat"))),
+            All(Bounds(State(omega, i)), B("omega", words), B("i", I("Int"))),
+            All(Imp(Bounds(z), Call("Tendsto", new Formula.Sequence(Past(omega, z), n, I("Nat")),
+                I("atTop"), Call("nhds", State(omega, i)))),
+                B("omega", words), B("i", I("Int")), B("z", I("Real"))),
+            All(Equal(State(omega, Add(i, D(1))), Call("letterMap", At(omega, i), State(omega, i))),
+                B("omega", words), B("i", I("Int"))),
+            All(Imp(And(All(Bounds(At(y, i)), B("i", I("Int"))),
+                All(Equal(At(y, Add(i, D(1))), Call("letterMap", At(omega, i), At(y, i))), B("i", I("Int")))),
+                Equal(y, Call("pastState", omega))), B("omega", words),
+                B("y", new Formula.TypeArrow(I("Int"), I("Real")))),
+            All(Imp(All(Equal(At(omega, previous), At(nu, previous)), B("k", Call("Fin", n))),
+                Call("le", new Formula.Absolute(Sub(State(omega, i), State(nu, i))), Mul(h, Pow(I("rho"), n)))),
+                B("omega", words), B("nu", words), B("i", I("Int")), B("N", I("Nat"))),
+            All(Equal(State(Call("const", I("u")), i), h), B("i", I("Int"))),
+            All(Call("Continuous", new Formula.Sequence(State(omega, i), omega, words)), B("i", I("Int"))),
+            All(Imp(Call("le", D(1), I("K")),
+                And(Call("Nonempty", Call("AuxiliaryLanguage", I("K"), I("d"))),
+                    Call("IsCompact", Call("AuxiliaryLanguage", I("K"), I("d"))))),
+                B("K", I("Nat")), B("d", I("Real"))),
+            All(Equal(State(Call("shift", omega, I("j")), i), State(omega, Add(i, I("j")))),
+                B("omega", words), B("i", I("Int")), B("j", I("Int"))),
+            All(new Formula.Logic(Call("member", omega, Call("AuxiliaryLanguage", I("K"), I("d"))),
+                FormulaLogicOperator.Iff,
+                Call("member", Call("shift", omega, I("j")), Call("AuxiliaryLanguage", I("K"), I("d")))),
+                B("omega", words), B("j", I("Int")), B("K", I("Nat")), B("d", I("Real")))));
+    }
+
+    private static Formula FiniteRunDecomposition()
+    {
+        var w = I("w"); var a = I("a"); var xs = I("xs");
+        var ap = I("ap"); var xp = I("xp");
+        var letters = Call("List", I("CuLetter"));
+        Formula Rep(Formula n) => Call("replicate", n, I("u"));
+        Formula Parsed(Formula n, Formula list) => Call("append", Rep(n), Call("executionWord", list));
+        Formula Imp(Formula x, Formula y) => new Formula.Logic(x, FormulaLogicOperator.Implies, y);
+        var ends = new Formula.Logic(Equal(w, I("nil")), FormulaLogicOperator.Or,
+            Equal(Call("getLastOption", w), Call("some", I("u"))));
+        var body = And(Equal(w, Parsed(a, xs)),
+            All(Imp(Equal(w, Parsed(ap, xp)), And(Equal(ap, a), Equal(xp, xs))),
+                B("ap", I("Nat")), B("xp", Returns)));
+        return Disp(All(Imp(ends,
+            new Formula.BindMany(FormulaQuantifier.Exists, [B("a", I("Nat")), B("xs", Returns)], body)),
+            B("w", letters)));
+    }
+
+    private static Formula OccurrenceRunGuards()
+    {
+        var kmax = I("K"); var d = I("d"); var omega = I("omega");
+        var i = I("i"); var xs = I("xs"); var k = I("k");
+        var word = Call("executionWord", xs); var len = Call("length", word);
+        var value = Call("getElem", word, k);
+        Formula Imp(Formula x, Formula y) => new Formula.Logic(x, FormulaLogicOperator.Implies, y);
+        var observed = new Formula.Logic(Call("lt", Add(Call("val", k), D(1)), len),
+            FormulaLogicOperator.Or, Equal(value, I("c")));
+        var letters = All(Imp(observed, Equal(Call("apply", omega, Add(i, Call("castInt", Call("val", k)))), value)),
+            B("k", Call("Fin", len)));
+        var premise = And(Call("le", D(1), kmax), Call("member", omega, Call("AuxiliaryLanguage", kmax, d)), letters);
+        return Disp(All(Imp(premise,
+            Call("GuardTrace", kmax, d, I("false"), I("high"), xs, Call("pastState", omega, i))),
+            B("K", I("Nat")), B("d", I("Real")),
+            B("omega", new Formula.TypeArrow(I("Int"), I("CuLetter"))),
+            B("i", I("Int")), B("xs", Returns)));
+    }
+
+
+    private static Formula UniformGuardTraceSplit()
+    {
+        var cap = I("K"); var d = I("d"); var strict = I("strict");
+        var side = I("j"); var execution = I("execution"); var state = I("D");
+        var before = I("before"); var a = I("a"); var after = I("after");
+        var reached = Call("execute", side, before, state);
+        Formula Imp(Formula x, Formula y) => new Formula.Logic(x, FormulaLogicOperator.Implies, y);
+        var bound = And(
+            Imp(Equal(strict, I("true")), Call("lt", d, reached)),
+            Imp(Equal(strict, I("false")), Call("le", d, reached)));
+        var local = And(Call("le", Call("r", a), cap),
+            Imp(Equal(Call("r", a), cap), bound));
+        var splits = All(Imp(Equal(execution, Call("append", before, Call("cons", a, after))), local),
+            B("before", Returns), B("a", I("Return")), B("after", Returns));
+        return Disp(All(new Formula.Logic(
+            Call("GuardTrace", cap, d, strict, side, execution, state), FormulaLogicOperator.Iff, splits),
+            B("K", I("Nat")), B("d", I("Real")), B("strict", I("Bool")),
+            B("j", I("Side")), B("execution", Returns), B("D", I("Real"))));
+    }
+
+    private static Formula ExactControlSplit()
+    {
+        var side = I("j"); var budget = I("budget");
+        var execution = I("execution"); var state = I("D");
+        var before = I("before"); var a = I("a"); var after = I("after");
+        var cost = Sub(I("lam"), Mul(Mul(Pow(I("g"), D(2)), Pow(I("chi"), Call("r", a))),
+            Call("execute", side, before, state)));
+        var splits = All(new Formula.Logic(
+            Equal(execution, Call("append", before, Call("cons", a, after))),
+            FormulaLogicOperator.Implies, Call("lt", cost, budget)),
+            B("before", Returns), B("a", I("Return")), B("after", Returns));
+        return Disp(All(new Formula.Logic(
+            Call("StrictControl", side, budget, execution, state), FormulaLogicOperator.Iff, splits),
+            B("j", I("Side")), B("budget", I("Real")), B("execution", Returns), B("D", I("Real"))));
+    }
+
+    public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
+        "Positive Fibonacci return lists have unique execution-word and color-history decodings. Bilateral letter pasts determine a unique bounded state, terminal-u words have unique positive-run decompositions, and independently occurring runs inherit their exact return guards.",
+        H("Execution parsing, bilateral past states and return guards"),
+        Blocks(
+            Describe.Lean(DescribeId.Create("fib-complete-execution-word-parser"),
+                DeclarationHandle.Create(Prefix + "complete_execution_word_parser"),
+                H("Maximal complete runs and original history injection"),
+                StatementSource.FromAuthor(CompleteParser()), AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("The initial maximal c-run has exactly r letters and the following maximal u-run has exactly m letters for every positive return. Recursing after those runs uniquely recovers the complete execution list. Its weight is exactly the original list weight with c charged 20 and u charged 6. The actual color blocks have different second colors, so their concatenation is injective. Reversing only the execution-letter word produces the external block order without reversing any color-block letters. Removing the fixed common stem and paid anchor proves history injection for each actual model."))),
+                DescribeRole.Theorem),
+            Describe.Lean(DescribeId.Create("fib-bilateral-past-state"),
+                DeclarationHandle.Create(Prefix + "bilateral_past_state"),
+                H("Independent finite-past state and bounded bilateral uniqueness"),
+                StatementSource.FromAuthor(BilateralPast()), AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("The auxiliary letter maps are c: z maps to chi*z and u: z maps to A_H+rho*z, with the original high-side constants. The finite past at i composes the N letters immediately before i in chronological order. Its exact seed difference is g raised to their original 20/6 weight times the seed difference, bounded by rho^N. The zero-seed sequence is increasing and bounded in [0,h_H]; its supremum is the independently defined pastState. Every seed in that interval has the same limit. This state satisfies the letter transition law and is the unique bilateral solution confined to [0,h_H]. Two sequences agreeing on the last N past letters have states differing by at most h_H*rho^N. The all-u state equals h_H. In the formula, Sequence denotes the function of N and const(u) denotes the constant bilateral u sequence.")),
+                    Paragraph(Text("Matching-past stability gives continuity in the product of the discrete letter spaces. AuxiliaryLanguage forbids K+1 consecutive c letters and checks chi^(K-1)*d before a current c whose preceding K-1 letters are c. For K at least one and every real d, the all-u sequence belongs to this closed compact language. States commute with every integer shift, where shift(omega,j)(n)=omega(n+j), and membership is invariant under those shifts. This language is defined by the independent letter conditions and is not a completion image or an actual literal source."))),
+                DescribeRole.Theorem),
+            Describe.Lean(DescribeId.Create("fib-finite-run-decomposition"),
+                DeclarationHandle.Create(Prefix + "finite_run_decomposition"),
+                H("Unique decomposition of arbitrary terminal-u words"),
+                StatementSource.FromAuthor(FiniteRunDecomposition()), AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("Every finite c/u word that is empty or ends in u has exactly one decomposition into a leading u run and a positive complete return list. The leading run may be empty; the return list may be empty for an all-u word. The existence proof constructs the runs by induction on the literal letters; uniqueness directly reuses the complete execution parser. The displayed two-variable existential with equality of every alternative pair is the unique-existence statement on Nat times List Return. getLastOption denotes getLast?."))), DescribeRole.Theorem),
+            Describe.Lean(DescribeId.Create("fib-occurrence-run-guards"),
+                DeclarationHandle.Create(Prefix + "occurrence_run_guards"),
+                H("Independent occurrence guards on canonical complete runs"),
+                StatementSource.FromAuthor(OccurrenceRunGuards()), AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("The bilateral sequence independently belongs to AuxiliaryLanguage. Its letters agree with the prescribed complete execution word at every position except that the final u may have been appended as a terminal fill. All c letters must still agree. Each run inherits the cap from the original forbidden K+1 c letters. At a run of length K, the original state before its last c is chi^(K-1) times its run-start state, so the independent before-Kth-c guard yields the weak return guard. When another return follows, every intervening u is an original occurrence letter and the exact transition law aligns its next start. No state alignment is claimed across an appended terminal u."))), DescribeRole.Theorem),
+            Describe.Lean(DescribeId.Create("fib-uniform-guard-trace-iff-split"),
+                DeclarationHandle.Create(Prefix + "uniform_guard_trace_iff_split"),
+                H("Recursive guards at every execution split"),
+                StatementSource.FromAuthor(UniformGuardTraceSplit()), AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("For every natural cap K, real threshold d, Boolean strictness, side, finite positive-return list and real initial state D, the recursive GuardTrace holds exactly when each split before ++ a :: after obeys a.r <= K and, when a.r = K, tests the state obtained by executing before from D. The test is d < state when strict is true and d <= state when strict is false; the displayed pair of implications states that Boolean conditional completely. Return carries positive natural r and m. No lower bound on K, restriction to an actual literal starting state, or bound on the list length is assumed. Induction aligns the tail's initial state with returnMap after its first return. This structural equivalence alone does not assert whole-record supply."))), DescribeRole.Theorem),
+            Describe.Lean(DescribeId.Create("fib-exact-control-iff-split"),
+                DeclarationHandle.Create(Prefix + "exact_control_iff_split"),
+                H("Exact active costs at every execution split"),
+                StatementSource.FromAuthor(ExactControlSplit()), AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("For either side, every real budget and initial state, and every finite list of positive returns, StrictControl is equivalent to testing lam - g^2 * chi^(a.r) * execute(j,before,D) < budget at every split before ++ a :: after of the same execution. StrictControl recursively tests the current cost and continues at returnMap(j,a,D); execute follows that same return map. The constants are T2 = 1 - t and lam = T2 / 10, with the original Fibonacci t, g and chi. The empty list satisfies both sides. The proof uses unbounded list induction and imposes no actual-start, budget-interval or cap hypothesis. It proves no record-error, reset or rate assertion."))), DescribeRole.Theorem),
+            new DocumentBlock.Section(H("Uncapped positive-return enumeration and guarded recurrence"), Blocks(
+                new DocumentBlock.Section(H("Original lists, execution order and half weight"), Blocks(
+                    Paragraph(Text("The objects in this application are the original Return records a = (m,r,m_pos,r_pos), with m,r : Nat, m_pos : 0 < m and r_pos : 0 < r. Neither exponent has a cap. An execution is an ordered List Return. Its definitions are executionWord([]) = [], executionWord(a :: xs) = replicate(a.r,c) ++ replicate(a.m,u) ++ executionWord(xs), listWeight([]) = 0, and listWeight(a :: xs) = 6*a.m + 20*a.r + listWeight(xs). Thus each positive return contributes a complete c^r u^m run in execution order, and the list concatenates those runs without reversing them.")),
+                    Paragraph(Text("On List CuLetter, retain wordWeight([]) = 0, wordWeight(c :: w) = 20 + wordWeight(w), and wordWeight(u :: w) = 6 + wordWeight(w). Define halfWeight([]) = 0, halfWeight(c :: w) = 10 + halfWeight(w), and halfWeight(u :: w) = 3 + halfWeight(w). In particular halfWeight(w ++ v) = halfWeight(w) + halfWeight(v), wordWeight(w) = 2*halfWeight(w), and wordWeight(executionWord(xs)) = listWeight(xs). The last identity is the complete_execution_word_parser supplier in "),
+                        Ref("D5/S3/ConceptDynamics/Coding/FibonacciFactorCompletion/Bilateral"),
+                        Text(". The first two identities use List.foldr_hom with the additive letter steps: adding halfWeight(v) transports the append fold, and k ↦ 2*k transports the 10/3 fold to the 20/6 fold. No change of word or letter order is involved.")),
+                    Paragraph(Text("For each n : Nat, the actual carrier is ReturnFiber(n) := {xs : List Return // xs ≠ [] ∧ listWeight(xs) = 2*n}, and returnCount(n) := Nat.card(ReturnFiber(n)). This excludes the empty execution even at n = 0; it includes every nonempty positive-return list of that weight, with no GuardTrace, side, model, budget or supply condition. The finiteness assertion below concerns this subtype itself, separately from its natural cardinality.")),
+                    Paragraph(Text("The index n is half the execution weight. It is not the number of returns or the number of c/u letters. The original history is colorsD ++ colorsE ++ (xs.reverse.map(returnColors)).flatten ++ anchor(model), where returnColors(a) = flatten(replicate(a.m,colorsD)) ++ flatten(replicate(a.r,colorsE)), the original anchor is empty, and the anchored model adds colorsD ++ colorsE. Since colorsD and colorsE have lengths 6 and 20, a member of ReturnFiber(n) has history length 26 + 2*n in the original model and 52 + 2*n in the anchored model. The literal source uses the reversed packet order described in the source-address application below, and appends its prescribed finite tail. Its full sourcePrefix length includes that tail; its infinite source is eventually L0. Those lengths and addresses do not redefine the weight in ReturnFiber.")))),
+                new DocumentBlock.Section(H("Both endpoint directions and the actual parser inverse"), Blocks(
+                    Paragraph(Text("Every nonempty executionWord(xs) starts with c because the first return has positive r, and ends with u because the last return has positive m. Hence it has the form c :: (w ++ [u]) for a unique literal middle word w. Conversely, for every w : List CuLetter the word c :: (w ++ [u]) ends in u. Apply the existing finite_run_decomposition in the Completion namespace of "),
+                        Ref("D5/S3/ConceptDynamics/Coding/FibonacciFactorCompletion/Bilateral"),
+                        Text(". Its leading u run has length zero, since a positive leading u run would make the first letter u instead of c. The remaining execution list is nonempty, since its execution word starts with c. This gives an original positive-return list for every middle word, including w = [].")),
+                    Paragraph(Text("The inverse operation is the same maximal-run parser already described above: from c :: (w ++ [u]), read its maximal initial c run, then its maximal u run, record their positive lengths as (m,r), and continue on the remaining complete runs. The complete_execution_word_parser gives uniqueness of this list and injectivity of executionWord. Starting from a nonempty xs, delete exactly its first c and final u, namely take (executionWord(xs)).tail.dropLast, and parse after putting those two endpoints back. The recovered list is xs by that injectivity. Starting from w, parsing and then deleting the two endpoints returns w by cancellation of the common initial c and final [u]. This describes both inverse laws on the actual words and lists, rather than on their letter multiplicities.")),
+                    Paragraph(Text("For an arbitrary natural n, the endpoint correspondence therefore has carriers {w : List CuLetter // 13 + halfWeight(w) = n} and ReturnFiber(n). Its forward map parses c :: (w ++ [u]); its inverse strips the endpoints of executionWord(xs). Indeed halfWeight(c :: (w ++ [u])) = 10 + halfWeight(w) + 3 = 13 + halfWeight(w), so the parser's weight identity gives listWeight(xs) = 2*(13 + halfWeight(w)). In the forward direction the carrier equation gives xs ≠ [] and listWeight(xs) = 2*n. In the reverse direction xs ≠ [] supplies the endpoints and listWeight(xs) = 2*n gives 13 + halfWeight(w) = n, cancelling multiplication by 2 in Nat.")),
+                    Paragraph(Text("Writing the forward and inverse maps here as E_n and F_n, their graph equations are executionWord((E_n(w)).val) = c :: (w.val ++ [u]) and executionWord(xs.val) = c :: ((F_n(xs)).val ++ [u]). Their laws are F_n(E_n(w)) = w and E_n(F_n(xs)) = xs, including the subtype evidence by extensionality. If E_n(w) = E_n(v), the graph equations cancel to w.val = v.val; if two lists have the same execution word, the existing complete parser identifies them. This is a correspondence of the original ordered objects for every n, also when both carriers are empty.")))),
+                new DocumentBlock.Section(H("The literal guarded finite enumeration and both membership directions"), Blocks(
+                    Paragraph(Text("Retain the recursive Finset of literal words, with all indices in Nat: middleWords(k) = (if k = 0 then {[]} else ∅) ∪ ((if 3 ≤ k then (middleWords(k-3)).image(List.cons u) else ∅) ∪ (if 10 ≤ k then (middleWords(k-10)).image(List.cons c) else ∅)). The recursion is on k. Each recursive call is made only under its displayed guard and then has strictly smaller index. The three branches enumerate the empty word, a first u followed by a middle word of half weight k-3, and a first c followed by one of half weight k-10. Finset image prefixes the actual list; it does not quotient by letter counts.")),
+                    Paragraph(Text("The complete membership statement is, for every k : Nat and every w : List CuLetter, w ∈ middleWords(k) ↔ halfWeight(w) = k. Its forward direction sends an enumerated word to its exact half weight; its reverse direction places every word of that half weight in the same literal Finset. For [] the two observations are both 0 = k. For u :: v they are both equivalent to 3 ≤ k ∧ halfWeight(v) = k-3, and for c :: v they are both equivalent to 10 ≤ k ∧ halfWeight(v) = k-10. The reverse implications use the guard to restore k from its natural subtraction; the forward implications obtain the guard from 3 + halfWeight(v) = k or 10 + halfWeight(v) = k.")),
+                    Paragraph(Text("More explicitly, put cost(c) = 10 and cost(u) = 3, and let the letter step send a predicate q on Nat to k ↦ cost(a) ≤ k ∧ q(k-cost(a)). Both w ↦ (k ↦ w ∈ middleWords(k)) and w ↦ (k ↦ halfWeight(w) = k) have the same empty-word predicate k ↦ 0 = k and the same letter step. List.foldr_hom identifies these two folds, evaluated at the same k. In unfolding the enumeration, membership of a cons in the empty-word branch is impossible, and a u-prefixed word cannot come from the c image or conversely. Thus the equivalence retains both membership directions for arbitrary words, rather than only for words of a chosen run form.")),
+                    Paragraph(Text("At k = 0, both positive-cost guards are false and middleWords(0) = {[]}. For 0 < k < 3 all three branches are empty. For 3 ≤ k < 10 only the u branch can contribute; at k ≥ 10 both prefixed branches are available, with the empty-word branch absent. At the guard equalities k = 3 and k = 10 the recursive argument is zero and its [] is legitimately prefixed. Below a cost, the corresponding difference would truncate to zero, but the branch is ∅, so it does not incorrectly prefix the zero-weight word. These cases also explain why an empty Finset at a positive k and the singleton {[]} at k = 0 have different meanings.")),
+                    Paragraph(Text("The membership correspondence {w : List CuLetter // halfWeight(w) = k} ≃ {w : List CuLetter // w ∈ middleWords(k)} is the identity on w in both directions: only the proof field changes, using the reverse membership implication for the forward map and the forward implication for its inverse. Consequently both inverse laws hold by subtype extensionality, and the underlying word is unchanged in each direction. This is also the precise correspondence at k = n-13, whether or not 13 ≤ n; the separate endpoint shift used next is the step that requires that inequality.")))),
+                new DocumentBlock.Section(H("Separate finite carriers and the complete all-natural count conjunction"), Blocks(
+                    Paragraph(Text("First establish finiteness. For any k, Finset.Subtype.fintype makes {w // w ∈ middleWords(k)} finite. Transport it through the inverse of the identity-on-words membership correspondence using Finite.of_equiv. This gives Finite {w : List CuLetter // halfWeight(w) = k}, in particular at k = n-13. This argument uses the actual finite enumeration and does not infer finiteness from a value of Nat.card.")),
+                    Paragraph(Text("When 13 ≤ n, the equation halfWeight(w) = n-13 is equivalent to 13 + halfWeight(w) = n. Equiv.subtypeEquivRight changes only this proof field and leaves w fixed in both directions. Compose that guarded endpoint shift with the endpoint correspondence to obtain an equivalence from the finite half-weight carrier to ReturnFiber(n). Finite.of_equiv gives Finite(ReturnFiber(n)) before any cardinality equality is used. When n < 13, no w can satisfy 13 + halfWeight(w) = n. The inverse endpoint map therefore gives IsEmpty(ReturnFiber(n)), and its empty Fintype supplies finiteness in this branch as well.")),
+                    Paragraph(Text("Only after those finite carriers are established, Nat.card_congr transports their cardinalities. For 13 ≤ n the chain is Nat.card(ReturnFiber(n)) = Nat.card {w : List CuLetter // 13 + halfWeight(w) = n} = Nat.card {w : List CuLetter // halfWeight(w) = n-13} = (middleWords(n-13)).card. The last equality uses the identity-on-words membership equivalence and the cardinality of a Finset subtype. For n < 13 the actual fiber is empty and its cardinality is zero.")),
+                    Paragraph(Text("The complete conclusion, with no finiteness premise, is ∀ n : Nat, Finite(ReturnFiber(n)) ∧ returnCount(n) = (if 13 ≤ n then (middleWords(n-13)).card else 0). Equivalently its first conjunct is Finite {xs : List Return // xs ≠ [] ∧ listWeight(xs) = 2*n}, and its second conjunct has Nat.card of that exact same subtype on the left. Projecting either conjunct preserves the universal natural index; the finite statement is not merely a side condition for interpreting the second.")),
+                    Paragraph(Text("For all n < 13, ReturnFiber(n) is empty, including n = 0. Although n-13 = 0 then, the outer guard suppresses middleWords(0); omitting that guard would falsely count its empty middle. At n = 13 the guard is true and middleWords(0) = {[]} contributes one. Its endpoint word is [c,u], whose parser gives exactly the singleton list [a] with a.m = a.r = 1. This is a nonempty list of weight 26, so returnCount(13) = 1. For n > 13 an empty middle cannot have half weight n-13, and any zero count comes from an empty positive-weight enumeration. No identification of the empty middle with an empty Return list occurs.")))),
+                new DocumentBlock.Section(H("Disjoint empty/u/c partition and guarded cardinalities"), Blocks(
+                    Paragraph(Text("For k : Nat write Z_k = (if k = 0 then {[]} else ∅), U_k = (if 3 ≤ k then (middleWords(k-3)).image(List.cons u) else ∅), and C_k = (if 10 ≤ k then (middleWords(k-10)).image(List.cons c) else ∅). These are exactly the three branches of the original definition, so middleWords(k) = Z_k ∪ (U_k ∪ C_k). The empty word cannot equal a cons; and a word in U_k and C_k would have both first letters u and c, which are distinct. Thus U_k and C_k are disjoint and Z_k is disjoint from their union, in every guard case including an empty branch.")),
+                    Paragraph(Text("For each letter a, List.cons a is injective: a :: v = a :: t implies v = t by List.cons.inj. Hence Finset.card_image_of_injective preserves the cardinality of each enabled prefixed branch. The branch cardinalities are card(Z_k) = (if k = 0 then 1 else 0), card(U_k) = (if 3 ≤ k then (middleWords(k-3)).card else 0), and card(C_k) = (if 10 ≤ k then (middleWords(k-10)).card else 0). Disabled branches have cardinality zero rather than the cardinality at a truncated index.")),
+                    Paragraph(Text("Apply Finset.card_union_of_disjoint to those two disjoint unions and reorder the three natural summands. For every k : Nat this gives (middleWords(k)).card = (if 3 ≤ k then (middleWords(k-3)).card else 0) + (if 10 ≤ k then (middleWords(k-10)).card else 0) + (if k = 0 then 1 else 0). Thus at k = 0 the two prefix terms vanish and only the empty-word pulse remains; at k = 1 or 2 everything vanishes; for 3 ≤ k < 10 only the u term is present; and at every k ≥ 10 both prefix terms are present. These are cardinalities of disjoint sets of literal words.")))),
+                new DocumentBlock.Section(H("Natural-index transport with both guards and the thirteen pulse"), Blocks(
+                    Paragraph(Text("For n ≥ 13 substitute k = n-13 in this middle-word recurrence and use the finite/count conjunction. The natural-index identities n-13-3 = n-3-13 and n-13-10 = n-10-13 hold with truncated subtraction. The corresponding guarded identities, under this n ≥ 13 condition, are 3 ≤ n-13 ↔ (3 ≤ n ∧ 13 ≤ n-3) ↔ 16 ≤ n, and 10 ≤ n-13 ↔ (10 ≤ n ∧ 13 ≤ n-10) ↔ 23 ≤ n. These conjunctions retain both the outer recurrence guard and the inner endpoint threshold of the delayed count.")),
+                    Paragraph(Text("For the u term, if 3 ≤ n-13 then both 3 ≤ n and 13 ≤ n-3 hold. The count formula at n-3 and the first index identity identify (middleWords(n-13-3)).card with returnCount(n-3). If 3 ≤ n-13 is false, the middle u term is zero; when the outer guard 3 ≤ n is true, the inner condition 13 ≤ n-3 is false, so the delayed return count is also zero. If that outer guard is false the guarded delayed term is zero directly. Consequently (if 3 ≤ n-13 then (middleWords(n-13-3)).card else 0) = (if 3 ≤ n then returnCount(n-3) else 0) under n ≥ 13.")),
+                    Paragraph(Text("For the c term, if 10 ≤ n-13 then both 10 ≤ n and 13 ≤ n-10 hold, and the count formula at n-10 with n-13-10 = n-10-13 identifies its cardinality with returnCount(n-10). If the middle guard is false while 10 ≤ n is true, the delayed index is below 13 and its count is zero; if the outer guard is false the term is zero directly. Thus (if 10 ≤ n-13 then (middleWords(n-13-10)).card else 0) = (if 10 ≤ n then returnCount(n-10) else 0) under n ≥ 13. The two transports are separate; neither permits replacing a disabled branch by an unguarded middleWords at zero.")),
+                    Paragraph(Text("For the remaining summand, n ≥ 13 gives n-13 = 0 ↔ n = 13, so the middle empty-word pulse becomes exactly (if n = 13 then 1 else 0). This equivalence is not used below 13: there n-13 is also zero but n ≠ 13. Instead handle n < 13 from the empty actual fiber. If 3 ≤ n, then n-3 < 13 and returnCount(n-3) = 0; otherwise its guarded term vanishes. If 10 ≤ n, then n-10 < 13 and returnCount(n-10) = 0; otherwise that guarded term vanishes. The pulse is zero. Thus every term on both sides of the recurrence is zero throughout n < 13 without applying the endpoint shift outside its domain.")),
+                    Paragraph(Text("Combining these branches gives the complete original target: ∀ n : Nat, returnCount(n) = (if 3 ≤ n then returnCount(n-3) else 0) + (if 10 ≤ n then returnCount(n-10) else 0) + (if n = 13 then 1 else 0). Expanding returnCount everywhere makes this the recurrence for Nat.card {xs : List Return // xs ≠ [] ∧ listWeight(xs) = 2*n}, with the identical literal subtype at weights 2*(n-3) and 2*(n-10) in the two guarded terms. There is no seed, finiteness or additional parameter hypothesis in this universal equation.")),
+                    Paragraph(Text("The full small-index split is explicit. For n < 3 neither delayed term is enabled, and n-3 and n-10 would both truncate to zero. For 3 ≤ n < 10 only the three-delay is enabled, at an index below 13. For 10 ≤ n < 13 both are enabled but both delayed fibers are empty. At n = 13 the delayed indices are 10 and 3, both empty, and the pulse is one. For 13 < n < 16 both delayed indices remain below 13, so the count is zero. For 16 ≤ n < 23 only the three-delay reaches the endpoint threshold; the ten-delay still has count zero. At n ≥ 23 both delayed indices meet that threshold. Within these ranges the equalities n = 3, 10, 16 and 23 retain the zero residual index exactly as the corresponding enabled guard requires.")),
+                    Paragraph(Text("In particular the boundary values are returnCount(0) = returnCount(3) = returnCount(10) = returnCount(12) = 0, returnCount(13) = 1, returnCount(14) = returnCount(15) = 0, and returnCount(16) = returnCount(22) = returnCount(23) = 1. The value at 13 comes from middleWords(0) and the singleton (m,r) = (1,1); the subsequent values use the guarded recurrence and the below-13 zero branch. For example the three-delay propagates 13 to 16, 19 and 22, while at 23 the three-delay index 20 has count zero and the ten-delay index 13 supplies one. These examples retain the complete universal statements, including every intervening zero case.")))),
+                new DocumentBlock.Section(H("Ordered-list meaning and application boundary"), Blocks(
+                    Paragraph(Text("The equivalences count complete ordered Return lists, not coefficient pairs. For example middleWords(13) contains both [u,c] and [c,u]. After adding the forced endpoints their execution words are [c,u,c,u] and [c,c,u,u], parsed respectively as the two-return list [(1,1),(1,1)] and the one-return list [(2,2)], with pairs written (m,r). Both have listWeight 52 and index n = 26, yet they are different elements of the actual fiber. Their equal letter multiplicities cannot replace their word order or their different run decompositions.")),
+                    Paragraph(Text("This application reuses the complete execution parser and finite run decomposition in "),
+                        Ref("D5/S3/ConceptDynamics/Coding/FibonacciFactorCompletion/Bilateral"),
+                        Text(" together with List.foldr_hom, Equiv.subtypeEquivRight, Finite.of_equiv, Finset.Subtype.fintype, Nat.card_congr and the injective-image and disjoint-union cardinality results. Its conclusions are the exact endpoint and membership correspondences, separate finite-carrier assertion, full count formula and guarded recurrence above. They concern execution weight on the original uncapped lists. They add no support characterization, scaled count window, root, logarithmic rate, generating or cumulative formula, critical-storage bound, decoder consequence, physical realization or novelty claim. The other applications in this document keep their own stated dictionaries and hypotheses.")))))),
+            new DocumentBlock.Section(H("Exact equal-weight source-address application"), Blocks(
+                Paragraph(Text(
+                    "This application uses the original literal alphabet Label = {L3, L0, L5, L2, L25}. "
+                    + "The fixed blocks are U = [L5,L0,L3,L0,L3,L3], V = [L0,L3,L3,L5,L0,L3], and "
+                    + "C = [L5,L5,L3,L2,L2,L0,L3,L3,L3,L25,L5,L0,L0,L2,L2,L25,L3,L3,L0,L5]. "
+                    + "For side high the block is U and for side low it is V. A positive return a=(m,r) contributes "
+                    + "returnWord(j,a) = repeatWord(block(j),m) ++ repeatWord(C,r), with both m and r positive.")),
+                Paragraph(Text(
+                    "The original stem is block(j) ++ C. The external word of an execution is "
+                    + "(execution.reverse.map(returnWord(j))).flatten, so packet order is reversed while the literal "
+                    + "order inside every repeated block is retained. The original model has empty anchor; the "
+                    + "anchored model has anchor equal to the stem. Thus observedPrefix(j,model,execution) is the "
+                    + "common stem followed by that external word and the model anchor. The finite source appends "
+                    + "the finite tail block(j) ++ repeatWord(C,3) ++ exitPrefix(j), where exitPrefix(high) = [L5,L0] "
+                    + "and exitPrefix(low) = [L0]. The source at p is the Label at that finite word position, with L0 "
+                    + "as the eventual default outside the word.")),
+                Paragraph(Text(
+                    "Encode c by C and u by block(j). The complete parser "),
+                    Ref("D5/S3/ConceptDynamics/Coding/FibonacciFactorCompletion/Bilateral"),
+                    Text(" supplies the complete_execution_word_parser c^r u^m run decomposition, injectivity of executionWord, and equality of its "
+                    + "20/6 word weight with listWeight. The existing prefix-free decoder "),
+                    Ref("D5/S0/Computability/Coding/PrefixFreeCode"),
+                    Text(" (the uniquelyDecodable_of_isPrefixFree declaration) applies because C, U and V are nonempty and the displayed literal blocks form a prefix-free "
+                    + "two-letter code for each side. The lawful monoid-power identity for repeatWord turns every "
+                    + "repeated block into the corresponding flattened replicate, so the decoder sees exactly the "
+                    + "reversed execution packets.")),
+                Paragraph(Text(
+                    "Fix a common side j and a common model. For two executions xs and ys with equal listWeight, the parser and the block lengths give equal observed-prefix "
+                    + "lengths. Equality of their actual source addresses therefore restricts to equality of the two "
+                    + "finite observed prefixes at every position before the common tail; no observed-prefix equality "
+                    + "is assumed. Cancelling the common stem and the equal model anchor leaves equality of the two "
+                    + "external words. Prefix-free unique decoding gives equality of the reversed execution-letter words. "
+                    + "Cancelling reversal and applying the complete execution parser then gives equality of the original Return lists. This is the "
+                    + "Label source-address injection for both sides, both models, and arbitrary positive lists including "
+                    + "the empty list.")),
+                Paragraph(Text(
+                    "This Label-address application is separate from the preceding Color-history injection, whose "
+                    + "observations use colorsD and colorsE. It makes no claim about an all-even dictionary, any count, "
+                    + "or ActualPairSupply, and it asserts no resource, rate, optimality, or physical-realization "
+                    + "property.")))),
+            new DocumentBlock.Section(H("One reset and the complete all-even counting application"), Blocks(
+                Paragraph(Text(
+                    "The same_reset_all_even_counts application combines the uniform-reset construction with the equal-weight "
+                    + "source-address decoding above. Its objects are the original positive Return lists and their prescribed "
+                    + "literal sources. The dictionary, execution, two-sided supply, histories and source addresses in the "
+                    + "conclusions all refer to those same lists. The following definitions and supplier correspondence specify "
+                    + "this application without adding a mathematical declaration.")),
+                new DocumentBlock.Section(H("Original objects, dictionaries and budget hypotheses"), Blocks(
+                    Paragraph(Text(
+                        "Write t = (sqrt(5) − 1)/2, g = 2t − 1, rho = g⁶, chi = g²⁰, T2 = 1 − t and lam = T2/10. For side high set "
+                        + "hSide(high) = (39 − 6g)/380, and for side low set hSide(low) = (46 + 31g)/380; put aSide(j) = (1 − "
+                        + "rho)hSide(j). With c0 = 2t/5, set eSide(high) = T2 − c0 and eSide(low) = c0, xSide(j) = aSide(j) + rho "
+                        + "chi³ eSide(j), and ySide(j) = aSide(j) + rho chi xSide(j). The original model starts at "
+                        + "initial(j,original) = xSide(j), and the anchored model at initial(j,anchored) = ySide(j). Below H, A, X "
+                        + "and Y abbreviate the high-side values hSide(high), aSide(high), xSide(high) and ySide(high).")),
+                    Paragraph(Text(
+                        "A Return a = (m,r) has positive natural m and r, weight 6m + 20r and state map returnMap(j,a,D) = hSide(j) "
+                        + "− rhoᵐ(hSide(j) − chiʳD). The state execute(j,before,D) applies these maps in list order. "
+                        + "GuardTrace(K,d,strict,j,xs,D) is true on the empty list; at a :: rest it requires a.r ≤ K, tests d < D "
+                        + "when a.r = K and strict = true or d ≤ D when a.r = K and strict = false, then continues on rest at "
+                        + "returnMap(j,a,D). The total listWeight is the sum of the return weights. Thus the guard tests the actual "
+                        + "state before each maximal return, rather than a scalar label attached to a word.")),
+                    Paragraph(Text(
+                        "The original ActualDictionary(model,K,d,strict,N) is the subtype of all lists xs of positive Returns with "
+                        + "GuardTrace(K,d,strict,high,xs,initial(high,model)) and listWeight(xs) = N. Define "
+                        + "actualCount(model,K,d,strict,N) as its Nat.card. Likewise ContractDictionary(model,o,b,contract,N) "
+                        + "consists of the lists xs with ActualPairSupply(model,o,b,contract,xs) and listWeight(xs) = N, and "
+                        + "contractCount is its Nat.card. These are the full original dictionaries, with no selection of "
+                        + "representatives or replacement by abstract packets.")),
+                    Paragraph(Text(
+                        "Fix any ownership o : Fin 5 → Bool, any real b and any natural K satisfying K ≥ 2 and both original "
+                        + "inequalities lam − g² chiᴷ H < b and b < lam − g² chiᴷ(A/(1 − rho chiᴷ)). Put S = g² chiᴷ and d = (lam − "
+                        + "b)/g²/chiᴷ = (lam − b)/S. Under exactly these hypotheses there is one positive Return R with R.r = 1 and "
+                        + "max(max(X,Y),d) < B, where B = H − rho^(R.m)(H − chi A). The quantifier for R precedes every sourceModel "
+                        + "and N: this reset is shared by all source models, all admissible positive source weights, all target "
+                        + "models and all target weights.")),
+                    Paragraph(Text(
+                        "After fixing that R, take any sourceModel and any N > 0 for which 1 ≤ "
+                        + "actualCount(sourceModel,K,d,false,N). Let V = ActualDictionary(sourceModel,K,d,false,N), delta = B − "
+                        + "initial(high,sourceModel), gamma = delta gᴺ, eps = min(b − actualAutomaticCost(K), S gamma)/2 and L = N + "
+                        + "20 + 6 R.m, where actualAutomaticCost(K) = max(max(lam − g² chi X, lam − g² chi^(K−1) A), lam − g⁶). These "
+                        + "are the original formulas: delta depends on sourceModel, gamma also on N, and eps on both through gamma. "
+                        + "They are kept when the target model changes. The positive dictionary hypothesis supplies an actual element "
+                        + "of V; its even weight gives Even N and then Even L. We also obtain L > 0, delta > 0, gamma > 0 and eps > "
+                        + "0.")))),
+                new DocumentBlock.Section(H("Exact correspondence and the shared reset supplier"), Blocks(
+                    Paragraph(Text("Use the uniform-reset application in ResetCodebookFinite "),
+                        Ref("D5/S1/Digit/Infinite/ResetCodebookFinite"),
+                        Text(" with the following exact correspondence. Literal high/low become the fixed low Boolean false/true, and original/anchored become the fixed anchor Boolean false/true. The five literal labels L3, L0, L5, L2 and L25 become threeLabel, nullLabel, fiveLabel, twoLabel and twoFiveLabel. The original t, g, rho, chi and lam equal the fixed t, g, rho, chi and lambda; original T2 equals the fixed t². For either side the original hSide, aSide, xSide, ySide and initial become h, A, X, Y and initial. The positive Return (m,r) becomes ResetCodebook.Return with the same ordered pair and positivity conditions. This map is injective, including at the list level.")),
+                    Paragraph(Text(
+                        "Under this map returnMap is closedRun, and run_closed identifies it with the fixed run. "
+                        + "GuardTrace(K,d,false,high,xs,D) is precisely Statement.weak(K,d,map(xs),D), while listWeight(xs) is "
+                        + "Statement.weight(map(xs)). The original actualAutomaticCost is Statement.autoCost, after reassociating the "
+                        + "maximum and using rho = g⁶. The literal observedPrefix maps to the fixed sourcePrefix; history maps to the "
+                        + "fixed colors. Both source-prefix definitions reverse the return-list order. The literal tailPrefix maps to "
+                        + "tailWord followed by nullLabel, whose extra zero label leaves the zero address unchanged. In particular "
+                        + "this correspondence preserves the entire source and its suffix coordinates, rather than only the guard or "
+                        + "the weight.")),
+                    Paragraph(Text(
+                        "The reset construction uses parameters, X_bounds and the definitions of Y and A to put max(X,Y) below H, "
+                        + "and the lower-budget inequality puts d below H. With J = max(max(X,Y),d), common_memory_cutoff at lower "
+                        + "index 1, height H − chi A and tolerance H − J gives M ≥ 1 with (H − chi A)rhoᴹ < H − J. Taking R = (M,1) "
+                        + "therefore gives B = Statement.B(M) > J. Since B exceeds both initial high-side states, delta is positive "
+                        + "for either sourceModel; g > 0 then gives gamma > 0. The fixed automatic_strict at K ≥ 2 gives "
+                        + "actualAutomaticCost(K) < lam − S H < b, so the exact eps above is positive as well.")),
+                    Paragraph(Text(
+                        "For any targetModel and any finite list words of members of V, let E be "
+                        + "resetConcatenation(R,map(val,words)): resetConcatenation(R,[]) = [], and resetConcatenation(R,xs :: rest) "
+                        + "= (R :: xs) ++ resetConcatenation(R,rest). Apply finite_reset_weak_state with source anchor sourceModel, "
+                        + "reset M, source weight N and target starting state initial(high,targetModel). The fixed initial_floor and "
+                        + "initial_bounds put this target state in [A,H], and every mapped word has weight N and the source weak "
+                        + "guard by its membership in V. The result is GuardTrace(K,d + "
+                        + "gamma,false,high,E,initial(high,targetModel)). Its gain is computed from the source initial state, even "
+                        + "when the target model differs. The original upper-budget inequality and N > 0 remain hypotheses of the "
+                        + "application, although this reset supplier does not need them to derive its guard gain.")))),
+                new DocumentBlock.Section(H("Prescribed padding at every even target weight"), Blocks(
+                    Paragraph(Text(
+                        "Now take every targetModel and every natural T with T ≥ 78 and Even T. Set k = paddingCopies(L,T) = (T − "
+                        + "78)/L and F = paddingWeight(L,T) = T − kL, using natural-number subtraction and division. Since L > 0 and "
+                        + "Even L, quotient-remainder arithmetic gives Even F, 78 ≤ F < 78 + L and kL + F = T. There is no positive-k "
+                        + "condition: T = 78 and every other case with T − 78 < L have k = 0.")),
+                    Paragraph(Text(
+                        "The filler is the prescribed positive-return list. Define fillerJ(F) = 3 if (F/2) mod 3 = 0, and otherwise "
+                        + "fillerJ(F) = (F/2) mod 3; define fillerQ(F) = (F/2 − 13 fillerJ(F))/3. For q : Nat put lowReturn(q) = (1 + "
+                        + "q,1), and set lowFiller(F) = lowReturn(fillerQ(F)) :: replicate(fillerJ(F) − 1,lowReturn(0)). Execution "
+                        + "order places the longer low return first. For even F ≥ 78, j = fillerJ(F) is the unique representative in "
+                        + "{1,2,3} of (F/2) modulo 3; 13j ≤ F/2 and 3 divides F/2 − 13j. Hence q = fillerQ(F) is a natural number and "
+                        + "26j + 6q = F. Summing the displayed returns gives listWeight(lowFiller(F)) = F. Every filler return has r "
+                        + "= 1 < K, so this filler satisfies GuardTrace at every threshold, Boolean strictness, side and initial "
+                        + "state when K ≥ 2.")),
+                    Paragraph(Text(
+                        "For each choice function z : Fin k → V, put words(z) = List.ofFn(i ↦ (z i).val), E(z) = "
+                        + "resetConcatenation(R,words(z)) and f(z) = paddedExecution(R,words(z),F) = E(z) ++ lowFiller(F). These are "
+                        + "the literal prescribed Return lists. Their reset packets all have weight L, so listWeight(E(z)) = kL and "
+                        + "listWeight(f(z)) = T. When k = 0, words(z) and E(z) are empty and f(z) is exactly lowFiller(T); the common "
+                        + "stem, optional anchor and source tail are still present in its literal sources.")),
+                    Paragraph(Text("The equal-weight parsing suppliers in ResetCodebookWeighted "),
+                        Ref("D5/S1/Digit/Infinite/ResetCodebookWeighted"),
+                        Text(" establish injection of z ↦ E(z) for arbitrary k. More explicitly, encode v : V as Statement.letters(map(R :: v.val)), where map is the coordinate-preserving Return map above. codeword_weight gives each encoding the same positive letter weight L; letters_injective and Return-map injection recover v from it. Use the range of this encoding as the fixed codebook. weighted_parse_injective recovers the entire Fin k choice function from the flattened encoded packets, and letters_flatten identifies that flattening with Statement.letters(map(E(z))). concatenated_weight gives its exact weight kL. These applications use the genuine dictionary V; no assumed packet injection is substituted for it. Cancelling the identical lowFiller(F) suffix then proves that z ↦ f(z) is injective, including for k = 0.")))),
+                new DocumentBlock.Section(H("Unchanged high prefixes and actual paired supply"), Blocks(
+                    Paragraph(Text(
+                        "Suppose f(z) = before ++ a :: after and a.r = K. Since every return in lowFiller(F) has r = 1 and K ≥ 2, "
+                        + "this split cannot place a in the filler. List.append_eq_append_iff therefore gives a rest with E(z) = "
+                        + "before ++ a :: rest. The entire literal prefix before and the return a are identical in the unpadded reset "
+                        + "concatenation. The split characterization uniform_guard_trace_iff_split transfers the strengthened d + "
+                        + "gamma guard from E(z) at this same reached state; filler returns have r = 1 < K and need no threshold "
+                        + "test. Every return of f(z) obeys the cap, so GuardTrace(K,d + "
+                        + "gamma,false,high,f(z),initial(high,targetModel)) holds for every z.")),
+                    Paragraph(Text(
+                        "Recompute the whole-source cost for this padded execution. The exact identity b = lam − S d and its "
+                        + "strengthened guard let the fixed fullBudget_guard bound fullBudget on each side by "
+                        + "max(actualAutomaticCost(K), b − S gamma). The fixed full_departure_cost bounds the wordCost of the "
+                        + "prescribed complete sourcePrefix by that fullBudget. From the definition of eps, 2 eps ≤ b − "
+                        + "actualAutomaticCost(K) and 2 eps ≤ S gamma; thus both actual source costs are at most b − 2 eps. The fixed "
+                        + "auto_nonneg also gives b − eps > 0. This argument applies the suppliers to f(z) itself; it does not infer "
+                        + "padded supply by extending an error record for E(z). It requires no extra premise lam − S H < b − eps.")),
+                    Paragraph(Text(
+                        "Here ActualPairSupply retains the original observation model. With phi = 1 + t, the label shifts of "
+                        + "L3,L0,L5,L2,L25 are respectively −t,0,T2,1,2 − t; branch(l,x) = shift(l) − gx, compose([],x) = x and "
+                        + "compose(l :: w,x) = branch(l,compose(w,x)). Define coordinate(w,p) = compose(drop(w,p),0), clip(x) = "
+                        + "max(−1,min(phi,x)) and observe(o,x,e) = readout(o,clip(x + e)). The readout cuts are cut(0) = −1, cut(1) = "
+                        + "−T2 − lam, cut(2) = g − 3lam, cut(3) = t − 5lam, cut(4) = 2t − 7lam, cut(5) = 2t + lam and cut(n) = phi "
+                        + "for n ≥ 6. The readout is the increasing six-cell color index, with o(i) choosing the upper adjacent color "
+                        + "at cut(i + 1) when true and the lower when false, for i : Fin 5.")),
+                    Paragraph(Text(
+                        "The history is the original color list: colorsD = [2,1,0,2,1,0] and colorsE = "
+                        + "[2,3,0,3,4,2,0,1,0,5,2,1,1,3,3,5,0,0,1,2]. A return contributes m copies of colorsD followed by r copies "
+                        + "of colorsE. history(targetModel,f(z)) is colorsD ++ colorsE, then these return-color blocks in reversed "
+                        + "return order, then an extra colorsD ++ colorsE exactly for the anchored model. Its length equals the "
+                        + "observedPrefix length. The sourcePrefix, source and tailPrefix are exactly the literal ones defined in the "
+                        + "source-address application above, for this same targetModel and f(z).")),
+                    Paragraph(Text(
+                        "The actual_pair and actual_errors suppliers, with prefix_scalar, literal_tail_spec and the "
+                        + "original_t_shift/window_shift identities, give the required literal-source transport described in "
+                        + "ResetCodebookFinite. At every p, the mapped source label equals the window of that same legal finite-tail "
+                        + "source, and coordinate(sourcePrefix(j,targetModel,f(z)),p) equals kappa of its p-fold originalT shift. "
+                        + "Literal clipping agrees with the supplier clipping; any ownership readout selects the required color on an "
+                        + "open cell interior. Consequently the bound b − 2 eps yields, for each side j, an error function err on all "
+                        + "natural positions with |err(p)| < b − eps, whose observations at every history position equal that history "
+                        + "color. Extend the supplier's finite error list by zero: err(p) = 0 for history.length ≤ p, and at every "
+                        + "observedPrefix.length + q the observation equals observe(o,coordinate(tailPrefix(j),q),0). These are the "
+                        + "original history, zero-error and entire-future clauses of ActualPairSupply(targetModel,o,b − "
+                        + "eps,strict,f(z)).")),
+                    Paragraph(Text(
+                        "The same errors also supply every original Contract at budget b. The strict contract requires |err(p)| < "
+                        + "b; this follows from eps > 0 and the strict b − eps bound. The recordMargin contract requires some "
+                        + "positive margin eta with |err(p)| ≤ b − eta at every p; take exactly eta = eps. The closed contract "
+                        + "requires |err(p)| ≤ b and follows from the strict bound. In each case keep the same history observations "
+                        + "and both zero-error future clauses. Thus for every contract in {closed,strict,recordMargin}, "
+                        + "ActualPairSupply(targetModel,o,b,contract,f(z)) concerns the same actual pair of prescribed sources and "
+                        + "the same padded execution.")),
+                    Paragraph(Text(
+                        "For every side j, externalWord(j,f(z)) = externalWord(j,lowFiller(F)) ++ externalWord(j,E(z)). This "
+                        + "follows directly from the original reverse/map/flatten definition and reverse_append, map_append and "
+                        + "flatten_append. The filler is last in Return execution order and first in external literal-word order; no "
+                        + "literal letters inside any block are reversed. Together with the identical high-prefix statement, this "
+                        + "records both order-sensitive parts of the original conclusion.")))),
+                new DocumentBlock.Section(H("Both count bounds and the history and source injections"), Blocks(
+                    Paragraph(Text(
+                        "All the cardinalities here are finite for a concrete reason. Map a list of original Returns injectively to "
+                        + "the fixed Returns, preserving its weight; finite_weight_lists from ResetCodebookWeighted then makes every "
+                        + "original fixed-weight subtype finite, with any guard or supply predicate. In particular V is finite, and "
+                        + "Nat.card_pos_iff turns the assumed actualCount ≥ 1 into the dictionary inhabitant used to obtain Even N. "
+                        + "No scalar cardinality is assumed in place of this dictionary or its Return lists.")),
+                    Paragraph(Text(
+                        "For each Boolean strict, the strengthened guard at d + gamma and gamma > 0 imply "
+                        + "GuardTrace(K,d,strict,high,f(z),initial(high,targetModel)): at an r = K split the reached state is at "
+                        + "least d + gamma and hence strictly above d; all cap conditions are unchanged. Together with "
+                        + "listWeight(f(z)) = T, this gives an injective map z ↦ f(z) into "
+                        + "ActualDictionary(targetModel,K,d,strict,T). Nat.card_fun, Nat.card_fin and Nat.card_le_card_of_injective "
+                        + "give the original first lower bound actualCount(sourceModel,K,d,false,N)^k ≤ "
+                        + "actualCount(targetModel,K,d,strict,T) for both strict = false and strict = true.")),
+                    Paragraph(Text(
+                        "For each original contract, the actual paired supply at b and the same exact weight give an injective map "
+                        + "z ↦ f(z) into ContractDictionary(targetModel,o,b,contract,T). The same finite-cardinality formulas give "
+                        + "the second lower bound actualCount(sourceModel,K,d,false,N)^k ≤ contractCount(targetModel,o,b,contract,T) "
+                        + "for every contract. These bounds use the same domain Fin k → V, with cardinality "
+                        + "actualCount(sourceModel,K,d,false,N)^k. At k = 0 this domain has one function, the power is 1, and the "
+                        + "prescribed filler supplies the target entry; none of the guard, supply, weight or injection statements "
+                        + "omits this case.")),
+                    Paragraph(Text(
+                        "For each targetModel, compose z ↦ f(z) with the history injection in complete_execution_word_parser to "
+                        + "obtain injection of z ↦ history(targetModel,f(z)). For each side j and targetModel, all f(z) have the "
+                        + "common weight T. The exact equal-weight source-address application above therefore recovers f(z) from "
+                        + "source(j,targetModel,f(z)), and then the padded-execution injection recovers z. This proves the original "
+                        + "source injection for both sides and both models. It uses equality of the actual infinite Label source "
+                        + "functions, not an assumed equality of observed prefixes; the separate Color-history injection is also "
+                        + "retained.")),
+                    Paragraph(Text(
+                        "The two budget inequalities, K ≥ 2, positive source weight and positive original dictionary delimit this "
+                        + "full application. The lower inequality permits the uniform reset and positive error margin; K ≥ 2 also "
+                        + "separates all filler returns from the r = K guarded returns; dictionary positivity supplies the parity "
+                        + "needed for padding; Even T and T ≥ 78 give the prescribed filler and bounded remainder. The original upper "
+                        + "inequality is retained even though the sufficient supplier derivation above does not consume it. The "
+                        + "conclusions quantify over every target model, every even T ≥ 78, every z, both guard strictness values, "
+                        + "every contract and every side as specified. They describe this formal source/readout model; they do not "
+                        + "assert an empirical or physical realization, resource or optimality bounds, a literature novelty claim, or "
+                        + "additional bilateral-language or asymptotic rate conclusions.")))))),
+            new DocumentBlock.Section(H("Complete finite-even application"), Blocks(
+                Paragraph(Text(
+                    "The complete original_finite_even_bridge application combines the preceding all-even construction with "
+                    + "odd-weight exclusion, standalone filler supply, quantitative control of the original counts and a lower "
+                    + "bound on the whole even sequence of actual logarithmic rates. Fix arbitrary ownership o : Fin 5 → Bool, "
+                    + "real b and natural K with K ≥ 2 and both original strict inequalities lam − g² chiᴷ H < b and b < lam − "
+                    + "g² chiᴷ(A/(1 − rho chiᴷ)); set d = (lam − b)/g²/chiᴷ. Throughout this application the constants H, A, X "
+                    + "and Y, the two models original and anchored, the literal sources, the Return maps, ActualDictionary, "
+                    + "ContractDictionary and ActualPairSupply are exactly those defined above. In particular the source-model "
+                    + "flag is not a replacement for ownership, and changing the target model leaves o, b, K and d fixed.")),
+                Paragraph(Text(
+                    "For any model, K, d, Boolean strict and natural N, the original definition is "
+                    + "actualLogRate(model,K,d,strict,N) = logb(2, ((max(1,actualCount(model,K,d,strict,N)) : Nat) : Real))/(N : "
+                    + "Real). The maximum is taken in Nat before casting to Real. Here logb(2,x) denotes Real.logb 2 x. The definitions "
+                    + "of paddingCopies and paddingWeight retain natural-number arithmetic: subtraction is truncated and "
+                    + "division is the natural-number quotient. Quotients in actualLogRate and in the logarithmic-rate and "
+                    + "limit expressions below use real division after casting natural counts and weights to Real. At N = 0 "
+                    + "this rate is 0 by the "
+                    + "real-field convention for division by zero; no positive-weight hypothesis is used to define it. This is "
+                    + "the rate of the full original guard dictionary, not the rate of a scalar composition count or of a chosen "
+                    + "codebook alone.")),
+                new DocumentBlock.Section(H("Odd weights and the prescribed standalone filler"), Blocks(
+                    Paragraph(Text(
+                        "Every positive Return has even weight 6m + 20r, and hence every Return list has even listWeight, "
+                        + "including the empty list of weight zero. Thus for every odd T the weight field makes both original "
+                        + "dictionary subtypes empty. Nat.card_of_isEmpty gives actualCount(model,K,d,strict,T) = 0 for both models "
+                        + "and both Boolean flags, and contractCount(model,o,b,contract,T) = 0 for both models and every contract in "
+                        + "{closed,strict,recordMargin}. This parity conclusion holds for arbitrary K, d, o and b, independently of "
+                        + "the budget hypotheses.")),
+                    Paragraph(Text(
+                        "Under K ≥ 2 and the two original budget inequalities, every even T ≥ 78 has listWeight(lowFiller(T)) = T "
+                        + "and ActualPairSupply(model,o,b,contract,lowFiller(T)) for every model and every original contract. To "
+                        + "obtain the actual supply, specialize the all-even construction to the auxiliary source model original and "
+                        + "source weight N₀ = 2T. The filler geometry above puts lowFiller(N₀) in "
+                        + "ActualDictionary(original,K,d,false,N₀): its exact weight is N₀ and every return has r = 1 < K, so its "
+                        + "weak guard holds at the original initial state for any d. Finiteness from the weight-preserving Return "
+                        + "correspondence and finite_weight_lists makes this inhabited dictionary have actualCount ≥ 1, without "
+                        + "assuming any contract supply.")),
+                    Paragraph(Text(
+                        "For the reset R₀ in that auxiliary specialization, L₀ = 2T + 20 + 6 R₀.m is greater than T. Consequently "
+                        + "paddingCopies(L₀,T) = (T − 78)/L₀ = 0 and paddingWeight(L₀,T) = T. The unique Fin 0 choice function has "
+                        + "an empty List.ofFn of source executions; resetConcatenation is empty and paddedExecution is exactly "
+                        + "lowFiller(T). The all-contract packet supply already derived for the padded execution therefore supplies "
+                        + "this very standalone filler at budget b, on both sides, for both target models and all contracts. This "
+                        + "auxiliary specialization establishes the standalone clause for each T; the shared reset in the "
+                        + "source-codebook conclusions below is still chosen before every sourceModel and N.")),
+                    Paragraph(Text(
+                        "For every even T ≥ 78 under the same K ≥ 2 and original budget inequalities, the exact filler weight and "
+                        + "the actual paired supply give an inhabitant of each ContractDictionary(model,o,b,contract,T). Those "
+                        + "dictionaries are finite by finite_weight_lists and the injective Return correspondence, so Nat.card_pos "
+                        + "gives 0 < contractCount(model,o,b,contract,T) for both models and every contract. The filler guard at "
+                        + "every threshold, initial state and Boolean strictness similarly inhabits each finite "
+                        + "ActualDictionary(model,K,d,strict,T), yielding 0 < actualCount(model,K,d,strict,T) for both models and "
+                        + "both flags. Hence max(1,actualCount) = actualCount at these weights, and the original rate equals "
+                        + "logb(2,(actualCount(model,K,d,strict,T) : Real))/(T : Real). Positivity is obtained from the actual "
+                        + "dictionaries before removing the maximum.")))),
+                new DocumentBlock.Section(H("The one reset and every-even powers"), Blocks(
+                    Paragraph(Text(
+                        "With arbitrary o, b, K satisfying K ≥ 2 and both original inequalities, choose one positive Return R with "
+                        + "R.r = 1 and max(max(X,Y),d) < H − rho^(R.m)(H − chi A), using the uniform-reset supplier and exact "
+                        + "correspondence above. This existential choice precedes every sourceModel and every N. For each "
+                        + "sourceModel in {original,anchored} and each N > 0 with 1 ≤ actualCount(sourceModel,K,d,false,N), put a = "
+                        + "actualCount(sourceModel,K,d,false,N) and L = N + 20 + 6 R.m. The finite nonempty source dictionary "
+                        + "supplies an actual Return list of weight N, so Even N; therefore Even L and 0 < L. No assumption a > 1 is "
+                        + "made.")),
+                    Paragraph(Text(
+                        "For this same R, sourceModel, N, d, a and L, the all-even construction gives, for every targetModel in "
+                        + "{original,anchored} and every even T ≥ 78, both a^paddingCopies(L,T) ≤ "
+                        + "actualCount(targetModel,K,d,strict,T) for each Boolean strict and a^paddingCopies(L,T) ≤ "
+                        + "contractCount(targetModel,o,b,contract,T) for every original contract. These are the two full-dictionary "
+                        + "cardinality bounds from the same prescribed executions and the same finite domain Fin(paddingCopies(L,T)) "
+                        + "→ ActualDictionary(sourceModel,K,d,false,N). The exponent may be zero: then its power is 1 and the domain "
+                        + "has one function, whose execution is lowFiller(T). Neither a positive-copy condition nor a restriction to "
+                        + "multiples of L is imposed.")))),
+                new DocumentBlock.Section(H("Quantitative bounds for the original rate"), Blocks(
+                    Paragraph(Text(
+                        "The upper control needed for a real liminf is derived from the original counts. For any model, natural K, "
+                        + "real d, Boolean strict and natural N, map xs in ActualDictionary(model,K,d,strict,N) to w = "
+                        + "Statement.letters(map(returnMap′,xs.val)), where returnMap′ is the coordinate-preserving map to "
+                        + "ResetCodebook.Return already specified above. The exact weight correspondence and codeword_weight give "
+                        + "Statement.letterWeight(w) = N. Regard w as a factor at index 0 of the bilateral Boolean sequence omega(i) "
+                        + "= w[i.toNat]?.getD(false), which belongs to the unrestricted Set.univ. Thus the codomain is the fixed "
+                        + "subtype of weight-N Boolean words occurring as factors in Set.univ; it is finite by finite_letter_weight. "
+                        + "The fixed letters_injective and injectivity of the Return map make this an injection from the actual "
+                        + "dictionary.")),
+                    Paragraph(Text(
+                        "In ResetCodebookWeighted, Nat.card_le_card_of_injective followed by factorCount_le_pow(Set.univ,N) "
+                        + "therefore gives actualCount(model,K,d,strict,N) ≤ 3^N for every N, including N = 0. The Boolean factor "
+                        + "space is used only as an upper-bound codomain: it does not replace the actual dictionary, its sources or "
+                        + "any supply predicate. The finite_letter_weight, codeword_weight, letters_injective and factorCount_le_pow "
+                        + "suppliers are the existing fixed weighted-word results, with their original 20/6 weights; no new counting "
+                        + "premise is introduced.")),
+                    Paragraph(Text(
+                        "For K ≥ 1, every model, real d, Boolean strict and every N, these same counts give 0 ≤ "
+                        + "actualLogRate(model,K,d,strict,N) ≤ logb(2,3). Indeed 1 ≤ max(1,actualCount) ≤ 3^N. At N > 0, "
+                        + "Real.logb_nonneg, Real.logb_le_logb_of_le at base 2 and Real.logb_pow bound its logarithm between 0 and N "
+                        + "logb(2,3); division by the positive real N yields the asserted bound. At N = 0 the rate is exactly 0, "
+                        + "which also lies in that interval. In particular B = logb(2,3) is a derived uniform eventual upper bound. "
+                        + "It is not an additional boundedness hypothesis on the original finite-even application, whose K ≥ 2 "
+                        + "already implies K ≥ 1.")))),
+                new DocumentBlock.Section(H("Full-even quotient limit and the actual liminf"), Blocks(
+                    Paragraph(Text(
+                        "For every fixed positive even L, write kᵥ = paddingCopies(L,2v) and Fᵥ = paddingWeight(L,2v). For every v "
+                        + "≥ 39, the original padding arithmetic gives 78 ≤ Fᵥ < 78 + L and kᵥ L + Fᵥ = 2v. The real denominator 2v "
+                        + "tends to positive infinity by tendsto_natCast_atTop_atTop and Tendsto.const_mul_atTop. The nonnegative "
+                        + "numerator Fᵥ is eventually bounded above by the constant 78 + L, so tendsto_bdd_div_atTop_nhds_zero gives "
+                        + "Fᵥ/(2v) → 0. For v ≥ 39 the exact identity gives kᵥ/(2v) = (1 − Fᵥ/(2v))/L. Since L > 0, limit algebra "
+                        + "yields kᵥ/(2v) → 1/L along all natural v → infinity. This uses every sufficiently large even target "
+                        + "weight, rather than a subsequence chosen from the reset-packet lengths.")),
+                    Paragraph(Text(
+                        "Fix any of the source choices above, so N > 0, a = actualCount(sourceModel,K,d,false,N) ≥ 1 and L = N + "
+                        + "20 + 6 R.m is positive and even. For either targetModel and either Boolean strict, set ell(v) = logb(2,(a "
+                        + ": Real)) · (kᵥ/(2v)). The full-even quotient limit gives ell(v) → logb(2,(a : Real))/(L : Real). For "
+                        + "every v ≥ 39 the actual power bound gives a^kᵥ ≤ actualCount(targetModel,K,d,strict,2v) ≤ "
+                        + "max(1,actualCount(targetModel,K,d,strict,2v)). Since a ≥ 1 and base 2 is greater than 1, "
+                        + "Real.logb_le_logb_of_le and Real.logb_pow, followed by division by the positive 2v, give ell(v) ≤ "
+                        + "actualLogRate(targetModel,K,d,strict,2v). This compares the original normalized rate directly; a = 1 is "
+                        + "allowed and gives a zero lower limit.")),
+                    Paragraph(Text(
+                        "The real-valued liminf comparison requires its boundedness premises in the correct directions. "
+                        + "Convergence of ell gives IsBoundedUnder(≥,atTop,ell), the eventual lower boundedness supplied by "
+                        + "Tendsto.isBoundedUnder_ge. For q(v) = actualLogRate(targetModel,K,d,strict,2v), the map v ↦ 2v tends to "
+                        + "atTop, so the derived bound q(v) ≤ logb(2,3) gives IsBoundedUnder(≤,atTop,q) via "
+                        + "isBoundedUnder_of_eventually_le. Its isCoboundedUnder_ge supplies IsCoboundedUnder(≥,atTop,q), the other "
+                        + "premise of Filter.liminf_le_liminf. Apply that theorem to the eventual ell ≤ q comparison and then use "
+                        + "Tendsto.liminf_eq for ell. The existence of a lower comparison alone is not used in place of the required "
+                        + "coboundedness of q.")),
+                    Paragraph(Text(
+                        "Consequently, for arbitrary ownership o, real b and K ≥ 2 satisfying both lam − g² chiᴷ H < b and b < lam "
+                        + "− g² chiᴷ(A/(1 − rho chiᴷ)), one R with R.r = 1 and max(max(X,Y),d) < H − rho^(R.m)(H − chi A) works as "
+                        + "follows: for every sourceModel and N > 0 with a = actualCount(sourceModel,K,d,false,N) ≥ 1, d = (lam − "
+                        + "b)/g²/chiᴷ and L = N + 20 + 6 R.m, and for every targetModel and Boolean strict, logb(2,(a : Real))/(L : "
+                        + "Real) ≤ liminf(v ↦ actualLogRate(targetModel,K,d,strict,2v),atTop). The liminf is on the entire sequence "
+                        + "v ↦ 2v. On its even weights at least 78 the same original rate also equals the raw-count logarithm "
+                        + "divided by weight, by the positivity clause above; no alternate rate or assumed boundedness is "
+                        + "substituted.")))),
+                new DocumentBlock.Section(H("Applicability boundary"), Blocks(
+                    Paragraph(Text(
+                        "These conclusions are a complete finite-even application of the existing weighted-word, reset, "
+                        + "literal-source and logarithmic-limit results within the stated source/readout model. The finite-even "
+                        + "bridge supplies the lower bounds and eventual positivity used in the raw-even application below; full "
+                        + "raw limits and identification with eta_b require that further limit argument. Equality of the contract "
+                        + "counts is supplied by the contract correspondence below; the complete observation-count application "
+                        + "identifies the actual images by absolute history length. Contract-rate limits require their own arguments. The finite-codebook lower "
+                        + "bound alone does not assert those identifications, additional bilateral-language conclusions, a physical "
+                        + "realization, a resource or optimality bound, or literature novelty.")))))),
+            new DocumentBlock.Section(H("Exact contract and guard correspondence"), Blocks(
+                Paragraph(Text(
+                    "The contract_count_correspondence application concerns the full ActualDictionary and ContractDictionary "
+                    + "defined above. Fix either model, arbitrary ownership o, real b and K ≥ 2 with both original strict "
+                    + "inequalities lam − g² chiᴷ H < b and b < lam − g² chiᴷ(A/(1 − rho chiᴷ)); keep d = (lam − b)/g²/chiᴷ. "
+                    + "For every positive Return list xs and every contract, ActualPairSupply(model,o,b,contract,xs) is "
+                    + "equivalent to GuardTrace(K,d,contractStrict(o,contract),high,xs,initial(high,model)), where "
+                    + "contractStrict(o,closed) = !o(0), and contractStrict(o,strict) = contractStrict(o,recordMargin) = true. "
+                    + "Here ! is Boolean negation. Thus closed supply uses the weak guard exactly when o(0) = true. Both "
+                    + "directions retain xs itself, both prescribed side sources, the model and the original budget.")),
+                new DocumentBlock.Section(H("Whole-source supply and the owned endpoint"), Blocks(
+                    Paragraph(Text(
+                        "For each side separately, ActualPairSupply asks for one error function err : Nat → Real. Its "
+                        + "ErrorBound is |err(p)| ≤ b for closed, |err(p)| < b for strict, and the existence of eps > 0 with "
+                        + "|err(p)| ≤ b − eps for every p for recordMargin. At p < history(model,xs).length, observation of "
+                        + "coordinate(sourcePrefix(j,model,xs),p) with this err(p) must equal that very history entry. The same "
+                        + "err is zero for every p at or after the history length. For every q : Nat its observation at "
+                        + "observedPrefix(j,model,xs).length + q must equal observe(o,coordinate(tailPrefix(j),q),0). This last "
+                        + "clause is the entire infinite future, including the finite tail's final L0 and its infinite L0 "
+                        + "continuation. The two sides may have different error functions.")),
+                    Paragraph(Text("The supplier correspondence is the same coordinate-preserving map used above: high/low "
+                        + "map to low = false/true, original/anchored to anchor = false/true, and each Return keeps m, r and "
+                        + "positivity. Original T2 is the fixed t², and original lam is the fixed lambda. In "),
+                        Ref("D5/S1/Digit/Infinite/ResetCodebookGrowth"),
+                        Text(" the U_slot and V_slot bounds control the five nonactive positions of each side block, and "
+                        + "the C_slot bounds control all twenty positions of C. The U_scalar_4, V_scalar_4 and inside_target results in "),
+                        Ref("D5/S1/Digit/Infinite/ResetCodebookOrder"),
+                        Text(" give the remaining active position, indexed 4, and errors reaching cell interiors. "
+                        + "Transport preserves compose, the literal suffix "
+                        + "coordinate, the cuts and clip(x) = max(−1,min(phi,x)); all readouts here apply that clipping before "
+                        + "readout. These ingredients give both necessity and sufficiency at every block position, rather "
+                        + "than merely a distance to a closed cell.")),
+                    Paragraph(Text(
+                        "More precisely, for 0 < D ≤ eSide(j) and b > lam − rho, a side block with suffix coordinate "
+                        + "c0 + sign(j)D has a strict error supply exactly when lam − g²D < b. Closed supply holds exactly when "
+                        + "that inequality is strict, or the cost equals b and the nearest endpoint is owned by the target "
+                        + "color: o(0) = true on high, o(1) = false on low. The active coordinates are "
+                        + "cut(1) − lam + g²D on high and cut(2) + lam − g²D on low. The high equality endpoint is cut(1), belonging to "
+                        + "color 1 precisely when o(0) = true; the corresponding low endpoint is cut(2), belonging to color 1 "
+                        + "precisely when o(1) = false. Every C block with suffix in [0,T2] has strict supply under this same "
+                        + "b > lam − rho. The original lower budget inequality implies that auxiliary budget bound and b > 0; "
+                        + "neither is a new premise. Closed-cell distance alone would admit an unowned endpoint and would give "
+                        + "the wrong weak guard.")),
+                    Paragraph(Text(
+                        "Composition through repeated blocks and the reversed externalWord aligns the active cost of return "
+                        + "a at split xs = before ++ a :: after with lam − g² chi^(a.r)D, where D = "
+                        + "execute(high,before,initial(high,model)). Each side's prefix states stay strictly between aSide(j) "
+                        + "and hSide(j), and the high state is strictly smaller than the low state at every common split. "
+                        + "Consequently each low active cost is strictly smaller than its high counterpart, even when the "
+                        + "high cost equals b. The local low ownership condition therefore imposes no further condition on "
+                        + "the paired supply. The common stem and the anchored model's paid anchor are included: their high "
+                        + "costs are lam − g² chi execute(high,xs,initial(high,model)) and, for the anchor, lam − g² chi X. "
+                        + "They are strictly below b under the stated hypotheses, and the corresponding low costs are smaller.")))),
+                new DocumentBlock.Section(H("From active costs to the exact dictionaries"), Blocks(
+                    Paragraph(Text(
+                        "The two budget inequalities give A/(1 − rho chiᴷ) < d < H. On the actual high prefix states A < D < H, "
+                        + "the active-cost condition is equivalent to r ≤ K together with the test at r = K. Returns with r < K "
+                        + "have cost strictly below b automatically; r > K is incompatible even with the weak cost bound. At "
+                        + "r = K, lam − g² chiᴷD < b is exactly d < D, while equality is exactly D = d. Thus closed supply "
+                        + "allows d ≤ D when o(0) = true and requires d < D otherwise. Recursing on the same returnMap gives "
+                        + "the displayed GuardTrace equivalence. Supply-to-guard extracts these costs from the actual "
+                        + "observations; guard-to-supply assembles the block errors on the complete observed prefix, including "
+                        + "stem and optional anchor, and extends that error function by zero. The suffix-coordinate identity "
+                        + "then supplies every future readout on the same actual source.")),
+                    Paragraph(Text(
+                        "Strict and recordMargin supply are equivalent here because only finitely many history positions "
+                        + "can have nonzero error. Given strict supply on a side, keep its error function, choose a positive "
+                        + "minimum slack over those positions with eps ≤ b, and retain zero errors throughout the future. "
+                        + "This gives |err(p)| ≤ b − eps for all p, without changing any observation. Conversely a positive "
+                        + "record margin makes those same errors strict. The margin may depend on the execution, side and "
+                        + "chosen errors; no common positive margin over the entire dictionary is asserted. Closed supply at "
+                        + "an owned equality endpoint need not supply either of these stricter contracts.")),
+                    Paragraph(Text(
+                        "For every N : Nat, contractDictionaryEquiv sends a member xs of "
+                        + "ContractDictionary(model,o,b,contract,N) to the identical xs.val with its guard proof, and its "
+                        + "inverse keeps that same list and replaces the guard proof by its supply proof. Weight N is "
+                        + "unchanged in both directions. The weight-preserving injective Return map and finite_weight_lists "
+                        + "from ResetCodebookWeighted give finiteness for the original weight-N lists, hence for both "
+                        + "dictionaries. Nat.card_congr yields the exact equality contractCount(model,o,b,contract,N) = "
+                        + "actualCount(model,K,(lam − b)/g²/chiᴷ,contractStrict(o,contract),N). This includes N = 0, empty "
+                        + "lists and empty dictionaries, both models, every ownership and all three contracts. It assumes "
+                        + "neither positive count nor positive weight, a reset construction nor even-weight lower bounds.")),
+                    Paragraph(Text(
+                        "This correspondence retains K ≥ 2 and both strict budget inequalities; it makes no assertion at "
+                        + "their endpoints or outside that interval. It is an application of the existing slot, affine, "
+                        + "guard and finite-cardinality results to the original sources. Equality of these finite counts "
+                        + "does not by itself provide a contract-rate limit. The observation-count application below supplies the "
+                        + "actual image and absolute-length identifications. No physical, resource, optimality or literature-novelty claim follows.")))))),
+            new DocumentBlock.Section(H("Operation records on the prescribed sources"), Blocks(
+                Paragraph(Text(
+                    "The operation_pair_membership application has a different telescope. For every model, ownership o, "
+                    + "real b, contract, positive Return list xs and side j, its sole premise is "
+                    + "ActualPairSupply(model,o,b,contract,xs). Its conclusion is "
+                    + "OperationRecord(o,b,contract,source(j,model,xs),OperationPairedRecord(model,o,xs,j)) together with "
+                    + "OperationFiniteSource(source(j,model,xs)). No K, budget interval, additional margin or length "
+                    + "hypothesis is imposed, and xs may be empty. This conditional statement does not assert existence of "
+                    + "supply at an arbitrary b.")),
+                new DocumentBlock.Section(H("The operation state and its literal trajectory"), Blocks(
+                    Paragraph(Text(
+                        "The guards are G0 and G1. From G0, labels L3, L0 and L2 lead to G0, while L5 and L25 lead to G1. "
+                        + "From G1, L3 and L0 lead to G0 and L5 leads to G1; L2 and L25 are forbidden. These are exactly "
+                        + "nextGuard's successful transitions. InSupport(G0,x) means −1 ≤ x ≤ phi, and InSupport(G1,x) means "
+                        + "−1 ≤ x ≤ t. OperationOmega(a,x) requires one path : Nat → Guard starting at G0, "
+                        + "nextGuard(path(p),a(p)) = some(path(p+1)), InSupport(path(p),x(p)) and "
+                        + "x(p) = branch(a(p),x(p+1)) for every p. Here branch is the original shift(label) − g x, with "
+                        + "the five label shifts given above. OperationRecord(o,b,contract,a,r) asks for such an x and "
+                        + "one err obeying the original ErrorBound with observe(o,x(p),err(p)) = r(p) at every p. "
+                        + "OperationFiniteSource(a) means that some M satisfies a(p) = L0 for all p ≥ M.")),
+                    Paragraph(Text("Choose x(p) = coordinate(sourcePrefix(j,model,xs),p), the literal remaining-suffix "
+                        + "coordinate, for every p : Nat. In "),
+                        Ref("D5/S1/Digit/Infinite/ResetCodebookFinite"),
+                        Text(" actual_pair and literal_tail_spec supply the actual legal source for this model, list and "
+                        + "side under the same low/anchor/Return map as above. The finite prefix maps to sourcePrefix "
+                        + "including its explicit final L0; appending this null label preserves its zero address. At every "
+                        + "p, the mapped source label equals window(originalT^[p](src),0), and this exact x(p) equals "
+                        + "kappa(originalT^[p](src)), for that same src. All labels and all coordinates are transported "
+                        + "together; an unrelated trajectory with a matching readout is not substituted.")),
+                    Paragraph(Text("Map the supplier guard false/true to G0/G1 and take path(p) from "
+                        + "actualGuard(false,src,p), so path(0) = G0 by definition. The tail_guard and last_guard results in "),
+                        Ref("D5/S1/Digit/Infinite/CriticalPrefixSeparation"),
+                        Text(" give every legal transition on this source, including the G1 "
+                        + "restriction. In "),
+                        Ref("D5/S1/Digit/Infinite/ClosedObservationGraphRealization"),
+                        Text(" closed_observation_graph_realization supplies the stateInterval membership and affine "
+                        + "recurrence. Under the guard and branch maps these are exactly InSupport(path(p),x(p)) and "
+                        + "x(p) = branch(source(j,model,xs)(p),x(p+1)). Thus OperationOmega holds on the prescribed "
+                        + "literal coordinate at all times, independently of the error or contract premise.")))),
+                new DocumentBlock.Section(H("The original errors and the complete paired future"), Blocks(
+                    Paragraph(Text(
+                        "Put n = history(model,xs).length. OperationPairedRecord(model,o,xs,j)(p) is the original history "
+                        + "entry when p < n, and observe(o,coordinate(tailPrefix(j),p − n),0) otherwise, using natural "
+                        + "subtraction. The full_length supplier gives observedPrefix(j,model,xs).length = n. Obtain err "
+                        + "from supply(j) and keep its ErrorBound unchanged. For p < n its history clause gives exactly "
+                        + "the required observation of x(p). For p ≥ n, use the same supply's entire-future clause at "
+                        + "q = p − n; the length equality gives n + q = p, and its zero-error clause gives err(p) = 0. "
+                        + "This proves the operation readout for every future p with the very same err that supplies the "
+                        + "history and bound. No error, budget or contract is changed during this assembly.")),
+                    Paragraph(Text(
+                        "For OperationFiniteSource take M = sourcePrefix(j,model,xs).length: the literal address "
+                        + "defaults to L0 at every p ≥ M. The record includes the finite tail before M, its final L0 "
+                        + "and the infinite L0 continuation after M. Zero future error means observation without "
+                        + "perturbation of the prescribed tail coordinate; it does not make that whole coordinate zero "
+                        + "or the whole future color record constant. The eventual L0 statement concerns labels. "
+                        + "The result holds for either side and both models, for all three contracts and the empty "
+                        + "Return list, whose common stem and model anchor are still present. It supplies an operation "
+                        + "record from ActualPairSupply. The observation-count application below adds the image counts and "
+                        + "absolute offset identification; no converse operation characterization, rate conclusion, physical realization, resource or novelty claim is asserted.")))))),
+            new DocumentBlock.Section(H("Complete observation-count application"), Blocks(
+                new DocumentBlock.Section(H("The observed dictionary and original hypotheses"), Blocks(
+                    Paragraph(Text("The actual_observation_count_correspondence application counts the original histories and literal sources by absolute observation length. Fix either model, "
+                        + "arbitrary ownership o : Fin 5 → Bool, real b, contract in {closed,strict,recordMargin}, and natural T and K with K ≥ 2, lam − g² chiᴷ H < b and b < lam − g² "
+                        + "chiᴷ(A/(1 − rho chiᴷ)). Keep H = hSide(high), A = aSide(high) and d = (lam − b)/g²/chiᴷ. There is no positivity or parity assumption on T and no extra margin, "
+                        + "endpoint or guard hypothesis.")),
+                    Paragraph(Text("For every Nobs : Nat, ObservedContractDictionary(model,o,b,contract,Nobs) is the subtype of all positive Return lists xs with "
+                        + "ActualPairSupply(model,o,b,contract,xs) and history(model,xs).length = Nobs. It uses the full original supply relation, including each side’s history, zero-error "
+                        + "and entire-future clauses. Write offset = observationOffset(model), equal to 26 for original and 52 for anchored, N = offset + T, and O = "
+                        + "ObservedContractDictionary(model,o,b,contract,N). The length in this definition is the actual color-history length; neither a freely chosen word length nor the "
+                        + "total finite sourcePrefix length replaces it.")))),
+                new DocumentBlock.Section(H("Absolute length and the identity on executions"), Blocks(
+                    Paragraph(Text("For every list xs, each return contributes 6m + 20r literal positions, so externalWord(j,xs).length = listWeight(xs) on either side. Reversal changes no length. "
+                        + "The common stem has 6 + 20 = 26 positions; the original anchor is empty and the anchored model adds another 26. Hence observedPrefix(j,model,xs).length = offset + "
+                        + "listWeight(xs). The corresponding color blocks have exactly these same lengths, giving history(model,xs).length = offset + listWeight(xs) as well. These "
+                        + "identities hold for every list, including the empty list, before any budget or supply assumption.")),
+                    Paragraph(Text("Thus observed_contract_equiv identifies O with ContractDictionary(model,o,b,contract,T). Its forward map keeps xs.val and its ActualPairSupply proof and cancels "
+                        + "the same natural offset from offset + listWeight(xs.val) = offset + T. Its inverse keeps the identical list and supply and rewrites weight T into the absolute "
+                        + "history length. Both inverse laws are equality of subtypes with unchanged underlying lists. This equivalence introduces no selection, replacement source or new "
+                        + "error function.")),
+                    Paragraph(Text("The contract correspondence above supplies an explicit Finite instance for ContractDictionary at this same T, using the weight-preserving Return map and "
+                        + "finite_weight_lists. Finite.of_equiv along the inverse of observed_contract_equiv therefore gives Finite O. Finiteness is established before the image "
+                        + "cardinalities are compared; a zero value of Nat.card is not used to infer finiteness or emptiness.")))),
+                new DocumentBlock.Section(H("Actual images of the same dictionary"), Blocks(
+                    Paragraph(Text("ActualHistoryImage(model,o,b,contract,N) is the range of xs ↦ history(model,xs.val) for xs : O. For a fixed side j, ActualSourceImage(j,model,o,b,contract,N) is "
+                        + "the range of xs ↦ source(j,model,xs.val) on that same O, as a set of functions Nat → Label with their complete prescribed tails. "
+                        + "ActualSourcePairImage(model,o,b,contract,N) is the range of xs ↦ (source(high,model,xs.val),source(low,model,xs.val)). Both components come from one and the same "
+                        + "xs.val; the pair image is not a Cartesian product of independently chosen side images.")),
+                    Paragraph(Text("The original historyImageCount, sourceImageCount(j,·) and sourcePairImageCount are Nat.card of these respective range subtypes. The histories are lists of Color; "
+                        + "source equality is equality of complete Label-address functions. These distinct codomains are retained. The model, ownership, b, contract and absolute N are "
+                        + "common to every range map, and the dictionary condition continues to require actual simultaneous supply of both sides even when only one side’s image is counted.")))),
+                new DocumentBlock.Section(H("Injection and the four image counts"), Blocks(
+                    Paragraph(Text("The complete_execution_word_parser gives injection of history(model,·) on the underlying Return lists, hence on O by subtype extensionality. For each side, two "
+                        + "members of O have the same weight T by observed_contract_equiv. The equal-weight actual source-address injection above then recovers equality of those very lists "
+                        + "from equality of their full source functions. Equality of two source pairs implies equality of their high components, so that same high-side injection recovers "
+                        + "the list and proves injection of the pair map. No independent marginal choices or presumed observed-prefix equality enter this argument.")),
+                    Paragraph(Text("For each of these injective maps, Equiv.ofInjective identifies O with its actual range subtype. Composing its inverse with observed_contract_equiv and applying "
+                        + "Nat.card_congr gives historyImageCount(model,o,b,contract,N) = contractCount(model,o,b,contract,T), sourceImageCount(j,model,o,b,contract,N) = "
+                        + "contractCount(model,o,b,contract,T) for every j, and sourcePairImageCount(model,o,b,contract,N) = contractCount(model,o,b,contract,T). The "
+                        + "contract_count_correspondence at exactly T,K and the two stated budgets then identifies this common count with "
+                        + "actualCount(model,K,d,contractStrict(o,contract),T). Here contractStrict(o,closed) = !o(0), while strict and recordMargin both give true. These are four image "
+                        + "counts: history, high source, low source and same-list pair.")))),
+                new DocumentBlock.Section(H("Every member carries its operation record"), Blocks(
+                    Paragraph(Text("For every xs : O, the same equivalence gives listWeight(xs.val) = T. Substitution in the absolute length identity gives observedPrefix(j,model,xs.val).length = N "
+                        + "for every side j, and xs.property already gives history(model,xs.val).length = N. Thus the count comparison and all member conclusions refer to exactly the same "
+                        + "execution, history and two literal sources.")),
+                    Paragraph(Text("Apply operation_pair_membership to xs.val and its own ActualPairSupply proof, separately for each j. This gives "
+                        + "OperationRecord(o,b,contract,source(j,model,xs.val),OperationPairedRecord(model,o,xs.val,j)) and OperationFiniteSource(source(j,model,xs.val)). OperationRecord "
+                        + "retains the full OperationOmega path, support inequalities, branch recurrence and every-time readout described above; it is not merely history membership. "
+                        + "OperationPairedRecord uses the actual history before N and observe(o,coordinate(tailPrefix(j),p − N),0) at every p ≥ N. The budget, contract and ownership are "
+                        + "unchanged.")))),
+                new DocumentBlock.Section(H("Literal tails at every position"), Blocks(
+                    Paragraph(Text("The member’s sourcePrefix is observedPrefix(j,model,xs.val) ++ tailPrefix(j). At every q : Nat, append-right indexing and the prefix length N give "
+                        + "source(j,model,xs.val)(offset + T + q) = address(tailPrefix(j),q). This is equality of the literal Label at every tail position, including q = 0, every position "
+                        + "within the finite tail, its final L0 and the infinite continuation. It is stronger than equality of readouts alone and does not rely on discarding a finite "
+                        + "initial part of the tail.")),
+                    Paragraph(Text("The finite-source conclusion has the explicit boundary M = sourcePrefix(j,model,xs.val).length: source(j,model,xs.val)(p) = L0 for all p ≥ M. N marks the start of "
+                        + "the tail, whereas M includes the finite tail itself. The original tailPrefix remains block(j) ++ repeatWord(C,3) ++ exitPrefix(j), with exitPrefix(high) = [L5,L0] "
+                        + "and exitPrefix(low) = [L0]. In particular the model’s 26/52 observation offset is not enlarged to include this tail.")))),
+                new DocumentBlock.Section(H("One supplied error and the entire future"), Blocks(
+                    Paragraph(Text("For each xs : O and side j, unpack xs.property’s ActualPairSupply at j once, obtaining one err : Nat → Real together with its bound, history observations, "
+                        + "zero-error clause and entire-future clause. Keep that very err in all of the following conclusions. Its original ErrorBound(b,contract,err) is |err(p)| ≤ b for "
+                        + "closed, |err(p)| < b for strict, or one eps > 0 with |err(p)| ≤ b − eps at every p for recordMargin. The two sides may use different errors; no common positive "
+                        + "margin across members or sides is introduced.")),
+                    Paragraph(Text("For every p and every hp : p < offset + T, observe(o,coordinate(sourcePrefix(j,model,xs.val),p),err(p)) = history(model,xs.val)[p]. This entry uses the dependent "
+                        + "index proof obtained by rewriting history(model,xs.val).length = offset + T in hp, exactly as required by the original list readout. The zero-error clause for "
+                        + "this same err is err(p) = 0 whenever offset + T ≤ p, including equality at the boundary.")),
+                    Paragraph(Text("For every q : Nat, the same err also satisfies observe(o,coordinate(sourcePrefix(j,model,xs.val),offset + T + q),err(offset + T + q)) = "
+                        + "observe(o,coordinate(tailPrefix(j),q),0). Rewrite the supplied future clause using observedPrefix.length = offset + T to obtain this equality without replacing "
+                        + "its error witness. It covers the entire infinite future on the actual source, together with the bound and every dependent history entry. Zero future error means "
+                        + "an unperturbed readout of the prescribed suffix coordinate; it does not force every tail coordinate to be zero or the whole future color record to be constant.")))),
+                new DocumentBlock.Section(H("Parameter correspondence and applicability"), Blocks(
+                    Paragraph(Text("The supplier map is exactly the one used above: high/low correspond to low = false/true, original/anchored to anchor = false/true, and Return(m,r) retains both "
+                        + "positive coordinates. Labels map as L3,L0,L5,L2,L25 to threeLabel,nullLabel,fiveLabel,twoLabel,twoFiveLabel; T2 maps to the fixed t² and lam to lambda, with "
+                        + "t,g,rho,chi,initial, source labels, suffix coordinates, history and list weight preserved. The observation dictionary equivalence adds only the absolute 26/52 "
+                        + "length identification. In particular the guard Boolean contractStrict(o,contract), the model flag and the ownership function remain distinct parameters.")),
+                    Paragraph(Text("The complete observation-count application retains both original strict budgets and K ≥ 2 for its count-to-guard conclusion and covers every natural T, including "
+                        + "T = 0, odd T and empty dictionaries. No positive count is assumed. For odd T the inherited parity argument makes the weight-T dictionary empty, and the same "
+                        + "equivalences give zero image counts; T = 0 retains the empty execution with its stem, optional anchor and prescribed tail whenever supplied. The absolute-length "
+                        + "and same-list range arguments add no observation-length logarithmic limit or little-o asymptotic conclusion. They assert no physical realization, resource or "
+                        + "optimality bound, or literature novelty.")))))),
+            new DocumentBlock.Section(H("Raw even logarithmic asymptotics"), Blocks(
+                new DocumentBlock.Section(H("Original dictionaries, parameters and rate"), Blocks(
+                    Paragraph(Text(
+                        "Take arbitrary ownership o : Fin 5 → Bool, real b and natural K with K ≥ 2 and both original strict "
+                        + "inequalities lam − g² chiᴷ H < b and b < lam − g² chiᴷ(A/(1 − rho chiᴷ)). Here H = hSide(high), A = "
+                        + "aSide(high), and d = (lam − b)/g²/chiᴷ, with real division in the displayed order. Keep the original t, "
+                        + "g, rho, chi and lam and the literal models original and anchored. In the fixed ResetCodebook "
+                        + "correspondence, high/low are the low Boolean false/true, original/anchored are the anchor Boolean "
+                        + "false/true, and each positive Return (m,r) keeps the same coordinates, weight 6m + 20r and initial "
+                        + "state. This application uses that same correspondence and the preceding finite-even derivation; neither "
+                        + "the model flag nor the guard flag replaces ownership.")),
+                    Paragraph(Text(
+                        "For model in {original,anchored}, strict in {false,true} and N : Nat, "
+                        + "ActualDictionary(model,K,d,strict,N) consists of all positive Return lists xs satisfying "
+                        + "GuardTrace(K,d,strict,high,xs,initial(high,model)) and listWeight(xs) = N. Its natural cardinality is "
+                        + "actualCount(model,K,d,strict,N). The guard requires r ≤ K at each return; at r = K it tests d ≤ the "
+                        + "preceding state for strict = false and d < that state for strict = true. Thus strict refers to the guard "
+                        + "on these same executions, not to a Contract value. Finiteness is supplied by the weight-preserving "
+                        + "correspondence and the weighted-list finiteness argument above.")),
+                    Paragraph(Text(
+                        "The original actualLogRate(model,K,d,strict,N) is logb(2,((max(1,actualCount(model,K,d,strict,N)) : Nat) "
+                        + ": Real))/(N : Real). Define actualRate(model,K,d,strict) = limsup(N ↦ "
+                        + "actualLogRate(model,K,d,strict,N),atTop) and eta_b(K,b) = actualRate(original,K,(lam − "
+                        + "b)/g²/chiᴷ,false). This is the original limsup over all natural N, including odd weights, rather than a "
+                        + "new definition using only even weights. The counts and their maximum are natural numbers; logarithms, "
+                        + "quotients, limits and eta_b are real-valued. Lean uses Real.logb 2 x = Real.log x / Real.log 2, Real.log "
+                        + "0 = 0 and real division by zero equal to zero. In particular the normalized rate at N = 0 is defined and "
+                        + "equals zero. Finite initial zero counts are allowed.")))),
+                new DocumentBlock.Section(H("The full raw even conclusion"), Blocks(
+                    Paragraph(Text(
+                        "Under exactly these budget and K hypotheses, for every model in {original,anchored} and every Boolean "
+                        + "strict, the entire sequence v ↦ logb(2,(actualCount(model,K,(lam − b)/g²/chiᴷ,strict,2v) : Real))/((2v : "
+                        + "Nat) : Real) tends to eta_b(K,b) as v : Nat tends to infinity. This is raw logarithmic convergence, with "
+                        + "no max(1,·) in the conclusion. It uses every sufficiently large even weight, without restricting to "
+                        + "multiples of a selected packet length.")),
+                    Paragraph(Text(
+                        "The literal remainder is logb(2,(actualCount(model,K,(lam − b)/g²/chiᴷ,strict,2v) : Real)) − eta_b(K,b) "
+                        + "· ((2v : Nat) : Real) = o(((2v : Nat) : Real)) as v tends to infinity. Equivalently, "
+                        + "Asymptotics.IsLittleO atTop applies to the function v ↦ logb(2,(actualCount(model,K,(lam − "
+                        + "b)/g²/chiᴷ,strict,2v) : Real)) − eta_b(K,b) · ((2v : Nat) : Real), relative to the function v ↦ ((2v : "
+                        + "Nat) : Real). The error is the unnormalized logarithm minus eta_b times the original even weight; it is "
+                        + "not a different count or a remainder measured against a different scale. There is no hypothesis "
+                        + "eta_b(K,b) > 0. The case eta_b(K,b) = 0 is included, and the conclusion supplies no uniform positive "
+                        + "rate.")))),
+                new DocumentBlock.Section(H("From the shared reset to the common limit"), Blocks(
+                    Paragraph(Text(
+                        "Write U(model,strict,N) = actualLogRate(model,K,d,strict,N), E(model,strict,v) = U(model,strict,2v), and "
+                        + "I(model,strict) = liminf(v ↦ E(model,strict,v),atTop). The preceding count bound actualCount ≤ 3ᴺ gives "
+                        + "0 ≤ U ≤ logb(2,3), including N = 0. Hence U and E have the upper and lower boundedness needed for real "
+                        + "limsup and liminf, and I ≥ 0. The weighted-word ingredients are those in "
+                        + "D5.S1.Digit.Infinite.ResetCodebook.Coding, in ResetCodebookWeighted: finite_weight_lists, "
+                        + "finite_letter_weight, codeword_weight, letters_injective and factorCount_le_pow are private to that "
+                        + "source. The preceding derivation uses their weight and injection arguments; these names are not assumed "
+                        + "to be exported cross-module interfaces. No boundedness or finiteness premise is added to the original "
+                        + "application.")),
+                    Paragraph(Text(
+                        "Choose the one reset R from the finite-even application before any sourceModel or N, and fix C = 20 + 6 "
+                        + "R.m. Its full-even lower bound says that, whenever N > 0 and a = actualCount(sourceModel,K,d,false,N) ≥ "
+                        + "1, logb(2,(a : Real))/((N + C : Nat) : Real) ≤ I(targetModel,strict) for every targetModel and strict. "
+                        + "Consequently U(sourceModel,false,N) · p(N) ≤ I(targetModel,strict), where p(N) = (N : Real)/((N + C : "
+                        + "Nat) : Real). If the source count is zero, U is zero by its max-one definition and the same inequality "
+                        + "follows from I ≥ 0. This case split removes any need to assume that every source count is positive. In "
+                        + "the nonzero case the finite-even bound applies directly, with the same R and C for every source and "
+                        + "target.")),
+                    Paragraph(Text(
+                        "The fixed overhead disappears because p(N) → 1, by the pinned mathlib declaration "
+                        + "tendsto_natCast_div_add_atTop. Apply le_limsup_mul to U(original,false,·) and p: the former is "
+                        + "nonnegative and bounded above, and p is nonnegative and bounded above by its convergence. Their product "
+                        + "is nonnegative, providing the coboundedness needed by Filter.limsup_le_of_le. Taking the limsup of the "
+                        + "preceding comparison for N ≥ 1 therefore gives eta_b(K,b) ≤ I(model,strict) for both models and both "
+                        + "flags. This uses the original all-weight definition of eta_b and remains valid when its value is zero.")),
+                    Paragraph(Text(
+                        "The upper comparison retains the actual guard semantics. In the Bilateral source module the declaration "
+                        + "D5.S3.ConceptDynamics.Coding.FibonacciFactorCompletion.StrictSupply.uniform_guard_trace_iff_split "
+                        + "expresses the guard at each split of the same Return list. Replacing d < state by d ≤ state keeps every "
+                        + "execution, its initial state, r ≤ K and exact weight. The identity on lists is thus an injection from "
+                        + "the strict dictionary into the weak dictionary. Finiteness of the weak dictionary and "
+                        + "Nat.card_le_card_of_injective give actualCount(model,K,d,strict,N) ≤ actualCount(model,K,d,false,N); the "
+                        + "false flag gives equality. Real.logb_le_logb_of_le at base 2 and division by the nonnegative real N then "
+                        + "give U(model,strict,N) ≤ U(model,false,N), including N = 0.")),
+                    Paragraph(Text(
+                        "Use the shared-reset comparison again with sourceModel = model and targetModel = original, target strict "
+                        + "= false, and source weight 2v. For v ≥ 1 it gives E(model,strict,v) ≤ I(original,false) · r(v), where "
+                        + "r(v) = ((2v + C : Nat) : Real)/((2v : Nat) : Real). The reciprocal-overhead limit r(v) → 1 follows from "
+                        + "tendsto_const_div_atTop_nhds_zero_nat composed with v ↦ 2v and real limit algebra. The multiplier r(v) "
+                        + "is nonnegative. Filter.limsup_le_limsup therefore bounds limsup(E(model,strict),atTop) by "
+                        + "I(original,false); its lower coboundedness comes from E ≥ 0 and its majorant is bounded above by "
+                        + "convergence. On the canonical original weak sequence, Filter.Tendsto.limsup_comp_le_limsup for v ↦ 2v, "
+                        + "together with Filter.liminf_le_limsup and the same two-sided bounds, gives I(original,false) ≤ "
+                        + "eta_b(K,b).")),
+                    Paragraph(Text(
+                        "These comparisons put eta_b(K,b) below each even liminf and above each even limsup. The pinned "
+                        + "tendsto_of_le_liminf_of_limsup_le, with upper and lower boundedness of E supplied explicitly, gives "
+                        + "E(model,strict,v) → eta_b(K,b). The declarations le_limsup_mul and tendsto_of_le_liminf_of_limsup_le are "
+                        + "at mathlib root scope; the limsup comparison declarations just named are in Filter. This identifies the "
+                        + "limit with the original eta_b without assuming convergence of the all-weight sequence or a positive "
+                        + "limiting value.")))),
+                new DocumentBlock.Section(H("Removing max-one and obtaining the little-o error"), Blocks(
+                    Paragraph(Text(
+                        "For every v ≥ 39, the even weight 2v is at least 78. The standalone filler and finite-even positivity "
+                        + "result give 0 < actualCount(model,K,d,strict,2v) for each original model and both flags. Thus "
+                        + "max(1,actualCount) = actualCount on this eventual tail, and the raw logarithmic quotient equals E there. "
+                        + "Eventual equality transfers its limit to the raw sequence. Positivity is established before removing the "
+                        + "maximum; it is not required at all weights and does not exclude zero counts among the finite initial "
+                        + "even terms. The raw expression itself is defined at those terms by the real logarithm and division "
+                        + "conventions above.")),
+                    Paragraph(Text(
+                        "Subtract eta_b(K,b) from the convergent raw quotient. For v ≥ 1, the real denominator ((2v : Nat) : "
+                        + "Real) is nonzero, so this difference is exactly the literal logarithmic remainder divided by ((2v : Nat) "
+                        + ": Real). The difference tends to zero. The pinned Asymptotics.isLittleO_of_tendsto' converts this "
+                        + "quotient limit, with its eventual zero-denominator implication discharged by that nonzero denominator, "
+                        + "into the stated IsLittleO remainder. No all-weight positivity, positive source rate, extra budget margin "
+                        + "or endpoint hypothesis is introduced.")))),
+                new DocumentBlock.Section(H("Raw-even applicability boundary"), Blocks(
+                    Paragraph(Text(
+                        "These are consequences for the full original guarded dictionaries under K ≥ 2 and the two strict budget "
+                        + "inequalities. Ownership remains arbitrary, and the same conclusion holds for both models and both "
+                        + "Boolean guard flags at the original d and eta_b. Odd-weight exclusion, the finite-even count bounds and "
+                        + "their contract lower bounds retain their stated scopes. The separate contract correspondence above "
+                        + "identifies the full finite dictionaries at contractStrict(o,contract), and the operation application "
+                        + "places each supplied source in its prescribed operation record. The raw-even argument itself "
+                        + "adds no contract-rate or observation-length asymptotic limit. The observation-count application "
+                        + "identifies the finite images and absolute offset separately. It also gives no additional bilateral-language "
+                        + "identification, empirical or physical realization, resource or optimality bound, or literature novelty "
+                        + "claim.")))))),
+            new DocumentBlock.Section(H("Complete actual observation-length application"), Blocks(
+                new DocumentBlock.Section(H("Original parameters and actual image definitions"), Blocks(
+                    Paragraph(Text("Fix arbitrary ownership o : Fin 5 → Bool, real b and natural K with K ≥ 2, lam − g² chiᴷ H < b and b < lam − g² chiᴷ(A/(1 − rho chiᴷ)), where H = hSide(high) and A = aSide(high). The complete actual_observation_length_asymptotics application keeps these two strict budget inequalities "
+                        + "for every model in {original,anchored}, every contract in {closed,strict,recordMargin}, and both sides. Set d = (lam − b)/g²/chiᴷ with the same ordered real divisions as above. The fixed t,g,rho,chi,lam, initial states, literal alphabet, ownership and contracts are unchanged.")),
+                    Paragraph(Text("Keep eta = eta_b(K,b) = actualRate(original,K,d,false), the original all-natural-weight limsup of logb(2,(max(1,actualCount(original,K,d,false,N)) : Real))/(N : Real). The contract flag is contractStrict(o,closed) = !o(0), while contractStrict(o,strict) and contractStrict(o,recordMargin) "
+                        + "are true. The map to the fixed suppliers still sends high/low to low = false/true and original/anchored to anchor = false/true, preserving each positive Return(m,r), its weight 6m + 20r, and its source and history. Neither contract nor ownership is replaced by the model or guard Boolean.")),
+                    Paragraph(Text("Write c = observationOffset(model), equal to 26 for original and 52 for anchored. For every absolute length N, O_N = ObservedContractDictionary(model,o,b,contract,N) is exactly {xs : List Return // ActualPairSupply(model,o,b,contract,xs) ∧ history(model,xs).length = N}. Abbreviate the original historyImageCount by H_N, sourceImageCount(j,·) by S^j_N, and sourcePairImageCount "
+                        + "by P_N, keeping model,o,b,contract fixed. These are Nat.card of the ranges of history(model,xs.val), source(j,model,xs.val), and (source(high,model,xs.val),source(low,model,xs.val)) over that same O_N. Source equality remains equality of complete Nat → Label functions, and both components of every pair come from one actual execution list.")))),
+                new DocumentBlock.Section(H("The consumed contract raw-even packet"), Blocks(
+                    Paragraph(Text("For every natural T, contract_count_correspondence gives contractCount(model,o,b,contract,T) = actualCount(model,K,d,contractStrict(o,contract),T) under the stated K and budget hypotheses. Substitute this equality at T "
+                        + "= 2v into both clauses of the full raw-even result. This yields contract_even_raw_asymptotics for every model and all three contracts, with no extra source-count positivity, ownership endpoint or error-margin premise.")),
+                    Paragraph(Text("Explicitly, as v : Nat tends to atTop, logb(2,(contractCount(model,o,b,contract,2v) : Real))/((2v : Nat) : Real) tends to eta, and logb(2,(contractCount(model,o,b,contract,2v) : Real)) − eta · ((2v : Nat) : Real) = o(((2v : Nat) : Real)). The little-o is Asymptotics.IsLittleO "
+                        + "atTop of this literal remainder relative to v ↦ ((2v : Nat) : Real). This is the complete even sequence with its original weight denominator; the next steps account for the observation offset before changing to the actual-length denominator.")),
+                    Paragraph(Text("The raw-even supplier establishes eventual positivity from Even(2v) and 78 ≤ 2v, for example for v ≥ 39, before removing max(1,·). Initial zero counts remain allowed. The contract packet transfers that result by exact "
+                        + "count equality rather than assuming positivity at every index. Its two clauses retain eta = 0 and do not assert eta > 0. Real.logb 2 uses the same total real logarithm and division conventions already specified above.")))),
+                new DocumentBlock.Section(H("Every odd observed length is empty"), Blocks(
+                    Paragraph(Text("Each positive return has even weight 6m + 20r, so listWeight(xs) is even for every list, including the empty list. The absolute identity history(model,xs).length = c + listWeight(xs) and the even offsets 26 and 52 make every actual history length "
+                        + "even. Consequently, for every Nobs : Nat with Odd Nobs, any putative member of O_Nobs contradicts its defining length equality. Thus the original observed dictionary is empty for all odd observed lengths, with no lower bound on Nobs.")),
+                    Paragraph(Text("Each history, side-source or same-list-pair image is a range over this empty dictionary and is therefore empty itself. Nat.card of each empty range is zero: H_Nobs = 0, "
+                        + "S^j_Nobs = 0 for every side j, and P_Nobs = 0. This proves emptiness before computing its cardinality; it does not infer emptiness from an unexplained zero Nat.card.")),
+                    Paragraph(Text("The argument covers odd Nobs below 26 or 52 directly and does not encode such a length by subtracting the offset. Indeed the absolute length identity also excludes any Nobs < c, since listWeight(xs) is a "
+                        + "natural number. In particular the eventual reindexing used for limits supplies no replacement dictionary at those small indices, and the finite initial zero counts stay within the original definitions.")))),
+                new DocumentBlock.Section(H("All offset counts and original positivity"), Blocks(
+                    Paragraph(Text("For every T : Nat, the complete observation-count correspondence gives H_(c+T) = contractCount(model,o,b,contract,T), S^j_(c+T) = contractCount(model,o,b,contract,T) for every side j, and P_(c+T) = contractCount(model,o,b,contract,T). These are the original counts at absolute "
+                        + "observation length c + T, with no parity, lower-bound or count-positive hypothesis on T. The identity on executions and the actual range injections supply these equalities; the full sourcePrefix length, which includes the finite tail, is not the observation length.")),
+                    Paragraph(Text("In particular the equalities include T = 0, odd T and empty dictionaries. At T = 0 they keep the empty execution, stem, model anchor and prescribed tails with their original supply condition. For odd T, c + T is odd and the preceding emptiness "
+                        + "argument gives zero for every image; the same count equality gives zero for the contract dictionary. The pair count equals this common count because it is an injective image of one list dictionary, not a product of two marginal counts.")),
+                    Paragraph(Text("When T is even and 78 ≤ T, even_actual_positivity gives 0 < contractCount(model,o,b,contract,T), so the same exact equalities give 0 < H_(c+T), 0 < S^j_(c+T) for every j, and 0 < P_(c+T). These are precisely "
+                        + "the original positivity hypotheses, Even T and 78 ≤ T. They are conclusions of the finite-even application under the two budgets and K ≥ 2, rather than new premises for the logarithmic limits.")))),
+                new DocumentBlock.Section(H("Four reindexing clauses and truncated subtraction"), Blocks(
+                    Paragraph(Text("The observation_even_reindexing interface retains four clauses for each model: Even(c); Tendsto(v ↦ c + 2v,atTop,atTop); Tendsto(v ↦ v − c/2,atTop,atTop); and eventually c + 2(v − c/2) = 2v. Here c/2 is natural division, equal "
+                        + "to 13 or 26, and v − c/2 is Nat subtraction truncated at zero. Cofinality of v ↦ c + 2v records that the shifted lengths go to infinity; cofinality of v ↦ v − c/2 is the separate fact needed to recover the full even sequence.")),
+                    Paragraph(Text("Parity follows from the actual offsets; multiplication by two followed by addition of c gives the shifted cofinality. The pinned tendsto_sub_atTop_nat gives cofinality after subtracting c/2. Since c is even, "
+                        + "once c/2 ≤ v, natural subtraction no longer truncates and c + 2(v − c/2) = 2v. Thus the recovery identity holds eventually, with the explicit sufficient bounds v ≥ 13 for original and v ≥ 26 for anchored.")),
+                    Paragraph(Text("Below those bounds the recovery identity is not asserted: for v < c/2 the subtracted index is zero and the reconstructed length is c, rather than 2v. The same convention is used throughout; there is no replacement by integer subtraction "
+                        + "or a new observation index. The two cofinality statements and the eventual identity have different roles, and keeping all four clauses prevents a shifted sequence alone from being mistaken for the required full-even conclusion.")))),
+                new DocumentBlock.Section(H("Finite overhead in the actual-length denominator"), Blocks(
+                    Paragraph(Text("Put C_T = contractCount(model,o,b,contract,T). The contract packet first gives logb(2,(C_(2v) : Real))/((2v : Nat) : Real) → eta. To count by observed length c + 2v, retain the factor ((2v : Nat) : Real)/((c "
+                        + "+ 2v : Nat) : Real). This factor tends to 1 by tendsto_natCast_div_add_atTop composed with the cofinal map v ↦ 2v. The finite overhead is the actual model offset c, not a tail length or an adjustable charge.")),
+                    Paragraph(Text("For v ≥ 1, multiplication of the raw contract quotient by this factor is exactly logb(2,(C_(2v) : Real))/((c + 2v : Nat) : Real). The equality uses the nonzero real value of 2v and ordinary "
+                        + "field normalization. Multiplication of limits therefore gives this shifted quotient tending to eta · 1 = eta. The argument retains the factor explicitly and is valid also when eta is zero.")),
+                    Paragraph(Text("For any one of the original sequences a_N = H_N, a_N = S^j_N for a fixed side, or a_N = P_N, the all-T equality a_(c+T) = C_T rewrites the preceding limit into logb(2,(a_(c+2v) : Real))/((c + 2v : Nat) : "
+                        + "Real) → eta. Both numerator and denominator now refer to that actual shifted observation length. Simply rewriting the numerator while leaving the weight denominator would omit the finite-overhead step.")))),
+                new DocumentBlock.Section(H("Recovery of every even observed length"), Blocks(
+                    Paragraph(Text("Compose the shifted image quotient with the cofinal natural map v ↦ v − c/2. Its numerator is then a_(c+2(v−c/2)), and its denominator is the real cast of c + 2(v − c/2). On the eventual tail where the fourth reindexing clause holds, both are exactly the expressions "
+                        + "at 2v. Filter.Tendsto.comp and eventual congruence give Tendsto(v ↦ logb(2,(a_(2v) : Real))/((2v : Nat) : Real),atTop,nhds(eta)). This reaches the full even sequence of actual observed lengths, rather than only the initially shifted parametrization.")),
+                    Paragraph(Text("In full, for each original model and each contract, Tendsto(v ↦ logb(2,(historyImageCount(model,o,b,contract,2v) : Real))/((2v : Nat) : Real),atTop,nhds(eta_b(K,b))) holds. For every side j, Tendsto(v ↦ logb(2,(sourceImageCount(j,model,o,b,contract,2v) "
+                        + ": Real))/((2v : Nat) : Real),atTop,nhds(eta_b(K,b))) holds as well. Both side counts still use simultaneous ActualPairSupply on the same original dictionary.")),
+                    Paragraph(Text("The fourth count has Tendsto(v ↦ logb(2,(sourcePairImageCount(model,o,b,contract,2v) : Real))/((2v : Nat) : Real),atTop,nhds(eta_b(K,b))). Together these are the history, high source, low source and same-list pair limits. Their denominator "
+                        + "is the actual observed length 2v in every case. They are full atTop limits over v : Nat, not limsup statements or limits restricted to multiples of a chosen packet weight; eta_b retains its original all-weight definition.")))),
+                new DocumentBlock.Section(H("Literal little-o errors and applicability"), Blocks(
+                    Paragraph(Text("For each a_N among H_N, S^high_N, S^low_N and P_N, subtract eta from its full actual-length quotient limit. For v ≥ 1 the denominator ((2v : Nat) : Real) is nonzero, and logb(2,(a_(2v) : Real))/((2v : Nat) : Real) − eta equals (logb(2,(a_(2v) : Real)) − eta · ((2v : Nat) : Real))/((2v : "
+                        + "Nat) : Real). This quotient tends to zero. Asymptotics.isLittleO_of_tendsto' then gives the literal statement Asymptotics.IsLittleO atTop (v ↦ logb(2,(a_(2v) : Real)) − eta · ((2v : Nat) : Real)) (v ↦ ((2v : Nat) : Real)). Its eventual zero-denominator obligation is discharged by v ≥ 1.")),
+                    Paragraph(Text("Thus logb(2,(historyImageCount(model,o,b,contract,2v) : Real)) − eta_b(K,b) · ((2v : Nat) : Real) = o(((2v : Nat) : Real)); for every side j the identical literal formula holds with sourceImageCount(j,model,o,b,contract,2v); and it holds with sourcePairImageCount(model,o,b,contract,2v). "
+                        + "These are four unnormalized logarithmic remainders measured against the same actual length 2v. No max-one replacement, positive eta premise, positive-count premise at every index, or alternative denominator enters the conclusions.")),
+                    Paragraph(Text("The application includes eta_b(K,b) = 0 and finite initial zero counts, using Real.log 0 = 0 and total real division at those initial indices. The all-odd zero counts, every-T offset correspondences, and Even T with 78 ≤ T positivity clauses remain alongside the four limit and little-o packets; eventual identities do not erase their finite-index "
+                        + "scope. The derivation reuses the guarded-count, contract and observation correspondences under their original hypotheses. These are observation-length consequences for the prescribed dictionaries and their actual images; they assert no physical realization, resource optimality, independent pair choices or literature novelty.")))))))));
+
+}

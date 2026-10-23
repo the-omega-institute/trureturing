@@ -1,1 +1,1 @@
-{"statement_id":"sha256:3d4ca48fe461a4e6acc6e22b0d9ab799276ad5de2f86a73d808b8e211d5fafd8"}
+{"statement_id":"sha256:3d4ca48fe461a4e6acc6e22b0d9ab799276ad5de2f86a73d808b8e211d5fafd8","declarations":[{"declaration_name_key":"ns(ns(ns(n0,14:LightCondensed),5:Solid),19:hom_eq_zero_of_free)","kind":"theorem"},{"declaration_name_key":"ns(ns(ns(n0,14:LightCondensed),5:Solid),24:exact_of_free_boundaries)","kind":"theorem"}]}

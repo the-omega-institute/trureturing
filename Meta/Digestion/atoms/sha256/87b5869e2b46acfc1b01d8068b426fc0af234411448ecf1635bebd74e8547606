@@ -1,0 +1,13 @@
+**定义 412.3（既有 Hardy 支撑接口与实际缺口）。** Burnol 的原始 [arXiv:math/0202166v1](https://arxiv.org/pdf/math/0202166v1)，引理4.3，对 $f_\varepsilon(u)=\sum_{n\ge1}\mu(n)n^{-\varepsilon}\{1/(nu)\}$，其中 $\{t\}=t-\lfloor t\rfloor$，在 $\varepsilon>0$、$\Re s>1$ 上无条件给
+
+$$
+\int_0^1f_\varepsilon(u)u^{s-1}du
+=\frac1{\zeta(1+\varepsilon)(s-1)}
+-\frac{\zeta(s)}{s\zeta(s+\varepsilon)}.
+\tag{412.5}
+$$
+
+它已经提供有理主部扣除与单侧 Mellin 支撑的经典联系，直接复用，不另证为项目成果。同文的临界线均匀移位比值估计明确假设 RH；定理4.3的消失移位 Hardy 投影身份则与 RH 等价。它们不提供本项目实际 $-\zeta'$ 分子、$\mathcal B$ 比值及 $\widetilde w_x$ 配对的无条件临界符号估计。
+
+在（412.2）已支付时，同一个实际完整 $I_{\varepsilon_x}$ 不随所选表示改变，而（412.4）说明各固定有限表示的绝对账都远大于临界尺度。继续推进需要同一实际来源的联合相位估计，或在合同之外另行构造并支付更强的全域近似；仅增加预固定阶数的局部扣除不能补足该缺口。完整 Robin 与 RH 仍未由这些接口得到证明。
+

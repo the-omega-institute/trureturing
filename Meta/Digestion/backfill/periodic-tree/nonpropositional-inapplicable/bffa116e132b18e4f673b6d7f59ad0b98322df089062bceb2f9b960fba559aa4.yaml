@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:bffa116e132b18e4f673b6d7f59ad0b98322df089062bceb2f9b960fba559aa4
+  normalized_sha256: sha256:bffa116e132b18e4f673b6d7f59ad0b98322df089062bceb2f9b960fba559aa4
+cas_ref: sha256:bffa116e132b18e4f673b6d7f59ad0b98322df089062bceb2f9b960fba559aa4
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 英文证明段（**Proof.** Begin with one progression modulo6K_r on which K_r|m^2+1 an…）仅给出前文命题的推导或证明方向，不另提出独立结论。
+    previous_atom_id: c1a5cb2d8f3a3114f88b1b03d9f5b4cc7a4221a75d8f6f5c351eea0d9887eb4b
+    next_atom_id: eb7a29c1b7ab168a681078b6eb8a8d7ba9844b7bc97bd2b904561e4b548c8e57

@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:c42488bb92421b03830b0ead575dcd30195cc24981f2830a0973049d14009a8e
+  normalized_sha256: sha256:c42488bb92421b03830b0ead575dcd30195cc24981f2830a0973049d14009a8e
+cas_ref: sha256:c42488bb92421b03830b0ead575dcd30195cc24981f2830a0973049d14009a8e
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 候选构造清单的累积量项，未附某概率律的分解恒等式。
+    previous_atom_id: c5eb84f58e02137a1570bde1554c3453b6d19cec318663fbfcbe7c5fec857b6f
+    next_atom_id: 4b93cf8743d1709eb0f89d8f5d9af31fcc81d5016347a9f4d1d8384ce844fec0

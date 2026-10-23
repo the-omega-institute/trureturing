@@ -1,0 +1,29 @@
+## 14. 反射、反码与点数奇偶
+
+构型反射会逆转 gap word：
+
+\[
+b(H^\vee)=\operatorname{reverse}(b(H)).
+\]
+
+曲率满足：
+
+\[
+\boxed{
+\kappa(H^\vee)
+=
+-\operatorname{reverse}(\kappa(H)).
+}
+\]
+
+若模 \(3\) admissibility 迫使 \(b\) 交替，且 gap word 长度为 \(k-1\)，则：
+
+\[
+\operatorname{reverse}(b)
+=
+\begin{cases}
+b,&k\text{ 为偶数},\\
+1-b,&k\text{ 为奇数}.
+\end{cases}
+\]
+

@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:224b08bf069668266d5b622028a5bdc0a54777f7147399b4df0d3c0128693af0
+  normalized_sha256: sha256:224b08bf069668266d5b622028a5bdc0a54777f7147399b4df0d3c0128693af0
+cas_ref: sha256:224b08bf069668266d5b622028a5bdc0a54777f7147399b4df0d3c0128693af0
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 英文证明段（**Proof.** Fermat's theorem makes the integer quotient well-defined. R…）仅给出前文命题的推导或证明方向，不另提出独立结论。
+    previous_atom_id: 7ec0da4843ee9439592a9aca8eec8a7fbd1741cc73748502534d4f5c368a0698
+    next_atom_id: 0e829757d50c2b8af1018acb15d21dd67f68c7411285e521c6065d0ce7eee6cb

@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:df78c6b99d3d8511bed48ab15dd2a829220e937795d191f7dede145e4d4935c6
+  normalized_sha256: sha256:df78c6b99d3d8511bed48ab15dd2a829220e937795d191f7dede145e4d4935c6
+cas_ref: sha256:df78c6b99d3d8511bed48ab15dd2a829220e937795d191f7dede145e4d4935c6
+coverage_gids:
+  - gid: D5/S3/ConceptDynamics/TimeProjection/TimeExpansionEscape.time_expansion_escape_iff_expansion_escape
+    target_statement_id: sha256:930763f6003dce48a2e19276fc03afe94576f327e7f9a0b0b06d6e8d9748c728
+receipts:
+  unresolved_subitems: []

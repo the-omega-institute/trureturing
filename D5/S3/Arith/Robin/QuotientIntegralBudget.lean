@@ -71,7 +71,7 @@ private theorem prefix_monotone (k : ℕ → ℝ) (hk : ∀ n : ℕ, 1 ≤ n →
   intro y z hyz
   unfold arithmeticPrefix
   exact Finset.sum_le_sum_of_subset_of_nonneg (Finset.range_mono (Nat.floor_mono hyz)) (fun i _ _ => hk (i + 1) (Nat.succ_pos i))
-private theorem prefix_as_finite_sum (k : ℕ → ℝ) {N : ℕ} {y : ℝ} (hy : 0 ≤ y) (hyN : y ≤ N) : arithmeticPrefix k y = ∑ i ∈ Finset.range N, if ((i
+theorem prefix_as_finite_sum (k : ℕ → ℝ) {N : ℕ} {y : ℝ} (hy : 0 ≤ y) (hyN : y ≤ N) : arithmeticPrefix k y = ∑ i ∈ Finset.range N, if ((i
     + 1 : ℕ) : ℝ) ≤ y then k (i + 1) else 0 := by
   have hfloor : ⌊y⌋₊ ≤ N := by
     simpa using Nat.floor_mono hyN
@@ -92,7 +92,7 @@ private theorem prefix_as_finite_sum (k : ℕ → ℝ) {N : ℕ} {y : ℝ} (hy :
         exact hi (Finset.mem_range.mpr (Nat.lt_of_succ_le h'))
       simp only [if_neg hnot]
 
-private theorem prefix_difference_finite (k : ℕ → ℝ) {N : ℕ} {c y : ℝ} (hy : 0 ≤ y) (hcy : 0 ≤ c * y) (hcyle : c * y ≤ y) (hyN : y ≤ N) :
+theorem prefix_difference_finite (k : ℕ → ℝ) {N : ℕ} {c y : ℝ} (hy : 0 ≤ y) (hcy : 0 ≤ c * y) (hcyle : c * y ≤ y) (hyN : y ≤ N) :
     arithmeticPrefix k y - arithmeticPrefix k (c * y) = ∑ i ∈ Finset.range N, if c * y < ((i + 1 : ℕ) : ℝ) ∧ ((i + 1 : ℕ) : ℝ) ≤ y then k (i + 1)
     else 0 := by
   rw [prefix_as_finite_sum k hy hyN, prefix_as_finite_sum k hcy (hcyle.trans hyN), ← Finset.sum_sub_distrib]
@@ -164,7 +164,7 @@ private theorem weight_nonneg {t : ℝ} (ht : 1 < t) : 0 ≤ weight t := by
   unfold weight
   have := Real.log_pos ht
   positivity
-private theorem weight_le {x t : ℝ} (hx : 1 < x) (hxt : x ≤ t) : weight t ≤ weightEnvelope x / t ^ 2 := by
+theorem weight_le {x t : ℝ} (hx : 1 < x) (hxt : x ≤ t) : weight t ≤ weightEnvelope x / t ^ 2 := by
   have hxlog : 0 < Real.log x := Real.log_pos hx
   have htlog : 0 < Real.log t := Real.log_pos (hx.trans_le hxt)
   have hlog : Real.log x ≤ Real.log t := Real.log_le_log (by linarith) hxt
@@ -278,7 +278,7 @@ private theorem integral_inv_sq_Ico {d c : ℝ} (hd : 0 < d) (hc : 0 < c) (hc1 :
   rw [integral_Ico_eq_integral_Ioc, ← intervalIntegral.integral_of_le hdc, hFTC]
   field_simp [hd.ne', hc.ne']
   <;> ring
-private theorem hasDerivAt_log_tail_primitive {y : ℝ} (hy : 0 < y) : HasDerivAt (fun z : ℝ => -(Real.log z + 2) / z) ((1 + Real.log y) / y ^ 2) y
+theorem hasDerivAt_log_tail_primitive {y : ℝ} (hy : 0 < y) : HasDerivAt (fun z : ℝ => -(Real.log z + 2) / z) ((1 + Real.log y) / y ^ 2) y
     := by
   have h := (((Real.hasDerivAt_log hy.ne').add_const 2).neg.div (hasDerivAt_id y) hy.ne')
   apply h.congr_deriv
@@ -312,7 +312,7 @@ private theorem integrableOn_low_smooth (A D : ℝ) {m : ℝ} (hm : 1 ≤ m) : I
   have hypos : 0 < y := hminvpos.trans_le hy.1
   have hlog : ContinuousAt Real.log y := Real.continuousAt_log hypos.ne'
   exact (((continuousAt_const.mul (continuousAt_const.add hlog.abs)).add continuousAt_const).div continuousAt_id hypos.ne').continuousWithinAt
-private theorem integral_affine_log_div {a b : ℝ} (ha : 0 < a) (hab : a ≤ b) (P Q : ℝ) : (∫ y in a..b, (P + Q * Real.log y) / y) = P * (Real.log
+theorem integral_affine_log_div {a b : ℝ} (ha : 0 < a) (hab : a ≤ b) (P Q : ℝ) : (∫ y in a..b, (P + Q * Real.log y) / y) = P * (Real.log
     b - Real.log a) + (Q / 2) * ((Real.log b) ^ 2 - (Real.log a) ^ 2) := by
   have hcont : ContinuousOn (fun y : ℝ => (P + Q * Real.log y) / y) (Icc a b) := by
     intro y hy

@@ -1,0 +1,104 @@
+**Theorem 4.1 (finite actions and representatives are operationally complete).**
+In the nonempty finite-output cases of Definition 2.2, let $M=\max F$ and put
+
+$$
+\mathcal M=\{\varepsilon,L\}\cup\{z(v):2\le v\le N+M\}.
+\tag{AOF.10}
+$$
+
+Consider finite decision trees on $F$ using these actual entry addresses.
+A node can halt exactly when its surviving indices have a common full row;
+otherwise a read must split them into at least two nonempty reply classes.
+Unreachable children need no continuation. Every path has at most
+$|F|-1$ reads. Each such tree extends effectively to a source-total actual
+service on the entire $U$, with exactly its representative run's costs:
+
+$$
+c_B(T_k)=c_B(T_{\pi(k)})\qquad(k\in S).
+\tag{AOF.11}
+$$
+
+Conversely every original source-total comparator $A$, even with no
+uniform cost bound, admits such a tree and extension $B$ for which
+
+$$
+\begin{aligned}
+c_B(T_j)&\le c_A(T_j)&& (j\in F),\\
+b(B)&\le b(A),\qquad
+W_\lambda(B)\le W_\lambda(A)&& (\lambda\in\mathbb Q_{\ge0}^3).
+\end{aligned}
+\tag{AOF.12}
+$$
+
+The last two inequalities compare worst budgets and same-run suprema;
+no same-source inequality between $B$ and $A$ is asserted for $k\notin F$.
+
+Proof. First restrict the entry-static simulation of Theorem 3.1 to the
+finitely many actual sources $T_j$, $j\in F$. Every one of those runs is
+finite by source-totality. They can be computed on the known candidate
+trees and their finite union unfolded into one finite reachable reply
+tree. The common control at a common transcript fixes the next action;
+source-dependent local work supplies no extra branch. No uniform bound
+on $A$ was assumed, and no search for a bound is used in this construction.
+
+A static nonroot request ending in $R$ of weight $v\ge2$ can be replaced
+by $z(v)$ with identical replies and no longer address. A request ending
+in $L$ of weight $v\ge2$ is decoded from $z(v)$ by merging alpha into
+absence, again with no greater length. Weight one is $L$; root is retained.
+If $v>N+M$, every representative reply is absent, for either last edge,
+and that request is simulated without a source call. Remove every query
+whose reply is already constant on its surviving representative set.
+Decoding a refined reply can be represented by equal child continuations.
+Stop immediately whenever the required entire row is already common.
+Each retained read now splits its finite surviving set, so its depth is
+at most $|F|-1$. These operations do not increase any representative's
+cost. The addresses remaining are precisely in (AOF.10).
+
+It remains to prove that this finite tree is implementable on all original
+sources, rather than only on the representatives. For finite $S$ this is
+immediate. In the tail case $M=D$, and for every $a\in\mathcal M$ there is
+a computable reply map $\delta_a$ with
+
+$$
+r_{T_{N+\pi(k)}}(a)=\delta_a(r_{T_{N+k}}(a))\qquad(k\in S).
+\tag{AOF.13}
+$$
+
+The map is identity on replies realized below $D$; replies realized only
+in the tail map to the reply at $D$. This is well-defined. For $z(v)$,
+$v\le N+D$: if $N+D\ge v+2$, the entire tail is branch; if $N+D=v+1$,
+only beta and branch are merged; if $N+D=v$, only alpha, beta and branch
+are merged. In the latter two cases the merged extra replies occur on no
+index below $D$. At root, only $N+D=1$ is exceptional, when $N=1,D=0$
+and all allowed indices are tail. For $L$, use its threshold $x=2$:
+if $N+D\ge3$ the tail is branch; if $N+D=2$ merge beta and branch;
+if $N+D=1$ all allowed indices are again tail. Thus the endpoint and small
+index exceptions are included. This proves (AOF.13) on the whole $S$.
+
+Run the finite tree using actual reads at its listed addresses, feeding
+$\delta_a$ of each actual reply into its representative control. Induction
+on this finite execution keeps $\pi(k)$ among the surviving indices.
+The halt output is $f(\pi(k))=f(k)$ by (AOF.5), so it is the entire correct
+original row. Every actual source follows exactly its representative's
+addresses and halting depth, proving (AOF.11) and termination. This changes
+neither the physical source nor its root; $\pi$ is a proof and decoding
+map, not a supplied source identity or a reset. Receipts record the raw
+replies before $\delta_a$.
+
+Since every representative is itself an allowed actual source and
+$\pi$ is onto, the maximum of each cost, or each weighted path sum, in
+the extension is its maximum over $F$. Combine this equality with the
+representative inequalities proved above and then take the supremum over
+all of $S$ to obtain (AOF.12). This proves the two operational directions
+before imposing the finite strategy domain.
+
+Every nonempty node of the finite tree has an actual witness $T_j$ with
+$j$ in its surviving set. An extension's additional raw reply branches
+need not have a witness in $F$: their exact source set is obtained by
+intersecting (AOF.3) with the finitely many raw reply inequalities (AOF.8)
+along that branch, and the stipulated decoder choices. This is an effective
+finite/cofinite set; if nonempty its least index gives an actual witness.
+Thus unreachable branches are never charged or used as lower-bound
+witnesses, while every attained maximum has a concrete allowed witness.
+$\square$
+

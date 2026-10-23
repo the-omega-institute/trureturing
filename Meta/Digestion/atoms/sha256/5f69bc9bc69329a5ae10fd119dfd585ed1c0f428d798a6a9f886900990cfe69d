@@ -1,0 +1,51 @@
+## 2. 具体算术边界符号与除差矩阵
+
+以下令 c>=2 为整数，L=log c，omega_n=2*pi*n/L，beta_r=2r+1/2。定义
+
+\[
+\begin{aligned}
+s_c(n)={}&-\frac{2\omega_n(\cosh(L/2)-1)}{\omega_n^2+1/4}\\
+&-\sum_{r\ge0}\frac{\omega_n(1-e^{-\beta_rL})}{\beta_r^2+\omega_n^2}
+-\sum_{2\le j<c}\frac{\Lambda(j)}{\sqrt j}\sin(\omega_n\log j).
+\end{aligned}
+\tag{AC1}
+\]
+
+这是一个由实际算术数据独立构造的实奇序列。它不使用未知最低特征函数或零点位置。设 K(t)=e^{-t/2}/(1-e^{-2t})。对 n!=m，相关函数偶化为
+
+\[
+C(e_n,e_m)(t)+C(e_n,e_m)(-t)
+=\frac{\sin(\omega_nt)-\sin(\omega_mt)}{\pi(m-n)},\qquad 0\le t\le L.
+\]
+
+将其代入完整 Weil 形式，使用 K(t)=sum_r exp(-beta_r*t)，以及 exp(i*omega_n*L)=1，得到
+
+\[
+\boxed{A_{nm}=\frac{s_c(n)-s_c(m)}{\pi(m-n)},\qquad n\ne m.}
+\tag{AC2}
+\]
+
+这一步保留 prime、pole 和 Gamma 的完整耦合。Gamma 逐项积分可由 |sin(omega*t)|<=|omega|*t 和 sum beta_r^-2<infinity 正当化。
+
+对角元同样有精确公式。记 z_n=1/4+i*omega_n/2，psi_1 为 trigamma：
+
+\[
+\begin{aligned}
+A_{nn}={}&\gamma(\omega_n)+\frac{\Re\psi_1(z_n)}{2L}
+-\frac2L\sum_{r\ge0}e^{-\beta_rL}\Re(\beta_r-i\omega_n)^{-2}\\
+&+\frac{4(\cosh(L/2)-1)}L\Re(1/2+i\omega_n)^{-2}\\
+&-2\sum_{2\le j<c}\frac{\Lambda(j)}{\sqrt j}
+\left(1-\frac{\log j}L\right)\cos(\omega_n\log j).
+\end{aligned}
+\tag{AC3}
+\]
+
+例如 Gamma 项可先写成
+
+\[
+\gamma(\omega_n)+\frac2L\int_0^LtK(t)\cos(\omega_nt)dt
++2\int_L^\infty K(t)\cos(\omega_nt)dt.
+\]
+
+延长第一个积分到正半轴后，剩余尾项是 -(2/L)*integral_L^infinity (t-L)K(t)cos(omega_n*t)dt，给出 (AC3)。因此对角公式中的 trigamma 系数和指数尾项符号都有直接检查。
+

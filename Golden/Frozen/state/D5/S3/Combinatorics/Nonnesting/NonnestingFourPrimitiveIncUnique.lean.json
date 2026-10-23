@@ -1,1 +1,1 @@
-{"statement_id":"sha256:7a4a8798204b6f668b72ba35493f09442be9131a6299fe45f833015907e53f4d"}
+{"statement_id":"sha256:7a4a8798204b6f668b72ba35493f09442be9131a6299fe45f833015907e53f4d","declarations":[{"declaration_name_key":"ns(ns(ns(ns(ns(ns(n0,2:D5),2:S3),13:Combinatorics),10:Nonnesting),32:NonnestingFourPrimitiveIncUnique),27:primitive_increasing_exists)","kind":"theorem"},{"declaration_name_key":"ns(ns(ns(ns(ns(ns(n0,2:D5),2:S3),13:Combinatorics),10:Nonnesting),32:NonnestingFourPrimitiveIncUnique),27:primitive_increasing_unique)","kind":"theorem"}]}

@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:fab58b0eb20533a1f8be8080959b63a2c92835c3e99c24ad04f4918904097edd
+  normalized_sha256: sha256:fab58b0eb20533a1f8be8080959b63a2c92835c3e99c24ad04f4918904097edd
+cas_ref: sha256:fab58b0eb20533a1f8be8080959b63a2c92835c3e99c24ad04f4918904097edd
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 1.1 素数、二次型与 crossing 锚点：仅为导引、项目安排、来源条目或记号清单，不提出数学命题。
+    previous_atom_id: 56d1883977a5851046043b4eb9a61de36fc79a403ce219563c9654edc051c9fe
+    next_atom_id: 63da392c53045d03de75d574cc8ff847e34bd298bb6893866b476cd4a79f20a3

@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:22e40988784f8851725eef91bb993e9af7b61a4aa31e776a1265bdc8f1ef631b
+  normalized_sha256: sha256:22e40988784f8851725eef91bb993e9af7b61a4aa31e776a1265bdc8f1ef631b
+cas_ref: sha256:22e40988784f8851725eef91bb993e9af7b61a4aa31e776a1265bdc8f1ef631b
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 定义 30.2（多重实现）：本段仅约定名称、符号及其判定条件；不主张满足条件的对象存在，也不追加性质定理。
+    previous_atom_id: a72182ba83cd5b9b878ef22c901691ce5bb1786e46c17fc4e328219bd6caacad
+    next_atom_id: 840523c3632d207457b195970bcce03f7197d19bcda29c05141666cde24fb121

@@ -14,6 +14,199 @@ internal sealed class QuadraticRadiiDocument : IScribeDocumentDefinition
         H("Exact Quadratic Root Radii"),
         Blocks(
             Describe.Lean(
+                DescribeId.Create("complex-quadratic-factors"),
+                DeclarationHandle.Create(Prefix + "quadratic_factors"),
+                H("Factorization of a complex quadratic"),
+                StatementSource.FromAuthor(
+                    FormulaDsl.Disp(
+                        new Formula.Bind(
+                            FormulaQuantifier.ForAll,
+                            FormulaIdentifier.Create("A"),
+                            FormulaDsl.Seq(FormulaDsl.Mathbb, FormulaDsl.Grp(FormulaDsl.Id("C"))),
+                            new Formula.Bind(
+                                FormulaQuantifier.ForAll,
+                                FormulaIdentifier.Create("B"),
+                                FormulaDsl.Seq(FormulaDsl.Mathbb, FormulaDsl.Grp(FormulaDsl.Id("C"))),
+                                new Formula.Bind(
+                                    FormulaQuantifier.ForAll,
+                                    FormulaIdentifier.Create("c"),
+                                    FormulaDsl.Seq(FormulaDsl.Mathbb, FormulaDsl.Grp(FormulaDsl.Id("C"))),
+                                    new Formula.Logic(
+                                        new Formula.Relation(
+                                            FormulaDsl.Id("A"),
+                                            FormulaRelationOperator.NotEqual,
+                                            FormulaDsl.D(0)),
+                                        FormulaLogicOperator.Implies,
+                                        new Formula.Bind(
+                                            FormulaQuantifier.Exists,
+                                            FormulaIdentifier.Create("z"),
+                                            FormulaDsl.Seq(
+                                                FormulaDsl.Mathbb,
+                                                FormulaDsl.Grp(FormulaDsl.Id("C"))),
+                                            new Formula.Bind(
+                                                FormulaQuantifier.Exists,
+                                                FormulaIdentifier.Create("w"),
+                                                FormulaDsl.Seq(
+                                                    FormulaDsl.Mathbb,
+                                                    FormulaDsl.Grp(FormulaDsl.Id("C"))),
+                                                new Formula.Logic(
+                                                    new Formula.Relation(
+                                                        new Formula.Apply(
+                                                            FormulaDsl.Seq(
+                                                                FormulaDsl.Operatorname,
+                                                                FormulaDsl.Grp(
+                                                                    FormulaDsl.Seq(
+                                                                        FormulaDsl.Id("Polynomial"),
+                                                                        FormulaDsl.Dot,
+                                                                        FormulaDsl.Id("roots")))),
+                                                            [new Formula.Binary(
+    new Formula.Binary(
+        new Formula.Binary(
+            new Formula.Apply(
+                FormulaDsl.Seq(
+                    FormulaDsl.Operatorname,
+                    FormulaDsl.Grp(
+                        FormulaDsl.Seq(FormulaDsl.Id("Polynomial"), FormulaDsl.Dot, FormulaDsl.Id("C")))),
+                [FormulaDsl.Id("A")]),
+            FormulaBinaryOperator.Multiply,
+            new Formula.Power(
+                FormulaDsl.Seq(
+                    FormulaDsl.Operatorname,
+                    FormulaDsl.Grp(
+                        FormulaDsl.Seq(FormulaDsl.Id("Polynomial"), FormulaDsl.Dot, FormulaDsl.Id("X")))),
+                FormulaDsl.D(2))),
+        FormulaBinaryOperator.Add,
+        new Formula.Binary(
+            new Formula.Apply(
+                FormulaDsl.Seq(
+                    FormulaDsl.Operatorname,
+                    FormulaDsl.Grp(
+                        FormulaDsl.Seq(FormulaDsl.Id("Polynomial"), FormulaDsl.Dot, FormulaDsl.Id("C")))),
+                [FormulaDsl.Id("B")]),
+            FormulaBinaryOperator.Multiply,
+            FormulaDsl.Seq(
+                FormulaDsl.Operatorname,
+                FormulaDsl.Grp(FormulaDsl.Seq(FormulaDsl.Id("Polynomial"), FormulaDsl.Dot, FormulaDsl.Id("X")))))),
+    FormulaBinaryOperator.Add,
+    new Formula.Apply(
+        FormulaDsl.Seq(
+            FormulaDsl.Operatorname,
+            FormulaDsl.Grp(FormulaDsl.Seq(FormulaDsl.Id("Polynomial"), FormulaDsl.Dot, FormulaDsl.Id("C")))),
+        [FormulaDsl.Id("c")]))]),
+                                                        FormulaRelationOperator.Equal,
+                                                        new Formula.SetLiteral(
+                                                            [FormulaDsl.Id("z"), FormulaDsl.Id("w")])),
+                                                    FormulaLogicOperator.And,
+                                                    new Formula.Relation(
+                                                        new Formula.Binary(
+                                                            new Formula.Binary(
+                                                                new Formula.Binary(
+                                                                    new Formula.Apply(
+                                                                        FormulaDsl.Seq(
+                                                                            FormulaDsl.Operatorname,
+                                                                            FormulaDsl.Grp(
+                                                                                FormulaDsl.Seq(
+                                                                                    FormulaDsl.Id("Polynomial"),
+                                                                                    FormulaDsl.Dot,
+                                                                                    FormulaDsl.Id("C")))),
+                                                                        [FormulaDsl.Id("A")]),
+                                                                    FormulaBinaryOperator.Multiply,
+                                                                    new Formula.Power(
+                                                                        FormulaDsl.Seq(
+                                                                            FormulaDsl.Operatorname,
+                                                                            FormulaDsl.Grp(
+                                                                                FormulaDsl.Seq(
+                                                                                    FormulaDsl.Id("Polynomial"),
+                                                                                    FormulaDsl.Dot,
+                                                                                    FormulaDsl.Id("X")))),
+                                                                        FormulaDsl.D(2))),
+                                                                FormulaBinaryOperator.Add,
+                                                                new Formula.Binary(
+                                                                    new Formula.Apply(
+                                                                        FormulaDsl.Seq(
+                                                                            FormulaDsl.Operatorname,
+                                                                            FormulaDsl.Grp(
+                                                                                FormulaDsl.Seq(
+                                                                                    FormulaDsl.Id("Polynomial"),
+                                                                                    FormulaDsl.Dot,
+                                                                                    FormulaDsl.Id("C")))),
+                                                                        [FormulaDsl.Id("B")]),
+                                                                    FormulaBinaryOperator.Multiply,
+                                                                    FormulaDsl.Seq(
+                                                                        FormulaDsl.Operatorname,
+                                                                        FormulaDsl.Grp(
+                                                                            FormulaDsl.Seq(
+                                                                                FormulaDsl.Id("Polynomial"),
+                                                                                FormulaDsl.Dot,
+                                                                                FormulaDsl.Id("X")))))),
+                                                            FormulaBinaryOperator.Add,
+                                                            new Formula.Apply(
+                                                                FormulaDsl.Seq(
+                                                                    FormulaDsl.Operatorname,
+                                                                    FormulaDsl.Grp(
+                                                                        FormulaDsl.Seq(
+                                                                            FormulaDsl.Id("Polynomial"),
+                                                                            FormulaDsl.Dot,
+                                                                            FormulaDsl.Id("C")))),
+                                                                [FormulaDsl.Id("c")])),
+                                                        FormulaRelationOperator.Equal,
+                                                        new Formula.Binary(
+                                                            new Formula.Apply(
+                                                                FormulaDsl.Seq(
+                                                                    FormulaDsl.Operatorname,
+                                                                    FormulaDsl.Grp(
+                                                                        FormulaDsl.Seq(
+                                                                            FormulaDsl.Id("Polynomial"),
+                                                                            FormulaDsl.Dot,
+                                                                            FormulaDsl.Id("C")))),
+                                                                [FormulaDsl.Id("A")]),
+                                                            FormulaBinaryOperator.Multiply,
+                                                            new Formula.Binary(
+                                                                new Formula.Binary(
+                                                                    FormulaDsl.Seq(
+                                                                        FormulaDsl.Operatorname,
+                                                                        FormulaDsl.Grp(
+                                                                            FormulaDsl.Seq(
+                                                                                FormulaDsl.Id("Polynomial"),
+                                                                                FormulaDsl.Dot,
+                                                                                FormulaDsl.Id("X")))),
+                                                                    FormulaBinaryOperator.Subtract,
+                                                                    new Formula.Apply(
+                                                                        FormulaDsl.Seq(
+                                                                            FormulaDsl.Operatorname,
+                                                                            FormulaDsl.Grp(
+                                                                                FormulaDsl.Seq(
+                                                                                    FormulaDsl.Id("Polynomial"),
+                                                                                    FormulaDsl.Dot,
+                                                                                    FormulaDsl.Id("C")))),
+                                                                        [FormulaDsl.Id("z")])),
+                                                                FormulaBinaryOperator.Multiply,
+                                                                new Formula.Binary(
+                                                                    FormulaDsl.Seq(
+                                                                        FormulaDsl.Operatorname,
+                                                                        FormulaDsl.Grp(
+                                                                            FormulaDsl.Seq(
+                                                                                FormulaDsl.Id("Polynomial"),
+                                                                                FormulaDsl.Dot,
+                                                                                FormulaDsl.Id("X")))),
+                                                                    FormulaBinaryOperator.Subtract,
+                                                                    new Formula.Apply(
+                                                                        FormulaDsl.Seq(
+                                                                            FormulaDsl.Operatorname,
+                                                                            FormulaDsl.Grp(
+                                                                                FormulaDsl.Seq(
+                                                                                    FormulaDsl.Id("Polynomial"),
+                                                                                    FormulaDsl.Dot,
+                                                                                    FormulaDsl.Id("C")))),
+                                                                        [FormulaDsl.Id("w")])))))))))))))),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text(
+                    "For every complex A, B and c with A nonzero, there are complex "
+                        + "z and w such that the multiset of roots of A X^2 + B X + c "
+                        + "is {z,w}, and the polynomial equals A(X-z)(X-w). "
+                        + "The roots are counted with multiplicity, so z and w may coincide."))),
+                DescribeRole.Theorem),
+            Describe.Lean(
                 DescribeId.Create("quadratic-admissible-class"),
                 DeclarationHandle.Create(Prefix + "U2"),
                 H("The full degree-two class"),

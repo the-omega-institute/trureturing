@@ -1,0 +1,49 @@
+**Open problem 7.3 (unrestricted faithful safe source-convolution
+construction).** For arbitrary complete signed-native $I$ and
+arbitrary finite distinct attained $B$ with $|B|\ge2$, construct
+effectively a faithful safe carrier satisfying (NMF.23), or supply
+a different terminating exact mechanism for the original
+alternative (NMF.2). All exteriors, full partitions, reached
+guards, actual epochs, multiple positive constraints, finite
+negatives, shared values and image/rank correlations must remain.
+No such unrestricted carrier construction is supplied by the
+transducers of §5.
+
+A finite zipper on a chosen tuple is not a proof that a whole
+signed tuple language has a finite safe convolution scheme.
+An eager whole-value generator can preserve sharing and still
+be unsafe: an order-$k$ argument containing a free variable of
+order less than $k$ fails the safety condition of Definition 6.1.
+The transduction theorem here starts from an already safe exact
+convolution carrier and does not repair that failure. Likewise,
+ordinary finite-packet equality checking does not give effective
+safe-scheme closure under all original signed constraints.
+
+The mathematical obligation remaining before an unconditional
+decision is therefore specific: provide both whole-source
+directions for that constrained convolution and prove its safety,
+or prove another exact stopping theorem. Once those premises
+are supplied, (NMF.19), (NMF.24) and (NMF.25) already give the
+faithful every-path cost and its decision consumer. Cardinality,
+a long branch, matched-leaf endpoints and a critical balanced
+sequence do not discharge that obligation, by Theorems 4.1,
+4.2, 5.3 and 6.4.
+
+[ARH]: RECURSIVE_RELATIONAL_OBSERVATION_ACQUIRED_RELATION_HISTORY.md
+[NSF]: RECURSIVE_RELATIONAL_OBSERVATION_NATIVE_SIGNED_FEASIBILITY.md
+[NIC]: RECURSIVE_RELATIONAL_OBSERVATION_NATIVE_IMAGE_COVER_AND_PREFIX_COST.md
+[NLC]: RECURSIVE_RELATIONAL_OBSERVATION_NATIVE_LEAF_DEPTH_CONTACT.md
+[SPC]: RECURSIVE_RELATIONAL_OBSERVATION_NATIVE_SIGNED_PRODUCTIVE_CONTACT.md
+[SPCEXT]: https://github.com/the-omega-institute/trureturing/blob/db23810980530aea4b6fc2a056615460c8cbecb9/docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION_NATIVE_SIGNED_PRODUCTIVE_CONTACT.md
+[READOUT]: ../../../D5/S3/Arith/FibonacciAtomic/ActualTreeReadoutAcquisition.lean
+[ROWS]: ../../../D5/S3/Arith/FibonacciAtomic/Observer/ActualCutPartitionDecoder.lean
+[FIBERS]: ../../../D5/S3/Arith/FibonacciAtomic/Observer/NativeCutFibers.lean
+[DEPTH]: ../../../D5/S3/Arith/FibonacciAtomic/Observer/NativeDepthPatterns.lean
+[KRAFT]: https://doi.org/10.1002/047174882X
+[BCCP]: https://arxiv.org/html/2004.12187v6
+[BCCP42]: https://arxiv.org/html/2004.12187v6#S4.SS2
+[BCCP44]: https://arxiv.org/html/2004.12187v6#S4.SS4
+[BCCP5]: https://arxiv.org/html/2004.12187v6#S5
+[BCCPDOI]: https://doi.org/10.3233/FI-222145
+[BP]: https://arxiv.org/html/2311.16607v1
+

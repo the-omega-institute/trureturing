@@ -1,0 +1,15 @@
+fingerprints:
+  raw_sha256: sha256:238f4939f72a0079ec63a9959d5e70b7e8e1eacd272c87428a2f37920e4c5a16
+  normalized_sha256: sha256:238f4939f72a0079ec63a9959d5e70b7e8e1eacd272c87428a2f37920e4c5a16
+cas_ref: sha256:238f4939f72a0079ec63a9959d5e70b7e8e1eacd272c87428a2f37920e4c5a16
+coverage_gids:
+  - gid: D5/S3/Quantum/Divergence/CanonicalChannelDPI.extended_quantum_relative_entropy_channel_dpi
+    target_statement_id: sha256:f6c41775b192518669e4da2a9dc6fbdfb3eeb83a300658a0e7df0b78458fc002
+  - gid: D5/S3/Quantum/Divergence/LegacyRelativeEntropyBoundary.legacy_quantumRelativeEntropy_eq_finite_branch
+    target_statement_id: sha256:00e4844ab9306a3c8f3cb3b84c67697f3572a6cf8a5a58b9c4a99ac029a9bd26
+  - gid: D5/S3/Quantum/Divergence/QuantumRelativeEntropyDefectComposition.relative_entropy_defect_composition
+    target_statement_id: sha256:ff956a915e0d0f51a9121b68581bac8d8071ef63682ff2bbb374287537a6286e
+  - gid: D5/S3/Quantum/Divergence/SupportAwareRelativeEntropy.extendedQuantumRelativeEntropy_eq_coe_of_support
+    target_statement_id: sha256:8a217b33805c7ccc53bf51f0fa0d5895a111ce85970b3d3beb38f5a96583a2fb
+receipts:
+  unresolved_subitems: []

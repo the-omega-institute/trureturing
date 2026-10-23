@@ -1,0 +1,34 @@
+其参考 Bernstein 下、上系数分别为 $\ell_{k,t}(x),u_{k,t}(x)$，$0\le t\le d_k$，具备四个直接输入：
+
+1. 固定余量 $c_0\le\ell_{k,t}\le u_{k,t}\le1-c_0$，其中可取 $c_0=1/32$。
+
+2. 对所有 $x\in[0,x^\dagger]$，参考次数提升满足
+
+   $$
+   \mathsf E^H_k\ell_{k-1}(x)\le\ell_k(x),\qquad
+   u_k(x)\le\mathsf E^H_ku_{k-1}(x)
+   $$
+
+   （逐系数）。在 $x=0$ 全部上下系数等于 $1/2$。
+
+3. 单个系数的任务参数正则性统一有界：
+
+   $$
+   \sup_{k,t}\bigl(\|\ell_{k,t}\|_{C^\beta}
+                  +\|u_{k,t}\|_{C^\beta}\bigr)\le C_*.
+   \tag{338.4}
+   $$
+
+   这是式（330.16）的单系数界。
+
+4. 参考多项式 $L_k(x,q),U_k(x,q)$ 的差
+
+   $$
+   \Gamma_k(x,q)=U_k(x,q)-L_k(x,q)
+   \le Cx^\beta\min\{1,(n_kx^2)^{-\rho/2}\},
+   \tag{338.5}
+   $$
+
+   且两者趋于 $F_x(q)$。在实际楔域，
+   $F_x(q)=1/2+6\varepsilon h^\beta$，$\varepsilon=1/16$。
+

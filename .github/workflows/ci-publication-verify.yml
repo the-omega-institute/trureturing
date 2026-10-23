@@ -33,6 +33,7 @@ jobs:
             .github/workflows/ci-publication-verify.yml
             .github/workflows/lean-analysis-fixtures.yml
             .github/workflows/lean-cache-publish.yml
+            .github/actions/lean-cache-produce/action.yml
             .gitignore
             D5/*.lean
             Directory.Build.*

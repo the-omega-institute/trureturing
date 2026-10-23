@@ -7,50 +7,31 @@ name: CI unit
 on:
   workflow_call:
     inputs:
-      project:
-        description: Test project run through make -C tools test; empty for a command unit
+      unit:
+        description: Unit identity in Meta/ci-units.json
         type: string
-        default: ''
-      command:
-        description: Command of a non-test unit, executed from the repository root
-        type: string
-        default: ''
-      dotnet:
-        description: Set up the .NET SDK
-        type: boolean
-        default: true
-      cache-dependency-path:
-        description: Package locks for the unit's actual build closure
-        type: string
-        default: '**/packages.lock.json'
-      lean:
-        description: 'Lean preparation: none, toolchain, or build (toolchain plus build seeds)'
-        type: string
-        default: none
+        required: true
       timeout-minutes:
+        description: Cumulative compute allowance after CI preparation; the platform job cap is separate
         type: number
-        default: 30
+        default: 120
+    outputs:
+      unit:
+        description: Identity emitted only after the declared unit succeeds
+        value: ${{ jobs.unit.outputs.unit }}
 
 permissions:
   contents: read
   actions: read
+  pull-requests: read
 
 jobs:
   unit:
     runs-on: ubuntu-24.04-arm
-    timeout-minutes: ${{ inputs.timeout-minutes }}
+    timeout-minutes: 360
+    outputs:
+      unit: ${{ steps.run.outputs.unit }}
     steps:
-      - name: Validate the unit definition
-        env:
-          PROJECT: ${{ inputs.project }}
-          COMMAND: ${{ inputs.command }}
-          LEAN: ${{ inputs.lean }}
-        run: |
-          has_project=false has_command=false
-          [[ -z "$PROJECT" ]] || has_project=true
-          [[ -z "${COMMAND//[[:space:]]/}" ]] || has_command=true
-          [[ "$has_project" != "$has_command" ]] || { echo "CI_UNIT_ERROR set exactly one of project and command" >&2; exit 2; }
-          case "$LEAN" in none|toolchain|build) ;; *) echo "CI_UNIT_ERROR lean is '$LEAN'" >&2; exit 2 ;; esac
       - uses: actions/checkout@v5
         with:
           ref: ${{ github.sha }}
@@ -62,28 +43,38 @@ jobs:
           CI_PR_HEAD: ${{ github.event.pull_request.head.sha }}
           CI_PUSH_BEFORE: ${{ github.event.before }}
         run: bash tools/scripts/workflow/ci-entry.sh
-      - if: inputs.dotnet
+      - id: definition
+        env:
+          UNIT: ${{ inputs.unit }}
+        run: python3 tools/scripts/workflow/ci_checks.py describe "$UNIT"
+      - if: fromJSON(steps.definition.outputs.definition)['dotnet']
         uses: actions/setup-dotnet@v5
         with:
           global-json-file: global.json
           cache: true
-          cache-dependency-path: ${{ inputs.cache-dependency-path }}
-      - id: keys
-        if: inputs.lean != 'none'
+          cache-dependency-path: ${{ fromJSON(steps.definition.outputs.definition)['cache-dependency-path'] }}
+      - id: prepared
+        name: Adopt a matching PR preparation for this event
+        if: fromJSON(steps.definition.outputs.definition)['lean'] == 'build'
         env:
-          GH_TOKEN: ${{ inputs.lean == 'build' && github.token || '' }}
+          GH_TOKEN: ${{ github.token }}
+        run: python3 tools/scripts/worktree/lean_pr_cache.py adopt --repository "$GITHUB_WORKSPACE"
+      - id: keys
+        if: fromJSON(steps.definition.outputs.definition)['lean'] != 'none'
+        env:
+          GH_TOKEN: ${{ fromJSON(steps.definition.outputs.definition)['lean'] == 'build' && github.token || '' }}
         run: python3 tools/scripts/worktree/lean_actions.py keys --repository "$GITHUB_WORKSPACE"
       - id: elan
-        if: inputs.lean != 'none' && steps.keys.outputs.elan_key != ''
+        if: fromJSON(steps.definition.outputs.definition)['lean'] != 'none' && steps.keys.outputs.elan_key != ''
         continue-on-error: true
         uses: actions/cache/restore@v5
         with:
           path: ~/.elan
           key: ${{ steps.keys.outputs.elan_key }}
-      - if: inputs.lean != 'none'
+      - if: fromJSON(steps.definition.outputs.definition)['lean'] != 'none'
         run: tools/scripts/workflow/install-lean-toolchain.sh lean-toolchain --github-path "$GITHUB_PATH"
       - id: dependency
-        if: inputs.lean == 'build' && steps.keys.outputs.dependency_key != ''
+        if: steps.prepared.outputs.adopted != 'true' && fromJSON(steps.definition.outputs.definition)['lean'] == 'build' && steps.keys.outputs.dependency_key != ''
         continue-on-error: true
         uses: actions/cache/restore@v5
         with:
@@ -91,7 +82,7 @@ jobs:
           key: ${{ steps.keys.outputs.dependency_key }}
           restore-keys: ${{ steps.keys.outputs.dependency_restore_prefix }}
       - id: project
-        if: inputs.lean == 'build' && steps.keys.outputs.project_key != ''
+        if: steps.prepared.outputs.adopted != 'true' && fromJSON(steps.definition.outputs.definition)['lean'] == 'build' && steps.keys.outputs.project_key != ''
         continue-on-error: true
         uses: actions/cache/restore@v5
         with:
@@ -99,7 +90,7 @@ jobs:
           key: ${{ steps.keys.outputs.project_restore_key }}
           restore-keys: ${{ steps.keys.outputs.project_restore_prefix }}
       - name: Restore optional Lean build seeds
-        if: inputs.lean == 'build'
+        if: fromJSON(steps.definition.outputs.definition)['lean'] == 'build'
         env:
           DEPENDENCY_KEY: ${{ steps.dependency.outputs.cache-matched-key }}
           PROJECT_KEY: ${{ steps.project.outputs.cache-matched-key }}
@@ -107,15 +98,24 @@ jobs:
           DEPENDENCY_OUTCOME: ${{ steps.dependency.outcome }}
           PROJECT_OUTCOME: ${{ steps.project.outcome }}
         run: python3 tools/scripts/worktree/lean_actions.py restore --repository "$GITHUB_WORKSPACE" --dependency-key "$DEPENDENCY_KEY" --project-key "$PROJECT_KEY" --project-restore-key "$PROJECT_RESTORE_KEY" --dependency-outcome "$DEPENDENCY_OUTCOME" --project-outcome "$PROJECT_OUTCOME"
-      - name: Run
+      - name: Restore selected .NET dependencies
+        if: fromJSON(steps.definition.outputs.definition).dotnet
+        env:
+          UNIT: ${{ inputs.unit }}
+        run: python3 tools/scripts/workflow/ci_checks.py unit "$UNIT" --prepare
+      - name: Initialize the shared compute allowance
+        env:
+          COMPUTE_MINUTES: ${{ inputs.timeout-minutes }}
+        run: |
+          [[ "$COMPUTE_MINUTES" =~ ^[1-9][0-9]*$ && "$COMPUTE_MINUTES" -le 360 ]] || { echo 'CI_UNIT_ERROR compute minutes must be 1..360' >&2; exit 2; }
+          budget="$RUNNER_TEMP/unit-compute-seconds"
+          python3 tools/scripts/workflow/ci_compute.py init "$budget" "$COMPUTE_MINUTES"
+          echo "STRATALINT_CI_COMPUTE_BUDGET=$budget" >> "$GITHUB_ENV"
+      - id: run
+        name: Run
         env:
           CI: 'true'
+          CI_DOTNET_PREPARED: ${{ fromJSON(steps.definition.outputs.definition).dotnet && '1' || '0' }}
           DOTNET_CLI_UI_LANGUAGE: en-US
-          PROJECT: ${{ inputs.project }}
-          COMMAND: ${{ inputs.command }}
-        run: |
-          if [[ -n "$PROJECT" ]]; then
-            make -C tools test TEST_PROJECT="$PROJECT"
-          else
-            bash -e -o pipefail -c "$COMMAND"
-          fi
+          UNIT: ${{ inputs.unit }}
+        run: python3 tools/scripts/workflow/ci_checks.py unit "$UNIT"

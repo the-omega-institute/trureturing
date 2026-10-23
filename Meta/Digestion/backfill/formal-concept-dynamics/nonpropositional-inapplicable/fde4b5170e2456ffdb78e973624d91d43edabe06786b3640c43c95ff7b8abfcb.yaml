@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:fde4b5170e2456ffdb78e973624d91d43edabe06786b3640c43c95ff7b8abfcb
+  normalized_sha256: sha256:fde4b5170e2456ffdb78e973624d91d43edabe06786b3640c43c95ff7b8abfcb
+cas_ref: sha256:fde4b5170e2456ffdb78e973624d91d43edabe06786b3640c43c95ff7b8abfcb
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 固定点多重性结论之后，列举额外对象选择依据的说明清单；本片段 * 现实准入。 仅为标签，不陈述具体性质、存在断言或充分性定理。
+    previous_atom_id: 3c4c330e9ee1a6c3861cd9e5c6131bd7b0eb9314544497b70a22dab400540baa
+    next_atom_id: cec471f40c61b036a29f95f02cb075c5449817b8ed55da7076f583ec5daedafb

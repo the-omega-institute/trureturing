@@ -1,0 +1,22 @@
+**定义 29.10（初始可见状态与来源记录的合同）。** 对定义 29.1 的有限模型，
+沿定理 29.4 证明中的子空间 $V$，确定初态的额外预测数据是
+$P_V\xi_0$。$V^\perp$ 在 $K$ 下不变，且其整个演化被 $B^{\mathsf T}$ 湮灭；
+所以这一投影足够，且在相同输入下两初态有相同全部输出恰在投影相同。
+后一方向由零点各阶导数给 $B^{\mathsf T}K^j(\xi_0-\xi'_0)=0$ 对所有 $j$
+成立，亦即差与 $V$ 正交。随机初态的完整输出律还需要这个投影的概率律，
+若输入随机则需要二者的联合关系；只给均值或零态核不供应该联合律。
+
+已取得记录的继续任务使用
+[动态未来商卷第一部 §§2–6](AURIC_FIB_ATOM_DYNAMIC_FUTURE_QUOTIENT_AND_FUTURE_CLOSED_MEMORY.md)
+和 [记录单纯形卷 §§5.1–5.2、§9.1](AURIC_FIB_ATOM_RECORD_SIMPLEX_AND_HIGHER_ORDER_COMPATIBILITY.md)
+的实际操作与条件化合同。
+[`common_prediction_factor_universal_property`](../../../D5/S3/ObserverMemory/Fusion/CommonPredictionFactor.lean)
+给共同的动力学稳定粗化，其定义不是联合观察的细化。
+这些有限标签或来源摘要与本节的实 LTI 状态维数属于不同的比较类；
+一个实坐标已有无限多个可能值。
+共同保留与重新独立抽取的区分，以及相干历史的非对角 $\Xi_{hk}$，分别使用
+[二阶关系完成卷 §§109–110](AURIC_FIB_SECOND_ORDER_RELATION_COMPLETION.md)
+及 [历史记录卷 §119、§§185–186](AURIC_FIB_HISTORY_RECORDS_TIME_ARROW.md)
+的原合同。$M,R,S_k,H_\ell$ 都是指定经典响应律的数学对象，
+并不因此取得实际寄存器、全历史联合律或相干的非对角读数。
+

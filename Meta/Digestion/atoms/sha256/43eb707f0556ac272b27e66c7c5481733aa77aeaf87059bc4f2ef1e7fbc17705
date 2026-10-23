@@ -1,0 +1,6 @@
+Tate–Iwasawa 的 adelic zeta integral 正是：
+
+* 在加法 adeles 上使用 Fourier 变换；
+* 在乘法 ideles 上使用 Mellin character；
+* 由 Poisson summation 导出 \(L\)-函数的函数方程。([论文库][5])
+

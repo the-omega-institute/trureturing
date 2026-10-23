@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:fccda22fbde72dc07e664bc41c0cfaa4533a724bd1d85627020020868acc2260
+  normalized_sha256: sha256:fccda22fbde72dc07e664bc41c0cfaa4533a724bd1d85627020020868acc2260
+cas_ref: sha256:fccda22fbde72dc07e664bc41c0cfaa4533a724bd1d85627020020868acc2260
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 纯定义段仅引入本节的对象、记号或术语（**定义。** 设 $L:H\to H$ 线性，$B:H\times H\to H$ 双线性，$f\in H$，定义），没有另行断言这些对象的性质。
+    previous_atom_id: 5819ba261083350d97383339517030f74135da663a615072e5c84de75e0896cd
+    next_atom_id: aaaaac0884d5fdf19df88de5cfd6af5f838cdf581aae0f618d2fb3a40eeac766

@@ -1,0 +1,17 @@
+**Convention 58.5 (action order and the scope of the supplier).**
+[Holographic IV, §107](https://github.com/the-omega-institute/trureturing/blob/0cd2d8e87296269efebb3d308ff59318aab0a10a/docs/develop/theory/FIB_ATOM_RECURSIVE_HOLOGRAPHIC_BOUNDARY_GEOMETRY_CONTINUATION_IV.md#107-root-readout-action-closure-and-future-memory)
+uses $C_\ell A^jT_w$: intervention word first, passive evolution next,
+readout last. For arbitrary allowed passive/intervention interleavings,
+the supplier is
+[Relational II, §§44.5--44.7](https://github.com/the-omega-institute/trureturing/blob/0cd2d8e87296269efebb3d308ff59318aab0a10a/docs/develop/theory/FIB_RELATIONAL_FIBER_CALCULUS_CONTINUATION_II.md#44-固定原生菜单的边界因子化与交错动作修正).
+A native bridge must retain its own allowed ordered words, legality,
+same-source branch support, resources, and absorbing Stop. Neither linear
+supplier supplies those resource or full-record assumptions for a new bridge.
+
+The chronological target of §59 is actual ancestry comparison, successor
+heat, then normalized successor root readout, using
+[Holographic IV, §§109--110](https://github.com/the-omega-institute/trureturing/blob/0cd2d8e87296269efebb3d308ff59318aab0a10a/docs/develop/theory/FIB_ATOM_RECURSIVE_HOLOGRAPHIC_BOUNDARY_GEOMETRY_CONTINUATION_IV.md#110-root-visible-ancestry-memory-of-homogeneous-occurrence-states).
+It is a signed homogeneous-state comparison, not a native original-reply
+protocol. Constructing and effectively presenting a general signed FIB
+interface satisfying the preceding bridge assumptions remains unproved.
+

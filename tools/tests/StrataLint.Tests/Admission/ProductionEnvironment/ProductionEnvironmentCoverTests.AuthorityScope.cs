@@ -20,9 +20,9 @@ public sealed partial class ProductionEnvironmentTests
                 []),
         });
         var inputs = DirectoryInputs(WithInvalidSiblingCoverage(materialized));
-        var withFrozenEvent = WithUnrelatedFrozenAcceptedEvent(inputs);
-        inputs = withFrozenEvent.Inputs;
-        var frozenEventPath = withFrozenEvent.EventPath;
+        var withFrozenState = WithUnrelatedFrozenState(inputs);
+        inputs = withFrozenState.Inputs;
+        var frozenStatePath = withFrozenState.StatePath;
         using var temporary = new TemporaryDirectory();
         DirectoryLedgerTestSupport.Write(temporary.Path, inputs.Files);
         var before = DirectoryLedgerTestSupport.RepositoryImage(temporary);
@@ -30,7 +30,7 @@ public sealed partial class ProductionEnvironmentTests
             temporary.Path,
             inputs,
             inputs.Files,
-            RawChangeSet.Create([frozenEventPath]));
+            RawChangeSet.Create([frozenStatePath]));
 
         var result = environment.CoverAtom(CoverArgs(inputs));
 
@@ -64,7 +64,7 @@ public sealed partial class ProductionEnvironmentTests
         AssertUnreferencedAtomBytesUnchanged(temporary.Path, inputs, CoverWorld.OtherAtomId);
     }
 
-    private static (CoverInputs Inputs, string EventPath) WithUnrelatedFrozenAcceptedEvent(
+    private static (CoverInputs Inputs, string StatePath) WithUnrelatedFrozenState(
         CoverInputs inputs)
     {
         var files = new Dictionary<string, string>(inputs.Files, StringComparer.Ordinal);
@@ -75,9 +75,9 @@ public sealed partial class ProductionEnvironmentTests
                 "D5/S9/Unrelated/FrozenBacklog.lean",
                 FrozenStatementReceiptTestData.Id('9'),
                 []));
-        var eventPath = Assert.Single(
+        var statePath = Assert.Single(
             files.Keys.Except(existingPaths, StringComparer.Ordinal),
-            FrozenLedgerChangeClassifier.IsAcceptedEventPath);
-        return (inputs with { Files = files }, eventPath);
+            FrozenStatePath.IsUnderRoot);
+        return (inputs with { Files = files }, statePath);
     }
 }

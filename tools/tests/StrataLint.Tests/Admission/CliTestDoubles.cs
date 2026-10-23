@@ -27,6 +27,9 @@ internal sealed class StubCliEnvironment(
     public ExplicitCommandResult CheckDelta(IReadOnlyList<string> arguments) =>
         checkDelta ?? throw new NotSupportedException();
 
+    public ExplicitCommandResult CheckSource(IReadOnlyList<string> arguments) =>
+        throw new NotSupportedException();
+
     public AdmissionOutcome Check(IReadOnlyList<string> arguments) => outcome;
 
     public ExplicitCommandResult CapacityAudit(IReadOnlyList<string> arguments) =>
@@ -37,6 +40,10 @@ internal sealed class StubCliEnvironment(
 
     public CommandResult Coverage(IReadOnlyList<string> arguments) =>
         new(false, string.Empty, "coverage is not configured in this fixture");
+
+    public CommandResult MigrateAtomContext(IReadOnlyList<string> arguments) => new(true, string.Empty, string.Empty);
+    public CommandResult SourceDispatch(IReadOnlyList<string> arguments) =>
+        new(false, string.Empty, "source dispatch is not configured in this fixture");
 
     public CommandResult SearchAtoms(IReadOnlyList<string> arguments) =>
         new(false, string.Empty, "atom search is not configured in this fixture");

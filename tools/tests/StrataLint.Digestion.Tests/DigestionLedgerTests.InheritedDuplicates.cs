@@ -53,15 +53,13 @@ public sealed partial class DigestionLedgerTests
             // Fully covered and chain-free, so the full scan derives absorbed for it.
             DuplicateEntry(other, DigestionMigrationState.Absorbed));
 
-        // Pins the entry and observation contract only: the unregistered fixture atomizer never
-        // reaches the aligner's clause-chain check. That path is pinned on a PZG fixture in
-        // DigestionAlignmentTests.AdmissionDoesNotJudgeClauseChainOfBaselineInheritedDuplicates.
+        // Unchanged CAS-backed duplicate roots remain observations, not replay targets.
         var evaluation = DigestionStatusEvaluator.Evaluate(
             DigestionEvaluationScope.ChangedSet,
             document,
             DuplicateSnapshot(child, parent, other),
             AcceptedLean(DuplicateProbePath),
-            changes: RawChangeSet.Create(["docs/source.md"]));
+            changes: RawChangeSet.Create(["notes/unrelated.md"]));
 
         Assert.True(evaluation.Findings.IsEmpty, string.Join(" | ", evaluation.Findings));
         Assert.Equal([otherId], evaluation.Entries.Select(static entry => entry.Entry.AtomId));
@@ -88,7 +86,7 @@ public sealed partial class DigestionLedgerTests
             DigestionTruthState.Closed,
             DuplicateProbeGid,
             new DigestionCoverageEdge(DuplicateProbeGid, TestModuleStatementId),
-            atomizer: AtomizerRegistry.NoAtomizerId).RequireDigestionEntries());
+            atomizer: AtomizerRegistry.GenericId).RequireDigestionEntries());
 
     private static BackfillInventoryDocument DuplicateLedger(params DigestionLedgerEntry[] entries)
     {
@@ -98,7 +96,7 @@ public sealed partial class DigestionLedgerTests
             DigestionTruthState.Closed,
             DuplicateProbeGid,
             new DigestionCoverageEdge(DuplicateProbeGid, TestModuleStatementId),
-            atomizer: AtomizerRegistry.NoAtomizerId);
+            atomizer: AtomizerRegistry.GenericId);
         var source = Assert.Single(template.RequireDigestionSources());
         return template.WithDigestionSources([source with { Entries = [.. entries] }]);
     }

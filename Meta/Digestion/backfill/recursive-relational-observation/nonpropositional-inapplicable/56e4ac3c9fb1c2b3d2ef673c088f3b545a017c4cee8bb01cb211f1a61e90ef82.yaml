@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:56e4ac3c9fb1c2b3d2ef673c088f3b545a017c4cee8bb01cb211f1a61e90ef82
+  normalized_sha256: sha256:56e4ac3c9fb1c2b3d2ef673c088f3b545a017c4cee8bb01cb211f1a61e90ef82
+cas_ref: sha256:56e4ac3c9fb1c2b3d2ef673c088f3b545a017c4cee8bb01cb211f1a61e90ef82
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: theorem 35.2 (Every finite gap and every closed ball).的证明段，仅展开该陈述的推导及说明，不另提出独立命题；本收据不替代原陈述的形式化覆盖。
+    previous_atom_id: 7229f6c0758a0afe672ecc7af3597da1f534c8891162e044a70f73290e799df4
+    next_atom_id: 921f8ca8d34311b21ccda43029a3e1bc10b84fb87a1e259a69ae23e214ef1a87

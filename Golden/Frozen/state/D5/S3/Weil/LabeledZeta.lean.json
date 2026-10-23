@@ -1,1 +1,1 @@
-{"statement_id":"sha256:a488604bdf91cbd6b304df446fe3d54b1d385e80613cc4b8ed1c462b2ac3bce3"}
+{"statement_id":"sha256:a488604bdf91cbd6b304df446fe3d54b1d385e80613cc4b8ed1c462b2ac3bce3","declarations":[{"declaration_name_key":"ns(ns(ns(ns(ns(n0,2:D5),2:S3),4:Weil),11:LabeledZeta),11:labeledZeta)","kind":"def"},{"declaration_name_key":"ns(ns(ns(ns(ns(n0,2:D5),2:S3),4:Weil),11:LabeledZeta),12:LedgerLength)","kind":"def"},{"declaration_name_key":"ns(ns(ns(ns(ns(n0,2:D5),2:S3),4:Weil),11:LabeledZeta),27:labeled_zeta_vector_ne_zero)","kind":"theorem"}]}

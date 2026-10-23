@@ -1,0 +1,21 @@
+## 76. FIB 替换词的符号动力学、频率与谱测度
+
+取有限字母表 \(\mathcal A=\{\alpha,\beta\}\) 及外加替换
+\[
+\sigma(\alpha)=\alpha\beta,\qquad
+\sigma(\beta)=\alpha.
+\]
+其按列计数的替换矩阵为
+\[
+M=\begin{pmatrix}1&1\\1&0\end{pmatrix}.
+\]
+令 \(\mathcal L(\sigma)\) 为所有 \(\sigma^n(a)\) 的有限子词，并定义双边 hull
+\[
+X_\sigma
+=\{x\in\mathcal A^{\mathbb Z}:
+\text{每个有限子块均属于 }\mathcal L(\sigma)\},
+\qquad
+(Tx)_k=x_{k+1}.
+\]
+FIB 递归 \(W_{j+2}=W_{j+1}W_j\) 只有在指定了与某个 \(X_\sigma\) 的合法嵌入、平移极限和双边延拓后，才能使用下述结论；原始有限词本身不自动给出平移不变概率律。
+

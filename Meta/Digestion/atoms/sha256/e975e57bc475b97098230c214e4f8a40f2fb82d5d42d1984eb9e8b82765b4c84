@@ -1,0 +1,15 @@
+**命题 12.4（固定认证偶纪元的精确存在支撑半径）。** 令认证实际纪元
+$N=2k\ge2$，$k\ge1$。对所有 $u,v\in\mathcal T$ 与 $h\ge0$，
+
+$$
+\boxed{
+\operatorname{supp}_{h+k+1}(\rho^{2k}u)
+=\operatorname{supp}_{h+k+1}(\rho^{2k}v)
+\iff p_h(u)=p_h(v).
+}
+\tag{ABT.35}
+$$
+
+形状观察的对应半径为 $h+k$，而存在支撑的对应半径为 $h+k+1$。这里的
+$N$ 是同一原根寄存器上已认证的实际替换次数。
+

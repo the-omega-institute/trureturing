@@ -1,0 +1,24 @@
+**References 10.2 (new versus reused content).** The new interface is the
+native skeleton-constraint compilation and reverse replay preserving all
+accessible state (Theorem 3.4); cleaned native selection counterexamples
+(Propositions 4.1–4.2); exact computably enumerable backward-closed support
+classification despite universal finite-interference liveness (Theorem 5.2);
+one fixed total producer admitting an exact source/count characterization
+with undecidable source projection, and the resulting finite-language
+obstruction (Theorem 6.2 and Corollary 6.3);
+and terminal-stamp candidate decision preserving prevalidation restrictions
+while normalizing the postvalidation suffix (Theorem 7.3).
+For supplied source and counts, (NASF.12) is decidable by bounded simulation;
+undecidability concerns the source projection (NASF.11).
+
+Lemma 3.2 expands finite navigation only to discharge the native grammar
+correspondence. Traversal, complete-row acquisition, whole-tree comparison,
+primitive coordinates, stamp advancement, finite affine existence,
+generic quotient minimality and fixed-schedule service theory retain the
+suppliers in Section 2. Section 8 gives applications with explicit additional
+continuation premises, not new generic quotient results. The inspected
+native D5/Scribe and RRO suppliers do not state the support classification,
+fixed total-producer undecidability or terminal-stamp decision proved here.
+This is a scoped repository comparison, not worldwide originality evidence.
+No `suspected-novel` claim is made.
+

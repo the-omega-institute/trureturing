@@ -1,0 +1,19 @@
+**Lemma 4.2 (Complete parameter-uniform projected-root cover).**
+For every $(p,v)\in K\times V_-$, $R(r,p,v)$ has exactly four
+strict real roots. For every $(p,v)\in K\times V_+$ it has exactly
+six. Each root is simple. The following tables give their exhaustive
+partition certificates. A word lists the signs of all nineteen
+Bernstein coefficients in increasing $k=0,\ldots,18$ order.
+
+| $\sigma=-$: closed interval | Sign word | Variation |
+| --- | --- | --- |
+| $[0,1/8]$ | `-------------++++++` | $1$ |
+| $[1/8,1/4]$ | `++-----------------` | $1$ |
+| $[1/4,1/2]$ | `-------------------` | $0$ |
+| $[1/2,3/4]$ | `-------------------` | $0$ |
+| $[3/4,7/8]$ | `-------------------` | $0$ |
+| $[7/8,113/128]$ | `-++++++++++++++++++` | $1$ |
+| $[113/128,57/64]$ | `++++++++++---------` | $1$ |
+| $[57/64,29/32]$ | `-------------------` | $0$ |
+| $[29/32,15/16]$ | `-------------------` | $0$ |
+| $[15/16,1]$ | `-------------------` | $0$ |

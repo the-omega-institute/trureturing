@@ -1,0 +1,4 @@
+## 参考文献与定位
+
+* [Matsuo–Nagatomo 1997, *On axioms for a vertex algebra and locality of quantum fields*](https://arxiv.org/abs/hep-th/9706118v1)：命题 1.5.5 给出正规乘积的局域性保持；定理 5.4.1 给出创生局域生成场的重构。秩一源码验证全态创生、实际平移、算子一致局域性与二次共形场同一性；文献引用不代替任何 Lean 证明，也不扩展为 Monster 或几何桥梁。来源、Carnahan 最小 Apache 2.0 内核适配及自身钉版 Mathlib 退休条件见 `Library/VertexAlgebra/matsuo1997locality.md`。
+* [Kytölä, *VirasoroProject*](https://github.com/kkytola/VirasoroProject/blob/5ff4245383b2cdd4eea7a0524bc1274c32041eb4/VirasoroProject/Sugawara.lean)：固定修订的秩一玻色 Sugawara 原始 Lean 证明；本库移植中心关系并保留 Apache 2.0 许可，来源与版本适配见 `Library/VertexAlgebra/kytola2025virasoro.md`。

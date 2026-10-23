@@ -113,6 +113,36 @@ class PartitionTests(PartitionFixture, unittest.TestCase):
                     self.assertEqual(prefix, keys[layer]["restore_prefix"])
                     self.assertEqual(prefix + "12-1", keys[layer]["key"])
 
+    def test_manual_producer_requires_a_validated_protected_source_pin(self):
+        spec = importlib.util.spec_from_file_location("lean_actions", ROOT / "tools/scripts/worktree/lean_actions.py")
+        module = importlib.util.module_from_spec(spec)
+        spec.loader.exec_module(module)
+        source_commit = "a" * 40
+        valid = dict(os.environ, GITHUB_RUN_ID="17", GITHUB_RUN_ATTEMPT="2",
+                     STRATALINT_CACHE_WRITES="true", STRATALINT_CHECK_SUCCEEDED="true",
+                     STRATALINT_REPORT_SUCCEEDED="true", GITHUB_EVENT_NAME="workflow_dispatch",
+                     GITHUB_REF="refs/heads/dev",
+                     GITHUB_SHA="b" * 40, STRATALINT_CACHE_CHECKED_OUT_SHA=source_commit,
+                     STRATALINT_CACHE_SOURCE_REF="refs/heads/dev",
+                     STRATALINT_CACHE_SOURCE_COMMIT=source_commit,
+                     STRATALINT_CACHE_SOURCE_VALIDATED="true")
+        with mock.patch.dict(os.environ, valid, clear=True):
+            keys = module.actions_keys(self.root)
+        self.assertTrue(keys["save_allowed"])
+        self.assertTrue(keys["project_save_allowed"])
+
+        for defect in (
+                {"STRATALINT_CACHE_SOURCE_VALIDATED": "false"},
+                {"STRATALINT_CACHE_SOURCE_REF": "refs/heads/integration-seed", "GITHUB_REF": "refs/heads/dev"},
+                {"STRATALINT_CACHE_SOURCE_REF": "refs/heads/topic"},
+                {"STRATALINT_CACHE_SOURCE_COMMIT": "b" * 40},
+                {"STRATALINT_CACHE_CHECKED_OUT_SHA": "c" * 40},
+                {"STRATALINT_CACHE_SOURCE_COMMIT": "0" * 40}):
+            environment = dict(valid, **defect)
+            with self.subTest(defect=defect), mock.patch.dict(os.environ, environment, clear=True):
+                keys = module.actions_keys(self.root)
+            self.assertFalse(keys["save_allowed"])
+            self.assertFalse(keys["project_save_allowed"])
 
 
 if __name__ == "__main__":

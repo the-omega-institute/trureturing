@@ -1,9 +1,0 @@
-fingerprints:
-  raw_sha256: sha256:ce1b84ae4277434b18827e086f487b2fcf5241c117fa71bb3aa48b0a26be3f2f
-  normalized_sha256: sha256:ce1b84ae4277434b18827e086f487b2fcf5241c117fa71bb3aa48b0a26be3f2f
-cas_ref: sha256:ce1b84ae4277434b18827e086f487b2fcf5241c117fa71bb3aa48b0a26be3f2f
-coverage_gids:
-  - gid: D5/S3/Quantum/Algebra/StateTransferCovariance.diagonal_state_transfer_covariance
-    target_statement_id: sha256:735d792c7cae552a5bb1547e87d5be2b230fbab8ab10e6c4db7c9e77dc0a9fb9
-receipts:
-  unresolved_subitems: []

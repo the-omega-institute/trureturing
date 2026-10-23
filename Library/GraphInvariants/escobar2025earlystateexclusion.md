@@ -8,6 +8,8 @@ url: https://arxiv.org/abs/2507.18767v1
 claim: "Section 4 conjectures that a 7 x 7 Jacobi matrix with symmetric spectrum realizing perfect state transfer does not have early state exclusion if and only if its positive eigenvalues are integer multiples of the smallest positive eigenvalue; Theorems 3.2 and 3.4 prove the spectra {0, +-1, +-2m, +-(2m+1)} (no early state exclusion) and {0, +-(2m+1), +-(2m+2), +-(2m+3)} (early state exclusion exactly 2m times)."
 strata_touched:
   - D5/S3/Quantum/Dynamics/EndAmplitudeCosineSumZeros
+  - D5/S3/Quantum/Dynamics/SymmetricSpectrumEndAmplitude
+  - D5/S3/Quantum/Dynamics/SevenSiteEarlyStateExclusion
 license: citation-only
 triage: anchor
 ---
@@ -18,7 +20,8 @@ M. G. Escobar, V. Garcia and A. Minenkova, *Early State Exclusion in 7-Qubit
 Spin Chains*, arXiv:2507.18767v1 (24 July 2025). The arXiv record lists these
 three authors; the title page of the source names M. G. Escobar and V. Garcia
 as authors and A. Minenkova as project advisor. The quotations are taken from
-the arXiv v1 source `Finaldraft7x7.tex`.
+the arXiv v1 source `Finaldraft7x7.tex`, without its `\label`, `\emph` and
+`\nonumber` markup.
 
 ## Jacobi matrices, perfect state transfer and early state exclusion
 
@@ -94,6 +97,17 @@ with $\gcd(a, b, c) = 1$, that this cosine sum has a zero in $(0, \pi)$ if and
 only if $a \neq 1$. The triples $(1, 2m, 2m + 1)$ of Theorem 3.2 and
 $(2m + 1, 2m + 2, 2m + 3)$ of Theorem 3.4 are special cases; the count of
 exactly $2m$ zeros in Theorem 3.4 is not treated in that module.
+
+The module `D5/S3/Quantum/Dynamics/SymmetricSpectrumEndAmplitude` formalises
+Eq. (2.1) for every seven-site chain with positive couplings, real potentials,
+symmetric spectrum and transfer at some time $T$, with the spectrum
+$\tfrac{\pi}{T}\{0, \pm a, \pm b, \pm c\}$, $a$ and $c$ odd, $b$ even; that
+generality is known from Kay's criterion, which the source recalls as its
+Eq. (1.3), and from the amplitude formulas of arXiv:2606.04353. The
+module `D5/S3/Quantum/Dynamics/SevenSiteEarlyStateExclusion` proves the
+conjecture of Section 4: for every such chain and every earliest transfer time
+$T$, the first-site amplitude has no zero in $(0, T)$ exactly when every
+positive eigenvalue is an integer multiple of the smallest one.
 
 ## Verified locator
 

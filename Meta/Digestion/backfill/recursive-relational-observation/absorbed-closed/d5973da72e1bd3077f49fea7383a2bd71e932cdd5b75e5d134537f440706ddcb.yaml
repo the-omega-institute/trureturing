@@ -1,0 +1,15 @@
+fingerprints:
+  raw_sha256: sha256:d5973da72e1bd3077f49fea7383a2bd71e932cdd5b75e5d134537f440706ddcb
+  normalized_sha256: sha256:d5973da72e1bd3077f49fea7383a2bd71e932cdd5b75e5d134537f440706ddcb
+cas_ref: sha256:d5973da72e1bd3077f49fea7383a2bd71e932cdd5b75e5d134537f440706ddcb
+coverage_gids:
+  - gid: D5/S3/ConceptDynamics/Epistemic/FiberInteriorEquivalence.fiber_interior_equivalence
+    target_statement_id: sha256:07483271775ed0112947356143bac6b3953344ada6fde5a1183193b71a34f7a3
+  - gid: D5/S3/ConceptDynamics/EpistemicOperators/FiberModalOperatorLaws.fiber_knowledge_and_possibility_operator_laws
+    target_statement_id: sha256:c7179c09eee25f593229f05e70000a162f22a59d82ad2b4fd59b9735f2c84f97
+  - gid: D5/S3/ConceptDynamics/Factor/UniqueInterfaceKernelCriterion.unique_interface_factorization_iff_reverse_kernel
+    target_statement_id: sha256:88d1777d72d8df7a5d26cb677ac3ecc208fc37e47c8e48b9970ded47edd40f98
+  - gid: D5/S3/ConceptDynamics/Negation/DirectImageComplementSaturation.image_complement_iff_saturated
+    target_statement_id: sha256:1a0f5e4abdaee3f227f0aa314da69ea67ca39a21c41591d5690546c9a101cf30
+receipts:
+  unresolved_subitems: []

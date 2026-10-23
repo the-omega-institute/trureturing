@@ -1,0 +1,5 @@
+#### 10.2 节内标题：2. 局部边缘和线性前缀矩不决定完整未来
+
+`JointLaw.lean` 中已有的概率分离定理构造了两种 full-support 概率律 $P_+$ 与 $P_-$，使得：
+
+- 所有 proper coordinate marginals 相同；

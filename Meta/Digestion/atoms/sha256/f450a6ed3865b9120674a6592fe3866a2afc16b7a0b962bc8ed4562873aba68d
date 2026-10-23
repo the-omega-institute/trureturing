@@ -1,0 +1,42 @@
+**定理 8.2（两步深移与奇数前沿）。** 对全部 $t,u\in\mathcal T$ 和 $r\ge0$，有
+
+$$
+\delta(\rho^2t,\rho^2u)=\delta(t,u)+1,
+\qquad
+\delta(t,u)\le\delta(\rho t,\rho u)\le\delta(t,u)+1,
+$$
+
+以及
+
+$$
+\ker(P_{r+1}\circ\rho^2)=\ker P_r,
+\qquad
+\ker(P_r\circ\rho)=\ker E_r.
+$$
+
+因此，写 $h=2k$ 或 $h=2k+1$，当 $d\ge k$ 时，精确的来源纤维为
+
+$$
+\boxed{
+\ker(P_d\circ\rho^{2k})=\ker P_{d-k},\qquad
+\ker(P_d\circ\rho^{2k+1})=\ker E_{d-k}.
+}
+$$
+
+当 $d<k$ 时，两种延迟前缀都在 $\mathcal T$ 上常值，值为深度 $d$ 内全部为分支的前缀。
+
+证明。先比较根标签不同的树。替换给出
+
+$$
+\rho^2\alpha=\langle\beta,\alpha\rangle,\qquad
+\rho^2\beta=\langle\langle\beta,\alpha\rangle,\beta\rangle,
+$$
+
+而任意 $\rho^2v$ 的根都是分支。不同根类型的首次差异深度如下，表中分支一栏允许任意
+两个非空有限孩子：
+
+| 原根类型对 | 一次替换后的差异深度 | 两次替换后的差异深度 |
+| --- | --- | --- |
+| $\alpha,\beta$ | $0$ | $1$ |
+| $\alpha,\mathsf{branch}$ | $0$ | $1$ |
+| $\beta,\mathsf{branch}$ | $1$ | $1$ |

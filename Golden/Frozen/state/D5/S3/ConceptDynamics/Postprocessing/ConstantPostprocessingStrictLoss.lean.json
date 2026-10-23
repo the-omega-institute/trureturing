@@ -1,1 +1,1 @@
-{"statement_id":"sha256:091dece1f8c59226af6ff895a069e689d0d8838147c6ecadc8a9aa06e93ca6ab"}
+{"statement_id":"sha256:091dece1f8c59226af6ff895a069e689d0d8838147c6ecadc8a9aa06e93ca6ab","declarations":[{"declaration_name_key":"ns(ns(ns(ns(ns(ns(n0,2:D5),2:S3),15:ConceptDynamics),14:Postprocessing),32:ConstantPostprocessingStrictLoss),48:constant_postprocessing_strictly_enlarges_kernel)","kind":"theorem"}]}

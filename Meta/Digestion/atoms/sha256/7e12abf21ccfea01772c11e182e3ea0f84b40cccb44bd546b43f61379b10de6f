@@ -1,0 +1,71 @@
+## 21. The original augmented-J map and its regular critical equations
+
+Retain the entire parent $\mathcal H$ and complete worlds of Definition 1.1,
+with one nonzero real gain of degree at most three, one real drift per world,
+and the original clocks $0,\ldots,7$. Define
+
+$$
+\Psi_J:\mathcal H\longrightarrow\mathbb R^3,\qquad
+\Psi_J(W)=(p(W),v(W),a(W)).
+\tag{21.1}
+$$
+
+Its differential is taken on the full two-dimensional analytic parent.
+The singular-source rank assertion used below is [SIII], Theorem 13.1,
+for this same map, rather than for a fixed-source or fixed-drift slice.
+Write [SVI](FIB_STRICT_REAL_JOINT_INCIDENCE_SUPPORT_VI.md) for the
+regular-critical support volume.
+
+In the regular chart put
+
+$$
+t=r/b,\quad r=tb,\quad j=t+b(1-t^2),\quad n=j+tb,\quad
+T=1+b,\quad U=1+2b.
+\tag{21.2}
+$$
+
+The strict source conditions are precisely $t>0$, $b>0$, $tb<1$.
+In this section $D,C_0,\ldots,C_3,B_5,B_6,B_7,N_p,N_v,N_a$ mean exactly
+the integer circuit (2.5) after (21.2). In particular its terminal-$J$
+numerator is $N_a=-C_0+(T+2j+4tb)B_7$.
+The original left products in O, Definition 1.3, have traces
+
+$$
+(1,j,T,n,U,U+n,2U+n),\qquad
+\operatorname{tr}(JQ_6P)=T+2j+4tb,\quad
+\operatorname{tr}(MQ_6P)=3U+2n.
+\tag{21.3}
+$$
+
+Thus the $a$ in (21.1) is exactly the original clock-seven alternative.
+For clarity, the regular whole-world correspondence (2.7) uses
+
+$$
+d=-\frac{C_0}{D},\qquad
+ g(s)=\sum_{k=0}^3\frac{C_k}{D}
+       \prod_{\substack{0\le l\le3\\l\ne k}}\frac{s-l}{k-l},
+\qquad (p,v,a)=\frac{(N_p,N_v,N_a)}{D}.
+\tag{21.4}
+$$
+
+This is the unique actual parent world over a strict source with $D\ne0$.
+Indeed, besides the tautological clock-zero equality, direct substitution
+in (2.5) gives the polynomial identities
+
+$$
+\begin{aligned}
+-C_0+jC_1&=24D,&-C_0+TC_2&=(147/5)D,\\
+-C_0+nC_3&=24D,&
+-C_0+U(-C_0+4C_1-6C_2+4C_3)&=18D.
+\end{aligned}
+\tag{21.5}
+$$
+
+The interpolation rows (2.3) give $g(5)=B_5/D$, $g(6)=B_6/D$,
+$g(7)=B_7/D$, proving every remaining response in (21.4) with the
+same entire gain and drift. Conversely the first four clocks determine
+this interpolant, and (2.1), (2.6) determine the drift when $D\ne0$.
+The first two readings $0,24$ force $g\ne0$. This is the inherited
+full-parent converse of O, Theorem 2.1, in the circuit normalization
+of Section 2.
+

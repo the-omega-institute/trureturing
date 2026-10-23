@@ -1,0 +1,35 @@
+**Lemma 10.2 (the complete root cases).** Fix a rational
+$0<q<1/2$. For finite native $s,t$ the following cases exhaust the
+roots.
+
+1. If $s=t$, then $D_q(E(s),E(t))=0$.
+2. If $s,t$ are distinct leaves, then
+   $D_q(E(s),E(t))=2q$.
+3. If exactly one of $s,t$ is a branch, then
+   $D_q(E(s),E(t))\le2q$.
+4. If $s=\langle s_0,s_1\rangle$ and
+   $t=\langle t_0,t_1\rangle$, then
+
+   $$
+   D_q(E(s),E(t))
+   =q\bigl(D_q(E(s_0),E(t_0))
+          +D_q(E(s_1),E(t_1))\bigr).
+   \tag{NMF.10.2}
+   $$
+
+Proof. The first case is substitution of equal terms. In the second,
+the two roots in (NMF.10.1) are both branches. For the pair
+$(\alpha,\beta)$, its left replies are $\beta$ and
+$\langle\beta,\alpha\rangle$, and its right replies are $\alpha$ and
+$\beta$; hence its frontier is exactly $\{L,R\}$ and its mass is
+$2q$. The same calculation with the order of the leaves exchanged is
+identical.
+
+In the third case, (NMF.10.1) makes both transformed roots branches.
+The metric recursion of Theorem 3.3 applies at this common branch root,
+and each of the two child distances is at most one by that theorem.
+Consequently the transformed distance is at most $q(1+1)=2q$.
+The fourth case is the same metric recursion, now with the displayed
+child identities in (NMF.10.1). These cases include every combination
+of leaf and branch roots. $\square$
+

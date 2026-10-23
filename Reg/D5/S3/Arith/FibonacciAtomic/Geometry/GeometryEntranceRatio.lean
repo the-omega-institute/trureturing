@@ -242,4 +242,156 @@ noncomputable def registration_3 : LeanInformationAudit.Contract.Registration.{_
   options := #[] }
 
 end
+open _root_.D5.S3.Arith.FibonacciAtomic.GenealogicalFiberTransport (Source substitution)
+open _root_.D5.S3.Combinatorics.Partitions.WordPartitionInverse (wd)
+
+abbrev lengthSignature : Signature where
+  Params := Unit
+  State _ := Source
+  Role := Unit
+  finiteRole := inferInstance
+  nonemptyRole := inferInstance
+  Output _ _ := ℕ
+  Anchor := Empty
+  finiteAnchor := inferInstance
+
+def lengthActual : Realization lengthSignature :=
+  realize lengthSignature (fun _ _ t => t.length) (fun e => nomatch e)
+def lengthRejected : Realization lengthSignature :=
+  realize lengthSignature (fun _ _ _ => 0) (fun e => nomatch e)
+abbrev lengthArena : Arena where
+  signature := lengthSignature
+  Law R := ∀ (g : Five) (t : TreeFiber g), R.readout () () t.val = N g
+
+theorem lengthRejectedLaw : ¬ lengthArena.Law lengthRejected := by
+  intro h
+  let t : Source := .of true
+  have ht : t.length = N (G (wd t)) := tree_length _ ⟨t,rfl⟩
+  have hb := h (G (wd t)) ⟨t,rfl⟩
+  change (0 : ℕ) = N (G (wd t)) at hb
+  have hp := t.length_pos
+  omega
+
+theorem lengthDependence : ObservationalDependence lengthSignature lengthActual := by
+  intro i
+  cases i
+  exact ⟨(), .of true, .mul (.of true) (.of true), by decide⟩
+
+def lengthFamily : Registration lengthArena (type_of% (@tree_length)) where
+  actual := lengthActual
+  bridge := Iff.rfl
+  variation := ⟨tree_length,lengthRejected,lengthRejectedLaw⟩
+  sensitivity := ⟨fun _i => ⟨lengthRejected,
+    fun _j h => (h (Subsingleton.elim _ _)).elim,rfl,lengthRejectedLaw⟩,fun i => nomatch i⟩
+  dependence := lengthDependence
+
+abbrev wordSignature : Signature where
+  Params := Unit
+  State _ := Source
+  Role := Unit
+  finiteRole := inferInstance
+  nonemptyRole := inferInstance
+  Output _ _ := List Bool
+  Anchor := Empty
+  finiteAnchor := inferInstance
+
+def wordActual : Realization wordSignature :=
+  realize wordSignature (fun _ _ t => wd t) (fun e => nomatch e)
+def wordRejected : Realization wordSignature :=
+  realize wordSignature (fun _ _ _ => [true]) (fun e => nomatch e)
+abbrev wordArena : Arena where
+  signature := wordSignature
+  Law R := ∀ t : Source, R.readout () () (substitution t) = sigma (R.readout () () t)
+
+theorem wordRejectedLaw : ¬ wordArena.Law wordRejected := by
+  intro h
+  have hb := h (.of true)
+  change [true] = [false] at hb
+  cases hb
+
+theorem wordDependence : ObservationalDependence wordSignature wordActual := by
+  intro i
+  cases i
+  exact ⟨(), .of true, .of false, by decide⟩
+
+def wordFamily : Registration wordArena (type_of% (@wd_substitution)) where
+  actual := wordActual
+  bridge := Iff.rfl
+  variation := ⟨wd_substitution,wordRejected,wordRejectedLaw⟩
+  sensitivity := ⟨fun _i => ⟨wordRejected,
+    fun _j h => (h (Subsingleton.elim _ _)).elim,rfl,wordRejectedLaw⟩,fun i => nomatch i⟩
+  dependence := wordDependence
+
+def lengthRegistration : LeanInformationAudit.Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
+    (@tree_length) (type_of% (realize lengthSignature lengthActual.readout lengthActual.anchor))
+    Unit Unit where
+  unitName := `D5.S3.Arith.FibonacciAtomic.Geometry.GeometryEntranceRatio.tree_length.__information_unit
+  realizationName := `Reg.D5.S3.Arith.FibonacciAtomic.Geometry.GeometryEntranceRatio.lengthFamily
+  realizationSource := none
+  generated := false
+  arena := .source ⟨lengthArena⟩
+  objectArena := .source ⟨lengthArena⟩
+  catalog := Lean.Name.anonymous
+  localNames := false
+  realization := .source lengthArena ⟨lengthFamily⟩
+  correspondence := { stage := .evidence, objectStage := .evidence }
+  bundleNonempty := .absent
+  readout := some (realize lengthSignature lengthActual.readout lengthActual.anchor)
+  variation := .absent
+  sensitivity := .absent
+  partialSensitivity := none
+  escapeFrom := none
+  sourceSelection := some {
+    owner := `D5.S3.Arith.FibonacciAtomic.Geometry.GeometryEntranceRatio,
+    definition := none,
+    coordinates := #[],
+    readouts := #[{
+      path := #["body", "body", "fn", "arg"],
+      stateBinder := 0,
+      functionOperand := false,
+      stateOperand := some #["arg"],
+      booleanPredicate := false }] }
+  continuation := .unknown
+  familyRecord := none
+  options := #[]
+
+def wordRegistration : LeanInformationAudit.Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
+    (@wd_substitution) (type_of% (realize wordSignature wordActual.readout wordActual.anchor))
+    Unit Unit where
+  unitName := `D5.S3.Arith.FibonacciAtomic.Geometry.GeometryEntranceRatio.wd_substitution.__information_unit
+  realizationName := `Reg.D5.S3.Arith.FibonacciAtomic.Geometry.GeometryEntranceRatio.wordFamily
+  realizationSource := none
+  generated := false
+  arena := .source ⟨wordArena⟩
+  objectArena := .source ⟨wordArena⟩
+  catalog := Lean.Name.anonymous
+  localNames := false
+  realization := .source wordArena ⟨wordFamily⟩
+  correspondence := { stage := .evidence, objectStage := .evidence }
+  bundleNonempty := .absent
+  readout := some (realize wordSignature wordActual.readout wordActual.anchor)
+  variation := .absent
+  sensitivity := .absent
+  partialSensitivity := none
+  escapeFrom := none
+  sourceSelection := some {
+    owner := `D5.S3.Arith.FibonacciAtomic.Geometry.GeometryEntranceRatio,
+    definition := none,
+    coordinates := #[],
+    readouts := #[{
+      path := #["body", "fn", "arg", "fn"],
+      stateBinder := 0,
+      functionOperand := true,
+      stateOperand := none,
+      booleanPredicate := false }] }
+  continuation := .unknown
+  familyRecord := none
+  options := #[]
+
+#print axioms tree_length
+#print axioms wd_substitution
+#print axioms lengthRegistration
+#print axioms wordRegistration
+
+
 end Reg.D5.S3.Arith.FibonacciAtomic.Geometry.GeometryEntranceRatio

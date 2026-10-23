@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:e9cf219921725823356d8fdbcab64f391ade34877b317087d5d49854943b211f
+  normalized_sha256: sha256:e9cf219921725823356d8fdbcab64f391ade34877b317087d5d49854943b211f
+cas_ref: sha256:e9cf219921725823356d8fdbcab64f391ade34877b317087d5d49854943b211f
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 非命题文本：- `D5/S3/Observer/Tomography/FiniteTimeTomography.lean`：有限维渐进观察塔的有限时间完备性；：仅为导引、项目安排、来源条目或记号清单，不提出数学命题。
+    previous_atom_id: 5be065e000faf89eb0fdf6bcc38eae2d69cbd1e28e81778d30f6ebff37f7000f
+    next_atom_id: 49297ccce530d353b4fa975aded55be888eeb21180f6a977069ba08aa04376aa

@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:c7e30ddfe8aab6d15bf786f5cd8c87ded55e3b9ac44b3ee55f05104cff55f421
+  normalized_sha256: sha256:c7e30ddfe8aab6d15bf786f5cd8c87ded55e3b9ac44b3ee55f05104cff55f421
+cas_ref: sha256:c7e30ddfe8aab6d15bf786f5cd8c87ded55e3b9ac44b3ee55f05104cff55f421
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 纯定义段仅引入本节的对象、记号或术语（**定义。** 对自然数 $m$，称 $C_k$ 与 $D_k$ 在 $\mathbb Z/(m)$ 上共轭，如果存在 $P,Q\in M_2(\mathbb Z/(m))$ 满足），没有另行断言这些对象的性质。
+    previous_atom_id: 38bc114348f526ac3dc2e8e59bf1f7b5530d890098f70739e7b9b301720870f9
+    next_atom_id: f04bf8bdc4254ad5ac02582f0d363acb627ca049f7a0329cc834de679d969259

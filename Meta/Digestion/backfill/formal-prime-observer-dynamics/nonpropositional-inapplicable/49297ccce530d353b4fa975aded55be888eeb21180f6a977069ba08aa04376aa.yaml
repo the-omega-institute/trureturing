@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:49297ccce530d353b4fa975aded55be888eeb21180f6a977069ba08aa04376aa
+  normalized_sha256: sha256:49297ccce530d353b4fa975aded55be888eeb21180f6a977069ba08aa04376aa
+cas_ref: sha256:49297ccce530d353b4fa975aded55be888eeb21180f6a977069ba08aa04376aa
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 非命题文本：- `D5/S3/Observer/MetricGeometry/DiscretePredictionUltrametric.lean`：离散未来读出距离的强三角不等式；：仅为导引、项目安排、来源条目或记号清单，不提出数学命题。
+    previous_atom_id: e9cf219921725823356d8fdbcab64f391ade34877b317087d5d49854943b211f
+    next_atom_id: 7fa166a217e7252511762d42eb6e99c672608e0eabc2a955e3b3281d0827ab68

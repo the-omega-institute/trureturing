@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:0eee048f93e812ce9cd640227fdf6511098f6386d15a19e40c09f99859eb2ef0
+  normalized_sha256: sha256:0eee048f93e812ce9cd640227fdf6511098f6386d15a19e40c09f99859eb2ef0
+cas_ref: sha256:0eee048f93e812ce9cd640227fdf6511098f6386d15a19e40c09f99859eb2ef0
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 英文证明段（**Proof.** If an odd prime q divides any odd-index F_n, the identity L…）仅给出前文命题的推导或证明方向，不另提出独立结论。
+    previous_atom_id: d1ddf7f67e44bbc1aad2378351bfc389df83d07ffccf70a30217b96d453d638d
+    next_atom_id: abbbb271cb42aabe9193ac9ae1daf5ddbc7af63bb2c0f0f018cfb96fc5f7927c

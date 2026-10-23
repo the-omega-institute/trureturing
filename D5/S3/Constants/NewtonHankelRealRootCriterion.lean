@@ -81,7 +81,7 @@ def EnumeratesReversedRoots {d : Nat} (P : Real[X])
     ∀ z : Complex, (P.map Complex.ofRealHom).IsRoot z ↔
       ∃ j, z = -(roots j)⁻¹
 
-private theorem eval_pos_of_positive_coefficients {P : Real[X]} {d : Nat}
+theorem eval_pos_of_positive_coefficients {P : Real[X]} {d : Nat}
     (hP : HasPositiveCoefficientsOfDegree P d) {x : Real} (hx : 0 ≤ x) :
     0 < P.eval x := by
   rw [Polynomial.eval_eq_sum_range]

@@ -172,7 +172,19 @@ $$\begin{aligned}\operatorname{Experiment}:Type\\\forall e \in \operatorname{Exp
 
 The structure has exactly the fields alice and bob, both with type Fin 4 → Fin 4 → Matrix (Fin 2 × Fin 2) (Fin 2 × Fin 2) C. The first argument indexes a local setting and the second an outcome. Each party's operator acts jointly on its two qubits. Together with Valid, this is the source's 2×4×4 experiment type.
 
-**Definition 1.15 (Validity of all eight settings).**
+**Definition 1.15 (Peres–Mermin observable grid).**
+
+$$\begin{aligned}\operatorname{square}:\operatorname{Fin}\left(3\right) \to \left(\operatorname{Fin}\left(3\right) \to \operatorname{Matrix}\left((\operatorname{Fin}\left(2\right) \times \operatorname{Fin}\left(2\right)), (\operatorname{Fin}\left(2\right) \times \operatorname{Fin}\left(2\right)), \mathbb{C}\right)\right)\\\operatorname{square} = \begin{bmatrix}\operatorname{Matrix}.\operatorname{kronecker}\left(\operatorname{qubitZ}, 1\right)&\operatorname{Matrix}.\operatorname{kronecker}\left(1, \operatorname{qubitZ}\right)&\operatorname{Matrix}.\operatorname{kronecker}\left(\operatorname{qubitZ}, \operatorname{qubitZ}\right)\\\operatorname{Matrix}.\operatorname{kronecker}\left(1, \operatorname{qubitX}\right)&\operatorname{Matrix}.\operatorname{kronecker}\left(\operatorname{qubitX}, 1\right)&\operatorname{Matrix}.\operatorname{kronecker}\left(\operatorname{qubitX}, \operatorname{qubitX}\right)\\\operatorname{Matrix}.\operatorname{kronecker}\left(\operatorname{qubitZ}, \operatorname{qubitX}\right)&\operatorname{Matrix}.\operatorname{kronecker}\left(\operatorname{qubitX}, \operatorname{qubitZ}\right)&\operatorname{Matrix}.\operatorname{kronecker}\left(\operatorname{pauliMatrix}\left(\operatorname{Pauli}.\operatorname{Y}\right), \operatorname{pauliMatrix}\left(\operatorname{Pauli}.\operatorname{Y}\right)\right)\end{bmatrix}\end{aligned}$$
+
+*Formalization.* `D5/S3/QuantumBounds/StatisticalStrengthMagicSquare.square` (`✓ std3`).
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+The nine entries form the Peres–Mermin square. Matrix.kronecker acts on the two-qubit product indices; 1 is the single-qubit identity matrix.
+
+**Definition 1.16 (Validity of all eight settings).**
 
 $$\forall e \in \operatorname{Experiment},\; \operatorname{Valid}\left(e\right) = \left((\forall x \in \operatorname{Fin}\left(4\right),\; \operatorname{IsPVM}\left(\operatorname{Experiment}.\operatorname{alice}\left(e, x\right)\right)) \land (\forall y \in \operatorname{Fin}\left(4\right),\; \operatorname{IsPVM}\left(\operatorname{Experiment}.\operatorname{bob}\left(e, y\right)\right))\right)$$
 
@@ -184,7 +196,7 @@ $$\forall e \in \operatorname{Experiment},\; \operatorname{Valid}\left(e\right) 
 
 Every Alice setting and every Bob setting satisfies IsPVM. In particular the four outcomes of every setting are nonzero.
 
-**Definition 1.16 (Products of single-qubit operators).**
+**Definition 1.17 (Products of single-qubit operators).**
 
 $$\forall P \in \operatorname{Matrix}\left((\operatorname{Fin}\left(2\right) \times \operatorname{Fin}\left(2\right)), (\operatorname{Fin}\left(2\right) \times \operatorname{Fin}\left(2\right)), \mathbb{C}\right),\; \operatorname{ProductOperator}\left(P\right) = \left(\exists A \in \operatorname{Matrix}\left(\operatorname{Fin}\left(2\right), \operatorname{Fin}\left(2\right), \mathbb{C}\right),\; \exists B \in \operatorname{Matrix}\left(\operatorname{Fin}\left(2\right), \operatorname{Fin}\left(2\right), \mathbb{C}\right),\; P = \operatorname{Matrix}.\operatorname{kroneckerMap}\left((\lambda (u v:\mathbb{C}), u \cdot v), A, B\right)\right)$$
 
@@ -196,7 +208,7 @@ $$\forall P \in \operatorname{Matrix}\left((\operatorname{Fin}\left(2\right) \ti
 
 A product operator is literally a Kronecker product A ⊗ₖ B of arbitrary two-by-two complex matrices. No rank or separability surrogate replaces that existential definition.
 
-**Definition 1.17 (A joint measurement on a pair).**
+**Definition 1.18 (A joint measurement on a pair).**
 
 $$\forall e \in \operatorname{Experiment},\; \operatorname{JointMeasurement}\left(e\right) = \left((\exists x \in \operatorname{Fin}\left(4\right),\; \exists a \in \operatorname{Fin}\left(4\right),\; \neg \operatorname{ProductOperator}\left(\operatorname{Experiment}.\operatorname{alice}\left(e, x, a\right)\right)) \lor (\exists y \in \operatorname{Fin}\left(4\right),\; \exists b \in \operatorname{Fin}\left(4\right),\; \neg \operatorname{ProductOperator}\left(\operatorname{Experiment}.\operatorname{bob}\left(e, y, b\right)\right))\right)$$
 
@@ -208,7 +220,7 @@ $$\forall e \in \operatorname{Experiment},\; \operatorname{JointMeasurement}\lef
 
 Conjecture 5, Section VI.D, p. 11 requires “involving joint measurements on the pairs.” This means that at least one local projector, for Alice or Bob, is not a product of single-qubit operators. The existential quantifiers range over actual settings and outcomes.
 
-**Definition 1.18 (Born amplitudes of the two-singlet experiment).**
+**Definition 1.19 (Born amplitudes of the two-singlet experiment).**
 
 $$\forall e \in \operatorname{Experiment},\; \forall x \in \operatorname{Fin}\left(4\right),\; \forall y \in \operatorname{Fin}\left(4\right),\; \forall a \in \operatorname{Fin}\left(4\right),\; \forall b \in \operatorname{Fin}\left(4\right),\; \operatorname{born}\left(e, x, y, a, b\right) = \operatorname{dotProduct}\left(\operatorname{star}\left(\operatorname{twoSinglets}\right), \operatorname{Matrix}.\operatorname{mulVec}\left(\operatorname{Matrix}.\operatorname{kroneckerMap}\left((\lambda (u v:\mathbb{C}), u \cdot v), \operatorname{Experiment}.\operatorname{alice}\left(e, x, a\right), \operatorname{Experiment}.\operatorname{bob}\left(e, y, b\right)\right), \operatorname{twoSinglets}\right)\right)$$
 
@@ -220,7 +232,7 @@ $$\forall e \in \operatorname{Experiment},\; \forall x \in \operatorname{Fin}\le
 
 The expression is the literal Born expectation: dotProduct of star twoSinglets with the action of the Kronecker product of the two local outcome projectors. All four indices range over Fin 4.
 
-**Definition 1.19 (Conditional quantum probabilities).**
+**Definition 1.20 (Conditional quantum probabilities).**
 
 $$\forall e \in \operatorname{Experiment},\; \forall x \in \operatorname{Fin}\left(4\right),\; \forall y \in \operatorname{Fin}\left(4\right),\; \forall a \in \operatorname{Fin}\left(4\right),\; \forall b \in \operatorname{Fin}\left(4\right),\; \operatorname{quantum}\left(e\right)\left(x, y, a, b\right) = \operatorname{Real}.\operatorname{toNNReal}\left(\operatorname{Complex}.\operatorname{re}\left(\operatorname{born}\left(e, x, y, a, b\right)\right)\right)$$
 
@@ -232,7 +244,7 @@ $$\forall e \in \operatorname{Experiment},\; \forall x \in \operatorname{Fin}\le
 
 The quantum conditional law is Real.toNNReal of the real part of the Born expectation. Validity proves that this real part is nonnegative and that the probabilities sum to one; the truncation thus leaves every valid Born probability unchanged.
 
-**Definition 1.20 (Alice's CHSH projectors).**
+**Definition 1.21 (Alice's CHSH projectors).**
 
 $$\forall x \in \operatorname{Fin}\left(2\right),\; \forall a \in \operatorname{Fin}\left(2\right),\; \operatorname{chshAlice}\left(x, a\right) = \operatorname{HSMul}.\operatorname{hSMul}\left((\frac{1}{2}:\mathbb{C}), 1 + \operatorname{HSMul}.\operatorname{hSMul}\left(\operatorname{ite}\left(a = 0, 1, -1\right), \operatorname{ite}\left(x = 0, \operatorname{qubitZ}, \operatorname{qubitX}\right)\right)\right)$$
 
@@ -244,7 +256,7 @@ $$\forall x \in \operatorname{Fin}\left(2\right),\; \forall a \in \operatorname{
 
 Appendix III.C, pp. 18–20 gives the CHSH quantum table. These two-outcome projectors use frozen qubitZ and qubitX. Settings and outcomes have indices 0 and 1. The sign is +1 for outcome 0 and −1 for outcome 1.
 
-**Definition 1.21 (Bob's singlet-conjugated CHSH projectors).**
+**Definition 1.22 (Bob's singlet-conjugated CHSH projectors).**
 
 $$\forall y \in \operatorname{Fin}\left(2\right),\; \forall b \in \operatorname{Fin}\left(2\right),\; \operatorname{chshBob}\left(y, b\right) = \operatorname{HSMul}.\operatorname{hSMul}\left((\frac{1}{2}:\mathbb{C}), 1 + \operatorname{HSMul}.\operatorname{hSMul}\left(\operatorname{ite}\left(b = 0, 1, -1\right), \operatorname{HSMul}.\operatorname{hSMul}\left(-(\operatorname{Real}.\operatorname{sqrt}\left(2\right):\mathbb{C})^{-1}, \operatorname{ite}\left(y = 0, \operatorname{qubitZ} + \operatorname{qubitX}, \operatorname{qubitZ} - \operatorname{qubitX}\right)\right)\right)\right)$$
 
@@ -256,7 +268,7 @@ $$\forall y \in \operatorname{Fin}\left(2\right),\; \forall b \in \operatorname{
 
 The source realizes its CHSH table with Phi-plus. Bob's observables are conjugated by the local singlet unitary. On a literal singlet they are −(Z+X)/sqrt 2 and −(Z−X)/sqrt 2; these projectors reproduce the source table, with probabilities (2+sqrt 2)/8 for a winning output and (2−sqrt 2)/8 otherwise.
 
-**Definition 1.22 (The CHSH Born expectation on a singlet).**
+**Definition 1.23 (The CHSH Born expectation on a singlet).**
 
 $$\forall x \in \operatorname{Fin}\left(2\right),\; \forall y \in \operatorname{Fin}\left(2\right),\; \forall a \in \operatorname{Fin}\left(2\right),\; \forall b \in \operatorname{Fin}\left(2\right),\; \operatorname{chshBorn}\left(x, y, a, b\right) = \operatorname{dotProduct}\left(\operatorname{star}\left((\lambda (z:\operatorname{Fin}\left(2\right) \times \operatorname{Fin}\left(2\right)), \operatorname{singletCoefficient}\left(z.1, z.2\right))\right), \operatorname{Matrix}.\operatorname{mulVec}\left(\operatorname{Matrix}.\operatorname{kroneckerMap}\left((\lambda (u v:\mathbb{C}), u \cdot v), \operatorname{chshAlice}\left(x, a\right), \operatorname{chshBob}\left(y, b\right)\right), (\lambda (z:\operatorname{Fin}\left(2\right) \times \operatorname{Fin}\left(2\right)), \operatorname{singletCoefficient}\left(z.1, z.2\right))\right)\right)$$
 
@@ -268,7 +280,7 @@ $$\forall x \in \operatorname{Fin}\left(2\right),\; \forall y \in \operatorname{
 
 The vector in both dotProduct and mulVec has entries singletCoefficient z.1 z.2. This expectation uses a literal singlet and the displayed CHSH PVMs, not the source's Phi-plus state.
 
-**Definition 1.23 (The physical CHSH conditional law).**
+**Definition 1.24 (The physical CHSH conditional law).**
 
 $$\forall x \in \operatorname{Fin}\left(2\right),\; \forall y \in \operatorname{Fin}\left(2\right),\; \forall a \in \operatorname{Fin}\left(2\right),\; \forall b \in \operatorname{Fin}\left(2\right),\; \operatorname{chsh}\left(x, y, a, b\right) = \operatorname{Real}.\operatorname{toNNReal}\left(\operatorname{Complex}.\operatorname{re}\left(\operatorname{chshBorn}\left(x, y, a, b\right)\right)\right)$$
 
@@ -280,7 +292,7 @@ $$\forall x \in \operatorname{Fin}\left(2\right),\; \forall y \in \operatorname{
 
 The probabilities are Real.toNNReal of the real parts of the literal singlet Born expectations. The private source_chsh_born calculation connects this law to Appendix III.C's table and is used in the arbitrary-setting-law upper bound.
 
-**Definition 1.24 (Conjecture 5).**
+**Definition 1.25 (Conjecture 5).**
 
 $$\exists e \in \operatorname{Experiment},\; (\operatorname{Valid}\left(e\right)) \land ((\operatorname{JointMeasurement}\left(e\right)) \land (\operatorname{S}_{uni}\left(\operatorname{quantum}\left(e\right)\right) > 2 \cdot \operatorname{S}_{cor}\left(\operatorname{chsh}\right)))$$
 
@@ -292,7 +304,21 @@ $$\exists e \in \operatorname{Experiment},\; (\operatorname{Valid}\left(e\right)
 
 Conjecture 5, Section VI.D, p. 11: “There is an experiment on pairs of Bell singlets, of the 2×4×4 type, more than twice as strong as CHSH, and involving joint measurements on the pairs.” The encoding is: there exists e : Experiment with Valid e and JointMeasurement e, and S_uni (quantum e) > 2 * S_cor chsh. Since the uniform strength is no larger than the product-setting strength, which is no larger than the correlated-setting strength, this inequality implies the required comparison in each of the source's three senses.
 
-**Theorem 1.25 (The two-singlet experiment proves the conjecture).**
+**Definition 1.26 (Rational amplitudes of two singlets).**
+
+$$\forall z \in (\operatorname{Fin}\left(2\right) \times \operatorname{Fin}\left(2\right)) \times (\operatorname{Fin}\left(2\right) \times \operatorname{Fin}\left(2\right)),\; \operatorname{rationalSinglets}\left(z\right) = \operatorname{ite}\left((z.1.1 \ne z.2.1) \land (z.1.2 \ne z.2.2), \operatorname{ite}\left(z.1.1 = z.1.2, (\frac{1}{2}:\mathbb{C}), -\frac{1}{2}\right), 0\right)$$
+
+*Formalization.* `D5/S3/QuantumBounds/StatisticalStrengthMagicSquare.rationalSinglets` (`✓ std3`).
+
+*Source.* Repository-derived.
+
+*Acknowledgement.* W. van Dam; R. D. Gill; P. D. Grünwald (2005). *The Statistical Strength of Nonlocality Proofs*. DOI: [10.1109/TIT.2005.851738](https://doi.org/10.1109/TIT.2005.851738). URL: <https://arxiv.org/abs/quant-ph/0307125v2>.
+
+*Commentary.*
+
+For each party-grouped basis index z, the amplitude is zero unless both corresponding bit pairs differ. When both differ, equal bits on Alice's side give one half and unequal bits give minus one half. These are the rational amplitudes of the product of two singlets.
+
+**Theorem 1.27 (The two-singlet experiment proves the conjecture).**
 
 $$\exists e \in \operatorname{Experiment},\; (\operatorname{Valid}\left(e\right)) \land ((\operatorname{JointMeasurement}\left(e\right)) \land (\operatorname{S}_{uni}\left(\operatorname{quantum}\left(e\right)\right) > 2 \cdot \operatorname{S}_{cor}\left(\operatorname{chsh}\right)))$$
 
@@ -331,8 +357,10 @@ The commuting magic-square rows and columns give four nonzero-outcome PVMs on ea
 - Truth anchor: `D5/S3/QuantumBounds/StatisticalStrengthMagicSquare.localBehavior`
 - Truth anchor: `D5/S3/QuantumBounds/StatisticalStrengthMagicSquare.productLaw`
 - Truth anchor: `D5/S3/QuantumBounds/StatisticalStrengthMagicSquare.quantum`
+- Truth anchor: `D5/S3/QuantumBounds/StatisticalStrengthMagicSquare.rationalSinglets`
 - Truth anchor: `D5/S3/QuantumBounds/StatisticalStrengthMagicSquare.result`
 - Truth anchor: `D5/S3/QuantumBounds/StatisticalStrengthMagicSquare.singletCoefficient`
+- Truth anchor: `D5/S3/QuantumBounds/StatisticalStrengthMagicSquare.square`
 - Truth anchor: `D5/S3/QuantumBounds/StatisticalStrengthMagicSquare.strengthAt`
 - Truth anchor: `D5/S3/QuantumBounds/StatisticalStrengthMagicSquare.twoSinglets`
 - Truth anchor: `D5/S3/QuantumBounds/StatisticalStrengthMagicSquare.uniform`

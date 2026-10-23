@@ -9,7 +9,7 @@ internal sealed class NewtonHankelRealRootCriterionDocument : IScribeDocumentDef
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "Negative real roots of a positive-coefficient polynomial are equivalent to positivity of its Newton--Hankel matrix.",
         H("Newton--Hankel Real-Root Criterion"),
-        Blocks(Describe.Lean(
+        Blocks(EvaluationNode(), Describe.Lean(
             DescribeId.Create("negative-real-roots-iff-newton-hankel-positive-semidefinite"),
             DeclarationHandle.Create(
                 "D5/S3/Constants/NewtonHankelRealRootCriterion."
@@ -39,6 +39,59 @@ internal sealed class NewtonHankelRealRootCriterionDocument : IScribeDocumentDef
                         + "It does not assert a positive-definite determinant realization or a "
                         + "nonnegative-weight Fibonacci-chain realization."))),
             DescribeRole.Theorem))));
+
+    private static DocumentBlock EvaluationNode() => Describe.Lean(
+        DescribeId.Create("positive-coefficients-positive-evaluation"),
+        DeclarationHandle.Create(
+            "D5/S3/Constants/NewtonHankelRealRootCriterion.eval_pos_of_positive_coefficients"),
+        H("Positive coefficients give positive evaluation"),
+        StatementSource.FromAuthor(Disp(EvaluationFormula())),
+        AssessedProvenance.FromRepo(),
+        Blocks(Paragraph(Text(
+            "A real polynomial of degree d with strictly positive coefficients from zero through d "
+                + "has a strictly positive value at every nonnegative real argument. "
+                + "The displayed degree equality and coefficient inequalities are the definition of "
+                + "HasPositiveCoefficientsOfDegree. "
+                + "Every term in its evaluation sum is nonnegative, and its constant term is strictly positive."))),
+        DescribeRole.Theorem);
+
+    private static Formula EvaluationFormula()
+    {
+        Formula reals = Seq(Mathbb, Grp(F.Id("R")));
+        Formula naturals = Seq(Mathbb, Grp(F.Id("N")));
+        Formula polynomial = ApplyNamed(Named("Polynomial"), reals);
+        Formula degree = new Formula.Relation(ApplyNamed(Named("Polynomial", "natDegree"), F.Id("P")),
+            FormulaRelationOperator.Equal, F.Id("d"));
+        Formula coefficients = Quantify("k", naturals, Implication(
+            new Formula.Relation(F.Id("k"), FormulaRelationOperator.LessThanOrEqual, F.Id("d")),
+            new Formula.Relation(D(0), FormulaRelationOperator.LessThan,
+                ApplyNamed(Named("Polynomial", "coeff"), F.Id("P"), F.Id("k")))));
+        Formula positive = new Formula.Logic(Parenthesized(degree), FormulaLogicOperator.And,
+            Parenthesized(coefficients));
+        Formula nonnegative = new Formula.Relation(D(0), FormulaRelationOperator.LessThanOrEqual, F.Id("x"));
+        Formula evaluation = ApplyNamed(Named("Polynomial", "eval"), F.Id("x"), F.Id("P"));
+        Formula conclusion = new Formula.Relation(D(0), FormulaRelationOperator.LessThan, evaluation);
+        return Quantify("P", polynomial, Quantify("d", naturals,
+            Implication(positive, Quantify("x", reals, Implication(nonnegative, conclusion)))));
+    }
+
+    private static Formula Named(params string[] parts)
+    {
+        var items = new System.Collections.Generic.List<Formula>();
+        foreach (var part in parts)
+        {
+            if (items.Count > 0) items.Add(Dot);
+            items.Add(F.Id(part));
+        }
+        return Seq(Operatorname, Grp(Seq([.. items])));
+    }
+    private static Formula ApplyNamed(Formula function, params Formula[] arguments) =>
+        new Formula.Apply(function, [.. arguments]);
+    private static Formula Parenthesized(Formula value) => Seq(F.Open, value, F.Close);
+    private static Formula Quantify(string name, Formula type, Formula body) => Seq(Forall, Sp,
+        Parenthesized(Seq(F.Id(name), Colon, Sp, type)), Comma, Sp, Parenthesized(body));
+    private static Formula Implication(Formula premise, Formula conclusion) =>
+        new Formula.Logic(Parenthesized(premise), FormulaLogicOperator.Implies, Parenthesized(conclusion));
 
     private static Formula TheoremFormula()
     {

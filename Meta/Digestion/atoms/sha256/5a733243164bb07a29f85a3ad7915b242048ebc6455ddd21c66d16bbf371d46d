@@ -1,0 +1,11 @@
+- $e$：来源 epoch 或原始历史身份。
+
+但是不能无条件宣称：
+
+$$
+\mathcal S=
+\kappa\times(a,A,B)\times\tau\times e
+$$
+
+就是普适最小状态。因为 $\kappa$ 与深度后验是否共同出现，取决于：
+

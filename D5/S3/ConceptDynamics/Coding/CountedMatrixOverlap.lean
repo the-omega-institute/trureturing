@@ -4,7 +4,7 @@
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
    utility: none
-   digest: Matrix multiplication constructs endpoint-preserving edge splittings and actual overlap conjugacies. -/
+   digest: Lexicographic numbered-edge fibers and rectangular overlap recoding. -/
 
 import D5.S3.ConceptDynamics.Coding.BipartiteOverlapConjugacy
 import Mathlib.Data.Matrix.Mul
@@ -39,14 +39,16 @@ abbrev Path {n : ℕ} (M : CountMat n n) :=
 def shift {n : ℕ} (M : CountMat n n) (x : Path M) : Path M :=
   ⟨fun i => x.val (i + 1), fun i => x.property (i + 1)⟩
 
-variable {n m : ℕ} (U : CountMat n m) (V : CountMat m n)
+section RectangularProduct
+
+variable {n m p : ℕ} (U : CountMat n m) (V : CountMat m p)
 
 /-- All factorizations with these fixed outside endpoints. -/
-abbrev Fiber (i k : Fin n) := Σ j : Fin m, Fin (U i j) × Fin (V j k)
+abbrev Fiber (i : Fin n) (k : Fin p) := Σ j : Fin m, Fin (U i j) × Fin (V j k)
 
 /-- The numbered edge is ranked by the lexicographic intermediate vertex and
 the two factor-edge numbers, using the proved count identity. -/
-noncomputable def fiberEquiv (i k : Fin n) :
+noncomputable def fiberEquiv (i : Fin n) (k : Fin p) :
     Fin ((U * V) i k) ≃ Fiber U V i k := by
   classical
   have hcard : Fintype.card (Fiber U V i k) = (U * V) i k := by
@@ -90,6 +92,24 @@ noncomputable def join (a : Edge U) (b : Edge V) (h : a.target = b.source) :
   rcases a with ⟨i, k, a⟩
   simp [join, split, Equiv.apply_symm_apply, Equiv.symm_apply_apply]
   exact (fiberEquiv U V i k).symm_apply_apply a
+
+/-- Split preserves the original left endpoint. -/
+@[simp] theorem split_source (a : Edge (U * V)) :
+    (split U V a).1.source = a.source := rfl
+
+/-- Both split half-edges meet at the same actual middle vertex. -/
+@[simp] theorem split_middle (a : Edge (U * V)) :
+    (split U V a).1.target = (split U V a).2.source := rfl
+
+/-- Split preserves the original right endpoint, now in Fin p. -/
+@[simp] theorem split_target (a : Edge (U * V)) :
+    (split U V a).2.target = a.target := rfl
+
+end RectangularProduct
+
+section ClosedProduct
+
+variable {n m : ℕ} (U : CountMat n m) (V : CountMat m n)
 
 def boundary : Boundary (Edge U) (Edge V) (Fin n) (Fin m) :=
   ⟨Edge.source, Edge.target, Edge.source, Edge.target⟩
@@ -144,5 +164,7 @@ noncomputable def elementaryHomeomorph : Path (U * V) ≃ₜ Path (V * U) :=
 #print axioms split_join
 #print axioms join_split
 #print axioms elementaryHomeomorph
+
+end ClosedProduct
 
 end D5.S3.ConceptDynamics.Coding.CountedMatrixOverlap

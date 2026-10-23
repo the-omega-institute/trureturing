@@ -1,1 +1,1 @@
-{"statement_id":"sha256:f77eba6f1643abe0e76dbc2765f6cca707dce89aa6ff6e3006f5ccab0305182d"}
+{"statement_id":"sha256:f77eba6f1643abe0e76dbc2765f6cca707dce89aa6ff6e3006f5ccab0305182d","declarations":[{"declaration_name_key":"ns(ns(ns(ns(ns(n0,2:D5),2:S1),10:Recurrence),18:NormOneLucasDouble),33:trace_sq_eq_trace_two_mul_add_two)","kind":"theorem"},{"declaration_name_key":"ns(ns(ns(ns(ns(n0,2:D5),2:S1),10:Recurrence),18:NormOneLucasDouble),37:companion_sq_eq_trace_two_mul_sub_two)","kind":"theorem"}]}

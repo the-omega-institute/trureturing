@@ -1,1 +1,1 @@
-{"statement_id":"sha256:4b40b288827191627f415ce0955bc7b26df5b33bbdde43324306a64e38f79c07"}
+{"statement_id":"sha256:aa55b0b497b9186de32a9783e9ed415270b4e2ab78fd3450592abf8ea85dc812","declarations":[{"declaration_name_key":"ns(ns(ns(n0,11:NumberField),5:discr),10:congr_simp)","kind":"theorem"},{"declaration_name_key":"ns(ns(ns(ns(ns(ns(n0,2:D5),2:S3),5:Arith),8:Lattices),24:PureCubicMixedMaximality),44:pure_cubic_mixed_maximality_and_discriminant)","kind":"theorem"}]}

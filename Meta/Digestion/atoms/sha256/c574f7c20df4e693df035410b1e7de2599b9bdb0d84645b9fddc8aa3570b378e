@@ -1,0 +1,24 @@
+**定理 23.11（有限联合实现、完成与稠密真子集）。** 对全部 $h\ge0$，$A_h=S_h$，每个限制 $A_{h+1}\to A_h$ 满射，而且
+
+$$
+\varprojlim_h A_h=\mathcal A.
+\tag{RA.2320}
+$$
+
+出生映射扩展为同胚 $\overline B:\overline{\mathcal T}\to\mathcal A$；有限来源的像恰为稠密真子集 $\mathcal A_{\rm fin}$。
+
+证明有限阶段。实际出生满足可见规则，所以 $A_h\subseteq S_h$。取 $x\in S_h$，把深度至多 $h$ 的零节点保留。值不减保证零节点的前缀仍为零，兄弟等式保证其内部满二叉结构。对深度小于 $h$ 的零节点，孩子值可见，依次用 $e_x=0,1,2$ 赋配对、$\beta,\alpha$；深度 $h$ 的零节点切为任意 $\alpha$ 或 $\beta$ 叶，因为其孩子出生尚未观察。这构造一个有限来源 $u_x$。按地址长度，与定理 23.7 相同的分支延迟归纳，只对 $|p|\le h$ 使用可见规则，得 $B(u_x)(p)=x(p)$。边界叶标签只影响下一层的出生，没有修改已指定值。$h=0$ 时阶段仅为根零，任一单叶来源均实现。于是反包含成立。给任一 $A_h$ 元素选这个来源，其深度 $h+1$ 出生限制是延拓，故连接映射满射。
+
+一个相容线程在每个坐标 $p$ 的值由任意 $h\ge|p|$ 读取，限制相容保证无关。根规则在零层检查；每个局部规则在 $h\ge|p|+1$ 检查，故所得全场属于 $\mathcal A$。反向，一个 $b\in\mathcal A$ 的全部限制属于 $S_h=A_h$。这完成具体线程识别，不把联合像改成单坐标像的自由乘积。一般线程与分离／实现的包装直接使用 [InverseLimitCompletion](../../../D5/S3/ConceptDynamics/RefinementGeometry/InverseLimitCompletion.lean) 的 `stateThread_injective_iff_separates`、`stateThread_bijective_iff_complete_and_separates` 和 [过程几何定理 4.1–4.4](RECURSIVE_RELATIONAL_OBSERVATION_PROCESS_GEOMETRY.md)。本节已供应它们所需的实际阶段与共同实现。
+
+证明无限来源对应。对任意 $b\in\mathcal A$，同样把零集合赋以 $e_b$ 决定的标签；无需它有限，所得仍满足 $\overline{\mathcal T}$ 的每项有限良构条件，记为 $\overline D(b)$。在无限树上，$\rho$ 的有限坐标定义见下节；引理 23.2 的地址长度归纳只经过一条有限祖先链，仍证明每个地址在至多 $2|p|$ 时出现。因此 $\overline B(v)$ 有定义，且同样的局部延迟归纳给出
+$\overline B\overline D=\operatorname{id}$、$\overline D\overline B=\operatorname{id}$。零集合和子出生时刻恢复所有初始标签，故不同来源分离；不需要在无限右脊上求 $\kappa$。
+
+给出精确有限依赖以证明两向连续。$h=0$ 的出生限制恒为根零。$h\ge1$ 时，原来源构造标签通过深度 $h-1$ 足以决定全部深度至多 $h$ 的出生：沿每条地址，只要父初始为配对就继续零出生；第一次初始叶的标签给一或二的分支时刻，后面全部延迟由左右字母决定。所用来源标签都是该地址的严格前缀。反向，出生通过深度 $r+1$ 决定初态构造标签通过深度 $r$：$b(p)>0$ 给初态不存在；$b(p)=0$ 时 $e_b(p)$ 给初态三种构造。两方向每个有限读数都只依赖有限读数，所以是同胚，且有限子空间的拓扑也由此对应。
+
+各局部规则只涉及有限离散坐标，违例有有限见证，故 $\mathcal A$ 在 $\mathcal D$ 中闭。紧有限坐标乘积及闭条件的完成机制沿用过程几何定理 4.3–4.4；如用 [CompactLocalRealization](../../../D5/S3/Observer/Completion/CompactLocalRealization.lean) 的 `compact_local_realization`，其紧载体取 $\mathcal A$ 或同胚的 $\overline{\mathcal T}$，不是有限树集合 $\mathcal T$。每个基本柱邻域只限制有限地址，取覆盖这些地址的某个深度，前面的 $u_x$ 同时实现它们，证明 $\mathcal A_{\rm fin}$ 稠密。
+
+最后全零场 $b_\infty(p)=0$ 满足所有局部规则，零集合是全部 $\mathcal P$，故不属于 $\mathcal A_{\rm fin}$。深度 $h$ 内全部为配对、深度 $h$ 边界切为叶的有限来源，实现其全部出生坐标到深度 $h$；完整全零场却只由无限全配对树实现，任何有限初态都不可能有全部地址。故子集是真子集，有限一致性不等于有限来源实现。这个具体实例也符合 [LocalDescentGlobalCompatibility](../../../D5/S3/ConceptDynamics/Gluing/LocalDescentGlobalCompatibility.lean) 的 `escaping_thread_not_in_global_image` 所区分的局部满射与全局像。证毕。
+
+[来源联合完成卷引理 2.2、定理 2.3、命题 2.4、推论 2.5](FIB_SOURCE_COMPLETION_DYNAMICS.md) 的来源是有限支持非相邻数字地址，读数为数字前缀和组成余数；其无有限 End 结论仍属于该读数族。（RA.2316）是另一种更强有序出生观察上的耗尽证书，不从数字／余数读数获得，也不声称任何无限场由有限来源实现。
+

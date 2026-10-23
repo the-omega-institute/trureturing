@@ -1,0 +1,14 @@
+**定义 49.1（完整数量轨迹与 composition 因子）。** 令
+\[
+\Gamma(a,b)=\bigl(q(M^n(a,b))\bigr)_{n\ge0},
+\qquad
+(a,b)\in\mathbb N_0^2\setminus\{(0,0)\},
+\]
+并定义完整数量观测
+\[
+\mathsf O(t)=\bigl(q(M^n c(t))\bigr)_{n\ge0}
+=\Gamma(c(t)).
+\]
+对源律 \(\pi\) 写 \(\mu_\pi=c_\#\pi\)，并把
+\(\mathsf O_\#\pi\) 视为在 \(\mathbb R^{\mathbb N_0}\) 上的观测律。
+
