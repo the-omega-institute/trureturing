@@ -851,13 +851,16 @@ def assembleZero (graph : ProofGraph) (paired := false) : MetaM (Option Expr) :=
   let seeds := armSeeds graph paired
   let table := dpTable arm costUpper seeds
   let rec go (fuel id : Nat) : MetaM (Option Expr) := do
-    if h : fuel = 0 then return none
+    if h : fuel = 0 then return ← throwError "graph.assembly_fuel:{id}"
     let v := vertex graph id
     if v.seed then return some v.origin
     if paired && v.structureSeed && !v.targetPart then return v.structureProof?
-    let some index := (table[id]?.getD {}).edge? | return none
-    let some edge := arm.edges[index]? | return none
-    let some schema := if paired then edge.pairedZeroProof else edge.zeroProof | return none
+    let some index := (table[id]?.getD {}).edge?
+      | throwError "graph.assembly_missing_backpointer:{id}"
+    let some edge := arm.edges[index]?
+      | throwError "graph.assembly_missing_edge:{id}:{index}"
+    let some schema := if paired then edge.pairedZeroProof else edge.zeroProof
+      | throwError "graph.assembly_missing_certificate:{id}:{index}"
     let mut arguments := #[]
     for p in edge.premises do
       let some proof ← go (fuel - 1) p | return none
