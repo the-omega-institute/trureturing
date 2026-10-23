@@ -486,7 +486,7 @@ indexes. Only compiled Lean declarations are read back; JSON is print-only. -/
     let command := s!"run_cmd LeanInformationAudit.SearchReduction.executeProbeFile {repr payload.toString}\n"
     IO.FS.writeFile input (imports ++ command)
     let workers := min 8 <| max 1 <|
-      ((← IO.getEnv "SEARCH_REDUCTION_WORKERS").bind String.toNat?).getD 1
+      ((← IO.getEnv "SEARCH_REDUCTION_WORKERS").bind String.toNat?).getD 8
     let child ← IO.Process.output {
       cmd := "lean", args := #[s!"-j{workers}", "--root=" ++ directory.toString,
         "-o", output.toString, input.toString]}

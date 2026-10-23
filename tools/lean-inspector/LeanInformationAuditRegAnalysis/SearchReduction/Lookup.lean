@@ -706,7 +706,7 @@ unsafe def lookupLeafPass (fallback : Bool) (table : LookupTable) (goal : MVarId
       ("ns", toJson ((← IO.monoNanosNow) - floorNs))] |>.compress}"
   let stride := (candidates.entries.size + 63) / 64
   let workers := min 8 <| max 1 <|
-    ((← IO.getEnv "SEARCH_REDUCTION_WORKERS").bind String.toNat?).getD 1
+    ((← IO.getEnv "SEARCH_REDUCTION_WORKERS").bind String.toNat?).getD 8
   let mut ordinal := 0
   let mut trace : LookupTrace := {
     complete := candidates.complete && table.complete,
