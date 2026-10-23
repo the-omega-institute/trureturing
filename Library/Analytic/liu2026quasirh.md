@@ -384,3 +384,78 @@ R_6(\delta_*)-R(\delta_*)=
 $$
 
 Both denominator factors are positive on $[1/3,1/2]$. The numerator's quadratic factor is concave with endpoint values $21,38$, hence positive throughout that interval. Numerically the two count exponents are $R_6(\delta_*)=0.7575635858\ldots$ and $R(\delta_*)=0.6254252143\ldots$. Thus retaining the old count and taking the minimum with this new input still attains the old maximum at $\delta_*$. It leaves the §459 energy exponent $(49-10\sqrt6)/12$ unchanged; replacing the old count outright would be weaker there. The $T$ factor and finite transport costs cannot improve this comparison. No optimization of other bins, new zero-density theorem, or lower bound on the actual energy is asserted. A stronger same-object joint estimate remains required.
+
+## The actual-order-six correlation for the inverse fourth moment
+
+The remaining correlation can first be sought for the actual inverse square, rather than for an arbitrary two-factor convolution. Reuse $g_D$ from (458.6) above, with the same original row family, fixed Fourier component $\xi$, nonnegative row weight $\Omega$, zero extensions and fixed profile/height contract. Let $r_j(a)$ denote the ideal whose prime valuations are $v_{\mathfrak p}(a)\bmod j$. Since each nonzero Möbius factor is squarefree, every column in $g_D$ is cube-free. Consequently $r_3$ is injective on this support: different columns cannot have an actual ratio character of order two. Different columns with equal $r_2$ have ratio order three; unequal $r_2$ forces order six. These statements refer to the underlying primitive ratio on the coprime locus; its original zeros remain in the row sum.
+
+The actual Möbius structure is retained by this cut. Write a cube-free column uniquely as $a=st^2$, with $s,t$ squarefree and $(s,t)=1$, and put
+
+$$
+A_D(s,t)=\sum_{ef=s}V(q_tq_e/D)V(q_tq_f/D).
+$$
+
+Every contributing pair is $d_1=te,d_2=tf$, and $\mu(d_1)\mu(d_2)=\mu(s)$. Hence the exact coefficient is
+
+$$
+g_D(st^2)=D^{-1}\mu(s)\xi(st^2)A_D(s,t).
+$$
+
+Thus the Möbius sign is constant within each parity-core block and cancels from its squared norm; it remains in cross-core products as $\mu(s)\mu(s')$. For complex $V$, no positivity of $A_D$ is asserted. Replacing these fixed cross-core coefficients by an independently chosen vector would lose the intended input.
+
+Define the actual weighted row kernel and two contractions by
+
+$$
+\begin{aligned}
+\mathcal K_{U,\Omega}(a,b)
+&=\sum_{u\ {\rm original}}\Omega(q_u/U)
+ \chi_a(u)\overline{\chi_b(u)},\\
+H_2^\mu
+&=\sum_s\sum_{u\ {\rm original}}\Omega(q_u/U)
+ \left|\sum_{r_2(a)=s}g_D(a)\chi_a(u)\right|^2,\\
+E_6^\mu
+&=\sum_{\substack{a,b\ {\rm cube\!\!-\!free}\\r_2(a)\ne r_2(b)}}
+ g_D(a)\overline{g_D(b)}\mathcal K_{U,\Omega}(a,b).
+\end{aligned}
+$$
+
+The last sum uses ordered pairs and is real by Hermitian symmetry; no nonnegativity is asserted for it. Finite expansion gives the same-object identity
+
+$$
+\sum_{u\ {\rm original}}\Omega(q_u/U)|M_\xi(u)|^4
+=H_2^\mu+E_6^\mu.
+$$
+
+**The cubic block is already paid.** Directly reuse the parity-block supplier in the [existing lower-order decomposition](faveri2026fixedorder.md#separating-the-lower-order-character-blocks). Its proof uses only the divisor envelope and the cited cubic sieve, so it applies to $G_D(a)=Dg_D(a)$, supported on $q_a\asymp K_\mu:=D^2$, with $|G_D(a)|\ll_{V,\varepsilon}q_a^\varepsilon$. With $B_s=(K_\mu/q_s)^{1/2}$, the existing bound and core sums give
+
+$$
+\begin{aligned}
+H_2^\mu
+&\ll_{\varepsilon,\mathrm{fixed\ data}}
+ (UK_\mu)^\varepsilon D^{-2}
+ \sum_{q_s\ll K_\mu}B_s
+ \left(U+U^{1/3}B_s+U^{2/3}B_s^{2/3}\right)\\
+&\ll_{\varepsilon,\mathrm{fixed\ data}}(UD)^\varepsilon U.
+\end{aligned}
+$$
+
+The mandatory $D^{-2}$ is the squared normalization of $g_D$. The source already supplies $\sum_s B_s\ll K_\mu$, $\sum_s B_s^2\ll K_\mu\log(2K_\mu)$ and $\sum_s B_s^{5/3}\ll K_\mu$; they are reused, not new counting results. The bound retains all original sixth-power-free rows, including lower inducing orders. A row enlargement is used only inside the positive cubic blocks, never to erase a mask from $E_6^\mu$.
+
+**The unpaid input is specific to these coefficients.** At $D=\sqrt U$, an upper bound
+
+$$
+\operatorname{Re}E_6^\mu
+\ll_{\varepsilon,\mathrm{fixed\ data}}U^{B+\varepsilon},
+\qquad
+1<B<\frac{31-10\sqrt6}{6},
+$$
+
+would give an inverse fourth moment of order $U^{B+\varepsilon}$. If uniform over the original finite components and the profile derivatives required by the existing common-cost contract, it would combine with the unchanged plain fourth moment at $D=N=\sqrt U$, $K=U$, to yield
+
+$$
+Q(b),\ \|(I-P)Ab\|_2^2
+\ll_{\varepsilon,\mathrm{fixed\ data}}
+K^{(B+3)/2+\varepsilon},
+$$
+
+strictly improving the current §459 exponent. This is a conditional consumer, not a supplied bound for $E_6^\mu$. The generic sixth-order sieve still gives only the $7/6$ inverse-fourth exponent. Separate bounds $H_2^\mu\ll U^{1+\varepsilon}$ and $E_6^\mu\ll U^{1+\varepsilon}$ would reach $K^{2+\varepsilon}$ through this Cauchy step, without a strict saving. These two separate upper bounds do not supply a sub-$U$ bound for the full inverse fourth moment. Other witness lengths, growing-height costs and the final signed Robin restoration remain unpaid. This application reuses the lower-order sieve results and adds no analytic Lean certification or literature-priority claim.
