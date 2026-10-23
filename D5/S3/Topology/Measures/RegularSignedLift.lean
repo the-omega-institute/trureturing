@@ -3,7 +3,7 @@
    mirror-B: D5/B/S3/Topology/Measures/RegularSignedLift
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
-   utility: construction
+   utility: none
    digest: Regular signed-measure lifts along arbitrary compact Hausdorff continuous surjections. -/
 
 import Mathlib.MeasureTheory.Integral.RieszMarkovKakutani.Real
