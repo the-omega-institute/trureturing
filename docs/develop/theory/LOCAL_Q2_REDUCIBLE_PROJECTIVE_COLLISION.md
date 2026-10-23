@@ -302,3 +302,210 @@ The first entry forces $c=1$, and the second forces $\omega^{-1}=\omega$, contra
 Proof. Take $M=L$ and $\sigma_j=\rho_j$ from Theorem 1.3. Both maps even satisfy the reducibility and non-torality conditions. The projectively irreducible hypothesis in [*Irreducible projective rigidity over the dyadic local field*, Theorem 1.2](LOCAL_Q2_IRREDUCIBLE_PROJECTIVE_RIGIDITY.md#1-the-fixed-source-comparison) is absent here, so that theorem is not an implication applicable to this pair. ∎
 
 ## 追加锚（本行以下为增补区）
+
+## 5. Strict-degree rigidity below twenty-four
+
+**Theorem 5.1 (Strict-degree reducible non-toral rigidity).** For every finite Galois extension $M/\mathbb Q_2$ with
+
+$$
+[M:\mathbb Q_2]<24,
+$$
+
+put $H=\operatorname{Gal}(M/\mathbb Q_2)$. Let
+
+$$
+\sigma_1,\sigma_2:H\longrightarrow PGL_3(\mathbb C)
+$$
+
+be injective homomorphisms. Assume that the full inverse image of $\sigma_1(H)$ in $GL_3(\mathbb C)$ preserves a nonzero proper complex subspace, that $\sigma_1(H)$ is contained in no algebraic torus, and that
+
+$$
+\forall g\in H\quad\exists h_g\in PGL_3(\mathbb C),
+\qquad
+\sigma_2(g)=h_g\sigma_1(g)h_g^{-1}.
+\tag{5.1}
+$$
+
+Then there is one $h\in PGL_3(\mathbb C)$ such that
+
+$$
+\sigma_2(g)=h\sigma_1(g)h^{-1}\qquad(g\in H).
+\tag{5.2}
+$$
+
+No reducibility, lift, or other additional hypothesis is imposed on $\sigma_2$.
+
+**Proof.** We keep the original element $g\in H$ throughout. First, reducibility of the second map is forced. If $\sigma_2$ were projectively irreducible, then (5.1), which is symmetric in the two maps, would let us apply Theorem 1.2 of [*Irreducible projective rigidity over the dyadic local field*](LOCAL_Q2_IRREDUCIBLE_PROJECTIVE_RIGIDITY.md#1-the-fixed-source-comparison) with $\sigma_2$ as its first map and $\sigma_1$ as its second. Its hypotheses are exactly met: the source is the actual finite group $H=\operatorname{Gal}(M/\mathbb Q_2)$, both maps are injective, and the same source elements are compared. The resulting global conjugacy would preserve projective irreducibility, contradicting the assumed reducibility of $\sigma_1$. Thus $\sigma_2$ is reducible as well.
+
+For $i=1,2$, let $\widetilde H_i$ be the inverse image of $\sigma_i(H)$ in $SL_3(\mathbb C)$. Since the projective image has order $|H|$, $\widetilde H_i$ is finite of order $3|H|$. The full inverse image in $GL_3(\mathbb C)$ consists of scalar multiples of $\widetilde H_i$, so it has exactly the same invariant subspaces. Reducibility therefore gives an invariant line or plane for $\widetilde H_i$. Average a positive definite Hermitian form over this finite group. The orthogonal complement is invariant too, and we obtain an invariant decomposition
+
+$$
+\mathbb C^3=L_i\oplus W_i,
+\qquad \dim L_i=1,\quad \dim W_i=2.
+$$
+
+Choose a basis adapted to this decomposition. Every matrix representative of $\sigma_i(g)$ has the form $\operatorname{diag}(a,B)$ with $a\in\mathbb C^\times$ and $B\in GL_2(\mathbb C)$. Dividing by $a$ gives the projective representative
+
+$$
+R_i(g)=\operatorname{diag}(1,r_i(g)),
+\qquad r_i(g)=a^{-1}B.
+\tag{5.3}
+$$
+
+This representative is independent of the scalar used for the original lift. If representatives for $g$ and $h$ are multiplied, their product is a representative for $gh$ up to a scalar, and the scalar cancels in the ratio of the two blocks. Hence
+
+$$
+ r_i:H\longrightarrow GL_2(\mathbb C),\qquad R_i=1\oplus r_i,
+\tag{5.4}
+$$
+
+are ordinary homomorphisms. This is a derived lift, not an assumption. If $r_i(g)=I_2$, then $R_i(g)=I_3$, so injectivity of $\sigma_i$ gives $g=1$; both $r_i$ are faithful.
+
+The group $H$ is nonabelian. Indeed, if it were abelian, the finite commuting group $r_1(H)$ would be simultaneously diagonalizable, so $R_1(H)$ and hence $\sigma_1(H)$ would lie in a diagonal algebraic torus, contrary to the hypothesis. A reducible finite-dimensional representation of a finite group splits after the same averaging argument. Thus, if either faithful $r_i$ were reducible, it would be a direct sum of two characters and would embed $H$ into an abelian group. Therefore both $r_i$ are irreducible. The projectivizations of $R_1$ and $R_2$ are still element-conjugate by (5.1).
+
+We will use the following elementary ordinary-character interface. If $U,V$ are finite-dimensional complex representations of a finite group with characters $\chi_U,\chi_V$, averaging the action on $\operatorname{Hom}(U,V)$ gives a projection whose trace is
+
+$$
+\frac1{|H|}\sum_{g\in H}\chi_V(g)\chi_U(g^{-1}).
+\tag{5.5}
+$$
+
+For irreducible $U,V$, this dimension is $0$ or $1$: a nonzero intertwiner is an isomorphism, and an endomorphism of an irreducible representation is scalar because an eigenspace is invariant. Averaging also splits every representation into irreducibles. Consequently equal ordinary characters give isomorphic representations, with equal irreducible multiplicities. This is the ordinary-character step used below; it requires only finite-group semisimplicity and no projective lift beyond (5.4).
+
+Suppose first that $3\nmid N$, where $N=|H|$. Choose $q\in\mathbb Z$ with
+
+$$
+3q+1\equiv0\pmod N.
+$$
+
+Write $d_i=\det R_i$. Define
+
+$$
+A_i(g)=d_i(g)^qR_i(g).
+\tag{5.6}
+$$
+
+These are ordinary homomorphisms, $\det A_i(g)=1$, and $A_i(g)^N=I$. From projective element-conjugacy there are $C_g\in GL_3(\mathbb C)$ and $\zeta_g\in\mathbb C^\times$ with
+
+$$
+A_2(g)=\zeta_g C_gA_1(g)C_g^{-1}.
+$$
+
+Taking determinants and then $N$th powers gives
+
+$$
+\zeta_g^3=1,\qquad \zeta_g^N=1.
+$$
+
+Since $\gcd(3,N)=1$, $\zeta_g=1$. Thus $A_1(g)$ and $A_2(g)$ are ordinarily conjugate for every $g$, so their ordinary characters agree. The character interface just proved supplies one fixed $C$ with $A_2=C A_1 C^{-1}$. Projectivizing $C$ proves (5.2) in this case. The determinant normalization is legitimate precisely because the determinant twist is a character, the congruence makes the twist determinant one, and the coprimality removes the projective cube-root ambiguity.
+
+It remains to treat the orders divisible by three. We first isolate the only representation-theoretic lemma needed for the cyclic cases.
+
+**Lemma 5.2 (Cyclic normal subgroup of index two).** Let $K$ be a finite group with a cyclic normal subgroup $A$ of index two. Let $u_1,u_2:K\to GL_2(\mathbb C)$ be irreducible, and suppose the projective maps $1\oplus u_1$ and $1\oplus u_2$ are element-conjugate on the same elements of $K$. Then $u_1$ and $u_2$ are isomorphic.
+
+**Proof.** If $A=1$, then $K$ is cyclic and has no irreducible two-dimensional complex representation, so assume $A=\langle a\rangle$ is nontrivial. Choose $t\notin A$ and let $\varphi$ be conjugation by $t$ on $A$. Since $t^2\in A$ and $A$ is abelian, $\varphi^2=1$.
+
+The restriction of $u_i$ to $A$ is a sum of two characters. They are distinct: if one character occurred twice, $A$ would act by scalars, and an eigenline of $u_i(t)$ would be $K$-invariant. Since the two weight lines are distinct, irreducibility forces $t$ to interchange them; otherwise either line would be $K$-invariant. Write the weights as $\alpha_i,\beta_i$. They are interchanged by $\varphi$, so neither is the trivial character. Put
+
+$$
+S_i=\{1,\alpha_i,\beta_i\}\subset\widehat A.
+$$
+
+At the generator $a$, element-conjugacy of $1\oplus u_i$ identifies the three eigenvalues up to one scalar and a permutation. That scalar is a ratio of $|A|$th roots of unity, hence is $\lambda\in\mu_{|A|}$ and defines a character $\eta\in\widehat A$ by $\eta(a)=\lambda$. Since $A$ is cyclic, the equality at $a$ is equality of character sets:
+
+$$
+S_2=\eta S_1.
+\tag{5.7}
+$$
+
+Let
+
+$$
+B=\{\kappa\in\widehat A:\kappa S_1=S_1\}.
+$$
+
+This is a subgroup of $\widehat A$ acting freely on the three-element set $S_1$, so $|B|$ is $1$ or $3$. Because $S_2$ is $\varphi$-invariant, (5.7) gives $\varphi(\eta)\eta^{-1}\in B$, where $\varphi$ acts on characters by precomposition with $\varphi^{-1}$. If $B=1$, then $\eta$ is $\varphi$-fixed. The only $\varphi$-fixed member of $S_1$ is $1$, while $1\in S_2$ implies $\eta^{-1}\in S_1$; hence $\eta=1$. If $|B|=3$, then $S_1$ is one coset of $B$, and because it contains $1$ it equals $B$. Again $1\in\eta S_1$ gives $\eta\in B$, so $\eta S_1=S_1$. In either case
+
+$$
+S_2=S_1.
+$$
+
+Removing the common character $1$, the restrictions $u_1|_A$ and $u_2|_A$ have the same two weights. Align their weight lines by one fixed change of basis. In that basis,
+
+$$
+ u_i(a)=\operatorname{diag}(\alpha(a),\beta(a)),
+ \qquad
+ u_i(t)=\begin{pmatrix}0&x_i\\y_i&0\end{pmatrix},
+\qquad x_i y_i\ne0.
+$$
+
+The element $t^2$ lies in the abelian subgroup $A$ and commutes with $t$. Since $A$ and $t$ generate $K$, $t^2$ is central in $K$, so $u_i(t^2)$ is scalar by irreducibility; also $u_i(t)^2=u_i(t^2)$. Since the restrictions on $A$ have been aligned,
+
+$$
+ x_1y_1=x_2y_2.
+$$
+
+Conjugation by $\operatorname{diag}(x_2/x_1,1)$ centralizes the aligned diagonal action of $A$ and changes the matrix for $t$ in $u_1$ into the matrix for $t$ in $u_2$. Since $A$ and $t$ generate $K$, this is one intertwiner for $u_1$ and $u_2$. The corresponding block matrix $\operatorname{diag}(1,C)$ is a single projective conjugator for the three-dimensional maps. No automorphism of the source has been used. ∎
+
+We now exhaust the orders divisible by three below $24$:
+
+$$
+3,6,9,12,15,18,21.
+\tag{5.8}
+$$
+
+The groups of orders $3$ and $9$ are abelian, since every group of prime or prime-square order is abelian. For order $15$, both Sylow subgroups are normal: the Sylow counts are forced to be one. Their direct product is cyclic of order $15$. These three orders are impossible because $H$ was shown nonabelian.
+
+At order $21$, the Sylow-seven subgroup $P$ is cyclic and normal. In a two-dimensional representation, the restriction to $P$ has either two distinct weight lines or one weight with multiplicity two. In the first case the quotient $H/P$, of order three, cannot interchange two lines, so it fixes both and the representation is reducible. In the second case $P$ acts by scalars. A Sylow-three subgroup $T$ is cyclic, $H=PT$, and an eigenline of $u(T)$ is invariant under both factors. Thus no irreducible two-dimensional representation exists at order $21$.
+
+At order $6$, the Sylow-three subgroup is cyclic, normal, and of index two, so Lemma 5.2 applies.
+
+Consider order $12$. If there are four Sylow-three subgroups, conjugation gives a transitive action on four objects. Its image in $S_4$ has order four or twelve, because it is transitive and its order divides $12$. A kernel of order three would be a normal Sylow-three subgroup, contrary to there being four; hence the action is faithful and $H$ is an index-two subgroup of $S_4$. The index-two subgroup is $A_4$: an index-two subgroup is the kernel of a nontrivial homomorphism $S_4\to C_2$, and the transpositions are conjugate and generate $S_4$, so this homomorphism is the sign map. The normal Klein four subgroup $V\triangleleft A_4$ has three nontrivial characters, cyclically permuted by a three-cycle. The multiset of two characters occurring in the restriction of a two-dimensional representation to $V$ is invariant under this cycle, so every nontrivial character has multiplicity zero. Hence $V$ acts trivially, and the representation is not faithful. This branch cannot occur.
+
+If the Sylow-three subgroup $P$ at order $12$ is normal, it is cyclic of order three. If $H$ centralizes $P$, a Sylow-two subgroup has order four and is abelian, and $H=P\times S$ is abelian. Otherwise the conjugation map $H\to\operatorname{Aut}(P)=C_2$ is onto. Its kernel $A=C_H(P)$ has order six; it contains the central subgroup $P$ and a subgroup of order two, so it is their direct product $C_6$. Thus $A$ is cyclic, normal, and of index two, and Lemma 5.2 applies.
+
+At order $18$, the Sylow-three subgroup $P$ has order nine and is normal, and Cauchy's theorem gives an involution $t$ outside $P$. Thus $H=P\rtimes\langle t\rangle$, with $P\cong C_9$ or $C_3\times C_3$. In the first case Lemma 5.2 applies. In the second case, use the faithful irreducible representation $r_1$ already derived. Its restriction to $P$ has two distinct weight characters $\alpha,\beta$, interchanged by $t$; one weight would make $P$ scalar and give a $t$-eigenline invariant under $H$. Faithfulness makes $\alpha,\beta$ independent in the two-dimensional $\mathbb F_3$ character space of $P$, since their common kernel is the kernel of $r_1|_P$. The involution induced by $t$ therefore interchanges a basis of that space. Its $+1$ and $-1$ eigenspaces, and likewise those of the dual action on $P$, are one-dimensional. Consequently
+
+$$
+P=P_+\times P_-,
+$$
+
+where $P_+$ and $P_-$ have order three, $t$ centralizes $P_+$ and inverts $P_-$. With generators $z$ of $P_+$ and $a$ of $P_-$,
+
+$$
+ z^3=a^3=t^2=1,
+\qquad tat^{-1}=a^{-1},
+\qquad [z,a]=[z,t]=1.
+\tag{5.9}
+$$
+
+Thus the actual group forced by the representation is
+
+$$
+H\cong C_3\times S_3.
+\tag{5.10}
+$$
+
+This is obtained from the admitted representation and does not assume a classification of groups of order eighteen.
+
+It remains to compare the two representations in (5.10). The central element $z$ acts in each irreducible $r_i$ as a scalar $c_iI_2$, by the eigenspace argument in the character interface. Faithfulness makes $c_i$ a nontrivial cube root of unity. The eigenvalue multisets of $R_i(z)=1\oplus r_i(z)$ are $\{1,c_i,c_i\}$. Projective element-conjugacy at $z$ preserves the singleton and double multiplicities, so its matching scalar must be $1$ and
+
+$$
+ c_1=c_2.
+\tag{5.11}
+$$
+
+Each restriction $r_i|_{S_3}$ is irreducible: an invariant line for $S_3$ would also be invariant under the scalar action of $z$, contradicting irreducibility of $r_i$. We can compare these restrictions directly. Let $S_3=\langle a,t\mid a^3=t^2=1,\ tat^{-1}=a^{-1}\rangle$. In an irreducible two-dimensional representation, $a$ cannot act as a scalar, since an eigenline of $t$ would then be invariant under all of $S_3$. Its two eigenvalues are distinct and their set is invariant under inversion, hence they are $\omega$ and $\omega^{-1}$ for a primitive cube root $\omega$. After aligning these two weight lines in the two restrictions, the matrix for $t$ is
+
+$$
+\begin{pmatrix}0&x_i\\y_i&0\end{pmatrix},
+\qquad x_iy_i=1,
+$$
+
+because $t^2=1$. The same diagonal conjugation as in Lemma 5.2 aligns the two matrices. Therefore one matrix $C$ intertwines $r_1|_{S_3}$ and $r_2|_{S_3}$; (5.11) shows that it also intertwines the action of $z$. Hence $\operatorname{diag}(1,C)$ globally conjugates $R_1$ and $R_2$, and its projective class gives (5.2).
+
+The orders in (5.8) are exhaustive, while all orders below $24$ that are coprime to three were handled by (5.6). The actual $\mathbb Q_2$ realization is used only to invoke Theorem 1.2 at the first step; the remaining argument is an elementary proof for every group and pair that reaches it. Both ordinary lifts in (5.4), the reducibility of the second map, and all conjugators were derived from the original hypotheses. This proves the theorem. ∎
+
+**Corollary 5.3 (Sharpness of the bound).** Consider the universal statement obtained from Theorem 5.1 by replacing $[M:\mathbb Q_2]<24$ with $[M:\mathbb Q_2]\le B$, while retaining the same fixed-source quantifiers, injectivity of both maps, reducibility and non-torality only for the first map, and no extra condition on the second map. Theorem 5.1 proves this statement for every $B\le23$. Theorem 1.3 of this volume gives an actual degree-$24$ extension of $\mathbb Q_2$ and injective maps satisfying even reducibility and non-torality for both maps, which are element-conjugate but not globally conjugate. Therefore $24$ is the first degree at which this universal rigidity statement fails, and the strict bound $[M:\mathbb Q_2]<24$ is optimal. This uses the existing degree-$24$ construction without reproducing it and makes no assertion about degrees above $24$. ∎
+
+## 追加锚（本行以下为增补区）

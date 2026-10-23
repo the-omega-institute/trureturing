@@ -493,13 +493,12 @@ backfill 条目由 residual-open 迁入 absorbed-closed        消化闭合
 
 ### 5.11 sshx 载体、公开证据与运行契约
 
-**多模型对抗共识**:`/sshx`(`consensus-rnd:sshx`)派 heca/codex-cli/nyxid-oracle 隔离席设计、实施、评审;载体按下列阶段约束分派,nyxid-oracle 只承担推理,不承担验证。
+**多模型对抗共识**:`/sshx`(`consensus-rnd:sshx`)派隔离席设计、实施、评审;载体按 skill 契约及下列阶段约束分派,nyxid-oracle 只承担推理,不承担验证。
 
-- **oracle 默认只用于推理,不用于验证**:nyxid-oracle(ChatGPT Pro)默认只接推理任务——思考面板、设计、研究、文献地图、搜题与证明路线推演;sshx 的 oracle 席同样只排在推理阶段。验证任务——评审与复审各席(含 architecture/quality/tests)、适用的独立终止或完成审计、判形与忠实性核对——不派 oracle,全部由 codex-cli 承担。oracle 的推理结论不算验证结果,进入验证前须由能执行的载体或 orchestrator 亲验。验证席因此同属一个模型族时,按第 5.2、5.8 条如实披露,不冒充多样性。
-- **目标迭代无总轮数上限**:覆盖 skill 的有限 `pass_budget`/耗尽停机规则,设计/修复/复审/适用独立终止审计不得因轮数停止仍可推进的目标。按证据修真实缺口,无进展须查根因换法,不原样空转。独立实施/评审、无未解 reject、适用完成审计及 PR MERGED 要求仍在;真实能力/授权/资源缺口按第 5.9 条。单次调用、有限重试、失败回退仍按各自契约,不等于目标轮数上限。
-- **默认不用 `isolated-token-subagent`**:覆盖 skill 的默认席位布局;推理多席阶段保留一 nyxid-oracle,其余席(含原 subagent 名额)及预测席在检出 heca 时派 heca,否则派 codex-cli。实施、探针与验证阶段全部 codex-cli,不得回退 nyxid-oracle 或 heca;codex-cli 不可用则该阶段 abstain。推理阶段只在 codex-cli/heca/nyxid-oracle 中按 `WorkerMode` 优先序作合规失败回退,无可用载体则 abstain;各阶段均不得回退 subagent 顶替。
-- **heca 推理席的 provider 按席机械抽签**:heca 检出、工作树放置、派发、通知、终态收集、隔离与归档沿 skill 契约。只读推理/预测席的 mode 规则优先于 skill 的 bypass-equivalent 要求:在父会话权限内选择可无人值守完成任务的兼容模式(如 codex `read-only`、claude `auto`),不得提升父会话权限;兼容模式不可用时按既有失败回退。用户/宿主显式指定的 provider/model 原样传递;未指定时,在已启用的 `codex`/`claude` provider 间按席机械抽签,可行布局须含至少一席 `claude`,使用各 provider 默认模型。派发前记录抽签结果且不得重抽;实际模型族、缺席与失败回退按第 5.2、5.8 条及 skill 披露,未取得不同模型族的完成证据不得宣称模型多样性。
-- **tests 席只能 codex-cli**:须在 `work_target` 真跑验证;nyxid-oracle 无工作树执行能力,其“跑过什么”一律 `ASSUMED-UNVERIFIED`。
+- **oracle 默认只用于推理,不用于验证**:nyxid-oracle(ChatGPT Pro)默认只接推理任务——思考面板、设计、研究、文献地图、搜题与证明路线推演;sshx 的 oracle 席同样只排在推理阶段。验证任务——评审与复审各席(含 architecture/quality/tests)、适用的独立终止或完成审计、判形与忠实性核对——不派 oracle,由能在 `work_target` 执行的载体承担。oracle 的推理结论不算验证结果,进入验证前须由能执行的载体或 orchestrator 亲验。验证席因此同属一个模型族时,按第 5.2、5.8 条如实披露,不冒充多样性。
+- **目标迭代无总轮数上限**:不记录 skill 可选的有限 `pass_budget`,设计/修复/复审/适用独立终止审计不得因轮数停止仍可推进的目标。按证据修真实缺口,无进展须查根因换法,不原样空转。独立实施/评审、无未解 reject、适用完成审计及 PR MERGED 要求仍在;真实能力/授权/资源缺口按第 5.9 条。单次调用、有限重试、失败回退仍按各自契约,不等于目标轮数上限。
+- **默认不用 `isolated-token-subagent`**:覆盖 skill 的默认席位布局;推理多席阶段保留一 nyxid-oracle,原 subagent 名额并入其余席,其余席及预测席按 skill 分派。实施、探针与验证阶段不得派或回退 nyxid-oracle,无合规载体则该阶段 abstain。失败回退按 skill 的 `WorkerMode` 优先序,无可用载体则 abstain;各阶段均不得回退 subagent 顶替。
+- **tests 席不派 nyxid-oracle**:须在 `work_target` 真跑验证;nyxid-oracle 无工作树执行能力,其“跑过什么”一律 `ASSUMED-UNVERIFIED`。
 - **推理提示词要求**:每个 nyx oracle/GPT Pro 推理提示词(含 nyxid-oracle/ChatGPT Pro brief)必须包含原文「深入思考与推理, 如数学推理按照正式定义定理证明推理」。
 - **每个 nyxid/ChatGPT Pro brief 必含 `https://github.com/the-omega-institute/trureturing`**,搜题/设计/研究等推理任务均适用;按需给 `/blob/<head-sha>/<path>`、PR/issue/checks 具体 URL,缺仓库地址即不合格。让席位独立取公开状态,不只转述状态;前提是实测仓库 `visibility=public`,私有时另测可达性,不假定。
 - **公开证据边界**:nyxid 可读已发布状态,不能核本地未推送分支/工作树。要交它推理的内容能推就先推(可用 draft PR/临时分支);不能公开须在 brief 明写,相关结论标假设,由能执行的载体或 orchestrator 亲验。

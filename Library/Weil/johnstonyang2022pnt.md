@@ -71,3 +71,7 @@ application of existing sources, not a new PNT estimate; its cutoff
 has no asserted computational efficiency. It does not bound the sign
 of the remaining finite arithmetic head or prove the full joint
 inequalities, Robin, or RH.
+
+## Verified locator
+
+- URL: https://arxiv.org/abs/2204.01980v2

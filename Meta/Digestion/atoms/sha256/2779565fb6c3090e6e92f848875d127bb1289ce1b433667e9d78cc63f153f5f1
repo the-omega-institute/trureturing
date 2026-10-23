@@ -1,0 +1,4 @@
+2. For every real $p,v$, there is at most one complete world in
+$C(p,v)$ with $b\ge8$. More precisely, among worlds with $b\ge8$
+and the same fifth reading $p$, increasing $b$ strictly decreases
+$r$ and strictly increases the sixth reading $v$.
