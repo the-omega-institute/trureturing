@@ -28,7 +28,7 @@ def rowReturn {K : Type*} [Field K] (r : Kˣ) (c : K) : Perm K where
   left_inv h := by simp
   right_inv h := by simp
 
-private theorem row_power {K : Type*} [Field K] (r : Kˣ) (c h : K) (n : ℕ) :
+theorem row_power {K : Type*} [Field K] (r : Kˣ) (c h : K) (n : ℕ) :
     (rowReturn r c ^ n) h = c + (r : K) ^ n * (h - c) := by
   induction n with
   | zero => simp
