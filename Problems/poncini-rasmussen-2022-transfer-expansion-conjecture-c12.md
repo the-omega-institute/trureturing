@@ -238,7 +238,7 @@ Experiment: [pinned program and results](https://github.com/the-omega-institute/
 | `D5.S3.StatisticalMechanics.VertexModels.PonciniRasmussenTransferExpansion.signChanges_le` | bind-only | `none` | `claim_of_spectral_obligations` |
 | `D5.S3.StatisticalMechanics.VertexModels.PonciniRasmussenTransferExpansion.walsh_right_cancel` | bind-only | `none` | `claim_of_spectral_obligations` |
 | `D5.S3.StatisticalMechanics.VertexModels.PonciniRasmussenTransferExpansion.claim_of_spectral_obligations` | bind-only | `none` | `claim_of_scalar_identity` |
-| `D5.S3.StatisticalMechanics.VertexModels.PonciniRasmussenTransferExpansion.claim_of_scalar_identity` | content | `central_spectral_coeff` | `result` |
+| `D5.S3.StatisticalMechanics.VertexModels.PonciniRasmussenTransferExpansion.claim_of_scalar_identity` | content | `transfer_walsh` | `result` |
 | `D5.S3.StatisticalMechanics.VertexModels.PonciniRasmussenTransferExpansion.result` | content | `central_spectral_coeff` | none (settling result) |
 
 The supporting scalar module has admission basis `escape-witness`. The modified existing owner retains admission basis `escape-witness`. The settling module has admission basis `open-problem-resolution (#19637; Proved)`. All three carry `utility: none`.
