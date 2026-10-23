@@ -57,11 +57,11 @@ The proof would not answer the question if the module's competitors were restric
 
 ## Evidence
 
-The canonical source is `D5/S3/Quantum/Measurement/DeferredInstrumentUniqueness.lean` (998 lines).
+The canonical source is `D5/S3/Quantum/Measurement/DeferredInstrumentUniqueness.lean` (994 lines).
 - **Proof.** It proves `result : claim`.
 - **Axioms.** It uses only the standard axioms `propext`, `Classical.choice` and `Quot.sound`; no `sorry`, `native_decide`, or new axiom.
 
-Frozen state: `Golden/Frozen/state/D5/S3/Quantum/Measurement/DeferredInstrumentUniqueness.lean.json`, statement `sha256:6b81822eb5c7d8791857b4a1c7df4e5e6adef559b49d5fdb172768627dd1b229`.
+Frozen state: `Golden/Frozen/state/D5/S3/Quantum/Measurement/DeferredInstrumentUniqueness.lean.json`, statement `sha256:1ea5e86718cf75bea63517221f5922c1d24f2cb1e58d001a70e00e06a21b5652`.
 
 Declaration statements:
 - `result`: `sha256:8dbbe0f78fb0d8a4a8a7ed99dc442b1e717d79db38205689fc672d508796a249`;

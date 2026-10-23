@@ -38,7 +38,7 @@ $$\forall (d : \mathbb{N}), \forall (t : \mathbb{R}), \forall (rho : Matrix\left
 
 *Commentary.*
 
-Equation (eq:Ir) defines the depolarizing map. Its action is specified on every complex matrix, without a positivity or trace-one restriction on the argument. The trace factor is complex, while the noise coefficient is formed in ℝ before being cast to ℂ.
+It is the depolarizing channel depolarized id (1 - t) from the frozen TracePreservingEigenvalueBound. Its action is specified on every complex matrix, without a positivity or trace-one restriction on the argument. The formula is t ρ + (1 - t)/d · tr(ρ) 1; the trace factor is complex, while the noise coefficient is formed in ℝ before being cast to ℂ.
 
 **Definition 1.4 (The upper-boundary noise).**
 
@@ -138,3 +138,4 @@ For a general unitary U, the transformed outcome map ρ ↦ U*Jₓ(UρU*)U is co
 - Truth anchor: `D5/S3/Quantum/Measurement/DeferredInstrumentUniqueness.result`
 - Truth anchor: `D5/S3/Quantum/Measurement/DeferredInstrumentUniqueness.sMax`
 - Dependency: [D5/S3/Quantum/Foundation/FiniteKrausRepresentation](../Foundation/FiniteKrausRepresentation.md)
+- Dependency: [D5/S3/Quantum/QuantumChannels/TracePreservingEigenvalueBound](../QuantumChannels/TracePreservingEigenvalueBound.md)
