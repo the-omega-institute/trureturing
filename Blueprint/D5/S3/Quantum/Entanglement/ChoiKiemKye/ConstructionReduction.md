@@ -526,5 +526,5 @@ The formula uses the actual Lean names and notation. HDiv.hDiv is displayed in i
 - Truth anchor: `D5/S3/Quantum/Entanglement/ChoiKiemKye/ConstructionReduction.sum_indicator_le`
 - Truth anchor: `D5/S3/Quantum/Entanglement/ChoiKiemKye/ConstructionReduction.tensor`
 - Truth anchor: `D5/S3/Quantum/Entanglement/ChoiKiemKye/ConstructionReduction.triangular_pivot`
-- Dependency: [D5/S3/Quantum/Divergence/ConditionalHockeyStickOrthogonalReduction](../../Divergence/ConditionalHockeyStickOrthogonalReduction.md)
 - Dependency: [D5/S3/Quantum/Entanglement/StructuredNegativityCoincidenceRefutation](../StructuredNegativityCoincidenceRefutation.md)
+- Dependency: [D5/S3/Quantum/Measurement/FiniteDetectionDarkSpace](../../Measurement/FiniteDetectionDarkSpace.md)
