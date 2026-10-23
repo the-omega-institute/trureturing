@@ -323,14 +323,15 @@ structure LocalResult where
   used : List Nat := []
   sharedData? : Option Bool := none
   lookup : LookupTrace := {}
+  certificate? : Option ObviousCertificate := none
 
 private unsafe def solveLookupGoal (table : LookupTable) (goal : MVarId)
-    (facts : Array Expr) (tryLocal := true) : MetaM LookupTrace := goal.withContext do
+    (facts : Array Expr) (tryLocal := true) (name? : Option Name := none) : MetaM LookupTrace := goal.withContext do
   if tryLocal && (← solveLocalGoal goal facts) then return {complete := true}
   let type ← withReducible <| whnf (← goal.getType)
   if type.isForall then
     let (fvar, next) ← goal.intro1
-    return ← solveLookupGoal table next (facts.push (mkFVar fvar))
+    return ← solveLookupGoal table next (facts.push (mkFVar fvar)) true name?
   if type.isAppOfArity ``And 2 || type.isAppOfArity ``Iff 2 then
     let saved ← saveState
     let ctor := if type.isAppOfArity ``And 2 then ``And.intro else ``Iff.intro
@@ -338,7 +339,7 @@ private unsafe def solveLookupGoal (table : LookupTable) (goal : MVarId)
     let mut trace : LookupTrace := {complete := true}
     let mut solved := true
     for next in goals do
-      let leaf ← solveLookupGoal table next facts
+      let leaf ← solveLookupGoal table next facts true name?
       trace := {
         visited := trace.visited + leaf.visited
         attempted := trace.attempted + leaf.attempted
@@ -352,6 +353,9 @@ private unsafe def solveLookupGoal (table : LookupTable) (goal : MVarId)
     if solved then return trace
     saved.restore
   let projected ← eliminateLocal facts
+  if let some name := name? then
+    return ← lookupNamedLeaf table name goal (fun next => exactLocal next projected)
+      (fun next => solveLocalGoal next facts)
   lookupLeaf table goal (fun next => exactLocal next projected)
     (fun next => solveLocalGoal next facts)
 
@@ -453,7 +457,7 @@ def independentRebuild (localRoute lookup : MetaM LocalResult)
 /-- Only statement types enter R. The successful lambda retains precisely its
 used premise binders, so zero edges carry their actual premises. -/
 private unsafe def rebuildRoute (target : Expr) (types : List Expr)
-    (lookup? : Option LookupTable) : MetaM LocalResult := do
+    (lookup? : Option LookupTable) (certificate? : Option ObviousCertificate := none) : MetaM LocalResult := do
   let originalEnv ← getEnv
   let finish (proof : Expr) : MetaM Expr := do
     if let some exportProof := lookup?.bind (·.finish?) then
@@ -470,16 +474,23 @@ private unsafe def rebuildRoute (target : Expr) (types : List Expr)
     let mut membershipTrace : LookupTrace := {complete := true}
     if let some table := lookup? then
         let exactRoot ← mkFreshExprMVar target
-        let exactTrace ← lookupExact table exactRoot.mvarId!
+        let exactTrace ← match certificate? with
+          | some (.member name) => lookupNamedMember table name exactRoot.mvarId!
+          | some _ => pure {complete := true}
+          | none => lookupExact table exactRoot.mvarId!
         membershipTrace := exactTrace
         if exactTrace.source?.isSome then
           let proof ← finish (← instantiateMVars exactRoot)
           withEnv originalEnv <| checkLocalProof target proof
           return {
             cost := .zero, proof? := some proof, lookup := exactTrace,
+            certificate? := exactTrace.source?.map ObviousCertificate.member,
             detail := s!"kernel-checked-lookup:{exactTrace.source?}"}
+    if certificate?.any (fun c => match c with | .member _ => true | _ => false) then
+      return {detail := "certificate.member_not_verified"}
     let trace ← if let some table := lookup? then
-        goal.withContext (solveLookupGoal table goal available false)
+        goal.withContext (solveLookupGoal table goal available false
+          (certificate?.bind fun c => match c with | .lookup n => some n | _ => none))
       else do
         discard <| goal.withContext (solveLocalGoal goal available)
         pure {complete := true}
@@ -505,8 +516,23 @@ private unsafe def rebuildRoute (target : Expr) (types : List Expr)
     withEnv originalEnv <| checkLocalProof certificateType certificate
     return {
       cost := .zero, proof? := some certificate, used, lookup := trace,
+      certificate? := some (trace.source?.map ObviousCertificate.lookup |>.getD .close),
       detail := if let some name := trace.source? then s!"kernel-checked-lookup:{name}"
         else "kernel-checked-statement"}
+
+/-- The replayer constructs the complete target and Γ; the author supplies
+only a frozen constructor and optionally one untrusted name. Failed replay,
+including a capped candidate, can never produce cost one. -/
+unsafe def replayCertificate (target : Expr) (types : List Expr)
+    (certificate : ObviousCertificate) (lookup? : Option LookupTable := none) : MetaM LocalResult := do
+  let result ← match certificate with
+    | .close => boundedRebuildBranch (rebuildRoute target types none (some certificate))
+    | _ =>
+      if let some table := lookup? then
+        boundedRebuildBranch (rebuildRoute target types (some table) (some certificate)) table.budget?
+      else pure {detail := "certificate.lookup_unavailable"}
+  if result.cost == .zero then return {result with certificate? := some certificate}
+  return {result with cost := .unknown, proof? := none, certificate? := none}
 
 /-- Typed answers are scoped to exact target vocabulary, protected basis data
 and the explicit R version. JSON projections never enter this cache. -/

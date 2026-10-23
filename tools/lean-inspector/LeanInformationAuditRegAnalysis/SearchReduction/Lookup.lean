@@ -489,6 +489,26 @@ unsafe def lookupExact (table : LookupTable) (goal : MVarId) : MetaM LookupTrace
     if trace.source?.isSome then return trace
   return trace
 
+/-- A member certificate must be recalled by the full-B0 alpha hash. Naming
+an arbitrary definitionally equal declaration does not bypass membership. -/
+unsafe def lookupNamedMember (table : LookupTable) (name : Name)
+    (goal : MVarId) : MetaM LookupTrace := goal.withContext do
+  if !table.enabled then return {}
+  let some index ← tableIndex table | return {}
+  let type ← goal.getType
+  let candidates ← DiskLookup.queryMembership index type table.budget?
+  let some entry := candidates.entries.find? (·.leanName == name) | return {}
+  boundedLookupCandidate table entry goal do
+    let candidate ← candidateValue table entry none type
+    if let some reason := candidate.failure? then
+      return {failures := #[reason], missing := #[name]}
+    for value in candidate.values do
+      if ← withReducible <| isDefEq (← inferType value) type then
+        candidate.certify
+        goal.assign (← instantiateMVars value)
+        return {complete := true, source? := some name, attempted := 1}
+    return {complete := true}
+
 partial def inlineLookupSupport (base : Environment) (proof : Expr)
     (seen : NameSet := {}) : MetaM Expr :=
   Core.transform proof (pre := fun e => do
@@ -681,6 +701,16 @@ unsafe def attemptLookupLeaf (table : LookupTable) (entry : DiskLookup.Entry)
             unloaded := if candidate.unloaded then 1 else 0}
         saved.restore
     return {complete := true, attempted, unloaded := if candidate.unloaded then 1 else 0}
+
+/-- Exactly the production primary-index recall and v16 single-candidate
+attempt. In particular, naming a star or out-of-B_T theorem cannot admit it. -/
+unsafe def lookupNamedLeaf (table : LookupTable) (name : Name) (goal : MVarId)
+    (unify close : MVarId → MetaM Bool) : MetaM LookupTrace := goal.withContext do
+  if !table.enabled then return {}
+  let some index ← tableIndex table | return {}
+  let candidates ← queryLookup table index (← goal.getType) none false
+  let some entry := candidates.entries.find? (·.leanName == name) | return {}
+  attemptLookupLeaf table entry goal unify close
 
 /-- Only loaded candidates may run concurrently: importing and freeing a
 temporary module remains owned by the serial thread. Each task receives the

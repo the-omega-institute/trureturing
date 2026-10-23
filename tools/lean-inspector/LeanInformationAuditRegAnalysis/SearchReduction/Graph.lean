@@ -1,4 +1,5 @@
 import Lean
+import LeanInformationAuditRegAnalysis.SearchReduction.CertificateSyntax
 import Lean.Elab.Tactic.Omega
 import Lean.Elab.Tactic.Simp
 
@@ -97,6 +98,8 @@ structure GraphEdge where
   pairedVisibleCost : EdgeCost := .unknown
   zeroProof : Option Expr := none
   pairedZeroProof : Option Expr := none
+  certificate? : Option ObviousCertificate := none
+  pairedCertificate? : Option ObviousCertificate := none
   detail : String := ""
   window : Nat := 1
   sharedData? : Option Bool := none
