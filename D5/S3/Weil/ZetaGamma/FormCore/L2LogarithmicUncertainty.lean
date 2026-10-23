@@ -1,7 +1,7 @@
 /- GID: D5/S3/Weil/ZetaGamma/FormCore/L2LogarithmicUncertainty
    D5/Scribe: linked exception pending faithful Reg intake for the new bridge.
    The source is retained as the scientific product; no acceptance wrapper is
-   promoted for the still-open layer-cake obligation.
+   promoted for the still-open downstream endpoint obligations.
 
   Actual L2 Fourier concentration bridge (B02).
 
@@ -14,6 +14,10 @@ import D5.S3.Weil.ZetaGamma.FormCore.LineFourier
 import Mathlib.MeasureTheory.Function.LpSeminorm.TriangleInequality
 import Mathlib.MeasureTheory.Function.LpSeminorm.LpNorm
 import Mathlib.MeasureTheory.Integral.Bochner.Basic
+import Mathlib.MeasureTheory.Integral.Layercake
+import Mathlib.MeasureTheory.Measure.WithDensity
+import Mathlib.MeasureTheory.Function.L1Space.Integrable
+import Mathlib.Analysis.SpecialFunctions.ImproperIntegrals
 
 noncomputable section
 
@@ -635,6 +639,236 @@ private theorem source_energy_eq_norm_sq (u : LineL2) :
     sourceEnergy u = ‖u‖ ^ 2 := by
   exact lp_mass_eq_norm_sq u
 
+private theorem bandMass_eq_setIntegral (f : LineL2) {R : ℝ} (hR : 0 < R) :
+    bandMass f R = ∫ x : ℝ in cyclesBand R, ‖f x‖ ^ 2 := by
+  have hnorm : ‖bandPiece f R‖ ^ 2 = ∫ x : ℝ, ‖bandPiece f R x‖ ^ 2 := by
+    rw [lp_mass_eq_norm_sq]
+  have hcoe : (bandPiece f R : ℝ → ℂ) =ᵐ[volume]
+      (cyclesBand R).indicator (f : ℝ → ℂ) :=
+    (bandMemLp f R).coeFn_toLp
+  change ‖bandPiece f R‖ ^ 2 = ∫ x : ℝ in cyclesBand R, ‖f x‖ ^ 2
+  rw [hnorm]
+  calc
+    (∫ x : ℝ, ‖bandPiece f R x‖ ^ 2) =
+        ∫ x : ℝ, ‖(cyclesBand R).indicator (f : ℝ → ℂ) x‖ ^ 2 := by
+      apply integral_congr_ae
+      filter_upwards [hcoe] with x hx
+      rw [hx]
+    _ = ∫ x : ℝ, (cyclesBand R).indicator (fun x => ‖f x‖ ^ 2) x := by
+      apply integral_congr_ae
+      filter_upwards with x
+      by_cases hx : x ∈ cyclesBand R <;> simp [hx]
+    _ = ∫ x : ℝ in cyclesBand R, ‖f x‖ ^ 2 := by
+      change (∫ x : ℝ, (Ioo (-R) R).indicator (fun x => ‖f x‖ ^ 2) x) = _
+      rw [integral_indicator measurableSet_Ioo]
+      rfl
+
+/- The missing negative layer is now proved from the whole band profile.  The
+   density measure packages the actual Fourier square mass, so the layer-cake
+   tails are the genuine band masses rather than a scalar surrogate. -/
+theorem nonnegative_layer_cake_bound
+    {f : ℝ → ℂ} {S m A : ℝ}
+    (hA : 0 < A) (hS : 0 < S) (hm : 0 < m)
+    (hAeq : A = S / (32 * m))
+    (hMassInt : Integrable (fun x : ℝ => ‖f x‖ ^ 2) volume)
+    (hMass : (∫ x : ℝ, ‖f x‖ ^ 2) = S)
+    (hProfile : ∀ {R : ℝ}, 0 < R →
+      (∫ x : ℝ in cyclesBand R, ‖f x‖ ^ 2) ≤
+        4 * Real.sqrt (2 * R * m / S) * S) :
+    Integrable (fun x : ℝ =>
+      max (Real.log (A / |x|)) 0 * ‖f x‖ ^ 2) volume ∧
+      (∫ x : ℝ, max (Real.log (A / |x|)) 0 * ‖f x‖ ^ 2) ≤ 2 * S := by
+  classical
+  let q : ℝ → ℝ := fun x => ‖f x‖ ^ 2
+  let h : ℝ → ℝ := fun x => max (Real.log (A / |x|)) 0
+  let qE : ℝ → ℝ≥0∞ := fun x => ENNReal.ofReal (q x)
+  let μ : Measure ℝ := volume.withDensity qE
+  have hq_int : Integrable q volume := by simpa [q] using hMassInt
+  have hq_ae : AEMeasurable q volume := hq_int.aestronglyMeasurable.aemeasurable
+  have hqE_ae : AEMeasurable qE volume := by
+    exact hq_ae.ennreal_ofReal
+  have hmeas : Measurable h := by
+    dsimp [h]
+    fun_prop
+  have hmeas_ae : AEMeasurable h μ := hmeas.aemeasurable
+  have hnonneg : ∀ᵐ x : ℝ ∂μ, 0 ≤ h x :=
+    Eventually.of_forall (fun x => le_max_right _ _)
+  have hlayer :
+      (∫⁻ x : ℝ, ENNReal.ofReal (h x) ∂μ) =
+        ∫⁻ t : ℝ in Ioi 0, μ {x : ℝ | t < h x} :=
+    lintegral_eq_lintegral_meas_lt μ hnonneg hmeas_ae
+  have hleft :
+      (∫⁻ x : ℝ, ENNReal.ofReal (h x * q x)) =
+        ∫⁻ x : ℝ, ENNReal.ofReal (h x) ∂μ := by
+    rw [lintegral_withDensity_eq_lintegral_mul₀ hqE_ae hmeas.aemeasurable.ennreal_ofReal]
+    apply lintegral_congr_ae
+    filter_upwards with x
+    dsimp [qE, q]
+    calc
+      ENNReal.ofReal (h x * ‖f x‖ ^ 2) =
+          ENNReal.ofReal (‖f x‖ ^ 2 * h x) := by rw [mul_comm]
+      _ = ENNReal.ofReal (‖f x‖ ^ 2) * ENNReal.ofReal (h x) :=
+        ENNReal.ofReal_mul (sq_nonneg _)
+  have htail_bound : ∀ᵐ t : ℝ ∂(volume.restrict (Ioi 0)),
+      μ {x : ℝ | t < h x} ≤
+        ENNReal.ofReal (4 * Real.sqrt (2 * (A * Real.exp (-t)) * m / S) * S) := by
+    filter_upwards [ae_restrict_mem measurableSet_Ioi] with t ht
+    have htpos : 0 < t := ht
+    let R : ℝ := A * Real.exp (-t)
+    have hR : 0 < R := by dsimp [R]; positivity
+    have hset : {x : ℝ | t < h x} =ᵐ[μ] cyclesBand R := by
+      filter_upwards [Measure.ae_ne μ (0 : ℝ)] with x hx0
+      have hxabs : 0 < |x| := abs_pos.mpr hx0
+      apply propext
+      constructor
+      · intro htx
+        have htx' : t < Real.log (A / |x|) := by
+          rcases (lt_max_iff.mp htx) with htx' | htx'
+          · exact htx'
+          · linarith
+        have hexp : Real.exp t < A / |x| :=
+          (Real.lt_log_iff_exp_lt (div_pos hA hxabs)).mp htx'
+        have hmul : Real.exp t * |x| < A :=
+          (lt_div_iff₀ hxabs).mp hexp
+        have htarget : |x| < A * Real.exp (-t) := by
+          have hdiv : |x| < A / Real.exp t := by
+            exact (lt_div_iff₀ (Real.exp_pos t)).mpr (by simpa [mul_comm] using hmul)
+          simpa [div_eq_mul_inv, ← Real.exp_neg] using hdiv
+        simpa [cyclesBand, R, abs_lt] using htarget
+      · intro htx
+        have htarget : |x| < A * Real.exp (-t) := by
+          simpa [cyclesBand, R, abs_lt] using htx
+        have hmul : Real.exp t * |x| < A := by
+          have hdiv : |x| < A / Real.exp t := by
+            simpa [div_eq_mul_inv, ← Real.exp_neg] using htarget
+          simpa [mul_comm] using (lt_div_iff₀ (Real.exp_pos t)).mp hdiv
+        have hexp : Real.exp t < A / |x| :=
+          (lt_div_iff₀ hxabs).mpr (by simpa [mul_comm] using hmul)
+        have htx' : t < Real.log (A / |x|) :=
+          (Real.lt_log_iff_exp_lt (div_pos hA hxabs)).mpr hexp
+        exact (lt_max_iff.mpr (Or.inl htx'))
+    have hmeasure : μ {x : ℝ | t < h x} = μ (cyclesBand R) :=
+      measure_congr hset
+    rw [hmeasure]
+    dsimp [μ]
+    change (volume.withDensity qE) (Ioo (-R) R) ≤ _
+    rw [withDensity_apply qE measurableSet_Ioo]
+    dsimp [qE, q]
+    rw [← ofReal_integral_eq_lintegral_ofReal
+      (μ := volume.restrict (Ioo (-R) R)) hq_int.integrableOn]
+    · exact ENNReal.ofReal_le_ofReal (hProfile hR)
+    · filter_upwards [ae_restrict_mem measurableSet_Ioo] with x hx
+      exact sq_nonneg _
+  let C : ℝ := 4 * Real.sqrt (2 * m / S) * S * Real.sqrt A
+  have hsqrt_exp (t : ℝ) : Real.sqrt (Real.exp (-t)) = Real.exp (-t / 2) := by
+    have he : Real.exp (-t) = (Real.exp (-t / 2)) ^ 2 := by
+      rw [pow_two, ← Real.exp_add]
+      congr 1 <;> ring
+    rw [he, Real.sqrt_sq_eq_abs, abs_of_pos (Real.exp_pos _)]
+  have hprofile_exp (t : ℝ) :
+      4 * Real.sqrt (2 * (A * Real.exp (-t)) * m / S) * S =
+        C * Real.exp (-t / 2) := by
+    dsimp [C]
+    have h₁ : 0 ≤ 2 * m / S := by positivity
+    have h₂ : 0 ≤ A := hA.le
+    calc
+      4 * Real.sqrt (2 * (A * Real.exp (-t)) * m / S) * S =
+          4 * (Real.sqrt (2 * m / S) * Real.sqrt (A * Real.exp (-t))) * S := by
+            congr 2
+            rw [show 2 * (A * Real.exp (-t)) * m / S =
+                (2 * m / S) * (A * Real.exp (-t)) by ring,
+              Real.sqrt_mul h₁]
+      _ = 4 * Real.sqrt (2 * m / S) * S *
+          (Real.sqrt A * Real.exp (-t / 2)) := by
+            rw [Real.sqrt_mul h₂, hsqrt_exp]
+            ring
+      _ = (4 * Real.sqrt (2 * m / S) * S * Real.sqrt A) *
+          Real.exp (-t / 2) := by ring
+  have hC_nonneg : 0 ≤ C := by
+    dsimp [C]
+    positivity
+  have hexp_int : Integrable (fun t : ℝ => Real.exp ((-1 / 2) * t))
+      (volume.restrict (Ioi (0 : ℝ))) := by
+    exact integrableOn_exp_mul_Ioi (by norm_num) 0
+  have hC_int : Integrable (fun t : ℝ => C * Real.exp ((-1 / 2) * t))
+      (volume.restrict (Ioi (0 : ℝ))) := by
+    simpa [smul_eq_mul] using hexp_int.const_mul C
+  have hC_nonneg_ae : ∀ᵐ t : ℝ ∂(volume.restrict (Ioi 0)),
+      0 ≤ C * Real.exp ((-1 / 2) * t) :=
+    Eventually.of_forall (fun t => mul_nonneg hC_nonneg (Real.exp_pos _).le)
+  have hC_eval :
+      (∫ t : ℝ in Ioi 0, C * Real.exp ((-1 / 2) * t)) = 2 * C := by
+    rw [integral_const_mul]
+    rw [integral_exp_mul_Ioi (by norm_num : (-1 / 2 : ℝ) < 0) 0]
+    norm_num [mul_comm]
+  have hCA : 2 * C = 2 * S := by
+    dsimp [C]
+    rw [hAeq]
+    have h₁ : 0 ≤ 2 * m / S := by positivity
+    have hprod : Real.sqrt (2 * m / S) * Real.sqrt (S / (32 * m)) =
+        (1 / 4 : ℝ) := by
+      rw [← Real.sqrt_mul h₁]
+      have hratio : (2 * m / S) * (S / (32 * m)) = (1 / 4 : ℝ) ^ 2 := by
+        field_simp
+        ring
+      rw [hratio, Real.sqrt_sq_eq_abs, abs_of_nonneg (by norm_num)]
+    rw [show 4 * Real.sqrt (2 * m / S) * S * Real.sqrt (S / (32 * m)) =
+        4 * S * (Real.sqrt (2 * m / S) * Real.sqrt (S / (32 * m))) by ring,
+      hprod]
+    ring
+  have houter :
+      (∫⁻ t : ℝ in Ioi 0, μ {x : ℝ | t < h x}) ≤ ENNReal.ofReal (2 * S) := by
+    calc
+      (∫⁻ t : ℝ in Ioi 0, μ {x : ℝ | t < h x}) ≤
+          ∫⁻ t : ℝ in Ioi 0,
+            ENNReal.ofReal (4 * Real.sqrt (2 * (A * Real.exp (-t)) * m / S) * S) :=
+        lintegral_mono_ae htail_bound
+      _ = ∫⁻ t : ℝ in Ioi 0,
+          ENNReal.ofReal (C * Real.exp ((-1 / 2) * t)) := by
+        apply lintegral_congr_ae
+        filter_upwards [ae_restrict_mem measurableSet_Ioi] with t ht
+        rw [hprofile_exp, show (-t / 2 : ℝ) = (-1 / 2) * t by ring]
+      _ = ENNReal.ofReal (∫ t : ℝ in Ioi 0,
+          C * Real.exp ((-1 / 2) * t)) := by
+        rw [← ofReal_integral_eq_lintegral_ofReal hC_int hC_nonneg_ae]
+      _ = ENNReal.ofReal (2 * S) := by rw [hC_eval, hCA]
+  have hbound :
+      (∫⁻ x : ℝ, ENNReal.ofReal (h x * q x)) ≤ ENNReal.ofReal (2 * S) := by
+    rw [hleft, hlayer]
+    exact houter
+  have hbound_top : (∫⁻ x : ℝ, ENNReal.ofReal (h x * q x)) ≠ ∞ :=
+    ne_top_of_le_ne_top ENNReal.ofReal_ne_top hbound
+  have hg_ae : AEMeasurable (fun x : ℝ => h x * q x) volume :=
+    hmeas.aemeasurable.mul hq_ae
+  have hg_nonneg : ∀ᵐ x : ℝ ∂volume, 0 ≤ h x * q x := by
+    filter_upwards with x
+    exact mul_nonneg (le_max_right _ _) (sq_nonneg _)
+  have hE_ae : AEMeasurable
+      (fun x : ℝ => ENNReal.ofReal (h x * q x)) volume := hg_ae.ennreal_ofReal
+  have hto_int : Integrable
+      (fun x : ℝ => (ENNReal.ofReal (h x * q x)).toReal) volume :=
+    integrable_toReal_of_lintegral_ne_top hE_ae hbound_top
+  have hg_int : Integrable (fun x : ℝ => h x * q x) volume := by
+    apply hto_int.congr
+    filter_upwards [hg_nonneg] with x hx
+    simp [ENNReal.toReal_ofReal hx]
+  have hreal :
+      ENNReal.ofReal (∫ x : ℝ, h x * q x) =
+        ∫⁻ x : ℝ, ENNReal.ofReal (h x * q x) :=
+    ofReal_integral_eq_lintegral_ofReal hg_int hg_nonneg
+  have htoReal := (ENNReal.toReal_le_toReal hbound_top ENNReal.ofReal_ne_top).mpr hbound
+  have hreal_le : (∫ x : ℝ, h x * q x) ≤ 2 * S := by
+    calc
+      (∫ x : ℝ, h x * q x) =
+          (ENNReal.ofReal (∫ x : ℝ, h x * q x)).toReal := by
+            rw [ENNReal.toReal_ofReal (integral_nonneg_of_ae hg_nonneg)]
+      _ = (∫⁻ x : ℝ, ENNReal.ofReal (h x * q x)).toReal := by rw [hreal]
+      _ ≤ (ENNReal.ofReal (2 * S)).toReal := htoReal
+      _ = 2 * S := ENNReal.toReal_ofReal (by positivity)
+  constructor
+  · simpa [h, q] using hg_int
+  · simpa [h, q] using hreal_le
+
 theorem angular_unitary_fourier_mass_eq_source_energy (u : LineL2) :
     (∫ ξ : ℝ, ‖angularUnitary ((𝓕 u : LineL2) : ℝ → ℂ) ξ‖ ^ 2) = sourceEnergy u := by
   rw [angular_unitary_mass_preserved]
@@ -753,17 +987,52 @@ theorem angular_log_lower_bound_of_layer_cake
   rw [hlogprod]
   linarith
 
+/- The actual Fourier consumer discharges the negative layer from the proved
+   band profile.  Its only logarithmic input is the positive form-domain
+   integrability supplied by the completed Gamma source. -/
+theorem angular_log_lower_bound
+    (u : LineL2) {A : ℝ}
+    (hSupport : ∀ᵐ x : ℝ ∂volume, x < 0 → u x = 0)
+    (hMoment : Integrable (fun x : ℝ => x * ‖u x‖ ^ 2)
+      (volume.restrict (Ioi (0 : ℝ))))
+    (hS : 0 < sourceEnergy u)
+    (hm : 0 < firstPositionMoment u)
+    (hA : A = sourceEnergy u / (32 * firstPositionMoment u))
+    (hLogInt : Integrable
+      (fun x : ℝ => Real.log |x| * ‖((𝓕 u : LineL2) : ℝ → ℂ) x‖ ^ 2) volume) :
+    sourceEnergy u * (Real.log (Real.pi * sourceEnergy u /
+      (16 * firstPositionMoment u)) - 2) ≤
+      ∫ ξ : ℝ, Real.log |ξ| *
+        ‖angularUnitary ((𝓕 u : LineL2) : ℝ → ℂ) ξ‖ ^ 2 := by
+  have hApos : 0 < A := by
+    rw [hA]
+    positivity
+  have hfourier_mass :
+      (∫ x : ℝ, ‖((𝓕 u : LineL2) : ℝ → ℂ) x‖ ^ 2) = sourceEnergy u := by
+    rw [lp_mass_eq_norm_sq, Lp.norm_fourier_eq, source_energy_eq_norm_sq]
+  have hProfile : ∀ {R : ℝ}, 0 < R →
+      (∫ x : ℝ in cyclesBand R,
+        ‖((𝓕 u : LineL2) : ℝ → ℂ) x‖ ^ 2) ≤
+        4 * Real.sqrt (2 * R * firstPositionMoment u / sourceEnergy u) *
+          sourceEnergy u := by
+    intro R hR
+    rw [← bandMass_eq_setIntegral (𝓕 u : LineL2) hR]
+    exact (div_le_iff₀ hS).mp
+      (fourier_band_mass_ratio u hR hSupport hMoment hS hm)
+  have hNeg := nonnegative_layer_cake_bound
+    (f := ((𝓕 u : LineL2) : ℝ → ℂ))
+    (S := sourceEnergy u) (m := firstPositionMoment u) (A := A)
+    hApos hS hm hA (sourceEnergy_integrable (𝓕 u : LineL2)) hfourier_mass
+      hProfile
+  exact angular_log_lower_bound_of_layer_cake u hSupport hMoment hS hm hA hLogInt
+    hNeg.1 hNeg.2
+
 /- The compiled frontier is deliberately explicit.  The actual band estimate,
-   optimized mass profile, source-to-angular mass normalization, signed-log
-   comparison, and the angular consumer are present.  The remaining B02
-   obligation is the nonnegative layer-cake estimate
-
-     ∫ max (log (A / |x|)) 0 * ‖f x‖² ≤ 2*S,
-
-   derived from the profile by `lintegral_lintegral_swap` (with the null point
-   at zero handled before signed integration).  It is not assumed here and
-   therefore the angular consumer keeps its negative-part hypotheses explicit.
-   B01/B03/B04/B05/B06 remain open.  No full-source L1 premise is introduced.
+   optimized mass profile, nonnegative layer-cake bound, source-to-angular
+   mass normalization, signed-log comparison, and the angular consumer are
+   present.  The consumer keeps the positive logarithmic form-domain premise
+   explicit; the completed Gamma source must supply it.  B01/B03/B04/B05/B06
+   remain open.  No full-source L1 premise is introduced.
  -/
 
 end D5.S3.Weil.ZetaGamma.FormCore.L2LogarithmicUncertainty
