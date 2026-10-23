@@ -24,9 +24,9 @@ Lean statement: `D5/S3/ArithSums/GiniStationaryTest/Result.result`
 
 *Proof.* Machine-checked in Lean as `D5/S3/ArithSums/GiniStationaryTest/Result.result` (`✓ std3`). ∎
 
-*Resolves.* `Problems/grunwald-pales-2024-gini-stationary-characterization` (refuted) by `D5/S3/ArithSums/GiniStationaryTest/Result.result`.
+*Resolves.* `Problems/grunwald-pales-2024-gini-stationary-test` (refuted) by `D5/S3/ArithSums/GiniStationaryTest/Result.result`.
 
-<!-- scribe-open-problem-resolution-v1 {"problem_slug":"grunwald-pales-2024-gini-stationary-characterization","declaration_gid":"D5/S3/ArithSums/GiniStationaryTest/Result.result","resolution_kind":"refuted"} -->
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"grunwald-pales-2024-gini-stationary-test","declaration_gid":"D5/S3/ArithSums/GiniStationaryTest/Result.result","resolution_kind":"refuted"} -->
 
 *Source.* Repository-derived.
 

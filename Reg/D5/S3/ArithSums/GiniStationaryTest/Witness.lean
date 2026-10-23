@@ -1,6 +1,7 @@
 import LeanInformationAuditInterface.Contract.Registration
 import D5.S3.ArithSums.GiniStationaryTest.Witness
 import Reg.Support.SingleDependentReadout
+import Batteries.Tactic.OpenPrivate
 
 /-! Observation families for Gini comparison statements. -/
 
@@ -9,6 +10,7 @@ open _root_.D5.S3.ConceptDynamics.InformationEscape.DependentFamily
 open _root_.D5.S3.ArithSums.GiniStationaryTest.Witness
 open _root_.D5.S3.ArithSums.GiniStationaryTest.Defs
 open _root_.D5.S3.ArithSums.GiniMeanEndpointComparison (highTuple)
+open private sum_highTuple_rpow from D5.S3.ArithSums.GiniStationaryTest.Witness
 
 noncomputable section
 namespace Reg.D5.S3.ArithSums.GiniStationaryTest.Witness
@@ -99,8 +101,11 @@ def evidence : Registration arena (type_of% (@witness_comparison)) where
     refine ⟨3, 1/2, 1/4, ?_⟩
     change giniMean 2 (-1) (highTuple 3 (1/2) 1) ≠
       giniMean 2 (-1) (highTuple 3 (1/4) 1)
-    norm_num [giniMean, _root_.D5.S3.ArithSums.GiniMeanEndpointComparison.giniMean,
-      highTuple, Fin.sum_univ_three, Real.rpow_neg_one, Real.rpow_two]
+    simp only [giniMean, if_neg (by norm_num : (2 : ℝ) ≠ -1),
+      _root_.D5.S3.ArithSums.GiniMeanEndpointComparison.giniMean,
+      sum_highTuple_rpow 2 (1/2) 2, sum_highTuple_rpow 2 (1/2) (-1),
+      sum_highTuple_rpow 2 (1/4) 2, sum_highTuple_rpow 2 (1/4) (-1)]
+    norm_num [Real.rpow_neg_one, Real.rpow_two]
     exact ne_of_gt (Real.rpow_lt_rpow (by norm_num) (by norm_num) (by norm_num))
 def registration : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
     (@witness_comparison)

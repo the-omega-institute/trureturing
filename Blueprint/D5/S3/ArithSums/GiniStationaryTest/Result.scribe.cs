@@ -24,6 +24,6 @@ internal sealed class ResultDocument : IScribeDocumentDefinition
                 Blocks(Paragraph(Text("The full claim is false. Specialize it to n=3, I=(0,infinity), and the pair ((1,0),(2,-1)). This interval is nonempty and order connected. Its quotient set is exactly the positive half-line: every quotient is positive, and every positive y is y/1. The infimum of that half-line is zero. The claimed equivalence would turn the stationary test supplied by the family theorem into universal mean comparison, contradicting the other conjunct of that same family theorem. The equal-parameter branch in the claim uses the exponential definition, although this refutation uses only unequal parameters. No assertion about a scaled parameter family is needed."))),
                 DescribeRole.Theorem,
                 new OpenProblemResolutionClaim(
-                    ProblemSlugRef.Create("grunwald-pales-2024-gini-stationary-characterization"),
+                    ProblemSlugRef.Create("grunwald-pales-2024-gini-stationary-test"),
                     ResolutionKind.Refuted)))));
 }

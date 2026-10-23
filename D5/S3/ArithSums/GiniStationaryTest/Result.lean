@@ -3,7 +3,7 @@
    mirror-B: D5/B/S3/ArithSums/GiniStationaryTest/Result
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
-   utility: none
+   utility: kind=certified-instance; basis=refutes=gid:D5/S3/ArithSums/GiniStationaryTest/Defs.claim; result=D5/S3/ArithSums/GiniStationaryTest/Result.result; claim=D5/S3/ArithSums/GiniStationaryTest/Defs.claim
    digest: Stationary tests do not characterize Gini comparisons on the positive half-line. -/
 
 import D5.S3.ArithSums.GiniStationaryTest.Stationary

@@ -26,6 +26,6 @@ internal sealed class DefsDocument : IScribeDocumentDefinition
     private static DocumentBlock Entry(string name, string title, string prose) => Describe.Lean(
         DescribeId.Create("gini-stationary-defs-" + name.ToLowerInvariant()),
         DeclarationHandle.Create("D5/S3/ArithSums/GiniStationaryTest/Defs." + name),
-        H(title), StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(Source),
+        H(title), StatementSource.WithoutFormula(), AssessedProvenance.FromLiterature(Source),
         Blocks(Paragraph(Text(prose))), DescribeRole.Definition);
 }

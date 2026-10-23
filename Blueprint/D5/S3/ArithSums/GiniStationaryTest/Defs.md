@@ -10,9 +10,7 @@ Lean statement: `D5/S3/ArithSums/GiniStationaryTest/Defs.giniMean`
 
 *Formalization.* `D5/S3/ArithSums/GiniStationaryTest/Defs.giniMean` (`✓ std3`).
 
-*Source.* Repository-derived.
-
-*Acknowledgement.* R. Grünwald; Zs. Páles (2024). *Comparison of Gini means with fixed number of variables*. URL: <https://arxiv.org/abs/2408.07658v1>.
+*Citation.* R. Grünwald; Zs. Páles (2024). *Comparison of Gini means with fixed number of variables*. URL: <https://arxiv.org/abs/2408.07658v1>.
 
 *Commentary.*
 
@@ -24,9 +22,7 @@ Lean statement: `D5/S3/ArithSums/GiniStationaryTest/Defs.chi`
 
 *Formalization.* `D5/S3/ArithSums/GiniStationaryTest/Defs.chi` (`✓ std3`).
 
-*Source.* Repository-derived.
-
-*Acknowledgement.* R. Grünwald; Zs. Páles (2024). *Comparison of Gini means with fixed number of variables*. URL: <https://arxiv.org/abs/2408.07658v1>.
+*Citation.* R. Grünwald; Zs. Páles (2024). *Comparison of Gini means with fixed number of variables*. URL: <https://arxiv.org/abs/2408.07658v1>.
 
 *Commentary.*
 
@@ -38,9 +34,7 @@ Lean statement: `D5/S3/ArithSums/GiniStationaryTest/Defs.chiDeriv`
 
 *Formalization.* `D5/S3/ArithSums/GiniStationaryTest/Defs.chiDeriv` (`✓ std3`).
 
-*Source.* Repository-derived.
-
-*Acknowledgement.* R. Grünwald; Zs. Páles (2024). *Comparison of Gini means with fixed number of variables*. URL: <https://arxiv.org/abs/2408.07658v1>.
+*Citation.* R. Grünwald; Zs. Páles (2024). *Comparison of Gini means with fixed number of variables*. URL: <https://arxiv.org/abs/2408.07658v1>.
 
 *Commentary.*
 
@@ -52,9 +46,7 @@ Lean statement: `D5/S3/ArithSums/GiniStationaryTest/Defs.Gamma`
 
 *Formalization.* `D5/S3/ArithSums/GiniStationaryTest/Defs.Gamma` (`✓ std3`).
 
-*Source.* Repository-derived.
-
-*Acknowledgement.* R. Grünwald; Zs. Páles (2024). *Comparison of Gini means with fixed number of variables*. URL: <https://arxiv.org/abs/2408.07658v1>.
+*Citation.* R. Grünwald; Zs. Páles (2024). *Comparison of Gini means with fixed number of variables*. URL: <https://arxiv.org/abs/2408.07658v1>.
 
 *Commentary.*
 
@@ -66,9 +58,7 @@ Lean statement: `D5/S3/ArithSums/GiniStationaryTest/Defs.stationaryTest`
 
 *Formalization.* `D5/S3/ArithSums/GiniStationaryTest/Defs.stationaryTest` (`✓ std3`).
 
-*Source.* Repository-derived.
-
-*Acknowledgement.* R. Grünwald; Zs. Páles (2024). *Comparison of Gini means with fixed number of variables*. URL: <https://arxiv.org/abs/2408.07658v1>.
+*Citation.* R. Grünwald; Zs. Páles (2024). *Comparison of Gini means with fixed number of variables*. URL: <https://arxiv.org/abs/2408.07658v1>.
 
 *Commentary.*
 
@@ -80,9 +70,7 @@ Lean statement: `D5/S3/ArithSums/GiniStationaryTest/Defs.claim`
 
 *Formalization.* `D5/S3/ArithSums/GiniStationaryTest/Defs.claim` (`✓ std3`).
 
-*Source.* Repository-derived.
-
-*Acknowledgement.* R. Grünwald; Zs. Páles (2024). *Comparison of Gini means with fixed number of variables*. URL: <https://arxiv.org/abs/2408.07658v1>.
+*Citation.* R. Grünwald; Zs. Páles (2024). *Comparison of Gini means with fixed number of variables*. URL: <https://arxiv.org/abs/2408.07658v1>.
 
 *Commentary.*
 
