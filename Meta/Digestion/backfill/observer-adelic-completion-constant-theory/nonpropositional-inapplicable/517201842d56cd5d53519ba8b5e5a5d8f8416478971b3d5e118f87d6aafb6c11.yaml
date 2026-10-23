@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:517201842d56cd5d53519ba8b5e5a5d8f8416478971b3d5e118f87d6aafb6c11
+  normalized_sha256: sha256:517201842d56cd5d53519ba8b5e5a5d8f8416478971b3d5e118f87d6aafb6c11
+cas_ref: sha256:517201842d56cd5d53519ba8b5e5a5d8f8416478971b3d5e118f87d6aafb6c11
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 以 Sigma_K := A_K/K 引入加法商的记号，并命名其相位用途；本片不声称紧致性或对偶性。
+    previous_atom_id: 29a37b84fa08cbec4bdf1418d0234270165c969449afcc80d971abc8291faca5
+    next_atom_id: fdc7acfb1643e19f3dd6872ef4e0a3fcdd7edb6cae49fcf0d1b48a84686feac0

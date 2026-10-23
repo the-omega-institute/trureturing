@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:7e8510d3c8ea60ab9f7865b06639bc848204a89e6b6b277db899a363c9aeaca8
+  normalized_sha256: sha256:7e8510d3c8ea60ab9f7865b06639bc848204a89e6b6b277db899a363c9aeaca8
+cas_ref: sha256:7e8510d3c8ea60ab9f7865b06639bc848204a89e6b6b277db899a363c9aeaca8
+coverage_gids:
+  - gid: D5/S3/Observer/Hankel/BalancedSteinEnergy.squareSum_nonneg
+    target_statement_id: sha256:08cc984ae4bbaedaa2a9ee901f8ca95b67f23c5589cedbb406fe2f85e45b9ab3
+receipts:
+  unresolved_subitems: []
