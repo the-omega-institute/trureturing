@@ -6,7 +6,7 @@ ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/../.." && pwd -P)"
 # compile those modules one at a time before the ordinary aggregate build.
 make -C "$ROOT" search-reduction-index-fixtures
 search_reduction_modules=(
-  GraphCandidates GraphModel LookupModel LookupBaseline LookupTests GraphCalibration Baseline Model FiniteModel PresentationBaseline Candidates PresentationCandidates
+  GraphCandidates GraphModel LookupModel LookupBaseline LookupTests LookupRecallTests LookupColdTests LookupCacheTests LookupIsolationTests GraphCalibration Baseline Model FiniteModel PresentationBaseline Candidates PresentationCandidates
   FaultPaths SingleSourceModel PresentationCoverage RawOriginsTests SingleSourceTests
   Calibration Faults RealNegative
   VocabularyCandidates VocabularyModel VocabularyTransport VocabularyTests InformationTests

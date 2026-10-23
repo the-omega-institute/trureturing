@@ -11,7 +11,7 @@ case "${1:-}" in
     shift
     test "$#" -eq 0 || { echo 'search-reduction-runner test takes no arguments' >&2; exit 2; }
     modules=(GraphModel LookupModel CertificateModel CertificateTests CertificateScope
-      LookupPruningTests LookupTests LookupTelemetry LookupScope NativeCertification GraphCalibration
+      LookupPruningTests LookupTests LookupRecallTests LookupColdTests LookupCacheTests LookupIsolationTests LookupTelemetry LookupScope NativeCertification GraphCalibration
       Calibration FaultPaths SingleSourceModel VocabularyModel PresentationCoverage
       SingleSourceTests RawOriginsTests Faults RealNegative VocabularyTransport
       VocabularyTests InformationTests)
