@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:632f9104dff59fa6709b9f0b5e6b336414de6a5ad12d17bb8419a06fbabb81d6
+  normalized_sha256: sha256:632f9104dff59fa6709b9f0b5e6b336414de6a5ad12d17bb8419a06fbabb81d6
+cas_ref: sha256:632f9104dff59fa6709b9f0b5e6b336414de6a5ad12d17bb8419a06fbabb81d6
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 非命题：是分块研究计划中的标签名称，未断言 Coxeter 扇区的具体谱公式。
+    previous_atom_id: 7edb7dbe8c719c9cc579d82d46264912a98d27691e22838c48ce1336bd298f75
+    next_atom_id: 403f06d1078bc38dda31418a52efe84f295892616c5bf385859b3063ff833f6a

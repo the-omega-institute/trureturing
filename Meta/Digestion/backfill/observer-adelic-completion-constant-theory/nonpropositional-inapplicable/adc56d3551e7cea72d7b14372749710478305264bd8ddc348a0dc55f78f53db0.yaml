@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:adc56d3551e7cea72d7b14372749710478305264bd8ddc348a0dc55f78f53db0
+  normalized_sha256: sha256:adc56d3551e7cea72d7b14372749710478305264bd8ddc348a0dc55f78f53db0
+cas_ref: sha256:adc56d3551e7cea72d7b14372749710478305264bd8ddc348a0dc55f78f53db0
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: Research-route recommendation and implementation topic label; it asserts no completed construction.
+    previous_atom_id: ccf67de331ff668b4f8e976e34de0c8f522b8d4ab0344209b32c66d035408357
+    next_atom_id: 01fa0d0f2fd34d85e1cac63e1fab1658178df4c15cbea49ea8f82ebdab85fecc

@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:049d0bc401f7a76434134153ee817472f412eef389a9792a9bfc5afa5e8141e0
+  normalized_sha256: sha256:049d0bc401f7a76434134153ee817472f412eef389a9792a9bfc5afa5e8141e0
+cas_ref: sha256:049d0bc401f7a76434134153ee817472f412eef389a9792a9bfc5afa5e8141e0
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 此片为下一节分工与算法计划的介绍，没有给出算法正确性、终止性或数学输出断言。
+    previous_atom_id: 3e22ddb580a55e7644c9712093290cbc737369315639dc0ad3d52728c7a9834b
+    next_atom_id: f0d71ff1ee04ec9fbd953405b2df0ab3420d5994fd7d60cb817a6f45a5dff57b
