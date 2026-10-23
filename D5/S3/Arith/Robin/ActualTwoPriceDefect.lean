@@ -1,5 +1,5 @@
 /- GID: D5/S3/Arith/Robin/ActualTwoPriceDefect
-   generality: G
+   generality: I
    mirror-B: D5/B/S3/Arith/Robin/ActualTwoPriceDefect
    mirror-E: none(waiver:general-analytic-results-no-numerical-evidence-artifact)
    anchors: []

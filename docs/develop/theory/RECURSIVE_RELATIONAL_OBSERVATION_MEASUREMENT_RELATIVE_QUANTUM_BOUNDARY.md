@@ -1489,3 +1489,1078 @@ receiver by native $\alpha/\beta$ operations has been proved. These
 remaining bridges are separate from the closure and recovery theorems.
 
 ## 追加锚（本行以下为增补区）
+
+## 12. Necessary acquisition budget for a supplied coherent consumer
+
+**Definition 12.1 (original acquisition and the prediction cut).** Fix an
+integer $k\ge20$, put $r=k^2$, and in the fixed real frame of Definition
+6.1 set
+
+$$
+Y=iJ_{12},\qquad \rho_\theta=I_5/5+\theta Y,
+\qquad \theta\in\{0,2/k\}.
+\tag{12.1}
+$$
+
+One value of $\theta$ is fixed throughout the actual run. The service of
+Assumption 6.2 supplies stationary independent copies of that same state,
+with the same preparation binding $\xi$ for acquisition and continuation.
+The public inputs $k,N$, frame, calibration, initial controller, programs,
+reference and auxiliary resources, advice, permissions and binding labels
+are source-independent. More precisely, their initial joint state or law
+is the same under both hypotheses. For every finite list of $n$ source
+requests, the initial resources and those inputs have joint state
+$\omega_{\mathrm{init}}\otimes\rho_\theta^{\otimes n}$, with one
+common $\omega_{\mathrm{init}}$ (including classical random resources).
+Further metadata is generated only by common rules from these resources
+and the recorded experiments. A binding authenticates
+occurrences of this service; it supplies no information about $\theta$.
+The only source-dependent resources available at the prediction cut are
+the classical records specified below.
+
+Choose either of the two schedules in Proposition 10.2 and a positive
+integer $N$. Execute exactly $N$ attempts per configuration in its fixed
+public order, without retries or additional source observations. Let $W$
+be the complete classical record: all single-copy outcomes, both filter
+chains of each pair, every failure prefix, all actual detector outcomes,
+the prescribed padding, setting/order/occurrence labels and readable
+source/frame/calibration backing. Both members of a pair execute their
+own prescribed chain even if the other fails. Every training source
+register, its successor and every source-dependent quantum environment
+is discarded at the end of its attempt, including failed attempts.
+No such quantum system links two attempts or survives to prediction.
+No nonreal reference or hidden Kraus label is supplied, as in Assumption
+6.2. The number of pair attempts is
+
+$$
+m=40N\quad\hbox{(directional)},\qquad
+m=50N\quad\hbox{(depth)}.
+\tag{12.2}
+$$
+
+A predictor is any common measurable randomized function of $W$ and the
+public inputs, with real output $\widehat p$. Equivalently it is a
+source-independent probability kernel from this record to $\mathbb R$.
+Allowing arbitrary classical processing strengthens the observer for a
+necessary bound; it grants neither an installed algorithm nor free
+processing, storage or arithmetic. Prediction occurs before the future
+source calls of Definition 12.3 and uses no additional acquisition.
+
+**Theorem 12.2 (complete original records and pair information).** Under
+Definition 12.1, let $P_\theta$ be the law of the entire retained classical
+record. With $\operatorname{TV}(P,Q)=\tfrac12\sum_w|P(w)-Q(w)|$ on a
+finite record alphabet, and $\operatorname{TV}(P,Q)=
+\sup_B|P(B)-Q(B)|$ over measurable events for general record measures,
+one has
+
+$$
+\operatorname{TV}(P_0,P_{2/k})
+\le\frac12\sqrt{(1+1600/r^2)^m-1}.
+\tag{12.3}
+$$
+
+Every common randomized postprocessing obeys the same bound. In
+particular the bound concerns the complete flagged word, rather than
+only frequencies or successful pairs.
+
+Proof. First express each original pair attempt as a complete real
+POVM on its two unfiltered inputs. At depth $j$, the possible local
+prefix operators are $F^j$ for all successes and $LF^\ell$ for a first
+failure after $\ell$ successes, $0\le\ell<j$. At depth zero the only
+operator is $I$. Their adjoint-square sum is $I$, by successive
+completeness of (9.1). For a directional chain the two operators are
+$D_v,L_v$ of (8.1), with the same completeness property. Denote a local
+prefix operator by $B_\alpha$ and its all-success prefix by $s$.
+For configuration $c$ using detector $f$, its record effects are
+
+$$
+\begin{aligned}
+Q_{c,(s,s,o)}
+ &= (B_s\otimes B_s)^T E_f^o(B_s\otimes B_s),
+ &&o\in\{+,-\},\\
+Q_{c,(\alpha,\beta,0)}
+ &=B_\alpha^TB_\alpha\otimes B_\beta^TB_\beta,
+ &&(\alpha,\beta)\ne(s,s).
+\end{aligned}
+\tag{12.4}
+$$
+
+The last label is padding, not a detector outcome. All these effects
+are positive and real symmetric. Summing the first line over $o$ gives
+the same product effect as for any other prefix pair; summing over
+prefixes gives $I_{25}$. Thus (12.4) retains both actual chains and
+every failure, including impossible words with zero effect. It is the
+POVM of the actual protocol, with no conditional division or free
+replacement of failed specimens.
+
+Put $S_0=I_5/5$ and introduce, only for the probability calculation,
+
+$$
+\begin{aligned}
+\sigma_\theta
+ &=\tfrac12\bigl(\rho_\theta^{\otimes2}
+                    +\rho_{-\theta}^{\otimes2}\bigr)\\
+ &=I_{25}/25+\theta^2Y\otimes Y.
+\end{aligned}
+\tag{12.5}
+$$
+
+Here $\rho_{-\theta}=\overline{\rho_\theta}$ is also lawful. Indeed $Y$
+has eigenvalues $y=(1,-1,0,0,0)$, so the eigenvalues of $\rho_\theta$
+are $1/5+\theta,1/5-\theta,1/5,1/5,1/5$, all strictly positive for
+$|\theta|\le1/10$. For every real symmetric $Q$, the term
+$\theta(Y\otimes I+I\otimes Y)/5$ in the tensor-square expansion has
+zero trace pairing with $Q$: it is imaginary and has skew transpose.
+Consequently
+
+$$
+\Pr_\theta(w\mid c)
+=\operatorname{tr}(Q_{c,w}\rho_\theta^{\otimes2})
+=\operatorname{tr}(Q_{c,w}\sigma_\theta).
+\tag{12.6}
+$$
+
+This applies to the full effects (12.4), not just the terminal detector.
+Each single-copy real effect likewise has probability
+$\operatorname{tr}(PS_0)$ independent of $\theta$.
+
+For an explicit classical representation of (12.6), choose once an
+orthonormal eigenbasis $u_a$ of $Y$, independent of $\theta$, and define
+on its twenty-five ordered pair labels
+
+$$
+q_\theta(a,b)=1/25+\theta^2y_ay_b,\qquad
+K_c(w\mid a,b)
+=\langle u_a\otimes u_b,Q_{c,w}(u_a\otimes u_b)\rangle.
+\tag{12.7}
+$$
+
+The $q_\theta$ are the eigenvalue laws of $\sigma_\theta$. Each $K_c$
+is a probability kernel independent of $\theta$, by positivity and
+completeness of (12.4), and $q_\theta K_c$ is exactly the actual
+configuration law. These spectral labels and kernels are a mathematical
+simulation; the observer is not given the labels, a measurement of $Y$
+or a new preparation procedure.
+
+The reused symmetric-mixture calculation has the following exact
+parameter correspondence. Each spectral factor is in the two nonzero
+$Y$ directions with probability $2/5$, independent of the signed
+parameter. Conditional on both factors being there, their symmetrized
+sign law is the symmetric binomial supplier with $B=2$, $z=5\theta$
+and $|z|\le1/2$; its ordered likelihood is $1+z^2s_1s_2$. Its positive-sign count has
+exactly the law $p_z(2,\cdot)$ of
+[SymmetricBinomialChiSquare](../../../D5/S3/Estimation/ErrorExponents/SymmetricBinomialChiSquare.lean),
+with [owning Scribe](../../../Blueprint/D5/S3/Estimation/ErrorExponents/SymmetricBinomialChiSquare.scribe.cs).
+The likelihood is constant on each count fiber, so passing to the count
+preserves its second moment. The supplier's defect is $z^4$ when $B=2$.
+All other spectral masks have unchanged law. Their contribution is zero,
+whereas the both-active mask has weight $4/25$. Thus the pair defect is
+$(4/25)(5\theta)^4=100\theta^4$. Directly, with
+$\chi^2(q\Vert q_0)=\sum(q-q_0)^2/q_0$, the same correspondence reads
+
+$$
+\chi^2(q_\theta\Vert q_0)
+=25\theta^4\sum_{a,b}y_a^2y_b^2
+=100\theta^4,
+\qquad \sum_a y_a^2=2.
+\tag{12.8}
+$$
+
+By the iid service and terminal discard, the joint law of the $m$ pair
+records is the product of the $m$ respective $q_\theta K_c$ laws.
+The single-copy records have a common independent law. Consequently the
+entire record, including its common metadata rules, is a common
+postprocessing of $q_\theta^{\otimes m}$ with source-independent
+randomness. Conditional on the auxiliary spectral labels, the kernels
+in (12.7) do not change under the two hypotheses.
+
+For completeness, the standard second-moment and testing suppliers
+apply here as follows. The product likelihood $\Lambda$ has mean one
+under $q_0^{\otimes m}$ and
+
+$$
+\mathbb E_0\Lambda^2=(1+100\theta^4)^m.
+\tag{12.9}
+$$
+
+This is the product second-moment rule used in AURIC–Langlands
+Theorem 3.5. For any common output kernel $K$, summing absolute
+differences and using $\sum_wK(w\mid x)=1$ gives
+$\operatorname{TV}(qK,q_0K)\le\operatorname{TV}(q,q_0)$.
+The same proof uses integration for random metadata. Cauchy–Schwarz
+under the strictly positive $q_0^{\otimes m}$ gives
+
+$$
+\operatorname{TV}(q_\theta^{\otimes m},q_0^{\otimes m})
+=\tfrac12\mathbb E_0|\Lambda-1|
+\le\tfrac12\sqrt{\mathbb E_0\Lambda^2-1}.
+\tag{12.10}
+$$
+
+Insert $\theta=2/k$, so $100\theta^4=1600/r^2$, to obtain (12.3).
+Appending any common randomized predictor is another such kernel.
+
+The independent pair symmetrizations in this proof replace only the
+laws of already terminal real experiments. They do not replace the
+actual stationary source by a service that refreshes a hidden sign on
+each call. No independently chosen signs are assigned to the future
+copies. Without terminal discard the inter-attempt quantum carrier
+would have to be included, and the present product-record reduction
+would not establish (12.3). $\square$
+
+**Definition 12.3 (separately supplied real continuation).** In addition
+to the original acquisition interface, supply, at the relevant controller
+state, the public integer $k$, current permission, $r=k^2$ fresh calls
+to the same stationary service, their joint carrier $H^{\otimes r}$,
+and the calibrated terminal binary instrument with Kraus operators
+$E_k,I-E_k$, where
+
+$$
+T_r=\sum_{j=1}^rY^{(j)},\qquad
+E_k=\mathbf1_{[4k^2,\infty)}(T_r^2).
+\tag{12.11}
+$$
+
+Here $Y^{(j)}$ acts as $Y$ on factor $j$ and as the identity on every
+other factor. The event of interest is its $E_k$ outcome, with probability
+$p_{\theta,k}=\operatorname{tr}(E_k\rho_\theta^{\otimes r})$.
+The full binary outcome is recorded and all $r$ measured registers are
+then discarded. Before that discard a positive-probability branch has
+its actual state $E_k\rho_\theta^{\otimes r}E_k/p_{\theta,k}$ or the
+corresponding complement expression. A zero branch has zero mass and
+no conditional state. This continuation specification is independent
+of the unknown $\theta$; any information supplied with its calibration
+or authorization is subject to Definition 12.1's independence rule.
+
+Availability of this instrument is an additional contract, including
+its size, joint control, storage, calibration, instructions, readable
+backing and permission. It is not inferred from membership in Definition
+11.1's mathematical class or compiled from the forty or fifty original
+pair configurations. The following proposition proves the real-matrix
+membership of this specified instrument, separately from its availability.
+
+**Proposition 12.4 (the supplied consumer separates the two sources).**
+The instrument in Definition 12.3 has real Kraus operators and is
+trace-preserving. For every integer $k\ge20$,
+
+$$
+p_{0,k}\le\frac1{10},\qquad
+p_{2/k,k}\ge\frac9{10},\qquad
+p_{2/k,k}-p_{0,k}\ge\frac45.
+\tag{12.12}
+$$
+
+Its probabilities are unchanged if the one source parameter is
+simultaneously conjugated on all factors.
+
+Proof. $Y$ and $T_r$ are Hermitian and purely imaginary, with
+$\overline{T_r}=-T_r$. Hence $T_r^2$ is real symmetric and positive
+semidefinite. The real spectral theorem makes its spectral projection
+$E_k$ real symmetric, with $E_k^2=E_k$. Thus $E_k,I-E_k$ are real
+Kraus operators whose adjoint squares sum to $I$. Simultaneous
+conjugation preserves this real effect's trace probability; equivalently
+it changes $T_r$ to $-T_r$ and leaves the event unchanged.
+
+To calculate that probability, diagonalize $Y$ mathematically. Under
+$\rho_\theta^{\otimes r}$ the spectral values $X_1,\ldots,X_r$ are
+independent, each with
+
+$$
+\Pr_\theta(X=1)=1/5+\theta,\qquad
+\Pr_\theta(X=-1)=1/5-\theta,\qquad
+\Pr_\theta(X=0)=3/5.
+\tag{12.13}
+$$
+
+Thus $p_{\theta,k}=\Pr_\theta(|\sum_jX_j|\ge2k)$,
+$\mathbb E_\theta X=2\theta$ and
+$\operatorname{Var}_\theta X=2/5-4\theta^2$. These are product-state
+probabilities of the declared real joint event; individual measurements
+of the nonreal $Y$ are not an allowed acquisition step.
+At $\theta=0$ the sum has mean zero and variance $2k^2/5$.
+Chebyshev's inequality therefore gives $p_{0,k}\le1/10$.
+At $\theta=2/k$ its mean is $4k$ and its variance is
+$2k^2/5-16\le2k^2/5$. The complement of the event has
+$|\sum_jX_j|<2k$, which implies
+$|\sum_jX_j-4k|>2k$. The same inequality bounds its probability
+by $1/10$, proving (12.12). The sum-variance and Chebyshev steps are
+standard finite-probability suppliers; for example their pinned
+upstream statements are
+[`IndepFun.variance_sum` and `meas_ge_le_variance_div_sq`](https://github.com/leanprover-community/mathlib4/blob/56a005855ea17e0b0958f73ec801ae140b0a1679/Mathlib/Probability/Moments/Variance.lean).
+All variables here are bounded and all denominators $2k$ are positive.
+$\square$
+
+The real-Kraus convention is the established one in Wu et al.,
+[*Resource theory of imaginarity: quantification and state conversion*,
+§III, the real-Kraus definition](https://arxiv.org/abs/2103.01805v1).
+Only its basis-dependent operation definition and real completion
+principle are used; the realness and probability separation of (12.11)
+are established above. The sign condition is joint: changing all
+$\rho_\theta$ to $\rho_{-\theta}$ preserves the event, whereas
+independently choosing conjugation representatives for different
+factors need not preserve a joint law. The actual continuation uses
+the same fixed representative as acquisition, as required in §11.
+
+**Theorem 12.5 (necessary original-panel budget for this consumer).**
+For every integer $k\ge20$, every positive integer $N$, either original
+schedule of Definition 12.1, every $0<\delta<1/2$, and every predictor
+allowed there, suppose that, before any continuation acquisition,
+
+$$
+\Pr_\theta\bigl(|\widehat p-p_{\theta,k}|\le1/5\bigr)
+\ge1-\delta\qquad\text{for each }\theta\in\{0,2/k\}.
+\tag{12.14}
+$$
+
+Then its number $m$ of pair attempts necessarily satisfies
+
+$$
+\boxed{
+m\ge
+\frac{\log(1+4(1-2\delta)^2)}{\log(1+1600/r^2)}
+\ge\frac{r^2}{1600}\log(1+4(1-2\delta)^2).
+}
+\tag{12.15}
+$$
+
+All logarithms are natural. At confidence $3/4$, that is $\delta=1/4$,
+this gives respectively
+
+$$
+\boxed{
+N\ge\frac{r^2\log2}{64000}\quad\text{(directional)},\qquad
+N\ge\frac{r^2\log2}{80000}\quad\text{(depth)}.
+}
+\tag{12.16}
+$$
+
+Integer budgets obey the ceilings of these bounds and, more strongly,
+$N\ge\lceil\log(1+4(1-2\delta)^2)/
+(c\log(1+1600/r^2))\rceil$, where $c=40$ or $50$.
+
+Proof. Test the two source hypotheses by reporting $2/k$ precisely
+when $\widehat p>1/2$. By (12.12), an error of at most $1/5$ places
+$\widehat p\le3/10$ under zero and $\widehat p\ge7/10$ under $2/k$.
+Therefore each testing error is at most $\delta$.
+The standard two-point testing inequality, supplied by
+[LeCam, `le_cam_two_point_sum`](../../../D5/S3/Estimation/LeCam.lean)
+and its [owning Scribe](../../../Blueprint/D5/S3/Estimation/LeCam.scribe.cs),
+requires $\operatorname{TV}(P_0,P_{2/k})\ge1-2\delta$.
+This also covers random predictors: if $a(w)\in[0,1]$ is their
+conditional probability of reporting $2/k$, their error sum is
+$1-\sum_w(P_{2/k}(w)-P_0(w))a(w)\ge1-\operatorname{TV}(P_0,P_{2/k})$.
+This is the same testing supplier applied to a randomized decision,
+with integration if common metadata is continuous.
+
+Combine this requirement with (12.3). Both sides are nonnegative,
+so squaring gives
+$(1+1600/r^2)^m\ge1+4(1-2\delta)^2$.
+The denominator in (12.15) is strictly positive. Taking logarithms
+proves its first inequality, and $\log(1+x)\le x$ for $x\ge0$
+proves its second. Substituting $\delta=1/4$ and (12.2) gives
+(12.16); integrality gives the stated ceilings. $\square$
+
+The acquisition and, if performed once after prediction, continuation
+charges belong to that same run. Adding Definition 12.3 to (10.5)
+gives
+
+$$
+\begin{array}{c|c|c}
+ &\text{directional}&\text{depth}\\ \hline
+\text{source preparations}&95N+r&115N+r\\
+\text{single-copy detector calls}&15N&15N\\
+\text{local filter calls}&40N&60N+U_1\le90N\\
+\text{original joint detector calls}&20N+C_D\le40N&20N+C_T\le50N\\
+\text{additional }r\text{-register detector calls}&1&1\\
+\text{outcome payload bits}&95N+1&155N+1
+\end{array}
+\tag{12.17}
+$$
+
+Here $U_1,C_D,C_T$ retain exactly their actual-run definitions in
+Proposition 10.2. The preparation row follows by adding the $r$ fresh
+requests; the extra call and bit are the one complete binary
+continuation. All acquisition failures remain charged. The continuation
+requires a carrier for $r$ jointly available five-mode inputs, of
+Hilbert-space dimension $5^r$. Its hardware realization, workspace,
+backing, calibration, instruction descriptions, counters, permission,
+record reads/writes and prediction-output encoding add resources beyond
+these rows. The prediction cut itself precedes those $r$ future
+requests; promising them is not acquiring their outcomes in advance.
+No relation between this call count and elementary gates, physical
+duration, energy or a total implementation cost is assumed.
+
+The coefficients in (12.16) express necessary bounds for two different
+fixed schedules. Their ratio does not prove that either schedule is
+more efficient, that a bound is attained, or that the constants are
+optimal. The dependence on $\delta$ in (12.15) is the stated testing
+consequence, not a confidence-optimal characterization. In particular,
+it stays bounded as $\delta$ tends to zero. No upper bound is inferred.
+
+**Corollary 12.6 (fixed acquisition cannot cover all supplied sizes).**
+There is no family of predictors satisfying (12.14) with $\delta=1/4$
+for every integer $k\ge20$ under these original schedules, no additional
+acquisition before prediction, and a common finite upper bound $M$ on
+the number of acquisition pair attempts. This remains true if the
+predictor and the public choice of schedule and $N$ depend on $k$.
+A common finite upper bound on training preparations also rules out
+such a family.
+
+Proof. Theorem 12.5 requires
+$m\ge k^4\log2/1600$, which exceeds any fixed $M$ for some integer
+$k$. Each pair attempt uses two preparations, so a finite preparation
+bound implies a finite pair-attempt bound. $\square$
+
+This corollary quantifies over both unknown sources for each supplied
+size. It does not assert failure for every fixed source, a fixed
+consumer, or training budgets increasing with $k$. It concerns
+prediction of one specified event with a two-source promise. It neither
+certifies all events simultaneously nor prohibits further sampling of
+the same service. The actual information-bearing record has many bits;
+the obstruction is its statistical relation to this consumer, not the
+finiteness of a program or a bound on all possible memory.
+
+Attribution and scope of Theorems 12.2 and 12.5. The contribution is the
+correspondence (12.4)–(12.8) for the original complete flagged
+acquisition and (12.11)–(12.13) for a particular same-source real
+continuation, yielding the horizon-dependent necessary budget (12.15).
+This is a repository-derived synthesis. Symmetric-mixture cancellation,
+product second moments, total-variation contraction, two-point testing
+and Chebyshev's inequality are reused ingredients, not new statistical
+principles or a global originality claim.
+[Phase Boundary §267](RECURSIVE_RELATIONAL_OBSERVATION_PHASE_BOUNDARY.md#267-唯一混合来源在完整重置接口上的八次方副本预算)
+compares access to its fixed input/reference states $\Omega_j$ and
+complete reset outputs $\sigma_j$, with budgets $h^{-2}$ and $h^{-8}$.
+Those states and reset channels are not the five-mode preparations and
+pair filters (12.4).
+[Its §283](RECURSIVE_RELATIONAL_OBSERVATION_PHASE_BOUNDARY.md#283-有限共同相位块的最优重置副本预算与径向信息)
+supplies the symmetric-binomial mechanism with block length $B$ and
+bias $z$, then a complete-block adaptive reset budget. Here its
+second-moment ingredient is used only with $B=2,z=5\theta$, conditional
+on the both-active spectral mask of weight $4/25$. There is no refreshed
+Haar phase, complete-block charging rule or transfer of its adaptive
+upper/lower bounds to this schedule. The spectral simulation is not an
+acquired program in either setting.
+
+[AURIC–Langlands](AURIC_LANGLANDS_STRUCTURE_ACQUISITION_AND_SPECTRAL_EXTENSION_THEORY.md),
+Theorem 3.5, already supplies logarithmic budget inversion from a
+likelihood second moment, while Theorem 4.2 and Proposition 6.3 give
+conjugation classification and full quadratic-tensor acquisition at the
+level of laws. Its Proposition 4.4 supplies stability for the full tensor,
+not this original record's numerical inverse. Its calibrated nonreal
+reference in §5 is a different supplied resource. Its representation
+splitting and conditional Hecke naturality in §§6–7 introduce no
+implementation of (12.11). The private `real_trace_pairing`,
+`statistics_iff_real` and `two_copy_classification`, together with public
+`real_copy_classification`, in
+[RealCopyConjugation](../../../D5/S3/Quantum/Fibers/RealCopyConjugation.lean)
+and its [owning Scribe](../../../Blueprint/D5/S3/Quantum/Fibers/RealCopyConjugation.scribe.cs)
+already express the real-statistics/conjugation suppliers; they assert
+no acquired-record budget for this consumer.
+
+Zhuang, [*On stability of generalized phase retrieval and generalized affine
+phase retrieval*, §2, Theorem 2.3](https://doi.org/10.1186/s13660-019-1968-z),
+gives the bi-Lipschitz estimate for a phase-retrievable real quadratic
+map $M_A$ in the metric $\|x+y\|\|x-y\|$. That stability supplier does
+not specify the finite sampling law, conditioning margins or an
+executable numerical decoder for the present filtered panels. The
+law/record distinction and lawful-output requirements also remain as
+in [Recovery Geometry §§1–3](RECURSIVE_RELATIONAL_OBSERVATION_RECOVERY_GEOMETRY.md).
+No new inverse-stability or sufficient all-source sampling theorem is
+asserted here.
+
+The [Native Structural Storage Atlas](RECURSIVE_RELATIONAL_OBSERVATION_NATIVE_STRUCTURAL_STORAGE_ATLAS.md),
+Theorems 6.2 and 7.3 and §9, transports complete actual native
+representations and distinguishes their mathematical inverses from
+receiver acquisition. [Native Paid View Conversion](RECURSIVE_RELATIONAL_OBSERVATION_NATIVE_PAID_VIEW_CONVERSION.md),
+Assumption 1.2 and §7, instead uses its declared fixed-height entrance
+and added installation/conversion services. Their complete-history and
+callable-conversion tasks are not this stochastic source's terminal
+record prediction task. The added result here is an explicit necessary
+budget between the latter record and a supplied later real event;
+it neither replaces those native constructions nor derives the present
+source, joint carrier or detector from them.
+
+In particular, Proposition 10.4's exact-decoding obstruction remains
+unchanged; it uses common support, whereas (12.15) quantifies approximate
+prediction at a growing supplied size. Proposition 10.2 and §11 still
+supply determination from exact panel laws: recover the same source
+orbit and evaluate $\operatorname{tr}(E_k\rho^{\otimes r})$ using one
+common representative. The two exact-law recovery routes agree by
+(10.6) and Proposition 11.2, and the real event removes their one common
+sign choice. Theorem 12.5 adds a necessary acquisition condition for
+that task; it supplies neither an inverse from one finite word nor an
+installed, calibrated and authorized implementation of the exact-law
+calculation.
+
+The fixed-$N$ hypotheses do not cover arbitrary adaptive configurations,
+retry schemes or stopping-time/expected-budget contracts. Surviving
+source-dependent quantum memory, new source-dependent advice, extra
+observations or a nonreal reference change the acquisition interface.
+No finite arithmetic or calibration-robust guarantee follows from the
+ideal matrices. Mathematical realness of $E_k$ does not generate it
+from the original menu or from native $\alpha/\beta$ constructors.
+Mode correlations, ordered control responses, boundary laws and the
+actual retained word keep their independent meanings in Definition 6.3;
+these results do not recover physical space or time, a realized past,
+or retained memory from a probability law. The fixed-$G_{gc}$,
+original-$Q$, parked-consumer, unchanged-initialization, original-root
+late-target, $M_1(D)$ and sharp-$\lambda$ obligations, and the all-size
+positive acquisition/certification bridges retain their original scopes.
+The joint four-expression recovery problem remains separate from this
+necessary budget for a supplied family of continuations.
+
+## 追加锚（本行以下为增补区）
+
+## 13. An evaluated inverse certificate for the original fifty means
+
+The setting in this section is the depth interface of Assumption 6.2,
+with exactly the fixed frame, orientation, $F,L$ and detectors of
+Definitions 6.1, 9.2 and 10.1. The source remains every $(S,A)$ in
+$\mathcal L$. The certificate is algebraic on the larger space of all
+real skew matrices; it requires no rank or spectral restriction on a
+source. Section 12's necessary budget for a separately supplied coherent
+consumer and the inverse certificate here concern different conclusions.
+
+**Definition 13.1 (coordinates, polarization and fixed normalization).**
+Order the ten edges as $(12,13,14,15,23,24,25,34,35,45)$.
+For $u\in\mathbb R^{10}$ let $U(u)$ be the skew matrix whose ordered
+upper entries are $u$, and write $u_{ik}=U(u)_{ik}$ also when $i>k$.
+For a skew matrix set
+
+$$
+a(A)=(A_{ik})_{i<k},\qquad
+\|A\|_{\mathrm{sk}}=\|a(A)\|_2=\|A\|_{\mathrm F}/\sqrt2.
+\tag{13.1}
+$$
+
+For a symmetric matrix put
+$\|T\|_{\triangle,2}^2=\sum_{i\le k}T_{ik}^2$.
+This coordinate norm differs from its Frobenius norm. All vectors of
+fifty means have the ordinary Euclidean norm. For a homogeneous
+quadratic map $f$ use
+$\operatorname{pol}f(u,v)=(f(u+v)-f(u-v))/4$.
+Put $h_i=i^2/36$, $F_j=F^j$, $G_j=F^{2j}$, and define
+
+$$
+\begin{aligned}
+C_j(u,v)&=-\tfrac12F_j\bigl(U(u)G_jU(v)+U(v)G_jU(u)\bigr)F_j,
+&&j=0,1,2,\\
+d(u,v)&=\operatorname{pol}(b\circ U)(u,v),\\
+\Phi_F(u,v)&=\bigl((C_0)_{ik}:i\le k;\ d;
+                         (C_1)_{ik}:i\le k;\ (C_2)_{ik}:i\le k\bigr).
+\end{aligned}
+\tag{13.2}
+$$
+
+There are $15+5+15+15=50$ coordinates. In particular,
+$C_j(u,u)=K(F^jU(u)F^j)$.
+For the four indices $a<b<c<d$ complementary to $r$, the orientation
+in Definition 6.1 gives
+
+$$
+\begin{aligned}
+b_r(U(u))&=2(-1)^{r-1}
+ (u_{ab}u_{cd}-u_{ac}u_{bd}+u_{ad}u_{bc}),\\
+d_r(u,v)&=(-1)^{r-1}
+ (u_{ab}v_{cd}+v_{ab}u_{cd}-u_{ac}v_{bd}-v_{ac}u_{bd}
+                         +u_{ad}v_{bc}+v_{ad}u_{bc}).
+\end{aligned}
+\tag{13.3}
+$$
+
+Let $Q_F(A)$ be the original fifty means $\mathbb E Z_f$ in (10.3),
+in the order of (13.2), and let
+$B_F=\operatorname{pol}(Q_F\circ U)$.
+At depth $j$ its coordinate is
+$M_f^{-1}\operatorname{pol}(A\mapsto f(F^jAF^j))$.
+Here $M_f$ is computed from the base polynomial, before filtering:
+
+| Base coordinate $f$ | Sum of absolute base coefficients | $M_f$ in (10.1) |
+| --- | ---: | ---: |
+| $K_{ii}=\sum_{\ell\ne i}A_{i\ell}^2$ | $4$ | $2$ |
+| $K_{ik}=-\sum_{\ell\notin\{i,k\}}A_{i\ell}A_{\ell k}$, $i<k$ | $3$ | $7/4$ |
+| $b_r$ in (13.3) | $6$ | $5/2$ |
+
+The same detector and the same $M_f$ are used at every depth.
+Thus $\Phi_F=D_M B_F$ for the diagonal matrix of these fifty base
+normalizations, and
+$\|\Phi_F(u,v)\|_2\le(5/2)\|B_F(u,v)\|_2$.
+No full-tensor effect or depth-dependent rescaling is supplied.
+
+**Lemma 13.2 (homogeneous five-vertex estimate).** For distinct indices
+define
+
+$$
+x_{ik\ell}=u_{i\ell}v_{\ell k}+v_{i\ell}u_{\ell k},
+\qquad z_{i\ell}=u_{i\ell}v_{i\ell}=z_{\ell i}.
+\tag{13.4}
+$$
+
+If $\eta\ge0$ bounds the absolute values of every $x_{ik\ell}$,
+every $z_{i\ell}$ and every $d_r(u,v)$, then
+
+$$
+\|u\|_2\|v\|_2\le100\eta.
+\tag{13.5}
+$$
+
+Proof. If either vector vanishes the assertion holds. Otherwise divide
+the two vectors by their norms and divide $\eta$ by their norm product.
+Bilinearity reduces the proof to $\|u\|_2=\|v\|_2=1$.
+Choose an edge $p=\{a,b\}$, $a<b$, on which
+$\alpha=|u_{ab}|=\max_e|u_e|$. Then
+$\alpha\ge1/\sqrt{10}$ and $|v_{ab}|\le\eta/\alpha$.
+
+For every $c\notin\{a,b\}$ the two available equations are
+
+$$
+x_{bca}=-(u_{ab}v_{ac}+v_{ab}u_{ac}),\qquad
+x_{acb}=u_{ab}v_{bc}+v_{ab}u_{bc}.
+\tag{13.6}
+$$
+
+Ordered entries in these formulas automatically include the signs when
+$c<a$ or $c<b$. Since every $|u_e|\le\alpha$, each of the six edges
+meeting $p$ other than $p$ satisfies
+
+$$
+|v_e|\le\frac{\eta+|v_{ab}|\alpha}{\alpha}
+       \le\frac{2\eta}{\alpha}.
+\tag{13.7}
+$$
+
+For a disjoint edge $\{c,d\}$ let $r$ be the fifth vertex.
+After multiplication by its orientation sign, (13.3) contains
+$u_{ab}v_{cd}+v_{ab}u_{cd}$ and four other products. Each of those
+four products has a $v$ edge meeting $p$ other than $p$, so its absolute
+value is at most $\alpha(2\eta/\alpha)=2\eta$.
+The term $v_{ab}u_{cd}$ has absolute value at most $\eta$.
+Consequently
+
+$$
+\alpha|v_{cd}|\le\eta+\eta+4(2\eta)=10\eta.
+\tag{13.8}
+$$
+
+All ten coordinates of $v$ are now at most $10\eta/\alpha$ in absolute
+value, including $p$. Therefore
+$1=\|v\|_2\le10\sqrt{10}\eta/\alpha\le100\eta$.
+Undoing the normalization proves (13.5). The classification into the
+chosen edge, its six neighbors and its three disjoint edges exhausts
+all ten edges. $\square$
+
+**Lemma 13.3 (explicit inversion of the original filtered moments).**
+For every real $u,v$,
+
+$$
+\|u\|_2\|v\|_2\le16124313600\,\|\Phi_F(u,v)\|_2.
+\tag{13.9}
+$$
+
+Proof. Put $\Delta=\|\Phi_F(u,v)\|_2$; each coordinate of (13.2)
+has absolute value at most $\Delta$.
+Every two distinct $h_i$ differ by at least $1/12$, and
+$0<h_i<1$. For $i\ne k$ the three off-diagonal moments are
+
+$$
+y_j^{ik}=-\frac{2(C_j)_{ik}}{(i/6)^j(k/6)^j}
+     =\sum_{\ell\notin\{i,k\}}h_\ell^j x_{ik\ell},
+\qquad j=0,1,2.
+\tag{13.10}
+$$
+
+The denominators used here are at least $6^{-4}$, so
+$|y_j^{ik}|\le2592\Delta$. For the remaining three indices $r,s,t$,
+subtracting $(h_s+h_t)y_1^{ik}$ from
+$y_2^{ik}+h_sh_ty_0^{ik}$ cancels the $s,t$ terms. Hence
+
+$$
+x_{ikr}=
+\frac{h_sh_t y_0^{ik}-(h_s+h_t)y_1^{ik}+y_2^{ik}}
+     {(h_r-h_s)(h_r-h_t)},\qquad
+|x_{ikr}|\le144\cdot4\cdot2592\Delta=1492992\Delta.
+\tag{13.11}
+$$
+
+This formula applies to each of the three choices of $r$ and to every
+ordered off-diagonal entry; symmetry of $C_j$ supplies either order.
+
+The diagonal moments give all fifteen numbers
+
+$$
+t_{ij}=\frac{(C_j)_{ii}}{(i/6)^{2j}}
+       =\sum_{\ell\ne i}h_\ell^j z_{i\ell},\qquad
+|t_{ij}|\le1296\Delta,\qquad j=0,1,2.
+\tag{13.12}
+$$
+
+Here is an explicit inversion using these moments, without an unknown
+conditioning constant. To recover any edge $\{a,b\}$ choose any third
+vertex $c$, and let $r,s$ be the remaining two vertices. For
+$i\in\{a,b,c\}$ put
+
+$$
+w_i=(h_i-h_r)(h_i-h_s),\qquad
+R_i=t_{i2}-(h_r+h_s)t_{i1}+h_rh_s t_{i0}.
+\tag{13.13}
+$$
+
+The polynomial $(X-h_r)(X-h_s)$ vanishes at $h_r,h_s$. Substitution
+in (13.12) therefore gives the three exact equations
+
+$$
+R_a=w_bz_{ab}+w_cz_{ac},\qquad
+R_b=w_az_{ab}+w_cz_{bc},\qquad
+R_c=w_az_{ac}+w_bz_{bc}.
+\tag{13.14}
+$$
+
+Multiply these equations by $w_a,w_b,w_c$, respectively, and add the
+first two minus the third. The $z_{ac},z_{bc}$ terms cancel, proving
+
+$$
+z_{ab}=\frac{w_aR_a+w_bR_b-w_cR_c}{2w_aw_b}.
+\tag{13.15}
+$$
+
+Every $1/144\le|w_i|\le1$, and (13.12) gives
+$|R_i|\le(1+2+1)1296\Delta=5184\Delta$. Thus for every edge
+
+$$
+|z_{ab}|\le\frac32\,144^2\,5184\Delta=161243136\Delta.
+\tag{13.16}
+$$
+
+Finally $|d_r|\le\Delta$. Since $1492992<161243136$, all the
+hypotheses of Lemma 13.2 hold with $\eta=161243136\Delta$.
+Its factor $100$ gives (13.9), including when $\Delta=0$.
+Every denominator above depends only on the five fixed filter entries;
+no division by a source coordinate, eigenvalue or spectral gap occurs
+in this moment inversion. $\square$
+
+**Theorem 13.4 (evaluated detector-normalized certificate).** The
+polarization of the original fifty means satisfies
+
+$$
+\boxed{
+\|B_F(u,v)\|_2\ge c_F\|u\|_2\|v\|_2,
+\qquad c_F=\frac1{40310784000}>0,
+\qquad u,v\in\mathbb R^{10}.
+}
+\tag{13.17}
+$$
+
+Proof. Combine (13.9) with
+$\|\Phi_F\|_2\le(5/2)\|B_F\|_2$ from Definition 13.1 and the exact
+identity $(5/2)16124313600=40310784000$. $\square$
+
+For correspondence with the general suppliers, write the $\nu$th
+coordinate of $Q_F\circ U$ as $u^T R_\nu u$. Each $R_\nu$ is the real
+symmetric $10\times10$ coefficient matrix, with half the mixed
+coefficient in each off-diagonal position. Then
+$B_F(u,v)_\nu=u^T R_\nu v$. There are exactly fifty such matrices,
+and their entries include the base $M_f^{-1}$ at every depth.
+Wang–Xu, [*Generalized phase retrieval*, Theorem 2.1](https://arxiv.org/html/1605.08034v3),
+equates real quadratic phase retrieval with nonsingularity of this
+bilinear map. Its hypotheses hold here by Theorem 9.1 on all real skew
+matrices. Zhuang, [*On stability of generalized phase retrieval and
+generalized affine phase retrieval*, Lemma 2.1, Theorem 2.3 and
+(2.3)](https://link.springer.com/article/10.1186/s13660-019-1968-z),
+supplies the general positive frame bound and product-distance stability.
+Those results apply to real symmetric coefficient matrices without a
+positive-semidefiniteness requirement; the square-root measurement
+results later in that paper have extra hypotheses and are not used.
+The number $c_F^2$ is an evaluated lower choice for its squared frame
+bound $a_0$. The source-specific contribution here is the bound
+(13.17), obtained from the original moments by (13.6)–(13.16), rather
+than a new general phase-retrieval or compactness theorem.
+
+## 14. Residual-qualified precision and the complete finite record
+
+**Proposition 14.1 (orbit ambiguity and arbitrary off-image readouts).**
+For real skew $A,B$ put
+
+$$
+d_\pm(A,B)=\min\{\|A-B\|_{\mathrm{sk}},\|A+B\|_{\mathrm{sk}}\},
+\qquad
+D_\pm(A,B)=\max\{\|A-B\|_{\mathrm{sk}},\|A+B\|_{\mathrm{sk}}\}.
+\tag{14.1}
+$$
+
+With $K_F=c_F^{-1}=40310784000$, one has
+
+$$
+d_\pm D_\pm\le K_F\|Q_F(A)-Q_F(B)\|_2.
+\tag{14.2}
+$$
+
+More explicitly, let $(S,A),(T,B)\in\mathcal L$, and let
+$y\in\mathbb R^{50}$ and a real symmetric $\widehat S$ be arbitrary
+readouts, not necessarily in the lawful image. Suppose known bounds are
+
+$$
+\begin{aligned}
+\|Q_F(A)-y\|_2&\le\varepsilon_Q,&
+\|Q_F(B)-y\|_2&\le r_Q,\\
+\|S-\widehat S\|_{\mathrm F}&\le\varepsilon_S,&
+\|T-\widehat S\|_{\mathrm F}&\le r_S.
+\end{aligned}
+\tag{14.3}
+$$
+
+All four bounds are nonnegative. Then
+
+$$
+\begin{aligned}
+d_\pm D_\pm&\le40310784000(\varepsilon_Q+r_Q),\\
+d_\pm&\le\sqrt{40310784000(\varepsilon_Q+r_Q)},\\
+\|S-T\|_{\mathrm F}&\le\varepsilon_S+r_S,\\
+\min_{\sigma\in\{-1,1\}}
+\|(S+iA)-(T+i\sigma B)\|_{\mathrm F}
+&\le\sqrt{(\varepsilon_S+r_S)^2+
+                     80621568000(\varepsilon_Q+r_Q)}.
+\end{aligned}
+\tag{14.4}
+$$
+
+If $D_\pm\ge r>0$, the second line may be replaced by the linear
+bound $d_\pm\le40310784000(\varepsilon_Q+r_Q)/r$.
+Any two lawful candidates whose quadratic residuals about the same $y$
+are at most $\varepsilon_Q$ obey
+$d_\pm D_\pm\le80621568000\varepsilon_Q$.
+
+Proof. The product-distance implication is Zhuang's Theorem 2.3/(2.3)
+with the evaluated lower bound (13.17). In the present conventions its
+polarization identity is exactly
+
+$$
+Q_F(A)-Q_F(B)=B_F(a(A)-a(B),a(A)+a(B)).
+\tag{14.5}
+$$
+
+Thus its distance product is $d_\pm D_\pm$, with no extra factor.
+The triangle inequality gives the first and third lines of (14.4).
+Since $D_\pm\ge d_\pm$, the first line bounds $d_\pm^2$.
+Finally the squared complex Frobenius norm is
+$\|S-T\|_{\mathrm F}^2+2\|A-\sigma B\|_{\mathrm{sk}}^2$;
+minimize over the one common sign. Division by the declared positive
+$r$ gives the local bound. The two-candidate assertion uses the same
+triangle inequality. $\square$
+
+In particular the global bound has a square root in readout error;
+it covers $A=0$, singular densities and repeated-spectrum strata.
+A lower bound on $D_\pm$ is a separate condition, not a genericity
+assumption silently imposed on this global statement. The readout
+premises do not construct a lawful candidate. A finite-arithmetic
+residual certificate must include its evaluation error in $r_Q,r_S$;
+substituting unbounded numerical residual approximations would not
+verify (14.3).
+
+**Proposition 14.2 (confidence radii for the original complete schedule).**
+Fix a positive integer $N$ and $0<\delta<1$. Use exactly the depth schedule of
+Proposition 10.2: $N$ independent attempts for each of the fifty pair
+configurations and each of the fifteen single-copy settings, in the
+fixed public order, with no retries. Retain both filter chains and all
+failed prefixes. Put
+
+$$
+L_\delta=\log(130/\delta),\qquad
+\tau_{\rm pair}=\sqrt{2L_\delta/N},\qquad
+\tau_{\rm single}=\sqrt{L_\delta/(2N)}.
+\tag{14.6}
+$$
+
+Let $\overline q$ be the fifty averages of the actual variables
+$Z_f\in\{-1,0,1\}$ in Definition 10.1. Let $\overline p$ be the fifteen
+averages of the single-copy indicators, and form $S_N$ by applying
+(10.4) to those fifteen averages. For each fixed lawful source, with
+probability at least $1-\delta$ simultaneously,
+
+$$
+\begin{aligned}
+\|\overline q-Q_F(A)\|_\infty&\le\tau_{\rm pair},&
+\|\overline q-Q_F(A)\|_2&\le10\sqrt{L_\delta/N},\\
+\|\overline p-p(S)\|_\infty&\le\tau_{\rm single},&
+\|S_N-S\|_{\triangle,2}&\le3\sqrt5\,\tau_{\rm single},\\
+&&\|S_N-S\|_{\mathrm F}&\le\sqrt{85}\,\tau_{\rm single}.
+\end{aligned}
+\tag{14.7}
+$$
+
+Here $p(S)$ denotes precisely the fifteen probabilities in (10.4).
+The confidence level is uniform over the lawful domain in the sense
+that the same constants work for every fixed source; it is not a
+simultaneous coupling of runs from different sources.
+
+For actual arithmetic outputs $y\in\mathbb R^{50}$ and real symmetric
+$\widehat S$, suppose certified nonnegative tolerances $a_Q,a_S$ satisfy
+$\|y-\overline q\|_2\le a_Q$ and
+$\|\widehat S-S_N\|_{\mathrm F}\le a_S$.
+On the same event the source-error inputs in (14.3) may be taken as
+
+$$
+\varepsilon_Q=a_Q+10\sqrt{L_\delta/N},\qquad
+\varepsilon_S=a_S+\sqrt{85}\,\tau_{\rm single}.
+\tag{14.8}
+$$
+
+There is also the symmetric coordinate bound
+$\|\widehat S-S\|_{\triangle,2}\le a_S+3\sqrt5\tau_{\rm single}$.
+Consequently every lawful candidate with certified residuals $r_Q,r_S$
+obeys (14.4), with these explicit values. The statement is simultaneous
+over such candidates, including candidates selected after reading the
+record; no further union bound over candidates is required.
+
+Proof. Conditional on the fixed source, Assumption 6.2 and the
+independent instrument initialization give independent attempts within
+each configuration. Every pair variable uses the denominator $N$ of
+all attempts. It equals zero on a failed prefix and has expectation
+$f(F^jAF^j)/M_f$ by (10.3). Thus it estimates $Q_F(A)$ directly,
+without multiplying by a newly chosen normalization or dividing by
+success counts.
+
+The bounded-independent-variable Hoeffding inequality gives, for $t>0$,
+the actual two-sided tails
+
+$$
+\Pr(|\overline q_\nu-Q_F(A)_\nu|\ge t)
+ \le2\exp(-Nt^2/2),\qquad
+\Pr(|\overline p_\ell-p(S)_\ell|\ge t)
+ \le2\exp(-2Nt^2).
+\tag{14.9}
+$$
+
+The first range has length two, and the second range has length one.
+The standard supplier is Hoeffding,
+[*Probability Inequalities for Sums of Bounded Random Variables*,
+Theorem 2](https://doi.org/10.1080/01621459.1963.10500830),
+applied with those ranges. At the respective radii in (14.6) both
+right sides are $2e^{-L_\delta}=\delta/65$.
+A union bound over $50+15=65$ settings gives the claimed event.
+In particular the pair radius is twice the single radius.
+
+On that event, the fifty-dimensional Euclidean error is at most
+$\sqrt{50}\tau_{\rm pair}=10\sqrt{L_\delta/N}$.
+Each diagonal entry of $S_N$ has error at most $\tau_{\rm single}$.
+By (10.4), each of its ten off-diagonal entries has error at most
+$\tau_{\rm single}+\tfrac12(2\tau_{\rm single})
+=2\tau_{\rm single}$.
+The two squared norm bounds are therefore
+$5\tau_{\rm single}^2+10(2\tau_{\rm single})^2=45\tau_{\rm single}^2$
+and
+$5\tau_{\rm single}^2+20(2\tau_{\rm single})^2=85\tau_{\rm single}^2$.
+Adding the separate arithmetic tolerances proves (14.8), using
+$\|T\|_{\triangle,2}\le\|T\|_{\mathrm F}$ for the coordinate version.
+Proposition 14.1 is deterministic on this event and hence applies to
+every qualifying candidate. $\square$
+
+**Corollary 14.3 (nonempty confidence regions and charged precision).**
+Under Proposition 14.2 define the set of lawful candidates
+
+$$
+\mathcal C=
+\{(T,B)\in\mathcal L:
+ \|Q_F(B)-y\|_2\le\varepsilon_Q,
+ \|T-\widehat S\|_{\mathrm F}\le\varepsilon_S\}.
+\tag{14.10}
+$$
+
+With probability at least $1-\delta$ it contains the true source, and
+every two of its elements obey
+
+$$
+d_\pm(A,B)\le\sqrt{80621568000\varepsilon_Q},\qquad
+\|S-T\|_{\mathrm F}\le2\varepsilon_S.
+\tag{14.11}
+$$
+
+For prescribed skew-coordinate ambiguity $h>0$ and symmetric Frobenius
+ambiguity $g>0$, suppose
+$a_Q<h^2/80621568000$ and $a_S<g/2$.
+It suffices to choose the positive integer $N$ with
+
+$$
+N\ge\max\left\{
+\frac{100L_\delta}{(h^2/80621568000-a_Q)^2},\quad
+\frac{85L_\delta}{2(g/2-a_S)^2}
+\right\}.
+\tag{14.12}
+$$
+
+Every such region has the ambiguities at most $h,g$ on that event.
+The complete acquisition charges for this $N$ are
+
+$$
+\begin{array}{c|c}
+\text{source preparations}&115N\\
+\text{single-copy detector calls}&15N\\
+\text{local filter calls}&60N+U_1\le90N\\
+\text{joint detector calls}&20N+C_T\le50N\\
+\text{padded outcome-record bits}&155N.
+\end{array}
+\tag{14.13}
+$$
+
+The variables $U_1,C_T$ have exactly their actual-run meanings in
+Proposition 10.2. All preparations and actual calls on failed prefixes
+are charged. Both specimens execute their prescribed chain even if
+the other fails; an unexecuted detector is only padded.
+
+Proof. On the event (14.7), (14.8) puts $(S,A)$ in $\mathcal C$.
+For any two candidates in this set the triangle inequality bounds their
+quadratic-mean difference by $2\varepsilon_Q$, and their symmetric
+difference by $2\varepsilon_S$. Apply (14.2) and $d_\pm^2\le d_\pm D_\pm$
+to obtain (14.11). Inequality (14.12) makes
+$\varepsilon_Q\le h^2/80621568000$ and
+$\varepsilon_S\le g/2$, which proves the precision assertion.
+
+There are $50N$ pairs and $15N$ single specimens, giving $115N$
+preparations. The $15N$ depth-one pairs use $30N$ local filter calls;
+the depth-two pairs use $30N$ first calls and $U_1$ second calls.
+There are $20N$ unfiltered joint detector calls and $C_T$ filtered
+double-success calls. The payload is
+$15N+20N+3(15N)+5(15N)=155N$ bits. This is exactly (10.5), without
+free successful replacement. $\square$
+
+The region (14.10) is a set-valued precision assertion, not an installed
+point-output orbit decoder. For an arbitrary off-image readout outside
+the confidence event it can be empty. Certifying a candidate's lawfulness,
+finding one, evaluating residual bounds with finite arithmetic, and
+proving a bound on that computation's time and workspace remain separate
+tasks. The arithmetic tolerances in (14.8) are declared premises, not
+an uncharged algorithm. At zero arithmetic tolerance the displayed
+sufficient pair-precision budget scales as $h^{-4}$; no claim of sharp
+risk or resource optimality follows. There is no exact recovery of
+continuous parameters from a fixed finite record, in accordance with
+Proposition 10.4.
+
+The outcome payload in (14.13) retains order and failures. Its reads and
+writes, extraction of counts, source/frame/calibration backing, schedule
+and program descriptions, counters, allocation, arithmetic-output
+encoding, workspace and actual permissions require the further
+resources in Definition 10.3. The rows give neither elementary gate
+counts nor physical time or energy. Section 12's separately supplied
+coherent continuation is not executed or charged in this acquisition
+result; its necessary lower bound remains in its original prediction
+task. The present upper certificate does not assert an efficient
+predictor for that task or a matching lower bound.
+
+Attribution and scope. The evaluated number (13.17), the moment
+relations (13.10)–(13.16) and their consumer (14.4), (14.8)–(14.13)
+are a repository-derived synthesis for the fixed fifty means and the
+same lawful source. Nonsingular-polarization and product-distance
+stability are the published Wang–Xu and Zhuang suppliers cited above;
+bounded independent concentration is Hoeffding's inequality. These
+ingredients are not new general theorems or a claim of global
+literature originality. The certificate adds no observations or
+permissions, no nonreal reference, no source-dependent selector and no
+free post-selection. It uses the additional preparation/control
+service in Assumption 6.2, without implementing it in the old
+wait/read/Stop menu or by native $\alpha/\beta$ constructors. Physical
+Euclidean dimension, full joint prediction, lawful off-image decoding
+with proved arithmetic cost, fixed-record sharp risk and the remaining
+native acquisition/certification bridges retain their separate scopes.
+No Lean verification or physical realization is asserted.
+
+## 追加锚（本行以下为增补区）
