@@ -12,16 +12,16 @@ internal sealed class SignedSplitSuccessorDocument : IScribeDocumentDefinition
         Seq(Forall, Sp, V(s), Colon, Sp, type, Comma, Sp, body);
     private static Formula Ex(string s, Formula type, Formula body) =>
         Seq(Exists, Sp, V(s), Colon, Sp, type, Comma, Sp, body);
-    private static Formula Arr(Formula a, Formula b) => Seq(a, Sp, Rightarrow, Sp, b);
+    private static Formula Par(Formula a) => Seq(F.Open, a, F.Close);
+    private static Formula Arr(Formula a, Formula b) => Seq(Par(a), Sp, Rightarrow, Sp, Par(b));
     private static Formula Fn(Formula a, Formula b) => Seq(a, Sp, Rightarrow, Sp, b);
-    private static Formula Eq(Formula a, Formula b) => Seq(a, Sp, Equal, Sp, b);
+    private static Formula Eq(Formula a, Formula b) => Seq(a, Sp, F.Eq, Sp, b);
     private static Formula Lt(Formula a, Formula b) => Seq(a, Sp, F.Lt, Sp, b);
     private static Formula Leq(Formula a, Formula b) => Seq(a, Sp, Le, Sp, b);
     private static Formula Mem(Formula a, Formula b) => Seq(a, Sp, InMacro, Sp, b);
-    private static Formula Not(Formula a) => Seq(Neg, Sp, a);
-    private static Formula And(Formula a, Formula b) => Seq(a, Sp, Land, Sp, b);
-    private static Formula Or(Formula a, Formula b) => Seq(a, Sp, Lor, Sp, b);
-    private static Formula Iff(Formula a, Formula b) => Seq(a, Sp, Leftrightarrow, Sp, b);
+    private static Formula And(Formula a, Formula b) => Seq(Par(a), Sp, Land, Sp, Par(b));
+    private static Formula Or(Formula a, Formula b) => Seq(Par(a), Sp, Lor, Sp, Par(b));
+    private static Formula Iff(Formula a, Formula b) => Seq(Par(a), Sp, Leftrightarrow, Sp, Par(b));
     private static Formula Lam(string x, Formula body) => Grp(Seq(V(x), Sp, Mapsto, Sp, body));
     private static Formula Ev(Formula l, string x, Formula body) => Call("Eventually", l, Lam(x, body));
     private static Formula Set(Formula a) => Call("Set", a);
@@ -34,6 +34,8 @@ internal sealed class SignedSplitSuccessorDocument : IScribeDocumentDefinition
     private static Formula At(string f, params Formula[] args) => Call(f, args);
     private static Formula Inst(string cls, Formula type, Formula body) =>
         Seq(OpenBracket, Call(cls, type), CloseBracket, Sp, body);
+    private static Formula Fraction(Formula numerator, Formula denominator) =>
+        Seq(F.Frac, Grp(numerator), Grp(denominator));
     private static Formula CoordinateMap() => Lam("x", Lam("c", At("coord", V("c"), V("x"))));
 
     private static Formula UniformStatement()
@@ -191,17 +193,17 @@ internal sealed class SignedSplitSuccessorDocument : IScribeDocumentDefinition
         var k = V("K"); var l = V("L"); var t = V("t"); var nu = V("nu");
         var mass = Eq(At("apply", TV(t), V("univ")), At("apply", TV(nu), V("univ")));
         var mapped = Eq(Map(t, V("p")), nu);
-        var lower = And(Lt(Frac(D(1,3), D(4,8)), At("apply", t, V("H"))),
-            Lt(Frac(D(1), D(6)), At("apply", t, V("H"))));
+        var lower = And(Lt(Fraction(D(1,3), D(4,8)), At("apply", t, V("H"))),
+            Lt(Fraction(D(1), D(6)), At("apply", t, V("H"))));
         var conclusion = Ex("H", Set(k), And(At("IsClopen", V("H")),
             And(At("Subset", V("H"), At("diff", At("preimage", V("p"), V("V")), V("R"))),
             All("t", SM(k), Arr(mapped, Arr(mass, lower))))));
         var small = All("t", SM(k), Arr(mapped, Arr(mass,
-            Leq(At("real", TV(t), V("R")), Frac(D(1), D(1,6))))));
+            Leq(At("real", TV(t), V("R")), Fraction(D(1), D(1,6))))));
         Formula body = Arr(small, conclusion);
         body = Arr(At("IsClopen", V("R")), body);
         body = All("R", Set(k), body);
-        body = Arr(Leq(Frac(D(1), D(2)), At("real", At("posPart", At("toJordanDecomposition", nu)), V("univ"))), body);
+        body = Arr(Leq(Fraction(D(1), D(2)), At("real", At("posPart", At("toJordanDecomposition", nu)), V("univ"))), body);
         body = Arr(Eq(At("apply", TV(nu), Compl(V("V"))), D(0)), body);
         body = Arr(At("IsClopen", V("V")), body);
         body = All("V", Set(l), body);
@@ -231,8 +233,8 @@ internal sealed class SignedSplitSuccessorDocument : IScribeDocumentDefinition
         var x = V("x"); var y = V("y"); var p = V("p"); var wn = At("W", r, j);
         var nu = At("nu", n); var sn = At("s", n); var vn = At("V", n);
         var filter = At("inf", V("atTop"), At("principal", V("S")));
-        var half = Frac(D(1), D(2));
-        var budget = At("mul", At("mul", Frac(D(1), D(6,4)),
+        var half = Fraction(D(1), D(2));
+        var budget = At("mul", At("mul", Fraction(D(1), D(6,4)),
             At("pow", half, At("code", r))), At("pow", half, j));
         Formula Earlier(Formula b) => All("r", rows, Arr(Mem(r, V("A")),
             All("j", nat, Arr(Lt(j, V("q")), b))));
@@ -243,8 +245,8 @@ internal sealed class SignedSplitSuccessorDocument : IScribeDocumentDefinition
             Ex("j", nat, And(Lt(j, V("q")), Mem(x, wn)))))));
         var candidate = All("t", SM(k), Arr(Eq(Map(t, p), nu),
             Arr(Eq(At("apply", TV(t), V("univ")), At("apply", TV(nu), V("univ"))),
-                And(Lt(Frac(D(1,3), D(4,8)), At("apply", t, V("H"))),
-                    Lt(Frac(D(1), D(6)), At("apply", t, V("H")))))));
+                And(Lt(Fraction(D(1,3), D(4,8)), At("apply", t, V("H"))),
+                    Lt(Fraction(D(1), D(6)), At("apply", t, V("H")))))));
         var piece = Ex("H", Set(k), And(At("IsClopen", V("H")),
             And(At("Subset", V("H"), At("diff", At("preimage", p, vn), exclusion)), candidate)));
         Formula body = All("M", nat, Ex("n", nat,
