@@ -254,7 +254,46 @@ private lemma quantum_overlap {N : ℕ}
 private lemma fidelity_overlap {n : Type*} [Fintype n] [DecidableEq n]
     (ρ σ : Matrix n n ℂ) (hρ : ρ.PosSemidef) (hσ : σ.PosSemidef) :
     (Matrix.trace (ρ * σ)).re ≤ fidelity ρ σ := by
-  sorry
+  classical
+  let X := CFC.sqrt ρ * CFC.sqrt σ
+  let S := CFC.sqrt (Xᴴ * X)
+  have hS : S.PosSemidef := Matrix.nonneg_iff_posSemidef.mp (CFC.sqrt_nonneg _)
+  let D := Matrix.diagonal (fun i => (hS.1.eigenvalues i : ℂ))
+  let φ := Unitary.conjStarAlgAut ℂ (Matrix n n ℂ) hS.1.eigenvectorUnitary
+  have hspec : S = φ D := hS.1.spectral_theorem
+  have hsquare : (Matrix.trace (S * S)).re = ∑ i, (hS.1.eigenvalues i) ^ 2 := by
+    calc
+      _ = (Matrix.trace (φ (D * D))).re := by rw [map_mul, ← hspec]
+      _ = (Matrix.trace (D * D)).re := by
+        dsimp [φ]
+        rw [Matrix.trace_mul_cycle, Unitary.coe_star_mul_self, one_mul]
+      _ = _ := by
+        simp [D, Matrix.diagonal_mul_diagonal, Matrix.trace_diagonal,
+          Complex.mul_re, pow_two]
+  have htrace : (Matrix.trace S).re = ∑ i, hS.1.eigenvalues i := by
+    rw [hS.1.trace_eq_sum_eigenvalues]
+    simp
+  have hρs := (Matrix.nonneg_iff_posSemidef.mp (CFC.sqrt_nonneg ρ)).1.eq
+  have hσs := (Matrix.nonneg_iff_posSemidef.mp (CFC.sqrt_nonneg σ)).1.eq
+  have hgram : Matrix.trace (Xᴴ * X) = Matrix.trace (ρ * σ) := by
+    dsimp [X]
+    rw [Matrix.conjTranspose_mul, hρs, hσs]
+    calc
+      _ = Matrix.trace (CFC.sqrt σ * (CFC.sqrt ρ * CFC.sqrt ρ) * CFC.sqrt σ) := by
+        simp only [Matrix.mul_assoc]
+      _ = Matrix.trace (CFC.sqrt σ * ρ * CFC.sqrt σ) := by
+        rw [CFC.sqrt_mul_sqrt_self ρ hρ.nonneg]
+      _ = Matrix.trace (CFC.sqrt σ * CFC.sqrt σ * ρ) := Matrix.trace_mul_cycle _ _ _
+      _ = Matrix.trace (ρ * σ) := by
+        rw [CFC.sqrt_mul_sqrt_self σ hσ.nonneg, Matrix.trace_mul_comm]
+  calc
+    (Matrix.trace (ρ * σ)).re = (Matrix.trace (S * S)).re := by
+      rw [show S * S = Xᴴ * X from CFC.sqrt_mul_sqrt_self _
+        (Matrix.posSemidef_conjTranspose_mul_self X).nonneg, hgram]
+    _ ≤ (Matrix.trace S).re ^ 2 := by
+      rw [hsquare, htrace]
+      exact Finset.sum_sq_le_sq_sum_of_nonneg (fun i _ => hS.eigenvalues_nonneg i)
+    _ = fidelity ρ σ := rfl
 
 private lemma shift_expansion (N : ℕ) :
     ∑ a, shiftCoeff N a • pauliString a = cyclicShift N := by
