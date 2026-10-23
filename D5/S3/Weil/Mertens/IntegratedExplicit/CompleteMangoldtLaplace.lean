@@ -4,8 +4,9 @@
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
    utility: none
-   digest: The literal inclusive Mangoldt ramp and complete Mertens function have exact Fourier line Laplace transforms. -/
-/- Source-only candidate. All arithmetic sums below use the complete actual
+   digest: Exact Fourier line Laplace transforms of the inclusive Mangoldt ramp and U. -/
+/- Complete arithmetic source candidate; final admission pending.
+   All arithmetic sums below use the complete actual
    von Mangoldt function, and U is the existing CompleteMertensPeak.U. -/
 import D5.S3.Weil.Mertens.IntegratedExplicit.TrivialZeroLaplace
 import D5.S3.Arith.Robin.CompleteMertensPeak
@@ -265,7 +266,9 @@ theorem mangoldtRamp_laplace_norm (t : ℝ) (n : ℕ) :
           abs_of_nonneg (mangoldtRamp_nonneg n _)]
         congr 2
         simp [Complex.mul_re, Complex.neg_re]
-      _ = _ := by rw [he]; simp
+      _ = _ := by
+        rw [he]
+        simp only [Complex.mul_re, Complex.ofReal_re, Complex.ofReal_im, mul_zero, sub_zero]
   simp_rw [he]
   change (∫ y : ℝ in Ioi 0,
     RCLike.re (Complex.exp (-(2 : ℂ) * y) * (mangoldtRamp n (Real.exp y) : ℂ))) = _
@@ -278,7 +281,8 @@ theorem mangoldtRamp_laplace_norm (t : ℝ) (n : ℕ) :
       ((ArithmeticFunction.vonMangoldt n / (n : ℝ) ^ (2 : ℕ) / 2 : ℝ) : ℂ) := by
     push_cast
     norm_num
-  rw [Complex.cpow_ofNat, hr, Complex.ofReal_re]
+  rw [Complex.cpow_ofNat, hr]
+  rfl
 
 theorem mangoldtRamp_norm_integrals_summable (t : ℝ) :
     Summable (fun n : ℕ => ∫ y : ℝ in Ioi 0,
@@ -389,7 +393,7 @@ private theorem first_exp_moment_integrable (t : ℝ) :
       Complex.exp ((1 - transformLine t) * y)) by fun_prop).aestronglyMeasurable) ?_
   filter_upwards [ae_restrict_mem measurableSet_Ioi] with y hy
   exact le_of_eq (by
-    simp [norm_mul, Complex.norm_exp, abs_of_nonneg (show 0 < y from hy).le])
+    norm_num [norm_mul, Complex.norm_exp, abs_of_nonneg (show 0 < y from hy).le])
 
 /-- The first exponential moment on the whole line, with the boundary at infinity paid. -/
 theorem first_exp_moment (t : ℝ) :
@@ -470,16 +474,27 @@ theorem U_line_laplace (t : ℝ) :
           1 / (transformLine t - 1) ^ 2 +
             ((1 + Real.eulerMascheroniConstant : ℝ) : ℂ) / (transformLine t - 1) := by
   simp_rw [U_weighted_split]
-  rw [integral_add (show IntegrableOn (fun y : ℝ =>
+  have hconst : IntegrableOn (fun y : ℝ =>
+      ((1 + Real.eulerMascheroniConstant : ℝ) : ℂ) *
+        Complex.exp ((1 - transformLine t) * y)) (Ioi 0) :=
+    (integrableOn_exp_mul_complex_Ioi
+      (by simp : (1 - transformLine t).re < 0) 0).const_mul _
+  rw [integral_add (μ := volume.restrict (Ioi (0 : ℝ))) (f := fun y : ℝ =>
       Complex.exp (-transformLine t * y) * (mangoldtPart (Real.exp y) : ℂ) -
-        (y : ℂ) * Complex.exp ((1 - transformLine t) * y)) (Ioi 0) from
-      (mangoldtPart_line_integrable t).sub (first_exp_moment_integrable t))
-    ((integrableOn_exp_mul_complex_Ioi (by simp : (1 - transformLine t).re < 0) 0).const_mul _),
-    integral_sub (mangoldtPart_line_integrable t) (first_exp_moment_integrable t),
+        (y : ℂ) * Complex.exp ((1 - transformLine t) * y))
+    (g := fun y : ℝ => ((1 + Real.eulerMascheroniConstant : ℝ) : ℂ) *
+      Complex.exp ((1 - transformLine t) * y))
+    ((mangoldtPart_line_integrable t).sub (first_exp_moment_integrable t))
+    hconst,
+    integral_sub (f := fun y : ℝ => Complex.exp (-transformLine t * y) *
+      (mangoldtPart (Real.exp y) : ℂ))
+      (g := fun y : ℝ => (y : ℂ) * Complex.exp ((1 - transformLine t) * y))
+      (mangoldtPart_line_integrable t) (first_exp_moment_integrable t),
     mangoldtPart_line_laplace, first_exp_moment, integral_const_mul,
     integral_exp_mul_complex_Ioi (by simp : (1 - transformLine t).re < 0)]
   rw [show 1 - transformLine t = -(transformLine t - 1) by ring]
-  simp [div_eq_mul_inv]
+  simp only [Complex.ofReal_zero, mul_zero, Complex.exp_zero, div_neg, neg_neg]
+  ring
 
 end D5.S3.Weil.Mertens.IntegratedExplicit
 end

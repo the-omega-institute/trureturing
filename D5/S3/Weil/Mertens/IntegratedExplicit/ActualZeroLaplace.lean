@@ -4,13 +4,13 @@
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
    utility: none
-   digest: All actual analytic zero occurrences have an absolutely convergent integrated Laplace transform. -/
-/- TRANSIENT WHOLE SOURCE APPLICATION — UNCOMPILED.
+   digest: Absolutely convergent Laplace transform over all actual analytic zero occurrences. -/
+/- Complete actual-occurrence Laplace source candidate; final admission pending.
    Complete actual zero occurrence family; no abstract mass or symmetry premise.
    Reuses the same normalized xi-resolvent calculation already consumed inside
    ActualReciprocalSquareBounds.actual_pairWeight_hasSum, then transports every
    analytic multiplicity to the existing actualZero natural presentation.
-   No canonical alias, Describe, Reg wrapper or RH claim is proposed. -/
+   Native evidence is recorded separately. No RH claim is made. -/
 
 import D5.S3.Weil.ZeroData.ActualReciprocalSquareBounds
 import Mathlib.Logic.Equiv.Defs
@@ -43,7 +43,7 @@ namespace D5.S3.Weil.Mertens.IntegratedExplicit
 
 /-- Exact mass, conjugation, convergence, bound and absolute weighted exchange,
 rederived from the actual normalized xi resolvent. The proof below is the
-sealed source4564 proof body; it is not an additional analytic premise. -/
+sealed source4564 argument with native elaboration repairs, not an analytic premise. -/
 theorem actual_complete_H_package :
     let a : ℕ → ℂ := fun k => 1 / (actualZero k * (1 - actualZero k))
     HasSum a (firstLiMass : ℂ) ∧

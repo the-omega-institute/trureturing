@@ -5,7 +5,7 @@
    anchors: []
    utility: none
    digest: The unconditional integrated explicit formula holds at every positive real point. -/
-/- Uncompiled SOURCE IMPLEMENTATION candidate, not an acceptance claim.
+/- Complete explicit-formula source candidate; final admission pending.
    Exact unconditional integrated Mangoldt formula, all actual occurrences,
    every real y>0, and the complete trivial-zero correction.
    No explicit formula, arithmetic transform, zero mass or symmetry is a premise.
@@ -58,8 +58,10 @@ private theorem digamma_trivial_balance {t : ℝ} (ht : t ≠ 0) :
       1 / (2 * ((n : ℂ) + 1) * (s + 2 * ((n : ℂ) + 1))))
       ((Complex.digamma (s / 2) / 2 +
         (Real.eulerMascheroniConstant : ℂ) / 2 + 1 / s) / s) := by
-    convert (Zeta23.DigammaSeries.hasSum_digamma_series
-      (line_half_integerComplement ht)).mul_right (1 / (2 * s)) using 1
+    have hdig : HasSum (fun n : ℕ => 1 / ((n : ℂ) + 1) - 1 / (s / 2 + n + 1))
+        (Complex.digamma (s / 2) + (Real.eulerMascheroniConstant : ℂ) + 1 / (s / 2)) :=
+      Zeta23.DigammaSeries.hasSum_digamma_series (line_half_integerComplement ht)
+    convert hdig.mul_right (1 / (2 * s)) using 1
     · funext n
       have hj : ((n : ℂ) + 1) ≠ 0 := Nat.cast_add_one_ne_zero n
       have hj' : s / 2 + n + 1 ≠ 0 := by
@@ -76,7 +78,9 @@ private theorem digamma_trivial_balance {t : ℝ} (ht : t ≠ 0) :
       <;> ring
     · field_simp [hs0]
       <;> ring
-  have hR := trivialT_laplace_hasSum (by simp : 0 < (transformLine t).re)
+  have hR : HasSum (fun n : ℕ => (trivialCoeff n : ℂ) / (s + 2 * ((n : ℂ) + 1)))
+      (∫ y : ℝ in Ioi 0, Complex.exp (-s * y) * (trivialT y : ℂ)) :=
+    trivialT_laplace_hasSum (by simp [s] : 0 < s.re)
   have hc : HasSum (fun n : ℕ => (trivialCoeff n : ℂ))
       ((Complex.digamma (s / 2) / 2 +
         (Real.eulerMascheroniConstant : ℂ) / 2 + 1 / s) / s +
@@ -106,7 +110,10 @@ private theorem digamma_trivial_balance {t : ℝ} (ht : t ≠ 0) :
             (s - 1) / (2 * j * (2 * j + 1) * (s + 2 * j)) :=
         (trivial_partial_fraction j s hj hj1 hsj).symm
       _ = _ := by
-        dsimp only [j]
+        change 1 / (2 * j * (s + 2 * j)) +
+          (s - 1) / (2 * j * (2 * j + 1) * (s + 2 * j)) =
+          1 / (2 * j * (s + 2 * j)) +
+            (s - 1) * (1 / (2 * j * (2 * j + 1)) / (s + 2 * j))
         field_simp [hj, hj1, hsj]
         <;> ring
   exact hc.unique (Complex.hasSum_ofReal.mpr trivialCoeff_hasSum)
@@ -125,7 +132,7 @@ private theorem transform_scalar_cancellation
       s * (s - 1) * R = s * (1 - (Real.log 2 : ℂ)) := by
     calc
       _ = s * ((d / 2 + (Real.eulerMascheroniConstant : ℂ) / 2 + 1 / s) / s +
-          (s - 1) * R) := by field_simp [hs0]; ring
+          (s - 1) * R) := by field_simp [hs0] <;> ring
       _ = _ := by rw [hbalance]; push_cast; rfl
   have hden : s * (s - 1) ≠ 0 := mul_ne_zero hs0 hs1
   apply mul_left_cancel₀ hden
@@ -163,7 +170,7 @@ private theorem constant_line_laplace (t : ℝ) :
       (Real.log (2 * Real.pi) : ℂ)) =
         (Real.log (2 * Real.pi) : ℂ) / transformLine t := by
   rw [integral_mul_const, integral_exp_mul_complex_Ioi (by simp : (-transformLine t).re < 0)]
-  simp only [mul_zero, Complex.exp_zero, div_neg, neg_neg]
+  simp only [Complex.ofReal_zero, mul_zero, Complex.exp_zero, div_neg, neg_neg]
   ring
 
 theorem explicitDiscrepancy_line_integrable (t : ℝ) :
@@ -175,7 +182,7 @@ theorem explicitDiscrepancy_line_integrable (t : ℝ) :
         (trivialT_laplace_integrable (by simp : 0 < (transformLine t).re))
   convert h using 1
   funext y
-  dsimp only [explicitDiscrepancy]
+  dsimp only [explicitDiscrepancy, Pi.add_apply, Pi.sub_apply]
   ring
 
 /-- The desired transform is a conclusion of the preceding actual proofs,
@@ -191,14 +198,25 @@ theorem explicitDiscrepancy_line_zero {t : ℝ} (ht : t ≠ 0) :
     funext y
     dsimp only [explicitDiscrepancy]
     ring
-  rw [he, integral_add (((U_line_integrable t).sub
+  rw [he, integral_add (μ := volume.restrict (Ioi (0 : ℝ)))
+    (f := fun y : ℝ => (Complex.exp (-transformLine t * y) * (U (Real.exp y) : ℂ) -
+      Complex.exp (-transformLine t * y) * actualH y) -
+        Complex.exp (-transformLine t * y) * (Real.log (2 * Real.pi) : ℂ))
+    (g := fun y : ℝ => Complex.exp (-transformLine t * y) * (trivialT y : ℂ))
+    (((U_line_integrable t).sub
     (actualH_laplace_integrable (by simp : 1 < (transformLine t).re))).sub
       (constant_line_integrable t))
     (trivialT_laplace_integrable (by simp : 0 < (transformLine t).re)),
-    integral_sub ((U_line_integrable t).sub
+    integral_sub (f := fun y : ℝ =>
+      Complex.exp (-transformLine t * y) * (U (Real.exp y) : ℂ) -
+        Complex.exp (-transformLine t * y) * actualH y)
+      (g := fun y : ℝ => Complex.exp (-transformLine t * y) * (Real.log (2 * Real.pi) : ℂ))
+      ((U_line_integrable t).sub
       (actualH_laplace_integrable (by simp : 1 < (transformLine t).re)))
       (constant_line_integrable t),
-    integral_sub (U_line_integrable t)
+    integral_sub (f := fun y : ℝ => Complex.exp (-transformLine t * y) * (U (Real.exp y) : ℂ))
+      (g := fun y : ℝ => Complex.exp (-transformLine t * y) * actualH y)
+      (U_line_integrable t)
       (actualH_laplace_integrable (by simp : 1 < (transformLine t).re)),
     U_line_laplace, actualH_laplace (by simp : 1 < (transformLine t).re),
     constant_line_laplace, xi_logDeriv_right (by simp : 1 < (transformLine t).re)]
@@ -223,7 +241,8 @@ theorem explicitFourierResidual_continuousAt {y : ℝ} (hy : 0 < y) :
     exact Set.indicator_of_mem hx _
   apply ContinuousAt.congr_of_eventuallyEq (hg := he)
   apply ContinuousAt.mul (by fun_prop)
-  dsimp only [explicitDiscrepancy]
+  change ContinuousAt (fun x : ℝ => (U (Real.exp x) : ℂ) - actualH x -
+    (Real.log (2 * Real.pi) : ℂ) + (trivialT x : ℂ)) y
   exact (((Complex.continuous_ofReal.continuousAt.comp U_exp_continuous.continuousAt).sub
     actualH_continuous.continuousAt).sub continuousAt_const).add
       (Complex.continuous_ofReal.continuousAt.comp (trivialT_continuousAt hy))
@@ -257,7 +276,9 @@ theorem explicitFourierResidual_fourier_zero : 𝓕 explicitFourierResidual = 0 
       (by fun_prop) explicitFourierResidual_integrable
   have hz : ({(0 : ℝ)}ᶜ : Set ℝ) ⊆ {t : ℝ | 𝓕 explicitFourierResidual t = 0} := by
     intro t ht
-    rw [explicitFourierResidual_fourier, explicitDiscrepancy_line_zero ht]
+    change 𝓕 explicitFourierResidual t = 0
+    rw [explicitFourierResidual_fourier, explicitDiscrepancy_line_zero
+      (show t ≠ 0 by simpa only [Set.mem_compl_iff, Set.mem_singleton_iff] using ht)]
   have hall := closure_minimal hz (isClosed_eq hc continuous_const)
   rw [(dense_compl_singleton (0 : ℝ)).closure_eq] at hall
   funext t
@@ -270,13 +291,14 @@ theorem actual_integrated_explicit_formula {y : ℝ} (hy : 0 < y) :
       ((U (Real.exp y) - Real.log (2 * Real.pi) + trivialT y : ℝ) : ℂ) := by
   have hf : Integrable (𝓕 explicitFourierResidual) := by
     rw [explicitFourierResidual_fourier_zero]
-    exact integrable_zero volume
+    exact integrable_zero ℝ ℂ volume
   have hinv := explicitFourierResidual_integrable.fourierInv_fourier_eq hf
     (explicitFourierResidual_continuousAt hy)
   rw [explicitFourierResidual_fourier_zero, Real.fourierInv_eq'] at hinv
   simp only [Pi.zero_apply, smul_zero, integral_zero] at hinv
   have hz : Complex.exp (-(2 : ℂ) * y) * explicitDiscrepancy y = 0 := by
-    simpa only [explicitFourierResidual, Set.indicator_of_mem hy] using hinv.symm
+    simpa only [explicitFourierResidual,
+      Set.indicator_of_mem (show y ∈ Ioi (0 : ℝ) from hy)] using hinv.symm
   have hd : explicitDiscrepancy y = 0 :=
     (mul_eq_zero.mp hz).resolve_left (Complex.exp_ne_zero _)
   dsimp only [explicitDiscrepancy] at hd

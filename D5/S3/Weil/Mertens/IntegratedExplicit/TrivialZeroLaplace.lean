@@ -4,8 +4,8 @@
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
    utility: none
-   digest: The full trivial zero correction has coefficient mass one minus log two and a Laplace transform. -/
-/- Source implementation only; not compiled or kernel accepted.
+   digest: Full trivial zero correction, coefficient mass and Laplace transform. -/
+/- Complete trivial-zero source candidate; final admission pending.
    Exact full trivial-zero correction, including its total coefficient mass.
    Supplied APIs are pinned to Mathlib56a00585/project26623eee/coref024c589. -/
 import D5.S3.Weil.Mertens.IntegratedExplicit.ActualZeroLaplace
