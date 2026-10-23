@@ -178,10 +178,69 @@ private lemma process_trace {N : ℕ}
     simpa [Matrix.trace, ← Finset.sum_mul, Fintype.card_fun] using ht
   exact mul_right_cancel₀ (pow_ne_zero N (by norm_num : (2 : ℂ) ≠ 0)) ht' 
 
+private lemma marginal_split {N : ℕ}
+    (χ : Matrix (Fin N → Fin 4) (Fin N → Fin 4) ℂ) (k : Fin N) (i j : Fin 4) :
+    marginal χ k i j = ∑ z : {l : Fin N // l ≠ k} → Fin 4,
+      χ ((Equiv.funSplitAt k (Fin 4)).symm (i, z))
+        ((Equiv.funSplitAt k (Fin 4)).symm (j, z)) := by
+  classical
+  let e := Equiv.funSplitAt k (Fin 4)
+  have hcoord (t : Fin 4) (z : {l : Fin N // l ≠ k} → Fin 4) :
+      (e.symm (t, z)) k = t := congrArg Prod.fst (e.apply_symm_apply (t, z))
+  have hupdate (t : Fin 4) (z : {l : Fin N // l ≠ k} → Fin 4) :
+      Function.update (e.symm (t, z)) k j = e.symm (j, z) := by
+    funext l
+    by_cases hl : l = k
+    · subst l
+      simp only [Function.update_self, hcoord]
+    · simp [e, Equiv.funSplitAt, Equiv.piSplitAt, hl, Function.update_of_ne hl]
+  unfold marginal
+  rw [← e.symm.sum_comp (fun y => if y k = i then χ y (Function.update y k j) else 0),
+    Fintype.sum_prod_type]
+  simp_rw [hcoord, hupdate]
+  rw [Finset.sum_comm]
+  simp [e]
+
+private lemma marginal_psd {N : ℕ}
+    (χ : Matrix (Fin N → Fin 4) (Fin N → Fin 4) ℂ) (hχ : χ.PosSemidef) (k : Fin N) :
+    (marginal χ k).PosSemidef := by
+  classical
+  have he : marginal χ k = ∑ z : {l : Fin N // l ≠ k} → Fin 4,
+      χ.submatrix (fun i => (Equiv.funSplitAt k (Fin 4)).symm (i, z))
+        (fun i => (Equiv.funSplitAt k (Fin 4)).symm (i, z)) := by
+    ext i j
+    simpa only [Matrix.sum_apply, Matrix.submatrix_apply] using marginal_split χ k i j
+  rw [he]
+  exact Matrix.posSemidef_sum Finset.univ fun z _ => hχ.submatrix _
+
 private lemma marginalApprox_psd {N : ℕ}
     (χ : Matrix (Fin N → Fin 4) (Fin N → Fin 4) ℂ) (hχ : χ.PosSemidef) :
     (marginalApprox χ).PosSemidef := by
-  sorry
+  classical
+  have hprod (s : Finset (Fin N)) :
+      Matrix.PosSemidef
+        (fun a b : Fin N → Fin 4 => ∏ k ∈ s, marginal χ k (a k) (b k)) := by
+    induction s using Finset.induction_on with
+    | empty =>
+      have he : (fun a b : Fin N → Fin 4 =>
+          ∏ k ∈ (∅ : Finset (Fin N)), marginal χ k (a k) (b k)) =
+          Matrix.vecMulVec (fun _ : Fin N → Fin 4 => (1 : ℂ))
+            (star (fun _ : Fin N → Fin 4 => (1 : ℂ))) := by
+        ext a b
+        simp [Matrix.vecMulVec_apply]
+      rw [he]
+      exact Matrix.posSemidef_vecMulVec_self_star _
+    | @insert k s hk ih =>
+      have he : (fun a b : Fin N → Fin 4 =>
+          ∏ l ∈ insert k s, marginal χ l (a l) (b l)) =
+          Matrix.hadamard ((marginal χ k).submatrix (fun a => a k) (fun a => a k))
+            (fun a b => ∏ l ∈ s, marginal χ l (a l) (b l)) := by
+        ext a b
+        simp only [Finset.prod_insert hk]
+        rfl
+      rw [he]
+      exact ((marginal_psd χ hχ k).submatrix (fun a : Fin N → Fin 4 => a k)).hadamard ih
+  exact hprod Finset.univ
 
 private lemma quantum_overlap {N : ℕ}
     (χ : Matrix (Fin N → Fin 4) (Fin N → Fin 4) ℂ)
