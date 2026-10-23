@@ -80,6 +80,20 @@ internal sealed class NormPreservingLiftsDocument : IScribeDocumentDefinition
                 + "Its operator norm is bounded by the real total mass of the Hahn–Jordan totalVariation of s. SignedMeasure itself is not assigned a normed-space instance. "
                 + "weakSignedFunctional(s) means pointwise application of StrongDual.toWeakDual to this functional. totalVariationMass(s) means totalVariation(s)(univ), an extended nonnegative real; toReal is used only for its finite total mass.")),
             Describe.Lean(
+                DescribeId.Create("signed-functional-norm-le"),
+                DeclarationHandle.Create(Owner + "signedFunctional_norm_le"),
+                H("Signed integration operator bound"),
+                StatementSource.FromAuthor(Disp(Seq(All("K", Call("Type", V("u"))),
+                    Call("CompactBorel", V("K")), Sp, Rightarrow, Sp,
+                    All("s", Call("SignedMeasure", V("K"))),
+                    Call("norm", Call("signedFunctional", V("s"))), Sp, Le, Sp,
+                    Call("totalVariationRealUniv", V("s"))))),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text(
+                    "The original continuous-linear-map construction bounds the operator norm of actual signed integration by totalVariation.real(univ). "
+                    + "ClopenCauchyConvergence directly consumes this supplier."))),
+                DescribeRole.Theorem),
+            Describe.Lean(
                 DescribeId.Create("total-variation-map-of-mass"),
                 DeclarationHandle.Create(Owner + "totalVariation_map_of_mass"),
                 H("Preserved mass makes variation commute with pushforward"),
