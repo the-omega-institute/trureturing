@@ -1,5 +1,5 @@
 /- GID: D5/S3/Quantum/Fibers/RealCopyConjugation
-   generality: G
+   generality: I
    mirror-B: D5/B/S3/Quantum/Fibers/RealCopyConjugation
    mirror-E: none(waiver:unbounded-symbolic-proof)
    anchors: []
