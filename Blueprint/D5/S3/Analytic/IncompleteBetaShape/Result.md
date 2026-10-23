@@ -26,7 +26,7 @@ Lean statement: `D5/S3/Analytic/IncompleteBetaShape/Result.convolution_strictMon
 
 *Commentary.*
 
-When b lies strictly between zero and one, the same convolution strictly increases with d. The negative kernel is continuous, symmetric, and strictly increasing toward the midpoint, so the beta-mean comparison applies to its negative. Linearity of the integral reverses the resulting inequality for H.
+When b lies strictly between zero and one, the same convolution strictly increases with d. The function -H is continuous, symmetric, and strictly increasing toward the midpoint, so it satisfies the beta-mean comparison hypotheses. Linearity of the integral reverses the resulting inequality for H.
 
 **Theorem 1.3 (The strict coefficient signs).**
 

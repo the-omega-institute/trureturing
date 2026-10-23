@@ -17,7 +17,7 @@ internal sealed class ResultDocument : IScribeDocumentDefinition
                 DeclarationHandle.Create("D5/S3/Analytic/IncompleteBetaShape/Result.convolution_strictMono_imbalance"),
                 H("Strict increase with imbalance below one"), StatementSource.WithoutFormula(),
                 AssessedProvenance.FromRepo(),
-                Blocks(Paragraph(Text("When b lies strictly between zero and one, the same convolution strictly increases with d. The negative kernel is continuous, symmetric, and strictly increasing toward the midpoint, so the beta-mean comparison applies to its negative. Linearity of the integral reverses the resulting inequality for H."))),
+                Blocks(Paragraph(Text("When b lies strictly between zero and one, the same convolution strictly increases with d. The function -H is continuous, symmetric, and strictly increasing toward the midpoint, so it satisfies the beta-mean comparison hypotheses. Linearity of the integral reverses the resulting inequality for H."))),
                 DescribeRole.Theorem),
             Describe.Lean(DescribeId.Create("incomplete-beta-shape-coefficient-sign"),
                 DeclarationHandle.Create("D5/S3/Analytic/IncompleteBetaShape/Result.result"),
