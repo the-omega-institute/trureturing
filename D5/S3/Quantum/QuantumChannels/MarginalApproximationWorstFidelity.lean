@@ -8,6 +8,8 @@
 
 import D5.S3.Quantum.Entanglement.AbsoluteSeparability.GurvitsBarnumBall
 import D5.S3.Quantum.Recovery.PurifiedLocalPath
+import D5.S3.Quantum.Information.StabilizerPairLocalUnitaryInequivalence
+import D5.S3.Quantum.PureState.PureStateHandshake
 import D5.S3.Quantum.Information.LiTheilHarrowChuangPurifyCloneRefutation
 import D5.S3.QuantumChannels.PauliThreeWeightBayesianInverseUniqueness
 import D5.S3.Quantum.Dynamics.KickedIsingNegativityRefutation
@@ -19,55 +21,41 @@ open scoped BigOperators ComplexOrder MatrixOrder
 open Matrix
 open D5.S3.Quantum.Recovery.ProductPrefixRigidity (productMap)
 open D5.S3.Quantum.Information.StabilizerPairLocalUnitaryInequivalence
-  (Pauli pauliMatrix wordOp tensorOp)
+  (Pauli pauliMatrix wordOp tensorOp qubitPermutation)
 open D5.S3.Quantum.Measurement.StabilizerPovmMaximalEntanglementRefutation
   (word_trace_pair word_expansion word_hermitian)
+open D5.S3.Quantum.PureState.PureStateHandshake (rankOneDensity)
 open D5.S3.QuantumChannels.PauliThreeWeightBayesianInverseUniqueness (sigma)
 open D5.S3.Quantum.Information.LiTheilHarrowChuangPurifyCloneRefutation (sqFidelity)
 
 noncomputable section
 namespace D5.S3.Quantum.QuantumChannels.MarginalApproximationWorstFidelity
 
-/-- A tensor product of Pauli matrices, in the order identity, X, Y, Z. -/
-def pauliString {N : ℕ} (a : Fin N → Fin 4) :
-    Matrix (Fin N → Fin 2) (Fin N → Fin 2) ℂ :=
-  fun x y => ∏ i, sigma (a i) (x i) (y i)
-
 /-- Positivity and trace preservation in the unnormalized Pauli basis. -/
 def IsProcessCPTP {N : ℕ} (χ : Matrix (Fin N → Fin 4) (Fin N → Fin 4) ℂ) : Prop :=
-  χ.PosSemidef ∧ ∑ a, ∑ b, χ a b • (pauliString b * pauliString a) = 1
+  χ.PosSemidef ∧
+    ∑ a, ∑ b, χ a b •
+      (tensorOp (fun k => sigma (b k)) * tensorOp (fun k => sigma (a k))) = 1
 
 /-- The partial trace onto one four-dimensional site. -/
 def marginal {N : ℕ} (χ : Matrix (Fin N → Fin 4) (Fin N → Fin 4) ℂ) (k : Fin N) :
     Matrix (Fin 4) (Fin 4) ℂ :=
   fun i j => ∑ y, if y k = i then χ y (Function.update y k j) else 0
 
-/-- The tensor product of all single-site process-matrix marginals. -/
-def marginalApprox {N : ℕ} (χ : Matrix (Fin N → Fin 4) (Fin N → Fin 4) ℂ) :
-    Matrix (Fin N → Fin 4) (Fin N → Fin 4) ℂ :=
-  fun a b => ∏ k, marginal χ k (a k) (b k)
-
-/-- The wire permutation with entry one exactly when `x = y ∘ finRotate N`. -/
-def cyclicShift (N : ℕ) : Matrix (Fin N → Fin 2) (Fin N → Fin 2) ℂ :=
-  fun x y => if x = y ∘ finRotate N then 1 else 0
-
 /-- Pauli expansion coefficients of the cyclic wire permutation. -/
 def shiftCoeff (N : ℕ) (a : Fin N → Fin 4) : ℂ :=
-  (2 ^ N : ℂ)⁻¹ * Matrix.trace (pauliString a * cyclicShift N)
-
-/-- The rank-one process matrix of the cyclic wire permutation. -/
-def shiftProcess (N : ℕ) : Matrix (Fin N → Fin 4) (Fin N → Fin 4) ℂ :=
-  Matrix.vecMulVec (shiftCoeff N) (star (shiftCoeff N))
+  (2 ^ N : ℂ)⁻¹ * Matrix.trace (tensorOp (fun k => sigma (a k)) * (qubitPermutation (finRotate N))ᵀ)
 
 /-- The universal lower bound and its cyclic-shift attainment. -/
 def claim : Prop :=
   (∀ N, 1 ≤ N → ∀ χ : Matrix (Fin N → Fin 4) (Fin N → Fin 4) ℂ,
-    IsProcessCPTP χ → (1 / 4 ^ N : ℝ) ≤ sqFidelity χ (marginalApprox χ)) ∧
+    IsProcessCPTP χ → (1 / 4 ^ N : ℝ) ≤ sqFidelity χ (productMap (fun _ => Fin 4) (marginal χ))) ∧
   (∀ N, 2 ≤ N →
-    (∑ a, shiftCoeff N a • pauliString a = cyclicShift N) ∧
-    IsProcessCPTP (shiftProcess N) ∧
-    (∀ k, marginal (shiftProcess N) k = (1 / 4 : ℂ) • 1) ∧
-    sqFidelity (shiftProcess N) (marginalApprox (shiftProcess N)) = 1 / 4 ^ N)
+    (∑ a, shiftCoeff N a • tensorOp (fun k => sigma (a k)) = (qubitPermutation (finRotate N))ᵀ) ∧
+    IsProcessCPTP (rankOneDensity (shiftCoeff N)) ∧
+    (∀ k, marginal (rankOneDensity (shiftCoeff N)) k = (1 / 4 : ℂ) • 1) ∧
+    sqFidelity (rankOneDensity (shiftCoeff N))
+      (productMap (fun _ => Fin 4) (marginal (rankOneDensity (shiftCoeff N)))) = 1 / 4 ^ N)
 
 private def pauliLabelEquiv : Fin 4 ≃ Pauli where
   toFun := ![.I, .X, .Y, .Z]
@@ -76,16 +64,17 @@ private def pauliLabelEquiv : Fin 4 ≃ Pauli where
   right_inv := by intro i; cases i <;> rfl
 
 private lemma pauliString_word {N : ℕ} (a : Fin N → Fin 4) :
-    pauliString a = wordOp (fun k => pauliLabelEquiv (a k)) := by
+    tensorOp (fun k => sigma (a k)) = wordOp (fun k => pauliLabelEquiv (a k)) := by
   ext x y
-  simp only [pauliString, wordOp, tensorOp, Matrix.of_apply]
+  simp only [wordOp, tensorOp, Matrix.of_apply]
   apply Finset.prod_congr rfl
   intro k _
   generalize a k = j
   fin_cases j <;> rfl
 
 private lemma pauliString_trace_pair {N : ℕ} (a b : Fin N → Fin 4) :
-    Matrix.trace (pauliString a * pauliString b) = if a = b then (2 : ℂ) ^ N else 0 := by
+    Matrix.trace (tensorOp (fun k => sigma (a k)) * tensorOp (fun k => sigma (b k))) =
+      if a = b then (2 : ℂ) ^ N else 0 := by
   have he : (fun k => pauliLabelEquiv (a k)) = (fun k => pauliLabelEquiv (b k)) ↔
       a = b := by
     constructor
@@ -158,7 +147,7 @@ private lemma classical_overlap {N : ℕ} (p : (Fin N → Fin 4) → ℝ)
     (fun x _ => Finset.prod_nonneg fun k _ => hq k (x k))
   rw [hfactor] at ham
   calc
-    (1 / 4 ^ N : ℝ) = ∏ _k : Fin N, (1 / 4 : ℝ) := by simp [div_pow]
+    (1 / 4 ^ N : ℝ) = ∏ _k : Fin N, (1 / 4 : ℝ) := by simp
     _ ≤ ∏ k, ∏ j, (q k j) ^ (q k j) := by
       exact Finset.prod_le_prod₀ (fun _ _ => by norm_num) (fun k _ => hlocal k)
     _ ≤ _ := ham
@@ -172,7 +161,7 @@ private lemma process_trace {N : ℕ}
     mul_ite, mul_zero] at ht
   have ht' : Matrix.trace χ * (2 : ℂ) ^ N = 1 * (2 : ℂ) ^ N := by
     simpa [Matrix.trace, ← Finset.sum_mul, Fintype.card_fun] using ht
-  exact mul_right_cancel₀ (pow_ne_zero N (by norm_num : (2 : ℂ) ≠ 0)) ht' 
+  exact mul_right_cancel₀ (pow_ne_zero N (by norm_num : (2 : ℂ) ≠ 0)) ht'
 
 private lemma marginal_split {N : ℕ}
     (χ : Matrix (Fin N → Fin 4) (Fin N → Fin 4) ℂ) (k : Fin N) (i j : Fin 4) :
@@ -189,7 +178,7 @@ private lemma marginal_split {N : ℕ}
     by_cases hl : l = k
     · subst l
       simp only [Function.update_self, hcoord]
-    · simp [e, Equiv.funSplitAt, Equiv.piSplitAt, hl, Function.update_of_ne hl]
+    · simp [e, Equiv.funSplitAt, Equiv.piSplitAt, hl]
   unfold marginal
   rw [← e.symm.sum_comp (fun y => if y k = i then χ y (Function.update y k j) else 0),
     Fintype.sum_prod_type]
@@ -213,7 +202,7 @@ private lemma marginal_psd {N : ℕ}
 
 private lemma marginalApprox_psd {N : ℕ}
     (χ : Matrix (Fin N → Fin 4) (Fin N → Fin 4) ℂ) (hχ : χ.PosSemidef) :
-    (marginalApprox χ).PosSemidef := by
+    (productMap (fun _ => Fin 4) (marginal χ)).PosSemidef := by
   classical
   have hprod (s : Finset (Fin N)) :
       Matrix.PosSemidef
@@ -333,7 +322,7 @@ private lemma quantum_overlap {N : ℕ}
     (hc : ∀ p : (Fin N → Fin 4) → ℝ, (∀ x, 0 ≤ p x) → ∑ x, p x = 1 →
       (1 / 4 ^ N : ℝ) ≤
         ∑ x, p x * ∏ k, ∑ y, if y k = x k then p y else 0) :
-    (1 / 4 ^ N : ℝ) ≤ (Matrix.trace (χ * marginalApprox χ)).re := by
+    (1 / 4 ^ N : ℝ) ≤ (Matrix.trace (χ * (productMap (fun _ => Fin 4) (marginal χ)))).re := by
   classical
   let U (k : Fin N) := (marginal_psd χ hχ k).1.eigenvectorUnitary
   let lam (k : Fin N) := (marginal_psd χ hχ k).1.eigenvalues
@@ -362,11 +351,11 @@ private lemma quantum_overlap {N : ℕ}
       apply Finset.sum_congr rfl
       intro y _
       by_cases hy : y k = j
-      · simp only [if_pos hy]
+      · simp only [ite_eq_left hy]
         rw [← hy, Function.update_eq_self]
       · simp [hy]
     rw [he, hmg, Matrix.diagonal_apply_eq, Complex.ofReal_re]
-  have hA : Vᴴ * marginalApprox χ * V =
+  have hA : Vᴴ * (productMap (fun _ => Fin 4) (marginal χ)) * V =
       Matrix.diagonal (fun x => ((∏ k, lam k (x k) : ℝ) : ℂ)) := by
     change (productMap (fun _ => Fin 4) (fun k => (U k : Matrix (Fin 4) (Fin 4) ℂ)))ᴴ *
       productMap (fun _ => Fin 4) (fun k => marginal χ k) *
@@ -375,9 +364,10 @@ private lemma quantum_overlap {N : ℕ}
     simp_rw [hdiag]
     rw [productMatrix_diagonal]
     simp only [Complex.ofReal_prod]
-  have htr : Matrix.trace (Ψ * (Vᴴ * marginalApprox χ * V)) =
-      Matrix.trace (χ * marginalApprox χ) := by
-    have he : Ψ * (Vᴴ * marginalApprox χ * V) = Vᴴ * (χ * marginalApprox χ) * V := by
+  have htr : Matrix.trace (Ψ * (Vᴴ * (productMap (fun _ => Fin 4) (marginal χ)) * V)) =
+      Matrix.trace (χ * (productMap (fun _ => Fin 4) (marginal χ))) := by
+    have he : Ψ * (Vᴴ * productMap (fun _ => Fin 4) (marginal χ) * V) =
+        Vᴴ * (χ * productMap (fun _ => Fin 4) (marginal χ)) * V := by
       dsimp [Ψ]
       simp only [Matrix.mul_assoc]
       rw [← Matrix.mul_assoc V Vᴴ, hVV, Matrix.one_mul]
@@ -413,41 +403,44 @@ private lemma sqFidelity_overlap {n : Type*} [Fintype n] [DecidableEq n]
     _ = sqFidelity ρ σ := rfl
 
 private lemma shift_expansion (N : ℕ) :
-    ∑ a, shiftCoeff N a • pauliString a = cyclicShift N := by
+    ∑ a, shiftCoeff N a • tensorOp (fun k => sigma (a k)) = (qubitPermutation (finRotate N))ᵀ := by
   classical
   simp only [shiftCoeff, pauliString_word]
   let e : (Fin N → Fin 4) ≃ (Fin N → Pauli) :=
     Equiv.piCongrRight fun _ => pauliLabelEquiv
   exact (e.sum_comp (fun a => (((2 : ℂ) ^ N)⁻¹ *
-    Matrix.trace (wordOp a * cyclicShift N)) • wordOp a)).trans
-    (word_expansion (cyclicShift N)).symm
+    Matrix.trace (wordOp a * (qubitPermutation (finRotate N))ᵀ)) • wordOp a)).trans
+    (word_expansion ((qubitPermutation (finRotate N))ᵀ)).symm
 
-private lemma shift_unitary (N : ℕ) : (cyclicShift N)ᴴ * cyclicShift N = 1 := by
+private lemma shift_unitary (N : ℕ) :
+    ((qubitPermutation (finRotate N))ᵀ)ᴴ * (qubitPermutation (finRotate N))ᵀ = 1 := by
   classical
   let e : Equiv.Perm (Fin N → Fin 2) := (finRotate N).symm.arrowCongr (Equiv.refl (Fin 2))
-  have he : cyclicShift N = (e.permMatrix ℂ)ᵀ := by
+  have he : (qubitPermutation (finRotate N))ᵀ = (e.permMatrix ℂ)ᵀ := by
     ext x y
-    simp [cyclicShift, e, Equiv.Perm.permMatrix, PEquiv.toMatrix,
-      Equiv.arrowCongr, eq_comm]
+    simp [qubitPermutation, Matrix.transpose_apply, Matrix.of_apply, e,
+      Equiv.Perm.permMatrix, PEquiv.toMatrix, Equiv.arrowCongr, eq_comm]
   rw [he, Matrix.transpose_permMatrix]
   exact Unitary.coe_star_mul_self
     (D5.S3.Quantum.RandomCircuits.HaarTwoCopyTwirl.permutationUnitary e⁻¹)
 
 private lemma shift_cptp (N : ℕ)
-    (he : ∑ a, shiftCoeff N a • pauliString a = cyclicShift N)
-    (hu : (cyclicShift N)ᴴ * cyclicShift N = 1) : IsProcessCPTP (shiftProcess N) := by
+    (he : ∑ a, shiftCoeff N a • tensorOp (fun k => sigma (a k)) = (qubitPermutation (finRotate N))ᵀ)
+    (hu : ((qubitPermutation (finRotate N))ᵀ)ᴴ * (qubitPermutation (finRotate N))ᵀ = 1) :
+    IsProcessCPTP (rankOneDensity (shiftCoeff N)) := by
   classical
   refine ⟨Matrix.posSemidef_vecMulVec_self_star (shiftCoeff N), ?_⟩
-  have hstar : (∑ a, star (shiftCoeff N a) • pauliString a) = (cyclicShift N)ᴴ := by
+  have hstar : (∑ a, star (shiftCoeff N a) • tensorOp (fun k => sigma (a k))) =
+      ((qubitPermutation (finRotate N))ᵀ)ᴴ := by
     have h := congrArg (fun A : Matrix (Fin N → Fin 2) (Fin N → Fin 2) ℂ => Aᴴ) he
     simpa only [Matrix.conjTranspose_sum, Matrix.conjTranspose_smul,
       pauliString_word, word_hermitian] using h
   calc
-    _ = (∑ b, star (shiftCoeff N b) • pauliString b) *
-        (∑ a, shiftCoeff N a • pauliString a) := by
+    _ = (∑ b, star (shiftCoeff N b) • tensorOp (fun k => sigma (b k))) *
+        (∑ a, shiftCoeff N a • tensorOp (fun k => sigma (a k))) := by
       rw [Matrix.sum_mul]
-      simp only [Matrix.mul_sum, Matrix.smul_mul, Matrix.mul_smul, Finset.smul_sum,
-        smul_smul, shiftProcess, Matrix.vecMulVec_apply, Pi.star_apply]
+      simp only [Matrix.mul_sum, Matrix.smul_mul, Matrix.mul_smul,
+        smul_smul, rankOneDensity, Matrix.vecMulVec_apply, Pi.star_apply]
       rw [Finset.sum_comm]
     _ = 1 := by rw [hstar, he, hu]
 
@@ -457,9 +450,9 @@ private def shiftTrace (N : ℕ) (a : Fin N → Fin 4) : ℂ :=
 private lemma shiftCoeff_trace (N : ℕ) (a : Fin N → Fin 4) :
     shiftCoeff N a = (2 ^ N : ℂ)⁻¹ * shiftTrace N a := by
   classical
-  simp only [shiftCoeff, Matrix.trace, Matrix.diag_apply, Matrix.mul_apply, cyclicShift,
-    mul_ite, mul_one, mul_zero, Finset.sum_ite_eq', Finset.mem_univ, ite_true,
-    shiftTrace, pauliString, Function.comp_apply]
+  simp only [shiftCoeff, Matrix.trace, Matrix.diag_apply, Matrix.mul_apply, qubitPermutation,
+    Matrix.transpose_apply, Matrix.of_apply, mul_ite, mul_one, mul_zero, Finset.sum_ite_eq',
+    Finset.mem_univ, ite_true, shiftTrace, tensorOp, Function.comp_apply]
 
 set_option maxHeartbeats 1000000 in
 -- The coordinate sums combine Pauli completeness with two distinct wire coordinates.
@@ -477,7 +470,7 @@ private lemma shift_trace_contraction (N : ℕ) (hN : 2 ≤ N) (k : Fin N) (i j 
     rw [support_finRotate_of_le hN]
     exact Finset.mem_univ k)
   have hB : Fintype.card B = N - 1 := by
-    simpa [B] using Fintype.card_subtype_compl (fun l : Fin N => l = k)
+    simp [B]
   have hcomplete (u v u' v' : Fin 2) :
       (∑ a : Fin 4, sigma a u v * star (sigma a u' v')) =
         if u = u' ∧ v = v' then (2 : ℂ) else 0 := by
@@ -558,7 +551,7 @@ private lemma shift_trace_contraction (N : ℕ) (hN : 2 ≤ N) (k : Fin N) (i j 
   let ex := Equiv.funSplitAt k (Fin 2)
   let ey := Equiv.funSplitAt t (Fin 2)
   have hC : Fintype.card C = N - 2 := by
-    simpa [C, hB, Nat.sub_sub] using Fintype.card_subtype_compl (fun l : B => l = t)
+    simp [C, hB, Nat.sub_sub]
   have hpairs : (∑ x : Fin N → Fin 2,
       sigma i (x k) (x (finRotate N k)) * star (sigma j (x k) (x (finRotate N k)))) =
       (2 : ℂ) ^ (N - 2) * (if i = j then 2 else 0) := by
@@ -609,14 +602,14 @@ private lemma shift_trace_contraction (N : ℕ) (hN : 2 ≤ N) (k : Fin N) (i j 
       split_ifs <;> ring
 
 private lemma shift_marginals (N : ℕ) (hN : 2 ≤ N) :
-    ∀ k, marginal (shiftProcess N) k = (1 / 4 : ℂ) • 1 := by
+    ∀ k, marginal (rankOneDensity (shiftCoeff N)) k = (1 / 4 : ℂ) • 1 := by
   classical
   intro k
   ext i j
   simp only [Matrix.smul_apply, smul_eq_mul, Matrix.one_apply, mul_ite, mul_one, mul_zero]
   rw [marginal_split]
   have hstar : star ((2 ^ N : ℂ)⁻¹) = (2 ^ N : ℂ)⁻¹ := by simp
-  simp only [shiftProcess, Matrix.vecMulVec_apply, Pi.star_apply, shiftCoeff_trace,
+  simp only [rankOneDensity, Matrix.vecMulVec_apply, Pi.star_apply, shiftCoeff_trace,
     star_mul, hstar]
   have he (z : {l : Fin N // l ≠ k} → Fin 4) :
       (2 ^ N : ℂ)⁻¹ * shiftTrace N ((Equiv.funSplitAt k (Fin 4)).symm (i, z)) *
@@ -628,35 +621,38 @@ private lemma shift_marginals (N : ℕ) (hN : 2 ≤ N) :
   simp_rw [he]
   rw [← Finset.mul_sum, shift_trace_contraction N hN k i j]
   have hd : (2 ^ N : ℂ) ≠ 0 := pow_ne_zero _ (by norm_num)
-  split_ifs <;> field_simp [hd] <;> ring
+  split_ifs <;> field_simp [hd]
 
 private lemma shift_fidelity (N : ℕ)
-    (hχ : IsProcessCPTP (shiftProcess N))
-    (hm : ∀ k, marginal (shiftProcess N) k = (1 / 4 : ℂ) • 1) :
-    sqFidelity (shiftProcess N) (marginalApprox (shiftProcess N)) = 1 / 4 ^ N := by
+    (hχ : IsProcessCPTP (rankOneDensity (shiftCoeff N)))
+    (hm : ∀ k, marginal (rankOneDensity (shiftCoeff N)) k = (1 / 4 : ℂ) • 1) :
+    sqFidelity (rankOneDensity (shiftCoeff N))
+      (productMap (fun _ => Fin 4) (marginal (rankOneDensity (shiftCoeff N)))) = 1 / 4 ^ N := by
   classical
   let c : ℝ := 1 / 4 ^ N
   have hc : 0 ≤ c := by positivity
-  have ht : Matrix.trace (shiftProcess N) = 1 := process_trace _ hχ
+  have ht : Matrix.trace (rankOneDensity (shiftCoeff N)) = 1 := process_trace _ hχ
   have hnorm : star (shiftCoeff N) ⬝ᵥ shiftCoeff N = 1 := by
     rw [dotProduct_comm]
-    simpa only [shiftProcess, Matrix.trace_vecMulVec] using ht
-  have hidem : shiftProcess N * shiftProcess N = shiftProcess N := by
-    simp only [shiftProcess, Matrix.vecMulVec_mul_vecMulVec, hnorm, one_smul]
-  have hroot : CFC.sqrt (shiftProcess N) = shiftProcess N :=
+    simpa only [rankOneDensity, Matrix.trace_vecMulVec] using ht
+  have hidem : rankOneDensity (shiftCoeff N) * rankOneDensity (shiftCoeff N) =
+      rankOneDensity (shiftCoeff N) :=
+    (D5.S3.Quantum.PureState.PureStateHandshake.pure_state_handshake (shiftCoeff N) hnorm 1).1
+  have hroot : CFC.sqrt (rankOneDensity (shiftCoeff N)) = (rankOneDensity (shiftCoeff N)) :=
     CFC.sqrt_unique hidem hχ.1.nonneg
-  have hmarg : marginalApprox (shiftProcess N) = (c : ℂ) • 1 := by
+  have hmarg : productMap (fun _ => Fin 4) (marginal (rankOneDensity (shiftCoeff N))) =
+      (c : ℂ) • 1 := by
     ext a b
-    simp only [marginalApprox, hm, Matrix.smul_apply, smul_eq_mul, Matrix.one_apply]
+    simp only [productMap, hm, Matrix.smul_apply, smul_eq_mul, Matrix.one_apply]
     by_cases hab : a = b
     · subst b
-      simp [c, div_pow]
+      simp [c]
     · obtain ⟨k, hk⟩ := Function.ne_iff.mp hab
-      rw [if_neg hab]
+      rw [ite_eq_right hab]
       simp only [mul_zero]
       exact Finset.prod_eq_zero (Finset.mem_univ k) (by simp [hk])
-  have hsqrt : CFC.sqrt ((c : ℂ) • shiftProcess N) =
-      (Real.sqrt c : ℂ) • shiftProcess N := by
+  have hsqrt : CFC.sqrt ((c : ℂ) • (rankOneDensity (shiftCoeff N))) =
+      (Real.sqrt c : ℂ) • (rankOneDensity (shiftCoeff N)) := by
     apply CFC.sqrt_unique
     · simp only [Matrix.smul_mul, Matrix.mul_smul, smul_smul, hidem,
         ← Complex.ofReal_mul, Real.mul_self_sqrt hc]
@@ -670,7 +666,8 @@ theorem result : claim := by
   constructor
   · intro N _ χ hχ
     exact (quantum_overlap χ hχ.1 (process_trace χ hχ) classical_overlap).trans
-      (sqFidelity_overlap χ (marginalApprox χ) hχ.1 (marginalApprox_psd χ hχ.1))
+      (sqFidelity_overlap χ (productMap (fun _ => Fin 4) (marginal χ)) hχ.1
+        (marginalApprox_psd χ hχ.1))
   · intro N hN
     have he := shift_expansion N
     have hχ := shift_cptp N he (shift_unitary N)
