@@ -10,7 +10,6 @@ import D5.S3.Quantum.Information.NMLWMeasuredFidelitySeparation
 import D5.S3.QuantumChannels.PauliThreeWeightBayesianInverseUniqueness
 import D5.S3.Quantum.Measurement.StabilizerPovmMaximalEntanglementRefutation
 import D5.S3.Quantum.Dynamics.KickedIsingNegativityRefutation
-import Mathlib.Analysis.MeanInequalities
 import Mathlib.Logic.Equiv.Fin.Rotate
 
 /-! The product of single-site process marginals has squared Uhlmann fidelity at least
