@@ -28,7 +28,7 @@ open Module
 open D5.S3.Quantum.Information.StabilizerPairLocalUnitaryInequivalence
 open D5.S3.Quantum.Information.BinaryStabilizerGraphNormalForm (tensor_smul)
 open D5.S3.Quantum.Measurement.StabilizerPovmMaximalEntanglementRefutation
-  (letterProduct letterPhase letter_mul letter_comm word_one word_mul word_comm_sign)
+  (letterProduct letterPhase letter_mul letter_comm word_mul word_comm_sign wordUnit)
 open D5.S3.VertexAlgebra.LatticeTwistedGroundRealization (sign_sum)
 open D5.S3.VertexAlgebra.LatticeTwistedGroundRealization.SignQuotient (complexSign)
 
@@ -90,15 +90,15 @@ private def localExponent (u v : ZMod 2 × ZMod 2) : ZMod 4 :=
   (u.1.val * u.2.val : ℕ) + (v.1.val * v.2.val : ℕ) -
     ((u + v).1.val * (u + v).2.val : ℕ) + 2 * (u.2.val * v.1.val : ℕ)
 
-private def fourthRoot (k : ZMod 4) : ℂ := Complex.I ^ k.val
-
 private def phase {N : ℕ} (u v : Fin N → ZMod 2 × ZMod 2) : ℂ :=
-  ∏ j, fourthRoot (localExponent (u j) (v j))
+  ∏ j, AddChar.zmodChar 4 Complex.I_pow_four (localExponent (u j) (v j))
 
 private theorem local_mul (u v : ZMod 2 × ZMod 2) :
     pauliMatrix (canonicalLabel u) * pauliMatrix (canonicalLabel v) =
-      fourthRoot (localExponent u v) • pauliMatrix (canonicalLabel (u + v)) := by
-  have hp : letterPhase (canonicalLabel u) (canonicalLabel v) = fourthRoot (localExponent u v) := by
+      AddChar.zmodChar 4 Complex.I_pow_four (localExponent u v) •
+        pauliMatrix (canonicalLabel (u + v)) := by
+  have hp : letterPhase (canonicalLabel u) (canonicalLabel v) =
+      AddChar.zmodChar 4 Complex.I_pow_four (localExponent u v) := by
     rcases u with ⟨x, z⟩
     rcases v with ⟨y, t⟩
     fin_cases x <;> fin_cases z <;> fin_cases y <;> fin_cases t
@@ -183,10 +183,6 @@ private theorem local_comm (u v : ZMod 2 × ZMod 2) :
       norm_num
   simpa only [hs] using letter_comm (canonicalLabel u) (canonicalLabel v)
 
-private theorem observable_zero (N : ℕ) : observable (0 : Fin N → ZMod 2 × ZMod 2) = 1 := by
-  change wordOp (fun _ : Fin N => Pauli.I) = 1
-  exact word_one
-
 private theorem observable_mul {N : ℕ} (u v : Fin N → ZMod 2 × ZMod 2) :
     observable u * observable v = phase u v • observable (u + v) := by
   classical
@@ -199,12 +195,7 @@ private theorem observable_mul {N : ℕ} (u v : Fin N → ZMod 2 × ZMod 2) :
 
 private theorem observable_sq {N : ℕ} (u : Fin N → ZMod 2 × ZMod 2) :
     observable u * observable u = 1 := by
-  have hz : u + u = 0 := by ext j <;> exact CharTwo.add_self_eq_zero _
-  have hlocal : ∀ p : ZMod 2 × ZMod 2, localExponent p p = 0 := by
-    rintro ⟨x, z⟩
-    fin_cases x <;> fin_cases z <;> decide
-  rw [observable_mul, hz, observable_zero]
-  simp [phase, hlocal, fourthRoot]
+  exact (wordUnit (fun j => canonicalLabel (u j))).val_inv
 
 private theorem observable_comm {N : ℕ} (u v : Fin N → ZMod 2 × ZMod 2) :
     observable u * observable v = complexSign (B u v) • (observable v * observable u) := by
@@ -218,7 +209,8 @@ private theorem observable_comm {N : ℕ} (u v : Fin N → ZMod 2 × ZMod 2) :
   rfl
 
 private theorem local_phase_sq (u v : ZMod 2 × ZMod 2) :
-    fourthRoot (localExponent u v) ^ 2 = complexSign (u.1 * v.2 + u.2 * v.1) := by
+    AddChar.zmodChar 4 Complex.I_pow_four (localExponent u v) ^ 2 =
+      complexSign (u.1 * v.2 + u.2 * v.1) := by
   rcases u with ⟨x, z⟩
   rcases v with ⟨y, t⟩
   fin_cases x <;> fin_cases z <;> fin_cases y <;> fin_cases t
@@ -442,62 +434,47 @@ private theorem model_cover : ∀ a b : Fin 4 → ZMod 2,
       ∃ k : Fin 15, modelSet k = {a, b, a + b} := by
   decide
 
-private def localEval (w : Fin 4 → ZMod 2 × ZMod 2) (a : Fin 4 → ZMod 2) :
-    ZMod 2 × ZMod 2 := ∑ i, a i • w i
-
 set_option maxRecDepth 100000 in
 set_option maxHeartbeats 0 in
 -- Reduction covers the 256 assignments of four single-qubit binary labels.
 private theorem local_total_exponent : ∀ w : Fin 4 → ZMod 2 × ZMod 2,
-    (∑ k : Fin 15, localExponent (localEval w (modelPair k).1)
-      (localEval w (modelPair k).2)) =
+    (∑ k : Fin 15, localExponent (Fintype.linearCombination (ZMod 2) w (modelPair k).1)
+      (Fintype.linearCombination (ZMod 2) w (modelPair k).2)) =
         2 * ((w 0).1 * (w 1).2 + (w 0).2 * (w 1).1).val := by
   decide
 
-private theorem fourthRoot_add (a b : ZMod 4) :
-    fourthRoot (a + b) = fourthRoot a * fourthRoot b := by
-  unfold fourthRoot
-  rw [ZMod.val_add, ← pow_add]
-  exact (pow_eq_pow_mod _ (show Complex.I ^ 4 = 1 by
-    norm_num [pow_succ, Complex.I_sq])).symm
-
-private theorem prod_fourthRoot {ι : Type*} (s : Finset ι) (f : ι → ZMod 4) :
-    (∏ i ∈ s, fourthRoot (f i)) = fourthRoot (∑ i ∈ s, f i) := by
-  let χ : Multiplicative (ZMod 4) →* ℂ :=
-    { toFun := fun b => fourthRoot b.toAdd
-      map_one' := rfl
-      map_mul' := fun a b => fourthRoot_add a.toAdd b.toAdd }
-  have hχ (b : ZMod 4) : χ (Multiplicative.ofAdd b) = fourthRoot b := rfl
-  have hprod := (map_prod χ (fun i => Multiplicative.ofAdd (f i)) s).symm
-  rw [← ofAdd_sum] at hprod
-  simpa only [hχ] using hprod
-
 private theorem fourthRoot_two (b : ZMod 2) :
-    fourthRoot (2 * b.val) = complexSign b := by
-  fin_cases b
-  · change Complex.I ^ 0 = (1 : ℂ)
-    rfl
-  · change Complex.I ^ 2 = (-1 : ℂ)
-    exact Complex.I_sq
+    AddChar.zmodChar 4 Complex.I_pow_four (2 * b.val) = complexSign b := by
+  rw [show (2 : ZMod 4) * b.val = ((2 * b.val : ℕ) : ZMod 4) by push_cast; rfl,
+    AddChar.zmodChar_apply', pow_mul, Complex.I_sq]
+  exact (D5.S3.Quantum.Information.BinaryStabilizerGraphNormalForm.complex_sign_val b).symm
 
 private theorem local_phase_product (w : Fin 4 → ZMod 2 × ZMod 2) :
-    (∏ k : Fin 15, fourthRoot (localExponent (localEval w (modelPair k).1)
-      (localEval w (modelPair k).2))) =
+    (∏ k : Fin 15, AddChar.zmodChar 4 Complex.I_pow_four
+      (localExponent (Fintype.linearCombination (ZMod 2) w (modelPair k).1)
+        (Fintype.linearCombination (ZMod 2) w (modelPair k).2))) =
         complexSign ((w 0).1 * (w 1).2 + (w 0).2 * (w 1).1) := by
-  rw [prod_fourthRoot, local_total_exponent, fourthRoot_two]
+  have hprod := (map_prod (AddChar.zmodChar 4 Complex.I_pow_four).toMonoidHom
+    (fun k : Fin 15 => Multiplicative.ofAdd
+      (localExponent (Fintype.linearCombination (ZMod 2) w (modelPair k).1)
+        (Fintype.linearCombination (ZMod 2) w (modelPair k).2)))
+    Finset.univ).symm
+  rw [← ofAdd_sum] at hprod
+  simp only [AddChar.toMonoidHom_apply, toAdd_ofAdd] at hprod
+  rw [hprod, local_total_exponent, fourthRoot_two]
 
 private theorem coordinates_eval {N : ℕ}
     {U : Submodule (ZMod 2) (Fin N → ZMod 2 × ZMod 2)}
     (e : (Fin 4 → ZMod 2) ≃ₗ[ZMod 2] U) (a : Fin 4 → ZMod 2) (j : Fin N) :
     (e a : Fin N → ZMod 2 × ZMod 2) j =
-      localEval (fun i => (e (Pi.single i 1) : Fin N → ZMod 2 × ZMod 2) j) a := by
-  classical
-  have ha : a = ∑ i : Fin 4, a i • Pi.single i 1 := by ext k; simp [Pi.single_apply, mul_ite]
-  have he : e a = ∑ i : Fin 4, a i • e (Pi.single i 1) := by
-    conv_lhs => rw [ha]
-    simp
-  have h := congrArg (fun u : U => (u : Fin N → ZMod 2 × ZMod 2) j) he
-  simpa [localEval, Submodule.coe_sum, Finset.sum_apply] using h
+      Fintype.linearCombination (ZMod 2)
+        (fun i => (e (Pi.single i 1) : Fin N → ZMod 2 × ZMod 2) j) a := by
+  simpa only [Fintype.linearCombination_apply, LinearEquiv.symm_apply_apply,
+    LinearEquiv.piRing_apply, LinearMap.comp_apply, LinearMap.proj_apply,
+    Submodule.subtype_apply, LinearEquiv.coe_coe] using
+    (LinearEquiv.piRing_symm_apply (S := ZMod 2)
+      (LinearEquiv.piRing (ZMod 2) (ZMod 2 × ZMod 2) (Fin 4) (ZMod 2)
+        ((LinearMap.proj j).comp (U.subtype.comp e.toLinearMap))) a)
 
 private theorem total_phase {N : ℕ}
     {U : Submodule (ZMod 2) (Fin N → ZMod 2 × ZMod 2)}
@@ -511,9 +488,11 @@ private theorem total_phase {N : ℕ}
       localExponent ((e (modelPair k).1 : Fin N → ZMod 2 × ZMod 2) j)
         ((e (modelPair k).2 : Fin N → ZMod 2 × ZMod 2) j) =
       localExponent
-        (localEval (fun i => (e (Pi.single i 1) : Fin N → ZMod 2 × ZMod 2) j)
+        (Fintype.linearCombination (ZMod 2)
+          (fun i => (e (Pi.single i 1) : Fin N → ZMod 2 × ZMod 2) j)
           (modelPair k).1)
-        (localEval (fun i => (e (Pi.single i 1) : Fin N → ZMod 2 × ZMod 2) j)
+        (Fintype.linearCombination (ZMod 2)
+          (fun i => (e (Pi.single i 1) : Fin N → ZMod 2 × ZMod 2) j)
           (modelPair k).2) := by
     congr 1
     · exact coordinates_eval e _ j
