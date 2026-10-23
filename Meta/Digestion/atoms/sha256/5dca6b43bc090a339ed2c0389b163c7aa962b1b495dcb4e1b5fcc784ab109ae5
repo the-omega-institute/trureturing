@@ -1,0 +1,26 @@
+### 1.3. Alignment and the torus cocycle
+
+The required alignment on $D$ reuses determinant normalization and character multiplicities from [the toral proof, §2.1](TORAL_CHARACTER_TRIPLE_SOURCE_SUPPORT.md#21-scalar-normalization-and-character-multiplicities). Explicitly, let $N$ be the exponent of $D$ and choose $r$ with $3r+1\equiv0\pmod N$. Each toral map has a homomorphic diagonal lift $B=\operatorname{diag}(1,\alpha,\beta)$. Then
+
+$$
+A(d)=\det(B(d))^r B(d)
+$$
+
+is a determinant-one homomorphic lift with $A(d)^N=1$. The pointwise projective conjugacy scalar lies in both $\mu_3$ and $\mu_N$, hence is one. Ordinary character equivalence aligns the restrictions on all of $D$ by one conjugator. Uniqueness of this determinant-one, exponent-dividing-$N$ lift makes it compatible with conjugation by $G$. The three distinct weight lines consequently give identical permutations for both maps after alignment as well.
+
+Now $\rho_2(g)=d(g)\rho_1(g)$ for a $T$-valued cocycle $d$, with
+
+$$
+d(gh)=d(g)\,g(d(h)).
+$$
+
+It is trivial on $D$. Since $D$ acts trivially on $T$, it descends to $K=G/D$, which is $C_3$ or $S_3$ with its permutation action. The following explicit calculation removes this cocycle.
+
+For a three-cycle $\sigma$, the map $b\mapsto b/\sigma(b)$ is surjective on $T$. Indeed, represent a desired value by three nonzero coordinates, rescale them to product one, and solve the cyclic ratio equations. Conjugating $\rho_2$ by such a $b$ makes $d(\sigma)=1$. This finishes when $K=C_3$. Otherwise choose a transposition $s$ with $s\sigma s=\sigma^{-1}$ and put $a=d(s)$. The cocycle identities for $s^2=1$ and $s\sigma s\sigma=1$ give
+
+$$
+a\,s(a)=1=a\,s\sigma(a).
+$$
+
+Hence $\sigma(a)=a$, so $a\in T^\sigma$. On this order-three subgroup $s$ acts by inversion. Conjugation by $b\in T^\sigma$ leaves $d(\sigma)=1$ and replaces $a$ by $b^2a$. Squaring is bijective on this subgroup, so a choice of $b$ kills $a$. The cocycle is trivial on both generators, hence on $K$. Undoing the fixed conjugations gives the asserted single conjugator on the original $G$. ∎
+
