@@ -1085,3 +1085,251 @@ $$
 Darpö, *Vector product algebras*, arXiv:0810.5464v1, Theorem 1 是带相容形式的精确向量积分类；Baez, *The Octonions*, §4.1 是精确的八元数与 $G_2$ 背景。钉版 mathlib Mathlib/LinearAlgebra/CrossProduct.lean 的 cross_dot_cross 与 jacobi_cross 只供应固定 Fin 3 的精确恒等式，不能替代未知维数的全域近似选择。本地 mathlib 不作为本批前提，公开生态检索也未覆盖全部近似向量积、稳健秩识别或有限关系检验文献；这里不作全局原创性或穷尽检索声明。所有实际物理端点、重复准备、控制复位、标量精度和来源身份仍须由相应合同另行供应。
 
 ## 追加锚（本行以下为增补区）
+
+
+## 15. 有限协方差菜单与带标签的运输场
+
+本节把第 10 节的同一来源 $J$、同一映射 $\Pi:J\to K$ 和同一 $g_D$ 保持不变。新增的对象是一个实际许可的有限运输菜单；它不是第 10 节的二元读出，也不是把一个括号运算重新命名为第三个噪声方向。写 $B:=\Pi(S)\subseteq K$，其中 $S\subseteq J$ 是实际允许的来源域。令 $X_0,X_1,\ldots,X_m$ 是 $S$ 邻域上的光滑向量场。$X_a$ 的标签是实际合同中的控制名称，$X_0$ 是同一合同中的共同漂移。对一个常数实对称半正定矩阵 $Q$，定义
+
+$$
+\mathcal L_Q f=X_0f+\frac12\sum_{a,b=1}^mQ_{ab}X_aX_bf,
+\qquad
+\Gamma_Q(f,g)=\sum_{a,b=1}^mQ_{ab}(X_af)(X_bg).
+\tag{15.1}
+$$
+
+这里 $\Gamma_Q$ 是该实际时钟中二阶矩率；它不是一组已经取得的有限样本。称一个有限菜单 $(Q^1,\ldots,Q^r)$ 为完整的，若每个 $Q^\ell$ 是实际允许的正定协方差，且
+
+$$
+\operatorname{span}_{\mathbb R}\{Q^1,\ldots,Q^r\}=\operatorname{Sym}_m.
+\tag{15.2}
+$$
+
+对 $x\in S$ 写
+
+$$
+v_a(x):=d\Pi_xX_a(x)\in T_{\Pi(x)}K,
+\qquad
+T_{ab}(x):=\tfrac12(v_a\otimes v_b+v_b\otimes v_a).
+\tag{15.3}
+$$
+
+**定义 15.1（来源匹配的菜单证书）。** 完整菜单满足下列条件时，称 $(S,\Pi,X_0,\ldots,X_m)$ 有一个菜单证书。先要求 $S$ 是允许带边界的光滑源域，$B$ 是光滑域，且 $\Pi|_S:S\to B$ 是满射光滑下沉；每个纤维 $F_y=S\cap\Pi^{-1}(y)$ 非空。
+
+1. 对每个 $\ell$ 和每个 $\varphi\in C^\infty(B)$，存在 $\overline{\mathcal L}_{\ell}\varphi\in C^\infty(B)$，使 $\mathcal L_{Q^\ell}(\varphi\circ\Pi)=(\overline{\mathcal L}_{\ell}\varphi)\circ\Pi$ 在 $S$ 上成立。
+2. 对每个连通的纤维 $F_y=S\cap\Pi^{-1}(y)$，实际控制合同提供一个光滑的带符号锚：在 $B$ 的每个坐标邻域内，选一个标签 $a_*$ 和一个光滑余向量 $\lambda_y$，使选定的光滑向量场 $\widehat v_{a_*}$ 满足 $\lambda_y(\widehat v_{a_*})>0$（在其非零域上）、$\widehat v_{a_*}\otimes\widehat v_{a_*}=T_{a_*a_*}$，并且其符号由一次实际的同源有符号校准固定。不同邻域的锚在重叠处相等。零点要求由这些非零域上的光滑延拓承担；若某个纤维上所有控制投影都为零，则全部场在那里定义为零。这个条件只供应方向和手性，不供应新的控制权限。
+3. $S$、$B$ 和全部控制流的共同生存域已经给定；控制只能在该域的守卫内执行。若 $S$ 有边界，退出边界就是声明的死亡事件。
+
+条件 2 是有意写出的非协方差条件。协方差只给平方和，不能给一个有标签向量的正向。条件 3 也不从投影自动得到；它是源、守卫和寿命的合同。
+
+**引理 15.2（有限菜单恢复带标签的二阶张量）。** 若菜单证书的第 1 项成立，则每个 $T_{ab}$ 在每个连通纤维上为常数。若 $F_y$ 连通，则在给定锚之后存在唯一的光滑向量场 $\overline X_a$、$a=1,\ldots,m$，使
+
+$$
+d\Pi\,X_a=(\overline X_a\circ\Pi)\quad\text{在 }S\text{ 上}.
+\tag{15.4}
+$$
+
+证明。对基本函数 $f=\varphi\circ\Pi$、$g=\psi\circ\Pi$，由 (15.1) 和第 1 项，$\Gamma_{Q^\ell}(f,g)$ 在 $F_y$ 上为常数。其值是
+
+$$
+\sum_{a,b}Q^\ell_{ab}\,d\varphi(T_{ab})d\psi.
+\tag{15.5}
+$$
+
+由 (15.2) 和对称矩阵的线性独立性，所有 $T_{ab}$ 在纤维上为常数。现在用一个初等事实：若实向量组 $(u_a)$、$(w_a)$ 满足
+
+$$
+\operatorname{sym}(u_a\otimes u_b)=
+\operatorname{sym}(w_a\otimes w_b)\quad\text{对所有 }a,b,
+\tag{15.6}
+$$
+
+则或者两组都全为零，或者存在一个 $\epsilon\in\{+1,-1\}$ 使 $w_a=\epsilon u_a$ 对所有 $a$ 成立。事实上，选 $u_{a_*}\ne0$；对 $a=b=a_*$，秩一张量给 $w_{a_*}=\epsilon u_{a_*}$。映射 $z\mapsto\operatorname{sym}(u_{a_*}\otimes z)$ 是单射，故交叉项给 $w_b=\epsilon u_b$。若没有非零向量，结论显然。
+
+把这个事实应用于纤维中的两个点。$T_{ab}$ 常数，所以它们之间的符号只能是一个共同的 $\epsilon$；在非零区域它随点连续，连通性使其在整个 $F_y$ 上恒定。条件 2 的带符号锚取 $\epsilon=+1$，并用 (15.6) 恢复每个其余标签。重叠锚的一致性使所得场光滑；在全为零的开集上令相应场为零，并由锚的重叠延拓。于是 (15.4) 成立且唯一。证毕。
+
+**定理 15.3（共同漂移也下降）。** 在引理 15.2 的条件下，存在唯一的光滑向量场 $\overline X_0$ 在 $B$ 上，使
+
+$$
+d\Pi\,X_0=(\overline X_0\circ\Pi)\quad\text{在 }S\text{ 上},
+\tag{15.7}
+$$
+
+并且每个菜单生成元满足
+
+$$
+\overline{\mathcal L}_{\ell}\varphi
+=\overline X_0\varphi
++\frac12\sum_{a,b}Q^\ell_{ab}\overline X_a\overline X_b\varphi.
+\tag{15.8}
+$$
+
+证明。由 (15.4)，对基本函数有
+
+$$
+X_aX_b(\varphi\circ\Pi)=
+(\overline X_a\overline X_b\varphi)\circ\Pi.
+\tag{15.9}
+$$
+
+从任意一个菜单成员中减去右端的二阶项，得到 $(X_0\varphi)\circ\Pi$。第 1 项说明这个一阶量在每个纤维上恒定；对坐标函数 $\varphi=y^i$，这些常数正是 $d\Pi X_0$ 的坐标，组成光滑向量场 $\overline X_0$。代回即得 (15.8)。若两个场满足 (15.7)，它们在每个坐标函数上的值相等，故唯一。证毕。
+
+**推论 15.4（有限菜单的经济性与必要边界）。** 完整菜单的条件是一个有限、源匹配的充分条件：它把每个实际命名控制的投影场和共同漂移都下降到 $B$。若菜单不张成 $\operatorname{Sym}_m$，则只能恢复其张成子空间上的协方差组合；单个 $Q$ 不能区分标签旋转。即使菜单完整，若没有带符号锚，只能得到
+
+$$
+\{\overline X_a\}\quad\text{模共同纤维内符号 }\overline X_a\mapsto-\overline X_a,
+\tag{15.10}
+$$
+
+而不能得到带标签的有向控制。定理不把一个二阶括号、一个统计连接或一条投影扩散律变成新的原生控制。
+
+**命题 15.5（受限来源与不连通纤维）。** 若 $F_y$ 不连通，令 $\mathscr C_y=\pi_0(F_y)$。在完整菜单和第 1 项下，对每个 $C\in\mathscr C_y$ 存在 $\epsilon_{y,C}\in\{\pm1\}$，使
+
+$$
+d\Pi X_a|_C=\epsilon_{y,C}\,v_a(y),
+\tag{15.11}
+$$
+
+其中 $v_a(y)$ 是任一选定分支的向量；共同漂移的投影则是依赖分支的量 $v_0(y,C)$。因此 $K$ 上的带标签商存在，当且仅当对每个 $y$ 所有分支的 $\epsilon_{y,C}v_a(y)$（每个 $a$）相等，并且所有 $v_0(y,C)$ 相等；再加上各分支的符号锚相容。充分性由把这些共同值定义为 $\overline X_a(y)$、$\overline X_0(y)$，并重复定理 15.3 的证明得到。
+
+若这些相等式失败，精确商只能取为 $\widetilde B=\{(y,C):C\in\mathscr C_y\}$ 或保留相应的分支标签。不能以总空间连通、一个协方差值或一个代表分支替代这些条件。特别地，一个有限样本的同值读数不证明 (15.11) 在未读的来源分支上成立。
+
+## 16. 距离、实际路径与同一时钟的二阶传播
+
+**假设 16.1（旧距离和控制合同）。** 沿用 §10 的全域二次距离律
+
+$$
+d_D(x,x')^2=g_D(x-x',x-x')
+=\langle\Pi x-\Pi x',\Pi x-\Pi x'\rangle_K.
+\tag{16.1}
+$$
+
+一个实际确定性控制 $u=(u_1,\ldots,u_m)$ 是分段 $C^1$；控制合同还要求在声明的有限时段内存在唯一完整提升 $z:[0,T]\to S$，并满足
+
+$$
+\dot z(t)=\sum_{a=1}^m u_a(t)X_a(z(t)),
+\tag{16.2}
+$$
+
+在所有时刻通过守卫。若合同把共同漂移也作为确定性执行的一部分，则在 (16.2) 右端另加 $X_0(z(t))$；下文始终明确采用哪一种时钟和方程。实际成本是合同给出的
+
+$$
+\operatorname{Cost}(u,z)=\int_0^T c(u(t),z(t))\,dt,
+\tag{16.3}
+$$
+
+它包含同时控制的费用、守卫、源服务、保留和失败收费；投影不会删除任何一项。
+
+**定理 16.2（旧距离的精确消费与路径提升）。** 在定理 15.3 和假设 16.1 下，每个有限实际路径的投影 $y=\Pi\circ z$ 满足
+
+$$
+\dot y(t)=\sum_a u_a(t)\overline X_a(y(t)),
+\qquad
+d_D(z(s),z(t))=\|y(s)-y(t)\|_K.
+\tag{16.4}
+$$
+
+若固定初点 $z(0)$ 和一条满足该完整性合同的合法控制 $u$，则 (16.2) 的提升在其源寿命内唯一，故 (16.4) 对所有 $0\le s,t\le T$ 同时成立。若要由解析条件推出该合同，可另加 $X_a$ 在声明源域上的线性增长和守卫闭合；局部光滑性单独不排除有限时间爆炸。旧距离任务在终点上的值恰为 $\|y(T)-y(0)\|_K$；实际控制成本仍是 (16.3)，不等同于该欧氏距离。不同隐藏初点的提升可以有不同的完整记录而有同一个 $y$ 路径。
+
+证明。链式法则和 (15.4) 给出第一式。把 $z(t)-z(s)$ 代入 (16.1) 给第二式；它是同一来源的精确度量律。局部光滑性给出提升的局部唯一性；完整提升和守卫由控制合同承担（或由上述线性增长条件推出）。长度和费用的区分由 (16.3) 的定义直接保持。证毕。
+
+**假设 16.3（同一时钟的扩散合同）。** 取菜单中的一个 $Q$，令 $W$ 为协方差 $Q$ 的布朗运动，且在 $S$ 的边界以杀死方式停止。假定 $X_0,\ldots,X_m$ 在每个有限时间窗满足局部 Lipschitz 和线性增长，实际源的退出时刻满足
+
+$$
+\tau_S=\inf\{t:Z_t\notin S\}
+=\inf\{t:Y_t\notin B\}=\tau_B,
+\tag{16.5}
+$$
+
+其中第二个等号是源守卫的条件，不由投影自动推出。SDE 采用原时钟
+
+$$
+dZ_t=X_0(Z_t)\,dt+\sum_aX_a(Z_t)\circ dW_t^a.
+\tag{16.6}
+$$
+
+**定理 16.4（全起点有限时间的同一时钟传播）。** 在假设 16.3 下，对每个 $z\in S$ 存在唯一的最大强解直到 $\tau_S$，并且 $Y_t=\Pi(Z_t)$ 是唯一解
+
+$$
+dY_t=\overline X_0(Y_t)\,dt
++\sum_a\overline X_a(Y_t)\circ dW_t^a
+\tag{16.7}
+$$
+
+直到 $\tau_B=\tau_S$。对任意有界 Borel 函数 $\varphi$、任意 $t\ge0$，
+
+$$
+\mathbb E_z[\varphi(\Pi Z_t)\mathbf1_{t<\tau_S}]
+=\mathbb E_{\Pi z}[\varphi(Y_t)\mathbf1_{t<\tau_B}]
+:=P_t^B\varphi(\Pi z).
+\tag{16.8}
+$$
+
+所以 $(P_t^B)_{t\ge0}$ 是同一原时钟中的杀死扩散半群；(16.8) 是全有限时间的路径和半群陈述，不只是一个生成元恒等式。
+
+证明。对 $\varphi\in C^2(B)$ 使用 Stratonovich 链式法则和 (15.4)、(15.7)，得到 (16.7)。线性增长给出每个有限时间窗的非爆炸性，局部 Lipschitz 给出强解路径唯一性；因此两个从同一 $\Pi z$ 开始的投影解具有同一法律。由 (16.5) 杀死时刻也相同。先对连续有界 $\varphi$ 取期望，再用有界 Borel 函数的单调类逼近，得到 (16.8)。路径唯一性和 (16.5) 同时保留隐藏记录、边界条件和源寿命；没有复位、复制、独立重采样或额外控制权。证毕。
+
+**模型 16.5（有真实隐藏记录的正模型）。** 取
+
+$$
+J=\mathbb R^3\times\mathbb R^2,
+\quad K=\mathbb R^3,
+\quad\Pi(q,h)=q,
+\quad g_D((q,h),(q',h'))=q\cdot q'.
+\tag{16.9}
+$$
+
+令 $e'_1,e'_2$ 是隐藏因子的标准基，取全局光滑且线性增长的 $b(q)=Aq+c$，以及
+
+$$
+X_0(q,h)=(b(q),-\lambda h),\quad
+X_1=(e_1,e'_1),\quad X_2=(e_2,e'_2),\quad X_3=(e_3,0),
+\quad \lambda>0.
+\tag{16.10}
+$$
+
+任意完整的正定菜单满足 (15.2)，并取显示的有符号坐标校准；所有条件均由常系数投影直接满足，且 $\overline X_0=b$、$\overline X_a=e_a$。初始记录 $(q,h)$ 与 $(q,\widetilde h)$ 在 $h\ne\widetilde h$ 时是真正不同的来源记录；$h$ 还受漂移和前两个实际控制改变。取锚列 $h_1=(e_1,0),h_2=(e_2,0),h_3=(e_3,0),h_4=(0,e'_1),h_5=(0,e'_2)$ 即得到张成 $J$ 的同源有限标定列。三维距离、二阶传播和五维隐藏记录在同一个 $J$ 上共存；模型没有声称隐藏坐标是物理空间，也没有把投影变成对 $h$ 的取得权限。
+
+## 17. 分离反模型与可证伪边界
+
+**命题 17.1（单一协方差律不固定命名控制）。** 取 $S=\mathbb R^3\times S^1$、$\Pi(q,\theta)=q$，在 $e_1e_2$ 平面令 $R_\theta$ 为旋转，定义
+
+$$
+X_1=(R_\theta e_1,0),\quad
+X_2=(R_\theta e_2,0),\quad X_3=(e_3,0),\quad X_0=0.
+\tag{17.1}
+$$
+
+对唯一介入 $Q=I_3$，投影协方差恒为 $I_3$，所以投影扩散律不依赖 $\theta$；但同名的 $X_1$、$X_2$ 随纤维改变。证明是 $R_\theta(e_1e_1^{\mathsf T}+e_2e_2^{\mathsf T})R_\theta^{\mathsf T}=e_1e_1^{\mathsf T}+e_2e_2^{\mathsf T}$。完整菜单正是为排除这一标签旋转而要求的额外信息。
+
+**命题 17.2（不连通纤维的标签逃逸）。** 取 $S=\mathbb R^3\times\{-1,+1\}$、$\Pi(q,\sigma)=q$，并令 $X_a(q,\sigma)=(\sigma e_a,0)$、$X_0=0$。对每个协方差 $Q$，
+
+$$
+\sum_{a,b}Q_{ab}\,d\Pi X_a\otimes d\Pi X_b=Q
+\tag{17.2}
+$$
+
+在两个分支相同；但标签 $a$ 的有向控制在两个分支相反。这里每个分支的菜单证书都有一个符号，然而 $\epsilon_{y,+}=-\epsilon_{y,-}$，故命题 15.5 的兼容性失败。只保留 $q$ 的协方差和距离不能把两个分支压成带标签的 $K$ 商。
+
+**命题 17.3（手性与隐藏漂移的两个独立失败）。**
+
+1. 在连通 $S=\mathbb R^3\times\mathbb R$ 上，模型 A 取 $X_a=(e_a,0)$，模型 B 取 $X_a=(-e_a,0)$，两者 $X_0=0$。任意完整协方差菜单的所有二阶张量相同，但同名控制的方向相反；没有实际有符号锚时，(15.10) 不能被消除。
+2. 取 $S=\mathbb R^3\times\mathbb R$、$X_a=(e_a,0)$，而 $X_0(q,h)=(h e_1,0)$。所有协方差读数和全部控制场相同，但漂移 $d\Pi X_0=h e_1$ 随纤维变化；投影扩散的漂移因而不是 $K$ 上的单值函数。任何只检查二阶矩率而不检查 (15.7) 的证书都会错误通过。
+
+证明。第 1 项由 $(-v_a)\otimes(-v_b)=v_a\otimes v_b$；第 2 项由 $\Gamma_Q$ 不含 $X_0$ 且 (15.7) 在 $h\ne\widetilde h$ 时失败。两项都满足相同的正定性和光滑性，故失败不是退化或不连续造成的。证毕。
+
+**命题 17.4（有限读取不能替代全源条件）。** 对任意有限的读取点集 $E\subset S$，存在两个光滑控制系统，它们在 $E$ 上的全部菜单矩率、漂移和校准值相同，而在 $S\setminus E$ 上的带标签运输不同。取一个不在 $E$ 上的光滑紧支撑函数 $\chi$，把一个控制的投影场从 $e_1$ 改为 $e_1+\chi e_2$ 即可；若需要保持有限点的全部二阶读数，则让 $\chi$ 在这些点的邻域恒为零。故有限精度和有限采样不能认证“所有来源纤维”的精确证书；一个有限菜单也不是在无界来源上只取有限观察。
+
+同样，实测频率是有限样本的获取结果，$\Gamma_Q$ 是假设的精确矩率。前者可用于统计误差合同，不能把一个近似相等升级为 (15.5) 的全域恒等式。若同一来源的新读取发现 $T_{ab}$、漂移残差、守卫或死亡时间在同一 $\Pi$ 纤维的两个代表上不同，证书立即被否证；若发现锚的有向读数相反，则否证的是带标签版本而非无向协方差版本。
+
+## 18. 来源、复用与边界
+
+本增补的有限菜单重建是对第 10 节同源商的一个源特定消费者：它使用协方差张成 $\operatorname{Sym}_m$、纤维连通性或显式分支兼容性，以及一份实际带符号校准。它没有把一般的 projectability、Frobenius 条件、joint diagonalization 或统计投影联络单独包装成新结果。
+
+Elworthy–Le Jan–Li, *The Geometry of Filtering*, arXiv:0810.2253v1，引言关于 symbol 投影的说明、§1.4 Proposition 1.4.4 及第 2 章式 (2.3) 供应扩散算子、symbol 和光滑映射之间的标准关系。Hochgerner–Ratiu, *Geometry of non-holonomic diffusion*, arXiv:1204.6438v1, Theorems 3.1--3.2 区分 Stratonovich 算子本身的可投影性与扩散及生成元的可投影性；本节的 (16.7)--(16.8) 额外保留了带标签场和完整源寿命，所以不把它们的较弱结论当作本节的条件。Kleinsteuber–Shen, *Uniqueness Analysis of Non-Unitary Matrix Joint Diagonalization*, arXiv:1111.7088v3, Theorems 1--3（尤其 Theorem 1 的 essential uniqueness 条件）是多矩阵二阶识别的成熟背景；本节采用的是显示的有限维张量证明，并不声称复制其算法或全部模型。
+
+仓内复用边界如下。[可取得预测丛卷](AURIC_FIB_OBTAINABLE_PREDICTIVE_BUNDLE_THEORY.md) §1 和命题 2.13 把精确秩、条件数和取得资源分开；[二次时钟卷](FIB_UNCALIBRATED_QUADRATIC_CLOCK_THREE_INDEX_DESIGN.md) §11 保留原风险和标定；[相对测量卷](RECURSIVE_RELATIONAL_OBSERVATION_MEASUREMENT_RELATIVE_QUANTUM_BOUNDARY.md) §§15--16 把有限记录、确定性/置信界和 bit time、workspace、output、backing 分开。[FIB 原生自由扩散卷](FIB_NATIVE_FREE_DIFFUSION_QUOTIENT_RIGIDITY.md) §§1--3 已给实际原生 rank-two 场、守卫、密度和完整 killed-semigroup 条件；[概率相位卷](AURIC_FIB_ATOM_PROBABILITY_PHASE_TRANSPORT_AND_HOLONOMY.md) §10.4--§10.5 的两控制 principal-symbol 障碍不能因本节的抽象菜单而取得第三个原生噪声方向。[递归边界卷 Continuation III](FIB_ATOM_RECURSIVE_HOLOGRAPHIC_BOUNDARY_GEOMETRY_CONTINUATION_III.md) §§81--83 的同源空间/Green 要求和三维 Brownian factor、[Continuation IX](FIB_ATOM_RECURSIVE_HOLOGRAPHIC_BOUNDARY_GEOMETRY_CONTINUATION_IX.md) §§243--246 的 affine holonomy 与局部三框架到整体载体条件，分别是边界条件和整体运输的既有供应者；本节只在 (15.1)--(16.10) 的明确同源合同上消费它们。所有这些引用仍是理论来源或仓内综合，不是本节的 Lean 认证，也不产生原生 FIB 的实际控制、取得、未知环境维数、无限时间稳定性或物理实现。
+
+本批的结论范围是：在完整有限协方差菜单、带符号校准、来源守卫、光滑性、非爆炸性和同一死亡时钟这些明确条件下，三轴任务商同时成为每个实际命名控制和共同漂移的精确商，并给出 (16.4)、(16.8) 的距离与传播对应；缺少任何相应条件时，命题 17.1--17.4 给出具体失败。它没有完成“为什么宇宙是三维”或 native FIB 的控制取得问题。
+
+## 追加锚（本行以下为增补区）
