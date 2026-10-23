@@ -5,7 +5,7 @@ year: 2021
 title: The Riemann hypothesis is true up to 3·10^12
 doi: 10.1112/blms.12460
 url: https://arxiv.org/abs/2004.09765v1
-claim: Published verification supplies the finite-height RH premise. Exact heat-loss factorization and the complete arithmetic block bound give a whole-source negative allowance of order (log T)^(-4) in the original sixth moment; fixed height still leaves a negative allowance. A support-independent Gamma-only lower bound for the prime Hankel form fails on all compact half-line tests. An even actual-source partition controls the joint metric defect and bounds supporting multipliers of negative cap-four minima from below, up to the finite-height signed zero tail. Its null supporting vector bootstraps every fixed logarithmic order below five and recovers individual branch moments with an explicit inverse-multiplier cost; separation of the finite reconstruction intervals replaces its N-fold Fourier-tail payment by a harmonic factor, giving every fixed joint-metric exponent below five on actual negative minima and a fifth-power rate with a log-log factor on nonpositive-energy sources under RH(T), without improving the general exponent-four negative allowance. For hypothetical unit negative cap-four minimizers with a positive supporting multiplier, retaining the errors' own moments also gives every finite logarithmic order and arbitrary fixed logarithmic-power branch rates. A bounded analytic Sobolev regularizer gives positive-order regularity by commuting with the complete energy and paying both original metric defects; its constants deteriorate exponentially as the multiplier tends to zero and do not improve the uniform negative allowance. The same regularity controls finite physical dilation in the complete energy and both original metrics, including the source error itself, with explicit multiplier costs; the resulting sublinear squared-norm rate gives no dilation derivative or uniform allowance improvement. Directly retaining the regularizer's original moment coordinate then improves the squared-error range to every rho < 2s, with a larger inverse-multiplier cost and still no first-order or uniform allowance conclusion.
+claim: Published verification supplies the finite-height RH premise. Exact heat-loss factorization and the complete arithmetic block bound give a whole-source negative allowance of order (log T)^(-4) in the original sixth moment; fixed height still leaves a negative allowance. A support-independent Gamma-only lower bound for the prime Hankel form fails on all compact half-line tests. An even actual-source partition controls the joint metric defect and bounds supporting multipliers of negative cap-four minima from below, up to the finite-height signed zero tail. Its null supporting vector bootstraps every fixed logarithmic order below five and recovers individual branch moments with an explicit inverse-multiplier cost; separation of the finite reconstruction intervals replaces its N-fold Fourier-tail payment by a harmonic factor, giving every fixed joint-metric exponent below five on actual negative minima and a fifth-power rate with a log-log factor on nonpositive-energy sources under RH(T), without improving the general exponent-four negative allowance. For hypothetical unit negative cap-four minimizers with a positive supporting multiplier, retaining the errors' own moments also gives every finite logarithmic order and arbitrary fixed logarithmic-power branch rates. A bounded analytic Sobolev regularizer gives positive-order regularity by commuting with the complete energy and paying both original metric defects; its constants deteriorate exponentially as the multiplier tends to zero and do not improve the uniform negative allowance. The same regularity controls finite physical dilation in the complete energy and both original metrics, including the source error itself, with explicit multiplier costs; the resulting sublinear squared-norm rate gives no dilation derivative or uniform allowance improvement. Directly retaining the regularizer's original moment coordinate then improves the squared-error range to every rho < 2s, with a larger inverse-multiplier cost and still no first-order or uniform allowance conclusion. A fixed actual source with every subcritical Sobolev order has a signed critical metric defect of order (log N)^2 while its regularized original moment is O(log N), excluding a universal endpoint absorption when lambda differs from mu; no null-minimizer obstruction is inferred.
 strata_touched: []
 license: citation-only
 triage: anchor
@@ -2031,3 +2031,484 @@ Since $2s<1$, VHM8 still supplies neither $o(a)$ nor a physical
 dilation derivative or favorable sign. It does not improve VHR1's
 uniform $(\log T)^{-4}$ allowance. Full RH and strict Robin for
 every integer $n>5040$ remain unproved.
+
+## A critical signed quadratic defect on a fixed actual source
+
+The subcritical estimate VHS5 cannot be extended as a universal
+critical signed quadratic absorption estimate on actual sources.
+The construction below keeps the ORIGINAL source inverse, every
+Möbius shift, both metrics and the exponential tilt. It gives a
+fixed actual source whose full-line reconstruction has every
+subcritical Sobolev order and whose critical defect grows quadratically in the logarithm of the
+regularizer cap, while its regularized moment grows only linearly
+in that logarithm. This supplies the signed quadratic test on the
+actual source range.
+
+The actual inverse VHP1, full-line reconstruction VHP3 and the
+finite-cap range argument of VHS1 are reused. Compact logarithm
+and jump Fourier asymptotics and logarithmic frequency coordinates
+are classical tools. The additional `repo-derived` application is
+the signed critical asymptotic on this SAME actual source, without
+a literature-priority claim or Lean/kernel certification. The
+source is **not asserted to satisfy the GLOBAL supporting-form
+null equation, the unit negative cap-four constraints, or even
+nonpositive energy**. A cancellation forced by those hypotheses
+remains a separate question.
+
+### Critical regularizer and signed quadratic conclusion
+
+Use the unitary Fourier transform
+
+$$
+ \widehat f(\xi)=(2\pi)^{-1/2}\int_{\mathbb R}f(t)e^{-i\xi t}\,dt,
+ \qquad \langle f,g\rangle=\int\overline f g.
+$$
+
+Fix $q=5/4$, $c>q$, and set
+
+$$
+ j_N(\xi)=\left(\frac{c^2+\xi^2}{c^2+\xi^2/N^2}\right)^{1/4},
+ \quad J_N=j_N(D),\quad L_N=e^{qt}J_Ne^{-qt},\quad N\ge2.
+$$
+
+These are VHS1's bounded regularizers at the critical order $s=1/2$. For a bounded real multiplication operator $B$, define
+
+$$
+ D_B^L(X)=\langle L_NX,BL_NX\rangle-
+             \Re\langle BX,L_N^2X\rangle,
+$$
+
+and use $D_B^J$ for the same expression with $J_N$ in place of $L_N$. In particular, $B$ need not be positive.
+
+For arbitrary real $A,C$, the construction below gives a fixed real actual source $F\in\mathcal V$, with its original full-line reconstruction $X=KSw$, such that
+
+$$
+ \boxed{D_{P_+}^{L}(X)=\frac{AC}{2\pi c}(\log N)^2+O(\log N).}
+ \tag{VHC1}
+$$
+
+More generally, for fixed real $\lambda,\mu$,
+
+$$
+ \boxed{
+ D_{\lambda P_+-\mu e^{-6t}P_+}^{L}(X)
+ =\frac{(\lambda-\mu)AC}{2\pi c}(\log N)^2
+   +O_{\lambda,\mu}(\log N).}
+ \tag{VHC2}
+$$
+
+At the same time,
+
+$$
+ \|J_NX\|_2^2+\|L_NX\|_2^2=O(\log N),\qquad
+ M(F_{J_N})=O(\log N).
+ \tag{VHC3}
+$$
+
+For fixed $\lambda>0$ and $\lambda\ne\mu$, choose the sign of $AC$ to make the leading coefficient positive. The signed defect then cannot be absorbed into any fixed multiple of $\lambda M(F_{J_N})$, uniformly in $N$. All constants below may depend on the fixed cutoff, $A,C,c$, and the owned reconstruction operators, but not on $N$.
+
+### An explicit even profile and its actual inverse
+
+Let
+
+$$
+ t_0=2\log2,\quad a_n=2\log n,
+ \quad 0<\varepsilon<\tfrac1{10}\min(t_0,a_3-t_0).
+$$
+
+Choose a real even $\chi\in C_c^\infty((-\varepsilon,\varepsilon))$ with $\chi=1$ on $[-\varepsilon/2,\varepsilon/2]$. Let $H=\mathbf1_{(0,\infty)}$, put $D=-\sqrt2 C$, and define, up to irrelevant values at isolated points,
+
+$$
+ \begin{split}
+ \beta(t)={}&A\chi(t)\log|t|\\
+ &+D\bigl[\chi(t-t_0)H(t-t_0)
+              +\chi(t+t_0)H(-t-t_0)\bigr].
+ \end{split}
+ \tag{VHC4}
+$$
+
+This is real, even, compactly supported, and belongs to every $H^r(\mathbb R)$, $r<1/2$. Its only singularities are the logarithm at zero and the jumps at $\pm t_0$. No pointwise value is assigned at the logarithmic singularity.
+
+For $t\ge0$, perform the same owned inverse as VHP1:
+
+$$
+ Y(t)=\int_0^\infty e^{v/4}\beta(t+v)\,dv,
+ \qquad u(t)=\beta(t)+\tfrac32Y(t),
+ \tag{VHC5}
+$$
+
+$$
+ U(x)=x^{-9/4}u(\log(x/\pi)),\qquad
+ F(x)=\sum_{n\ge1}\mu(n)n^4U(n^2x),\quad x\ge\pi.
+ \tag{VHC6}
+$$
+
+These formulas really produce an actual member of $\mathcal V$, rather than invoking a converse to W338:
+
+1. On the positive half-line $\beta$ is supported in $[0,t_0+\varepsilon]$. Hence $Y,u$ have this same upper support bound. Also $Y'=-\beta-Y/4$, so $Y\in H^1(0,\infty)$.
+2. The sum in VHC6 is finite for $x\ge\pi$; with the chosen support it has only $n=1,2$. The finite divisor identity gives $\mathscr TF=U$. The original sixth moment is finite, since $U$ has bounded physical support and belongs to the weighted $L^2$ space there.
+3. The zero extension of $u$ consists of a one-sided compact logarithm, a compact jump, and the zero extension of a compact half-line $H^1$ function. Its Fourier transform is $O((1+\log|\xi|)/|\xi|)$. Thus its actual $p$-weighted Fourier integral is finite, since $p(\xi)=O(1+\log(2+|\xi|))$. This proves $F\in\mathcal V$.
+4. With $(I_{5/4}v)(t)=\int_0^\infty e^{-5a/4}v(t+a)da$, the Volterra identity $(I-\tfrac32 I_{5/4})u=\beta$ holds on $t\ge0$. Consequently the actual even arithmetic profile of $F$ is $g_F(r)=\beta(2r)$. The prescribed even profile and the reconstructed source agree.
+
+Set, on the whole line exactly as in VHP3,
+
+$$
+ w=e^{qt}\beta,\quad
+ S=\sum_{n\ge1}\mu(n)n^{-3}T_{a_n},\quad
+ K=I+\tfrac32I_1,\quad X=KSw.
+ \tag{VHC7}
+$$
+
+Here $I_1f(t)=\int_0^\infty e^{-v}f(t+v)\,dv$. All these are the owned actual reconstruction operators. On the positive half-line $X=\pi^{7/4}h_F$.
+
+Near zero only the $n=1$ and $n=2$ terms of $Sw$ are nonzero. They give
+
+$$
+ Sw(t)=Ae^{qt}\log|t|+Ce^{qt}H(t)
+ \quad (0<|t|<\varepsilon/2).
+ \tag{VHC8}
+$$
+
+Indeed, the second coefficient is
+$\mu(2)2^{-3}e^{qt_0}D=-D/\sqrt2=C$.
+Since $K-I:L^2(\mathbb R)\to H^1(\mathbb R)$, VHC8 implies
+
+$$
+ X(t)=A\log|t|+CH(t)+R(t),\qquad R\in H^1_{\mathrm{loc}}\text{ near }0.
+ \tag{VHC9}
+$$
+
+There is **no claim that the global remainder in VHC9 belongs to $H^1$**. The other shifted singularities are retained explicitly next.
+
+### Keep every shifted singularity in the Fourier expansion
+
+Put
+
+$$
+ d_+=De^{qt_0},\qquad d_-=-De^{-qt_0}.
+$$
+
+For $\xi\to+\infty$, the standard compact-logarithm and compact-jump expansions give
+
+$$
+ \widehat w(\xi)=\frac1{\sqrt{2\pi}\xi}
+ \bigl[-\pi A-i d_+e^{-it_0\xi}-i d_-e^{it_0\xi}\bigr]
+ +O(\xi^{-2}).
+ \tag{VHC10}
+$$
+
+For completeness, the logarithm coefficient follows by differentiating $\chi\log|t|$: its principal singular derivative is $\operatorname{pv}(1/t)$, with nonunitary transform $-i\pi\operatorname{sgn}\xi$. The remaining derivative has transform $O(\xi^{-1})$. Multiplication of the logarithm by a smooth factor vanishing at zero adds $t b(t)\log|t|$; its second derivative is a compact $L^1$ function plus a compact principal-value $b(t)/t$, whose transform is bounded. It therefore adds $O(\xi^{-2})$. A compact step of jump $d$ contributes $d e^{-it_*\xi}/(i\sqrt{2\pi}\xi)+O(\xi^{-2})$, by integration by parts. These observations establish VHC10 with a genuine pointwise remainder.
+
+The full-line Fourier multipliers of $S,K$ are
+
+$$
+ \sigma(\xi)=\sum_{n\ge1}\mu(n)n^{-3}e^{ia_n\xi},
+ \qquad k(\xi)=1+\frac{3/2}{1-i\xi}.
+$$
+
+Both are bounded and $k-1=O(\xi^{-1})$. Multiplying VHC10 gives
+
+$$
+ \begin{split}
+ \xi\widehat X(\xi)=\frac1{\sqrt{2\pi}}\sum_{n\ge1}\mu(n)n^{-3}
+ \bigl[&-\pi A e^{ia_n\xi}\\
+       &-i d_+e^{-i(t_0-a_n)\xi}
+        -i d_-e^{-i(-t_0-a_n)\xi}\bigr]
+       +O(\xi^{-1}).
+ \end{split}
+ \tag{VHC11}
+$$
+
+The error is uniform in $\xi\ge1$; the series of coefficients is absolutely summable. Exactly two terms in VHC11 have phase zero: the logarithm term with $n=1$, and the $d_+$ jump term with $n=2$. Their combined coefficient is
+
+$$
+ \frac{-\pi A-iC}{\sqrt{2\pi}}.
+ \tag{VHC12}
+$$
+
+Every remaining phase $t_*$ has a fixed positive distance from zero:
+
+$$
+ |t_*|\ge d_*:=\min(t_0,a_3-t_0)>0.
+ \tag{VHC13}
+$$
+
+This includes all shifted logarithms at $-a_n$, $n\ge2$, all shifted positive jumps at $t_0-a_n$, $n\ne2$, and all shifted negative jumps at $-t_0-a_n$. Coincident nonzero phases may be combined; their absolute coefficients are still summable.
+
+In particular, $X\in H^r(\mathbb R)$ for every $0\le r<1/2$, $X\in L^1\cap L^2$, $\widehat X$ is bounded near zero, and $\widehat X(\xi)=O(1/|\xi|)$ at infinity. The $L^1$ assertion follows directly from VHC7, since $w\in L^1$ and the translations, the absolutely summable $S$, and $I_1$ are bounded on $L^1$.
+
+Write $\ell=\log N$ and define for $x\ge0$
+
+$$
+ f(x)=c^{-1/2}e^x\widehat X(e^x)=a+e(x),
+ \qquad a=\frac{-\pi A-iC}{\sqrt{2\pi c}}.
+ \tag{VHC14}
+$$
+
+Then $e$ is bounded and has a uniformly bounded primitive:
+
+$$
+ \sup_{L\ge0}\left|\int_0^L e(x)\,dx\right|<\infty.
+ \tag{VHC15}
+$$
+
+Indeed the remainder in VHC11 is $O(e^{-x})$, hence integrable in $x$. Each nonzero phase satisfies
+
+$$
+ \int_0^L e^{-it_*e^x}\,dx
+ =\int_1^{e^L}\frac{e^{-it_*v}}v\,dv,
+ \qquad\left|\int_1^R\frac{e^{-it_*v}}v\,dv\right|
+ \le\frac3{|t_*|}\le\frac3{d_*},
+ \tag{VHC16}
+$$
+
+by one integration by parts. Absolute summability of all coefficients proves VHC15. This is the estimate that pays every remote singularity; none is silently moved into an $H^1$ remainder.
+
+### The exact four Fourier blocks of the quadratic defect
+
+Set $Y_N=J_NX$. The Fourier convolution kernel of $P_+$ is
+
+$$
+ \tfrac12\delta(\xi-\eta)+\frac1{2\pi i}\operatorname{pv}\frac1{\xi-\eta}.
+$$
+
+The delta cancels in the double defect. Consequently its kernel in the $Y_N$ coordinate is
+
+$$
+ M_N(\xi,\eta)
+ =\frac{i}{4\pi(\xi-\eta)}
+ \left[\frac{j_N(\xi)}{j_N(\eta)}+
+       \frac{j_N(\eta)}{j_N(\xi)}-2\right].
+ \tag{VHC17}
+$$
+
+The numerator removes the diagonal singularity. Split each frequency into $\xi=\sigma e^x$, $\eta=\tau e^y$, $\sigma,\tau\in\{+,-\}$, and use the unitary coordinates
+
+$$
+ V_N^\sigma(x)=e^{x/2}\widehat Y_N(\sigma e^x).
+$$
+
+The exact logarithmic kernel is
+
+$$
+ \mathcal K_N^{\sigma\tau}(x,y)
+ =\frac{i}{4\pi}
+ \left[r_N(x,y)+r_N(x,y)^{-1}-2\right]
+ \frac{e^{(x+y)/2}}{\sigma e^x-\tau e^y},
+ \quad r_N=\frac{j_N(e^x)}{j_N(e^y)}.
+ \tag{VHC18}
+$$
+
+The defect is the sum of the four integrals
+$\iint\overline{V_N^\sigma(x)}\mathcal K_N^{\sigma\tau}(x,y)V_N^\tau(y)\,dx\,dy$.
+At each fixed $N$, first restrict $X$ to the symmetric Fourier
+band $\epsilon\le|\xi|\le R$, then send $\epsilon\downarrow0$ and
+$R\to\infty$. Boundedness of $J_N$ and $P_+$ on $L^2$ passes the
+quadratic form to the limit. The kernel bound below and VHC23's
+$L^1$ bounds supply integrable domination for these four integrals.
+
+For all real $x,y$, all $N$, and all blocks,
+
+$$
+ |\mathcal K_N^{\sigma\tau}(x,y)|\le C;
+$$
+
+for same-sign blocks it also obeys $C\min(|x-y|,1)$. To see this, note that
+$0\le d\log j_N(e^x)/dx\le1/2$. For $x\ge y$, therefore $1\le r_N\le e^{(x-y)/2}$; substituting the largest possible numerator in VHC18 gives respectively the bounds by $\tanh(|x-y|/4)$ and $1-\operatorname{sech}((x-y)/2)$.
+
+### Pay the cap and every exterior frequency
+
+On $0\le x\le\ell$, write
+
+$$
+ j_N(e^x)=c^{-1/2}e^{x/2}e^{b_N(x)},
+ \quad b_N(x)=\tfrac14\log(1+c^2e^{-2x})
+              -\tfrac14\log(1+c^{-2}e^{2(x-\ell)}).
+$$
+
+For $\omega_N(x)=e^{-2x}+e^{-2(\ell-x)}$,
+
+$$
+ |b_N(x)|+|b_N'(x)|\le C_c\omega_N(x),\qquad
+ \int_0^\ell\omega_N(x)\,dx\le C.
+ \tag{VHC19}
+$$
+
+It follows that $V_N^+(x)=e^{b_N(x)}f(x)$, so it is bounded, and
+
+$$
+ \|V_N^+-f\|_{L^1(0,\ell)}\le C.
+ \tag{VHC20}
+$$
+
+Because $X$ is real, $V_N^-=\overline{V_N^+}$.
+
+Replace $r_N(x,y)$ in VHC18 by $e^{(x-y)/2}$. The resulting four kernels are exactly
+
+$$
+ \begin{array}{ll}
+ \mathcal K_\infty^{++}=\dfrac{i}{4\pi}\tanh\dfrac{x-y}{4},
+ &\mathcal K_\infty^{--}=-\mathcal K_\infty^{++},\\[2mm]
+ \mathcal K_\infty^{+-}=\dfrac{i}{4\pi}
+       \left(1-\operatorname{sech}\dfrac{x-y}{2}\right),
+ &\mathcal K_\infty^{-+}=-\mathcal K_\infty^{+-}.
+ \end{array}
+ \tag{VHC21}
+$$
+
+On the middle square $[0,\ell]^2$,
+
+$$
+ |\mathcal K_N^{\sigma\tau}-\mathcal K_\infty^{\sigma\tau}|
+ \le C[\omega_N(x)+\omega_N(y)].
+ \tag{VHC22}
+$$
+
+For $|x-y|\ge1$, this follows directly from VHC19 and the exponential denominators in VHC18. For $|x-y|<1$, use
+$|b_N(x)-b_N(y)|\le C|x-y|[\omega_N(x)+\omega_N(y)]$; differentiating the cosh numerator supplies the other factor of $|x-y|$, which cancels the sinh denominator. Thus VHC22 has no diagonal singularity.
+
+The contribution of VHC22 to each bounded-amplitude quadratic integral is $O(\ell)$, by VHC19. Replacing $V_N^+$ by $f$, and $V_N^-$ by $\bar f$, also costs $O(\ell)$, using VHC20 and the uniform kernel bound.
+
+The exterior logarithmic intervals are equally explicit. Since $\widehat X$ is bounded at zero and $O(1/|\xi|)$ at infinity,
+
+$$
+ |V_N^\sigma(x)|\le
+ \begin{cases}
+ Ce^{x/2},&x<0,\\
+ C,&0\le x\le\ell,\\
+ Ce^{-(x-\ell)/2},&x>\ell.
+ \end{cases}
+ \tag{VHC23}
+$$
+
+Hence the exterior $L^1$ norm is uniformly bounded and the total $L^1$ norm is $O(1+\ell)$. The uniform bound on VHC18 shows that every integral involving at least one exterior frequency is $O(\ell)$. This pays both the low-frequency regularization and the entire $N$-cap tail; no sharp-cut substitute for $j_N$ is assumed.
+
+### Evaluate the four homogeneous blocks
+
+We have reduced the defect, with error $O(\ell)$, to VHC21 on $[0,\ell]^2$, with inputs $f=a+e$ and $\bar f$, where $e$ is bounded and has bounded primitive.
+
+For the same-sign blocks, decompose
+
+$$
+ \tanh(z/4)=\operatorname{sgn}(z)+r(z),\qquad r\in L^1(\mathbb R).
+$$
+
+The $r$-part is $O(\ell)$ by Young's inequality and $\|f\|_{L^2(0,\ell)}^2=O(\ell)$. The constant-constant sign integral vanishes. For an error factor, its primitive is bounded; explicitly,
+
+$$
+ \int_0^\ell\operatorname{sgn}(x-y)e(y)dy
+ =2\int_0^x e(y)dy-\int_0^\ell e(y)dy=O(1).
+$$
+
+This controls the error-error term by $O(\ell)$. The constant-error terms are $O(\ell)$ as well: after interchanging the integrals they involve $\int_0^\ell(\ell-2y)e(y)dy$, bounded by $C\ell$ after one integration by parts with the bounded primitive. Therefore **both same-sign blocks are $O(\ell)$**.
+
+For the cross blocks, the sech part is $O(\ell)$ by Young's inequality. Their constant parts, including both conjugate blocks and the unitary normalization, sum to
+
+$$
+ 2\Re\left[\frac{i}{4\pi}
+          \left(\int_0^\ell\overline{f(x)}dx\right)^2\right]
+ =2\Re\left[\frac{i\bar a^2}{4\pi}\right]\ell^2+O(\ell).
+$$
+
+Since $a=(-\pi A-iC)/\sqrt{2\pi c}$,
+
+$$
+ 2\Re\left[\frac{i\bar a^2}{4\pi}\right]
+ =\frac{AC}{2\pi c}.
+$$
+
+Together with the cap and exterior-frequency bounds this proves
+
+$$
+ D_{P_+}^{J}(X)=\frac{AC}{2\pi c}\ell^2+O(\ell).
+ \tag{VHC24}
+$$
+
+VHC15--VHC16 explicitly show why all remote shifted logarithms and jumps contribute only $O(\ell)$, including their cross terms with the singularity at zero and with each other. No real-symmetry restriction is dropped: the negative-frequency input is exactly the conjugate of the positive-frequency input throughout.
+
+### The continuous joint-metric part has no quadratic logarithm
+
+Let $C_6=(1-e^{-6t})P_+$. Its non-diagonal Fourier kernel equals that of $P_+$ multiplied by
+
+$$
+ \frac6{6+i(\xi-\eta)}.
+$$
+
+Thus its double-defect logarithmic kernel is VHC18 times this factor. Outside the middle square VHC23 again gives $O(\ell)$. On the middle square its absolute integral is uniformly bounded:
+
+* For opposite signs, $|\xi-\eta|=e^x+e^y$, so the extra factor is bounded by $Ce^{-\max(x,y)}$, integrable on the quadrant.
+* For the same signs, assume $x=y+z$, $z\ge0$. For $z\le1$, the product is bounded by $C\min(z,e^{-y})$; for $z\ge1$, it is bounded by $Ce^{-y-z}$. Both are integrable in $y,z\ge0$.
+
+The bounded amplitudes therefore give $D_{C_6}^{J}(X)=O(\ell)$. Since
+
+$$
+ \lambda P_+-\mu e^{-6t}P_+
+ =(\lambda-\mu)P_++\mu C_6,
+$$
+
+VHC24 proves VHC2 for the self-adjoint $J_N$.
+
+### Retain the actual exponential tilt
+
+In the adopted convention $L_N$ has symbol $j_N(\xi+iq)$. On $|\Im z|\le q<c$, the factors $|c^2+z^2|$ and $|c^2+z^2/N^2|$ are uniformly comparable to $c^2+\xi^2$ and $c^2+\xi^2/N^2$. Differentiating
+
+$$
+ m_N(z)=j_N(z)^2=
+ \left(\frac{c^2+z^2}{c^2+z^2/N^2}\right)^{1/2}
+$$
+
+gives
+
+$$
+ m_N'(z)=m_N(z)\,
+ \frac{zc^2(1-N^{-2})}
+ {(c^2+z^2)(c^2+z^2/N^2)}.
+$$
+
+This is uniformly bounded on the strip, as is $j_N'=m_N'/(2j_N)$. Vertical integration yields
+
+$$
+ \|L_N-J_N\|_{2\to2}+\|L_N^2-J_N^2\|_{2\to2}\le C_{c,q}.
+ \tag{VHC25}
+$$
+
+VHC10--VHC11 give $\|J_NX\|_2^2=O(\ell)$: the middle frequencies contribute $\int_1^N d\xi/\xi$; the $|\xi|>N$ contribution is $O(1)$, since $j_N^2\le N$. Expanding the first term of the defect and using VHC25 then shows
+
+$$
+ |D_B^L(X)-D_B^J(X)|
+ \le C_B\|X\|_2(\|J_NX\|_2+\|X\|_2)
+ =O(\sqrt\ell)+O(1).
+ \tag{VHC26}
+$$
+
+This proves VHC1--VHC2 with the actual nonself-adjoint $L_N$. The tilt has not been discarded.
+
+### Actual regularized sources and the precise method boundary
+
+For each finite $N$, $j_N-N^{1/2}$ and $j_N^2-N$ have order $-2$ on smaller closed strips. The VHS1/VHP1 construction therefore supplies actual $F_{J_N},F_{J_N^2}\in\mathcal V$, including the nondegenerate case $AC\ne0$, in which $X\notin H^{1/2}$. Their actual reconstructions satisfy $X_{J_N}=L_NX$, and
+
+$$
+ M(F_{J_N})=\pi^{-7/2}\|P_+L_NX\|_2^2=O(\log N).
+$$
+
+The complete energy commutation identity continues to hold for every finite $N$. The initial profile is compactly supported; the regularized profiles have the required exponential weight from the zero-free strip $c>q$. Thus the complete prime-power sums, both pole functionals, and Gamma terms are the same actual objects used in VHS2. No arithmetic term or original metric is changed to create the example.
+
+For fixed $\lambda>0$ and $\lambda\ne\mu$, choosing $(\lambda-\mu)AC>0$ yields
+
+$$
+ D_{\lambda P_+-\mu e^{-6t}P_+}^{L}(X)
+ \sim \frac{(\lambda-\mu)AC}{2\pi c}(\log N)^2,
+ \qquad M(F_{J_N})=O(\log N).
+$$
+
+Consequently a universal critical signed replacement of VHS5 by a fixed multiple of $M(F_{J_N})$ is false, even on actual sources with every subcritical Sobolev order. A fixed positive $\lambda$ does not supply an $N$-independent absorption constant for this example.
+
+This leaves a narrower, genuinely null-specific question. A GLOBAL null minimizer could satisfy a relation that excludes, cancels, or signs the logarithm/jump cross coefficient. No such relation is proved here, and the example is not asserted to satisfy the GLOBAL null equation or the unit negative cap-four minimization constraints. When $\lambda=\mu$, the quadratic logarithmic term cancels; this proof does not settle the remaining critical absorption problem in that case. The result gives no dilation derivative, no $o(a)$ conclusion, and no RH/Robin improvement.
+
+The generic endpoint substitution is therefore unavailable. A
+critical absorption argument for the hypothetical negative minimizer
+requires additional information specific to that restricted class;
+its SAME global null equation is one possible source.
+This method boundary leaves VHR1's uniform $(\log T)^{-4}$
+allowance unchanged. Full RH and strict Robin for every integer
+$n>5040$ remain unproved.
