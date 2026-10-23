@@ -5,13 +5,13 @@ year: 2025
 title: Optimal boundary regularity and a Hopf-type lemma for Dirichlet problems involving the logarithmic Laplacian
 doi: 10.3934/dcds.2024084
 url: https://arxiv.org/abs/2401.18033v2
-claim: The published boundary theorem requires an exterior-zero equation with bounded solution and forcing. Actual cap-four features can have uniformly bounded logarithmic Fourier moments of every fixed order while their profile values at zero diverge. Smooth actual sources also give opposite unbounded full-prime dilation difference quotients with controlled origin data. These paper-level interface counterexamples supply neither a negative minimizer nor an RH or Robin bound.
+claim: The published boundary theorem requires an exterior-zero equation with bounded solution and forcing. Actual cap-four features can have uniformly bounded logarithmic Fourier moments of every fixed order while their profile values at zero diverge. Smooth actual sources also give opposite unbounded full-prime dilation difference quotients with controlled origin data. A fixed actual source also has a signed critical metric defect quadratic in log log log N, while its regularized original moment and actual Gamma form, including a fixed spatial weight, remain uniformly bounded. These paper-level interface counterexamples supply neither a negative minimizer nor an RH or Robin bound.
 strata_touched: []
 license: bibliographic-reference-only
 triage: anchor
 ---
 
-# Actual-source interfaces for boundary values and arithmetic dilation
+# Actual-source interfaces for boundary values, dilation and critical payment
 
 ## What the published theorems provide
 
@@ -351,3 +351,309 @@ Thus (LB7)--(LB8) exclude a shortcut from the CURRENT moment and
 logarithmic regularity bounds alone to the theorem's bounded-value
 premise. They supply no favorable sign for the original complete
 form, improved Robin error, full RH proof or Lean/kernel result.
+
+
+## A fixed actual source excludes a universal Gamma-only critical payment
+
+Reuse the [actual inverse and critical signed-defect calculation](platttrudgian2021rh.md#a-critical-signed-quadratic-defect-on-a-fixed-actual-source),
+VHC5--VHC7 and VHC17--VHC26, the finite-cap range construction VHS1,
+and [W338's comparison of the actual Gamma and arithmetic forms](suzuki2026screw.md#compare-the-full-logarithmic-forms-with-a-bounded-boundary-cost).
+The half-line projection bound in the logarithmic form is the existing
+Carleman interface used in VHD1. None of those suppliers is reproved.
+Compact symbol localization and the logarithmic-frequency calculation
+below are classical tools. The additional `repo-derived` interface is a
+FIXED actual source for which the critical signed defect grows faster
+than its uniformly bounded actual Gamma payment, including a spatially
+weighted Gamma payment. No literature-priority or Lean/kernel certification is claimed.
+
+### Statement with the original source and the regularized source separated
+
+Keep the unitary Fourier convention of VHC and fix $c>q=5/4$.
+Use exactly its critical regularizer and exponential tilt,
+$$
+ j_N(\xi)=\left(\frac{c^2+\xi^2}{c^2+\xi^2/N^2}\right)^{1/4},
+ \quad J_N=j_N(D),\quad L_N=e^{qt}J_Ne^{-qt},\quad N\ge2,
+$$
+and its signed defect
+$$
+ D_B^L(X)=\langle L_NX,BL_NX\rangle
+             -\Re\langle BX,L_N^2X\rangle.
+$$
+For every prescribed $K_*>1$ and fixed real $\lambda\ne\mu$, there
+is a FIXED real actual source $F\in\mathcal V$, independent of $N$,
+with $\mathcal H(F)=1$ and $M(F)<K_*$, such that its actual finite-cap
+sources $F_{J_N}$ satisfy
+$$
+ \begin{aligned}
+ M(F_{J_N})&=O(1),\\
+ \mathcal P(F_{J_N})&=O(1),\\
+ \mathcal G(e^{rt}u_{F_{J_N}})&=O_r(1)
+                  &&(1/4<r<1/2),
+ \end{aligned}
+ \tag{GCP1}
+$$
+where $\mathcal G(v)=\int p(\xi)|\widehat v(\xi)|^2d\xi$ and
+$u_{F_{J_N}}$ is the ACTUAL zero-extended theta coordinate. Meanwhile,
+with $B=\lambda P_+-\mu e^{-6t}P_+$,
+$$
+ D_B^L(X)=\kappa(\log\log\log N)^2+O_{\lambda,\mu}(1+\log\log\log N),
+ \qquad \kappa>0.
+ \tag{GCP2}
+$$
+The estimates and the asymptotic are for $N\to\infty$. The constants
+can depend on the fixed source, $c$, the fixed weight
+$r$, and the fixed multipliers. Every original spatial moment and
+$\mathcal G(e^{rt}u_F)$ is finite and independent of $N$. The cap is
+on the ORIGINAL $F$, not on $F_{J_N}$.
+
+Consequently no finite coefficient, even one allowed to depend on
+those fixed original-source budgets, bounds this positive defect
+by $\mathcal P(F_{J_N})+M(F_{J_N})$ uniformly in $N$. The same is true
+with $\mathcal G(e^{rt}u_{F_{J_N}})$ in place of $\mathcal P(F_{J_N})$.
+The source is not asserted to be GLOBAL null, minimizing, or of
+nonpositive complete energy. These are indispensable scope exclusions.
+
+### Choose a fixed symbol with two inverse logarithms
+
+Choose $\vartheta\in C^\infty(\mathbb R)$, zero on $(-\infty,2]$,
+one on $[3,\infty)$, and taking values in $[0,1]$. Put
+$$
+ a(s)=\begin{cases}\vartheta(s)/(s\log s),&s>2,\\0,&s\le2.\end{cases}
+$$
+It is bounded, of finite total variation, and in $L^2(0,\infty)$.
+For $\ell\ge3$,
+$$
+ \int_0^\ell a(s)ds=\log\log\ell+c_\vartheta,
+ \qquad
+ \int_0^\infty(1+s)a(s)^2ds<\infty.
+ \tag{GCP3}
+$$
+Define real-even $A_0$ and real-odd $B_0$ by
+$$
+ \widehat A_0(\xi)=\frac{a(\log|\xi|)}{|\xi|},
+ \qquad
+ \widehat B_0(\xi)=-i\frac{a(\log|\xi|)}{\xi},
+ \tag{GCP4}
+$$
+with both symbols zero for $|\xi|\le1$. They belong to $H^{1/2}$:
+the high-frequency half-derivative integral is $\int a(s)^2ds$.
+For either symbol $h$, $|h(\xi)|\le C/|\xi|$ and
+$|h'(\xi)|\le C/|\xi|^2$ for $|\xi|\ge1$.
+
+For fixed smooth compact $m$, the unitary convolution formula gives
+$$
+ \widehat{m h^\vee}(\xi)=m(0)h(\xi)+O(|\xi|^{-2}).
+ \tag{GCP5}
+$$
+Indeed subtract $m(0)h(\xi)$ under the convolution. On
+$|\eta|\le|\xi|/2$, the mean-value bound is
+$C|\eta||\xi|^{-2}$; $\widehat m$ has finite first absolute moment.
+On the complement, its rapid decay and boundedness of $h$ give the
+same bound. The low-frequency remainder is in $L^2$, so the entire
+remainder is in $H^1$. This assertion is about each localized packet;
+remote translated packets are retained separately.
+
+Take VHC4's real-even cutoff $\chi$, equal to one near zero and
+supported in $(-\varepsilon,\varepsilon)$, with
+$$
+ t_0=2\log2,\qquad
+ \varepsilon<\tfrac1{10}\min(t_0,2\log3-t_0),\qquad
+ e^{6\varepsilon}<K_*.
+$$
+For a small real parameter $C$, put $D=\sqrt2C$ and
+$$
+ \beta_C(t)=\chi(t)A_0(t)
+ +D[\chi(t-t_0)B_0(t-t_0)-\chi(t+t_0)B_0(t+t_0)].
+ \tag{GCP6}
+$$
+Oddness of $B_0$ makes this real-even. Use precisely VHC5--VHC6:
+$$
+ \begin{aligned}
+ Y(t)&=\int_0^\infty e^{v/4}\beta_C(t+v)dv,
+ &u(t)&=\beta_C(t)+\tfrac32Y(t)\quad(t\ge0),\\
+ U(x)&=x^{-9/4}u(\log(x/\pi)),
+ &F_C(x)&=\sum_{n\ge1}\mu(n)n^4U(n^2x)\quad(x\ge\pi).
+ \end{aligned}
+$$
+Only $n=1,2$ occur in this physical inverse. The same finite divisor
+identity gives $\mathscr TF_C=U$, and the Volterra identity gives
+$g_{F_C}(r)=\beta_C(2r)$. Also $Y'=-\beta_C-Y/4$, so $Y$ is
+half-line $H^1$ with bounded support. Its zero extension has at most
+a bounded jump. The logarithmic-form projection bound and GCP4--GCP5
+therefore give $F_C\in\mathcal V$, with bounded physical support
+and every fixed exponentially weighted original Gamma norm finite.
+No converse to W338 is assumed to manufacture the source.
+
+At $C=0$, this source is nonzero and supported in
+$[\pi,\pi e^\varepsilon]$. To verify nonvanishing, the inverse cosine
+integral for $A_0$ below frequency $1/|t|$ has positive main growth
+$\log\log\log(1/|t|)$, with bounded error; one integration by parts bounds
+the remaining oscillatory tail by $C/[\log(1/|t|)\log\log(1/|t|)]$. Thus $A_0$ is
+nonzero near zero, and the actual inverse identity gives $F_0\ne0$.
+Reuse VHC27's strict-cap continuity argument: $F_C=F_0+CF_1$ in
+$H_6$, and $M(F_0)<K_*\mathcal H(F_0)$. A sufficiently small nonzero
+$C$ of either sign preserves that strict inequality. Fix it with
+$(\lambda-\mu)C>0$, then normalize by $\sqrt{\mathcal H(F_C)}$.
+Only after fixing and normalizing this source is $N$ allowed to grow.
+The following calculations use the unnormalized profile $\beta_C$;
+normalization divides their quadratic forms by $\mathcal H(F_C)$.
+
+### Retain every arithmetic shift in the critical Fourier coordinate
+
+Use VHP3's exact whole-line reconstruction
+$$
+ w=e^{qt}\beta_C,\quad
+ S=\sum_{n\ge1}\mu(n)n^{-3}T_{2\log n},\quad
+ K=I+\tfrac32I_1,\quad X=KSw.
+$$
+For $\xi>0$, applying GCP5 at all three centers gives
+$$
+ \widehat w(\xi)=\frac{a(\log\xi)}\xi
+ \left[1-iDe^{qt_0}e^{-it_0\xi}
+           +iDe^{-qt_0}e^{it_0\xi}\right]+O(\xi^{-2}).
+ \tag{GCP7}
+$$
+The multipliers of $S$ and $K$ are respectively
+$\sum\mu(n)n^{-3}e^{2i\log n\,\xi}$ and $1+O(\xi^{-1})$.
+There are exactly two zero-phase terms: the first packet with $n=1$
+and the positive-center odd packet with $n=2$. Their sum is
+$(1+iC)a(\log\xi)/\xi$, because
+$\mu(2)2^{-3}[-iDe^{qt_0}]=iC$.
+Every other phase has fixed distance at least $d_*>0$ from zero,
+as in VHC13, and its coefficients are absolutely summable.
+Consequently, for $s\ge0$,
+$$
+ c^{-1/2}e^s\widehat X(e^s)
+ =c^{-1/2}(1+iC)a(s)+E(s),
+$$
+$$
+ \|E\|_\infty+\|E\|_2<\infty,\qquad
+ \int_0^\ell|E(s)|ds=O(1+\log\log\ell),\qquad
+ \sup_{\ell\ge0}\left|\int_0^\ell E(s)ds\right|<\infty.
+ \tag{GCP8}
+$$
+Each remote term is a constant times $a(s)e^{i\tau e^s}$,
+$|\tau|\ge d_*$. VHC16's oscillatory primitive bound and integration
+by parts against the finite variation of $a$ give a uniform primitive
+bound $C/|\tau|$. Sum the absolute coefficients. The $O(\xi^{-2})$
+Fourier remainder becomes $O(e^{-s})$ and is integrable. This proves
+GCP8 while retaining all remote interactions. GCP7 also gives
+$X\in H^{1/2}$, hence $\|J_NX\|_2+\|L_NX\|_2=O(1)$ by VHC25.
+The actual identity $M(F_{J_N})=\pi^{-7/2}\|P_+L_NX\|_2^2$
+proves the first line of GCP1.
+
+### Evaluate the same signed four-block form with its actual cap
+
+Set $\ell=\log N$ and reuse exactly VHC17--VHC23's four kernels.
+The present logarithmic-frequency input has bounded $L^2$ norm
+and total $L^1$ norm $O(1+\log\log\ell)$. Its exterior $L^1$ factors
+are uniformly bounded. The kernel errors are bounded by
+$C[\omega_N(s)+\omega_N(t)]$, with
+$\omega_N(s)=e^{-2s}+e^{-2(\ell-s)}$ on $[0,\ell]$.
+Their weighted $L^1$ factor is bounded and the other is
+$O(1+\log\log\ell)$. Thus the entire rational cap, lower-frequency
+and exterior-frequency errors cost $O(1+\log\log\ell)$.
+
+For the same-sign homogeneous kernels, write
+$\tanh(z/4)=\operatorname{sgn}z+r(z)$ with $r\in L^1$.
+Young's inequality pays the $r$ term by the bounded $L^2$ norm.
+The main/main sign term vanishes by antisymmetry. Terms involving
+$E$ cost $O(1+\log\log\ell)$: its primitive is bounded by GCP8;
+for the main/error term integrate the resulting main primitive by
+parts against that bounded error primitive, using
+$\int_0^\ell a=O(1+\log\log\ell)$.
+
+For the opposite-sign blocks, the sech part likewise costs $O(1)$.
+With $f=c^{-1/2}(1+iC)a+E$, their constant parts are exactly
+$$
+ 2\Re\left[\frac{i}{4\pi}
+       \left(\int_0^\ell\overline{f(s)}ds\right)^2\right]
+ =\frac{C}{\pi c}(\log\log\ell)^2+O(1+\log\log\ell).
+ \tag{GCP9}
+$$
+Here $\int E=O(1)$ and
+$\Re[i(1-iC)^2]=2C$. This keeps real-source conjugacy in both
+negative-frequency blocks.
+
+For $C_6=(1-e^{-6t})P_+$, VHC's exact additional Fourier factor
+$6/[6+i(\xi-\eta)]$ is absolutely integrable against the bounded
+middle-quadrant kernels; exterior interactions cost
+$O(1+\log\log\ell)$. Thus $D_{C_6}^{J}(X)=O(1+\log\log\ell)$.
+VHC25--VHC26 retain the ORIGINAL exponential tilt; since
+$\|J_NX\|_2=O(1)$, their error here is $O_B(1)$.
+Use $B=(\lambda-\mu)P_++\mu C_6$ to obtain GCP2 with
+$$
+ \kappa=\frac{(\lambda-\mu)C}{\pi c\,\mathcal H(F_C)}>0.
+$$
+At each finite $N$, the symmetric Fourier-cutoff limit is exactly
+the one in VHC18; the finite logarithmic $L^1$ bounds above supply
+absolute domination. No sharp-cut surrogate for $j_N$ is used.
+
+### Pay the actual Gamma form and its spatially weighted version
+
+The ACTUAL finite-cap arithmetic profile is
+$\beta_{F_{J_N}}=J_N\beta_C$. GCP5 gives its logarithmic squared
+norm the upper bound
+$$
+ C+C\int_1^\infty(1+\log\xi)j_N(\xi)^2
+                       \frac{a(\log\xi)^2}{\xi^2}d\xi
+ =O(1).
+ \tag{GCP10}
+$$
+Use $j_N(\xi)^2\le C(1+|\xi|)$ uniformly in $N$ and the finite
+integral in GCP3. The $O(\xi^{-2})$ Fourier remainder contributes
+a uniformly integrable logarithmic density as well.
+W338's UPPER comparison, with
+$S(F_{J_N})\le CM(F_{J_N})=O(1)$, now proves
+$\mathcal P(F_{J_N})=O(1)$.
+This is the actual zero-extended theta Gamma form, not
+$\mathcal G(X_{J_N})$ substituted for it.
+
+For fixed $1/4<r<1/2$, put $\beta_r=e^{rt}\beta_C$.
+GCP5 gives the same spectral bounds for this fixed compact profile.
+The analytic strip $c>q>r$ and VHC25's vertical derivative bound give
+$$
+ \begin{aligned}
+ \mathcal G(e^{rt}J_N\beta_C)
+ &=\mathcal G(j_N(D+ir)\beta_r)\\
+ &\le C_r[\mathcal G(J_N\beta_r)+\mathcal G(\beta_r)]
+ \le C_r.
+ \end{aligned}
+ \tag{GCP11}
+$$
+The equality follows from exponential conjugation in that strip;
+the bounded difference from the real-axis symbol is uniform in $N$.
+On the positive half-line the SAME actual Volterra inverse reads
+$$
+ e^{rt}u_{F_{J_N}}(t)=e^{rt}\beta_{F_{J_N}}(t)
+ +\frac32\int_0^\infty e^{-(r-1/4)v}
+               e^{r(t+v)}\beta_{F_{J_N}}(t+v)dv.
+$$
+First apply $P_+$ to $e^{rt}\beta_{F_{J_N}}$, then the full-line
+forward resolvent of parameter $r-1/4>0$, then $P_+$ again.
+Forward shifts give exactly this half-line inverse. The resolvent
+is a bounded multiplier in the logarithmic form. Both projections
+use the EXISTING logarithmic-form Carleman bound of W338/VHD1:
+the two half-line diagonal energies sum to the full energy up to
+a bounded $L^2$ cross term with kernel bounded by $C/(s+t)$.
+No boundedness of $P_+$ on $H^{1/2}$ is assumed. This proves the
+weighted Gamma line of GCP1 without applying any null estimate to
+$F_{J_N}$.
+
+### Consequence for the remaining minimizer argument
+
+Taking $N=\exp(\exp(\exp L))$, the positive signed defect is
+$\kappa L^2+O(L)$, while every Gamma payment in GCP1 is $O(1)$
+and the regularized original moment is bounded. Fixed spatial
+budgets and the actual strictly weighted Gamma payment therefore
+do not supply a universal pure-critical linear absorption estimate.
+This is stronger than the earlier moment-only obstruction and
+rules out that proposed substitute for the missing endpoint step.
+
+The source has not been made GLOBAL null. Such a null equation
+could impose phase relations excluding or cancelling GCP9's
+coefficient. A SAME-null joint regularizer/weight estimate remains
+unproved. The [weighted-null compactification](platttrudgian2021rh.md#direct-physical-compactification-with-the-original-cap)
+is unchanged. No critical minimizer regularity, physical-dilation
+first derivative, improved uniform allowance, RH or full Robin
+conclusion follows from this generic-source counterexample.
