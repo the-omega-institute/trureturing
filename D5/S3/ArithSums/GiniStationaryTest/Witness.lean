@@ -23,7 +23,7 @@ theorem witness_identity (t k : ℝ) :
       k * (t - 1) ^ 3 * (t - k ^ 2) := by
   ring
 
-private lemma sum_highTuple_rpow (m : ℕ) (t p : ℝ) :
+lemma sum_highTuple_rpow (m : ℕ) (t p : ℝ) :
     (∑ i : Fin (m + 1), highTuple (m + 1) t 1 i ^ p) = t ^ p + m := by
   simp [highTuple, Fin.sum_univ_succ]
 
