@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:29b15a94657d72bf9fe03e936444ae8b762b54debf4b4e3166976bb7e71968e2
+  normalized_sha256: sha256:29b15a94657d72bf9fe03e936444ae8b762b54debf4b4e3166976bb7e71968e2
+cas_ref: sha256:29b15a94657d72bf9fe03e936444ae8b762b54debf4b4e3166976bb7e71968e2
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 建议在零阶读数不足时提升到 value + first jet 的研究方法，不宣称一个具体高阶重建定理。
+    previous_atom_id: 5ecca757f183bb440998e7be7e2a1c89202198573a3e838cb249fb62c5b4a2bd
+    next_atom_id: a2b33ba5e0e339bd0ab7ac09fea901cf5cabd1c7b7738d7d8b88e37c285a237b
