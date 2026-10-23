@@ -16,7 +16,7 @@ internal sealed class ActualReadoutDocument : IScribeDocumentDefinition
                 H("actual_ab_nested_readout"),
                 StatementSource.WithoutFormula(),
                 AssessedProvenance.FromRepo(LibraryNoteRef.Create("D5/L/VertexAlgebra/bakalovkac2004lattice")),
-                Blocks(Paragraph(Text("Consumed original boundary helper for forward_weighted_identity. The source telescope and complete conclusion are retained. Its whole-family four-slot audit remains unfinished under issue #20163; no declared_validated status is asserted."))),
+                Blocks(Paragraph(Text("Consumed original boundary helper for forward_weighted_identity. The source telescope and complete conclusion are retained."))),
                 DescribeRole.Theorem),
             Describe.Lean(
                 DescribeId.Create("actual-ab-joint-outer-support"),
@@ -24,6 +24,6 @@ internal sealed class ActualReadoutDocument : IScribeDocumentDefinition
                 H("actual_ab_joint_outer_support"),
                 StatementSource.WithoutFormula(),
                 AssessedProvenance.FromRepo(LibraryNoteRef.Create("D5/L/VertexAlgebra/bakalovkac2004lattice")),
-                Blocks(Paragraph(Text("Consumed original boundary helper for forward_weighted_identity. The source telescope and complete conclusion are retained. Its whole-family four-slot audit remains unfinished under issue #20163; no declared_validated status is asserted."))),
+                Blocks(Paragraph(Text("Consumed original boundary helper for forward_weighted_identity. The source telescope and complete conclusion are retained."))),
                 DescribeRole.Theorem))));
 }

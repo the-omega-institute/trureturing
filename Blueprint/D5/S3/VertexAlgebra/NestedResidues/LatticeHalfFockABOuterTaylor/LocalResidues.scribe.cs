@@ -16,7 +16,7 @@ internal sealed class LocalResiduesDocument : IScribeDocumentDefinition
                 H("signed_kernel_choose"),
                 StatementSource.WithoutFormula(),
                 AssessedProvenance.FromRepo(LibraryNoteRef.Create("D5/L/VertexAlgebra/bakalovkac2004lattice")),
-                Blocks(Paragraph(Text("Consumed original boundary helper for forward_weighted_identity. The source telescope and complete conclusion are retained. Its whole-family four-slot audit remains unfinished under issue #20163; no declared_validated status is asserted."))),
+                Blocks(Paragraph(Text("Consumed original boundary helper for forward_weighted_identity. The source telescope and complete conclusion are retained."))),
                 DescribeRole.Theorem),
             Describe.Lean(
                 DescribeId.Create("finite-forward-outer-taylor"),
@@ -24,7 +24,7 @@ internal sealed class LocalResiduesDocument : IScribeDocumentDefinition
                 H("finite_forward_outer_taylor"),
                 StatementSource.WithoutFormula(),
                 AssessedProvenance.FromRepo(LibraryNoteRef.Create("D5/L/VertexAlgebra/bakalovkac2004lattice")),
-                Blocks(Paragraph(Text("Consumed original boundary helper for forward_weighted_identity. The source telescope and complete conclusion are retained. Its whole-family four-slot audit remains unfinished under issue #20163; no declared_validated status is asserted."))),
+                Blocks(Paragraph(Text("Consumed original boundary helper for forward_weighted_identity. The source telescope and complete conclusion are retained."))),
                 DescribeRole.Theorem),
             Describe.Lean(
                 DescribeId.Create("ab-complete-remaining-orders"),
@@ -32,7 +32,7 @@ internal sealed class LocalResiduesDocument : IScribeDocumentDefinition
                 H("ab_complete_remaining_orders"),
                 StatementSource.WithoutFormula(),
                 AssessedProvenance.FromRepo(LibraryNoteRef.Create("D5/L/VertexAlgebra/bakalovkac2004lattice")),
-                Blocks(Paragraph(Text("Consumed original boundary helper for forward_weighted_identity. The source telescope and complete conclusion are retained. Its whole-family four-slot audit remains unfinished under issue #20163; no declared_validated status is asserted."))),
+                Blocks(Paragraph(Text("Consumed original boundary helper for forward_weighted_identity. The source telescope and complete conclusion are retained."))),
                 DescribeRole.Theorem),
             Describe.Lean(
                 DescribeId.Create("ab-complete-pole-bound"),
@@ -40,6 +40,6 @@ internal sealed class LocalResiduesDocument : IScribeDocumentDefinition
                 H("ab_complete_pole_bound"),
                 StatementSource.WithoutFormula(),
                 AssessedProvenance.FromRepo(LibraryNoteRef.Create("D5/L/VertexAlgebra/bakalovkac2004lattice")),
-                Blocks(Paragraph(Text("Consumed original boundary helper for forward_weighted_identity. The source telescope and complete conclusion are retained. Its whole-family four-slot audit remains unfinished under issue #20163; no declared_validated status is asserted."))),
+                Blocks(Paragraph(Text("Consumed original boundary helper for forward_weighted_identity. The source telescope and complete conclusion are retained."))),
                 DescribeRole.Theorem))));
 }
