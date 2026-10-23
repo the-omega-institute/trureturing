@@ -57,7 +57,7 @@ run_cmd liftTermElabM do
       throwError "wrong static boundary for {entry.leanName}"
     let target := if entry.leanName == ``certifiedData then
         mkApp (mkConst ``DataMark) (mkNatLit 11)
-      else mkConst ``Finish
+      else mkConst ``HiddenFinish
     let goal ← mkFreshExprMVar target
     let trace ← attemptLookupLeaf table entry goal.mvarId!
       (fun _ => pure false) (fun _ => pure false)

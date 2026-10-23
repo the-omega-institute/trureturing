@@ -32,8 +32,9 @@ class OutputCertified (n : outParam Nat) : Prop where
   evidence : Mark n
 
 instance : OutputCertified 7 := ⟨.intro⟩
-theorem instanceHiddenForm (n : Nat) [OutputCertified n] : Finish := .intro
-theorem unusedData (_n : Nat) : Finish := .intro
+inductive HiddenFinish : Prop where | intro : HiddenFinish
+theorem instanceHiddenForm (n : Nat) [OutputCertified n] : HiddenFinish := .intro
+theorem unusedData (_n : Nat) : HiddenFinish := .intro
 
 inductive First : Prop where | intro : First
 inductive Middle : Prop where | intro : Middle
