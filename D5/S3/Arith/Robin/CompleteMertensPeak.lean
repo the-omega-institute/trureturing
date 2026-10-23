@@ -8,6 +8,7 @@
 
 import D5.S3.Weil.Mertens.Gamma
 import D5.S3.Arith.Robin.QuotientIntegralBudget
+import D5.S3.Arith.Robin.OriginalMovingWindowMoment
 import D5.S3.Arith.Robin.LcmRobinResponse
 import Mathlib.Analysis.SpecialFunctions.Gaussian.GaussianIntegral
 import Mathlib.Analysis.SpecialFunctions.Integrals.Basic
@@ -49,9 +50,16 @@ private lemma jy_majorant_integrable {t : ℝ} (ht : 2 ≤ t) :
   have ht0 : 0 < t := by linarith
   have hlogt : 0 < log t := log_pos (by linarith)
   have hg : IntegrableOn g (Ioi (log t)) := by
-    have h := (integrableOn_rpow_mul_exp_neg_mul_rpow
+    have hbase : IntegrableOn
+        (fun v : ℝ => v ^ (303 / 200 : ℝ) *
+          exp (-(4137 / 5000) * v ^ (1 / 2 : ℝ))) (Ioi 0) :=
+      integrableOn_rpow_mul_exp_neg_mul_rpow
       (s := (303 / 200 : ℝ)) (p := (1 / 2 : ℝ)) (b := (4137 / 5000 : ℝ))
-      (by norm_num) (by norm_num) (by norm_num)).const_mul (939 / 100 : ℝ)
+      (by norm_num) (by norm_num) (by norm_num)
+    have h : IntegrableOn
+        (fun v : ℝ => (939 / 100) * (v ^ (303 / 200 : ℝ) *
+          exp (-(4137 / 5000) * v ^ (1 / 2 : ℝ)))) (Ioi 0) :=
+      hbase.const_mul (939 / 100 : ℝ)
     have hm := h.mono_set (Ioi_subset_Ioi hlogt.le)
     simpa only [g, sqrt_eq_rpow, mul_assoc] using hm
   have hmajor : IntegrableOn (fun u : ℝ => u⁻¹ * g (log u)) (Ioi t) := by
@@ -70,9 +78,11 @@ private lemma kernel_integrable
     ((Chebyshev.psi_mono.measurable.sub measurable_id).div
       (measurable_id.pow_const 2)).aestronglyMeasurable
   filter_upwards [ae_restrict_mem measurableSet_Ioi] with u hu
+  change t < u at hu
   have hu2 : 2 ≤ u := ht.trans hu.le
   have hu0 : 0 < u := by linarith
-  rw [Real.norm_eq_abs, psiErrorKernel, abs_div, abs_of_nonneg (sq_nonneg u)]
+  change |(Chebyshev.psi u - u) / u ^ 2| ≤ _
+  rw [abs_div, abs_of_nonneg (sq_nonneg u)]
   calc
     |Chebyshev.psi u - u| / u ^ 2 ≤
         ((939 / 100) * u * (log u) ^ (303 / 200 : ℝ) *
@@ -80,8 +90,7 @@ private lemma kernel_integrable
       div_le_div_of_nonneg_right (hJY u hu2) (sq_nonneg u)
     _ = (939 / 100) * (log u) ^ (303 / 200 : ℝ) *
         exp (-(4137 / 5000) * sqrt (log u)) / u := by
-      field_simp [hu0.ne']
-      ring
+      field_simp [hu0.ne'] <;> ring
 
 private lemma inv_log_pow_integrable {t : ℝ} (ht : 2 ≤ t)
     (hf : IntegrableOn psiErrorKernel (Ioi t)) (k : ℕ) :
@@ -90,12 +99,15 @@ private lemma inv_log_pow_integrable {t : ℝ} (ht : 2 ≤ t)
   have hbound : ∀ᵐ u : ℝ ∂volume.restrict (Ioi t),
       ‖1 / (log u) ^ k‖ ≤ 1 / (log t) ^ k := by
     filter_upwards [ae_restrict_mem measurableSet_Ioi] with u hu
+    change t < u at hu
     have hlu : log t ≤ log u := log_le_log (by linarith) hu.le
     have hlu0 : 0 < log u := hl.trans_le hlu
     rw [Real.norm_eq_abs, abs_of_pos (by positivity : 0 < 1 / (log u) ^ k)]
     exact one_div_le_one_div_of_le (by positivity) (pow_le_pow_left₀ hl.le hlu k)
+  change Integrable (fun u => psiErrorKernel u / (log u) ^ k) (volume.restrict (Ioi t))
   simpa only [div_eq_mul_inv, one_mul] using
-    hf.mul_bdd (g := fun u => 1 / (log u) ^ k) (by fun_prop) hbound
+    hf.mul_bdd (g := fun u => 1 / (log u) ^ k)
+      ((measurable_const.div (Real.measurable_log.pow_const k)).aestronglyMeasurable) hbound
 
 private lemma weighted_kernel_integrable {t : ℝ} (ht : 2 ≤ t)
     (hf : IntegrableOn psiErrorKernel (Ioi t)) :
@@ -104,10 +116,10 @@ private lemma weighted_kernel_integrable {t : ℝ} (ht : 2 ≤ t)
     simpa only [pow_one] using inv_log_pow_integrable ht hf 1
   apply ((inv_log_pow_integrable ht hf 2).add hlog1).congr_fun _ measurableSet_Ioi
   intro u hu
+  change t < u at hu
   have hlu : log u ≠ 0 := ne_of_gt (log_pos (by linarith [hu] : 1 < u))
   dsimp [r, QuotientIntegralBudget.weightEnvelope]
-  field_simp [hlu]
-  ring
+  field_simp [hlu] <;> ring
 
 private def triangle (s u : ℝ) : ℝ :=
   {p : ℝ × ℝ | p.1 < p.2}.indicator
@@ -125,7 +137,7 @@ private lemma triangle_right {t s : ℝ} (hs : t < s) :
   have heq : (fun u => triangle s u) =
       (Ioi s).indicator (fun u => (1 / (s * log s ^ 2)) * psiErrorKernel u) := by
     ext u
-    simp only [triangle, indicator_apply, mem_setOf_eq, mem_Ioi]
+    simp only [triangle, indicator_apply, Set.mem_ofPred_eq, Set.mem_Ioi]
   rw [heq, integral_indicator measurableSet_Ioi,
     Measure.restrict_restrict_of_subset (Ioi_subset_Ioi hs.le), integral_const_mul]
   dsimp [Q]
@@ -137,9 +149,9 @@ private lemma triangle_left {t u : ℝ} (ht : 2 ≤ t) (hu : t < u) :
   have heq : (fun s => triangle s u) =
       (Iio u).indicator (fun s => (1 / (s * log s ^ 2)) * psiErrorKernel u) := by
     ext s
-    simp only [triangle, indicator_apply, mem_setOf_eq, mem_Iio]
+    simp only [triangle, indicator_apply, Set.mem_ofPred_eq, Set.mem_Iio]
   rw [heq, integral_indicator measurableSet_Iio,
-    Measure.restrict_restrict measurableSet_Iio, inter_comm, Ioi_inter_Iio,
+    Measure.restrict_restrict measurableSet_Iio, Set.inter_comm, Ioi_inter_Iio,
     integral_mul_const, ← integral_Ioc_eq_integral_Ioo,
     ← intervalIntegral.integral_of_le hu.le]
   have hdiff := intervalIntegral.integral_Ioi_sub_Ioi
@@ -178,7 +190,7 @@ private lemma tail_log_integral {t : ℝ} (ht : 2 ≤ t)
   have heq : (fun u => psiErrorKernel u * (1 / log t - 1 / log u)) =
       (fun u => psiErrorKernel u / log t - psiErrorKernel u / log u) := by
     ext u; ring
-  rw [heq, integral_sub (hf.div_const _) hlog, integral_div_const]
+  rw [heq, integral_sub (hf.div_const _) hlog, integral_div]
   rfl
 
 /-- Johnston--Yang decay and Lay's complete identity give the weighted Mertens ledger. -/
@@ -212,19 +224,26 @@ private theorem complete_mertens_ledger
         psiErrorKernel u / log u ^ 2 -
           eulerMascheroniConstant / (u * log u ^ 2) - Q u / (u * log u ^ 2) := by
     intro u hu
+    change t < u at hu
     rw [hE u (ht.trans hu.le)]
     dsimp [psiErrorKernel]
     have hu0 : u ≠ 0 := ne_of_gt (by linarith [hu])
     have hlu : log u ≠ 0 := ne_of_gt (log_pos (by linarith [hu] : 1 < u))
-    field_simp [hu0, hlu]
-    ring
+    field_simp [hu0, hlu] <;> ring
   have hEi : (∫ u in Ioi t, Mertens.E₁Λ u / (u * log u ^ 2)) =
       (∫ u in Ioi t, psiErrorKernel u / log u ^ 2) -
         eulerMascheroniConstant / log t -
           (Q t / log t - ∫ u in Ioi t, psiErrorKernel u / log u) := by
+    have hc : IntegrableOn
+        (fun u : ℝ => eulerMascheroniConstant / (u * log u ^ 2)) (Ioi t) :=
+      Mertens.integrable_const_div_mul_log_sq eulerMascheroniConstant ht
+    dsimp only [IntegrableOn] at hlog2 hc hQint
+    have hsplit := integral_sub
+      (f := fun u => psiErrorKernel u / log u ^ 2 -
+        eulerMascheroniConstant / (u * log u ^ 2))
+      (g := fun u => Q u / (u * log u ^ 2)) (hlog2.sub hc) hQint
     rw [setIntegral_congr_fun measurableSet_Ioi hintegrand,
-      integral_sub (hlog2.sub (Mertens.integrable_const_div_mul_log_sq _ ht)) hQint,
-      integral_sub hlog2 (Mertens.integrable_const_div_mul_log_sq _ ht),
+      hsplit, integral_sub hlog2 hc,
       Mertens.integ_div_mul_log_sq _ ht, hQ]
   have hI : I t = (∫ u in Ioi t, psiErrorKernel u / log u ^ 2) +
       ∫ u in Ioi t, psiErrorKernel u / log u := by
@@ -232,24 +251,27 @@ private theorem complete_mertens_ledger
     rw [← integral_add hlog2 hlog1]
     apply setIntegral_congr_fun measurableSet_Ioi
     intro u hu
+    change t < u at hu
     dsimp [r, QuotientIntegralBudget.weightEnvelope]
     have hlu : log u ≠ 0 := ne_of_gt (log_pos (by linarith [hu] : 1 < u))
-    field_simp [hlu]
-    ring
+    field_simp [hlu] <;> ring
   rw [Mertens.E₂Λ.eq ht, hEi, hE t ht, hI]
   have ht0 : t ≠ 0 := ne_of_gt (by linarith)
   have hlt : log t ≠ 0 := ne_of_gt (log_pos (by linarith : 1 < t))
-  field_simp [ht0, hlt]
-  ring
+  field_simp [ht0, hlt] <;> ring
 
 
 private def w (t : ℝ) : ℝ :=
   Real.log t * (Real.log t + 2) / (t * (1 + Real.log t) ^ 2)
 
 private lemma r_pos {t : ℝ} (ht : 1 < t) : 0 < r t := by
-  have hl := Real.log_pos ht
-  dsimp [r, QuotientIntegralBudget.weightEnvelope]
-  positivity
+  have ht0 : t ≠ 0 := ne_of_gt (by linarith)
+  have hl0 : log t ≠ 0 := ne_of_gt (log_pos ht)
+  have heq : r t = t ^ 2 * MellinWeightedVariation.weight t := by
+    dsimp [r, QuotientIntegralBudget.weightEnvelope, MellinWeightedVariation.weight]
+    field_simp [ht0, hl0] <;> ring
+  rw [heq]
+  exact mul_pos (sq_pos_of_ne_zero ht0) (OriginalMovingWindowMoment.weight_pos ht)
 
 private lemma r_antitone {s t : ℝ} (hs : 1 < s) (hst : s ≤ t) : r t ≤ r s := by
   have ht0 : 0 < t := by linarith
@@ -295,8 +317,6 @@ private lemma finite_kernel_change {a b : ℝ} (ha : 2 ≤ a) (hab : a ≤ b)
   let H : ℝ → ℝ := fun x => 1 / r x
   have hf' : IntegrableOn psiErrorKernel (Ioi b) :=
     hf.mono_set (Ioi_subset_Ioi hab)
-  have hfr' : IntegrableOn (fun u => psiErrorKernel u * r u) (Ioi b) :=
-    hfr.mono_set (Ioi_subset_Ioi hab)
   have hfi : IntervalIntegrable (fun u => psiErrorKernel u * r u) volume a b := by
     rw [intervalIntegrable_iff, uIoc_of_le hab]
     exact hfr.mono_set Ioc_subset_Ioi_self
@@ -322,6 +342,7 @@ private lemma finite_kernel_change {a b : ℝ} (ha : 2 ≤ a) (hab : a ≤ b)
     have hr0 : (1 + Real.log t) / (Real.log t) ^ 2 ≠ 0 :=
       div_ne_zero hl1 (pow_ne_zero 2 hl0)
     dsimp [H, r, QuotientIntegralBudget.weightEnvelope]
+    simp only [one_div_div]
     fun_prop (disch := assumption)
   have hFTC := hFac.integral_deriv_mul_eq_sub hHac
   have hderiv : ∀ᵐ t, t ∈ uIoc a b →
@@ -336,26 +357,29 @@ private lemma finite_kernel_change {a b : ℝ} (ha : 2 ≤ a) (hab : a ≤ b)
     have hHd : deriv H t = w t := (reciprocal_r_hasDerivAt ht1).deriv
     rw [hFd, hHd, hF t htIcc]
     dsimp [H]
-    field_simp [ne_of_gt (r_pos ht1)]
-    ring
+    field_simp [ne_of_gt (r_pos ht1)] <;> ring
   rw [intervalIntegral.integral_congr_ae hderiv] at hFTC
   have hwi : IntervalIntegrable (fun t => w t * I t) volume a b := by
     have hh := hHac.intervalIntegrable_deriv.mul_continuousOn hFac.continuousOn
     apply hh.congr
     intro t ht
     have htIcc : t ∈ Icc a b := by simpa [uIcc_of_le hab] using uIoc_subset_uIcc ht
+    change deriv H t * F t = w t * I t
     rw [hF t htIcc]
     exact congrArg (fun z => z * I t)
       (reciprocal_r_hasDerivAt (by linarith [htIcc.1])).deriv
   have hpi : IntervalIntegrable psiErrorKernel volume a b := by
     rw [intervalIntegrable_iff, uIoc_of_le hab]
     exact hf.mono_set Ioc_subset_Ioi_self
-  rw [intervalIntegral.integral_add hpi.neg hwi,
+  rw [intervalIntegral.integral_add
+      (f := fun t => -psiErrorKernel t) (g := fun t => w t * I t) hpi.neg hwi,
     intervalIntegral.integral_neg, hF b ⟨hab, le_rfl⟩, hF a ⟨le_rfl, hab⟩] at hFTC
   have hQ := intervalIntegral.integral_interval_add_Ioi hf hf'
   change (∫ u in a..b, psiErrorKernel u) + Q b = Q a at hQ
   dsimp [H] at hFTC
-  exact ⟨hwi, by linarith⟩
+  refine ⟨hwi, ?_⟩
+  simp only [div_eq_mul_inv, one_mul] at hFTC ⊢
+  linarith only [hFTC, hQ]
 
 private lemma tail_difference_bound {x : ℝ} (hx : 2 ≤ x)
     (hf : IntegrableOn psiErrorKernel (Ioi x))
@@ -368,6 +392,7 @@ private lemma tail_difference_bound {x : ℝ} (hx : 2 ≤ x)
       _ ≤ ∫ u in Ioi x, r x * |psiErrorKernel u| := by
         apply setIntegral_mono_on hfr.abs (hf.abs.const_mul _) measurableSet_Ioi
         intro u hu
+        change x < u at hu
         rw [abs_mul, abs_of_pos (r_pos (by linarith [hu] : 1 < u))]
         have hr := r_antitone (show 1 < x by linarith) hu.le
         nlinarith [abs_nonneg (psiErrorKernel u)]
@@ -383,21 +408,21 @@ private theorem complete_mangoldt_le_neg_E3 {x : ℝ} (hx : 2 ≤ x) :
   let K : ℕ := ⌊Real.log x / Real.log 2⌋₊
   have hx1 : 1 ≤ x := by linarith
   have hsum :
-      (∑ d ∈ Ioc 0 ⌊x⌋₊,
+      (∑ d ∈ Finset.Ioc 0 ⌊x⌋₊,
         ArithmeticFunction.vonMangoldt d / ((d : ℝ) * Real.log d)) ≤
-      ∑ p ∈ (Ioc 0 ⌊x⌋₊).filter Nat.Prime,
+      ∑ p ∈ (Finset.Ioc 0 ⌊x⌋₊).filter Nat.Prime,
         -Real.log (1 - 1 / (p : ℝ)) := by
-    simp_rw [vonMangoldt_apply, ite_div, zero_div, ← sum_filter,
+    simp_rw [vonMangoldt_apply, ite_div, zero_div, ← Finset.sum_filter,
       Chebyshev.sum_PrimePow_eq_sum_sum _ (by linarith : 0 ≤ x)]
     calc
-      _ = ∑ k ∈ Icc 1 K,
-          ∑ p ∈ (Ioc 0 ⌊x ^ (1 / (k : ℝ))⌋₊).filter Nat.Prime,
+      _ = ∑ k ∈ Finset.Icc 1 K,
+          ∑ p ∈ (Finset.Ioc 0 ⌊x ^ (1 / (k : ℝ))⌋₊).filter Nat.Prime,
             (1 : ℝ) / ((k : ℝ) * (p : ℝ) ^ k) := by
-        refine sum_congr rfl fun k hk => sum_congr rfl fun p hp => ?_
+        refine Finset.sum_congr rfl fun k hk => Finset.sum_congr rfl fun p hp => ?_
         have hk0 : k ≠ 0 := by
-          have := (mem_Icc.mp hk).1
+          have := (Finset.mem_Icc.mp hk).1
           omega
-        have hpp : p.Prime := (mem_filter.mp hp).2
+        have hpp : p.Prime := (Finset.mem_filter.mp hp).2
         have hkp : (k : ℝ) ≠ 0 := by exact_mod_cast hk0
         have hpp0 : (p : ℝ) ≠ 0 := by exact_mod_cast hpp.ne_zero
         have hlog : Real.log (p : ℝ) ≠ 0 :=
@@ -406,42 +431,42 @@ private theorem complete_mangoldt_le_neg_E3 {x : ℝ} (hx : 2 ≤ x) :
         simp only [Nat.cast_pow, Real.log_pow]
         field_simp [hlog, hkp, hpp0]
         <;> ring
-      _ ≤ ∑ k ∈ Icc 1 K,
-          ∑ p ∈ (Ioc 0 ⌊x⌋₊).filter Nat.Prime,
+      _ ≤ ∑ k ∈ Finset.Icc 1 K,
+          ∑ p ∈ (Finset.Ioc 0 ⌊x⌋₊).filter Nat.Prime,
             (1 : ℝ) / ((k : ℝ) * (p : ℝ) ^ k) := by
-        refine sum_le_sum fun k hk => ?_
+        refine Finset.sum_le_sum fun k hk => ?_
         have hk1 : (1 : ℝ) ≤ k := by
-          exact_mod_cast (mem_Icc.mp hk).1
+          exact_mod_cast (Finset.mem_Icc.mp hk).1
         have hroot : x ^ (1 / (k : ℝ)) ≤ x :=
           Real.rpow_le_self_of_one_le hx1
             ((div_le_one₀ (by linarith : 0 < (k : ℝ))).mpr hk1)
-        have hsub : (Ioc 0 ⌊x ^ (1 / (k : ℝ))⌋₊).filter Nat.Prime ⊆
-            (Ioc 0 ⌊x⌋₊).filter Nat.Prime := by
+        have hsub : (Finset.Ioc 0 ⌊x ^ (1 / (k : ℝ))⌋₊).filter Nat.Prime ⊆
+            (Finset.Ioc 0 ⌊x⌋₊).filter Nat.Prime := by
           intro p hp
-          obtain ⟨hpi, hpp⟩ := mem_filter.mp hp
-          obtain ⟨hp0, hpx⟩ := mem_Ioc.mp hpi
-          exact mem_filter.mpr
-            ⟨mem_Ioc.mpr ⟨hp0, hpx.trans (Nat.floor_mono hroot)⟩, hpp⟩
-        exact sum_le_sum_of_subset_of_nonneg hsub (by
+          obtain ⟨hpi, hpp⟩ := Finset.mem_filter.mp hp
+          obtain ⟨hp0, hpx⟩ := Finset.mem_Ioc.mp hpi
+          exact Finset.mem_filter.mpr
+            ⟨Finset.mem_Ioc.mpr ⟨hp0, hpx.trans (Nat.floor_mono hroot)⟩, hpp⟩
+        exact Finset.sum_le_sum_of_subset_of_nonneg hsub (by
           intro p hp hnot
           positivity)
-      _ = ∑ p ∈ (Ioc 0 ⌊x⌋₊).filter Nat.Prime,
-          ∑ k ∈ Icc 1 K, (1 : ℝ) / ((k : ℝ) * (p : ℝ) ^ k) :=
-        sum_comm
+      _ = ∑ p ∈ (Finset.Ioc 0 ⌊x⌋₊).filter Nat.Prime,
+          ∑ k ∈ Finset.Icc 1 K, (1 : ℝ) / ((k : ℝ) * (p : ℝ) ^ k) :=
+        Finset.sum_comm
       _ ≤ _ := by
-        refine sum_le_sum fun p hp => ?_
-        have hpp : p.Prime := (mem_filter.mp hp).2
+        refine Finset.sum_le_sum fun p hp => ?_
+        have hpp : p.Prime := (Finset.mem_filter.mp hp).2
         have hseries :
             HasSum (fun k : ℕ => (1 : ℝ) / ((k : ℝ) * (p : ℝ) ^ k))
               (-Real.log (1 - 1 / (p : ℝ))) := by
           apply (hasSum_nat_add_iff' 1).mp
-          simpa only [sum_range_one, Nat.cast_zero, zero_mul, zero_div,
-            sub_zero, Nat.cast_add, Nat.cast_one, neg_div, neg_neg] using
+          simpa only [Finset.sum_range_one, Nat.cast_zero, zero_mul, zero_div,
+            sub_zero, Nat.cast_add, Nat.cast_one, neg_div, neg_neg, div_zero, sub_zero] using
             (Mertens.HasSum_log_one_sub_one_div_prime hpp).neg
-        exact sum_le_hasSum (Icc 1 K) (by
+        exact sum_le_hasSum (Finset.Icc 1 K) (by
           intro k hk
           positivity) hseries
-  simp only [sum_neg_distrib] at hsum
+  simp only [Finset.sum_neg_distrib] at hsum
   unfold Mertens.E₂Λ Mertens.E₃
   rw [Mertens.γ.eq_eulerMascheroni]
   linarith
@@ -453,13 +478,16 @@ private lemma fifth_moment_tail {z : ℝ} (hz : 16 ≤ z) :
   let d : ℝ → ℝ := fun v => v ^ 4 * (2 * v - 25 / 2) * exp (-(4 / 5) * v)
   have hd (v : ℝ) : HasDerivAt P (d v) v := by
     have he := ((hasDerivAt_id v).const_mul (-(4 / 5 : ℝ))).exp
-    convert ((hasDerivAt_pow 5 v).const_mul (-(5 / 2 : ℝ))).mul he using 1 <;>
-      dsimp [P, d] <;> ring
+    have hh := ((hasDerivAt_pow 5 v).const_mul (-(5 / 2 : ℝ))).mul he
+    change HasDerivAt (fun u : ℝ => (-(5 / 2 : ℝ) * u ^ 5) *
+      exp (-(4 / 5) * u)) _ v at hh
+    convert hh using 1 <;> dsimp [P, d] <;> ring
   have hlim : Tendsto P atTop (𝓝 0) := by
-    have h := (Real.tendsto_rpow_mul_exp_neg_mul_atTop_nhds_zero
+    have h := (tendsto_rpow_mul_exp_neg_mul_atTop_nhds_zero
       5 (4 / 5) (by norm_num)).const_mul (-(5 / 2 : ℝ))
-    simpa [P, Real.rpow_natCast, mul_assoc] using h
+    simpa [P, Real.rpow_ofNat, mul_assoc] using h
   have hdpos (v : ℝ) (hv : v ∈ Ioi z) : 0 ≤ d v := by
+    change z < v at hv
     dsimp [d]
     apply mul_nonneg _ (exp_pos _).le
     exact mul_nonneg (pow_nonneg (by linarith [hv] : 0 ≤ v) 4) (by linarith [hv])
@@ -467,6 +495,7 @@ private lemma fifth_moment_tail {z : ℝ} (hz : 16 ≤ z) :
     integrableOn_Ioi_deriv_of_nonneg' (fun v _ => hd v) hdpos hlim
   have hpoint (v : ℝ) (hv : v ∈ Ioi z) :
       v ^ 5 * exp (-(4 / 5) * v) ≤ d v := by
+    change z < v at hv
     have h := mul_le_mul_of_nonneg_left
       (show v ≤ 2 * v - 25 / 2 by linarith [hv])
       (show 0 ≤ v ^ 4 * exp (-(4 / 5) * v) by positivity)
@@ -475,6 +504,7 @@ private lemma fifth_moment_tail {z : ℝ} (hz : 16 ≤ z) :
   have hi : IntegrableOn (fun v : ℝ => v ^ 5 * exp (-(4 / 5) * v)) (Ioi z) := by
     apply hdi.mono' (by fun_prop)
     filter_upwards [ae_restrict_mem measurableSet_Ioi] with v hv
+    change z < v at hv
     rw [Real.norm_eq_abs, abs_of_nonneg (by
       have : 0 ≤ v := by linarith [hv]
       positivity : 0 ≤ v ^ 5 * exp (-(4 / 5) * v))]
@@ -521,7 +551,8 @@ private lemma jy_tail_bound
   have hpoint : ∀ v ∈ Ioi z, 2 * v * g (v ^ 2) ≤
       (939 / 50) * (v ^ 5 * exp (-(4 / 5) * v)) := by
     intro v hv
-    have hv1 : 1 ≤ v := by dsimp [z] at hv; linarith
+    change z < v at hv
+    have hv1 : 1 ≤ v := by linarith
     have hv0 : 0 < v := by linarith
     have hp : v ^ (303 / 100 : ℝ) ≤ v ^ (4 : ℝ) :=
       Real.rpow_le_rpow_of_exponent_le hv1 (by norm_num)
@@ -536,13 +567,14 @@ private lemma jy_tail_bound
     dsimp [g]
     rw [hs, hr]
     have hprod := mul_le_mul hp he (exp_pos _).le (by positivity)
-    rw [Real.rpow_natCast] at hprod
+    rw [Real.rpow_ofNat] at hprod
     have h := mul_le_mul_of_nonneg_left hprod (show 0 ≤ (939 / 50 : ℝ) * v by positivity)
     nlinarith [h]
   have htrans : IntegrableOn (fun v : ℝ => 2 * v * g (v ^ 2)) (Ioi z) := by
     apply (hzi.const_mul (939 / 50 : ℝ)).mono' (by dsimp [g]; fun_prop)
     filter_upwards [ae_restrict_mem measurableSet_Ioi] with v hv
-    have hv0 : 0 ≤ v := by dsimp [z] at hv; linarith
+    change z < v at hv
+    have hv0 : 0 ≤ v := by linarith
     rw [Real.norm_eq_abs, abs_of_nonneg (by dsimp [g]; positivity)]
     exact hpoint v hv
   calc
@@ -575,12 +607,14 @@ private lemma far_tail_small {A : ℝ} (hA : 10000 ≤ A) :
   have hlog40 : log (40 : ℝ) < 4 := by
     have heq : log (40 : ℝ) = 3 * log 2 + log 5 := by
       rw [show (40 : ℝ) = 2 ^ 3 * 5 by norm_num, log_mul (by norm_num) (by norm_num), log_pow]
+      norm_num
     rw [heq]
     linarith [Real.log_two_lt_d9, Real.log_five_lt_d9]
   have hlog200 : log (200 : ℝ) < 6 := by
     have heq : log (200 : ℝ) = 3 * log 2 + 2 * log 5 := by
       rw [show (200 : ℝ) = 2 ^ 3 * 5 ^ 2 by norm_num,
         log_mul (by norm_num) (by norm_num), log_pow, log_pow]
+      norm_num
     rw [heq]
     linarith [Real.log_two_lt_d9, Real.log_five_lt_d9]
   have hlogz : log z ≤ log 40 + L / 20 := by
@@ -628,7 +662,7 @@ private lemma finite_lower_bound {a b : ℝ} (ha : 10000 ≤ a) (hab : a ≤ b)
     have hb0 : 0 < b := ha0.trans_le hab
     have hzero : (0 : ℝ) ∉ uIcc a b := by
       rw [uIcc_of_le hab]
-      simp only [mem_Icc, not_and]
+      simp only [Set.mem_Icc, not_and]
       intro h
       linarith
     have heq := integral_rpow (a := a) (b := b) (r := (-3 / 2 : ℝ))
@@ -654,10 +688,12 @@ private lemma finite_lower_bound {a b : ℝ} (ha : 10000 ≤ a) (hab : a ≤ b)
     have hprod := mul_le_mul_of_nonneg_left (hI t ht) hw.1
     have heq : (1 / t) / sqrt t = 1 / (t * sqrt t) := by ring
     rw [heq] at hdiv
-    nlinarith
+    simp only [div_eq_mul_inv] at hdiv hprod ⊢
+    nlinarith only [hdiv, hprod]
   rw [intervalIntegral.integral_const_mul, heval] at hmono
   have hsb : 0 ≤ 2 / sqrt b := by positivity
-  nlinarith
+  simp only [div_eq_mul_inv] at hmono hsb ⊢
+  linarith only [hmono, hsb]
 
 theorem complete_mertens_peak
     (hJY : ∀ u : ℝ, 2 ≤ u → |Chebyshev.psi u - u| ≤
@@ -722,22 +758,28 @@ theorem complete_mertens_peak
       have heq : (-4 / sqrt A) / r A - 8 / sqrt A - 1 / (2 * sqrt A) =
           -(4 / r A + 17 / 2) / sqrt A := by ring
       rw [← heq]
-      linarith [hchange.2]
+      have hchg := hchange.2
+      simp only [div_eq_mul_inv] at hfirst hfinite htailLower hchg ⊢
+      linarith only [hfirst, hfinite, htailLower, hchg]
     have hU : U A = -A * Q A := by
       unfold U
       rw [hLay A hA2]
       field_simp [hA0.ne']
       ring
     have hr : 4 / r A = 4 * (log A) ^ 2 / (1 + log A) := by
-      dsimp [r, QuotientIntegralBudget.weightEnvelope]
-      field_simp
-      ring
+      simp only [r, QuotientIntegralBudget.weightEnvelope, div_div_eq_mul_div]
     have hpeak' : sqrt A * (4 / r A + 9) < -A * Q A := by
       rw [hr, ← hU]
       exact hpeak
     have hp : 4 / r A + 9 < -sqrt A * Q A := by
-      apply (mul_lt_mul_left hsA).mp
-      convert hpeak' using 1 <;> nlinarith [sq_sqrt hA0.le]
+      have hmul : -A * Q A = sqrt A * (-sqrt A * Q A) := by
+        calc
+          -A * Q A = -(sqrt A * sqrt A) * Q A := by
+            rw [Real.mul_self_sqrt hA0.le]
+          _ = sqrt A * (-sqrt A * Q A) := by ring
+      have hh : sqrt A * (4 / r A + 9) < sqrt A * (-sqrt A * Q A) := by
+        exact hmul ▸ hpeak'
+      exact (mul_lt_mul_iff_right₀ hsA).mp hh
     have hq := (div_lt_iff₀ hsA).mp hQlow
     nlinarith
   obtain ⟨t, ht, hE⟩ := hex
