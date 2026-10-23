@@ -7,6 +7,7 @@
    digest: The unique right-special rotor factor is the reversed prefix after the initial zero. -/
 import D5.S1.Words.Mechanical.MechanicalRightSpecial
 import D5.S1.Words.Complexity.MechanicalSubshiftIntercept
+import D5.S1.Words.Mechanical.MechanicalDyadicBoundary
 
 /-! Right-special factors of the separator encoding of an irrational cutting sequence. -/
 
@@ -119,25 +120,24 @@ private theorem cutting_mechanical {σ : ℝ} (hσ : Irrational σ) (hσ1 : 1 < 
 private theorem finite_floor_left {α : ℝ} (hα : Irrational α) (N : ℕ) :
     ∃ ε : ℝ, 0 < ε ∧ ∀ q : ℕ, 1 ≤ q → q ≤ N →
       ∀ δ : ℝ, 0 ≤ δ → δ < ε → ⌊-(q : ℝ) * α - δ⌋ = ⌊-(q : ℝ) * α⌋ := by
-  induction N with
-  | zero => exact ⟨1, by norm_num, by intro q hq hq'; omega⟩
-  | succ N ih =>
-    obtain ⟨ε, hε, he⟩ := ih
-    let x := -((N + 1 : ℕ) : ℝ) * α
-    have hx : (⌊x⌋ : ℝ) < x := by
-      apply Int.floor_lt_self_iff.mpr
-      rintro ⟨z, hz⟩
-      exact ((hα.natCast_mul (by omega : N + 1 ≠ 0)).neg).ne_int z (by
-        simpa [x, neg_mul] using hz.symm)
-    refine ⟨min ε (x - ⌊x⌋), lt_min hε (by linarith), ?_⟩
-    intro q hq hqN δ hδ hδe
-    rcases Nat.eq_or_lt_of_le hqN with rfl | hqN
-    · apply Int.floor_eq_iff.mpr
-      change (⌊x⌋ : ℝ) ≤ x - δ ∧ x - δ < (⌊x⌋ : ℝ) + 1
-      constructor
-      · have := (lt_min_iff.mp hδe).2; linarith
-      · linarith [Int.lt_floor_add_one x]
-    · exact he q hq (by omega) δ hδ (lt_min_iff.mp hδe).1
+  obtain ⟨ε, hε, he⟩ :=
+    MechanicalDyadicBoundary.finite_word_stable_off_integer_hits (-α) 0 N (by
+      intro k hk hkN z
+      simpa [mul_neg, neg_mul] using ((hα.natCast_mul (by omega : k ≠ 0)).neg).ne_int z)
+  refine ⟨ε, hε, ?_⟩
+  intro q hq hqN δ hδ hδε
+  have hq1 : (1 : ℝ) ≤ q := by exact_mod_cast hq
+  have hqp : (0 : ℝ) < q := by linarith
+  have hdiv : δ / (q : ℝ) ≤ δ := (div_le_iff₀ hqp).mpr (by nlinarith)
+  have hsmall : |(-α - δ / (q : ℝ)) - -α| < ε := by
+    have heq : (-α - δ / (q : ℝ)) - -α = -(δ / (q : ℝ)) := by ring
+    rw [heq, abs_neg, abs_of_nonneg (div_nonneg hδ hqp.le)]
+    exact hdiv.trans_lt hδε
+  have hf := (he (-α - δ / (q : ℝ)) hsmall).1 q hqN
+  have heq : (q : ℝ) * (-α - δ / (q : ℝ)) = -(q : ℝ) * α - δ := by
+    field_simp [ne_of_gt hqp]
+    <;> ring
+  simpa [heq, mul_neg, neg_mul] using hf
 
 private theorem mechanical_reversed_extension {α : ℝ}
     (hα0 : 0 < α) (hα1 : α < 1) (hα : Irrational α) (m : ℕ) (b : Bool) :
@@ -410,7 +410,6 @@ private theorem rotor_special_unique {σ : ℝ} (hσ : Irrational σ) (hσ1 : 1 
       rw [hp]
 
 private theorem rotor_reverse_prefix_special {σ : ℝ}
-    (hσ : Irrational σ) (hσ1 : 1 < σ)
     (hcut : ∀ j : ℕ, cutting σ (j + 1) =
       if lowerMechanicalWord (1 / (σ + 1)) (1 / (σ + 1)) j then 3 else 1)
     (hrev : ∀ m : ℕ,
@@ -489,7 +488,7 @@ theorem result : claim := by
     simpa using (hσ.add_ratCast 1).inv
   have hc := cutting_mechanical hσ hσ1
   have hr := mechanical_reverse_prefix_special hα0 hα1 hα
-  have hs := rotor_reverse_prefix_special hσ hσ1 hc hr (n - 1) (by omega)
+  have hs := rotor_reverse_prefix_special hc hr (n - 1) (by omega)
   constructor
   · intro h
     exact rotor_special_unique hσ hσ1 hc (n - 1) (by omega) w _ hw
