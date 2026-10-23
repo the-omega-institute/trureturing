@@ -354,6 +354,7 @@ private unsafe def solveLookupGoal (table : LookupTable) (goal : MVarId)
         pages := trace.pages + leaf.pages
         missing := trace.missing ++ leaf.missing
         failures := trace.failures ++ leaf.failures
+        capped := trace.capped ++ leaf.capped
         unloaded := trace.unloaded + leaf.unloaded
         source? := trace.source?.or leaf.source?
         complete := trace.complete && leaf.complete}
@@ -362,7 +363,32 @@ private unsafe def solveLookupGoal (table : LookupTable) (goal : MVarId)
     -- A split query is part of the same R success space as its parent.
     -- Once one child enumeration is incomplete, falling back to the parent
     -- query would erase that residual and could turn unknown into NoHit.
-    if !trace.complete then return {trace with source? := none}
+    if !trace.complete then
+      let mut failures := trace.failures.push "B1:split-incomplete"
+      if (← IO.getEnv "SEARCH_REDUCTION_B1_COMPARE") == some "1" then
+        let splitState ← saveState
+        let heartbeats ← IO.getNumHeartbeats
+        let budget ← table.budget?.mapM (·.get)
+        try
+          saved.restore
+          let projected ← eliminateLocal facts
+          let parent ← if let some name := name? then
+              lookupNamedLeaf table name goal (fun next => exactLocal next projected)
+                (fun next => solveLocalGoal next facts)
+            else
+              lookupLeaf table goal (fun next => exactLocal next projected)
+                (fun next => solveLocalGoal next facts)
+          let price := if parent.source?.isSome then "zero"
+            else if parent.complete then "one" else "unknown"
+          failures := failures.push s!"B1:parent={price}"
+          emitLookupRecord s!"LOOKUP_B1_COMPARISON parent={price} split=unknown"
+        finally
+          splitState.restore
+          if let some ref := table.budget? then
+            if let some state := budget then ref.set state
+          IO.setNumHeartbeats heartbeats
+      saved.restore
+      return {trace with source? := none, failures}
     saved.restore
   let projected ← eliminateLocal facts
   if let some name := name? then
@@ -866,6 +892,7 @@ private def addRootProbe (graph : ProofGraph) (probe : ProbeResult) (paired : Bo
     zeroProof := if paired then none else probe.proof?, pairedZeroProof := probe.proof?,
     certificate? := if paired then none else probe.certificate?,
     pairedCertificate? := probe.certificate?,
+    sharedData? := (graph.edges.find? (·.conclusion == graph.root)).bind (·.sharedData?),
     detail := if paired then "paired-root-certificate" else "baseline-root-certificate"}]}
 
 /-- Unknown author edges selected by the optimistic lower-bound DP. The
@@ -900,18 +927,21 @@ private unsafe def refineBaseline (initial : ProofGraph) (lookup? : Option Looku
   let mut probe := initialProbe
   let mut calls := 0
   let mut tried := []
-  if better (armInterval graph true).upper (armInterval graph).upper then
+  let exhaustive := (← IO.getEnv "SEARCH_REDUCTION_FULL_EVAL") == some "1"
+  if exhaustive || better (armInterval graph true).upper (armInterval graph).upper then
     probe ← rootProbe graph false lookup? true
     calls := calls + 1
     graph := addRootProbe graph probe false
   for _ in [:initial.edges.length] do
     let base := armInterval graph
     let paired := armInterval graph true
-    if !better paired.upper base.upper ||
-        (strictDrop base paired && probe.outcome == .exhausted) then break
+    if !exhaustive && (!better paired.upper base.upper ||
+        (strictDrop base paired && probe.outcome == .exhausted)) then break
     let witnesses := graph.edges.zipIdx.filterMap fun (edge, i) =>
       if edge.window == 1 && edge.cost == .unknown && edge.pairedCost == .zero then some i else none
-    let candidates := (witnesses ++ lowerUnknownPath graph).eraseDups
+    let candidates := if exhaustive then graph.edges.zipIdx.filterMap fun (edge, i) =>
+        if edge.window == 1 && edge.cost == .unknown then some i else none
+      else (witnesses ++ lowerUnknownPath graph).eraseDups
     let some index := candidates.find? (fun i => !tried.contains i) | break
     tried := index :: tried
     let some edge := graph.edges[index]? | continue
@@ -987,11 +1017,13 @@ unsafe def evaluateGraph (raw : ProofGraph) (lookup? : Option LookupTable := non
     let mut independentCalls := 0
     let mut reverseCalls := 0
     let mut probed := []
+    let exhaustive := (← IO.getEnv "SEARCH_REDUCTION_FULL_EVAL") == some "1"
     -- Excluding a seed may select another route. Recompute before every new
     -- probe, visiting each eligible seed at most once.
     for _ in [:graph.vertices.length] do
-      if !better (armInterval graph true).upper (armInterval graph).upper then break
-      let selected := optimalSeeds (armGraph graph true false) costUpper (armSeeds graph true)
+      if !exhaustive && !better (armInterval graph true).upper (armInterval graph).upper then break
+      let selected := if exhaustive then armSeeds graph true else
+        optimalSeeds (armGraph graph true false) costUpper (armSeeds graph true)
       let some id := selected.find? (fun id =>
           selectedStructureSeed graph selected id && !probed.contains id) | break
       probed := id :: probed
@@ -1009,7 +1041,8 @@ unsafe def evaluateGraph (raw : ProofGraph) (lookup? : Option LookupTable := non
         let decisive := positiveEligible && graph.complete && finite (armInterval graph).upper &&
           strictDrop (armInterval graph) (armInterval graph true) &&
           baseProbe.outcome == .exhausted
-        if needsReverseNegative decisive independentRun (toRun reverse) then
+        if reverse.cost != .zero &&
+            (exhaustive || needsReverseNegative decisive independentRun (toRun reverse)) then
           -- Reverse evidence affects only target-part exclusion, never prices.
           reverse ← localRebuild v.type (rootType :: baseTypes) lookup?
           reverseCalls := reverseCalls + 1

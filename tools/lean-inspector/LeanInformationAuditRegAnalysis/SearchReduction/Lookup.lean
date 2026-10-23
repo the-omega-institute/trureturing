@@ -25,7 +25,7 @@ def timeLookup {α : Type} (label : String) (action : MetaM α) : MetaM α := do
   try action finally
     lookupPhase s!"{label}/end ns={(← IO.monoNanosNow) - start} heartbeats={(← IO.getNumHeartbeats) - heartbeats}"
 
-abbrev lookupVersion : String := "R_lookup/v18/obvious-v1/lazy-interval/scope-B_T/primary-index-only/candidate-200000/preparation-8000000/G-340000000/memo-target-basis-R-v1/N-memo-2000000/checkpoint-v4/views-kappa"
+abbrev lookupVersion : String := "R_lookup/v18/obvious-v1/lazy-interval/scope-B_T/primary-index-only/candidate-200000/preparation-8000000/G-340000000/memo-target-basis-R-v1/N-memo-2000000/checkpoint-v5/views-kappa"
 
 abbrev lookupCandidateBudget : Nat := 200000
 /-- Frozen from verdict-free fallback and fixed-stride candidate telemetry. -/
@@ -461,7 +461,7 @@ unsafe def boundedLookupCandidate (table : LookupTable) (entry : DiskLookup.Entr
     ("capped", toJson (!result.capped.isEmpty)), ("reasons", toJson result.failures)]
   if !result.complete || (← IO.getEnv "SEARCH_REDUCTION_TELEMETRY").isSome then
     emitLookupRecord s!"LOOKUP_CANDIDATE {residual.compress}"
-  if result.source?.isNone || (← IO.getEnv "SEARCH_REDUCTION_TELEMETRY").isSome then
+  if result.source?.isNone then
     original.restore
     set original.meta
     modifyThe Core.State fun state => {state with cache := original.core.cache}
@@ -792,7 +792,6 @@ unsafe def lookupLeafPass (table : LookupTable) (goal : MVarId)
       ("search_internal_heartbeats", toJson ((← IO.getNumHeartbeats) - floorStart)),
       ("preparation_internal_heartbeats", toJson (afterPreparation.preparation - beforePreparation.preparation)),
       ("ns", toJson ((← IO.monoNanosNow) - floorNs))] |>.compress}"
-  let stride := (candidates.entries.size + 63) / 64
   let workers := min 8 <| max 1 <|
     ((← IO.getEnv "SEARCH_REDUCTION_WORKERS").bind String.toNat?).getD 8
   let mut ordinal := 0
@@ -804,17 +803,13 @@ unsafe def lookupLeafPass (table : LookupTable) (goal : MVarId)
   for entry in candidates.entries do
     let position := ordinal
     ordinal := ordinal + 1
-    -- Telemetry observes the same enumeration.  It may change logging and
-    -- scheduling, but never drops candidates from the semantic result.
-    if telemetry && position % (max 1 stride) != 0 then
-      pure ()
     unless ← coverageAvailable table do
       trace := {trace with
         complete := false, failures := trace.failures.push s!"G-truncated:primary-index:remaining={candidates.entries.size - trace.visited}"}
       break
     if position % 128 == 0 then
       emitLookupRecord s!"LOOKUP_ENUMERATION_PROGRESS fallback=false next={position} total={candidates.entries.size}"
-    if !telemetry && workers > 1 &&
+    if workers > 1 &&
         (position < pendingStart || position >= pendingStart + pending.size) then
       let mut batch := #[]
       let queue := workers
@@ -840,7 +835,7 @@ unsafe def lookupLeafPass (table : LookupTable) (goal : MVarId)
           pure speculated
       else attemptLookupLeaf table entry goal unify close
     trace := mergeLookupTrace trace result
-    if trace.source?.isSome && !telemetry then break
+    if trace.source?.isSome then break
   unless telemetry do emitLookupRecord s!"LOOKUP_ENUMERATION {Json.mkObj [
     ("fallback", toJson false), ("total", toJson candidates.entries.size),
     ("static_normal_failures", toJson candidates.staticFailures),

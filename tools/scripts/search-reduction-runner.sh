@@ -11,7 +11,7 @@ case "${1:-}" in
     shift
     test "$#" -eq 0 || { echo 'search-reduction-runner test takes no arguments' >&2; exit 2; }
     modules=(GraphModel LookupModel CertificateModel CertificateTests CertificateScope
-      LookupPruningTests LookupTests LookupScope NativeCertification GraphCalibration
+      LookupPruningTests LookupTests LookupTelemetry LookupScope NativeCertification GraphCalibration
       Calibration FaultPaths SingleSourceModel VocabularyModel PresentationCoverage
       SingleSourceTests RawOriginsTests Faults RealNegative VocabularyTransport
       VocabularyTests InformationTests)
@@ -28,6 +28,8 @@ case "${1:-}" in
         "$module" "$search_test_seconds" "$search_test_exit"
       test "$search_test_exit" -eq 0 || exit "$search_test_exit"
     done
+    SEARCH_REDUCTION_TELEMETRY=1 make search-reduction-run \
+      REQUESTS=tools/lean-inspector/LeanInformationAuditRegTests/SearchReduction/LookupTelemetry.lean
     ;;
   native)
     shift
@@ -48,7 +50,7 @@ case "${1:-}" in
     }
     if test -z "${SEARCH_REDUCTION_RESUME+x}"; then
       lookup_request_hash=$(shasum -a 256 "$SEARCH_REDUCTION_REQUESTS")
-      export SEARCH_REDUCTION_RESUME="build/lean-inspector/search-reduction-checkpoints/R_lookup-v18-checkpoint-v4/${lookup_request_hash%% *}"
+      export SEARCH_REDUCTION_RESUME="build/lean-inspector/search-reduction-checkpoints/R_lookup-v18-checkpoint-v5/${lookup_request_hash%% *}"
     fi
     while :; do
       lookup_exit=0
