@@ -5,3 +5,7 @@ cas_ref: sha256:66914cb6f66133ad916070f0aa2ec863b4f36dabbc5cef04e75900a2514bac65
 coverage_gids: []
 receipts:
   unresolved_subitems: []
+  nonpropositional:
+    justification: Research question asking whether primes preserve or exchange branches, without asserting a classification.
+    previous_atom_id: 833521f0ac2dc5f295163a35ac8b4d065420c56f0b64972c6dc4d3418b5e69a1
+    next_atom_id: 740dd2d2599d960c789e1a1ce21d62c78119d74e8c96c4a60471afdd4158a7e2

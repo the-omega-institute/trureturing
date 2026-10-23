@@ -5,3 +5,7 @@ cas_ref: sha256:f5962a5f93f466a6fbde2558ca2c4628c82f4ec7e3e0898ffadd248b48551593
 coverage_gids: []
 receipts:
   unresolved_subitems: []
+  nonpropositional:
+    justification: Names absolute Euler-product convergence as an assumed input, without claiming that convergence has been proved.
+    previous_atom_id: 56a654b4d3768081caa7d8c54cebd4a574e834cc06d254b8cdf4978793d73650
+    next_atom_id: 3eb94fa7a547144a97594fed83400b59ce4b2386cae1a940a64bc2427993ac18

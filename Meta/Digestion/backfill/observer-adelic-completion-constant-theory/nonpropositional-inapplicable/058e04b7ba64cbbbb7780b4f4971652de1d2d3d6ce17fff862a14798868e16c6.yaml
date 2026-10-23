@@ -5,3 +5,7 @@ cas_ref: sha256:058e04b7ba64cbbbb7780b4f4971652de1d2d3d6ce17fff862a14798868e16c6
 coverage_gids: []
 receipts:
   unresolved_subitems: []
+  nonpropositional:
+    justification: Audit status marking the Casimir-to-xi bridge not established.
+    previous_atom_id: 71f8e8a00bceeb3cd665a7a242a3490d7d727dd5e3eb5e84df27f082a24e47e2
+    next_atom_id: 273b6e53e4f40776af84b4d068ba8c223c13ff00fd9fe5d21f70d26734482c59

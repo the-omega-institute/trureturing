@@ -5,3 +5,7 @@ cas_ref: sha256:b0654e7ba78f4126c5b57cccbed963d1750955ef8f02f7afc704cca88b238a5c
 coverage_gids: []
 receipts:
   unresolved_subitems: []
+  nonpropositional:
+    justification: Qualitative audit classification of prime holonomy as a memory model; no group identity or invariant is stated.
+    previous_atom_id: 50d88658786197908408be72cfa5d4f113a4f58243239018eaf42e7ba7a46460
+    next_atom_id: 3856326bf4251eeac37f9e50e82851e939cb56ef1620509f456b6e7267b8f744
