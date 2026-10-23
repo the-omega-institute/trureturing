@@ -1,0 +1,52 @@
+using static StrataLint.Scribe.DefinitionDsl;
+
+namespace StrataLint.Scribe.Blueprint.D5.S3.Weil.Mertens.IntegratedExplicit;
+
+internal sealed class WholeFormulaDocument : IScribeDocumentDefinition
+{
+    public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
+        "Unconditional integrated explicit formula", H("Unconditional integrated explicit formula"),
+        Blocks(Paragraph(Text("For every real y>0, the complete actual zero occurrence series equals U(exp(y))-log(2*pi) plus the full trivial zero correction. The residual is literally zero on y<=0 and damped by exp(-2*y) on y>0. Its L1 Fourier transform vanishes at nonzero frequencies by the actual Laplace suppliers. Continuity of that transform gives frequency zero without applying the digamma series at integer one. Pointwise inversion uses continuity only at the requested positive y. This formula makes no RH, Robin positivity or positive U peak claim. Integer 5040, all integer endpoints N>=2, every prime-power endpoint and the literal exponential-over-denominator form are checked only by transient anonymous applications.")),
+            Describe.Lean(DescribeId.Create("explicitDiscrepancy-line-integrable"),
+                DeclarationHandle.Create("D5/S3/Weil/Mertens/IntegratedExplicit/WholeFormula.explicitDiscrepancy_line_integrable"),
+                H("explicitDiscrepancy line integrable"), StatementSource.FromLean(),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("The exact hypotheses, occurrence indices and endpoint quantifiers are given by the Lean declaration."))),
+                DescribeRole.Theorem),
+            Describe.Lean(DescribeId.Create("explicitDiscrepancy-line-zero"),
+                DeclarationHandle.Create("D5/S3/Weil/Mertens/IntegratedExplicit/WholeFormula.explicitDiscrepancy_line_zero"),
+                H("explicitDiscrepancy line zero"), StatementSource.FromLean(),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("The exact hypotheses, occurrence indices and endpoint quantifiers are given by the Lean declaration."))),
+                DescribeRole.Theorem),
+            Describe.Lean(DescribeId.Create("explicitFourierResidual-integrable"),
+                DeclarationHandle.Create("D5/S3/Weil/Mertens/IntegratedExplicit/WholeFormula.explicitFourierResidual_integrable"),
+                H("explicitFourierResidual integrable"), StatementSource.FromLean(),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("The exact hypotheses, occurrence indices and endpoint quantifiers are given by the Lean declaration."))),
+                DescribeRole.Theorem),
+            Describe.Lean(DescribeId.Create("explicitFourierResidual-continuousAt"),
+                DeclarationHandle.Create("D5/S3/Weil/Mertens/IntegratedExplicit/WholeFormula.explicitFourierResidual_continuousAt"),
+                H("explicitFourierResidual continuousAt"), StatementSource.FromLean(),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("The exact hypotheses, occurrence indices and endpoint quantifiers are given by the Lean declaration."))),
+                DescribeRole.Theorem),
+            Describe.Lean(DescribeId.Create("explicitFourierResidual-fourier"),
+                DeclarationHandle.Create("D5/S3/Weil/Mertens/IntegratedExplicit/WholeFormula.explicitFourierResidual_fourier"),
+                H("explicitFourierResidual fourier"), StatementSource.FromLean(),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("The exact hypotheses, occurrence indices and endpoint quantifiers are given by the Lean declaration."))),
+                DescribeRole.Theorem),
+            Describe.Lean(DescribeId.Create("explicitFourierResidual-fourier-zero"),
+                DeclarationHandle.Create("D5/S3/Weil/Mertens/IntegratedExplicit/WholeFormula.explicitFourierResidual_fourier_zero"),
+                H("explicitFourierResidual fourier zero"), StatementSource.FromLean(),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("The exact hypotheses, occurrence indices and endpoint quantifiers are given by the Lean declaration."))),
+                DescribeRole.Theorem),
+            Describe.Lean(DescribeId.Create("actual-integrated-explicit-formula"),
+                DeclarationHandle.Create("D5/S3/Weil/Mertens/IntegratedExplicit/WholeFormula.actual_integrated_explicit_formula"),
+                H("actual integrated explicit formula"), StatementSource.FromLean(),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("The exact hypotheses, occurrence indices and endpoint quantifiers are given by the Lean declaration."))),
+                DescribeRole.Theorem))));
+}
