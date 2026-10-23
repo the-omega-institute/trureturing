@@ -110,9 +110,7 @@ internal sealed class ActualReciprocalSquareBoundsDocument : IScribeDocumentDefi
                         "The height theorem is upstream; no height or mass certificate is assumed."))),
                     DescribeRole.Theorem),
                 Paragraph(Text(
-                    "The following literal-cutoff result is a mathematical application, with its " +
-                    "complete proof preserved in the exact transient source; it is not a retained " +
-                    "declaration or an additional canonical consumer.")),
+                    "The complete height-derived mass bound gives the following literal-cutoff consequence.")),
                 new DocumentBlock.DisplayFormula(CountBothFormula()),
                 Paragraph(Text(
                     "For each distinct source zero n, the occurrence fiber is exactly " +
@@ -130,8 +128,7 @@ internal sealed class ActualReciprocalSquareBoundsDocument : IScribeDocumentDefi
                     "sum of the exact fiber cardinalities. For T >= 10, every cutoff occurrence " +
                     "contributes at least 1/T^2, so count/T^2 <= the full mass " +
                     "<= (101/100)*firstLiMass < 2. Thus count < 2*T^2, and the natural-floor " +
-                    "inequality displayed above follows. These statements also have complete " +
-                    "proofs in the transient context; no removed handle is asserted here.")),
+                    "inequality displayed above follows.")),
                 Describe.Lean(
                     DescribeId.Create("actualheightgtten"),
                     DeclarationHandle.Create("D5/S3/Weil/ZeroData/ActualReciprocalSquareBounds.actual_height_gt_ten"),
@@ -170,7 +167,7 @@ internal sealed class ActualReciprocalSquareBoundsDocument : IScribeDocumentDefi
                         "the contradiction to every actual nontrivial zero."))),
                     DescribeRole.Theorem),
                 Paragraph(Text(
-                    "As a transient mathematical application, the seven CompleteZeroFamily fields are supplied by the exact zero, strip, " +
+                    "For the complete-zero application, the seven CompleteZeroFamily fields are supplied by the exact zero, strip, " +
                     "height, reciprocal-square summability, reciprocal-square mass < 2, finite " +
                     "count shell, and count bound above. Soundness follows from zero_isNontrivial; " +
                     "exhaustivity follows by choosing the zero-th element of each positive finite fiber. " +
@@ -184,7 +181,7 @@ internal sealed class ActualReciprocalSquareBoundsDocument : IScribeDocumentDefi
                     "lowHIntegrand is integrable on Ioi 1. The original mean bound assumes m >= 1 " +
                     "and gamma > 10. For an actual rho, it sets " +
                     "gamma = |Im rho|, so actual_height_gt_ten supplies gamma > 10. " +
-                    "The application of complete_low_h_weighted_mean_bound uses " +
+                    "The Gaussian moment, absolute-convergence and extension derivation uses " +
                     "the scalar hypothesis m ≥ 1 and the bound " +
                     "m*(gamma+10)^2*(2400000*exp(-83*m) + 2400 + 384*exp(-28*m)). " +
                     "Here the inner h-domain is the full Icc 0 2 with weight 1+h, whose integral is 4; " +
@@ -192,21 +189,10 @@ internal sealed class ActualReciprocalSquareBoundsDocument : IScribeDocumentDefi
                     "has coefficient 3; and the shell estimate has core coefficient 20, " +
                     "giving 3*4*20 = 240 and the 2400000*exp(-83*m) term. The positive and negative " +
                     "extensions are 2400 and 384*exp(-28*m).")),
-                Paragraph(Text(
-                    "Complete exact proof provenance under /Users/macstudio/omega/research/rh-01a124c9-coordination/" +
-                    "signed-source-envelope-20261014/r2559-aggregate-supplier-design-20261017/" +
-                    "Robin-height-refined-mass-scoped-native-r4472/: scientific-products/original-r4464/D5/S3/Weil/ZeroData/" +
-                    "ActualReciprocalSquareBounds.lean (SHA256 bb76e63810f119b6391c3881c44166c7969c9bb460b5a9b9ec162a69485eed04) " +
-                    "preserves every original assertion, proof and telescope. The corresponding " +
-                    "scientific-products/transient-checks/R4472TransientOriginalBounds.lean uses its " +
-                    "unchanged imports and namespace. R4472TransientExactOriginalStatements.lean " +
-                    "checks the fifteen original public propositions. The anonymous " +
-                    "R4472TransientActualCompleteZeroFamily.lean and " +
-                    "R4472TransientActualOriginalFieldConsumer.lean preserve the complete seven-field " +
-                    "actual family and both original weighted applications. These files live in " +
-                    "the same-owner scientific-products directory, outside canonical D5 sources; " +
-                    "they establish no retained consumer. Their complete sources and native " +
-                    "evidence are pinned in the accompanying scientific manifest.")),
+                Paragraph(Text("Complete-family first Li mass application.")),
+                Paragraph(Text("The arbitrary-index reciprocal-mass Gaussian shell formula and its full weighted endpoint derivation are given in the existing CountableGaussianQuadraticFourthMoment exposition. For this actual family take I=N, t(k)=Im(actualZero(k)), w(k)=1, a=10 and any real m>=1. The actual_height_gt_ten theorem supplies the full-family height condition; actual_weighted_inverse_square_summable and actual_inverse_square_tsum_transport supply the natural-occurrence summability. The seven-field witness also retains its original strict mass <2, inclusive-cutoff finiteness and count bound. Soundness, exhaustiveness, exact analytic multiplicities, both conjugate occurrences, the exact occurrence fibers and their cardinalities, and the full complex multiplicity-reindexed kernel remain in that same witness.")),
+                Paragraph(Text("Write R_Z=sum_k Im(actualZero(k))^(-2). First obtain Summable(k -> (|Im(actualZero(k))|+1)*exp(-m*Im(actualZero(k))^2)) and shell<=1100*R_Z*exp(-100*m)<=2200*exp(-100*m) directly from the original R_Z<2. Independently apply the substantive actual_inverse_square_mass_le_height theorem to this identical entire occurrence family: R_Z<=(101/100)*firstLiMass. Nonnegative multiplication and 1100*(101/100)=1111 give shell<=1111*firstLiMass*exp(-100*m). This uses the height-derived mass theorem, rather than substituting the old 2200 estimate. The exact firstLiMass is 2+EulerGamma-2*log(2*sqrt(pi)), twice the first Li endpoint 1+EulerGamma/2-log(2*sqrt(pi)). The kernel still uses both signs and every occurrence, with no finite-subset, critical-line, injectivity or desired-shell-bound premise.")),
+                Paragraph(Text("The complete seven-field original-family application also keeps shell<=10000*exp(-100*m), integrability for every real gamma and m>0, and the original m>=1, gamma>10 mean bound m*(gamma+10)^2*(2400000*exp(-83*m)+2400+384*exp(-28*m)). For every actual nontrivial zero rho one may set gamma=|Im(rho)| because actual_height_gt_ten supplies that certificate. The 1111 first-Li-mass shell consequence alone does not certify a revised weighted 2400000 endpoint, the full Robin sign, retained Schur bounds, a completed carrier or RH. The complete weighted endpoint also requires the Gaussian moment, absolute convergence and extension bounds.")),
                 Paragraph(Text(
                     "The proof uses endpoint " +
                     "normalization, strip and conjugation algebra, occurrence and fiber transports, " +
