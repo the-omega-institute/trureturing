@@ -938,3 +938,246 @@ $$
 证明。(483.25) 直接代入 (483.19)；I3 允许的固定 $\eta$ 任意接近零。留数与连续项采用相同 $b,G_L$，其和用平方范数三角不等式控制。(483.26) 是原精确伴随分解。该分解未给 $e_L^{\rm ref}$ 的新上界，也未给完整正交补的上界；不同长度、高度、signed Robin restoration、全部 $n>5040$ 的严格 Robin 不等式和 RH 均不由上述估计推出。证毕。
 
 ## 追加锚（本行以下为增补区）
+
+## 484. 全部小标记的反射主项与完整投影预算
+
+**约定与解析假设。** 保留 §482–483 的原卷积 $b(h)$、全部 good sixth-power-free 标记 $q_R\le L$（包括单位）、实际 $G_L$ 与原 row Mellin profile。采用前卷假设 454.2 的解析输入，以及 [I1–I16、I14a、H1–H8、G7](../../../Library/Analytic/faveri2026fixedorder.md#an-unchanged-numerator-term-in-the-primitive-continuous-adjoint) 和 [PR1–PR10、SH6](../../../Library/Analytic/openai2026quasirh.md#joint-control-of-all-powerful-prime-reflection-choices) 的精确有限变换、原固定字符 $B_0=7/8$ zero-free/reciprocal-strip 输入及移动删因子合同。固定 $u=1+\eta+it$，$0<\eta<1/48$ 满足同一固定 cusp 的谱避让条件。特别地，$B_0=7/8$ 是保留的解析前提，不在此宣告为无条件定理。
+
+本节直接复用前卷 (456.5)–(456.11) 的完整 Gauss 平方支撑与 finite Euler split、(457.4)–(457.7) 的保留谱幂次正均方，以及 [Type-I 原稿 v1](https://rstation.ai/api/v1/papers/riemann_hypothesis_8/versions/1/download) §§5–7、[primitive-mean 原稿 v2](https://rstation.ai/api/v1/papers/riemann_hypothesis_10/versions/2/download) §§3–7 的实际原始 series 和局部反演。新增 `repo-derived` 推导是带固定标记乘子的多 mark 主项消费及其全部小标记原系数预算；不对上述筛、Gauss、反演、正均方或 inverse-$L$ 输入另作新结果或文献优先权断言。
+
+**引理 484.1（固定乘子的多 mark 主项消费）。** 取 PR4 的互素平方自由低反射块 $P_i$，其真实总估值为 $j_i\in\{1,2,3,4\}$。写
+
+$$
+s_i=4-j_i,\quad b_i=5-j_i,\quad k_i=j_i+1,\qquad
+Z=\prod_iP_i,\quad \Pi=\prod_iP_i^{s_i},\quad
+V=q_\Pi,\quad R_0=\prod_iP_i^{b_i}.
+\tag{484.1}
+$$
+
+允许没有低 mark，此时上述乘积均为单位。固定 seventh-power-free $P$，$(P,Z)=1$。原剩余外变量 $a_0$ 平方自由并避开 $PZ$；所有变量仍避开原固定坏素。取 $m$ 的真实 annular 尺度 $Y$、原完整 reflected scalar 与 character mark、原 numerator masks，full numerator 为 $P\Pi m$，并在 $a_0\mid m$ 上求和。反射 scalar 和 mark 保持 PR1、PR4 的实际顺序、相位、共轭与 ray 运输，不独立选择系数。
+
+令 $\mathfrak P_{P,a_0}(Y)$ 为这份 unweighted pairing 的完整小高度主项。存在原固定有限 cusp 族的实际系数 $A_{{\rm in},[R_0c^6]}(u)$、$A_{{\rm out},[R_0c^6]}(u)$，包含该支的原单位相位，使
+
+$$
+\begin{aligned}
+\mathfrak P_{P,a_0}(Y)=\frac1{q_{a_0}}
+\sum_{\substack{c\ {\rm sf}\\c^6\mid P}}\varphi(c^6)
+\big[&q_c^{-6u}A_{{\rm in},[R_0c^6]}(u)Y\widehat{\mathcal W}(1)\\
+&+q_P^{1-u}q_c^{6u-12}A_{{\rm out},[R_0c^6]}(u)
+Y^{2-u}\widehat{\mathcal W}(2-u)\big].
+\end{aligned}
+\tag{484.2}
+$$
+
+这些系数与 $a_0$ 无关，并满足
+
+$$
+\begin{aligned}
+|A_{{\rm in},[R_0c^6]}(u)|&\ll(1+|t|)^B\prod_iq_{P_i}^{-1-6\eta},\\
+|A_{{\rm out},[R_0c^6]}(u)|&\ll(1+|t|)^B\prod_iq_{P_i}^{-1-j_i\eta}.
+\end{aligned}
+\tag{484.3}
+$$
+
+完整 unweighted 非恒定项的误差为
+
+$$
+\ll_\varepsilon(Yq_Pq_{a_0}q_Z)^\varepsilon(1+|t|)^B
+q_P^{1/2}Y^{-\eta}q_{a_0}^{1/2+\eta}
+\prod_iq_{P_i}^{3-j_i/2-j_i\eta}.
+\tag{484.4}
+$$
+
+插入原有限 Euler 密度及冻结分母后，主项为
+$F_T(u)Z_u^T v_u(a_0)\mathfrak P_{P,a_0}(Y)$；其中 $T$ 是原冻结／删除素支持的平方自由乘积，包含 $PZ$ 的支持及该支全部已选支持（包括高六层支），$a_0$ 避开 $T$。$F_T$ 是每个冻结分母只计一次的实际乘积，$Z_u^T$ 如 SH6 前的原 Euler 乘积。它们与 $a_0$ 无关且在固定 $\eta$ 下一致有界。(484.2) 右侧括号连同 $c$-和是不含 $q_{a_0}^{-1}$ 的 principal sum；$\mathfrak P_{P,a_0}$ 已含该分母，完成主项不再乘第二份。全部误差和 finite polar tails 满足
+
+$$
+\operatorname{Err}_{P,\mathrm{wt}}
+\ll_\varepsilon(Yq_Pq_{a_0}q_Zq_T)^\varepsilon(1+|t|)^B
+q_P^{1/2}Y^{5/12+\eta}
+\prod_iq_{P_i}^{(26-5j_i)/12+12\eta}.
+\tag{484.5}
+$$
+
+若 $a_0=d_0$ 为原 Möbius 外变量，保持原固定有限字符和 normalized smooth profiles，则两份完成主项均可使用同一 $D_0^{-1/8}$ 位移；不需要将其绝对值先估成 $Y/q_p$。
+
+证明。原 full Fourier 尺度是 $X=q_PVY$，外模数为 $a=Pa_0$。PR4 的完整有限变换不要求 $r\mid a$ 平方自由。零频单位字符主当且仅当 $r=c^6$；因 $a_0$ 平方自由且 $(a_0,P)=1$，这恰为 $c^6\mid P$。此时
+
+$$
+\chi_{P_i}(c^6)^{-k_i}=1.
+\tag{484.6}
+$$
+
+PR4 的 mark Ramanujan 常数与原 $\gamma_{k_i}\tau_i$ 相位配对仍精确成立。按 I11 的原 normalization 恢复 $m$ 坐标后，incoming 的 $q_P$ 抵消，outgoing 留下 $q_P^{1-u}$，给出 (484.2)–(484.3)。Cusp 分量仅依赖 $R_0c^6\bmod\mathfrak M$；剩余固定 $P$ 相位留在系数中。原大高度常数仍按同一变换扣除，Gamma 抵消的极点不新增主项。
+
+对非零频率直接使用 (456.5)–(456.7) 的完整 imprimitive Gauss 平方界。它允许 $a$ 在 $P$ 处估值六，且 $(P,\Pi)=1$ 使原双频支撑计数不变。原计算中的 $X^{-\eta}q_a^{1/2+\eta}$ 现在恰贡献额外 $q_P^{1/2}$，得到 (484.4)。固定非零频率间隙、原核奇性及大参数任意阶衰减仍支付全部 dyads；不按外变量选择不同 profile，不把 $t(\Pi n)$ 的平方质量假设为密度分布。
+
+原密度只在允许的 $g$ 上展开，保留冻结分母。$g$ 避开全部 $T$；$\operatorname{lcm}(a_0,g)$ 仍平方自由，故六阶主除数和 (484.2) 的常数不改变。取 $q_g\le G$，原误差为 (484.4) 乘 $G^{1/2-5\eta+\varepsilon}$。Full-$D$ convexity 的大 $g$ 尾部不超过
+
+$$
+(Yq_Pq_{a_0}q_Zq_T)^\varepsilon(1+|t|)^B
+\frac{q_P^{1/4-\eta/2}Y^{5/4-\eta/2}}{q_{a_0}G^{1+6\eta}}
+\prod_iq_{P_i}^{1/2-j_i/4-(3+j_i/2)\eta}.
+\tag{484.7}
+$$
+
+Incoming 的 $c$ 和只有除数费用；outgoing 也如此，因为
+$q_P^{-\eta}q_c^{6\eta}\le1$。因此两份 finite polar tails 至多为次幂及多项式高度成本乘
+$Y(q_{a_0}q_Z)^{-1}G^{-1-6\eta}$。取原分裂点
+
+$$
+G=Y^{5/6}q_{a_0}^{-1}\prod_iq_{P_i}^{-5/3+j_i/6}.
+\tag{484.8}
+$$
+
+若 $G\ge1$，(456.10)–(456.11) 的同一指数计算适用；$q_P^{1/4-\eta/2}\le q_P^{1/2}$，故得到 (484.5)。若 $G<1$，则
+$q_{a_0}>Y^{5/6}\prod_iq_{P_i}^{-5/3+j_i/6}$；直接计数整个原支给出
+
+$$
+q_P^{1/4-\eta/2}Y^{5/12-\eta/2}
+\prod_iq_{P_i}^{(26-5j_i)/12-(3+j_i/2)\eta},
+\tag{484.9}
+$$
+
+完整 polar main 则至多为
+$Y^{1/6}\prod_iq_{P_i}^{2/3-j_i/6}$，均被 (484.5) 控制。非空 $m$-annulus 保证 $Y$ 有固定正下界，故 bounded subunit 支撑同样成立。
+
+付清上述尾项后才完成 Euler 主项，得到所述 $F_T Z_u^T v_u(a_0)$。在 $a_0=d_0$ 的原系数和中，(484.6) 保证没有增长的 $d_0$-字符；实际算术权是
+
+$$
+\frac{\mu(d_0)v_u(d_0)\xi(d_0)}{q_{d_0}},
+\qquad(d_0,T)=1,
+\tag{484.10}
+$$
+
+其中 $\xi$ 仅遍历原固定有限族。两个 polar 泛函只增加共同 normalized smooth/Mellin profiles。直接使用 I7 的 $B_0=7/8$ 位移及 SH6 的删除因子次幂费用，即得 $D_0^{-1/8}$。所有复相位在这之前保留在实际 signed pairing 中。证毕。
+
+**定理 484.2（全部小标记的完整连续反射向量）。** 在上述条件下，以 I2 的同一固定反演顺序定义 $e_L^{\rm ref}$，包含全部非空第二选择，令
+$Q_{{\rm ref},L}=(e_L^{\rm ref})^*G_L^{-1}e_L^{\rm ref}$。记 $T_1,T_2,T_3>1$ 为原 valuation-one、two、three 非标签反射乘积的共同截断阈值。一次选定共同成本包络 $\mathcal C$，覆盖原有限族、所需 profiles、核、Mellin、高度、inverse-$L$ 与 G7 成本的实际有限乘积和；不随标记或分支重选。则
+
+$$
+\begin{aligned}
+Q_{{\rm ref},L}\ll_\varepsilon{}&\mathcal C^2(UKL)^\varepsilon U^{2\eta}L^{12}
+\big[K^2D^{-1/4}\\
+&+K^{5/6+2\eta}D^2T_1^{14/3+22\eta}
+ T_2^{3+20\eta}T_3^{4/3+18\eta}\\
+&+K^2(T_2^{-2}+T_3^{-9/2})+K^{2-4\eta}\\
+&+K^{2-\eta}T_1^{-1/2-6\eta}+K^2T_1^{-1-4\eta}\big].
+\end{aligned}
+\tag{484.11}
+$$
+
+证明。先固定一个真实标记 $R$。对每个 $p\mid R$ 记 $t_p=v_p(R)\in\{1,\ldots,5\}$，按原 $j=v_p(Rh)$ 分为 $t_p\le j\le5$ 和 $j\ge6$，并分原 Möbius 变量在 $p$ 处的估值 $0$ 或 $1$。低支精确采用
+$e=0,\ldots,\min(1,j-t_p)$、$d=p^ed_0$、$n=p^{j-t_p-e}n_0$，其中 $p\nmid d_0n_0$；故原 $h$ 提取 $p^{j-t_p}$。$j\le4$ 的第二选择成为 PR4 的同一低 mark，raw numerator 为 $p^{4-j}m$，其 $p\nmid n_0$ 仍由原 mark 的自然零延拓执行；$j=5$ 没有第二选择。高支精确写 $h=p^{6-t_p}m$，$m$ 不限重数，第一选择保留 $D(p^6m,u)$，第二选择保留原 $-q_p^{6-6u}D(m,u)$。不约化离开留数点的 raw 估值。
+
+对低第一选择，仅在原 $n_0$ 中使用
+$\mathbf1_{p\nmid n_0}=1-\mathbf1_{p\mid n_0}$；$d_0$ 已避开 $p$。第二项令 $n_0=pn_1$，同步改变原 profile、原 $h$、full numerator、mask 和全部混合相位。该项不再声称单独是原低估值来源，但两项之差精确等于原单位限制；原 $\mu(d)$ 及原符号不变。新的 $h$ 提取指数至多为 $6-t_p$，numerator 指数至多为六。
+
+由此得到至多 $64^{\omega(R)}\ll_\varepsilon q_R^\varepsilon$ 份精确有限 sector。各份具有标签提取 $J_R$、未反射标签乘子 $P$ 和低标签 marks；写
+
+$$
+H_R=P\prod_{i\text{ 为标签低 mark}}P_i^{4-j_i},\qquad
+q_{J_R}\le q_R^5,\quad q_P\le q_R^6,\quad q_{H_R}\le q_R^6.
+\tag{484.12}
+$$
+
+$P$ 与所有低 marks 互素；$H_R$ 还包含选中标签的强制 numerator 因子，不能在正均方中将它误写成 $P$。标签 branch scalar 的模至多为一，连同原统一有界分母；所有标签相位和固定 $216$ 个 ray 分量均保留。Frozen denominators 与原 Euler 展开遵守每素因子只计一次的 SH5–SH6。
+
+其余所选素因子避开 $R$。令 $C=A_1$ 为其中原 valuation-one 的乘积，$A_2,A_3,A_4,B$ 为原 valuation $2,3,4,\ge6$ 的乘积；写
+$x_j=q_{A_j}$、$z=q_B$、$W=x_2^2x_3^3x_4^4z^6$、$H_0=A_2^2A_3$。原变量仍按 PR3、(454.14) 提取 $E_j\mid A_j$、$F\mid B$，其余外变量 $d_0$ 避开全部选中支持和 $R$；没有附加 $(d_0,n_0)=1$。实际剩余尺度是
+
+$$
+Y=\frac{K}{q_{J_R}q_CW},\qquad
+D_0=\frac{D}{q_{E_R}(\prod_{j=1}^4q_{E_j})q_F},
+\quad E_R\mid\operatorname{rad}R,
+\tag{484.13}
+$$
+
+各 sector 保留自身非空 annuli。此时引理 484.1 的 $T$ 冻结 $\operatorname{rad}R$ 及全部已选非标签支持（含 $B$），再并入原固定坏素；Euler 变量 $g$ 避开全部 $T$。标签有限容斥只在 $J_R$、$P$ 和原 profile 中增加已说明的因子。
+
+在 $q_C\le T_1,x_2\le T_2,x_3\le T_3$ 上使用引理 484.1。标签低 mark 的误差费用至多为 $q_R^{7/4+12\eta}$，而 $q_P^{1/2}\le q_R^3$，故可共同上界为 $q_R^5$。非标签的原变量误差质量与 (456.13) 相同，其指数依次为 $4/3+11\eta,1/2+10\eta,-1/3+9\eta,-7/6+8\eta,-5/2-6\eta$。后两类绝对可和，前三区域按共同阈值求和，得到
+
+$$
+\begin{aligned}
+|C_{R,\rm small}(t)|\ll_\varepsilon{}&\mathcal C(Kq_R)^\varepsilon(1+|t|)^Bq_R^5
+\big[KD^{-1/8}\\
+&+K^{5/12+\eta}D
+T_1^{7/3+11\eta}T_2^{3/2+10\eta}T_3^{2/3+9\eta}\big].
+\end{aligned}
+\tag{484.14}
+$$
+
+第一项在同一 signed pairing 中使用 (484.10)，没有以反射部分的大小代替整个 $R$。具体地，incoming 的非标签质量为
+$\prod_{j=1}^4x_j^{-j-1-6\eta}z^{-6-6\eta}$，outgoing 为 $\prod_{j=1}^4x_j^{-j-1}z^{-6}$；连 $E_j,F$ 的 $1/8$ 次幂损失仍绝对可和。标签 $E_R$ 的损失至多为 $q_R^{1/8}$，已被 $q_R^5$ 覆盖；$J_R\ge1$ 的缩短只改善上述上界。有限极点尾项先由 (484.5) 支付，之后才使用完成主项。
+
+对 $q_C>T_1$，直接复用 (457.4)–(457.7)，以实际 multiplier $H_RH_0$、尺度 (484.13)、系数侧权重 $d(m)^{1/2}$ 和正均方侧倒权重作同一 Cauchy。这里 $d(m)$ 是平方部分的 norm。因 $6\eta<1/2$，原平方部分和仍收敛。逐 $R$ 使用该正均方，不合并标签，因此无需素标记专属的 $d(pm)$ 一致估计。将真实 $q_{H_R}^{1/2-\eta}\le q_R^3$ 保留，原 powerful 质量仍为 (457.9) 后的同一可和质量；得到逐标签的平方 pairing 上界
+
+$$
+\mathcal C^2(Kq_R)^\varepsilon(1+|t|)^Bq_R^3
+\big[K^{2-4\eta}+K^{2-\eta}T_1^{-1/2-6\eta}
+ +K^2T_1^{-1-4\eta}\big].
+\tag{484.15}
+$$
+
+对 $q_C\le T_1$ 且 $x_2>T_2$ 或 $x_3>T_3$，使用 (454.11) 的同一粗正均方，multiplier 仍为 $H_RH_0$。$C$ dyads 只支付次幂；原质量尾和给出逐标签平方费用
+
+$$
+\mathcal C^2(Kq_R)^\varepsilon(1+|t|)^Bq_R^3K^2
+(T_2^{-2}+T_3^{-9/2}).
+\tag{484.16}
+$$
+
+标签乘子不与这些非标签块共享素支持，不能把它们当成新增自由块再求和。全部原系数、mask 和同时选择始终在原 pairing 中，仅在这些正范数中放松支持。无非空反射的部分直接复用 §483，不加入反射向量。
+
+所有实际 label sectors 先在同一向量范数中用除数 Cauchy 汇总。理想计数给 $\sum_{q_R\le L}q_R^{10}\ll L^{11}$、$\sum_{q_R\le L}q_R^3\ll L^4$。分配内部小幂后，统一保守付 $L^{12}$，再恢复原实际 Mellin 的 $U^{2\eta}$ 与同一 G7，即得 (484.11)。证毕。
+
+**推论 484.3（指定平衡扇区的全部小标记完整投影）。** 在同一条件和实际 G7 范围下，取
+
+$$
+U\asymp K,\quad D=N=\sqrt K,\quad L=K^\ell,
+\quad 0<\ell<10^{-6},\qquad 7\ell<\eta<8\ell,
+\tag{484.17}
+$$
+
+其中固定 $\eta$ 满足原谱避让条件，并取
+$T_1=K^{1/100}$、$T_2=K^{1/500}$、$T_3=K^{1/1000}$。若全部所需共同成本为 $\mathcal C=K^{o(1)}$，则对每个最终 $\varepsilon>0$，先分配内部小幂后，
+
+$$
+Q_{{\rm ref},L}\ll_\varepsilon\mathcal C^2K^{2-\ell+\varepsilon},
+\qquad
+\|P_LAb\|_2^2\ll_\varepsilon\mathcal C^2K^{2-\ell+\varepsilon}
+=o(K^2)
+\tag{484.18}
+$$
+
+其中最后取 $\varepsilon<\ell/2$，$P_L$ 是同一全部小标记的实际行投影。
+
+证明。(484.11) 临界项恢复 Mellin 后的裕度为 $2\eta-12\ell>2\ell$。其余各项的裕度依次为
+
+$$
+\begin{gathered}
+\tfrac18-2\eta-12\ell,\\
+\tfrac16-4\eta-12\ell
+-\tfrac{14/3+22\eta}{100}-\tfrac{3+20\eta}{500}
+-\tfrac{4/3+18\eta}{1000},\\
+\tfrac2{500}-2\eta-12\ell,\quad
+\tfrac9{2000}-2\eta-12\ell,\\
+\tfrac{1/2+6\eta}{100}-\eta-12\ell,\qquad
+\tfrac{1+4\eta}{100}-2\eta-12\ell.
+\end{gathered}
+\tag{484.19}
+$$
+
+在 (484.17) 的整个范围内，它们均大于 $2\ell$；例如第二个大于 $11/100$，最小的 powerful-tail 裕度大于 $39/10000$。保留 $\ell$ 作为共同节省即可分配内部小幂。原固定商空间的离散谱允许在非空区间 $(7\ell,8\ell)$ 内选择合法固定 $\eta$。
+
+另保留 §482 的留数输入及 §483 的连续原分子输入，将所有成本纳入同一包络。它们在本尺度和同一 $\eta$ 下有更大的正裕度。由同一精确分解
+
+$$
+\|P_LAb\|_2^2
+=\|G_L^{-1/2}(w_L+e_L^0+e_L^{\rm ref})\|_2^2
+\tag{484.20}
+$$
+
+使用有限和平方范数界，得到 (484.18)。完整补空间仍是同一个未被上述估计控制的 $\|(I-P_L)Ab\|_2^2$；其他长度、高度、原 growing-height allowance、F4 transfer 和 signed Robin restoration 也未由本推论供应。RH 与全部 $n>5040$ 的严格 Robin 不等式仍未由此推出。证毕。
+
+## 追加锚（本行以下为增补区）
