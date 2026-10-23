@@ -9,14 +9,12 @@
 import D5.S3.VertexAlgebra.NestedResidues.LatticeHalfFockSliceQuotient
 import D5.S3.VertexAlgebra.NestedResidues.LatticeHalfFockCollisionTaylor
 
-/-! Source-isolation proposal from the exact FIRST prototype at
-3e905f5c5789a9b4247257ff54c2e2029dc03c47. Relocated research proofs retain
-signed Laurent powers and empty cases. Classical formal local-field calculus:
+/-! Signed Laurent powers include empty cases. Classical formal local-field calculus:
 Matsuo--Nagatomo; Bakalov--Kac, math/0402315. Hahn/Laurent/binomial infrastructure:
 mathlib, Apache 2.0 (Aaron Anderson, María Inés de Frutos-Fernández,
 Filippo A. E. Nuccio). Actual field composition: Scott Carnahan, vertexAlg
 4453e34ec390e82a0c789c731ada8f9a6e86bdea, Apache 2.0.
-This file is proposed source; it has not been compiled in this preparation. -/
+-/
 
 set_option autoImplicit false
 set_option backward.isDefEq.respectTransparency false
