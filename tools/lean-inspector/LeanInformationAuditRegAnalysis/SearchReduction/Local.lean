@@ -869,7 +869,9 @@ def assembleZero (graph : ProofGraph) (paired := false) : MetaM (Option Expr) :=
     let some proof ← go (graph.vertices.length + 1) graph.root | return none
     checkLocalProof (vertex graph graph.root).type proof
     return some proof
-  catch _ => return none
+  catch ex =>
+    logInfo m!"GRAPH_ASSEMBLY_INCOMPLETE paired={paired}: {← ex.toMessageData.toString}"
+    return none
 
 /-- Lower bounds allow an unknown successful certificate to discard any
 premises. Upper bounds retain the author's known route. -/
