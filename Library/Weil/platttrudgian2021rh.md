@@ -5,7 +5,7 @@ year: 2021
 title: The Riemann hypothesis is true up to 3·10^12
 doi: 10.1112/blms.12460
 url: https://arxiv.org/abs/2004.09765v1
-claim: Published verification supplies the finite-height RH premise. Exact heat-loss factorization and the complete arithmetic block bound give a whole-source negative allowance of order (log T)^(-4) in the original sixth moment; fixed height still leaves a negative allowance. A support-independent Gamma-only lower bound for the prime Hankel form fails on all compact half-line tests. An even actual-source partition controls the joint metric defect and bounds supporting multipliers of negative cap-four minima from below, up to the finite-height signed zero tail. Its null supporting vector bootstraps every fixed logarithmic order below five and recovers individual branch moments with an explicit inverse-multiplier cost; these subcritical estimates do not improve the general exponent-four allowance.
+claim: Published verification supplies the finite-height RH premise. Exact heat-loss factorization and the complete arithmetic block bound give a whole-source negative allowance of order (log T)^(-4) in the original sixth moment; fixed height still leaves a negative allowance. A support-independent Gamma-only lower bound for the prime Hankel form fails on all compact half-line tests. An even actual-source partition controls the joint metric defect and bounds supporting multipliers of negative cap-four minima from below, up to the finite-height signed zero tail. Its null supporting vector bootstraps every fixed logarithmic order below five and recovers individual branch moments with an explicit inverse-multiplier cost; finite-height RH(T) also yields a conditional fourth-power joint metric endpoint on the same source, without improving the general exponent-four allowance.
 strata_touched: []
 license: citation-only
 triage: anchor
@@ -1020,3 +1020,102 @@ of order $L^{-s}$ for $s<4$. It does NOT improve the already owned
 VHR1 exponent $4$. An estimate beyond the critical logarithmic tail, or a new signed
 joint estimate, is still required. Full RH and strict Robin for every
 integer $n>5040$ remain unproved.
+
+### Use the verified height to reach a conditional boundary endpoint
+
+The same finite-height premise supplies an endpoint estimate for the
+actual boundary defect. This is not a limit of VHB5's constants.
+Let $F\in\mathcal V$, $\mathfrak E(F)\le0$, and assume
+$\mathsf{RH}(T)$, with $T$ sufficiently large depending on fixed $c$.
+Write $L=\log T$, retain $\eta_T$ from VHP9, and use the SAME
+actual branches at any $T^{-1}\le\sigma\le\sigma_0$, where
+$\sigma_0<1$ is fixed and sufficiently small. Put
+$s_\sigma=\|g_{F_{v,\sigma}}\|_0^2$ and
+$L_\sigma=\log(1/\sigma)$. Then
+
+$$
+ s_\sigma\le CM(F)\left[
+ L_\sigma^{-5}+\sqrt\sigma+\eta_T/L_\sigma\right].
+ \tag{VHB8}
+$$
+
+Indeed the finite-height heat-tail argument of VHP9 is uniform over
+these COARSER filters. For a zero frequency $z=u+iv$, $|v|<1/2$,
+
+$$
+ |a_\sigma(z)^2|
+ =e^{-2\sigma(u^2+c^2-v^2)}\le e^{-2u^2/T}.
+$$
+
+Thus the existing signed zero-tail majorant gives
+$\mathfrak E(F_{h,\sigma})\ge-CM(F)\eta_T$.
+The exact energy partition and the original nonpositive energy imply
+$\mathfrak E(F_{v,\sigma})\le CM(F)\eta_T$; the high-pass branch
+is NOT assumed to have nonpositive energy. Its weighted profile norm
+is bounded by $C\sqrt{M(F)}$ by VHP's full-$M$ branch bound.
+On $|\tau|\le\sigma^{-1/4}$ its squared Fourier mass is at most
+$CM(F)\sqrt\sigma$. Retain the Gamma contribution on the complement
+and apply the EXISTING complete prime-and-pole bound VHR7 to obtain
+
+$$
+ aL_\sigma s_\sigma
+ \le B M(F)^{1/5}s_\sigma^{4/5}
+       +CM(F)L_\sigma\sqrt\sigma+CM(F)\eta_T,
+ \qquad a>0.
+$$
+
+Young's inequality absorbs half the left side at cost
+$CM(F)L_\sigma^{-4}$. Division by $L_\sigma$ proves VHB8.
+This uses the full arithmetic debit and never applies W366's
+nonpositive-energy hypothesis to the high-pass branch.
+
+At the TARGET scale $\epsilon=1/T$, the actual joint metric defect
+satisfies the endpoint
+
+$$
+ |\Delta_M|+|\Delta_H|\le CM(F)L^{-4}.
+ \tag{VHB9}
+$$
+
+To pay the arithmetic boundary, take the coarser
+$\sigma=T^{-1/4}$, set $r=T^{-1/4}$ and $R=T^{1/8}$, and retain
+$\beta(t)=g_F(t/2)$. The symbol $b_\sigma(2\xi)^2$ is bounded below
+on $|\xi|\ge R$. VHB8 therefore gives Fourier-tail squared mass
+$CM(F)L^{-5}$ there. The low-frequency projection has local squared
+mass at most $CrR M(F)$ on every interval of length $2r$.
+Consequently the finite actual reconstruction used in VHP6 gives
+
+$$
+ \|\mathbf1_{[-r,r]}X\|_2^2
+ \le CM(F)\left[NL^{-5}+N^{-4}+Nr^{1/2}+r\right].
+$$
+
+Choose $N$ comparable to $L$. The SQUARED local mass in VHB2,
+together with the smaller kernel and exponential-conjugation errors,
+proves VHB9. This is a conditional estimate on the original
+nonpositive-energy class, not a vanishing defect on the full $M$
+domain.
+
+For the SAME hypothetical unit negative cap-four minimizer,
+VHP7 and VHB9 give, under $\mathsf{RH}(T)$ at sufficiently large $T$,
+
+$$
+ \begin{gathered}
+ 0\le Q_\lambda(F_h),Q_\lambda(F_v)\le C\delta L^{-4},\\
+ \lambda\ge[1/3-CL^{-4}]\delta-C\eta_T.
+ \end{gathered}
+ \tag{VHB10}
+$$
+
+The last line uses the existing $\mathcal H(F_h)\ge1/2$ and
+$M(F_h)\ge\mathcal H(F_h)$ in VHP9's supporting-form comparison.
+No new multiplier argument or source normalization is needed.
+
+Finite $T$ in VHB8 does not give a strong logarithmic fifth moment,
+or a fifth-order Fourier-tail rate continuing uniformly as the
+frequency tends to infinity. VHB9--VHB10 supply a conditional
+boundary endpoint; they do not remove the inverse-multiplier cost
+in original-moment recovery or improve VHR1's general fourth-power
+negative allowance. A new signed arithmetic estimate is still
+required. These applications remain paper derivations without
+Lean/kernel certification.
