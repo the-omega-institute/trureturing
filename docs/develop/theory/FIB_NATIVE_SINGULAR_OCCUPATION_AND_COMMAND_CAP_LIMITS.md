@@ -1051,3 +1051,448 @@ larger-exponent cap restrictions retain their stated force. Neither
 exponents: the upper integral in (8.5) is finite only for $2p<1$.
 
 ## 追加锚（本行以下为增补区）
+
+## 9. Full-state discrete potentials and the simultaneous cap boundary
+
+**Lemma 9.1 (a smooth auxiliary potential with a positive decaying source).**
+In the first-kind whitened coordinates $(\xi,\eta,\upsilon)$ of (1.5),
+put
+
+$$
+\begin{gathered}
+U=\partial_\xi-\tfrac\eta2\partial_\upsilon,\qquad
+V=\partial_\eta+\tfrac\xi2\partial_\upsilon,\qquad
+\Delta_H=U^2+V^2,\\
+q\cdot q'=(\xi+\xi',\eta+\eta',
+ \upsilon+\upsilon'+(\xi\eta'-\eta\xi')/2),\qquad
+G_H(q)=(2\pi)^{-1}R(q)^{-2},\\
+f_s(q)=\bigl(1+R(q)^4/s^4\bigr)^{-3/4},\qquad
+\mathcal U_s(q)=\int_{\mathbb R^3}G_H(z^{-1}\cdot q)f_s(z)\,dz,
+\quad s>0.
+\end{gathered}
+\tag{9.1}
+$$
+
+Lebesgue measure $dz$ is Haar measure for this auxiliary group. The
+integral is finite, nonnegative and smooth, and
+
+$$
+-\Delta_H\mathcal U_s=f_s,\qquad
+f_s(q)\asymp\frac{s^3}{(s+R(q))^3},\qquad
+|Z_{i_1}\cdots Z_{i_k}\mathcal U_s(q)|
+ \le C_k\frac{s^3}{(s+R(q))^{1+k}},\quad 0\le k\le4,
+\quad (Z_1,Z_2)=(U,V).
+\tag{9.2}
+$$
+
+For $k=0$ the derivative denotes the function itself. Constants are
+independent of $s,q$ and the word of length $k$. In particular
+$0\le\mathcal U_s\le Cs^2$. These are deterministic auxiliary tests;
+no new random command, source normalization or physical domain is
+introduced.
+
+Proof. G, Theorem 10.2, including its flux calculation after (10.9),
+gives $-\Delta_HG_H=\delta_0$ relative to Lebesgue measure. The kernel
+is smooth away from zero, homogeneous of degree $-2$, and its horizontal
+derivatives of order $k$ have degree $-2-k$. The function $f_1$ is
+smooth even at zero, since $R^4=(\xi^2+\eta^2)^2+16\upsilon^2$ is a
+polynomial. At infinity $f_1=O(R^{-3})$. The potential integral converges:
+near its diagonal the kernel $R^{-2}$ is locally integrable in homogeneous
+volume dimension four; at infinity its radial majorant is $CR^{-2}dR$.
+
+Here are uniform derivative bounds, including the derivatives needed for
+the discrete transfer. Write $\mathfrak d_a(\xi,\eta,\upsilon)
+=(a\xi,a\eta,a^2\upsilon)$ and $u=\mathcal U_1$. For $a\ge1$,
+change variables $z=\mathfrak d_a w$ to obtain
+
+$$
+a\,u(\mathfrak d_a q)
+ =\int G_H(w^{-1}\cdot q)g_a(w)\,dw,\qquad
+g_a(w)=\bigl(a^{-4}+R(w)^4\bigr)^{-3/4}
+ \le R(w)^{-3}.
+\tag{9.3}
+$$
+
+Consider $q$ in the fixed compact annulus $1\le R(q)\le2$.
+Split the integral by smooth cutoffs into a sufficiently small ball
+about $w=0$, a fixed intervening annulus, and the complement of a
+sufficiently large ball. The small ball is separated from every such
+$q$ in group distance. All derivatives in $q$ of its kernel are uniformly
+bounded, and $R^{-3}$ is integrable there. On the outer region those
+derivatives are bounded by $C_kR(w)^{-2-k}$, by homogeneity and compactness
+of the unit gauge sphere. Multiplication by $g_a\le R^{-3}$ gives the
+integrable radial bound $C_kR^{-2-k}dR$.
+
+On the intervening annulus, let $h_a$ be $g_a$ times its smooth compact
+cutoff. All ordinary derivatives of $h_a$ are bounded uniformly in
+$a\ge1$, because this support avoids zero. Its contribution is
+
+$$
+\int G_H(w^{-1}\cdot q)h_a(w)dw
+ =\int G_H(v)h_a(q\cdot v^{-1})dv.
+\tag{9.4}
+$$
+
+For $q$ in a neighbourhood of the fixed annulus, the integrand and all
+its $q$ derivatives vanish outside a common compact set of $v$.
+Differentiate the smooth factor $h_a(q\cdot v^{-1})$. Its derivatives
+are uniformly bounded on that set, and $G_H(v)$ is integrable there.
+Thus the middle contribution has uniformly bounded derivatives too.
+This proves that all horizontal derivatives through order four of the
+right side of (9.3) are uniformly bounded on the fixed annulus.
+Homogeneity of each horizontal field gives
+$|Z_{i_1}\cdots Z_{i_k}u(q)|\le C_kR(q)^{-1-k}$ for $R(q)\ge1$.
+On a fixed ball the same cutoff argument, with the smooth $f_1$ in the
+middle part, bounds all derivatives and proves smoothness.
+
+The fundamental-solution identity gives $-\Delta_Hu=f_1$ in
+distributions. For example, first cut $f_1$ off at a large radius; its
+potentials have that identity, and their omitted tails, together with
+all local horizontal derivatives through order two, tend to zero by
+the outer-region bounds above. Smoothness makes the identity pointwise.
+Finally
+$\mathcal U_s(q)=s^2u(\mathfrak d_{1/s}q)$ and
+$f_s(q)\asymp s^3(s+R(q))^{-3}$. Scaling proves (9.2). $\square$
+
+The fundamental solution and convolution calculus used here are classical
+intermediate tools; see Ciatti–Cowling–Ricci,
+[*Hardy and uncertainty inequalities on stratified Lie groups*, §2,
+(2.1), (2.5)–(2.7)](https://arxiv.org/html/1308.2373v1).
+The derivative bounds for the particular noncompact smooth source $f_s$
+are proved above, rather than inferred from a heat-kernel upper bound.
+
+**Lemma 9.2 (mesh-uniform node occupation with all returns).**
+Keep every fixed model of Definition 1.1 and the comparison-node exit
+$N_n$ of (7.1). There are $n_0,s_0>0$ and $C<\infty$, depending on
+this model and source, such that
+
+$$
+\delta_n\,\mathbb E\sum_{i<N_n}
+ {\bf1}_{\mathcal B_s}(q_i)
+ \le C(s^2+e_n^2),\qquad
+0<s\le s_0,\quad n\ge n_0,
+\qquad e_n=\sqrt{\delta_n}.
+\tag{9.5}
+$$
+
+The comparison after $m_n$ cells is used only for an upper bound, as in
+Theorem 7.1; the executed random cells are the indices
+$i<N_n\wedge m_n$. Conditioning uses the complete state and past.
+
+Proof. The exact source-chart fields must be distinguished from their
+second-kind expressions. Before whitening, $t=z-xy/2$ gives
+$P=\partial_x-(y/2)\partial_t$ and
+$Q=\partial_y+(x/2)\partial_t$. The graded map in G, (10.1), pushes
+these fields to the columns of $B$ in the frame $(U,V)$ of (9.1).
+If $w_i=Bv_i$, the actual chord in a local lift is exactly
+
+$$
+\begin{aligned}
+(\xi,\eta)(\theta)&=(\xi_i,\eta_i)+\theta(w_i^1,w_i^2),\\
+\upsilon(\theta)&=\upsilon_i+
+ \tfrac\theta2(\xi_iw_i^2-\eta_iw_i^1),\qquad 0\le\theta\le1.
+\end{aligned}
+\tag{9.6}
+$$
+
+Equivalently it is $q_i\cdot(\theta w_i^1,\theta w_i^2,0)$, the flow
+of $w_i^1U+w_i^2V$. Formula (9.6) is (1.4) after its quadratic
+second-kind term is combined with $-xy/2$; it retains the actual
+chronological area across every join.
+
+Write $\delta=e^2=\delta_n$, $b(q)=Bd(q)$ and
+$C(q)=BA(q)B^{\mathsf T}$. On a fixed source chart the generator is
+exactly
+
+$$
+\mathcal G=\sum_a b^aZ_a+\sum_{a,b}C^{ab}Z_aZ_b,
+\qquad C(0)=I_2,\qquad |C(q)-I_2|\le C_*R(q),\quad |b(q)|\le C_*.
+\tag{9.7}
+$$
+
+This is the push-forward of G, (29.7), including its raw-density drift.
+All coefficient bounds are uniform on a fixed compact chart. Applied
+to (9.2), they give, for small $s$ and chart radius,
+
+$$
+|\mathcal G\mathcal U_s+f_s|
+ \le C(s+R)f_s.
+\tag{9.8}
+$$
+
+Indeed the second-derivative error is at most
+$CRs^3(s+R)^{-3}$ and the drift error at most
+$Cs^3(s+R)^{-2}$. Choose a fixed $b_0>0$ so small that
+$\overline{\mathcal B_{4b_0}}$ is an injective interior chart and
+(9.8) is at most $f_s/4$ whenever $s\le b_0/4$ and $R\le b_0$.
+Choose $0\le\chi\le1$ smooth, equal to one on $R\le b_0$ and zero
+on $R\ge2b_0$. On the native cylinder set
+$F_s=\chi\mathcal U_s$ in this chart and zero elsewhere, also extending
+it by zero beyond the two height faces. It is smooth and nonnegative,
+$\|F_s\|_\infty\le Cs^2$, and all its horizontal derivatives through
+order four outside $\mathcal B_{b_0/4}$ are bounded by $Cs^3$.
+The cutoff is fixed independently of $s,n$.
+
+We now prove the one-step error uniformly for these changing tests.
+At an alive node,
+$w=\delta b+\sqrt{2\delta}\,B\Sigma(q_i)\xi_i$, with the original
+four signs, so
+
+$$
+\mathbb E_iw^a=\delta b^a,\qquad
+\mathbb E_iw^aw^b=2\delta C^{ab}+\delta^2b^ab^b,
+\qquad |\mathbb E_iw^aw^bw^c|\le C\delta^2,
+\qquad |w|\le Ce.
+\tag{9.9}
+$$
+
+The third bound follows by expanding the product: the pure-noise cubic
+has mean zero under $\xi_i\mapsto-\xi_i$, and every other nonzero term
+has at least one factor $\delta b$. It is a one-step statement;
+no symmetry of a variable-coefficient multistep block is assumed.
+Taylor expansion along the exact flow (9.6), through degree three with
+a fourth-order integral remainder, consequently gives
+
+$$
+\left|\mathbb E_i(F_s(q_{i+1})-F_s(q_i))
+      -\delta\mathcal GF_s(q_i)\right|
+ \le C\delta^2\left(
+ |\nabla_H^2F_s(q_i)|+|\nabla_H^3F_s(q_i)|
+ +\sup_{0\le\theta\le1}|\nabla_H^4F_s(q_i(\theta))|\right).
+\tag{9.10}
+$$
+
+Here $|\nabla_H^k|$ means the sum over every word of length $k$;
+the coefficients of the flow are frozen at its initial node. Off the
+chart the identical formula uses the original fields $P,Q$, with the
+fixed factors of $B$ absorbed in $C$.
+
+For $R(q_i)\le b_0/2$ and fine meshes the whole chord is in $R<b_0$.
+The identity $|\nabla_HR|\le1$ in G, (10.9), implies
+$|R(q_i(\theta))-R(q_i)|\le Ce$. Hence if $s\ge Ke$, with a fixed
+sufficiently large $K$, then $s+R$ along this chord is comparable to
+its initial value. Equations (9.2), (9.9)–(9.10) bound the error by
+
+$$
+C\delta^2\frac{s^3}{(s+R(q_i))^5}
+ \le C\delta(e/s)^2f_s(q_i).
+\tag{9.11}
+$$
+
+The second and third derivatives in (9.10) satisfy the same bound
+after increasing $C$, since $s+R$ is in a fixed bounded interval.
+Choose $K$ so that (9.11) is at most $\delta f_s/4$.
+Together with (9.8), this gives decrement at least $\delta f_s/2$
+on this smaller chart. For nodes outside $\mathcal B_{b_0/2}$, a
+fine-mesh chord stays outside $\mathcal B_{b_0/4}$ whenever it meets
+the support of $F_s$. All derivatives there are $O(s^3)$, so its
+conditional increment is at most $C\delta s^3$. It follows globally,
+for every alive node and $Ke\le s\le s_0:=b_0/4$, that
+
+$$
+\mathbb E_i(F_s(q_{i+1})-F_s(q_i))
+ \le-c\delta\,{\bf1}_{\mathcal B_s}(q_i)+C\delta s^3,
+\tag{9.12}
+$$
+
+where $c>0$ uses $f_s\ge2^{-3/4}$ on $\mathcal B_s$.
+The positive cutoff error is controlled over the complete lifetime;
+it is not discarded by an annular summation.
+
+For each deterministic integer $j$, multiply (9.12) by the predictable
+indicator $i<N_n\wedge j$ and sum. Nonnegativity of $F_s$ and
+$F_s(o)\le Cs^2$ give
+
+$$
+c\delta\,\mathbb E\sum_{i<N_n\wedge j}
+ {\bf1}_{\mathcal B_s}(q_i)
+ \le F_s(o)-\mathbb EF_s(q_{N_n\wedge j})
+       +Cs^3\delta\mathbb E(N_n\wedge j)
+ \le Cs^2+CMs^3.
+\tag{9.13}
+$$
+
+Here $\delta\mathbb EN_n\le M$ is exactly (7.6). The last uncut
+overshoot is included in $q_{N_n\wedge j}$; $F_s$ is defined and
+nonnegative there, and is zero outside the height interval.
+Monotone convergence as $j\to\infty$ proves the $Cs^2$ bound for
+$Ke\le s\le s_0$. Increase $n_0$ so that $Ke_n\le s_0$.
+For $s<Ke_n$, set inclusion in $\mathcal B_{Ke_n}$ and that already
+proved bound give $CK^2e_n^2$. This proves (9.5), including the
+submesh branch, without multiplying a mere lifetime bound by $e_n^2$.
+Every alive-node index is counted, including all returns. $\square$
+
+**Theorem 9.3 (complete mesh-aware source-ball occupation).**
+For every fixed model of Definition 1.1 there are $n_0,\epsilon_1>0$
+and $C<\infty$ such that the unchanged complete commands satisfy
+
+$$
+\boxed{\displaystyle
+\nu_n(\mathcal B_\epsilon)
+ \le C(\epsilon^2+e_n\epsilon),\qquad
+0<\epsilon\le\epsilon_1,\quad n\ge n_0.}
+\tag{9.14}
+$$
+
+Both walls, the last cut chord, all later returns and the terminal height
+leg are included.
+
+Proof. The deterministic chord-time bound (7.12) is
+$C\delta_n\min(1,\epsilon/e_n)$. It uses the nonzero two-control speed,
+the true affine horizontal chord and at most one lifted source disk.
+The central-coordinate condition only shortens that set of times.
+If a chord meets $\mathcal B_\epsilon$, its starting node has a lift
+in the same enlarged injective chart for all sufficiently small
+$\epsilon,e_n$. Following this chord backwards in (9.6) and using
+$|\nabla_HR|\le1$ gives
+$R(q_i)\le\epsilon+Ce_n$. Choose a fixed $L\ge\max(C,K)$ and
+$s=\epsilon+Le_n$. Decrease $\epsilon_1$ and increase $n_0$ so that
+$s\le s_0$. Lemma 9.2, or its proved $s\ge Ke_n$ branch, yields
+
+$$
+\begin{aligned}
+\mathbb E\int_0^{\zeta_n\wedge S_n}
+ {\bf1}_{\mathcal B_\epsilon}(\bar q_n(t))dt
+&\le C\delta_n\min(1,\epsilon/e_n)
+ \mathbb E\sum_{i<N_n\wedge m_n}{\bf1}_{\mathcal B_s}(q_i)\\
+&\le C\min(1,\epsilon/e_n)(\epsilon+Le_n)^2
+ \le C(\epsilon^2+e_n\epsilon).
+\end{aligned}
+\tag{9.15}
+$$
+
+The last inequality follows separately for $\epsilon\ge e_n$ and
+$\epsilon<e_n$. A wall cut restricts a chord to a prefix and therefore
+preserves its time bound. The comparison's uncut exit endpoint was used
+only in (9.13), not executed after a wall hit.
+
+The unchanged terminal leg has the deterministic source-band time bound
+(7.15), $C\delta_n\epsilon$, on every surviving command. It is zero
+when that leg misses the ball, and otherwise its speed towards $u$ is
+bounded below by the fixed source-to-upper-wall margin divided by
+$\delta_n$. Since $\delta_n\le e_n$, adding this contribution proves
+(9.14). No death hold is integrated. $\square$
+
+**Theorem 9.4 (exact simultaneous cap rates for every fixed smooth model).**
+Fix any model of Definition 1.1 and $1/2\le p<1$. Let $M_n\to\infty$
+be arbitrary deterministic positive caps on $W=\Gamma^p$ and
+$J_p=\int_\Omega\Gamma^{p+1}d\mu<\infty$. Then
+
+$$
+\boxed{\displaystyle
+\nu_n(\Gamma^p\wedge M_n)\longrightarrow J_p
+\quad\Longleftrightarrow\quad
+\begin{cases}
+e_n\log M_n\longrightarrow0,&p=1/2,\\
+e_nM_n^{1-1/(2p)}\longrightarrow0,&1/2<p<1.
+\end{cases}}
+\tag{9.16}
+$$
+
+Under these equivalent conditions, for every
+$h\in C(\overline\Omega;\mathbb C)$,
+
+$$
+\mathbb E\int_0^{\zeta_n}h(\bar q_n(t))
+ (\Gamma(\bar q_n(t))^p\wedge M_n)dt
+ \longrightarrow
+\mathbb E_o\int_0^\tau h(Q_t)\Gamma(Q_t)^pdt
+ =\int_\Omega h\Gamma^{p+1}d\mu.
+\tag{9.17}
+$$
+
+Thus the necessary rates of Theorem 5.1 are sufficient for the complete
+original producer, with no restriction on the size of the fixed smooth
+coefficient variation. For $\delta_n=n^{-2}$ they are
+$\log M_n=o(n)$ at $p=1/2$, and
+$M_n=o(n^{2p/(2p-1)})$ at $1/2<p<1$.
+
+Proof. Necessity is Theorem 5.1, which also gives its positive-excess
+boundary constants. To prove sufficiency put $a=2p\in[1,2)$.
+The source comparison (1.6) gives $\Gamma^p\le D_pR^{-a}$ on a
+fixed ball $\mathcal B_{\epsilon_1}$. For all $M\ge1$ and
+$0<\epsilon\le\epsilon_1$, (9.14) implies
+
+$$
+\nu_n\bigl((\Gamma^p\wedge M){\bf1}_{\mathcal B_\epsilon}\bigr)
+ \le C_p\epsilon^{2-2p}+C_pe_n H_p(M),\qquad
+H_p(M)=
+\begin{cases}
+1+\log M,&p=1/2,\\
+M^{1-1/(2p)},&1/2<p<1.
+\end{cases}
+\tag{9.18}
+$$
+
+For completeness, set $t_0=(D_p/M)^{1/a}$. If $t_0<\epsilon$,
+the capped layer-cake identity and Tonelli give the upper bound
+
+$$
+D_p\epsilon^{-a}\nu_n(\mathcal B_\epsilon)
+ +aD_p\int_{t_0}^{\epsilon}
+ t^{-a-1}\nu_n(\mathcal B_t)dt
+ \le C_p\left[
+ \epsilon^{2-a}+e_n\epsilon^{1-a}
+ +\int_{t_0}^{\epsilon}(t^{1-a}+e_nt^{-a})dt\right].
+\tag{9.19}
+$$
+
+The first integral is bounded by $C_p\epsilon^{2-a}$ because $a<2$.
+For $a>1$, the other terms are bounded by $C_pe_nt_0^{1-a}$;
+for $a=1$ they are bounded by
+$C_pe_n(1+\log(\epsilon/t_0))\le C_pe_n(1+\log M)$, after adjusting
+constants on the fixed radius range. If $t_0\ge\epsilon$, use instead
+$M\nu_n(\mathcal B_\epsilon)$: here
+$M\epsilon^2\le D_p\epsilon^{2-a}$ and
+$M\epsilon\le D_p^{1/a}M^{1-1/a}$, with the last exponent zero
+when $a=1$. These estimates prove (9.18) in both cap regimes.
+Its derivation uses the actual occupation measure, not a node density.
+
+Let $K$ be at least the finite off-source bound
+$\sup_{\Omega\setminus\mathcal B_\epsilon}\Gamma^p$, which includes
+neighbourhoods of both killed faces. For all eventual $n$ with $M_n\ge K$,
+
+$$
+0\le\nu_n\bigl((W\wedge M_n)-(W\wedge K)\bigr)
+ \le C_p\epsilon^{2-2p}+C_pe_nH_p(M_n).
+\tag{9.20}
+$$
+
+The rate in (9.16) makes the second term tend to zero. First take
+$n\to\infty$, then $\epsilon\downarrow0$ (and allow $K\to\infty$).
+This proves the complete-tail condition (5.8). The fixed-cap bridge of
+Theorem 4.1 and that condition give convergence to $J_p$.
+For (9.17), multiply each fixed-cap error by the bounded continuous
+$h$ and bound its tail by $\|h\|_\infty$ times (9.20).
+The target tail vanishes by $\int\Gamma^{p+1}d\mu<\infty$.
+Tonelli and absolute integrability identify the diffusion expectation.
+$\square$
+
+The new input in this section is the same-producer discrete occupation
+estimate (9.5), obtained from the smooth positive-source potential and
+the uniform one-step bounds (9.8)–(9.13). The auxiliary potential on
+$\mathbb R^3$ is cut off inside an injective chart to form a native
+periodic test. Its cutoff error is $O(s^3)$ over a uniformly bounded
+expected lifetime, while its initial size is $O(s^2)$. It changes neither
+the raw unit-source Green field being observed nor any executed command.
+This is a repo-derived application of classical homogeneous convolution,
+Taylor expansion and stopped telescoping; no worldwide novelty claim
+is made. In particular no limiting diffusion density is substituted
+for a finite-sign-chain density.
+
+Conclusions (9.16)–(9.17) concern deterministic expected occupation
+measures. They assert neither pathwise convergence of these singular
+integrals nor uniform integrability of their random total values.
+They concern the single fixed observation $\Gamma^p$ with its displayed
+caps, rather than all mesh-dependent smooth probes or continuity of a
+command trace in the spatial form norm. The nonclosability and
+changing-probe obstructions in
+[Original-control instrument stability, §§7–11](https://github.com/the-omega-institute/trureturing/blob/6b0a6edd60b/docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION_ORIGINAL_CONTROL_INSTRUMENT_STABILITY.md)
+therefore have different quantifiers. The original integrability
+thresholds and original kinetic domain in §§1–8 are retained. The
+three state coordinates, two direct controls and homogeneous volume
+exponent four are contact-geometric quantities, without an inference
+of physical Euclidean three-space, empirical sampling capability or
+Lean certification.
+
+## 追加锚（本行以下为增补区）

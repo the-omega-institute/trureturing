@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:1bbe07872e5b66037be713447a2d98b33bc51424c49828ef85286a288951ef4a
+  normalized_sha256: sha256:1bbe07872e5b66037be713447a2d98b33bc51424c49828ef85286a288951ef4a
+cas_ref: sha256:1bbe07872e5b66037be713447a2d98b33bc51424c49828ef85286a288951ef4a
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: This is the interpretive label Galois-conjugate/internal coordinate for the already defined lambda-minus, without an independent lattice, inversion or stability assertion.
+    previous_atom_id: 57c91861a13005bf694c96c3b3cf716826e50ccaa497a678636be627ce59bff4
+    next_atom_id: 8ba14b0f53d93fb268e402c734c1f7502344c4a55884656b5a7903006561f382

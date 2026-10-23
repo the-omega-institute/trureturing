@@ -1,0 +1,59 @@
+**Definition 13.1 (coordinates, polarization and fixed normalization).**
+Order the ten edges as $(12,13,14,15,23,24,25,34,35,45)$.
+For $u\in\mathbb R^{10}$ let $U(u)$ be the skew matrix whose ordered
+upper entries are $u$, and write $u_{ik}=U(u)_{ik}$ also when $i>k$.
+For a skew matrix set
+
+$$
+a(A)=(A_{ik})_{i<k},\qquad
+\|A\|_{\mathrm{sk}}=\|a(A)\|_2=\|A\|_{\mathrm F}/\sqrt2.
+\tag{13.1}
+$$
+
+For a symmetric matrix put
+$\|T\|_{\triangle,2}^2=\sum_{i\le k}T_{ik}^2$.
+This coordinate norm differs from its Frobenius norm. All vectors of
+fifty means have the ordinary Euclidean norm. For a homogeneous
+quadratic map $f$ use
+$\operatorname{pol}f(u,v)=(f(u+v)-f(u-v))/4$.
+Put $h_i=i^2/36$, $F_j=F^j$, $G_j=F^{2j}$, and define
+
+$$
+\begin{aligned}
+C_j(u,v)&=-\tfrac12F_j\bigl(U(u)G_jU(v)+U(v)G_jU(u)\bigr)F_j,
+&&j=0,1,2,\\
+d(u,v)&=\operatorname{pol}(b\circ U)(u,v),\\
+\Phi_F(u,v)&=\bigl((C_0)_{ik}:i\le k;\ d;
+                         (C_1)_{ik}:i\le k;\ (C_2)_{ik}:i\le k\bigr).
+\end{aligned}
+\tag{13.2}
+$$
+
+There are $15+5+15+15=50$ coordinates. In particular,
+$C_j(u,u)=K(F^jU(u)F^j)$.
+For the four indices $a<b<c<d$ complementary to $r$, the orientation
+in Definition 6.1 gives
+
+$$
+\begin{aligned}
+b_r(U(u))&=2(-1)^{r-1}
+ (u_{ab}u_{cd}-u_{ac}u_{bd}+u_{ad}u_{bc}),\\
+d_r(u,v)&=(-1)^{r-1}
+ (u_{ab}v_{cd}+v_{ab}u_{cd}-u_{ac}v_{bd}-v_{ac}u_{bd}
+                         +u_{ad}v_{bc}+v_{ad}u_{bc}).
+\end{aligned}
+\tag{13.3}
+$$
+
+Let $Q_F(A)$ be the original fifty means $\mathbb E Z_f$ in (10.3),
+in the order of (13.2), and let
+$B_F=\operatorname{pol}(Q_F\circ U)$.
+At depth $j$ its coordinate is
+$M_f^{-1}\operatorname{pol}(A\mapsto f(F^jAF^j))$.
+Here $M_f$ is computed from the base polynomial, before filtering:
+
+| Base coordinate $f$ | Sum of absolute base coefficients | $M_f$ in (10.1) |
+| --- | ---: | ---: |
+| $K_{ii}=\sum_{\ell\ne i}A_{i\ell}^2$ | $4$ | $2$ |
+| $K_{ik}=-\sum_{\ell\notin\{i,k\}}A_{i\ell}A_{\ell k}$, $i<k$ | $3$ | $7/4$ |
+| $b_r$ in (13.3) | $6$ | $5/2$ |
