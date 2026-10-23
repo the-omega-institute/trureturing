@@ -7,7 +7,6 @@
    digest: Consumed logarithmic density and integer deletion estimates for the original first-clock buffer. -/
 
 import D5.S3.Arith.Robin.ActualRobinClockCovariance
-import D5.S3.Arith.Robin.LogarithmBounds
 import D5.S3.Arith.GoldenResource.GoldenResource5040EndpointComparison
 import D5.S3.Arith.GoldenResource.FirstLayerMarginalAntitone
 
@@ -21,6 +20,32 @@ open D5.S3.Arith.GoldenResource.GoldenResource5040EndpointComparison
 open D5.S3.Arith.GoldenResource.FirstLayerMarginalAntitone
 
 local notation "w₀" => D5.S3.Arith.Robin.ActualRobinClockCovariance.activationDensity
+
+/-- Uniform logarithm bounds on the literal two-left/one-right window. -/
+theorem buffer_log_size {x z : ℝ}
+    (hx : 256 ≤ x) (hzl : x-2 ≤ z) (hzu : z ≤ x+1) :
+    5 < Real.log z ∧ Real.log z ≤ x/20 := by
+  have hx0 : 0 < x := by linarith
+  have hz0 : 0 < z := by linarith
+  have he5 : Real.exp (5 : ℝ) < 243 := by
+    rw [show (5 : ℝ) = (5 : ℕ)*1 by norm_num, Real.exp_nat_mul]
+    have hp := pow_lt_pow_left₀ Real.exp_one_lt_three
+      (Real.exp_pos _).le (by decide : (5 : ℕ) ≠ 0)
+    norm_num at hp ⊢
+    exact hp
+  have hlow : 5 < Real.log z :=
+    (Real.lt_log_iff_exp_lt hz0).mpr (by linarith)
+  have hlog256 : Real.log (256 : ℝ) ≤ 8 := by
+    rw [show (256 : ℝ) = 2^8 by norm_num, Real.log_pow]
+    have h2 := Real.log_le_sub_one_of_pos (by norm_num : (0 : ℝ) < 2)
+    norm_num at h2 ⊢
+    linarith
+  have hx1 : 0 < x+1 := by linarith
+  have hs := Real.log_le_sub_one_of_pos
+    (div_pos hx1 (by norm_num : (0 : ℝ) < 256))
+  rw [Real.log_div hx1.ne' (by norm_num : (256 : ℝ) ≠ 0)] at hs
+  have hup : Real.log (x+1) ≤ x/20 := by linarith
+  exact ⟨hlow, (Real.log_le_log hz0 hzu).trans hup⟩
 
 /-- Backward comparison for the literal Robin activation density. -/
 theorem buffer_density_left {x h : ℝ}
