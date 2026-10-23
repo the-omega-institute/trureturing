@@ -21,7 +21,7 @@ open D5.S3.ConceptDynamics.Coding.ResponseKernelRecursion
 open D5.S3.ConceptDynamics.Coding.CommonNilpotencyForgettingBound
 
 /-- Pathwise forgetting and equality of the response kernel use the same paths. -/
-private theorem forgets_iff_response {p : ℕ} {A : CountMat p p} {Q : Type}
+theorem forgets_iff_response {p : ℕ} {A : CountMat p p} {Q : Type}
     (L : IncomingLift A Q) (d : ℕ) :
     Forgets L d ↔ L.response d = Setoid.ker L.project := by
   constructor
