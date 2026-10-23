@@ -1,0 +1,29 @@
+### 定义 1.3（纤维正负质量）
+
+对 $z\in Q$、$d\in D$，定义
+
+$$
+M^+_{z,d}
+=
+\sum_{s\in C_z:\ d\in F(s)}\mu(s),
+\qquad
+M^-_{z,d}
+=
+\sum_{s\in C_z:\ d\notin F(s)}\mu(s).
+\tag{1.3}
+$$
+
+于是 $M^+_{z,d}+M^-_{z,d}=\mu(C_z)$。定义表示 $q$ 的加性逃逸谱为
+
+$$
+\boxed{
+\mathsf E_\omega(q;F,\mu)
+=
+\sum_{z\in Q}\sum_{d\in D}
+\omega(d)\min\{M^+_{z,d},M^-_{z,d}\}.
+}
+\tag{1.4}
+$$
+
+它只对可达纤维有贡献。若 $\omega\equiv1$，简写为 $\mathsf E(q)$。
+

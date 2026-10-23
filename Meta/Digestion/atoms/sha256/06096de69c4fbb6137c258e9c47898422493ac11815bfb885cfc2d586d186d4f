@@ -1,0 +1,23 @@
+**定义 1.1（五窗、指标与分类风险）。** Use the low-to-high three-bit coordinates of [the FIB ML volume, Definition 2.1](FIB_ATOM_MACHINE_LEARNING_WHITEBOX.md):
+
+$$
+(a,b,c,d,e)=(000,100,010,101,001).
+$$
+
+Let $S$ be a finite probability space and $C:S\to\{a,b,c,d,e\}$, $Q:S\to\mathcal Q$ deterministic maps. Write
+
+$$
+\begin{aligned}
+p_i&=\Pr(C=i),&\lambda_q&=\Pr(Q=q),&
+v_i(q)&=\Pr(C=i\mid Q=q),\\
+r_i&=\mathbb E\min(v_i(Q),1-v_i(Q)),&
+\epsilon&=\mathbb E(1-\max_iv_i(Q)),&
+I&=H(p)-\mathbb EH(v(Q)).
+\end{aligned}
+\tag{1.1}
+$$
+
+Only $\lambda_q>0$ is considered. Thus $r_i$ is the Bayes error for $\mathbf1_{\{C=i\}}$, and $\epsilon$ is the categorical Bayes error. Entropies are in bits, $H(v)=-\sum_iv_i\log_2v_i$, $h(t)=-t\log_2t-(1-t)\log_2(1-t)$, and $0\log_20=0$. A label-only readout has $Q=f(C)$. An auxiliary readout is any deterministic $Q$ on a supplied finite $S$; $Q$ need not be a function of $C$ alone.
+
+A finite posterior specification $(\lambda_q,v(q))$ with $\sum_q\lambda_qv(q)=p$ is realized on states $(i,q)$ of masses $\lambda_qv_i(q)$, with $C(i,q)=i$ and $Q(i,q)=q$. This is the finite splitting construction used in Kamenica–Gentzkow, *Bayesian Persuasion*, Proposition 1, [primary text](https://web.stanford.edu/~gentzkow/research/BayesianPersuasion.pdf), [DOI 10.1257/aer.101.6.2590](https://doi.org/10.1257/aer.101.6.2590). It is an intermediate representation tool, not an additional five-window result.
+

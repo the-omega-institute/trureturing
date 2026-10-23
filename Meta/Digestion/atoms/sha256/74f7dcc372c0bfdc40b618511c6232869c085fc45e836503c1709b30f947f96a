@@ -1,0 +1,45 @@
+**Definition 12.1 (The entire compact region and its coordinates).**
+Write III for [Strict Real Joint Incidence Support III](https://github.com/the-omega-institute/trureturing/blob/30b32d5e17e23590839090a0b244c019c4796817/docs/develop/theory/FIB_STRICT_REAL_JOINT_INCIDENCE_SUPPORT_III.md).
+Use its Definition 1.1 and Definition 20.1 for the ambient parent
+$\mathcal H_{\rm par}$, distinguished here from the system Hilbert
+space $\mathcal H=L^2(\mathbb R^{17};\mathbb C)$. Set
+
+$$
+K_J=\{W\in\mathcal H_{\rm par}:10\le p(W)\le34,
+\quad v(W)=v_J(p(W))\}.
+\tag{12.1}
+$$
+
+This is III, Definition 23.1: at $p\ne24$ it contains every world of
+$C(p,v_J(p))$, and at $p=24$ it retains the same complete-world
+equations in the ambient parent. Unused companions, singular sources,
+degree drops, sampled gain zeros and zero drift remain included.
+No choice of a terminal pair enters (12.1).
+
+Write the full coordinates and the prescribed preparation mean as
+
+$$
+\begin{gathered}
+W=(P,g,d),\qquad
+P=\begin{pmatrix}r&b\\c&1-r\end{pmatrix},\qquad
+c=\frac{r(1-r)}b,\quad 0<r<1,\quad b>0,\quad d=e+24,\\
+g(s)=\sum_{k=0}^3a_ks^k\ne0,\qquad
+\operatorname{vec}(X)=(X_{11},X_{21},X_{12},X_{22})^T,\\
+\mu(W)=m_W=
+(d,\operatorname{vec}(a_0P),\operatorname{vec}(a_1P),
+\operatorname{vec}(a_2P),\operatorname{vec}(a_3P))\in\mathbb R^{17}.
+\end{gathered}
+\tag{12.2}
+$$
+
+The four coefficients are padded through degree three. In particular
+each four-coordinate block in (12.2) is
+$a_k(r,c,b,1-r)^T$, with column rather than row vectorization.
+The preparation is exactly Assumption 2.1:
+
+$$
+\psi_W(x)=\pi^{-17/4}e^{-\|x-\mu(W)\|^2/2},\qquad
+\rho_W=|\psi_W\rangle\langle\psi_W|.
+\tag{12.3}
+$$
+
