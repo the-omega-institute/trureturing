@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:c3bebb8b1fd6f8e36596db7be0dbf461f560a75318588590287d50cd1fd38165
+  normalized_sha256: sha256:c3bebb8b1fd6f8e36596db7be0dbf461f560a75318588590287d50cd1fd38165
+cas_ref: sha256:c3bebb8b1fd6f8e36596db7be0dbf461f560a75318588590287d50cd1fd38165
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 'Nonpropositional: 在负 Jet 或 Hankel 失正的假设下列出待完成的尺度恢复任务，没有声称已完成恢复。'
+    previous_atom_id: 67324832118cb53e2b218a9dbeaab837f51098265a6382d066d9a94857feabe0
+    next_atom_id: 7dc2f13ed27c75b9f02ee0ef0edff99965da5f151480dbe4aab1bf02a287d819
