@@ -2,6 +2,8 @@ fingerprints:
   raw_sha256: sha256:37983cca24bd38999efaa6682f536422a3a45b5d6a62da41190b807f465b03fa
   normalized_sha256: sha256:37983cca24bd38999efaa6682f536422a3a45b5d6a62da41190b807f465b03fa
 cas_ref: sha256:37983cca24bd38999efaa6682f536422a3a45b5d6a62da41190b807f465b03fa
-coverage_gids: []
+coverage_gids:
+  - gid: D5/S3/FiniteGroups/ToralCharacterSupport.support_iff
+    target_statement_id: sha256:ed1605704cb8d4d6ed6a226c67045336282a094c2e2758d345daecd1f69540c6
 receipts:
   unresolved_subitems: []
