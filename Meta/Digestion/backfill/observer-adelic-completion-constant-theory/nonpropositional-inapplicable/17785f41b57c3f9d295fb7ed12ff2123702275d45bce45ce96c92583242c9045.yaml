@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:17785f41b57c3f9d295fb7ed12ff2123702275d45bce45ce96c92583242c9045
+  normalized_sha256: sha256:17785f41b57c3f9d295fb7ed12ff2123702275d45bce45ce96c92583242c9045
+cas_ref: sha256:17785f41b57c3f9d295fb7ed12ff2123702275d45bce45ce96c92583242c9045
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 建议形式化模块路径及顺序的工程清单，无数学断言。
+    previous_atom_id: 217af9b600c4b9b5ee369ec17325fac62d15f216114b33852ca7ceb999dd432e
+    next_atom_id: e98172459e9e340af09392307282526edda3e133892e68fd1f17ab76b6bfaaca
