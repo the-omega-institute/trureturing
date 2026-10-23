@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:71a6a67af285de0aaf8039992d0cd4a7a34946e0f5bb1c9e574f085edb20f878
+  normalized_sha256: sha256:71a6a67af285de0aaf8039992d0cd4a7a34946e0f5bb1c9e574f085edb20f878
+cas_ref: sha256:71a6a67af285de0aaf8039992d0cd4a7a34946e0f5bb1c9e574f085edb20f878
+coverage_gids:
+  - gid: D5/S1/Digit/Infinite/UnsignedGoldenReadout.unsigned_golden_readout
+    target_statement_id: sha256:908202c2bd62f84cd827368084a4190f0540df5e3207b98a15a58548b7cc03e6
+receipts:
+  unresolved_subitems: []

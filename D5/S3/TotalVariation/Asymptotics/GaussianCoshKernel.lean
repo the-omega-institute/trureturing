@@ -45,7 +45,7 @@ private theorem density_bounds (u : ℝ) :
       div_le_div_of_nonneg_right (by linarith) hs.le
     _ = _ := by ring
 
-private theorem kernel_integrable (q d : ℝ) :
+theorem kernel_integrable (q d : ℝ) :
     Integrable (fun u : ℝ => stdNormalPDF u * max (Real.exp d - Real.cosh (q * u)) 0) := by
   apply (integrable_stdNormalPDF.mul_const (Real.exp d)).mono'
     ((continuous_stdNormalPDF.mul (by fun_prop)).aestronglyMeasurable)

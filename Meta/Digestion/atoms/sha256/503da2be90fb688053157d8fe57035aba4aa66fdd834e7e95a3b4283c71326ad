@@ -1,0 +1,35 @@
+**Assumption 7.1 (Exact published suppliers).** The following statements
+are used with their original quantifiers. Write
+$\delta(W)=\min\{r,1-r,b,c\}$ and let $D_J$ mean the set of bases
+with a distinct equal-$a$ pair in the entire off-$24$ child.
+
+1. III, Theorem 7.1, supplies $P_J>0$ such that, for every real
+   $p\ne24,v$ and $W\ne W'\in C(p,v)$ with $a(W)=a(W')$,
+   $|p|\le P_J$.
+2. III, Corollary 8.1, supplies finite $V_J,C_J>0$ such that every
+   $(p,v)\in D_J$ has $|v|\le V_J$, and every world of its entire
+   child has $b,c,|d|$ and all four padded whole-gain coefficients
+   bounded by $C_J$. The same enlarged bound controls both terminal
+   responses, including those of unused companions.
+3. SII, Theorem 29.1, supplies one $\epsilon>0$, uniform in $v$,
+   such that $0<|p-24|<\epsilon$ admits no distinct equal-$m$ pair.
+   Hence every (1.1) has $|p-24|\ge\epsilon$.
+4. SII, Theorem 23.1, supplies $\eta>0$ such that for every real
+   $p\ne24,v$ and every distinct equal-$m$ pair in $C(p,v)$,
+   both endpoints have $b+c\ge\eta$. It assumes no bound on $p$.
+5. SII, Theorem 14.3, gives, for every $P>0$, one
+   $\varepsilon(P)>0$ for both actions and all $|p|\le P,p\ne24,v$,
+   such that every selected distinct equal-terminal pair obeys
+   $\max\{\delta(W),\delta(W')\}\ge\varepsilon(P)$.
+   SII, Theorem 15.1, puts the chosen endpoint of each pair of a joint
+   configuration into one compact strict-parent set; over a compact
+   off-$24$ base set it lies in a compact strict off-$24$ parent set.
+6. SII, Theorem 21.2, excludes convergence of either selected $M$
+   endpoint of original joint configurations, whose bases have a finite
+   off-$24$ limit, to a complete $B_0(t)$ tuple for $t>0,t\ne1$.
+   Its $L(t)$ is exactly the face $B_0(t)$ of Definition 1.3.
+
+These are supplied conclusions, not a hypothesis that the joint locus
+itself is compact or closed. Theorem 21.2 uses the original selected
+$J$ pair at the same bases and does not require a cross-pair equality.
+

@@ -1,0 +1,63 @@
+## 34. Mathematical suppliers and the remaining joint incidence
+
+The all-companion implications (31.1) and (32.1), together with their
+application (33.1)–(33.2) over the negative window and the parameter
+subsets (33.4), are source-specific quantitative estimates in the
+original model. The parent converse,
+clock products and fixed interpolation rows are the published
+interfaces cited in Section 30. Polynomial interpolation at the
+distinct nodes $0,1,2,3$ is also the classical formula of Berrut and
+Trefethen, *Barycentric Lagrange Interpolation*, Section 2,
+equations (2.1)–(2.2),
+[DOI 10.1137/S0036144502417715](https://doi.org/10.1137/S0036144502417715).
+The negative-$p$ strict $J$ pairs and their projection coverage are
+the supplied Theorem 28.1, not consequences of boundedness.
+
+The finite boundary lift on
+$P=\left(\begin{smallmatrix}0&0\\t&1\end{smallmatrix}\right)$,
+$t>0$, $t\ne1$, is the existing auxiliary face $B_0(t)$.
+Its drift and $p,v,a,m$ fractions belong to
+[Support, Definition 12.2 and Theorem 13.1](https://github.com/the-omega-institute/trureturing/blob/f09e5d2a5164cf569740c782618c743b0b2d055c/docs/develop/theory/FIB_STRICT_REAL_JOINT_INCIDENCE_SUPPORT.md),
+and to
+[Support II, Lemma 12.2 and (17.1)–(17.2)](https://github.com/the-omega-institute/trureturing/blob/f09e5d2a5164cf569740c782618c743b0b2d055c/docs/develop/theory/FIB_STRICT_REAL_JOINT_INCIDENCE_SUPPORT_II.md).
+In particular the matrix in (27.8) has this already defined face
+type. Its use as a limit does not make it a strict-world witness.
+The complete strict lower-face equal-$M$ relation is already
+classified by Support II, Theorem 19.4; its Sections 20–21 supply
+the corresponding whole-child $J$ exclusions and finite joint-end
+restriction. Those results retain their stated scopes. The present
+caps supply neither a replacement boundary classification nor a new
+boundary response formula.
+
+For each complete world $W=(P(r,b),g,d)$ in the domain of
+Section 30, with $j,n,T,U$ as in (30.4) for that world, define its
+terminal $J$ and $M$ responses at clock seven by
+
+$$
+a(W)=d+(T+2j+4r)g(7),\qquad
+m(W)=d+(3U+2n)g(7).
+$$
+
+The unchanged global target remains
+
+$$
+\begin{gathered}
+\exists p\ne24,\ v,\ W_0,W_1,W_2,W_3\in C(p,v):\\
+W_0\ne W_1,\qquad a(W_0)=a(W_1),\\
+W_2\ne W_3,\qquad m(W_2)=m(W_3).
+\end{gathered}
+\tag{34.1}
+$$
+
+The two pairs are independently selected, may overlap or be disjoint,
+and their common terminal answers are unrelated. All four labels
+belong to one entire child and retain the domain of Section 30.
+The caps do not construct an equal-$M$ pair there and do not show
+that $M$ is injective there. They give no complete companion
+inventory, separation theorem or global completion. In particular
+unequal terminal-$M$ readings of the two selected $J$ endpoints do
+not exclude a different $M$ pair in the same child. Finite source
+boundary limits, singular alternatives, critical mergers and other
+source branches remain part of the original incidence problem.
+The existence or absence of (34.1) remains unresolved.
+

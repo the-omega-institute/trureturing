@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:2c1bfb44acffa08367f02d43c9b17c33f18e6ea97ea0d4a51ae1097348214048
+  normalized_sha256: sha256:2c1bfb44acffa08367f02d43c9b17c33f18e6ea97ea0d4a51ae1097348214048
+cas_ref: sha256:2c1bfb44acffa08367f02d43c9b17c33f18e6ea97ea0d4a51ae1097348214048
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: Section introduction specifying the two programming test contracts and excluding acquisition; it asserts no independent mathematical conclusion.
+    previous_atom_id: d8986067843c6a848ecc78ea76071072d8ab6a2a6cb931974702a6156bdd1ef6
+    next_atom_id: a043178376a89c7f7cbc0718fc6384f2b989b114e5123fd34794494b913386bc

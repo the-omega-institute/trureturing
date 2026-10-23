@@ -1,0 +1,7 @@
+Sources, verified 2026-10-06:
+
+- Paper: https://arxiv.org/html/2605.01410v1, Section 4, Conjecture 1
+- Author notebook pinned at repository commit `0d4404941894d3ef8dd9f27f1e61829bec2bcde5`: https://github.com/babakghanbari993/cdc-random-embeddings/blob/0d4404941894d3ef8dd9f27f1e61829bec2bcde5/notebooks/random_embedding_experiment.ipynb
+- Notebook blob: `82fb13311d4c9ef254d644ab021346915e61618a`
+- Relevant functions: `random_pi`, `random_lambda`, `random_embedding`, `count_good_bad_regular`
+

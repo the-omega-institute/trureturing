@@ -1,0 +1,25 @@
+**命题 466.2（同权 F4 子和与剩余物理行）。** 沿用 [F1–F4](../../../Library/Analytic/faveri2026fixedorder.md#a-weighted-powerful-part-majorant-for-all-original-columns) 的全部原系数及 $s=1/2+\eta$。当 $K\le C_0U$ 时，实际 F4 包在（466.2）两类物理行上的完整能量，沿同一个 F4 正权的总和满足
+
+$$
+Z_s|\mathcal T|\sum_{c\ {\rm powerful}}
+ q_c^s\tau(\operatorname{rad}c)
+ \sum_{a\mid\operatorname{rad}c}\sum_{\kappa\in\mathcal T}
+ \widetilde T^{{\rm sf},\,{\rm proper}}_{j;c,a,\kappa}
+\ll_{\varepsilon,C_0}\mathcal C^2(UK)^\varepsilon UK.
+\tag{466.8}
+$$
+
+证明。每个实际包的原系数具有同一除数型包络，支撑长度为 $X=K/q_c\ll K$，其列 mask 与有限过滤仍与物理行无关。把（466.4）的 $K$ 换成 $X$，得到完整包的 $UX$ 上界；这里只在包实际非空时应用固定 annular 合同。然后直接使用（464.14）的同一个临界 powerful-core 求和，并按一个最终 $\varepsilon$ 选择同一个 $\eta$ 与全部内部损失，得到（466.8）。没有估计独立 signed pole，也没有把正范数界相减。证毕。
+
+在原平衡 $U\asymp K$、$D=N=\sqrt K$ 中，该行切面包含全部 $c=a=1$ 的平方自由列系数在这些物理行上的完整能量。这不要求这些列属于第 464–465 节的短因子范围。该切面也不是列对 $h,k$ 的比值阶数选择：已知的 $H_{2,j},H_{3,j},H_{6,j}$ 是列对的分块，不能将其有符号拼接直接认作（466.2）的正行能量。
+
+把其余 good 非单位 sixth-power-free 行记为 $\mathcal R_{6,j}$。它们在 $S$ 外的字符阶数恰为六，因为其素估值不全被二整除，也不全被三整除。这给出同一个原正能量的精确行分拆
+
+$$
+Q(b)=Q_{\rm exc}(b)+
+ \sum_j\{Q_{3,j}(b)+Q_{2,j}(b)+Q_{6,j}(b)\}.
+\tag{466.9}
+$$
+
+有限 $S$-例外保持原处理。在 $K\le C_0U$ 范围内，完整 $UK$ 正预算仍需估计 $Q_{6,j}$；（466.3）在 $K/U$ 无界时也不自动给出 $UK$ 预算。原更大高度费用、完整六阶行及 signed Robin restoration 仍是独立义务；这些结论不证明 RH 或逐整数 Robin 不等式。
+

@@ -1,0 +1,82 @@
+**Theorem 16.4 (Faithful incidence and diagonal-accumulation tests).**
+The sentence $\mathsf I$ is equivalent to the original assertion
+$D_J\cap D_M\ne\varnothing$ with the entire-child quantifiers
+of Definition 9.1. For each $i$, $\mathsf J_i$ is equivalent to
+$(p_i,v_i)\in D_J$, and $\mathsf Q_i$ is equivalent to existence
+of a sequence of original joint configurations whose two selected
+$M$ endpoints both converge as complete worlds to $W_i$.
+These are finite real-algebraic sentences with algebraic constants.
+
+In a configuration of (16.6), the two selected $J$ worlds cannot
+both belong to the same $\mathcal U_i$ of Theorem 16.1, even if
+both selected $M$ worlds do belong to it. The scope of the existing
+regional $J$ exclusion in [SV](FIB_STRICT_REAL_JOINT_INCIDENCE_SUPPORT_V.md),
+Theorem 1.1, does not include the fourth base $(p_4,v_4)$.
+
+*Proof.* The source inequalities and equation $bc=r(1-r)$ in
+(16.5) give exactly a strict trace-one rank-one source, with
+$c=r(1-r)/b$. The four coefficients specify one entire real
+polynomial of degree at most three and their sum-of-squares guard
+excludes only the identically zero gain. That guard also follows
+from the unequal original readings, so it removes no original
+world. The seven equations are exactly the original left-action
+clock equations, including the fourth reading and both acquired
+readings. Formula (16.4) supplies the two alternative clock-seven
+responses. This identifies $\mathscr W$ bijectively with the
+entire $C(p,v)$, including singular sources, zero drift, degree
+drops and gain samples that vanish. A positive squared difference
+means distinct complete worlds. Thus (16.6) and (16.7) have exactly
+the asserted independent-pair and base-pair quantifiers.
+
+If $\mathsf Q_i$ holds, choose its witnesses with
+$\epsilon=1/n$. Both selected $M$ triples $(r,b,d)$ converge to
+$z_i$. Since $b_i>0$, the entries $c=r(1-r)/b$ converge too.
+Set $e=d-24$ and use the whole-gain samples (2.2): their positive
+source denominators are bounded away from zero near this strict
+limit, and each sample is a continuous function of $(r,b,d)$.
+Fixed-node interpolation then gives convergence of all four padded
+gain coefficients. Hence both selected complete worlds converge
+to $W_i$. Their common $p,v$ converge to $p_i,v_i$ by continuity,
+and all worlds in the sequence retain the strict original guards.
+
+Conversely, for a sequence of such joint configurations with
+both selected $M$ worlds converging to $W_i$, the sum in (16.8)
+tends to zero; for every $\epsilon>0$ some member supplies its
+witnesses. This proves the exact equivalence. Theorem 16.2
+classifies the possible strict off-$24$ common limits in this
+equivalence. It does not supply the independent $J$ pair in any
+of the constructed $M$ germs.
+
+All expressions in (16.4)–(16.8) are polynomial equalities and
+inequalities with rational coefficients apart from the specified
+real algebraic constants. Those constants are themselves defined
+by $F$, the isolating intervals and (13.2)–(13.4). Denominators
+there are certified nonzero; their defining rational equations
+may therefore be expressed by multiplication without selecting
+additional components. Classical quantifier elimination over real
+closed fields applies, including to the quantified $\epsilon$
+in (16.8); the general method is that of Basu–Pollack–Roy cited
+in Lemma 12.3. For the fixed-base tests, F, Theorem 32.1, also
+bounds each entire off-$24$ child by $24$ worlds, so direct
+unordered comparison has at most $\binom{24}{2}=276$ pairs.
+
+The local assertion follows directly from (16.1), since the $J$
+pair shares both $p$ and $a$. It leaves at least one $J$ endpoint
+outside that patch and permits every original cross-pair overlap.
+Finally $v_4>305.047970>305$ by Lemma 13.2, whereas SV,
+Theorem 1.1, excludes $J$ pairs only for
+$(p,v)\in[56,58]\times[304,305]$. Thus its rectangle cannot be
+enlarged to this fourth critical base by that theorem.
+
+Theorem 16.2 assumes a common strict interior limit of the $M$
+endpoints. It gives no reduction of configurations whose $M$
+endpoints remain separated, or whose common limit is a boundary
+world or has $p=24$. Moreover $\neg\mathsf J_i$ alone asserts
+absence only at one exact base: it supplies no neighbourhood
+absence for independently selected $J$ pairs whose endpoints can
+approach their own boundary or diagonal. Conversely
+$\mathsf J_i$ by itself supplies no intersection of its base
+pair with the neighbouring $M$ double-point branch. The global
+sentence $\mathsf I$ therefore retains all bases, all independent
+$J$ roles and all separated $M$ pairs in (16.6). ∎
+

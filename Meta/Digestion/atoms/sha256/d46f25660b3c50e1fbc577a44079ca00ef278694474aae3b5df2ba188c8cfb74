@@ -1,0 +1,111 @@
+**Lemma 10.9 (Universal carrier division and the infinity branch).**
+Use (10.17) first with independent $p,v$ and fixed degree bounds
+$\deg_dF=2$, $\deg_dG=4$. Let
+
+$$
+T_0=\operatorname{Res}_d(F,G),\qquad
+\mathscr R=\frac{T_0}{D^8H^2}.
+\tag{10.23}
+$$
+
+The division is exact over $\mathbb Q[p,v,x]$, and
+$\deg_xT_0\le48$, $\deg_x\mathscr R\le18$. After
+$v=s_t(p)$ it remains an exact polynomial division in
+$\mathbb K[p,x]$. The carrier $\mathscr R$ is distinct from the
+inherited eliminant $R(r,p,v)$ of Section 3.
+
+Proof. For $c=0,-1,-2$ put $u=x-c$ and substitute, respectively,
+
+$$
+d=24+uz,\qquad d=p+uz,\qquad d=v+uz.
+\tag{10.24}
+$$
+
+Each $N_i$ and $D$ is divisible by $u$ after its corresponding
+substitution. Therefore the substituted $F,G$ are divisible by
+$u^2,u^4$ respectively. Translation and scaling of the eliminated
+variable in a fixed degree-$(2,4)$ resultant multiply it by $u^8$.
+Factoring $u^2$ from the first input and $u^4$ from the second
+multiplies their resultant by $u^{2\cdot4+4\cdot2}=u^{16}$.
+Cancelling in the polynomial domain proves $u^8\mid T_0$.
+The three distinct linear factors yield $D^8\mid T_0$.
+
+For $H^2$, the constant coefficient of $F$ in $d$ is divisible
+by $H$; the constant and linear coefficients of $G$ are divisible
+by $H^2$ and $H$. The following universal coefficient argument
+makes this sufficient. For independent coefficients consider
+
+$$
+\begin{aligned}
+f_h(d)&=f_2d^2+f_1d+hf_0,\\
+g_h(d)&=g_4d^4+g_3d^3+g_2d^2+hg_1d+h^2g_0.
+\end{aligned}
+\tag{10.25}
+$$
+
+Over the generic coefficient field, $f_1,f_2$ are nonzero. One
+formal root of $f_h$ is of order $h$ and the other is finite.
+At the first root $g_h$ has order at least two in $h$; at the
+second it has nonnegative order. The resultant product formula
+therefore gives $h^2\mid\operatorname{Res}_d(f_h,g_h)$.
+Its coefficients are polynomials in the independent coefficients,
+so this divisibility is a polynomial identity and specializes even
+when $f_1$ or $f_2$ vanishes. Apply it to the coefficients of
+$F,G$, with $h=H$, to obtain $H^2\mid T_0$.
+
+The polynomial $H$ has degree three in $x$ with constant leading
+coefficient $-810$. Also
+
+$$
+H(0)=960,\qquad H(-1)=-36p,\qquad H(-2)=-20v.
+\tag{10.26}
+$$
+
+Thus $H$ and $D$ are relatively prime over $\mathbb Q(p,v)$,
+and the two factors combine there. Division by their product,
+whose leading coefficient in $x$ is the nonzero constant $810^2$,
+is polynomial division over $\mathbb Q[p,v]$; the zero remainder
+over its fraction field is therefore identically zero. The result
+specializes polynomially to $v=s_t(p)$, including parameter values
+where some values in (10.26) vanish.
+
+For the degree, $\deg_xF\le6$, $\deg_xG\le14$ give the initial
+Sylvester bound $4\cdot6+2\cdot14=52$. The coefficient of $x^6$
+in $F$ is
+
+$$
+-30(d-18)(59d-1251).
+\tag{10.27}
+$$
+
+Set $z=1/x$. The polynomial $z^6F(z^{-1},d)$ has at $z=0$ the
+two simple roots $18$ and $1251/59$. Both extend to formal power
+series in $z$ over $\mathbb Q(p,v)$. On the branch
+$d(z)=18+O(z)$, each of $z^3N_0,z^3N_1,z^3N_2$ has order at
+least one, because its value at $z=0,d=18$ vanishes.
+Also $z^3D=1+O(z)$ and
+
+$$
+z^4\{xN_1-(24-d)D\}
+=z^3N_1-z(24-d)(z^3D)=O(z).
+\tag{10.28}
+$$
+
+It follows term by term that $z^8A=O(z^2)$ and
+$z^7B=O(z^2)$. In $z^{14}G$, the orders of the three terms
+$N_0^2A$, $-dDN_0B$, $-d^2D^2N_1^2$ are therefore at least
+$4,4,4$ respectively. In particular $G(z^{-1},d(z))=O(z^{-10})$.
+On the other finite branch the unsharpened bound is $O(z^{-14})$.
+The leading coefficient of $F$ as a polynomial in $d$ is
+$O(z^{-6})$ and has nonzero leading term. The resultant product
+formula, with its fourth power, consequently bounds $T_0$ by
+$O(z^{-24-10-14})=O(z^{-48})$. This proves
+$\deg_xT_0\le48$. Subtracting the degrees $24+6$ of $D^8H^2$
+gives $\deg_x\mathscr R\le18$.
+All arguments are polynomial identities, so degree drops under
+specialization cause no exception to the stated bounds. The
+resultant product formula used here is the classical Sylvester
+elimination formula; see Cox–Little–O'Shea,
+*[Ideals, Varieties, and Algorithms](https://doi.org/10.1007/978-3-319-16721-3)*,
+Chapter 3. ∎
+

@@ -33,6 +33,17 @@ internal sealed class GaussianCoshKernelDocument : IScribeDocumentDefinition
                     + "integrable for every real q and d."))),
                 DescribeRole.Definition),
             Describe.Lean(
+                DescribeId.Create("all-parameter-integrability"),
+                DeclarationHandle.Create(Prefix + "kernel_integrable"),
+                H("Integrability for every real parameter"),
+                StatementSource.FromAuthor(Disp(All("q", R, All("d", R,
+                    Call("Integrable", Call("K", I("q"), I("d"))))))),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("The nonnegative clipped integrand is at most exp(d) "
+                    + "times the standard normal density. This gives integrability without "
+                    + "any sign or smallness restriction on either real parameter."))),
+                DescribeRole.Theorem),
+            Describe.Lean(
                 DescribeId.Create("compact-uniform-remainder"),
                 DeclarationHandle.Create(Prefix + "gaussian_cosh_uniform_remainder"),
                 H("The exact coefficient and a uniform fifth-half-power remainder"),

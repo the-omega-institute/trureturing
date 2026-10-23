@@ -1,0 +1,38 @@
+## 1. 固定目标下的未来窗口
+
+取有限观察域 $D$、输出集 $O$ 和目标读数 $t:D\to O$。每个候选 $Q$ 在 $D$ 上给出确定性读数 $Q_D:D\to O$，其失败边为
+
+$$
+F_Q=\{w\in D:Q_D(w)\ne t(w)\}.
+$$
+
+对候选族 $\mathfrak P$ 和观察集 $C\subseteq D$，定义幸存候选集
+
+$$
+V_{\mathfrak P}(C)=\{Q\in\mathfrak P:C\cap F_Q=\varnothing\}.
+$$
+
+$C$ 是 $\mathfrak P$ 的失败证书，当且仅当 $V_{\mathfrak P}(C)=\varnothing$。
+
+给定有限更新窗口
+
+$$
+\mathfrak M_a,\mathfrak M_{a+1},\ldots,\mathfrak M_b,
+\qquad a\le b,
+$$
+
+把窗口内候选族合并为
+
+$$
+\mathfrak U_{a:b}=\bigcup_{j=a}^{b}\mathfrak M_j.
+$$
+
+对当前观察 $C$，定义窗口残余失败边族
+
+$$
+\mathcal E_{a:b}(C)
+=\{F_Q:Q\in\mathfrak U_{a:b},\ C\cap F_Q=\varnothing\}.
+$$
+
+重复失败边可以保留，因为它们不改变横截数。若残余边族含空边，约定其横截数为 $\infty$；空边族的横截数为 $0$。
+

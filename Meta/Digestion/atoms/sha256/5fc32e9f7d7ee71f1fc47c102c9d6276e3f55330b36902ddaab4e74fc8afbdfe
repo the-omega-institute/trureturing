@@ -1,0 +1,71 @@
+**定理 15.1（稠密切面上的相对实提升恢复）。** Fix the same input, clock,
+$b,a,T$ as in §9. Let $D\subseteq[0,T]$ be dense. Suppose the complete
+terminal instruments of the truncated controls agree on that same input
+at every cut $t\in D$. Then
+
+$$
+k(t)=\widetilde k(t),\qquad
+\chi(t)-\chi(0)=\widetilde\chi(t)-\widetilde\chi(0)
+\quad(0\le t\le T).
+\tag{OC.53}
+$$
+
+Conversely these pointwise equalities give equal instruments at all cuts.
+The conclusion identifies the exact time-parameterized relative waveform,
+not merely a reparameterization class. For a current loop it identifies its
+full signed winding.
+
+Proof. Apply Theorem 11.1 to each truncated control. It gives equal heights
+and equal characters $e^{-iH_\pm(t)}$ at every cut in $D$.
+All these functions are continuous, so the equalities extend to the whole
+interval. Each real difference $H_\pm-\widetilde H_\pm$ is continuous,
+starts at zero and takes values in the discrete set $2\pi\mathbb Z$.
+Connectedness forces it to vanish identically. Formula (OC.27) then gives
+(OC.53). Conversely equal $k$ and relative $\chi$ have equal derivatives
+almost everywhere, equal integrals and therefore all the same prefix maps.
+Zero duration gives the identity as before. $\square$
+
+There is also a constructive law-level reading when the input phase is
+calibrated, or the same input's time-zero coherences are supplied. Let
+$\sigma_t=K_t|\psi\rangle\langle\psi|K_t^*$ be the unnormalized
+successful state at each supplied cut. For $i\ne2$,
+
+$$
+e^{-iH_i(t)}=
+ \frac{(\sigma_t)_{i2}}
+ {S(t)\sqrt{p_i(k(t))Z}\,e^{-i\vartheta_i}},
+\qquad \psi_i=\sqrt{p_i(a)}e^{-i\vartheta_i}.
+\tag{OC.54}
+$$
+
+All denominator factors are nonzero and fixed by the stated preparation
+calibration or its time-zero coherence. The two known continuous circle
+paths have unique real lifts starting at $H_\pm(0)=0$. For completeness,
+uniform continuity on a compact interval gives a finite partition on which
+each circle path stays in an open semicircle about its value at the left
+endpoint. Choose its local continuous argument there, then successively
+adjust by multiples of $2\pi$ to match preceding endpoints. This constructs
+the lift. Two such lifts differ continuously in $2\pi\mathbb Z$ and
+coincide initially, proving uniqueness. Exact dense-cut values with the
+continuous-path promise specify the same paths uniquely; no finite noisy
+algorithm or uniform phase-unwrapping error estimate follows from this
+uniqueness proof.
+
+This access contract is strictly stronger than a terminal instrument: it
+supplies aligned whole cut laws and successful quantum-output coordinates
+throughout the interval, with a common input/reference or calibrated
+time-zero coherences. Unlabelled independently reselected inputs at each
+cut do not meet it. A stopped run does not deliver every one of those
+success states; after failure its successor is $f$. Neither all-prefix law
+comparison nor (OC.54) is a one-run acquisition theorem, a nondisturbing
+measurement service or a grant of repeated same-history specimens.
+
+The recovery begins at time zero with the relative lift set to zero. It
+cannot unfold windings accumulated before that initial event which already
+coincide in the input ray, such as $m$ and $m+2$ at fixed $\beta$ in
+(OC.10). Current all-prefix laws from the same initial density depend on
+that density, not on an unsupplied earlier real-lift record. The two claims
+are compatible: present relative real phase is identifiable under the
+stronger access contract; preinitial winding and actually acquired archives
+require their own source-bound information.
+

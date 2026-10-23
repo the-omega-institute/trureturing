@@ -1,0 +1,5 @@
+source_id = "fib-strict-real-unequal-diagonal-actual-m-pair"
+path = "docs/develop/theory/FIB_STRICT_REAL_UNEQUAL_DIAGONAL_ACTUAL_M_PAIR.md"
+atomizer = "generic-v1"
+genre_registry_check = "no-registry"
+unregistered_genres = []

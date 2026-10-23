@@ -1,0 +1,17 @@
+**假设 8.4（原始共同高斯记录与仅输入投影的配对）。** Retain exactly Assumption 7.6: five supplied original preparations $\rho_{W_i}$ with $W_i\in K_J$, uniform labels, one externally fixed word $w=E_1\cdots E_t$ with $0\le t\le7$, one fixed $\sigma>0$ and one common finite Borel quantizer $\kappa:\mathbb R^{t+1}\to\mathcal Q$. The original states are the preparations (12.3) of [the Gaussian record volume](FIB_SHARED_GAUSSIAN_RECORD_LAWS.md); their normalized input projections are its (13.1). Both use the unchanged complete-record measurement of its Definition 14.1. In the notation of its Theorem 5.1 and Proposition 14.2, set
+
+$$
+ \begin{gathered}
+ \mu_i=L_w\mu(W_i),\qquad
+ \Sigma=\frac12L_wL_w^T+\sigma^2I_{t+1}>0,\\
+ d=\sqrt{(\mu_a-\mu_d)^T\Sigma^{-1}(\mu_a-\mu_d)},\qquad
+ g=\frac25\Phi(-d/2),\\
+ \rho_N=\frac{\sqrt{t_N(W_a)}+\sqrt{t_N(W_d)}}5
+ \le\frac25\delta_N,\qquad
+ \gamma_N=(g-\rho_N)_+.
+ \end{gathered}
+\tag{8.15}
+$$
+
+Here $\Phi$ is the standard normal distribution function, and $t_N,\delta_N$ are the input-tail and uniform input-error quantities of the source's (13.1)–(13.3). The symbol $\rho_N$ in (8.15) is a scalar pairwise error bound, distinct from the input density operators $\rho_{W_i,N}$. The laws $J,J_N$ remain precisely the quantized joint laws (7.10).
+

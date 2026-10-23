@@ -1,0 +1,84 @@
+**Proposition 16.3 (finite installation and original-consumer correspondence
+for $W_r$).** The extension in Definition 16.2 is a finite installed
+wrapper/control/storage extension, and each $W_r$ member reaches the original
+CAP verifier and consumer with the original target and source conditions.
+
+**Proof.** The code consists of one copy of each fixed helper at each static
+call site, the finite client table, one $F^W$ inlining and the displayed
+control joins. Its only cycle between complete frame calls is
+$W_{\rm entry}\to F^W\to W_{\rm return}\to W_{\rm entry}$.
+This is an ordinary finite graph cycle under §2.3, not recursive native
+calls or an unbounded return stack. All successor numbers, branch states,
+port/latch choices and the new finite block type are literally boot
+installed. No runtime return-kind word is needed for this fixed call site.
+The original frame command and the actor's genuine §8.1 packets and saved
+continuations still occupy their actual retained storage.
+
+The original paid preparation and acquired-seed return establish the stated
+completed-boundary invariants, and the first normalization establishes the
+heads and word-role permutation of $W_{\rm entry}$. From that relation,
+Base and Append give the displayed three initialized cells on 13. The
+descriptor writer has ten complete field words, including base and status;
+its other two roles suffice for its count as in §6.1. Thus it needs no
+thirteenth simultaneous word. Seal then licenses the producer's RD of its
+own bit; this is not a descriptor-derived cross-owner read. The RD into 6
+and Tail using 4 prove the branch latch invariant. Its base/status roles
+are dead at the branch, so the frame or actor may reuse the pool.
+
+For bit 0, §4.7 and Lemma 6.7 apply to $F^W$ with their original guards,
+owners, actual retained inputs and complete row/channel return. Renumbering
+its nodes changes no primitive before the final idle successor. At that
+successor every workspace token is back at the producer, the source token
+is back at the dispatcher and every mandatory ACK is complete. The return
+normalization therefore reestablishes exactly $W_{\rm entry}$, including
+the parked 24–27 state and a longer complete stream on 13/17. Induction
+gives this entry relation after any finite number of canonical frames,
+not only after the first one. Partial and fault branches keep their
+original successors and do not receive a spurious completed return.
+
+For bit 1, the actual twelve TOKs and CTL establish the §8.1 actor entry
+relation. Its Local and literal-read returns have complete retained packets,
+acquired row responses and the declared fixed handler successors. Their
+loans/returns preserve producer admission and install the next actual state
+on 25. The terminal packet/output copies supply the old global-Halt entry;
+the complete §6.5 consumer, rather than the wrapper, selects and outputs
+the checked target. The acquired initial root still identifies $\alpha$ in
+$D$, so the compatible initial-source fibre is $\{\alpha\}$. Consequently
+the authentic snapshot and historical guards pass with the proposal
+$\tau=q_1(\alpha)$ and the unchanged `INITIAL-q_H0` target. No later guard
+changes the saved initial target. Finite completion uses actually supplied
+finite input and termination of reached local/prior computations.
+The same finite $F^W$ code handles arbitrary finite request words and
+capacities on the original admission domain; none is stored as a future
+maximum. Finite initial source does not bound these retained runtime tapes.
+Infinite continuation would additionally require continuing actual input
+supply and completion of every reached local computation.
+
+For completeness, expand these additional rows by the same recurrence
+$V$ of §7.1 in the actual state left by each preceding fragment. Let
+$B$ be this run's complete boot/acquisition/client-initialization/first
+normalization cost, $A_i$ its $i$th activation block/read/branch cost,
+$P_i$ its $i$th complete $F^W$ cost through idle CTL,
+$D_i$ its return-normalization cost, and $L_C$
+its final workspace loan and complete client/terminal cost. For $r+2$
+frames the absolute length is
+
+$$
+n=B+\sum_{i=1}^{r+2}(A_i+P_i+D_i)+A_{r+3}+L_C.
+$$
+
+These are consecutive fragments of one execution, not separately optimized
+runs; their actual supplied bits and reached heads fix every summand.
+In particular $A_i$ includes IN, base/address/ordinal construction, all
+ten descriptor fields, status/seal, reread, Tail and branch; $D_i$
+includes its two CTLs and both Tail loops. $L_C$ includes all pool TOKs,
+state installation, packet construction, both channel stages, every row,
+snapshot, receipt, consumer output, ACK and halt. The boot code of $F^W$
+and every literal successor/control bit is in $B$ and $b_{\rm ctl}$.
+Each executed occurrence contributes one tick, two fee units and one
+receipt, and every constructed activation, word, descriptor and retired
+cell stays counted in $A$ of §7.2. Thus the same run satisfies
+$T=n$, $F=2n$, $S=S_0+b_{\rm ctl}+8A+8n$; there is no free return
+storage or uncharged controller. This proves the finite installation and
+original-consumer correspondence uniformly in $r$. $\square$
+

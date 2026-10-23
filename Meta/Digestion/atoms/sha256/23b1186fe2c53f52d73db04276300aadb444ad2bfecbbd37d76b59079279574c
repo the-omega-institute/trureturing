@@ -1,0 +1,29 @@
+**定理 5.1（已校准参考的线性恢复）。** 已知参考态
+$\sigma=T+iB$ 满足 $B\ne0$，系统和参考独立，且完整实联合效果可用时，
+
+$$
+R_\sigma(\rho)=\operatorname{Re}(\rho\otimes\sigma)=S\otimes T-A\otimes B
+$$
+
+唯一确定 $\rho$。对收缩
+$\mathcal C_C(X\otimes Y)=X\langle C,Y\rangle_F$，有
+
+$$
+S=\frac{\mathcal C_T(R_\sigma)}{\|T\|_F^2},qquad
+A=-\frac{\mathcal C_B(R_\sigma)}{\|B\|_F^2}.
+$$
+
+**证明。** 对称与反对称矩阵在 Frobenius 内积下正交，分别收缩即可；$T$ 的迹为一
+所以 $T\ne0$，$B\ne0$ 是假设。$□$
+
+两态差满足精确恒等式
+
+$$
+\|R_\sigma(\rho)-R_\sigma(\rho')\|_F^2
+=\|S-S'\|_F^2\|T\|_F^2+\|A-A'\|_F^2\|B\|_F^2.
+$$
+
+合法参考满足 $\|B\|_F^2\le1/2$，纯量子位
+$(1,i)^{\mathsf T}/\sqrt2$ 达到该界。若参考也只知道到复共轭，整体同时共轭仍无法
+消除歧义。
+

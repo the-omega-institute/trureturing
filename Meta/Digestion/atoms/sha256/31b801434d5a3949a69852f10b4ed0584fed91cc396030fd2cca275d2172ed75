@@ -1,0 +1,67 @@
+**Lemma 2.2 (Exact original-row identities).** This circuit gives the required first five original readings, and its responses $p,v,a,m$ are the literal original responses.
+
+Proof. The following are polynomial identities in $r,b$:
+
+$$
+\begin{aligned}
+-\widehat C_0+\widehat C_0&=0,\\
+-b\widehat C_0+\mathcal J\widehat C_1&=24b\widehat D,\\
+-\widehat C_0+T\widehat C_2&=(147/5)\widehat D,\\
+-b\widehat C_0+\mathcal N\widehat C_3&=24b\widehat D,\\
+-\widehat C_0+U\widehat C_4&=18\widehat D.
+\end{aligned}
+$$
+
+The odd-row identities follow immediately from the two factors $\mathcal J,\mathcal N$ in $\widehat C_0+24\widehat D$. For the row at clock two, set $A=b^2+8b+4$ and use
+
+$$
+T(49b+34)-S=9A.
+$$
+
+Substitution of $\widehat D$ then cancels the coefficient of $b(\mathcal J+\mathcal N)$ and gives the displayed identity. For the row at clock four, substituting $\widehat C_4$ reduces its difference from $18\widehat D$ to the sum of $\mathcal J\mathcal N$ times
+
+$$
+5(6+24U)A-3(1+U)S-18U(49b+34)=0
+$$
+
+and $Ub(\mathcal J+\mathcal N)$ times
+
+$$
+-10(6+24U)T+12S+324U=0.
+$$
+
+Both are elementary identities in $b$. Thus none of these row equalities is an assertion of numerical closeness.
+
+The evaluations of the same four cardinal polynomials are
+
+$$
+\begin{array}{c|rrrr}
+s&\ell_0(s)&\ell_1(s)&\ell_2(s)&\ell_3(s)\\ \hline
+4&-1&4&-6&4\\
+5&-4&15&-20&10\\
+6&-10&36&-45&20\\
+7&-20&70&-84&35
+\end{array}.
+$$
+
+Consequently $\widehat Dg(4)=\widehat C_4$ and $\widehat Dg(i)=\widehat B_i$ for $i=5,6,7$. In particular these samples belong to one polynomial of degree at most three.
+
+Direct multiplication of the literal action matrices gives
+
+$$
+\begin{array}{c|c|c}
+\text{word}&Q&\operatorname{tr}(QP)\\ \hline
+\varnothing&I&1\\
+J&\begin{pmatrix}0&1\\1&0\end{pmatrix}&j\\
+JM&\begin{pmatrix}1&0\\1&1\end{pmatrix}&T\\
+JMJ&\begin{pmatrix}1&1\\1&0\end{pmatrix}&n\\
+JMJM&\begin{pmatrix}1&0\\2&1\end{pmatrix}&U\\
+JMJMM&\begin{pmatrix}2&1\\3&1\end{pmatrix}&U+n\\
+JMJMMM&\begin{pmatrix}3&1\\5&2\end{pmatrix}&2U+n\\
+JMJMMMJ&\begin{pmatrix}5&2\\3&1\end{pmatrix}&T+2j+4r\\
+JMJMMMM&\begin{pmatrix}5&2\\8&3\end{pmatrix}&3U+2n
+\end{array}.
+$$
+
+Divide the first five identities by their nonzero $b\widehat D$ or $\widehat D$ as appropriate, and use these traces. This gives exactly the first five readings in Definition 1.2. Substituting the remaining traces gives precisely the four quotients in Definition 2.1 at clocks five, six and seven. If the whole gain were zero, the first two readings would both equal $d$, contrary to $0\ne24$. Thus the constructed gain is nonzero. All four entries of the source matrix are positive; its determinant is zero and its trace is one. It is therefore a valid rank-one source. ∎
+

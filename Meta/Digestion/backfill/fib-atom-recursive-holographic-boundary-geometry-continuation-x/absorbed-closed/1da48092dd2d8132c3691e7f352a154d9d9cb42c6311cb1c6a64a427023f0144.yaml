@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:1da48092dd2d8132c3691e7f352a154d9d9cb42c6311cb1c6a64a427023f0144
+  normalized_sha256: sha256:1da48092dd2d8132c3691e7f352a154d9d9cb42c6311cb1c6a64a427023f0144
+cas_ref: sha256:1da48092dd2d8132c3691e7f352a154d9d9cb42c6311cb1c6a64a427023f0144
+coverage_gids:
+  - gid: D5/S3/Combinatorics/SpectralGraph/TreeResponseQuartet.complete263_2
+    target_statement_id: sha256:f9d243cf96ca3d35c9dbdb519919e3f96c6cdac987ba43250cded98bc299bba7
+receipts:
+  unresolved_subitems: []

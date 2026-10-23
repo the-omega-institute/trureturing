@@ -1,0 +1,39 @@
+**Definition 56.9 (Resources, four-expression limits and suppliers).**
+The independently verified same-run source resources are ten atoms
+(six $J$, four $M$) and eleven immediate reads including initialization.
+Arithmetic, comparison, latch writing and clearing do not advance source
+time.  No $39/40$ arithmetic-operation count and no nine-real-cell bound
+is asserted; those schedules are outside this result.  Exact-real cells
+and a finite controller do not imply finite-bit capacity, and no
+minimality, physical erasure, free unlimited dispatch, robustness or
+global optimum is claimed.
+
+Space is the independently defined ordered-basis predicate $b>1/16$;
+time is the literal source clock and executed action order; boundary is
+the actual endpoint/action/clock/status/scalar report stream; memory is
+the committed bit and its declared Recall behavior.  The proved directions
+are actual source route to boundary reports, reports on the promised
+image to the complete world, world predicate to the committed bit, and
+the committed bit to source-free supported responses.  The bit does not
+recover $P,g,d$, the raw reports, clock history, permissions or arbitrary
+future source actions; no boundary/time/memory mutual recovery, universal
+alpha/beta reduction, or four-expression completion is supplied.
+
+Common Parent Theorems 2.1--2.2, the zero-drift Theorem 4.1, the exact
+M-pair Section 2 circuit and its Sections 19--30 are suppliers for the
+parent identities, guards, and witness construction. Self-Calibrating I
+Theorem 4.1 supplies the four-read relation algebra; Self-Calibrating II
+Theorem 60.1 and V--VIII supply root/return calibration services under
+different histories, clocks, and promises. Literal Clock, Definitions
+1.1--1.2 and Proposition 5.2, supplies a longer literal atomic-clock
+service: every atom advances the clock and is immediately read.
+Polynomial Gain Shear, Definitions 1.1 and 3.1 and Section 9, supplies a
+distinct recorded-read/composite-word service: each recorded read advances
+its index, including empty-word repeats, while unread atoms do not. None
+of these services directly instantiates this JMJMMMJJJJ run.
+Berrut--Trefethen supplies fixed-node
+interpolation; the cited observability literature supplies context only.
+FRS53--55 and the retained row-depth, fixed-offset, and Process Geometry
+suppliers supply the generic retention, legality, and successor distinctions.
+No supplier supplies this receiver's actual ten-step latch commit.
+

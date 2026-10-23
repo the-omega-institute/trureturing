@@ -102,7 +102,21 @@ $$(\operatorname{claim}) \Leftrightarrow (\forall kappa \in \mathbb{R},\; \foral
 
 Page 12, Section VI after Eq. (66): We have also numerically verified that non-zero phases ϑ_m lead to worse result, and we can thus conjecture that this fully characterizes the optimal steady-state general-dyne monitoring. The real parameters kappa, chi and nth are κ, χ and n_th; nu = 2 nth + 1 and r = 2 chi / kappa. The matrices M and S represent σ_m and σ. IsGaussianMeasurementCov is the existing GaussianThermometryJointMeasurementRefutation predicate at m = 1: symmetry and S + i Omega positive semidefinite. The first conjunct bounds every physical stationary solution for every physical measurement; the second gives a physical stationary solution at the aligned measurement with equality. No uniqueness of the minimizing measurement is asserted.
 
-**Theorem 1.9 (The aligned measurement achieves the global optimum).**
+**Theorem 1.9 (Physical one-mode covariances are positive definite).**
+
+$$\forall M \in \operatorname{Matrix}\left(\operatorname{Fin}\left(2\right), \operatorname{Fin}\left(2\right), \mathbb{R}\right),\; (\operatorname{D5.S3.Estimation.GaussianThermometryJointMeasurementRefutation.IsGaussianMeasurementCov} (m := 1) (M)) \Rightarrow ((\operatorname{Matrix.PosDef}\left(M\right)) \land (1 \le \operatorname{Matrix.det}\left(M\right)))$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/Quantum/Measurements/GeneralDyneSteadyStateOptimality.physical_forward` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Acknowledgement.* K. H. Kua; A. Serafini; M. G. Genoni (2025). *Daemonic ergotropy of Gaussian quantum states and the role of measurement-induced purification via general-dyne detection*. DOI: [10.1088/2058-9565/ae2200](https://doi.org/10.1088/2058-9565/ae2200). URL: <https://arxiv.org/abs/2506.22288>.
+
+*Commentary.*
+
+A real two-by-two covariance satisfying IsGaussianMeasurementCov at m = 1 is positive definite and has determinant at least one. The stationary covariance lower bound uses these properties through physical_iff; GaussianAtemporalityEntanglement uses positive definiteness to invert both local covariance blocks.
+
+**Theorem 1.10 (The aligned measurement achieves the global optimum).**
 
 $$\forall kappa \in \mathbb{R},\; \forall chi \in \mathbb{R},\; \forall nth \in \mathbb{R},\; (0 < kappa) \Rightarrow ((0 \le chi) \Rightarrow ((chi < \frac{kappa}{2}) \Rightarrow ((0 \le nth) \Rightarrow ((\forall M \in \operatorname{Matrix}\left(\operatorname{Fin}\left(2\right), \operatorname{Fin}\left(2\right), \mathbb{R}\right),\; \forall S \in \operatorname{Matrix}\left(\operatorname{Fin}\left(2\right), \operatorname{Fin}\left(2\right), \mathbb{R}\right),\; (\operatorname{IsGaussianMeasurementCov} (m := 1) (M)) \Rightarrow ((\operatorname{IsGaussianMeasurementCov} (m := 1) (S)) \Rightarrow ((\operatorname{steadyEq}\left(kappa, chi, 2 \cdot nth + 1, M, S\right)) \Rightarrow (\operatorname{vStar}\left(\frac{2 \cdot chi}{kappa}, 2 \cdot nth + 1\right) \le \operatorname{Real.sqrt}\left(\operatorname{Matrix.det}\left(S\right)\right))))) \land (\exists S \in \operatorname{Matrix}\left(\operatorname{Fin}\left(2\right), \operatorname{Fin}\left(2\right), \mathbb{R}\right),\; (\operatorname{IsGaussianMeasurementCov} (m := 1) (S)) \land ((\operatorname{steadyEq}\left(kappa, chi, 2 \cdot nth + 1, \operatorname{optMeas}\left(\frac{2 \cdot chi}{kappa}\right), S\right)) \land (\operatorname{Real.sqrt}\left(\operatorname{Matrix.det}\left(S\right)\right) = \operatorname{vStar}\left(\frac{2 \cdot chi}{kappa}, 2 \cdot nth + 1\right))))))))$$
 
@@ -132,6 +146,7 @@ At zero pump the matrix equation forces S = nu I for every physical stationary s
 - Truth anchor: `D5/S3/Quantum/Measurements/GeneralDyneSteadyStateOptimality.driftA`
 - Truth anchor: `D5/S3/Quantum/Measurements/GeneralDyneSteadyStateOptimality.eMat`
 - Truth anchor: `D5/S3/Quantum/Measurements/GeneralDyneSteadyStateOptimality.optMeas`
+- Truth anchor: `D5/S3/Quantum/Measurements/GeneralDyneSteadyStateOptimality.physical_forward`
 - Truth anchor: `D5/S3/Quantum/Measurements/GeneralDyneSteadyStateOptimality.result`
 - Truth anchor: `D5/S3/Quantum/Measurements/GeneralDyneSteadyStateOptimality.steadyEq`
 - Truth anchor: `D5/S3/Quantum/Measurements/GeneralDyneSteadyStateOptimality.vStar`

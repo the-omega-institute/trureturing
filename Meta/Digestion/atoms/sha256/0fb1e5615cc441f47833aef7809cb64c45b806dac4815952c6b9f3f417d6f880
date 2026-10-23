@@ -1,0 +1,68 @@
+**Lemma 13.2 (Strict lift and response certificates).** The four
+worlds of Definition 13.1 are well defined and belong to $\mathcal H$.
+The following are strict rational enclosures; each finite decimal
+denotes the displayed exact rational number.
+
+| $i$ | $r_i$ | $b_i$ | $\operatorname{sign}D(t_i,b_i)$ |
+| --- | --- | --- | --- |
+| $1$ | $(0.0084901253,0.0084901254)$ | $(0.0084574469,0.0084574470)$ | $-$ |
+| $2$ | $(0.5195359430,0.5195359431)$ | $(0.0422838313,0.0422838314)$ | $+$ |
+| $3$ | $(0.9005088162,0.9005088163)$ | $(0.1275805397,0.1275805398)$ | $-$ |
+| $4$ | $(0.9648629529,0.9648629530)$ | $(0.8867628398,0.8867628399)$ | $-$ |
+
+| $i$ | $p_i$ | $v_i$ | $d_i$ |
+| --- | --- | --- | --- |
+| $1$ | $(690.595905,690.595906)$ | $(1416.434664,1416.434665)$ | $(-659.603336,-659.603335)$ |
+| $2$ | $(1.830485,1.830486)$ | $(175.912050,175.912051)$ | $(24.243210,24.243211)$ |
+| $3$ | $(7.283036,7.283037)$ | $(61.494372,61.494373)$ | $(27.263115,27.263116)$ |
+| $4$ | $(57.070846,57.070847)$ | $(305.047970,305.047971)$ | $(28.731355,28.731356)$ |
+
+| $i$ | $m_i$ | $a_i$ |
+| --- | --- | --- |
+| $1$ | $(3014.237990,3014.237991)$ | $(1548.191707,1548.191708)$ |
+| $2$ | $(1077.618894,1077.618895)$ | $(1001.314438,1001.314439)$ |
+| $3$ | $(351.057514,351.057515)$ | $(313.557782,313.557783)$ |
+| $4$ | $(1228.882278,1228.882279)$ | $(782.150437,782.150438)$ |
+
+*Proof.* The intervals and the signs of $D$ follow by the rational
+interval definitions in Definition 14.1 below; that definition and
+the derivative formulas there also specify a finite certificate for
+these tables. For these first tables only the polynomials
+$a,c,D,N_0,N_1,N_2,C_0$ and
+
+$$
+N_a=-C_0+(T+2j+4tb)B_7
+\tag{13.4}
+$$
+
+are needed. The trace at the alternative seventh action $J$ is
+$T+2j+4tb$, so $a=N_a/D$.
+
+In particular $b_i>0$, $0<r_i<1$ and $D(t_i,b_i)\ne0$.
+Thus $t_i>0$, $t_ib_i<1$, and (13.3) gives a strict rank-one,
+trace-one matrix. The determinant is
+$t_ib_i(1-t_ib_i)-b_it_i(1-t_ib_i)=0$, and the trace is one.
+Lemma 2.2 and the full-parent converse of O, Theorem 2.1, identify
+the interpolated gain and drift with an actual original world.
+For clarity, their original-clock identities are
+
+$$
+\begin{aligned}
+(Z_0,Z_1,Z_2,Z_3,Z_4,Z_5,Z_6)
+  &=(1,j,T,n,U,U+n,2U+n),\\
+d_i+Z_k g_i(k)&=(0,24,147/5,24,18)_k\quad(0\le k\le4),\\
+d_i+Z_5g_i(5)&=p_i,\qquad d_i+Z_6g_i(6)=v_i,\\
+d_i+(3U+2n)g_i(7)&=m_i,\qquad
+d_i+(T+2j+4r_i)g_i(7)=a_i.
+\end{aligned}
+\tag{13.5}
+$$
+
+The fourth-clock row is included: substituting the four samples in
+(2.5) gives $H=0$, since (2.4) solves the regular parent equation.
+The fixed-node interpolant is one polynomial of degree at most three;
+if it were identically zero, the original readings $0$ and $24$
+would both equal $d_i$, a contradiction. All original source
+denominators $b,j,n,T,U$ are positive. The only chart denominator
+$D$ is separately certified nonzero, and every $p_i\ne24$. ∎
+

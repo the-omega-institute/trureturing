@@ -1,0 +1,37 @@
+## 4. 相同付费长度也不能修复这个边界
+
+丢弃的前奏类型本身也不能由总付费次数替代。考虑两条都含一个被拒绝对、都接受 $R=1$、都在载荷取得 `100` 的历史：
+
+$$
+h_\alpha=\alpha\alpha\,\beta\alpha\mid\beta\beta\alpha\alpha,
+$$
+
+$$
+h_\beta=\beta\beta\,\beta\alpha\mid\beta\beta\alpha\alpha.
+$$
+
+二者都有八次付费 Read，且在原边界上都有同一 $C$。但它们的计数分别为
+
+$$
+(N_\alpha,N_\beta)(h_\alpha)=(5,3),qquad
+(N_\alpha,N_\beta)(h_\beta)=(3,5).
+$$
+
+在同一均匀先验下，
+
+$$
+\begin{array}{c|c|c}
+\text{历史}&\Pr(K=2\mid h)&\Pr(Y=0,\mathrm{Stop}=0\mid h)\\ \hline
+h_\alpha&708588/1099213&71866785/146195329\\
+h_\beta&1594323/3156823&200665110/419857459
+\end{array}
+$$
+
+两行的后验和未来响应都不同；对应第三列的差为
+
+$$
+\frac{899574609375}{65930396725681}>0.
+$$
+
+所以，即使补充总付费次数和重试次数，仍需保留被丢弃 Read 的类型关系，或保留一个等价的来源校准坐标。
+

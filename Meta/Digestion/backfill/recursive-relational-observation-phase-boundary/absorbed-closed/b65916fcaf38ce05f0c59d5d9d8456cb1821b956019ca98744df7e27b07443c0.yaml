@@ -1,0 +1,22 @@
+fingerprints:
+  raw_sha256: sha256:b65916fcaf38ce05f0c59d5d9d8456cb1821b956019ca98744df7e27b07443c0
+  normalized_sha256: sha256:b65916fcaf38ce05f0c59d5d9d8456cb1821b956019ca98744df7e27b07443c0
+cas_ref: sha256:b65916fcaf38ce05f0c59d5d9d8456cb1821b956019ca98744df7e27b07443c0
+coverage_gids:
+  - gid: D5/S3/Analytic/SeriesInequalities/LorentzCoefficientRemainder.coefficient_sub
+    target_statement_id: sha256:d0c4309bc87e18ee27282334b11f717c580ac1e40c565389681055f3e4a25b10
+  - gid: D5/S3/Analytic/SeriesInequalities/LorentzCoefficientRemainder.grid_geometry
+    target_statement_id: sha256:09dda65dbdb940e4b4872adc9546415808473790ad18b93c7fe2d963725bed3f
+  - gid: D5/S3/Analytic/SeriesInequalities/LorentzCoefficientRemainder.lorentz_reproduction
+    target_statement_id: sha256:3d2cf611704820b026dc2a7bf79e0702abfab23ad7719720b419b5f9c79becca
+  - gid: D5/S3/Analytic/SeriesInequalities/LorentzLocalCoefficientKernel.local_coefficient_bound
+    target_statement_id: sha256:47c8d385cbb2463b0f929b9fc9fe917310c96955d089b1111fc4f0c0e2ff6629
+  - gid: D5/S3/Analytic/SeriesInequalities/LorentzLowDegreeCoefficientRemainder.bernstein_coefficient_C_mul
+    target_statement_id: sha256:5504d32150b6a3ff7db016f42cb9bf3a1b483308d8d4ba119ab811664938e92a
+  - gid: D5/S3/Analytic/SeriesInequalities/LorentzLowDegreeCoefficientRemainder.bernstein_coefficient_sum
+    target_statement_id: sha256:50258b31e64c1966bcdace4eb294ea7aea8fdd909923a6cd41bb7dfe67411b33
+receipts:
+  unresolved_subitems: []
+  chain_atoms:
+    - efb6aca87ffafa7c6acce98dd2dc1dd9ee2d5fd94092c4d6a7fd7d9c8bb27f72
+    - 33f8a9e48aabb7c0ee222c302565a183948cca7f6ed88dbbc0f6b83bb62dca66

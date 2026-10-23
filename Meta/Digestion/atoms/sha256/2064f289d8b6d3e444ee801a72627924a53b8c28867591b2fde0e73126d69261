@@ -1,0 +1,55 @@
+**Lemma 22.2 (Reused necessity on the entire child).** Every original
+complete world at every base in $B$ satisfies
+
+$$
+x>0,\qquad f=K=R=0,\qquad \alpha d+\zeta=0.
+\tag{22.8}
+$$
+
+Proof. F, Lemma 30.2, gives the following necessary and sufficient
+whole-world reconstruction guards at an off-$24$ base:
+
+$$
+\begin{gathered}
+x>0,\quad d\ne24,\quad H_1\ne0,\quad d^2+B_0^2>0,\\
+U=\frac{-dH_0+B_0H_2}{d^2+B_0^2}>1,\quad
+b=(U-1)/2,\quad j=U(24-d)/H_1,\quad r=xU-j,\\
+0<r<1,\quad j=b+r(1-r)/b,\quad
+ dU=-H_0,\quad B_0U=H_2.
+\end{gathered}
+\tag{22.9}
+$$
+
+The corresponding whole gain is $g=H/U$. Its parameters are exactly
+F30.2's $x=n/U,H=Ug,d=d$; the $B_0$ in (22.1) is its
+$2(147/5-d)-H_2$. O, Theorem 2.2, gives the $d=24$ branch only at
+$p=24$, so it has not been discarded from an off-$24$ child by
+assumption. The pair $(d,B_0)$ cannot vanish: the last two equations
+would give $H_2=0$ while its definition gives $H_2=294/5$.
+
+SVII, Lemma 15.1, applies to exactly (22.2), with its $\mathscr D=D$
+and $\mathscr R=R$. Its all-world necessity is also recorded in
+(12.9). In particular
+
+$$
+f=5D^2(dH_2+H_0B_0).
+\tag{22.10}
+$$
+
+At nonzero $d$, the rank-one relation in (22.9) gives $K=0$ by
+(24.4) below. At $d=0$, the original clock-zero equation gives
+$H_0=0$ and every term of $K$ vanishes without division by $d$.
+The extension to actual $F_0=0$ and singular $\Lambda=0$ sources is
+SVII15.1's polynomial-density and continuous-parent argument, explicitly
+recalled in Section 12: a nonzero $F_0$ pullback on the regular source
+chart is witnessed at $(r,b)=(1/2,1/4)$, and singular sources are
+approached through the undivided parent using its nonzero $r$ derivative.
+This establishes $R=0$ there without cancelling $F_0$ or $\Lambda$.
+Finally the first polynomial identity in (22.4) gives
+$\alpha d+\zeta=0$ even at a degree drop $A=0$.
+
+These are necessity statements for every original world before any
+local unit test. They retain all zero-sample, lower-degree,
+repeated-root, drift-zero, singular and specialized-degree strata,
+and every companion unused by either selected pair. ∎
+

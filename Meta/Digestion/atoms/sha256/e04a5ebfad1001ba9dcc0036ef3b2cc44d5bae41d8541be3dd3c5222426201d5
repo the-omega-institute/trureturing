@@ -1,0 +1,28 @@
+**Proposition 5.1 (The design ratio and its pulse approximation).**
+If $J/r=4/\sqrt3$, then
+
+$$
+d=\tfrac12,\qquad \alpha=\tfrac14,\qquad x=\tfrac{\sqrt3}{4},\qquad
+\mathcal L_x=\mathbb Z(4,0),\quad
+\mathcal L_{x/2}=\mathbb Z(4,0).
+$$
+
+Thus pulse-only approximation to $S$ succeeds for every fixed phase of
+$g$. Corrected approximation also succeeds for every phase; a finite
+corrected exact hit exists exactly for $g=\pm ir$.
+No phase of $g$ gives a finite pulse-only exact hit.
+
+Proof. In $h/4+k\sqrt3/4\in\mathbb Z$, irrationality of $\sqrt3$ forces
+$k=0$, then $4\mid h$. The same reasoning with $\sqrt3/8$ gives the
+second lattice. Both criteria of Theorem 4.2 pass.
+More explicitly, $m=4n+1$ has $\lambda_m=i$ and
+
+$$
+mx/2=n\sqrt3/2+\sqrt3/8.
+$$
+
+The irrational circle orbit used inside Theorem 4.2 makes this approach
+zero modulo one along arbitrarily late positive indices, giving $B\to I$.
+For finite $m>0$, $mx$ is irrational; the exact conclusions follow also
+from Proposition 3.2, with $d=1/2$. $\square$
+

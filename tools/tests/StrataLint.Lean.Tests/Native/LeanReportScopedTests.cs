@@ -8,6 +8,7 @@ public sealed class LeanReportScopedTests(InspectorCompilerFixture compiler) : I
     [Theory]
     [InlineData("test_selected_utility_discovery_uses_production_reader")]
     [InlineData("test_rejects_empty_targets_and_canonical_destination")]
+    [InlineData("test_cache_replacement_preserves_scoped_discovery_logs")]
     [InlineData("test_scoped_bundle_checks_independent_membership_sources_and_materials")]
     [InlineData("test_scoped_bundle_reuses_registered_source_inventory_across_modules")]
     [InlineData("test_scoped_inputs_exclude_siblings_and_program_bytes")]
@@ -19,6 +20,7 @@ public sealed class LeanReportScopedTests(InspectorCompilerFixture compiler) : I
     [InlineData("test_native_selected_utility_reader_ignores_unrelated_unfinished_refutation")]
     [InlineData("test_native_scope_uses_only_explicit_module_facets")]
     [InlineData("test_native_scope_tracks_changed_imports_and_external_utility_claims")]
+    [InlineData("test_native_aged_warm_scope_reuses_cache_without_archive_refresh")]
     [InlineData("test_native_scope_includes_external_consumer_and_checks_its_closure")]
     [InlineData("test_native_cached_scope_still_builds_program_and_clears_failure_seal")]
     public void ScopedProducerNativeContract(string scenario) => Run(scenario, native: true);

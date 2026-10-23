@@ -1,0 +1,21 @@
+**Definition 1.1 (The complete original domain).** Let $\mathcal W$ consist of all triples $W=(P,g,d)$ with
+
+$$
+P=\begin{pmatrix}r&b\\c&1-r\end{pmatrix},\qquad
+0<r<1,\quad b,c>0,\quad bc=r(1-r),\qquad
+g(t)=\sum_{k=0}^3a_kt^k\ne0,\qquad d\in\mathbb R.
+$$
+
+The equation $g\ne0$ means that its four coefficients are not all zero. In particular all degrees from zero to three, sampled zeros, repeated roots and zero drift are included. There is no upper bound on $b,c$, the coefficients or $d$. The matrix $P$ has strictly positive real entries, trace one and rank one. It is a real program matrix; it need not be symmetric and is not assumed to be a quantum density operator.
+
+The original actions and deterministic mathematical responses are
+
+$$
+J=\begin{pmatrix}0&1\\1&0\end{pmatrix},\qquad
+M=\begin{pmatrix}0&1\\1&1\end{pmatrix},\qquad
+Q_0=I_2,\quad Q_i=E_iQ_{i-1},\quad
+y_i(W)=d+g(i)\operatorname{tr}(Q_iP).
+$$
+
+A word $E_1\cdots E_t$ is chronological, so $Q_i=E_i\cdots E_1$. One complete $P$, one whole polynomial $g$ and one fixed $d$ are used at every clock and in every alternative continuation. These are the definitions of [Common Parent, Definition 1.1](FIB_COMMON_PARENT_GEOMETRY_AND_MIXED_CHILDREN.md) and [Strict Real, Definition 1.1](FIB_STRICT_REAL_JOINT_INCIDENCE_SUPPORT.md). The acquisitions have their original clocks $0,\ldots,7$, including the initial read and a read immediately after each executed action. No additional outward acquisition is part of this definition.
+

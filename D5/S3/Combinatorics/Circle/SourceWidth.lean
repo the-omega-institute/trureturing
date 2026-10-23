@@ -8,6 +8,7 @@
 import Mathlib.Data.Int.ModEq
 import Mathlib.Data.List.FinRange
 import Mathlib.Data.List.Rotate
+import Mathlib.Algebra.Ring.GeomSum
 import Mathlib.Algebra.Order.BigOperators.Group.List
 import Mathlib.Tactic
 
@@ -31,7 +32,7 @@ def actualSource (k t : ℕ) (p : Fin k) : ℤ :=
 /-- The support capacity, larger than the conjectured half-modulus capacity. -/
 def capacity (k : ℕ) : ℤ := modulus k - modulus k / 3 - 2
 
-private theorem centered_bounds {N : ℤ} (hN : 0 < N) (hodd : N % 2 = 1) (x : ℤ) :
+theorem centered_bounds {N : ℤ} (hN : 0 < N) (hodd : N % 2 = 1) (x : ℤ) :
     -(N / 2) ≤ centered N x ∧ centered N x ≤ N / 2 := by
   have hlo := Int.emod_nonneg (x + N / 2) (ne_of_gt hN)
   have hhi := Int.emod_lt_of_pos (x + N / 2) hN
@@ -39,10 +40,10 @@ private theorem centered_bounds {N : ℤ} (hN : 0 < N) (hodd : N % 2 = 1) (x : �
   dsimp [centered]
   omega
 
-private theorem centered_mod (N x : ℤ) : centered N x % N = x % N := by
+theorem centered_mod (N x : ℤ) : centered N x % N = x % N := by
   simp only [centered, Int.emod_sub_emod, add_sub_cancel_right]
 
-private theorem centered_unique {N x y : ℤ} (hN : 0 < N) (hodd : N % 2 = 1)
+theorem centered_unique {N x y : ℤ} (hN : 0 < N) (hodd : N % 2 = 1)
     (hx : -(N / 2) ≤ x ∧ x ≤ N / 2)
     (hy : -(N / 2) ≤ y ∧ y ≤ N / 2) (he : x % N = y % N) : x = y := by
   have hd := (Int.modEq_iff_dvd).mp he
@@ -81,7 +82,7 @@ theorem centered_double {N : ℤ} (hN : 0 < N) (hodd : N % 2 = 1) (x : ℤ) :
   · dsimp [doubleStep]
     split_ifs <;> simpa only [Int.sub_emod_right, Int.add_emod_right] using he
 
-private theorem unsigned_step {N s : ℤ} (hN : 0 < N) (hodd : N % 2 = 1)
+theorem unsigned_step {N s : ℤ} (hN : 0 < N) (hodd : N % 2 = 1)
     (hs : -(N / 2) ≤ s ∧ s ≤ N / 2) :
     (doubleStep N s + if doubleStep N s < 0 then N else 0) -
       (s + if s < 0 then N else 0) = s := by
@@ -129,7 +130,7 @@ theorem inStrip_nonpos {α : Type*} {f : α → ℤ} {B h : ℤ} {l : List α}
     refine ⟨by omega, hh, ih hxs (by omega) ?_⟩
     omega
 
-private theorem inStrip_reflect {α : Type*} {f : α → ℤ} {B h : ℤ} {l : List α}
+theorem inStrip_reflect {α : Type*} {f : α → ℤ} {B h : ℤ} {l : List α}
     (hl : InStrip (fun x => -f x) B (B - h) l) : InStrip f B h l := by
   induction l generalizing h with
   | nil => dsimp [InStrip] at *; omega
@@ -276,7 +277,7 @@ inductive SourcePath {α : Type*} (N : ℤ) (f u : α → ℤ) : α → List α 
       (potential : u b - u a = f a) (successor : f b = doubleStep N (f a))
       (tail : SourcePath N f u b l z) : SourcePath N f u a (a :: l) z
 
-private theorem path_sum {α : Type*} {N : ℤ} {f u : α → ℤ} {a z : α} {l : List α}
+theorem path_sum {α : Type*} {N : ℤ} {f u : α → ℤ} {a z : α} {l : List α}
     (hp : SourcePath N f u a l z) : (l.map f).sum = u z - u a := by
   induction hp with
   | nil => simp
@@ -599,7 +600,7 @@ private theorem modulus_facts {k : ℕ} (hk : 3 ≤ k) :
   dsimp [modulus] at *
   omega
 
-private theorem centered_full_period (k t : ℕ) :
+theorem centered_full_period (k t : ℕ) :
     centered (modulus k) ((2 : ℤ) ^ k * (t : ℤ)) =
       centered (modulus k) (t : ℤ) := by
   apply centered_congr
@@ -607,7 +608,7 @@ private theorem centered_full_period (k t : ℕ) :
     dsimp [modulus]; ring
   rw [he, Int.add_mul_emod_self_right]
 
-private theorem path_range {α : Type*} {N : ℤ} {f u : α → ℤ} (p : ℕ → α)
+theorem path_range {α : Type*} {N : ℤ} {f u : α → ℤ} (p : ℕ → α)
     (n : ℕ) (hpot : ∀ i < n, u (p (i + 1)) - u (p i) = f (p i))
     (hstep : ∀ i < n, f (p (i + 1)) = doubleStep N (f (p i))) :
     SourcePath N f u (p 0) ((List.range n).map p) (p n) := by

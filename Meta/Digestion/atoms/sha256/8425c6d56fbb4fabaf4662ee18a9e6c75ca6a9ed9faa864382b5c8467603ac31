@@ -1,0 +1,67 @@
+**Theorem 4.1 (Conic containment of the raw elimination ideal).** Set
+
+$$
+F(p,v)=525p^2-665pv-9108p+210v^2+5952v+35424.
+$$
+
+This polynomial is geometrically irreducible, and
+
+$$
+\Delta_{\rm raw}\subseteq(F)\subset\mathbb Q[p,v].
+$$
+
+Consequently every nonzero raw joint eliminant is divisible by $F$.
+The raw elimination ideal is not the unit ideal, and its zero set cannot
+be zero dimensional. The ideal may be zero.
+
+Proof. Make the invertible affine change
+
+$$
+X=\frac{7(3p-2v-24)}{96},\qquad
+Y=\frac{5(5p-3v-48)}{54}.
+$$
+
+Its linear determinant is $35/5184\ne0$. Substituting Lemma 3.2 gives
+
+$$
+X=2b+1,\qquad Y=\frac{2b+1}{b+1},\qquad
+(X+1)Y-2X=\frac{F(p,v)}{5184}=0.
+$$
+
+The inverse parameter on this image is
+
+$$
+b=\frac{21p-14v-264}{192}.
+$$
+
+The homogeneous conic matrix is
+
+$$
+\begin{pmatrix}
+525&-665/2&-4554\\
+-665/2&210&2976\\
+-4554&2976&35424
+\end{pmatrix},\qquad \det=-3175200\ne0.
+$$
+
+Thus the projective conic is nonsingular. A degree-two polynomial that
+factors over $\mathbb C$ gives two lines, whose intersection is singular
+(or a double line); hence $F$ is geometrically irreducible. Equivalently,
+in the affine $X,Y$ coordinates the curve is
+$(X+1)(Y-2)=-2$. The rational inverse exhibits the parametrized image
+as a dense subset of this curve. Excluding the finite guard zeros does
+not change density. Even the real parameter interval $b>0$ is Zariski
+dense in the curve: a rational function vanishing on that interval has
+identically zero numerator.
+
+Every polynomial in $\Delta_{\rm raw}$ vanishes on every lifted point
+of Lemma 3.2, so vanishes on this dense conic. The ideal of the conic is
+$(F)$, proving the stated containment over $\mathbb Q$. Thus its zero
+set contains a curve. This also excludes the unit ideal. ∎
+
+There is no assertion that $F\in\Delta_{\rm raw}$, that
+$\Delta_{\rm raw}=(F)$, or that the lifted family is a maximal component.
+No nonzero element of $\Delta_{\rm raw}$ has been produced here. The
+containment alone blocks a raw finite-base or raw unit-ideal outcome.
+It leaves elimination valid as a necessary-condition method.
+

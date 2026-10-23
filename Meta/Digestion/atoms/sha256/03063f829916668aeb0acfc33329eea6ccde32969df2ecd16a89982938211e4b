@@ -1,0 +1,36 @@
+### 5.2 Ideal all-prefix limit
+
+Fix one public prescribed original continuation $(k,\chi)$ of finite
+duration $T\ge0$ at the double-wall base.  Its waveform is the control
+program used to define an instrument; it is not acquired from the unknown
+past.  Both original regularity alternatives make $k,\chi$ absolutely
+continuous: on a finite-$C^1$ partition, integrating the continuous rates on
+each closed piece and telescoping gives the global integral primitive.
+This is also the regularity argument in the composition supplier.
+Define
+
+$$
+H_i(t)=\int_0^t \operatorname{phaseWeight}(b,k(s))_i\,\chi'(s)\,ds.
+\tag{OC.14}
+$$
+
+Put $U(t)=\operatorname{diag}(e^{-iH_i(t)})$.  The actual target at time
+$t$ is
+$U(t)\Psi_{k(t),\beta,m}$, for the unknown initial $(\beta,m)$.
+At an open prefix its relation phase need not be an integral multiple of
+$2\pi$.  Conjugating by the known $U(t)$ brings its family back to (OC.10);
+it does not remove, measure, or reveal the initial phase or signed winding.
+
+For a subinterval $[s,t]$ define
+
+$$
+\Lambda[s,t]=\int_s^t
+ \left(\frac{(k'(u))_+}{k(u)}
+ +\frac{(-k'(u))_+}{c-k(u)}\right)du,
+\qquad \Lambda(t)=\Lambda[0,t].
+\tag{OC.15}
+$$
+
+Strict interiority on the compact interval makes the denominators bounded
+away from zero and makes this quantity finite.
+
