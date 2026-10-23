@@ -10,6 +10,10 @@ Lean statement: `D5/S3/Analytic/MomentMinors/Result.result`
 
 *Proof.* Machine-checked in Lean as `D5/S3/Analytic/MomentMinors/Result.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/simic-2018-iterated-moment-minor-inequalities` (proved) by `D5/S3/Analytic/MomentMinors/Result.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"simic-2018-iterated-moment-minor-inequalities","declaration_gid":"D5/S3/Analytic/MomentMinors/Result.result","resolution_kind":"proved"} -->
+
 *Source.* Repository-derived.
 
 *Commentary.*

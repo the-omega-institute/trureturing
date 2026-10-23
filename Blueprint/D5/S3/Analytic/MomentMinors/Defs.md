@@ -10,7 +10,7 @@ Lean statement: `D5/S3/Analytic/MomentMinors/Defs.mean`
 
 *Formalization.* `D5/S3/Analytic/MomentMinors/Defs.mean` (`✓ std3`).
 
-*Source.* Repository-derived.
+*Citation.* S. Simić (2018). *Second and third order moment inequalities for probability distributions*. DOI: [10.1007/s10474-018-0848-1](https://doi.org/10.1007/s10474-018-0848-1). URL: <https://arxiv.org/abs/1509.08519v2>.
 
 *Commentary.*
 
@@ -22,7 +22,7 @@ Lean statement: `D5/S3/Analytic/MomentMinors/Defs.Admissible`
 
 *Formalization.* `D5/S3/Analytic/MomentMinors/Defs.Admissible` (`✓ std3`).
 
-*Source.* Repository-derived.
+*Citation.* S. Simić (2018). *Second and third order moment inequalities for probability distributions*. DOI: [10.1007/s10474-018-0848-1](https://doi.org/10.1007/s10474-018-0848-1). URL: <https://arxiv.org/abs/1509.08519v2>.
 
 *Commentary.*
 
@@ -34,7 +34,7 @@ Lean statement: `D5/S3/Analytic/MomentMinors/Defs.lam`
 
 *Formalization.* `D5/S3/Analytic/MomentMinors/Defs.lam` (`✓ std3`).
 
-*Source.* Repository-derived.
+*Citation.* S. Simić (2018). *Second and third order moment inequalities for probability distributions*. DOI: [10.1007/s10474-018-0848-1](https://doi.org/10.1007/s10474-018-0848-1). URL: <https://arxiv.org/abs/1509.08519v2>.
 
 *Commentary.*
 
@@ -46,7 +46,7 @@ Lean statement: `D5/S3/Analytic/MomentMinors/Defs.xi`
 
 *Formalization.* `D5/S3/Analytic/MomentMinors/Defs.xi` (`✓ std3`).
 
-*Source.* Repository-derived.
+*Citation.* S. Simić (2018). *Second and third order moment inequalities for probability distributions*. DOI: [10.1007/s10474-018-0848-1](https://doi.org/10.1007/s10474-018-0848-1). URL: <https://arxiv.org/abs/1509.08519v2>.
 
 *Commentary.*
 
@@ -58,7 +58,7 @@ Lean statement: `D5/S3/Analytic/MomentMinors/Defs.phi`
 
 *Formalization.* `D5/S3/Analytic/MomentMinors/Defs.phi` (`✓ std3`).
 
-*Source.* Repository-derived.
+*Citation.* S. Simić (2018). *Second and third order moment inequalities for probability distributions*. DOI: [10.1007/s10474-018-0848-1](https://doi.org/10.1007/s10474-018-0848-1). URL: <https://arxiv.org/abs/1509.08519v2>.
 
 *Commentary.*
 
@@ -70,7 +70,7 @@ Lean statement: `D5/S3/Analytic/MomentMinors/Defs.sigma`
 
 *Formalization.* `D5/S3/Analytic/MomentMinors/Defs.sigma` (`✓ std3`).
 
-*Source.* Repository-derived.
+*Citation.* S. Simić (2018). *Second and third order moment inequalities for probability distributions*. DOI: [10.1007/s10474-018-0848-1](https://doi.org/10.1007/s10474-018-0848-1). URL: <https://arxiv.org/abs/1509.08519v2>.
 
 *Commentary.*
 
@@ -82,7 +82,7 @@ Lean statement: `D5/S3/Analytic/MomentMinors/Defs.theta`
 
 *Formalization.* `D5/S3/Analytic/MomentMinors/Defs.theta` (`✓ std3`).
 
-*Source.* Repository-derived.
+*Citation.* S. Simić (2018). *Second and third order moment inequalities for probability distributions*. DOI: [10.1007/s10474-018-0848-1](https://doi.org/10.1007/s10474-018-0848-1). URL: <https://arxiv.org/abs/1509.08519v2>.
 
 *Commentary.*
 
@@ -94,7 +94,7 @@ Lean statement: `D5/S3/Analytic/MomentMinors/Defs.claim1`
 
 *Formalization.* `D5/S3/Analytic/MomentMinors/Defs.claim1` (`✓ std3`).
 
-*Source.* Repository-derived.
+*Citation.* S. Simić (2018). *Second and third order moment inequalities for probability distributions*. DOI: [10.1007/s10474-018-0848-1](https://doi.org/10.1007/s10474-018-0848-1). URL: <https://arxiv.org/abs/1509.08519v2>.
 
 *Commentary.*
 
@@ -106,7 +106,7 @@ Lean statement: `D5/S3/Analytic/MomentMinors/Defs.claim2`
 
 *Formalization.* `D5/S3/Analytic/MomentMinors/Defs.claim2` (`✓ std3`).
 
-*Source.* Repository-derived.
+*Citation.* S. Simić (2018). *Second and third order moment inequalities for probability distributions*. DOI: [10.1007/s10474-018-0848-1](https://doi.org/10.1007/s10474-018-0848-1). URL: <https://arxiv.org/abs/1509.08519v2>.
 
 *Commentary.*
 
@@ -118,7 +118,7 @@ Lean statement: `D5/S3/Analytic/MomentMinors/Defs.claim`
 
 *Formalization.* `D5/S3/Analytic/MomentMinors/Defs.claim` (`✓ std3`).
 
-*Source.* Repository-derived.
+*Citation.* S. Simić (2018). *Second and third order moment inequalities for probability distributions*. DOI: [10.1007/s10474-018-0848-1](https://doi.org/10.1007/s10474-018-0848-1). URL: <https://arxiv.org/abs/1509.08519v2>.
 
 *Commentary.*
 
