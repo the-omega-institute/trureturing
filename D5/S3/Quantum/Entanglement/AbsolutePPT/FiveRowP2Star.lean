@@ -129,23 +129,16 @@ theorem five_coefficient_mass (p : Fin 4 → ℝ) (hp : ∀ i,0 ≤ p i)
         nlinarith only [hn',hprod,hA,hB,mul_nonneg (hp 1) (hp 2)]
       nlinarith [sq_nonneg (p 0-2/3)]
 
-/-- The exact polynomial paying all six non-star head edges. -/
-theorem star_polynomial (delta B C : ℝ) :
-    (6*delta^2+3*delta*B+C)^2-
-      9*delta^2*(4*delta^2+2*delta*B+B^2-2*C) =
-      18*delta^3*B+30*delta^2*C+6*delta*B*C+C^2 := by ring
-
 /-- No division by the fourth largest weight delta. -/
 theorem star_product_bound (delta B C P t : ℝ)
     (hd : 0 ≤ delta) (hB : 0 ≤ B) (hC : 0 ≤ C) (hP : 0 ≤ P) (ht : 0 ≤ t)
     (hPe : P=6*delta^2+3*delta*B+C)
     (hte : t^2=4*delta^2+2*delta*B+B^2-2*C) : 3*delta*t ≤ P := by
-  have hid := star_polynomial delta B C
   have hnon : 0 ≤ 18*delta^3*B+30*delta^2*C+6*delta*B*C+C^2 := by positivity
   have hscale := congrArg (fun z : ℝ => 9*delta^2*z) hte
   have hsq : (3*delta*t)^2 ≤ P^2 := by
     rw [hPe]
-    nlinarith only [hid,hscale,hnon]
+    nlinarith only [hscale,hnon]
   nlinarith [mul_nonneg hd ht]
 
 /-- The entire ten-edge square root, not only the four star-edge squares. -/

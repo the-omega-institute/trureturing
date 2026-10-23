@@ -24,8 +24,6 @@ abbrev signature : Signature where
   finiteAnchor := inferInstance
 def orderActual : Realization signature :=
   realize signature (fun _ _ x y => x ≤ y) (fun e => nomatch e)
-def equalityActual : Realization signature :=
-  realize signature (fun _ _ x y => x=y) (fun e => nomatch e)
 def rejected : Realization signature :=
   realize signature (fun _ _ _ _ => False) (fun e => nomatch e)
 private theorem order_dependence : ObservationalDependence signature orderActual := by
@@ -34,12 +32,6 @@ private theorem order_dependence : ObservationalDependence signature orderActual
   intro he
   have hz : (0:ℝ) ≤ 0 := le_rfl
   have hf : (1:ℝ) ≤ 0 := Eq.mp (congrFun he 0) hz
-  norm_num at hf
-private theorem equality_dependence : ObservationalDependence signature equalityActual := by
-  intro i
-  refine ⟨(),0,1,?_⟩
-  intro he
-  have hf : (1:ℝ)=0 := Eq.mp (congrFun he 0) rfl
   norm_num at hf
 private theorem sensitivity (law : Realization signature → Prop)
     (actual : Realization signature) (hbad : ¬ law rejected) :
@@ -53,54 +45,6 @@ private theorem sensitivity (law : Realization signature → Prop)
       exact nomatch e
   · intro e
     exact nomatch e
-
-namespace star_polynomial
-abbrev arena : Arena where
-  signature := signature
-  Law realization := ∀ (delta B C : ℝ), realization.readout () () ((6*delta^2+3*delta*B+C)^2-9*delta^2*(4*delta^2+2*delta*B+B^2-2*C)) (18*delta^3*B+30*delta^2*C+6*delta*B*C+C^2)
-private theorem rejected_law : ¬ arena.Law rejected := by
-  intro h
-  exact h 0 0 0
-def family : Registration arena (type_of% (@_root_.D5.S3.Quantum.Entanglement.AbsolutePPT.FiveRowP2Star.star_polynomial)) where
-  actual := equalityActual
-  bridge := Iff.rfl
-  variation := ⟨@_root_.D5.S3.Quantum.Entanglement.AbsolutePPT.FiveRowP2Star.star_polynomial,rejected,rejected_law⟩
-  sensitivity := sensitivity arena.Law equalityActual rejected_law
-  dependence := equality_dependence
-def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
-    (@_root_.D5.S3.Quantum.Entanglement.AbsolutePPT.FiveRowP2Star.star_polynomial) (Realization signature) Unit Unit where
-  unitName := `Reg.D5.S3.Quantum.Entanglement.AbsolutePPT.FiveRowP2Star.star_polynomial.unit
-  realizationName := `Reg.D5.S3.Quantum.Entanglement.AbsolutePPT.FiveRowP2Star.star_polynomial.family
-  realizationSource := none
-  generated := false
-  arena := .source ⟨arena⟩
-  objectArena := .source ⟨arena⟩
-  catalog := Lean.Name.anonymous
-  localNames := false
-  realization := .source arena ⟨family⟩
-  correspondence := { stage := .evidence, objectStage := .evidence }
-  bundleNonempty := .absent
-  readout := some (realize signature (fun _ _ x y => x=y) (fun e => nomatch e))
-  variation := .absent
-  sensitivity := .absent
-  partialSensitivity := none
-  escapeFrom := none
-  sourceSelection := some {
-    owner := `D5.S3.Quantum.Entanglement.AbsolutePPT.FiveRowP2Star
-    definition := none
-    coordinates := #[]
-    readouts := #[{
-      path := #["body", "body", "body", "fn", "fn"]
-      stateBinder := 0
-      functionOperand := true
-      stateOperand := none
-      booleanPredicate := false
-    }]
-  }
-  continuation := .unknown
-  familyRecord := none
-  options := #[]
-end star_polynomial
 
 namespace star_product_bound
 abbrev arena : Arena where
