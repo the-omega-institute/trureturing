@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:12ce2a1f7221a4b2127278961bdcb24fc0c33568debabe47f314b84d42db5c56
+  normalized_sha256: sha256:12ce2a1f7221a4b2127278961bdcb24fc0c33568debabe47f314b84d42db5c56
+cas_ref: sha256:12ce2a1f7221a4b2127278961bdcb24fc0c33568debabe47f314b84d42db5c56
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 表中仅说明 reproducing-kernel vector 的观察者用语，没有另陈述再生恒等式。
+    previous_atom_id: 3a964fb3eb949f2f7d25b74ba46cf800e5553e6be4f7cfc1480a5cbe696fe204
+    next_atom_id: 1e636cc9bb02e218737f3dd181a49eddbe3b7a8e9c42641473f86d204801ba42
