@@ -7,10 +7,7 @@
    digest: No exponential-dependent logarithm maps recover every complex halved commutator. -/
 
 import Mathlib.Analysis.Normed.Algebra.MatrixExponential
-import Mathlib.Analysis.SpecialFunctions.Trigonometric.Basic
 import Mathlib.Analysis.SpecialFunctions.Exponential
-import Mathlib.Data.Matrix.Basis
-import Mathlib.Tactic.FinCases
 
 noncomputable section
 
