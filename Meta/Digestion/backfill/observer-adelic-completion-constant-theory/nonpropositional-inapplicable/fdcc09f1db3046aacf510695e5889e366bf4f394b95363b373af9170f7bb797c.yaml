@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:fdcc09f1db3046aacf510695e5889e366bf4f394b95363b373af9170f7bb797c
+  normalized_sha256: sha256:fdcc09f1db3046aacf510695e5889e366bf4f394b95363b373af9170f7bb797c
+cas_ref: sha256:fdcc09f1db3046aacf510695e5889e366bf4f394b95363b373af9170f7bb797c
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 列举完成参数 tau 的一种候选解释（黄金 zeta 因子抽取深度），没有声称该离散深度可微。
+    previous_atom_id: 223e6ab7826876cd322bbbe072f23cce83644a40ea2a205063142c1c2efff08b
+    next_atom_id: 35eb441e5c8cce652bf0e37d44c5cb166cdc08120c1722e1a51749e96ae8b336

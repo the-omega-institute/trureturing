@@ -5,3 +5,7 @@ cas_ref: sha256:bcf2830a9134e19d8e2ed97c057b1756666f4d7b6bee63de9d11718ee8676802
 coverage_gids: []
 receipts:
   unresolved_subitems: []
+  nonpropositional:
+    justification: 参数词汇表将 pi 命名为素数观察顺序；没有声称某种顺序具有特定性质。
+    previous_atom_id: 818bd37df6b36aaf7fa51fe915387501a114378ab73ec1db1f92642ae2b9a980
+    next_atom_id: ec8c60cded9e9e1e8c279bc87148cf762b470a2be353ec0ce52f1e0db7464be1

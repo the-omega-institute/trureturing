@@ -5,3 +5,7 @@ cas_ref: sha256:3a227a2be643dd4b067b7d9995b5271e2e2505ef04fe7cf59e929e78be995f2b
 coverage_gids: []
 receipts:
   unresolved_subitems: []
+  nonpropositional:
+    justification: 四层分离的章节标题及阅读提示，没有数学断言。
+    previous_atom_id: d777183c4d1378c2632d60e10c7bc7fca5836c78dc88ba6828cc7909d521fd1c
+    next_atom_id: 8628146273660c77f48334d0a20cf2e919555baf59401c6ef8ecc02850f3d1f1
