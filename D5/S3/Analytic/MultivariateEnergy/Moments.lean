@@ -201,44 +201,15 @@ theorem T_eq {d : ℕ} [NeZero d] (x y z : S d) :
   field_simp [hd]
   <;> ring
 
-/-- The three-input member of the family has three quadratic terms and one cubic term. -/
-theorem familyKernel_three (d : ℕ) (β : ℝ) (x : Fin 3 → S d) :
-    familyKernel d 0 β x = β / 3 * (L (x 0) (x 1) + L (x 0) (x 2) +
-      L (x 1) (x 2)) - T (x 0) (x 1) (x 2) := by
-  have h2 : (Finset.univ : Finset (Fin 3)).powersetCard 2 =
-      {{0, 1}, {0, 2}, {1, 2}} := by decide
-  have h3 : (Finset.univ : Finset (Fin 3)).powersetCard 3 = {{0, 1, 2}} := by decide
-  have hs01 : ({0, 1} : Finset (Fin 3)).sort (· ≤ ·) = [0, 1] := by
-    simpa using (List.toFinset_sort (· ≤ ·)
-      (show ([0, 1] : List (Fin 3)).Nodup by decide)).mpr (by decide)
-  have hs02 : ({0, 2} : Finset (Fin 3)).sort (· ≤ ·) = [0, 2] := by
-    simpa using (List.toFinset_sort (· ≤ ·)
-      (show ([0, 2] : List (Fin 3)).Nodup by decide)).mpr (by decide)
-  have hs12 : ({1, 2} : Finset (Fin 3)).sort (· ≤ ·) = [1, 2] := by
-    simpa using (List.toFinset_sort (· ≤ ·)
-      (show ([1, 2] : List (Fin 3)).Nodup by decide)).mpr (by decide)
-  have hs012 : ({0, 1, 2} : Finset (Fin 3)).sort (· ≤ ·) = [0, 1, 2] := by
-    simpa using (List.toFinset_sort (· ≤ ·)
-      (show ([0, 1, 2] : List (Fin 3)).Nodup by decide)).mpr (by decide)
-  rw [familyKernel, h2, h3]
-  rw [Finset.sum_insert (by decide), Finset.sum_insert (by decide)]
-  norm_num [hs01, hs02, hs12, hs012]
-  <;> ring_nf
-  <;> simp
-
 /-- Every three-input family member is continuous, symmetric and orthogonally invariant. -/
 theorem isAdmissible_familyKernel_three (d : ℕ) [NeZero d] (β : ℝ) :
-    IsAdmissible (familyKernel d 0 β) := by
-  have he : familyKernel d 0 β = fun x => β / 3 *
-      (L (x 0) (x 1) + L (x 0) (x 2) + L (x 1) (x 2)) - T (x 0) (x 1) (x 2) := by
-    funext x
-    exact familyKernel_three d β x
+    IsAdmissible (familyKernel d β) := by
   refine ⟨?_, ?_, ?_⟩
-  · rw [he]
+  · unfold familyKernel
     simp only [L_eq, T_eq]
     fun_prop
   · intro π x
-    simp only [he, L_eq, T_eq, Function.comp_apply]
+    simp only [familyKernel, L_eq, T_eq, Function.comp_apply]
     have h01 : π 0 ≠ π 1 := π.injective.ne (by decide)
     have h02 : π 0 ≠ π 2 := π.injective.ne (by decide)
     have h12 : π 1 ≠ π 2 := π.injective.ne (by decide)
@@ -250,6 +221,6 @@ theorem isAdmissible_familyKernel_three (d : ℕ) [NeZero d] (β : ℝ) :
       simp only [real_inner_comm (x 1).val (x 0).val,
         real_inner_comm (x 2).val (x 0).val, real_inner_comm (x 2).val (x 1).val] <;> ring
   · intro V x
-    simp only [he, L_eq, T_eq, sphereAction, V.inner_map_map]
+    simp only [familyKernel, L_eq, T_eq, sphereAction, V.inner_map_map]
 
 end D5.S3.Analytic.MultivariateEnergy.Moments

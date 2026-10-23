@@ -21,12 +21,12 @@ namespace D5.S3.Analytic.MultivariateEnergy.Result
 open Defs Moments Energy
 
 private lemma energy_sigma (d : ℕ) [NeZero d] (β : ℝ) :
-    energy (familyKernel d 0 β) (sigma d) = 0 := by
+    energy (familyKernel d β) (sigma d) = 0 := by
   rw [energy_family_eq]
   simp [Q, integral_A_eq_zero]
 
 private lemma energy_dirac (d : ℕ) [NeZero d] (β : ℝ) (e : S d) :
-    energy (familyKernel d 0 β) (Measure.dirac e) =
+    energy (familyKernel d β) (Measure.dirac e) =
       ((d : ℝ) - 1) / d * (β - ((d : ℝ) - 2) / d) := by
   have hd : (d : ℝ) ≠ 0 := Nat.cast_ne_zero.mpr (NeZero.ne d)
   have hQ : Q (Measure.dirac e) = A e := by
@@ -44,9 +44,9 @@ private lemma energy_dirac (d : ℕ) [NeZero d] (β : ℝ) (e : S d) :
 while normalized surface measure fails to minimize the energy. -/
 theorem family_refutes (d : ℕ) (hd : 3 ≤ d) (β : ℝ)
     (hβ : 0 < β) (hβupper : β < ((d : ℝ) - 2) / d) :
-    IsAdmissible (familyKernel d 0 β) ∧
-      IsCondPosDef (avgKernel (familyKernel d 0 β)) ∧
-      ¬ IsMinimizer (familyKernel d 0 β) (sigma d) := by
+    IsAdmissible (familyKernel d β) ∧
+      IsCondPosDef (avgKernel (familyKernel d β)) ∧
+      ¬ IsMinimizer (familyKernel d β) (sigma d) := by
   haveI : NeZero d := ⟨by omega⟩
   refine ⟨isAdmissible_familyKernel_three d β,
     isCondPosDef_family d β hβ.le, ?_⟩
@@ -66,6 +66,6 @@ theorem family_refutes (d : ℕ) (hd : 3 ≤ d) (β : ℝ)
 theorem result : ¬ claim := by
   intro hclaim
   obtain ⟨ha, hc, hn⟩ := family_refutes 3 (by omega) (1 / 10) (by norm_num) (by norm_num)
-  exact hn ((hclaim 3 (by omega) 0 (familyKernel 3 0 (1 / 10)) ha).mpr hc)
+  exact hn ((hclaim 3 (by omega) 0 (familyKernel 3 (1 / 10)) ha).mpr hc)
 
 end D5.S3.Analytic.MultivariateEnergy.Result

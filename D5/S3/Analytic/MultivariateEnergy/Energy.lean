@@ -93,19 +93,17 @@ private lemma integral_expr {d : ℕ} (μ : Measure (S d)) [IsFiniteMeasure μ]
 
 /-- For three inputs, all probability-measure energy depends only on the centered matrix moment. -/
 theorem energy_family_eq (d : ℕ) (β : ℝ) (μ : Measure (S d)) [IsProbabilityMeasure μ] :
-    energy (familyKernel d 0 β) μ = β * trace (Q μ * Q μ) - trace (Q μ * Q μ * Q μ) := by
-  have hc : Continuous (familyKernel d 0 β) := by
-    simp_rw [show familyKernel d 0 β = fun x => β / 3 *
-      (L (x 0) (x 1) + L (x 0) (x 2) + L (x 1) (x 2)) - T (x 0) (x 1) (x 2) from
-        funext (familyKernel_three d β)]
+    energy (familyKernel d β) μ = β * trace (Q μ * Q μ) - trace (Q μ * Q μ * Q μ) := by
+  have hc : Continuous (familyKernel d β) := by
+    unfold familyKernel
     unfold L T
     fun_prop
   rw [energy, integral_three μ _ hc]
   have hz (x y : S d) :
-      (∫ z, familyKernel d 0 β ![x,y,z] ∂μ) =
+      (∫ z, familyKernel d β ![x,y,z] ∂μ) =
       β / 3 * (L x y + trace (A x * Q μ) + trace (A y * Q μ)) -
         trace (A x * A y * Q μ) := by
-    simp only [familyKernel_three]
+    simp only [familyKernel]
     change (∫ z, β / 3 * (L x y + L x z + L y z) - T x y z ∂μ) = _
     rw [integral_expr μ β (fun _ => L x y) (fun z => L x z) (fun z => L y z)
       (fun z => T x y z) continuous_const (by unfold L; fun_prop)
@@ -130,12 +128,12 @@ theorem energy_family_eq (d : ℕ) (β : ℝ) (μ : Measure (S d)) [IsProbabilit
 
 /-- Averaging one input leaves exactly a positive multiple of the matrix feature pairing. -/
 theorem avgKernel_family_eq (d : ℕ) [NeZero d] (β : ℝ) (x y : S d) :
-    avgKernel (familyKernel d 0 β) x y = β / 3 * L x y := by
+    avgKernel (familyKernel d β) x y = β / 3 * L x y := by
   have he : (fun z : Fin 1 → S d =>
-      familyKernel d 0 β (Fin.append (m := 1) (n := 2) z ![x,y])) =
+      familyKernel d β (Fin.append (m := 1) (n := 2) z ![x,y])) =
       fun z => β / 3 * (L (z 0) x + L (z 0) y + L x y) - T (z 0) x y := by
     funext z
-    simp [familyKernel_three, Fin.append, Fin.addCases]
+    simp [familyKernel, Fin.append, Fin.addCases]
   unfold avgKernel
   rw [he]
   rw [integral_comp_eval (μ := fun _ : Fin 1 => sigma d) (i := 0)
@@ -163,7 +161,7 @@ private lemma Q_symmetric {d : ℕ} (μ : Measure (S d)) [IsFiniteMeasure μ] :
 
 /-- The averaged kernel is positive on differences of arbitrary finite measures. -/
 theorem isCondPosDef_family (d : ℕ) [NeZero d] (β : ℝ) (hβ : 0 ≤ β) :
-    IsCondPosDef (avgKernel (familyKernel d 0 β)) := by
+    IsCondPosDef (avgKernel (familyKernel d β)) := by
   intro μ₁ μ₂ hμ₁ hμ₂ _
   letI := hμ₁
   letI := hμ₂

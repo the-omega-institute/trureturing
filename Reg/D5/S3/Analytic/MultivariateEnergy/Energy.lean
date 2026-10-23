@@ -38,7 +38,7 @@ def energyRejected : Realization coefficientSignature :=
 abbrev energyArena : Arena where
   signature := coefficientSignature
   Law R := ∀ (d : ℕ) (β : ℝ) (μ : Measure (S d)) [IsProbabilityMeasure μ],
-    energy (familyKernel d 0 β) μ = R.readout () () β * trace (Q μ * Q μ) -
+    energy (familyKernel d β) μ = R.readout () () β * trace (Q μ * Q μ) -
       trace (Q μ * Q μ * Q μ)
 
 private theorem energyRejected_false : ¬ energyArena.Law energyRejected := by
@@ -114,7 +114,7 @@ def averagedRejected : Realization coefficientSignature :=
 abbrev averagedArena : Arena where
   signature := coefficientSignature
   Law R := ∀ (d : ℕ) [NeZero d] (β : ℝ) (x y : S d),
-    avgKernel (familyKernel d 0 β) x y = R.readout () () β * L x y
+    avgKernel (familyKernel d β) x y = R.readout () () β * L x y
 
 private theorem averagedRejected_false : ¬ averagedArena.Law averagedRejected := by
   intro h
@@ -182,7 +182,7 @@ def positiveRejected : Realization coefficientSignature :=
 abbrev positiveArena : Arena where
   signature := coefficientSignature
   Law R := ∀ (d : ℕ) [NeZero d] (β : ℝ), 0 ≤ β →
-    IsCondPosDef (avgKernel (familyKernel d 0 (R.readout () () β)))
+    IsCondPosDef (avgKernel (familyKernel d (R.readout () () β)))
 
 private theorem positiveRejected_false : ¬ positiveArena.Law positiveRejected := by
   intro h

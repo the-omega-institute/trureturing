@@ -2,14 +2,13 @@
    generality: G
    mirror-B: D5/B/S3/Analytic/MultivariateEnergy/Defs
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
-   anchors: [mathlib/module/Mathlib.MeasureTheory.Constructions.HaarToSphere, mathlib/module/Mathlib.MeasureTheory.Integral.Pi, mathlib/module/Mathlib.LinearAlgebra.Matrix.Trace, mathlib/module/Mathlib.Data.Finset.Sort, mathlib/module/Mathlib.MeasureTheory.Measure.Haar.InnerProductSpace, mathlib/module/Mathlib.Analysis.Matrix.Normed]
+   anchors: [mathlib/module/Mathlib.MeasureTheory.Constructions.HaarToSphere, mathlib/module/Mathlib.MeasureTheory.Integral.Pi, mathlib/module/Mathlib.LinearAlgebra.Matrix.Trace, mathlib/module/Mathlib.MeasureTheory.Measure.Haar.InnerProductSpace, mathlib/module/Mathlib.Analysis.Matrix.Normed]
    utility: none
    digest: Normalized spherical measure, multivariate energy and centered matrix kernels. -/
 
 import Mathlib.MeasureTheory.Constructions.HaarToSphere
 import Mathlib.MeasureTheory.Integral.Pi
 import Mathlib.LinearAlgebra.Matrix.Trace
-import Mathlib.Data.Finset.Sort
 import Mathlib.MeasureTheory.Measure.Haar.InnerProductSpace
 import Mathlib.Analysis.Matrix.Normed
 
@@ -89,15 +88,9 @@ def T {d : ℕ} (x y z : S d) : ℝ := Matrix.trace (A x * A y * A z)
 /-- The averaged centered feature of a measure. -/
 def Q {d : ℕ} (μ : Measure (S d)) : Matrix (Fin d) (Fin d) ℝ := ∫ x, A x ∂μ
 
-/-- The symmetric pair and triple family, indexed by unordered subsets.
-The increasing enumeration chooses one ordering for each subset. -/
-def familyKernel (d m : ℕ) (β : ℝ) (x : Fin (m + 3) → S d) : ℝ :=
-  β / ((m + 3).choose 2 : ℝ) *
-    (∑ s ∈ (Finset.univ : Finset (Fin (m + 3))).powersetCard 2,
-      L (x ((s.sort (· ≤ ·)).getD 0 0)) (x ((s.sort (· ≤ ·)).getD 1 0))) -
-  1 / ((m + 3).choose 3 : ℝ) *
-    (∑ s ∈ (Finset.univ : Finset (Fin (m + 3))).powersetCard 3,
-      T (x ((s.sort (· ≤ ·)).getD 0 0)) (x ((s.sort (· ≤ ·)).getD 1 0))
-        (x ((s.sort (· ≤ ·)).getD 2 0)))
+/-- The three-input centered pair and triple family. -/
+def familyKernel (d : ℕ) (β : ℝ) (x : Fin 3 → S d) : ℝ :=
+  β / 3 * (L (x 0) (x 1) + L (x 0) (x 2) + L (x 1) (x 2)) -
+    T (x 0) (x 1) (x 2)
 
 end D5.S3.Analytic.MultivariateEnergy.Defs
