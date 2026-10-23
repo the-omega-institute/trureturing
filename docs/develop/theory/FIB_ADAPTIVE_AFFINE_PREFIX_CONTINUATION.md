@@ -9,7 +9,7 @@ $$
 
 The result is a continuation theorem only. It does not give the unrestricted adaptive optimum when the initial calibration prefix itself may be chosen adaptively.
 
-All statements are ordinary exact mathematics. No Lean, Scribe, or Reg declaration is added.
+All statements are ordinary exact mathematics, without formal or empirical certification.
 
 ## 1. Contract and prefix
 
@@ -35,7 +35,7 @@ z_i=(1+\kappa i)\operatorname{tr}(A_iS)+D(i),
 \tag{1.1}
 $$
 
-with real $\kappa$ and $\deg D\le d$. The source is one fixed positive rank-one source with one fixed positive row, and all cumulative matrices are produced on one forward trajectory. There is no reset, copy, inverse acquisition, or second observation channel. A finite composite $M/J$ word is one continuation action; after a read the clock index advances by one, while an unread atom does not.
+with real $\kappa$, a known integer $d\ge0$, and $\deg D\le d$. The source is one fixed positive rank-one source with one fixed positive row, and all cumulative matrices are produced on one forward trajectory. There is no reset, copy, inverse acquisition, or second observation channel. Matrix products act on the left and are executed from right to left. A finite composite $M/J$ word, including the empty word, is one continuation action; after a read the clock index advances by one, while an unread atom does not.
 
 Set
 
@@ -365,6 +365,8 @@ Therefore the new adaptive result has three distinct boundaries:
 
 The fixed-path theorem supplies the three-read upper bound and the exact prefix contract. Its two-read obstruction applies only to predetermined continuations. The present lower bound chooses the collision worlds after the first continuation word is fixed by a common actual history; this is the new adaptive quantifier. The constant-drift upper bound uses a data-dependent finite word and a monotone positive fiber, which is not a fixed-path construction.
 
-The result does not settle the unrestricted adaptive problem in which the initial calibration prefix may itself depend on the readings. It does not change the existing fixed-path value $d+5$ for $d\ge1$, the known $d=0$ fixed-path bounds, or the separate polynomial-gain and every-atom cubic contracts. It is not a randomized, noisy, bit-complexity, time, atom-cost, physical-realization, or Lean-certification statement.
+The result does not settle the unrestricted adaptive problem in which the initial calibration prefix may itself depend on the readings. It does not change the existing fixed-path value $d+5$ for $d\ge1$ or the bounds $5\le C_{\mathrm{fix}}(0)\le6$ in Section 10 of [Sharp positive-degree recovery and six-read stability with affine gain](FIB_AFFINE_SIX_READ_SHARP_RECOVERY.md), or the separate polynomial-gain and every-atom cubic contracts. It is not a randomized, noisy, bit-complexity, time, atom-cost, physical-realization, or Lean-certification statement.
 
 The proof uses exact real arithmetic and permits an unbounded data-dependent finite atom count in the $d=0$, $\kappa\ne0$ branch. The lower bounds use fixed parameters throughout each run, strictly positive rank-one sources, and the original single trajectory. No world is changed after observing a response.
+
+The adaptive continuation argument is repo-derived; no literature-priority claim is made.
