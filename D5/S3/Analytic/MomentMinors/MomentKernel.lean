@@ -2,7 +2,7 @@
    generality: G
    mirror-B: D5/B/S3/Analytic/MomentMinors/MomentKernel
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
-   anchors: [mathlib/module/Mathlib.Analysis.Convex.Deriv, mathlib/module/Mathlib.Analysis.SpecialFunctions.Pow.Deriv, mathlib/module/Mathlib.LinearAlgebra.Matrix.PosDef, mathlib/module/Mathlib.Analysis.SpecialFunctions.Log.NegMulLog]
+   anchors: [mathlib/module/Mathlib.Analysis.Convex.Deriv, mathlib/module/Mathlib.Analysis.SpecialFunctions.Pow.Deriv, mathlib/module/Mathlib.LinearAlgebra.Matrix.PosDef, mathlib/module/Mathlib.InformationTheory.KullbackLeibler.KLFun]
    utility: none
    digest: Positive semidefiniteness of the midpoint moment gap kernel by integrated supporting tangents. -/
 
@@ -10,7 +10,7 @@ import D5.S3.Analytic.MomentMinors.Defs
 import Mathlib.Analysis.Convex.Deriv
 import Mathlib.Analysis.SpecialFunctions.Pow.Deriv
 import Mathlib.LinearAlgebra.Matrix.PosDef
-import Mathlib.Analysis.SpecialFunctions.Log.NegMulLog
+import Mathlib.InformationTheory.KullbackLeibler.KLFun
 
 /-! The power Jensen gaps form a positive semidefinite midpoint kernel. -/
 
@@ -46,10 +46,8 @@ private lemma potential_hasDerivAt (s : ℝ) {x : ℝ} (hx : 0 < x) :
   · by_cases hs1 : s = 1
     · subst s
       simp only [potential, slope, one_ne_zero, ↓reduceIte]
-      convert (((Real.hasDerivAt_mul_log hx.ne').sub (hasDerivAt_id x)).add_const 1) using 1
-      · ext y
-        rfl
-      · ring
+      convert InformationTheory.hasDerivAt_klFun hx.ne' using 1
+      exact funext fun y => (add_sub_right_comm (y * Real.log y) 1 y).symm
     · simp only [potential, slope, hs0, hs1, ↓reduceIte]
       convert (((((Real.hasDerivAt_rpow_const (p := s) (Or.inl hx.ne')).sub
         ((hasDerivAt_id x).const_mul s)).add_const s).sub_const 1).div_const
