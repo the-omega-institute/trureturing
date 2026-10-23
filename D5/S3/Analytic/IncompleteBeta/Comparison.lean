@@ -6,7 +6,7 @@
    utility: none
    digest: Strict comparison of symmetric beta means under increasing shape imbalance. -/
 
-import D5.S3.Analytic.KummerRatio.BetaIntegral
+import D5.S3.Analytic.KilbasSaigo.Bounds
 import Mathlib.Analysis.SpecialFunctions.Trigonometric.DerivHyp
 
 /-! Symmetric beta densities become ordered cosh tilts after reflection. -/
@@ -25,10 +25,11 @@ def betaMean (W : ℝ → ℝ) (m d : ℝ) : ℝ :=
   (Real.Gamma (m + d) * Real.Gamma (m - d) / Real.Gamma (2 * m))⁻¹ *
     ∫ u in (0 : ℝ)..1, u ^ (m + d - 1) * (1 - u) ^ (m - d - 1) * W u
 
-private def density (m d u : ℝ) : ℝ :=
-  u ^ (m + d - 1) * (1 - u) ^ (m - d - 1)
-
-private def folded (m d u : ℝ) : ℝ := density m d u + density m d (1 - u)
+private def folded (m d u : ℝ) : ℝ :=
+  D5.S3.Analytic.KilbasSaigo.Bounds.FractionalCertificate.weight
+      (1 - m + d) (2 * m - 1) u +
+    D5.S3.Analytic.KilbasSaigo.Bounds.FractionalCertificate.weight
+      (1 - m + d) (2 * m - 1) (1 - u)
 
 private lemma cosh_ratio_strictMono {d e : ℝ} (hd : 0 ≤ d) (hde : d < e) :
     StrictMonoOn (fun v : ℝ => Real.cosh (e * v) / Real.cosh (d * v)) (Ioi 0) := by
@@ -61,7 +62,9 @@ private lemma folded_eq {m d u : ℝ} (hu : u ∈ Ioo 0 1) :
     folded m d u = 2 * (u * (1 - u)) ^ (m - 1) *
       Real.cosh (d * Real.log ((1 - u) / u)) := by
   have h1 : 0 < 1 - u := sub_pos.mpr hu.2
-  dsimp only [folded, density]
+  dsimp only [folded, D5.S3.Analytic.KilbasSaigo.Bounds.FractionalCertificate.weight]
+  rw [show 2 * m - 1 + (1 - m + d) - 1 = m + d - 1 by ring,
+    show -(1 - m + d) = m - d - 1 by ring]
   simp only [sub_sub_cancel]
   rw [Real.mul_rpow hu.1.le h1.le, Real.cosh_eq]
   simp only [Real.rpow_def_of_pos hu.1, Real.rpow_def_of_pos h1,
@@ -206,14 +209,13 @@ private lemma fold_integral {f : ℝ → ℝ} (hf : IntervalIntegrable f volume 
   norm_num only [sub_zero, show (1:ℝ)-1/2=1/2 by norm_num]
   exact (intervalIntegral.integral_add_adjacent_intervals hleft hright).symm
 
-private lemma density_integrable {m d : ℝ} (hp : 0 < m+d) (hq : 0 < m-d) :
-    IntervalIntegrable (density m d) volume 0 1 :=
-  D5.S3.Analytic.KummerRatio.BetaIntegral.intervalIntegrable_beta hp hq
-
 private lemma folded_integrable {m d : ℝ} (hp : 0 < m+d) (hq : 0 < m-d) :
     IntervalIntegrable (folded m d) volume 0 (1/2) := by
-  have hi := density_integrable hp hq
-  have hr : IntervalIntegrable (fun u => density m d (1-u)) volume 0 1 := by
+  have hi := D5.S3.Analytic.KilbasSaigo.Bounds.FractionalCertificate.weight_integrable
+    (α := 1 - m + d) (a := 2 * m - 1) (by linarith) (by linarith)
+  have hr : IntervalIntegrable
+      (fun u => D5.S3.Analytic.KilbasSaigo.Bounds.FractionalCertificate.weight
+        (1 - m + d) (2 * m - 1) (1 - u)) volume 0 1 := by
     convert (hi.comp_sub_left 1).symm using 1 <;> norm_num
   exact (hi.add hr).mono_set (by
     norm_num [Set.uIcc_of_le]
@@ -227,9 +229,12 @@ private lemma betaMean_eq_foldedMean {W : ℝ → ℝ}
     betaMean W m d =
       (∫ u in (0:ℝ)..(1/2), folded m d u * W u) /
         (∫ u in (0:ℝ)..(1/2), folded m d u) := by
-  have hi := density_integrable hp hq
+  have hi := D5.S3.Analytic.KilbasSaigo.Bounds.FractionalCertificate.weight_integrable
+    (α := 1 - m + d) (a := 2 * m - 1) (by linarith) (by linarith)
   have hWi := hi.mul_continuousOn (by simpa only [Set.uIcc_of_le zero_le_one] using hW)
-  have hnum : (∫ u in (0:ℝ)..1, density m d u * W u) =
+  have hnum : (∫ u in (0:ℝ)..1,
+      D5.S3.Analytic.KilbasSaigo.Bounds.FractionalCertificate.weight
+        (1 - m + d) (2 * m - 1) u * W u) =
       ∫ u in (0:ℝ)..(1/2), folded m d u * W u := by
     rw [fold_integral hWi]
     apply intervalIntegral.integral_congr_Ioo_of_le (by norm_num)
@@ -240,13 +245,25 @@ private lemma betaMean_eq_foldedMean {W : ℝ → ℝ}
     ring
   have hden : (∫ u in (0:ℝ)..(1/2), folded m d u) =
       Real.Gamma (m+d) * Real.Gamma (m-d) / Real.Gamma (2*m) := by
-    change (∫ u in (0:ℝ)..(1/2), density m d u + density m d (1-u)) = _
+    change (∫ u in (0:ℝ)..(1/2),
+      D5.S3.Analytic.KilbasSaigo.Bounds.FractionalCertificate.weight
+          (1 - m + d) (2 * m - 1) u +
+        D5.S3.Analytic.KilbasSaigo.Bounds.FractionalCertificate.weight
+          (1 - m + d) (2 * m - 1) (1 - u)) = _
     rw [← fold_integral hi]
-    dsimp only [density]
-    simpa only [show m+d+(m-d)=2*m by ring] using
-      D5.S3.Analytic.KummerRatio.BetaIntegral.integral_beta hp hq
+    simpa only [show 2 * m - 1 + (1 - m + d) = m + d by ring,
+      show 1 - (1 - m + d) = m - d by ring,
+      show 2 * m - 1 + 1 = 2 * m by ring] using
+      D5.S3.Analytic.KilbasSaigo.Bounds.FractionalCertificate.integral_weight
+        (α := 1 - m + d) (a := 2 * m - 1) (by linarith) (by linarith)
   unfold betaMean
-  change _ * (∫ u in (0:ℝ)..1, density m d u * W u) = _
+  have hw : (fun u : ℝ => u ^ (m + d - 1) * (1 - u) ^ (m - d - 1)) =
+      D5.S3.Analytic.KilbasSaigo.Bounds.FractionalCertificate.weight
+        (1 - m + d) (2 * m - 1) := by
+    funext u
+    unfold D5.S3.Analytic.KilbasSaigo.Bounds.FractionalCertificate.weight
+    congr 2 <;> ring
+  simp_rw [← hw] at hnum
   rw [hnum, hden]
   ring
 
