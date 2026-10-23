@@ -34,6 +34,10 @@ Lean statement: `D5/S3/Quantum/Information/GroupInvariantPsi/Result.result`
 
 *Proof.* Machine-checked in Lean as `D5/S3/Quantum/Information/GroupInvariantPsi/Result.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/hiai-mosonyi-hayashi-2009-group-invariant-psi-differentiability-refutation` (refuted) by `D5/S3/Quantum/Information/GroupInvariantPsi/Result.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"hiai-mosonyi-hayashi-2009-group-invariant-psi-differentiability-refutation","declaration_gid":"D5/S3/Quantum/Information/GroupInvariantPsi/Result.result","resolution_kind":"refuted"} -->
+
 *Source.* Repository-derived.
 
 *Commentary.*

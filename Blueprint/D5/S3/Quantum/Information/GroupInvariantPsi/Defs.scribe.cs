@@ -4,6 +4,9 @@ namespace StrataLint.Scribe.Blueprint.D5.S3.Quantum.Information.GroupInvariantPs
 
 internal sealed class DefsDocument : IScribeDocumentDefinition
 {
+    private static readonly LibraryNoteRef Source =
+        LibraryNoteRef.Create("D5/L/Divergence/hiaimosonyihayashi2009groupsymmetry");
+
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "Finite-group discrimination of faithful density matrices.",
         H("Tensor averages and asymptotic overlaps"), Blocks(
@@ -21,6 +24,7 @@ internal sealed class DefsDocument : IScribeDocumentDefinition
     private static DocumentBlock Entry(string declaration, string title, string text) =>
         Describe.Lean(DescribeId.Create("group-invariant-psi-defs-" + declaration.Replace('_', '-').ToLowerInvariant()),
             DeclarationHandle.Create("D5/S3/Quantum/Information/GroupInvariantPsi/Defs." + declaration),
-            H(title), StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
+            H(title), StatementSource.WithoutFormula(), declaration == "tensorPower"
+                ? AssessedProvenance.FromRepo() : AssessedProvenance.FromLiterature(Source),
             Blocks(Paragraph(Text(text))), DescribeRole.Definition);
 }

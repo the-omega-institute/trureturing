@@ -22,7 +22,7 @@ Lean statement: `D5/S3/Quantum/Information/GroupInvariantPsi/Defs.twirlPower`
 
 *Formalization.* `D5/S3/Quantum/Information/GroupInvariantPsi/Defs.twirlPower` (`✓ std3`).
 
-*Source.* Repository-derived.
+*Citation.* Fumio Hiai and Milan Mosonyi and Masahito Hayashi (2009). *Quantum hypothesis testing with group symmetry*. DOI: [10.1063/1.3234186](https://doi.org/10.1063/1.3234186). URL: <https://arxiv.org/abs/0904.0704v2>.
 
 *Commentary.*
 
@@ -34,7 +34,7 @@ Lean statement: `D5/S3/Quantum/Information/GroupInvariantPsi/Defs.psiN`
 
 *Formalization.* `D5/S3/Quantum/Information/GroupInvariantPsi/Defs.psiN` (`✓ std3`).
 
-*Source.* Repository-derived.
+*Citation.* Fumio Hiai and Milan Mosonyi and Masahito Hayashi (2009). *Quantum hypothesis testing with group symmetry*. DOI: [10.1063/1.3234186](https://doi.org/10.1063/1.3234186). URL: <https://arxiv.org/abs/0904.0704v2>.
 
 *Commentary.*
 
@@ -46,7 +46,7 @@ Lean statement: `D5/S3/Quantum/Information/GroupInvariantPsi/Defs.psi`
 
 *Formalization.* `D5/S3/Quantum/Information/GroupInvariantPsi/Defs.psi` (`✓ std3`).
 
-*Source.* Repository-derived.
+*Citation.* Fumio Hiai and Milan Mosonyi and Masahito Hayashi (2009). *Quantum hypothesis testing with group symmetry*. DOI: [10.1063/1.3234186](https://doi.org/10.1063/1.3234186). URL: <https://arxiv.org/abs/0904.0704v2>.
 
 *Commentary.*
 
@@ -58,7 +58,7 @@ Lean statement: `D5/S3/Quantum/Information/GroupInvariantPsi/Defs.claim`
 
 *Formalization.* `D5/S3/Quantum/Information/GroupInvariantPsi/Defs.claim` (`✓ std3`).
 
-*Source.* Repository-derived.
+*Citation.* Fumio Hiai and Milan Mosonyi and Masahito Hayashi (2009). *Quantum hypothesis testing with group symmetry*. DOI: [10.1063/1.3234186](https://doi.org/10.1063/1.3234186). URL: <https://arxiv.org/abs/0904.0704v2>.
 
 *Commentary.*
 
