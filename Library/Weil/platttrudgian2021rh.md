@@ -606,6 +606,9 @@ $$
 
 Here the first line controls a joint defect; it does not assert that
 $M(F_v)$ tends to zero uniformly over that class.
+The last line is a moment-only bound on all actual sources, without
+the Gamma hypothesis. It follows from the full-line reconstruction
+and boundedness of both exponentially weighted filters below.
 
 Use $q=5/4$, the even full-line function $\beta(t)=g(t/2)$, and
 $w(t)=e^{qt}\beta(t)$. On the full line let
@@ -698,7 +701,7 @@ $C\sqrt D L_\epsilon^{-2/5}$ for the commutators. The identity
 $A^2+B^2=I$ for the real-axis filters turns each metric defect into
 $\langle X,(A[P_+,A]+B[P_+,B])X\rangle$, with the indicated bounded
 weight for $\mathcal H$. The exponential-conjugation error has the
-smaller order already stated. This proves the first and third lines
+smaller order already stated. This proves the first line
 of VHP2 while retaining the sharp arithmetic boundary.
 
 For its second line, the same frequency split as W331 gives
@@ -791,7 +794,8 @@ To check the direction, VHP8 and the height bound imply
 $(\delta-3\lambda)\mathcal H(F_h)
  \le C\delta(\log T)^{-2/5}+C\eta_T$.
 Dividing by its positive norm proves VHP9.
-In particular, at a sufficiently large absolute starting height,
+In particular, at a sufficiently large starting height depending
+only on the fixed $c$,
 
 $$
  \lambda\le\delta/6\quad\Longrightarrow\quad
