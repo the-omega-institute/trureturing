@@ -8,11 +8,19 @@
 
 import D5.S3.Quantum.Information.NMLWMeasuredFidelitySeparation
 import D5.S3.QuantumChannels.PauliThreeWeightBayesianInverseUniqueness
+import D5.S3.Quantum.Measurement.StabilizerPovmMaximalEntanglementRefutation
 import Mathlib.Analysis.MeanInequalities
 import Mathlib.Logic.Equiv.Fin.Rotate
 
+/-! The product of single-site process marginals has squared Uhlmann fidelity at least
+`4⁻ᴺ`. Cyclic wire permutations give equality when there are at least two wires. -/
+
 open scoped BigOperators ComplexOrder MatrixOrder
 open Matrix
+open D5.S3.Quantum.Information.StabilizerPairLocalUnitaryInequivalence
+  (Pauli pauliMatrix wordOp tensorOp)
+open D5.S3.Quantum.Measurement.StabilizerPovmMaximalEntanglementRefutation
+  (word_trace_pair word_expansion word_hermitian)
 open D5.S3.QuantumChannels.PauliThreeWeightBayesianInverseUniqueness (sigma)
 open D5.S3.Quantum.Information.NMLWMeasuredFidelitySeparation (uhlmann)
 open D5.S3.Quantum.Foundation.FiniteTraceDistance
@@ -64,6 +72,32 @@ def claim : Prop :=
     IsProcessCPTP (shiftProcess N) ∧
     (∀ k, marginal (shiftProcess N) k = (1 / 4 : ℂ) • 1) ∧
     fidelity (shiftProcess N) (marginalApprox (shiftProcess N)) = 1 / 4 ^ N)
+
+private def pauliLabelEquiv : Fin 4 ≃ Pauli where
+  toFun := ![.I, .X, .Y, .Z]
+  invFun := fun | .I => 0 | .X => 1 | .Y => 2 | .Z => 3
+  left_inv := by intro i; fin_cases i <;> rfl
+  right_inv := by intro i; cases i <;> rfl
+
+private lemma pauliString_word {N : ℕ} (a : Fin N → Fin 4) :
+    pauliString a = wordOp (fun k => pauliLabelEquiv (a k)) := by
+  ext x y
+  simp only [pauliString, wordOp, tensorOp, Matrix.of_apply]
+  apply Finset.prod_congr rfl
+  intro k _
+  generalize a k = j
+  fin_cases j <;> rfl
+
+private lemma pauliString_trace_pair {N : ℕ} (a b : Fin N → Fin 4) :
+    Matrix.trace (pauliString a * pauliString b) = if a = b then (2 : ℂ) ^ N else 0 := by
+  have he : (fun k => pauliLabelEquiv (a k)) = (fun k => pauliLabelEquiv (b k)) ↔
+      a = b := by
+    constructor
+    · intro h
+      exact funext fun k => pauliLabelEquiv.injective (congrFun h k)
+    · rintro rfl; rfl
+  simpa only [pauliString_word, he] using
+    word_trace_pair (fun k => pauliLabelEquiv (a k)) (fun k => pauliLabelEquiv (b k))
 
 private lemma classical_overlap {N : ℕ} (p : (Fin N → Fin 4) → ℝ)
     (hp : ∀ x, 0 ≤ p x) (hs : ∑ x, p x = 1) :
@@ -136,7 +170,13 @@ private lemma classical_overlap {N : ℕ} (p : (Fin N → Fin 4) → ℝ)
 private lemma process_trace {N : ℕ}
     (χ : Matrix (Fin N → Fin 4) (Fin N → Fin 4) ℂ) (hχ : IsProcessCPTP χ) :
     Matrix.trace χ = 1 := by
-  sorry
+  classical
+  have ht := congrArg Matrix.trace hχ.2
+  simp only [Matrix.trace_sum, Matrix.trace_smul, pauliString_trace_pair, smul_eq_mul,
+    mul_ite, mul_zero] at ht
+  have ht' : Matrix.trace χ * (2 : ℂ) ^ N = 1 * (2 : ℂ) ^ N := by
+    simpa [Matrix.trace, ← Finset.sum_mul, Fintype.card_fun] using ht
+  exact mul_right_cancel₀ (pow_ne_zero N (by norm_num : (2 : ℂ) ≠ 0)) ht' 
 
 private lemma marginalApprox_psd {N : ℕ}
     (χ : Matrix (Fin N → Fin 4) (Fin N → Fin 4) ℂ) (hχ : χ.PosSemidef) :
