@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:65ca41836853a0d01232f5320b2d6b838562149cfcb2c073ef0b523b7451baaf
+  normalized_sha256: sha256:65ca41836853a0d01232f5320b2d6b838562149cfcb2c073ef0b523b7451baaf
+cas_ref: sha256:65ca41836853a0d01232f5320b2d6b838562149cfcb2c073ef0b523b7451baaf
+coverage_gids:
+  - gid: D5/S1/FixedPoints/Algebraic/GoldenFixedPoint.golden_fixed_point_unique
+    target_statement_id: sha256:771aee0dba83a9ce3372477e12c888e107eba4084f286c96b7b01362ddf3e60f
+receipts:
+  unresolved_subitems: []

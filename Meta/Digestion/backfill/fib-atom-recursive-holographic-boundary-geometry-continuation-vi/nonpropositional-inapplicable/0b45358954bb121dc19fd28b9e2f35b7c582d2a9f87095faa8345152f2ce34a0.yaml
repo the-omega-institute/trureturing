@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:0b45358954bb121dc19fd28b9e2f35b7c582d2a9f87095faa8345152f2ce34a0
+  normalized_sha256: sha256:0b45358954bb121dc19fd28b9e2f35b7c582d2a9f87095faa8345152f2ce34a0
+cas_ref: sha256:0b45358954bb121dc19fd28b9e2f35b7c582d2a9f87095faa8345152f2ce34a0
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 'Nonpropositional: Section roadmap for a finite-depth test object and its scope; it states no independent equality, estimate, existence result or preservation theorem.'
+    previous_atom_id: a6aadb4ddce10ddb667c47a2bbbafd5aa8a37bb18bff05f98085978e8e4a623d
+    next_atom_id: 42bd4d4c409035ddd7c33f02e48018ef51a6b1a68309a8f86ec98deeb6e2b641
