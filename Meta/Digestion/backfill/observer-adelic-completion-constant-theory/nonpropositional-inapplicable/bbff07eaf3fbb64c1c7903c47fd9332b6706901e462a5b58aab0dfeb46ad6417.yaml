@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:bbff07eaf3fbb64c1c7903c47fd9332b6706901e462a5b58aab0dfeb46ad6417
+  normalized_sha256: sha256:bbff07eaf3fbb64c1c7903c47fd9332b6706901e462a5b58aab0dfeb46ad6417
+cas_ref: sha256:bbff07eaf3fbb64c1c7903c47fd9332b6706901e462a5b58aab0dfeb46ad6417
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 声明黑洞类比不等同于物理实现，是解释范围限定。
+    previous_atom_id: 5f9c613fbaee718e5c51a4bea6e8dfc142a76cba49ac253b2fa14a94ce1e07e9
+    next_atom_id: 59a17547e62761274be66a19ef16e3696db513307f04f5cb8babb35a78625ad2

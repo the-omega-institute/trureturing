@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:62479064226e8cdfce1090c3d48d1bd488147b5c6c38c8fe0c076c47b88149a9
+  normalized_sha256: sha256:62479064226e8cdfce1090c3d48d1bd488147b5c6c38c8fe0c076c47b88149a9
+cas_ref: sha256:62479064226e8cdfce1090c3d48d1bd488147b5c6c38c8fe0c076c47b88149a9
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 仅列举商去对象“可消去内部历史”。
+    previous_atom_id: 54d8271a103904b2aa5e0868fbd1040e1114a5f0774f0cddadfcd75286e5fc7b
+    next_atom_id: 7d00e29f06e38607018ebc3874ee5804add244997907de294613c64e90df992f

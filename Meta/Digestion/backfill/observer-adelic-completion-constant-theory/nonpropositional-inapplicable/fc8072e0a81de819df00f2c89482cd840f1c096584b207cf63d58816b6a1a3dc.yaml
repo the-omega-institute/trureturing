@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:fc8072e0a81de819df00f2c89482cd840f1c096584b207cf63d58816b6a1a3dc
+  normalized_sha256: sha256:fc8072e0a81de819df00f2c89482cd840f1c096584b207cf63d58816b6a1a3dc
+cas_ref: sha256:fc8072e0a81de819df00f2c89482cd840f1c096584b207cf63d58816b6a1a3dc
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 建议的文件/模块目录清单，不声称其中定理已成立。
+    previous_atom_id: 8f5c38ea375164cf09109f0a83da19647333a596fd47f0f8bbe3ebf29d7aa916
+    next_atom_id: 1558bd6e23c92df19204cd7d65136912371a377fb8d2ff24f225a9d44084e9c7

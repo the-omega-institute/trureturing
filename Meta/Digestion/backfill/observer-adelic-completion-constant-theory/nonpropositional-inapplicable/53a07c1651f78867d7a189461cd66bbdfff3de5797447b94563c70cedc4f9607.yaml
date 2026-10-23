@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:53a07c1651f78867d7a189461cd66bbdfff3de5797447b94563c70cedc4f9607
+  normalized_sha256: sha256:53a07c1651f78867d7a189461cd66bbdfff3de5797447b94563c70cedc4f9607
+cas_ref: sha256:53a07c1651f78867d7a189461cd66bbdfff3de5797447b94563c70cedc4f9607
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 仅列举 Gram 读数的解释项“相对深度”。
+    previous_atom_id: 8d33649e2750c2c71e6b26177734a64a17786409ff5e0bab3ffe299a41942901
+    next_atom_id: e2561f58d1f978dcc26d1bfe3a297c531c7ddc09426f804e32752f656961d3f9
