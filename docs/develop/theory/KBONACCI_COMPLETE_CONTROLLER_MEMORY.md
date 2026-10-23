@@ -1,6 +1,6 @@
 # KBONACCI complete-controller memory
 
-**定义 40.0（Parent source and numbering）。** Sections 40–41 use the weights, actual joint source and INITIAL contracts of [Self-calibrating boundaries](KBONACCI_SELF_CALIBRATING_BOUNDARIES.md). References to its Sections 15–27 and their numbered formulas retain that parent scope; Sections 40–41 and formulas bearing those prefixes belong to this volume. The controller is deterministic, every running instruction emits an actual complete block, and all program, branch, saved INITIAL-value and persistent literal-output memory is included in its finite state set. A probability law over proposed output labels is a different object from this controller.
+**定义 40.0（Parent source and numbering）。** Sections 40–41 use the weights, actual joint source and INITIAL contracts of [Self-calibrating boundaries](KBONACCI_SELF_CALIBRATING_BOUNDARIES_CONTINUATION.md). References to its Sections 15–27 and their numbered formulas retain that parent scope; Sections 40–41 and formulas bearing those prefixes belong to this volume. The controller is deterministic, every running instruction emits an actual complete block, and all program, branch, saved INITIAL-value and persistent literal-output memory is included in its finite state set. A probability law over proposed output labels is a different object from this controller.
 
 ## 40. Exact complete-controller memory at the seven-phase three-block fee
 
