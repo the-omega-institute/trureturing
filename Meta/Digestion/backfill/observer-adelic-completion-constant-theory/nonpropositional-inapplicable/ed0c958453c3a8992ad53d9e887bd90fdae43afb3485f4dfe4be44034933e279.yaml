@@ -1,0 +1,17 @@
+fingerprints:
+  raw_sha256: sha256:ed0c958453c3a8992ad53d9e887bd90fdae43afb3485f4dfe4be44034933e279
+  normalized_sha256: sha256:ed0c958453c3a8992ad53d9e887bd90fdae43afb3485f4dfe4be44034933e279
+cas_ref: sha256:ed0c958453c3a8992ad53d9e887bd90fdae43afb3485f4dfe4be44034933e279
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 研究方法与类比说明，建议以高阶信息区分零阶碰撞；不提出量词完整的重建或最小性定理。
+    previous_atom_id: 5ecca757f183bb440998e7be7e2a1c89202198573a3e838cb249fb62c5b4a2bd
+    next_atom_id: c742e1ef70a6fea348558733ffde87c92e4701a196e2e15c72ff75edf8af0883
+  chain_atoms:
+    - 29b15a94657d72bf9fe03e936444ae8b762b54debf4b4e3166976bb7e71968e2
+    - a2b33ba5e0e339bd0ab7ac09fea901cf5cabd1c7b7738d7d8b88e37c285a237b
+    - fce579fb2e9ef9ba9a5253db29a05f33bc1a2785ca1e678bf9ffd0df0ffbfeee
+    - 4dd3ef445ab899770ced1dcd010d9778c07dc38a73a6c151771f4155ef3f74c7
+    - 9ce0460772d88507748f743e54dcfb723cce00657792212542fe57426f6b8f32

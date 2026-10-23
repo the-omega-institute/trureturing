@@ -1,0 +1,52 @@
+**Definition 7.3 (trace space, expected measure and supplied limit).** The
+actual run-time measure space is the finite disjoint union
+
+$$
+\mathscr D_n=\coprod_{\omega\in\Xi_n}
+ \{\omega\}\times[0,\zeta_{n,\omega}),\qquad
+ d\vartheta_n(\omega,t)=\pi_n(\omega)\,dt.
+\tag{NT.5}
+$$
+
+Define the expected spatial occupation measure $\nu_n$ and the linear
+smooth-core trace by
+
+$$
+\begin{aligned}
+\nu_n(B)&=\sum_{\omega\in\Xi_n}\pi_n(\omega)
+ \int_0^{\zeta_{n,\omega}}{\bf1}_B(\bar q_{n,\omega}(t))\,dt,\\
+\mathscr R_n:C_c^\infty(\Omega)\subset\mathcal F_A
+ &\longrightarrow L^2(\mathscr D_n,\vartheta_n),\qquad
+ (\mathscr R_nf)(\omega,t)=f(\bar q_{n,\omega}(t)).
+\end{aligned}
+\tag{NT.6}
+$$
+
+The target records functions of the actual executed time and sign word;
+it is not an acquired sensor record. Its norm satisfies
+$\|\mathscr R_nf\|^2=\nu_n(|f|^2)$. Equivalently, restriction first
+lands in $L^2(\nu_n)$ and then pulls back isometrically into this run-time
+space. The latter isometry need not be onto: an arbitrary time function
+need not depend only on the visited state. Thus no independent run-time
+information is silently identified with a spatial value.
+
+For the same-source free diffusion $Q_t$ of G, (29.6)–(29.7), killed at
+$\tau$, Tonelli gives, for every nonnegative Borel $W$,
+
+$$
+\nu(W)=\mathbb E_o\int_0^\tau W(Q_t)\,dt.
+\tag{NT.7}
+$$
+
+G, Theorem 29.6, supplies the complete-lifetime fixed-test bridge
+
+$$
+\nu_n(f)\longrightarrow\nu(f)
+\qquad(f\in C(\overline\Omega)),\qquad
+\nu_n(1)\longrightarrow\nu(1)=\mathbb E_o\tau\in(0,\infty).
+\tag{NT.8}
+$$
+
+Its lifetime estimate and original termination rule are part of that
+supplier. No limit on an initial cell is substituted for (NT.8).
+

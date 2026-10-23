@@ -61,11 +61,11 @@ The canonical source is `D5/S3/Quantum/Information/SeparabilitySinglePolynomialR
 - **Proof.** It proves `result : ¬ claim`.
 - **Axioms.** It uses only the standard axioms `propext`, `Classical.choice` and `Quot.sound`; no `sorry`, `native_decide`, or new axiom.
 
-Frozen state: `Golden/Frozen/state/D5/S3/Quantum/Information/SeparabilitySinglePolynomialRefutation.lean.json`, statement `sha256:028f2b025d0432cedf5467e49818996946a28237fedb422c5794e467ea275119`.
+Frozen state: `Golden/Frozen/state/D5/S3/Quantum/Information/SeparabilitySinglePolynomialRefutation.lean.json`, statement `sha256:149b1fc9e72f5965739e71b5f89e6f5a202e4350b18cb3d6b36b2a14455595c4`.
 
 Declaration statements:
 - `result`: `sha256:a224bc0cef29f2c2d74eb2280fe0335e285b7ef9e9db0553d45ad19294189332`;
-- `claim`: `sha256:ded22751866d024e034aadf2960c18f9f27f54baafa10c022792014c20290f96`.
+- `claim`: `sha256:9db64305a153ac7ecdaf57289a878b56afc01a7239b86a58105866cf5df05192`.
 
 ## Triage
 
