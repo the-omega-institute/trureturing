@@ -7,7 +7,6 @@
    digest: Finite measure-and-prepare cannot clone amplitude-damping channels. -/
 
 import D5.S3.Quantum.Information.PartialTraceMutualInformation
-import Mathlib.Algebra.Polynomial.Roots
 import Mathlib.Order.Interval.Set.Infinite
 import Mathlib.Tactic.FinCases
 import Mathlib.Tactic.Ring
