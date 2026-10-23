@@ -4,7 +4,7 @@
    mirror-E: none(waiver:source-only-implementation-not-frozen)
    anchors: []
    utility: kind=numeric-reduction; basis=consumer=D5/S3/Weil/ZeroData/ActualReciprocalSquareBounds.actual_height_gt_ten; premises=D5/S3/Weil/ZeroData/ActualReciprocalSquareBounds.firstLiMass_lt_one,D5/S3/Weil/ZeroData/ActualReciprocalSquareBounds.firstLiMass_lt_third,D5/S3/Weil/ZeroData/ActualReciprocalSquareBounds.gamma_upper_r6,D5/S3/Weil/ZeroData/ActualReciprocalSquareBounds.log_pi_lower_r6,D5/S3/Weil/ZeroData/ActualReciprocalSquareBounds.sixQ_upper,D5/S3/Weil/ZeroData/ActualReciprocalSquareBounds.sixDefect_upper
-   digest: Derive all actual zeta inverse-ordinate-square mass and indexed counting from the xi resolvent and distinct conjugate pairs. -/
+   digest: Prove unconditional height ten and sharpen the complete actual reciprocal-square mass from the xi resolvent. -/
 
 import D5.S3.Zeros.Resolvent.XiSquareExteriorRemainder
 import D5.S3.Zeros.Endpoints.FirstLiCoefficientPositivity
@@ -27,8 +27,8 @@ import Mathlib.Tactic
 Every actual nontrivial zeta zero is included, with both imaginary signs and
 its exact analytic multiplicity. The normalized rational summand is summed
 before taking real parts. Distinct conjugate indices bootstrap the inverse
-ordinate estimates. Exact occurrence fibers transport the infinite mass and
-the inclusive imaginary-height finite cutoffs to natural indices.
+ordinate estimates. The exact multiplicity-occurrence equivalence transports
+the infinite mass to natural indices.
 
 The first normalized xi resolvent at six gives a positive rational kernel.
 An ordinate of absolute value at most ten would force its defect above the
@@ -265,23 +265,6 @@ theorem actual_weighted_inverse_square_summable :
     mul_le_mul_of_nonneg_left (actual_inverse_square_le n)
       (Nat.cast_nonneg (actualData.multiplicity n))
 
-/-- The all-zero, both-sign, exact-multiplicity inverse-square mass is less than two. -/
-theorem actual_weighted_inverse_square_mass_lt_two :
-    (∑' n : ℕ, (actualData.multiplicity n : ℝ) *
-      ((actualData.zero n).im)⁻¹ ^ 2) < 2 := by
-  have hb : (∑' n : ℕ, (actualData.multiplicity n : ℝ) *
-      ((actualData.zero n).im)⁻¹ ^ 2) ≤ 2 * firstLiMass := by
-    have hc := actual_pairWeight_hasSum.mul_left 2
-    have hdom : ∀ n : ℕ, (actualData.multiplicity n : ℝ) *
-        ((actualData.zero n).im)⁻¹ ^ 2 ≤
-          2 * ((actualData.multiplicity n : ℝ) * pairWeight (actualData.zero n)) := by
-      intro n
-      simpa only [mul_assoc, mul_left_comm, mul_comm] using
-        mul_le_mul_of_nonneg_left (actual_inverse_square_le n)
-          (Nat.cast_nonneg (actualData.multiplicity n))
-    simpa only [hc.tsum_eq] using
-      actual_weighted_inverse_square_summable.tsum_le_tsum hdom hc.summable
-  linarith [firstLiMass_lt_one]
 
 /-- Each exact analytic multiplicity is retained as a finite occurrence fiber. -/
 abbrev ActualZeroOccurrence := Σ n : ℕ, Fin (actualData.multiplicity n)
@@ -299,35 +282,6 @@ def actualOccurrenceEquiv : ℕ ≃ ActualZeroOccurrence :=
 /-- All actual nontrivial zeros, with repetitions exactly equal to analytic order. -/
 def actualZero (k : ℕ) : ℂ := actualData.zero (actualOccurrenceEquiv k).1
 
-/-- An exact fiber identity, before taking any cardinality. -/
-theorem actualZero_fiber (n : ℕ) :
-    {k : ℕ | actualZero k = actualData.zero n} =
-      Set.range (fun j : Fin (actualData.multiplicity n) =>
-        actualOccurrenceEquiv.symm ⟨n, j⟩) := by
-  ext k
-  constructor
-  · intro hk
-    rcases hpk : actualOccurrenceEquiv k with ⟨i, j⟩
-    have hk' : actualData.zero (actualOccurrenceEquiv k).1 = actualData.zero n := hk
-    rw [hpk] at hk'
-    have hi : i = n := actualData.zero_injective hk'
-    subst i
-    refine ⟨j, ?_⟩
-    simpa only [Equiv.symm_apply_apply] using (congrArg actualOccurrenceEquiv.symm hpk).symm
-  · rintro ⟨j, rfl⟩
-    simp only [actualZero, Equiv.apply_symm_apply, Set.mem_setOf_eq]
-
-/-- The number of occurrences of each distinct source zero is its exact analytic multiplicity. -/
-theorem actualZero_fiber_card (n : ℕ) :
-    Set.ncard {k : ℕ | actualZero k = actualData.zero n} = actualData.multiplicity n := by
-  rw [actualZero_fiber]
-  have hinj : Function.Injective (fun j : Fin (actualData.multiplicity n) =>
-      actualOccurrenceEquiv.symm (⟨n, j⟩ : ActualZeroOccurrence)) := by
-    intro a b hab
-    apply Fin.ext
-    exact congrArg (fun p : ActualZeroOccurrence => (p.2 : ℕ))
-      (actualOccurrenceEquiv.symm.injective hab)
-  simpa only [Nat.card_fin] using Set.ncard_range_of_injective hinj
 
 private theorem actual_sigma_inverse_square_summable :
     Summable (fun p : ActualZeroOccurrence => ((actualData.zero p.1).im)⁻¹ ^ 2) := by
@@ -349,157 +303,6 @@ theorem actual_inverse_square_tsum_transport :
       rw [actual_sigma_inverse_square_summable.tsum_sigma]
       simp only [tsum_fintype, Finset.sum_const, Finset.card_univ,
         Fintype.card_fin, nsmul_eq_mul]
-
-/-- The original unweighted natural-index inverse-square series is summable. -/
-theorem actual_inverse_square_summable :
-    Summable (fun k : ℕ => ((actualZero k).im)⁻¹ ^ 2) := by
-  exact actualOccurrenceEquiv.summable_iff.2 actual_sigma_inverse_square_summable
-
-/-- The original unweighted natural-index total mass is less than two. -/
-theorem actual_inverse_square_mass_lt_two :
-    (∑' k : ℕ, ((actualZero k).im)⁻¹ ^ 2) < 2 := by
-  rw [actual_inverse_square_tsum_transport]
-  exact actual_weighted_inverse_square_mass_lt_two
-
-private theorem actual_ordinate_locallyFinite (T : ℝ) :
-    {n : ℕ | |(actualData.zero n).im| ≤ T}.Finite := by
-  apply (actualData.locallyFinite (T + 1)).subset
-  intro n hn
-  have hs := (actualData.zero_isNontrivial n).2
-  have hb : |(1 / 2 : ℝ) - (actualData.zero n).re| ≤ 1 / 2 := by
-    apply abs_le.2
-    constructor <;> linarith
-  have hre : (spectralParameter (actualData.zero n)).re = (actualData.zero n).im := by
-    simp [spectralParameter]
-  have him : (spectralParameter (actualData.zero n)).im =
-      (1 / 2 : ℝ) - (actualData.zero n).re := by
-    simp [spectralParameter, criticalAbscissa]
-    <;> ring
-  have hnorm := Complex.norm_le_abs_re_add_abs_im (spectralParameter (actualData.zero n))
-  rw [hre, him] at hnorm
-  change ZeroSum.spectralRadius (actualData.zero n) ≤ T + 1
-  unfold ZeroSum.spectralRadius
-  have ht : |(actualData.zero n).im| ≤ T := hn
-  linarith
-
-/-- The literal distinct-zero imaginary cutoff; no spectral cutoff is substituted for it. -/
-def actualOrdinateIndices (T : ℝ) : Finset ℕ := (actual_ordinate_locallyFinite T).toFinset
-
-private theorem mem_actualOrdinateIndices (T : ℝ) (n : ℕ) :
-    n ∈ actualOrdinateIndices T ↔ |(actualData.zero n).im| ≤ T := by
-  simp only [actualOrdinateIndices, Set.Finite.mem_toFinset, Set.mem_setOf_eq]
-
-/-- All exact multiplicity occurrences above the distinct indices in the literal cutoff. -/
-def actualSigmaCutoff (T : ℝ) : Finset ActualZeroOccurrence :=
-  (actualOrdinateIndices T).sigma (fun _ => Finset.univ)
-
-/-- The original natural-index cutoff, obtained by an injective map of the full sigma cutoff. -/
-def actualNatCutoff (T : ℝ) : Finset ℕ :=
-  (actualSigmaCutoff T).map actualOccurrenceEquiv.symm.toEmbedding
-
-/-- Exact membership transport to the original imaginary cutoff. -/
-theorem mem_actualNatCutoff (T : ℝ) (k : ℕ) :
-    k ∈ actualNatCutoff T ↔ |(actualZero k).im| ≤ T := by
-  classical
-  constructor
-  · intro hk
-    obtain ⟨p, hp, rfl⟩ := Finset.mem_map.1 hk
-    have hn : p.1 ∈ actualOrdinateIndices T := (Finset.mem_sigma.1 hp).1
-    change |(actualZero (actualOccurrenceEquiv.symm p)).im| ≤ T
-    simpa only [actualZero, Equiv.apply_symm_apply] using
-      (mem_actualOrdinateIndices T p.1).1 hn
-  · intro hk
-    apply Finset.mem_map.2
-    refine ⟨actualOccurrenceEquiv k, ?_, by simp⟩
-    apply Finset.mem_sigma.2
-    refine ⟨(mem_actualOrdinateIndices T _).2 hk, Finset.mem_univ _⟩
-
-/-- Every finite cutoff sum retains all analytic multiplicities exactly. -/
-theorem actual_cutoff_sum_transport (T : ℝ) (w : ℂ → ℝ) :
-    (∑ k ∈ actualNatCutoff T, w (actualZero k)) =
-      ∑ n ∈ actualOrdinateIndices T, (actualData.multiplicity n : ℝ) *
-        w (actualData.zero n) := by
-  classical
-  unfold actualNatCutoff actualSigmaCutoff
-  rw [Finset.sum_map]
-  change (∑ p ∈ (actualOrdinateIndices T).sigma (fun _ => Finset.univ),
-    w (actualZero (actualOccurrenceEquiv.symm p))) = _
-  rw [Finset.sum_sigma]
-  simp only [actualZero, Equiv.apply_symm_apply,
-    Finset.sum_const, Finset.card_univ, Fintype.card_fin, nsmul_eq_mul]
-
-/-- Cardinal transport explicitly counts the exact fibers of the actual natural enumeration. -/
-theorem actual_cutoff_card_by_fiber (T : ℝ) :
-    (actualNatCutoff T).card = ∑ n ∈ actualOrdinateIndices T,
-      Set.ncard {k : ℕ | actualZero k = actualData.zero n} := by
-  classical
-  simp only [actualNatCutoff, actualSigmaCutoff, Finset.card_map,
-    Finset.card_sigma, Finset.card_univ, Fintype.card_fin, actualZero_fiber_card]
-
-/-- Finiteness for the original indexed cutoff, at every real height. -/
-theorem actual_finite_count_shell (T : ℝ) :
-    Set.Finite {k : ℕ | |(actualZero k).im| ≤ T} := by
-  have he : {k : ℕ | |(actualZero k).im| ≤ T} = (actualNatCutoff T : Set ℕ) := by
-    ext k
-    exact (mem_actualNatCutoff T k).symm
-  rw [he]
-  exact (actualNatCutoff T).finite_toSet
-
-private theorem actual_cutoff_ncard (T : ℝ) :
-    Set.ncard {k : ℕ | |(actualZero k).im| ≤ T} = (actualNatCutoff T).card := by
-  classical
-  rw [Set.ncard_eq_toFinset_card _ (actual_finite_count_shell T)]
-  congr 1
-  ext k
-  simp only [Set.Finite.mem_toFinset, Set.mem_setOf_eq, mem_actualNatCutoff]
-
-/-- The original finite indexed count is bounded by `floor (2*T^2)` for every `T >= 10`.
-Its proof uses both exact fiber cardinality and finite-sum transport, then the actual all-index mass.
--/
-theorem actual_count_both (T : ℝ) (hT : 10 ≤ T) :
-    Set.ncard {k : ℕ | |(actualZero k).im| ≤ T} ≤ Nat.floor (2 * T ^ 2) := by
-  classical
-  have hT0 : 0 < T := by linarith
-  have hT2 : 0 < T ^ 2 := sq_pos_of_pos hT0
-  have hpoint (n : ℕ) (hn : n ∈ actualOrdinateIndices T) :
-      1 / T ^ 2 ≤ ((actualData.zero n).im)⁻¹ ^ 2 := by
-    have ht := (mem_actualOrdinateIndices T n).1 hn
-    have hu := actual_ordinate_sq_gt_one n
-    have him2 : 0 < (actualData.zero n).im ^ 2 := by linarith
-    have hsq : (actualData.zero n).im ^ 2 ≤ T ^ 2 := by
-      have hh := mul_nonneg (sub_nonneg.mpr ht)
-        (show 0 ≤ T + |(actualData.zero n).im| by positivity)
-      nlinarith only [hh, sq_abs ((actualData.zero n).im)]
-    simpa only [one_div, inv_pow] using one_div_le_one_div_of_le him2 hsq
-  have hfinite : (∑ n ∈ actualOrdinateIndices T,
-      (actualData.multiplicity n : ℝ) * ((actualData.zero n).im)⁻¹ ^ 2) ≤
-        ∑' k : ℕ, ((actualZero k).im)⁻¹ ^ 2 := by
-    rw [← actual_cutoff_sum_transport T (fun rho => rho.im⁻¹ ^ 2)]
-    exact actual_inverse_square_summable.sum_le_tsum (actualNatCutoff T)
-      (fun _ _ => sq_nonneg _)
-  have hcardmass : ((actualNatCutoff T).card : ℝ) / T ^ 2 ≤
-      ∑ n ∈ actualOrdinateIndices T,
-        (actualData.multiplicity n : ℝ) * ((actualData.zero n).im)⁻¹ ^ 2 := by
-    rw [actual_cutoff_card_by_fiber]
-    simp_rw [actualZero_fiber_card]
-    push_cast
-    rw [Finset.sum_div]
-    apply Finset.sum_le_sum
-    intro n hn
-    simpa only [mul_one_div] using
-      mul_le_mul_of_nonneg_left (hpoint n hn) (Nat.cast_nonneg (actualData.multiplicity n))
-  have hlt : ((actualNatCutoff T).card : ℝ) / T ^ 2 < 2 :=
-    (hcardmass.trans hfinite).trans_lt actual_inverse_square_mass_lt_two
-  have hcount : ((actualNatCutoff T).card : ℝ) < 2 * T ^ 2 :=
-    (div_lt_iff₀ hT2).1 hlt
-  rw [actual_cutoff_ncard]
-  exact (Nat.le_floor_iff (by positivity : (0 : ℝ) ≤ 2 * T ^ 2)).2 hcount.le
-
-#print axioms actual_pairWeight_hasSum
-#print axioms actual_weighted_inverse_square_mass_lt_two
-#print axioms actual_inverse_square_summable
-#print axioms actual_inverse_square_mass_lt_two
-#print axioms actual_count_both
 
 
 /-! ## First-resolvent height exclusion
@@ -988,6 +791,61 @@ theorem actual_height_gt_ten (rho : ℂ) (hrho : IsNontrivialZero rho) :
     (show 0 ≤ 10 + |rho.im| by positivity)
   nlinarith [sq_abs rho.im]
 
+
+/-! ## Height-derived refinement of the complete inverse-square mass
+
+The height theorem gives `1 + 1/10^2 = 101/100` on the complete
+occurrence family. The pointwise refinement is consumed by the weighted
+series bound, which is transported to the public natural-index mass result.
+-/
+
+private theorem actual_inverse_square_le_height (n : ℕ) :
+    ((actualData.zero n).im)⁻¹ ^ 2 ≤
+      (101 / 100 : ℝ) * pairWeight (actualData.zero n) := by
+  have hs := (actualData.zero_isNontrivial n).2
+  have hlower := (pairWeight_strip hs.1 hs.2).2
+  have ht := actual_height_gt_ten (actualData.zero n)
+    (actualData.zero_isNontrivial n)
+  have hu : (100 : ℝ) < (actualData.zero n).im ^ 2 := by
+    have hp : 0 < (|(actualData.zero n).im| - 10) *
+        (|(actualData.zero n).im| + 10) :=
+      mul_pos (sub_pos.mpr ht) (by linarith)
+    nlinarith only [hp, sq_abs ((actualData.zero n).im)]
+  have hpos : 0 < (actualData.zero n).im ^ 2 := by linarith
+  calc
+    ((actualData.zero n).im)⁻¹ ^ 2 = 1 / ((actualData.zero n).im ^ 2) := by
+      simp only [inv_pow, one_div]
+    _ ≤ (101 / 100 : ℝ) * (1 / ((actualData.zero n).im ^ 2 + 1)) := by
+      rw [mul_one_div, div_le_div_iff₀ hpos (by positivity)]
+      linarith
+    _ ≤ (101 / 100 : ℝ) * pairWeight (actualData.zero n) :=
+      mul_le_mul_of_nonneg_left hlower (by norm_num)
+
+private theorem actual_weighted_inverse_square_mass_le_height :
+    (∑' n : ℕ, (actualData.multiplicity n : ℝ) *
+      ((actualData.zero n).im)⁻¹ ^ 2) ≤ (101 / 100 : ℝ) * firstLiMass := by
+  have hc := actual_pairWeight_hasSum.mul_left (101 / 100 : ℝ)
+  have hdom : ∀ n : ℕ, (actualData.multiplicity n : ℝ) *
+      ((actualData.zero n).im)⁻¹ ^ 2 ≤
+        (101 / 100 : ℝ) *
+          ((actualData.multiplicity n : ℝ) * pairWeight (actualData.zero n)) := by
+    intro n
+    simpa only [mul_assoc, mul_left_comm, mul_comm] using
+      mul_le_mul_of_nonneg_left (actual_inverse_square_le_height n)
+        (Nat.cast_nonneg (actualData.multiplicity n))
+  simpa only [hc.tsum_eq] using
+    actual_weighted_inverse_square_summable.tsum_le_tsum hdom hc.summable
+
+/-- The full natural-index inverse-square mass is bounded by the height-derived
+factor `101/100` times the exact first Li mass. Both signs and every analytic
+multiplicity remain in the occurrence family. -/
+theorem actual_inverse_square_mass_le_height :
+    (∑' k : ℕ, ((actualZero k).im)⁻¹ ^ 2) ≤ (101 / 100 : ℝ) * firstLiMass := by
+  rw [actual_inverse_square_tsum_transport]
+  exact actual_weighted_inverse_square_mass_le_height
+
+
 #print axioms actual_height_gt_ten
+#print axioms actual_inverse_square_mass_le_height
 
 end D5.S3.Weil.ZeroData.ActualReciprocalSquareBounds

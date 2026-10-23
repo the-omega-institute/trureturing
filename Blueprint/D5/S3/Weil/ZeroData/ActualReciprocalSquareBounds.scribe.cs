@@ -46,6 +46,17 @@ internal sealed class ActualReciprocalSquareBoundsDocument : IScribeDocumentDefi
         return All("T", Real, Then(AtMost(new Formula.Number(10), t), AtMost(left, right)));
     }
 
+    private static Formula NaturalMassFormula()
+    {
+        var k = DefinitionDsl.Id("k");
+        var ordinate = Call("im", Call("actualZero", k));
+        var inverse = Power(ordinate, new Formula.Negate(new Formula.Number(1)));
+        var term = Power(Seq(Left, Open, inverse, Right, Close), new Formula.Number(2));
+        var mass = Seq(Sum, Underscore, Grp(k, Sp, InMacro, Sp, Nat), Sp, term);
+        var factor = new Formula.Fraction(new Formula.Number(101), new Formula.Number(100));
+        return AtMost(mass, Multiply(factor, DefinitionDsl.Id("firstLiMass")));
+    }
+
     private static Formula HeightFormula()
     {
         var rho = DefinitionDsl.Id("rho");
@@ -77,25 +88,50 @@ internal sealed class ActualReciprocalSquareBoundsDocument : IScribeDocumentDefi
                     "identity and fiber cardinality give exact transports of the infinite mass and " +
                     "the finite inclusive cutoffs. The resulting family includes both imaginary signs and every positive " +
                     "analytic multiplicity. The reciprocal-square summability and strict total bound " +
-                    "are transported through those fibers; actual_count_both applies them to the " +
+                    "are transported through those fibers. After height ten is proved, the complete " +
+                    "inverse-square mass is sharpened to at most (101/100)*firstLiMass. " +
+                    "The mathematical count consequence applies that sharper mass to the " +
                     "literal cutoff |Im(actualZero k)| ≤ T and gives ncard ≤ floor(2*T^2) for " +
                     "every T ≥ 10, without a filtered family or RH premise.")),
                 Describe.Lean(
                     DescribeId.Create("actualreciprocalsquarebounds"),
-                    DeclarationHandle.Create("D5/S3/Weil/ZeroData/ActualReciprocalSquareBounds.actual_count_both"),
-                    H("Actual Inverse Square Mass and Literal Cutoffs"),
-                    StatementSource.FromAuthor(Disp(CountBothFormula())),
+                    DeclarationHandle.Create("D5/S3/Weil/ZeroData/ActualReciprocalSquareBounds.actual_inverse_square_mass_le_height"),
+                    H("Complete Height-Derived Inverse Square Mass"),
+                    StatementSource.FromAuthor(Disp(NaturalMassFormula())),
                     AssessedProvenance.FromRepo(),
                     Blocks(Paragraph(Text(
-                        "The displayed telescope binds the real cutoff T and retains its hypothesis " +
-                        "10 ≤ T. The set is exactly the natural-index set {k : N | |im(actualZero k)| ≤ T}; " +
-                        "its cardinality is bounded by the natural floor of 2*T^2. The proof consumes " +
-                        "actual_inverse_square_summable, actual_inverse_square_mass_lt_two, " +
-                        "mem_actualNatCutoff, actual_cutoff_sum_transport, " +
-                        "actual_cutoff_card_by_fiber, and actual_finite_count_shell. The finite " +
-                        "cutoff remains inclusive, and the bound is a conclusion of the exact family, " +
-                        "not an assumed mass or height certificate."))),
+                        "The sum is over every natural occurrence k, with both imaginary signs and " +
+                        "each exact analytic multiplicity. For u = Im(rho)^2 > 100, " +
+                        "1/u <= (101/100)/(u+1) <= (101/100)*pairWeight(rho). " +
+                        "Multiplication by each multiplicity and comparison of the summable full " +
+                        "series give mass <= (101/100)*firstLiMass. The occurrence equivalence " +
+                        "transports this bound exactly to the displayed natural-index sum. " +
+                        "The two private refined-mass helpers feed this public conclusion. " +
+                        "The height theorem is upstream; no height or mass certificate is assumed."))),
                     DescribeRole.Theorem),
+                Paragraph(Text(
+                    "The following literal-cutoff result is a mathematical application, with its " +
+                    "complete proof preserved in the exact transient source; it is not a retained " +
+                    "declaration or an additional canonical consumer.")),
+                new DocumentBlock.DisplayFormula(CountBothFormula()),
+                Paragraph(Text(
+                    "For each distinct source zero n, the occurrence fiber is exactly " +
+                    "{actualOccurrenceEquiv.symm (n,j) : j in Fin(actualData.multiplicity n)}. " +
+                    "Its cardinality is actualData.multiplicity n, and multiplicity_spec identifies " +
+                    "this number with the analytic order. The weighted reciprocal-square series " +
+                    "is summable; its coarse mass is below 2*firstLiMass < 2. Transport through " +
+                    "the natural equivalence gives both the natural-index summability and mass < 2. " +
+                    "The distinct indices |Im(zero n)| <= T form a finite set for every real T: " +
+                    "the strip bounds its spectral radius by T+1. Taking all finite occurrence " +
+                    "fibers and mapping back by the equivalence yields exactly the inclusive " +
+                    "natural cutoff, with no change of cutoff or sign restriction. For every " +
+                    "real-valued weight w, the finite natural sum equals the sum over these " +
+                    "distinct indices of multiplicity(n)*w(zero n). Its cardinality equals the " +
+                    "sum of the exact fiber cardinalities. For T >= 10, every cutoff occurrence " +
+                    "contributes at least 1/T^2, so count/T^2 <= the full mass " +
+                    "<= (101/100)*firstLiMass < 2. Thus count < 2*T^2, and the natural-floor " +
+                    "inequality displayed above follows. These statements also have complete " +
+                    "proofs in the transient context; no removed handle is asserted here.")),
                 Describe.Lean(
                     DescribeId.Create("actualheightgtten"),
                     DeclarationHandle.Create("D5/S3/Weil/ZeroData/ActualReciprocalSquareBounds.actual_height_gt_ten"),
@@ -134,9 +170,19 @@ internal sealed class ActualReciprocalSquareBoundsDocument : IScribeDocumentDefi
                         "the contradiction to every actual nontrivial zero."))),
                     DescribeRole.Theorem),
                 Paragraph(Text(
-                    "For every m ≥ 1, the CompleteZeroFamily fields are supplied by the exact zero, strip, " +
+                    "As a transient mathematical application, the seven CompleteZeroFamily fields are supplied by the exact zero, strip, " +
                     "height, reciprocal-square summability, reciprocal-square mass < 2, finite " +
-                    "count shell, and count bound above. For an actual rho, it sets " +
+                    "count shell, and count bound above. Soundness follows from zero_isNontrivial; " +
+                    "exhaustivity follows by choosing the zero-th element of each positive finite fiber. " +
+                    "The same construction over the conjugation index supplies the conjugate occurrence. " +
+                    "For every h in Icc 0 2 and every real y, the literal complex spectralKernel " +
+                    "equals the sum over n of multiplicity(n)*exp((zero n-h)*y)*resolventCoefficient(zero n,h). " +
+                    "Absolute summability of the full natural series permits its exact equivalence " +
+                    "and sigma-sum transports; finite fiber summation gives the complex multiplicity. " +
+                    "The shell application holds for every m >= 1: shellWeight is summable and " +
+                    "shellSum <= 10000*exp(-100*m). For every real m > 0 and every real gamma, " +
+                    "lowHIntegrand is integrable on Ioi 1. The original mean bound assumes m >= 1 " +
+                    "and gamma > 10. For an actual rho, it sets " +
                     "gamma = |Im rho|, so actual_height_gt_ten supplies gamma > 10. " +
                     "The application of complete_low_h_weighted_mean_bound uses " +
                     "the scalar hypothesis m ≥ 1 and the bound " +
@@ -146,6 +192,21 @@ internal sealed class ActualReciprocalSquareBoundsDocument : IScribeDocumentDefi
                     "has coefficient 3; and the shell estimate has core coefficient 20, " +
                     "giving 3*4*20 = 240 and the 2400000*exp(-83*m) term. The positive and negative " +
                     "extensions are 2400 and 384*exp(-28*m).")),
+                Paragraph(Text(
+                    "Complete exact proof provenance under /Users/macstudio/omega/research/rh-01a124c9-coordination/" +
+                    "signed-source-envelope-20261014/r2559-aggregate-supplier-design-20261017/" +
+                    "Robin-height-refined-mass-scoped-native-r4472/: scientific-products/original-r4464/D5/S3/Weil/ZeroData/" +
+                    "ActualReciprocalSquareBounds.lean (SHA256 bb76e63810f119b6391c3881c44166c7969c9bb460b5a9b9ec162a69485eed04) " +
+                    "preserves every original assertion, proof and telescope. The corresponding " +
+                    "scientific-products/transient-checks/R4472TransientOriginalBounds.lean uses its " +
+                    "unchanged imports and namespace. R4472TransientExactOriginalStatements.lean " +
+                    "checks the fifteen original public propositions. The anonymous " +
+                    "R4472TransientActualCompleteZeroFamily.lean and " +
+                    "R4472TransientActualOriginalFieldConsumer.lean preserve the complete seven-field " +
+                    "actual family and both original weighted applications. These files live in " +
+                    "the same-owner scientific-products directory, outside canonical D5 sources; " +
+                    "they establish no retained consumer. Their complete sources and native " +
+                    "evidence are pinned in the accompanying scientific manifest.")),
                 Paragraph(Text(
                     "The proof uses endpoint " +
                     "normalization, strip and conjugation algebra, occurrence and fiber transports, " +
