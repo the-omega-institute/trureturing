@@ -889,23 +889,5 @@ theorem second_source_monomial_taylor_index
   have hpos : 1 ≤ vectorFrequencyBound D b + 1 - j - alpha := by omega
   rw [Nat.sub_add_cancel hpos]
 
-theorem second_source_taylor_inner_expansion
-    (D : LatticeData) (a b : Carrier D) (K : ℕ) (P : LabelledPolynomial ℂ 3)
-    (j : ℕ) :
-    secondSourceTaylorRational D a b K P j =
-      ∑ alpha ∈ Finset.range (vectorFrequencyBound D b + 1 - j),
-        ∑ e ∈ P.coeff.support,
-          secondSourceInnerTaylorTerm D a b K P j alpha e := by
-  classical
-  unfold secondSourceTaylorRational
-  simp_rw [Finset.mul_sum]
-  apply Finset.sum_congr rfl
-  intro alpha ha
-  apply Finset.sum_congr rfl
-  intro e he
-  change secondSourceTerm D a b K P j alpha e = _
-  rw [second_source_monomial_taylor_index D a b K P j alpha e
-    (Finset.mem_range.mp ha)]
-
 end
 end D5.S3.VertexAlgebra.NestedResidues.LatticeHalfFockSecondSourceTaylor.LocalResidues

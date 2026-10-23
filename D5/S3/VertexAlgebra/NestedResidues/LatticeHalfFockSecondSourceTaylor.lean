@@ -577,45 +577,6 @@ private theorem source_epsilon_sub (p : ℤ) (k : ℕ) :
   rw [zpow_sub₀ (by norm_num : (-1 : ℂ) ≠ 0), zpow_natCast,
     div_eq_mul_inv, ← inv_pow, inv_neg_one]
 
-/- The two independent finite Vandermonde contractions expand the exact
-collisionTaylor coefficient on the original signed exponent support. This
-helper is consumed by the actual third-telescope composition below. -/
-private theorem second_source_collision_taylor_sum
-    (P : LabelledPolynomial ℂ 3) (gamma : ℤ) (u v : ℕ) :
-    collisionTaylor P gamma u v =
-      P.coeff.sum (fun e c =>
-        c *
-          (∑ alpha ∈ Finset.range (u + 1),
-            Ring.choose (-(1 : ℂ) / 2) alpha *
-              Ring.choose (e 0 : ℂ) (u - alpha)) *
-          (∑ beta ∈ Finset.range (v + 1),
-            Ring.choose (-(gamma : ℂ) / 2) beta *
-              Ring.choose (e 1 : ℂ) (v - beta))) := by
-  classical
-  induction P using AddMonoidAlgebra.induction_linear with
-  | zero =>
-      simp [collisionTaylor, Finsupp.linearCombination_apply]
-  | add P Q hP hQ =>
-      simp only [collisionTaylor, AddMonoidAlgebra.coeff_add,
-        Finsupp.linearCombination_apply, smul_eq_mul]
-      conv_rhs =>
-        rw [Finsupp.sum_add_index (by simp) (by intros; ring)]
-      conv_lhs =>
-        rw [Finsupp.sum_add_index (by simp) (by intros; ring)]
-      have hP' := hP
-      have hQ' := hQ
-      simp only [collisionTaylor, Finsupp.linearCombination_apply,
-        smul_eq_mul] at hP' hQ'
-      rw [hP', hQ']
-  | single e c =>
-      simp only [collisionTaylor, AddMonoidAlgebra.coeff_single,
-        Finsupp.linearCombination_single, smul_eq_mul]
-      rw [Finsupp.sum_single_index (by simp)]
-      rw [second_source_inner_vandermonde (e 0) u,
-        second_source_outer_vandermonde (e 1) gamma v]
-      ring_nf
-
-
 private theorem source_inner_readout_evaluation
     (D : LatticeData) (a b : Carrier D) (K : ℕ) (P : LabelledPolynomial ℂ 3)
     (j alpha : ℕ) (e : Exponent 3) (gamma d r n : ℤ) (H : ℕ)
@@ -843,7 +804,7 @@ private theorem second_source_third_conjunct_of_local_taylor
     rcases hbridge with ⟨_, _, _, _, _, _, _, _, _, hreadout, _⟩
     dsimp [T, L, M, degree]
     rw [hreadout]
-    simpa only [second_source_collision_taylor_sum] using local_taylor j hj
+    exact local_taylor j hj
   have hM : 0 < M := by dsimp [M]; omega
   have contracted := second_source_reverse_outer_contraction P gamma d degree L M T hlocal hM
   simpa only [T, L, M, degree, Nat.cast_add, Nat.cast_one] using contracted

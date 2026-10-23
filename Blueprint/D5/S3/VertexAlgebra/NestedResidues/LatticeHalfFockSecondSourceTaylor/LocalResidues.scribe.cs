@@ -66,14 +66,5 @@ internal sealed class LocalResiduesDocument : IScribeDocumentDefinition
                 AssessedProvenance.FromRepo(LibraryNoteRef.Create("D5/L/VertexAlgebra/bakalovkac2004lattice")),
                 Blocks(
                     Paragraph(Text("The actual signed monomial residue equals its explicit finite local Taylor expansion on every alpha in range M-j."))),
-                DescribeRole.Theorem),
-            Describe.Lean(
-                DescribeId.Create("second-source-taylor-inner-expansion"),
-                DeclarationHandle.Create("D5/S3/VertexAlgebra/NestedResidues/LatticeHalfFockSecondSourceTaylor/LocalResidues.second_source_taylor_inner_expansion"),
-                H("The complete signed inner Taylor expansion"),
-                StatementSource.WithoutFormula(),
-                AssessedProvenance.FromRepo(LibraryNoteRef.Create("D5/L/VertexAlgebra/bakalovkac2004lattice")),
-                Blocks(
-                    Paragraph(Text("For every alpha in the actual finite range, secondSourceTerm is expanded over the local Taylor index u < M-j-alpha. The expansion retains signed numerator exponents, both pair poles, the spectator factor and the fractional z^(-alpha) shift. The complete G_j is the finite sum over alpha and the actual coefficient support."))),
                 DescribeRole.Theorem))));
 }

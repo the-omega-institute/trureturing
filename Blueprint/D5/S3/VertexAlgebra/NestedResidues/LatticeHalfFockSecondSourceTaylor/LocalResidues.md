@@ -104,20 +104,6 @@ Lean statement: `D5/S3/VertexAlgebra/NestedResidues/LatticeHalfFockSecondSourceT
 
 The actual signed monomial residue equals its explicit finite local Taylor expansion on every alpha in range M-j.
 
-**Theorem 1.8 (The complete signed inner Taylor expansion).**
-
-Lean statement: `D5/S3/VertexAlgebra/NestedResidues/LatticeHalfFockSecondSourceTaylor/LocalResidues.second_source_taylor_inner_expansion`
-
-*Proof.* Machine-checked in Lean as `D5/S3/VertexAlgebra/NestedResidues/LatticeHalfFockSecondSourceTaylor/LocalResidues.second_source_taylor_inner_expansion` (`✓ std3`). ∎
-
-*Source.* Repository-derived.
-
-*Acknowledgement.* Bojko Bakalov and Victor G. Kac (2004). *Twisted Modules over Lattice Vertex Algebras*. DOI: [10.1142/9789812702562_0001](https://doi.org/10.1142/9789812702562_0001). URL: <https://arxiv.org/abs/math/0402315v1>.
-
-*Commentary.*
-
-For every alpha in the actual finite range, secondSourceTerm is expanded over the local Taylor index u < M-j-alpha. The expansion retains signed numerator exponents, both pair poles, the spectator factor and the fractional z^(-alpha) shift. The complete G_j is the finite sum over alpha and the actual coefficient support.
-
 ## References
 
 - Truth anchor: `D5/S3/VertexAlgebra/NestedResidues/LatticeHalfFockSecondSourceTaylor/LocalResidues.rational_joint_support`
@@ -125,7 +111,6 @@ For every alpha in the actual finite range, secondSourceTerm is expanded over th
 - Truth anchor: `D5/S3/VertexAlgebra/NestedResidues/LatticeHalfFockSecondSourceTaylor/LocalResidues.second_source_coefficients`
 - Truth anchor: `D5/S3/VertexAlgebra/NestedResidues/LatticeHalfFockSecondSourceTaylor/LocalResidues.second_source_monomial_taylor_index`
 - Truth anchor: `D5/S3/VertexAlgebra/NestedResidues/LatticeHalfFockSecondSourceTaylor/LocalResidues.second_source_rational_evaluation`
-- Truth anchor: `D5/S3/VertexAlgebra/NestedResidues/LatticeHalfFockSecondSourceTaylor/LocalResidues.second_source_taylor_inner_expansion`
 - Truth anchor: `D5/S3/VertexAlgebra/NestedResidues/LatticeHalfFockSecondSourceTaylor/LocalResidues.source_inner_monomial_normal_form`
 - Truth anchor: `D5/S3/VertexAlgebra/NestedResidues/LatticeHalfFockSecondSourceTaylor/LocalResidues.source_monomial_complete_residue`
 - Dependency: [D5/S3/VertexAlgebra/NestedResidues/ContextualKernelExtraction](../ContextualKernelExtraction.md)

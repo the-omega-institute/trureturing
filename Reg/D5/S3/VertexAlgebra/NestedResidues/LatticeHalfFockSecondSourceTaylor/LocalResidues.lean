@@ -186,28 +186,5 @@ theorem second_source_monomial_taylor_index_actual
     source_second_source_monomial_taylor_index D a b K P j alpha e hα := by
   exact _root_.D5.S3.VertexAlgebra.NestedResidues.LatticeHalfFockSecondSourceTaylor.LocalResidues.second_source_monomial_taylor_index D a b K P j alpha e hα
 
-def source_second_source_taylor_inner_expansion
-    (D : LatticeData) (a b : Carrier D) (K : ℕ) (P : LabelledPolynomial ℂ 3)
-    (j : ℕ) : Prop :=
-    secondSourceTaylorRational D a b K P j =
-      ∑ alpha ∈ Finset.range (vectorFrequencyBound D b + 1 - j),
-        ∑ e ∈ P.coeff.support,
-          secondSourceInnerTaylorTerm D a b K P j alpha e
-
-theorem second_source_taylor_inner_expansion_source_iff
-    (D : LatticeData) (a b : Carrier D) (K : ℕ) (P : LabelledPolynomial ℂ 3)
-    (j : ℕ) :
-    source_second_source_taylor_inner_expansion D a b K P j ↔
-    (secondSourceTaylorRational D a b K P j =
-      ∑ alpha ∈ Finset.range (vectorFrequencyBound D b + 1 - j),
-        ∑ e ∈ P.coeff.support,
-          secondSourceInnerTaylorTerm D a b K P j alpha e) := Iff.rfl
-
-theorem second_source_taylor_inner_expansion_actual
-    (D : LatticeData) (a b : Carrier D) (K : ℕ) (P : LabelledPolynomial ℂ 3)
-    (j : ℕ) :
-    source_second_source_taylor_inner_expansion D a b K P j := by
-  exact _root_.D5.S3.VertexAlgebra.NestedResidues.LatticeHalfFockSecondSourceTaylor.LocalResidues.second_source_taylor_inner_expansion D a b K P j
-
 end
 end Reg.D5.S3.VertexAlgebra.NestedResidues.LatticeHalfFockSecondSourceTaylor.LocalResidues
