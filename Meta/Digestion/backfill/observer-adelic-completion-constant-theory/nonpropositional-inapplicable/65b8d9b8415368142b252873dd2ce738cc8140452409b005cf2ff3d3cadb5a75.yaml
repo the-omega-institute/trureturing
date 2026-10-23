@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:65b8d9b8415368142b252873dd2ce738cc8140452409b005cf2ff3d3cadb5a75
+  normalized_sha256: sha256:65b8d9b8415368142b252873dd2ce738cc8140452409b005cf2ff3d3cadb5a75
+cas_ref: sha256:65b8d9b8415368142b252873dd2ce738cc8140452409b005cf2ff3d3cadb5a75
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 此片解释已定义 Σ_L 的 self-energy counterterm 名称，没有额外等式、正性或存在性断言。
+    previous_atom_id: b5fe4fd4bcc48d47aad08dac2e2e4ef2257b975c1b78c1ce58f0b2c5856f171c
+    next_atom_id: abcedd863d73d294adcad5ac1190d24ea7bad55840c3529259e961851237d177

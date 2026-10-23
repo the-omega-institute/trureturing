@@ -28,7 +28,7 @@ Issue [#20028](https://github.com/the-omega-institute/trureturing/issues/20028) 
 
 ## Motivation
 
-The source quantifies the advantage of deferring the choice of a second measurement by the compatibility region of a noisy sharp meter and a noisy identity channel. The upper boundary is where the meter is as sharp as possible for a given channel quality. Uniqueness of the joint instrument there means the optimal sequential implementation is rigid: there is exactly one way to realize the boundary trade-off.
+The source quantifies the advantage of deferring the choice of a second measurement by the compatibility region of a noisy sharp meter and a noisy identity channel. The upper boundary is where the meter is as sharp as possible for a given channel quality. Uniqueness of the joint instrument there means that on the boundary exactly one family of completely positive outcome maps has these marginals; it does not classify dilations or physical implementations of that instrument.
 
 ## Gap
 

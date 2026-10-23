@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:f2d5da80a6761f815433389a68c89050dbb6347947a9a3c7c76e241e19c52b87
+  normalized_sha256: sha256:f2d5da80a6761f815433389a68c89050dbb6347947a9a3c7c76e241e19c52b87
+cas_ref: sha256:f2d5da80a6761f815433389a68c89050dbb6347947a9a3c7c76e241e19c52b87
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 规定索引 m 的语义为调节子 Fourier/Hecke 模式；没有新增等式。
+    previous_atom_id: 6589c919f0709633afe6c036797481f3c96d43931e3974422db1add8430f3276
+    next_atom_id: c79f411009ed67711dd4b3c81c1271ea722c8087b07a52bcd61e57e51c27da85

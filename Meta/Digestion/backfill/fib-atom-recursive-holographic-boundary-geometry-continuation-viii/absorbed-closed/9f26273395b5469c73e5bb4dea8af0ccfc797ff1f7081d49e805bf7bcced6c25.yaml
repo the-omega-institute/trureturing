@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:9f26273395b5469c73e5bb4dea8af0ccfc797ff1f7081d49e805bf7bcced6c25
+  normalized_sha256: sha256:9f26273395b5469c73e5bb4dea8af0ccfc797ff1f7081d49e805bf7bcced6c25
+cas_ref: sha256:9f26273395b5469c73e5bb4dea8af0ccfc797ff1f7081d49e805bf7bcced6c25
+coverage_gids:
+  - gid: D5/S3/Arith/FibonacciAtomic/ImmediateWindowStateCapacity.clock
+    target_statement_id: sha256:57f7f7d9708965eef8f5b767662be5ea1e210c2bf3e456348a09d6273fceac6c
+  - gid: D5/S3/Arith/FibonacciAtomic/ImmediateWindowStateCapacity.rawTransition
+    target_statement_id: sha256:d860e447f18fc8aecf19f1a269df71edd1ce879ee114f0f43ece2c676e87697c
+receipts:
+  unresolved_subitems: []

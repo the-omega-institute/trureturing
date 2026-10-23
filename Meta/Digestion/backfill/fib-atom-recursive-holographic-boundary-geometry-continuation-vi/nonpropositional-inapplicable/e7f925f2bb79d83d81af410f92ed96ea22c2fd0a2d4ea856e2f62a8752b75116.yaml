@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:e7f925f2bb79d83d81af410f92ed96ea22c2fd0a2d4ea856e2f62a8752b75116
+  normalized_sha256: sha256:e7f925f2bb79d83d81af410f92ed96ea22c2fd0a2d4ea856e2f62a8752b75116
+cas_ref: sha256:e7f925f2bb79d83d81af410f92ed96ea22c2fd0a2d4ea856e2f62a8752b75116
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 'Nonpropositional: Section roadmap for a node-dependent clock and its necessary mass profile; no profile equation, existence claim or no-go theorem is stated in this atom.'
+    previous_atom_id: ef7340f0e7194b4d772e8f9321d82c5ff3361f27f9e4c8a24ebbd647868735a4
+    next_atom_id: 20c08c99fc97f10aca76abfde67aa7b6a799fa18693811afcb00dbe1c379284d

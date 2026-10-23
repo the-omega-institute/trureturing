@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:3606338d40641f6eb59899560508f16812e0c2ece3775c5d7b26f685acc541d3
+  normalized_sha256: sha256:3606338d40641f6eb59899560508f16812e0c2ece3775c5d7b26f685acc541d3
+cas_ref: sha256:3606338d40641f6eb59899560508f16812e0c2ece3775c5d7b26f685acc541d3
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 非命题：以可能的观察图表作研究建议，并明确说 off-line 零点到负见证之桥尚未证明；不宣称该桥成立。
+    previous_atom_id: dc2024bb2daaa0617051e31b513694af76762048bbdd2ecb64d8ef6364f425e0
+    next_atom_id: 8da55eeec4ddc85ac57b2d32ac57f0e22303771e476f99c39112f0e1f0bafdb7

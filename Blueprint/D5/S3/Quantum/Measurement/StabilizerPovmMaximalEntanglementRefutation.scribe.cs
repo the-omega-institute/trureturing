@@ -30,6 +30,9 @@ internal sealed class StabilizerPovmMaximalEntanglementRefutationDocument : IScr
             Node("letterPhase", "Pauli product phases", LetterPhaseFormula(),
                 "The cyclic products XY, YZ and ZX have phase i; their reversals have phase -i. Identity products and squares have phase one.",
                 DescribeRole.Definition, AssessedProvenance.FromRepo()),
+            Node("bellInput", "Binary coordinates of a Pauli label", BellInputFormula(),
+                "The first bit records the Z component and the second bit records the X component: I gives (0,0), X gives (0,1), Y gives (1,1), and Z gives (1,0).",
+                DescribeRole.Definition, AssessedProvenance.FromRepo()),
             Node("letter_mul", "The Pauli multiplication table", LetterMulFormula(),
                 "Multiplying two Pauli matrices gives the matrix of letterProduct, multiplied by letterPhase. This separates the label and scalar parts of each product.",
                 DescribeRole.Theorem, AssessedProvenance.FromRepo()),
@@ -142,6 +145,14 @@ internal sealed class StabilizerPovmMaximalEntanglementRefutationDocument : IScr
             Call("Pauli.rec",q,Call("Pauli.rec",X,I,Z,Y,q),
                 Call("Pauli.rec",Y,Z,I,X,q),Call("Pauli.rec",Z,Y,X,I,q),p))));
     }
+    private static Formula BellInputFormula()
+    {
+        Formula Pair(byte z, byte x) => Parenthesized(Seq(D(z),Comma,D(x)));
+        Formula Image(string label) => Call("bellInput",Call("Pauli." + label));
+        return And(And(Equal(Image("I"),Pair(0,0)),Equal(Image("X"),Pair(0,1))),
+            And(Equal(Image("Y"),Pair(1,1)),Equal(Image("Z"),Pair(1,0))));
+    }
+
     private static Formula LetterPhaseFormula()
     {
         Formula p=F.Id("p"),q=F.Id("q"),P=Call("Pauli"),i=Call("Complex.I");

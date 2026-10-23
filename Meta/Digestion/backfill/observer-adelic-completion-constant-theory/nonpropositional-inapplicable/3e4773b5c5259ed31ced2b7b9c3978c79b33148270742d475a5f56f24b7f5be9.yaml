@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:3e4773b5c5259ed31ced2b7b9c3978c79b33148270742d475a5f56f24b7f5be9
+  normalized_sha256: sha256:3e4773b5c5259ed31ced2b7b9c3978c79b33148270742d475a5f56f24b7f5be9
+cas_ref: sha256:3e4773b5c5259ed31ced2b7b9c3978c79b33148270742d475a5f56f24b7f5be9
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 'Upstream-only mathematical clause, under the surrounding Laurent-chart domain q != 0: for every q : Complex with q != 0, Tendsto (fun p => p^-1 - q^-1) (nhds q) (nhds 0). Supplied by continuousAt_inv₀, ContinuousAt.tendsto, Filter.Tendsto.sub_const and sub_self, pinned Mathlib revision 56a005855ea17e0b0958f73ec801ae140b0a1679. Exact optional application built successfully using make lean LEAN_TARGETS=D5.S3.Observer.GoldenCoding.Yd31ReuseCheck. No assertion at q=0 or about the J difference or diagonal product is made. D5 search scope: All D5/**/*.lean including private declarations, searched by reciprocal/inverse continuity, tendsto inverse difference, continuousAt_inv, inv_sub_inv; inspected RationalPositiveRealization.coefficients (matrix inverse over rational numbers, not the complex reciprocal limit), generic checked_expression_encloses (real rational arithmetic enclosures, not a supplier of complex analytic continuity), cutoff_first_nonstrict (cutoff index ordering, no relevant analytic subgoal).'
+    previous_atom_id: e3275db953d007a492e2ac6cdfe6b3cf9fee9cf0f98634d560235d17880c9fd1
+    next_atom_id: dbb9852de0df93532458dfc8074db7703cac948a29186fe6a8afd92a8503dd39
