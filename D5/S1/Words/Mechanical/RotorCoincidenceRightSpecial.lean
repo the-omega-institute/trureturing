@@ -420,7 +420,66 @@ private theorem rotor_reverse_prefix_special {σ : ℝ}
     (ℓ : ℕ) (hℓ : 0 < ℓ) :
     IsRightSpecial (rotor σ)
       (List.ofFn (fun t : Fin ℓ => rotor σ (t + 1))).reverse := by
-  sorry
+  let α : ℝ := 1 / (σ + 1)
+  let m := ℓ / 2
+  let p := (lowerMechanicalFactor α α m 0).reverse
+  let u := (List.ofFn (fun t : Fin ℓ => rotor σ (t + 1))).reverse
+  have hplen : p.length = m := by simp [p, lowerMechanicalFactor]
+  have hulen : u.length = ℓ := by simp [u]
+  have lift (b : Bool) (k : ℕ)
+      (hk : p ++ [b] = lowerMechanicalFactor α α (m + 1) k) :
+      IsFactor (rotor σ) (u ++ [if b then 3 else 1]) := by
+    let i := 2 * k + 2 - ℓ % 2
+    have hip : 0 < i := by dsimp [i]; omega
+    have hpari : (i + ℓ) % 2 = 0 := by dsimp [i]; omega
+    have hki : (i - 1) / 2 = k := by dsimp [i]; omega
+    refine ⟨i, ?_⟩
+    intro t ht
+    have htℓ : t < ℓ + 1 := by simpa [hulen] using ht
+    rw [rotor_window hcut hip hpari, hki]
+    by_cases hlt : t < ℓ
+    · rw [List.getElem_append_left (by omega)]
+      change _ = (List.ofFn (fun t : Fin ℓ => rotor σ (t + 1))).reverse[t]
+      rw [List.getElem_reverse]
+      simp only [List.length_ofFn, List.getElem_ofFn]
+      have htidx : ℓ - 1 - t + 1 = ℓ - t := by omega
+      rw [htidx]
+      by_cases hpar : (t + ℓ) % 2 = 1
+      · rw [if_pos hpar]
+        exact ((rotor_two_iff σ _).mpr (by omega)).symm
+      · rw [if_neg hpar]
+        have htd : t / 2 < m := by dsimp [m]; omega
+        have hp := congrArg (fun w : List Bool => w[t / 2]?) hk
+        rw [List.getElem?_append_left (by omega)] at hp
+        have hpt : t / 2 < p.length := by omega
+        rw [List.getElem?_eq_getElem hpt] at hp
+        dsimp [p] at hp
+        rw [List.getElem_reverse] at hp
+        simp only [lowerMechanicalFactor, List.length_ofFn, List.getElem_ofFn,
+          zero_add, List.getElem?_ofFn, dif_pos (by omega : t / 2 < m + 1),
+          Option.some.injEq] at hp
+        have hpos : ℓ - t ≠ 0 := by omega
+        have heven : (ℓ - t) % 2 ≠ 1 := by omega
+        have hdiv : (ℓ - t) / 2 = (m - 1 - t / 2) + 1 := by dsimp [m]; omega
+        simp only [rotor, if_neg hpos, if_neg heven, hdiv, hcut]
+        rw [hp]
+    · have ht' : t = ℓ := by omega
+      subst t
+      rw [List.getElem_append_right (by omega)]
+      simp only [hulen, Nat.sub_self, List.getElem_cons_zero]
+      have hpar : (ℓ + ℓ) % 2 ≠ 1 := by omega
+      rw [if_neg hpar]
+      have hp := congrArg (fun w : List Bool => w[m]?) hk
+      rw [List.getElem?_append_right (by omega)] at hp
+      simp only [hplen, Nat.sub_self, List.getElem?_cons_zero,
+        lowerMechanicalFactor, List.getElem?_ofFn, dif_pos (by omega : m < m + 1),
+        Option.some.injEq] at hp
+      change (if lowerMechanicalWord α α (k + m) then 3 else 1) = _
+      rw [← hp]
+  obtain ⟨kf, hkf⟩ := mem_lowerMechanicalFactorSet.mp (hrev m).2.1
+  obtain ⟨kt, hkt⟩ := mem_lowerMechanicalFactorSet.mp (hrev m).2.2
+  exact ⟨1, 3, by decide, by simpa using lift false kf hkf,
+    by simpa using lift true kt hkt⟩
 
 theorem result : claim := by
   intro σ hσ hσ1 n hn w hw
