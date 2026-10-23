@@ -50,7 +50,7 @@ Put $a_k=2^{-k}\sum_{\varepsilon\in\{\pm1\}^k}|\sum_i\varepsilon_i|$.
 ## Falsifier
 
 The proof would not answer the conjecture if the module's quantities differed from the source's. The module:
-- defines $W_{n,k}$, the Manhattan norm, $L_k$ and $L$ exactly as the source's Methods section;
+- encodes each matrix in $W_{n,k}$ by its row map $f:\mathrm{Fin}\,n\to\mathrm{Fin}\,k$, the matrix whose $i$-th row is $e_{f(i)}$, and defines the Manhattan norm, $L_k$ and $L$ as the source's Methods section does;
 - proves a uniform constant below $k$, which excludes both a matrix with $L(M)>0$ attaining $L_k=kL$ and a sequence approaching ratio $k$.
 
 ## Evidence

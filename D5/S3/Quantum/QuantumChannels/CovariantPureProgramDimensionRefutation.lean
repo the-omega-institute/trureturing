@@ -80,7 +80,7 @@ not_pure_programmable: proof_shape: content; escape_witness: PureProgramQubitObs
 result: proof_shape: content; escape_witness: PureProgramQubitObstruction.three_pure_outputs_rigidity;
   consumers: external settlement; Direct frozen dependencies: F1, F3, F7, F4, F6, F8, F9, F2, F5
 Frozen declaration identities (declaration statement_ids from the Lean report):
-  F1: D5/S3/Quantum/Entanglement/GHZMeasureBiseparableBound.IsDensity
+  F1: D5/S3/Quantum/Information/SLDSpectralEnergy.IsDensity
     statement_id: sha256:fc9bb0824d5818ff419f72f26095faecc04e62ab59bf26f4f2bcefbb2d380448
   F2: D5/S3/Quantum/Foundation/FiniteKrausChannel.PhyslibLeaf.MatrixMap
     statement_id: sha256:df01dcc9d6d91985f3214eaee7e1c5eacebab3335dff64bb7b620043c650cad7
@@ -110,6 +110,7 @@ DTR reading: DTR-Unregistered (Observe) for no_four_replacements; the designated
 The public result is the designated refutation result (`basis=refutes`) and is exempt from four-slot escape registration (CLAUDE.md §3.9).
 -/
 
+import D5.S3.Quantum.Information.SLDSpectralEnergy
 import D5.S3.Quantum.QuantumChannels.PureProgramQubitObstruction
 import D5.S3.Quantum.Entanglement.GHZMeasureBiseparableBound
 import D5.S3.Quantum.Information.NiceErrorBasisNonNormalStabilizer
@@ -123,7 +124,7 @@ namespace D5.S3.Quantum.QuantumChannels.CovariantPureProgramDimensionRefutation
 open D5.S3.Quantum.QuantumChannels.PureProgramQubitObstruction
 open D5.S3.Quantum.PureState.PureStateHandshake (rankOneDensity)
 open D5.S3.Quantum.Information.NiceErrorBasisNonNormalStabilizer (IrredProj)
-open D5.S3.Quantum.Entanglement.GHZMeasureBiseparableBound (IsDensity)
+open D5.S3.Quantum.Information.SLDSpectralEnergy (IsDensity)
 open D5.S3.Quantum.Foundation.FiniteKrausChannel.PhyslibLeaf
 
 def IsCovariant {G : Type} [Group G] {d1 d2 : ℕ}
