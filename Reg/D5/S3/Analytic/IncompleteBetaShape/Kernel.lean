@@ -16,24 +16,24 @@ namespace Reg.D5.S3.Analytic.IncompleteBetaShape.Kernel
 private theorem kernel_dependence :
     ObservationalDependence
       (_root_.Reg.Support.SingleDependentReadout.signature
-        (ℝ × ℕ × ℝ) (fun _ => ℝ) (fun _ => ℝ))
+        (Σ _ : ℝ, Σ _ : ℕ, ℝ) (fun _ => ℝ) (fun _ => ℝ))
       (realize _ (fun _ q v => H q.1 q.2.1 q.2.2 v) (fun e => nomatch e)) := by
   intro i
-  refine ⟨(1,0,2), 1/4, 1/2, ?_⟩
+  refine ⟨⟨1,⟨0,2⟩⟩, 1/4, 1/2, ?_⟩
   exact ne_of_lt (H_strictMonoOn_of_one_lt (by norm_num : (0:ℝ)<1)
     (by norm_num : (1:ℝ)<2) 0 (by norm_num) (by norm_num) (by norm_num))
 
 namespace Reflection
 abbrev signature : Signature :=
   _root_.Reg.Support.SingleDependentReadout.signature
-    (ℝ × ℕ × ℝ) (fun _ => ℝ) (fun _ => ℝ)
+    (Σ _ : ℝ, Σ _ : ℕ, ℝ) (fun _ => ℝ) (fun _ => ℝ)
 def actual : Realization signature :=
   realize signature (fun _ q v => H q.1 q.2.1 q.2.2 v) (fun e => nomatch e)
 def rejected : Realization signature :=
   realize signature (fun _ q v => v) (fun e => nomatch e)
 def arena : Arena where
   signature := signature
-  Law R := ∀ c : ℝ, ∀ n : ℕ, ∀ b v : ℝ, R.readout () (c,n,b) (1-v) = R.readout () (c,n,b) v
+  Law R := ∀ c : ℝ, ∀ n : ℕ, ∀ b v : ℝ, R.readout () ⟨c,⟨n,b⟩⟩ (1-v) = R.readout () ⟨c,⟨n,b⟩⟩ v
 private theorem rejected_law : ¬ arena.Law rejected := by
   intro h
   have hh := h 1 0 2 0
@@ -68,7 +68,7 @@ def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
     definition := none
     coordinates := #[0, 1, 2]
     readouts := #[{
-      path := #["body", "body", "body", "body", "fn", "arg"]
+      path := #["body", "body", "body", "body", "arg"]
       stateBinder := 3
       functionOperand := false
       stateOperand := none
@@ -81,14 +81,14 @@ end Reflection
 namespace Continuity
 abbrev signature : Signature :=
   _root_.Reg.Support.SingleDependentReadout.signature
-    (ℝ × ℕ × ℝ) (fun _ => ℝ) (fun _ => ℝ)
+    (Σ _ : ℝ, Σ _ : ℝ, ℕ) (fun _ => ℝ) (fun _ => ℝ)
 def actual : Realization signature :=
-  realize signature (fun _ q v => H q.1 q.2.1 q.2.2 v) (fun e => nomatch e)
+  realize signature (fun _ q v => H q.1 q.2.2 q.2.1 v) (fun e => nomatch e)
 def rejected : Realization signature :=
   realize signature (fun _ q v => (Real.log (v+1/2))⁻¹) (fun e => nomatch e)
 def arena : Arena where
   signature := signature
-  Law R := ∀ {c b : ℝ}, 0 < c → 0 < b → ∀ n : ℕ, ContinuousOn (R.readout () (c,n,b)) (Icc 0 1)
+  Law R := ∀ {c b : ℝ}, 0 < c → 0 < b → ∀ n : ℕ, ContinuousOn (R.readout () ⟨c,⟨b,n⟩⟩) (Icc 0 1)
 private theorem rejected_law : ¬ arena.Law rejected := by
   intro h
   have hh := h (c := 1) (b := 2) (by norm_num) (by norm_num) 0
@@ -104,7 +104,12 @@ def family : Registration arena (type_of% @H_continuousOn) where
   variation := ⟨@H_continuousOn, rejected, rejected_law⟩
   sensitivity := _root_.Reg.Support.SingleDependentReadout.sensitivity
     arena.Law actual rejected rejected_law
-  dependence := kernel_dependence
+  dependence := by
+    change ObservationalDependence signature actual
+    intro i
+    refine ⟨⟨1,⟨2,0⟩⟩, 1/4, 1/2, ?_⟩
+    exact ne_of_lt (H_strictMonoOn_of_one_lt (by norm_num : (0:ℝ)<1)
+      (by norm_num : (1:ℝ)<2) 0 (by norm_num) (by norm_num) (by norm_num))
 def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
     (@H_continuousOn) (Realization signature) Unit Unit where
   unitName := `Reg.D5.S3.Analytic.IncompleteBetaShape.Kernel.Continuity.unit
@@ -118,7 +123,7 @@ def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
   realization := .source arena ⟨family⟩
   correspondence := { stage := .evidence, objectStage := .evidence }
   bundleNonempty := .absent
-  readout := some (realize signature (fun _ q v => H q.1 q.2.1 q.2.2 v) (fun e => nomatch e))
+  readout := some (realize signature (fun _ q v => H q.1 q.2.2 q.2.1 v) (fun e => nomatch e))
   variation := .absent
   sensitivity := .absent
   partialSensitivity := none
@@ -141,14 +146,14 @@ end Continuity
 namespace Boundedness
 abbrev signature : Signature :=
   _root_.Reg.Support.SingleDependentReadout.signature
-    (ℝ × ℕ × ℝ) (fun _ => ℝ) (fun _ => ℝ)
+    (Σ _ : ℝ, Σ _ : ℝ, ℕ) (fun _ => ℝ) (fun _ => ℝ)
 def actual : Realization signature :=
-  realize signature (fun _ q v => H q.1 q.2.1 q.2.2 v) (fun e => nomatch e)
+  realize signature (fun _ q v => H q.1 q.2.2 q.2.1 v) (fun e => nomatch e)
 def rejected : Realization signature :=
   realize signature (fun _ q v => v⁻¹) (fun e => nomatch e)
 def arena : Arena where
   signature := signature
-  Law R := ∀ {c b : ℝ}, 0 < c → 0 < b → ∀ n : ℕ, ∃ C : ℝ, ∀ v ∈ Icc 0 1, ‖R.readout () (c,n,b) v‖ ≤ C
+  Law R := ∀ {c b : ℝ}, 0 < c → 0 < b → ∀ n : ℕ, ∃ C : ℝ, ∀ v ∈ Icc 0 1, ‖R.readout () ⟨c,⟨b,n⟩⟩ v‖ ≤ C
 private theorem rejected_law : ¬ arena.Law rejected := by
   intro h
   obtain ⟨C,hC⟩ := h (c := 1) (b := 2) (by norm_num) (by norm_num) 0
@@ -165,7 +170,12 @@ def family : Registration arena (type_of% @H_bounded) where
   variation := ⟨@H_bounded, rejected, rejected_law⟩
   sensitivity := _root_.Reg.Support.SingleDependentReadout.sensitivity
     arena.Law actual rejected rejected_law
-  dependence := kernel_dependence
+  dependence := by
+    change ObservationalDependence signature actual
+    intro i
+    refine ⟨⟨1,⟨2,0⟩⟩, 1/4, 1/2, ?_⟩
+    exact ne_of_lt (H_strictMonoOn_of_one_lt (by norm_num : (0:ℝ)<1)
+      (by norm_num : (1:ℝ)<2) 0 (by norm_num) (by norm_num) (by norm_num))
 def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
     (@H_bounded) (Realization signature) Unit Unit where
   unitName := `Reg.D5.S3.Analytic.IncompleteBetaShape.Kernel.Boundedness.unit
@@ -179,7 +189,7 @@ def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
   realization := .source arena ⟨family⟩
   correspondence := { stage := .evidence, objectStage := .evidence }
   bundleNonempty := .absent
-  readout := some (realize signature (fun _ q v => H q.1 q.2.1 q.2.2 v) (fun e => nomatch e))
+  readout := some (realize signature (fun _ q v => H q.1 q.2.2 q.2.1 v) (fun e => nomatch e))
   variation := .absent
   sensitivity := .absent
   partialSensitivity := none
@@ -189,7 +199,7 @@ def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
     definition := none
     coordinates := #[0, 1, 4]
     readouts := #[{
-      path := #["body", "body", "body", "body", "body", "body", "body", "body", "fn", "arg", "arg"]
+      path := #["body", "body", "body", "body", "body", "arg", "body", "body", "body", "fn", "arg", "arg"]
       stateBinder := 6
       functionOperand := false
       stateOperand := none
@@ -202,14 +212,14 @@ end Boundedness
 namespace Increase
 abbrev signature : Signature :=
   _root_.Reg.Support.SingleDependentReadout.signature
-    (ℝ × ℕ × ℝ) (fun _ => ℝ) (fun _ => ℝ)
+    (Σ _ : ℝ, Σ _ : ℝ, ℕ) (fun _ => ℝ) (fun _ => ℝ)
 def actual : Realization signature :=
-  realize signature (fun _ q v => H q.1 q.2.1 q.2.2 v) (fun e => nomatch e)
+  realize signature (fun _ q v => H q.1 q.2.2 q.2.1 v) (fun e => nomatch e)
 def rejected : Realization signature :=
   realize signature (fun _ q v => 0) (fun e => nomatch e)
 def arena : Arena where
   signature := signature
-  Law R := ∀ {c b : ℝ}, 0 < c → 1 < b → ∀ n : ℕ, StrictMonoOn (R.readout () (c,n,b)) (Ioc 0 (1/2))
+  Law R := ∀ {c b : ℝ}, 0 < c → 1 < b → ∀ n : ℕ, StrictMonoOn (R.readout () ⟨c,⟨b,n⟩⟩) (Ioc 0 (1/2))
 private theorem rejected_law : ¬ arena.Law rejected := by
   intro h
   have hh := h (c := 1) (b := 2) (by norm_num) (by norm_num) 0
@@ -222,7 +232,12 @@ def family : Registration arena (type_of% @H_strictMonoOn_of_one_lt) where
   variation := ⟨@H_strictMonoOn_of_one_lt, rejected, rejected_law⟩
   sensitivity := _root_.Reg.Support.SingleDependentReadout.sensitivity
     arena.Law actual rejected rejected_law
-  dependence := kernel_dependence
+  dependence := by
+    change ObservationalDependence signature actual
+    intro i
+    refine ⟨⟨1,⟨2,0⟩⟩, 1/4, 1/2, ?_⟩
+    exact ne_of_lt (H_strictMonoOn_of_one_lt (by norm_num : (0:ℝ)<1)
+      (by norm_num : (1:ℝ)<2) 0 (by norm_num) (by norm_num) (by norm_num))
 def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
     (@H_strictMonoOn_of_one_lt) (Realization signature) Unit Unit where
   unitName := `Reg.D5.S3.Analytic.IncompleteBetaShape.Kernel.Increase.unit
@@ -236,7 +251,7 @@ def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
   realization := .source arena ⟨family⟩
   correspondence := { stage := .evidence, objectStage := .evidence }
   bundleNonempty := .absent
-  readout := some (realize signature (fun _ q v => H q.1 q.2.1 q.2.2 v) (fun e => nomatch e))
+  readout := some (realize signature (fun _ q v => H q.1 q.2.2 q.2.1 v) (fun e => nomatch e))
   variation := .absent
   sensitivity := .absent
   partialSensitivity := none
@@ -259,14 +274,14 @@ end Increase
 namespace Decrease
 abbrev signature : Signature :=
   _root_.Reg.Support.SingleDependentReadout.signature
-    (ℝ × ℕ × ℝ) (fun _ => ℝ) (fun _ => ℝ)
+    (Σ _ : ℝ, Σ _ : ℝ, ℕ) (fun _ => ℝ) (fun _ => ℝ)
 def actual : Realization signature :=
-  realize signature (fun _ q v => H q.1 q.2.1 q.2.2 v) (fun e => nomatch e)
+  realize signature (fun _ q v => H q.1 q.2.2 q.2.1 v) (fun e => nomatch e)
 def rejected : Realization signature :=
   realize signature (fun _ q v => 0) (fun e => nomatch e)
 def arena : Arena where
   signature := signature
-  Law R := ∀ {c b : ℝ}, 0 < c → 0 < b → b < 1 → ∀ n : ℕ, StrictAntiOn (R.readout () (c,n,b)) (Ioc 0 (1/2))
+  Law R := ∀ {c b : ℝ}, 0 < c → 0 < b → b < 1 → ∀ n : ℕ, StrictAntiOn (R.readout () ⟨c,⟨b,n⟩⟩) (Ioc 0 (1/2))
 private theorem rejected_law : ¬ arena.Law rejected := by
   intro h
   have hh := h (c := 1) (b := 1/2) (by norm_num) (by norm_num) (by norm_num) 0
@@ -279,7 +294,12 @@ def family : Registration arena (type_of% @H_strictAntiOn_of_lt_one) where
   variation := ⟨@H_strictAntiOn_of_lt_one, rejected, rejected_law⟩
   sensitivity := _root_.Reg.Support.SingleDependentReadout.sensitivity
     arena.Law actual rejected rejected_law
-  dependence := kernel_dependence
+  dependence := by
+    change ObservationalDependence signature actual
+    intro i
+    refine ⟨⟨1,⟨2,0⟩⟩, 1/4, 1/2, ?_⟩
+    exact ne_of_lt (H_strictMonoOn_of_one_lt (by norm_num : (0:ℝ)<1)
+      (by norm_num : (1:ℝ)<2) 0 (by norm_num) (by norm_num) (by norm_num))
 def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
     (@H_strictAntiOn_of_lt_one) (Realization signature) Unit Unit where
   unitName := `Reg.D5.S3.Analytic.IncompleteBetaShape.Kernel.Decrease.unit
@@ -293,7 +313,7 @@ def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
   realization := .source arena ⟨family⟩
   correspondence := { stage := .evidence, objectStage := .evidence }
   bundleNonempty := .absent
-  readout := some (realize signature (fun _ q v => H q.1 q.2.1 q.2.2 v) (fun e => nomatch e))
+  readout := some (realize signature (fun _ q v => H q.1 q.2.2 q.2.1 v) (fun e => nomatch e))
   variation := .absent
   sensitivity := .absent
   partialSensitivity := none
@@ -316,14 +336,14 @@ end Decrease
 namespace InnerIntegrability
 abbrev signature : Signature :=
   _root_.Reg.Support.SingleDependentReadout.signature
-    (ℝ × ℕ × ℝ × ℝ) (fun _ => ℝ) (fun _ => ℝ)
+    (Σ _ : ℝ, Σ _ : ℝ, Σ _ : ℝ, ℕ) (fun _ => ℝ) (fun _ => ℝ)
 def actual : Realization signature :=
-  realize signature (fun _ q v => v^(q.1-1)*(1-v)^((q.2.1:ℝ)+1)*F q.2.2.1 v q.2.2.2) (fun e => nomatch e)
+  realize signature (fun _ q v => v^(q.1-1)*(1-v)^((q.2.2.2:ℝ)+1)*F q.2.1 v q.2.2.1) (fun e => nomatch e)
 def rejected : Realization signature :=
   realize signature (fun _ q v => v⁻¹) (fun e => nomatch e)
 def arena : Arena where
   signature := signature
-  Law R := ∀ {c b v : ℝ}, 0 < c → 0 < b → ∀ n : ℕ, v ∈ Icc 0 1 → IntervalIntegrable (fun s => R.readout () (c,n,b,v) s) volume 0 1
+  Law R := ∀ {c b v : ℝ}, 0 < c → 0 < b → ∀ n : ℕ, v ∈ Icc 0 1 → IntervalIntegrable (fun s => R.readout () ⟨c,⟨b,⟨v,n⟩⟩⟩ s) volume 0 1
 private theorem rejected_law : ¬ arena.Law rejected := by
   intro h
   have hh := h (c := 1) (b := 1) (v := 0) (by norm_num) (by norm_num) 0 (by norm_num)
@@ -338,7 +358,7 @@ def family : Registration arena (type_of% @H_integrand_intervalIntegrable) where
   dependence := by
     change ObservationalDependence signature actual
     intro i
-    refine ⟨(1,0,1,0), 0, 1, ?_⟩
+    refine ⟨⟨1,⟨1,⟨0,0⟩⟩⟩, 0, 1, ?_⟩
     norm_num [actual, realize, F, w]
 def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
     (@H_integrand_intervalIntegrable) (Realization signature) Unit Unit where
@@ -353,7 +373,7 @@ def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
   realization := .source arena ⟨family⟩
   correspondence := { stage := .evidence, objectStage := .evidence }
   bundleNonempty := .absent
-  readout := some (realize signature (fun _ q v => v^(q.1-1)*(1-v)^((q.2.1:ℝ)+1)*F q.2.2.1 v q.2.2.2) (fun e => nomatch e))
+  readout := some (realize signature (fun _ q v => v^(q.1-1)*(1-v)^((q.2.2.2:ℝ)+1)*F q.2.1 v q.2.2.1) (fun e => nomatch e))
   variation := .absent
   sensitivity := .absent
   partialSensitivity := none
@@ -363,7 +383,7 @@ def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
     definition := none
     coordinates := #[0, 1, 2, 5]
     readouts := #[{
-      path := #["body", "body", "body", "body", "body", "body", "body", "fn", "arg"]
+      path := #["body", "body", "body", "body", "body", "body", "body", "fn", "fn", "fn", "arg"]
       stateBinder := 0
       functionOperand := true
       stateOperand := none
@@ -376,14 +396,14 @@ end InnerIntegrability
 namespace AffineReflection
 abbrev signature : Signature :=
   _root_.Reg.Support.SingleDependentReadout.signature
-    (ℝ × ℝ) (fun _ => ℝ) (fun _ => ℝ)
+    (Σ _ : ℝ, ℝ) (fun _ => ℝ) (fun _ => ℝ)
 def actual : Realization signature :=
   realize signature (fun _ q v => F q.1 q.2 v) (fun e => nomatch e)
 def rejected : Realization signature :=
   realize signature (fun _ q v => v) (fun e => nomatch e)
 def arena : Arena where
   signature := signature
-  Law R := ∀ b s v : ℝ, R.readout () (b,s) (1-v) = R.readout () (b,s) v
+  Law R := ∀ b s v : ℝ, R.readout () ⟨b,s⟩ (1-v) = R.readout () ⟨b,s⟩ v
 private theorem rejected_law : ¬ arena.Law rejected := by
   intro h
   have hh := h 2 1 0
@@ -397,7 +417,7 @@ def family : Registration arena (type_of% @F_symm) where
   dependence := by
     change ObservationalDependence signature actual
     intro i
-    refine ⟨(2,1), 0, 1/2, ?_⟩
+    refine ⟨⟨2,1⟩, 0, 1/2, ?_⟩
     norm_num [actual, realize, F, w]
 def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
     (@F_symm) (Realization signature) Unit Unit where
@@ -422,7 +442,7 @@ def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
     definition := none
     coordinates := #[0, 1]
     readouts := #[{
-      path := #["body", "body", "body", "fn", "arg"]
+      path := #["body", "body", "body", "arg"]
       stateBinder := 2
       functionOperand := false
       stateOperand := none
@@ -435,14 +455,14 @@ end AffineReflection
 namespace AffineContinuity
 abbrev signature : Signature :=
   _root_.Reg.Support.SingleDependentReadout.signature
-    (ℝ × ℝ) (fun _ => ℝ) (fun _ => ℝ)
+    (Σ _ : ℝ, ℝ) (fun _ => ℝ) (fun _ => ℝ)
 def actual : Realization signature :=
   realize signature (fun _ q v => F q.1 q.2 v) (fun e => nomatch e)
 def rejected : Realization signature :=
   realize signature (fun _ q v => (Real.log (v+1/2))⁻¹) (fun e => nomatch e)
 def arena : Arena where
   signature := signature
-  Law R := ∀ {b s : ℝ}, 0 < b → s ∈ Ico 0 1 → ContinuousOn (R.readout () (b,s)) (Icc 0 1)
+  Law R := ∀ {b s : ℝ}, 0 < b → s ∈ Ico 0 1 → ContinuousOn (R.readout () ⟨b,s⟩) (Icc 0 1)
 private theorem rejected_law : ¬ arena.Law rejected := by
   intro h
   have hh := h (b := 2) (s := 0) (by norm_num) (by norm_num)
@@ -461,7 +481,7 @@ def family : Registration arena (type_of% @F_continuousOn) where
   dependence := by
     change ObservationalDependence signature actual
     intro i
-    refine ⟨(2,1), 0, 1/2, ?_⟩
+    refine ⟨⟨2,1⟩, 0, 1/2, ?_⟩
     norm_num [actual, realize, F, w]
 def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
     (@F_continuousOn) (Realization signature) Unit Unit where
@@ -499,14 +519,14 @@ end AffineContinuity
 namespace AffineBound
 abbrev signature : Signature :=
   _root_.Reg.Support.SingleDependentReadout.signature
-    (ℝ × ℝ) (fun _ => ℝ) (fun _ => ℝ)
+    (Σ _ : ℝ, ℝ) (fun _ => ℝ) (fun _ => ℝ)
 def actual : Realization signature :=
   realize signature (fun _ q v => F q.1 q.2 v) (fun e => nomatch e)
 def rejected : Realization signature :=
   realize signature (fun _ q v => (Real.Gamma q.1 * Real.Gamma q.1 / Real.Gamma (2*q.1))/(1-q.2)+1) (fun e => nomatch e)
 def arena : Arena where
   signature := signature
-  Law R := ∀ {b s v : ℝ}, 0 < b → s ∈ Ico 0 1 → v ∈ Icc 0 1 → |R.readout () (b,s) v| ≤ (Real.Gamma b * Real.Gamma b / Real.Gamma (2*b))/(1-s)
+  Law R := ∀ {b s v : ℝ}, 0 < b → s ∈ Ico 0 1 → v ∈ Icc 0 1 → |R.readout () ⟨b,s⟩ v| ≤ (Real.Gamma b * Real.Gamma b / Real.Gamma (2*b))/(1-s)
 private theorem rejected_law : ¬ arena.Law rejected := by
   intro h
   have hh := h (b := 1) (s := 0) (v := 0) (by norm_num) (by norm_num) (by norm_num)
@@ -522,7 +542,7 @@ def family : Registration arena (type_of% @F_bound) where
   dependence := by
     change ObservationalDependence signature actual
     intro i
-    refine ⟨(2,1), 0, 1/2, ?_⟩
+    refine ⟨⟨2,1⟩, 0, 1/2, ?_⟩
     norm_num [actual, realize, F, w]
 def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
     (@F_bound) (Realization signature) Unit Unit where
