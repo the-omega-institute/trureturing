@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:db5ac6dcf4c52c9ef5d96fd43b60862e34e59f16dfc3f4f3d73b0baaab458269
+  normalized_sha256: sha256:db5ac6dcf4c52c9ef5d96fd43b60862e34e59f16dfc3f4f3d73b0baaab458269
+cas_ref: sha256:db5ac6dcf4c52c9ef5d96fd43b60862e34e59f16dfc3f4f3d73b0baaab458269
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 非命题：仅建议模块地址、实现顺序和迁入接口的工作计划，不断言所列待建定理已经证明。
+    previous_atom_id: 0d60de0564683ae863f9d92755707db9297692570a26f276f30ee57531975cda
+    next_atom_id: 471ee74fbebaec84456b58d17ffc342f01579ed2a0f9f2e1fa55114027552d1c

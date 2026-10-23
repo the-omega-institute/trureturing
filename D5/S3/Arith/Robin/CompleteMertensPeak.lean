@@ -69,7 +69,7 @@ private lemma jy_majorant_integrable {t : ℝ} (ht : 2 ≤ t) :
   dsimp [g]
   ring
 
-private lemma kernel_integrable
+lemma kernel_integrable
     (hJY : ∀ u : ℝ, 2 ≤ u → |Chebyshev.psi u - u| ≤
       (939 / 100) * u * (log u) ^ (303 / 200 : ℝ) *
         exp (-(4137 / 5000) * sqrt (log u)))

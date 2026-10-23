@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:c49c83ea1d07c791ae2c2f8fc1abd2ed9cf623241058d1031565f35e0af8ee23
+  normalized_sha256: sha256:c49c83ea1d07c791ae2c2f8fc1abd2ed9cf623241058d1031565f35e0af8ee23
+cas_ref: sha256:c49c83ea1d07c791ae2c2f8fc1abd2ed9cf623241058d1031565f35e0af8ee23
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: The atom is only a bullet question asking why past and future have reciprocal multipliers. It records an open prompt and asserts no proposition.
+    previous_atom_id: 821e4a38e879b06757da5920cdd0bb0b06599661d9a85028ced2869e3da58151
+    next_atom_id: 1673e9edc3163043571a76fb4c4fde4914653b148d34e694b09c908e4e2a94fc

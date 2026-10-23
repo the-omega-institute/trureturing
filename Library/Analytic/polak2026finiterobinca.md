@@ -434,6 +434,38 @@ $|\mathcal P(t+h)-\mathcal P(t-h)|^2\le4\mathcal P(t)\mathcal P(2h)$
 in a proof of RH. The source's adaptive window has additive scale
 $\sqrt q\log q$, rather than an independently chosen coarse interval.
 
+For the exact target, take the same actual event $t=\tau_q$ and
+$0<h<t$. Let $T_\triangle(t,h)$ be the signed odd-triangular
+sum minus smooth forcing defined in (8.35), with
+$F=\mathcal P/4+k$. The central event is excluded and endpoint
+events have zero weight. Proposition 21, (8.38), pp.25–26, states
+that, under the inherited cone
+$\mathcal P(t)>0$, $|\mathcal P'(t^-)|<Q(t)$, the post-event
+cone condition is equivalent to
+
+$$
+\mathcal P(t+h)-\mathcal P(t-h)+T_\triangle(t,h)
+                  +2hQ(t)-hJ_q>0.
+$$
+
+The secant and signed discrepancy must be controlled jointly.
+The source's (8.48)–(8.49), p.27, exhibits the obstruction to
+using a small triangular discrepancy alone: for a fixed nonzero
+exponential mode $f_\mu(t)=e^{\mu t}$,
+
+$$
+T_\mu(t,h)=2e^{\mu t}(\mu h-\sinh(\mu h)),\qquad
+\frac{T_\mu(t,h)}{2hf'_\mu(t)}=O_\mu(h^2)\longrightarrow0
+\quad(h\to0),
+$$
+
+including when $\operatorname{Re}\mu>0$. This is a source-given
+mode obstruction, not an actual arithmetic counterexample or an
+RH disproof. Relative decay of the triangular remainder leaves
+the growing secant uncontrolled. Proving that decay, or first
+assuming Proposition 22's RH-conditional secant bound, does not
+supply the combined unconditional event inequality.
+
 The separate energy audit makes the missing joint quantity explicit.
 For $r\ge0$, $\epsilon_r=(1+t)^{-r}$ and
 $E_r=(1-\epsilon_r/2)\widehat B^2+2\epsilon_r\widehat B'^2$,

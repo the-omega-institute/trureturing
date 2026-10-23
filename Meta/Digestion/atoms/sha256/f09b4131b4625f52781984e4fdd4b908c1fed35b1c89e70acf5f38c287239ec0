@@ -1,0 +1,39 @@
+**Definition 6.1 (fixed frame, lawful source and task).** In this section
+and §§7–11, fix $H=\mathbb C^5$ with real orthonormal frame
+$e_1,\ldots,e_5$, Euclidean metric and orientation
+$e_1\wedge\cdots\wedge e_5$. Put $J_{ij}=E_{ij}-E_{ji}$. The source domain is
+
+$$
+\mathcal L=\{(S,A):S^T=S,\ \operatorname{tr}S=1,\ A^T=-A,
+\quad S,A\in M_5(\mathbb R),\quad S+iA\succeq0\}.
+\tag{6.1}
+$$
+
+A comparison with common $S$ ranges over every $A,B$ allowed by (6.1),
+including singular states. Its target is
+$\mathcal G(S,A)=(S,\{A,-A\})$. Thus the only identification is complex
+conjugation in this frame; neither orthogonal conjugacy nor equality of
+spectra is an identification. The two-form convention is
+$a_A=\sum_{i<j}A_{ij}e_i\wedge e_j$. In particular,
+$a_A(u,v)=u^TAv$ after metric identification, and
+$\iota_u a_A=-(Au)^\flat$.
+
+Use precisely the quadratic map of
+[AURIC–Langlands, Definition 6.1 and §15](AURIC_LANGLANDS_STRUCTURE_ACQUISITION_AND_SPECTRAL_EXTENSION_THEORY.md):
+
+$$
+\begin{aligned}
+q(A)&=\left(-\tfrac12\operatorname{tr}(A^2),
+ -A^2+\tfrac15\operatorname{tr}(A^2)I,
+ *_5(a_A\wedge a_A)\right),\\
+K(A)&=-A^2,\qquad b(A)=*_5(a_A\wedge a_A).
+\end{aligned}
+\tag{6.2}
+$$
+
+Writing $q=(\sigma,\gamma,b)$ gives
+$K=\gamma+(2\sigma/5)I$, $\sigma=\operatorname{tr}K/2$ and
+$\gamma=K-(\operatorname{tr}K/5)I$. Consequently $(K,b)$ is an invertible
+linear recoding of the published boundary. All normalizations and Hodge
+orientations in what follows refer to (6.2).
+

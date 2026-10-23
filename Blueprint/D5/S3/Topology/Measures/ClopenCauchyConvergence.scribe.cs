@@ -47,6 +47,25 @@ internal sealed class ClopenCauchyConvergenceDocument : IScribeDocumentDefinitio
                 + "For a real C with 0 ≤ C and an arbitrary sequence of actual finite signed measures s, "
                 + "assume only the uniform total-variation bound and Cauchy convergence of s(n)(A) for every clopen A.")),
             Describe.Lean(
+                DescribeId.Create("signed-functional-clopen-evaluation"),
+                DeclarationHandle.Create(Owner + "signedFunctional_charFn"),
+                H("Exact signed clopen evaluation"),
+                StatementSource.FromAuthor(Disp(Seq(
+                    All("K", Seq(V("Type"), Underscore, Grp(V("u")))),
+                    Inst("MetricSpace", V("K")), Inst("CompactSpace", V("K")),
+                    Inst("TotallyDisconnectedSpace", V("K")),
+                    Inst("MeasurableSpace", V("K")), Inst("BorelSpace", V("K")),
+                    All("r", Signed(V("K"))), All("A", Call("Set", V("K"))),
+                    Call("IsClopen", V("A")), Sp, Rightarrow, Sp,
+                    Call("signedFunctional", V("r"), Call("charFnContinuousMap", V("A"))),
+                    Sp, Eq, Sp, Call("apply", V("r"), V("A"))))),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text(
+                    "The real characteristic function of a clopen A integrates exactly to r(A). "
+                    + "This consumed evaluation identity connects old weak-star F to exact clopen values in SignedProperLimit. "
+                    + "The proof and statement are the existing signed integral identity; no new measure representation is asserted."))),
+                DescribeRole.Theorem),
+            Describe.Lean(
                 DescribeId.Create("tendsto-signed-functional-of-clopen-cauchy"),
                 DeclarationHandle.Create(Owner + "tendsto_signedFunctional_of_clopen_cauchy"),
                 H("Represented signed whole-sequence convergence criterion"),

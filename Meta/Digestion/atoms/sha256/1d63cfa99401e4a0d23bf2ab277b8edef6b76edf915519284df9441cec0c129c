@@ -1,0 +1,19 @@
+**假设 1.1（独立量子制备与指定行走）。** 固定复 Hilbert 空间 $\mathcal H=\mathbb C^5$，单位正交基依次为
+
+$$
+(e_N,e_2,e_3,e_5,e_{25}),\qquad
+\mathsf S=\{N,2,3,5,25\},\qquad \Pi_s=e_se_s^\dagger.
+$$
+
+允许的输入是全部密度算子 $\mathcal D(\mathcal H)=\{\varrho\ge0:\operatorname{tr}\varrho=1\}$。这项制备假设独立于原生 $\alpha/\beta$ 有序树；标签 $N$ 表示范数一的模式向量，不是零向量、未读或停止。复用 [AURIC 第 61、63、73 章](https://github.com/the-omega-institute/trureturing/blob/bcf8bc4317eb78b19f2d0f5076318bf3dc5a3324/docs/develop/theory/AURIC_FIB_SECOND_ORDER_RELATION_COMPLETION.md) 的同一矩阵
+
+$$
+K=\begin{pmatrix}
+0&1&1&1&0\\
+1&0&0&0&1\\
+1&0&0&0&0\\
+1&0&0&0&1\\
+0&1&0&1&0
+\end{pmatrix},\qquad U(t)=\exp(-itK),\quad t\ge0.
+$$
+

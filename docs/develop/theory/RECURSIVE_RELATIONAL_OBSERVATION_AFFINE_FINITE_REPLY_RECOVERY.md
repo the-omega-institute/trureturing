@@ -1144,3 +1144,487 @@ ontology or the full mutual-recovery programme.
 [APM]: RECURSIVE_RELATIONAL_OBSERVATION_AUTONOMOUS_PREDICTIVE_MEMORY.md
 
 ## 追加锚（本行以下为增补区）
+
+## 9. Distinct bounded quadratic-clock model: finite and countable exact-cap answers
+
+**Definition 9.1 (bounded calibrated quadratic clock).** Fix an integer
+$h\ge1$, real $0<\varepsilon\le h^2/2$ and finite $B>r$, where
+
+$$
+r=\varepsilon/h,\qquad m=-h/2,\qquad K=[m-B,m+B].
+\tag{QC.1}
+$$
+
+The unknown origin is $\tau\in K$. The calibrated passive clock is
+$H(t)=t^2$, with known unit gain and zero offset. Its two actually acquired
+reports, indexed by $0,h$, are
+
+$$
+S_h(t)=\bigl(t^2,(t+h)^2\bigr),\qquad
+ y=S_h(\tau)+\eta,\qquad \eta\in[-\varepsilon,\varepsilon]^2.
+\tag{QC.2}
+$$
+
+For every origin, every vector in this full closed square is allowed,
+including its boundary. There is no probability law or additional joint
+error constraint. Write $Y=S_h(K)+[-\varepsilon,\varepsilon]^2$ for the
+reachable reports. A decision is any deterministic map
+$\delta:\mathbb R^2\to\mathbb R$, with risk
+
+$$
+\mathcal R(\delta)=
+ \sup_{\tau\in K}\ \sup_{\eta\in[-\varepsilon,\varepsilon]^2}
+ |\delta(S_h(\tau)+\eta)-\tau|.
+\tag{QC.3}
+$$
+
+No measurability, computability or membership of the answer in the
+compatible-origin set is required. This is the two-report source of
+[Clock, Definitions 77.1 and 79.1 and Proposition 79.5](https://github.com/the-omega-institute/trureturing/blob/6b48dd4bf915980ce45d7998d0347d031e63a1bc/docs/develop/theory/FIB_SELF_CALIBRATING_RELATION_MATHEMATICS_II.md).
+It is distinct from the affine source of Definition 1.1 and from Clock
+§§80–81's three-report clock with unknown gain and offset. The prior $K$
+is fixed once $h$ is chosen; changing $h$ in (QC.1) changes that prior.
+
+**Definition 9.2 (completed answer representations).** The completed
+answer range of $\delta$ is $A_\delta=\delta(Y)$. A finite-range decision
+has finite $A_\delta$. A closed word-valued decision factors as
+$\delta=\mathrm{Dec}\circ E$ on $Y$, where $\Sigma$ is a fixed finite
+symbol alphabet, $E:Y\to\Sigma^*$ and
+$\mathrm{Dec}:\Sigma^*\to\mathbb R$ are deterministic maps, and the decoder
+is fixed independently of the unknown origin and errors. Public fixed
+calibration may parameterize both maps. All source- or report-dependent
+operands determining the answer are in the completed word: no analog
+reply, implicit decoder parameter, callable backing, infinite name or
+later source access is additionally available to that decoding.
+Here “closed” concerns this operand boundary, not topological closedness
+of $A_\delta$. A uniform word-length bound means one finite $L$ with
+$|E(y)|\le L$ for every $y\in Y$; per-instance finiteness means only
+$E(y)\in\Sigma^*$ for each $y$.
+
+This uses Definition 2.1's representation distinction with a scalar
+codomain. The finite-codebook viewpoint is also used by Zhu and Lafferty,
+[*Quantized Minimax Estimation over Sobolev Ellipsoids*, §2](https://arxiv.org/html/1503.07368v3):
+a fixed bit budget bounds the number of decoded estimates. Their risk
+is expected squared error under statistical laws, and their principal
+model is Gaussian white noise over Sobolev ellipsoids; their asymptotic
+bounds are not bounds for (QC.3).
+
+**Theorem 9.3 (finite nonattainment and countable dyadic attainment).**
+Under Definition 9.1, the unrestricted real-answer minimax risk is the
+existing value $r$. Every decision with finite completed answer range
+satisfies $\mathcal R(\delta)>r$. Nevertheless there is a decision with
+values in the fixed dyadic set
+
+$$
+\mathbb D=\{j2^{-n}:j\in\mathbb Z,\ n\in\mathbb N\}
+\tag{QC.4}
+$$
+
+whose risk is exactly $r$. Consequently the least cardinality of a
+completed answer range attaining this risk is $\aleph_0$. A fixed binary
+symbol alphabet suffices for completed finite words attaining $r$ as
+arbitrary maps; no uniform length bound can suffice.
+
+Proof. Reuse Clock Theorems 79.2–79.3 and Proposition 79.5. Their secant
+identity and balanced-prior radius are
+
+$$
+\|S_h(t)-S_h(s)\|_\infty
+ =|t-s|\bigl(h+|s+t+h|\bigr),\qquad
+ \inf_\delta\mathcal R(\delta)=\min(B,\varepsilon/h)=r.
+\tag{QC.5}
+$$
+
+For the finite-range obstruction, fix any finite proposed range $A$.
+For $0<x<B-r$, put
+
+$$
+\begin{aligned}
+d_x&=\frac{2rh}{h+2x},&
+s_x&=m+x-d_x/2,& t_x&=m+x+d_x/2,\\
+y_x&=\frac{S_h(s_x)+S_h(t_x)}2,&
+w_x&=r-d_x/2=\frac{2rx}{h+2x}.
+\end{aligned}
+\tag{QC.6}
+$$
+
+Since $0<d_x/2<r$ and $x+r<B$, both $s_x,t_x$ lie in $K$.
+Their sum is $2m+2x=-h+2x$, so (QC.5) gives
+
+$$
+\|S_h(t_x)-S_h(s_x)\|_\infty
+ =d_x(h+2x)=2\varepsilon.
+\tag{QC.7}
+$$
+
+Thus the same report $y_x$ is legal at both origins, with opposite
+errors $[S_h(t_x)-S_h(s_x)]/2$ and its negative. Their maximum norms
+are exactly $\varepsilon$; the closed-square boundary is used.
+A common answer accurate to $r$ at both origins must belong to
+
+$$
+\begin{aligned}
+J_x&=[s_x-r,s_x+r]\cap[t_x-r,t_x+r]\\
+   &=[m+x-w_x,m+x+w_x].
+\end{aligned}
+\tag{QC.8}
+$$
+
+The assumption $2r\le h$ gives $0<w_x<x$ for every $x>0$, including
+$2r=h$. Hence $J_x\subset(m,m+2x)$, and these intervals approach $m$
+while excluding it. If $A$ has no element above $m$, every $J_x$ misses
+$A$. Otherwise let $a=\min\{v-m:v\in A,\ v>m\}>0$ and choose
+$0<x<\min(B-r,a/2)$. Again $A\cap J_x=\varnothing$. Any answer in $A$
+at this one report therefore has error strictly greater than $r$ at
+one of its two legal origins. The witness pair may depend on $A$.
+This proves strict nonattainment for every finite range, without a
+range-independent positive excess.
+
+For countable attainment, retain the actual compatibility set
+
+$$
+C(y)=\{t\in K:\|S_h(t)-y\|_\infty\le\varepsilon\},\qquad y\in Y.
+\tag{QC.9}
+$$
+
+It is nonempty compact and need not be an interval. Write
+$p_y=\min C(y)$ and $q_y=\max C(y)$. Equation (QC.5) and the common-report
+triangle inequality give $q_y-p_y\le2r$. Exactly the answers accurate
+to $r$ at every origin compatible with $y$ form the nonempty interval
+
+$$
+J(y)=\bigcap_{t\in C(y)}[t-r,t+r]
+     =[q_y-r,p_y+r].
+\tag{QC.10}
+$$
+
+If it has positive length, dyadic density gives $J(y)\cap\mathbb D\ne
+\varnothing$. If it is a singleton, then $q_y-p_y=2r>0$ and
+
+$$
+2r\bigl(h+|p_y+q_y+h|\bigr)
+ =\|S_h(q_y)-S_h(p_y)\|_\infty
+ \le2\varepsilon=2rh.
+\tag{QC.11}
+$$
+
+Therefore $p_y+q_y=-h$ and $J(y)=\{m\}$. Since $h$ is integral, $m$ is
+dyadic. Thus every $J(y)$ meets the same countable set $\mathbb D$.
+Fix an enumeration $(a_n)_{n\in\mathbb N}$ of $\mathbb D$ and define
+
+$$
+\delta_{\mathbb D}(y)=a_{\min\{n:a_n\in J(y)\}},\quad y\in Y;
+\qquad \delta_{\mathbb D}(y)=m,\quad y\notin Y.
+\tag{QC.12}
+$$
+
+The minimum exists and the selected value has error at most $r$ on
+every allowed source/error pair. The existing lower bound in (QC.5)
+makes its risk exactly $r$. In particular the common report
+$y_0=(h^2/4+r^2,h^2/4+r^2)$ of $m-r,m+r$ forces the unique cap-$r$
+answer $m$. This also realizes the singleton case rather than merely
+allowing it abstractly.
+
+Encode the finite index in (QC.12) by a fixed binary word and decode it
+by the fixed enumeration. This gives a closed word-valued decision.
+Its attained range is infinite by the finite-range obstruction and is
+countable by construction. Words of uniformly bounded length over a
+finite symbol alphabet have only finitely many possibilities, so the
+lengths cannot have a uniform bound. $\square$
+
+The same-data two-object lower-bound method in this proof is
+literature-attested: Foucart and Liao,
+[*Optimal Recovery from Inaccurate Data in Hilbert Spaces: Regularize,
+but what of the Parameter?*, Lemma 11 and §4.1](https://arxiv.org/abs/2111.02601v1),
+use linear Hilbert-space observations, a subspace-approximability model
+and a norm-ball uncertainty set. Their whole regularization theorem is
+not instantiated by the nonlinear signature (QC.2). Compatible-target
+midpoints also occur in Foucart,
+[*Learning the Maximum of a Hölder Function from Inexact Data*, Theorem 1](https://arxiv.org/html/2509.25209v1),
+for a Hölder model and a monotone Banach-lattice-valued target; this
+clock source is not that model. These general methods, dyadic density,
+and (QC.5) remain suppliers. The repo-derived mathematical addition is
+the shrinking family (QC.6)–(QC.8) together with the singleton-center
+classification (QC.11), yielding this source's finite/countable
+separation. No worldwide priority claim is attached to that distinction.
+
+The index selection (QC.12) is a definition of an arbitrary map using
+exact real predicates, including non-strict compatibility and singleton
+membership. Its existence supplies no terminating encoder on real-input
+names, acquisition procedure, work bound or memory bound. Pauly,
+[*On the topological aspects of the theory of represented spaces*,
+§§3–4 and Proposition 3](https://arxiv.org/abs/1204.3763v3), defines
+representations and realizers and proves computable evaluation for
+supplied function and argument names. That result does not supply a
+realizer for (QC.12). Proposition 5.3's distinction between real-name
+access and a productive discrete port remains applicable. No
+computability or noncomputability theorem for this selector is asserted.
+
+**Assumption 9.4 (original complete adaptive main history).** Fix
+nonnegative integers $k,d$. A main world is $W=(R,G,D,\tau)$, where $R$ is a real $2$ by
+$2$ matrix with strictly positive entries, rank one and trace one,
+$G$ is a nonzero real polynomial of degree at most $k$, and $D$ is a
+real polynomial of degree at most $d$. The main actions are the original
+
+$$
+M=\begin{pmatrix}0&1\\1&1\end{pmatrix},\qquad
+J=\begin{pmatrix}0&1\\1&0\end{pmatrix}.
+\tag{QC.13}
+$$
+
+There is one trajectory with $A_0=I$ and $A_{i+1}=U_iA_i$ after the
+chosen action $U_i\in\{M,J\}$. Each action advances the index once and
+immediately produces an exact main report, which is retained:
+
+$$
+z_i(W)=G(i+\tau)\operatorname{tr}(A_iR)+D(i+\tau),\qquad
+q(W)=\bigl(R,G(\mathord\cdot+\tau),D(\mathord\cdot+\tau)\bigr).
+\tag{QC.14}
+$$
+
+The ambient class $\varnothing\ne\mathscr W$ is closed under every
+$T_v(R,G,D,\tau)=(R,G(\mathord\cdot+v),D(\mathord\cdot+v),\tau-v)$.
+The restricted source class is exactly
+$\mathscr W_K=\{W\in\mathscr W:\tau\in K\}$. There is no additional
+origin/main-parameter coupling or absolute anchor. For each such world,
+every error pair of (QC.2) is legal independently of its main parameters.
+Side reports are passive at the actual indices $0,h$ and do not advance
+the trajectory. Every policy actually acquires these two reports and
+no other side information; all intermediate main reports are included.
+
+The observer's initialization and public advice are fixed independently
+of the unknown world and errors. A deterministic causal policy may use
+the entire acquired main/side record to choose the next action, legal
+extension, stopping and real answer. Request identities, indices,
+framing and stopping fields expose only those reports and the policy's
+choices, with no additional source channel. Every legal complete run
+has a specified answer depending only on its acquired history. If an
+infinite complete history is admitted, it supplies no extra limit read.
+This is Clock §§77 and 79.8–79.9's full-history contract, with the source
+and original action matrices also given in
+[Self-Calibrating Relation Mathematics, Definitions 2.1 and 3.1](FIB_SELF_CALIBRATING_RELATION_MATHEMATICS.md).
+The restricted class itself is not assumed translation closed.
+For an allowed policy $\Pi$, write $H_\Pi(W,\eta)$ for its complete
+acquired history and $\widehat\tau_\Pi(H)$ for its specified answer. Its
+full-history origin risk is
+
+$$
+\mathcal R_{\mathscr W}(\Pi)=
+ \sup_{W\in\mathscr W_K}\ \sup_{\eta\in[-\varepsilon,\varepsilon]^2}
+ |\widehat\tau_\Pi(H_\Pi(W,\eta))-\tau(W)|.
+\tag{QC.14a}
+$$
+
+**Theorem 9.5 (translation-orbit application with full histories).**
+Under Assumption 9.4 and (QC.1), every such policy whose completed real
+answer range over all legal complete runs is finite has worst origin
+error strictly greater than $r$. The least completed answer-range
+cardinality attaining $r$ is still $\aleph_0$. When $k\ge1$ and the
+source is restricted to the explicit orbit (QC.18) within the full
+degree class, the same finite/countable statement holds for the
+original coordinate $G(0)$.
+
+Proof. By ambient nonemptiness and translation closure choose
+$W_0=(R_0,G_0,D_0,0)\in\mathscr W$. Then for every $t\in K$ the actual
+world
+
+$$
+W_t=\bigl(R_0,G_0(\mathord\cdot-t),D_0(\mathord\cdot-t),t\bigr)
+     =T_{-t}W_0
+\tag{QC.15}
+$$
+
+belongs to $\mathscr W_K$, has the same effective target $q(W_t)$, and
+on every common action prefix has the main reading
+
+$$
+z_i(W_t)=G_0(i)\operatorname{tr}(A_iR_0)+D_0(i),
+\tag{QC.16}
+$$
+
+independent of $t$. For the policy's finite answer range $A$, use the
+specific $s_x,t_x,y_x$ chosen in Theorem 9.3. Give the worlds $W_{s_x}$
+and $W_{t_x}$ their two opposite legal error vectors from (QC.7), so
+both actually acquire the same two indexed side reports $y_x$.
+
+Initialization and initial main readings agree, as does the side report
+at index zero. If the complete acquired prefixes agree, deterministic
+causality gives the same next action or simultaneous stopping. The
+resulting cumulative matrices agree, (QC.16) gives the same next exact
+main reading, and the side readings agree whenever index $h$ is reached.
+Thus induction includes every actual intermediate output, side-dependent
+control choice, extension and stopping field. All finite prefixes
+coincide; any admitted infinite histories coincide as well. The common
+answer is therefore in $A$ and outside $J_x$, so one legal full world
+has error strictly greater than $r$. This is the original Clock 79.9
+orbit induction applied to the new shrinking pairs, not a comparison
+of unrelated marginal experiments.
+
+For the upper bound, follow $M$ until index $h$, retaining each main
+read and actually taking both side reports, and apply (QC.12) while
+ignoring the main values for this answer. It has countable range and
+risk $r$. The lower-bound pair $m-r,m+r$ can likewise be placed in the
+same orbit, so the unrestricted full-history optimum remains $r$.
+
+In the full degree class, an explicit legal zero-origin representative
+for every $k,d\ge0$ is
+
+$$
+R_0=\tfrac12\begin{pmatrix}1&1\\1&1\end{pmatrix},\qquad
+G_0=1,\qquad D_0=0.
+\tag{QC.17}
+$$
+
+It has positive entries, rank one, trace one and a nonzero allowed gain.
+For the gain-coordinate application when $k\ge1$, instead take
+$G_0(u)=u$, with the same $R_0,D_0$. Its orbit has
+
+$$
+G_t(u)=u-t,\qquad q(W_t)=(R_0,u,0),\qquad
+z_i(W_t)=i\operatorname{tr}(A_iR_0),\qquad G_t(0)=-t.
+\tag{QC.18}
+$$
+
+Negating an answer preserves absolute error and finite or countable
+range, so Theorem 9.3 and the full-history argument apply to this
+original gain coordinate on this orbit. The polynomial $u-t$ is
+nonzero even if an individual read vanishes. The orbit is a member of
+the full class, not necessarily of every chosen ambient subclass.
+This coordinate conclusion is not recovery of the whole $G$, $D$ or
+an independently meaningful spatial view. $\square$
+
+If a separately supplied main policy recovers an effective initial-world
+target $F=\bar F\circ q$ with $1\le n_\pi(W)\le N$ main reads, Clock
+Proposition 79.8 supplies a same-run composition preserving its answer
+and obtaining the two side reports. Its exact acquisition counts remain
+
+$$
+\bigl(\text{main actions},\text{main reads},\text{side reads}\bigr)
+ =\bigl(\max(n_\pi(W)-1,h),\max(n_\pi(W),h+1),2\bigr).
+\tag{QC.19}
+$$
+
+This uses the supplied legal single-action padding, with each padding
+read retained. Substituting (QC.12) as the abstract origin answer changes
+none of these acquisition counts, but supplies no bound on the work or
+storage of that selection. There is no reset, copied specimen, erased
+mandatory history or new main-policy recovery bound in this application.
+
+**Definition 9.6 (complete finite usable boundary for this answer).**
+At a fixed later use of the origin-estimation task, fix the genuinely
+source-independent public operands $p$, including the declared
+calibration and query. A complete finite usable boundary means a finite
+set $C_p$, a retained-state map $c$ from the legal complete acquisitions
+to $C_p$, and a fixed decoder $f_p:C_p\to\mathbb R$ such that the
+actual later answer is $f_p(c(H))$ for every legal history $H$.
+All retained or later-usable source- or report-dependent operands are
+included in $c(H)$: numerical payload and retained main/side outputs,
+program or advice choice, control and program counter, phase,
+lengths, cut and ordinal, informative timing or schedule fields,
+addresses and identities, selectors and decoder parameters, references
+with every accessible source-linked backing, all source-dependent
+current rights, callable services, and later inputs or source accesses
+used to determine the answer. Every such later operand is inside the
+claimed finite boundary; there is no additional distinguishing operand
+outside this factorization. Fixed public
+parameters do not vary along the adversarial source family.
+
+This is the closed-boundary premise of Definition 2.1 for this named
+scalar task. The distinction between mathematical extraction and
+callable retained possession is also explicit in
+[Structural Storage Atlas §§7 and 9](RECURSIVE_RELATIONAL_OBSERVATION_NATIVE_STRUCTURAL_STORAGE_ATLAS.md)
+and [Paid View Conversion, Assumption 1.2](RECURSIVE_RELATIONAL_OBSERVATION_NATIVE_PAID_VIEW_CONVERSION.md).
+The latter assumes authentic acquired finite-word inputs and its own
+fixed-height installation and rights; arbitrary real reports (QC.2)
+do not supply those premises.
+
+**Corollary 9.7 (conditional finite usable-state consequence).**
+Under Assumption 9.4 and (QC.1), a later origin answer satisfying
+Definition 9.6 cannot have worst error at most $r$.
+
+Proof. At the fixed public operands $p$, its completed answer range
+is contained in the finite set $f_p(C_p)$. Theorem 9.5 applies to the
+resulting full-history decision and gives a legal source/error pair
+with error strictly greater than $r$. A short pointer into an unbounded
+source-linked archive does not establish the premise: its accessible
+backing remains an operand in Definition 9.6. A finite program with
+unbounded variable data likewise does not establish finite $C_p$.
+The generally real-valued retained main history in Assumption 9.4 has
+not been shown to satisfy this finite-boundary premise. $\square$
+
+**Proposition 9.8 (end regimes, slack and the affine comparison).**
+For the same balanced prior and calibrated two-report source, allow
+arbitrary finite $B\ge0$ and $\varepsilon\ge0$ while keeping integer
+$h\ge1$. The unrestricted risk is $\min(B,\varepsilon/h)$. If
+$B=0$, one value recovers the origin exactly. If $\varepsilon\ge hB$,
+including equality, one value attains the saturated optimum $B$.
+If $\varepsilon=0$ and $B>0$, attaining the optimum zero requires an
+uncountable completed answer range. Under (QC.1), for every
+$\zeta>0$ a finite-range decision has risk at most $r+\zeta$; hence
+
+$$
+\inf_{\delta:\,|A_\delta|<\infty}\mathcal R(\delta)=r,
+\quad\text{with no finite-range minimizer.}
+\tag{QC.20}
+$$
+
+Thus Theorem 9.3's countable positive-noise attainment differs from
+Theorem 2.2's affine obstruction even for countably many closed values.
+
+Proof. The risk formula is Clock Proposition 79.5. For a singleton
+prior the answer is its known point $m$. In the saturated case the
+same constant has worst error $B$ and meets that formula; this includes
+$B=\varepsilon/h$, outside the strict $B>r$ premise of Theorem 9.3.
+In the noiseless case (QC.5) implies injectivity of $S_h$, since $h>0$.
+Zero error therefore forces $\delta(S_h(t))=t$ for every $t\in K$;
+this interval is uncountable when $B>0$. The inverse on $S_h(K)$ attains
+zero with that uncountable range.
+
+Under (QC.1), the existing midpoint rule
+$\delta_*(y)=(p_y+q_y)/2$ lies in compact $K$ and has error at most $r$.
+Choose a finite $\zeta$-net of $K$ and round each midpoint to a net
+point at distance at most $\zeta$. The triangle inequality gives risk
+at most $r+\zeta$, and the existing lower bound gives (QC.20).
+This is an arbitrary-map approximation, with no effective-input claim.
+The finite-center propagation result
+[`QuantizedWordApproximation.quantized_word_approximation`](../../../D5/S3/ObserverMemory/Prediction/QuantizedWordApproximation.lean)
+and its [owning Scribe](../../../Blueprint/D5/S3/ObserverMemory/Prediction/QuantizedWordApproximation.scribe.cs)
+assume a supplied quantizer and Lipschitz dynamics/readout. They do not
+supply an exact-cap quantizer or a real-input encoder for this clock.
+
+For the affine source, Theorem 2.2 forces the answer on each noiseless
+branch to equal its uncountably varying center; it therefore excludes
+countable closed-value ranges. Here (QC.11) forces only the single
+center $m$, while every other acceptable interval has positive length.
+The two sources and their source-specific conclusions remain distinct.
+Neither boundedness nor positive optimal risk alone entails countable
+attainment. For example, in the different scalar identity-observation
+model $y=t+\eta$, $t\in[m-B,m+B]$, $|\eta|\le r<B$, each interior report
+$y\in(m-B+r,m+B-r)$ has compatible endpoints $y-r,y+r$. A cap-$r$
+answer must equal $y$, requiring uncountably many answers. Its
+unrestricted risk is $r$ by the estimator $y$ and that same endpoint
+pair. This comparison isolates the quadratic calculation rather than
+a general cardinality principle. $\square$
+
+Theorem 9.3 includes $\varepsilon=h^2/2$, since $w_x<x$ remains strict
+there. It makes no unsaturated finite/countable classification for
+$\varepsilon>h^2/2$, no $h=0$ claim, and no limit-uniform assertion as
+$\varepsilon\downarrow0$. Changing the prior, the full closed error
+relation, the side indices, initialization or available anchors requires
+a new argument. Positive slack changes the target cap and is distinct
+from exact attainment; no fixed-cardinality excess curve or uniform
+positive finite-range penalty follows from (QC.20).
+
+Theorems 9.3 and 9.5 constrain completed answers, while Corollary 9.7
+requires its full usable-boundary premise. Productive real-report
+acquisition and finite encoding, authentic callable retention with
+lawful continuation, and a native alpha/beta realization are not
+consequences of these statements. No independently meaningful four-view
+inverse system, route agreement or dynamics compatibility is constructed.
+The original fixed-$G_{\rm gc}$, original-$Q$, parked-consumer,
+unchanged-initialization and main-policy matching-bound obligations
+retain their original scopes. These ordinary mathematical deductions
+do not supply new Lean certification or complete the mutual-recovery
+programme.
+
+## 追加锚（本行以下为增补区）

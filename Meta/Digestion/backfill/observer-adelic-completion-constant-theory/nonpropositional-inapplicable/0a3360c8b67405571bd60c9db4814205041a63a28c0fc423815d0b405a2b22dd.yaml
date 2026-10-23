@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:0a3360c8b67405571bd60c9db4814205041a63a28c0fc423815d0b405a2b22dd
+  normalized_sha256: sha256:0a3360c8b67405571bd60c9db4814205041a63a28c0fc423815d0b405a2b22dd
+cas_ref: sha256:0a3360c8b67405571bd60c9db4814205041a63a28c0fc423815d0b405a2b22dd
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 非命题：审计表记录具名研究桥梁或物理解释仍开放／尚未建立的研究状态，不断言该桥梁存在或猜想成立。
+    previous_atom_id: 53b81efcb53218f6321871179e57b27b2e35e6993d4a14f9a850a50de5f478b5
+    next_atom_id: 0d60de0564683ae863f9d92755707db9297692570a26f276f30ee57531975cda

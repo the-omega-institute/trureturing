@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:7edb7dbe8c719c9cc579d82d46264912a98d27691e22838c48ce1336bd298f75
+  normalized_sha256: sha256:7edb7dbe8c719c9cc579d82d46264912a98d27691e22838c48ce1336bd298f75
+cas_ref: sha256:7edb7dbe8c719c9cc579d82d46264912a98d27691e22838c48ce1336bd298f75
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 非命题：是“把格点按……进行多尺度分块”的方法清单项，未断言新的 H4 分解定理。
+    previous_atom_id: 1b55673519913f44ea14127e7ab5a126e93d28ec646973351fec8cbe822c5a47
+    next_atom_id: 632f9104dff59fa6709b9f0b5e6b336414de6a5ad12d17bb8419a06fbabb81d6

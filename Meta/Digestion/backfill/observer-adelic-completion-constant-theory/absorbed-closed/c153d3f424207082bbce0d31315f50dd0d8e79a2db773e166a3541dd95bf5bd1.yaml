@@ -1,0 +1,26 @@
+fingerprints:
+  raw_sha256: sha256:c153d3f424207082bbce0d31315f50dd0d8e79a2db773e166a3541dd95bf5bd1
+  normalized_sha256: sha256:c153d3f424207082bbce0d31315f50dd0d8e79a2db773e166a3541dd95bf5bd1
+cas_ref: sha256:c153d3f424207082bbce0d31315f50dd0d8e79a2db773e166a3541dd95bf5bd1
+coverage_gids:
+  - gid: D5/S3/ConceptDynamics/ObservationOrder/TypedPrimeLanguageHierarchy.prime_diagonal_strictly_coarser_than_operator
+    target_statement_id: sha256:15d0780aaecad50fd34e2e47e7bfde132d374083a60ff6dd7dc0a73996c5ed12
+  - gid: D5/S3/ConceptDynamics/ObservationOrder/TypedPrimeLanguageHierarchy.support_strictly_coarser_than_valuation
+    target_statement_id: sha256:14778f1cd0be0bda7b661395137a3c1eb8ed75610a647ad20acd6db2f058e036
+  - gid: D5/S3/Weil/CayleyLaguerre/TruncatedCircleMomentBridge.truncated_circle_moment_of_posSemidef
+    target_statement_id: sha256:2f00e7d0d21a20a113947621bea0172c770ee7dadb5af106c9d47ab7ce15d750
+  - gid: D5/S3/Weil/TestFunctions/ExactTruncatedHaarFloor.exact_truncated_haar_floor
+    target_statement_id: sha256:97128c8df67784b4c3dbd76c9c1278eadc17053904d7c12fcd97adadae7c9bfd
+  - gid: D5/S3/Weil/TestFunctions/FixedDepthLiClarkRecovery.fixed_depth_li_clark_recovery
+    target_statement_id: sha256:9ddb3adb80f5c9ca9788d4dc92facebd9e8538bdd9465f053e92ca7afd1bffe0
+  - gid: D5/S3/Weil/TestFunctions/LiCurvatureCriterion.circle_moment_toeplitz_posSemidef
+    target_statement_id: sha256:47a6e3a47437bcbb9bb671570a3853da7f53a28c552cf199cdc38787c6bec57a
+  - gid: D5/S3/Weil/TestFunctions/ToeplitzContactSupport.toeplitz_contact_support
+    target_statement_id: sha256:5c8c57af382b78dd1a56636fb9d3366e45b79cab8037377e17029e31d861f1cc
+receipts:
+  unresolved_subitems: []
+  chain_atoms:
+    - 43ab2c073eb9ccbbbf4ff292cbc57468777b97a10c2435ec1d2dcb8f87732e3c
+    - f2e4b93bb451bf5dbbca4f8b2059d7e395d11944389a1a6fc81acc452ad68ae2
+    - 53680608c11ef53de5c82fa66bc76abf63e5fed2aa591aa6dcc18054e0a6a243
+    - 13189680c44ae44c9cb5eb04a566a42ef4e52961f887768ae421271edf50e0d0
