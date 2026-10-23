@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:db6728c577dd9c76d73d5b7605e6ec10ca00b25534faf53e05a2ed67901f3cff
+  normalized_sha256: sha256:db6728c577dd9c76d73d5b7605e6ec10ca00b25534faf53e05a2ed67901f3cff
+cas_ref: sha256:db6728c577dd9c76d73d5b7605e6ec10ca00b25534faf53e05a2ed67901f3cff
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 自观察事件与 Jones projection/迹的解释性命名，未断言迹值。
+    previous_atom_id: 6c9c8e5e7d8c72372a89d7fcec894bac50be50a09a18cd338ddcab892812928d
+    next_atom_id: 00175bc8456ebe6111b84f9cf35d1944b64a5e9ba404a449a9c08d5a794b7d87

@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:2dee7a679101194627b968ff5e8c2355c6be97e0bf1cfb510f88a55fd7730f95
+  normalized_sha256: sha256:2dee7a679101194627b968ff5e8c2355c6be97e0bf1cfb510f88a55fd7730f95
+cas_ref: sha256:2dee7a679101194627b968ff5e8c2355c6be97e0bf1cfb510f88a55fd7730f95
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 明确记录 Poisson 曲率与 stableResidualSwapCurvature 的认同尚未建立，不断言认同或其否定。
+    previous_atom_id: 8c36f2fc263d97ee2cc0f9382384f9d5af6f99994f2af998fb12e8a3138b1bc6
+    next_atom_id: 5e459a1b8e01c8fbc2990c6e8080eb577b4080d38437db3dabdb45ff49d7de57

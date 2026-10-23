@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:1b1e5f0c9e88c1b47d33ace238e4fb86cd87ce436072ceedd029d6c46c536114
+  normalized_sha256: sha256:1b1e5f0c9e88c1b47d33ace238e4fb86cd87ce436072ceedd029d6c46c536114
+cas_ref: sha256:1b1e5f0c9e88c1b47d33ace238e4fb86cd87ce436072ceedd029d6c46c536114
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 串联、取商、最小化及证明 transfer 的构造计划；公式指定拟构造对象，没有声称存在性或正确性已证明。
+    previous_atom_id: cc5f40b925a244aeec5f5ccdc16615a393089275b05bc2ef01cfe5e6a0250675
+    next_atom_id: fff286460474e21213cf85e69213f3bf179d1835b8ecf462b66334677d62763f
