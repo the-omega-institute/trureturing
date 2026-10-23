@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:6dfda469b66f045b91cc982a3312063c5645ae4fbc07e26f16fd8a0e56dc2112
+  normalized_sha256: sha256:6dfda469b66f045b91cc982a3312063c5645ae4fbc07e26f16fd8a0e56dc2112
+cas_ref: sha256:6dfda469b66f045b91cc982a3312063c5645ae4fbc07e26f16fd8a0e56dc2112
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 'nonpropositional: Solver input choice: Crofoot cross pairings.'
+    previous_atom_id: a83bb0bede868e602db0ac171fc1955a40331fdb78dc226645e17ade6121b7a2
+    next_atom_id: c9561c942420b1e147afe57f71b0520cc53e98a8f895a4758be3b231edf95d69
