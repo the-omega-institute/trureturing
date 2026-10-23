@@ -212,7 +212,7 @@ internal sealed class DeterministicSimplicialDegreeShiftDocument : IScribeDocume
     }
 
     private static Formula VertexBinders(Formula body) => All(X("V"), Name("Type"),
-        Seq(OpenBracket, X("inst"), Colon, Sp, At(Name("DecidableEq"), X("V")),
+        Seq(OpenBracket, At(Name("DecidableEq"), X("V")),
             CloseBracket, Comma, Sp, Parenthesized(body)));
     private static Formula Naturals => Seq(Mathbb, Grp(X("N")));
     private static Formula VZero => new Formula.Subscript(X("v"), D(0));
