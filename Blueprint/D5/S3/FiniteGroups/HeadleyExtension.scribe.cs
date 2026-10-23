@@ -24,6 +24,18 @@ internal sealed class HeadleyExtensionDocument : IScribeDocumentDefinition
                     + "orthomorphism pair and negates the original difference inventory."))),
                 DescribeRole.Theorem),
             Describe.Lean(
+                DescribeId.Create("headley-extension-kernel-f"),
+                DeclarationHandle.Create(Owner + "kernel_F_formula"),
+                H("The kernel difference map supplies F = id − D"),
+                StatementSource.FromAuthor(Disp(F.Id("kernelF"))),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text(
+                    "From the complete kernel R-cycle, D fixes zero and has one nonzero orbit. "
+                    + "Its directed-difference permutation gives F(h)=h−D(h); the negation "
+                    + "of that inventory makes F an orthomorphism, and orthomorphism_inverse "
+                    + "supplies the companion map J=F⁻¹ used on the second exceptional edge."))),
+                DescribeRole.Theorem),
+            Describe.Lean(
                 DescribeId.Create("headley-extension-representative-system"),
                 DeclarationHandle.Create(Owner + "RepresentativeSystem"),
                 H("Nonsplit representatives are set-theoretic"),
@@ -44,6 +56,18 @@ internal sealed class HeadleyExtensionDocument : IScribeDocumentDefinition
                     "With B=A+C, F(h)=h-D(h), and a selected nonzero row v, replacing the "
                     + "two A→B→C rows by the kernel path and the short B-column path preserves "
                     + "the four labels exactly in E, including the closing edge."))),
+                DescribeRole.Theorem),
+            Describe.Lean(
+                DescribeId.Create("headley-extension-lifted-edge"),
+                DeclarationHandle.Create(Owner + "lifted_edge_quotient_label"),
+                H("Ordinary row lifts keep one quotient label coset"),
+                StatementSource.FromAuthor(Disp(F.Id("liftedEdge"))),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text(
+                    "For any quotient edge u→v, an orthomorphic row map f sends h to f(h). "
+                    + "The ambient label is representative(v)−representative(u)+f(h)−h; "
+                    + "its quotient is the single edge label, while the row offset ranges over "
+                    + "the kernel difference coset."))),
                 DescribeRole.Theorem),
             Describe.Lean(
                 DescribeId.Create("headley-extension-certificate-assembly"),
