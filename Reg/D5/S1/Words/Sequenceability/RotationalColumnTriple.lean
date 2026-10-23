@@ -41,7 +41,7 @@ abbrev arena : Arena where
 private theorem rejected_law : ¬ arena.Law rejected := by
   intro h
   obtain ⟨d,hv,_,_⟩ := h 7 (by decide) (by decide)
-  exact hv.1 0 (Set.mem_univ _) rfl
+  exact hv.1 (x := (0 : ZMod 6)) (Set.mem_univ _) rfl
 
 def family : Registration arena (type_of% (@exists_rotational_column_triple)) where
   actual := actual
@@ -61,7 +61,7 @@ def family : Registration arena (type_of% (@exists_rotational_column_triple)) wh
     intro he
     have hv := congrFun he 0
     change (0 : ZMod 7) = 1 at hv
-    norm_num at hv
+    exact (by decide : (0 : ZMod 7) ≠ 1) hv
 
 def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0} (@exists_rotational_column_triple)
     (Realization signature) (ℕ → Type) Unit where

@@ -15,7 +15,8 @@ internal sealed class RotationalColumnTripleDocument : IScribeDocumentDefinition
             DeclarationHandle.Create(Prefix + "exists_rotational_column_triple"),
             H("Every prime at least seven"),
             StatementSource.WithoutFormula(),
-            AssessedProvenance.FromLiterature("olliswillmott2011twizzler"),
+            AssessedProvenance.FromLiterature(
+                LibraryNoteRef.Create("D5/L/FiniteGroups/olliswillmott2011twizzler")),
             Blocks(
                 Paragraph(Text("For every prime p at least seven, there is a function "
                     + "d from the cyclic phase group ZMod (p-1) to ZMod p. The function "
@@ -39,7 +40,8 @@ internal sealed class RotationalColumnTripleDocument : IScribeDocumentDefinition
                     + "tail length R as 0,5,2,3 for m modulo four equal to 0,1,2,3, "
                     + "and put a=(m-R)/2+1. The tails are empty, (a,a+1), "
                     + "(a+1,a+2,a), or (a+3,a+2,a,a+4,a+1). Their seam has "
-                    + "length R and their internal lengths complete 1 through R-1. "
+                    + "length R when the tail is nonempty, and the internal lengths "
+                    + "complete 1 through R-1. "
                     + "The proof establishes the vertex and edge injectivity of these "
                     + "explicit formulas, with no supplied graceful certificate.")),
                 Paragraph(Text("For m=6h+2 the twizzler triple centered at phase "
@@ -62,7 +64,16 @@ internal sealed class RotationalColumnTripleDocument : IScribeDocumentDefinition
                 Paragraph(Text("The additive relation is the column part of the future "
                     + "two-orbit cut identity: one column equals the sum of its two "
                     + "neighbors, allowing the missing first-coordinate labels to "
-                    + "match the splice. This source proves only the column supplier. "
+                    + "match the splice. For a finite field K of characteristic p and "
+                    + "nonzero u in K, in that planned lift put B=d(0), A=d(1), "
+                    + "C=d(2), choose the phase-two row offset 2u and all other "
+                    + "offsets zero. The heads are (C,2u) and (A,u), with "
+                    + "predecessors (A,0) and (B,-u). The column identities "
+                    + "C-A=-B and A-B=C make the removed vectors (-B,2u) and "
+                    + "(C,2u) equal the replacement vectors to (0,u) and from "
+                    + "(0,0); the remaining cross-edge has vector (0,u). "
+                    + "These are the intended next-stage row equations, not additional "
+                    + "claims of the column theorem. This source proves only the column supplier. "
                     + "The full-vector row relation, conjugate lift, whole-set surgery, "
                     + "endpoints, path enumeration and coefficient-one prefix and "
                     + "interval conclusions remain to be proved, as does the separate "
