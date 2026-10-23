@@ -74,7 +74,21 @@ Lean statement: `D5/S3/VertexAlgebra/NestedResidues/LatticeHalfFockOuterTaylorEv
 
 The current/source diagonal is taken before either remaining order. The signed monomial residue and the finite associated-coordinate contraction feed the exact fused FIRST proof. Negative degrees, empty supports and independent bounds remain included.
 
-**Theorem 1.6 (finite_associated_contraction).**
+**Theorem 1.6 (finite_rectangle_cut).**
+
+Lean statement: `D5/S3/VertexAlgebra/NestedResidues/LatticeHalfFockOuterTaylorEvaluation.finite_rectangle_cut`
+
+*Proof.* Machine-checked in Lean as `D5/S3/VertexAlgebra/NestedResidues/LatticeHalfFockOuterTaylorEvaluation.finite_rectangle_cut` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Acknowledgement.* Bojko Bakalov and Victor G. Kac (2004). *Twisted Modules over Lattice Vertex Algebras*. DOI: [10.1142/9789812702562_0001](https://doi.org/10.1142/9789812702562_0001). URL: <https://arxiv.org/abs/math/0402315v1>.
+
+*Commentary.*
+
+The same finite rectangle is summed along either natural bound, for an arbitrary complex sequence. The original associated contraction and forward Taylor convolution use this reindexing, including the zero bounds.
+
+**Theorem 1.7 (finite_associated_contraction).**
 
 Lean statement: `D5/S3/VertexAlgebra/NestedResidues/LatticeHalfFockOuterTaylorEvaluation.finite_associated_contraction`
 
@@ -88,7 +102,7 @@ Lean statement: `D5/S3/VertexAlgebra/NestedResidues/LatticeHalfFockOuterTaylorEv
 
 The current/source diagonal is taken before either remaining order. The signed monomial residue and the finite associated-coordinate contraction feed the exact fused FIRST proof. Negative degrees, empty supports and independent bounds remain included.
 
-**Theorem 1.7 (finite_left_outer_taylor).**
+**Theorem 1.8 (finite_left_outer_taylor).**
 
 Lean statement: `D5/S3/VertexAlgebra/NestedResidues/LatticeHalfFockOuterTaylorEvaluation.finite_left_outer_taylor`
 
@@ -110,6 +124,7 @@ The current/source diagonal is taken before either remaining order. The signed m
 - Truth anchor: `D5/S3/VertexAlgebra/NestedResidues/LatticeHalfFockOuterTaylorEvaluation.current_source_monomial_residue`
 - Truth anchor: `D5/S3/VertexAlgebra/NestedResidues/LatticeHalfFockOuterTaylorEvaluation.finite_associated_contraction`
 - Truth anchor: `D5/S3/VertexAlgebra/NestedResidues/LatticeHalfFockOuterTaylorEvaluation.finite_left_outer_taylor`
+- Truth anchor: `D5/S3/VertexAlgebra/NestedResidues/LatticeHalfFockOuterTaylorEvaluation.finite_rectangle_cut`
 - Truth anchor: `D5/S3/VertexAlgebra/NestedResidues/LatticeHalfFockOuterTaylorEvaluation.local_laurent_pair_residue`
 - Dependency: [D5/S3/VertexAlgebra/NestedResidues/LatticeHalfFockCollisionTaylor](LatticeHalfFockCollisionTaylor.md)
 - Dependency: [D5/S3/VertexAlgebra/NestedResidues/LatticeHalfFockSliceQuotient](LatticeHalfFockSliceQuotient.md)
