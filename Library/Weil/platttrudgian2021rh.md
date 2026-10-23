@@ -2881,3 +2881,12 @@ proved here. No dilation derivative, critical signed absorption,
 improved VHR1 allowance or sign of the completed minimum is obtained.
 The existing uniform $(\log T)^{-4}$ allowance is unchanged. Full RH
 and strict Robin for every integer $n>5040$ remain unproved.
+
+
+The [matched-multiplier selection](hernandezsantamaria2025optimal.md#select-an-attained-negative-representative-with-exactly-matched-multipliers)
+uses the excess quotient of the SAME complete physical form. Conditional
+on a negative source, it selects a GLOBAL-null representative with
+exactly $\mu=\lambda>0$, preserving both original metrics. Its unit-norm
+cap is finite and depends on $\lambda$; it is not asserted to be the
+old cap-four minimizer. This paper application adds no sign theorem
+or Lean certification.
