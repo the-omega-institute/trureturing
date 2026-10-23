@@ -54,6 +54,29 @@ internal sealed class LengthGramBodyDocument : IScribeDocumentDefinition
                         + "edge distances, dihedral angles or relabeling isometries. "
                         + "Those obligations retain the original all-six strict source "
                         + "cosine domain; one strict condition suffices for this frame step.")),
+                    Paragraph(Text("Application: normalization of the inverse length-Gram matrix. For any real matrix G indexed by "
+                        + "an arbitrary finite type, put A=inverse(G). Assume G is invertible and every Aii is positive, "
+                        + "and set D=diag(1/sqrt(Aii)). The actual normalized-inverse map is N(G)=D*A*D. It is "
+                        + "differentiable at G under these conditions; neither symmetry nor positive definiteness is "
+                        + "needed for this matrix calculation.")),
+                    Paragraph(Text("For any matrix direction E put B=-A*E*A and C=diag(Bii/(2*Aii)). The actual Frechet derivative "
+                        + "is DN_G[E]=D*(B-C*A-A*C)*D. The inverse along G+s*E has derivative B, and the diagonal scale "
+                        + "has derivative -C*D. Since C and D are diagonal they commute with each other. The product rule "
+                        + "then gives both correction terms, while no commutation with A or E is used.")),
+                    Paragraph(Text("If Gii=1 and Eii=0 for every index, DN_G[E]=0 forces E=0. Cancel the invertible D, then "
+                        + "multiply on the left and right by G to obtain -E=G*C+C*G. Its diagonal entries give 0=2*Cii, so "
+                        + "C=0 and E=0. Applying this calculation to a difference of zero-diagonal directions proves "
+                        + "injectivity of the actual differential on the tangent space of matrices with unit diagonal. The "
+                        + "direction E need not be symmetric, and empty or singleton index types remain included.")),
+                    Paragraph(Text("For the original genuine six-length geometry, applying this matrix calculation requires the "
+                        + "same actual G(l), its invertibility and positive inverse diagonal on that domain, the "
+                        + "zero-diagonal Gram derivative, and the exact identity relating N(G(l)) to the original angle "
+                        + "readout. Recovering a six-length tangent direction also requires its positive-length hyperbolic "
+                        + "factors to be nonzero. These geometric identities must be established on the same parameter "
+                        + "domain.")),
+                    Paragraph(Text("The result above is injectivity of a differential restricted to an affine tangent space. Global "
+                        + "geometric rigidity, positivity of the angle Jacobian or Hessian, and convexity of the genuine "
+                        + "length domain require their separate arguments.")),
                     Paragraph(Text("Application: a smooth native-coordinate family anchored at the entire original frame. Fix six positive lengths l0, an invertible original frame M0 with G(l0)=M0*J*transpose(M0), and an original radial realization f0 on the complete closed C(l0), where J=diag(1,1,1,-1). Put H(l)=inverse(M0)*G(l)*transpose(inverse(M0)). Then H(l0)=J. The construction below preserves every entry of M0 at the base parameter.")),
                     Paragraph(Text("For a symmetric H define r0=H00 and c00=sqrt(r0); c10=H10/c00, c20=H20/c00, c30=H30/c00. Next set r1=H11-c10^2, c11=sqrt(r1), c21=(H21-c20*c10)/c11, c31=(H31-c30*c10)/c11. Set r2=H22-c20^2-c21^2, c22=sqrt(r2), c32=(H32-c30*c20-c31*c21)/c22. Finally set r3=-H33+c30^2+c31^2+c32^2 and c33=sqrt(r3). Let C(H) be the lower triangular matrix with these entries and zeros above the diagonal. All four r are one at J. On their positive domain the ten scalar equations give C(H)*J*transpose(C(H))=H and det(C(H))>0. This is the signed Cholesky construction; the last radicand uses the negative coordinate of J.")),
                     Paragraph(Text("Positive square roots and nonzero denominators make every entry smooth on this open domain. Thus M(l)=M0*C(H(l)) is smooth on an open neighborhood of l0 within positive lengths, has nonzero determinant, satisfies M(l)*J*transpose(M(l))=G(l), and obeys M(l0)=M0 exactly. Constant inverse cancellation proves the Gram identity; no smoothness of a separately selected frame is assumed.")),
