@@ -20,8 +20,21 @@ Density matrices form a compact convex set. A local order-unit perturbation argu
 
 Evaluation at the identity has codimension one and vanishes on those directions, proving the upper bound. Injectivity of the visible readout makes the centered map injective and preserves all d squared minus one traceless degrees of freedom.
 
+**Theorem 1.2 (The actual normalized density domain is compact and convex).**
+
+$$\forall d\in\operatorname{Nat}\left(\right),[\operatorname{NeZero}\left(d\right)],\operatorname{IsCompact}\left(\operatorname{setOf}\left(M\in\operatorname{Matrix}\left(\operatorname{Fin}\left(d\right), \operatorname{Fin}\left(d\right), \operatorname{Complex}\left(\right)\right)\mapsto\operatorname{PosSemidef}\left(M\right)\land\operatorname{trace}\left(M\right)=1\right)\right)\land\operatorname{Convex}\left(\operatorname{Real}\left(\right), \operatorname{setOf}\left(M\in\operatorname{Matrix}\left(\operatorname{Fin}\left(d\right), \operatorname{Fin}\left(d\right), \operatorname{Complex}\left(\right)\right)\mapsto\operatorname{PosSemidef}\left(M\right)\land\operatorname{trace}\left(M\right)=1\right)\right)$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/Quantum/Measurements/VisibleStateSpaceDimension.density_matrix_set_compact_convex` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+For every nonzero dimension this is the set of all complex positive semidefinite matrices of trace one. Singular states are included. The same original supplier is used by the visible-image dimension proof and by the centered physical conjugation-quotient geometry.
+
 ## References
 
+- Truth anchor: `D5/S3/Quantum/Measurements/VisibleStateSpaceDimension.density_matrix_set_compact_convex`
 - Truth anchor: `D5/S3/Quantum/Measurements/VisibleStateSpaceDimension.visible_state_space_compact_convex_dimension`
 - Dependency: [D5/S3/Quantum/Entanglement/BipartiteSectorDecomposition](../Entanglement/BipartiteSectorDecomposition.md)
 - Dependency: [D5/S3/Quantum/Fibers/FutureStatisticsEquivalence](../Fibers/FutureStatisticsEquivalence.md)
