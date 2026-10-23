@@ -288,6 +288,7 @@ private lemma productMatrix_unitary {ι : Type*} [Fintype ι] [DecidableEq ι]
   exact productMatrix_one ι
 
 set_option maxHeartbeats 1000000 in
+-- Splitting a tensor coordinate elaborates dependent finite-product instances.
 private lemma marginal_product_unitary {N : ℕ}
     (χ : Matrix (Fin N → Fin 4) (Fin N → Fin 4) ℂ)
     (U : Fin N → Matrix.unitaryGroup (Fin 4) ℂ) (k : Fin N) :
@@ -498,12 +499,163 @@ private lemma shiftCoeff_trace (N : ℕ) (a : Fin N → Fin 4) :
     mul_ite, mul_one, mul_zero, Finset.sum_ite_eq', Finset.mem_univ, ite_true,
     shiftTrace, pauliString, Function.comp_apply]
 
+set_option maxHeartbeats 1000000 in
+-- The coordinate sums combine Pauli completeness with two distinct wire coordinates.
 private lemma shift_trace_contraction (N : ℕ) (hN : 2 ≤ N) (k : Fin N) (i j : Fin 4) :
     (∑ z : {l : Fin N // l ≠ k} → Fin 4,
       shiftTrace N ((Equiv.funSplitAt k (Fin 4)).symm (i, z)) *
         star (shiftTrace N ((Equiv.funSplitAt k (Fin 4)).symm (j, z)))) =
       ((2 : ℂ) ^ N) ^ 2 * (if i = j then (1 / 4 : ℂ) else 0) := by
-  sorry
+  classical
+  let B := {l : Fin N // l ≠ k}
+  let e := Equiv.funSplitAt k (Fin 4)
+  let A (i : Fin 4) (z : B → Fin 4) (x : Fin N → Fin 2) :=
+    ∏ l, sigma ((e.symm (i,z)) l) (x l) (x (finRotate N l))
+  have hm : finRotate N k ≠ k := by
+    cases N with
+    | zero => exact Fin.elim0 k
+    | succ n =>
+      by_cases hk : k = Fin.last n
+      · subst k
+        intro h
+        have hh := congrArg Fin.val h
+        simp only [finRotate_last, Fin.val_zero, Fin.val_last] at hh
+        omega
+      · intro h
+        have hh := congrArg Fin.val h
+        rw [coe_finRotate_of_ne_last hk] at hh
+        omega
+  have hB : Fintype.card B = N - 1 := by
+    simpa [B] using Fintype.card_subtype_compl (fun l : Fin N => l = k)
+  have hcomplete (u v u' v' : Fin 2) :
+      (∑ a : Fin 4, sigma a u v * star (sigma a u' v')) =
+        if u = u' ∧ v = v' then (2 : ℂ) else 0 := by
+    fin_cases u <;> fin_cases v <;> fin_cases u' <;> fin_cases v' <;>
+      norm_num [sigma, pauliMatrix, D5.S3.Quantum.FiniteDimensional.qubitX,
+        D5.S3.Quantum.FiniteDimensional.qubitZ, Fin.sum_univ_succ]
+  have horth (i j : Fin 4) :
+      (∑ u : Fin 2, ∑ v : Fin 2, sigma i u v * star (sigma j u v)) =
+        if i = j then (2 : ℂ) else 0 := by
+    have hi : sigma i = pauliMatrix (pauliLabelEquiv i) := by fin_cases i <;> rfl
+    have hj : sigma j = pauliMatrix (pauliLabelEquiv j) := by fin_cases j <;> rfl
+    have hs := D5.S3.Quantum.Measurement.StabilizerPovmMaximalEntanglementRefutation.pauli_hermitian
+      (pauliLabelEquiv j)
+    have hh (u v : Fin 2) : star (sigma j u v) = sigma j v u := by
+      rw [hj]
+      exact congrArg (fun M : Matrix (Fin 2) (Fin 2) ℂ => M v u) hs
+    simp_rw [hh]
+    change Matrix.trace (sigma i * sigma j) = _
+    rw [hi, hj,
+      D5.S3.Quantum.Measurement.StabilizerPovmMaximalEntanglementRefutation.pauli_trace_pair]
+    simp only [Equiv.apply_eq_iff_eq]
+  have hprod (i : Fin 4) (z : B → Fin 4) (x : Fin N → Fin 2) :
+      A i z x = sigma i (x k) (x (finRotate N k)) *
+        ∏ l : B, sigma (z l) (x l) (x (finRotate N l)) := by
+    dsimp [A]
+    rw [Fintype.prod_eq_mul_prod_compl k]
+    have hc : (e.symm (i,z)) k = i := congrArg Prod.fst (e.apply_symm_apply (i,z))
+    rw [hc]
+    congr 1
+    rw [Finset.prod_subtype _ (p := fun l : Fin N => l ≠ k) (by simp)]
+    apply Finset.prod_congr rfl
+    intro l _
+    have hr : (e.symm (i,z)) l = z l :=
+      congrFun (congrArg Prod.snd (e.apply_symm_apply (i,z))) l
+    rw [hr]
+  have hconstraint (x y : Fin N → Fin 2) :
+      (∀ l : B, x l = y l ∧ x (finRotate N l) = y (finRotate N l)) ↔ x = y := by
+    constructor
+    · intro h
+      funext l
+      by_cases hl : l = k
+      · subst l
+        have hp : (finRotate N).symm k ≠ k := by
+          intro h'
+          apply hm
+          calc
+            finRotate N k = finRotate N ((finRotate N).symm k) := congrArg _ h'.symm
+            _ = k := (finRotate N).apply_symm_apply k
+        simpa only [Equiv.apply_symm_apply] using (h ⟨(finRotate N).symm k,hp⟩).2
+      · exact (h ⟨l,hl⟩).1
+    · rintro rfl l
+      exact ⟨rfl,rfl⟩
+  have hgram (x y : Fin N → Fin 2) :
+      (∑ z : B → Fin 4, A i z x * star (A j z y)) =
+        (sigma i (x k) (x (finRotate N k)) * star (sigma j (y k) (y (finRotate N k)))) *
+          (2 : ℂ) ^ (N - 1) * (if x = y then 1 else 0) := by
+    have hsum := Finset.prod_univ_sum (fun _ : B => (Finset.univ : Finset (Fin 4)))
+      (fun l a => sigma a (x l) (x (finRotate N l)) *
+        star (sigma a (y l) (y (finRotate N l))))
+    rw [Fintype.piFinset_univ] at hsum
+    calc
+      _ = (sigma i (x k) (x (finRotate N k)) * star (sigma j (y k) (y (finRotate N k)))) *
+          (∑ z : B → Fin 4, ∏ l : B, sigma (z l) (x l) (x (finRotate N l)) *
+            star (sigma (z l) (y l) (y (finRotate N l)))) := by
+        rw [Finset.mul_sum]
+        apply Finset.sum_congr rfl
+        intro z _
+        rw [hprod, hprod, star_mul, star_prod, Finset.prod_mul_distrib]
+        ring
+      _ = _ := by
+        rw [← hsum]
+        simp_rw [hcomplete]
+        rw [Fintype.prod_ite_zero]
+        simp only [hconstraint, Finset.prod_const, Finset.card_univ, hB]
+        split_ifs <;> ring
+  let t : B := ⟨finRotate N k, hm⟩
+  let C := {l : B // l ≠ t}
+  let ex := Equiv.funSplitAt k (Fin 2)
+  let ey := Equiv.funSplitAt t (Fin 2)
+  have hC : Fintype.card C = N - 2 := by
+    simpa [C, hB, Nat.sub_sub] using Fintype.card_subtype_compl (fun l : B => l = t)
+  have hpairs : (∑ x : Fin N → Fin 2,
+      sigma i (x k) (x (finRotate N k)) * star (sigma j (x k) (x (finRotate N k)))) =
+      (2 : ℂ) ^ (N - 2) * (if i = j then 2 else 0) := by
+    have hx0 (u : Fin 2) (z : B → Fin 2) : (ex.symm (u,z)) k = u :=
+      congrArg Prod.fst (ex.apply_symm_apply (u,z))
+    have hx1 (u : Fin 2) (z : B → Fin 2) : (ex.symm (u,z)) (finRotate N k) = z t :=
+      congrFun (congrArg Prod.snd (ex.apply_symm_apply (u,z))) t
+    have hy (v : Fin 2) (w : C → Fin 2) : (ey.symm (v,w)) t = v :=
+      congrArg Prod.fst (ey.apply_symm_apply (v,w))
+    calc
+      _ = ∑ u : Fin 2, ∑ v : Fin 2, ∑ _w : C → Fin 2,
+          sigma i u v * star (sigma j u v) := by
+        rw [← ex.symm.sum_comp, Fintype.sum_prod_type]
+        simp only [hx0, hx1]
+        apply Finset.sum_congr rfl
+        intro u _
+        rw [← ey.symm.sum_comp, Fintype.sum_prod_type]
+        simp only [hy]
+        rfl
+      _ = _ := by
+        simp only [Finset.sum_const, Finset.card_univ, Fintype.card_fun,
+          Fintype.card_fin, hC, nsmul_eq_mul, Nat.cast_pow, Nat.cast_ofNat]
+        simp_rw [← Finset.mul_sum]
+        rw [horth]
+  have hpow : (2 : ℂ) ^ N = (2 : ℂ) ^ (N - 2) * 4 := by
+    conv_lhs => rw [← Nat.sub_add_cancel hN]
+    rw [pow_add]
+    norm_num
+  have hpowB : (2 : ℂ) ^ (N - 1) = (2 : ℂ) ^ (N - 2) * 2 := by
+    rw [show N - 1 = N - 2 + 1 by omega, pow_succ]
+  change (∑ z : B → Fin 4, (∑ x, A i z x) * star (∑ y, A j z y)) = _
+  simp_rw [star_sum, Finset.sum_mul, Finset.mul_sum]
+  calc
+    _ = ∑ x, ∑ y, ∑ z : B → Fin 4, A i z x * star (A j z y) := by
+      rw [Finset.sum_comm]
+      apply Finset.sum_congr rfl
+      intro x _
+      rw [Finset.sum_comm]
+    _ = (2 : ℂ) ^ (N - 1) *
+        (∑ x : Fin N → Fin 2, sigma i (x k) (x (finRotate N k)) *
+          star (sigma j (x k) (x (finRotate N k)))) := by
+      simp_rw [hgram, mul_ite, mul_one, mul_zero]
+      simp only [Finset.sum_ite_eq, Finset.mem_univ, ite_true]
+      rw [← Finset.sum_mul]
+      ring
+    _ = _ := by
+      rw [hpairs, hpow, hpowB]
+      split_ifs <;> ring
 
 private lemma shift_marginals (N : ℕ) (hN : 2 ≤ N) :
     ∀ k, marginal (shiftProcess N) k = (1 / 4 : ℂ) • 1 := by
