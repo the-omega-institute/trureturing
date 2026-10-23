@@ -11,7 +11,15 @@ import D5.S3.Analytic.IncompleteBeta.Moment
 import Mathlib.Algebra.BigOperators.NatAntidiagonal
 import Mathlib.Analysis.SpecialFunctions.Pow.Deriv
 
-/-! A fixed sum of beta shapes gives a common positive moment factor. -/
+/-!
+The pinned `phi a b α β n` is the coefficient of `x^n` in
+`x^(-2*a) * (1-x)^(-2*b-α-β)` times
+`I_x(a,b+α) * I_x(a,b+β) - I_x(a,b) * I_x(a,b+α+β)`, by equations
+(1), (3), and (4) of the normalized incomplete beta source. The coefficients
+are independent of `x`, so its restriction to `(0,1)` adds no coefficient condition.
+
+A fixed sum of beta shapes gives a common positive moment factor.
+-/
 
 noncomputable section
 open Set MeasureTheory
