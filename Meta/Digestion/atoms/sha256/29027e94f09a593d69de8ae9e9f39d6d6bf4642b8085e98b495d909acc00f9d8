@@ -1,0 +1,22 @@
+**Definition 5.1 (natural source domain).** For any real $\eta$ choose a
+positive $H_\eta$ equal to $h(-\log R+\eta)$ on a sufficiently small
+source ball and smoothly positive elsewhere. Let $\mathcal V_\eta$ be
+the completion, in weighted horizontal energy plus weighted $L^2$, of
+quotients smooth away from the source, constant on some source
+neighbourhood, and satisfying the inherited outer killing. Put
+
+$$
+\begin{aligned}
+W_\eta&=H_\eta^{-1}\mathcal T H_\eta,\\
+q_\eta[H_\eta v]
+ &=\int H_\eta^2\langle AXv,Xv\rangle d\mu
+                   +\int W_\eta H_\eta^2|v|^2d\mu,\qquad
+D(q_\eta)=H_\eta\mathcal V_\eta.
+\end{aligned}
+\tag{5.1}
+$$
+
+The expression for $W_\eta$ is taken off the source. The frozen
+critical equation for both $h$ and $h\log R$, together with the native
+coefficient and Green remainders, gives $W_\eta=O(R^{-1})$.
+

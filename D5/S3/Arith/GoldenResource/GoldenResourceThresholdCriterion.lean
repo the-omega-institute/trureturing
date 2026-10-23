@@ -7,6 +7,7 @@
    digest: Positive-price global optimality is equivalent to boundary layer thresholds. -/
 
 import D5.S3.Arith.GoldenResourceObjectiveFactorization
+import D5.S3.Arith.GoldenLocalThreshold
 
 /- Library-search audit trail (2026-09-06):
    1. D5 searches for IsGoldenResourceOptimal, golden_resource_optimal_iff_layer_thresholds,

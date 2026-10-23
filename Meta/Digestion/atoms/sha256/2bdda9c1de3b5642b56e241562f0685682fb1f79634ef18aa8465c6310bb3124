@@ -1,0 +1,16 @@
+**Definition 1.5 (Fixed dimensionless parameters).**
+Write
+
+$$
+\begin{aligned}
+r&=|g|>0,&u&=g/r,&\Delta&=\sqrt{J^2+16r^2},\\
+d&=J/\Delta,&x&=2r/\Delta,&\eta&=4r/\Delta,\\
+\alpha&=(1-d)/2,&
+\tau(t)&=\Delta t/(2\hbar),&\chi(t)&=Jt/(2\hbar),\quad
+\theta(t)=rt/\hbar.
+\end{aligned}
+$$
+
+Thus $|u|=1$, $-1<d<1$, $0<x\leq1/2$, $\eta=2x>0$ and
+$d^2+\eta^2=d^2+4x^2=1$. Parameters do not vary with the desired accuracy.
+

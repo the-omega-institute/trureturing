@@ -1,0 +1,38 @@
+**Lemma 29.3 (literal lawfulness and finite resources).** Every realization
+of Definition 29.2 is an original absolutely continuous, piecewise linear,
+zero-start command on a finite interval. Its lifetime satisfies
+$0<\zeta_n\le T_n$, and every prefix obeys
+
+$$
+k_o+\min\widehat a_n\ge l>0,\qquad
+k_o+\max\widehat a_n\le u<H.
+\tag{29.5}
+$$
+
+Its state and area are (29.2) and the same ordinary integral, including the
+possibly partial final chord. Both actual height walls are used for killing.
+
+Proof. The height on a chord is affine, so its exact first hit is computable
+from its initial height and $v_i^1$. If both endpoints lie inside $I$, the
+whole chord does; if it leaves, the executed portion ends at its first face.
+Thus checking endpoints to compute that fraction misses no within-cell
+exit. The extra terminal leg lies inside $[l,u]$ and reaches $u$.
+There are finitely many chords and at most one partial chord. Their holds
+and joins are absolutely continuous. Integrating $a\,db$ on a partial
+chord gives (29.4); the terminal height leg has $db=0$. N, Theorems 9.2–9.3,
+therefore give (29.5) and (29.2) for the complete original history.
+A killing face is inside the original native source $(0,H)$, so holding
+there is lawful even though its killed observation is already dead.
+
+On $\overline\Omega$, boundedness gives $|v_i|\le C\sqrt{\delta_n}$.
+Consequently the executed total control variation is at most
+$C m_n\sqrt{\delta_n}+(u-l)$. If the additional norm of N, §10.1,
+is used, its length is bounded by a fixed multiple of that quantity and
+its quadratic energy by $C(m_n+(u-l)^2/\delta_n)$. These follow by
+integrating the actual velocities for their actual elapsed fractions;
+$A^{-1}$ is uniformly bounded on the closed cylinder. All are finite at
+each stage. These bounds are not uniform as the mesh vanishes and do not
+price sampling or coefficient access. A command precomputed for $o$ is
+one numerical command; at another start its lawful domain is still N's
+extrema domain, not a recomputed cutoff. $\square$
+

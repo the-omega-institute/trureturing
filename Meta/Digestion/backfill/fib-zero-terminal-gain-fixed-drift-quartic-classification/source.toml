@@ -1,0 +1,5 @@
+source_id = "fib-zero-terminal-gain-fixed-drift-quartic-classification"
+path = "docs/develop/theory/FIB_ZERO_TERMINAL_GAIN_FIXED_DRIFT_QUARTIC_CLASSIFICATION.md"
+atomizer = "generic-v1"
+genre_registry_check = "no-registry"
+unregistered_genres = []

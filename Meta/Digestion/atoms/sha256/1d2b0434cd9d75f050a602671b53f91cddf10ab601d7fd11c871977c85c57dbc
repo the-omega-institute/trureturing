@@ -1,0 +1,30 @@
+**定理 8.1（最大可平坦化环面商）。** 令 $c\in\mathbb Z^3$ 为表中的非零原始向量，
+置
+
+$$
+\lambda_c:\mathbb G_m\to T=(\mathbb C^\times)^3,
+\qquad u\mapsto(u^{c_1},u^{c_2},u^{c_3}),
+$$
+
+$$
+T_{\mathrm{flat}}=T/\lambda_c(\mathbb G_m).
+$$
+
+则 $T_{\mathrm{flat}}$ 是二维环面，其字符格为
+
+$$
+X^*(T_{\mathrm{flat}})=\{q\in\mathbb Z^3:\langle q,c\rangle=0\}.
+$$
+
+对任意复环面同态 $f:T\to T'$，以下等价：
+
+1. 推出丛 $f_*P_c$ 存在平坦联络；
+2. 共字符 $f_*c$ 为零；
+3. $f$ 唯一因子化通过 $T_{\mathrm{flat}}$。
+
+**证明。** 原始性使 $c$ 可补成整数基，故 $\lambda_c$ 是闭嵌入，商为二维环面。字符在
+子环面上平凡当且仅当与 $c$ 配对为零。若推出丛平坦，则每个字符关联线丛平坦，球面
+上的 Chern 数必须为零，于是 $\langle\eta,f_*c\rangle=0$ 对所有字符 $\eta$ 成立，
+故 $f_*c=0$。反之 $f_*c=0$ 时过渡 $z^c$ 被送到单位，推出丛平凡并有平坦联络。
+$f_*c=0$ 等价于 $f\circ\lambda_c$ 平凡，正是因子化条件。$□$
+

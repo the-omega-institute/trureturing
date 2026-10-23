@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:630680418723fa63bdb064f83d87401da0dd5a2a63dd6a605ee703e784523e65
+  normalized_sha256: sha256:630680418723fa63bdb064f83d87401da0dd5a2a63dd6a605ee703e784523e65
+cas_ref: sha256:630680418723fa63bdb064f83d87401da0dd5a2a63dd6a605ee703e784523e65
+coverage_gids:
+  - gid: D5/S3/Estimation/TimeArrow/HypercubeMarkedPoissonAsymptotics.hypercube_marked_local_asymptotics
+    target_statement_id: sha256:fdd89ae02a6cce60777863f405d5859d7e3d2ec95ddec8d9dd19c2ad43d269c2
+  - gid: D5/S3/Estimation/TimeArrow/HypercubeMarkedPoissonAsymptotics.hypercube_marked_tail_event_asymptotics
+    target_statement_id: sha256:462f945080ac40d82153ae74ed7c7d5034d585c45af3306c6dd4e8fbb1c8055a
+receipts:
+  unresolved_subitems: []

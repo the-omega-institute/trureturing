@@ -1,0 +1,24 @@
+### 2.2. A well-defined involution exchanging the sign changes
+
+The exchange $\alpha\leftrightarrow\beta$ defines an automorphism of $E$, as follows. Consider the presentation
+
+$$
+A=\mathbb Q_2[X,Y]/(X^4-5,\ X^2+Y^2).
+\tag{2.4}
+$$
+
+Its elements are spanned over $\mathbb Q_2$ by $X^rY^e$ with $0\le r<4$ and $0\le e<2$. Evaluation at $(\alpha,\beta)$ is a surjection $A\to E$. Equation (2.2) and the eight spanning monomials imply that this map is an isomorphism. In $A$ one has $Y^4=X^4=5$, so exchanging $X,Y$ preserves both defining relations. It induces an involution $F_E$ of $E$ with
+
+$$
+F_E(\alpha)=\beta,\qquad F_E(\beta)=\alpha,
+\qquad F_E(u)=-u.
+\tag{2.5}
+$$
+
+In particular it is nonidentity and has order two. Applying it on both sides of (2.3) gives
+
+$$
+F_Ev_{s,t}F_E^{-1}=v_{t,s}.
+\tag{2.6}
+$$
+

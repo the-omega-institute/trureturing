@@ -1,0 +1,16 @@
+fingerprints:
+  raw_sha256: sha256:144e1007cf3c612f8e31b727e89842df4b9153bfee6d22becfb28cb5a98fb42f
+  normalized_sha256: sha256:144e1007cf3c612f8e31b727e89842df4b9153bfee6d22becfb28cb5a98fb42f
+cas_ref: sha256:144e1007cf3c612f8e31b727e89842df4b9153bfee6d22becfb28cb5a98fb42f
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: Title, document scope, provenance and reading conventions only. Describes the boundary of the manuscript and does not assert any mathematical theorem.
+    previous_atom_id: null
+    next_atom_id: bcf0a0665e233c844f4808761707966a8913c701817c3b8232f407d50b878c9a
+  chain_atoms:
+    - 7b2ebee89d265972a8b6b982a81226d8125aa5ad52e7f9b9a8946410e23d7648
+    - e1731f5bce7edafb3ae09f2d80cd3e3a00ed14707eb7f6b4688c034ce869c062
+    - 61060ca9846828ef9438843e36cae02f5bda268bac6170eb2313593b82928a2d
+    - 870760b15574309921867598e41d7fa6c30dca02e1697f26f1486ff1de05c8b3

@@ -27,7 +27,7 @@ private theorem rejectedLaw : ¬ arena.Law rejected := by
   intro h
   apply h (n := 1) (A := 0) (X := 0) (B := 0) _ (Or.inl rfl)
   simpa using (Matrix.PosSemidef.zero : (0 : Block 1).PosSemidef)
-private theorem dependence : ObservationalDependence signature actual := by
+theorem dependence : ObservationalDependence signature actual := by
   intro i
   refine ⟨1, 0, 1, ?_⟩
   intro he
@@ -85,7 +85,7 @@ abbrev arena : Arena where
 private theorem rejectedLaw : ¬ arena.Law rejected := by
   intro h
   exact h (n := 1) (A := 1) Matrix.PosSemidef.one one_ne_zero
-private theorem dependence : ObservationalDependence signature actual := by
+theorem dependence : ObservationalDependence signature actual := by
   intro i
   refine ⟨(), 0, 1, ?_⟩
   intro he
@@ -143,20 +143,13 @@ abbrev arena : Arena where
 private theorem rejectedLaw : ¬ arena.Law rejected := by
   intro h
   exact h (n := 1) 0 0 0
-private theorem dependence : ObservationalDependence signature actual := by
-  intro i
-  refine ⟨1, 0, 1, ?_⟩
-  intro he
-  change (fun y : Mat 1 => (0 : Mat 1) = y) = (fun y : Mat 1 => (1 : Mat 1) = y) at he
-  have h10 : (1 : Mat 1) = 0 := by rw [← congrFun he 0]
-  exact one_ne_zero h10
 def family : Registration arena (type_of% (@phi_smul)) where
   actual := actual
   bridge := Iff.rfl
   variation := ⟨@phi_smul, rejected, rejectedLaw⟩
   sensitivity := _root_.Reg.Support.SingleDependentReadout.sensitivity
     arena.Law actual rejected rejectedLaw
-  dependence := dependence
+  dependence := ZeroBlock.dependence
 def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
     (@phi_smul) (Realization signature) Unit Unit where
   unitName := `D5.S3.Quantum.Matrix.LinGProperty.phi_smul.__information_unit

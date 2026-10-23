@@ -1,0 +1,10 @@
+## 10. 来源与复用边界
+
+| 来源 | 本卷使用的内容 | 不承担的内容 |
+| --- | --- | --- |
+| [FIB ATOM 机器学习白盒卷](FIB_ATOM_MACHINE_LEARNING_WHITEBOX.md) | 五窗字典、四态结构商、联合特征与梯度反馈 | 任意网络的经验白盒成功 |
+| [FIB 原子关系生成卷](FIBONACCI_ATOMIC_RELATION_GENERATION.md) | 有序树替换、关系组合和递归通道语义 | 本卷的短词 DFAO 证书界 |
+| R2 #18450 与其终局证据 | 两状态短词无界障碍族 | FIB 特定编码 |
+| R3 #18494、PR #18535 与其终局证据 | $16(k+1)$ 原始观察上界 | 系数 $2$ 或最优性 |
+| [FIB 逃逸见证深度与鲁棒白盒卷（PR #19537）](https://github.com/the-omega-institute/trureturing/pull/19537) | 未来响应深度、裕量和鲁棒分离 | 本卷的原始观察宽度 |
+| Geiger 等因果抽象、Toy Models of Superposition 等 | 白盒与动态抽象的文献背景 | 五窗定理或 FIB 经验验证 |

@@ -1,0 +1,111 @@
+**Theorem 247.3 (Uniform finite-copy separable zero-map theorem).**
+At $t=3-2\sqrt2$, fix any finite $k\ge2$. Let
+
+$$
+\mathcal E_k:M_{8^k}(\mathbb C)\longrightarrow M_4(\mathbb C)
+\tag{247.13}
+$$
+
+be one $q$-independent separable completely positive map across the
+input cut (247.9), with the fixed output cut
+$\mathbb C^2\otimes\mathbb C^2$. The quantifier ranges over the
+whole separable CP class with arbitrary complex product Kraus factors; no
+restricted ansatz is imposed. If, for every actual $q\in D$, there
+is an arbitrary nonnegative scalar $m_q$ such that
+
+$$
+\mathcal E_k(\rho_q^{\otimes k})=m_qW_q,
+\qquad m_q\ge0,
+\tag{247.14}
+$$
+
+then $\mathcal E_k=0$. No trace bound and no uniform positive lower
+bound on the masses $m_q$ is assumed.
+
+Proof. Choose any finite product-Kraus representation of the separable
+map in the form (244.4), with
+$A_j:\mathbb C^{2^k}\to\mathbb C^2$ and
+$B_j:\mathbb C^{4^k}\to\mathbb C^2$. Lemma 244.4 applies directly to
+(247.14). More explicitly, the actual rectangle of Lemma 240.2 and the
+joint identity $N(p(q),\theta(q))=C\Omega_q$ eliminate the arbitrary
+$m_q$ by the trace and give (244.10) on that rectangle; polynomiality in
+$p$ and finite trigonometric polynomiality in $\theta$ extend it to all
+real $p,\theta$. The same $(p,\theta)$ is used in every tensor factor.
+This is an identity for the one fixed map and does not make $p$ or
+$U_q$ independently controllable.
+
+At $p_*=1/2$, equations (244.7)–(244.8) make
+$R_\theta=N(p_*,\theta)^\Gamma\succeq0$, while
+$T_t(p_*)^\Gamma=tQ$ annihilates the output vector
+$|\phi\rangle$. The Alice-only transpose $\Gamma$ leaves Bob's copy and
+spatial registers unchanged. For each product Kraus factor set
+
+$$
+ v_j=(A_j^{\mathsf T}\otimes B_j^\dagger)|\phi\rangle.
+\tag{247.15}
+$$
+
+The exact transpose/adjoint identity (244.14), with the genuine Bob
+adjoint, gives
+
+$$
+0=\sum_j\langle v_j|R_\theta^{\otimes k}|v_j\rangle
+\qquad(\theta\in\mathbb R).
+\tag{247.16}
+$$
+
+Every summand is nonnegative. Hence each $v_j$ lies in every kernel in
+(244.12), so $v_j\in K_k$. A pullback of the two-term output vector
+has Schmidt rank at most two across the party cut: in the fixed bases
+its coefficient matrix is
+
+$$
+V_j=\frac1{\sqrt2}A_j^{\mathsf T}\overline{B_j},
+\tag{247.17}
+$$
+
+where the bar is entrywise conjugation and the transpose is only on
+Alice. Proposition 247.2 therefore forces $v_j=0$ for every $j$.
+
+For every input matrix $X$, the same formula (244.14) now gives
+
+$$
+\langle\phi|\mathcal E_k(X)^\Gamma|\phi\rangle
+=\sum_j\langle v_j|X^\Gamma|v_j\rangle=0.
+\tag{247.18}
+$$
+
+Take the actual source point $q_0=(1/3,1/3)$. Lemma 240.2 gives
+$p(q_0)=1/3$, and the source identity (245.10) gives
+
+$$
+\langle\phi|W_{q_0}^\Gamma|\phi\rangle
+=\frac{t(2/3-1)^2}{2(2t+g(1/3))}>0.
+\tag{247.19}
+$$
+
+Equations (247.14), (247.18) and (247.19) force $m_{q_0}=0$ and hence
+$\mathcal E_k(\rho_{q_0}^{\otimes k})=0$. The actual input is full rank:
+its unnormalized active block is
+$tI_4+2g(1/3)P_-\succeq tI_4\succ0$ and its spectator block is
+$th(1/3)I_4\succ0$ on the orthogonal spatial rays. The positive
+normalization preserves this, so for some $\delta>0$,
+
+$$
+\rho_{q_0}^{\otimes k}\succeq\delta I_{8^k}.
+\tag{247.20}
+$$
+
+Positivity gives
+
+$$
+0=\mathcal E_k(\rho_{q_0}^{\otimes k})
+\succeq\delta\mathcal E_k(I_{8^k})\succeq0.
+\tag{247.21}
+$$
+
+Thus $\mathcal E_k(I_{8^k})=0$. Every positive semidefinite input
+$Z$ is bounded by a scalar multiple of $I_{8^k}$, so positivity gives
+$\mathcal E_k(Z)=0$. Positive matrices span the Hermitian matrices, and
+complex linearity then gives $\mathcal E_k=0$. ∎
+

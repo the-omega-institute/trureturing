@@ -1,0 +1,43 @@
+### 推论 79.6（固定先验的精确容差与最小整数跨度）
+
+保持 $a,b$ 固定。若容差 $\rho\ge L/2$，先验中点已经满足误差要求，不需侧读数。
+若 $L>0$ 且 $0<\rho<L/2$，则本两索引设计满足
+
+$$
+\begin{aligned}
+R_h^*\le\rho
+&\quad\Longleftrightarrow\quad 2\varepsilon\le f_h(2\rho)\\
+&\quad\Longleftrightarrow\quad
+\varepsilon\le\rho\max(h,2h+2a+2\rho,2\rho-2b).
+\end{aligned}
+\tag{79.9}
+$$
+
+等号允许。令 $C=\varepsilon/\rho$、$K_0=2\rho-2b$，则在整数 $h\ge1$ 中
+满足该容差的最小跨度恰为
+
+$$
+h_{\min}=\begin{cases}
+1,&C\le K_0,\\
+\displaystyle\max\left(1,\left\lceil
+ \min\left(C,\frac{C-2a-2\rho}{2}\right)\right\rceil\right),&C>K_0.
+\end{cases}
+\tag{79.10}
+$$
+
+若 $L>0,\rho=0$，则可行性恰为 $\varepsilon=0$，此时每个 $h\ge1$ 可行。
+$L=0$ 的任意非负容差都由先验常数满足。这些最小跨度只针对指定的
+$H(t)=t^2,I=\{0,h\}$ 家族，不是任意时钟、采样方式或主策略的最优性。
+
+**证明。** 对 $0<2\rho<L$，$f_h$ 严格递增；其允许距离的最大值至多
+$2\rho$ 当且仅当 $2\varepsilon\le f_h(2\rho)$，包括等号和饱和排除情形。
+代入 (79.3) 即得 (79.9)。若 $C\le K_0$，最大值的第三项已经充分。
+否则第三项不能满足不等式，必须且只需
+
+$$
+h\ge C\quad\text{或}\quad h\ge(C-2a-2\rho)/2.
+$$
+
+这等价于 $h$ 大于等于两阈值的较小者；取最小正整数得到 (79.10)。
+零容差由推论 79.4，先验中点的情形由 $|\tau-(a+b)/2|\le L/2$ 得到。∎
+

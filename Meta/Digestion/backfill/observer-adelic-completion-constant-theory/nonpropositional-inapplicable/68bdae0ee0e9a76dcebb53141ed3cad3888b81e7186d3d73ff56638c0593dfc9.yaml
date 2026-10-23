@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:68bdae0ee0e9a76dcebb53141ed3cad3888b81e7186d3d73ff56638c0593dfc9
+  normalized_sha256: sha256:68bdae0ee0e9a76dcebb53141ed3cad3888b81e7186d3d73ff56638c0593dfc9
+cas_ref: sha256:68bdae0ee0e9a76dcebb53141ed3cad3888b81e7186d3d73ff56638c0593dfc9
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 列举准晶体的预期实验用途，不给出数学性质或 RH 充分性断言。
+    previous_atom_id: 34c11702d78ee83d5ad08c984c41cc442ede0e315317da05efa9f991703e1817
+    next_atom_id: 23915160ba3202afbff1b9f1494045836bae4534374ca0ba1a99671d4f76a2ac

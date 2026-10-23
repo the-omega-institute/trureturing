@@ -1,0 +1,183 @@
+**Theorem 4.2 (Complete fixed-model approximation criteria).**
+For every fixed nonzero complex $g$, finite real $J$ and positive $\hbar$:
+
+1. The joint phase orbit $\{\lambda_m:m\geq1\}$ is finite if $d$ is rational
+   and dense in the circle if $d$ is irrational. Its closure contains $i$
+   or $-i$ exactly when $d$ is irrational or $d$ has even reduced rational
+   denominator.
+2. If $\operatorname{Re}(g)=0$, one-sided or two-sided supplied real
+   corrections permit arbitrary approximation to $S$, as a matrix or
+   complete channel, exactly under that phase-closure condition.
+3. If $\operatorname{Re}(g)\ne0$, these same corrected matrix and channel
+   approximation conditions are equivalent to
+
+$$
+\boxed{\quad (h,k)\in\mathcal L_x\ \Longrightarrow\ 4\mid h.\quad}
+$$
+
+4. With no corrections, matrix and complete-channel approximation to $S$
+   are equivalent, for every phase of $g$, to
+
+$$
+\boxed{\quad (h,k)\in\mathcal L_{x/2}\ \Longrightarrow\ 4\mid h.\quad}
+$$
+
+Every successful approximation can use arbitrarily large positive return
+indices. None of these conclusions supplies a quantitative hitting-time
+bound or permits varying the fixed parameters with accuracy.
+
+Proof. The necessary compactness and projective arguments are first made
+explicit. $SO(5)$ is compact. The endpoints belong to the compact family
+$A(\theta,\lambda)$ with spectators $1,1$, block $B(\theta)$ and last
+entry $\lambda$, parametrized by two circles. Any convergent corrected
+sequence has a subsubsequence in which its endpoint, left correction and
+right correction all converge. The limiting corrections remain in
+$SO(5)$ and Theorem 3.1's imaginary-part proof applies to the limiting
+endpoint. Thus matrix convergence requires
+
+$$
+\lambda_{m_j}\longrightarrow i,\qquad
+|\cos\phi\sin(\pi m_jx)|\longrightarrow0.
+$$
+
+For channel convergence it requires instead distance of $\lambda_{m_j}$
+from $\{i,-i\}$ tending to zero, with the same sine condition.
+If either necessity failed for the whole sequence, compactness would
+produce a limiting counterexample, proving these necessities for whole
+sequences as well as subsequences. One may select a subsequence with a
+fixed limiting sign.
+
+For this argument on channels, equality up to scalar was proved in
+Theorem 3.1. Convergence of complete channels is equivalently convergence
+in operator norm up to scalar: otherwise compactness of $U(5)$ would
+produce a limit with the same channel but positive distance from the
+scalar orbit. Conversely expanding two products, also with an arbitrary
+ancilla, gives
+
+$$
+\|\operatorname{Ad}_A-\operatorname{Ad}_B\|_\diamond
+ \leq2\|A-B\|.
+$$
+
+This justifies both channel necessity and sufficiency without substituting
+a restricted observation algebra for the full matrix algebra.
+
+For the orbit step use the classical Kronecker character criterion,
+attributed in the existing [Onishchik/Kronecker note](../../../Library/Fourier/onishchik2020kronecker.md)
+to the [Encyclopedia of Mathematics entry](https://encyclopediaofmath.org/index.php?title=Kronecker_theorem&oldid=47528).
+The following argument supplies the needed character and positive-index
+steps inside this model-specific proof. They are standard torus facts,
+not additional new theorems of this volume.
+
+Let $\beta$ denote either $(\alpha)$, $(\alpha,x)$ or $(\alpha,x/2)$,
+and put $C=\overline{\mathbb Z\beta}$ in the corresponding finite torus.
+For any integer $Q\geq1$, pigeonhole $Q^n+1$ points $j\beta$ into $Q^n$
+cubes of side $1/Q$. Subtraction gives a positive $q\leq Q^n$ with
+$\operatorname{dist}(q\beta,0)\leq\sqrt n/Q$.
+Either these $q$ have an unbounded subsequence tending back to zero,
+or one bounded value $q_0$ recurs and satisfies $q_0\beta=0$ exactly.
+In the latter case use its arbitrarily large positive multiples.
+Thus in both cases there are $q_\ell\to\infty$ with $q_\ell\beta\to0$.
+For each integer $a$, $(q_\ell+a)\beta\to a\beta$ through every sufficiently
+late positive tail. Hence each positive-tail closure is $C$, a compact
+subgroup. This replaces discrete positive powers by integer powers,
+not by a continuous-time torus flow.
+
+Every relation $v\cdot\beta\in\mathbb Z$ forces
+$v\cdot y\in\mathbb Z$ on $C$. To see sufficiency, if $y\notin C$ set
+$f(t)=\operatorname{dist}(t,C)$, using the translation-invariant torus
+metric. It is continuous, $f(0)=0<f(y)$, and $f(t+\beta)=f(t)$.
+Its Fourier coefficient $c_v$ therefore obeys
+
+$$
+c_v=e^{-2\pi i v\cdot\beta}c_v,
+$$
+
+so vanishes unless $v\cdot\beta$ is integral. For an explicit uniform
+approximation, the standard Fejér kernels
+
+$$
+F_N(s)=\frac1N\left|\sum_{a=0}^{N-1}e^{2\pi ias}\right|^2
+ =\sum_{|a|<N}\left(1-\frac{|a|}{N}\right)e^{2\pi ias}
+$$
+
+are nonnegative and have integral one. Away from
+$\operatorname{dist}(s,\mathbb Z)<\delta$ they are at most
+$1/(N\sin^2(\pi\delta))$ by the geometric sum.
+Their product in $n$ coordinates has outside-box mass at most
+$n/(N\sin^2(\pi\delta))$. Uniform continuity now gives
+$f*\prod F_N\to f$ uniformly: use a prescribed continuity tolerance inside
+the box and $2\|f\|_\infty$ times that vanishing mass outside.
+Each convolution is a finite Fourier polynomial supported on the integral
+relations just identified. If $y$ satisfied all the character conditions,
+that polynomial would have equal values at $y$ and $0$.
+Uniform convergence would imply $f(y)=f(0)$, a contradiction.
+For these three model frequency vectors the needed orbit description is
+therefore
+
+$$
+y\in C
+\quad\Longleftrightarrow\quad
+v\cdot y\in\mathbb Z\text{ whenever }v\cdot\beta\in\mathbb Z.
+$$
+
+This proof retains all torsion and disconnected components.
+
+Apply it first to $\beta=\alpha$. If $\alpha$ is irrational, its only
+integral relation is zero, giving the whole circle; if $\alpha=a/b$
+is reduced, its orbit is the finite group of order $b$.
+Proposition 3.2 translates quarter-phase membership into even reduced
+denominator for $d$, proving assertion 1. In the aligned case
+$\operatorname{Re}(g)=0$, every $B(\theta_m)$ is real. Its inverse is a
+permitted endpoint correction and leaves the corrected error exactly
+$|\lambda_m-i|$. Necessity, including two-sided and projective versions,
+follows from the compactness argument. The two quarter targets have the
+same finite-group membership and are both in the irrational closure.
+This proves assertion 2.
+
+In the nonaligned case, fixed $\cos\phi\ne0$ makes the realness limit
+exactly $\operatorname{dist}(mx,\mathbb Z)\to0$.
+For matrix approximation the simultaneous target for $(\alpha,x)$ is
+$(1/4,0)$ modulo $\mathbb Z^2$.
+Its character value is $h/4$, so the orbit criterion is precisely
+$4\mid h$ for every $(h,k)\in\mathcal L_x$.
+For explicit sufficiency, choose such positive indices and a nearest
+integer $\ell_m$ to $mx$. Use the correction that is $(-1)^{\ell_m}$ on
+both $e_1,e_3$ and identity elsewhere; its determinant is one.
+Writing $\delta_m=\pi(mx-\ell_m)$ gives
+
+$$
+\|(-1)^{\ell_m}B(\theta_m)-I\|
+ =2|\sin(\delta_m/2)|\leq\pi\operatorname{dist}(mx,\mathbb Z).
+$$
+
+Together with $|\lambda_m-i|\to0$ this proves convergence.
+The same sign correction works on the right. For the channel branch
+$\lambda\to-i$, the target is $(3/4,0)$, whose character values are
+$3h/4$; integrality is again exactly $4\mid h$.
+The earlier compactness proof rules out any additional two-sided limits.
+This proves assertion 3.
+
+Without corrections, $B(\theta_m)$ must approach $+I$.
+The Hermitian involution
+
+$$
+T_u=\begin{pmatrix}0&u\\\bar u&0\end{pmatrix},\qquad T_u^2=I
+$$
+
+has eigenvalues $1,-1$, and $B(\theta_m)=e^{-i\pi mxT_u}$. Hence
+
+$$
+\|B(\theta_m)-I\|=2|\sin(\pi mx/2)|.
+$$
+
+It tends to zero exactly when $\operatorname{dist}(mx/2,\mathbb Z)\to0$.
+The appropriate frequency pair is $(\alpha,x/2)$, with the same target
+$(1/4,0)$, giving assertion 4's character criterion. Approaching $-I$
+on this block has operator error two and is insufficient.
+For pulse-only projective convergence choose scalars $z_j$ with
+$z_jU_{m_j}\to S$. Acting on the fixed $e_0$ forces $z_j\to1$, so the
+matrices themselves converge to $S$. This holds for every phase of $g$.
+Every tail of each positive orbit has the same closure, as already proved,
+which supplies arbitrarily large successful indices. $\square$
+

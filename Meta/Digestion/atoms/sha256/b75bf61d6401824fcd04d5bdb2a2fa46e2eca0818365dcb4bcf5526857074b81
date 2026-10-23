@@ -1,0 +1,73 @@
+**Theorem 3.1 (a normalized original-domain squared-amplitude witness).**
+Fix any $a$ with $1/2\le a<1$. Choose a nonnegative radial cutoff
+$\chi=\chi_0(R)$ in the source chart, equal to one for $R<b/2$ and
+zero for $R\ge b$, where the closed gauge ball is inside that chart.
+Extend by zero and set
+
+$$
+N_a^2=\int_\Omega\chi^2R^{-2a}\,d\mu,\qquad
+u_a=N_a^{-1}\chi R^{-a},\qquad W^{(a)}=|u_a|^2,
+\quad W^{(a)}(o)=+\infty.
+\tag{3.1}
+$$
+
+The amplitude denotes an $L^2(\mu)$ class; its source value has no bearing
+on membership in the form domain. Then
+
+$$
+\begin{gathered}
+0<N_a<\infty,\quad u_a\in\mathcal F_A,\quad \|u_a\|_2=1,\quad
+0<\int_\Omega\Gamma|u_a|^2d\mu<\infty,\\
+\mathbb E_o\int_0^\tau W^{(a)}(Q_t)dt=\nu(W^{(a)})<\infty,
+\qquad
+\int_0^{\zeta_n}W^{(a)}(\bar q_n(t))dt=+\infty
+\quad\hbox{for every realization and every }n\ge1.
+\end{gathered}
+\tag{3.2}
+$$
+
+In particular the continuous-test bridge of G, (29.15), cannot be
+extended to all normalized squared amplitudes in its original kinetic
+domain, even after requiring a finite full Green potential integral.
+
+Proof. Near the source the squared norm is controlled by
+$\int_0^bR^{3-2a}dR$, and the potential integral by
+$\int_0^bR^{1-2a}dR$. Both are finite for $a<1$, and positivity is
+immediate. In the source chart the energy is exactly
+$\int m\langle C\nabla_Hu,\nabla_Hu\rangle dq$ of G, (10.2), with
+$C$ smooth uniformly positive definite. The identity
+$|\nabla_HR|^2=\cos a_{\rm ang}\le1$ from G, (10.9), gives
+
+$$
+T_A[u_a;R<b/2]\le C_a\int_0^{b/2}R^{1-2a}dR<\infty.
+\tag{3.3}
+$$
+
+The angular symbol $a_{\rm ang}$ in this identity is unrelated to the
+chosen exponent. The cutoff collar has finite energy because it is
+smooth and separated from $o$.
+
+To verify the original closure domain, take a smooth $\eta$ with
+$\eta=0$ on $[0,1]$, $\eta=1$ on $[2,\infty)$ and bounded derivative.
+The functions $u_{a,\epsilon}=u_a\eta(R/\epsilon)$ belong to
+$C_c^\infty(\Omega\setminus\{o\})$. The same polar estimates and the
+product rule give
+
+$$
+\|u_a-u_{a,\epsilon}\|_2^2=O(\epsilon^{4-2a}),\qquad
+T_A[u_a-u_{a,\epsilon}]=O(\epsilon^{2-2a})\longrightarrow0.
+\tag{3.4}
+$$
+
+Indeed the derivative of $\eta(R/\epsilon)$ is bounded by
+$C/\epsilon$ on $\epsilon<R<2\epsilon$, whose contribution is
+$O(\epsilon^{-2}\epsilon^{4-2a})$. Thus membership is in exactly
+$\mathcal F_A$, without a critical completion or a substituted Sobolev
+domain. Equation (2.5) supplies the diffusion assertion and its almost
+sure finiteness. On a nonzero initial chord, (2.6) and $\chi=1$ near
+zero give a positive multiple of $t^{-2a}$; a zero initial chord is a
+source hold. Since $2a\ge1$, both cases give the last assertion of
+(3.2). This is the same-source full-coefficient application of the
+elementary cutoff and polar estimates, not an additional general Hardy
+theorem. $\square$
+

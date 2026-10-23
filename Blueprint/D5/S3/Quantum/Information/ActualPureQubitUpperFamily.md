@@ -39,3 +39,4 @@ The functions N, rho, I and Q give actual programs simultaneously for every suff
 - Truth anchor: `D5/S3/Quantum/Information/ActualPureQubitUpperFamily.actual_effect_family`
 - Truth anchor: `D5/S3/Quantum/Information/ActualPureQubitUpperFamily.actual_upper_family`
 - Dependency: [D5/S3/Quantum/Information/ActualPureQubitGeometry](ActualPureQubitGeometry.md)
+- Dependency: [D5/S3/Quantum/Information/SLDSpectralEnergy](SLDSpectralEnergy.md)

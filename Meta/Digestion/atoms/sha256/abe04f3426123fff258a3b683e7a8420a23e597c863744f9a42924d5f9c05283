@@ -1,0 +1,10 @@
+## 5. Incremental information is a necessary budget for risk improvement
+
+Let $Q_A$ be a deterministic coarsening of $Q_B$, as for $A\subseteq B$. Then $\eta_A=\mathbb E[\eta_B\mid Q_A]$. Let
+
+$$
+\Delta e=e(A)-e(B)\ge0,
+\qquad
+\Delta I=I(Y;Q_B\mid Q_A).
+$$
+

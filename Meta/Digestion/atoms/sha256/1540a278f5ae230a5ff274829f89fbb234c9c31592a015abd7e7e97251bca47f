@@ -1,0 +1,78 @@
+**Definition 51.1 (The original parent and its singular projection).**
+Use the original ordered basis and the complete worlds
+
+$$
+\begin{gathered}
+W=(P(r,b),g,d),\qquad
+P(r,b)=\begin{pmatrix}r&b\\r(1-r)/b&1-r\end{pmatrix},\\
+0<r<1,\quad b>0,\quad 0\ne g\in\mathbb R[s],\quad
+\deg g\le3,\quad d\in\mathbb R,\\
+J=\begin{pmatrix}0&1\\1&0\end{pmatrix},\qquad
+M=\begin{pmatrix}0&1\\1&1\end{pmatrix},\qquad
+Q_0=I,\quad Q_i=E_iQ_{i-1},\\
+(E_1,\ldots,E_6)=(J,M,J,M,M,M),\qquad
+y_i(W)=d+g(i)\operatorname{tr}(Q_iP).
+\end{gathered}
+\tag{51.1}
+$$
+
+The parent satisfies $(y_0,\ldots,y_4)=(0,24,147/5,24,18)$;
+write $p=y_5$, $v=y_6$, and for $p\ne24$ let $C(p,v)$ contain
+all its compatible complete worlds. Each world has its own whole polynomial and its own
+fixed drift. No degree-three, nonzero-sample, simple-root or nonzero-drift
+restriction is added. Put
+
+$$
+\begin{gathered}
+j=b+r(1-r)/b,\quad n=j+r,\quad T=1+b,\quad U=1+2b,\\
+e=d-24,\qquad
+\Lambda=1+6/T+1/U-4/j-4/n,\\
+D_s=5\{(b^2+8b+4)jn-2TU(j+n)\}.
+\end{gathered}
+\tag{51.2}
+$$
+
+The singular parent is the locus $\Lambda=0$. All four factors
+$T,U,j,n$ are positive, and
+$D_s=(5/2)TUjn\Lambda$, so this is exactly the $D_s=0$ locus.
+The undivided parent equation is
+
+$$
+e\Lambda+\frac{24}{5}(b-1/8)(6/T-2/U)=0,
+\qquad 6/T-2/U=\frac{2(2+5b)}{TU}>0.
+\tag{51.3}
+$$
+
+The mathematical suppliers for this definition are
+[CommonParent](FIB_COMMON_PARENT_GEOMETRY_AND_MIXED_CHILDREN.md),
+Theorems 2.1–2.2 and 4.2, and
+[StrictReal III](FIB_STRICT_REAL_JOINT_INCIDENCE_SUPPORT_III.md),
+Proposition 11.1 and Lemma 14.2. In particular their exhaustive singular
+classification, rather than a regular-chart parametrization, gives
+exactly the two lines
+
+$$
+\begin{gathered}
+b=1/8,\quad r=\rho_-\ \hbox{or}\ \rho_+,\quad e\in\mathbb R,\\
+\Phi(r)=438272r^4-931328r^3+540800r^2-50728r-853=0,\\
+134815/10^6<\rho_-<134816/10^6,\qquad
+902449/10^6<\rho_+<902450/10^6.
+\end{gathered}
+\tag{51.4}
+$$
+
+Every point of either line has its unique legal nonzero whole gain.
+The symbols $\rho_\pm$ distinguish these fixed singular roots from
+the continued regular endpoints below. On these lines, the supplied
+responses, with $n=1/8+9r-8r^2$, are
+
+$$
+\begin{gathered}
+p=24+eA(n),\qquad v=84+24n+eB(n),\\
+A(n)=-\frac{716n^2+31n-900}{144n},\qquad
+B(n)=-\frac{142n^2+185n-400}{10n},\\
+23/20<n(\rho_-)<5/4,\qquad 5/3<n(\rho_+)<7/4.
+\end{gathered}
+\tag{51.5}
+$$
+

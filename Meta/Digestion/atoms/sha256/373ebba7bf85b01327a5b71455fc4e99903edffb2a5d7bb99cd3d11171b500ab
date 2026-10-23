@@ -1,0 +1,43 @@
+**定理 3.2（先验依赖的最大剩余歧义与叶点障碍）。** Under (1.3), the attainable categorical risks form $[0,M(p)]$, where
+
+$$
+\boxed{
+M(p)=\min\{p_a+p_d,\ p_b+p_c+p_e,\ p_a+p_b+p_e\}.
+}
+\tag{3.5}
+$$
+
+If all $p_i\le1/2$, the full indicator baseline plateau $r_i=p_i$ is feasible precisely when
+
+$$
+p_a+p_d=\frac12,\qquad p_c\le p_a.
+\tag{3.6}
+$$
+
+Here $M(p)$ is the maximum remaining categorical risk. The minimum achievable risk is zero, attained by revealing $C$.
+
+Proof. Write $L_0=p_a+p_d$, $R_0=p_b+p_c+p_e$, $U=p_b+p_e$. For every feasible $z$, (3.2) gives $\epsilon\le L_0,R_0$. Also $z_{ac}\le p_a$ and
+
+$$
+\epsilon=z_{ac}+(z_{ab}+z_{bd})+(z_{ae}+z_{de})\le p_a+U.
+$$
+
+These give (3.5) as an upper bound. For attainment set $t=\min(p_a,p_c)$ on $ac$. The four remaining edges form the complete bipartite graph between $\{a,d\}$ and $\{b,e\}$. Its remaining total capacities are $L_0-t$ on the left and $U$ on the right. Put $x=\min(L_0-t,U)$ and choose explicitly
+
+$$
+\ell_a=\min(p_a-t,x),\quad \ell_d=x-\ell_a,\qquad
+s_b=\min(p_b,x),\quad s_e=x-s_b.
+$$
+
+These are nonnegative, obey their respective capacities, and have both side sums $x$. If $x>0$, assign $z_{ij}=\ell_i s_j/x$ on those four edges; if $x=0$, assign zero. With $z_{ac}=t$, the total edge weight is
+
+$$
+t+x=\min(L_0,U+t)
+=\min(L_0,U+p_a,U+p_c)=M(p).
+\tag{3.7}
+$$
+
+The construction of Theorem 3.1 realizes it. Scaling this $z$ by any factor in $[0,1]$ gives the whole interval, including all degenerate cases.
+
+For the plateau substitute $r=p$ into (3.2): the bipartite equality is $L_0=R_0=1/2$, and the remaining constraint is $p_c\le p_a$. Conversely these two conditions make $r=p$ feasible in (3.2). The assumption $p_i\le1/2$ makes $p_i$ the binary baseline error; no nonbalanced binary baseline has been replaced by its larger class mass. $\square$
+

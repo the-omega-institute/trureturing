@@ -1,0 +1,44 @@
+## 12. The all-real-parameter operator limit
+
+Retain exactly the data, chart and family (1.1)–(1.5). In particular,
+the domain of each capped operator is the original $D(L_A)$, its form
+domain is $\mathcal F_A$, and the full killed unit-source Green field
+is capped by a spatial minimum. All preparations, controls, guards,
+grouping, periodic phases and the two killed height endpoints remain
+fixed. No angular symmetry of the actual coefficients or states is
+assumed. Constants below may depend on this one fixed smooth positive
+$\rho$, smooth horizontal SPD $A$, source and admissible $b$.
+
+Use the genuine inherited-wall pair $\mathcal A,\mathcal B$ of Native
+Green stability, Theorem 21.1, with scalar product linear in its first
+variable. Write $S_{\min}=S_{D,\min}$ and $S_{\max}=S_{D,\max}$ for
+that theorem's operators, and set
+
+$$
+\begin{aligned}
+G_\kappa&=S_{\max}|_{\{u:\mathcal A(u)=\kappa\mathcal B(u)\}},
+                      &&\kappa\in\mathbb R,\\
+F&=S_{\max}|_{\ker\mathcal B},&
+\kappa_b&=\kappa_{\rm cap}-\log b,\\
+\lambda_n&=\frac{n^2\pi^2}{\alpha},&&n=1,2,\ldots .
+\end{aligned}
+\tag{12.1}
+$$
+
+All these realizations retain the original outer domain. Here
+$\lambda_1=\lambda_D$, and $G_\kappa=F_{-\kappa}$ in the source-line
+notation of §§5–7. The boundary pairing is
+
+$$
+[u,v]=K\{\mathcal B(u)\overline{\mathcal A(v)}
+                  -\mathcal A(u)\overline{\mathcal B(v)}\},\qquad
+K=m_0\frac\pi2 C,\quad C=\int_Jc\phi^2da.
+\tag{12.2}
+$$
+
+In particular $K$ has no factor $a_*^2$. General maximal vectors have
+the angular-$L^2$/weighted-graph source expansion of that theorem,
+rather than a uniform pointwise expansion of the whole maximal domain.
+The source coordinates in (12.1) will be evaluated only on actual
+limiting maximal vectors.
+

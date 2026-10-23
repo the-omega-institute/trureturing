@@ -1,0 +1,44 @@
+**定理 3.2（响应裕量下的鲁棒白盒分离）。** 令 \(\widehat S\) 是任意确定性候选表示，含编码 \(m:S\to\widehat S\)、更新 \(\widehat T\) 和读出 \(\widehat o\)。假设存在 \(\varepsilon\ge0\)，使对全部 \(s\in S\) 和 \(|w|\le q-1\)，
+
+$$
+d_Y\bigl(\widehat o(\widehat T_w(m(s))),\rho_s(w)\bigr)\le\varepsilon.
+$$
+
+若
+
+$$
+\boxed{2\varepsilon<\Delta_q,}
+$$
+
+则 \(m\) 不会合并不同的完整未来类；特别地
+
+$$
+\bigl|m(S)\bigr|\ge q.
+$$
+
+**证明。** 假设 \(s,t\) 属于不同完整未来类但 \(m(s)=m(t)\)。候选更新确定，所以对每个共同词 \(w\)，
+
+$$
+\widehat o(\widehat T_w(m(s)))
+=
+\widehat o(\widehat T_w(m(t))).
+$$
+
+于是三角不等式给出
+
+$$
+d_Y(\rho_s(w),\rho_t(w))\le2\varepsilon
+\qquad(|w|\le q-1).
+$$
+
+由于 \(s,t\) 本身属于不同完整未来类，\(\Delta_q\) 的定义给出
+
+$$
+\Delta_q
+\le
+\max_{|w|\le q-1}d_Y(\rho_s(w),\rho_t(w))
+\le2\varepsilon,
+$$
+
+与 \(2\varepsilon<\Delta_q\) 矛盾。这里始终保留的是假设中被候选合并的原状态对，而不是另取达到全局最小值的状态对。 \(\square\)
+

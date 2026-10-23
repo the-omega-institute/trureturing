@@ -1,0 +1,30 @@
+**Corollary 11.6 (Exceptional strata and exact remaining obligation).**
+Theorem 11.5 supplies an evaluated necessary candidate cover on the
+whole original response plane. It does not supply an actual terminal-M
+pair, a joint witness or uniform exclusion. It does not prove that
+$P_J$ and $P_M$ are coprime, that their common zero set is finite,
+or that any of their real common zeros is feasible.
+
+Proof. Bases with $B=0$ are retained in full, with every possible
+endpoint stratum. The zero-drift examples in the supplied local
+ordinary source are therefore not erased. The same applies to
+leading-degree drops, repeated carrier roots, failed linear lifts,
+any common or vertical polynomial factor and any failed denominator.
+Outside this exceptional set the remaining obligation is the strict
+real realization of independently chosen off-diagonal J and M pairs
+at $P_J=P_M=0$. A shared algebraic component of these two numerators
+has not been excluded and remains in that displayed intersection.
+A component of $B=0$, including any vertical component, remains in
+the first part of the union. No assertion of enumeration or feasibility
+is implicit in either part.
+
+The carrier equations are only necessary; reconstruction and all
+strict guards are still required at any candidate. Complex projection,
+a real algebraic candidate and an actual four-world joint witness
+are different conditions. Theorem 11.5 proves only the first necessary
+restriction together with entire-child injectivity off its support.
+The prior finite singular-line restrictions and the prior local
+zero-drift existence retain their exact scopes. The original completion
+criterion is still (11.1), with all its original strata and independent
+pairs. ∎
+

@@ -1254,6 +1254,107 @@ complete signed floor (S4), or proof of RH is obtained. Qualitative
 density $o(X)$ and averages in other variables still require the
 quantitative same-source measure transport described after (P4).
 
+### The classical Huxley rate on the same CA price path
+
+The supplier's recorded classical prime-error statement is the Huxley
+prime-number-theorem rate, as quoted in
+[Matomäki--Teräväinen, §2.1, printed p.4](../Analytic/shortuniformity2026robininterfaces.md#a-stronger-error-on-longer-möbius-intervals),
+with a fixed interval exponent $\theta>7/12$. Apply it here with
+$X=A$, $\theta=2/3$, and $A^{2/3}\le t\le A$. Write
+
+$$
+\rho_A=\left(\frac{\log A}{\log\log A}\right)^{1/3}
+       =\left(\frac{L}{\log L}\right)^{1/3}.
+$$
+
+After choosing a fixed $0<c_\Lambda<c_{\Lambda,2/3}$ to absorb the
+supplier's implied constant, put
+$\varepsilon_A=\exp(-c_\Lambda\rho_A)$. The complete $\psi$ increment,
+including every prime power, then gives for all sufficiently large $A$
+
+$$
+|B(A+t)-B(A)-t|\le C_\Lambda\varepsilon_A t
+\qquad(A^{2/3}\le t\le A),
+\tag{P10}
+$$
+
+with a fixed $C_\Lambda>0$. The existing correction
+$|B(x)-\psi(x)|\ll\sqrt{x}[\log(2x)]^{5/2}$ is absorbed because
+$\sqrt A L^{5/2}=o(\varepsilon_A A^{2/3})$. No future $C_b$ is assumed
+regular or GA1, and all activation ties remain in $B(b)$.
+
+Reuse the pressure identity, the tangent gap, the original right-tail
+maximality, and the same short initial segment from (P6). They give,
+for one fixed $C_2>0$ and $A\le b\le2A$,
+
+$$
+0\le X_N-X(b)
+\le C_2 k(A)\left[A^{4/3}+\varepsilon_A(b-A)^2\right].
+\tag{P11}
+$$
+
+This is the same actual ordinary selected $N$, full layer rule, price
+$g(b)$, and $B(b)$ as in (P1)--(P9); only the already sourced prime
+error is changed. Let the fixed supplied excess from (S2) be
+$X_N\ge dA^{-\eta'}$ with $d>0$ and $0<\eta'<1/2$. For a sufficiently
+small fixed $\kappa>0$, depending only on $d$ and $C_2$, set
+
+$$
+h_{\eta'}^{\mathrm H}(A)
+=\kappa A^{1-\eta'/2}\sqrt{L}\,\exp\!\left(\frac{c_\Lambda\rho_A}{2}\right).
+$$
+
+Then $h_{\eta'}^{\mathrm H}(A)=o(A)$ and
+
+$$
+k(A)\varepsilon_A\bigl(h_{\eta'}^{\mathrm H}(A)\bigr)^2
+=\kappa^2\left(1+\frac1L\right)A^{-\eta'},
+\qquad
+k(A)A^{4/3}=o(A^{-\eta'}).
+$$
+
+Thus (P11) yields, eventually,
+
+$$
+X(b)\ge\frac d2A^{-\eta'}
+\qquad\left(A\le b\le A+h_{\eta'}^{\mathrm H}(A)\right).
+\tag{P12}
+$$
+
+Compared with the previously retained width in (P8), the ratio is
+
+$$
+\frac{h_{\eta'}^{\mathrm H}(A)}{\widetilde h_{\eta'}(A)}
+=\frac{\kappa}{\lambda}\sqrt L\,
+\exp\!\left(\frac{c_\Lambda\rho_A-L^{1/4}}2\right)\longrightarrow\infty,
+$$
+
+using the same supplied $\eta'$ from (S2) as in (P8).
+For the existing set
+$\mathcal E_X=\{b\in[X,3X]:X(b)>\delta X^{-\eta'}\}$ with
+$\delta=d/(4\,2^{\eta'})$, every selected $A\in[X,2X]$ places the
+interval in $\mathcal E_X$ for large $X$. A sufficient still-missing
+exceptional-set estimate is therefore
+
+$$
+|\mathcal E_X|=o\!\left(
+X^{1-\eta'/2}\sqrt{\log X}\,
+\exp\!\left(\frac{c_\Lambda}{2}
+\left(\frac{\log X}{\log\log X}\right)^{1/3}\right)
+\right).
+\tag{P13}
+$$
+
+The constants $c_\Lambda$, $C_\Lambda$, $C_2$, $d$, and $\kappa$ are
+fixed existential constants; the sufficiently-large threshold may
+depend on the supplied fixed $\eta'$. This is an application of the
+published prime-error rate to the unchanged actual CA persistence
+interface, with no new supplier proof or estimate. It is not Lean
+certified and claims no source priority. Neither (P13), a
+directed mean bound, the original signed-tail floor, nor RH is proved;
+the actual-price measure transport and all unpaid boundaries remain
+explicit.
+
 ## A partial zero-free envelope leaves the supplied excess unpaid
 
 Keep the actual family (S2), proper GA1 and the event-free bridge above.

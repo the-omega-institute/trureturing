@@ -1,0 +1,14 @@
+**Corollary 11.1 (cubic constant-drift instance at the acquired history).** At $k=3,\delta=0$, the chronological word is $M^8JM^7$, with sixteen atoms and seventeen readings including the current one. Starting after the original six atoms $(J,M,J,M,M,M)$, it ends at absolute clock $22$; the whole history has twenty-two atoms and twenty-three readings. It recovers every original world of Definition 1.1 from its actual new continuation data. For arbitrary proposed continuation data, realization by a world in the entire $C(p,v)$ is equivalent to Corollary 9.3's source conditions together with all seven original equations of Theorem 6.4.
+
+**Proof.** Substitute $k=3,\delta=0$ in Theorems 7.2 and 9.1 and Proposition 10.1. The acquired $Q_6$ and $t_0=6$ are those of Definition 6.3. The common-source inverse of Corollary 9.3 supplies exactly one original world if its source conditions hold. That world realizes the preceding history if and only if each of its seven actual acquired readings equals the given original row, which is exactly the seven equations in Theorem 6.4. The last such equation identifies the current continuation reading with $v$. Necessity and sufficiency follow using one whole gain, one drift and one source for every row; uniqueness follows from the continuation inverse. ∎
+
+The data word in Corollary 11.1 is distinct from the word in Theorem 2.1; no readings from their different continuations are equated. The original seven readings remain
+
+$$
+(0,24,147/5,24,18,p,v)
+$$
+
+at clocks $0,\ldots,6$, and both alternative terminal responses in Problem 6.5 are still evaluated at clock $7$. That problem still requires some $p\ne24,v$ and two independently chosen distinct-world pairs in the same entire $C(p,v)$, one pair colliding under $J$ and one under $M$. Its full degree/root/source domain and its allowance of independent drifts between worlds are unchanged.
+
+Later recovery from additional acquired readings proves neither existence nor nonexistence of these two pairs. Explicitly, if two distinct worlds share the entire acquired child and the terminal $M$ response, then their readings along $M^8JM^7$ agree at continuation indices zero and one but differ at some index $2\le i\le16$, by injectivity. If they instead collide under the alternative terminal $J$, injectivity only implies a differing index $1\le i\le16$ on this $M$-first path. Both statements are conditional on the respective pair's existence and create no such pair. The independent same-child $J/M$ existence question of Problem 6.5 remains open.
+
