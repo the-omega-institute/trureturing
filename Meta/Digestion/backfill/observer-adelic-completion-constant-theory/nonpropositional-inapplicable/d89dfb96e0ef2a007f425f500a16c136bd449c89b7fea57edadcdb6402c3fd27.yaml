@@ -5,3 +5,7 @@ cas_ref: sha256:d89dfb96e0ef2a007f425f500a16c136bd449c89b7fea57edadcdb6402c3fd27
 coverage_gids: []
 receipts:
   unresolved_subitems: []
+  nonpropositional:
+    justification: list label naming a proposed invariant; no proposition
+    previous_atom_id: 695e32e11ed1a4223ae8c29773165a88e60e664b40967e0809bbb33b211b6a3e
+    next_atom_id: e6bcc3ad3c185ec680261c643e2c406f006204971581de97d47b7835795ecb13
