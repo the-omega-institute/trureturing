@@ -153,7 +153,7 @@ internal sealed class SignedSplitSuccessorDocument : IScribeDocumentDefinition
             Arr(Eq(At("apply", TV(V("t")), V("univ")), At("apply", TV(At("nu", n)), V("univ"))),
                 Lt(At("real", TV(V("t")), At("A", j)), At("b", j)))));
         Formula body = All("M", nat, Ex("n", nat, And(Mem(n, V("S")),
-            And(Lt(V("M"), n), All("j", f, candidate)))));
+            And(Lt(V("M"), n), And(All("j", f, fibre), All("j", f, candidate))))));
         body = Arr(All("j", f, Lt(At("real", V("v"), At("A", j)), At("b", j))), body);
         body = All("b", Fn(f, V("Real")), body);
         body = Arr(All("j", f, At("Tendsto", Lam("n", At("real", TV(At("s", n)), At("A", j))),
@@ -197,7 +197,9 @@ internal sealed class SignedSplitSuccessorDocument : IScribeDocumentDefinition
             Lt(Fraction(D(1), D(6)), At("apply", t, V("H"))));
         var conclusion = Ex("H", Set(k), And(At("IsClopen", V("H")),
             And(At("Subset", V("H"), At("diff", At("preimage", V("p"), V("V")), V("R"))),
-            All("t", SM(k), Arr(mapped, Arr(mass, lower))))));
+            And(Ex("B", Set(l), And(At("IsClopen", V("B")), And(At("Subset", V("B"), V("V")),
+                Eq(V("H"), At("diff", At("preimage", V("p"), V("B")), V("R")))))),
+                All("t", SM(k), Arr(mapped, Arr(mass, lower)))))));
         var small = All("t", SM(k), Arr(mapped, Arr(mass,
             Leq(At("real", TV(t), V("R")), Fraction(D(1), D(1,6))))));
         Formula body = Arr(small, conclusion);
@@ -247,8 +249,14 @@ internal sealed class SignedSplitSuccessorDocument : IScribeDocumentDefinition
             Arr(Eq(At("apply", TV(t), V("univ")), At("apply", TV(nu), V("univ"))),
                 And(Lt(Fraction(D(1,3), D(4,8)), At("apply", t, V("H"))),
                     Lt(Fraction(D(1), D(6)), At("apply", t, V("H")))))));
+        var literal = Ex("B", Set(l), And(At("IsClopen", V("B")), And(At("Subset", V("B"), vn),
+            Eq(V("H"), At("diff", At("preimage", p, V("B")), exclusion)))));
+        var pieceFibre = All("x", k, All("y", k, Arr(Mem(At("p", x), vn),
+            Arr(Mem(At("p", y), vn), Arr(Eq(At("p", x), At("p", y)),
+                Iff(Mem(x, V("H")), Mem(y, V("H"))))))));
         var piece = Ex("H", Set(k), And(At("IsClopen", V("H")),
-            And(At("Subset", V("H"), At("diff", At("preimage", p, vn), exclusion)), candidate)));
+            And(At("Subset", V("H"), At("diff", At("preimage", p, vn), exclusion)),
+                And(literal, And(pieceFibre, candidate)))));
         Formula body = All("M", nat, Ex("n", nat,
             And(Mem(n, V("S")), And(Lt(V("M"), n), piece))));
         body = Arr(Earlier(Lt(At("real", V("v"), wn), budget)), body);
@@ -389,7 +397,7 @@ internal sealed class SignedSplitSuccessorDocument : IScribeDocumentDefinition
                     Paragraph(Text("Fix a finite family of clopen sets A(j). The positive variation evaluations of the reference lifts converge on these fixed sets to v(A(j)), each strictly below its prescribed bound b(j). "
                         + "Whole-fibre constancy for membership in every A(j) holds eventually in the infinite reservoir S. Exact preservation of base variation transfers each reference evaluation to every signed lift in its norm-preserving class.")),
                     Paragraph(Text("A finite intersection of the resulting eventual conditions and a lower index bound leaves an infinite tail in S. One target index therefore controls every exclusion simultaneously for every signed lift. "
-                        + "The family may be empty. The input is fixed-test convergence of positive variations; it assumes neither a moving-test estimate nor a signed weak-star limit for those variations."))), DescribeRole.Theorem),
+                        + "The same selected index retains whole-fibre constancy of every exclusion. The family may be empty. The input is fixed-test convergence of positive variations; it assumes neither a moving-test estimate nor a signed weak-star limit for those variations."))), DescribeRole.Theorem),
             Describe.Lean(DescribeId.Create("signed-target-piece"),
                 DeclarationHandle.Create(Owner + "exists_signed_target_piece"),
                 H("Signed target piece after exclusion"), StatementSource.FromAuthor(TargetStatement()),
@@ -397,13 +405,13 @@ internal sealed class SignedSplitSuccessorDocument : IScribeDocumentDefinition
                     Paragraph(Text("The target is an arbitrary real signed measure nu on a compact Hausdorff zero-dimensional Borel space L. Its Jordan parts are regular, its variation vanishes off the clopen V, and its positive mass is at least one half. "
                         + "The continuous p maps K to L. For every lift preserving signed projection and total variation mass, the clopen exclusion R has variation mass at most one sixteenth.")),
                     Paragraph(Text("Positive-clopen approximation gives a clopen B inside V with nu(B) greater than one third. Put H=p inverse(B) minus R. For every such signed lift t, its mass on p inverse(B) is nu(B), while t on the removed intersection is at most its variation on R. "
-                        + "Thus t(H) is greater than one third minus one sixteenth, namely thirteen forty-eighths, which is greater than one sixth. The selected H is shared by all lifts."))), DescribeRole.Theorem),
+                        + "Thus t(H) is greater than one third minus one sixteenth, namely thirteen forty-eighths, which is greater than one sixth. The selected H is shared by all lifts. The output retains the clopen B, its containment in V, and the literal equation H=p inverse(B) minus R."))), DescribeRole.Theorem),
             Describe.Lean(DescribeId.Create("finite-exclusion-target"),
                 DeclarationHandle.Create(Owner + "exists_target_after_finite_exclusion"),
                 H("Target after the finite earlier exclusions"), StatementSource.FromAuthor(FiniteTargetStatement()),
                 AssessedProvenance.FromRepo(), Blocks(
                     Paragraph(Text("The finite row set A and earlier columns j<q are fixed before the target index is selected. Distinct row codes give the budget (1/64)(1/2)^(code(r))(1/2)^j. The sum of all such budgets is at most one sixteenth, including when A or the earlier column set is empty.")),
-                    Paragraph(Text("The positive reference variation on each fixed clopen exclusion is strictly below its budget. Positive-variation convergence and whole-fibre constancy select one larger target index for which every signed norm-preserving lift obeys all those bounds. Finite subadditivity therefore bounds the variation of their whole union by one sixteenth. Positive clopen approximation then constructs the common H outside the union with signed mass greater than thirteen forty-eighths, hence greater than one sixth, for every lift."))), DescribeRole.Theorem),
+                    Paragraph(Text("The positive reference variation on each fixed clopen exclusion is strictly below its budget. Positive-variation convergence and whole-fibre constancy select one larger target index for which every signed norm-preserving lift obeys all those bounds. Finite subadditivity therefore bounds the variation of their whole union by one sixteenth. Positive clopen approximation then constructs the common H outside the union with signed mass greater than thirteen forty-eighths, hence greater than one sixth, for every lift. The literal base slice is retained, and the earlier exclusion tests prove whole-target-fibre constancy of H at this same selected index."))), DescribeRole.Theorem),
             Describe.Lean(DescribeId.Create("literal-split-carrier"),
                 DeclarationHandle.Create(Owner + "splitCarrier"), H("Literal split carrier"),
                 StatementSource.FromAuthor(SplitStatement()),
@@ -421,5 +429,36 @@ internal sealed class SignedSplitSuccessorDocument : IScribeDocumentDefinition
                         + "Consequently the union of all even H(s) and its finite even prefix have exactly the same trace on W(r,q). Closure preserves this trace because both the support and the finite prefix are clopen.")),
                     Paragraph(Text("Define Z as the closure of the full even union and Y as the closure of its complement. These closed sets cover K. "
                         + "Their local traces are complementary, so their common boundary avoids each active support. The literal split is closed, its first projection is surjective, and its new Boolean coordinate on an active support is precisely membership in the finite prefix. "
-                        + "Pairwise disjoint clopen target supports T(q), with H(q) contained in T(q), have exact traces H(q) on even q and the empty set on odd q, including q=0. Their boundaries are excluded as well. The row type can be finite, including a single row. Ordered index selection, measure bookkeeping, and successor signed convergence require further arguments."))), DescribeRole.Theorem))));
+                        + "Pairwise disjoint clopen target supports T(q), with H(q) contained in T(q), have exact traces H(q) on even q and the empty set on odd q, including q=0. Their boundaries are excluded as well. The row type can be finite, including a single row."))), DescribeRole.Theorem),
+            Describe.Lean(DescribeId.Create("ordered-history"), DeclarationHandle.Create(Owner + "OrderedHistory"),
+                H("Finite dynamic history"), StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("A history of depth q stores the target indices, target clopens, finite clopen test families and every actual row's auxiliary indices on Fin(q). A column may contain countably many independent row choices."))), DescribeRole.Definition),
+            Describe.Lean(DescribeId.Create("ordered-column"), DeclarationHandle.Create(Owner + "OrderedColumn"),
+                H("One measured column"), StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("The column stores the target index and clopen, the fixed finite tests and one auxiliary index for every row."))), DescribeRole.Definition),
+            Describe.Lean(DescribeId.Create("append-history"), DeclarationHandle.Create(Owner + "append"),
+                H("Literal append"), StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("All four old arrays are retained by Fin.snoc. The new entry is appended at the last index."))), DescribeRole.Definition),
+            Describe.Lean(DescribeId.Create("restrict-history"), DeclarationHandle.Create(Owner + "restrict"),
+                H("Exact truncation"), StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("Truncation restricts every array along Fin.castSucc."))), DescribeRole.Definition),
+            Describe.Lean(DescribeId.Create("ordered-column-spec"), DeclarationHandle.Create(Owner + "Spec"),
+                H("Measured extension obligations"), StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("The predicate records exact truncation, increasing indices, the active row set, the literal finite exclusion and target slice, target whole-fibre constancy and signed mass, the finite test family, pool membership and every-lift finite signed marginal bounds. It is an output predicate, not a prefix assumption."))), DescribeRole.Definition),
+            Describe.Lean(DescribeId.Create("ordered-signed-column"), DeclarationHandle.Create(Owner + "exists_ordered_signed_column"),
+                H("Adaptive signed column"), StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("The finite set of rows with code below q and all earlier columns determine the exclusion. Compact separation derives every fixed clopen fibre test from the original continuous separating coordinates, including empty carriers or coordinate families. The target index retains the earlier tests; its literal slice supplies fibre constancy at that same index. Only then are all earlier tests and the three clopens B(q), H(q), R(q) combined, and each row chooses its next auxiliary index independently.")),
+                    Paragraph(Text("The row bases form a dependent family. Inputs are actual signed references and infinite reservoirs, coordinate-E, positive target-variation convergence and the previous measured history. No moving-test estimate or suitable successor split is assumed. The one-column theorem does not choose old/new birth reservoirs or initialize the residual label."))), DescribeRole.Theorem),
+            Describe.Lean(DescribeId.Create("ordinary-pool"), DeclarationHandle.Create(Owner + "ordinaryPool"),
+                H("Old reservoirs and the new row's signed pool"), StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("Old J and permanent N have proof-indexed domains excluding the distinguished new row. Their intersection uses the original column parity. The new row instead uses its signed convergence pool; no old J or N is supplied at birth."))), DescribeRole.Definition),
+            Describe.Lean(DescribeId.Create("ordinary-reference"), DeclarationHandle.Create(Owner + "ordinaryReference"),
+                H("Old references and the constructed birth reference"), StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("An inherited signed reference is supplied only on old rows. The distinguished new row uses its independently extracted signed cluster. This definition never requests an old reference on the new row."))), DescribeRole.Definition),
+            Describe.Lean(DescribeId.Create("measured-dynamic-split"), DeclarationHandle.Create(Owner + "exists_measured_dynamic_split"),
+                H("Dynamic measured closed split"), StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("Starting from the empty history, the measured column construction is iterated without changing earlier entries. Its geometric-series small-mass invariant supplies the strict margins at the next target choice. Stable entries give strictly increasing target and row indices. An earlier auxiliary support belongs to every later active exclusion, so the selected later H avoids it.")),
+                    Paragraph(Text("The closed split is constructed from these same dynamic H and m, using exists_closed_split_of_ordered_exclusion. Its output includes the literal closed carrier, surjective projection, whole-support auxiliary and target traces and boundary exclusion. Rows may be finite, including a singleton distinguished new row. The signed G conclusion applies to every norm-preserving real signed lift: even target columns have side mass greater than one sixth and odd columns have exact zero, giving infinitely many witnesses of both kinds.")),
+                    Paragraph(Text("Finite Boolean marginal errors control every union of test atoms. Every fixed old clopen is eventually a test, and the even prefixes increase. The published signed reference convergence theorem therefore supplies a regular represented signed limit on every fixed-label subsequence. Interleaving two choices proves that one common represented limit works for every choice. The same convergence is transferred to the actual J filter by its increasing enumeration.")),
+                    Paragraph(Text("The constructed I includes the active auxiliary indices and all target n indices on the target row. The actual support and fibre identifications with that row transfer the same-index target E witnesses. Old I and J are refined one-sidedly, old N is unchanged, and the new row's N is first defined from the scheduled parity pieces. The birth reservoirs are disjoint by strict index increasingness, and old disjointness is retained. Every J meets both reservoirs infinitely often. The full fixed-clopen and new Boolean coordinate fibre condition is derived on this final ordinary I. Signed weak-star compactness constructs the new row's signed reference pools internally. Independently, compactness of probability measures extracts the target positive-variation limit from the original infinite target pool; it is not identified with the variation of a signed reference. Only after this I is fixed, norm-preserving lift existence and signed compactness construct the residual-label references on every row. Full fibre-E transfers their convergence to every choice of lifts, and their permanent parity reservoirs are then defined. Any later common-row enlargement requires its own residual initialization on the genuinely final I. The literal ordinal-prefix adapter, full CH recursion and both analytic endpoints remain outside this conclusion."))), DescribeRole.Theorem))));
 }
