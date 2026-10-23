@@ -5,3 +5,7 @@ cas_ref: sha256:5b602b61af1304bb74cd86e428836349ffaec9cd1bd802b24fb8e70b69030ccb
 coverage_gids: []
 receipts:
   unresolved_subitems: []
+  nonpropositional:
+    justification: 章节引言预告三类可用作完成参数的层级；没有列出独立数学命题。
+    previous_atom_id: 46832ac0ec2c3c5ad2d4b2edacda31958f84162ac7f6e5dba7b549ffbe853bfb
+    next_atom_id: 1dd5c79b6c8067cfac74a9147c735f900f1032a3e1a6124fce071c80c44e0bc4

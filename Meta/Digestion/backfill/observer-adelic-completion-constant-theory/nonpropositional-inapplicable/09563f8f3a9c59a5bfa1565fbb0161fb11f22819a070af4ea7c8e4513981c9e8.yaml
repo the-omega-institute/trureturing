@@ -5,3 +5,7 @@ cas_ref: sha256:09563f8f3a9c59a5bfa1565fbb0161fb11f22819a070af4ea7c8e4513981c9e8
 coverage_gids: []
 receipts:
   unresolved_subitems: []
+  nonpropositional:
+    justification: 为尚未建立的 J 映射列举候选研究输入 memory holonomy；没有数学性质断言。
+    previous_atom_id: 3c5628f355ef43f99e2a5e61c97c52272e030231b56227ff16cfb3d74ac4bca2
+    next_atom_id: 3e48bf2a0c4d9c2d0303ff4f9ad151861dd4d0459ef9c44393b70275b5da8a3d

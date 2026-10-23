@@ -5,3 +5,7 @@ cas_ref: sha256:3c5628f355ef43f99e2a5e61c97c52272e030231b56227ff16cfb3d74ac4bca2
 coverage_gids: []
 receipts:
   unresolved_subitems: []
+  nonpropositional:
+    justification: 为尚未建立的 J 映射列举候选研究输入 golden residual factor；不主张该输入足以构造 J。
+    previous_atom_id: 25710c941f8c0fb9b90c996394ce234d902d08ae75ada5de5a3d8b725c1eba95
+    next_atom_id: 09563f8f3a9c59a5bfa1565fbb0161fb11f22819a070af4ea7c8e4513981c9e8

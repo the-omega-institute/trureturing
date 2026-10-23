@@ -5,3 +5,7 @@ cas_ref: sha256:818bd37df6b36aaf7fa51fe915387501a114378ab73ec1db1f92642ae2b9a980
 coverage_gids: []
 receipts:
   unresolved_subitems: []
+  nonpropositional:
+    justification: 参数词汇表将 n 命名为观察记忆深度；没有等式、估计或实现性断言。
+    previous_atom_id: 1261b31245514878c846e43a46ae26f7185f3ed635ccbe7249fe9271513e6dca
+    next_atom_id: bcf2830a9134e19d8e2ed97c057b1756666f4d7b6bee63de9d11718ee8676802

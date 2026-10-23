@@ -5,3 +5,7 @@ cas_ref: sha256:8fe6a13f84b8f0e8b450031fcbeff3c4b7e91f6187af4bdac17c7a30466c7dbd
 coverage_gids: []
 receipts:
   unresolved_subitems: []
+  nonpropositional:
+    justification: 审计表把实际离线零点存在性明确标为未知；没有断言存在或不存在离线零点。
+    previous_atom_id: b7c4e65a9ec2c2988702ef2e04d4b996e1f299f165c53405458a16b2b4a690b2
+    next_atom_id: 9071f1ce18919ebd9583aaf3bd6ea92752fe34233b73a5de4698c1d41bf08e92
