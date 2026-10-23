@@ -49,13 +49,15 @@ def lift {K : Type*} [Field K] (r : Kˣ) (c : K) : Perm (Fin 6 × K) where
     rintro ⟨i, h⟩
     fin_cases i <;> simp
 
-def initialRow {K : Type*} (v : Fin 6 × K) : K :=
+def initialRow {K : Type*} [Field K] (v : Fin 6 × K) : K :=
   if v.1 = 0 ∨ v.1 = 2 ∨ v.1 = 4 then v.2 else -v.2
 
 def vertex {K : Type*} (v : Fin 6 × K) : ZMod 7 × K := (column v.1, v.2)
 
 def edgeLabel {K : Type*} [Field K] (r : Kˣ) (c : K) (v : Fin 6 × K) :
     ZMod 7 × K := vertex (lift r c v) - vertex v
+
+def labelColumn : Fin 6 → ZMod 7 := ![2, 6, 4, 5, 1, 3]
 
 private theorem lift_round {K : Type*} [Field K] (r : Kˣ) (c h : K) :
     (lift r c ^ 6) (0, h) = (0, rowReturn r c h) := by
@@ -126,25 +128,27 @@ private theorem vertices_bijective (K : Type*) :
   · rintro ⟨d, h⟩ hd
     fin_cases d
     · exact (hd rfl).elim
-    · exact ⟨(0, h), trivial, rfl⟩
-    · exact ⟨(1, h), trivial, rfl⟩
-    · exact ⟨(2, h), trivial, rfl⟩
-    · exact ⟨(3, h), trivial, rfl⟩
-    · exact ⟨(4, h), trivial, rfl⟩
+    · exact ⟨(0, h), trivial, by norm_num [vertex, column] <;> rfl⟩
+    · exact ⟨(2, h), trivial, by norm_num [vertex, column] <;> rfl⟩
+    · exact ⟨(1, h), trivial, by norm_num [vertex, column] <;> rfl⟩
+    · exact ⟨(4, h), trivial, by norm_num [vertex, column] <;> rfl⟩
+    · exact ⟨(5, h), trivial, by norm_num [vertex, column] <;> rfl⟩
+    · exact ⟨(3, h), trivial, by norm_num [vertex, column] <;> rfl⟩
 
 private theorem labels_bijective {K : Type*} [Field K] [CharP K 7] (r : Kˣ)
     (hr : (r : K) + 1 ≠ 0) (c : K) :
     Set.BijOn (edgeLabel r c) Set.univ {v | v.1 ≠ 0} := by
   have htwo : (2 : K) ≠ 0 := (CharP.cast_eq_zero_iff K 7 2).not.mpr (by decide)
-  have hcol : Function.Injective column := by decide
-  have hcform : ∀ (i : Fin 6) (h : K), (edgeLabel r c (i, h)).1 = column i := by
+  have hcol : Function.Injective labelColumn := by decide
+  have hcform : ∀ (i : Fin 6) (h : K),
+      (edgeLabel r c (i, h)).1 = labelColumn i := by
     intro i h
-    fin_cases i <;> norm_num [edgeLabel, lift, vertex, column] <;> decide
+    fin_cases i <;> norm_num [edgeLabel, lift, vertex, column, labelColumn] <;> decide
   constructor
   · rintro ⟨i, h⟩ _
     change (edgeLabel r c (i, h)).1 ≠ 0
     rw [hcform]
-    exact (by decide : ∀ i : Fin 6, column i ≠ 0) i
+    exact (by decide : ∀ i : Fin 6, labelColumn i ≠ 0) i
   constructor
   · rintro ⟨i, h⟩ _ ⟨j, k⟩ _ he
     have hc := congrArg Prod.fst he
@@ -163,32 +167,32 @@ private theorem labels_bijective {K : Type*} [Field K] [CharP K 7] (r : Kˣ)
     · exact (hd rfl).elim
     · refine ⟨(4, -h / 2), trivial, ?_⟩
       apply Prod.ext
-      · rw [hcform]; change column 4 = (1 : ZMod 7); decide
+      · rw [hcform]; change labelColumn 4 = (1 : ZMod 7); decide
       · simp [edgeLabel, lift, vertex]
         field_simp [htwo, hr] <;> ring
     · refine ⟨(0, -h / 2), trivial, ?_⟩
       apply Prod.ext
-      · rw [hcform]; change column 0 = (2 : ZMod 7); decide
+      · rw [hcform]; change labelColumn 0 = (2 : ZMod 7); decide
       · simp [edgeLabel, lift, vertex]
         field_simp [htwo, hr] <;> ring
     · refine ⟨(5, ((1 - (r : K)) * c - h) / ((r : K) + 1)), trivial, ?_⟩
       apply Prod.ext
-      · rw [hcform]; change column 5 = (3 : ZMod 7); decide
+      · rw [hcform]; change labelColumn 5 = (3 : ZMod 7); decide
       · simp [edgeLabel, lift, vertex]
         field_simp [htwo, hr] <;> ring
     · refine ⟨(2, -h / 2), trivial, ?_⟩
       apply Prod.ext
-      · rw [hcform]; change column 2 = (4 : ZMod 7); decide
+      · rw [hcform]; change labelColumn 2 = (4 : ZMod 7); decide
       · simp [edgeLabel, lift, vertex]
         field_simp [htwo, hr] <;> ring
     · refine ⟨(3, -h / 2), trivial, ?_⟩
       apply Prod.ext
-      · rw [hcform]; change column 3 = (5 : ZMod 7); decide
+      · rw [hcform]; change labelColumn 3 = (5 : ZMod 7); decide
       · simp [edgeLabel, lift, vertex]
         field_simp [htwo, hr] <;> ring
     · refine ⟨(1, -h / 2), trivial, ?_⟩
       apply Prod.ext
-      · rw [hcform]; change column 1 = (6 : ZMod 7); decide
+      · rw [hcform]; change labelColumn 1 = (6 : ZMod 7); decide
       · simp [edgeLabel, lift, vertex]
         field_simp [htwo, hr] <;> ring
 
@@ -228,6 +232,10 @@ theorem exists_characteristic_seven_lift (K : Type*) [Field K] [Finite K] [CharP
 section RelativePathData
 
 variable {K : Type*} [Field K] [CharP K 7]
+
+noncomputable section
+attribute [local instance] Classical.propDecidable
+attribute [local instance] Classical.decEq
 
 def alpha (r : Kˣ) (u : K) : K := ((r : K) + 1) * u / (3 * (r : K))
 
@@ -269,7 +277,8 @@ private theorem alpha_den_ne_zero (r : Kˣ) : (3 * (r : K)) ≠ 0 :=
 
 private theorem alpha_equation (r : Kˣ) (u : K) :
     3 * (r : K) * alpha r u = ((r : K) + 1) * u := by
-  field_simp [alpha, alpha_den_ne_zero r]
+  unfold alpha
+  field_simp [alpha_den_ne_zero r, char7_three_ne_zero]
 
 private theorem alpha_beta_sum (r : Kˣ) (u : K) : alpha r u + beta r u = u := by
   simp [beta]
@@ -278,44 +287,98 @@ private theorem lift_predecessor_two (r : Kˣ) (u : K) :
     lift r (-alpha r u) (5, u - 2 * alpha r u) = (0, beta r u) := by
   apply Prod.ext
   · rfl
-  · simp [lift, beta]
-    rw [show -(r : K) * (u - 2 * alpha r u) +
-        (1 - (r : K)) * (-alpha r u) =
-        u - alpha r u by
-      have h := alpha_equation r u
-      linear_combination h]
+  · change -(r : K) * (u - 2 * alpha r u) +
+        (1 - (r : K)) * (-alpha r u) = u - alpha r u
+    have h := alpha_equation r u
+    linear_combination h
 
 private theorem lift_second_head (r : Kˣ) (u : K) :
     liftWithEndpoints r (-alpha r u) (predecessorTwo r u) = headTwo r u := by
-  simp [liftWithEndpoints, predecessorTwo, headTwo, lift_predecessor_two]
+  change Sum.inl (lift r (-alpha r u) (5, u - 2 * alpha r u)) =
+    Sum.inl (0, beta r u)
+  rw [lift_predecessor_two]
 
-private theorem splice_key_apply (r : Kˣ) (u : K) :
+private theorem splice_key_apply (r : Kˣ) (u : K) (hu : u ≠ 0) :
     splice r u (predecessorOne r u) = headTwo r u ∧
     splice r u (predecessorTwo r u) = target ∧
     splice r u source = headOne r u ∧
     splice r u target = source := by
-  have h₁ : headOne r u ≠ source := by simp [headOne, source]
-  have h₂ : headOne r u ≠ target := by simp [headOne, target]
-  have h₃ : headOne r u ≠ headTwo r u := by simp [headOne, headTwo]
+  have h₁ : headOne r u ≠ source := by
+    change Sum.inl _ ≠ Sum.inr _
+    exact Sum.inl_ne_inr
+  have h₂ : headOne r u ≠ target := by
+    change Sum.inl _ ≠ Sum.inr _
+    exact Sum.inl_ne_inr
+  have h₃ : headOne r u ≠ headTwo r u := by
+    intro h
+    have h' := congrArg (fun z => (z : Fin 6 × K).1) (Sum.inl.inj h)
+    norm_num [headOne, headTwo] at h'
   have hp₁ : predecessorOne r u ≠ predecessorTwo r u := by
-    simp [predecessorOne, predecessorTwo]
+    intro h
+    have h' := congrArg (fun z => (z : Fin 6 × K).1) (Sum.inl.inj h)
+    norm_num [predecessorOne, predecessorTwo] at h'
   have hp₁h₁ : predecessorOne r u ≠ headOne r u := by
-    simp [predecessorOne, headOne]
+    intro h
+    have h' := congrArg (fun z => (z : Fin 6 × K).1) (Sum.inl.inj h)
+    norm_num [predecessorOne, headOne] at h'
   have hp₁h₂ : predecessorOne r u ≠ headTwo r u := by
-    simp [predecessorOne, headTwo]
+    intro h
+    change (Sum.inl (0, -alpha r u) : carrier (K := K)) =
+      Sum.inl (0, beta r u) at h
+    have h' := congrArg Prod.snd (Sum.inl.inj h)
+    simp [beta] at h'
+    have hz : u = 0 := by
+      calc
+        u = (u - alpha r u) - (-alpha r u) := by ring
+        _ = 0 := by rw [← h']; ring
+    exact hu hz
   have hp₂h₁ : predecessorTwo r u ≠ headOne r u := by
-    simp [predecessorTwo, headOne]
+    intro h
+    have h' := congrArg (fun z => (z : Fin 6 × K).1) (Sum.inl.inj h)
+    norm_num [predecessorTwo, headOne] at h'
   have hp₂h₂ : predecessorTwo r u ≠ headTwo r u := by
-    simp [predecessorTwo, headTwo]
-  have hs : source ≠ headTwo r u := by simp [source, headTwo]
-  have ht : target ≠ headTwo r u := by simp [target, headTwo]
-  have hs' : source ≠ target := by simp [source, target]
+    intro h
+    have h' := congrArg (fun z => (z : Fin 6 × K).1) (Sum.inl.inj h)
+    norm_num [predecessorTwo, headTwo] at h'
+  have hs : source ≠ headTwo r u := by
+    change Sum.inr _ ≠ Sum.inl _
+    exact Sum.inr_ne_inl
+  have ht : target ≠ headTwo r u := by
+    change Sum.inr _ ≠ Sum.inl _
+    exact Sum.inr_ne_inl
+  have hs' : source (K := K) ≠ target (K := K) := by
+    change (Sum.inr (0 : Fin 2) : carrier (K := K)) ≠ Sum.inr 1
+    intro h
+    have h' := congrArg (fun z : carrier (K := K) =>
+      match z with | Sum.inl _ => (0 : Fin 2) | Sum.inr i => i) h
+    norm_num at h'
   have hpre₁ : liftWithEndpoints r (-alpha r u) (predecessorOne r u) = headOne r u := by
-    simp [liftWithEndpoints, predecessorOne, headOne, lift]
+    change Sum.inl (lift r (-alpha r u) (0, -alpha r u)) =
+      Sum.inl (1, alpha r u)
+    simp [lift]
   have hpre₂ : liftWithEndpoints r (-alpha r u) (predecessorTwo r u) = headTwo r u :=
     lift_second_head r u
-  simp only [splice, Equiv.Perm.mul_apply, Equiv.swap_apply_def]
-  split_ifs <;> simp_all
+  have hfixs : liftWithEndpoints r (-alpha r u) (source (K := K)) = source := by rfl
+  have hfixt : liftWithEndpoints r (-alpha r u) (target (K := K)) = target := by rfl
+  refine ⟨?_, ?_⟩
+  · simp only [splice, Equiv.Perm.mul_apply]
+    rw [hpre₁, Equiv.swap_apply_left]
+    rw [Equiv.swap_apply_of_ne_of_ne h₃.symm ht.symm]
+    rw [Equiv.swap_apply_of_ne_of_ne h₃.symm hs.symm]
+  · refine ⟨?_, ?_⟩
+    · simp only [splice, Equiv.Perm.mul_apply]
+      rw [hpre₂, Equiv.swap_apply_right, Equiv.swap_apply_left]
+      rw [Equiv.swap_apply_of_ne_of_ne h₂.symm hs'.symm]
+    · refine ⟨?_, ?_⟩
+      · simp only [splice, Equiv.Perm.mul_apply]
+        rw [hfixs]
+        rw [Equiv.swap_apply_of_ne_of_ne h₁.symm hs]
+        rw [Equiv.swap_apply_of_ne_of_ne h₁.symm hs']
+        rw [Equiv.swap_apply_right]
+      · simp only [splice, Equiv.Perm.mul_apply]
+        rw [hfixt]
+        rw [Equiv.swap_apply_of_ne_of_ne h₂.symm ht]
+        rw [Equiv.swap_apply_right, Equiv.swap_apply_left]
 
 /-- The affine equations behind the two-head splice.  The theorem records the
 actual four seams and their vector labels before the closing endpoint edge is
@@ -334,13 +397,16 @@ theorem six_column_splice_seams (r : Kˣ) (u : K) (hu : u ≠ 0)
         vertexWithEndpoints u source = (3, alpha r u)) ∧
     (vertexWithEndpoints u source -
         vertexWithEndpoints u target = (0, -u)) := by
-  have hkey := splice_key_apply r u
-  refine ⟨hkey.1, hkey.2.1, hkey.2.2.1, hkey.2.2.2.1, ?_, ?_, ?_, ?_⟩
+  have hkey := splice_key_apply r u hu
+  refine ⟨hkey.1, hkey.2.1, hkey.2.2.1, hkey.2.2.2, ?_, ?_, ?_, ?_⟩
   · simp [vertexWithEndpoints, predecessorOne, headTwo, vertex, column, beta,
       alpha_beta_sum]
-  · simp [vertexWithEndpoints, predecessorTwo, target, vertex, column]
+  · have hneg : (-5 : ZMod 7) = 2 := by decide
+    simp [vertexWithEndpoints, predecessorTwo, target, vertex, column, hneg]
   · simp [vertexWithEndpoints, headOne, source, vertex, column]
   · simp [vertexWithEndpoints, source, target]
+
+end
 
 end RelativePathData
 

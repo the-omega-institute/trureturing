@@ -49,7 +49,8 @@ abbrev liftArena : Arena where
         (initialRow v = c ↔ initialRow w = c)) ∧
       Set.BijOn (R.readout () ⟨K, f, r, c⟩) Set.univ {v | v.1 ≠ 0} ∧
       Set.BijOn (@vertex K) Set.univ {v | v.1 ≠ 0} ∧
-      (∀ h : K, (lift r c ^ 6) (0, h) = (0, rowReturn r c h))
+      (∀ h : K, (lift r c ^ 6) (0, h) =
+        (0, _root_.D5.S1.Words.Sequenceability.RowOrbitLift.rowReturn r c h))
 
 private theorem lift_bad_law : ¬ liftArena.{u}.Law liftBad := by
   intro h
@@ -76,9 +77,13 @@ def liftFamily : Registration liftArena.{u}
     refine ⟨⟨K, inferInstance, 1, 0⟩, (0, 0), (1, 0), ?_⟩
     intro he
     have h := congrArg Prod.fst he
-    have h' : (2 : ZMod 7) - 1 = 6 - 3 := by
-      simpa [liftActual, realize, edgeLabel, lift, vertex, column] using h
-    exact (by decide : (2 : ZMod 7) - 1 ≠ 6 - 3) h'
+    have h' : (3 : ZMod 7) - 1 = 2 - 3 := by
+      simpa [liftActual, realize,
+        _root_.D5.S1.Words.Sequenceability.CharacteristicSevenDetour.edgeLabel,
+        _root_.D5.S1.Words.Sequenceability.CharacteristicSevenDetour.lift,
+        _root_.D5.S1.Words.Sequenceability.CharacteristicSevenDetour.vertex,
+        _root_.D5.S1.Words.Sequenceability.CharacteristicSevenDetour.column] using h
+    exact (by decide : (3 : ZMod 7) - 1 ≠ 2 - 3) h'
 
 def liftAudit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
     (@exists_characteristic_seven_lift.{u}) (Realization liftSignature.{u}) Unit Unit where
