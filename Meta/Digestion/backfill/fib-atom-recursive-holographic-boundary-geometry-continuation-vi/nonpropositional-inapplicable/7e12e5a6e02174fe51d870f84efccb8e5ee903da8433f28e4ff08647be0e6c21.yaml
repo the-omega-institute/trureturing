@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:7e12e5a6e02174fe51d870f84efccb8e5ee903da8433f28e4ff08647be0e6c21
+  normalized_sha256: sha256:7e12e5a6e02174fe51d870f84efccb8e5ee903da8433f28e4ff08647be0e6c21
+cas_ref: sha256:7e12e5a6e02174fe51d870f84efccb8e5ee903da8433f28e4ff08647be0e6c21
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 'Nonpropositional: Section roadmap specifying source objects, literal addresses and comparison conventions; it states no new finite-coherence or residual-diagonalization theorem.'
+    previous_atom_id: 0a4a003f24281a3089e38d71cac2886c6d80d7d6553ddc7cf4aab5976aeb6164
+    next_atom_id: c308808ca68edf3adbbda3f64f8b448901349e5693c97308be8811e4c6c74296
