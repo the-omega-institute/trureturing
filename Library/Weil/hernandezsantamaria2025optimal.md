@@ -5,13 +5,13 @@ year: 2025
 title: Optimal boundary regularity and a Hopf-type lemma for Dirichlet problems involving the logarithmic Laplacian
 doi: 10.3934/dcds.2024084
 url: https://arxiv.org/abs/2401.18033v2
-claim: The published boundary theorem requires an exterior-zero equation with bounded solution and forcing. Actual cap-four features can have uniformly bounded logarithmic Fourier moments of every fixed order while their profile values at zero diverge. This paper-level interface counterexample supplies neither a negative minimizer nor an RH or Robin bound.
+claim: The published boundary theorem requires an exterior-zero equation with bounded solution and forcing. Actual cap-four features can have uniformly bounded logarithmic Fourier moments of every fixed order while their profile values at zero diverge. Smooth actual sources also give opposite unbounded full-prime dilation difference quotients with controlled origin data. These paper-level interface counterexamples supply neither a negative minimizer nor an RH or Robin bound.
 strata_touched: []
 license: bibliographic-reference-only
 triage: anchor
 ---
 
-# Logarithmic boundary regularity requires an additional actual-source interface
+# Actual-source interfaces for boundary values and arithmetic dilation
 
 ## What the published theorems provide
 
@@ -44,6 +44,13 @@ Its underlying Dirichlet framework is for bounded domains; the proof
 of its restatement, Theorem 5.4, uses that boundedness on printed p.29.
 Neither result is a theorem for an arbitrary nonnegative form with a
 comparable logarithmic multiplier.
+
+The related preprint [arXiv:2411.15985v2](https://arxiv.org/abs/2411.15985v2),
+*Nonlocal elliptic equations involving logarithmic Laplacian: Existence,
+non-existence and uniqueness results*, is explicitly withdrawn by its
+authors, citing "a crucial error in Proof of Pohozaev identity".
+Its claimed Pohozaev identity is therefore not used as a proved supplier
+here. This withdrawal does not decide the actual minimizing-source estimate.
 
 ## Keep the actual two profiles distinct
 
@@ -192,6 +199,135 @@ $$
 This is a single jointly realized family: its physical moment,
 Gamma profile and arithmetic profile all come from the SAME $F_j$.
 It does not combine independently optimized observables.
+
+## Smooth boundary data do not control arithmetic dilation difference quotients
+
+There is a separate actual-source obstruction even when the starting
+arithmetic profiles are smooth at zero. Reuse the actual inverse (LB5),
+classical modulation, and support isolation of the sole $n=2$ prime term,
+as in the [existing prime cross-term account](frankliebseiringer2006hardy.md).
+The additional conclusion concerns their JOINT physical realization and
+dilation difference quotient, not a new modulation or inverse theorem. It is
+paper analysis without Lean certification or a priority claim.
+
+For $s\ge0$ use the physical variation
+
+$$
+D_sF(x)=e^{7s/2}F(e^sx),\qquad
+h_F(t)=\sqrt\pi e^{7t/2}F(\pi e^t).
+$$
+
+The actual $\mathscr T,B$ commute with this physical scaling, so
+$h_{D_sF}(t)=h_F(t+s)$ and
+$g_{D_sF}(r)=e^{5s/4}g_F(|r|+s/2)$.
+This is a folded translation of the profile, not a full-line translation.
+Put
+
+$$
+C_\ell(g)=\Re\int_{\mathbb R}\overline{g(r)}g(r+\ell)dr,
+\qquad
+\mathfrak T(g)=2\sum_{n\ge2}\frac{\Lambda(n)}{\sqrt n}C_{\log n}(g).
+\tag{PD1}
+$$
+
+If $g(r)=f(|r|)$ and $G_a(r)=f(|r|+a)$, the two same-side
+pieces and the folded piece give exactly
+
+$$
+C_\ell(G_a)=2\Re\int_a^\infty\overline{f(t)}f(t+\ell)dt
++\Re\int_a^{\ell+a}\overline{f(t)}f(\ell+2a-t)dt.
+\tag{PD2}
+$$
+
+The second piece moves its reflection center throughout the correlation
+interval. It is not confined to a deleted neighborhood of zero.
+
+Let $L=\log2$ and choose
+$0<\varepsilon<\min\{L/8,(\log3-L)/4\}$ and a nonzero real even
+$\phi\in C_c^\infty(-\varepsilon,\varepsilon)$. For $N\to\infty$ set
+
+$$
+\omega_N=e^{-\sqrt{\log(2+N)}},\qquad
+f_N^\pm(r)=\omega_N\phi(r-L/2)
+\cos\bigl(N(r-L/2)\pm\pi/4\bigr)\quad(r\ge0).
+\tag{PD3}
+$$
+
+Here is one actual source realizing each profile. Write
+$(I_bv)(t)=\int_0^\infty e^{-by}v(t+y)dy$ and put
+
+$$
+v_N^\pm(t)=\pi^{-7/4}e^{5t/4}f_N^\pm(t/2),\qquad
+h_N^\pm=(I+\tfrac32I_1)v_N^\pm,\qquad
+F_N^\pm(\pi e^t)=\pi^{-1/2}e^{-7t/2}h_N^\pm(t).
+\tag{PD4}
+$$
+
+The reused resolvent identity
+$(I-\tfrac32I_{5/2})(I+\tfrac32I_1)=I$ gives the actual $B$ inverse.
+Also $h_N^\pm$ is supported in $[0,L+2\varepsilon]\subset[0,\log4)$.
+Thus $\mathscr TF_N^\pm=F_N^\pm$, and substitution in (LB5) gives
+$g_{F_N^\pm}(r)=f_N^\pm(|r|)$ exactly.
+These physical sources are smooth up to $\pi$.
+
+Their moment is $O(\omega_N^2)$. Their Gamma form is
+$O(\omega_N^2\log(2+N))$: the usual right-convolution, smooth-multiplier
+and half-line-cutoff bounds on $H^\sigma$ are uniform for
+$0\le\sigma\le1/4$, by interpolation of the two endpoints.
+Apply them to the fixed smooth envelope modulated at frequency $N/2$,
+with $\sigma=1/\log(2+N)$ for sufficiently large $N$, and use
+$p(\xi)\le C\sigma^{-1}(1+\xi^2)^\sigma$.
+For every fixed finite $k\ge0$, classical modulation likewise gives
+$\mathcal L_k(g_{F_N^\pm})\le C_k\omega_N^2[\log(2+N)]^k$.
+
+To impose the SAME normalized cap, choose a fixed nonzero real even
+smooth profile $g_0$ supported in $(-d,d)$, $0<d<L/16$.
+Use (PD4)'s inverse to realize it by $F_0$, then normalize $H(F_0)=1$.
+Its physical support gives $M(F_0)\le e^{12d}<4$. Set
+
+$$
+Z_N^\pm=\frac{F_0+F_N^\pm}{\|F_0+F_N^\pm\|_H}.
+\tag{PD5}
+$$
+
+The denominator tends to one. For all sufficiently large $N$ these
+actual sources satisfy $H(Z_N^\pm)=1$, $M(Z_N^\pm)<4$, and uniform
+bounds on $\mathcal P$ and every fixed $\mathcal L_k$.
+Their arithmetic profiles are smooth at zero, with every fixed
+origin derivative uniformly bounded: the added packets vanish near zero.
+
+For the packet alone, all same-side prime correlations vanish and
+all folded correlations with $n\ge3$ vanish. Its even support has
+diameter $L+2\varepsilon<\log3$. The fixed profile and the packets
+have no prime cross terms, since every distance between a base-profile
+point and a packet point is less than $L$. These facts persist at $s=1/N$ for large $N$.
+Hence the COMPLETE sum in (PD1), before and after that variation,
+has only the packet's $n=2$ term.
+
+For $I(a)=\int\phi(y+a)\phi(y-a)dy$ and
+$J_N(a)=\int\phi(y+a)\phi(y-a)\cos(2Ny)dy$, product-to-sum in (PD2)
+gives the exact packet expression
+$C_L(G_a)=\omega_N^2[\cos(2Na\pm\pi/2)I(a)+J_N(a)]/2$.
+Both $I,J_N$ are even, with uniformly bounded second derivatives.
+At $s=1/N$, $a=s/2$, this yields, including the actual factor
+$e^{5s/2}$ and the common normalization,
+
+$$
+\frac{\mathfrak T(g_{D_{1/N}Z_N^\pm})-
+      \mathfrak T(g_{Z_N^\pm})}{1/N}
+=\mp\frac{L\sin1}{\sqrt2}\|\phi\|_2^2
+N\omega_N^2[1+o(1)].
+\tag{PD6}
+$$
+
+Since $N\omega_N^2\to\infty$, the two signs are unbounded in opposite
+directions. The starting sources obey the normalized cap; the varied
+sources are not renormalized again or asserted to preserve that cap.
+Thus the given moment and logarithmic bounds, even together with
+smooth controlled origin data, do not supply a uniform bound on
+arithmetic dilation difference quotients. This does not assert that these sources
+are minimizing or $q$-null, or rule out cancellation with the other
+terms of the COMPLETE energy on actual minimizers.
 
 ## What remains necessary for an actual minimizing source
 
