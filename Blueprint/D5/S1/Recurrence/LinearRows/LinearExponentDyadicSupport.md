@@ -6,7 +6,31 @@ The integer series of OEIS A397591 exists uniquely and has odd coefficients prec
 
 The source defines A over integer formal power series with constant coefficient zero. For every m>1, [X^(m-1)](1-A)^m/(1-mX)=0. The inverse of the constant-one denominator is expressed by invOfUnit, and a(n) means the coefficient [X^n]A.
 
-**Definition 1.1 (Construction over the integers).**
+**Definition 1.1 (Agreement below a degree).**
+
+$$\forall R: \operatorname{Type}\left(\right), [\operatorname{CommRing}\left(R\right)] \forall n: \mathbb{N}, \forall F: \operatorname{PowerSeries}\left(R\right), \forall G: \operatorname{PowerSeries}\left(R\right), \operatorname{Agree}\left(n, F, G\right) \iff (\forall k: \mathbb{N}, (k < n) \implies (\operatorname{coeff}\left(k, F\right) = \operatorname{coeff}\left(k, G\right)))$$
+
+*Formalization.* `D5/S1/Recurrence/LinearRows/LinearExponentDyadicSupport.Agree` (`✓ std3`).
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+Two series agree at every natural degree strictly below n.
+
+**Theorem 1.2 (First coefficient difference of a power).**
+
+$$\forall R: \operatorname{Type}\left(\right), [\operatorname{CommRing}\left(R\right)] \forall n: \mathbb{N}, \forall F: \operatorname{PowerSeries}\left(R\right), \forall G: \operatorname{PowerSeries}\left(R\right), (\operatorname{constantCoeff}\left(F\right) = 1) \implies ((\operatorname{constantCoeff}\left(G\right) = 1) \implies ((\operatorname{Agree}\left(n, F, G\right)) \implies (\forall e: \mathbb{N}, \operatorname{coeff}\left(n, F^{e}\right) - \operatorname{coeff}\left(n, G^{e}\right) = (e: R) \cdot (\operatorname{coeff}\left(n, F\right) - \operatorname{coeff}\left(n, G\right)))))$$
+
+*Proof.* Machine-checked in Lean as `D5/S1/Recurrence/LinearRows/LinearExponentDyadicSupport.pow_change` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+For constant-one series agreeing below n, the degree-n difference of their e-th powers is e times the degree-n difference of the series.
+
+**Definition 1.3 (Construction over the integers).**
 
 $$\operatorname{generatingSeries}\left(\right) = 1 - \operatorname{solution}\left(\right)$$
 
@@ -20,7 +44,7 @@ $$\operatorname{generatingSeries}\left(\right) = 1 - \operatorname{solution}\lef
 
 Write F=1-A. At degree n>0, put e=n+1 and g=(1-eX) inverse. Let R=[X^n](F^e g) and T=[X^(n-1)](F^(e-1) F' g+F^e g squared). Differentiation gives nR=eT, so N=R-T satisfies R=eN. Changing the nth coefficient of F changes N by exactly the same amount. Successive coefficient corrections stabilize, giving an integer series F with N=0 at every positive degree. The generating series is A=1-F.
 
-**Definition 1.2 (The exact source equation).**
+**Definition 1.4 (The exact source equation).**
 
 $$\forall A: \operatorname{PowerSeries}\left(\mathbb{Z}\right), \operatorname{DefiningEquation}\left(A\right) \iff (\operatorname{constantCoeff}\left(A\right) = 0 \land (\forall m: \mathbb{N}, 1 < m \implies \operatorname{coeff}\left(m - 1, (1 - A)^{m} \cdot \operatorname{invOfUnit}\left(1 - m \cdot X, 1\right)\right) = 0))$$
 
@@ -34,7 +58,7 @@ $$\forall A: \operatorname{PowerSeries}\left(\mathbb{Z}\right), \operatorname{De
 
 The predicate specifies integer coefficients, the zero constant term, the linear exponent m, and all natural m>1. The power-series unit inverse implements the division in the source NAME.
 
-**Theorem 1.3 (Every defining row vanishes).**
+**Theorem 1.5 (Every defining row vanishes).**
 
 $$\operatorname{DefiningEquation}\left(\operatorname{generatingSeries}\left(\right)\right)$$
 
@@ -48,7 +72,7 @@ $$\operatorname{DefiningEquation}\left(\operatorname{generatingSeries}\left(\rig
 
 Stabilization gives N=0 at each positive index. The identity R=eN and the equality of the geometric series with the denominator inverse give the original defining equation.
 
-**Theorem 1.4 (Integer existence and uniqueness).**
+**Theorem 1.6 (Integer existence and uniqueness).**
 
 $$\exists! A: \operatorname{PowerSeries}\left(\mathbb{Z}\right), \operatorname{DefiningEquation}\left(A\right)$$
 
@@ -62,7 +86,7 @@ $$\exists! A: \operatorname{PowerSeries}\left(\mathbb{Z}\right), \operatorname{D
 
 The stabilized construction supplies an integer solution. If two solutions agree below degree n, their normalized residual difference equals their nth coefficient difference. Induction forces equality in every degree.
 
-**Definition 1.5 (Coefficient indexing).**
+**Definition 1.7 (Coefficient indexing).**
 
 $$\forall n: \mathbb{N}, \operatorname{a}\left(n\right) = \operatorname{coeff}\left(n, \operatorname{generatingSeries}\left(\right)\right)$$
 
@@ -76,7 +100,7 @@ $$\forall n: \mathbb{N}, \operatorname{a}\left(n\right) = \operatorname{coeff}\l
 
 The source coefficient indexing is extended by a(0)=0.
 
-**Theorem 1.6 (Odd coefficients at dyadic neighbors).**
+**Theorem 1.8 (Odd coefficients at dyadic neighbors).**
 
 $$\forall A: \operatorname{PowerSeries}\left(\mathbb{Z}\right), \operatorname{DefiningEquation}\left(A\right) \implies \forall n: \mathbb{N}, 3 < n \implies (\operatorname{Odd}\left(\operatorname{coeff}\left(n, A\right)\right) \iff (\exists k: \mathbb{N}, 1 < k \land (n = 2^{k} - 1 \lor n = 2^{k} + 1)))$$
 
@@ -92,10 +116,12 @@ Over ZMod 2, let U be the Catalan unit, so U=1+X U squared. Put E=1+X, O=EU, B=E
 
 ## References
 
+- Truth anchor: `D5/S1/Recurrence/LinearRows/LinearExponentDyadicSupport.Agree`
 - Truth anchor: `D5/S1/Recurrence/LinearRows/LinearExponentDyadicSupport.DefiningEquation`
 - Truth anchor: `D5/S1/Recurrence/LinearRows/LinearExponentDyadicSupport.a`
 - Truth anchor: `D5/S1/Recurrence/LinearRows/LinearExponentDyadicSupport.generatingSeries`
 - Truth anchor: `D5/S1/Recurrence/LinearRows/LinearExponentDyadicSupport.generating_equation`
 - Truth anchor: `D5/S1/Recurrence/LinearRows/LinearExponentDyadicSupport.hanna_conjecture`
 - Truth anchor: `D5/S1/Recurrence/LinearRows/LinearExponentDyadicSupport.integer_exists_unique`
+- Truth anchor: `D5/S1/Recurrence/LinearRows/LinearExponentDyadicSupport.pow_change`
 - Dependency: [D5/S1/Recurrence/Invariants/CatalanCompositionSquareParity](../Invariants/CatalanCompositionSquareParity.md)
