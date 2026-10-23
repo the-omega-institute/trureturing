@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:85f7046894edb29764037577f5e86ca7b2feb853504505ee794caf6b9f9671cb
+  normalized_sha256: sha256:85f7046894edb29764037577f5e86ca7b2feb853504505ee794caf6b9f9671cb
+cas_ref: sha256:85f7046894edb29764037577f5e86ca7b2feb853504505ee794caf6b9f9671cb
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 列举整数这一模型条件，无数学断言。
+    previous_atom_id: 9fc4d57707ef743accacad70ccd8905d3f9220c0e02ce1dda99fbcf408f65c9f
+    next_atom_id: d798bb8de2c28be6debb032fdb71214edf2a0fb53251be48fca8667fe0ae798b

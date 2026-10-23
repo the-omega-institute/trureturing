@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:e98172459e9e340af09392307282526edda3e133892e68fd1f17ab76b6bfaaca
+  normalized_sha256: sha256:e98172459e9e340af09392307282526edda3e133892e68fd1f17ab76b6bfaaca
+cas_ref: sha256:e98172459e9e340af09392307282526edda3e133892e68fd1f17ab76b6bfaaca
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 引出结论的过渡标题与叙述，无数学断言。
+    previous_atom_id: 17785f41b57c3f9d295fb7ed12ff2123702275d45bce45ce96c92583242c9045
+    next_atom_id: a956896a81af3104ccdc77503a1026a25fc990b67a71382e9f29b7797586f82a
