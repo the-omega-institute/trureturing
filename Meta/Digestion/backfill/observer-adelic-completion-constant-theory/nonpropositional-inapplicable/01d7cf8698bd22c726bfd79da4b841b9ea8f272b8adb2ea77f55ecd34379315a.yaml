@@ -5,3 +5,7 @@ cas_ref: sha256:01d7cf8698bd22c726bfd79da4b841b9ea8f272b8adb2ea77f55ecd34379315a
 coverage_gids: []
 receipts:
   unresolved_subitems: []
+  nonpropositional:
+    justification: chapter file listing only; contains no mathematical assertion
+    previous_atom_id: ce66edab94cc2a7bc04b611b58d65704a5bb1c0715b3bf8c11528c65df1ecef4
+    next_atom_id: a9fc70590b8473d64ee42de602886b56f79ca4c4b5132bf00d9f662edba1246d

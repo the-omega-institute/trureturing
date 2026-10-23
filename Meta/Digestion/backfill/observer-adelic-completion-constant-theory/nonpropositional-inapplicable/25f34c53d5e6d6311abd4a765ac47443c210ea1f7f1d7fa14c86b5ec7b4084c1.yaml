@@ -5,3 +5,7 @@ cas_ref: sha256:25f34c53d5e6d6311abd4a765ac47443c210ea1f7f1d7fa14c86b5ec7b4084c1
 coverage_gids: []
 receipts:
   unresolved_subitems: []
+  nonpropositional:
+    justification: list label naming a coarse-graining route; no proposition
+    previous_atom_id: 8b548a4bc5b9792fc1ae438494fc638b706a8ab26262cb12f5c6f7bfcfdebb36
+    next_atom_id: 8b5296e32dad7e6472d48e1a26b4161e26e8be79de943d8c0be83194049b2319
