@@ -138,6 +138,7 @@ off-diagonal part has signs. The complete original-energy estimate in
 [§459](../../docs/develop/theory/FIBONACCI_ANALYTIC_FRONTIER_INTERFACES.md#459-缓冲零点分箱下的完整原卷积联合估计),
 the small-label projection in
 [§484](../../docs/develop/theory/FIBONACCI_ANALYTIC_FRONTIER_INTERFACES_II.md#484-全部小标记的反射主项与完整投影预算),
-and the uncontrolled complement therefore retain distinct scopes.
+and the complement lacking the required sub-$K^2$ bound therefore retain
+distinct scopes.
 These applicability statements carry no independent Lean certification
 or new large-sieve theorem.
