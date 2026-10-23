@@ -6,7 +6,7 @@
    utility: none
    digest: Sharp all-price original endpoint tails and exact first-layer lower replacement with nonnegative higher-layer remainder. -/
 
-/-!
+/-
 Source-only coherent continuation r4475; NOT elaborated or compiled.
 Base: current dev 12df0f09e5942541c5878409dfa86f61187c090c, including
 MERGED PR20429 (8ce18dd75863b93d935b529f40be1578232df595).
@@ -248,12 +248,10 @@ private theorem endpoint_local {q : ℝ} (hq : 0 < q) {N p : ℕ}
       goldenLayerMarginal p (a + 1) * Real.log p := by
     unfold nextMarginal goldenLayerMarginal
     rw [div_mul_cancel₀ _ hlog.ne', hynext]
-    rfl
   have hmatch_last : lastMarginal p y =
       goldenLayerMarginal p a * Real.log p := by
     unfold lastMarginal goldenLayerMarginal
     rw [div_mul_cancel₀ _ hlog.ne', hpa]
-    rfl
   have hb := endpoint_bracket hq hN hp ha
   have hnext : nextMarginal p y ≤ q * Real.log p := by
     rw [hmatch_next]
@@ -286,7 +284,8 @@ private theorem endpoint_local {q : ℝ} (hq : 0 < q) {N p : ℕ}
     have hylt : y < 1 := by linarith
     have h := Real.log_le_log (show 0 < 1 - y by linarith)
       (show 1 - y ≤ 1 by linarith)
-    simpa [truncationTail] using neg_nonneg.mpr (by simpa using h)
+    dsimp only [truncationTail]
+    exact neg_nonneg.mpr (by simpa only [Real.log_one] using h)
   change 0 ≤ truncationTail y ∧ _
   exact ⟨hnonneg, hs.1, hs.2, hlin, hlarge⟩
 
@@ -422,6 +421,7 @@ theorem original_endpoint_prime_tail_supply {q : ℝ} (hq : 0 < q) {N : ℕ}
             intro p hp t ht heq
             have := hKp p hp
             have := hKp t ht
+            change p - K = t - K at heq
             omega)]
           apply sum_congr rfl
           intro p hp
@@ -456,7 +456,7 @@ theorem original_endpoint_prime_tail_supply {q : ℝ} (hq : 0 < q) {N : ℕ}
             ∑ p ∈ large, layerTail N p := by
           have h := sum_filter_add_sum_filter_not S
             (fun p : ℕ => (p : ℝ) ≤ r) (layerTail N)
-          simpa only [not_le] using h.symm
+          simpa only [tail, S, small, large, not_le] using h.symm
         change tail N ≤ (7 / 2 : ℝ) / r
         rw [hsplit]
         calc

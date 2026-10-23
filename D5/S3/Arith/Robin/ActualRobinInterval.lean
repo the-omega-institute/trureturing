@@ -446,20 +446,20 @@ theorem global_robin_margin_reduction
       · have h11 : p ≠ 11 := by
           rintro rfl
           exact hp (by norm_num)
-        rw [targetExponent55440, if_neg h11, target5040_zero_of_not_prime hp]
+        simp only [targetExponent55440, if_neg h11, target5040_zero_of_not_prime hp]
         simp [weakLayerCount, hp]
 
     have strictInteger_q11 : strictInteger q11 = 5040 := by
       apply Nat.factorization_inj
-        (by have := strictInteger_pos q11_pos; omega)
-        (by norm_num)
+        (Nat.ne_of_gt (strictInteger_pos q11_pos))
+        (by norm_num : (5040 : ℕ) ≠ 0)
       ext p
       rw [strictInteger_counts q11_pos, optimalLayerCount_q11, target_exponent_eq_factorization_5040]
 
     have maximalInteger_q11 : maximalInteger q11 = 55440 := by
       apply Nat.factorization_inj
-        (by have := (maximalInteger_spec q11_pos).1; omega)
-        (by norm_num)
+        (Nat.ne_of_gt (maximalInteger_spec q11_pos).1)
+        (by norm_num : (55440 : ℕ) ≠ 0)
       ext p
       rw [(maximalInteger_spec q11_pos).2.1 p, weakLayerCount_q11,
         target55440_factorization]
