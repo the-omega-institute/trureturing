@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:a6015bbe8abb9b6c2d704790dd9bc346b4fd58541cd2ab7931de4c30710d1f58
+  normalized_sha256: sha256:a6015bbe8abb9b6c2d704790dd9bc346b4fd58541cd2ab7931de4c30710d1f58
+cas_ref: sha256:a6015bbe8abb9b6c2d704790dd9bc346b4fd58541cd2ab7931de4c30710d1f58
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 'nonpropositional: 术语翻译中把 storage operator 读作正能量，未断言已构造某个正算子。'
+    previous_atom_id: b0272bedb482e95cda040902cc56d9656d8f42c6876359c2af71d09068245abd
+    next_atom_id: 7e6cfd9af2f237eb93309a01694259c99eb9470ae2bd2b9a701f57563b013d47
