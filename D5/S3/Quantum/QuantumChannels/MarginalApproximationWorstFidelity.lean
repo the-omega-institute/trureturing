@@ -734,7 +734,5 @@ theorem result : claim := by
     have hm := shift_marginals N hN
     exact ⟨he, hχ, hm, shift_fidelity N hχ hm⟩
 
-#print axioms quantum_overlap
-#print axioms result
 
 end D5.S3.Quantum.QuantumChannels.MarginalApproximationWorstFidelity
