@@ -5,7 +5,7 @@ year: 2025
 title: "Network nonlocality breaking channels"
 doi: null
 url: https://arxiv.org/abs/2510.26417v1
-claim: "The paper studies channels that destroy the violation of n-local inequalities in linear quantum networks, gives sufficient conditions on the parameters of a class of non-unital qubit channels under which repeated use does not break n-nonlocality (Theorem 3), and conjectures from numerical comparison with the channel conditions that every non-unital channel of the class is non n-locality breaking (Conjecture 1)."
+claim: "The paper studies channels that destroy the violation of n-local inequalities in linear quantum networks, gives sufficient conditions on the parameters of a class of non-unital qubit channels under which k uses of the channel destroy the non n-local resource of linear n-local networks (Theorem 3), and conjectures from numerical comparison with the channel conditions that every non-unital channel of the class is non n-locality breaking (Conjecture 1)."
 strata_touched:
   - D5/S3/Quantum/QuantumChannels/NonUnitalNetworkConditionImplication
 license: citation-only
