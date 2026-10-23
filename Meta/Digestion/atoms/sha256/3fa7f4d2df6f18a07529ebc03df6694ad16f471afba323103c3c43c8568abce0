@@ -1,0 +1,33 @@
+### 2.6. The supporting twelve-element group
+
+Let $\omega$ be a primitive cube root of unity and set
+
+$$
+\Gamma=\{\pm1\}\times\{\pm1\}\times\mu_3
+\cong C_2^2\times C_3.
+$$
+
+Define triples by the diagonal matrices
+
+$$
+D_1(s,t,z)=\operatorname{diag}(1,sz,tz^{-1}),\qquad
+D_2(s,t,z)=\operatorname{diag}(1,sz^{-1},tz).
+\tag{2.10}
+$$
+
+Both are projectively faithful. If one matrix is scalar, its first coordinate makes that scalar $1$. The other coordinates then force $z\in\mu_3\cap\{\pm1\}=\{1\}$, and subsequently $s=t=1$.
+
+Let $P_{ij}$ exchange coordinates $i,j$. The following identities prove pointwise matching and exhaust all sign patterns:
+
+$$
+\begin{array}{c|c}
+\text{condition}&\text{matrix identity}\\\hline
+s=t&D_2=P_{23}D_1P_{23}^{-1}\\
+(s,t)=(1,-1)&D_2=z^{-1}P_{12}D_1P_{12}^{-1}\\
+(s,t)=(-1,1)&D_2=zP_{13}D_1P_{13}^{-1}.
+\end{array}
+\tag{2.11}
+$$
+
+There is no global match. On $V=\{\pm1\}^2\times\{1\}$ both triples restrict to $(1,s,t)$. If $\psi_i=\epsilon\chi_{\pi(i)}$ globally, multiplying the restrictions on $V$ gives $\epsilon(v)^3=1$, while $\epsilon(v)^2=1$; hence $\epsilon|_V=1$. The three characters $1,s,t$ of $V$ are distinct, so $\pi$ must be the identity. The first coordinate then forces $\epsilon=1$ on all of $\Gamma$. The second coordinates at $(1,1,\omega)$ would give $\omega=\omega^{-1}$, a contradiction. This proves sufficiency.
+
