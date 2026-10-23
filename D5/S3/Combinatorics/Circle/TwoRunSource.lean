@@ -5,14 +5,17 @@
    anchors: [mathlib/module/Mathlib.Dynamics.PeriodicPts.Defs, mathlib/module/Mathlib.Logic.Equiv.Fin.Rotate]
    utility: none
    digest: Genuine-period ordering and disjoint physical repetition for actual two-run sources. -/
-import D5.S3.Combinatorics.Circle.TwoLargeOrdering
-import Mathlib.Dynamics.PeriodicPts.Defs
-import Mathlib.Logic.Equiv.Fin.Rotate
+module
+public import D5.S3.Combinatorics.Circle.TwoLargeOrdering
+public import Mathlib.Dynamics.PeriodicPts.Defs
+public import Mathlib.Logic.Equiv.Fin.Rotate
 
 /-! # Complete physical orderings for actual cyclic two-run sources -/
 
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
+
+@[expose] public section
 
 namespace D5.S3.Combinatorics.Circle.TwoRunSource
 
@@ -36,7 +39,7 @@ def TwoRun (k t : ℕ) : Prop :=
 def amplitude (k t : ℕ) : ℤ :=
   (Finset.univ.sup (fun i : Fin k => (actualSource k t i).natAbs) : ℕ)
 
-private theorem modulus_positive_odd (k : ℕ) (hk : 0 < k) :
+theorem modulus_positive_odd (k : ℕ) (hk : 0 < k) :
     0 < modulus k ∧ modulus k % 2 = 1 := by
   obtain ⟨j, rfl⟩ := Nat.exists_eq_succ_of_ne_zero (by omega : k ≠ 0)
   have hp : 0 < (2 : ℤ) ^ j := pow_pos (by omega) _
@@ -217,7 +220,7 @@ private theorem period_large_unique (k t : ℕ) (hk : 0 < k)
   · intro i j hi hj
     exact (hin.unique ((hcross i).2 hi) ((hcross j).2 hj))
 
-private theorem concatenate_zero {α β : Type*} (f : α → ℤ) (B : ℤ) (hB : 0 ≤ B)
+theorem concatenate_zero {α β : Type*} (f : α → ℤ) (B : ℤ) (hB : 0 ≤ B)
     (blocks : List β) (words : β → List α)
     (hsum : ∀ j ∈ blocks, ((words j).map f).sum = 0)
     (hstrip : ∀ j ∈ blocks, InStrip f B 0 (words j)) :

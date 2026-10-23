@@ -5,12 +5,15 @@
    anchors: [mathlib/module/Mathlib.Data.List.FinRange]
    utility: none
    digest: Conservation completes zero-sum rows with one large occurrence per sign. -/
-import D5.S3.Combinatorics.Circle.SourceWidth
+module
+public import D5.S3.Combinatorics.Circle.SourceWidth
 
 /-! # Complete strip orderings with at most one large occurrence of either sign -/
 
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
+
+@[expose] public section
 
 namespace D5.S3.Combinatorics.Circle.TwoLargeOrdering
 

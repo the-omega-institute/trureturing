@@ -95,7 +95,17 @@ def audit : Contract.Registration.{_,_,_,0,0,0,0,0,0,0,0,0}
   realization := .source arena ⟨source_registration⟩
   correspondence := { stage := .evidence, objectStage := .evidence }
   bundleNonempty := .absent
-  readout := some actual
+  readout := some (realize signature (fun _ p i =>
+    let J := p.1
+    let m := p.2.1
+    let d := p.2.2.1
+    let s := p.2.2.2
+    let k0 := baseLength J m
+    let k := d * k0
+    let lam := (2 ^ k - 1) / (2 ^ k0 - 1)
+    let t := (lam * (M (r J) (q J m)).toNat) % (2 ^ k - 1)
+    let ts := (2 ^ s * t) % (2 ^ k - 1)
+    actualSource k ts i) (fun e => nomatch e))
   variation := .absent
   sensitivity := .absent
   partialSensitivity := none
@@ -104,7 +114,12 @@ def audit : Contract.Registration.{_,_,_,0,0,0,0,0,0,0,0,0}
     owner := `D5.S3.Combinatorics.Circle.ThreeRowSource
     definition := none
     coordinates := #[0, 1, 2, 3]
-    readouts := #[] }
+    readouts := #[{
+      path := #["body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "arg", "body", "arg", "fn", "arg", "fn", "arg", "arg", "fn", "arg"]
+      stateBinder := 0
+      functionOperand := true
+      stateOperand := none
+      booleanPredicate := false }] }
   continuation := .unknown
   familyRecord := none
   options := #[]

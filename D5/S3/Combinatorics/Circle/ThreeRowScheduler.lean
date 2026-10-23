@@ -8,6 +8,7 @@
 module
 import all D5.S3.Combinatorics.Circle.ThreeRowParameters
 import D5.S3.Combinatorics.Circle.SourceWidth
+import D5.S3.Combinatorics.Circle.ZeroSumSubsets
 import Mathlib.Tactic
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
@@ -15,8 +16,8 @@ set_option maxHeartbeats 10000000
 namespace D5.S3.Combinatorics.Circle.ThreeRowSource
 open SourceWidth
 open scoped BigOperators
-/- SMALL batches at arbitrary legal endpoints. This is local because the
-needed exported supplier does not exist; TwoLargeOrdering's helper is private.
+/- SMALL batches at arbitrary legal endpoints. Unlike complete_small_positives,
+the final height need not be zero; schedule_rows uses that stronger conclusion.
 There is no uniqueness-of-values premise. -/
 private theorem small_batch {α : Type*} [DecidableEq α]
     (f : α → ℤ) (B S : ℤ) (hS : 0 ≤ S) (hSB : 2 * S ≤ B)
@@ -80,59 +81,12 @@ private theorem small_batch {α : Type*} [DecidableEq α]
     exact ⟨x :: word, (hw.cons x).trans (List.perm_cons_erase hx).symm,
       hh.1, hh.2, hs⟩
 
-/- The pointwise dyadic supplier in ThreeParentFamily is private, so the
-consumed four-line induction is rebuilt locally; selection itself is reused. -/
-private theorem dyadic_ofFn {α : Type*} (f : α → ℤ) (n : ℕ) (seed : ℤ)
-    (g : Fin n → α) (hg : ∀ i, f (g i) = 2 ^ i.val * seed) :
-    SourceWidth.Dyadic f seed (List.ofFn g) := by
-  induction n generalizing seed with
-  | zero => simp [SourceWidth.Dyadic]
-  | succ n ih =>
-    rw [List.ofFn_succ]
-    refine ⟨by simpa using hg 0, ?_⟩
-    apply ih
-    intro i
-    rw [hg i.succ]
-    simp only [Fin.val_succ, pow_succ]
-    ring
-
-/- The physical original source has integer total zero without calling the
-private ZeroSumSubsets.source_cycle. The seam is part of this proof. -/
+/- Only the Finset-to-finRange conversion is local; the physical cycle theorem
+and its coboundary proof are owned by ZeroSumSubsets. -/
 private theorem actual_total (k t : ℕ) (hk : 0 < k) :
     ((List.finRange k).map (actualSource k t)).sum = 0 := by
-  have hp : (1 : ℤ) < 2 ^ k := by
-    exact_mod_cast (Nat.one_lt_two_pow (ne_of_gt hk))
-  have hN : 0 < modulus k := by unfold modulus; omega
-  have hodd : modulus k % 2 = 1 := by
-    obtain ⟨j, rfl⟩ := Nat.exists_eq_succ_of_ne_zero (ne_of_gt hk)
-    rw [modulus, pow_succ]
-    omega
-  have hstep (i : Fin k) : actualSource k t (finRotate k i) =
-      doubleStep (modulus k) (actualSource k t i) := by
-    have hnext : actualSource k t (finRotate k i) =
-        centered (modulus k) ((2 : ℤ) ^ (i.val + 1) * t) := by
-      obtain ⟨j, rfl⟩ := Nat.exists_eq_succ_of_ne_zero (ne_of_gt hk)
-      by_cases hi : i = Fin.last j
-      · subst i
-        simp only [finRotate_last, actualSource, Fin.val_zero, pow_zero, one_mul,
-          Fin.val_last, centered_full_period]
-      · simp only [actualSource, coe_finRotate, ite_eq_right hi]
-    rw [hnext]
-    have he : (2 : ℤ) ^ (i.val + 1) * t = 2 * (2 ^ i.val * (t : ℤ)) := by
-      rw [pow_succ]; ring
-    rw [he, centered_double hN hodd]
-    rfl
-  let u := fun i : Fin k => actualSource k t i +
-    if actualSource k t i < 0 then modulus k else 0
-  have hpot (i : Fin k) : u (finRotate k i) - u i = actualSource k t i := by
-    dsimp [u]
-    rw [hstep]
-    exact unsigned_step hN hodd (centered_bounds hN hodd _)
-  have hz : (∑ i : Fin k, actualSource k t i) = 0 := by
-    simp_rw [← hpot]
-    rw [Finset.sum_sub_distrib, Equiv.sum_comp, sub_self]
   rw [← List.sum_toFinset _ (List.nodup_finRange k), List.toFinset_finRange]
-  exact hz
+  exact (ZeroSumSubsets.source_cycle hk t).2.1
 
 /- A concrete physical interval. Offsets below are original-source positions,
 not values or positions in the newly scheduled word. -/
@@ -294,25 +248,15 @@ private theorem schedule_rows {k : ℕ} (f : Fin k → ℤ)
     dsimp [R, z1]
     ring
   have hnegative : ∀ x ∈ oldNeg ++ nextNeg ++ thirdNeg, f x ≤ 0 := by
-    have onDyadic {seed : ℤ} {xs : List (Fin k)} (hs : 0 ≤ seed)
-        (hx : Dyadic (fun x => -f x) seed xs) : ∀ x ∈ xs, f x ≤ 0 := by
-      induction xs generalizing seed with
-      | nil => simp
-      | cons x xs ih =>
-        intro y hy
-        rcases List.mem_cons.mp hy with rfl | hy
-        · have hseed := hx.1
-          linarith
-        · exact ih (by omega) hx.2 y hy
     have ha0 : 0 ≤ a r q := by unfold a H; nlinarith [sq_nonneg q]
     have hz10 : 0 ≤ z1 r q := by unfold z1 delta; nlinarith
     have hz20 : 0 ≤ z2 r q := by unfold z2 e2; nlinarith
     intro x hx
     simp only [List.mem_append] at hx
     rcases hx with (hx | hx) | hx
-    · exact onDyadic ha0 hold x hx
-    · exact onDyadic hz10 hnext x hx
-    · exact onDyadic hz20 hthird x hx
+    · exact neg_nonneg.mp (SourceWidth.dyadic_nonneg ha0 hold x hx)
+    · exact neg_nonneg.mp (SourceWidth.dyadic_nonneg hz10 hnext x hx)
+    · exact neg_nonneg.mp (SourceWidth.dyadic_nonneg hz20 hthird x hx)
   have hselNeg : ∀ x ∈ aSel ++ zSel, f x ≤ 0 := by
     intro x hx
     simp only [List.mem_append] at hx

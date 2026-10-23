@@ -9,6 +9,8 @@ module
 public import D5.S3.Combinatorics.Circle.ThreeRowParameters
 import all D5.S3.Combinatorics.Circle.ThreeRowScheduler
 public import D5.S3.Combinatorics.Circle.SourceWidth
+import D5.S3.Combinatorics.Circle.ThreeParentFamily
+import D5.S3.Combinatorics.Circle.TwoRunSource
 import Mathlib.Logic.Equiv.Fin.Rotate
 import Mathlib.Tactic
 set_option autoImplicit false
@@ -35,22 +37,6 @@ def rowValue (J m : ℕ) (i : Fin (baseLength J m)) : ℤ :=
   else if i.val = 2 * L + J + 3 then V2 r q
   else if i.val < 3 * L + J + 3 then -(2 ^ (i.val - (2 * L + J + 4)) * z2 r q)
   else -W2 r q
-
-private theorem centered_same {N x y : ℤ} (h : x % N = y % N) :
-    centered N x = centered N y := by
-  unfold centered
-  exact congrArg (fun z : ℤ => z - N / 2)
-    (Int.add_emod_eq_add_emod_right (N / 2) h)
-
-private theorem modulus_pos_odd (k : ℕ) (hk : 0 < k) :
-    0 < modulus k ∧ modulus k % 2 = 1 := by
-  have hp : (1 : ℤ) < 2 ^ k := by
-    exact_mod_cast (Nat.one_lt_two_pow (ne_of_gt hk))
-  constructor
-  · unfold modulus; omega
-  · obtain ⟨j, rfl⟩ := Nat.exists_eq_succ_of_ne_zero (ne_of_gt hk)
-    rw [modulus, pow_succ]
-    omega
 
 /- Exact scalar range facts for the row realization. Doubling the W-bounds
 avoids division in the polynomial certificates. -/
@@ -102,7 +88,7 @@ private theorem centered_ladder (k t start len : ℕ) (hk : 0 < k) (seed : ℤ)
     (hcap : (2 : ℤ) ^ len * |seed| ≤ modulus k / 2) :
     ∀ i : ℕ, i ≤ len →
       centered (modulus k) ((2 : ℤ) ^ (start + i) * t) = 2 ^ i * seed := by
-  obtain ⟨hN, hodd⟩ := modulus_pos_odd k hk
+  obtain ⟨hN, hodd⟩ := TwoRunSource.modulus_positive_odd k hk
   intro i hi
   have hpow : (2 : ℤ) ^ i ≤ 2 ^ len :=
     pow_le_pow_right₀ (by norm_num) hi
@@ -144,7 +130,7 @@ private theorem proposed_source_values (J m : ℕ) (hJ : 2 ≤ J) (hm : 1 ≤ m)
   obtain ⟨hr, hq, hr2, hq2, hL, _, _⟩ := parameter_bounds J m hJ hm
   change 1 ≤ L at hL
   have hk : 0 < k := by dsimp [k, baseLength]; omega
-  obtain ⟨hN, hodd⟩ := modulus_pos_odd k hk
+  obtain ⟨hN, hodd⟩ := TwoRunSource.modulus_positive_odd k hk
   have hmod : modulus k = N r q := modulus_identity J m
   have hhalf : modulus k / 2 = C r q := by
     rw [hmod]
@@ -293,13 +279,13 @@ private theorem proposed_source_values (J m : ℕ) (hJ : 2 ≤ J) (hm : 1 ≤ m)
 private theorem orbit_mod (k t n : ℕ) (hk : 0 < k) :
     centered (modulus k) ((2 : ℤ) ^ n * t) =
       centered (modulus k) ((2 : ℤ) ^ (n % k) * t) := by
-  apply centered_same
+  apply SourceWidth.centered_congr
   have hpow : (2 : ℤ) ^ k % modulus k = 1 % modulus k := by
     rw [show (2 : ℤ) ^ k = modulus k + 1 by unfold modulus; ring,
       add_comm (modulus k) 1, Int.add_emod_right]
   have he : n = n % k + k * (n / k) := (Nat.mod_add_div n k).symm
   conv_lhs => rw [he, pow_add, pow_mul]
-  have hN := modulus_pos_odd k hk
+  have hN := TwoRunSource.modulus_positive_odd k hk
   have hkmod : (2 : ℤ) ^ k ≡ 1 [ZMOD modulus k] := by
     change (2 : ℤ) ^ k % modulus k = 1 % modulus k
     exact hpow
@@ -379,13 +365,13 @@ private theorem repeated_source (b d t : ℕ) (hb : 0 < b) (hd : 1 ≤ d)
     actualSource (d * b) ((multiplier b d * t) % (2 ^ (d * b) - 1)) i =
       (multiplier b d : ℤ) * actualSource b t ⟨i.val % b, Nat.mod_lt _ hb⟩ := by
   have hk : 0 < d * b := Nat.mul_pos (by omega) hb
-  obtain ⟨hN, hodd⟩ := modulus_pos_odd (d * b) hk
-  obtain ⟨h0, hodd0⟩ := modulus_pos_odd b hb
+  obtain ⟨hN, hodd⟩ := TwoRunSource.modulus_positive_odd (d * b) hk
+  obtain ⟨h0, hodd0⟩ := TwoRunSource.modulus_positive_odd b hb
   have hlam : (1 : ℤ) ≤ multiplier b d := by exact_mod_cast multiplier_positive b d hd
   have hparam : centered (modulus (d * b))
       ((2 : ℤ) ^ i.val * (((multiplier b d * t) % (2 ^ (d * b) - 1) : ℕ) : ℤ)) =
       centered (modulus (d * b)) ((multiplier b d : ℤ) * ((2 : ℤ) ^ i.val * t)) := by
-    apply centered_same
+    apply SourceWidth.centered_congr
     change ((2 : ℤ) ^ i.val * (((multiplier b d * t) % (2 ^ (d * b) - 1) : ℕ) : ℤ)) %
       modulus (d * b) =
       ((multiplier b d : ℤ) * ((2 : ℤ) ^ i.val * t)) % modulus (d * b)
@@ -440,19 +426,6 @@ private theorem scaled_sum {α β : Type*} (f : α → ℤ) (g : β → ℤ)
     rw [hval x (by simp), ih (fun y hy => hval y (by simp [hy]))]
     ring
 
-private theorem concatenate_zero {α β : Type*} (f : α → ℤ) (B : ℤ) (hB : 0 ≤ B)
-    (blocks : List β) (words : β → List α)
-    (hsum : ∀ j ∈ blocks, ((words j).map f).sum = 0)
-    (hstrip : ∀ j ∈ blocks, InStrip f B 0 (words j)) :
-    InStrip f B 0 (blocks.flatMap words) := by
-  induction blocks with
-  | nil => exact ⟨le_refl _, hB⟩
-  | cons j js ih =>
-    simp only [List.flatMap_cons]
-    apply inStrip_append (hstrip j (by simp))
-    simpa only [hsum j (by simp), add_zero] using
-      ih (fun i hi => hsum i (by simp [hi])) (fun i hi => hstrip i (by simp [hi]))
-
 /- Product buckets prove exact physical consumption, including ties and
 nonunits. No least numerical period or distinct-values premise is needed.
 This private helper is conditional on the base word, whose construction is
@@ -489,8 +462,8 @@ private theorem repeated_word (b d t : ℕ) (hb : 0 < b) (hd : 1 ≤ d)
     dsimp [lam]
     exact_mod_cast multiplier_positive b d hd
   have hcap : lam * B ≤ B' := by
-    have h0 := modulus_pos_odd b hb
-    have hfull := modulus_pos_odd k (Nat.mul_pos (by omega) hb)
+    have h0 := TwoRunSource.modulus_positive_odd b hb
+    have hfull := TwoRunSource.modulus_positive_odd k (Nat.mul_pos (by omega) hb)
     have he := multiplier_identity b d
     have hhalf0 := Int.emod_add_mul_ediv (modulus b) 2
     have hhalf := Int.emod_add_mul_ediv (modulus k) 2
@@ -526,7 +499,7 @@ private theorem repeated_word (b d t : ℕ) (hb : 0 < b) (hd : 1 ≤ d)
       List.mem_product.mpr ⟨by simp, by simp⟩, θ.apply_symm_apply x⟩
   refine ⟨(List.finRange d).flatMap words,
     (List.Perm.flatMap_left _ (fun j _ => hp j)).trans hcomplete,
-    concatenate_zero _ _ hB' _ words (fun j _ => hsum j) (fun j _ => hstrip j), ?_⟩
+    TwoRunSource.concatenate_zero _ _ hB' _ words (fun j _ => hsum j) (fun j _ => hstrip j), ?_⟩
   induction (List.finRange d) with
   | nil => simp
   | cons j js ih =>
@@ -565,7 +538,7 @@ private theorem rotated_source (k t s : ℕ) (hk : 0 < k) (i : Fin k) :
   rw [hval]
   calc
     _ = centered (modulus k) ((2 : ℤ) ^ (i.val + s) * t) := by
-      apply centered_same
+      apply SourceWidth.centered_congr
       have hnat :
           (((2 ^ s * t) % (2 ^ k - 1) : ℕ) : ℤ) ≡
             (2 ^ s * t : ℕ) [ZMOD modulus k] := by
@@ -689,7 +662,7 @@ private theorem proposed_base_order (J m : ℕ) (hJ : 2 ≤ J) (hm : 1 ≤ m) :
       | (simp [hidxTop, hpowJ, L, k, r, q])
   have hold : Dyadic (fun x => -f x) (a r q) oldNeg := by
     unfold oldNeg segment
-    apply dyadic_ofFn
+    apply ThreeParentFamily.dyadic_ofFn
     intro i
     simp only [f, k, r, q]
     rw [hval]
@@ -697,7 +670,7 @@ private theorem proposed_base_order (J m : ℕ) (hJ : 2 ≤ J) (hm : 1 ≤ m) :
     split_ifs <;> first | omega | (congr 1 <;> simp_all <;> omega)
   have hpos : Dyadic f (b r q) oldPosLower := by
     unfold oldPosLower segment
-    apply dyadic_ofFn
+    apply ThreeParentFamily.dyadic_ofFn
     intro i
     simp only [f, k, r, q]
     rw [hval]
@@ -705,7 +678,7 @@ private theorem proposed_base_order (J m : ℕ) (hJ : 2 ≤ J) (hm : 1 ≤ m) :
     split_ifs <;> first | omega | (congr 1 <;> simp_all <;> omega)
   have hnext : Dyadic (fun x => -f x) (z1 r q) nextNeg := by
     unfold nextNeg segment
-    apply dyadic_ofFn
+    apply ThreeParentFamily.dyadic_ofFn
     intro i
     simp only [f, k, r, q]
     rw [hval]
@@ -713,7 +686,7 @@ private theorem proposed_base_order (J m : ℕ) (hJ : 2 ≤ J) (hm : 1 ≤ m) :
     split_ifs <;> first | omega | (congr 1 <;> simp_all <;> omega)
   have hthird : Dyadic (fun x => -f x) (z2 r q) thirdNeg := by
     unfold thirdNeg segment
-    apply dyadic_ofFn
+    apply ThreeParentFamily.dyadic_ofFn
     intro i
     simp only [f, k, r, q]
     rw [hval]

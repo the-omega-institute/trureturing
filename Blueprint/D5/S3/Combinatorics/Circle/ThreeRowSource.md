@@ -32,3 +32,7 @@ The motivating source problem is Damasdi, Frankl, Pach and Palvolgyi, Monochroma
 
 - Truth anchor: `D5/S3/Combinatorics/Circle/ThreeRowSource.exists_order`
 - Dependency: [D5/S3/Combinatorics/Circle/SourceWidth](SourceWidth.md)
+- Dependency: [D5/S3/Combinatorics/Circle/ThreeParentFamily](ThreeParentFamily.md)
+- Dependency: [D5/S3/Combinatorics/Circle/ThreeRowParameters](ThreeRowParameters.md)
+- Dependency: [D5/S3/Combinatorics/Circle/ThreeRowScheduler](ThreeRowScheduler.md)
+- Dependency: [D5/S3/Combinatorics/Circle/TwoRunSource](TwoRunSource.md)
