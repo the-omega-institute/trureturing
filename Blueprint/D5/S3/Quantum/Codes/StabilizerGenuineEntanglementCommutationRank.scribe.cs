@@ -384,5 +384,8 @@ internal sealed class StabilizerGenuineEntanglementCommutationRankDocument : ISc
                         + "zero. The inequality n ≤ (p minus one)finrank(commutationSpace(G)), after "
                         + "adding p minus two on both sides, gives the displayed bound by the "
                         + "natural-number division criterion. This includes N equal to one."))),
-                DescribeRole.Theorem))));
+                DescribeRole.Theorem,
+                openProblemResolutionClaim: new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("makuta-kuzaka-augusiak-2023-stabilizer-commutation-rank"),
+                    ResolutionKind.Proved)))));
 }
