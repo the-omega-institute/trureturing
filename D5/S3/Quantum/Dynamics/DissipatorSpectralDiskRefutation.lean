@@ -7,8 +7,11 @@
    digest: The intrinsic scale does not confine dissipative GKLS spectra to the unit disk. -/
 
 import Mathlib.LinearAlgebra.Matrix.Trace
-import Mathlib.LinearAlgebra.Matrix.ConjTranspose
-import Mathlib.Analysis.Matrix.Spectrum
+import Mathlib.Analysis.Complex.Basic
+import Mathlib.Tactic.FieldSimp
+import Mathlib.Tactic.FinCases
+import Mathlib.Tactic.Linarith
+import Mathlib.Tactic.Ring.RingNF
 
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
