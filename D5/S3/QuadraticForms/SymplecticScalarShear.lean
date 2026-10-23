@@ -3,7 +3,7 @@
    mirror-B: D5/B/S3/QuadraticForms/SymplecticScalarShear
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
-   utility: prerequisite
+   utility: none
    digest: Every finite real J0-symplectic block matrix has a bounded scalar shear and exact symmetric factorization. -/
 
 import Mathlib.LinearAlgebra.SymplecticGroup
