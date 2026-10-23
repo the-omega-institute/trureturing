@@ -14,7 +14,7 @@ internal sealed class ResultDocument : IScribeDocumentDefinition
                 DeclarationHandle.Create("D5/S3/Quantum/Information/FisherDiscord/Result.result"),
                 H("Explicit refutation"), StatementSource.WithoutFormula(),
                 AssessedProvenance.FromRepo(Source),
-                Blocks(Paragraph(Text("Use the diagonal qubit state with weights one fifth and four fifths and the Pauli X observable. Its Fisher discord is four twenty-fifths for every Hermitian SLD solution. Explicit Hermitian solutions establish existence on both spaces. The flagged state with support on the basis vectors 00 and 11 has the same marginal and zero discord for the lifted observable, for every Hermitian SLD solution. The classification of diagonal marginals then contradicts the universal partial-trace inequality."))),
+                Blocks(Paragraph(Text("Use the diagonal qubit state with weights one fifth and four fifths and the Pauli X observable. Its Fisher discord is four twenty-fifths for every Hermitian SLD solution. Explicit Hermitian solutions establish existence on both spaces. The flagged state with support on the basis vectors 00 and 11 has the same marginal and zero discord for the lifted observable, for every Hermitian SLD solution. The necessary condition for diagonal marginals then contradicts the universal partial-trace inequality."))),
                 DescribeRole.Theorem,
                 new OpenProblemResolutionClaim(
                     ProblemSlugRef.Create("li-luo-zhang-2025-fisher-discord-partial-trace-refutation"),
