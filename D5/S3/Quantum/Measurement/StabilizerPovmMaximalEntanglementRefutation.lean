@@ -806,7 +806,7 @@ private def explicitBasis : StabilizerBasis 3 3 := by
   have explicit_orthonormal (b c : (Fin 6 → Fin 2)) : (∑ x, star (explicitVector b x)*explicitVector c x) = if b = c then 1 else 0 := (by have hh := congrFun (congrFun explicit_u_star_mul b) c; simpa only [Matrix.mul_apply,Matrix.conjTranspose_apply,explicitVector,Matrix.one_apply] using hh)
   have explicit_common_eigen (b : (Fin 6 → Fin 2)) : CommonEigenvector explicitGroup (explicitVector b) := (by rintro u ⟨s,hs,he⟩; obtain ⟨a,rfl⟩ := hs; refine ⟨standardEigen a b, ?_⟩; have hu : (u : Operator 6) = explicitU*wordOp (zWord a)*explicitU.conjTranspose := (by exact congrArg Units.val he.symm); rw [hu,explicit_vector_single,Matrix.mulVec_mulVec]; rw [mul_assoc (explicitU*wordOp (zWord a)) explicitU.conjTranspose explicitU, explicit_u_star_mul,mul_one,← Matrix.mulVec_mulVec,standard_eigen_single,Matrix.mulVec_smul])
   exact ⟨explicitGroup,explicitVector,explicit_orthonormal,explicit_common_eigen,explicit_spans⟩
-private def bellInput : Pauli → (Fin 2 × Fin 2) | .I => (0,0) | .X => (0,1) | .Y => (1,1) | .Z => (1,0)
+def bellInput : Pauli → (Fin 2 × Fin 2) | .I => (0,0) | .X => (0,1) | .Y => (1,1) | .Z => (1,0)
 private def correlatedWord (p : (Fin 2 → Pauli)) (d a : Fin 2) : (Fin 6 → Pauli) := ![p 0,p 1,zLetter d,p 0,p 1,zLetter a]
 private def inputBits (p : (Fin 2 → Pauli)) (d a : Fin 2) : (Fin 6 → Fin 2) := ![(bellInput (p 0)).1,(bellInput (p 1)).1,d, (bellInput (p 0)).2,(bellInput (p 1)).2,a]
 private lemma thirtytwo_in_span (p : (Fin 2 → Pauli)) (d : Fin 2) : wordOp (Fin.snoc p (zLetter d)) ∈ Submodule.span ℂ (Set.range (fun b => mu witness (explicitBasis.vectors b))) := by

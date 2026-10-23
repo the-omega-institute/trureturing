@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:999cd675fb74246ae9dd4921fdfca049cd65bc6280332396f4d4b09b0ffd773f
+  normalized_sha256: sha256:999cd675fb74246ae9dd4921fdfca049cd65bc6280332396f4d4b09b0ffd773f
+cas_ref: sha256:999cd675fb74246ae9dd4921fdfca049cd65bc6280332396f4d4b09b0ffd773f
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 观察接口的提议和索引命名：拟用 q_(p,m,t,α)，并把 p 约定为素数或素理想通道，不声称观察族充分。
+    previous_atom_id: a15800869c12ae41610ed5b7b0a2af83ce1553943afbd681c506bf15c7d44db5
+    next_atom_id: c4d41d4aefd68f416d8cc5985b00372886a9ca73c9297d2f1f9575eeb62d42ca

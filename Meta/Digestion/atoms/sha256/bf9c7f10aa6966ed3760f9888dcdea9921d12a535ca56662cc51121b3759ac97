@@ -1,0 +1,14 @@
+### 引理 75.2（目标参数的单射性）
+
+映射 $\theta\mapsto\mathcal T(\theta)$ 在 $\mathcal U_d$ 上单射。
+
+**证明。** 由目标的第一分量得到规范来源 $R_0=S/\operatorname{tr}S$，第二分量
+$H(t)=\operatorname{tr}S\,(1+\kappa t)$ 的常数项严格为正，故
+
+$$
+\operatorname{tr}S=H(0),\qquad
+\kappa=\frac{H'(0)}{H(0)}.
+$$
+
+于是 $S=H(0)R_0$，而第三分量直接给出 $D$。∎
+

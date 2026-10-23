@@ -251,3 +251,118 @@ form-norm obstruction (BM5). Neither conclusion decides the signed
 comparison between the two actual projected channels. No negative
 Weil value, endpoint half-bound, full Robin inequality or RH proof
 follows, and no new Lean certification or literature priority is claimed.
+
+
+## Nonzero actual sources with the matched Laplace reciprocity
+
+The required existence supplier is already in this published article:
+section 2, printed p.690, before Theorem 1, gives an unnumbered
+construction of a nonzero Schwartz function whose value and Fourier
+transform both vanish on an arbitrarily large interval about zero.
+The text attributes the construction to a private communication from
+Kahane. The source cited here is Burnol's published account, not a
+separate claimed Kahane paper or an invented theorem number.
+This `literature-attested` existence statement is reused directly;
+no new projection or common-gap existence theorem is constructed.
+
+The following `repo-derived` application changes dimension through
+[Grafakos--Teschl, Theorem 1.1](../Fourier/grafakosteschl2013radial.md),
+then pays the original actual-source $M+\mathcal P$ norm. It does not
+identify the old cosine Sonine Hilbert norm with that source norm.
+It is paper mathematics without Lean certification or a priority claim.
+
+### Transport the published common gap to the required radial order
+
+Choose $R>1$ and a nonzero Schwartz function $g$ on $\mathbb R$
+such that $g$ and $\widehat g$ vanish on $(-R,R)$.
+It can be taken real and even while retaining the gap: take a nonzero
+real or imaginary part, then its even part if nonzero; otherwise
+differentiate its nonzero odd part. Differentiation preserves both gaps.
+
+Set $G(z)=g(|z|)$ on $\mathbb R^9$. It is a nonzero radial Schwartz
+function. Apply the published dimension recurrence four times, from
+dimension one to nine. Because derivatives of the one-dimensional
+Fourier profile vanish throughout $0<r<R$, its nine-dimensional
+Fourier transform also vanishes on the ball $|\xi|<R$.
+
+If $G-\mathcal F_9G\ne0$, take $\Psi=G-\mathcal F_9G$.
+Otherwise $G=\mathcal F_9G$; take
+
+$$
+\Psi=\left(|z|^2+\frac{\Delta}{4\pi^2}\right)G.
+$$
+
+The displayed operator anticommutes with Fourier transformation.
+It preserves the radial Schwartz class and its spatial gap, and it
+cannot annihilate this nonzero $G$: its radial equation would be
+$g''+8g'/r+4\pi^2r^2g=0$ on $r>0$, whose uniqueness and the open
+zero interval would force $g=0$. In either case this gives
+
+$$
+\Psi\ne0,\qquad \mathcal F_9\Psi=-\Psi,\qquad
+\Psi(z)=\psi(|z|)=0\quad(|z|<R).                 \tag{SG1}
+$$
+
+### Return to the same physical source and pay its full domain
+
+Put $w(x)=(x/\pi)^6-1$ and, for $x>\pi$, define
+
+$$
+v(x)=x^{7/2}\psi(\sqrt{x/\pi}),\qquad
+F(x)=v(x)/w(x).                                  \tag{SG2}
+$$
+
+The numerator vanishes for $x<\pi R^2$, so the simple zero of
+$w$ at $\pi$ creates no singularity. The resulting nonzero real
+source is smooth, zero near $\pi$, and rapidly decreasing with all
+derivatives at infinity. Hence its original sixth moment is finite.
+The [exact weighted radial correspondence RF2--RF3](../Fourier/grafakosteschl2013radial.md#the-actual-weighted-source-in-nine-dimensions)
+gives, on this very source,
+
+$$
+L_F(s):=\int_\pi^\infty w(x)F(x)e^{-sx}dx
+=-s^{-9/2}L_F(1/s)\quad(\Re s>0).                 \tag{SG3}
+$$
+
+It remains to pay the ACTUAL Gamma domain, not just an auxiliary
+Hankel norm. In the [owned W317 notation](suzuki2026screw.md), set
+
+$$
+q(t)=(\pi e^t)^{9/4}\sum_{n\ge1}n^4F(n^2\pi e^t),
+\quad t\ge0,\qquad q_+=q\,\mathbf1_{t\ge0}.
+$$
+
+For any sufficiently large integer $N$, rapid decrease gives
+$|F(x)|+|xF'(x)|\le C_Nx^{-N}$. Consequently
+
+$$
+|q(t)|+|q'(t)|\le C_N'(\pi e^t)^{9/4-N}
+ \sum_{n\ge1}n^{4-2N}.                            \tag{SG4}
+$$
+
+Taking $N=4$ proves $q,q'\in L^1\cap L^2(0,\infty)$.
+The value $q(0)$ need not be zero: the terms $F(n^2\pi)$ for $n\ge2$
+can contribute despite the source gap. Retain this jump in the zero
+extension. Integration by parts gives
+
+$$
+|\widehat {q_+}(\xi)|\le C\min\left\{\|q\|_1,
+ \frac{|q(0)|+\|q'\|_1}{|\xi|}\right\}.
+$$
+
+Since the full Gamma multiplier is comparable to
+$1+\log(2+|\xi|)$, this proves $\mathcal P(F)<\infty$.
+Thus SG2 is a NONZERO source in the SAME actual $\mathcal V$
+which satisfies SG3. Rapid polynomial decrease is compatible with
+the absence of square-root-exponential moments established through RF4.
+
+By [LR2--LR3](hernandezsantamaria2025optimal.md#the-selected-null-obeys-a-weighted-laplace-reciprocity),
+this example is $D$-orthogonal to every evenized physical Gaussian
+$f_a+f_{-a}$ and every fixed even parameter derivative at zero.
+Their span is therefore not dense in the $D$ Hilbert norm, even
+when its orthogonal complement is tested inside the actual $\mathcal V$.
+Density of ALL finite Gaussian features in W326 cannot be restricted
+to that radical subfamily. This does not give the example a negative
+Weil energy, a global supporting-null equation, or any favorable full
+arithmetic sign. The relevant matched-branch sign estimate, RH and
+strict all-integer Robin remain unresolved.
