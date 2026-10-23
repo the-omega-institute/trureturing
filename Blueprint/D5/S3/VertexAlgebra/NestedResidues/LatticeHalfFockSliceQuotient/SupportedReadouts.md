@@ -20,7 +20,7 @@ The finite fractional product uses the lawful complete residue Calculus.Q. Its s
 
 The two supported inner pair extractions are computed coefficient by coefficient in the Hahn carriers. Their nested left and right formulas preserve the spectator modes and the same total signed mode. The left and swapped current/second-source computations are used together in the actual two-branch supplier. A finite cutoff on the fractional product does not assert separate support of either ordered residue term.
 
-Classical local-field provenance is Matsuo–Nagatomo and Bakalov–Kac (math/0402315). The source retains the mathlib Hahn/Laurent and partial-fraction authors and Scott Carnahan/vertexAlg composition attribution under Apache 2.0. The full quotient and its supporting public computations have an unfinished four-slot audit under issue #20510; source reconstruction alone is not declared_validated.
+Classical local-field provenance is Matsuo–Nagatomo and Bakalov–Kac (math/0402315). The source retains the mathlib Hahn/Laurent and partial-fraction authors and Scott Carnahan/vertexAlg composition attribution under Apache 2.0.
 
 ## References
 

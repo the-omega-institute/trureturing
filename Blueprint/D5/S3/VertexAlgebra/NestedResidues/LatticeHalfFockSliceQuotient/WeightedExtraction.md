@@ -20,7 +20,7 @@ A finite Laurent numerator has a signed local collision formula with all weighte
 
 The resulting weighted fiber identity identifies complete current/source local residues in the supported triple carriers. Combining it with the actual homogeneous Laurent carrier supplier and native current inverse gives both the actual J/A branch and the swapped J/B branch for one numerator and all signed modes. These two branches feed the arbitrary-cutoff quotient comparison; no finite Taylor identification is asserted.
 
-Classical local-field provenance is Matsuo–Nagatomo and Bakalov–Kac (math/0402315). The source retains the mathlib Hahn/Laurent and partial-fraction authors and Scott Carnahan/vertexAlg composition attribution under Apache 2.0. The full quotient and its supporting public computations have an unfinished four-slot audit under issue #20510; source reconstruction alone is not declared_validated.
+Classical local-field provenance is Matsuo–Nagatomo and Bakalov–Kac (math/0402315). The source retains the mathlib Hahn/Laurent and partial-fraction authors and Scott Carnahan/vertexAlg composition attribution under Apache 2.0.
 
 ## References
 

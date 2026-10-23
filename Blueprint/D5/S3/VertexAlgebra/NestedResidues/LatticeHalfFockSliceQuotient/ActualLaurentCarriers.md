@@ -20,7 +20,7 @@ The actual current and two physical source slices have three independent localit
 
 The construction first supplies the actual common array and supported carriers. Homogeneous multiplication by each labelled difference shifts degree by one; division by the homogeneous clearing polynomial then identifies all ordered scalar coefficients. Negative degrees and zero slices are included. The resulting carriers supply the two actual local branches of the arbitrary-cutoff quotient theorem.
 
-Classical local-field provenance is Matsuo–Nagatomo and Bakalov–Kac (math/0402315). The source retains the mathlib Hahn/Laurent and partial-fraction authors and Scott Carnahan/vertexAlg composition attribution under Apache 2.0. The full quotient and its supporting public computations have an unfinished four-slot audit under issue #20510; source reconstruction alone is not declared_validated.
+Classical local-field provenance is Matsuo–Nagatomo and Bakalov–Kac (math/0402315). The source retains the mathlib Hahn/Laurent and partial-fraction authors and Scott Carnahan/vertexAlg composition attribution under Apache 2.0.
 
 ## References
 
