@@ -1,0 +1,161 @@
+**Lemma 9.2 (mesh-uniform node occupation with all returns).**
+Keep every fixed model of Definition 1.1 and the comparison-node exit
+$N_n$ of (7.1). There are $n_0,s_0>0$ and $C<\infty$, depending on
+this model and source, such that
+
+$$
+\delta_n\,\mathbb E\sum_{i<N_n}
+ {\bf1}_{\mathcal B_s}(q_i)
+ \le C(s^2+e_n^2),\qquad
+0<s\le s_0,\quad n\ge n_0,
+\qquad e_n=\sqrt{\delta_n}.
+\tag{9.5}
+$$
+
+The comparison after $m_n$ cells is used only for an upper bound, as in
+Theorem 7.1; the executed random cells are the indices
+$i<N_n\wedge m_n$. Conditioning uses the complete state and past.
+
+Proof. The exact source-chart fields must be distinguished from their
+second-kind expressions. Before whitening, $t=z-xy/2$ gives
+$P=\partial_x-(y/2)\partial_t$ and
+$Q=\partial_y+(x/2)\partial_t$. The graded map in G, (10.1), pushes
+these fields to the columns of $B$ in the frame $(U,V)$ of (9.1).
+If $w_i=Bv_i$, the actual chord in a local lift is exactly
+
+$$
+\begin{aligned}
+(\xi,\eta)(\theta)&=(\xi_i,\eta_i)+\theta(w_i^1,w_i^2),\\
+\upsilon(\theta)&=\upsilon_i+
+ \tfrac\theta2(\xi_iw_i^2-\eta_iw_i^1),\qquad 0\le\theta\le1.
+\end{aligned}
+\tag{9.6}
+$$
+
+Equivalently it is $q_i\cdot(\theta w_i^1,\theta w_i^2,0)$, the flow
+of $w_i^1U+w_i^2V$. Formula (9.6) is (1.4) after its quadratic
+second-kind term is combined with $-xy/2$; it retains the actual
+chronological area across every join.
+
+Write $\delta=e^2=\delta_n$, $b(q)=Bd(q)$ and
+$C(q)=BA(q)B^{\mathsf T}$. On a fixed source chart the generator is
+exactly
+
+$$
+\mathcal G=\sum_a b^aZ_a+\sum_{a,b}C^{ab}Z_aZ_b,
+\qquad C(0)=I_2,\qquad |C(q)-I_2|\le C_*R(q),\quad |b(q)|\le C_*.
+\tag{9.7}
+$$
+
+This is the push-forward of G, (29.7), including its raw-density drift.
+All coefficient bounds are uniform on a fixed compact chart. Applied
+to (9.2), they give, for small $s$ and chart radius,
+
+$$
+|\mathcal G\mathcal U_s+f_s|
+ \le C(s+R)f_s.
+\tag{9.8}
+$$
+
+Indeed the second-derivative error is at most
+$CRs^3(s+R)^{-3}$ and the drift error at most
+$Cs^3(s+R)^{-2}$. Choose a fixed $b_0>0$ so small that
+$\overline{\mathcal B_{4b_0}}$ is an injective interior chart and
+(9.8) is at most $f_s/4$ whenever $s\le b_0/4$ and $R\le b_0$.
+Choose $0\le\chi\le1$ smooth, equal to one on $R\le b_0$ and zero
+on $R\ge2b_0$. On the native cylinder set
+$F_s=\chi\mathcal U_s$ in this chart and zero elsewhere, also extending
+it by zero beyond the two height faces. It is smooth and nonnegative,
+$\|F_s\|_\infty\le Cs^2$, and all its horizontal derivatives through
+order four outside $\mathcal B_{b_0/4}$ are bounded by $Cs^3$.
+The cutoff is fixed independently of $s,n$.
+
+We now prove the one-step error uniformly for these changing tests.
+At an alive node,
+$w=\delta b+\sqrt{2\delta}\,B\Sigma(q_i)\xi_i$, with the original
+four signs, so
+
+$$
+\mathbb E_iw^a=\delta b^a,\qquad
+\mathbb E_iw^aw^b=2\delta C^{ab}+\delta^2b^ab^b,
+\qquad |\mathbb E_iw^aw^bw^c|\le C\delta^2,
+\qquad |w|\le Ce.
+\tag{9.9}
+$$
+
+The third bound follows by expanding the product: the pure-noise cubic
+has mean zero under $\xi_i\mapsto-\xi_i$, and every other nonzero term
+has at least one factor $\delta b$. It is a one-step statement;
+no symmetry of a variable-coefficient multistep block is assumed.
+Taylor expansion along the exact flow (9.6), through degree three with
+a fourth-order integral remainder, consequently gives
+
+$$
+\left|\mathbb E_i(F_s(q_{i+1})-F_s(q_i))
+      -\delta\mathcal GF_s(q_i)\right|
+ \le C\delta^2\left(
+ |\nabla_H^2F_s(q_i)|+|\nabla_H^3F_s(q_i)|
+ +\sup_{0\le\theta\le1}|\nabla_H^4F_s(q_i(\theta))|\right).
+\tag{9.10}
+$$
+
+Here $|\nabla_H^k|$ means the sum over every word of length $k$;
+the coefficients of the flow are frozen at its initial node. Off the
+chart the identical formula uses the original fields $P,Q$, with the
+fixed factors of $B$ absorbed in $C$.
+
+For $R(q_i)\le b_0/2$ and fine meshes the whole chord is in $R<b_0$.
+The identity $|\nabla_HR|\le1$ in G, (10.9), implies
+$|R(q_i(\theta))-R(q_i)|\le Ce$. Hence if $s\ge Ke$, with a fixed
+sufficiently large $K$, then $s+R$ along this chord is comparable to
+its initial value. Equations (9.2), (9.9)–(9.10) bound the error by
+
+$$
+C\delta^2\frac{s^3}{(s+R(q_i))^5}
+ \le C\delta(e/s)^2f_s(q_i).
+\tag{9.11}
+$$
+
+The second and third derivatives in (9.10) satisfy the same bound
+after increasing $C$, since $s+R$ is in a fixed bounded interval.
+Choose $K$ so that (9.11) is at most $\delta f_s/4$.
+Together with (9.8), this gives decrement at least $\delta f_s/2$
+on this smaller chart. For nodes outside $\mathcal B_{b_0/2}$, a
+fine-mesh chord stays outside $\mathcal B_{b_0/4}$ whenever it meets
+the support of $F_s$. All derivatives there are $O(s^3)$, so its
+conditional increment is at most $C\delta s^3$. It follows globally,
+for every alive node and $Ke\le s\le s_0:=b_0/4$, that
+
+$$
+\mathbb E_i(F_s(q_{i+1})-F_s(q_i))
+ \le-c\delta\,{\bf1}_{\mathcal B_s}(q_i)+C\delta s^3,
+\tag{9.12}
+$$
+
+where $c>0$ uses $f_s\ge2^{-3/4}$ on $\mathcal B_s$.
+The positive cutoff error is controlled over the complete lifetime;
+it is not discarded by an annular summation.
+
+For each deterministic integer $j$, multiply (9.12) by the predictable
+indicator $i<N_n\wedge j$ and sum. Nonnegativity of $F_s$ and
+$F_s(o)\le Cs^2$ give
+
+$$
+c\delta\,\mathbb E\sum_{i<N_n\wedge j}
+ {\bf1}_{\mathcal B_s}(q_i)
+ \le F_s(o)-\mathbb EF_s(q_{N_n\wedge j})
+       +Cs^3\delta\mathbb E(N_n\wedge j)
+ \le Cs^2+CMs^3.
+\tag{9.13}
+$$
+
+Here $\delta\mathbb EN_n\le M$ is exactly (7.6). The last uncut
+overshoot is included in $q_{N_n\wedge j}$; $F_s$ is defined and
+nonnegative there, and is zero outside the height interval.
+Monotone convergence as $j\to\infty$ proves the $Cs^2$ bound for
+$Ke\le s\le s_0$. Increase $n_0$ so that $Ke_n\le s_0$.
+For $s<Ke_n$, set inclusion in $\mathcal B_{Ke_n}$ and that already
+proved bound give $CK^2e_n^2$. This proves (9.5), including the
+submesh branch, without multiplying a mere lifetime bound by $e_n^2$.
+Every alive-node index is counted, including all returns. $\square$
+
