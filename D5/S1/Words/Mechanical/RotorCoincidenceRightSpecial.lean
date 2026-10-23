@@ -13,9 +13,6 @@ import D5.S1.Words.Mechanical.MechanicalDyadicBoundary
 
 namespace D5.S1.Words.Mechanical.RotorCoincidenceRightSpecial
 
-open private lowerMechanicalFactor_succ from
-  D5.S1.Words.Mechanical.MechanicalRightSpecial
-
 noncomputable def cutting (σ : ℝ) (m : ℕ) : ℕ := by
   classical
   exact if ∃ k : ℕ, 1 ≤ k ∧ m = ⌊(k : ℝ) * σ⌋₊ + k then 3 else 1
@@ -242,14 +239,15 @@ private theorem mechanical_reverse_prefix_special {α : ℝ}
   obtain ⟨i, hi⟩ := mem_lowerMechanicalFactorSet.mp
     (mechanical_reversed_extension hα0 hα1 hα m false)
   refine mem_lowerMechanicalFactorSet.mpr ⟨i, ?_⟩
-  rw [lowerMechanicalFactor_succ] at hi
+  rw [MechanicalRightSpecial.lowerMechanicalFactor_succ] at hi
   exact List.append_inj_left hi (by simp [lowerMechanicalFactor])
 
 private theorem cutting_values (σ : ℝ) (i : ℕ) :
     cutting σ i = 1 ∨ cutting σ i = 3 := by
   classical
-  unfold cutting
-  split <;> simp_all
+  exact ((Lean.Omega.ite_disjunction
+    (P := ∃ k : ℕ, 1 ≤ k ∧ i = ⌊(k : ℝ) * σ⌋₊ + k)
+    (a := (3 : ℕ)) (b := 1)).imp And.right And.right).symm
 
 private theorem rotor_zero_iff (σ : ℝ) (i : ℕ) : rotor σ i = 0 ↔ i = 0 := by
   by_cases hi : i = 0
@@ -354,7 +352,7 @@ private theorem rotor_special_projection {σ α : ℝ}
         Function.Injective (fun b : Bool => if b then (3 : ℕ) else 1)) hp
   have hext (k : ℕ) : lowerMechanicalFactor α α (ℓ / 2) k ++
       [lowerMechanicalWord α α (k + ℓ / 2)] ∈ lowerMechanicalFactorSet α α (ℓ / 2 + 1) := by
-    rw [← lowerMechanicalFactor_succ]
+    rw [← MechanicalRightSpecial.lowerMechanicalFactor_succ]
     exact mem_lowerMechanicalFactorSet.mpr ⟨k, rfl⟩
   have hbits : lowerMechanicalWord α α ((i - 1) / 2 + ℓ / 2) ≠
       lowerMechanicalWord α α ((j - 1) / 2 + ℓ / 2) := by
