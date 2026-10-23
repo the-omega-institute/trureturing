@@ -5,3 +5,7 @@ cas_ref: sha256:25710c941f8c0fb9b90c996394ce234d902d08ae75ada5de5a3d8b725c1eba95
 coverage_gids: []
 receipts:
   unresolved_subitems: []
+  nonpropositional:
+    justification: Bare framework name in an expository topic list; no Weil positivity claim is stated in this fragment.
+    previous_atom_id: 36aa34e47bc38af86b797592323b338dceae7d99a5fbd593066c8428920deac2
+    next_atom_id: aca048895b2617d6d71daebc38b63573edd345ed565012ba26877085632a242f

@@ -5,3 +5,7 @@ cas_ref: sha256:4a7e48d6af4b1a7e29a86579d0c2caf2123bfec1934f59230c22fa43c1f01ac6
 coverage_gids: []
 receipts:
   unresolved_subitems: []
+  nonpropositional:
+    justification: Explicit list of open construction/proof problems; none of the displayed targets is asserted established.
+    previous_atom_id: f0ba6caa0006f642f651c16412c0e89c15fb993adda0861a2beb23ec7cdde462
+    next_atom_id: 6960a18a836b5b92ee3ab2cfc8f9a76bfa363711aa5523c64cc6364064aff386
