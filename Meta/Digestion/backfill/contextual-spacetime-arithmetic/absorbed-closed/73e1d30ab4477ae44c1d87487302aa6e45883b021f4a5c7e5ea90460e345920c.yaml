@@ -1,0 +1,21 @@
+fingerprints:
+  raw_sha256: sha256:73e1d30ab4477ae44c1d87487302aa6e45883b021f4a5c7e5ea90460e345920c
+  normalized_sha256: sha256:73e1d30ab4477ae44c1d87487302aa6e45883b021f4a5c7e5ea90460e345920c
+cas_ref: sha256:73e1d30ab4477ae44c1d87487302aa6e45883b021f4a5c7e5ea90460e345920c
+coverage_gids:
+  - gid: D5/S0/History/Spacetime/ArchiveCarrier.Archive
+    target_statement_id: sha256:68398975e18185ade9e842130995e305538d3523284b8d32d83856db8f8439a1
+  - gid: D5/S3/ConceptDynamics/Observation/StrictOneHoleContexts.Generator
+    target_statement_id: sha256:8f89456044a72fdb237aba0f26d37d54f2aa4671ba3f15f81cbec94b2344e8b1
+  - gid: D5/S3/ConceptDynamics/Observation/StrictOneHoleContexts.contextDenote
+    target_statement_id: sha256:5a35957b45517db14c994ef3fc0b58fdaa49dd6cb4d04022a7af64fcbcdf4564
+  - gid: D5/S3/ConceptDynamics/Spacetime/HistoricalEquivalence.historical_iso_refl
+    target_statement_id: sha256:dd2bc9e3441b5c627114af06a7f42792e50da81420eaca85b7ff3b39b916fe26
+  - gid: D5/S3/ConceptDynamics/Spacetime/TotalCopyNormalization.filterBalanced
+    target_statement_id: sha256:636e5ef9d7680c63d26462ec30553350e08646d2597b50f730f28a8317ba91cb
+  - gid: D5/S3/ConceptDynamics/Spacetime/TotalCopyNormalization.nativeSignature
+    target_statement_id: sha256:dabc60e7affb90c044bd59b140cd9eb85913b07a12ae00a85afb7d76334b07f1
+  - gid: D5/S3/ConceptDynamics/Spacetime/TotalCopyNormalization.sourceAttributeEquiv
+    target_statement_id: sha256:7779a7f16713271fa55e381df07af41cf0319b3446c1abea90226e162935fca2
+receipts:
+  unresolved_subitems: []

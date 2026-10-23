@@ -1,0 +1,32 @@
+**Proposition 139.1 (a sufficient three-matrix route at a fixed spectrum).** Fix $q>0$. Use the direct threshold $a_k$ in (U.140) at $k=7/(2h)$, and $a_S$ in (U.166) at $k=4/h$. If all three conditions
+
+$$
+\begin{aligned}
+&(m-2q/7)I_2-a_{7/(2h)}(2q/7)M_{7/(2h),u}\succeq0,\\
+&(m-q/2)I_2-a_{7/(2h)}(q/2)M_{7/(2h),u}\succeq0,\\
+&(m-q/2)I_2-a_S(q/2)M_{4/h,u}\succeq0
+\end{aligned}
+\quad\text{for every real unit }u
+\tag{U.173}
+$$
+
+hold, then every actual common pair at this $p$ with $\lambda\geq2q/7$ satisfies $\Theta\leq r$. If in addition $p\geq2/3$, the conclusion holds for all actual $\lambda$.
+
+Proof. The first two conditions interpolate, with fixed $k,u$, to every $\lambda\in[2q/7,q/2]$. Proposition 134.1 then proves the direct target at an actual minimizing direction. For the high interval the other endpoint is automatic for every $p$:
+
+$$
+a_S(q)=\frac{4[p+g-(1+\sqrt2)/2]}h\leq0.
+\tag{U.174}
+$$
+
+Indeed $d=2p-1$, $y=2g$ satisfy $d^2+y^2=1$, so $d+y\leq\sqrt2$ and $p+g\leq(1+\sqrt2)/2$. Thus $(m-q)I-a_S(q)M_{4/h,u}\succeq0$ for all directions. Interpolating with the third condition in (U.173) proves the high matrix condition, and the positive-threshold argument (U.144), or its automatic nonpositive-threshold case, yields $Z_{4/h}\geq a_S$. Proposition 123.1 and (U.27) prove the target on $[q/2,q]$. If $p\geq2/3$, Theorem 136.1 supplies the remaining interval.
+
+For each fixed $p$, the exact coefficients and the endpoint/vertex rule in Proposition 135.1 give explicit scalar sufficient tests for all of (U.173). Their validity uniformly over $p\in(p_-,17/20)$ is unresolved. Theorem 137.1 supplies their complete certificates at $p=3/4$. Failure of one of these all-direction conditions would disprove that sufficient certificate at the tested spectrum; it would not disprove the actual target. In particular the realized minimizing direction must also obey
+
+$$
+\sqrt P V^TV\sqrt P u=(P-\lambda I_2)u,
+\tag{U.175}
+$$
+
+and remains tied to the actual traces and the same two-column matrix. The clipped bound (U.139) and the strict root-trace improvement (U.114) remain available independently of the sufficient matrix route. $\square$
+

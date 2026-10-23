@@ -1,0 +1,49 @@
+**Reused equal-$M$ exclusions and counting consequences.** F,
+Theorem 26.4 already excludes every distinct equal-$x$, equal-$M$
+pair in the entire $C(p,v)$ for $p\ne24$. Its sixth response $u$
+is precisely the present $v$, and its reflected alternative occurs
+only at $p=24$. SIII, Corollary 27.2 uses this identical correspondence.
+Thus the exclusion of a two-$\kappa$ $M$ pair, and also of a two-golden
+$M$ pair off $24$, are applications of that existing result. The
+additional strength of Corollary 11.1 for the $\kappa$ layer is
+separation before fixing $v$ or any terminal, and in particular its
+$J$ consequence.
+
+For real $p\ne24,v,m$, retain the exact $N$, $F$, $\mathcal R$,
+$\mathcal E$ and $\mathcal W$ of (2.5), (3.1), Definition 4.2 and
+(1.4). The exceptional equivalence in Theorem 4.3 and the cited
+F26.4 exclusion already give
+
+$$
+|\mathcal E(p,v,m)|\le1.
+\tag{11.1}
+$$
+
+This also follows from (9.1). Reusing Proposition 5.1's noncollapse
+and double factor and Theorem 5.2's ordinary inverse gives the
+conditional consequence
+
+$$
+p\ne24,\quad N(\kappa;p,v,m)=0
+\quad\Longrightarrow\quad |\mathcal W(p,v,m)|\le6.
+\tag{11.2}
+$$
+
+Indeed the nonzero polynomial $F/(x-\kappa)^2$ has degree at most
+five by those existing results, so supplies at most five ordinary
+worlds; (11.1) supplies at most one exceptional world. This argument
+does not require an exceptional world to exist. If $N(\kappa)\ne0$,
+there is no exceptional world, and the ordinary bound is seven.
+Consequently the unconditional bounds retained from Theorem 5.2 and
+F, Theorem 32.1 are
+
+$$
+p\ne24:\qquad |\mathcal W(p,v,m)|\le7,\qquad |C(p,v)|\le24.
+\tag{11.3}
+$$
+
+Neither (11.2) nor (11.3) is asserted at $p=24$. The inverse,
+noncollapse and double-factor mechanism in these statements are the
+existing results of Sections 3–5; the conditional count combines them
+with the existing F26.4 exclusion.
+

@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:bd0aef2981e8f0fdc4d8bdae503d08ec91e9eab7ee5af698c81d42aa08f6f227
+  normalized_sha256: sha256:bd0aef2981e8f0fdc4d8bdae503d08ec91e9eab7ee5af698c81d42aa08f6f227
+cas_ref: sha256:bd0aef2981e8f0fdc4d8bdae503d08ec91e9eab7ee5af698c81d42aa08f6f227
+coverage_gids:
+  - gid: D5/S3/Observer/GoldenCoding/GoldenRationalShellRigidity.golden_ratio_positive_power_irrational
+    target_statement_id: sha256:a83b815937546cab1b75cb381b11e71e85b487c201f5a5a216d5ad205ec4af69
+receipts:
+  unresolved_subitems: []

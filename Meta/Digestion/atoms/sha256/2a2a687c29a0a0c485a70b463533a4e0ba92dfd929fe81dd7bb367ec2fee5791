@@ -1,0 +1,19 @@
+## 5. 更新序列的累积修复界
+
+固定同一个 $D,t$，令
+
+$$
+\mathfrak M_0,\mathfrak M_1,\ldots,\mathfrak M_T,
+\qquad T\in\mathbb N_0.
+$$
+
+为一列有限候选族。设 $C_0$ 是 $\mathfrak M_0$ 的完整失败证书。对 $0\le j<T$，选取 $R_j\subseteq D$ 使
+
+$$
+|R_j|=\rho_{\mathfrak M_{j+1}}(C_j),
+\qquad
+C_{j+1}=C_j\cup R_j.
+$$
+
+当修复宽度为 $\infty$ 时，序列在该步停止；以下只讨论所有所列步均有限的情形。
+

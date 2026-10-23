@@ -1,0 +1,15 @@
+## 246. Three-copy complex rank and the native separable zero-map theorem
+
+Fix $t=3-2\sqrt2$ and retain Definitions 240.1, 244.1 and 244.3.
+In particular $q\in D$ is the actual joint principal-root source,
+$\rho_q=\Omega_q/P_q$, $P_q=P_{\mathrm{full}}(q,t)>0$, and
+$W_q=W_{\lambda(p(q))}$ is the fixed-register target. The parameters
+$p(q)$ and $U_q$ are not independent preparation controls. All these
+required targets are separable by Theorem 240.3.
+
+The three-block application below uses the exact common-kernel formula
+of Proposition 245.1 and the whole-family implication of Lemma 244.4.
+Its rank argument is an elementary complex block-minor argument; it does
+not invoke a Hermitian Boolean-function rank theorem. In particular the
+coefficient matrices need not be Hermitian, real or diagonalizable.
+

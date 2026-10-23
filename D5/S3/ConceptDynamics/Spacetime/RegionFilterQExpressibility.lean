@@ -95,7 +95,7 @@ private def unary_data {X Y : B} (h : CurrentIsoData X Y) (f : Unary) : CurrentI
 
 /-- A correspondence of current events, order and selection without an attribute claim. -/
 
-private structure CurrentPairData (X Y : B) where
+structure CurrentPairData (X Y : B) where
   equiv : ↥X.val.1.current ≃ ↥Y.val.1.current
   causal_iff : ∀ e f, Y.val.1.archive.causal (equiv e).val (equiv f).val ↔ X.val.1.archive.causal e.val f.val
   selected_iff : ∀ e, (equiv e).val ∈ Y.val.2.val ↔ e.val ∈ X.val.2.val
@@ -186,19 +186,19 @@ private def product_data {X X' Y Y' : B} (h : CurrentIsoData X X') (k : CurrentI
 private def refl_data (X : B) : CurrentIsoData X X :=
   ⟨Equiv.refl _, fun _ => rfl, fun _ _ => Iff.rfl, fun _ => Iff.rfl⟩
 
-private inductive Step where
+inductive Step where
   | unary (f : Unary)
   | parallelLeft (Z : B)
   | parallelRight (Z : B)
   | productLeft (Z : B)
   | productRight (Z : B)
-private def applyStep : Step → B → B
+def applyStep : Step → B → B
   | .unary f, X => unary f X
   | .parallelLeft Z, X => parallelBalanced X Z
   | .parallelRight Z, X => parallelBalanced Z X
   | .productLeft Z, X => productBalanced X Z
   | .productRight Z, X => productBalanced Z X
-private def runSteps : List Step → B → B
+def runSteps : List Step → B → B
   | [], X => X
   | s :: w, X => runSteps w (applyStep s X)
 private theorem step_reify (g : Generator nativeSignature) (hg : g.symbol ≠ .inr .temporal) :
@@ -222,7 +222,7 @@ private theorem step_reify (g : Generator nativeSignature) (hg : g.symbol ≠ .i
       rcases hi with rfl | rfl
       · exact ⟨.productLeft (p ⟨1, by decide⟩), fun _ => rfl⟩
       · exact ⟨.productRight (p ⟨0, by decide⟩), fun _ => rfl⟩
-private theorem reify_temporal_free (w : List (Generator nativeSignature)) (hw : WordTemporalFree w) :
+theorem reify_temporal_free (w : List (Generator nativeSignature)) (hw : WordTemporalFree w) :
     ∃ v : List Step, ∀ X, contextDenote nativeSignature w X = some (runSteps v X) := by
   induction w with
   | nil => exact ⟨[], fun _ => rfl⟩
@@ -247,7 +247,7 @@ private theorem temporal_free_readout {X Y : B} (h : CurrentIsoData X Y) (w : Li
   | nil => exact current_readout_eq h
   | cons s w ih => exact ih (step_data h s)
 
-private structure PreVariant (X Y : B) extends CurrentPairData X Y where
+structure PreVariant (X Y : B) extends CurrentPairData X Y where
   exceptional : ↥X.val.1.current
   attributes_other : ∀ e, e ≠ exceptional →
     Y.val.1.archive.attributes (equiv e).val = X.val.1.archive.attributes e.val
@@ -258,9 +258,9 @@ private structure PreVariant (X Y : B) extends CurrentPairData X Y where
   source_eq : (Y.val.1.archive.attributes (equiv exceptional).val).source =
     (X.val.1.archive.attributes exceptional.val).source
   no_incoming : ∀ (e : ↥X.val.1.current), ¬ X.val.1.archive.causal e.val exceptional.val
-private def mask (X : B) (e : ↥X.val.1.current) (Q : Set (Attributes 3)) : Prop :=
+def mask (X : B) (e : ↥X.val.1.current) (Q : Set (Attributes 3)) : Prop :=
   ∃ d : ↥X.val.1.current, X.val.1.archive.attributes d.val ∈ Q ∧ (e = d ∨ X.val.1.archive.causal e.val d.val)
-private def Saturated {X Y : B} (h : PreVariant X Y) (Qs : List (Set (Attributes 3))) : Prop :=
+def Saturated {X Y : B} (h : PreVariant X Y) (Qs : List (Set (Attributes 3))) : Prop :=
   ∀ Q ∈ Qs, Q.Nonempty → mask X h.exceptional Q ∧ mask Y (h.equiv h.exceptional) Q
 private theorem mask_nonempty (X : B) (e : ↥X.val.1.current) (Q : Set (Attributes 3)) : mask X e Q → Q.Nonempty := by
   rintro ⟨d, hd, _⟩; exact ⟨_, hd⟩
@@ -464,7 +464,7 @@ private theorem parallel_variant_right_equiv {X Y : B} (h : PreVariant X Y) (Z :
   rw [Equiv.symm_apply_apply]
 private def shiftAttributes (k : Int) (a : Attributes 3) : Attributes 3 := {a with time := a.time + k}
 
-private def requiredPredicates : List Step → List (Set (Attributes 3))
+def requiredPredicates : List Step → List (Set (Attributes 3))
   | [] => []
   | .unary (.causal Q) :: w => (sourceAttributeEquiv ⁻¹' Q) :: requiredPredicates w
   | .unary (.shift k) :: w => (requiredPredicates w).map (fun Q => shiftAttributes k ⁻¹' Q)
@@ -481,7 +481,7 @@ private theorem current_lower_bound (Z : B) (e : ↥Z.val.1.current) :
     abs_nonneg (Z.val.1.archive.attributes i.val).time) (Finset.mem_univ e)
   have hl := neg_abs_le (Z.val.1.archive.attributes e.val).time; unfold currentLowerBound
   omega
-private def timeThreshold : List Step → Int
+def timeThreshold : List Step → Int
   | [] => 0
   | .unary (.shift k) :: w => timeThreshold w - k
   | .unary _ :: w => timeThreshold w
@@ -531,7 +531,7 @@ private def collapse_right {X Y : B} (h : PreVariant X Y) (Z : B)
     · simp only [generatedAttributes, same_positive h a.2]
     · simp only [generatedAttributes, same_source h a.2]
   · simp only [generatedAttributes, h.attributes_other a.2 ha]
-private theorem saturated_runSteps (w : List Step) {X Y : B} (h : PreVariant X Y)
+theorem saturated_runSteps (w : List Step) {X Y : B} (h : PreVariant X Y)
     (ht : (X.val.1.archive.attributes h.exceptional.val).time < timeThreshold w)
     (ht' : (Y.val.1.archive.attributes (h.equiv h.exceptional).val).time < timeThreshold w)
     (hs : Saturated h (requiredPredicates w)) : q (runSteps w X).val = q (runSteps w Y).val := by
@@ -645,15 +645,15 @@ def SelectedVariant (X Y : B) (p : Fin 3 → Int) (t t' : Int) : Prop := ∃ h :
     X.val.2.val = {h.exceptional} ∧ (X.val.1.archive.attributes h.exceptional).position = p ∧
     (X.val.1.archive.attributes h.exceptional).positive = true ∧ (X.val.1.archive.attributes h.exceptional).time = t ∧
     (Y.val.1.archive.attributes (h.eventEquiv h.exceptional)).time = t'
-private abbrev StarNode (m : Nat) := ((Option (Fin m)) × Bool) ⊕ Bool
-private def starCode (m : Nat) : StarNode m ↪ HF where
+abbrev StarNode (m : Nat) := ((Option (Fin m)) × Bool) ⊕ Bool
+def starCode (m : Nat) : StarNode m ↪ HF where
   toFun x := natCode ((Fintype.equivFin (StarNode m)) x).val
   inj' _ _ h := (Fintype.equivFin (StarNode m)).injective (Fin.ext (natCode_inj.mp h))
-private def starExceptional (m : Nat) : StarNode m := .inl (none, true)
+def starExceptional (m : Nat) : StarNode m := .inl (none, true)
 private def starCurrent (m : Nat) : Finset (StarNode m) := Finset.univ.disjSum ∅
 private def starRelation {m : Nat} (a b : StarNode m) : Prop :=
   a = starExceptional m ∧ ∃ i : Fin m, b = .inl (some i, true)
-private def starAttributes {m : Nat} (v : Fin m → Attributes 3) (p : Fin 3 → Int)
+def starAttributes {m : Nat} (v : Fin m → Attributes 3) (p : Fin 3 → Int)
     (lo hi t : Int) : StarNode m → Attributes 3
   | .inl (none, true) => ⟨t, p, true, FreeMagma.of 0⟩
   | .inl (some i, true) => v i
@@ -682,17 +682,17 @@ private theorem star_balanced {m : Nat} (v : Fin m → Attributes 3) (p : Fin 3 
   intro i _; cases i with
   | none => simp [starAttributes]
   | some i => cases h : (v i).positive <;> simp [starAttributes, h]
-private def starInput {m : Nat} (v : Fin m → Attributes 3) (p : Fin 3 → Int)
+def starInput {m : Nat} (v : Fin m → Attributes 3) (p : Fin 3 → Int)
     (lo hi t : Int) (ht : ∀ i, t < (v i).time) : B :=
   ⟨⟨starContext v p lo hi t ht, selectionOf (starCode m) (starAttributes v p lo hi t) starRelation
       star_irrefl star_trans (star_time v p lo hi t ht) (starCurrent m)
       {starExceptional m} (by simp [starExceptional, starCurrent])⟩, star_balanced v p lo hi t ht⟩
-private theorem star_attributes_eq {m : Nat} (v : Fin m → Attributes 3)
+theorem star_attributes_eq {m : Nat} (v : Fin m → Attributes 3)
     (p : Fin 3 → Int) (lo hi t : Int) (ht : ∀ i, t < (v i).time) (a : StarNode m) :
     (starInput v p lo hi t ht).val.1.archive.attributes (eventEquiv (starCode m) a) = starAttributes v p lo hi t a :=
   attributes_eventEquiv (starCode m) (starAttributes v p lo hi t) starRelation
     star_irrefl star_trans (star_time v p lo hi t ht) a
-private theorem star_pair {m : Nat} (v : Fin m → Attributes 3) (p : Fin 3 → Int)
+theorem star_pair {m : Nat} (v : Fin m → Attributes 3) (p : Fin 3 → Int)
     (lo hi t t' : Int) (ht : ∀ i, t < (v i).time) (ht' : ∀ i, t' < (v i).time)
     (hlo : lo < t ∧ lo < t') (hhi : t < hi ∧ t' < hi) :
     SelectedVariant (starInput v p lo hi t ht) (starInput v p lo hi t' ht') p t t' := by
@@ -736,7 +736,7 @@ private theorem star_pair {m : Nat} (v : Fin m → Attributes 3) (p : Fin 3 → 
     · simpa [eqv, starInput, starContext, contextOf, archiveOf, starExceptional, starAttributes] using hhi.1
     · simpa [eqv, starInput, starContext, contextOf, archiveOf, starExceptional, starAttributes] using hhi.2
   · exact Finset.map_singleton _ _
-private def star_current_variant {m : Nat} (v : Fin m → Attributes 3) (p : Fin 3 → Int)
+def star_current_variant {m : Nat} (v : Fin m → Attributes 3) (p : Fin 3 → Int)
     (lo hi t t' : Int) (ht : ∀ i, t < (v i).time) (ht' : ∀ i, t' < (v i).time) :
     PreVariant (starInput v p lo hi t ht) (starInput v p lo hi t' ht') := by
   let eqv := eventEquiv (starCode m)
@@ -767,11 +767,11 @@ private def star_current_variant {m : Nat} (v : Fin m → Attributes 3) (p : Fin
   · intro a; change ¬ starRelation (eqv.symm a.val) (eqv.symm (eqv (starExceptional m)))
     rw [Equiv.symm_apply_apply]; rintro ⟨_, i, h⟩
     simp [starExceptional] at h
-private def starPoint {m : Nat} (v : Fin m → Attributes 3) (p : Fin 3 → Int)
+def starPoint {m : Nat} (v : Fin m → Attributes 3) (p : Fin 3 → Int)
     (lo hi t : Int) (ht : ∀ i, t < (v i).time) (i : Option (Fin m)) (b : Bool) :
     ↥(starInput v p lo hi t ht).val.1.current := ⟨eventEquiv (starCode m) (.inl (i, b)), by
     simp [starInput, starContext, contextOf, starCurrent]⟩
-private theorem star_hit {m : Nat} (v : Fin m → Attributes 3) (p : Fin 3 → Int)
+theorem star_hit {m : Nat} (v : Fin m → Attributes 3) (p : Fin 3 → Int)
     (lo hi t : Int) (ht : ∀ i, t < (v i).time) (i : Fin m) (Q : Set (Attributes 3)) (hv : v i ∈ Q) :
     mask (starInput v p lo hi t ht) (starPoint v p lo hi t ht none true) Q := by
   refine ⟨starPoint v p lo hi t ht (some i) true, ?_, Or.inr ?_⟩
@@ -781,7 +781,7 @@ private theorem star_hit {m : Nat} (v : Fin m → Attributes 3) (p : Fin 3 → I
       Equiv.symm_apply_apply, starExceptional] using
         (show starRelation (starExceptional m) (.inl (some i, true)) from ⟨rfl, i, rfl⟩)
 
-private theorem finite_joint_input (Qs : List (Set (Attributes 3))) (K : Int) :
+theorem finite_joint_input (Qs : List (Set (Attributes 3))) (K : Int) :
     ∃ c : Int, c ≤ K ∧ ∀ (p : Fin 3 → Int) (t t' : Int), t < c → t' < c → ∃ X Y : B, SelectedVariant X Y p t t' ∧
         ∃ h : PreVariant X Y, (X.val.1.archive.attributes h.exceptional.val).time = t ∧
           (Y.val.1.archive.attributes (h.equiv h.exceptional).val).time = t' ∧ Saturated h Qs := by
@@ -814,7 +814,7 @@ private theorem finite_joint_input (Qs : List (Set (Attributes 3))) (K : Int) :
     have hvQ : v i ∈ Q := hiQ ▸ hv i (hiQ ▸ hn)
     exact ⟨star_hit v p lo hi t htv i Q hvQ, star_hit v p lo hi t' ht'v i Q hvQ⟩
 
-private theorem normalize_word (w : Word) (ht : ∀ X : B, ∃ Y, contextDenote nativeSignature w X = some Y) :
+theorem normalize_word (w : Word) (ht : ∀ X : B, ∃ Y, contextDenote nativeSignature w X = some Y) :
     ∃ w' : Word, WordTemporalFree w' ∧
       ∀ X, contextDenote nativeSignature w X = contextDenote nativeSignature w' X := by
   have hc : DiagonalTotal (wordToCopy w) := by
@@ -850,7 +850,7 @@ theorem total_word_saturation (w : Word)
     exact ht'.trans_le hc
   · exact sat
 
-private theorem selected_region_values (R : Region) (X Y : B)
+theorem selected_region_values (R : Region) (X Y : B)
     (p : Fin 3 → Int) (t t' : Int) (pair : SelectedVariant X Y p t t') :
     regionReadout R X = (if (t, p) ∈ R then 1 else 0) ∧ regionReadout R Y = (if (t', p) ∈ R then 1 else 0) := by
   obtain ⟨v, selected, pos, positive, time, time'⟩ := pair

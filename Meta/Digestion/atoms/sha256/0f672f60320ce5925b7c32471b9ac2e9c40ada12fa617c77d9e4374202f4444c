@@ -1,0 +1,30 @@
+**推论 13.4（临界尺度的条件 TV 保留证书）。** Let $(q_n,b_n)$ satisfy (13.4), and apply the same parameter-dependent readout $Q_{q_n,b_n}$ to a supplied comparison law with the same original-label prior and binary output alphabet. Write its singleton gain as $B_n'$, and suppose the resulting joint laws obey
+
+$$
+ \operatorname{TV}(\mathcal J_{q_n,b_n},\mathcal J_{q_n,b_n}')\le e_n.
+\tag{13.20}
+$$
+
+If $e_n=o(b_n^{3/2})$, then
+
+$$
+ \frac{B_n'}{B(q_n,b_n)}\longrightarrow1.
+\tag{13.21}
+$$
+
+More generally, if $e_n\le d\,b_n^{3/2}$ eventually for a fixed $d\ge0$, then
+
+$$
+ \limsup_{n\to\infty}
+ \left|\frac{B_n'}{B(q_n,b_n)}-1\right|\le\frac d{H(\tau)},\qquad
+ \liminf_{n\to\infty}\frac{B_n'}{B(q_n,b_n)}
+ \ge\max\left\{0,1-\frac d{H(\tau)}\right\}.
+\tag{13.22}
+$$
+
+In particular, $d<H(\tau)$ gives a positive eventual retained fraction, and every fixed $0<\theta<1-d/H(\tau)$ is eventually certified. These are sufficient certificates for the respective Bayes optima under the supplied TV bound; they are neither necessary conditions nor an achieved approximation rate. They do not assert a comparison-law construction, training guarantee, or actual loss when an upper budget is loose.
+
+**Proof.** Equation (13.18) gives $|B_n'-B(q_n,b_n)|\le e_n$. Divide by the positive quantity $B(q_n,b_n)$ and use (13.5), with $H(\tau)>0$. The little-$o$ case gives (13.21); the eventual bound gives the first inequality in (13.22). A constant nonsingleton action is always available under the common prior, so $B_n'\ge0$, which gives the second inequality. The stated fraction follows when $d<H(\tau)$. $\square$
+
+The source correspondences are Proposition 2.1 and (11.2)--(11.3) for the signed Bayes identity, Theorem 10.2 for the on-axis onset context, Theorem 12.2 for the fixed-$q$ off-axis context, and Proposition 7.5 for the same-prior finite-law TV bound. The proof of Theorem 13.2 is direct and does not substitute a varying $q_n$ into the fixed-$q$ theorem. No native recursive-FIB realization, physical-cost claim, unknown-law learning, empirical benefit, formal certification, comparison-law approximation rate, or global originality claim follows.
+

@@ -1,0 +1,68 @@
+**Theorem 195.1 (Flag-dependent correlation threshold and finite cases).**
+For the actual conditional outputs,
+
+$$
+\begin{aligned}
+\rho_F\text{ entangled}
+ &\Longleftrightarrow w-3\eta<0
+ \Longleftrightarrow C_F>\frac w3
+ \Longleftrightarrow D_F>\frac{w^2}{9},\\
+\rho_E\text{ entangled}
+ &\Longleftrightarrow C_E>\frac13
+ \Longleftrightarrow D_E>\frac19.
+\end{aligned}
+$$
+
+Proof. Theorem 194.1 gives the full-state corner eigenvalue; its
+constructive block decomposition establishes separability on the
+other side. In microscopic parameters both conditions reduce to
+
+$$
+\boxed{\mu>ad\ \Longleftrightarrow\ g>t
+ \ \Longleftrightarrow\ 4p(1-p)\sinh^2(\beta/2)>1.}
+$$
+
+The last equivalence uses $(1-t)^2/t=4\sinh^2(\beta/2)$ with $t>0$.
+For $0<p<1$ this is exactly
+
+$$
+\beta>\beta_c(p)=2\operatorname{arsinh}\frac1{2\sqrt{p(1-p)}},\qquad
+\beta_{c,a}=2\operatorname{arsinh}\frac{99}{\sqrt{7301}},\quad
+\beta_{c,b}=2\operatorname{arsinh}\frac3{2\sqrt2}.
+$$
+
+Since $p_a(1-p_a)<p_b(1-p_b)$, $\beta_{c,b}<\beta_{c,a}$.
+For either procedure, both native outputs are separable for
+$0\le\beta\le\beta_{c,b}$; only $q_b$ is entangled for
+$\beta_{c,b}<\beta\le\beta_{c,a}$; both are entangled for finite
+$\beta>\beta_{c,a}$. Equality is separable at each model's boundary.
+The native generators are unaffected by the quantum postselection.
+
+The remaining finite cases are explicit. One has $g=0$ exactly when
+$\beta=0$ or $p\in\{0,1\}$. Both outputs are then product states and
+$C=D=\mathcal N=0$. At $\beta=0$,
+
+$$
+\rho_E=I_4/4,\quad \rho_F=I_8/8,\quad P_E=1/4,\quad P_F=1/8.
+$$
+
+At $p=0$ one has $w=1/(1+t)$; at $p=1$ one has $w=1/2$.
+Bob's marginal need not be maximally mixed, although the full state remains
+product. At the nonzero boundary $g=t$, negativity vanishes but
+$C_E=1/3$, $C_F=w/3$ and both discords are positive. Throughout
+$0<g\le t$ the states are separable with strictly positive covariance
+and discord. Thus neither positive discord nor saturation of
+$C_M=\sqrt{D_G^A}$ identifies entanglement.
+
+The unchanged constants $C_F>1/3$ and $D_F>1/9$ are sufficient because
+$w<1$, but are not necessary. The native example below violates their
+necessity. With the paper's doubled negativity convention, the exact gap is
+
+$$
+\boxed{\sqrt{D_j}-2\mathcal N_j=\frac{\min(g,t)}{Q_j},\qquad j=E,F.}
+$$
+
+Indeed, for $g\le t$ the left side is $g/Q_j$, while for $g>t$ it is
+$g/Q_j-(g-t)/Q_j=t/Q_j$. At finite $t>0$ this gap vanishes exactly when
+$g=0$. No $t=0$ state, limiting attainer or zero-temperature claim is used.
+

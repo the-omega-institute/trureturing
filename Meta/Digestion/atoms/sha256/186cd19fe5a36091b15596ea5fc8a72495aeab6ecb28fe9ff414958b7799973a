@@ -1,0 +1,25 @@
+**Corollary 160.3 (divergence of the required volume exponent).** With
+$A,B,c,c_-,c_+$ fixed, define
+
+$$
+d_{\rm req}(n)=
+\frac{\log\bigl((c_-/c_+)N_n\bigr)}
+     {\log\bigl(1+3[A(n-1)+B]/c\bigr)}.
+\tag{160.10}
+$$
+
+Any exponent $d$ satisfying the prefix inequality (160.7) obeys
+$d\ge d_{\rm req}(n)$, and
+
+$$
+d_{\rm req}(n)\sim\frac{n\log\varphi}{\log n}
+\longrightarrow+\infty.
+\tag{160.11}
+$$
+
+Proof. Divide (160.7) by $c_+(c/3)^d$ and take logarithms. The denominator
+in (160.10) is positive because $A,B,c>0$. Equations (160.8) and
+$\log(1+3[A(n-1)+B]/c)=\log n+O(1)$ give (160.11).
+This is a necessary packing exponent with fixed constants, not a physical
+or Hausdorff dimension inferred for an unspecified carrier. $\square$
+

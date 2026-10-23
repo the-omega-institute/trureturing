@@ -1,0 +1,87 @@
+**Theorem 122.1 (weighted common-direction evaluation).** For $q>0$ and any real unit vector $u\in\mathbb R^2$, set
+
+$$
+ a=\sqrt P u,\qquad m=u^TPu,\qquad
+ M_u=mP^{-1/2}-\frac{2aa^T}{3h}.
+\tag{U.65}
+$$
+
+Then $M_u\succ0$ and
+
+$$
+\sum_i\|V_i\sqrt P u\|^2
+\leq\lambda_{\max}(M_u)Z.
+\tag{U.66}
+$$
+
+In particular, at a unit minimum eigenvector of the actual $B$,
+
+$$
+m-\lambda\leq\lambda_{\max}(M_u)Z.
+\tag{U.67}
+$$
+
+Proof. Use row coordinates $x_i=(v_{i,11},v_{i,12},v_{i,21},v_{i,22})^T$ and define
+
+$$
+\begin{gathered}
+\mathsf F=\operatorname{diag}(\alpha,\alpha,\beta,\beta),\qquad
+ t=(\alpha,0,0,\beta)^T,\qquad z=(1,0,0,1)^T,\\
+\mathsf K=\mathsf F+\frac2h tt^T
+=\begin{pmatrix}
+\alpha+2p/h&0&0&2g/h\\
+0&\alpha&0&0\\
+0&0&\beta&0\\
+2g/h&0&0&\beta+2q/h
+\end{pmatrix},\\
+H=\sum_i x_i^T\mathsf F x_i,\qquad
+2\tau=\sum_i(t^Tx_i)^2,\qquad
+Z=\sum_i x_i^T\mathsf Kx_i.
+\end{gathered}
+\tag{U.68}
+$$
+
+The weight $\mathsf K$ is positive definite. Since $\mathsf F^{-1}t=z$ and $t^T\mathsf F^{-1}t=h$, the rank-one inverse formula, also checked by multiplication, is
+
+$$
+\mathsf K^{-1}=\mathsf F^{-1}-\frac{2zz^T}{3h}.
+\tag{U.69}
+$$
+
+Indeed in multiplying $\mathsf K$ by the right side, the coefficient of $tz^T$ is $2/h-2/(3h)-4/(3h)=0$. Thus no inverse of $A$ or $B$ is used. The evaluation map and its weighted Gram are
+
+$$
+\begin{gathered}
+L_u=\begin{pmatrix}\alpha u_1&\beta u_2&0&0\\0&0&\alpha u_1&\beta u_2\end{pmatrix},
+\qquad L_ux_i=V_i\sqrt P u,\\
+L_u\mathsf K^{-1}L_u^T=M_u
+=\begin{pmatrix}
+m/\alpha-2pu_1^2/(3h)&-2gu_1u_2/(3h)\\
+-2gu_1u_2/(3h)&m/\beta-2qu_2^2/(3h)
+\end{pmatrix}.
+\end{gathered}
+\tag{U.70}
+$$
+
+In particular the exact generalized Rayleigh maximum is
+
+$$
+\sup_{x\ne0}\frac{\|L_ux\|^2}{x^T\mathsf Kx}
+=\|L_u\mathsf K^{-1/2}\|_{\mathrm{op}}^2
+=\lambda_{\max}(M_u).
+\tag{U.71}
+$$
+
+To see this, substitute $y=\mathsf K^{1/2}x$ and take the largest eigenvalue of the two Grams of $L_u\mathsf K^{-1/2}$. Its two rows are independent for unit $u$ and $q>0$, so $M_u\succ0$. Apply (U.71) to both $x_i$ and sum to obtain (U.66). If $Bu=\lambda u$, then
+$\|V\sqrt P u\|^2=u^T(P-B)u=m-\lambda$, proving (U.67).
+
+For an actual SVD $V=\sum_{j=1}^2s_j\ell_j u_j^T$, splitting $\ell_j$ into copies gives
+
+$$
+H=\sum_js_j^2\ell_j^TD\ell_j,\qquad
+\operatorname{Tr}(V_i\sqrt P)=\sum_js_j\ell_{j,i}^T\sqrt P u_j.
+\tag{U.72}
+$$
+
+The second singular contribution is present in $H$; both singular contributions are added before the traces are squared in $\tau$. Thus (U.68) retains their actual cross cancellation. It is not an estimate obtained by assigning the trace penalties of two singular components separately. $\square$
+

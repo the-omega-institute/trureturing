@@ -1,0 +1,46 @@
+**Assumption 1.2 (Normalized CCR and one fixed Hamiltonian).**
+On the algebraic Fock domain assume
+
+$$
+[a_j,a_k^\dagger]=\delta_{jk}I,\qquad
+[a_j,a_k]=[a_j^\dagger,a_k^\dagger]=0,\qquad n_j=a_j^\dagger a_j,
+$$
+
+with the normalized actions
+
+$$
+a_j|n\rangle=\sqrt{n_j}|n-\mathbf e_j\rangle,\qquad
+a_j^\dagger|n\rangle=\sqrt{n_j+1}|n+\mathbf e_j\rangle.
+$$
+
+The negative-occupation term is zero. Fix, throughout each result and each
+approximation sequence,
+
+$$
+H=g a_1^\dagger a_3+\bar g a_3^\dagger a_1+J n_1n_3,
+\qquad g\in\mathbb C\setminus\{0\},\quad J\in\mathbb R,\quad\hbar>0.
+$$
+
+Both $g$ and $J$ have units of energy. Evolution means
+$U(t)=\exp(-itH/\hbar)$. Each finite total-number sector is invariant and
+finite dimensional; take the orthogonal direct sum of these Hermitian
+restrictions to define the self-adjoint Hamiltonian and its unitary group.
+All spectral assertions below concern $H|_W$ only.
+
+The exchange/number-interaction family is classical: compare Links,
+Foerster, Tonel and Santos, *The two-site Bose–Hubbard model*,
+[arXiv:cond-mat/0605486v1](https://arxiv.org/abs/cond-mat/0605486v1),
+§1, equation (1), [DOI 10.1007/s00023-006-0295-3](https://doi.org/10.1007/s00023-006-0295-3).
+For the two outer modes, writing $M=n_1+n_3$ gives
+$Jn_1n_3=J(M^2-(n_1-n_3)^2)/4$.
+A scalar shift on one fixed $M$ sector is not one common scalar on $V$,
+which contains different values of $M$. No such sector-dependent term is
+removed in the present Hamiltonian.
+
+The Fock modes in [Pyramid Correlation and Native Continuation,
+Definition 26.7](AURIC_FIB_ATOM_PYRAMID_CORRELATION_AND_NATIVE_CONTINUATION.md#263-指定玻色模型及唯一零能射线)
+are indexed by complete legal words, with a different positive Hamiltonian
+in its equation defining $H_n$. Here the modes are three positions and the
+Hamiltonian is the displayed $H$. Neither the indexing nor that Hamiltonian
+is transported merely by using five of the same word labels.
+

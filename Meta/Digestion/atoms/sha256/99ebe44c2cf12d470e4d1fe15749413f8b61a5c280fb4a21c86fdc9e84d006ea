@@ -1,0 +1,11 @@
+**定义 34.1（窗口的正位置选择）。** 对低到高打印的三位 $w=b_0b_1b_2$，$b_j\in\{0,1\}$，定义形式选择多项式与两种读出
+
+$$
+P_w(t)=b_0+b_1t+b_2t^2,\qquad
+p_{\mathrm{win}}(w)=P_w(\omega)\in\mathbb Z[\omega],
+\qquad
+\theta_4(w)=P_w(\eta)\in\mathbb F_4.
+$$
+
+这是所选位置相位的正线性和，独立于第三十三章树节点的负加法规则。原生五模式、整数贡献 $d(w)$、零层数量 $q_0(w)=\ell d(w)$ 与高到低守卫保持 [FIB 关系延拓几何，钉版定义 2.1、7.1](https://github.com/the-omega-institute/trureturing/blob/61dcb1249a11ddc6745686bc6bc9cbc85d0e7936/docs/develop/theory/FIB_RELATIONAL_CONTINUATION_GEOMETRY.md) 的合同。$P_w$ 也可作为全部八种三位串的形式记录，但形式记录不使非法位串成为原生模式。
+

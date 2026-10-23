@@ -9,7 +9,7 @@ internal sealed class ParityRefutationDocument : IScribeDocumentDefinition
     private const string Prefix =
         "D5/S3/Combinatorics/GeneralizedPetersen/ParityRefutation.";
     private static readonly LibraryNoteRef Source =
-        LibraryNoteRef.Create("D5/L/Combinatorics/pandey2026parity");
+        LibraryNoteRef.Create("D5/L/GraphInvariants/pandey2026parity");
     private static readonly LibraryNoteRef PriorRefutationSource =
         LibraryNoteRef.Create("D5/L/Combinatorics/demonstrandum2026pandeyrefutation");
 

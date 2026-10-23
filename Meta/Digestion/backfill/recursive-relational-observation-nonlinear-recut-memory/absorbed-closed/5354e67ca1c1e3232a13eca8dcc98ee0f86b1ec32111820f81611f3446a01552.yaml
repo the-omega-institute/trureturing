@@ -1,0 +1,17 @@
+fingerprints:
+  raw_sha256: sha256:5354e67ca1c1e3232a13eca8dcc98ee0f86b1ec32111820f81611f3446a01552
+  normalized_sha256: sha256:5354e67ca1c1e3232a13eca8dcc98ee0f86b1ec32111820f81611f3446a01552
+cas_ref: sha256:5354e67ca1c1e3232a13eca8dcc98ee0f86b1ec32111820f81611f3446a01552
+coverage_gids:
+  - gid: D5/S0/Automata/TypedPartialDFAOOverBase.runFrom_type
+    target_statement_id: sha256:863032833966809decc097ccc607628b90e6b3e108932536813d32213612056c
+  - gid: D5/S3/ObserverMemory/BinarySelectorRecutFibers.selector_legal_separators
+    target_statement_id: sha256:d8a5700dfd4b7676803b95f5b91d86dd036a74ba33d1550a2b80c1a984002c65
+  - gid: D5/S3/ObserverMemory/BinarySelectorRecutFibers.selector_residual_classification
+    target_statement_id: sha256:e35129132b5e42d7a1f07de332c5bd59448745aa68ebd4aaa418af6ee2d02fd7
+  - gid: D5/S3/ObserverMemory/BinarySelectorRecutFibers.selector_widths_and_fibers
+    target_statement_id: sha256:ab9df52ee8dc921902cd79363d8a7c9decbb0c723ea9b2337fe87063d3a5cb92
+  - gid: D5/S3/ObserverMemory/StrictAnchoredBoundary.strict_anchored_specialization
+    target_statement_id: sha256:8e12560442ef672042b970336dec669f3084ed00894c29df8a0e9eeeb15c2643
+receipts:
+  unresolved_subitems: []

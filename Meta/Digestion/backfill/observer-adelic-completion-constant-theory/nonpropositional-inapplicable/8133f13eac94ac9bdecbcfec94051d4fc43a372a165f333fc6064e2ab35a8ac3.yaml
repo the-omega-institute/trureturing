@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:8133f13eac94ac9bdecbcfec94051d4fc43a372a165f333fc6064e2ab35a8ac3
+  normalized_sha256: sha256:8133f13eac94ac9bdecbcfec94051d4fc43a372a165f333fc6064e2ab35a8ac3
+cas_ref: sha256:8133f13eac94ac9bdecbcfec94051d4fc43a372a165f333fc6064e2ab35a8ac3
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 理论深度审计的标题和空表头，没有任何数学数据行。
+    previous_atom_id: 81114eccb24a0c0ef3df340598c69af1289893799e25a36475c7ed8a06145cd1
+    next_atom_id: 20900fbe123828540b3d817b7c96c708b96b949210d1d941db02dff376f9798c

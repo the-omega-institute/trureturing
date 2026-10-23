@@ -1,0 +1,32 @@
+**Lemma 22.2 (Unique guarded algebraic lift).** For every complex root
+$\beta$ of $F_J$, the three polynomials $E_i(r,\beta)$ have exactly
+one common root,
+
+$$
+\rho=-c_J(\beta)/a_J(\beta),\qquad
+\overline D(\rho,\beta)\ne0.
+\tag{22.8}
+$$
+
+In particular this lift is real for real $\beta$.
+
+Proof. The gcd relations (22.4) imply that $a_J(\beta)$,
+$h_J(\beta)$ and every $\ell_i(\beta)$ are nonzero. Thus the three
+initial $r$ degrees remain $15$. Equation (22.1) makes
+$R_1(\beta)=0$, and the fixed linear subresultant has nonzero
+$r$ coefficient $a_0(\beta)=h_J(\beta)a_J(\beta)$.
+The classical subresultant gcd criterion, with these preserved initial
+degrees, makes the gcd of $E_0(r,\beta),E_1(r,\beta)$ have degree
+exactly one and root $-c_0(\beta)/a_0(\beta)=\rho$.
+This is precisely the criterion used in SVI, Lemma 12.3, applied here
+to the polynomials of (21.7). It concerns the fixed ordered minors,
+not a matrix resized after specialization.
+
+The three zero remainders in (22.4), together with $a_J(\beta)\ne0$,
+give $E_i(\rho,\beta)=0$ for all $i$. They identify a common root of
+all three, rather than merely separate roots supplied by two resultants.
+Uniqueness follows already from the degree-one gcd of the first pair.
+The last gcd in (22.4) gives $H_D(\beta)\ne0$, whence
+$\overline D(\rho,\beta)=H_D(\beta)/a_J(\beta)^4\ne0$.
+Real coefficients give the final assertion. ∎
+

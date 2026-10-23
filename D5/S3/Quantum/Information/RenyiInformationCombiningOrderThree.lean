@@ -13,7 +13,7 @@ admission_basis: open-problem-resolution (#15115; Proved)
 Direct frozen dependencies: F1--F6 are declaration identities, not module pins.
 F1: D5/S3/Quantum/Dynamics/ProjectionProbabilityFlow.trace_hermitian_product_real
   declaration statement_id: sha256:d57aafbe2afd1228c9b5e26bf06684ec80accc922d16f29290f16819337adc81
-F2: D5/S3/Quantum/Entanglement/GHZMeasureBiseparableBound.IsDensity
+F2: D5/S3/Quantum/Information/SLDSpectralEnergy.IsDensity
   declaration statement_id: sha256:fc9bb0824d5818ff419f72f26095faecc04e62ab59bf26f4f2bcefbb2d380448
 F3: D5/S3/Quantum/Information/PartialTraceMutualInformation.kronecker_eq_conj_diagonal_eigenvalues
   declaration statement_id: sha256:8b1b61a640dd9dac61868bff2b7627714c90764e99b8c320fdb404ae694c4b19
@@ -209,6 +209,7 @@ proof_shape: output_entropy_exp: bind-only; escape_witness: none
   consumers (result): none
 -/
 
+import D5.S3.Quantum.Information.SLDSpectralEnergy
 import D5.S3.Entropy.RenyiCombining.BinaryRenyiCombining
 import D5.S3.Weil.ZetaLinear.RankTrace
 import D5.S3.Quantum.Information.PartialTraceMutualInformation
@@ -217,7 +218,7 @@ import D5.S3.Quantum.Entanglement.GHZMeasureBiseparableBound
 
 open Matrix
 open D5.S3.Entropy.RenyiCombining.BinaryRenyiCombining
-open D5.S3.Quantum.Entanglement.GHZMeasureBiseparableBound (IsDensity)
+open D5.S3.Quantum.Information.SLDSpectralEnergy (IsDensity)
 open D5.S3.Quantum.Information.PartialTraceMutualInformation (partialTraceLeft)
 open scoped Kronecker MatrixOrder Matrix.Norms.L2Operator BigOperators ComplexOrder
 

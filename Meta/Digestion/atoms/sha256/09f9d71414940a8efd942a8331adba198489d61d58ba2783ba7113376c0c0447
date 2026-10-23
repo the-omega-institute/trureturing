@@ -1,0 +1,36 @@
+**Theorem 198.1 (Success weighting and subnormalized disturbance).**
+The probability-weighted conditional quantities are
+
+| Quantity | Procedure E | Procedure F |
+| --- | --- | --- |
+| $P C_M=P\sqrt{D_G^A}$ | $2\mu$ | $2r_0^2\mu$ |
+| $P D_G^A$ | $4\mu^2/P_E=2\mu^2/S$ | $4r_0^4\mu^2/P_F$ |
+| $P\mathcal N$ | $(\mu-A)_+$ | $r_0^2(\mu-A)_+$ |
+
+Proof. These follow by inserting $\lambda=2\mu/P_E$ and
+$\eta=2r_0^2\mu/P_F$ into the conditional formulas. They are finite
+weighted state diagnostics. In particular, $C_M$ here is defined on
+normalized states: substituting $X=P\rho$ into a trace-minus-product
+expression scales its first term by $P$ and its expectation-product term
+by $P^2$. Thus $P C_M$ is not assigned a raw-covariance interpretation.
+
+The quadratic measurement disturbance has a different homogeneous law.
+Linearity of every dephasing map gives, for a subnormalized $X=P\rho$,
+
+$$
+\mathfrak D(X):=2\inf_{\mathcal B}\|X-\mathcal M_{\mathcal B}(X)\|_{\mathrm{HS}}^2
+ =P^2D_G^A(\rho).
+$$
+
+Here $\mathcal B$ ranges over Alice's rank-one projective bases and $P$
+is the success probability. Consequently
+
+$$
+\mathfrak D(C_-)=4\mu^2,\qquad
+\mathfrak D(\Omega_F)=4r_0^4\mu^2.
+$$
+
+The quantities $P D_G^A$ and $P^2D_G^A$ must be kept distinct. Conditioning
+on the active flag also changes the state and its joint success probability;
+it cannot justify attaching E's raw probability to F's active output.
+

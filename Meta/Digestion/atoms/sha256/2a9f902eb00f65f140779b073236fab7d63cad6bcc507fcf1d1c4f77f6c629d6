@@ -1,0 +1,24 @@
+**命题 81.5（固定联合相位的四调用单体提取）。** 上述子菜单中的每个原语都保持 $\mathcal C$，并固定其在 $\mathcal K_3$ 内的正交补 $\mathbb C|010\rangle$。端点脉冲的逻辑限制为
+
+$$
+\iota_2^\dagger R_1(t)\iota_2=e^{-itX_1},\qquad
+\iota_2^\dagger R_3(t)\iota_2=e^{-itX_2}.
+\tag{XVII.6}
+$$
+
+两个四调用字的逻辑限制分别为
+
+$$
+\begin{aligned}
+R_3(-\pi/2)S_{\star,3}R_3(\pi/2)S_{\star,3}
+&\longmapsto D_1=\operatorname{diag}(1,1,i,i),\\
+R_1(-\pi/2)S_{\star,3}R_1(\pi/2)S_{\star,3}
+&\longmapsto D_2=\operatorname{diag}(1,i,1,i).
+\end{aligned}
+\tag{XVII.7}
+$$
+
+**证明。** 在 $\mathcal C$ 内中位为零，故端点的相邻投影恒为一，直接给 (XVII.6)；对 $010$，两个投影都阻止翻转，固定相位的 $n_1n_3$ 也为零。此论证适用于每个脉冲的全部中间参数，故每个执行前缀都保持编码。
+
+在逻辑限制上，$R_3(\pi/2)=-iX_2$、$R_3(-\pi/2)=iX_2$，两标量相消，因而第一字为 $X_2SX_2S$。复用 [Garion–Cross，式 (12)](../../../Library/Computability/garioncross2020cnotdihedral.md) 的既有关系，或逐基态计算：对 $a=0$ 的两个基态相位为一，对 $a=1$ 的两个基态相位均为 $i$，给出 $D_1$。交换端点得到 $D_2$。每个物理因子还固定 $010$，所以没有把逻辑整体标量误当作整个五维空间的整体标量。$\square$
+

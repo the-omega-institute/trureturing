@@ -1,0 +1,47 @@
+**Proposition 158.3 (separate full-source birth-count variant).**
+For every fixed finite $u\in\mathcal T$, let $a(u),b(u)$ be its original
+alpha- and beta-leaf counts. In the construction (158.2)--(158.4),
+
+$$
+b_e=a(u)F_e+b(u)F_{e+1},\qquad
+H_{u,r}=L_0\mathbin{\oplus}
+ \bigoplus_{e\ge\eta(u)}Cr^{e-\eta(u)}I_{2b_e}.
+\tag{158.12}
+$$
+
+Its domain is $\sum_{e\ge\eta(u)}(Cr^{e-\eta(u)})^2\|z_e\|^2<\infty$
+inside $\mathscr H_u$, with no additional restriction on the finite initial
+component. It is self-adjoint with compact resolvent. For $\Lambda\ge C$,
+
+$$
+\begin{aligned}
+N_{u,r}^+(\Lambda)
+ &=N_{\rm initial}^+(\Lambda)
+   +2\sum_{e=\eta(u)}^{\eta(u)+m}b_e,
+ &m&=\lfloor\log_r(\Lambda/C)\rfloor,\\
+\operatorname{Tr}(e^{-tH_{u,r}})
+ &=\operatorname{Tr}(e^{-tL_0})
+   +2\sum_{e\ge\eta(u)}b_e e^{-tCr^{e-\eta(u)}}.
+\end{aligned}
+\tag{158.13}
+$$
+
+Here $N_{\rm initial}^+(\Lambda)$ counts the positive eigenvalues of $L_0$
+up to and including $\Lambda$, and the heat identity is for $t>0$.
+Below $C$ only the initial positive count remains. The two logarithmic limits
+displayed in (158.7) equal $\log\varphi/\log r$ for this fixed $u$ as well.
+
+**Proof.** The terminal recurrence in the preceding proof gives the first
+formula of (158.12), including $e=0$. It is also the birth-count identity
+of IV, Theorem 112.4, now with the full source convention of Definition
+127.1. The construction and direct-sum argument in Theorem 158.2 already
+apply to these sources, proving the operator, domain and compactness
+claims. Since $a(u)+b(u)>0$, the leading Fibonacci coefficient is positive:
+$b_{\eta(u)+j}\asymp_u\varphi^j$ as $j\to\infty$. The cumulative sum
+therefore has this same order. Counting blocks proves (158.13), and the
+two-sided power and integral bounds of (158.9)--(158.11) apply with
+source-dependent constants. The finite initial count and finite initial
+heat trace do not change either logarithmic limit. All constants refer to
+one fixed source; no uniformity over unbounded initial source sizes is
+needed. $\square$
+

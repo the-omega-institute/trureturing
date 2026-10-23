@@ -18,7 +18,7 @@ Lean statement: `D5/S3/Arith/Robin/OriginalMovingWindowMoment.original_window_mo
 
 For every real t>=4 and beta>=0, define a_beta(t)=integral from t to B(t) of k(t,x)*(x-2)^(-beta). With C_beta=4+beta+2*beta*2^(beta+1), |a_beta(t)-t^(1/2-beta)/2| <= C_beta*t^(-1/5)*t^(1/2-beta)/2.
 
-The proof reuses ActualRobinClockCovariance.g, its original derivative and density-integral suppliers, and MellinWeightedVariation.scaleWeight_antitone. Their weight normalization gives w(B)*(B-x)<=lambda(x)-lambda(B)<=w(t)*(B-x). The logarithmic growth estimate proves (t/B)^4*w(t)<=w(B). Exact integration of these bounds gives the endpoint moment bounds (t/B)^4*(B-2)^(-beta)*H^2/(2*t^(11/10)) <=a_beta(t)<=(t-2)^(-beta)*H^2/(2*t^(11/10)). Negative-power derivative estimates and H^2/t^(11/10)=sqrt(t) supply the displayed error. A triangle enters only as a proved bound on the same price-difference kernel.
+The proof reuses ActualRobinClockCovariance.g, its original derivative and density-integral suppliers, MellinWeightedVariation.scaleWeight_antitone, and the weight_continuous lemma in LogarithmBounds. Their weight normalization gives w(B)*(B-x)<=lambda(x)-lambda(B)<=w(t)*(B-x). The logarithmic growth estimate proves (t/B)^4*w(t)<=w(B). Exact integration of these bounds gives the endpoint moment bounds (t/B)^4*(B-2)^(-beta)*H^2/(2*t^(11/10)) <=a_beta(t)<=(t-2)^(-beta)*H^2/(2*t^(11/10)). Negative-power derivative estimates and H^2/t^(11/10)=sqrt(t) supply the displayed error. A triangle enters only as a proved bound on the same price-difference kernel.
 
 The source definition is EL Definition 1.2 in FIBONACCI_ATOMIC_RELATION_GENERATION_ROBIN_SELECTED_EULER_LAYERS. The estimate applies separately to every point of any complete original S_X contained in [4,infinity), for example when ell_X>=4; it does not select, thin or displace that family. At beta=1/2 its continuous single-window main term is 1/2.
 
@@ -49,5 +49,5 @@ This leaves a joint signed target, allowing cancellation between the baseline an
 ## References
 
 - Truth anchor: `D5/S3/Arith/Robin/OriginalMovingWindowMoment.original_window_moment_estimate`
-- Dependency: [D5/S3/Arith/Robin/ActualRobinClockCovariance](ActualRobinClockCovariance.md)
+- Dependency: [D5/S3/Arith/Robin/LogarithmBounds](LogarithmBounds.md)
 - Dependency: [D5/S3/Arith/Robin/MellinWeightedVariation](MellinWeightedVariation.md)

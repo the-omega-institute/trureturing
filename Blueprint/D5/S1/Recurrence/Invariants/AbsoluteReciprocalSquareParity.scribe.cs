@@ -26,6 +26,8 @@ internal sealed class AbsoluteReciprocalSquareParityDocument : IScribeDocumentDe
                 + "When the constant coefficient of F is one, its product with this "
                 + "inverse is one. The operator map applies a ring homomorphism "
                 + "coefficientwise, and intCast(ZMod(2)) denotes Int.castRingHom(ZMod(2)).")),
+            Node("map_abs", "Absolute values modulo two", PublishedMapAbsolute(),
+                "Reduction modulo two identifies an integer and its absolute value coefficientwise."),
             Node("absSeries", "Coefficientwise absolute value", AbsoluteDefinition(),
                 "The coefficient of absSeries(F) at each natural index n is the "
                 + "integer absolute value of the corresponding coefficient of F.",
@@ -132,4 +134,11 @@ internal sealed class AbsoluteReciprocalSquareParityDocument : IScribeDocumentDe
             Parenthesized(Seq(Call("Odd", Call("a", N())), Sp, Iff, Sp,
                 Parenthesized(Seq(Exists, Sp, F.Id("k"), Colon, Sp, Naturals(), Comma, Sp,
                     Equal(N(), Power(D(2), F.Id("k"))))))))));
+    private static Formula PublishedMapAbsolute()
+    {
+        var f = F.Id("F");
+        Formula Pi() => new Formula.Apply(Seq(Named("Int"), Dot, Named("castRingHom")), [Call("ZMod", D(2))]);
+        return Disp(Seq(Bound("F", Call("PowerSeries", Integers())),
+            Equal(Call("map", Pi(), Call("absSeries", f)), Call("map", Pi(), f))));
+    }
 }

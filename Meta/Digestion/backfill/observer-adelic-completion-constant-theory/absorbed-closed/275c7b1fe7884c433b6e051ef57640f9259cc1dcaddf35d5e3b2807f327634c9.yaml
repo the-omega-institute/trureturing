@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:275c7b1fe7884c433b6e051ef57640f9259cc1dcaddf35d5e3b2807f327634c9
+  normalized_sha256: sha256:275c7b1fe7884c433b6e051ef57640f9259cc1dcaddf35d5e3b2807f327634c9
+cas_ref: sha256:275c7b1fe7884c433b6e051ef57640f9259cc1dcaddf35d5e3b2807f327634c9
+coverage_gids:
+  - gid: D5/S3/Weil/TestFunctions/LiCurvatureCriterion.circle_moment_toeplitz_posSemidef
+    target_statement_id: sha256:47a6e3a47437bcbb9bb671570a3853da7f53a28c552cf199cdc38787c6bec57a
+receipts:
+  unresolved_subitems: []

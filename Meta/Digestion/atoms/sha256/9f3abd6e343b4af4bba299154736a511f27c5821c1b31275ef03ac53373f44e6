@@ -1,0 +1,41 @@
+**定理 2（sharp balanced binary sandwich）。**
+
+For every finite readout,
+
+$$
+\boxed{
+1-h_2(e(A))\le I(A)\le 1-2e(A).
+}
+$$
+
+Both endpoints are sharp.
+
+- Equality on the left holds when the posterior error $r_A$ is constant almost surely. A binary symmetric channel with crossover probability $e(A)$ is an extremizer.
+- Equality on the right holds when $r_A$ takes only the values $0$ and $1/2$. An erasure channel is an extremizer.
+
+**证明。** Concavity of $h_2$ gives
+
+$$
+\mathbb E h_2(r_A)\le h_2(\mathbb E r_A)=h_2(e(A)),
+$$
+
+which is the lower bound on $I$. The chord from $(0,0)$ to $(1/2,1)$ gives $h_2(t)\ge2t$ on $[0,1/2]$, hence $\mathbb E h_2(r_A)\ge2e(A)$ and the upper bound. Constant-error BSC posteriors attain the first equality; posterior errors $0$ and $1/2$ attain the second. $\square$
+
+Equivalently, at fixed information $I$,
+
+$$
+\boxed{
+ h_2^{-1}(1-I)\le e(A)\le\frac{1-I}{2}
+}
+$$
+
+with the inverse taken on $[0,1/2]$. Information fixes an interval of task risks, not a task risk.
+
+For a non-balanced prior, the corresponding safe form is
+
+$$
+H_2(p)-h_2(e(A))\le I(A)\le H_2(p)-2e(A),
+$$
+
+with $e(A)\le\min(p,1-p)$. The balanced statement is the one whose extremizers and endpoint interpretation are symmetric.
+

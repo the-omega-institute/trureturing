@@ -1,0 +1,145 @@
+**Theorem 2.1 (Five original labels attained by one complete source execution).** Under Assumption 1.2, all constants of Definition 1.3 exist, and $q,b>0$. The five complete worlds
+
+$$
+W_1=W_2=W_L(a_*),\qquad W_3=W_L(c_*),\qquad
+W_4=W_5=W_L(d_*)
+\tag{2.1}
+$$
+
+belong to the actual $K_J$ in (1.5). Let $I$ have the uniform prior on the five original labels, with one common initialization
+
+$$
+\Omega=\frac15\sum_{i=1}^5|i\rangle\langle i|
+\otimes\rho_{W_i}\otimes(|k_1\rangle\langle k_1|)^{\otimes8}
+\otimes\rho_{\rm ctl}.
+\tag{2.2}
+$$
+
+The label register is inaccessible to the controller. Its initial state $\rho_{\rm ctl}$, the executed word (1.9), the couplings, meter settings and $\sigma=1$ are the same for every label and independent of all outcomes. Then the entire actual acquired record $R=(R_0,\ldots,R_6)$ satisfies
+
+$$
+R\mid(I=i)\sim\mathcal N_7(y(p_i),C_7),\qquad
+(p_1,p_2,p_3,p_4,p_5)=(a_*,a_*,c_*,d_*,d_*).
+\tag{2.3}
+$$
+
+For the single public invertible map (1.17), write $Y=\mathcal F(R)=(Y^{(2)},N)$, with $N\in\mathbb R^5$. Its exact joint law is
+
+$$
+\mathbb P(I=i,Y^{(2)}\in dx,N\in dz)
+=\frac15\,\mathcal N_2(\mu_i,I_2)(dx)\,\mathcal N_5(0,I_5)(dz),
+\tag{2.4}
+$$
+
+where
+
+$$
+\mu_1=\mu_2=(-q,0),\qquad \mu_3=(0,b),\qquad
+\mu_4=\mu_5=(q,0).
+\tag{2.5}
+$$
+
+In particular every nuisance coordinate is standard Gaussian, the five nuisance coordinates are independent, and their vector is independent of the joint pair $(I,Y^{(2)})$. The original five-label prior is preserved; the three distinct preparation clusters have weights $2/5,1/5,2/5$.
+
+The map preserves the complete relevant instrument, including its selective system successors and its nonselective channel. More precisely, let $\mathcal I_w$ be G's seven-acquisition instrument on the system and define $\mathcal I_w^{\mathcal F}(E)=\mathcal I_w(\mathcal F^{-1}E)$ for Borel $E\subseteq\mathbb R^7$. With
+
+$$
+\begin{aligned}
+\mathsf K_w(r)
+&=K_6(r_6)U_{A_{E_6}}\cdots K_1(r_1)U_{A_{E_1}}K_0(r_0),\\
+K_j(r_j)&=k_1(r_j-\ell_j^Tq),\qquad D_{\mathcal F}=OS,
+\end{aligned}
+\tag{2.6}
+$$
+
+its density in transformed coordinates is
+
+$$
+\widetilde{\mathsf K}(s)
+=|\det D_{\mathcal F}|^{-1/2}\mathsf K_w(\mathcal F^{-1}s).
+\tag{2.7}
+$$
+
+Thus, for every trace-class system input $\rho$, the complete CP output is the pushforward of the original CP output, and normalized selective states at $r$ and $\mathcal F(r)$ coincide whenever their outcome density is positive. No acquisition, posterior factor or relevant quantum successor is replaced by the two-coordinate marginal. The unused eighth probe remains in its original independent state.
+
+This theorem establishes one actual preparation-to-complete-acquired-law interface, with an exact all-record representation of C, Definition 13.1. It does not assert that every $q,b>0$, any prescribed critical path, a shortest word or an optimal total cost is attained.
+
+**Proof.** First consider the actual complete-world equations. On each selected lower source, III, (16.12) gives $0<r<1$, $\beta>0$ and $\Lambda>0$. The matrix has $c=r(1-r)/\beta>0$, trace one and determinant zero. To verify the gain correspondence directly, $j=\beta+c$ and $n=j+r$ are positive, and the first four readouts from (1.2) are
+
+$$
+d+G_0=0,\quad d+jG_1=24,\quad
+d+TG_2=147/5,\quad d+nG_3=24.
+\tag{2.8}
+$$
+
+Lagrange extrapolation gives $G_4=-G_0+4G_1-6G_2+4G_3$. Hence
+
+$$
+G_4=24-\frac{162}{5T}+e(\Lambda-1/U),\qquad
+d+UG_4=24+24U-\frac{162U}{5T}+U\eta=18.
+\tag{2.9}
+$$
+
+The last equality follows from the identity
+
+$$
+\eta=\frac{162}{5T}-24-\frac6U,
+\tag{2.10}
+$$
+
+which is (1.1) after multiplication by the positive denominator $TU$. Equations (2.8)–(2.9) are the original whole parent history $H_4$, with one fixed drift and one entire polynomial. That polynomial is nonzero because otherwise all five values would equal $d$, contradicting $0\ne24$. The formulas for $G_5,G_6,G_7$ are evaluations of this same polynomial. The four equations defining $z_J(p)$ then give $p(t_L,\beta_L)=p$ and $V(t_L,\beta_L)=v_J(p)$, as well as equality with the other actual source in the clock-seven $J$ response. This is precisely the lifting of III, Theorem 16.4. It proves $W_L(p)\in K_J$ for all $p\in[10,34]$, without dividing by any sampled gain or imposing regular-source conditions on other members of $K_J$. In particular each world retains both values $a(t_L,\beta_L)$ and $m(t_L,\beta_L)$ of (1.2) as its original alternative responses.
+
+We next prove that $f$ is not affine on $[15,32]$ using the exact historical source, rather than a rounded drawing of the arc. At $p=15,25,32$, the lower coordinates of the respective centre maps in III, (16.7) are the following rational pairs; each entry is divided by $10^{20}$:
+
+| $p$ | Centre $t$ numerator | Centre $\beta$ numerator |
+| --- | --- | --- |
+| $15$ | $210788533712955551542$ | $4532053336144848092$ |
+| $25$ | $219625886685223990790$ | $13475282226511291486$ |
+| $32$ | $221845194568232864125$ | $20494322221751046893$ |
+
+Call these pairs $C_{15},C_{25},C_{32}$. The contraction bounds of III, (16.11), together with its proof's estimate $\|z_J(p)-\widehat z(p)\|_\infty\le\eta_{\rm con}/(1-q_{\rm con})$, give respectively
+
+$$
+\|(t_L(p),\beta_L(p))-C_p\|_\infty
+<\frac1{300000},\quad\frac1{2000000},\quad\frac1{4000000}.
+\tag{2.11}
+$$
+
+Indeed the three upper quotients are $(19/10^7)/(1-2/5)$, $(41/10^8)/(1-17/100)$ and $(2/10^7)/(1-3/100)$. The centre and the entire segment to the actual root lie in
+
+$$
+\mathcal D=[2,9/4]\times[1/25,21/100].
+\tag{2.12}
+$$
+
+For clarity, the rational response and its error bound can be estimated without the large numerator arrays of III. On $\mathcal D$,
+
+$$
+\begin{gathered}
+j\ge137/100,\qquad n\ge179/100,\qquad
+T\ge26/25,\qquad U\ge27/25,\\
+\Lambda\ge1+600/121+50/71-400/137-400/179>3/2,\\
+0<\kappa<22/5,\qquad |e|<6/5.
+\end{gathered}
+\tag{2.13}
+$$
+
+For example $j_t=1-2t\beta>0$ and $n_t=1+\beta(1-2t)>0$ on this rectangle, whereas $j_\beta=1-t^2<0$ and $n_\beta=1+t-t^2<0$; these signs give the displayed lower bounds for $j,n$. The $T,U$ upper endpoints give the positive terms in the lower bound for $\Lambda$. The estimate for $e$ follows from $|\beta-1/8|\le17/200$, $\Lambda>3/2$ and the bound on $\kappa$.
+
+Write the stable sixth-gain formula as
+
+$$
+\begin{gathered}
+k_6=240-243/T,\qquad h_6=10-36/j+45/T-20/n,\\
+G_6=k_6+eh_6,\qquad V=24+e+(2U+n)G_6.
+\end{gathered}
+\tag{2.14}
+$$
+
+All entries in the following table are exact rational endpoints, with finite decimals denoting rationals. Direct substitution of the three rational pairs into (1.1) and (2.14) gives these strict enclosures:
+
+| Centre | $e$ | $k_6$ | $h_6$ | $2U+n$ |
+| --- | --- | --- | --- | --- |
+| $C_{15}$ | $(.4088,.4090)$ | $(7.535,7.536)$ | $(24.835,24.838)$ | $(4.2286,4.2287)$ |
+| $C_{25}$ | $(-.0651,-.0650)$ | $(25.856,25.857)$ | $(18.123,18.126)$ | $(4.5159,4.5161)$ |
+| $C_{32}$ | $(-.7937,-.7936)$ | $(38.330,38.332)$ | $(11.201,11.203)$ | $(4.6891,4.6893)$ |

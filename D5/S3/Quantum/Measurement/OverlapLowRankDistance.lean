@@ -277,7 +277,7 @@ end
 section
 variable {ι : Type*} [Fintype ι] [DecidableEq ι]
 
-private theorem eigenvalue_lower_of_psd_sub_scalar {A : Matrix ι ι ℂ}
+theorem eigenvalue_lower_of_psd_sub_scalar {A : Matrix ι ι ℂ}
     (hA : A.IsHermitian) (a : ℝ) (hsub : (A - a • (1 : Matrix ι ι ℂ)).PosSemidef)
     (i : ι) : a ≤ hA.eigenvalues i := by
   let x : EuclideanSpace ℂ ι := hA.eigenvectorBasis i

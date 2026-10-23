@@ -1,0 +1,4 @@
+**Proposition 6.2 (different parameter spaces).** The common-source cubic models form a proper subset of $\mathcal X$. Fourteen scalar linear observations cannot recover every point of $\mathcal X$, even though Proposition 6.1 recovers the constrained family. The seventeen-read lower bound of Proposition 5.1 imposes no seventeen-read lower bound on that family.
+
+**Proof.** For a fixed invertible $Q_0$, common-source coefficients satisfy $Z_j=h_jQ_0P$. Thus $Q_0^{-1}Z_j$ are scalar multiples of a single positive rank-one trace-one matrix. For example, the ambient point $Z_0=Q_0$, $Z_1=Z_2=Z_3=0$ fails this condition because $Q_0^{-1}Z_0=I$ has rank two. Properness follows. Rank-nullity gives a kernel of dimension at least three for any fourteen fixed linear observations on $\mathcal X$. Proposition 6.1 is about injectivity on the smaller domain, so it does not contradict that kernel. ∎
+

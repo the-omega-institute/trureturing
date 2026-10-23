@@ -1,0 +1,37 @@
+### 定理 245.2　Fibonacci 解析分辨率阈值
+
+假设第 $n$ 个前缀有 $N_n=2F_{n+1}-1$ 个需区分的 occurrence，并且
+
+$$
+R_n\le An+B,
+\qquad
+\delta_n\ge c\,n^{-s}e^{-\kappa n}
+$$
+
+其中 $A,B,c>0$、$s\ge0$。若所有前缀都能以一个共同的欧氏 $d$ 维载体实现为上述分离集，则必有
+
+$$
+\boxed{d\kappa\ge\log\varphi.}
+\tag{245.2}
+$$
+
+**证明。** 由 (245.1)，$N_n$ 至多为一个常数乘以
+
+$$
+n^{d(s+1)}e^{d\kappa n}.
+$$
+
+另一方面 Binet 公式给出 $N_n\ge c'\varphi^n$，其中 $c'>0$。若 $d\kappa<\log\varphi$，两者比值随 $n$ 趋于无穷，矛盾。\quad$\square$
+
+在三维时，这个必要条件为
+
+$$
+\boxed{
+\kappa\ge\frac{\log\varphi}{3}
+\approx0.1604039416865345.
+}
+\tag{245.3}
+$$
+
+这个数是 occurrence-to-carrier 分辨率指数。它不是空间维数、热核指数、Fock 模式数或观察秩；只有在另行证明这些量之间的对应后，才可以讨论物理解释。
+

@@ -1,0 +1,164 @@
+**Theorem 12.2 (Explicit fourth neighbourhood and actual-germ exclusion).**
+Every source in $B_4$ has a unique original complete-parent lift, and
+its acquired base is in $U_4\subset K_+$. More precisely the entire
+closed patch has the rational enclosures
+
+$$
+\begin{array}{c|c}
+\text{quantity}&\text{closed enclosure}\\ \hline
+\Lambda&[-1900311/10^6,-1900309/10^6]\\
+e&[4731353/10^6,4731359/10^6]\\
+p&[28535187/500000,1426783/25000]\\
+v&[38130779/125000,305049717/10^6].
+\end{array}
+\tag{12.2}
+$$
+
+There is no original joint configuration with even one selected $M$
+endpoint whose source satisfies
+
+$$
+\max\{|r-r_4|,|b-b_4|\}<\epsilon_*.
+\tag{12.3}
+$$
+
+In the exact terminology of VI, Definition 16.3, both $\mathsf J_4$
+and $\mathsf Q_4$ are false. Moreover, for the actual analytic
+double-point maps $W_4^+(h),W_4^-(h)$ of VI, Theorem 15.1, there is
+$\delta>0$ such that for every $0<|h|<\delta$, both sources are in
+$\operatorname{int}B_4$, the pair is an actual distinct equal-$M$
+pair, and its entire common child has injective terminal $J$.
+
+*Proof.* First evaluate the original parent and gain on $B_4$.
+The rational interval rules (10.2)–(10.3) make the following finite
+calculation explicit. Enclose each patch endpoint outward on the
+$S^{-1}$ grid; form, in order,
+
+$$
+c=r(1-r)/b,\quad j=b+c,\quad n=j+r,\quad T=1+b,\quad U=1+2b.
+\tag{12.4}
+$$
+
+Use (2.1) for $\Lambda,D$ with the grouping of (10.4). Its
+$\Lambda$ interval is contained in the first enclosure of (12.2), hence strictly
+negative. Only after this sign test form $e=-D/\Lambda$ and
+$d=24+e$. Use the four original gain samples in Section 2 in the
+order $0,1,2,3$, computing $g(0)=-d$. Apply the rows at clocks
+$5,6$ from that section, accumulating each row product from zero
+in sample order. Finally form
+
+$$
+p=d+(U+n)g(5),\qquad v=d+(2U+n)g(6).
+\tag{12.5}
+$$
+
+All rational constants are enclosed by (10.2), each product and
+quotient is rounded outward once as in (10.3), and additions use
+their endpoint sums. Enlarging the four resulting intervals outward
+to the $10^{-6}$ grid gives exactly (12.2). Thus the displayed
+table is a finite interval evaluation of the original whole-gain
+circuit, with all operations and their order fixed. The denominators
+$b,T,U,j,n$ are positive on the entire patch, and $\Lambda<0$
+is certified before the additional division. Equation (2.1) and the
+common-parent Theorem 2.1 give the unique complete lift. It is strict
+because $B_4\subset(0,1)\times(0,\infty)$, and its interpolating
+gain is nonzero because the original readings $0$ and $24$ differ.
+No exact-degree or nonzero-sample assumption is involved.
+
+The endpoints in (12.2) give, by strict rational comparisons,
+
+$$
+57<\frac{28535187}{500000}
+\le p\le\frac{1426783}{25000}<\frac{571}{10},
+\qquad
+305<\frac{38130779}{125000}
+\le v\le\frac{305049717}{10^6}<\frac{3051}{10}.
+\tag{12.6}
+$$
+
+This proves the full patch-image inclusion. In particular an actual
+world whose source lies anywhere in $B_4$ fixes a base in $K_+$;
+Theorem 9.2 applies to every companion in that child, not just to
+worlds with sources in $B_4$.
+
+VI, Lemma 13.2, gives the strict enclosures
+
+$$
+\frac{9648629529}{10^{10}}<r_4<\frac{9648629530}{10^{10}},
+\qquad
+\frac{8867628398}{10^{10}}<b_4<\frac{8867628399}{10^{10}}.
+\tag{12.7}
+$$
+
+Subtracting the four edges of $B_4$ shows that the distances from
+$(r_4,b_4)$ to its left, right, lower and upper edges are strictly
+greater than, respectively,
+
+$$
+\frac{529}{10^{10}},\qquad
+\frac{47}{10^9},\qquad
+\frac{199}{5\cdot10^9},\qquad
+\frac{601}{10^{10}}.
+\tag{12.8}
+$$
+
+Each exceeds $\epsilon_*$; the smallest displayed margin minus
+$\epsilon_*$ is $49/(5\cdot10^9)>0$. Thus (12.3) puts the
+source strictly inside $B_4$.
+
+Suppose an original joint configuration had such a selected $M$
+endpoint. That endpoint's base belongs to $U_4$, so the entire common
+child has injective terminal $J$ by Theorem 9.2. The independently
+selected distinct equal-$J$ pair required by $\mathscr I$ is
+therefore impossible. No restriction on the other selected $M$
+endpoint, either $J$ endpoint, cross-pair overlap, or the two
+terminal values was used. This proves (12.3)'s exclusion. Applying
+the same reasoning to $W_4$ itself also gives
+$(p_4,v_4)\notin D_J$, equivalently $\neg\mathsf J_4$ by VI,
+Theorem 16.4.
+
+For the neighbourhood sentence use precisely
+$\epsilon=\epsilon_*=3/10^8$ in VI, (16.8). If its witnesses
+existed, their original condition would be
+
+$$
+\|z(w_2)-z_4\|_2^2+
+\|z(w_3)-z_4\|_2^2<\left(\frac3{10^8}\right)^2.
+\tag{12.9}
+$$
+
+Every summand and every coordinate square in this expression is
+nonnegative. In particular each of $|r(w_2)-r_4|$ and
+$|b(w_2)-b_4|$ is strictly less than $3/10^8$; the same holds for
+$w_3$. Already $w_2$ contradicts the preceding endpoint exclusion.
+Thus this one explicit positive $\epsilon$ has no witnesses, proving
+$\neg\mathsf Q_4$. The deduction uses the exact sum in (12.9);
+it does not replace the original topology by a stronger norm.
+
+Finally VI, Theorem 15.1, supplies actual analytic complete-world
+maps $W_4^\pm(h)$, both tending to the exact $W_4$, with distinct
+endpoints and equal $(p,v,m)$ for every sufficiently small nonzero
+$h$. Since (12.7)–(12.8) place the limit source in
+$\operatorname{int}B_4$, continuity gives $\delta>0$ for which
+both sources lie in that interior whenever $|h|<\delta$.
+Reduce $\delta$ if necessary to the germ's original strict and
+off-$24$ domain. For $0<|h|<\delta$, (12.6) places its common
+base in $U_4$, and Theorem 9.2 makes its whole common child
+$J$-injective. These are actual original $M$ collisions entering
+the patch; they cannot acquire an independent $J$ pair from any
+other part of their children. In particular distant $J$ endpoints,
+boundary escape of such endpoints, or their merging in a limit
+cannot evade this pointwise entire-child exclusion. ∎
+
+The first three exact critical bases of VI, Definition 13.1, their
+independent-$J$ compatibility, and their sentences $\mathsf Q_1$,
+$\mathsf Q_2$, $\mathsf Q_3$ remain unresolved by these theorems.
+So do separated actual equal-$M$ pairs outside $K_+$ and all other
+possible original joint configurations outside this rectangle.
+The global sentence $\mathsf I$ of VI, Definition 16.3, still asks
+for independently chosen distinct equal-$J$ and equal-$M$ pairs in
+one entire off-$24$ child, permitting cross-pair overlap and unrelated
+terminal values. Its witness-or-exclusion problem is unchanged.
+Neither classification of critical worlds nor existence of their
+double-point germs reduces that problem to the critical bases.
+

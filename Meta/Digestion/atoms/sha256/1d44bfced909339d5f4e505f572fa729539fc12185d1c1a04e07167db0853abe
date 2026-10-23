@@ -1,0 +1,64 @@
+**Theorem 12.1 (All regular companions at these actual bases).**
+On the rectangle (12.4), the original regular child has at most
+two worlds. On its actual continued bases for every $q\in Q$,
+
+$$
+C_{\rm reg}(p(q),v(q))=\{W_-(q),W_+(q)\},\qquad
+a(W_-(q))=a(W_+(q)),
+\qquad
+m(W_+(q))-m(W_-(q))>213/50.
+\tag{12.27}
+$$
+
+Consequently there is no independently chosen distinct equal-$M$
+pair whose two endpoints are regular in that same entire child.
+
+Proof. The necessary carrier identity (12.13) places every regular
+world above a root of $R$. The uniform disjoint disks exhaust
+those roots, including all degree possibilities. The two strict-sign
+drift brackets at each positive projection exhaust its drift roots.
+The inverse filters and faithful uniqueness give (12.18), on the
+entire rectangle and for every original strict source.
+
+For each $q\in Q$, (12.25) places the exact full base in that
+rectangle. The inherited exact continuation and the explicit
+strictness and denominator bounds above supply two distinct
+regular worlds there. They therefore occupy the bound of two,
+proving the inventory equality. Their equal-$J$ reading is the
+secant equality, and (12.26) supplies their strict $M$ separation.
+Any two regular endpoints chosen independently in this child must
+be these worlds if they are distinct, so cannot have equal $M$.
+This proves the final assertion. ∎
+
+In particular the conclusion excludes regular equal-$M$ alternatives
+with one or both endpoints outside IX's source class, including a
+mixed interior/exterior regular pair or two exterior regular endpoints.
+It follows by an inventory of all original regular worlds at the
+actual full base; no uniform exterior sign implication, source-class
+localization assumption, cap or shared drift is used. The source
+boxes in the inverse calculation arise from exhaustive carrier and
+drift accounting.
+
+The evaluated addition is the whole-rectangle bound (12.18),
+the simultaneous actual-base enclosures on both closed cells, and
+their exact all-regular-companion consequence (12.27) with the
+quantitative terminal gap. The original model and traces, regular
+whole-gain circuit, normalized carrier, exceptional-point necessity,
+faithful inverse, exact first-$J$ continuation and corner are the
+attributed ordinary results of IX specified above. The qualitative
+$M$ order of the two selected endpoints is already IX Theorem 28.1;
+the present terminal table supplies its stated uniform numerical
+margin. Polynomial root counting, distinct-node interpolation,
+Rouché's theorem and the mean value bound are the ordinary tools
+used with these interfaces.
+
+This theorem leaves $D_s=0$ worlds unresolved, including at every
+base in (12.27). It also leaves unresolved every equal-$M$ pair
+with at least one such singular endpoint. Regular incidence on the
+continued branch outside $Q$, other $J$ branches and all other
+entire children remain outside this bounded result. In particular
+it neither proves nor refutes (12.3). The quantifiers there still
+range over all original worlds with their arbitrary own fixed
+drifts, lower gain degrees, zero samples and repeated gain roots.
+There is no whole-child global resolution in the regular inventory.
+

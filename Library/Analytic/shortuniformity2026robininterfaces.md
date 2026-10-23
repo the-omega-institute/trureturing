@@ -23,8 +23,8 @@ certification is claimed.
 
 Joni Teräväinen, *Quantitative Gowers uniformity of the primes in intervals
 of length $X^{5/8+\varepsilon}$*,
-[arXiv:2610.03707v1](https://arxiv.org/html/2610.03707v1),
-version 2 October 2026, §1, Theorem 1.1, equations (1.3)–(1.5).
+[arXiv:2610.03707v2](https://arxiv.org/html/2610.03707v2),
+version 22 October 2026, §1, Theorem 1.1, equations (1.3)–(1.5).
 
 For fixed integer $k\ge2$ and $\varepsilon>0$, set $a_k=2^{-k-2}$.
 There is $c=c(k,\varepsilon)>0$ such that
@@ -97,6 +97,10 @@ uses a fixed power margin in the length exponent; the trivial bound
 for a short $\Lambda-1$ prefix costs its length times $O(\log X)$.
 Neither the Möbius $0.55$ threshold nor the shorter range below is
 substituted into this classical prime-error statement.
+
+The corresponding application to the same actual CA price path, with
+its pressure cost, persistence width, and exceptional-measure boundary,
+is retained in [the owning Caveney note](../Arith/caveney2012sacaga.md#the-classical-huxley-rate-on-the-same-ca-price-path); this supplier note does not duplicate that application.
 
 
 ## A shorter interval range with different quantitative conclusions
@@ -287,8 +291,8 @@ occupation/credit bound nor a Robin or RH proof.
 
 Javier Pliego and Mengdi Wang, *Discorrelation of the Möbius function
 with linear phases in short intervals*,
-[arXiv:2610.11487v1](https://arxiv.org/html/2610.11487v1#S1.Thmtheorem1),
-version 8 October 2026, §1, Theorem 1.1, gives, for fixed small
+[arXiv:2610.11487v2](https://arxiv.org/html/2610.11487v2#S1.Thmtheorem1),
+version 22 October 2026, §1, Theorem 1.1, gives, for fixed small
 $\varepsilon>0$ and $X^{0.58+\varepsilon}\le H\le X$,
 
 $$
@@ -301,6 +305,33 @@ This theorem is unconditional. The Dirichlet-$L$ moment premise
 (1.2) belongs to the paper's Theorem 1.3 on prime exponential sums;
 it is not an assumption of Theorem 1.1. The statement and its
 hypotheses are cited directly, without reproducing the source proof.
+
+In the same interval range, its unconditional Theorem 1.2 gives, for
+every fixed large $L\ge1$, both bounds
+
+$$
+\left|\sum_{X<n\le X+H}\Lambda(n)e(n\alpha)\right|,
+\quad
+\left|\sum_{X<n\le X+H}\mu(n)e(n\alpha)\right|
+\le H(\log X)^{-L},
+$$
+
+unless there is an integer
+$1\le q\ll(\log X)^{O_L(1)}$ with
+
+$$
+\|q\alpha\|\ll\frac{X(\log X)^{O_L(1)}}{H^2}.
+$$
+
+This is a minor-arc input, including for the uncentered prime sum;
+it does not give an arbitrary-logarithmic bound at every phase.
+The zero phase is exceptional with $q=1$. The same allowed major-arc
+scale contains $|\alpha|\le1/H$, since $H\le X$ implies
+$1/H\le X/H^2$. A weighted Fourier transfer must therefore retain
+this slow-frequency contribution together with its actual baseline,
+expansion weight and losses. Theorem 1.3 reduces the exception width
+to $(\log X)^{O_L(1)}/H$ only under the stated fourth-moment premise
+(1.2); zero frequency remains exceptional there too.
 
 For the [original residual-band application (I59)](../Weil/corvalan2023interpolation.md#pay-the-terminal-covariance-while-retaining-the-endpoint),
 $X\asymp N$ and $H\asymp N^{3/4}e^{\lambda\Omega(N)}$ satisfy

@@ -1,0 +1,8 @@
+**定义 36.1（两种精确恢复任务）。** 对复数取观察 $q_3(z)=z^3$；对实二元端点取观察
+
+$$
+F(a,b)=(d,\kappa),\qquad d=a-b,\qquad \kappa=Q(a,b).
+$$
+
+任务能由观察恢复，当且仅当它在每个非空观察纤维上恒定。这一集合论判据复用 [FIB 关系延拓几何，钉版定义 11.1](https://github.com/the-omega-institute/trureturing/blob/61dcb1249a11ddc6745686bc6bc9cbc85d0e7936/docs/develop/theory/FIB_RELATIONAL_CONTINUATION_GEOMETRY.md)。可计算、可取得及可认证恢复仍是额外要求，不由纤维恒定性自动提供。
+

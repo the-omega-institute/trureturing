@@ -16,11 +16,12 @@ internal sealed class BroadcastingChannelExtremaRefutationDocument : IScribeDocu
         "A three-dimensional observable with two outcomes has a nonempty set of broadcasting channels and has neither extremum under nondisturbing precomposition.",
         H("Broadcasting channels need have neither extremum"),
         Blocks(
+            Node("density_le_one", "Density matrices are contractions", Disp(All("n", Call("Type"), Seq(OpenBracket, Call("Fintype", V("n")), CloseBracket, Sp, OpenBracket, Call("DecidableEq", V("n")), CloseBracket, Comma, Sp, All("T", MatrixType(V("n"), V("n")), Implies(At(Qualified("Matrix", "PosSemidef"), V("T")), Implies(Equal(Trace(V("T")), D(1)), At(Qualified("Matrix", "PosSemidef"), new Formula.Binary(D(1), FormulaBinaryOperator.Subtract, V("T"))))))))), "Every positive semidefinite complex matrix of trace one is bounded above by the identity in the positive semidefinite order.", DescribeRole.Theorem, AssessedProvenance.FromRepo()),
             Node("IsChannel", "Finite Kraus channels", ChannelFormula(),
                 "Section II.B, p. 2: “A CPTP map Θ : S(Hin) → S(Hout) is called a quantum channel, where Hin and Hout are two Hilbert spaces [15].” Finite Kraus form expresses complete positivity and trace preservation. MatrixMap.of_kraus is the frozen operation; its action is the finite sum of K(j) X conjTranspose(K(j)). The output index type iota has anonymous Fintype and DecidableEq instances.",
                 DescribeRole.Definition, AssessedProvenance.FromLiterature(Source)),
             Node("Broadcasts", "Broadcasting an observable", BroadcastingFormula(),
-                "Definition 1, p. 2: “A channel Λ : S(H) → S(H_A ⊗ H_B) with H_A = H_B = H is called a broadcasting channel.” Definition 3, p. 3: “An observable A ∈ O_X^d is broadcast by a broadcasting channel Λ ∈ C_broad^d if for all ρ ∈ S(H), x ∈ X” followed by equation (5), Tr[ρA(x)] = Tr[Λ(ρ)A(x) ⊗ I] = Tr[Λ(ρ)I ⊗ A(x)]. Outcomes are Fin m, and each subsystem is indexed by Fin d. The state predicate is the frozen GHZMeasureBiseparableBound.IsDensity: positive semidefinite with trace one.",
+                "Definition 1, p. 2: “A channel Λ : S(H) → S(H_A ⊗ H_B) with H_A = H_B = H is called a broadcasting channel.” Definition 3, p. 3: “An observable A ∈ O_X^d is broadcast by a broadcasting channel Λ ∈ C_broad^d if for all ρ ∈ S(H), x ∈ X” followed by equation (5), Tr[ρA(x)] = Tr[Λ(ρ)A(x) ⊗ I] = Tr[Λ(ρ)I ⊗ A(x)]. Outcomes are Fin m, and each subsystem is indexed by Fin d. The state predicate is the SLDSpectralEnergy.IsDensity: positive semidefinite with trace one.",
                 DescribeRole.Definition, AssessedProvenance.FromLiterature(Source)),
             Node("Nondisturbing", "Nondisturbing channels", NondisturbingFormula(),
                 "Definition 8, p. 5: “A channel Θ : S(H) → S(H) is nondisturbing with respect to an observable A if for all ρ ∈ S(H),” followed by equation (22), Tr[ρA(x)] = Tr[Θ(ρ)A(x)] for all x ∈ Ω_A. The displayed formula uses this trace form, equivalent to the dual form in equation (23).",
@@ -37,7 +38,7 @@ internal sealed class BroadcastingChannelExtremaRefutationDocument : IScribeDocu
             Node("claim", "The two extremum questions", ClaimFormula(),
                 Questions + " The universal encoding quantifies over natural dimensions d, outcome counts m, and all observables A. The frozen ConcealmentKernelNecessityRefutation.IsPOVM means that every effect is positive semidefinite and their sum is I. Nonemptiness of the broadcasting set is explicit. The disjunction allows either extremum; its negation exhibits one observable lacking both.",
                 DescribeRole.Definition, AssessedProvenance.FromLiterature(Source)),
-            Node("result", "Both answers can be negative", Disp(Seq(Neg, Sp, V("claim"))),
+            Node("result", "Both answers can be negative", Disp(new Formula.Not(Parenthesized(ClaimBody()))),
                 "Take d = 3, m = 2, P = diag(1,1,0), Q = I − P, A(0) = (3/4)P + (1/4)Q, and A(1) = I − A(0). Three broadcasting channels prepare the matrix units at (0,0), (1,1), and (0,1) on the P sector and at (2,2) on the Q sector. Preservation of A(0) and trace forces preservation of P. ConcealmentKernelNecessityRefutation.dual_kraus identifies the dual effect. The balanced state on coordinates zero and two is ActualQubitChordObstruction.signalProbe 1. Together with the other normalized real and imaginary pure states it determines the dual effect on all matrices, so nondisturbing precomposition fixes each of the three channels. Their inequality excludes a lowest element. FiniteMemoryHistoryCapacity.zero_trace_mul_eq_zero applied to I − P places the three input states of a highest element in the P sector. They would produce three orthogonal pure outputs. Positivity and the dual Kraus completeness identity bound their total trace by trace(P) = 2, although each output contributes at least one. Thus 3 ≤ 2, a contradiction. Only this three-dimensional, two-outcome instance is asserted; the rank-r family and the qubit and sharp-observable questions remain open here.",
                 DescribeRole.Theorem, AssessedProvenance.FromRepo(Source),
                 new OpenProblemResolutionClaim(
@@ -47,7 +48,7 @@ internal sealed class BroadcastingChannelExtremaRefutationDocument : IScribeDocu
     private static DocumentBlock Node(string name, string title, Formula formula, string prose,
         DescribeRole role, AssessedProvenance provenance,
         OpenProblemResolutionClaim? resolution = null) => Describe.Lean(
-        DescribeId.Create("broadcasting-extrema-" + name.ToLowerInvariant()),
+        DescribeId.Create("broadcasting-extrema-" + name.Replace("_", "").ToLowerInvariant()),
         DeclarationHandle.Create(Prefix + name), H(title), StatementSource.FromAuthor(formula),
         provenance, Blocks(Paragraph(Text(prose))), role, resolution);
 
@@ -80,7 +81,7 @@ internal sealed class BroadcastingChannelExtremaRefutationDocument : IScribeDocu
     private static Formula Trace(Formula matrix) => At(Qualified("Matrix", "trace"), matrix);
     private static Formula Adjoint(Formula matrix) => At(Qualified("Matrix", "conjTranspose"), matrix);
     private static Formula Kron(Formula a, Formula b) => At(Qualified("Matrix", "kronecker"), a, b);
-    private static Formula Density(Formula matrix) => At(Qualified("GHZMeasureBiseparableBound", "IsDensity"), matrix);
+    private static Formula Density(Formula matrix) => At(Qualified("SLDSpectralEnergy", "IsDensity"), matrix);
     private static Formula Observable(Formula a) => At(Qualified("ConcealmentKernelNecessityRefutation", "IsPOVM"), a);
     private static Formula Parameters(Formula body) => All("d", Field("N"), All("m", Field("N"), All("A", Fun(Fin(V("m")), Mat(V("d"))), body)));
 
@@ -135,11 +136,13 @@ internal sealed class BroadcastingChannelExtremaRefutationDocument : IScribeDocu
         return Disp(Parameters(Iff(Call(highest ? "HasHighest" : "HasLowest", a), body)));
     }
 
-    private static Formula ClaimFormula()
+    private static Formula ClaimFormula() => Disp(Iff(V("claim"), ClaimBody()));
+
+    private static Formula ClaimBody()
     {
         Formula d = V("d"), a = V("A"), l = V("L");
         Formula body = Implies(Observable(a), Implies(Some("L", Fun(Mat(d), Out(d)), Call("Broadcasts", a, l)),
             Or(Call("HasHighest", a), Call("HasLowest", a))));
-        return Disp(Iff(V("claim"), Parameters(body)));
+        return Parameters(body);
     }
 }

@@ -1,0 +1,72 @@
+**Theorem 7.2 (bounded additive excess and the leading divergence).** Fix $p,q>0$ with $s=p+q<1/2$, and fix $0<2\epsilon<\kappa(p,q,s)$. As $r\to s$ through unequal allowed values, with the original hypotheses valid in a sufficiently small neighborhood,
+
+$$
+N_{\mathrm{gen}}(\epsilon)=6+N_2+O_{p,q,\epsilon}(1),
+$$
+
+$$
+N_{\mathrm{gen}}(\epsilon)\sim
+\frac{1-s}{|r-s|}\log\frac{1-2\epsilon}{2\epsilon}.
+$$
+
+For $\rho\le1/2$ an explicit bound is
+
+$$
+0\le N_{\mathrm{gen}}-(6+N_2)
+\le2+C_\epsilon\frac{v}{1-v},\qquad
+C_\epsilon=\frac{\epsilon}{1-2\epsilon}+\frac23.
+$$
+
+This holds on both sides of equality and includes $p=q$. At equality itself the minimum is seven, as in Theorem 7.1.
+
+**Proof (7.2).** Let $\Delta=v-u=|r-s|$. For $n\ge1$,
+
+$$
+v^n-u^n
+=\Delta\sum_{j=0}^{n-1}v^{n-1-j}u^j
+\le\Delta n v^{n-1}
+\le\frac{\Delta}{1-v}.
+$$
+
+The last inequality follows because each term in $\sum_{j=0}^{n-1}v^j$ is at least $v^{n-1}$. Proposition 5.3 gives $\rho\le\Delta/(1-v)\to0$. Also
+
+$$
+\lambda=\int_u^v\frac{dx}{x}\ge\frac{\Delta}{v}.
+$$
+
+For $L(x)=\log((1-x)/x)$, the exact non-strict cutoff formula is $\min\{k:\delta_k\le x\}=\lceil L(x)/\lambda\rceil$ when $0<x<1/2$. With $\rho\le1/2$,
+
+$$
+\begin{aligned}
+L((2-\rho)\epsilon)-L(2\epsilon)
+&=\log\left(1+\frac{\rho\epsilon}{1-2\epsilon}\right)
+-\log(1-\rho/2)\\
+&\le C_\epsilon\rho.
+\end{aligned}
+$$
+
+Here $\log(1+x)\le x$ and $-\log(1-y)\le y/(1-y)$, with $y=\rho/2\le1/4$. Taking ceilings, which also preserves integer threshold ties, gives
+
+$$
+0\le K_{\mathrm{ov}}-N_2
+\le1+C_\epsilon\frac{\rho}{\lambda}
+\le1+C_\epsilon\frac{v}{1-v}.
+$$
+
+The upper $N_{\mathrm{gen}}\le7+K_{\mathrm{ov}}$ follows from Theorems 5.5 and 6.1. Theorem 4.3 gives $N_{\mathrm{gen}}\ge6+N_2$. Subtracting yields the stated additive bound. Since $v\to1-s<1$, it is uniformly bounded in a sufficiently small punctured neighborhood. Continuity and positivity of $\kappa$ at $r=s$, together with the strict fixed error margin, keep the original small-error assumption valid there.
+
+Finally $\lambda\sim\Delta/(1-s)$, so
+
+$$
+N_2=\left\lceil\frac{L(2\epsilon)}{\lambda}\right\rceil
+\sim\frac{1-s}{\Delta}L(2\epsilon)\longrightarrow\infty.
+$$
+
+The bounded additive excess transfers this same leading coefficient to $N_{\mathrm{gen}}$. In contrast,
+
+$$
+N_1-N_2=\frac{L(\epsilon)-L(2\epsilon)}{\lambda}+O(1)\longrightarrow\infty,
+$$
+
+while $K_{\mathrm{ov}}-N_2$ stays bounded. Hence the new upper is strictly smaller than $6+N_1$ for all sufficiently close unequal holdings. This discontinuity at the equality stratum concerns worst-case treatment of arbitrarily long positive startup histories, not a physical clock or singular source dynamics. $\square$
+

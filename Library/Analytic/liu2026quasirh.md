@@ -172,3 +172,148 @@ $$
 It therefore exceeds the $K^2$ scale of that row-energy problem. An improvement in a different projection or packet does not pay this floor bin or justify an unlicensed contour shift.
 
 **Stop result.** None of these capacity, complete-energy, projection or angular/DDDS estimates gives a strictly stronger same-object input to the $8748087/10^7$ ledger; they do not lower $\theta$. The repository estimates remain conditional on their stated analytical inputs. Possible future inputs through this line include a same-object floor-bin theorem, a separately paid contour change, or a root-moment estimate compatible with Gao's full root-moment contract and providing a strict saving that survives every detector and final-comparison constraint. Reoptimizing the record's existing inputs does not constitute such a new estimate.
+
+## Exact-rescaling ceilings and density substitutions
+
+The external manuscript by `span_of_dilates`, [*Structural ceilings in the cubic-theta quasi-Riemann-hypothesis argument*, v2](https://rstation.ai/problems/riemann_hypothesis/papers/40/v2), records two restrictions on specified modifications of the OpenAI/Liu argument. Its [primary text](https://rstation.ai/api/v1/papers/riemann_hypothesis_40/versions/2/download), Propositions A–B, is the source for this section. These are literature results to reuse, not new repository theorems. The manuscript's introductory zero-free numbers do not replace the later tracker comparison above. No external Lean build or independent certification of its numerical tables is asserted here.
+
+**Exact compensation.** Proposition A permits a finite linear combination of rescaled copies of the same completed average,
+
+$$
+\sum_{j=1}^J\beta_jQ^{-c_j}
+I_\eta(X/Q^{\alpha_{X,j}},Y/Q^{\alpha_{Y,j}},Z/Q^{\alpha_{Z,j}}).
+$$
+
+The real exponents and complex coefficients are independent of the slot prime. The required local Mellin multiplier is exactly $Q^{z-1-w}$ on the product of the three original contour lines, for every good slot prime in an unbounded family. After combining identical affine exponent vectors, the proposition gives the single compensation
+
+$$
+(c,\alpha_X,\alpha_Y,\alpha_Z)=(3/2,1,1,0),
+\qquad\beta=1.
+$$
+
+The source's original rescaled-length condition then gives $\ell\le l_x$ and $h=1+\ell-l_x\le1$. With its nonnegative low-side loss $\lambda$, the direct-comparison bookkeeping boundary satisfies $\sigma_0=1-h/6+\lambda\ge5/6$. This conclusion concerns that exact comparison and compensation class. It gives no obstruction for a different base average, slot-prime-dependent coefficients, a bounded family of primes, or a controlled approximate compensation. The source explicitly leaves its approximate-cancellation heuristic unproved.
+
+**Density substitution in Liu's system.** Write $\xi(\kappa)$ for the smaller root of
+
+$$
+(216\kappa-18)\xi^2-(468\kappa-57)\xi+150\kappa-20=0,
+\qquad 13/18\le\kappa\le1,
+$$
+
+and set $A_*(\kappa)=4/[3(1-\xi(\kappa))]$. Proposition B assumes an additional estimate for the same zero-class row family,
+$N_{\rm fam}(a)\ll U^{A(1-a)+\varepsilon}$, and replaces its count exponent by
+$\min\{R_\kappa(\delta,x),A(1-\delta)/2\}$, where $\delta=2a-1$.
+At Liu's existing optimum, this branch strictly reduces the critical count exactly when
+
+$$
+A<A_*(\kappa_{\rm new})=2.180727892\ldots.
+$$
+
+For $A\ge A_*(1)=2.183363347\ldots$, the source states that the optimum of this modified Liu system remains unchanged over the whole stated moment range. It leaves the intermediate interval undecided. The local threshold at $\kappa_{\rm new}$ does not decide that interval or establish a new optimum. Its reoptimization tables are explicitly numerical grid searches, rather than certified zero-free bounds.
+
+The extra density input must count the same family with its actual conductor, height, finite ray data and zero multiplicities. A single-$L$ height-density exponent or an all-character conductor estimate cannot be inserted by identifying its exponent symbol with $A$; its family and resource powers must first be transported. The manuscript's comparison with classical density exponents does not itself supply that transport.
+
+**Relation to the complete Möbius/plain energy.** Neither proposition estimates $\|(I-P_L)Ab\|_2^2$ or the full energy of the preceding original coefficient. The critical class and admissible system in Proposition B belong to Liu's zero-free comparison, rather than the maximization in (459.11). The complete-energy bound in §459, the narrow all-small-label projection in [§484](../../docs/develop/theory/FIBONACCI_ANALYTIC_FRONTIER_INTERFACES_II.md#484-全部小标记的反射主项与完整投影预算), and the final signed Robin restoration remain distinct targets. Reusing these scoped ceilings avoids repeating their parameter optimizations without treating them as a general impossibility theorem for RH.
+
+## Amplitude-resolved counts and the original complete energy
+
+Liu v2 [§10.1, (10.1), and Proposition 29.1, (29.1)–(29.3)](https://arxiv.org/html/2610.12234v2) retain a prime-amplitude coordinate that the complete-energy estimate in §459 does not use. With the source's full Hecke-family zero-free hypothesis $\beta_*\le(1+\kappa)/2$, $13/18\le\kappa\le1$, its required auxiliary-prime length $\ell_{\rm src}/d\ge1/5+\rho$, and its original finite character, bin, height and coefficient contracts, the count exponent is
+
+$$
+\begin{aligned}
+c_\kappa&=\frac2{3\kappa},&
+D_\kappa(x)&=3-(1+c_\kappa)x,&
+P_\kappa(x)&=(2-c_\kappa x)(1-x),\\
+J_\kappa(\delta,x)&=(5/6-\delta)D_\kappa(x)+\delta P_\kappa(x),\\
+R_\kappa(\delta,x)&=1-\delta+
+\frac{(5/6-\delta)\delta P_\kappa(x)}{2J_\kappa(\delta,x)},
+\qquad 0<\delta<5/6,\quad0\le x\le1/2.
+\end{aligned}
+$$
+
+The source's original zero-class restrictions also apply; the displayed rectangle is not an assertion that every pair occurs. For the present full row family, its source variables may be taken as $Z=U,d=1$ with the original finite Fourier character family included in the same fixed $\Theta$. Sixth-power-free rows of lower inducing order, all nonunit row zero classes and the common buffer are retained. A Dirichlet-only zero-free input cannot discharge the full Hecke-family hypothesis.
+
+The coordinate $x=\bar g/\delta$ comes from the source's auxiliary prime polynomials
+
+$$
+Q_i(u;z)=P_i^{-1/2}\sum_{p\in\mathcal P_i}
+\overline{\chi_p(u)}W_i(q_p/P_i)(q_p/P_i)^{z-1},
+\qquad
+\bar g=\frac{\sum_i\ell_i g_i}{\ell_{\rm src}}.
+$$
+
+Here $g_i$ indexes the size of $|Q_i|$, with the bottom bin $g_i=0$ carrying only an upper bound. This is a different observation from the original annular plain polynomial $S_u(U^{1/2})$, or the original inverse polynomial at length $U^{1/2}$.
+
+The count exponent $R_\kappa(\delta,x)$ is decreasing in $x$ on its stated range, and
+
+$$
+R_\kappa(\delta,0)=\frac{15-16\delta}{15-6\delta}.
+$$
+
+Consequently, merely replacing the count in (459.10), while retaining its inverse supremum and plain fourth moment, returns the same upper envelope as (459.11). The allowed bottom bin is still present, independently of $\kappa$. The known zero-free cutoffs do not remove its maximizing $\delta_*=(15-5\sqrt6)/6$. This substitution alone therefore leaves the bound $\mathcal C^2K^{(49-10\sqrt6)/12+\varepsilon}$ unchanged; it is not a proof that the actual energy saturates that bound.
+
+The remaining interface cannot be supplied by relabelling the source's detector witnesses. Source (5.2) gives the target-polynomial pointwise bounds in terms of the zero bin and lengths, with no $x$ gain. Source (5.5) returns a separate pair of detecting lengths, rather than prescribing the target pair $D=N=U^{1/2}$. Moreover, attaching these prime slots to the existing plain fourth moment at the target pair exhausts the length allowance: (9.4)/(28.2), with row exponent $m_0=1$, conductor exponent $q_0=0$ and hence source allowance $M=1$, requires $n_1+n_2+6\kappa z_{\rm p}\le M$. The two original plain exponents sum to $n_1+n_2=1$, so $1+6\kappa z_{\rm p}\le1$, hence $z_{\rm p}=0$. It supplies no positive-width prime-amplitude gain there.
+
+A stronger original-coefficient estimate would have to relate the same inverse/plain energy to these prime amplitudes, including the bottom bin, or supply another estimate for the complete kernel. Neither the count refinement nor a positive operator-norm lower bound provides that relation. This is a limitation of the specified substitution into §459, not a general impossibility result for amplitude-sensitive methods or RH.
+
+## Actual inverse coefficients: a limit of norm-only refinements
+
+For one original finite Fourier component, reuse the exact coefficient in (458.6), including shared primes:
+
+$$
+M_\xi(u)=D^{-1/2}\sum_{d\ {\rm good}}\mu(d)V(q_d/D)\xi(d)\chi_d(u),
+\qquad
+M_\xi(u)^2=\sum_a g_D(a)\chi_a(u),
+$$
+
+$$
+g_D(a)=D^{-1}\xi(a)\sum_{d_1d_2=a}
+\mu(d_1)\mu(d_2)V(q_{d_1}/D)V(q_{d_2}/D).
+$$
+
+Every column and factor sum in this section is over good ideals, meaning ideals prime to $S$; $\xi$ is multiplicative and has modulus one on this semigroup. Ideals are counted once, $q_d=Nd$, and the field and bad-prime set $S$ are fixed. In this section assume a **fixed nonzero smooth nonnegative annular profile $V$**. This is a permitted profile subclass, not a statement for arbitrary complex profiles, profile derivatives, or the sum of all Fourier components.
+
+The classical ideal Möbius/Liouville identity
+$\mu(d)=(-1)^{\Omega_F(d)}\mu(d)^2$, with $\Omega_F$ counting prime-ideal factors with multiplicity, gives
+
+$$
+g_D(a)=\xi(a)(-1)^{\Omega_F(a)}c_D(a),
+\qquad
+c_D(a)=D^{-1}\sum_{d_1d_2=a}
+\mu(d_1)^2\mu(d_2)^2V(q_{d_1}/D)V(q_{d_2}/D)\ge0.
+$$
+
+Thus the factorizations of a fixed product column have the same Möbius sign. Expanding $c_D(a)^2$ and keeping just the ordered diagonal pairs yields
+
+$$
+\|g_D\|_2^2=\sum_a c_D(a)^2
+\ge D^{-2}\left(\sum_{d\ {\rm good}}
+\mu(d)^2V(q_d/D)^2\right)^2.
+$$
+
+For the squarefree count, directly reuse the principal-character case of [G5 and its squarefree expansion](faveri2026fixedorder.md#the-actual-gram-including-all-original-zeros), based on Lemke Oliver–Thorner, Lemma A.3 in [Pasten, arXiv:1705.09251v4](https://arxiv.org/pdf/1705.09251v4). Taking the label $R=1$ and profile $V^2$ in G3 gives
+
+$$
+D^{-1}\sum_{d\ {\rm good}}\mu(d)^2V(q_d/D)^2
+\longrightarrow C_{V,S}
+=\frac{\operatorname{Res}_{s=1}\zeta_F(s)}{\zeta_F(2)}
+\prod_{\mathfrak p\in S}(1+q_{\mathfrak p}^{-1})^{-1}
+\int_0^\infty V(y)^2\,dy>0.
+$$
+
+This uses ideal counting, not an additional restriction to one ray class or a count of unit representatives. Consequently $\liminf_{D\to\infty}\|g_D\|_2^2\ge C_{V,S}^2>0$. The sign identity and counting theorem are classical inputs; this is their scoped application to the existing coefficient, not a new large-sieve or RH estimate.
+
+At $D=U^{1/2}$, the coefficient-independent sixth-order sieve in (458.7) has cost $U^{7/6+\varepsilon}\|g_D\|_2^2$. Together with the unchanged plain fourth moment $\ll U^{1+\varepsilon}$, an inverse fourth-moment exponent $B$ would give complete-energy exponent $(B+3)/2$ when $U\asymp K$. To improve the current §459 exponent through this route requires
+
+$$
+B<B_*:=\frac{31-10\sqrt6}{6}=1.084183762\ldots.
+$$
+
+Paying this improvement solely by reducing the coefficient norm in the unchanged sieve would require, for some fixed $\eta>0$,
+
+$$
+\|g_D\|_2^2\ll U^{B_*-7/6-\eta},
+\qquad B_*-7/6=\frac{12-5\sqrt6}{3}<0.
+$$
+
+The positive lower bound excludes such a uniform norm-only shortcut on this profile subclass. It gives **no lower bound** for the actual inverse fourth moment, $Q(b)$, any projected energy, or the complement: cross terms between distinct columns can cancel through the row characters. Coefficient-sensitive estimates for those correlations, zero-bin gains, complex-profile cancellation and the full signed Robin restoration remain separate questions.

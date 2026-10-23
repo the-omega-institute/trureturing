@@ -1,0 +1,35 @@
+**Proposition 25.2 (Events and the actual selected marginal).** Let $\mathcal I_w(B)$ be the
+original normal instrument for a Borel full-record event $B$. Define
+$\mathcal C_{\boldsymbol\eta,w}$ by averaging conjugation with $D_w(\xi)$ against
+$\gamma_{\boldsymbol\eta}$. Then for every trace-class $R$,
+
+$$
+\mathcal I_w(B)(\mathcal M_{\boldsymbol\eta}(R))
+=\mathcal C_{\boldsymbol\eta,w}(\mathcal I_w(B)(R)).
+\tag{25.3}
+$$
+
+For JM, let $\mathcal C_{\boldsymbol\eta}$ denote the corresponding two-mode channel from
+(25.2). The actual event output obeys
+
+$$
+\operatorname{Tr}_{\rm rest}\mathcal I_{JM}(B)
+       (\mathcal M_{\boldsymbol\eta}(R))
+=\mathcal C_{\boldsymbol\eta}
+       (\operatorname{Tr}_{\rm rest}\mathcal I_{JM}(B)(R)).
+\tag{25.4}
+$$
+
+*Proof.* Conjugate the pointwise identity (25.1), and integrate it in the normal trace pairings
+defining the instrument. For positive trace-class inputs, the total event trace is bounded by
+the input trace. Positivity and Tonelli justify the kick/outcome interchange; extend by
+linearity to trace class. The kick-channel integral itself exists in trace norm. No
+operator-norm integral of Kraus operators over all outcomes is being assumed. Finally (25.2)
+acts trivially on the rest, so partial trace gives (25.4). $\square$
+
+Since $\mathcal C_{\boldsymbol\eta,w}$ preserves trace, event probabilities in (25.3) agree
+exactly. If their common probability $p_B$ is positive, division by $p_B$ gives the same channel
+relation between normalized event-conditioned states. This is a relation between states, not
+equality of their internal states. No claim about individual point-outcome posteriors is
+required here.
+

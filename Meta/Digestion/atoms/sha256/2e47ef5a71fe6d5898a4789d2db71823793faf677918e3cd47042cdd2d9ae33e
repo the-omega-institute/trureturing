@@ -1,0 +1,69 @@
+### 2. Reconstruction without removing gain degeneracies
+
+Put
+
+$$
+\begin{gathered}
+e=d-24,\quad j=b+r(1-r)/b,\quad n=j+r,\quad T=1+b,\quad U=1+2b,\\
+Z=T+2j+4r,\qquad R=3U+2n,\\
+\Lambda=1+6/T+1/U-4/j-4/n,\\
+D_0=\frac{24}{5}(b-1/8)(6/T-2/U).
+\tag{2.1}
+\end{gathered}
+$$
+
+Direct multiplication of the literal matrices gives trace factors
+
+$$
+(1,j,T,n,U,U+n,2U+n;Z,R).
+\tag{2.2}
+$$
+
+In particular the cumulative matrices at clocks six and the two clock-seven
+alternatives are
+
+$$
+Q_6=\begin{pmatrix}3&1\\5&2\end{pmatrix},\quad
+JQ_6=\begin{pmatrix}5&2\\3&1\end{pmatrix},\quad
+MQ_6=\begin{pmatrix}5&2\\8&3\end{pmatrix}.
+$$
+
+All $j,n,T,U$ are strictly positive. If $\ell_i$ is the Lagrange basis at
+$0,1,2,3$, the first four prescribed readings force the entire gain to be
+
+$$
+\begin{gathered}
+z_0=-24-e,\quad z_1=-e/j,\quad z_2=(27/5-e)/T,\quad z_3=-e/n,\\
+g(s)=\sum_{i=0}^3z_i\ell_i(s).
+\tag{2.3}
+\end{gathered}
+$$
+
+Interpolation gives $g(4)=-z_0+4z_1-6z_2+4z_3$ and the exact residual
+
+$$
+d+Ug(4)-18=U(e\Lambda+D_0).
+\tag{2.4}
+$$
+
+Thus the complete five-row parent condition is $e\Lambda+D_0=0$.
+On $\Lambda\ne0$, set $e=-D_0/\Lambda$ and use
+
+$$
+\begin{aligned}
+g_5&=-4z_0+15z_1-20z_2+10z_3,\\
+g_6&=-10z_0+36z_1-45z_2+20z_3,\\
+g_7&=-20z_0+70z_1-84z_2+35z_3,\\
+p&=24+e+(U+n)g_5,\\
+v&=24+e+(2U+n)g_6,\\
+a&=24+e+Zg_7,\qquad m=24+e+Rg_7.
+\end{aligned}
+\tag{2.5}
+$$
+
+These formulas use one whole polynomial and one fixed drift. They do not
+divide by a gain value, leading coefficient, root difference or drift.
+The gain cannot vanish identically, since the readings at clocks zero
+and one differ. Lower degrees, sampled zeros and repeated roots are
+therefore included.
+

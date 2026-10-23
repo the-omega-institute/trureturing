@@ -36,15 +36,6 @@ local macro "R_mode" : term => pure (Lean.mkIdent
 local macro "Z_mode" : term => pure (Lean.mkIdent
   ((Lean.Name.num `_private.D5.S3.VertexAlgebra.GroundRightCurrentTransport.Residue 0) ++
     `D5.S3.VertexAlgebra.LatticeHalfFockGroundRightCurrentTransport.Calculus.Z_mode))
-local macro "Q_mode" : term => pure (Lean.mkIdent
-  ((Lean.Name.num `_private.D5.S3.VertexAlgebra.GroundRightCurrentTransport.Residue 0) ++
-    `D5.S3.VertexAlgebra.LatticeHalfFockGroundRightCurrentTransport.Calculus.Q_mode))
-local macro "Q_cutoff" : term => pure (Lean.mkIdent
-  ((Lean.Name.num `_private.D5.S3.VertexAlgebra.GroundRightCurrentTransport.Residue 0) ++
-    `D5.S3.VertexAlgebra.LatticeHalfFockGroundRightCurrentTransport.Calculus.Q_cutoff))
-local macro "valid_of_locality" : term => pure (Lean.mkIdent
-  ((Lean.Name.num `_private.D5.S3.VertexAlgebra.GroundRightCurrentTransport.Residue 0) ++
-    `D5.S3.VertexAlgebra.LatticeHalfFockGroundRightCurrentTransport.Calculus.valid_of_locality))
 local macro "Q_left_valid" : term => pure (Lean.mkIdent
   ((Lean.Name.num `_private.D5.S3.VertexAlgebra.GroundRightCurrentTransport.Interchange 0) ++
     `D5.S3.VertexAlgebra.LatticeHalfFockGroundRightCurrentTransport.Calculus.Q_left_valid))
@@ -77,7 +68,7 @@ private theorem nativeSlice_mode (D : LatticeData) (hu : IsUnit D.G.det)
     (nativeSlice D hu a gamma)[[n]] = slice D hu a gamma n :=
   physicalSlice_mode D hu (correctedField D hu a) gamma n
 
-private theorem native_valid_exists (D : LatticeData) (hu : IsUnit D.G.det)
+theorem native_valid_exists (D : LatticeData) (hu : IsUnit D.G.det)
     (a b : Carrier D) (gamma delta : ℤ) :
     ∃ K : ℕ, ∀ shift : ℤ,
       Valid (Z (-shift) (nativeSlice D hu a gamma)) (nativeSlice D hu b delta) K := by
@@ -161,7 +152,7 @@ local macro "currentInverse" : term => pure (Lean.mkIdent
   ((Lean.Name.num `_private.D5.S3.VertexAlgebra.LatticeHalfFockCurrentBorcherds 0) ++
     `D5.S3.VertexAlgebra.LatticeHalfFockCurrentBorcherds.inverse_all))
 
-private theorem native_current_inverse (D : LatticeData) (hu : IsUnit D.G.det)
+theorem native_current_inverse (D : LatticeData) (hu : IsUnit D.G.det)
     (i : Fin D.rank) (b : Carrier D) (delta r : ℤ) :
     nativeSlice D hu (neutralMode D i r b) (delta+1) =
       Q (nativeCurrent D hu i) (nativeSlice D hu b delta) 1 r

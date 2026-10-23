@@ -1,0 +1,10 @@
+**推论 5.5（有限混合参考的精确控制障碍）。** 取 $\sigma_\theta=(I+\theta Y)/2$、$Y=\begin{psmallmatrix}0&-i\\i&0\end{psmallmatrix}$、$0<\theta<1$。它可作为完备实联合读出参考，但任意有限 $n$ 份 $\sigma_\theta^{\otimes n}$ 都不能精确、确定性地实现真正非实幺正。
+
+**证明。** 其虚部非零，故联合读出参考收缩公式可逆；另一方面
+
+$$
+\operatorname{tr}(\sigma_\theta\bar\sigma_\theta)=(1-\theta^2)/2>0.
+$$
+
+张量 $n$ 份后的迹积是此数的 $n$ 次幂，仍为正，应用定理 5.4。$□$
+

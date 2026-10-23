@@ -12,6 +12,18 @@ internal sealed class ZetaProductFibreDocument : IScribeDocumentDefinition
         H("The L2 count as a sum of norm-residue counts"),
         Blocks(
             Describe.Lean(
+                DescribeId.Create("aut-to-pow-frobenius-class"),
+                DeclarationHandle.Create("D5/S3/Analytic/Zeta/NumberField/ZetaProductFibre.autToPow_frobeniusClass"),
+                H("The original per-prime cyclotomic character formula"),
+                StatementSource.WithoutFormula(),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text(
+                    "For a nonzero prime ideal unramified in a cyclotomic extension and with norm coprime to "
+                    + "the modulus, the primitive-root character of its Frobenius class representative is the "
+                    + "unit represented by its absolute norm. This is the existing per-prime proof factored from "
+                    + "the ideal formula, which continues to consume it."))),
+                DescribeRole.Theorem),
+            Describe.Lean(
                 DescribeId.Create("is-bad-part"),
                 DeclarationHandle.Create(
                     "D5/S3/Analytic/Zeta/NumberField/ZetaProductFibre.IsBadPart"),

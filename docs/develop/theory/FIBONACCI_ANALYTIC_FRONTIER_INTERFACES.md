@@ -4624,3 +4624,343 @@ $$
 本节是纸面数学应用；没有科学执行、数值扫描、Lean 编译或 kernel 认证。文献检索只承担既有来源与适用范围核对，不承担证明审查。有限峰值到整数的转换由上述推导承担。
 
 ## 追加锚（本行以下为增补区）
+
+## 478. 完整 Mertens 累积峰值的显式有限 Robin 定位
+
+本节复用第 477 节的实际 lcm 响应比较，以及 [Johnston–Yang，arXiv:2204.01980v2，定理 1.1、式 (1.3)](../../../Library/Weil/johnstonyang2022pnt.md) 的无条件完整 Chebyshev 误差界。经典 Mertens 分部求和恒等式由 [Lay，arXiv:1505.03589v1，Lemma 4 证明中的未编号身份，印刷第 6 页](../../../Library/Analytic/lay2015mertenssignchanges.md) 直接供应；它与正权积分、该素数定理估计均作为已有工具；下面保留远端边界并给出显式整数位置的综合命题记为 `repo-derived`，不主张文献优先权。
+
+令 $\Lambda$ 为 von Mangoldt 函数，$\gamma_E$ 为 Euler 常数，并定义
+
+$$
+\begin{aligned}
+\psi(t)&=\sum_{n\le t}\Lambda(n),&
+Q(t)&=\int_t^\infty\frac{\psi(u)-u}{u^2}\,du,\\
+r(t)&=\frac{1+\log t}{(\log t)^2},&
+I(t)&=\int_t^\infty\frac{\psi(u)-u}{u^2}r(u)\,du,\\
+\mathcal U(t)&=t\sum_{n\le t}\frac{\Lambda(n)}n-\psi(t)
+-t\log t+(1+\gamma_E)t.
+\end{aligned}
+\tag{478.1}
+$$
+
+所有有限和包括上端点及全部素数幂。经典完整 Mertens 恒等式给出 $\mathcal U(t)=-tQ(t)$；因而 $\mathcal U(t)$ 的定义只需截止到 $t$ 的有限算术和与固定常数，不要求取得无限尾积分的数值。
+
+**命题 478.1（完整素数幂累积峰值的有限见证）。** 对每个实数 $A\ge10000$，令
+
+$$
+L=\log A,\qquad B=\exp\!\left(4(L+20)^2\right).
+$$
+
+若
+
+$$
+\mathcal U(A)>
+\sqrt A\left(\frac{4L^2}{1+L}+9\right),
+\tag{478.2}
+$$
+
+则存在实数 $t\in[A,B]$，使实际整数 $N=\operatorname{lcm}(1,\ldots,\lfloor t\rfloor)$ 满足
+
+$$
+5040<N\le\exp(B\log B),\qquad
+\frac{\sigma(N)}N>e^{\gamma_E}\log\log N.
+\tag{478.3}
+$$
+
+证明。引用的完整 Chebyshev 界是对每个 $u\ge2$ 成立的
+
+$$
+|\psi(u)-u|\le
+9.39u(\log u)^{1.515}e^{-0.8274\sqrt{\log u}}.
+\tag{478.4}
+$$
+
+它保证本节全部无限积分的绝对收敛及下面使用的无穷端边界消失。直接套用 Lay 的上述完整 Mertens 恒等式，即有
+
+$$
+Q(t)=\frac{\psi(t)}t-\sum_{n\le t}\frac{\Lambda(n)}n
++\log t-1-\gamma_E=-\frac{\mathcal U(t)}t.
+\tag{478.5}
+$$
+
+为保留更换核产生的远端项，写
+
+$$
+w(t)=\left(\frac1{r(t)}\right)'
+=\frac{(\log t)(\log t+2)}{t(1+\log t)^2},
+\qquad 0<w(t)<\frac1t.
+$$
+
+由 $I'=rQ'$（几乎处处），在任意有限区间 $[A,Y]$ 分部积分得到
+
+$$
+Q(A)=\frac{I(A)}{r(A)}
++\int_A^Yw(t)I(t)\,dt
++Q(Y)-\frac{I(Y)}{r(Y)}.
+\tag{478.6}
+$$
+
+函数 $I,Q$ 在每个此类区间绝对连续，故该恒等式也适用于素数幂端点。令 $Y\to\infty$ 后，再在任意 $X>A$ 处拆开，远端边界的精确表达是
+
+$$
+\mathcal T(X):=Q(X)-\frac{I(X)}{r(X)}
+=\int_X^\infty w(t)I(t)\,dt.
+\tag{478.7}
+$$
+
+以下估计保留并支付 $\mathcal T(X)$。设 $b=\log X\ge1$。由 (478.4) 及 $w(t)\le1/t$，绝对值、Tonelli 与 $v=\log u$ 给出
+
+$$
+\begin{aligned}
+|\mathcal T(X)|
+&\le9.39\int_b^\infty
+(v-b)(v^{-0.485}+v^{0.515})e^{-0.8274\sqrt v}\,dv\\
+&\le18.78\int_b^\infty v^{1.515}e^{-0.8274\sqrt v}\,dv\\
+&\le37.56\int_{\sqrt b}^\infty z^5e^{-4z/5}\,dz.
+\end{aligned}
+\tag{478.8}
+$$
+
+最后一步令 $v=z^2$，使用 $z^{4.03}\le z^5$（$z\ge1$）及 $0.8274>4/5$。对 $z_0\ge16$，经典有限分部积分公式及 $5!/(5-j)!\le5^j$ 给出
+
+$$
+\begin{aligned}
+\int_{z_0}^\infty z^5e^{-4z/5}\,dz
+&=e^{-4z_0/5}\sum_{j=0}^5
+\frac{5!}{(5-j)!}\left(\frac54\right)^{j+1}z_0^{5-j}\\
+&\le\frac52z_0^5e^{-4z_0/5}.
+\end{aligned}
+$$
+
+这里的几何级数比为 $25/(4z_0)<1/2$。所以得到完全显式的远端界
+
+$$
+|\mathcal T(X)|\le100z_0^5e^{-4z_0/5},
+\qquad z_0=\sqrt{\log X}\ge16.
+\tag{478.9}
+$$
+
+对所选 $X=B$，有 $z_0=2(L+20)\ge40$。由 $\log40<4$、$\log200<6$ 及 $\log(1+L/20)\le L/20$，
+
+$$
+\begin{aligned}
+\log\!\left(200\sqrt A\,z_0^5e^{-4z_0/5}\right)
+&=\log200+\frac L2+5\log\!\left(40(1+L/20)\right)
+-\frac85(L+20)\\
+&< -6-\frac{17}{20}L<0.
+\end{aligned}
+$$
+
+故
+
+$$
+|\mathcal T(B)|<\frac1{2\sqrt A}.
+\tag{478.10}
+$$
+
+反设 $[A,B]$ 中没有任何 $\operatorname{lcm}(1,\ldots,\lfloor t\rfloor)$ 严格违反 Robin。第 477 节的完整 Euler 乘积比较 (477.4) 对每个这样的 $t$ 直接给出
+
+$$
+I(t)\ge-\frac4{\sqrt t}\qquad(A\le t\le B).
+\tag{478.11}
+$$
+
+将此下界与 (478.10) 用于有限恒等式 (478.6)，再用 $w(t)\le1/t$，得到
+
+$$
+\begin{aligned}
+Q(A)
+&\ge-\frac4{\sqrt A\,r(A)}
+-4\int_A^B\frac{dt}{t^{3/2}}-\frac1{2\sqrt A}\\
+&\ge-\frac1{\sqrt A}\left(\frac4{r(A)}+\frac{17}2\right).
+\end{aligned}
+$$
+
+这与 (478.2) 及 (478.5) 矛盾，因为 $4/r(A)=4L^2/(1+L)$。因而有实际 $t\in[A,B]$ 严格超界。沿用第 477 节的有限库存界，$N\ge\lfloor t\rfloor\ge10000>5040$，且 $\log N=\psi(t)\le t\log t\le B\log B$，即得 (478.3)。证毕。
+
+**推论 478.2（普通素数 $E_1$ 累积量的有限消费）。** 沿用 [Zhao，arXiv:2411.18903v2，式 (14)](../../../Library/Analytic/zhao2025mertensmeans.md) 的
+
+$$
+\mathcal E_1=-\gamma_E-\sum_p\sum_{j\ge2}\frac{\log p}{p^j},
+\quad E_1(t)=\sum_{p\le t}\frac{\log p}{p}-\log t-\mathcal E_1,
+\quad F_1(A)=\int_2^AE_1(t)\,dt,
+\quad c_1=2\log2-2+2\mathcal E_1.
+$$
+
+对 $A\ge10000$、$L=\log A$，若
+
+$$
+F_1(A)-c_1>\sqrt A\left[
+\frac{4L^2}{1+L}+9+\frac{2L^2+8L+16}{\log2}\right],
+\tag{478.12}
+$$
+
+则有同一个显式 $B=\exp(4(L+20)^2)$ 与 (478.3) 中的实际整数见证。
+
+证明。直接使用该来源的恒等式 $Q_\theta(A)=(c_1-F_1(A))/A$。全部高次素数幂满足
+
+$$
+0\le\psi(u)-\theta(u)
+\le\frac{\sqrt u(\log u)^2}{\log2}.
+$$
+
+因此保留它们的非负积分后是
+
+$$
+\begin{aligned}
+0\le Q(A)-Q_\theta(A)
+&\le\frac1{\log2}\int_A^\infty\frac{(\log u)^2}{u^{3/2}}\,du\\
+&=\frac{2L^2+8L+16}{\sqrt A\log2}.
+\end{aligned}
+$$
+
+由此，$\mathcal U(A)=-AQ(A)$ 大于 $\sqrt A(4L^2/(1+L)+9)$；应用命题 478.1，证毕。
+
+第 477 节的输入是普通素数倒数误差 $E_2$ 在有限前缀上的累积峰值；命题 478.1 的输入是有限完整素数幂和 $\mathcal U(A)$，推论 478.2 则消费普通素数 $E_1$ 的累积峰值。新的远端位置 $B$ 由完整尾项 (478.7) 与无条件显式误差 (478.4) 决定，并未删除未来均值。它不要求 CA 最优性、零点高度门槛、零点简单性或零点分离，但也未断言任何实际 $A$ 满足其峰值前提。峰值前提的存在性及全范围严格 Robin 的估计不包含在上述条件结论中。
+
+## 追加锚（本行以下为增补区）
+
+## 479. 任意离线零点的正累积峰值与显式整数位置
+
+本节复用第 478 节的完整 Mertens 量 $\mathcal U$ 与实际 lcm 消费命题；复用[完整积分显式公式与零点和](../../../Library/Analytic/polak2026finiterobinca.md#published-event-dynamics-and-the-unpaid-prime-state-work)，以及 [Révész 的 Cassel 幂和步骤及低高度零点事实](../../../Library/Zeros/revesz1988oscillation.md)。以下保留非振荡包络及全尾项的带符号应用记为 `repo-derived`；不主张文献优先权。
+
+**命题 479.1（不另设零点高度门槛的有限正峰值）。** 设实际非平凡零点 $\rho_0=\beta+i\gamma$ 满足 $\beta>1/2$、$\gamma>0$，令
+
+$$
+\delta=\beta-\tfrac12,\quad D=\gamma+10,\quad
+m_0=100D^2\delta^{-2},\quad m_1=500D^4\delta^{-2}.
+$$
+
+则存在实数 $A\in[e^{4m_0},e^{28m_1}]$ 使
+
+$$
+\mathcal U(A)>\sqrt A\,(4\log A+9).
+\tag{479.1}
+$$
+
+从而，若 $B_0=\exp(4(28m_1+20)^2)$，存在实际整数 $5040<N\le\exp(B_0\log B_0)$ 严格违反 Robin。
+
+证明。下列零点多重集均包括全部非平凡零点，不假设简单性、分离或存在最右零点。写 $\rho=b+i\eta$、$a_\rho=[\rho(1-\rho)]^{-1}$，定义
+
+$$
+H(y)=\sum_\rho a_\rho e^{\rho y}\quad(y\in\mathbb R),\qquad
+\sum_\rho a_\rho=C=2+\gamma_E-\log(4\pi)<1.
+$$
+
+经典低高度结果给出 $|\eta|>10$。由 $0<b<1$，直接有 $\Re a_\rho\ge1/(2\eta^2)$，故
+
+$$
+\sum_\rho\eta^{-2}\le2C<2,\quad
+\sum_\rho|a_\rho|<2,\quad
+\#\{\rho:|\Im\rho|\le T\}\le2T^2,\quad
+|H(y)|\le2e^{\max(y,0)}.
+\tag{479.2}
+$$
+
+这里 $\Re a_\rho$ 的分母不超过 $2\eta^4$，分子至少为 $\eta^2$。所有级数在实紧集上一致绝对收敛，$H$ 由共轭对称性为实值。复用完整积分显式公式，对 $y>0$ 有
+
+$$
+H(y)=\mathcal U(e^y)-\log(2\pi)
++\sum_{j\ge1}\frac{e^{-2jy}}{2j(2j+1)}\le\mathcal U(e^y).
+\tag{479.3}
+$$
+
+最后的级数小于 $1$，而 $\log(2\pi)>1$；不丢弃素数幂或平凡零点修正。
+
+令 $a=\beta^2+16\beta$，把 $|\eta-\gamma|\le6$ 的 $n$ 个零点（计重数）变成复数
+
+$$
+z_\rho=\exp\!\left(m_0[(\rho-i\gamma)^2+16(\rho-i\gamma)-a]\right).
+$$
+
+其中至少一个为 $1$，且 $n\le2(\gamma+6)^2\le2D^2$。使用所引 Cassel 步骤的离散结论：去掉一个 $1$ 后把其余根连同共轭取成实系数多项式的根，存在整数 $1\le\nu\le2n+1$ 使 $\Re\sum z_\rho^\nu\ge1$。于是 $m=\nu m_0$ 满足 $m_0\le m\le m_1$，且相应有限和的实部至少为 $e^{am}$。
+
+记完整高斯零点和
+
+$$
+E_\gamma(m)=\sum_\rho e^{m(\rho-i\gamma)^2+16m(\rho-i\gamma)}.
+$$
+
+对所遗漏的 $|\eta-\gamma|>6$，按整数距离 $k\ge6$ 分组，利用 (479.2) 及 $b^2+16b\le17$，得到
+
+$$
+\begin{aligned}
+\left|\sum_{|\eta-\gamma|>6}e^{m(\rho-i\gamma)^2+16m(\rho-i\gamma)}\right|
+&\le2D^2\sum_{j\ge0}(j+1)^2e^{m(17-(6+j)^2)}
+\le4D^2e^{-19m},\\
+\Re E_\gamma(m)&\ge\tfrac12e^{am}.
+\end{aligned}
+\tag{479.4}
+$$
+
+此处 $m\ge m_0\ge1$，并用 $\sum_{j\ge0}(j+1)^2r^j<2$（$0\le r\le1/10$）及 $e^{(a+19)m}>8D^2$。
+
+现在支付带符号适配。取均值 $M=16m$、方差 $2m$ 的高斯密度，写
+
+$$
+g(y)=\frac{e^{-(y-M)^2/(4m)}}{\sqrt{4\pi m}},\quad
+u=\frac{y-M}{2m},\quad P=(u+i\gamma)(u+i\gamma-1)-\frac1{2m},\quad
+K(y)=-\Re(e^{-i\gamma y}P)g(y),\quad
+v(y)=2(u^2+\gamma^2+1)g(y)\ge|K(y)|.
+$$
+
+对高斯核求两次 $M$ 导数，保持 $m$ 固定，然后在 $M=16m$ 取值。绝对可和性与高斯衰减允许逐项积分，由 $a_\rho\rho(\rho-1)=-1$ 得到精确等式
+
+$$
+\int_{\mathbb R}H(y)K(y)\,dy=\Re E_\gamma(m),\qquad
+\int_{\mathbb R}H(y)v(y)\,dy
+=2\sum_\rho a_\rho\left(\rho^2+\gamma^2+1+\frac1{2m}\right)e^{m\rho^2+16m\rho}.
+\tag{479.5}
+$$
+
+包络对应的第二个积分没有被删去。用 $|\eta|>10$ 与 (479.2)，按 $|\eta|\in[k,k+1)$ 分组，有
+
+$$
+\sum_\rho e^{-m\eta^2}\le\sum_{k\ge10}2(k+1)^2e^{-mk^2}\le500e^{-100m},\qquad
+\left|\int H v\right|\le1000D^2e^{-83m}.
+\tag{479.6}
+$$
+
+后一式使用 $|a_\rho|(\gamma^2+1+1/(2m)+|\rho|^2)\le\gamma^2+3\le D^2$。
+
+反设 (479.1) 在 $e^{4m}\le A\le e^{28m}$ 全部失败。由 (479.3)，在 $J=[4m,28m]$ 上 $H(y)\le b(y):=(4y+11)e^{y/2}$。因 $K+v\ge0$，保留整个实轴上的包络积分及区间外响应，得
+
+$$
+\Re E_\gamma(m)\le2\int_0^\infty b(y)v(y)\,dy
++\left|\int_{\mathbb R}H(y)v(y)\,dy\right|
++2\int_{\mathbb R\setminus J}|H(y)|v(y)\,dy.
+\tag{479.7}
+$$
+
+下面的三个高斯估计给出全部常数。第一项以 $e^{y/2}g(y)$ 换成均值 $17m$、方差 $2m$ 的高斯，令 $z=y-17m$，使用 $4y+11\le81m+2z^2$（$y\ge0$）、$u^2\le1/2+z^2/(2m^2)$ 及二、四阶矩 $2m,12m^2$，得到
+
+$$
+\int_0^\infty bv\le2e^{33m/4}\bigl[85m(\gamma^2+2)+93\bigr]
+\le300mD^2e^{33m/4}.
+\tag{479.8}
+$$
+
+对 $y\ge0$ 的区间外部分用 $|H(y)|\le2e^y$。指数倾斜把均值移至 $18m$，令 $z=y-18m$，此部分满足 $|z|\ge10m$，且 $u^2+\gamma^2+1\le D^2+z^2/(2m^2)$。把高斯指数分为相等两半，支付 $e^{-25m/2}$ 并对方差 $4m$ 的高斯积分。对 $y<0$ 同样支付 $e^{-32m}$，得
+
+$$
+\int_{[0,\infty)\setminus J}|H|v\le12D^2e^{9m/2},\qquad
+\int_{(-\infty,0)}|H|v\le8D^2e^{-32m}.
+\tag{479.9}
+$$
+
+由 (479.6)—(479.9)，反设蕴含 $\Re E_\gamma(m)\le2000mD^2e^{33m/4}$。但
+
+$$
+\begin{aligned}
+a-\tfrac{33}4&=17\delta+\delta^2,\\
+\log(4000mD^2)&\le\log(2\cdot10^6D^6\delta^{-2})
+<20+6D+2/\delta\le D^2/\delta
+<17\delta m.
+\end{aligned}
+$$
+
+这里 $D>20$、$0<\delta<1/2$、$m_0\le m\le m_1$，故与 (479.4) 矛盾。这证明 (479.1)。所得 $A>10000$，且 $4\log A+9>4(\log A)^2/(1+\log A)+9$。直接应用命题 478.1，并用 $\log A\le28m_1$，即得 $N$ 的上界。证毕。
+
+本命题只以实际离线零点为条件，不给出该条件的实例或 RH 的判定；它给出的正峰值是完整 $\mathcal U$ 的峰值，不把某个余项的绝对值下界当成其正向下界，也不把截断参数 $B_0$ 当成整数 $N$ 的上界。
+
+## 追加锚（本行以下为增补区）

@@ -1,0 +1,11 @@
+**Definition 3.1 (static exact auxiliary code).** Supply the complete
+current $O(p)=(c_0,n)$ to a decoder as side information, including its
+unbounded depth coordinate. An auxiliary code for budget $h$ is a
+map $\alpha_h:\mathcal P\to A_h$ into a finite fixed alphabet together
+with a decoder of $(O(p),\alpha_h(p))$ into the signature, or,
+equivalently by Theorems 2.1--2.2, its exact frozen law or complete
+endpoint response family. The alphabet can be reused at different
+current observations. This is a static deterministic representation
+of probability laws; a code symbol is not obtained from a random
+path by this definition.
+
