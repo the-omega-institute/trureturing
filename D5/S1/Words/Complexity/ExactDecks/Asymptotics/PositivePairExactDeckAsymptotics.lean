@@ -28,6 +28,11 @@ Library search: no project declaration packages the exact upper injection or
 
 
 import Batteries.Tactic.OpenPrivate
+import D5.S1.Words.Complexity.ExactDecks.Growth.ExactDeckCore
+import D5.S1.Words.Complexity.ExactDecks.Growth.PositiveWordBall
+import D5.S1.Words.Complexity.LyndonBrackets.LyndonOrder
+import D5.S1.Words.Complexity.PositivePairs.Digits.ActualLyndonDirections
+import D5.S1.Words.Complexity.VivionBinomialConverseFails
 import D5.S1.Words.Complexity.ExactDecks.Growth.ExactDeckLowerBound
 import D5.S1.Words.Complexity.ExactDecks.UpperBound.FullLyndonRecovery
 
@@ -48,8 +53,6 @@ open D5.S1.Words.Complexity.ExactDecks.UpperBound.FullLyndonRecovery
 
 open private scatteredCount_singleton_eq_count letterActualLyndonEquiv from
   D5.S1.Words.Complexity.ExactDecks.Growth.PositiveWordBall
-open private scatteredCount_eq_count_sublistsLen from
-  D5.S1.Words.Complexity.ExactDecks.Growth.ExactDeckCore
 
 variable {A : Type*}
 
@@ -324,6 +327,5 @@ theorem actual_exactKDeckImage_weightedLyndon_isTheta
       Real.norm_eq_abs, abs_of_nonneg hcardNonneg]
     exact_mod_cast hlower n hn
 
-#print axioms actual_exactKDeckImage_weightedLyndon_isTheta
 
 end D5.S1.Words.Complexity.ExactDecks.Asymptotics.PositivePairExactDeckAsymptotics
