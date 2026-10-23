@@ -8,10 +8,6 @@
 
 import Mathlib.LinearAlgebra.Matrix.Trace
 import Mathlib.Analysis.Complex.Basic
-import Mathlib.Tactic.FieldSimp
-import Mathlib.Tactic.FinCases
-import Mathlib.Tactic.Linarith
-import Mathlib.Tactic.Ring.RingNF
 
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
