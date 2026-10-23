@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:1bfe80e49fc01f81beb5a8be4ae41ac7e149393d57cb6332d79034a2f9b42680
+  normalized_sha256: sha256:1bfe80e49fc01f81beb5a8be4ae41ac7e149393d57cb6332d79034a2f9b42680
+cas_ref: sha256:1bfe80e49fc01f81beb5a8be4ae41ac7e149393d57cb6332d79034a2f9b42680
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 仅为反馈参数趋零时的稳定性检查步骤，不断言稳定性已成立。
+    previous_atom_id: 1ad63420a146079e09adfcb6b75139e1cd82d44272d4590a7782ad1e2a8cbd57
+    next_atom_id: a61212d9fddcdfcfbe02fad3b5be5ffa0f63fc58b23c6a07fb0163bf93a31fe6

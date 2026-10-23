@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:a61212d9fddcdfcfbe02fad3b5be5ffa0f63fc58b23c6a07fb0163bf93a31fe6
+  normalized_sha256: sha256:a61212d9fddcdfcfbe02fad3b5be5ffa0f63fc58b23c6a07fb0163bf93a31fe6
+cas_ref: sha256:a61212d9fddcdfcfbe02fad3b5be5ffa0f63fc58b23c6a07fb0163bf93a31fe6
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 仅为调度协变性检查和结果标记限制，不断言检查结果。
+    previous_atom_id: 1bfe80e49fc01f81beb5a8be4ae41ac7e149393d57cb6332d79034a2f9b42680
+    next_atom_id: b94d154df554530402b9b13cfe5aec750759c35a7551579a3c6cbedc7cb22aa8
