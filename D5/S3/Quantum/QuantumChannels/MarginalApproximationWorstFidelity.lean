@@ -1,5 +1,5 @@
 /- GID: D5/S3/Quantum/QuantumChannels/MarginalApproximationWorstFidelity
-   generality: G
+   generality: I
    mirror-B: D5/B/S3/Quantum/QuantumChannels/MarginalApproximationWorstFidelity
    mirror-E: none(waiver:external-open-problem-resolution)
    anchors: []
@@ -8,8 +8,6 @@
 
 import D5.S3.Quantum.Entanglement.AbsoluteSeparability.GurvitsBarnumBall
 import D5.S3.Quantum.Recovery.PurifiedLocalPath
-import D5.S3.Quantum.Information.StabilizerPairLocalUnitaryInequivalence
-import D5.S3.Quantum.PureState.PureStateHandshake
 import D5.S3.Quantum.Information.LiTheilHarrowChuangPurifyCloneRefutation
 import D5.S3.QuantumChannels.PauliThreeWeightBayesianInverseUniqueness
 import D5.S3.Quantum.Dynamics.KickedIsingNegativityRefutation

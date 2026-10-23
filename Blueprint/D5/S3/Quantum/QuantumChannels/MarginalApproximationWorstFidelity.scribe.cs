@@ -200,7 +200,7 @@ internal sealed class MarginalApproximationWorstFidelityDocument : IScribeDocume
     private static Formula Shift => App(Qualified("Matrix", "transpose"), Call("qubitPermutation", Call("finRotate", N)));
     private static Formula ShiftDensity => Call("rankOneDensity", Call("shiftCoeff", N));
     private static Formula MarginalProduct(Formula matrix) => Call("productMap",
-        LambdaOf(F.Id("x"), Fin(N), Fin(D(4))), Call("marginal", matrix));
+        App(Qualified("Function", "const"), Fin(N), Fin(D(4))), Call("marginal", matrix));
 
     private static Formula ProcessFormula() => All(N, Naturals, All(Chi, ProcessMatrices,
         IffTo(Call("IsProcessCPTP", Chi), And(App(Qualified("Matrix", "PosSemidef"), Chi),
