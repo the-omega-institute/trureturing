@@ -2,7 +2,7 @@
    generality: G
    mirror-B: D5/B/S3/Quantum/Information/FisherDiscord/Extension
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
-   anchors: [mathlib/module/Mathlib.LinearAlgebra.Matrix.Kronecker]
+   anchors: []
    utility: none
    digest: Flagged extensions have the prescribed marginal and zero Fisher discord; the universal extension inequality is equivalent to zero marginal discord. -/
 
