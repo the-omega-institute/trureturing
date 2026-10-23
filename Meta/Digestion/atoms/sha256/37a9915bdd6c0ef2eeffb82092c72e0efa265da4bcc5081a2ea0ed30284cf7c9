@@ -1,0 +1,40 @@
+**Proposition 7.2 (The first excursion can return).** With the same $P,Q$
+and $K(t)$,
+
+$$
+P U(2t)P\big|_V
+=K(t)^2+P U(t)Q U(t)P\big|_V.
+\tag{7.5}
+$$
+
+For the fixed bosonic model,
+
+$$
+P U(t)Q U(t)P\big|_V
+=C(t)^2|e_4\rangle\langle e_4|
+=-\eta^2e^{-2i\chi(t)}\sin^2\!\tau(t)
+  |e_4\rangle\langle e_4|.
+\tag{7.6}
+$$
+
+Consequently the compression $K(t)^2$ is not, in general, the two-time
+evolution restricted to $V$. The missing term is precisely the amplitude
+that leaves through $b$ during the first interval and returns during the
+second one. At the uniform return times of Theorem 2.3 it vanishes because
+$C(t)=0$; away from those times it must be retained in any multi-step readout
+calculation.
+
+**Proof.** The group law gives
+$P U(2t)P=P U(t)(P+Q)U(t)P$, which is (7.5). Theorem 2.2 gives
+$Q U(t)P=C(t)|b\rangle\langle e_4|$ and, from the displayed action on $b$,
+$P U(t)Q=C(t)|e_4\rangle\langle b|$. Their product is (7.6). $\square$
+
+The operator quantities in (7.1)--(7.6) are distinct from the four-corner
+seam responses in the local-clock volume. A seam kernel becomes a leakage or
+decay observable only after an explicit map from the physical evolution and
+the accessible output instrument to that kernel has been supplied. The
+existing seam boundary therefore remains in force: nonzero seam response
+establishes sensitivity of the specified readout, while a lifetime or an
+irreversible decay law additionally requires a dynamical coupling, a return
+analysis, an output event and a time calibration.
+

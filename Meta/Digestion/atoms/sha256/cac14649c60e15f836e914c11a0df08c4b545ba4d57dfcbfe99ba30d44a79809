@@ -1,0 +1,42 @@
+**Definition 15.1 (C1 notation and boundary tuples).** Retain the complete
+worlds, left products, entire children and terminal responses of
+Definitions 1.1–1.2, equivalently
+[III](FIB_STRICT_REAL_JOINT_INCIDENCE_SUPPORT_III.md), Definitions 1.1–1.2.
+The symbols introduced in Sections 15–21 are local to the C1 face; in
+particular its polynomials $Q_4,F,G$ below are different from the C0
+polynomials of Sections 2–5. For a finite real $t>0$ put
+
+$$
+\begin{gathered}
+C_1(t)=(r,b,c)=(1,t,0),\qquad
+q=(t+1)(t^3-4t-2),\qquad q_d=5q,\\
+P_1=-6(36t^4+61t^3+221t^2+181t+30),\\
+V_1=-3(375t^4+881t^3+2486t^2+1706t+266),\\
+T_1=-3(1088t^4+3483t^3+9978t^2+7102t+1220).
+\end{gathered}
+\tag{15.1}
+$$
+
+When $q\ne0$ define
+
+$$
+\begin{gathered}
+d_1=-\frac{3(11t^2+158t+80)}{5(t^3-4t-2)},\qquad
+(p_1,v_1,m_1)=\frac{(P_1,V_1,T_1)}{q_d},\\
+g_1=\operatorname{Interp}_{0,1,2,3}
+\left(-d_1,\frac{24-d_1}{t},
+\frac{147/5-d_1}{1+t},\frac{24-d_1}{1+t}\right).
+\end{gathered}
+\tag{15.2}
+$$
+
+Here interpolation means the unique polynomial of degree at most three
+at the four displayed distinct nodes, using the Lagrange formula of
+Berrut–Trefethen, [§2](https://doi.org/10.1137/S0036144502417715).
+Write $\widehat W_1(t)=(P(1,t,0),g_1,d_1)$ for this complete auxiliary
+tuple. Its source is nonstrict, so $\widehat W_1(t)$ is not an actual
+world. Its gains are whole polynomials, not independently variable
+samples. These are the C1 tuples of
+[SII](FIB_STRICT_REAL_JOINT_INCIDENCE_SUPPORT_II.md), Definition 12.1
+and Lemma 12.2, with the same original clocks.
+

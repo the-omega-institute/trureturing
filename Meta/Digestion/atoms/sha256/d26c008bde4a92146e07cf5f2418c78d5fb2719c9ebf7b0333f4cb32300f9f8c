@@ -1,0 +1,20 @@
+**Corollary 35.5 (the three-coordinate trap through horizon five).** The
+rank three at horizon $H=1$ is a finite-prefix response rank. At $H=2$ it
+is already seven, and at $H=5$ it is seventeen. Therefore no common
+three-coordinate affine readout state can preserve the full fixed-word
+Gaussian record family through horizon five in this model. The additional
+coordinates are predictive carrier directions for the drift and four
+coefficient matrices; they are not additional
+physical spatial axes.
+
+The theorem does not rule out a nonlinear readout, a shorter word family, a
+finite promised subset of worlds, or a different task. It also does not
+identify the seventeen coordinates with physical modes or a spatial
+dimension. In the terminology of [the recursive holographic boundary
+geometry, Theorem 17.2](FIB_ATOM_RECURSIVE_HOLOGRAPHIC_BOUNDARY_GEOMETRY.md),
+this is a state/readout capacity under the displayed contract, not a
+Hilbert-mode count, an $SO(3)$ vector-block count, or a physical spatial
+dimension. A three-dimensional physical domain could carry seventeen
+internal coefficient fields, while a different carrier contract could use
+another number of coordinates.
+

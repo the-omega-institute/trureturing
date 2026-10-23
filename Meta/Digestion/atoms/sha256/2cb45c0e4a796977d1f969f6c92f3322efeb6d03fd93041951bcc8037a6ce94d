@@ -1,0 +1,67 @@
+**定理 16.4（逐因子模拟与有限网络的同律替换）。** Every individual $W_+$ factor on any ordered actual-variable scope has a finite $W_{\mathrm{res}}$ replacement whose effective table, conditional on one internally generated zero pin and after summing its fresh hidden variables, is a positive rational constant times the original factor. The constant is independent of all assignments to the original variables. Every finite $W_+$ network consequently has a finite $W_{\mathrm{res}}$ network with exactly the same normalized visible law, retaining its original variables and their identifications.
+
+**Proof.** Let $f$ be any normalized rational table strictly positive on $A$ and zero outside $A$, without assuming (16.1). Define
+
+$$
+ b_{00}=f(000),\quad b_{10}=f(100),\quad
+ b_{01}=f(010),\quad b_{11}=f(110),\qquad
+ \tau=\frac{f(001)}{f(000)}\in\mathbb Q_{>0}.
+\tag{16.13}
+$$
+
+This is a positive rational binary table $B$. On all eight formal triples,
+
+$$
+ f(x,y,z)=\mathbf1_A(x,y,z)\,b_{xy}\tau^z.
+\tag{16.14}
+$$
+
+For $z=0$ this is the definition of $B$ on the four permitted triples. For $z=1$, the only permitted triple is $001$, where $b_{00}\tau=f(001)$. Off $A$ both sides vanish.
+
+On the original scope $(x,y,z)$, replace $f$ by the product
+
+$$
+ \mathcal R_f(x,y,z,o,\xi)
+ =\mathsf H(x,y,z)\,
+   \mathcal G_B(x,y,o,\xi)\,
+   \mathsf V_\tau(z,o,o).
+\tag{16.15}
+$$
+
+Here $\mathcal G_B$ is the ternary-factor product of Proposition 16.3, with fresh internal variables $\xi$. Its notation introduces no binary primitive. By (16.3), (16.4) and (16.14),
+
+$$
+ \left.\sum_\xi\mathcal R_f(x,y,z,o,\xi)\right|_{o=0}
+ =c_f f(x,y,z),\qquad
+ c_f=\frac{c_B}{5(3+2\tau)}\in\mathbb Q_{>0}.
+\tag{16.16}
+$$
+
+Each actual complete ternary table in (16.15) is $\mathsf H$ or some $\mathsf V_t$ and obeys (16.1). The unrestricted table $f$ is removed. Equation (16.16) holds pointwise on the complete three-bit cube, so it survives any identification among $x,y,z$, including all three equal. None of the unvisited entries of any replacement table is altered.
+
+For a network with factors $f_1,\ldots,f_N$, introduce one common fresh $o$ and its single pin $\mathsf H(o,o,o)$. Use (16.15) for each factor, choosing pairwise disjoint sets $\xi_j$ of new internal variables, all disjoint from the original variables and $o$. The replacements may share any of their original terminals. Fix an assignment $b$ of all original visible and hidden variables, and let $b_j$ be its ordered triple at the $j$th original scope. On $o=0$ the only remaining variables shared between different replacements have already been fixed. Finite distributivity therefore gives
+
+$$
+ \begin{aligned}
+ &\sum_{o,\xi_1,\ldots,\xi_N}
+   \mathsf H(o,o,o)\prod_{j=1}^N\mathcal R_{f_j}(b_j,o,\xi_j)\\
+ &\qquad=\frac15\prod_{j=1}^N
+       \left(\left.\sum_{\xi_j}\mathcal R_{f_j}(b_j,o,\xi_j)\right|_{o=0}\right)
+   =C\prod_{j=1}^N f_j(b_j),\qquad
+ C=\frac15\prod_{j=1}^N c_{f_j}\in\mathbb Q_{>0}.
+ \end{aligned}
+\tag{16.17}
+$$
+
+The pin eliminates $o=1$ before the separate hidden sums are factored. Thus the common zero is counted once, while (16.12) and (16.16) count all edge, activity and original-scope normalization factors.
+
+Now sum (16.17) over the original hidden variables. If $W(a)$ and $Z$ are the original unnormalized visible weights and their total, the replacement has
+
+$$
+ W'(a)=CW(a),\qquad Z'=CZ>0,\qquad
+ P'(a)=\frac{W'(a)}{Z'}=\frac{W(a)}Z=P(a).
+\tag{16.18}
+$$
+
+Every sum and product is finite and rational. In particular $Z'$ is finite, positive and rational. For $N=0$, all products over factors are empty and $C=1/5$; the additional pin alone multiplies the original weights by $1/5$, so (16.18) still holds. All repetitions, coincident scopes and original hidden-variable identifications have remained intact. The construction uses only the actual-variable scopes of (16.2), multiplication, finite hidden summation and final normalization; every parameter in it is positive rational. $\square$
+

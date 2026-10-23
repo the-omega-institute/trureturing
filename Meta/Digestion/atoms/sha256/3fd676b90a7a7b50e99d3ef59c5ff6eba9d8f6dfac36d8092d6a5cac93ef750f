@@ -1,0 +1,8 @@
+**定理 5.4（精确非实幺正的参考条件）。** 给定已知参考态 $\sigma$ 与固定数据维数 $d\ge2$，允许任意实 CPTP 处理器、实辅助态和丢弃，并要求对所有数据输入精确、确定性地实现已给定幺正通道。以下条件等价：
+
+1. 能实现某个不与实正交矩阵成比例的幺正 $U$；
+2. $\operatorname{supp}\sigma\perp\operatorname{supp}\bar\sigma$；
+3. $\operatorname{tr}(\sigma\bar\sigma)=0$；
+4. 能精确制备 $r=|+i\rangle\langle+i|$，其中 $|+i\rangle=(1,i)/\sqrt2$；
+5. 能实现任意已给定幺正矩阵的通道。
+

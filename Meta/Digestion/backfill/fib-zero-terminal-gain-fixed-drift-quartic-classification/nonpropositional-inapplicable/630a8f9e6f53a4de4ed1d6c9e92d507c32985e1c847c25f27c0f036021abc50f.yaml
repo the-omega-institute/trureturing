@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:630a8f9e6f53a4de4ed1d6c9e92d507c32985e1c847c25f27c0f036021abc50f
+  normalized_sha256: sha256:630a8f9e6f53a4de4ed1d6c9e92d507c32985e1c847c25f27c0f036021abc50f
+cas_ref: sha256:630a8f9e6f53a4de4ed1d6c9e92d507c32985e1c847c25f27c0f036021abc50f
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 'Nonpropositional: asks whether four original-child worlds with the specified distinctness and terminal coincidences exist. The displayed formulas and overlap convention specify the question, and its answer is explicitly left unresolved. No existence, nonexistence or collision result is asserted.'
+    previous_atom_id: 0a1ca30ceccce0c0ec014b6bb15205221e46c290a84b38cf13f3b899ac28e935
+    next_atom_id: null

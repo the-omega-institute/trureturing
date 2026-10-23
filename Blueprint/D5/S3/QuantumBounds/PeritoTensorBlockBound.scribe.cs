@@ -15,6 +15,14 @@ internal sealed class PeritoTensorBlockBoundDocument : IScribeDocumentDefinition
         "Unitary tensor sums satisfy the uniform scalar coefficient bound on the unit circle in the Euclidean operator norm, for all finite dimensions and all finite numbers of summands.",
         H("Unitary spectral blocks and the tensor bound"),
         Blocks(
+            Describe.Lean(
+                DescribeId.Create("perito-unitary-diagonalization"),
+                DeclarationHandle.Create(Prefix + "unitary_diagonalization"),
+                H("Unitary diagonalization"),
+                StatementSource.FromAuthor(Disp(UnitaryDiagonalization())),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("Every finite unitary matrix has a unitary eigenbasis and eigenvalues of modulus one."))),
+                DescribeRole.Theorem),
             Paragraph(Text(
                 "All matrix norms below are operator norms for the Euclidean vector norm. " +
                 "The local spaces have dimensions n and m, and the summation index is Fin d. " +
@@ -88,6 +96,20 @@ internal sealed class PeritoTensorBlockBoundDocument : IScribeDocumentDefinition
                 Le(SumOver(Y, Fin(Dd), Norm(Add(D(1), Mul(Phase(), Z)))), K))),
                 Le(Norm(SumOver(Y, Fin(Dd),
                     Call("kronecker", Add(D(1), Mul(Phase(), U)), App(B, Y)))), K))))))));
+
+    private static Formula UnitaryDiagonalization()
+    {
+        var p = F.Id("P");
+        var group = Call("unitaryGroup", Fin(N), Complex());
+        var circle = All(I, Fin(N), Eq(Norm(App(Z, I)), D(1)));
+        var equation = Eq(Mul(Mul(Call("star", p), U), p), Call("diagonal", Z));
+        var diagonal = new Formula.Logic(Parenthesized(circle), FormulaLogicOperator.And, Parenthesized(equation));
+        var spectrum = new Formula.Bind(FormulaQuantifier.Exists, FormulaIdentifier.Create("z"), Arrow(Fin(N), Complex()), diagonal);
+        var basis = new Formula.Logic(Parenthesized(Member(p, group)), FormulaLogicOperator.And, Parenthesized(spectrum));
+        return All(N, Naturals(), All(U, Mat(N), Imp(Member(U, group),
+            new Formula.Bind(FormulaQuantifier.Exists, FormulaIdentifier.Create("P"), Mat(N), basis))));
+    }
+    private static Formula Parenthesized(Formula x) => Seq(Open, x, Close);
 
     private static Formula Dimensions(Formula body) =>
         All(N, Naturals(), All(M, Naturals(), All(Dd, Naturals(), body)));

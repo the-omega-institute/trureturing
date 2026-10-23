@@ -1,0 +1,60 @@
+**定理 10.2（精确增益及其起始系数）。** For $0<q\le q_c$, $B(q)=0$. For $q>q_c$, set
+
+$$
+ z=z(q)=\frac{\operatorname{arcosh}(\exp(e))}{q}.
+$$
+
+Then
+
+$$
+ \boxed{B(q)=\frac{2\Phi(z)-1
+ -4\bigl(\Phi(z-q)+\Phi(z+q)-1\bigr)}5.}
+\tag{10.2}
+$$
+
+The function is continuous at $q_c$, strictly increasing on $(q_c,\infty)$, satisfies $0<B(q)<1/5$ at every finite $q>q_c$, and tends to $1/5$ as $q\to\infty$. Along the continuous interpolation, as $e\downarrow0$ through positive values,
+
+$$
+ \boxed{B(q)\sim C e^{3/2},\qquad
+ C=\frac4{15q_c\sqrt\pi}.}
+\tag{10.3}
+$$
+
+Proof. Equal priors per original label and (9.6) give the singleton posterior $v_0(y)=(1+4e^{-q^2/2}\cosh(qy))^{-1}$. Multiplying the positive-part identity (9.7) by the mixture density gives
+
+$$
+ \begin{aligned}
+ D_q(y)&=\phi(y)-2\phi(y-q)-2\phi(y+q)
+       =\phi(y)\bigl[1-e^{-e}\cosh(qy)\bigr],\\
+ B(q)&=\frac15\int_{\mathbb R}(D_q(y))_+\,dy.
+ \end{aligned}
+\tag{10.4}
+$$
+
+Thus $D_q\le0$ everywhere when $e\le0$; at $e=0$ its sole zero is $y=0$. For $e>0$ its positive set is exactly $(-z,z)$. Integrating the three Gaussian densities on this interval proves (10.2), including the factor four from the two labels at each endpoint.
+
+On $(q_c,\infty)$ the endpoints are smooth and $D_q(\pm z)=0$, so differentiating that finite-interval integral has no endpoint term and yields
+
+$$
+ B'(q)=\frac45\bigl[\phi(z-q)-\phi(z+q)\bigr]>0.
+\tag{10.5}
+$$
+
+Indeed $(z+q)^2-(z-q)^2=4zq>0$. Positivity follows also from the positive integrand near zero, and
+$B(q)\le[2\Phi(z)-1]/5<1/5$ for finite $z$. As $q\downarrow q_c$, $z\to0$ and (10.2) tends to zero. As $q\to\infty$, $\operatorname{arcosh}(\exp(e))=e+\ln2+o(1)$, hence $z=q/2-(\ln2)/q+o(q^{-1})$. Consequently $z\to\infty$, $z-q\to-\infty$ and $z+q\to\infty$, giving the stated limit in (10.2).
+
+For the onset, put $t=qz=\operatorname{arcosh}(\exp(e))$. Taylor expansion of $\cosh t=\exp(e)$ at zero gives $t^2=2e+O(e^2)$, while $q=q_c+O(e)$ and $z\sim\sqrt{2e}/q_c$. Uniformly for $-1\le x\le1$,
+
+$$
+ \begin{aligned}
+ 1-e^{-e}\cosh(tx)&=e(1-x^2)+O(e^2),\\
+ \phi(zx)&=\phi(0)(1+O(e)),\\
+ B(q)&=\frac{ze\phi(0)}5
+       \left[\int_{-1}^1(1-x^2)\,dx+O(e)\right]
+       \sim\frac{4\sqrt2\phi(0)}{15q_c}e^{3/2}.
+ \end{aligned}
+\tag{10.6}
+$$
+
+Since $\phi(0)=(2\pi)^{-1/2}$, the coefficient is exactly (10.3). This is a local asymptotic, and does not supply a useful uniform positive gain as the threshold is approached. $\square$
+

@@ -1,0 +1,17 @@
+## 19. Necessary incidence consumers and the exact remaining alternatives
+
+Let \(W_3\) be the third critical world of Section 13.  Lemma 14.2 and
+Theorem 16.1 give \(\operatorname{rank}D(p,a)(W_3)=2\) and a full-parent neighborhood
+\(\mathcal U_3\) of \(W_3\) on which \((p,a)\) is injective.  Lemma 13.2
+places \(\Phi(W_3)\) strictly inside \(K_3\) and gives \(313<a(W_3)<314\).
+By continuity, shrink \(\mathcal U_3\) so that \(313<a<314\), it is disjoint
+from \(R\), and \(\mathcal U_3\subset\Phi^{-1}(\operatorname{int}K_3)\).
+The remote branch has the separation
+\[
+  a(\mathcal U_3)-a(R)>46011537/500000>92.02.
+\tag{19.1}
+\]
+At fixed \(y\in K_3\), there is one world in \(R\).  The local injectivity
+in \(\mathcal U_3\), uniqueness in \(R\), and (19.1) imply that \(a\) is
+injective on \(\mathcal U_3\cup R\) in each entire child.
+

@@ -1,0 +1,19 @@
+**命题 4.3（局部操作边界）。** 只供应独立副本、局部实操作和经典反馈时，任意
+分支概率只依赖 $S$，因为
+
+$$
+\operatorname{tr}[(E_1\otimes\cdots\otimes E_k)\rho^{\otimes k}]
+=\prod_j\operatorname{tr}(E_jS).
+$$
+若不保证 i.i.d.，联合实统计不能识别单一来源的隐藏虚部。
+
+**证明。** 迹的张量乘法性给出第一式。对相关来源
+
+$$
+\Omega=\tfrac12\rho\otimes\rho+\tfrac12\bar\rho\otimes\bar\rho
+=S\otimes S-A\otimes A,
+$$
+
+其边缘为 $S$，且对实联合效果与 $\rho^{\otimes2}$ 相同。因此独立制备条件不可省略。
+$□$
+

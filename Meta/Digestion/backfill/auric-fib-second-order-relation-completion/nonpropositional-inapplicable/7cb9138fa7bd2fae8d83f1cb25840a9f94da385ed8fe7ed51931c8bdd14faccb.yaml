@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:7cb9138fa7bd2fae8d83f1cb25840a9f94da385ed8fe7ed51931c8bdd14faccb
+  normalized_sha256: sha256:7cb9138fa7bd2fae8d83f1cb25840a9f94da385ed8fe7ed51931c8bdd14faccb
+cas_ref: sha256:7cb9138fa7bd2fae8d83f1cb25840a9f94da385ed8fe7ed51931c8bdd14faccb
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 'Nonpropositional: 定义紧凑递推输入和端点任务，并假设固定相位门可执行；未给编译长度或成本界。'
+    previous_atom_id: 7735ebadc7efeb9d55f8303520f73ecb7369a71f46813d4f83239e2d86578640
+    next_atom_id: 455e90abf4fe2b672064bff9f0073153c946bc4167de9835dd55dff1f705b88f

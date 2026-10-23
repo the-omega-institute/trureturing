@@ -69,7 +69,7 @@ def pairPolynomial (i j : Fin N) : LaurentPolynomial N :=
 def difference (i j : Fin N) : Module.End ℂ (Distribution N V) :=
   shift (Pi.single i 1) - shift (Pi.single j 1)
 
-private theorem action_pair (i j : Fin N) :
+theorem action_pair (i j : Fin N) :
     (polynomialAction (V := V)) (pairPolynomial i j) = difference i j := by
   simp [polynomialAction, pairPolynomial, variablePolynomial, difference,
     AddMonoidAlgebra.lift_single, shifts]
@@ -142,14 +142,14 @@ private theorem word_shift (A : Fin N → VertexOperator ℂ V) (l : List (Fin N
   have ne : j ≠ i := by rintro rfl; exact hi hj
   simp [ne]
 
-private def liftPair (A : Fin N → VertexOperator ℂ V) (Ω : V) (P : Module.End ℂ V)
+def liftPair (A : Fin N → VertexOperator ℂ V) (Ω : V) (P : Module.End ℂ V)
     (pre post : List (Fin N)) (i j : Fin N) :
     (ℤ → ℤ → Module.End ℂ V) →ₗ[ℂ] Distribution N V where
   toFun C := fun e => P (word A pre e (C (-e i - 1) (-e j - 1) (word A post e Ω)))
   map_add' C E := by ext e; simp [map_add]
   map_smul' c C := by ext e; simp [map_smul]
 
-private theorem liftPair_difference (A : Fin N → VertexOperator ℂ V) (Ω : V)
+theorem liftPair_difference (A : Fin N → VertexOperator ℂ V) (Ω : V)
     (P : Module.End ℂ V) (pre post : List (Fin N)) (i j : Fin N) (hne : i ≠ j)
     (hip : i ∉ pre) (hjp : j ∉ pre) (his : i ∉ post) (hjs : j ∉ post)
     (C : ℤ → ℤ → Module.End ℂ V) :
@@ -165,14 +165,14 @@ private theorem liftPair_difference (A : Fin N → VertexOperator ℂ V) (Ω : V
     Pi.sub_apply, LinearMap.sub_apply]
   simp only [Pi.single_apply, hne, hne.symm, if_false, if_true, sub_zero, ii, jj]
 
-private theorem intertwine_power {X Y : Type*} [AddCommGroup X] [Module ℂ X]
+theorem intertwine_power {X Y : Type*} [AddCommGroup X] [Module ℂ X]
     [AddCommGroup Y] [Module ℂ Y] (a : Module.End ℂ X) (b : Module.End ℂ Y)
     (L : X →ₗ[ℂ] Y) (law : ∀ x, b (L x) = L (a x)) (k : ℕ) (x : X) :
     (b ^ k) (L x) = L ((a ^ k) x) := by
   have h : Function.Semiconj L a b := fun x => (law x).symm
   simpa only [Module.End.pow_apply] using (h.iterate_right k x).symm
 
-private theorem liftPair_commutator (A : Fin N → VertexOperator ℂ V) (Ω : V)
+theorem liftPair_commutator (A : Fin N → VertexOperator ℂ V) (Ω : V)
     (P : Module.End ℂ V) (pre post : List (Fin N)) (i j : Fin N) :
     liftPair A Ω P pre post i j (commutator (A i) (A j)) =
       coefficientDistribution A Ω P (pre ++ i :: j :: post) -

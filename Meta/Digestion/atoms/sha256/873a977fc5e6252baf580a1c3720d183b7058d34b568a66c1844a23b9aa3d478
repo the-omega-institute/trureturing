@@ -1,0 +1,19 @@
+**Definition 6.1.2 (Undivided parent).** The parent used in the full problem is the zero-safe parent of common-parent geometry, Theorem 2.1. In the present normalization it is
+
+$$
+e=d-24,\qquad
+\Lambda=1+6/T+1/U-4/j-4/n,\qquad
+e\Lambda+\frac{24}{5}(b-1/8)\left(\frac6T-\frac2U\right)=0.
+\tag{6.1.7}
+$$
+
+Its one whole gain is the unique cubic-or-lower interpolant at $0,1,2,3$ with samples
+
+$$
+\bigl(g(0),g(1),g(2),g(3)\bigr)
+=\bigl(-24-e,-e/j,(27/5-e)/T,-e/n\bigr).
+\tag{6.1.8}
+$$
+
+There is no global condition $\Lambda\ne0$. Singular sources, zero drift, sampled gain zeros, repeated gain roots and degree drops remain in (6.1.6).
+

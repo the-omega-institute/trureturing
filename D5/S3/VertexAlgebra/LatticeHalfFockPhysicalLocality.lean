@@ -62,7 +62,7 @@ def orderedProducts (D : LatticeData) (hu : IsUnit D.G.det)
   fun first second => chargedCoefficient D hu left (firstExponent - 2 * first) *
     chargedCoefficient D hu right (secondExponent - 2 * second)
 
-private theorem product_pure (D : LatticeData) (hu : IsUnit D.G.det)
+theorem product_pure (D : LatticeData) (hu : IsUnit D.G.det)
     (left right : Charge D) (first second : ℤ) (polynomial : Oscillator D)
     (vector : ActualGround D hu) :
     chargedCoefficient D hu left first

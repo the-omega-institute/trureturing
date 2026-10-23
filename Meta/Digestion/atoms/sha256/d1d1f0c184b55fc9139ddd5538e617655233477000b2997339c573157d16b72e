@@ -1,0 +1,47 @@
+**Theorem 33.1 (complete circle-mixing trace).**
+For every $0<z_0<z_1<\infty$, through both signs,
+
+$$
+\sup_{z\in[z_0,z_1]}
+\left|e^{\lambda z/a^2}Z_\kappa(z/a^2)-\Theta_\beta(z)\right|
+\longrightarrow0.
+\tag{33.1}
+$$
+
+Proof. The perturbation supplied by [Critical cutoff, (32.4)] for the
+visible zero block is
+
+$$
+\Lambda_\kappa(q)=\lambda+\beta_\kappa q^2+O(q^4),\qquad
+\beta_\kappa=\int_I b_\kappa^2\phi^2\,dk\longrightarrow\beta,
+\tag{33.2}
+$$
+
+uniformly near $q=0$. We use its eigenvalue, not its fixed-pole
+kernel coefficient. In a trace each normalized scalar eigenfunction
+contributes one, so no $\phi(k_0)$ or source charge can occur.
+For each fixed $j$, (33.2) with $q=\kappa j$ gives the limiting first
+height contribution $e^{-\beta zj^2}$ uniformly on $[z_0,z_1]$.
+All higher height contributions vanish there: their eigenvalues are
+at least $\lambda h^2$, $h\ge2$.
+
+To justify the complete sum, note that for $a\le1$,
+$\Psi(a|j|)/a^2\ge\Psi(|j|)$. Equation (31.5) therefore bounds the
+compensated visible zero trace by $Ce^{-c z_0\Psi(|j|)/2}$, a summable
+sequence. This also dominates its higher height part, whose individual
+$j$ limits are zero. The nonzero visible blocks obey, by (31.5) and
+exactly the separation used in (26.14), for $t\ge1$,
+
+$$
+e^{\lambda t}\sum_{(n,m)\ne(0,0),j}
+ T_\kappa(t;n,m,\kappa j)
+ \le Ce^{-dt}(1+(a\sqrt t)^{-1}),\qquad d>0.
+\tag{33.3}
+$$
+
+This tends to zero uniformly at $t=z/a^2$. Uniform dominated summation
+proves (33.1). The scalar estimate is the bounded selfadjoint
+multiplication perturbation with a uniform isolated height ground;
+its derivation and classical attribution are those of the cited
+(32.4), with both Dirichlet faces unchanged. $\square$
+

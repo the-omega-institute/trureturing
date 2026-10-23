@@ -1,0 +1,43 @@
+**定理 5（conditional-information risk budget）。**
+
+For every finite binary task and every such refinement,
+
+$$
+\boxed{
+0\le\Delta e\le\sqrt{\frac{\ln2}{2}\,\Delta I}
+}
+$$
+
+when $\Delta I$ is measured in bits. Equivalently, in nats,
+
+$$
+\Delta I_{\mathrm{nats}}\ge2(\Delta e)^2.
+$$
+
+**证明。** Write $r(t)=\min(t,1-t)$. The function $r$ is 1-Lipschitz, hence
+
+$$
+\Delta e
+=\mathbb E[r(\eta_A)-r(\eta_B)]
+\le\mathbb E|\eta_A-\eta_B|.
+$$
+
+The posterior conditional-information identity gives
+
+$$
+\Delta I_{\mathrm{nats}}
+=\mathbb E\,D_{\mathrm{KL}}
+\bigl(\operatorname{Bern}(\eta_B)\,\|\,\operatorname{Bern}(\eta_A)\bigr).
+$$
+
+Binary Pinsker yields $D_{\mathrm{KL}}\ge2(\eta_B-\eta_A)^2$. Jensen's inequality then gives
+
+$$
+\Delta e\le\sqrt{\mathbb E(\eta_B-\eta_A)^2}
+\le\sqrt{\Delta I_{\mathrm{nats}}/2}.
+$$
+
+If $\eta_A$ is $0$ or $1$ on a fibre, the tower identity $\eta_A=\mathbb E[\eta_B\mid Q_A]$ forces $\eta_B=\eta_A$ almost surely on that fibre, so its KL and posterior-difference contributions are zero. Zero-mass fibres contribute nothing. $\square$
+
+There is no converse of the form $\Delta e\ge\phi(\Delta I)$ with $\phi(t)>0$ for $t>0$: Theorem 4 has positive information gain and zero risk gain. Near the blind balanced posterior, a symmetric split $1/2\pm\delta$ has risk gain $\delta$ but information gain $1-h_2(1/2-\delta)\sim2\delta^2/\ln2$, so the quadratic scale is the correct local order.
+

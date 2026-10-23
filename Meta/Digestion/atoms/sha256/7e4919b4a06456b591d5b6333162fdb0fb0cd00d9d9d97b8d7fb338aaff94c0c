@@ -1,0 +1,37 @@
+### 5.2 Original worlds and reused interfaces
+
+An original world is
+
+$$
+W=(P(r,b),g,d),\qquad
+P(r,b)=\begin{pmatrix}r&b\\r(1-r)/b&1-r\end{pmatrix},
+\quad 0<r<1,\quad b>0,\quad
+0\ne g\in\mathbb R[s],\quad\deg g\le3.
+$$
+
+Each world has its own fixed real $d$, one entire polynomial $g$, and the literal actions $J,M,J,M,M,M$. At clocks zero through six its readings are
+$(0,24,147/5,24,18,p,v)$. At clock seven J and M are alternatives on the same world. No reset, copy, new port, shared drift, or source-box substitution is used. Write
+
+$$
+j=b+r(1-r)/b,\quad n=j+r,\quad T_0=1+b,\quad U_0=1+2b.
+$$
+
+The original traces are
+$(1,j,T_0,n,U_0,U_0+n,2U_0+n)$, and the terminal traces are
+$T_0+2j+4r$ and $3U_0+2n$. Thus
+
+$$
+a=d+(T_0+2j+4r)g(7),\qquad
+m=d+(3U_0+2n)g(7).
+\tag{5.2.1}
+$$
+
+The following ordinary sources provide the cited interfaces and their stated limits.
+
+| Source | Reused content and limit |
+|---|---|
+| `FIB_COMMON_PARENT_GEOMETRY_AND_MIXED_CHILDREN.md`, Definitions 1.1–1.3 and Theorems 2.1–2.2, 12.3 | Original whole-world converse; on $p\ne24$, $d\ne24$; uniqueness at fixed source and p, including singular sources. |
+| `FIB_STRICT_REAL_JOINT_INCIDENCE_SUPPORT_X.md`, Sections 1–6 and 9–11 | Original traces and the full guarded ordinary/exceptional fixed-terminal inverse. The entire $x=x_{\mathrm{exc}}$ layer is separated by p alone. No region of the response plane is imposed as a global restriction. |
+| `FIB_STRICT_REAL_JOINT_INCIDENCE_SUPPORT_XI.md`, Sections 1–4 | The lossless independent-pair relation and overlap strata. Neither pair's common value is identified with the other's. |
+| `FIB_STRICT_REAL_JOINT_INCIDENCE_SUPPORT_VI.md`, Sections 16, 23, 28–29 | The printed local and entire-child statements only; they are not a global J-injectivity theorem and are not a hypothesis of the new law. |
+| `FIB_STRICT_REAL_JOINT_INCIDENCE_SUPPORT_IX.md`, Sections 1–2, 35–42 | Literal source maps, printed negative-J/source-class scope, and the exact exterior counterexample. No implication $v<2p$ is assumed. |

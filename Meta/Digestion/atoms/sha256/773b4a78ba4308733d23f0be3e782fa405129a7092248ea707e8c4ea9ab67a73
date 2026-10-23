@@ -1,0 +1,25 @@
+**Definition 2.4 (Undivided terminal equation).** Put
+
+$$
+\begin{aligned}
+\phi(x)&=8x^4+29x^3+18x^2-15x-6,\\
+L(t,x)&=240qx^4+(-48t^3-9973t^2-12863t-3874)x^3\\
+&\quad+(-12t^3-7719t^2-11455t-2266)x^2\\
+&\quad+(468t^3+6730t^2+4198t+2388)x-240q,\\
+h(t,x)&=(2t+1)x-t.
+\end{aligned}
+\tag{2.11}
+$$
+
+Using $p=p_0,v=v_0$ in (2.5) gives the exact rational identity
+
+$$
+dD+(2x+3)a_7-m_0D=-\phi(x)d+\frac{3L(t,x)}{5q}.
+\tag{2.12}
+$$
+
+It follows by collecting coefficients of $d$ and $x$ in (2.5).
+The left side is $D(m-m_0)$ by the original terminal trace.
+In particular when $\phi=0$, the equation is $L=0$ for every drift;
+solving for $d$ is restricted to $\phi\ne0$.
+

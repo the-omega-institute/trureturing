@@ -1,0 +1,72 @@
+**Theorem 17.3 (separate resources of the actual finite-resolution states).**
+With
+
+$$
+V_{\rm raw}[f]=\int\Gamma|f|^2d\mu,\qquad
+V_{\rm cap}[f]=\int\Gamma_\epsilon|f|^2d\mu,
+\tag{17.17}
+$$
+
+where the second notation is evaluated at its indicated resolution,
+all three finite-resolution resources satisfy
+
+$$
+\begin{aligned}
+\frac{V_{\rm raw}[f_\epsilon]}L&\longrightarrow
+                    \frac{a_*^2M_\phi}{12},\\
+\frac{V_{\rm cap}[f_\epsilon]}L&\longrightarrow
+                    \frac{a_*^2M_\phi}{12},\\
+\frac{T_A[f_\epsilon]}L&\longrightarrow
+                    \frac{g_{\mathrm c}a_*^2M_\phi}{12}.
+\end{aligned}
+\tag{17.18}
+$$
+
+In particular the selected completed state is approached with divergent
+separate kinetic and attraction costs, although its energy is finite.
+
+Proof. On $R<\epsilon/2$ the deficit is at least a fixed positive
+multiple of $\Gamma$, so (17.7) bounds the raw attraction there by
+$C d_\epsilon$. On $\epsilon/2<R<\epsilon$, the mean is
+$O(\sqrt{d_\epsilon})$ by (17.12) and the derivative bound. Applying
+(17.10) on this fixed-width logarithmic collar bounds the angular
+remainder in squared norm by $C d_\epsilon$. Hence
+
+$$
+V_{\rm raw}[f_\epsilon;R<\epsilon]=O(L^{-1}).
+\tag{17.19}
+$$
+
+Outside $R<b$ the full Green multiplier is bounded, so its contribution
+is $O(1)$. On the middle annulus use its exact raw volume and density:
+if $v_\epsilon=f_\epsilon/h$, then
+
+$$
+\Gamma f_\epsilon^2d\mu
+ =\left\{\frac1{8\pi}+O(R)\right\}
+       \phi^2v_\epsilon^2\,dt\,da\,d\theta.
+\tag{17.20}
+$$
+
+The coefficient $1/(8\pi)$ is $m_0c_G/4$; it retains both the raw
+Jacobian $1/4$ and the full $2\pi$ angular period. Divide the annular
+integral by $L$ and use (17.5). The error in (17.20) vanishes: below a
+fixed $d$ it is bounded by $Cd$ times a uniformly bounded rescaled
+squared norm; above $d$ the interval has fixed logarithmic length and
+the eigenfunctions converge smoothly. The main term is
+
+$$
+\frac1{8\pi}\,a_*^2
+ \int_0^1s^2ds\int_J\int_0^{2\pi}\phi^2d\theta da
+ =\frac{a_*^2M_\phi}{12}.
+\tag{17.21}
+$$
+
+This proves the raw law. The nonnegative difference of raw and capped
+attraction is bounded by $d_\epsilon/g_{\mathrm c}$ in (17.7), so the
+capped law has the same leading coefficient. Finally the exact
+finite-domain identity
+$T_A[f_\epsilon]=E_\epsilon+g_{\mathrm c}V_{\rm cap}[f_\epsilon]$
+and boundedness of $E_\epsilon$ prove the kinetic law. No subtraction of
+infinities is used for any finite $\epsilon$. $\square$
+

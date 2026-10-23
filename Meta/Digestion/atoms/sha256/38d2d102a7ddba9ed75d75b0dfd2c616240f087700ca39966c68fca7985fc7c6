@@ -1,0 +1,16 @@
+## 18. Exact equality of every complete fixed-word record measure
+
+Use the externally fixed menu
+$\mathscr W_7=\bigcup_{t=0}^7\{J,M\}^t$ of Corollary 14.3.
+For $w=E_1\cdots E_t$, every read $0,\ldots,t$ is executed and
+retained, including read zero for the empty word. Define
+
+$$
+\nu_{w,\eta}(W)(B)
+=\operatorname{tr}(\rho_{W,\eta}\mathsf E_w(B)),
+\qquad B\in\mathcal B(\mathbb R^{t+1}),
+\tag{18.1}
+$$
+
+using the same normal joint POVM as (14.1).
+

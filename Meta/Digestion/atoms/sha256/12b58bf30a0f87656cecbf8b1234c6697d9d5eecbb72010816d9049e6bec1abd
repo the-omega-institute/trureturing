@@ -1,0 +1,46 @@
+**Theorem 56.4 (Actual-image full-world recovery and task comparator).**
+For every $W\in\mathcal Z$, the actual reports through clock ten determine
+the same complete $P,g,d$ by
+
+$$
+d=y_7,\qquad
+\tau=-7L/d,\qquad
+g(t)=(7-t)H(t)/\tau,
+$$
+
+$$
+b=N_c/D_c,\qquad
+r=(24-d)\left(\frac1{g(3)}-\frac1{g(1)}\right),
+\qquad
+P_{21}=r(1-r)/b.
+$$
+
+The reconstructed values are the actual world values.  In particular the
+Boolean
+
+$$
+\widehat\sigma=
+\mathbf1_{\{(16N_c-D_c)D_c>0\}}
+$$
+
+equals $\sigma(P)$.
+
+**Proof.**
+Since $g(7)=0$, the actual clock-seven report is $y_7=d$.
+Lemma 56.3 gives $d\ne0$, so $\tau$ is recovered from $L$ and is the
+positive actual trace.  The interpolation identity then recovers the
+whole polynomial.  The original odd rows are
+
+$$
+24=d+g(1)j=d+g(3)n.
+$$
+
+Lemma 56.3 gives $d\ne24$, hence $g(1)$ and $g(3)$ are nonzero and
+$n-j=r$ gives the displayed formula for $r$.  The identity
+$N_c=bD_c$ recovers $b$ and then the remaining matrix entry.  Thus all
+formulas return the original complete world on the actual image; they
+are not an arbitrary-record validator, a domain recognizer, a preparation
+procedure, or a decoder for unexecuted responses.  Finally
+$(16N_c-D_c)D_c=(16b-1)D_c^2$ and $D_c\ne0$ prove the comparator claim,
+including equality at $b=1/16$. ∎
+

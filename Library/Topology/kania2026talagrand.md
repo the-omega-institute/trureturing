@@ -5,14 +5,15 @@ year: 2026
 title: Talagrand compacta, 2DCP, and pointwise quotients
 doi: null
 url: https://arxiv.org/abs/2607.06808v2
-claim: Problem 8.2 asks whether the prediction principle in Theorem A can be weakened from diamond on a stationary co-stationary set to CH; the local project supplier proves only common-stage clopen reflection.
+claim: Problem 8.2 asks whether the prediction principle in Theorem A can be weakened from diamond on a stationary co-stationary set to CH; the project suppliers prove common-stage clopen reflection and regular signed-measure lifting, without the CH induction.
 strata_touched:
   - D5/S3/Topology/InverseLimit
+  - D5/S3/Topology/Measures
 license: citation-only
 triage: anchor
 ---
 
-# Talagrand scheme and the common-stage supplier
+# Talagrand scheme and local construction suppliers
 
 The inspected source is the complete 20-page arXiv version 2607.06808v2,
 updated 10 July 2026. Problem 8.2 appears on PDF page 19:
@@ -49,6 +50,49 @@ at a single stage. It supplies neither CH bookkeeping nor the
 transfinite splitting construction, signed-measure (A)-(G), or the
 retrospective paired-Dirac capture argument. Problem 8.2 remains
 unresolved by this module. The result is not claimed as new mathematics.
+
+## Regular signed-measure lift supplier
+
+`D5.S3.Topology.Measures.RegularSignedLift` supplies an ordinary
+Hahn–Banach / positive Riesz–Markov–Kakutani / Jordan construction.
+For arbitrary compact Hausdorff Borel spaces K and L in independent
+universes, a continuous surjection p : K → L and an actual finite
+signed measure mu on L with explicitly regular total variation, it
+constructs an actual signed measure nu on K with regular total
+variation, nu.map p = mu, and nu.totalVariation(univ) =
+mu.totalVariation(univ). Empty spaces, zero measures and both signs
+remain in scope. Regularity is a premise: it is not inferred for an
+arbitrary Borel measure on a nonmetric compact Hausdorff space.
+
+For a finite regular positive measure, pullback is a unital isometry
+C(L, ℝ) → C(K, ℝ). Real Hahn–Banach extends the integration functional
+from its range with unchanged norm. The norm bound and value on one
+imply positivity, so positive RealRMK represents the extension by a
+finite regular measure. Integral uniqueness identifies its pushforward
+with the input, and evaluating one gives exact mass. Each Jordan part
+of mu is a restriction of its regular total variation, hence regular.
+Lifting the two parts and pulling back their measurable separator
+preserves mutual singularity. Their Jordan difference gives the signed
+lift and exact total variation mass.
+
+The analytic inputs are standard results supplied by the pinned Mathlib:
+`exists_extension_norm_eq`, `RealRMK.rieszMeasure`,
+`RealRMK.integral_rieszMeasure`,
+`Measure.ext_of_integral_eq_on_compactlySupported`,
+`Measure.Regular.restrict_of_measure_ne_top`, and the signed-measure
+Jordan decomposition API. The local proof composes these APIs; it does
+not attribute this general construction as a new theorem of Kania and
+Kąkol or claim global mathematical novelty.
+
+The supplier can provide the map and mass hypotheses of
+`NormPreservingLifts.arbitrary_lifts_tendsto`. That consumer still
+requires clopen concentration, a uniform variation bound, eventual
+fibre constancy for each locally constant test, and a reference
+weak-star limit. Existence of lifts alone proves none of these
+additional hypotheses. Neither supplier constructs the CH recursion,
+the signed-measure induction (A)–(G), or the retrospective paired-Dirac
+capture argument. Problem 8.2 remains unresolved here; no official
+acceptance is asserted.
 
 ## Verified locator
 

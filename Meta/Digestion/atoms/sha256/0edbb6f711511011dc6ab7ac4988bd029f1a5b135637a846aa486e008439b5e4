@@ -1,0 +1,2 @@
+**Assumption 9.1 (optional effective data).** Exact rational $p,q,r,\epsilon$ are supplied in binary, together with rational and integer arithmetic and a request for a symbolic law descriptor, one finite-word probability, or a complete finite-horizon law. Installed data, planning and evaluation workspace, initialization, actual acquisition, output and physical storage are separate resource coordinates. This effective specialization does not add a recording-age input to $U$.
+

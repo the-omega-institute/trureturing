@@ -1,0 +1,103 @@
+**Definition 6.3 (fully positioned two-stage channel).** A sender block is
+sealed, immutable and readable by its actual owner. Its length $\ell$ and
+base are loaded from its real descriptor by Definition 6.1. Construct a
+complete $U(\ell)$ counter on a work port. Before any mailbox allocation,
+Base on its assigned mailbox port measures the actual base; Zero reserves
+and initializes its $\ell$ payload cells and following sep. Append one
+zero seal-status cell immediately after that sep, by the three-primitive
+Append; construct the mailbox descriptor with status address
+base+$\ell+1$. Do the identical Base/Zero/status/descriptor construction at
+the receiver's archive port. The receiver constructs its own block and local descriptor during the
+explicit workspace loan of Definition 2.2, then returns the pool for stage
+one. These ports can be nonempty: both bases are
+measured at their actual current R. Their distinct intervals, tokens and
+status cells exist before copying. Sender, mailbox and receiver coexist.
+
+For the first stage, Last(counter); At(sender,base); At(mailbox,base).
+The six-row loop is RD(counter,test); on 0 go to sealing, on 1 RD(sender,data);
+WR(mailbox,data); MR(sender); MR(mailbox); MR(counter) and back to the test.
+The private/data latch and public counter-test latch are distinct. At exit,
+At(mailbox,status); WR(1) is the seal-status prelude; CTL seals the whole
+mailbox; TOK hands off its read token. Lend the word pool to the receiver
+by Definition 2.2. For the second stage reposition
+Last(counter), At(mailbox,base), At(receiver,base), run the identical six-row
+loop, At(receiver,status); WR(1); CTL seal; TOK copy completion. Complete its requested receiver checks
+and return the word pool before the sender continuation/row ACK. These
+At invocations include Last on their actual address words. Every computed
+status address and its duplicate needed for later positioning is copied
+before the corresponding body. The destination's following sep permits its
+last MR. Sender remains immutable; mailbox becomes readable after its own
+seal/handoff; receiver is unavailable until its final seal. A finite token
+does not stand for an unconstructed seal table.
+
+Consequently the two payload loops, terminal tests, CTL seals and TOKs have
+exactly $12\ell+6$ occurrences, as in AIF6.4. The two real status-positioning
+and WR preludes, all Base/Zero/status/descriptor construction, actual workspace loans/returns, first positioning
+and between-stage repositioning are additional displayed graph evaluations.
+There is no assertion that $12\ell+6$, or $8\ell+4$, is the complete bill.
+Each such Prelude, At, Frame, Last, Base and Zero has its expansion here or
+in the exact supplier; the channel has no unnamed setup service.
+
+The mandatory row route copies the complete unified row, its semantic row
+when present, and any request/context/control/output material absent at the
+actor through fresh mailboxes into that actor's append-only archive.
+Only after all these blocks have arrived and the receiver checks both whole
+row payloads and their local availability does its final TOK
+acknowledge the row. A channel stage's receiver-seal TOK is an internal
+copy completion; the row caller does not treat it as this final row ACK.
+Required ancillary blocks are sent in fixed order: boot binding/initialization/prior if
+absent, the complete typed request's enumerated blocks in order (source
+header/length/payload then contexts, or local/terminal packet and its
+control/output dependencies), then the semantic row if present, then the
+unified row. Absence is tested by the local origin scan, not an external assertion.
+The receiver uses its origin-to-local descriptor records for every referenced
+payload check. Its bounded decoder checks `SEG-U1`, identity, all before/after
+fields, full manifest, final status and predecessor against the previous
+acquired unified row, or boot at zero. It computes $\epsilon$ from the actual
+kind, checks $j'=j+\epsilon$ and the applicable $q,g,e$ cases. On maintenance
+it requires `no-semantic-row` and retains its previous semantic end. Otherwise
+it loads the present `SEG-J1` through its acquired local origin, checks all
+fifteen fields against this unified event, checks ordinal $j+1$, and compares
+its predecessor to the previous acquired semantic end. Its occurrence,
+historical guard/layout manifest, template, request/response and two fences
+must all agree. The first semantic predecessor is none even after leading
+maintenance; it never uses the preceding unified reference as that predecessor.
+Any local expected count/end word is staged in that owner's archive/checking
+work using its own descriptors while the pool is lent to it. A new joined
+end is installed by full word copies only after both checks succeed.
+Failed structural checking takes the paid refusal edge with
+no new service-admission token; authentic rows follow the success edge. The row-copy caller resumes Definition 4.6 at that actual
+acknowledgement. At stop freeze that already complete index-19 prefix:
+scan its records once, constructing its unary count, and retain its last
+row reference and event count $m_*$. Its bounded row scans count semantic
+events, construct $U(j_*)$ and retain the last semantic reference; compare
+them with the complete index-18 prefix and its closed end. The frozen prefix
+binding is $(m_*,j_*,\mathrm{last}\ U,\mathrm{last}\ J)$, with explicit none
+tags for empty ends. No later event is admitted during this stop route.
+Construct a snapshot-index bit word with Frame(`SEG-P1`), $U(m_*)$, $U(j_*)$,
+Frame(optional last unified reference), Frame(optional last semantic reference),
+Frame(boot-binding reference), Frame(prior reference), then, in index order,
+Frame(unified row reference), Frame(complete request-reference tuple),
+Frame(optional semantic-row reference). Iterate the
+frozen indices by the preceding native reader; each row's bounded ReadFrame
+scan obtains its retained request-reference tuple. New/UnaryBody/Frame/Finish
+and the ordinary staging bit-block graph construct/seal this finite index
+on 21; its bound is obtained by the same length scan, not a live meter end.
+Each typed request tuple explicitly enumerates all its source or local/terminal
+material references with its constructed finite count. Its bit parser is
+ReadUnary followed by that count's ReadFrames and a remaining-budget check.
+
+Through the same full channel first copy the boot binding/prior and every
+semantic/unified row and request/context/control/output block in this frozen
+finite list to the verifier, in the same dependency order and testing
+its local origins to avoid a missing dependency; then copy the sealed
+snapshot index. Its reference fields keep their producer origin meanings;
+the verifier reads payloads through its acquired local descriptors. The
+snapshot consists of these actual blocks and that completed index, and
+its release CTL follows the complete index seal and dependency checks.
+There is no atomic multi-tape freeze/copy or uncharged import. An empty
+frozen list still constructs both zero counts, both none ends, version,
+boot/prior fields and status.
+Earlier snapshots and archives are retained; no arbitrary external
+transcript-import port is added.
+
