@@ -35,24 +35,32 @@ def flagSLD : Matrix (Fin 2 × Fin 2) (Fin 2 × Fin 2) ℂ := fun x y =>
 
 private theorem weights_nonneg : ∀ i, 0 ≤ weights i := by
   intro i
-  fin_cases i <;> norm_num [weights]
+  fin_cases i <;> delta weights <;> norm_num
 
 private theorem weights_sum : ∑ i, weights i = 1 := by
-  norm_num [weights, Fin.sum_univ_two]
+  delta weights
+  norm_num [Fin.sum_univ_two]
 
 private theorem qubitX_hermitian : qubitX.IsHermitian := by
   ext i j
-  fin_cases i <;> fin_cases j <;> simp [qubitX, Matrix.IsHermitian, Matrix.conjTranspose_apply]
+  change star (qubitX j i) = qubitX i j
+  fin_cases i <;> fin_cases j <;> delta qubitX <;>
+    simp [Matrix.IsHermitian, Matrix.conjTranspose_apply]
 
 private theorem qubit_sld : IsSLD (diagonal (fun i => (weights i : ℂ))) qubitX qubitSLD := by
   constructor
   · ext i j
+    change star (qubitSLD j i) = qubitSLD i j
     fin_cases i <;> fin_cases j <;>
-      norm_num [qubitSLD, Matrix.IsHermitian, Matrix.conjTranspose_apply,
+      delta qubitSLD <;>
+      norm_num [Matrix.IsHermitian, Matrix.conjTranspose_apply,
         Matrix.of_apply]
   · ext i j
+    simp only [Matrix.smul_apply, smul_eq_mul, Matrix.sub_apply, Matrix.add_apply,
+      Matrix.mul_apply]
     fin_cases i <;> fin_cases j <;>
-      norm_num [weights, qubitX, qubitSLD, Matrix.diagonal, Matrix.diagonal_apply_eq,
+      delta weights qubitX qubitSLD <;>
+      norm_num [Matrix.diagonal, Matrix.diagonal_apply_eq,
         Matrix.diagonal_apply_ne, Matrix.of_apply, Matrix.mul_apply, Fin.sum_univ_two] <;>
       apply Complex.ext <;> norm_num
 
@@ -60,11 +68,18 @@ private theorem flag_sld :
     IsSLD (flagExtension weights) (liftLeft (d₂ := 2) qubitX) flagSLD := by
   constructor
   · ext ⟨i, b⟩ ⟨j, c⟩
+    change star (flagSLD (j, c) (i, b)) = flagSLD (i, b) (j, c)
     fin_cases i <;> fin_cases b <;> fin_cases j <;> fin_cases c <;>
-      norm_num [flagSLD, Matrix.IsHermitian, Matrix.conjTranspose_apply, Matrix.of_apply]
+      delta flagSLD <;>
+      norm_num [Matrix.IsHermitian, Matrix.conjTranspose_apply, Matrix.of_apply]
   · ext ⟨i, b⟩ ⟨j, c⟩
+    simp only [Matrix.smul_apply, smul_eq_mul, Matrix.sub_apply, Matrix.add_apply,
+      Matrix.mul_apply]
+    delta liftLeft
+    simp only [Matrix.kroneckerMap_apply, Matrix.one_apply]
     fin_cases i <;> fin_cases b <;> fin_cases j <;> fin_cases c <;>
-      norm_num [weights, qubitX, flagExtension, flagSLD, liftLeft,
+      delta weights qubitX flagSLD <;>
+      norm_num [flagExtension,
         Matrix.kroneckerMap_apply, Matrix.diagonal, Matrix.diagonal_apply_eq,
         Matrix.diagonal_apply_ne, Matrix.of_apply, Matrix.mul_apply,
         Fintype.sum_prod_type, Fin.sum_univ_two] <;>
@@ -75,7 +90,8 @@ private theorem base_discord (L : Matrix (Fin 2) (Fin 2) ℂ)
     fisherSLD (diagonal (fun i => (weights i : ℂ))) L -
       skewWY (diagonal (fun i => (weights i : ℂ))) qubitX = 4 / 25 := by
   rw [discord_diag weights weights_nonneg qubitX L qubitX_hermitian hL]
-  norm_num [weights, qubitX, pairKernel, Fin.sum_univ_two]
+  delta weights qubitX pairKernel
+  norm_num [Fin.sum_univ_two]
   field_simp
   ring_nf
   have hs : (Real.sqrt (5 : ℝ)) ^ 2 = 5 := by norm_num

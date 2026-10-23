@@ -60,6 +60,7 @@ private theorem flag_term_zero (w : Fin n → ℝ) (H : Matrix (Fin n) (Fin n) �
         (if y.2 = y.1 then w y.1 else 0) *
       Complex.normSq (liftLeft (d₂ := n) H x y) = 0 := by
   classical
+  delta liftLeft pairKernel
   by_cases hxy : x.2 = y.2
   · by_cases hx : x.2 = x.1
     · by_cases hy : y.2 = y.1
@@ -68,10 +69,10 @@ private theorem flag_term_zero (w : Fin n → ℝ) (H : Matrix (Fin n) (Fin n) �
           · exact hx.symm.trans (hxy.trans hy)
           · exact hxy
         subst y
-        simp [liftLeft, Matrix.kroneckerMap_apply, pairKernel]
-      · simp [liftLeft, Matrix.kroneckerMap_apply, hy, pairKernel]
-    · simp [liftLeft, Matrix.kroneckerMap_apply, hx, pairKernel]
-  · simp [liftLeft, Matrix.kroneckerMap_apply, hxy, pairKernel]
+        simp [Matrix.kroneckerMap_apply]
+      · simp [Matrix.kroneckerMap_apply, hy]
+    · simp [Matrix.kroneckerMap_apply, hx]
+  · simp [Matrix.kroneckerMap_apply, hxy]
 
 /- The product-indexed sum in the flag calculation is deliberately reduced by the diagonal
    support before invoking the spectral formula. -/
