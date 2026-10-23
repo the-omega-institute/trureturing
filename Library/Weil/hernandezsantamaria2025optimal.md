@@ -663,9 +663,11 @@ conclusion follows from this generic-source counterexample.
 
 Reuse [W266, W317--W320 and W326](suzuki2026screw.md), including
 the small-excess positivity, actual finite-source form core and
-original-feature compactness. Classical quadratic Rayleigh minimization,
-polarization and lower semicontinuity are used within this application;
-no general min--max theorem is asserted as new. The additional
+original-feature compactness. The published generalized Rayleigh
+supplier is [Jacob--Langer--Trunk, Theorem 2.4](../Eigenstructure/jacoblangertrunk2016variational.md);
+its exact common-domain and parameter correspondence is recorded there.
+Classical polarization and lower semicontinuity are used within this
+application; no general min--max theorem is asserted as new. The additional
 `repo-derived` interface is selection of a negative actual representative
 whose two ORIGINAL supporting multipliers agree exactly. This is a
 paper derivation, without Lean/kernel certification or a priority claim.
