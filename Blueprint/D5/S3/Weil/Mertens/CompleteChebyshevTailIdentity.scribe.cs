@@ -46,16 +46,17 @@ internal sealed class CompleteChebyshevTailIdentityDocument : IScribeDocumentDef
                         + "absolutely integrable tail at the same t proves the stated formula. "
                         + "No endpoint avoids integers or prime powers.")),
                     Paragraph(Text(
-                        "The transient consumer supplies the old frozen CompleteMertensPeak.hLay "
-                        + "argument from this identity. It reuses the existing Johnston-Yang "
-                        + "integrability proof on (2,infinity), with only a proposed visibility "
-                        + "change, and extends across (1,2) where psi=0. The public frozen peak "
+                        "The anonymous consumer supplies the hLay argument of complete_mertens_peak "
+                        + "from this identity. It reuses the existing Johnston-Yang "
+                        + "integrability proof kernel_integrable on (2,infinity), exposed for this "
+                        + "application, and extends across (1,2) where psi=0. The public frozen peak "
                         + "theorem and its finite kernel ledger stay unchanged. The application "
                         + "still assumes the all-real Johnston-Yang bound and an actual peak; "
                         + "it supplies neither that peak nor an unconditional Robin or RH proof.")),
                     Paragraph(Text(
-                        "This packet contains implementation source only. Elaboration, kernel "
-                        + "acceptance, the proposed content classification, registration, Scribe "
-                        + "validation and freezing are reserved for the later guarded native handoff."))),
+                        "The identity and full original anonymous 5040 consumer are kernel checked "
+                        + "with only the permitted standard axioms. This does not discharge the "
+                        + "Johnston-Yang bound or the actual U-peak assumption; registration and "
+                        + "final canonical admission are separate obligations."))),
                 DescribeRole.Theorem))));
 }
