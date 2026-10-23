@@ -212,7 +212,7 @@ private lemma tanh_hasDerivAt (s : ℝ) :
     field_simp [(Real.cosh_pos s).ne']
     nlinarith [Real.cosh_sq_sub_sinh_sq s])
 
-private lemma ratio_tanh (s : ℝ) :
+lemma ratio_tanh (s : ℝ) :
     HircheCachinCombiningConcavity.ratio (Real.tanh s) = Real.exp (-2 * s) := by
   rw [HircheCachinCombiningConcavity.ratio, Real.tanh_eq, Real.exp_neg,
     show -2 * s = -(s + s) by ring, Real.exp_neg, Real.exp_add]
@@ -228,7 +228,7 @@ private lemma T_tanh (b s : ℝ) :
     (add_pos (Real.exp_pos (b * s)) (Real.exp_pos (-(b * s)))).ne']
   <;> ring
 
-private lemma tanh_mem {s : ℝ} (hs : 0 < s) : Real.tanh s ∈ Ioo (0 : ℝ) 1 := by
+lemma tanh_mem {s : ℝ} (hs : 0 < s) : Real.tanh s ∈ Ioo (0 : ℝ) 1 := by
   exact ⟨by rw [Real.tanh_eq_sinh_div_cosh]
             exact div_pos (Real.sinh_pos_iff.mpr hs) (Real.cosh_pos s), Real.tanh_lt_one s⟩
 

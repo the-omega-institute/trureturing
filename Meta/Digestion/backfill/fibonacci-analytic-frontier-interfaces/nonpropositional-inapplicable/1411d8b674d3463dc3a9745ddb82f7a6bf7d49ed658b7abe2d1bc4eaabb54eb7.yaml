@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:1411d8b674d3463dc3a9745ddb82f7a6bf7d49ed658b7abe2d1bc4eaabb54eb7
+  normalized_sha256: sha256:1411d8b674d3463dc3a9745ddb82f7a6bf7d49ed658b7abe2d1bc4eaabb54eb7
+cas_ref: sha256:1411d8b674d3463dc3a9745ddb82f7a6bf7d49ed658b7abe2d1bc4eaabb54eb7
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: Volume title and editorial scope description only.
+    previous_atom_id: null
+    next_atom_id: e74f3a747aabc7f3ffd07df80340d3e023cc13068a7c48474ddbaffb7e3b433e

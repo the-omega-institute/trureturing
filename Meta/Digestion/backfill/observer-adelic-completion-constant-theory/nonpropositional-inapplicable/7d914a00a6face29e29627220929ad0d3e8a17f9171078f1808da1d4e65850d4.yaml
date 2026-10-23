@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:7d914a00a6face29e29627220929ad0d3e8a17f9171078f1808da1d4e65850d4
+  normalized_sha256: sha256:7d914a00a6face29e29627220929ad0d3e8a17f9171078f1808da1d4e65850d4
+cas_ref: sha256:7d914a00a6face29e29627220929ad0d3e8a17f9171078f1808da1d4e65850d4
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 求解器规划片段：指定优化目标、约束及 white floor 输出字段，没有最优解存在的断言。
+    previous_atom_id: c6e758530a51f0de4163ec79b14607cacb43ed8f86d722b286da5679db313084
+    next_atom_id: d83dd568d63ed8662611a44c1d6cc51e2a298637a5a6f2abf8171c3f23f1e2e8

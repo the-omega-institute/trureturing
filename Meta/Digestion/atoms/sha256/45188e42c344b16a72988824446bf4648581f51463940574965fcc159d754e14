@@ -1,0 +1,24 @@
+**Lemma 10.11 (Common finite roots under every specialization).**
+If $F(d)=G(d)=0$ at a finite value $d$ under any coefficient
+specialization, then $L(d)=0$. This remains true if the leading
+coefficient of either input vanishes or its degree drops.
+
+Proof. For row $i$ let $c_i$ be the signed maximal minor obtained
+from the first three columns of $C$ by deleting that row, with
+sign $(-1)^{i+4}$. Cofactor expansion gives
+
+$$
+\sum_{i=1}^4c_i C_{i,k}=0\quad(k=4,3,2),\qquad
+\sum_{i=1}^4c_i C_{i,1}=\ell_1,\qquad
+\sum_{i=1}^4c_i C_{i,0}=\ell_0.
+\tag{10.30}
+$$
+
+Consequently $L$ is the polynomial combination
+$c_1d^2F+c_2dF+c_3F+c_4G$. Every common finite root annihilates
+it. This identity divides by no leading coefficient and is preserved
+by every specialization. It is the elementary determinant form of
+the classical subresultant construction, as in Brown–Traub,
+*[On Euclid's Algorithm and the Theory of Subresultants](https://doi.org/10.1145/321662.321665)*,
+*J. ACM* 18, 505–514. ∎
+

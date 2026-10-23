@@ -6,7 +6,7 @@
    utility: none
    digest: Native marked counts in compensated finite paths obey a complex Poisson envelope. -/
 
-import D5.S3.Estimation.SequentialDecisionRisk.FiniteSupportSelectionBayes
+import D5.S3.Estimation.TimeArrow.MarkedPoissonCoefficient
 import Mathlib.Analysis.SpecialFunctions.Complex.LogBounds
 import Mathlib.Analysis.Complex.ExponentialBounds
 
@@ -16,24 +16,6 @@ set_option autoImplicit false
 set_option relaxedAutoImplicit false
 noncomputable section
 namespace D5.S3.Estimation.TimeArrow.ActualMarkedPathPgfPoissonEnvelope
-
-/-- Half the sum of the two destination tilts, centered at one. -/
-def tiltU {k : ℕ} (zp zm : Fin k → ℂ) (j : Fin k) : ℂ := (zp j + zm j)/2-1
-/-- Half the difference of the two destination tilts. -/
-def tiltV {k : ℕ} (zp zm : Fin k → ℂ) (j : Fin k) : ℂ := (zp j - zm j)/2
-/-- The compensated total-mass drift of the marked edge tilt. -/
-def driftA {M q k : ℕ} (r : ℝ) (S : Support M q) (m : Fin k → Fin M)
-    (zp zm : Fin k → ℂ) : ℂ :=
-  (∑ j, (tiltU zp zm j + (b r S (.inl (m j)) : ℂ)*tiltV zp zm j))/(2*M)
-/-- The physical endpoint-parity drift of the marked edge tilt. -/
-def driftB {M q k : ℕ} (r : ℝ) (S : Support M q) (m : Fin k → Fin M)
-    (zp zm : Fin k → ℂ) : ℂ :=
-  (∑ j, (tiltV zp zm j + (b r S (.inl (m j)) : ℂ)*tiltU zp zm j))/(2*M)
-/-- The finite sum of native complete-history masses times actual departure count powers. -/
-def actualPGF {M q k : ℕ} (r : ℝ) (S : Support M q) (m : Fin k → Fin M)
-    (zp zm : Fin k → ℂ) (T : ℕ) : ℂ :=
-  ∑ o : Obs M T .path, (probability r .path S o : ℂ) *
-    ∏ j, (zp j)^count .path o (m j) 1 * (zm j)^count .path o (m j) (-1)
 
 set_option maxHeartbeats 1600000 in
 -- The proof combines complete-history sums with the normalized feedback estimate.
@@ -48,176 +30,13 @@ theorem actual_marked_path_pgf_poisson_envelope {M q T k : ℕ} {r η : ℝ} (hq
     ‖actualPGF r S m zp zm T-Complex.exp ((T:ℂ)*driftA r S m zp zm)‖ ≤
       20*(T:ℝ)*η^2*Real.exp ((T:ℝ)*(driftA r S m zp zm).re) := by
   classical
-  have hM : (0:ℝ)<M := by exact_mod_cast (show 0<M by omega)
-  have hMc : (M:ℂ)≠0 := by exact_mod_cast hM.ne'
-  have hN : (2*(M:ℂ))≠0 := by exact_mod_cast (ne_of_gt (show (0:ℝ)<2*M by positivity))
-  have hc : 0 ≤ compensation M q r := by unfold compensation; positivity
-  have law := finite_support_bayes (s:=T) hq hqm hr hr1 hc hc1 Experiment.path
-  have hcol := (law.1 S).2
-  let u := tiltU zp zm
-  let v := tiltV zp zm
   let A := driftA r S m zp zm
   let B := driftB r S m zp zm
-  let N : ℂ := 2*M
-  let U (x : Vertex M) : ℂ := ∑ j, if x=Sum.inl (m j) then u j else 0
-  let W (x : Vertex M) : ℂ := ∑ j, if x=Sum.inl (m j) then v j else 0
-  let g (j : Fin k) (x y : Vertex M) : ℂ :=
-    (if x=Sum.inl (m j) ∧ chi y=1 then zp j else 1) *
-    (if x=Sum.inl (m j) ∧ chi y= -1 then zm j else 1)
-  have hcount (n : ℕ) (o : Obs M n .path) (j : Fin k) :
-      (zp j)^count .path o (m j) 1*(zm j)^count .path o (m j) (-1) =
-      ∏ t : Fin n, g j (o t.castSucc) (o t.succ) := by
-    dsimp [g]
-    rw [prod_mul_distrib]
-    simp only [prod_ite, prod_const, one_pow, mul_one, count, edges]
-    rfl
-  have hedge (x y : Vertex M) : ∏ j, g j x y = 1+U x+W x*(chi y:ℂ) := by
-    by_cases hx : ∃ j, x=Sum.inl (m j)
-    · obtain ⟨j,hj⟩ := hx
-      have hother (i : Fin k) (hi : i≠j) : x≠Sum.inl (m i) := by
-        intro he; have := Sum.inl.inj (hj.symm.trans he)
-        exact hi (hm this.symm)
-      have hU : U x=u j := by
-        dsimp [U]; rw [sum_eq_single j (fun i _ hi => if_neg (hother i hi)) (by simp),if_pos hj]
-      have hW : W x=v j := by
-        dsimp [W]; rw [sum_eq_single j (fun i _ hi => if_neg (hother i hi)) (by simp),if_pos hj]
-      rw [prod_eq_single j (fun i _ hi => by simp [g,hother i hi]) (by simp),hU,hW]
-      rcases y with l|l <;> norm_num [g,hj,chi,u,v,tiltU,tiltV] <;> ring
-    · have hnone (j : Fin k) : x≠Sum.inl (m j) := fun hj => hx ⟨j,hj⟩
-      simp [g,U,W,hnone]
-  let K (x y : Vertex M) : ℂ := (transition r S x y:ℂ)*(1+U x+W x*(chi y:ℂ))
-  have hmass (n : ℕ) (o : Obs M n .path) :
-      (probability r .path S o:ℂ)*
-        (∏ j, (zp j)^count .path o (m j) 1*(zm j)^count .path o (m j) (-1)) =
-      N⁻¹*∏ t : Fin n, K (o t.castSucc) (o t.succ) := by
-    simp_rw [hcount]
-    rw [prod_comm]
-    simp_rw [hedge]
-    simp only [probability, Complex.ofReal_mul,Complex.ofReal_inv,Complex.ofReal_prod,
-      Complex.ofReal_natCast,Complex.ofReal_ofNat,prod_mul_distrib,K,N]
-    ring
-  have hsumbr : ∑ x : Vertex M, b r S x = 0 := by
-    have hh := hcol (Sum.inl ⟨0, by omega⟩)
-    simp only [transition,chi,mul_one,← sum_div,sum_add_distrib,sum_const,card_univ,
-      Fintype.card_sum,Fintype.card_fin,nsmul_eq_mul,mul_one] at hh
-    push_cast at hh
-    have hn : (2*(M:ℝ))≠0 := by positivity
-    apply (div_eq_iff hn).mp at hh
-    linarith
-  have hsumb : ∑ x : Vertex M, (b r S x:ℂ) = 0 := by exact_mod_cast hsumbr
-  have hsumχ : ∑ x : Vertex M, (chi x:ℂ) = 0 := by
-    simp [Fintype.sum_sum_type,chi]
-  have hχb (x : Vertex M) : (chi x:ℂ)*(b r S x:ℂ)=(b r S x:ℂ) := by
-    cases x <;> simp [chi,b]
-  have hχU (x : Vertex M) : (chi x:ℂ)*U x=U x := by
-    cases x <;> simp [chi,U]
-  have hχW (x : Vertex M) : (chi x:ℂ)*W x=W x := by
-    cases x <;> simp [chi,W]
-  have hsparse (f : Vertex M→ℂ) (a : Fin k→ℂ) :
-      (∑ x, f x*(∑ j, if x=Sum.inl (m j) then a j else 0)) =
-      ∑ j, f (.inl (m j))*a j := by
-    simp_rw [mul_sum,mul_ite,mul_zero]
-    rw [sum_comm]
-    simp
-  have hsumU : ∑ x, U x=∑ j, u j := by
-    simpa [U] using hsparse (fun _ => 1) u
-  have hsumW : ∑ x, W x=∑ j, v j := by
-    simpa [W] using hsparse (fun _ => 1) v
-  let α (x : Vertex M) : ℂ := 1+U x+(b r S x:ℂ)*W x
-  let β (x : Vertex M) : ℂ := (b r S x:ℂ)*(1+U x)+W x
-  have hα : ∑ x, α x=N*(1+A) := by
-    dsimp [α]
-    rw [sum_add_distrib,sum_add_distrib,hsumU,hsparse (fun x => (b r S x:ℂ)) v]
-    simp only [sum_const,card_univ,Fintype.card_sum,Fintype.card_fin,nsmul_eq_mul,mul_one]
-    dsimp [N,A,driftA,u,v]
-    rw [sum_add_distrib]
-    push_cast
-    field_simp [hN,hMc]
-    ring
-  have hχα : ∑ x, (chi x:ℂ)*α x=N*A := by
-    have he (x : Vertex M) : (chi x:ℂ)*α x=(chi x:ℂ)+U x+(b r S x:ℂ)*W x := by
-      dsimp [α]; rw [mul_add,mul_add,mul_one,hχU,← mul_assoc,hχb]
-    simp_rw [he]
-    rw [sum_add_distrib,sum_add_distrib,hsumχ,hsumU,zero_add,
-      hsparse (fun x => (b r S x:ℂ)) v]
-    dsimp [N,A,driftA,u,v]
-    rw [sum_add_distrib]
-    field_simp [hN,hMc]
-  have hβ : ∑ x, β x=N*B := by
-    have he (x : Vertex M) : β x=(b r S x:ℂ)+(b r S x:ℂ)*U x+W x := by dsimp [β]; ring
-    simp_rw [he]
-    rw [sum_add_distrib,sum_add_distrib,hsumb,zero_add,
-      hsparse (fun x => (b r S x:ℂ)) u,hsumW]
-    dsimp [N,B,driftB,u,v]
-    rw [sum_add_distrib]
-    field_simp [hN,hMc]
-    ring
-  have hχβ : ∑ x, (chi x:ℂ)*β x=N*B := by
-    have he (x : Vertex M) : (chi x:ℂ)*β x=β x := by
-      dsimp [β]; rw [mul_add,← mul_assoc,hχb,hχW]
-    simpa only [he] using hβ
-  have hK (x y : Vertex M) : K x y=(α x+β x*(chi y:ℂ))/N := by
-    cases y <;> dsimp [K,transition,α,β,N,chi] <;> push_cast <;>
-      field_simp [hMc] <;> ring
-  let p (n : ℕ) (y : Vertex M) : ℂ := N⁻¹*
-    ∑ o : Fin (n+1)→Vertex M, if o (Fin.last n)=y then
-      ∏ t : Fin n, K (o t.castSucc) (o t.succ) else 0
-  have hp0 (y : Vertex M) : p 0 y=N⁻¹ := by
-    dsimp [p]
-    simp only [Fin.prod_univ_zero]
-    rw [← (Equiv.funUnique (Fin 1) (Vertex M)).symm.sum_comp]
-    cases y <;> simp [Equiv.funUnique,Equiv.piUnique]
-  have hpnext (n : ℕ) (y : Vertex M) : p (n+1) y=∑ x, p n x*K x y := by
-    dsimp [p]
-    rw [← (Fin.snocEquiv (fun _ : Fin (n+2) => Vertex M)).sum_comp]
-    simp only [Fintype.sum_prod_type,Fin.snocEquiv,Equiv.coe_fn_mk,
-      Fin.prod_univ_castSucc,Fin.snoc_last,Fin.snoc_castSucc,Fin.succ_castSucc,
-      Fin.succ_last]
-    rw [sum_comm]
-    simp only [sum_ite_eq',mem_univ,if_true]
-    symm
-    simp_rw [mul_sum,sum_mul]
-    rw [sum_comm]
-    apply sum_congr rfl
-    intro o _
-    simp [mul_ite,ite_mul,mul_assoc]
-  let R : ℕ → ℂ × ℂ := fun n => Nat.rec (1,0)
-    (fun _ f => ((1+A)*f.1+A*f.2,B*f.1+B*f.2)) n
-  have hR0 : R 0=(1,0) := rfl
-  have hRnext (n : ℕ) : R (n+1)=((1+A)*(R n).1+A*(R n).2,B*(R n).1+B*(R n).2) := rfl
-  have hpend (n : ℕ) (y : Vertex M) :
-      p n y=((R n).1+(chi y:ℂ)*(R n).2)/N := by
-    induction n generalizing y with
-    | zero => simp [hp0,R,div_eq_mul_inv]
-    | succ n ih =>
-      rw [hpnext]
-      simp_rw [ih,hK]
-      have hex (x : Vertex M) :
-          (((R n).1+(chi x:ℂ)*(R n).2)/N)*((α x+β x*(chi y:ℂ))/N) =
-          ((R n).1*α x+(R n).2*((chi x:ℂ)*α x)+
-            ((R n).1*β x+(R n).2*((chi x:ℂ)*β x))*(chi y:ℂ))/N^2 := by ring
-      simp_rw [hex]
-      rw [← sum_div,sum_add_distrib,sum_add_distrib,← sum_mul,sum_add_distrib,
-        ← mul_sum,← mul_sum,← mul_sum,← mul_sum,hα,hχα,hβ,hχβ,hRnext]
-      field_simp [hN,hMc]
-  have htotal (n : ℕ) : actualPGF r S m zp zm n=(R n).1 := by
-    have hjoin : actualPGF r S m zp zm n=∑ y, p n y := by
-      dsimp [actualPGF,p]
-      simp_rw [hmass,mul_sum]
-      rw [sum_comm]
-      apply sum_congr rfl
-      intro o _
-      rw [← mul_sum]
-      simp
-    rw [hjoin]
-    simp_rw [hpend]
-    rw [← sum_div,sum_add_distrib,← sum_mul,hsumχ]
-    simp only [zero_mul,add_zero,sum_const,card_univ,Fintype.card_sum,
-      Fintype.card_fin,nsmul_eq_mul]
-    dsimp [N]
-    push_cast
-    field_simp [hN,hMc]
-    ring
+  let R := D5.S3.Estimation.TimeArrow.ForwardMarkedPathTransfer.forwardState A B
+  have hRnext (n : ℕ) : R (n + 1) = ((1 + A) * (R n).1 + A * (R n).2, B * (R n).1 + B * (R n).2) := rfl
+  have htotal (n : ℕ) : actualPGF r S m zp zm n = (R n).1 :=
+    (D5.S3.Estimation.TimeArrow.ForwardMarkedPathTransfer.actual_marked_path_transfer
+      (T := n) hq hqm hr hr1 hc1 S m hm zp zm).1
   let h : ℂ := 1+A
   have ha : ‖A‖≤η := hA
   have hb : ‖B‖≤η := hB
@@ -232,8 +51,8 @@ theorem actual_marked_path_pgf_poisson_envelope {M q T k : ℕ} {r η : ℝ} (hq
   let X (n : ℕ) : ℂ := (R n).1/h^n
   let Y (n : ℕ) : ℂ := (R n).2/h^n
   let ρ : ℂ := B/h
-  have hx0 : X 0=1 := by simp [X,R]
-  have hy0 : Y 0=0 := by simp [Y,R]
+  have hx0 : X 0=1 := by simp [X,R,D5.S3.Estimation.TimeArrow.ForwardMarkedPathTransfer.forwardState]
+  have hy0 : Y 0=0 := by simp [Y,R,D5.S3.Estimation.TimeArrow.ForwardMarkedPathTransfer.forwardState]
   have hxnext (n : ℕ) : X (n+1)=X n+(A/h)*Y n := by
     dsimp [X,Y]
     rw [hRnext,pow_succ]

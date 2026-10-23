@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:01af78977a95ef8452fb5d82f0ed7d095ca49f7c3aea9bdef915b989126a6e31
+  normalized_sha256: sha256:01af78977a95ef8452fb5d82f0ed7d095ca49f7c3aea9bdef915b989126a6e31
+cas_ref: sha256:01af78977a95ef8452fb5d82f0ed7d095ca49f7c3aea9bdef915b989126a6e31
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 'Nonpropositional: 记录 δ 的定义及带问号的比值收敛检验；没有断言该极限成立。'
+    previous_atom_id: f4062c184f4617b06a9f318bd817e5ec7774ab6bca07c61ce1bdb73717c75ab0
+    next_atom_id: f6fa891f44730abe69324dc5e78f99853e4493adc0dc8642c23b5268d1b2e712

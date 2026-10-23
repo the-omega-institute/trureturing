@@ -1,0 +1,29 @@
+**Convention 27.1 (operation and resource scope).** The consumer in
+§§24–26 is one permitted common relative horizontal request on the same
+still-live specimen. All tested histories are from one actual preparation,
+base, source/epoch and aligned clock. The prescribed waveform generator,
+calibrated Kraus operations, blank resources and exact time/mode recorder
+are the additional ideal operation services of §§5.2 and 17; their
+mathematical specification supplies neither hardware nor a waveform sensor.
+Selection uses only actual retained inputs in $H$ and public common
+inputs. Any internal measurement or feedback is included in the single
+common CP operation with all its retained outputs.
+
+The request is partial: outside $(0,c-d)$ it has no executed original
+successor. No unknown-height rejection detector or total guard is added.
+A separately known permission or source mismatch has only its declared
+unexecuted rejection and controller update. Original failure has its
+executed time/mode and absorbing successor instead. No positive original
+control is executed from $f$. For $d=0$, a matching finite wait, including
+the zero-duration identity, imposes no height-capacity bound: all $a_j=1$
+and the distinct-eigenvalue argument does not apply. A positive $d$ with
+$L=0$ is not this continuous lawful request.
+
+| Resource | Exact allocation and boundary |
+| --- | --- |
+| Live specimen | The credited three-dimensional span $V$, with its original five-mode labels and stopped completion. It is an input separate from the programme dimension $D$; no new specimen compression minimum is asserted. |
+| Incoming accessible assistance | The whole $H$, of dimension $D=\sum_y\dim H_y$ in the finite classical–quantum case. All accessible history-bearing archives, source-bound programmes, clocks, calibration, controller/permission data, receiver shares and selection/update ports belong jointly here. A variable source-dependent installed programme is not common apparatus. |
+| Unread joint reference $R$ | Retained by identity and possibly correlated with $H$ and the history. Its exclusion from accessible assistance is an access premise, not a claim that it is absent or uncorrelated. Making it accessible changes the handoff and its counted resource. |
+| Successful residue $E$ | Includes every retained success output and the mathematical discarded environment. The isometry $B$ is global on this residue; it need not have a readable output or accessible inverse. Output residue dimension is not substituted for the incoming capacity bound. |
+| Public description and ideal services | The common candidate catalogue, $c,d,L$, basis, source convention, waveform generation, exact gates and recorder are fixed and conditional. The rational height example has a finite symbolic description; exact gates, real clocks, reference stability, parameter precision and exact time records have separate implementation and storage costs. |
+| Acquisition and complete archive | No procedure or finite cost for preparing, acquiring, source-binding or certifying $\tau_j$ is supplied. Exact nonatomic failure-time storage, the growing full archive, arithmetic, calibration work and physical hardware are not bounded by $\sum_j\operatorname{rank}\tau_j$. |

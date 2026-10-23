@@ -15,7 +15,7 @@ F1: D5/S3/Quantum/Foundation/FiniteKrausChannel.MatrixMap
   statement_id: sha256:df01dcc9d6d91985f3214eaee7e1c5eacebab3335dff64bb7b620043c650cad7
 F2: D5/S3/Quantum/Foundation/FiniteKrausChannel.of_kraus
   statement_id: sha256:024ca3125b8f182e070b880d7c41840a31fa9cb0aaa89e5d81dbe4ebb3c5f287
-F3: D5/S3/Quantum/Entanglement/GHZMeasureBiseparableBound.IsDensity
+F3: D5/S3/Quantum/Information/SLDSpectralEnergy.IsDensity
   statement_id: sha256:fc9bb0824d5818ff419f72f26095faecc04e62ab59bf26f4f2bcefbb2d380448
 F4: D5/S3/Quantum/FiniteDimensional.QubitMatrix
   statement_id: sha256:e376bbe008ddbbc49fcf9763247304ed70ec54ac5cf49af3c6f7fb58fa626f30
@@ -93,6 +93,7 @@ FiniteKrausRepresentation is unfrozen; its additional channel declarations are
 not used. The frozen FiniteKrausChannel.of_kraus owner suffices here.
 -/
 
+import D5.S3.Quantum.Information.SLDSpectralEnergy
 import Batteries.Tactic.OpenPrivate
 import D5.S3.Quantum.Measurements.BroadcastingChannelExtremaRefutation
 import D5.S3.Quantum.Entanglement.BellPureStateMixedMarginal
@@ -111,7 +112,7 @@ noncomputable section
 open Matrix
 open scoped ComplexOrder MatrixOrder Kronecker
 namespace D5.S3.QuantumChannels.PositiveKrausSideEntanglementRefutation
-open D5.S3.Quantum.Entanglement.GHZMeasureBiseparableBound (IsDensity)
+open D5.S3.Quantum.Information.SLDSpectralEnergy (IsDensity)
 open D5.S3.Quantum.FiniteDimensional (qubitX qubitZ)
 open D5.S3.QuantumBounds.CHSHWitness (bellDensity bellVector bell_density_is_state)
 open D5.S3.Quantum.Entanglement.BellPureStateMixedMarginal

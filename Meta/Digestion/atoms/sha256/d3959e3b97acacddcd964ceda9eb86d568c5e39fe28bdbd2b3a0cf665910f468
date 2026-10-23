@@ -1,0 +1,23 @@
+**定理 1（signed mass is the common coordinate）。**
+
+For every finite task readout,
+
+$$
+\boxed{
+ e(A)=\frac12\left(1-\sum_u|\sigma_A(u)|\right)
+}
+$$
+
+and
+
+$$
+\boxed{
+ I(A)=H_2(p)-\sum_{m_A(u)>0}m_A(u)
+ h_2\!\left(\frac{1+\sigma_A(u)/m_A(u)}2\right).
+}
+$$
+
+**证明。** The first identity uses $\min(a,b)=(a+b-|a-b|)/2$ and $\sum_um_A(u)=1$. The second substitutes the posterior expression into conditional entropy. Thus the signed norm alone determines Bayes risk, while mutual information also depends on the fibre masses and the posterior magnitudes. $\square$
+
+This is the exact bridge to the finite FIB signature. It also marks the first failure of a tempting compression: there is no function of $\|\sigma_A\|_1$ alone that recovers $I(A)$. For example, at risk $1/4$ both a BSC with crossover $1/4$ and an erasure channel with erasure probability $1/2$ have $\|\sigma_A\|_1=1/2$, while their informations are respectively $1-h_2(1/4)$ and $1/2$.
+

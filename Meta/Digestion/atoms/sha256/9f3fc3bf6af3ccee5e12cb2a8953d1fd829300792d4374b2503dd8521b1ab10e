@@ -1,0 +1,85 @@
+**Definition 6.4.1 (The two inclusion prescriptions).** For the critical inclusion use
+
+$$
+G_*=(E_1,E_2),\qquad c=c_*,\quad \rho=\rho_*,\quad X=X_*,
+\qquad C_*=DG_*(c_*)^{-1}.
+\tag{6.4.1}
+$$
+
+In particular the exact rational preconditioner is specified by
+
+$$
+C_*=
+\left.
+\frac1{E_{1,r}E_{2,b}-E_{1,b}E_{2,r}}
+\begin{pmatrix}E_{2,b}&-E_{1,b}\\-E_{2,r}&E_{1,r}\end{pmatrix}
+\right|_{c_*}.
+\tag{6.4.2}
+$$
+
+The denominator here is a nonzero rational obtained from (6.3.1)–(6.3.5). For the finite inclusion use $h_0=1/1000$ and
+
+$$
+S_F(R,B,k,h)=\frac{F(R+h,B+kh)-F(R-h,B-kh)}{2h}
+\quad(h\ne0),
+\tag{6.4.3}
+$$
+
+with
+
+$$
+G_0=S_F(\,\cdot\,,h_0),\qquad c=c_0,\quad\rho=\rho_0=10^{-30},
+\quad X=X_0=c_0+[-\rho_0,\rho_0]^3,\qquad C=C_0^{\mathrm{pre}}.
+\tag{6.4.4}
+$$
+
+The centre $c_0$ and the rational matrix $C_0^{\mathrm{pre}}$ are given in Definition 6.7.1. For either of these two prescriptions define the interval matrix and the centred inclusion image
+
+$$
+\begin{aligned}
+\mathcal B&=I-C\,DG(X),\qquad \eta=\|CG(c)\|_\infty,\\
+\mathscr K-c&=-CG(c)+\mathcal B[-\rho,\rho]^n.
+\end{aligned}
+\tag{6.4.5}
+$$
+
+For an interval matrix, $\|\mathcal B\|_\infty$ means the maximum row sum of the largest absolute endpoints of its entries.
+
+All interval endpoints and arithmetic in these prescriptions are rational. For intervals $I=[a,b]$, $J=[c,d]$ use
+
+$$
+\begin{aligned}
+I+J&=[a+c,b+d],& I-J&=[a-d,b-c],\\
+IJ&=[\min(ac,ad,bc,bd),\max(ac,ad,bc,bd)],&
+I^{-1}&=[1/b,1/a]\quad(0\notin I).
+\end{aligned}
+\tag{6.4.6}
+$$
+
+Powers are repeated interval multiplications. Expand $E_i$ as specified in (6.3.4), differentiate its monomials, and evaluate the resulting polynomials termwise. For $G_0$ use the rational circuit (6.2.1)–(6.2.2). Its derivative columns in the order $(R,B,k)$ are exactly
+
+$$
+\frac{F_r(z_+)-F_r(z_-)}{2h_0},\qquad
+\frac{F_b(z_+)-F_b(z_-)}{2h_0},\qquad
+\frac{F_b(z_+)+F_b(z_-)}2,
+\quad z_\pm=(R\pm h_0,B\pm kh_0).
+\tag{6.4.7}
+$$
+
+For source derivatives through order three evaluate the same circuit as a truncated jet with interval coefficients, substituting $r=X_r+\xi$, $b=X_b+\zeta$ and discarding all monomials of total degree at least four. The underlying exact-point algebra is
+
+$$
+\mathbb Q[\xi,\zeta]/(\xi,\zeta)^4.
+\tag{6.4.8}
+$$
+
+For a jet $c+u$, with zero constant term in $u$ and $0\notin c$, its inverse is evaluated as
+
+$$
+(c+u)^{-1}=c^{-1}\{1-u/c+(u/c)^2-(u/c)^3\}
+\pmod{(\xi,\zeta)^4}.
+\tag{6.4.9}
+$$
+
+The coefficient of $\xi^i\zeta^j$, multiplied by $i!j!$, encloses $\partial_r^i\partial_b^j f$ throughout the box for $i+j\le3$. This follows by the truncated Taylor identity at every point of the box and the inclusion property of (6.4.6). All inversions first exclude zero: the source bounds exclude $b=0$, the D bounds exclude $D=0$, and the $p_b$ and determinant bounds used below exclude their respective denominators. Matrix inversion for the coefficients below uses the adjugate divided by the determinant. The construction is the classical rational interval/Newton contraction applied to these two stated systems; compare R. Krawczyk, *Newton-Algorithmen zur Bestimmung von Nullstellen mit Fehlerschranken*, Computing 4 (1969), 187–201, [doi:10.1007/BF02234767](https://doi.org/10.1007/BF02234767).
+

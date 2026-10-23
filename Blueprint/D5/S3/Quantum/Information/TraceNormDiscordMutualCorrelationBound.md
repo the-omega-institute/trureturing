@@ -30,7 +30,19 @@ $$\operatorname{claim} \Leftrightarrow (\forall (\rho: \operatorname{Matrix}\lef
 
 The proposition states D₁(ρ) ≤ C_M(ρ) for every positive semidefinite two-qubit matrix of trace one, including pure and mixed states. The source proves the Bell-diagonal case and conjectures the inequality for general two-qubit states.
 
-**Theorem 1.3 (Maximal mutual correlation bounds trace-norm discord).**
+**Theorem 1.3 (The square of a real Pauli combination).**
+
+Lean statement: `D5/S3/Quantum/Information/TraceNormDiscordMutualCorrelationBound.spin_square`
+
+*Proof.* Machine-checked in Lean as `D5/S3/Quantum/Information/TraceNormDiscordMutualCorrelationBound.spin_square` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+For every real three-vector c, the Pauli combination c·σ squares to the squared Euclidean length of c times the identity. This follows by applying the Pauli anticommutator to c twice.
+
+**Theorem 1.4 (Maximal mutual correlation bounds trace-norm discord).**
 
 $$\operatorname{claim}$$
 
@@ -67,6 +79,7 @@ For a ≠ 0, choose unit spin directions c = v′ and d = a/|a|. Their covarianc
 - Truth anchor: `D5/S3/Quantum/Information/GeometricDiscordMutualCorrelationBound.rotated_spin_witness`
 - Truth anchor: `D5/S3/Quantum/Information/TraceNormDiscordMutualCorrelationBound.claim`
 - Truth anchor: `D5/S3/Quantum/Information/TraceNormDiscordMutualCorrelationBound.result`
+- Truth anchor: `D5/S3/Quantum/Information/TraceNormDiscordMutualCorrelationBound.spin_square`
 - Truth anchor: `D5/S3/Quantum/Information/TraceNormDiscordMutualCorrelationBound.traceNormDiscord`
 - Dependency: [D5/S3/Quantum/Entanglement/ConicalDesignConcurrenceComparability](../Entanglement/ConicalDesignConcurrenceComparability.md)
 - Dependency: [D5/S3/Quantum/Information/GeometricDiscordMutualCorrelationBound](GeometricDiscordMutualCorrelationBound.md)

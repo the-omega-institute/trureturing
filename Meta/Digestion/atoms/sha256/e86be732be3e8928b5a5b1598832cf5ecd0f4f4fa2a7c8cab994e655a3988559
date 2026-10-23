@@ -1,0 +1,55 @@
+**Proposition 7.2 (actual equality source amplitude).** At equality,
+
+$$
+A_\epsilon\longrightarrow a_D,\qquad
+\epsilon f_\epsilon(\Psi^{-1}\delta_\epsilon x)
+                         \longrightarrow a_D Z(x).
+\tag{7.4}
+$$
+
+The second convergence is locally uniform and strong in local
+horizontal $W^{1,2}$ through the source and the cap interface.
+It is smooth on compact sets off $R=1$. In particular
+$\epsilon f_\epsilon(o)\to a_DZ(0)$.
+
+Proof. The $c\phi^2$ mean of $v_\epsilon$ has derivative controlled
+by $\int w_\epsilon^2|p'|^2$. Between a fixed scaled exterior collar
+$y=\log(R/\epsilon)=T$ and a fixed small original radius $d$, its
+reciprocal resistance is uniformly bounded. More precisely the
+exact sine part gives
+
+$$
+\int_{\log\epsilon+T}^{\log d}w_\epsilon^{-2}dt
+\le C\{(T+\kappa_{\rm cap})^{-1}
+                           +(-\log d+\eta_b)^{-1}\}.
+\tag{7.5}
+$$
+
+Indeed the relevant primitive is a difference of $q_L$ cotangents:
+integrate $q_L^2\csc^2(q_L(t-\log\epsilon)+\delta(q_L))$.
+The lower and upper endpoint asymptotics give the two terms.
+Choose $T$ beyond the initial exterior collars so the complement
+is controlled; the finitely many remaining core collars contribute
+only a bounded resistance. Angular factors are uniformly comparable.
+
+The fixed outer mean is bounded by Theorem 7.1. Cauchy–Schwarz,
+(7.5), and the bounded shifted energy bound the inner mean.
+Harnack on the cap ball and the actual normalized core theorem
+identify the quotient on each fixed scaled collar as
+$A_\epsilon(1+o(1))$, because $Z_{z_L}\to Z$.
+This first proves that the actual $A_\epsilon$ is bounded.
+Now use the exhausted energy tail (7.3) in the same
+Cauchy–Schwarz estimate. It gives
+
+$$
+\lim_{d\downarrow0}\limsup_{\epsilon\downarrow0}
+ |A_\epsilon-\mathcal Mv_\epsilon(\log d)|=0.
+\tag{7.6}
+$$
+
+The outer mean tends to that of $f_D/H_{\eta_b}$ and then, by (7.2),
+to $a_D$. This proves the first limit in (7.4).
+The actual normalized core and its strong horizontal convergence
+then prove the second. Only the identified limiting maximal
+solution receives the traces in (7.2). $\square$
+

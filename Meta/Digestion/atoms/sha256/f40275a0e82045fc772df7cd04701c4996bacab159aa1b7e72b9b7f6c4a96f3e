@@ -1,0 +1,21 @@
+**Theorem 2.1 (Equivariant marginal denominator).** Let a group $H$ act on a nonempty finite set $E$ and on a nonempty finite probability space $\Omega$ with uniform law. Suppose the action on $E$ is transitive. Let $T:\Omega\times E\to\{0,1\}$ satisfy
+
+$$
+T(h\omega,he)=T(\omega,e)
+\qquad(h\in H,\omega\in\Omega,e\in E).
+$$
+
+Write $N=|\Omega|$, $m=|E|$, and $C(\omega)=\sum_{e\in E}T(\omega,e)$. There is an integer $k$ with $0\le k\le N$ such that
+
+$$
+\mathbb E C = \frac{mk}{N}.
+$$
+
+Consequently, for relatively prime integers $a,b$ with $b>0$, the equality $\mathbb EC/m=a/b$ requires $b\mid N$. If it fails, the sharp arithmetic lower bound is
+
+$$
+\left|\frac{\mathbb EC}{m}-\frac ab\right|\ge\frac1{bN}.
+$$
+
+Proof. Fix $e_0\in E$. For each $e$, transitivity supplies $h$ with $he_0=e$. The permutation $\omega\mapsto h\omega$ is a bijection from the event $T(\omega,e_0)=1$ to $T(\omega,e)=1$. All these events therefore have the same integer cardinality $k$. Interchanging the two finite sums gives $\sum_\omega C(\omega)=mk$. If $k/N=a/b$, then $bk=aN$; coprimality implies $b\mid N$. If unequal, $|bk-aN|$ is a positive integer, hence at least one. ∎
+

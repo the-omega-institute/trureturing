@@ -1,0 +1,27 @@
+## 17. 同标签记录的饱和与关系阶数的资源交换
+
+对 §15 同一个有限标签概率族，另行供应分组实验：每组抽取一个标签 $C\sim p_\theta$，条件于该标签取得 $\ell$ 份独立记录 $R_b=\varepsilon m_C+G_b$；不同组重新独立抽取标签。共同标签、条件独立制备和已知协方差都是额外实验结构，不由反复测量一个会改变的对象自动获得。
+
+令 $\mathcal J_\ell(\varepsilon)$ 为一组关于 $\theta$ 的 Fisher 信息。使用经典的观察得分条件期望方法，即 Louis, [*Finding the Observed Information Matrix when Using the EM Algorithm*, §3](https://doi.org/10.1111/j.2517-6161.1982.tb01203.x) 的缺失信息框架：潜在得分 $S(C)=d_T(C)/p_\theta(C)$ 均值零，而实际得分是 $\mathbb E[S(C)\mid R_1,\ldots,R_\ell]$。因此在本实验中
+
+$$
+\begin{aligned}
+\mathcal J_\ell(\varepsilon)
+&=\operatorname{Var}(\mathbb E[S(C)\mid R_1,\ldots,R_\ell]),\\
+0\le\mathcal J_1(\varepsilon)&\le\mathcal J_2(\varepsilon)\le\cdots
+\le\mathcal I_T:=\sum_I\frac{d_T(I)^2}{p_\theta(I)}.
+\end{aligned}
+\tag{17.1}
+$$
+
+这里条件期望是同一无限条件独立记录序列中的有界 $L^2$ 鞅。样本均值几乎必然识别真实均值簇；同簇的条件记录律完全相同，后验比例始终为其原概率比例。不同簇的高斯似然比由大数律趋于零。故固定 $\varepsilon>0$ 时，若 $\mathscr G$ 是相同 $m_I$ 的标签簇，
+
+$$
+\lim_{\ell\to\infty}\mathcal J_\ell(\varepsilon)
+=\sum_{G\in\mathscr G}
+\frac{(\sum_{I\in G}d_T(I))^2}{\sum_{I\in G}p_\theta(I)}.
+\tag{17.2}
+$$
+
+该式保留原标签概率，未把簇变为等先验标签。它说明读清一次标签的份数可以无限多，但单组信息仍至多为一次潜在标签的信息。
+

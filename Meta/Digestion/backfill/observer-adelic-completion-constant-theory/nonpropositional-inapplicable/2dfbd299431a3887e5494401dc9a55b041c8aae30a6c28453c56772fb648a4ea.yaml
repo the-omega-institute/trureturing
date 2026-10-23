@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:2dfbd299431a3887e5494401dc9a55b041c8aae30a6c28453c56772fb648a4ea
+  normalized_sha256: sha256:2dfbd299431a3887e5494401dc9a55b041c8aae30a6c28453c56772fb648a4ea
+cas_ref: sha256:2dfbd299431a3887e5494401dc9a55b041c8aae30a6c28453c56772fb648a4ea
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 仅解释 pi 表示观察顺序或旗标。
+    previous_atom_id: 2616149e86b46a7f6d0cc8658f79e74d721186277d8d92edbadc30718df3d551
+    next_atom_id: 14b381c6c84184321bd5ae92e53cb7b9b862261a84627d1a17ad96d4e7ecf6b3

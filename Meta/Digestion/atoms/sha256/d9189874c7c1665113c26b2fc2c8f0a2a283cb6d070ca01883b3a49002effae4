@@ -1,0 +1,40 @@
+**Proposition 10.4 (finite records do not supply the exact inverse).**
+For either fixed schedule in Proposition 10.2, no decoder of its finite
+record, even with additional source-independent classical randomness,
+is almost surely exactly correct for every source orbit in (6.1).
+The expectation identities nevertheless give unbiased finite estimates
+of the listed quadratic coordinates.
+
+Proof. For every strictly positive $\rho$, both outcomes of each
+single-copy projector setting have positive probability. In the
+directional schedule both filter flags have positive probability; the
+success Kraus operator is invertible and the failure state is real. In
+the depth schedule $F$ and $L$ are invertible, so every allowed failure
+prefix and all-success prefix has positive probability. The terminal
+joint effects are positive definite by (10.1). Therefore every record
+allowed by either fixed padded grammar has positive probability under
+every strictly positive source. For example $I/5$ and
+$I/5+iJ_{12}/10$ have distinct orbits and the same possible finite
+records. At any such record an exactly correct decoder would have to
+return each of two different orbits with conditional probability one.
+Extra source-independent randomness cannot satisfy both requirements.
+This proves the statement for these schedules, without a universal
+impossibility claim about other acquisition models.
+
+For a quadratic setting the random variables $Z_f$ in its $N$ attempts
+are independent, take values in $[-1,1]$, and satisfy (10.3). Thus
+$M_fN^{-1}\sum Z_f$ is unbiased with variance at most $M_f^2/N$.
+For single-copy probabilities the variance is at most $1/(4N)$.
+These elementary sampling facts describe finite records; they do not
+perform the inverse's exact rank tests, supply exact zero probabilities,
+or bound the error of a numerically decoded orbit. $\square$
+
+The exact inverses in §§8–9 act on genuine image values, with exact real
+comparisons, square roots and finite linear algebra. Arbitrary exact real
+values need not have finite digital descriptions. Applying those formulas
+to finite estimates is a separate numerical problem: estimates can lie
+off the lawful image, and the repeated-spectrum branches require their
+own precision and conditioning analysis. No exact finite acquisition,
+uniform numerical error guarantee or installed numerical decoder follows
+from the algebraic inverses or from (10.5).
+

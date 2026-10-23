@@ -1,0 +1,52 @@
+**Theorem 9.1 (known left multiplier and absolute clock).** Let $Q_0$ be any known invertible real matrix and $t_0$ any known real number. Suppose the independent absolute-time unknowns are
+
+$$
+U(t)=\sum_{h=0}^kU_ht^h,\qquad
+\mathcal D(t)=\sum_{h=0}^{\delta}\eta_ht^h,
+$$
+
+and readings on the same continuation word are
+
+$$
+Y_i=\mathcal D(t_0+i)+\operatorname{tr}(A_iQ_0U(t_0+i)).
+$$
+
+They uniquely recover all coefficients of $U,\mathcal D$. In the ordinary coefficient order of Theorem 8.1, now applied to $(\eta_h,U_h)$, the determinant is
+
+$$
+\boxed{\det C_{k,\delta}\,(\det Q_0)^{2(k+1)}\ne0.}
+$$
+
+**Proof.** Define local polynomials
+
+$$
+Z(s)=Q_0U(t_0+s),\qquad D(s)=\mathcal D(t_0+s).
+$$
+
+These are exactly the independent unknowns of Definition 7.1, because time translation and left multiplication are invertible. Theorem 7.2 recovers them, after which
+
+$$
+U(t)=Q_0^{-1}Z(t-t_0),\qquad
+\mathcal D(t)=D(t-t_0).
+$$
+
+For example, if $Z(s)=\sum_jZ_js^j$ and $D(s)=\sum_jd_js^j$, the absolute coefficients are
+
+$$
+U_h=Q_0^{-1}\sum_{j=h}^k\binom jh Z_j(-t_0)^{j-h},\qquad
+\eta_h=\sum_{j=h}^{\delta}\binom jh d_j(-t_0)^{j-h}.
+$$
+
+On every scalar polynomial coefficient vector, translation has a triangular matrix with diagonal one, hence determinant one. Left multiplication by $Q_0$ has determinant $(\det Q_0)^2$ on each matrix coefficient, since it acts on the two columns independently. There are $k+1$ such blocks and the drift block is unaffected by left multiplication. Multiplication of these determinants proves the assertion. ∎
+
+For an actually acquired legal prefix, $Q_0$ is its cumulative product and $t_0$ its nonnegative integer length. Since each atom has determinant $-1$, every such $Q_0$ is invertible. The theorem's extension to other specified invertible $Q_0$ and real $t_0$ is algebraic, with no assertion of legal attainability. Matrix inverses and translations occur only in the decoder, not as physical interventions.
+
+Invertibility and knowledge of the stated coordinates matter. If $Q_0$ is singular, take a nonzero matrix $H$ with $Q_0H=0$. Replacing $U(t)$ by $U(t)+H$ leaves every observation unchanged, even on arbitrarily long continuations. If the absolute origin is unknown, then for any real $h$ the simultaneous replacement
+
+$$
+t_0\mapsto t_0+h,\qquad U(t)\mapsto U(t-h),\qquad
+\mathcal D(t)\mapsto\mathcal D(t-h)
+$$
+
+preserves every reading and all degree bounds. Thus local polynomial recovery does not identify an unknown absolute time origin. This is the time-translation ambiguity already expressed in [FIB self-calibrating relation mathematics, Proposition 37.4](FIB_SELF_CALIBRATING_RELATION_MATHEMATICS.md).
+

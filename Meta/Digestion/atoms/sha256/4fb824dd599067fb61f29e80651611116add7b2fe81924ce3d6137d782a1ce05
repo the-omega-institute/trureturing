@@ -1,0 +1,75 @@
+**Theorem 2.2 (actual retained ground and separate resources).** For every
+fixed admissible model and $b$, and every fixed real $\lambda<\lambda_D$,
+
+$$
+E_{\epsilon,\lambda}=E_*+\mathsf K H_\lambda/L+o(L^{-1}),
+\qquad LA_\epsilon\longrightarrow a_*C_\lambda.
+\tag{2.3}
+$$
+
+The normalized state converges strongly to $f_*$ in $L^2(\mu)$ and the
+shifted critical form norm of $\mathcal Q$, and smoothly on compact
+interior sets away from $o$. Its rank-one positive ground projection
+converges in norm. No mass escapes. For a chart function $u$ write
+
+$$
+\mathcal M u(t)=\frac1{2\pi C}\int_J\int_0^{2\pi}
+                       c\phi^2u(e^t,a,\theta)\,d\theta da.
+\tag{2.4}
+$$
+
+At $R=\epsilon e^{sL}$,
+
+$$
+\begin{aligned}
+\mathcal M(f_\epsilon/f_*)(\log\epsilon+sL)&\longrightarrow S_\lambda(s)
+                                               &&\text{in }H^1(0,1),\\
+f_\epsilon/h&\longrightarrow a_*S_\lambda(s)
+                            &&\text{in }L^2(\phi^2ds\,da\,d\theta),\\
+\epsilon Lf_\epsilon(\Psi^{-1}\delta_\epsilon x)
+                    &\longrightarrow a_*C_\lambda Z(x).
+\end{aligned}
+\tag{2.5}
+$$
+
+The last convergence is locally uniform and strong in local horizontal
+$W^{1,2}$, including the source and through $R=1$, and is smooth only
+off that interface. On each compact Cartesian annulus and for
+$s\in[\delta,1-\delta]$, the rescaled second convergence is smooth,
+uniformly in $s$, for every $0<\delta<1/2$. The $H^1$ assertion concerns
+$f_\epsilon/f_*$; it does not assert an $H^1$ limit for $f_\epsilon/h$
+at the fixed outer endpoint.
+
+The actual separate total and moving-core costs obey
+
+$$
+\begin{aligned}
+\frac{V_{\rm raw}[f_\epsilon]}L,\quad
+\frac{V_{\rm cap}[f_\epsilon]}L
+       &\longrightarrow \frac{a_*^2M J_\lambda}{4},\\
+\frac{T_A[f_\epsilon]}L
+       &\longrightarrow \frac{g_{\mathrm c}a_*^2M J_\lambda}{4},\\
+L^2(V_{\rm raw}-V_{\rm cap})[f_\epsilon]
+       &\longrightarrow \frac{a_*^2C_\lambda^2I}{2\pi},\\
+L^2\int_{\mathcal C_\epsilon}\Gamma f_\epsilon^2d\mu
+       &\longrightarrow \frac{a_*^2C_\lambda^2J_{\rm raw}}{2\pi},\\
+L^2\int_{\mathcal C_\epsilon}\Gamma_\epsilon f_\epsilon^2d\mu
+       &\longrightarrow \frac{a_*^2C_\lambda^2J_{\rm cap}}{2\pi},\\
+L^2T_A[f_\epsilon;\mathcal C_\epsilon]
+       &\longrightarrow m_0a_*^2C_\lambda^2J_T,\\
+LQ_\epsilon&\longrightarrow\mathsf K C_\lambda.
+\end{aligned}
+\tag{2.6}
+$$
+
+The limits and remainders are uniform on each compact subset of
+$(-\infty,\lambda_D)$ for a fixed model and $b$. No uniformity over
+$\rho,A$ or through $\lambda_D$ is asserted. The zero case is exactly
+Native Green stability, §§14–19. At the unique zero $\lambda_Z$ of
+$H_\lambda$, its Theorem 25.2, (25.2)–(25.5), supplies the sharper
+actual energy and resource finite parts, including admissible balanced
+$b$. Those results are used without repeating their proof.
+Thus $E_\epsilon-E_*$ has positive leading sign below $\lambda_Z$ and
+negative leading sign between $\lambda_Z$ and $\lambda_D$; a zero first
+coefficient is not a sign determination.
+

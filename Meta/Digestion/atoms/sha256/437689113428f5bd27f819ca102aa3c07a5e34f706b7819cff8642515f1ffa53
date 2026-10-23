@@ -1,0 +1,107 @@
+**Definition 25.1 (fixed data, complete domains and the two charges).**
+Fix, before choosing a parameter neighbourhood or a time family,
+
+$$
+0<Z<1,\quad H=(1-Z)/2,\quad
+0<l<k_0<u<H,\quad \varepsilon>0,\quad \tau_{\min}>0.
+\tag{25.1}
+$$
+
+For every sufficiently small nonzero real $\kappa$ of either sign use
+exactly Definition 20.1. Thus $X=Y=H+\kappa$, the probabilities are
+
+$$
+(k-2\kappa,H+\kappa-k,Z,H+\kappa-k,k),
+\tag{25.2}
+$$
+
+all preparation phases are arbitrary and immutable, the amplitude
+convention is negative, and the increments satisfy $h_2=0$, $h_1=h_3=v$.
+The unimodular coordinates are $\theta=h_{13}$, $D=h_0-h_{13}$ and $v$,
+each of actual period $2\pi$. The full cylinder, measure and pole are
+
+$$
+\Omega=I\times\mathbb T_\theta\times\mathbb T_v\times\mathbb T_D,
+\quad I=(l,u),\quad d\mu=dk\,d\theta\,dv\,dD,
+\quad o=(k_0,0,0,0).
+\tag{25.3}
+$$
+
+Retain $P=\partial_k$ and the original $Q$ with
+$d=(1,-1,0,-1,1)$, $\mathcal I_\kappa=
+\sum_{s\in\{0,1,3,13\}}p_{\kappa,s}^{-1}$ and
+$w_s=d_s/(p_{\kappa,s}\mathcal I_\kappa)$.
+For subsequent estimates write its already supplied coefficients as
+
+$$
+\begin{aligned}
+s_\kappa&=H+\kappa,& \alpha_\kappa&=\kappa+\kappa^2/H,\\
+A_\kappa&=\frac{(k-2\kappa)(s_\kappa-k)}{2H(k-\alpha_\kappa)},&
+B_\kappa&=-\frac{k(k-2\kappa)}{2H(k-\alpha_\kappa)},&
+b_\kappa&=\frac{s_\kappa-k}{H(k-\alpha_\kappa)},\\
+Q_\kappa&=A_\kappa\partial_\theta+B_\kappa\partial_v
+                 +\kappa b_\kappa\partial_D.
+\end{aligned}
+\tag{25.4}
+$$
+
+There is one $v$ coefficient. Let $T_\kappa$, $\mathcal F_\kappa$ and
+$L_\kappa$ be the complete free form, its horizontal closure and its
+Friedrichs operator in (20.4). The covariance is
+$\operatorname{diag}(\varepsilon^2,1)$, with diffusion covariance twice
+this matrix times $dt$. The original clock is $e^{-tL_\kappa}$.
+Both height faces are absorbing and every phase is periodic.
+Put
+
+$$
+d_I=u-l,\qquad \lambda=\frac{\varepsilon^2\pi^2}{d_I^2},\qquad
+\phi(k)=\sqrt{2/d_I}\sin\frac{\pi(k-l)}{d_I}.
+\tag{25.5}
+$$
+
+For every $\tau\ge\tau_{\min}$ define, in that clock,
+
+$$
+V_{\kappa,\tau}(y)=\int_\tau^\infty p_\kappa(t,o,y)dt,
+\qquad S(\tau)=\mathbb P_{k_0}(\zeta>\tau),
+\tag{25.6}
+$$
+
+where $\zeta$ is the first exit from $I$ of
+$K_t=k_0+\sqrt2\varepsilon B_t^1$. The source equation, both deaths
+and its charge are those of Theorem 20.2:
+
+$$
+L_\kappa V_{\kappa,\tau}=p_\kappa(\tau,o,\cdot),\qquad
+\int p_\kappa(\tau,o,y)d\mu(y)=S(\tau)\in(0,1).
+\tag{25.7}
+$$
+
+Compare exactly the two fields
+
+$$
+W_{\rm raw}=V_{\kappa,\tau},\qquad
+W_{\rm unit}=V_{\kappa,\tau}/S(\tau).
+\tag{25.8}
+$$
+
+The second has effective source $p_\kappa(\tau,o,\cdot)/S(\tau)$ of
+charge one; propagation in its inverse $L_\kappa^{-1}$ still has both
+height deaths. It is not a reset source or the Green field of a
+survival-conditioned free generator. Theorem 20.2 and Theorem 23.1,
+applied at each fixed pair $(\kappa,\tau)$, give bounded positive
+multipliers before the following attractive forms are used. They are
+closed on exactly $\mathcal F_\kappa$, have operator domain
+$D(L_\kappa)$, compact resolvent, and attained finite minima
+
+$$
+E_\sigma(\kappa,\tau;g)=
+\inf_{\substack{f\in\mathcal F_\kappa\\\|f\|_2=1}}
+\left(T_\kappa[f]-g\int W_\sigma|f|^2d\mu\right),\qquad g>0.
+\tag{25.9}
+$$
+
+Here the infimum is over the entire original domain. The unregularized
+full point-field collapse of Theorem 3.1 remains a different, reused
+statement. No attractive evolution is a premise of any estimate below.
+

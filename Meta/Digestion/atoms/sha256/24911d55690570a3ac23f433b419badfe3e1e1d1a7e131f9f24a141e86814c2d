@@ -1,0 +1,86 @@
+**Theorem 3.2 (uniform convergence with bounded resources does not control
+survival).** Fix $c\in(0,1/2)$, $Z=1-2c$, $a=c/2$, duration $T=1$ and
+constant real phase. Set $v=c/2$. For each integer $n\geq1$, define the
+triangular function on the $j$th cycle, $0\leq j<n$, by
+
+$$
+C_n(t)=
+\begin{cases}
+v(t-j/n),& j/n\leq t\leq(j+1/2)/n,\\
+v((j+1)/n-t),&(j+1/2)/n\leq t\leq(j+1)/n.
+\end{cases}
+\tag{IS.16}
+$$
+
+The actual original height control is
+
+$$
+S_*(t)=1-t/2,\qquad
+k_n(t)=\frac c2-\frac{C_n(t)}{2S_*(t)},\qquad \chi_n(t)=\chi_0.
+\tag{IS.17}
+$$
+
+These controls belong to both original regularity alternatives and have
+the following common bounds, in the acquisition supplier's chosen coordinate
+units:
+
+$$
+\begin{aligned}
+&k_n(0)=k_n(1)=a,\qquad c/4\leq k_n\leq c/2,\\
+&\min_i p_i(k_n(t))\geq\min(c/4,Z)>0,\qquad |k_n'|\leq3c/4,\\
+&\chi_n'=0,\quad \operatorname{TV}(\chi_n)=0,\quad
+  \operatorname{TV}(k_n)=\mathcal L_n\leq3c/4,\quad
+  \mathcal Q_n\leq9c^2/16.
+\end{aligned}
+\tag{IS.18}
+$$
+
+Here $\mathcal L=\int\sqrt{k'^2+\chi'^2}$ and
+$\mathcal Q=\int(k'^2+\chi'^2)$ are mathematical coordinate costs,
+not calibrated physical energy. Both $k_n\to a$ and the instrument's
+actual signed loss curves $C_n\to0$ uniformly, with bounds $c/(4n)$.
+Nevertheless the actual survival is $S_n(t)=1-t/2$, and hence
+
+$$
+S_n(1)=\tfrac12\neq1=S_{\mathrm{wait}}(1),\qquad
+d_{\mathrm{mark}}(\gamma_n,\mathrm{wait})
+=D_\rho(\gamma_n,\mathrm{wait})
+=d_{\mathrm{op}}(\gamma_n,\mathrm{wait})=\tfrac12
+\tag{IS.19}
+$$
+
+for every normalized live input with any reference in the $D_\rho$ equality.
+
+Proof. The functions in (IS.17) are continuous and smooth on each of the
+finitely many triangular legs, with denominators at least $1/2$. Their
+derivatives extend continuously to each closed leg. They therefore satisfy
+the finite-piecewise-$C^1$ condition and are absolutely continuous.
+The bounds $0\leq C_n\leq c/(4n)$ and $S_*\geq1/2$ give the height,
+margin and uniform-error bounds. Differentiation on a leg gives
+
+$$
+k_n'=-\frac{C_n'}{2S_*}-\frac{C_n}{4S_*^2}.
+\tag{IS.20}
+$$
+
+On rising legs $C_n'=v$ and this equals
+$-(c-k_n)/(2S_*)<0$. On falling legs $C_n'=-v$ and it equals
+$k_n/(2S_*)>0$. Thus the *actual* hazard from (IS.2) is
+$\lambda_n=1/(2S_*)$. Since $S_*'=-1/2$ and $S_*(0)=1$, it solves
+$S_*'=-\lambda_nS_*$ and is the actual survival. By (IS.14) the actual
+derivative of $F_0-F_1$ is $+v$ on the rising legs and $-v$ on the
+falling legs. It starts at zero, so the actual curve is precisely (IS.16).
+This verifies the family directly from the original hazard and jump law,
+without assuming any curve-realization theorem.
+
+From (IS.20),
+$|k_n'|\leq v+c/(4n)\leq3c/4$. Integrating this speed and its square
+over the unit interval proves the variation, length and quadratic bounds.
+The transported phase is zero, and the height returns to $a$, so
+$K^{(n)}_1=I_5/\sqrt2$. Completeness makes the total failure effect
+$I_5/2$. Waiting has successful operator $I_5$ and no failure output.
+For any normalized input with reference the success difference has trace
+norm $1/2$; the positive failure blocks together have trace $1/2$.
+Their half-sum in (IS.7) is $1/2$. The classical failure event gives the
+same distance for (IS.6). Taking the supremum changes nothing. $\square$
+

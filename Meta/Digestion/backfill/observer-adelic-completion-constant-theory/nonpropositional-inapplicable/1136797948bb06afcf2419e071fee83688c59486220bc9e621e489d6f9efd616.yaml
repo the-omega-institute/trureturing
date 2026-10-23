@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:1136797948bb06afcf2419e071fee83688c59486220bc9e621e489d6f9efd616
+  normalized_sha256: sha256:1136797948bb06afcf2419e071fee83688c59486220bc9e621e489d6f9efd616
+cas_ref: sha256:1136797948bb06afcf2419e071fee83688c59486220bc9e621e489d6f9efd616
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 'nonpropositional: Naming convention: an output satisfying the stated non-invariance condition is called an observer signature; no existence or invariance theorem asserted.'
+    previous_atom_id: 61c907ff443f21152917704a9e61b5e2a989beb38dcf721245daf2fc159ec65f
+    next_atom_id: e4c6a55a5ba051ddd99245ed0c24e21d8b2d48349e26c258f0a498c889b5f4b0

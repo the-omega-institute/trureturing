@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:e4327a9537bf2472ea0312441bafb3e908e463a21fa59b04d35558e587acf6cf
+  normalized_sha256: sha256:e4327a9537bf2472ea0312441bafb3e908e463a21fa59b04d35558e587acf6cf
+cas_ref: sha256:e4327a9537bf2472ea0312441bafb3e908e463a21fa59b04d35558e587acf6cf
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 'nonpropositional: Permitted input-constraint type: singleton equality.'
+    previous_atom_id: 9252400c195b4ab2ad96b5d691d72d6a7e33a6250248b9b54455f46f5455443c
+    next_atom_id: 365e2aa56c0dc391cdd70c9f8ea32a070dcf16a199b3be6c8d7a93c47a0139fc

@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:856fa91952b5fbe9eb4f3c4dde91053861b07e3b038da7b381b50a2320296f80
+  normalized_sha256: sha256:856fa91952b5fbe9eb4f3c4dde91053861b07e3b038da7b381b50a2320296f80
+cas_ref: sha256:856fa91952b5fbe9eb4f3c4dde91053861b07e3b038da7b381b50a2320296f80
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 上游绑定结算（不是非命题判定）。钉版 Mathlib 56a005855ea17e0b0958f73ec801ae140b0a1679；搜索范围：D5/**/*.lean（含 private）：sinh/cosh 的奇偶投影、integral_neg_eq_self、Dirac 积分和总质量形状；核对 ResolventParitySignatures、CayleyMomentTransport、CayleyLaguerreMomentTomography、FullCirclePrimalAttainment、CirclePrimalEquivalence、ExternalSupportInvisibility、LiCurvatureCriterion。未找到供应本条实际子目标的冻结定理；定义或相邻条件定理不冒充供应。 紧化预算定义为圆周总质量；MeasureTheory.Measure.add_apply、MeasureTheory.Measure.smul_apply、MeasureTheory.Measure.dirac_apply_of_mem 给出 (mu+c delta_1)(univ)=mu(univ)+c，故 infinity atom 在 resolvent 预算中被计量。
+    previous_atom_id: b653ced4fdb61a5cdd6b8a4dab9ef2d0f5fe1fa55870d97e3f747ae08c21d61d
+    next_atom_id: 394afdc11924c5c1363c4dbbe3b00d5c8d242e4e50ea0c10f25bbfc26cd4a800

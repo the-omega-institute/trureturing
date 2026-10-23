@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:c0018c08217a14c60a7ada36e11d17d86cc1936218ecdbb522808c5c3375d3c8
+  normalized_sha256: sha256:c0018c08217a14c60a7ada36e11d17d86cc1936218ecdbb522808c5c3375d3c8
+cas_ref: sha256:c0018c08217a14c60a7ada36e11d17d86cc1936218ecdbb522808c5c3375d3c8
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: Formalization recommendations and evidence disclaimer only; lists prospective targets without asserting that they are compiled.
+    previous_atom_id: ec6468fc883464ca0bb830185a193759872074b9f267d42c981595f2cb0abf33
+    next_atom_id: 4c85211ab6804ed88cf92fa6db3ee95b6fa3c961238d73573bbfe462a2904db4

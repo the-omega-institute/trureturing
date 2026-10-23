@@ -1,0 +1,4 @@
+**Theorem 10.4 (Graph-derived complete conditional inventory law).** In Definitions 10.1–10.3, the following assertions hold together.
+
+1. The map $\lambda:U\times\{0,1,2,3\}\to\operatorname{Fix}(r_a)$ is a bijection, constructed from the labelled graph incidences, and
+

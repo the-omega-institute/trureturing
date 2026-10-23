@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:1305e9456e2346d4da8a5c8d917ba81f9204a18ad637db0d78463bad41eb65b9
+  normalized_sha256: sha256:1305e9456e2346d4da8a5c8d917ba81f9204a18ad637db0d78463bad41eb65b9
+cas_ref: sha256:1305e9456e2346d4da8a5c8d917ba81f9204a18ad637db0d78463bad41eb65b9
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: Purpose assignment to record scattering and observability; no scattering or observability theorem.
+    previous_atom_id: 06672455256bbc7490ee7510eb57a2ee8a00308470dcb8160afd4bc4d9de74b3
+    next_atom_id: 96ff83857e1c8a41429a5392515497d52199c6effbc4ddc58a6d8bb24fe0e53c

@@ -1,0 +1,83 @@
+**定理 8.6（常秩预测子丛与正概率后验下降）。**
+令 $B$ 为光滑流形，$H,A,O$ 固定。假设每个仪器分支 $\Phi_{a,o,\lambda}$ 的矩阵系数及有限末端效果 $G_{j,\lambda}$ 都光滑依赖 $\lambda\in B$，且末端族始终含 $I$。在每个参数上按定义[8.3](#obs-def-closure)构造 $W_{\infty,\lambda}$。
+
+若其维数在某开域 $U\subseteq B$ 恒为 $r$，则
+
+$$
+\mathcal W=\coprod_{\lambda\in U}W_{\infty,\lambda},\qquad
+ \mathcal N=\coprod_{\lambda\in U}W_{\infty,\lambda}^{\perp}
+$$
+
+分别是平凡实向量丛 $U\times V$ 的光滑秩 $r$ 和 $d^2-r$ 子丛。商丛 $(U\times V)/\mathcal N$ 是线性预测丛；其中物理态像的迹一仿射包络具有秩 $r-1$。
+
+每个参数处、每个输出分支在商上诱导良定义的线性更新。对该分支概率严格正的物理商态，归一化后验更新也良定义。令 $P_\lambda$ 为到 $W_{\infty,\lambda}$ 的正交投影，则
+
+$$
+\nabla s=P\,ds,
+ \qquad
+ F_\nabla=P(dP\wedge dP)P
+$$
+
+给出 $\mathcal W$ 上一个度量相容联络及其曲率。该数学联络的物理可实现性不包含在这些假设中。
+
+**证明。**
+
+因为初始效果空间至少含 $I$，定理[8.4](#obs-thm-predictive)给统一上界
+
+$$
+W_{\infty,\lambda}=W_{d^2-1,\lambda}.
+$$
+
+有限动作、输出、末端族及有限词长使右侧由有限多个光滑词效果张成。将这些效果在固定的 $V$ 正交基中排成列矩阵 $C(\lambda)$。它在 $U$ 上秩恒为 $r$。在任意 $\lambda_0$ 选择一个非零的 $r$ 阶子式；该子式在某邻域仍非零，对应的 $r$ 列在那里构成光滑局部标架。因此 $\mathcal W$ 是光滑子丛。
+
+若局部标架矩阵为 $C_0$，正交投影为
+
+$$
+P=C_0(C_0^{\mathsf T}C_0)^{-1}C_0^{\mathsf T}.
+$$
+
+故 $P$ 光滑；$I-P$ 的像给光滑正交补子丛 $\mathcal N$。不同局部公式都等于唯一正交投影，所以可以拼接。商丛由正交投影与 $\mathcal W$ 同构。恒等矩阵属于每个纤维，$\mathcal N\subseteq U\times V_0$；减去固定 $I/d$ 后，迹一物理态像的仿射包络与 $\mathcal W\cap(U\times V_0)$ 同构，秩为 $r-1$。
+
+固定参数，若 $X\in N$、$E\in W_\infty$，则
+
+$$
+\operatorname{Tr}[\Phi_{a,o}(X)E]
+ =\operatorname{Tr}[X\Phi_{a,o}^*(E)]=0,
+$$
+
+因为闭包已对每个 $`\Phi_{a,o}^*`$ 不变。因此 $\Phi_{a,o}N\subseteq N$，商映射
+
+$$
+\overline\Phi_{a,o}([X])=[\Phi_{a,o}(X)]
+$$
+
+良定义。迹也在商上良定义，因为 $N$ 中元素迹零。若 $[\rho]=[\sigma]$，它们对该分支有同一个概率
+
+$$
+p=\operatorname{Tr}\Phi_{a,o}(\rho)
+   =\operatorname{Tr}\Phi_{a,o}(\sigma).
+$$
+
+当 $p>0$ 时，后验差为 $\Phi_{a,o}(\rho-\sigma)/p\in N$，所以归一化后验仍属同一商类；当 $p=0$ 时，该事件在该输入上不发生，本定理不定义条件后验。
+
+对 $\mathcal W$ 的截面 $s$ 有 $Ps=s$。$\nabla s=Pds$ 满足 Leibniz 规则，并且对任意截面 $s,t$，
+
+$$
+d\langle s,t\rangle
+ =\langle Pds,t\rangle+\langle s,Pdt\rangle,
+$$
+
+故度量相容。微分 $P^2=P$ 得 $PdPP=0$。于是
+
+$$
+\nabla^2s=P\,dP\wedge ds
+ =P\,dP\wedge dP\,s
+ =P(dP\wedge dP)Ps,
+$$
+
+即所给曲率公式。构造只用统计效果空间和 Hilbert--Schmidt 度量；没有给出沿参数路径驱动实际系统的 Hamiltonian，因而不能把该投影联络的平行运输直接宣告为可调用量子门。
+
+证毕。
+
+<a id="obs-prop-growth"></a>
+
