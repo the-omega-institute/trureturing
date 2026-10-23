@@ -3291,3 +3291,1533 @@ classical tools, applied with the displayed model-specific hypotheses.
 
 ## 追加锚（本行以下为增补区）
 
+## 47. Equal-width terminal-M collisions in the entire child
+
+**Definition 47.1 (An equal-width M pair).** Retain exactly the complete
+worlds and entire children of Definitions 1.1–1.2. In particular the
+literal acquired word is $J,M,J,M,M,M$, its clocks are $0,\ldots,6$,
+its readings are $(0,24,147/5,24,18,p,v)$, and both alternatives use
+clock seven. For $p\ne24$, an equal-width M pair consists of
+
+$$
+W_1,W_2\in C(p,v),\quad W_1\ne W_2,\qquad m(W_1)=m(W_2),\qquad
+b(W_1)=b(W_2)=b>0.
+\tag{47.1}
+$$
+
+Equality of widths is a condition on these two worlds, not on every
+world of the entire child. Write $r_i,j_i,n_i,d_i,\epsilon_i$ for their
+coordinates, where $\epsilon_i=d_i-24$. Throughout the following
+sections $T=1+b$ and $U=1+2b$ at a common width. Define
+
+$$
+\begin{aligned}
+H_0(b)&=50b^4-1137b^3-842b^2-1442b-1262,\\
+H_1(b)&=2000b^4-13092b^3-74938b^2-88421b-33300,\\
+H_2(b)&=11209b+37242,\\
+H_3(b)&=1289b^3-12511b^2-66211b-38698,\\
+\mathcal B_b(x,y)&=H_3(b)xy+TUH_2(b)(x+y)+UH_1(b),\\
+F_{\rm w}(b)&=5289b^5+8141b^4-12957b^3
+                  -44608b^2-80537b-33300.
+\end{aligned}
+\tag{47.2}
+$$
+
+The polynomials $H_i$ here are distinct from the circuit denominator
+$H=b\widehat D$ of Definition 2.1.
+
+**Theorem 47.2 (Fixed-width necessary identities and exclusion).** Every
+pair in (47.1) satisfies the two exact necessary identities
+
+$$
+\boxed{H_3(b)n_1n_2+TUH_2(b)(n_1+n_2)+UH_1(b)=0}
+\tag{47.3}
+$$
+
+and
+
+$$
+\boxed{3T H_2(b)(n_1-n_2)=5H_0(b)(d_1-d_2)}.
+\tag{47.4}
+$$
+
+Both distinctions
+
+$$
+d_1\ne d_2,\qquad n_1\ne n_2
+\tag{47.5}
+$$
+
+are consequences of (47.1), rather than extra hypotheses. The
+polynomial $F_{\rm w}$ has a unique positive real root $\rho$, with
+$2<\rho<3$. Every such pair has $b<\rho$; equivalently, no pair in
+(47.1) has common width $b\ge\rho$. Moreover
+
+$$
+(n_1-n_2)(d_1-d_2)<0.
+\tag{47.6}
+$$
+
+These are necessary conditions at equal widths. The bound $b<\rho$
+is not an existence assertion for any common width below $\rho$.
+The proof occupies Sections 48–52.
+
+## 48. Full-parent reconstruction without a regular-chart restriction
+
+Use the source coordinates of (19.1):
+
+$$
+\begin{gathered}
+c_{\rm src}=r(1-r)/b,\quad j=b+c_{\rm src},\quad n=j+r,\quad
+T=1+b,\quad U=1+2b,\quad\epsilon=d-24,\\
+\Lambda=1+6/T+1/U-4/j-4/n,\\
+B_{\rm par}=6/T-2/U=2(2+5b)/(TU)>0,\\
+D_{\rm par}=\frac{24}{5}(b-1/8)B_{\rm par}.
+\end{gathered}
+\tag{48.1}
+$$
+
+The symbol $D_{\rm par}$ is the constant term in the parent equation,
+not the regular-chart denominator of Section 31.
+
+**Lemma 48.1 (The zero-safe parent and its actual-world lift).** The full
+five-row parent consists exactly of $b>0$, $0<r<1$, $\epsilon\in\mathbb R$
+satisfying
+
+$$
+\epsilon\Lambda+D_{\rm par}=0.
+\tag{48.2}
+$$
+
+Its corresponding complete world has $P=P(r,b)$, $d=24+\epsilon$, and
+
+$$
+\begin{gathered}
+z_0=-24-\epsilon,\quad z_1=-\epsilon/j,\quad
+z_2=(27/5-\epsilon)/T,\quad z_3=-\epsilon/n,\\
+g(s)=\sum_{i=0}^3 z_i\ell_i(s),\qquad
+\ell_i(s)=\prod_{\substack{0\le k\le3\\ k\ne i}}\frac{s-k}{i-k}.
+\end{gathered}
+\tag{48.3}
+$$
+
+This is a bijection with complete worlds, including every source with
+$\Lambda=0$.
+
+**Proof.** All of $j,n,T,U$ are strictly positive on the source domain.
+The literal traces, already obtained in Lemma 2.2, are
+
+$$
+\begin{array}{c|rrrrrrrrr}
+\text{clock/action}&0&1,J&2,M&3,J&4,M&5,M&6,M&7,J&7,M\\ \hline
+\text{trace}&1&j&T&n&U&U+n&2U+n&T+2j+4r&3U+2n.
+\end{array}
+\tag{48.4}
+$$
+
+The first four original readings therefore force exactly the four
+samples in (48.3). A polynomial of degree at most three is uniquely
+determined by these samples. The fixed-node weights give
+
+$$
+\begin{array}{c|rrrr}
+s&\ell_0(s)&\ell_1(s)&\ell_2(s)&\ell_3(s)\\ \hline
+4&-1&4&-6&4\\
+5&-4&15&-20&10\\
+6&-10&36&-45&20\\
+7&-20&70&-84&35.
+\end{array}
+\tag{48.5}
+$$
+
+Substitution of the first row into the fifth original reading gives
+
+$$
+d+Ug(4)-18=U(\epsilon\Lambda+D_{\rm par}).
+\tag{48.6}
+$$
+
+After division of this residual by $U$, its constant term is
+$6/U+24-162/(5T)=D_{\rm par}$, and its coefficient of $\epsilon$
+is $\Lambda$. Hence (48.2) is both necessary and sufficient. The source
+matrix is legal because $b>0$, $0<r<1$, and (48.3) has degree at most
+three. Its whole gain cannot vanish identically: otherwise the first
+two readings would both be $d$, contrary to $0\ne24$. Conversely every
+parent world fixes $(b,r,\epsilon)$ and these samples, proving the
+bijection. This is the target-parent correspondence of Section 19 and
+*FIB common-parent geometry and two exact mixed children*, Theorem 2.1,
+with its reconstruction displayed in the present notation. $\square$
+
+In particular $\Lambda=0$ forces $D_{\rm par}=0$, hence $b=1/8$.
+At any source with $b=1/8$ and $\Lambda=0$, every real $\epsilon$ is
+allowed by (48.2), including $\epsilon=-24$, which gives zero drift.
+The reconstruction divides by positive source traces and fixed
+interpolation-node differences, never by $\Lambda$, a gain sample,
+a leading coefficient or a difference of gain roots.
+
+**Lemma 48.2 (The original $p\ne24$ condition).** Every world of
+$C(p,v)$ with $p\ne24$ has $\epsilon\ne0$.
+
+**Proof.** If $\epsilon=0$, then (48.2) and $B_{\rm par}>0$ force
+$b=1/8$. The four samples in (48.3) then give exactly
+
+$$
+g(s)=h(s)=\frac85(s-1)(s-3)(s-5),\qquad d=24.
+\tag{48.7}
+$$
+
+Since $h(5)=0$, the literal fifth response is $p=24$, a contradiction.
+Thus $\epsilon\ne0$ is a derived consequence of the required base,
+not a restriction on the original world domain. In particular it does
+not require $d\ne0$. $\square$
+
+## 49. A zero-safe affine lift of three actual responses
+
+For $b>0$ define the following functions of the width alone:
+
+$$
+\begin{aligned}
+\mathsf C_5&=\frac{3(b+2)(8b-1)}{2TU},&
+\mathsf A_5&=\frac{b^2-16b-12}{2TU},\\
+\mathsf C_6&=\frac{3(80b^2+192b+31)}{5TU},&
+\mathsf A_6&=\frac{2b^2-24b-17}{TU},\\
+\mathsf C_7&=\frac{3(200b^2+503b+114)}{5TU},&
+\mathsf A_7&=\frac{5b^2-52b-36}{TU}.
+\end{aligned}
+\tag{49.1}
+$$
+
+These symbols denote gain coefficients; they are not the response
+coefficients $A_5,A_6$ of (19.3). Put
+
+$$
+L_{\rm w}(b)=
+\begin{pmatrix}
+\mathsf C_5&\mathsf A_5&6+U\mathsf A_5&5U\\
+\mathsf C_6&\mathsf A_6&17+2U\mathsf A_6&32U\\
+2\mathsf C_7&2\mathsf A_7&71+3U\mathsf A_7&105U
+\end{pmatrix}.
+\tag{49.2}
+$$
+
+**Lemma 49.1 (Full-parent affine response identity).** On every full
+parent world the literal responses after fifth M, sixth M and terminal
+M satisfy
+
+$$
+\begin{pmatrix}p-24\\v-24\\m-24\end{pmatrix}
+=
+\begin{pmatrix}U\mathsf C_5\\2U\mathsf C_6\\3U\mathsf C_7\end{pmatrix}
++L_{\rm w}(b)
+\begin{pmatrix}n\\\epsilon n\\\epsilon\\\epsilon/n\end{pmatrix}.
+\tag{49.3}
+$$
+
+This identity also holds when $\epsilon=0$ or $\Lambda=0$.
+
+**Proof.** Rearranging (48.2), without dividing by either of those
+quantities, gives
+
+$$
+\frac{\epsilon}{j}
+=\frac{\epsilon}{4}(1+6/T+1/U)-\frac{\epsilon}{n}
+ +\frac{D_{\rm par}}4.
+\tag{49.4}
+$$
+
+Insert (49.4) in the last three interpolation rows (48.5).
+Collection of the constant and $\epsilon$ coefficients yields
+
+$$
+\begin{aligned}
+g(5)&=\mathsf C_5+\mathsf A_5\epsilon+5\epsilon/n,\\
+g(6)&=\mathsf C_6+\mathsf A_6\epsilon+16\epsilon/n,\\
+g(7)&=\mathsf C_7+\mathsf A_7\epsilon+35\epsilon/n.
+\end{aligned}
+\tag{49.5}
+$$
+
+Explicitly, the same coefficients before simplification are
+
+$$
+\begin{aligned}
+\mathsf C_5&=96-108/T-15D_{\rm par}/4,&
+\mathsf A_5&=(1-10/T-15/U)/4,\\
+\mathsf C_6&=240-243/T-9D_{\rm par},&
+\mathsf A_6&=1-9/T-9/U,\\
+\mathsf C_7&=480-2268/(5T)-35D_{\rm par}/2,&
+\mathsf A_7&=5/2-21/T-35/(2U).
+\end{aligned}
+\tag{49.6}
+$$
+
+Substituting (48.1) simplifies these to (49.1). Multiply (49.5),
+respectively, by $U+n$, $2U+n$ and $3U+2n$, and add $d=24+\epsilon$.
+The results are exactly (49.2)–(49.3). Thus these three readings belong
+to the same complete world with its one whole gain and one fixed drift.
+Only positive $j,n,T,U$ have been divided out. $\square$
+
+## 50. The everywhere rank-three cofactor line
+
+**Lemma 50.1 (Rank and kernel at every positive width).** For every
+$b>0$, $L_{\rm w}(b)$ has rank three, and
+
+$$
+\ker L_{\rm w}(b)=\mathbb R K_{\rm w}(b),\qquad
+K_{\rm w}(b)=
+\begin{pmatrix}
+-5UH_0(b)\\3UH_1(b)\\-3TUH_2(b)\\3H_3(b)
+\end{pmatrix}.
+\tag{50.1}
+$$
+
+**Proof.** The determinant of the three columns numbered one, two and
+four of (49.2) is
+
+$$
+-\frac{3H_2(b)}{10T}\ne0,
+\tag{50.2}
+$$
+
+since $H_2(b)=11209b+37242>0$. More explicitly, delete column $i$
+and multiply its maximal minor by $(-1)^{i+1}$. In column order the
+four signed minors are
+
+$$
+\left(
+-\frac{H_0}{2T^2},\quad
+\frac{3H_1}{10T^2},\quad
+-\frac{3H_2}{10T},\quad
+\frac{3H_3}{10T^2U}
+\right).
+\tag{50.3}
+$$
+
+These equalities follow by substituting (49.1) into (49.2) and
+expanding the three-by-three determinants. Each row annihilates this
+cofactor vector, by expansion of the determinant with that row
+repeated. Multiplication of (50.3) by the positive scalar $10T^2U$
+gives $K_{\rm w}$. The nonzero minor proves rank three, so this
+nonzero kernel vector spans the entire kernel. No width at which
+$H_0$, $H_1$ or $H_3$ vanishes is deleted. $\square$
+
+## 51. Pair identities and distinctions forced by actual worlds
+
+Suppose (47.1) holds. Subtracting (49.3) at the common width gives
+
+$$
+L_{\rm w}(b)\delta=0,\qquad
+\delta=
+\begin{pmatrix}
+n_1-n_2\\
+\epsilon_1n_1-\epsilon_2n_2\\
+\epsilon_1-\epsilon_2\\
+\epsilon_1/n_1-\epsilon_2/n_2
+\end{pmatrix}.
+\tag{51.1}
+$$
+
+First $\delta\ne0$. Otherwise $n_1=n_2$ and
+$\epsilon_1=\epsilon_2=\epsilon\ne0$ by Lemma 48.2. Equation (49.4)
+then gives the same $\epsilon/j$ in both worlds, hence the same $j$.
+Thus $r=n-j$ is also the same. The fixed width, source and drift
+coincide, and (48.3) fixes the same entire gain, contradicting
+$W_1\ne W_2$. The use of $\epsilon\ne0$ here is justified by
+$p\ne24$; it is not required for the affine lift.
+
+Lemma 50.1 now gives a real $t\ne0$ such that
+
+$$
+\delta=tK_{\rm w}(b).
+\tag{51.2}
+$$
+
+Its third coordinate is nonzero because $T,U,H_2$ are positive.
+Consequently $\epsilon_1\ne\epsilon_2$, or $d_1\ne d_2$.
+Comparing its first and third coordinates yields (47.4).
+For (47.3) use the exact algebraic identity
+
+$$
+(\epsilon_1n_1-\epsilon_2n_2)
++n_1n_2(\epsilon_1/n_1-\epsilon_2/n_2)
+=(n_1+n_2)(\epsilon_1-\epsilon_2).
+\tag{51.3}
+$$
+
+Substitute (51.2) and cancel the known nonzero scalar $3t$ to obtain
+
+$$
+UH_1+H_3n_1n_2+TUH_2(n_1+n_2)=0.
+\tag{51.4}
+$$
+
+No gain value, root difference, drift or $\Lambda$ is cancelled in
+this step.
+
+The distinction $n_1\ne n_2$ follows from the actual-world hypotheses
+as well. For $0<b\le3$ one has
+
+$$
+H_0(b)=(50b-1137)b^3-842b^2-1442b-1262<0.
+\tag{51.5}
+$$
+
+If $n_1=n_2$, equation (47.4) and $d_1\ne d_2$ would force
+$H_0(b)=0$, so $b>3$. At a fixed such width the function
+
+$$
+n(r)=b+\frac{(b+1)r-r^2}{b},\qquad
+\frac{dn}{dr}=\frac{b+1-2r}{b}>0\quad(0<r<1)
+\tag{51.6}
+$$
+
+is strictly increasing. Hence equal $n$ forces equal $r$, and both
+worlds have the same source. Since $b>3$, $D_{\rm par}\ne0$;
+(48.2) therefore forces $\Lambda\ne0$ at that source.
+Subtracting their two parent equations gives
+$(\epsilon_1-\epsilon_2)\Lambda=0$, contradicting their different
+drifts. This proves both assertions of (47.5) without assuming them.
+
+## 52. A positive-root range excluding every common-width M pair
+
+For $b\ge1$ every strict source has
+
+$$
+b<n<b+1.
+\tag{52.1}
+$$
+
+Indeed $n-b=r(b+1-r)/b>0$ and
+$b+1-n=(1-r)(b-r)/b>0$. The three different corner values of
+$\mathcal B_b$ on $[b,b+1]^2$ are
+
+$$
+\begin{aligned}
+\mathcal B_b(b,b)=F_{\rm w}(b)
+ &=5289b^5+8141b^4-12957b^3-44608b^2-80537b-33300,\\
+\mathcal B_b(b,b+1)=\mathcal B_b(b+1,b)=G_{\rm w}(b)
+ &=5289b^5+9430b^4-3050b^3-2708b^2+3700b+3942,\\
+\mathcal B_b(b+1,b+1)=H_{\rm w}(b)
+ &=5289b^5+10719b^4+8146b^3+26681b^2+21726b+2486.
+\end{aligned}
+\tag{52.2}
+$$
+
+The descending coefficient signs of $F_{\rm w}$ have exactly one
+change. Descartes' rule of signs gives at most one positive root,
+counted with multiplicity. The exact evaluations
+
+$$
+F_{\rm w}(2)=-176958<0,\qquad F_{\rm w}(3)=918426>0
+\tag{52.3}
+$$
+
+and the intermediate value theorem give such a root
+$\rho\in(2,3)$. It is the unique positive root. Since the leading
+coefficient is positive, $F_{\rm w}(b)\ge0$ for $b\ge\rho$.
+The exact shifted expansion
+
+$$
+G_{\rm w}(2+u)=5289u^5+62320u^4+283950u^3
+              +628432u^2+681148u+296238
+\tag{52.4}
+$$
+
+is positive for $u\ge0$. All coefficients of $H_{\rm w}$ in
+(52.2) are positive, so $H_{\rm w}(b)>0$ for $b>0$.
+
+Let $b\ge\rho$. For $x,y\in(b,b+1)$ put $s=x-b$, $t=y-b$.
+Bilinear interpolation gives exactly
+
+$$
+\mathcal B_b(x,y)
+=(1-s)(1-t)F_{\rm w}(b)
++\{s(1-t)+(1-s)t\}G_{\rm w}(b)
++stH_{\rm w}(b).
+\tag{52.5}
+$$
+
+Here $0<s,t<1$. The first term is nonnegative, and the last two
+are positive, including at $b=\rho$. Thus
+$\mathcal B_b(x,y)>0$ throughout this open square. By (52.1) the
+actual $n_1,n_2$ lie in it, contradicting (47.3). Hence every pair
+in (47.1) has $b<\rho$.
+
+For such a pair $b<\rho<3$, so (51.5) gives $H_0(b)<0$.
+Multiplication of (47.4) by $d_1-d_2$ now gives
+
+$$
+3T H_2(b)(n_1-n_2)(d_1-d_2)
+=5H_0(b)(d_1-d_2)^2<0.
+\tag{52.6}
+$$
+
+This proves (47.6) and completes Theorem 47.2. $\square$
+
+## 53. Independent-pair scope and comparison with the parent results
+
+The original question of Definition 1.2 retains the full predicate
+
+$$
+\begin{gathered}
+\exists p,v\in\mathbb R,\quad p\ne24,\quad
+\exists W_{J0},W_{J1},W_{M0},W_{M1}\in C(p,v):\\
+W_{J0}\ne W_{J1},\qquad a(W_{J0})=a(W_{J1}),\\
+W_{M0}\ne W_{M1},\qquad m(W_{M0})=m(W_{M1}).
+\end{gathered}
+\tag{53.1}
+$$
+
+The two pairs may overlap, and their common terminal readings may
+differ. No source coordinate or gain direction is an acquired
+observation.
+
+**Corollary 53.1 (The equal-width alternative for an independent M
+pair).** If (53.1) holds, its independently chosen M pair either has
+unequal widths, or has a common width $0<b<\rho$ satisfying
+(47.3)–(47.6). This assertion imposes no equality of widths on the
+J pair and no relation between the two common terminal readings.
+
+**Proof.** If the two M widths agree, that pair satisfies exactly
+Definition 47.1, so Theorem 47.2 applies. Otherwise it is in the
+unequal-width alternative. The J pair does not enter that theorem's
+hypotheses or proof. $\square$
+
+For the four worlds of Proposition 40.1, the source intervals (40.2)
+give, with exact rational decimal endpoints,
+
+$$
+\begin{gathered}
+b_A\in(0.1148,0.1149),\qquad b_C\in(0.1172,0.1173),\\
+b_D\in(0.2175,0.2176),\qquad b_B\in(0.3115,0.3116).
+\end{gathered}
+\tag{53.2}
+$$
+
+These intervals are pairwise disjoint. Consequently none of the six
+pairs among those four worlds meets the equal-width hypothesis.
+The fixed-width exclusion supplies no obstruction to that J
+construction, no assertion about its continuations, and no exclusion
+of additional companions in its entire child. Its listed M readings
+remain pairwise distinct by Proposition 40.1; that finite comparison
+is not injectivity of M on the entire child.
+
+The preceding results differ from the relevant parent theorems in
+*FIB common-parent geometry and two exact mixed children* as follows.
+Its Theorem 3.2 concerns equal projective gain directions on the
+five-row parent: outside the saturated direction each direction has
+at most one complete world. When $p\ne24$ the saturated direction
+is absent. That theorem compares proportional whole gains; it does
+not impose equal widths or compare the three shared actual responses
+$p,v,m$ of arbitrary distinct worlds. The affine response kernel and
+identities (47.3)–(47.4) supply those latter constraints without a
+proportional-gain hypothesis.
+
+Its Theorem 4.1 describes the exceptional slice $b=\beta$ at the
+parent parameter $\beta$; at the present parent $\beta=1/8$.
+Its Theorem 5.1 excludes full fifth-M $L_2$ supports contained in that
+exceptional slice and supplies the associated direction restrictions.
+A fifth-M $L_2$ support requires both sixth actions and their
+continuations; a single terminal-M pair after the specified sixth M
+is a different assertion. In addition an arbitrary common width here
+need not equal $1/8$. Thus neither the exceptional-slice result nor
+its full-support exclusion gives (47.3), (47.4), or the range
+$b\ge\rho$ for actual M pairs at arbitrary common widths. The new
+identities apply also at the exceptional width when their actual-world
+hypotheses hold.
+
+The zero-safe parent and complete-world meaning are inherited from
+Sections 1–2, 19 and 31 and the cited Common Parent Theorem 2.1.
+The model-specific affine reduction, cofactor line, fixed-width
+identities and corner exclusion are those of *A zero-safe fixed-width
+obstruction for the independent-pair problem*, expressed here with
+that whole-world correspondence. Section 51 also derives
+$n_1\ne n_2$ from the stated hypotheses, rather than adding it as a
+restriction. Fixed-node polynomial interpolation, the cofactor
+identity, bilinear interpolation, Descartes' rule and the intermediate
+value theorem are the classical tools within these proofs.
+
+The necessary identities do not themselves supply legal sources,
+their full parent lifts, or a shared acquired child. No sufficiency
+or sharp existence threshold at $\rho$ follows. The exclusion is
+confined to equal widths at least $\rho$; it does not exclude
+unequal-width M pairs or establish any realizable equal-width pair
+below $\rho$. The existence of the independent pairs in (53.1), or
+a global impossibility theorem for them, remains unresolved.
+
+Every universal full-parent identity above retains $\Lambda=0$,
+vanishing sampled gains, lower degrees, repeated gain roots and zero
+drift wherever the original rows permit them. The original entire
+child still contains all legal worlds of Definitions 1.1–1.2,
+including its singular and degenerate strata. The distinctions of
+(47.5) and the nonzero $\epsilon$ of Lemma 48.2 are forced only under
+the explicitly stated collision and $p\ne24$ hypotheses; they are
+not replacements for the unrestricted domain.
+
+## 追加锚（本行以下为增补区）
+
+## 54. All-width reconstruction and the exact parent correspondence
+
+Retain the entire child and complete worlds of Definitions 1.1–1.2.
+The chronological acquired word is literally $J,M,J,M,M,M$, with
+readings $(0,24,147/5,24,18,p,v)$ at clocks $0,\ldots,6$.
+The alternative terminal actions $J$ and $M$ both occur at clock seven.
+Each world has its own fixed source $P(r,b)$, one fixed real drift $d$
+and one whole nonzero real polynomial $g$ of degree at most three.
+There is no restriction to a regular source chart or a particular
+component of the entire child.
+
+Fix real $p\ne24,v,w$. The variable $w$ prescribes the terminal-M
+answer, so the object to reconstruct is
+
+$$
+\{W\in C(p,v):m(W)=w\}.
+\tag{54.1}
+$$
+
+The width $b>0$ is allowed to vary over all positive real numbers.
+Widths, $r,j,n$, gain coefficients and drift coordinates are defined
+source parameters, not additional acquired observations. In particular
+prescribing $w$ selects a terminal-response fiber; it does not add a
+source port to the acquired experiment.
+
+**Definition 54.1 (Notation and reused identities).** Use exactly
+$T,U,j,n,\epsilon,D_{\rm par},\Lambda$ from (48.1), and put
+
+$$
+\mathcal A_{\rm par}=1+6/T+1/U,\qquad
+\Lambda=\mathcal A_{\rm par}-4/j-4/n.
+\tag{54.2}
+$$
+
+The parent and full-world reconstruction are Lemma 48.1, with
+$\epsilon=d-24$, $D_{\rm par}=\frac{24}{5}(b-1/8)B_{\rm par}$ and
+the four samples (48.3). The affine identity to be used is precisely
+(49.3), with the coefficients $\mathsf C_i,\mathsf A_i$ of (49.1)
+and matrix $L_{\rm w}$ of (49.2). The rank and cofactor line are
+Lemma 50.1. None of these results requires $\Lambda\ne0$.
+
+For explicit correspondence with *Exact cross-width reconstruction of
+a terminal-M response triple*, its symbols have the following meanings
+in the present volume:
+
+$$
+\begin{array}{c|c}
+\text{cross-width notation}&\text{present notation}\\ \hline
+e&\epsilon=d-24\\
+\mathcal A&\mathcal A_{\rm par}\\
+D&D_{\rm par}\\
+C_i,A_i&\mathsf C_i,\mathsf A_i\quad(i=5,6,7)\\
+L,V&L_{\rm w},\mathsf V\\
+\alpha,\beta,\gamma&\alpha_{\rm w},\beta_{\rm w},\gamma_{\rm w}\\
+\kappa,\eta&\kappa_{\rm rec},\eta_{\rm rec}\\
+Q,R,\Delta&Q_{\rm rec},R_{\rm rec},\Delta_{\rm rec}\\
+q,q_0,\varrho&q_{\rm rec},q_{\rm s},\chi_{\rm src}\\
+F,G&F_{\rm rec},G_{\rm rec}.
+\end{array}
+\tag{54.3}
+$$
+
+The width slope $\alpha_{\rm w}$ is unrelated to the isolated fold
+coordinate $\alpha_{\rm f}$ or the gain coefficients $\alpha_i$.
+The slope $\beta_{\rm w}$ is not the parent parameter $\beta=1/8$.
+The scalar $D_{\rm par}$ is neither the chart denominator
+$\widehat D$ nor the local alias $D$ of Section 31.
+The symbols $\kappa_{\rm rec},\eta_{\rm rec}$ below are response
+consistency coefficients, not the fold curvature or a chart radius.
+In Sections 55–60, $X,Y,Z$ denote transformed response coordinates,
+not the source polynomial $X=\mathcal J$ used in Sections 32–38.
+Finally $\chi_{\rm src}$ is a reconstruction numerator, not the
+positive width cutoff $\rho$ of Theorem 47.2; and $Q_{\rm rec}$ is a
+scalar polynomial, not an action product $Q_i$.
+
+The full-parent literal formulas needed below, directly from
+(48.4), (49.3) and (49.5), are
+
+$$
+\begin{aligned}
+g(5)&=\mathsf C_5+\mathsf A_5\epsilon+5\epsilon/n,\\
+g(6)&=\mathsf C_6+\mathsf A_6\epsilon+16\epsilon/n,\\
+g(7)&=\mathsf C_7+\mathsf A_7\epsilon+35\epsilon/n,\\
+p(W)&=24+\epsilon+(U+n)g(5),\\
+v(W)&=24+\epsilon+(2U+n)g(6),\\
+m(W)&=24+\epsilon+(3U+2n)g(7),\\
+a(W)&=24+\epsilon+(T+2j+4r)g(7).
+\end{aligned}
+\tag{54.4}
+$$
+
+These are responses of the same complete world at the specified
+literal clocks. Lemma 48.2 gives $\epsilon\ne0$ whenever $p\ne24$.
+This is a consequence of the prescribed base, not a prohibition on
+zero drift: $d=0$ means $\epsilon=-24$ and remains admitted whenever
+the original equations hold. The parent, interpolation and cofactor
+proofs in Sections 48–50 are reused with this exact correspondence.
+
+## 55. An explicit inverse at every positive width
+
+**Definition 55.1 (Width slopes and response transform).** With exactly
+the polynomials $H_0,H_1,H_2,H_3$ of (47.2), set
+
+$$
+\alpha_{\rm w}=\frac{5H_0}{3TH_2},\qquad
+\beta_{\rm w}=-\frac{H_1}{TH_2},\qquad
+\gamma_{\rm w}=-\frac{H_3}{TUH_2}.
+\tag{55.1}
+$$
+
+Let $\mathsf V$ consist of columns one, two and four of $L_{\rm w}$:
+
+$$
+\mathsf V=
+\begin{pmatrix}
+\mathsf C_5&\mathsf A_5&5U\\
+\mathsf C_6&\mathsf A_6&32U\\
+2\mathsf C_7&2\mathsf A_7&105U
+\end{pmatrix}.
+\tag{55.2}
+$$
+
+For the prescribed triple $(p,v,w)$ define
+
+$$
+q_{\rm rec}=
+\begin{pmatrix}
+p-24-U\mathsf C_5\\
+v-24-2U\mathsf C_6\\
+w-24-3U\mathsf C_7
+\end{pmatrix},\qquad
+\begin{pmatrix}X\\Y\\Z\end{pmatrix}=\mathsf V^{-1}q_{\rm rec}.
+\tag{55.3}
+$$
+
+The inverse is completely explicit: its three rows are
+
+$$
+\begin{aligned}
+(\mathsf V^{-1})_{1,\bullet}
+&=\frac1{3H_2}\bigl(
+10(110b^2-808b-519),\quad
+25(b^2-128b-108),\quad
+-10(6b^2-136b-107)\bigr),\\
+(\mathsf V^{-1})_{2,\bullet}
+&=\frac1{H_2}\bigl(
+-2(4400b^2+12032b+4041),\quad
+-5(40b^2-437b-666),\quad
+30(4b-3)(4b+7)\bigr),\\
+(\mathsf V^{-1})_{3,\bullet}
+&=\frac1{UH_2}\bigl(
+-12(99b+274),\quad32(31b+108),\quad-(139b+542)\bigr).
+\end{aligned}
+\tag{55.4}
+$$
+
+Every defining denominator here is positive for $b>0$, since
+$T=1+b>0$, $U=1+2b>0$ and $H_2=11209b+37242>0$.
+No zero of $H_0,H_1$ or $H_3$ is excluded.
+
+**Lemma 55.2 (The affine solution line in drift coordinates).** For a
+full-parent world of width $b>0$, the equations
+$p(W)=p,v(W)=v,m(W)=w$ are equivalent to
+
+$$
+n=X+\alpha_{\rm w}\epsilon,\qquad
+\epsilon n=Y+\beta_{\rm w}\epsilon,\qquad
+\epsilon/n=Z+\gamma_{\rm w}\epsilon.
+\tag{55.5}
+$$
+
+**Proof.** By (50.2),
+$\det\mathsf V=-3H_2/(10T)\ne0$ at every positive width.
+Substitution of (49.1) in (55.2) and multiplication by (55.4)
+gives the identity matrix, proving the displayed inverse.
+Dividing the kernel vector (50.1) by its nonzero third coordinate
+$-3TUH_2$ gives
+
+$$
+\frac{K_{\rm w}}{-3TUH_2}
+=(\alpha_{\rm w},\beta_{\rm w},1,\gamma_{\rm w})^{\mathsf T},
+\qquad
+\mathsf V
+\begin{pmatrix}\alpha_{\rm w}\\\beta_{\rm w}\\\gamma_{\rm w}\end{pmatrix}
+=-(L_{\rm w})_{\bullet,3}.
+\tag{55.6}
+$$
+
+Thus (49.3) says exactly that
+
+$$
+\mathsf V(n,\epsilon n,\epsilon/n)^{\mathsf T}
+=q_{\rm rec}-\epsilon(L_{\rm w})_{\bullet,3}.
+$$
+
+Applying (55.4) gives (55.5). Reversing these equalities proves the
+converse. This uses the existing cofactor line, without a new parent
+or cofactor argument. $\square$
+
+## 56. Multiplicative consistency and the exhaustive exceptional branch
+
+**Definition 56.1 (Two consistency equations).** Set
+
+$$
+\begin{gathered}
+\kappa_{\rm rec}=\alpha_{\rm w}Z+\gamma_{\rm w}\beta_{\rm w}-1,
+\qquad
+\eta_{\rm rec}=XZ+\gamma_{\rm w}Y,\\
+Q_{\rm rec}(E)=\alpha_{\rm w}E^2+(X-\beta_{\rm w})E-Y,\\
+R_{\rm rec}(E)=(X+\alpha_{\rm w}E)(Z+\gamma_{\rm w}E)-E.
+\end{gathered}
+\tag{56.1}
+$$
+
+The variable $E$ is a candidate value of $\epsilon$, not an action.
+All the coefficients in (56.1) are defined for every $b>0$.
+
+**Lemma 56.2 (Exact consistency reduction).** The two polynomial
+identities required to turn the affine line into actual products are
+equivalent to
+
+$$
+Q_{\rm rec}(E)=0,\qquad
+\kappa_{\rm rec}E+\eta_{\rm rec}=0.
+\tag{56.2}
+$$
+
+More precisely, put $n=X+\alpha_{\rm w}E$ and $t=Z+\gamma_{\rm w}E$.
+If (56.2) holds and $n>0$, then
+
+$$
+En=Y+\beta_{\rm w}E,\qquad t=E/n.
+\tag{56.3}
+$$
+
+**Proof.** For every real $E$,
+
+$$
+\begin{aligned}
+Q_{\rm rec}(E)&=(X+\alpha_{\rm w}E)E-(Y+\beta_{\rm w}E),\\
+R_{\rm rec}(E)-\gamma_{\rm w}Q_{\rm rec}(E)
+&=\kappa_{\rm rec}E+\eta_{\rm rec}.
+\end{aligned}
+\tag{56.4}
+$$
+
+The first identity gives the first equation in (56.3). The second
+shows that (56.2) is exactly $Q_{\rm rec}(E)=R_{\rm rec}(E)=0$.
+With $n>0$, the latter equation is $nt=E$ and gives $t=E/n$.
+Conversely both product identities make both polynomials vanish,
+so (56.2) follows. $\square$
+
+**Lemma 56.3 (A positive remainder prevents an infinite branch).**
+For every $b>0$, $\alpha_{\rm w}=0$ implies $\kappa_{\rm rec}>0$,
+independently of $(p,v,w)$. Hence
+
+$$
+\kappa_{\rm rec}=0\quad\Longrightarrow\quad\alpha_{\rm w}\ne0.
+\tag{56.5}
+$$
+
+**Proof.** Define the polynomial
+$P_*=H_1H_3-T^2UH_2^2$. Its exact division identity is
+
+$$
+\begin{aligned}
+31250P_*={}&H_0\bigl(1611250000b^3+10453832500b^2
+                  +67037081050b+1318823177377\bigr)\\
+&+1544327184292999b^3+1181902158153034b^2\\
+&+1962712091375234b+1661282250974774.
+\end{aligned}
+\tag{56.6}
+$$
+
+Multiplying the polynomials in (47.2) proves this identity coefficient
+by coefficient. If $\alpha_{\rm w}=0$, the positive denominator in
+(55.1) implies $H_0=0$. Every coefficient of the displayed remainder
+is strictly positive, so $P_*>0$ for $b>0$. In this case the term
+$\alpha_{\rm w}Z$ vanishes and
+
+$$
+\kappa_{\rm rec}=\gamma_{\rm w}\beta_{\rm w}-1
+=\frac{P_*}{T^2UH_2^2}>0.
+\tag{56.7}
+$$
+
+This proves (56.5). In particular, simultaneous vanishing of the
+linear consistency equation's coefficients cannot leave an
+identically zero quadratic. $\square$
+
+## 57. Complete strict-source filters and the whole-gain converse
+
+**Definition 57.1 (Legal candidate at a prescribed width).** Given
+real $p,v,w$ with $p\ne24$, a width $b>0$ and a real solution $E$
+of (56.2), form in order
+
+$$
+\begin{gathered}
+n=X+\alpha_{\rm w}E,\qquad t=Z+\gamma_{\rm w}E,\\
+q_{\rm s}=\mathcal A_{\rm par}E+D_{\rm par}-4t,\qquad
+j=4E/q_{\rm s},\qquad r=n-j.
+\end{gathered}
+\tag{57.1}
+$$
+
+The expression for $j$ is evaluated only after checking
+$q_{\rm s}\ne0$. The candidate is retained exactly when
+
+$$
+\boxed{\begin{gathered}
+E\ne0,\qquad n>0,\qquad q_{\rm s}\ne0,\\
+j>b,\qquad 0<r<1,\qquad b(j-b)=r(1-r).
+\end{gathered}}
+\tag{57.2}
+$$
+
+These tests enforce the original strict source domain as well as
+its nonlinear source relation. They are not optional filters on an
+eliminant root. A retained candidate has $j>b>0$, so all source
+trace divisions in (48.3) are lawful.
+
+**Theorem 57.2 (Exact reconstruction at every positive width).** Fix
+any real $p\ne24,v,w$. At each $b>0$, the complete worlds in (54.1)
+of width $b$ are in bijection with the retained candidates of
+Definition 57.1. The exhaustive candidate list is as follows.
+
+1. If $\kappa_{\rm rec}\ne0$, there is just one possible candidate,
+   $E=-\eta_{\rm rec}/\kappa_{\rm rec}$. It is retained exactly when
+   $Q_{\rm rec}(E)=0$ and all of (57.2) hold.
+2. If $\kappa_{\rm rec}=0$ and $\eta_{\rm rec}\ne0$, there are no
+   candidates and hence no worlds of this width in (54.1).
+3. If $\kappa_{\rm rec}=\eta_{\rm rec}=0$, define
+
+$$
+\Delta_{\rm rec}=(X-\beta_{\rm w})^2+4\alpha_{\rm w}Y.
+\tag{57.3}
+$$
+
+   If $\Delta_{\rm rec}<0$, there are no candidates. If
+   $\Delta_{\rm rec}\ge0$, the candidates are exactly
+
+$$
+E=\frac{\beta_{\rm w}-X\pm\sqrt{\Delta_{\rm rec}}}
+          {2\alpha_{\rm w}}.
+\tag{57.4}
+$$
+
+   A repeated root is counted once; each real root is retained
+   exactly when (57.2) holds. Lemma 56.3 guarantees that the
+   denominator $2\alpha_{\rm w}$ in this case is nonzero.
+
+Every retained candidate determines the entire world, not just its
+source or its sampled responses. Its drift is $d=24+E$, its source
+is $P(r,b)$, and its one whole gain is exactly
+
+$$
+\begin{gathered}
+z_0=-24-E,\quad z_1=-E/j,\quad
+z_2=(27/5-E)/T,\quad z_3=-E/n,\\
+g(s)=\sum_{i=0}^3z_i\ell_i(s),
+\qquad\ell_i\text{ as in (48.3)}.
+\end{gathered}
+\tag{57.5}
+$$
+
+The criterion applies at arbitrary widths independently, including
+widths different from those of any other reconstructed world.
+It has no hypothesis $\Lambda\ne0$.
+
+**Proof.** Let $W$ be an actual world in (54.1). Lemma 48.2 supplies
+$\epsilon\ne0$, and Lemmas 55.2 and 56.2 give (56.2) with
+$E=\epsilon$ and $t=\epsilon/n$. The parent equation (48.2) gives
+
+$$
+q_{\rm s}=\mathcal A_{\rm par}\epsilon+D_{\rm par}
+             -4\epsilon/n=4\epsilon/j\ne0.
+\tag{57.6}
+$$
+
+Therefore (57.1) recovers precisely the world's $j$ and $r$.
+The actual strict source has $n>0$, $j>b$ and
+$b(j-b)=r(1-r)$, so it passes every test in (57.2).
+
+Conversely, take any retained candidate. By Lemma 56.2,
+$t=E/n$ and $En=Y+\beta_{\rm w}E$. Its definition of $j$ gives
+$4E/j=q_{\rm s}$, with no division by a zero quantity, and hence
+
+$$
+\begin{aligned}
+E(\mathcal A_{\rm par}-4/j-4/n)+D_{\rm par}
+&=\mathcal A_{\rm par}E-q_{\rm s}-4t+D_{\rm par}\\
+&=0.
+\end{aligned}
+\tag{57.7}
+$$
+
+The last equation in (57.2), together with $b>0$, gives exactly
+$j=b+r(1-r)/b$. Also $n=j+r$ by (57.1), and $0<r<1$ is strict.
+Thus the reconstructed source is an original legal source, and
+(57.7) is exactly its full parent equation (48.2).
+
+Lemma 48.1 applied to this source and $E$ supplies the whole gain
+(57.5), of degree at most three, with the first five prescribed
+readings. Lemma 56.2 gives all three equalities in (55.5), so
+Lemma 55.2, now on this full parent, gives precisely $p,v,w$ at
+clocks five, six and terminal seven with M. The gain cannot be
+identically zero, because then clocks zero and one would both read
+$d$, contrary to their readings $0$ and $24$. This constructs a
+complete world in the entire $C(p,v)$ with $m=w$.
+
+For a fixed candidate, $b,E,n,j,r$ are fixed, so (57.5) determines
+its unique gain and drift. Conversely an actual world recovers its
+own $E$ by (57.6). This proves the bijection. Finally the three cases
+are the exhaustive solution of a quadratic and a linear equation
+(56.2); Lemma 56.3 supplies the nonzero quadratic leading coefficient
+in case 3. No fourth case or infinite exceptional family is omitted.
+$\square$
+
+**Corollary 57.3 (Multiplicity at one width).** For a fixed
+$(p,v,w)$ with $p\ne24$ and a fixed $b>0$, there are at most two
+complete worlds in (54.1). There are two distinct worlds exactly
+when $\kappa_{\rm rec}=\eta_{\rm rec}=0$,
+$\Delta_{\rm rec}>0$ and both roots in (57.4) pass (57.2).
+
+**Proof.** The rational case has at most one world, the inconsistent
+linear case has none, and case 3 has at most two roots. Two distinct
+roots that pass the filter give different $E$, hence different
+drifts and complete worlds. A repeated root gives only one world.
+$\square$
+
+The construction includes the parent singularity $\Lambda=0$:
+(48.2) then forces $D_{\rm par}=0$ and $b=1/8$, but neither (57.1)
+nor (57.5) divides by $D_{\rm par}$ or $\Lambda$. Vanishing sampled
+gains, a vanishing cubic coefficient, lower gain degrees and repeated
+gain roots are preserved wherever the original rows permit them.
+No gain sample, leading coefficient or gain-root difference has been
+cancelled. The necessary $E\ne0$ in (57.2) is exactly the consequence
+of $p\ne24$ from Lemma 48.2; in particular $E=-24$ is not removed.
+
+## 58. Two rational width equations and their exact guards
+
+**Definition 58.1 (Rational branch functions).** On the branch
+$\kappa_{\rm rec}\ne0$ define
+
+$$
+\begin{aligned}
+\nu&=X\kappa_{\rm rec}-\alpha_{\rm w}\eta_{\rm rec},\\
+\theta&=Z\kappa_{\rm rec}-\gamma_{\rm w}\eta_{\rm rec},\\
+\omega&=D_{\rm par}\kappa_{\rm rec}
+          -\mathcal A_{\rm par}\eta_{\rm rec}-4\theta,\\
+\chi_{\rm src}&=\nu\omega+4\eta_{\rm rec}\kappa_{\rm rec},\\
+F_{\rm rec}&=\alpha_{\rm w}\eta_{\rm rec}^2
+ -(X-\beta_{\rm w})\eta_{\rm rec}\kappa_{\rm rec}
+ -Y\kappa_{\rm rec}^2,\\
+G_{\rm rec}&=b(-4\eta_{\rm rec}-b\omega)
+                 \kappa_{\rm rec}^2\omega
+ -\chi_{\rm src}(\kappa_{\rm rec}\omega-\chi_{\rm src}).
+\end{aligned}
+\tag{58.1}
+$$
+
+These are rational functions of $b$ for each fixed $(p,v,w)$.
+Their defining denominators are products of positive numerical
+constants and positive powers of $T,U,H_2$. Their numerator equations
+can therefore be used on $b>0$ without introducing a positive-width
+pole. They are different from $F_{\rm w},G_{\rm w}$ in Section 52.
+
+**Theorem 58.2 (Exact rational-branch width criterion).** Fix real
+$p\ne24,v,w$. A width $b>0$ with $\kappa_{\rm rec}\ne0$ supports a
+complete world in (54.1) if and only if
+
+$$
+\boxed{\begin{gathered}
+F_{\rm rec}=G_{\rm rec}=0,\qquad
+\eta_{\rm rec}\ne0,\qquad\omega\ne0,\\
+\frac{\nu}{\kappa_{\rm rec}}>0,\qquad
+-\frac{4\eta_{\rm rec}}{\omega}>b,\qquad
+0<\frac{\chi_{\rm src}}{\kappa_{\rm rec}\omega}<1.
+\end{gathered}}
+\tag{58.2}
+$$
+
+All rational expressions in these tests are evaluated with the
+stated nonzero denominators. The unique resulting world at that
+width has
+
+$$
+\begin{gathered}
+\epsilon=-\eta_{\rm rec}/\kappa_{\rm rec},\qquad
+n=\nu/\kappa_{\rm rec},\qquad t=\theta/\kappa_{\rm rec},\\
+q_{\rm s}=\omega/\kappa_{\rm rec},\qquad
+j=-4\eta_{\rm rec}/\omega,\qquad
+r=\chi_{\rm src}/(\kappa_{\rm rec}\omega),
+\end{gathered}
+\tag{58.3}
+$$
+
+and the gain and drift in (57.5). For each fixed $b>0$,
+$F_{\rm rec}$ has total degree at most three in $(p,v,w)$.
+
+**Proof.** Substitute $E=-\eta_{\rm rec}/\kappa_{\rm rec}$ into
+(57.1). Its first two affine expressions give $n=\nu/\kappa_{\rm rec}$
+and $t=\theta/\kappa_{\rm rec}$. Its third gives
+$q_{\rm s}=\omega/\kappa_{\rm rec}$. If $\omega\ne0$, the definitions
+of $j$ and $r=n-j$ give exactly the last two formulas in (58.3).
+These formulas yield the exact identities
+
+$$
+\begin{aligned}
+\kappa_{\rm rec}^2
+ Q_{\rm rec}(-\eta_{\rm rec}/\kappa_{\rm rec})&=F_{\rm rec},\\
+\kappa_{\rm rec}^2\omega^2
+ \{b(j-b)-r(1-r)\}&=G_{\rm rec}.
+\end{aligned}
+\tag{58.4}
+$$
+
+Thus the equations in (58.2) are exactly the quadratic consistency
+and original source relation, with only nonzero factors cleared.
+The guard $E\ne0$ becomes $\eta_{\rm rec}\ne0$, and
+$q_{\rm s}\ne0$ becomes $\omega\ne0$. The other tests in (57.2)
+become exactly the three inequalities in (58.2). Both directions,
+including the full gain and all original readings, now follow from
+Theorem 57.2.
+
+For the degree assertion, $X,Y,Z$ are affine in $(p,v,w)$, whereas
+the width slopes are constants at fixed $b$. The apparently
+fourth-degree contributions in
+$\alpha_{\rm w}\eta_{\rm rec}^2-X\eta_{\rm rec}\kappa_{\rm rec}$
+are $\alpha_{\rm w}X^2Z^2$ with opposite signs, and cancel.
+An exact expression displaying the remaining degree bound is
+
+$$
+\begin{aligned}
+F_{\rm rec}={}&(XZ+\gamma_{\rm w}Y)
+ \bigl[(1-\gamma_{\rm w}\beta_{\rm w})(X-\beta_{\rm w})
+       +\alpha_{\rm w}\gamma_{\rm w}Y
+       +\alpha_{\rm w}\beta_{\rm w}Z\bigr]\\
+&-Y(\alpha_{\rm w}Z+\gamma_{\rm w}\beta_{\rm w}-1)^2.
+\end{aligned}
+\tag{58.5}
+$$
+
+The first factor has degree at most two and its bracket at most one;
+the last term has degree at most three. Affine substitution preserves
+this bound. Finally the positive defining denominators noted in
+Definition 58.1 justify numerator clearing on $b>0$. $\square$
+
+Theorem 58.2 treats the rational branch only. To obtain the complete
+width reconstruction one must also retain the exceptional quadratic
+case 3 of Theorem 57.2; case 2 contributes no world. Even on the
+rational branch, common numerator roots of $F_{\rm rec},G_{\rm rec}$
+are not worlds until $b>0$, $\kappa_{\rm rec}\ne0$, both remaining
+nonzero guards and all strict inequalities in (58.2) have been checked.
+A projected eliminant can lose these guards or contain roots from an
+exceptional branch, so an eliminant root alone is never a sufficient
+world criterion.
+
+## 59. The original independent J and M pairs over all widths
+
+**Definition 59.1 (All-width reconstruction set).** Let
+$\mathcal R(p,v,w)$ consist of every retained reconstruction of
+Theorem 57.2 over all $b>0$, with its complete source, drift and gain.
+Write $x\sim y$ when their triples $(b,r,\epsilon)$ coincide.
+By Lemma 48.1 this is exactly equality of complete worlds; it is
+not equality of an acquired observable or an extra experiment.
+For such a reconstruction put
+
+$$
+\mathfrak a(x)=24+\epsilon+(T+2j+4r)
+ (\mathsf C_7+\mathsf A_7\epsilon+35t).
+\tag{59.1}
+$$
+
+Here $t=\epsilon/n$ by Lemma 56.2. By (54.4), $\mathfrak a(x)$
+is the literal terminal-J reading at clock seven of the same whole
+gain used in every other row.
+
+**Theorem 59.2 (Full independent-pair equivalence).** The original
+predicate (53.1) is equivalent to the existence of real
+$p\ne24,v,w_0,w_1,w_*$ and reconstructions satisfying
+
+$$
+\begin{gathered}
+x_0\in\mathcal R(p,v,w_0),\qquad
+x_1\in\mathcal R(p,v,w_1),\\
+x_2,x_3\in\mathcal R(p,v,w_*),\\
+x_0\not\sim x_1,\qquad x_2\not\sim x_3,\qquad
+\mathfrak a(x_0)=\mathfrak a(x_1).
+\end{gathered}
+\tag{59.2}
+$$
+
+There is no condition between the two pairs. In particular they may
+overlap, $w_0,w_1$ need not be equal to one another or to $w_*$, and
+the J pair's common value need not equal $w_*$. Their acquired
+readings share exactly the same $p,v$ and the same specified earlier
+record. Width equality within or between the pairs is not imposed.
+
+**Proof.** Starting from (53.1), set
+$w_0=m(W_{J0})$, $w_1=m(W_{J1})$ and
+$w_*=m(W_{M0})=m(W_{M1})$. Apply Theorem 57.2 at each world's
+own width to obtain $x_0,x_1,x_2,x_3$. Its bijection preserves
+complete-world distinctness, and (59.1) is the original J reading,
+so every condition in (59.2) follows.
+
+Conversely, each reconstruction in (59.2) gives a complete world
+in the same entire $C(p,v)$ by Theorem 57.2. The two stipulated
+inequivalences give the two distinct-world pairs, and (59.1) gives
+the J collision. The last two reconstructions have the same terminal-M
+value $w_*$ by their definition. These are exactly (53.1), with
+no identification between the two pairs and no equality required
+between their common terminal answers. $\square$
+
+Thus an M pair at arbitrary widths is specified exactly by two
+inequivalent legal reconstructions for one shared $(p,v,w)$.
+Different widths already imply inequivalence. At the same width,
+Corollary 57.3 gives the exact two-root test. In either case the
+independent J pair remains the separate condition in (59.2), with
+its own two terminal-M values $w_0,w_1$ retained independently.
+
+## 60. Fixed-width information, all-width coverage and mathematical sources
+
+Theorem 47.2 adds necessary actual-pair identities at a common width,
+the derived distinctions $d_1\ne d_2$ and $n_1\ne n_2$, their sign
+relation, and the exclusion of every common width $b\ge\rho$.
+These are consequences for distinct worlds sharing $p,v,m$, without
+a proportional-gain assumption. They neither give a sufficient
+source construction below $\rho$ nor exclude unequal-width M pairs.
+For an equal-width pair reconstructed in Section 57, all those
+necessary identities still apply, in addition to its complete
+source filters. No cutoff is imposed on an individual world or
+on the arbitrary-width reconstruction set.
+
+Theorems 57.2 and 58.2 instead give exact source-compatible
+reconstruction for every width $b>0$ and every prescribed
+$p\ne24,v,w$, with both necessity and the complete-world converse.
+They include equal and unequal widths, the full $\Lambda=0$ parent
+branch, sampled gain zeros, repeated gain roots, lower degrees and
+zero drift wherever the original rows permit them. Positivity of
+$T,U,H_2$, the rational branch guards, the exceptional quadratic
+case and the strict source tests are all part of this assertion.
+No whole gain is replaced by independently chosen samples.
+
+The remaining existence question is satisfiability of (59.2).
+Neither a new actual witness for its independent pairs nor a global
+obstruction is supplied by the reconstruction criteria. In
+particular no M crossing is asserted on the four-world J locus of
+Section 40. The J-separation and same-pair double-zero questions for
+the known two-world component are not settled by these criteria.
+The local forbidden-base intersection of Sections 42–46 remains
+confined to its stated scope and does not make $p=24$ admissible
+in (59.2).
+
+The complete-world convention, traces and zero-safe parent are those
+of *FIB common-parent geometry and two exact mixed children*,
+Definitions 1.1–1.3 and Theorem 2.1, with parent parameters
+$\beta=1/8$ and $a_{\rm parent}=24/5$. Their precise specialization
+is already given in Sections 48–49. The affine lift, $H_i$,
+positive-width rank and cofactor line are exactly Sections 49–50;
+the fixed-width information remains Theorem 47.2 and Sections 51–53.
+These results are used through (54.2)–(55.6), rather than repeated
+as separate parent or cofactor proofs.
+
+The explicit inverse, product consistency equations, positive
+polynomial remainder, exhaustive strict-source reconstruction,
+rational width equations and cubic total-response-degree cancellation
+are those of *Exact cross-width reconstruction of a terminal-M
+response triple*, Sections 3–5, under the correspondence (54.3).
+Its Section 6 gives the independent-pair formulation expressed in
+(59.2). Fixed-node interpolation and elementary matrix and polynomial
+identities suffice for the displayed reconstruction proofs. The
+criteria concern exactly the original complete worlds and literal
+clock readings; source coordinates are never acquired observations.
+
+## 追加锚（本行以下为增补区）
+
+## 61. Exceptional reconstruction in the existing whole-world coordinates
+
+Keep the complete original domain of Definitions 1.1–1.2 and the full parent of Lemma 48.1. All statements below use the chronological left-product word $J,M,J,M,M,M$, clocks $0,\ldots,6$ with record $(0,24,147/5,24,18,p,v)$, and both alternatives at clock seven. The source is strictly $P(r,b)$ with $0<r<1,b>0$; each world retains its single whole nonzero real gain of degree at most three and its fixed real drift. No regular-chart or gain-genericity assumption is added.
+
+Use $T,U,j,n,\epsilon,\Lambda,D_{\rm par}$ from Section 48, $\mathsf C_i,\mathsf A_i$ from Section 49, $H_i$ from (47.2), and $\alpha_{\rm w},\beta_{\rm w},\gamma_{\rm w},X,Y,Z,\kappa_{\rm rec},\eta_{\rm rec}$ from Sections 55–56. Introduce only the following source-polynomial notation:
+
+$$
+\begin{gathered}
+\mathcal J=b^2+r(1-r)=bj,\qquad \mathcal N=\mathcal J+rb=bn,\\
+S=(8b-1)(2+5b),\qquad
+\Pi=(b^2+8b+4)\mathcal J\mathcal N-2TUb(\mathcal J+\mathcal N).
+\end{gathered}
+\tag{61.1}
+$$
+
+Here $\mathcal N$ is the source polynomial called $N$ in Sections 31–38; the degree-ten polynomial below is instead $N_{\rm exc}$. Precisely, $\Pi=\widehat D/5=D_\Lambda$, where $\widehat D$ is Definition 2.1's circuit denominator and $D_\Lambda$ is Section 13's denominator. Thus the local scalar alias $D$ in Section 31 is $5\Pi$, and its $H=bD$ is $5b\Pi$. None of these is $D_{\rm par}$. The parameter $\beta_{\rm w}$ is a width slope, not the parent parameter $\beta=1/8$.
+
+Multiplying the already proved parent equation (48.2) by positive source factors gives, without cancelling $\Pi$,
+
+$$
+\Lambda=\frac{2\Pi}{TU\mathcal J\mathcal N},\qquad
+D_{\rm par}=\frac{6S}{5TU},\qquad
+\epsilon\Pi=-\frac35S\mathcal J\mathcal N.
+\tag{61.2}
+$$
+
+Its converse and the entire gain remain exactly (48.3), including $\Pi=0$. For an actual parent world, take the response transform (55.3) with $(p,v,w)=(p(W),v(W),m(W))$ and set
+
+$$
+K(W)=\alpha_{\rm w}\epsilon(1/n-\gamma_{\rm w})
+       +\gamma_{\rm w}\beta_{\rm w}-1.
+\tag{61.3}
+$$
+
+This scalar is unrelated to the kernel vector $K_{\rm w}$ of Section 50 or the source alias $K=S$ of Section 31. Under the notation of *Two width graphs for the actual exceptional terminal-M reconstruction*, its $(e,\alpha,\beta,\gamma,V,C_i,A_i,\kappa,\eta)$ are respectively $(\epsilon,\alpha_{\rm w},\beta_{\rm w},\gamma_{\rm w},\mathsf V,\mathsf C_i,\mathsf A_i,\kappa_{\rm rec},\eta_{\rm rec})$ here. Lemma 55.2 gives
+
+$$
+X=n-\alpha_{\rm w}\epsilon,\quad
+Y=\epsilon n-\beta_{\rm w}\epsilon,\quad
+Z=\epsilon/n-\gamma_{\rm w}\epsilon;\qquad
+\kappa_{\rm rec}=K(W),\quad \eta_{\rm rec}=-\epsilon K(W).
+\tag{61.4}
+$$
+
+The last equality follows by expanding $XZ+\gamma_{\rm w}Y$. Thus an actual world is in the exceptional reconstruction case $\kappa_{\rm rec}=\eta_{\rm rec}=0$ exactly when $K(W)=0$. These identities reuse Sections 48–56; they do not introduce another parent or response transform. In particular the definition of $K$ makes sense also when $p=24$ or $\epsilon=0$.
+
+## 62. A degree-ten polynomial and its two simple width graphs
+
+Define
+
+$$
+N_{\rm exc}(b,r)=\sum_{i=0}^{10}c_i(r)b^i,
+\tag{62.1}
+$$
+
+with the following exact coefficients:
+
+$$
+\begin{aligned}
+c_0={}&-295618904r^2(r-1)^2,\\
+c_1={}&-56r(r-1)(56840601r^2-62119510r+5344533),\\
+c_2={}&-2r(2061224799r^3-5713986426r^2+5060221231r-1505782768),\\
+c_3={}&-2(1228278046r^4-4517780891r^3+3830122638r^2-1149025595r-149646924),\\
+c_4={}&-2(1288200024r^4-3804678094r^3+1799167195r^2+1079818433r-1555269056),\\
+c_5={}&-2(275975799r^4-1840151622r^3+1701917076r^2+1004193479r-2132156621),\\
+c_6={}&3(10277197r^4+163429472r^3+391180106r^2-927087035r+895942616),\\
+c_7={}&-30831591r^3+538008065r^2-2450563658r+2732038598,\\
+c_8={}&-28933182r^2-439223240r+881739723,\\
+c_9={}&25675591r+44775124,\qquad c_{10}=-1898409.
+\end{aligned}
+\tag{62.2}
+$$
+
+**Theorem 62.1 (Two simple positive width roots).** For every $0<r<1$, $N_{\rm exc}(\cdot,r)$ has exactly two positive roots counted with multiplicity. Both are simple. They define real analytic functions on $(0,1)$ with
+
+$$
+0<b_-(r)<1<24<b_+(r)<64.
+\tag{62.3}
+$$
+
+**Proof.** For any polynomial $f$ of degree at most $d$, write its Bernstein expansion as
+
+$$
+f(r)=\sum_{j=0}^d B_j^{(d)}(f)\binom dj r^j(1-r)^{d-j},\qquad
+B_j^{(d)}(f)=\sum_{i=0}^j\frac{\binom ji}{\binom di}[r^i]f.
+\tag{62.4}
+$$
+
+The basis weights are nonnegative and sum to one on $[0,1]$. The degree-four coefficient vectors for $c_3,\ldots,c_9$, in increasing Bernstein index, are
+
+$$
+\begin{array}{c|l}
+ c_3&(299293848,1747613291/2,171611897,451600048,1516105452)\\
+ c_4&(3110538112,5141257791/2,4292991842/3,3187964629/2,2385522996)\\
+ c_5&(4264313242,7524433005/2,2692814071,3952363517/2,1980443778)\\
+ c_6&(2687827848,7970050287/4,2985574697/2,5244897129/4,1601227068)\\
+ c_7&(2732038598,4238795367/2,9578548679/6,4621647957/4,788651414)\\
+ c_8&(881739723,771933913,657305906,537855702,413583301)\\
+ c_9&(44775124,204776087/4,115225839/2,256127269/4,70450715).
+\end{array}
+\tag{62.5}
+$$
+
+Their respective minima are $171611897$, $4292991842/3$, $3952363517/2$, $5244897129/4$, $788651414$, $413583301$, $44775124$, all positive. For $c_2$, use the two half-interval substitutions. The degree-four Bernstein vectors in $u$ for $c_2(u/2)$ and $c_2((1+u)/2)$ are exactly
+
+$$
+\begin{aligned}
+&(0,376445692,3974475377/12,1771247359/8,1172125273/8),\\
+&(1172125273/8,573003187/8,379742861/12,126046231,196646328).
+\end{aligned}
+\tag{62.6}
+$$
+
+On the first half, at every $r>0$ some positive-coefficient basis weight is positive; on the second half all five coefficients are positive. Consequently $c_i(r)>0$ for $2\le i\le9$ and $0<r<1$. Also $c_0(r)<0$ and $c_{10}<0$. In descending width powers the signs therefore have exactly two changes, regardless of the sign or vanishing of $c_1$. Descartes' rule bounds the total multiplicity of positive roots by two.
+
+For completeness the endpoint Bernstein vectors $\bigl(B_j^{(4)}(N_{\rm exc}(w,\cdot))\bigr)_{j=0}^4$ are
+
+$$
+\begin{aligned}
+w=1:\quad &(14018628086,25935013341/2,14774821713/2,28579017491/4,8950732643),\\
+w=24:\quad &(108058548295265882112,109982226112023108240,\\
+&\hspace{12mm}335457005514538140692/3,113564937595636352256,115216701333695424000),\\
+w=64:\quad &(-1121726995611910666190848,-1039744754329513585587840,\\
+&\hspace{12mm}-958712655450236766356196,-878655155132242056408064,-799595227342287555297280).
+\end{aligned}
+\tag{62.7}
+$$
+
+Thus at width one the coefficient range is $[28579017491/4,14018628086]$; at width $24$ it is $[108058548295265882112,115216701333695424000]$; at width $64$ it is $[-1121726995611910666190848,-799595227342287555297280]$. Formula (62.4) applied to (62.2) verifies every entry of (62.5)–(62.7) directly. In particular $N_{\rm exc}(1,r)>0$, $N_{\rm exc}(24,r)>0$, and $N_{\rm exc}(64,r)<0$. Since $N_{\rm exc}(0,r)=c_0(r)<0$, the intermediate value theorem gives a root in $(0,1)$ and one in $(24,64)$. The bound counting multiplicity forces precisely these two roots, each of multiplicity one. The analytic implicit-function theorem then gives local analytic root functions; uniqueness in the disjoint intervals identifies them on overlaps, giving the two analytic graphs throughout $(0,1)$. $\square$
+
+## 63. The zero-safe exceptional identity and actual-world multiplicity
+
+**Lemma 63.1 (Actual exceptional identity).** Every complete parent world satisfies
+
+$$
+N_{\rm exc}(b,r)=TH_2(b)^2\Pi(b,r)K(W),
+\tag{63.1}
+$$
+
+including the singular sources $\Pi=0$.
+
+**Proof.** Substitution of (55.1) in the following expression and collection in powers of $b$ gives exactly the eleven coefficients in (62.2):
+
+$$
+N_{\rm exc}=TH_2^2\left\{\Pi(\gamma_{\rm w}\beta_{\rm w}-1)
+ -\frac35\alpha_{\rm w}S\mathcal J\mathcal N(1/n-\gamma_{\rm w})\right\}.
+\tag{63.2}
+$$
+
+This is a rational identity with only positive-width denominators, and its right side simplifies to the displayed polynomial. In an actual world, (61.2) replaces $-(3/5)S\mathcal J\mathcal N$ by $\epsilon\Pi$. The resulting expression is $TH_2^2\Pi K(W)$. No division by $\Pi$, $\epsilon$ or any gain sample occurs. $\square$
+
+**Theorem 63.2 (Candidate graphs and actual multiplicities).** Every actual exceptional parent world has $b=b_-(r)$ or $b=b_+(r)$. For each fixed $0<r<1$ there are at most two such complete worlds, with at most one above either candidate width. There is exactly one above the upper candidate width $b_+(r)$.
+
+**Proof.** An actual $K(W)=0$ implies $N_{\rm exc}=0$ by (63.1), so Theorem 62.1 gives the two candidate widths. At any source with $\Pi\ne0$, (61.2) fixes the unique real number
+
+$$
+\epsilon=-\frac{3S\mathcal J\mathcal N}{5\Pi}.
+\tag{63.3}
+$$
+
+Lemma 48.1 then fixes its complete world. Conversely at a candidate root with $\Pi\ne0$ this world is exceptional by (63.1), since $T,H_2,\Pi$ are nonzero.
+
+If an actual source has $\Pi=0$, (61.2) and $\mathcal J\mathcal N>0$ force $S=0$, hence $b=1/8$. All real $\epsilon$ remain allowed at this singular parent source by Lemma 48.1, but the exceptional equation (61.3) is affine in $\epsilon$. Its constant at this width is
+
+$$
+\left.(\gamma_{\rm w}\beta_{\rm w}-1)\right|_{b=1/8}
+=-\frac{207798820547}{2293695144600}\ne0.
+\tag{63.4}
+$$
+
+Substituting the $H_i$ and $T,U$ in (55.1) gives this fraction. Therefore the affine equation has at most one solution even if its slope $\alpha_{\rm w}(1/n-\gamma_{\rm w})$ vanishes; in that event it has none. This controls all singular actual sources without cancelling $\Pi$. It proves the asserted upper bound at each candidate and hence the bound of two at fixed $r$.
+
+For $b\ge24$, the strict source inequalities give $j>b$ and $n>j>b$, so
+
+$$
+\Lambda=1+6/T+1/U-4/j-4/n>1-8/b>0,
+\qquad \Pi>0.
+\tag{63.5}
+$$
+
+At $b_+(r)\in(24,64)$, (63.3) therefore constructs exactly one complete world and (63.1) makes it exceptional. Lemma 48.1 ensures a strict source and a whole nonzero gain of degree at most three, with its one fixed drift. The lower graph is only a candidate graph at singular sources; no assertion that both roots always support actual worlds is needed or made. $\square$
+
+In particular an actual exceptional world has neither $1\le b\le24$ nor $b\ge64$. A root of $N_{\rm exc}$ alone is not an unrestricted sufficient world criterion at a singular source: its parent equation and the affine $K$ equation remain necessary there.
+
+## 64. Literal interpolation and a negative fifth response at every large width
+
+**Theorem 64.1 (Negative response for $b\ge24$).** Every complete parent world with $b\ge24$ has its literal fifth-M response $p(W)<0$.
+
+**Proof.** Positivity (63.5) justifies division by $\Pi$. Use the following explicit interpolation circuit, with local symbols $D_i^{\rm int}$ distinct from $D_{\rm par}$:
+
+$$
+\begin{aligned}
+D_0^{\rm int}&=-120\Pi+3S\mathcal J\mathcal N,&
+D_1^{\rm int}&=3S\mathcal N b,\\
+D_2^{\rm int}&=3(49b+34)\mathcal J\mathcal N-54Ub(\mathcal J+\mathcal N),&
+D_3^{\rm int}&=3S\mathcal J b,\\
+B_5^{\rm int}&=-4D_0^{\rm int}+15D_1^{\rm int}-20D_2^{\rm int}+10D_3^{\rm int},\\
+P_p^{\rm int}&=-bD_0^{\rm int}+(bU+\mathcal N)B_5^{\rm int}.
+\end{aligned}
+\tag{64.1}
+$$
+
+Precisely $D_i^{\rm int}=\widehat C_i$ for $0\le i\le3$, $B_5^{\rm int}=\widehat B_5$ and $P_p^{\rm int}=P_p$ of Definition 2.1, because $\widehat D=5\Pi$. Substituting (63.3) into the samples (48.3) yields
+
+$$
+d=-\frac{D_0^{\rm int}}{5\Pi},\qquad
+ g(i)=\frac{D_i^{\rm int}}{5\Pi}\ (0\le i\le3),\qquad
+ g(5)=\frac{B_5^{\rm int}}{5\Pi},\qquad
+ p(W)=\frac{P_p^{\rm int}}{5b\Pi}.
+\tag{64.2}
+$$
+
+The clock-five interpolation weights are literally $(-4,15,-20,10)$ from (48.5), and the trace is $U+n=(bU+\mathcal N)/b$. Thus (64.2) computes the original response of the same whole gain, rather than a shifted-clock or independently sampled model.
+
+Write $P_p^{\rm int}(24+u,r)=\sum_{k=0}^7q_k(r)u^k$. The correct uniform degree bound in $r$ is six. In fact the high-degree part of this numerator is exactly
+
+$$
+[r^5]P_p^{\rm int}=96(2b+3)(8b-1),\qquad
+[r^6]P_p^{\rm int}=-96(8b-1).
+\tag{64.3}
+$$
+
+In particular a degree-four Bernstein expansion of the full $q_0,q_1,q_2$ is unavailable. To distinguish a degree-four truncation from the full coefficient, set $\widetilde q_k=\sum_{i=0}^4[r^i]q_k\,r^i$. Expansion of (64.1) gives
+
+$$
+q_0-\widetilde q_0=935136r^5-18336r^6,\quad
+q_1-\widetilde q_1=75840r^5-768r^6,\quad
+q_2-\widetilde q_2=1536r^5;\qquad q_k=\widetilde q_k\ (k\ge3).
+\tag{64.4}
+$$
+
+Here are both the degree-four truncation maxima and the valid full degree-six Bernstein maxima, computed by (62.4):
+
+| $k$ | $\max_j B_j^{(4)}(\widetilde q_k)$ | $\max_j B_j^{(6)}(q_k)$ |
+| --- | ---: | ---: |
+| $0$ | $-1071543670080$ | $-1071542753280$ |
+| $1$ | $-308693734464$ | $-308693659392$ |
+| $2$ | $-38126986656$ | $-38126985120$ |
+| $3$ | $-2617160436$ | $-2617160436$ |
+| $4$ | $-107831886$ | $-107831886$ |
+| $5$ | $-2666766$ | $-2666766$ |
+| $6$ | $-36654$ | $-36654$ |
+| $7$ | $-216$ | $-216$ |
+
+The complete degree-six coefficient vectors, making the sign certificate explicit, are
+
+$$
+\begin{aligned}
+q_0:\quad &(-1429603540992,-1368180995904,-6536864982144/5,\\
+&-6236219379768/5,-5939280021888/5,-1129269632256,-1071542753280),\\
+q_1:\quad &(-398205517824,-382920178128,-1838838438848/5,\\
+&-1763793047784/5,-1689516284352/5,-323211681024,-308693659392),\\
+q_2:\quad &(-47450375424,-45865673021,-221462179566/5,\\
+&-427313143281/10,-41182947938,-39647965604,-38126985120),\\
+q_3:\quad &(-3135061440,-6094902039/2,-14801672339/5,\\
+&-57474591417/20,-13938269829/5,-2702125141,-2617160436),\\
+q_4:\quad &(-124013550,-242578899/2,-592879842/5,-1158732891/10,\\
+&-113181594,-221002131/2,-107831886),\\
+q_5:\quad &(-2936403,-5782471/2,-14230796/5,-28011741/10,\\
+&-13781401/5,-5422955/2,-2666766),\\
+q_6:\quad &(-38526,-38214,-37902,-37590,-37278,-36966,-36654),\\
+q_7:\quad &(-216,-216,-216,-216,-216,-216,-216).
+\end{aligned}
+\tag{64.5}
+$$
+
+To verify these entries using only the displayed circuit, expand (64.1), substitute $b=24+u$, and apply $B_j^{(6)}(q_k)=\sum_{i=0}^j\binom ji[r^iu^k]P_p^{\rm int}(24+u,r)/\binom6i$. All seven coefficients in each row are strictly negative, so each $q_k(r)<0$ on $[0,1]$. For $u\ge0$ the sum $\sum q_k(r)u^k$ is strictly negative, already because $q_0<0$. The denominator $5b\Pi$ in (64.2) is positive by (63.5). Therefore $p(W)<0$ for all $b\ge24$. $\square$
+
+## 65. Nonnegative bases, rational reconstruction and the remaining joint target
+
+**Corollary 65.1 (Exceptional-width and rational-branch cut).** The unique actual exceptional world above $b_+(r)$ has $p(W)<0$. In any entire acquired child $C(p,v)$ with real $p\ge0,v$, every exceptional world has $0<b<1$. If in addition $p\ne24$, then for every real terminal value $w$ and every actual world $W\in C(p,v)$ with $m(W)=w$ and $b(W)\ge1$, its Section 55 transform satisfies
+
+$$
+\kappa_{\rm rec}\ne0,\qquad
+\epsilon=-\eta_{\rm rec}/\kappa_{\rm rec}.
+\tag{65.1}
+$$
+
+**Proof.** The upper existence is Theorem 63.2, and its width exceeds $24$, so Theorem 64.1 makes its fifth response negative. The same theorem excludes every actual parent of width $b\ge24$ from a nonnegative fifth response. Theorem 63.2 leaves only the lower graph for an exceptional world in $C(p,v)$, hence $b<1$. An actual world with $b\ge1$ is consequently nonexceptional; (61.4) gives $\kappa_{\rm rec}=K(W)\ne0$, and its actual consistency equation (56.2) yields (65.1). $\square$
+
+The hypotheses $p\ge0$ and $p\ne24$ in the rational-branch conclusion are both retained: the former excludes the actual upper exceptional graph; the latter is the base hypothesis for the exhaustive reconstruction of Sections 57–58. Formula (65.1) never replaces the equations and strict source filters of Theorem 57.2 or (58.2). In particular $b>0$, the nonzero rational denominators, $\eta_{\rm rec}\ne0$, $\omega\ne0$, $n>0$, $j>b$, $0<r<1$, and the source relation must still hold as specified there. A polynomial root or a rational value without those tests is not a world. Exceptional reconstruction below width one is not excluded at nonnegative bases. For negative bases both candidate graphs must remain available, subject to actual-world conditions; lower-graph existence at every $r$ is not asserted.
+
+The complete-world parent and traces are those of [*FIB common-parent geometry and two exact mixed children*](FIB_COMMON_PARENT_GEOMETRY_AND_MIXED_CHILDREN.md), Definitions 1.1–1.3 and Theorem 2.1, specialized exactly as in Sections 48–49. The all-width slopes, transform, consistency equations and strict filters are Sections 54–60. The new exceptional polynomial, two-root sign argument, affine treatment of singular sources and upper-world construction are the mathematical content of *Two width graphs for the actual exceptional terminal-M reconstruction*. Its literal interpolation circuit is (64.1); the full degree-six coefficient certificate (64.3)–(64.5) supplies the negative-response proof with all high-degree terms retained. Descartes' rule, Bernstein convexity and the analytic implicit-function theorem are the classical tools used here. No literature-priority or formal-kernel claim is part of these ordinary results.
+
+The original target is still exactly (53.1), equivalently (59.2): some real $p\ne24,v$ and independently distinct J and M pairs in one entire $C(p,v)$, with overlap permitted and independent common terminal values. The cut above provides neither a joint witness nor a global obstruction, and does not establish a terminal-M collision on the known J locus. The full singular parent and all gain-degenerate actual worlds remain in the unrestricted statements, with the exceptional affine case, polynomial-root multiplicities and all source/pole guards retained. No source parameter becomes an acquired observation, and no port, reset, copy or clock change is introduced.
+
+## 追加锚（本行以下为增补区）
+
