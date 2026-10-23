@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:c079933699304f3dfdc081f5e2e1c058d1cba3b246bef7b40b9e02e1099a9177
+  normalized_sha256: sha256:c079933699304f3dfdc081f5e2e1c058d1cba3b246bef7b40b9e02e1099a9177
+cas_ref: sha256:c079933699304f3dfdc081f5e2e1c058d1cba3b246bef7b40b9e02e1099a9177
+coverage_gids:
+  - gid: D5/S3/ConceptDynamics/Coding/ResponseGraphs/ActualQuantitativeExchangeChain.full_original_52
+    target_statement_id: sha256:a54c130a076c6bd23506fbdc18cb25304e09f532b3e1c2eb7932124628a9431e
+receipts:
+  unresolved_subitems: []

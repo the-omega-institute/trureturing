@@ -1,0 +1,48 @@
+## 25. Exact scope
+
+A complete world is $W=(P,g,d)$, where
+
+$$
+P=P(r,b)=\begin{pmatrix}r&b\\r(1-r)/b&1-r\end{pmatrix},\qquad
+0<r<1,\quad b>0,\quad d\in\mathbb R,\quad
+0\ne g\in\mathbb R[s],\quad\deg g\le3.
+$$
+
+The matrices $J=\left(\begin{smallmatrix}0&1\\1&0\end{smallmatrix}\right)$ and
+$M=\left(\begin{smallmatrix}0&1\\1&1\end{smallmatrix}\right)$ act on the left.
+The chronological acquired word is $J,M,J,M,M,M$, and the readings at
+clocks zero through six are $0,24,147/5,24,18,p,v$.
+The reading at clock $i$ is $d+g(i)\operatorname{tr}(Q_iP)$, with
+$Q_0=I$ and $Q_i=E_iQ_{i-1}$. The terminal alternatives $J,M$ occur
+at clock seven. Write their readings as $a(W),m(W)$.
+The entire child $C(p,v)$ contains all complete worlds with that record.
+
+The original target remains the existence of some $p\ne24,v$ with
+$W_0\ne W_1$ and $W_2\ne W_3$ in one entire $C(p,v)$ such that
+$a(W_0)=a(W_1)$ and $m(W_2)=m(W_3)$. The two pairs may overlap,
+and their common terminal answers are independent.
+This source studies the allowed sector $p=0$ only.
+
+**Theorem 25.1.** All complete parent worlds whose fifth acquired
+reading is zero form exactly two real analytic arcs
+$W_-(r),W_+(r)$, each parametrized by the whole interval $0<r<1$.
+Their source widths are the two simple positive roots $b_-(r),b_+(r)$
+of the explicit polynomial $F(r,b)$ below, and satisfy
+
+$$
+0<b_-(r)<\frac{r(1-r)}2<b_+(r)<\frac12.
+$$
+
+Every point of both arcs is an actual complete world. Their whole
+nonzero gains and fixed drifts have the zero-safe rational reconstruction
+in Section 29. In every such world $d>24$ and $g(5)<0$.
+The lower arc has no singular parent source. The upper arc contains
+exactly the two singular parent sources specified in Section 28, with
+their unique complete zero-base lifts.
+
+This is an algebraic reduction of the entire zero sector, including its
+parent singularity. It supplies no terminal collision pair and no
+exclusion of terminal collision pairs.
+
+
+

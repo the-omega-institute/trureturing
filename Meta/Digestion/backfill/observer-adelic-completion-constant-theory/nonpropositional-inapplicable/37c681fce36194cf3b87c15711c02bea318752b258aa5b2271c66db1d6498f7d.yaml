@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:37c681fce36194cf3b87c15711c02bea318752b258aa5b2271c66db1d6498f7d
+  normalized_sha256: sha256:37c681fce36194cf3b87c15711c02bea318752b258aa5b2271c66db1d6498f7d
+cas_ref: sha256:37c681fce36194cf3b87c15711c02bea318752b258aa5b2271c66db1d6498f7d
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: Sticky 分支的方法选择：在 t 方向使用 Mellin/Riemann 积分；不含积分恒等式、收敛性或收缩率结论。
+    previous_atom_id: 6ecd6a2dcac75316378829b83fc74c2a9b4f34a2b8e1271d9b62f36dfa5286b9
+    next_atom_id: 741f3352e201dd24bc267e590734368028dbb45583cb7c0175652e0419917308
