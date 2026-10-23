@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:a7b4e5631b1956ae9524028b829d608ebb04e282d29c5b0fdda674f87acbe859
+  normalized_sha256: sha256:a7b4e5631b1956ae9524028b829d608ebb04e282d29c5b0fdda674f87acbe859
+cas_ref: sha256:a7b4e5631b1956ae9524028b829d608ebb04e282d29c5b0fdda674f87acbe859
+coverage_gids:
+  - gid: D5/S3/Weil/Scattering/PrimePoissonResummation.prime_poisson_resummation
+    target_statement_id: sha256:a63eee6f5323128fd95adfb96d85d2d58e58de31f473cb25dd03ea4a6f840e48
+receipts:
+  unresolved_subitems: []

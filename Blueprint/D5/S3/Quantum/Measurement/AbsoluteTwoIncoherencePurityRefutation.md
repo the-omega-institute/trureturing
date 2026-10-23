@@ -6,7 +6,7 @@ Absolute two-incoherence beyond the purity bound.
 
 **Definition 1.1 (IsAbsolutelyKIncoherent).**
 
-$$\forall (\operatorname{n} : \mathbb{N}) , \forall (\operatorname{k} : \mathbb{N}) , \forall (\operatorname{rho} : \operatorname{Matrix} (\operatorname{Fin} \operatorname{n}) (\operatorname{Fin} \operatorname{n}) \mathbb{C}) , \operatorname{IsAbsolutelyKIncoherent} \operatorname{k} \operatorname{rho} = ((\operatorname{D5}.\operatorname{S3}.\operatorname{Quantum}.\operatorname{Entanglement}.\operatorname{GHZMeasureBiseparableBound}.\operatorname{IsDensity} \operatorname{rho}) \land (\forall (\operatorname{U} : \operatorname{Matrix} (\operatorname{Fin} \operatorname{n}) (\operatorname{Fin} \operatorname{n}) \mathbb{C}) , (\operatorname{U} \in \operatorname{Matrix}.\operatorname{unitaryGroup} (\operatorname{Fin} \operatorname{n}) \mathbb{C}) \to \operatorname{D5}.\operatorname{S3}.\operatorname{Quantum}.\operatorname{Measurement}.\operatorname{FactorWidthTwoCone}.\operatorname{IsKIncoherentSum} \operatorname{k} (\operatorname{U} \cdot \operatorname{rho} \cdot \operatorname{star} (\operatorname{U}))))$$
+$$\forall (\operatorname{n} : \mathbb{N}) , \forall (\operatorname{k} : \mathbb{N}) , \forall (\operatorname{rho} : \operatorname{Matrix} (\operatorname{Fin} \operatorname{n}) (\operatorname{Fin} \operatorname{n}) \mathbb{C}) , \operatorname{IsAbsolutelyKIncoherent} \operatorname{k} \operatorname{rho} = ((\operatorname{D5}.\operatorname{S3}.\operatorname{Quantum}.\operatorname{Information}.\operatorname{SLDSpectralEnergy}.\operatorname{IsDensity} \operatorname{rho}) \land (\forall (\operatorname{U} : \operatorname{Matrix} (\operatorname{Fin} \operatorname{n}) (\operatorname{Fin} \operatorname{n}) \mathbb{C}) , (\operatorname{U} \in \operatorname{Matrix}.\operatorname{unitaryGroup} (\operatorname{Fin} \operatorname{n}) \mathbb{C}) \to \operatorname{D5}.\operatorname{S3}.\operatorname{Quantum}.\operatorname{Measurement}.\operatorname{FactorWidthTwoCone}.\operatorname{IsKIncoherentSum} \operatorname{k} (\operatorname{U} \cdot \operatorname{rho} \cdot \operatorname{star} (\operatorname{U}))))$$
 
 *Formalization.* `D5/S3/Quantum/Measurement/AbsoluteTwoIncoherencePurityRefutation.IsAbsolutelyKIncoherent` (`✓ std3`).
 
@@ -53,6 +53,7 @@ A density matrix in dimension five is absolutely two-incoherent and has purity s
 - Truth anchor: `D5/S3/Quantum/Measurement/AbsoluteTwoIncoherencePurityRefutation.result`
 - Dependency: [D5/S3/Quantum/Decoherence/ProjectedUnistochasticDynamics](../Decoherence/ProjectedUnistochasticDynamics.md)
 - Dependency: [D5/S3/Quantum/Entanglement/GHZMeasureBiseparableBound](../Entanglement/GHZMeasureBiseparableBound.md)
+- Dependency: [D5/S3/Quantum/Information/SLDSpectralEnergy](../Information/SLDSpectralEnergy.md)
 - Dependency: [D5/S3/Quantum/Matrix/CartesianVariance](../Matrix/CartesianVariance.md)
 - Dependency: [D5/S3/Quantum/Matrix/CommutatorGap](../Matrix/CommutatorGap.md)
 - Dependency: [D5/S3/Quantum/Measurement/AntidistinguishabilityOverlapNonTight](AntidistinguishabilityOverlapNonTight.md)

@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:1b55673519913f44ea14127e7ab5a126e93d28ec646973351fec8cbe822c5a47
+  normalized_sha256: sha256:1b55673519913f44ea14127e7ab5a126e93d28ec646973351fec8cbe822c5a47
+cas_ref: sha256:1b55673519913f44ea14127e7ab5a126e93d28ec646973351fec8cbe822c5a47
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 非命题：只提出按能量壳分块的研究操作，没有分类结论。
+    previous_atom_id: 571448099278bb4969d6e707b6e2fa8f3a4ae4b9776cb223c2f8d06145629f55
+    next_atom_id: 7edb7dbe8c719c9cc579d82d46264912a98d27691e22838c48ce1336bd298f75
