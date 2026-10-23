@@ -33,7 +33,7 @@ set_option autoImplicit false
 set_option relaxedAutoImplicit false
 
 open Set Filter MeasureTheory
-open scoped Topology ENNReal NNReal CompactlySupported
+open scoped Topology ENNReal NNReal CompactlySupported Function
 
 namespace D5.S3.Topology.Measures.ClopenDisjointization
 
@@ -43,74 +43,76 @@ variable {K : Type u} [TopologicalSpace K] [CompactSpace K] [T2Space K]
   [MeasurableSpace K] [BorelSpace K]
 
 private theorem exists_regular_clopen_cluster (μ : ℕ → ProbabilityMeasure K) :
-    ∃ λ : Measure K, λ.Regular ∧ IsProbabilityMeasure λ ∧
+    ∃ ρ : Measure K, ρ.Regular ∧ IsProbabilityMeasure ρ ∧
       ∀ P : Set K, IsClopen P →
         Tendsto (fun n => (μ n : Measure K).real P)
-          (hyperfilter ℕ : Filter ℕ) (𝓝 (λ.real P)) := by
+          (hyperfilter ℕ : Filter ℕ) (𝓝 (ρ.real P)) := by
   classical
   obtain ⟨ν, -, hν⟩ :=
     (isCompact_univ : IsCompact (univ : Set (ProbabilityMeasure K))).ultrafilter_le_nhds'
-      ((hyperfilter ℕ).map μ) (by simp)
+      ((hyperfilter ℕ).map μ) (by exact Filter.univ_mem)
   have hlim : Tendsto μ (hyperfilter ℕ : Filter ℕ) (𝓝 ν) := by
     simpa only [Tendsto, Ultrafilter.coe_map] using hν
-  let L : C_c(K, ℝ) →ₚ[ℝ] ℝ := integralPositiveLinearMap (ν : Measure K)
-  let λ : Measure K := RealRMK.rieszMeasure L
-  letI : λ.Regular := inferInstance
+  let L : C_c(K, ℝ) →ₚ[ℝ] ℝ := CompactlySupportedContinuousMap.integralPositiveLinearMap (ν : Measure K)
+  let ρ : Measure K := RealRMK.rieszMeasure L
+  letI : ρ.Regular := inferInstance
   -- RMK is finite on compacts, and K is compact, before evaluating one.
-  letI : IsFiniteMeasure λ := inferInstance
+  letI : IsFiniteMeasure ρ := inferInstance
   let one : C_c(K, ℝ) :=
     (CompactlySupportedContinuousMap.continuousMapEquiv (α := K) (β := ℝ))
       (1 : C(K, ℝ))
   have hconst : (fun x : K => one x) = fun _ => (1 : ℝ) := rfl
-  have hmassReal : λ.real univ = 1 := by
+  have hmassReal : ρ.real univ = 1 := by
     have h := RealRMK.integral_rieszMeasure L one
-    change (∫ x, one x ∂λ) = ∫ x, one x ∂(ν : Measure K) at h
+    change (∫ x, one x ∂ρ) = ∫ x, one x ∂(ν : Measure K) at h
     rw [hconst] at h
     simpa only [integral_const, smul_eq_mul, mul_one, Measure.real, measure_univ,
       ENNReal.toReal_one] using h
-  have hmass : λ univ = 1 := by
+  have hmass : ρ univ = 1 := by
     calc
-      λ univ = ENNReal.ofReal (λ.real univ) :=
-        (ENNReal.ofReal_toReal (measure_ne_top λ univ)).symm
+      ρ univ = ENNReal.ofReal (ρ.real univ) :=
+        (ENNReal.ofReal_toReal (measure_ne_top ρ univ)).symm
       _ = 1 := by rw [hmassReal]; norm_num
-  letI : IsProbabilityMeasure λ := ⟨hmass⟩
-  refine ⟨λ, inferInstance, inferInstance, ?_⟩
+  letI : IsProbabilityMeasure ρ := ⟨hmass⟩
+  refine ⟨ρ, inferInstance, inferInstance, ?_⟩
   intro P hP
   let f : C(K, ℝ) := ⟨P.indicator (fun _ => 1), hP.continuous_indicator continuous_const⟩
   let g : C_c(K, ℝ) :=
     (CompactlySupportedContinuousMap.continuousMapEquiv (α := K) (β := ℝ)) f
-  have htest : (ν : Measure K).real P = λ.real P := by
+  have htest : (ν : Measure K).real P = ρ.real P := by
     have h := RealRMK.integral_rieszMeasure L g
-    change (∫ x, P.indicator (fun _ => (1 : ℝ)) x ∂λ) =
+    change (∫ x, P.indicator (fun _ => (1 : ℝ)) x ∂ρ) =
       ∫ x, P.indicator (fun _ => (1 : ℝ)) x ∂(ν : Measure K) at h
-    simpa only [integral_indicator_one hP.isOpen.measurableSet] using h.symm
+    simpa only [integral_indicator_const _ hP.isOpen.measurableSet, smul_eq_mul,
+      mul_one] using h.symm
   have h := (ProbabilityMeasure.continuous_integral_continuousMap f).continuousAt.tendsto.comp hlim
   change Tendsto (fun n => ∫ x, P.indicator (fun _ => (1 : ℝ)) x ∂(μ n : Measure K))
     (hyperfilter ℕ : Filter ℕ)
     (𝓝 (∫ x, P.indicator (fun _ => (1 : ℝ)) x ∂(ν : Measure K))) at h
-  simpa only [integral_indicator_one hP.isOpen.measurableSet, htest] using h
+  simpa only [integral_indicator_const _ hP.isOpen.measurableSet, smul_eq_mul,
+    mul_one, htest] using h
 
 private theorem selection_step [ZeroDimensionalSpace K]
     (μ : ℕ → ProbabilityMeasure K) (hreg : ∀ n, (μ n : Measure K).Regular)
     (E : ℕ → Set K) (hE : ∀ n, MeasurableSet (E n))
     (hdisj : Pairwise (Disjoint on E)) (hcarry : ∀ n, (μ n : Measure K) (E n) = 1)
-    (λ : Measure K) [λ.Regular] [IsProbabilityMeasure λ]
+    (ρ : Measure K) [ρ.Regular] [IsProbabilityMeasure ρ]
     (hlim : ∀ P : Set K, IsClopen P →
       Tendsto (fun n => (μ n : Measure K).real P)
-        (hyperfilter ℕ : Filter ℕ) (𝓝 (λ.real P)))
+        (hyperfilter ℕ : Filter ℕ) (𝓝 (ρ.real P)))
     {η : ℝ} (hη : 0 < η) (hηone : η < 1)
-    (P : Set K) (hP : IsClopen P) (hbudget : λ.real P < η / 8) (m : ℕ) :
+    (P : Set K) (hP : IsClopen P) (hbudget : ρ.real P < η / 8) (m : ℕ) :
     ∃ n : ℕ, ∃ W : Set K, m ≤ n ∧ IsClopen W ∧ W.Nonempty ∧
       Disjoint P W ∧ 1 - η / 2 < (μ n : Measure K).real W ∧
-      λ.real (P ∪ W) < η / 8 := by
+      ρ.real (P ∪ W) < η / 8 := by
   classical
-  let δ : ℝ := (η / 8 - λ.real P) / 2
+  let δ : ℝ := (η / 8 - ρ.real P) / 2
   have hδ : 0 < δ := by dsimp [δ]; linarith
-  have hsmallE : Tendsto (fun n => λ.real (E n)) atTop (𝓝 0) :=
+  have hsmallE : Tendsto (fun n => ρ.real (E n)) atTop (𝓝 0) :=
     (summable_measure_toReal hE hdisj).tendsto_atTop_zero
   have hA : ∀ᶠ n in (hyperfilter ℕ : Filter ℕ), (μ n : Measure K).real P < η / 4 :=
-    (hlim P hP).eventually (eventually_lt_nhds (by linarith : λ.real P < η / 4))
-  have hB : ∀ᶠ n in (hyperfilter ℕ : Filter ℕ), λ.real (E n) < δ :=
+    (hlim P hP).eventually (eventually_lt_nhds (by linarith : ρ.real P < η / 4))
+  have hB : ∀ᶠ n in (hyperfilter ℕ : Filter ℕ), ρ.real (E n) < δ :=
     (hsmallE.eventually (eventually_lt_nhds hδ)).filter_mono Nat.hyperfilter_le_atTop
   have hT : ∀ᶠ n in (hyperfilter ℕ : Filter ℕ), m ≤ n :=
     (eventually_ge_atTop m).filter_mono Nat.hyperfilter_le_atTop
@@ -129,12 +131,12 @@ private theorem selection_step [ZeroDimensionalSpace K]
   obtain ⟨C, hCE, hC, hCmass⟩ :=
     ((hE n).diff hP.isOpen.measurableSet).exists_lt_isCompact_of_ne_top
       (μ := (μ n : Measure K)) (measure_ne_top _ _) hcore'
-  have hλC : λ C < ENNReal.ofReal δ := by
-    apply (ENNReal.toReal_lt_toReal (measure_ne_top λ C) ENNReal.ofReal_ne_top).1
+  have hρC : ρ C < ENNReal.ofReal δ := by
+    apply (ENNReal.toReal_lt_toReal (measure_ne_top ρ C) ENNReal.ofReal_ne_top).1
     rw [ENNReal.toReal_ofReal hδ.le]
-    exact (measureReal_mono (fun x hx => (hCE hx).1) (measure_ne_top λ _)).trans_lt hnE
+    exact (measureReal_mono (fun x hx => (hCE hx).1) (measure_ne_top ρ _)).trans_lt hnE
   obtain ⟨O, hCO, hO, hOmass⟩ :=
-    Set.exists_isOpen_lt_of_lt (μ := λ) C (ENNReal.ofReal δ) hλC
+    Set.exists_isOpen_lt_of_lt (μ := ρ) C (ENNReal.ofReal δ) hρC
   obtain ⟨W, hW, hCW, hWO⟩ :=
     exists_clopen_of_closed_subset_open hC.isClosed (hO.sdiff hP.isClosed)
       (fun x hx => ⟨hCO hx, (hCE hx).2⟩)
@@ -147,14 +149,14 @@ private theorem selection_step [ZeroDimensionalSpace K]
     by_contra h
     rw [Set.not_nonempty_iff_eq_empty.mp h, measureReal_empty] at hmassW
     linarith
-  have hλW : λ.real W < δ := by
-    have h := (ENNReal.toReal_lt_toReal (measure_ne_top λ O) ENNReal.ofReal_ne_top).2 hOmass
+  have hρW : ρ.real W < δ := by
+    have h := (ENNReal.toReal_lt_toReal (measure_ne_top ρ O) ENNReal.ofReal_ne_top).2 hOmass
     rw [ENNReal.toReal_ofReal hδ.le] at h
-    exact (measureReal_mono (fun x hx => (hWO hx).1) (measure_ne_top λ O)).trans_lt h
+    exact (measureReal_mono (fun x hx => (hWO hx).1) (measure_ne_top ρ O)).trans_lt h
   refine ⟨n, W, hmn, hW, hWnonempty, ?_, hmassW, ?_⟩
   · exact Set.disjoint_left.mpr (fun x hxP hxW => (hWO hxW).2 hxP)
-  · have h := measureReal_union_le (μ := λ) P W
-    dsimp [δ] at hλW
+  · have h := measureReal_union_le (μ := ρ) P W
+    dsimp [δ] at hρW
     linarith
 
 /-- Disjoint Borel carriers of regular probabilities admit an increasing
@@ -170,15 +172,15 @@ theorem exists_clopen_disjointization [ZeroDimensionalSpace K]
       ∀ k, IsClopen (W k) ∧ (W k).Nonempty ∧
         1 - η / 2 < (μ (n k) : Measure K).real (W k) := by
   classical
-  obtain ⟨λ, hλreg, hλprob, hlim⟩ := exists_regular_clopen_cluster μ
-  letI : λ.Regular := hλreg
-  letI : IsProbabilityMeasure λ := hλprob
-  let S := {s : ℕ × Set K // IsClopen s.2 ∧ λ.real s.2 < η / 8}
+  obtain ⟨ρ, hρreg, hρprob, hlim⟩ := exists_regular_clopen_cluster μ
+  letI : ρ.Regular := hρreg
+  letI : IsProbabilityMeasure ρ := hρprob
+  let S := {s : ℕ × Set K // IsClopen s.2 ∧ ρ.real s.2 < η / 8}
   have step (s : S) :
       ∃ n : ℕ, ∃ W : Set K, s.val.1 ≤ n ∧ IsClopen W ∧ W.Nonempty ∧
         Disjoint s.val.2 W ∧ 1 - η / 2 < (μ n : Measure K).real W ∧
-        λ.real (s.val.2 ∪ W) < η / 8 :=
-    selection_step μ hreg E hE hdisj hcarry λ hlim hη hηone
+        ρ.real (s.val.2 ∪ W) < η / 8 :=
+    selection_step μ hreg E hE hdisj hcarry ρ hlim hη hηone
       s.val.2 s.property.1 s.property.2 s.val.1
   choose ix ws hindex hclopen hnonempty hdisjoint hmass hbudget using step
   let next : S → S := fun s =>
@@ -220,7 +222,7 @@ theorem exists_clopen_disjointization [ZeroDimensionalSpace K]
 
 private theorem totalVariation_restrict (v : SignedMeasure K) {W : Set K}
     (hW : MeasurableSet W) :
-    (v.restrict W).totalVariation = v.totalVariation.restrict W := by
+    SignedMeasure.totalVariation (v.restrict W) = v.totalVariation.restrict W := by
   simp only [SignedMeasure.totalVariation_eq_variation, VectorMeasure.variation_restrict hW]
 
 private theorem totalVariation_smul_real (v : SignedMeasure K) (c : ℝ) (A : Set K) :
@@ -232,12 +234,12 @@ private theorem normalized_restriction (v : SignedMeasure K)
     (hreg : v.totalVariation.Regular) (hv : v.totalVariation.real univ = 1)
     {W : Set K} (hW : IsClopen W) (hq : 0 < v.totalVariation.real W) :
     let q := v.totalVariation.real W
-    let t := q⁻¹ • v.restrict W
+    let t : SignedMeasure K := q⁻¹ • v.restrict W
     q ≤ 1 ∧ t.totalVariation.Regular ∧ t.totalVariation.real univ = 1 ∧
       t.totalVariation Wᶜ = 0 ∧
       (t - v).totalVariation.real univ = 2 * (1 - q) := by
   let q := v.totalVariation.real W
-  let t := q⁻¹ • v.restrict W
+  let t : SignedMeasure K := q⁻¹ • v.restrict W
   change q ≤ 1 ∧ t.totalVariation.Regular ∧ t.totalVariation.real univ = 1 ∧
     t.totalVariation Wᶜ = 0 ∧ (t - v).totalVariation.real univ = 2 * (1 - q)
   have hqpos : 0 < q := hq
@@ -267,12 +269,12 @@ private theorem normalized_restriction (v : SignedMeasure K)
   have hdW : (t - v).restrict W = (q⁻¹ - 1) • v.restrict W := by
     dsimp [t]
     rw [VectorMeasure.restrict_sub, VectorMeasure.restrict_smul,
-      VectorMeasure.restrict_restrict hW.isOpen.measurableSet hW.isOpen.measurableSet,
+      VectorMeasure.restrict_restrict v hW.isOpen.measurableSet hW.isOpen.measurableSet,
       inter_self, sub_smul, one_smul]
   have hdWc : (t - v).restrict Wᶜ = -v.restrict Wᶜ := by
     dsimp [t]
     rw [VectorMeasure.restrict_sub, VectorMeasure.restrict_smul,
-      VectorMeasure.restrict_restrict hW.isOpen.measurableSet.compl hW.isOpen.measurableSet,
+      VectorMeasure.restrict_restrict v hW.isOpen.measurableSet.compl hW.isOpen.measurableSet,
       compl_inter_self, VectorMeasure.restrict_empty, smul_zero, zero_sub]
   have hcoeff : 0 ≤ q⁻¹ - 1 := by
     have h := (one_le_inv₀ hqpos).2 hqle
@@ -280,10 +282,10 @@ private theorem normalized_restriction (v : SignedMeasure K)
   have hdiffW : (t - v).totalVariation.real W = (q⁻¹ - 1) * q := by
     calc
       (t - v).totalVariation.real W =
-          ((t - v).restrict W).totalVariation.real univ := by
+          (SignedMeasure.totalVariation ((t - v).restrict W)).real univ := by
         rw [totalVariation_restrict _ hW.isOpen.measurableSet,
           measureReal_restrict_apply_univ]
-      _ = ((q⁻¹ - 1) • v.restrict W).totalVariation.real univ := by rw [hdW]
+      _ = (SignedMeasure.totalVariation ((q⁻¹ - 1) • v.restrict W)).real univ := by rw [hdW]
       _ = (q⁻¹ - 1) * q := by
         rw [totalVariation_smul_real, abs_of_nonneg hcoeff,
           totalVariation_restrict v hW.isOpen.measurableSet,
@@ -291,10 +293,10 @@ private theorem normalized_restriction (v : SignedMeasure K)
   have hdiffWc : (t - v).totalVariation.real Wᶜ = 1 - q := by
     calc
       (t - v).totalVariation.real Wᶜ =
-          ((t - v).restrict Wᶜ).totalVariation.real univ := by
+          (SignedMeasure.totalVariation ((t - v).restrict Wᶜ)).real univ := by
         rw [totalVariation_restrict _ hW.isOpen.measurableSet.compl,
           measureReal_restrict_apply_univ]
-      _ = (-v.restrict Wᶜ).totalVariation.real univ := by rw [hdWc]
+      _ = (SignedMeasure.totalVariation (-v.restrict Wᶜ)).real univ := by rw [hdWc]
       _ = 1 - q := by
         rw [SignedMeasure.totalVariation_neg,
           totalVariation_restrict v hW.isOpen.measurableSet.compl,
@@ -318,7 +320,7 @@ private theorem exists_common_sign (t : ℕ → SignedMeasure K)
   by_cases h : ∀ N : ℕ, ∃ k > N, (1 / 2 : ℝ) ≤ p k
   · obtain ⟨j, hj, hp⟩ := Nat.exists_strictMono_subsequence h
     exact ⟨1, j, Or.inl rfl, hj, by simpa only [one_smul] using hp⟩
-  · push_neg at h
+  · push Not at h
     obtain ⟨N, hN⟩ := h
     have hneg : ∀ M : ℕ, ∃ k > M, (1 / 2 : ℝ) ≤ n k := by
       intro M

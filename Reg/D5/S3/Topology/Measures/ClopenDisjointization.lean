@@ -16,6 +16,7 @@ https://github.com/the-omega-institute/trureturing/issues/16293.
 namespace Reg.D5.S3.Topology.Measures.ClopenDisjointization
 
 open Set MeasureTheory
+open scoped Function
 open _root_.D5.S3.Topology.Measures.ClopenDisjointization
 open _root_.D5.S3.ConceptDynamics.InformationEscape
 

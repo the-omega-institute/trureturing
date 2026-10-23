@@ -29,13 +29,12 @@ internal sealed class ClopenDisjointizationDocument : IScribeDocumentDefinition
     private static Formula Lt(Formula a, Formula b) => Seq(a, Sp, F.Lt, Sp, b);
     private static Formula Le(Formula a, Formula b) => Seq(a, Sp, Leq, Sp, b);
     private static Formula Sub(Formula a, Formula b) => Seq(a, Sp, Minus, Sp, b);
-    private static Formula Mul(Formula a, Formula b) => Seq(a, Sp, Cdot, Sp, b);
+    private static Formula Mul(Formula a, Formula b) => Seq(a, Sp, Cdot, Sp, Open, b, Close);
     private static Formula Num(int n) => D((byte)n);
     private static Formula Quot(Formula a, Formula b) => Seq(F.Frac, Grp(a), Grp(b));
     private static Formula At(string f, Formula x) => Call(f, x);
     private static Formula SetK => Call("Set", V("K"));
     private static Formula SeqOf(Formula type) => Arrow(V("Nat"), type);
-    private static Formula Measure => Call("Measure", V("K"));
     private static Formula Signed => Call("SignedMeasure", V("K"));
     private static Formula TV(Formula v) => Call("totalVariation", v);
     private static Formula Mass(Formula measure, Formula set) => Call("real", measure, set);
@@ -120,7 +119,7 @@ internal sealed class ClopenDisjointizationDocument : IScribeDocumentDefinition
                 H("Disjoint clopens retaining probability mass"), StatementSource.FromAuthor(Positive()),
                 AssessedProvenance.FromRepo(), Blocks(
                     Paragraph(Text("Compactness of ProbabilityMeasure K gives a free-ultrafilter cluster nu. "
-                        + "Positive RMK represents integration against nu by a regular lambda. Finiteness follows from regularity on compact K before evaluating one to prove lambda(K)=1. "
+                        + "Positive RMK represents integration against nu by a regular lambda. RMK finiteness on compact sets gives finiteness on K before evaluating one to prove lambda(K)=1. "
                         + "The representing identity tests every fixed clopen indicator; it does not identify nu and lambda on all Borel sets.")),
                     Paragraph(Text("Countable additivity makes lambda(E_n) summable and hence convergent to zero. "
                         + "The recursive state contains the next allowed index and the actual preceding clopen union P, with lambda.real(P)<eta/8. "
@@ -144,8 +143,9 @@ internal sealed class ClopenDisjointizationDocument : IScribeDocumentDefinition
                         + "A fixed positive approximation bound supplies no weak-star convergence of t; the theorem asserts none."))), DescribeRole.Theorem),
             Paragraph(Text("The ordinary selection argument is classical background, not a novelty claim. "
                 + "The source-level suppliers are the pinned Mathlib Prokhorov forward compactness theorem, positive RealRMK, finite-measure summability, regularity, the clopen sandwich, and the signed/Jordan variation interfaces. "
-                + "Library/Topology/kania2026talagrand.md records the application boundary. "
+                + "Library/Topology/kania2026talagrand.md records the application boundary and the local kernel-checked supplier provenance. "
                 + "Neither local theorem proves KPR, the signed A-G recursion, final capture, the Grothendieck C(T) endpoint or exclusion in the whole signed dual unit ball. "
-                + "Information audit remains unfinished: full raw telescope reconstruction/sourceSelection and dependent-family realization, variation and sensitivity evidence are absent. "
-                + "The existing source-reconstruction issue is https://github.com/the-omega-institute/trureturing/issues/16293. No validated registration or kernel acceptance is asserted by this document.")))));
+                + "Information audit remains unfinished for both theorem targets: the source equivalence and actual-positive bridges are present, while Contract.Registration, whole-family variation, sensitivity, observational dependence, enrolled readout binding and complete raw sourceSelection evidence are absent. "
+                + "The target-specific unfinished registration is tracked at https://github.com/the-omega-institute/trureturing/issues/20708; the broader source-reconstruction context is https://github.com/the-omega-institute/trureturing/issues/16293. "
+                + "No registration retry is performed here, and neither theorem has a declared_validated registration.")))));
 }

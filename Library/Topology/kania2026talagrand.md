@@ -130,6 +130,35 @@ is not kernel acceptance. Neither this selection statement nor its signed
 normalization establishes KPR, the signed (A)-(G) recursion, final capture,
 the Grothendieck endpoint or exclusion in the whole signed dual unit ball.
 
+The local source is kernel-checked under the pinned project toolchain. It
+contains the two public suppliers
+`D5.S3.Topology.Measures.ClopenDisjointization.exists_clopen_disjointization`
+and
+`D5.S3.Topology.Measures.ClopenDisjointization.exists_signed_clopen_disjointization`.
+The scoped report records statement identities
+`sha256:7d793bb2985eff9fa64f7451af62ac5c451f2692ecfce37248db61ac4ec3b867`
+and
+`sha256:db82e144a84a7e6ceb423a536d401f0006f2a0ac37c94eb7ab7ea23c50b8518f`,
+with type identities
+`sha256:5d83d13afbefa6152a937e5a6eacfcc6658b937475f2aa4b1e4a7b38defd9b74`
+and
+`sha256:931f69e143389d4d4e9147855d510b47b2ad4844f3ef31d908cd44bad809b542`.
+The accepted target axiom closure is `Classical.choice`, `Quot.sound` and
+`propext`; this is a local supplier record, not an attribution of the
+construction to Kania and Kąkol and not a novelty or solved-problem claim.
+The positive theorem has the arbitrary nonmetric compact Hausdorff
+zero-dimensional Borel hypotheses stated above. The signed theorem carries
+and normalizes by total variation, has exact error `2 * (1 - q)`, and uses one
+common sign on both sequences. No weak-star convergence is inferred.
+
+The information registration remains unfinished for both public suppliers.
+Issue https://github.com/the-omega-institute/trureturing/issues/20708 records
+the missing whole-family variation, sensitivity, observational dependence,
+enrolled readout binding and complete raw `sourceSelection` evidence; the
+broader reconstruction context is issue 16293. The issue is an unfinished
+audit disclosure, not a `declared_validated` registration, and no retry is
+claimed here.
+
 ## Verified locator
 
 Canonical arXiv record: https://arxiv.org/abs/2607.06808v2.
