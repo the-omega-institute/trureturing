@@ -29,7 +29,10 @@ internal sealed class ConditionalSubentropyGuessingBoundDocument : IScribeDocume
     private static DocumentBlock.Describe Node(string name, Formula formula, string text, AssessedProvenance provenance, bool theorem = false) =>
         Describe.Lean(DescribeId.Create("conditionalsubentropy-" + name.ToLowerInvariant()), DeclarationHandle.Create(Owner + name),
             H(name), StatementSource.FromAuthor(Disp(formula)), provenance, Blocks(Paragraph(Text(text))),
-            theorem ? DescribeRole.Theorem : DescribeRole.Definition);
+            theorem ? DescribeRole.Theorem : DescribeRole.Definition,
+            theorem ? new OpenProblemResolutionClaim(
+                ProblemSlugRef.Create("datta-dorlas-jozsa-benatti-2014-conditional-subentropy-conjecture-2"),
+                ResolutionKind.Proved) : null);
 
     private static Formula CFormula() => All("n", Natural,
         Eqn(Call("C", Id("n")), SumOver("k", Call("Finset.Icc", D(2), Id("n")), Divide(D(1), Typed(Id("k"), Real)))));

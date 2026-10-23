@@ -82,6 +82,10 @@ $$\forall X \in \operatorname{Type},\; \forall B \in \operatorname{Type},\; [\op
 
 *Proof.* Machine-checked in Lean as `D5/S3/Quantum/Measurement/ConditionalSubentropyGuessingBound.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/datta-dorlas-jozsa-benatti-2014-conditional-subentropy-conjecture-2` (proved) by `D5/S3/Quantum/Measurement/ConditionalSubentropyGuessingBound.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"datta-dorlas-jozsa-benatti-2014-conditional-subentropy-conjecture-2","declaration_gid":"D5/S3/Quantum/Measurement/ConditionalSubentropyGuessingBound.result","resolution_kind":"proved"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* Nilanjana Datta, Tony Dorlas, Richard Jozsa, Fabio Benatti (2014). *Properties of subentropy*. DOI: [10.48550/arXiv.1310.1312](https://doi.org/10.48550/arXiv.1310.1312). URL: <https://arxiv.org/abs/1310.1312v1>.
