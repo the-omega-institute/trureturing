@@ -30,62 +30,29 @@ theorem fisherSLD_diag (w : n → ℝ) (hw : ∀ i, 0 ≤ w i) (H L : Matrix n n
     (hL : IsSLD (diagonal (fun i => (w i : ℂ))) H L) :
     fisherSLD (diagonal (fun i => (w i : ℂ))) L =
       (1 / 2) * ∑ i, ∑ j, (w i - w j) ^ 2 / (w i + w j) * Complex.normSq (H i j) := by
-  have hentry (i j : n) :
-      L i j * ((w i + w j : ℝ) : ℂ) =
-        2 * Complex.I * ((w i - w j : ℝ) : ℂ) * H i j := by
-    have he := congrArg (fun M : Matrix n n ℂ => M i j) hL.2
-    simp only [Matrix.smul_apply, smul_eq_mul, Matrix.sub_apply, Matrix.add_apply,
-      diagonal_mul, mul_diagonal] at he
-    push_cast
-    linear_combination -2 * he
-  have hterm (i j : n) :
-      (w i + w j) * Complex.normSq (L i j) =
-        4 * ((w i - w j) ^ 2 / (w i + w j) * Complex.normSq (H i j)) := by
-    by_cases hz : w i + w j = 0
-    · simp [hz]
-    · have he := congrArg Complex.normSq (hentry i j)
-      simp only [map_mul, Complex.normSq_ofReal, Complex.normSq_I,
-        Complex.normSq_ofNat] at he
-      apply (mul_right_cancel₀ hz)
-      field_simp
-      nlinarith [he]
-  have ht : (diagonal (fun i => (w i : ℂ)) * L * L).trace.re =
-      ∑ i, ∑ j, w i * Complex.normSq (L i j) := by
-    simp only [Matrix.trace, Matrix.diag,
-      Matrix.mul_apply (M := diagonal (fun i => (w i : ℂ)) * L) (N := L),
-      diagonal_mul, Complex.re_sum]
-    apply sum_congr rfl
-    intro i _
-    apply sum_congr rfl
-    intro j _
-    rw [← hL.1.apply j i]
-    have he : (w i : ℂ) * L i j * star (L i j) =
-        (w i : ℂ) * (Complex.normSq (L i j) : ℂ) := by
-      rw [Complex.normSq_eq_conj_mul_self]
-      change _ = (w i : ℂ) * (star (L i j) * L i j)
+  let ρ := diagonal (fun i => (w i : ℂ))
+  let B := Complex.I • (ρ * H - H * ρ)
+  have hsolve : L * ρ + ρ * L = (2 : ℂ) • B := by
+    change _ = (2 : ℂ) • (Complex.I • (ρ * H - H * ρ))
+    rw [hL.2]
+    simp only [smul_smul]
+    norm_num [ρ]
+  have he := D5.S3.Quantum.Information.SLDSpectralEnergy.diagonal_energy w B L hL.1 hsolve
+  have hB (i j : n) : Complex.normSq (B i j) =
+      (w i - w j) ^ 2 * Complex.normSq (H i j) := by
+    have hb : B i j = Complex.I * ((w i - w j : ℝ) : ℂ) * H i j := by
+      simp only [B, ρ, Matrix.smul_apply, smul_eq_mul, Matrix.sub_apply,
+        diagonal_mul, mul_diagonal]
+      push_cast
       ring
-    rw [he]
-    simp
-  have hswap : (∑ i, ∑ j, w i * Complex.normSq (L i j)) =
-      ∑ i, ∑ j, w j * Complex.normSq (L i j) := by
-    rw [sum_comm]
-    apply sum_congr rfl
-    intro i _
-    apply sum_congr rfl
-    intro j _
-    rw [← hL.1.apply i j]
-    simp only [Complex.star_def, Complex.normSq_conj]
-  have hsum : 2 * (∑ i, ∑ j, w i * Complex.normSq (L i j)) =
-      4 * ∑ i, ∑ j, (w i - w j) ^ 2 / (w i + w j) * Complex.normSq (H i j) := by
-    calc
-      _ = (∑ i, ∑ j, w i * Complex.normSq (L i j)) +
-          (∑ i, ∑ j, w j * Complex.normSq (L i j)) := by rw [← hswap]; ring
-      _ = ∑ i, ∑ j, (w i + w j) * Complex.normSq (L i j) := by
-        simp only [add_mul, sum_add_distrib]
-      _ = _ := by simp_rw [hterm]; simp only [← mul_sum]
+    rw [hb]
+    simp only [map_mul, Complex.normSq_I, Complex.normSq_ofReal, one_mul, pow_two]
   unfold fisherSLD
-  rw [ht]
-  linarith
+  rw [show (ρ * L * L).trace = (L * ρ * L).trace by
+    rw [Matrix.trace_mul_cycle], he]
+  simp_rw [hB]
+  simp only [mul_div_assoc, div_mul_eq_mul_div, ← mul_sum]
+  ring
 
 /-- Skew information in a diagonal eigenbasis. -/
 theorem skewWY_diag (w : n → ℝ) (hw : ∀ i, 0 ≤ w i) (H : Matrix n n ℂ)

@@ -7,6 +7,7 @@
    digest: The flagged two-qubit state refutes partial-trace monotonicity of Fisher discord. -/
 
 import D5.S3.Quantum.Information.FisherDiscord.Extension
+import D5.S3.Quantum.FiniteDimensional
 import Mathlib.Tactic
 
 noncomputable section
@@ -14,14 +15,12 @@ open Matrix Finset
 open scoped BigOperators ComplexOrder MatrixOrder Matrix.Norms.L2Operator
 
 namespace D5.S3.Quantum.Information.FisherDiscord.Result
+open D5.S3.Quantum.FiniteDimensional (qubitX qubit_weyl_star)
 open D5.S3.Quantum.Information.FisherDiscord.Defs
 open D5.S3.Quantum.Information.FisherDiscord.Spectral
 open D5.S3.Quantum.Information.FisherDiscord.Extension
 
 def weights : Fin 2 → ℝ := fun i => if i = 0 then 1 / 5 else 4 / 5
-
-def qubitX : Matrix (Fin 2) (Fin 2) ℂ := fun i j =>
-  if i = 0 ∧ j = 1 then 1 else if i = 1 ∧ j = 0 then 1 else 0
 
 def qubitSLD : Matrix (Fin 2) (Fin 2) ℂ := fun i j =>
   if i = 0 ∧ j = 1 then -(6 / 5 : ℂ) * Complex.I else
@@ -40,12 +39,6 @@ private theorem weights_nonneg : ∀ i, 0 ≤ weights i := by
 private theorem weights_sum : ∑ i, weights i = 1 := by
   delta weights
   norm_num [Fin.sum_univ_two]
-
-private theorem qubitX_hermitian : qubitX.IsHermitian := by
-  ext i j
-  change star (qubitX j i) = qubitX i j
-  fin_cases i <;> fin_cases j <;> delta qubitX <;>
-    simp [Matrix.IsHermitian, Matrix.conjTranspose_apply]
 
 private theorem qubit_sld : IsSLD (diagonal (fun i => (weights i : ℂ))) qubitX qubitSLD := by
   constructor
@@ -89,7 +82,7 @@ private theorem base_discord (L : Matrix (Fin 2) (Fin 2) ℂ)
     (hL : IsSLD (diagonal (fun i => (weights i : ℂ))) qubitX L) :
     fisherSLD (diagonal (fun i => (weights i : ℂ))) L -
       skewWY (diagonal (fun i => (weights i : ℂ))) qubitX = 4 / 25 := by
-  rw [discord_diag weights weights_nonneg qubitX L qubitX_hermitian hL]
+  rw [discord_diag weights weights_nonneg qubitX L qubit_weyl_star.2.1 hL]
   delta weights qubitX pairKernel
   norm_num [Fin.sum_univ_two]
   field_simp
@@ -105,9 +98,9 @@ theorem result : ¬ claim := by
     have hLbase : IsSLD (partialTrace₂ σ) qubitX qubitSLD := by
       simpa [hMarg] using qubit_sld
     simpa [hMarg] using
-      (hclaim 2 d₂ σ qubitX Lσ qubitSLD hσ qubitX_hermitian hLσ hLbase)
+      (hclaim 2 d₂ σ qubitX Lσ qubitSLD hσ qubit_weyl_star.2.1 hLσ hLbase)
   have hzero := monotone_discord_zero weights weights_nonneg weights_sum
-    qubitX qubitSLD qubitX_hermitian qubit_sld ⟨flagSLD, flag_sld⟩ hall
+    qubitX qubitSLD qubit_weyl_star.2.1 qubit_sld ⟨flagSLD, flag_sld⟩ hall
   rw [base_discord qubitSLD qubit_sld] at hzero
   norm_num at hzero
 

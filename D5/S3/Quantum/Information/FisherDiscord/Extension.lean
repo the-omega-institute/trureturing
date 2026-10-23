@@ -14,6 +14,7 @@ open Matrix Finset
 open scoped BigOperators ComplexOrder MatrixOrder Matrix.Norms.L2Operator
 
 namespace D5.S3.Quantum.Information.FisherDiscord.Extension
+open D5.S3.Quantum.Information.SLDSpectralEnergy (IsDensity)
 open D5.S3.Quantum.Information.FisherDiscord.Defs
 open D5.S3.Quantum.Information.FisherDiscord.Spectral
 

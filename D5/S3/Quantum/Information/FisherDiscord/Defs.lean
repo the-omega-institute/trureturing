@@ -6,6 +6,7 @@
    utility: none
    digest: Density matrices, symmetric logarithmic derivatives and partial trace for Fisher discord. -/
 
+import D5.S3.Quantum.Information.SLDSpectralEnergy
 import D5.S3.Quantum.Information.PartialTraceMutualInformation
 import Mathlib.Analysis.Matrix.Order
 import Mathlib.Analysis.SpecialFunctions.ContinuousFunctionalCalculus.Rpow.Basic
@@ -15,11 +16,9 @@ noncomputable section
 open scoped BigOperators ComplexOrder MatrixOrder Matrix.Norms.L2Operator
 
 namespace D5.S3.Quantum.Information.FisherDiscord.Defs
+open D5.S3.Quantum.Information.SLDSpectralEnergy (IsDensity)
 
 variable {n : Type*} [Fintype n] [DecidableEq n]
-
-/-- A positive semidefinite matrix of unit trace. -/
-def IsDensity (ρ : Matrix n n ℂ) : Prop := ρ.PosSemidef ∧ ρ.trace = 1
 
 /-- Trace over the second tensor factor, in product coordinates. -/
 def partialTrace₂ {d₁ d₂ : ℕ}
