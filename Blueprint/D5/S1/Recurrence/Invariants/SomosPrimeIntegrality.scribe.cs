@@ -25,7 +25,9 @@ internal sealed class SomosPrimeIntegralityDocument : IScribeDocumentDefinition
         DescribeRole role, AssessedProvenance provenance) => Describe.Lean(
             DescribeId.Create("hanna2004a091190-" + name.Replace('_', '-').Replace('.', '-').ToLowerInvariant()),
             DeclarationHandle.Create(Prefix + name), H(title), StatementSource.FromAuthor(formula),
-            provenance, Blocks(Paragraph(Text(prose))), role);
+            provenance, Blocks(Paragraph(Text(prose))), role,
+            name == "result" ? new OpenProblemResolutionClaim(
+                ProblemSlugRef.Create("oeis-a091190-somos-prime-integrality"), ResolutionKind.Proved) : null);
 
     private static Formula N() => Seq(Mathbb, Grp(F.Id("N")));
     private static Formula Z() => Seq(Mathbb, Grp(F.Id("Z")));

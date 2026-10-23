@@ -25,7 +25,9 @@ internal sealed class HannaA377106ParityReversionDocument : IScribeDocumentDefin
         DescribeRole role, AssessedProvenance provenance) => Describe.Lean(
             DescribeId.Create("hanna2024a377106-" + name.Replace('_', '-').Replace('.', '-').ToLowerInvariant()),
             DeclarationHandle.Create(Prefix + name), H(title), StatementSource.FromAuthor(formula),
-            provenance, Blocks(Paragraph(Text(prose))), role);
+            provenance, Blocks(Paragraph(Text(prose))), role,
+            name == "result" ? new OpenProblemResolutionClaim(
+                ProblemSlugRef.Create("oeis-a377106-hanna-parity-reversion"), ResolutionKind.Proved) : null);
 
     private static Formula N() => Seq(Mathbb, Grp(F.Id("N")));
     private static Formula Z() => Seq(Mathbb, Grp(F.Id("Z")));
