@@ -179,7 +179,7 @@ The decision set follows the current paired optimum. After excluding a seed, the
 
 ### 6.1 现在时限制
 
-证书模型已覆盖有限候选域、生产区间比较、正证据归一化及边附件的字段保留。完整运行时的候选域对应、kernel 重放结果到 GraphEdge 与 DP 包络的解释桥、以及保持全部分类守卫的 `lazy_attack_sound` 仍为 open；条件区间引理不替代这些义务。
+证书模型覆盖有限候选域、生产区间比较和正证据归一化。`RuntimeBridge` 核验生产证书边界保留的证明与支持、`attachCertificate` 经 `armGraph` 选取实际支持，以及在 `ArmCompletion` 图模拟条件下的生产数组 DP 完成包络与阳性严格差距。该条件包含连续顶点编号、前提下标范围、共同轮数，以及含实际支持的上下图模拟；尚未从运行时重放和完整 R 自动构造。未命中的非作者 shortcut 不进入当前下界图，因而其未来激活需要额外模拟依据。完整运行时的候选域对应、kernel 与来源审计到图模拟前提的桥、保持全部分类守卫的 `lazy_attack_sound` 和完整分类器的基底证书单调性仍为 open；条件定理不替代这些义务。
 
 内联 `have` 不拆，声明体内部例行步骤与内部发明折成一个 `opaque` 步骤。两个见证打包进同一声明会折叠构造层，可能使约化消失而转为证据不足；本契约不宣称任意 helper 拆并保持距离，也不要求为了读数制造辅助声明。
 
