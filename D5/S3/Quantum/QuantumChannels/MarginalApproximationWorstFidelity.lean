@@ -242,6 +242,57 @@ private lemma marginalApprox_psd {N : ℕ}
       exact ((marginal_psd χ hχ k).submatrix (fun a : Fin N → Fin 4 => a k)).hadamard ih
   exact hprod Finset.univ
 
+private def productMatrix {N : ℕ} (M : Fin N → Matrix (Fin 4) (Fin 4) ℂ) :
+    Matrix (Fin N → Fin 4) (Fin N → Fin 4) ℂ :=
+  fun a b => ∏ k, M k (a k) (b k)
+
+private lemma productMatrix_mul {N : ℕ}
+    (M L : Fin N → Matrix (Fin 4) (Fin 4) ℂ) :
+    productMatrix M * productMatrix L = productMatrix (fun k => M k * L k) := by
+  classical
+  ext a b
+  simp only [productMatrix, Matrix.mul_apply]
+  simp_rw [← Finset.prod_mul_distrib]
+  rw [Finset.prod_univ_sum, Fintype.piFinset_univ]
+
+private lemma productMatrix_star {N : ℕ}
+    (M : Fin N → Matrix (Fin 4) (Fin 4) ℂ) :
+    (productMatrix M)ᴴ = productMatrix (fun k => (M k)ᴴ) := by
+  ext a b
+  simp [productMatrix, Matrix.conjTranspose_apply]
+
+private lemma productMatrix_diagonal {N : ℕ} (d : Fin N → Fin 4 → ℂ) :
+    productMatrix (fun k => Matrix.diagonal (d k)) =
+      Matrix.diagonal (fun a => ∏ k, d k (a k)) := by
+  classical
+  ext a b
+  simp only [productMatrix, Matrix.diagonal_apply]
+  rw [Fintype.prod_ite_zero]
+  simp only [← funext_iff]
+
+private lemma productMatrix_one (N : ℕ) :
+    productMatrix (fun _ : Fin N => (1 : Matrix (Fin 4) (Fin 4) ℂ)) = 1 := by
+  simpa only [Matrix.diagonal_one, Finset.prod_const_one] using
+    productMatrix_diagonal (fun _ : Fin N => fun _ : Fin 4 => (1 : ℂ))
+
+private lemma productMatrix_unitary {N : ℕ}
+    (U : Fin N → Matrix.unitaryGroup (Fin 4) ℂ) :
+    (productMatrix (fun k => (U k : Matrix (Fin 4) (Fin 4) ℂ)))ᴴ *
+      productMatrix (fun k => (U k : Matrix (Fin 4) (Fin 4) ℂ)) = 1 := by
+  rw [productMatrix_star, productMatrix_mul]
+  have he (k : Fin N) : (U k : Matrix (Fin 4) (Fin 4) ℂ)ᴴ * U k = 1 :=
+    Unitary.coe_star_mul_self (U k)
+  simp_rw [he]
+  exact productMatrix_one N
+
+private lemma marginal_product_unitary {N : ℕ}
+    (χ : Matrix (Fin N → Fin 4) (Fin N → Fin 4) ℂ)
+    (U : Fin N → Matrix.unitaryGroup (Fin 4) ℂ) (k : Fin N) :
+    marginal ((productMatrix (fun l => (U l : Matrix (Fin 4) (Fin 4) ℂ)))ᴴ * χ *
+      productMatrix (fun l => (U l : Matrix (Fin 4) (Fin 4) ℂ))) k =
+      (U k : Matrix (Fin 4) (Fin 4) ℂ)ᴴ * marginal χ k * U k := by
+  sorry
+
 private lemma quantum_overlap {N : ℕ}
     (χ : Matrix (Fin N → Fin 4) (Fin N → Fin 4) ℂ)
     (hχ : χ.PosSemidef) (ht : Matrix.trace χ = 1)
@@ -249,7 +300,62 @@ private lemma quantum_overlap {N : ℕ}
       (1 / 4 ^ N : ℝ) ≤
         ∑ x, p x * ∏ k, ∑ y, if y k = x k then p y else 0) :
     (1 / 4 ^ N : ℝ) ≤ (Matrix.trace (χ * marginalApprox χ)).re := by
-  sorry
+  classical
+  let U (k : Fin N) := (marginal_psd χ hχ k).1.eigenvectorUnitary
+  let lam (k : Fin N) := (marginal_psd χ hχ k).1.eigenvalues
+  let V := productMatrix (fun k => (U k : Matrix (Fin 4) (Fin 4) ℂ))
+  let Ψ := Vᴴ * χ * V
+  have hVV : V * Vᴴ = 1 := mul_eq_one_comm.mp (productMatrix_unitary U)
+  have hΨ : Ψ.PosSemidef := hχ.conjTranspose_mul_mul_same V
+  have htΨ : Matrix.trace Ψ = 1 := by
+    dsimp [Ψ]
+    rw [Matrix.trace_mul_cycle, hVV, Matrix.one_mul, ht]
+  have hdiag (k : Fin N) : (U k : Matrix (Fin 4) (Fin 4) ℂ)ᴴ * marginal χ k * U k =
+      Matrix.diagonal (fun j => (lam k j : ℂ)) := by
+    simpa only [U, lam, Unitary.conjStarAlgAut_star_apply, Matrix.star_eq_conjTranspose,
+      Function.comp_def, RCLike.ofReal_eq_complex_ofReal]
+      using (marginal_psd χ hχ k).1.conjStarAlgAut_star_eigenvectorUnitary
+  have hmg (k : Fin N) : marginal Ψ k = Matrix.diagonal (fun j => (lam k j : ℂ)) := by
+    exact (marginal_product_unitary χ U k).trans (hdiag k)
+  let p (x : Fin N → Fin 4) := (Ψ x x).re
+  have hp (x) : 0 ≤ p x := (Complex.nonneg_iff.mp hΨ.diag_nonneg).1
+  have hps : ∑ x, p x = 1 := by
+    simpa only [Matrix.trace, Matrix.diag_apply, Complex.re_sum, Complex.one_re, p] using
+      congrArg Complex.re htΨ
+  have hq (k : Fin N) (j : Fin 4) : (∑ y, if y k = j then p y else 0) = lam k j := by
+    have he : (∑ y, if y k = j then p y else 0) = (marginal Ψ k j j).re := by
+      simp only [marginal, Complex.re_sum]
+      apply Finset.sum_congr rfl
+      intro y _
+      by_cases hy : y k = j
+      · simp only [if_pos hy]
+        rw [← hy, Function.update_eq_self]
+      · simp [hy]
+    rw [he, hmg, Matrix.diagonal_apply_eq, Complex.ofReal_re]
+  have hA : Vᴴ * marginalApprox χ * V =
+      Matrix.diagonal (fun x => ((∏ k, lam k (x k) : ℝ) : ℂ)) := by
+    change (productMatrix (fun k => (U k : Matrix (Fin 4) (Fin 4) ℂ)))ᴴ *
+      productMatrix (fun k => marginal χ k) * productMatrix (fun k => U k) = _
+    rw [productMatrix_star, productMatrix_mul, productMatrix_mul]
+    simp_rw [hdiag]
+    rw [productMatrix_diagonal]
+    simp only [Complex.ofReal_prod]
+  have htr : Matrix.trace (Ψ * (Vᴴ * marginalApprox χ * V)) =
+      Matrix.trace (χ * marginalApprox χ) := by
+    have he : Ψ * (Vᴴ * marginalApprox χ * V) = Vᴴ * (χ * marginalApprox χ) * V := by
+      dsimp [Ψ]
+      simp only [Matrix.mul_assoc]
+      rw [← Matrix.mul_assoc V Vᴴ, hVV, Matrix.one_mul]
+    rw [he, Matrix.trace_mul_cycle, hVV, Matrix.one_mul]
+  have hb := hc p hp hps
+  simp_rw [hq] at hb
+  calc
+    _ ≤ ∑ x, p x * ∏ k, lam k (x k) := hb
+    _ = _ := by
+      rw [← htr, hA]
+      simp only [Matrix.trace, Matrix.diag_apply, Matrix.mul_diagonal,
+        Complex.re_sum, Complex.mul_re, Complex.ofReal_re, Complex.ofReal_im,
+        mul_zero, sub_zero, p]
 
 private lemma fidelity_overlap {n : Type*} [Fintype n] [DecidableEq n]
     (ρ σ : Matrix n n ℂ) (hρ : ρ.PosSemidef) (hσ : σ.PosSemidef) :
