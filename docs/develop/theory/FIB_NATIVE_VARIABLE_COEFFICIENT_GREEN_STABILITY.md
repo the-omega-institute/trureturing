@@ -4940,3 +4940,15 @@ selection, atomic-to-cylinder identification or priority claim is made.
 These are ordinary mathematical proofs, with no Lean/kernel certification.
 
 ## 追加锚（本行以下为增补区）
+
+## 30. Point-source occupation and finite-command caps
+
+The same model and exactly Definition 29.2's commands are used in
+[Native point-source occupation and finite-command cap limits](FIB_NATIVE_SINGULAR_OCCUPATION_AND_COMMAND_CAP_LIMITS.md).
+Its Theorems 2.1–5.1 give the distinct spatial, diffusion-mean and finite-command
+integrability thresholds, an original-domain squared-amplitude counterexample,
+fixed-cap transfer, noncommuting uncapping limits and necessary simultaneous
+cap rates. These conclusions supplement (29.15) without changing its
+continuous-test claims or the source and stability classification of §§10–13.
+
+## 追加锚（本行以下为增补区）
