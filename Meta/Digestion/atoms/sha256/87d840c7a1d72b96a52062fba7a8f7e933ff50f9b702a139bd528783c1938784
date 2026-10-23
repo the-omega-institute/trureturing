@@ -1,0 +1,17 @@
+### 定义 9.1（所用中间结果的来源）
+
+* [II 第 77--81 节](FIB_SELF_CALIBRATING_RELATION_MATHEMATICS_II.md#77-未知时间原点下的自适应轨道运输)
+  给出有效主世界、平移轨道、等距三报告的原始误差合同及中点恢复结构。
+  本文保持其主侧独立性、完整噪声立方体和实际轨迹计费条件。
+* Casini、Garulli、Vicino，
+  [*A linear programming approach to online set membership parameter estimation for linear regression models*，§4，式 (7)--(10)](https://control.dii.unisi.it/~casini/pdf/IJACSP_2017a.pdf)：
+  固定未知参数、已知回归向量及逐项有界误差产生条带交，坐标极值可由线性规划计算。
+  在这里回归向量是 $(i^2,i,1)$，参数为 $(A,2At,At^2+B)$；
+  原点是系数比值而非某个系数坐标，所以不能把三个系数的外包盒当成精确原点区间。
+  定理 3.1 对所需正分母换元及反向有限实现给出直接证明。
+
+三点插值、有限向量的共同平移中点以及线性约束投影都是中间步骤。
+定理 2.1 的方向分离、定理 3.1 的显式风险、定理 4.1 的定位、
+定理 5.1 的参数区间全局设计及命题 6.1--6.2 均由本文普通证明承担，
+不以一般插值或一般线性规划事实替代这些结论，也不提出外部原创性断言。
+
