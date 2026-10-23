@@ -157,7 +157,10 @@ internal sealed class DeterministicSimplicialDegreeShiftDocument : IScribeDocume
                         + "In the reverse direction zero comes from (0,0), the primordial "
                         + "value comes from (m,0), and all other vertex values already satisfy "
                         + "the bound. Taking m = n − d ≥ 1 proves the asserted equality."))),
-                DescribeRole.Theorem))));
+                DescribeRole.Theorem,
+                openProblemResolutionClaim: new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("dorogovtsev-krapivsky-2025-deterministic-simplicial-degree-shift"),
+                    ResolutionKind.Proved)))));
 
     private static Formula DscFormula()
     {
