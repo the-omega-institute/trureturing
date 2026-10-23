@@ -1,6 +1,6 @@
-/- GID: D5/S3/VertexAlgebra/LatticeHalfFockOuterTaylorEvaluation
+/- GID: D5/S3/VertexAlgebra/NestedResidues/LatticeHalfFockOuterTaylorEvaluation
    generality: I
-   mirror-B: D5/B/S3/VertexAlgebra/LatticeHalfFockOuterTaylorEvaluation
+   mirror-B: D5/B/S3/VertexAlgebra/NestedResidues/LatticeHalfFockOuterTaylorEvaluation
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
    utility: none

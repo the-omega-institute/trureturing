@@ -6,7 +6,7 @@
    utility: none
    digest: Complete binary Laurent residues at arbitrary signed diagonal powers. -/
 
-import D5.S3.VertexAlgebra.LatticeHalfFockOuterTaylorEvaluation
+import D5.S3.VertexAlgebra.NestedResidues.LatticeHalfFockOuterTaylorEvaluation
 
 /-! The two remaining labels are the original J and B. Every Laurent
 numerator exponent is signed. The complete difference precedes evaluation;

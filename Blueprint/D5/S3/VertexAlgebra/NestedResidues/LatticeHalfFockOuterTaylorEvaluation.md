@@ -6,9 +6,9 @@ Current and first-source Laurent residue
 
 **Theorem 1.1 (local_laurent_pair_residue).**
 
-Lean statement: `D5/S3/VertexAlgebra/LatticeHalfFockOuterTaylorEvaluation.local_laurent_pair_residue`
+Lean statement: `D5/S3/VertexAlgebra/NestedResidues/LatticeHalfFockOuterTaylorEvaluation.local_laurent_pair_residue`
 
-*Proof.* Machine-checked in Lean as `D5/S3/VertexAlgebra/LatticeHalfFockOuterTaylorEvaluation.local_laurent_pair_residue` (`✓ std3`). ∎
+*Proof.* Machine-checked in Lean as `D5/S3/VertexAlgebra/NestedResidues/LatticeHalfFockOuterTaylorEvaluation.local_laurent_pair_residue` (`✓ std3`). ∎
 
 *Source.* Repository-derived.
 
@@ -20,9 +20,9 @@ The current/source diagonal is taken before either remaining order. The signed m
 
 **Theorem 1.2 (current_source_local_monomial).**
 
-Lean statement: `D5/S3/VertexAlgebra/LatticeHalfFockOuterTaylorEvaluation.current_source_local_monomial`
+Lean statement: `D5/S3/VertexAlgebra/NestedResidues/LatticeHalfFockOuterTaylorEvaluation.current_source_local_monomial`
 
-*Proof.* Machine-checked in Lean as `D5/S3/VertexAlgebra/LatticeHalfFockOuterTaylorEvaluation.current_source_local_monomial` (`✓ std3`). ∎
+*Proof.* Machine-checked in Lean as `D5/S3/VertexAlgebra/NestedResidues/LatticeHalfFockOuterTaylorEvaluation.current_source_local_monomial` (`✓ std3`). ∎
 
 *Source.* Repository-derived.
 
@@ -34,9 +34,9 @@ The current/source diagonal is taken before either remaining order. The signed m
 
 **Definition 1.3 (currentSourceMonomialValue).**
 
-Lean statement: `D5/S3/VertexAlgebra/LatticeHalfFockOuterTaylorEvaluation.currentSourceMonomialValue`
+Lean statement: `D5/S3/VertexAlgebra/NestedResidues/LatticeHalfFockOuterTaylorEvaluation.currentSourceMonomialValue`
 
-*Formalization.* `D5/S3/VertexAlgebra/LatticeHalfFockOuterTaylorEvaluation.currentSourceMonomialValue` (`✓ std3`).
+*Formalization.* `D5/S3/VertexAlgebra/NestedResidues/LatticeHalfFockOuterTaylorEvaluation.currentSourceMonomialValue` (`✓ std3`).
 
 *Source.* Repository-derived.
 
@@ -48,9 +48,9 @@ The current/source diagonal is taken before either remaining order. The signed m
 
 **Theorem 1.4 (current_source_monomial_residue).**
 
-Lean statement: `D5/S3/VertexAlgebra/LatticeHalfFockOuterTaylorEvaluation.current_source_monomial_residue`
+Lean statement: `D5/S3/VertexAlgebra/NestedResidues/LatticeHalfFockOuterTaylorEvaluation.current_source_monomial_residue`
 
-*Proof.* Machine-checked in Lean as `D5/S3/VertexAlgebra/LatticeHalfFockOuterTaylorEvaluation.current_source_monomial_residue` (`✓ std3`). ∎
+*Proof.* Machine-checked in Lean as `D5/S3/VertexAlgebra/NestedResidues/LatticeHalfFockOuterTaylorEvaluation.current_source_monomial_residue` (`✓ std3`). ∎
 
 *Source.* Repository-derived.
 
@@ -62,9 +62,9 @@ The current/source diagonal is taken before either remaining order. The signed m
 
 **Theorem 1.5 (current_source_laurent_residue).**
 
-Lean statement: `D5/S3/VertexAlgebra/LatticeHalfFockOuterTaylorEvaluation.current_source_laurent_residue`
+Lean statement: `D5/S3/VertexAlgebra/NestedResidues/LatticeHalfFockOuterTaylorEvaluation.current_source_laurent_residue`
 
-*Proof.* Machine-checked in Lean as `D5/S3/VertexAlgebra/LatticeHalfFockOuterTaylorEvaluation.current_source_laurent_residue` (`✓ std3`). ∎
+*Proof.* Machine-checked in Lean as `D5/S3/VertexAlgebra/NestedResidues/LatticeHalfFockOuterTaylorEvaluation.current_source_laurent_residue` (`✓ std3`). ∎
 
 *Source.* Repository-derived.
 
@@ -76,9 +76,9 @@ The current/source diagonal is taken before either remaining order. The signed m
 
 **Theorem 1.6 (finite_associated_contraction).**
 
-Lean statement: `D5/S3/VertexAlgebra/LatticeHalfFockOuterTaylorEvaluation.finite_associated_contraction`
+Lean statement: `D5/S3/VertexAlgebra/NestedResidues/LatticeHalfFockOuterTaylorEvaluation.finite_associated_contraction`
 
-*Proof.* Machine-checked in Lean as `D5/S3/VertexAlgebra/LatticeHalfFockOuterTaylorEvaluation.finite_associated_contraction` (`✓ std3`). ∎
+*Proof.* Machine-checked in Lean as `D5/S3/VertexAlgebra/NestedResidues/LatticeHalfFockOuterTaylorEvaluation.finite_associated_contraction` (`✓ std3`). ∎
 
 *Source.* Repository-derived.
 
@@ -90,9 +90,9 @@ The current/source diagonal is taken before either remaining order. The signed m
 
 **Theorem 1.7 (finite_left_outer_taylor).**
 
-Lean statement: `D5/S3/VertexAlgebra/LatticeHalfFockOuterTaylorEvaluation.finite_left_outer_taylor`
+Lean statement: `D5/S3/VertexAlgebra/NestedResidues/LatticeHalfFockOuterTaylorEvaluation.finite_left_outer_taylor`
 
-*Proof.* Machine-checked in Lean as `D5/S3/VertexAlgebra/LatticeHalfFockOuterTaylorEvaluation.finite_left_outer_taylor` (`✓ std3`). ∎
+*Proof.* Machine-checked in Lean as `D5/S3/VertexAlgebra/NestedResidues/LatticeHalfFockOuterTaylorEvaluation.finite_left_outer_taylor` (`✓ std3`). ∎
 
 *Source.* Repository-derived.
 
@@ -104,12 +104,12 @@ The current/source diagonal is taken before either remaining order. The signed m
 
 ## References
 
-- Truth anchor: `D5/S3/VertexAlgebra/LatticeHalfFockOuterTaylorEvaluation.currentSourceMonomialValue`
-- Truth anchor: `D5/S3/VertexAlgebra/LatticeHalfFockOuterTaylorEvaluation.current_source_laurent_residue`
-- Truth anchor: `D5/S3/VertexAlgebra/LatticeHalfFockOuterTaylorEvaluation.current_source_local_monomial`
-- Truth anchor: `D5/S3/VertexAlgebra/LatticeHalfFockOuterTaylorEvaluation.current_source_monomial_residue`
-- Truth anchor: `D5/S3/VertexAlgebra/LatticeHalfFockOuterTaylorEvaluation.finite_associated_contraction`
-- Truth anchor: `D5/S3/VertexAlgebra/LatticeHalfFockOuterTaylorEvaluation.finite_left_outer_taylor`
-- Truth anchor: `D5/S3/VertexAlgebra/LatticeHalfFockOuterTaylorEvaluation.local_laurent_pair_residue`
-- Dependency: [D5/S3/VertexAlgebra/NestedResidues/LatticeHalfFockCollisionTaylor](NestedResidues/LatticeHalfFockCollisionTaylor.md)
-- Dependency: [D5/S3/VertexAlgebra/NestedResidues/LatticeHalfFockSliceQuotient](NestedResidues/LatticeHalfFockSliceQuotient.md)
+- Truth anchor: `D5/S3/VertexAlgebra/NestedResidues/LatticeHalfFockOuterTaylorEvaluation.currentSourceMonomialValue`
+- Truth anchor: `D5/S3/VertexAlgebra/NestedResidues/LatticeHalfFockOuterTaylorEvaluation.current_source_laurent_residue`
+- Truth anchor: `D5/S3/VertexAlgebra/NestedResidues/LatticeHalfFockOuterTaylorEvaluation.current_source_local_monomial`
+- Truth anchor: `D5/S3/VertexAlgebra/NestedResidues/LatticeHalfFockOuterTaylorEvaluation.current_source_monomial_residue`
+- Truth anchor: `D5/S3/VertexAlgebra/NestedResidues/LatticeHalfFockOuterTaylorEvaluation.finite_associated_contraction`
+- Truth anchor: `D5/S3/VertexAlgebra/NestedResidues/LatticeHalfFockOuterTaylorEvaluation.finite_left_outer_taylor`
+- Truth anchor: `D5/S3/VertexAlgebra/NestedResidues/LatticeHalfFockOuterTaylorEvaluation.local_laurent_pair_residue`
+- Dependency: [D5/S3/VertexAlgebra/NestedResidues/LatticeHalfFockCollisionTaylor](LatticeHalfFockCollisionTaylor.md)
+- Dependency: [D5/S3/VertexAlgebra/NestedResidues/LatticeHalfFockSliceQuotient](LatticeHalfFockSliceQuotient.md)
