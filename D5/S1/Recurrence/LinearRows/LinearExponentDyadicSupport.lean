@@ -6,6 +6,8 @@
    utility: none
    digest: The exponent-n integer series has odd support at dyadic neighbors. -/
 
+/- Escape audit unfinished: https://github.com/the-omega-institute/trureturing/issues/19891 -/
+
 import D5.S1.Recurrence.Invariants.CatalanCompositionSquareParity
 import Mathlib.RingTheory.PowerSeries.Derivative
 import Mathlib.RingTheory.PowerSeries.WellKnown
@@ -94,7 +96,7 @@ private theorem square_odd (F : PowerSeries F2) (n : ℕ) : coeff (2*n+1) (F^2) 
   rw [square_expand, coeff_expand_of_not_dvd]
   omega
 
-private def Agree (n : ℕ) (F G : PowerSeries R) : Prop := ∀ k < n, coeff k F = coeff k G
+def Agree (n : ℕ) (F G : PowerSeries R) : Prop := ∀ k < n, coeff k F = coeff k G
 
 private theorem agree_iff (n : ℕ) (F G : PowerSeries R) :
     Agree n F G ↔ (X : PowerSeries R)^n ∣ F-G := by
@@ -117,7 +119,7 @@ private theorem leading_mul {n : ℕ} {U : PowerSeries R} (h : X ^ n ∣ U) (V :
     simpa only [zero_add, coeff_zero_eq_constantCoeff] using coeff_X_pow_mul T n 0
   rw [mul_assoc, hc, hc, map_mul]
 
-private theorem pow_change {n : ℕ} {F G : PowerSeries R}
+theorem pow_change {n : ℕ} {F G : PowerSeries R}
     (hF : constantCoeff F = 1) (hG : constantCoeff G = 1) (h : Agree n F G) (e : ℕ) :
     coeff n (F^e) - coeff n (G^e) = (e : R)*(coeff n F - coeff n G) := by
   induction e with
