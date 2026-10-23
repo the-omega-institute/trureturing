@@ -181,10 +181,9 @@ private theorem information_unitary (ρ H L : Matrix n n ℂ) (hρ : ρ.PosSemid
   have ht (M : Matrix n n ℂ) : (φ M).trace = M.trace := by
     exact Matrix.trace_units_conj (Unitary.toUnits U) M
   have hs : CFC.sqrt (φ ρ) = φ (CFC.sqrt ρ) := by
-    apply CFC.sqrt_unique
-    · rw [← map_mul, CFC.sqrt_mul_sqrt_self ρ hρ.nonneg]
-    · exact ((CFC.sqrt_nonneg ρ).posSemidef.mul_mul_conjTranspose_same
-        (U : Matrix n n ℂ)).nonneg
+    exact (NonUnitalStarAlgHomClass.map_cfcₙ (S := ℂ) φ NNReal.sqrt ρ
+      (ha := hρ.nonneg)
+      (hφa := (hρ.mul_mul_conjTranspose_same (U : Matrix n n ℂ)).nonneg)).symm
   constructor
   · change (1 / 4 : ℝ) * (trace (φ ρ * φ L * φ L)).re = _
     rw [← map_mul, ← map_mul, ht]

@@ -7,6 +7,7 @@
    digest: Flagged extensions have the prescribed marginal and zero Fisher discord; the universal extension inequality is equivalent to zero marginal discord. -/
 
 import D5.S3.Quantum.Information.FisherDiscord.Spectral
+import D5.S3.Quantum.Decoherence.EnvironmentMarginalChannel
 
 noncomputable section
 open Matrix Finset
@@ -29,15 +30,29 @@ def flagExtension (w : Fin n → ℝ) :
 theorem flag_partialTrace (w : Fin n → ℝ) :
     partialTrace₂ (flagExtension w) = diagonal (fun i => (w i : ℂ)) := by
   classical
+  let record : Fin n → Fin n → ℂ := fun i b => if i = b then 1 else 0
+  let V : Matrix (Fin n × Fin n) (Fin n) ℂ :=
+    fun x j => if j = x.1 then record x.1 x.2 else 0
+  have hV : V * diagonal (fun i => (w i : ℂ)) * V.conjTranspose = flagExtension w := by
+    ext ⟨i, b⟩ ⟨j, c⟩
+    rw [Matrix.mul_apply (M := V * diagonal (fun i => (w i : ℂ)))
+      (N := V.conjTranspose)]
+    simp only [Matrix.mul_diagonal, Matrix.conjTranspose_apply]
+    simp [V, record, flagExtension, Matrix.diagonal_apply, Prod.ext_iff] <;>
+      split_ifs <;> simp_all <;> aesop
+  have hm := (D5.S3.Quantum.Decoherence.EnvironmentMarginalChannel.environment_marginal_channel
+    record (diagonal (fun i => (w i : ℂ)))).1
+  change partialTrace₂ (V * diagonal (fun i => (w i : ℂ)) * V.conjTranspose) =
+    D5.S3.Quantum.FixedAlgebra.SingletonRecordClassicality.recordChannel record (diagonal (fun i => (w i : ℂ))) at hm
+  rw [hV] at hm
+  rw [hm]
   ext i j
   by_cases hij : i = j
   · subst j
-    simp [partialTrace₂,
-      D5.S3.Quantum.Information.PartialTraceMutualInformation.partialTraceRight, flagExtension, Matrix.diagonal_apply_eq]
-    norm_cast
-    simp [Finset.sum_ite_eq']
-  · simp [partialTrace₂,
-      D5.S3.Quantum.Information.PartialTraceMutualInformation.partialTraceRight, flagExtension, Matrix.diagonal_apply_ne, hij]
+    simp [D5.S3.Quantum.FixedAlgebra.SingletonRecordClassicality.recordChannel,
+      D5.S3.Quantum.FixedAlgebra.SingletonRecordClassicality.recordGram, record]
+  · simp [D5.S3.Quantum.FixedAlgebra.SingletonRecordClassicality.recordChannel,
+      Matrix.diagonal_apply_ne _ hij, hij]
 
 private theorem flag_term_zero (w : Fin n → ℝ) (H : Matrix (Fin n) (Fin n) ℂ)
     (x y : Fin n × Fin n) :
