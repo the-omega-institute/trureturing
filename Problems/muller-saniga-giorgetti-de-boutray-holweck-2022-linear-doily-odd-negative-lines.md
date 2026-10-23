@@ -56,7 +56,7 @@ A mismatch in the subspace, the sign convention or the counted lines would preve
 
 ## Evidence
 
-The canonical source is `D5/S3/Quantum/Contextuality/LinearDoilyNegativeLineParity.lean` (831 lines).
+The canonical source is `D5/S3/Quantum/Contextuality/LinearDoilyNegativeLineParity.lean` (713 lines).
 
 - **Proof.** It proves `result : claim`.
 - **Axioms.** It uses only the standard axioms `propext`, `Classical.choice` and `Quot.sound`; no `sorry`, `native_decide`, or new axiom.
