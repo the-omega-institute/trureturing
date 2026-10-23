@@ -1,6 +1,6 @@
-/- GID: D5/S3/VertexAlgebra/LatticeHalfFockNestedQForwardEdge
+/- GID: D5/S3/VertexAlgebra/NestedResidues/LatticeHalfFockNestedQForwardEdge
    generality: I
-   mirror-B: D5/B/S3/VertexAlgebra/LatticeHalfFockNestedQForwardEdge
+   mirror-B: D5/B/S3/VertexAlgebra/NestedResidues/LatticeHalfFockNestedQForwardEdge
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
    utility: none
@@ -12,7 +12,7 @@ import D5.S3.VertexAlgebra.LatticeHalfFockOuterTaylorEvaluation
 
 set_option autoImplicit false
 
-namespace D5.S3.VertexAlgebra.LatticeHalfFockNestedQForwardEdge
+namespace D5.S3.VertexAlgebra.NestedResidues.LatticeHalfFockNestedQForwardEdge
 open LatticeHalfFockLeftCurrentTransport LatticeHalfFockNestedQReadout
 open LatticeHalfFockOuterTaylorEvaluation
 open LatticeGeneratingFieldLocality LatticeHalfFockChargedTensorCoefficients
@@ -75,4 +75,4 @@ theorem forward_weighted_identity_of_cutoff_le_lift
     simp
 
 end
-end D5.S3.VertexAlgebra.LatticeHalfFockNestedQForwardEdge
+end D5.S3.VertexAlgebra.NestedResidues.LatticeHalfFockNestedQForwardEdge

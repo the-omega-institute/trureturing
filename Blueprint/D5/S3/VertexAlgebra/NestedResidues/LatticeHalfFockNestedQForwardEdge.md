@@ -6,9 +6,9 @@ The actual forward nested-Q collision equality is closed on the empty inner-cuto
 
 **Theorem 1.1 (The forward weighted identity when the inner cutoff is at most the signed lift).**
 
-Lean statement: `D5/S3/VertexAlgebra/LatticeHalfFockNestedQForwardEdge.forward_weighted_identity_of_cutoff_le_lift`
+Lean statement: `D5/S3/VertexAlgebra/NestedResidues/LatticeHalfFockNestedQForwardEdge.forward_weighted_identity_of_cutoff_le_lift`
 
-*Proof.* Machine-checked in Lean as `D5/S3/VertexAlgebra/LatticeHalfFockNestedQForwardEdge.forward_weighted_identity_of_cutoff_le_lift` (`✓ std3`). ∎
+*Proof.* Machine-checked in Lean as `D5/S3/VertexAlgebra/NestedResidues/LatticeHalfFockNestedQForwardEdge.forward_weighted_identity_of_cutoff_le_lift` (`✓ std3`). ∎
 
 *Source.* Repository-derived.
 
@@ -24,5 +24,5 @@ The four-slot source-bound audit remains unfinished at issue #20163; this source
 
 ## References
 
-- Truth anchor: `D5/S3/VertexAlgebra/LatticeHalfFockNestedQForwardEdge.forward_weighted_identity_of_cutoff_le_lift`
-- Dependency: [D5/S3/VertexAlgebra/LatticeHalfFockOuterTaylorEvaluation](LatticeHalfFockOuterTaylorEvaluation.md)
+- Truth anchor: `D5/S3/VertexAlgebra/NestedResidues/LatticeHalfFockNestedQForwardEdge.forward_weighted_identity_of_cutoff_le_lift`
+- Dependency: [D5/S3/VertexAlgebra/LatticeHalfFockOuterTaylorEvaluation](../LatticeHalfFockOuterTaylorEvaluation.md)

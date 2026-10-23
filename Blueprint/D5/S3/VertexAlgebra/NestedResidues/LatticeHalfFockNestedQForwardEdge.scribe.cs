@@ -2,7 +2,7 @@ using StrataLint.Scribe;
 using static StrataLint.Scribe.DefinitionDsl;
 using static StrataLint.Scribe.FormulaDsl;
 
-namespace StrataLint.Scribe.Blueprint.D5.S3.VertexAlgebra;
+namespace StrataLint.Scribe.Blueprint.D5.S3.VertexAlgebra.NestedResidues;
 
 internal sealed class LatticeHalfFockNestedQForwardEdgeDocument : IScribeDocumentDefinition
 {
@@ -12,7 +12,7 @@ internal sealed class LatticeHalfFockNestedQForwardEdgeDocument : IScribeDocumen
         Blocks(
             Describe.Lean(
                 DescribeId.Create("forward-weighted-identity-of-cutoff-le-lift"),
-                DeclarationHandle.Create("D5/S3/VertexAlgebra/LatticeHalfFockNestedQForwardEdge.forward_weighted_identity_of_cutoff_le_lift"),
+                DeclarationHandle.Create("D5/S3/VertexAlgebra/NestedResidues/LatticeHalfFockNestedQForwardEdge.forward_weighted_identity_of_cutoff_le_lift"),
                 H("The forward weighted identity when the inner cutoff is at most the signed lift"),
                 StatementSource.WithoutFormula(),
                 AssessedProvenance.FromRepo(LibraryNoteRef.Create("D5/L/VertexAlgebra/bakalovkac2004lattice")),
