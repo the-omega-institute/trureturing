@@ -72,8 +72,9 @@ def claim : Prop :=
 end D5.S1.Recurrence.Bilateral.HannaThetaFourModFour
 
 open PowerSeries
-open private Agree agree_refl agree_add agree_mul agree_pow agree_inv map_inv from
+open private Agree agree_refl agree_add agree_mul agree_pow agree_inv from
   D5.S1.Recurrence.Parity.BilateralQuarticPowerThetaModFour
+open D5.S1.Recurrence.Parity.BilateralQuarticPowerThetaModFour (map_inv)
 open private agree_sub from D5.S1.Recurrence.Parity.ScaledQuadraticReversionModSixteen
 open D5.S1.Recurrence.Bilateral.BilateralProductModFour
 

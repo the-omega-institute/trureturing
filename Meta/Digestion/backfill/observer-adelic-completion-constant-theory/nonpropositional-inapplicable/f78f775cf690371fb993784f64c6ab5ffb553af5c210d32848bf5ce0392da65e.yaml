@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:f78f775cf690371fb993784f64c6ab5ffb553af5c210d32848bf5ce0392da65e
+  normalized_sha256: sha256:f78f775cf690371fb993784f64c6ab5ffb553af5c210d32848bf5ce0392da65e
+cas_ref: sha256:f78f775cf690371fb993784f64c6ab5ffb553af5c210d32848bf5ce0392da65e
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: Sticky 分支的拟议处理方法：在 p 方向选择 Euler/Hecke primitive 分解；本片段没有断言后续历史压缩已成立。
+    previous_atom_id: b9c8d26455bfcb902a4f44d275c07e610fd1a2050f599805e93cc4edb69420cb
+    next_atom_id: 6ecd6a2dcac75316378829b83fc74c2a9b4f34a2b8e1271d9b62f36dfa5286b9

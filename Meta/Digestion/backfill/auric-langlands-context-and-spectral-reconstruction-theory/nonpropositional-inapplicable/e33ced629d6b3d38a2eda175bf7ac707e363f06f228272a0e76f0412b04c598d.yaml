@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:e33ced629d6b3d38a2eda175bf7ac707e363f06f228272a0e76f0412b04c598d
+  normalized_sha256: sha256:e33ced629d6b3d38a2eda175bf7ac707e363f06f228272a0e76f0412b04c598d
+cas_ref: sha256:e33ced629d6b3d38a2eda175bf7ac707e363f06f228272a0e76f0412b04c598d
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 'Bibliographic source metadata only: author, title, version or locator; theorem numbers are citations, not asserted theorem statements. No mathematical assertion is settled by this receipt.'
+    previous_atom_id: bff299c38f851e2ff14e960a95c663d4ca6c84bd744f89bda8f0279125fa2a05
+    next_atom_id: 32878f178dd012187fdebabab594425ad7ea9f754ea7ac18425795c88d2926a0

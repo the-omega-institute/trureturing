@@ -1,0 +1,121 @@
+## 16. Entire gains and all three affine responses
+
+At either root use the same interpolation basis $\ell_i$ as (2.2) and
+set
+
+$$
+h(s)=\frac85(s-1)(s-3)(s-5),\qquad
+q_r(s)=-\ell_0(s)-\frac{\ell_1(s)}j
+                   -\frac{\ell_2(s)}T-\frac{\ell_3(s)}n.
+\tag{16.1}
+$$
+
+Thus $q_r(0),\ldots,q_r(3)$ equal
+$-1,-1/j,-1/T,-1/n$. Substitution in (14.1), with $T=9/8$, proves
+that the complete singular worlds are exactly
+
+$$
+W(r,\epsilon)=
+\left(P(r,1/8),\ h+\epsilon q_r,\ 24+\epsilon\right),
+\qquad r\in\{r_-,r_+\},\quad\epsilon\in\mathbb R.
+\tag{16.2}
+$$
+
+For completeness, the fixed part has values
+
+$$
+(h(0),\ldots,h(7))=
+(-24,0,24/5,0,-24/5,0,24,384/5).
+\tag{16.3}
+$$
+
+The interpolation weights at four through seven give
+
+$$
+\begin{aligned}
+q_r(4)&=1-4/j+6/T-4/n=-1/U,\\
+q_r(5)&=4-15/j+20/T-10/n,\\
+q_r(6)&=10-36/j+45/T-20/n,\\
+q_r(7)&=20-70/j+84/T-35/n.
+\end{aligned}
+\tag{16.4}
+$$
+
+The last equality for $q_r(4)$ uses $\Lambda=0$. These identities
+verify all five prescribed rows, including
+$24+\epsilon+U(-24/5-\epsilon/U)=18$ at four.
+A zero entire gain would make the first two readings both equal to
+the drift, contrary to $0\ne24$. Thus (16.2) always has a nonzero
+whole gain, without imposing nonzero samples, exact degree or simple
+roots. The four interpolated samples prove its uniqueness at fixed
+source and drift.
+
+At a root, (14.5) gives $1/j+1/n=107/60$. In particular
+
+$$
+q_r(5)=\frac{71}{18}-\frac5j,\quad
+q_r(6)=\frac{43}{3}-\frac{16}j,\quad
+q_r(7)=\frac{129}{4}-\frac{35}j.
+\tag{16.5}
+$$
+
+Define the fifth-response coefficient and the terminal-J trace by
+
+$$
+A_5(r)=1+(n+5/4)q_r(5),\qquad L(r)=T+2j+4r.
+\tag{16.6}
+$$
+
+Since $n>j>0$, the root relation implies $1/j>107/120$ and
+$n>120/107$. Hence
+
+$$
+q_r(5)<-\frac{37}{72},\qquad
+A_5(r)<1-\left(\frac{120}{107}+\frac54\right)\frac{37}{72}
+       =-\frac{6739}{30816}<0.
+\tag{16.7}
+$$
+
+There is consequently exactly one complete singular world at each
+source $r_\pm$ and each prescribed real fifth reading $p$:
+
+$$
+\epsilon_r(p)=\frac{p-24}{A_5(r)},\qquad
+W_r(p)=W(r,\epsilon_r(p)).
+\tag{16.8}
+$$
+
+This includes $p=24$, where $\epsilon=0$. It follows from the
+original gain reconstruction, rather than treating gain values at
+later clocks as additional free variables.
+
+The literal products are $Q_5=\left(\begin{smallmatrix}2&1\\3&1\end{smallmatrix}\right)$,
+$Q_6=\left(\begin{smallmatrix}3&1\\5&2\end{smallmatrix}\right)$,
+and $JQ_6=\left(\begin{smallmatrix}5&2\\3&1\end{smallmatrix}\right)$.
+Their traces against the original source are $U+n$, $2U+n$, $L$.
+Therefore, with the same entire $g$ and fixed $d$ throughout, put
+
+$$
+\begin{aligned}
+V_0(r)&=24(7/2+n),&
+V_1(r)&=\frac{1+(5/2+n)q_r(6)}{A_5(r)},\\
+A_0(r)&=24+\frac{384}{5}L(r),&
+A_1(r)&=\frac{1+L(r)q_r(7)}{A_5(r)}.
+\end{aligned}
+\tag{16.9}
+$$
+
+The exact affine responses are
+
+$$
+\begin{aligned}
+p(W(r,\epsilon))&=24+A_5(r)\epsilon,\\
+v(W_r(p))&=V_0(r)+V_1(r)(p-24),\\
+a(W_r(p))&=A_0(r)+A_1(r)(p-24).
+\end{aligned}
+\tag{16.10}
+$$
+
+No terminal-M equality or additional acquired observation enters
+these formulas.
+

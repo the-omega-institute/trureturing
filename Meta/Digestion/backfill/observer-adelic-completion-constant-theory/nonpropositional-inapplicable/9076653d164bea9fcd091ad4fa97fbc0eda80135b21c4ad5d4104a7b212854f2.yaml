@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:9076653d164bea9fcd091ad4fa97fbc0eda80135b21c4ad5d4104a7b212854f2
+  normalized_sha256: sha256:9076653d164bea9fcd091ad4fa97fbc0eda80135b21c4ad5d4104a7b212854f2
+cas_ref: sha256:9076653d164bea9fcd091ad4fa97fbc0eda80135b21c4ad5d4104a7b212854f2
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: The atom is editorial or methodological text without a mathematical assertion.
+    previous_atom_id: 5cfba0c7e1f30d7233c57a959ec1fce84b1227fa9675dd39979d4b6c5a8a1e8d
+    next_atom_id: 67f7fa6be956b5d4f0950048ce33e7249bd2124631edd92e2a9d58a9603736ec

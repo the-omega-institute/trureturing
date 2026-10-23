@@ -1,0 +1,33 @@
+## 5. An exact negative-base critical source at width four
+
+The same determinant polynomial has the exact endpoint values
+
+$$
+E(0,4)=-545620205984808960<0,\qquad
+E(1,4)=437107566064435200>0.
+\tag{5.1}
+$$
+
+They follow directly by substituting into (2.1) and (3.1). The
+intermediate value theorem supplies $r_*\in(0,1)$ satisfying
+$E(r_*,4)=0$. This is an exact algebraic source condition: one may
+choose any real root of this displayed, nonzero integer polynomial
+inside that open interval. No numerical root is needed for existence.
+
+At $(r_*,4)$, Lemma 2.1 supplies the original strict source, one whole
+nonzero polynomial gain of degree at most three, and its fixed drift.
+The first five readings are exactly the prescribed ones. Set
+
+$$
+p_*=\frac{N_p(r_*,4)}{H(r_*,4)},\qquad
+v_*=\frac{N_v(r_*,4)}{H(r_*,4)}.
+\tag{5.2}
+$$
+
+By (1.1), $p_*<-216/5<0$, with $6p_*<v_*<5p_*-9$.
+By (3.5), the determinant of the acquired differential vanishes
+there, while $p_r>0$. The differential consequently has rank exactly
+one. This proves Part 3 of Theorem 1.1. No assertion about fold
+nondegeneracy, multiplicity of the child, or terminal equality follows
+merely from this criticality.
+

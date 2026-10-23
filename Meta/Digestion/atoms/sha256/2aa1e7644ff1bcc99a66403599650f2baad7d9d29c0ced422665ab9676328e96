@@ -1,0 +1,199 @@
+**Theorem 5.1 (first-cell law, full-occupation obstruction and sufficiency boundary).**
+Let $0<p<1$ and choose one of the following observations, with its
+indicated source coefficient:
+
+$$
+W=\Gamma^p,\quad \kappa=c_G^p;
+\qquad\hbox{or}\qquad
+p=a\in[1/2,1),\quad W=W^{(a)},\quad \kappa=N_a^{-2}.
+\tag{5.1}
+$$
+
+In both cases $W=\kappa R^{-2p}(1+O(R))$ near $o$ and
+$J=\nu(W)<\infty$. Let $M_n\to\infty$ be deterministic caps on the
+observation $W$, and write
+
+$$
+A_n=\nu_n(W_{M_n}),\qquad
+I_n=\mathbb E\int_0^{\delta_n}W_{M_n}(\bar q_n(t))dt,
+\qquad b_p=\kappa\,4^{-p}.
+\tag{5.2}
+$$
+
+For all sufficiently large $n$ the entire first cell is alive. Uniformly
+over every choice of $M_n>0$, its expectation obeys
+
+$$
+I_n=(1+O(\sqrt{\delta_n}))\,
+b_p\delta_n^{1-p}F_p(M_n\delta_n^p/b_p),\qquad
+F_p(h)=\int_0^1\min(h,s^{-2p})ds.
+\tag{5.3}
+$$
+
+The exact scalar function is
+
+$$
+F_p(h)=
+\begin{cases}
+h,&0<h\le1,\\
+\displaystyle\frac{2p\,h^{(2p-1)/(2p)}-1}{2p-1},
+   &h\ge1,\ p\ne1/2,\\
+1+\log h,&h\ge1,\ p=1/2.
+\end{cases}
+\tag{5.4}
+$$
+
+Full capped convergence $A_n\to J$ necessarily implies $I_n\to0$.
+The exact criteria for this *first-cell* vanishing are
+
+$$
+\begin{array}{c|c|c}
+\text{exponent}&I_n\to0&\delta_n=n^{-2}\\ \hline
+0<p<1/2&\text{automatic for all }M_n\to\infty&\text{no first-cell restriction}\\
+p=1/2&\sqrt{\delta_n}\log M_n\to0&\log M_n=o(n)\\
+1/2<p<1&\sqrt{\delta_n}M_n^{1-1/(2p)}\to0
+  &M_n=o(n^{2p/(2p-1)}) .
+\end{array}
+\tag{5.5}
+$$
+
+Each nonautomatic condition is therefore necessary for convergence of
+the full original commands. It is sufficient for removing the first-cell
+contribution, with no assertion that it controls later cells.
+
+There is also a quantitative excess. Along every subsequence,
+
+$$
+\liminf_n(A_n-I_n)\ge J,
+\qquad \liminf_n A_n\ge J+\liminf_n I_n.
+\tag{5.6}
+$$
+
+In particular, at $p=1/2$, if
+$\log M_n\sim c/\sqrt{\delta_n}$ with $c>0$, then
+$I_n\to\kappa c/2$. At $1/2<p<1$, if
+$M_n\sim C\delta_n^{-p/(2p-1)}$ with $C>0$, then
+
+$$
+I_n\longrightarrow
+\frac{p}{2p-1}\kappa^{1/(2p)}C^{1-1/(2p)}>0.
+\tag{5.7}
+$$
+
+These boundary rates already preclude $A_n\to J$; rates for which the
+corresponding expression in (5.5) tends to infinity give $A_n\to\infty$.
+For example, $a=3/4$ in (3.1) requires $M_n=o(n^3)$, and caps
+$M_n\sim Cn^3$ have a positive excess at least
+$\tfrac32N_a^{-4/3}C^{1/3}$.
+
+For $W=\Gamma^p$, a cap $K_n$ on $\Gamma$ means
+$W_{M_n}=(\Gamma\wedge K_n)^p$ with $M_n=K_n^p$. Thus the necessary
+conditions are $\log K_n=o(n)$ at $p=1/2$ and
+$K_n=o(n^{2/(2p-1)})$ for $1/2<p<1$. They refer to the cap on the
+specified observable, not to a changed source or kinetic form.
+
+For precision about the remaining sufficiency question, full convergence
+$A_n\to J$ is equivalent to the additional complete-occupation tail
+condition
+
+$$
+\lim_{K\to\infty}\limsup_{n\to\infty}
+\nu_n(W_{M_n}-W_K)=0,
+\tag{5.8}
+$$
+
+where for each fixed $K$ the difference is considered only for the
+eventual indices with $M_n\ge K$. There exist sufficiently slowly
+growing deterministic caps giving $A_n\to J$. No explicit rate in
+(5.5) is asserted sufficient for (5.8), and no uncapped convergence
+is asserted for $0<p<1/2$. For $p\ge1$ and $W=\Gamma^p$, in contrast,
+every sequence $M_n\to\infty$ satisfies
+$\nu_n(W_{M_n})\to\infty$ as an extended expected-occupation limit.
+
+Proof. At the first node put $v=v_0$ and let its signs be $\xi$.
+The height margin of $o$ is positive and $|v|\le C\sqrt{\delta_n}$,
+so for large $n$ its whole first cell is inside $I$ and the source chart.
+Equations (1.4)–(1.5) give, exactly for $0<t\le\delta_n$,
+
+$$
+\upsilon(t)=0,\qquad
+R(t)=\ell_{n,\xi}\,t/\delta_n,\qquad
+\ell_{n,\xi}=|Bv|
+=|\delta_n Bd(o)+\sqrt{2\delta_n}\xi|
+=2\sqrt{\delta_n}(1+O(\sqrt{\delta_n})).
+\tag{5.9}
+$$
+
+The last estimate is uniform over the four sign choices. In particular
+it keeps the covariance normalization $2A\,dt$, including its cross
+term. With $s=t/\delta_n$, (1.6) or (3.1) now gives
+
+$$
+W(\bar q_n(t))
+=b_p\delta_n^{-p}s^{-2p}(1+O(\sqrt{\delta_n})),\quad 0<s\le1,
+\tag{5.10}
+$$
+
+uniformly even as $s\downarrow0$. For any positive $x,M$ and
+$0<e<1$, a multiplicative bound $(1-e)x\le y\le(1+e)x$ implies
+$(1-e)\min(x,M)\le\min(y,M)\le(1+e)\min(x,M)$.
+Applying this to (5.10), integrating, then averaging the four signs,
+proves (5.3) uniformly in the cap. Splitting the integral defining $F_p$
+at $s=h^{-1/(2p)}$ for $h\ge1$ proves (5.4) by direct integration.
+
+If $p<1/2$, $F_p(h)\le(1-2p)^{-1}$ for every $h$, proving automatic
+vanishing. At $p=1/2$, the range $h\le1$ has
+$I_n\le C\delta_n^{1/2}$; the range $h\ge1$ has
+$I_n\sim b_p\delta_n^{1/2}(1+\log h)$.
+Since $\sqrt{\delta_n}|\log\delta_n|\to0$ and $M_n\to\infty$,
+these are exactly the middle criterion of (5.5). At $p>1/2$,
+$F_p(h)$ is comparable to $h^{1-1/(2p)}$ on $h\ge1$, giving
+$I_n\asymp\sqrt{\delta_n}M_n^{1-1/(2p)}$ there.
+On $h\le1$ both $I_n$ and this latter expression are at most a
+constant times $\delta_n^{1-p}\to0$. This proves the last equivalence,
+and its stated $n$ form. The same formulas give the boundary constants:
+$b_{1/2}=\kappa/2$, and
+$\frac{2p}{2p-1}b_p^{1/(2p)}
+=\frac{p}{2p-1}\kappa^{1/(2p)}$. In the power boundary regime
+$M_n\delta_n^p\to\infty$ because $p<1$, justifying use of that branch.
+
+To pass from the first cell to a necessary condition for the *whole*
+occupation, fix $K>0$. For all large $n$, $M_n\ge K$ and the first
+cell is alive. Positivity yields
+
+$$
+A_n-I_n
+\ge\nu_n(W_K)-\mathbb E\int_0^{\delta_n}W_K(\bar q_n(t))dt
+\ge\nu_n(W_K)-K\delta_n.
+\tag{5.11}
+$$
+
+By Theorem 4.1 its right side tends to $\nu(W_K)$. Letting $K\to\infty$
+proves (5.6), also along every subsequence. If $A_n\to J$ but $I_n$
+does not tend to zero, a subsequence with $I_n\ge c>0$ contradicts
+(5.6). Thus no cancellation by later nonnegative occupations can
+remove the initial excess. This proves necessity without presuming
+convergence of the unbounded test on the rest of the trajectory.
+
+Condition (5.8) is the classical truncation/uniform-integrability
+mechanism applied to these actual occupation measures. Here is the
+complete argument in this setting. If $A_n\to J$, then at fixed $K$
+the difference in (5.8) tends to $J-\nu(W_K)$, which tends to zero.
+Conversely (5.8), fixed-$K$ convergence, and
+$A_n=\nu_n(W_K)+\nu_n(W_{M_n}-W_K)$ give $\limsup A_n\le J$.
+Positivity and fixed caps give $\liminf A_n\ge\nu(W_K)$ for every
+$K$, hence $\liminf A_n\ge J$. This proves the equivalence.
+It does not assert (5.8) from the lifetime estimate: that estimate
+controls elapsed time, not singular source weights on later chords.
+
+There is a qualitative sufficient cap choice. For each integer $j\ge1$,
+fixed-cap convergence supplies $N_j$, increasing strictly to infinity,
+such that $|\nu_n(W_j)-\nu(W_j)|<1/j$ for every $n\ge N_j$.
+Put $M_n=j$ on $N_j\le n<N_{j+1}$, and choose any positive caps on
+the finite initial segment. Then $M_n\to\infty$ and
+$|A_n-J|\le1/j+|\nu(W_j)-J|\to0$. This proves existence but gives
+no quantitative bound on $N_j$ and no explicit sufficient cap rate.
+It is not an uncapped bridge. Finally, if $p\ge1$, positivity gives
+$\liminf\nu_n(W_{M_n})\ge\nu(W_K)$ for every fixed $K$ by Theorem
+4.1; these lower bounds tend to infinity by Theorem 2.1. $\square$
+

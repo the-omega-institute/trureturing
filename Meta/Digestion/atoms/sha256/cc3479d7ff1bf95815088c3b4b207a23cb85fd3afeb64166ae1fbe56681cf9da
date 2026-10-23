@@ -1,0 +1,46 @@
+**Definition 9.1 (native source and covering contract).** Retain Definition
+4.1, with $0<Z<1$, $r=1-Z$, $H=r/2$, $X=Y=H$ and probabilities
+$(k,H-k,Z,H-k,k)$ in the original mode order. Preparation phases remain
+arbitrary and fixed, and the amplitudes retain the negative phase
+convention. Write
+
+$$
+\widetilde\Omega=I\times\mathbb R^2,\qquad
+I=(l,u),\quad 0<l<k_o<u<H,\qquad
+\varpi(k,A,B)=(k,[A]_{2\pi},[B]_{2\pi}).
+\tag{9.1}
+$$
+
+Here $A,B$ denote real phase coordinates. This is additional
+covering structure over $\Omega=I\times\mathbb T^2$, not a replacement of
+its current-ray torus. The deck transformations are
+$(A,B)\mapsto(A+2\pi n,B+2\pi m)$, $(n,m)\in\mathbb Z^2$.
+The unimodular change in Definition 4.1 fixes these two actual periods.
+Lift the same fields, with the same notation,
+
+$$
+P=\partial_k,\qquad Q=\tfrac12\partial_A+
+c(k)\partial_B,\qquad c(k)=\tfrac12-k/r,\qquad
+d\widetilde\mu=dk\,dA\,dB.
+\tag{9.2}
+$$
+
+For an original numerical absolutely continuous or piecewise $C^1$
+command $(a,b)$ starting at zero, put $J_t=\int_0^t a\,db$.
+The exact lifted path from $(k,A_0,B_0)$ is
+
+$$
+(k+a_t,\ A_0+b_t/2,\
+ B_0+c(k)b_t-J_t/r).
+\tag{9.3}
+$$
+
+Its original whole-height guard remains $k+\min a>0$ and
+$k+\max a<H$. Requiring this path to remain in $I$ adds precisely
+$k+\min a>l$ and $k+\max a<u$. Neither endpoint membership nor taking a
+lift changes these extrema conditions. Formula (9.3) directly reuses
+[N, Theorems 9.2--9.3] and the full-path correspondence in
+[Native guarded lift limits and diffusion selection, §§2.2--2.4](FIB_NATIVE_GUARDED_LIFT_LIMITS_AND_DIFFUSION_SELECTION.md).
+No new control, mean selector, phase reset or unrestricted rotation is
+included.
+

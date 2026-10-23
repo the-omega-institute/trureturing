@@ -1,0 +1,164 @@
+**Theorem 27.1 (joint variational lower witnesses).** After a fixed
+shrink of the same two-sided neighbourhood, there exist $c,C_0>0$ and,
+for every $0<|\kappa|\le\kappa_*$ and $\tau\ge\tau_{\min}$,
+a real normalized $f_{\kappa,\tau}\in C_c^\infty(\Omega)$ such that
+
+$$
+\begin{aligned}
+T_\kappa[f_{\kappa,\tau}]&\le C_0,\\
+\int V_{\kappa,\tau}|f_{\kappa,\tau}|^2d\mu
+ &\ge c e^{-\lambda\tau}
+              \left(1+\frac1{|\kappa|\sqrt\tau}\right).
+\end{aligned}
+\tag{27.1}
+$$
+
+These are actual full-domain witnesses for the original point-generated
+field. They remain valid when the cutoff depends arbitrarily on the
+parameter, including in the circle-mixing range.
+
+Proof. Fix a compact interval $J\Subset I$ with nonempty interior.
+The killed height kernel satisfies
+
+$$
+h_I(t;k_0,k)\ge c_J e^{-\lambda t}
+\quad(t\ge\tau_{\min},\ k\in J).
+\tag{27.2}
+$$
+
+To verify uniformity in time, use its strictly positive continuous
+kernel on a compact time interval, and then its sine series: the leading
+term is $e^{-\lambda t}\phi(k_0)\phi(k)$, with a positive minimum on
+$J$, while the remaining terms are $O(e^{-4\lambda t})$. Thus (27.2)
+uses the same two absorbing height faces and the same clock.
+
+Integrate out both visible angles, rather than assume an independent
+hidden driver. Proposition 16.2 gives the original real hidden lift
+
+$$
+\delta_t=\sqrt2\kappa\int_0^t b_\kappa(K_s)dB_s^2.
+\tag{27.3}
+$$
+
+The same $B^2$ drives the visible angles. Conditional on the entire
+height path, which depends only on the independent $B^1$, its hidden
+variance is $2\kappa^2\mathcal A_t$, where
+
+$$
+\mathcal A_t=\int_0^t b_\kappa(K_s)^2ds,
+\qquad m^2t\le\mathcal A_t\le M^2t
+\quad\hbox{on }\{\zeta>t\}.
+\tag{27.4}
+$$
+
+These deterministic bounds hold on that very surviving path; they do
+not combine different realizations. The conditional characteristic
+function follows by the Gaussian stochastic integral with the now
+fixed integrand. On reducing $\delta_t$ modulo its actual $2\pi$
+period, its conditional density is
+
+$$
+G_{\kappa^2\mathcal A_t}(D),\qquad
+G_s(D)=\frac1{\sqrt{4\pi s}}
+ \sum_{r\in\mathbb Z}e^{-(D+2\pi r)^2/(4s)}.
+\tag{27.5}
+$$
+
+This is a conditional formula for the original law, not a new clock,
+a new source, or a new diffusion input. In particular the exact visible
+integral is
+
+$$
+\begin{aligned}
+M_\kappa(t;k,D)
+&:=\int_{\mathbb T^2}p_\kappa(t,o,(k,\theta,v,D))d\theta dv\\
+&=h_I(t;k_0,k)\,
+ \mathbb E\!\left[G_{\kappa^2\mathcal A_t}(D)
+        \mid K_t=k,\ \zeta>t\right].
+\end{aligned}
+\tag{27.6}
+$$
+
+Disintegration is with respect to the killed height endpoint measure.
+It holds almost everywhere, which suffices for all following integrals.
+It is obtained by integrating the joint transition law, not by multiplying
+independent visible and hidden densities.
+
+Put $a=|\kappa|$, $r_\tau=\min(1,a\sqrt\tau)$, and fix
+$0<\eta_0<1/4$. If $a\sqrt\tau\le1$, then for
+$t\in[\tau,\tau+1]$ the variance parameter $s$ in (27.5) lies between
+$m^2a^2\tau$ and $M^2(1+1/\tau_{\min})a^2\tau$.
+The single summand with $r=0$ proves
+$G_s(D)\ge c/(a\sqrt\tau)$ on $|D|\le\eta_0r_\tau$.
+If $a\sqrt\tau\ge1$, instead $s\ge m^2$.
+There is a common strictly positive lower bound for $G_s(D)$ for all
+$s\ge m^2$ and all $D\in\mathbb T$: on any bounded positive time
+interval use the positive periodized Gaussian, and for large $s$ use
+its Fourier series
+$(2\pi)^{-1}\sum_{j\in\mathbb Z}e^{-j^2s}e^{ijD}$,
+whose coefficients are obtained by a Gaussian integral over the
+periodized real line.
+Together these facts and (27.2) give
+
+$$
+M_\kappa(t;k,D)\ge c e^{-\lambda t}
+       \left(1+\frac1{a\sqrt\tau}\right)
+\tag{27.7}
+$$
+
+for $t\in[\tau,\tau+1]$, $k\in J$ and
+$|D|\le\eta_0r_\tau$. All constants are independent of $\kappa,\tau$.
+This lower estimate already includes every hidden winding in the
+large-time case.
+
+Choose real $\chi\in C_c^\infty(\operatorname{int}J)$ and
+$F\in C_c^\infty((-\eta_0,\eta_0))$ with
+$\int_I\chi^2dk=\int_{\mathbb R}F^2dx=1$.
+For the actual representative $D\in(-\pi,\pi)$ set
+
+$$
+f_{\kappa,\tau}(k,\theta,v,D)=
+ \frac1{2\pi}\chi(k)r_\tau^{-1/2}F(D/r_\tau).
+\tag{27.8}
+$$
+
+Extend by zero through the phase seam and periodically. Since
+$r_\tau\le1$ and $\eta_0<1/4$, this is smooth on the actual torus
+and compactly supported away from the height faces. The raw Jacobian
+is $dD=r_\tau dx$; the visible volume is $(2\pi)^2$. Therefore
+$\|f_{\kappa,\tau}\|_2=1$ exactly, and direct application of the two
+original fields gives
+
+$$
+T_\kappa[f_{\kappa,\tau}]
+ =\varepsilon^2\|\chi'\|_2^2
+  +\frac{a^2}{r_\tau^2}\|F'\|_2^2
+                    \int_I b_\kappa^2\chi^2dk\le C_0.
+\tag{27.9}
+$$
+
+Indeed $a^2/r_\tau^2$ is either $1/\tau\le1/\tau_{\min}$ or
+$a^2\le\kappa_*^2$. No isotropic derivative in $D$ was substituted
+for $Q_\kappa$.
+
+For their potential expectation, Tonelli gives the exact full-space
+identity
+
+$$
+\begin{aligned}
+\int V_{\kappa,\tau}|f_{\kappa,\tau}|^2d\mu
+=\frac1{(2\pi)^2}\int_{I\times\mathbb T}
+ \chi(k)^2r_\tau^{-1}F(D/r_\tau)^2
+ \left(\int_\tau^\infty M_\kappa(t;k,D)dt\right)dkdD.
+\end{aligned}
+\tag{27.10}
+$$
+
+Use the positive time window $[\tau,\tau+1]$ in this entire field,
+then (27.7) and the exact normalization. This proves (27.1).
+The trial amplitudes depend on $D$. Their use of a marginal in
+(27.10) computes their original full energy; it neither changes the
+point source nor identifies the full infimum with a marginal infimum.
+The upper estimate in Theorem 26.1, in contrast, holds for every full
+state. $\square$
+

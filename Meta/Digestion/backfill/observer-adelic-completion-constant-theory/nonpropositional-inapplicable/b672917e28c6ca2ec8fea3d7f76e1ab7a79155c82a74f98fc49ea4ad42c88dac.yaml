@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:b672917e28c6ca2ec8fea3d7f76e1ab7a79155c82a74f98fc49ea4ad42c88dac
+  normalized_sha256: sha256:b672917e28c6ca2ec8fea3d7f76e1ab7a79155c82a74f98fc49ea4ad42c88dac
+cas_ref: sha256:b672917e28c6ca2ec8fea3d7f76e1ab7a79155c82a74f98fc49ea4ad42c88dac
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 在方法不可替代范围中仅列 Slepian 方法名称。
+    previous_atom_id: 19d7ec7cdad8fbff8b62e6d32961d7601479e4fb387abb185fe012162c27f930
+    next_atom_id: bb3ce9ed76487835a59f3f0f5c405b4f84e0807389d1ca4f5305342640bbb578

@@ -1,0 +1,38 @@
+**Theorem 5.1 (double-wall weak-coupling interval).** In the both-wall row,
+set
+
+$$
+g_-:=\frac{1}{2K_o}=\frac{1}{2C_{G,o}M_oH_o}>0.
+\tag{5.1}
+$$
+
+For every $0<g<g_-$, the full form $q_{A,g}$ is closed and semibounded on
+exactly $\mathcal F_A$. Its shifted norm is equivalent to the free form
+norm, its associated operator has compact resolvent, and its normalized
+lowest energy is finite and attained.
+
+**Proof.** Proposition 4.2 gives a relative form bound
+$a=gK_o=gC_{G,o}M_oH_o<1/2$ and an additive bound $b=gB_o$. The KLMN
+theorem, in the form of Teschl, Theorem 6.24, applies to the closed
+nonnegative form $T_A$ and the Hermitian perturbation $-gV_{A,o}$. It yields
+closedness and semiboundedness on the unchanged domain $\mathcal F_A$, with
+
+$$
+q_{A,g}[f]\ge(1-a)T_A[f]-b\|f\|_2^2.
+\tag{5.2}
+$$
+
+For a shift $c>b+1$, the norms from $q_{A,g}+c\|\cdot\|_2^2$ and
+$T_A+\|\cdot\|_2^2$ dominate each other. The compact embedding
+$\mathcal F_A\hookrightarrow L^2(\Omega,\mu)$ from Proposition 2.1 of the
+original volume therefore gives compact resolvent for the perturbed form.
+Any normalized minimizing sequence is bounded in the shifted form norm and
+has a strongly $L^2$-convergent subsequence. Weak lower semicontinuity of
+the shifted form preserves the norm constraint and attains the infimum.
+The Euler--Lagrange equation places the minimizer in the associated
+operator domain. $\square$
+
+The interval is a semiboundedness interval, not a claim that the minimum is
+positive. Its sign depends on the fixed source and model. No endpoint is
+claimed and no all-model threshold is asserted.
+

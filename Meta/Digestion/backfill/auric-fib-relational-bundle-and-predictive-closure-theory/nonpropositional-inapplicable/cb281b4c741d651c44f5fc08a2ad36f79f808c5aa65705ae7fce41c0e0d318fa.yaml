@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:cb281b4c741d651c44f5fc08a2ad36f79f808c5aa65705ae7fce41c0e0d318fa
+  normalized_sha256: sha256:cb281b4c741d651c44f5fc08a2ad36f79f808c5aa65705ae7fce41c0e0d318fa
+cas_ref: sha256:cb281b4c741d651c44f5fc08a2ad36f79f808c5aa65705ae7fce41c0e0d318fa
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: Title and subtitle identifying the subject of the document; no mathematical proposition is asserted.
+    previous_atom_id: null
+    next_atom_id: 72bd0fd89ed920ef87e8941ed11ade22d55184df625877beb8abc8afd00d33fb

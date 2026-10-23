@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:3f4be4e235e089a2900b22e3c551b43cb726a2576c397eb366309f1f7cb435db
+  normalized_sha256: sha256:3f4be4e235e089a2900b22e3c551b43cb726a2576c397eb366309f1f7cb435db
+cas_ref: sha256:3f4be4e235e089a2900b22e3c551b43cb726a2576c397eb366309f1f7cb435db
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 'Nonpropositional: Defines the source grammar and substitution, accepted-epoch semantics, source quantifier, notation and replacement references. These are model conventions rather than derived transport or range claims.'
+    previous_atom_id: 624b08cd9225a7f76bad2ea1f4fe1a76462538a3a75915a8315c8ac615770583
+    next_atom_id: ae128487a74a82826b20d64fb063be6f8730d8a8041c806046880a14dcecfe62

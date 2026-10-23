@@ -1,0 +1,49 @@
+### 12.4. Eighteen uniform disks exhaust the carrier
+
+For a rational complex center $c$, expand the polynomial just defined:
+
+$$
+R(c+z,p_c+u,v_c+w)=\sum_{k,j,\ell}T_{kj\ell}z^ku^jw^\ell.
+\tag{12.14}
+$$
+
+For a complex rational coefficient $a$ put
+$\mathfrak U(a)=|\Re a|+|\Im a|$ and
+$\mathfrak L(a)=\max(|\Re a|,|\Im a|)$. Define
+
+$$
+\begin{gathered}
+E_k=\sum_{j+\ell>0}\mathfrak U(T_{kj\ell})r_p^jr_v^\ell,\qquad
+U_k=\mathfrak U(T_{k00})+E_k,\\
+L_1=\mathfrak L(T_{100})-E_1,\qquad
+\Theta(c,\epsilon)=
+\frac{U_0+\sum_{k=2}^{18}U_k\epsilon^k}{L_1\epsilon}.
+\end{gathered}
+\tag{12.15}
+$$
+
+The exact rational coefficient comparisons give $L_1>0$ and
+the following strict bounds. Each displayed center and radius is
+rational, including the real and imaginary coordinates of the last
+two centers.
+
+| Disk $j$ | $\Re c_j$ | $\Im c_j$ | $\epsilon_j$ | $\Theta(c_j,\epsilon_j)<$ |
+| --- | --- | --- | --- | --- |
+| 0 | -18.1078145193260267 | 0 | $1/10$ | 0.270 |
+| 1 | -6.8548120586969603 | 0 | $1/100$ | 0.440 |
+| 2 | -5.6391380897664973 | 0 | $1/100$ | 0.268 |
+| 3 | -4.6679093711815433 | 0 | $1/100$ | 0.158 |
+| 4 | -3.1887959786467426 | 0 | $1/1000$ | 0.475 |
+| 5 | -3.1799246720608286 | 0 | $1/1000$ | 0.469 |
+| 6 | -2.4835588139286718 | 0 | $1/10000$ | 0.470 |
+| 7 | -0.4110614439347009 | 0 | $1/1000000$ | 0.558 |
+| 8 | 0.3434434654565345 | 0 | $1/100000$ | 0.198 |
+| 9 | 0.4075545729310278 | 0 | $1/100000$ | 0.271 |
+| 10 | 0.9678579505862664 | 0 | $1/1000$ | 0.150 |
+| 11 | 0.9930955345564154 | 0 | $1/1000$ | 0.230 |
+| 12 | 1.9223318809923248 | 0 | $1/1000$ | 0.122 |
+| 13 | 2.5069731622049084 | 0 | $1/1000$ | 0.146 |
+| 14 | 30.3412706951550927 | 0 | $1/100$ | 0.749 |
+| 15 | 30.3902806577818153 | 0 | $1/100$ | 0.756 |
+| 16 | 0.7235008085094468 | -0.1131405572686191 | $1/100000$ | 0.212 |
+| 17 | 0.7235008085094468 | 0.1131405572686191 | $1/100000$ | 0.212 |

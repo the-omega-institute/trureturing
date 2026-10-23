@@ -1,0 +1,30 @@
+**Theorem 3.1 (original-world reconstruction).** For every world of Definition 1.1, every known invertible $Q_0$ and every known $t_0$, the seventeen equations of Theorem 2.1 determine $(P,g,d)$ uniquely.
+
+**Proof.** Define
+
+$$
+h(s)=g(t_0+s)=\sum_{j=0}^3h_js^j,\qquad
+Z_j=h_jQ_0P.
+$$
+
+Then $Y_i=d+\operatorname{tr}(A_i\sum_j i^jZ_j)$. The ambient inverse of Theorem 2.1 returns the actual $d,Z_0,\ldots,Z_3$. Set
+
+$$
+B_j=Q_0^{-1}Z_j,\qquad h_j=\operatorname{tr}B_j.
+$$
+
+Since $B_j=h_jP$ and $\operatorname{tr}P=1$, these are the actual shifted gain coefficients. Translation is invertible on polynomials, so $h\not\equiv0$. Choose the smallest $k$ with $h_k\ne0$ and recover
+
+$$
+\boxed{P=B_k/h_k,\qquad r=P_{11},\quad b=P_{12},\qquad
+ g(t)=\sum_{j=0}^3h_j(t-t_0)^j.}
+$$
+
+Every possible nonzero coefficient gives the same $P$. Explicitly, if $g(t)=\sum_{a=0}^3g_at^a$, then
+
+$$
+g_a=\sum_{j=a}^3\binom ja h_j(-t_0)^{j-a}.
+$$
+
+These formulas are a left inverse, hence prove uniqueness as well as recovery. The drift is the recovered intercept. The inverse $Q_0^{-1}$ is used only as decoder arithmetic. The use of a nonzero recovered coefficient, rather than a prescribed gain sample, is the coefficient normalization already used in [FIB self-calibrating relation mathematics, Theorem 39.2](FIB_SELF_CALIBRATING_RELATION_MATHEMATICS.md). ∎
+

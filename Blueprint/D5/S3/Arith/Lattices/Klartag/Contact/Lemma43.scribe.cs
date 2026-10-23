@@ -13,8 +13,6 @@ internal sealed class Lemma43Document : IScribeDocumentDefinition
         H("Lemma43"),
         Blocks(
             Paragraph(Text("Contact profile counts and accumulated projection dimension. The results below relate lemma43 to the stochastic ellipsoid construction.")),
-            Node("claim-1", "neg_log_one_sub_le", "neg log one sub le",
-                "The sharp bound. -log(1-x) ≤ x + x² for 0 ≤ x ≤ 1/2. This is the step that fixes the 1/8. The crude -log(1-x) ≤ 2x, also true on [0,1/2], would put γ = 1/2 and destroy the n².", DescribeRole.Theorem),
             Node("claim-2", "rpow_one_sub_le_exp", "rpow one sub le exp",
                 "(1 - x)^{-m/2} ≤ exp((m/2)·(x + x²)) for 0 ≤ x ≤ 1/2 and 0 ≤ m.", DescribeRole.Theorem),
             Node("claim-3", "neg_sq_half_add_mul", "neg sq half add mul",

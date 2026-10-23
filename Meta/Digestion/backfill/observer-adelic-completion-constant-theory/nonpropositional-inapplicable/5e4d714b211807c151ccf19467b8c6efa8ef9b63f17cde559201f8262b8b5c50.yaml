@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:5e4d714b211807c151ccf19467b8c6efa8ef9b63f17cde559201f8262b8b5c50
+  normalized_sha256: sha256:5e4d714b211807c151ccf19467b8c6efa8ef9b63f17cde559201f8262b8b5c50
+cas_ref: sha256:5e4d714b211807c151ccf19467b8c6efa8ef9b63f17cde559201f8262b8b5c50
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 建议形式化的文件清单和保留冻结链、补接口的工程安排；没有独立数学断言。
+    previous_atom_id: 4e0d153062bc491c818410a28e1bfa42462b915906ce6c3dad0f4ccb72ce90f6
+    next_atom_id: f9f6c93e762797ee68eae4e31bf0c95fa407121f8f37fe1dc681e9cbd9a9a2b0

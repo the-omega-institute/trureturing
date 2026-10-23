@@ -1,0 +1,60 @@
+**Proposition 6.1 (exact phase average of the full killed field).** Define
+
+$$
+G_I(k_o,k)=\frac{(\min(k_o,k)-l)(u-\max(k_o,k))}{u-l}.
+\tag{6.1}
+$$
+
+For every $\varepsilon>0$, in the normalization (4.1),
+
+$$
+\int_{\mathbb T^2}\Gamma_{\varepsilon,o}(k,\alpha,\beta)
+\,d\alpha\,d\beta
+=\varepsilon^{-2}G_I(k_o,k),
+\tag{6.2}
+$$
+
+as an $L^1(I)$ identity, with the nonnegative integral representative where
+defined. In particular
+
+$$
+\int_\Omega\Gamma_{\varepsilon,o}\,d\mu
+=\frac{(k_o-l)(u-k_o)}{2\varepsilon^2}.
+\tag{6.3}
+$$
+
+**Proof.** On phase-independent functions the exact generator is
+$\varepsilon^2\partial_k^2$. More explicitly, with independent real
+Brownian motions, the added process has
+
+$$
+dK_t=\sqrt2\varepsilon\,dB_t^1,
+\quad d\alpha_t=\frac1{\sqrt2}\,dB_t^2,
+\quad d\beta_t=\sqrt2(1/2-K_t/r)\,dB_t^2.
+\tag{6.4}
+$$
+
+There is no Itô correction since $Qk=0$ and $Q$ annihilates its
+$k$-dependent coefficients. Wrap the actual two phases and kill exactly
+at exit of $K_t$ from $I$. Its generator and boundary are precisely
+(4.1), so uniqueness of the corresponding killed semigroup gives, for
+bounded Borel height tests,
+
+$$
+H_t(f\circ\pi_k)(o)
+=(e^{t\varepsilon^2\partial_k^2}_{D,I}f)(k_o).
+\tag{6.5}
+$$
+
+Comparing kernel densities proves that the phase integral of the heat
+kernel is the one-dimensional killed heat kernel. Tonelli integrates this
+identity over all $t>0$. The inverse of
+$-\varepsilon^2\partial_k^2$ has kernel $\varepsilon^{-2}G_I$:
+(6.1) vanishes at the endpoints, is affine on either side of $k_o$, and
+has derivative jump $-1$. This proves (6.2). Its integral in $k$ is
+$(k_o-l)(u-k_o)/2$, proving (6.3).
+The factor in (6.2) is an integral over phases, not their normalized
+average; the normalized average is smaller by $4\pi^2$.
+No deterministic Definition 3.1 history is equated with a Brownian path.
+$\square$
+

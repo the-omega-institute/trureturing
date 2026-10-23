@@ -1,0 +1,23 @@
+**Definition 13.1 (The cutoff family).**
+Use the usual seventeen-mode oscillator Fock basis
+$|\mathbf n\rangle$, $\mathbf n=(n_1,\ldots,n_{17})\in\mathbb N^{17}$,
+with $|\mathbf n|=\sum_jn_j$ and
+$N_{\rm ref}|\mathbf n\rangle=|\mathbf n|\,|\mathbf n\rangle$.
+For an integer $N\ge0$, put
+
+$$
+\begin{gathered}
+\Pi_N=1_{\{N_{\rm ref}\le N\}},\qquad
+\mathcal H_N=\operatorname{ran}\Pi_N,\\
+q_N(W)=\langle\psi_W,\Pi_N\psi_W\rangle,\qquad
+t_N(W)=1-q_N(W),\\
+\psi_{W,N}=\frac{\Pi_N\psi_W}{\sqrt{q_N(W)}},\qquad
+\rho_{W,N}=|\psi_{W,N}\rangle\langle\psi_{W,N}|.
+\end{gathered}
+\tag{13.1}
+$$
+
+Here $q_N(W)$ is a scalar retained mass, distinct from any position
+operator $q_j$. The same projector is used for every companion.
+The positivity needed for normalization follows below.
+
