@@ -81,3 +81,4 @@ Fourier diagonalization expresses the energy as a sum of absolute Ramanujan sums
 - Dependency: [D5/S3/Arith/RoldanCirculantEnergyP2Q3Certificate](RoldanCirculantEnergyP2Q3Certificate.md)
 - Dependency: [D5/S3/ConceptDynamics/Coding/CountedOriginalOrbitGyration](../ConceptDynamics/Coding/CountedOriginalOrbitGyration.md)
 - Dependency: [D5/S3/Quantum/Dynamics/PolygonalFourierCouplings](../Quantum/Dynamics/PolygonalFourierCouplings.md)
+- Dependency: [D5/S3/Quantum/Matrix/CirculantCharpoly](../Quantum/Matrix/CirculantCharpoly.md)
