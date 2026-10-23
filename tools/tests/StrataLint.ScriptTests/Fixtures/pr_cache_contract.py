@@ -451,6 +451,11 @@ class PrCacheContracts(CacheFixture, unittest.TestCase):
             self.zip_preparation()
             with self.subTest(key=key, update=update), self.assertRaisesRegex(ValueError, reason):
                 self.adopt()
+        for key in ("partition", "elan_key"):
+            (self.bundle / "preparation.json").write_text(json.dumps(dict(original, **{key: "foreign"})))
+            self.zip_preparation()
+            with self.assertRaisesRegex(ValueError, "invalid preparation native identity"):
+                self.adopt()
         (self.bundle / "preparation.json").write_text(json.dumps(original))
         self.zip_preparation()
         def api(repository, path, body=None):

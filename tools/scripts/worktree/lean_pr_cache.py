@@ -276,7 +276,10 @@ def validate_preparation(root, value, context, artifact):
     identity, runtime = validate_identity(value["source"]), value["runtime"]
     require(all(identity[key] == context[key] for key in ("repository", "pr", "head", "target_ref")),
             "preparation PR/head/target mismatch")
-    require(all(isinstance(value[key], str) and value[key] for key in ("partition", "elan_key")),
+    require(isinstance(value["partition"], str) and
+            re.fullmatch(r"[0-9a-f]{40}/[a-z0-9_]+-[a-z0-9_]+", value["partition"]) and
+            isinstance(value["elan_key"], str) and
+            re.fullmatch(r"elan-pinned-[a-z0-9_]+-[a-z0-9_]+-[0-9a-f]{64}", value["elan_key"]),
             "invalid preparation native identity")
     require(isinstance(runtime, dict) and set(runtime) == {"ref", "sha", "workflow_ref", "workflow_sha", "run", "attempt"}
             and runtime["ref"] == identity["target_ref"] and runtime["sha"] == runtime["workflow_sha"]
