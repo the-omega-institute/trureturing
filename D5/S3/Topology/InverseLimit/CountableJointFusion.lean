@@ -4,8 +4,7 @@
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
    utility: none
-   digest: Countable finite blocks preserve fixed reservoirs and one-sided cofinite inclusions.
- -/
+   digest: Countable finite blocks preserve fixed reservoirs and one-sided cofinite inclusions. -/
 
 import Mathlib.Data.Set.Finite.Basic
 import Mathlib.Order.Filter.Cofinite
