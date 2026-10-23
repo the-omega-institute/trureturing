@@ -133,5 +133,85 @@ Whole-family variation, sensitivity, observational dependence and the final
 typed registration with its enrolled readout and source binding remain absent.
 This partial source makes no declared_validated claim. -/
 
+
+structure ThirdInput where
+  D : LatticeData
+  hu : IsUnit D.G.det
+  i : Fin D.rank
+  a : Carrier D
+  b : Carrier D
+  K : ℕ
+  gamma : ℤ
+  delta : ℤ
+  d : ℤ
+  r : ℤ
+  n : ℤ
+  x : ActualTensor D hu
+  phi : ActualTensor D hu →ₗ[ℂ] ℂ
+  P : LabelledPolynomial ℂ 3
+  H₃ : ℕ → ℕ
+
+def thirdSignature : Signature where
+  Params := Unit
+  State _ := ThirdInput
+  Role := Unit
+  finiteRole := inferInstance
+  nonemptyRole := inferInstance
+  Output _ _ := ℂ
+  Anchor := Empty
+  finiteAnchor := inferInstance
+
+def thirdActual : Realization thirdSignature := realize thirdSignature
+  (fun _ _ s => StateFieldResidueReconstruction.epsilon s.d *
+    ∑ j ∈ Finset.range (vectorFrequencyBound s.D s.b + 1),
+      BinomialKernelDelta.chooseSign s.d j *
+        s.phi (((qField s.gamma (s.d + s.r - j) (s.H₃ j)
+          (targetSlice s.D s.hu s.a s.gamma)
+          (targetSlice s.D s.hu (neutralMode s.D s.i j s.b) (s.delta + 1)))[[s.n]]) s.x))
+  (fun empty => nomatch empty)
+
+def thirdCoefficientEquation (s : ThirdInput) : Prop :=
+  ∀ e : Exponent 3, s.P.coeff e =
+    if totalExponent e =
+        (∑ p ∈ labelledPairs 3, (threeOrders s.D s.a s.b s.K p : ℤ)) - s.d - s.r - s.n - 3
+    then s.phi (actualNumerator s.D s.hu s.i s.a s.b s.gamma s.delta s.K s.x e) else 0
+
+def thirdLocalityEquation (s : ThirdInput) : Prop :=
+  ∀ j ∈ Finset.range (vectorFrequencyBound s.D s.b + 1),
+    (FieldNormalProductLocality.deltaEnd ^ s.H₃ j)
+      (FieldNormalProductLocality.commutator (targetSlice s.D s.hu s.a s.gamma)
+        (targetSlice s.D s.hu (neutralMode s.D s.i j s.b) (s.delta + 1))) = 0
+
+def thirdResult (s : ThirdInput) (value : ℂ) : Prop :=
+  let L := vectorFrequencyBound s.D s.a + 1
+  let M := vectorFrequencyBound s.D s.b + 1
+  let degree : ℤ := (L : ℤ) + M + s.K - s.d - s.r - 2
+  value = StateFieldResidueReconstruction.epsilon (s.d - L) *
+    ∑ u ∈ Finset.range (degree + 1).toNat,
+      collisionTaylor s.P s.gamma u (degree - u).toNat *
+        orderedResidueWeight (s.d - L) ((u : ℤ) - M)
+
+def thirdArena : Arena where
+  signature := thirdSignature
+  Law R := ∀ s : ThirdInput, thirdCoefficientEquation s → thirdLocalityEquation s →
+    thirdResult s (R.readout () () s)
+
+theorem third_source_bridge :
+    (type_of% (@actual_second_source_third)) ↔ thirdArena.Law thirdActual := by
+  constructor
+  · intro h s coefficients locality
+    exact h s.D s.hu s.i s.a s.b s.K s.gamma s.delta s.d s.r s.n s.x s.phi s.P
+      coefficients s.H₃ locality
+  · intro h D hu i a b K gamma delta d r n x phi P coefficients H₃ locality
+    exact h ⟨D, hu, i, a, b, K, gamma, delta, d, r, n, x, phi, P, H₃⟩ coefficients locality
+
+theorem third_actual_law : thirdArena.Law thirdActual :=
+  third_source_bridge.mp (@actual_second_source_third)
+
+/- The exact original THIRD telescope and its actual scalar readout are
+reconstructed without restricting P, K, signed modes or locality orders.
+Whole-family variation, sensitivity, observational dependence and an enrolled
+Contract.Registration remain absent; this is not declared_validated. -/
+
 end
 end Reg.D5.S3.VertexAlgebra.NestedResidues.LatticeHalfFockSecondSourceTaylor
