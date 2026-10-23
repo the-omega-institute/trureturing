@@ -1,0 +1,13 @@
+fingerprints:
+  raw_sha256: sha256:fd7d170da2ba85396fd1812db621deecb34590ad0d2d3c669a2a4025173f3e52
+  normalized_sha256: sha256:fd7d170da2ba85396fd1812db621deecb34590ad0d2d3c669a2a4025173f3e52
+cas_ref: sha256:fd7d170da2ba85396fd1812db621deecb34590ad0d2d3c669a2a4025173f3e52
+coverage_gids:
+  - gid: D5/S1/Solenoid/ExactSequence.congruence_solenoid_short_exact
+    target_statement_id: sha256:0a9bf8bcb0b7e0f35a9126b6880ab8524982944507b03c62e61f70a756fd897e
+  - gid: D5/S1/Solenoid/StreamlineDecomposition.hiddenUnitOffset_ne_zero
+    target_statement_id: sha256:d19120e664e72bb9ea6e89b56b3755448c3da25afda8064a706697a61da72063
+  - gid: D5/S3/Weil/ZetaLinear/CompactCharacterMellinObstruction.compact_character_modulus_and_mellin_obstruction
+    target_statement_id: sha256:7161c25573285d765611032ffec09b1864beb057e3d8eff9176765d6cd23849b
+receipts:
+  unresolved_subitems: []
