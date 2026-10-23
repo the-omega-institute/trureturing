@@ -18,7 +18,8 @@ abbrev signature : Signature :=
   Reg.Support.SingleDependentReadout.signature ℕ (fun _ => ℕ) (fun _ => Bool)
 
 def actual : Realization signature :=
-  realize signature (fun _ d n => decide (d + 1 ≤ n)) (fun e => nomatch e)
+  realize signature (fun _ d n => @decide (d + 1 ≤ n) (Classical.propDecidable _))
+    (fun e => nomatch e)
 
 def rejected : Realization signature :=
   realize signature (fun _ _ _ => true) (fun e => nomatch e)
@@ -46,8 +47,7 @@ theorem rejected_law : ¬ arena.Law rejected := by
 theorem dependence : ObservationalDependence signature actual := by
   intro i
   refine ⟨1, 0, 2, ?_⟩
-  change decide (1 + 1 ≤ 0) ≠ decide (1 + 1 ≤ 2)
-  decide
+  simp [actual, realize]
 
 def source_registration : Registration arena claim where
   actual := actual
@@ -74,7 +74,8 @@ def registration :
   realization := .source arena ⟨source_registration⟩
   correspondence := { stage := .evidence, objectStage := .evidence }
   bundleNonempty := .absent
-  readout := some (realize signature (fun _ d n => decide (d + 1 ≤ n))
+  readout := some (realize signature
+    (fun _ d n => @decide (d + 1 ≤ n) (Classical.propDecidable _))
     (fun e => nomatch e))
   variation := .absent
   sensitivity := .absent
