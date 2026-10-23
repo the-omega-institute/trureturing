@@ -11,6 +11,7 @@ open LeanInformationAudit.Tests.SearchReduction
 #search_reduction_config
 
 -- A compliant baseline lookup certificate makes the square witness bind-only.
+#search_reduction_certificates [by_lookup Nat.exists_mul_self]
 #search_reduction LeanInformationAudit.Tests.SearchReduction.GraphCandidates.squareVia
   at "b530df86e6e9c4709edecd3009bb96c3d4ebc8be"
   baseline [LeanInformationAuditRegTests.SearchReduction.Baseline]
@@ -34,6 +35,8 @@ open LeanInformationAudit.Tests.SearchReduction
 #guard neutralArithmeticResult = Verdict.bindOnly
 #guard neutralArithmeticResult.baseline = Run.found
 #guard neutralArithmeticResult.paired = Run.found
+
+#search_reduction_certificates []
 
 #search_reduction LeanInformationAudit.Tests.SearchReduction.Candidates.statementAlias
   at "b530df86e6e9c4709edecd3009bb96c3d4ebc8be"

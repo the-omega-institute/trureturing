@@ -43,3 +43,28 @@ run_cmd liftTermElabM do
       result.lookup.failures.contains "B1:split-incomplete" do
     throwError "B1 mutation accepted: incomplete split became NoHit: {result.detail}"
   logInfo "LOOKUP_B1_MECHANISM parent=one split=unknown incomplete_preserved=true"
+
+run_cmd liftTermElabM do
+  unless (← IO.getEnv "SEARCH_REDUCTION_RESUME").any (!·.isEmpty) do return
+  let index ← DiskLookup.openIndex "build/lean-inspector/lookup-index/lookup-fixture"
+    "lookup-fixture" "56a005855ea17e0b0958f73ec801ae140b0a1679"
+  let table : LookupTable := {environment := ← getEnv, disk? := some index}
+  let target := mkApp (mkConst ``Mark) (mkNatLit 9)
+  let checked ← replayCertificate target [] (.lookup ``pair) (some table)
+  let some certificate := checked.proof? | throwError "missing fixture certificate"
+  let candidates ← DiskLookup.queryMature index target none false
+  let some entry := candidates.entries.find? (·.leanName == ``pair)
+    | throwError "missing fixture candidate"
+  let ordinal ← lookupAttemptOrdinal.get
+  for pass in [:2] do
+    lookupAttemptOrdinal.set ordinal
+    withLocalDeclD `_checkpointUnused (mkConst ``True) fun unused => do
+      let root ← mkFreshExprMVar target
+      let trace ← boundedLookupCandidate table entry root.mvarId! do
+        root.mvarId!.assign certificate
+        return {source? := some ``pair, complete := true}
+      unless trace.source? == some ``pair do throwError "checkpoint lookup failed"
+      let proof ← instantiateMVars root
+      let retained := proof.containsFVar unused.fvarId!
+      logInfo s!"CHECKPOINT_SUPPORT pass={pass} unused_retained={retained}"
+      if retained then throwError "checkpoint replay introduced an unused premise"

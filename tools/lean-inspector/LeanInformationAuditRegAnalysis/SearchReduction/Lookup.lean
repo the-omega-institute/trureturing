@@ -25,7 +25,7 @@ def timeLookup {α : Type} (label : String) (action : MetaM α) : MetaM α := do
   try action finally
     lookupPhase s!"{label}/end ns={(← IO.monoNanosNow) - start} heartbeats={(← IO.getNumHeartbeats) - heartbeats}"
 
-abbrev lookupVersion : String := "R_lookup/v18/obvious-v1/lazy-interval/scope-B_T/primary-index-only/candidate-200000/preparation-8000000/G-340000000/memo-target-basis-R-v1/N-memo-2000000/checkpoint-v5/views-kappa"
+abbrev lookupVersion : String := "R_lookup/v18/obvious-v1/lazy-interval/scope-B_T/primary-index-only/candidate-200000/preparation-8000000/G-340000000/memo-target-basis-R-v2/N-memo-2000000/checkpoint-v5/views-kappa"
 
 abbrev lookupCandidateBudget : Nat := 200000
 /-- Frozen from verdict-free fallback and fixed-stride candidate telemetry. -/
@@ -403,7 +403,7 @@ unsafe def boundedLookupCandidate (table : LookupTable) (entry : DiskLookup.Entr
         let beforeReplay := (← table.budget?.mapM (·.get)).getD {}
         if let some proof := record.proof? then
           let arguments ← xs.filterM fun x => return !(← x.fvarId!.isLetVar)
-          goal.assign (mkAppN proof arguments)
+          goal.assign (proof.beta arguments)
           discard <| checkLookupGoal table (← getEnv) goal
         if let some budget := table.budget? then
           budget.set {beforeReplay with
