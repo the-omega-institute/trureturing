@@ -9,6 +9,7 @@
 import Mathlib.LinearAlgebra.SymplecticGroup
 import Mathlib.LinearAlgebra.Matrix.Polynomial
 import Mathlib.LinearAlgebra.Matrix.PosDef
+import Mathlib.Data.Matrix.ColumnRowPartitioned
 import Mathlib.Basic.Complex.Basic
 import Mathlib.Algebra.Order.Star.Real
 import Mathlib.Algebra.Polynomial.Roots
@@ -43,7 +44,11 @@ def J0Inv (n : ℕ) : Matrix (Fin n ⊕ Fin n) (Fin n ⊕ Fin n) ℝ :=
   Matrix.fromBlocks 0 (-1) 1 0
 
 lemma J0_mul_J0Inv : J0 n * J0Inv n = 1 := by
-  simp [J0, J0Inv, Matrix.fromBlocks_multiply]
+  have hJ : J0 n = -Matrix.J (Fin n) ℝ := by
+    ext i j
+    rcases i with i | i <;> rcases j with j | j <;> simp [J0, Matrix.J]
+  change J0 n * Matrix.J (Fin n) ℝ = 1
+  rw [hJ, Matrix.neg_mul, Matrix.J_squared, neg_neg]
 
 lemma block_symplectic_identities
     {P : Matrix (Fin n ⊕ Fin n) (Fin n ⊕ Fin n) ℝ}
@@ -72,20 +77,20 @@ lemma block_symplectic_identities
 private lemma gram_pos {a b c d : Matrix (Fin n) (Fin n) ℝ}
     (had : a * d.transpose - b * c.transpose = 1) :
     (a * a.transpose + b * b.transpose).PosDef := by
-  let A : Matrix (Fin n) (Fin n ⊕ Fin n) ℝ := Matrix.of fun i j => Sum.elim (a i) (b i) j
+  let A : Matrix (Fin n) (Fin n ⊕ Fin n) ℝ := Matrix.fromCols a b
   let B : Matrix (Fin n ⊕ Fin n) (Fin n) ℝ :=
-    Matrix.of fun i j => Sum.elim (fun k => d.transpose k j) (fun k => -c.transpose k j) i
+    Matrix.fromRows d.transpose (-c.transpose)
   have hAB : A * B = 1 := by
-    ext i j
-    simpa [A, B, Matrix.mul_apply, Fintype.sum_sum_type, sub_eq_add_neg,
-      Finset.sum_add_distrib, ← Finset.sum_neg_distrib] using congrFun (congrFun had i) j
+    simpa only [A, B, Matrix.fromCols_mul_fromRows, Matrix.mul_neg,
+      ← sub_eq_add_neg] using had
   have hAinj : Function.Injective (fun v => Matrix.vecMul v A) := by
     intro x y hxy
     have hxy' := congrArg (fun z => Matrix.vecMul z B) hxy
     simpa only [Matrix.vecMul_vecMul, hAB, Matrix.vecMul_one] using hxy'
   have hgram : A * A.conjTranspose = a * a.transpose + b * b.transpose := by
-    ext i j
-    simp [A, Matrix.mul_apply, Fintype.sum_sum_type, Matrix.conjTranspose_apply]
+    dsimp [A]
+    rw [Matrix.conjTranspose_fromCols_eq_fromRows_conjTranspose, Matrix.fromCols_mul_fromRows]
+    simp only [Matrix.conjTranspose_eq_transpose_of_trivial]
   rw [← hgram]
   exact Matrix.PosDef.mul_conjTranspose_self A hAinj
 
@@ -95,17 +100,18 @@ private lemma complex_gram {a b : Matrix (Fin n) (Fin n) ℝ}
     M * M.conjTranspose = (a * a.transpose + b * b.transpose).map Complex.ofReal := by
   let A := a.map Complex.ofRealHom
   let B := b.map Complex.ofRealHom
+  have hof : (Complex.ofRealHom : ℝ → ℂ) = Complex.ofReal := rfl
   have hA : A.conjTranspose = A.transpose := by ext i j; simp [A]
   have hB : B.conjTranspose = B.transpose := by ext i j; simp [B]
   have hAB : A * B.transpose = B * A.transpose := by
     calc
       A * B.transpose = (a * b.transpose).map Complex.ofReal := by
-        ext i j
-        simp [A, B, Matrix.mul_apply, Matrix.transpose_apply, Complex.ofReal_mul]
+        simpa only [A, B, Matrix.transpose_map, hof] using
+          (Matrix.map_mul (L := a) (M := b.transpose) (f := Complex.ofRealHom)).symm
       _ = (b * a.transpose).map Complex.ofReal := congrArg (fun M : Matrix (Fin n) (Fin n) ℝ => M.map Complex.ofRealHom) hab
       _ = B * A.transpose := by
-        ext i j
-        simp [A, B, Matrix.mul_apply, Matrix.transpose_apply, Complex.ofReal_mul]
+        simpa only [A, B, Matrix.transpose_map, hof] using
+          (Matrix.map_mul (L := b) (M := a.transpose) (f := Complex.ofRealHom))
   change (A + Complex.I • B) * (A + Complex.I • B).conjTranspose = _
   rw [Matrix.conjTranspose_add, Matrix.conjTranspose_smul, hA, hB]
   rw [Matrix.mul_add, Matrix.add_mul]
@@ -113,11 +119,11 @@ private lemma complex_gram {a b : Matrix (Fin n) (Fin n) ℝ}
     Matrix.mul_smul, Matrix.smul_mul, smul_smul, Complex.I_mul_I, neg_neg,
     one_smul, mul_one, Matrix.add_mul, hAB]
   have hAA : A * A.transpose = (a * a.transpose).map Complex.ofReal := by
-    ext i j
-    simp [A, Matrix.mul_apply, Matrix.transpose_apply, Complex.ofReal_mul]
+    simpa only [A, Matrix.transpose_map, hof] using
+      (Matrix.map_mul (L := a) (M := a.transpose) (f := Complex.ofRealHom)).symm
   have hBB : B * B.transpose = (b * b.transpose).map Complex.ofReal := by
-    ext i j
-    simp [B, Matrix.mul_apply, Matrix.transpose_apply, Complex.ofReal_mul]
+    simpa only [B, Matrix.transpose_map, hof] using
+      (Matrix.map_mul (L := b) (M := b.transpose) (f := Complex.ofRealHom)).symm
   rw [hAA, hBB]
   ext i j
   simp [Matrix.add_apply, Complex.ofReal_add]
@@ -130,29 +136,11 @@ private lemma eval_det_complex {a b : Matrix (Fin n) (Fin n) ℝ} (z : ℂ) :
     Polynomial.eval₂ Complex.ofRealHom z q.det =
       Matrix.det (z • b.map Complex.ofReal + a.map Complex.ofReal) := by
   dsimp
-  simp only [Matrix.det_apply, Matrix.smul_apply, Matrix.add_apply, Matrix.map_apply,
-    Polynomial.eval₂_finsetSum, Polynomial.eval₂_finsetProd, Polynomial.eval₂_smul, Polynomial.eval₂_add,
-    Polynomial.eval₂_mul, Polynomial.eval₂_C, Polynomial.eval₂_X, Units.smul_def, smul_eq_mul, map_mul, map_add]
-  classical
-  apply Finset.sum_congr rfl
-  intro σ hσ
-  rcases Int.units_eq_one_or (Equiv.Perm.sign σ) with hsg | hsg
-  · rw [hsg]
-    simp only [Units.smul_def, Units.val_one, one_smul]
-    rw [Polynomial.eval₂_finsetProd]
-    apply Finset.prod_congr rfl
-    intro i hi
-    simp [Polynomial.eval₂_add, Polynomial.eval₂_mul, Polynomial.eval₂_C,
-      Polynomial.eval₂_X]
-    ring
-  · rw [hsg]
-    simp [Units.smul_def, smul_eq_mul]
-    rw [Polynomial.eval₂_finsetProd]
-    apply Finset.prod_congr rfl
-    intro i hi
-    simp [Polynomial.eval₂_add, Polynomial.eval₂_mul, Polynomial.eval₂_C,
-      Polynomial.eval₂_X]
-    ring
+  change (Polynomial.eval₂RingHom Complex.ofRealHom z) _ = _
+  rw [RingHom.map_det]
+  congr 1
+  ext i j
+  simp [RingHom.mapMatrix_apply, Matrix.smul_apply, smul_eq_mul] <;> ring
 private lemma complex_det_ne_zero {a b c d : Matrix (Fin n) (Fin n) ℝ}
     (hab : a * b.transpose = b * a.transpose)
     (had : a * d.transpose - b * c.transpose = 1) :
@@ -374,18 +362,12 @@ private lemma block_factor
     (hd : d = R * b + E.transpose⁻¹) :
     Matrix.fromBlocks E b C d =
       lowerShear R * dilation E * upperShear H := by
-  have hEH : E * H = b := by
-    rw [hH, ← Matrix.mul_assoc, Matrix.mul_nonsing_inv E hdetE, Matrix.one_mul]
-  have hRE : R * E = C := by
-    rw [hR, Matrix.mul_assoc, Matrix.nonsing_inv_mul E hdetE, Matrix.mul_one]
-  have hRt : R * E * H + E.transpose⁻¹ = d := by
-    rw [Matrix.mul_assoc, hEH, hd]
-  have hRt' : C * H + E.transpose⁻¹ = d := by
-    calc
-      C * H + E.transpose⁻¹ = R * E * H + E.transpose⁻¹ := by rw [hRE]
-      _ = d := hRt
-  simp [lowerShear, dilation, upperShear, Matrix.fromBlocks_multiply,
-    hEH, hRE, hRt']
+  letI : Invertible E := ((Matrix.isUnit_iff_isUnit_det E).mpr hdetE).invertible
+  have hSchur : d - C * E⁻¹ * b = E.transpose⁻¹ := by
+    rw [hd, ← hR, add_sub_cancel_left]
+  have hLDU := Matrix.fromBlocks_eq_of_invertible₁₁ E b C d
+  rw [Matrix.invOf_eq_nonsing_inv, hSchur] at hLDU
+  simpa only [← hH, ← hR, lowerShear, dilation, upperShear] using hLDU
 
 private lemma j0_lower_conjugate {H : Matrix (Fin n) (Fin n) ℝ} :
     J0 n * lowerShear (-H) * J0Inv n = upperShear H := by
@@ -446,8 +428,7 @@ private lemma lower_cancel (t : ℕ) :
       d = R * b + E.transpose⁻¹ := by
     simpa [H, R] using hinv
   have hPblocks : P = Matrix.fromBlocks a b c d := by
-    ext i j
-    rcases i with i | i <;> rcases j with j | j <;> rfl
+    exact (Matrix.fromBlocks_toBlocks P).symm
   have hPnt : P * lowerShear ((t : ℝ) • (1 : Matrix (Fin n) (Fin n) ℝ)) =
       lowerShear R * dilation E * upperShear H := by
     calc
