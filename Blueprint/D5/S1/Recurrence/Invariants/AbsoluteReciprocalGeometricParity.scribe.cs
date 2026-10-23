@@ -28,6 +28,8 @@ internal sealed class AbsoluteReciprocalGeometricParityDocument : IScribeDocumen
                 + "contain X to a power greater than N and contribute zero at degree N. "
                 + "The map intCast(ZMod(2)) denotes Int.castRingHom(ZMod(2)); map(h,F) "
                 + "applies h to every coefficient of F.")),
+            Node("agree_mul", "Multiplication preserves coefficient agreement", PubAgreeMul(),
+                "Products of two pairs of series agreeing below d also agree below d."),
             Node("agree_inv", "Agree inv",
                 Disp(Seq(Forall, Sp, F.Id("R"), Colon, Sp, F.Id("Type"), Comma, Sp, Seq(OpenBracket, Call("CommRing", F.Id("R")), CloseBracket, Comma, Sp, Seq(Forall, Sp, F.Id("d"), Colon, Sp, Seq(Mathbb, Grp(F.Id("N"))), Comma, Sp, Seq(Forall, Sp, F.Id("f"), Colon, Sp, Call("PowerSeries", F.Id("R")), Comma, Sp, Seq(Forall, Sp, F.Id("g"), Colon, Sp, Call("PowerSeries", F.Id("R")), Comma, Sp, Seq(Parenthesized(Seq(Call("constantCoeff", F.Id("f")), Sp, Eq, Sp, D(1))), Sp, Implies, Sp, Parenthesized(Seq(Parenthesized(Seq(Call("constantCoeff", F.Id("g")), Sp, Eq, Sp, D(1))), Sp, Implies, Sp, Parenthesized(Seq(Parenthesized(Seq(Forall, Sp, F.Id("j"), Colon, Sp, Naturals(), Comma, Sp, Parenthesized(Seq(F.Id("j"), Sp, Lt, Sp, F.Id("d"))), Sp, Implies, Sp, Parenthesized(Seq(Call("coeff", F.Id("j"), F.Id("f")), Sp, Eq, Sp, Call("coeff", F.Id("j"), F.Id("g")))))), Sp, Implies, Sp, Parenthesized(Seq(Forall, Sp, F.Id("j"), Colon, Sp, Naturals(), Comma, Sp, Parenthesized(Seq(F.Id("j"), Sp, Lt, Sp, F.Id("d"))), Sp, Implies, Sp, Parenthesized(Seq(Call("coeff", F.Id("j"), Call("invOfUnit", F.Id("f"), D(1))), Sp, Eq, Sp, Call("coeff", F.Id("j"), Call("invOfUnit", F.Id("g"), D(1)))))))))))))))))),
                 "The unit inverses of normalized agreeing series agree through the same degree.", DescribeRole.Theorem, AssessedProvenance.FromRepo()),
@@ -140,4 +142,23 @@ internal sealed class AbsoluteReciprocalGeometricParityDocument : IScribeDocumen
 
     private static Formula ParityFormula() => Disp(Seq(Bound("n", Naturals()),
         Implication(Seq(D(1), Sp, Lt, Sp, SmallN()), Call("Even", Call("a", SmallN())))));
+
+    private static Formula PubV(string name) => F.Id(name);
+    private static Formula PubSeries() => Call("PowerSeries", PubV("R"));
+    private static Formula PubAll(string name, Formula type, Formula body) =>
+        Seq(Forall, Sp, PubV(name), Colon, Sp, type, Comma, Sp, body);
+    private static Formula PubRel(Formula a, Formula op, Formula b) => Seq(a, Sp, op, Sp, b);
+    private static Formula PubImp(Formula a, Formula b) => Seq(Parenthesized(a), Sp, Implies, Sp, Parenthesized(b));
+    private static Formula PubEq(Formula a, Formula b) => PubRel(a, Eq, b);
+    private static Formula PubRing(Formula body) => PubAll("R", Named("Type"),
+        Seq(OpenBracket, Call("CommRing", PubV("R")), CloseBracket, Comma, Sp, body));
+    private static Formula PubAgree(Formula n, Formula f, Formula g) => PubAll("k", Naturals(),
+        PubImp(PubRel(PubV("k"), Lt, n), PubEq(Call("coeff", PubV("k"), f), Call("coeff", PubV("k"), g))));
+    private static Formula PubFG(Formula body) => PubAll("f", PubSeries(), PubAll("g", PubSeries(), body));
+    private static Formula PubAgreeMul() => Disp(PubRing(PubAll("d", Naturals(), PubFG(
+        PubAll("u", PubSeries(), PubAll("v", PubSeries(),
+            PubImp(PubAgree(PubV("d"), PubV("f"), PubV("g")),
+            PubImp(PubAgree(PubV("d"), PubV("u"), PubV("v")),
+                PubAgree(PubV("d"), new Formula.Binary(PubV("f"), FormulaBinaryOperator.Multiply, PubV("u")),
+                    new Formula.Binary(PubV("g"), FormulaBinaryOperator.Multiply, PubV("v")))))))))));
 }
