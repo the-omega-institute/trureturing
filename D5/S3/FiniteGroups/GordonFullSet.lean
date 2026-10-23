@@ -1,7 +1,7 @@
 /- GID: D5/S3/FiniteGroups/GordonFullSet
    generality: G
    mirror-B: D5/B/S3/FiniteGroups/GordonFullSet
-   mirror-E: none
+   mirror-E: none(waiver:pure-mathematical-gordon-construction)
    anchors: []
    utility: none
    digest: Gordon full-set sequencing for every finite additive abelian group of nonzero total. -/

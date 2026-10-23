@@ -1,7 +1,7 @@
 /- GID: D5/S3/FiniteGroups/GordonProduct
    generality: G
    mirror-B: D5/B/S3/FiniteGroups/GordonProduct
-   mirror-E: none
+   mirror-E: none(waiver:pure-mathematical-gordon-construction)
    anchors: []
    utility: none
    digest: Gordon interleaving has distinct vertices and every nonzero directed difference. -/

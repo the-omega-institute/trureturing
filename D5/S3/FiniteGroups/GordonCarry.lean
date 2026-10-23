@@ -1,7 +1,7 @@
 /- GID: D5/S3/FiniteGroups/GordonCarry
    generality: G
    mirror-B: D5/B/S3/FiniteGroups/GordonCarry
-   mirror-E: none
+   mirror-E: none(waiver:pure-mathematical-gordon-construction)
    anchors: []
    utility: none
    digest: Mixed-radix predecessor and reversible odd-radix carry transform. -/
