@@ -675,3 +675,266 @@ $$
 (482.15) 加强 (460.3) 的留数项；对相同平衡尺度，(482.22) 将 (460.16) 的投影预算从 $K^{2+5\ell/3+\varepsilon}$ 改为 $K^{2+3\ell/2+\varepsilon}$。它仍不提供 $o(K^2)$ 的完整投影，更不提供同一完整补空间的估计。引理的固定形式条件、共同成本合同和实际 Gram 范围不可删除；其他长度、高度及 signed Robin restoration 不由上述估计推出。所有结果均为在明列解析输入下的纸面推导，未作 Lean 核验；RH 与每个 $n>5040$ 的严格 Robin 不等式仍未证明。
 
 ## 追加锚（本行以下为增补区）
+
+## 483. 六阶主字符块与全部小标记的原分子连续项
+
+**约定与解析假设。** 保留 §482 的固定 Eisenstein 算术、原有限 masks、primary/ray sectors 和 level $M$，以及 [I1–I6](../../../Library/Analytic/faveri2026fixedorder.md#an-unchanged-numerator-term-in-the-primitive-continuous-adjoint) 的实际 full-series cusp 族。固定 $u=1+\eta+it$，其中 $0<\eta<1/12$ 满足 I3 的谱避让条件。I4 的统一平方和指数为 $1+\eta$；I5 的核在零附近为 $x^{-\eta/2-\varepsilon}$，在无穷远任意阶衰减，各有限阶 Euler 导数及 Mellin 分离具有多项式 $t$ 成本。这些解析输入在此作为前提，所有形式与 level 保持固定。
+
+本节使用 [Type-I 原稿 v1](https://rstation.ai/api/v1/papers/riemann_hypothesis_8/versions/1/download) §§5–7 的固定形式变换与除数聚合，以及 [primitive-mean 原稿 v2](https://rstation.ai/api/v1/papers/riemann_hypothesis_10/versions/2/download) §§3、7 的完整局部反演和实际伴随公式。前者 Proposition 4 限定平方自由外模数，§482 限定外模数指数至多五；后者 Corollary 5 给通用连续余项均方，不给下述原系数消费。I9 和前卷 §457 的对应消费限定素标记。本节的 `repo-derived` 承重推导是估值六的主字符块及全部小标记的原分子连续项；已知筛法、Gauss 恒等式和反演公式只作输入，不另立为新结果，也不主张文献优先权。
+
+**引理 483.1（含六阶主字符块的平均 full-series 估计）。** 取指定 good seventh-power-free 理想 $T$。设 $\alpha_a$ 支撑在 $q_a\asymp A$、$a$ good seventh-power-free、$a^{\ge2}\mid T^{\ge2}$，并有 $1\le A\le C_0X$。令 $\phi$ 为原固定 numerator mask，$\mathcal W$ 为固定光滑 annular profile，$\varphi(r)=|(\mathcal O/r)^\times|$。写
+
+$$
+\mathcal Q_6(a)=\{c\text{ squarefree}:c^6\mid a\}.
+\tag{483.1}
+$$
+
+令 $C_{{\rm in},[r]}(u),C_{{\rm out},[r]}(u)$ 为该实际过滤形式在 $\sigma_r$ 的两项 cusp 常数经 I5 原 Mellin/Fourier 归一化所得的有限族。定义
+
+$$
+\begin{aligned}
+\mathfrak M_a(X)=\frac1{q_a}\sum_{c\in\mathcal Q_6(a)}\varphi(c^6)
+\big[&C_{{\rm in},[c^6]}(u)q_c^{-6u}X\widehat{\mathcal W}(1)\\
+&+C_{{\rm out},[c^6]}(u)q_c^{6u-12}
+ X^{2-u}\widehat{\mathcal W}(2-u)\big].
+\end{aligned}
+\tag{483.2}
+$$
+
+则
+
+$$
+\left|\sum_a\alpha_a\left(\sum_{a\mid n}\phi(n)
+D_{\nu;S}(n,u)\mathcal W(q_n/X)-\mathfrak M_a(X)\right)\right|
+\ll_\varepsilon(XAq_T)^\varepsilon(1+|t|)^B
+ X^{5/12-\eta}A^{1/6+\eta}\|\alpha\|_2.
+\tag{483.3}
+$$
+
+再令 $\mathcal v_u,z_u,Z_u,v_u$ 为 I1、I6 的原 Euler 因子；特别地 $\mathcal v_u=1*z_u$，而 $v_u$ 是主项局部因子，二者不混同。将内和乘 $\mathcal v_u(n)$ 后，主项变为 $Z_uv_u(\operatorname{rad}a)\mathfrak M_a(X)$，误差满足
+
+$$
+\left|\sum_a\alpha_a\left(\sum_{a\mid n}\phi(n)\mathcal v_u(n)
+D_{\nu;S}(n,u)\mathcal W(q_n/X)
+-Z_uv_u(\operatorname{rad}a)\mathfrak M_a(X)\right)\right|
+\ll_\varepsilon(XAq_T)^\varepsilon(1+|t|)^B
+ X^{5/12}A^{1/6}\|\alpha\|_2.
+\tag{483.4}
+$$
+
+隐常数只依赖固定族、$\eta,\varepsilon,C_0$ 和有限阶 profile seminorms，不依赖 $T$；$q_T^\varepsilon$ 的显式费用不可删除。
+
+证明。原稿 (5.1)–(5.3) 的矩阵、multiplier 与固定 cusp 族计算不使用模数平方自由性；保持完整 Gauss 和即可使用 §482 的 progression 变换。若 $r\mid a$，其单位字符主当且仅当各局部估值皆为六，即 $r=c^6$。在 cusp 常数指数 $\beta$ 上，有限单位和给出乘在原 $\beta$-cusp 常数前的运输因子
+
+$$
+\frac{\varphi(r)q_r^{-\beta}}{q_a}y^{-\beta}.
+\tag{483.5}
+$$
+
+取 $\beta=u,2-u$，原归一化 Fourier 主项指数 $(1+\beta)/2$ 在去除 $q_n^{(u-1)/2}$ 后分别成为 $1,2-u$，因而恰得 (483.2)。大高度的两项常数仍按 I5 扣除，其 Gamma 抵消极点不新增主项。尤其不能把 $r=c^6\ne1$ 的小高度常数抹去，也不使用离开留数点的六次幂周期性。
+
+为估计完整非恒定项，将每个 $r\mid a$ 唯一写为
+
+$$
+r=sb^6e,\quad v_p(s)\in\{2,3,4,5\},\quad
+b,e\text{ squarefree},\quad(s,b)=(s,e)=(b,e)=1.
+\tag{483.6}
+$$
+
+固定 $s,b$ 与有限 ray sector，写 $S_1=q_s$、$F=q_{\operatorname{rad}s}$、$B_1=q_b$、$q_e\asymp R$。非主的 $s$ 部分直接复用 (482.5)–(482.6)。主字符部分是原有限 Gauss/Ramanujan 恒等式
+
+$$
+\begin{gathered}
+g(n,b^6)=0\quad(b^5\nmid n),\qquad
+g(b^5m,b^6)=B_1^5c_b(m),\\
+c_b(m)=\sum_{k\mid b}\mu(b/k)q_k\,\mathbf1_{k\mid m}.
+\end{gathered}
+\tag{483.7}
+$$
+
+因此逐个 $k\mid b$ 重编号 $n=(s/\operatorname{rad}s)b^5km$。相位与单位字符保留在系数中；progression 前因子为 $Xq_k/(q_a\sqrt F B_1\sqrt{q_e})$。将 $q_k$ 单独留在外面，其聚合外系数 $\Psi$ 的平方范数满足
+
+$$
+\|\Psi\|_2^2\ll_\varepsilon(Aq_T)^\varepsilon
+ A^{-1}S_1^{-1}F^{-1}B_1^{-8}R^{-2}\|\alpha\|_2^2.
+\tag{483.8}
+$$
+
+这是原除数 Cauchy：固定 $sb^6e$ 的倍数至多 $O(A/(S_1B_1^6R))$，前因子平方再贡献 $A^{-2}F^{-1}B_1^{-2}R^{-1}$。所有分支仍只读取同一原系数。
+
+对 $q_m\asymp H$ 的频率块，不假设子序列具有新的均方消去；I4 直接给
+
+$$
+\sum_{q_m\asymp H}
+|t_{u,[r]}((s/\operatorname{rad}s)b^5km/M)|^2
+\ll (1+|t|)^B[(S_1/F)B_1^5q_kH]^{1+\eta+\varepsilon}.
+\tag{483.9}
+$$
+
+此 $m$ 坐标的实际对偶尺度是
+
+$$
+J=\frac{S_1FB_1^7R^2}{q_kX}.
+\tag{483.10}
+$$
+
+因为 $S_1B_1^6R\ll A\ll X$，在 $H\le J$ 时有 $H/R\ll FB_1/q_k$。原完整四项筛由此蕴含
+
+$$
+\Delta_6(H,R)\ll_\varepsilon(HR)^\varepsilon
+ (FB_1/q_k)^{5/6}H^{1/6}R.
+\tag{483.11}
+$$
+
+共同 smooth Mellin 分离、(483.8)–(483.11) 与核奇性给出的块费用，在 $H\asymp J$ 为
+
+$$
+(XAq_T)^\varepsilon(1+|t|)^B
+ X^{5/12-\eta/2}A^{-1/2}S_1^{7/12+\eta}
+ B_1^{3+6\eta}q_k^{1/2}R^{2/3+\eta}\|\alpha\|_2.
+\tag{483.12}
+$$
+
+在 $H\le J$ 上，核奇性扣除后剩余 $H$ 幂为 $7/12-\varepsilon>0$，故 dyadic 和由临界块控制。$H>J$ 使用完整四项筛，额外损失至多为固定多项式，选择核衰减阶四即可求和。若 $J<1$，固定非零频率间隙与 $\Delta_6(H,R)\ll(HR)^\varepsilon HR$ 给出的尾部相对于 (483.12) 多出至多
+
+$$
+(q_k/(FB_1))^{5/12}J^{4-7/12-\eta/2},
+\tag{483.13}
+$$
+
+其有界，因为 $q_k\le B_1$、$F\ge1$、$0<\eta<1/12$。固定 $M$ 的比较常数并入隐常数；全部分离使用块内共同 profile，不允许按 $e$ 选择另一个变换。
+
+去除原 Fourier 归一化贡献 $X^{-\eta/2}$；再用 $R\ll A/(S_1B_1^6)$，(483.12) 变为
+
+$$
+(XAq_T)^\varepsilon(1+|t|)^B
+ X^{5/12-\eta}A^{1/6+\eta}
+ S_1^{-1/12}B_1^{-1}q_k^{1/2}\|\alpha\|_2.
+\tag{483.14}
+$$
+
+这里 $F$ 与全部 $B_1^{6\eta}$ 均已抵消，且
+$B_1^{-1}\sum_{k\mid b}q_k^{1/2}\ll_\varepsilon B_1^{-1/2+\varepsilon}$。所有可能 $s,b$ 来自指定 $T$，其数量只支付 $q_T^\varepsilon$。$R$ dyads 的正幂和由同一上端控制。这证明 (483.3)。
+
+为加上原 Euler 密度，按 I1、I6 写平方自由密度除数为 $eg$，$e\mid\operatorname{rad}a$、$(g,a)=1$。精确展开为
+
+$$
+\sum_{a\mid n}\phi(n)\mathcal v_u(n)D(n,u)\mathcal W(q_n/X)
+=\mathcal v_u(a)\sum_{\substack{g\text{ squarefree}\\(g,aS)=1}}z_u(g)
+ \sum_{ag\mid n}\phi(n)D(n,u)\mathcal W(q_n/X).
+\tag{483.15}
+$$
+
+$ag$ 的高估值部分及六阶主除数与 $a$ 相同。$q_g\asymp G$ 时，I6 的聚合系数范数为
+$\ll(AG)^\varepsilon G^{-1/2-6\eta}\|\alpha\|_2$；(483.3) 给 $G^{-1/3-5\eta+\varepsilon}$ 的可求和误差。非空支持满足 $AG\ll X$，且 $(A/X)^\eta\ll1$，因此得到 (483.4) 的误差。
+
+在 (483.2) 中，入射主和的绝对大小至多为除数费用，出射主和至多为除数费用乘 $A^\eta$。因 $A\ll X$，全部主项每个 $\alpha_a/q_a$ 的系数为 $O(X)$，连同原有限族的多项式 $t$ 费用。将 $g$ 主项延到无穷的尾部至多
+
+$$
+(XAq_T)^\varepsilon(1+|t|)^B
+ A^{1/2}(A/X)^{6\eta}\|\alpha\|_2,
+\tag{483.16}
+$$
+
+被 (483.4) 吸收。主项 Euler 乘积正是
+$\mathcal v_u(a)\prod_{p\nmid aS}(1+z_u(p)/q_p)
+=Z_uv_u(\operatorname{rad}a)$，证毕。
+
+**定理 483.2（原卷积全部小标记的原分子连续项）。** 保留 (482.14) 的同一个原始 $b(h)$、全部标记 $R\in\mathcal L_L$（包括单位）、实际 $G_L$ 与 G7 范围。令
+
+$$
+C_R^0(t)=\sum_hb(h)\overline{\mathcal v_u(Rh)
+D_{\nu_{[h]};S}(Rh,u)}.
+\tag{483.17}
+$$
+
+在 primitive-mean 原稿 §7 的同一个实际 Mellin 伴随中，由 I2 精确分解 $E_L^*b=e_L^0+e_L^{\rm ref}$，其中 $e_L^0$ 积分 (483.17)，$e_L^{\rm ref}$ 保存每个非空反射选择。假设 $2L\le D$，并保留原固定字符 $B_0=7/8$ 的 inverse-$L$ 输入。令共同成本包络 $\mathcal C$ 覆盖原有限族、所需 smooth/Mellin seminorms、多项式 $t$ 积分、reciprocal-strip 与 G7 inverse-Gram 成本的实际有限乘积和。则
+
+$$
+|C_R^0(t)|\ll_\varepsilon\mathcal C(Kq_R)^\varepsilon(1+|t|)^B
+ \left(KD^{-1/8}+K^{5/12}D^{2/3}q_R^{7/12}\right),
+\tag{483.18}
+$$
+
+$$
+Q_{E0,L}:=(e_L^0)^*G_L^{-1}e_L^0
+\ll_\varepsilon\mathcal C^2(UKL)^\varepsilon U^{2\eta}
+ \left(K^2D^{-1/4}L+K^{5/6}D^{4/3}L^{13/6}\right).
+\tag{483.19}
+$$
+
+证明。对每个原 Möbius 变量写
+
+$$
+g=(d,\operatorname{rad}R),\quad d=ge,\quad(e,R)=1,
+\qquad R_5=\prod_{v_p(R)=5}p.
+\tag{483.20}
+$$
+
+直接把 (483.4) 用于实际外模数 $a=Rge$；不删除 $Rh$ 的六次幂。参数精确为
+
+$$
+T=Rg,\qquad A=q_RD,\qquad X=q_RK,\qquad
+\|\alpha\|_2\ll_\varepsilon\mathcal C(D/q_g)^{1/2+\varepsilon}.
+\tag{483.21}
+$$
+
+$a$ 的局部指数至多六，$a^{\ge2}=(Rg)^{\ge2}$，$q_T\le q_R^2$，$A/X=1/N$；原非空 annuli 及 $2L\le D$ 保证长度条件。原 fixed masks 沿 $h\equiv R^{-1}m\pmod B$ 拉回，只置换同一有限族。共同 Mellin 分离仍读取 $q_m/X=(q_d/D)(q_n/N)$，不额外选择依赖标签的任意 profile。于是误差为
+
+$$
+\mathcal C(Kq_R)^\varepsilon(1+|t|)^B
+ K^{5/12}D^{2/3}q_R^{7/12}
+ \sum_{g\mid\operatorname{rad}R}q_g^{-1/2},
+\tag{483.22}
+$$
+
+最后的和只支付 $q_R^\varepsilon$。
+
+主项的 $c$ 恰好遍历 $c\mid(g,R_5)$，与变化的 $e$ 无关；$\operatorname{rad}a=\operatorname{rad}R\,e$。故 (483.2) 的原有限 cusp 常数和 ray 相位可在每个 $g,c$ 分支固定后，直接复用 I7 的 $\mu(e)v_u(e)\xi(e)/q_e$ smooth inverse-$L$ 估计。局部因子的正常收敛域、所选 $B_0$ 和字符有限族均不改变。入射常数前的大小满足 $\varphi(c^6)q_c^{-6\Re u}\le q_c^{-6\eta}$，出射部分满足 $\varphi(c^6)q_c^{6\Re u-12}\le q_c^{6\eta}$。相应主项上界分别为
+
+$$
+\begin{aligned}
+&\mathcal C(Kq_R)^\varepsilon(1+|t|)^B KD^{-1/8}
+ \sum_{g\mid\operatorname{rad}R}q_g^{-7/8}
+ \sum_{c\mid(g,R_5)}q_c^{-6\eta},\\
+&\mathcal C(Kq_R)^\varepsilon(1+|t|)^B K^{1-\eta}q_R^{-\eta}D^{-1/8}
+ \sum_{g\mid\operatorname{rad}R}q_g^{-7/8}
+ \sum_{c\mid(g,R_5)}q_c^{6\eta}.
+\end{aligned}
+\tag{483.23}
+$$
+
+两和均为 $O_\varepsilon(q_R^\varepsilon)$：出射一项在 $p\mid R_5$ 的局部因子是
+$1+q_p^{-7/8}+q_p^{-7/8+6\eta}$，而 $6\eta<1/2<7/8$。这证明 (483.18)，没有用不同分支的分别最优值替代原来的联合系数。
+
+最后在原实际伴随中乘 $U^\eta$，对原快速衰减 row Mellin profile 积分，再用同一 G7 和
+$\sum_{q_R\le L}1\ll L$、$\sum_{q_R\le L}q_R^{7/6}\ll L^{13/6}$。先完成每个原 $h$ 的 coherent 求和后才取标签平方和，得到 (483.19)，不假设标签正交。证毕。
+
+**推论 483.3（平衡尺度的连续原分子预算）。** 在定理 483.2 的条件下，取 $U\asymp K$、$D=N=\sqrt K$、$L=K^\ell$，其中固定 $0<\ell<1/8$ 且实际 G7 范围成立。定义
+
+$$
+\zeta_{\ell,\eta}
+=\min\{1/8-\ell,\ 1/2-13\ell/6\}-2\eta.
+\tag{483.24}
+$$
+
+可选足够小且满足 I3 的固定 $\eta>0$ 使 $\zeta_{\ell,\eta}>0$。若共同成本为 $\mathcal C=K^{o(1)}$，则
+
+$$
+Q_{E0,L}\ll_\varepsilon\mathcal C^2K^\varepsilon
+ \left(K^{15/8+\ell+2\eta}+K^{3/2+13\ell/6+2\eta}\right)
+=o(K^2)
+\tag{483.25}
+$$
+
+其中最终 $\varepsilon<\zeta_{\ell,\eta}$。另保留 §482 的解析输入，并将两处成本纳入同一共同包络后，与 (482.21) 联合可在同一实际投影中控制 $w_L+e_L^0$，其中 $w_L=\mathsf W_L^*b$；完整向量仍为
+
+$$
+\|P_LAb\|_2^2
+=\|G_L^{-1/2}(w_L+e_L^0+e_L^{\rm ref})\|_2^2.
+\tag{483.26}
+$$
+
+证明。(483.25) 直接代入 (483.19)；I3 允许的固定 $\eta$ 任意接近零。留数与连续项采用相同 $b,G_L$，其和用平方范数三角不等式控制。(483.26) 是原精确伴随分解。该分解未给 $e_L^{\rm ref}$ 的新上界，也未给完整正交补的上界；不同长度、高度、signed Robin restoration、全部 $n>5040$ 的严格 Robin 不等式和 RH 均不由上述估计推出。证毕。
+
+## 追加锚（本行以下为增补区）
