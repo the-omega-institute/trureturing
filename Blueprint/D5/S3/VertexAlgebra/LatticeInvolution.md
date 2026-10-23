@@ -20,7 +20,35 @@ Lean statement: `D5/S3/VertexAlgebra/LatticeInvolution.theta_involutive`
 
 Define sigma by polynomial evaluation X_(i,k) to -X_(i,k), fixing each complex constant. Define the complex-linear theta by theta(single(a,p))=single(-a,sigma(p)). This acts on every oscillator index, rather than just on charge. Polynomial induction proves sigma squared is identity; finite-charge linear extension proves theta squared is identity and gives an actual linear equivalence.
 
-**Theorem 1.2 (The actual vacuum is fixed).**
+**Theorem 1.2 (At positive rank the reflection is nonidentity).**
+
+Lean statement: `D5/S3/VertexAlgebra/LatticeInvolution.theta_nontrivial_of_rank_pos`
+
+*Proof.* Machine-checked in Lean as `D5/S3/VertexAlgebra/LatticeInvolution.theta_nontrivial_of_rank_pos` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Acknowledgement.* Igor B. Frenkel, James Lepowsky, and Arne Meurman (1988). *Vertex Operator Algebras and the Monster*. DOI: [10.1016/S0079-8169(08)X6136-7](https://doi.org/10.1016/S0079-8169(08)X6136-7).
+
+*Commentary.*
+
+For every lattice datum D with 0 < D.rank, theta D differs from the identity complex-linear equivalence. Take i=0 in Fin(D.rank) and the nonzero state v=single(0,X_(i,0)). Reflection sends v to -v. If theta were identity, then 2 smul v=0 over the complex numbers, contradicting v nonzero. The symmetric integral Gram matrix may be degenerate or indefinite; only the positive-rank hypothesis is added.
+
+**Theorem 1.3 (At positive rank the reflection has exact order two).**
+
+Lean statement: `D5/S3/VertexAlgebra/LatticeInvolution.theta_orderOf_eq_two_of_rank_pos`
+
+*Proof.* Machine-checked in Lean as `D5/S3/VertexAlgebra/LatticeInvolution.theta_orderOf_eq_two_of_rank_pos` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Acknowledgement.* Igor B. Frenkel, James Lepowsky, and Arne Meurman (1988). *Vertex Operator Algebras and the Monster*. DOI: [10.1016/S0079-8169(08)X6136-7](https://doi.org/10.1016/S0079-8169(08)X6136-7).
+
+*Commentary.*
+
+For every D with 0 < D.rank, orderOf(theta D)=2 in the group of complex-linear self-equivalences of the actual carrier. The square identity supplies theta squared equals identity; the nonzero oscillator witness excludes order one. The final step applies mathlib's orderOf_eq_prime at 2. No exact-order assertion at rank zero is made.
+
+**Theorem 1.4 (The actual vacuum is fixed).**
 
 Lean statement: `D5/S3/VertexAlgebra/LatticeInvolution.theta_vacuum`
 
@@ -36,7 +64,7 @@ The vacuum is single(0,1). Charge negation fixes zero and sigma fixes the consta
 
 The realized lower-triangular section obeys c(a,a)=B(a,a)/2 and epsilon(a,-a)=(-1)^(B(a,a)/2). The ground formula is theta(single(a,1))=(-1)^(B(a,a)/2) smul (epsilon(a,-a) smul single(-a,1))=single(-a,1). The section-square equation is the released integral_cocycle_square result. Dong-Nagatomo, math/9808088v1, pp. 4-5 and 9, write theta(a)=a inverse times (-1)^q, q=B(a,a)/2. Bakalov-Kac, math/0402315v1, section 4.1, equations (4.18)-(4.20), Proposition 4.1 and Remark 4.1 give the lift and field context. Their positive-definite classification conclusions are outside the present hypotheses.
 
-**Theorem 1.3 (Every actual integer mode commutes with reflection).**
+**Theorem 1.5 (Every actual integer mode commutes with reflection).**
 
 Lean statement: `D5/S3/VertexAlgebra/LatticeInvolution.stateField_theta`
 
@@ -54,7 +82,7 @@ The charged proof transports the actual creation series, exponential coefficient
 
 The two contextual sums in a normal-product coefficient have finite support at the indicated actual vector. Theta transports both sums and retains the order of each composition. Induction on ordered oscillator words gives the sign (-1)^word_length. The monomial basis and finite-charge linear extension then give the displayed all-state law. Internal product compatibility is proved from these concrete generators, without assuming the desired result.
 
-**Theorem 1.4 (The actual fixed subtype is a full ungraded vertex algebra).**
+**Theorem 1.6 (The actual fixed subtype is a full ungraded vertex algebra).**
 
 Lean statement: `D5/S3/VertexAlgebra/LatticeInvolution.fixed_actualVertexAlgebra`
 
@@ -70,7 +98,7 @@ The fixed submodule is ker(thetaLinear-id). The actual vacuum belongs to it, and
 
 The constructor contains the actual vacuum field, creation at mode -1, creativity at every n>=0, T(vacuum)=0, [T,a_n]=-n a_(n-1), pairwise locality with an order independent of the test vector, and full integer Borcherds. Inclusion identifies each actual mode. Iterated commutator differences transport locality from the already proved ambient actual vertex algebra.
 
-**Theorem 1.5 (Full integer Borcherds and all three finite supports).**
+**Theorem 1.7 (Full integer Borcherds and all three finite supports).**
 
 Lean statement: `D5/S3/VertexAlgebra/LatticeInvolution.fixed_borcherds`
 
@@ -86,7 +114,7 @@ For fixed a,b,c and arbitrary p,q,r in Z, put mu(a,n,b)=(fixedY(a))_n b and C(k,
 
 Subtype inclusion preserves each nested summand, reflects zero exactly, and hence identifies the genuine supports. It transports each of the three ambient finite-support proofs and preserves finsums by injectivity. Thus the full equality is inherited without a fixed-algebra compatibility premise or an assumption that divergent sums vanish.
 
-**Theorem 1.6 (Actual mode eigenvalues multiply).**
+**Theorem 1.8 (Actual mode eigenvalues multiply).**
 
 Lean statement: `D5/S3/VertexAlgebra/LatticeInvolution.mode_eigenvalue_selection`
 
@@ -111,6 +139,8 @@ This result constructs an ungraded fixed vertex algebra. Conformal grading, PCT,
 - Truth anchor: `D5/S3/VertexAlgebra/LatticeInvolution.mode_eigenvalue_selection`
 - Truth anchor: `D5/S3/VertexAlgebra/LatticeInvolution.stateField_theta`
 - Truth anchor: `D5/S3/VertexAlgebra/LatticeInvolution.theta_involutive`
+- Truth anchor: `D5/S3/VertexAlgebra/LatticeInvolution.theta_nontrivial_of_rank_pos`
+- Truth anchor: `D5/S3/VertexAlgebra/LatticeInvolution.theta_orderOf_eq_two_of_rank_pos`
 - Truth anchor: `D5/S3/VertexAlgebra/LatticeInvolution.theta_vacuum`
 - Dependency: [D5/S3/VertexAlgebra/LatticeActualVertexAlgebra](LatticeActualVertexAlgebra.md)
 - Dependency: [D5/S3/VertexAlgebra/LatticeTwistedGroundRealization](LatticeTwistedGroundRealization.md)
