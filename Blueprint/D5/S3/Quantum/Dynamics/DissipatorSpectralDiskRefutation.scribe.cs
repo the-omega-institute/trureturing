@@ -98,7 +98,10 @@ internal sealed class DissipatorSpectralDiskRefutationDocument : IScribeDocument
                             + "Its eigenvalue equation would give a disk norm at most one. "
                             + "Applying the strict inequality with ν = scale(γ,L), using its positivity "
                             + "and upper bound by one, contradicts that conclusion."))),
-                DescribeRole.Theorem))));
+                DescribeRole.Theorem,
+                openProblemResolutionClaim: new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("chruscinski-denisov-tarnowski-zyczkowski-2025-dissipator-spectral-disk-refutation"),
+                    ResolutionKind.Refuted)))));
 
     private static DocumentBlock Definition(string name, string title, Formula formula, string prose) =>
         Describe.Lean(DescribeId.Create(name), DeclarationHandle.Create(Module + "." + name),
