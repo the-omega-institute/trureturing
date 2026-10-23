@@ -1,5 +1,5 @@
 /- GID: D5/S3/Quantum/Information/FisherDiscord/Result
-   generality: G
+   generality: I
    mirror-B: D5/B/S3/Quantum/Information/FisherDiscord/Result
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: [mathlib/module/Mathlib.Tactic]
@@ -70,10 +70,11 @@ private theorem flag_sld :
         Fintype.sum_prod_type, Fin.sum_univ_two] <;>
       apply Complex.ext <;> norm_num
 
-private theorem base_discord :
-    fisherSLD (diagonal (fun i => (weights i : ℂ))) qubitSLD -
+private theorem base_discord (L : Matrix (Fin 2) (Fin 2) ℂ)
+    (hL : IsSLD (diagonal (fun i => (weights i : ℂ))) qubitX L) :
+    fisherSLD (diagonal (fun i => (weights i : ℂ))) L -
       skewWY (diagonal (fun i => (weights i : ℂ))) qubitX = 4 / 25 := by
-  rw [discord_diag weights weights_nonneg qubitX qubitSLD qubitX_hermitian qubit_sld]
+  rw [discord_diag weights weights_nonneg qubitX L qubitX_hermitian hL]
   norm_num [weights, qubitX, pairKernel, Fin.sum_univ_two]
   field_simp
   ring_nf
@@ -92,7 +93,7 @@ theorem result : ¬ claim := by
     simpa [hMarg] using
       (hclaim 2 d₂ σ qubitX Lσ qubitSLD hσ qubitX_hermitian hLσ hLbase)
   have hzero := hiff.mp hall
-  rw [base_discord] at hzero
+  rw [base_discord qubitSLD qubit_sld] at hzero
   norm_num at hzero
 
 end D5.S3.Quantum.Information.FisherDiscord.Result
