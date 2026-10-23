@@ -59,7 +59,7 @@ namespace D5.S3.Combinatorics.Partitions.OverpartitionSquareLogDerivativeModFour
 open PowerSeries
 open D5.S3.Combinatorics.TwoColorPartition.AndrewsElBachraouiDefs (geom)
 open D5.S1.Recurrence.Invariants.ScaledReversionCongruence (geometric)
-open private derivative_map from D5.S1.Recurrence.LinearRows.LinearExponentDyadicSupport
+open D5.S1.Recurrence.LinearRows.LinearExponentDyadicSupport (derivative_map)
 open private four_zero from D5.S1.Recurrence.Parity.BilateralQuarticPowerThetaModFour
 open D5.S1.Recurrence.Parity.BilateralQuarticPowerThetaModFour (map_inv)
 
