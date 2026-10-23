@@ -271,7 +271,7 @@ Take L = 4, A = {0}, B = {1}, C = {2,3}, t = 1, hᵢ = 1 and φᵢ = 0. The init
 - Truth anchor: `D5/S3/Quantum/Dynamics/KickedIsingNegativityRefutation.trace_conjugate_right`
 - Truth anchor: `D5/S3/Quantum/Dynamics/KickedIsingNegativityRefutation.trace_local_left`
 - Truth anchor: `D5/S3/Quantum/Dynamics/KickedIsingNegativityRefutation.trace_local_right`
-- Dependency: [D5/S3/Quantum/Entanglement/AbsolutePPT/GenericAPPT](../Entanglement/AbsolutePPT/GenericAPPT.md)
+- Dependency: [D5/S3/Quantum/Entanglement/AbsolutePPT/UniformSchmidtCorner](../Entanglement/AbsolutePPT/UniformSchmidtCorner.md)
 - Dependency: [D5/S3/Quantum/Entanglement/FourQubitResidualSumMonotoneRefutation](../Entanglement/FourQubitResidualSumMonotoneRefutation.md)
 - Dependency: [D5/S3/Quantum/Entanglement/StructuredNegativityCoincidenceRefutation](../Entanglement/StructuredNegativityCoincidenceRefutation.md)
 - Dependency: [D5/S3/Quantum/Foundation/FiniteTraceDistance](../Foundation/FiniteTraceDistance.md)

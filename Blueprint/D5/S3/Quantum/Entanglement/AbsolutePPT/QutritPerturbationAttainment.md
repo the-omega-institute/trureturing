@@ -100,4 +100,4 @@ For positive n, a Hermitian idempotent of rank n produces a density matrix of pu
 - Truth anchor: `D5/S3/Quantum/Entanglement/AbsolutePPT/QutritPerturbationAttainment.rhoPure`
 - Truth anchor: `D5/S3/Quantum/Entanglement/AbsolutePPT/QutritPerturbationAttainment.unitary_vector_norm`
 - Dependency: [D5/S3/Quantum/Dynamics/KickedIsingNegativityRefutation](../../Dynamics/KickedIsingNegativityRefutation.md)
-- Dependency: [D5/S3/Quantum/Entanglement/AbsolutePPT/GenericAPPT](GenericAPPT.md)
+- Dependency: [D5/S3/Quantum/Entanglement/AbsolutePPT/UniformSchmidtCorner](UniformSchmidtCorner.md)

@@ -422,5 +422,5 @@ For every k and every positive semidefinite trace-one Matrix on Fin 3 × Fin (3+
 - Truth anchor: `D5/S3/Quantum/Entanglement/AbsolutePPT/QutritSpectralReduction.swap_pack`
 - Truth anchor: `D5/S3/Quantum/Entanglement/AbsolutePPT/QutritSpectralReduction.unitary_purity_trace`
 - Truth anchor: `D5/S3/Quantum/Entanglement/AbsolutePPT/QutritSpectralReduction.unitary_trace`
-- Dependency: [D5/S3/Quantum/Entanglement/AbsolutePPT/GenericAPPT](GenericAPPT.md)
 - Dependency: [D5/S3/Quantum/Entanglement/AbsolutePPT/QutritPerturbationAttainment](QutritPerturbationAttainment.md)
+- Dependency: [D5/S3/Quantum/Entanglement/AbsolutePPT/UniformSchmidtCorner](UniformSchmidtCorner.md)
