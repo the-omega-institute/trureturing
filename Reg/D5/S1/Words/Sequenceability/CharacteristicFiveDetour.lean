@@ -110,7 +110,12 @@ def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
   familyRecord := none
   options := #[]
 
+set_option pp.universes true in
+#check @exists_characteristic_five_relative_path
+
 #print axioms family
 #print axioms audit
 
 end Reg.D5.S1.Words.Sequenceability.CharacteristicFiveDetour
+
+end

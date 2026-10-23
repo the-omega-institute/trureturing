@@ -76,7 +76,8 @@ internal sealed class CharacteristicFiveDetourDocument : IScribeDocumentDefiniti
                         + "Their labels are (1,u), (2,3u), and (4,4u). The middle removed edge lies on the "
                         + "small row-lift cycle; the first and third lie on the other cycle.")),
                     Paragraph(Text("On the carrier (Fin(4) times K) plus Fin(2), extend the lift P by fixing "
-                        + "s and t. Set h=(1,3u), j=(2,4u), k=(3,2u) in the old carrier, and take "
+                        + "s and t. In phase coordinates set h=(1,3u), j=(2,4u), k=(3,2u); "
+                        + "their actual group coordinates are (2,3u), (4,4u), (3,2u). Take "
                         + "Q=swap(h,s)*swap(h,t)*swap(j,k)*P, with the rightmost action first. "
                         + "Swapping the two attachments merges the disjoint old cycles. The next two swaps "
                         + "insert the fixed points t and s. A first-return argument also applies to singleton "

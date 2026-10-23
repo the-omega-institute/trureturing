@@ -9,6 +9,8 @@
 import D5.S1.Words.Sequenceability.RowOrbitLift
 import D5.S3.Combinatorics.PerfectMatchings.WeightedReattachment
 
+/-! Three cuts join the two row-lift cycles and the two endpoints into an exact relative path. -/
+
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
 
@@ -21,14 +23,16 @@ open scoped BigOperators
 
 noncomputable section
 
+attribute [local instance] Classical.propDecidable
+
 /-- Swapping outgoing attachments joins two disjoint cycles, including singleton
 cycles, without requiring the ambient permutation to have only those cycles. -/
-private theorem merge_cycles {X : Type*} [Finite X] (f : Perm X)
+private theorem merge_cycles {X : Type*} [Finite X] [DecidableEq X] (f : Perm X)
     (A B : Set X) (hA : f.IsCycleOn A) (hB : f.IsCycleOn B)
     (hd : Disjoint A B) (a b : X) (ha : a ∈ A) (hb : b ∈ B) :
     (f * swap a b).IsCycleOn (A ∪ B) := by
-  classical
   let S : Set X := {a, b}
+  let : DecidablePred (· ∈ S) := fun _ => Classical.propDecidable _
   let aa : S := ⟨a, by simp [S]⟩
   let bb : S := ⟨b, by simp [S]⟩
   let J : Perm S := swap aa bb
@@ -76,7 +80,7 @@ private theorem merge_cycles {X : Type*} [Finite X] (f : Perm X)
     · exact hmarks.trans ((show (x : X) = b from hxb) ▸ hx)
   rw [← hJ]
   refine ⟨?_, fun x hx y hy => (hreach x hx).symm.trans (hreach y hy)⟩
-  simpa only [hJ] using (hA.1.union hB.1 f.injective.injOn).comp
+  simpa only [hJ, Perm.coe_mul] using (hA.1.union hB.1 f.injective.injOn).comp
     (Equiv.bijOn_swap (Or.inl ha) (Or.inr hb))
 
 
@@ -100,7 +104,6 @@ private theorem surgery_cycle {K : Type*} [Field K] [Finite K] [CharP K 5]
     (hc : ∀ v w : Fin 4 × K, (lift r (4*u)).SameCycle v w ↔
       (initialRow v = 4*u ↔ initialRow w = 4*u)) :
     (surgery r u).IsCycleOn Set.univ := by
-  classical
   let P := basePerm r (4*u)
   let h₁ : Carrier K := .inl (1, 3*u)
   let h₂ : Carrier K := .inl (2, 4*u)
@@ -147,18 +150,17 @@ private theorem surgery_cycle {K : Type*} [Field K] [Finite K] [CharP K 5]
     ext z
     cases z with
     | inl v =>
-      simp only [Set.mem_union, Set.mem_setOf_eq, A, B]
+      simp only [Set.mem_union, Set.mem_ofPred_eq, A, B]
       rw [hcP, hcP]
       simp only [hi₂, hi₃, true_iff, false_iff]
-      simp [U]
+      simpa only [U, Set.mem_range, Sum.inl.injEq, exists_eq, iff_true] using
+        em (initialRow v = 4*u)
     | inr i =>
       have hfix : P (.inr i) = .inr i := rfl
       have hna : ¬ P.SameCycle h₂ (.inr i) := fun h => by
-        have := h.eq_of_right hfix
-        cases this
+        simpa only [h₂, reduceCtorEq] using h.eq_of_right hfix
       have hnb : ¬ P.SameCycle h₃ (.inr i) := fun h => by
-        have := h.eq_of_right hfix
-        cases this
+        simpa only [h₃, reduceCtorEq] using h.eq_of_right hfix
       simp [A, B, hna, hnb, U]
   have hR : (swap h₂ h₃ * P).IsCycleOn U := by
     have hm := merge_cycles P A B hA hB hd (P⁻¹ h₂) (P⁻¹ h₃)
@@ -166,8 +168,8 @@ private theorem surgery_cycle {K : Type*} [Field K] [Finite K] [CharP K 5]
       ((Perm.SameCycle.refl P h₃).symm_apply_right)
     simpa only [mul_swap_eq_swap_mul, Perm.inv_def, Equiv.apply_symm_apply, hU] using hm
   let R := swap h₂ h₃ * P
-  have hRt : R t = t := by simp [R, t, P, basePerm, h₂, h₃]
-  have hRs : R s = s := by simp [R, s, P, basePerm, h₂, h₃]
+  have hRt : R t = t := by simp [R, t, P, basePerm, h₂, h₃, swap_apply_def]
+  have hRs : R s = s := by simp [R, s, P, basePerm, h₂, h₃, swap_apply_def]
   have h₁U : h₁ ∈ U := ⟨(1, 3*u), rfl⟩
   have hT : (swap h₁ t * R).IsCycleOn (U ∪ {t}) := by
     have hm := merge_cycles R U {t} hR (Perm.isCycleOn_singleton.mpr hRt)
@@ -175,7 +177,7 @@ private theorem surgery_cycle {K : Type*} [Field K] [Finite K] [CharP K 5]
       (hR.inv.1.1 h₁U) (by simp)
     simpa only [mul_swap_eq_swap_mul, Perm.inv_def, Equiv.apply_symm_apply, hRt] using hm
   let T := swap h₁ t * R
-  have hTs : T s = s := by simp [T, Perm.mul_apply, hRs, h₁, s, t]
+  have hTs : T s = s := by simp [T, Perm.mul_apply, hRs, h₁, s, t, swap_apply_def]
   have hQ : (swap h₁ s * T).IsCycleOn ((U ∪ {t}) ∪ {s}) := by
     have hm := merge_cycles T (U ∪ {t}) {s} hT (Perm.isCycleOn_singleton.mpr hTs)
       (by simp [U, s, t, Set.disjoint_singleton_right]) (T⁻¹ h₁) s
@@ -196,10 +198,10 @@ private theorem coordinate_injective {K : Type*} [Field K] (u : K) (hu : u ≠ 0
   · exact congrArg Sum.inl (hv.2.1 trivial trivial he)
   · have hn := hv.1 (Set.mem_univ v)
     have hz := congrArg Prod.fst he
-    fin_cases j <;> simp [coordinate] at hz <;> exact (hn hz).elim
+    fin_cases j <;> exact (hn hz).elim
   · have hn := hv.1 (Set.mem_univ w)
     have hz := congrArg Prod.fst he
-    fin_cases i <;> simp [coordinate] at hz <;> exact (hn hz.symm).elim
+    fin_cases i <;> exact (hn hz.symm).elim
   · fin_cases i <;> fin_cases j <;> simp_all [coordinate]
 
 /-- Puncturing at the terminal point removes precisely the artificial closing label. -/
@@ -208,7 +210,6 @@ private theorem surgery_labels {K : Type*} [Field K] [CharP K 5]
     (he : Set.BijOn (edgeLabel r (4*u)) Set.univ {v | v.1 ≠ 0}) :
     Set.BijOn (fun z => coordinate u (surgery r u z) - coordinate u z)
       {z | z ≠ Sum.inr 1} ({v | v.1 ≠ 0} ∪ {(0, u)}) := by
-  classical
   let s : Carrier K := .inr 0
   let t : Carrier K := .inr 1
   let a : Carrier K := .inl (0, 2*u)
@@ -229,9 +230,12 @@ private theorem surgery_labels {K : Type*} [Field K] [CharP K 5]
     simp [basePerm, b, lift, hneg₁]
   have hP₃ : basePerm r (4*u) c = .inl (3, 2*u) := by
     simp [basePerm, c, lift, hneg₃]
-  have hLt : ψ t = t := by simp [ψ, s, t, a, b, c]
+  have hLt : ψ t = t := by simp [ψ, s, t, a, b, c, swap_apply_def]
   have hψ : Set.BijOn ψ {z | z ≠ t} {z | z ≠ t} :=
-    ψ.bijOn (fun z => by rw [← hLt, ψ.injective.eq_iff])
+    ψ.bijOn (fun z => by
+      change ψ z ≠ t ↔ z ≠ t
+      conv_lhs => rw [← hLt]
+      exact not_congr ψ.injective.eq_iff)
   have hL : Set.BijOn L {z | z ≠ t} ({v | v.1 ≠ 0} ∪ {(0, u)}) := by
     constructor
     · rintro (v | i) hz
@@ -257,34 +261,34 @@ private theorem surgery_labels {K : Type*} [Field K] [CharP K 5]
     by_cases hza : z = a
     · subst z
       apply Prod.ext
-      · norm_num [surgery, Perm.mul_apply, hP₁, coordinate, ψ, L, s, t, a, b, c,
-          basePerm, vertex, column, edgeLabel, lift]
-      · simp [surgery, Perm.mul_apply, hP₁, coordinate, ψ, L, s, t, a, b, c,
-          basePerm, vertex, column, edgeLabel, lift] <;>
-        linear_combination u*h5
+      · norm_num [surgery, coordinate, ψ, L, s, a, b, c,
+          basePerm, vertex, column, edgeLabel, lift, swap_apply_def, hneg₂, hneg₃]
+      · simp [surgery, coordinate, ψ, L, s, a, b, c,
+          basePerm, vertex, column, edgeLabel, lift, swap_apply_def, hneg₂, hneg₃]
+        ring
     by_cases hzb : z = b
     · subst z
       apply Prod.ext
-      · norm_num [surgery, Perm.mul_apply, hP₂, coordinate, ψ, L, s, t, a, b, c,
-          basePerm, vertex, column, edgeLabel, lift]
-      · simp [surgery, Perm.mul_apply, hP₂, coordinate, ψ, L, s, t, a, b, c,
-          basePerm, vertex, column, edgeLabel, lift] <;>
-        linear_combination u*h5
+      · norm_num [surgery, coordinate, ψ, L, s, a, b, c,
+          basePerm, vertex, column, edgeLabel, lift, swap_apply_def, hneg₁]
+      · simp [surgery, coordinate, ψ, L, s, a, b, c,
+          basePerm, vertex, column, edgeLabel, lift, swap_apply_def, hneg₁, hneg₂]
+        ring
     by_cases hzc : z = c
     · subst z
       apply Prod.ext
-      · norm_num [surgery, Perm.mul_apply, hP₃, coordinate, ψ, L, s, t, a, b, c,
-          basePerm, vertex, column, edgeLabel, lift]
-      · simp [surgery, Perm.mul_apply, hP₃, coordinate, ψ, L, s, t, a, b, c,
-          basePerm, vertex, column, edgeLabel, lift] <;>
+      · norm_num [surgery, coordinate, ψ, L, s, a, b, c,
+          basePerm, vertex, column, edgeLabel, lift, swap_apply_def, hneg₃]
+      · simp [surgery, coordinate, ψ, L, s, a, b, c,
+          basePerm, vertex, column, edgeLabel, lift, swap_apply_def, hneg₃]
         ring
     by_cases hzs : z = s
     · subst z
       apply Prod.ext
-      · norm_num [surgery, coordinate, ψ, L, s, t, a, b, c, basePerm,
-          vertex, column, edgeLabel, lift]
-      · simp [surgery, coordinate, ψ, L, s, t, a, b, c, basePerm,
-          vertex, column, edgeLabel, lift] <;>
+      · norm_num [surgery, coordinate, ψ, L, s, a, b, c, basePerm,
+          vertex, column, edgeLabel, lift, swap_apply_def]
+      · simp [surgery, coordinate, ψ, L, s, a, b, c, basePerm,
+          vertex, column, edgeLabel, lift, swap_apply_def]
         linear_combination u*h5
     have hp₁ : basePerm r (4*u) z ≠ .inl (1, 3*u) := by
       rw [← hP₁]; exact (basePerm r (4*u)).injective.ne hza
@@ -328,8 +332,7 @@ theorem exists_characteristic_five_relative_path (K : Type*)
       (∀ a b : ℕ, a < b → b ≤ M →
         (∑ i ∈ Finset.Ico a b, (v (i + 1) - v i)) ≠ 0) ∧
       (∑ i ∈ Finset.range M, (v (i + 1) - v i)) = (0, u) := by
-  classical
-  letI := Fintype.ofFinite K
+  let := Fintype.ofFinite K
   let M := 4 * Nat.card K + 1
   obtain ⟨r, _, hc, he, hv, _⟩ := exists_characteristic_five_lift K (4*u)
   let Q := surgery r u
@@ -340,7 +343,6 @@ theorem exists_characteristic_five_relative_path (K : Type*)
   have hcard : Fintype.card (Carrier K) = M + 1 := by
     simp only [Carrier, Fintype.card_sum, Fintype.card_prod, Fintype.card_fin,
       M, Nat.card_eq_fintype_card]
-    omega
   have hcyc : Q.IsCycleOn (Finset.univ : Finset (Carrier K)) := by
     simpa only [Finset.coe_univ] using surgery_cycle r u hu hc
   have hbound : Set.InjOn orbit (Set.Iio (M + 1)) := by
@@ -350,7 +352,7 @@ theorem exists_characteristic_five_relative_path (K : Type*)
       hcyc.exists_pow_eq (Finset.mem_univ s) (Finset.mem_univ z)
   have hzero : orbit 0 = s := rfl
   have hQt : Q t = s := by
-    simp [Q, surgery, t, s, basePerm, Perm.mul_apply]
+    simp [Q, surgery, t, s, basePerm, Perm.mul_apply, swap_apply_def]
   have hlast : orbit M = t := by
     apply Q.injective
     rw [hQt]
@@ -365,21 +367,32 @@ theorem exists_characteristic_five_relative_path (K : Type*)
   have hinside : Set.BijOn orbit (Set.Ioo 0 M) (Set.range Sum.inl) := by
     constructor
     · intro n hn
+      rcases hn with ⟨hn0, hnM⟩
       cases heq : orbit n with
       | inl z => exact ⟨z, rfl⟩
       | inr i =>
         fin_cases i
-        · have hh : n = 0 := hbound (by omega) (by omega) (heq.trans hzero.symm)
+        · have hh : n = 0 := hbound (x₁ := n) (x₂ := 0)
+            (by change n < M + 1; omega) (by change 0 < M + 1; omega)
+            (heq.trans hzero.symm)
           omega
-        · have hh : n = M := hbound (by omega) (by omega) (heq.trans hlast.symm)
+        · have hh : n = M := hbound (x₁ := n) (x₂ := M)
+            (by change n < M + 1; omega) (by change M < M + 1; omega)
+            (heq.trans hlast.symm)
           omega
     constructor
     · intro i hi j hj hij
-      exact hbound (by omega) (by omega) hij
+      exact hbound (x₁ := i) (x₂ := j)
+        (by change i < M + 1; exact Nat.lt_succ_of_lt hi.2)
+        (by change j < M + 1; exact Nat.lt_succ_of_lt hj.2) hij
     · rintro z ⟨w, rfl⟩
       obtain ⟨n, hn, heq⟩ := horbit (.inl w)
       have hn0 : n ≠ 0 := by intro h; subst n; cases heq
-      have hnM : n ≠ M := by intro h; subst n; rw [hlast] at heq; cases heq
+      have hnM : n ≠ M := by
+        intro h
+        subst n
+        rw [hlast] at heq
+        simp only [t, reduceCtorEq] at heq
       exact ⟨n, ⟨by omega, by omega⟩, heq⟩
   have hcoords : Set.BijOn (coordinate u) (Set.range Sum.inl) {z | z.1 ≠ 0} := by
     constructor
@@ -393,15 +406,20 @@ theorem exists_characteristic_five_relative_path (K : Type*)
   have hpunctured : Set.BijOn orbit (Set.Iio M) {z | z ≠ t} := by
     constructor
     · intro n hn heq
-      have hh : n = M := hbound (by omega) (by omega) (heq.trans hlast.symm)
+      change n < M at hn
+      have hh : n = M := hbound (x₁ := n) (x₂ := M)
+            (by change n < M + 1; omega) (by change M < M + 1; omega)
+            (heq.trans hlast.symm)
       omega
     constructor
     · intro i hi j hj hij
-      exact hbound (by omega) (by omega) hij
+      exact hbound (x₁ := i) (x₂ := j)
+        (by change i < M + 1; exact Nat.lt_succ_of_lt hi)
+        (by change j < M + 1; exact Nat.lt_succ_of_lt hj) hij
     · intro z hz
       obtain ⟨n, hn, heq⟩ := horbit z
       have hnM : n ≠ M := by intro h; subst n; exact hz (heq.symm.trans hlast)
-      exact ⟨n, by omega, heq⟩
+      exact ⟨n, (show n < M from by omega), heq⟩
   have hlabels := (surgery_labels r u he).comp hpunctured
   have hstep (n : ℕ) : orbit (n + 1) = Q (orbit n) := by
     simp only [orbit, pow_succ', Perm.mul_apply]
@@ -409,7 +427,10 @@ theorem exists_characteristic_five_relative_path (K : Type*)
       (∑ i ∈ Finset.range n, (v (i + 1) - v i)) = v n - v 0 :=
     Finset.sum_range_sub v n
   refine ⟨v, hv0, hvM, hvinj, hcoords.comp hinside, ?_, ?_, ?_, ?_⟩
-  · simpa only [Function.comp_apply, ← hstep, v] using hlabels
+  · exact hlabels.congr (fun n _ => by
+      change coordinate u (Q (orbit n)) - coordinate u (orbit n) =
+        coordinate u (orbit (n + 1)) - coordinate u (orbit n)
+      rw [hstep])
   · intro i j heq
     apply hvinj
     simpa only [hsum, sub_left_inj] using heq
@@ -418,12 +439,14 @@ theorem exists_characteristic_five_relative_path (K : Type*)
       rw [Finset.sum_Ico_eq_sub _ hab.le, hsum, hsum]
       abel
     have heq : v b = v a := sub_eq_zero.mp (hinterval.symm.trans hzero)
-    have hij := hvinj (a := ⟨b, by omega⟩) (b := ⟨a, by omega⟩) heq
-    have := congrArg Fin.val hij
+    have hij := hvinj (a₁ := ⟨b, by omega⟩) (a₂ := ⟨a, by omega⟩) heq
+    have heqb : b = a := congrArg Fin.val hij
     omega
   · rw [hsum, hv0, hvM]
     simp
 
 #print axioms exists_characteristic_five_relative_path
+
+end
 
 end D5.S1.Words.Sequenceability.CharacteristicFiveDetour
