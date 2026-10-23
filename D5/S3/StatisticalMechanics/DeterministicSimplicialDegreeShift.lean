@@ -63,12 +63,12 @@ private theorem vertices_earlier (v₀ : V) (v : ℕ → Finset V → V)
     rcases (mem_dsc_succ v₀ v n σ).mp hσ with hold | ⟨ρ, hρ, β, hβ, rfl⟩
     · rcases ih hold hx with h | ⟨s, hs, ρ, he⟩
       · exact Or.inl h
-      · exact Or.inr ⟨s, Nat.le_step hs, ρ, he⟩
+      · exact Or.inr ⟨s, Nat.le_succ_of_le hs, ρ, he⟩
     · rcases mem_insert.mp hx with h | h
       · exact Or.inr ⟨n + 1, le_rfl, ρ, h⟩
       · rcases ih hρ (hβ h) with h | ⟨s, hs, ρ, he⟩
         · exact Or.inl h
-        · exact Or.inr ⟨s, Nat.le_step hs, ρ, he⟩
+        · exact Or.inr ⟨s, Nat.le_succ_of_le hs, ρ, he⟩
 
 private theorem fresh (v₀ : V) (v : ℕ → Finset V → V)
     (hi : Function.Injective (Function.uncurry v)) (h₀ : ∀ s σ, v s σ ≠ v₀)
@@ -137,6 +137,31 @@ private theorem face_exists (v₀ : V) (v : ℕ → Finset V → V)
   obtain ⟨τ, hτ, htc⟩ := exists_subset_card_eq (hc ▸ hkn)
   exact ⟨τ, downward v₀ v hσ hτ (one_le_card.mp (htc ▸ hk)), htc⟩
 
+private theorem mem_link (C : Finset (Finset V)) (τ α : Finset V) :
+    α ∈ link C τ ↔ Disjoint τ α ∧ τ ∪ α ∈ C := by
+  constructor
+  · rintro h
+    obtain ⟨ρ, hρ, rfl⟩ := mem_image.mp h
+    obtain ⟨hρ, ht⟩ := mem_filter.mp hρ
+    exact ⟨disjoint_sdiff_self_right, (union_sdiff_of_subset ht).symm ▸ hρ⟩
+  · rintro ⟨hd, h⟩
+    exact mem_image.mpr ⟨τ ∪ α, mem_filter.mpr ⟨h, subset_union_left⟩,
+      union_sdiff_cancel_left hd⟩
+
+private theorem new_vertex_mem (v₀ : V) (v : ℕ → Finset V → V)
+    (hi : Function.Injective (Function.uncurry v)) (h₀ : ∀ s σ, v s σ ≠ v₀)
+    {n : ℕ} (σ : Finset V) {ρ β : Finset V} (hρ : ρ ∈ dsc v₀ v n) (hβ : β ⊆ ρ) :
+    v (n + 1) σ ∈ insert (v (n + 1) ρ) β ↔ σ = ρ := by
+  have hf := fresh v₀ v hi h₀ (by omega : n < n + 1) hρ σ
+  constructor
+  · intro h
+    rcases mem_insert.mp h with he | hb
+    · have hep : (n + 1, σ) = (n + 1, ρ) := hi he
+      exact congrArg Prod.snd hep
+    · exact False.elim (hf (hβ hb))
+  · rintro rfl
+    exact mem_insert_self _ _
+
 private theorem degree_link (C : Finset (Finset V)) (τ : Finset V) :
     upperDegree C τ = linkWeight C τ (weight 0) := by
   rw [linkWeight, link, sum_image]
@@ -180,14 +205,48 @@ private theorem birth_link (v₀ : V) (v : ℕ → Finset V → V)
     (hi : Function.Injective (Function.uncurry v)) (h₀ : ∀ s σ, v s σ ≠ v₀)
     {s : ℕ} {σ η : Finset V} (hσ : σ ∈ dsc v₀ v s) (hη : η ⊆ σ) :
     link (dsc v₀ v (s + 1)) (insert (v (s + 1) σ) η) = (σ \ η).powerset := by
-  sorry
+  ext α
+  rw [mem_link, mem_powerset]
+  have hfs := fresh v₀ v hi h₀ (by omega : s < s + 1) hσ σ
+  constructor
+  · rintro ⟨hd, h⟩
+    rcases (mem_dsc_succ v₀ v s _).mp h with hold | ⟨ρ, hρ, β, hβ, he⟩
+    · exact False.elim ((fresh v₀ v hi h₀ (by omega) hold σ)
+        (mem_union_left _ (mem_insert_self _ _)))
+    · have hv : v (s + 1) σ ∈ insert (v (s + 1) ρ) β :=
+        he.symm ▸ mem_union_left α (mem_insert_self _ _)
+      have hp := (new_vertex_mem v₀ v hi h₀ σ hρ hβ).mp hv
+      subst ρ
+      intro x hx
+      have hxt : x ∉ insert (v (s + 1) σ) η := fun hm =>
+        disjoint_left.mp hd hm hx
+      have hxb : x ∈ β := (mem_insert.mp (he.symm ▸ mem_union_right _ hx)).resolve_left
+        (fun he => hxt (he ▸ mem_insert_self _ _))
+      exact mem_sdiff.mpr ⟨hβ hxb, fun hm => hxt (mem_insert_of_mem hm)⟩
+  · intro ha
+    have hd : Disjoint (insert (v (s + 1) σ) η) α := by
+      apply disjoint_left.mpr
+      intro x hx hxa
+      have hdiff := mem_sdiff.mp (ha hxa)
+      rcases mem_insert.mp hx with rfl | hx
+      · exact hfs hdiff.1
+      · exact hdiff.2 hx
+    refine ⟨hd, (mem_dsc_succ v₀ v s _).mpr (Or.inr ⟨σ, hσ, η ∪ α, ?_, ?_⟩)⟩
+    · exact union_subset hη (fun x hx => (mem_sdiff.mp (ha hx)).1)
+    · ext x
+      simp only [mem_insert, mem_union]
+      tauto
 
 private theorem birth_degree (v₀ : V) (v : ℕ → Finset V → V)
     (hi : Function.Injective (Function.uncurry v)) (h₀ : ∀ s σ, v s σ ≠ v₀)
     {s : ℕ} {σ η : Finset V} (hσ : σ ∈ dsc v₀ v s) (hη : η ⊆ σ) (t : ℕ) :
     upperDegree (dsc v₀ v (s + 1 + t)) (insert (v (s + 1) σ) η) =
       g t (σ.card - η.card) := by
-  sorry
+  have hb : insert (v (s + 1) σ) η ∈ dsc v₀ v (s + 1) :=
+    (mem_dsc_succ v₀ v s _).mpr (Or.inr ⟨σ, hσ, η, hη, rfl⟩)
+  rw [degree_link, link_evolution v₀ v hi h₀ hb, zero_add, linkWeight,
+    birth_link v₀ v hi h₀ hσ hη, sum_powerset_apply_card]
+  simp [g, simplexSum, card_sdiff_of_subset hη, nsmul_eq_mul]
 
 private theorem positive_degree_types (v₀ : V) (v : ℕ → Finset V → V)
     (hi : Function.Injective (Function.uncurry v)) (h₀ : ∀ s σ, v s σ ≠ v₀)
