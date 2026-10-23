@@ -386,7 +386,28 @@ private theorem rotor_special_unique {σ : ℝ} (hσ : Irrational σ) (hσ1 : 1 
     (ℓ : ℕ) (hℓ : 0 < ℓ) :
     ∀ u v : List ℕ, u.length = ℓ → v.length = ℓ →
       IsRightSpecial (rotor σ) u → IsRightSpecial (rotor σ) v → u = v := by
-  sorry
+  intro u v hu hv hsu hsv
+  obtain ⟨i, hip, hpari, hsi, hi⟩ := rotor_special_projection hcut hℓ hu hsu
+  obtain ⟨j, hjp, hparj, hsj, hj⟩ := rotor_special_projection hcut hℓ hv hsv
+  have hα0 : 0 ≤ 1 / (σ + 1) := le_of_lt (one_div_pos.mpr (by linarith))
+  have hα1 : 1 / (σ + 1) < 1 := (div_lt_one (by linarith)).mpr (by linarith)
+  have hα : Irrational (1 / (σ + 1)) := by simpa using (hσ.add_ratCast 1).inv
+  obtain ⟨z, hz, huniq⟩ := MechanicalRightSpecial.exists_unique_lower_mechanical_right_special
+    (rho := 1 / (σ + 1)) hα0 hα1 hα (ℓ / 2)
+  have hbase := (huniq _ hsi).trans (huniq _ hsj).symm
+  apply List.ext_getElem
+  · omega
+  · intro t ht ht'
+    have htℓ : t < ℓ := by omega
+    rw [← hi t ht, ← hj t ht', rotor_window hcut hip hpari, rotor_window hcut hjp hparj]
+    by_cases hpar : (t + ℓ) % 2 = 1
+    · rw [if_pos hpar, if_pos hpar]
+    · rw [if_neg hpar, if_neg hpar]
+      have htd : t / 2 < ℓ / 2 := by omega
+      have hp := congrArg (fun w : List Bool => w[t / 2]?) hbase
+      simp only [lowerMechanicalFactor, List.getElem?_ofFn, dif_pos htd,
+        Option.some.injEq] at hp
+      rw [hp]
 
 private theorem rotor_reverse_prefix_special {σ : ℝ}
     (hσ : Irrational σ) (hσ1 : 1 < σ)
