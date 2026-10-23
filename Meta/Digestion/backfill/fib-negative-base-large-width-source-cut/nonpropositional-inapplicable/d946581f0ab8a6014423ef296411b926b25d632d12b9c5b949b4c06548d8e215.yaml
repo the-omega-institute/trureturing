@@ -5,3 +5,7 @@ cas_ref: sha256:d946581f0ab8a6014423ef296411b926b25d632d12b9c5b949b4c06548d8e215
 coverage_gids: []
 receipts:
   unresolved_subitems: []
+  nonpropositional:
+    justification: Section heading only; the singular-world multiplicity assertions belong to the following separate theorem atom.
+    previous_atom_id: 53d2a405277c3eeaeb57d4633c4988630e5b9d9e8da77612c5afd4220dad78e8
+    next_atom_id: d9d66e9e866de20d5668068e1a8ccb9d95b375eb73798a791e9b834fe8bd6567
