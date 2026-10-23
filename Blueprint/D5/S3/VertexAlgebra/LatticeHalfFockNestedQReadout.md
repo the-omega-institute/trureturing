@@ -110,3 +110,4 @@ These are finite chart identities for the actual numerator. sameNumeratorCollisi
 - Truth anchor: `D5/S3/VertexAlgebra/LatticeHalfFockNestedQReadout.actual_supported_nested_extraction`
 - Truth anchor: `D5/S3/VertexAlgebra/LatticeHalfFockNestedQReadout.associatedTaylor_cocycle`
 - Dependency: [D5/S3/VertexAlgebra/LatticeHalfFockClearedTaylorReadout](LatticeHalfFockClearedTaylorReadout.md)
+- Dependency: [D5/S3/VertexAlgebra/NestedResidues/ContextualKernelExtraction](NestedResidues/ContextualKernelExtraction.md)

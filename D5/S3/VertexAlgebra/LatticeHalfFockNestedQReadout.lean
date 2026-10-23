@@ -177,7 +177,7 @@ private theorem completeOuterQReadout_of_support (s r n : ℤ) (H : ℕ)
     omega)]
   rfl
 
-private theorem completeOuterQReadout_of_locality (s r n : ℤ) (H : ℕ)
+theorem completeOuterQReadout_of_locality (s r n : ℤ) (H : ℕ)
     (A B : VertexOperator ℂ V) (x : V) (phi : V →ₗ[ℂ] ℂ)
     (f g : ℤ → ℤ → ℂ)
     (locality : (FieldNormalProductLocality.deltaEnd ^ H)
