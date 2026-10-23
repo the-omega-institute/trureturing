@@ -55,9 +55,9 @@ internal sealed class GranvikRedhefferSupportDocument : IScribeDocumentDefinitio
     {
         int[] values = [11, 23, 13, 18, 19, 25, 17, 29, 19, 30,
             26, 26, 23, 45, 27, 30, 32, 39, 29, 48];
-        Formula body = Eqn(Call("a", D(30)), D(values[19]));
+        Formula body = Eqn(Call("a", Num(30)), Num(values[19]));
         for (int k = 18; k >= 0; --k)
-            body = new Formula.Logic(Eqn(Call("a", D(k + 11)), D(values[k])),
+            body = new Formula.Logic(Eqn(Call("a", Num(k + 11)), Num(values[k])),
                 FormulaLogicOperator.And, body);
         return Disp(Eqn(V("claim"), body));
     }
