@@ -2,6 +2,8 @@ fingerprints:
   raw_sha256: sha256:cc5ee8565ef26de7848fdfcf5a8d8d8be10b41bd539bfcebca90b09c80172518
   normalized_sha256: sha256:cc5ee8565ef26de7848fdfcf5a8d8d8be10b41bd539bfcebca90b09c80172518
 cas_ref: sha256:cc5ee8565ef26de7848fdfcf5a8d8d8be10b41bd539bfcebca90b09c80172518
-coverage_gids: []
+coverage_gids:
+  - gid: D5/S3/Analytic/Probability/NativeCommandLifetime.actual_lifetime_estimates
+    target_statement_id: sha256:0ab2d6b02e5fe9f15fc853ed4535bd33bc783035a7cad030a9b42578bd215805
 receipts:
   unresolved_subitems: []
