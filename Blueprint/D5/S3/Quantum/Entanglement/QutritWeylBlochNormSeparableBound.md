@@ -80,5 +80,6 @@ The vector (0,1,-1)/sqrt(2) gives a qutrit density matrix with local one-norm fi
 - Truth anchor: `D5/S3/Quantum/Entanglement/QutritWeylBlochNormSeparableBound.l1`
 - Truth anchor: `D5/S3/Quantum/Entanglement/QutritWeylBlochNormSeparableBound.result`
 - Dependency: [D5/S3/Quantum/Entanglement/GHZMeasureBiseparableBound](GHZMeasureBiseparableBound.md)
+- Dependency: [D5/S3/Quantum/Information/SLDSpectralEnergy](../Information/SLDSpectralEnergy.md)
 - Dependency: [D5/S3/Quantum/QuantumChannels/IptPptSquaredEquivalence](../QuantumChannels/IptPptSquaredEquivalence.md)
 - Dependency: [D5/S3/QuantumContext/HesseSicCertificate](../../QuantumContext/HesseSicCertificate.md)
