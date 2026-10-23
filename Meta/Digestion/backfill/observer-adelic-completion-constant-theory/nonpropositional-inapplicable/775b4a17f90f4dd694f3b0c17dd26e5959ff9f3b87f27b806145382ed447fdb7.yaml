@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:775b4a17f90f4dd694f3b0c17dd26e5959ff9f3b87f27b806145382ed447fdb7
+  normalized_sha256: sha256:775b4a17f90f4dd694f3b0c17dd26e5959ff9f3b87f27b806145382ed447fdb7
+cas_ref: sha256:775b4a17f90f4dd694f3b0c17dd26e5959ff9f3b87f27b806145382ed447fdb7
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 'Nonpropositional: “不是局部负证书的本体原因”是本体解释句，没有新增数学断言；邻项的不变性另行处理。'
+    previous_atom_id: 61596e7a5808f666fdd640502193bee8ba4911d7cae82fd210c9001cdfde9b24
+    next_atom_id: 5403a0eec4cb327a6cd1e2c66421b7a7bf83a70a8e3bafa862797fdabd9bdb87

@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:195b92956dc7a782d818e7fb343576f69248ed1faee6fc5b184888c8f9cfc65a
+  normalized_sha256: sha256:195b92956dc7a782d818e7fb343576f69248ed1faee6fc5b184888c8f9cfc65a
+cas_ref: sha256:195b92956dc7a782d818e7fb343576f69248ed1faee6fc5b184888c8f9cfc65a
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 'Nonpropositional: 仅含理论深度审计标题、表头和分隔行，不含结果行。'
+    previous_atom_id: fcd89c295d7470e0dd1caee049e36c91fe5f7e6f83a3c6f260cfc22a77e6dd5f
+    next_atom_id: f64f0f27b848ddb526064e3429ac9b5f111e3987e21f77b6a992886972903b41

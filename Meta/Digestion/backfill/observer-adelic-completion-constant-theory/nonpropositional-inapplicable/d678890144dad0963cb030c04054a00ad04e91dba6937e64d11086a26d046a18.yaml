@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:d678890144dad0963cb030c04054a00ad04e91dba6937e64d11086a26d046a18
+  normalized_sha256: sha256:d678890144dad0963cb030c04054a00ad04e91dba6937e64d11086a26d046a18
+cas_ref: sha256:d678890144dad0963cb030c04054a00ad04e91dba6937e64d11086a26d046a18
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 'Nonpropositional: 把 Lyapunov 指数解释为可见增长率的语义标签，没有指定新数值、估计或定理。'
+    previous_atom_id: ea92229aff22e66482ce524531df114ae6b006d5bd74b04a2b627e1dfbf4ec73
+    next_atom_id: 98ae192dd9a0a78e4f13395b7cd7281ab122fb07d6f652bedce899ed07b81dbb

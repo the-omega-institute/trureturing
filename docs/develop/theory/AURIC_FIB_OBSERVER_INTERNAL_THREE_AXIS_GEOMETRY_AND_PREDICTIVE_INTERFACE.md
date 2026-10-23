@@ -696,3 +696,392 @@ $$
 [VP]: ../../../Library/Geometry/darpo2009vectorproduct.md
 
 ## 追加锚（本行以下为增补区）
+
+## 11. 全域鲁棒面积—Jacobi 合同
+
+**定义 11.1（固定尺度的全域缺陷）。** 令 $K$ 是有限维实正定内积空间，$d=\dim K\ge2$，并令 $B:K\times K\to K$ 是全域双线性映射。置
+
+$$
+T(u,v,w)=\langle B(u,v),w\rangle_K,
+\qquad
+\mathcal J_B(u,v,w)=B(u,B(v,w))+B(v,B(w,u))+B(w,B(u,v)).
+$$
+
+本节的结构假设是 $T$ 对三个变量完全交错；因此它是精确的反对称性假设，而不是有误差的反交错测量。固定一个已校准的归一化尺度，并取 $\alpha,\beta\ge0$。全域面积预算和全域 Jacobi 预算分别是
+
+$$
+\left|\|B(u,v)\|_K^2-\bigl(\|u\|_K^2\|v\|_K^2-\langle u,v\rangle_K^2\bigr)\right|
+\le \alpha\|u\|_K^2\|v\|_K^2, \tag{11.1}
+$$
+
+$$
+\|\mathcal J_B(u,v,w)\|_K
+\le \beta\|u\|_K\|v\|_K\|w\|_K. \tag{11.2}
+$$
+
+这两个量词都遍历全部 $u,v,w\in K$，包括零向量；预算是相对于同一个尺度的无量纲数。若 $B$ 被乘以 $\kappa$，面积缺陷的目标系数变为 $\kappa^2$，所以不能在未校准增益时把一个任意比例的积称为满足 (11.1)。
+
+**定理 11.2（严格鲁棒阈值）。** 在定义 11.1 的条件下，若
+
+$$
+5\alpha+\beta<1, \tag{11.3}
+$$
+
+则 $d=3$。更具体地，若 $d\ge4$ 且 $0\le\alpha<1$，则存在正交单位向量 $u,v,z$ 使得
+
+$$
+\|\mathcal J_B(u,v,z)\|_K\ge 1-5\alpha. \tag{11.4}
+$$
+
+所以任何满足 (11.1) 的 $d\ge4$ 载体都必须有
+
+$$
+\beta\ge 1-5\alpha. \tag{11.5}
+$$
+
+当 $\alpha<1/5$ 时，右端是明确的正缺陷下界。阈值外不作三维结论：若 $\alpha<1$，这些假设仍只无条件给出 $d\ge3$；若 $\alpha\ge1$，由这些预算本身不能排除 $d=2$。
+
+**证明。** 记 $L_x y=B(x,y)$，并记面积残差为
+
+$$
+D(x,y)=\|B(x,y)\|_K^2-\bigl(\|x\|_K^2\|y\|_K^2-\langle x,y\rangle_K^2\bigr).
+$$
+
+完全交错性给 $L_x^*=-L_x$，并给 $B(x,y)\perp x,y$。取正交单位 $u,v$，置 $c=B(u,v)$。由 (11.1)，
+
+$$
+1-\alpha\le\|c\|_K^2\le1+\alpha. \tag{11.6}
+$$
+
+当 $\alpha<1$ 时 $c\ne0$；若 $d\ge4$，可取正交单位 $z$ 垂直于 $u,v,c$。
+
+先估计反对易项。对单位向量 $w$，四次有限差分的双线性展开给出
+
+$$
+\begin{aligned}
+&Q(u+v,z+w)-Q(u+v,z-w)\\
+&\quad-Q(u-v,z+w)+Q(u-v,z-w)\\
+&=8\bigl(\langle B(u,z),B(v,w)\rangle_K
+       +\langle B(u,w),B(v,z)\rangle_K\bigr),
+\end{aligned} \tag{11.7}
+$$
+
+其中 $Q(x,y)=\|B(x,y)\|_K^2$。把 $Q$ 换成面积式
+$A(x,y)=\|x\|^2\|y\|^2-\langle x,y\rangle^2$，同一差分为零：这是直接展开，使用 $u,v,z$ 两两正交；$w$ 不需要再与它们正交。因此 (11.7)、(11.1) 以及
+$\|u+v\|^2=\|u-v\|^2=2$ 给出
+
+$$
+\left|\langle B(u,z),B(v,w)\rangle_K
++\langle B(u,w),B(v,z)\rangle_K\right|
+\le\frac{\alpha}{8}
+\bigl(\|u+v\|^2+\|u-v\|^2\bigr)\cdot
+\bigl(\|z+w\|^2+\|z-w\|^2\bigr)
+=2\alpha. \tag{11.8}
+$$
+
+而
+
+$$
+R=(L_uL_v+L_vL_u)z
+$$
+
+满足
+
+$$
+\langle R,w\rangle_K
+=-\langle B(v,z),B(u,w)\rangle_K
+ -\langle B(u,z),B(v,w)\rangle_K.
+$$
+
+对所有单位 $w$ 使用 (11.8)，得到
+
+$$
+\|R\|_K\le2\alpha. \tag{11.9}
+$$
+
+令 $x=L_vz$. 交错性和 $z\perp c$ 给
+
+$$
+\langle x,v\rangle=\langle x,z\rangle=0,\qquad
+\langle x,u\rangle=T(v,z,u)=T(u,v,z)=\langle c,z\rangle=0. \tag{11.10}
+$$
+
+两次使用 (11.1)，并注意 $\alpha<1$，便有
+
+$$
+\|x\|^2\ge1-\alpha,\qquad
+\|L_ux\|^2\ge(1-\alpha)\|x\|^2\ge(1-\alpha)^2,
+$$
+
+从而
+
+$$
+\|L_uL_vz\|\ge1-\alpha. \tag{11.11}
+$$
+
+同理，$c\perp z$，故由 (11.6) 和 (11.1)
+
+$$
+\|L_cz\|^2\le(1+\alpha)\|c\|^2\le(1+\alpha)^2,\qquad
+\|L_cz\|\le1+\alpha. \tag{11.12}
+$$
+
+最后，交错性把 Jacobi 和写成
+
+$$
+\mathcal J_B(u,v,z)=L_uL_vz-L_vL_uz-L_cz
+=2L_uL_vz-L_cz-R. \tag{11.13}
+$$
+
+反三角不等式、(11.9)、(11.11)、(11.12) 给出 (11.4)。若 (11.2) 成立，单位三元组又给
+$\beta\ge\|\mathcal J_B(u,v,z)\|\ge1-5\alpha$，即 (11.5)。在 (11.3) 下 $\alpha<1/5<1$，故 $d\ge4$ 不可能。另一方面，(11.6) 在 $\alpha<1$ 时排除 $d=2$：非零的 $c$ 同时垂直于两个正交单位向量，必须提供第三方向。因此 $d=3$。证毕。
+
+**推论 11.3（低维、缩放与阈值外边界）。** 在维数二，完全交错性使 $B(u,v)$ 同时垂直于 $K$ 的两个独立方向，所以 $B=0$；它的最小面积预算是 $\alpha=1$，而 Jacobi 预算为 $\beta=0$。在维数三，取任意定向正交叉积 $\times$ 和 $B_\kappa=\kappa\times$，则
+
+$$
+|D_\kappa(u,v)|=|\kappa^2-1|
+ (\|u\|^2\|v\|^2-\langle u,v\rangle^2),\qquad
+\mathcal J_{B_\kappa}=0. \tag{11.14}
+$$
+
+**证明。** 二维时三线性完全交错形式为零，内积非退化故 $B=0$；取正交单位对使面积项为一，得到最小 $\alpha=1$。三维标准叉积的范数恒等式和 Jacobi 恒等式分别把两项缩放为 $\kappa^2$ 倍和零，故 (11.14) 成立；正交单位对达到面积比的上确界，因而预算是最小的。$\kappa=\pm1$ 保留零面积缺陷下的两种手性。对 $\alpha<1$，定理 11.2 的无条件结论确实是至少三维；超过严格阈值时不能把三维结论冒称为已证。
+
+**命题 11.4（七维精确供应者的分析边界）。** 令 $K=\operatorname{Im}\mathbb O$ 为正定实八元数的虚部，取
+$B(u,v)=(uv-vu)/2$。为固定乘法和符号，取 $\mathbb O=\mathbb H\oplus\mathbb H$，约定
+
+$$
+(a,b)(c,d)=(ac-\bar d b,\;da+b\bar c),\qquad
+\overline{(a,b)}=(\bar a,-b),\qquad
+N(a,b)=|a|^2+|b|^2.
+$$
+
+四元数基满足 $ij=k$、$jk=i$、$ki=j$，反序变号，且 $i^2=j^2=k^2=-1$。取正交单位基
+
+$$
+e_1=(i,0),\ e_2=(j,0),\ e_3=(k,0),\ e_4=(0,1),
+e_5=(0,i),\ e_6=(0,j),\ e_7=(0,k).
+$$
+
+由此乘法得到的有向三元组是
+
+$$
+(1,2,3),(1,4,5),(1,7,6),(2,4,6),
+(2,5,7),(3,4,7),(3,6,5),
+$$
+
+使 $e_i\times e_j=e_k$ 沿有向三元组循环、反序变号，并令 $e_i\times e_i=0$；这里 $\times=B$。Darpö 的 Theorem 1 与 Baez 的 §4.1 在此只供应经典精确七维向量积的背景；本条用上述明确约定核对范数律和所需边界。在此同一正交标架中，面积预算为零，最小全域 Jacobi 预算为 $3$；对任意实数 $\kappa$，$\kappa B$ 的最小预算是 $(|\kappa^2-1|,3\kappa^2)$。直接取
+$u=e_3,v=e_5,w=e_7$ 得
+
+$$
+\begin{aligned}
+ e_3\times(e_5\times e_7)&=-e_1,\\
+ e_5\times(e_7\times e_3)&=-e_1,\\
+ e_7\times(e_3\times e_5)&=-e_1,
+\end{aligned}
+\qquad
+\mathcal J_B(e_3,e_5,e_7)=-3e_1. \tag{11.15}
+$$
+
+**证明。** 把上述七个基代入二元组乘法，得到所列有向表；每个无序异基对恰在一个三元组中，故该表确定同一个 $B$ 的全部系数。$\langle B(e_i,e_j),e_k\rangle$ 在每个有向三元组的偶置换上为 $1$、奇置换上为 $-1$，其余为零，三线性展开给完全交错性。
+
+范数律须对全部输入核对。四元数范数的乘法性和实部的循环不变性给
+
+$$
+\begin{aligned}
+N((a,b)(c,d))
+&=|ac-\bar d b|^2+|da+b\bar c|^2\\
+&=|a|^2|c|^2+|d|^2|b|^2+|d|^2|a|^2+|b|^2|c|^2\\
+&\quad-2\operatorname{Re}(ac\bar b d)+2\operatorname{Re}(dac\bar b)\\
+&=(|a|^2+|b|^2)(|c|^2+|d|^2).
+\end{aligned}
+$$
+
+最后的交叉项相消只用结合的四元数乘法与 $\operatorname{Re}(rs)=\operatorname{Re}(sr)$，未把八元数乘法当作结合。对虚八元数 $u=(a,b)$，$\bar a=-a$，同一乘法给 $u^2=-N(u)1$。极化得
+$uv+vu=-2\langle u,v\rangle1$；共轭公式又给 $\overline{uv}=\bar v\bar u=vu$，故 $B(u,v)$ 为虚部，且
+
+$$
+uv=-\langle u,v\rangle1+B(u,v),\qquad
+\|u\|^2\|v\|^2=N(uv)=\langle u,v\rangle^2+\|B(u,v)\|^2.
+$$
+
+这证明所列同一个积的全输入面积律，包括零输入和平行输入。作为同一符号约定的具体核对，
+$B(e_1+e_2,e_4+e_7)=e_5+e_6+e_6-e_5=2e_6$，平方范数与面积平方都为 $4$。
+
+表中 $e_5\times e_7=e_2$、$e_7\times e_3=e_4$、$e_3\times e_5=-e_6$，而
+$e_3\times e_2=e_5\times e_4=-e_1$、$e_7\times e_6=e_1$，逐项给出 (11.15)。面积律使每个嵌套项的范数至多为 $\|u\|\|v\|\|w\|$，三角不等式给全域上界 $3$；(11.15) 在单位三元组上达到 $3$，所以最小全域 Jacobi 预算正是 $3$。缩放后的面积残差为
+$(\kappa^2-1)(\|u\|^2\|v\|^2-\langle u,v\rangle^2)$，Jacobi 为 $\kappa^2\mathcal J_B$，得到所列最小预算；面积预算由正交单位对达到。该七维计算不把 $\Lambda^2K\to K$ 要求为同构，也不加入比向量积范数恒等式更强的 Gram 恒等式。
+
+## 12. 完整已知标架上的有限系数误差证书
+
+**定义 12.1（完整标架和取得条件）。** 另行供应一个已知维数 $d$ 以及完整正交单位标架
+$e_1,\ldots,e_d$，即 $K=\operatorname{span}\{e_i\}$ 且
+$\langle e_i,e_j\rangle=\delta_{ij}$ 是独立校准的精确事实。这里“完整”是来源合同中的已知覆盖，不是从有限样本发现未知环境维数。对每个有序 $(i,j)$，在同一来源版本、同一尺度和同一控制条件下准备 $(e_i,e_j)$，执行有序二元操作，并用第 $k$ 个标架探针取得
+
+$$
+ b_{kij}=\langle B(e_i,e_j),e_k\rangle.
+$$
+
+若一次操作会破坏来源，必须由同一来源身份的重复准备和控制完成全部 $d^3$ 个三标量；若操作可逆，则重复控制仍须证明标定没有漂移。重复准备、复位、共同初态、探针归属、动作次序和读出宽度都是实际额外假设；原生菜单没有它们时，本证书不替代这些权限。
+
+设标量取得给出已认证的确定性区间
+
+$$
+|\widehat b_{kij}-b_{kij}|\le\epsilon_{kij},\qquad
+E=\left(\sum_{k,i,j=1}^d\epsilon_{kij}^2\right)^{1/2}. \tag{12.1}
+$$
+
+若所有标量误差都由一个上界 $\epsilon$ 控制，则可直接取 $E\le d^{3/2}\epsilon$。区间须包含制备、控制、标量读数和共同校准的全部确定性误差；统计置信度若要使用，必须另给其抽样与失败合同，不能把概率保证写成 (12.1)。
+
+由测得系数定义双线性张量
+
+$$
+\widehat B(x,y)=\sum_{k,i,j}\widehat b_{kij}x_i y_j e_k,
+\qquad
+M=\left(\sum_{k,i,j}\widehat b_{kij}^{\,2}\right)^{1/2}.
+$$
+
+测得的 $\widehat b_{kij}$ 不要求任何交错关系，$\widehat B$ 可不反对称；真实 $T$ 的精确完全交错性是维数选择所需的独立结构前提，不能从它推断测量噪声也交错。
+
+把有限多项式
+
+$$
+P_A(x,y)=\|\widehat B(x,y)\|^2-
+(\|x\|^2\|y\|^2-\langle x,y\rangle^2)
+$$
+
+唯一收集成
+$P_A(x,y)=\sum_{|\mu|=|\nu|=2}a_{\mu\nu}x^\mu y^\nu$，并置
+$R_A=\sum_{\mu,\nu}|a_{\mu\nu}|$。同样，把
+
+$$
+P_J(x,y,z)=\widehat B(x,\widehat B(y,z))
++\widehat B(y,\widehat B(z,x))
++\widehat B(z,\widehat B(x,y))
+$$
+
+的每个坐标唯一收集成
+$P_{J,k}(x,y,z)=\sum_{i,j,l}q_{kijl}x_i y_j z_l$，置
+$R_J=\sum_{k,i,j,l}|q_{kijl}|$。直接按上式的参数次序展开，系数为
+
+$$
+q_{kijl}=\sum_{m=1}^d\left(
+\widehat b_{kim}\widehat b_{mjl}
++\widehat b_{kjm}\widehat b_{mli}
++\widehat b_{klm}\widehat b_{mij}\right).
+$$
+
+这些是分别只有
+$\binom{d+1}{2}^2$ 和 $d^4$ 个有限系数的确定性和，不是紧致性给出的未知常数。
+
+若实际算术程序输出 $M_0,R_{A,0},R_{J,0}$ 以及已认证的绝对上误差
+$\eta_M,\eta_A,\eta_J$，使用
+
+$$
+\overline M=M_0+\eta_M\ge M,\qquad
+\overline R_A=R_{A,0}+\eta_A\ge R_A,\qquad
+\overline R_J=R_{J,0}+\eta_J\ge R_J. \tag{12.2}
+$$
+
+区间向上舍入直接给出同样的三个上界；精确有理或代数算术时相应 $\eta$ 可以为零。定义可直接验算的预算
+
+$$
+\alpha_{\rm cert}=\overline R_A+(2\overline M+E)E, \tag{12.3}
+$$
+
+$$
+\beta_{\rm cert}=\overline R_J+3(2\overline M+E)E. \tag{12.4}
+$$
+
+若该有限算术结果满足 $5\alpha_{\rm cert}+\beta_{\rm cert}<1$，且完全交错性是独立的精确结构假设，则定理 11.2 认证 $\dim K=3$。
+
+**定理 12.2（证书的正确性）。** 在定义 12.1 的完整标架和 (12.1)–(12.2) 下，真实 $B$ 满足 (11.1)–(11.2)，其中可以取
+$\alpha=\alpha_{\rm cert}$、$\beta=\beta_{\rm cert}$。
+
+**证明。** 对任意 $x,y$，Cauchy–Schwarz 直接给
+
+$$
+\|(B-\widehat B)(x,y)\|
+\le E\|x\|\|y\|. \tag{12.5}
+$$
+
+故 $\|\widehat B(x,y)\|\le M\|x\|\|y\|$，而
+$\|B(x,y)\|\le(M+E)\|x\|\|y\|$。对单位 $x,y$，平方范数的差满足
+
+$$
+\bigl|\|B(x,y)\|^2-\|\widehat B(x,y)\|^2\bigr|
+\le(2M+E)E. \tag{12.6}
+$$
+
+每个 $P_A$ 单项在单位球上的绝对值不超过一，所以
+$|P_A(x,y)|\le R_A\le\overline R_A$；(12.6) 给出 (11.1) 和 (12.3)，再按齐次性推广到任意 $x,y$。
+
+令 $\Delta=B-\widehat B$。对 $P_J$ 定义中相同参数次序的一项，双线性给出精确分解
+
+$$
+B(x,B(y,z))-\widehat B(x,\widehat B(y,z))
+=\Delta(x,B(y,z))+\widehat B(x,\Delta(y,z)).
+$$
+
+因此，不论 $\widehat B$ 是否交错，均有
+
+$$
+\begin{aligned}
+&\|B(x,B(y,z))-\widehat B(x,\widehat B(y,z))\|\\
+&\quad\le E\|x\|\|B(y,z)\|
+ +M\|x\|\|B(y,z)-\widehat B(y,z)\|\\
+&\quad\le(2M+E)E\|x\|\|y\|\|z\|.
+\end{aligned} \tag{12.7}
+$$
+
+对另两项循环置换 $x,y,z$ 后相加，得到
+$\|\mathcal J_B(x,y,z)-P_J(x,y,z)\|\le3(2M+E)E\|x\|\|y\|\|z\|$。
+对单位 $x,y,z$，每个坐标单项的绝对值不超过一，故
+
+$$
+\|P_J(x,y,z)\|_2
+\le\sum_k|P_{J,k}(x,y,z)|
+\le\sum_{k,i,j,l}|q_{kijl}|=R_J\le\overline R_J.
+$$
+
+三角不等式及 $M\le\overline M$ 给 (12.4) 的预算；按三线性齐次性推广到任意输入，任一输入为零时两边均为零，得到 (11.2)。这一证明从未交换 $\widehat B$ 的两个参数，也未从真实 $T$ 的完全交错性给它增加结构先验。证毕。
+
+**说明 12.3（零误差和七维检查）。** 对精确三维标准叉积系数，$E=\eta_M=\eta_A=\eta_J=0$，有 $R_A=R_J=0$，所以证书给出 $(\alpha_{\rm cert},\beta_{\rm cert})=(0,0)$。对命题 11.4 的明确乘法和正交标架，取精确七维系数及零算术误差，则该命题的全输入面积律使 $P_A$ 为零多项式，故唯一收集后的全部 $a_{\mu\nu}=0$，$R_A=0$。同一张量的 Jacobi 系数有 $168$ 个非零项，每项绝对值为 $3$：有序互异三元组共 $7\cdot6\cdot5=210$ 个，其中七条 Fano 线上的 $7\cdot6=42$ 个为零，其余 $168$ 个各只输出一个带符号的 $3e_k$。因此 $R_J=504$，本系数绝对值和证书给 $\beta_{\rm cert}=504$，而 (11.15) 和全域上界给出的真实最小预算是 $3$。这一有限证书允许保守上界，不把 $R_J$ 冒称为最小常数；两种预算均不通过严格三维阈值。因此本证书检验的是平方面积残差，而不是强加一个七维不成立的全 Gram 或楔平方同型条件。
+
+## 13. 只替换代数供应者时的 §10 同源消费者
+
+**假设 13.1（精确桥的保留面）。** 只把 §10 中“精确面积—Jacobi 代数供应者”替换为定理 11.2、12.2 的供应者，仍保留以下精确条件：共同来源和共同零参照 $O$；态域 $J$ 的有限维全向量模型；$h_1,\ldots,h_N$ 张成 $J$；同一来源上的全域二次距离律 $d_D(x,y)^2=g_D(x-y,x-y)$；$G\succeq0$ 的锚定距离数据；正交单位实际探针 $p_1,p_2,p_3$；全部 (10.1) 的有限距离—读出校准；允许二元操作的全部 (10.2) 双线性读出校准；以及每个实际线性生成元的
+$U_a^*E_0\subseteq E_0$、完整菜单和同源执行条件。若要消费二元响应，$D$ 的三个方向读出仍须对同一来源双线性；计数、守卫、失败和历史槽仍按原 §10 单独保留。
+
+在载体 $K$ 中选正交单位 $a,b$，并用有符号次序定义
+
+$$
+c=B(b,a),\qquad s=\|c\|,\qquad e_3=c/s. \tag{13.1}
+$$
+
+在 $5\alpha+\beta<1$ 下，定理 11.2 给 $\dim K=3$，而 (11.1) 给
+$s^2\in[1-\alpha,1+\alpha]$，故 $s>0$，$(a,b,e_3)$ 是完整正交单位标架。这里的 $e_3$ 保留 $c$ 的实际符号和手性；不能以 $|c|$ 或未经说明的反向向量替换它。
+
+若原标定是对 $c$ 通道的标量，替换后的精确校准式必须明确写为
+
+$$
+C_3(h_j)=\langle e_3,v_j\rangle_K
+=s^{-1}\langle c,v_j\rangle_K,\qquad
+\beta_3(h_j,h_k)=\langle e_3,B(v_j,v_k)\rangle_K
+=s^{-1}\langle c,B(v_j,v_k)\rangle_K. \tag{13.2}
+$$
+
+也可以直接把 $e_3$ 作为独立正交探针校准；两者都要求实际的尺度 $s$ 和符号归属已经由同源合同供应。代数式 $c=B(b,a)$ 本身不授权制备端点 $c$，因此本消费者不假定能够准备归一化端点；它只要求一个实际的第三探针或一组共同距离/读出校准来承载 (13.2)。
+
+**定理 13.2（条件消费者）。** 假设 13.1、定理 11.2 的严格阈值以及 (13.2) 的精确归一化校准成立，则 §10 的定理 10.2、其映射 $\Pi$、核等式、距离等距性、二元读出因子化和生成元预测闭合均按原证明成立，只需把原来的第三基向量替换为 (13.1) 的 $e_3$。有限系数的噪声只认证 $\alpha_{\rm cert},\beta_{\rm cert}$ 和维数选择；它不把近似系数自动提升为 (10.1)、(10.2) 的精确共同来源等式。
+
+**证明。** 定理 11.2 供应三维性，(13.1) 供应带符号的正交单位第三方向，(13.2) 正是 (10.1)、(10.2) 的第三坐标版本。其余两坐标和所有距离、张成、探针、生成元不变及菜单条件没有改变。因此 §10 证明中的矩阵 $S$、$G=S^{\mathsf T}S$、商映射 $\Pi$、二元双线性展开和词长归纳逐字适用；唯一改变是第三行使用 $e_3$，并在原始 $c$ 读数时显式除以 $s$。证毕。
+
+**边界 13.3（本单元未解决的取得问题）。** 近似交错、近似内积、未知或不完整方向、全套带噪的 (10.1)/(10.2) 校准、把有限标定外推到未知方向，以及无限时间的近似预测都不由定理 12.2 或定理 13.2 解决。若标架不是完整的，证书只作用于其张成子空间；若共同来源、复位／重复准备或实际第三探针不具备，相关式只能标为附加假设。已知完整标架的有限证书是模型一致性检查，不是发现未知环境维数。
+
+## 14. 来源范围、复用和适用边界
+
+本批的仓内推导是定理 11.2 的鲁棒反对易估计、定理 12.2 的有限系数误差传播和定理 13.2 的条件消费者。命题 11.4 复用经典七维八元数积，并在明确的乘法和正交标架中核对全输入面积律、Jacobi 缺陷及缩放边界；它不把经典向量积另算为新发现。已有卷 [STABLE] §8.2 的完整有限群 Hilbert–Schmidt 标准、[FIB] §§7–8 的原生切面与外部方向障碍、[量子测量相对边界](RECURSIVE_RELATIONAL_OBSERVATION_MEASUREMENT_RELATIVE_QUANTUM_BOUNDARY.md) §§13–14 的固定五模逆／样本预算只作为供应者复用，不在此重写，也不把它们的有限样本升级为全域近似选择。
+
+Darpö, *Vector product algebras*, arXiv:0810.5464v1, Theorem 1 是带相容形式的精确向量积分类；Baez, *The Octonions*, §4.1 是精确的八元数与 $G_2$ 背景。钉版 mathlib Mathlib/LinearAlgebra/CrossProduct.lean 的 cross_dot_cross 与 jacobi_cross 只供应固定 Fin 3 的精确恒等式，不能替代未知维数的全域近似选择。本地 mathlib 不作为本批前提，公开生态检索也未覆盖全部近似向量积、稳健秩识别或有限关系检验文献；这里不作全局原创性或穷尽检索声明。所有实际物理端点、重复准备、控制复位、标量精度和来源身份仍须由相应合同另行供应。
+
+## 追加锚（本行以下为增补区）
