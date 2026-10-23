@@ -6,6 +6,7 @@
    utility: none
    digest: The sharp worst-case fidelity of the product of process-matrix marginals. -/
 
+import D5.S3.Quantum.Codes.StabilizerGenuineEntanglementCommutationRank
 import D5.S3.Quantum.Entanglement.AbsoluteSeparability.GurvitsBarnumBall
 import D5.S3.Quantum.Recovery.PurifiedLocalPath
 import D5.S3.Quantum.Information.LiTheilHarrowChuangPurifyCloneRefutation
@@ -17,6 +18,8 @@ import D5.S3.Quantum.Dynamics.KickedIsingNegativityRefutation
 
 open scoped BigOperators ComplexOrder MatrixOrder
 open Matrix
+open D5.S3.Quantum.Codes.StabilizerGenuineEntanglementCommutationRank
+  (coordinate_product_mul coordinate_product_one)
 open D5.S3.Quantum.Recovery.ProductPrefixRigidity (productMap)
 open D5.S3.Quantum.Information.StabilizerPairLocalUnitaryInequivalence
   (Pauli pauliMatrix wordOp tensorOp qubitPermutation)
@@ -227,16 +230,6 @@ private lemma marginalApprox_psd {N : ℕ}
       exact ((marginal_psd χ hχ k).submatrix (fun a : Fin N → Fin 4 => a k)).hadamard ih
   exact hprod Finset.univ
 
-private lemma productMatrix_mul {ι : Type*} [Fintype ι] [DecidableEq ι]
-    (M L : ι → Matrix (Fin 4) (Fin 4) ℂ) :
-    productMap (fun _ => Fin 4) M * productMap (fun _ => Fin 4) L =
-      productMap (fun _ => Fin 4) (fun k => M k * L k) := by
-  classical
-  ext a b
-  simp only [productMap, Matrix.mul_apply]
-  simp_rw [← Finset.prod_mul_distrib]
-  rw [Finset.prod_univ_sum, Fintype.piFinset_univ]
-
 private lemma productMatrix_star {ι : Type*} [Fintype ι] [DecidableEq ι]
     (M : ι → Matrix (Fin 4) (Fin 4) ℂ) :
     (productMap (fun _ => Fin 4) M)ᴴ = productMap (fun _ => Fin 4) (fun k => (M k)ᴴ) := by
@@ -252,20 +245,21 @@ private lemma productMatrix_diagonal {ι : Type*} [Fintype ι] [DecidableEq ι] 
   rw [Fintype.prod_ite_zero]
   simp only [← funext_iff]
 
-private lemma productMatrix_one (ι : Type*) [Fintype ι] [DecidableEq ι] :
-    productMap (fun _ => Fin 4) (fun _ : ι => (1 : Matrix (Fin 4) (Fin 4) ℂ)) = 1 := by
-  simpa only [Matrix.diagonal_one, Finset.prod_const_one] using
-    productMatrix_diagonal (fun _ : ι => fun _ : Fin 4 => (1 : ℂ))
-
 private lemma productMatrix_unitary {ι : Type*} [Fintype ι] [DecidableEq ι]
     (U : ι → Matrix.unitaryGroup (Fin 4) ℂ) :
     (productMap (fun _ => Fin 4) (fun k => (U k : Matrix (Fin 4) (Fin 4) ℂ)))ᴴ *
       productMap (fun _ => Fin 4) (fun k => (U k : Matrix (Fin 4) (Fin 4) ℂ)) = 1 := by
-  rw [productMatrix_star, productMatrix_mul]
+  rw [productMatrix_star]
   have he (k : ι) : (U k : Matrix (Fin 4) (Fin 4) ℂ)ᴴ * U k = 1 :=
     Unitary.coe_star_mul_self (U k)
-  simp_rw [he]
-  exact productMatrix_one ι
+  calc
+    _ = productMap (fun _ => Fin 4)
+        (fun k => (U k : Matrix (Fin 4) (Fin 4) ℂ)ᴴ *
+          (U k : Matrix (Fin 4) (Fin 4) ℂ)) :=
+      coordinate_product_mul _ _
+    _ = 1 := by
+      simp_rw [he]
+      exact coordinate_product_one
 
 set_option maxHeartbeats 1000000 in
 -- Splitting a tensor coordinate elaborates dependent finite-product instances.
@@ -358,10 +352,21 @@ private lemma quantum_overlap {N : ℕ}
     change (productMap (fun _ => Fin 4) (fun k => (U k : Matrix (Fin 4) (Fin 4) ℂ)))ᴴ *
       productMap (fun _ => Fin 4) (fun k => marginal χ k) *
       productMap (fun _ => Fin 4) (fun k => U k) = _
-    rw [productMatrix_star, productMatrix_mul, productMatrix_mul]
-    simp_rw [hdiag]
-    rw [productMatrix_diagonal]
-    simp only [Complex.ofReal_prod]
+    rw [productMatrix_star]
+    calc
+      _ = productMap (fun _ => Fin 4)
+          (fun k => (U k : Matrix (Fin 4) (Fin 4) ℂ)ᴴ * marginal χ k) *
+          productMap (fun _ => Fin 4) (fun k => (U k : Matrix (Fin 4) (Fin 4) ℂ)) :=
+        congrArg (fun M => M * productMap (fun _ => Fin 4)
+          (fun k => (U k : Matrix (Fin 4) (Fin 4) ℂ))) (coordinate_product_mul _ _)
+      _ = productMap (fun _ => Fin 4)
+          (fun k => (U k : Matrix (Fin 4) (Fin 4) ℂ)ᴴ * marginal χ k *
+            (U k : Matrix (Fin 4) (Fin 4) ℂ)) :=
+        coordinate_product_mul _ _
+      _ = _ := by
+        simp_rw [hdiag]
+        rw [productMatrix_diagonal]
+        simp only [Complex.ofReal_prod]
   have htr : Matrix.trace (Ψ * (Vᴴ * (productMap (fun _ => Fin 4) (marginal χ)) * V)) =
       Matrix.trace (χ * (productMap (fun _ => Fin 4) (marginal χ))) := by
     have he : Ψ * (Vᴴ * productMap (fun _ => Fin 4) (marginal χ) * V) =

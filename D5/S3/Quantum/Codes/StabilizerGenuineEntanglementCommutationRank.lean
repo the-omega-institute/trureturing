@@ -56,7 +56,7 @@ private def wordMul {N p : ℕ} (a b : PauliWord N p) : PauliWord N p :=
 def commutationVector {N p : ℕ} (a b : PauliWord N p) : Fin N → ZMod p :=
   fun n => localSymplectic (a.x n) (a.z n) (b.x n) (b.z n)
 
-private theorem coordinate_product_mul {ι α : Type*} [Fintype ι] [DecidableEq ι] [Fintype α]
+theorem coordinate_product_mul {ι α : Type*} [Fintype ι] [DecidableEq ι] [Fintype α]
     (A B : ι → Matrix α α ℂ) :
     Matrix.of (fun u v : ι → α => ∏ n, A n (u n) (v n)) *
         Matrix.of (fun u v : ι → α => ∏ n, B n (u n) (v n)) =
@@ -77,7 +77,7 @@ private theorem phase_sum {ι : Type*} {p : ℕ} [NeZero p]
     map_prod (AddChar.zmodChar p (windowRoot_isPrimitiveRoot p).pow_eq_one).toMonoidHom
       (fun i => Multiplicative.ofAdd (f i)) s
 
-private theorem coordinate_product_one {ι α : Type*} [Fintype ι]
+theorem coordinate_product_one {ι α : Type*} [Fintype ι]
     [DecidableEq α] :
     Matrix.of (fun u v : ι → α => ∏ n, (1 : Matrix α α ℂ) (u n) (v n)) = 1 := by
   ext u v
