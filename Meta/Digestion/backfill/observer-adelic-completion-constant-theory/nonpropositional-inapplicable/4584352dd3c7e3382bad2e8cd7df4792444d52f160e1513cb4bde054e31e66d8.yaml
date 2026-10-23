@@ -5,3 +5,7 @@ cas_ref: sha256:4584352dd3c7e3382bad2e8cd7df4792444d52f160e1513cb4bde054e31e66d8
 coverage_gids: []
 receipts:
   unresolved_subitems: []
+  nonpropositional:
+    justification: Category heading and the object-name internal state; no existence, identity or property is asserted.
+    previous_atom_id: 06e870b49364698dfc1a9d1ba742e2514b3990da59fdc41c3380c07e88aafb5e
+    next_atom_id: 3e9f3d272b5aa9a0c9bf145c57595dfacc30e94aaf7ea698789f890766ac9b36

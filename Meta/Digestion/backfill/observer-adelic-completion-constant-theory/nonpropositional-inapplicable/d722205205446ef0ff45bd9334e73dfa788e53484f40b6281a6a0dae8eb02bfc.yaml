@@ -5,3 +5,7 @@ cas_ref: sha256:d722205205446ef0ff45bd9334e73dfa788e53484f40b6281a6a0dae8eb02bfc
 coverage_gids: []
 receipts:
   unresolved_subitems: []
+  nonpropositional:
+    justification: Introduces a two-step research goal; asks to construct a conservative realization without asserting one exists.
+    previous_atom_id: b6045bf116d5157d892cd26ceb5387285e47a66eec5398eb56eb653f49930910
+    next_atom_id: 75c28bec44f6d43adcdd7c8b48408bd9c5961df2884793aa0e125481c3a94bb2

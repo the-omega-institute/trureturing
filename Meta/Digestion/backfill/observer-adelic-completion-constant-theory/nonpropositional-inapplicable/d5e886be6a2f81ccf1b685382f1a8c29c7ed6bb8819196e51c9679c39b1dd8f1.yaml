@@ -5,3 +5,7 @@ cas_ref: sha256:d5e886be6a2f81ccf1b685382f1a8c29c7ed6bb8819196e51c9679c39b1dd8f1
 coverage_gids: []
 receipts:
   unresolved_subitems: []
+  nonpropositional:
+    justification: Terminology assigning pi to the Poisson/Fourier normalization convention; no identity or theorem.
+    previous_atom_id: 292f049be8aaab9c07c113bc8df37307c45f5ca70c406b76ec8081affac493c0
+    next_atom_id: b5c96561e47f56740f898600005c4567b85d12e20d8ed57d3735317082cedb43

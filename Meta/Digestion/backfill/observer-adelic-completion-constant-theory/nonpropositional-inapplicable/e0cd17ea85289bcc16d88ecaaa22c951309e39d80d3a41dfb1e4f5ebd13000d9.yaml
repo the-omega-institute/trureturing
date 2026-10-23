@@ -5,3 +5,7 @@ cas_ref: sha256:e0cd17ea85289bcc16d88ecaaa22c951309e39d80d3a41dfb1e4f5ebd13000d9
 coverage_gids: []
 receipts:
   unresolved_subitems: []
+  nonpropositional:
+    justification: Names the Fourier-Poisson transform as a proof ingredient, without a transform identity.
+    previous_atom_id: 2fc7fb7d61f108c8d4a0c5d3dfdfeec46d9b065d24ebed96204dcc78ce4942bf
+    next_atom_id: 124060bf6ce048f4c7f9f9ab2bf90f405208ff6c86fd83594ac0ca5518ece255

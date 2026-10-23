@@ -2,6 +2,8 @@ fingerprints:
   raw_sha256: sha256:968c7127334c33afcaeb42b9f7c8212680270a35814eb96a0a5376d8bad0dd97
   normalized_sha256: sha256:968c7127334c33afcaeb42b9f7c8212680270a35814eb96a0a5376d8bad0dd97
 cas_ref: sha256:968c7127334c33afcaeb42b9f7c8212680270a35814eb96a0a5376d8bad0dd97
-coverage_gids: []
+coverage_gids:
+  - gid: D5/S3/Analytic/ShiftedXiPoisson/ShiftedPoissonSemigroup.shiftedPhaseFourier_eq_Q_T
+    target_statement_id: sha256:e63f7f643124f4647099f192974df9c34c71a8db6b8dd165e444eb0fffb45d0e
 receipts:
   unresolved_subitems: []
