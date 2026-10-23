@@ -19,7 +19,7 @@ internal sealed class DefsDocument : IScribeDocumentDefinition
                 "For every dimension, finite group and unitary representation, and every pair of positive definite complex matrices of trace one, convergence at every parameter strictly between zero and one is asserted to imply differentiability throughout that interval. Finite groups carry the discrete compact topology, and their normalized Haar measure is uniform. A failure in this domain therefore also gives a failure for compact groups."))));
 
     private static DocumentBlock Entry(string declaration, string title, string text) =>
-        Describe.Lean(DescribeId.Create("group-invariant-psi-defs-" + declaration),
+        Describe.Lean(DescribeId.Create("group-invariant-psi-defs-" + declaration.Replace('_', '-').ToLowerInvariant()),
             DeclarationHandle.Create("D5/S3/Quantum/Information/GroupInvariantPsi/Defs." + declaration),
             H(title), StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
             Blocks(Paragraph(Text(text))), DescribeRole.Definition);

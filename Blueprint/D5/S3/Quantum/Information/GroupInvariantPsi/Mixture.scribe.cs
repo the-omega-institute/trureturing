@@ -19,7 +19,7 @@ internal sealed class MixtureDocument : IScribeDocumentDefinition
                 "The real part of the trace of the product of the CFC powers of two real diagonal matrices is the sum of the corresponding products of scalar real powers. The existing diagonal functional-calculus theorem supplies both powers."))));
 
     private static DocumentBlock Entry(string declaration, string title, DescribeRole role, string text) =>
-        Describe.Lean(DescribeId.Create("group-invariant-psi-mixture-" + declaration),
+        Describe.Lean(DescribeId.Create("group-invariant-psi-mixture-" + declaration.Replace('_', '-').ToLowerInvariant()),
             DeclarationHandle.Create("D5/S3/Quantum/Information/GroupInvariantPsi/Mixture." + declaration),
             H(title), StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
             Blocks(Paragraph(Text(text))), role);
