@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:ac16834cc6b59b832a87d0a03b7d62a32d0ddbfa1143811080adaa44627d6049
+  normalized_sha256: sha256:ac16834cc6b59b832a87d0a03b7d62a32d0ddbfa1143811080adaa44627d6049
+cas_ref: sha256:ac16834cc6b59b832a87d0a03b7d62a32d0ddbfa1143811080adaa44627d6049
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 在方法不可替代范围中列出另一容量机制的名称，不给出该机制的容量估计或证明。
+    previous_atom_id: f28901e38a867334e87ad6f2b5a5f9c5c5bc38e17836e30963d5be70c10b73f9
+    next_atom_id: 7b81da323a4ca19a90c827cefd389e94aee8812aea3aa3a26a592e93507d12b1
