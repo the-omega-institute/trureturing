@@ -1,4 +1,5 @@
 import LeanInformationAuditRegTests.SearchReduction.GraphModel
+import LeanInformationAuditRegAnalysis.SearchReduction.LookupPruning
 
 /-! Production lookup guards and their proof-hard boundary. Implication bases
 are B_T; exact membership independently ranges over protected B0. The model
@@ -463,5 +464,47 @@ theorem budget_noninterference {Query Cache Candidate : Type*}
 #print axioms unknown_monotonicity
 #print axioms coverage_monotone_in_G
 #print axioms budget_noninterference
+
+/-- The only data-assignment routes in R: a matching/synthesis site, or the
+type of an argument determined by an earlier route. Seeds include proposition
+premise unification and instance synthesis, including output parameters. -/
+inductive StarDetermined (plan : StarDeterminationPlan) : Nat → Prop
+  | seed {i} : i ∈ plan.seeds → StarDetermined plan i
+  | dependency {i j} : StarDetermined plan i → (i, j) ∈ plan.dependencies →
+      StarDetermined plan j
+
+private theorem star_determined_inside_barrier (plan : StarDeterminationPlan)
+    (support : List Nat) (closed : starDeterminationClosed plan support = true)
+    {i : Nat} (determined : StarDetermined plan i) : i ∈ support := by
+  simp only [starDeterminationClosed, Bool.and_eq_true, List.all_eq_true,
+    List.contains_iff_mem, Bool.or_eq_true] at closed
+  induction determined with
+  | seed member => exact closed.1 _ member
+  | @dependency i j determined edge ih =>
+    rcases closed.2 (i, j) edge with absent | present
+    · have missing : i ∉ support := by simpa using absent
+      exact False.elim (missing ih)
+    · exact present
+
+/-- A compliant certificate closes every data argument using R's allowed
+routes. The target is arbitrary and supplies no extra assignment mechanism. -/
+def StarCompliantCertificate (plan : StarDeterminationPlan) {Target : Type*}
+    (_target : Target) : Prop := ∀ i ∈ plan.required, StarDetermined plan i
+
+/-- The production static predicate rules out a compliant certificate for
+every target. The barrier is checked by the predicate itself; no completeness
+assumption about the support-computation algorithm is needed. -/
+theorem static_star_impossible_no_certificate (plan : StarDeterminationPlan)
+    (support : List Nat) (impossible : staticStarImpossible plan support = true)
+    {Target : Type*} (target : Target) : ¬ StarCompliantCertificate plan target := by
+  simp only [staticStarImpossible, Bool.and_eq_true, List.any_eq_true] at impossible
+  rcases impossible.2 with ⟨i, required, absent⟩
+  intro certificate
+  have inside := star_determined_inside_barrier plan support impossible.1
+    (certificate i required)
+  have missing : i ∉ support := by simpa using absent
+  exact missing inside
+
+#print axioms static_star_impossible_no_certificate
 
 end LeanInformationAudit.Tests.SearchReduction.GraphModel
