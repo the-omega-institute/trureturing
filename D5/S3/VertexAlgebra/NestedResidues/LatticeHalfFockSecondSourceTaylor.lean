@@ -1022,6 +1022,112 @@ theorem second_source_outer_vandermonde (q gamma : ℤ) (u : ℕ) :
   rw [Finset.Nat.sum_antidiagonal_eq_sum_range_succ_mk] at h
   simpa only [show (q : ℂ) - (gamma : ℂ) / 2 =
       -(gamma : ℂ) / 2 + q by ring] using h.symm
+/- The two independent finite Vandermonde contractions expand the exact
+collisionTaylor coefficient on the original signed exponent support. This
+helper is consumed by the actual third-telescope composition below. -/
+private theorem second_source_collision_taylor_sum
+    (P : LabelledPolynomial ℂ 3) (gamma : ℤ) (u v : ℕ) :
+    collisionTaylor P gamma u v =
+      P.coeff.sum (fun e c =>
+        c *
+          (∑ alpha ∈ Finset.range (u + 1),
+            Ring.choose (-(1 : ℂ) / 2) alpha *
+              Ring.choose (e 0 : ℂ) (u - alpha)) *
+          (∑ beta ∈ Finset.range (v + 1),
+            Ring.choose (-(gamma : ℂ) / 2) beta *
+              Ring.choose (e 1 : ℂ) (v - beta))) := by
+  classical
+  induction P using AddMonoidAlgebra.induction_linear with
+  | zero =>
+      simp [collisionTaylor, Finsupp.linearCombination_apply]
+  | add P Q hP hQ =>
+      simp only [collisionTaylor, AddMonoidAlgebra.coeff_add,
+        Finsupp.linearCombination_apply, smul_eq_mul]
+      conv_rhs =>
+        rw [Finsupp.sum_add_index (by simp) (by intros; ring)]
+      conv_lhs =>
+        rw [Finsupp.sum_add_index (by simp) (by intros; ring)]
+      have hP' := hP
+      have hQ' := hQ
+      simp only [collisionTaylor, Finsupp.linearCombination_apply,
+        smul_eq_mul] at hP' hQ'
+      rw [hP', hQ']
+  | single e c =>
+      simp only [collisionTaylor, AddMonoidAlgebra.coeff_single,
+        Finsupp.linearCombination_single, smul_eq_mul]
+      rw [Finsupp.sum_single_index (by simp)]
+      rw [second_source_inner_vandermonde (e 0) u,
+        second_source_outer_vandermonde (e 1) gamma v]
+      ring_nf
+
+private theorem second_source_third_conjunct_of_local_taylor
+    (D : LatticeData) (hu : IsUnit D.G.det) (i : Fin D.rank)
+    (a b : Carrier D) (K : ℕ) (gamma delta d r n : ℤ)
+    (x : ActualTensor D hu) (phi : ActualTensor D hu →ₗ[ℂ] ℂ)
+    (P : LabelledPolynomial ℂ 3)
+    (coefficients : ∀ e : Exponent 3, P.coeff e =
+      if totalExponent e =
+          (∑ p ∈ labelledPairs 3, (threeOrders D a b K p : ℤ)) - d - r - n - 3
+      then phi (actualNumerator D hu i a b gamma delta K x e) else 0)
+    (H₃ : ℕ → ℕ)
+    (locality : ∀ j ∈ Finset.range (vectorFrequencyBound D b + 1),
+      (FieldNormalProductLocality.deltaEnd ^ H₃ j)
+        (FieldNormalProductLocality.commutator
+          (targetSlice D hu a gamma)
+          (targetSlice D hu (neutralMode D i j b) (delta + 1))) = 0)
+    (local_taylor : ∀ j ∈ Finset.range (vectorFrequencyBound D b + 1),
+      secondSourceTaylorOuterReadout D a b K P j gamma (d + r - j) n
+        (max (H₃ j) (vectorFrequencyBound D a + 1 + (vectorFrequencyBound D b + 1) + K)) =
+      StateFieldResidueReconstruction.epsilon
+          (-(vectorFrequencyBound D a + 1 : ℤ)) *
+        ∑ u ∈ Finset.range (vectorFrequencyBound D b + 1 - j),
+          (if (u : ℤ) ≤
+              (vectorFrequencyBound D a + 1 : ℤ) +
+                (vectorFrequencyBound D b + 1 : ℤ) + K - d - r - 2 then
+            collisionTaylor P gamma u
+              ((vectorFrequencyBound D a + 1 : ℤ) +
+                (vectorFrequencyBound D b + 1 : ℤ) + K - d - r - 2 - u).toNat
+           else 0) *
+          BinomialKernelDelta.chooseSign (-(vectorFrequencyBound D a + 1 : ℤ))
+            (vectorFrequencyBound D b + 1 - j - 1 - u)) :
+    StateFieldResidueReconstruction.epsilon d *
+        (∑ j ∈ Finset.range (vectorFrequencyBound D b + 1),
+          BinomialKernelDelta.chooseSign d j *
+            phi (((qField gamma (d + r - j) (H₃ j)
+              (targetSlice D hu a gamma)
+              (targetSlice D hu (neutralMode D i j b) (delta + 1)))[[n]]) x)) =
+      StateFieldResidueReconstruction.epsilon
+          (d - (vectorFrequencyBound D a + 1 : ℤ)) *
+        ∑ u ∈ Finset.range
+            ((vectorFrequencyBound D a + 1 : ℤ) +
+              (vectorFrequencyBound D b + 1 : ℤ) + K - d - r - 2 + 1).toNat,
+          collisionTaylor P gamma u
+              ((vectorFrequencyBound D a + 1 : ℤ) +
+                (vectorFrequencyBound D b + 1 : ℤ) + K - d - r - 2 - u).toNat *
+            orderedResidueWeight (d - (vectorFrequencyBound D a + 1 : ℤ))
+              ((u : ℤ) - (vectorFrequencyBound D b + 1 : ℤ)) := by
+  let L : ℕ := vectorFrequencyBound D a + 1
+  let M : ℕ := vectorFrequencyBound D b + 1
+  let degree : ℤ := (L : ℤ) + M + K - d - r - 2
+  let T : ℕ → ℂ := fun j =>
+    phi (((qField gamma (d + r - j) (H₃ j)
+      (targetSlice D hu a gamma)
+      (targetSlice D hu (neutralMode D i j b) (delta + 1)))[[n]]) x)
+  have hlocal (j : ℕ) (hj : j ∈ Finset.range M) :
+      T j = StateFieldResidueReconstruction.epsilon (-(L : ℤ)) *
+        ∑ u ∈ Finset.range (M - j),
+          (if (u : ℤ) ≤ degree then
+            collisionTaylor P gamma u (degree - u).toNat else 0) *
+            BinomialKernelDelta.chooseSign (-(L : ℤ)) (M - j - 1 - u) := by
+    have hbridge := actual_current_second_source_rational_field D hu i a b K
+      gamma delta d r n x phi P coefficients (H₃ j) j (locality j hj)
+    rcases hbridge with ⟨_, _, _, _, _, _, _, _, _, hreadout, _⟩
+    dsimp [T, L, M, degree]
+    rw [hreadout]
+    simpa only [second_source_collision_taylor_sum] using local_taylor j hj
+  have hM : 0 < M := by dsimp [M]; omega
+  have contracted := second_source_reverse_outer_contraction P gamma d degree L M T hlocal hM
+  simpa only [T, L, M, degree, Nat.cast_add, Nat.cast_one] using contracted
 
 end
 end D5.S3.VertexAlgebra.NestedResidues.LatticeHalfFockSecondSourceTaylor
