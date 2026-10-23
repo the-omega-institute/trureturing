@@ -5,3 +5,7 @@ cas_ref: sha256:8503144d4c423a29568b7df24684ff4777ae476826b8de29ab170d6f65ea0c1a
 coverage_gids: []
 receipts:
   unresolved_subitems: []
+  nonpropositional:
+    justification: Methodological assessment of suitability for definitions and local deformation, without a mathematical assertion.
+    previous_atom_id: 7cf55d844e46c6d4c011eea1e133f9cee13fc4f4471b4033e9dee991ed2d0cce
+    next_atom_id: 9809d82306d5ca4709242b361734cb74e026a771f221eb3a73deef1b365e672d

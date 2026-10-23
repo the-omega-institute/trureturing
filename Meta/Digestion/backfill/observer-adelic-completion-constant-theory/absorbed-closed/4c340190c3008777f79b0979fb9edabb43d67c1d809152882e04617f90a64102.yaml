@@ -2,6 +2,8 @@ fingerprints:
   raw_sha256: sha256:4c340190c3008777f79b0979fb9edabb43d67c1d809152882e04617f90a64102
   normalized_sha256: sha256:4c340190c3008777f79b0979fb9edabb43d67c1d809152882e04617f90a64102
 cas_ref: sha256:4c340190c3008777f79b0979fb9edabb43d67c1d809152882e04617f90a64102
-coverage_gids: []
+coverage_gids:
+  - gid: D5/S3/Observer/Linear/FiniteObservabilityEnergyBalance.finite_observability_energy_balance
+    target_statement_id: sha256:bc7ad2505e5a12a28d56633ab671a448fb984cfe377f9638708e9f9413dc1b77
 receipts:
   unresolved_subitems: []
