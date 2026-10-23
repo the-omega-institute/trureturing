@@ -32,9 +32,69 @@ The sharp joint local Taylor support alpha+a+k=M-j-1 and alpha+a+beta+b=degree, 
 
 The signed Laurent proof adapts the J/A calculation in LatticeHalfFockOuterTaylorEvaluation to J/B; the Hahn, Laurent and binomial infrastructure is from mathlib under Apache 2.0. The actual supplier closure is inherited research source, including the six additional owners and four modified older owners disclosed with the slice quotient checkpoint. It is not asserted to be an independently integrated dev API. The matching Reg source reconstructs the whole theorem and its positive actual law; the remaining family variation, sensitivity, observational dependence and final registration are unfinished.
 
+**Definition 1.2 (The signed inner Taylor summand).**
+
+Lean statement: `D5/S3/VertexAlgebra/NestedResidues/LatticeHalfFockSecondSourceTaylor.secondSourceInnerTaylorTerm`
+
+*Formalization.* `D5/S3/VertexAlgebra/NestedResidues/LatticeHalfFockSecondSourceTaylor.secondSourceInnerTaylorTerm` (`✓ std3`).
+
+*Source.* Repository-derived.
+
+*Acknowledgement.* Bojko Bakalov and Victor G. Kac (2004). *Twisted Modules over Lattice Vertex Algebras*. DOI: [10.1142/9789812702562_0001](https://doi.org/10.1142/9789812702562_0001). URL: <https://arxiv.org/abs/math/0402315v1>.
+
+*Commentary.*
+
+This finite coefficient-field term records the complete signed Laurent factors after the J/B local residue and before either outer Hahn order.
+
+**Theorem 1.3 (The finite local Taylor index).**
+
+Lean statement: `D5/S3/VertexAlgebra/NestedResidues/LatticeHalfFockSecondSourceTaylor.second_source_monomial_taylor_index`
+
+*Proof.* Machine-checked in Lean as `D5/S3/VertexAlgebra/NestedResidues/LatticeHalfFockSecondSourceTaylor.second_source_monomial_taylor_index` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Acknowledgement.* Bojko Bakalov and Victor G. Kac (2004). *Twisted Modules over Lattice Vertex Algebras*. DOI: [10.1142/9789812702562_0001](https://doi.org/10.1142/9789812702562_0001). URL: <https://arxiv.org/abs/math/0402315v1>.
+
+*Commentary.*
+
+The actual signed monomial residue equals its explicit finite local Taylor expansion on every alpha in range M-j.
+
+**Theorem 1.4 (The complete signed inner Taylor expansion).**
+
+Lean statement: `D5/S3/VertexAlgebra/NestedResidues/LatticeHalfFockSecondSourceTaylor.second_source_taylor_inner_expansion`
+
+*Proof.* Machine-checked in Lean as `D5/S3/VertexAlgebra/NestedResidues/LatticeHalfFockSecondSourceTaylor.second_source_taylor_inner_expansion` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Acknowledgement.* Bojko Bakalov and Victor G. Kac (2004). *Twisted Modules over Lattice Vertex Algebras*. DOI: [10.1142/9789812702562_0001](https://doi.org/10.1142/9789812702562_0001). URL: <https://arxiv.org/abs/math/0402315v1>.
+
+*Commentary.*
+
+For every alpha in the actual finite range, secondSourceTerm is expanded over the local Taylor index u < M-j-alpha. The expansion retains signed numerator exponents, both pair poles, the spectator factor and the fractional z^(-alpha) shift. The complete G_j is the finite sum over alpha and the actual coefficient support.
+
+**Theorem 1.5 (The complete actual signed outer collision).**
+
+Lean statement: `D5/S3/VertexAlgebra/NestedResidues/LatticeHalfFockSecondSourceTaylor.actual_second_source_outer_collision`
+
+*Proof.* Machine-checked in Lean as `D5/S3/VertexAlgebra/NestedResidues/LatticeHalfFockSecondSourceTaylor.actual_second_source_outer_collision` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Acknowledgement.* Bojko Bakalov and Victor G. Kac (2004). *Twisted Modules over Lattice Vertex Algebras*. DOI: [10.1142/9789812702562_0001](https://doi.org/10.1142/9789812702562_0001). URL: <https://arxiv.org/abs/math/0402315v1>.
+
+*Commentary.*
+
+For the original three-label numerator and arbitrary supplied cutoff K, the two complete outer Laurent orders satisfy the inherited unrestricted collision identity coefficientwise. Signed numerator exponents and origin-pole cancellation are retained, with no locality assumption on an ordered half. The coefficient identification with the expanded G_j terms remains open.
+
 ## References
 
 - Truth anchor: `D5/S3/VertexAlgebra/NestedResidues/LatticeHalfFockSecondSourceTaylor.actual_current_second_source_rational_field`
+- Truth anchor: `D5/S3/VertexAlgebra/NestedResidues/LatticeHalfFockSecondSourceTaylor.actual_second_source_outer_collision`
+- Truth anchor: `D5/S3/VertexAlgebra/NestedResidues/LatticeHalfFockSecondSourceTaylor.secondSourceInnerTaylorTerm`
+- Truth anchor: `D5/S3/VertexAlgebra/NestedResidues/LatticeHalfFockSecondSourceTaylor.second_source_monomial_taylor_index`
+- Truth anchor: `D5/S3/VertexAlgebra/NestedResidues/LatticeHalfFockSecondSourceTaylor.second_source_taylor_inner_expansion`
 - Dependency: [D5/S3/VertexAlgebra/LatticeHalfFockOuterTaylorEvaluation](../LatticeHalfFockOuterTaylorEvaluation.md)
 - Dependency: [D5/S3/VertexAlgebra/NestedResidues/ContextualKernelExtraction](ContextualKernelExtraction.md)
 - Dependency: [D5/S3/VertexAlgebra/NestedResidues/LatticeHalfFockSliceQuotient](LatticeHalfFockSliceQuotient.md)

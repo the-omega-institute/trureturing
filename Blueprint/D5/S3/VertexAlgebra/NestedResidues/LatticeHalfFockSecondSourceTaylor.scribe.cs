@@ -23,5 +23,41 @@ internal sealed class LatticeHalfFockSecondSourceTaylorDocument : IScribeDocumen
                     Paragraph(Text("For the actual fields A and Bj and their supplied independent locality order H, the complete field is first padded to max(H,L+M+K). The arbitrary-cutoff slice quotient theorem then transports the actual readout to the original P/Q_K. Only after that padding does the finite rational evaluation enter the proof. The theorem retains arbitrary input tensor, functional, signed indices and lifts, zero numerator and empty inner sums; it also transports the complete OuterQCompletion law at H.")),
                     Paragraph(Text("The sharp joint local Taylor support alpha+a+k=M-j-1 and alpha+a+beta+b=degree, its final z exponent -n-1, the complete outer Laurent collision and the two Vandermonde contractions remain to be established. In particular this result does not yet prove current_second_source_local_taylor, the reverse third conjunct, the full forward equality or sameNumeratorCollisionBridge. finite_reverse_outer_taylor at t=M-1 is the later finite algebra consumer.")),
                     Paragraph(Text("The signed Laurent proof adapts the J/A calculation in LatticeHalfFockOuterTaylorEvaluation to J/B; the Hahn, Laurent and binomial infrastructure is from mathlib under Apache 2.0. The actual supplier closure is inherited research source, including the six additional owners and four modified older owners disclosed with the slice quotient checkpoint. It is not asserted to be an independently integrated dev API. The matching Reg source reconstructs the whole theorem and its positive actual law; the remaining family variation, sensitivity, observational dependence and final registration are unfinished."))),
+                DescribeRole.Theorem),
+            Describe.Lean(
+                DescribeId.Create("second-source-inner-taylor-term"),
+                DeclarationHandle.Create("D5/S3/VertexAlgebra/NestedResidues/LatticeHalfFockSecondSourceTaylor.secondSourceInnerTaylorTerm"),
+                H("The signed inner Taylor summand"),
+                StatementSource.WithoutFormula(),
+                AssessedProvenance.FromRepo(LibraryNoteRef.Create("D5/L/VertexAlgebra/bakalovkac2004lattice")),
+                Blocks(
+                    Paragraph(Text("This finite coefficient-field term records the complete signed Laurent factors after the J/B local residue and before either outer Hahn order."))),
+                DescribeRole.Definition),
+            Describe.Lean(
+                DescribeId.Create("second-source-monomial-taylor-index"),
+                DeclarationHandle.Create("D5/S3/VertexAlgebra/NestedResidues/LatticeHalfFockSecondSourceTaylor.second_source_monomial_taylor_index"),
+                H("The finite local Taylor index"),
+                StatementSource.WithoutFormula(),
+                AssessedProvenance.FromRepo(LibraryNoteRef.Create("D5/L/VertexAlgebra/bakalovkac2004lattice")),
+                Blocks(
+                    Paragraph(Text("The actual signed monomial residue equals its explicit finite local Taylor expansion on every alpha in range M-j."))),
+                DescribeRole.Theorem),
+            Describe.Lean(
+                DescribeId.Create("second-source-taylor-inner-expansion"),
+                DeclarationHandle.Create("D5/S3/VertexAlgebra/NestedResidues/LatticeHalfFockSecondSourceTaylor.second_source_taylor_inner_expansion"),
+                H("The complete signed inner Taylor expansion"),
+                StatementSource.WithoutFormula(),
+                AssessedProvenance.FromRepo(LibraryNoteRef.Create("D5/L/VertexAlgebra/bakalovkac2004lattice")),
+                Blocks(
+                    Paragraph(Text("For every alpha in the actual finite range, secondSourceTerm is expanded over the local Taylor index u < M-j-alpha. The expansion retains signed numerator exponents, both pair poles, the spectator factor and the fractional z^(-alpha) shift. The complete G_j is the finite sum over alpha and the actual coefficient support."))),
+                DescribeRole.Theorem),
+            Describe.Lean(
+                DescribeId.Create("actual-second-source-outer-collision"),
+                DeclarationHandle.Create("D5/S3/VertexAlgebra/NestedResidues/LatticeHalfFockSecondSourceTaylor.actual_second_source_outer_collision"),
+                H("The complete actual signed outer collision"),
+                StatementSource.WithoutFormula(),
+                AssessedProvenance.FromRepo(LibraryNoteRef.Create("D5/L/VertexAlgebra/bakalovkac2004lattice")),
+                Blocks(
+                    Paragraph(Text("For the original three-label numerator and arbitrary supplied cutoff K, the two complete outer Laurent orders satisfy the inherited unrestricted collision identity coefficientwise. Signed numerator exponents and origin-pole cancellation are retained, with no locality assumption on an ordered half. The coefficient identification with the expanded G_j terms remains open."))),
                 DescribeRole.Theorem))));
 }

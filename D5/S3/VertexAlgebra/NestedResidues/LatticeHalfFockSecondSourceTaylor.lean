@@ -25,7 +25,13 @@ open LatticeHalfFockOuterTaylorEvaluation UniformGradedLocalCorrelator
 open SupportedFieldWords.OrderedWords SupportedFieldWords.OrderedDistribution
 open SupportedFieldWords.FiniteConvolution
 open CollisionRationalExpansions.OrderedRationalExpansion
+open CollisionRationalExpansions.HahnFiberResidue
+open CollisionRationalExpansions.HahnFiberScalar
+open CollisionRationalExpansions.FullOrderSpectatorPole
 open CollisionLaurentKernels.LaurentCollision
+open CollisionLaurentKernels.RationalFusedResidue
+open OrderedCollisionCoordinates.ContextualLaurentKernel
+open OrderedCollisionCoordinates.AdjacentFullOrders
 open LatticeGeneratingFieldLocality LatticeHalfFockChargedTensorCoefficients
 open LatticeFiniteNegativeGeneration LatticeSugawaraCurrents
 open OrderedCollisionCoordinates.OrderedCoefficientCompatibility
@@ -71,7 +77,7 @@ private theorem second_source_local_monomial (D : LatticeData) (a b : Carrier D)
       pairPolynomial (0 : Fin 3) 2 ^ (vectorFrequencyBound D b + 1) *
       pairPolynomial (1 : Fin 3) 2 ^ K := by
     simp [weightedClearingPolynomial, pairs, threeOrders]
-    ring
+    ring_nf
   rw [clear]
   simp only [OrderedCollisionCoordinates.LocalResidueCurrying.localRational,
     RingHom.comp_apply, map_mul, map_div₀, map_pow, map_zpow₀,
@@ -227,8 +233,6 @@ private theorem second_source_laurent_residue (D : LatticeData) (a b : Carrier D
   intro e he
   exact second_source_monomial_residue D a b K e (P.coeff e) w
 
-
-/-- The fixed-labelled coefficient field retaining v and z after eliminating y. -/
 abbrev SecondSourceField := CoefficientField ℂ (0 : Fin 3)
 
 /-- The complete finite J/B residue in one rational coefficient field.
@@ -333,6 +337,53 @@ private theorem second_source_rational_evaluation (D : LatticeData) (a b : Carri
       secondSourceTaylorRational D a b K P j := by
   unfold secondSourceRational secondSourceTaylorRational
   simp_rw [second_source_laurent_residue]
+
+/- The local two-order expansion can only contribute on the sharp joint
+support. This algebraic bridge is independent of any ordered-half locality
+claim; it is the exponent calculation used after the complete field has been
+expanded. -/
+theorem second_source_sharp_joint_exponent
+    (e : Exponent 3) (n degree : ℤ)
+    (coefficient_degree : totalExponent e = degree - n - 1)
+    (alpha a k beta b : ℕ)
+    (joint_support : (alpha + a + beta + b : ℤ) = degree) :
+    totalExponent e - alpha - a - beta - b = -n - 1 := by
+  rw [coefficient_degree]
+  norm_num at joint_support ⊢
+  omega
+
+/- The theorem keeps the original coefficient equation and signed target
+degree. A support element of P therefore supplies the degree hypothesis, and
+the preceding bridge gives the final z-mode exponent -n-1 for every sharp
+inner/outer Taylor tuple. -/
+theorem actual_second_source_sharp_support
+    (D : LatticeData) (hu : IsUnit D.G.det) (i : Fin D.rank)
+    (a b : Carrier D) (K : ℕ) (gamma delta d r n degree : ℤ) (j : ℕ)
+    (x : ActualTensor D hu) (phi : ActualTensor D hu →ₗ[ℂ] ℂ)
+    (P : LabelledPolynomial ℂ 3)
+    (degree_equation : degree - n - 1 =
+      (∑ p ∈ labelledPairs 3, (threeOrders D a b K p : ℤ)) - d - r - n - 3)
+    (coefficients : ∀ e : Exponent 3, P.coeff e =
+      if totalExponent e =
+          (∑ p ∈ labelledPairs 3, (threeOrders D a b K p : ℤ)) - d - r - n - 3
+      then phi (actualNumerator D hu i a b gamma delta K x e) else 0) :
+    ∀ e ∈ P.coeff.support, ∀ alpha a' k beta b' : ℕ,
+      (alpha + a' + k = vectorFrequencyBound D b + 1 - j - 1) →
+      (alpha + a' + beta + b' : ℤ) = degree →
+      totalExponent e - alpha - a' - beta - b' = -n - 1 ∧
+      k < vectorFrequencyBound D b + 1 := by
+  intro e he alpha a' k beta b' hinner hjoint
+  have hcoeff : P.coeff e ≠ 0 := by
+    exact Finsupp.mem_support_iff.mp he
+  have hdegree : totalExponent e = degree - n - 1 := by
+    have h := coefficients e
+    by_contra hne
+    rw [if_neg (by
+      intro hEq
+      apply hne
+      simpa [degree_equation] using hEq)] at h
+    exact hcoeff h
+  exact ⟨second_source_sharp_joint_exponent e n degree hdegree alpha a' k beta b' hjoint, by omega⟩
 
 /-- Coefficients in the v,z order of the complete rational inner field. -/
 def secondSourceForward (T : SecondSourceField) (k l : ℤ) : ℂ :=
@@ -440,6 +491,66 @@ def secondSourceTerm (D : LatticeData) (a b : Carrier D) (K : ℕ)
       (Pi.single (⟨2, by decide⟩ : Remaining (0 : Fin 3)) (-(alpha : ℤ)))
       (Ring.choose (-(1 : ℂ) / 2) alpha)) *
     secondSourceMonomialValue D a b K e (P.coeff e) ((j : ℤ) + alpha)
+
+/- The local inner Taylor index is exposed before any outer coefficient
+calculation. This keeps the complete signed Laurent factors and the actual
+finite cutoff visible, including the empty branch. -/
+def secondSourceInnerTaylorTerm
+    (D : LatticeData) (a b : Carrier D) (K : ℕ) (P : LabelledPolynomial ℂ 3)
+    (j alpha : ℕ) (e : Exponent 3) : SecondSourceField :=
+      let E := SecondSourceField
+      let v : E := LabelledRationalClearing.PairDifferenceLocalization.remainingVariable
+        ℂ (0 : Fin 3) ⟨1, by decide⟩
+      let z : E := LabelledRationalClearing.PairDifferenceLocalization.remainingVariable
+        ℂ (0 : Fin 3) ⟨2, by decide⟩
+      let C : E := algebraMap _ E
+        (AddMonoidAlgebra.single
+          (fun q : LabelledRationalClearing.GlobalRationalCurry.Remaining (0 : Fin 3) => e q.val)
+          (P.coeff e))
+      let L := vectorFrequencyBound D a + 1
+      let M := vectorFrequencyBound D b + 1
+      (algebraMap (CoefficientPolynomial ℂ (0 : Fin 3)) E
+        (AddMonoidAlgebra.single
+          (Pi.single (⟨2, by decide⟩ : Remaining (0 : Fin 3)) (-(alpha : ℤ)))
+          (Ring.choose (-(1 : ℂ) / 2) alpha)) *
+        ((C * (v - z) ^ (-(K : ℤ))) * (z ^ e 0 * (z - v) ^ (-(L : ℤ))) *
+          ∑ u ∈ Finset.range (M - j - alpha),
+            z⁻¹ ^ u * ((Ring.choose (e 0) u : ℤ) : E) *
+              ((z - v)⁻¹ ^ (M - j - alpha - 1 - u) *
+                ((Ring.choose (-(L : ℤ)) (M - j - alpha - 1 - u) : ℤ) : E))))
+
+theorem second_source_monomial_taylor_index
+    (D : LatticeData) (a b : Carrier D) (K : ℕ) (P : LabelledPolynomial ℂ 3)
+    (j alpha : ℕ) (e : Exponent 3) (hα : alpha < vectorFrequencyBound D b + 1 - j) :
+    secondSourceTerm D a b K P j alpha e =
+      secondSourceInnerTaylorTerm D a b K P j alpha e := by
+  classical
+  dsimp only [secondSourceTerm, secondSourceMonomialValue]
+  rw [if_pos (by omega : (j : ℤ) + alpha - (vectorFrequencyBound D b + 1 : ℕ) < 0)]
+  congr 2
+  have m : (-( (j : ℤ) + alpha - (vectorFrequencyBound D b + 1 : ℕ)) - 1).toNat =
+      vectorFrequencyBound D b + 1 - j - alpha - 1 := by omega
+  simp only [m]
+  have hpos : 1 ≤ vectorFrequencyBound D b + 1 - j - alpha := by omega
+  rw [Nat.sub_add_cancel hpos]
+
+theorem second_source_taylor_inner_expansion
+    (D : LatticeData) (a b : Carrier D) (K : ℕ) (P : LabelledPolynomial ℂ 3)
+    (j : ℕ) :
+    secondSourceTaylorRational D a b K P j =
+      ∑ alpha ∈ Finset.range (vectorFrequencyBound D b + 1 - j),
+        ∑ e ∈ P.coeff.support,
+          secondSourceInnerTaylorTerm D a b K P j alpha e := by
+  classical
+  unfold secondSourceTaylorRational
+  simp_rw [Finset.mul_sum]
+  apply Finset.sum_congr rfl
+  intro alpha ha
+  apply Finset.sum_congr rfl
+  intro e he
+  change secondSourceTerm D a b K P j alpha e = _
+  rw [second_source_monomial_taylor_index D a b K P j alpha e
+    (Finset.mem_range.mp ha)]
 
 /-- Joint support includes the fractional inner index, the numerator
 monomial, the fractional outer index and the outer mode-convolution index. -/
@@ -552,6 +663,84 @@ private theorem second_source_outer_expansion (D : LatticeData) (a b : Carrier D
   apply Finset.sum_congr rfl
   intro alpha ha
   exact finite_rational_outer_readout _ _ gamma r n H
+
+/- The complete outer two-order collision is inherited at the rational-field
+level. This local copy keeps the unrestricted Laurent numerator and its
+origin-pole cancellation available to the second-source Taylor proof without
+opening the frozen readout owner. -/
+private theorem second_source_weighted_local_fiber (pre post : ℕ)
+    (z : Fin ((pre + 2) + post))
+    (tau : Fin ((pre + 1) + post) ≃
+      LabelledRationalClearing.GlobalRationalCurry.Remaining z)
+    (x : LabelledRationalClearing.GlobalRationalCurry.Remaining z)
+    (hx : tau (OrderedCollisionResidues.AdjacentLabelledCoordinates.boundarySlot pre post) = x)
+    (P : LabelledPolynomial ℂ ((pre + 2) + post))
+    (orders : Fin ((pre + 2) + post) × Fin ((pre + 2) + post) → ℕ)
+    (r : ℤ) (g : Indices ((pre + 1) + post)) :
+    let R := algebraMap _ (CommonRational ℂ ((pre + 2) + post)) P /
+      algebraMap _ (CommonRational ℂ ((pre + 2) + post))
+        (∏ p ∈ LabelledRationalClearing.PairDifferenceLocalization.labelledPairs
+          ((pre + 2) + post),
+          LabelledRationalClearing.PairDifferenceLocalization.pairPolynomial ℂ p.1 p.2 ^ orders p)
+    (pullFiber (firstEmbedding pre post (-1))
+      (contextPair ℂ pre post (kernelZX ℂ r) *
+        OrderedCollisionCoordinates.AdjacentFullOrders.firstRational ℂ pre post z tau R)).coeff g -
+    (residue (pre + 1) post
+      (contextPair ℂ pre post (kernelXZ ℂ r) *
+        OrderedCollisionCoordinates.AdjacentFullOrders.secondRational ℂ pre post z tau R)).coeff g =
+    ((OrderedCollisionCoordinates.LocalResidueCurrying.fusedLocalSeries ℂ (pre + 1) post z x tau
+      (LabelledRationalClearing.WeightedActualQ.globalDiagonal ℂ z x ^ r * R)).coeff (-1)).coeff g := by
+  dsimp only
+  have equality := RationalCollision.LaurentNumerator.weighted_laurent_collision
+    ℂ pre post z tau x hx P orders r
+  have first : ∀ R : CommonRational ℂ ((pre + 2) + post),
+      OrderedCollisionCoordinates.AdjacentFullOrders.firstRational ℂ pre post z tau
+        (LabelledRationalClearing.WeightedActualQ.globalDiagonal ℂ z x ^ r * R) =
+      contextPair ℂ pre post (kernelZX ℂ r) *
+        OrderedCollisionCoordinates.AdjacentFullOrders.firstRational ℂ pre post z tau R := by
+    intro R
+    simp only [LabelledRationalClearing.WeightedActualQ.globalDiagonal, map_mul, map_zpow₀,
+      OrderedCollisionResidues.LabelledDiagonalResidue.first_diagonal ℂ pre post z tau x hx,
+      iotaZX_diagonal, kernelZX_zpow]
+  have second : ∀ R : CommonRational ℂ ((pre + 2) + post),
+      OrderedCollisionCoordinates.AdjacentFullOrders.secondRational ℂ pre post z tau
+        (LabelledRationalClearing.WeightedActualQ.globalDiagonal ℂ z x ^ r * R) =
+      contextPair ℂ pre post (kernelXZ ℂ r) *
+        OrderedCollisionCoordinates.AdjacentFullOrders.secondRational ℂ pre post z tau R := by
+    intro R
+    simp only [LabelledRationalClearing.WeightedActualQ.globalDiagonal, map_mul, map_zpow₀,
+      OrderedCollisionResidues.LabelledDiagonalResidue.second_diagonal ℂ pre post z tau x hx,
+      iotaXZ_diagonal, kernelXZ_zpow]
+  dsimp only at equality
+  rw [first, second] at equality
+  exact congrArg (fun F : HahnSeries (Indices ((pre + 1) + post)) ℂ => F.coeff g) equality.symm
+
+/- The preceding collision is now instantiated on the original labelled
+numerator and its actual three pair orders. This is the complete signed outer
+two-order identity; the remaining step is its coefficient identification with
+the local Taylor terms above. -/
+theorem actual_second_source_outer_collision
+    (D : LatticeData) (a b : Carrier D) (K : ℕ) (P : LabelledPolynomial ℂ 3)
+    (rho : ℤ) (g : Indices 2) :
+    let R := algebraMap _ (CommonRational ℂ 3) P /
+      algebraMap _ (CommonRational ℂ 3)
+        (weightedClearingPolynomial (threeOrders D a b K))
+    let z : Fin 3 := 1
+    let x : LabelledRationalClearing.GlobalRationalCurry.Remaining z := ⟨2, by decide⟩
+    let tau : Fin 2 ≃ LabelledRationalClearing.GlobalRationalCurry.Remaining z :=
+      finSuccAboveEquiv z
+    (pullFiber (firstEmbedding 1 0 (-1))
+      (contextPair ℂ 1 0 (kernelZX ℂ rho) *
+        OrderedCollisionCoordinates.AdjacentFullOrders.firstRational ℂ 1 0 z tau R)).coeff g -
+    (residue 2 0
+      (contextPair ℂ 1 0 (kernelXZ ℂ rho) *
+        OrderedCollisionCoordinates.AdjacentFullOrders.secondRational ℂ 1 0 z tau R)).coeff g =
+    ((OrderedCollisionCoordinates.LocalResidueCurrying.fusedLocalSeries ℂ 2 0 z x tau
+      (LabelledRationalClearing.WeightedActualQ.globalDiagonal ℂ z x ^ rho * R)).coeff (-1)).coeff g := by
+  dsimp only
+  exact second_source_weighted_local_fiber 1 0 1
+    (finSuccAboveEquiv (1 : Fin 3)) ⟨2, by decide⟩ (by rfl) P
+    (threeOrders D a b K) rho g
 
 /- Complete-field padding reuses the finite-tail proof in LeftCurrentTransport. -/
 section
