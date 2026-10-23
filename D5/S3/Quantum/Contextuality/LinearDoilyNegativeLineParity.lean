@@ -6,8 +6,8 @@
    utility: none
    digest: Every linear N-qubit doily has an odd number of negative lines. -/
 
-import D5.S3.Quantum.Information.StabilizerPairLocalUnitaryInequivalence
-import D5.S3.VertexAlgebra.LatticeTwistedGroundRealization
+import D5.S3.Quantum.Information.BinaryStabilizerGraphNormalForm
+import D5.S3.Quantum.Measurement.StabilizerPovmMaximalEntanglementRefutation
 
 /-! Canonical Pauli line signs on nondegenerate binary four-spaces.
 
@@ -26,7 +26,9 @@ set_option maxSynthPendingDepth 32
 open scoped BigOperators
 open Module
 open D5.S3.Quantum.Information.StabilizerPairLocalUnitaryInequivalence
-open D5.S3.Quantum.FiniteDimensional (qubitX qubitZ)
+open D5.S3.Quantum.Information.BinaryStabilizerGraphNormalForm (tensor_smul)
+open D5.S3.Quantum.Measurement.StabilizerPovmMaximalEntanglementRefutation
+  (letterProduct letterPhase letter_mul letter_comm word_one word_mul word_comm_sign)
 open D5.S3.VertexAlgebra.LatticeTwistedGroundRealization (sign_sum)
 open D5.S3.VertexAlgebra.LatticeTwistedGroundRealization.SignQuotient (complexSign)
 
@@ -96,195 +98,104 @@ private def phase {N : ℕ} (u v : Fin N → ZMod 2 × ZMod 2) : ℂ :=
 private theorem local_mul (u v : ZMod 2 × ZMod 2) :
     pauliMatrix (canonicalLabel u) * pauliMatrix (canonicalLabel v) =
       fourthRoot (localExponent u v) • pauliMatrix (canonicalLabel (u + v)) := by
-  rcases u with ⟨x, z⟩
-  rcases v with ⟨y, t⟩
-  fin_cases x <;> fin_cases z <;> fin_cases y <;> fin_cases t
-  · change pauliMatrix .I * pauliMatrix .I =
-      (Complex.I ^ 0) • pauliMatrix .I
-    ext i j; fin_cases i <;> fin_cases j <;>
-      norm_num [pauliMatrix, qubitX, qubitZ, Matrix.mul_apply, Fin.sum_univ_two,
-        Matrix.smul_apply, smul_eq_mul, pow_succ, Complex.I_sq]
-  · change pauliMatrix .I * pauliMatrix .Z =
-      (Complex.I ^ 0) • pauliMatrix .Z
-    ext i j; fin_cases i <;> fin_cases j <;>
-      norm_num [pauliMatrix, qubitX, qubitZ, Matrix.mul_apply, Fin.sum_univ_two,
-        Matrix.smul_apply, smul_eq_mul, pow_succ, Complex.I_sq]
-  · change pauliMatrix .I * pauliMatrix .X =
-      (Complex.I ^ 0) • pauliMatrix .X
-    ext i j; fin_cases i <;> fin_cases j <;>
-      norm_num [pauliMatrix, qubitX, qubitZ, Matrix.mul_apply, Fin.sum_univ_two,
-        Matrix.smul_apply, smul_eq_mul, pow_succ, Complex.I_sq]
-  · change pauliMatrix .I * pauliMatrix .Y =
-      (Complex.I ^ 0) • pauliMatrix .Y
-    ext i j; fin_cases i <;> fin_cases j <;>
-      norm_num [pauliMatrix, qubitX, qubitZ, Matrix.mul_apply, Fin.sum_univ_two,
-        Matrix.smul_apply, smul_eq_mul, pow_succ, Complex.I_sq]
-  · change pauliMatrix .Z * pauliMatrix .I =
-      (Complex.I ^ 0) • pauliMatrix .Z
-    ext i j; fin_cases i <;> fin_cases j <;>
-      norm_num [pauliMatrix, qubitX, qubitZ, Matrix.mul_apply, Fin.sum_univ_two,
-        Matrix.smul_apply, smul_eq_mul, pow_succ, Complex.I_sq]
-  · change pauliMatrix .Z * pauliMatrix .Z =
-      (Complex.I ^ 0) • pauliMatrix .I
-    ext i j; fin_cases i <;> fin_cases j <;>
-      norm_num [pauliMatrix, qubitX, qubitZ, Matrix.mul_apply, Fin.sum_univ_two,
-        Matrix.smul_apply, smul_eq_mul, pow_succ, Complex.I_sq]
-  · change pauliMatrix .Z * pauliMatrix .X =
-      (Complex.I ^ 1) • pauliMatrix .Y
-    ext i j; fin_cases i <;> fin_cases j <;>
-      norm_num [pauliMatrix, qubitX, qubitZ, Matrix.mul_apply, Fin.sum_univ_two,
-        Matrix.smul_apply, smul_eq_mul, pow_succ, Complex.I_sq]
-  · change pauliMatrix .Z * pauliMatrix .Y =
-      (Complex.I ^ 3) • pauliMatrix .X
-    ext i j; fin_cases i <;> fin_cases j <;>
-      norm_num [pauliMatrix, qubitX, qubitZ, Matrix.mul_apply, Fin.sum_univ_two,
-        Matrix.smul_apply, smul_eq_mul, pow_succ, Complex.I_sq]
-  · change pauliMatrix .X * pauliMatrix .I =
-      (Complex.I ^ 0) • pauliMatrix .X
-    ext i j; fin_cases i <;> fin_cases j <;>
-      norm_num [pauliMatrix, qubitX, qubitZ, Matrix.mul_apply, Fin.sum_univ_two,
-        Matrix.smul_apply, smul_eq_mul, pow_succ, Complex.I_sq]
-  · change pauliMatrix .X * pauliMatrix .Z =
-      (Complex.I ^ 3) • pauliMatrix .Y
-    ext i j; fin_cases i <;> fin_cases j <;>
-      norm_num [pauliMatrix, qubitX, qubitZ, Matrix.mul_apply, Fin.sum_univ_two,
-        Matrix.smul_apply, smul_eq_mul, pow_succ, Complex.I_sq]
-  · change pauliMatrix .X * pauliMatrix .X =
-      (Complex.I ^ 0) • pauliMatrix .I
-    ext i j; fin_cases i <;> fin_cases j <;>
-      norm_num [pauliMatrix, qubitX, qubitZ, Matrix.mul_apply, Fin.sum_univ_two,
-        Matrix.smul_apply, smul_eq_mul, pow_succ, Complex.I_sq]
-  · change pauliMatrix .X * pauliMatrix .Y =
-      (Complex.I ^ 1) • pauliMatrix .Z
-    ext i j; fin_cases i <;> fin_cases j <;>
-      norm_num [pauliMatrix, qubitX, qubitZ, Matrix.mul_apply, Fin.sum_univ_two,
-        Matrix.smul_apply, smul_eq_mul, pow_succ, Complex.I_sq]
-  · change pauliMatrix .Y * pauliMatrix .I =
-      (Complex.I ^ 0) • pauliMatrix .Y
-    ext i j; fin_cases i <;> fin_cases j <;>
-      norm_num [pauliMatrix, qubitX, qubitZ, Matrix.mul_apply, Fin.sum_univ_two,
-        Matrix.smul_apply, smul_eq_mul, pow_succ, Complex.I_sq]
-  · change pauliMatrix .Y * pauliMatrix .Z =
-      (Complex.I ^ 1) • pauliMatrix .X
-    ext i j; fin_cases i <;> fin_cases j <;>
-      norm_num [pauliMatrix, qubitX, qubitZ, Matrix.mul_apply, Fin.sum_univ_two,
-        Matrix.smul_apply, smul_eq_mul, pow_succ, Complex.I_sq]
-  · change pauliMatrix .Y * pauliMatrix .X =
-      (Complex.I ^ 3) • pauliMatrix .Z
-    ext i j; fin_cases i <;> fin_cases j <;>
-      norm_num [pauliMatrix, qubitX, qubitZ, Matrix.mul_apply, Fin.sum_univ_two,
-        Matrix.smul_apply, smul_eq_mul, pow_succ, Complex.I_sq]
-  · change pauliMatrix .Y * pauliMatrix .Y =
-      (Complex.I ^ 0) • pauliMatrix .I
-    ext i j; fin_cases i <;> fin_cases j <;>
-      norm_num [pauliMatrix, qubitX, qubitZ, Matrix.mul_apply, Fin.sum_univ_two,
-        Matrix.smul_apply, smul_eq_mul, pow_succ, Complex.I_sq]
+  have hp : letterPhase (canonicalLabel u) (canonicalLabel v) = fourthRoot (localExponent u v) := by
+    rcases u with ⟨x, z⟩
+    rcases v with ⟨y, t⟩
+    fin_cases x <;> fin_cases z <;> fin_cases y <;> fin_cases t
+    · change (1 : ℂ) = Complex.I ^ 0
+      norm_num [pow_succ, Complex.I_sq]
+    · change (1 : ℂ) = Complex.I ^ 0
+      norm_num [pow_succ, Complex.I_sq]
+    · change (1 : ℂ) = Complex.I ^ 0
+      norm_num [pow_succ, Complex.I_sq]
+    · change (1 : ℂ) = Complex.I ^ 0
+      norm_num [pow_succ, Complex.I_sq]
+    · change (1 : ℂ) = Complex.I ^ 0
+      norm_num [pow_succ, Complex.I_sq]
+    · change (1 : ℂ) = Complex.I ^ 0
+      norm_num [pow_succ, Complex.I_sq]
+    · change (Complex.I : ℂ) = Complex.I ^ 1
+      norm_num [pow_succ, Complex.I_sq]
+    · change (-Complex.I : ℂ) = Complex.I ^ 3
+      norm_num [pow_succ, Complex.I_sq]
+    · change (1 : ℂ) = Complex.I ^ 0
+      norm_num [pow_succ, Complex.I_sq]
+    · change (-Complex.I : ℂ) = Complex.I ^ 3
+      norm_num [pow_succ, Complex.I_sq]
+    · change (1 : ℂ) = Complex.I ^ 0
+      norm_num [pow_succ, Complex.I_sq]
+    · change (Complex.I : ℂ) = Complex.I ^ 1
+      norm_num [pow_succ, Complex.I_sq]
+    · change (1 : ℂ) = Complex.I ^ 0
+      norm_num [pow_succ, Complex.I_sq]
+    · change (Complex.I : ℂ) = Complex.I ^ 1
+      norm_num [pow_succ, Complex.I_sq]
+    · change (-Complex.I : ℂ) = Complex.I ^ 3
+      norm_num [pow_succ, Complex.I_sq]
+    · change (1 : ℂ) = Complex.I ^ 0
+      norm_num [pow_succ, Complex.I_sq]
+  have hl : letterProduct (canonicalLabel u) (canonicalLabel v) = canonicalLabel (u + v) := by
+    rcases u with ⟨x, z⟩
+    rcases v with ⟨y, t⟩
+    fin_cases x <;> fin_cases z <;> fin_cases y <;> fin_cases t <;> rfl
+  simpa only [hp, hl] using letter_mul (canonicalLabel u) (canonicalLabel v)
 
 private theorem local_comm (u v : ZMod 2 × ZMod 2) :
     pauliMatrix (canonicalLabel u) * pauliMatrix (canonicalLabel v) =
       complexSign (u.1 * v.2 + u.2 * v.1) •
         (pauliMatrix (canonicalLabel v) * pauliMatrix (canonicalLabel u)) := by
-  rcases u with ⟨x, z⟩
-  rcases v with ⟨y, t⟩
-  fin_cases x <;> fin_cases z <;> fin_cases y <;> fin_cases t
-  · change pauliMatrix .I * pauliMatrix .I =
-      (1 : ℂ) • (pauliMatrix .I * pauliMatrix .I)
-    ext i j; fin_cases i <;> fin_cases j <;>
-      norm_num [pauliMatrix, qubitX, qubitZ, Matrix.mul_apply, Fin.sum_univ_two,
-        Matrix.smul_apply, smul_eq_mul, pow_succ, Complex.I_sq]
-  · change pauliMatrix .I * pauliMatrix .Z =
-      (1 : ℂ) • (pauliMatrix .Z * pauliMatrix .I)
-    ext i j; fin_cases i <;> fin_cases j <;>
-      norm_num [pauliMatrix, qubitX, qubitZ, Matrix.mul_apply, Fin.sum_univ_two,
-        Matrix.smul_apply, smul_eq_mul, pow_succ, Complex.I_sq]
-  · change pauliMatrix .I * pauliMatrix .X =
-      (1 : ℂ) • (pauliMatrix .X * pauliMatrix .I)
-    ext i j; fin_cases i <;> fin_cases j <;>
-      norm_num [pauliMatrix, qubitX, qubitZ, Matrix.mul_apply, Fin.sum_univ_two,
-        Matrix.smul_apply, smul_eq_mul, pow_succ, Complex.I_sq]
-  · change pauliMatrix .I * pauliMatrix .Y =
-      (1 : ℂ) • (pauliMatrix .Y * pauliMatrix .I)
-    ext i j; fin_cases i <;> fin_cases j <;>
-      norm_num [pauliMatrix, qubitX, qubitZ, Matrix.mul_apply, Fin.sum_univ_two,
-        Matrix.smul_apply, smul_eq_mul, pow_succ, Complex.I_sq]
-  · change pauliMatrix .Z * pauliMatrix .I =
-      (1 : ℂ) • (pauliMatrix .I * pauliMatrix .Z)
-    ext i j; fin_cases i <;> fin_cases j <;>
-      norm_num [pauliMatrix, qubitX, qubitZ, Matrix.mul_apply, Fin.sum_univ_two,
-        Matrix.smul_apply, smul_eq_mul, pow_succ, Complex.I_sq]
-  · change pauliMatrix .Z * pauliMatrix .Z =
-      (1 : ℂ) • (pauliMatrix .Z * pauliMatrix .Z)
-    ext i j; fin_cases i <;> fin_cases j <;>
-      norm_num [pauliMatrix, qubitX, qubitZ, Matrix.mul_apply, Fin.sum_univ_two,
-        Matrix.smul_apply, smul_eq_mul, pow_succ, Complex.I_sq]
-  · change pauliMatrix .Z * pauliMatrix .X =
-      (-1 : ℂ) • (pauliMatrix .X * pauliMatrix .Z)
-    ext i j; fin_cases i <;> fin_cases j <;>
-      norm_num [pauliMatrix, qubitX, qubitZ, Matrix.mul_apply, Fin.sum_univ_two,
-        Matrix.smul_apply, smul_eq_mul, pow_succ, Complex.I_sq]
-  · change pauliMatrix .Z * pauliMatrix .Y =
-      (-1 : ℂ) • (pauliMatrix .Y * pauliMatrix .Z)
-    ext i j; fin_cases i <;> fin_cases j <;>
-      norm_num [pauliMatrix, qubitX, qubitZ, Matrix.mul_apply, Fin.sum_univ_two,
-        Matrix.smul_apply, smul_eq_mul, pow_succ, Complex.I_sq]
-  · change pauliMatrix .X * pauliMatrix .I =
-      (1 : ℂ) • (pauliMatrix .I * pauliMatrix .X)
-    ext i j; fin_cases i <;> fin_cases j <;>
-      norm_num [pauliMatrix, qubitX, qubitZ, Matrix.mul_apply, Fin.sum_univ_two,
-        Matrix.smul_apply, smul_eq_mul, pow_succ, Complex.I_sq]
-  · change pauliMatrix .X * pauliMatrix .Z =
-      (-1 : ℂ) • (pauliMatrix .Z * pauliMatrix .X)
-    ext i j; fin_cases i <;> fin_cases j <;>
-      norm_num [pauliMatrix, qubitX, qubitZ, Matrix.mul_apply, Fin.sum_univ_two,
-        Matrix.smul_apply, smul_eq_mul, pow_succ, Complex.I_sq]
-  · change pauliMatrix .X * pauliMatrix .X =
-      (1 : ℂ) • (pauliMatrix .X * pauliMatrix .X)
-    ext i j; fin_cases i <;> fin_cases j <;>
-      norm_num [pauliMatrix, qubitX, qubitZ, Matrix.mul_apply, Fin.sum_univ_two,
-        Matrix.smul_apply, smul_eq_mul, pow_succ, Complex.I_sq]
-  · change pauliMatrix .X * pauliMatrix .Y =
-      (-1 : ℂ) • (pauliMatrix .Y * pauliMatrix .X)
-    ext i j; fin_cases i <;> fin_cases j <;>
-      norm_num [pauliMatrix, qubitX, qubitZ, Matrix.mul_apply, Fin.sum_univ_two,
-        Matrix.smul_apply, smul_eq_mul, pow_succ, Complex.I_sq]
-  · change pauliMatrix .Y * pauliMatrix .I =
-      (1 : ℂ) • (pauliMatrix .I * pauliMatrix .Y)
-    ext i j; fin_cases i <;> fin_cases j <;>
-      norm_num [pauliMatrix, qubitX, qubitZ, Matrix.mul_apply, Fin.sum_univ_two,
-        Matrix.smul_apply, smul_eq_mul, pow_succ, Complex.I_sq]
-  · change pauliMatrix .Y * pauliMatrix .Z =
-      (-1 : ℂ) • (pauliMatrix .Z * pauliMatrix .Y)
-    ext i j; fin_cases i <;> fin_cases j <;>
-      norm_num [pauliMatrix, qubitX, qubitZ, Matrix.mul_apply, Fin.sum_univ_two,
-        Matrix.smul_apply, smul_eq_mul, pow_succ, Complex.I_sq]
-  · change pauliMatrix .Y * pauliMatrix .X =
-      (-1 : ℂ) • (pauliMatrix .X * pauliMatrix .Y)
-    ext i j; fin_cases i <;> fin_cases j <;>
-      norm_num [pauliMatrix, qubitX, qubitZ, Matrix.mul_apply, Fin.sum_univ_two,
-        Matrix.smul_apply, smul_eq_mul, pow_succ, Complex.I_sq]
-  · change pauliMatrix .Y * pauliMatrix .Y =
-      (1 : ℂ) • (pauliMatrix .Y * pauliMatrix .Y)
-    ext i j; fin_cases i <;> fin_cases j <;>
-      norm_num [pauliMatrix, qubitX, qubitZ, Matrix.mul_apply, Fin.sum_univ_two,
-        Matrix.smul_apply, smul_eq_mul, pow_succ, Complex.I_sq]
+  have hs : (sgn (canonicalLabel u) (canonicalLabel v) : ℂ) =
+      complexSign (u.1 * v.2 + u.2 * v.1) := by
+    rcases u with ⟨x, z⟩
+    rcases v with ⟨y, t⟩
+    fin_cases x <;> fin_cases z <;> fin_cases y <;> fin_cases t
+    · change ((1 : ℤ) : ℂ) = (1 : ℂ)
+      norm_num
+    · change ((1 : ℤ) : ℂ) = (1 : ℂ)
+      norm_num
+    · change ((1 : ℤ) : ℂ) = (1 : ℂ)
+      norm_num
+    · change ((1 : ℤ) : ℂ) = (1 : ℂ)
+      norm_num
+    · change ((1 : ℤ) : ℂ) = (1 : ℂ)
+      norm_num
+    · change ((1 : ℤ) : ℂ) = (1 : ℂ)
+      norm_num
+    · change ((-1 : ℤ) : ℂ) = (-1 : ℂ)
+      norm_num
+    · change ((-1 : ℤ) : ℂ) = (-1 : ℂ)
+      norm_num
+    · change ((1 : ℤ) : ℂ) = (1 : ℂ)
+      norm_num
+    · change ((-1 : ℤ) : ℂ) = (-1 : ℂ)
+      norm_num
+    · change ((1 : ℤ) : ℂ) = (1 : ℂ)
+      norm_num
+    · change ((-1 : ℤ) : ℂ) = (-1 : ℂ)
+      norm_num
+    · change ((1 : ℤ) : ℂ) = (1 : ℂ)
+      norm_num
+    · change ((-1 : ℤ) : ℂ) = (-1 : ℂ)
+      norm_num
+    · change ((-1 : ℤ) : ℂ) = (-1 : ℂ)
+      norm_num
+    · change ((1 : ℤ) : ℂ) = (1 : ℂ)
+      norm_num
+  simpa only [hs] using letter_comm (canonicalLabel u) (canonicalLabel v)
 
 private theorem observable_zero (N : ℕ) : observable (0 : Fin N → ZMod 2 × ZMod 2) = 1 := by
-  classical
-  ext x y
-  simp only [observable, wordOp, tensorOp, Matrix.of_apply, Pi.zero_apply,
-    canonicalLabel, Prod.fst_zero, Prod.snd_zero, ↓reduceIte, pauliMatrix,
-    Matrix.one_apply]
-  rw [Fintype.prod_ite_zero]
-  simp only [Finset.prod_const_one, funext_iff]
+  change wordOp (fun _ : Fin N => Pauli.I) = 1
+  exact word_one
 
 private theorem observable_mul {N : ℕ} (u v : Fin N → ZMod 2 × ZMod 2) :
     observable u * observable v = phase u v • observable (u + v) := by
   classical
-  unfold observable wordOp
-  rw [tensor_mul]
-  simp_rw [local_mul]
-  ext x y
-  simp [tensorOp, phase, Finset.prod_mul_distrib]
+  unfold observable
+  rw [word_mul]
+  unfold wordOp
+  rw [← tensor_smul]
+  simp_rw [← letter_mul, local_mul]
+  exact tensor_smul _ _
 
 private theorem observable_sq {N : ℕ} (u : Fin N → ZMod 2 × ZMod 2) :
     observable u * observable u = 1 := by
@@ -298,12 +209,12 @@ private theorem observable_sq {N : ℕ} (u : Fin N → ZMod 2 × ZMod 2) :
 private theorem observable_comm {N : ℕ} (u v : Fin N → ZMod 2 × ZMod 2) :
     observable u * observable v = complexSign (B u v) • (observable v * observable u) := by
   classical
-  unfold observable wordOp
-  rw [tensor_mul, tensor_mul]
-  conv_lhs => arg 1; ext i; rw [local_comm]
-  ext x y
-  simp only [tensorOp, Matrix.of_apply, Matrix.smul_apply, smul_eq_mul]
-  rw [Finset.prod_mul_distrib, ← sign_sum]
+  unfold observable
+  rw [word_comm_sign]
+  unfold wordOp
+  rw [tensor_mul, ← tensor_smul]
+  conv_lhs => arg 1; ext i; rw [← letter_comm, local_comm]
+  rw [tensor_smul, ← sign_sum]
   rfl
 
 private theorem local_phase_sq (u v : ZMod 2 × ZMod 2) :
@@ -545,39 +456,10 @@ private theorem local_total_exponent : ∀ w : Fin 4 → ZMod 2 × ZMod 2,
 
 private theorem fourthRoot_add (a b : ZMod 4) :
     fourthRoot (a + b) = fourthRoot a * fourthRoot b := by
-  fin_cases a <;> fin_cases b
-  · change Complex.I ^ 0 = Complex.I ^ 0 * Complex.I ^ 0
-    norm_num [pow_succ, Complex.I_sq]
-  · change Complex.I ^ 1 = Complex.I ^ 0 * Complex.I ^ 1
-    norm_num [pow_succ, Complex.I_sq]
-  · change Complex.I ^ 2 = Complex.I ^ 0 * Complex.I ^ 2
-    norm_num [pow_succ, Complex.I_sq]
-  · change Complex.I ^ 3 = Complex.I ^ 0 * Complex.I ^ 3
-    norm_num [pow_succ, Complex.I_sq]
-  · change Complex.I ^ 1 = Complex.I ^ 1 * Complex.I ^ 0
-    norm_num [pow_succ, Complex.I_sq]
-  · change Complex.I ^ 2 = Complex.I ^ 1 * Complex.I ^ 1
-    norm_num [pow_succ, Complex.I_sq]
-  · change Complex.I ^ 3 = Complex.I ^ 1 * Complex.I ^ 2
-    norm_num [pow_succ, Complex.I_sq]
-  · change Complex.I ^ 0 = Complex.I ^ 1 * Complex.I ^ 3
-    norm_num [pow_succ, Complex.I_sq]
-  · change Complex.I ^ 2 = Complex.I ^ 2 * Complex.I ^ 0
-    norm_num [pow_succ, Complex.I_sq]
-  · change Complex.I ^ 3 = Complex.I ^ 2 * Complex.I ^ 1
-    norm_num [pow_succ, Complex.I_sq]
-  · change Complex.I ^ 0 = Complex.I ^ 2 * Complex.I ^ 2
-    norm_num [pow_succ, Complex.I_sq]
-  · change Complex.I ^ 1 = Complex.I ^ 2 * Complex.I ^ 3
-    norm_num [pow_succ, Complex.I_sq]
-  · change Complex.I ^ 3 = Complex.I ^ 3 * Complex.I ^ 0
-    norm_num [pow_succ, Complex.I_sq]
-  · change Complex.I ^ 0 = Complex.I ^ 3 * Complex.I ^ 1
-    norm_num [pow_succ, Complex.I_sq]
-  · change Complex.I ^ 1 = Complex.I ^ 3 * Complex.I ^ 2
-    norm_num [pow_succ, Complex.I_sq]
-  · change Complex.I ^ 2 = Complex.I ^ 3 * Complex.I ^ 3
-    norm_num [pow_succ, Complex.I_sq]
+  unfold fourthRoot
+  rw [ZMod.val_add, ← pow_add]
+  exact (pow_eq_pow_mod _ (show Complex.I ^ 4 = 1 by
+    norm_num [pow_succ, Complex.I_sq])).symm
 
 private theorem prod_fourthRoot {ι : Type*} (s : Finset ι) (f : ι → ZMod 4) :
     (∏ i ∈ s, fourthRoot (f i)) = fourthRoot (∑ i ∈ s, f i) := by
