@@ -18,7 +18,7 @@ Let $I$ and $P$ be inertia and wild inertia. The residue action identifies $G/I$
 
 $$
 I\longrightarrow k_L^\times,\qquad
-u\longmapsto\overline{\nu(\varpi)/\varpi}
+\nu\longmapsto\overline{\nu(\varpi)/\varpi}
 $$
 
 is a homomorphism with kernel $P$. Thus $I/P$ is cyclic of odd order. The higher ramification filtration of $P$ terminates; its successive quotients embed in the additive group of $k_L$ by the leading coefficient of $\nu(\varpi)-\varpi$. Consequently $P$ is a $2$-group. A lift $F\in G$ of arithmetic residue Frobenius acts on $I/P$ by squaring, since its residue action is $x\mapsto x^2$. These valuation descriptions apply in residue characteristic two.
