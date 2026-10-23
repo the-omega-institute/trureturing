@@ -85,7 +85,7 @@ functional on the real Banach space of continuous functions on the compact carri
 noncomputable def signedFunctional (s : SignedMeasure K) : StrongDual ℝ C(K, ℝ) :=
   (signedLinear s).mkContinuous (s.totalVariation.real univ) (signedLinear_bound s)
 
-private lemma signedFunctional_norm_le (s : SignedMeasure K) :
+lemma signedFunctional_norm_le (s : SignedMeasure K) :
     ‖signedFunctional s‖ ≤ s.totalVariation.real univ :=
   (signedLinear s).mkContinuous_norm_le (measureReal_nonneg) (signedLinear_bound s)
 
