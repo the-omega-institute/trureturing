@@ -5,7 +5,7 @@ year: 2021
 title: The Riemann hypothesis is true up to 3·10^12
 doi: 10.1112/blms.12460
 url: https://arxiv.org/abs/2004.09765v1
-claim: Published verification supplies the finite-height RH premise. Exact heat-loss factorization and the complete arithmetic block bound give a whole-source negative allowance of order (log T)^(-4) in the original sixth moment; fixed height still leaves a negative allowance. A support-independent Gamma-only lower bound for the prime Hankel form fails on all compact half-line tests. An even actual-source partition controls the joint metric defect and bounds supporting multipliers of negative cap-four minima from below, up to the finite-height signed zero tail. Its null supporting vector bootstraps every fixed logarithmic order below five and recovers individual branch moments with an explicit inverse-multiplier cost; separation of the finite reconstruction intervals replaces its N-fold Fourier-tail payment by a harmonic factor, giving every fixed joint-metric exponent below five on actual negative minima and a fifth-power rate with a log-log factor on nonpositive-energy sources under RH(T), without improving the general exponent-four negative allowance. For hypothetical unit negative cap-four minimizers with a positive supporting multiplier, retaining the errors' own moments also gives every finite logarithmic order and arbitrary fixed logarithmic-power branch rates, with constants that deteriorate as the multiplier tends to zero.
+claim: Published verification supplies the finite-height RH premise. Exact heat-loss factorization and the complete arithmetic block bound give a whole-source negative allowance of order (log T)^(-4) in the original sixth moment; fixed height still leaves a negative allowance. A support-independent Gamma-only lower bound for the prime Hankel form fails on all compact half-line tests. An even actual-source partition controls the joint metric defect and bounds supporting multipliers of negative cap-four minima from below, up to the finite-height signed zero tail. Its null supporting vector bootstraps every fixed logarithmic order below five and recovers individual branch moments with an explicit inverse-multiplier cost; separation of the finite reconstruction intervals replaces its N-fold Fourier-tail payment by a harmonic factor, giving every fixed joint-metric exponent below five on actual negative minima and a fifth-power rate with a log-log factor on nonpositive-energy sources under RH(T), without improving the general exponent-four negative allowance. For hypothetical unit negative cap-four minimizers with a positive supporting multiplier, retaining the errors' own moments also gives every finite logarithmic order and arbitrary fixed logarithmic-power branch rates. A bounded analytic Sobolev regularizer gives positive-order regularity by commuting with the complete energy and paying both original metric defects; its constants deteriorate exponentially as the multiplier tends to zero and do not improve the uniform negative allowance.
 strata_touched: []
 license: citation-only
 triage: anchor
@@ -1459,3 +1459,224 @@ $\eta\downarrow0$ with controlled constants is supplied. Thus the
 positive-multiplier regularity and branch rates in VHB20--VHB21
 remain distinct from a uniform improvement of VHR1. Full RH and
 strict Robin for every integer $n>5040$ remain unproved.
+
+## Obtain positive Sobolev order from the same global null equation
+
+Retain the hypothetical unit negative cap-four minimizer $F$ and
+VHP7's GLOBAL supporting form, with $\lambda>0$. An analytic even
+regularizer commutes with the COMPLETE arithmetic form. Its only
+variational errors are consequently the two ORIGINAL physical
+metrics in VHP3. A uniform Schur estimate pays their hard cuts and
+allows a positive Sobolev order to be absorbed in VHB17.
+
+This is a `repo-derived` application of W359, VHP1--VHP3, VHB16--VHB17
+and classical Fourier multiplier and Schur estimates. Those suppliers
+are reused; no general regularity theorem, priority claim or Lean/kernel
+certification is supplied. The exponential multiplier cost below is
+part of the estimate.
+
+### Use a bounded regularizer before taking a Sobolev limit
+
+Fix $c>q=5/4$ and $0<s_0<1/2$. In the $t$ coordinate of VHP3 set
+
+$$
+ j_{s,N}(\xi)=
+ \left(\frac{c^2+\xi^2}{c^2+\xi^2/N^2}\right)^{s/2},
+ \qquad J=j_{s,N}(D),\qquad N\ge2,\quad 0<s\le s_0.
+ \tag{VHS1}
+$$
+
+Choose the branch positive on the real axis. It is even and
+Schwarz-real on $|\Im z|<c$. For fixed $N$, $J-N^sI$ and
+$J^2-N^{2s}I$ have symbols of order $-2$ on each smaller closed
+strip. Their convolution terms have weighted $H^1$ regularity.
+Applying VHP1's SAME Volterra/Möbius reconstruction to those terms
+therefore gives actual $F_J,F_{J^2}\in\mathcal V$, with
+
+$$
+ \beta_J=J\beta,\quad \beta_{J^2}=J^2\beta,
+ \qquad \beta(t)=g_F(t/2).
+$$
+
+Specifically, the smoothed terms give a half-line $H^1$ Gamma
+profile whose zero extension has at most one jump, exactly as in
+VHP1. Add $N^sF$ or $N^{2s}F$ to recover the full regularized
+source. This range argument is for each finite $N$; it does not
+assume a converse to W338 or positive regularity of $F$.
+
+The Gamma multiplier and each full prime-power translation commute
+with $J$. Both pole frequencies in the $\beta$ coordinate are
+$\pm i/4$, where $j_{s,N}$ has the SAME real value. Thus W359,
+including BOTH pole squares, gives exactly
+
+$$
+ \mathfrak E(F_J)=\Re\mathfrak E(F,F_{J^2}).
+ \tag{VHS2}
+$$
+
+For each finite $N$ the strip bounds preserve the exponential
+profile weight, so the complete prime sums and pole functionals
+converge. The identity can equivalently be passed from VHP1's joint
+core. No finite prime truncation or separate favorable sign is used.
+
+### Keep the hard-cut metric commutators small in the Sobolev order
+
+Write $X=KSw$ as in VHP3 and put
+
+$$
+ L=e^{qt}Je^{-qt},\qquad
+ B_0=P_+,\qquad B_6=e^{-6t}P_+.
+$$
+
+The full-line multipliers $K,S,L$ commute, hence
+$X_J=LX$ and $X_{J^2}=L^2X$. For $B=B_0,B_6$ define
+
+$$
+ D_B(X)=\langle LX,BLX\rangle
+             -\Re\langle BX,L^2X\rangle.
+$$
+
+The GLOBAL mixed null equation and VHS2 give the exact account
+
+$$
+ 0\le Q_\lambda(F_J)
+ =\pi^{-7/2}\{\lambda D_{B_0}(X)-\mu D_{B_6}(X)\}.
+ \tag{VHS3}
+$$
+
+Both original metrics remain in this formula. Their errors obey
+
+$$
+ \|[J,B]J^{-1}\|_{2\to2}\le Cs,
+ \qquad \|LJ^{-1}-I\|_{2\to2}\le Cs,
+ \qquad B=B_0,B_6,
+ \tag{VHS4}
+$$
+
+uniformly in $N$. Here is the scalar estimate paying the cut.
+The non-diagonal Fourier kernels of $B_0$ and $B_6$ are bounded by
+$C/|\xi-\eta|$; the diagonal term of $B_0$ cancels in the
+commutator. Put $a_\xi=(c^2+\xi^2)^{1/2}$. Direct differentiation
+gives
+
+$$
+ 0\le\frac{d\log j_{s,N}}{d\log a}\le s.
+$$
+
+Consequently the absolute commutator kernel is bounded by
+$C|j_{s,N}(\xi)/j_{s,N}(\eta)-1|/|\xi-\eta|$.
+Apply Schur with weight $a_\xi^{-1/2}$. On comparable scales the
+derivative bound removes the diagonal singularity. On either far
+scale the weighted row and column integrals are at most a constant
+times
+
+$$
+ s\int_2^\infty\log v\,v^{s-3/2}dv\le C_{s_0}s.
+$$
+
+This proves the first estimate, including both signs of the real
+frequency. For the second, the symbol is
+$j_{s,N}(\xi+iq)/j_{s,N}(\xi)-1$. Integrate the logarithmic
+derivative along that vertical segment. The segment stays inside
+the fixed zero-free strip and the bound is $Cs$, independently of
+$N$.
+
+Set $Y=JX$ and write $L=(I+R)J$, $\|R\|\le Cs$.
+In the second term of $D_B$, move the self-adjoint $J$ to the first
+slot. The operator there is $JBJ^{-1}=B+[J,B]J^{-1}$.
+Expansion and VHS4 therefore give $|D_B(X)|\le Cs\|Y\|_2^2$.
+After reducing the fixed upper bound for $s$, the inverse of $I+R$
+is uniformly bounded. VHP3 applied to the SAME actual $F_J$ then
+gives
+
+$$
+ |D_{B_0}(X)|+|D_{B_6}(X)|
+ \le Cs\|JX\|_2^2\le CsM(F_J).
+ \tag{VHS5}
+$$
+
+The last step uses VHP3's full-line reconstruction bound for actual
+even profiles, rather than a comparison of arbitrary full-line and
+positive-half-line norms.
+
+### Absorb the metric cost and retain the multiplier dependence
+
+Fix $\eta$ as in VHB16 and retain
+$\kappa=(1-\theta)/\theta>1/4$ and
+$\Lambda=1+\lambda^{-\kappa}$. There are fixed $s_*,a_*>0$ such that
+for
+
+$$
+ 0<s\le\min\left(s_*,a_*\frac{\lambda}{\lambda+|\mu|}\right),
+ \tag{VHS6}
+$$
+
+VHS3--VHS5 and VHB17 imply
+
+$$
+ \mathcal P(F_J)+\frac\lambda4M(F_J)
+ \le C_\eta\Lambda\|g_{F_J}\|_2^2.
+ \tag{VHS7}
+$$
+
+Indeed choose $s$ so that the upper bound for $Q_\lambda(F_J)$ is
+at most $\lambda M(F_J)/4$. In W338,
+$S(F_J)=\|u_{F_J}\|_2^2\le\mathcal P(F_J)$ since $p\ge1$.
+The full logarithmic form comparison thus yields
+
+$$
+ \mathcal L_1(g_{F_J})+c_1\lambda M(F_J)
+ \le C_\eta\Lambda\|g_{F_J}\|_2^2.
+ \tag{VHS8}
+$$
+
+Choose $\log R=C_\eta\Lambda$ with a sufficiently large fixed
+coefficient. The contribution of $|\tau|>R$ on the right of VHS8
+is absorbed by its logarithmic left side. The remaining low
+frequencies satisfy $j_{s,N}(\tau/2)^2\le C\exp(Cs\Lambda)$.
+The original unit cap-four class has $\|g_F\|_2^2\le C$. Hence
+
+$$
+ \begin{aligned}
+ \|g_{F_J}\|_2^2&\le C_\eta\exp(C_\eta s\Lambda),\\
+ \mathcal L_1(g_{F_J})+\lambda M(F_J)
+ &\le C_\eta\Lambda\exp(C_\eta s\Lambda).
+ \end{aligned}
+ \tag{VHS9}
+$$
+
+These bounds are uniform in $N$. Monotone convergence of
+$j_{s,N}(\tau/2)^2$ proves the positive-order estimate
+
+$$
+ \boxed{\quad
+ \|g_F\|_{H^s(\mathbb R)}^2
+ \le C_\eta\exp[C_\eta s(1+\lambda^{-\kappa})].
+ \quad}
+ \tag{VHS10}
+$$
+
+The limiting weight is $(1+\tau^2/(4c^2))^s$, equivalent to the
+usual $H^s$ norm with uniform constants for $s\le s_*$. This is a
+positive Sobolev order of the original arithmetic profile, rather
+than another finite logarithmic moment. Its range remains below
+$1/2$; it supplies neither a continuous trace nor a physical
+dilation derivative.
+
+Under the finite-height premise, outside VHP10's exponentially
+small allowance, VHP7 and VHP9 give $\lambda\asymp\delta$ and
+$|\mu|\le C\delta$. A fixed $s>0$ is then allowed, but VHS10 costs
+$\exp(C\delta^{-\kappa})$. For example, W367--W370's complete heat
+comparison with $a=5/6$, $b=5/2$ and $\epsilon=1/T$ gives only
+
+$$
+ \delta\le C\eta_T+
+ C\exp(C\delta^{-\kappa})T^{-s/3},
+ \qquad \eta_T=\sqrt T\log(2+T)e^{-T}.
+ \tag{VHS11}
+$$
+
+Its resulting exponent $1/\kappa<4$ does not improve VHR1's
+existing $(\log T)^{-4}$ allowance. The positive-order estimate
+and the uniform signed allowance are different conclusions. Full
+RH and strict Robin for every integer $n>5040$ remain unproved.
