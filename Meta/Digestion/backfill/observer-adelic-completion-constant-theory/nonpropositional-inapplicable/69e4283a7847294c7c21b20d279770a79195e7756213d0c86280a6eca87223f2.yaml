@@ -5,3 +5,7 @@ cas_ref: sha256:69e4283a7847294c7c21b20d279770a79195e7756213d0c86280a6eca87223f2
 coverage_gids: []
 receipts:
   unresolved_subitems: []
+  nonpropositional:
+    justification: Nominal list or definition fragment with no mathematical assertion; settled as nonpropositional.
+    previous_atom_id: 07ebf953d50ef0ee5607563c4dd7a5ac5dd790893be33ed7080b56adcd4afa12
+    next_atom_id: 3bacb9ec79d1970fbf74103788a91f29c47b0853b66097eae55f5fe43054b996
