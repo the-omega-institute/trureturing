@@ -245,7 +245,10 @@ internal sealed class LinearDoilyNegativeLineParityDocument : IScribeDocumentDef
                         + "identifies this count with the cardinality of negativeLines U. "
                         + "Choosing the symplectic equivalence for each U proves the assertion "
                         + "for every N at least two."))),
-                DescribeRole.Theorem))));
+                DescribeRole.Theorem,
+                openProblemResolutionClaim: new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("muller-saniga-giorgetti-de-boutray-holweck-2022-linear-doily-odd-negative-lines"),
+                    ResolutionKind.Proved)))));
 
     private static DocumentBlock Definition(string id, string title, string declaration,
         Formula formula, AssessedProvenance provenance, string prose) => Describe.Lean(
