@@ -46,9 +46,9 @@ internal sealed class LaurentNumeratorDocument : IScribeDocumentDefinition
                 + "checkpoint 6c8682a64921b8f8d2f059c80e395b2af30c9a13; original proof checkpoint "
                 + "cda001f75ea0ca217d1230c9abbefd62265d44aa. The complete telescope and proof are preserved. "
                 + "This extraction claims no independent discovery. The locality LibraryNote is background.")),
-            Paragraph(Text("The full-telescope Reg mirror proves source_bridge and actual_law. Whole-family "
-                + "variation, sensitivity, observational dependence, the final typed Contract.Registration "
-                + "and sourceSelection remain unfinished under https://github.com/the-omega-institute/trureturing/issues/20163. "
+            Paragraph(Text("The full-telescope Reg mirror contains a dependent/source registration attempt that "
+                + "preserves all original parameter and input fibers. Source-coordinate selection remains unfinished "
+                + "under https://github.com/the-omega-institute/trureturing/issues/20163. "
                 + "No declared_validated registration is claimed.")),
             Paragraph(Text("Polynomial partial fractions: Kevin Buzzard, Sidharth Hariharan and Aaron Liu; "
                 + "HahnSeries: Aaron Anderson; LaurentSeries: Aaron Anderson, María Inés de Frutos-Fernández "

@@ -116,10 +116,6 @@ private def poleOrder (x : Remaining z) (orders : Fin N × Fin N → ℕ) (m : �
 private def orientation (orders : Fin N × Fin N → ℕ) : CoefficientField K z :=
   ∏ p : LabelledPair N, pairScalar K z p ^ orders p.val
 
-private theorem orientation_nonzero (orders : Fin N × Fin N → ℕ) :
-    orientation K z orders ≠ 0 := by
-  exact Finset.prod_ne_zero_iff.mpr (fun p _ => pow_ne_zero _ (pairScalar_ne_zero K z p))
-
 private theorem curry_weighted_denominator (orders : Fin N × Fin N → ℕ) :
     curryPolynomial K z (∏ p ∈ labelledPairs N, pairPolynomial K p.1 p.2 ^ orders p) =
       RatFunc.C (orientation K z orders) *

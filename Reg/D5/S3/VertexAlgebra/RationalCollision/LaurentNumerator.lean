@@ -1,5 +1,7 @@
 import D5.S3.VertexAlgebra.RationalCollision.LaurentNumerator
 import Reg.Support.DependentFamily
+import LeanInformationAuditInterface.Contract.Registration
+import Mathlib.Algebra.Field.ULift
 
 /-! Complete source telescope for weighted Laurent collision.
 
@@ -40,7 +42,7 @@ structure Input (p : Parameters.{u}) where
   orders : Fin ((p.pre + 2) + p.post) × Fin ((p.pre + 2) + p.post) → ℕ
   r : ℤ
 
-def signature : Signature where
+abbrev signature : Signature where
   Params := Parameters.{u}
   State := Input
   Role := Unit
@@ -89,7 +91,7 @@ theorem actual_law : arena.{u}.Law actual.{u} :=
 /-- A whole-family intervention; the original parameter and state fibers remain intact. -/
 def rejected : Realization signature.{u} := realize signature.{u} (fun _ p v =>
   letI := p.field
-  actual.readout () p v + 1) (fun empty => nomatch empty)
+  actual.readout () p v + 1) actual.anchor
 
 private def witnessOrder : Fin 1 ≃ Remaining (0 : Fin 2) where
   toFun _ := ⟨1, by decide⟩
@@ -136,7 +138,7 @@ theorem sensitivity : Sensitivity arena.{u} actual.{u} := by
   · intro i
     refine ⟨rejected, ?_, rfl, rejected_law⟩
     intro j hj
-    exact (hj (Subsingleton.elim _ _)).elim
+    exact (hj (Subsingleton.elim (α := Unit) j i)).elim
   · intro e
     cases e
 
@@ -153,6 +155,7 @@ theorem dependence : ObservationalDependence signature.{u} actual.{u} := by
     simp [rational, v1]
   have hj : OrderedCollisionResidues.CollisionResidueMaps.jump p.scalar p.pre p.post p.z p.tau
       (LabelledRationalClearing.WeightedActualQ.globalDiagonal p.scalar p.z p.x ^ (-1 : ℤ)) = 1 := by
+    dsimp only [LabelledRationalClearing.WeightedActualQ.globalDiagonal]
     rw [← OrderedCollisionResidues.ActualDiagonalLocalResidue.diagonal_collision
       p.scalar p.pre p.post p.z p.tau p.x p.adjacent (-1)]
     change coefficientHahn p.scalar (p.pre + 1) p.post p.z p.tau
@@ -180,7 +183,7 @@ def familyRegistration : Registration arena.{u}
 
 /-- The compiled mathematical family is supplied to the source implementation.
 Source-coordinate binding is explicitly unfinished; this is not declared_validated. -/
-def registration : LeanInformationAudit.Contract.Registration
+def registration : LeanInformationAudit.Contract.Registration.{_, _, _, 0, 0, 0, _, _, _, _, _, 0}
     (@_root_.D5.S3.VertexAlgebra.RationalCollision.LaurentNumerator.weighted_laurent_collision.{u})
     (type_of% (realize signature.{u} actual.readout actual.anchor)) Type Unit where
   unitName := `D5.S3.VertexAlgebra.RationalCollision.LaurentNumerator.weighted_laurent_collision.__information_unit
