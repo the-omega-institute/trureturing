@@ -4,7 +4,7 @@
    mirror-E: none(waiver:external-open-problem-resolution)
    anchors: []
    utility: none
-   digest: Finite measure-and-prepare processes cannot perfectly clone amplitude-damping channels. -/
+   digest: Finite measure-and-prepare cannot clone amplitude-damping channels. -/
 
 import D5.S3.Quantum.Information.PartialTraceMutualInformation
 import Mathlib.Algebra.Polynomial.Roots
@@ -59,16 +59,25 @@ private def polyChoi : Matrix (Fin 2 × Fin 2) (Fin 2 × Fin 2) (Polynomial ℂ)
 private lemma ad_entries (s : ℝ) (hs : s ∈ Set.Icc (0 : ℝ) 1)
     (x y : Fin 2 × Fin 2) :
     adChoi (1 - s ^ 2) x y = (polyChoi x y).eval (s : ℂ) := by
-  sorry
+  have hγ : 0 ≤ 1 - s ^ 2 := by nlinarith [hs.1, hs.2]
+  rcases x with ⟨r, o⟩
+  rcases y with ⟨r', o'⟩
+  fin_cases r <;> fin_cases o <;> fin_cases r' <;> fin_cases o' <;>
+    simp [adChoi, polyChoi, Fin.sum_univ_two, Real.sqrt_sq hs.1,
+      ← Complex.ofReal_mul, Real.mul_self_sqrt hγ] <;> ring
 
 private lemma ad_tp (s : ℝ) (hs : s ∈ Set.Icc (0 : ℝ) 1) (r r' : Fin 2) :
     ∑ o : Fin 2, adChoi (1 - s ^ 2) (r, o) (r', o) = if r = r' then 1 else 0 := by
-  sorry
+  simp_rw [ad_entries s hs]
+  fin_cases r <;> fin_cases r' <;>
+    simp [Fin.sum_univ_two, polyChoi] <;> ring
 
 private lemma ad_injective (s t : ℝ)
     (hs : s ∈ Set.Icc (0 : ℝ) 1) (ht : t ∈ Set.Icc (0 : ℝ) 1)
     (h : adChoi (1 - s ^ 2) = adChoi (1 - t ^ 2)) : s = t := by
-  sorry
+  have he := congrArg (fun A => A (0, 0) (1, 1)) h
+  simp only [ad_entries s hs, ad_entries t ht] at he
+  simpa [polyChoi] using he
 
 /-- Feed zero into the other reference sites and trace their output sites. -/
 private def red (n : ℕ)
@@ -83,17 +92,41 @@ private lemma red_channel (n : ℕ)
     (hK : IsChannelChoi K) :
     (red n K).PosSemidef ∧ ∀ r r' : Fin 2,
       ∑ o : Fin 2, red n K (r, o) (r', o) = if r = r' then 1 else 0 := by
-  sorry
+  refine ⟨partialTraceRight_posSemidef (hK.1.submatrix _), ?_⟩
+  intro r r'
+  have ht := hK.2 (Fin.cons r (fun _ => 0)) (Fin.cons r' (fun _ => 0))
+  rw [← (Fin.consEquiv (fun _ : Fin (n + 1) => Fin 2)).sum_comp] at ht
+  rw [Fintype.sum_prod_type] at ht
+  have hcons (a b : Fin 2) (v : Fin n → Fin 2) :
+      (fun i => ((@Fin.cons n (fun _ => Fin 2) a (fun _ => 0)) i,
+        (@Fin.cons n (fun _ => Fin 2) b v) i)) =
+        @Fin.cons n (fun _ => Fin 2 × Fin 2) (a, b) (fun i => (0, v i)) := by
+    funext i
+    exact Fin.cases rfl (fun _ => rfl) i
+  simp only [Fin.consEquiv_apply] at ht
+  simp_rw [hcons] at ht
+  simpa [red, partialTraceRight, Fin.cons_inj] using ht
 
 private lemma red_pow (n : ℕ) (s : ℝ) (hs : s ∈ Set.Icc (0 : ℝ) 1) :
     red n (choiPow (adChoi (1 - s ^ 2)) (n + 1)) = adChoi (1 - s ^ 2) := by
-  sorry
+  ext x y
+  simp only [red, partialTraceRight, Matrix.submatrix_apply, choiPow,
+    Fin.prod_univ_succ, Fin.cons_zero, Fin.cons_succ]
+  rw [← Finset.mul_sum]
+  rw [← Fintype.prod_sum (fun (_ : Fin n) (o : Fin 2) =>
+    adChoi (1 - s ^ 2) (0, o) (0, o))]
+  simp_rw [ad_tp s hs 0 0]
+  simp
 
 private lemma red_sum (n L : ℕ) (p : Fin L → ℂ)
     (K : Fin L → Matrix (Fin (n + 1) → Fin 2 × Fin 2)
       (Fin (n + 1) → Fin 2 × Fin 2) ℂ) :
     red n (∑ ℓ, p ℓ • K ℓ) = ∑ ℓ, p ℓ • red n (K ℓ) := by
-  sorry
+  ext x y
+  simp only [red, partialTraceRight, Matrix.submatrix_apply, Matrix.sum_apply,
+    Matrix.smul_apply, smul_eq_mul]
+  rw [Finset.sum_comm]
+  simp_rw [Finset.mul_sum]
 
 private lemma ad_extreme (s : ℝ) (hs : s ∈ Set.Icc (0 : ℝ) 1)
     (L : ℕ) (q : Fin L → ℂ)
@@ -108,13 +141,32 @@ private lemma measurement_polynomial (N : ℕ)
     (T : Matrix (Fin N → Fin 2 × Fin 2) (Fin N → Fin 2 × Fin 2) ℂ) :
     ∃ P : Polynomial ℂ, ∀ s ∈ Set.Icc (0 : ℝ) 1,
       P.eval (s : ℂ) = Matrix.trace (T * choiPow (adChoi (1 - s ^ 2)) N) := by
-  sorry
+  refine ⟨∑ x, ∑ y, C (T x y) * ∏ i, polyChoi (y i) (x i), ?_⟩
+  intro s hs
+  simp only [Polynomial.eval_finsetSum, Polynomial.eval_mul, Polynomial.eval_C,
+    Polynomial.eval_prod, ← ad_entries s hs, Matrix.trace, Matrix.diag_apply,
+    Matrix.mul_apply, choiPow]
 
 private lemma polynomial_zero (P : Polynomial ℂ)
     (R : Matrix (Fin 2 × Fin 2) (Fin 2 × Fin 2) ℂ)
     (h : ∀ s ∈ Set.Icc (0 : ℝ) 1,
       P.eval (s : ℂ) ≠ 0 → R = adChoi (1 - s ^ 2)) : P = 0 := by
-  sorry
+  by_cases hz : ∀ s ∈ Set.Icc (0 : ℝ) 1, P.eval (s : ℂ) = 0
+  · apply Polynomial.eq_zero_of_infinite_isRoot
+    apply ((Set.Icc_infinite (by norm_num : (0 : ℝ) < 1)).image
+      Complex.ofReal_injective.injOn).mono
+    rintro z ⟨s, hs, rfl⟩
+    exact hz s hs
+  · push_neg at hz
+    obtain ⟨t, ht, hpt⟩ := hz
+    apply Polynomial.eq_zero_of_infinite_isRoot
+    apply (((Set.Icc_infinite (by norm_num : (0 : ℝ) < 1)).sdiff
+      (Set.finite_singleton t)).image Complex.ofReal_injective.injOn).mono
+    rintro z ⟨s, ⟨hs, hst⟩, rfl⟩
+    change P.eval (s : ℂ) = 0
+    by_contra hp
+    have he := ad_injective s t hs ht ((h s hs hp).symm.trans (h t ht hpt))
+    exact hst (Set.mem_singleton_iff.mpr he)
 
 /-- Perfect measure-and-prepare cloning of the amplitude-damping family is impossible. -/
 theorem result : claim := by
