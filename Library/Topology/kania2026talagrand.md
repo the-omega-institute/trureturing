@@ -94,6 +94,42 @@ the signed-measure induction (A)–(G), or the retrospective paired-Dirac
 capture argument. Problem 8.2 remains unresolved here; no official
 acceptance is asserted.
 
+## Nonmetric clopen disjointization
+
+The local selection statement concerns arbitrary compact Hausdorff
+zero-dimensional Borel spaces. For regular probabilities mu_n carried by
+pairwise disjoint Borel E_n and 0 < eta < 1, its conclusion is an increasing
+subsequence and pairwise disjoint nonempty clopens retaining probability
+greater than 1-eta/2. The ordinary argument is a classical selection proof,
+not a novelty claim or a claim that this theorem originates in the cited
+Problem 8.2 article.
+
+The construction uses the pinned Mathlib general Prokhorov forward compactness
+instance for ProbabilityMeasure K. A cluster nu is regularized by applying
+positive RealRMK to its continuous integral functional; nu is not assumed
+regular. The representing lambda is finite on compact K before its integral
+of one proves probability mass. Continuous clopen indicators supply precisely
+the fixed-clopen convergence needed by the finite-history induction. They do
+not supply convergence on moving Borel carriers. Summability of lambda(E_n),
+regular compact cores, outer open approximations and a finite clopen sandwich
+complete the ordinary construction without a metric or countable base.
+
+For a real finite regular signed input, carrying means zero total variation
+on the complement of the carrier. Normalization uses
+q=totalVariation(u)(W), never the cancelling signed value u(W). Restriction
+and positive rescaling give t=q inverse times u restricted to W, total
+variation norm one, and exact error 2(1-q). On a further increasing
+subsequence a single sign makes positive Jordan mass at least one half.
+That sign acts on both t and the corresponding original u. A fixed positive
+error bound does not imply weak-star convergence of the approximants.
+
+The canonical implementation source is
+`D5.S3.Topology.Measures.ClopenDisjointization`; its corresponding Scribe
+states the full positive and paired-sign signed telescopes. Source presence
+is not kernel acceptance. Neither this selection statement nor its signed
+normalization establishes KPR, the signed (A)-(G) recursion, final capture,
+the Grothendieck endpoint or exclusion in the whole signed dual unit ball.
+
 ## Verified locator
 
 Canonical arXiv record: https://arxiv.org/abs/2607.06808v2.
