@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:4236257f5bfe63eb99d61915761a0de14d77085c06c7e1e13e7037c62a83e8d0
+  normalized_sha256: sha256:4236257f5bfe63eb99d61915761a0de14d77085c06c7e1e13e7037c62a83e8d0
+cas_ref: sha256:4236257f5bfe63eb99d61915761a0de14d77085c06c7e1e13e7037c62a83e8d0
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: Methodological comparison about what would count as a qualitative change, without a numerical or algebraic claim.
+    previous_atom_id: 8ee30c7423f36001fc6ea217e0800565561a20dbeb2ab8e53f68aba022f43650
+    next_atom_id: 5009d67dce2d036f217f341e69ac31e0428229d5e93be341f0b66165b751a1ed
