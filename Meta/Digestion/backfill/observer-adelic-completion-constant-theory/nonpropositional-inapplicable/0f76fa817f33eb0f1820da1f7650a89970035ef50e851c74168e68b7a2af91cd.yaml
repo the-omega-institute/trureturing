@@ -5,3 +5,7 @@ cas_ref: sha256:0f76fa817f33eb0f1820da1f7650a89970035ef50e851c74168e68b7a2af91cd
 coverage_gids: []
 receipts:
   unresolved_subitems: []
+  nonpropositional:
+    justification: 该 atom 只是章节标题和方法论提示，要求区分已推导与待检验，不含独立数学断言。
+    previous_atom_id: f2d6068b5ca62a49723d3a8900f4afeb74071664aa2d2ce0c2aab39c5fbcdea1
+    next_atom_id: b4939bc0b6143c65a4e9725e34714bf03238c8c37b47d5daad563ec1870e7879

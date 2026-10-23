@@ -5,3 +5,7 @@ cas_ref: sha256:19c201198bd33d1a9b7f9fb18715ebc6b48f6c88ebc285f601fbcf8b19e46fde
 coverage_gids: []
 receipts:
   unresolved_subitems: []
+  nonpropositional:
+    justification: 该 atom 只是方法论协议或列表续项，不含独立可结算的数学断言。
+    previous_atom_id: e5a3fa29868bd40e7b7e0294ded2089388f442859395fdd60b82ba404f2029ba
+    next_atom_id: e60d2806b42daf32ce65fc7c93e59f017de4a2aa660a461a126e86795410a018

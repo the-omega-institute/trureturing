@@ -5,3 +5,7 @@ cas_ref: sha256:6fbd06d5628b217566c2b75bbf868f638d814dae5396b90fdaca9274aad88865
 coverage_gids: []
 receipts:
   unresolved_subitems: []
+  nonpropositional:
+    justification: 该 atom 是章节标题及对前文的解释性定位，不含独立可结算的数学断言。
+    previous_atom_id: 9921d2577ac65e4fd52dba92214b3cbfda6aeb15c37fa2f2c7bfae561c6a0e72
+    next_atom_id: 5c116209b217bb9a2d50c6ba3399e28967dfa9c06b62e7320f49d1a4261f47a0
