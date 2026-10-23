@@ -727,7 +727,10 @@ unsafe def lookupLeafPass (fallback : Bool) (table : LookupTable) (goal : MVarId
     if !telemetry && workers > 1 &&
         (position < pendingStart || position >= pendingStart + pending.size) then
       let mut batch := #[]
-      for next in candidates.entries[position:min candidates.entries.size (position + workers)] do
+      -- A bounded queue lets short fallback failures fill gaps left by long
+      -- candidates; the native thread pool still limits simultaneous work.
+      let queue := workers * (if fallback then 8 else 1)
+      for next in candidates.entries[position:min candidates.entries.size (position + queue)] do
         unless candidateOwnerMatches table next do break
         batch := batch.push next
       pendingStart := position
