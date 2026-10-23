@@ -76,7 +76,21 @@ $$\begin{aligned}\operatorname{sourceMatrix}\left(g, adjacency\right) = \operato
 
 A is Mathlib SimpleGraph.adjMatrix over the reals, with entry one on an edge and zero otherwise. D is SimpleGraph.degMatrix, the diagonal of the actual neighbour counts. L is SimpleGraph.lapMatrix = D-A; Q is D+A. The fourth choice is the literal commonNeighbourMatrix. All four matrices are Hermitian: the first three use the corresponding Mathlib symmetry results, and CN is symmetric by interchange of its two counted-neighbour conditions.
 
-**Definition 1.7 (Actual spectra with multiplicity).**
+**Theorem 1.7 (Each source matrix is Hermitian).**
+
+$$\forall V \in Type,\; [\operatorname{Fintype}\left(V\right)], \forall g \in \operatorname{SimpleGraph}\left(V\right),\; \forall kind \in MatrixKind,\; Matrix.IsHermitian\left(\operatorname{sourceMatrix}\left(g, kind\right)\right)$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/Graph/SubgroupGenerating/CyclicExtensionRefutation.source_matrix_isHermitian` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Acknowledgement.* Shrabani Das; Ahmad Erfanian; Rajat Kanti Nath (2026). *Certain topological indices and spectral properties of SGB-graphs of finite cyclic groups*. DOI: [10.48550/arXiv.2602.07587](https://doi.org/10.48550/arXiv.2602.07587). URL: <https://arxiv.org/abs/2602.07587v1>.
+
+*Commentary.*
+
+For every finite vertex type V, simple graph g and matrix choice kind, sourceMatrix g kind is Hermitian. The adjacency, Laplacian and degree matrices are real symmetric; interchanging the vertices preserves the common-neighbour count. The graphSpectrum definition uses this theorem to enumerate the real eigenvalues with multiplicities.
+
+**Definition 1.8 (Actual spectra with multiplicity).**
 
 $$\text{let} hM : \operatorname{IsHermitian}\left(\operatorname{sourceMatrix}\left(g, kind\right)\right), \operatorname{graphSpectrum}\left(g, kind\right) = \operatorname{map}\left(\operatorname{eigenvalues}\left(hM\right), \operatorname{univ}\left(V\right)\right)$$
 
@@ -88,7 +102,7 @@ $$\text{let} hM : \operatorname{IsHermitian}\left(\operatorname{sourceMatrix}\le
 
 Let M = sourceMatrix(g,kind), and let hM be its Hermitian proof. The multiset maps hM.eigenvalues over the entire finite index type V. The definition also applies RCLike.ofReal, which is the identity in the real field. Mathlib Matrix.IsHermitian.roots_charpoly_eq_eigenvalues identifies this multiset with M.charpoly.roots. Consequently algebraic multiplicity is retained and no integer-valued surrogate or selected subset of eigenvalues is used.
 
-**Definition 1.8 (Integer eigenvalues).**
+**Definition 1.9 (Integer eigenvalues).**
 
 $$\operatorname{IntegralSpectrum}\left(s\right) \Leftrightarrow \left(\forall x \in \mathbb{R},\; x \in s \Rightarrow \left(\exists z \in \mathbb{Z},\; x = (z : \mathbb{R})\right)\right)$$
 
@@ -100,7 +114,7 @@ $$\operatorname{IntegralSpectrum}\left(s\right) \Leftrightarrow \left(\forall x 
 
 Integral means that every member of the actual real eigenvalue multiset equals the real image of some integer. Integer matrix entries or integer characteristic coefficients alone would not satisfy this definition.
 
-**Definition 1.9 (The whole-graph center).**
+**Definition 1.10 (The whole-graph center).**
 
 $$\operatorname{averageDegree}\left(g\right) = \frac{2 \cdot (\operatorname{card}\left(\operatorname{edgeFinset}\left(g\right)\right) : \mathbb{R})}{(\operatorname{card}\left(V\right) : \mathbb{R})}$$
 
@@ -112,7 +126,7 @@ $$\operatorname{averageDegree}\left(g\right) = \frac{2 \cdot (\operatorname{card
 
 The center is twice the number of actual unordered edges divided by the total number of vertices. Both counts belong to the entire graph, including every component and every subgroup vertex. There is no separate component centering.
 
-**Definition 1.10 (The four absolute energies).**
+**Definition 1.11 (The four absolute energies).**
 
 $$\begin{aligned}\operatorname{graphEnergy}\left(g, kind\right) = \sum_{x \in \operatorname{graphSpectrum}\left(g, kind\right)}\left|x - \operatorname{center}\left(g, kind\right)\right|\\\operatorname{center}\left(g, laplacian\right) = \operatorname{averageDegree}\left(g\right)\\\operatorname{center}\left(g, signless\right) = \operatorname{averageDegree}\left(g\right)\\\operatorname{center}\left(g, adjacency\right) = 0\\\operatorname{center}\left(g, commonNeighbour\right) = 0\end{aligned}$$
 
@@ -124,7 +138,7 @@ $$\begin{aligned}\operatorname{graphEnergy}\left(g, kind\right) = \sum_{x \in \o
 
 The sum is a multiset sum, so repeated eigenvalues contribute repeatedly. For adjacency and CN, center is zero. For Laplacian and signless Laplacian, center is averageDegree(g), exactly the whole-graph 2m/N used in Section 5. The construction applies equally to the SGB graph and each complete-graph benchmark.
 
-**Definition 1.11 (The complete ten-clause list).**
+**Definition 1.12 (The complete ten-clause list).**
 
 $$\operatorname{sourceBundle}\left(g\right) \Leftrightarrow \left(\left(\neg \operatorname{IntegralSpectrum}\left(\operatorname{graphSpectrum}\left(g, adjacency\right)\right)\right) \land \left(\operatorname{IntegralSpectrum}\left(\operatorname{graphSpectrum}\left(g, laplacian\right)\right) \land \left(\operatorname{IntegralSpectrum}\left(\operatorname{graphSpectrum}\left(g, signless\right)\right) \land \left(\operatorname{IntegralSpectrum}\left(\operatorname{graphSpectrum}\left(g, commonNeighbour\right)\right) \land \left(\operatorname{graphEnergy}\left(g, adjacency\right) < (\operatorname{card}\left(V\right) : \mathbb{R}) \land \left(\operatorname{graphEnergy}\left(g, adjacency\right) \le \operatorname{graphEnergy}\left(\operatorname{K}\left(V\right), adjacency\right) \land \left(\operatorname{graphEnergy}\left(g, laplacian\right) \le \operatorname{graphEnergy}\left(\operatorname{K}\left(V\right), laplacian\right) \land \left(\operatorname{graphEnergy}\left(g, signless\right) \le \operatorname{graphEnergy}\left(\operatorname{K}\left(V\right), signless\right) \land \left(\operatorname{graphEnergy}\left(g, commonNeighbour\right) \le \operatorname{graphEnergy}\left(\operatorname{K}\left(V\right), commonNeighbour\right) \land \operatorname{graphEnergy}\left(g, adjacency\right) \le \operatorname{graphEnergy}\left(g, laplacian\right)\right)\right)\right)\right)\right)\right)\right)\right)\right)$$
 
@@ -136,7 +150,7 @@ $$\operatorname{sourceBundle}\left(g\right) \Leftrightarrow \left(\left(\neg \op
 
 The displayed conjunction preserves every clause of the closing (a)-(c) list: adjacency nonintegrality; L, Q and CN integrality; strict E < card(V); four separate non-hyperenergeticity bounds; and E <= LE. In the four benchmark clauses, K(V) denotes the actual complete SimpleGraph on the same type V, namely top. Its respective energy is evaluated by the same graphEnergy definition. This is the same-order complete graph in the original definitions; no benchmark estimate is substituted.
 
-**Definition 1.12 (The unrestricted finite-cyclic extension).**
+**Definition 1.13 (The unrestricted finite-cyclic extension).**
 
 $$claim \Leftrightarrow \left(\forall G \in Type,\; [\operatorname{Group}\left(G\right)], [\operatorname{Fintype}\left(G\right)], [\operatorname{IsCyclic}\left(G\right)], \operatorname{sourceBundle}\left(\operatorname{sgbGraph}\left(G\right)\right)\right)$$
 
@@ -148,7 +162,7 @@ $$claim \Leftrightarrow \left(\forall G \in Type,\; [\operatorname{Group}\left(G
 
 The source's closing invitation follows its complete (a)-(c) summary for the known orders p^n, pq, p^2q and p^2q^2, with distinct primes and n >= 1. Those families are results of Das–Erfanian–Nath. The ambient framework is finite groups. Group supplies nonemptiness, Fintype supplies finiteness and IsCyclic supplies cyclicity, so every positive finite order, including one, is retained. The finite-subgroup enumeration is obtained injectively from subsets of G. Decidable choices used to form finite matrices impose no extra group restriction. The invitation is unlabelled; no numbered conjecture or private author-intent assertion is introduced.
 
-**Theorem 1.13 (The whole extension is false).**
+**Theorem 1.14 (The whole extension is false).**
 
 $$\neg claim$$
 
@@ -180,4 +194,5 @@ Use the order-one group PUnit with its existing cyclic-group instance. The compl
 - Truth anchor: `D5/S3/Combinatorics/Graph/SubgroupGenerating/CyclicExtensionRefutation.sgbGraph`
 - Truth anchor: `D5/S3/Combinatorics/Graph/SubgroupGenerating/CyclicExtensionRefutation.sourceBundle`
 - Truth anchor: `D5/S3/Combinatorics/Graph/SubgroupGenerating/CyclicExtensionRefutation.sourceMatrix`
+- Truth anchor: `D5/S3/Combinatorics/Graph/SubgroupGenerating/CyclicExtensionRefutation.source_matrix_isHermitian`
 - Truth anchor: `D5/S3/Combinatorics/Graph/SubgroupGenerating/CyclicExtensionRefutation.subgroupFintype`
