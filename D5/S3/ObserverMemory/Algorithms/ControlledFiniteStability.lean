@@ -270,7 +270,7 @@ private theorem controlled_limit_fixed
       update readout input pair hp
 
 /-- The complete relation is the greatest fixed point of the source operator. -/
-private theorem controlled_limit_eq_gfp
+theorem controlled_limit_eq_gfp
     {Y : Type*} {U O : Type u}
     (update : U -> Y -> Y) (readout : Y -> O) :
     controlledLimitRelation update readout =
@@ -330,7 +330,7 @@ def commonStableEquivalences {Y : Type*} {U O : Type u}
       forall input pair, pair ∈ relation ->
         (update input pair.1, update input pair.2) ∈ relation}
 
-private theorem controlled_limit_is_greatest_stable_equivalence
+theorem controlled_limit_is_greatest_stable_equivalence
     {Y : Type*} {U O : Type u}
     (update : U -> Y -> Y) (readout : Y -> O) :
     IsGreatest (commonStableEquivalences update readout)

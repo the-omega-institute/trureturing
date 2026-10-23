@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:fcd89c295d7470e0dd1caee049e36c91fe5f7e6f83a3c6f260cfc22a77e6dd5f
+  normalized_sha256: sha256:fcd89c295d7470e0dd1caee049e36c91fe5f7e6f83a3c6f260cfc22a77e6dd5f
+cas_ref: sha256:fcd89c295d7470e0dd1caee049e36c91fe5f7e6f83a3c6f260cfc22a77e6dd5f
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 'Nonpropositional: 受“下一步建立关于 N 的”支配的 sticky projection 递推待办项，没有递推结果。'
+    previous_atom_id: 2a7cc16bb29291e9c4e08225029722acee025cfda17bc4df3114a879e82e4d20
+    next_atom_id: 195b92956dc7a782d818e7fb343576f69248ed1faee6fc5b184888c8f9cfc65a

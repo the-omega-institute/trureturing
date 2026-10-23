@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:7e73cc1e2833e6670eb71e0234ddea0d3f85f8abaefa0d02c0a73c90727e5b53
+  normalized_sha256: sha256:7e73cc1e2833e6670eb71e0234ddea0d3f85f8abaefa0d02c0a73c90727e5b53
+cas_ref: sha256:7e73cc1e2833e6670eb71e0234ddea0d3f85f8abaefa0d02c0a73c90727e5b53
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 研究窗口层数的参数清单项；未断言任何极限成立。
+    previous_atom_id: 8510c604337ccec0e6c935246467531b700acf6c68ca67237fbf00cdd0775d9c
+    next_atom_id: 1c6d14fb6a2cf50cb9fce39e0106e2b2fbd75da78b391621a526e5bcbf8ee59d

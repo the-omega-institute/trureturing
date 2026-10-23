@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:ecda8d74bf1d1cadb9b6956820f61c0896683cfb6cc6f60a743acac40247833f
+  normalized_sha256: sha256:ecda8d74bf1d1cadb9b6956820f61c0896683cfb6cc6f60a743acac40247833f
+cas_ref: sha256:ecda8d74bf1d1cadb9b6956820f61c0896683cfb6cc6f60a743acac40247833f
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 只有章节标题和证书层级的引导语，本 atom 尚未陈述各层的数学关系。
+    previous_atom_id: 7b1f6eb6b2e253fe2e46a7e18fa5b6b34c623c643a88a2bdacbd858b32eae5f8
+    next_atom_id: 24437e4744fb3f666617408fb6722b1026a1f26eb37ca5f403535cda25382e2a

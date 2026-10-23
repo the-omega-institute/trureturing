@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:fa5359a4d6120ba2992597d7f6aaf42a2e9631fe4e5ea63140aba0035cf2de15
+  normalized_sha256: sha256:fa5359a4d6120ba2992597d7f6aaf42a2e9631fe4e5ea63140aba0035cf2de15
+cas_ref: sha256:fa5359a4d6120ba2992597d7f6aaf42a2e9631fe4e5ea63140aba0035cf2de15
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 尺度选择与数值策略的认识论限制；不主张任何尺度具有已证的全局最优性。
+    previous_atom_id: 561821f9c1c72e3054405eb89152fc621cbeffca454768c90ea3bc8712f3807c
+    next_atom_id: 1a58ce1eb3e9aa9da4086fcff85beb200dc8dff40bd329017517b34f8f557858

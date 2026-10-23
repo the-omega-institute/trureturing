@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:a5d35fa803c9eca3a6e5df89ef4e6474bfb6f96e840b6736351d1083ec788a5b
+  normalized_sha256: sha256:a5d35fa803c9eca3a6e5df89ef4e6474bfb6f96e840b6736351d1083ec788a5b
+cas_ref: sha256:a5d35fa803c9eca3a6e5df89ef4e6474bfb6f96e840b6736351d1083ec788a5b
+coverage_gids:
+  - gid: D5/S3/Zeros/Symmetry/ReflectionFixedPointContrast.reflection_mirror_fixed_locus_contrast
+    target_statement_id: sha256:fd8fd3fb8622dd2712ab2218cf0616007766d60a01b4f957c6ea9032aa4241a6
+receipts:
+  unresolved_subitems: []

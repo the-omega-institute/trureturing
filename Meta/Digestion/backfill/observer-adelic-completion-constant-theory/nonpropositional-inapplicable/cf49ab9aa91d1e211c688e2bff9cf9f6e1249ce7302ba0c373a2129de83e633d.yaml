@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:cf49ab9aa91d1e211c688e2bff9cf9f6e1249ce7302ba0c373a2129de83e633d
+  normalized_sha256: sha256:cf49ab9aa91d1e211c688e2bff9cf9f6e1249ce7302ba0c373a2129de83e633d
+cas_ref: sha256:cf49ab9aa91d1e211c688e2bff9cf9f6e1249ce7302ba0c373a2129de83e633d
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 这里只定义幂包测试族 P_psi 和缩放 bump psi_a 的记号；族完备性、Fourier 变换和负见证存在性由后续 atom 单独承担。
+    previous_atom_id: 4583ed85a3f1d01ff119a4b67e6c790b7295d81acac54c1a5c6601f2c33b7313
+    next_atom_id: cff8d92a054f08cb47c444aaac2a7677176ef7f27b0b81c92b0bfb910f55eee1
