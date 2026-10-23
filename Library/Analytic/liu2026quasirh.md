@@ -678,3 +678,70 @@ $$
 $$
 
 Its conductor cut is defined separately in each fixed finite ray character component; these components are then summed coherently. The same source, coefficient signs, all squarefree columns and original collision zeros remain. With this unproved input, the paid lower-order block, low-conductor sum and preceding truncation error would give the full inverse-fourth exponent $B_*-\nu$, and hence the existing complete-energy consumer at $\kappa_{\rm joint}-\nu/2$. No such long-conductor estimate is supplied. This application narrows that missing input; it neither improves the full moment on its own nor restores the signed Robin expression. Classical convexity, Euler products, conductor identities and ideal counting are reused, with no analytic Lean certification or literature-priority claim.
+
+## Reusing the global ordinary-source frontier
+
+At the immutable [QuasiRiemannTracker snapshot `0ce80fdddebb03128d30a917006d8520e7a774b8`](https://github.com/GTimG/QuasiRiemannTracker/tree/0ce80fdddebb03128d30a917006d8520e7a774b8), the merged submissions [Collet #69](https://github.com/GTimG/QuasiRiemannTracker/pull/69) and [Lewko #70](https://github.com/GTimG/QuasiRiemannTracker/pull/70) state stronger boundaries than the Gao value compared above:
+
+| Source | Stated zero-free boundary | Pinned endpoint declaration |
+|---|---|---|
+| Hailey Collet, *A zero-free half-plane from finite ordinary source moments* | $8747729897/10^{10}=0.8747729897$ | [`QRH.Record1252270103Source.Endpoint.beta_bound`](https://github.com/GTimG/QuasiRiemannTracker/blob/0ce80fdddebb03128d30a917006d8520e7a774b8/submissions/hailey-collet-1252270103/src/Submissions/hailey_collet_1252270103/Record1252270103Source/Core/Endpoint.lean) |
+| Mark Lewko, *An acyclic ordinary-source refinement targeting the Dirichlet boundary 0.874772906* | $437386453/500000000=0.874772906$ | [`Lewko.QRH.Endpoint.family_beta`](https://github.com/GTimG/QuasiRiemannTracker/blob/0ce80fdddebb03128d30a917006d8520e7a774b8/submissions/lewko-acyclic-bootstrap-874772906/src/Submissions/lewko_acyclic_bootstrap_874772906/Lewko/QRH/Endpoint.lean) |
+
+Both displayed declarations concern the full relevant finite-order Hecke zero supremum, not only its Dirichlet consequence. Their associated nonvanishing statements use a strict half-plane and exclude the principal pole; the Dirichlet consequences cover every positive modulus. Lewko reuses Collet's ordinary-source machinery in two acyclic parameter steps and explicitly describes the result as a parameter refinement. These are cited external source statements: merged tracker status is observed, but this repository has not built either external Lean development or independently certified its analytic proof. The table is a comparison at the pinned snapshot, not a claim that all later literature has been searched.
+
+**The reusable source is genuinely global in its length domain.** Collet's [primary paper](https://github.com/rohanarun/quasi-rh-hillclimb/tree/594fc4838e9c92d5a16bedf270d07d1f51161be7/submissions/hailey-collet-1252270103/paper), Chapter 28, (G1), states the ordinary initial moment $G(B,\Lambda,h)$ on
+
+$$
+m_1,m_2\ge0,\qquad 0\le s\le h,\qquad
+m_1+m_2+\Lambda s\le B.
+$$
+
+There are no separate lower plain-length edges. The corresponding [`GlobalSource`](https://github.com/GTimG/QuasiRiemannTracker/blob/0ce80fdddebb03128d30a917006d8520e7a774b8/submissions/hailey-collet-1252270103/src/Submissions/hailey_collet_1252270103/Record1252270103Source/Core/Contract.lean) is the literal `UniformUnitFaceSource` with `globalFace B lam cap`; its admissibility and coordinatewise-shortening interfaces are already supplied there. The natural $B=1$ face admits $m_1=m_2=1/2$, $s=0$. The earlier Gao individual-length window therefore cannot be used to reject this newer source. Its mesh precedes the finite slot type and moving arithmetic data; finite controls, polynomial height degree and constant precede the ambient scale and live profiles. Reuse must preserve that order and the allowed ray/anchor data.
+
+**Length admissibility does not change the coefficients.** In the paper's literal row, (158)--(161), write $c_z(I)=\eta(I)\chi_{m^6Az}(I)$, including natural zeros, and
+
+$$
+L_z(p,X;t)=\sum_{I\ne0}c_z(I)q_I^{it}p(q_I/X),
+\qquad
+\mathscr R_z=(X_1X_2)^{-1/2}
+ L_z(p_1,X_1;t)L_z(p_2,X_2;t)\prod_j A_j(z).
+$$
+
+The $A_j$ are the source's normalized marked prime polynomials with their actual relative coefficients. The estimated energy is
+
+$$
+\sum_{z:\,\operatorname{initialKeep}(z)}
+ |\mathscr R_z|^2\operatorname{Re}\Phi(q_z/U)
+\ll U^{1+\varepsilon}\mathcal H,
+$$
+
+with its stated radial, profile and height controls $\mathcal H$. It retains all six units, sixth-power repetitions, fixed-inducing exclusions and root-relative holes. Both ideal sums $L_z$ are ordinary: neither contains $\mu(I)$. With no prime slots and two equal plain factors, the normalized fourth-moment exponent is $U^{1+\varepsilon}$. This is already the exponent used in [(458.8)](../../docs/develop/theory/FIBONACCI_ANALYTIC_FRONTIER_INTERFACES.md#458-möbius-自卷积与无槽四矩的完整原系数预算); it is not a new improvement to that input. In particular, no extra power of $X_1X_2$ may be gained by comparing normalized and unnormalized sums. Fixed-inducing rows cannot be restored merely by deleting `initialKeep` from the displayed bound.
+
+**The supplied coefficient transport is squarefree-total-product transport.** Chapter 25 proves the exact two-variable kernels between the ordinary pair and its restriction $\mu^2(I_1I_2)$:
+
+$$
+h_{\mathfrak p}(X,Y)=(1-X)(1-Y)(1+X+Y)
+=1-X^2-XY-Y^2+X^2Y+XY^2,
+\qquad k_{\mathfrak p}=h_{\mathfrak p}^{-1}.
+$$
+
+Both have no degree-one monomial. The source already proves their subpower absolute central mass and transports the completed positive norm by Minkowski, shortening both actual lengths and retaining common punctures. These identities, mass bounds and domain transport should be reused directly; they are not new coefficient lemmas here. They do not replace either factor by a Möbius polynomial. The paper explicitly excludes treating arbitrary bounded coefficient multiplication as contraction of the quadratic energy.
+
+For comparison, the local quotient needed to change the first ordinary factor to $\mu(I_1)$ is
+
+$$
+\frac{(1-X)/(1-Y)}{1/((1-X)(1-Y))}
+=(1-X)^2=1-2X+X^2.
+$$
+
+For two Möbius factors it is $(1-X)^2(1-Y)^2$. Thus an absolute central divisor-kernel argument of the same kind encounters a degree-one prime contribution. Up to an inverse-factor scale $D$, its mass already includes
+
+$$
+2\sum_{q_{\mathfrak p}\le D}q_{\mathfrak p}^{-1/2}
+\gg\frac{\sqrt D}{\log D},
+$$
+
+by the ordinary prime-ideal theorem over the fixed field, after deleting the fixed bad set. It cannot be absorbed into $U^\varepsilon$ for every $\varepsilon>0$ at $D=\sqrt U$. This is an algebraic comparison with the existing absolute-mass method, not a nonrepresentation theorem or an obstruction to a different transport retaining cancellation.
+
+Consequently the newer source is available for its actual ordinary subenergies, while a transfer to $\sum_u\Omega|M_\xi S_\xi|^2$ or $\sum_u\Omega|M_\xi|^4$ remains unpaid. Merely substituting the smaller zero-free boundary also leaves the existing critical bin $a_*=(1+\delta_*)/2$, $\delta_*=(15-5\sqrt6)/6$, inside the allowed zero range, so it does not remove the maximum in (459.12). The small-gcd, long-conductor contraction specified above still requires a coefficient-sensitive estimate on the original object. The reusable literature advance is the stronger ordinary-source interface and endpoint; no full inverse-fourth improvement, strict Robin conclusion, analytic Lean certification or priority claim is supplied by this comparison.
