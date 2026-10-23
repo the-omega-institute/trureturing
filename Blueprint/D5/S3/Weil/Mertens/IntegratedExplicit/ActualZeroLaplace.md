@@ -42,19 +42,7 @@ Lean statement: `D5/S3/Weil/Mertens/IntegratedExplicit/ActualZeroLaplace.actualH
 
 The exact hypotheses, occurrence indices and endpoint quantifiers are given by the Lean declaration.
 
-**Theorem 1.4 (actualH im).**
-
-Lean statement: `D5/S3/Weil/Mertens/IntegratedExplicit/ActualZeroLaplace.actualH_im`
-
-*Proof.* Machine-checked in Lean as `D5/S3/Weil/Mertens/IntegratedExplicit/ActualZeroLaplace.actualH_im` (`✓ std3`). ∎
-
-*Source.* Repository-derived.
-
-*Commentary.*
-
-The exact hypotheses, occurrence indices and endpoint quantifiers are given by the Lean declaration.
-
-**Theorem 1.5 (actualH bound).**
+**Theorem 1.4 (actualH bound).**
 
 Lean statement: `D5/S3/Weil/Mertens/IntegratedExplicit/ActualZeroLaplace.actualH_bound`
 
@@ -66,7 +54,7 @@ Lean statement: `D5/S3/Weil/Mertens/IntegratedExplicit/ActualZeroLaplace.actualH
 
 The exact hypotheses, occurrence indices and endpoint quantifiers are given by the Lean declaration.
 
-**Theorem 1.6 (actualH continuous).**
+**Theorem 1.5 (actualH continuous).**
 
 Lean statement: `D5/S3/Weil/Mertens/IntegratedExplicit/ActualZeroLaplace.actualH_continuous`
 
@@ -78,7 +66,7 @@ Lean statement: `D5/S3/Weil/Mertens/IntegratedExplicit/ActualZeroLaplace.actualH
 
 The exact hypotheses, occurrence indices and endpoint quantifiers are given by the Lean declaration.
 
-**Theorem 1.7 (xiReading ne zero right).**
+**Theorem 1.6 (xiReading ne zero right).**
 
 Lean statement: `D5/S3/Weil/Mertens/IntegratedExplicit/ActualZeroLaplace.xiReading_ne_zero_right`
 
@@ -90,19 +78,7 @@ Lean statement: `D5/S3/Weil/Mertens/IntegratedExplicit/ActualZeroLaplace.xiReadi
 
 The exact hypotheses, occurrence indices and endpoint quantifiers are given by the Lean declaration.
 
-**Theorem 1.8 (xi logDeriv zero).**
-
-Lean statement: `D5/S3/Weil/Mertens/IntegratedExplicit/ActualZeroLaplace.xi_logDeriv_zero`
-
-*Proof.* Machine-checked in Lean as `D5/S3/Weil/Mertens/IntegratedExplicit/ActualZeroLaplace.xi_logDeriv_zero` (`✓ std3`). ∎
-
-*Source.* Repository-derived.
-
-*Commentary.*
-
-The exact hypotheses, occurrence indices and endpoint quantifiers are given by the Lean declaration.
-
-**Theorem 1.9 (actual normalized resolvent).**
+**Theorem 1.7 (actual normalized resolvent).**
 
 Lean statement: `D5/S3/Weil/Mertens/IntegratedExplicit/ActualZeroLaplace.actual_normalized_resolvent`
 
@@ -114,7 +90,7 @@ Lean statement: `D5/S3/Weil/Mertens/IntegratedExplicit/ActualZeroLaplace.actual_
 
 The exact hypotheses, occurrence indices and endpoint quantifiers are given by the Lean declaration.
 
-**Theorem 1.10 (actual resolvent hasSum).**
+**Theorem 1.8 (actual resolvent hasSum).**
 
 Lean statement: `D5/S3/Weil/Mertens/IntegratedExplicit/ActualZeroLaplace.actual_resolvent_hasSum`
 
@@ -126,7 +102,7 @@ Lean statement: `D5/S3/Weil/Mertens/IntegratedExplicit/ActualZeroLaplace.actual_
 
 The exact hypotheses, occurrence indices and endpoint quantifiers are given by the Lean declaration.
 
-**Theorem 1.11 (actualH laplace integrable).**
+**Theorem 1.9 (actualH laplace integrable).**
 
 Lean statement: `D5/S3/Weil/Mertens/IntegratedExplicit/ActualZeroLaplace.actualH_laplace_integrable`
 
@@ -138,7 +114,7 @@ Lean statement: `D5/S3/Weil/Mertens/IntegratedExplicit/ActualZeroLaplace.actualH
 
 The exact hypotheses, occurrence indices and endpoint quantifiers are given by the Lean declaration.
 
-**Theorem 1.12 (actualH laplace).**
+**Theorem 1.10 (actualH laplace).**
 
 Lean statement: `D5/S3/Weil/Mertens/IntegratedExplicit/ActualZeroLaplace.actualH_laplace`
 
@@ -150,7 +126,7 @@ Lean statement: `D5/S3/Weil/Mertens/IntegratedExplicit/ActualZeroLaplace.actualH
 
 The exact hypotheses, occurrence indices and endpoint quantifiers are given by the Lean declaration.
 
-**Theorem 1.13 (xi logDeriv right).**
+**Theorem 1.11 (xi logDeriv right).**
 
 Lean statement: `D5/S3/Weil/Mertens/IntegratedExplicit/ActualZeroLaplace.xi_logDeriv_right`
 
@@ -167,7 +143,6 @@ The exact hypotheses, occurrence indices and endpoint quantifiers are given by t
 - Truth anchor: `D5/S3/Weil/Mertens/IntegratedExplicit/ActualZeroLaplace.actualCoeff_hasSum`
 - Truth anchor: `D5/S3/Weil/Mertens/IntegratedExplicit/ActualZeroLaplace.actualH_bound`
 - Truth anchor: `D5/S3/Weil/Mertens/IntegratedExplicit/ActualZeroLaplace.actualH_continuous`
-- Truth anchor: `D5/S3/Weil/Mertens/IntegratedExplicit/ActualZeroLaplace.actualH_im`
 - Truth anchor: `D5/S3/Weil/Mertens/IntegratedExplicit/ActualZeroLaplace.actualH_laplace`
 - Truth anchor: `D5/S3/Weil/Mertens/IntegratedExplicit/ActualZeroLaplace.actualH_laplace_integrable`
 - Truth anchor: `D5/S3/Weil/Mertens/IntegratedExplicit/ActualZeroLaplace.actualH_summable`
@@ -176,5 +151,4 @@ The exact hypotheses, occurrence indices and endpoint quantifiers are given by t
 - Truth anchor: `D5/S3/Weil/Mertens/IntegratedExplicit/ActualZeroLaplace.actual_resolvent_hasSum`
 - Truth anchor: `D5/S3/Weil/Mertens/IntegratedExplicit/ActualZeroLaplace.xiReading_ne_zero_right`
 - Truth anchor: `D5/S3/Weil/Mertens/IntegratedExplicit/ActualZeroLaplace.xi_logDeriv_right`
-- Truth anchor: `D5/S3/Weil/Mertens/IntegratedExplicit/ActualZeroLaplace.xi_logDeriv_zero`
 - Dependency: [D5/S3/Weil/ZeroData/ActualReciprocalSquareBounds](../../ZeroData/ActualReciprocalSquareBounds.md)
