@@ -298,6 +298,10 @@ $$\neg \left(\forall t \in \mathbb{N},\; \forall i \in \mathbb{N},\; \forall k \
 
 *Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/Graph/Domination/LuizVieiraBlanusaIndependentRoman.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/luiz-vieira-2024-blanusa-independent-roman-closing-conjecture` (refuted) by `D5/S3/Combinatorics/Graph/Domination/LuizVieiraBlanusaIndependentRoman.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"luiz-vieira-2024-blanusa-independent-roman-closing-conjecture","declaration_gid":"D5/S3/Combinatorics/Graph/Domination/LuizVieiraBlanusaIndependentRoman.result","resolution_kind":"refuted"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* A. G. Luiz and F. A. S. Vieira (2025). *Independent [k]-Roman Domination on Graphs*. DOI: [10.7151/dmgt.2580](https://doi.org/10.7151/dmgt.2580). URL: <https://arxiv.org/abs/2406.11688v1>.
