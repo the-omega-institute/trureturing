@@ -6,6 +6,8 @@
    utility: none
    digest: The sharp worst-case fidelity of the product of process-matrix marginals. -/
 
+import D5.S3.Quantum.Entanglement.AbsoluteSeparability.GurvitsBarnumBall
+import D5.S3.Quantum.Recovery.PurifiedLocalPath
 import D5.S3.Quantum.Information.LiTheilHarrowChuangPurifyCloneRefutation
 import D5.S3.QuantumChannels.PauliThreeWeightBayesianInverseUniqueness
 import D5.S3.Quantum.Dynamics.KickedIsingNegativityRefutation
@@ -15,6 +17,7 @@ import D5.S3.Quantum.Dynamics.KickedIsingNegativityRefutation
 
 open scoped BigOperators ComplexOrder MatrixOrder
 open Matrix
+open D5.S3.Quantum.Recovery.ProductPrefixRigidity (productMap)
 open D5.S3.Quantum.Information.StabilizerPairLocalUnitaryInequivalence
   (Pauli pauliMatrix wordOp tensorOp)
 open D5.S3.Quantum.Measurement.StabilizerPovmMaximalEntanglementRefutation
@@ -198,13 +201,15 @@ private lemma marginal_psd {N : ℕ}
     (χ : Matrix (Fin N → Fin 4) (Fin N → Fin 4) ℂ) (hχ : χ.PosSemidef) (k : Fin N) :
     (marginal χ k).PosSemidef := by
   classical
-  have he : marginal χ k = ∑ z : {l : Fin N // l ≠ k} → Fin 4,
-      χ.submatrix (fun i => (Equiv.funSplitAt k (Fin 4)).symm (i, z))
-        (fun i => (Equiv.funSplitAt k (Fin 4)).symm (i, z)) := by
+  have he : marginal χ k =
+      D5.S3.Quantum.Information.PartialTraceMutualInformation.partialTraceRight
+        (χ.submatrix (Equiv.funSplitAt k (Fin 4)).symm
+          (Equiv.funSplitAt k (Fin 4)).symm) := by
     ext i j
-    simpa only [Matrix.sum_apply, Matrix.submatrix_apply] using marginal_split χ k i j
+    exact marginal_split χ k i j
   rw [he]
-  exact Matrix.posSemidef_sum Finset.univ fun z _ => hχ.submatrix _
+  exact D5.S3.Quantum.Information.PartialTraceMutualInformation.partialTraceRight_posSemidef
+    (hχ.submatrix (Equiv.funSplitAt k (Fin 4)).symm)
 
 private lemma marginalApprox_psd {N : ℕ}
     (χ : Matrix (Fin N → Fin 4) (Fin N → Fin 4) ℂ) (hχ : χ.PosSemidef) :
@@ -235,44 +240,40 @@ private lemma marginalApprox_psd {N : ℕ}
       exact ((marginal_psd χ hχ k).submatrix (fun a : Fin N → Fin 4 => a k)).hadamard ih
   exact hprod Finset.univ
 
-private def productMatrix {ι : Type*} [Fintype ι] [DecidableEq ι]
-    (M : ι → Matrix (Fin 4) (Fin 4) ℂ) :
-    Matrix (ι → Fin 4) (ι → Fin 4) ℂ :=
-  fun a b => ∏ k, M k (a k) (b k)
-
 private lemma productMatrix_mul {ι : Type*} [Fintype ι] [DecidableEq ι]
     (M L : ι → Matrix (Fin 4) (Fin 4) ℂ) :
-    productMatrix M * productMatrix L = productMatrix (fun k => M k * L k) := by
+    productMap (fun _ => Fin 4) M * productMap (fun _ => Fin 4) L =
+      productMap (fun _ => Fin 4) (fun k => M k * L k) := by
   classical
   ext a b
-  simp only [productMatrix, Matrix.mul_apply]
+  simp only [productMap, Matrix.mul_apply]
   simp_rw [← Finset.prod_mul_distrib]
   rw [Finset.prod_univ_sum, Fintype.piFinset_univ]
 
 private lemma productMatrix_star {ι : Type*} [Fintype ι] [DecidableEq ι]
     (M : ι → Matrix (Fin 4) (Fin 4) ℂ) :
-    (productMatrix M)ᴴ = productMatrix (fun k => (M k)ᴴ) := by
+    (productMap (fun _ => Fin 4) M)ᴴ = productMap (fun _ => Fin 4) (fun k => (M k)ᴴ) := by
   ext a b
-  simp [productMatrix, Matrix.conjTranspose_apply]
+  simp [productMap, Matrix.conjTranspose_apply]
 
 private lemma productMatrix_diagonal {ι : Type*} [Fintype ι] [DecidableEq ι] (d : ι → Fin 4 → ℂ) :
-    productMatrix (fun k => Matrix.diagonal (d k)) =
+    productMap (fun _ => Fin 4) (fun k => Matrix.diagonal (d k)) =
       Matrix.diagonal (fun a => ∏ k, d k (a k)) := by
   classical
   ext a b
-  simp only [productMatrix, Matrix.diagonal_apply]
+  simp only [productMap, Matrix.diagonal_apply]
   rw [Fintype.prod_ite_zero]
   simp only [← funext_iff]
 
 private lemma productMatrix_one (ι : Type*) [Fintype ι] [DecidableEq ι] :
-    productMatrix (fun _ : ι => (1 : Matrix (Fin 4) (Fin 4) ℂ)) = 1 := by
+    productMap (fun _ => Fin 4) (fun _ : ι => (1 : Matrix (Fin 4) (Fin 4) ℂ)) = 1 := by
   simpa only [Matrix.diagonal_one, Finset.prod_const_one] using
     productMatrix_diagonal (fun _ : ι => fun _ : Fin 4 => (1 : ℂ))
 
 private lemma productMatrix_unitary {ι : Type*} [Fintype ι] [DecidableEq ι]
     (U : ι → Matrix.unitaryGroup (Fin 4) ℂ) :
-    (productMatrix (fun k => (U k : Matrix (Fin 4) (Fin 4) ℂ)))ᴴ *
-      productMatrix (fun k => (U k : Matrix (Fin 4) (Fin 4) ℂ)) = 1 := by
+    (productMap (fun _ => Fin 4) (fun k => (U k : Matrix (Fin 4) (Fin 4) ℂ)))ᴴ *
+      productMap (fun _ => Fin 4) (fun k => (U k : Matrix (Fin 4) (Fin 4) ℂ)) = 1 := by
   rw [productMatrix_star, productMatrix_mul]
   have he (k : ι) : (U k : Matrix (Fin 4) (Fin 4) ℂ)ᴴ * U k = 1 :=
     Unitary.coe_star_mul_self (U k)
@@ -284,14 +285,14 @@ set_option maxHeartbeats 1000000 in
 private lemma marginal_product_unitary {N : ℕ}
     (χ : Matrix (Fin N → Fin 4) (Fin N → Fin 4) ℂ)
     (U : Fin N → Matrix.unitaryGroup (Fin 4) ℂ) (k : Fin N) :
-    marginal ((productMatrix (fun l => (U l : Matrix (Fin 4) (Fin 4) ℂ)))ᴴ * χ *
-      productMatrix (fun l => (U l : Matrix (Fin 4) (Fin 4) ℂ))) k =
+    marginal ((productMap (fun _ => Fin 4) (fun l => (U l : Matrix (Fin 4) (Fin 4) ℂ)))ᴴ * χ *
+      productMap (fun _ => Fin 4) (fun l => (U l : Matrix (Fin 4) (Fin 4) ℂ))) k =
       (U k : Matrix (Fin 4) (Fin 4) ℂ)ᴴ * marginal χ k * U k := by
   classical
   let B := {l : Fin N // l ≠ k}
   let e := Equiv.funSplitAt k (Fin 4)
   let E := Matrix.reindexAlgEquiv ℂ ℂ e
-  let W := productMatrix (fun l : B => (U l : Matrix (Fin 4) (Fin 4) ℂ))
+  let W := productMap (fun _ => Fin 4) (fun l : B => (U l : Matrix (Fin 4) (Fin 4) ℂ))
   have hm (A : Matrix (Fin N → Fin 4) (Fin N → Fin 4) ℂ) :
       D5.S3.Quantum.Information.PartialTraceMutualInformation.partialTraceRight (E A) =
         marginal A k := by
@@ -299,7 +300,7 @@ private lemma marginal_product_unitary {N : ℕ}
     exact (marginal_split A k i j).symm
   have hs (A : Matrix (Fin N → Fin 4) (Fin N → Fin 4) ℂ) :
       E Aᴴ = (E A)ᴴ := rfl
-  have hprod : E (productMatrix (fun l => (U l : Matrix (Fin 4) (Fin 4) ℂ))) =
+  have hprod : E (productMap (fun _ => Fin 4) (fun l => (U l : Matrix (Fin 4) (Fin 4) ℂ))) =
       Matrix.kronecker (U k : Matrix (Fin 4) (Fin 4) ℂ) W := by
     ext ⟨i, z⟩ ⟨j, w⟩
     change (∏ l, (U l : Matrix (Fin 4) (Fin 4) ℂ)
@@ -336,7 +337,7 @@ private lemma quantum_overlap {N : ℕ}
   classical
   let U (k : Fin N) := (marginal_psd χ hχ k).1.eigenvectorUnitary
   let lam (k : Fin N) := (marginal_psd χ hχ k).1.eigenvalues
-  let V := productMatrix (fun k => (U k : Matrix (Fin 4) (Fin 4) ℂ))
+  let V := productMap (fun _ => Fin 4) (fun k => (U k : Matrix (Fin 4) (Fin 4) ℂ))
   let Ψ := Vᴴ * χ * V
   have hVV : V * Vᴴ = 1 := mul_eq_one_comm.mp (productMatrix_unitary U)
   have hΨ : Ψ.PosSemidef := hχ.conjTranspose_mul_mul_same V
@@ -367,8 +368,9 @@ private lemma quantum_overlap {N : ℕ}
     rw [he, hmg, Matrix.diagonal_apply_eq, Complex.ofReal_re]
   have hA : Vᴴ * marginalApprox χ * V =
       Matrix.diagonal (fun x => ((∏ k, lam k (x k) : ℝ) : ℂ)) := by
-    change (productMatrix (fun k => (U k : Matrix (Fin 4) (Fin 4) ℂ)))ᴴ *
-      productMatrix (fun k => marginal χ k) * productMatrix (fun k => U k) = _
+    change (productMap (fun _ => Fin 4) (fun k => (U k : Matrix (Fin 4) (Fin 4) ℂ)))ᴴ *
+      productMap (fun _ => Fin 4) (fun k => marginal χ k) *
+      productMap (fun _ => Fin 4) (fun k => U k) = _
     rw [productMatrix_star, productMatrix_mul, productMatrix_mul]
     simp_rw [hdiag]
     rw [productMatrix_diagonal]
@@ -400,30 +402,14 @@ private lemma sqFidelity_overlap {n : Type*} [Fintype n] [DecidableEq n]
   have hA : A.PosSemidef := by
     simpa only [hρs] using hσ.conjTranspose_mul_mul_same (CFC.sqrt ρ)
   have hS : S.PosSemidef := Matrix.nonneg_iff_posSemidef.mp (CFC.sqrt_nonneg _)
-  let D := Matrix.diagonal (fun i => (hS.1.eigenvalues i : ℂ))
-  let φ := Unitary.conjStarAlgAut ℂ (Matrix n n ℂ) hS.1.eigenvectorUnitary
-  have hspec : S = φ D := hS.1.spectral_theorem
-  have hsquare : (Matrix.trace (S * S)).re = ∑ i, (hS.1.eigenvalues i) ^ 2 := by
-    calc
-      _ = (Matrix.trace (φ (D * D))).re := by rw [map_mul, ← hspec]
-      _ = (Matrix.trace (D * D)).re := by
-        dsimp [φ]
-        rw [Matrix.trace_mul_cycle, Unitary.coe_star_mul_self, one_mul]
-      _ = _ := by
-        simp [D, Matrix.diagonal_mul_diagonal, Matrix.trace_diagonal,
-          Complex.mul_re, pow_two]
-  have htrace : (Matrix.trace S).re = ∑ i, hS.1.eigenvalues i := by
-    rw [hS.1.trace_eq_sum_eigenvalues]
-    simp
   have hgram : Matrix.trace A = Matrix.trace (ρ * σ) := by
     dsimp [A]
     rw [Matrix.trace_mul_cycle, CFC.sqrt_mul_sqrt_self ρ hρ.nonneg]
   calc
     (Matrix.trace (ρ * σ)).re = (Matrix.trace (S * S)).re := by
       rw [show S * S = A from CFC.sqrt_mul_sqrt_self _ hA.nonneg, hgram]
-    _ ≤ (Matrix.trace S).re ^ 2 := by
-      rw [hsquare, htrace]
-      exact Finset.sum_sq_le_sq_sum_of_nonneg (fun i _ => hS.eigenvalues_nonneg i)
+    _ ≤ (Matrix.trace S).re ^ 2 :=
+      D5.S3.Quantum.Entanglement.AbsoluteSeparability.GurvitsBarnumBall.psd_trace_sq S hS
     _ = sqFidelity ρ σ := rfl
 
 private lemma shift_expansion (N : ℕ) :
@@ -438,22 +424,14 @@ private lemma shift_expansion (N : ℕ) :
 
 private lemma shift_unitary (N : ℕ) : (cyclicShift N)ᴴ * cyclicShift N = 1 := by
   classical
-  ext x y
-  have hrot : (x ∘ finRotate N = y ∘ finRotate N) ↔ x = y := by
-    constructor
-    · intro h
-      funext i
-      simpa only [Function.comp_apply, Equiv.apply_symm_apply] using
-        congrFun h ((finRotate N).symm i)
-    · rintro rfl; rfl
-  have hc (z : Fin N → Fin 2) :
-      star (if z = x ∘ finRotate N then (1 : ℂ) else 0) =
-        if z = x ∘ finRotate N then (1 : ℂ) else 0 := by
-    split_ifs <;> simp
-  simp only [Matrix.mul_apply, Matrix.conjTranspose_apply, cyclicShift,
-    hc, ite_mul, one_mul, zero_mul, Matrix.one_apply]
-  rw [Finset.sum_ite_eq' Finset.univ (x ∘ finRotate N)]
-  simp only [Finset.mem_univ, ite_true, hrot, Matrix.one_apply]
+  let e : Equiv.Perm (Fin N → Fin 2) := (finRotate N).symm.arrowCongr (Equiv.refl (Fin 2))
+  have he : cyclicShift N = (e.permMatrix ℂ)ᵀ := by
+    ext x y
+    simp [cyclicShift, e, Equiv.Perm.permMatrix, PEquiv.toMatrix,
+      Equiv.arrowCongr, eq_comm]
+  rw [he, Matrix.transpose_permMatrix]
+  exact Unitary.coe_star_mul_self
+    (D5.S3.Quantum.RandomCircuits.HaarTwoCopyTwirl.permutationUnitary e⁻¹)
 
 private lemma shift_cptp (N : ℕ)
     (he : ∑ a, shiftCoeff N a • pauliString a = cyclicShift N)
@@ -495,20 +473,9 @@ private lemma shift_trace_contraction (N : ℕ) (hN : 2 ≤ N) (k : Fin N) (i j 
   let e := Equiv.funSplitAt k (Fin 4)
   let A (i : Fin 4) (z : B → Fin 4) (x : Fin N → Fin 2) :=
     ∏ l, sigma ((e.symm (i,z)) l) (x l) (x (finRotate N l))
-  have hm : finRotate N k ≠ k := by
-    cases N with
-    | zero => exact Fin.elim0 k
-    | succ n =>
-      by_cases hk : k = Fin.last n
-      · subst k
-        intro h
-        have hh := congrArg Fin.val h
-        simp only [finRotate_last, Fin.val_zero, Fin.val_last] at hh
-        omega
-      · intro h
-        have hh := congrArg Fin.val h
-        rw [coe_finRotate_of_ne_last hk] at hh
-        omega
+  have hm : finRotate N k ≠ k := Equiv.Perm.mem_support.mp (by
+    rw [support_finRotate_of_le hN]
+    exact Finset.mem_univ k)
   have hB : Fintype.card B = N - 1 := by
     simpa [B] using Fintype.card_subtype_compl (fun l : Fin N => l = k)
   have hcomplete (u v u' v' : Fin 2) :
