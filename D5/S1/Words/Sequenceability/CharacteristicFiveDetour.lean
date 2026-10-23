@@ -77,7 +77,7 @@ private theorem merge_cycles {X : Type*} [Finite X] (f : Perm X)
   rw [← hJ]
   refine ⟨?_, fun x hx y hy => (hreach x hx).symm.trans (hreach y hy)⟩
   simpa only [hJ] using (hA.1.union hB.1 f.injective.injOn).comp
-    (Set.bijOn_swap (Or.inl ha) (Or.inr hb))
+    (Equiv.bijOn_swap (Or.inl ha) (Or.inr hb))
 
 
 open RowOrbitLift
@@ -341,8 +341,8 @@ theorem exists_characteristic_five_relative_path (K : Type*)
     simp only [Carrier, Fintype.card_sum, Fintype.card_prod, Fintype.card_fin,
       M, Nat.card_eq_fintype_card]
     omega
-  have hcyc : Q.IsCycleOn (Finset.univ : Finset (Carrier K)) :=
-    surgery_cycle r u hu hc
+  have hcyc : Q.IsCycleOn (Finset.univ : Finset (Carrier K)) := by
+    simpa only [Finset.coe_univ] using surgery_cycle r u hu hc
   have hbound : Set.InjOn orbit (Set.Iio (M + 1)) := by
     simpa only [Finset.card_univ, hcard] using hcyc.injOn_pow_apply (Finset.mem_univ s)
   have horbit (z : Carrier K) : ∃ n < M + 1, orbit n = z := by
