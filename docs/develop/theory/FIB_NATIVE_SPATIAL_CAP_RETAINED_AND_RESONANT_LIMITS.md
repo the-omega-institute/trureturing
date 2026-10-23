@@ -1499,3 +1499,1117 @@ order to select the ground: its source line follows from the
 weighted-domain and cap limit proofs above.
 
 ## 追加锚（本行以下为增补区）
+
+## 12. The all-real-parameter operator limit
+
+Retain exactly the data, chart and family (1.1)–(1.5). In particular,
+the domain of each capped operator is the original $D(L_A)$, its form
+domain is $\mathcal F_A$, and the full killed unit-source Green field
+is capped by a spatial minimum. All preparations, controls, guards,
+grouping, periodic phases and the two killed height endpoints remain
+fixed. No angular symmetry of the actual coefficients or states is
+assumed. Constants below may depend on this one fixed smooth positive
+$\rho$, smooth horizontal SPD $A$, source and admissible $b$.
+
+Use the genuine inherited-wall pair $\mathcal A,\mathcal B$ of Native
+Green stability, Theorem 21.1, with scalar product linear in its first
+variable. Write $S_{\min}=S_{D,\min}$ and $S_{\max}=S_{D,\max}$ for
+that theorem's operators, and set
+
+$$
+\begin{aligned}
+G_\kappa&=S_{\max}|_{\{u:\mathcal A(u)=\kappa\mathcal B(u)\}},
+                      &&\kappa\in\mathbb R,\\
+F&=S_{\max}|_{\ker\mathcal B},&
+\kappa_b&=\kappa_{\rm cap}-\log b,\\
+\lambda_n&=\frac{n^2\pi^2}{\alpha},&&n=1,2,\ldots .
+\end{aligned}
+\tag{12.1}
+$$
+
+All these realizations retain the original outer domain. Here
+$\lambda_1=\lambda_D$, and $G_\kappa=F_{-\kappa}$ in the source-line
+notation of §§5–7. The boundary pairing is
+
+$$
+[u,v]=K\{\mathcal B(u)\overline{\mathcal A(v)}
+                  -\mathcal A(u)\overline{\mathcal B(v)}\},\qquad
+K=m_0\frac\pi2 C,\quad C=\int_Jc\phi^2da.
+\tag{12.2}
+$$
+
+In particular $K$ has no factor $a_*^2$. General maximal vectors have
+the angular-$L^2$/weighted-graph source expansion of that theorem,
+rather than a uniform pointwise expansion of the whole maximal domain.
+The source coordinates in (12.1) will be evaluated only on actual
+limiting maximal vectors.
+
+**Theorem 12.1 (the realization selected at every fixed real detuning).**
+For every fixed model just specified, every fixed admissible $b$ and
+every fixed real $\lambda$, let
+
+$$
+K_{\epsilon,\lambda}=L_A-g_{\mathrm c}(1+\lambda/L^2)\Gamma_\epsilon,
+\qquad L=\log(b/\epsilon),\qquad D(K_{\epsilon,\lambda})=D(L_A).
+\tag{12.3}
+$$
+
+The multiplier $\Gamma_\epsilon$ is bounded and real for each fixed
+$\epsilon$, so this is a selfadjoint bounded multiplication
+perturbation of $L_A$ on exactly $D(L_A)$.
+
+As $\epsilon\downarrow0$, these selfadjoint operators converge in
+strong resolvent sense to
+
+$$
+H_\lambda=
+\begin{cases}
+F,&\lambda\notin\{\lambda_n:n\ge1\},\\
+G_{\kappa_b},&\lambda=\lambda_n\text{ for some }n\ge1.
+\end{cases}
+\tag{12.4}
+$$
+
+Explicitly, for every $f\in L^2(\mu)$ and every
+$z\in\mathbb C\setminus\mathbb R$,
+
+$$
+\|(K_{\epsilon,\lambda}-z)^{-1}f-(H_\lambda-z)^{-1}f\|_2
+\longrightarrow0.
+\tag{12.5}
+$$
+
+This includes every $\lambda\le0$, every positive nonresonant value,
+all derivative zeros of the slow wave, and every positive resonance
+$\lambda_n$. In particular $\lambda_Z$ is not an exceptional operator
+parameter. Inputs may be complex or sign-changing, and all angular and
+spectral channels are included.
+
+For fixed $f$, model and $b$, convergence is uniform for $\lambda$ in
+any compact subset of $\mathbb R\setminus\{\lambda_n:n\ge1\}$ and
+$z$ in any compact subset of $\mathbb C\setminus\mathbb R$.
+There is no model-uniform assertion over $\rho,A$, or uniformity
+through an unscaled resonance.
+
+For a fixed $n\ge1$, replace the relative coupling in (12.3) by
+
+$$
+\frac{\widetilde g_\epsilon}{g_{\mathrm c}}
+ =1+\frac{\lambda_n}{L^2}+\frac{\eta}{L^3}+r_L(\eta),
+\qquad r_L(\eta)=o(L^{-3}).
+\tag{12.6}
+$$
+
+For every fixed real $\eta$ the strong-resolvent limit is
+
+$$
+G_{\kappa_b+\eta/(2\lambda_n)}.
+\tag{12.7}
+$$
+
+Convergence is uniform on compact $\eta$ sets, for each fixed $f$ and
+compact nonreal $z$ set, when the remainder in (12.6) is uniform on
+those $\eta$ sets. The parameter $\eta$ in (12.6) is the third-order
+relative detuning; it is distinct from the global response function
+$\eta(E)$ of §6.
+
+A zero eigenvalue or any other real eigenvalue of a selected global
+realization leaves (12.4)–(12.7) unchanged. The conclusions concern
+nonreal resolvents and do not require a global Weyl denominator to be
+nonzero at a prescribed real energy. They assert neither norm-resolvent
+convergence nor a quantitative rate, all-level eigenvalue count or
+classification of arbitrary varying-$\lambda$ sequences.
+
+The proof in §§13–19 constructs one source-singular graph-core vector
+for each selected line. It first solves a full-angular weighted frozen
+problem and then corrects that solution to the exact native local
+equation. It does not assume a bound on arbitrary actual resolvent
+trace amplitudes or on an outer return map. The ground and resource
+theorems remain the separate results identified in §20.
+
+## 13. Common weighted cylinder spaces and the graph-core criterion
+
+Put $t=\log R$ and write a physical function as $u=R^{-1}v$.
+On cylinder functions let $D_i=RZ_i$, with $(Z_1,Z_2)=(U,V)$.
+Their coefficients in $(t,a,\theta)$ are independent of $t$.
+The polar description always means the closure inherited from smooth
+Cartesian annular functions; the collapsed polar endpoints introduce
+no extra boundary condition. For a positive weight $\delta$ define
+
+$$
+\begin{aligned}
+Y_\delta&=L^2(e^{-2\delta t}dt\,da\,d\theta),\\
+\|v\|_{X_\delta}^2
+ &=\|v\|_{Y_\delta}^2+\sum_i\|D_iv\|_{Y_\delta}^2
+                         +\sum_{i,j}\|D_iD_jv\|_{Y_\delta}^2.
+\end{aligned}
+\tag{13.1}
+$$
+
+The derivatives are distributional, and the last sum includes every
+ordered pair. These are fixed Hilbert spaces, common to all cap
+positions and all sufficiently small detunings. Equivalently their
+norms are obtained on bounded-overlap unit logarithmic slabs, using a
+slightly larger slab for local estimates and the same exponential
+weight. Translation in $t$ multiplies both norms by the same scalar.
+
+The fields $D_i$ and their commutator span all tangent directions on
+each fixed Cartesian annulus. Ordinary first derivatives there are
+bounded combinations of $D_i$ and ordered $D_iD_j$. Thus $X_\delta$
+controls local ordinary $H^1$ and embeds compactly into local $L^2$.
+This also gives the continuous angular-$L^2$ slice representatives
+needed when comparing source expansions.
+
+For the frozen expression put
+
+$$
+P_\gamma=R^3(-\Delta_H-\gamma R^{-2})R^{-1},\qquad
+P_\gamma^{\rm cap}=R^3(-\Delta_H-\gamma\min(R^{-2},1))R^{-1}.
+\tag{13.2}
+$$
+
+The normalized cylinder form of $P_\gamma$ is
+
+$$
+\mathfrak a_\gamma[v]=\int
+ \{c|v_t+\tan a\,v_\theta|^2
+       +4c|v_a+v_\theta/2|^2+(c-\gamma)|v|^2\}
+                       dt\,da\,d\theta.
+\tag{13.3}
+$$
+
+This follows from Native Green stability, (10.10), by integrating the
+$-v$ cross term. For $P_\gamma^{\rm cap}$ replace $\gamma$ in the last
+term by $\gamma\min(1,e^{2t})$. A cap at $t=a_0$ is the translate of
+this expression. Its zeroth-order cylinder coefficient is bounded
+uniformly in position and in $\gamma$ near $\lambda_0$.
+
+The horizontal maximal estimate of Native Green stability, (21.4)–(21.5),
+therefore gives
+
+$$
+\|v\|_{X_\delta}\le C_\delta
+ \{\|P_{\gamma,a_0}^{\rm cap}v\|_{Y_\delta}
+                                      +\|v\|_{Y_\delta}\},
+\tag{13.4}
+$$
+
+uniformly in $a_0$ and in a fixed sufficiently small
+$\gamma$ neighbourhood; the analogous uncapped estimate holds.
+Indeed, move the bounded cap multiplication to the $L^2$ right side
+of the smooth free local estimate on each enlarged slab. Conjugate by
+$e^{\delta t}$, compare the weights on that slab and sum with bounded
+overlap. The distributional extension is the local regularization
+argument in that maximal estimate. This requires no derivative of the
+minimum across its interface. Horizontal graph estimates and weak
+equations will be used at that interface throughout.
+
+**Lemma 13.1 (a sufficient operator graph-core test).** Let $H_j,H$ be
+selfadjoint operators on one Hilbert space. Suppose $\mathcal D$ is
+an operator graph core of $H$, and for each $v\in\mathcal D$ there
+are $v_j\in D(H_j)$ such that $v_j\to v$ and $H_jv_j\to Hv$ in
+norm. Then $H_j$ converges to $H$ in strong resolvent sense.
+
+Proof. Fix nonreal $z$, put $f=(H-z)v$ and
+$f_j=(H_j-z)v_j$, and write
+
+$$
+(H_j-z)^{-1}f=v_j+(H_j-z)^{-1}(f-f_j).
+\tag{13.5}
+$$
+
+The selfadjoint bound $\|(H_j-z)^{-1}\|\le|\operatorname{Im}z|^{-1}$
+gives convergence on $(H-z)\mathcal D$. This set is dense because
+$\mathcal D$ is a graph core and $H-z$ maps $D(H)$ onto the Hilbert
+space. Density and the same resolvent bound give convergence for every
+input. No uniform lower spectral bound is required. $\square$
+
+Let $\mathcal D_0$ be the domain of $D(F)$ vectors vanishing on some
+source neighbourhood, as in Native Green stability, (21.1). Its graph
+closure is $D(S_{\min})$. The direct-sum maximal decomposition gives
+
+$$
+\begin{aligned}
+D(F)&=D(S_{\min})\dotplus\operatorname{span}\{p\},\\
+D(G_\kappa)&=D(S_{\min})\dotplus
+                              \operatorname{span}\{\kappa p+\zeta\}.
+\end{aligned}
+\tag{13.6}
+$$
+
+Consequently $\mathcal D_0$ plus any one genuine maximal vector of
+trace $(1,0)$ or $(\kappa,1)$ is a graph core for the corresponding
+realization. A different choice with the same trace differs by a
+minimal vector. It suffices to approximate one such chosen vector;
+no estimate for arbitrary actual capped boundary traces is part of
+this criterion.
+
+## 14. A full-angular weighted right inverse for the frozen cap
+
+**Lemma 14.1 (uniform capped right inverse).** There exist
+$0<\delta<1$ and a neighbourhood of $\lambda_0$ such that the frozen
+capped expression has a bounded right inverse
+
+$$
+\mathcal G_\gamma:Y_\delta\longrightarrow X_\delta,\qquad
+P_\gamma^{\rm cap}\mathcal G_\gamma=I,
+\qquad \sup_\gamma\|\mathcal G_\gamma\|<\infty.
+\tag{14.1}
+$$
+
+Its translate $\mathcal G_{a_0,\gamma}$ has the same bound when the
+cap is at $a_0$. The capped expression has a scattering kernel;
+(14.1) is a right inverse, not a bijection.
+
+Proof. Split the frozen operator into its $\theta$ average and the
+orthogonal complement. This uses rotational invariance of the frozen
+expression only; neither the forcing nor the native coefficients will
+be restricted to rotational functions.
+
+On the nonzero-$\theta$ complement, Native Green stability, the proof
+of Theorem 22.1 using (20.6)–(20.7), supplies $\eta_*>0$ such that
+the uncapped form at $\gamma=\lambda_0$ bounds
+$\eta_*\|v\|_{L^2(dt\,da\,d\theta)}^2$. The bound is uniform over
+every nonzero integer Fourier mode. The capped form adds the
+nonnegative term
+$\gamma(1-\min(1,e^{2t}))|v|^2$. For $v=e^{\delta t}y$,
+direct integration gives
+
+$$
+\operatorname{Re}\langle e^{-\delta t}P_\gamma^{\rm cap}
+                          e^{\delta t}y,y\rangle
+ =\mathfrak a_\gamma^{\rm cap}[y]
+                                  -\delta^2\int c|y|^2.
+\tag{14.2}
+$$
+
+The terms linear in $\delta$ are skew, since
+$\partial_t+\tan a\,\partial_\theta$ is skew for cylinder measure.
+Take $\delta^2<\eta_*/4$ and shrink the $\gamma$ neighbourhood.
+The right side retains a fixed positive unweighted mass bound.
+It controls the free cylinder energy too: that energy equals the cap
+form plus $\gamma\int\min(1,e^{2t})|y|^2$.
+The endpoint inequality in Native Green stability, (12.10), applied
+after the fibre phase $e^{-ina/2}$, bounds unweighted angular mass by
+the free energy with constants independent of $n$. The conjugated
+form is continuous on the free-energy completion; its extra
+first-order terms are bounded by that energy and the $c$-weighted
+mass. Lax–Milgram gives a unique weighted energy solution for every
+nonzero-$\theta$ forcing in $Y_\delta$, with uniform bound.
+Estimate (13.4) upgrades it to $X_\delta$. The uniform coercivity
+allows summation of all modes. This is a whole-cylinder inverse on
+that complement, with no arbitrary-trace Poisson assertion.
+
+For the rotational sector use precisely the trace spaces of Native
+Green stability, Theorem 22.1:
+
+$$
+\begin{gathered}
+\mathsf H=L^2(J,c\,da),\qquad
+\mathsf V=\{b:\int_Jc(|b'|^2+|b|^2)da<\infty\},\\
+T_0\text{ has form }\int_J(4c|b'|^2+c|b|^2)da
+                         \text{ on }\mathsf H,\qquad
+\mathsf X=D(T_0^{1/4}).
+\end{gathered}
+\tag{14.3}
+$$
+
+Here $\mathsf X$ is a boundary trace space, distinct from the full
+cylinder space $X_\delta$. Its dual below is the anti-dual for the
+first-variable-linear pairing. Spectral minimization of free
+half-cylinder energy gives this trace space and a bounded lifting,
+which can be cut off to a fixed boundary collar.
+
+Write $\Lambda(\sigma)=\gamma$ for the analytic signed dispersion
+parameter near zero. The operator $\mathsf A_\gamma$ on $\mathsf H$
+has form
+
+$$
+\int_J\{4c|b'|^2+(c-\gamma)|b|^2\}da.
+\tag{14.4}
+$$
+
+It has simple eigenpair $(-\sigma,\phi_\sigma)$ and a uniformly
+positive complementary spectrum. Let $P_\sigma$ be its
+$\mathsf H$-orthogonal projection onto $\phi_\sigma$,
+$Q_\sigma=I-P_\sigma$, and
+$D_\sigma=\sqrt{\mathsf A_\gamma|_{Q_\sigma}}$, extended by zero
+on $P_\sigma$. The normalized interior conormal map
+$N_\gamma:\mathsf X\to\mathsf X^*$ and
+
+$$
+\mathsf M_\sigma=N_\gamma+D_\sigma:
+                              \mathsf X\longrightarrow\mathsf X^*
+\tag{14.5}
+$$
+
+are the analytic maps constructed there. The sum is coercive and
+boundedly onto, with uniformly bounded inverse near zero. The
+projections are bounded on the energy and trace spaces. Choose
+$\delta$ also smaller than the square root of the complementary
+gap and small enough for the interior coercivity used next.
+
+Let $\mathfrak f\in Y_\delta$ be rotational forcing. On $t<0$ solve
+the forced interior equation with zero boundary value. The interior
+form is
+
+$$
+\mathfrak B_\gamma[W]=\int_{t<0}\int_J
+ \{c|W_t|^2+4c|W_a|^2+(c-\gamma e^{2t})|W|^2\}da\,dt.
+\tag{14.6}
+$$
+
+Its free-energy coercivity is proved in Native Green stability,
+(22.8): use $W=\phi v$, the positive
+$\lambda_0(1-e^{2t})\phi^2|v|^2$ term on $t<-1$, the fundamental
+theorem on the last unit collar, and the angular endpoint inequality.
+Conjugation subtracts only $\delta^2\|W\|_{\mathsf H}^2$ from the
+real part, so coercivity persists for small $\delta$. A bounded
+trace lifting supported in $-1<t<0$ gives the same weighted estimate
+for arbitrary trace in $\mathsf X$. Denote the zero-boundary forced
+solution by $d(\mathfrak f)$ and its normalized increasing-$t$
+conormal at zero by $j(\mathfrak f)\in\mathsf X^*$. The variational
+Green formula against such liftings gives
+
+$$
+\|d(\mathfrak f)\|_{\rm weighted\ energy}
+       +\|j(\mathfrak f)\|_{\mathsf X^*}
+                                  \le C\|\mathfrak f\|_{Y_\delta}.
+\tag{14.7}
+$$
+
+These conormals are functionals, with no classical normal trace
+assigned at a characteristic polar endpoint.
+
+The endpoint inequality $\mathsf V\hookrightarrow L^2(J,da)$ means
+that an $L^2(da)$ forcing acts in $\mathsf V^*$. Define its slow
+projection and complementary functional by
+
+$$
+\begin{aligned}
+C_\sigma&=\int_Jc\phi_\sigma^2da,\\
+f_s(t)&=\frac{\int_J\mathfrak f(t,a)\phi_\sigma(a)da}{C_\sigma},\\
+\mathfrak f_Q&=\mathfrak f-c\phi_\sigma f_s.
+\end{aligned}
+\tag{14.8}
+$$
+
+Thus $\mathfrak f_Q$ annihilates $\phi_\sigma$ as a functional.
+The scalar $f_s$ has the corresponding weighted $L^2$ bound. There
+is no assertion that $c^{-1}\mathfrak f$ belongs to $\mathsf H$.
+On $t>0$, solve the forced complementary equation with forcing
+$\mathfrak f_Q$, zero boundary value and the weighted condition.
+The positive complementary gap, after subtraction of $\delta^2$
+mass, gives a unique solution $y(\mathfrak f)$. Its weighted energy
+and normalized increasing-$t$ conormal
+$k(\mathfrak f)=y_t(0)\in\mathsf X^*$ are bounded by
+$C\|\mathfrak f\|_{Y_\delta}$. To obtain the conormal estimate,
+integrate the weak Green formula against a bounded trace lifting in
+a fixed exterior collar; its form and forcing terms have exactly
+these bounds. This is again a form/anti-dual construction.
+
+Choose the slow derivative datum at $t=0$ to be zero, and solve
+
+$$
+\mathsf M_\sigma f=k(\mathfrak f)-j(\mathfrak f),\qquad
+C_0=\langle f,\phi_\sigma\rangle_{\mathsf H}/C_\sigma.
+\tag{14.9}
+$$
+
+The exterior solution is
+
+$$
+\begin{aligned}
+W_+(t)={}&\phi_\sigma
+ \left\{C_0c_\sigma(t)-\int_0^t s_\sigma(t-s)f_s(s)ds\right\}\\
+ &+e^{-tD_\sigma}Q_\sigma f+y(\mathfrak f)(t),
+\end{aligned}
+\tag{14.10}
+$$
+
+where $c_\sigma,s_\sigma$ are the entire functions in (1.8).
+The interior solution is the harmonic extension of $f$ plus
+$d(\mathfrak f)$. Their values at zero agree. Their normalized
+derivatives agree because (14.9) says precisely
+
+$$
+N_\gamma f+j(\mathfrak f)=-D_\sigma f+k(\mathfrak f).
+\tag{14.11}
+$$
+
+The physical conormal on each side subtracts the same identity term
+from the normalized one, as in Native Green stability, (22.8)–(22.9).
+It cancels in matching. The glued weak solution therefore creates no
+interface delta distribution.
+
+After conjugation the scalar retarded kernel in (14.10) is
+$s_\sigma(r)e^{-\delta r}$ for $r\ge0$. It and its first derivative
+have uniformly bounded $L^1$ norms when
+$|\operatorname{Im}\sqrt\sigma|<\delta/2$. Young's inequality
+gives the weighted energy bound for the forced slow part. The
+homogeneous cosine belongs to the weighted half-line energy too.
+The complementary semigroup, its forced solution and the interior
+extension have the bounds just proved. Consequently the glued
+solution lies in $Y_\delta$ with uniform energy bound, and (13.4)
+upgrades it to $X_\delta$. Together with the nonzero-$\theta$
+solution this defines (14.1) on every full-angular forcing.
+
+For zero forcing a free slow derivative $D_0$ instead gives boundary
+value $\mathsf M_\sigma^{-1}(\phi_\sigma D_0)$, and hence $D_0$
+times the source-regular scattering solution of Native Green
+stability, Theorem 22.1. It belongs to the weighted space for the
+chosen small parameter neighbourhood. The choice $D_0=0$ specifies
+the right inverse while retaining this kernel. Finally translation
+$t\mapsto t-a_0$ multiplies the $X_\delta$ and $Y_\delta$ norms by
+the same scalar. The translated right inverse therefore has the same
+uniform bound. $\square$
+
+## 15. The uncapped inverse and the local native perturbation
+
+For the same sufficiently small positive $\delta$, the uncapped
+critical expression is a bijection
+
+$$
+P_{\lambda_0}:X_\delta\longrightarrow Y_\delta,
+\qquad \mathcal G_0=P_{\lambda_0}^{-1}.
+\tag{15.1}
+$$
+
+Indeed, the nonzero-$\theta$ coercivity in §14 applies without the
+cap addition. In the rotational sector the complementary problem
+is the positive full-cylinder form problem. For its slow part the
+equation is $-x''=f_s$, with unique weighted solution
+
+$$
+x(t)=-\int_{-\infty}^t(t-s)f_s(s)ds.
+\tag{15.2}
+$$
+
+The conjugated convolution kernel is $re^{-\delta r}$, $r\ge0$,
+whose $L^1$ norm is $\delta^{-2}$. This proves existence and its
+weighted bound; (13.4) gives the $X_\delta$ bound. Constants and
+linear homogeneous slow solutions fail the positive-weight
+condition at $-\infty$. Every complementary homogeneous exponential
+fails it at one end. Together with nonzero-$\theta$ uniqueness this
+proves injectivity. This explicit construction agrees with the
+weighted inversion of Native Green stability, Theorem 21.1; no
+Laurent functional with reversed scalar-product orientation is used.
+
+Choose an auxiliary radius $r_0>0$ inside the injective source chart,
+with $2r_0$ still in that chart. It may be smaller than $b$, which
+remains fixed in the physical family. On $R<2r_0$ write
+
+$$
+\begin{aligned}
+R^3K_{\epsilon,\lambda}R^{-1}
+ &=P_{\gamma_\epsilon,\log\epsilon}^{\rm cap}+Q_\epsilon,\\
+\gamma_\epsilon&=\frac{g_{\epsilon,\lambda}}{2\pi m_0}
+                         =\lambda_0(1+\lambda/L^2).
+\end{aligned}
+\tag{15.3}
+$$
+
+The exact chart estimates of Native Green stability, (11.1)–(11.3),
+give $C(q)-I=O(R)$, $m(q)/m_0-1=O(R)$, bounded horizontal first
+coefficient derivatives and
+$|\Gamma-c_GR^{-2}|\le C_1/R$. Thus the principal and first-order
+cylinder coefficients in $Q_\epsilon$ are $O(R)$.
+The minimum is $1$-Lipschitz in its first argument, so
+
+$$
+|\Gamma_\epsilon-c_G\min(R^{-2},\epsilon^{-2})|
+                                      \le C_1/R.
+\tag{15.4}
+$$
+
+Multiplication by $R^2$ makes the corresponding cylinder potential
+error $O(R)$ too. No derivative across the cap is needed.
+
+Extend these perturbation coefficients by a fixed smooth cutoff
+equal to one for $R<r_0$ and zero for $R>2r_0$. This defines an
+auxiliary operator $Q_\epsilon$ on the full cylinder with
+
+$$
+\|Q_\epsilon v\|_{Y_\delta}\le C_2r_0\|v\|_{X_\delta}.
+\tag{15.5}
+$$
+
+The extension agrees with the actual expression on $R<r_0$; no
+physical boundary or operator is changed. On each fixed punctured
+annulus it tends to the corresponding critical $Q_0$, and the
+coefficients remain uniformly $O(R)$. Dominated convergence gives
+$Q_\epsilon v\to Q_0v$ in $Y_\delta$ for each fixed
+$v\in X_\delta$. Outside the eventual cap the coefficients have
+their smooth annular convergence.
+
+Fix the inverse norms from §§14–15 first and then shrink $r_0$ so
+that
+
+$$
+C_2r_0\max\{\sup_\gamma\|\mathcal G_\gamma\|,
+                                      \|\mathcal G_0\|\}<\tfrac12.
+\tag{15.6}
+$$
+
+This is local analysis for each arbitrary fixed smooth model, not
+a small-global-perturbation condition. The weight can also be chosen
+below the positive source-corrector exponent in Native Green
+stability, Theorem 21.1. All these choices are independent of
+$\epsilon$ and of parameters in the compact sets used below.
+
+## 16. Normalizing the exact frozen column at all detunings
+
+Let $\sigma_\epsilon$ be the small real solution of
+$\Lambda(\sigma_\epsilon)=\gamma_\epsilon$. Since
+$\Lambda'(0)=C/M$, the exact analytic dispersion gives
+
+$$
+\sigma_\epsilon=\frac{\alpha\lambda}{L^2}+O(L^{-4}),
+\tag{16.1}
+$$
+
+uniformly on compact real $\lambda$ sets. Set
+$\ell=-\log\epsilon=L-\log b$. In the chart, for a point $x$ with
+$R(x)=e^t$, define the translated frozen cylinder solution
+
+$$
+W_\epsilon(t,a,\theta)
+ =R(x)\epsilon^{-1}
+                    Z_{\sigma_\epsilon}(\delta_{1/\epsilon}x).
+\tag{16.2}
+$$
+
+It solves $P_{\gamma_\epsilon,\log\epsilon}^{\rm cap}W_\epsilon=0$.
+The exact scattering representation (1.8), referred to $t=\log R$,
+has slow column
+
+$$
+\begin{aligned}
+U_\epsilon&=s_{\sigma_\epsilon}(\ell)
+                          +a(\sigma_\epsilon)c_{\sigma_\epsilon}(\ell),\\
+V_\epsilon&=c_{\sigma_\epsilon}(\ell)
+             -\sigma_\epsilon a(\sigma_\epsilon)
+                                      s_{\sigma_\epsilon}(\ell),\\
+W_{\epsilon,\rm slow}(t)
+ &=\phi_{\sigma_\epsilon}
+       \{U_\epsilon c_{\sigma_\epsilon}(t)
+                              +V_\epsilon s_{\sigma_\epsilon}(t)\}.
+\end{aligned}
+\tag{16.3}
+$$
+
+These are coordinates of a frozen solution, not uncapped maximal
+traces of a finite-$\epsilon$ capped vector.
+
+For $\lambda>0$ write $\mu=\sqrt{\alpha\lambda}$, and for
+$\lambda<0$ write $\nu=\sqrt{-\alpha\lambda}$. Then
+
+$$
+\frac{U_\epsilon}{L}\longrightarrow
+\begin{cases}
+\sin\mu/\mu,&\lambda>0,\\
+1,&\lambda=0,\\
+\sinh\nu/\nu,&\lambda<0.
+\end{cases}
+\tag{16.4}
+$$
+
+At zero the exact value is
+$U_\epsilon=L-\log b+\kappa_{\rm cap}$. For every fixed
+$\lambda\notin\{\lambda_n:n\ge1\}$ the appropriate limit in
+(16.4) is nonzero, while $V_\epsilon$ is bounded. Normalize by
+
+$$
+d_\epsilon=U_\epsilon^{-1},\qquad
+w_\epsilon=d_\epsilon W_\epsilon.
+\tag{16.5}
+$$
+
+On every fixed annulus $w_\epsilon\to w_0=\phi$. The normalization
+does not divide by $V_\epsilon$, so zeros of $\cos\mu$ cause no
+exception.
+
+At $\lambda=\lambda_n$, put $q_\epsilon=\sqrt{\sigma_\epsilon}>0$.
+Equation (16.1) and analyticity of $a$ give
+
+$$
+\begin{gathered}
+q_\epsilon=n\pi/L+O(L^{-3}),\qquad
+a(\sigma_\epsilon)=\kappa_{\rm cap}+O(L^{-2}),\\
+U_\epsilon\longrightarrow(-1)^n\kappa_b,\qquad
+V_\epsilon\longrightarrow(-1)^n.
+\end{gathered}
+\tag{16.6}
+$$
+
+Use $d_\epsilon=V_\epsilon^{-1}$ instead. This gives
+
+$$
+w_\epsilon\longrightarrow w_0=\phi(\kappa_b+t)
+\tag{16.7}
+$$
+
+on fixed annuli, including when $\kappa_b=0$. The complementary
+scattering remainder vanishes there by its exterior exponential
+decay. Both choices of $d_\epsilon$ stay bounded.
+
+The needed forcing bound is stronger than fixed-annulus convergence
+but does not concern an arbitrary actual trace. On every unit slab
+with $t<T=\log(2r_0)$, the $L^2$ slab norms of $w_\epsilon$, its
+first $D_i$ derivatives and all ordered $D_iD_j$ derivatives are at
+most
+
+$$
+C_3(1+|t|),
+\tag{16.8}
+$$
+
+uniformly as $\epsilon\downarrow0$ in each of the stated parameter
+ranges. To see this outside the cap, keep the exact sine or
+hyperbolic column. In the nonresonant case $d_\epsilon=O(L^{-1})$
+and $|s_{\sigma_\epsilon}(t-\log\epsilon)|\le C_4L$ for
+$\log\epsilon\le t\le T$. In the resonant case use the bounded
+$U_\epsilon/V_\epsilon$ representation and
+$|s_{\sigma_\epsilon}(t)|\le C_4|t|$ for $|t|\le L+O(1)$.
+The complementary part is bounded at the first core collars and
+decays exponentially farther out. Inside the core source smoothness
+of $Z_\sigma$ gives the sharper bound
+$C_4|d_\epsilon|e^{t-\log\epsilon}$ for the function. The frozen
+cap equation and (13.4) give the local horizontal graph bounds,
+including the interface collars. No Cartesian smoothness across the
+literal cap interface is asserted.
+
+Together with the $O(e^t)$ coefficients of $Q_\epsilon$, (16.8)
+proves
+
+$$
+Q_\epsilon w_\epsilon\longrightarrow Q_0w_0
+                                      \quad\hbox{in }Y_\delta.
+\tag{16.9}
+$$
+
+For an explicit dominating series, on a slab indexed by
+$j\to-\infty$ the unweighted forcing norm is at most
+$C_5e^j(1+|j|)$. The squared weighted majorant is
+$C_6e^{2(1-\delta)j}(1+|j|)^2$, which is summable because
+$\delta<1$. The source-core collars obey the same bound as they
+move to $-\infty$. Fixed annuli give convergence of the forcing
+there, so dominated convergence proves (16.9).
+
+## 17. Exact native correction, physical tails and limiting source traces
+
+Let $\mathcal G_\epsilon$ be the translated right inverse of §14
+at $\gamma_\epsilon$ and cap position $\log\epsilon$. In the common
+space $X_\delta$ solve
+
+$$
+\begin{aligned}
+r_\epsilon&=-\mathcal G_\epsilon
+                                  Q_\epsilon(w_\epsilon+r_\epsilon),\\
+r_\epsilon&=-(I+\mathcal G_\epsilon Q_\epsilon)^{-1}
+                                  \mathcal G_\epsilon Q_\epsilon w_\epsilon.
+\end{aligned}
+\tag{17.1}
+$$
+
+By (15.6) this is a strict contraction. Equations (14.1) and (16.9)
+give $\|r_\epsilon\|_{X_\delta}\le C_7$. Applying the actual
+right-inverse identity, not an inverse identity for the capped
+kernel, yields
+
+$$
+(P_{\gamma_\epsilon,\log\epsilon}^{\rm cap}+Q_\epsilon)
+                               (w_\epsilon+r_\epsilon)=0.
+\tag{17.2}
+$$
+
+Therefore
+$u_\epsilon=R^{-1}(w_\epsilon+r_\epsilon)$ solves the exact original
+native capped zero-energy equation on $R<r_0$. Actual coefficients
+may break every angular symmetry; their effects are in
+$Q_\epsilon$ and the full-angular correction $r_\epsilon$.
+
+Take any weakly convergent $X_\delta$ subsequence of $r_\epsilon$.
+Pass in (17.2) against compactly supported punctured-cylinder tests.
+The local coefficient convergence and (16.9) give for its weak limit
+$r$
+
+$$
+P_{\lambda_0}r=-Q_0(w_0+r),\qquad
+r=-(I+\mathcal G_0Q_0)^{-1}\mathcal G_0Q_0w_0.
+\tag{17.3}
+$$
+
+Weak closedness places $r$ in $X_\delta$, and (15.1), (15.6) make
+(17.3) unique. Every subsequence has this same limit. Local compactness
+of $X_\delta$ gives strong local $L^2$ convergence. On each fixed
+punctured annulus the cap is eventually absent, the coefficients
+converge smoothly, and the functions solve homogeneous native
+equations. Iterated local subelliptic estimates give convergence
+with every fixed smooth derivative on smaller annuli. This controls
+the cutoff commutators below. No strong or norm convergence of the
+translated right inverses is assumed in this argument.
+
+There is also strong physical $L^2(\mu)$ convergence on every
+smaller whole source ball. The polar Jacobian and comparable actual
+density give
+
+$$
+\|R^{-1}v\|_{L^2(\mu;\,t<S)}^2
+                       \asymp\int_{t<S}e^{2t}|v|^2dt\,da\,d\theta.
+\tag{17.4}
+$$
+
+The bounded correction norm implies
+
+$$
+\int_{t<S}e^{2t}|r_\epsilon|^2dt\,da\,d\theta
+                            \le C_8e^{2(1+\delta)S}.
+\tag{17.5}
+$$
+
+For the frozen part (16.8) gives the uniform tail bound
+$C_8\int_{-\infty}^S e^{2t}(1+|t|)^2dt$. Both tails tend to zero
+as $S\to-\infty$. Strong convergence on the remaining compact
+annulus proves the whole-ball assertion, with the original density.
+
+The limit $u_0=R^{-1}(w_0+r)$ is $L^2$ and solves the actual
+uncapped critical equation on the punctured ball. After a compact
+cutoff its critical image is $L^2$, so it is genuinely in the native
+maximal domain. Its source coordinates are exactly
+
+$$
+(\mathcal A,\mathcal B)=
+\begin{cases}
+(1,0),&\lambda\notin\{\lambda_n:n\ge1\},\\
+(\kappa_b,1),&\lambda=\lambda_n.
+\end{cases}
+\tag{17.6}
+$$
+
+Here is the trace justification in the required graph topology.
+Choose $\delta$ below the source-corrector exponent of Native Green
+stability, Theorem 21.1. The corrected $p,\zeta$ differ in cylinder
+coordinates from $\phi,t\phi$ by elements of $X_\delta$ locally
+near $-\infty$; the graph-minimal remainder is in $X_1$ and hence
+in $X_\delta$ there. Subtract that theorem's maximal decomposition
+of a cutoff of $u_0$ from $w_0+r$. The difference between the
+proposed and genuine trace coefficients would give
+$\phi(A+Bt)$ in $X_\delta$ near $-\infty$. Positive exponential
+weight makes this impossible unless $A=B=0$. This proves (17.6).
+The ordered-derivative control in (13.1) also supplies its continuous
+angular-$L^2$ slice interpretation. At no step are uncapped maximal
+traces evaluated on $u_\epsilon$ or another finite-cap vector.
+
+## 18. Original-domain graph approximants and all nonreal resolvents
+
+For each fixed $\epsilon$ the constructed local $u_\epsilon$ has
+finite original free horizontal energy through the source. For the
+correction and $a_0=\log\epsilon$, positivity of $\delta$ gives
+
+$$
+\int_{t<a_0}\left(|r_\epsilon|^2+\sum_i|D_ir_\epsilon|^2\right)
+                                    dt\,da\,d\theta
+                \le e^{2\delta a_0}\|r_\epsilon\|_{X_\delta}^2<\infty.
+\tag{18.1}
+$$
+
+In the physical derivative of $R^{-1}r_\epsilon$, the cylinder
+derivative differs from $D_ir_\epsilon$ by a bounded multiple of
+$r_\epsilon$. The polar factors cancel in the free kinetic integral,
+as in Native Green stability, (10.10). Thus (18.1) is finite free
+energy, and (17.4) gives finite physical norm. The frozen part is
+source-regular and has the same property. On the remaining compact
+collars the horizontal graph estimate supplies the required energy.
+
+The free horizontal point capacity is zero: cutoffs on source scale
+$s$ have horizontal energy $O(s^2)$ in homogeneous volume exponent
+four. Test the finite-energy weak equation with these cutoffs and
+let $s\downarrow0$. Since $\Gamma_\epsilon$ is bounded for fixed
+$\epsilon$, its product with $u_\epsilon$ is locally $L^2$; the
+puncture contributes no distribution. The cap is constant on a
+source neighbourhood. Local hypoellipticity then makes
+$u_\epsilon$ smooth there. Through a literal cap interface the
+equation remains weak with horizontal maximal regularity; no
+smoothness across that interface is required.
+
+Take a fixed smooth $\chi$ compactly supported in $R<r_0$ and equal
+to one on a smaller ball. Extend
+$g_\epsilon=\chi u_\epsilon$ by zero to the original cylinder.
+It belongs to the original $\mathcal F_A$, and its weak image is
+
+$$
+L_Ag_\epsilon=g_{\epsilon,\lambda}\Gamma_\epsilon g_\epsilon
+                                      +[L_A,\chi]u_\epsilon\in L^2(\mu).
+\tag{18.2}
+$$
+
+The identity extends from compact smooth form tests to
+$\mathcal F_A$ by form-core density, since its left form and right
+$L^2$ functional are continuous there. The closed-form representation
+criterion therefore puts $g_\epsilon$ in actual $D(L_A)$. A formal
+differential image alone would not suffice for this domain assertion.
+For the capped operator its image is exactly the commutator.
+
+Put $g_0=\chi u_0$. It is a genuine inherited-wall maximal vector
+with the trace in (17.6), and
+$S_{\max}g_0=[L_A,\chi]u_0$. These commutators are first-order and
+supported on one fixed smooth source-avoiding annulus. Whole-ball
+norm convergence and smooth annular convergence from §17 give
+
+$$
+g_\epsilon\longrightarrow g_0,\qquad
+K_{\epsilon,\lambda}g_\epsilon
+                          \longrightarrow S_{\max}g_0
+                                  \quad\hbox{in }L^2(\mu).
+\tag{18.3}
+$$
+
+The support of $g_\epsilon,g_0$ lies inside the original source
+chart; they respect the actual outer killing and phases. They are
+graph-core vectors, with no assertion that the local zero-energy
+solution is a global eigenfunction.
+
+For $v\in\mathcal D_0$, localization away from the source places
+$v$ in the original free operator domain $D(L_A)$. The full Green
+field is bounded on its support and eventually equals its cap
+there. Hence
+
+$$
+K_{\epsilon,\lambda}v
+      =Fv-\frac{g_{\mathrm c}\lambda}{L^2}\Gamma v
+                                      \longrightarrow Fv\quad\hbox{in }L^2.
+\tag{18.4}
+$$
+
+This uses the inherited-wall localization of Native Green stability,
+Theorem 21.1; it does not replace that domain by the absolute
+adjoint of a punctured compact core. By (13.6),
+$\mathcal D_0+\operatorname{span}\{g_0\}$ is an operator graph core
+for the selected $H_\lambda$. Equations (18.3)–(18.4) supply all its
+graph approximants in $D(L_A)$. Lemma 13.1 proves (12.5), on the
+original full Hilbert space and for every nonreal spectral parameter.
+
+Only local zero-energy equations were separated in the frozen
+construction. A nonzero-energy rotational native equation need not
+stay in its slow angular eigenspace: the nonconstant $c(a)$ in
+Native Green stability, Proposition 22.4, precludes that reduction.
+Here no $Ee^{2t}$ term of an actual finite-energy equation is dropped.
+The selfadjoint graph-core argument, rather than scalar separation
+of a resolvent equation, supplies all complex resolvents and inputs.
+
+## 19. All positive resonances, third-order selection and uniformity
+
+The only positive zeros of the limiting quotient in (16.4) are
+$\sqrt{\alpha\lambda}=n\pi$, $n\ge1$. The hyperbolic quotient
+and its continuous value at zero have no zero. At each positive
+zero, $V_\epsilon$ has the nonzero limit in (16.6). The inverse on
+all nonzero-$\theta$ modes and the rotational complementary inverse
+in §14 show that no angular branch was omitted. This exhausts the
+fixed-real-parameter cases, without dividing by a slow derivative
+which can vanish at half waves.
+
+For (12.6), analytic inversion of the same dispersion gives
+
+$$
+q_\epsilon L=n\pi+
+                \frac{\alpha\eta}{2n\pi L}+o(L^{-1}).
+\tag{19.1}
+$$
+
+In particular
+
+$$
+\frac{s_{\sigma_\epsilon}(L-\log b)}
+     {c_{\sigma_\epsilon}(L-\log b)}
+       \longrightarrow\frac{\eta}{2\lambda_n}-\log b,
+\qquad
+\frac{U_\epsilon}{V_\epsilon}
+       \longrightarrow\kappa_b+\frac{\eta}{2\lambda_n}.
+\tag{19.2}
+$$
+
+Normalize by $V_\epsilon$ as at (16.7). It stays bounded away from
+zero on compact $\eta$ sets, and the limiting frozen vector becomes
+$\phi(\kappa_b+\eta/(2\lambda_n)+t)$. The slab majorant, forcing
+convergence, contraction, physical tails and original-domain graph
+approximants of §§16–18 apply with this vector. They prove (12.7).
+This derives the $L^{-3}$ relative-coupling precision and the
+selected line, instead of choosing an extension in advance.
+
+The sign and the fixed reference radius can be checked in two ways.
+Writing the genuine source expansion using $\log(R/b)$ changes its
+constant to
+
+$$
+\mathcal A_b=\mathcal A+\mathcal B\log b.
+\tag{19.3}
+$$
+
+Alternatively put $b'=be^d$ and $L'=L+d$. The exactly resonant
+coupling written in the old convention satisfies
+
+$$
+\frac{\lambda_n}{(L+d)^2}
+ =\frac{\lambda_n}{L^2}-\frac{2\lambda_nd}{L^3}+O(L^{-4}).
+\tag{19.4}
+$$
+
+It is the window coefficient $\eta=-2\lambda_nd$, so (19.2)
+changes $\kappa_b$ by $-d$, precisely to
+$\kappa_{\rm cap}-\log b'$. These are compatible descriptions of
+the actual family. At $n=1$, Corollary 10.1 has
+$\eta_\sigma=-\kappa_b-\sigma/(2\lambda_D)$, with its
+$\sigma$ equal to the third-order coefficient in (12.6).
+Thus its positive-ground source line agrees with (12.7).
+
+For completeness the compact-parameter assertions require the
+following uniform argument. On a compact nonresonant $\lambda$
+set, (16.4) gives $|U_\epsilon|\ge c_1L$ and bounded
+$V_\epsilon$ uniformly. Every sequence of parameters in that set
+has the same limiting $w_0=\phi$. The majorant and the contraction
+constants are uniform. The weak-subsequence uniqueness and compactness
+argument of §17 then proves uniform graph approximation to the
+same $g_0$. Formula (18.4) is uniform too. Apply the density estimate
+(13.5) on a finite approximation of each fixed input; the resolvent
+bound is parameter independent on a compact nonreal $z$ set. First
+this gives uniform convergence at one nonreal $z$, and the resolvent
+identity and compactness give it on the whole compact set.
+
+For the refined window assume the remainder in (12.6) is uniform on
+the compact $\eta$ set. Along any $\eta_\epsilon\to\eta$, the
+same construction converges to the vector for
+$\kappa=\kappa_b+\eta/(2\lambda_n)$. At the limit the correction
+(17.3) is linear in $w_0=\phi(\kappa+t)$, so the graph-core vector
+$g_0(\kappa)$ and its maximal image depend affinely on $\kappa$.
+Using (13.6) and Lemma 13.1 once more, now for
+$G_{\kappa_j}$ with $\kappa_j\to\kappa$, proves strong-resolvent
+continuity in $\kappa$. Compactness of the $\eta$ set gives the
+uniform convergence to the corresponding $G_{\kappa(\eta)}$ for
+every fixed input. The same resolvent identity handles compact
+nonreal $z$ sets. No operator-norm convergence is inferred from
+this fixed-input argument.
+
+Uniformity through a resonance in the unscaled $\lambda$ variable
+would be false. For any fixed nonzero $\eta$, take
+$\lambda(\epsilon)=\lambda_n+\eta/L$. These are nonresonant for
+small $\epsilon$, so their pointwise limiting operator from (12.4)
+would be $F$, whereas the actual sequence has the limit
+$G_{\kappa_b+\eta/(2\lambda_n)}$ just proved. The onto source pair
+distinguishes every finite line from $\mathcal B=0$ and distinguishes
+different finite $\kappa$ lines. Their resolvents therefore differ
+on some fixed input. This establishes the parameter-limit distinction;
+it is not a classification of every varying-$\lambda$ sequence.
+$\square$
+
+## 20. Source covariance, ground-state compatibility and proof scope
+
+The coefficient in (16.1) is fixed by the unit source and angular
+dispersion, not by a radial analogue:
+
+$$
+\gamma=\frac g{2\pi m_0},\qquad
+\Lambda'(0)=\frac CM,\qquad
+\alpha=\frac{\lambda_0M}{C}.
+\tag{20.1}
+$$
+
+The polar Jacobian $1/4$ and actual angle period $2\pi$ give the
+source flux coefficient $K=m_0(\pi/2)C$ in (12.2). No normalized
+ground amplitude enters that source-line ratio, and the clock with
+covariance $2A\,dt$ supplies no additional factor $1/2$.
+Under $\rho\mapsto c_1\rho$, the Green field and its cap divide by
+$c_1$ while $m_0,g_{\mathrm c},K$ multiply by $c_1$. The product
+$g\Gamma_\epsilon$ and the differential operator are unchanged
+under the natural unitary identification of the two $L^2$ spaces.
+The source coefficients scale together, preserving
+$\mathcal A/\mathcal B$ and the selected $\kappa$.
+
+The full auxiliary cylinder, its right inverse, the small radius
+$r_0$, the extension of $Q_\epsilon$ and the final cutoff are proof
+devices. They yield one compactly supported actual graph-core vector
+and change no physical source, wall, phase, kinetic form, quotient or
+domain. Their choices do not affect the resulting realization: the
+limiting correction lies in positive-weight $X_\delta$ and adds no
+constant or logarithmic source term; vectors with the same genuine
+trace differ by a graph-minimal vector.
+
+Theorem 12.1 adds an operator statement across all spectral channels.
+Its ground-state consequences must be read together with the already
+established ground theorems at their exact scopes. For
+$\lambda<\lambda_D$, Theorem 2.2 gives retention of $f_*$ and the
+actual divergent separate-resource laws, including their compact
+subthreshold uniformity. The $\lambda_Z$ cancellation and finite
+parts are Native Green stability, Theorem 25.2. At $\lambda_D$,
+Theorems 7.1–9.1 give the finite $G_{\kappa_b}$ ground, its sharp
+energy correction, profile and $L^3$ separate resources; Corollary
+10.1 gives the stated first-threshold ground window. For every fixed
+$\lambda>\lambda_D$, including $\lambda_n$ with $n\ge2$, Native
+Green stability, Theorem 24.1, gives actual ground collapse, its
+concentration profile and sharp separate-resource laws, uniformly on
+compact subsets of that open range for a fixed model and $b$.
+Those laws are not inferred from strong-resolvent convergence and
+are not new energy or resource conclusions of Theorem 12.1.
+
+Deep ground collapse is compatible with either limit in (12.4).
+The graph-core proof uses only
+$\|(K_{\epsilon,\lambda}-z)^{-1}\|\le|\operatorname{Im}z|^{-1}$,
+with no uniform lower spectral bound. If the ground energy tends
+to $-\infty$, the norm of its contribution to the resolvent applied
+to $f$ is at most
+$\|f\|/|E_{\epsilon,\lambda}-z|$, which tends to zero. The
+collapsing normalized states from Theorem 24.1 concentrate at the
+source and converge weakly to zero; their moving negative energies
+do not obstruct the finite nonreal resolvent limit. The operator
+theorem does not retain those normalized grounds or bound their
+kinetic, raw-attraction or capped-attraction resources. A finite
+total energy at equality likewise does not remove the separate
+$L^3$ divergences in §9.
+
+The source-specific analytic ingredients used here are the genuine
+maximal pair and horizontal graph estimate of Native Green stability,
+Theorem 21.1, and its Theorem 22.1's analytic dispersion, scattering
+column, trace-space maps, interior coercivity and all-mode gap.
+The additional inferences are the forced full-angular right inverse,
+the bounded local native correction, the physical tail and trace
+identification, and the original-domain graph approximants. All
+inverse bounds used for these inferences follow from the displayed
+coercivity, convolution and graph estimates. No stronger
+cap-to-fixed-radius operator-norm matching estimate, arbitrary actual
+trace amplitude bound or outer-return estimate is a premise.
+
+For bounded primary correspondence, Derkach–Hassi–Malamud–de Snoo,
+[Proposition 4.2 and Theorem 7.2](https://arxiv.org/html/math/0610299v1),
+provide boundary-triplet/Weyl and resolvent tools under their stated
+range, Green identity and invertibility hypotheses. They do not
+select this spatial-cap parameter, and their formula is not needed
+in the graph-core proof. Dereziński–Richard,
+[Theorem 5.5 and the selfadjoint half-line families](https://arxiv.org/html/1604.03340v2),
+treat scalar inverse-square endpoints with specified boundary
+parameters. Neither their Bessel constants nor a chosen half-line
+extension is substituted for the full-angular native construction.
+Lax–Milgram, weighted energy conjugation, Young's convolution
+inequality, local compactness and Lemma 13.1 are the standard
+analytical tools instantiated in the proof above.
+
+The neighbouring repository families retain the distinctions in
+Native Green stability, §26: the moving-time multipliers and changed
+carrier of Critical cutoff, Definition 31.1 and Theorems 32.2–33.1;
+the real-cover threshold source and different infinity in Weak
+binding, Definition 70.1 and Proposition 70.2; and the bounded-cap
+and added-kinetic-law settings of Continuation III, Specification
+82.7 and Theorem 87.4. None is a supplier of (12.4) for the unchanged
+periodic killed unit-source spatial minimum. This is a bounded
+correspondence, with no exhaustive-search or priority assertion.
+
+The all-fixed-real-parameter operator classification and its stated
+precision windows do not assert norm-resolvent rates, all-level
+counts, model-uniformity, new resource finite parts or the outcome
+of the broader why-three programme. Finite normalized-law task
+information, binary-task Bayes risk and zero-one loss provide no
+native Green law or acquisition map here. Homogeneous volume
+exponent four, growth $(2,3)$, current-ray dimension three, direct
+rank two and physical Euclidean dimension retain their distinct
+meanings.
+
+## 追加锚（本行以下为增补区）
