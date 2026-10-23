@@ -93,7 +93,8 @@ def arena : Arena where
 private theorem rejected_law : ¬ arena.Law identityReadout := by
   intro h
   have H := h 0 0 (a := 1)
-  norm_num [identityReadout, realize] at H
+  change (1 : ℝ) - 0 = 0 at H
+  norm_num at H
 def family : Registration arena (type_of% @W_symm) where
   actual := actual
   bridge := Iff.rfl
@@ -274,7 +275,8 @@ def family : Registration arena (type_of% @convolution_eq_betaMean) where
     intro i
     refine ⟨⟨1, 1, 1⟩, 0, 1, ?_⟩
     change convolution 1 1 1 0 ≠ convolution 1 1 1 1
-    norm_num [convolution, coeff, Finset.sum_range_succ, Real.Gamma_add_one]
+    delta convolution coeff
+    norm_num [Finset.sum_range_succ, Real.Gamma_add_one]
 def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
     (@convolution_eq_betaMean) (Realization signature) Unit Unit where
   unitName := `Reg.D5.S3.Analytic.IncompleteBeta.Moment.Representation.unit
