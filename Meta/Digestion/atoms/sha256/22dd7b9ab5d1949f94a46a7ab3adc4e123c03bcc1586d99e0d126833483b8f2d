@@ -1,0 +1,38 @@
+### 448.1 现有尺度下的条件性比较
+
+这条来源不能直接替换 (TC.11)。若另有一个尚未证明的同源桥同时给出
+
+$$
+\log C=a+O\!\left(\frac a{\log a}\right),
+\qquad N_y\ge C e^{-L},
+\qquad L=O(a^{3/4}),
+$$
+
+并且 $C e^{-L}\le X_+/2$，可以形式上取 $y\asymp a$、$z=C e^{-L}$。此时
+
+$$
+ \nu=\frac{\log z}{\log y}
+ =\frac{a-L+O(a/\log a)}{\log a},
+$$
+
+从而
+
+$$
+ \nu\log\!\bigl(\nu\log(3\nu)\bigr)
+ =a-L+O\!\left(\frac a{\log a}\right).
+$$
+
+在 $\log X_+=a+O(1)$ 的同一附加尺度下，Tenenbaum--Wang 的人口界至多给出
+
+$$
+\log\Theta(X_+,y,z)=O\!\left(\frac a{\log a}\right),
+$$
+
+与当前精确同余计数的
+
+$$
+\log\tau(C)=O\!\left(\frac a{\log a}\right)
+$$
+
+同阶。这里的三项附加条件尚未由 FIB/CA 接口证明；即使它们都成立，也只说明人口层没有新的渐近量级，仍未支付同一候选的 signed Robin tail。要取得实质推进，必须得到常数级改进并保留同余，或直接建立联合有符号估计。
+

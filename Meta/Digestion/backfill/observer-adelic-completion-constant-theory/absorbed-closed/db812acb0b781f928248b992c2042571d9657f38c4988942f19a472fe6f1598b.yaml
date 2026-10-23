@@ -1,0 +1,17 @@
+fingerprints:
+  raw_sha256: sha256:db812acb0b781f928248b992c2042571d9657f38c4988942f19a472fe6f1598b
+  normalized_sha256: sha256:db812acb0b781f928248b992c2042571d9657f38c4988942f19a472fe6f1598b
+cas_ref: sha256:db812acb0b781f928248b992c2042571d9657f38c4988942f19a472fe6f1598b
+coverage_gids:
+  - gid: D5/S3/Weil/Probability/CanonicalLiCurvatureZeroFree.canonical_li_curvature_zero
+    target_statement_id: sha256:968a64ee77206c9ec07fb20085a0b0060f1435a06823e8530402657122f816b3
+  - gid: D5/S3/Zeros/Endpoints/CanonicalLiLocalExpansion.canonical_li_one
+    target_statement_id: sha256:0100e2f984a054bf1399ac30c29697fab0d0bbd61e47bc2a1f998ff74cff6483
+  - gid: D5/S3/Zeros/Endpoints/CanonicalLiLocalExpansion.canonical_li_one_pos
+    target_statement_id: sha256:0d85422bd950ae17260315a7bddefaba67fa989c54122a753e75c7a2d6ec9b6f
+  - gid: D5/S3/Zeros/Endpoints/CanonicalLiLocalExpansion.canonical_li_zero
+    target_statement_id: sha256:b1c73c432b885d2b8a53e3da372efe73ff143371e87eda2f0336edd418edd027
+  - gid: D5/S3/Zeros/Endpoints/FirstLiCoefficientNormalization.first_li_coefficient_normalization
+    target_statement_id: sha256:c6a2e83a596f7ecb38a06003a580c20c03d90b947c4562de5a1d9e9ce637d4c6
+receipts:
+  unresolved_subitems: []

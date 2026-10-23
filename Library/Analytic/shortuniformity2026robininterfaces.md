@@ -98,6 +98,10 @@ for a short $\Lambda-1$ prefix costs its length times $O(\log X)$.
 Neither the Möbius $0.55$ threshold nor the shorter range below is
 substituted into this classical prime-error statement.
 
+The corresponding application to the same actual CA price path, with
+its pressure cost, persistence width, and exceptional-measure boundary,
+is retained in [the owning Caveney note](../Arith/caveney2012sacaga.md#the-classical-huxley-rate-on-the-same-ca-price-path); this supplier note does not duplicate that application.
+
 
 ## A shorter interval range with different quantitative conclusions
 

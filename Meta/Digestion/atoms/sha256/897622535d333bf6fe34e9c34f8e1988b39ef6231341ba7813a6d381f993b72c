@@ -1,0 +1,181 @@
+## 12. Reused whole-world projection, inverse and normalized carrier
+
+The whole-world inverse is reused from F, Lemma 30.2, and SVIII,
+Section 12; the normalized carrier is the one in
+[Proposition 4.2](#4-the-fixed-finite-carrier-and-its-drift-equation)
+and SVIII, Section 22. Its formulas and ordinary proofs are recorded
+here to specify all rational calculations.
+
+Write $c=r(1-r)/b$, $j=b+c$, $n=j+r$, $T=1+b$, $U=1+2b$.
+The chronological traces are $1,j,T,n,U,U+n,2U+n$ at clocks 0 through 6,
+and $T+2j+4r$, $3U+2n$ at the two clock-seven alternatives.
+Thus $x=n/U>0$ and $H=Ug$ have the four samples
+
+$$
+ h_3=(24-d)/x,\quad h_4=18-d,\quad
+ h_5=(p-d)/(x+1),\quad h_6=(v-d)/(x+2).
+$$
+
+$H(s)$ denotes their unique polynomial interpolant of degree at most
+three at the original nodes $3,4,5,6$. Define
+
+$$
+\begin{aligned}
+ H_0&=20h_3-45h_4+36h_5-10h_6,\\
+ H_1&=10h_3-20h_4+15h_5-4h_6,\\
+ H_2&=4h_3-6h_4+4h_5-h_6,\\
+ H_7&=-h_3+4h_4-6h_5+4h_6,\\
+ B_0&=294/5-2d-H_2,\qquad \chi=d^2+B_0^2,\\
+ U&=(-dH_0+B_0H_2)/\chi,\quad b=(U-1)/2,\\
+ j&=U(24-d)/H_1,\quad r=xU-j,\quad g=H/U,\\
+ m&=d+(3+2x)H_7.
+\end{aligned} \tag{12.1}
+$$
+
+For an actual off-24 world these are necessary identities, with
+$d\ne24$, $H_1\ne0$, $\chi>0$. The complete faithful inverse guards,
+including the restored clock equations, are
+
+$$
+\begin{gathered}
+x>0,\quad d\ne24,\quad H_1\ne0,\quad\chi>0,\quad
+U>1,\quad b=(U-1)/2>0,\quad0<r<1,\\
+j=b+r(1-r)/b,\qquad dU=-H_0,\qquad B_0U=H_2.
+\end{gathered} \tag{12.2}
+$$
+
+These are the necessary and sufficient guards of F, Lemma 30.2;
+$x=n/U$, $H=Ug$ and the drift $d$ are unchanged. To see the
+$d\ne24$ guard directly, $d=24$
+makes $g(1)=g(3)=0$; the clock-zero, clock-two, clock-four equations then
+force $b=1/8$ and $g(s)=\frac85(s-1)(s-3)(s-5)$, whence $p=24$.
+The $H_1\ne0$ guard follows from $H_1=U(24-d)/j$.
+The pair $(d,B_0)$ cannot vanish: the necessary equation $B_0U=H_2$
+would then give both $H_2=0$ and $H_2=294/5$.
+
+For the carrier, in $\mathbb Z[x,p,v,d]$ put
+
+$$
+\begin{gathered}
+ D=x(x+1)(x+2),\quad z_3=(24-d)(x+1)(x+2),\quad z_4=(18-d)D,\\
+ z_5=(p-d)x(x+2),\quad z_6=(v-d)x(x+1),\\
+ a_0=20z_3-45z_4+36z_5-10z_6,\\
+ a_1=10z_3-20z_4+15z_5-4z_6,\quad a_2=4z_3-6z_4+4z_5-z_6,\\
+ z_*=xa_1-D(24-d),\\
+ f=5dDa_2+a_0\{(294-10d)D-5a_2\},\\
+ K=4a_0^2z_*^2+2a_0(dD-a_0)z_*a_1
+ -(a_0+dD)\{dD+(1-2x)a_0\}a_1^2,\\
+ F_0=405x^3+(975-18p+5v)x^2+(90-36p+5v)x-480.
+\end{gathered} \tag{12.3}
+$$
+
+Write $f=Ad^2+B_fd+C_f$, $K=\sum_{k=0}^4 k_kd^k$, and set
+
+$$
+\begin{aligned}
+ \alpha&=k_4(-B_f^3+2AB_fC_f)+k_3A(B_f^2-AC_f)
+          -k_2A^2B_f+k_1A^3,\\
+ \zeta&=k_4(-B_f^2C_f+AC_f^2)+k_3AB_fC_f-k_2A^2C_f+k_0A^3.
+\end{aligned}
+$$
+
+The exact polynomial quotients
+
+$$
+ E=(A\zeta^2-B_f\alpha\zeta+C_f\alpha^2)/A^3,\qquad
+ R=E/(256D^8F_0^2) \tag{12.4}
+$$
+
+specify $R$ before any specialization. Both divisions have zero
+polynomial remainder. In particular (12.4) is not division at an
+individual zero of $A$ or $F_0$. This is precisely the normalization
+of SVIII, Section 22: $R$ has 512 terms and degrees $(18,6,6)$,
+with total $(p,v)$ degree 6. Polynomial reduction gives
+$A^3K\equiv\alpha d+\zeta\pmod f$ and the identity in (12.4).
+Every actual world satisfies $f=K=R=0$. These necessity statements
+reuse SVIII, Sections 12 and 22; in particular they apply before any
+local nonvanishing test or strict-source filter.
+
+The following direct ordinary polynomial identity also gives this
+necessity, including its singular-source extension. For source
+coordinates $t=r/b,b$ put
+
+$$
+\begin{gathered}
+ r=tb,\quad j=t+b(1-t^2),\quad n=j+tb,\quad T=1+b,\quad U=1+2b,\\
+ D_s=5\{(b^2+8b+4)jn-2TU(j+n)\},\quad A_s=(8b-1)(2+5b),\\
+ C_0=-24D_s+3A_sjn,\ C_1=3A_sn,\
+ C_2=3(49b+34)jn-54U(j+n),\ C_3=3A_sj,\\
+ B_5=-4C_0+15C_1-20C_2+10C_3,\\
+ B_6=-10C_0+36C_1-45C_2+20C_3,\\
+ B_7=-20C_0+70C_1-84C_2+35C_3,\\
+ N_p=-C_0+(U+n)B_5,\quad N_v=-C_0+(2U+n)B_6,\\
+ N_a=-C_0+(T+2j+4r)B_7,\quad N_m=-C_0+(3U+2n)B_7.
+\end{gathered} \tag{12.5}
+$$
+
+On the regular parent,
+
+$$
+d=-C_0/D_s,\qquad
+g(s)=\frac1{D_s}\sum_{k=0}^3 C_k
+\prod_{\substack{0\le l\le3\\l\ne k}}\frac{s-l}{k-l},\qquad
+(p,v,a,m)=(N_p,N_v,N_a,N_m)/D_s.
+\tag{12.6}
+$$
+
+This is the SIII, Definition 16.1, source circuit, with $t=r/b$;
+$D_s$ is distinct from $D=x(x+1)(x+2)$.
+The four exact polynomial identities
+
+$$
+\begin{gathered}
+ -C_0+jC_1=24D_s,\quad5(-C_0+TC_2)=147D_s,\\
+ -C_0+nC_3=24D_s,\quad
+ -C_0+U(-C_0+4C_1-6C_2+4C_3)=18D_s
+\end{gathered} \tag{12.7}
+$$
+
+verify the literal original readings; clock zero is $d+g(0)=0$.
+If $R=\sum c_{ijk}x^ip^jv^k$, the exact two-variable identity
+
+$$
+ \sum c_{ijk}n^iU^{18-i}N_p^jN_v^kD_s^{6-j-k}=0 \tag{12.8}
+$$
+
+establishes $R=0$ directly on every regular source. Its terms are fully
+specified by (12.3)–(12.5); expansion has zero remainder.
+For completeness put $e=d-24$,
+$\Lambda=1+6/T+1/U-4/j-4/n$, $B=6/T-2/U$.
+The undivided original parent is
+$e\Lambda+(24/5)(b-1/8)B=0$.
+A singular off-24 world must have $b=1/8$, $e\ne0$, and
+
+$$
+ \Lambda=\frac{\Phi(r)}{960jn},\qquad
+ \Phi=438272r^4-931328r^3+540800r^2-50728r-853.
+$$
+
+The exact identity $\gcd(\Phi,\Phi')=1$ gives
+$e\Lambda_r\ne0$ there. The implicit function theorem, with $e$ fixed
+and $b$ varying through $1/8$, supplies nearby strict regular parent
+worlds. Their whole interpolated gains and responses converge to this
+singular world. Consequently (12.8) passes to it by continuity. Thus no
+singular original world was removed before the carrier was used.
+
+The inverse is also a sufficiency test where its displayed guards hold.
+Indeed $f=5D^2(dH_2+H_0B_0)$. If $d\ne0$ and $f=0$, (12.1) gives
+$U=-H_0/d$ and $B_0U=H_2$. Substituting into (12.3) gives
+
+$$
+ K=4D^4d^2H_1^2\{r^2-(1+b)r+b(xU-b)\}. \tag{12.9}
+$$
+
+Hence $K=0$, $b>0$ imply $j=b+r(1-r)/b$.
+The definitions restore clock one; $dU=-H_0$ restores clock zero;
+$(U+1)B_0=294/5-2d$ restores clock two. The four interpolation
+samples restore clocks three through six. Thus $0<r<1,U>1$
+produce exactly one whole original world, and $0,24$ ensure $g\ne0$.
+Every surviving drift interval below avoids zero, as a conclusion of
+exhaustive testing rather than a domain restriction.
+

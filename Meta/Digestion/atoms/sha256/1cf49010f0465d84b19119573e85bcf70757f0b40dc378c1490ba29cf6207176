@@ -1,0 +1,53 @@
+**Proposition 20.6 (conditional Schwarzschild cost of the native image
+protocol).** Under Definitions 20.1, 20.3 and 20.5, set
+
+$$
+C=\frac{64GM_0a_0}{9c^4},\qquad
+q_{\rm S}(n)=2+C P(n)Q(n).
+$$
+
+The actual static clock satisfies
+
+$$
+1\le\alpha^{-1}\le q_{\rm S}(n),\qquad
+\frac{T_t}{\tau_0}\ge
+\frac{(137^j-1)(s_0+279/136)}{p(n)}.
+\tag{C.20.8}
+$$
+
+If instead an external reference interval $T_{\rm ext}\ge0$ is compared
+with this apparatus's elapsed proper waiting time $\tau_{\rm wait}$,
+
+$$
+\frac{T_{\rm ext}}{q_{\rm S}(n)}
+\le\tau_{\rm wait}=\alpha T_{\rm ext}\le T_{\rm ext}.
+\tag{C.20.9}
+$$
+
+Thus this static, polynomially bounded source-and-acceleration family
+cannot convert an exponentially long external interval into a polynomial
+proper waiting interval. This compares interval lengths and supplies no
+external computation, return signal or readout protocol.
+
+Proof. Use the classical Schwarzschild clock and acceleration formulas as
+intermediate facts, with their derivation and limitations in
+[Reall's black-hole note](../../../Library/Observer/reall2024blackholes.md):
+
+$$
+\alpha=\sqrt{1-\frac{2GM}{c^2R}},\qquad
+ a=\frac{GM}{R^2\alpha},\qquad
+ Ma=\frac{c^4}{4G}\frac{(1-\alpha^2)^2}{\alpha}.
+\tag{C.20.10}
+$$
+
+For $0<\alpha\le1/2$,
+$(1-\alpha^2)^2\ge9/16$ gives
+$\alpha^{-1}\le64GMa/(9c^4)\le C P(n)Q(n)$.
+For $1/2<\alpha<1$ its inverse is less than two. This proves the first
+bound, with $q_{\rm S}$ a polynomial majorant for both branches.
+Since $\alpha\le1$, each actual native interval costs at least
+$\tau_0/p(n)$ in reference time; summing and applying Proposition 20.2
+proves the second bound in (C.20.8). At fixed $R$, $\alpha$ is constant,
+so (C.20.9) follows by integration of $d\tau=\alpha\,dt$.
+$\square$
+

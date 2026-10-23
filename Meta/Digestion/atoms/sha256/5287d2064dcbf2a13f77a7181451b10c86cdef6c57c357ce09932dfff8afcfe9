@@ -1,0 +1,34 @@
+**Theorem 16.4 (the $2^r$ terminal family).** For every $r\ge1$, $W_r$
+contains $2^r$ complete runs with pairwise different retained full histories
+but the same original task response: for distinct words $w,v\in\{R_2,A_2\}^r$,
+$T_w\not\sim_TT_v$ and $T_w\sim_QT_v$.
+
+**Proof.** The first $R_2$ is a strict `Reserve(2)` from $K=1$ and appends
+$4$ source cells. The next $A_2$ is `Raise(2)` and changes the semantic guard
+without changing the source. Subsequent occurrences are complete paid
+unchanged maintenance branches with the same finite return contract. All
+members therefore have the common acquired source $\alpha$, $h=K=2$, the
+same layout and policy ordinals, and the same client proposal. Relative to the
+common prefix, the event counts are
+
+$$
+(q,g,e,j,m)=(q_a+1,g_a,e_a,j_a+3,m_a+r+5).
+$$
+
+If $w$ and $v$ first differ at position $i$, the reached ingress cell at that
+position receives the different acquired headers $101$ and $110$. The header,
+its source origin, its row and the later retained block are append-only
+material, so the complete primitive words and retained cells differ. This
+proves $T_w\not\sim_TT_v$.
+
+All command frames are finite and use the same acquired source and original
+owner paths. The verifier receives an authentic snapshot and binding for each
+run, checks the same initial target $q_1(\alpha)$, and the consumer emits the
+same target output. At global halt the original row delivery, verifier,
+consumer, `OUT`, `ACK` and return have already completed. Every prescribed
+producer or journal entry requires acknowledged idle or a held frozen
+continuation, and neither is available after the final halt control edge.
+Thus every enabled continuation experiment has the same disabled response and
+the empty response has the same terminal type and output. Hence
+$Q(T_w)=Q(T_v)$, proving $T_w\sim_QT_v$. There are $2^r$ words. $\square$
+

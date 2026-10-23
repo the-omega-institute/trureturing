@@ -1,0 +1,18 @@
+## 6. Complete original realization
+
+Proof of Theorem 1.3. Define, using the unique exact zero from Theorem 4.3,
+
+$$
+\begin{gathered}
+W_2=W(2/5,b_{0*}),\qquad W_3=W(r_{1*},b_{1*}),\\
+p_*=p(2/5,b_{0*}),\quad v_*=v(2/5,b_{0*}),\quad
+m_*=m(2/5,b_{0*}).
+\end{gathered}
+$$
+
+All divisions are legitimate by Section 5. Lemma 2.2 supplies the first five original readings, valid source matrices and nonzero whole gains of degree at most three. It also identifies $p,v,m,a$ with the literal readings using those same matrices, drifts and whole gains.
+
+The first two coordinates of $F(x_*)=0$ give $p(W_3)=p_*$ and $v(W_3)=v_*$. Hence both worlds belong to the same entire original child $C(p_*,v_*)$. The third coordinate gives $m(W_3)=m_*$. The $p$ guard gives $p_*\ne24$. The separated diagonal parameters give $P(W_2)\ne P(W_3)$, so the complete triples are distinct. Their separately reconstructed drifts remain fixed through all eight clocks. The terminal J difference interval proves the final inequality in Theorem 1.3. This proves every assertion. ∎
+
+For orientation, the common responses lie near $p_*=1.80571266239$, $v_*=172.24716809632$ and $m_*=1055.09504456528$. These approximations do not define the worlds or supply their equalities; the exact box, rational equations and unique-zero theorem do.
+

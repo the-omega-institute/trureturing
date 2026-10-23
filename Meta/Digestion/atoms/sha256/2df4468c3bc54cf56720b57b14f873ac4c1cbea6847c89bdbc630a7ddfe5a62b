@@ -1,0 +1,32 @@
+### 7. Scope and mathematical sources
+
+The new conclusion is the complete three-world source classification
+and J-injectivity on $\mathcal Q$, including the third source of width
+about $0.04644285938$. The exact M point only locates an M-collision
+route within that excluded region. The obstruction does not assume that
+the sought J pair would be the M pair: there is no J pair at all in
+these entire children.
+
+All positive widths, the original independent pairs and independent
+common terminal answers remain in the original problem outside
+$\mathcal Q$. Singular parent worlds are handled in Lemma 3.1 before
+the all-width certificate excludes them in this rectangle. No reset,
+copy, new port, clock shift or fixed-width replacement is used. The
+first-width slice in Section 6 specifies one point of the original
+full source family and is released in the analytic continuation.
+
+The ordinary algebraic sources are *FIB_ALL_BASE_CANONICAL_ASSEMBLY_CORRECTED*,
+Sections 1--2 and 14, for literal-world and singular-parent coordinates;
+*FIB_CANONICAL_APPEND_SECTIONS_47_54_CORRECTED*, Sections 48--49, for
+the parent polynomial chart and resultant/subresultant organization;
+and *FIB_OUTSIDE_U_M_BRANCH*, for the location of a positive M-collision
+candidate. The proofs and rational bounds needed here are explicitly
+specified in Sections 2--6; no numerical interval or finite continuation
+claim from the candidate source is a premise.
+
+Lagrange interpolation, Sylvester determinants and subresultants,
+Descartes' rule of signs, the contraction mapping theorem and the real
+analytic implicit-function theorem are the classical tools used.
+These are ordinary mathematical proofs and rational certificates;
+no Lean-kernel verification is asserted.
+

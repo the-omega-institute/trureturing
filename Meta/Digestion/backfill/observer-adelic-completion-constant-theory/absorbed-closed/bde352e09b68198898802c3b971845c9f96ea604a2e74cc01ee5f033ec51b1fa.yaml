@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:bde352e09b68198898802c3b971845c9f96ea604a2e74cc01ee5f033ec51b1fa
+  normalized_sha256: sha256:bde352e09b68198898802c3b971845c9f96ea604a2e74cc01ee5f033ec51b1fa
+cas_ref: sha256:bde352e09b68198898802c3b971845c9f96ea604a2e74cc01ee5f033ec51b1fa
+coverage_gids:
+  - gid: D5/S0/Carrier/PrincipalIdeal.golden_int_is_pid
+    target_statement_id: sha256:e310785077866a0b738328dc0c9d99b396f3111fe5c05a8a3b1232edf22c0299
+  - gid: D5/S3/Arith/Lattices/GoldenIntegerRing.goldenIntegerRingEquiv
+    target_statement_id: sha256:73f7d6e1d24160186c4cdcdb5d51edafb6e5cc92b3f24dbefd28109823bf5e46
+receipts:
+  unresolved_subitems: []

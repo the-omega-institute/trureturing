@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:64ac16baee9c5c5b592cada87b59894da4a078b9784e867e25d8e6eb3337a3b0
+  normalized_sha256: sha256:64ac16baee9c5c5b592cada87b59894da4a078b9784e867e25d8e6eb3337a3b0
+cas_ref: sha256:64ac16baee9c5c5b592cada87b59894da4a078b9784e867e25d8e6eb3337a3b0
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 'Nonpropositional: 定义有序角色对的更新及状态信息；没有周期结论。'
+    previous_atom_id: 2fe761de7e2fee83461af9c674dc534536aa22733d45af963bf4775049b8a540
+    next_atom_id: 4da10a64080f8ca58c747f1541b52e277abb63521c79ea878b7ffcf9edcefeef

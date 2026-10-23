@@ -199,7 +199,7 @@ private lemma h_bound_zero {a s : ℝ} (ha : 0 < a) (hs : 0 < s) :
     h a s ≤ 1 / (Real.pi * s / a) := one_div_le_one_div_of_le hc he
     _ = a / (Real.pi * s) := by field_simp
 
-private lemma h_exp (a s : ℝ) :
+lemma h_exp (a s : ℝ) :
     h a s = Real.exp (-(Real.pi / a) * s) /
       (1 - Real.exp (-(Real.pi / a) * s)) := by
   have hmul : -(Real.pi / a) * s = -(Real.pi * s / a) := by ring
@@ -276,13 +276,13 @@ theorem integrable_logIntegrand {a : ℝ} (ha : 0 < a) (t : ℝ) :
       exact div_le_div_of_nonneg_right (mul_le_mul_of_nonneg_right hcos hh) hs.le
     _ = _ := by ring
 
-private def rate (a : ℝ) (n : ℕ) : ℝ := Real.pi * ((n : ℝ) + 1) / a
+def rate (a : ℝ) (n : ℕ) : ℝ := Real.pi * ((n : ℝ) + 1) / a
 
 private lemma rate_pos {a : ℝ} (ha : 0 < a) (n : ℕ) : 0 < rate a n := by
   unfold rate
   positivity
 
-private lemma hasSum_h {a s : ℝ} (ha : 0 < a) (hs : 0 < s) :
+lemma hasSum_h {a s : ℝ} (ha : 0 < a) (hs : 0 < s) :
     HasSum (fun n : ℕ => Real.exp (-(rate a n) * s)) (h a s) := by
   have hc : 0 < Real.pi / a := by positivity
   have H := (hasSum_geometric_of_lt_one (Real.exp_pos (-(Real.pi / a) * s)).le

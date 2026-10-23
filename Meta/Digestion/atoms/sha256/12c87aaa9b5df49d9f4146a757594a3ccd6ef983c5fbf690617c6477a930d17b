@@ -1,0 +1,25 @@
+**Assumption 2.1 (Carrier and preparation contract).** Use the complex Schrödinger space
+
+$$
+\mathcal H=L^2(\mathbb R^{17},dx;\mathbb C),\qquad
+q_a\psi(x)=x_a\psi(x),\qquad
+\pi_a\psi(x)=-i\partial_a\psi(x),\qquad \hbar=1.
+$$
+
+Seventeen counts system modes, equivalently position coordinates. The Hilbert space is infinite dimensional. No minimum number of modes is assumed.
+
+Use column vectorization $\operatorname{vec}(X)=(X_{11},X_{21},X_{12},X_{22})^T$. For each original $W$ supply the preparation
+
+$$
+m_W=(d,\operatorname{vec}(a_0P),\operatorname{vec}(a_1P),
+\operatorname{vec}(a_2P),\operatorname{vec}(a_3P))\in\mathbb R^{17},
+$$
+
+$$
+\psi_W(x)=\pi^{-17/4}\exp\!\left(-\frac{\|x-m_W\|^2}{2}\right),
+\qquad
+\rho_W=|\psi_W\rangle\langle\psi_W|.
+$$
+
+Availability is assumed for this specified family of initial preparations. No transformation extracting $m_W$ from an unknown original carrier, world-identification measurement, preparation algorithm or preparation cost is included in the assumption. The coefficients enter the initial state, rather than a world-dependent choice of subsequent apparatus.
+

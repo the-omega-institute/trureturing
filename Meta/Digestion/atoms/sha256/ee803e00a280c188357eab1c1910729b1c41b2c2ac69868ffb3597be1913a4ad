@@ -1,0 +1,44 @@
+**伴随核与有限下端。** 令 $M=16m$，并写
+
+$$
+g(y)=\frac{e^{-(y-M)^2/(4m)}}{\sqrt{4\pi m}},\qquad
+u=\frac{y-M}{2m},\qquad \phi(y)=e^{-i\gamma y}g(y).
+$$
+
+定义
+
+$$
+\begin{aligned}
+k_R&=-q\phi''-(q'+q)\phi',\qquad K_R=\Re k_R,\\
+v_R(y)&=3(y+1)(u^2+\gamma^2+1)g(y)\quad(y\ge1).
+\end{aligned}
+$$
+
+由 $0<q\le y$、$0<q'\le1$、$\phi'=-(u+i\gamma)\phi$ 及 $m\ge1$，有 $|K_R|\le v_R$。零点高斯积分给出 $E_\gamma(m)=-\int_{\mathbb R}H(\phi''+\phi')$；将 (480.5) 用于 $[1,\infty)$，两次分部积分得到
+
+$$
+E_\gamma(m)=\int_1^\infty R(y)k_R(y)\,dy+\mathcal E_m,
+\tag{480.8}
+$$
+
+其中完整误差为
+
+$$
+\begin{aligned}
+\mathcal E_m={}&-\int_{-\infty}^1H(\phi''+\phi')
+-\int_1^\infty(V''-V')\phi\\
+&+[H(1)-q(1)R(1)]\phi'(1)
+ +[-c+V(1)-V'(1)]\phi(1).
+\end{aligned}
+\tag{480.9}
+$$
+
+所有无穷端因高斯衰减消失；$y=1$ 不是素数幂事件。由 $|H(1)|<6$、$|R(1)|<30$、$q(1)=1/2$、$|\phi'(1)|\le D$ 及 $|-c+V(1)-V'(1)|\le4$，并用
+
+$$
+|\phi''+\phi'|\le2(u^2+\gamma^2+1)g,\qquad
+\int_{\mathbb R}2(u^2+\gamma^2+1)g\le2D^2,
+$$
+
+得到 $|\mathcal E_m|\le12D^2+21D+5<20D^2$。不能将 (480.9) 当作零边界。
+

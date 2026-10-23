@@ -1,0 +1,60 @@
+**Proposition 21.2 (trace topology and the cap-domain distinction).**
+For a general maximal vector, (21.8) gives an angular $L^2$ continuous
+slice representative with
+$\|u_{\min}/h\|_{L^2(\{R=\mathrm{constant}\})}=o(R)$.
+Consequently its total trace error in (21.2) is $O_u(R^\gamma)$ in that
+angular norm. The traces do not extend continuously to the shifted form
+norm on $\mathcal Q$. If $\mathcal T u=Eu$, $E$ finite, the error is
+uniform over the whole sphere with all rescaled-annular derivatives;
+compact-$E$ uniformity also requires bounded local solution norms.
+
+For every fixed resolution the positive $f_{\epsilon,\lambda}$ is not
+in $D(S_{D,\max})$. If a sequence of $K_{\epsilon,\lambda}$ has a
+proper selfadjoint strong-resolvent limit $G$, then
+$S_{D,\min}\subset G\subset S_{D,\max}$, so $G$ is one of the
+realizations in Theorem 21.1. This is a restriction on an existing
+limit, not an existence or selection assertion.
+
+Proof. The fields $D_i$ and their commutator control ordinary first
+cylinder derivatives. For the remainder in (21.8), $e^{-t}Ru_{\min}$
+is $H^1$ in $t$ with values in angular $L^2$, and is $L^2$ in $t$.
+Its slice norm tends to zero as $t\to-\infty$, proving the first claim.
+For a finite-energy solution the remainder equation on rescaled annuli
+has forcing $O(R^2(1+|\log R|))$ and a bounded $O(R^2)$ coefficient
+multiplying that remainder. Its annular $L^2$ norm is $o(R)$.
+Iterated interior estimates prove the uniform smooth expansion, reducing
+$\gamma$ if necessary. The punctured form core has $\mathcal A=0$ and
+is $\mathcal Q$ dense, whereas $\mathcal A(p)=1$; form continuity is
+impossible. A nonzero logarithmic coefficient has infinite transformed
+form energy.
+
+There is also a direct counterexample to pointwise traces on the general
+maximal domain. Choose disjoint tiny contact balls at $q_j\to0$, radii
+$d_j\ll R_j=R(q_j)$, and amplitudes $a_j=h(q_j)$. In the normalized
+frozen chart at $q_j$ take the smooth bump
+$\eta(\log(d_j/N_j)/M_j)$, with $\eta=0$ on $(-\infty,0]$ and
+$\eta=1$ on $[1,\infty)$, constant at its centre.
+The identity $\Delta_H\log N_j=2|\nabla_HN_j|^2/N_j^2$ gives squared
+operator cost at most $Ca_j^2/M_j$ and squared norm at most
+$Ca_j^2d_j^4/M_j^2$. Smooth principal and drift errors add at most a
+fixed local constant times $a_j^2d_j^2/M_j^2$; the attraction adds at
+most $Ca_j^2R_j^{-4}d_j^4/M_j^2$. Choose each finite $M_j$ large enough
+that its graph norm is at most $2^{-j}$. The sum is a graph limit of
+punctured tests, hence minimal with both traces zero, yet its quotient
+by $h$ is one at $q_j$ and zero at intervening points outside the balls.
+
+For fixed $\epsilon$, the cap is constant near zero and its positive
+state is smooth there, with $f_{\epsilon,\lambda}(o)>0$. In
+$\mathcal T f_{\epsilon,\lambda}$ the leading term is
+$-\lambda_0R^{-2}f_{\epsilon,\lambda}(o)$ with $O(R^{-1})$ error.
+Its square has radial integral a positive multiple of $\int_0dR/R$.
+It is not $L^2$, so uncapped operator traces cannot be evaluated on this
+finite-resolution state. Finally, for $v\in\mathcal D_0$ the cap equals
+$\Gamma$ on its support for small $\epsilon$, and
+$K_{\epsilon,\lambda}v\to Fv$ in $L^2$. Passing in the resolvent
+equation at a nonreal point gives $Gv=Fv$; graph closure proves the
+stated inclusion. Replacing $\log R$ by $\log(R/b)$ changes the constant
+trace to $\mathcal A_b=\mathcal A+\mathcal B\log b$ and therefore
+$\kappa_b=\kappa+\log b$. The fixed $b$ cannot be erased from a future
+selection calculation. $\square$
+

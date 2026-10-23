@@ -1,0 +1,55 @@
+## 1. Source contract, overlap, and the checkpoint interface
+
+The source is [FIB ATOM recursive holographic boundary geometry, Continuation
+VII](FIB_ATOM_RECURSIVE_HOLOGRAPHIC_BOUNDARY_GEOMETRY_CONTINUATION_VII.md)
+at immutable revision `4442fb66c4d7017bb7b932cc63f058b46c83b71c`, blob
+`d3b82c91d43cea5e84d75328161f8a31eefb1e84`, content SHA256
+`8bc226e06d503cb5e698c3ea3346dcb57504ef32d89b90fd1dcca0b2057d50ca`.
+Sections 201–213 supply the two-copy state, the common twirl, the signed
+charge blocks, the fifteen probabilities, and the pointwise PPT/NPT and
+inverse-filter results used here. Sections 214–225, published at the same
+revision, analyze a fixed known-parameter postfilter problem, its finite
+attainer, and a stricter single-product ceiling. Section 225 explicitly
+leaves a $q$-independent operation with unknown active/spectator
+basis unresolved. The present result addresses a different, finite
+source-independent encoded checkpoint and does not duplicate that
+known-parameter frontier.
+
+The common preparation is exactly VII Definition 201.1 and Assumption 201.2:
+two independent compatible UNTWiRLED preparations of the same one-copy
+resource, followed by one common local-number twirl. The creation order is
+$(\ell _1,r_1,R_1,\ell _2,r_2,R_2)$, the cut is
+$(\ell _1,\ell _2)\mid(r_1,R_1,r_2,R_2)$, and the regrouping sign is
+
+$$
+(-1)^{(n_{r_1}+n_{R_1})n_{\ell _2}}.
+$$
+
+The transpose below is ordinary Alice partial transpose in this fixed
+occupation tensor. The enlarged independent-ray orbit is a declared
+mathematical preparation family; it is not passive or native reachability and
+does not provide a source label, an external phase reference, preparations
+beyond the declared two copies, or a correlated programme.
+
+Fix
+
+$$
+t=\frac14,\qquad s=1-t=\frac34,\qquad
+Z=2(1+t)^2=\frac{25}{8},\qquad
+x_* = \frac{3-\sqrt5}{6}.
+$$
+
+For a unit vector $\eta\in\mathbb C^2$ and
+$x\in(x_*,1/2]$, set
+
+$$
+v_{x,\eta}=(\sqrt{x},\sqrt{1-x}\,\eta),\qquad
+w_\eta=(0,\eta),
+$$
+
+and let $\Omega_{x,\eta}$ be the normalized $64$-dimensional two-copy
+resource of VII §§201–203 for these vectors. No $x$ or $\eta$ label is
+delivered to the controller. This is a coupled subfamily of the independently
+assignable rays in VII Definition 201.1, not the whole independent-ray family
+or a claimed realization by the native principal-root metrics.
+

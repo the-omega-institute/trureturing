@@ -1,0 +1,21 @@
+**定理 63.3（指定初终模式的闭路相位）。** 在相同二部图、无对角环上允许 Hermitian 复边权。记
+
+$$
+a=K_{25,2}K_{2,N},\qquad b=K_{25,5}K_{5,N}.
+$$
+
+初态为 $|N\rangle$、终端效果为 $\Pi_{25}$ 时，
+
+$$
+p_{25}(\tau\mid N)=\langle N|U^\dagger\Pi_{25}U|N\rangle
+=\frac{\tau^4}{4}|a+b|^2+O(\tau^6).
+$$
+
+证明（63.3）。零步、一步都不能从 $N$ 到 $25$，两步只有经 $2$ 或 $5$ 两路，$\langle25|K^2|N\rangle=a+b$。同部间只有偶次幂，故振幅为 $-\tau^2(a+b)/2+O(\tau^4)$，用上述指数尾界平方即得。展开
+
+$$
+|a+b|^2=|a|^2+|b|^2+2\operatorname{Re}(a\overline b).
+$$
+
+两者都非零时可写末项 $2|a||b|\cos\Phi$、$\Phi=\arg(a\overline b)$；零路情形只用实部式，不定义不存在的辐角。基重标 $|s\rangle\mapsto e^{i\theta_s}|s\rangle$ 使两步积 $a,b$ 同乘 $e^{i(\theta_N-\theta_{25})}$，故 $a\overline b$ 不变。这是闭路的共同实现信息，单条边的模长或可分别选的标签不能代替它。边相位、实际行走和探测仍是新增合同。$\square$
+

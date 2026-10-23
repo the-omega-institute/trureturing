@@ -35,3 +35,4 @@ For every chosen negative-score index and positive-score index, the conclusion i
 - Truth anchor: `D5/S3/Quantum/Information/ActualPureQubitFisherRank.actual_fisher`
 - Truth anchor: `D5/S3/Quantum/Information/ActualPureQubitFisherRank.actual_rank_alternative`
 - Dependency: [D5/S3/Quantum/Information/ActualPureQubitGeometry](ActualPureQubitGeometry.md)
+- Dependency: [D5/S3/Quantum/Information/SLDSpectralEnergy](SLDSpectralEnergy.md)

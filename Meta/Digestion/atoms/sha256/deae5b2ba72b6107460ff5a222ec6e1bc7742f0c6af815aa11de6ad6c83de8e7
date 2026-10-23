@@ -1,0 +1,135 @@
+**Lemma 34.1 (Strict parent exclusion, including rectangle
+endpoints).** The original complete parent satisfies
+
+$$
+\mathcal H\cap
+\left\{\frac45\le b\le\frac72,\ -10\le d\le0\right\}
+=\varnothing.
+\tag{34.1}
+$$
+
+Proof. Suppose a complete parent world lay in this closed rectangle.
+Put $a_0=-d\in[0,10]$ and $f=1/j+1/n$. The original clock-four
+equation (32.6), divided by the positive $4(24+a_0)$, gives
+
+$$
+f=F(a_0,b):=
+\frac{a_0+6(147/5+a_0)/T+(18+a_0)/U}{4(24+a_0)}.
+\tag{34.2}
+$$
+
+At fixed $b$ its derivative is
+
+$$
+\frac{\partial F}{\partial a_0}
+=\frac{24-162/(5T)+6/U}{4(24+a_0)^2}>0.
+\tag{34.3}
+$$
+
+Indeed $T\ge9/5$, so $24-162/(5T)\ge6$, while $6/U>0$.
+This argument includes both $a_0$ endpoints and gives
+
+$$
+f\le f_{10}:=F(10,b)
+=\frac{10+1182/(5T)+28/U}{136}.
+\tag{34.4}
+$$
+
+The strict source equations (32.1) give
+
+$$
+j+n=2b+r+\frac{2r(1-r)}b,
+\qquad
+f-\frac4{j+n}=\frac{(n-j)^2}{jn(j+n)}>0.
+\tag{34.5}
+$$
+
+Here $n-j=r>0$ and every denominator is positive; no equality case
+of the last inequality belongs to the strict source domain.
+
+First suppose $2\le b\le7/2$. Then $0<r<1$ gives
+
+$$
+U-(j+n)=(1-r)\left(1-\frac{2r}{b}\right)>0.
+\tag{34.6}
+$$
+
+This remains strict at $b=2$. For $3\le T\le9/2$ direct collection
+gives the rational comparison
+
+$$
+\frac4U-f_{10}
+=-\frac{100T^2-266T-1182}{680TU}>0.
+\tag{34.7}
+$$
+
+To see its sign on the entire closed interval, the numerator
+quadratic has derivative $200T-266>0$ there, and its value at
+$T=9/2$ is $-354<0$. The denominator is positive. Consequently
+(34.4)–(34.7) imply
+
+$$
+f\le f_{10}<\frac4U<\frac4{j+n}<f,
+$$
+
+a contradiction throughout this first closed interval, including
+$b=2,7/2$ and $d=-10,0$.
+
+For the remaining interval $4/5\le b\le2$, completion of the square
+in the exact source sum gives
+
+$$
+\frac{17b^2+4b+4}{8b}-(j+n)
+=\frac2b\left(r-\frac{b+2}{4}\right)^2\ge0.
+\tag{34.8}
+$$
+
+Write
+
+$$
+\begin{aligned}
+D_b&=17b^2+4b+4>0,\\
+P_b&=-850b^4-999b^3+15470b^2+2828b-2744.
+\end{aligned}
+$$
+
+The required reciprocal comparison is the exact identity
+
+$$
+\frac{32b}{D_b}-f_{10}=\frac{P_b}{340TU D_b}.
+\tag{34.9}
+$$
+
+For every $b$ in this closed interval one has
+
+$$
+\begin{aligned}
+P_b-(10072b^2+2828b-2744)
+&=850b^2(4-b^2)+999b^2(2-b)\ge0.
+\end{aligned}
+\tag{34.10}
+$$
+
+The lower quadratic $10072b^2+2828b-2744$ is strictly increasing
+for $b\ge4/5$, since its derivative is $20144b+2828>0$.
+At the left endpoint its exact value is
+
+$$
+10072(4/5)^2+2828(4/5)-2744=\frac{149112}{25}>0.
+\tag{34.11}
+$$
+
+Thus (34.9) is strictly positive on all of $[4/5,2]$. The square
+bound (34.8) has positive sides, so taking reciprocals gives
+$32b/D_b\le4/(j+n)$. Equations (34.4), (34.5), (34.9) now yield
+
+$$
+f\le f_{10}<\frac{32b}{D_b}\le\frac4{j+n}<f,
+$$
+
+again a contradiction. This second argument includes $b=4/5,2$
+and both drift endpoints; the two closed width intervals overlap
+at $b=2$. They cover the entire closed rectangle in (34.1).
+The contradiction uses the strict source equations and original
+clock-four row, with no additional observation or gain restriction. ∎
+

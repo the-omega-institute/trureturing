@@ -1,0 +1,12 @@
+**Proposition 9.2 (finite rational descriptions with separately charged costs).** Under Assumption 9.1, equality of holdings, their order, $N_j$, $J$, $M$, $K_{\mathrm{tail}}$ and $K_{\mathrm{ov}}$ are decidable by terminating exact comparisons, including ties. The fixed-holding, overlap, equality and source-exact constructions have rational emission rows. A general-holding construction has rational rows if its chosen $t,\beta$ are additionally rational; rational source data alone do not establish that such a feasible rational choice exists at every boundary. If each input rational has numerator and denominator of at most $B$ bits, a sufficient explicit table for the fixed-holding construction at cutoff $K$ with extremum index $M$ has description size
+
+$$
+O\bigl((K+1)^2B+(M+1)B+(K+1)\log(K+2)\bigr).
+$$
+
+No minimality of this description is claimed. No decision procedure for $K_{\mathrm{geo}}$ is implied, even by this rational specialization.
+
+**Proof (9.2).** Rational comparisons decide $r=s$ and the holding order. Since $\theta^k\to0$, successive exact comparisons terminate for all the non-strict and strict scalar cutoffs; exact equality is not replaced by rounded logarithms. Proposition 5.3 makes $f_m$ strictly decreasing to a negative limit, so its first nonpositive index is found finitely and yields rational $\alpha_{\mathrm{tail}}$. The geometric crossing is similarly a finite comparison of $h_u(n)$ and $h_v(n)$, giving rational $\rho$. Sums, products and divisions by the positive normalizers then give every coefficient in the fixed-holding and overlap constructions.
+
+Derived source parameters have $O(B)$-bit rational descriptions. An index-$k$ power and its transient row have $O((k+1)B)$ bits. Summing these descriptions over $k<K$ gives $O((K+1)^2B)$. The single tail row carries $\alpha_{\mathrm{tail}}$ and $\delta_K$, with $O((M+K+1)B)$ bits, and a constant number of successor addresses per label adds $O((K+1)\log(K+2))$. The overlap alternative has the same type of estimate with its geometric crossing index in place of $M$. These are sufficient static descriptions; finding the indices requires its own time and working registers. The existential two-variable criterion is not reduced here to a finite exact decision method. $\square$
+

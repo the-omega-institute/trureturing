@@ -1,0 +1,39 @@
+**Definition 242.1 (Fixed source and output coordinates).** Fix the native
+family, the positive principal-root convention, the normalized cut, the
+compatible same-$q$ full Gibbs preparations, the coherent filter, and the
+CAR sign and register ordering of Definitions 240.1 and 240.4 and
+§§235--236. Fix
+
+$$
+t=3-2\sqrt2,\qquad C=4(1+t)^4,
+$$
+
+and write $P_i$ for the singlet projector on the input Alice--copy register
+and $P_o$ for the singlet projector on the fixed output register. They are
+the same real matrix in their respective fixed ordered bases. For
+$p\in(0,1)$ put
+
+$$
+\begin{aligned}
+g(p)&=(1-t)^2p(1-p),& b(p)&=2g(p)=8tp(1-p),\\
+h(p)&=t+(1-t)p,& a(p)&=t(1+h(p))
+       =t(1+t)+t(1-t)p,\\
+w(p)&=\frac{t+b(p)}{4t+b(p)}.
+\end{aligned}
+$$
+
+For an actual source $q$ with $p=p(q)$, let $\Omega_q$ be the unnormalized
+selected state in (240.4), let $W_q=W_{\lambda(p(q))}$ be the target in
+(240.6), and define the fixed-coordinate Choi row
+
+$$
+B_q=(P_o-w(p(q))I_4)\otimes\Omega_q^{\mathsf T},
+$$
+
+where the transpose is in the original Alice--copy--space coordinates. The
+transpose records the output-first Choi convention; it does not alter the
+native source or introduce a spatial operation.
+
+Since $\lambda(p)=b(p)/(4t+b(p))$, the target in (240.6) satisfies
+$\operatorname{Tr}(P_oW_q)=w(p(q))$.
+

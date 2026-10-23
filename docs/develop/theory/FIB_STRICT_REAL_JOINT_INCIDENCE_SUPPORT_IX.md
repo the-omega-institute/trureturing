@@ -3577,3 +3577,1211 @@ all gain strata, other source branches and unexamined bases remain
 in the global domain. The corner limits only this selected strict
 pair continuation. It is neither a joint witness nor a global negative
 theorem for (18.3).
+
+## 30. The literal parent and quantitative companion restrictions
+
+The domain throughout Sections 30–34 is the literal parent
+
+$$
+H_4=(0,J,24,M,147/5,J,24,M,18).
+\tag{30.1}
+$$
+
+Every world is one complete triple
+
+$$
+W=(P(r,b),g,d),\qquad
+P(r,b)=\begin{pmatrix}r&b\\c&1-r\end{pmatrix},\qquad
+c=\frac{r(1-r)}b,
+\tag{30.2}
+$$
+
+where $0<r<1$, $b>0$, $d\in\mathbb R$ is fixed in that world,
+and $g$ is one nonzero real polynomial of degree at most three.
+The two action matrices are
+
+$$
+J=\begin{pmatrix}0&1\\1&0\end{pmatrix},\qquad
+M=\begin{pmatrix}0&1\\1&1\end{pmatrix}.
+\tag{30.3}
+$$
+
+Products are chronological left products, $Q_0=I$ and
+$Q_i=E_iQ_{i-1}$, with reading
+$y_i=d+g(i)\operatorname{tr}(Q_iP)$. Realizing (30.1) means that
+the first five readings, for actions $J,M,J,M$, are exactly
+$(0,24,147/5,24,18)$. The subsequent two actions are $M,M$ at
+clocks five and six, with acquired readings $p,v$.
+
+Write
+
+$$
+j=b+c,\qquad n=j+r,\qquad T=1+b,\qquad U=1+2b,\qquad e=d-24.
+\tag{30.4}
+$$
+
+The corresponding traces through clock six are
+$(1,j,T,n,U,U+n,2U+n)$. In particular
+
+$$
+p=d+(U+n)g(5),\qquad v=d+(2U+n)g(6).
+\tag{30.5}
+$$
+
+The entire child $C(p,v)$ consists of all these complete worlds with
+the indicated two acquired readings; when referring to the joint
+problem, $p\ne24$. No world is restricted by the gain's sign, exact
+degree, individual sampled values or root multiplicities. Each world
+has its own arbitrary fixed real drift. Singular parent sources and
+unbounded positive source entries are included in this definition.
+
+The following identities are the published parent and extrapolation
+interfaces, specialized to (30.1). Their primary source is
+[common-parent geometry, Theorem 2.1, (2.1)–(2.5)](https://github.com/the-omega-institute/trureturing/blob/da6aaf648e7e7c38d6020abe845eda950ef30ae8/docs/develop/theory/FIB_COMMON_PARENT_GEOMETRY_AND_MIXED_CHILDREN.md).
+The same source's (18.2)–(18.5) give the gain extrapolations and
+readouts; its (18.6)–(18.8) concern a multiworld construction.
+For every world in the present domain,
+
+$$
+\begin{gathered}
+\Lambda=1+\frac6T+\frac1U-\frac4j-\frac4n,\qquad
+\kappa=\frac6T-\frac2U=\frac{2(2+5b)}{TU}>0,\\
+e\Lambda+\frac{24}{5}(b-1/8)\kappa=0,\\
+\bigl(g(0),g(1),g(2),g(3)\bigr)
+=\left(-d,-\frac e j,\frac{147/5-d}{T},-\frac e n\right).
+\end{gathered}
+\tag{30.6}
+$$
+
+The parent equation in (30.6) is undivided, so it retains
+$\Lambda=0$. Rewriting it without dividing gives
+
+$$
+d\Lambda=N,\qquad
+N=\frac{882}{5T}+\frac{18}{U}-\frac{96}{j}-\frac{96}{n}.
+\tag{30.7}
+$$
+
+The fixed-node interpolation rows for clocks five and six are
+$(-4,15,-20,10)$ and $(-10,36,-45,20)$. Thus the same whole gain has
+
+$$
+\begin{aligned}
+g(5)&=d\mathcal A+\mathcal C,\\
+\mathcal A&=4-\frac{15}{j}+\frac{20}{T}-\frac{10}{n},\qquad
+\mathcal C=\frac{360}{j}-\frac{588}{T}+\frac{240}{n},\\
+g(6)&=240-\frac{243}{T}+eL,\qquad
+L=10+\frac{45}{T}-\frac{36}{j}-\frac{20}{n}.
+\end{aligned}
+\tag{30.8}
+$$
+
+These are applications of the existing degree-at-most-three
+interpolation formula, not extra assumptions on late-clock gains.
+All denominators displayed in (30.6)–(30.8), other than the
+undivided factor $\Lambda$, are positive by (30.2).
+
+## 31. An explicit upper-offdiagonal cap from the acquired fifth reading
+
+**Theorem 31.1 (All-companion $b$ cap).** Every complete world
+realizing the literal history (30.1) satisfies
+
+$$
+p\le-425\quad\Longrightarrow\quad b<20.
+\tag{31.1}
+$$
+
+The acquired sixth reading $v$ is unrestricted. In particular the
+implication applies separately to every world in any such $C(p,v)$.
+
+*Proof.* We prove that $b\ge20$ forces $p>-425$.
+Put $\alpha=r(1-r)$, so $0<\alpha\le1/4$, and write
+
+$$
+j=b+\frac\alpha b,\qquad
+n=b+r+\frac\alpha b.
+\tag{31.2}
+$$
+
+For $b>0$ and $z\ge0$, the exact reciprocal identity
+
+$$
+\frac1{b+z}=\frac1b-\frac z{b^2}
++\frac{z^2}{b^2(b+z)}
+\tag{31.3}
+$$
+
+implies $1/b-z/b^2\le1/(b+z)\le1/b$.
+Consequently
+
+$$
+\begin{gathered}
+\frac1b-\frac1{b^2}\le\frac1T\le\frac1b,\qquad
+\frac1{2b}-\frac1{4b^2}\le\frac1U\le\frac1{2b},\\
+\frac1b-\frac1{4b^3}\le\frac1j\le\frac1b,\qquad
+\frac1b-\frac1{b^2}-\frac1{4b^3}\le\frac1n\le\frac1b.
+\end{gathered}
+\tag{31.4}
+$$
+
+Here the last lower bound uses $r<1$ and $\alpha\le1/4$;
+the bounds remain valid at $\alpha=1/4$.
+In particular
+
+$$
+\Lambda\ge1-\frac8b\ge\frac35>0.
+\tag{31.5}
+$$
+
+For the lower bound on $N$, use the lower bounds for $1/T,1/U$
+and the upper bounds for $1/j,1/n$ in (30.7). This gives
+
+$$
+N\ge-\frac{33}{5b}-\frac{1809}{10b^2}.
+\tag{31.6}
+$$
+
+For its upper bound, use $1/T\le1/b$, $1/U\le1/(2b)$ and the
+two lower bounds for $1/j,1/n$ in (31.4). The result is
+
+$$
+N\le-\frac{33}{5b}+\frac{96}{b^2}+\frac{48}{b^3}<0.
+\tag{31.7}
+$$
+
+Indeed, after multiplication by $b$, the right side is at most
+$-33/5+96/20+48/20^2=-42/25<0$.
+The comparison with the desired drift bound has the explicit margin
+
+$$
+\begin{aligned}
+&-\frac{33}{5b}-\frac{1809}{10b^2}
+ +\frac{27}{b}\left(1-\frac8b\right)\\
+&\hspace{12mm}=
+\frac1b\left(\frac{102}{5}-\frac{3969}{10b}\right)
+\ge\frac{111}{200b}>0.
+\end{aligned}
+\tag{31.8}
+$$
+
+Combining (31.5)–(31.8) gives
+$N>-(27/b)(1-8/b)\ge-(27/b)\Lambda$.
+Division by the now positive $\Lambda$ in (30.7) therefore gives
+
+$$
+-\frac{27}{b}<d<0.
+\tag{31.9}
+$$
+
+Since $b\ge20$, the negative terms in $\mathcal A$ give
+
+$$
+\mathcal A\le4+\frac{20}{1+b}<5.
+\tag{31.10}
+$$
+
+Because $d<0$, this is the useful upper bound:
+$d\mathcal A\ge5d>-135/b$. There is no need to assume
+$\mathcal A$ or any gain sample positive.
+The lower bounds for $1/j,1/n$ in (31.4), together with
+$1/T\le1/b$, give
+
+$$
+\begin{aligned}
+\mathcal C
+&\ge\frac{12}{b}-\frac{240}{b^2}-\frac{150}{b^3}\\
+&=\frac1b\left(12-\frac{240}{b}-\frac{150}{b^2}\right)
+\ge-\frac{3}{8b}.
+\end{aligned}
+\tag{31.11}
+$$
+
+The final inequality follows by substituting $b=20$ into the two
+negative terms. Hence (30.8) implies
+
+$$
+g(5)>-\frac{1083}{8b}.
+\tag{31.12}
+$$
+
+The source trace also obeys
+
+$$
+\begin{aligned}
+0<U+n
+&=3b+1+r+\alpha/b
+<3b+2+\frac1{4b}<\frac{25b}{8}.
+\end{aligned}
+\tag{31.13}
+$$
+
+For the last inequality,
+$2+1/(4b)\le161/80<5/2\le b/8$ when $b\ge20$.
+Since the trace is positive, (30.5), (31.9) and (31.12) give
+
+$$
+\begin{aligned}
+p
+&>-\frac{27}{b}-\frac{1083(U+n)}{8b}\\
+&>-\frac{27}{b}-\frac{27075}{64}\\
+&\ge-\frac{27}{20}-\frac{27075}{64}
+=-\frac{135807}{320}>-425.
+\end{aligned}
+\tag{31.14}
+$$
+
+The last strict margin is $193/320$. This proves the
+contrapositive, including the threshold $p=-425$. ∎
+
+## 32. An explicit opposite-offdiagonal cap from the acquired sixth reading
+
+**Theorem 32.1 (All-companion $c$ cap).** Every complete world
+realizing the literal history (30.1) satisfies
+
+$$
+v\le24\quad\Longrightarrow\quad c<2.
+\tag{32.1}
+$$
+
+There is no restriction on its acquired fifth reading $p$.
+
+*Proof.* Suppose $c\ge2$. The rank-one identity gives
+$bc=r(1-r)\le1/4$, whence
+
+$$
+0<b\le\frac18,\qquad j\ge2,\qquad n\ge2.
+\tag{32.2}
+$$
+
+It follows that
+
+$$
+\Lambda
+\ge1+\frac{6}{9/8}+\frac1{5/4}-4
+=\frac{47}{15}>0.
+\tag{32.3}
+$$
+
+The parent equation (30.6) can therefore be solved in this region as
+
+$$
+e=\frac{24}{5}(1/8-b)\frac\kappa\Lambda\ge0,
+\qquad d=24+e\ge24.
+\tag{32.4}
+$$
+
+The coefficient of $e$ in (30.8) has the lower bound
+
+$$
+L\ge10+\frac{45}{9/8}-\frac{36}{2}-\frac{20}{2}=22.
+\tag{32.5}
+$$
+
+If $1/80\le b\le1/8$, then
+
+$$
+240-\frac{243}{T}=\frac{240b-3}{1+b}\ge0.
+\tag{32.6}
+$$
+
+For $b<1/8$, (32.4) has $e>0$, so $eL>0$.
+At the remaining endpoint $b=1/8$, the constant in (32.6) is
+$24>0$, even though $e=0$. Thus $g(6)>0$ throughout this
+closed $b$ interval, including $b=1/80$.
+
+It remains to treat $0<b<1/80$. Since $T,U>1$,
+
+$$
+0<\Lambda<8,\qquad
+\kappa=\frac6T-\frac2U
+>\frac{6}{81/80}-2=\frac{106}{27},\qquad
+\frac18-b>\frac9{80}.
+\tag{32.7}
+$$
+
+Equations (32.4) and (32.7) give the explicit strict estimate
+
+$$
+e>\frac{24}{5}\cdot\frac9{80}\cdot
+\frac{106}{27}\cdot\frac18=\frac{53}{200}.
+\tag{32.8}
+$$
+
+Also $240-243/T>-3$. Therefore (30.8) and (32.5) yield
+
+$$
+g(6)>-3+22\cdot\frac{53}{200}=\frac{283}{100}>0.
+\tag{32.9}
+$$
+
+In both cases $2U+n>0$, $d\ge24$ and $g(6)>0$.
+Consequently $v=d+(2U+n)g(6)>24$.
+This proves the contrapositive, including $c=2$ and the acquired
+threshold $v=24$. ∎
+
+Both proofs start from the undivided parent identity. Their divisions
+by $\Lambda$ occur only in regions where its strict positivity has
+been established. They do not cancel $e,d$, a sampled gain, a cubic
+leading coefficient or a root difference. Thus singular parent
+worlds, zero drift, lower gain degrees, sampled zeros and repeated
+roots have not been removed from either implication's domain.
+The bounds impose no equality of drifts or gains between worlds.
+
+## 33. Every companion over the negative acquired-base window
+
+Let $I=[-533,-458]$. The two quantitative conclusions have the
+following direct consumer on the original entire children.
+
+**Corollary 33.1 (Negative-window companion restrictions).** For
+every real $p\in I$, every real $v$, and every $W\in C(p,v)$,
+
+$$
+0<b(W)<20.
+\tag{33.1}
+$$
+
+If, in addition, that acquired reading satisfies $v\le24$, then
+every world in the same entire child also satisfies
+
+$$
+0<c(W)<2.
+\tag{33.2}
+$$
+
+*Proof.* Each such world realizes (30.1), and
+$p\le-458<-425$, so Theorem 31.1 gives (33.1).
+When $v\le24$, Theorem 32.1 gives (33.2) independently for
+each of those worlds. Positivity is part of the original source
+domain. Neither inference selects a preferred pair or a source
+branch. ∎
+
+The qualitative control of the other complete-world coordinates is
+already supplied by
+[Support, Theorem 12.1](https://github.com/the-omega-institute/trureturing/blob/f09e5d2a5164cf569740c782618c743b0b2d055c/docs/develop/theory/FIB_STRICT_REAL_JOINT_INCIDENCE_SUPPORT.md).
+In that theorem take its $b$ bound to be $20$ and its bound on
+$|p|$ to be $533$, as permitted by (33.1). Its existing conclusion
+therefore bounds $c$, $|d|$, every one of the four padded gain
+coefficients, and the subsequent readings uniformly over
+
+$$
+\bigcup_{p\in I,\ v\in\mathbb R}C(p,v).
+\tag{33.3}
+$$
+
+This application of the published theorem requires no bound on $v$.
+The explicit constant $c<2$ in (33.2), in contrast, is acquired only
+where $v\le24$. Qualitative coercivity and coefficient boundedness
+are reused here; they are not additional new theorems.
+Bounded complete coordinates do not imply that the strict source
+set is closed or compact: strict positivity can be lost in a limit.
+
+For the selected continuation of Theorem 28.1, define precisely
+
+$$
+\begin{aligned}
+Q_I&=\{q:0<q<q_*,\ p(q)\in I\},\\
+Q_I^{\le24}&=\{q\in Q_I:v(q)\le24\}.
+\end{aligned}
+\tag{33.4}
+$$
+
+For every $q\in Q_I$, (33.1) restricts every companion in
+$C(p(q),v(q))$, including companions other than the selected
+$W_\pm(q)$. For every $q\in Q_I^{\le24}$ the explicit restriction
+(33.2) applies as well. Theorem 28.1 supplies
+
+$$
+p(Q_I)=I:
+\quad\text{for every }p\in I\text{ some }0<q<q_*
+\text{ has }p(q)=p.
+\tag{33.5}
+$$
+
+The meaning of (33.5) is projection coverage, with some acquired
+$v=v(q)$ at each such parameter. It asserts neither monotonicity
+of $p(q)$ nor containment of the whole strict arc in $I$.
+It also gives no whole-arc inequality $v(q)\le24$.
+The source restrictions in (33.1)–(33.2) apply exactly on the
+subsets just specified; they do not extend the selected continuation
+or classify its other companions.
+
+## 34. Mathematical suppliers and the remaining joint incidence
+
+The all-companion implications (31.1) and (32.1), together with their
+application (33.1)–(33.2) over the negative window and the parameter
+subsets (33.4), are source-specific quantitative estimates in the
+original model. The parent converse,
+clock products and fixed interpolation rows are the published
+interfaces cited in Section 30. Polynomial interpolation at the
+distinct nodes $0,1,2,3$ is also the classical formula of Berrut and
+Trefethen, *Barycentric Lagrange Interpolation*, Section 2,
+equations (2.1)–(2.2),
+[DOI 10.1137/S0036144502417715](https://doi.org/10.1137/S0036144502417715).
+The negative-$p$ strict $J$ pairs and their projection coverage are
+the supplied Theorem 28.1, not consequences of boundedness.
+
+The finite boundary lift on
+$P=\left(\begin{smallmatrix}0&0\\t&1\end{smallmatrix}\right)$,
+$t>0$, $t\ne1$, is the existing auxiliary face $B_0(t)$.
+Its drift and $p,v,a,m$ fractions belong to
+[Support, Definition 12.2 and Theorem 13.1](https://github.com/the-omega-institute/trureturing/blob/f09e5d2a5164cf569740c782618c743b0b2d055c/docs/develop/theory/FIB_STRICT_REAL_JOINT_INCIDENCE_SUPPORT.md),
+and to
+[Support II, Lemma 12.2 and (17.1)–(17.2)](https://github.com/the-omega-institute/trureturing/blob/f09e5d2a5164cf569740c782618c743b0b2d055c/docs/develop/theory/FIB_STRICT_REAL_JOINT_INCIDENCE_SUPPORT_II.md).
+In particular the matrix in (27.8) has this already defined face
+type. Its use as a limit does not make it a strict-world witness.
+The complete strict lower-face equal-$M$ relation is already
+classified by Support II, Theorem 19.4; its Sections 20–21 supply
+the corresponding whole-child $J$ exclusions and finite joint-end
+restriction. Those results retain their stated scopes. The present
+caps supply neither a replacement boundary classification nor a new
+boundary response formula.
+
+For each complete world $W=(P(r,b),g,d)$ in the domain of
+Section 30, with $j,n,T,U$ as in (30.4) for that world, define its
+terminal $J$ and $M$ responses at clock seven by
+
+$$
+a(W)=d+(T+2j+4r)g(7),\qquad
+m(W)=d+(3U+2n)g(7).
+$$
+
+The unchanged global target remains
+
+$$
+\begin{gathered}
+\exists p\ne24,\ v,\ W_0,W_1,W_2,W_3\in C(p,v):\\
+W_0\ne W_1,\qquad a(W_0)=a(W_1),\\
+W_2\ne W_3,\qquad m(W_2)=m(W_3).
+\end{gathered}
+\tag{34.1}
+$$
+
+The two pairs are independently selected, may overlap or be disjoint,
+and their common terminal answers are unrelated. All four labels
+belong to one entire child and retain the domain of Section 30.
+The caps do not construct an equal-$M$ pair there and do not show
+that $M$ is injective there. They give no complete companion
+inventory, separation theorem or global completion. In particular
+unequal terminal-$M$ readings of the two selected $J$ endpoints do
+not exclude a different $M$ pair in the same child. Finite source
+boundary limits, singular alternatives, critical mergers and other
+source branches remain part of the original incidence problem.
+The existence or absence of (34.1) remains unresolved.
+
+## 追加锚（本行以下为增补区）
+## 35. A source class containing the negative continuation
+
+Retain the original complete-world domain, chronological left products,
+whole gain polynomial and arbitrary fixed drift of Definition 1.1.
+Thus a world is
+
+$$
+W=(P(r,b),g,d),\qquad
+P(r,b)=\begin{pmatrix}r&b\\r(1-r)/b&1-r\end{pmatrix},
+\quad 0<r<1,\ b>0,\quad
+0\ne g\in\mathbb R[s],\ \deg g\le3,\ d\in\mathbb R.
+\tag{35.1}
+$$
+
+The parent readings at clocks zero through four are
+$(0,24,147/5,24,18)$; $p,v$ are the two subsequent acquired $M$
+readings and $a,m$ the alternative clock-seven $J,M$ readings on that
+same world. The child $C(p,v)$ still contains every original compatible
+world, with $p\ne24$.
+
+Define the source class
+
+$$
+\mathscr R=\left\{W\text{ in the original parent}:\quad
+0<b\le\frac1{10},\quad 1\le\frac rb\le\frac{107}{100}\right\},
+\qquad I_p=[-534,-457].
+\tag{35.2}
+$$
+
+The class is used for a restricted theorem and is not substituted for
+$C(p,v)$. In particular the independent terminal-$M$ pair in the global
+question may have one or both endpoints outside this class.
+
+Here is the supplied regular response circuit, recorded to specify all
+polynomials used below. Write $t=r/b$, and put
+
+$$
+\begin{gathered}
+r=tb,\quad j=t+b(1-t^2),\quad n=j+tb,\quad
+T=1+b,\quad U=1+2b,\\
+D=5\{(b^2+8b+4)jn-2TU(j+n)\},\quad S=(8b-1)(2+5b),\\
+C_0=-24D+3Sjn,\quad C_1=3Sn,\\
+C_2=3(49b+34)jn-54U(j+n),\quad C_3=3Sj,\\
+B_5=-4C_0+15C_1-20C_2+10C_3,\\
+B_6=-10C_0+36C_1-45C_2+20C_3,\\
+B_7=-20C_0+70C_1-84C_2+35C_3,\\
+N_p=-C_0+(U+n)B_5,\quad
+N_v=-C_0+(2U+n)B_6,\quad
+N_m=-C_0+(3U+2n)B_7.
+\end{gathered}
+\tag{35.3}
+$$
+
+When $D\ne0$, the original complete-world lift is
+
+$$
+d=-C_0/D,\qquad
+g(s)=\frac1D\sum_{i=0}^3 C_i
+ \prod_{\substack{0\le k\le3\\k\ne i}}\frac{s-k}{i-k},
+\qquad (p,v,m)=(N_p,N_v,N_m)/D.
+\tag{35.4}
+$$
+
+This is the circuit and whole-world bridge of (24.2), (28.3)–(28.7),
+and the inherited Support III, Definition 16.1. It uses the same entire
+polynomial at every original clock. The traces are
+
+$$
+(1,j,T,n,U,U+n,2U+n),\qquad T+2j+4r,\qquad3U+2n.
+\tag{35.5}
+$$
+
+In particular the four fixed noninitial parent readings follow from
+
+$$
+\begin{gathered}
+-C_0+jC_1=24D,\quad -C_0+TC_2=(147/5)D,\\
+-C_0+nC_3=24D,\quad
+-C_0+U(-C_0+4C_1-6C_2+4C_3)=18D.
+\end{gathered}
+\tag{35.6}
+$$
+
+These are polynomial identities. Clock zero is $d+g(0)=0$; the rows
+$B_5,B_6,B_7$ are evaluations of this same interpolant.
+The unequal first two readings ensure that $g$ is not identically zero.
+
+Every original parent world in $\mathscr R$ is regular in this circuit.
+Indeed the zero-safe parent equation is
+
+$$
+(d-24)\Lambda+\frac{24}{5}(b-1/8)
+       \left(\frac6T-\frac2U\right)=0,\qquad
+D=\frac52TUjn\Lambda.
+\tag{35.7}
+$$
+
+All of $T,U,j,n$ are positive, as is $6/T-2/U$.
+If $\Lambda=0$, (35.7) forces $b=1/8$, which is outside (35.2).
+Thus (35.4) is necessary as well as sufficient for this source class.
+This observation does not delete singular worlds from the global child.
+
+## 36. Exact polynomial bounds for a thin source strip
+
+Use a scalar $P$ for a prescribed fifth reading and define
+
+$$
+F_P=N_p-PD,\qquad L=N_m-5N_v,\qquad
+A=N_{p,t}D-N_pD_t.
+\tag{36.1}
+$$
+
+Define the polynomial
+
+$$
+\begin{aligned}
+\mathcal J={}&D(N_{p,t}L_b-N_{p,b}L_t)
+ -L(N_{p,t}D_b-N_{p,b}D_t)\\
+ &-N_p(D_tL_b-D_bL_t).
+\end{aligned}
+\tag{36.2}
+$$
+
+Subscripts here are polynomial partial derivatives in the independent
+coordinates $(t,b)$. Direct multiplication gives the identity
+
+$$
+\begin{aligned}
+D \mathcal J={}&(N_{p,t}D-N_pD_t)(L_bD-LD_b)\\
+ &-(N_{p,b}D-N_pD_b)(L_tD-LD_t).
+\end{aligned}
+\tag{36.3}
+$$
+
+Thus $\mathcal J$ is specified without division at a point where $D=0$.
+
+Put $\epsilon=10^{-4}$ and use the following exact rational polynomial:
+
+$$
+\begin{aligned}
+\theta(b)=10^{-12}\bigl(&1000583206906+495974407332b
+ +759297221119b^2\\
+ &+1295143705629b^3+6255734498341b^4\bigr).
+\end{aligned}
+\tag{36.4}
+$$
+
+Its positive coefficients give, for $0\le b\le1/10$,
+
+$$
+1<\theta(b)-\epsilon<\theta(b)+\epsilon<53/50<107/100.
+\tag{36.5}
+$$
+
+Define the two closed sets of auxiliary source coordinates
+
+$$
+B=[1,107/100]\times[0,1/10],\qquad
+R=\{(\theta(b)+z,b):0\le b\le1/10,\ |z|\le\epsilon\}.
+\tag{36.6}
+$$
+
+Their $b=0$ points are polynomial auxiliary points, not original worlds.
+
+**Lemma 36.1 (Finite rational comparisons).** On $B$,
+
+$$
+(F_{-534})_t\ge10962,\qquad
+(F_{-457})_t\ge9422,\qquad20\le D_t<23.
+\tag{36.7}
+$$
+
+The following uniform strict bounds hold for $0\le b\le1/10$:
+
+| Polynomial | Lower bound | Upper bound |
+| --- | --- | --- |
+| $F_{-534}(\theta-\epsilon,b)$ | $-113/100$ | $-7/10$ |
+| $F_{-457}(\theta-\epsilon,b)$ | $-145/100$ | $-119/100$ |
+| $F_{-534}(\theta+\epsilon,b)$ | $133/100$ | $3/2$ |
+| $F_{-457}(\theta+\epsilon,b)$ | $44/100$ | $93/100$ |
+| $D(\theta-\epsilon,b)$ | $9/10000$ | $1/100$ |
+| $D(\theta+\epsilon,b)$ | $1/200$ | $7/500$ |
+
+On the whole set $R$,
+
+$$
+36<A<121,\qquad12<\mathcal J<56.
+\tag{36.8}
+$$
+
+*Proof.* All the comparisons are finite rational coefficient
+comparisons, with the following explicit prescription.
+For a polynomial $V(y_1,\ldots,y_s)$ on a rational rectangle
+$\prod_i[\ell_i,u_i]$, first expand
+
+$$
+V(\ell_1+(u_1-\ell_1)w_1,\ldots,
+  \ell_s+(u_s-\ell_s)w_s)=\sum_\alpha c_\alpha w^\alpha.
+$$
+
+If $n_i$ is its degree in $w_i$, form every coefficient
+
+$$
+\beta_k=\sum_{\alpha_i\le k_i\ \forall i}
+ c_\alpha\prod_{i=1}^s
+ \frac{\binom{k_i}{\alpha_i}}{\binom{n_i}{\alpha_i}},
+\qquad0\le k_i\le n_i.
+\tag{36.9}
+$$
+
+These are exact rational sums, with missing monomials treated as zero.
+The tensor Bernstein expansion is
+
+$$
+\sum_k\beta_k\prod_i
+ \binom{n_i}{k_i}w_i^{k_i}(1-w_i)^{n_i-k_i}.
+\tag{36.10}
+$$
+
+Its weights are nonnegative and sum to one on the closed unit cube.
+Consequently the smallest and largest $\beta_k$ enclose every value
+of $V$ on the original rectangle.
+
+For (36.7), apply (36.9) to the displayed derivatives on $B$.
+Their coordinate degrees, in the order $(t,b)$, are $(5,4),(5,4)$
+and $(3,4)$. The minimum coefficients for the first two are exactly
+$10962,9422$; their maximum coefficients are less than $12621,10861$,
+respectively. The minimum coefficient for $D_t$ is $20$, and its
+maximum is less than $23$.
+
+For the six table rows substitute (36.4) and the indicated sign of
+$\epsilon$ into (35.3), expand, and use (36.9) on $b\in[0,1/10]$.
+The four $F$ polynomials have degree $28$; the two $D$ polynomials
+have degree $20$. Every resulting coefficient lies strictly between
+the rational bounds in its row.
+
+Finally substitute $t=\theta(b)+z$ in $A,\mathcal J$ and use (36.9) on
+$[0,1/10]\times[-\epsilon,\epsilon]$ in the variable order $(b,z)$.
+The degrees and coefficient comparisons are
+
+| Polynomial after substitution | Coordinate degrees | Number of coefficients | Lower bound for every coefficient | Upper bound for every coefficient |
+| --- | --- | --- | --- | --- |
+| $A(\theta(b)+z,b)$ | $(44,9)$ | $450$ | $36$ | $121$ |
+| $\mathcal J(\theta(b)+z,b)$ | $(70,15)$ | $1136$ | $12$ | $56$ |
+
+Equations (35.3), (36.1)–(36.4) and (36.9) specify every entry by
+rational addition, multiplication, differentiation and binomial
+coefficients. No numerical root or sampled derivative enters these
+coefficient comparisons. The convex combination (36.10) proves all
+the asserted whole-set bounds. ∎
+
+## 37. Whole-class terminal order at fixed negative fifth reading
+
+**Theorem 37.1 (A complete source-class graph and a quantitative order).**
+For every $P\in I_p$, the set of all original parent worlds in
+$\mathscr R$ whose fifth reading is $P$ is precisely one analytic graph
+$W_P(b)$, with $0<b\le1/10$. Its source satisfies
+
+$$
+t=t_P(b),\qquad F_P(t_P(b),b)=0,\qquad
+|t_P(b)-\theta(b)|<\epsilon,\qquad0<D<7/500.
+\tag{37.1}
+$$
+
+On this entire graph,
+
+$$
+\frac{d}{db}\bigl(m(W_P(b))-5v(W_P(b))\bigr)>7.
+\tag{37.2}
+$$
+
+Consequently for any two of its worlds with $b_1<b_2$,
+
+$$
+m(W_P(b_2))-m(W_P(b_1))
+ -5\{v(W_P(b_2))-v(W_P(b_1))\}>7(b_2-b_1).
+\tag{37.3}
+$$
+
+In particular, for every real $v$ and every $P\in I_p$, terminal $M$
+is injective on the whole set $C(P,v)\cap\mathscr R$.
+
+*Proof.* The expression $(F_P)_t$ is affine in $P$.
+Its bounds at the two endpoints of $I_p$ in (36.7) therefore give
+$(F_P)_t\ge9422>0$ everywhere on $B$. The first four rows of
+Lemma 36.1 and the same affine dependence give
+
+$$
+F_P(\theta(b)-\epsilon,b)<0<
+F_P(\theta(b)+\epsilon,b)
+\tag{37.4}
+$$
+
+for every $b\in[0,1/10]$ and $P\in I_p$.
+Thus for each such $b$ there is exactly one root in $[1,107/100]$,
+and it lies strictly between the displayed two bounds.
+The implicit-function theorem, with $(F_P)_t>0$, makes these unique
+roots an analytic function $t_P(b)$, including analytic extensions
+at the closed interval endpoints.
+
+Since $D_t>0$, the last two rows of Lemma 36.1 bound $D$ everywhere
+between the two graphs. They give
+
+$$
+9/10000<D(t,b)<7/500\qquad((t,b)\in R).
+\tag{37.5}
+$$
+
+In particular the root $t_P(b)$ is never a pole. For $b>0$ its
+source is strict: $t_P(b)>1$, $b>0$, and
+$0<r=bt_P(b)<(1/10)(107/100)<1$.
+The lift (35.4) therefore supplies an original complete world for
+that root, with fifth reading $P$. Conversely every world in the
+specified source class is regular by (35.7); it must satisfy $F_P=0$,
+so has exactly this source and this unique whole-world lift. This
+proves the graph assertion without a drift or gain restriction.
+
+Put $\ell=m-5v=L/D$. Quotient differentiation and (36.3) give
+
+$$
+p_t=A/D^2,\qquad
+p_t\ell_b-p_b\ell_t=\mathcal J/D^3.
+\tag{37.6}
+$$
+
+Here $p_t>0$ by (36.8) and (37.5). Along $p=P$, the chain rule and
+$t_P'=-p_b/p_t$ give
+
+$$
+\frac{d\ell}{db}
+=\ell_b-\frac{p_b}{p_t}\ell_t
+=\frac{\mathcal J}{DA}
+>\frac{12}{(7/500)121}
+=\frac{6000}{847}>7.
+\tag{37.7}
+$$
+
+This proves (37.2), and integration between any $b_1<b_2$ proves
+(37.3). If two distinct worlds of $C(P,v)\cap\mathscr R$ existed
+with equal $m$, equal $b$ would make them the same graph point and
+whole-world lift. Otherwise order their $b$ coordinates and apply
+(37.3), whose $v$ difference vanishes; their $m$ difference is then
+strictly positive. This proves injectivity on the entire indicated
+source class. ∎
+
+The theorem controls every possible pair in this class, regardless of
+whether either endpoint is one of the selected equal-$J$ worlds.
+The polynomial extension at $b=0$ only supplies compact bounds and
+is not counted as a world. The theorem makes no assertion about a
+pair with an endpoint outside $\mathscr R$.
+
+## 38. Containment of both continued J sources
+
+**Lemma 38.1 (The continued strict sources lie in the class).** Every
+strict endpoint of Theorem 28.1, for $0<q<q_*$, belongs to
+$\mathscr R$. More explicitly,
+
+$$
+1<t_-(q)\le t_+(q)<107/100,\qquad
+0<b_-(q)<b_+(q)<1/10.
+\tag{38.1}
+$$
+
+*Proof.* Theorem 27.1 gives $q_*<287/125000=0.002296$.
+For $0\le i\le11$ truncate the cell $I_i$ of (25.1) at this last
+rational endpoint. Evaluate each coordinate polynomial (25.2) by
+interval Horner evaluation on that truncated cell's $\nu$ interval,
+and enlarge its result by $[-\rho,\rho]$, where $\rho=10^{-12}$.
+Write the resulting intervals as $X_i,Y_i,K_i$.
+For its rational upper parameter endpoint $u_i$, let
+
+$$
+h_i=10^{-40}
+ \left(1+\left\lfloor\sqrt{10^{80}u_i}\right\rfloor\right).
+\tag{38.2}
+$$
+
+This is a strict upper bound for $\sqrt q$ on that cell.
+Since $K>0$, the expressions
+
+$$
+\inf X_i-h_i\sup K_i,\qquad
+\sup X_i+h_i\sup K_i,\qquad
+\sup Y_i+h_i
+\tag{38.3}
+$$
+
+are respectively a lower bound for $t_-$ and upper bounds for
+$t_+,b_+$. The first exceeds the following rational numbers,
+in increasing cell order:
+
+$$
+\frac1{10000}
+(10171,10140,10117,10097,10081,10066,
+ 10052,10040,10028,10018,10007,10004).
+\tag{38.4}
+$$
+
+The second is less than $1057/1000$ in every cell, and the third
+is less than $12/125=0.096$ in every cell. These comparisons use
+only the rational arrays (25.2), their stated error radius and
+integer square-root bounds in (38.2). Horner interval multiplication
+uses the minimum and maximum of its four endpoint products;
+addition is endpoint addition. Thus (38.2)–(38.4) specify the finite
+comparisons independently of pointwise derivative samples.
+Theorem 27.1 supplies $b_->0$ for the strict part of the branch.
+Finally $K>0$ and $\sqrt q>0$ order the two $t$ coordinates, and
+the $b$ coordinates differ by $2\sqrt q>0$. This proves (38.1). ∎
+
+## 39. The independent-pair bridge and its remaining boundary
+
+Let $(p(q),v(q))$, $W_-(q),W_+(q)$ be exactly the continuation of
+Theorems 26.1 and 28.1, with $0<q<q_*$. No monotonicity of its
+$p$ projection is assumed. Set
+
+$$
+Q_R=\{q:0<q<q_*,\quad p(q)\in[-534,-457]\}.
+\tag{39.1}
+$$
+
+This is a subset on which the source-class theorem applies, not a
+replacement for the original full-domain target.
+
+**Corollary 39.1 (A necessary exterior endpoint for an independent M pair).**
+For every $q\in Q_R$, any distinct equal-$M$ pair in the entire
+$C(p(q),v(q))$ has at least one endpoint satisfying
+
+$$
+b>1/10\quad\text{or}\quad r/b<1\quad\text{or}\quad r/b>107/100.
+\tag{39.2}
+$$
+
+The pair is still permitted to overlap the selected $J$ pair or to
+be disjoint from it. For every $P\in[-533,-458]$ there is at least
+one strict continued $J$ pair with fifth reading $P$ to which this
+necessary condition applies.
+
+*Proof.* If both $M$ endpoints were in $\mathscr R$, Theorem 37.1
+would make them equal, contradicting within-pair distinctness.
+Since every original source has $b>0$, failure to lie in
+$\mathscr R$ is exactly (39.2). The supplied Theorem 28.1 gives
+some strict $q$ with $p(q)=P$ for every $P\in[-533,-458]$;
+this $q$ belongs to $Q_R$. Lemma 38.1 places both of its selected
+$J$ endpoints in $\mathscr R$, while imposing no restriction on the
+independent $M$ endpoints. ∎
+
+For example, the following is a precise sufficient localization bridge
+for excluding an independent $M$ pair at any chosen $q\in Q_R$:
+
+$$
+\boxed{\quad
+\text{Every }W\in C(p(q),v(q))\text{ satisfies }
+ b(W)\le1/10,\quad1\le r(W)/b(W)\le107/100.
+\quad}
+\tag{39.3}
+$$
+
+If (39.3) holds, Theorem 37.1 gives injectivity of $m$ on that
+entire original child, and the independently known $J$ pair puts
+its base in $D_J\setminus D_M$. Proving (39.3) simultaneously for
+all $q\in Q_R$ would extend this exclusion across that part of
+the evaluated continuation. A single actual compatible world
+satisfying (39.2) disproves (39.3) at its base; that alone is not an
+$M$ pair or a joint witness.
+
+The bridge (39.3) is not established here. In particular the containment
+of the two selected $J$ worlds in Lemma 38.1 does not establish it.
+The zero-safe faithful $(x,d)$ inverse of Section 12, or the equivalent
+whole-parent inverse in the finite-fibre volume, Lemma 30.2, remains
+available to test every companion, including zero drift and singular
+sources. No regular formula for the two selected endpoints replaces
+that whole-child obligation.
+
+There is no exact positive joint witness in these results, and the
+unchanged global independent-$J/M$ problem remains unresolved.
+The class theorem does not exclude a mixed interior/exterior $M$
+pair, two exterior endpoints, other continued $J$ branches or any
+unexamined base. All original gain strata, arbitrary fixed drifts,
+singular worlds and unbounded positive offdiagonals remain in the
+global problem. Neither the source corner $q_*$ nor this source-class
+order is a global negative theorem.
+
+## 40. Reused interfaces, new conclusion and classical sources
+
+The original-world interpretation and regular circuit in
+(35.1), (35.3)–(35.7) are reused from this volume's Sections 1–2,
+12, 18 and 24–29 and the ordinary sources they cite. In particular:
+
+- [Common-parent geometry, Theorem 2.1](https://github.com/the-omega-institute/trureturing/blob/f38e7d6dad5d17bf396a26b6b03b2eed6a3728d4/docs/develop/theory/FIB_COMMON_PARENT_GEOMETRY_AND_MIXED_CHILDREN.md)
+  supplies the zero-safe parent and complete whole-gain converse.
+- [Finite-fibre geometry, Lemma 30.2 and Theorem 32.1](https://github.com/the-omega-institute/trureturing/blob/f38e7d6dad5d17bf396a26b6b03b2eed6a3728d4/docs/develop/theory/FIB_ALL_RESPONSE_FINITE_FIBRE_GEOMETRY.md)
+  supplies the faithful $(x,d)$ inverse and whole-child finite bound.
+  Its Theorem 26.4 already excludes every off-$24$ equal-$M$ pair
+  with equal unobserved ratio $x=n/U$, including the exceptional
+  positive root of $8x^4+29x^3+18x^2-15x-6$. That equal-ratio
+  classification is not a new conclusion here.
+- [Support VII, Sections 3–10](https://github.com/the-omega-institute/trureturing/blob/f38e7d6dad5d17bf396a26b6b03b2eed6a3728d4/docs/develop/theory/FIB_STRICT_REAL_JOINT_INCIDENCE_SUPPORT_VII.md)
+  supplies the undivided residual comparator, global different-$b$
+  necessity and a faithful independent-$M$-pair interface. Those
+  results do not themselves provide the fixed-$P$ order (37.2).
+- The exact first critical source, local entire-child exclusion and
+  evaluated twelve-cell continuation, together with its strict-source
+  interval, corner and base coverage, are the supplied results of
+  Sections 19–29. The cited Sections 19–29 supply these existence and continuation statements.
+
+The relation used in the additional argument is positivity of the
+source-specific fixed-$p$ Jacobian for the scalar $m-5v$, followed by
+one-variable integration. Its evaluated polynomial content is
+(36.4), Lemma 36.1 and the uniform derivative margin (37.7).
+The resulting theorem concerns every world in the complete class
+(35.2), for every $p\in[-534,-457]$ and every real $v$. It is stronger
+than comparison of the two selected $J$ endpoints and does not count
+or exclude compatible worlds outside that class.
+
+Fixed-node interpolation is the classical formula in Berrut and
+Trefethen, *Barycentric Lagrange Interpolation*, SIAM Review 46,
+501–517, Section 2, equations (2.1)–(2.2),
+[DOI 10.1137/S0036144502417715](https://doi.org/10.1137/S0036144502417715).
+The Bernstein convex-hull bound is classical; see Mourrain,
+Rouillier and Roy, *Bernstein's basis and real root isolation*,
+INRIA Research Report 5149, Section 2, especially Proposition 2.8,
+[primary report](https://inria.hal.science/inria-00071434/document).
+The tensor version needed here is explicitly proved by (36.9)–(36.10).
+The implicit-function theorem, quotient differentiation and integration
+of a strictly positive derivative are standard real analysis.
+
+Thus the append establishes the evaluated source-class order and its
+necessary exterior-endpoint condition, together with the explicit
+unresolved whole-child localization bridge. The model, interpolation,
+response circuit, exceptional equal-ratio classification, finite carrier
+and negative-$J$ continuation are reused.
+
+## 追加锚（本行以下为增补区）
+## 41. Strict rational failure of the exterior sign implication
+
+Retain the original world, action sequence, and readings of (35.1) and
+(35.3)--(35.5): the actions are $J,M,J,M,M,M$, the first five
+readings are $(0,24,147/5,24,18)$, and $p,v$ are respectively the clock-five and
+clock-six readings, both following $M$.  The terminal alternatives $a,m$ are the two
+clock-seven readings on the same world.  Consider the following direct
+uniform implication, with $c=r(1-r)/b$:
+
+**Proposition 41.1 (failure of the exterior sign implication).** For
+complete worlds with these chronological readings, the implication
+below is false:
+
+$$
+\begin{aligned}
+&0<r<1,\quad b>0,\quad 0\ne g\in\mathbb R[s],\quad \deg g\le3,\quad d\in\mathbb R,\\
+&\bigl(b>1/10\ \text{or}\ r/b<1\ \text{or}\ r/b>107/100\bigr),\qquad b<20,\qquad c<2,\\
+&-533\le p\le-458,\qquad p\le-425,\qquad v<0
+\quad\Longrightarrow\quad v<2p.
+\end{aligned}
+\tag{41.1}
+$$
+
+Here the readings $p,v$ are required to arise from the complete
+chronological products and the five fixed parent readings above.  The
+implication is false even when the regular denominator $D$ of (35.3)
+is nonzero.  A single strict world witnessing the failure is
+
+$$
+r=\frac{17}{154},\qquad b=\frac8{77},\qquad
+c=\frac{2329}{2464},\qquad
+P=\begin{pmatrix}17/154&8/77\\2329/2464&137/154\end{pmatrix},
+\tag{41.2}
+$$
+
+with one fixed drift and one whole gain polynomial
+
+$$
+d=\frac{530671617}{945590},\qquad
+g(s)=\frac{5497681s^3-61028667s^2+287890127s-2653358085}{4727950}.
+\tag{41.3}
+$$
+
+The leading coefficient $5497681/4727950$ is positive, so this is a
+nonzero cubic.  Literal left multiplication by the chronological
+actions gives the following complete trace and reading table; the last
+two rows are alternatives, not two successive seventh actions.
+
+| clock and action | trace | reading |
+| --- | ---: | ---: |
+| $0$ | $1$ | $0$ |
+| $1,J$ | $235/224$ | $24$ |
+| $2,M$ | $85/77$ | $147/5$ |
+| $3,J$ | $2857/2464$ | $24$ |
+| $4,M$ | $93/77$ | $18$ |
+| $5,M$ | $5833/2464$ | $p=-9703315251/20802980$ |
+| $6,M$ | $8809/2464$ | $v=-1501769676273/1664238400$ |
+| $7,J$ | $4489/1232$ | $a=-40666201527/52007450$ |
+| $7,M$ | $7321/1232$ | $m=-84734834583/52007450$ |
+
+The strict source and cap margins are
+
+$$
+\begin{gathered}
+r=17/154>0,\quad 1-r=137/154>0,\quad
+b-1/10=3/770>0,\\
+20-b=1532/77>0,\quad c=2329/2464>0,\quad
+2-c=2599/2464>0,\\
+r/b=17/16>1,\qquad 107/100-r/b=3/400>0.
+\end{gathered}
+\tag{41.4}
+$$
+
+The exterior disjunction in (41.1) is met by its $b>1/10$ branch.
+
+The fifth and sixth readings lie strictly in the required negative
+window, with exact margins
+
+$$
+p+467=\frac{11676409}{20802980}>0,\qquad
+-466-p=\frac{9126571}{20802980}>0,
+\tag{41.5}
+$$
+
+and
+
+$$
+v+903=\frac{1037598927}{1664238400}>0,\qquad
+-902-v=\frac{626639473}{1664238400}>0.
+\tag{41.6}
+$$
+
+Thus $-467<p<-466\subset[-533,-458]$, $p\le-425$, and
+$-903<v<-902<0$, while $p\ne24$.
+
+For a sign calculation tied to the regular circuit, put $x=r$,
+$H=b^2+x-x^2$, $K=H+bx$, $L=b^2+8b+4$, and use the
+$\widetilde C_i=b^2C_i(x/b,b)$ from (35.3):
+
+$$
+\begin{aligned}
+A&=LHK-2b(1+b)(1+2b)(H+K),\\
+\widetilde C_0&=-120A+3(8b-1)(2+5b)HK,\\
+\widetilde C_1&=3(8b-1)(2+5b)bK,\\
+\widetilde C_2&=3(49b+34)HK-54b(1+2b)(H+K),\\
+\widetilde C_3&=3(8b-1)(2+5b)bH,\\
+\widetilde B_5&=-4\widetilde C_0+15\widetilde C_1-20\widetilde C_2+10\widetilde C_3,\\
+\widetilde B_6&=-10\widetilde C_0+36\widetilde C_1-45\widetilde C_2+20\widetilde C_3,\\
+B&=-\frac13\{b\widetilde C_0+(2b(1+2b)+K)\widetilde B_6
+-2(b(1+2b)+K)\widetilde B_5\}.
+\end{aligned}
+\tag{41.7}
+$$
+
+Since $j=H/b$, $n=K/b$, the identities from (35.3)--(35.4)
+give $A=(b^2/5)D$, $B=-b^3(N_v-2N_p)/3$, and hence
+
+$$
+v-2p=-\frac{3B}{5Ab}.
+\tag{41.8}
+$$
+
+At (41.2), direct rational substitution gives
+
+$$
+D=\frac{2363975}{818107136}>0,\qquad
+A=\frac{472795}{75789956396}>0,\qquad
+B=-\frac{16920254629}{513552744539296}<0,
+\tag{41.9}
+$$
+
+and
+
+$$
+AB=-\frac{7999811787318055}{38922140115679370948537216}<0,\qquad
+v-2p=\frac{50760763887}{1664238400}>0.
+\tag{41.10}
+$$
+
+All $b,j,n,T,U$ in (35.3) are positive, and every denominator of a displayed rational value in
+(41.2)--(41.10) is a positive integer; $5Ab$ in (41.8) is positive.  Thus the world is strict,
+regular, and has no pole or non-strict endpoint.  The calculation uses
+one fixed $d$ and the entire polynomial $g$ at every clock; it does
+not divide by a sampled gain, a gain coefficient, a drift, or a root
+difference.  Consequently exterior position, both caps, negative
+$p,v$, and the narrower $p$-window together do not force
+$v<2p$.  The counterexample is local in the regular chart and does
+not remove singular $D=0$, degree-drop, sampled-gain-zero, repeated
+root, or arbitrary-drift worlds from the original domain.
+
+## 42. Scope relative to the independent-pair target
+
+The regular lift and whole-gain converse used above are exactly the
+interfaces in §35, equations (35.1), (35.3)--(35.7), with the polynomial
+rewrite of §24, equations (24.2)--(24.5), and the lift range of
+§28, equations (28.3)--(28.7).  Theorem 37.1 has the stated scope
+$P\in[-534,-457]$ and $W\in\mathscr R$, where
+$0<b\le1/10$ and $1\le r/b\le107/100$.  The world (41.2) is
+outside that class solely because $b>1/10$; therefore (41.9)--(41.10)
+do not contradict the source-class $M$-injectivity theorem.  Lemma
+38.1 concerns the two selected continued $J$-sources only and does
+not place every companion in $\mathscr R$.
+
+The $p$-projection of (41.2) lies in the interval used for some
+continued $J$ sources, but this construction does not establish an
+equal-$J$ pair at the full base $(p,v)$ in (41.5)--(41.6), nor does
+it exhibit a distinct equal-$M$ companion there.  Hence (41.2) is not
+a joint witness and gives no global negative answer.  The original target remains
+
+$$
+\exists\,p\ne24,\ v,\ W_0,W_1,W_2,W_3\in C(p,v):
+\quad W_0\ne W_1,\ a(W_0)=a(W_1),\quad
+W_2\ne W_3,\ m(W_2)=m(W_3).
+\tag{42.1}
+$$
+
+The independent $J/M$ incidence at a common full base, including
+mixed and exterior $M$-pairs and singular joins, remains open under
+the original complete-world domain.  The result above is only the
+explicit failed sufficient condition (41.1); it does not narrow the
+quantifiers or alter any earlier theorem's range.
+
+## 追加锚（本行以下为增补区）

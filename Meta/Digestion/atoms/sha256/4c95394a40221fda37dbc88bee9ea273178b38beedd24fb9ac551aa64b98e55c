@@ -1,0 +1,167 @@
+**Lemma 33.1 (Singular parameters force an excluded source
+rectangle).** Suppose $T_1,T_2>1$ and $d\in\mathbb R$ give
+$\Delta=Q=0$ in (31.3). Then one of the two widths has
+
+$$
+\frac45<b_i<\frac72,\qquad -10<d<0.
+\tag{33.1}
+$$
+
+Proof. First handle $d=0$ before taking a ratio. Then
+$k=-147/(5T_1T_2)\ne0$ and
+$Q=525k^2/2>0$, a contradiction. Thus $d\ne0$ and the ratio
+$\kappa=k/d$ is defined. The equation $Q=0$ gives both possibilities
+
+$$
+525\kappa^2-347\kappa+50=0,\qquad
+\kappa=\kappa_\pm=\frac{347\pm\sqrt{15409}}{1050}.
+\tag{33.2}
+$$
+
+Both roots are strictly positive. The definition of $k$ implies
+
+$$
+\kappa\pi=1-\frac{147}{5d},\qquad
+d=\frac{147/5}{1-\kappa\pi}.
+\tag{33.3}
+$$
+
+The first equation and finite $d\ne0$ exclude
+$1-\kappa\pi=0$, so the second equation introduces no lost case.
+Define
+
+$$
+A_\kappa=\frac{99912-269325\kappa}{13377},\qquad
+B_\kappa=\frac{67254-133875\kappa}{13377}.
+\tag{33.4}
+$$
+
+Substitution of (33.3) and $k=d\kappa$ gives the exact identity
+
+$$
+\frac{2\Delta}{d^2}
++91\kappa(\sigma-A_\kappa-B_\kappa\pi)
+=\frac{171}{49}(525\kappa^2-347\kappa+50).
+\tag{33.5}
+$$
+
+Since $\Delta=0$, (33.2) and $\kappa>0$ force
+
+$$
+\sigma=A_\kappa+B_\kappa\pi.
+\tag{33.6}
+$$
+
+Consider $\kappa_-$ first. The exact square comparisons
+$15409-124^2=33>0$ and $125^2-15409=216>0$ give
+$124<\sqrt{15409}<125$, hence $0<\kappa_-<1/4$.
+Both affine functions in (33.4) strictly decrease with $\kappa$, and
+
+$$
+A_{1/4}-1=\frac{25605}{17836}>0,\qquad
+B_{1/4}-1=\frac{27211}{17836}>0.
+\tag{33.7}
+$$
+
+Thus (33.6) would imply $\sigma>1+\pi$, contrary to the strict
+source inequality
+
+$$
+\pi-\sigma+1=(T_1-1)(T_2-1)>0.
+\tag{33.8}
+$$
+
+The entire $\kappa_-$ branch is therefore impossible.
+
+For $\kappa_+$ the following exact enclosure suffices:
+
+$$
+\frac{56}{125}<\kappa_+<\frac{449}{1000}.
+\tag{33.9}
+$$
+
+Indeed the corresponding bounds on $\sqrt{15409}$ are $617/5$ and
+$2489/20$, and their exact square gaps are
+
+$$
+15409-(617/5)^2=\frac{4536}{25}>0,\qquad
+(2489/20)^2-15409=\frac{31521}{400}>0.
+\tag{33.10}
+$$
+
+The decreasing affine functions (33.4) consequently obey
+
+$$
+-\frac85<A_\kappa<-\frac32,\qquad
+\frac8{15}<B_\kappa<\frac59,\qquad \kappa>\frac49.
+\tag{33.11}
+$$
+
+For completeness, the endpoint comparisons have the exact positive
+margins
+
+$$
+\begin{aligned}
+A_{449/1000}+8/5&=5177/178360,\\
+-3/2-A_{56/125}&=2267/44590,\\
+B_{449/1000}-8/15&=389/535080,\\
+5/9-B_{56/125}&=461/40131,\\
+56/125-4/9&=4/1125.
+\end{aligned}
+\tag{33.12}
+$$
+
+Equation (33.3) excludes $0<d\le147/5$, since its first right side
+would be nonpositive while $\kappa\pi>0$. If $d>147/5$, then
+$0<\kappa\pi<1$ and so $\pi<1/\kappa<9/4$. Equations (33.6),
+(33.11) would give
+
+$$
+\sigma<-\frac32+\frac59\frac94=-\frac14,
+$$
+
+contrary to $T_1+T_2>2$. Therefore $d<0$.
+
+The arithmetic-geometric mean inequality, (33.6) and (33.11) give
+
+$$
+2\sqrt\pi\le\sigma<B_\kappa\pi<\frac59\pi.
+$$
+
+Dividing by $\sqrt\pi>0$ shows $\pi>324/25>9$. Since
+$\kappa>4/9$, this implies $\kappa\pi>4$. Equation (33.3) now yields
+
+$$
+0<-d=\frac{147/5}{\kappa\pi-1}<\frac{49}{5}<10.
+\tag{33.13}
+$$
+
+Let $t=\min(T_1,T_2)$ and $u=\max(T_1,T_2)$. From (33.6) and
+$A_\kappa<0$,
+
+$$
+\frac1t+\frac1u=\frac\sigma\pi<B_\kappa.
+$$
+
+Thus $t>1/B_\kappa>9/5$. The same equation (33.6) gives the exact
+quadratic relation
+
+$$
+B_\kappa t^2-2t+A_\kappa
+=(u-t)(1-B_\kappa t)\le0,
+\tag{33.14}
+$$
+
+where $u\ge t$ and $B_\kappa t>1$ explain the sign. On
+$t\ge9/2$ this quadratic is strictly increasing: its derivative
+$2B_\kappa t-2$ is positive by $B_\kappa>8/15$. At $9/2$ its value
+is strictly greater than
+
+$$
+\frac8{15}\left(\frac92\right)^2-9-\frac85=\frac15>0.
+$$
+
+This contradicts (33.14). Hence $9/5<t<9/2$, and the source whose
+$T$ equals $t$ has $4/5<b<7/2$. Together with (33.13) this proves
+(33.1). ∎
+

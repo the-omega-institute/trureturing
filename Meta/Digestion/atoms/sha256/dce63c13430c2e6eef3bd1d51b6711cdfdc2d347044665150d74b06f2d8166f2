@@ -1,0 +1,15 @@
+**Definition 1.3 (Original recursive predicates and three observation levels).** For $S\subseteq\mathcal F(H)$, retain [Common Parent, Definition 1.2](FIB_COMMON_PARENT_GEOMETRY_AND_MIXED_CHILDREN.md):
+
+$$
+\begin{aligned}
+L_0(S,H)&\iff |S|\ge2,\\
+L_{k+1}(S,H)&\iff |S|\ge2\ \land\
+\bigwedge_{E\in\{J,M\}}\exists u\in\mathbb R:\ 
+L_k(S\cap\mathcal F(H,E,u),(H,E,u)).
+\end{aligned}
+$$
+
+Here $k$ is restricted to the remaining original acquisition horizon. Cardinality counts complete worlds. A shared acquired response is selected before taking its alternative continuations.
+
+For a fixed chronological word $w$, let $y_w(W)$ be its entire deterministic response vector, including clock zero. A population-law interface assigns to each labelled world a probability law $\nu_w(W)$ of a random vector $R_w$. The vector $y_w(W)$, the law $\nu_w(W)$, and a realized acquisition $R_w$ are three different mathematical objects. Equality of population laws will be used as a relation on the indexed family $W\mapsto\nu_w(W)$.
+

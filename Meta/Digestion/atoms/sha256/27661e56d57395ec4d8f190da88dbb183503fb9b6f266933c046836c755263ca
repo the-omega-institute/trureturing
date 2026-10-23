@@ -1,0 +1,59 @@
+**Definition 2.2 (Late-node interpolation and necessary equations).**
+At a hypothetical actual companion put $x=n/U>0$ and
+$D=x(x+1)(x+2)$. Let $\mathcal H=Ug$ be interpolated at $3,4,5,6$
+from $((24-d)/x,18-d,(p-d)/(x+1),(v-d)/(x+2))$. Define
+
+$$
+\begin{gathered}
+z_3=(24-d)(x+1)(x+2),\quad z_4=(18-d)D,\\
+z_5=(p-d)x(x+2),\quad z_6=(v-d)x(x+1),\\
+\begin{pmatrix}a_0\\a_1\\a_2\\a_7\end{pmatrix}
+=\begin{pmatrix}
+20&-45&36&-10\\10&-20&15&-4\\4&-6&4&-1\\-1&4&-6&4
+\end{pmatrix}
+\begin{pmatrix}z_3\\z_4\\z_5\\z_6\end{pmatrix}.
+\end{gathered}
+\tag{2.5}
+$$
+
+Then $\mathcal H_i=a_i/D$ for $i=0,1,2,7$. Set
+
+$$
+\begin{aligned}
+z&=xa_1-D(24-d),& b_s&=(294-10d)D-5a_2,\\
+A_q&=4z^2-2za_1+(2x-1)a_1^2,&
+E_q&=-2za_1+2(1-x)a_1^2,\\
+\mathcal Q(u,w)&=A_qu^2+E_quw-a_1^2w^2,\\
+f&=5dDa_2+a_0b_s,& K_d&=\mathcal Q(-a_0,dD),\\
+K_s&=25K_d+\mathcal Q(5a_2,b_s).
+\end{aligned}
+\tag{2.6}
+$$
+
+These names do not change the source coordinate $b$ or the base box $K$.
+The original clocks zero and two give
+
+$$
+dDU=-a_0,\qquad b_sU=5a_2.
+\tag{2.7}
+$$
+
+The source relation gives, by expansion,
+
+$$
+\mathcal Q(U,1)
+=4a_1^2\{b(j-b)-r(1-r)\}=0.
+\tag{2.8}
+$$
+
+Indeed clock one gives $j=U(24-d)D/a_1$, and $r=Uz/a_1$.
+Multiplying $f$ by $U$ in (2.7), and using homogeneity in (2.8), gives
+
+$$
+f=0,\qquad K_d=(dD)^2\mathcal Q(U,1)=0,\qquad
+\mathcal Q(5a_2,b_s)=b_s^2\mathcal Q(U,1)=0.
+\tag{2.9}
+$$
+
+No division by $d$ or $b_s$ occurs, so their zero branches are retained.
+

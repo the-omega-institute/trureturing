@@ -1,0 +1,12 @@
+**推论 8.3（无条件包络与正支撑阈值的细化）。** Minimizing (8.3) over feasible overlaps at a fixed $\ell\in[0,3/5]$ recovers Theorem 7.3:
+
+$$
+ \min_{\ell_G=\ell}D=\left(\frac15-2\ell\right)_+.
+\tag{8.14}
+$$
+
+For prescribed positive overlap, the plateau threshold is the attained value $1/10+o$, including among full-support laws. Over all finite full-support plateau laws the leakage infimum remains $1/10$ and is not attained, as in Proposition 7.4. The classification (8.2)–(8.4) concerns the feasible $(o,\ell)$ projection and the minimum of $D$ above each pair; it supplies neither a complete joint upper boundary for $D$ nor an all-risk region involving the individual $r_i$, $\epsilon$ or $I$.
+
+Proof. At fixed $\ell$, feasible overlaps are
+$\max\{0,\ell-2/5\}\le o\le\min\{1/5,\ell\}$. Since (8.3) is nondecreasing in $o$, its minimum is at the lower endpoint. For $\ell\le2/5$ this gives (8.14) directly; for $\ell>2/5$ both sides of (8.14) vanish. The attainers of Theorem 8.2 give equality. Full support forces $o>0$, so (8.5) forces $\ell>1/10$. Conversely $F_{o,1/10}$ is a full-support plateau law for every $o>0$ and has $\ell=1/10+o\downarrow1/10$ as $o\downarrow0$. $\square$
+

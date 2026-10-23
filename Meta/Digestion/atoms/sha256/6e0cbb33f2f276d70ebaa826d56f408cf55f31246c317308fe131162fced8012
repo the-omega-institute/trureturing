@@ -1,0 +1,43 @@
+**Definition 1.2 (Entire histories and the original joint relation).** For a history $H=(h_0,E_1,h_1,\ldots,E_t,h_t)$ define
+
+$$
+\mathcal F(H)=
+\{W\in\mathcal W:(y_0(W),\ldots,y_t(W))=(h_0,\ldots,h_t)\}.
+$$
+
+In the notation of [Common Parent, Definitions 1.1–1.3](FIB_COMMON_PARENT_GEOMETRY_AND_MIXED_CHILDREN.md), set
+
+$$
+H_4=(0,J,24,M,147/5,J,24,M,18),\qquad
+C(p,v)=\mathcal F(H_4,M,p,M,v),\qquad
+h(p,v)=(0,24,147/5,24,18,p,v).
+$$
+
+The acquired actions for this child are $J,M,J,M,M,M$. The strict-real joint question uses $p\ne24$, as in [Strict Real, Definitions 1.1–1.2](FIB_STRICT_REAL_JOINT_INCIDENCE_SUPPORT.md). The set $\mathcal F(H_4,M,p,M,v)$ itself is also meaningful at $p=24$.
+
+Write
+
+$$
+j=b+c,\qquad n=j+r,\qquad T=1+b,\qquad U=1+2b.
+$$
+
+After the acquired sixth $M$, the seventh-clock alternatives on the same world are
+
+$$
+f_{MJ}(W)=d+(T+2j+4r)g(7),\qquad
+f_{MM}(W)=d+(3U+2n)g(7).
+$$
+
+They are the functions denoted $a(W)$ and $m(W)$ in [Strict Real III, Definition 1.1](FIB_STRICT_REAL_JOINT_INCIDENCE_SUPPORT_III.md) and [Strict Real IV, Definition 1.1](FIB_STRICT_REAL_JOINT_INCIDENCE_SUPPORT_IV.md). Define
+
+$$
+\begin{aligned}
+D_J&=\{(p,v):p\ne24,\ \exists W_0\ne W_1\in C(p,v),\
+f_{MJ}(W_0)=f_{MJ}(W_1)\},\\
+D_M&=\{(p,v):p\ne24,\ \exists W_2\ne W_3\in C(p,v),\
+f_{MM}(W_2)=f_{MM}(W_3)\}.
+\end{aligned}
+$$
+
+The joint relation is $D_J\cap D_M$. Both pairs use one entire child, including worlds unused by the chosen pairs. The pairs may differ or overlap, and their common terminal values may differ. Each run executes only one seventh action.
+

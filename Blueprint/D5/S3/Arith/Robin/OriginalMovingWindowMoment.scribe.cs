@@ -35,7 +35,8 @@ internal sealed class OriginalMovingWindowMomentDocument : IScribeDocumentDefini
                     Paragraph(Text(
                         "The proof reuses ActualRobinClockCovariance.g, its "
                         + "original derivative and density-integral suppliers, "
-                        + "and MellinWeightedVariation.scaleWeight_antitone. "
+                        + "MellinWeightedVariation.scaleWeight_antitone, and the "
+                        + "weight_continuous lemma in LogarithmBounds. "
                         + "Their weight normalization gives "
                         + "w(B)*(B-x)<=lambda(x)-lambda(B)<=w(t)*(B-x). "
                         + "The logarithmic growth estimate proves "

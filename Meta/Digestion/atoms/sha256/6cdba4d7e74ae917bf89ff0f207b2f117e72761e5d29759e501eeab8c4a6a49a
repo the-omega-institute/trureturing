@@ -1,0 +1,40 @@
+**Lemma 13.1 (a sufficient operator graph-core test).** Let $H_j,H$ be
+selfadjoint operators on one Hilbert space. Suppose $\mathcal D$ is
+an operator graph core of $H$, and for each $v\in\mathcal D$ there
+are $v_j\in D(H_j)$ such that $v_j\to v$ and $H_jv_j\to Hv$ in
+norm. Then $H_j$ converges to $H$ in strong resolvent sense.
+
+Proof. Fix nonreal $z$, put $f=(H-z)v$ and
+$f_j=(H_j-z)v_j$, and write
+
+$$
+(H_j-z)^{-1}f=v_j+(H_j-z)^{-1}(f-f_j).
+\tag{13.5}
+$$
+
+The selfadjoint bound $\|(H_j-z)^{-1}\|\le|\operatorname{Im}z|^{-1}$
+gives convergence on $(H-z)\mathcal D$. This set is dense because
+$\mathcal D$ is a graph core and $H-z$ maps $D(H)$ onto the Hilbert
+space. Density and the same resolvent bound give convergence for every
+input. No uniform lower spectral bound is required. $\square$
+
+Let $\mathcal D_0$ be the domain of $D(F)$ vectors vanishing on some
+source neighbourhood, as in Native Green stability, (21.1). Its graph
+closure is $D(S_{\min})$. The direct-sum maximal decomposition gives
+
+$$
+\begin{aligned}
+D(F)&=D(S_{\min})\dotplus\operatorname{span}\{p\},\\
+D(G_\kappa)&=D(S_{\min})\dotplus
+                              \operatorname{span}\{\kappa p+\zeta\}.
+\end{aligned}
+\tag{13.6}
+$$
+
+Consequently $\mathcal D_0$ plus any one genuine maximal vector of
+trace $(1,0)$ or $(\kappa,1)$ is a graph core for the corresponding
+realization. A different choice with the same trace differs by a
+minimal vector. It suffices to approximate one such chosen vector;
+no estimate for arbitrary actual capped boundary traces is part of
+this criterion.
+

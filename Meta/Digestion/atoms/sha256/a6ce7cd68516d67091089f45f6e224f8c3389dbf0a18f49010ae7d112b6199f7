@@ -1,0 +1,17 @@
+**Definition 266.1 (positive masses, killing and exact label dynamics).** Let $T=(V,E)$ be a nonempty finite tree, $c_{xy}=c_{yx}>0$ on every edge, $\mu_x>0$, and $\kappa_x\ge0$. The backward killed generator in its given time is
+
+$$
+(Gf)(x)=\sum_{y\sim x}\frac{c_{xy}}{\mu_x}(f(y)-f(x))-\kappa_xf(x).
+\tag{266.1}
+$$
+
+For a surjection $\pi:V\to B$, put $\nu_b=\sum_{x\in V_b}\mu_x$, and let $H_\pi$ be the simple graph with edge $ab$ when an actual edge joins the distinct classes $a,b$. It is connected. Write $m=|B|$, $e=|E(H_\pi)|$, $\beta=e-m+1\ge0$. A deterministic refinement is a map $\psi:V\to C=\operatorname{im}\psi$ with $\pi=h\psi$. It is exact on the same clock when a killed generator $Q^\psi$ satisfies
+
+$$
+G U_\psi=U_\psi Q^\psi,\qquad
+(U_\psi f)(x)=f(\psi(x)).
+\tag{266.2}
+$$
+
+In finite dimension this is equivalent to the corresponding all-time heat intertwining, by differentiation at zero and by exponential series. Testing class indicators shows that (266.2) is exactly constancy, on each $\psi$ class, of all off-class sums $\sum_{\psi(y)=c}c_{xy}/\mu_x$ and of $\kappa_x$. Indeed off-class indicators give the sums, and the constant function gives $G1=-\kappa$; the converse follows by expanding $GU_\psi f$. This is ordinary lumpability, not a new criterion. Nilsson Jacobi–Görnerup, [arXiv:0710.1986v1, Theorem 1 and equation (2.1)](https://arxiv.org/pdf/0710.1986v1), states the finite stochastic row-sum supplier. For killing one may add an absorbing cemetery and uniformize the finite rates; no cemetery state is counted in $C$.
+

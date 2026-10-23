@@ -1,0 +1,28 @@
+**Definition 12.1 (The second linear subresultant).** Let $F\in\mathbb Z[b]$
+be the univariate polynomial of Lemma 4.2, with the coefficient list
+given there. Retain $E_0,E_1,E_2,R_1,R_2,a_0,c_0,h,a,c$ exactly as in
+Definitions 3.1 and 4.1. In particular $a_0=ha$ and $c_0=hc$.
+For the ordered pair $(E_0,E_2)$ form the $28$ rows
+
+$$
+r^{13}E_0,\ldots,E_0,\quad r^{13}E_2,\ldots,E_2
+\tag{12.1}
+$$
+
+in columns $r^{28},r^{27},\ldots,1$. Let $a_2$ be the determinant
+retaining columns $r^{28},\ldots,r^2,r$, and $c_2$ the determinant
+retaining columns $r^{28},\ldots,r^2,1$. Thus
+
+$$
+L_2(r,b)=a_2(b)r+c_2(b).
+\tag{12.2}
+$$
+
+The row order and column order are part of the definition. Neither
+the initial leading coefficients nor a factor of $a_2,c_2$ is removed.
+Write $\ell_k=\operatorname{lc}_rE_k$ for $k=0,1,2$.
+All remainders and gcds below are in $\mathbb Q[b]$; a gcd is normalized
+to be monic. For $V\ne0$, $\operatorname{rem}_V U$ denotes the unique
+polynomial of degree less than $\deg V$ for which
+$U-QV=\operatorname{rem}_V U$ for some $Q\in\mathbb Q[b]$.
+

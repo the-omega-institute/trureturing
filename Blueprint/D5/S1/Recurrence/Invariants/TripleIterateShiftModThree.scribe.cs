@@ -27,6 +27,9 @@ internal sealed class TripleIterateShiftModThreeDocument : IScribeDocumentDefini
                 + "geometric series with coefficients c^n. Indices are natural numbers, "
                 + "mk constructs a series from its coefficient function, and the final "
                 + "remainder is integer remainder.")),
+            Node("subst_coeff", "Coefficients of substitution", SubstitutionFormula(),
+                "For a series u with zero constant coefficient, only powers up to n contribute to the coefficient of degree n in f(u).",
+                DescribeRole.Theorem, AssessedProvenance.FromRepo(Source)),
             Node("a", "The integer coefficient sequence", CoefficientFormula(),
                 "The local notation approximation denotes the integer series defined by "
                 + "the displayed iteration, starting at X. Agreement below degree d, "
@@ -105,6 +108,16 @@ internal sealed class TripleIterateShiftModThreeDocument : IScribeDocumentDefini
     private static Formula Step(Formula series) =>
         Subtract(Parenthesized(Add(series, RightSide(Integers(), series))),
             Iter(Integers(), series, D(3)));
+
+    private static Formula SubstitutionFormula() => Disp(Seq(
+        Bound("R", Named("Type")), OpenBracket, Call("CommRing", F.Id("R")), CloseBracket, Comma, Sp,
+        Bound("f", Series(F.Id("R"))), Bound("u", Series(F.Id("R"))),
+        Implication(Equal(Call("constantCoeff", F.Id("u")), D(0)),
+            Parenthesized(Seq(Bound("n", Naturals()), Equal(Call("coeff", F.Id("n"), Call("subst", F.Id("u"), F.Id("f"))),
+                Seq(new Formula.Subscript(F.Sum, Seq(F.Id("k"), Sp, InMacro, Sp,
+                    Call("range", Add(F.Id("n"), D(1))))), Sp,
+                    Parenthesized(Mul(Call("coeff", F.Id("k"), F.Id("f")),
+                        Call("coeff", F.Id("n"), new Formula.Power(F.Id("u"), F.Id("k"))))))))))));
 
     private static Formula CoefficientFormula() => Disp(new Formula.Aligned([
         Seq(Bound("n", Naturals()), Equal(Call("a", F.Id("n")),

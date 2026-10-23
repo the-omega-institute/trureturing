@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:572f60beb3d1b16ff9029a98082d82c59509b19fa3110b0198a4ac30beb7f3b9
+  normalized_sha256: sha256:572f60beb3d1b16ff9029a98082d82c59509b19fa3110b0198a4ac30beb7f3b9
+cas_ref: sha256:572f60beb3d1b16ff9029a98082d82c59509b19fa3110b0198a4ac30beb7f3b9
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: Source inventory and directory-comparison methodology only; explicitly excludes treating repository differences as mathematical evidence.
+    previous_atom_id: fcd76022930bcfbbc9760858a39a963130f83e3d521158161c9aa32050977b5e
+    next_atom_id: 51a575b738b1fb606db3d8eddda63dea19ca1734cba494373cda1a60ce8ef980

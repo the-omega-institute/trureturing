@@ -80,6 +80,7 @@ Literature completeness and unpublished frame overlap are ASSUMED-UNVERIFIED as 
 Escape audit unfinished: https://github.com/the-omega-institute/trureturing/issues/18980
 -/
 
+import D5.S3.Quantum.Information.SLDSpectralEnergy
 import D5.S3.Quantum.Decoherence.ProjectedUnistochasticDynamics
 import D5.S3.Quantum.Entanglement.GHZMeasureBiseparableBound
 import D5.S3.Quantum.Matrix.CartesianVariance
@@ -107,7 +108,7 @@ open D5.S3.Quantum.Decoherence.ProjectedUnistochasticDynamics (unitaryEvolution)
 /-- Definition 3: a mixed state `ρ` is absolutely `k`-incoherent if `U ρ U*` is `k`-incoherent
 for every unitary `U`. -/
 def IsAbsolutelyKIncoherent {n : ℕ} (k : ℕ) (ρ : Matrix (Fin n) (Fin n) ℂ) : Prop :=
-  D5.S3.Quantum.Entanglement.GHZMeasureBiseparableBound.IsDensity ρ ∧
+  D5.S3.Quantum.Information.SLDSpectralEnergy.IsDensity ρ ∧
     ∀ U ∈ Matrix.unitaryGroup (Fin n) ℂ, IsKIncoherentSum k (U * ρ * star U)
 
 /-- Section 5, third open-question bullet: is the purity condition of Theorem 7,
@@ -166,7 +167,7 @@ private theorem rho_trace (t : ℝ) : (rho t).trace = 1 := by
   }
 
 private theorem rho_density (t : ℝ) (ht : 0 ≤ t) (htu : t ≤ 1 / 10) :
-    D5.S3.Quantum.Entanglement.GHZMeasureBiseparableBound.IsDensity (rho t) := by
+    D5.S3.Quantum.Information.SLDSpectralEnergy.IsDensity (rho t) := by
   {
     refine ⟨?_, rho_trace t⟩
     rw [rho_diagonal, Matrix.posSemidef_diagonal_iff]

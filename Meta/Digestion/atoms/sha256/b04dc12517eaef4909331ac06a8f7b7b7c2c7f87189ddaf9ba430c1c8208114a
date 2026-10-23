@@ -1,0 +1,54 @@
+**Lemma 26.1 (Source enclosure and identification).** Each $K_i$ contains
+one zero of $E$, lying within $3\,10^{-66}$ of its centre in maximum
+norm. This zero is exactly $z_i$ of (25.1). The source is strict and
+regular, and (26.2) gives precisely $\mathcal W_i^J$.
+
+Proof. The endpoint operations and the integer coefficient recurrences
+(21.8), (26.1), (26.3) give the bounds in (26.5)–(26.7) by rational
+arithmetic. More explicitly, every lower comparison is a comparison
+with the minimum endpoint of its prescribed interval and every upper
+comparison is with the maximum endpoint; after clearing positive powers
+of $10$, they are integer inequalities. Invert $J_i$ exactly by its
+adjugate and determinant, round its four entries as in (26.5), evaluate
+$E$ at the centre and $DE$ on $K_i$, and take the two row sums. These
+finite operations give respectively the first two columns of the
+bound table. Evaluation of (26.7) by its quotient rule gives the three
+integer-interval enclosures. No algebraic-root approximation enters
+these comparisons.
+
+The map $z\mapsto z-Y_iE(z)$ has Lipschitz constant at most
+$\theta_i<1$ on the convex cube, and its displacement from the centre
+is at most $\eta_i+\theta_i h<h$. It therefore maps $K_i$ strictly
+into itself. The contraction theorem gives a unique fixed point and,
+since $Y_i$ is invertible, a unique zero of $E$ there. The usual
+geometric-series bound gives (26.6).
+
+The displayed cubes are strict source cubes, and their $\ell$ signs
+make them regular. Their $r$ coordinates are in the corresponding
+$r$ intervals of Lemma 23.2, and their $b$ coordinates are in the
+corresponding intervals (23.3). At the zero, $p_r\ne0$ and the two
+minors $(p,v),(p,a)$ vanish. The determinant identity
+
+$$
+p_r\det D(v,a)-v_r\det D(p,a)+a_r\det D(p,v)=0
+\tag{26.8}
+$$
+
+forces the third minor to vanish. The full-parent classification
+Theorem 24.1 now identifies its unique whole-world lift with the
+corresponding world (23.8). The cubes cannot interchange the two
+worlds because their source intervals are disjoint. The whole gain
+and the drift are forced by (26.2), not chosen anew. ∎
+
+The following open enclosures record the exact bases and the critical
+carrier and terminal values; each entire interval evaluation of the
+corresponding expression on $K_i$ is inside the displayed interval.
+For $d,m$ the forced lift in Section 28 supplies these bounds.
+
+| Quantity | $i=1$ | $i=2$ |
+| --- | --- | --- |
+| $p$ | $(-533512131/1000000,-53351213/100000)$ | $(-5445191/500000,-10890381/1000000)$ |
+| $v$ | $(-203835443/200000,-509588607/500000)$ | $(-509599/62500,-8153583/1000000)$ |
+| $x$ | $(244919203169/250000000000,979676812677/1000000000000)$ | $(688485537633/500000000000,1376971075267/1000000000000)$ |
+| $d$ | $(76059941/125000,608479529/1000000)$ | $(3850713/125000,6161141/200000)$ |
+| $m$ | $(-1817532459/1000000,-908766229/500000)$ | $(104587403/1000000,26146851/250000)$ |

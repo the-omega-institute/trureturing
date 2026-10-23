@@ -1090,3 +1090,160 @@ The physical supply and recovery bridges remain separate mathematical
 obligations. $\square$
 
 ## 追加锚（本行以下为增补区）
+
+## 7. Mode language and the leakage--return bridge
+
+A free real scalar field in a finite periodic box gives the usual oscillator
+language after a finite mode truncation. If $e_a$ are real orthonormal
+Laplacian eigenmodes and $\phi=\sum_a q_a e_a$, then
+
+$$
+L=\frac12\sum_a\left(\dot q_a^2-\omega_a^2q_a^2\right),
+\qquad
+\omega_a^2=c^2\kappa_a^2+\omega_0^2.
+$$
+
+For one mode, $p=\dot q$ and
+
+$$
+\alpha=\frac1{\sqrt2}\left(\sqrt\omega\,q
+       +i\frac p{\sqrt\omega}\right)
+$$
+
+satisfy $\dot\alpha=-i\omega\alpha$ and hence
+$\alpha(t)=e^{-i\omega t}\alpha(0)$. The circle is in the $(q,p)$ phase
+plane; it is not by itself a pair of spatial directions. Quantization adds
+the canonical commutation relations. In particular, the five-dimensional
+space $V$ above is an encoded or truncated sector: it cannot carry exact
+$[a,a^\dagger]=I$ for a nonzero finite identity, since taking traces would
+give $0=\dim V$. The mode construction therefore supplies an interpretation
+of the oscillator terminology, not a derivation of the particular Hamiltonian
+in Assumption 1.2. A standard free-field construction is given, for example,
+in Tong, [*Quantum Field Theory*, §2](https://www.damtp.cam.ac.uk/user/tong/qft/qfthtml/S2.html).
+
+The following classical projection identity supplies the supporting
+algebra for the model-specific bridge. Let $P$ be an orthogonal projection,
+$Q=I-P$, and $U$ a unitary on a reducing finite subspace. On $P\mathcal H$
+put
+
+$$
+K=PUP\big|_{P\mathcal H},
+\qquad
+L=QUP\big|_{P\mathcal H}.
+$$
+
+The standard defect/dilation identity (see Robinson,
+[arXiv:1803.09329](https://arxiv.org/abs/1803.09329), for this classical
+framework) is
+
+$$
+I_{P\mathcal H}-K^\dagger K=L^\dagger L\succeq0.
+\tag{7.1}
+$$
+
+Thus the norm loss of the retained compression is exactly the squared
+amplitude sent into the complementary channel. Applying this supporting
+identity to the seven-state model, Theorem 2.2 gives
+
+$$
+L=C(t)|b\rangle\langle e_4|,
+\qquad
+I_V-K(t)^\dagger K(t)
+=\eta^2\sin^2\!\tau(t)\,|e_4\rangle\langle e_4|.
+\tag{7.2}
+$$
+
+For a density $\rho$ on $V$, the retained trace is therefore
+
+$$
+1-\operatorname{tr}\!\left(K(t)\rho K(t)^\dagger\right)
+=\eta^2\sin^2\!\tau(t)\,\langle e_4,\rho e_4\rangle.
+\tag{7.3}
+$$
+
+Indeed, insert $P+Q=I$ between the two copies of $U$ and use
+$U^\dagger U=I$:
+
+$$
+K^\dagger K+L^\dagger L
+=P U^\dagger(P+Q)UP\big|_{P\mathcal H}
+=I_{P\mathcal H}.
+$$
+
+The displayed seven-state formulas then give (7.2), and taking the trace
+pairing with $\rho$ gives (7.3). This attribution is only supporting
+material; the substantive conclusion here is the resulting identity for
+the fixed bosonic model.
+
+Because the present $W$ is finite dimensional, the short-time statement can
+also be made in operator norm. For $U(t)=e^{-itH/\hbar}$,
+
+$$
+Q U(t)P\big|_V
+=-\frac{it}{\hbar}QHP\big|_V+O(t^2),
+\qquad
+\operatorname{tr}(Q U(t)\rho U(t)^\dagger)
+=\frac{t^2}{\hbar^2}\operatorname{tr}\!\left(PH QH P\,\rho\right)+O(t^3).
+\tag{7.4}
+$$
+
+Here $QHP=2r|b\rangle\langle e_4|$, so (7.4) has leading coefficient
+$4r^2\langle e_4,\rho e_4\rangle/\hbar^2$, agreeing with the exact
+formula (7.3). This identifies $QHP$ as the initial coupling interface;
+it does not by itself imply irreversible decay.
+
+**Proposition 7.2 (The first excursion can return).** With the same $P,Q$
+and $K(t)$,
+
+$$
+P U(2t)P\big|_V
+=K(t)^2+P U(t)Q U(t)P\big|_V.
+\tag{7.5}
+$$
+
+For the fixed bosonic model,
+
+$$
+P U(t)Q U(t)P\big|_V
+=C(t)^2|e_4\rangle\langle e_4|
+=-\eta^2e^{-2i\chi(t)}\sin^2\!\tau(t)
+  |e_4\rangle\langle e_4|.
+\tag{7.6}
+$$
+
+Consequently the compression $K(t)^2$ is not, in general, the two-time
+evolution restricted to $V$. The missing term is precisely the amplitude
+that leaves through $b$ during the first interval and returns during the
+second one. At the uniform return times of Theorem 2.3 it vanishes because
+$C(t)=0$; away from those times it must be retained in any multi-step readout
+calculation.
+
+**Proof.** The group law gives
+$P U(2t)P=P U(t)(P+Q)U(t)P$, which is (7.5). Theorem 2.2 gives
+$Q U(t)P=C(t)|b\rangle\langle e_4|$ and, from the displayed action on $b$,
+$P U(t)Q=C(t)|e_4\rangle\langle b|$. Their product is (7.6). $\square$
+
+The operator quantities in (7.1)--(7.6) are distinct from the four-corner
+seam responses in the local-clock volume. A seam kernel becomes a leakage or
+decay observable only after an explicit map from the physical evolution and
+the accessible output instrument to that kernel has been supplied. The
+existing seam boundary therefore remains in force: nonzero seam response
+establishes sensitivity of the specified readout, while a lifetime or an
+irreversible decay law additionally requires a dynamical coupling, a return
+analysis, an output event and a time calibration.
+
+## 追加锚（本行以下为增补区）
+
+## 8. Frequency domain of the mode interpretation
+
+The oscillator coordinate in Section 7 is defined for a positive-frequency
+mode, $\omega>0$. In the displayed dispersion relation this means
+$c^2\kappa_a^2+\omega_0^2>0$. If that quantity is zero, the corresponding
+classical mode instead has $L=\dot q^2/2$, $p=\dot q$,
+$p(t)=p(0)$ and $q(t)=q(0)+tp(0)$; the formula containing
+$1/\sqrt\omega$ is undefined and supplies no circular oscillator phase.
+This frequency condition belongs to the free-field interpretation only.
+It does not change Assumption 1.2's fixed nonzero $g$, finite real $J$,
+positive $\hbar$, or any seven-state leakage, return or correction identity.
+
+## 追加锚（本行以下为增补区）

@@ -1,0 +1,90 @@
+**Theorem 6.1 (actual global response).** For every $E<E_*$ there is a
+unique inherited-wall maximal solution $U_E\in L^2(\mu)$ of
+$(\mathcal T-E)U_E=0$ with $\mathcal B(U_E)=-1$. It is strictly
+positive and has the all-angular expansion
+
+$$
+U_E/h=-\log R+\eta(E)+O(R^\gamma).
+\tag{6.1}
+$$
+
+The response $\eta:(-\infty,E_*)\to\mathbb R$ is real analytic,
+strictly increasing and onto. For any $E_0<E_*$,
+
+$$
+\begin{aligned}
+U_E&=U_{E_0}+(E-E_0)(F-E)^{-1}U_{E_0},\\
+\eta(E)&=\eta(E_0)+\frac{E-E_0}{K}
+ \{\|U_{E_0}\|_2^2+
+           (E-E_0)\langle(F-E)^{-1}U_{E_0},U_{E_0}\rangle\},\\
+\frac{\eta(E)-\eta(E')}{E-E'}
+ &=\frac{\langle U_E,U_{E'}\rangle}{K}>0,\qquad
+\eta'(E)=\|U_E\|_2^2/K.
+\end{aligned}
+\tag{6.2}
+$$
+
+For every real $\eta$, let $E_\eta<E_*$ be its unique response root,
+and put
+
+$$
+\eta(E_\eta)=\eta,\qquad
+a_\eta=\|U_{E_\eta}\|_2^{-1}
+                 =[K\eta'(E_\eta)]^{-1/2},\qquad
+f_\eta=a_\eta U_{E_\eta}.
+\tag{6.3}
+$$
+
+Then $(E_\eta,f_\eta)$ is the simple positive normalized ground pair
+of $F_\eta$, and $dE_\eta/d\eta=Ka_\eta^2$.
+
+Proof. Use the genuine native vector $\zeta$, not the bare expression
+$h\log R$, and define
+
+$$
+U_E=-\zeta+(F-E)^{-1}(S_{D,\max}-E)\zeta.
+\tag{6.4}
+$$
+
+Every term retains the original killed outer walls. The trace is
+$\mathcal B=-1$, the equation holds, and the difference of any two
+such solutions would be an $F$ eigenvector below $E_*$. This proves
+existence and uniqueness. The finite-energy expansion (1.6) gives
+(6.1) and positivity near the source. The negative part vanishes
+there and belongs to $\mathcal Q$. Testing its equation by this part,
+using $q_F-E>0$, proves nonnegativity everywhere. Local positivity
+on the connected punctured cylinder gives $U_E>0$.
+
+Apply (1.6) to $U_E,U_{E'}$, whose traces are $(\eta(E),-1)$ and
+$(\eta(E'),-1)$. It gives the third identity in (6.2), with the
+displayed positive sign. Resolvent subtraction gives its first
+identity, and substitution gives its second. Analyticity and the
+derivative follow.
+
+For each $\eta$, Proposition 5.2 supplies a compact semibounded form
+containing $\mathcal Q$ and agreeing with $q_F$ on it. Its minimum
+is at most $E_*$. If it equalled $E_*$, the normalized minimizer
+$f_*\in\mathcal Q$ would also be an operator ground of $F_\eta$,
+contradicting its traces $(a_*,0)$ and (5.3).
+Hence its minimum is strictly below $E_*$. Modulus decreases the
+weighted kinetic form; local positivity gives a positive minimizer.
+The exact transform by this positive ground shows simplicity.
+Its logarithmic trace is nonzero, or it would be an $F$ eigenvector
+below $E_*$. Positivity makes that coefficient negative. Normalize
+it to $-1$ and apply (6.4); its source condition yields
+$\eta(E_\eta)=\eta$.
+This proves surjectivity without a frozen exterior finite part or a
+large-negative-energy approximation. Strict monotonicity proves
+uniqueness, and normalization gives (6.3).
+
+As an orientation and normalization check, pairing $U_E$ with $f_*$
+in (1.6) gives
+
+$$
+(E-E_*)\langle U_E,f_*\rangle=-Ka_*.
+\tag{6.5}
+$$
+
+In particular the response is that of the entire killed native model,
+not a universal source-local energy constant. $\square$
+

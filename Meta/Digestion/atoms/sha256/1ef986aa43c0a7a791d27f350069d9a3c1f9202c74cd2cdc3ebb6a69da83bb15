@@ -1,0 +1,6 @@
+**命题 110.4（同一环境不能复制成新环境）。** 系统 $S$、环境 $E$ 都是量子位，初始 $\varrho\otimes|0\rangle\langle0|$，令 $W$ 为以 $S$ 控制、$E$ 目标的 CNOT。作用一次并忽略环境给 $\mathcal D_Z(\varrho)=(\varrho+Z\varrho Z)/2$。第二次作用于同一个环境却给原联合态；两次使用各自新准备环境则仍为 $\mathcal D_Z(\varrho)$。
+
+证明（110.4）。$W|j,0\rangle=|j,j\rangle$，所以联合态为 $\sum_{j,k}\varrho_{jk}|j,j\rangle\langle k,k|$，取环境迹消去 $j\ne k$。同一个 $W^2=I$，第二次把完整联合态送回初始，系统恢复 $\varrho$。若每次换新环境，两个约化信道复合为 $\mathcal D_Z^2=\mathcal D_Z$；对 $|+\rangle$ 初态，它与共同环境的第二步输出严格不同。$\square$
+
+第70及81章已说明局部相同不等于共同来源相同；这里给可复用环境的明确反例。Felix A. Pollock、César Rodríguez-Rosario、Thomas Frauenheim、Mauro Paternostro、Kavan Modi，[*Operational Markov condition for quantum processes*, arXiv:1801.09811v1](https://arxiv.org/abs/1801.09811v1)，以操作性的多时刻记忆和过程张量区分仅当前态的描述。本节块递归和 CNOT 例子由各自证明承担，未援引该文为原生 FIB 无限记忆界。
+

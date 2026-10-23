@@ -22,10 +22,48 @@ internal sealed class ZeroSumSubsetsDocument : IScribeDocumentDefinition
             Q(Imp(Call("mem", A, blocks), Call("Nonempty", A)), ("A", subsets)),
             Call("PairwiseDisjoint", blocks),
             Q(Imp(Call("mem", A, blocks), Eq(sum, Num(0))), ("A", subsets)));
+        Formula n = V("n"), m = V("m"), B = V("B"), v = V("v"), i = V("i");
+        Formula counts = new Formula.TypeArrow(labels, Nat());
+        Formula L(Formula x) => Call("L", x);
+        Formula E(Formula x) => Call("E", x);
+        Formula M(Formula x) => Call("M", x);
+        Formula T(Formula x) => Call("T", k, t, x);
+        Formula J(Formula x) => Call("J", k, t, x);
+        Formula Core(Formula a, Formula c) => And(
+            Call("Nonempty", a),
+            Q(Eq(Call("int", Call("apply", n, i)),
+                Sub(Add(Call("indicator", a, i), Mul(Num(2), Call("int", Call("apply", c, i)))),
+                    Call("int", Call("apply", c, Call("pred", k, i))))), ("i", labels)),
+            Eq(L(n), Add(Call("card", a), L(c))),
+            Eq(E(n), Add(M(a), Mul(N, Call("apply", c, Sub(k, Num(1)))))),
+            Eq(T(n), Add(Call("sourceSum", k, t, a), Mul(N, J(c)))),
+            Imp(Eq(T(n), Num(0)), Call("dvd", Call("div", N, g), M(a))),
+            Imp(Call("Coprime", t, N), Imp(Eq(T(n), Num(0)), And(
+                Eq(a, Call("univ", labels)), Eq(J(c), Num(0)),
+                Eq(L(n), Add(k, L(c))), Le(k, L(n)),
+                new Formula.Logic(Eq(L(n), k), FormulaLogicOperator.Iff,
+                    Q(Eq(Call("apply", n, i), Num(1)), ("i", labels)))))));
+        Formula carryStatement = Q(Imp(And(Lt(Num(0), k), Call("ne", n, Num(0))),
+            Ex("A", subsets, Ex("m", counts, And(Core(A, m),
+                Q(Imp(Core(B, v), And(Eq(B, A), Eq(v, m))), ("B", subsets), ("v", counts)))))),
+            ("k", Nat()), ("t", Nat()), ("n", counts));
         return DocumentDefinition.Create(ScribeNode.Create(
-            "Binary masks restrict how many exact integer-zero subsets and independent zero blocks an actual centered doubling source can have.",
-            H("Zero subsets of the physical circle source"),
+            "Cyclic natural carrying gives a unique physical binary endpoint and sharp unit-source relation length; binary masks also bound exact zero subsets and independent zero blocks.",
+            H("Cyclic carries and zero relations of the physical circle source"),
             Blocks(
+                Describe.Lean(DescribeId.Create("cyclic-binary-normal-form"),
+                    DeclarationHandle.Create(Prefix + "cyclic_binary_normal_form"),
+                    H("Natural cyclic carries and the sharp unit relation length"),
+                    StatementSource.FromAuthor(Disp(carryStatement)),
+                    AssessedProvenance.FromRepo(),
+                    Blocks(
+                        Paragraph(Text("Let k>0 and t be arbitrary natural numbers, N=2^k-1, and s(i)=actualSource(k,t,i) on the physical labels Fin(k). For any nonzero natural coefficient function n, there is exactly one pair consisting of a nonempty physical subset A and natural carries m. Write pred for the inverse of finRotate(k), L(x)=sum_i x(i), E(x)=sum_i x(i)2^i, and M(A)=sum_{i in A}2^i. In the coordinate equation the indicator is integer valued, every coefficient is cast to the integers before subtraction, and the last index k-1 denotes its physical Fin(k) label.")),
+                        Paragraph(Text("The pair satisfies n(i)=indicator_A(i)+2m(i)-m(pred(i)), L(n)=card(A)+L(m), and E(n)=M(A)+N m(k-1). The endpoint mask lies in [1,N]; the full mask N represents residue zero. To construct it, fire any coordinate containing at least two units, subtracting two there and adding one at its successor. The natural total decreases by exactly one and the vector remains nonzero. At k=1 these changes occur at the same coordinate and subtract one. Strong induction ends at a nonempty binary vector. Summing the coordinate identity gives the length formula; weighting by powers of two cancels every interior contribution and leaves only the last carry.")),
+                        Paragraph(Text("Two possible endpoints have congruent masks in [1,N], so their masks agree and binary-mask injectivity gives the same physical subset. For two carry vectors their integer difference d satisfies 2d(i)=d(pred(i)). Reindexing the sum of absolute values gives twice that sum equal to itself, hence d=0. This proves uniqueness of the counts, without asserting uniqueness of a firing order.")),
+                        Paragraph(Text("For the exact source put eps(i)=1 when N<4s(i), eps(i)=-1 when 4s(i)<-N, and eps(i)=0 otherwise. Define T(x)=sum_i x(i)s(i) and J(m)=sum_i m(i)eps(i), in the integers; their displayed arguments also show the fixed parameters k,t. The displayed sourceSum(k,t,A) means sum_{i in A}s(i). Centered doubling gives 2s(i)-s(next(i))=N eps(i). The unsigned potential u(i)=s(i)+(N if s(i)<0 else 0) satisfies u(next(i))-u(i)=s(i). Reindexing its cyclic sum gives sum_i s(i)=0, including k=1, zero sources, repeated values and short periods. Pairing the same coordinate equation with s proves T(n)=sum_{i in A}s(i)+N J(m). In particular carrying preserves modular charge but can change exact integer charge; the negative wrap has sign minus one.")),
+                        Paragraph(Text("If T(n)=0, then N divides t E(n). The weighted identity and gcd cancellation imply that N/gcd(t,N) divides M(A), for the very same pair. For a unit t modulo N, positivity and the upper bound M(A)<=N force M(A)=N and A=univ. The source total and the charge identity then give J(m)=0. Consequently L(n)=k+L(m), so L(n)>=k, and L(n)=k if and only if every physical n(i) equals one. No coordinatewise positivity was assumed. At k=1, N=1 and the result reads n(0)=1+m(0); at k=2 the unit source values are opposite.")),
+                        Paragraph(Text("For a nonunit source the divisibility condition and card(A)<=L(n) are necessary restrictions only. They do not make the endpoint integer-zero, assert a minimum-weight mask is attained by a relation, or realize any ordering in an interval. A closed-walk count vector may use the unit length bound only after an independent telescoping proof of its exact source charge zero. These arithmetic restrictions do not construct a capacity-(N-1)/2 permutation. Damasdi–Frankl–Pach–Palvolgyi, Monochromatic configurations on a circle, arXiv:2504.10687v2, Conjecture 3.1, DOI 10.5070/C6.68671, remains open in its full all-source scope. No literature novelty claim is made."))),
+                    DescribeRole.Theorem),
                 Describe.Lean(DescribeId.Create("source-zero-subset-count"),
                     DeclarationHandle.Create(Prefix + "zero_subsets_card_le"),
                     H("The source gcd bounds the entire zero fibre"),
@@ -67,6 +105,10 @@ internal sealed class ZeroSumSubsetsDocument : IScribeDocumentDefinition
         return body;
     }
     private static Formula Eq(Formula a, Formula b) => new Formula.Relation(a, FormulaRelationOperator.Equal, b);
+    private static Formula Ex(string name, Formula domain, Formula body) =>
+        new Formula.Bind(FormulaQuantifier.Exists, FormulaIdentifier.Create(name), domain, body);
+    private static Formula Lt(Formula a, Formula b) => new Formula.Relation(a, FormulaRelationOperator.LessThan, b);
+    private static Formula Mul(Formula a, Formula b) => new Formula.Binary(a, FormulaBinaryOperator.Multiply, b);
     private static Formula Le(Formula a, Formula b) => new Formula.Relation(a, FormulaRelationOperator.LessThanOrEqual, b);
     private static Formula Imp(Formula a, Formula b) => new Formula.Logic(a, FormulaLogicOperator.Implies, b);
     private static Formula And(params Formula[] values)

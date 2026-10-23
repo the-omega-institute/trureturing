@@ -1,0 +1,21 @@
+**Corollary 29.1 (Both alternatives are empty).** At $y_1$, neither
+alternative (a) nor alternative (b) of Theorem 19.3 holds. Consequently
+
+$$
+\neg\mathsf J_1,\qquad \neg\mathsf Q_1,
+\tag{29.1}
+$$
+
+with exactly the original quantifiers of (16.7)--(16.8).
+
+*Proof.* The singleton (28.1) contains no distinct equal-$a$ pair,
+excluding (a) and proving $\neg\mathsf J_1$. Separately, it contains
+no different companion at all, so there is no different strict
+regular world with $\operatorname{rank}D(p,v,a)<2$; this excludes
+(b). The second exclusion uses the entire-child inventory, not an
+implication from $J$ injectivity. Theorem 19.3 with both alternatives
+absent now gives $\neg\mathsf Q_1$. Its singular-parent supplier is
+the full all-drift immersion theorem [III], Theorem 13.1, as in its
+proof; no singular companion has been discarded by a regular-rank
+test. $\square$
+
