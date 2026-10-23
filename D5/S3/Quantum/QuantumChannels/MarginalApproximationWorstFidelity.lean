@@ -208,7 +208,23 @@ private lemma shift_expansion (N : ℕ) :
     (word_expansion (cyclicShift N)).symm
 
 private lemma shift_unitary (N : ℕ) : (cyclicShift N)ᴴ * cyclicShift N = 1 := by
-  sorry
+  classical
+  ext x y
+  have hrot : (x ∘ finRotate N = y ∘ finRotate N) ↔ x = y := by
+    constructor
+    · intro h
+      funext i
+      simpa only [Function.comp_apply, Equiv.apply_symm_apply] using
+        congrFun h ((finRotate N).symm i)
+    · rintro rfl; rfl
+  have hc (z : Fin N → Fin 2) :
+      star (if z = x ∘ finRotate N then (1 : ℂ) else 0) =
+        if z = x ∘ finRotate N then (1 : ℂ) else 0 := by
+    split_ifs <;> simp
+  simp only [Matrix.mul_apply, Matrix.conjTranspose_apply, cyclicShift,
+    hc, ite_mul, one_mul, zero_mul, Matrix.one_apply]
+  rw [Finset.sum_ite_eq' Finset.univ (x ∘ finRotate N)]
+  simp only [Finset.mem_univ, ite_true, hrot, Matrix.one_apply]
 
 private lemma shift_cptp (N : ℕ)
     (he : ∑ a, shiftCoeff N a • pauliString a = cyclicShift N)
