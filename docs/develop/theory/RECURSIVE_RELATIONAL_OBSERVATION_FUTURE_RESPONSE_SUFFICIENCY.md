@@ -3163,40 +3163,50 @@ sustained four-expression objective.
 ## 追加锚（本行以下为增补区）
 
 
-## 56. A literal-clock ten-read acquisition of the spatial bit
+## 56. A ten-clock acquisition of the spatial bit
 
 **Definition 56.1 (The complete promised domain and task).**
 For a complete world write
-\[
+
+$$
 P=P(r,b)=\begin{pmatrix}r&b\\r(1-r)/b&1-r\end{pmatrix},
 \qquad 0<r<1,\quad b>0,
-\]
+$$
+
 where $g\in\mathbb R[t]$ is one fixed nonzero polynomial of degree at most
 three and $d\in\mathbb R$ is one fixed drift.  Let
-\[
+
+$$
 J=\begin{pmatrix}0&1\\1&0\end{pmatrix},\qquad
 M=\begin{pmatrix}0&1\\1&1\end{pmatrix},\qquad
 Q_0=I,\quad Q_i=E_iQ_{i-1},
-\]
+$$
+
 with the literal original word
 $(E_1,\ldots,E_6)=(J,M,J,M,M,M)$.  The report at clock $i$ is
-\[
+
+$$
 y_i=d+g(i)\operatorname{tr}(Q_iP).
-\]
+$$
+
 Put
-\[
+
+$$
 c=r(1-r)/b,\quad j=b+c,\quad n=j+r,\quad
 T=1+b,\quad U=1+2b,\quad V=U+n.
-\]
+$$
+
 Let $C(p,v)$ be the set of complete worlds whose first five reports are
 $(0,24,147/5,24,18)$ and whose sixth and seventh reports are $p,v$,
 respectively, on this same chronological word.  Define
-\[
+
+$$
 \mathcal Z=\bigcup_{p\ne24,\ v\in\mathbb R}
 \{W=(P,g,d)\in C(p,v):g(7)=0\},
 \qquad
 \sigma(P)=\mathbf 1_{\{b>1/16\}}.
-\]
+$$
+
 Every quantifier below is over this entire union.  In particular, no common
 drift between two worlds, regular chart, exact degree, simple root, or
 nonzero sampled gain is assumed.
@@ -3208,19 +3218,23 @@ used with their full degenerate domain.
 
 **Lemma 56.2 (The ten literal products and the report rows).**
 For the prescribed first six atoms,
-\[
+
+$$
 Q_6=\begin{pmatrix}3&1\\5&2\end{pmatrix},
 \qquad
 Q_7=JQ_6=\begin{pmatrix}5&2\\3&1\end{pmatrix},
 \qquad
 Q_8=Q_6,\quad Q_9=Q_7,\quad Q_{10}=Q_6
-\]
+$$
+
 when four further atoms $J,J,J,J$ are appended.  Moreover
-\[
+
+$$
 \operatorname{tr}(Q_6P)=2U+n=:\tau>0,
 \quad
 \operatorname{tr}(Q_7P)=T+2j+4r,
-\]
+$$
+
 and the reports $y_6,y_7,y_8,y_9,y_{10}$ are the actual reports at
 clocks six through ten of one run.
 
@@ -3235,41 +3249,54 @@ nine. ∎
 
 **Lemma 56.3 (Zero-safe interpolation and the spatial identity).**
 For $W\in\mathcal Z$ set
-\[
+
+$$
 z_6=y_6-d,\qquad z_8=d-y_8,\qquad
 z_{10}=(d-y_{10})/3,
-\]
+$$
+
 and define the quadratic
-\[
+
+$$
 H(t)=z_6\frac{(t-8)(t-10)}8
 -z_8\frac{(t-6)(t-10)}4
 +z_{10}\frac{(t-6)(t-8)}8.
-\]
+$$
+
 Then $H=\tau h$ for $g(t)=(7-t)h(t)$, $\deg h\le2$, and
-\[
+
+$$
 \begin{aligned}
 L&=H(0)=10z_6-15z_8+6z_{10},\\
 A&=5H(2)=30z_6-40z_8+15z_{10},\\
 B&=3H(4)=9z_6-9z_8+3z_{10}
 \end{aligned}
-\]
+$$
+
 satisfy
-\[
+
+$$
 -7L=\tau d,\qquad A=\tau g(2),\qquad B=\tau g(4).
-\]
+$$
+
 Define
-\[
+
+$$
 D_c=d(A^2+4B^2),
-\]
-\[
+$$
+
+$$
 N_c=-7L\left[A\left(147/5-d\right)+2B(18-d)\right]
 -d(A^2+2B^2).
-\]
+$$
+
 Then
-\[
-N_c=bD_c,qquad
+
+$$
+N_c=bD_c,\qquad
 (16N_c-D_c)D_c=(16b-1)D_c^2,
-\]
+$$
+
 and $D_c\ne0$ on $\mathcal Z$.
 
 **Proof.**
@@ -3282,29 +3309,37 @@ stated linear forms.  The clock-zero row gives $-7L=\tau d$; the factors
 $5$ and $3$ in $A,B$ match $g(2)=5h(2)$ and $g(4)=3h(4)$.
 
 The even original rows give
-\[
+
+$$
 \tau(147/5-d)=AT,\qquad \tau(18-d)=BU.
-\]
+$$
+
 Substitute these and $-7L=\tau d$ into $N_c$:
-\[
+
+$$
 N_c=d\{A^2(T-1)+2B^2(U-1)\}=bd(A^2+4B^2)=bD_c.
-\]
+$$
+
 It remains to justify the denominator guard.  The zero-drift
 classification, Theorem 4.1 of
 [FIB_ZERO_TERMINAL_GAIN_FIXED_DRIFT_QUARTIC_CLASSIFICATION.md], gives,
 with $u=1+2b$,
-\[
+
+$$
 j=\frac{400u(u+1)}{3(269u-25)},\quad
 n=\frac{200u(u+1)}{3(123u+25)},\quad
 r=\frac{200u(u+1)(23u-75)}
  {3(123u+25)(269u-25)}.
-\]
+$$
+
 If $d=0$, positivity gives $u>75/23$; the last expression and $r<1$
 give $u<27$.  Then
-\[
+
+$$
 c=\frac{-7u^2+1682u-75}{6(269u-25)}>245/269,
 \qquad b=(u-1)/2>26/23,
-\]
+$$
+
 so $bc>6370/6187>1$, contrary to $bc=r(1-r)\le1/4$.
 Thus $d\ne0$.  If $d=24$, Common Parent Theorem 2.2 forces
 $b=1/8$ and $g(t)=(8/5)(t-1)(t-3)(t-5)$, whose value at seven is
@@ -3316,23 +3351,28 @@ $g(6),g(8),g(10)$ was divided out. ∎
 **Theorem 56.4 (Actual-image full-world recovery and task comparator).**
 For every $W\in\mathcal Z$, the actual reports through clock ten determine
 the same complete $P,g,d$ by
-\[
+
+$$
 d=y_7,\qquad
 \tau=-7L/d,\qquad
 g(t)=(7-t)H(t)/\tau,
-\]
-\[
+$$
+
+$$
 b=N_c/D_c,\qquad
 r=(24-d)\left(\frac1{g(3)}-\frac1{g(1)}\right),
 \qquad
 P_{21}=r(1-r)/b.
-\]
+$$
+
 The reconstructed values are the actual world values.  In particular the
 Boolean
-\[
+
+$$
 \widehat\sigma=
 \mathbf1_{\{(16N_c-D_c)D_c>0\}}
-\]
+$$
+
 equals $\sigma(P)$.
 
 **Proof.**
@@ -3340,9 +3380,11 @@ Since $g(7)=0$, the actual clock-seven report is $y_7=d$.
 Lemma 56.3 gives $d\ne0$, so $\tau$ is recovered from $L$ and is the
 positive actual trace.  The interpolation identity then recovers the
 whole polynomial.  The original odd rows are
-\[
+
+$$
 24=d+g(1)j=d+g(3)n.
-\]
+$$
+
 Lemma 56.3 gives $d\ne24$, hence $g(1)$ and $g(3)$ are nonzero and
 $n-j=r$ gives the displayed formula for $r$.  The identity
 $N_c=bD_c$ recovers $b$ and then the remaining matrix entry.  Thus all
@@ -3358,67 +3400,83 @@ $\mathcal Z$ with $\sigma(P)=1$.
 
 **Proof.**
 For the low bit, let $u\in[1,10/9]$, set
-\[
+
+$$
 d=147/5,\quad b=(u-1)/2,\quad
 j=36u/(63u-19),\quad n=18u/(19-7u),\quad r=n-j.
-\]
+$$
+
 Interpolate $h$ at $0,2,4$ with values
 $(-21/5,0,-19/(5u))$ and put $g(t)=(7-t)h(t)$.
 The denominators are positive on the interval.  Direct evaluation gives
-\[
+
+$$
 g(1)=-\frac{3(63u-19)}{20u},\qquad
 g(3)=-\frac{3(19-7u)}{10u},
-\]
+$$
+
 so $g(1)j=g(3)n=-27/5$, while the even rows follow from
 $g(2)=0$ and $g(4)=-57/(5u)$; the zero row follows from
 $g(0)=-147/5$.  Thus the five prescribed rows hold.
 The function $r$ increases from $15/22$ to $5140/5151$, so it lies in
 $(0,1)$ throughout.  The continuous function
-\[
+
+$$
 R(u)=r(1-r)-b(j-b)
-\]
+$$
+
 has $R(1)=105/484>0$ and
 $R(10/9)=56540/26532801-223/5508<0$.
 An interior zero gives $b>0$, $c=j-b=r(1-r)/b>0$, and a legal source
 matrix.  At that zero,
-\[
+
+$$
 p+141/10=-\frac{63(u-1)(95-7u)}{20(19-7u)}<0,
-\]
+$$
+
 so $p\ne24$; its actual $v$ is real and $g\ne0$.  Since
 $0<b<1/18<1/16$, this world is the required $W_-.$
 
 For the high bit use the exact M-pair circuit of
 [FIB_STRICT_REAL_UNEQUAL_DIAGONAL_ACTUAL_M_PAIR.md, Section 2] on the
 line $r=1/2$.  Put
-\[
+
+$$
 \mathcal J=b^2+1/4,\quad \mathcal N=\mathcal J+b/2,\quad
 S=40b^2+11b-2,
-\]
+$$
+
 and retain its denominator $\widehat D$ and seventh-gain numerator
 $\widehat B_7$.  Direct substitution in that published circuit gives
-\[
+
+$$
 \widehat B_7=3f(b)/4,\qquad
 f(b)=96+322b-1053b^2-860b^3-4724b^4-544b^5.
-\]
+$$
+
 The exact endpoint values are
 $f(13/40)=41825785/8000000>0$ and
 $f(1/3)=-1477/243<0$, so an interior root $b_*$ exists.  On this
 interval $j=b+1/(4b)$ and $n=j+1/2$ have negative derivatives, and
-\[
+
+$$
 \Lambda'= -6/T^2-2/U^2+4j'/j^2+4n'/n^2<0,
 \quad
 \Lambda(13/40)
 =1+240/53+20/33-2080/569-2080/829<-28/1000.
-\]
+$$
+
 Since $\Lambda=2\widehat D/(5TU\mathcal J\mathcal N)$, the root has
 $\widehat D\ne0$, and the same circuit supplies a legal nonzero
 degree-at-most-three gain with $g(7)=0$.  Here $b_*>13/40>1/16$.
 The parent identity and $\Lambda<0$ give $\epsilon=d-24>0$.
 Writing $K=2+5b$ and $V=U+n$, the exact clock-five identity is
-\[
+
+$$
 p-24=\epsilon\left(1+V\frac EK\right),\qquad
 E=5(b+2)/j+10(3b+2)/n-32.
-\]
+$$
+
 The term $-32$ includes the $-10U(1/U)$ contribution; replacing it by
 $-22$ changes the identity and is not accepted.  On the interval,
 $E\le-564/247$, $E/K\le-1692/2717$, and $V\ge97/30$, hence the
@@ -3429,7 +3487,7 @@ $g\ne0$. ∎
 **Hypothesis 56.6 (Installed receiver and exact transition contract).**
 One unknown specimen is prepared in one world $W\in\mathcal Z$ at its
 original clock zero.  The receiver is installed before initialization
-with the ordered basis, named source endpoint \(\epsilon\), public constants and exact-real capture,
+with the ordered basis, named source endpoint $\epsilon$, public constants and exact-real capture,
 arithmetic, strict comparison, Boolean-latch write, and clearing
 primitives.  It has ten source-invocation rights and one immediate read
 at each invocation, plus the initialization read.  These are supplied
@@ -3501,12 +3559,14 @@ after clock ten, proving the final state. ∎
 **Theorem 56.8 (Source-free continuation and the exact recovery directions).**
 At acquired idle cuts with common public metadata and local rights, the
 projection
-\[
+
+$$
 \pi(S)=(\mathrm{endpoint},\mathrm{Acquired},10,\eta,
           \mathrm{public\ local\ rights})
-\]
-factors every supported local response and successor.  Equal projected
-states have identical finite supported source-free behavior, and unequal
+$$
+
+factors every supported local response and projected joint successor.
+Equal projected states have identical finite supported source-free behavior, and unequal
 bits are separated by one authorized Recall.  The source route before
 acquisition is the literal chronological route above; after acquisition,
 local requests do not advance it.
@@ -3549,9 +3609,14 @@ M-pair Section 2 circuit and its Sections 19--30 are suppliers for the
 parent identities, guards, and witness construction. Self-Calibrating I
 Theorem 4.1 supplies the four-read relation algebra; Self-Calibrating II
 Theorem 60.1 and V--VIII supply root/return calibration services under
-different histories, clocks, and promises, while Literal Clock and
-Polynomial Gain Shear supply longer literal-clock services. None directly
-instantiates this JMJMMMJJJJ run. Berrut--Trefethen supplies fixed-node
+different histories, clocks, and promises. Literal Clock, Definitions
+1.1--1.2 and Proposition 5.2, supplies a longer literal atomic-clock
+service: every atom advances the clock and is immediately read.
+Polynomial Gain Shear, Definitions 1.1 and 3.1 and Section 9, supplies a
+distinct recorded-read/composite-word service: each recorded read advances
+its index, including empty-word repeats, while unread atoms do not. None
+of these services directly instantiates this JMJMMMJJJJ run.
+Berrut--Trefethen supplies fixed-node
 interpolation; the cited observability literature supplies context only.
 FRS53--55 and the retained row-depth, fixed-offset, and Process Geometry
 suppliers supply the generic retention, legality, and successor distinctions.
