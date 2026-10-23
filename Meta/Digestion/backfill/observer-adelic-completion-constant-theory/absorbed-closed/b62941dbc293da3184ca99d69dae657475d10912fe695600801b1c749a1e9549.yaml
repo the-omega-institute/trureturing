@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:b62941dbc293da3184ca99d69dae657475d10912fe695600801b1c749a1e9549
+  normalized_sha256: sha256:b62941dbc293da3184ca99d69dae657475d10912fe695600801b1c749a1e9549
+cas_ref: sha256:b62941dbc293da3184ca99d69dae657475d10912fe695600801b1c749a1e9549
+coverage_gids:
+  - gid: D5/S3/Fourier/ConvolutionPowerAmplification.doubleCenteredPowerPacket_eq_shifted_convolutionSuccPower
+    target_statement_id: sha256:8e457d0327fb04d1ff54f855d3c37e011c954dcab8b5d5a5d7c099e6bb494fb8
+  - gid: D5/S3/Fourier/ConvolutionPowerAmplification.fourierLaplace_doubleCenteredInverse
+    target_statement_id: sha256:14655949f0a9c130cd1e6a11c113ca4d9e8a9d21b12799725b4c926afbb9ef33
+receipts:
+  unresolved_subitems: []

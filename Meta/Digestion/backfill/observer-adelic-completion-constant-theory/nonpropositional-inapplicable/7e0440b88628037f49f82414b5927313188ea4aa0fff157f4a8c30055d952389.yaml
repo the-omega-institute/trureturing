@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:7e0440b88628037f49f82414b5927313188ea4aa0fff157f4a8c30055d952389
+  normalized_sha256: sha256:7e0440b88628037f49f82414b5927313188ea4aa0fff157f4a8c30055d952389
+cas_ref: sha256:7e0440b88628037f49f82414b5927313188ea4aa0fff157f4a8c30055d952389
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 'nonpropositional: Bibliographic identification of standard polynomial normalization and recurrence topics; no particular identity is stated.'
+    previous_atom_id: 8edba3ce3f7afaa5a91dde627c56e4ef368421aff4147760f634d01528dd33bd
+    next_atom_id: 78046ece6c8f29cd731d844bfe1cf2ccdb0e51a25c87a60a11945611edb7fb79

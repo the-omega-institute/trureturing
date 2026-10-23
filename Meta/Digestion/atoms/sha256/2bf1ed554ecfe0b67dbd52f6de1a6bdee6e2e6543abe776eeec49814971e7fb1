@@ -1,0 +1,162 @@
+**Theorem 12.2 (complete original records and pair information).** Under
+Definition 12.1, let $P_\theta$ be the law of the entire retained classical
+record. With $\operatorname{TV}(P,Q)=\tfrac12\sum_w|P(w)-Q(w)|$ on a
+finite record alphabet, and $\operatorname{TV}(P,Q)=
+\sup_B|P(B)-Q(B)|$ over measurable events for general record measures,
+one has
+
+$$
+\operatorname{TV}(P_0,P_{2/k})
+\le\frac12\sqrt{(1+1600/r^2)^m-1}.
+\tag{12.3}
+$$
+
+Every common randomized postprocessing obeys the same bound. In
+particular the bound concerns the complete flagged word, rather than
+only frequencies or successful pairs.
+
+Proof. First express each original pair attempt as a complete real
+POVM on its two unfiltered inputs. At depth $j$, the possible local
+prefix operators are $F^j$ for all successes and $LF^\ell$ for a first
+failure after $\ell$ successes, $0\le\ell<j$. At depth zero the only
+operator is $I$. Their adjoint-square sum is $I$, by successive
+completeness of (9.1). For a directional chain the two operators are
+$D_v,L_v$ of (8.1), with the same completeness property. Denote a local
+prefix operator by $B_\alpha$ and its all-success prefix by $s$.
+For configuration $c$ using detector $f$, its record effects are
+
+$$
+\begin{aligned}
+Q_{c,(s,s,o)}
+ &= (B_s\otimes B_s)^T E_f^o(B_s\otimes B_s),
+ &&o\in\{+,-\},\\
+Q_{c,(\alpha,\beta,0)}
+ &=B_\alpha^TB_\alpha\otimes B_\beta^TB_\beta,
+ &&(\alpha,\beta)\ne(s,s).
+\end{aligned}
+\tag{12.4}
+$$
+
+The last label is padding, not a detector outcome. All these effects
+are positive and real symmetric. Summing the first line over $o$ gives
+the same product effect as for any other prefix pair; summing over
+prefixes gives $I_{25}$. Thus (12.4) retains both actual chains and
+every failure, including impossible words with zero effect. It is the
+POVM of the actual protocol, with no conditional division or free
+replacement of failed specimens.
+
+Put $S_0=I_5/5$ and introduce, only for the probability calculation,
+
+$$
+\begin{aligned}
+\sigma_\theta
+ &=\tfrac12\bigl(\rho_\theta^{\otimes2}
+                    +\rho_{-\theta}^{\otimes2}\bigr)\\
+ &=I_{25}/25+\theta^2Y\otimes Y.
+\end{aligned}
+\tag{12.5}
+$$
+
+Here $\rho_{-\theta}=\overline{\rho_\theta}$ is also lawful. Indeed $Y$
+has eigenvalues $y=(1,-1,0,0,0)$, so the eigenvalues of $\rho_\theta$
+are $1/5+\theta,1/5-\theta,1/5,1/5,1/5$, all strictly positive for
+$|\theta|\le1/10$. For every real symmetric $Q$, the term
+$\theta(Y\otimes I+I\otimes Y)/5$ in the tensor-square expansion has
+zero trace pairing with $Q$: it is imaginary and has skew transpose.
+Consequently
+
+$$
+\Pr_\theta(w\mid c)
+=\operatorname{tr}(Q_{c,w}\rho_\theta^{\otimes2})
+=\operatorname{tr}(Q_{c,w}\sigma_\theta).
+\tag{12.6}
+$$
+
+This applies to the full effects (12.4), not just the terminal detector.
+Each single-copy real effect likewise has probability
+$\operatorname{tr}(PS_0)$ independent of $\theta$.
+
+For an explicit classical representation of (12.6), choose once an
+orthonormal eigenbasis $u_a$ of $Y$, independent of $\theta$, and define
+on its twenty-five ordered pair labels
+
+$$
+q_\theta(a,b)=1/25+\theta^2y_ay_b,\qquad
+K_c(w\mid a,b)
+=\langle u_a\otimes u_b,Q_{c,w}(u_a\otimes u_b)\rangle.
+\tag{12.7}
+$$
+
+The $q_\theta$ are the eigenvalue laws of $\sigma_\theta$. Each $K_c$
+is a probability kernel independent of $\theta$, by positivity and
+completeness of (12.4), and $q_\theta K_c$ is exactly the actual
+configuration law. These spectral labels and kernels are a mathematical
+simulation; the observer is not given the labels, a measurement of $Y$
+or a new preparation procedure.
+
+The reused symmetric-mixture calculation has the following exact
+parameter correspondence. Each spectral factor is in the two nonzero
+$Y$ directions with probability $2/5$, independent of the signed
+parameter. Conditional on both factors being there, their symmetrized
+sign law is the symmetric binomial supplier with $B=2$, $z=5\theta$
+and $|z|\le1/2$; its ordered likelihood is $1+z^2s_1s_2$. Its positive-sign count has
+exactly the law $p_z(2,\cdot)$ of
+[SymmetricBinomialChiSquare](../../../D5/S3/Estimation/ErrorExponents/SymmetricBinomialChiSquare.lean),
+with [owning Scribe](../../../Blueprint/D5/S3/Estimation/ErrorExponents/SymmetricBinomialChiSquare.scribe.cs).
+The likelihood is constant on each count fiber, so passing to the count
+preserves its second moment. The supplier's defect is $z^4$ when $B=2$.
+All other spectral masks have unchanged law. Their contribution is zero,
+whereas the both-active mask has weight $4/25$. Thus the pair defect is
+$(4/25)(5\theta)^4=100\theta^4$. Directly, with
+$\chi^2(q\Vert q_0)=\sum(q-q_0)^2/q_0$, the same correspondence reads
+
+$$
+\chi^2(q_\theta\Vert q_0)
+=25\theta^4\sum_{a,b}y_a^2y_b^2
+=100\theta^4,
+\qquad \sum_a y_a^2=2.
+\tag{12.8}
+$$
+
+By the iid service and terminal discard, the joint law of the $m$ pair
+records is the product of the $m$ respective $q_\theta K_c$ laws.
+The single-copy records have a common independent law. Consequently the
+entire record, including its common metadata rules, is a common
+postprocessing of $q_\theta^{\otimes m}$ with source-independent
+randomness. Conditional on the auxiliary spectral labels, the kernels
+in (12.7) do not change under the two hypotheses.
+
+For completeness, the standard second-moment and testing suppliers
+apply here as follows. The product likelihood $\Lambda$ has mean one
+under $q_0^{\otimes m}$ and
+
+$$
+\mathbb E_0\Lambda^2=(1+100\theta^4)^m.
+\tag{12.9}
+$$
+
+This is the product second-moment rule used in AURIC–Langlands
+Theorem 3.5. For any common output kernel $K$, summing absolute
+differences and using $\sum_wK(w\mid x)=1$ gives
+$\operatorname{TV}(qK,q_0K)\le\operatorname{TV}(q,q_0)$.
+The same proof uses integration for random metadata. Cauchy–Schwarz
+under the strictly positive $q_0^{\otimes m}$ gives
+
+$$
+\operatorname{TV}(q_\theta^{\otimes m},q_0^{\otimes m})
+=\tfrac12\mathbb E_0|\Lambda-1|
+\le\tfrac12\sqrt{\mathbb E_0\Lambda^2-1}.
+\tag{12.10}
+$$
+
+Insert $\theta=2/k$, so $100\theta^4=1600/r^2$, to obtain (12.3).
+Appending any common randomized predictor is another such kernel.
+
+The independent pair symmetrizations in this proof replace only the
+laws of already terminal real experiments. They do not replace the
+actual stationary source by a service that refreshes a hidden sign on
+each call. No independently chosen signs are assigned to the future
+copies. Without terminal discard the inter-attempt quantum carrier
+would have to be included, and the present product-record reduction
+would not establish (12.3). $\square$
+

@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:a7c4c28ff8d9343c250138a440c22c7c50ca2e77080025a5dc2596366e37abbe
+  normalized_sha256: sha256:a7c4c28ff8d9343c250138a440c22c7c50ca2e77080025a5dc2596366e37abbe
+cas_ref: sha256:a7c4c28ff8d9343c250138a440c22c7c50ca2e77080025a5dc2596366e37abbe
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 'nonpropositional: 所需验证材料 convergence certificates 的名称，没有收敛断言。'
+    previous_atom_id: 9dfea970e94a35526f96dd2c56f6ea9c923d35c9f9ef177cc96cfaaecf55f12d
+    next_atom_id: adf380704aa768b9b3283b712938d8479c6ef11298244cecade5ddfdcf15de76

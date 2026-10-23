@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:b653ced4fdb61a5cdd6b8a4dab9ef2d0f5fe1fa55870d97e3f747ae08c21d61d
+  normalized_sha256: sha256:b653ced4fdb61a5cdd6b8a4dab9ef2d0f5fe1fa55870d97e3f747ae08c21d61d
+cas_ref: sha256:b653ced4fdb61a5cdd6b8a4dab9ef2d0f5fe1fa55870d97e3f747ae08c21d61d
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 上游绑定结算（不是非命题判定）。钉版 Mathlib 56a005855ea17e0b0958f73ec801ae140b0a1679；搜索范围：D5/**/*.lean（含 private）：sinh/cosh 的奇偶投影、integral_neg_eq_self、Dirac 积分和总质量形状；核对 ResolventParitySignatures、CayleyMomentTransport、CayleyLaguerreMomentTomography、FullCirclePrimalAttainment、CirclePrimalEquivalence、ExternalSupportInvisibility、LiCurvatureCriterion。未找到供应本条实际子目标的冻结定理；定义或相邻条件定理不冒充供应。 按 506.1 的分段定义 Gamma(1)=0。MeasureTheory.integral_smul_measure 与 MeasureTheory.integral_dirac 给出任意 c>=0 的 integral Gamma d(c delta_1)=0；MeasureTheory.Measure.smul_apply、MeasureTheory.Measure.dirac_apply_of_mem 给出该原子的圆周总质量为 c，因此局部 moments 不见该质量而紧化预算计入 c。
+    previous_atom_id: 589f2c525453f3682f9e1cc4d910afa406fcca30c75e1f473be527b1a1c04c6a
+    next_atom_id: 856fa91952b5fbe9eb4f3c4dde91053861b07e3b038da7b381b50a2320296f80

@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:49d2f9379356a085a7624c71659f9c7d1218372d0e4864d8f1d485f9f679c018
+  normalized_sha256: sha256:49d2f9379356a085a7624c71659f9c7d1218372d0e4864d8f1d485f9f679c018
+cas_ref: sha256:49d2f9379356a085a7624c71659f9c7d1218372d0e4864d8f1d485f9f679c018
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 仅把 forced golden residual 标为待算术实现的诊断模型，不声称已实现。
+    previous_atom_id: 0af5e1b07db7250d22a76e2cdfc5e5273e3945bad43d689a5863c098f377d316
+    next_atom_id: 4ef04d97fa20417aede9eeaa8b723ac4b754fb2b98e159c5170c15425b7ee37b

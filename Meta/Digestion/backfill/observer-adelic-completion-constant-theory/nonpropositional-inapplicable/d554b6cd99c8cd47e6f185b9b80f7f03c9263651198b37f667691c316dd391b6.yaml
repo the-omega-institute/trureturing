@@ -1,0 +1,16 @@
+fingerprints:
+  raw_sha256: sha256:d554b6cd99c8cd47e6f185b9b80f7f03c9263651198b37f667691c316dd391b6
+  normalized_sha256: sha256:d554b6cd99c8cd47e6f185b9b80f7f03c9263651198b37f667691c316dd391b6
+cas_ref: sha256:d554b6cd99c8cd47e6f185b9b80f7f03c9263651198b37f667691c316dd391b6
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: Toeplitz certificate 求解器的检查与输出字段列表，没有证书成立或存在的断言。
+    previous_atom_id: d8fc7bcdb036457be9f59aef0a01ca3061f2cf8f30be58d8c94e6441178c1ddd
+    next_atom_id: b64b438a158a61c849f34305403c6a77330adc08ae807e50f24e99f5267ef57c
+  chain_atoms:
+    - 13ce8d085feec1679aae49af9bf5ddba935775348f431ca8600feae57b17c7df
+    - 7032f401588b156919a56ceb986b4f4c40c0706db3632185e10150acefc0ba26
+    - 12e8bebcb7a9c4fac9379eec79f5896d5dd0af6ce0acb817e42ab6ce18899c20
+    - 43c84b3515b862412bab84613e76d5055e59fe049354ae416760c97076d1c2ca

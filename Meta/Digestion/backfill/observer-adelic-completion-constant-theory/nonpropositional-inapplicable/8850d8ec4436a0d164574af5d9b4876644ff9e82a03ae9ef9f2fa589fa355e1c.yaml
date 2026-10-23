@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:8850d8ec4436a0d164574af5d9b4876644ff9e82a03ae9ef9f2fa589fa355e1c
+  normalized_sha256: sha256:8850d8ec4436a0d164574af5d9b4876644ff9e82a03ae9ef9f2fa589fa355e1c
+cas_ref: sha256:8850d8ec4436a0d164574af5d9b4876644ff9e82a03ae9ef9f2fa589fa355e1c
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 审计表仅将 probe completion 归类为干预完成的新结构，没有断言存在性、等式或性质。
+    previous_atom_id: 000c6138a48a4128ab33d6ae2fa6dd78063a880249adb95055d5fc12f48cb306
+    next_atom_id: 244fd53c6a98d179b68d6266b1476a4439a1cf36dc3be3f040bf39851de97668

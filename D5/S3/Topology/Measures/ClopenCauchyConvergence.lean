@@ -33,7 +33,7 @@ private noncomputable def locallyConstantSimpleFunc
     (fun x => (f.isLocallyConstant.isClopen_fiber x).isClosed.measurableSet)
     f.range_finite
 
-private lemma signedFunctional_charFn (r : SignedMeasure K) {A : Set K}
+lemma signedFunctional_charFn (r : SignedMeasure K) {A : Set K}
     (hA : IsClopen A) :
     NormPreservingLifts.signedFunctional r
         (LocallyConstant.charFn ℝ hA).toContinuousMap = r A := by
