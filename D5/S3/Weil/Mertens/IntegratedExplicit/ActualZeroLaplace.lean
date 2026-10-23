@@ -7,8 +7,8 @@
    digest: Absolutely convergent Laplace transform over all actual analytic zero occurrences. -/
 /- Complete actual-occurrence Laplace source candidate; final admission pending.
    Complete actual zero occurrence family; no abstract mass or symmetry premise.
-   Reuses the same normalized xi-resolvent calculation already consumed inside
-   ActualReciprocalSquareBounds.actual_pairWeight_hasSum, then transports every
+   Reuses ActualReciprocalSquareBounds.actual_complex_pairWeight_hasSum,
+   also consumed by the original real-mass theorem, then transports every
    analytic multiplicity to the existing actualZero natural presentation.
    Native evidence is recorded separately. No RH claim is made. -/
 
@@ -41,9 +41,9 @@ open scoped BigOperators ComplexConjugate Topology
 
 namespace D5.S3.Weil.Mertens.IntegratedExplicit
 
-/-- Exact mass, conjugation, convergence, bound and absolute weighted exchange,
-rederived from the actual normalized xi resolvent. The proof below is the
-sealed source4564 argument with native elaboration repairs, not an analytic premise. -/
+/-- Exact mass, conjugation, convergence, bound and absolute weighted exchange.
+The original owner supplies the complex mass; the occurrence transports and
+absolute exchange below introduce no analytic premise. -/
 theorem actual_complete_H_package :
     let a : ℕ → ℂ := fun k => 1 / (actualZero k * (1 - actualZero k))
     HasSum a (firstLiMass : ℂ) ∧
@@ -64,38 +64,7 @@ theorem actual_complete_H_package :
   classical
   dsimp only
   let a : ℕ → ℂ := fun k => 1 / (actualZero k * (1 - actualZero k))
-  have hx1 : xiReading 1 ≠ 0 := by
-    rw [xi_reading_endpoint_values.2]
-    norm_num
-  have hres := xi_reading_normalized_resolvent_hasSum actualData 1 hx1
-  have href : logDeriv xiReading 0 = -logDeriv xiReading 1 := by
-    simpa only [sub_self] using xi_logDeriv_reflection (1 : ℂ)
-  have hend : logDeriv xiReading 1 =
-      ((1 + Real.eulerMascheroniConstant / 2 -
-        Real.log (2 * Real.sqrt Real.pi) : ℝ) : ℂ) := by
-    change deriv xiReading 1 / xiReading 1 = _
-    exact first_li_coefficient_normalization.1
-  have hweighted : HasSum
-      (fun n : ℕ => (actualData.multiplicity n : ℂ) *
-        (1 / (actualData.zero n * (1 - actualData.zero n))))
-      (firstLiMass : ℂ) := by
-    convert hres using 1
-    · funext n
-      have hs := (actualData.zero_isNontrivial n).2
-      have h0 : actualData.zero n ≠ 0 := by
-        intro he
-        have := hs.1
-        simpa only [he, Complex.zero_re, lt_self_iff_false] using this
-      have h1 : actualData.zero n ≠ 1 := by
-        intro he
-        have := hs.2
-        simpa only [he, Complex.one_re, lt_self_iff_false] using this
-      field_simp [h0, sub_ne_zero.mpr h1.symm]
-      <;> ring
-    · rw [href, hend]
-      unfold firstLiMass
-      push_cast
-      ring
+  have hweighted := actual_complex_pairWeight_hasSum
   have hnorm : Summable (fun n : ℕ => (actualData.multiplicity n : ℝ) *
       ‖1 / (actualData.zero n * (1 - actualData.zero n))‖) := by
     simpa [norm_mul] using hweighted.summable.norm
@@ -259,9 +228,6 @@ theorem actualH_summable (y : ℝ) :
     Summable (fun k : ℕ => actualCoeff k * Complex.exp ((y : ℂ) * actualZero k)) :=
   actual_complete_H_package.2.choose_spec.2.1 y |>.1
 
-theorem actualH_im (y : ℝ) : (actualH y).im = 0 :=
-  actual_complete_H_package.2.choose_spec.2.1 y |>.2.1
-
 theorem actualH_bound (y : ℝ) :
     ‖actualH y‖ ≤ ((101 / 100 : ℝ) * firstLiMass) * Real.exp (max y 0) :=
   actual_complete_H_package.2.choose_spec.2.1 y |>.2.2
@@ -333,25 +299,15 @@ theorem xiReading_ne_zero_right {s : ℂ} (hs : 1 < s.re) : xiReading s ≠ 0 :=
       (Complex.Gammaℝ_ne_zero_of_re_pos (by linarith))
       (riemannZeta_ne_zero_of_one_lt_re hs))
 
-theorem xi_logDeriv_zero : logDeriv xiReading 0 = -(firstLiMass : ℂ) / 2 := by
-  have hr : logDeriv xiReading 0 = -logDeriv xiReading 1 := by
-    simpa only [sub_self] using xi_logDeriv_reflection (1 : ℂ)
-  have hend : logDeriv xiReading 1 =
-      ((1 + Real.eulerMascheroniConstant / 2 -
-        Real.log (2 * Real.sqrt Real.pi) : ℝ) : ℂ) :=
-    first_li_coefficient_normalization.1
-  rw [hr, hend]
-  unfold firstLiMass
-  push_cast
-  ring
-
 /-- The normalized, convergent resolvent is never split into reciprocal-zero sums. -/
 theorem actual_normalized_resolvent {s : ℂ} (hs : 1 < s.re) :
     HasSum (fun k : ℕ => 1 / (s - actualZero k) + 1 / actualZero k)
       (logDeriv xiReading s + (firstLiMass : ℂ) / 2) := by
   have h := occurrence_hasSum (f := fun z : ℂ => 1 / (s - z) + 1 / z)
     (xi_reading_normalized_resolvent_hasSum actualData s (xiReading_ne_zero_right hs))
-  simpa only [xi_logDeriv_zero, neg_div, sub_neg_eq_add] using h
+  rw [zero_endpoint_logDeriv] at h
+  push_cast at h
+  simpa only [neg_div, sub_neg_eq_add] using h
 
 /-- Exact bridge from the actual normalized resolvent to the integrated coefficients. -/
 theorem actual_resolvent_hasSum {s : ℂ} (hs : 1 < s.re) :
