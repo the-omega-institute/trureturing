@@ -5,3 +5,7 @@ cas_ref: sha256:9064ec54be50d7746028eec67dbaa657755633edad764bb048b13ea450b85d92
 coverage_gids: []
 receipts:
   unresolved_subitems: []
+  nonpropositional:
+    justification: imperative method fragment; no mathematical assertion
+    previous_atom_id: d23130b71096a1dde7afa788d587c5ef5155addfce274a5abf79aed7667cbbcf
+    next_atom_id: e841b2efb6cdf793ce85320e2e0d763d7b4af64c7e4196f8b4b9603f1ed0d0c7
