@@ -58,7 +58,7 @@ theorem interval_strictDrop_sound (base paired : Interval) (baseValue pairedValu
 
 /-- Any later full attack inside the current envelope still has a strict
 drop when the lazy procedure grants one. Other lazy exits grant no positive. -/
-theorem lazy_attack_sound (base paired : Interval) (baseValue pairedValue : Nat)
+theorem interval_lazy_exit_conservative (base paired : Interval) (baseValue pairedValue : Nat)
     (baseBound : base.lower ≤ Bound.finite baseValue)
     (pairedBound : Bound.finite pairedValue ≤ paired.upper) :
     (strictDrop base paired = true → pairedValue < baseValue) ∧
@@ -119,7 +119,7 @@ theorem certificate_to_GraphEdge (edge : GraphEdge) (certificate : ObviousCertif
 #print axioms nohit_excludes_cert
 #print axioms scope_symmetry
 #print axioms interval_strictDrop_sound
-#print axioms lazy_attack_sound
+#print axioms interval_lazy_exit_conservative
 #print axioms paired_negative_irrelevant
 #print axioms base_cert_never_creates_nonBindOnly
 #print axioms attack_failure_not_cost_one

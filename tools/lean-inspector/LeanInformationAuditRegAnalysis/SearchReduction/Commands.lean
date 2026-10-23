@@ -318,7 +318,7 @@ def publish (name : Name) (r : Observation) (source? : Option Environment := non
             discard <| checkProof (edgeName ++ arm ++ `proof) levels type proof
           else
             checkLocalProof type proof
-            addAndCompile (.defnDecl {
+            addDecl (.defnDecl {
               name := edgeName ++ arm ++ `proof, levelParams := levels, type, value := proof,
               hints := .abbrev, safety := .safe})
     let value := toExpr (reading.certificatePool.map CertificateNomination.encode)
@@ -401,8 +401,25 @@ private def writeRequest (path : System.FilePath) (request : Request)
     getEnv
   writeModule env path (writeIR := false)
 
-/-- Optional diagnostics inspect the certificates already produced by the
-production run, without repeating graph evaluation or certificate assembly. -/
+/-- Inspect the actual transitive source closure of checked terms. -/
+def certificateSourceDependencies (source : Environment) (proofs : Array Expr)
+    (forbidden : Array Name) : Except String Nat := do
+  let mut todo := proofs.foldl (fun names proof => names ++ proof.getUsedConstants) #[]
+  let mut seen : NameSet := {}
+  while !todo.isEmpty do
+    let constant := todo.back!
+    todo := todo.pop
+    if seen.contains constant then continue
+    seen := seen.insert constant
+    if forbidden.contains constant then
+      throw s!"search.source_certificate_leak:{constant}"
+    let some info := (source.setExporting false).find? constant
+      | throw s!"search.source_certificate_unresolved:{constant}"
+    for dependency in info.getUsedConstantsAsSet do todo := todo.push dependency
+  return seen.size
+
+/-- Mandatory source audit reuses checked terms without repeating graph
+evaluation or certificate assembly. -/
 private def auditProbeCertificates (source : Environment) (request : Request)
     (result : Observation) : CommandElabM Unit := do
   let some reading := result.graph? | return
@@ -412,21 +429,12 @@ private def auditProbeCertificates (source : Environment) (request : Request)
     reading.pairedProbe.proof?.toArray ++ reading.pairedProof?.toArray
   for (arm, proofs, forbidden) in #[("baseline", baselineProofs, #[request.target] ++ request.additions),
       ("paired", paired, #[request.target])] do
-    let mut todo := proofs.foldl (fun names proof => names ++ proof.getUsedConstants) #[]
-    let mut seen : NameSet := {}
-    while !todo.isEmpty do
-      let constant := todo.back!
-      todo := todo.pop
-      if seen.contains constant then continue
-      seen := seen.insert constant
-      if forbidden.contains constant then
-        throwError "search.source_certificate_leak: {arm}: {constant}"
-      let some info := (source.setExporting false).find? constant
-        | throwError "search.source_certificate_unresolved: {constant}"
-      for dependency in info.getUsedConstantsAsSet do todo := todo.push dependency
+    let count ← match certificateSourceDependencies source proofs forbidden with
+      | .ok count => pure count
+      | .error error => throwError "{arm}: {error}"
     emitLookupRecord s!"PRODUCTION_SOURCE_AUDIT {Json.mkObj [
       ("target", toJson request.target.toString), ("arm", toJson arm),
-      ("certificates", toJson proofs.size), ("transitive_constants", toJson seen.size),
+      ("certificates", toJson proofs.size), ("transitive_constants", toJson count),
       ("forbidden", toJson (forbidden.map Name.toString)),
       ("no_forbidden_dependency", toJson true),
       ("assembled_zero", toJson (if arm == "baseline" then reading.baselineProof?.isSome

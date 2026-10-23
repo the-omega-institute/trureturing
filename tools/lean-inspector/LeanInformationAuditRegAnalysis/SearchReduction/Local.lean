@@ -660,9 +660,11 @@ private unsafe def certifyLocalUncached (target : Expr) (types : List Expr := []
     try memberCertificateNames table target catch _ => pure #[]
     else pure #[]
   let pool ← certificateNominations.get
-  let candidates := nominationCertificates (pool ++
-    (members.map fun name => ⟨.member name, "alpha-membership"⟩) ++
+  let submitted := nominationCertificates (pool ++
     (nominations.map fun c => ⟨c, "explicit"⟩))
+  let automatic := nominationCertificates
+    (members.map fun name => ⟨.member name, "alpha-membership"⟩)
+  let candidates := submitted ++ automatic.filter (fun c => !submitted.contains c)
   for candidate in candidates do
     match candidate with
     | .close => continue

@@ -1,12 +1,30 @@
 import LeanInformationAuditRegAnalysis.SearchReduction.Commands
 
+/-! Name-only syntax and positive evidence normalization mutations. -/
+
 open Lean Meta Elab Command LeanInformationAudit.SearchReduction
 
 set_option Elab.async false
 set_option maxHeartbeats 0
 
+namespace CertificateTests
+theorem target : True := True.intro
+theorem helper : True := True.intro
+theorem polluted : True := target
+end CertificateTests
+
 run_cmd do
   let env ← getEnv
+  unless (certificateSourceDependencies env #[mkConst ``True.intro]
+      #[``CertificateTests.target, ``CertificateTests.helper]).isOk do
+    throwError "source audit rejected clean proof"
+  for (label, name) in [("target-constant", ``CertificateTests.target),
+      ("structure-constant", ``CertificateTests.helper),
+      ("transitively-polluted", ``CertificateTests.polluted)] do
+    unless !(certificateSourceDependencies env #[mkConst name]
+        #[``CertificateTests.target, ``CertificateTests.helper]).isOk do
+      throwError "mutation accepted: {label}"
+    logInfo s!"CERT_MUTATION rejected {label}"
   for good in ["by_close", "by_lookup Nat.add_comm", "by_member Nat.add_comm"] do
     unless (Parser.runParserCategory env `obvious_certificate good).isOk do
       throwError "certificate grammar rejected {good}"

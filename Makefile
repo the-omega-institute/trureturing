@@ -209,7 +209,7 @@ search-reduction-run:
 search-reduction search-reduction-run: export SEARCH_REDUCTION_REQUESTS := $(value REQUESTS)
 
 search-reduction-test: search-reduction-index-fixtures
-	@for module in GraphModel LookupModel LookupPruningTests LookupTests LookupScope NativeCertification GraphCalibration Calibration FaultPaths SingleSourceModel VocabularyModel PresentationCoverage SingleSourceTests RawOriginsTests Faults RealNegative VocabularyTransport VocabularyTests InformationTests; do \
+	@for module in GraphModel LookupModel CertificateModel CertificateTests CertificateScope LookupPruningTests LookupTests LookupScope NativeCertification GraphCalibration Calibration FaultPaths SingleSourceModel VocabularyModel PresentationCoverage SingleSourceTests RawOriginsTests Faults RealNegative VocabularyTransport VocabularyTests InformationTests; do \
 	  search_test_start=$$(date +%s); \
 	  $(MAKE) lean LEAN_TARGETS="LeanInformationAuditRegTests.SearchReduction.$$module"; search_test_exit=$$?; \
 	  search_test_seconds=$$(($$(date +%s) - search_test_start)); \
