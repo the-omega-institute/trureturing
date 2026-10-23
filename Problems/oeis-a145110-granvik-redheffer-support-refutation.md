@@ -121,10 +121,12 @@ Proved: for every `n≥2`, the count is
 divisors of `n`, together with the fixed diagonal positions and the closing
 edge. The instance `a(20)=31` refutes the stated list. At 20 the eighteen
 diagonal positions, one closing position and twelve strict-divisibility
-positions total 31. The source supplies no derivation of its conjectured
-value, so the cause of its numerical error is not identified.
+positions total 31.
 
-Computed consequence: at 21 there are nineteen diagonal positions, one
+Open: the source supplies no derivation of its conjectured values, so the
+cause of the two numerical errors is not identified.
+
+Computed consequence of the proved formula (not a separate Lean statement): at 21 there are nineteen diagonal positions, one
 closing position and five strict-divisibility positions, giving 25. The
 comparison of all twenty values is supported by independent matching
 computations; only the index 20 instance is needed for the formal refutation.
@@ -132,7 +134,7 @@ A position can occur in several contributing permutations but is counted
 once. Neither the number of permutations nor their signed determinant sum
 determines this union by itself.
 
-Literature-attested: A143104 concerns the ambient Redheffer entries, and
+Literature-attested (cited, not re-proved in this module): A143104 concerns the ambient Redheffer entries, and
 A008683 records the Möbius function and the modified determinant. Correcting
 the support counts changes neither sequence's defining statement, and
 asserts no new bound on the Möbius or Mertens functions. Wilf's
