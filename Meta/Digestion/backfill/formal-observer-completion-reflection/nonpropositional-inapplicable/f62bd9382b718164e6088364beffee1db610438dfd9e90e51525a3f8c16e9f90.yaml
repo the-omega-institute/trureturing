@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:f62bd9382b718164e6088364beffee1db610438dfd9e90e51525a3f8c16e9f90
+  normalized_sha256: sha256:f62bd9382b718164e6088364beffee1db610438dfd9e90e51525a3f8c16e9f90
+cas_ref: sha256:f62bd9382b718164e6088364beffee1db610438dfd9e90e51525a3f8c16e9f90
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: Introduces a taxonomy table; no row or mathematical claim is included.
+    previous_atom_id: 8b49e50aa25137c1d030d9b4b861f1451a86918c9442b4207ec8568947a1e059
+    next_atom_id: 731b5d17fd6328224a1c159d9d738a0ee24b11aee56be7cb69a44507f71f226d

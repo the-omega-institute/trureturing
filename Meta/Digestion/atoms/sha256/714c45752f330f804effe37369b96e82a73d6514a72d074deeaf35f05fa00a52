@@ -1,0 +1,18 @@
+**定理 74.3（偶数维载体与 qubit 重数分解）。** 存在整数 $r\ge1$ 和一个酉基识别，使
+
+$$
+\mathcal K\simeq\mathbb C^2\otimes\mathbb C^r,
+\qquad
+A=Z\otimes I_r,\quad B=X\otimes I_r,\quad C=Y\otimes I_r.
+$$
+
+因而 $\dim_{\mathbb C}\mathcal K=2r$，所表示的代数恰为 $M_2(\mathbb C)\otimes I_r$；最小非平凡载体是 $\mathbb C^2$。
+
+证明（74.3）。设 $\mathcal K_\pm$ 为 $A$ 的 $\pm1$ 特征空间。若 $Av=v$，则 $ABv=-BAv=-Bv$，所以 $B$ 把 $\mathcal K_+$ 送到 $\mathcal K_-$；反向同理。$B^\dagger=B$、$B^2=I$ 使该映射酉且互逆，两空间维数相等。若一空间为零，另一空间也为零，与载体非零矛盾，故共同维数 $r\ge1$。取 $\mathcal K_+$ 的正交基 $e_j$，以 $f_j=Be_j$ 配对得到 $\mathcal K_-$ 的正交基；在顺序 $(e_1,\ldots,e_r,f_1,\ldots,f_r)$ 中，$A$ 是两对角块 $I_r,-I_r$，$B$ 交换两块，得到所列 $Z,X$，而 $-iZX=Y$ 给 $C$。
+
+标准 $I_2,X,Y,Z$ 的矩阵项独立且复线性张成 $M_2(\mathbb C)$，张量 $I_r$ 不改变独立性。若 $O=a_0I+a_AA+a_BB+a_CC$ 自伴，比较 $O^\dagger$ 并用独立性，得到各系数均实；故 Hermitian 部分实维四。$A,B,C$ 的两阶迹为零，张量后仍无迹，所以去掉恒定单位方向留下三个方向。$\square$
+
+这里复载体维数二、Hermitian 实维四、迹一切面的三个可变方向是三种不同计数。最小载体上的态为 $(I+xX+yY+zZ)/2$，正性给 $x^2+y^2+z^2\le1$，不是三个可同时锐取的经典轴。$r>1$ 时上述代数只观察 qubit 因子，其期望由约化 qubit 态决定；它不表达环境或重数态以及双方全部关联。完整 $2r$ 维迹一态有 $(2r)^2-1$ 个实参数，不能以三个方向替代。
+
+Pauli、Clifford 与旋转的结构是成熟数学。Baez，[*The Octonions*, Introduction](https://math.ucr.edu/home/baez/octonions/node1.html)，说明单位四元数群 $SU(2)$ 双覆盖 $SO(3)$，并将其置于 Clifford 与旋量背景中。这里的分解由以上矩阵证明给出；旋转对应没有授权任何新的原生门或真实空间轴。下面的完全正保持条件还比单纯代数闭包更强。
+

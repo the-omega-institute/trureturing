@@ -1,0 +1,16 @@
+**定义 73.2（实际仪器及固定完整历史）。** 有限维载体上的实际仪器由有限结果和 Kraus 族给出：
+
+$$
+\mathcal J_y(\varrho)=\sum_\mu K_{y\mu}\varrho K_{y\mu}^\dagger,
+\qquad \sum_{y,\mu}K_{y\mu}^\dagger K_{y\mu}=I.
+$$
+
+每个分支完全正且迹不增加，总和保迹。允许的控制只依赖已经保留的结果、时钟和控制资料。固定完整历史 $h$ 后，沿该路径实际选择的控制和分支均固定，其复合为 $\mathcal J_h$；隐藏 Kraus 指标不是可供选择器使用的结果。定义
+
+$$
+E_h=\mathcal J_h^\dagger(I),\qquad
+p_{\varrho}(h)=\operatorname{tr}\mathcal J_h(\varrho).
+$$
+
+失败、停止及末端读出也属于记录。一个事件可以是同一完整协议中互斥历史的并，其效果是对应 $E_h$ 的和。
+

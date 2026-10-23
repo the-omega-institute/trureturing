@@ -1,0 +1,32 @@
+**Theorem 7.1 (Uniform all-real-response finite fibre).** For every
+real $p\in\mathcal P$ and every real $v$,
+
+$$
+\left|\mathcal F(H_4,M,p,M,v)\right|\leq49.
+$$
+
+This includes lower-degree gains, sampled zeros, repeated gain roots,
+zero drift, unbounded positive offdiagonals, the singular branch
+$\Lambda=0$, and the source-degree drop $v=-225$.
+
+**Proof.** By Section 2, every complete world gives a unique strict
+source $(r,b)$ in the published source parametrization.  A nonsingular
+world satisfies $\mathsf A=\mathsf B=0$ by Theorem 20.2, and a singular
+world satisfies the same equations by the exact $\Phi$-remainder
+identity in Section 2.  Thus all complete worlds inject into the strict
+part of the common affine zero set of $\mathsf A,\mathsf B$.
+
+Both polynomials have total degree at most seven.  Lemma 6.1 removes
+common components.  Affine Bézout, applied after homogenizing in
+$(r,b)$, bounds the sum of intersection multiplicities in the
+projective plane by $7\cdot7=49$; affine distinct points are a
+subset of those points.  Theorem 12.3 gives at most one complete world
+over each strict source, including every zero-safe singular or degree
+drop case.  Therefore the complete-world fibre has at most $49$
+distinct worlds. ∎
+
+The Bézout step is the standard affine/projective intersection theorem;
+the source-specific work is the noncollapse certificate and the
+zero-safe injection.  No projected root is counted as a world unless it
+is real, strict, and liftable, so the bound is conservative.
+

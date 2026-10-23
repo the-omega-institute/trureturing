@@ -1,0 +1,9 @@
+## 20. Complete-coordinate limits and the unchanged joint remainder
+
+For a polynomial of degree at most three, use its four coefficients
+in the fixed basis $1,t,t^2,t^3$, padding with zeros. A complete
+coordinate tuple consists of $(r,b,c,d)$ and those four coefficients.
+The literal readouts are polynomial, hence continuous, in these
+coordinates even at the auxiliary matrix (17.5). The expression
+$r(1-r)/b$ is not evaluated at $b=0$.
+

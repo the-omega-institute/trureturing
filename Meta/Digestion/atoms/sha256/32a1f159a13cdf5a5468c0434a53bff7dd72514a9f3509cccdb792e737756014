@@ -1,0 +1,30 @@
+**Definition 5.2 (Linear drift remainder).** Write
+
+$$
+f=A_fd^2+B_fd+C_f,\qquad K=\sum_{j=0}^4 K_jd^j,
+$$
+
+and set
+
+$$
+\begin{aligned}
+\alpha={}&K_4(-B_f^3+2A_fB_fC_f)
+ +K_3A_f(B_f^2-A_fC_f)-K_2A_f^2B_f+K_1A_f^3,\\
+\zeta={}&K_4(-B_f^2C_f+A_fC_f^2)
+ +K_3A_fB_fC_f-K_2A_f^2C_f+K_0A_f^3.
+\end{aligned}
+\tag{5.3}
+$$
+
+The different letter $\zeta$ keeps this remainder coefficient distinct from
+the fold derivative $\beta$ below. Polynomial reduction gives
+
+$$
+f\ \mid\ A_f^3K-(\alpha d+\zeta).
+\tag{5.4}
+$$
+
+Consequently every actual common root satisfies $\alpha d+\zeta=0$.
+This implication divides by neither $A_f$ nor $d$; whenever $\alpha\ne0$,
+the only possible drift at that $x,p,v$ is $d=-\zeta/\alpha$.
+

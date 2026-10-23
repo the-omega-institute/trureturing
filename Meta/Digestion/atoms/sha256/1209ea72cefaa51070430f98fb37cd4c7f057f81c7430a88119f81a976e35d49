@@ -1,0 +1,81 @@
+## 4. Integer regular-response circuit
+
+On the regular domain $\Lambda\ne0$, use the circuit of [support II](FIB_STRICT_REAL_JOINT_INCIDENCE_SUPPORT_II.md), Definition 2.2 and Proposition 2.3. In $\mathbb Z[r,b]$ define
+
+$$
+\begin{gathered}
+X=b^2+r-r^2,\qquad N=X+rb,\qquad T=1+b,\qquad U=1+2b,\\
+L=(b^2+8b+4)XN-2bTU(X+N),\qquad \ell=2L,\\
+E=-6(8b-1)(2+5b)XN,\qquad d_N=120\ell+E,\qquad Q=5bT\ell,\\
+q=\bigl(-d_NT,\;6(8b-1)(2+5b)bNT,\;27\ell-E,
+\;6(8b-1)(2+5b)bXT\bigr).
+\end{gathered}
+\tag{4.1}
+$$
+
+Let the integer row products be
+
+$$
+\begin{aligned}
+G_5&=(-4,15,-20,10)\mathbin{\cdot}q,\\
+G_6&=(-10,36,-45,20)\mathbin{\cdot}q,\\
+G_7&=(-20,70,-84,35)\mathbin{\cdot}q.
+\end{aligned}
+$$
+
+Define
+
+$$
+\begin{aligned}
+P&=d_NbT+(bU+N)G_5,\\
+V&=d_NbT+(2bU+N)G_6,\\
+Z&=d_NbT+(bT+2X+4rb)G_7,\\
+W&=d_NbT+(3bU+2N)G_7.
+\end{aligned}
+\tag{4.2}
+$$
+
+The identities $j=X/b$, $n=N/b$,
+$\Lambda=\ell/(TUXN)=2L/(TUXN)$, $e=E/(5\ell)$, and
+$d=d_N/(5\ell)$ show directly that $q/(5T\ell)$ is the four original gain
+samples. Consequently the original whole response is exactly
+
+$$
+(p,v,a,m)=\left(\frac P Q,\frac V Q,\frac Z Q,\frac W Q\right).
+\tag{4.3}
+$$
+
+This is an identity for the one fixed interpolating gain, not a response projection
+with independent gain values. The original parent correspondence of Theorem 2.1 and
+[support III](FIB_STRICT_REAL_JOINT_INCIDENCE_SUPPORT_III.md), Definitions 1.1–1.2
+and 10.1 with Lemma 10.2, supplies the converse, including zero leading
+coefficients, lower degrees, zero drift, and the complete original clocks.
+
+For a polynomial $f$ among $P,Z$, set
+
+$$
+N_{f,t}=(\partial_t f)Q-f(\partial_tQ),\qquad t\in\{r,b\}.
+$$
+
+The following divisions have exact zero remainder in $\mathbb Z[r,b]$:
+
+$$
+B_p=\frac{N_{P,b}}{120T^2},\qquad
+C_J=\frac{N_{Z,r}N_{P,b}-N_{Z,b}N_{P,r}}
+{3600b^2T^4L}.
+\tag{4.4}
+$$
+
+Differentiating the displayed rational circuit gives the checkable identities
+
+$$
+\Lambda=\frac{2L}{TUXN},\qquad
+\partial_b p=\frac{6B_p}{5b^2L^2},\qquad
+(\partial_ra)(\partial_bp)-(\partial_ba)(\partial_rp)
+=\frac{9C_J}{25b^2L^3}.
+\tag{4.5}
+$$
+
+All denominators in (4.3)–(4.5) are guarded on $R$ below; no division is used on
+the discarded zero branches of Section 3.
+

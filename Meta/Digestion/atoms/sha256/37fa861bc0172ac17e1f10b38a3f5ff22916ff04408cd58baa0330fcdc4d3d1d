@@ -1,0 +1,36 @@
+## 8. Open problems and mathematical references
+
+**Open problem 8.1 (Corrected algebra).** Determine the elimination geometry
+of the trace-saturated two-world $M$ subsystem, or of $I_{\rm tr}$.
+Specifically, determine its elimination ideal in $\mathbb Q[p,v]$,
+including whether it is zero and whether a corrected component has dense
+base projection. The raw family of Section 3 has $n=0$ and therefore
+does not give a lift to the pointwise corrected system.
+
+**Open problem 8.2 (Original strict-real target).** Find real $p\ne24,v$
+and four complete worlds satisfying Definition 1.2, with all original
+clocks and both within-pair distinctness conditions, or prove absence
+over the entire original domain. A corrected algebraic base, if found,
+still needs four strict-real lifts, their entire nonzero gains and fixed
+drifts. Independent pairs, cross-pair overlap and separate common
+terminal values remain allowed. A negative answer must cover all actual
+strata and all bases; no unexamined component, boundary mechanism or
+unbounded range is excluded by the present results.
+
+No exclusion of a negative-$p$ $J$ branch, a positive-$p$ $J$ arc, or any
+other actual component follows here. The false family has equal $b$ at
+both endpoints but contains no actual pair. Consequently it supplies no
+counterexample to an injectivity statement about actual strict worlds.
+
+The following references fix the model and notation. All definitions
+needed for the preceding results are also displayed above.
+
+| Reference | Mathematical correspondence |
+| --- | --- |
+| [O: common parent](https://github.com/the-omega-institute/trureturing/blob/c91f4841791e83e61d117ab81a4a70495567f21d/docs/develop/theory/FIB_COMMON_PARENT_GEOMETRY_AND_MIXED_CHILDREN.md), Definitions 1.1–1.3, Theorems 2.1 and 4.2 | Whole strict source, literal traces, zero-safe converse; its $\epsilon$ is $e$ here, its $\beta=1/8$, and $r=tb$. The singular fifth-response coefficient used in Proposition 2.3 is its $A_5$. |
+| [F: finite fibre](https://github.com/the-omega-institute/trureturing/blob/c91f4841791e83e61d117ab81a4a70495567f21d/docs/develop/theory/FIB_ALL_RESPONSE_FINITE_FIBRE_GEOMETRY.md), Lemma 30.2 and Definition 33.1 | Faithful whole-world reconstruction and independent same-base pair semantics. Its $(x,d)$ coordinates are not substituted for the complete worlds here. No finite-world theorem supplies a finite list of all bases. |
+| [S: joint support](https://github.com/the-omega-institute/trureturing/blob/c91f4841791e83e61d117ab81a4a70495567f21d/docs/develop/theory/FIB_STRICT_REAL_JOINT_INCIDENCE_SUPPORT.md), Definitions 1.1–1.2 | The original entire child and the unchanged $D_J,D_M$ quantifiers. |
+| [SII: unused companion](https://github.com/the-omega-institute/trureturing/blob/c91f4841791e83e61d117ab81a4a70495567f21d/docs/develop/theory/FIB_STRICT_REAL_JOINT_INCIDENCE_SUPPORT_II.md), Definitions 2.1–2.2 and Proposition 2.3 | Original gain samples and response/interpolation interface; its regular division by $\Lambda$ is not used to define the present domain. |
+| [SIII: J tail](https://github.com/the-omega-institute/trureturing/blob/c91f4841791e83e61d117ab81a4a70495567f21d/docs/develop/theory/FIB_STRICT_REAL_JOINT_INCIDENCE_SUPPORT_III.md), Definitions 1.1–1.2 | Whole-world quantifiers, literal traces and undivided parent, with all singular and unused worlds retained. |
+| [SIV: undivided responses](https://github.com/the-omega-institute/trureturing/blob/c91f4841791e83e61d117ab81a4a70495567f21d/docs/develop/theory/FIB_STRICT_REAL_JOINT_INCIDENCE_SUPPORT_IV.md), Theorem 8.2 | Interpolation identities valid on the undivided parent; no permission to divide by $\Lambda$ merely because a regular formula exists. |
+| [SV: regional result](https://github.com/the-omega-institute/trureturing/blob/c91f4841791e83e61d117ab81a4a70495567f21d/docs/develop/theory/FIB_STRICT_REAL_JOINT_INCIDENCE_SUPPORT_V.md), Sections 1–2 | Original joint target and explicit clock-four residual. Its regional exclusions and strict $M$ point are not promoted to global claims. |

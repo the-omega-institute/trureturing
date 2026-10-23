@@ -1,0 +1,104 @@
+**Definition 9.6 (Exact arithmetic circuits on the image curve).** Put
+
+$$
+B_{24}=\mathbb Q[p,v]/(Q_{24}),\qquad
+K_{24}=\operatorname{Frac}(B_{24}),\qquad \bar R=R/\rho.
+$$
+
+The following rules specify polynomial representatives and every inverse
+used below. They are also a way to evaluate the definitions without
+expanding the final determinant polynomials.
+
+For a monic polynomial $P\in K_{24}[x]$ of degree $s$ and a residue $u$,
+let $M_P(u)$ be the matrix whose column $j$ is the coefficient vector of
+$\operatorname{rem}_x(ux^j,P)$ in $1,x,\ldots,x^{s-1}$, for
+$0\le j<s$. Define
+
+$$
+\operatorname{Norm}_P(u)=\det M_P(u),\qquad
+u^{-1}=\frac{\operatorname{adj}(M_P(u))\,\mathbf e_0}
+                  {\det M_P(u)}
+$$
+
+when the norm is nonzero; the vector in the second expression denotes
+its polynomial in the power basis. Polynomial products are reduced by
+monic long division. Determinants use their usual finite permutation
+formula, introducing no pivot denominators.
+
+For coefficient arithmetic, divide $Q_{24}$ by its constant
+$v$-leading coefficient. Reduce polynomial representatives to degree
+less than $24$ in $v$ over $\mathbb Q[p]$. Represent a field element
+by a fraction of such polynomials. Addition, multiplication and inversion
+use fraction arithmetic, followed by this normal-form reduction of
+numerator and denominator and cancellation of their ordinary polynomial
+gcd when present. Clear scalar rational denominators and remove integer
+content when extracting a primitive numerator or denominator. Fix its
+sign by positive lexicographic leading coefficient in $(p,v)$.
+These rules select representatives in the coordinate ring; a denominator
+which vanishes at a specialization is retained in the exceptional product,
+not evaluated by cancellation at that point.
+
+Let $S_1(x)$ be the degree-one subresultant in $x$ of $\bar R,F_0$.
+Explicitly form the $19$ by $20$ coefficient matrix with rows
+$x\bar R,\bar R,x^{16}F_0,x^{15}F_0,\ldots,F_0$ and descending
+columns $x^{19},x^{18},\ldots,1$. Keep its first eighteen columns
+(the degrees $19$ through $2$). Append the degree-one column to obtain
+$A_1$, or the constant column to obtain $A_0$. Then
+$S_1(x)=\det(A_1)x+\det(A_0)$. This fixes the subresultant scalar
+and sign as well as its zero locus. Put $s_1=[x]S_1$ and
+
+$$
+G=S_1/s_1=\operatorname{monic}\gcd_x(\bar R,F_0),\qquad
+T=\bar R/G.
+$$
+
+These identities hold over $K_{24}$ and $\deg G=1$. To see the lower
+bound, the $R$-on-$\chi$ identity and the dense source/image map in
+Lemma 9.5 give a common $R,F_0$ root over the generic image. The
+specialization in Lemma 9.8 below has gcd degree one, so the generic
+gcd has degree at most one. The same certificate makes $s_1$ and
+$\operatorname{Res}(G,T)$ nonzero. Thus all divisions specified here
+exist in $K_{24}$; their special failures will be retained explicitly.
+
+Write $f=a_fd^2+b_fd+c_f$, retaining the fixed F31 coefficients.
+In the indicated quotient algebras define
+
+$$
+\delta_T=-\beta\alpha^{-1}\pmod T,\qquad
+d_F=-b_fa_f^{-1}\pmod G,
+$$
+
+$$
+\widehat\delta=
+\operatorname{rem}_{\bar R}\left[
+\delta_T+T\bigl((d_F-\delta_T)T^{-1}\pmod G\bigr)\right].
+$$
+
+All inverses mean the preceding adjugate rule, in the quotient specified
+by the modulus. The norm of $\alpha$ on $T$ is nonzero by Lemma 9.8;
+there is no inverse of $\alpha$ on $G$.
+This is the Chinese remainder construction: $\widehat\delta$ agrees
+with $\delta_T$ modulo $T$ and with $d_F$ modulo $G$.
+
+Use $\widehat\delta$ in place of $\delta$ in the following exact circuits
+in $K_{24}[x]/(\bar R)$:
+
+$$
+\begin{gathered}
+\widehat H_i=a_i(x,\widehat\delta)/D\quad(i=0,1,2,7),\\
+\widehat B_0=294/5-2\widehat\delta-\widehat H_2,\quad
+\widehat C_0=\widehat\delta^2+\widehat B_0^2,\quad
+\widehat N_0=-\widehat\delta\widehat H_0+\widehat B_0\widehat H_2,\\
+\widehat\tau_M=\widehat\delta+(2x+3)\widehat H_7,\\
+\widehat\tau_J=\widehat\delta+
+ \left(4x+\frac12+\frac{\widehat C_0}{2\widehat N_0}
+       -\frac{2(24-\widehat\delta)}{\widehat H_1}\right)\widehat H_7.
+\end{gathered}
+$$
+
+Let $\widehat K_E$ be the $18$ by $18$ coefficient matrix with columns
+$1,\widehat\tau_E,\ldots,\widehat\tau_E^{17}$ in the power basis.
+Define $n_{24,E}$ to be the primitive numerator of its determinant using
+the coefficient rules above. This definition requires no selection or
+ordering of real roots.
+

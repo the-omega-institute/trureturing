@@ -1,0 +1,48 @@
+**Proposition 2.3 (a finite known-setting producer at $\log7$).** In the
+declared exact-control model, seven independent fair bits per copy, three
+blank source modes, three occupied reservoir modes and a known three-mode
+rotation suffice to prepare the full $\rho_{q,\log7}$ for either setting.
+Two independent sets of these bits and reservoirs, with a common calibrated
+modal convention, prepare the base two-copy source. This is an upper
+construction, not an elementary-gate or precision optimum.
+
+Proof. Write $V_q=(\eta,\chi,\chi)^{\mathsf T}$ and set
+
+$$
+w_q=(-\sqrt2\chi,\eta/\sqrt2,\eta/\sqrt2)^{\mathsf T},\quad
+d_q=(0,1,-1)^{\mathsf T}/\sqrt2,\quad M_q=[V_q,w_q,d_q].
+\tag{QSSR.4}
+$$
+
+The identity $\eta^2+2\chi^2=1$ gives three unit, mutually orthogonal
+columns. The last two are perpendicular to $V_q$, so
+$H_q M_q=M_q\operatorname{diag}(0,1,1)$. Take independent bits
+$C_0,\ldots,C_6$. Fill eigenmode zero when $C_0=1$, eigenmode one when
+$C_1=C_2=C_3=1$, and eigenmode two when $C_4=C_5=C_6=1$. A conditional
+swap from its occupied reservoir fills an empty source mode without changing
+the combined particle number. Unused occupied reservoirs remain outside the
+released source. Fixed-order reservoir/source transfers fix all ket phases;
+these phases cannot affect the diagonal occupation mixture.
+
+The three occupations $m_0,m_1,m_2$ are independent with probabilities
+$(1/2,1/8,1/8)$. Their joint weight is
+
+$$
+\frac12\prod_{j=1}^2
+  (1/8)^{m_j}(7/8)^{1-m_j}
+=\frac{(1/7)^{m_1+m_2}}{2(1+1/7)^2}.
+\tag{QSSR.5}
+$$
+
+Apply $\Gamma_-(M_q)$ to the source, then release it without the coin and
+reservoir records. On every occupied exterior basis vector this rotation
+maps the eigenmode ket to the corresponding eigenket of $d\Gamma_-(H_q)$.
+Tracing the inaccessible records therefore gives (QSSR.3), including its
+vacuum, one-, two- and three-particle components. This finite occupation
+proof uses the usual second-quantization law and requires no infinite-Fock
+limit. Independent occupation bits do not independently randomize modal
+phases: the two $M_q$ controls use the same reference convention. The same
+argument with probabilities $(1/2,t/(1+t),t/(1+t))$ is conditional algebra
+at other temperatures; the seven-fair-bit implementation is asserted only
+for the values in (QSSR.5). ∎
+

@@ -1,0 +1,34 @@
+**Proposition 9.1 (Integer conic identity).** Define
+
+$$
+N_p=156-1968b-2880b^2,\quad
+N_v=-426-4092b-4800b^2,\quad D=35+35b.
+$$
+
+Then $p_b=N_p/D,v_b=N_v/D$, and
+
+$$
+525N_p^2-665N_pN_v-9108N_pD+210N_v^2+5952N_vD+35424D^2=0.
+$$
+
+Proof. The coefficients of the six summands, in ascending powers of $b$,
+are the following exact integers.
+
+| Summand | $b^0$ | $b^1$ | $b^2$ | $b^3$ | $b^4$ |
+| --- | ---: | ---: | ---: | ---: | ---: |
+| $525N_p^2$ | 12776400 | -322358400 | 1561593600 | 5951232000 | 4354560000 |
+| $-665N_pN_v$ | 44193240 | -133010640 | -5673205440 | -14118854400 | -9192960000 |
+| $-9108N_pD$ | -49729680 | 577629360 | 1545445440 | 918086400 | 0 |
+| $210N_v^2$ | 38109960 | 732140640 | 4375153440 | 8249472000 | 4838400000 |
+| $5952N_vD$ | -88744320 | -941189760 | -1852381440 | -999936000 | 0 |
+| $35424D^2$ | 43394400 | 86788800 | 43394400 | 0 | 0 |
+| Sum | 0 | 0 | 0 | 0 | 0 |
+
+For example the $b^2$ coefficient in the first row is
+$525(1968^2-2\cdot156\cdot2880)=1561593600$; the other entries
+follow from the same multiplication rule
+$[b^k](AB)=\sum_{i=0}^k[b^i]A\,[b^{k-i}]B$.
+Each column sums to zero, proving the polynomial identity. Division by
+$D^2$ on $b\ne-1$ proves $F(p_b,v_b)=0$. This identity asserts no
+membership of $F$ in $\Delta_{\rm raw}$. ∎
+

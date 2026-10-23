@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:2b7a7939801013c7a79cd90d968b995dd166e644562e86d439125d8bd02f65d6
+  normalized_sha256: sha256:2b7a7939801013c7a79cd90d968b995dd166e644562e86d439125d8bd02f65d6
+cas_ref: sha256:2b7a7939801013c7a79cd90d968b995dd166e644562e86d439125d8bd02f65d6
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: Defines old and new record fields and jointly permitted additive/logarithmic retention relations, with public radii and metadata. No recovery or separation assertion is made.
+    previous_atom_id: 06a5298140cd91905b24bc927330b9d74d2c3574f2c6c389a118be373866f43f
+    next_atom_id: f97a0260adb9319062029e1190a2f7ade01edc978bba19d2a4563dcb60eab589

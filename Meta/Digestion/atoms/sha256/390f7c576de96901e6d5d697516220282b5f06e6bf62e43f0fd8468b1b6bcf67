@@ -1,0 +1,10 @@
+**定义 90.1（单窗的三角色摘要）。** 沿用第24–25章的五模式与低到高印刷次序，定义
+
+$$
+\eta(\mathrm{null})=\emptyset_{\mathrm{ext}},\quad
+\eta([2])=a,\quad\eta([3])=b,\quad\eta([5])=c,\quad
+\eta([25])=a\star c=b.
+$$
+
+$\emptyset_{\mathrm{ext}}$ 是三角色代数外另一个标签；未赋予它单位律。这是把第23.2条的不同非零输入表对应到第85章的三角色名称，对角规则仍分别保留。
+

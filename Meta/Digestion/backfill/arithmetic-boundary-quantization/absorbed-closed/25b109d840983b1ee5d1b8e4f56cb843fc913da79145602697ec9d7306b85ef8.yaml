@@ -1,0 +1,13 @@
+fingerprints:
+  raw_sha256: sha256:25b109d840983b1ee5d1b8e4f56cb843fc913da79145602697ec9d7306b85ef8
+  normalized_sha256: sha256:25b109d840983b1ee5d1b8e4f56cb843fc913da79145602697ec9d7306b85ef8
+cas_ref: sha256:25b109d840983b1ee5d1b8e4f56cb843fc913da79145602697ec9d7306b85ef8
+coverage_gids:
+  - gid: D5/S3/Fourier/Asymptotics/TorusObservationWindowReturns.result
+    target_statement_id: sha256:1d193404c9518ba239c7991446d44b8aedda6c16f277317a7f471787e6bd193f
+  - gid: D5/S3/Fourier/Asymptotics/TorusOrbitEquidistribution.result
+    target_statement_id: sha256:c79dbeae4179fadbc26b19eb21db8d79ea9c0551b1a358a50981411174547731
+  - gid: D5/S3/Fourier/TorusOrbitClosure.result
+    target_statement_id: sha256:caf0494154aac8e0e431192bd01a4b6b70a6325fb74ca65873470e5c2843bcb7
+receipts:
+  unresolved_subitems: []

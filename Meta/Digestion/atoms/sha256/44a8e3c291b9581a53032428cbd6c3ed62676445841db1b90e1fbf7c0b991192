@@ -1,0 +1,31 @@
+**Convention 10.4 (library and literature boundaries).** The repository's
+`NativeSerialMachine.operational_replay` and `reached_prefix_replay`
+retain local/update/read chronology given actual run premises.
+`NativeFullSourceProducer.native_source_producer`, including its private
+`traverse`, `production_reads` and `stationary` proofs, supplies a finite
+source-blind traversal in its own abstract serial machine. Neither
+installs this annex or grants current channel rights.
+`NativeSourceSelectorCode.selectorCode`, `selector_code_correct` and
+`realization` supply an actual closed numerical program on genuine
+encoded original states; `NativeSerialEffective.original_code_service_simulation`
+consumes an explicit `OriginalCodeRealization` and preserves its stated
+erased evaluator trace/terminal observation. Their owning Blueprint
+Scribes retain that numerical/physical boundary. These results do not
+identify their terminal observation with the original complete-successor
+$Q$ here. Existence of effective code is not the missing permission or
+placement theorem.
+
+`TypedFiniteViewKernel.typed_finite_view_kernel` presupposes the supplied
+typed partial edge semantics and readout; `PredictiveMemoryMinimalQuotient.predictive_memory_minimal_quotient`
+presupposes readout and update factors. They cannot provide the unproved
+factors in obligation10.3. At mathlib revision
+`db584cd6d46c92f209a44c0f1c829460d327499d`,
+[`Function.factorsThrough_iff`](https://github.com/leanprover-community/mathlib4/blob/db584cd6d46c92f209a44c0f1c829460d327499d/Mathlib/Logic/Function/Basic.lean)
+requires fibre constancy; the
+[`Computability.Encoding`](https://github.com/leanprover-community/mathlib4/blob/db584cd6d46c92f209a44c0f1c829460d327499d/Mathlib/Computability/Encoding.lean)
+interface requires its encode/decode law; and
+[`StateTransition.Respects`/`tr_reaches`](https://github.com/leanprover-community/mathlib4/blob/db584cd6d46c92f209a44c0f1c829460d327499d/Mathlib/Computability/StateTransition.lean)
+transport an already supplied simulation. They provide no native
+original-task factor or cost equality without its premises. The
+construction asserts no global literature novelty or absence theorem.
+

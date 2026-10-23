@@ -1,0 +1,164 @@
+**Theorem 28.2 (Evaluated point and its complete lifts).** There is a
+unique zero $z_*$ of $\Phi$ in $\mathcal B_*$. Write $p_*$ for its last
+coordinate and $v_*=v_H(z_*)$. Then
+
+$$
+\begin{gathered}
+13.13771861912<p_*<13.13771861914,\\
+92.7068988914<v_*<92.7068988915,\\
+(t_H,b_H,t_L,b_L)(z_*)=z_J(p_*),\qquad v_*=v_J(p_*).
+\end{gathered}
+\tag{28.5}
+$$
+
+For each $s\in\{H,L,G\}$ the formulas
+
+$$
+\begin{gathered}
+P_s=P(t_sb_s,b_s),\qquad
+ g_s(q)=\sum_{i=0}^3\frac{C_i(t_s,b_s)}{\mathcal D(t_s,b_s)}
+ \prod_{\substack{0\le h\le3\\h\ne i}}\frac{q-h}{i-h},\qquad
+ d_s=-\frac{C_0(t_s,b_s)}{\mathcal D(t_s,b_s)}
+\end{gathered}
+\tag{28.6}
+$$
+
+are evaluated at $z_*$. They specify one whole gain polynomial and one
+fixed drift for each source. The two worlds $W_H=(P_H,g_H,d_H)$ and
+$W_L=(P_L,g_L,d_L)$ are distinct original strict worlds in the entire
+$C(p_*,v_*)$ and satisfy $a_H=a_L$. The lift $G$ satisfies the same
+algebraic acquisition equations and has $p_G=p_*$, $v_G=v_*$ and
+$x_G=x_H$, but $b_G<0$, so it is not an original admissible world.
+Their values obey
+
+| Quantity | Exact rational enclosure |
+| --- | --- |
+| $r_H$ | $(0.70,0.72)$ |
+| $r_L$ | $(0.06,0.07)$ |
+| $d_H$ | $(32.7382713922,32.7382713923)$ |
+| $d_L$ | $(24.4,24.5)$ |
+| $d_G$ | $(37.0216525196,37.0216525198)$ |
+| $x_H=x_G$ | $(1.0261995683,1.0261995685)$ |
+| $a_H=a_L$ | $(356,357)$ |
+| $m_H$ | $(471.63688484,471.63688486)$ |
+| $m_L$ | $(483,485)$ |
+| $m_G$ | $(445.92293460,445.92293463)$ |
+
+In particular the algebraic lift $G$ has a different terminal-$M$ value
+from $H$.
+
+Proof. First, interval evaluation of the polynomial factors in (28.1)
+on $\mathcal B_*$ gives the following open rational enclosures.
+
+| Factor | $H$ | $L$ | $G$ |
+| --- | --- | --- | --- |
+| $b$ | $(0.316,0.317)$ | $(0.030,0.031)$ | $(-0.417,-0.416)$ |
+| $T$ | $(1.316,1.317)$ | $(1.030,1.031)$ | $(0.583,0.584)$ |
+| $U$ | $(1.633,1.634)$ | $(1.061,1.062)$ | $(0.166,0.167)$ |
+| $j$ | $(0.967,0.968)$ | $(1.991,1.992)$ | $(-0.696,-0.695)$ |
+| $n$ | $(1.676,1.677)$ | $(2.055,2.056)$ | $(0.171,0.172)$ |
+| $\mathcal D$ | $(-3.068,-3.067)$ | $(42.66,42.67)$ | $(0.0098,0.01)$ |
+
+Thus all divisions in (28.2) are defined on the whole box, and all of
+$b,T,U,j,n$ are nonzero there. The factors $T,U,j,n$ are positive
+for $H,L$. Consequently it is legitimate to define
+
+$$
+\Lambda=1+\frac6T+\frac1U-\frac4j-\frac4n,
+\qquad \mathcal D=\frac52 TUjn\Lambda.
+\tag{28.7}
+$$
+
+The identity is SIII (16.2); the same rational evaluation gives
+
+$$
+-0.352<\Lambda_H<-0.351,\qquad
+3.809<\Lambda_L<3.810,\qquad
+-0.342<\Lambda_G<-0.341.
+\tag{28.8}
+$$
+
+Here is an exact interval construction for the remaining finite
+inequalities. It also specifies the preconditioner without decimal
+matrix approximations. Put $h_*=10^{-80}$ and, for rational $u$, set
+
+$$
+\operatorname{rd}_-(u)=h_*\lfloor u/h_*\rfloor,\qquad
+\operatorname{rd}_+(u)=h_*\lceil u/h_*\rceil,\qquad
+\langle[a,b]\rangle=[\operatorname{rd}_-(a),\operatorname{rd}_+(b)].
+\tag{28.9}
+$$
+
+For interval addition, subtraction and multiplication use
+
+$$
+\begin{aligned}
+[a,b]+[e,f]&=\langle[a+e,b+f]\rangle,\\
+[a,b]-[e,f]&=\langle[a-f,b-e]\rangle,\\
+[a,b][e,f]&=\langle[\min(ae,af,be,bf),\max(ae,af,be,bf)]\rangle.
+\end{aligned}
+\tag{28.10}
+$$
+
+For $0\notin[a,b]$, use
+$[a,b]^{-1}=\langle[1/b,1/a]\rangle$; division means multiplication
+by this reciprocal. Enclose each rational input by (28.9). Evaluate
+(28.1)–(28.4) in their displayed order, associating sums and products
+from the left. Use $t^2=tt$ and $b^2=bb$.
+
+To enclose derivatives, attach to every interval value $V$ its seven
+interval derivatives $(V_1,\ldots,V_7)$. The input coordinates have
+unit coordinate derivatives and constants have zero derivatives. For a
+product $VW$ use $V_iW+VW_i$. For a reciprocal first form $Q=V^{-1}$
+and use $(-V_i)QQ$, with the products in that order. Addition and
+subtraction act componentwise. These formulas give an interval
+Jacobian $J(\mathcal X)$ of $\Phi$ on each box $\mathcal X$ used here.
+The point box $\{c\}$ has exactly represented rational coordinates.
+Let
+
+$$
+\mathsf M_{ij}=\frac{\inf J(\{c\})_{ij}+\sup J(\{c\})_{ij}}2,
+\qquad
+C_{ij}=10^{-40}\left\lfloor10^{40}(\mathsf M^{-1})_{ij}\right\rfloor.
+\tag{28.11}
+$$
+
+Let $P$ be the permutation matrix with
+$P(y_1,\ldots,y_7)^{\mathsf T}=(y_1,y_3,y_2,y_4,y_5,y_6,y_7)^{\mathsf T}$.
+Start exact rational Gauss–Jordan elimination with the augmented matrix
+$[P\mathsf M\mid P]$. For $k=1,\ldots,7$, take as pivot the current
+$(k,k)$ entry of the left block, divide the entire row $k$ by that
+pivot, and then, in increasing order of $i\ne k$, subtract from row $i$
+its current column-$k$ entry times the normalized row $k$. All these
+operations act on both blocks; use no further row permutations and no
+column permutations. The seven successive pivots lie respectively in
+
+$$
+\begin{gathered}
+(110.639,110.640),\quad(126.232,126.233),\quad(-2.875,-2.874),\\
+(-5875.445,-5875.444),\quad(-10931.139,-10931.138),\\
+(-3072.116,-3072.115),\quad(-0.012,-0.011).
+\end{gathered}
+\tag{28.12}
+$$
+
+Thus every pivot is nonzero. The final augmented matrix is
+$[I\mid\mathsf M^{-1}]$: if $E$ is the product of the row-operation
+matrices, then $EP\mathsf M=I$ and $EP=\mathsf M^{-1}$.
+This is the inverse used in (28.11).
+
+For an interval $I$ write $|I|_{\max}=\max(|\inf I|,|\sup I|)$.
+Form $N=I-CJ(\mathcal B_*)$ and $w=C\Phi(c)$ with interval
+operations (28.9)–(28.10); matrix scalar products sum from index one
+to seven, enclosing each product before adding it. The finite rational
+bounds, in the coordinate order of $z$, are
+
+| $i$ | $10^{24}\sum_{j=1}^7|N_{ij}|_{\max}\le$ | $10^{44}|w_i|_{\max}\le$ |
+| --- | --- | --- |
+| $1$ | $201$ | $2481$ |
+| $2$ | $11$ | $1046$ |
+| $3$ | $45$ | $2021$ |
+| $4$ | $55$ | $3475$ |
+| $5$ | $7$ | $4077$ |
+| $6$ | $2$ | $4337$ |
+| $7$ | $7134$ | $4307$ |

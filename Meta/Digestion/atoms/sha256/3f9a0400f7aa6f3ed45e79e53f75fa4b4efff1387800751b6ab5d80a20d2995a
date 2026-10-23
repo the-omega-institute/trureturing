@@ -1,0 +1,81 @@
+**Theorem 15.5 (Strict interior continuation and failure of an
+$M$-only source margin).**  For every $\eta>0$ there are two distinct
+actual strict worlds $W_A,W_B$ with the same $(p,v)$, the same terminal
+$m$, and $p\ne24$, such that
+
+$$
+0<1-r(W_A)<\eta.
+\tag{15.13}
+$$
+
+Proof.  For a first source with $(r,b)=(s,t)$ define
+
+$$
+c_A(s,t)=\frac{s(1-s)}t,
+\qquad
+\Lambda_A(s,t)=1+\frac6{1+t}+\frac1{1+2t}
+ -\frac4{t+c_A(s,t)}-\frac4{t+c_A(s,t)+s},
+$$
+
+and
+
+$$
+E(s,t)=-\frac{(24/5)(t-1/8)\,2(2+5t)/((1+t)(1+2t))}
+              {\Lambda_A(s,t)}.
+\tag{15.14}
+$$
+
+This is defined in a neighbourhood of $(1,t_*)$ by (15.11), where
+$t_*$ is the first coordinate of $x_*$.  Let $X_i^A(s,t)$ be the
+original responses (10.5) evaluated at $(r,b,e)=(s,t,E(s,t))$, and set
+
+$$
+\mathcal F(s,t,b,r,e)=
+\begin{pmatrix}
+H(r,b,e)\\
+X_0(r,b,e)-X_0^A(s,t)\\
+X_1(r,b,e)-X_1^A(s,t)\\
+X_3(r,b,e)-X_3^A(s,t)
+\end{pmatrix}.
+\tag{15.15}
+$$
+
+At $s=1$, the first source is the C1 boundary extension, so
+$\mathcal F(1,x_*)=F(x_*)=0$.  Differentiating the exact rational
+formulas (15.3) shows that the derivative of $\mathcal F$ in
+$(t,b,r,e)$ at $(1,x_*)$ is $DF(x_*)$, which is invertible by
+Proposition 15.4.  The analytic implicit function theorem therefore
+gives functions $t(s),b(s),r(s),e(s)$ for $s$ near $1$ satisfying
+$\mathcal F=0$.
+
+Shrink the interval so that $0.98<s<1$, $0.92<r(s)<0.94$, both $b$
+coordinates are positive, both $\Lambda$ values are nonzero, both
+$e$ values are positive, and the common $p(s)$ is larger than $56$.
+The first source has
+
+$$
+P_A(s)=\begin{pmatrix}s&t(s)\\s(1-s)/t(s)&1-s\end{pmatrix},
+$$
+
+and the second has
+
+$$
+P_B(s)=\begin{pmatrix}r(s)&b(s)\\r(s)(1-r(s))/b(s)&1-r(s)\end{pmatrix}.
+$$
+
+Both satisfy the undivided parent equation, so Lemma 10.2 reconstructs
+one entire degree-at-most-three gain and one fixed drift for each.  The
+positive $e$ values imply $g(0)=-24-e<0$, so neither gain is the zero
+polynomial.  The equations in (15.15) give
+
+$$
+W_A(s),W_B(s)\in C(p(s),v(s)),\qquad m(W_A(s))=m(W_B(s)).
+\tag{15.16}
+$$
+
+They use the original clocks and readings; $s$ is a parameter selecting
+different worlds, not a new clock, reset, reclocking, or added port.
+The worlds are distinct because their $r$ coordinates lie in the
+disjoint intervals $(0.98,1)$ and $(0.92,0.94)$.  Given $\eta>0$, choose
+$s$ also with $s>1-\eta$; then (15.13) follows. ∎
+

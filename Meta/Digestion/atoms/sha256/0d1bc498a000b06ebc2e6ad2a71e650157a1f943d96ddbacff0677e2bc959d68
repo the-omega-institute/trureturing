@@ -1,0 +1,118 @@
+**Definition 21.1 (The ordered $r$ projection of the original circuit).**
+In the independent coordinates $(r,b)$ put
+
+$$
+\begin{gathered}
+X=b^2+r-r^2,\qquad N=X+br,\qquad T=1+b,\qquad U=1+2b,\\
+A=(8b-1)(2+5b),\\
+\delta=5\bigl((b^2+8b+4)XN-2bTU(X+N)\bigr),\\
+\widehat B_5=(8b-1)\bigl(96XN-30(2+3b)bX-15(2+b)bN\bigr),\\
+\widehat B_6=24\delta+(8b-1)
+ \bigl(15(14-b)XN-30(8b+5)bX-54bN\bigr),\\
+F_0=(24-p)b\delta-3AbXN+(Ub+N)\widehat B_5,\\
+F_1=(24-v)b\delta-3AbXN+(2Ub+N)\widehat B_6.
+\end{gathered}
+\tag{21.1}
+$$
+
+The symbols $D,C_i,B_i,N_i$ in the following identities refer exactly to
+this volume's Lemma 2.2, evaluated at $(t,b)=(r/b,b)$:
+
+$$
+\begin{gathered}
+j=X/b,\quad n=N/b,\quad \delta=b^2D,
+\quad\widehat B_5=b^2B_5,\quad\widehat B_6=b^2B_6,\\
+F_0=b^3(N_0-pD),\qquad F_1=b^3(N_1-vD).
+\end{gathered}
+\tag{21.2}
+$$
+
+Thus $F_0=-\mathsf A$ and $F_1=-\mathsf B$ of [O], (20.1), with
+exactly that normalization; here the eliminated variable is $r$.
+Both $F_i$ have generic $r$ degree six. Form the $12$ by $12$ matrix
+$\mathscr S$ whose rows are the descending coefficients of
+
+$$
+r^5F_0,r^4F_0,\ldots,F_0,
+\quad r^5F_1,r^4F_1,\ldots,F_1
+$$
+
+in columns $r^{11},r^{10},\ldots,1$. Form also the $10$ by $11$
+matrix $\mathscr M$ with rows
+$r^4F_0,r^3F_0,\ldots,F_0,r^4F_1,r^3F_1,\ldots,F_1$
+in columns $r^{10},r^9,\ldots,1$, denoted $c_{10},\ldots,c_0$.
+Define
+
+$$
+\begin{gathered}
+S_1=\det(c_{10},c_9,\ldots,c_2,c_1),\qquad
+S_0=\det(c_{10},c_9,\ldots,c_2,c_0),\\
+\gamma=2430b^{13}(8b-1)^3(2b+1),\\
+\det\mathscr S=72900b^{20}(8b-1)^4(2b+1)^2
+                  \mathcal E(b;p,v),\qquad
+S_i=\gamma\lambda_i(b;p,v)\quad(i=0,1).
+\end{gathered}
+\tag{21.3}
+$$
+
+These are exact polynomial identities over $\mathbb Z[b,p,v]$.
+They fix every scalar and sign, with no later primitive-part operation.
+The full integer coefficient array in Section 24 is another specification
+of the same three quotients. In monomial order $(b,p,v)$ their nonzero
+term counts and coordinate degrees are
+
+$$
+\begin{array}{c|c|c}
+ &\text{terms}&(\deg_b,\deg_p,\deg_v)\\ \hline
+\mathcal E&644&(22,6,6)\\
+\lambda_1&399&(18,5,5)\\
+\lambda_0&378&(19,5,5).
+\end{array}
+\tag{21.4}
+$$
+
+For any finite common $r$ root of $F_0,F_1$, evaluation of the rows of
+$\mathscr M$ gives
+
+$$
+S_1r+S_0
+=\det(c_{10},\ldots,c_2,c_1r+c_0)=0,
+\tag{21.5}
+$$
+
+since $c_1r+c_0=-\sum_{k=2}^{10}c_kr^k$.
+This is the ordered-minor argument of [O], Theorem 20.2, with the
+projection interchanged. The fixed-size Sylvester matrix likewise has a
+nonzero evaluation vector in its kernel at any common finite root.
+Neither implication requires preservation of the generic degree or a
+simple common root. On $b>0$, $b\ne1/8$, the removed factors in (21.3)
+are nonzero. Every regular world over $K_3$ therefore satisfies
+
+$$
+\mathcal E(b;p,v)=0,\qquad
+\lambda_1(b;p,v)r+\lambda_0(b;p,v)=0.
+\tag{21.6}
+$$
+
+The remaining regular source $b=1/8$ has $e=0$ and $p=24$ by Lemma 6.1,
+and hence cannot lie over $K_3$. Where $\lambda_1\ne0$, a fixed finite
+$b$ admits at most one common $r$, namely $-\lambda_0/\lambda_1$.
+This is a necessary lift relation, not an existence assertion.
+
+For any strict regular source the original parent fixes
+$e=-3Ajn/D$, $d=24+e=-C_0/D$, and the whole gain is the unique
+interpolant of $C_i/D$ at $0,1,2,3$. Its traces at clocks zero through
+six and at the two alternative seventh actions are respectively
+
+$$
+(1,j,T,n,U,U+n,2U+n),\qquad T+2j+4r,\qquad3U+2n.
+\tag{21.7}
+$$
+
+Thus a regular geometry has at most one complete-world lift. Lemma 2.2,
+(2.3)--(2.5), gives all original readings for that lift; the unequal
+readings $0,24$ ensure that its one gain is not the zero polynomial.
+In particular the known $W_3$ and $Z_3$ are actual lifts independently
+of the eliminant. No gain sample, leading gain coefficient, drift,
+$e$, or gain-root difference is cancelled in these implications.
+

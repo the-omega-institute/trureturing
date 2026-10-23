@@ -1,0 +1,105 @@
+## 232. All-domain calculus proof and native interior attainment
+
+**Proof of Theorem 231.2.** First $U_t(p)\le(1-t)^2/4$, with equality
+only at $p=1/2$ when $t<1$. Positive negativity is possible exactly when
+$(1-t)^2>4t$, equivalently $0<t<t_c$ in the specified temperature domain.
+This proves the entire zero regime, including the critical equality and
+$t=1$, without dividing by $1-t$ or $U_t-t$. Solving the strict quadratic
+inequality $U_t>t$ gives (231.8); its boundary denominators remain positive.
+
+Now suppose $0<t<t_c$. On the positive interval, differentiation gives
+
+$$
+\begin{aligned}
+A_t'(p)&=\frac{3t b_t^2(1-2p)}{2Z_t(p)^2},\\
+w_t'(p)&=-\frac{2tb_t(t+h_t(p)^2)}{E_t(p)^2}<0,\\
+B_t'(p)&=\frac{tb_t Q_t(p)}{2E_t(p)^2},\\
+Q_t(p)&=b_t(3+2t)(1-2p)-2b_t^2p^2+2t,\\
+Q_t'(p)&=-2b_t(3+2t)-4b_t^2p<0\qquad(0\le p\le1).
+\end{aligned}
+\tag{232.1}
+$$
+
+The derivative of $w_t$ holds on the whole scalar interval and is the
+$p$ form of (216.8). Exact sign evaluations are
+
+$$
+Q_t(2/5)=\frac{7+61t-18t^2}{25}>0,\qquad
+Q_t(1/2)=-\frac{\delta_t}{2}<0.
+\tag{232.2}
+$$
+
+The first numerator is positive for $0<t<1$, since $61t-18t^2>43t$.
+Strict decrease gives precisely one root between $2/5$ and $1/2$; solving
+its quadratic gives $p_c$ in (231.4). At the lower positivity endpoint,
+using $U_t(p_-)=t$ gives
+
+$$
+Q_t(p_-)=b_t(1-2p_-)(3+2h_t(p_-))>0.
+\tag{232.3}
+$$
+
+Consequently $p_-<p_c<1/2<p_+$. The truncated functions vanish outside
+$(p_-,p_+)$, while inside it $A_t$ strictly increases up to $1/2$ and
+strictly decreases thereafter, and $B_t$ strictly increases up to $p_c$
+and strictly decreases thereafter. Thus their unique positive global
+maxima on all of $(0,1)$ occur at $1/2$ and $p_c$, respectively.
+Strict decrease of $w_t$ gives $s_0<s_1$; positivity and $w_t<1$ give
+the other bounds in (231.4).
+
+If $s\le s_0$, then $F_{t,s}\le A_t\le A_t(1/2)$, with equality
+at $1/2$ because $w_t(1/2)\ge s$. Strict scalar uniqueness follows
+from that of $A_t$. Direct substitution gives $A_t(1/2)=\delta_t/(2K_t)$.
+If $s\ge s_1$, then $F_{t,s}\le B_t/s\le B_t(p_c)/s$, with equality
+at $p_c$ because $w_t(p_c)\le s$. Strict uniqueness follows from that
+of $B_t$. These arguments include both threshold equalities.
+
+If $s_0<s<s_1$, continuity and strict decrease of $w_t$ give one
+$p_s\in(p_c,1/2)$ with
+$A_t(p_s)=B_t(p_s)/s>0$. For every $p<p_s$, either the truncated
+$A_t(p)$ is zero or its strict increase below $1/2$ gives
+$F_{t,s}(p)\le A_t(p)<A_t(p_s)$. For every $p>p_s$, either $B_t(p)=0$
+or its strict decrease above $p_c$ gives
+$F_{t,s}(p)\le B_t(p)/s<B_t(p_s)/s$. This proves global strict
+optimality even outside $[p_c,1/2]$. Rewriting $Z_t=sE_t$ with
+$U_t=(h-t)(1-h)$ gives
+
+$$
+(1-s)\left[-h^2+
+\left(1+t-\frac{2st}{1-s}\right)h+t\right]=0.
+\tag{232.4}
+$$
+
+Since $s<1$ and the two quadratic roots have product $-t<0$, the positive
+root is exactly (231.6); the monotone crossing fixes its admissible domain.
+Continuity of this inverse gives the asserted boundary matches.
+
+It remains to restrict this scalar proof to actual sources. The established
+bound (228.12) gives
+
+$$
+m<(56/153)^2<2/5<p_c<1/2<(76/97)^2<M.
+\tag{232.5}
+$$
+
+Therefore every $y=p_*(t,s)$ lies in $(m,M)$. Use the interior inverse
+of §229: choose any integer $n\ge2$ satisfying (229.3) for this $y$,
+put $\varepsilon=1/n$, and take the unique $\xi\in(0,1)$ solving
+
+$$
+p\big((1-\varepsilon)\xi,(1-\varepsilon)(1-\xi)\big)=y.
+\tag{232.6}
+$$
+
+Then $q=((1-\varepsilon)\xi,(1-\varepsilon)(1-\xi))$ has both
+coordinates positive and sum $1-\varepsilon<1$. This is an actual native
+interior source with the fixed principal square root, not a free scalar or
+a boundary substitute. Theorem 229.1 supplies existence and uniqueness on
+each chosen segment; its image and inverse proof need not be repeated.
+The scalar upper bound and this attaining source prove equality of scalar
+and native optimal values, and scalar uniqueness proves precisely (231.7).
+In fact all sufficiently large integers $n$ satisfy (229.3); their distinct
+coordinate sums exhibit multiple sources in each optimal fibre. In the zero
+regime any interior source attains zero, as already proved. This completes
+the proof.
+

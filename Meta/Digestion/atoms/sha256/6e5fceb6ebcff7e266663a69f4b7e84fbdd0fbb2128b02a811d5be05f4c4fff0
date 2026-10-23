@@ -1,0 +1,49 @@
+**Lemma 7.2 (Correlated output bounds).** For a single cell use the
+common $x=v-v_c$ and the record for branch $i$. Put
+
+$$
+\begin{aligned}
+w_i&=\omega(m_i),\qquad a_i=D\omega(m_i)L_i,\\
+e_i&=\rho_i\sup_{\mathcal B_i}\|D\omega\|_1
++h_v\sup_{\mathcal B_i}|(D\omega-D\omega(m_i))L_i|.
+\end{aligned}
+\tag{7.1}
+$$
+
+At the actual source for the same $p,v$,
+$|\omega(z_i)-w_i-a_ix|\le e_i$. On all 190 cells the rational
+lower bounds for the differences $(i,j)=(0,2),(2,1),(1,3)$ are
+strictly greater than, respectively,
+
+$$
+\frac{69947968847}{10^{10}}>6,\qquad
+\frac{144190706814}{10^{10}}>14,\qquad
+\frac{1614405690}{10^{10}}>\frac4{25}.
+\tag{7.2}
+$$
+
+Proof. Write $z_i=m_i+L_ix+\delta_i$ with
+$\|\delta_i\|_\infty\le\rho_i$. Integrate $D\omega$ first from
+$m_i+L_ix$ to $z_i$, then from $m_i$ to $m_i+L_ix$ after
+subtracting $D\omega(m_i)$. Both segments lie inside (5.2).
+This proves (7.1), and therefore
+
+$$
+\omega(z_j)-\omega(z_i)
+\ge(w_j-w_i)-|a_j-a_i|h_v-e_i-e_j.
+\tag{7.3}
+$$
+
+Companion Sections 4–7 specify outward rational enclosures for
+every term and the resulting bounds (7.2). The affine part uses
+$a_j-a_i$ times one shared $x$; it never combines independently
+attained extrema at different sixth responses.
+The remainders hold uniformly for the same actual $p\in K$.
+The decisions are exact rational inequalities. ∎
+
+Proof of Theorem 1.3. Lemma 7.1 proves exactly four complete legal
+worlds, and Lemma 3.3 identifies their terminal-M readings with
+$\omega$. Lemma 7.2 gives the order and gaps. Distinct sources give
+distinct complete triples. The closed cells cover every boundary
+point. ∎
+

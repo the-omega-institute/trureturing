@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:9adebb5890543b62b56eda68dc5ca72d8fd0a5a828aef1f80f2a287d4a597a33
+  normalized_sha256: sha256:9adebb5890543b62b56eda68dc5ca72d8fd0a5a828aef1f80f2a287d4a597a33
+cas_ref: sha256:9adebb5890543b62b56eda68dc5ca72d8fd0a5a828aef1f80f2a287d4a597a33
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: This definition stipulates the five fields required of a task-relative certificate. It does not assert that such data exist or that any candidate satisfies them. Each numbered item is a certificate requirement rather than a proved property of an object.
+    previous_atom_id: 07cfc5a3766bb98587a547c449d142aeee2268095d87cf0d3bff130349d3a052
+    next_atom_id: ba6e26323d8a34300d32a3ab5976e4f0a2d178cc336f351fc4bd007a0f699e82

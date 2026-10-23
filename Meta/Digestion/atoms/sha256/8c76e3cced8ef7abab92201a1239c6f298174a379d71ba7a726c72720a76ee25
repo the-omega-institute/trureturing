@@ -1,0 +1,128 @@
+**Theorem 114.1 (quantitative squared bound).** For every feasible rank-one zero-penalty pair with $q>0$ and $s>0$, using Theorem 113.2's $h,f$,
+
+$$
+\begin{aligned}
+\mathcal S&\leq\frac c2-\frac{s^2}{2880}-\frac{(h-f)^2}{32},\\
+\Theta^2&\leq c-\frac{s^2}{1440}-\frac{(h-f)^2}{16}.
+\end{aligned}
+\tag{U.34}
+$$
+
+No commutation or alignment condition is imposed.
+
+Proof. Set
+
+$$
+n=\frac{pq}{m},\qquad
+\gamma^2=1-m-n=\frac{(p-m)(m-q)}m\geq0,\qquad
+x=(\sqrt m,\sqrt n,\gamma)^T.
+$$
+
+Choose $\gamma\geq0$, so $\|x\|=1$ and $ab=\sqrt{mn}$. Since $1-tm=\eta^2m+n+\gamma^2$, the discriminant in (U.31) has the decomposition
+
+$$
+\Delta^2=(\eta^2m-n-\gamma^2)^2+4\eta^2m\gamma^2.
+\tag{U.35}
+$$
+
+Using $(h+f)^2=2(h^2+f^2)-(h-f)^2$, $h^2=1+2ab$ and $f^2=1-tn+2ab\eta$, the exact formula for $\mathcal S$ becomes
+
+$$
+\mathcal S=\frac14+\frac\Phi8-\frac{(h-f)^2}{32},\qquad
+\Phi=t(m-n/2)+(1+\eta)\sqrt{mn}+\Delta.
+\tag{U.36}
+$$
+
+To bound this expression in every direction, use the support function of the two-vector in (U.35). Its second coordinate $2\eta\sqrt m\gamma$ is nonnegative, hence
+
+$$
+\Delta=\max_{-1\leq\xi\leq1}
+\left[\xi(\eta^2m-n-\gamma^2)
++2\eta\sqrt{1-\xi^2}\sqrt m\gamma\right].
+$$
+
+This formula includes a zero second coordinate. Consequently
+
+$$
+\begin{gathered}
+\Phi=\max_{-1\leq\xi\leq1}x^TM_\eta(\xi)x,\\
+M_\eta(\xi)=
+\begin{pmatrix}
+t+\eta^2\xi&(1+\eta)/2&\eta\sqrt{1-\xi^2}\\
+(1+\eta)/2&-t/2-\xi&0\\
+\eta\sqrt{1-\xi^2}&0&-\xi
+\end{pmatrix}.
+\end{gathered}
+\tag{U.37}
+$$
+
+We prove the uniform matrix bound
+
+$$
+M_\eta(\xi)\preceq\left(\sqrt2-\frac t{360}\right)I_3
+\quad(0\leq\eta\leq1,\ t=1-\eta^2,\ -1\leq\xi\leq1).
+\tag{U.38}
+$$
+
+Put $\kappa=\sqrt2$, $d=\kappa-1$, $z=\kappa+\xi\in[d,1/d]$, and $\mathsf K=\kappa I_3-M_\eta(\xi)$. The lower $2\times2$ block is $\operatorname{diag}(z+t/2,z)\succ0$, including $t=0$ and $\eta=0$. Its Schur complement is
+
+$$
+\begin{aligned}
+\mathsf{Schur}
+&=\kappa-t-\eta^2\xi
+-\frac{(1+\eta)^2}{4(z+t/2)}
+-\frac{\eta^2(1-\xi^2)}z\\
+&=\frac{tH}{4(z+t/2)},\\
+H&=\frac{2\eta^2}{z}+4dz+2d(1-\eta^2)-\frac{3\eta+1}{1+\eta}.
+\end{aligned}
+\tag{U.39}
+$$
+
+The identity follows by putting the first line over $4z(z+t/2)$, substituting $\xi=z-\kappa$, $t=1-\eta^2$, $\kappa^2=2$, and using $t/(1+\eta)=1-\eta$. It introduces no division by $t$, so it holds at $t=0$ as well.
+
+We next prove $H\geq1/4$ on its entire rectangle. For $0\leq\eta\leq1/3$, the function $2\eta^2/z+4dz$ is increasing on $z\geq d$, because its derivative is $4d-2\eta^2/z^2>0$. Indeed $\eta^2\leq1/9<2d^3$, the latter following from $d>2/5$ and $1/9<16/125$. Evaluate at $z=d$ and use $1/d=\kappa+1$ to obtain
+
+$$
+\begin{aligned}
+H&\geq4\eta^2+10-6\sqrt2-\frac{3\eta+1}{1+\eta}\\
+&\geq4\eta^2-2\eta+9-6\sqrt2\\
+&\geq\frac{35}{4}-6\sqrt2>\frac14.
+\end{aligned}
+\tag{U.40}
+$$
+
+The second line uses $(3\eta+1)/(1+\eta)=1+2\eta/(1+\eta)\leq1+2\eta$; the third completes $4(\eta-1/4)^2$. The final strict comparison is $\sqrt2<17/12$, verified by squaring.
+
+For $1/3\leq\eta\leq1$, AM–GM gives $2\eta^2/z+4dz\geq4\eta\sqrt{2d}\geq16\eta/5$, since $d>2/5$ implies $\sqrt{2d}>4/5$. Also $2d(1-\eta^2)\geq4(1-\eta^2)/5$. Hence
+
+$$
+\begin{gathered}
+H\geq F_1(\eta):=\frac{16\eta}{5}+\frac{4(1-\eta^2)}5-\frac{3\eta+1}{1+\eta},\\
+F_1'(\eta)=\frac{16}{5}-\frac{8\eta}{5}-\frac2{(1+\eta)^2}
+\geq\frac85-\frac98=\frac{19}{40}>0,\\
+F_1(1/3)=\frac5{18}>\frac14.
+\end{gathered}
+\tag{U.41}
+$$
+
+This proves the required lower bound on $H$ without restricting the direction parameter $z$.
+
+The Schur complement now gives $\mathsf K\succeq0$, and $\mathsf K\succ0$ if $t>0$. Moreover
+
+$$
+\det\mathsf K=\frac{tzH}{4}\geq\frac{tz}{16},\qquad
+\operatorname{Tr}\mathsf K=3\sqrt2-\frac t2+(1+t)\xi
+\leq3\sqrt2+\frac32<6.
+\tag{U.42}
+$$
+
+If $t>0$, the product of the two largest eigenvalues is at most $(\operatorname{Tr}\mathsf K)^2/4<9$. Therefore
+
+$$
+\lambda_{\min}(\mathsf K)
+\geq\frac{\det\mathsf K}{9}
+\geq\frac{td}{144}\geq\frac t{360}.
+$$
+
+For $t=0$, PSD alone gives the same non-strict bound. This proves (U.38). The unit-vector representation (U.37) yields $\Phi\leq\sqrt2-t/360$, and substitution in (U.36) proves the first line of (U.34), since $1/4+\sqrt2/8=c/2$. Identity (U.27) proves the second line. All steps retain the same $m,n,\gamma$; the matrix estimate dominates the whole actual directional family rather than selecting independent eigenvalue optima. $\square$
+

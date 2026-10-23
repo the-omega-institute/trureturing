@@ -1,0 +1,193 @@
+**Theorem 8.1 (paid acquisition to the common Bell-use port).** For every
+public rational $0<d\le5/64$, set
+
+$$
+M=\left\lceil\frac{5000(t+d)}{3d}\right\rceil,\qquad N_{\rm cal}=3M.
+\tag{8.1}
+$$
+
+Under Definitions 6.1–6.2, for every $(x,\eta)\in\mathcal P_d$, the
+actual procedure of §7 consumes $N_{\rm cal}+2$ full specimens and has
+the following output law. Put
+
+$$
+\bar r=\sum_h p_h r_h,\quad
+\bar a=t-ts\bar r,\quad
+\bar B=c\{t+s(1-x)\bar r\},\quad
+P_s=\frac{2(\bar a+\bar B)}{Z^2},\quad
+\sigma_s=\frac{X(\bar r)}{P_s}.
+\tag{8.2}
+$$
+
+After the specified record discard, its success report has probability
+$P_s\ge16/625$ and conditional state $\sigma_s$ on exactly (7.7).
+The two failure masses are $1-\alpha$ and $\alpha-P_s$, summing to
+$1-P_s$. The exact correctness condition for this retained pair is
+
+$$
+\begin{aligned}
+\sigma_s\text{ is NPT}
+&\ \Longleftrightarrow\ (t+\Delta)\bar r>t\\
+&\ \Longleftrightarrow\
+\mathbb E_h(1-|k_h^\dagger\eta|^2)<\frac{\Delta}{t+\Delta}.
+\end{aligned}
+\tag{8.3}
+$$
+
+The displayed construction satisfies it uniformly, with
+
+$$
+\mathcal N(\sigma_s)
+ =\frac{[(t+\Delta)\bar r-t]_+}{2(\bar a+\bar B)}
+ \ge\frac{\Delta}{2Z^2P_s}\ge\frac{32d}{625}>0.
+\tag{8.4}
+$$
+
+On the observed success branch this very pair supports the fixed
+teleportation call specified below, with average pure-input fidelity at
+least $2/3+64d/1875$. The call consumes the shared pair. None of these
+conclusions asserts that each finer $h$-conditioned pair is NPT.
+
+Proof. The independent complete calibration laws give
+
+$$
+\mathbb E z=a_{\rm sig}n,\qquad
+\mathbb E\|z-a_{\rm sig}n\|^2
+ =\sum_{i=1}^3\frac{\operatorname{Var}(Y_i)}M\le\frac3M.
+\tag{8.5}
+$$
+
+Use the normalization inequality of Phase Boundary (278.18), including its
+zero-vector convention: $\|\widehat n-n\|\le
+2\|z-a_{\rm sig}n\|/a_{\rm sig}$. The qubit projector identity
+$1-|k^\dagger\eta|^2=\|\widehat n-n\|^2/4$ therefore yields
+
+$$
+\mathbb E_h(1-r_h)\le\frac3{a_{\rm sig}^2M}
+ \le\frac{2500}{3M}\le\frac{d}{2(t+d)}.
+\tag{8.6}
+$$
+
+This is a uniform mean bound at each fixed setting; it uses no prior over
+$n$, accepted-sample replacement or hidden good-calibration event.
+
+Conditional independence in (6.3) leaves the target state $\Omega$
+unchanged conditional on every preliminary history. Hence the accepted
+classical–quantum operator before the final erasure is
+$\sum_h p_h|h\rangle\langle h|\otimes X(r_h)$, allowing already
+discarded records to be represented by their inaccessible environment.
+Tracing all those registers gives
+
+$$
+X_s=\sum_h p_hX(r_h)=X(\bar r).
+\tag{8.7}
+$$
+
+The second equality uses the affine source-specific formula (7.8).
+Conditioning follows this sum. Equivalently, the normalized successful
+histories have weights $p_hP(r_h)/P_s$, not $p_h$.
+Equation (8.7) is precisely the declared erasure channel applied to the
+actual controlled process; it is not an alternative averaging convention.
+Accessible copies of calibration or setting information would give a finer
+interface and would not establish the historywise conclusion excluded above.
+
+The partial-transpose eigenvalues of $X_s$ are
+
+$$
+\frac1{Z^2}\{\bar B,\bar B,\bar a+m\bar r,\bar a-m\bar r\}.
+\tag{8.8}
+$$
+
+Since $ts+m=t+\Delta$, (8.3) and the exact expression in (8.4) follow.
+For (8.1), (8.6) gives
+
+$$
+(t+\Delta)\bar r-t
+ \ge\Delta-\frac{(t+\Delta)d}{2(t+d)}\ge\frac\Delta2,
+\tag{8.9}
+$$
+
+where the last inequality is equivalent to $\Delta\ge d$.
+Also $a(r),B(r)\ge t^2$ give
+$P_s\ge4t^2/Z^2=16/625$. Dividing (8.9) by $Z^2P_s$ gives the first
+lower bound in (8.4); $P_s\le1$ gives the second. All statements include
+the maximum-margin endpoint. Equations (7.4), (7.9)–(7.11) prove the
+claimed complete flag law on the same run. The call law below finishes the
+consumer assertion. $\square$
+
+For that call fix the four Bell vectors in code (7.7), beginning with
+$\psi^-=(|01\rangle-|10\rangle)/\sqrt2$. The state in (8.2) is Bell
+diagonal. Its weights, in the order $\psi^-,\psi^+,\phi^-,\phi^+$, are
+
+$$
+q_0=\frac{\bar B+m\bar r}{2(\bar a+\bar B)},\quad
+q_z=\frac{\bar B-m\bar r}{2(\bar a+\bar B)},\quad
+q_x=q_y=\frac{\bar a}{2(\bar a+\bar B)}.
+\tag{8.10}
+$$
+
+They are nonnegative and sum to one. In the NPT regime,
+$q_0=1/2+\mathcal N(\sigma_s)>1/2$.
+Only after receiving the resource herald, Alice is supplied an independent
+logical input qubit $\tau$ in an additional fixed-number rail code.
+The consumer is the standard complete logical Bell measurement on input
+and Alice's resource qubit, its actual two-bit transmission, and Bob's
+fixed Pauli correction table, chosen so that $\psi^-$ gives identity.
+No source-dependent choice is made by this consumer. A complete encoded
+Bell instrument, including coherent control inside Alice's total-number-two
+input/resource sector, is an additional explicit primitive; local rail
+rotations alone are not asserted to synthesize it.
+
+The ordinary Bell-component teleportation identity, applied to (8.10), gives
+
+$$
+\mathcal T_{x,\eta}(\tau)=q_0\tau+q_xX\tau X+q_yY\tau Y+q_zZ\tau Z.
+\tag{8.11}
+$$
+
+For each of the four Bell reports $b$, its corrected subnormalized Bob
+output on the full preparation run is
+
+$$
+\frac{P_s}{4}\mathcal T_{x,\eta}(\tau),\qquad
+\Pr(s,b)=P_s/4.
+\tag{8.12}
+$$
+
+To check the identity, on resource $\psi^-$ each Bell report has probability
+$1/4$ and the fixed correction returns $\tau$. The other resource Bell
+vectors are obtained by Bob Paulis; commuting them past a correction changes
+only an irrelevant sign, and gives the respective Pauli error in (8.11).
+Linearity gives (8.12), with the same channel for every report. This also
+holds with an untouched reference entangled with the input, provided the
+input–reference system is independent of resource preparation. Failed
+resource runs have the two failure-symbol successors of Theorem 8.1; no
+input is requested on them. Thus all failure masses and all four call
+branches sum to one, with no input-dependent postselection.
+
+For a Haar-distributed pure qubit the mean squared overlap with any
+nonidentity Pauli image is $1/3$. The declared metric is therefore
+
+$$
+F_{\rm av}(\mathcal T)=q_0+\frac{1-q_0}{3}
+ =\frac23+\frac23\mathcal N(\sigma_s)
+ \ge\frac23+\frac{64d}{1875}.
+\tag{8.13}
+$$
+
+This is average fidelity after an input-independent resource herald, not
+worst-input fidelity or perfect transmission. Alice's measured systems are
+consumed/discarded; Bob's rail is now the noisy transmitted input, not a
+second callable copy of the entanglement resource. The Bell readout uses
+fresh pointers and actual communication in addition to the earlier herald.
+
+Immediate sequential use supplies no durable-storage guarantee. If a wait
+is desired, the separate QSSR2 Definition 5.1 isolation premise must actually
+hold on these retained rails: $H_M=\varepsilon_A N_A+\varepsilon_B N_B$,
+no residual coupling or rail splitting, stable classical flag, and addressed
+controls at the later call. Here $N_A=N_B=1$, so $H_M$ restricts to the
+scalar $\varepsilon_A+\varepsilon_B$ and preserves $\sigma_s$ during each
+finite wait. This is the existing QSSR2 storage argument instantiated on the
+successful code, conditional on that extra premise. It is not inferred from
+raw thermal stationarity or from the immediate-call theorem.
+

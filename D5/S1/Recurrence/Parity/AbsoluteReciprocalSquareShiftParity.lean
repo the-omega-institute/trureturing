@@ -6,6 +6,8 @@
    utility: none
    digest: A cubic shift and exact binomial division prove Hanna's A384267 parity. -/
 
+/- Escape audit unfinished: https://github.com/the-omega-institute/trureturing/issues/19951. -/
+
 import D5.S1.Recurrence.Invariants.AbsoluteReciprocalSquareParity
 import D5.S1.Recurrence.Parity.StripThreeTernaryCatalanParity
 
@@ -110,7 +112,7 @@ private theorem map_abs (F : PowerSeries ℤ) :
   ext n
   simp [coeff_map, absSeries, ZMod.intCast_abs_mod_two]
 
-private theorem reduced_cubic :
+theorem reduced_cubic :
     (generatingSeries.map (Int.castRingHom (ZMod 2))) ^ 3 =
       (generatingSeries.map (Int.castRingHom (ZMod 2))) ^ 2 + X := by
   let hom := Int.castRingHom (ZMod 2)
@@ -310,13 +312,5 @@ theorem hanna_conjecture (n : ℕ) (hn : 1 ≤ n) :
       coefficient_shift, if_pos (dvd_mul_right 2 r), Nat.mul_div_right _ (by decide)]
     exact (quotient_odd_parity r).symm
 
-#print axioms generating_equation
-#print axioms generating_unique
-#print axioms mod_two_identity
-#print axioms a_zero
-#print axioms ternary_dvd
-#print axioms ternary_div_odd
-#print axioms ternary_div_even
-#print axioms hanna_conjecture
 
 end D5.S1.Recurrence.Parity.AbsoluteReciprocalSquareShiftParity

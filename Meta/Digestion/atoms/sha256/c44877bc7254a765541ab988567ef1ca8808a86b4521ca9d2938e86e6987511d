@@ -1,0 +1,29 @@
+**Proposition 123.1 (threshold for the squared comparison).** For $q>0$,
+
+$$
+\begin{aligned}
+N^2&\leq\frac{h^2}{8}-\frac{hH}{16},\\
+S&\leq\frac{h^2}{8}+\frac{1-\lambda}{4}-\frac{hZ}{16}.
+\end{aligned}
+\tag{U.74}
+$$
+
+Define
+
+$$
+a(\lambda)=\frac{2+4g-4\lambda-2\sqrt2}{h}.
+\tag{U.75}
+$$
+
+Then $Z\geq a(\lambda)$ implies $S\leq c/2$. In particular it suffices when $a(\lambda)\leq0$.
+
+Proof. Hilbert–Schmidt Cauchy–Schwarz applied to $D^{1/2}$ and $D^{-1/2}\sqrt A$ gives
+
+$$
+(\operatorname{Tr}\sqrt A)^2
+\leq\operatorname{Tr}(D)\operatorname{Tr}(D^{-1}A)
+=2h(2h-H).
+$$
+
+For the equality on the right, cycle the trace in $D^{-1}A=(I_4-VV^T)D$. This uses no commutation between $D$ and $VV^T$. Divide by $32$, add $(1-\lambda-\tau)/4$, and use $hZ=hH+4\tau$ to obtain (U.74). Since $h^2=1+2g$, substitution of (U.75) into its last expression gives exactly $(2+\sqrt2)/8=c/2$. Finally $Z\geq0$. $\square$
+

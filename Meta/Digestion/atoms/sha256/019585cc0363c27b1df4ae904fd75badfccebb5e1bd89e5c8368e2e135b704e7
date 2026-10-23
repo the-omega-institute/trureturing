@@ -1,0 +1,35 @@
+**命题 76.3（局部正球及一般输入的质量）。** 有
+
+$$
+X_P^2=Y_P^2=Z_P^2=P,\qquad
+X_PY_P=iZ_P,\quad Y_PZ_P=iX_P,\quad Z_PX_P=iY_P.
+$$
+
+支撑于 $P$ 的归一化态唯一写成
+
+$$
+\varrho_P=\frac{P+xX_P+yY_P+zZ_P}{2},
+\qquad r=(x,y,z),\quad |r|\le1.
+$$
+
+对一般五态 $\varrho$，令 $p=\operatorname{tr}(P\varrho)\in[0,1]$。仅当 $p>0$ 时才定义条件向量 $r$，并有
+
+$$
+P\varrho P=\frac p2(P+r\cdot\sigma_P).
+$$
+
+当 $p=0$ 时 $P\varrho P=0$ 且 $P\varrho Q=0$，没有唯一的条件 Bloch 向量。
+
+证明（76.3）。限制到 $(3,25)$ 基后矩阵恰为标准 Pauli，直接相乘给平方及循环式；它们在完整五态上的平方为 $P\ne I_5$，所以不能当作全局 involution。局部 Hermitian 正交基 $P,X_P,Y_P,Z_P$ 给唯一展开，迹一把单位系数固定为 $1/2$。$(r\cdot\sigma_P)^2=|r|^2P$，故两局部特征值为 $(1\pm|r|)/2$，正性恰为球条件。一般压缩块是正算子，迹为 $p$；正迹时除以 $p$ 应用该结论。若 $p=0$，正算子的非负特征值之和为零，所以压缩块为零。对正 $\varrho$ 和任意 $u\in P\mathcal H_F,v\in Q\mathcal H_F$，正二次型的 Cauchy–Schwarz 不等式给
+
+$$
+|\langle u|\varrho|v\rangle|^2
+\le\langle u|\varrho|u\rangle\langle v|\varrho|v\rangle.
+$$
+
+第一因子为零时跨块项全为零，得最后断言；一般情况下该式仍约束跨块相干。$\square$
+
+条件 $r$ 没有包含质量 $p$。例如 $\varrho_p=p\Pi_3+(1-p)\Pi_N$，$0<p\le1$，有相同条件向量 $(0,0,1)$，但实际 $P$ 读出概率为 $p$。即使给定两个对角块 $P\varrho P,Q\varrho Q$，跨块项 $P\varrho Q$ 也可不同；第 78.3 条的同质量纯态将用同一行走显示这种差异。故局部态语法、局部块成员身份和实际操作下的自治是三个条件。
+
+Kribs–Laflamme–Poulin–Lesosky，[*Operator Quantum Error Correction*, arXiv:quant-ph/0504189v3，§2 的 noiseless subsystem 条件及§3 的 correctable triple](https://arxiv.org/pdf/quant-ph/0504189v3)，给有限维任意量子通道的受保护子系统与恢复框架。它要求关于指定误差 map 与恢复 map 的条件，不把任选二维支撑自动判为受保护块。本块是否持续存在仍须检查实际操作，下一章给出这个 $K$ 的具体结论。
+

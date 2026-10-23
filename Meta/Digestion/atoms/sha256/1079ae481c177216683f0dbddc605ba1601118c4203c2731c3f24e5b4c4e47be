@@ -1,0 +1,44 @@
+**Corollary 13.4 (adaptive native acquisition cannot recover the target
+word).** Consider any finite adaptive acquisition/use scheme confined to
+Definition 13.1's installed paths, starting with common actually acquired
+material and common public parameters. Its later supplies and decisions
+may depend on that material and its subsequent actual native acquisitions,
+released outputs and available outcomes. It obtains the same acquired
+material and makes the same decisions on $P_0,P_1$. It cannot correctly
+determine the first-Ready target bit $c_p$ on both, nor faithfully emit
+that target's full raw record or any one of
+
+$$
+S(h_\sigma),\quad B(h_\sigma),\quad T(h_\sigma),\quad
+M_{\rm ret}(h_\sigma)
+$$
+
+on both histories. This remains true with arbitrarily growing annex
+retention, any finite number of source/history returns, and all actually
+reached original journal, frozen-prefix and final Stop work.
+
+Proof. Induct over the finite adaptive decision tree, and within each
+chosen fragment over its actual native rows. Equal acquired arguments
+choose the same next branch/bit, and Theorem 13.3 gives equal subsequent
+acquired values and outcomes, including a chosen early stop. This does
+not allow a decision node to inspect hidden coordinates merely because
+a complete successor exists mathematically. All actual authorized reads
+and copied bodies are among the equal ordinary data. Growing storage
+retains functions of these same arguments and changes no step of the
+induction. The common result cannot be both $c_p=0$ and $c_p=1$.
+A recovered raw record supplies this coordinate; a faithful body of any
+listed independent view supplies it by Theorem 11.4. Those targets belong
+to its stated $\mathcal D_0\cup\mathcal D_1$ domain. No memory value at a
+later00/terminal cut is required. ∎
+
+Unlike Corollary 12.4's one-flight statement, the obstruction excludes
+recomposition of the fixed installed native routes as acquisition of this
+distinction from common data. A distinguishing dependency must enter the
+acquisition/use construction. Additional externally retained bootstrap
+information, including a bit used to choose different later Supply, is
+such a dependency and is allowed when genuinely available. An independently
+established legitimate structural interface could also provide one. The
+corollary neither supplies nor excludes either mechanism; it prevents
+counting repetitions or alternate orderings of the existing native routes
+as its acquisition proof.
+

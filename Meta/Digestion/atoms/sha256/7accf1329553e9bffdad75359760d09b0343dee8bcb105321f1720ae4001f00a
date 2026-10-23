@@ -1,0 +1,82 @@
+**定理 11.2（完整 Möbius 反演与关系辛坐标）。**
+上述矩变换和相位变换均整数可逆，逆公式为
+
+$$
+p_I=\sum_{\substack{T\in\Gamma_n\\T\supseteq I}}
+          (-1)^{|T|-|I|}\mu_T,\qquad
+ \theta_I=\sum_{T\subseteq I}\Phi_T\pmod{2\pi}.
+$$
+
+在全正振幅域有
+
+$$
+\sum_I p_I\,d\theta_I=\sum_{T\in\Gamma_n}\mu_T\,d\Phi_T,
+ \qquad
+ \omega_{\rm FS}
+ =\sum_{\substack{T\in\Gamma_n\\T\ne\varnothing}}
+                  d\Phi_T\wedge d\mu_T .
+$$
+
+固定所有 $1\le|T|\le q$ 的均值，并商去其对应的相位作用，
+其中 $0\le q\le\lceil n/2\rceil$。
+只要该固定矩域含一个全正概率，其正域关系商实维数为
+
+$$
+2D_{n,q},\qquad
+ D_{n,q}=\sum_{k=q+1}^{\lceil n/2\rceil}
+                       \binom{n-k+1}{k},
+$$
+
+每个 $|T|>q$ 的合法子集贡献一对 $(\mu_T,\Phi_T)$。
+
+**证明。**
+
+合法子集族向下封闭，因此若 $I\subseteq J$ 且 $J$ 合法，
+区间中的每个 $T$ 都合法。代入矩定义，
+
+$$
+\sum_{T\supseteq I}(-1)^{|T|-|I|}\mu_T
+ =\sum_{J\supseteq I}p_J
+       \sum_{I\subseteq T\subseteq J}(-1)^{|T|-|I|}.
+$$
+
+内层和为 $(1-1)^{|J\setminus I|}$，仅 $J=I$ 时为一，
+故得到 $p_I$。相位逆式的证明相同。
+这些矩阵按集合大小排序后都是对角线为一的整数三角矩阵，
+因而在整数格上可逆，并在相位环面上不存在额外周期覆盖。
+
+将 $\theta_I$ 的逆式代入一形式并交换有限求和次序，
+
+$$
+\sum_Ip_I\sum_{T\subseteq I}d\Phi_T
+ =\sum_T\left(\sum_{I\supseteq T}p_I\right)d\Phi_T
+ =\sum_T\mu_Td\Phi_T.
+$$
+
+取负外微分并除去共同相位，得到辛形式。
+由于整数变换可逆，全正射影域的全部非空矩与关系角
+是一套独立坐标。固定低阶矩、除去其相位后，剩下的坐标
+恰是所有高阶对；正概率不等式只将其概率部分截成一个非空开凸域，
+不会改变局部维数。
+
+最后计数大小为 $k$ 的合法子集。
+若 $1\le i_1<\cdots<i_k\le n$ 且 $i_{j+1}\ge i_j+2$，
+令 $j_a=i_a-(a-1)$，便得到
+$1\le j_1<\cdots<j_k\le n-k+1$，且逆变换唯一。
+所以该层有 $\binom{n-k+1}{k}$ 个模式。
+把高于 $q$ 的各层相加，得所述维数。
+
+证毕。
+
+特别地，$|\Gamma_n|=F_{n+2}$。
+当 $n=3,q=1$ 时，唯一高阶合法子集为 $\{1,3\}$，
+其矩与相位正是 $\kappa$ 和 $\chi$。
+当 $n=9,q=2$ 时，模式数为 $89$，
+非空一、二阶均值共有 $9+28=37$ 个，
+剩余高阶关系为 $35+15+1=51$ 对，关系商实维数为 $102$。
+这些是指定读出菜单的状态关系维数，不是物理空间维数。
+全链上每个高阶占位矩对应对角投影；
+其独立读出或相位驱动是否可实现，仍须逐项供给操作菜单。
+
+<a id="sec-quantization"></a>
+

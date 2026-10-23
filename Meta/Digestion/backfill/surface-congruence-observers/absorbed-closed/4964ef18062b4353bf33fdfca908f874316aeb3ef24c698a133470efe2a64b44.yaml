@@ -1,0 +1,15 @@
+fingerprints:
+  raw_sha256: sha256:4964ef18062b4353bf33fdfca908f874316aeb3ef24c698a133470efe2a64b44
+  normalized_sha256: sha256:4964ef18062b4353bf33fdfca908f874316aeb3ef24c698a133470efe2a64b44
+cas_ref: sha256:4964ef18062b4353bf33fdfca908f874316aeb3ef24c698a133470efe2a64b44
+coverage_gids:
+  - gid: D5/S3/Observer/Dynamics/SurfaceTwistCongruence.Target
+    target_statement_id: sha256:e9837dc0c7968b3783926c3a5e98808b70616fd44c17cec88d71214b928cbb69
+  - gid: D5/S3/Observer/Dynamics/SurfaceTwistCongruence.evaluation
+    target_statement_id: sha256:4a34bc5bb36f201b5f66352aa59294b47cd46bd5e3415fece09826a42be732ef
+  - gid: D5/S3/Observer/Dynamics/SurfaceTwistCongruence.finite_characteristic_twist_detector
+    target_statement_id: sha256:3dce188a3615b020f249625e6aebc8eddbb45120bf4ae786b7d40d91245698f9
+  - gid: D5/S3/Observer/Dynamics/SurfaceTwistCongruence.projection
+    target_statement_id: sha256:f5c9a3cb88b081ce74f0ab4655cd9b0496f119f4c00a9c184bb7691c8b618360
+receipts:
+  unresolved_subitems: []

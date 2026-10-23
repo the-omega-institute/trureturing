@@ -1,0 +1,23 @@
+### Proposition 256.3 (transfer on the realized boundary image)
+
+Assume $S_0$ is closed under $\rho^2$ and (256.2)–(256.3) hold. Then for
+all $s,t\in S_0$ and $k\in\mathbb N$,
+
+$$
+\|T^k\Gamma(s)-T^k\Gamma(t)\|
+\le C(2q)^k\delta_q(s,t)
+\le \frac Cc(2q)^k\|\Gamma(s)-\Gamma(t)\|.
+\tag{256.4}
+$$
+
+**Proof.** The update equation gives
+$T^k\Gamma(s)=\Gamma(\rho^{2k}s)$ by induction. Apply the upper bridge
+bound, then the existing contraction (256.1), then the lower bridge bound.
+\quad$\square$
+
+This conclusion is only on the realized image. Extending $T$ to all of $E$,
+or requiring linearity, continuity, a norm bound, or a closed domain, requires
+separate evidence. An upper-bound-only encoding may control a resolution cost,
+but it supplies neither injectivity/source recovery nor task/update
+factorization.
+

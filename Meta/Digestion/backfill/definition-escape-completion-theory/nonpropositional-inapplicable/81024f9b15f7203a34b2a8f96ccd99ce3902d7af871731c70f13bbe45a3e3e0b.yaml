@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:81024f9b15f7203a34b2a8f96ccd99ce3902d7af871731c70f13bbe45a3e3e0b
+  normalized_sha256: sha256:81024f9b15f7203a34b2a8f96ccd99ce3902d7af871731c70f13bbe45a3e3e0b
+cas_ref: sha256:81024f9b15f7203a34b2a8f96ccd99ce3902d7af871731c70f13bbe45a3e3e0b
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 'nonpropositional: 失败与反驳见证不得替换既有预测的接口纪律。'
+    previous_atom_id: ebefb985f9e22c08ccc40ba1bd483b67e9d34f2687224b5758b479d97e151ff6
+    next_atom_id: be6b39a4a076fd10579d6d2d80d709ce368446c9c07c867ff4be826176e2ff71

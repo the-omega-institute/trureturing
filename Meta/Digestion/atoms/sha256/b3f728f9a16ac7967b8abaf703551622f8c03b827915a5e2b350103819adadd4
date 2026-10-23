@@ -1,0 +1,57 @@
+## 153. Parity-legal filtering and the different parity-twirled total
+
+The filter (151.1), the effective number filter, the B rotations and the
+Alice rail phase all commute with local parity. They are therefore also
+allowed under a local total-parity SSR. Each selected local number-one
+space has fixed odd parity, so the same conditional states, probabilities
+and thresholds apply to this heralded protocol.
+
+The complete effective parity twirl is nevertheless different from the
+number twirl. Put $P_A=(-1)^{N_A^{\mathrm{tot}}}$ and
+$P_B=(-1)^{N_b^{\mathrm{tot}}}$ on the effective system and define
+
+$$
+\mathcal G_P(X)=\frac14\sum_{j,k=0}^1P_A^jP_B^kX P_B^kP_A^j.
+\tag{153.1}
+$$
+
+The odd--odd block is $C_-$. There is also an even--even block on
+Alice and Bob bases $(|00\rangle,|11\rangle)$, respectively, with form
+
+$$
+E=\begin{pmatrix}
+a^2&0&0&0\\
+0&b^2&\eta&0\\
+0&\overline\eta&c^2&0\\
+0&0&0&d^2
+\end{pmatrix},\qquad |\eta|=\mu.
+\tag{153.2}
+$$
+
+In the unphased party-first convention $\eta=z^2$; a declared local rail
+phase can change its sign. The remaining two parity blocks are diagonal.
+The corner of $E^{T_A}$ has diagonal $(a^2,d^2)$ and off-diagonal
+magnitude $\mu$. It is NPT precisely when $\mu^2>a^2d^2$, equivalently
+$\mu>ad$. If $\mu\le ad$, both actual $2\times2$ blocks are PPT and
+separable, as are the diagonal blocks. Thus the effective parity-twirled
+state has the same threshold, with an additional contributing block above it.
+
+In particular its total ordinary negativity is
+
+$$
+\mathcal N\bigl(\mathcal G_P(\sigma^{\otimes2})\bigr)
+=(\mu-ad)_+
++\frac12\left(\sqrt{(a^2-d^2)^2+4\mu^2}-(a^2+d^2)\right)_+.
+\tag{153.3}
+$$
+
+At $q_b,\beta=\log7$, this is $(\sqrt{10}-3)/32$, rather than
+$1/256$. Formula (150.5) is specifically the effective total-number value.
+For each fixed diagonal B spectator occupation pattern, its contribution
+to B parity is a fixed sign, which leaves parity conjugation unchanged.
+The additional sign in (149.2) gives at most an Alice-local phase on that
+flag. Thus the spectator flags do not change the parity activation
+threshold for the full copies. They do enter the probability and the
+success-weighted negativity of the full number-filter outcome as in §151.
+None of these total-state quantities is a rate.
+

@@ -392,4 +392,116 @@ def audit : Contract.Registration.{_, _, _, 0, 0, 0, _, _, _, _, _, 0}
   options := #[]
 end ProfilePositive
 
+
+namespace DensityExpansion
+
+def arena : Arena where
+  signature := scalarSignature
+  Law R := ∀ {a s : ℝ}, 0 < a → 0 < s →
+    HasSum (fun n : ℕ => Real.exp (-(rate a n) * s)) (R.readout () a s)
+
+private theorem rejected : ¬ arena.Law zeroReadout := by
+  intro H
+  have he := (hasSum_h (a := 1) (s := 1) (by norm_num) (by norm_num)).unique
+    (H (a := 1) (s := 1) (by norm_num) (by norm_num))
+  exact (h_pos (a := 1) (s := 1) (by norm_num) (by norm_num)).ne' he
+
+def family : Registration arena (type_of% @hasSum_h) where
+  actual := scaleActual
+  bridge := Iff.rfl
+  variation := ⟨@hasSum_h, zeroReadout, rejected⟩
+  sensitivity := _root_.Reg.Support.SingleDependentReadout.sensitivity
+    arena.Law scaleActual zeroReadout rejected
+  dependence := scale_dependence
+
+def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
+    (@hasSum_h) (Realization scalarSignature) Unit Unit where
+  unitName := `Reg.D5.S3.Analytic.Fourier.SinhLogIntegral.DensityExpansion.unit
+  realizationName := `Reg.D5.S3.Analytic.Fourier.SinhLogIntegral.DensityExpansion.family
+  realizationSource := none
+  generated := false
+  arena := .source ⟨arena⟩
+  objectArena := .source ⟨arena⟩
+  catalog := Lean.Name.anonymous
+  localNames := false
+  realization := .source arena ⟨family⟩
+  correspondence := { stage := .evidence, objectStage := .evidence }
+  bundleNonempty := .absent
+  readout := some (realize scalarSignature (fun _ a s => h a s) (fun e => nomatch e))
+  variation := .absent
+  sensitivity := .absent
+  partialSensitivity := none
+  escapeFrom := none
+  sourceSelection := some {
+    owner := `D5.S3.Analytic.Fourier.SinhLogIntegral
+    definition := none
+    coordinates := #[0]
+    readouts := #[{
+      path := #["body", "body", "body", "body", "fn", "arg"]
+      stateBinder := 1
+      functionOperand := false
+      stateOperand := none
+      booleanPredicate := false }] }
+  continuation := .unknown
+  familyRecord := none
+  options := #[]
+
+#print axioms audit
+end DensityExpansion
+
+namespace DensityExponential
+
+def arena : Arena where
+  signature := scalarSignature
+  Law R := ∀ a s : ℝ, R.readout () a s =
+    Real.exp (-(Real.pi / a) * s) / (1 - Real.exp (-(Real.pi / a) * s))
+
+private theorem rejected : ¬ arena.Law zeroReadout := by
+  intro H
+  have he := (h_exp 1 1).trans (H 1 1).symm
+  exact (h_pos (a := 1) (s := 1) (by norm_num) (by norm_num)).ne' he
+
+def family : Registration arena (type_of% @h_exp) where
+  actual := scaleActual
+  bridge := Iff.rfl
+  variation := ⟨@h_exp, zeroReadout, rejected⟩
+  sensitivity := _root_.Reg.Support.SingleDependentReadout.sensitivity
+    arena.Law scaleActual zeroReadout rejected
+  dependence := scale_dependence
+
+def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
+    (@h_exp) (Realization scalarSignature) Unit Unit where
+  unitName := `Reg.D5.S3.Analytic.Fourier.SinhLogIntegral.DensityExponential.unit
+  realizationName := `Reg.D5.S3.Analytic.Fourier.SinhLogIntegral.DensityExponential.family
+  realizationSource := none
+  generated := false
+  arena := .source ⟨arena⟩
+  objectArena := .source ⟨arena⟩
+  catalog := Lean.Name.anonymous
+  localNames := false
+  realization := .source arena ⟨family⟩
+  correspondence := { stage := .evidence, objectStage := .evidence }
+  bundleNonempty := .absent
+  readout := some (realize scalarSignature (fun _ a s => h a s) (fun e => nomatch e))
+  variation := .absent
+  sensitivity := .absent
+  partialSensitivity := none
+  escapeFrom := none
+  sourceSelection := some {
+    owner := `D5.S3.Analytic.Fourier.SinhLogIntegral
+    definition := none
+    coordinates := #[0]
+    readouts := #[{
+      path := #["body", "body", "fn", "arg"]
+      stateBinder := 1
+      functionOperand := false
+      stateOperand := none
+      booleanPredicate := false }] }
+  continuation := .unknown
+  familyRecord := none
+  options := #[]
+
+#print axioms audit
+end DensityExponential
+
 end Reg.D5.S3.Analytic.Fourier.SinhLogIntegral

@@ -34,7 +34,7 @@ namespace D5.S3.Topology.Measures.NormPreservingLifts
 
 universe u v w
 
-private lemma totalVariation_map_of_mass {X : Type u} {Y : Type v}
+lemma totalVariation_map_of_mass {X : Type u} {Y : Type v}
     [MeasurableSpace X] [MeasurableSpace Y] (s : SignedMeasure X)
     (p : X → Y) (hp : Measurable p)
     (hmass : (SignedMeasure.totalVariation (s.map p)) univ = s.totalVariation univ) :
@@ -89,7 +89,7 @@ private lemma signedFunctional_norm_le (s : SignedMeasure K) :
     ‖signedFunctional s‖ ≤ s.totalVariation.real univ :=
   (signedLinear s).mkContinuous_norm_le (measureReal_nonneg) (signedLinear_bound s)
 
-private lemma apply_eq_of_supported_clopen {L : Type v} [TopologicalSpace L]
+lemma apply_eq_of_supported_clopen {L : Type v} [TopologicalSpace L]
     [T2Space L] [MeasurableSpace L] [BorelSpace L]
     (p : K → L) (hp : Continuous p) {V : Set L} (hV : IsClopen V)
     (s t : SignedMeasure K) (hmap : s.map p = t.map p)

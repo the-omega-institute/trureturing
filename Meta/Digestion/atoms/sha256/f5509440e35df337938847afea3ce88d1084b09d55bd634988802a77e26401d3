@@ -1,0 +1,76 @@
+**数学引文（五窗账本所用的经典坐标与加权界）。** For every common finite law of Definition 2.1,
+
+$$
+0\le r_i\le m_i,\qquad
+h(p_i)-h(r_i)\le I(Y_i;Q_A)\le h(p_i)-2r_i.
+\tag{2.1}
+$$
+
+For any fixed binary prior $p$ and any $0\le u\le\min(p,1-p)$, both endpoints of the corresponding scalar interval are attained by finite deterministic-readout laws. This existence statement varies the finite law; it does not assert simultaneous endpoint attainment for a prescribed correlated task vector and common readout.
+
+Writing $\bar H=\sum_i\alpha_ih(p_i)$ gives
+
+$$
+\boxed{
+\bar H-\sum_i\alpha_ih(r_i)
+\le\bar I\le\bar H-2\bar e,
+\qquad
+\bar H-h(\bar e)\le\bar I.
+}
+\tag{2.2}
+$$
+
+Proof. The scalar inequalities used here are classical binary entropy/error bounds; the error-to-entropy estimate $2u\le H(Y\mid Q)$ is the binary specialization of Hellman–Raviv, §III, equation (18), [DOI 10.1109/TIT.1970.1054466](https://doi.org/10.1109/TIT.1970.1054466), [primary text](https://ee.stanford.edu/~hellman/publications/07.pdf). For completeness of the parameter correspondence, write
+
+$$
+\eta(q)=\Pr(Y=1\mid Q=q),\qquad
+\nu(q)=\min(\eta(q),1-\eta(q)).
+$$
+
+Then $u=\mathbb E\nu$, $I(Y;Q)=h(p)-\mathbb Eh(\nu)$ and $0\le\nu\le1/2$. Concavity and the chord on $[0,1/2]$ give
+
+$$
+2u\le\mathbb Eh(\nu)\le h(u).
+\tag{2.3}
+$$
+
+The bound $u\le\min(p,1-p)$ follows by considering the two constant classifiers. It is a bound on the average error, not on each $\nu(q)$.
+
+Here are finite joint laws attaining both endpoints. For the lower information endpoint, if $u<1/2$, let
+
+$$
+\theta=\frac{p-u}{1-2u}\in[0,1]
+$$
+
+and specify outputs $q_+,q_-$ with masses $\theta,1-\theta$ and posteriors $\eta(q_+)=1-u$, $\eta(q_-)=u$. The mean is $p$, every posterior error is $u$, and $H(Y\mid Q)=h(u)$. An output of zero mass is discarded. If $u=1/2$, feasibility forces $p=1/2$; one constant output has the required law.
+
+For the upper information endpoint, give $(Y,Q)$ the nonzero entries
+
+$$
+\begin{array}{c|ccc}
+ &q_*&q_1&q_0\\ \hline
+Y=1&u&p-u&0\\
+Y=0&u&0&1-p-u
+\end{array}
+\tag{2.4}
+$$
+
+All entries are nonnegative. The ambiguous output has mass $2u$ and posterior $1/2$, while the others reveal the label, so its conditional entropy is $2u$. At $u=0$ both constructions reveal $Y$ up to zero-mass outputs. At $p=0$ or $p=1$ feasibility forces $u=0$ and $I=0$. At $p=u=1/2$ the ambiguous output has mass one. These include all degenerate boundaries. A tagged mixture of the two joint laws, with a tag independent of $Y$ included in the output, retains prior $p$ and error $u$ and interpolates their informations. Its state is the finite triple $(Y,\text{tag},Q)$, so every intermediate value in the interval is also attained.
+
+Strict concavity in (2.3) makes lower-information equality equivalent to constant posterior error; upper-information equality is equivalent to posterior errors in $\{0,1/2\}$. An erasure independent of $Y$, with erasure probability $u/\min(p,1-p)$, instead gives
+
+$$
+I=h(p)\left(1-\frac{u}{\min(p,1-p)}\right)
+\tag{2.5}
+$$
+
+for a nondegenerate prior. This is an attainable value, not the upper envelope when $p\ne1/2$ and $u>0$. For example, masses
+
+$$
+\Pr(Y=1,Q=q_*)=1/5,\quad
+\Pr(Y=0,Q=q_*)=1/5,\quad
+\Pr(Y=0,Q=q_0)=3/5
+$$
+
+give $p=u=1/5$ and $I=h(1/5)-2/5>0$. Finally, multiply (2.1) by $\alpha_i$ and sum. Jensen gives $\sum_i\alpha_ih(r_i)\le h(\bar e)$, proving (2.2). $\square$
+

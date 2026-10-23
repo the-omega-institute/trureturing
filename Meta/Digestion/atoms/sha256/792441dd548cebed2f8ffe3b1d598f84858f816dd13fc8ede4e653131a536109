@@ -1,0 +1,134 @@
+**Proposition 120.4 (native bounded-observable cycle heat and path laws).**
+For every fixed $m\ge3$, the map (120.12) is onto with all fibres infinite.
+On the displayed supremum-norm spaces it satisfies
+
+$$
+\begin{aligned}
+U&:\ell^\infty(C_m)\longrightarrow\ell^\infty(\mathcal P),
+&\|Uf\|_\infty&=\|f\|_\infty,\\
+L_\infty U&=UK_m,
+&e^{-tL_\infty}U&=Ue^{-tK_m}\qquad(t\ge0).
+\end{aligned}
+\tag{120.13}
+$$
+
+For every initial probability law on $\mathcal P$, the image under $q$
+of the unit-seam continuous-time source chain has exactly the unit
+cycle path law, with rate one to each adjacent residue and initial law
+the pushforward under $q$. The full-graph colouring is external
+equitable, rather than a cover of the full loopless graph. Independently,
+no map from this actual rooted $\mathcal P$ into $Q_3$ intertwines all
+cube-indicator generators, or their heat laws for all $t\ge0$.
+
+Proof. At the root the children have colours $b+1,b-1$, where $b=q(o)$,
+and there is no parent. At a nonroot vertex of colour $b$, its parent
+has colour $b-\delta(p)$. The three possibilities in (120.12) give
+
+$$
+\begin{array}{c|c|cc}
+\delta(p)&q(\operatorname{par}(p))&q(pL)&q(pR)\\ \hline
+0&b&b+1&b-1\\
++1&b-1&b&b+1\\
+-1&b+1&b-1&b
+\end{array}
+\tag{120.14}
+$$
+
+The residues $b,b+1,b-1$ are distinct for $m\ge3$, including $m=3$.
+Every actual vertex therefore has exactly one neighbour in each of
+the two adjacent cycle fibres. Each nonroot has one further neighbour
+in its own fibre, whereas the root has no such neighbour. In
+$L_\infty Uf$ the internal-fibre seam contributes zero, and the two
+external seams give
+
+$$
+(L_\infty Uf)(p)
+ =(f(b)-f(b+1))+(f(b)-f(b-1))=(UK_mf)(p).
+\tag{120.15}
+$$
+
+For $p_k=LR^{k-1}$, $k\ge1$, the recursion gives
+$\delta(p_k)=+1$ and $q(p_k)=k\pmod m$. Each residue occurs infinitely
+often along these distinct addresses. This proves surjectivity, the
+infinite-fibre assertion and the supremum-norm isometry. On the spaces
+in (120.13), $\|L_\infty\|\le6$ and $\|K_m\|\le4$. Iterating (120.15)
+and using norm-convergent exponential series proves the heat identity
+on every bounded observable, without a counting-$\ell^2$ assumption.
+
+For the full path law set $R_\infty=I-L_\infty/3$. The root has a
+virtual holding probability $1/3$; at nonroots each of the three actual
+seams has probability $1/3$. In both cases the observed row is
+
+$$
+\sum_{q(z)=c}R_\infty(p,z)
+ =\overline R(q(p),c),\qquad
+\overline R=I-K_m/3,
+\tag{120.16}
+$$
+
+with probabilities $1/3$ to $b+1$, $b-1$ and $b$. At a nonroot the last
+probability is an actual same-fibre transition. Conditional on any
+observed past, averaging (120.16) over the possible current source
+representatives leaves this same row. Thus the observed discrete chain
+is Markov with matrix $\overline R$ for every initial law, not merely
+one special or stationary law. Use an independent rate-three Poisson
+process for its event times. The source process so constructed has
+generator $-L_\infty$ by (120.7)'s bounded-operator version, and its
+observed process uses the same event times with matrix $\overline R$.
+Its generator is $3(\overline R-I)=-K_m$. Ignoring repeated observed
+states gives exactly the unit-cycle jump path. A finite number of
+Poisson events on every bounded time interval proves nonexplosion.
+
+Here (120.15) is the source-specific external equitable condition. Its
+standard finite-graph formulation is $LH=HL_\pi$ in
+[Schaub et al., *Graph partitions and cluster synchronization in networks
+of oscillators*, arXiv:1608.04283, §II (1)--(6), Remark 1 and
+§III.A (9)--(11)](https://arxiv.org/pdf/1608.04283): their indicator
+matrix $H$ corresponds to $U$, and their quotient Laplacian to $K_m$.
+The internal-cell cancellation is the same one as in (120.15). Their
+finite inverse fibre-count formula is not used for the infinite fibres.
+Likewise (120.16) is the observed-row criterion for strong lumpability,
+as in [Wolfer--Watanabe, *Geometric Aspects of Data-Processing of Markov
+Chains*, arXiv:2203.04575v3, §3.4, Theorem 3.1](https://arxiv.org/pdf/2203.04575v3),
+which attributes that criterion to Kemeny--Snell. Their finite source
+$Y$, target $X$, map $\kappa$ and kernel $P$ correspond here to
+$\mathcal P,C_m,q,R_\infty$; the countable-source extension used here
+is justified by the explicit conditional-row and bounded-rate argument
+above, not by applying a finite-only assertion without proof. Existing
+repository row-factorization suppliers are
+[StochasticDescentLumpability.StronglyLumpable and ExactQuotientKernel](../../../D5/S3/Estimation/DecisionRisk/StochasticDescentLumpability.lean)
+and [StrongLumpabilityDescent.strong_lumpability_descent_tfae](../../../D5/S3/Observer/ProbabilisticClosure/StrongLumpabilityDescent.lean).
+The local calculation supplies their representative-independence
+condition; it is not a new general lumpability theorem.
+
+Some actual seams have both endpoints in the same fibre, so $q$ is not
+a homomorphism of the full simple source graph into the loopless cycle,
+and in particular is not a locally bijective cover of that full graph.
+For comparison only, deleting the internal-fibre seams leaves exactly
+two edges at every vertex, one to each adjacent colour. On each connected
+component the restriction is locally bijective, and its nonempty image
+is closed under both target neighbours, hence is all of $C_m$. This is
+the standard cycle-cover picture; see
+[Fiala, *Structure and Complexity of Locally Constrained Graph
+Homomorphisms*, §3.1, Definition 3.12](https://kam.mff.cuni.cz/~fiala/papers/habl.pdf)
+for the locally bijective universal-cover convention. This comparison
+deletes no seam in the actual source or in $L_\infty$. Full adjacency
+equitability also fails: the fibre of colour zero contains the root
+with zero same-colour neighbours and $p_m$ with one.
+
+Finally, let $\pi:\mathcal P\to Q_3$ be any map. Its root image $b$ has
+three distinct target neighbours, and at most two can appear at the two
+actual root neighbours. For an absent target-neighbour label $c$,
+
+$$
+(L_\infty U_\pi e_c)(o)=0,
+\qquad (U_\pi K e_c)(o)=-1.
+\tag{120.17}
+$$
+
+This excludes generator intertwining. Since both operators on bounded
+observables are bounded, differentiating any proposed all-time heat
+identity at zero would give that impossible generator identity. The
+degree-two root is retained throughout; a different, degree-three root
+from a cube universal cover cannot replace it. $\square$
+

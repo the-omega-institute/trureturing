@@ -1,0 +1,16 @@
+**Theorem 19.1 (Four-child-world necessary condition near the third
+\(M\)-germ).**  If an original joint configuration has both selected
+\(M\)-endpoints in \(\mathcal U_3\), then its entire child contains at least
+four distinct complete worlds.
+
+**Proof.** The two selected \(M\)-endpoints are distinct by (16.6).  Their
+common base lies in \(\operatorname{int}K_3\) by the choice of
+\(\mathcal U_3\).  Theorem 18.1 supplies a third world in \(R\), distinct
+from both.  A selected \(J\)-pair cannot have both endpoints in
+\(\mathcal U_3\cup R\),
+since they would have equal \(p,a\) and injectivity would identify them.
+Choose an endpoint outside this union.  It is distinct from the two local
+\(M\)-endpoints and from the remote world.  Thus four distinct child worlds
+exist.  The other \(J\)-endpoint may coincide with any of these worlds; no
+cross-pair disjointness has been assumed.  \(\square\)
+

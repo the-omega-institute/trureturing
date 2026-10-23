@@ -1,0 +1,63 @@
+**Proposition 13.6 (equal suffix row charges, actual entrance bills).**
+At each pair of corresponding post-Ready rows in Theorem 13.3, native
+opcode counts/allocations agree. Under exactly UAS Definitions 4.1–4.2's
+ordered probe/assignment/birth tariff, their structural row charges also
+agree, although their actual probe records differ. Every run keeps its
+own entire pre-Ready/foundation and rule-apparatus bill.
+
+Proof. Complete ordinary records, head positions and finite-location
+presence sets agree. The common row/effect list determines equal ordered
+cell-role lists $\mathcal D_i$, append sites $\mathcal A_i$, old head-slot
+routes $\mathcal J_{i,\mathrm{old}}$, fresh-socket lists $\mathcal Z_i$,
+route lengths and alias partitions. Repeated roles are inspected equally
+often. Designated targets, including unchanged assignments, depend on the
+actual ordered effects, not on whether the final bit changes value. Hence
+the counts $e_i,s_i,t_i,r_i,a_i$ in Definition 8.5 agree as well. This
+includes all copy, marker, receipt and meter-alias targets.
+
+Put $q=q_{\mathrm{gc}}$ and let $c$ count present finite locations at the
+pre-row cut. The full finite component has $2q-1+c$ vertices. Each present
+0 or 1 contributes exactly one terminal child, so changing its occupied
+side does not change that number. Its inspection has
+$3(2q-1+c)-1=6q+3c-4$ probes, with the same root-route length $d_r$.
+Thus UAS's exact formula on these actual rows gives equal
+
+$$
+\begin{aligned}
+p_i={}&d_r+6q+3c-4
+ +\sum_{x\in\mathcal D_i}(|\pi_x|+68)
+ +\sum_{z\in\mathcal A_i}(|\pi_z|+2)\\
+ &+\sum_{w\in\mathcal J_{i,\mathrm{old}}}|w|
+ +\sum_{z\in\mathcal Z_i}(|\pi_z|+2),\\
+v_i={}&24e_i+s_i,\\
+w_i={}&3t_i+2e_i+2s_i+3r_i+2a_i+7v_i,\\
+g_i={}&1+p_i+w_i+v_i.
+\end{aligned}
+$$
+
+Probe partners/sides are not identified by these equal counts. No equality
+is asserted for a different optimized stencil, a value-dependent tariff
+or an extra export routine. For a paired length-$m$ suffix write its common
+row charges as $\gamma_1,\ldots,\gamma_m$. The complete structural bills
+remain, separately for $\sigma=0,1$,
+
+$$
+G_\sigma(b+m)=\rho_\sigma+g_{\sigma,0}
+ +\sum_{i=1}^{b}g_{\sigma,i}
+ +\sum_{j=1}^{m}\gamma_j,
+\qquad
+g_{\sigma,0}=1+8(195+2q+c_{\sigma,0}).
+$$
+
+The first sum includes every original preparation, load, capture and
+foundation-dependent row. It is not replaced by the other run's sum or
+removed on account of equal later increments. Each actual native bill
+is still Definition 8.5's
+$(n,2n,S_{\rm irreducible}+b_{\rm ctl}+8A+8n)$ at $n=b+m$.
+Proposition 11.2 and Theorem 13.3 pair these counts, while retaining each
+word's values, all dead material, every real allocation and one real
+receipt per executed row. Original Stop work and every actual loan/copy/
+ACK/return have these same complete accounts; no service subtotal replaces
+them. The structural tariff is the explicitly admitted atomic primitive
+model, not a lower ordinary-tape realization or a physical energy law. ∎
+

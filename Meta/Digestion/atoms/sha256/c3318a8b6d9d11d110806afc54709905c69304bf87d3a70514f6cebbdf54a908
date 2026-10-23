@@ -1,0 +1,106 @@
+**Lemma 20.3 (Projected factors and their strict-world filter).**
+Every actual companion in Lemma 20.2 has $Q_{41}(t)=0$,
+$x=-B(t)/A(t)$ and $d=d_n/(q\ell)$.
+The seven positive roots and their complete reconstruction enclosures
+are the following exact certificate.
+
+For a polynomial $Q$, define its signed primitive Sturm chain by
+$S_0=Q$, $S_1=Q'$, and $S_{i+1}=-\operatorname{rem}(S_{i-1},S_i)$,
+removing only positive rational content, clearing denominators positively,
+and never changing signs. Ignore zero entries in variation counts.
+The chain for $Q_{14}$ has length $15$ and endpoint signs
+
+$$
+\operatorname{sgn}S(-\infty)=(+,-,-,+,-,-,+,+,-,-,-,+,-,-,-).
+$$
+
+$$
+\operatorname{sgn}S(+\infty)=(+,+,-,-,-,+,+,-,-,+,-,-,-,+,-).
+$$
+
+Both variation counts are $7$, so $Q_{14}$ has no real root.
+The $Q_{41}$ chain has length $42$ and signs
+
+$$
+\operatorname{sgn}S(0)=(-,-,+,+,+,-,-,+,+,-,+,-,+,+,-,-,+,-,-,-,+,+,-,+,+,-,-,-,-,+,-,-,-,-,-,+,+,+,-,-,-,+).
+$$
+
+$$
+\operatorname{sgn}S(+\infty)=(+,+,+,+,-,-,-,+,-,-,-,+,+,-,-,-,+,+,+,+,+,-,-,-,-,-,-,+,+,+,-,+,+,-,-,-,-,-,-,-,-,+).
+$$
+
+The corresponding variation counts are $19,12$. In increasing order,
+put $I_i=[N_i,N_i+1]/10^{100}$ with the following integers.
+At each pair of endpoints $Q_{41}$ has opposite signs, and its
+Sturm variations are as listed.
+
+| $i$ | $N_i$ | Endpoint variations |
+| --- | --- | --- |
+| 1 | $3673966186886689544040020206438582231194471327213018740994213129258016135658119798769337922171432690$ | $19,18$ |
+| 2 | $4667791316805720920280933301326418468439245500987976078967815296049367378845772432102165034205472403$ | $18,17$ |
+| 3 | $5084261946711772408304108316073955415819997257278725792617513128825180432635635172816447522415646929$ | $17,16$ |
+| 4 | $7338861392973206190514597797787405360605022948262456145999677879059264177620068178150471279504301701$ | $16,15$ |
+| 5 | $8116670700777931359322069118350456305907943614178444264119653433583577228588933504877652918707121232$ | $15,14$ |
+| 6 | $10042876138781682369648017176544131204498789307264827912616897353309825581605044853782487143352466845$ | $14,13$ |
+| 7 | $10913496542724139053571273607590070503000268518569768199403379478359711342973362737574469633124326981$ | $13,12$ |
+
+Thus there is exactly one root in each $I_i$ and these exhaust $t>0$.
+For the following tables, an integer $L$ denotes the closed interval
+$[L,L+1]/10^9$. Evaluate $A,B$ by descending Horner, then
+$x=-B/A$, $d=d_n/(q\ell)$, the original $H_i$, and
+$B_0,C_0,U,b,j,r$ in the order of Lemma 19.2.
+Use closed rational interval operations, rounding the lower endpoint
+down and the upper endpoint up to $10^{-200}\mathbb Z$ after every
+operation. Multiplication takes all four products; inversion is used
+only on intervals excluding zero. This specifies the bounds without
+any floating-point root or external coefficient input.
+
+| $i$ | $x$ | $d$ | $U$ | $b$ | $r$ |
+| --- | ---: | ---: | ---: | ---: | ---: |
+| 1 | 338489158 | 21406461234 | 3405333835 | 1202666917 | 2229636045 |
+| 2 | -309985314 | 26621211526 | 8026665269 | 3513332634 | -2859752536 |
+| 3 | 623157789 | -198048445 | 150719751054 | 74859875527 | 34512640628 |
+| 4 | 1539198218 | 38551253871 | 347992599 | -326003701 | -291065059 |
+| 5 | 1049934643 | 40685794788 | 910945999 | -44527001 | -44567956 |
+| 6 | 1043947812 | 35957756394 | 1616299761 | 308149880 | 707169547 |
+| 7 | 7166535872 | 20238169380 | 212687601 | -393656200 | 1223444850 |
+
+| $i$ | $H_1$ | $C_0$ | $p$ | $v$ | $\ell$ |
+| --- | ---: | ---: | ---: | ---: | ---: |
+| 1 | -8200679812 | 471406423018 | 18775550619 | 93588137718 | 7785281121 |
+| 2 | -56618274204 | 709067970433 | 20525254967 | 103129759518 | 410532725 |
+| 3 | 61389525159 | 191453766 | 21939195859 | 109671973400 | 133475012 |
+| 4 | -6125270892 | 1670550465826 | -58589929475 | -183743203690 | -164208958184 |
+| 5 | -15184647279 | 1794851004023 | -6964141245 | 11184642444 | -41379995596 |
+| 6 | -19718473123 | 1318090421957 | 3670683933 | 56796298407 | -40453407084 |
+| 7 | 2659991303 | 637894393184 | 4661635574 | 63188293639 | -32587104028686 |
+
+For row six the additional lower numerators for $a=f_{MJ},m=f_{MM},H_0,H_2,H_7$
+are respectively
+$269030580044,350315789609,-58118513076,-8102511993,61785472110$,
+with the same interval convention. All reconstruction inverses exclude
+zero on the listed intervals. In particular $d-24,p-24,H_1,C_0,\ell$
+are separated from zero; $q$ is a unit on $Q_{41}=0$ as above.
+For row six $x\ne t+1$, since $1<t<2$ and $1<x<11/10$.
+
+**Proof.** Lemma 20.2 and $D>0$ permit exactly the divisions of
+Definition 19.3. Thus $F=G=0$ and the fixed resultant vanishes.
+The positive-coefficient $Q_4$ and the Sturm certificate for $Q_{14}$
+leave only $Q_8$ and $Q_{41}$. On $Q_8=0$, the $h_2$ unit and
+$S_2=0$ imply $x=-h_1/(2h_2)$ by the zero-discriminant identity.
+Its other remainder identity forces $\ell(x)=0$, already excluded.
+This eliminates the entire $Q_8$ factor, including multiple roots.
+On $Q_{41}=0$, the $\alpha$ unit and $S_1=0$ force
+$x=-\beta/\alpha=-B/A$; the terminal equation then fixes $d$.
+The Sturm intervals exhaust all positive parameters, with no finite
+upper cutoff. The tables are rational interval consequences of the
+defined determinants and circuit. Rows one and three have $r>1$;
+row two has $x<0$; rows four, five and seven have $U<1$.
+Only row six can pass the complete strict filter.
+
+These are necessary conditions on actual worlds. No projected root
+has yet been declared a world. Fixed determinants and the universal
+pole norm cover all leading-degree drops. The argument imposes no
+$\Lambda\ne0$, $F_0\ne0$, nonzero drift, exact cubic degree,
+nonzero $H_0,H_7$ or nonsampled-root assumption. ∎
+

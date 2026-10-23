@@ -1,0 +1,30 @@
+**Theorem 4.3 (No finite pole companion).** If $t>0,q\ne0$ and a
+finite real $x>0$ satisfies $\phi(x)=L(t,x)=0$, the original
+necessary equations $f=K_s=0$ have no finite real drift solution.
+
+Proof. The second resultant in (3.5) and the positive coefficients of
+$Q_4$ give $Q_8(t)=0$. The polynomial combination $T_1$ gives
+$P_Ax+P_B=0$, since $P_A$ is a unit. Thus the substitution in
+Definition 4.2 applies.
+
+To justify its characteristic-zero conclusion, take the monic form of
+$Q_8$ over $\mathbb Z_{(101)}$. Its leading coefficient has residue
+$72$, and the norm of $P_A$ has residue $71$. Hence $P_A$ has an
+inverse in this finite free algebra already over $\mathbb Z_{(101)}$.
+All scalar denominators in (4.1) and the monic division are prime to
+$101$. Substitution and determinant formation therefore commute with
+reduction. The coefficient rows (4.4) follow from the cleared circuit
+by ordinary polynomial substitution; expanding (4.2) gives (4.5).
+Multiplying the polynomials in (4.6) gives $1$ coefficient for coefficient.
+The norm table is also determined by (3.7), so the norm of $R$ is a
+nonzero rational number, having nonzero residue $73$.
+Consequently $R$ is a unit in $\mathcal A$ and cannot vanish at any
+complex $Q_8$ root. The norms of $f_2,g_4$ also preserve their exact
+degrees $2,4$ there; the fixed matrix itself requires no such
+specialized-degree assumption for its common-root implication.
+
+An original solution would give $f_c=K_{sc}=0$ since $q_5\ne0$.
+The column following (4.2) would force $R(t)=0$, a contradiction.
+This argument covers $d=0$, $b_s=0$ and every finite drift without
+solving for drift in the terminal equation. ∎
+

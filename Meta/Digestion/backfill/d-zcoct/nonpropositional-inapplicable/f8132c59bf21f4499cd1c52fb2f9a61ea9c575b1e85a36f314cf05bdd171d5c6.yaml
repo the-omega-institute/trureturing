@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:f8132c59bf21f4499cd1c52fb2f9a61ea9c575b1e85a36f314cf05bdd171d5c6
+  normalized_sha256: sha256:f8132c59bf21f4499cd1c52fb2f9a61ea9c575b1e85a36f314cf05bdd171d5c6
+cas_ref: sha256:f8132c59bf21f4499cd1c52fb2f9a61ea9c575b1e85a36f314cf05bdd171d5c6
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 待识别桥的枚举标签 Parity Weyl interval，无命题。
+    previous_atom_id: b25fcb154bbfa4337e529467f1d791ad9aea5ac182bd8c45314f5a0ab6e7791f
+    next_atom_id: d8c494dfafa487d9ab64e27aedea1dbcedce676463a04a6ceed253dca58dc8e3

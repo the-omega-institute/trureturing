@@ -1,0 +1,23 @@
+**Theorem 22.3 (Strict output margin on the actual J arc).** The arc of
+Theorem 16.4 satisfies, for every $p\in[10,34]$,
+
+$$
+v_J(p)>\ell(p)+\frac12.
+\tag{22.8}
+$$
+
+*Proof.* Use the actual $L$ endpoint, so $v_J=N_v/D$. The strict
+source guards give $T,U,j,n>0$. Lemma 16.3 gives
+$\Lambda_L\ge1421047/10^6>0$ on its radius-$2\rho$ tubes, which
+contain the actual radius-$\rho$ endpoint enclosures. By (16.2),
+$D=(5/2)TUjn\Lambda_L>0$ at this endpoint. Lemma 22.2 and (22.2)
+then imply
+
+$$
+v_J-\ell(p)-\frac12=\frac{\mathcal R(t_L,b_L,p)}{10D(t_L,b_L)}>0.
+$$
+
+Thus positivity of the denominator is an existing guard on this actual
+endpoint, with its source and parameter hypotheses satisfied. It is
+not a regularity condition imposed on every world in its child. ∎
+

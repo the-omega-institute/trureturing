@@ -1,0 +1,66 @@
+**Definition 16.1 (one actual mixed family).** Fix Assumption 1.2's
+installation and one actual canonical-acquired Ready history $P$, with
+its entire already paid prefix fixed as in Definition 15.1. First
+actually supply outer01 and the canonical ReadE frame0000. Complete
+its original source computation, row/dependency deliveries and checks,
+final ACK, source TOK, changed idle edge, InnerReturn, identity-role
+normalization, Tail13/Tail17, closed CaptureCAP and actual Ready. Denote
+this derived common history by $P_*$. CAP Lemmas 4.7 and 6.7 and ARC
+Proposition 5.5 supply this finite fragment under the retained pointwise
+supply/termination premises. $P_*$ is notation for that executed common
+prefix, not another initialization or a later entry supplied to a decoder.
+
+For $L\ge2$, $1\le r<L$, put
+
+$$
+\mathcal X_{L,r}=\{x\in\{0,1\}^L:|x|_1=r\},\qquad
+w_x=000\,U(L)\,x,\qquad U(L)=1^L0.
+$$
+
+From $P_*$ execute the following installed path for each $x$.
+
+1. Acquire outer1, transfer its invocation slot, and separately acquire
+   HistoryMode1 by GCA Definition 3.1. Acquire the **whole** frame $w_x$
+   on70: three header bits, its terminating unary length, and exactly
+   $L$ payload bits. Complete its F/seal, measured length, actual
+   descriptor and F-bounded import. The mode is neither a header bit
+   nor a bit inferred from the frame.
+2. Execute Recover: freeze the predecessor $M$ of $P_*$, run Boundary,
+   append the immutable cover, and Publish CoverRef. Complete its
+   actual sender71/mailbox72/receiver73 setup, copies, completion
+   records, print, check, ACK and mailbox return. Transfer to
+   ClientCover; position73 before bank work, import/check the received
+   CoverRef, retain its acquired $c$, and transfer the invocation to Bind.
+3. Bind resolves that authentic cover and tests the retained mode-one
+   selector. GCA Definition 3.2 requires tag111; tag000 takes its
+   first-detecting MalformedRecovery reason0000. Execute the complete
+   GCA Definition 6.3 rejection route: Publish Rejection, print,
+   transfer to ClientImage's rejection branch, positioned receiver
+   import, reason/raw-request check, ACK, mailbox return, five-field
+   completed-item append, invocation return, and the actual Ready CTL.
+   Call the resulting history $R_x$.
+4. Actually acquire outer01, including its seal/descriptor/import and
+   dispatch. Execute the unchanged original header Base/setup of
+   $F^A$. At its first original IN5 supply0. Write $h_x$ for the cut
+   immediately after this IN and before its matching EX13, and $h_x^+$
+   for the actual successor of that EX13.
+
+Recover and ClientCover precede the failed tag test. There is no
+Issue, PackageRef, Call/Image or successful five-view suffix on this
+rejection branch. GENERAL Definition 2.1 extends only the successful
+ClientImage tail and Definition 7.4 retains this rejection route.
+The completed history item has GCA's five fields, including the actual
+separate mode, whole frame, typed rejection and bindings actually
+received, as specified in Definition 7.2. Its predecessor excludes the
+current selecting flight.
+
+Every frame here is physically complete. Definition 1.4 includes its
+typed rejection in $\mathcal C_{\mathrm{gc}}$; this is neither a source
+frame-fault nor an unexecuted disabled attempt. No second flight enters
+a busy mailbox or invocation. The source prefix at $h_x$ is the proper
+canonical prefix0, extendible, for example, to ReadE0000. No completion
+of this last source call is assumed. The post-$P$ external supply has
+exactly $2L+15$ bits: six for the common outer01/ReadE, $2L+6$ for
+outer1/mode1/whole history frame, and three for the final outer01/IN5.
+Callbacks and represented historical inputs add no physical external IN.
+

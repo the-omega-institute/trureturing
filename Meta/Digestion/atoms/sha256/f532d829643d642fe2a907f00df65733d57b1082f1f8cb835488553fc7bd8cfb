@@ -1,0 +1,18 @@
+**Definition 15.1 (A width-dependent exact parent).** In the original domain of Definition 1.1, fix $\beta>0$ and put
+
+$$
+\begin{gathered}
+h(s)=\frac85(s-1)(s-3)(s-5),\qquad
+P_\beta(r)=\begin{pmatrix}r&\beta\\r(1-r)/\beta&1-r\end{pmatrix},\\
+W_\beta(r)=(P_\beta(r),h,24),\qquad
+K_\beta=\{W_\beta(r):0<r<1\},\\
+C_\beta=24+\frac{24}{5}(1+\beta),\qquad
+Y_\beta=24-\frac{24}{5}(1+2\beta),\\
+H_{4,\beta}=(0,J,24,M,C_\beta,J,24,M,Y_\beta),\qquad
+H_{5,\beta}^F=(H_{4,\beta},F,24)\quad(F=J,M).
+\end{gathered}
+\tag{15.1}
+$$
+
+For $S\subseteq(0,1)$ write $K_\beta(S)=\{W_\beta(r):r\in S\}$. Equality $g=h$ below means equality of entire polynomials, including scale. It does not mean a gain direction. The coordinates and the gain at $\beta=4$ occur in the root volume, §23, equations (23.4)–(23.6), (23.15)–(23.18). Here each width has its own exact parent; the support question concerns this family of parents.
+

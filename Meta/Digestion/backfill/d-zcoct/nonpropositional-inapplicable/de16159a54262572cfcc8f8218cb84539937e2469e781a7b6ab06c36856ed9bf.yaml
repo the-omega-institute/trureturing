@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:de16159a54262572cfcc8f8218cb84539937e2469e781a7b6ab06c36856ed9bf
+  normalized_sha256: sha256:de16159a54262572cfcc8f8218cb84539937e2469e781a7b6ab06c36856ed9bf
+cas_ref: sha256:de16159a54262572cfcc8f8218cb84539937e2469e781a7b6ab06c36856ed9bf
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: Defines the editorial category conditional theorem; no particular implication is asserted.
+    previous_atom_id: 98e4f203f2b3b6fc69cb0bff2b1654cdeb78642a7b63fa4f8eb58e38302f5db5
+    next_atom_id: c5d1691863a48ee36d6c122aeaf81abdcadffd3dcc4cc953c617add3dec839a9

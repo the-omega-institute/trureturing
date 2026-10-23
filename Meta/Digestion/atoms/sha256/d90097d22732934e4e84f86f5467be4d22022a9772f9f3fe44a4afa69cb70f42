@@ -1,0 +1,18 @@
+**Definition 117.3 (Remaining full finite optimization).** The exact
+finite target is still (111.1), with every complex density input, the
+original identity target and an unrestricted terminal CPTP decoder.
+Theorem 113.1 evaluates the complete-orbit auxiliary problem, and
+Theorem 115.1 characterizes the full-input optimizer set at parameter
+zero. The positive-width intervals (114.4) leave the exact values
+$\mu(-1/2)$ and $\mu(1/4)$ undetermined, as well as the general actual
+finite values and their minimizing decoders. Theorem 117.1 is a necessary
+accumulation implication; it does not establish that every element of
+$\mathcal Z_0$ occurs as a limit of nonzero-parameter minimizers.
+Neither an exact full finite minimax nor a minimax asymptotic equality
+is asserted by the orbit value or the zero-parameter characterization.
+
+[MAT-EXP]: https://arxiv.org/pdf/1012.2650v7 "Keiji Matsumoto, A quantum version of randomization criterion, Section 5, Theorem 5"
+[JC-EXP]: https://arxiv.org/pdf/1512.07016v2 "Anna Jenčová, Comparison of quantum channels and statistical experiments, Section 4, Theorem 4"
+[CGJLP-COH]: https://arxiv.org/pdf/1601.06269v2 "Jianxin Chen, Shane Grogan, Nathaniel Johnston, Chi-Kwong Li and Sarah Plosker, Quantifying the coherence of pure quantum states, Proposition 2"
+[GLO-EIG]: https://arxiv.org/pdf/1903.00785v2 "Anne Greenbaum, Ren-Cang Li and Michael L. Overton, First-order Perturbation Theory for Eigenvalues and Eigenvectors, Assumption 1 and Theorem 1"
+

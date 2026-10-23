@@ -1,0 +1,43 @@
+**定理 252.3（原生接缝重置排除该表示合同）。** 定义 252.2 的表示不存在。更精确地，令 $H\ge0$ 为整数，只要求下列两条合法轨道的更新等式在 $0\le k<H$ 成立、目标等式在 $0\le k\le H$ 成立，则任何这样的可逆线性表示都须满足
+
+$$
+\dim V\ge H+1:
+\qquad \mathrm{null}^k,\quad [2]\mathrm{null}^k.
+\tag{252.4}
+$$
+
+证明。定义 252.1 的表逐项给出
+
+$$
+\begin{aligned}
+G_5(\varepsilon)&=1,&G_5([2])&=0,\\
+G_5(\mathrm{null}^k)&=1,&
+G_5([2]\mathrm{null}^k)&=1\quad(k\ge1).
+\end{aligned}
+\tag{252.5}
+$$
+
+所有这些前缀均合法：$[2]$ 从初态合法，$\mathrm{null}$ 对两种接缝都允许，第一次 $\mathrm{null}$ 即将接缝置零。置 $x=v(\varepsilon)-v([2])$，由线性和更新等式得
+
+$$
+ex=1,\qquad eA^kx=0\quad(k\ge1).
+\tag{252.6}
+$$
+
+设 $d=\dim V$。$d=0$ 已与 $ex=1$ 矛盾。对 $d\ge1$，写 $A$ 的特征多项式为
+
+$$
+\chi_A(t)=c_0+c_1t+\cdots+c_{d-1}t^{d-1}+t^d,
+\qquad c_0=(-1)^d\det A\ne0.
+$$
+
+经典 Cayley–Hamilton 恒等式给
+
+$$
+0=e\chi_A(A)x
+  =c_0ex+\sum_{j=1}^{d-1}c_jeA^jx+eA^dx=c_0,
+\tag{252.7}
+$$
+
+矛盾。这个论证只使用 $k=0,\ldots,d$。故有限时域 $H$ 若允许 $d\le H$ 也矛盾，得到 (252.4)。所用中间机制是有限维线性表示的标量响应满足固定线性递推；其加权自动机背景见关系延拓几何 §6 所引 Berstel–Reutenauer，*Noncommutative Rational Series with Applications*，Chapter 2，以及 Balle–Panangaden–Precup，[*Singular Value Automata and Approximate Minimization*, arXiv:1711.05994v2](https://arxiv.org/abs/1711.05994v2)，§2、Theorem 2.1 的有限表示与 Hankel 秩对应。后者供应经典表示背景，不是本原生守卫障碍的逐字陈述。这里新增的是由原生两条轨道强制的 (252.6)，而非该经典递推工具。∎
+

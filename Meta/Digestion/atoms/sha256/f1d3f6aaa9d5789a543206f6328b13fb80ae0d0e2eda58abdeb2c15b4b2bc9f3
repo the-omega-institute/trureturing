@@ -1,0 +1,58 @@
+**Proposition 12.2 (response-frontier application of acquired replay).**
+From $D_i$ there is a finite mathematical procedure that reconstructs the
+same actual primitive history through $\nu_i$, and, for every selected
+ordinal $k\le\nu_i$ after acquisition, its literal prefix and complete
+endpoint. It can also compute the ordinal $N_i=|d_i|$ of this nonterminal
+acknowledged return and extend the reconstruction through $N_i$. At any
+later such actually acquired frontier, reconstruction restricts to the
+identical earlier prefix, including its old guards, layout, rights and
+preparation occurrence.
+
+Proof. Apply the actual local descriptor/origin resolution of Definition
+6.1 to the acquired material, not to a remote owner's private address.
+The bit decoders of Lemma 6.1b give the original request headers, lengths
+and payloads, in unified-row order. In raw mode concatenate their actual
+wire bits, excluding physical separators, status cells and computed
+responses. In the fixed automatic/effective mode, Definitions 4.6 and
+8.1–8.2 instead generate those command blocks by Append/copy from already
+acquired data, so their bits are not put in the external-input reservoir.
+The fixed boot mode and deterministic control distinguish these cases;
+no classification is guessed from equal command bytes. Acquired initial
+input and any actual externally supplied command bits are retained in
+their prescribed input-site order. For local/controller markers use the
+acquired instruction/return dependencies and the fixed installed graph;
+do not fabricate external input frames. Thus the resulting finite
+reservoir contains exactly the actual external input consumed through
+$d_i$. In particular it is a superprefix of the input consumed at
+$\nu_i$ and at every earlier selected $k$.
+
+The response fence's $U(\nu_i)$ is actually present. Run Theorem 7.4 with
+the acquired original seed and this reservoir, stopping after $\nu_i$
+original primitives, or after $k$ of them. Its induction requests a bit
+only at the actual next IN before that stop, so it consumes exactly the
+corresponding input prefix; an unused reservoir suffix has no effect.
+This is RCA Lemma 4.5's superprefix argument applied to CAP's specified
+graph, not a new replay theorem. Its state includes an IN-before-WR latch,
+a partial invalid source packet, staged counters, pending semantic or
+maintenance event, either journal writer and an unavailable copy whenever
+that is the actual phase. Old permission bits are reconstructed as data;
+they are not activated in the present machine.
+
+For the last nonterminal row, response commitment is followed by the
+specified fence readout, manifest and row construction, dependency copies,
+actor checks, final row ACK, source-token return, idle CTL and saved
+return edge. The installed graph and complete acquired dependencies fix
+this tail; it admits no additional independent external IN before that
+return. Simulate it until that particular row's acknowledged saved return,
+counting every original primitive. Lemmas 6.1b and 6.7 give termination.
+This computes $N_i$ rather than assuming the response fence is already the
+row seal, ACK or return. It is the closed-boundary stopping method of RCA
+Theorem 4.4 on this restricted CAP return, with the response ordinal
+already acquired. For any $k\le N_i$ stop this same reconstruction at $k$.
+
+Later delivered rows append without altering the acquired immutable
+prefix. Determinism and the same boot, allocator and input choices make
+later reconstruction agree at each earlier primitive. Reserve's stable
+address extension and Raise's historical-guard checks are retained as
+executed work, not replaced by the latest reserve or guard. $\square$
+

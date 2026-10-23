@@ -1,0 +1,76 @@
+**Definition 186.1 (Native prerequisites and normalized coordinates).**
+Use the stopped history and metric family of Continuation VI,
+§§139–140 [N]. The source is the stopped singleton substitution
+$\beta_{\mathrm{src}}\mapsto\langle\beta_{\mathrm{src}},\alpha\rangle$,
+with its two actual children, at the first accepted epoch. The source symbol
+$\beta_{\mathrm{src}}$ is distinct from inverse temperature. In actual-coordinate
+order $(r,\ell,R)$, retain the native data
+
+$$
+T=\begin{pmatrix}1\\1\\1\end{pmatrix},\quad
+W=\begin{pmatrix}1&0&0\\1&1&0\\1&0&1\end{pmatrix},\quad
+L_\star=\begin{pmatrix}2&-1&-1\\-1&1&0\\-1&0&1\end{pmatrix}.
+$$
+
+The old scalar norm and child residual metric are $G_0=[1]$ and $K=I_2$.
+For $q=(u,v)^{\mathsf T}$ put $\pi_q=(1-u-v,u,v)^{\mathsf T}$ and
+
+$$
+G_q=L_\star+\pi_q\pi_q^{\mathsf T},\qquad
+W^{\mathsf T}G_qW=
+\begin{pmatrix}1&q^{\mathsf T}\\q&I_2+qq^{\mathsf T}\end{pmatrix}.
+$$
+
+Equations VI (139.2)–(139.3) give
+
+$$
+G_qT=\pi_q,\qquad T^{\mathsf T}G_qT=1,\qquad
+Q_q=T\pi_q^{\mathsf T}-I_3,\qquad G_qQ_q=-L_\star.
+$$
+
+Thus the occurrence form, inherited norm and accepted history remain fixed
+while the metric varies. The native instances are
+
+$$
+q_a=(1/6,1/6)^{\mathsf T},\quad \pi_a=(2/3,1/6,1/6)^{\mathsf T},\qquad
+q_b=(1/3,1/3)^{\mathsf T},\quad \pi_b=T/3,
+$$
+
+$$
+G_a=\frac1{36}\begin{pmatrix}88&-32&-32\\-32&37&1\\-32&1&37\end{pmatrix},
+\qquad
+G_b=\frac1{9}\begin{pmatrix}19&-8&-8\\-8&10&1\\-8&1&10\end{pmatrix}.
+$$
+
+Every off-diagonal rate $(Q_q)_{ij}=(\pi_q)_j$ is positive for these two
+instances. Their finite generators are conservative and irreducible; this
+is a statement about the stopped history, not about subsequent epochs.
+
+Use the positive principal square root of VI (140.1), $S_q=G_q^{1/2}$, normalize by
+$z_{\mathrm{coord}}=S_qx$, and complexify to standard $\mathbb C^3$.
+The vectors $V_q=S_qT$ have norm one. Because $S_q^{-1}\pi_q=S_qT$,
+
+$$
+H_q=S_q^{-1}L_\star S_q^{-1}=I_3-V_qV_q^*,\qquad
+\operatorname{spec}H_q=\{0,1,1\}.
+$$
+
+The principal root fixes the coordinate model; an arbitrary metric factor
+followed by an unspecified unitary would not fix the cut. Equations VI (140.2)–(140.4) fix the principal-root vectors and cut:
+
+$$
+V_a=\frac{(10,7,7)^{\mathsf T}}{\sqrt{198}},\qquad V_b=\frac T{\sqrt3},\qquad
+\mathfrak h_A=\mathbb C e_\ell,\quad
+\mathfrak h_B=\operatorname{span}_{\mathbb C}\{e_r,e_R\},
+$$
+
+$$
+p_q=|(V_q)_\ell|^2,\qquad p_a=\frac{49}{198},\qquad p_b=\frac13.
+$$
+
+This is the source-defined common cut of the normalized principal-root axes.
+It does not identify raw weighted occurrence spans with orthogonal or physical
+subsystems. The family parameter $p\in[0,1]$ used below extends the algebraic
+formulas beyond these native instances. No assertion identifies that entire
+interval with the image of admissible native $q$.
+

@@ -1,0 +1,52 @@
+**Definition 30.2 (Source factors and an exact quotient).** For independent
+indeterminates $t,b$, use $j,n,T,U,C_i,N_p,N_v$ of (28.1)–(28.2) and set
+
+$$
+\begin{aligned}
+\mathcal S={}&b^4(t^6-3t^5-6t^4+17t^3+14t^2-23t-15)\\
+&+b^3(23t^6-72t^5-89t^4+320t^3+25t^2-230t+94)\\
+&+b^2(-69t^5+95t^4+348t^3-349t^2-241t+252)\\
+&+b(69t^4+22t^3-271t^2-19t+135)-23t^3-46t^2+15t+20,\\
+\mathcal B={}&b^3(309t^4-309t^3-298t^2+149t-11)\\
+&+b^2(162t^4-780t^3+465t^2+220t-318)\\
+&+b(-324t^3+631t^2-236t-160)+162t^2-160t.
+\end{aligned}
+\tag{30.2}
+$$
+
+Define $\mathcal T\in\mathbb Z[t,b]$ by the exact polynomial quotient
+
+$$
+\mathcal T=
+\frac{U^{23}\mathcal Q^3}{27\mathcal S^2}
+\alpha_r\left(\frac nU,\frac{N_p}{5\mathcal Q},
+                         \frac{N_v}{5\mathcal Q}\right).
+\tag{30.3}
+$$
+
+Here the right side specifies a polynomial identity before any source
+is evaluated. To specify its coefficients by integer arithmetic, write
+
+$$
+\alpha_r(x,p,v)=\sum_{i,j,k}a_{ijk}x^ip^jv^k.
+$$
+
+Coefficient extraction in (22.2)–(22.7) gives $i\le23$, $j+k\le3$.
+Consequently
+
+$$
+\begin{aligned}
+\mathcal W&=\sum_{i,j,k}a_{ijk}n^iU^{23-i}
+ N_p^jN_v^k(5\mathcal Q)^{3-j-k},\\
+\mathcal W&=3375\mathcal S^2\mathcal T.
+\end{aligned}
+\tag{30.4}
+$$
+
+Expansion and exact division in $\mathbb Z[t,b]$ give zero remainder.
+The numerator $\mathcal W$ has $1683$ nonzero monomials;
+$\mathcal T$ has $1034$ and bidegree $(46,27)$, in the order $(t,b)$.
+Thus (22.2)–(22.7), (28.1)–(28.2) and (30.2)–(30.4) specify every
+coefficient without a floating coefficient list or a source specialization.
+In particular $\mathcal S^2$ has not been dropped at its zero set.
+

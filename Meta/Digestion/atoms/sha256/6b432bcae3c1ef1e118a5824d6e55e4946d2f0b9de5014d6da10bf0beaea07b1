@@ -1,0 +1,23 @@
+**Theorem 141.3 (Local analytic persistence).** There are an open
+interval $I\subset(0,1)$ containing $q_0=1/4$ and real-analytic
+functions
+
+$$
+q\longmapsto(r(q),L(q),p(q),x(q)),\qquad y(q)=1-p(q)-x(q),
+\tag{141.8}
+$$
+
+whose values at $q_0$ are $(r_*,L_*,p_*,x_*)$, such that
+$F(q;r(q),L(q),p(q),x(q))=0$. The interval can be chosen so that,
+for every $q\in I$, the unrestricted value is $\mu(q)=L(q)$ and
+all optimal decoders are exactly (139.3)–(139.4), with $r=r(q)$
+and $|z|\le1$. Every such decoder has the same composite (140.1),
+with these continued $q,r(q)$. The support ellipsoid, optimal disk,
+ranks, covariance, nonunitality and nonface conclusions all persist.
+
+The interval is existential; no numerical radius is specified.
+The analytic branch is locally unique as a zero of the four-variable
+system near $u_*$. The decoders themselves form a disk and are not
+unique. The proof of the value and classification is completed in
+§§142–143, after the following strictness lemma.
+

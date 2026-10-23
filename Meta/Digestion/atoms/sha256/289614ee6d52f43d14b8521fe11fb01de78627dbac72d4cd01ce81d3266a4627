@@ -1,0 +1,30 @@
+**Definition 17.3 (pure source-height programme contract).** At height $x_j$
+the complete source-dependent input available to a common processor, apart
+from its data specimen, is a normalized pure programme $r_j$. Its calibrated
+pair is specified, and ket phases are chosen so that
+$\langle r_1,r_2\rangle=\mu\in[0,1]$. All accessible history-bearing
+assistance is included jointly in this programme: source-dependent
+installed descriptions, controller/clock states, accessible archive ports,
+ancillas, receiver shares of prior entanglement and any later-returned
+environment cannot be left outside the count.
+
+The fixed public description includes the pair $(x_1,x_2)$, $c,d,L$,
+the calibrated basis, clock convention and the common processor. Knowing
+the public pair does not reveal its actual index. A fixed mixed blank
+ancilla can be purified independently of that index. No other
+source-correlated input arrives. A reference/archive $R$ may be retained
+and acted on by identity; it is unavailable as programming assistance.
+If a selector or later gate accesses a history-bearing part of it, that
+part belongs in the accessible programme and the hypothesis must be
+checked again.
+
+For each $j$ the processor must give (OC.57) on every live density operator,
+including after tensoring with identity on arbitrary unchanged quantum
+references. Thus the tested input is $\rho_{VR}\otimes|r_j\rangle\langle r_j|$
+for every $\rho_{VR}$. This is complete-map testing on $M_3$, stronger than
+testing only the original correlated pure orbit. Accessible output
+programme states may change or be consumed. No programme return condition
+is imposed in the necessity assertion. Calibrated operations, permission,
+blank resources and the exact time/mode recorder are explicit ideal
+services, without a finite-hardware or acquisition assertion.
+

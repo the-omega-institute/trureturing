@@ -1,0 +1,150 @@
+**Theorem 31.1 (All-companion $b$ cap).** Every complete world
+realizing the literal history (30.1) satisfies
+
+$$
+p\le-425\quad\Longrightarrow\quad b<20.
+\tag{31.1}
+$$
+
+The acquired sixth reading $v$ is unrestricted. In particular the
+implication applies separately to every world in any such $C(p,v)$.
+
+*Proof.* We prove that $b\ge20$ forces $p>-425$.
+Put $\alpha=r(1-r)$, so $0<\alpha\le1/4$, and write
+
+$$
+j=b+\frac\alpha b,\qquad
+n=b+r+\frac\alpha b.
+\tag{31.2}
+$$
+
+For $b>0$ and $z\ge0$, the exact reciprocal identity
+
+$$
+\frac1{b+z}=\frac1b-\frac z{b^2}
++\frac{z^2}{b^2(b+z)}
+\tag{31.3}
+$$
+
+implies $1/b-z/b^2\le1/(b+z)\le1/b$.
+Consequently
+
+$$
+\begin{gathered}
+\frac1b-\frac1{b^2}\le\frac1T\le\frac1b,\qquad
+\frac1{2b}-\frac1{4b^2}\le\frac1U\le\frac1{2b},\\
+\frac1b-\frac1{4b^3}\le\frac1j\le\frac1b,\qquad
+\frac1b-\frac1{b^2}-\frac1{4b^3}\le\frac1n\le\frac1b.
+\end{gathered}
+\tag{31.4}
+$$
+
+Here the last lower bound uses $r<1$ and $\alpha\le1/4$;
+the bounds remain valid at $\alpha=1/4$.
+In particular
+
+$$
+\Lambda\ge1-\frac8b\ge\frac35>0.
+\tag{31.5}
+$$
+
+For the lower bound on $N$, use the lower bounds for $1/T,1/U$
+and the upper bounds for $1/j,1/n$ in (30.7). This gives
+
+$$
+N\ge-\frac{33}{5b}-\frac{1809}{10b^2}.
+\tag{31.6}
+$$
+
+For its upper bound, use $1/T\le1/b$, $1/U\le1/(2b)$ and the
+two lower bounds for $1/j,1/n$ in (31.4). The result is
+
+$$
+N\le-\frac{33}{5b}+\frac{96}{b^2}+\frac{48}{b^3}<0.
+\tag{31.7}
+$$
+
+Indeed, after multiplication by $b$, the right side is at most
+$-33/5+96/20+48/20^2=-42/25<0$.
+The comparison with the desired drift bound has the explicit margin
+
+$$
+\begin{aligned}
+&-\frac{33}{5b}-\frac{1809}{10b^2}
+ +\frac{27}{b}\left(1-\frac8b\right)\\
+&\hspace{12mm}=
+\frac1b\left(\frac{102}{5}-\frac{3969}{10b}\right)
+\ge\frac{111}{200b}>0.
+\end{aligned}
+\tag{31.8}
+$$
+
+Combining (31.5)–(31.8) gives
+$N>-(27/b)(1-8/b)\ge-(27/b)\Lambda$.
+Division by the now positive $\Lambda$ in (30.7) therefore gives
+
+$$
+-\frac{27}{b}<d<0.
+\tag{31.9}
+$$
+
+Since $b\ge20$, the negative terms in $\mathcal A$ give
+
+$$
+\mathcal A\le4+\frac{20}{1+b}<5.
+\tag{31.10}
+$$
+
+Because $d<0$, this is the useful upper bound:
+$d\mathcal A\ge5d>-135/b$. There is no need to assume
+$\mathcal A$ or any gain sample positive.
+The lower bounds for $1/j,1/n$ in (31.4), together with
+$1/T\le1/b$, give
+
+$$
+\begin{aligned}
+\mathcal C
+&\ge\frac{12}{b}-\frac{240}{b^2}-\frac{150}{b^3}\\
+&=\frac1b\left(12-\frac{240}{b}-\frac{150}{b^2}\right)
+\ge-\frac{3}{8b}.
+\end{aligned}
+\tag{31.11}
+$$
+
+The final inequality follows by substituting $b=20$ into the two
+negative terms. Hence (30.8) implies
+
+$$
+g(5)>-\frac{1083}{8b}.
+\tag{31.12}
+$$
+
+The source trace also obeys
+
+$$
+\begin{aligned}
+0<U+n
+&=3b+1+r+\alpha/b
+<3b+2+\frac1{4b}<\frac{25b}{8}.
+\end{aligned}
+\tag{31.13}
+$$
+
+For the last inequality,
+$2+1/(4b)\le161/80<5/2\le b/8$ when $b\ge20$.
+Since the trace is positive, (30.5), (31.9) and (31.12) give
+
+$$
+\begin{aligned}
+p
+&>-\frac{27}{b}-\frac{1083(U+n)}{8b}\\
+&>-\frac{27}{b}-\frac{27075}{64}\\
+&\ge-\frac{27}{20}-\frac{27075}{64}
+=-\frac{135807}{320}>-425.
+\end{aligned}
+\tag{31.14}
+$$
+
+The last strict margin is $193/320$. This proves the
+contrapositive, including the threshold $p=-425$. ∎
+

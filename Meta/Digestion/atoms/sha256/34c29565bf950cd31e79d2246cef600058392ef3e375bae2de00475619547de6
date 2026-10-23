@@ -1,0 +1,20 @@
+**定理 98.1（六个仿射自同构与循环方向）。** 第87.3条的三角色代数全部自同构为
+
+$$
+g_{\epsilon,k}(x)=\epsilon x+k,
+\qquad \epsilon\in\{1,-1\},\ k\in\mathbb F_3.
+$$
+
+令 $R(x)=x+1$，则 $gR=R^\epsilon g$；与指定 $R$ 交换的恰是三种平移。
+
+证明（98.1）。直接算
+
+$$
+g(x\star y)=-\epsilon x-\epsilon y+k,
+\qquad g(x)\star g(y)=-\epsilon x-\epsilon y-2k,
+$$
+
+两式由 $-2k=k$ 相同。$\epsilon\ne0$ 给双射。六个映射不同：$g(0)=k$ 区分平移，$g(1)-g(0)=\epsilon$ 区分符号。第88.2条给自同构总数六，故已穷尽。又 $g(x+1)=g(x)+\epsilon=R^\epsilon g(x)$。$\epsilon=-1$ 不可能交换，因为 $R^{-1}\ne R$；$\epsilon=1$ 则交换。$\square$
+
+因此若各窗口已选择相同的离散前进方向，保持此方向的接缝变换可以选平移。这里的离散方向反转不是自动的物理镜像或时间反演；将它们对应须另给作用在实际来源及运输上的映射。
+

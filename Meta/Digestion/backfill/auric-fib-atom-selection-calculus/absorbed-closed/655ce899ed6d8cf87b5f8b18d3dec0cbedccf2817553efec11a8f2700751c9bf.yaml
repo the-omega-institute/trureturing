@@ -1,0 +1,13 @@
+fingerprints:
+  raw_sha256: sha256:655ce899ed6d8cf87b5f8b18d3dec0cbedccf2817553efec11a8f2700751c9bf
+  normalized_sha256: sha256:655ce899ed6d8cf87b5f8b18d3dec0cbedccf2817553efec11a8f2700751c9bf
+cas_ref: sha256:655ce899ed6d8cf87b5f8b18d3dec0cbedccf2817553efec11a8f2700751c9bf
+coverage_gids:
+  - gid: D5/S3/Arith/FibonacciAtomic/GenealogicalFiberTransport.result
+    target_statement_id: sha256:ce5b0657affca07fd388326f2bb3911ee113fe49d2a58deb32d7c350af0391f4
+  - gid: D5/S3/Arith/FibonacciAtomic/GenealogicalFiberTransport.substitution
+    target_statement_id: sha256:957070adbbdbe74270734f4a55f942a70f7c3a38850ecf7fced89922734a68c5
+  - gid: D5/S3/Arith/FibonacciAtomic/GlobalGcdSampling.actual_source_value
+    target_statement_id: sha256:3406f7f53328a8887b698d60102470a698f404607b583b2621aaf8683594e9e3
+receipts:
+  unresolved_subitems: []

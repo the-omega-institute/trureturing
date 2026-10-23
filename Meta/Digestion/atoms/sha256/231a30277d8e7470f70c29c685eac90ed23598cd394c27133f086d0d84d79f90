@@ -1,0 +1,36 @@
+**定义 8.1（量子边界与互补接口）。** 设 $L,B,E$ 为有限维复 Hilbert 空间，且 $\dim L>0$。给等距编码 $V:L\to B\otimes E$，令
+
+$$
+\mathcal N_B(X)=\operatorname{tr}_E(VXV^\dagger),\qquad
+\mathcal N_E(X)=\operatorname{tr}_B(VXV^\dagger).
+$$
+
+在定义 8.1 的非零逻辑空间范围内，主定理所用的量子恢复边界是标准 information–disturbance／量子纠错条件：存在定义在整个 $M(B)$ 上的同一个 CPTP 映射 $\mathcal R:M(B)\to M(L)$，使 $\mathcal R\mathcal N_B(\rho)=\rho$ 对全部 $\rho\in\mathcal D(L)$ 成立，当且仅当有固定密度态 $\sigma_E$ 使
+
+$$
+\mathcal N_E(X)=\operatorname{tr}(X)\sigma_E\qquad\text{对全部 }X\in M(L).
+$$
+
+密度输入上的常值性与这个全线性扩展等价，因为秩一投影张成自伴空间，自伴空间复线性张成整个矩阵空间；同理，恢复等式等价于 $\mathcal R\mathcal N_B(X)=X$ 对全部 $X\in M(L)$ 成立。以下给出该标准条件的有限维证明，以明确“全部输入”如何进入。
+
+充分性：取逻辑基 $|i\rangle$，零谱方向的编码分量由正性为零；在 $\sigma_E$ 正支撑上写 $\sigma_E=\sum_j\lambda_j|j\rangle\langle j|$，$\lambda_j>0$。令
+
+$$
+V|i\rangle=\sum_j\sqrt{\lambda_j}\,|b_{ij}\rangle\otimes|j\rangle.
+$$
+
+互补条件用于矩阵单位 $|i\rangle\langle k|$ 给
+
+$$
+\sqrt{\lambda_j\lambda_l}\langle b_{kl},b_{ij}\rangle
+=\delta_{ik}\lambda_j\delta_{jl},
+$$
+
+所以全部 $b_{ij}$ 正交归一。$B$ 中其张成空间可等距识别为 $L\otimes\operatorname{supp}\sigma_E$；$\mathcal N_B(\rho)$ 在该识别下是 $\rho\otimes\sum_j\lambda_j|j\rangle\langle j|$。解码为先取此子空间、逆等距并迹掉第二因子，在正交补上以其迹乘固定逻辑密度态 $\tau_L$ 补全；$\dim L>0$ 保证 $\tau_L$ 存在。两项均完全正且总迹保持，因而这是全 $M(B)$ 上的合法恢复。
+
+必要性：取恢复的 Stinespring 等距 $W:B\to L\otimes F$，令 $U=(W\otimes I_E)V$。对每个纯逻辑输入，输出的 $L$ 边缘是同一个纯态，故 $U|\psi\rangle=|\psi\rangle\otimes|\eta_\psi\rangle$。在逻辑基及其两两叠加上应用线性性，得到同一个辅助单位向量 $\eta$，使 $U|\psi\rangle=|\psi\rangle\otimes|\eta\rangle$ 对所有 $\psi$ 成立。迹掉 $L,F$ 得到固定环境态 $\sigma_E=\operatorname{tr}_F|\eta\rangle\langle\eta|$；$W$ 是等距，故未改变原来的 $E$ 边缘。必要性成立。纠错与环境信息条件见 Knill–Laflamme 及 Schumacher–Nielsen 的标准理论。
+
+零维边界命题：上述恢复等价不能无条件推广到零维逻辑空间。证明：取 $L=\{0\}$、$B=E=\mathbb C$，零映射 $V$ 满足 $V^\dagger V=I_L=0$，因而等距。此时 $\mathcal D(L)=\varnothing$，密度输入上的常值性空泛成立；取 $\sigma_E=1$，全线性条件也成立，因为 $M(L)=\{0\}$。但从 $M(B)=\mathbb C$ 到 $M(L)=\{0\}$ 的唯一线性映射把 $1$ 送到 $0$，迹从一变为零，不能保迹。
+
+第 5 节的线性单射比该条件弱。例如 qubit 的可逆去极化线性映射 $\mathcal N(\rho)=a\rho+(1-a)I/2$，$0<a<1$，在迹一仿射空间上单射，其线性逆却把某些纯态送到非正算子；若存在全态 CPTP 左逆，它在该有限维满像张成空间上只能是这个不正的逆，矛盾。因此统计反演、恢复一个目标函数、与恢复全部量子输入是三种不同要求。
+

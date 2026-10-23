@@ -1,0 +1,126 @@
+**Theorem 27.2 (Local central-diagonal saturation).** There exists
+an open neighbourhood $\mathcal U$ of $W_0$ in the entire complete
+parent such that any distinct $W,W'\in\mathcal U$ with equal
+$(p,u,m)$ are exactly a legal reflected pair
+$A_r,A_{9/8-r}$. In particular their fifth response is 24.
+Consequently no sequence of distinct nonmirror terminal-M collision
+pairs can converge to $(W_0,W_0)$ in the coefficient topology.
+
+Proof. In the full-parent chart of Definition 27.1, put
+
+$$
+\alpha_0(r)=\partial_ep(r,0),\qquad
+\eta_0(r)=\partial_ek(r,0).
+$$
+
+The derivatives in O, Lemmas 16.3–16.4, computed from the same
+whole interpolant, have the exact form
+
+$$
+\begin{aligned}
+\alpha_0&=a_0+a_1/j,&
+a_0&=\frac{-512n^2-218n+475}{42n},&
+a_1&=\frac{85(4n+5)}{84},\\
+\eta_0&=e_0-c_0/j,&
+e_0&=\frac{10240n^2+33924n-32375}{140n},&
+c_0&=\frac{1672n+7455}{70},\\
+j&=1/8+8r(1-r),&n&=j+r.
+\end{aligned}
+\tag{27.4}
+$$
+
+Here the subscripted $a_0,e_0$ in (27.4) are rational functions
+of $n$ and do not denote the drift coordinate $e$. At $r=r_0$,
+
+$$
+ j=67/32,\quad n=85/32,\quad j_r=-1,\quad n_r=0,
+ \quad\Lambda=12701/3417.
+\tag{27.5}
+$$
+
+Substitution into (27.4) and differentiation give
+
+$$
+\begin{aligned}
+\alpha_0(r_0)&=-205402/7973,&
+\eta_0(r_0)&=10698679/39865,\\
+\alpha_0'(r_0)&=340000/94269,&
+\eta_0'(r_0)&=-1218176/31423,\\
+\alpha_0\eta_0'-\eta_0\alpha_0'&=49333024/1602573.
+\end{aligned}
+\tag{27.6}
+$$
+
+These fractions can also be recovered directly from (27.2):
+$b_e=-25\Lambda/448$, and differentiating the gain at nodes
+$0,1,2,3$ gives
+
+$$
+ \left(-1,-1/j,-\{1+(24/5)b_e\}/(9/8),-1/n\right).
+\tag{27.7}
+$$
+
+The extrapolation rows to clocks $5,6,7$ are
+$(-4,15,-20,10)$, $(-10,36,-45,20)$ and $(-20,70,-84,35)$,
+respectively. Substitution into the actual responses (25.2)
+gives (27.4)–(27.6); differentiation of $j,n$ at (27.5) yields
+$\alpha_0'=a_1/j^2$ and $\eta_0'=-c_0/j^2$ there.
+All these denominators are positive source traces.
+
+Since $p(r,0)=24$ and $k(r,0)=k_0$ throughout this chart,
+smooth factorization gives
+
+$$
+ p-24=e\,A(r,e),\qquad k-k_0=e\,E(r,e),\qquad
+ A(r,0)=\alpha_0(r),\quad E(r,0)=\eta_0(r).
+\tag{27.8}
+$$
+
+For example $A(r,e)=\int_0^1p_e(r,te)\,dt$, with the
+analogous formula for $E$. Thus these functions extend smoothly
+through $e=0$; this is not division by a sampled gain zero.
+Because $A(r_0,0)\ne0$, the inverse function theorem changes
+coordinates locally from $(r,e)$ to $(r,q)$, where $q=p-24$.
+Writing $e=e(r,q)$, (27.8) becomes
+
+$$
+ k-k_0=q\,L_c(r,q),\qquad
+ L_c(r,q)=\frac{E(r,e(r,q))}{A(r,e(r,q))}.
+\tag{27.9}
+$$
+
+At $q=0$, local uniqueness gives $e(r,0)=0$. Hence the derivative
+at the centre is
+
+$$
+\partial_rL_c(r_0,0)
+ =\frac{\alpha_0\eta_0'-\eta_0\alpha_0'}{\alpha_0^2}
+ =\frac{1467657464}{31642486203}>0.
+\tag{27.10}
+$$
+
+Choose an open product rectangle about $(r_0,0)$ in these
+coordinates, small enough that $A\ne0$ and $\partial_rL_c>0$
+on it. Its inverse image $\mathcal U$ is open in the entire
+parent because the original reconstruction and the coordinate
+changes are homeomorphisms.
+
+Two members of $\mathcal U$ having equal $(p,u,m)$ have equal
+$q$ and equal $k$. If $q\ne0$, (27.9) gives equal $L_c$ at
+that fixed $q$. Its strict increase in $r$ on the rectangle
+forces equal $r$, hence equal $e$ and the identical complete
+world. If $q=0$, both $e$ values are zero. The parent equation
+then forces $b=1/8$, and reconstruction gives $g=h$ and $d=24$.
+Equality of $u$ in (27.3) gives
+
+$$
+ (r-r')\{9-8(r+r')\}=0.
+$$
+
+Distinctness removes $r=r'$, leaving $r'=9/8-r$.
+Conversely every such pair lying in $\mathcal U$ has equal
+responses by (25.13). This proves the local classification.
+If a sequence of nonmirror collision pairs converged to
+$(W_0,W_0)$, both endpoints would eventually lie in $\mathcal U$,
+contradicting that classification. ∎
+

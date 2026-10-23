@@ -1,0 +1,34 @@
+**Theorem 7.1 (native weak stability iff both walls).** For every fixed
+choice of means, interior cylinder, source, smooth positive density and SPD
+horizontal covariance in Definition 1.3, the following are equivalent:
+
+1. There is a nonempty interval $(0,g_0)$ such that for every
+   $g\in(0,g_0)$ the full killed form $q_{A,g}$ is closed and semibounded on
+   exactly $\mathcal F_A$, has equivalent shifted form norms and compact
+   resolvent, and its normalized minimum is attained.
+2. Both native walls $E_-$ and $E_+$ hold, so the current-ray dimension is
+   $3$, the direct rank is $2$, the growth vector is $(2,3)$, and the native
+   volume exponent is $4$.
+
+**Proof.** If both walls hold, Theorem 5.1 supplies (1) for the fixed
+model. If either wall fails, the original volume's Theorem 3.1 applies to
+the same $\rho$, $A$, killed cylinder and full Green field. Its normalized
+privileged annular tests satisfy
+
+$$
+T_A[f_s]\le Cs^{-2},\qquad
+V_{A,o}[f_s]\ge cs^{2-Q_{\rm vol}},
+$$
+
+with $Q_{\rm vol}=7$ on a single wall and $Q_{\rm vol}=11$ off both. Since
+$Q_{\rm vol}>4$, the negative term dominates for every fixed $g>0$ and
+$q_{A,g}[f_s]\to-\infty$. Therefore no positive weak-coupling interval with
+the property in (1) exists. The two implications use the same native
+operator and source conventions; neither changes the form domain. $\square$
+
+This is an iff for each fixed model. It does not say that a single constant
+works uniformly over densities, covariances, intervals or sources. It also
+does not select the physical meaning of three dimensions: the dimension in
+the theorem is the current-ray coordinate count, while direct stochastic
+rank remains two.
+

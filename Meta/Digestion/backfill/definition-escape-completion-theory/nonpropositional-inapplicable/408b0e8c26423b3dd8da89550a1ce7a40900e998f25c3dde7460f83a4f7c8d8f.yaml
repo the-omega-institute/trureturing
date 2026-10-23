@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:408b0e8c26423b3dd8da89550a1ce7a40900e998f25c3dde7460f83a4f7c8d8f
+  normalized_sha256: sha256:408b0e8c26423b3dd8da89550a1ce7a40900e998f25c3dde7460f83a4f7c8d8f
+cas_ref: sha256:408b0e8c26423b3dd8da89550a1ce7a40900e998f25c3dde7460f83a4f7c8d8f
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 'nonpropositional: 章节接线索引，说明来源性质与时间判据的分工。'
+    previous_atom_id: 1bdb43ea83c01edc5e1e607a01652f2e3b2a12ab89b51fb553044af50c6c9d84
+    next_atom_id: b90d68726f3a9f7151c3b980e49a74853e30f9306eff3880d54c44c7c5d10ccb
