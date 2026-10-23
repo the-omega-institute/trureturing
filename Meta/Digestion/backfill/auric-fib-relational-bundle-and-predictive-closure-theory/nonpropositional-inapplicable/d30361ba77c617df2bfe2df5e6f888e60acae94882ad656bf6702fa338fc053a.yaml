@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:d30361ba77c617df2bfe2df5e6f888e60acae94882ad656bf6702fa338fc053a
+  normalized_sha256: sha256:d30361ba77c617df2bfe2df5e6f888e60acae94882ad656bf6702fa338fc053a
+cas_ref: sha256:d30361ba77c617df2bfe2df5e6f888e60acae94882ad656bf6702fa338fc053a
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: Chapter roadmap, background references and the scope of the later proofs; no mathematical criterion is stated in this atom.
+    previous_atom_id: 5e79910a28ee9a5d4f95ac20ac47234d1aa6d6b826625225238d67ce66a0347f
+    next_atom_id: 3cf0bd66941caf2450b9a577e635363e016b333089cf5723fca8076d5a9702ed

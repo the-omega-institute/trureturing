@@ -1,0 +1,4 @@
+### 2.7. Exhaustion of the parameter cases
+
+Section 2.2 excludes all $a=0$. For $a\ge1$, the ordering $a\le b$ implies $b\ge1$. If $b=1$, necessarily $a=1$, and §§2.3 and 2.6 give precisely $m=3$. If $b\ge2$, §2.4 first forces $m=3$, and §2.5 excludes that value. These cases exhaust every parameter in the theorem. ∎
+

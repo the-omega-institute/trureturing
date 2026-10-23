@@ -1,0 +1,47 @@
+**命题 37.3（关系缺陷的局部梯度收缩与可读出接口）。** 固定具有全正补全的三个均值，置 $r=1-Z>0$，
+
+$$
+h=|\psi_1\psi_3-\psi_0\psi_{13}|^2,\quad
+\kappa_*=XY/r,\quad u=\kappa-\kappa_*,\quad I_*=I(\kappa_*).
+$$
+
+在 $\chi=0$ 的局部角图与该正约化空间上，负梯度方程为
+
+$$
+\dot\kappa=-\frac2I\,\partial_\kappa h,\qquad
+\dot\chi=-\frac I2\,\partial_\chi h.
+$$
+
+它满足
+
+$$
+\dot h=-\frac2I(\partial_\kappa h)^2-\frac I2(\partial_\chi h)^2\le0,
+\qquad
+\binom{\dot u}{\dot\chi}=-r\binom u\chi+O((|u|+|\chi|)^2).
+$$
+
+所以该平衡点局部渐近稳定；对任意 $0<\gamma<r$，足够近的初态以至多常数倍 $e^{-\gamma t}$ 的距离趋近。
+
+证明。耗散式由链式法则得到。[循环控制卷命题 23.9](AURIC_FIB_ATOM_CIRCULATION_CONTROL_KL_ACTION_AND_TORIC_RELATIONS.md)
+已经给出同一相位、尺度下的展开
+
+$$
+h=\frac r2\left(\frac{I_*}2u^2+\frac2{I_*}\chi^2\right)+O((|u|+|\chi|)^3).
+$$
+
+代入逆度量，线性化恰为 $-rI_2$，光滑余项为二阶。
+在足够小的坐标球中，若 $q=(u,\chi)$，则 $q\cdot\dot q\le-\gamma\|q\|^2$，积分得到所述局部界。
+同一函数的 Hamilton 流则由该卷给出虚特征值 $\pm ir$；这是两种不同的更新规则。证毕。
+
+测量接口直接复用 [HiddenRelations 续卷命题 C-78.3](AURIC_FIB_ATOM_HIDDEN_RELATIONS_STATISTICS_PHASE_AND_SEAMS_CONTINUATION.md)：
+其归一化四项向量 $|\Omega\rangle=(|0,13\rangle+|13,0\rangle-|1,3\rangle-|3,1\rangle)/2$ 满足
+
+$$
+h=\operatorname{Tr}\!\left[|\Omega\rangle\langle\Omega|\,\rho_\psi^{\otimes2}\right].
+$$
+
+这是两次独立制备同一纯态后的一个概率，已有先例、归一化及非选择性总占位守恒由该条目承担。
+它不测出有向 $\chi$；实施投影、重新制备、样本和梯度取得另有成本。
+几何梯度流本身不是已实现的固定量子门；§35.9 的全输入均值保持障碍仍适用。
+这里的局部收缩也不供应任意初态的全局收敛或精度复杂度。
+

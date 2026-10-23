@@ -1,0 +1,28 @@
+**Theorem 1.1.** The following statements hold for the original worlds.
+
+1. Every actual parent world with $b\ge4$ satisfies
+
+$$
+p<-\frac{216}{5},\qquad 6p<v<5p-9.
+\tag{1.1}
+$$
+
+2. For every real $p,v$, there is at most one complete world in
+$C(p,v)$ with $b\ge8$. More precisely, among worlds with $b\ge8$
+and the same fifth reading $p$, increasing $b$ strictly decreases
+$r$ and strictly increases the sixth reading $v$.
+3. At width $b=4$ there exists an actual strict source at a negative
+acquired base where the differential of $(r,b)\mapsto(p,v)$ has
+rank exactly one.
+
+Consequently every distinct terminal-J pair and every distinct terminal-M
+pair in any acquired child contains a world with $b<8$. Across the union
+of independently selected pairs there is at most one distinct world of
+width at least eight. This is a restriction on actual configurations;
+it does not exclude pairs mixing a width above eight with one below eight.
+
+Part 3 asserts a critical source, not a terminal collision or a fold.
+The theorem does not settle existence or nonexistence of the original
+independent pairs. Singular parent sources and all allowed gain
+degeneracies remain in the unrestricted question.
+

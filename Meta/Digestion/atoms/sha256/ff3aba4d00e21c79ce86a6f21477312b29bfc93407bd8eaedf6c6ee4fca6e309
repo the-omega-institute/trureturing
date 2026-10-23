@@ -1,0 +1,16 @@
+**Theorem 13.1 (the sharp full-Green coupling for every smooth native
+model).** Retain the entire original both-wall model and (10.6). Then:
+
+1. For $0<g<g_{\mathrm c}$, $q_{A,g}$ is closed and semibounded on exactly
+   $\mathcal F_A$. Its sufficiently shifted norm is equivalent to the
+   original free form norm; its represented operator has compact resolvent;
+   and its normalized lowest energy is finite and attained in that domain.
+2. For $g>g_{\mathrm c}$, normalized members of the original punctured
+   core have energies tending to $-\infty$.
+3. At $g=g_{\mathrm c}$ the original form is semibounded and closable,
+   but not closed and not norm equivalent to the free form on
+   $\mathcal F_A$. Its finite normalized infimum equals the lowest energy
+   of (12.3), but is not attained by any member of $\mathcal F_A$.
+   The completed form does attain it. Every nonnegative completed ground
+   state $f$ satisfies, on a sufficiently small source neighbourhood,
+

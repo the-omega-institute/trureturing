@@ -1,0 +1,52 @@
+**定理 10.2（两个累计函数的像与共同定义域上的互逆）。** Given real
+absolutely continuous functions $u,v$ on $[0,T]$, they are exactly
+$(F_0,F_2)$ of some canonical original control if and only if
+
+$$
+\begin{gathered}
+u(0)=v(0)=0,\qquad v'\ge0\ \text{almost everywhere},\qquad v(T)<Z,\\
+S=1-v/Z,\qquad k=(a-u)/S\in(0,c)\ \text{at every time},\\
+u'(t)\in\{0,cv'(t)/Z\}\quad\text{almost everywhere}.
+\end{gathered}
+\tag{OC.35}
+$$
+
+On this exact domain the two representations are inverse by
+
+$$
+\ell=2u-cv/Z,\qquad V=cv/Z,
+\qquad
+u=(V+\ell)/2,\qquad v=ZV/c.
+\tag{OC.36}
+$$
+
+The remaining cumulative functions are
+$F_4=u$ and $F_1=F_3=cv/Z-u$. Thus these are two descriptions of the same
+law, not independent storage constructions.
+
+Proof. Necessity follows from (OC.30) and the two sign cases in Theorem
+10.1. Conversely (OC.35) bounds $S$ away from zero and makes $k$
+absolutely continuous. Put $\lambda_0=v'/(ZS)$. Where $u'=0$,
+$k'=k\lambda_0$; where $u'=cv'/Z$,
+$k'=-(c-k)\lambda_0$. If $v'=0$ these equations coincide. This gives
+exactly the canonical rate and survival, and constant $\chi$ supplies an
+actual original control with the requested $u,v$.
+
+For the common-domain assertion, (OC.35) gives
+$\ell'=\pm cv'/Z$ almost everywhere, so its actual variation is
+$V=cv/Z$. Its Jordan parts are $P=u$, $N=cv/Z-u$.
+Strict positivity of $k,c-k$ at $T$ gives their endpoint inequalities in
+(OC.34). Conversely a curve satisfying (OC.34) yields the $u,v$ in (OC.36),
+with $v(T)<Z$ and the two derivative alternatives from the disjoint Jordan
+parts. All formulas are then literal inverses. $\square$
+
+Absolute continuity is essential in these statements: an arbitrary
+bounded-variation curve may have singular loss and is not included. Nor
+can optimality be omitted. For example, adding a positive common attenuation
+rate $\eta$ at constant $k=a=c/2$ would give
+$S=e^{-\eta t}$, $P=N=a(1-S)$ and $\ell=0$ despite nonzero loss.
+This is an enlarged, noncanonical operation, not an instance of (OC.19b).
+Even its two CDFs violate the two-choice derivative condition in (OC.35).
+Other completions retaining different failure coherences need not satisfy
+(OC.32). None of these enlarged classes is classified here.
+

@@ -1,0 +1,87 @@
+**Theorem 10.14 (Uniform entire-child separation on the two singular lines).**
+For each $\sigma\in\{-,+\}$ and every real
+$p\notin E_\sigma\cup\{24\}$, the map
+
+$$
+m:C(p,s_\sigma(p))\longrightarrow\mathbb R
+\tag{10.39}
+$$
+
+is injective on the entire child. Consequently, at any off-24 base
+containing a singular source, the full independent-pair predicate
+$\mathfrak I(p,v)$ can hold only in the finite algebraic set
+
+$$
+\begin{aligned}
+&\{(p,s_-(p)):p\in E_-\setminus\{24\}\}\\
+&\hspace{12mm}\cup\{(p,s_+(p)):p\in E_+\setminus\{24\}\}.
+\end{aligned}
+\tag{10.40}
+$$
+
+Neither selected pair is required to contain a singular source.
+All regular companions, whether or not used by either selected pair,
+are included in (10.39).
+
+Proof. Fix a sign and a real $p$ outside its displayed exceptional
+set, and specialize all coefficient-field quantities through
+$\iota_\sigma$. Every conclusion of Lemma 10.13 holds at this
+parameter. If an actual world had $d=0$, Lemma 10.7 would give
+$H(x)=Z_0(x)=0$, contradicting their Bezout identity. Thus there
+is no actual zero-drift world at this parameter.
+
+Now take any actual world of the entire child, and use its faithful
+coordinates $(x,d)$ from Lemma 10.5. In particular $D(x)>0$,
+$N_1\ne0$ and $F(x,d)=G(x,d)=0$. Suppose first that $H(x)=0$.
+The formulas (10.17) show that $(x,0)$ is also a common zero of
+$F,G$: at $d=0$, $F$ is a multiple of $H$ and $G=H^2A$.
+Lemma 10.11 applied to this common zero gives $\ell_0(x)=0$.
+The gcd $\gcd(\ell_1,H)=1$ gives $\ell_1(x)\ne0$.
+Applying the same common-root identity to the actual $(x,d)$ gives
+$\ell_1(x)d+\ell_0(x)=0$, and hence $d=0$, already excluded.
+Therefore every actual world has $H(x)\ne0$.
+
+A common root of $F,G$ makes their fixed Sylvester resultant zero,
+even if a leading coefficient drops. Since $D(x)H(x)\ne0$,
+the polynomial identity $T_0=D^8H^2\mathscr R$ now gives
+$\mathscr R(x)=0$. The gcd $\gcd(\ell_1,\mathscr R)=1$
+and Lemma 10.11 force
+
+$$
+d=-\ell_0(x)/\ell_1(x)=d_R(x).
+\tag{10.41}
+$$
+
+Thus every actual world is carried by a root of the specialized
+$\widehat R$, and its actual terminal-M answer from (10.16) is
+exactly $M_R(x)$. This establishes coverage of the original worlds,
+not merely coverage of roots in a chosen source chart.
+
+Over an algebraic closure the squarefree degree-eighteen algebra
+$\mathcal B$ becomes the product of eighteen copies of that
+algebraically closed field, indexed by the distinct roots $\xi$
+of $\widehat R$. Multiplication by $M_R$ is diagonal on this
+product. Consequently
+
+$$
+Q_{\rm term}(Y)=\prod_{\widehat R(\xi)=0}\bigl(Y-M_R(\xi)\bigr).
+\tag{10.42}
+$$
+
+Its nonzero discriminant from Lemma 10.13 says that these eighteen
+values are pairwise distinct. This is the elementary finite
+separable-algebra separation principle; the standard decomposition
+into finite separable factors is also stated in the Stacks Project,
+[Lemma 10.143.4, Tag 00U3](https://stacks.math.columbia.edu/tag/00U3).
+Here squarefreeness gives the decomposition directly by the Chinese
+remainder theorem, with no realizability premise.
+
+If two actual worlds have the same $m$, equation (10.42) gives the
+same $x$ for both. Equation (10.41) then gives the same $d$.
+Lemma 10.5 reconstructs the identical strict source and identical
+entire gain, so the complete worlds coincide. This proves (10.39).
+Finally Lemma 10.3 puts every base containing a singular source on
+at least one of the two lines. Away from (10.40), (10.39) rules out
+the distinct M pair required in (10.6), regardless of the J pair.
+This proves the necessary finite restriction. ∎
+

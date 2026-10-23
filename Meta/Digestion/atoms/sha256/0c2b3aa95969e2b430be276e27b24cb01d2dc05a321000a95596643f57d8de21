@@ -1,0 +1,23 @@
+**定理 2.1（残余横截定理）。** 对任意 $C\subseteq D$，有
+
+$$
+\boxed{
+ \rho_{\mathfrak N}(C)
+ =\tau\bigl(\mathcal H_{\mathfrak N}\!\mid_C\bigr).
+}
+$$
+
+这里右侧是残余失败超图的最小横截数。
+
+**证明。** 对任意 $R\subseteq D$ 和 $N\in\mathfrak N$，
+
+$$
+N\in V_{\mathfrak N}(C\cup R)
+\Longleftrightarrow
+(C\cap F_N=\varnothing)\land(R\cap F_N=\varnothing).
+$$
+
+左侧版本空间为空，当且仅当每个满足 $C\cap F_N=\varnothing$ 的残余候选都满足 $R\cap F_N\ne\varnothing$。这正是 $R$ 横截全部边 $F_N$、$N\in\operatorname{Res}_{\mathfrak N}(C)$ 的条件。对 $R$ 取最小基数得到等式。若残余族为空，双方均为 $0$；若残余族含空失败边，双方均为 $\infty$。证毕。
+
+这个等式把更新问题精确地分成两步：先用旧证书计算残余候选，再只对残余失败边求横截。旧证书不需要重新检查已经被它击中的候选。
+

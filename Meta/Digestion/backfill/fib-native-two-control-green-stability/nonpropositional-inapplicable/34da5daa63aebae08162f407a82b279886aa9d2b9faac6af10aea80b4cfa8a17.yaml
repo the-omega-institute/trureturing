@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:34da5daa63aebae08162f407a82b279886aa9d2b9faac6af10aea80b4cfa8a17
+  normalized_sha256: sha256:34da5daa63aebae08162f407a82b279886aa9d2b9faac6af10aea80b4cfa8a17
+cas_ref: sha256:34da5daa63aebae08162f407a82b279886aa9d2b9faac6af10aea80b4cfa8a17
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: Title and reference-volume syntax notice only; no mathematical conclusion.
+    previous_atom_id: null
+    next_atom_id: 59b781a93855ee30c7a20a1dbd27371ddd8c8aacef35db7495e4f9dc8515b992

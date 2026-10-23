@@ -1,0 +1,93 @@
+**Theorem 25.1 (algebraically independent mixed supports).** Under the
+same hypotheses, suppose $p_j=s_j$ for every $j$, as required by the
+canonical complete law. Then the sum of the support spaces is algebraically
+direct:
+
+$$
+\sum_{j=1}^M u_j=0,\quad u_j\in S_j
+ \quad\Longrightarrow\quad u_1=\cdots=u_M=0.
+\qquad
+D\geq\sum_{j=1}^M\operatorname{rank}\tau_j\geq M.
+\tag{OC.78}
+$$
+
+More precisely, on $H_0=\operatorname{span}_jS_j$ there is one common
+isometry $B:H_0\to E$, independent of $j$, such that
+
+$$
+A_j=a_jB|_{S_j},\qquad
+W(q\otimes u)=K_jq\otimes Bu
+\quad(q\in V,\ u\in S_j).
+\tag{OC.79}
+$$
+
+This is a statement about the total successful residue. It imposes no
+orthogonality requirement on the incoming $S_j$ and supplies no accessible
+inverse or physically returned programme.
+
+Proof. By (OC.75), $Q_j=s_jI_{S_j}-A_j^\dagger A_j$ is positive.
+Its expectation in the faithful state $\tau_j$ is $s_j-p_j=0$.
+In a positive-eigenvalue eigenbasis of $\tau_j$, this is a positive
+weighted sum of nonnegative diagonal entries of $Q_j$. Each is zero;
+equivalently $Q_j^{1/2}$ annihilates the whole basis. Thus
+$A_j^\dagger A_j=s_jI_{S_j}$.
+
+Define $B$ on $H_0$ by the $|+\rangle$ component of the one map $W$.
+For $u\in S_j$, (OC.75) says
+
+$$
+W(|+\rangle\otimes u)=|+\rangle\otimes Bu,
+\qquad Bu=A_ju/a_j.
+$$
+
+These identities extend to the span and make $B$ a contraction.
+The equality just proved makes it an isometry on each $S_j$.
+The positive operator $I_{H_0}-B^\dagger B$ has zero quadratic form
+on each such subspace. Its square root therefore annihilates each $S_j$,
+hence their span. Consequently $B^\dagger B=I_{H_0}$: the same $B$
+is an isometry globally, not only separately on the supports.
+This proves (OC.79).
+
+Let $C:H_0\to E$ be the $|2\rangle$ component of
+$W(|2\rangle\otimes\,\cdot\,)$. On $S_j$ it equals $A_j=a_jB$.
+Thus the single linear operator $T=B^\dagger C$ on $H_0$ satisfies
+$Tu=a_ju$ for every $u\in S_j$. All $a_j$ are distinct by the strict
+monotonicity in the proof of Theorem 24.3. If $\sum_j u_j=0$, apply
+$\prod_{k\ne j}(T-a_kI)$ to obtain
+
+$$
+\left(\prod_{k\ne j}(a_j-a_k)\right)u_j=0.
+$$
+
+The scalar is nonzero, so every $u_j=0$. The empty product for $M=1$
+is the identity. Taking dimensions proves (OC.78). No self-adjointness
+of $T$ was used; distinct eigenspaces are algebraically independent even
+when they are not orthogonal.
+
+Pairwise intersections alone would not justify (OC.78). The rays spanned
+by $(1,0)$, $(0,1)$ and $(1,1)$ in $\mathbb C^2$ have pairwise zero
+intersection, while $(1,0)+(0,1)-(1,1)=0$ is a nontrivial relation
+among them. Thus their sum is not direct. Theorem 25.1 excludes three
+such programmes for three distinct heights at their canonical success
+weights. The common contraction and its saturated plus direction are
+essential to the stronger conclusion. $\square$
+
+For an actual extension $\omega_{j,\beta,m}^{HR}$ of $\tau_j$,
+(OC.79) gives the unnormalized successful output in the dilation as
+
+$$
+s_j|\psi_{x_j+d,\beta,m}\rangle
+       \langle\psi_{x_j+d,\beta,m}|
+\otimes(B\otimes I_R)\omega_{j,\beta,m}^{HR}
+                         (B^\dagger\otimes I_R).
+\tag{OC.80}
+$$
+
+The extension is supported on $S_j\otimes R$: positivity and its
+vanishing marginal weight outside $S_j$ imply this. Thus every incoming
+assistance/reference correlation is preserved isometrically in the total
+residue on success. Tracing out an inaccessible part of $E$ need not
+preserve recoverability for an observer. Formula (OC.80) cannot be used
+as an accessible return or calibration service. It places no return
+condition on failure.
+

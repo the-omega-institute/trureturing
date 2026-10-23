@@ -1,0 +1,88 @@
+**定理 7.9（括号位移、等周成本与达到等号的圆）。**
+上述模型满足
+$[\mathsf P,\mathsf Q]=\partial_z$。
+若轨迹从 $(0,0,0)$ 出发，平面投影闭合，
+终点为 $(0,0,\tau)$，则
+
+$$
+\tau=\oint x\,dy,\qquad
+ \ell^2\geq4\pi|\tau|.
+ \tag{H1}
+$$
+
+在整个 $\mathbb R^3$ 模型中，这一下界可达到：
+$\tau\neq0$ 时取半径 $R=\sqrt{|\tau|/\pi}$ 的有向圆，
+其平面投影经过原点；$\tau=0$ 时取常值轨迹。
+
+若进一步规定
+$\sqrt{u^2+v^2}\leq v_{\max}>0$，则
+
+$$
+T\geq\frac{\sqrt{4\pi|\tau|}}{v_{\max}}.
+ \tag{H2}
+$$
+
+采用常速圆可以达到 (H2)。
+
+**证明。**
+
+对任意光滑函数 $f$，
+
+$$
+[\mathsf P,\mathsf Q]f
+ =\partial_x(\partial_yf+x\partial_zf)
+  -(\partial_y+x\partial_z)\partial_xf
+ =\partial_zf.
+$$
+
+对轨迹积分 $\dot z=x\dot y$，即得面积表达式。
+
+若 $\ell=0$，结论显然。否则将闭合平面曲线按弧长
+$s\in[0,\ell]$ 参数化，记为 $r(s)=(x(s),y(s))$；
+平移曲线使其均值为零不改变 $\oint x\,dy$。
+由分部积分及闭合性，
+
+$$
+\tau=\frac12\int_0^\ell(xy'-yx')\,ds.
+$$
+
+Cauchy--Schwarz 不等式与周期 Wirtinger 不等式给出
+
+$$
+|\tau|
+ \leq\frac12
+       \left(\int_0^\ell|r|^2ds\right)^{1/2}
+       \left(\int_0^\ell|r'|^2ds\right)^{1/2}
+ \leq\frac{\ell}{4\pi}\int_0^\ell|r'|^2ds
+ =\frac{\ell^2}{4\pi}.
+$$
+
+所用 Wirtinger 不等式可直接由零均值周期函数的 Fourier 展开证明：
+每个非零频率 $n$ 的导数平方权重至少为
+$(2\pi/\ell)^2$，再应用 Parseval 恒等式即可。
+弧长曲线属于周期 $H^1$，故该论证适用；
+零速度区间可以删除，不影响长度或面积。
+
+令 $\varepsilon=\operatorname{sgn}\tau$，取
+
+$$
+x(t)=R(\cos t-1),\qquad
+ y(t)=\varepsilon R\sin t,\qquad 0\leq t\leq2\pi.
+$$
+
+其长度为 $2\pi R$，且
+$\int_0^{2\pi}x(t)y'(t)\,dt=\varepsilon\pi R^2=\tau$，
+故达到 (H1)。最后
+$\ell\leq v_{\max}T$ 给出 (H2)；
+将圆重新参数化为速度 $v_{\max}$ 即达到等号。
+
+证毕。
+
+这个等号结论以完整平面、双向控制以及指定长度代价为前提。
+在有限局部图域中，圆必须完全留在该图域内；
+额外漂移、单向门、曲率修正或控制代价改变，
+都需要重新验证下界与可达性。
+控制几何的标准背景见 [17](#ref-jean)。
+长度下界也不自动成为门数、比特复杂度或物理时间下界；
+(H2) 展示了加入明确速度标定后才可得到的时间结论。
+

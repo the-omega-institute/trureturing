@@ -1,0 +1,27 @@
+fingerprints:
+  raw_sha256: sha256:ad3662a216170f2d530c575ea1274e6185201e65af47bc0065c69c7f14797007
+  normalized_sha256: sha256:ad3662a216170f2d530c575ea1274e6185201e65af47bc0065c69c7f14797007
+cas_ref: sha256:ad3662a216170f2d530c575ea1274e6185201e65af47bc0065c69c7f14797007
+coverage_gids:
+  - gid: D5/S3/Observer/CubicGain/ParentCoordinates.actual_m_responses
+    target_statement_id: sha256:c84d4d0b739fb45e3b3622e634ab5200de71740b46fec484631852d5c2a90245
+  - gid: D5/S3/Observer/CubicGain/ParentCoordinates.fourth_residual
+    target_statement_id: sha256:da66fedf06d1eee897bc07b2665496d3d9ae9466a58d3acd4745a327d75a1cc3
+  - gid: D5/S3/Observer/CubicGain/ParentCoordinates.gainPoly_degree
+    target_statement_id: sha256:78a79fac8439028cb3511c5c66ee17231e7d44428f2db36ae303a0fd97c5e4b9
+  - gid: D5/S3/Observer/CubicGain/ParentCoordinates.gainPoly_eval
+    target_statement_id: sha256:efeaf01dcc7294075fcbe8cace96883c1d00cabfe5f351e37ed9d57e5eb33e2d
+  - gid: D5/S3/Observer/CubicGain/ParentCoordinates.gain_samples
+    target_statement_id: sha256:d2478564d7de7f3ca3f29cc9615f774fcf352adff89a7b1bb58bc029806a4d72
+  - gid: D5/S3/Observer/CubicGain/ParentCoordinates.literal_traces
+    target_statement_id: sha256:c511b3ca880a22f5b21c3411ed19ec25647440e8f55ac9d680ed289f80ff9405
+  - gid: D5/S3/Observer/CubicGain/ParentCoordinates.parent_gain_nonzero
+    target_statement_id: sha256:e65030f2fbc2125ac291aa3e61a7758c599a4c14b9d4b5d629d5d96bb03c6309
+  - gid: D5/S3/Observer/CubicGain/ParentCoordinates.parent_world_iff
+    target_statement_id: sha256:fff7448e9e6c51f9796d26b0d6a173e3568917f0b62356fcea027a90bc5687b6
+  - gid: D5/S3/Observer/CubicGain/ParentCoordinates.polynomial_representation
+    target_statement_id: sha256:d6ae184b207184b44f55cb3d4c6efc4b4ea7adc2f467ce69d25e919e7c618d5c
+  - gid: D5/S3/Observer/CubicGain/ParentCoordinates.source_positivity
+    target_statement_id: sha256:0c6dd1099335c894bd159bafc615d6fdc596c540ae40aa48fc7c1a0bd619446d
+receipts:
+  unresolved_subitems: []

@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:6ce021adb927611d5ad72246e1da98bc558a0e4f44b502974fa34f3663466d88
+  normalized_sha256: sha256:6ce021adb927611d5ad72246e1da98bc558a0e4f44b502974fa34f3663466d88
+cas_ref: sha256:6ce021adb927611d5ad72246e1da98bc558a0e4f44b502974fa34f3663466d88
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: Defines the complete worlds, action convention, reading functions, acquired child and exact rational rectangle Q; the three-world and injectivity assertions occur in separate theorem atoms.
+    previous_atom_id: null
+    next_atom_id: 526ee0c0ba8450f5e8b18d4624f0c546ef41ac732489ff13880a49ca2140d2b1

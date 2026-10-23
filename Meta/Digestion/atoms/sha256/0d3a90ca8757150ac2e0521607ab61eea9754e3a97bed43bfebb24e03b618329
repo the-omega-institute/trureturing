@@ -1,0 +1,84 @@
+## 37. Exact acquired-image separation
+
+Expanding (35.4), (35.9) and (35.11) gives the identity
+
+$$
+ V-90=3P(b,n)/(5H),\tag{37.1}
+$$
+
+where the complete numerator is
+
+$$
+\begin{split}
+ P(b,n)={}&1280b^4-452b^3n-7600b^3-824b^2n^2+6428b^2n
+          -19440b^2\\
+ &-139bn^3+1040bn^2+6967bn-13100b
+          -542n^3+1596n^2+1820n-2720.
+\end{split}\tag{37.2}
+$$
+
+On the lower arc, (33.1) gives $0<b<1/8$, and Section 34 gives
+$n>19/5$. Write
+$P(b,19/5+x)=\sum_{i=0}^3L_i(b)x^i$. The full Bernstein vectors
+of $L_i$ on $[0,1/8]$, at their respective degrees $4,3,2,1$,
+are
+
+$$
+\begin{split}
+ L_0:&\quad(-312298/125,-924739/500,-14622869/12000,
+                         -39053879/64000,-3667/128),\\
+ L_1:&\quad(-238246/25,-916111/100,-3516607/400,-1078009/128),\\
+ L_2:&\quad(-22914/5,-369347/80,-18655/4),\\
+ L_3:&\quad(-542,-4475/8).
+\end{split}\tag{37.3}
+$$
+
+These follow directly from (34.2) and (37.2); every entry is negative.
+Thus all $L_i(b)<0$, and for $x=n-19/5>0$ we have $P<0$.
+Since $H<0$, (37.1) proves $V_->90$ throughout the lower arc.
+
+On the upper arc $q(b)<n<2$ and $0<b<h$. At the lower endpoint,
+
+$$
+ P(b,q(b))=
+ \{78848-78336b-274048b^2-123904b^3-690064b^4
+                  -261712b^5-12138b^6-139b^7\}/512.
+ \tag{37.4}
+$$
+
+This polynomial strictly decreases with $b>0$, and
+
+$$
+ P(h,q(h))=1017472390683/655360000000>0.
+ \tag{37.5}
+$$
+
+Hence $P(b,q(b))>0$ for $0<b<h$.
+
+For completeness, positivity at that endpoint propagates in the required
+$n$-direction, rather than being treated as a global numerical test.
+The derivative $\partial_nP$ is a concave quadratic in $n$, with
+quadratic coefficient $-3(139b+542)<0$. Its endpoint values are
+
+$$
+\begin{split}
+ (\partial_nP)(b,q(b))
+ &=\{216704+546560b+190912b^2-276240b^3-24818b^4-417b^5\}/64>0,\\
+ (\partial_nP)(b,2)&=1700+9459b+3132b^2-452b^3>0.
+\end{split}\tag{37.6}
+$$
+
+For the first sign, group the terms of degree at least two as
+
+$$
+ b^2(190912-276240b-24818b^2-417b^3),
+$$
+
+whose bracket is at least its value at $h$, namely
+$729359329/8000>0$. For the second sign use
+$3132-452b>0$. A concave function is at least its endpoint chord,
+so $\partial_nP>0$ on $[q(b),2]$. Thus
+$P(b,n)>P(b,q(b))>0$ on the whole upper arc. Equation (37.1), with
+$H<0$, proves $V_+<90$. This establishes separation by exact
+whole-arc signs, not by isolated source samples.
+

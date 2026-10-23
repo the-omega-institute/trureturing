@@ -1,0 +1,9 @@
+**Definition 1.2 (continuation coordinates).** Fix a known invertible matrix $Q_0$ and a known clock $t_0$. For chronological continuation atoms $E_1,\ldots,E_{16}$ set
+
+$$
+A_0=I,\qquad A_i=E_iA_{i-1},\qquad
+Y_i=d+g(t_0+i)\operatorname{tr}(A_iQ_0P),\quad 0\le i\le16.
+$$
+
+For an acquired legal prefix, $t_0$ is its nonnegative integer length and $Y_0$ is its already acquired current reading. The algebraic continuation equations also make sense for any specified invertible real $Q_0$ and real $t_0$; that extension does not assert legal attainability of an arbitrary matrix.
+

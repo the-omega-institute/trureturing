@@ -1,24 +1,12 @@
 /- GID: D5/S3/Arith/GoldenResourceObjectiveFactorization
-   generality: I
+   generality: G
    mirror-B: D5/B/S3/Arith/GoldenResourceObjectiveFactorization
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
    utility: none
    digest: The resource objective at any real price decomposes into prime-direction terms. -/
 
-import D5.S3.Arith.GoldenLocalThreshold
-
-/- Library-search audit trail (2026-09-06):
-   * Repository searches for `goldenResourceObjective`, `goldenPrimeLocalObjective`, and the
-     proposed theorem names found no public arbitrary-price factorization. The only matching
-     decomposition is the private `objective_factorization`/`objective_sum_on` pair at price
-     1/25 in `GoldenResourceOptimalInteger`, so it cannot be imported as a GID.
-   * Pinned Mathlib provides `ArithmeticFunction.sigma_one_apply_prime_pow`, `geom_sum_eq`,
-     `ArithmeticFunction.isMultiplicative_sigma.multiplicative_factorization`, `Real.log_prod`,
-     and `Real.log_nat_eq_sum_factorization`. These are used directly below; no declaration in
-     the searched scope connects either golden-resource objective to the other.
-   * Third-party Lean ecosystem searches through Tavily for the two golden objective names and
-     for sigma/log factorization combinations found no matching declaration outside Mathlib. -/
+import D5.S3.Arith.GoldenResource.ObjectiveCore
 
 namespace D5.S3.Arith.GoldenResourceObjectiveFactorization
 

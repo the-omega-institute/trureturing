@@ -1,0 +1,35 @@
+**定理 7.2（完整的软泄漏—分类风险多边形）。** Over all finite joint laws with this uniform prior, the exact attained region is
+
+$$
+\boxed{
+ 0\le\ell_G\le\frac35,\qquad
+ \ell_G\le\epsilon\le
+ \min\left\{\frac25+\ell_G,\frac{1+\ell_G}{2}\right\}.
+}
+\tag{7.2}
+$$
+
+Its vertices, in boundary order, are $(0,0),(0,2/5),(1/5,3/5),(3/5,4/5),(3/5,3/5)$. This is a two-dimensional projection; it does not specify an exact joint region for $(\ell_G,\epsilon,D)$ or for information $I$.
+
+Proof. Every vertex has a neighbour, so $m\le s_G\le2m$. Also, writing $v_L=v_a+v_d$, every edge has one endpoint in $L=\{a,d\}$ and one in $R=\{b,c,e\}$, whence
+
+$$
+ s_G\le v_L+m,\qquad
+ \mathbb Es_G\ge\max_{ij\in E}\mathbb E(v_i+v_j)=2/5.
+\tag{7.3}
+$$
+
+Taking expectations gives all the inequalities in (7.2). In particular $s_G\le2m$ gives $\epsilon\le(1+\ell_G)/2$, while $s_G\le v_L+m$ gives $\epsilon-\ell_G\le2/5$.
+
+For necessity to be sufficient, use the uniform five-state source and the following partitions. The readout reports the block containing $C$; a block of size $k$ has output mass $k/5$ and uniform posterior on that block.
+
+| Readout | Partition blocks | $\ell_G$ | $\epsilon$ | $D$ |
+| --- | --- | --- | --- | --- |
+| $A$ | $a\mid b\mid c\mid d\mid e$ | $0$ | $0$ | $1$ |
+| $B$ | $ac\mid bd\mid e$ | $0$ | $2/5$ | $1/5$ |
+| $C_0$ | $ac\mid bde$ | $1/5$ | $3/5$ | $0$ |
+| $U$ | $abcde$ | $3/5$ | $4/5$ | $0$ |
+| $V$ | $ad\mid bce$ | $3/5$ | $3/5$ | $0$ |
+
+For $C_0$, the triple $bde$ has maximal edge mass $2/3$; for $V$, both blocks are independent sets and their maximal edge masses are respectively $1/2$ and $1/3$. These verify the entries beyond the legal-edge cases already supplied by Theorem 3.1. The upper lines meet at $(1/5,3/5)$; the remaining bounding lines meet at the other displayed vertices, so the inequalities define precisely their convex hull. For any convex weights, append an independent five-valued selector $T$ to this common source and observe $(T,Q_T)$. The output reveals the selector, so both risks are the weighted averages. This constructs every point of the polygon on a finite source. For any finite collection of choices, (4.7) supplies a common finite carrier. The generic gain and interpolation tools are those attributed in Definition 7.1; the graph-specific inequalities and attainers yield the stated polygon. $\square$
+

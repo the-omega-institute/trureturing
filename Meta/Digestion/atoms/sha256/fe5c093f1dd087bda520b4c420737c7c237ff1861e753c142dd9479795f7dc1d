@@ -1,0 +1,41 @@
+**定理 3（BSC/BEC equal-information separation）。**
+
+Let $0<\varepsilon<1/2$. A balanced binary task observed through
+
+- a BSC with crossover probability $\varepsilon$, and
+- a BEC with erasure probability $\lambda=h_2(\varepsilon)$
+
+has the same task mutual information,
+
+$$
+I_{\mathrm{BSC}}=1-h_2(\varepsilon)
+=I_{\mathrm{BEC}},
+$$
+
+but risks
+
+$$
+ e_{\mathrm{BSC}}=\varepsilon,
+\qquad
+ e_{\mathrm{BEC}}=\frac{h_2(\varepsilon)}2>\varepsilon.
+$$
+
+**证明。** The BSC posterior error is constantly $\varepsilon$. The BEC reveals the label outside an erasure event, so its conditional entropy and error are respectively $\lambda$ and $\lambda/2$. The strict inequality is the strict concavity inequality $h_2(\varepsilon)>2\varepsilon$ for $0<\varepsilon<1/2$. $\square$
+
+At $\varepsilon=1/4$, the common information is approximately $0.188722$ bits, while the risks are $0.25$ and approximately $0.405639$. The two channels realize the lower and upper endpoints of Theorem 2 at the same information level. A finite state model realizes both by coupling $(Y,Q_{\mathrm{BSC}},Q_{\mathrm{BEC}})$ on one finite state space and taking the two channel outputs as two deterministic feature maps. The two coordinates then share one actual implementation rather than merely two unrelated marginal examples.
+
+The same mechanism produces a finite ordering reversal between feature candidates. Start with two parent fibres of mass $80/160$ each. In the first parent, the label fraction is $1/4$; candidate $A$ splits it into two mass-$40/160$ children with positive counts $5$ and $15$. In the second parent, the label fraction is $1/2$; candidate $B$ splits it into two mass-$40/160$ children with positive counts $16$ and $24$. Candidate $A$ has zero risk gain but conditional information gain
+
+$$
+\frac12\left[h_2(1/4)-\frac{h_2(1/8)+h_2(3/8)}2\right]
+\approx0.031139,
+$$
+
+whereas candidate $B$ has risk gain $0.05$ and conditional information gain
+
+$$
+\frac12\left[1-h_2(0.6)\right]\approx0.014525.
+$$
+
+Thus information-gain ranking chooses $A$ while Bayes-risk ranking chooses $B$.
+

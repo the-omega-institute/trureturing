@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:cc3e5437f6d28930611eb4070a2c1e248b1f4304cf8ad4a57e49d7dde7fbd9cb
+  normalized_sha256: sha256:cc3e5437f6d28930611eb4070a2c1e248b1f4304cf8ad4a57e49d7dde7fbd9cb
+cas_ref: sha256:cc3e5437f6d28930611eb4070a2c1e248b1f4304cf8ad4a57e49d7dde7fbd9cb
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 四轴 non-sticky 定义的前缀和素数索引名，未包含严格增益猜想。
+    previous_atom_id: c742e1ef70a6fea348558733ffde87c92e4701a196e2e15c72ff75edf8af0883
+    next_atom_id: 629aeb133a6d647d59497cd03b33905107d9a16301f1f38d282b28c71423ee9c

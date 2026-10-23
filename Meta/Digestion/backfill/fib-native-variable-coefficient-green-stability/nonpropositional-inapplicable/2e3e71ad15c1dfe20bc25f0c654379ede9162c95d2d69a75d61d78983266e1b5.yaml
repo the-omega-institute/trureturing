@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:2e3e71ad15c1dfe20bc25f0c654379ede9162c95d2d69a75d61d78983266e1b5
+  normalized_sha256: sha256:2e3e71ad15c1dfe20bc25f0c654379ede9162c95d2d69a75d61d78983266e1b5
+cas_ref: sha256:2e3e71ad15c1dfe20bc25f0c654379ede9162c95d2d69a75d61d78983266e1b5
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: Definition of the frozen energy functional only; no Hardy inequality or estimate is asserted.
+    previous_atom_id: 6b96fb00f50bb2fd6a2cbee20d58cb4850741d0f29eeb655f1a967dabe7424e8
+    next_atom_id: 37fbace7ef30426be7e1b4a85f08b17024cc79b82a260cf87e3211f8990ab860

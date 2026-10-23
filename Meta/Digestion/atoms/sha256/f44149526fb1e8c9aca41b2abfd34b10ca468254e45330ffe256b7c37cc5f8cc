@@ -1,0 +1,60 @@
+**Proposition 6.3 (Number, parity and the unresolved resource premises).**
+On $V$, $S$ is invisible on number-block-diagonal densities and to
+number-preserving observables. This restricted equivalence does not imply
+equality of its unrestricted five-state channel with identity, or equality
+of the true and projected-Hamiltonian unrestricted channels.
+Parity alone does not remove the target's relative phase.
+None of the preceding Hamiltonian results supplies phase-sensitive
+preparation or readout, an encoder/decoder, a source reset, independent
+copies or a reference system.
+
+Proof. The number sectors on $V$ are
+
+$$
+\operatorname{span}(e_0),\qquad
+\operatorname{span}(e_1,e_2,e_3),\qquad
+\operatorname{span}(e_4),
+$$
+
+with numbers $0,1,2$. $S$ is scalar on each. Thus $[\rho,N]=0$ implies
+$S\rho S^\dagger=\rho$, and $[M,N]=0$ implies $S^\dagger MS=M$.
+For the latter statement $\operatorname{tr}(MS\rho S^\dagger)
+=\operatorname{tr}(M\rho)$ even if a cross-number-coherent $\rho$ is
+formally specified. At return, true and projected evolutions differ only
+by an $e_4$-sector scalar, so the same restricted indistinguishability
+applies. The vacuum-fixed projective argument in Theorem 2.3 nevertheless
+distinguishes their complete channels unless $\lambda_m=1$.
+
+For a parity-preserving distinction, if separately supplied take
+
+$$
+\psi=\frac{e_0+e_4}{\sqrt2},\qquad
+Y=-i|e_0\rangle\langle e_4|+i|e_4\rangle\langle e_0|.
+$$
+
+Both respect parity, and
+
+$$
+\langle\psi,Y\psi\rangle=0,\qquad
+\langle S\psi,YS\psi\rangle=1.
+$$
+
+$Y$ is not number preserving. The fixed $H$ leaves vacuum fixed and
+conserves number, so it cannot prepare $\psi$ from vacuum or by itself
+supply that readout. Assumption 1.3 includes rotations across number or
+parity sectors; an additional superselection restriction would require
+intersecting that stipulated group with the actual allowed controls.
+The selective correction of Proposition 3.3 does preserve number and parity,
+but its availability remains the stated premise.
+
+The definitions impose neither a map implementing the bosonic embedding
+on an actual native source nor preparation, reference or terminal readout
+instruments for it. Such additional objects and their composition laws
+would be new hypotheses, not consequences of the endpoint equalities.
+The results here determine the fixed model's leakage, return, correction
+and approximation conditions. They make no sharp recovery-error assertion
+for the original encoder/decoder problem of Static Compatibility–Fiber
+Theory, Definitions 1.5 and following, and no time-cost optimum.
+The physical supply and recovery bridges remain separate mathematical
+obligations. $\square$
+

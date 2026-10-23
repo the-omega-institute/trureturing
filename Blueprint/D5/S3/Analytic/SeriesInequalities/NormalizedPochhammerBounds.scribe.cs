@@ -23,6 +23,12 @@ internal sealed class NormalizedPochhammerBoundsDocument : IScribeDocumentDefini
             Entry("zero", "normalized_pochhammer_zero", "The zero index",
                 "At index zero the empty product is one. The compact-majorant consumer uses "
                 + "this companion on its finite-prefix continuity path.", DescribeRole.Theorem),
+            Describe.Lean(DescribeId.Create("inverse-square-sum"),
+                DeclarationHandle.Create(Prefix + "inverse_square_sum"), H("Finite inverse-square bound"),
+                StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("For every natural k, the sum of reciprocal squares from one through k is at most two. "
+                    + "This shared bound controls both normalized Pochhammer products and elliptic tail derivatives."))),
+                DescribeRole.Theorem),
             Entry("disk-bound", "normalized_pochhammer_norm_le", "An explicit disk bound",
                 "For every nonnegative real radius R, every natural k at least one and every "
                 + "complex z of norm at most R, the norm is at most exp(R + R squared) times "

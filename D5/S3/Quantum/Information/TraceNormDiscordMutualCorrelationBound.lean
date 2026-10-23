@@ -165,7 +165,7 @@ private lemma spin_anticommutator (c d : Fin 3 → ℝ) :
   all_goals simp only [Complex.I_sq]
   all_goals ring
 
-private lemma spin_square (c : Fin 3 → ℝ) :
+lemma spin_square (c : Fin 3 → ℝ) :
     spin c * spin c = (vlen c ^ 2 : ℝ) • (1 : Qubit) := by
   have hh := spin_anticommutator c c
   rw [← vlen_sq] at hh
