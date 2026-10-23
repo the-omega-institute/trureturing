@@ -6,7 +6,19 @@ Clopen Cauchy values determine a represented signed weak-star whole-sequence lim
 
 K is an arbitrary compact metric, totally disconnected Borel space, including the empty space. For a real C with 0 ≤ C and an arbitrary sequence of actual finite signed measures s, assume only the uniform total-variation bound and Cauchy convergence of s(n)(A) for every clopen A.
 
-**Theorem 1.1 (Represented signed whole-sequence convergence criterion).**
+**Theorem 1.1 (Exact signed clopen evaluation).**
+
+$$\forall K: Type_{u}, [\operatorname{MetricSpace}\left(K\right)] [\operatorname{CompactSpace}\left(K\right)] [\operatorname{TotallyDisconnectedSpace}\left(K\right)] [\operatorname{MeasurableSpace}\left(K\right)] [\operatorname{BorelSpace}\left(K\right)] \forall r: \operatorname{SignedMeasure}\left(K\right), \forall A: \operatorname{Set}\left(K\right), \operatorname{IsClopen}\left(A\right) \Rightarrow \operatorname{signedFunctional}\left(r, \operatorname{charFnContinuousMap}\left(A\right)\right) = \operatorname{apply}\left(r, A\right)$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/Topology/Measures/ClopenCauchyConvergence.signedFunctional_charFn` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+The real characteristic function of a clopen A integrates exactly to r(A). This consumed evaluation identity connects old weak-star F to exact clopen values in SignedProperLimit. The proof and statement are the existing signed integral identity; no new measure representation is asserted.
+
+**Theorem 1.2 (Represented signed whole-sequence convergence criterion).**
 
 $$\begin{aligned}\forall K: Type_{u}, [\operatorname{MetricSpace}\left(K\right)] [\operatorname{CompactSpace}\left(K\right)] [\operatorname{TotallyDisconnectedSpace}\left(K\right)] [\operatorname{MeasurableSpace}\left(K\right)] [\operatorname{BorelSpace}\left(K\right)] \\\forall C: \operatorname{Real}\left(\right), \forall s: \operatorname{Nat}\left(\right) \to \operatorname{SignedMeasure}\left(K\right), \\\operatorname{Nonneg}\left(C\right) \Rightarrow {\forall n: \operatorname{Nat}\left(\right), \operatorname{totalVariationRealUniv}\left(\operatorname{apply}\left(s, n\right)\right) \le C} \Rightarrow {\forall A: \operatorname{Set}\left(K\right), \operatorname{IsClopen}\left(A\right) \Rightarrow \operatorname{CauchySeq}\left(n \mapsto \operatorname{apply}\left(\operatorname{apply}\left(s, n\right), A\right)\right)}\\ \\\Rightarrow \exists mu:\operatorname{SignedMeasure}\left(K\right), \operatorname{totalVariationRealUniv}\left(mu\right) \le C \land \operatorname{Regular}\left(\operatorname{jordanPosPart}\left(mu\right)\right) \land \operatorname{Regular}\left(\operatorname{jordanNegPart}\left(mu\right)\right) \land \operatorname{Tendsto}\left(n \mapsto \operatorname{toWeakDual}\left(\operatorname{signedFunctional}\left(\operatorname{apply}\left(s, n\right)\right)\right), \operatorname{atTop}\left(\right), \operatorname{nhds}\left(\operatorname{toWeakDual}\left(\operatorname{signedFunctional}\left(mu\right)\right)\right)\right)\end{aligned}$$
 
@@ -26,5 +38,6 @@ Regularity is inherited from the compact metric Borel finite-measure instances f
 
 ## References
 
+- Truth anchor: `D5/S3/Topology/Measures/ClopenCauchyConvergence.signedFunctional_charFn`
 - Truth anchor: `D5/S3/Topology/Measures/ClopenCauchyConvergence.tendsto_signedFunctional_of_clopen_cauchy`
 - Dependency: [D5/S3/Topology/Measures/SignedWeakStarCompactness](SignedWeakStarCompactness.md)
