@@ -58,14 +58,14 @@ private theorem value_pos_iff {V : Type} (f : Factor V) (hf : Strict f.table)
   · intro ha
     exact hf (a f.scope.1, a f.scope.2.1, a f.scope.2.2) ha
 
-private def induced {n m k : Nat} (net : Network n m k) : LoopGraph n where
+def induced {n m k : Nat} (net : Network n m k) : LoopGraph n where
   edge i l := (∃ j, (net.factor j).scope.2.2 = Sum.inl l ∧
       ((net.factor j).scope.1 = Sum.inl i ∨ (net.factor j).scope.2.1 = Sum.inl i)) ∨
     (∃ j, (net.factor j).scope.2.2 = Sum.inl i ∧
       ((net.factor j).scope.1 = Sum.inl l ∨ (net.factor j).scope.2.1 = Sum.inl l))
   symm := by intro i l h; exact h.symm
 
-private theorem necessity {n m k : Nat} (net : Network n m k)
+theorem necessity {n m k : Nat} (net : Network n m k)
     (hs : ∀ j, Strict (net.factor j).table) :
     0 < net.partition ∧ ∀ a, 0 < net.law a ↔ Independent (induced net) a := by
   have hn (a : Fin n → Bool) (h : Fin m → Bool) : 0 ≤ net.weight a h :=
@@ -241,7 +241,7 @@ private theorem binary_strict (B : Bool → Bool → ℚ) (hB : ∀ x y, 0 < B x
   · norm_num
   · exact hB _ _
 
-private theorem pin_strict : Strict pinTable := by
+theorem pin_strict : Strict pinTable := by
   intro t ht
   norm_num [pinTable, pinRaw, ht]
 

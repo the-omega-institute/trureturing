@@ -20,6 +20,12 @@ internal sealed class RationalPositiveRealizationDocument : IScribeDocumentDefin
                 "A word a is independent when a(i) and a(j) are not simultaneously one at any adjacent pair i,j. A loop forces its coordinate to zero. The all-zero word is always independent; with no edges every word is independent.", DescribeRole.Definition),
             Node("strict-representability", "The exact finite representation predicate", "Representable", StatementSource.WithoutFormula(),
                 "Representable P means that some finite natural hidden count m and factor count k admit an existing Network n m k. Each factor's existing Table is Strict, the existing partition is positive, and its existing normalized law equals P at every visible assignment. Factors have ordered triples of actual variables in Fin n plus Fin m, with repetition permitted. The weight is the finite product, including the empty product one; the marginal sums every hidden assignment.", DescribeRole.Definition),
+            Node("canonical-pin-positivity", "Strict canonical pin table", "pin_strict", StatementSource.FromAuthor(Disp(Call("Strict", Named("pinTable")))),
+                "The canonical full pinTable is positive at every allowed tuple of A.", DescribeRole.Theorem),
+            Node("visible-exclusion-graph", "The induced visible exclusion graph", "induced", StatementSource.WithoutFormula(),
+                "For a canonical Network, the induced LoopGraph joins original visible coordinates whenever they occur as the first or second and third terminals of one factor, in either direction. Scope repetitions retain diagonal edges.", DescribeRole.Definition),
+            Node("strict-network-support", "Partition positivity and exact visible support", "necessity", StatementSource.FromAuthor(NecessityFormula()),
+                "Every canonical Network whose complete factor tables are Strict has a positive partition. At every visible assignment its normalized law is positive exactly when the assignment is independent in the induced LoopGraph. Arbitrary hidden counts and empty factor sets are included.", DescribeRole.Theorem),
             Node("strict-rational-classification", "All rational masses on every independent support", "result", StatementSource.FromAuthor(ResultFormula()),
                 "For every natural n and every nonnegative rational law P on the Boolean n-cube with total one, P has an exact finite representation by strict five-mode factors if and only if its positive support is the independent-word family of some labelled undirected graph with loops. In particular this includes every n at least one, every positive rational mass assignment on such a support, isolated coordinates, loops and the singleton all-zero support. The same statement also holds for the zero-dimensional cube.", DescribeRole.Theorem),
             Paragraph(Text("For necessity, each factor on actual variables (u,w,t) excludes the pairs (u,t) and (w,t). Keep both directions and every diagonal exclusion to obtain a symmetric graph on the visible coordinates. A positive full weight satisfies every exclusion. Conversely an independent visible word extends positively by assigning zero to every hidden variable. Nonnegative finite sums detect a positive summand. The complete zero assignment proves that the partition is positive, even with no factors and with arbitrary finite hidden count.")),
@@ -30,6 +36,15 @@ internal sealed class RationalPositiveRealizationDocument : IScribeDocumentDefin
             Paragraph(Text("Given graph-independent support, extend P to the positive full-cube table w that equals P on independent words and one elsewhere. Add a visible exclusion factor for every adjacency pair, including diagonal pairs; nonedges can use the internally pinned scope. Their product is the independent-word indicator times a positive constant. The marginal is exactly C L P for a positive rational C. Summing P gives partition C L, and final normalization recovers P. Finite equivalences number the actual hidden variables and factors using the existing Network constructor.")),
             Paragraph(Text("The conclusion concerns globally normalized rational potentials. It supplies neither an efficiency bound nor a causal sampling interpretation. Constants, complemented scope literals, supplied equality or disequality, external unary or multivariate factors, and limits are absent from the factor language. The matrix argument and selector construction establish arbitrary weights as well as support."))
         ), []));
+
+    private static Formula NecessityFormula()
+    {
+        Formula n=F.Id("n"),m=F.Id("m"),k=F.Id("k"),net=F.Id("net"),a=F.Id("a");
+        Formula strict=All("j",Call("Fin",k),Call("Strict",Call("table",Call("factor",net,F.Id("j")))));
+        Formula conclusion=And(Rel(D(0),FormulaRelationOperator.LessThan,Call("partition",net)),
+            All("a",Arrow(Call("Fin",n),Named("Bool")),Iff(Rel(D(0),FormulaRelationOperator.LessThan,Call("law",net,a)),Call("Independent",Call("induced",net),a))));
+        return Disp(All("n",Named("Nat"),All("m",Named("Nat"),All("k",Named("Nat"),All("net",Call("Network",n,m,k),Imp(strict,conclusion))))));
+    }
 
     private static Formula ResultFormula()
     {
