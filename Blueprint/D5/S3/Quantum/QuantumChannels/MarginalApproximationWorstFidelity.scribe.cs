@@ -156,7 +156,10 @@ internal sealed class MarginalApproximationWorstFidelityDocument : IScribeDocume
                         + "The positive square root of (c : ℂ)χ is (√c : ℂ)χ. Substituting "
                         + "these identities into sqFidelity, taking the trace and using trace χ = 1 "
                         + "gives (√c)² = c. This supplies all four attainment assertions for every N at least two."))),
-                DescribeRole.Theorem))));
+                DescribeRole.Theorem,
+                openProblemResolutionClaim: new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("sud-marshall-wang-rieffel-wudarski-2022-maten-worst-case-fidelity"),
+                    ResolutionKind.Proved)))));
 
     private static Formula Qualified(string owner, string name) =>
         Seq(Operatorname, Grp(Seq(F.Id(owner), Dot, F.Id(name))));
