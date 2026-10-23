@@ -94,6 +94,10 @@ $$\forall r \in \mathbb{N},\; \forall K \in \mathbb{N},\; \forall k \in \mathbb{
 
 *Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/Probability/AyyerMisraHalfDensityMode.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/ayyer-misra-2023-half-density-most-likely-occupation` (proved) by `D5/S3/Combinatorics/Probability/AyyerMisraHalfDensityMode.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"ayyer-misra-2023-half-density-most-likely-occupation","declaration_gid":"D5/S3/Combinatorics/Probability/AyyerMisraHalfDensityMode.result","resolution_kind":"proved"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* Arvind Ayyer and Samarth Misra (2024). *An exactly solvable asymmetric K-exclusion process*. DOI: [10.1088/1751-8121/ad5edd](https://doi.org/10.1088/1751-8121/ad5edd). URL: <https://arxiv.org/abs/2310.03343v2>.
