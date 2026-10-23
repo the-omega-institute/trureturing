@@ -7,7 +7,7 @@ namespace StrataLint.Scribe.Blueprint.D5.S3.ObserverMemory.Prediction;
 internal sealed class ControlledBehaviorUniversalityDocument : IScribeDocumentDefinition
 {
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
-        "Every finite controlled realization maps uniquely onto the complete behavior quotient.",
+        "Every exact controlled representation maps from its actual image uniquely onto the behavior quotient.",
         H("Controlled Behavior Universality"),
         Blocks(
             new DocumentBlock.Section(H("Local observation and choices"), Blocks(
@@ -45,6 +45,90 @@ internal sealed class ControlledBehaviorUniversalityDocument : IScribeDocumentDe
                     + "page one of Kozen, On the Myhill-Nerode Theorem for Trees. Equality of arbitrary output "
                     + "profiles replaces equality of Boolean membership; the concatenation argument is "
                     + "unchanged.")))),
+            new DocumentBlock.Section(H("Arbitrary states and the actual representation image"), Blocks(
+                Paragraph(Text(
+                    "Take a nonempty state carrier X, an arbitrary input alphabet Sigma, arbitrary outputs Y, "
+                    + "total deterministic updates F_a : X -> X, and a readout o : X -> Y. The carriers "
+                    + "X : Type u, Sigma : Type v, Y : Type w, and an ambient representation carrier "
+                    + "S : Type s have independent universes. In this module's notation the state parameter "
+                    + "Y is X, the input parameter U is Sigma, and the output parameter O is Y. Every state "
+                    + "x is compared; no designated initial state or reachable subset is substituted for X.")),
+                Paragraph(Text(
+                    "Write F_empty = id and F_word = runWord F word. Then B(x)(word) = o(F_word(x)) is "
+                    + "controlledBehavior F o. Concatenation is chronological: F_(uv) = F_v composed with F_u, "
+                    + "so u is read before v. The identity-readout specialization of "),
+                    Ref("D5/S3/ObserverMemory/RefinementClosure/BehaviorUpdateWordAction."
+                        + "behavior_update_well_defined"),
+                    Text(" supplies this order through its word-action law, evaluated at the empty word.")),
+                Paragraph(Text(
+                    "Let R be equality of B, and let Phi(T) consist of pairs with equal current readouts "
+                    + "whose F_a successors belong to T for every a. Thus Phi(T) is ker(o) intersected with "
+                    + "all one-step inverse images of T. The public results "),
+                    Ref("D5/S3/ObserverMemory/Algorithms/ControlledFiniteStability.controlled_limit_eq_gfp"),
+                    Text(" and "),
+                    Ref("D5/S3/ObserverMemory/Algorithms/ControlledFiniteStability."
+                        + "controlled_limit_is_greatest_stable_equivalence"),
+                    Text(" identify R with the greatest fixed point of Phi and the greatest equivalence "
+                        + "inside ker(o) preserved by every F_a. Neither result requires a finite carrier. "
+                        + "Greatest refers to inclusion of relations; it gives the coarsest exact quotient.")),
+                Paragraph(Text(
+                    "Those two suppliers share an input/output universe. To apply them without relating v "
+                    + "and w, use inputs ULift.{w} Sigma and outputs ULift.{v} Y, with lifted update "
+                    + "F^+(a)(x) = F(a.down)(x) and lifted readout o^+(x) = ULift.up(o(x)). Their behavior "
+                    + "kernel equals the original kernel: apply "),
+                    Ref("D5/S3/ConceptDynamics/Interventions/DynamicClosureMinimality.dynamic_closure_is_least"),
+                    Text(" in both directions to the original and lifted behavior profiles, using empty-word "
+                        + "evaluation for readout refinement and the one-letter profile equation for closure. "
+                        + "The resulting factorizations give both kernel inclusions. ULift.up and ULift.down "
+                        + "also identify the refinement operators and stable-equivalence families, transporting "
+                        + "both conclusions back to the independent original universes.")),
+                Paragraph(Text(
+                    "The quotient Q = X/R is ControlledCompletion F o. Its surjective projection pi, updates "
+                    + "Fbar_a, and readout obar_Q are completionProjection, completionUpdate, and "
+                    + "completionReadout from this module. They satisfy pi composed with F_a = Fbar_a "
+                    + "composed with pi and o = obar_Q composed with pi. By "),
+                    Ref("D5/S3/ObserverMemory/RefinementDescent/ControlledCompletionDescent."
+                        + "controlled_completion_update_and_readout_descend"),
+                    Text(" each commuting quotient update equals Fbar_a and each commuting quotient readout "
+                        + "equals obar_Q. This characterizes the unique descended maps on all of Q.")),
+                Paragraph(Text(
+                    "For any r : X -> S, corestrict to Sr = Set.range r with rho = Set.rangeFactorization r. "
+                    + "An exact representation consists of arbitrary maps G_a : Sr -> Sr and obar : Sr -> Y "
+                    + "satisfying rho composed with F_a = G_a composed with rho for every a, and "
+                    + "o = obar composed with rho. Only the actual image Sr carries these maps; no extension "
+                    + "of G or obar to unused elements of S is required.")),
+                Paragraph(Text(
+                    "The update squares make the fibers of rho intervention-closed, and the readout square "
+                    + "makes rho refine o. Applying dynamic_closure_is_least to this candidate factors B "
+                    + "through rho, hence ker(rho) is contained in ker(B). The existing supplier owns the "
+                    + "word-induction argument. Mathlib's Setoid.quotientKerEquivOfSurjective identifies "
+                    + "X/ker(rho) with Sr. Compose its inverse with Quotient.map id for that kernel inclusion "
+                    + "to obtain p : Sr -> Q, characterized by p(rho(x)) = pi(x).")),
+                Paragraph(Text(
+                    "This p is surjective because pi is surjective. It satisfies all three factor equations: "
+                    + "pi = p composed with rho; p composed with G_a = Fbar_a composed with p for every a; "
+                    + "and obar_Q composed with p = obar. To check the update and readout equations at any "
+                    + "z in Sr, write z = rho(x) using surjectivity of rho and apply the corresponding "
+                    + "representation square. The same substitution shows that any other factor with the "
+                    + "projection equation agrees with p everywhere. Thus there is a unique surjection "
+                    + "satisfying the projection, every update, and the readout equations.")),
+                Paragraph(Text(
+                    "If Q is finite, surjectivity gives the lower bound on actual states even when Sr is "
+                    + "infinite. Across the independent universes its precise form is "
+                    + "Cardinal.lift.{s}(Cardinal.mk Q) <= Cardinal.lift.{u}(Cardinal.mk Sr), using "
+                    + "Function.Embedding.ofSurjective and Cardinal.lift_mk_le'. Finiteness of Q alone "
+                    + "does not make Sr finite. If encode : Sr -> (Fin b -> Bool) is injective, the encoding "
+                    + "does make Sr finite; surjectivity of p and injectivity of encode then give "
+                    + "Nat.card Q <= 2^b by Fintype.card_le_of_surjective, Fintype.card_le_of_injective, "
+                    + "and the cardinality of functions from Fin b to Bool.")),
+                Paragraph(Text(
+                    "This is an application of the cited existing results. The named theorem "
+                    + "controlled_behavior_universal_property described below separately assumes finite "
+                    + "source and realized carriers; it is not the supplier of the unrestricted application. "
+                    + "Here X, Sigma, Y, and S have no finiteness assumption. The counting conclusion concerns "
+                    + "exact representations; a physical b-bit interpretation requires an injective encoding "
+                    + "of their complete actual states. It asserts neither an efficient construction nor "
+                    + "a time bound, and supplies no literature-priority claim.")))),
             new DocumentBlock.Section(H("Exact clocks require corresponding state capacity"), Blocks(
                 Paragraph(Text(
                     "For a nonempty alphabet choose a letter a. The words consisting of zero through N copies "
