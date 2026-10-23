@@ -13,6 +13,12 @@ import Mathlib.Tactic.FinCases
 import Mathlib.Tactic.Ring
 import Mathlib.Tactic.Linarith
 
+/-! # No perfect measure-and-prepare cloning of amplitude-damping channels
+
+A qubit marginal of a channel mixture inherits amplitude-damping extremality. Polynomial
+outcome probabilities then vanish, contradicting their normalization.
+-/
+
 namespace D5.S3.Quantum.QuantumChannels.AmplitudeDampingMeasurePrepareCloning
 
 open scoped BigOperators ComplexOrder
@@ -64,13 +70,14 @@ private lemma ad_entries (s : ℝ) (hs : s ∈ Set.Icc (0 : ℝ) 1)
   rcases y with ⟨r', o'⟩
   fin_cases r <;> fin_cases o <;> fin_cases r' <;> fin_cases o' <;>
     simp [adChoi, polyChoi, Fin.sum_univ_two, Real.sqrt_sq hs.1,
-      ← Complex.ofReal_mul, Real.mul_self_sqrt hγ] <;> ring
+      ← Complex.ofReal_mul, Real.mul_self_sqrt hγ]
 
 private lemma ad_tp (s : ℝ) (hs : s ∈ Set.Icc (0 : ℝ) 1) (r r' : Fin 2) :
     ∑ o : Fin 2, adChoi (1 - s ^ 2) (r, o) (r', o) = if r = r' then 1 else 0 := by
   simp_rw [ad_entries s hs]
   fin_cases r <;> fin_cases r' <;>
-    simp [Fin.sum_univ_two, polyChoi] <;> ring
+    simp [Fin.sum_univ_two, polyChoi]
+  ring
 
 private lemma ad_injective (s t : ℝ)
     (hs : s ∈ Set.Icc (0 : ℝ) 1) (ht : t ∈ Set.Icc (0 : ℝ) 1)
@@ -107,15 +114,19 @@ private lemma red_channel (n : ℕ)
   simp_rw [hcons] at ht
   simpa [red, partialTraceRight, Fin.cons_inj] using ht
 
-private lemma red_pow (n : ℕ) (s : ℝ) (hs : s ∈ Set.Icc (0 : ℝ) 1) :
-    red n (choiPow (adChoi (1 - s ^ 2)) (n + 1)) = adChoi (1 - s ^ 2) := by
+private lemma red_pow_formula (n : ℕ)
+    (J : Matrix (Fin 2 × Fin 2) (Fin 2 × Fin 2) ℂ) :
+    red n (choiPow J (n + 1)) = (∑ o : Fin 2, J (0, o) (0, o)) ^ n • J := by
   ext x y
   simp only [red, partialTraceRight, Matrix.submatrix_apply, choiPow,
     Fin.prod_univ_succ, Fin.cons_zero, Fin.cons_succ]
   rw [← Finset.mul_sum]
-  rw [← Fintype.prod_sum (fun (_ : Fin n) (o : Fin 2) =>
-    adChoi (1 - s ^ 2) (0, o) (0, o))]
-  simp_rw [ad_tp s hs 0 0]
+  rw [← Fintype.prod_sum (fun (_ : Fin n) (o : Fin 2) => J (0, o) (0, o))]
+  simp [mul_comm]
+
+private lemma red_pow (n : ℕ) (s : ℝ) (hs : s ∈ Set.Icc (0 : ℝ) 1) :
+    red n (choiPow (adChoi (1 - s ^ 2)) (n + 1)) = adChoi (1 - s ^ 2) := by
+  rw [red_pow_formula, ad_tp s hs 0 0]
   simp
 
 private lemma red_sum (n L : ℕ) (p : Fin L → ℂ)
@@ -148,7 +159,7 @@ private lemma ad_extreme (s : ℝ) (hs : s ∈ Set.Icc (0 : ℝ) 1)
   have hcol01 (x : Fin 2 × Fin 2) : R ℓ x (0, 1) = 0 := by
     have hv : adChoi (1 - s ^ 2) *ᵥ Pi.single (0, 1) 1 = 0 := by
       ext x
-      simp [Matrix.mulVec_single_one, ad_entries s hs, polyChoi]
+      simp [ad_entries s hs, polyChoi]
     have hx := congrFun (hkern _ hv) x
     simpa only [Matrix.mulVec_single_one, Matrix.col_apply, Pi.zero_apply] using hx
   have hcol11 (x : Fin 2 × Fin 2) : R ℓ x (1, 1) = (s : ℂ) * R ℓ x (0, 0) := by
@@ -157,8 +168,7 @@ private lemma ad_extreme (s : ℝ) (hs : s ∈ Set.Icc (0 : ℝ) 1)
     have hv : adChoi (1 - s ^ 2) *ᵥ v = 0 := by
       ext ⟨r, o⟩
       fin_cases r <;> fin_cases o <;>
-        simp [v, Matrix.mulVec_sub, Matrix.mulVec_smul, Matrix.mulVec_single_one,
-          ad_entries s hs, polyChoi] <;> ring
+        simp [v, Matrix.mulVec_sub, Matrix.mulVec_smul, ad_entries s hs, polyChoi]
     have hx := congrFun (hkern v hv) x
     simp only [v, Matrix.mulVec_sub, Matrix.mulVec_smul, Matrix.mulVec_single_one,
       Pi.sub_apply, Pi.smul_apply, Matrix.col_apply, smul_eq_mul, Pi.zero_apply] at hx
@@ -184,7 +194,7 @@ private lemma ad_extreme (s : ℝ) (hs : s ∈ Set.Icc (0 : ℝ) 1)
   ext ⟨r, o⟩ ⟨r', o'⟩
   fin_cases r <;> fin_cases o <;> fin_cases r' <;> fin_cases o' <;>
     simp [ad_entries s hs, polyChoi, hcol01, hrow01, hcol11, h00,
-      h0010, h1000, h1100, h1110, h1010] <;> ring
+      h0010, h1000, h1100, h1110, h1010]
 
 private lemma measurement_polynomial (N : ℕ)
     (T : Matrix (Fin N → Fin 2 × Fin 2) (Fin N → Fin 2 × Fin 2) ℂ) :
@@ -206,7 +216,7 @@ private lemma polynomial_zero (P : Polynomial ℂ)
       Complex.ofReal_injective.injOn).mono
     rintro z ⟨s, hs, rfl⟩
     exact hz s hs
-  · push_neg at hz
+  · push Not at hz
     obtain ⟨t, ht, hpt⟩ := hz
     apply Polynomial.eq_zero_of_infinite_isRoot
     apply (((Set.Icc_infinite (by norm_num : (0 : ℝ) < 1)).sdiff
@@ -239,7 +249,7 @@ theorem result : claim := by
     simpa [hp0] using hp.symm
   have hnorm := (h 1 (by constructor <;> norm_num)).2.1
   simp_rw [hzero] at hnorm
-  simpa using hnorm
+  simp at hnorm
 
 #print axioms result
 
