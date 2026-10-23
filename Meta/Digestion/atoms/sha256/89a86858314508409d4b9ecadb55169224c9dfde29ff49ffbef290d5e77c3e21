@@ -1,0 +1,165 @@
+**Theorem 8.1 (uniform source-weight tails and the full subcritical bridge).**
+For every fixed admitted model of Definition 1.1, there are $n_0$ and
+$\epsilon_0>0$ as in Theorem 7.1 such that, for each $0<p<1/2$, a
+finite $C_p$ satisfies
+
+$$
+\begin{gathered}
+\nu_n({\bf1}_{\{o\}})=0\quad(n\ge n_0),\\
+\sup_{n\ge n_0}
+ \nu_n(R^{-2p}{\bf1}_{\mathcal B_\epsilon})
+ \le C_p\epsilon^{1-2p},\qquad 0<\epsilon\le\epsilon_0,\\
+\sup_{n\ge n_0}
+ \nu_n(\Gamma^p{\bf1}_{\mathcal B_\epsilon})
+ \le C_p\epsilon^{1-2p}.
+\end{gathered}
+\tag{8.1}
+$$
+
+The local weight is extended by zero outside the source chart and
+has value infinity at $o$. In particular the spatial source-weight
+tails vanish uniformly for these expected occupation measures:
+
+$$
+\lim_{M\to\infty}\sup_{n\ge n_0}
+ \nu_n\bigl(\Gamma^p-(\Gamma^p\wedge M)\bigr)=0.
+\tag{8.2}
+$$
+
+For exactly the original uncapped complete commands the limit is
+
+$$
+\boxed{\displaystyle
+\lim_{n\to\infty}\mathbb E\int_0^{\zeta_n}
+ \Gamma(\bar q_n(t))^pdt
+=\mathbb E_o\int_0^\tau\Gamma(Q_t)^pdt
+=\int_\Omega\Gamma^{p+1}\,d\mu<\infty,
+\qquad 0<p<\tfrac12.}
+\tag{8.3}
+$$
+
+Every command at $n\ge n_0$ still has the finite integral of Theorem
+2.1. The new assertion is uniform control of its expected spatial
+tails and convergence of its expectation, not a deduction of either
+from that individual finiteness.
+
+Proof. Each $\nu_n$ is a finite Borel measure: it is the expectation
+of the time-occupation measure of the actual finite command; we write
+$\nu_n(E)=\nu_n({\bf1}_E)$ for Borel sets $E$. For the
+indices in question, (7.6) and the terminal-leg duration even give
+$\nu_n(1)\le M+\delta_n\le M+1$.
+The balls $\mathcal B_\epsilon$ decrease to $\{o\}$, so continuity
+from above and (7.3) give zero source mass for every such $\nu_n$.
+
+Put $a=2p\in(0,1)$. For $0<r<\epsilon$ the elementary identity
+
+$$
+r^{-a}=\epsilon^{-a}
+       +a\int_r^\epsilon t^{-a-1}dt
+\tag{8.4}
+$$
+
+and Tonelli, with infinity allowed before the estimate, give
+
+$$
+\begin{aligned}
+\nu_n(R^{-a}{\bf1}_{\mathcal B_\epsilon})
+&=\epsilon^{-a}\nu_n(\mathcal B_\epsilon)
+ +a\int_0^\epsilon t^{-a-1}\nu_n(\mathcal B_t)dt\\
+&\le C_2\epsilon^{1-a}
+ +aC_2\int_0^\epsilon t^{-a}dt
+ =\frac{C_2}{1-a}\epsilon^{1-a}.
+\end{aligned}
+\tag{8.5}
+$$
+
+There is no contribution from $R=0$, since its measure is zero.
+The local comparison (1.6), after decreasing $\epsilon_0$, gives
+$\Gamma\le C_\Gamma R^{-2}$ throughout the punctured ball, proving
+both weighted bounds in (8.1). This layer-cake argument controls all
+source returns together with the initial departure and terminal leg.
+
+For every fixed $\epsilon>0$ in this range, the full off-source bound
+of Definition 1.2 gives
+$B_\epsilon=\sup_{\Omega\setminus\mathcal B_\epsilon}\Gamma^p<\infty$,
+including the neighbourhoods of both killed faces. If $M\ge B_\epsilon$,
+then pointwise outside a $\nu_n$-null source,
+
+$$
+0\le\Gamma^p-(\Gamma^p\wedge M)
+\le\Gamma^p{\bf1}_{\mathcal B_\epsilon}.
+\tag{8.6}
+$$
+
+Taking the supremum over $n\ge n_0$, then $M\to\infty$ and finally
+$\epsilon\downarrow0$, proves (8.2). Equivalently one also obtains
+the usual spatial-weight tail bound with
+$\Gamma^p{\bf1}_{\{\Gamma^p>2M\}}$, since that function is at most
+$2(\Gamma^p-(\Gamma^p\wedge M))$.
+
+Set $W=\Gamma^p$ and $J=\nu(W)$. Theorem 2.1 gives $J<\infty$
+and (2.5) identifies it with the diffusion expectation in (8.3).
+For a fixed $M$, Theorem 4.1 gives $\nu_n(W\wedge M)\to\nu(W\wedge M)$
+over the entire original lifetime. All quantities below are finite
+for $n\ge n_0$, and positivity gives the precise truncation bound
+
+$$
+\begin{aligned}
+|\nu_n(W)-J|
+\le {}&|\nu_n(W\wedge M)-\nu(W\wedge M)|\\
+ &+\nu_n(W-W\wedge M)+\nu(W-W\wedge M).
+\end{aligned}
+\tag{8.7}
+$$
+
+The first term tends to zero at each fixed $M$. The second tends to
+zero uniformly in $n\ge n_0$ by (8.2); the third tends to zero by
+integrability of $W$ under $\nu$. First take $n\to\infty$, then
+$M\to\infty$. This proves (8.3) without a cap in the command or in
+the asserted limiting observation. $\square$
+
+The source-specific derivation (7.10)–(8.7) supplies the tail that
+§5 left unclaimed for $0<p<1/2$. The truncation step is the classical
+bounded-test plus uniform-integrability argument already used in the
+equivalence (5.8); the additional mathematical input is the proved
+uniform source-ball estimate for the same producer. It requires
+neither a node transition density nor an independent horizontal
+quotient law. In particular no assumption that $\rho$ or $A$ is close
+to constant has entered the proof.
+
+For comparison with published additive-functional approximation
+theorems, Kulik's [*Difference approximation for local times of
+multidimensional diffusions*, §2, Theorem 2.1, A1 and A3](https://arxiv.org/html/math/0702175v2)
+requires uniform ellipticity in the full Euclidean state and a $C^4$
+innovation density with derivative and moment bounds. The native
+three-coordinate state has rank-two instantaneous covariance, and its
+four-sign innovation has no Lebesgue density. Even the elliptic
+horizontal projection does not remove its dependence on the remaining
+state. Those hypotheses therefore do not justify applying that theorem
+to these commands. Kartashov–Kulik's [§3, Theorem 1, condition 2](https://arxiv.org/html/0704.0508v1)
+assumes uniform convergence of the additive-functional characteristics,
+in addition to Markov approximation, vanishing maximal summands and
+uniform continuity of the limiting characteristic. It cannot provide
+the missing singular expectation convergence by assuming that
+characteristic convergence. Kulik's [*Malliavin calculus for difference
+approximations of multidimensional diffusions: truncated local limit
+theorem*, §1.1, Theorem 1.1, B1 and B3](https://arxiv.org/html/0801.2319v1)
+also imposes full-state ellipticity and, in B3, a positive absolutely
+continuous component of the innovation law bounded below on an open
+set. Four signs fail B3. Its truncation is a decomposition of transition
+probabilities, not an uncapping theorem for the present source weight.
+These are hypothesis comparisons, not imports of their conclusions.
+The convex/Tanaka method and truncation principle are classical;
+the result here is their repo-derived application with the original
+full-coefficient native geometry, interpolation and termination rule.
+No assertion of world priority is made.
+
+The uniformity in (8.1)–(8.2) concerns spatial weights under the
+deterministic expected measures $\nu_n$. No uniform integrability of
+the random total occupations, almost sure convergence, or convergence
+rate is asserted. Theorem 2.1's infinite finite-command occupations
+for $p\ge1/2$, Theorem 3.1's original-form-domain witnesses and §5's
+larger-exponent cap restrictions retain their stated force. Neither
+(7.3) nor its layer-cake proof supplies the missing tails at those
+exponents: the upper integral in (8.5) is finite only for $2p<1$.
+

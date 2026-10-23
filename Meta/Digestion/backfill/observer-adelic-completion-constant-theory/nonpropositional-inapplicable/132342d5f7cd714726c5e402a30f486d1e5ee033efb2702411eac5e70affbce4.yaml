@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:132342d5f7cd714726c5e402a30f486d1e5ee033efb2702411eac5e70affbce4
+  normalized_sha256: sha256:132342d5f7cd714726c5e402a30f486d1e5ee033efb2702411eac5e70affbce4
+cas_ref: sha256:132342d5f7cd714726c5e402a30f486d1e5ee033efb2702411eac5e70affbce4
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: This is a taxonomy label Borcherds-renormalization model, without asserting a Borcherds lift, product identity or pullback theorem.
+    previous_atom_id: 46f67a1f76102f953f67d708938adfb179f0eae85814c5e38b04c12ed02c73c3
+    next_atom_id: 84cc2161cc9bcf63cb56d5b18ea819c302d01e1a5805962e32f7be4b9a72ad6d

@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:16f6cfb7ce57aa16c1082cb0de9c4f3b49c1590bca4c2b65da48f4c7ce2b7fa4
+  normalized_sha256: sha256:16f6cfb7ce57aa16c1082cb0de9c4f3b49c1590bca4c2b65da48f4c7ce2b7fa4
+cas_ref: sha256:16f6cfb7ce57aa16c1082cb0de9c4f3b49c1590bca4c2b65da48f4c7ce2b7fa4
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 非命题：列出建议考察的 Galois representation 信息，未声称具体表示或恢复定理。
+    previous_atom_id: b9474ee3a5f8a74d8a442f1d8f63b07237ff0c8874c3b285ab02b38c3b57d950
+    next_atom_id: 8da757d6e5604dabf3893d6ed21b74963bca67e67ec3d8775454a7722d7991cc

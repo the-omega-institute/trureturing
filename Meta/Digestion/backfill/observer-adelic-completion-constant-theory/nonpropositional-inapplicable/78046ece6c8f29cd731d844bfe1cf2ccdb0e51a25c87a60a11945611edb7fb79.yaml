@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:78046ece6c8f29cd731d844bfe1cf2ccdb0e51a25c87a60a11945611edb7fb79
+  normalized_sha256: sha256:78046ece6c8f29cd731d844bfe1cf2ccdb0e51a25c87a60a11945611edb7fb79
+cas_ref: sha256:78046ece6c8f29cd731d844bfe1cf2ccdb0e51a25c87a60a11945611edb7fb79
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 'nonpropositional: Explicit list of open research bridges, not claims that any bridge has been solved.'
+    previous_atom_id: 7e0440b88628037f49f82414b5927313188ea4aa0fff157f4a8c30055d952389
+    next_atom_id: 8f9ff0b22943dd281f27cead853e5cfc2705e2127f16edc2d9ff6784281e0ab4

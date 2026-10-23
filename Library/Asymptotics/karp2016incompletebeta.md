@@ -25,6 +25,7 @@ Source: https://arxiv.org/abs/1509.05120v1
 
 Pinned source: §3, Conjecture 1; definitions (1), (3), (4).
 The integer-shift case is proved via Lemma 2 and Theorem 3.
+Pinned source: §3, Conjecture 2, equation (6), and Corollary 1; equation (1) supplies the coefficients.
 Journal publication: *Journal of Mathematical Sciences* 217(1) (2016), 91–107.
 
 ## Mathematical correspondence

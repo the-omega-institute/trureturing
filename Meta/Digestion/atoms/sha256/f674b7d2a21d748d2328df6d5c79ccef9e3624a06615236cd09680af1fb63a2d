@@ -1,0 +1,37 @@
+### 推论 81.5（规定紧时间区间上的原始增益与漂移恢复）
+
+预先规定原始时间区间 $J=[c,d]$。设主策略精确恢复
+$q=(R,\widehat G,\widehat D)$，使用定理 80.3 的中点决策
+$\widetilde\tau\in K$，且在整个允许主类上有给定有限常数 $M_G,M_D$ 使
+
+$$
+\sup_{x\in J-K}|\widehat G'(x)|\le M_G,\qquad
+\sup_{x\in J-K}|\widehat D'(x)|\le M_D,
+\qquad J-K=[c-b,d-a].
+\tag{81.10}
+$$
+
+定义 $\widetilde G(t)=\widehat G(t-\widetilde\tau)$、
+$\widetilde D(t)=\widehat D(t-\widetilde\tau)$。则
+
+$$
+\|\widetilde G-G\|_{\infty,J}\le M_G\mathfrak R_h^*,\qquad
+\|\widetilde D-D\|_{\infty,J}\le M_D\mathfrak R_h^*.
+\tag{81.11}
+$$
+
+例如对次数至多 $k$ 的 $\widehat G(x)=\sum_{j=0}^kg_jx^j$，
+若给定 $|g_j|\le C_j$，可取
+$M_G=\sum_{j=1}^k jC_j Q^{j-1}$，其中
+$Q=\max(|c-b|,|d-a|)$；漂移有同样的系数界版本。
+这类敏感性前提缺失时，命题 79.10 的无统一函数误差界反例仍然适用。
+
+**证明。** 对每个 $t\in J$，两个自变量 $t-\tau,t-\widetilde\tau$ 及连接它们的
+线段都在 $J-K$ 内。由 (79.16)、中值定理和
+$|\widetilde\tau-\tau|\le\mathfrak R_h^*$，得到 (81.11)。
+系数版本直接对导数逐项取绝对值；常数项不贡献敏感性。
+没有统一导数或系数界时，允许的一次有效增益 $\widehat G(x)=Cx$ 对非零原点偏差
+产生 $C|\widetilde\tau-\tau|$ 的原始函数误差，$C$ 无界，正是命题 79.10 的边界。
+以上消费者均以前提中的精确有效目标策略为依据；它们不提供原开放自适应 FIB
+问题的匹配上界，也不解决不受限制的 FIB 碰撞问题。∎
+

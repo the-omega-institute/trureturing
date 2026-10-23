@@ -1,0 +1,15 @@
+fingerprints:
+  raw_sha256: sha256:f731651bd8fd0293e442bfe4791d3648abe72bb11b331124e5eac50e3d2a4324
+  normalized_sha256: sha256:f731651bd8fd0293e442bfe4791d3648abe72bb11b331124e5eac50e3d2a4324
+cas_ref: sha256:f731651bd8fd0293e442bfe4791d3648abe72bb11b331124e5eac50e3d2a4324
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 'Nonpropositional: 计算与比较 jet 的实验程序说明及检验问题列表。'
+    previous_atom_id: a33b3378fa03bc65b1cbca3c21dba9fb60c6d30d288846ed18cbaa5ed1bad9fb
+    next_atom_id: b54745afce5a1262a1d48c38d537c5fc42b41af3099509f33719b121c4c1622d
+  chain_atoms:
+    - 44b3c897aa0cbbe8344b1ae75a9adda7032d2f4b165aea5149ec1854e33c1842
+    - ad7061f80561a89cd32e2822de184b7edef2698b420ba20825a147ff6cd465d6
+    - 8beba4e98c629f9788305d6f6b5f5c5dcdbea473d53042b192f7300c6327ced4
