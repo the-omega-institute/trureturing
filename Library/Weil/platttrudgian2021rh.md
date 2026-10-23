@@ -5,7 +5,7 @@ year: 2021
 title: The Riemann hypothesis is true up to 3·10^12
 doi: 10.1112/blms.12460
 url: https://arxiv.org/abs/2004.09765v1
-claim: Published verification supplies the finite-height RH premise. Exact heat-loss factorization and the complete arithmetic block bound give a whole-source negative allowance of order (log T)^(-4) in the original sixth moment; fixed height still leaves a negative allowance. A support-independent Gamma-only lower bound for the prime Hankel form fails on all compact half-line tests. An even actual-source partition controls the joint metric defect and bounds supporting multipliers of negative cap-four minima from below, up to the finite-height signed zero tail; it does not improve the general exponent-four allowance.
+claim: Published verification supplies the finite-height RH premise. Exact heat-loss factorization and the complete arithmetic block bound give a whole-source negative allowance of order (log T)^(-4) in the original sixth moment; fixed height still leaves a negative allowance. A support-independent Gamma-only lower bound for the prime Hankel form fails on all compact half-line tests. An even actual-source partition controls the joint metric defect and bounds supporting multipliers of negative cap-four minima from below, up to the finite-height signed zero tail. Its null supporting vector bootstraps every fixed logarithmic order below five and recovers individual branch moments with an explicit inverse-multiplier cost; these subcritical estimates do not improve the general exponent-four allowance.
 strata_touched: []
 license: citation-only
 triage: anchor
@@ -815,3 +815,208 @@ needed by such a case's future estimates, up to the displayed height
 tail. They neither establish higher-log regularity nor remove the
 negative allowance in the original complete form. Full RH and strict
 Robin for every integer $n>5040$ remain unproved.
+
+## Bootstrap the actual minimizing source before paying its moment loss
+
+The global supporting form in VHP7 supplies more than a lower
+multiplier: it gives a source-specific logarithmic bootstrap. The
+following repo-derived application reuses VHP's actual even branches,
+W331's weighted inverse and W338's full Gamma comparison. No generic
+nonlocal eigenfunction regularity theorem is substituted for these
+interfaces. All estimates concern the SAME hypothetical negative
+cap-four minimizer. They remain paper derivations without Lean/kernel
+certification or a priority claim.
+
+### Square the local mass in the joint metric defect
+
+For $k\ge1$ put
+
+$$
+ \mathcal L_k(g)=\int_{\mathbb R}
+       [\log(2+|\tau|)]^k|\widehat g(\tau)|^2d\tau,
+ \qquad L=\log(1/\epsilon).
+$$
+
+On the actual class $M(F)+\mathcal L_k(g_F)\le D$, the same branches
+as VHP satisfy the stronger joint estimate
+
+$$
+ |\Delta_M|+|\Delta_H|\le C_kD L^{-4k/5}.
+ \tag{VHB1}
+$$
+
+The range check in VHP is unchanged; $\mathcal L_k$ with $k\ge1$
+pays its logarithmic domain. To improve the estimate, use the
+self-adjoint defect of the REAL-axis filters $A=a_\epsilon(2D)$ and
+$B=b_\epsilon(2D)$ in VHP3:
+
+$$
+ D_P=APA+BPB-P=A[P,A]+B[P,B],\qquad P=\mathbf1_+.
+$$
+
+For $Z_r=\mathbf1_{|t|\ge r}$, VHP4's cross-cut kernel bound gives
+$\|D_PZ_r\|\le C\sqrt\epsilon/r$. Since $D_P=D_P^*$ and
+$\|D_P\|\le C$, splitting $X=(1-Z_r)X+Z_rX$ gives
+
+$$
+ |\langle X,D_PX\rangle|
+ \le C\|\mathbf1_{[-r,r]}X\|_2^2
+        +C\sqrt\epsilon\,r^{-1}\|X\|_2^2.
+ \tag{VHB2}
+$$
+
+Both mixed terms use the SAME $D_PZ_r$ estimate. For
+$P e^{-6\max(t,0)}$ the bounded Lipschitz factor adds only
+$C\sqrt\epsilon\log(2+1/\epsilon)\|X\|_2^2$ by VHP4. The
+exponential-conjugation errors have this same smaller order.
+
+A Fourier split on $\beta(t)=g(t/2)$ now gives local squared mass
+$C_kD/[\log(1/r)]^k$. Reuse VHP6's finite Möbius reconstruction,
+without replacing its arithmetic coefficients:
+
+$$
+ \|\mathbf1_{[-r,r]}X\|_2^2
+ \le C_kD\left[
+       \frac{N}{[\log(1/r)]^k}+N^{-4}+r\right].
+$$
+
+Take $r=\epsilon^{1/4}$ and $N$ comparable to $L^{k/5}$.
+This proves VHB1. It is the self-adjoint quadratic defect, rather
+than the norm of its first commutator alone, that retains the
+squared local mass.
+
+### Keep the reconstruction just above its critical weight
+
+Fix $0<\eta<2$, and set
+
+$$
+ \theta_\eta=\frac{4-2\eta}{5}>0,\qquad d=F-F_h.
+$$
+
+On the same class, the actual original-source errors satisfy
+
+$$
+ \mathcal N(d)^2+\mathcal N(F_v)^2
+ \le C_{k,\eta}D L^{-\theta_\eta k}.
+ \tag{VHB3}
+$$
+
+Indeed both profile differences $(1-a_\epsilon)\widehat g$ and
+$b_\epsilon\widehat g$ have unweighted squared norm at most
+$C_kD L^{-k}$ by splitting at $|\tau|=\epsilon^{-1/4}$.
+Their weight-$5/2$ norms remain bounded by $C\sqrt{M(F)}$, as in
+VHP. In the $t$ coordinate interpolate to the positive exponential
+weight $a_\eta=1/4+\eta/2$, below $q=5/4$. The resulting squared
+norm has exponent
+$k(1-a_\eta/q)=\theta_\eta k$.
+
+Here the ACTUAL Volterra inverse is bounded because
+$a_\eta>1/4$. This is precisely the source space
+$H_{4+\eta}$, with squared norm
+$\int_\pi^\infty(x/\pi)^{4+\eta}|F(x)|^2dx$.
+The actual Möbius inverse has norm at most $\zeta(1+\eta)$ there,
+since its $n$th dilation has norm $n^{-1-\eta}$. Finally
+$\mathcal N(G)^2\le C_\eta\|G\|_{H_{4+\eta}}^2$.
+This proves VHB3 without an endpoint $H_4$ inverse. The constants
+may diverge as $\eta\downarrow0$; no endpoint assertion is made.
+
+### Use the null supporting vector to gain logarithmic regularity
+
+Let $F$ be an actual unit minimizer with $e_4=-\delta<0$ and use
+VHP7's global $Q_\lambda$. The existing complete-energy floor gives
+$\delta\le C$ and $M(F)+\mathcal P(F)\le C$. Thus W338 supplies
+$\mathcal L_1(g_F)\le C$. Suppose at some stage that
+$\mathcal L_k(g_F)\le C_k$, uniformly on these minimizing vectors.
+VHP1 and VHB1 give
+
+$$
+ 0\le Q_\lambda(F_h),Q_\lambda(F_v)
+ \le C_k\delta L^{-4k/5}.
+$$
+
+Since $Q_\lambda$ is nonnegative and $Q_\lambda(F)=0$, its
+polarized pairing with $F$ vanishes. In particular
+$Q_\lambda(d)=Q_\lambda(F_h)$. Applying W317's COMPLETE debit
+bound to $d$ and $F_v$, using VHB3 and
+$|\mu|\le C\delta\le C$, proves
+
+$$
+ \begin{aligned}
+ &\mathcal P(d)+\mathcal P(F_v)
+       +\lambda\bigl[M(d)+M(F_v)\bigr]\\
+ &\hspace{2em}\le C_{k,\eta}L^{-\theta_\eta k}.
+ \end{aligned}
+ \tag{VHB4}
+$$
+
+No division by $\lambda$ is used in the Gamma estimate. W338 applied
+to the ACTUAL difference $d$ bounds its full logarithmic profile
+norm by $C[\mathcal P(d)+\mathcal N(d)^2]$. On
+$|\tau|\ge\epsilon^{-1/2}$ the factor $1-a_\epsilon(\tau)$ is
+bounded below by a fixed positive constant. Therefore
+
+$$
+ \int_{|\tau|\ge R}\log(2+|\tau|)
+                |\widehat g_F(\tau)|^2d\tau
+ \le C_{k,\eta}[\log(2+R)]^{-\theta_\eta k}.
+$$
+
+Layer integration gives $\mathcal L_{k'}(g_F)\le C_{k'}$ for
+every $k'<1+\theta_\eta k$. Starting at $k=1$, choose $\eta>0$
+so that $1/(1-\theta_\eta)$ exceeds a given target $k_*<5$,
+and iterate a finite number of STRICT gains. Consequently
+
+$$
+ \boxed{\quad
+ \mathcal L_k(g_F)\le C_k\qquad(1\le k<5).
+ \quad}
+ \tag{VHB5}
+$$
+
+The constants depend on the chosen exponent and fixed $c$, but not
+on $\delta$, $\lambda$ or the minimizing vector. No $k=5$ or
+$k>5$ claim follows by taking a limit of these constants.
+
+### Retain the actual sixth moment and expose its remaining cost
+
+For each fixed $0<s<4$, choose $k<5$ and $\eta>0$ with
+$\theta_\eta k>s$. VHB1 and VHB3--VHB5 give
+
+$$
+ \begin{gathered}
+ |\Delta_M|+|\Delta_H|\le C_sL^{-s},\qquad
+ Q_\lambda(F_h),Q_\lambda(F_v)\le C_s\delta L^{-s},\\
+ \mathcal P(d)+\mathcal P(F_v)
+ +\lambda[M(d)+M(F_v)]\le C_sL^{-s},\\
+ |\mathcal H(F_h)-1|\le C_sL^{-s},\\
+ \lambda>0\quad\Longrightarrow\quad
+ M(F_v)+|M(F_h)-M(F)|\le C_s\lambda^{-1}L^{-s}.
+ \end{gathered}
+ \tag{VHB6}
+$$
+
+The fourth line uses the joint $H$ defect together with
+$\mathcal H(F_v)\le C\mathcal N(F_v)^2$, keeping all terms on the
+same source. The last line uses the joint $M$ defect and
+$\lambda M(F_v)\le C_sL^{-s}$; the uniform upper bound on
+$\lambda$ absorbs its harmless factor $1+\lambda^{-1}$.
+For $\lambda>0$, complementary slackness gives $M(F)=4$.
+Under the same finite-height premise as VHP9, at sufficiently large
+$T$ depending on the fixed $s,c$, this also improves that multiplier
+comparison to
+
+$$
+ \lambda\ge[1/3-C_s(\log T)^{-s}]\delta-C\eta_T
+ \qquad(0<s<4).
+ \tag{VHB7}
+$$
+
+This is a genuine single-minimizer moment recovery, unlike a
+sum-of-moments defect alone. Under $\mathsf{RH}(T)$, for $\delta\ge C_0\eta_T$, with
+$C_0$ sufficiently large and $T$ sufficiently large, VHP9 permits $\lambda^{-1}\le C\delta^{-1}$, so the final moment
+error still costs $C_s\delta^{-1}L^{-s}$. Inserting it into the
+heat-branch supporting equation only yields a negative allowance
+of order $L^{-s}$ for $s<4$. It does NOT improve the already owned
+VHR1 exponent $4$. An estimate beyond the critical logarithmic tail, or a new signed
+joint estimate, is still required. Full RH and strict Robin for every
+integer $n>5040$ remain unproved.
