@@ -29,6 +29,7 @@ private unsafe def importSource (owners : Array Import) : IO (Environment × Imp
 /-- The nested negative replay shares this probe's immutable module bytes.
 The reference is cleared before returning; it never caches across targets. -/
 private initialize activeProbe : IO.Ref (Option (Environment × ImportState)) ← IO.mkRef none
+private initialize activeReferenceRequest : IO.Ref (Option Request) ← IO.mkRef none
 
 private initialize submittedCertificates : IO.Ref (Array CertificateNomination) ← IO.mkRef #[]
 private initialize submittedEdgeCertificates : IO.Ref (Array (Name × CertificateNomination)) ← IO.mkRef #[]
@@ -70,11 +71,15 @@ probe context even when the negative guard raises an exception. -/
 def withReferenceProbeContext {m : Type → Type} [Monad m]
     [MonadLiftT (ST IO.RealWorld) m]
     [MonadFinally m] {α : Type} (source : Environment) (shared : ImportState)
-    (action : m α) : m α := do
+    (action : m α) (request? : Option Request := none) : m α := do
   let previous ← activeProbe.get
+  let previousRequest ← activeReferenceRequest.get
   activeProbe.set (some (source, shared))
+  activeReferenceRequest.set request?
   try action
-  finally activeProbe.set previous
+  finally
+    activeProbe.set previous
+    activeReferenceRequest.set previousRequest
 
 
 private def runJson : Run → Json
@@ -228,6 +233,11 @@ private def runExpr : Run → Expr
         | .cancelled => ``LeanInformationAudit.SearchReduction.Failure.cancelled
         | .undecided => ``LeanInformationAudit.SearchReduction.Failure.undecided)
 
+private def edgeCostExpr : EdgeCost → Expr
+  | .zero => mkConst ``EdgeCost.zero
+  | .one => mkConst ``EdgeCost.one
+  | .unknown => mkConst ``EdgeCost.unknown
+
 /-- Only dependencies of checked witness terms are exported. No source
 extension entries are copied into the proof environment. -/
 private partial def exportConstant (source : Environment) (target n : Name) : MetaM Unit := do
@@ -302,6 +312,15 @@ def publish (name : Name) (r : Observation) (source? : Option Environment := non
       addAndCompile (.defnDecl {
         name := edgeName, levelParams := [], type := ← inferType value,
         value, hints := .abbrev, safety := .safe})
+      for (arm, cost, used) in #[(`baseline, edge.cost, edge.usedPremises),
+          (`paired, edge.pairedCost, edge.pairedUsedPremises)] do
+        addAndCompile (.defnDecl {
+          name := edgeName ++ arm ++ `cost, levelParams := [], type := mkConst ``EdgeCost,
+          value := edgeCostExpr cost, hints := .abbrev, safety := .safe})
+        let value := toExpr used
+        addAndCompile (.defnDecl {
+          name := edgeName ++ arm ++ `usedPremises, levelParams := [], type := ← inferType value,
+          value, hints := .abbrev, safety := .safe})
       for (arm, certificate?, proof?) in #[
           (`baseline, edge.certificate?, edge.zeroProof),
           (`paired, edge.pairedCertificate?, edge.pairedZeroProof)] do
@@ -355,9 +374,13 @@ without rolling the diagnostic back as an ordinary tactic exception. -/
       | none => do
         let (source, shared, _) ← importSource (owners.getElems.map fun n => {module := n.getId})
         pure (source, shared)
-    let result ← run source {
+    let replay := (← activeReferenceRequest.get).filter fun request =>
+      request.target == target.getId && request.baselineCommit == sha.getString &&
+        request.baseline == bs.getElems.map (fun x => x.getId)
+    let request := replay.getD {
       target := target.getId, «baseline» := bs.getElems.map (fun x => x.getId),
-      baselineCommit := sha.getString } shared
+      baselineCommit := sha.getString }
+    let result ← run source request shared
     if result.presentation == .found then
       evalTactic (← `(tactic| exact True.intro))
       return
@@ -472,7 +495,7 @@ unsafe def executeProbe (request : Request) (owners : Array Name) (name : Name) 
       let sha := Syntax.mkStrLit request.baselineCommit
       let bs := request.baseline.map mkIdent
       let os := owners.map mkIdent
-      withReferenceProbeContext source shared do
+      withReferenceProbeContext (request? := some request) source shared do
         return some (← synthesizeUsingTactic' (u := .zero) (mkConst ``True)
           (← `(tactic|
             (fail_if_success (reference_baseline $target at $sha baseline [$bs,*] from [$os,*]))

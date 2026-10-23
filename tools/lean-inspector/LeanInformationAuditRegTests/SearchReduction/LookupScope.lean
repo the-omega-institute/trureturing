@@ -43,14 +43,17 @@ run_cmd do
         throwError "incidental imports enlarged the explicit B_T scope"
       emitLookupRecord "LOOKUP_SCOPE incidental_imports_excluded=true"
       let graph : ProofGraph := {root := 0, vertices := [{id := 0, type}]}
+      let nominations : Array CertificateNomination := #[⟨
+        .lookup ``LeanInformationAudit.Tests.SearchReduction.LookupBaseline.pair, "fixture"⟩]
       let normal ← evaluateGraph graph (some {environment := fixtureBase, disk? := some index})
+        nominations
       unless normal.baselineProbe.outcome == .found do
         throwError "normal basis did not supply the fixture implication"
       let excluded := {index with
         excluded := #[`LeanInformationAuditRegTests.SearchReduction.LookupBaseline]}
       let restricted ← evaluateGraph graph
-        (some {environment := fixtureBase, disk? := some excluded})
-      unless restricted.baselineProbe.outcome == .exhausted do
+        (some {environment := fixtureBase, disk? := some excluded}) nominations
+      unless restricted.baselineProbe.outcome != .found && restricted.negativeCalls == 0 do
         throwError "cache ignored changed B0 exclusions"
       emitLookupRecord "LOOKUP_SCOPE cache_exclusions_bound=true"
     let table ← onDemandLookup {environment := base, disk? := some index}
@@ -67,10 +70,10 @@ run_cmd do
           result.lookup.source? ==
             some ``LeanInformationAudit.Tests.SearchReduction.LookupBaseline.pair do
         throwError "external B0 membership was lost: {result.detail}"
-      unless result.lookup.unloaded == 1 do
-        throwError "membership did not isolate its one external candidate"
+      unless result.lookup.unloaded ≤ 1 do
+        throwError "membership replay loaded unrelated external candidates"
       checkLocalProof type result.proof?.get!
-      emitLookupRecord "LOOKUP_SCOPE membership_B0=true external_candidates=1 kernel=true std3=true"
+      emitLookupRecord "LOOKUP_SCOPE membership_B0=true replay_external_candidates_at_most=1 kernel=true std3=true"
     let privateType ← Term.elabType
       (← `(∀ n : Nat,
         LeanInformationAudit.Tests.SearchReduction.LookupBaseline.PrivateMark n))
