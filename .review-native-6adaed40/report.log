@@ -1,0 +1,14 @@
+LEAN_INSPECTOR_PHASE phase=producer-build status=started
+LEAN_INSPECTOR_PHASE phase=producer-build status=completed exit=0
+LEAN_INSPECTOR_PHASE phase=utility status=started
+LEAN_INSPECTOR_PHASE phase=utility status=completed exit=0
+LEAN_INSPECTOR_PHASE phase=utility-scope status=started
+LEAN_INSPECTOR_PHASE phase=utility-scope status=completed exit=0
+LEAN_INSPECTOR_PHASE phase=scope status=started
+LEAN_INSPECTOR_PHASE phase=scope status=completed exit=0
+LEAN_INSPECTOR_PHASE phase=report status=started
+LEAN_INSPECTOR_PHASE phase=report status=completed exit=0
+LEAN_INSPECTOR_AGGREGATE modules=109 declarations=6169
+LEAN_INSPECTOR_SCOPED_WORK {"compiled_module_names": [], "compiled_modules": 0, "extracted_module_names": [], "extracted_modules": 0, "selected_modules": 109}
+SCOPED_LEAN_REPORT path=/Users/macstudio/omega/trureturing-01a124be-quotient-delivery-20261023/.lake/build/stratalint/quotient-review-6adaed40-d5-reg.json sha256=8807bd394394a8478c4ee4b3c815f7a949dc798cda5e266f58668b8c94036079
+RESOURCE_OBSERVATION stage=report-supervisor-lean-producer disk_free_kb=53131572 fd_soft_limit=4096 fd_peak=272 rss_peak_kb=1797632
