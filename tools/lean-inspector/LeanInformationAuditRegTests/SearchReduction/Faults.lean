@@ -58,13 +58,11 @@ run_meta do
   at "b530df86e6e9c4709edecd3009bb96c3d4ebc8be"
   baseline [LeanInformationAuditRegTests.SearchReduction.Baseline]
   using [] as hiddenDependencyResult
--- The chosen datum is an opaque declaration node. Without an auxiliary seed,
--- its positive construction depth gives insufficient evidence in both arms.
-#guard hiddenDependencyResult = Verdict.insufficient
-#guard hiddenDependencyResult.baseline = Run.exhausted ∨
-  hiddenDependencyResult.baseline = Run.incomplete Failure.undecided
-#guard hiddenDependencyResult.paired = Run.exhausted ∨
-  hiddenDependencyResult.paired = Run.incomplete Failure.undecided
+-- Classical.choose_eq supplies a checked baseline certificate for the opaque
+-- chosen datum, so both graph arms have zero construction depth.
+#guard hiddenDependencyResult = Verdict.bindOnly
+#guard hiddenDependencyResult.baseline = Run.found
+#guard hiddenDependencyResult.paired = Run.found
 
 #search_reduction LeanInformationAudit.Tests.SearchReduction.Candidates.content
   at "b530df86e6e9c4709edecd3009bb96c3d4ebc8be"
