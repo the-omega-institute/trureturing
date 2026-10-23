@@ -5,7 +5,7 @@ year: 2021
 title: The Riemann hypothesis is true up to 3·10^12
 doi: 10.1112/blms.12460
 url: https://arxiv.org/abs/2004.09765v1
-claim: Published verification supplies the finite-height RH premise. Exact heat-loss factorization and the complete arithmetic block bound give a whole-source negative allowance of order (log T)^(-4) in the original sixth moment; fixed height still leaves a negative allowance. A support-independent Gamma-only lower bound for the prime Hankel form fails on all compact half-line tests. An even actual-source partition controls the joint metric defect and bounds supporting multipliers of negative cap-four minima from below, up to the finite-height signed zero tail. Its null supporting vector bootstraps every fixed logarithmic order below five and recovers individual branch moments with an explicit inverse-multiplier cost; separation of the finite reconstruction intervals replaces its N-fold Fourier-tail payment by a harmonic factor, giving every fixed joint-metric exponent below five on actual negative minima and a fifth-power rate with a log-log factor on nonpositive-energy sources under RH(T), without improving the general exponent-four negative allowance. For hypothetical unit negative cap-four minimizers with a positive supporting multiplier, retaining the errors' own moments also gives every finite logarithmic order and arbitrary fixed logarithmic-power branch rates. A bounded analytic Sobolev regularizer gives positive-order regularity by commuting with the complete energy and paying both original metric defects; its constants deteriorate exponentially as the multiplier tends to zero and do not improve the uniform negative allowance. The same regularity controls finite physical dilation in the complete energy and both original metrics, including the source error itself, with explicit multiplier costs; the resulting sublinear squared-norm rate gives no dilation derivative or uniform allowance improvement. Directly retaining the regularizer's original moment coordinate then improves the squared-error range to every rho < 2s, with a larger inverse-multiplier cost and still no first-order or uniform allowance conclusion. A fixed actual source with every subcritical Sobolev order has a signed critical metric defect of order (log N)^2 while its regularized original moment is O(log N), excluding a universal endpoint absorption when lambda differs from mu; no null-minimizer obstruction is inferred.
+claim: Published verification supplies the finite-height RH premise. Exact heat-loss factorization and the complete arithmetic block bound give a whole-source negative allowance of order (log T)^(-4) in the original sixth moment; fixed height still leaves a negative allowance. A support-independent Gamma-only lower bound for the prime Hankel form fails on all compact half-line tests. An even actual-source partition controls the joint metric defect and bounds supporting multipliers of negative cap-four minima from below, up to the finite-height signed zero tail. Its null supporting vector bootstraps every fixed logarithmic order below five and recovers individual branch moments with an explicit inverse-multiplier cost; separation of the finite reconstruction intervals replaces its N-fold Fourier-tail payment by a harmonic factor, giving every fixed joint-metric exponent below five on actual negative minima and a fifth-power rate with a log-log factor on nonpositive-energy sources under RH(T), without improving the general exponent-four negative allowance. For hypothetical unit negative cap-four minimizers with a positive supporting multiplier, retaining the errors' own moments also gives every finite logarithmic order and arbitrary fixed logarithmic-power branch rates. A bounded analytic Sobolev regularizer gives positive-order regularity by commuting with the complete energy and paying both original metric defects; its constants deteriorate exponentially as the multiplier tends to zero and do not improve the uniform negative allowance. The same regularity controls finite physical dilation in the complete energy and both original metrics, including the source error itself, with explicit multiplier costs; the resulting sublinear squared-norm rate gives no dilation derivative or uniform allowance improvement. Directly retaining the regularizer's original moment coordinate then improves the squared-error range to every rho < 2s, with a larger inverse-multiplier cost and still no first-order or uniform allowance conclusion. A fixed actual source with every subcritical Sobolev order has a signed critical metric defect of order (log N)^2 while its regularized original moment is O(log N), excluding a universal endpoint absorption when lambda differs from mu even for unit original sources in any prescribed moment cap K>1; no negative/null-minimizer obstruction is inferred.
 strata_touched: []
 license: citation-only
 triage: anchor
@@ -2504,6 +2504,48 @@ $$
 Consequently a universal critical signed replacement of VHS5 by a fixed multiple of $M(F_{J_N})$ is false, even on actual sources with every subcritical Sobolev order. A fixed positive $\lambda$ does not supply an $N$-independent absorption constant for this example.
 
 This leaves a narrower, genuinely null-specific question. A GLOBAL null minimizer could satisfy a relation that excludes, cancels, or signs the logarithm/jump cross coefficient. No such relation is proved here, and the example is not asserted to satisfy the GLOBAL null equation or the unit negative cap-four minimization constraints. When $\lambda=\mu$, the quadratic logarithmic term cancels; this proof does not settle the remaining critical absorption problem in that case. The result gives no dilation derivative, no $o(a)$ conclusion, and no RH/Robin improvement.
+
+### The original source can satisfy every nontrivial fixed moment cap
+
+Fix any $K_*>1$, $\lambda>0$ and $\mu\ne\lambda$. The source in
+VHC2--VHC3 may be chosen so that
+
+$$
+ \|F\|_H=1,\qquad M(F)<K_*.
+ \tag{VHC27}
+$$
+
+This cap is on the ORIGINAL unregularized source $F$; no cap on
+$F_{J_N}$ is asserted. Keep VHC4's cutoff restriction and choose
+$\varepsilon<(\log K_*)/6$ as well. Set $A=1$ and first $C=0$.
+The Volterra inverse then has support in $[0,\varepsilon]$.
+Consequently $U$ is supported in $[\pi,\pi e^\varepsilon]$;
+since $\varepsilon<\log4$, no $n\ge2$ term of VHC6's actual
+Möbius inverse contributes on $x\ge\pi$. Thus $F_0=U\ne0$,
+where nonvanishing follows from the forward Volterra identity, and
+
+$$
+ M(F_0)\le e^{6\varepsilon}\|F_0\|_H^2
+                   <K_*\|F_0\|_H^2.
+$$
+
+Now vary the jump coefficient $C$. The actual inverse is affine,
+$F_C=F_0+CF_1$, in $H_6$. Both sides of the strict cap inequality
+are continuous quadratic functions of $C$. It therefore persists
+for all sufficiently small $|C|$, with $F_C\ne0$. Fix such a
+nonzero $C$ with $(\lambda-\mu)C>0$ and normalize by
+$\|F_C\|_H$. This rescales $A,C$ by the same positive constant,
+preserving the nonzero signed leading coefficient. Only AFTER
+fixing this source take $N\to\infty$ in VHC2--VHC3. This proves
+VHC27 and the failure of uniform critical signed absorption even
+within that unit original-source moment cap. The asymptotic
+constants and starting $N$ may depend on $K_*$ and the fixed $C$.
+
+A unit norm and a fixed original moment budget alone therefore do
+not repair the generic endpoint estimate. No negative-energy,
+GLOBAL null or minimizing property has been obtained for this
+source. At cap one the unit feasible set is already empty by the
+existing W321 result; no endpoint feasible vector is inferred.
 
 The generic endpoint substitution is therefore unavailable. A
 critical absorption argument for the hypothetical negative minimizer
