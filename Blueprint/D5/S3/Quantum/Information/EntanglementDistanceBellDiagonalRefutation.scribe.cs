@@ -97,9 +97,6 @@ internal sealed class EntanglementDistanceBellDiagonalRefutationDocument : IScri
     private static Formula SomeG(Formula name, Formula type, Formula body) =>
         Seq(Exists, Sp, Typed(name, type), Comma, Sp, body);
 
-    private static Formula SomeAnon(Formula type, Formula body) =>
-        SomeG(new Formula.Placeholder(), type, body);
-
     private static Formula Arrow(Formula domain, Formula codomain) =>
         new Formula.TypeArrow(domain, codomain);
 
@@ -230,10 +227,11 @@ internal sealed class EntanglementDistanceBellDiagonalRefutationDocument : IScri
         Formula total = Eqn(SumOver(j, Fin(k), At(p, j)), D(1));
         Formula state = All("j", Fin(k), And(Call("Matrix.PosSemidef", At(ρs, j)), Eqn(Trace(At(ρs, j)), Cast(D(1), Complex()))));
         Formula mixture = Eqn(SumOver(j, Fin(k), Scale(RealToComplex(At(p, j)), At(ρs, j))), ρ);
-        Formula existential = SetOf("x", Real(), Some("k", Nat(), Some("p", Arrow(Fin(k), Real()),
-            SomeG(ρs, Arrow(Fin(k), TwoQubitMatrix()),
-                SomeAnon(positivity, SomeAnon(total, SomeAnon(state, SomeAnon(mixture,
-                    Eqn(x, value)))))))));
+        Formula constraints = And(positivity,
+            And(total, And(state, And(mixture, Eqn(x, value)))));
+        Formula existential = SetOf("x", Real(),
+            Some("k", Nat(), Some("p", Arrow(Fin(k), Real()),
+                SomeG(ρs, Arrow(Fin(k), TwoQubitMatrix()), constraints))));
         return Disp(AllG(ρ, TwoQubitMatrix(), Eqn(Call("ED", ρ), Call("sInf", existential))));
     }
 
