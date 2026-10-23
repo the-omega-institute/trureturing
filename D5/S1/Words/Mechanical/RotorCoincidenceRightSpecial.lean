@@ -416,7 +416,7 @@ private theorem rotor_reverse_prefix_special {σ : ℝ}
       MechanicalRightSpecial.IsLowerMechanicalRightSpecial
         (1 / (σ + 1)) (1 / (σ + 1)) m
         (lowerMechanicalFactor (1 / (σ + 1)) (1 / (σ + 1)) m 0).reverse)
-    (ℓ : ℕ) (hℓ : 0 < ℓ) :
+    (ℓ : ℕ) :
     IsRightSpecial (rotor σ)
       (List.ofFn (fun t : Fin ℓ => rotor σ (t + 1))).reverse := by
   let α : ℝ := 1 / (σ + 1)
@@ -488,7 +488,7 @@ theorem result : claim := by
     simpa using (hσ.add_ratCast 1).inv
   have hc := cutting_mechanical hσ hσ1
   have hr := mechanical_reverse_prefix_special hα0 hα1 hα
-  have hs := rotor_reverse_prefix_special hc hr (n - 1) (by omega)
+  have hs := rotor_reverse_prefix_special hc hr (n - 1)
   constructor
   · intro h
     exact rotor_special_unique hσ hσ1 hc (n - 1) (by omega) w _ hw
