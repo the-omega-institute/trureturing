@@ -344,18 +344,86 @@ private theorem birth_degree (v₀ : V) (v : ℕ → Finset V → V)
     birth_link v₀ v hi h₀ hσ hη, sum_powerset_apply_card]
   simp [g, simplexSum, card_sdiff_of_subset hη, nsmul_eq_mul]
 
+private theorem face_origin (v₀ : V) (v : ℕ → Finset V → V)
+    {n : ℕ} {τ : Finset V} (hτ : τ ∈ dsc v₀ v n) :
+    τ = {v₀} ∨ ∃ s t : ℕ, ∃ σ η : Finset V, s + 1 + t = n ∧
+      σ ∈ dsc v₀ v s ∧ η ⊆ σ ∧ τ = insert (v (s + 1) σ) η := by
+  induction n with
+  | zero => exact Or.inl (by simpa [dsc] using hτ)
+  | succ n ih =>
+    rcases (mem_dsc_succ v₀ v n τ).mp hτ with hold | ⟨σ, hσ, η, hη, he⟩
+    · rcases ih hold with hroot | ⟨s, t, σ, η, hn, hσ, hη, he⟩
+      · exact Or.inl hroot
+      · exact Or.inr ⟨s, t + 1, σ, η, by omega, hσ, hη, he⟩
+    · exact Or.inr ⟨n, 0, σ, η, by omega, hσ, hη, he.symm⟩
+
+private theorem root_degree (v₀ : V) (v : ℕ → Finset V → V)
+    (hi : Function.Injective (Function.uncurry v)) (h₀ : ∀ s σ, v s σ ≠ v₀)
+    (n : ℕ) : upperDegree (dsc v₀ v n) {v₀} = g n 0 := by
+  rw [degree_link]
+  have he := link_evolution v₀ v hi h₀ (s := 0) (τ := {v₀}) (by simp [dsc]) n 0
+  simpa [linkWeight, link, dsc, g, simplexSum, filter_singleton] using he
+
 private theorem positive_degree_types (v₀ : V) (v : ℕ → Finset V → V)
     (hi : Function.Injective (Function.uncurry v)) (h₀ : ∀ s σ, v s σ ≠ v₀)
     {d n : ℕ} (hd : 1 ≤ d) (hn : d + 1 ≤ n) :
     degreeSet (dsc v₀ v n) d = {k | ∃ t r : ℕ, t + r ≤ n - d ∧ g t r = k} := by
-  sorry
+  ext k
+  constructor
+  · rintro ⟨τ, hτ, hcard, hk⟩
+    rcases face_origin v₀ v hτ with rfl | ⟨s, t, σ, η, hst, hσ, hη, rfl⟩
+    · simp only [card_singleton] at hcard
+      omega
+    · have hf := notMem_mono hη (fresh v₀ v hi h₀ (by omega : s < s + 1) hσ σ)
+      rw [card_insert_of_notMem hf] at hcard
+      have hb := (face_bounds v₀ v hσ).2
+      have hec := card_le_card hη
+      refine ⟨t, σ.card - η.card, by omega, ?_⟩
+      rw [← birth_degree v₀ v hi h₀ hσ hη t, hst]
+      exact hk
+  · rintro ⟨t, r, htr, hk⟩
+    let s := n - t - 1
+    have hst : s + 1 + t = n := by dsimp [s]; omega
+    obtain ⟨σ, hσ, hc⟩ := face_exists v₀ v hi h₀ (n := s) (k := d + r)
+      (by omega) (by omega)
+    obtain ⟨η, hη, hec⟩ := exists_subset_card_eq (show d ≤ σ.card by omega)
+    have hf := notMem_mono hη (fresh v₀ v hi h₀ (by omega : s < s + 1) hσ σ)
+    have hb : insert (v (s + 1) σ) η ∈ dsc v₀ v (s + 1) :=
+      (mem_dsc_succ v₀ v s _).mpr (Or.inr ⟨σ, hσ, η, hη, rfl⟩)
+    refine ⟨insert (v (s + 1) σ) η, dsc_mono v₀ v (by omega) hb,
+      by rw [card_insert_of_notMem hf, hec], ?_⟩
+    rw [← hst, birth_degree v₀ v hi h₀ hσ hη t, hc, hec]
+    simpa using hk
 
 private theorem vertex_degree_types (v₀ : V) (v : ℕ → Finset V → V)
     (hi : Function.Injective (Function.uncurry v)) (h₀ : ∀ s σ, v s σ ≠ v₀)
     (m : ℕ) :
     degreeSet (dsc v₀ v m) 0 =
       {k | k = g m 0 ∨ ∃ t r : ℕ, 1 ≤ r ∧ t + r ≤ m ∧ g t r = k} := by
-  sorry
+  ext k
+  constructor
+  · rintro ⟨τ, hτ, hcard, hk⟩
+    rcases face_origin v₀ v hτ with rfl | ⟨s, t, σ, η, hst, hσ, hη, rfl⟩
+    · exact Or.inl (hk.symm.trans (root_degree v₀ v hi h₀ m))
+    · have hf := notMem_mono hη (fresh v₀ v hi h₀ (by omega : s < s + 1) hσ σ)
+      rw [card_insert_of_notMem hf] at hcard
+      have hec : η.card = 0 := by omega
+      have hb := face_bounds v₀ v hσ
+      refine Or.inr ⟨t, σ.card, hb.1, by omega, ?_⟩
+      have he := birth_degree v₀ v hi h₀ hσ hη t
+      rw [hst, hec, Nat.sub_zero] at he
+      exact he.symm.trans hk
+  · rintro (hk | ⟨t, r, hr, htr, hk⟩)
+    · refine ⟨{v₀}, dsc_mono v₀ v (Nat.zero_le m) (by simp [dsc]), by simp, ?_⟩
+      exact (root_degree v₀ v hi h₀ m).trans hk.symm
+    · let s := m - t - 1
+      have hst : s + 1 + t = m := by dsimp [s]; omega
+      obtain ⟨σ, hσ, hc⟩ := face_exists v₀ v hi h₀ (n := s) (k := r) hr (by omega)
+      have hb : insert (v (s + 1) σ) ∅ ∈ dsc v₀ v (s + 1) :=
+        (mem_dsc_succ v₀ v s _).mpr (Or.inr ⟨σ, hσ, ∅, empty_subset _, rfl⟩)
+      refine ⟨insert (v (s + 1) σ) ∅, dsc_mono v₀ v (by omega) hb, by simp, ?_⟩
+      rw [← hst, birth_degree v₀ v hi h₀ hσ (empty_subset σ) t, hc]
+      simpa using hk
 
 private theorem g_zero_zero : g 0 0 = 0 := by
   simp [g, simplexSum, weight]
