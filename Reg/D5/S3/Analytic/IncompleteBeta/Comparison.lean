@@ -1,5 +1,6 @@
 import LeanInformationAuditInterface.Contract.Registration
 import D5.S3.Analytic.IncompleteBeta.Comparison
+import D5.S3.Analytic.IncompleteBeta.Moment
 import Reg.Support.SingleDependentReadout
 
 /-! Dependent-family evidence for the strict beta comparison. -/
@@ -29,9 +30,14 @@ def arena : Arena where
     StrictAntiOn (R.readout () ⟨W, m⟩) (Ico 0 m)
 
 private theorem quadratic_mono : StrictMonoOn (fun u : ℝ => u * (1-u)) (Ioc 0 (1/2)) := by
-  intro x hx y hy hxy
-  dsimp only
-  nlinarith [mul_pos (sub_pos.mpr hxy) (show 0 < 1-x-y by linarith [hy.2])]
+  have h := (_root_.D5.S3.Analytic.IncompleteBeta.Moment.W_strictMonoOn
+    (a := 1) (by norm_num) 0).mono Ioc_subset_Icc_self
+  have hW : _root_.D5.S3.Analytic.IncompleteBeta.W 1 0 =
+      (fun u : ℝ => u * (1-u)) := by
+    funext u
+    delta _root_.D5.S3.Analytic.IncompleteBeta.W
+    norm_num [Real.Gamma_add_one]
+  simpa only [hW] using h
 
 private theorem rejected_law : ¬ arena.Law rejected := by
   intro h

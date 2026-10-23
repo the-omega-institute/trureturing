@@ -7,6 +7,7 @@
    digest: Strict comparison of symmetric beta means under increasing shape imbalance. -/
 
 import D5.S3.Analytic.KilbasSaigo.Bounds
+import D5.S3.Entropy.RenyiCombining.ArimotoHyperbolic
 import Mathlib.Analysis.SpecialFunctions.Trigonometric.DerivHyp
 
 /-! Symmetric beta densities become ordered cosh tilts after reflection. -/
@@ -51,12 +52,14 @@ private lemma cosh_ratio_strictMono {d e : ℝ} (hd : 0 ≤ d) (hde : d < e) :
     rfl
   rw [H'.deriv]
   apply div_pos _ (sq_pos_of_pos (Real.cosh_pos _))
-  have hp := mul_pos (mul_pos (sub_pos.mpr hde)
-    (Real.sinh_pos_iff.mpr (mul_pos he hv'))) (Real.cosh_pos (d * v))
-  have hq := mul_nonneg hd (Real.sinh_nonneg_iff.mpr
-    (mul_nonneg (sub_nonneg.mpr hde.le) hv'.le))
-  rw [sub_mul, Real.sinh_sub] at hq
-  nlinarith
+  rcases hd.eq_or_lt with rfl | hd'
+  · simpa using mul_pos (Real.sinh_pos_iff.mpr (mul_pos he hv')) he
+  · have hg := D5.S3.Entropy.RenyiCombining.ArimotoHyperbolic.g_strictMonoOn
+      hv' hd' he hde
+    unfold D5.S3.Entropy.RenyiCombining.ArimotoHyperbolic.g at hg
+    have hcross := (div_lt_div_iff₀ (Real.cosh_pos (d*v))
+      (Real.cosh_pos (e*v))).mp hg
+    nlinarith
 
 private lemma folded_eq {m d u : ℝ} (hu : u ∈ Ioo 0 1) :
     folded m d u = 2 * (u * (1 - u)) ^ (m - 1) *

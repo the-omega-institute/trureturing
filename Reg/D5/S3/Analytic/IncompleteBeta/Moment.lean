@@ -1,5 +1,6 @@
 import LeanInformationAuditInterface.Contract.Registration
 import D5.S3.Analytic.IncompleteBeta.Moment
+import Reg.D5.S3.Analytic.GaussZeroBalanced.Series
 import Reg.Support.SingleDependentReadout
 
 /-! Dependent-family evidence for the beta moment kernel. -/
@@ -145,16 +146,10 @@ def arena : Arena where
     ContinuousOn (R.readout () ⟨a, n⟩) (Icc 0 1)
 private theorem rejected_law : ¬ arena.Law stepReadout := by
   intro h
-  have hc := h (a := 1) (by norm_num) 0
-  have hct : ContinuousAt (fun x : ℝ => if x = 1/2 then (0:ℝ) else 1) (1/2) :=
-    hc.continuousAt (Icc_mem_nhds (by norm_num) (by norm_num))
-  obtain ⟨d, hd, hbound⟩ := Metric.continuousAt_iff.mp hct (1/2) (by norm_num)
-  let y := (1/2:ℝ) + d/2
-  have hy : y ≠ 1/2 := by dsimp [y]; linarith
-  have hdist : dist y (1/2:ℝ) < d := by
-    rw [Real.dist_eq, abs_of_pos]; all_goals dsimp [y]; linarith
-  have he := hbound hdist
-  norm_num [hy] at he
+  apply _root_.Reg.D5.S3.Analytic.GaussZeroBalanced.Series.continuousOn_fRejected
+  intro a b ha hb
+  exact (h (a := a) ha 0).mono Ico_subset_Icc_self
+
 def family : Registration arena (type_of% @W_continuousOn) where
   actual := actual
   bridge := Iff.rfl
