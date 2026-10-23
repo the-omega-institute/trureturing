@@ -135,7 +135,56 @@ private lemma ad_extreme (s : ℝ) (hs : s ∈ Set.Icc (0 : ℝ) 1)
       ∑ o : Fin 2, R ℓ (r, o) (r', o) = if r = r' then 1 else 0)
     (hq : ∀ ℓ, 0 ≤ q ℓ) (h : ∑ ℓ, q ℓ • R ℓ = adChoi (1 - s ^ 2))
     (ℓ : Fin L) (hℓ : q ℓ ≠ 0) : R ℓ = adChoi (1 - s ^ 2) := by
-  sorry
+  have hkern (v : (Fin 2 × Fin 2) → ℂ)
+      (hv : adChoi (1 - s ^ 2) *ᵥ v = 0) : R ℓ *ᵥ v = 0 := by
+    apply (hR ℓ).1.dotProduct_mulVec_zero_iff.mp
+    have he := congrArg (fun A => star v ⬝ᵥ (A *ᵥ v)) h
+    have hsum : ∑ j, q j * (star v ⬝ᵥ (R j *ᵥ v)) = 0 := by
+      simpa only [Matrix.sum_mulVec, Matrix.smul_mulVec, dotProduct_sum,
+        dotProduct_smul, smul_eq_mul, hv, dotProduct_zero] using he
+    have ht := (Finset.sum_eq_zero_iff_of_nonneg
+      (fun j _ => mul_nonneg (hq j) ((hR j).1.dotProduct_mulVec_nonneg v))).mp hsum
+    exact (mul_eq_zero.mp (ht ℓ (Finset.mem_univ ℓ))).resolve_left hℓ
+  have hcol01 (x : Fin 2 × Fin 2) : R ℓ x (0, 1) = 0 := by
+    have hv : adChoi (1 - s ^ 2) *ᵥ Pi.single (0, 1) 1 = 0 := by
+      ext x
+      simp [Matrix.mulVec_single_one, ad_entries s hs, polyChoi]
+    have hx := congrFun (hkern _ hv) x
+    simpa only [Matrix.mulVec_single_one, Matrix.col_apply, Pi.zero_apply] using hx
+  have hcol11 (x : Fin 2 × Fin 2) : R ℓ x (1, 1) = (s : ℂ) * R ℓ x (0, 0) := by
+    let v : (Fin 2 × Fin 2) → ℂ :=
+      (s : ℂ) • Pi.single (0, 0) 1 - Pi.single (1, 1) 1
+    have hv : adChoi (1 - s ^ 2) *ᵥ v = 0 := by
+      ext ⟨r, o⟩
+      fin_cases r <;> fin_cases o <;>
+        simp [v, Matrix.mulVec_sub, Matrix.mulVec_smul, Matrix.mulVec_single_one,
+          ad_entries s hs, polyChoi] <;> ring
+    have hx := congrFun (hkern v hv) x
+    simp only [v, Matrix.mulVec_sub, Matrix.mulVec_smul, Matrix.mulVec_single_one,
+      Pi.sub_apply, Pi.smul_apply, Matrix.col_apply, smul_eq_mul, Pi.zero_apply] at hx
+    exact (sub_eq_zero.mp hx).symm
+  have hherm := (hR ℓ).1.isHermitian
+  have hrow01 (x : Fin 2 × Fin 2) : R ℓ (0, 1) x = 0 := by
+    rw [← hherm.apply, hcol01, star_zero]
+  have h00 : R ℓ (0, 0) (0, 0) = 1 := by
+    simpa [Fin.sum_univ_two, hrow01] using (hR ℓ).2 0 0
+  have h0010 : R ℓ (0, 0) (1, 0) = 0 := by
+    simpa [Fin.sum_univ_two, hrow01] using (hR ℓ).2 0 1
+  have h1000 : R ℓ (1, 0) (0, 0) = 0 := by
+    rw [← hherm.apply, h0010, star_zero]
+  have h1100 : R ℓ (1, 1) (0, 0) = (s : ℂ) := by
+    rw [← hherm.apply, hcol11, h00, mul_one]
+    simp
+  have h1110 : R ℓ (1, 1) (1, 0) = 0 := by
+    rw [← hherm.apply, hcol11, h1000, mul_zero, star_zero]
+  have h1010 : R ℓ (1, 0) (1, 0) = 1 - (s : ℂ) ^ 2 := by
+    have ht := (hR ℓ).2 1 1
+    simp only [Fin.sum_univ_two, hcol11, h1100, ite_true] at ht
+    linear_combination ht
+  ext ⟨r, o⟩ ⟨r', o'⟩
+  fin_cases r <;> fin_cases o <;> fin_cases r' <;> fin_cases o' <;>
+    simp [ad_entries s hs, polyChoi, hcol01, hrow01, hcol11, h00,
+      h0010, h1000, h1100, h1110, h1010] <;> ring
 
 private lemma measurement_polynomial (N : ℕ)
     (T : Matrix (Fin N → Fin 2 × Fin 2) (Fin N → Fin 2 × Fin 2) ℂ) :
@@ -191,6 +240,8 @@ theorem result : claim := by
   have hnorm := (h 1 (by constructor <;> norm_num)).2.1
   simp_rw [hzero] at hnorm
   simpa using hnorm
+
+#print axioms result
 
 end
 
