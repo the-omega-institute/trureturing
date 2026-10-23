@@ -663,9 +663,11 @@ conclusion follows from this generic-source counterexample.
 
 Reuse [W266, W317--W320 and W326](suzuki2026screw.md), including
 the small-excess positivity, actual finite-source form core and
-original-feature compactness. Classical quadratic Rayleigh minimization,
-polarization and lower semicontinuity are used within this application;
-no general min--max theorem is asserted as new. The additional
+original-feature compactness. The published generalized Rayleigh
+supplier is [Jacob--Langer--Trunk, Theorem 2.4](../Eigenstructure/jacoblangertrunk2016variational.md);
+its exact common-domain and parameter correspondence is recorded there.
+Classical polarization and lower semicontinuity are used within this
+application; no general min--max theorem is asserted as new. The additional
 `repo-derived` interface is selection of a negative actual representative
 whose two ORIGINAL supporting multipliers agree exactly. This is a
 paper derivation, without Lean/kernel certification or a priority claim.
@@ -1441,3 +1443,149 @@ minimum. Its dilation derivative is positive, not a contradiction
 to its negative energy. The inverse-multiplier and K_F constants
 remain nonuniform. Hence no improvement of VHR1, RH, or strict Robin
 for all integers above 5040 is claimed by this branch result.
+
+
+## The selected null obeys a weighted Laplace reciprocity
+
+Reuse the actual mixed source identity W255, the odd complete kernel,
+W317's continuous form and W326's finite-Gaussian core in the
+[owned source account](suzuki2026screw.md). The null-direction mechanism
+of W347/W354 and the [classical derivative family](lagarias2004li.md#the-full-derivative-family-and-the-remaining-estimate)
+are already available. The additional `repo-derived` application is
+their constraint on the SAME MR11 representative, including its physical
+tail. This is paper mathematics, without Lean certification or a
+literature-priority claim.
+
+Keep $m(x)=(x/\pi)^6$, $w=m-1$, $D=M-H$, and assume on the actual
+complex domain $\mathcal V$ that
+
+$$
+Q_\lambda=\mathfrak E+\lambda D\ge0,\qquad
+Q_\lambda(F)=0,\qquad \lambda>0.                 \tag{LR1}
+$$
+
+For each real $a$, put
+$f_a(x)=e^{9a/2}e^{-e^{2a}x}$ and $z_a=f_a+f_{-a}$.
+These fixed Gaussian features belong to $\mathcal V$.
+W255 and oddness give
+$\mathfrak E(z_a,f_b)=L_0(a,b)+L_0(-a,b)=0$ for every real $b$.
+The owned core and form continuity extend this to every actual test.
+Positive-semidefinite mixed nullity in LR1 consequently gives
+
+$$
+\mathfrak E(z_a,G)=0\ (G\in\mathcal V),\qquad
+D(z_a,F)=0\quad(a\in\mathbb R).                 \tag{LR2}
+$$
+
+Define, without assuming ordinary unweighted integrability,
+
+$$
+L_F(s)=\int_\pi^\infty w(x)F(x)e^{-sx}dx,
+\qquad \Re s>0.
+$$
+
+Weighted Cauchy--Schwarz pays every derivative locally in this half-plane.
+With the real $z_a$ in the antilinear slot, LR2 is precisely
+$e^{9a/2}L_F(e^{2a})+e^{-9a/2}L_F(e^{-2a})=0$.
+The holomorphic identity theorem extends the positive-real identity to
+
+$$
+\boxed{L_F(s)=-s^{-9/2}L_F(1/s)\quad(\Re s>0).}   \tag{LR3}
+$$
+
+The power uses the right-half-plane principal branch. For an arbitrary
+actual source, LR3 is equivalent to all the orthogonalities in LR2;
+it does not imply LR1 or a negative energy.
+
+### Pay the endpoints in the original moment
+
+For $u=\Re s>0$ the original $M$ norm gives
+
+$$
+|L_F(s)|^2\le M(F)\int_\pi^\infty
+\frac{w(x)^2}{m(x)}e^{-2ux}dx.
+$$
+
+Writing $x=\pi+t$ and $y=1+t/\pi$,
+$(y^6-1)^2/y^6\le36(t/\pi)^2(1+t/\pi)^4$.
+Thus, with a fixed constant independent of $F$,
+
+$$
+\begin{aligned}
+|L_F(s)|&\le C\sqrt{M(F)}u^{-3/2}e^{-\pi u}
+&& (u\ge1),\\
+|L_F(s)|&\le C\sqrt{M(F)}s^{-3}e^{-\pi/s}
+&& (0<s\le1,\ s\text{ real}).
+\end{aligned}                                                    \tag{LR4}
+$$
+
+The second line consumes LR3. Its flatness at zero is not an analytic
+extension across zero. An additional positive exponential $L^2$ moment
+would give such an extension by Cauchy--Schwarz, forcing $L_F=0$ and
+$F=0$ by Laplace uniqueness.
+
+There is a stronger actual-source consequence. The
+[radial-distribution correspondence](../Fourier/grafakosteschl2013radial.md#the-actual-weighted-source-in-nine-dimensions)
+retains the original sixth moment and identifies LR3 with a Fourier
+anti-eigenfunction in nine dimensions, in the sense of tempered
+distributions. Its simultaneous spatial and Fourier gap gives
+
+$$
+F\ne0\quad\Longrightarrow\quad
+\int_\pi^\infty e^{2\varepsilon\sqrt{x}}|F(x)|^2dx=\infty
+\quad\text{for EVERY }\varepsilon>0.              \tag{LR5}
+$$
+
+This uses classical Fourier analytic uniqueness with the displayed
+source conversion; it does not assume ordinary $L^2$ Hankel membership.
+In particular a nonzero LR1 vector has neither compact physical support
+nor a finite Gaussian representation. W326's form-norm approximation
+by such features does not preserve an additional exponential moment.
+
+### A real representative must continue changing sign
+
+Every nonzero real source satisfying LR3 has both a positive set and
+a negative set of positive measure beyond EVERY $R>\pi$. Here is the
+classical positive-moment argument on this exact source.
+
+Suppose $v=wF\ge0$ almost everywhere beyond some $R$. Split $L_F$
+into its compact part and nonnegative tail. LR4 and monotone convergence
+give $v\in L^1$ and $L_F(0)=\int v=0$. For $n\ge1$,
+
+$$
+\int_\pi^\infty v(x)
+ \left(\frac{1-e^{-hx}}h\right)^n dx
+=h^{-n}\sum_{j=0}^n(-1)^j\binom njL_F(jh)\longrightarrow0.
+$$
+
+On the tail the bracket increases to $x$ as $h\downarrow0$;
+on the compact part dominated convergence applies. Hence all tail
+moments are finite and
+$\int_R^\infty x^nv\le R^n\int_\pi^R|v|$.
+Nonzero tail mass beyond any $r>R$ would instead give a lower bound
+$r^n\int_r^\infty v$, a contradiction as $n\to\infty$.
+The tail therefore vanishes; the remaining compact source vanishes
+by LR5. Apply the same argument to $-v$ to exclude the opposite sign.
+
+### Keep the arithmetic sign and the selected source together
+
+The reciprocal subspace is nontrivial even inside the actual
+$\mathcal V$: the [published common-gap supplier and its source adaptation](burnol2002sonine.md#nonzero-actual-sources-with-the-matched-laplace-reciprocity)
+give nonzero smooth examples. Thus LR3 is not a density argument that
+forces $F=0$. Nor does it make the complete Weil form positive.
+
+Centering by the older actual radical directions preserves the energy
+but generally leaves this selected subspace. If $z\ne0$ is any actual
+mixed-radical vector and $c\ne0$, LR1 gives $D(z,F)=0$ and therefore
+
+$$
+\mathfrak E(F+cz)=\mathfrak E(F),\qquad
+Q_\lambda(F+cz)=\lambda|c|^2D(z)>0.                 \tag{LR6}
+$$
+
+The nonzero radical combination used to center a moment must consequently
+not be treated as the same global-null source. A sign estimate must
+control W359/W362's COMPLETE arithmetic form on this one constrained
+source, or separately pay the change of constraints. No such estimate,
+exclusion of the matched negative branch, RH or strict all-integer Robin
+conclusion is obtained here.

@@ -1,0 +1,23 @@
+fingerprints:
+  raw_sha256: sha256:d31226643bbc3d7b416e3c0957074a0284109474ec436f42e0df0bcb9c566eb2
+  normalized_sha256: sha256:d31226643bbc3d7b416e3c0957074a0284109474ec436f42e0df0bcb9c566eb2
+cas_ref: sha256:d31226643bbc3d7b416e3c0957074a0284109474ec436f42e0df0bcb9c566eb2
+coverage_gids:
+  - gid: D5/S3/Arith/FibonacciAtomic/ImmediateWindowStateCapacity.clock
+    target_statement_id: sha256:57f7f7d9708965eef8f5b767662be5ea1e210c2bf3e456348a09d6273fceac6c
+  - gid: D5/S3/Arith/FibonacciAtomic/ImmediateWindowStateCapacity.displacement
+    target_statement_id: sha256:26e3fe66d5d89c5f88ed656daa67009e87f515fcd26be35f90088dbbe47a0bd8
+  - gid: D5/S3/Arith/FibonacciAtomic/ImmediateWindowStateCapacity.rawMachine
+    target_statement_id: sha256:5facd81aa5ec8438000a76065b0bebe8e78be96e95f093747f2433760f8bc156
+  - gid: D5/S3/Arith/FibonacciAtomic/ImmediateWindowStateCapacity.rawTransition
+    target_statement_id: sha256:d860e447f18fc8aecf19f1a269df71edd1ce879ee114f0f43ece2c676e87697c
+  - gid: D5/S3/Arith/FibonacciAtomic/LiteralWindowEnd.bits
+    target_statement_id: sha256:182ffa96cb7ebe707b3cd97b36541208e571ea395392c1e1440b2ef7a90c43ed
+  - gid: D5/S3/Arith/FibonacciAtomic/LiteralWindowEnd.first
+    target_statement_id: sha256:c5c44c696548638b70aa644372f712866ef070d3ebc63056e29f3f6eb74cb778
+  - gid: D5/S3/Arith/FibonacciAtomic/LiteralWindowEnd.last
+    target_statement_id: sha256:eb652a028ea99a0efc8ef8a8cbbadbd88dca2bcbcc0314600ed1c185f4b8760d
+  - gid: D5/S3/Arith/FibonacciAtomic/NativeContinuation/NullReplyFiber.native_execution
+    target_statement_id: sha256:f2e861558b8332c5bd3b34fc2e98744eac71562f83d066e47bdf8c6eff788bf6
+receipts:
+  unresolved_subitems: []
