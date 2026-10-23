@@ -1,0 +1,44 @@
+**Definition 1.2 (the specified completion).** Use only the supplier's
+instrument with live space $\mathbb C^5$ and absorbing state $f$:
+
+$$
+\begin{aligned}
+K_t&=\sqrt{S(t)}\operatorname{diag}_i
+       \left(\sqrt{\frac{p_i(k(t))}{p_i(a)}}e^{-iH_i(t)}\right),\\
+g_i(t)&=\lambda(t)-(\log p_i(k(t)))',\\
+J_i(t)&=\sqrt{g_i(t)}\,|f\rangle\langle i|K_t.
+\end{aligned}
+\tag{IS.3}
+$$
+
+Here $g_i\geq0$ almost everywhere. The terminal output retains either
+success with unnormalized live state $K_T\rho K_T^*$, or exact first
+failure time $t$, original mode $i$, and absorbing successor, with CP
+density $J_i(t)\rho J_i(t)^*$. Every Borel time event is retained.
+Failure has only its supplied stopped continuation. No hidden environment
+port, phase read, old-prefix quantum read or programme-identity register is
+adjoined to this output. If another task retains such fields, they remain
+additional fields and the comparisons here do not erase them.
+
+The full control indexes a prescribed mathematical instrument programme.
+An executed run that fails has only its live prefix and then $f$; its
+unvisited live tail is not executed. The law-level height inverse below
+identifies the programme's time function, not the unexecuted tail of a
+single acquired stopped trajectory.
+
+The supplier's full unknown initial family has diagonal $p(a)$:
+
+$$
+\Psi_{a,\beta,m}=\sqrt Z\,e_2+e^{-i\beta}
+ \left(\sqrt{2a}\,U_++(-1)^m\sqrt{2(c-a)}\,U_-\right),
+\quad \beta\in\mathbb R,\ m\in\mathbb Z,
+\tag{IS.4}
+$$
+
+where $U_+=(e^{-i\theta_0}e_0+e^{-i\theta_4}e_4)/\sqrt2$ and
+$U_-=(e^{-i\theta_1}e_1+e^{-i\theta_3}e_3)/\sqrt2$, with common fixed
+initial phases and middle phase zero. Unknown $\beta,m$ are not controller
+inputs. A matched comparison uses the same actual input on both sides,
+including any unchanged reference. Relabeling two independently unknown
+initial inputs is a different identification problem.
+

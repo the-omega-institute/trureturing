@@ -1,0 +1,41 @@
+### 定义 57.2（共用迹坐标及根承诺插值）
+
+记 $c=23/7$、$h=331/35$，并沿用 $B,D,Q_M,Q_J$。为简写置 $K=Q_J$、$Q=Q_M$。
+直接乘法给出
+
+$$
+K=2B-M,\qquad Q=B+D,\qquad JK=D.
+\tag{57.3}
+$$
+
+令 $u=\operatorname{tr}(MP)$、$v=\operatorname{tr}(BP)$、$w=\operatorname{tr}(DP)$。
+严格正性给出
+
+$$
+u>0,\quad w>0,\quad v-u=P_{11}+P_{21}>0,\quad
+1+2u-v=P_{12}+2P_{22}>0.
+\tag{57.4}
+$$
+
+特别 $v>0$、$2v-u>0$。这些不等式及式 (52.5) 的迹逆不需要秩一条件。
+路径 $MMJMJJJ$ 在原序号 $0,\ldots,7$ 的矩阵依次为
+$I,M,I+M,B,D,K,D,K$。
+
+若承诺根为 $a\in\{5,7\}$，写 $g(t)=(t-a)q(t)$，$\deg q\le2$。
+已知漂移后，前三读在任意候选 $u>0$ 上唯一给出
+
+$$
+\begin{aligned}
+A&=\delta/a,&\alpha&=(\delta-1)/(a-1),&\beta&=(\delta-c)/(a-2),\\
+q(t)&=\frac{(t-1)(t-2)}2A
+       +t(2-t)\frac\alpha u
+       +\frac{t(t-1)}2\frac\beta{1+u},\\
+N_i(u)&=u(1+u)q(i).
+\end{aligned}
+\tag{57.5}
+$$
+
+这是在 $0,1,2$ 的普通二次插值；代入三点分别为 $A,\alpha/u,\beta/(1+u)$。
+只有严格正的 $u,1+u$ 被除去，没有除以一个未经检查的采样增益。
+不同根承诺使用不同的 $q,N_i$，下两节分别写出其系数。
+
