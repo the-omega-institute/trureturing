@@ -136,5 +136,5 @@ For every finite positive semidefinite matrix and Hermitian observable, Fisher i
 - Truth anchor: `D5/S3/Quantum/Information/FisherDiscord/Spectral.pairKernel_nonneg`
 - Truth anchor: `D5/S3/Quantum/Information/FisherDiscord/Spectral.skewWY_diag`
 - Truth anchor: `D5/S3/Quantum/Information/FisherDiscord/Spectral.skewWY_spectral`
-- Dependency: [D5/S3/Quantum/Dynamics/EntropyProductionCoherenceDeletionIdentity](../../Dynamics/EntropyProductionCoherenceDeletionIdentity.md)
 - Dependency: [D5/S3/Quantum/Information/FisherDiscord/Defs](Defs.md)
+- Dependency: [D5/S3/Quantum/Information/NMLWMeasuredFidelitySeparation](../NMLWMeasuredFidelitySeparation.md)

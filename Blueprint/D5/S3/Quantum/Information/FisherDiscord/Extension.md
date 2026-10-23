@@ -62,7 +62,7 @@ Lean statement: `D5/S3/Quantum/Information/FisherDiscord/Extension.monotone_iff_
 
 *Commentary.*
 
-For normalized nonnegative diagonal weights and a Hermitian observable, the extension inequality holds in every finite second dimension exactly when the marginal Fisher discord is zero.
+For normalized nonnegative diagonal weights, a Hermitian observable, a marginal SLD solution and an SLD existence witness for the flag, the extension inequality holds in every finite second dimension exactly when the marginal Fisher discord is zero. The extensions themselves need not be diagonal.
 
 ## References
 
@@ -71,4 +71,5 @@ For normalized nonnegative diagonal weights and a Hermitian observable, the exte
 - Truth anchor: `D5/S3/Quantum/Information/FisherDiscord/Extension.flag_discord_zero`
 - Truth anchor: `D5/S3/Quantum/Information/FisherDiscord/Extension.flag_partialTrace`
 - Truth anchor: `D5/S3/Quantum/Information/FisherDiscord/Extension.monotone_iff_discord_zero`
+- Dependency: [D5/S3/Quantum/Decoherence/EnvironmentMarginalChannel](../../Decoherence/EnvironmentMarginalChannel.md)
 - Dependency: [D5/S3/Quantum/Information/FisherDiscord/Spectral](Spectral.md)

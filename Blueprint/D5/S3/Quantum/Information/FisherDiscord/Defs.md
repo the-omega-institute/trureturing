@@ -10,7 +10,7 @@ Lean statement: `D5/S3/Quantum/Information/FisherDiscord/Defs.IsDensity`
 
 *Formalization.* `D5/S3/Quantum/Information/FisherDiscord/Defs.IsDensity` (`✓ std3`).
 
-*Source.* Repository-derived.
+*Citation.* H. Li, S. Luo, Y. Zhang (2025). *Fisher discord as a quantifier of quantum complexity*. DOI: [10.1103/6kv3-hr92](https://doi.org/10.1103/6kv3-hr92). URL: <https://arxiv.org/abs/2510.15375v1>.
 
 *Commentary.*
 
@@ -24,7 +24,7 @@ Lean statement: `D5/S3/Quantum/Information/FisherDiscord/Defs.liftLeft`
 
 *Formalization.* `D5/S3/Quantum/Information/FisherDiscord/Defs.liftLeft` (`✓ std3`).
 
-*Source.* Repository-derived.
+*Citation.* H. Li, S. Luo, Y. Zhang (2025). *Fisher discord as a quantifier of quantum complexity*. DOI: [10.1103/6kv3-hr92](https://doi.org/10.1103/6kv3-hr92). URL: <https://arxiv.org/abs/2510.15375v1>.
 
 *Commentary.*
 
@@ -36,7 +36,7 @@ Lean statement: `D5/S3/Quantum/Information/FisherDiscord/Defs.IsSLD`
 
 *Formalization.* `D5/S3/Quantum/Information/FisherDiscord/Defs.IsSLD` (`✓ std3`).
 
-*Source.* Repository-derived.
+*Citation.* H. Li, S. Luo, Y. Zhang (2025). *Fisher discord as a quantifier of quantum complexity*. DOI: [10.1103/6kv3-hr92](https://doi.org/10.1103/6kv3-hr92). URL: <https://arxiv.org/abs/2510.15375v1>.
 
 *Commentary.*
 
@@ -48,7 +48,7 @@ Lean statement: `D5/S3/Quantum/Information/FisherDiscord/Defs.fisherSLD`
 
 *Formalization.* `D5/S3/Quantum/Information/FisherDiscord/Defs.fisherSLD` (`✓ std3`).
 
-*Source.* Repository-derived.
+*Citation.* H. Li, S. Luo, Y. Zhang (2025). *Fisher discord as a quantifier of quantum complexity*. DOI: [10.1103/6kv3-hr92](https://doi.org/10.1103/6kv3-hr92). URL: <https://arxiv.org/abs/2510.15375v1>.
 
 *Commentary.*
 
@@ -60,7 +60,7 @@ Lean statement: `D5/S3/Quantum/Information/FisherDiscord/Defs.skewWY`
 
 *Formalization.* `D5/S3/Quantum/Information/FisherDiscord/Defs.skewWY` (`✓ std3`).
 
-*Source.* Repository-derived.
+*Citation.* H. Li, S. Luo, Y. Zhang (2025). *Fisher discord as a quantifier of quantum complexity*. DOI: [10.1103/6kv3-hr92](https://doi.org/10.1103/6kv3-hr92). URL: <https://arxiv.org/abs/2510.15375v1>.
 
 *Commentary.*
 
@@ -72,11 +72,11 @@ Lean statement: `D5/S3/Quantum/Information/FisherDiscord/Defs.claim`
 
 *Formalization.* `D5/S3/Quantum/Information/FisherDiscord/Defs.claim` (`✓ std3`).
 
-*Source.* Repository-derived.
+*Citation.* H. Li, S. Luo, Y. Zhang (2025). *Fisher discord as a quantifier of quantum complexity*. DOI: [10.1103/6kv3-hr92](https://doi.org/10.1103/6kv3-hr92). URL: <https://arxiv.org/abs/2510.15375v1>.
 
 *Commentary.*
 
-The comparison quantifies over all finite dimensions, joint density matrices, Hermitian local observables and Hermitian SLD solutions on both spaces. Fisher discord is Fisher information minus skew information.
+The second-factor partial trace is the sum of entries with identical second coordinates. The comparison quantifies over all finite dimensions, joint density matrices, Hermitian local observables and Hermitian SLD solutions on both spaces. Fisher discord is Fisher information minus skew information.
 
 ## References
 
@@ -86,3 +86,4 @@ The comparison quantifies over all finite dimensions, joint density matrices, He
 - Truth anchor: `D5/S3/Quantum/Information/FisherDiscord/Defs.fisherSLD`
 - Truth anchor: `D5/S3/Quantum/Information/FisherDiscord/Defs.liftLeft`
 - Truth anchor: `D5/S3/Quantum/Information/FisherDiscord/Defs.skewWY`
+- Dependency: [D5/S3/Quantum/Information/PartialTraceMutualInformation](../PartialTraceMutualInformation.md)
