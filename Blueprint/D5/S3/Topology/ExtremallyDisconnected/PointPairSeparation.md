@@ -24,6 +24,8 @@ Starting with range b, split each infinite pool into disjoint infinite even and 
 
 This is a direct formal dependency proof for the cited CH analytic uniform-separation consumer. The supplied unpublished ordinary argument is fallible prior research, not Lean evidence or a classical source attribution. Pinned Mathlib supplies the topological separation and closure facts and elementary infinite-set tools; the shell, sparse avoidance and diagonal construction are assembled here. Repository-derived provenance makes no claim of mathematical novelty. The actual continuous-dual norm transfer, compact lower-semicontinuous minimum argument, full signed dual-ball endpoint, and full CH construction are outside this module.
 
+The escape registration is declared_unresolved, with IE-C050 source.selection_missing. Its typed dependent-family bridge, actual-positive law, variation, sensitivity and observational-dependence proof fields compile, but the raw sourceSelection field is absent (sourceSelection := none), so source reconstruction and binding have not been validated. The unfinished audit is tracked at https://github.com/the-omega-institute/trureturing/issues/20638. Compilation of these typed fields and the issue link do not establish declared_validated.
+
 ## References
 
 - Truth anchor: `D5/S3/Topology/ExtremallyDisconnected/PointPairSeparation.eventually_eq_of_eventually_mem_isClopen_iff`
