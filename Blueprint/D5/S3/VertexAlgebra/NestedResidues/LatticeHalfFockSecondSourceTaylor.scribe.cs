@@ -59,5 +59,41 @@ internal sealed class LatticeHalfFockSecondSourceTaylorDocument : IScribeDocumen
                 AssessedProvenance.FromRepo(LibraryNoteRef.Create("D5/L/VertexAlgebra/bakalovkac2004lattice")),
                 Blocks(
                     Paragraph(Text("For the original three-label numerator and arbitrary supplied cutoff K, the two complete outer Laurent orders satisfy the inherited unrestricted collision identity coefficientwise. Signed numerator exponents and origin-pole cancellation are retained, with no locality assumption on an ordered half. The coefficient identification with the expanded G_j terms remains open."))),
+                DescribeRole.Theorem),
+            Describe.Lean(
+                DescribeId.Create("second-source-reverse-outer-contraction"),
+                DeclarationHandle.Create("D5/S3/VertexAlgebra/NestedResidues/LatticeHalfFockSecondSourceTaylor.second_source_reverse_outer_contraction"),
+                H("Reverse outer contraction after complete local evaluation"),
+                StatementSource.WithoutFormula(),
+                AssessedProvenance.FromRepo(LibraryNoteRef.Create("D5/L/VertexAlgebra/bakalovkac2004lattice")),
+                Blocks(
+                    Paragraph(Text("For M>0, the theorem consumes the complete signed local evaluation for every original j, applies finite_reverse_outer_taylor at t=M-1, and combines the two epsilon factors. It preserves the signed degree, negative-degree empty branch and ordered residue weight. The local-evaluation hypothesis is the remaining coefficient-identification obligation."))),
+                DescribeRole.Theorem),
+            Describe.Lean(
+                DescribeId.Create("second-source-inner-sharp-support"),
+                DeclarationHandle.Create("D5/S3/VertexAlgebra/NestedResidues/LatticeHalfFockSecondSourceTaylor.second_source_inner_sharp_support"),
+                H("Sharp inner Taylor support"),
+                StatementSource.WithoutFormula(),
+                AssessedProvenance.FromRepo(LibraryNoteRef.Create("D5/L/VertexAlgebra/bakalovkac2004lattice")),
+                Blocks(
+                    Paragraph(Text("Every nonempty inner Taylor index satisfies alpha+a+k=M-j-1, including arbitrary signed Laurent numerator exponents."))),
+                DescribeRole.Theorem),
+            Describe.Lean(
+                DescribeId.Create("second-source-inner-vandermonde"),
+                DeclarationHandle.Create("D5/S3/VertexAlgebra/NestedResidues/LatticeHalfFockSecondSourceTaylor.second_source_inner_vandermonde"),
+                H("Inner fractional Vandermonde contraction"),
+                StatementSource.WithoutFormula(),
+                AssessedProvenance.FromRepo(LibraryNoteRef.Create("D5/L/VertexAlgebra/bakalovkac2004lattice")),
+                Blocks(
+                    Paragraph(Text("The finite -1/2 contraction is proved for every integer Laurent exponent, so negative and zero numerator powers remain in scope."))),
+                DescribeRole.Theorem),
+            Describe.Lean(
+                DescribeId.Create("second-source-outer-vandermonde"),
+                DeclarationHandle.Create("D5/S3/VertexAlgebra/NestedResidues/LatticeHalfFockSecondSourceTaylor.second_source_outer_vandermonde"),
+                H("Outer fractional Vandermonde contraction"),
+                StatementSource.WithoutFormula(),
+                AssessedProvenance.FromRepo(LibraryNoteRef.Create("D5/L/VertexAlgebra/bakalovkac2004lattice")),
+                Blocks(
+                    Paragraph(Text("The finite -gamma/2 contraction is proved for every integer Laurent exponent and is the outer contraction needed after sharp support."))),
                 DescribeRole.Theorem))));
 }

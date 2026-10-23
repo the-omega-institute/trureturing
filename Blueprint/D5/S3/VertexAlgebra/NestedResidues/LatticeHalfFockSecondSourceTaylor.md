@@ -88,12 +88,72 @@ Lean statement: `D5/S3/VertexAlgebra/NestedResidues/LatticeHalfFockSecondSourceT
 
 For the original three-label numerator and arbitrary supplied cutoff K, the two complete outer Laurent orders satisfy the inherited unrestricted collision identity coefficientwise. Signed numerator exponents and origin-pole cancellation are retained, with no locality assumption on an ordered half. The coefficient identification with the expanded G_j terms remains open.
 
+**Theorem 1.6 (Reverse outer contraction after complete local evaluation).**
+
+Lean statement: `D5/S3/VertexAlgebra/NestedResidues/LatticeHalfFockSecondSourceTaylor.second_source_reverse_outer_contraction`
+
+*Proof.* Machine-checked in Lean as `D5/S3/VertexAlgebra/NestedResidues/LatticeHalfFockSecondSourceTaylor.second_source_reverse_outer_contraction` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Acknowledgement.* Bojko Bakalov and Victor G. Kac (2004). *Twisted Modules over Lattice Vertex Algebras*. DOI: [10.1142/9789812702562_0001](https://doi.org/10.1142/9789812702562_0001). URL: <https://arxiv.org/abs/math/0402315v1>.
+
+*Commentary.*
+
+For M>0, the theorem consumes the complete signed local evaluation for every original j, applies finite_reverse_outer_taylor at t=M-1, and combines the two epsilon factors. It preserves the signed degree, negative-degree empty branch and ordered residue weight. The local-evaluation hypothesis is the remaining coefficient-identification obligation.
+
+**Theorem 1.7 (Sharp inner Taylor support).**
+
+Lean statement: `D5/S3/VertexAlgebra/NestedResidues/LatticeHalfFockSecondSourceTaylor.second_source_inner_sharp_support`
+
+*Proof.* Machine-checked in Lean as `D5/S3/VertexAlgebra/NestedResidues/LatticeHalfFockSecondSourceTaylor.second_source_inner_sharp_support` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Acknowledgement.* Bojko Bakalov and Victor G. Kac (2004). *Twisted Modules over Lattice Vertex Algebras*. DOI: [10.1142/9789812702562_0001](https://doi.org/10.1142/9789812702562_0001). URL: <https://arxiv.org/abs/math/0402315v1>.
+
+*Commentary.*
+
+Every nonempty inner Taylor index satisfies alpha+a+k=M-j-1, including arbitrary signed Laurent numerator exponents.
+
+**Theorem 1.8 (Inner fractional Vandermonde contraction).**
+
+Lean statement: `D5/S3/VertexAlgebra/NestedResidues/LatticeHalfFockSecondSourceTaylor.second_source_inner_vandermonde`
+
+*Proof.* Machine-checked in Lean as `D5/S3/VertexAlgebra/NestedResidues/LatticeHalfFockSecondSourceTaylor.second_source_inner_vandermonde` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Acknowledgement.* Bojko Bakalov and Victor G. Kac (2004). *Twisted Modules over Lattice Vertex Algebras*. DOI: [10.1142/9789812702562_0001](https://doi.org/10.1142/9789812702562_0001). URL: <https://arxiv.org/abs/math/0402315v1>.
+
+*Commentary.*
+
+The finite -1/2 contraction is proved for every integer Laurent exponent, so negative and zero numerator powers remain in scope.
+
+**Theorem 1.9 (Outer fractional Vandermonde contraction).**
+
+Lean statement: `D5/S3/VertexAlgebra/NestedResidues/LatticeHalfFockSecondSourceTaylor.second_source_outer_vandermonde`
+
+*Proof.* Machine-checked in Lean as `D5/S3/VertexAlgebra/NestedResidues/LatticeHalfFockSecondSourceTaylor.second_source_outer_vandermonde` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Acknowledgement.* Bojko Bakalov and Victor G. Kac (2004). *Twisted Modules over Lattice Vertex Algebras*. DOI: [10.1142/9789812702562_0001](https://doi.org/10.1142/9789812702562_0001). URL: <https://arxiv.org/abs/math/0402315v1>.
+
+*Commentary.*
+
+The finite -gamma/2 contraction is proved for every integer Laurent exponent and is the outer contraction needed after sharp support.
+
 ## References
 
 - Truth anchor: `D5/S3/VertexAlgebra/NestedResidues/LatticeHalfFockSecondSourceTaylor.actual_current_second_source_rational_field`
 - Truth anchor: `D5/S3/VertexAlgebra/NestedResidues/LatticeHalfFockSecondSourceTaylor.actual_second_source_outer_collision`
 - Truth anchor: `D5/S3/VertexAlgebra/NestedResidues/LatticeHalfFockSecondSourceTaylor.secondSourceInnerTaylorTerm`
+- Truth anchor: `D5/S3/VertexAlgebra/NestedResidues/LatticeHalfFockSecondSourceTaylor.second_source_inner_sharp_support`
+- Truth anchor: `D5/S3/VertexAlgebra/NestedResidues/LatticeHalfFockSecondSourceTaylor.second_source_inner_vandermonde`
 - Truth anchor: `D5/S3/VertexAlgebra/NestedResidues/LatticeHalfFockSecondSourceTaylor.second_source_monomial_taylor_index`
+- Truth anchor: `D5/S3/VertexAlgebra/NestedResidues/LatticeHalfFockSecondSourceTaylor.second_source_outer_vandermonde`
+- Truth anchor: `D5/S3/VertexAlgebra/NestedResidues/LatticeHalfFockSecondSourceTaylor.second_source_reverse_outer_contraction`
 - Truth anchor: `D5/S3/VertexAlgebra/NestedResidues/LatticeHalfFockSecondSourceTaylor.second_source_taylor_inner_expansion`
 - Dependency: [D5/S3/VertexAlgebra/LatticeHalfFockOuterTaylorEvaluation](../LatticeHalfFockOuterTaylorEvaluation.md)
 - Dependency: [D5/S3/VertexAlgebra/NestedResidues/ContextualKernelExtraction](ContextualKernelExtraction.md)

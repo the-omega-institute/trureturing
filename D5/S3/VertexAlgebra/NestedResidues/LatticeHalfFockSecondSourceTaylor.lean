@@ -883,5 +883,145 @@ theorem actual_current_second_source_rational_field
     expandedSupport.1, expandedSupport.2, padded_readout.trans readout,
     (padded_readout.trans readout).trans expansion, completion⟩
 
+/- The final reverse outer contraction is independent of the lattice carrier.
+It consumes the complete-field local evaluation for each original j and keeps
+the signed diagonal and origin-pole weights unchanged. -/
+theorem second_source_reverse_outer_contraction
+    (P : LabelledPolynomial ℂ 3) (gamma d degree : ℤ) (L M : ℕ)
+    (T : ℕ → ℂ)
+    (hlocal : ∀ j ∈ Finset.range M,
+      T j = StateFieldResidueReconstruction.epsilon (-(L : ℤ)) *
+        ∑ u ∈ Finset.range (M - j),
+          (if (u : ℤ) ≤ degree then
+            collisionTaylor P gamma u (degree - u).toNat else 0) *
+            BinomialKernelDelta.chooseSign (-(L : ℤ)) (M - j - 1 - u))
+    (hM : 0 < M) :
+    StateFieldResidueReconstruction.epsilon d *
+        (∑ j ∈ Finset.range M,
+          BinomialKernelDelta.chooseSign d j * T j) =
+      StateFieldResidueReconstruction.epsilon (d - L) *
+        ∑ u ∈ Finset.range (degree + 1).toNat,
+          collisionTaylor P gamma u (degree - u).toNat *
+            orderedResidueWeight (d - L) ((u : ℤ) - M) := by
+  have range_eq : (M - 1) + 1 = M := by omega
+  have inner_eq (j : ℕ) (hj : j ∈ Finset.range M) :
+      M - 1 - j + 1 = M - j := by
+    have hj' := Finset.mem_range.mp hj
+    omega
+  have reverse := finite_reverse_outer_taylor P gamma d degree L (M - 1)
+  have epsilon_product :
+      StateFieldResidueReconstruction.epsilon d *
+          StateFieldResidueReconstruction.epsilon (-(L : ℤ)) =
+        StateFieldResidueReconstruction.epsilon (d - L) := by
+    unfold StateFieldResidueReconstruction.epsilon
+    rw [← zpow_add₀ (by norm_num : (-1 : ℂ) ≠ 0)]
+    congr 1
+  have epsilon_mul (j : ℕ) (S : ℂ) :
+      StateFieldResidueReconstruction.epsilon d *
+          (BinomialKernelDelta.chooseSign d j *
+            (StateFieldResidueReconstruction.epsilon (-(L : ℤ)) * S)) =
+        StateFieldResidueReconstruction.epsilon (d - L) *
+          (BinomialKernelDelta.chooseSign d j * S) := by
+    calc
+      _ = (StateFieldResidueReconstruction.epsilon d *
+          StateFieldResidueReconstruction.epsilon (-(L : ℤ))) *
+          (BinomialKernelDelta.chooseSign d j * S) := by ring
+      _ = _ := by rw [epsilon_product]
+  calc
+    StateFieldResidueReconstruction.epsilon d *
+        (∑ j ∈ Finset.range M,
+          BinomialKernelDelta.chooseSign d j * T j) =
+      StateFieldResidueReconstruction.epsilon d *
+        (∑ j ∈ Finset.range ((M - 1) + 1),
+          BinomialKernelDelta.chooseSign d j * T j) := by rw [range_eq]
+    _ = ∑ j ∈ Finset.range ((M - 1) + 1),
+        StateFieldResidueReconstruction.epsilon d *
+          (BinomialKernelDelta.chooseSign d j * T j) := by
+      rw [Finset.mul_sum]
+    _ = ∑ j ∈ Finset.range ((M - 1) + 1),
+        StateFieldResidueReconstruction.epsilon (d - L) *
+          (BinomialKernelDelta.chooseSign d j *
+            ∑ u ∈ Finset.range (M - j),
+              (if (u : ℤ) ≤ degree then
+                collisionTaylor P gamma u (degree - u).toNat else 0) *
+                BinomialKernelDelta.chooseSign (-(L : ℤ)) (M - j - 1 - u)) := by
+      apply Finset.sum_congr rfl
+      intro j hj
+      have hjM : j ∈ Finset.range M := by simpa only [range_eq] using hj
+      rw [hlocal j hjM]
+      exact epsilon_mul j _
+    _ = StateFieldResidueReconstruction.epsilon (d - L) *
+        (∑ j ∈ Finset.range ((M - 1) + 1),
+          BinomialKernelDelta.chooseSign d j *
+            ∑ u ∈ Finset.range (M - j),
+              (if (u : ℤ) ≤ degree then
+                collisionTaylor P gamma u (degree - u).toNat else 0) *
+                BinomialKernelDelta.chooseSign (-(L : ℤ)) (M - j - 1 - u)) := by
+      rw [Finset.mul_sum]
+    _ = StateFieldResidueReconstruction.epsilon (d - L) *
+        (∑ j ∈ Finset.range ((M - 1) + 1),
+          BinomialKernelDelta.chooseSign d j *
+            ∑ u ∈ Finset.range ((M - 1) - j + 1),
+              (if (u : ℤ) ≤ degree then
+                collisionTaylor P gamma u (degree - u).toNat else 0) *
+                BinomialKernelDelta.chooseSign (-(L : ℤ)) ((M - 1) - j - u)) := by
+      congr 1
+      apply Finset.sum_congr rfl
+      intro j hj
+      have hjM : j ∈ Finset.range M := by simpa only [range_eq] using hj
+      have hidx : M - j - 1 = M - 1 - j := by
+        have hj' := Finset.mem_range.mp hjM
+        omega
+      rw [inner_eq j hjM, hidx]
+    _ = StateFieldResidueReconstruction.epsilon (d - L) *
+        ∑ u ∈ Finset.range (degree + 1).toNat,
+          collisionTaylor P gamma u (degree - u).toNat *
+            orderedResidueWeight (d - L) ((u : ℤ) - M) := by
+      rw [reverse]
+      congr 1
+      apply Finset.sum_congr rfl
+      intro u hu
+      congr 1
+      have hM' : 1 ≤ M := by omega
+      have hcast : ((M - 1 : ℕ) : ℤ) + 1 = (M : ℤ) := by
+        exact_mod_cast range_eq
+      have harg : (u : ℤ) - ((M - 1 : ℕ) : ℤ) - 1 = (u : ℤ) - (M : ℤ) := by
+        omega
+      rw [harg]
+
+/- The inner finite Taylor index has sharp support before any outer mode
+calculation. This is the arithmetic equality used by the complete-field
+expansion, including the empty cutoff branch. -/
+theorem second_source_inner_sharp_support
+    (j M alpha a k : ℕ)
+    (ha : a < M - j - alpha)
+    (hk : k = M - j - alpha - 1 - a) :
+    alpha + a + k = M - j - 1 := by
+  omega
+
+/- The two independent Vandermonde contractions used after the sharp support
+conditions are imposed. They are stated for arbitrary integer Laurent
+exponents, so negative and zero numerator powers remain in scope. -/
+theorem second_source_inner_vandermonde (q : ℤ) (u : ℕ) :
+    (∑ alpha ∈ Finset.range (u + 1),
+      Ring.choose (-(1 : ℂ) / 2) alpha *
+        Ring.choose (q : ℂ) (u - alpha)) =
+      Ring.choose (q - (1 : ℂ) / 2) u := by
+  have h := Ring.add_choose_eq (R := ℂ)
+    (r := -(1 : ℂ) / 2) (s := (q : ℂ)) u (Commute.all _ _)
+  rw [Finset.Nat.sum_antidiagonal_eq_sum_range_succ_mk] at h
+  simpa only [show q - (1 : ℂ) / 2 = -(1 : ℂ) / 2 + q by ring] using h.symm
+
+theorem second_source_outer_vandermonde (q gamma : ℤ) (u : ℕ) :
+    (∑ beta ∈ Finset.range (u + 1),
+      Ring.choose (-(gamma : ℂ) / 2) beta *
+        Ring.choose (q : ℂ) (u - beta)) =
+      Ring.choose ((q : ℂ) - (gamma : ℂ) / 2) u := by
+  have h := Ring.add_choose_eq (R := ℂ)
+    (r := -(gamma : ℂ) / 2) (s := (q : ℂ)) u (Commute.all _ _)
+  rw [Finset.Nat.sum_antidiagonal_eq_sum_range_succ_mk] at h
+  simpa only [show (q : ℂ) - (gamma : ℂ) / 2 =
+      -(gamma : ℂ) / 2 + q by ring] using h.symm
+
 end
 end D5.S3.VertexAlgebra.NestedResidues.LatticeHalfFockSecondSourceTaylor
