@@ -5,7 +5,7 @@ year: 2021
 title: The Riemann hypothesis is true up to 3·10^12
 doi: 10.1112/blms.12460
 url: https://arxiv.org/abs/2004.09765v1
-claim: Published verification supplies the finite-height RH premise. Exact heat-loss factorization and the complete arithmetic block bound give a whole-source negative allowance of order (log T)^(-4) in the original sixth moment; fixed height still leaves a negative allowance. A support-independent Gamma-only lower bound for the prime Hankel form fails on all compact half-line tests. An even actual-source partition controls the joint metric defect and bounds supporting multipliers of negative cap-four minima from below, up to the finite-height signed zero tail. Its null supporting vector bootstraps every fixed logarithmic order below five and recovers individual branch moments with an explicit inverse-multiplier cost; finite-height RH(T) also yields a conditional fourth-power joint metric endpoint on the same source, without improving the general exponent-four allowance.
+claim: Published verification supplies the finite-height RH premise. Exact heat-loss factorization and the complete arithmetic block bound give a whole-source negative allowance of order (log T)^(-4) in the original sixth moment; fixed height still leaves a negative allowance. A support-independent Gamma-only lower bound for the prime Hankel form fails on all compact half-line tests. An even actual-source partition controls the joint metric defect and bounds supporting multipliers of negative cap-four minima from below, up to the finite-height signed zero tail. Its null supporting vector bootstraps every fixed logarithmic order below five and recovers individual branch moments with an explicit inverse-multiplier cost; separation of the finite reconstruction intervals replaces its N-fold Fourier-tail payment by a harmonic factor, giving every fixed joint-metric exponent below five on actual negative minima and a fifth-power rate with a log-log factor on nonpositive-energy sources under RH(T), without improving the general exponent-four negative allowance. For hypothetical unit negative cap-four minimizers with a positive supporting multiplier, retaining the errors' own moments also gives every finite logarithmic order and arbitrary fixed logarithmic-power branch rates, with constants that deteriorate as the multiplier tends to zero.
 strata_touched: []
 license: citation-only
 triage: anchor
@@ -1119,3 +1119,343 @@ in original-moment recovery or improve VHR1's general fourth-power
 negative allowance. A new signed arithmetic estimate is still
 required. These applications remain paper derivations without
 Lean/kernel certification.
+
+
+## Pay one Fourier tail across the separated reconstruction intervals
+
+The finite actual reconstruction in VHP6 and VHB9 admits a stronger
+local estimate than their termwise triangle bound. Reuse exactly
+VHP3's $S,K,w,X$, VHB2's self-adjoint metric defect, VHB5's
+minimizer regularity and VHB8's finite-height tail. The ingredients
+are classical Cauchy--Schwarz and disjoint input intervals; W268 in
+[the actual-source account](suzuki2026screw.md#retain-all-disjoint-dilation-intervals-and-their-exact-harmonic-weights)
+already uses disjoint dilation intervals and harmonic weights for a
+different source contract. The additional application here concerns
+the joint metrics of the actual even heat branches. It introduces no
+new general localization theorem or literature-priority claim and
+remains a paper derivation without Lean/kernel certification.
+
+### Separate only the finite reconstruction before cutting frequencies
+
+For $0<r\le1$, $R\ge1$ and an integer $N\ge1$ with $2rN<1$, put
+
+$$
+ I=[-r,r],\qquad
+ \mathcal T_\beta(R)=\int_{|\xi|\ge R}|\widehat\beta(\xi)|^2d\xi,
+ \qquad S_N=\sum_{n\le N}\mu(n)n^{-3}T_{2\log n}.
+$$
+
+The same source satisfies
+
+$$
+ \boxed{\quad
+ \|\mathbf1_I X\|_2^2
+ \le C\left[(1+\log N)\mathcal T_\beta(R)
+       +M(F)(rRN+N^{-4}+r)\right].
+ \quad}
+ \tag{VHB11}
+$$
+
+Indeed, on $I$, the exact weight is
+
+$$
+ S_Nw(t)=e^{qt}\sum_{n\le N}\mu(n)n^{-1/2}
+                         \beta(t+2\log n),\qquad q=5/4.
+$$
+
+Split $\beta=\beta_{<R}+\beta_{\ge R}$ by its full-line Fourier
+transform, only in this FINITE sum. The factor $e^{qt}$ is uniformly
+bounded on $I$. Fourier Cauchy--Schwarz gives
+$\|\beta_{<R}\|_\infty^2\le CR\|\beta\|_2^2\le CRM(F)$.
+Since $\sum_{n\le N}n^{-1/2}\le C\sqrt N$, its local squared
+contribution is at most $CM(F)rRN$.
+
+For the high-frequency contribution, use the SAME global function
+in all input intervals:
+
+$$
+ \begin{aligned}
+ &\int_I\left|\sum_{n\le N}\mu(n)n^{-1/2}
+                       \beta_{\ge R}(t+2\log n)\right|^2dt\\
+ &\quad\le
+ \left(\sum_{n\le N}\frac{\mu(n)^2}{n}\right)
+ \sum_{n\le N}\int_{I+2\log n}|\beta_{\ge R}(u)|^2du\\
+ &\quad\le C(1+\log N)\mathcal T_\beta(R).
+ \end{aligned}
+ \tag{VHB12}
+$$
+
+For $n<N$, adjacent centers have distance
+$2\log(1+1/n)\ge2/(n+1)\ge2/N$; the intervals of length $2r$
+are disjoint under the stated condition. Thus the last sum pays
+at most one full Fourier-tail mass, rather than $N$ copies.
+No exponential weight is asserted for either Fourier projection,
+and the infinite operator is not applied to these projected inputs.
+
+For the remaining terms use the ORIGINAL $w$ and $Sw$.
+The absolute operator tail obeys
+$\|S-S_N\|\le\sum_{n>N}n^{-3}\le CN^{-2}$.
+VHP3 bounds $\|w\|_2^2+\|Sw\|_2^2\le CM(F)$, while
+$J_1:L^2\to L^\infty$ is bounded. Their local squared payments
+are respectively $CM(F)N^{-4}$ and $CM(F)r$. Since
+$X=S_Nw+(S-S_N)w+\tfrac32J_1Sw$, these estimates prove VHB11.
+
+### Retain the full logarithmic order in the joint metric estimate
+
+For every fixed $k\ge1$, on the SAME class
+$M(F)+\mathcal L_k(g_F)\le D$, the actual branches satisfy, for
+sufficiently small $\epsilon$ depending on $k,c$,
+
+$$
+ |\Delta_M|+|\Delta_H|
+ \le C_kD L^{-k}\log(2+L),\qquad L=\log(1/\epsilon).
+ \tag{VHB13}
+$$
+
+To see the scale exactly,
+$\widehat\beta(\xi)=2\widehat g_F(2\xi)$, so
+$\mathcal T_\beta(R)\le C_kD[\log(2+R)]^{-k}$.
+In VHB11 take
+
+$$
+ r=\epsilon^{1/4},\qquad R=\epsilon^{-1/8},\qquad
+ N=\lceil L^{k/4}\rceil.
+$$
+
+The separation condition holds for sufficiently small $\epsilon$.
+The tail and operator-tail terms have orders
+$DL^{-k}\log(2+L)$ and $DL^{-k}$; $rRN$ and $r$ are
+exponentially small in $L$. VHB2 then pays the actual quadratic
+metric defect, with cross-cut error $CM(F)\sqrt\epsilon/r$.
+The Lipschitz-weight and exponential-conjugation errors from VHP4
+are also exponentially small in $L$. This proves VHB13.
+
+On actual unit negative cap-four minimizers, VHB5 consequently gives
+$|\Delta_M|+|\Delta_H|\le C_sL^{-s}$ for every fixed $0<s<5$:
+choose $\max(1,s)<k<5$ and absorb the logarithm. This improves
+the joint metrics, not VHB3's original-source inverse estimate.
+No strong fifth logarithmic moment follows.
+
+### Use finite-height RH for the fifth-power boundary rate
+
+Let $F\in\mathcal V$ have $\mathfrak E(F)\le0$, assume
+$\mathsf{RH}(T)$, and take $T$ sufficiently large depending on the
+fixed $c$. At the TARGET scale $\epsilon=1/T$, write $L=\log T$.
+Then
+
+$$
+ \boxed{\quad
+ |\Delta_M|+|\Delta_H|
+ \le CM(F)L^{-5}\log(2+L).
+ \quad}
+ \tag{VHB14}
+$$
+
+Use VHB8 at the coarser $\sigma=T^{-1/4}$. With
+$R=T^{1/8}$, the symbol $b_\sigma(2\xi)^2$ is bounded below
+by a fixed positive constant on $|\xi|\ge R$. The exact Fourier
+scaling above therefore gives
+
+$$
+ \mathcal T_\beta(R)
+ \le C s_\sigma
+ \le CM(F)\left[L^{-5}+T^{-1/8}+\eta_T/L\right]
+ \le CM(F)L^{-5}.
+$$
+
+Take $r=T^{-1/4}$ and $N=\lceil L^{5/4}\rceil$ in VHB11.
+Then $N^{-4}\le CL^{-5}$ and
+$1+\log N\le C\log(2+L)$, while $rRN=T^{-1/8}N$
+and all the other metric errors are smaller. This proves VHB14
+on the original nonpositive-energy class; no nonpositive-energy
+premise is imposed on the high-pass branch.
+
+For the SAME hypothetical unit negative cap-four minimizer with
+$e_4=-\delta$, VHP1, VHP7 and VHP9 now give
+
+$$
+ \begin{gathered}
+ 0\le Q_\lambda(F_h),Q_\lambda(F_v)
+          \le C\delta L^{-5}\log(2+L),\\
+ \lambda\ge
+ [1/3-CL^{-5}\log(2+L)]\delta-C\eta_T.
+ \end{gathered}
+ \tag{VHB15}
+$$
+
+Here $M(F)\le4$, $|\mu|+\lambda\le C\delta$ and
+$\mathcal H(F_h)\ge1/2$ are the existing minimizer bounds.
+The supporting comparison still uses
+$(\delta-3\lambda)\mathcal H(F_h)$, keeping its original direction.
+The height premise and sufficiently large $T$ are essential to
+VHB14--VHB15; they are not uniform fifth-order tails at arbitrarily
+large frequency for a fixed verified height.
+
+VHB11--VHB15 do not change VHB3's inverse/interpolation cost.
+In particular a small $Q_\lambda(F_v)$ does not itself bound
+$\lambda M(F_v)$ without paying the complete debit and the
+original-source error. The final general negative allowance remains
+VHR1's $CL^{-4}$. Full RH and strict Robin for every integer
+$n>5040$ remain unproved.
+
+
+## Retain each error's own moment at a positive supporting multiplier
+
+Let $F$ be a hypothetical unit negative cap-four minimizer and retain
+VHP7's GLOBAL supporting form. Assume its supporting multiplier
+$\lambda>0$. The following application strengthens the logarithmic
+regularity on this branch, with explicit multiplier dependence. It
+reuses VHB3's actual inverse maps, W317's complete debit bound,
+W338 and VHB13; no generic eigenfunction-regularity theorem or
+additional physical moment is assumed. The estimates remain paper
+derivations without Lean/kernel certification or a priority claim.
+
+### Absorb the actual error moment before discarding it
+
+Fix $0<\eta<2$, and write
+
+$$
+ \theta=\frac{4-2\eta}{5},\qquad
+ \kappa=\frac{1-\theta}{\theta}>\frac14,\qquad
+ \Lambda=1+\lambda^{-\kappa}.
+$$
+
+For an ACTUAL error source $G$, put $s_G=\|g_G\|_2^2$ and
+$m_G=M(G)$. The same weighted interpolation and inverse maps as
+VHB3, before replacing the error moment by the original budget, give
+
+$$
+ \mathcal N(G)^2\le C_\eta s_G^\theta m_G^{1-\theta}.
+ \tag{VHB16}
+$$
+
+Indeed the unweighted squared profile norm is $2s_G$ after the
+$t=2r$ scaling, its squared weight-$q$ norm is bounded by $Cm_G$, and
+interpolation to $a_\eta=1/4+\eta/2$ has exponent
+$1-a_\eta/q=\theta$. The actual inverses and the original
+$\mathcal N$ weight are bounded at that strictly supercritical
+weight, exactly as in VHB3. This is not an unweighted endpoint
+inverse or an estimate on an independently chosen profile.
+
+On these supporting forms $|\mu|\le C$ by VHP7 and the existing
+complete-energy floor. W317, $\mathcal H(G)\le C\mathcal N(G)^2$
+and Young absorption therefore give
+
+$$
+ \mathcal P(G)+\frac\lambda2 M(G)
+ \le Q_\lambda(G)+C_\eta\lambda^{-\kappa}s_G.
+ \tag{VHB17}
+$$
+
+Apply this only to the SAME $d=F-F_h$ and $F_v$. If
+$M(F)+\mathcal L_k(g_F)\le D$, $k\ge1$, then VHB13,
+$Q_\lambda(d)=Q_\lambda(F_h)$ and the existing profile-frequency
+split imply
+
+$$
+ \begin{aligned}
+ s_d+s_{F_v}&\le C_kD L^{-k},\\
+ \mathcal P(d)+\mathcal P(F_v)
+ +\frac\lambda2[M(d)+M(F_v)]
+ &\le C_{k,\eta}D
+       [\delta\log(2+L)+\lambda^{-\kappa}]L^{-k},
+ \qquad L=\log(1/\epsilon).
+ \end{aligned}
+ \tag{VHB18}
+$$
+
+The complete debit and both pole terms are retained in this
+application; the moment term is absorbed on the error source itself.
+
+### Raise the logarithmic order and consume it in the branch estimates
+
+Interpolating those SAME errors again in VHB16 avoids paying an
+additional bare inverse multiplier. In particular
+
+$$
+ \begin{aligned}
+ \mathcal N(d)^2+\mathcal N(F_v)^2
+ \le C_{k,\eta}D L^{-k}\bigl[
+ &(\delta/\lambda)^{1-\theta}
+                         \log(2+L)^{1-\theta}
+ +\lambda^{-\kappa}\bigr].
+ \end{aligned}
+ \tag{VHB19}
+$$
+
+Here $(\kappa+1)(1-\theta)=\kappa$. Since $\delta$ and
+$\lambda$ have fixed uniform upper bounds, VHB18--VHB19 and W338
+bound $\mathcal L_1(g_d)$ by
+$C_{k,\eta}D\Lambda L^{-k}\log(2+L)$.
+On $|\tau|\ge\epsilon^{-1/2}$, the multiplier $1-a_\epsilon$
+is bounded below. Layer integration of this weighted Fourier tail
+then gives the STRICT gain
+
+$$
+ M(F)+\mathcal L_{k'}(g_F)
+ \le C_{k,k',\eta}\Lambda D
+ \qquad(1\le k'<k+1).
+ \tag{VHB20}
+$$
+
+Starting with any fixed uniform order $1\le k_0<5$ from VHB5,
+a finite number of such gains reaches every finite target order.
+More precisely, choose $0<h_i<1$ and
+$k_j=k_0+j-\sum_{i=1}^j h_i$. The resulting bound is
+$M(F)+\mathcal L_{k_j}(g_F)\le C_{j,k_0,\eta,h_i}\Lambda^j$.
+All constants refer to the original actual minimizing sources.
+
+This regularity has an existing consumer: for EVERY fixed $s>0$,
+VHB13 and VHB18--VHB19 now give, on the positive-multiplier branch,
+
+$$
+ \begin{gathered}
+ |\Delta_M|+|\Delta_H|
+ +\mathcal N(d)^2+\mathcal N(F_v)^2
+ +\mathcal P(d)+\mathcal P(F_v)\\
+ \hspace{2em}+\lambda[M(d)+M(F_v)]
+ \le C_{s,\lambda}L^{-s}.
+ \end{gathered}
+ \tag{VHB21}
+$$
+
+Choose $k_j>s$ and absorb the fixed logarithmic factors. The
+constants in VHB21 are uniform in the minimizing vector after fixing
+its positive supporting multiplier; no uniformity as
+$\lambda\downarrow0$ is asserted. No additional physical moment or
+physical-dilation derivative follows from these logarithmic estimates.
+
+### Keep the multiplier cost when returning to finite-height negativity
+
+VHB21 does not improve the uniform fourth-power negative allowance.
+Under the same finite-height premise and outside VHP9's exponentially
+small height tail, $\lambda\ge c\delta$. Each strict gain above
+costs $\Lambda$, and using VHB19 for the complete error debit costs
+one further $\lambda^{-\kappa}$. To return to the ORIGINAL complete
+energy, use VHP1, the heat-branch lower bound and W317 directly:
+
+$$
+ \delta\le C\eta_T+|\mathfrak J(F_v)|
+ \le C\eta_T+C\mathcal N(F_v)^2
+ \le C\eta_T+C_j\delta^{-(j+1)\kappa}
+                        L^{-k_j}\log(2+L).
+$$
+
+Starting from a uniform $k_0<5$, the resulting fixed-parameter
+allowance has nominal logarithmic exponent
+
+$$
+ p_j=\frac{k_0+j-\sum_{i=1}^j h_i}{1+(j+1)\kappa}<4,
+ \qquad
+ 4[1+(j+1)\kappa]-k_j
+ =(5-k_0)+\sum_{i=1}^j h_i+(j+1)(4\kappa-1)>0.
+ \tag{VHB22}
+$$
+
+Fixed logarithmic factors may further weaken that bound. VHB8's
+finite-height weak fifth-order tail is not a global strong fifth
+moment with which to restart the iteration. No limit in $j$ or
+$\eta\downarrow0$ with controlled constants is supplied. Thus the
+positive-multiplier regularity and branch rates in VHB20--VHB21
+remain distinct from a uniform improvement of VHR1. Full RH and
+strict Robin for every integer $n>5040$ remain unproved.

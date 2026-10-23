@@ -814,7 +814,7 @@ private theorem faithful_of_pointwise {G : Type*} [Group G] {X Y : Triple G}
   have hi := (hg (p.symm i)).trans (hg (p.symm 0)).symm
   simpa [hp] using hi
 
-private abbrev WitnessGroup := (rootsOfUnity 2 ℂ × rootsOfUnity 2 ℂ) × rootsOfUnity 3 ℂ
+abbrev WitnessGroup := (rootsOfUnity 2 ℂ × rootsOfUnity 2 ℂ) × rootsOfUnity 3 ℂ
 
 private def firstSign : WitnessGroup →* ℂˣ where
   toFun x := x.1.1.val
@@ -831,10 +831,10 @@ private def thirdRoot : WitnessGroup →* ℂˣ where
   map_one' := rfl
   map_mul' _ _ := rfl
 
-private def witnessX : Triple WitnessGroup :=
+def witnessX : Triple WitnessGroup :=
   ![1, firstSign * thirdRoot, secondSign * thirdRoot⁻¹]
 
-private def witnessY : Triple WitnessGroup :=
+def witnessY : Triple WitnessGroup :=
   ![1, firstSign * thirdRoot⁻¹, secondSign * thirdRoot]
 
 private theorem witness_faithful : ProjectivelyFaithful witnessX := by
@@ -857,7 +857,7 @@ private theorem unit_square_cases (s : ℂˣ) (hs : s ^ 2 = 1) : s = 1 ∨ s = -
   · exact Or.inl (Units.ext h)
   · exact Or.inr (Units.ext h)
 
-private theorem witness_pointwise : PointwiseMatched witnessX witnessY := by
+theorem witness_pointwise : PointwiseMatched witnessX witnessY := by
   intro x
   have hs : firstSign x ^ 2 = 1 := x.1.1.property
   have ht : secondSign x ^ 2 = 1 := x.1.2.property
