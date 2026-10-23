@@ -177,3 +177,57 @@ class DetachedRecoveryCases:
         result = json.loads(self.remove().stdout)["items"][0]
         self.g(self.main, "worktree", "add", self.tree, result["recovery_branch"].removeprefix("refs/heads/"))
         self.assertEqual("unfinished snapshot\n", (self.tree / "owned").read_text())
+
+    def interrupted_ignore_snapshot(self):
+        (self.tree / ".gitignore").write_text("/cache/\n*.tmp\n")
+        (self.tree / "nested").mkdir()
+        (self.tree / "nested/.gitignore").write_text("!keep.tmp\noutput/\n")
+        self.g(self.tree, "add", ".gitignore", "nested/.gitignore")
+        self.g(self.tree, "commit", "-m", "snapshot ignore rules")
+        (self.tree / "cache").mkdir()
+        (self.tree / "cache/generated").write_text("ignored output\n")
+        (self.tree / "nested/strange\nname.tmp").write_text("nested ignored output\n")
+        (self.tree / "nested/output").mkdir()
+        (self.tree / "nested/output/generated").write_text("nested rule output\n")
+        snapshot = self.interrupted_removal()["checkpoint"]["commit"]
+        for name in (".gitignore", "nested/.gitignore"):
+            (self.tree / name).unlink()
+        return snapshot
+
+    def test_interrupted_removal_uses_snapshot_ignore_rules(self):
+        snapshot = self.interrupted_ignore_snapshot()
+        self.assertIn("?? cache/generated", self.g(self.tree, "status", "--porcelain", "--untracked-files=all"))
+        result = json.loads(self.remove().stdout)["items"][0]
+        self.assertEqual(("removed", "resumed"), (result["outcome"], result["checkpoint"]["status"]))
+        self.assertFalse(self.tree.exists())
+        self.assertEqual(snapshot, self.g(self.main, "rev-parse", self.branch).strip())
+        self.assertEqual("/cache/\n*.tmp\n", self.g(self.main, "show", self.branch + ":.gitignore"))
+
+    def test_interrupted_ignore_loss_preserves_later_changes(self):
+        snapshot = self.interrupted_ignore_snapshot()
+        for name, stage in (("later", False), ("nested/keep.tmp", False),
+                            ("dir/child", False), ("staged", True)):
+            with self.subTest(path=name, staged=stage):
+                path = self.tree / name
+                previous = path.read_bytes() if path.exists() else None
+                path.write_text("later bytes\n")
+                if stage:
+                    self.g(self.tree, "add", name)
+                result = json.loads(self.remove(74).stdout)["items"][0]
+                self.assertIn("interrupted_removal_tree_changed", result["error"])
+                self.assertEqual("later bytes\n", path.read_text())
+                self.assertEqual(snapshot, self.g(self.main, "rev-parse", self.branch).strip())
+                if stage:
+                    self.g(self.tree, "reset", "--", name)
+                if previous is None:
+                    path.unlink()
+                else:
+                    path.write_bytes(previous)
+        self.assertTrue(self.tree.exists())
+
+    def test_interrupted_ignore_loss_keeps_snapshot_identity_guard(self):
+        self.interrupted_ignore_snapshot()
+        self.g(self.tree, "commit", "--allow-empty", "-m", "later history")
+        result = json.loads(self.remove(74).stdout)["items"][0]
+        self.assertIn("interrupted_removal_snapshot_moved", result["error"])
+        self.assertTrue((self.tree / "cache/generated").is_file())

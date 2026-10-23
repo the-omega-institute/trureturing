@@ -7,6 +7,7 @@ import os
 from pathlib import Path
 import re
 import subprocess
+import tempfile
 import time
 import uuid
 
@@ -63,6 +64,31 @@ def record_removal(metadata, commit, recovery_branch):
     os.replace(staged, metadata / REMOVAL_RECORD)
 
 
+def snapshot_ignored(target, commit, paths):
+    """Classify exposed files with native Git and the checkpoint's ignore hierarchy."""
+    with tempfile.TemporaryDirectory(prefix="worktree-removal-ignore-") as temporary:
+        context = Path(temporary)
+        # The index is unchanged: the caller accepts only unstaged deletions and
+        # untracked paths. Read its ignore-file names, but take bytes from commit.
+        entries = git(target, "ls-files", "--stage", "-z", "--",
+                      ".gitignore", ":(glob)**/.gitignore").stdout
+        for entry in entries.split(b"\0"):
+            if not entry:
+                continue
+            fields, name = entry.split(b"\t", 1)
+            if fields.split()[0] not in (b"100644", b"100755"):
+                continue  # Native Git does not follow symlinked .gitignore files.
+            name = os.fsdecode(name)
+            ignore = context / name
+            ignore.parent.mkdir(parents=True, exist_ok=True)
+            ignore.write_bytes(git(target, "show", commit + ":" + name).stdout)
+        result = git(target, "--work-tree=" + str(context), "check-ignore",
+                     "--no-index", "-z", "--stdin", input=b"\0".join(paths) + b"\0", check=False)
+        if result.returncode not in (0, 1):
+            raise Refused("interrupted_removal_ignore_check_failed")
+        return set(result.stdout.split(b"\0")) - {b""}
+
+
 def interrupted_removal(target, metadata):
     """Return the record of an earlier removal whose native deletion stopped part way."""
     record = metadata / REMOVAL_RECORD
@@ -73,9 +99,12 @@ def interrupted_removal(target, metadata):
     if (value(target, "rev-parse", "--verify", "HEAD^{commit}") != commit
             or value(target, "rev-parse", "--verify", removal["recovery_branch"] + "^{commit}") != commit):
         raise Refused("interrupted_removal_snapshot_moved")
-    # Native deletion only deletes files; other differences may be later changes.
-    status = git(target, "status", "--porcelain", "--untracked-files=all").stdout.splitlines()
-    if any(not line.startswith(b" D ") for line in status):
+    # Native deletion can remove ignore files before the files they excluded.
+    status = git(target, "status", "--porcelain", "-z", "--untracked-files=all").stdout.split(b"\0")
+    if any(line and line[:3] not in (b" D ", b"?? ") for line in status):
+        raise Refused("interrupted_removal_tree_changed")
+    exposed = {line[3:] for line in status if line.startswith(b"?? ")}
+    if exposed and snapshot_ignored(target, commit, exposed) != exposed:
         raise Refused("interrupted_removal_tree_changed")
     return removal
 
