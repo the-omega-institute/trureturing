@@ -5,7 +5,7 @@ year: 2021
 title: The Riemann hypothesis is true up to 3·10^12
 doi: 10.1112/blms.12460
 url: https://arxiv.org/abs/2004.09765v1
-claim: Published verification supplies the finite-height RH premise. Exact heat-loss factorization and the complete arithmetic block bound give a whole-source negative allowance of order (log T)^(-4) in the original sixth moment; fixed height still leaves a negative allowance. A support-independent Gamma-only lower bound for the prime Hankel form fails on all compact half-line tests.
+claim: Published verification supplies the finite-height RH premise. Exact heat-loss factorization and the complete arithmetic block bound give a whole-source negative allowance of order (log T)^(-4) in the original sixth moment; fixed height still leaves a negative allowance. A support-independent Gamma-only lower bound for the prime Hankel form fails on all compact half-line tests. An even actual-source partition controls the joint metric defect and bounds supporting multipliers of negative cap-four minima from below, up to the finite-height signed zero tail; it does not improve the general exponent-four allowance.
 strata_touched: []
 license: citation-only
 triage: anchor
@@ -731,3 +731,83 @@ half-line and the remaining tail is bounded by $CN^{-2}$. These facts
 justify the displayed limit. Here $\mathcal P(F_s)/M(F_s)$ grows as
 $\log(1/s)$; this family is not a counterexample on the nonpositive
 complete-energy class used below.
+
+### Consume the joint defect at an actual negative minimum
+
+Suppose $e_4=-\delta<0$, and choose its actual unit minimizer $F$.
+The usual supporting multiplier can be taken GLOBAL, not merely as
+a weak stationary equation:
+
+$$
+ Q_\lambda(G):=\mathfrak E(G)+\lambda M(G)-\mu\mathcal H(G)\ge0
+ \quad(G\in\mathcal V),\qquad
+ Q_\lambda(F)=0,\quad
+ \mu=-\delta+4\lambda,\quad
+ 0\le\lambda\le\frac{\delta}{4-\kappa_\circ}.
+ \tag{VHP7}
+$$
+
+Indeed the existing real extraction and imaginary mixing used in
+W345/W351 show that the finite function $K\mapsto e_K$ is convex
+and nonincreasing for $K>1$: mix two real minimizers with coefficients
+$\sqrt\theta,i\sqrt{1-\theta}$, then extract at the SAME moment.
+A classical supporting line at $K=4$ supplies $-\lambda$. Its bound
+at the actual minimizer gives complementary slackness, and testing
+on W350's unit null vector gives the upper bound in VHP7. No
+unconfined self-adjoint operator or negative penalized eigenvalue
+is assumed.
+
+W317 gives $M(F)+\mathcal P(F)\le C$ on these minimizers. With
+$\Delta_M=M(F_h)+M(F_v)-M(F)$ and the corresponding $\Delta_H$,
+VHP1, VHP2 and VHP7 give
+
+$$
+ 0\le Q_\lambda(F_h),Q_\lambda(F_v),\qquad
+ Q_\lambda(F_h)+Q_\lambda(F_v)
+ =\lambda\Delta_M-\mu\Delta_H
+ \le C\delta L_\epsilon^{-2/5}.
+ \tag{VHP8}
+$$
+
+The crucial factor $\delta$ multiplies the metric error; no
+$\lambda^{-1}$ or lower-multiplier premise was used.
+
+Now assume $\mathsf{RH}(T)$, take $\epsilon=1/T$, and put
+$\eta_T=\sqrt T\log(2+T)e^{-T}$. W369--W370, already used in
+VHR10, apply to the scalar-shifted heat branch and give
+$\mathfrak E(F_h)\ge-C\eta_T$. For all sufficiently large $T$,
+VHP2 also gives $\mathcal H(F_h)\ge1/2$, while always
+$M(F_h)\ge\mathcal H(F_h)$. Therefore
+
+$$
+ \boxed{\quad
+ \lambda\ge
+ \left[\frac13-C(\log T)^{-2/5}\right]\delta-C\eta_T.
+ \quad}
+ \tag{VHP9}
+$$
+
+To check the direction, VHP8 and the height bound imply
+$(\delta-3\lambda)\mathcal H(F_h)
+ \le C\delta(\log T)^{-2/5}+C\eta_T$.
+Dividing by its positive norm proves VHP9.
+In particular, at a sufficiently large absolute starting height,
+
+$$
+ \lambda\le\delta/6\quad\Longrightarrow\quad
+ \delta\le C\sqrt T\log(2+T)e^{-T}.
+ \tag{VHP10}
+$$
+
+This includes the previously allowed zero multiplier. Outside that
+exponentially small allowance the actual supporting multiplier has
+a positive lower bound proportional to $\delta$, as well as the
+existing upper bound. The constants and starting height have not
+been numerically evaluated.
+
+VHP9--VHP10 do not improve VHR1's allowance for the remaining
+positive-multiplier case. They supply the lower-multiplier premise
+needed by such a case's future estimates, up to the displayed height
+tail. They neither establish higher-log regularity nor remove the
+negative allowance in the original complete form. Full RH and strict
+Robin for every integer $n>5040$ remain unproved.
