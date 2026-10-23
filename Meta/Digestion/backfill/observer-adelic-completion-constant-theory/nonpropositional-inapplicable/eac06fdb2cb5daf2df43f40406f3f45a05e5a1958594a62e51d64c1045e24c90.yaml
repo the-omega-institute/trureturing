@@ -5,3 +5,7 @@ cas_ref: sha256:eac06fdb2cb5daf2df43f40406f3f45a05e5a1958594a62e51d64c1045e24c90
 coverage_gids: []
 receipts:
   unresolved_subitems: []
+  nonpropositional:
+    justification: The atom is editorial or methodological text without a mathematical assertion.
+    previous_atom_id: 4b22f8ed8455206dd1c9f9b33a38b005a90266a8fa35f2f86fc4411c1533e856
+    next_atom_id: 2ece2198cffbb0aaa862468a129efb4f5798743cd12631e56237dbb00d1a092e
