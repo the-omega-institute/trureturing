@@ -21,10 +21,10 @@ internal sealed class DefsDocument : IScribeDocumentDefinition
             Entry("stationaryTest", "The normalized stationary criterion",
                 "For each positive tuple with first Gini mean one, a common multiplier is required in all characteristic derivative equations. The criterion asks that the second Gini mean be at least one at every such tuple."),
             Entry("claim", "Characterization by stationary tuples",
-                "The claim quantifies over every n at least three and every nonempty positive interval whose quotient set has infimum zero. For every four real parameters, it asserts equivalence between comparison on the interval and the normalized stationary criterion.")))));
+                "The claim quantifies over every n at least three and every nonempty positive interval whose quotient set has infimum zero. For every four real parameters, it asserts equivalence between comparison on the interval and the normalized stationary criterion."))));
 
     private static DocumentBlock Entry(string name, string title, string prose) => Describe.Lean(
-        DescribeId.Create("gini-stationary-defs-" + name),
+        DescribeId.Create("gini-stationary-defs-" + name.ToLowerInvariant()),
         DeclarationHandle.Create("D5/S3/ArithSums/GiniStationaryTest/Defs." + name),
         H(title), StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(Source),
         Blocks(Paragraph(Text(prose))), DescribeRole.Definition);
