@@ -1,0 +1,53 @@
+### 4. An exact all-positive-width root certificate
+
+Here is a rational arithmetic prescription for all bounds in this
+section. For a rational polynomial $H$ and a rational box with center
+$c$ and half-widths $\eta_i$, expand
+
+$$
+H(c+u)=\sum_\alpha h_\alpha u^\alpha.
+$$
+
+Use the enclosure
+
+$$
+H\in[h_0-E,h_0+E],\qquad
+E=\sum_{\alpha\ne0}|h_\alpha|\prod_i\eta_i^{\alpha_i}.
+\tag{4.1}
+$$
+
+All expansions and endpoint operations here are exact rational ones.
+In particular cancellation is retained by expanding at the box center
+before taking absolute values.
+
+For a finite positive-width cell $(a,z)$ use
+
+$$
+T_{a,z}(t)=(1+t)^{18}\mathcal W((a+zt)/(1+t);p,v).
+\tag{4.2}
+$$
+
+If $\mathcal W=\sum_{i=0}^{18}w_i(p,v)b^i$, its $t^k$ coefficient is
+
+$$
+\sum_{i=0}^{18}\ \sum_{\substack{0\le j\le i\\0\le k-j\le18-i}}
+ w_i\binom ij a^{i-j}z^j\binom{18-i}{k-j}.
+\tag{4.3}
+$$
+
+For the final cell $(a,\infty)$ use $\mathcal W(a+t;p,v)$, with
+$t^k$ coefficient $\sum_{i=k}^{18}w_i\binom ik a^{i-k}$.
+Evaluate each coefficient on $\mathcal Q$ by (4.1).
+The following are the seven coarse cells and their coefficient-sign runs,
+listed in ascending coefficient order. Every coefficient interval is
+strictly separated from zero.
+
+| Index | Coarse width cell | Coefficient signs | Variations |
+| --- | --- | --- | --- |
+| 1 | $(0.04644,0.04645)$ | $+^6-^{13}$ | 1 |
+| 2 | $(0.11999,0.12001)$ | $-^9+^{10}$ | 1 |
+| 3 | $(0.13531,0.13534)$ | $+^{10}-^9$ | 1 |
+| 4 | $(0.74788,0.74791)$ | $-^7+^{12}$ | 1 |
+| 5 | $(0.78820,0.78823)$ | $+^8-^{11}$ | 1 |
+| 6 | $(2.88725,2.88728)$ | $-^8+^{11}$ | 1 |
+| 7 | $(7.79219,7.79223)$ | $+^9-^{10}$ | 1 |
