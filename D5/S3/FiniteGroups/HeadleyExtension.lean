@@ -19,7 +19,6 @@ set_option autoImplicit false
 set_option relaxedAutoImplicit false
 
 namespace D5.S3.FiniteGroups.HeadleyExtension
-
 open Function Set
 
 /-! ## The finite cyclic inventories used by the splice -/
@@ -109,8 +108,6 @@ private theorem swap_joins {X : Type*} [Finite X] [DecidableEq X]
   | succ n ih =>
     rw [pow_succ', Equiv.Perm.mul_apply]
     exact ih.trans (hedge _)
-
-
 private theorem kernel_return_cycle {N : Type*} [AddCommGroup N] [Fintype N]
     [DecidableEq N] (r : RCycle N) (v : N) (hv : v ≠ 0) :
     (r.successor * Equiv.swap 0 v).IsCycleOn Set.univ := by
@@ -126,7 +123,6 @@ private theorem kernel_return_cycle {N : Type*} [AddCommGroup N] [Fintype N]
     · exact hj.trans (hp v h (r.nonzero_cycle.2 hv hh))
   refine ⟨?_, fun x _ y _ => (hc x).symm.trans (hc y)⟩
   exact (r.successor * Equiv.swap 0 v).bijective.bijOn_univ
-
 private structure ColumnChart (Q : Type*) [AddCommGroup Q] [Fintype Q]
     (r : RStar Q) where
   k : ℕ
@@ -136,7 +132,6 @@ private structure ColumnChart (Q : Type*) [AddCommGroup Q] [Fintype Q]
   second : (vertex 1).val = r.b
   third : (vertex 2).val = r.c
   step : ∀ i, (vertex (finRotate (k + 3) i)).val = r.successor (vertex i).val
-
 private theorem column_chart {Q : Type*} [AddCommGroup Q] [Fintype Q]
     (r : RStar Q) : Nonempty (ColumnChart Q r) := by
   classical
@@ -194,20 +189,16 @@ private theorem column_chart {Q : Type*} [AddCommGroup Q] [Fintype Q]
       rw [hk'] at hp
       simpa [pow_succ', Equiv.Perm.mul_apply] using hp.symm
     · rw [coe_finRotate_of_ne_last hi, pow_succ', Equiv.Perm.mul_apply]
-
 private def kernelF {N : Type*} [AddCommGroup N] [Fintype N] (r : RCycle N) :
     Equiv.Perm N := r.difference.trans (Equiv.neg N)
-
 private theorem kernelF_apply {N : Type*} [AddCommGroup N] [Fintype N]
     (r : RCycle N) (h : N) : kernelF r h = h - r.successor h := by
   change -(r.difference h) = _
   rw [r.difference_spec]
   abel
-
 private theorem kernelF_zero {N : Type*} [AddCommGroup N] [Fintype N]
     (r : RCycle N) : kernelF r 0 = 0 := by
   simp [kernelF_apply, r.successor_zero]
-
 private theorem inverse_difference_bijective {N : Type*} [AddCommGroup N]
     (f : Equiv.Perm N) (hf : Bijective (fun h => f h - h)) :
     Bijective (fun h => f.symm h - h) := by
@@ -218,24 +209,20 @@ private theorem inverse_difference_bijective {N : Type*} [AddCommGroup N]
     abel
   rw [he]
   exact (Equiv.neg N).bijective.comp (hf.comp f.symm.bijective)
-
 private def rowPotential {N : Type*} [AddCommGroup N] [Fintype N]
     (r : RCycle N) {k : ℕ} (i : Fin (k + 3)) : Equiv.Perm N :=
   if i.val = 0 then 1 else if i.val = 1 then kernelF r
   else if i.val = 2 then 1 else if i.val % 2 = 1 then r.successor
   else r.successor.trans (kernelF r)
-
 private def cylinder {N : Type*} (D : Equiv.Perm N) (k : ℕ) :
     Equiv.Perm (Fin (k + 3) × N) :=
   (Equiv.prodCongrRight (fun i : Fin (k + 3) =>
     if i = Fin.last (k + 2) then D else 1)).trans
       (Equiv.prodCongr (finRotate (k + 3)) (Equiv.refl N))
-
 private def rowLift {N : Type*} [AddCommGroup N] [Fintype N]
     (r : RCycle N) (k : ℕ) : Equiv.Perm (Fin (k + 3) × N) :=
   let p := Equiv.prodCongrRight (@rowPotential N _ _ r k)
   (p.symm.trans (cylinder r.successor k)).trans p
-
 private theorem cylinder_partial {N : Type*} (D : Equiv.Perm N) (k : ℕ)
     (h : N) (j : ℕ) (hj : j < k + 3) :
     (cylinder D k ^ j) (0, h) = (⟨j, hj⟩, h) := by
@@ -249,14 +236,11 @@ private theorem cylinder_partial {N : Type*} (D : Equiv.Perm N) (k : ℕ)
       simp only [Fin.val_mk, Fin.val_last] at this
       omega
     simp [cylinder, hne, finRotate_of_lt (by omega : j < k + 2)]
-
 private theorem cylinder_round {N : Type*} (D : Equiv.Perm N) (k : ℕ) (h : N) :
     (cylinder D k ^ (k + 3)) (0, h) = (0, D h) := by
   rw [pow_succ', Equiv.Perm.mul_apply,
     cylinder_partial D k h (k + 2) (by omega)]
   simp [cylinder, show (⟨k + 2, by omega⟩ : Fin (k + 3)) = Fin.last (k + 2) from rfl]
-
-
 private theorem cylinder_rounds {N : Type*} (D : Equiv.Perm N) (k j : ℕ) (h : N) :
     (cylinder D k ^ ((k + 3) * j)) (0, h) = (0, (D ^ j) h) := by
   induction j generalizing h with
@@ -264,7 +248,6 @@ private theorem cylinder_rounds {N : Type*} (D : Equiv.Perm N) (k j : ℕ) (h : 
   | succ j ih =>
     rw [Nat.mul_succ, pow_add, Equiv.Perm.mul_apply, cylinder_round, ih,
       pow_succ, Equiv.Perm.mul_apply]
-
 private theorem cylinder_connect {N : Type*} [Finite N]
     (D : Equiv.Perm N) (k : ℕ) (i j : Fin (k + 3)) (h t : N)
     (hht : D.SameCycle h t) : (cylinder D k).SameCycle (i, h) (j, t) := by
@@ -275,17 +258,14 @@ private theorem cylinder_connect {N : Type*} [Finite N]
   have hb : (cylinder D k).SameCycle (0, h) (0, t) :=
     ⟨(((k + 3) * n : ℕ) : ℤ), by rw [zpow_natCast, cylinder_rounds, hn]⟩
   exact (hp h i).symm.trans (hb.trans (hp t j))
-
 private def rowEdge {N : Type*} [AddCommGroup N] [Fintype N]
     (r : RCycle N) {k : ℕ} (i : Fin (k + 3)) : Equiv.Perm N :=
   ((rowPotential r i).symm.trans
     (if i = Fin.last (k + 2) then r.successor else 1)).trans
       (rowPotential r (finRotate (k + 3) i))
-
 private theorem rowLift_apply {N : Type*} [AddCommGroup N] [Fintype N]
     (r : RCycle N) (k : ℕ) (i : Fin (k + 3)) (h : N) :
     rowLift r k (i, h) = (finRotate (k + 3) i, rowEdge r i h) := rfl
-
 private theorem rowEdge_formula {N : Type*} [AddCommGroup N] [Fintype N]
     (r : RCycle N) {k : ℕ} (hk : Even k) (i : Fin (k + 3)) :
     rowEdge r i = if i.val = 0 then kernelF r
@@ -337,7 +317,6 @@ private theorem rowEdge_formula {N : Type*} [AddCommGroup N] [Fintype N]
         hn0, hn1, hn2, hm, hm', ↓reduceIte]
       ext x
       simp
-
 private theorem rowEdge_difference {N : Type*} [AddCommGroup N] [Fintype N]
     (r : RCycle N) {k : ℕ} (hk : Even k) (i : Fin (k + 3)) :
     Bijective (fun h => rowEdge r i h - h) := by
@@ -356,7 +335,6 @@ private theorem rowEdge_difference {N : Type*} [AddCommGroup N] [Fintype N]
   · simpa only [← r.difference_spec] using r.difference.bijective
   · exact hF
   · exact hJ
-
 private theorem rowLift_connect {N : Type*} [AddCommGroup N] [Fintype N]
     (r : RCycle N) (k : ℕ) (i j : Fin (k + 3)) (h t : N)
     (hht : r.successor.SameCycle h t) :
@@ -364,7 +342,6 @@ private theorem rowLift_connect {N : Type*} [AddCommGroup N] [Fintype N]
   exact (D5.S3.Combinatorics.PerfectMatchings.FiniteBandSwitch.same_cycle_perm_congr
       (Equiv.prodCongrRight (@rowPotential N _ _ r k)) (cylinder r.successor k)
       (i, h) (j, t)).mpr (cylinder_connect r.successor k i j h t hht)
-
 private theorem cycle_invariant {X : Type*} [Finite X] (f : Equiv.Perm X)
     (P : X → Prop) (hP : ∀ x, P (f x) ↔ P x) {x y : X}
     (h : f.SameCycle x y) : P x ↔ P y := by
@@ -373,8 +350,6 @@ private theorem cycle_invariant {X : Type*} [Finite X] (f : Equiv.Perm X)
   induction n with
   | zero => rfl
   | succ n ih => simpa only [pow_succ', Equiv.Perm.mul_apply, hP] using ih
-
-
 private theorem compatible_section {E Q : Type*} [AddCommGroup E] [AddCommGroup Q]
     [Fintype Q] (π : E →+ Q) (hπ : Surjective π) (r : RStar Q) :
     ∃ s : Q → E, (∀ q, π (s q) = q) ∧ s r.a + s r.c = s r.b := by
@@ -388,13 +363,11 @@ private theorem compatible_section {E Q : Type*} [AddCommGroup E] [AddCommGroup 
     · simp [s, hq, map_add, ht, r.triple_sum]
     · simp [s, hq, ht]
   · simp [s, r.pairwise_distinct.1, Ne.symm r.pairwise_distinct.2.2]
-
 private def vertices {E Q : Type*} [AddCommGroup E] [AddCommGroup Q]
     [Fintype Q] (N : AddSubgroup E) (r : RStar Q) (c : ColumnChart Q r)
     (s : Q → E) : N ⊕ (Fin (c.k + 3) × N) → E
   | .inl h => h.val
   | .inr (i, h) => s (c.vertex i).val + h.val
-
 private theorem vertices_bijective {E Q : Type*} [AddCommGroup E] [AddCommGroup Q]
     [Fintype Q] (N : AddSubgroup E) (π : E →+ Q)
     (hker : π.ker = N) (r : RStar Q) (c : ColumnChart Q r)
@@ -443,11 +416,9 @@ private theorem vertices_bijective {E Q : Type*} [AddCommGroup E] [AddCommGroup 
       change s (c.vertex i).val + (x - s (π x)) = x
       rw [hi]
       abel
-
 private def oldSuccessor {N : Type*} [AddCommGroup N] [Fintype N]
     (r : RCycle N) (k : ℕ) : Equiv.Perm (N ⊕ (Fin (k + 3) × N)) :=
   Equiv.sumCongr r.successor (rowLift r k)
-
 private theorem sum_sameCycle_left {N X : Type*} [Finite N]
     (D : Equiv.Perm N) (f : Equiv.Perm X) {h t : N}
     (hht : D.SameCycle h t) :
@@ -463,7 +434,6 @@ private theorem sum_sameCycle_left {N X : Type*} [Finite N]
       simp only [pow_succ', Equiv.Perm.mul_apply]
       rfl
   exact ⟨(n : ℤ), by rw [zpow_natCast, hp n, hn]⟩
-
 private theorem sum_sameCycle_right {N X : Type*} [Finite X]
     (D : Equiv.Perm N) (f : Equiv.Perm X) {x y : X}
     (hxy : f.SameCycle x y) :
@@ -479,12 +449,10 @@ private theorem sum_sameCycle_right {N X : Type*} [Finite X]
       simp only [pow_succ', Equiv.Perm.mul_apply]
       rfl
   exact ⟨(n : ℤ), by rw [zpow_natCast, hp n, hn]⟩
-
 private def mainNonzero {N : Type*} [AddCommGroup N] [Fintype N]
     (r : RCycle N) {k : ℕ} : N ⊕ (Fin (k + 3) × N) → Prop
   | .inl _ => False
   | .inr (i, h) => (rowPotential r i).symm h ≠ 0
-
 private theorem mainNonzero_invariant {N : Type*} [AddCommGroup N] [Fintype N]
     (r : RCycle N) (k : ℕ) (x : N ⊕ (Fin (k + 3) × N)) :
     mainNonzero r (oldSuccessor r k x) ↔ mainNonzero r x := by
@@ -501,8 +469,6 @@ private theorem mainNonzero_invariant {N : Type*} [AddCommGroup N] [Fintype N]
     · rw [← r.successor_zero, r.successor.injective.ne_iff]
       rfl
     · rfl
-
-
 private theorem swap_invariant {X : Type*} [DecidableEq X] (P : X → Prop)
     (a b : X) (hab : P a ↔ P b) (x : X) :
     P (Equiv.swap a b x) ↔ P x := by
@@ -515,24 +481,20 @@ private theorem swap_invariant {X : Type*} [DecidableEq X] (P : X → Prop)
     simp only [Equiv.swap_apply_right]
     exact hab
   · rw [Equiv.swap_apply_of_ne_of_ne hxa hxb]
-
 private def spliceSuccessor {N : Type*} [AddCommGroup N] [Fintype N]
     [DecidableEq N] (r : RCycle N) (k : ℕ) (v : N) :
     Equiv.Perm (N ⊕ (Fin (k + 3) × N)) :=
   oldSuccessor r k * Equiv.swap (.inr (0, 0)) (.inl v) *
     Equiv.swap (.inl v) (.inr (1, kernelF r v))
-
 private theorem splice_zero {N : Type*} [AddCommGroup N] [Fintype N]
     [DecidableEq N] (r : RCycle N) (k : ℕ) (v : N) (hv : v ≠ 0) :
     spliceSuccessor r k v (.inl 0) = .inl 0 := by
   simp [spliceSuccessor, Equiv.Perm.mul_apply, Equiv.swap_apply_def,
     hv, Ne.symm hv, oldSuccessor, Equiv.sumCongr, r.successor_zero]
-
 /- A segment which avoids the return section until its endpoint.  In particular,
 prepending one edge from the section makes its length a genuine first-return time. -/
 private def Until {X : Type*} (f : Equiv.Perm X) (P : X → Prop) (x y : X) : Prop :=
   ∃ n : ℕ, (f ^ n) x = y ∧ ∀ j < n, ¬ P ((f ^ j) x)
-
 private theorem until_prepend {X : Type*} (f : Equiv.Perm X) (P : X → Prop)
     {x y z : X} (hxy : f x = y) (hx : ¬ P x) (hyz : Until f P y z) :
     Until f P x z := by
@@ -545,7 +507,6 @@ private theorem until_prepend {X : Type*} (f : Equiv.Perm X) (P : X → Prop)
     | succ j =>
       rw [pow_succ, Equiv.Perm.mul_apply, hxy]
       exact ha j (by omega)
-
 private theorem until_trans {X : Type*} (f : Equiv.Perm X) (P : X → Prop)
     {x y z : X} (hxy : Until f P x y) (hyz : Until f P y z) :
     Until f P x z := by
@@ -559,11 +520,9 @@ private theorem until_trans {X : Type*} (f : Equiv.Perm X) (P : X → Prop)
     · obtain ⟨l, rfl⟩ := Nat.exists_eq_add_of_le (by omega : m ≤ j)
       rw [Nat.add_comm m l, pow_add, Equiv.Perm.mul_apply, hm]
       exact hb l (by omega)
-
 private def aColumn {N : Type*} {k : ℕ} : N ⊕ (Fin (k + 3) × N) → Prop
   | .inl _ => False
   | .inr (i, _) => i = 0
-
 private theorem splice_tail {N : Type*} [AddCommGroup N] [Fintype N]
     [DecidableEq N] (r : RCycle N) (k : ℕ) (v h : N)
     (i : Fin (k + 3)) (hi : 2 ≤ i.val) :
@@ -605,7 +564,6 @@ private theorem splice_tail {N : Type*} [AddCommGroup N] [Fintype N]
         finRotate_of_lt (show i.val < k + 2 from i.isLt)]
     · exact hn0
     · exact ih (by simpa using Nat.le_succ_of_le hi)
-
 private theorem splice_first_return {N : Type*} [AddCommGroup N] [Fintype N]
     [DecidableEq N] (r : RCycle N) (k : ℕ) (v : N) (hv : v ≠ 0) (h : N) :
     ∃ n : ℕ, 0 < n ∧
@@ -700,7 +658,6 @@ private theorem splice_first_return {N : Type*} [AddCommGroup N] [Fintype N]
     obtain ⟨l, rfl⟩ := Nat.exists_eq_succ_of_ne_zero (by omega : j ≠ 0)
     rw [pow_succ, Equiv.Perm.mul_apply]
     exact ha l (by omega)
-
 private theorem splice_cycle {N : Type*} [AddCommGroup N] [Fintype N]
     [DecidableEq N] (r : RCycle N) (k : ℕ) (v : N) (hv : v ≠ 0) :
     (spliceSuccessor r k v).IsCycleOn {x | x ≠ .inl 0} := by
@@ -798,13 +755,10 @@ private theorem splice_cycle {N : Type*} [AddCommGroup N] [Fintype N]
       exact hy h
   · intro x hx y hy
     exact (hconnect x hx).symm.trans (hconnect y hy)
-
-
 private def column {Q N : Type*} [AddCommGroup Q] [Fintype Q]
     (r : RStar Q) (c : ColumnChart Q r) : N ⊕ (Fin (c.k + 3) × N) → Q
   | .inl _ => 0
   | .inr (i, _) => (c.vertex i).val
-
 private theorem old_label_injective {E Q : Type*} [AddCommGroup E] [AddCommGroup Q]
     [Fintype E] [Fintype Q] (N : AddSubgroup E) (π : E →+ Q)
     (hker : π.ker = N) [Fintype N] (r : RCycle N) (rQ : RStar Q) (c : ColumnChart Q rQ)
@@ -866,7 +820,6 @@ private theorem old_label_injective {E Q : Type*} [AddCommGroup E] [AddCommGroup
                 abel
       have hht := (rowEdge_difference r c.even_k i).injective he
       rw [hht]
-
 private theorem three_cut_labels {E X : Type*} [AddCommGroup E] [DecidableEq X]
     (V : X → E) (S : Equiv.Perm X) (a b c : X)
     (hab : a ≠ b) (hac : a ≠ c) (hbc : b ≠ c)
@@ -891,7 +844,6 @@ private theorem three_cut_labels {E X : Type*} [AddCommGroup E] [DecidableEq X]
     simpa [Equiv.Perm.mul_apply, Equiv.swap_apply_def, hab, hac, hbc,
       Ne.symm hab, Ne.symm hac, Ne.symm hbc] using hc
   · simp [Equiv.Perm.mul_apply, Equiv.swap_apply_of_ne_of_ne, hxa, hxb, hxc]
-
 private theorem splice_labels {E Q : Type*} [AddCommGroup E] [AddCommGroup Q]
     [Fintype E] [Fintype Q] (N : AddSubgroup E) [Fintype N] [DecidableEq N] (r : RCycle N) (rQ : RStar Q)
     (c : ColumnChart Q rQ) (s : Q → E) (hsum : s rQ.a + s rQ.c = s rQ.b)
@@ -933,7 +885,6 @@ private theorem splice_labels {E Q : Type*} [AddCommGroup E] [AddCommGroup Q]
     rw [← hsum]
     try rw [hFv]
     abel
-
 private theorem bijOn_complement {X : Type*} (f : Equiv.Perm X) (z : X)
     (hz : f z = z) : Set.BijOn f {x | x ≠ z} {x | x ≠ z} := by
   refine ⟨?_, f.injective.injOn, ?_⟩
@@ -945,7 +896,6 @@ private theorem bijOn_complement {X : Type*} (f : Equiv.Perm X) (z : X)
     have h := congrArg f he
     rw [f.apply_symm_apply, hz] at h
     exact hy h
-
 private noncomputable def transportCycle {G H : Type*} [AddCommGroup G]
     [AddCommGroup H] [Fintype G] [Fintype H] (e : G ≃+ H) (r : RCycle G) :
     RCycle H where
