@@ -133,9 +133,9 @@ The whole process tree remains subject to the 12 GiB physical-footprint limit. N
 
 `SEARCH_REDUCTION_FULL_EVAL=1` is a differential-test mode: it evaluates every unresolved baseline author edge and every eligible seed's independent and unresolved reverse query, without requesting paired negative prices. It uses the same candidate domain, budgets and classifier. `SEARCH_REDUCTION_B1_COMPARE=1` additionally measures the unsplit parent enumeration when a split is incomplete, then restores the split's Meta state and semantic budget accounting. Its comparison events are diagnostic requests, reported separately from production R requests, and never supply prices. `SEARCH_REDUCTION_TELEMETRY` changes diagnostic output only; successful assignments, candidate order, scheduling and termination on a hit are identical in both modes.
 
-## 4. 前沿、根探针与 min-max DP
+## 4. 声明窗口、根探针与 min-max DP
 
-保留声明级 `k=1` 作者边。`k=2` 对每个声明至多追加一个统一的两层祖先前沿候选，不枚举前提子集，不由跳边生成新窗口。新增候选数至多是批内活声明数；声明拆分不得改变窗口规则或生成额外选择自由。前沿仍按 §3.2–3.4 作陈述级解析检验和定价。
+保留声明级 `k=1` 作者边。`k=2` 对每个声明至多追加一个统一的两层祖先候选，不枚举前提子集，不由跳边生成新窗口。新增候选数至多是批内活声明数；声明拆分不得改变窗口规则或生成额外选择自由。候选仍按 §3.2–3.4 作陈述级解析检验和定价。
 
 两臂的根证书核验分别只持 `B_used` 和 `B_used∪S`。只有出现严格的上界差距时，基底根才追加一次完整 R；配对根不请求 NoHit。成功且经 kernel 复核时，将零价根超边加入两臂共享的候选图；边的前提是证书实际使用的事实，不能用无前提零边抹去 `S` 的成本。基底根探针成功直接提供 bind-only 证书。根探针和两层窗口候选探针仅在该臂闭合并经 kernel 复核时加入零价边；失败或耗尽不加边，不记一价。作者边的未知仍是 unknown。已有 `R_v1` 成功证书也可支持 bind-only，`R_v1` 不必跑，其旧耗尽不成为新下界。
 
