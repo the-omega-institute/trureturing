@@ -639,3 +639,415 @@ exponent four. Neither a physical Euclidean dimension nor preparation
 or physical-energy capabilities follow from these occupation results.
 
 ## 追加锚（本行以下为增补区）
+
+## 7. Uniform source-ball occupation of the original complete commands
+
+**Theorem 7.1 (height-band control and actual-chord source-ball bound).**
+Fix any model and source of Definition 1.1, with precisely G,
+Definitions 29.1–29.2's capabilities and commands. Write
+$e_n=\sqrt{\delta_n}=1/n$. There are $n_0$, $\epsilon_0>0$ and finite
+constants $C_1,C_2$, depending on this fixed model and source, such that
+the following assertions hold simultaneously for every $n\ge n_0$.
+
+Use G, Lemma 29.5's comparison node chain, starting at the same $o$,
+only up to its first node exit
+
+$$
+K_i=k(q_i),\qquad K_0=k_o,\qquad
+N_n=\inf\{i\ge1:K_i\notin(l,u)\}.
+\tag{7.1}
+$$
+
+Couple this auxiliary chain with the actual command on its first $m_n$
+sign vectors, as in G, Lemma 29.5; subsequent comparison signs are not
+executed. At a final exiting cell it retains the uncut endpoint for
+estimation; the actual command still stops at the first wall hit.
+For every $s\ge0$ its expected number of alive nodes in the height band
+satisfies
+
+$$
+\delta_n\,\mathbb E\sum_{i=0}^{N_n-1}
+  {\bf1}_{\{|K_i-k_o|\le s\}}\le C_1(s+e_n).
+\tag{7.2}
+$$
+
+For $0<\epsilon\le\epsilon_0$ let $\mathcal B_\epsilon$ be the
+source-chart ball $\{R<\epsilon\}$, including $o$. Then
+
+$$
+\nu_n({\bf1}_{\mathcal B_\epsilon})\le C_2\epsilon.
+\tag{7.3}
+$$
+
+This includes every executed random chord, its possible wall cut, and
+the original terminal height leg at $S_n$ on survival. Constants and the
+mesh threshold are independent of $s$ and $\epsilon$ in their stated
+ranges. No phase-independent coefficient or autonomous law of a
+horizontal projection is assumed.
+
+Proof. All conditional expectations below condition on the entire past
+$\mathcal F_i$, including both actual phases and chronological area.
+Put $\delta=\delta_n$ and $e=e_n$. Compactness, smoothness, positivity
+of $\rho$ and positive definiteness of $A$ give constants
+$a_*,s_*,C_v>0$ and $D\ge0$ such that, at every alive node,
+
+$$
+\begin{gathered}
+a^{11}\ge a_*,\qquad |d^1|\le D,\qquad
+\sigma_{\min}(\Sigma)\ge s_*,\qquad |v_i|\le C_ve,\\
+\mathbb E_i v_i^1=d^1(q_i)\delta,\qquad
+\mathbb E_i (v_i^1)^2
+ =2a^{11}(q_i)\delta+(d^1(q_i))^2\delta^2\ge2a_*\delta.
+\end{gathered}
+\tag{7.4}
+$$
+
+The moment identities are exactly G, (29.8), without a change to the
+density drift. Moreover, $|\xi_i|=\sqrt2$ gives
+$|v_i|\ge2s_*e-\|d\|_\infty e^2$. Increase $n_0$ so that
+
+$$
+c_ve\le |v_i|\le C_ve
+\tag{7.5}
+$$
+
+for some $c_v>0$, uniformly in all nodes and sign choices. In particular
+no executed random chord is stationary. G, (29.13), already proves
+
+$$
+\delta\mathbb E N_n\le M
+\tag{7.6}
+$$
+
+for a fixed $M<\infty$. Its hypotheses are just (7.4)'s positive height
+variance, bounded drift and increments, with conditioning on the full
+state. We use this mean node-exit estimate, rather than inferring a
+singular-weight estimate from the lifetime tail.
+
+To prove (7.2), put $L=s+C_ve$ and use the convex $C^1$ function
+
+$$
+F_L(x)=
+\begin{cases}
+x^2/2,&|x|\le L,\\
+L|x|-L^2/2,&|x|>L.
+\end{cases}
+\tag{7.7}
+$$
+
+It satisfies $0\le F_L(x)\le L|x|$ and $|F_L'(x)|\le L$.
+For $x=K_i-k_o$ and $h=v_i^1$, convexity makes
+$F_L(x+h)-F_L(x)-F_L'(x)h$ nonnegative. If $|x|\le s$, the whole
+segment from $x$ to $x+h$ lies in $[-L,L]$, so this remainder is
+exactly $h^2/2$. Thus at every $i<N_n$,
+
+$$
+\mathbb E_i\{F_L(K_{i+1}-k_o)-F_L(K_i-k_o)\}
+\ge a_*\delta\,{\bf1}_{\{|K_i-k_o|\le s\}}-DL\delta.
+\tag{7.8}
+$$
+
+The negative term bounds the signed drift contribution
+$F_L'(K_i-k_o)d^1(q_i)\delta$; no symmetry of the variable drift
+is required. For a deterministic integer $j$, sum (7.8) with the
+$\mathcal F_i$-measurable indicators $\{i<N_n\wedge j\}$.
+Since $F_L(K_0-k_o)=0$, this gives
+
+$$
+a_*\delta\,\mathbb E\sum_{i<N_n\wedge j}
+ {\bf1}_{\{|K_i-k_o|\le s\}}
+\le \mathbb E F_L(K_{N_n\wedge j}-k_o)
+       +DL\delta\mathbb E(N_n\wedge j).
+\tag{7.9}
+$$
+
+Before exit the height is in $I$; its last uncut overshoot has size at
+most $C_ve$. Hence
+$|K_{N_n\wedge j}-k_o|\le C_K$ with, for example,
+$C_K=(u-l)+C_v$ for $e\le1$. By (7.6), the right side of (7.9)
+is at most $L(C_K+DM)$. Monotone convergence as $j\to\infty$
+proves (7.2). In particular the terminal overshoot has been included
+in the telescope, without optional stopping at an unbounded time.
+
+We next estimate actual elapsed time in $\mathcal B_\epsilon$.
+Choose $\epsilon_0$ so that its closed ball lies in the injective
+source chart of Definition 1.2. From (1.5), for a fixed $C_B>0$,
+
+$$
+R<\epsilon\ \Longrightarrow\
+ |(x,y)|\le C_B\epsilon,\qquad
+x=k-k_o,\quad y=2(\alpha-\alpha_o)
+\tag{7.10}
+$$
+
+in the local representatives. Indeed $|B(x,y)^{\mathsf T}|\le R$,
+so $C_B=\|B^{-1}\|$ suffices. This implication discards the central
+coordinate only for an upper bound on a set of times. It imposes no
+quotient dynamics and makes no change to $j=\int a\,db$.
+
+On the $i$th random cell the lifted horizontal pair is exactly
+
+$$
+(k-k_o,\,2(\alpha-\alpha_o))
+ =(K_i-k_o,\,y_i)+\theta(v_i^1,v_i^2),\qquad 0\le\theta\le1.
+\tag{7.11}
+$$
+
+Here the lift $y_i$ can be chosen on this one cell; its actual period
+is $4\pi$. Source representatives in this plane have centers
+$(0,4\pi z)$, $z\in\mathbb Z$. Decrease $\epsilon_0$ and increase
+$n_0$ so that $2C_B\epsilon_0+C_v/n_0<4\pi$.
+An entire cell has horizontal length at most $C_ve$, so it can meet
+at most one of the disks of radius $C_B\epsilon$ about these centers:
+points of two different disks are separated by at least
+$4\pi-2C_B\epsilon>C_ve$. On the lift centered at that disk,
+the intersection of the affine segment (7.11) with the disk is an
+interval of $\theta$-length at most
+$\min(1,2C_B\epsilon/|v_i|)$. Possible further restrictions from the
+actual $\beta$ phase or the central gauge can only shorten its total
+time. Therefore (7.5) proves that the executed portion of this cell
+spends at most
+
+$$
+C\delta\min(1,\epsilon/e)
+\tag{7.12}
+$$
+
+in the source ball. The same upper bound applies to a wall-cut cell,
+as its actual time interval is a prefix of this segment.
+
+If that executed portion meets the ball, (7.10) and the height part
+of (7.11) give $|K_i-k_o|\le C_B\epsilon+C_ve$.
+Let $J_n=N_n\wedge m_n$; its indices $0\le i<J_n$ are exactly the
+random cells with an alive starting node, including the last cut cell
+when there is one. Combining (7.12) and (7.2) at
+$s=C_B\epsilon+C_ve$ yields
+
+$$
+\begin{aligned}
+\mathbb E\int_0^{\zeta_n\wedge S_n}
+ {\bf1}_{\mathcal B_\epsilon}(\bar q_n(t))dt
+&\le C\delta\min(1,\epsilon/e)\,
+ \mathbb E\sum_{i<J_n}
+ {\bf1}_{\{|K_i-k_o|\le C_B\epsilon+C_ve\}}\\
+&\le C\min(1,\epsilon/e)(\epsilon+e)
+ \le 2C\epsilon.
+\end{aligned}
+\tag{7.13}
+$$
+
+The last inequality follows separately from $\epsilon\ge e$ and
+$\epsilon<e$. Thus the estimate holds even for balls smaller than
+the mesh displacement. It counts all returns to the source chart;
+no density of a node distribution or exclusion of return contacts
+has been used.
+
+It remains to include the unchanged terminal leg. It occurs only
+on $N_n>m_n$, where $K_{m_n}<u$, and has exactly
+
+$$
+k(t)=K_{m_n}+\frac{t-S_n}{\delta}(u-K_{m_n}),
+\qquad S_n\le t\le S_n+\delta,
+\tag{7.14}
+$$
+
+with $b,j$ constant. Decrease $\epsilon_0$ so that
+$C_B\epsilon_0\le(u-k_o)/2$.
+If this increasing leg meets $\mathcal B_\epsilon$, then
+$K_{m_n}\le k_o+C_B\epsilon$, so
+$u-K_{m_n}\ge(u-k_o)/2$. Its elapsed time in the necessary height
+band $|k-k_o|\le C_B\epsilon$ is consequently at most
+
+$$
+\delta\frac{2C_B\epsilon}{u-K_{m_n}}
+\le \frac{4C_B}{u-k_o}\,\delta\epsilon.
+\tag{7.15}
+$$
+
+This is a deterministic bound on every surviving command, with zero
+contribution when the leg misses the ball. Combining it with (7.13)
+and $\delta\le1$ proves (7.3) for the complete original lifetime.
+Holds after a wall hit are outside $[0,\zeta_n)$ and do not enter any
+of these integrals. $\square$
+
+The convex remainder and stopped telescoping in (7.7)–(7.9) are the
+classical convex occupation/Lyapunov method, of the same type as the
+discrete absolute-value decomposition and Itô–Tanaka argument in
+Kartashov–Kulik, [*Invariance principle for additive functionals of
+Markov chains*, §5, Proposition 3, (5.2)–(5.3)](https://arxiv.org/html/0704.0508v1).
+That proposition treats a scalar diffusion approximation with scalar
+coefficients. Here $K_i$ need not be an autonomous scalar Markov chain:
+its coefficients depend on the complete native state. Equations
+(7.4)–(7.9) prove the estimate directly under that dependence. The
+classical convex identity is an intermediate tool; the conclusion
+(7.3) concerns the specified native chords and their complete killing
+rule.
+
+## 8. Uncapped subcritical expected occupation
+
+**Theorem 8.1 (uniform source-weight tails and the full subcritical bridge).**
+For every fixed admitted model of Definition 1.1, there are $n_0$ and
+$\epsilon_0>0$ as in Theorem 7.1 such that, for each $0<p<1/2$, a
+finite $C_p$ satisfies
+
+$$
+\begin{gathered}
+\nu_n({\bf1}_{\{o\}})=0\quad(n\ge n_0),\\
+\sup_{n\ge n_0}
+ \nu_n(R^{-2p}{\bf1}_{\mathcal B_\epsilon})
+ \le C_p\epsilon^{1-2p},\qquad 0<\epsilon\le\epsilon_0,\\
+\sup_{n\ge n_0}
+ \nu_n(\Gamma^p{\bf1}_{\mathcal B_\epsilon})
+ \le C_p\epsilon^{1-2p}.
+\end{gathered}
+\tag{8.1}
+$$
+
+The local weight is extended by zero outside the source chart and
+has value infinity at $o$. In particular the spatial source-weight
+tails vanish uniformly for these expected occupation measures:
+
+$$
+\lim_{M\to\infty}\sup_{n\ge n_0}
+ \nu_n\bigl(\Gamma^p-(\Gamma^p\wedge M)\bigr)=0.
+\tag{8.2}
+$$
+
+For exactly the original uncapped complete commands the limit is
+
+$$
+\boxed{\displaystyle
+\lim_{n\to\infty}\mathbb E\int_0^{\zeta_n}
+ \Gamma(\bar q_n(t))^pdt
+=\mathbb E_o\int_0^\tau\Gamma(Q_t)^pdt
+=\int_\Omega\Gamma^{p+1}\,d\mu<\infty,
+\qquad 0<p<\tfrac12.}
+\tag{8.3}
+$$
+
+Every command at $n\ge n_0$ still has the finite integral of Theorem
+2.1. The new assertion is uniform control of its expected spatial
+tails and convergence of its expectation, not a deduction of either
+from that individual finiteness.
+
+Proof. Each $\nu_n$ is a finite Borel measure: it is the expectation
+of the time-occupation measure of the actual finite command; we write
+$\nu_n(E)=\nu_n({\bf1}_E)$ for Borel sets $E$. For the
+indices in question, (7.6) and the terminal-leg duration even give
+$\nu_n(1)\le M+\delta_n\le M+1$.
+The balls $\mathcal B_\epsilon$ decrease to $\{o\}$, so continuity
+from above and (7.3) give zero source mass for every such $\nu_n$.
+
+Put $a=2p\in(0,1)$. For $0<r<\epsilon$ the elementary identity
+
+$$
+r^{-a}=\epsilon^{-a}
+       +a\int_r^\epsilon t^{-a-1}dt
+\tag{8.4}
+$$
+
+and Tonelli, with infinity allowed before the estimate, give
+
+$$
+\begin{aligned}
+\nu_n(R^{-a}{\bf1}_{\mathcal B_\epsilon})
+&=\epsilon^{-a}\nu_n(\mathcal B_\epsilon)
+ +a\int_0^\epsilon t^{-a-1}\nu_n(\mathcal B_t)dt\\
+&\le C_2\epsilon^{1-a}
+ +aC_2\int_0^\epsilon t^{-a}dt
+ =\frac{C_2}{1-a}\epsilon^{1-a}.
+\end{aligned}
+\tag{8.5}
+$$
+
+There is no contribution from $R=0$, since its measure is zero.
+The local comparison (1.6), after decreasing $\epsilon_0$, gives
+$\Gamma\le C_\Gamma R^{-2}$ throughout the punctured ball, proving
+both weighted bounds in (8.1). This layer-cake argument controls all
+source returns together with the initial departure and terminal leg.
+
+For every fixed $\epsilon>0$ in this range, the full off-source bound
+of Definition 1.2 gives
+$B_\epsilon=\sup_{\Omega\setminus\mathcal B_\epsilon}\Gamma^p<\infty$,
+including the neighbourhoods of both killed faces. If $M\ge B_\epsilon$,
+then pointwise outside a $\nu_n$-null source,
+
+$$
+0\le\Gamma^p-(\Gamma^p\wedge M)
+\le\Gamma^p{\bf1}_{\mathcal B_\epsilon}.
+\tag{8.6}
+$$
+
+Taking the supremum over $n\ge n_0$, then $M\to\infty$ and finally
+$\epsilon\downarrow0$, proves (8.2). Equivalently one also obtains
+the usual spatial-weight tail bound with
+$\Gamma^p{\bf1}_{\{\Gamma^p>2M\}}$, since that function is at most
+$2(\Gamma^p-(\Gamma^p\wedge M))$.
+
+Set $W=\Gamma^p$ and $J=\nu(W)$. Theorem 2.1 gives $J<\infty$
+and (2.5) identifies it with the diffusion expectation in (8.3).
+For a fixed $M$, Theorem 4.1 gives $\nu_n(W\wedge M)\to\nu(W\wedge M)$
+over the entire original lifetime. All quantities below are finite
+for $n\ge n_0$, and positivity gives the precise truncation bound
+
+$$
+\begin{aligned}
+|\nu_n(W)-J|
+\le {}&|\nu_n(W\wedge M)-\nu(W\wedge M)|\\
+ &+\nu_n(W-W\wedge M)+\nu(W-W\wedge M).
+\end{aligned}
+\tag{8.7}
+$$
+
+The first term tends to zero at each fixed $M$. The second tends to
+zero uniformly in $n\ge n_0$ by (8.2); the third tends to zero by
+integrability of $W$ under $\nu$. First take $n\to\infty$, then
+$M\to\infty$. This proves (8.3) without a cap in the command or in
+the asserted limiting observation. $\square$
+
+The source-specific derivation (7.10)–(8.7) supplies the tail that
+§5 left unclaimed for $0<p<1/2$. The truncation step is the classical
+bounded-test plus uniform-integrability argument already used in the
+equivalence (5.8); the additional mathematical input is the proved
+uniform source-ball estimate for the same producer. It requires
+neither a node transition density nor an independent horizontal
+quotient law. In particular no assumption that $\rho$ or $A$ is close
+to constant has entered the proof.
+
+For comparison with published additive-functional approximation
+theorems, Kulik's [*Difference approximation for local times of
+multidimensional diffusions*, §2, Theorem 2.1, A1 and A3](https://arxiv.org/html/math/0702175v2)
+requires uniform ellipticity in the full Euclidean state and a $C^4$
+innovation density with derivative and moment bounds. The native
+three-coordinate state has rank-two instantaneous covariance, and its
+four-sign innovation has no Lebesgue density. Even the elliptic
+horizontal projection does not remove its dependence on the remaining
+state. Those hypotheses therefore do not justify applying that theorem
+to these commands. Kartashov–Kulik's [§3, Theorem 1, condition 2](https://arxiv.org/html/0704.0508v1)
+assumes uniform convergence of the additive-functional characteristics,
+in addition to Markov approximation, vanishing maximal summands and
+uniform continuity of the limiting characteristic. It cannot provide
+the missing singular expectation convergence by assuming that
+characteristic convergence. Kulik's [*Malliavin calculus for difference
+approximations of multidimensional diffusions: truncated local limit
+theorem*, §1.1, Theorem 1.1, B1 and B3](https://arxiv.org/html/0801.2319v1)
+also imposes full-state ellipticity and, in B3, a positive absolutely
+continuous component of the innovation law bounded below on an open
+set. Four signs fail B3. Its truncation is a decomposition of transition
+probabilities, not an uncapping theorem for the present source weight.
+These are hypothesis comparisons, not imports of their conclusions.
+The convex/Tanaka method and truncation principle are classical;
+the result here is their repo-derived application with the original
+full-coefficient native geometry, interpolation and termination rule.
+No assertion of world priority is made.
+
+The uniformity in (8.1)–(8.2) concerns spatial weights under the
+deterministic expected measures $\nu_n$. No uniform integrability of
+the random total occupations, almost sure convergence, or convergence
+rate is asserted. Theorem 2.1's infinite finite-command occupations
+for $p\ge1/2$, Theorem 3.1's original-form-domain witnesses and §5's
+larger-exponent cap restrictions retain their stated force. Neither
+(7.3) nor its layer-cake proof supplies the missing tails at those
+exponents: the upper integral in (8.5) is finite only for $2p<1$.
+
+## 追加锚（本行以下为增补区）
