@@ -6,11 +6,13 @@
    utility: none
    digest: Uniform finite mixtures have the same exponential overlap rate as their largest component pair. -/
 
+import D5.S3.Quantum.Information.GroupInvariantPsi.Mixture
 import Mathlib.Analysis.MeanInequalitiesPow
 import Mathlib.Analysis.SpecialFunctions.Pow.Asymptotics
+/-! Relative permutation overlaps and their asymptotic logarithmic rate. -/
+
 open Finset Filter
 open scoped BigOperators Topology
-set_option maxHeartbeats 800000
 noncomputable section
 namespace D5.S3.Quantum.Information.GroupInvariantPsi.Sandwich
 private lemma sum_rpow_bound {I : Type*} [Fintype I] (a : I → ℝ)
@@ -90,6 +92,7 @@ def maxCoeff {d : ℕ} {G : Type*} [Group G] [Fintype G]
     (σ : G →* Equiv.Perm (Fin d)) (p q : Fin d → ℝ) (s : ℝ) : ℝ :=
   univ.sup' univ_nonempty (componentCoeff σ p q s)
 
+set_option maxHeartbeats 800000 in
 /-- Tensor overlaps of the uniform orbit mixtures have exponential bounds. -/
 theorem sandwich {d : ℕ} {G : Type*} [Group G] [Fintype G]
     (σ : G →* Equiv.Perm (Fin d)) (p q : Fin d → ℝ)
@@ -157,5 +160,47 @@ private theorem log_rate (Z : ℕ → ℝ) {M k : ℝ} (hM : 0 < M) (hk : 0 < k)
     rw [Real.log_mul hk.ne' (pow_ne_zero n hM.ne'), Real.log_pow] at hlog
     have hh := div_le_div_of_nonneg_right hlog (Nat.cast_nonneg n : (0 : ℝ) ≤ n)
     convert hh using 1 <;> field_simp <;> ring
+
+/-- The normalized logarithmic tensor overlaps converge to the largest logarithmic
+single-site overlap, and the limit selector has that value. -/
+theorem psi_eq_max {d : ℕ} [Nonempty (Fin d)] {G : Type*} [Group G] [Fintype G]
+    (σ : G →* Equiv.Perm (Fin d)) (p q : Fin d → ℝ)
+    (hp : ∀ i, 0 < p i) (hq : ∀ i, 0 < q i) {s : ℝ}
+    (hs : 0 < s) (hs1 : s < 1) :
+    Tendsto (fun n : ℕ =>
+      Defs.psiN (Mixture.permutationRepresentation σ)
+        (Matrix.diagonal fun i => (p i : ℂ))
+        (Matrix.diagonal fun i => (q i : ℂ)) n s / n)
+      atTop (𝓝 (Real.log (maxCoeff σ p q s))) ∧
+    Defs.psi (Mixture.permutationRepresentation σ)
+        (Matrix.diagonal fun i => (p i : ℂ))
+        (Matrix.diagonal fun i => (q i : ℂ)) s = Real.log (maxCoeff σ p q s) := by
+  classical
+  have hM : 0 < maxCoeff σ p q s := by
+    apply lt_of_lt_of_le (b := componentCoeff σ p q s 1)
+    · exact sum_pos (fun i _ => mul_pos (Real.rpow_pos_of_pos (hp i) _)
+        (Real.rpow_pos_of_pos (hq _) _)) univ_nonempty
+    · exact Finset.le_sup' _ (mem_univ _)
+  have ht : Tendsto (fun n : ℕ => Real.log (Mixture.mixtureTrace σ p q n s) / n)
+      atTop (𝓝 (Real.log (maxCoeff σ p q s))) := by
+    apply log_rate _ (k := (Fintype.card G : ℝ)) hM
+      (by exact_mod_cast Fintype.card_pos (α := G))
+    intro n
+    simpa only [Mixture.mixtureTrace, Mixture.mixtureWeight] using
+      sandwich σ p q (fun i => (hp i).le) (fun i => (hq i).le) hs hs1 n
+  have heq (n : ℕ) :
+      Defs.psiN (Mixture.permutationRepresentation σ)
+        (Matrix.diagonal fun i => (p i : ℂ))
+        (Matrix.diagonal fun i => (q i : ℂ)) n s =
+      Real.log (Mixture.mixtureTrace σ p q n s) := by
+    rw [Defs.psiN, Mixture.twirlPower_diag, Mixture.twirlPower_diag, Mixture.trace_pow_diag]
+    rfl
+  have ht' : Tendsto (fun n : ℕ =>
+      Defs.psiN (Mixture.permutationRepresentation σ)
+        (Matrix.diagonal fun i => (p i : ℂ))
+        (Matrix.diagonal fun i => (q i : ℂ)) n s / n)
+      atTop (𝓝 (Real.log (maxCoeff σ p q s))) := by
+    simpa only [heq] using ht
+  exact ⟨ht', ht'.limUnder_eq⟩
 
 end D5.S3.Quantum.Information.GroupInvariantPsi.Sandwich

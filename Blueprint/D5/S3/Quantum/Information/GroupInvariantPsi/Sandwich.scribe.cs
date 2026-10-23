@@ -20,5 +20,9 @@ internal sealed class SandwichDocument : IScribeDocumentDefinition
             Describe.Lean(DescribeId.Create("group-invariant-psi-max-coeff"),
                 DeclarationHandle.Create("D5/S3/Quantum/Information/GroupInvariantPsi/Sandwich.maxCoeff"),
                 H("Largest relative overlap"), StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
-                Blocks(Paragraph(Text("Take the maximum of the relative permutation overlaps over the finite group."))), DescribeRole.Definition))));
+                Blocks(Paragraph(Text("Take the maximum of the relative permutation overlaps over the finite group."))), DescribeRole.Definition),
+            Describe.Lean(DescribeId.Create("group-invariant-psi-limit"),
+                DeclarationHandle.Create("D5/S3/Quantum/Information/GroupInvariantPsi/Sandwich.psi_eq_max"),
+                H("The asymptotic logarithmic overlap"), StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("For strictly positive p and q on a nonempty finite alphabet, the normalized logarithm of the tensor overlap converges, at each parameter strictly between zero and one, to log M. This is also the value of the selected limit psi. The sandwich bounds leave a correction of absolute size at most log k divided by n. Diagonal spectral calculus and the permutation twirl identity identify this scalar overlap with the original matrix trace expression. Probability normalization is not required for this convergence calculation."))), DescribeRole.Theorem))));
 }
