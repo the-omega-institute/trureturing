@@ -1,5 +1,6 @@
 import LeanInformationAuditRegTests.SearchReduction.LookupModel
 import LeanInformationAuditRegTests.SearchReduction.LookupBaseline
+import LeanInformationAuditRegAnalysis.SearchReduction.Local
 
 /-! Non-occurrence, premise matching, instance outputs, dependent types,
 universe specialization and value-dependent Subtype projection boundaries. -/
@@ -39,3 +40,29 @@ run_cmd liftTermElabM do
 
 open LeanInformationAudit.Tests.SearchReduction.GraphModel
 #print axioms static_star_impossible_no_certificate
+
+run_cmd liftTermElabM do
+  let env := (← getEnv).setExporting false
+  let table : LookupTable := {environment := env}
+  let entries := DiskLookup.membershipEntries
+    "LeanInformationAuditRegTests.SearchReduction.LookupBaseline"
+    #[#[← getConstInfo ``instanceHiddenForm, ← getConstInfo ``unusedData,
+      ← getConstInfo ``certifiedData]]
+  for entry in entries do
+    let original ← saveState
+    let info ← getConstInfo entry.leanName
+    let rejected ← starCandidateImpossible info.type
+    let expectFailure := entry.leanName == ``unusedData
+    unless rejected == expectFailure do
+      throwError "wrong static boundary for {entry.leanName}"
+    let target := if entry.leanName == ``certifiedData then
+        mkApp (mkConst ``DataMark) (mkNatLit 11)
+      else mkConst ``Finish
+    let goal ← mkFreshExprMVar target
+    let trace ← attemptLookupLeaf table entry goal.mvarId!
+      (fun _ => pure false) (fun _ => pure false)
+    unless trace.complete && trace.source?.isSome == !expectFailure do
+      throwError "production candidate result disagrees for {entry.leanName}"
+    unless expectFailure do checkLocalProof target (← instantiateMVars goal)
+    original.restore
+  logInfo "STATIC_STAR_RUNTIME instance_outparam=true subtype_computation=true unused_data=true"

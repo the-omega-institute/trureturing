@@ -28,6 +28,13 @@ instance : Certified 7 := ⟨.intro⟩
 inductive InstanceMark (n : Nat) : Prop where | intro : InstanceMark n
 theorem instanceForm (n : Nat) [Certified n] : InstanceMark n := .intro
 
+class OutputCertified (n : outParam Nat) : Prop where
+  evidence : Mark n
+
+instance : OutputCertified 7 := ⟨.intro⟩
+theorem instanceHiddenForm (n : Nat) [OutputCertified n] : Finish := .intro
+theorem unusedData (_n : Nat) : Finish := .intro
+
 inductive First : Prop where | intro : First
 inductive Middle : Prop where | intro : Middle
 inductive Last : Prop where | intro : Last
