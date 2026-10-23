@@ -2555,6 +2555,11 @@ This method boundary leaves VHR1's uniform $(\log T)^{-4}$
 allowance unchanged. Full RH and strict Robin for every integer
 $n>5040$ remain unproved.
 
+The [fixed-source Gamma-payment obstruction](hernandezsantamaria2025optimal.md#a-fixed-actual-source-excludes-a-universal-gamma-only-critical-payment)
+strengthens this generic method boundary: its signed defect is quadratic
+in $\log\log\log N$, while its regularized moment and actual
+Gamma payment, including a fixed spatial weight, remain uniformly bounded. That source is likewise not GLOBAL null.
+
 ## Weighted null estimates in the actual theta coordinate
 
 Reuse W317's COMPLETE bilinear debit, W324's actual inverse, VHB3's
