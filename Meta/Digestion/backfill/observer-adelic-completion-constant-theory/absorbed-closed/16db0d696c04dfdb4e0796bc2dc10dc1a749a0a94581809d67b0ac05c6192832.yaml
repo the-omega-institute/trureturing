@@ -2,6 +2,8 @@ fingerprints:
   raw_sha256: sha256:16db0d696c04dfdb4e0796bc2dc10dc1a749a0a94581809d67b0ac05c6192832
   normalized_sha256: sha256:16db0d696c04dfdb4e0796bc2dc10dc1a749a0a94581809d67b0ac05c6192832
 cas_ref: sha256:16db0d696c04dfdb4e0796bc2dc10dc1a749a0a94581809d67b0ac05c6192832
-coverage_gids: []
+coverage_gids:
+  - gid: D5/S1/Eigenstructure/NilpotentNormalityObstruction.nonzero_nilpotent_shift_not_normal
+    target_statement_id: sha256:2259a42e1349e4a4a8c0040f24fed5196a2d28730eed85cd0d995aaaae3a2731
 receipts:
   unresolved_subitems: []
