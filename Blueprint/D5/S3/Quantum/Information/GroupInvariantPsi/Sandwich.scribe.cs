@@ -11,6 +11,14 @@ internal sealed class SandwichDocument : IScribeDocumentDefinition
                 DeclarationHandle.Create("D5/S3/Quantum/Information/GroupInvariantPsi/Sandwich.sandwich"),
                 H("Largest component overlap controls a uniform mixture"),
                 StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
-                Blocks(Paragraph(Text("Let two nonnegative finite families have the same nonzero number k of components, and let s lie strictly between zero and one. If R is the greatest overlap between a component of one family and a component of the other, the overlap of their uniform mixtures lies between R/k and kR. The lower bound retains a maximizing component pair. The upper bound expands the two fractional powers by subadditivity and sums all k squared component pairs."))),
-                DescribeRole.Theorem))));
+                Blocks(Paragraph(Text("Let a finite group of size k permute a finite alphabet, and let p and q be nonnegative functions on that alphabet. For s strictly between zero and one, let M be the largest relative permutation overlap. The overlap of the uniform mixtures of the n-fold product functions lies between M to the power n divided by k and k times M to the power n. Relative permutation reindexing reduces every component pair to a single-site overlap raised to the power n. The lower bound retains a maximizing pair, and the upper bound uses subadditivity of fractional powers."))),
+                DescribeRole.Theorem),
+            Describe.Lean(DescribeId.Create("group-invariant-psi-component-coeff"),
+                DeclarationHandle.Create("D5/S3/Quantum/Information/GroupInvariantPsi/Sandwich.componentCoeff"),
+                H("Relative permutation overlap"), StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("For a group action on basis labels, sum p(i) to the power s times q(g i) to the power one minus s over all labels."))), DescribeRole.Definition),
+            Describe.Lean(DescribeId.Create("group-invariant-psi-max-coeff"),
+                DeclarationHandle.Create("D5/S3/Quantum/Information/GroupInvariantPsi/Sandwich.maxCoeff"),
+                H("Largest relative overlap"), StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("Take the maximum of the relative permutation overlaps over the finite group."))), DescribeRole.Definition))));
 }
