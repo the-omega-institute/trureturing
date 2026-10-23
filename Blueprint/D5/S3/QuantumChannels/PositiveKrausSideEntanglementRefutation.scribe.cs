@@ -21,7 +21,7 @@ internal sealed class PositiveKrausSideEntanglementRefutationDocument : IScribeD
                 AssessedProvenance.FromRepo()),
             Node("claim", "claim", "The identity polar-factor conjecture", ClaimFormula(),
                 "Section 7, printed pages 16–17: \"" + SourceQuote + "\" "
-                + "The negative clause is encoded for qubit channels and a qubit ancilla. Strict positive definiteness ensures that the polar unitary is uniquely the identity. Both Kraus families have n operators and right Gram sum equal to the identity. IsDensity is the positive-semidefinite trace-one predicate of GHZMeasureBiseparableBound. Each effect and its complement are positive semidefinite. For every assisted input and effect, the assertion asks for an unassisted input and effect with at least the same success probability. The positive-definite qubit restriction is sufficient for a counterexample to the general negative clause.",
+                + "The negative clause is encoded for qubit channels and a qubit ancilla. Strict positive definiteness ensures that the polar unitary is uniquely the identity. Both Kraus families have n operators and right Gram sum equal to the identity. IsDensity is the positive-semidefinite trace-one predicate of SLDSpectralEnergy. Each effect and its complement are positive semidefinite. For every assisted input and effect, the assertion asks for an unassisted input and effect with at least the same success probability. The positive-definite qubit restriction is sufficient for a counterexample to the general negative clause.",
                 AssessedProvenance.FromLiterature(Source)),
             Node("refutation", "result", "Refutation by positive tetrahedral Kraus operators", Disp(new Formula.Not(Parenthesized(ClaimBody()))),
                 "For a=2 and a=3, use four Kraus operators (aI+sX+tY+uZ)/(2√(a²+3)), with (s,t,u)=(1,1,1),(1,−1,−1),(−1,1,−1),(−1,−1,1). X and Z are the qubit Pauli matrices and Y=Complex.I times XZ. A positive multiple of the identity plus a positive Gram matrix proves strict positive definiteness. The resulting channel sends A to ((a²−1)/(a²+3))A+(2/(a²+3))trace(A)I. Two nonnegative trace pairings bound every unassisted success probability by 47/84. The frozen Bell density is both input and effect for the assisted strategy, whose success probability is 33/56. The strict gap is 5/168. The paper's phase-damping result concerns its particular channel family and is unaffected by this counterexample to the general negative clause.",
@@ -81,7 +81,7 @@ internal sealed class PositiveKrausSideEntanglementRefutationDocument : IScribeD
     private static Formula Complete(Formula family, Formula n) => Equal(
         SumOver("i", Call("Fin", n), Product(Call("conjTranspose", App(family, V("i"))), App(family, V("i")))), D(1));
     private static Formula Effect(Formula value) => And(Call("PosSemidef", value), Call("PosSemidef", MinusOf(D(1), value)));
-    private static Formula Density(Formula value) => App(Qualified("GHZMeasureBiseparableBound", "IsDensity"), value);
+    private static Formula Density(Formula value) => App(Qualified("SLDSpectralEnergy", "IsDensity"), value);
     private static Formula MatrixType(bool assisted)
     {
         Formula index = Call("Fin", D(2));

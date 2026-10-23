@@ -19,7 +19,7 @@ D5/S3/Estimation/GaussianThermometryJointMeasurementRefutation.IsGaussianMeasure
   sha256:410391e348afb0d9876bdf2548ca1782f14191e2ac259dd3c3d81d1876de06a4
 D5/S3/Weil/Probability/FiniteGaussianSchoenberg.gram_gaussian_posSemidef
   sha256:e83ee5619019d4fc81d7390a8b36152737f3dda0b497486e0e5fc9c97d9a1c91
-D5/S3/Quantum/Entanglement/GHZMeasureBiseparableBound.IsDensity
+D5/S3/Quantum/Information/SLDSpectralEnergy.IsDensity
   sha256:fc9bb0824d5818ff419f72f26095faecc04e62ab59bf26f4f2bcefbb2d380448
 The centered index type and density conjunction occur literally; centered reduction uses ZMod.valMinAbs.
 The proof uses the existing density and covariance predicates; the source uncertainty matrix occurs literally in claim.
@@ -90,6 +90,7 @@ unnormalized_entry_midpoint | proof_shape: bind-only | escape_witness: none | co
 entry_half_lattice | proof_shape: bind-only | escape_witness: none | consumers: kernel_identity
 kernel_identity | proof_shape: bind-only | escape_witness: none | consumers: result
 -/
+import D5.S3.Quantum.Information.SLDSpectralEnergy
 import D5.S3.Estimation.GaussianThermometryJointMeasurementRefutation
 import D5.S3.Weil.Probability.FiniteGaussianSchoenberg
 import D5.S3.Quantum.Entanglement.GHZMeasureBiseparableBound
@@ -172,7 +173,7 @@ private theorem uncertainty_det_bound (σ : Matrix (Fin 2) (Fin 2) ℝ) (hσ : �
         norm_num [Matrix.J, Matrix.fromBlocks, Matrix.submatrix, Fin.divNat,
           Matrix.one_apply, sub_eq_add_neg]
   exact (D5.S3.Estimation.GaussianThermometryJointMeasurementRefutation.physical_data σ hm).2
-private theorem normalization_isDensity {ι : Type*} [Fintype ι] (A : Matrix ι ι ℂ) (hA : A.PosSemidef) (ht : A.trace ≠ 0) : D5.S3.Quantum.Entanglement.GHZMeasureBiseparableBound.IsDensity (A.trace⁻¹ • A) := by
+private theorem normalization_isDensity {ι : Type*} [Fintype ι] (A : Matrix ι ι ℂ) (hA : A.PosSemidef) (ht : A.trace ≠ 0) : D5.S3.Quantum.Information.SLDSpectralEnergy.IsDensity (A.trace⁻¹ • A) := by
   constructor
   · exact hA.smul (inv_nonneg.mpr hA.trace_nonneg)
   · rw [Matrix.trace_smul, smul_eq_mul, inv_mul_cancel₀ ht]
