@@ -6,7 +6,7 @@ internal sealed class UniformSchmidtCornerDocument : IScribeDocumentDefinition
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "An injectively labelled product corner extends to a permutation of the full spectrum and an actual corner unitary extends by the identity. Literal APPT therefore supplies positive semidefiniteness after partial transpose on every selected corner.", H("UniformSchmidtCorner"), Blocks(
             Paragraph(Text("An injectively labelled product corner extends to a permutation of the full spectrum and an actual corner unitary extends by the identity. Literal APPT therefore supplies positive semidefiniteness after partial transpose on every selected corner.")),
-            Paragraph(Text("Utility none: corner, corner_injective, Outside, outsideFintype, cornerEquiv, cornerEquiv_inl, cornerEquiv_symm_corner. Symbolic product embeddings, complement types, finiteness and equivalences for all r,m,n; no bounded search or certified input is delivered.")),
+            Paragraph(Text("Utility none: corner, corner_injective, Outside, outsideFintype, cornerEquiv, cornerEquiv_symm_corner. Symbolic product embeddings, complement types, finiteness and equivalences for all r,m,n; no bounded search or certified input is delivered.")),
             Paragraph(Text("Utility none: conjugate_corner, selected_corner_psd. Universal matrix transport and an implication from literal APPT, with the permutation and unitary constructed for arbitrary dimensions; no checker or numerical-premise reduction is delivered.")),
             Describe.Lean(DescribeId.Create("generic-appt-partial-transpose"),
                 DeclarationHandle.Create("D5/S3/Quantum/Entanglement/AbsolutePPT/UniformSchmidtCorner.partialTranspose"),
@@ -66,10 +66,6 @@ internal sealed class UniformSchmidtCornerDocument : IScribeDocumentDefinition
                 DeclarationHandle.Create("D5/S3/Quantum/Entanglement/AbsolutePPT/UniformSchmidtCorner.cornerEquiv"),
                 H("cornerEquiv"), StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
                 Blocks(Paragraph(Text("def cornerEquiv {r m n : ℕ} (hm : r ≤ m) (hn : r ≤ n) : ((Fin r × Fin r) ⊕ Outside hm hn) ≃ (Fin m × Fin n)"))), DescribeRole.Definition),
-            Describe.Lean(DescribeId.Create("uniformschmidtcorner-cornerequiv-inl"),
-                DeclarationHandle.Create("D5/S3/Quantum/Entanglement/AbsolutePPT/UniformSchmidtCorner.cornerEquiv_inl"),
-                H("cornerEquiv inl"), StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
-                Blocks(Paragraph(Text("@[simp] theorem cornerEquiv_inl {r m n : ℕ} (hm : r ≤ m) (hn : r ≤ n) (p : Fin r × Fin r) : cornerEquiv hm hn (Sum.inl p) = corner hm hn p"))), DescribeRole.Theorem),
             Describe.Lean(DescribeId.Create("uniformschmidtcorner-cornerequiv-symm-corner"),
                 DeclarationHandle.Create("D5/S3/Quantum/Entanglement/AbsolutePPT/UniformSchmidtCorner.cornerEquiv_symm_corner"),
                 H("cornerEquiv symm corner"), StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),

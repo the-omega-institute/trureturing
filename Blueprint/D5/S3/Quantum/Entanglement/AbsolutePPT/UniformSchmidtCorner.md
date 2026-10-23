@@ -6,7 +6,7 @@ An injectively labelled product corner extends to a permutation of the full spec
 
 An injectively labelled product corner extends to a permutation of the full spectrum and an actual corner unitary extends by the identity. Literal APPT therefore supplies positive semidefiniteness after partial transpose on every selected corner.
 
-Utility none: corner, corner_injective, Outside, outsideFintype, cornerEquiv, cornerEquiv_inl, cornerEquiv_symm_corner. Symbolic product embeddings, complement types, finiteness and equivalences for all r,m,n; no bounded search or certified input is delivered.
+Utility none: corner, corner_injective, Outside, outsideFintype, cornerEquiv, cornerEquiv_symm_corner. Symbolic product embeddings, complement types, finiteness and equivalences for all r,m,n; no bounded search or certified input is delivered.
 
 Utility none: conjugate_corner, selected_corner_psd. Universal matrix transport and an implication from literal APPT, with the permutation and unitary constructed for arbitrary dimensions; no checker or numerical-premise reduction is delivered.
 
@@ -178,19 +178,7 @@ Lean statement: `D5/S3/Quantum/Entanglement/AbsolutePPT/UniformSchmidtCorner.cor
 
 def cornerEquiv {r m n : ℕ} (hm : r ≤ m) (hn : r ≤ n) : ((Fin r × Fin r) ⊕ Outside hm hn) ≃ (Fin m × Fin n)
 
-**Theorem 1.15 (cornerEquiv inl).**
-
-Lean statement: `D5/S3/Quantum/Entanglement/AbsolutePPT/UniformSchmidtCorner.cornerEquiv_inl`
-
-*Proof.* Machine-checked in Lean as `D5/S3/Quantum/Entanglement/AbsolutePPT/UniformSchmidtCorner.cornerEquiv_inl` (`✓ std3`). ∎
-
-*Source.* Repository-derived.
-
-*Commentary.*
-
-@[simp] theorem cornerEquiv_inl {r m n : ℕ} (hm : r ≤ m) (hn : r ≤ n) (p : Fin r × Fin r) : cornerEquiv hm hn (Sum.inl p) = corner hm hn p
-
-**Theorem 1.16 (cornerEquiv symm corner).**
+**Theorem 1.15 (cornerEquiv symm corner).**
 
 Lean statement: `D5/S3/Quantum/Entanglement/AbsolutePPT/UniformSchmidtCorner.cornerEquiv_symm_corner`
 
@@ -202,7 +190,7 @@ Lean statement: `D5/S3/Quantum/Entanglement/AbsolutePPT/UniformSchmidtCorner.cor
 
 @[simp] theorem cornerEquiv_symm_corner {r m n : ℕ} (hm : r ≤ m) (hn : r ≤ n) (p : Fin r × Fin r) : (cornerEquiv hm hn).symm (corner hm hn p) = Sum.inl p
 
-**Theorem 1.17 (conjugate corner).**
+**Theorem 1.16 (conjugate corner).**
 
 Lean statement: `D5/S3/Quantum/Entanglement/AbsolutePPT/UniformSchmidtCorner.conjugate_corner`
 
@@ -214,7 +202,7 @@ Lean statement: `D5/S3/Quantum/Entanglement/AbsolutePPT/UniformSchmidtCorner.con
 
 theorem conjugate_corner {r m n : ℕ} (hm : r ≤ m) (hn : r ≤ n) (d : Fin m × Fin n → ℂ) (V : unitaryGroup (Fin r × Fin r) ℂ) : (((extendUnitaryAlong (cornerEquiv hm hn) V : Matrix _ _ ℂ) * diagonal d * (extendUnitaryAlong (cornerEquiv hm hn) V : Matrix _ _ ℂ)ᴴ).submatrix (corner hm hn) (corner hm hn)) = (V : Matrix _ _ ℂ) * diagonal (fun q => d (corner hm hn q)) * (V : Matrix _ _ ℂ)ᴴ
 
-**Theorem 1.18 (selected corner psd).**
+**Theorem 1.17 (selected corner psd).**
 
 Lean statement: `D5/S3/Quantum/Entanglement/AbsolutePPT/UniformSchmidtCorner.selected_corner_psd`
 
@@ -236,7 +224,6 @@ theorem selected_corner_psd {r m n : ℕ} (hm : r ≤ m) (hn : r ≤ n) (e : (Fi
 - Truth anchor: `D5/S3/Quantum/Entanglement/AbsolutePPT/UniformSchmidtCorner.conjugate_corner`
 - Truth anchor: `D5/S3/Quantum/Entanglement/AbsolutePPT/UniformSchmidtCorner.corner`
 - Truth anchor: `D5/S3/Quantum/Entanglement/AbsolutePPT/UniformSchmidtCorner.cornerEquiv`
-- Truth anchor: `D5/S3/Quantum/Entanglement/AbsolutePPT/UniformSchmidtCorner.cornerEquiv_inl`
 - Truth anchor: `D5/S3/Quantum/Entanglement/AbsolutePPT/UniformSchmidtCorner.cornerEquiv_symm_corner`
 - Truth anchor: `D5/S3/Quantum/Entanglement/AbsolutePPT/UniformSchmidtCorner.corner_injective`
 - Truth anchor: `D5/S3/Quantum/Entanglement/AbsolutePPT/UniformSchmidtCorner.extendUnitaryAlong`

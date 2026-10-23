@@ -8,7 +8,7 @@
 
 /-
 utility:none, declaration-by-declaration semantic scope (CLAUDE.md §3.3):
-corner, corner_injective, Outside, outsideFintype, cornerEquiv, cornerEquiv_inl, cornerEquiv_symm_corner:
+corner, corner_injective, Outside, outsideFintype, cornerEquiv, cornerEquiv_symm_corner:
   Symbolic product embeddings, complement types, finiteness and equivalences for all r,m,n; no bounded search or certified input is delivered.
 conjugate_corner, selected_corner_psd:
   Universal matrix transport and an implication from literal APPT, with the permutation and unitary constructed for arbitrary dimensions; no checker or numerical-premise reduction is delivered.
@@ -159,9 +159,6 @@ def cornerEquiv {r m n : ℕ} (hm : r ≤ m) (hn : r ≤ n) :
   (Equiv.sumCongr (Equiv.ofInjective (corner hm hn) (corner_injective hm hn))
     (Equiv.refl _)).trans (Equiv.Set.sumCompl (Set.range (corner hm hn)))
 
-@[simp] theorem cornerEquiv_inl {r m n : ℕ} (hm : r ≤ m) (hn : r ≤ n)
-    (p : Fin r × Fin r) : cornerEquiv hm hn (Sum.inl p) = corner hm hn p := rfl
-
 @[simp] theorem cornerEquiv_symm_corner {r m n : ℕ}
     (hm : r ≤ m) (hn : r ≤ n) (p : Fin r × Fin r) :
     (cornerEquiv hm hn).symm (corner hm hn p) = Sum.inl p :=
@@ -181,7 +178,7 @@ theorem conjugate_corner {r m n : ℕ} (hm : r ≤ m) (hn : r ≤ n)
     congr 1
     funext p
     obtain ⟨q, rfl⟩ := (cornerEquiv hm hn).surjective p
-    cases q <;> simp
+    cases q <;> simp <;> rfl
   rw [hd, extendUnitaryAlong_diagonal]
   ext i j
   simp [Matrix.submatrix_apply]
