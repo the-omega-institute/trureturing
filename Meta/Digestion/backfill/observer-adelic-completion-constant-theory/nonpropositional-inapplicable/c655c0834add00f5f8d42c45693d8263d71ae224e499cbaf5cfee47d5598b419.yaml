@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:c655c0834add00f5f8d42c45693d8263d71ae224e499cbaf5cfee47d5598b419
+  normalized_sha256: sha256:c655c0834add00f5f8d42c45693d8263d71ae224e499cbaf5cfee47d5598b419
+cas_ref: sha256:c655c0834add00f5f8d42c45693d8263d71ae224e499cbaf5cfee47d5598b419
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 'nonpropositional: 引出建议研究路线的标题与导语，不声称三项条件已成立。'
+    previous_atom_id: c276fc2ccbd1352131e7d53c6f08bd276049c75e1acc4746b4a9b207dabfcdfd
+    next_atom_id: 069ef0bfa875f9761636e0558b5f1a46a56b44b46aa3f2ddbd31d6f62b8ab857

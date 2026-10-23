@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:6599033f7cf8dc782682fe58fc69ed0b621e6bbe8c959049c5ecffe5a5cef9ab
+  normalized_sha256: sha256:6599033f7cf8dc782682fe58fc69ed0b621e6bbe8c959049c5ecffe5a5cef9ab
+cas_ref: sha256:6599033f7cf8dc782682fe58fc69ed0b621e6bbe8c959049c5ecffe5a5cef9ab
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 'nonpropositional: 研究分工表中的待办任务：定位共振谱简并。'
+    previous_atom_id: 61d98130049dc28161dccf386822ce37dac204cc23851808aa696cd2c19e7a6b
+    next_atom_id: 60e15202ea3a63c55d7fe364b4ec627f92ebee1ebdc2a7a3ac8698d42612b449
