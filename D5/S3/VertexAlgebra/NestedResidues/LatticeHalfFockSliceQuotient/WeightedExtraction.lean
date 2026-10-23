@@ -351,7 +351,7 @@ open OrderedCollisionCoordinates.ContextualLaurentKernel
 open CollisionRationalExpansions.HahnFiberResidue
 open CollisionRationalExpansions.FullOrderSpectatorPole
 
-private def currentSourceTau (reverse : Bool) :
+def currentSourceTau (reverse : Bool) :
     Fin 2 ≃ LabelledRationalClearing.GlobalRationalCurry.Remaining (0 : Fin 3) :=
   if reverse then (Equiv.swap 0 1).trans (finSuccAboveEquiv (0 : Fin 3))
   else finSuccAboveEquiv (0 : Fin 3)
