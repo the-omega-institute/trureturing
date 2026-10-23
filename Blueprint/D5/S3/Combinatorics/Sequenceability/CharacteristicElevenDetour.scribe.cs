@@ -28,7 +28,7 @@ internal sealed class CharacteristicElevenDetourDocument : IScribeDocumentDefini
     private static Formula Outside => Seq(OpenBrace, V("z"), Colon, Ambient,
         Bar, Call("fst", V("z")), Neq, Sp, D(0), CloseBrace);
     private static Formula Prefix(Formula n) =>
-        Seq(Sum, Underscore, Grp(V("i"), Lt, n), Edge(V("i")));
+        Seq(Sum, Underscore, Grp(V("i"), Lt, n), Open, Edge(V("i")), Close);
 
     private static Formula Statement()
     {
@@ -43,11 +43,11 @@ internal sealed class CharacteristicElevenDetourDocument : IScribeDocumentDefini
         Formula intervals = All("a", Nat, All("b", Nat,
             Seq(V("a"), Lt, V("b"), Land, Sp, V("b"), Le, Sp, V("M"), Rightarrow, Sp,
                 Sum, Underscore, Grp(V("a"), Le, Sp, V("i"), Lt, V("b")),
-                Edge(V("i")), Neq, Sp, D(0))));
+                Open, Edge(V("i")), Close, Neq, Sp, D(0))));
         Formula total = Seq(Prefix(V("M")), Eq, Pair(D(0), V("u")));
         Formula body = Ex("v", Seq(Nat, To, Sp, Ambient), Seq(endpoints, Land, Sp,
             injective, Land, Sp, interior, Land, Sp, labels, Land, Sp,
-            prefixes, Land, Sp, intervals, Land, Sp, total));
+            prefixes, Land, Sp, Open, intervals, Close, Land, Sp, total));
         body = Seq(Op("let"), Sp, V("M"), Eq, D(1,0), Cdot, Call("card", V("K")), Plus, D(1), Semi, body);
         body = All("u", V("K"), Seq(V("u"), Neq, Sp, D(0), Rightarrow, Sp, body));
         return Disp(All("K", Op("Type"), Seq(Inst("Field", V("K")), Inst("Finite", V("K")),
