@@ -815,3 +815,107 @@ needed by such a case's future estimates, up to the displayed height
 tail. They neither establish higher-log regularity nor remove the
 negative allowance in the original complete form. Full RH and strict
 Robin for every integer $n>5040$ remain unproved.
+
+## Bootstrap the actual minimizing source before paying its moment loss
+
+The global supporting form in VHP7 supplies more than a lower
+multiplier: it gives a source-specific logarithmic bootstrap. The
+following repo-derived application reuses VHP's actual even branches,
+W331's weighted inverse and W338's full Gamma comparison. No generic
+nonlocal eigenfunction regularity theorem is substituted for these
+interfaces. All estimates concern the SAME hypothetical negative
+cap-four minimizer. They remain paper derivations without Lean/kernel
+certification or a priority claim.
+
+### Square the local mass in the joint metric defect
+
+For $k\ge1$ put
+
+$$
+ \mathcal L_k(g)=\int_{\mathbb R}
+       [\log(2+|\tau|)]^k|\widehat g(\tau)|^2d\tau,
+ \qquad L=\log(1/\epsilon).
+$$
+
+On the actual class $M(F)+\mathcal L_k(g_F)\le D$, the same branches
+as VHP satisfy the stronger joint estimate
+
+$$
+ |\Delta_M|+|\Delta_H|\le C_kD L^{-4k/5}.
+ \tag{VHB1}
+$$
+
+The range check in VHP is unchanged; $\mathcal L_k$ with $k\ge1$
+pays its logarithmic domain. To improve the estimate, use the
+self-adjoint defect of the REAL-axis filters $A=a_\epsilon(2D)$ and
+$B=b_\epsilon(2D)$ in VHP3:
+
+$$
+ D_P=APA+BPB-P=A[P,A]+B[P,B],\qquad P=\mathbf1_+.
+$$
+
+For $Z_r=\mathbf1_{|t|\ge r}$, VHP4's cross-cut kernel bound gives
+$\|D_PZ_r\|\le C\sqrt\epsilon/r$. Since $D_P=D_P^*$ and
+$\|D_P\|\le C$, splitting $X=(1-Z_r)X+Z_rX$ gives
+
+$$
+ |\langle X,D_PX\rangle|
+ \le C\|\mathbf1_{[-r,r]}X\|_2^2
+        +C\sqrt\epsilon\,r^{-1}\|X\|_2^2.
+ \tag{VHB2}
+$$
+
+Both mixed terms use the SAME $D_PZ_r$ estimate. For
+$P e^{-6\max(t,0)}$ the bounded Lipschitz factor adds only
+$C\sqrt\epsilon\log(2+1/\epsilon)\|X\|_2^2$ by VHP4. The
+exponential-conjugation errors have this same smaller order.
+
+A Fourier split on $\beta(t)=g(t/2)$ now gives local squared mass
+$C_kD/[\log(1/r)]^k$. Reuse VHP6's finite Möbius reconstruction,
+without replacing its arithmetic coefficients:
+
+$$
+ \|\mathbf1_{[-r,r]}X\|_2^2
+ \le C_kD\left[
+       \frac{N}{[\log(1/r)]^k}+N^{-4}+r\right].
+$$
+
+Take $r=\epsilon^{1/4}$ and $N$ comparable to $L^{k/5}$.
+This proves VHB1. It is the self-adjoint quadratic defect, rather
+than the norm of its first commutator alone, that retains the
+squared local mass.
+
+### Keep the reconstruction just above its critical weight
+
+Fix $0<\eta<2$, and set
+
+$$
+ \theta_\eta=\frac{4-2\eta}{5}>0,\qquad d=F-F_h.
+$$
+
+On the same class, the actual original-source errors satisfy
+
+$$
+ \mathcal N(d)^2+\mathcal N(F_v)^2
+ \le C_{k,\eta}D L^{-\theta_\eta k}.
+ \tag{VHB3}
+$$
+
+Indeed both profile differences $(1-a_\epsilon)\widehat g$ and
+$b_\epsilon\widehat g$ have unweighted squared norm at most
+$C_kD L^{-k}$ by splitting at $|\tau|=\epsilon^{-1/4}$.
+Their weight-$5/2$ norms remain bounded by $C\sqrt{M(F)}$, as in
+VHP. In the $t$ coordinate interpolate to the positive exponential
+weight $a_\eta=1/4+\eta/2$, below $q=5/4$. The resulting squared
+norm has exponent
+$k(1-a_\eta/q)=\theta_\eta k$.
+
+Here the ACTUAL Volterra inverse is bounded because
+$a_\eta>1/4$. This is precisely the source space
+$H_{4+\eta}$, with squared norm
+$\int_\pi^\infty(x/\pi)^{4+\eta}|F(x)|^2dx$.
+The actual Möbius inverse has norm at most $\zeta(1+\eta)$ there,
+since its $n$th dilation has norm $n^{-1-\eta}$. Finally
+$\mathcal N(G)^2\le C_\eta\|G\|_{H_{4+\eta}}^2$.
+This proves VHB3 without an endpoint $H_4$ inverse. The constants
+may diverge as $\eta\downarrow0$; no endpoint assertion is made.
