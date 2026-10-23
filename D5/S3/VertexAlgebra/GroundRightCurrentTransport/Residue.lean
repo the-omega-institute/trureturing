@@ -147,7 +147,7 @@ theorem Q_mode (A B : VertexOperator ℂ M) (s r n : ℤ) (K : ℕ) (x : M) :
 def Valid (A B : VertexOperator ℂ M) (K : ℕ) : Prop :=
   ∀ r : ℤ, (K : ℤ) ≤ r → R A B r = 0
 
-private theorem Q_cutoff (A B : VertexOperator ℂ M) (s r : ℤ)
+theorem Q_cutoff (A B : VertexOperator ℂ M) (s r : ℤ)
     (K L : ℕ) (hK : Valid A B K) (hL : Valid A B L) :
     Q A B s r K = Q A B s r L := by
   classical
@@ -359,7 +359,7 @@ theorem R_nat (A B : VertexOperator ℂ M) (r : ℕ) (n : ℤ) (x : M) :
   rw [← mul_assoc, sign, Int.natCast_sub within]
   rw [show n + (r : ℤ) - ((r : ℤ) - j) = n + j by omega]
 
-private theorem valid_of_locality (A B : VertexOperator ℂ M) (K : ℕ)
+theorem valid_of_locality (A B : VertexOperator ℂ M) (K : ℕ)
     (locality : (FieldNormalProductLocality.deltaEnd ^ K)
       (FieldNormalProductLocality.commutator A B) = 0) : Valid A B K := by
   intro r hr
