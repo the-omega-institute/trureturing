@@ -5,3 +5,7 @@ cas_ref: sha256:ac05bca1709ed33b83df27a2a5067bfdc9299e3bb59f10d54437f3e283994bb0
 coverage_gids: []
 receipts:
   unresolved_subitems: []
+  nonpropositional:
+    justification: Name of a certificate type in an experimental measurement checklist; no certificate existence or negativity assertion.
+    previous_atom_id: bf1ecbddf702dd8c502e3671cdf03f9369e4a743bc2123db158cd999e4a249a5
+    next_atom_id: c84a8d136251888964777afe05eeb3e14cde090c958bf0323c5e000469392c8b

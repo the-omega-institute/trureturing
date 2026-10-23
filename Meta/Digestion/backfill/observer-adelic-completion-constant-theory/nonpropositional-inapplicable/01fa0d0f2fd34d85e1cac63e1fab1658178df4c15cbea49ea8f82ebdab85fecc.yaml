@@ -5,3 +5,7 @@ cas_ref: sha256:01fa0d0f2fd34d85e1cac63e1fab1658178df4c15cbea49ea8f82ebdab85fecc
 coverage_gids: []
 receipts:
   unresolved_subitems: []
+  nonpropositional:
+    justification: Implementation technique name in a list of possible uses, with no mathematical assertion.
+    previous_atom_id: adc56d3551e7cea72d7b14372749710478305264bd8ddc348a0dc55f78f53db0
+    next_atom_id: c8f8c50641c508b36bd4b8e20d252ed0987773c728978d14cf58cf2b028ce1ce
