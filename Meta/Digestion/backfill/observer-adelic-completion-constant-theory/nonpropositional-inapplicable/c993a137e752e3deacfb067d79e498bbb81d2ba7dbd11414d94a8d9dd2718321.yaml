@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:c993a137e752e3deacfb067d79e498bbb81d2ba7dbd11414d94a8d9dd2718321
+  normalized_sha256: sha256:c993a137e752e3deacfb067d79e498bbb81d2ba7dbd11414d94a8d9dd2718321
+cas_ref: sha256:c993a137e752e3deacfb067d79e498bbb81d2ba7dbd11414d94a8d9dd2718321
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 在“不预先指定”清单中列出正分支标签的选择约定。
+    previous_atom_id: e3da3c8b0380c74f2b70bd081a857b4f52b2401b6cb85c8b2c6aca25d5af20f0
+    next_atom_id: 2615482f27592f99c0cb2a0141e572f6d73a9fbd3e3a09b649a3b1644a85438b
