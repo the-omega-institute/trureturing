@@ -16,11 +16,6 @@ open LatticeSugawaraCurrents MvPolynomial
 open LatticeHalfFockFiniteCorrection (sourceWeight)
 open scoped BigOperators
 
-private theorem killed_mono {M : Type*} [AddCommMonoid M] [Module ℂ M]
-    (A : Module.End ℂ M) (r n : ℕ) (p : M) (h : (A^r) p = 0) (hr : r ≤ n) :
-    (A^n) p = 0 := by
-  rw [show n = (n-r)+r by omega, pow_add, Module.End.mul_apply, h, map_zero]
-
 /-- The sharp product bound, without division or any grading hypothesis. -/
 private theorem killed_mul {σ : Type*} (d : Derivation ℂ (MvPolynomial σ ℂ)
     (MvPolynomial σ ℂ)) : ∀ r s : ℕ, ∀ p q : MvPolynomial σ ℂ,
@@ -121,9 +116,9 @@ theorem sectorL1_degree_bound (D : LatticeData) (a : Charge D) (p : Oscillator D
       rw [map_sum]
       apply Finset.sum_eq_zero
       intro m hm
-      exact killed_mono _ (m.weight (sourceWeight D)+1) _ _
-        (sectorL1_monomial_bound D a m (p.coeff m))
+      exact Module.End.pow_map_zero_of_le
         (Nat.add_le_add_right (le_weightedTotalDegree (sourceWeight D) hm) 1)
+        (sectorL1_monomial_bound D a m (p.coeff m))
 
 theorem sugawara_pow_single (D : LatticeData)
     (H : Matrix (Fin D.rank) (Fin D.rank) ℂ)
@@ -152,7 +147,7 @@ theorem sugawara_one_locally_nilpotent (D : LatticeData)
     have hr : (sugawaraMode D H 1 ^ r) (Finsupp.single a p) = 0 := by
       rw [sugawara_pow_single D H hHG hGH, sectorL1_degree_bound, Finsupp.single_zero]
     refine ⟨r+s, ?_⟩
-    rw [map_add, killed_mono _ r (r+s) _ hr (by omega),
-      killed_mono _ s (r+s) v hs (by omega), add_zero]
+    rw [map_add, Module.End.pow_map_zero_of_le (show r ≤ r+s by omega) hr,
+      Module.End.pow_map_zero_of_le (show s ≤ r+s by omega) hs, add_zero]
 
 end D5.S3.VertexAlgebra.SourceMobius

@@ -115,26 +115,4 @@ theorem sourceFlow_add (D : LatticeData) (u v : ℂ) :
     sourceFlow D u (sourceFlow D v (Finsupp.single a p))
   rw [sourceFlow_single, sourceFlow_single, sourceFlow_single, sectorFlow_add]
 
-private theorem sourceFlow_zero (D : LatticeData) : sourceFlow D 0 = LinearMap.id := by
-  apply Finsupp.lhom_ext'
-  intro a
-  apply LinearMap.ext
-  intro p
-  change sourceFlow D 0 (Finsupp.single a p) = Finsupp.single a p
-  rw [sourceFlow_single, sectorFlow_zero]
-
-/-- The original finite source-coordinate operation is invertible, with no
-energy-space finiteness or analytic exponential. -/
-def sourceFlowEquiv (D : LatticeData) (u : ℂ) : Carrier D ≃ₗ[ℂ] Carrier D where
-  __ := sourceFlow D u
-  invFun := sourceFlow D (-u)
-  left_inv v := by
-    change (sourceFlow D (-u) * sourceFlow D u) v = v
-    rw [← sourceFlow_add, neg_add_cancel, sourceFlow_zero]
-    rfl
-  right_inv v := by
-    change (sourceFlow D u * sourceFlow D (-u)) v = v
-    rw [← sourceFlow_add, add_neg_cancel, sourceFlow_zero]
-    rfl
-
 end D5.S3.VertexAlgebra.SourceMobius

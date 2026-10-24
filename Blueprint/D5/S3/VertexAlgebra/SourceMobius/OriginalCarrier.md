@@ -52,7 +52,7 @@ Lean statement: `D5/S3/VertexAlgebra/SourceMobius/OriginalCarrier.sourceFlow_add
 
 *Commentary.*
 
-The charge-sector algebra composition law extends to additive parameter composition on the original finite charge direct sum and supplies its linear equivalence.
+The charge-sector algebra composition law extends to additive parameter composition on the original finite charge direct sum.
 
 The imported Sugawara architecture retains Kalle Kytola attribution. No literature novelty is claimed. Full all-source corrected-field adjointness, the K_L/K_R coefficient law and the complete Monster, VOA, CFT, fusion, string-theory and AdS/CFT goal remain open.
 

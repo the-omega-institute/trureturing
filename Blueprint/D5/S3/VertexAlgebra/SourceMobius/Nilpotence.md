@@ -28,7 +28,7 @@ Lean statement: `D5/S3/VertexAlgebra/SourceMobius/Nilpotence.sectorL1_degree_bou
 
 *Commentary.*
 
-The existing weighted total degree bounds the entire finite monomial support, including constants and zero.
+The existing weighted total degree bounds the entire finite monomial support, including constants and zero. The proof directly reuses Mathlib's Module.End.pow_map_zero_of_le to extend the monomial annihilation bound.
 
 **Theorem 1.3 (sugawara_pow_single).**
 
@@ -52,7 +52,7 @@ Lean statement: `D5/S3/VertexAlgebra/SourceMobius/Nilpotence.sugawara_one_locall
 
 *Commentary.*
 
-Finite charge support gives actual Sugawara local nilpotence without any assumption on signed charge norm.
+Finite charge support gives actual Sugawara local nilpotence without any assumption on signed charge norm. Mathlib's Module.End.pow_map_zero_of_le directly extends each finite-support annihilation bound to the common exponent.
 
 The imported Sugawara architecture retains Kalle Kytola attribution. No literature novelty is claimed. Full all-source corrected-field adjointness, the K_L/K_R coefficient law and the complete Monster, VOA, CFT, fusion, string-theory and AdS/CFT goal remain open.
 

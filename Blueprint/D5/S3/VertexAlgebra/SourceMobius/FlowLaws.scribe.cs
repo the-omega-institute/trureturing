@@ -17,12 +17,6 @@ internal sealed class FlowLawsDocument : IScribeDocumentDefinition
                 DeclarationHandle.Create("D5/S3/VertexAlgebra/SourceMobius/FlowLaws.sectorFlow_zero"),
                 H("sectorFlow_zero"), StatementSource.WithoutFormula(),
                 AssessedProvenance.FromLiterature(Source),
-                Blocks(Paragraph(Text("The zero parameter is identity, including zero and constants. This supplies the inverse construction."))), DescribeRole.Theorem),
-            Describe.Lean(
-                DescribeId.Create("sourcemobius-flowlaws-sectorflow-neg"),
-                DeclarationHandle.Create("D5/S3/VertexAlgebra/SourceMobius/FlowLaws.sectorFlow_neg"),
-                H("sectorFlow_neg"), StatementSource.WithoutFormula(),
-                AssessedProvenance.FromLiterature(Source),
-                Blocks(Paragraph(Text("Opposite parameters are inverses; this law is consumed by the sector algebra equivalence."))), DescribeRole.Theorem),
+                Blocks(Paragraph(Text("The zero parameter is identity, including zero and constants."))), DescribeRole.Theorem),
             Paragraph(Text("The imported Sugawara architecture retains Kalle Kytola attribution. No literature novelty is claimed. Full all-source corrected-field adjointness, the K_L/K_R coefficient law and the complete Monster, VOA, CFT, fusion, string-theory and AdS/CFT goal remain open.")))));
 }

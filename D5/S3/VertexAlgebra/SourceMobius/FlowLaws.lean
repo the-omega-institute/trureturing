@@ -91,9 +91,4 @@ theorem sectorFlow_zero (D : LatticeData) (a : Charge D) (p : Oscillator D) :
   rw [← Polynomial.coeff_zero_eq_eval_zero]
   simpa using flowPolynomial_coeff D a p 0
 
-/-- Inverse parameters give the actual inverse finite source operation. -/
-theorem sectorFlow_neg (D : LatticeData) (a : Charge D) (u : ℂ) (p : Oscillator D) :
-    sectorFlow D a (-u) (sectorFlow D a u p) = p := by
-  rw [← sectorFlow_add, neg_add_cancel, sectorFlow_zero]
-
 end D5.S3.VertexAlgebra.SourceMobius

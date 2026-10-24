@@ -94,14 +94,4 @@ theorem sectorFlow_eq_aeval (D : LatticeData) (a : Charge D) (u : ℂ) :
   intro x
   simpa using sectorFlow_X D a u x.1 x.2
 
-/-- Each finite charge-sector flow is an algebra equivalence with inverse parameter -u. -/
-def sectorFlowEquiv (D : LatticeData) (a : Charge D) (u : ℂ) :
-    Oscillator D ≃ₐ[ℂ] Oscillator D where
-  __ := sectorFlow D a u
-  invFun := sectorFlow D a (-u)
-  left_inv := sectorFlow_neg D a u
-  right_inv p := by
-    change sectorFlow D a u (sectorFlow D a (-u) p) = p
-    rw [← sectorFlow_add, add_neg_cancel, sectorFlow_zero]
-
 end D5.S3.VertexAlgebra.SourceMobius
