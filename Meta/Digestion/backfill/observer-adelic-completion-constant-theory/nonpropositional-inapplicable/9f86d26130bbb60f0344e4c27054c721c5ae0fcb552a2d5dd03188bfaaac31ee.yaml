@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:9f86d26130bbb60f0344e4c27054c721c5ae0fcb552a2d5dd03188bfaaac31ee
+  normalized_sha256: sha256:9f86d26130bbb60f0344e4c27054c721c5ae0fcb552a2d5dd03188bfaaac31ee
+cas_ref: sha256:9f86d26130bbb60f0344e4c27054c721c5ae0fcb552a2d5dd03188bfaaac31ee
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: Atom text is a continuation/list fragment (* 极端配置是否必然具有 rigid structure。); it contains no standalone mathematical assertion to formalize.
+    previous_atom_id: 68179ad8cf23d6c4f4b37591f08bf1c5a7f9661cd81aa1cde26c225e9ad76c43
+    next_atom_id: 6639746a301144a76992b6b587468885cebf513f4dfe73be91e4a9703cbd1dcc
