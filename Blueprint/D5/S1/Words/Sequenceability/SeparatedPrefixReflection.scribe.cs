@@ -156,7 +156,7 @@ internal sealed class SeparatedPrefixReflectionDocument : IScribeDocumentDefinit
                 ("A",FinsetG),("a",G),("b",G),("w",ListG),("t",Nat))),
                 "AdaptiveMergeRepair.expanded_permutation consumes the original theorem at t = length(L), "
                 + "with w = L ++ [a+b] ++ R and the actual LegalPair membership, distinctness and sum-exclusion facts. "
-                + "This is a consumed bind-only normalization helper, also used by same_pair_repair; no new-content claim is made.")
+                + "This normalization helper is also used by same_pair_repair.")
         ];
     }
 

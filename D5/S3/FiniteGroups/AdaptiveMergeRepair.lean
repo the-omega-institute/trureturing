@@ -1,6 +1,6 @@
-/- GID: D5/S1/Words/Sequenceability/AdaptiveMergeRepair
+/- GID: D5/S3/FiniteGroups/AdaptiveMergeRepair
    generality: G
-   mirror-B: D5/B/S1/Words/Sequenceability/AdaptiveMergeRepair
+   mirror-B: D5/B/S3/FiniteGroups/AdaptiveMergeRepair
    mirror-E: none(waiver:unbounded-symbolic-proof)
    anchors: []
    utility: none
@@ -11,7 +11,7 @@ import D5.S3.FiniteGroups.RestrictedPairSumClassification
 
 set_option autoImplicit false
 noncomputable section
-namespace D5.S1.Words.Sequenceability.AdaptiveMergeRepair
+namespace D5.S3.FiniteGroups.AdaptiveMergeRepair
 open _root_.D5.S1.Words.Sequenceability.AdaptiveMergePrefix
 open _root_.D5.S1.Words.Sequenceability.AdaptiveMergeSignedFork
 open _root_.D5.S1.Words.Sequenceability.AdaptiveMergeZeroCrossing
@@ -197,4 +197,4 @@ theorem adaptive_of_partition_blocks {A : Finset G} {P : Finset (Finset G)}
   adaptive_of_no_singleton_crossing H hedge
     (partition_blocks_no_singleton_crossing hpart hunions)
 
-end D5.S1.Words.Sequenceability.AdaptiveMergeRepair
+end D5.S3.FiniteGroups.AdaptiveMergeRepair
