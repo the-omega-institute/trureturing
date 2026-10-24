@@ -629,6 +629,34 @@ unsafe def executeProbeFile (path : System.FilePath) : CommandElabM Unit := do
       (owners.getElems.map (·.getId)) name.getId
   | _ => throwUnsupportedSyntax
 
+/-- Recheck child publication data and proofs in the parent environment. -/
+unsafe def replayPublication (constants : Array ConstantInfo) (target name : Name) : MetaM Unit :=
+    withPublicationContext do
+  for n in #[name ++ `baseline, name ++ `paired, name ++ `reason,
+      name ++ `presentation, name ++ `scope, name ++ `configuration,
+      name ++ `loadedCount, name ++ `catalogCount, name ++ `loadedModules,
+      name ++ `catalogExcluded, name ++ `pairedStructureUse,
+      name ++ `catalogVerified, name ++ `presentationSource,
+      name ++ `presentationConversion, name ++ `presentationProof,
+      name ++ `graphReading, name ++ `verdictProof,
+      name ++ `verdictWithNoHit, name,
+      name ++ `baselineProof, name ++ `pairedProof,
+      name ++ `baselineFailureGuard] do
+    match constants.find? (·.name == n) with
+    | some (.defnInfo info) => addAndCompile (.defnDecl info)
+    | some (.thmInfo info) =>
+      -- The child may use baseline vocabulary loaded for fixed tactics
+      -- that the request module itself does not import. Reconstruct that
+      -- support before rechecking the exported proof in the parent.
+      let dependencies := info.type.getUsedConstants ++ info.value.getUsedConstants
+      unless dependencies.all (← getEnv).contains do
+        enableInitializersExecution
+        let source ← referenceEnvironment
+        for dependency in dependencies do
+          exportConstant source target dependency
+      discard <| checkProof n info.levelParams info.type info.value
+    | _ => pure ()
+
 syntax (name := searchReductionCmd) "#search_reduction " ident " at " str
   " baseline " "[" ident,* "]" " using " "[" ident,* "]"
   (" information " ident)? " as " ident : command
@@ -703,31 +731,7 @@ indexes. Only compiled Lean declarations are read back; JSON is print-only. -/
     unless child.stderr.isEmpty do logInfo child.stderr
     let (projected, region) ← readModuleData output
     probeRegions.modify (·.push region)
-    liftTermElabM do
-      for n in #[name.getId ++ `baseline, name.getId ++ `paired, name.getId ++ `reason,
-          name.getId ++ `presentation, name.getId ++ `scope, name.getId ++ `configuration,
-          name.getId ++ `loadedCount, name.getId ++ `catalogCount, name.getId ++ `loadedModules,
-          name.getId ++ `catalogExcluded, name.getId ++ `pairedStructureUse,
-          name.getId ++ `catalogVerified, name.getId ++ `presentationSource,
-          name.getId ++ `presentationConversion, name.getId ++ `presentationProof,
-          name.getId ++ `graphReading, name.getId ++ `verdictProof,
-          name.getId ++ `verdictWithNoHit, name.getId,
-          name.getId ++ `baselineProof, name.getId ++ `pairedProof,
-          name.getId ++ `baselineFailureGuard] do
-        match projected.constants.find? (·.name == n) with
-        | some (.defnInfo info) => addAndCompile (.defnDecl info)
-        | some (.thmInfo info) =>
-          -- The child may use baseline vocabulary loaded for fixed tactics
-          -- that the request module itself does not import. Reconstruct that
-          -- support before rechecking the exported proof in the parent.
-          let dependencies := info.type.getUsedConstants ++ info.value.getUsedConstants
-          unless dependencies.all (← getEnv).contains do
-            enableInitializersExecution
-            let source ← referenceEnvironment
-            for dependency in dependencies do
-              exportConstant source target.getId dependency
-          discard <| checkProof n info.levelParams info.type info.value
-        | _ => pure ()
+    liftTermElabM <| replayPublication projected.constants target.getId name.getId
   | _ => throwUnsupportedSyntax
 
 syntax (name := searchReductionCatalogCmd) "#search_reduction_catalog " str : command

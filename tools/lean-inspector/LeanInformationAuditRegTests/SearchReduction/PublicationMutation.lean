@@ -30,6 +30,7 @@ run_cmd liftTermElabM do
 
 /- Publication must not inherit a request wrapper's recursion limit. -/
 run_cmd liftTermElabM <| withOptions (fun opts => opts.set `maxRecDepth (32 : Nat)) do
+  let before ← getEnv
   let reading : GraphReading := {
     graph := { vertices := (List.range 128).map fun id => { id } } }
   publish `largePublication {
@@ -38,3 +39,8 @@ run_cmd liftTermElabM <| withOptions (fun opts => opts.set `maxRecDepth (32 : Na
   let axioms ← collectAxioms `largePublication.verdictProof
   unless standardAxioms axioms do throwError "large publication has nonstandard axioms"
   logInfo "large GraphReading publication: kernel equality checked"
+  let constants ← #[`largePublication.graphReading, `largePublication.verdictProof,
+    `largePublication.verdictWithNoHit, `largePublication].mapM getConstInfo
+  for _ in [(), ()] do
+    withEnv before <| replayPublication constants `largePublication `largePublication
+  logInfo "repeated parent publication replay: kernel equalities rechecked"
