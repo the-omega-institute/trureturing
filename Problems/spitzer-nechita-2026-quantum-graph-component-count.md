@@ -36,7 +36,7 @@ The bounded check recorded in [issue #20910](https://github.com/the-omega-instit
 
 2. **Commutant reduction.** The columns of the realigned projector give a Kraus representation of `adjacency A C d`. A Gram-sum argument turns the separating condition in `HasComponents` into commutation of each resolving projection with every column. Thus the greatest-component problem becomes a commutant-resolution problem.
 
-3. **Upper bound.** Commutation forces diagonal entries to be constant along every reachable path of `underlyingGraph A C`. A nonzero off-diagonal entry of a commuting Hermitian projection can occur only on a two-vertex component with $A_{ij}=1/2$ and zero endpoint diagonal, exactly the predicate `IsLoopFreeStrangeComponent`. An injective choice of one vertex from every ordinary component and a second vertex from every exceptional component gives the bound $k \le c+s_0$.
+3. **Upper bound.** Commutant diagonals are constant on components. For commuting Hermitian $P$, $P_{ij}\ne0$ ($i\ne j$) forces $i$ into a loop-free strange component if it has a neighbor. Select one vertex per component and both endpoints of exceptional components. Isolated vertices are singleton components, each retained as one dimension. Off-diagonals incident to omitted vertices vanish; compression yields nonzero idempotents summing to identity, hence $k\le c+s_0$.
 
 4. **Attainment.** The projection onto each graph component commutes with all Kraus columns. For every loop-free strange component, a square root of the phase produces a rank-one edge projection; its complement inside the component projection is another nonzero commuting projection. Splitting precisely those components yields a resolution indexed by all graph components plus one extra index for each exceptional component, so the bound is attained and the `IsGreatest` statement follows.
 
@@ -78,11 +78,10 @@ The module is admitted under the open-problem-resolution basis of CLAUDE.md §3.
 
 **Argued, not formalized.**
 
-- **Mechanism.** The commutant reduction explains the count: a connected component normally contributes one central component projection, while a loop-free strange pair contributes two rank-one phase eigenspaces. The phase enters the eigenvectors but not the number of eigenspaces, so every phase has the same count in this exceptional case.
+- **Mechanism.** The attaining resolution uses one component projection on each nonexceptional component and splits each loop-free strange pair into two rank-one phase eigenspaces. The phase enters the eigenvectors but not the number of eigenspaces, so every phase has the same count in this exceptional case.
 - **Sharpness and nearby cases.** The `IsGreatest` conclusion includes an explicit commuting resolution attaining the upper bound. A connected component with more than two vertices, a classical edge component, or a strange pair with a nonzero endpoint diagonal has no additional summand in the formula. The predicate `IsLoopFreeStrangeComponent` is the exact boundary used by the theorem.
 - **Effect on the source.** Within this formal reading, the source's phase-$\pi$ disjoint-edge example is the case in which every component is exceptional, so the formula explains the doubling. The source's broader $X_{A,B,C}$ questions with a nontrivial $B$, and its separate clique, colouring, and quantum-symmetry questions, are unaffected. The source's earlier connectedness and lower-bound propositions remain compatible with this exact count.
 
 ## ASSUMED-UNVERIFIED
 
 The literature check is bounded to the records reported in issue #20910 and does not establish exhaustive worldwide novelty, priority, or the absence of an unpublished settlement. The direct source reading covered arXiv v3, including `content/conclusion.tex`, `content/graphtheory/conncomp.tex`, `content/groupactions.tex`, and `content/prelims.tex`; the source-to-Lean correspondence beyond the declarations in this module is not independently formalized. The phase-convention comparison mentioned in the preregistration, the source's full $X_{A,B,C}$ definitions, and the source's other propositions are not separate declarations here. The hand computation and the arguments in “Argued, not formalized” are not formalized as independent results.
-

@@ -67,7 +67,7 @@ internal sealed class QuantumGraphStrangeComponentCountDocument : IScribeDocumen
                     + "Each unordered two-vertex component is counted once, independently of the choice of its two endpoints. "
                     + "The subtype cardinality is a natural number, with no scalar conversion."),
             Node("claim", "claim", "The exact-count assertion",
-                Equivalent(Name("claim"), ClaimFormula()), AssessedProvenance.FromLiterature(Source),
+                Equivalent(Name("claim"), ClaimFormula()), AssessedProvenance.FromRepo(Source),
                 "The common diagonal conditions are A i i = d i and C i i = d i for every i. "
                     + "The realigned matrix is self-adjoint and idempotent, and offDiag A is self-adjoint. "
                     + "For every natural size n, the assertion says that the sum of the two displayed natural counts is both attainable "
