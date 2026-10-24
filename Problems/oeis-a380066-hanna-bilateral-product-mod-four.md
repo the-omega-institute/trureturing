@@ -115,3 +115,15 @@ The integral solution is unique. The proof makes no assertion about uniqueness a
 ## ASSUMED-UNVERIFIED
 
 Literature completeness is `ASSUMED-UNVERIFIED`. The bilateral interpretation is the explicit coefficientwise-window convention of #18805; no analytic summability or convergence assertion is made. Rational uniqueness, the symmetry question, and parameter zero remain outside this settlement.
+
+The public agreement, geometric-series, fixed-point and Laurent correspondence interface is
+owned by `D5/S1/Recurrence/Bilateral/BilateralProductModFour`. Its original statements and
+proofs are reused directly. The four-slot audits for `agree_iff`, `agree_refl`, `agree_add`,
+`agree_mul`, `agree_pow`, `agree_inverse`, `agree_shift`, `geometric_spec`, `geometric_coeff`,
+`equation_iff`, `embed_coeff`, `embed_injective`, `embed_inverse`, `negative_factorization`,
+`laurent_zero` and `zeroTerm_series` are unfinished under
+[#20261](https://github.com/the-omega-institute/trureturing/issues/20261): no complete
+source telescope reconstruction, lawful source selection and whole-family sensitivity
+evidence is supplied for these public interface theorems. The existing audit of
+`ofSeries_inverse` remains unfinished under
+[#19114](https://github.com/the-omega-institute/trureturing/issues/19114).
