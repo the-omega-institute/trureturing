@@ -9,7 +9,6 @@
 import D5.S3.Observer.MatrixUnitCertificate
 import D5.S3.Quantum.Algebra.WeylDisplacementPowers
 import Mathlib.LinearAlgebra.UnitaryGroup
-import Mathlib.Tactic.NormNum
 import Mathlib.Tactic.Ring
 
 /-! A five-dimensional counterexample to steering power preservation. -/
