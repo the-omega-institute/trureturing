@@ -14,6 +14,7 @@ import D5.S3.Quantum.QuantumChannels.PositiveFilterTransposeRefutation
 import D5.S3.Quantum.Magic.WignerDistanceMinimum
 import D5.S3.Quantum.Information.EntanglementDistanceBellDiagonalRefutation
 import D5.S3.Quantum.Measurement.StabilizerPovmMaximalEntanglementRefutation
+import D5.S3.Quantum.Information.SeparableStateLocalUnitaryStabilizerObstruction
 
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
@@ -157,14 +158,14 @@ private theorem spectral_density (j : Fin 3) (s : Bool) :
     IsDensity (D5.S3.Quantum.Magic.WignerDistanceMinimum.spectral (axis j)
       (if s then 1 else 0)) := by
   have hj : axis j ≠ .I := by fin_cases j <;> decide
-  obtain ⟨_, U, _, _, _, hn, _, he⟩ :=
+  obtain ⟨_, U, _, _, _, _, _, he⟩ :=
     D5.S3.Quantum.Magic.WignerDistanceMinimum.spectral_stabilizer (axis j)
       (if s then 1 else 0) hj
-  rw [he]
-  refine ⟨Matrix.posSemidef_vecMulVec_self_star _, ?_⟩
-  simpa only [Matrix.trace, Matrix.diag_apply, Matrix.vecMulVec_apply, Pi.star_apply,
-    Complex.star_def, Complex.mul_conj', ← Complex.ofReal_sum, ← Complex.ofReal_pow,
-    hn, Complex.ofReal_one]
+  refine ⟨?_, ?_⟩
+  · rw [he]
+    exact Matrix.posSemidef_vecMulVec_self_star _
+  · exact D5.S3.Quantum.Information.SeparableStateLocalUnitaryStabilizerObstruction.pauli_projector_trace
+      (axis j) hj s
 
 private def parityProduct (j : Fin 3) (s : Bool × Bool × Bool) : Matrix Q Q ℂ :=
   let P := D5.S3.Quantum.Magic.WignerDistanceMinimum.spectral (axis j)
