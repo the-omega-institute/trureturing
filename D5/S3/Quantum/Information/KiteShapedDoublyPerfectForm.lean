@@ -7,14 +7,10 @@
    digest: Binary kite forms are doubly perfect exactly off one residue modulo three. -/
 
 import D5.S3.Quantum.FockSpace.ForbiddenNeighbourDeterminant
-import Mathlib.Algebra.Field.ZMod
-import Mathlib.Algebra.CharP.Two
-import Mathlib.LinearAlgebra.Matrix.SchurComplement
-import Mathlib.LinearAlgebra.Matrix.ToLinearEquiv
-import Mathlib.Tactic.FinCases
-import Mathlib.Tactic.NormNum
 
 set_option autoImplicit false
+
+/-! Kite matrices over the binary field and their quadratic and symplectic block forms. -/
 
 namespace D5.S3.Quantum.Information.KiteShapedDoublyPerfectForm
 
@@ -133,7 +129,7 @@ private lemma tridiagonal_det_zero (n : ℕ) : (tridiagonal n).det = 0 ↔ n % 3
     intro k
     induction k using Nat.twoStepInduction with
     | zero => simp
-    | one => simp [Matrix.det_fin_one, tridiagonal]
+    | one => simp [tridiagonal]
     | more k hk hk1 =>
         rw [tridiagonal_recurrence, hk, hk1]
         have hm : k % 3 = 0 ∨ k % 3 = 1 ∨ k % 3 = 2 := by omega
@@ -163,7 +159,7 @@ private lemma quadratic_det (n : ℕ) : (quadraticForm n).det = 1 := by
 
 private lemma symplectic_det (n : ℕ) :
     (quadraticForm n + symplecticForm n).det = (kite n * kite n - 1).det := by
-  letI : Invertible (kite n) := invertibleOfRightInverse _ _ (kite_inverse n)
+  let : Invertible (kite n) := invertibleOfRightInverse _ _ (kite_inverse n)
   have hi : ⅟(kite n) = inverseKite n := invOf_eq_right_inv (kite_inverse n)
   have hb : quadraticForm n + symplecticForm n =
       Matrix.fromBlocks (kite n) 1 1 (kite n) := by
