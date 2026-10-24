@@ -198,7 +198,7 @@ $$
 
 Thus the actual complete higher-layer cost is eventually positive,
 uniformly for all original integers. On the actual strict CA family,
-[HCB3](polak2026finiterobinca.md#actual-strict-ca-sources-have-a-root-small-own-price-higher-baseline)
+[HCB3](../Analytic/polak2026finiterobinca.md#actual-strict-ca-sources-have-a-root-small-own-price-higher-baseline)
 makes its normalized limit exactly $2\sqrt2(1-b_+)>0$.
 This differs from HCB4's negative limit under its other, unchanged source.
 
