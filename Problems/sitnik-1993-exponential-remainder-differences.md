@@ -82,23 +82,21 @@ $$\Delta^3g_1(1)=g_4(1)-3g_3(1)+3g_2(1)-g_1(1)$$
 $$=\frac{e-8/3}{e-65/24}-3\frac{e-5/2}{e-8/3}
 +3\frac{e-2}{e-5/2}-\frac{e-1}{e-2}.$$
 
-The common-denominator identity is
-
-$$\Delta^3g_1(1)=
-\frac{12e^3+34e^2-457e+750}
-{288(e-2)(e-5/2)(e-8/3)(e-65/24)}.$$
-
 Put $L=2.7182818283$ and $U=2.7182818286$.
-Mathlib's `Real.exp_one_gt_d9` and `Real.exp_one_lt_d9` give $L<e<U$.
-The four denominator factors are positive, and
+Mathlib's `Real.exp_one_gt_d9` and `Real.exp_one_lt_d9` give $L<e<U$, so the
+four denominators are positive. Each ratio $(e-a)/(e-b)$ is monotone in $e$,
+and clearing its single denominator gives a linear inequality in $e$:
 
-$$12e^3+34e^2-457e+750
-<12U^3+34U^2-457L+750<0.$$
+$$\frac{e-8/3}{e-65/24}<5.188239,\qquad
+\frac{e-5/2}{e-8/3}>4.229025,$$
+$$\frac{e-2}{e-5/2}<3.290617,\qquad
+\frac{e-1}{e-2}>2.392211.$$
 
-The last comparison is an exact rational calculation. The draft Lean
-proof uses monotonicity of the second and third powers and `linarith`;
-the finite sums use `Finset.sum_range_succ` and `norm_num`, and the
-common-denominator identity uses `field_simp` and `ring`.
+Hence $\Delta^3g_1(1)<5.188239-3(4.229025)+3(3.290617)-2.392211=-0.019196<0$.
+The Lean proof evaluates the finite sums with `Finset.sum_range_succ` and
+`norm_num`, obtains each bound with `div_lt_iff₀` or `lt_div_iff₀` and
+`linarith`, and combines the four bounds linearly. The common-denominator form
+of the same quantity is $(12e^3+34e^2-457e+750)/(288(e-2)(e-5/2)(e-8/3)(e-65/24))$.
 
 ## Falsifier
 
