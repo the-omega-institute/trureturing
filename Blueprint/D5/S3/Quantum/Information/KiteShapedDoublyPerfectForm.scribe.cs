@@ -102,7 +102,7 @@ internal sealed class KiteShapedDoublyPerfectFormDocument : IScribeDocumentDefin
                 DeclarationHandle.Create(Module + ".claim"),
                 H("The exact residue criterion"),
                 StatementSource.FromAuthor(Disp(Eq(Typed(Named("claim"), Named("Prop")), Parenthesized(Claim)))),
-                AssessedProvenance.FromLiterature(Source),
+                AssessedProvenance.FromRepo(Source),
                 Blocks(Paragraph(Text(
                     "For every positive n, the kite matrix is symmetric and has trivial right kernel, as does its "
                     + "block-diagonal quadratic form. Each of the two remaining right kernels is trivial exactly "
