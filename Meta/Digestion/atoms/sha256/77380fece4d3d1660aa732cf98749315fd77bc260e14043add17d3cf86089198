@@ -1,2 +1,0 @@
-**定义 10.3(定义的价值)**〔引〕。一个定义 $d$ 对命题 $\varphi$ 的证明增益为 $\mathrm{ProofGain}(d;\varphi)=L(\varphi)-\big(c(d)+L_{+d}(\varphi)\big)$:引入 $d$ 后总描述是否更短(DECT 第 14.3 节)。
-

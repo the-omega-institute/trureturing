@@ -1,9 +1,0 @@
-fingerprints:
-  raw_sha256: sha256:47823337651367bf6ca558cdba9d39a6d08c09b9b991c47fa0b5490f2a253a27
-  normalized_sha256: sha256:47823337651367bf6ca558cdba9d39a6d08c09b9b991c47fa0b5490f2a253a27
-cas_ref: sha256:47823337651367bf6ca558cdba9d39a6d08c09b9b991c47fa0b5490f2a253a27
-coverage_gids:
-  - gid: D5/S3/Observer/BlockStructure/ProjectionCommutatorCrossBlockCriterion.projection_commutator_cross_blocks
-    target_statement_id: sha256:db139326a5732205e3b3d3cf375d5ab1555b3efdb45972a4223d0c6ac8d42b67
-receipts:
-  unresolved_subitems: []

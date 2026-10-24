@@ -1,8 +1,0 @@
-同时意味着：
-
-- 端点条件独立；
-- 条件熵最大；
-- $\kappa=\frac{XY}{1-Z}$；
-- transfer matrix 降秩；
-- 一个 continuation 方向不可逆恢复。
-

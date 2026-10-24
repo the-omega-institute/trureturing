@@ -1,4 +1,0 @@
-### 证明
-
-第 1 项由定理 375.2—375.3 和 376.2—376.4；第 2 项由定理 377.3；第 3 项由 \(\mathsf{PathCost},\mathsf{Couplings}\) 及有限运输规划决定；第 4 项由 \(\mathsf{Kernels},\mathsf{Budget},\mathsf{Event},\mathsf{Stop}\) 对有限策略树归纳。故声明范围内的任务响应相同。证毕。
-

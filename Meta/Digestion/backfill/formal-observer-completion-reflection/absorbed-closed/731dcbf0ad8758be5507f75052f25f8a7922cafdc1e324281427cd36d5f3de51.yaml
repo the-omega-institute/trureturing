@@ -1,9 +1,0 @@
-fingerprints:
-  raw_sha256: sha256:731dcbf0ad8758be5507f75052f25f8a7922cafdc1e324281427cd36d5f3de51
-  normalized_sha256: sha256:731dcbf0ad8758be5507f75052f25f8a7922cafdc1e324281427cd36d5f3de51
-cas_ref: sha256:731dcbf0ad8758be5507f75052f25f8a7922cafdc1e324281427cd36d5f3de51
-coverage_gids:
-  - gid: D5/S3/Observer/Budget/FiniteInternalProtocolNoGo.finite_internal_protocol_no_go
-    target_statement_id: sha256:4d766f7fb9c600d895527ff35d19c309f1e7984a482f2fc4d555c61686b518f8
-receipts:
-  unresolved_subitems: []

@@ -1,9 +1,0 @@
-fingerprints:
-  raw_sha256: sha256:12071c57d96f829735e42b128d1faaa0363728ce418b4893c018af46f86574e8
-  normalized_sha256: sha256:12071c57d96f829735e42b128d1faaa0363728ce418b4893c018af46f86574e8
-cas_ref: sha256:12071c57d96f829735e42b128d1faaa0363728ce418b4893c018af46f86574e8
-coverage_gids:
-  - gid: D5/S3/PrimeForms/Splitting/ModFiveOrientationBit.mod_five_orientation_separates_fibers_but_is_not_homomorphic
-    target_statement_id: sha256:b9c9953fd5123caf83086176146edbdb7a8373f2658bc0dde31c79466b231933
-receipts:
-  unresolved_subitems: []

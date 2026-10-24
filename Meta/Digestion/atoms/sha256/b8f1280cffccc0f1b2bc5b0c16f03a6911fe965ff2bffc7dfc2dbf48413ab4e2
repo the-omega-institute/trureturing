@@ -1,6 +1,0 @@
-# 2026-09-07：跨素数 3 阈值的统一强制性、真实谱间隔与低频端点结构
-
-新 Lean 为 `WeilPrimeActivationEdge.lean`，有同名 Scribe。新实际执行源为 `research/weil_ground_mode/certify_prime3_scale_schur.py`，结果为 `prime3_scale_schur_certificate.json`；第二表达诊断为 `test_prime3_scale_schur.py` 及其结果。源码与伴随先写回，再交付计算结果和本节增补。
-
-本轮将前节的极小存在性邻域换成一个实际统一计算的闭区间。旧 `certify_prime3_refined.py` 只作为钉住哈希的算术运算库与明确候选来源复用；本轮不调用它的谱验证入口，不读取旧谱 JSON 作为下界假设。以下全空间结论仍承接原 Fourier 矩阵、闭形式域与无限尾的纸面识别，不冒称完整 Lean 内核证书。新 Lean 和 Scribe 未运行编译。
-

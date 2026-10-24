@@ -1,8 +1,0 @@
-### 81.7 预测来源边界的适用范围与成熟来源
-
-本节是普通 repo-derived 综合：承重内容是无截断 FIB 替换与两个明确抽样权限的结合，以及共同可测自适应控制下的式（81.13）–（81.14）。它仅为理论推导，没有本节的 Lean 内核认证，也不主张世界原创性。合同 A 的比例类和合同 B 的计数类都是来源态的预测边界；它们不自动成为观察者已取得的状态，更不自动给出四视图的实际恢复、来源身份或树结构恢复。
-
-Littman、Sutton、Singh 的 [Predictive Representations of State](https://proceedings.neurips.cc/paper_files/paper/2001/file/1e4d36177d71bbb3558e43af9577d70e-Paper.pdf)（2001）提供用未来测试概率描述预测状态的背景，不提供本节无界 FIB 合同的核识别或自适应停止定理。式（81.6）的无放回有限总体因子沿用第81.3节所引经典抽样材料；计数更新沿用 FIB 卷第3节，不将它们另算为新增通用定理。
-
-仓内 [FinitePrefixInfiniteCompletionSeparation](../../../D5/S3/ConceptDynamics/ExperimentBoundary/FinitePrefixInfiniteCompletionSeparation.lean)处理既有 Bernoulli 系统的有限前缀律互相绝对连续与完整律分离，可作为“有限资料与完整律不同”的数学背景；它不代替定理81.10的无界、动作依赖和随机控制器论证。[ControlledBehaviorUniversality](../../../D5/S3/ObserverMemory/Prediction/ControlledBehaviorUniversality.lean)的有限确定性受控实现假设也不覆盖本节的无界随机来源。第80节有限 cutoff 合同下的具体分离、第39–42节的一般实际历史接口、观察者存储与实际抽样成本均保持各自适用条件，本节没有给出这些更大任务的完成结论。
-

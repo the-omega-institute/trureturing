@@ -1,9 +1,0 @@
-fingerprints:
-  raw_sha256: sha256:399f86f237f8f5e9c1238dfbf689025577c0a63da0168208383816b28f8b9707
-  normalized_sha256: sha256:399f86f237f8f5e9c1238dfbf689025577c0a63da0168208383816b28f8b9707
-cas_ref: sha256:399f86f237f8f5e9c1238dfbf689025577c0a63da0168208383816b28f8b9707
-coverage_gids:
-  - gid: D5/S3/Analytic/SeriesInequalities/CriticalDampedPhaseLimit.extension_graded
-    target_statement_id: sha256:93c2e0a672e8d5f9ef7562298b2c2cf6975b72ecdb85cf19ffcca7eb1165c39d
-receipts:
-  unresolved_subitems: []

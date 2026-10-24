@@ -1,4 +1,0 @@
-**定理 40.3（三种关系的分型）。** 共同占位、经典共同来源相关和相干干涉不能仅凭交叉项一词互相推出。
-
-证明（40.3）。第 39.3 条的实数量平方已有非零交叉响应，而未使用量子态。经典概率中 $\mathbb E(xy)$ 只给共同占位事件的概率，不指定复振幅。即使把合法位串作为正交基，$|101\rangle$ 与 $(|100\rangle+|001\rangle)/\sqrt2$ 仍为不同向量：前者的共同占位概率为一，后者为零。假设 40.1 使用的是同一输出端的通道开闭，不能将这两种输入认成同一个 $25$。此外 [相干运输边界，命题 2.3](https://github.com/the-omega-institute/trureturing/blob/94fb8f7b14e6dca112b6806810ed40d59e096bfe/docs/develop/theory/FIBONACCI_COHERENT_TRANSPORT_BOUNDARY.md)只证明计算基置换与实际计算基对角 Kraus 分支不读相位；仅效果对角不足以套用该结论。因而干涉式的适用性依赖本章新增的振幅、记录和探测合同。$\square$
-

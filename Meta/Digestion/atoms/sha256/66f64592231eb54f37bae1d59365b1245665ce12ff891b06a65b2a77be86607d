@@ -1,2 +1,0 @@
-**约定 2.5（图态的稳定子与局部补）。** $X,Y,Z$ 是单比特 Pauli 矩阵,$P_u$ 表示作用在第 $u$ 个量子比特上的 $P$,$\mathsf S=\operatorname{diag}(1,i)$。对 $[N]$ 上的图 $\Gamma$ 与顶点 $w$,记 $N_\Gamma(w)$ 为邻域,$K_w=X_w\prod_{u\in N_\Gamma(w)}Z_u$。以下标准事实作为引用步骤使用(图态的稳定子刻画,先例见第 9 节 Hein、Eisert、Briegel 一行):$K_w|\Gamma\rangle=|\Gamma\rangle$;诸 $K_w$ 两两对易,生成不含 $-I$ 的 $2^N$ 元 Pauli 子群 $\mathcal S_\Gamma$,其公共 $+1$ 特征空间是一维的,由 $|\Gamma\rangle$ 张成。顶点 $v$ 处的局部补 $\tau_v(\Gamma)$ 是把 $N_\Gamma(v)$ 中两两不同顶点之间的边全部取反(有则删、无则添)所得的图;它不改变与 $v$ 相连的边。两图称为局部补等价,如果可以经有限次局部补互相得到。
-

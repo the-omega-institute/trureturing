@@ -1,6 +1,0 @@
-# Actual CP reset stability and quantitative rank horizons
-
-This companion volume concerns finite homogeneous binary completely positive instruments, their actual post-tick states, and the trace norm of the entire calibrated tick Choi matrix. Its quantitative conclusions allow arbitrary complex matrices. The exact support and renewal suppliers are identified in Section 2; the quantitative proofs and all obstruction families are given in Sections 3–5.
-
-The source format is `generic-v1`, with numbered declarations and an empty final append anchor. The text is ordinary handwritten mathematics and a reference input, not a kernel verification. No worldwide originality claim is made. Norm bounds, exact algebraic properties, classical output laws and implementation resources retain their separate meanings.
-

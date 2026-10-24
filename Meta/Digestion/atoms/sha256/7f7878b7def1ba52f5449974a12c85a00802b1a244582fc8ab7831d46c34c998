@@ -1,2 +1,0 @@
-**H-1**:观测保最大公因数。对一切正整数 \(m,n\):\(\mathrm{Gobs}(\gcd(m,n))=\gcd(\mathrm{Gobs}\,m,\mathrm{Gobs}\,n)\)。
-

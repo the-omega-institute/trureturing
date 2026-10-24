@@ -1,4 +1,0 @@
-### 20.3 有限隐藏核与极限记录
-
-令 $V_\infty=\varprojlim_hV_h=\mathbb Z_p^2$、$R_\infty=\varprojlim_h(R_h,\ell_h)$。相容记录诱导 $r_\infty:V_\infty\to R_\infty$；以下使用定理 20.2 的标准坐标，双射重标记按层运输结论。
-

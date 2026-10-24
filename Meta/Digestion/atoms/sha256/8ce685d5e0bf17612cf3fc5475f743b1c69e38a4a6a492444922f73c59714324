@@ -1,1 +1,0 @@
-定理 3.3 的证明中关于 $\mathrm{rank}$ 的论证只用到支撑图不含偶圈与边权非零,故同样给出 $\operatorname{rank}_KA=2\nu(H(A))$

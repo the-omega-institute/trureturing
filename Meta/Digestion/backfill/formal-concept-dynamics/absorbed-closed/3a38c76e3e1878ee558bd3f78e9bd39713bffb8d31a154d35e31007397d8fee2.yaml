@@ -1,9 +1,0 @@
-fingerprints:
-  raw_sha256: sha256:3a38c76e3e1878ee558bd3f78e9bd39713bffb8d31a154d35e31007397d8fee2
-  normalized_sha256: sha256:3a38c76e3e1878ee558bd3f78e9bd39713bffb8d31a154d35e31007397d8fee2
-cas_ref: sha256:3a38c76e3e1878ee558bd3f78e9bd39713bffb8d31a154d35e31007397d8fee2
-coverage_gids:
-  - gid: D5/S3/ObserverMemory/FiniteCountermodels/CounterfactualFairnessDoesNotImplyGroupParity.counterfactual_fairness_does_not_imply_group_parity
-    target_statement_id: sha256:6e290b4c6a8eacc48925421a130e4cf8eec704514136051d502e3dead01be8d2
-receipts:
-  unresolved_subitems: []

@@ -1,9 +1,0 @@
-fingerprints:
-  raw_sha256: sha256:dd720cb1e33e749fb80bca62b95d7a93b3fed6ffb4ca7fcc75921a32266f92f5
-  normalized_sha256: sha256:dd720cb1e33e749fb80bca62b95d7a93b3fed6ffb4ca7fcc75921a32266f92f5
-cas_ref: sha256:dd720cb1e33e749fb80bca62b95d7a93b3fed6ffb4ca7fcc75921a32266f92f5
-coverage_gids:
-  - gid: D5/S3/Quantum/QubitWitnesses.phaseDampingIterate_apply
-    target_statement_id: sha256:5f4625fb281550a0efee74adf3a6dc137824b8ac26e6287a30c2276a87e773c2
-receipts:
-  unresolved_subitems: []

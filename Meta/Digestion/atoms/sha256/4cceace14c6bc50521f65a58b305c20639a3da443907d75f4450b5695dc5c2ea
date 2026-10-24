@@ -1,8 +1,0 @@
-For every $m\ge1$, $n\ge0$, and $s\in\Sigma$,
-$$
-T^n x_m^s=
-\begin{cases}
-x_{m-n}^s,&n<m,\\
-Z(n-m),&n\ge m.
-\end{cases}
-$$

@@ -1,9 +1,0 @@
-fingerprints:
-  raw_sha256: sha256:6eaf2bd6c840954bf968666097d184a178638d57997d3d4af116b5d398decac6
-  normalized_sha256: sha256:6eaf2bd6c840954bf968666097d184a178638d57997d3d4af116b5d398decac6
-cas_ref: sha256:6eaf2bd6c840954bf968666097d184a178638d57997d3d4af116b5d398decac6
-coverage_gids:
-  - gid: D5/S3/ConceptDynamics/GovernanceFixedPoint/TailRekeyUniqueness.legal_tail_rekey_unique
-    target_statement_id: sha256:546f8928931004a19a0d2b96652c965c91ebf283a93b06a3e3a4bc577bcd28a3
-receipts:
-  unresolved_subitems: []

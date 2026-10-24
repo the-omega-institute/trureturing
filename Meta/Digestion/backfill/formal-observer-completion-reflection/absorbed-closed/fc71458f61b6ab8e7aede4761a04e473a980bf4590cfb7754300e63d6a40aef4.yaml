@@ -1,9 +1,0 @@
-fingerprints:
-  raw_sha256: sha256:fc71458f61b6ab8e7aede4761a04e473a980bf4590cfb7754300e63d6a40aef4
-  normalized_sha256: sha256:fc71458f61b6ab8e7aede4761a04e473a980bf4590cfb7754300e63d6a40aef4
-cas_ref: sha256:fc71458f61b6ab8e7aede4761a04e473a980bf4590cfb7754300e63d6a40aef4
-coverage_gids:
-  - gid: D5/S3/QuantumBounds/Designs/LocalDeterministicCHSHSeparation.local_deterministic_chsh_separation
-    target_statement_id: sha256:e182a13f5ead2bb1d9a10c72bd207cef8093dc35b5875be1bd9224c08306aa32
-receipts:
-  unresolved_subitems: []

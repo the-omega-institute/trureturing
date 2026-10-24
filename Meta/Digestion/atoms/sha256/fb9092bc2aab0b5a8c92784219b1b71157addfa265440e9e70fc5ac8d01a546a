@@ -1,7 +1,0 @@
-仓库定义：
-
-- $\phi=(1+\sqrt5)/2$；
-- `structuralPole := 1 / phi ^ 3`；
-- `structuralZero := 1 / (2 * phi ^ 2)`；
-- `eulerGerm` 为黄金 Beatty／指数层构造的 Euler germ。
-

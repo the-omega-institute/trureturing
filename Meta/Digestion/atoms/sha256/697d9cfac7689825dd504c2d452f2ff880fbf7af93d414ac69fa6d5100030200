@@ -1,2 +1,0 @@
-,故由约定 2.4,$\operatorname{Pf}(A)=\sum_{\mathfrak m_j\subseteq E(H)}\omega_j$:$p=0$ 时为 $0$;$p=1$ 时为某个 $\omega_j\ne0$;$p=2$ 时为两个 $\omega$ 之和,由 (4.1) 等于第三个,非零;$p=3$ 时为 $0$。二元子集 $\{u,v\}$ 上的 Pfaffian 是 $A_{uv}$,非零当且仅当 $uv$ 是边;一元与三元子集的主子式为零。由 (2.4) 得 $K$ 上的秩。$\mathbb F_2$ 上(边权为 $1$)的 Pfaffian 是 $p\bmod2$,同理得 $\mathbb F_2$ 上的秩。$p=2$ 时 $E(H)$ 恰含两个 $\mathfrak m_j$,两者之并是四圈;$E(H)$ 至多再含第三个匹配的一条边,否则 $p=3$。四圈本身与四圈添一条弦(即菱形)都只含两个 $\mathfrak m_j$。$p=3$ 时 $E(H)$ 含全部六条边。(4.2) 由前述两张秩表逐项相减。∎
-

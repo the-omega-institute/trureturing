@@ -1,9 +1,0 @@
-fingerprints:
-  raw_sha256: sha256:7c98dfadae8a0e859f71d4db841707f0ac91144d4b4321f1841f7eb111cf6178
-  normalized_sha256: sha256:7c98dfadae8a0e859f71d4db841707f0ac91144d4b4321f1841f7eb111cf6178
-cas_ref: sha256:7c98dfadae8a0e859f71d4db841707f0ac91144d4b4321f1841f7eb111cf6178
-coverage_gids:
-  - gid: D5/S3/Quantum/Dynamics/CompressedResolventRemainder.compressed_resolvent_remainder
-    target_statement_id: sha256:086551daa10880611d446953e40520a57345a268f7248ff166d5c0c2512880a0
-receipts:
-  unresolved_subitems: []

@@ -1,7 +1,0 @@
-**Definition 74.1 (global nonsingular and formal subgroups).**
-For a prime Q>5, let
-
- E_Q: Y^2=X(X+5Q)(X-15Q).
-
-Write G_0(Q) for the subgroup of E_Q(\mathbb Q) whose points have nonsingular reduction modulo Q on this displayed integral model, and write G_1(Q) for its subgroup reducing to the point at infinity. These are subgroups of the global rational-point group, not the entire local groups E_Q(\mathbb Q_Q).
-

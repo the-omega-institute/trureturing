@@ -1,9 +1,0 @@
-fingerprints:
-  raw_sha256: sha256:308cafb6485bb4f8ee7f89b720cdcfb223b7781cb0f8c94795107b699eec2d80
-  normalized_sha256: sha256:308cafb6485bb4f8ee7f89b720cdcfb223b7781cb0f8c94795107b699eec2d80
-cas_ref: sha256:308cafb6485bb4f8ee7f89b720cdcfb223b7781cb0f8c94795107b699eec2d80
-coverage_gids:
-  - gid: D5/S3/ObserverMemory/NonlinearSelectorProfile.exact_selector_family_profile
-    target_statement_id: sha256:e5a5e3c1889184bb0e9029bedf54b1687b1e4d7ab880a1f66df604558594a17e
-receipts:
-  unresolved_subitems: []
