@@ -4,6 +4,9 @@ namespace StrataLint.Scribe.Blueprint.D5.S3.Analytic.Laplace;
 
 internal sealed class NonnegativeBoundaryDocument : IScribeDocumentDefinition
 {
+    private static readonly LibraryNoteRef Widder1941 =
+        LibraryNoteRef.Create("D5/L/Fourier/widder1941laplace");
+
     private const string Prefix = "D5/S3/Analytic/Laplace/NonnegativeBoundary.";
 
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
@@ -49,7 +52,7 @@ internal sealed class NonnegativeBoundaryDocument : IScribeDocumentDefinition
                 DeclarationHandle.Create(Prefix + "nonnegative_exponential_boundary"),
                 H("A singularity at the convergence boundary"),
                 StatementSource.WithoutFormula(),
-                AssessedProvenance.FromRepo(),
+                AssessedProvenance.FromLiterature(Widder1941),
                 Blocks(Paragraph(Text(
                     "Let mu be a measure on the nonnegative real axis and c a finite real number. "
                     + "Assume exp(t*x) is integrable for every t<c and is not integrable for any t>c. "
@@ -58,6 +61,8 @@ internal sealed class NonnegativeBoundaryDocument : IScribeDocumentDefinition
                     + "Indeed choose t=c-r/4. Taylor convergence on the ball about t of radius r/2 "
                     + "implies integrability at t+r/3>c, contradicting the convergence boundary. "
                     + "Replacing z by -s gives the corresponding nonnegative Laplace-transform theorem "
-                    + "at its finite abscissa of convergence."))),
+                    + "at its finite abscissa of convergence. "
+                    + "This formulation uses a general positive measure, extending Widder's "
+                    + "nonnegative locally integrable function formulation."))),
                 DescribeRole.Theorem))));
 }

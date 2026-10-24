@@ -9,7 +9,6 @@
 import Mathlib.Probability.Moments.ComplexMGF
 import Mathlib.Analysis.Complex.TaylorSeries
 import Mathlib.Analysis.Calculus.IteratedDeriv.Lemmas
-import Mathlib.MeasureTheory.Integral.DominatedConvergence
 
 /-! Nonnegative exponential transforms and their convergence boundaries. -/
 

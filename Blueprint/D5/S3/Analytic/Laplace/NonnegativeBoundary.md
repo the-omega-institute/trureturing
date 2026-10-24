@@ -34,11 +34,11 @@ Lean statement: `D5/S3/Analytic/Laplace/NonnegativeBoundary.nonnegative_exponent
 
 *Proof.* Machine-checked in Lean as `D5/S3/Analytic/Laplace/NonnegativeBoundary.nonnegative_exponential_boundary` (`✓ std3`). ∎
 
-*Source.* Repository-derived.
+*Citation.* David Vernon Widder (1941). *The Laplace Transform*. DOI: [10.1515/9781400876457](https://doi.org/10.1515/9781400876457).
 
 *Commentary.*
 
-Let mu be a measure on the nonnegative real axis and c a finite real number. Assume exp(t*x) is integrable for every t<c and is not integrable for any t>c. There is no positive radius r and holomorphic F on the ball about c of radius r which agrees with the exponential transform on the part of that ball with Re(z)<c. Indeed choose t=c-r/4. Taylor convergence on the ball about t of radius r/2 implies integrability at t+r/3>c, contradicting the convergence boundary. Replacing z by -s gives the corresponding nonnegative Laplace-transform theorem at its finite abscissa of convergence.
+Let mu be a measure on the nonnegative real axis and c a finite real number. Assume exp(t*x) is integrable for every t<c and is not integrable for any t>c. There is no positive radius r and holomorphic F on the ball about c of radius r which agrees with the exponential transform on the part of that ball with Re(z)<c. Indeed choose t=c-r/4. Taylor convergence on the ball about t of radius r/2 implies integrability at t+r/3>c, contradicting the convergence boundary. Replacing z by -s gives the corresponding nonnegative Laplace-transform theorem at its finite abscissa of convergence. This formulation uses a general positive measure, extending Widder's nonnegative locally integrable function formulation.
 
 ## References
 

@@ -47,27 +47,14 @@ private lemma zeroAbscissa_nonnegative : 0 ≤ zeroAbscissa := by
     D5.S3.Weil.ZeroInfinitude.ExplicitFormulaObstruction.isNontrivialZero_infinite.nonempty
   exact hρ.2.1.le.trans (zero_re_le_abscissa hρ)
 
-private lemma rh_zero_real_part (hRH : RiemannHypothesis) {ρ : ℂ}
-    (hρ : IsNontrivialZero ρ) : ρ.re = 1 / 2 := by
-  apply hRH ρ hρ.1
-  · rintro ⟨n, hn⟩
-    have hp := hρ.2.1
-    rw [hn] at hp
-    norm_num at hp
-    have hn0 : (0 : ℝ) ≤ n := Nat.cast_nonneg n
-    nlinarith
-  · intro h
-    have hp := hρ.2.2
-    simp [h] at hp
-
 private lemma zeroAbscissa_eq_half (hRH : RiemannHypothesis) : zeroAbscissa = 1 / 2 := by
   apply le_antisymm
   · apply csSup_le zero_real_parts_nonempty
     rintro r ⟨ρ, hρ, rfl⟩
-    exact (rh_zero_real_part hRH hρ).le
+    exact (Zeta23.RH_implies_on_line hRH hρ).le
   · obtain ⟨ρ, hρ⟩ :=
       D5.S3.Weil.ZeroInfinitude.ExplicitFormulaObstruction.isNontrivialZero_infinite.nonempty
-    simpa only [rh_zero_real_part hRH hρ] using zero_re_le_abscissa hρ
+    simpa only [Zeta23.RH_implies_on_line hRH hρ] using zero_re_le_abscissa hρ
 
 private lemma exists_right_zero_of_not_rh (hRH : ¬ RiemannHypothesis) :
     ∃ ρ : ℂ, IsNontrivialZero ρ ∧ 1 / 2 < ρ.re := by
@@ -285,7 +272,7 @@ private theorem rh_budget_minimum
   obtain ⟨ρ, hρ⟩ :=
     D5.S3.Weil.ZeroInfinitude.ExplicitFormulaObstruction.isNontrivialZero_infinite.nonempty
   exact (power_budget_constraints (by norm_num : (0 : ℝ) ≤ 3 / 5) hE hx0 he hbudget).2
-    (by norm_num) ρ hρ (rh_zero_real_part hRH hρ)
+    (by norm_num) ρ hρ (Zeta23.RH_implies_on_line hRH hρ)
 
 /-- A zero strictly to the right of the critical line precludes every eventual lower bound. -/
 theorem forward_response_unbounded_below_of_right_zero

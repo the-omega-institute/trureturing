@@ -1195,7 +1195,7 @@ $$
 \forall\varepsilon>0\ \exists C_\varepsilon:\quad |E(t)|\le C_\varepsilon t^{\Theta+\varepsilon}\qquad(t\ge2),
 \tag{485.1}
 $$
-非平凡零点的存在性，$\zeta$ 在实区间 $(0,1)$ 与 $(1,\infty)$ 无零点，以及 [Landau–Widder 非负 Laplace 变换定理](../../../Library/Weil/platttrudgian2021rh.md)：若 $g\ge0$ 在 $[y_0,\infty)$ 上局部可积，其 Laplace 变换的收敛横坐标 $c_g$ 有限，则 $c_g$ 是该变换的奇点。
+非平凡零点的存在性，$\zeta$ 在实区间 $(0,1)$ 与 $(1,\infty)$ 无零点，以及 [Widder, The Laplace Transform, Ch. II, Thm 5b](../../../Library/Fourier/widder1941laplace.md)：若 $g\ge0$ 在 $[y_0,\infty)$ 上局部可积，其 Laplace 变换的收敛横坐标 $c_g$ 有限，则 $c_g$ 是该变换的奇点。
 
 **命题 485.1（幂误差下的 Mellin 留数）。** 设 $\alpha\ge0$，且存在 $C,t_0$ 使 $|E(t)|\le Ct^\alpha$ 对 $t\ge t_0$ 成立。对固定 $x_0\ge3$，令 $\mathcal F(s)=\int_{x_0}^\infty\mathcal T(x)x^{-s-1}\,dx$，它在 $\Re s>\max(1/2,\alpha-3/10)$ 绝对收敛。则存在在
 $$
