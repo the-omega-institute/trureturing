@@ -39,14 +39,10 @@ def realignedProjector {n : ℕ} (A C : Mat n) (d : Fin n → ℂ) :
 def adjacency {n : ℕ} (A C : Mat n) (d : Fin n → ℂ) : Mat n →ₗ[ℂ] Mat n :=
   MatrixMap.of_choi_matrix (realignedProjector A C d)
 
-/-- A self-adjoint idempotent matrix. -/
-def IsOrthogonalProjector {n : ℕ} (P : Mat n) : Prop :=
-  P.IsHermitian ∧ P * P = P
-
 /-- Nonzero projectors resolving the identity and separating left multiplication. -/
 def HasComponents {n : ℕ} (G : Mat n →ₗ[ℂ] Mat n) (k : ℕ) : Prop :=
   ∃ P : Fin k → Mat n,
-    (∀ s, IsOrthogonalProjector (P s) ∧ P s ≠ 0) ∧
+    (∀ s, IsStarProjection (P s) ∧ P s ≠ 0) ∧
     (∑ s, P s) = 1 ∧
     ∀ s t, s ≠ t → ∀ Z, P s * G (P t * Z) = 0
 
@@ -297,7 +293,7 @@ private theorem commutant_offdiag_exceptional {n : ℕ} (A C : Mat n) (d : Fin n
     commutant_offdiag_loops A C d P hcomm hij hne⟩
 private def CommutantResolution {n : ℕ} (A C : Mat n) (d : Fin n → ℂ) (k : ℕ) : Prop :=
   ∃ P : Fin k → Mat n,
-    (∀ s, IsOrthogonalProjector (P s) ∧ P s ≠ 0) ∧
+    (∀ s, IsStarProjection (P s) ∧ P s ≠ 0) ∧
     (∑ s, P s) = 1 ∧
     ∀ s q, P s * column A C d q = column A C d q * P s
 private theorem adjacency_kraus {n : ℕ} (A C : Mat n) (d : Fin n → ℂ)
@@ -327,31 +323,36 @@ private theorem gram_sum_zero {n : ℕ} {ι : Type*} (T : Finset ι) (K : ι →
     (Finset.sum_eq_zero_iff_of_nonneg
       (fun r (_ : r ∈ T) => (Matrix.posSemidef_self_mul_conjTranspose (K r)).nonneg)).mp h
 private theorem resolution_orthogonal {n k : ℕ} (P : Fin k → Mat n)
-    (hP : ∀ s, IsOrthogonalProjector (P s)) (hsum : (∑ s, P s) = 1) :
+    (hP : ∀ s, IsStarProjection (P s)) (hsum : (∑ s, P s) = 1) :
     ∀ s t, s ≠ t → P s * P t = 0 := by
   classical
   intro s t hst
+  have hPs : (P s).IsHermitian := Matrix.isHermitian_iff_isSelfAdjoint.mpr (hP s).isSelfAdjoint
   have hgram : (∑ r ∈ Finset.univ.erase s, (P s * P r) * (P s * P r)ᴴ) = 0 := by
     calc
       _ = P s * (∑ r ∈ Finset.univ.erase s, P r) * P s := by
         simp only [Matrix.mul_sum, Matrix.sum_mul]
         apply Finset.sum_congr rfl
         intro r hr
-        rw [Matrix.conjTranspose_mul, (hP r).1, (hP s).1]
+        have hPr : (P r).IsHermitian :=
+          Matrix.isHermitian_iff_isSelfAdjoint.mpr (hP r).isSelfAdjoint
+        rw [Matrix.conjTranspose_mul, hPr, hPs]
         simp only [Matrix.mul_assoc]
-        rw [← Matrix.mul_assoc (P r) (P r), (hP r).2]
+        rw [← Matrix.mul_assoc (P r) (P r), (hP r).isIdempotentElem.eq]
       _ = P s * (1 - P s) * P s := by
         rw [Finset.sum_erase_eq_sub (Finset.mem_univ s), hsum]
-      _ = 0 := by rw [mul_sub, mul_one, (hP s).2, sub_self, zero_mul]
+      _ = 0 := by rw [mul_sub, mul_one, (hP s).isIdempotentElem.eq, sub_self, zero_mul]
   exact gram_sum_zero (Finset.univ.erase s) (fun r => P s * P r) hgram t
     (Finset.mem_erase.mpr ⟨hst.symm, Finset.mem_univ t⟩)
 private theorem separating_iff {n : ℕ} {ι : Type*} [Fintype ι]
     (K : ι → Mat n) (P Q : Mat n)
-    (hP : IsOrthogonalProjector P) (hQ : IsOrthogonalProjector Q) :
+    (hP : IsStarProjection P) (hQ : IsStarProjection Q) :
     (∀ Z, P * (∑ q, K q * (Q * Z) * (K q)ᴴ) = 0) ↔
       ∀ q, P * K q * Q = 0 := by
   constructor
   · intro h q
+    have hPH : P.IsHermitian := Matrix.isHermitian_iff_isSelfAdjoint.mpr hP.isSelfAdjoint
+    have hQH : Q.IsHermitian := Matrix.isHermitian_iff_isSelfAdjoint.mpr hQ.isSelfAdjoint
     have hz : P * (∑ r, K r * Q * (K r)ᴴ) * P = 0 := by
       simpa only [Matrix.mul_one, Matrix.zero_mul] using
         congrArg (fun M => M * P) (h 1)
@@ -361,9 +362,9 @@ private theorem separating_iff {n : ℕ} {ι : Type*} [Fintype ι]
           simp only [Matrix.mul_sum, Matrix.sum_mul]
           apply Finset.sum_congr rfl
           intro r hr
-          rw [Matrix.conjTranspose_mul, Matrix.conjTranspose_mul, hQ.1, hP.1]
+          rw [Matrix.conjTranspose_mul, Matrix.conjTranspose_mul, hQH, hPH]
           simp only [Matrix.mul_assoc]
-          rw [← Matrix.mul_assoc Q Q, hQ.2]
+          rw [← Matrix.mul_assoc Q Q, hQ.isIdempotentElem.eq]
         _ = 0 := hz
     exact gram_sum_zero Finset.univ (fun r => P * K r * Q) hg q (Finset.mem_univ q)
   · intro h Z
@@ -563,13 +564,17 @@ private theorem commutant_upper_bound_of_local {n : ℕ} (A C : Mat n) (d : Fin 
     have hne' : P s i j ≠ 0 := by
       intro hzero
       apply hne
-      rw [← (hP s).1.1.apply j i, hzero, star_zero]
+      have hPh : (P s).IsHermitian :=
+        Matrix.isHermitian_iff_isSelfAdjoint.mpr (hP s).1.isSelfAdjoint
+      rw [← hPh.apply j i, hzero, star_zero]
     obtain ⟨hnex, hex⟩ := omitted_vertex_properties A C d i hi
-    exact hnex (hsupport (P s) (hP s).1.1 (hcomm s) i j hji.symm hne' hex)
+    have hPh : (P s).IsHermitian :=
+      Matrix.isHermitian_iff_isSelfAdjoint.mpr (hP s).1.isSelfAdjoint
+    exact hnex (hsupport (P s) hPh (hcomm s) i j hji.symm hne' hex)
   let Q : Fin k → Matrix W W ℂ := fun s => (P s).submatrix e e
   have hid (s : Fin k) : IsIdempotentElem (Q s) := by
     change (P s).submatrix e e * (P s).submatrix e e = (P s).submatrix e e
-    rw [compressed_square e he (P s) (hz s), (hP s).1.2]
+    rw [compressed_square e he (P s) (hz s), (hP s).1.isIdempotentElem.eq]
   have hne (s : Fin k) : Q s ≠ 0 := by
     intro hzero
     apply (hP s).2
@@ -588,7 +593,9 @@ private theorem commutant_upper_bound_of_local {n : ℕ} (A C : Mat n) (d : Fin 
           (SimpleGraph.ConnectedComponent.exact (Quot.out_eq R)).symm
         exact (hdiag (P s) (hcomm s) i _ hr).trans
           (congrArg (fun M : Matrix W W ℂ => M (Sum.inl R) (Sum.inl R)) hzero)
-      · rw [← (hP s).1.1.apply i j, hz s i hi j hji, star_zero]
+      · have hPh : (P s).IsHermitian :=
+          Matrix.isHermitian_iff_isSelfAdjoint.mpr (hP s).1.isSelfAdjoint
+        rw [← hPh.apply i j, hz s i hi j hji, star_zero]
         rfl
   have hsumQ : (∑ s, Q s) = 1 := by
     calc
@@ -646,15 +653,17 @@ private theorem diagonal_commutes_columns {n : ℕ} (A C : Mat n) (d : Fin n →
 
 private theorem component_projection_projector {n : ℕ} (A C : Mat n)
     (Q : (underlyingGraph A C).ConnectedComponent) :
-    IsOrthogonalProjector (componentProjection A C Q) := by
+    IsStarProjection (componentProjection A C Q) := by
   classical
   constructor
-  · apply Matrix.isHermitian_diagonal_iff.mpr
-    intro i
-    split_ifs <;> simp
-  · simp only [componentProjection, Matrix.diagonal_mul_diagonal]
+  · change componentProjection A C Q * componentProjection A C Q = componentProjection A C Q
+    simp only [componentProjection, Matrix.diagonal_mul_diagonal]
     congr 1
     funext i
+    split_ifs <;> simp
+  · apply Matrix.isHermitian_iff_isSelfAdjoint.mp
+    apply Matrix.isHermitian_diagonal_iff.mpr
+    intro i
     split_ifs <;> simp
 
 private theorem component_projection_ne_zero {n : ℕ} (A C : Mat n)
@@ -697,8 +706,8 @@ private structure ComponentSplit {n : ℕ} (A C : Mat n) (d : Fin n → ℂ)
     (Q : (underlyingGraph A C).ConnectedComponent) where
   plus : Mat n
   minus : Mat n
-  plus_projector : IsOrthogonalProjector plus
-  minus_projector : IsOrthogonalProjector minus
+  plus_projector : IsStarProjection plus
+  minus_projector : IsStarProjection minus
   plus_ne_zero : plus ≠ 0
   minus_ne_zero : minus ≠ 0
   complete : plus + minus = componentProjection A C Q
@@ -733,7 +742,7 @@ private def edgeProjection {n : ℕ} (i j : Fin n) (z : ℂ) : Mat n :=
 
 private theorem edge_projection_data {n : ℕ} {i j : Fin n} (hij : i ≠ j)
     (z : ℂ) (hz : z * star z = 1) :
-    IsOrthogonalProjector (edgeProjection i j z) ∧ edgeProjection i j z ≠ 0 ∧
+    IsStarProjection (edgeProjection i j z) ∧ edgeProjection i j z ≠ 0 ∧
       pairDiagonal i j * edgeProjection i j z = edgeProjection i j z ∧
       edgeProjection i j z * pairDiagonal i j = edgeProjection i j z := by
   have hDD : pairDiagonal i j * pairDiagonal i j = pairDiagonal i j := by
@@ -746,16 +755,18 @@ private theorem edge_projection_data {n : ℕ} {i j : Fin n} (hij : i ≠ j)
     have hz' : (starRingEnd ℂ) z * z = 1 := by rw [mul_comm]; exact hz
     have hz'' : z * (starRingEnd ℂ) z = 1 := hz
     simp [pairDiagonal, edgeFlip, add_mul, mul_add, hij, hij.symm, hz', hz'', add_comm]
-  have hproj : IsOrthogonalProjector (edgeProjection i j z) := by
+  have hproj : IsStarProjection (edgeProjection i j z) := by
     constructor
-    · change (edgeProjection i j z)ᴴ = edgeProjection i j z
-      simp [edgeProjection, pairDiagonal, edgeFlip, Matrix.conjTranspose_smul,
-        Matrix.conjTranspose_add, add_comm, add_left_comm, add_assoc]
-    · simp only [edgeProjection, Matrix.smul_mul, Matrix.mul_smul, smul_smul,
+    · change edgeProjection i j z * edgeProjection i j z = edgeProjection i j z
+      simp only [edgeProjection, Matrix.smul_mul, Matrix.mul_smul, smul_smul,
         add_mul, mul_add, hDD, hDH, hHD, hHH]
       ext a b
       simp only [Matrix.smul_apply, Matrix.add_apply, smul_eq_mul]
       ring
+    · apply Matrix.isHermitian_iff_isSelfAdjoint.mp
+      change (edgeProjection i j z)ᴴ = edgeProjection i j z
+      simp [edgeProjection, pairDiagonal, edgeFlip, Matrix.conjTranspose_smul,
+        Matrix.conjTranspose_add, add_comm, add_left_comm, add_assoc]
   have hne : edgeProjection i j z ≠ 0 := by
     intro hz
     have h := congrArg (fun M => M i i) hz
@@ -865,15 +876,16 @@ private theorem exceptional_split {n : ℕ} (A C : Mat n) (d : Fin n → ℂ)
   have hcji : P * column A C d (j, i) = column A C d (j, i) * P := by
     rw [hcoladj]
     have h := congrArg Matrix.conjTranspose hcij
-    have hPHerm : Pᴴ = P := hP.1
+    have hPHerm : Pᴴ = P :=
+      (Matrix.isHermitian_iff_isSelfAdjoint.mpr hP.isSelfAdjoint).eq
     simpa only [Matrix.conjTranspose_mul, hPHerm] using h.symm
   have hcomm := pair_commutes_all A C d Q.val hij hpair hdi hdj P hDP hPD hcij hcji
   let R := componentProjection A C Q.val - P
-  have hPR : IsOrthogonalProjector R := by
+  have hPR : IsStarProjection R := by
     constructor
-    · exact (component_projection_projector A C Q.val).1.sub hP.1
-    · exact IsIdempotentElem.sub hP.2 (component_projection_projector A C Q.val).2
+    · exact hP.isIdempotentElem.sub (component_projection_projector A C Q.val).isIdempotentElem
         (by rw [hD]; exact hPD) (by rw [hD]; exact hDP)
+    · exact (component_projection_projector A C Q.val).isSelfAdjoint.sub hP.isSelfAdjoint
   have hRne : R ≠ 0 := by
     intro hz
     have he := congrArg (fun M => M i i) hz
@@ -905,7 +917,7 @@ private theorem resolution_from_splits {n : ℕ} (A C : Mat n) (d : Fin n → �
         (split ⟨Q, hQ⟩).plus else componentProjection A C Q
     | Sum.inr Q => (split Q).minus
   have hprops (w : CountIndex A C d) :
-      (IsOrthogonalProjector (F w) ∧ F w ≠ 0) ∧
+      (IsStarProjection (F w) ∧ F w ≠ 0) ∧
         ∀ q, F w * column A C d q = column A C d q * F w := by
     cases w with
     | inl Q =>
