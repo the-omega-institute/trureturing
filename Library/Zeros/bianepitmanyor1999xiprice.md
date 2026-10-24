@@ -293,3 +293,115 @@ neither supplies a sufficient lower bound for the remaining first-prime
 account. Its center and exact negative far tail still need a joint
 estimate. No improved finite verification range, unbounded Robin bound,
 RH proof or new Lean theorem follows from these applications.
+
+
+## An exact theta budget for the absent-layer sign
+
+The same positive source admits a more precise absent-layer analysis.
+Reuse GP's already owned weight $w_c(t)=c^{-1}\lambda(\max\{A,t/c\})$
+in the [Nicolas card](../ArithSums/nicolas2025comparison.md#a-directed-prime-weight-comparison-for-the-complete-gamma-response).
+Its complete response, the mass/price identities and IPX7 are inputs,
+not new formulas to reprove. The additional classical input is BPY,
+Proposition 1(ii), equation (23), printed p.7. The estimates below
+control the cap residual for IPX2's broad positive source; GP2's
+ordinary-mean-one hypothesis does not hold for this source.
+
+Fix $A$ sufficiently large. Write $C_A$ for a variable of law $\eta_A$,
+$X=\log C_A$, $a_A=\mathbb EX=a_++O(A^{-3})>0$, and
+$M_{2,A}=\mathbb EX^2=O(1)$. For an actual absent layer with
+$\lambda(t)=r_{p,j}$, its full observed hinge is
+
+$$
+\mathcal H_A(t)
+=\int(r_{p,j}-\lambda(Av))_+d\omega_A(v)
+=\lambda(t)-\mathbb E\frac{\lambda(\max\{A,t/C_A\})}{C_A}.
+\tag{IPX16}
+$$
+
+The second equality follows from IPX7 and the exact mass and price
+identities, using $(r-q)_+-(q-r)_+=r-q$. It retains the lower atom and the entire signed
+kernel tail. It is also the negative of GP's existing weight difference
+for $t\ge A$, rather than a new smoothing kernel.
+
+For $t=AB\ge A$ set $s=\log B$, $v=L+s$, and define
+
+$$
+\mathcal S_A(B)=\mathbb E(1-B/C_A)_+,\qquad
+\mathcal P_A(s)=\mathbb P(X\ge s),\qquad
+\mathcal T_A(s)=\mathbb E(X-s)_+.
+\tag{IPX17}
+$$
+
+Split the expectation in IPX16 at $C_A=B$. On $X<s$ use the exact
+identity
+$(v-X)^{-1}=v^{-1}+Xv^{-2}+X^2/[v^2(v-X)]$.
+The resulting cap account is
+
+$$
+\begin{aligned}
+v^2t\mathcal H_A(t)
+={}&\frac{v^2}{L}\mathcal S_A(B)-a_A+\mathcal T_A(s)\\
+&-\frac{s^2}{L}\mathcal P_A(s)
+ -\mathbb E\!\left[\frac{X^2}{v-X};X<s\right].
+\end{aligned}
+\tag{IPX18}
+$$
+
+Here $v-X\ge L$ on the last event, and
+$s^2\mathcal P_A(s)\le M_{2,A}$. Since $s\ge0$ and $a_A>0$,
+multiplying by $L^2/v^2$ gives the uniform lower bound; dropping the
+last two nonpositive terms gives the upper bound:
+
+$$
+\begin{aligned}
+L^2t\mathcal H_A(t)&\ge
+ L\mathcal S_A(B)-a_A-\frac{2M_{2,A}}L,\\
+v^2t\mathcal H_A(t)&\le
+ \frac{v^2}{L}\mathcal S_A(B)-a_A+\mathcal T_A(s).
+\end{aligned}
+\tag{IPX19}
+$$
+
+These bounds apply to every $B\ge1$. No term involving the cap or
+source tail has been treated as a root-small prime error.
+
+Put $C_0=1/Y$. BPY's cited equation gives for every $u>0$
+
+$$
+\mathbb P(C_0>u)=4\pi u^3\sum_{n\ge1}n^2e^{-\pi n^2u^2}.
+$$
+
+Tonelli's theorem therefore evaluates its positive cap budget exactly:
+
+$$
+\mathcal S_0(B)
+=B\int_B^\infty\frac{\mathbb P(C_0>u)}{u^2}\,du
+=2B\sum_{n\ge1}e^{-\pi n^2B^2},\qquad
+\mathcal S_A(B)=\mathcal S_0(B/z_A)\quad(B\ge1).
+\tag{IPX20}
+$$
+
+The last equality is exact: for sufficiently large $A$,
+$z_A\tau_A<1$, so the positive part in IPX17 vanishes on the entire
+clamped part of the source. Scaling the surviving upper source by
+$z_A$ is the only change. No estimate for a newly truncated law is
+being substituted for $\eta_A$.
+
+For $u=B/z_A\ge1$, differentiation of the absolutely convergent
+positive series yields
+
+$$
+\begin{aligned}
+\frac d{ds}\mathcal S_A(e^s)
+ &=\mathcal S_A(e^s)-\mathcal P_A(s)
+ \le(1-2\pi u^2)\mathcal S_A(e^s)<0,\\
+\mathcal T_A(s)
+ &=\mathcal S_A(e^s)+\int_s^\infty\mathcal S_A(e^w)\,dw
+ \le\left(1+\frac1{2\pi-1}\right)\mathcal S_A(e^s).
+\end{aligned}
+\tag{IPX21}
+$$
+
+Thus IPX19 has an explicit decreasing theta budget, with a uniformly
+controlled logarithmic tail. The statement concerns the full absent
+response of the fixed source, rather than positivity of $\omega_A$.
