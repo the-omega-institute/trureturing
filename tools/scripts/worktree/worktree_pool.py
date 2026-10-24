@@ -11,7 +11,7 @@ import time
 from types import SimpleNamespace
 import uuid
 
-from worktree_protocol import (Refused, acquire, common, git, git_environment, git_scope,
+from worktree_protocol import (GitFailure, Refused, acquire, common, git, git_environment, git_scope,
                                identity, inventory, remote_endpoint, scope_fds, tree_scope, value)
 from worktree_publication import commit_snapshot, confirm
 from worktree_preservation import qualify, remove
@@ -79,56 +79,88 @@ def available_fraction(source):
     return disk.free / disk.total
 
 
+def pool_receipt():
+    return dict(event="worktree_pool", capacity=IDLE_CAPACITY, items=[], status="succeeded")
+
+
+def sweep_failure(receipt, observed, stage, error):
+    receipt["items"].append(dict(observed, outcome="sweep_failed", reason="idle_sweep_failed",
+                                 stage=stage, error=str(error), error_type=type(error).__name__))
+    receipt["status"] = "failed"
+
+
 def sweep_locked(source, dev, force=False):
-    """The caller holds the clone's pool operation scope."""
-    source = Path(inventory(source)[0]["worktree"])
-    candidates, outcomes = [], []
-    for item in inventory(source):
-        if not idle_reference(item.get("branch", "")):
-            continue
-        path = Path(item["worktree"])
-        try:
-            with ExitStack() as stack:
-                tree_scope(stack, source, path, True)
-                git_scope(stack, source, path)
-                candidates.append(idle_state(source, path, dev))
-        except (Refused, OSError, ValueError) as error:
-            outcomes.append(dict(path=str(path), branch=item.get("branch"), head=item.get("HEAD"),
-                                 outcome="not_idle" if str(error) == "not_idle" else "retained", reason=str(error)))
-    candidates.sort(key=lambda row: (row["created"], row["path"]))
-    remaining = len(candidates)
-    for observed in candidates:
-        pressure = available_fraction(source) < 0.05
-        reason = "idle_disk_pressure" if pressure else "idle_capacity" if remaining > IDLE_CAPACITY else "idle_pool"
-        if reason == "idle_pool":
-            outcomes.append(dict(observed, outcome="retained", reason=reason))
-            continue
-        path = Path(observed["path"])
-        try:
+    """The caller holds the clone's pool operation scope; effects survive every failure."""
+    receipt = pool_receipt()
+    outcomes = receipt["items"]
+    rows, candidates = [], []
+    observed = dict(path=str(source), branch=None, head=dev)
+    stage = "inventory"
+    try:
+        inventory_rows = inventory(source)
+        source = Path(inventory_rows[0]["worktree"])
+        rows = [dict(path=item["worktree"], branch=item.get("branch"), head=item.get("HEAD"))
+                for item in inventory_rows if idle_reference(item.get("branch", ""))]
+        for observed in rows:
+            path = Path(observed["path"])
+            stage = "inspect"
+            try:
+                with ExitStack() as stack:
+                    tree_scope(stack, source, path, True)
+                    git_scope(stack, source, path)
+                    candidates.append(idle_state(source, path, dev))
+            except GitFailure:
+                raise
+            except Refused as error:
+                outcomes.append(dict(observed, outcome="not_idle" if str(error) == "not_idle" else "retained",
+                                     reason=str(error)))
+        candidates.sort(key=lambda row: (row["created"], row["path"]))
+        remaining = len(candidates)
+        for observed in candidates:
+            stage = "disk_pressure"
+            pressure = available_fraction(source) < 0.05
+            reason = "idle_disk_pressure" if pressure else "idle_capacity" if remaining > IDLE_CAPACITY else "idle_pool"
+            if reason == "idle_pool":
+                outcomes.append(dict(observed, outcome="retained", reason=reason))
+                continue
+            path = Path(observed["path"])
+            stage = "revalidate"
             with ExitStack() as stack:
                 tree_scope(stack, source, path, True)
                 current = idle_state(source, path, dev)
                 if current != observed:
                     raise Refused("idle_identity_changed")
                 # Common removal owns the index/ref scopes and snapshot rules.
+                stage = "remove"
                 result = remove(SimpleNamespace(source=source, names="", path=[path], force=False,
                     preview=not force, expected=[json.dumps(dict(path=str(path), head=observed["head"],
                                                                branch=observed["branch"]))]))
-                removal = result["items"][0]
-                outcomes.append(dict(observed, **removal, reason=reason))
-                if removal["outcome"] in ("removed", "would_remove"):
-                    remaining -= 1
-        except (Refused, OSError, ValueError) as error:
-            outcomes.append(dict(observed, outcome="retained", reason=str(error)))
-    return dict(event="worktree_pool", capacity=IDLE_CAPACITY, items=outcomes,
-                status="failed" if any(row["outcome"] in ("checkpoint_failed", "partial_or_indeterminate")
-                                       for row in outcomes) else "succeeded")
+                for removal in result["items"]:
+                    outcomes.append(dict(observed, **removal, reason=reason))
+                    if removal["outcome"] in ("removed", "would_remove"):
+                        remaining -= 1
+                if result["status"] == "failed":
+                    receipt["status"] = "failed"
+                stage = "release"
+    except Exception as error:
+        # This is the batch receipt boundary, including pressure reads and scope
+        # release. The common remover retains its own checkpoint/recovery fields.
+        sweep_failure(receipt, observed, stage, error)
+        reported = {row["path"] for row in outcomes}
+        outcomes.extend(dict(row, outcome="retained", reason="idle_sweep_deferred")
+                        for row in rows if row["path"] not in reported)
+    return receipt
 
 
 def sweep(source, dev, force=False):
-    with ExitStack() as stack:
-        acquire(stack, source, "operation:idle-pool", True)
-        return sweep_locked(source, dev, force)
+    receipt = pool_receipt()
+    try:
+        with ExitStack() as stack:
+            acquire(stack, source, "operation:idle-pool", True)
+            receipt = sweep_locked(source, dev, force)
+    except Exception as error:
+        sweep_failure(receipt, dict(path=str(source), branch=None, head=dev), "pool_scope", error)
+    return receipt
 
 
 def pr_evidence(path, number):
@@ -160,11 +192,19 @@ def pr_evidence(path, number):
 def return_tree(options):
     if not options.writers_joined:
         raise Refused("host_must_join_task_writers")
-    with ExitStack() as stack:
-        acquire(stack, options.source, "operation:idle-pool", True)
-        result = returned_snapshot(options)
-        result["pool"] = sweep_locked(options.source, result["dev_commit"], True)
-        return result
+    result = None
+    try:
+        with ExitStack() as stack:
+            acquire(stack, options.source, "operation:idle-pool", True)
+            result = returned_snapshot(options)
+            result["pool"] = sweep_locked(options.source, result["dev_commit"], True)
+    except Exception as error:
+        if result is None:
+            raise
+        receipt = result.setdefault("pool", pool_receipt())
+        sweep_failure(receipt, dict(path=str(options.source), branch=None, head=result["dev_commit"]),
+                      "pool_scope", error)
+    return result
 
 
 def returned_snapshot(options):

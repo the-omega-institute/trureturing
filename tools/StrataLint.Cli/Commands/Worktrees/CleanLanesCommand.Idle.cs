@@ -11,7 +11,7 @@ internal static partial class CleanLanesCommand
         Action<RegisteredWorktree> protectObservedWorktree)
     {
         var idle = inventory.Where(item => WorktreePoolCommand.IsIdleBranch(item.Branch)).ToArray();
-        var handled = new HashSet<string>(StringComparer.Ordinal);
+        var handled = idle.Select(item => item.Path).ToHashSet(StringComparer.Ordinal);
         if (idle.Length == 0) return handled;
         if (dev is null)
         {
@@ -33,17 +33,24 @@ internal static partial class CleanLanesCommand
             foreach (var item in idle)
             {
                 handled.Add(item.Path);
-                events.Add(BlockedWorktree(item, reason));
-                completeRemoval(item, Refused(reason));
+                var failure = new LaneRemovalResult(LaneRemovalOutcome.PoolSweepFailed, reason);
+                events.Add(RemovalEvent(item, failure) with { Kind = "idle_worktree" });
+                completeRemoval(item, failure);
             }
             return handled;
         }
         using var document = JsonDocument.Parse(result.Output);
+        var failed = !result.Success || document.RootElement.GetProperty("status").GetString() == "failed";
+        var reportedFailure = false;
         foreach (var row in document.RootElement.GetProperty("items").EnumerateArray())
         {
             var outcome = row.GetProperty("outcome").GetString()!;
-            if (outcome == "not_idle") continue;
             var path = row.GetProperty("path").GetString()!;
+            if (outcome == "not_idle")
+            {
+                handled.Remove(path);
+                continue;
+            }
             handled.Add(path);
             var observed = inventory.SingleOrDefault(item => item.Path == path);
             var item = new RegisteredWorktree(path, row.GetProperty("head").GetString()!,
@@ -60,11 +67,15 @@ internal static partial class CleanLanesCommand
                 "removed" or "would_remove" => LaneRemovalOutcome.Removed,
                 "checkpoint_failed" => LaneRemovalOutcome.CheckpointFailed,
                 "partial_or_indeterminate" => LaneRemovalOutcome.WorktreeRemoveFailed,
+                "sweep_failed" => LaneRemovalOutcome.PoolSweepFailed,
                 "retained" => LaneRemovalOutcome.Refused,
                 _ => throw new InvalidOperationException("unknown idle eviction outcome: " + outcome),
-            }, outcome is "checkpoint_failed" or "partial_or_indeterminate"
+            }, outcome == "sweep_failed" ? outcome + ":" + ReadOptional("stage") + ":" + ReadOptional("error")
+                : outcome is "checkpoint_failed" or "partial_or_indeterminate"
                 ? outcome + ":" + ReadOptional("error") : reason,
                 recovery, ReadOptional("recovery_branch_candidate"));
+            reportedFailure |= removal.Outcome is LaneRemovalOutcome.CheckpointFailed
+                or LaneRemovalOutcome.WorktreeRemoveFailed or LaneRemovalOutcome.PoolSweepFailed;
             var removalEvent = RemovalEvent(item, removal);
             events.Add(removalEvent with
             {
@@ -72,6 +83,13 @@ internal static partial class CleanLanesCommand
                 Action = outcome == "would_remove" ? "would_remove" : removalEvent.Action,
             });
             if (outcome != "retained" || reason != "idle_pool") completeRemoval(item, removal);
+        }
+        if (failed && !reportedFailure)
+        {
+            var failure = new LaneRemovalResult(LaneRemovalOutcome.PoolSweepFailed,
+                "idle_pool_failed:" + result.Error.Trim());
+            events.Add(RemovalEvent(inventory[0], failure) with { Kind = "idle_pool" });
+            completeRemoval(inventory[0], failure);
         }
         return handled;
     }

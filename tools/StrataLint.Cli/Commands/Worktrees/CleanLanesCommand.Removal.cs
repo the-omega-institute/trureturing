@@ -166,7 +166,7 @@ internal static partial class CleanLanesCommand
                 BlockedWorktree(item, result.Reason),
             LaneRemovalOutcome.Removed =>
                 new("stale_worktree", item.Path, item.Branch, item.Head, "removed", result.Reason),
-            LaneRemovalOutcome.CheckpointFailed =>
+            LaneRemovalOutcome.CheckpointFailed or LaneRemovalOutcome.PoolSweepFailed =>
                 new("stale_worktree", item.Path, item.Branch, item.Head, "failed", result.Reason),
             LaneRemovalOutcome.WorktreeRemoveFailed =>
                 new(
@@ -185,6 +185,7 @@ internal static partial class CleanLanesCommand
         Removed,
         WorktreeRemoveFailed,
         CheckpointFailed,
+        PoolSweepFailed,
     }
 
     private sealed record LaneRemovalResult(LaneRemovalOutcome Outcome, string Reason,

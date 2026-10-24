@@ -191,9 +191,9 @@ def remove(options):
                 removing = True
                 git(source, "worktree", "remove", *flags, "--", target,
                     timeout=None if options.force else 300)
-                outcomes.append(dict(path=str(target), outcome="removed", checkpoint=checkpoint,
-                                     recovery_branch=recovery_branch))
-        except (Refused, OSError, subprocess.SubprocessError) as error:
+            outcomes.append(dict(path=str(target), outcome="removed", checkpoint=checkpoint,
+                                 recovery_branch=recovery_branch))
+        except Exception as error:
             outcomes.append(dict(path=str(target),
                 outcome="partial_or_indeterminate" if removing else "checkpoint_failed",
                 error=str(error), checkpoint=checkpoint, recovery_branch=recovery_branch,
