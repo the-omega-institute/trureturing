@@ -13,6 +13,10 @@ strata_touched:
   - D5/S3/Analytic/KarpZhangGamma/Series
   - D5/S3/Analytic/KarpZhangConjecture/Result
   - D5/S3/Analytic/KarpZhangCatalanPower/Result
+  - D5/S3/Analytic/KarpZhangNinh/Kernel
+  - D5/S3/Analytic/KarpZhangNinh/Homogeneous
+  - D5/S3/Analytic/KarpZhangNinh/Beta
+  - D5/S3/Analytic/KarpZhangNinh/Result
 license: citation-only
 triage: anchor
 ---
