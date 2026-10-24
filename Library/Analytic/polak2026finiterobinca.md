@@ -2660,3 +2660,99 @@ first-layer account. It is not an additional physical reserve or a
 proved bound for that account. A FIB address may supply this same
 integer and its verified arithmetic data; the address alone supplies
 no sign in FDW10. The complete joint comparison and RH remain open.
+
+## Actual strict CA sources have a root-small own-price higher baseline
+
+This application continues the fixed-degree account FDW1--FDW11 on
+one specified actual integer family. It reuses the complete higher
+inventory and defect in [HLD1--HLD8](../ArithSums/nicolas2025comparison.md#a-root-small-debit-for-the-complete-actual-higher-layer-defect),
+the actual strict products in ACC, and their unconditional own-clock
+comparison [NP0](../ArithSums/erdosnicolas1975repartition.md#actual-strict-ca-products-at-their-own-size-price).
+The added consumer bounds this family's nonnegative higher baseline,
+which FDW10 retained without an upper estimate. No new prime theorem,
+literature priority, Lean certification or Robin sign is claimed.
+
+For sufficiently large real $x$, keep the actual strict product
+
+$$
+N_x=\prod_p p^{a_p(x)},\qquad
+ a_p(x)=\#\{j\ge1:r_{p,j}>\lambda(x)\},\qquad
+A=\log N_x,\quad L=\log A,\quad T_A=\sqrt A L,
+$$
+
+$$
+\lambda(u)=\frac1{u\log u},\qquad
+K(u)=-\lambda'(u),\qquad
+\varepsilon_x=\frac{|A-x|}{x}
+=O(e^{-a\sqrt{\log x}})=o(1)
+\tag{HCB1}
+$$
+
+for the same positive constant $a$ as NP0. Every layer and every
+simultaneous activation is retained; equality layers are excluded in
+$N_x$. In particular $A\in[x/2,2x]$ eventually. No CA optimizer is
+substituted for an arbitrary integer: this paragraph concerns the
+literal family $n=N_x$.
+
+Write $\mathcal A_2(u)$ for HLD1's complete active mass over $j\ge2$.
+HLD3 and its actual second-cutoff input give
+$\mathcal A_2(u)=O(\sqrt x)$ uniformly on $u\in[x/2,2x]$.
+The higher layers of $N_x$ already optimize the higher pressure at
+$\lambda(x)$, including the zero cost of any equality layer. Thus
+$d_2(N_x,\lambda(x))=0$ and $L_2(N_x)=\mathcal A_2(x)$ in HLD7.
+
+On this compact price interval only finitely many actual layers can
+activate. Apply the finite pressure differentiation already used in
+[NPC5](../ArithSums/erdosnicolas1975repartition.md#keep-the-exact-inventory-between-both-prices)
+to HLD1's higher pressure. It gives, in either endpoint ordering,
+
+$$
+\begin{aligned}
+G_{2,A}(N_x)&=d_2(N_x,\lambda(A))\\
+ &=\int_x^A[\mathcal A_2(u)-\mathcal A_2(x)]K(u)\,du\\
+ &=\int_{\min(x,A)}^{\max(x,A)}
+       |\mathcal A_2(u)-\mathcal A_2(x)|K(u)\,du\ge0.
+\end{aligned}
+\tag{HCB2}
+$$
+
+The strict endpoint convention changes neither the pressure integral
+nor a layer's zero benefit at equality. Monotonicity of the complete
+inventory justifies the absolute-value expression. Its integrand
+contains all higher exponent layers, rather than only the square layer.
+The uniform inventory bound and
+$K(u)=O(1/(x^2\log x))$ on this interval imply
+
+$$
+0\le G_{2,A}(N_x)\le
+\frac{C|A-x|}{x^{3/2}\log x},\qquad
+\boxed{\quad 0\le T_AG_{2,A}(N_x)\le C'\varepsilon_x=o(1).\quad}
+\tag{HCB3}
+$$
+
+These constants are uniform over all sufficiently large real $x$,
+including activation events. The conclusion requires only $A\sim x$,
+not NPC2's stronger $|A-x|=o(x^{3/4})$. It does not bound the
+complete own-price defect, whose first-layer part can remain larger.
+
+Retain precisely the fixed source and observation FDW1--FDW2.
+FDW3 and exact mass and price give the actual observed higher part
+
+$$
+T_AD_{2,A}(N_x)=2\sqrt2q_*+
+ O(L^{-1}+\varepsilon_x).
+\tag{HCB4}
+$$
+
+The nonzero signed higher-pressure term is still present. HCB3
+controls the original nonnegative baseline; it does not make the
+signed observer positive or turn HCB4 into an $o(1)$ assertion.
+
+The BPY law is nondegenerate: its mean is one and its inverse first moment
+is $m>1$. Strict convexity therefore gives
+$b=\mathbb E C^{-1/2}>1$, while XLR2 gives $b\le\sqrt m<m$.
+Consequently $q_*=(1-b)(1-b/m)<0$, and HCB4 implies
+$T_AD_{2,A}(N_x)\to2\sqrt2q_*<0$ over the whole strict CA family.
+This is a negative signed average of the actual nonnegative
+higher-defect integrands. It determines neither the full signed
+defect nor the Robin margin.
