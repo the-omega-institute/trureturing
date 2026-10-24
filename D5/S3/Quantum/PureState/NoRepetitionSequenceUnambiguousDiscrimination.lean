@@ -253,10 +253,119 @@ private lemma symmetrized_bound {N k : ℕ} (hk : k ≤ N) (s : ℝ)
     Complex.ofReal_one, one_smul] at hscale
   exact hscale
 
+private def overlapMatrix (N : ℕ) (s : ℝ) : Matrix (Fin N) (Fin N) ℂ :=
+  ((1 - s : ℝ) : ℂ) • 1 + (s : ℂ) • vecMulVec (fun _ => 1) (fun _ => 1)
+
+private lemma overlapMatrix_entry {N : ℕ} (s : ℝ) (a b : Fin N) :
+    overlapMatrix N s a b = if a = b then 1 else (s : ℂ) := by
+  unfold overlapMatrix
+  by_cases h : a = b <;>
+    simp only [Matrix.add_apply, Matrix.smul_apply, Matrix.one_apply, h,
+      ite_true, ite_false, Matrix.vecMulVec_apply, smul_eq_mul, mul_one, mul_zero,
+      Complex.ofReal_sub, Complex.ofReal_one] <;> ring
+
+private lemma alternant_action {N k : ℕ} (G : Matrix (Fin N) (Fin N) ℂ)
+    (u : Fin k → Fin N → ℂ) (ev : Fin k → ℂ)
+    (hU : ∀ i, G *ᵥ u i = ev i • u i) (x : Fin k → Fin N) :
+    (∑ y : Fin k → Fin N, (∏ j, G (x j) (y j)) * det (fun j i => u i (y j))) =
+      (∏ i, ev i) * det (fun j i => u i (x j)) := by
+  have hexpand : det (fun j i => (G *ᵥ u i) (x j)) =
+      ∑ y : Fin k → Fin N, (∏ j, G (x j) (y j)) * det (fun j i => u i (y j)) := by
+    have hrows : (fun j i => (G *ᵥ u i) (x j)) =
+        (fun j => ∑ a : Fin N, G (x j) a • (fun i => u i a)) := by
+      ext j i
+      simp only [Finset.sum_apply, Pi.smul_apply, smul_eq_mul]
+      rfl
+    rw [hrows]
+    change Matrix.detRowAlternating.toMultilinearMap
+      (fun j => ∑ a : Fin N, G (x j) a • (fun i => u i a)) = _
+    rw [Matrix.detRowAlternating.toMultilinearMap.map_sum]
+    apply Finset.sum_congr rfl
+    intro y _
+    rw [Matrix.detRowAlternating.toMultilinearMap.map_smul_univ, smul_eq_mul]
+    rfl
+  rw [← hexpand]
+  simp only [hU, Pi.smul_apply, smul_eq_mul]
+  exact Matrix.det_mul_row ev (fun j i => u i (x j))
+
+private lemma alternant_kernel {N k : ℕ} (s : ℝ) (u : Fin k → Fin N → ℂ)
+    (ev : Fin k → ℂ) (hU : ∀ i, overlapMatrix N s *ᵥ u i = ev i • u i) :
+    kernel s *ᵥ (fun x : Label N k => det (fun j i => u i (x.val j))) =
+      (∏ i, ev i) • (fun x : Label N k => det (fun j i => u i (x.val j))) := by
+  classical
+  have hzero (y : Fin k → Fin N) (hy : ¬Function.Injective y) :
+      det (fun j i => u i (y j)) = 0 := by
+    obtain ⟨a, b, hab, hne⟩ := Function.not_injective_iff.mp hy
+    exact Matrix.det_zero_of_row_eq hne (funext (fun i => congrArg (u i) hab))
+  ext x
+  let f (y : Fin k → Fin N) : ℂ :=
+    (∏ j, overlapMatrix N s (x.val j) (y j)) * det (fun j i => u i (y j))
+  have hfull : (∑ y : Label N k, f y.val) = ∑ y : Fin k → Fin N, f y := by
+    have hsplit := Fintype.sum_subtype_add_sum_subtype Function.Injective f
+    have hz : (∑ y : {y : Fin k → Fin N // ¬Function.Injective y}, f y.val) = 0 := by
+      apply Finset.sum_eq_zero
+      intro y _
+      dsimp [f]
+      rw [hzero y.val y.property, mul_zero]
+    rw [hz, add_zero] at hsplit
+    exact hsplit
+  change (∑ y : Label N k, kernel s x y * det (fun j i => u i (y.val j))) = _
+  have hleft : (∑ y : Label N k, kernel s x y * det (fun j i => u i (y.val j))) =
+      ∑ y : Label N k, f y.val := by
+    apply Finset.sum_congr rfl
+    intro y _
+    dsimp [f]
+    unfold kernel
+    simp only [overlapMatrix_entry]
+  rw [hleft, hfull]
+  exact alternant_action (overlapMatrix N s) u ev hU x.val
+
+private lemma short_eigenvector {N k : ℕ} (h : k < N) (s : ℝ) :
+    ∃ w : Label N k → ℂ, w ≠ 0 ∧ kernel s *ᵥ w = (value N k s : ℂ) • w := by
+  classical
+  let e : Fin k → Fin N := Fin.castLE h.le
+  let z : Fin N := ⟨k, h⟩
+  let u : Fin k → Fin N → ℂ := fun i => Pi.single (e i) 1 - Pi.single z 1
+  let w : Label N k → ℂ := fun x => det (fun j i => u i (x.val j))
+  have hU (i : Fin k) : overlapMatrix N s *ᵥ u i = ((1 - s : ℝ) : ℂ) • u i := by
+    have hJ : vecMulVec (fun _ : Fin N => (1 : ℂ)) (fun _ => 1) *ᵥ u i = 0 := by
+      change _ *ᵥ (Pi.single (e i) 1 - Pi.single z 1) = 0
+      rw [Matrix.mulVec_sub, Matrix.mulVec_single_one, Matrix.mulVec_single_one]
+      ext a
+      change (1 : ℂ) * 1 - 1 * 1 = 0
+      ring
+    unfold overlapMatrix
+    simp only [Matrix.add_mulVec, Matrix.smul_mulVec, Matrix.one_mulVec,
+      hJ, smul_zero, add_zero]
+  let x₀ : Label N k := ⟨e, Fin.castLE_injective h.le⟩
+  have hne (j : Fin k) : z ≠ e j := by
+    intro he
+    have hv := congrArg Fin.val he
+    exact (Nat.ne_of_gt j.isLt) hv
+  have hmatrix : (fun j i => u i (x₀.val j)) = (1 : Matrix (Fin k) (Fin k) ℂ) := by
+    ext j i
+    change (Pi.single (e i) 1 : Fin N → ℂ) (e j) -
+      (Pi.single z 1 : Fin N → ℂ) (e j) = _
+    rw [Pi.single_eq_of_ne (hne j).symm, sub_zero]
+    simp only [Pi.single_apply, Matrix.one_apply, e, Fin.castLE_inj, eq_comm]
+  refine ⟨w, ?_, ?_⟩
+  · intro hz
+    have he := congrFun hz x₀
+    change det (fun j i => u i (x₀.val j)) = 0 at he
+    rw [hmatrix, Matrix.det_one] at he
+    exact one_ne_zero he
+  · rw [value, ite_eq_left h]
+    simpa only [Finset.prod_const, Finset.card_univ, Fintype.card_fin,
+      Complex.ofReal_pow] using alternant_kernel s u (fun _ => ((1 - s : ℝ) : ℂ)) hU
+
 private lemma kernel_eigenvector {N k : ℕ} (hN : 3 ≤ N) (hk : 2 ≤ k)
     (hkN : k ≤ N) (s : ℝ) :
     ∃ w : Label N k → ℂ, w ≠ 0 ∧ kernel s *ᵥ w = (value N k s : ℂ) • w := by
-  sorry
+  by_cases h : k < N
+  · exact short_eigenvector h s
+  · have heq : k = N := Nat.le_antisymm hkN (Nat.le_of_not_gt h)
+    subst k
+    sorry
 
 private lemma eigenvalue_bound {N k : ℕ} (s a v : ℝ)
     (h : (kernel (N := N) (k := k) s - (a : ℂ) • 1).PosSemidef)
