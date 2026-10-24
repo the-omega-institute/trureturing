@@ -7,12 +7,14 @@
    digest: Optimal unambiguous discrimination of injectively labelled product sequences. -/
 
 import D5.S3.Quantum.Recovery.PurifiedLocalPath
+import D5.S3.Quantum.Measurement.OverlapLowRankDistance
 
 namespace D5.S3.Quantum.PureState.NoRepetitionSequenceUnambiguousDiscrimination
 
-open scoped ComplexOrder Matrix MatrixOrder
-open Matrix
-open D5.S3.Quantum.Recovery.ProductPrefixRigidity (gram productMap)
+open scoped ComplexOrder _root_.Matrix MatrixOrder
+open _root_.Matrix
+open D5.S3.Quantum.Recovery.ProductPrefixRigidity (gram productMap readout)
+open D5.S3.Quantum.Measurement.OverlapLowRankDistance (equalOverlap)
 
 noncomputable section
 
@@ -29,7 +31,8 @@ def IsEquiangular {N : ℕ} (ψ : Fin N → Fin N → ℂ) (s : ℝ) : Prop :=
 
 /-- The tensor product in the coordinate basis. -/
 def productState {N k : ℕ} (ψ : Fin N → Fin N → ℂ)
-    (x : Label N k) (a : Fin k → Fin N) : ℂ := ∏ j, ψ (x.val j) (a j)
+    (x : Label N k) (a : Fin k → Fin N) : ℂ :=
+  productMap (fun _ : Fin k => Fin N) (fun j (_ : Unit) => ψ (x.val j)) (fun _ => ()) a
 
 /-- Positive effects, including the inconclusive effect, with no erroneous output. -/
 def IsUnambiguousMeasurement {N k : ℕ}
@@ -44,21 +47,14 @@ def IsUnambiguousMeasurement {N k : ℕ}
 def averageSuccess {N k : ℕ}
     (φ : Label N k → (Fin k → Fin N) → ℂ)
     (E : Label N k → Matrix (Fin k → Fin N) (Fin k → Fin N) ℂ) : ℝ :=
-  (1 / (Fintype.card (Label N k) : ℝ)) *
-    ∑ x, (star (φ x) ⬝ᵥ ((E x) *ᵥ φ x)).re
-
-/-- The effect of a tuple of independent single-system outcomes. -/
-def productEffect {N k : ℕ}
-    (F : Option (Fin N) → Matrix (Fin N) (Fin N) ℂ)
-    (o : Fin k → Option (Fin N)) : Matrix (Fin k → Fin N) (Fin k → Fin N) ℂ :=
-  productMap (fun _ : Fin k => Fin N) (fun j => F (o j))
+  Finset.univ.expect (fun x => readout (E x) (φ x))
 
 /-- Classical processing sums the product effects assigned to the same output. -/
 noncomputable def inducedEffect {N k : ℕ}
     (F : Option (Fin N) → Matrix (Fin N) (Fin N) ℂ)
     (d : (Fin k → Option (Fin N)) → Option (Label N k))
     (z : Option (Label N k)) : Matrix (Fin k → Fin N) (Fin k → Fin N) ℂ :=
-  ∑ o, if d o = z then productEffect F o else 0
+  ∑ o, if d o = z then productMap (fun _ : Fin k => Fin N) (fun j => F (o j)) else 0
 
 /-- The same single-system POVM is applied at each position, then processed classically. -/
 def IsProductProtocol {N k : ℕ}
@@ -84,13 +80,9 @@ def claim : Prop :=
       IsUnambiguousMeasurement (productState (k := k) ψ) E E₀ ∧
       averageSuccess (productState (k := k) ψ) E = value N k s
 
-private def probabilities {N k : ℕ}
-    (φ : Label N k → (Fin k → Fin N) → ℂ)
-    (E : Label N k → Matrix (Fin k → Fin N) (Fin k → Fin N) ℂ) : Label N k → ℝ :=
-  fun x => (star (φ x) ⬝ᵥ ((E x) *ᵥ φ x)).re
-
 private def kernel {N k : ℕ} (s : ℝ) : Matrix (Label N k) (Label N k) ℂ :=
-  fun x y => ∏ j, if x.val j = y.val j then 1 else (s : ℂ)
+  fun x y => productMap (fun _ : Fin k => Fin N)
+    (fun _ (a b : Fin N) => if a = b then 1 else (s : ℂ)) x.val y.val
 
 private lemma product_gram {N k : ℕ} (ψ : Fin N → Fin N → ℂ) (s : ℝ)
     (hψ : IsEquiangular ψ s) : gram (fun a x => productState (k := k) ψ x a) = kernel s := by
@@ -113,13 +105,13 @@ private lemma measurement_gram_bound {N k : ℕ}
     (E : Label N k → Matrix (Fin k → Fin N) (Fin k → Fin N) ℂ)
     (E₀ : Matrix (Fin k → Fin N) (Fin k → Fin N) ℂ)
     (hE : IsUnambiguousMeasurement φ E E₀) :
-    (gram (fun a x => φ x a) - diagonal (fun x => (probabilities φ E x : ℂ))).PosSemidef := by
+    (gram (fun a x => φ x a) - diagonal (fun x => (readout (E x) (φ x) : ℂ))).PosSemidef := by
   classical
   let A : Matrix (Fin k → Fin N) (Label N k) ℂ := fun a x => φ x a
   have hzero (x y : Label N k) (hy : y ≠ x) : E x *ᵥ φ y = 0 :=
     ((hE.1 x).dotProduct_mulVec_zero_iff).mp (hE.2.2.2 x y hy)
   have hreal (x : Label N k) :
-      star (φ x) ⬝ᵥ (E x *ᵥ φ x) = (probabilities φ E x : ℂ) := by
+      star (φ x) ⬝ᵥ (E x *ᵥ φ x) = (readout (E x) (φ x) : ℂ) := by
     apply Complex.ext
     · rfl
     · exact (Complex.nonneg_iff.mp ((hE.1 x).dotProduct_mulVec_nonneg (φ x))).2.symm
@@ -128,7 +120,7 @@ private lemma measurement_gram_bound {N k : ℕ}
     rw [Matrix.mul_assoc]
     rfl
   have hcompression : Aᴴ * (∑ x, E x) * A =
-      diagonal (fun x => (probabilities φ E x : ℂ)) := by
+      diagonal (fun x => (readout (E x) (φ x) : ℂ)) := by
     rw [Matrix.mul_sum, Matrix.sum_mul]
     ext y z
     simp only [Matrix.sum_apply, hentry]
@@ -154,16 +146,14 @@ private lemma measurement_gram_bound {N k : ℕ}
     ext x y
     rfl
   have hidentity : Aᴴ * E₀ * A =
-      gram (fun a x => φ x a) - diagonal (fun x => (probabilities φ E x : ℂ)) := by
+      gram (fun a x => φ x a) - diagonal (fun x => (readout (E x) (φ x) : ℂ)) := by
     rw [htotal, Matrix.mul_sub, Matrix.sub_mul, Matrix.mul_one, hgram, hcompression]
   rw [← hidentity]
   exact hE.2.1.conjTranspose_mul_mul_same A
 
-private def relabel {N k : ℕ} (σ : Equiv.Perm (Fin N)) : Label N k ≃ Label N k where
-  toFun x := ⟨σ ∘ x.val, σ.injective.comp x.property⟩
-  invFun x := ⟨σ.symm ∘ x.val, σ.symm.injective.comp x.property⟩
-  left_inv x := Subtype.ext (funext (fun j => σ.symm_apply_apply (x.val j)))
-  right_inv x := Subtype.ext (funext (fun j => σ.apply_symm_apply (x.val j)))
+private def relabel {N k : ℕ} (σ : Equiv.Perm (Fin N)) : Label N k ≃ Label N k :=
+  Equiv.subtypeEquiv (Equiv.arrowCongr (Equiv.refl (Fin k)) σ)
+    (fun f => (σ.injective.of_comp_iff f).symm)
 
 private lemma symmetrized_bound {N k : ℕ} (hk : k ≤ N) (s : ℝ)
     (q : Label N k → ℝ)
@@ -206,7 +196,7 @@ private lemma symmetrized_bound {N k : ℕ} (hk : k ≤ N) (s : ℝ)
       _ = c * b := by dsimp [b]; rw [one_div]; ring
   have hkernel (σ : Equiv.Perm (Fin N)) (x y : Label N k) :
       kernel s (relabel σ x) (relabel σ y) = kernel s x y := by
-    unfold kernel
+    unfold kernel productMap
     apply Finset.prod_congr rfl
     intro j _
     change (if σ (x.val j) = σ (y.val j) then (1 : ℂ) else (s : ℂ)) = _
@@ -247,12 +237,16 @@ private lemma symmetrized_bound {N k : ℕ} (hk : k ≤ N) (s : ℝ)
     Complex.ofReal_one, one_smul] at hscale
   exact hscale
 
-private def overlapMatrix (N : ℕ) (s : ℝ) : Matrix (Fin N) (Fin N) ℂ :=
-  ((1 - s : ℝ) : ℂ) • 1 + (s : ℂ) • vecMulVec (fun _ => 1) (fun _ => 1)
+private lemma equalOverlap_eq (N : ℕ) (s : ℝ) :
+    equalOverlap N s =
+      ((1 - s : ℝ) : ℂ) • 1 + (s : ℂ) • vecMulVec (fun _ => 1) (fun _ => 1) := by
+  ext i j
+  simp [equalOverlap, Matrix.vecMulVec_apply, Complex.real_smul, smul_eq_mul,
+    Complex.ofReal_sub]
 
 private lemma overlapMatrix_entry {N : ℕ} (s : ℝ) (a b : Fin N) :
-    overlapMatrix N s a b = if a = b then 1 else (s : ℂ) := by
-  unfold overlapMatrix
+    equalOverlap N s a b = if a = b then 1 else (s : ℂ) := by
+  rw [equalOverlap_eq]
   by_cases h : a = b <;>
     simp only [Matrix.add_apply, Matrix.smul_apply, Matrix.one_apply, h,
       ite_true, ite_false, Matrix.vecMulVec_apply, smul_eq_mul, mul_one, mul_zero,
@@ -283,7 +277,7 @@ private lemma alternant_action {N k : ℕ} (G : Matrix (Fin N) (Fin N) ℂ)
   exact Matrix.det_mul_row ev (fun j i => u i (x j))
 
 private lemma alternant_kernel {N k : ℕ} (s : ℝ) (u : Fin k → Fin N → ℂ)
-    (ev : Fin k → ℂ) (hU : ∀ i, overlapMatrix N s *ᵥ u i = ev i • u i) :
+    (ev : Fin k → ℂ) (hU : ∀ i, equalOverlap N s *ᵥ u i = ev i • u i) :
     kernel s *ᵥ (fun x : Label N k => det (fun j i => u i (x.val j))) =
       (∏ i, ev i) • (fun x : Label N k => det (fun j i => u i (x.val j))) := by
   classical
@@ -293,7 +287,7 @@ private lemma alternant_kernel {N k : ℕ} (s : ℝ) (u : Fin k → Fin N → �
     exact Matrix.det_zero_of_row_eq hne (funext (fun i => congrArg (u i) hab))
   ext x
   let f (y : Fin k → Fin N) : ℂ :=
-    (∏ j, overlapMatrix N s (x.val j) (y j)) * det (fun j i => u i (y j))
+    (∏ j, equalOverlap N s (x.val j) (y j)) * det (fun j i => u i (y j))
   have hfull : (∑ y : Label N k, f y.val) = ∑ y : Fin k → Fin N, f y := by
     have hsplit := Fintype.sum_subtype_add_sum_subtype Function.Injective f
     have hz : (∑ y : {y : Fin k → Fin N // ¬Function.Injective y}, f y.val) = 0 := by
@@ -309,10 +303,10 @@ private lemma alternant_kernel {N k : ℕ} (s : ℝ) (u : Fin k → Fin N → �
     apply Finset.sum_congr rfl
     intro y _
     dsimp [f]
-    unfold kernel
+    unfold kernel productMap
     simp only [overlapMatrix_entry]
   rw [hleft, hfull]
-  exact alternant_action (overlapMatrix N s) u ev hU x.val
+  exact alternant_action (equalOverlap N s) u ev hU x.val
 
 private lemma short_eigenvector {N k : ℕ} (h : k < N) (s : ℝ) :
     ∃ w : Label N k → ℂ, w ≠ 0 ∧ kernel s *ᵥ w = (value N k s : ℂ) • w := by
@@ -321,14 +315,14 @@ private lemma short_eigenvector {N k : ℕ} (h : k < N) (s : ℝ) :
   let z : Fin N := ⟨k, h⟩
   let u : Fin k → Fin N → ℂ := fun i => Pi.single (e i) 1 - Pi.single z 1
   let w : Label N k → ℂ := fun x => det (fun j i => u i (x.val j))
-  have hU (i : Fin k) : overlapMatrix N s *ᵥ u i = ((1 - s : ℝ) : ℂ) • u i := by
+  have hU (i : Fin k) : equalOverlap N s *ᵥ u i = ((1 - s : ℝ) : ℂ) • u i := by
     have hJ : vecMulVec (fun _ : Fin N => (1 : ℂ)) (fun _ => 1) *ᵥ u i = 0 := by
       change _ *ᵥ (Pi.single (e i) 1 - Pi.single z 1) = 0
       rw [Matrix.mulVec_sub, Matrix.mulVec_single_one, Matrix.mulVec_single_one]
       ext a
       change (1 : ℂ) * 1 - 1 * 1 = 0
       ring
-    unfold overlapMatrix
+    rw [equalOverlap_eq]
     simp only [Matrix.add_mulVec, Matrix.smul_mulVec, Matrix.one_mulVec,
       hJ, smul_zero, add_zero]
   let x₀ : Label N k := ⟨e, Fin.castLE_injective h.le⟩
@@ -362,12 +356,12 @@ private lemma full_eigenvector (n : ℕ) (s : ℝ) :
       (fun i : Fin n => Pi.single i.castSucc 1 - Pi.single (Fin.last n) 1)
   let ev : Fin (n + 1) → ℂ :=
     Fin.lastCases ((1 + (n : ℝ) * s : ℝ) : ℂ) (fun _ => ((1 - s : ℝ) : ℂ))
-  have hU (i : Fin (n + 1)) : overlapMatrix (n + 1) s *ᵥ u i = ev i • u i := by
+  have hU (i : Fin (n + 1)) : equalOverlap (n + 1) s *ᵥ u i = ev i • u i := by
     refine Fin.lastCases ?_ (fun i => ?_) i
     · simp only [u, ev, Fin.lastCases_last]
-      change overlapMatrix (n + 1) s *ᵥ (fun _ => 1) =
+      change equalOverlap (n + 1) s *ᵥ (fun _ => 1) =
         ((1 + (n : ℝ) * s : ℝ) : ℂ) • (fun _ => 1)
-      unfold overlapMatrix
+      rw [equalOverlap_eq]
       ext a
       simp only [Matrix.add_mulVec, Matrix.smul_mulVec, Matrix.one_mulVec,
         Pi.add_apply, Pi.smul_apply, smul_eq_mul]
@@ -378,7 +372,7 @@ private lemma full_eigenvector (n : ℕ) (s : ℝ) :
         Complex.ofReal_one]
       ring
     · simp only [u, ev, Fin.lastCases_castSucc]
-      change overlapMatrix (n + 1) s *ᵥ
+      change equalOverlap (n + 1) s *ᵥ
           (Pi.single i.castSucc 1 - Pi.single (Fin.last n) 1) =
         ((1 - s : ℝ) : ℂ) • (Pi.single i.castSucc 1 - Pi.single (Fin.last n) 1)
       have hJ : vecMulVec (fun _ : Fin (n + 1) => (1 : ℂ)) (fun _ => 1) *ᵥ
@@ -387,7 +381,7 @@ private lemma full_eigenvector (n : ℕ) (s : ℝ) :
         ext a
         change (1 : ℂ) * 1 - 1 * 1 = 0
         ring
-      unfold overlapMatrix
+      rw [equalOverlap_eq]
       simp only [Matrix.add_mulVec, Matrix.smul_mulVec, Matrix.one_mulVec,
         hJ, smul_zero, add_zero]
   let M : Matrix (Fin (n + 1)) (Fin (n + 1)) ℂ := fun j i => u i j
@@ -477,9 +471,11 @@ private lemma upper_bound {N k : ℕ} (hN : 3 ≤ N) (hk : 2 ≤ k)
     averageSuccess (productState (k := k) ψ) E ≤ value N k s := by
   have hg := measurement_gram_bound (productState (k := k) ψ) E E₀ hE
   rw [product_gram ψ s hψ] at hg
-  have hb := symmetrized_bound hkN s (probabilities (productState (k := k) ψ) E) hg
+  have hb := symmetrized_bound hkN s (fun x => readout (E x) (productState (k := k) ψ x)) hg
   obtain ⟨w, hw, he⟩ := kernel_eigenvector hN hk hkN s
-  exact eigenvalue_bound s (averageSuccess (productState (k := k) ψ) E) (value N k s) hb w hw he
+  apply eigenvalue_bound s (averageSuccess (productState (k := k) ψ) E) (value N k s) _ w hw he
+  simpa only [averageSuccess, Fintype.expect_eq_sum_div_card, div_eq_mul_inv,
+    one_div, one_mul, mul_comm] using hb
 
 private lemma single_system_measurement {N : ℕ} (s : ℝ) (hs : 0 < s) (hs1 : s < 1)
     (ψ : Fin N → Fin N → ℂ) (hψ : IsEquiangular ψ s) :
@@ -494,11 +490,13 @@ private lemma single_system_measurement {N : ℕ} (s : ℝ) (hs : 0 < s) (hs1 : 
     change (vecMulVec (fun _ : Fin N => (1 : ℂ)) (fun _ => 1)).PosSemidef
     simpa only [Pi.star_def, star_one] using
       Matrix.posSemidef_vecMulVec_self_star (fun _ : Fin N => (1 : ℂ))
-  have hG : (overlapMatrix N s).PosDef :=
-    ((Matrix.PosDef.one : (1 : Matrix (Fin N) (Fin N) ℂ).PosDef).smul
-      (show (0 : ℂ) < ((1 - s : ℝ) : ℂ) by exact_mod_cast sub_pos.mpr hs1)).add_posSemidef
-      (hJ.smul (show (0 : ℂ) ≤ (s : ℂ) by exact_mod_cast hs.le))
-  have hgram : Aᴴ * A = overlapMatrix N s := by
+  have hG : (equalOverlap N s).PosDef := by
+    rw [equalOverlap_eq]
+    exact
+      ((Matrix.PosDef.one : (1 : Matrix (Fin N) (Fin N) ℂ).PosDef).smul
+        (show (0 : ℂ) < ((1 - s : ℝ) : ℂ) by exact_mod_cast sub_pos.mpr hs1)).add_posSemidef
+        (hJ.smul (show (0 : ℂ) ≤ (s : ℂ) by exact_mod_cast hs.le))
+  have hgram : Aᴴ * A = equalOverlap N s := by
     ext i j
     change star (ψ i) ⬝ᵥ ψ j = _
     rw [overlapMatrix_entry]
@@ -507,7 +505,7 @@ private lemma single_system_measurement {N : ℕ} (s : ℝ) (hs : 0 < s) (hs1 : 
       rw [ite_eq_left rfl, hψ.1]
     · rw [ite_eq_right h, hψ.2 _ _ h]
   have hAdet : IsUnit A.det := by
-    have hdet := (Matrix.isUnit_iff_isUnit_det (overlapMatrix N s)).mp hG.isUnit
+    have hdet := (Matrix.isUnit_iff_isUnit_det (equalOverlap N s)).mp hG.isUnit
     rw [← hgram, Matrix.det_mul] at hdet
     exact isUnit_of_mul_isUnit_right hdet
   let B := A⁻¹
@@ -529,12 +527,12 @@ private lemma single_system_measurement {N : ℕ} (s : ℝ) (hs : 0 < s) (hs1 : 
         rw [Pi.single_eq_same]
         exact_mod_cast (sub_pos.mpr hs1).le
       · rw [Pi.single_eq_of_ne h]
-  have hsumH : (∑ o, H o) = overlapMatrix N s := by
+  have hsumH : (∑ o, H o) = equalOverlap N s := by
     rw [Fintype.sum_option]
     ext a b
     simp only [H, Option.elim_none, Option.elim_some, Matrix.add_apply, Matrix.sum_apply, Matrix.diagonal_apply,
       Pi.single_apply]
-    unfold overlapMatrix
+    rw [equalOverlap_eq]
     simp only [Matrix.add_apply, Matrix.smul_apply, smul_eq_mul, Matrix.one_apply]
     by_cases hab : a = b
     · subst b
@@ -566,7 +564,7 @@ private lemma single_system_measurement {N : ℕ} (s : ℝ) (hs : 0 < s) (hs1 : 
 private lemma productEffect_posSemidef {N k : ℕ}
     (F : Option (Fin N) → Matrix (Fin N) (Fin N) ℂ)
     (hF : ∀ o, (F o).PosSemidef) (o : Fin k → Option (Fin N)) :
-    (productEffect F o).PosSemidef := by
+    (productMap (fun _ : Fin k => Fin N) (fun j => F (o j))).PosSemidef := by
   classical
   have hprod (t : Finset (Fin k)) :
       Matrix.PosSemidef (fun a b : Fin k → Fin N => ∏ j ∈ t, F (o j) (a j) (b j)) := by
@@ -591,7 +589,7 @@ private lemma productEffect_posSemidef {N k : ℕ}
 
 private lemma productEffect_sum {N k : ℕ}
     (F : Option (Fin N) → Matrix (Fin N) (Fin N) ℂ) (hF : (∑ o, F o) = 1) :
-    (∑ o : Fin k → Option (Fin N), productEffect F o) = 1 := by
+    (∑ o : Fin k → Option (Fin N), productMap (fun _ : Fin k => Fin N) (fun j => F (o j))) = 1 := by
   classical
   have hentry (a b : Fin N) : (∑ o, F o a b) = (1 : Matrix (Fin N) (Fin N) ℂ) a b :=
     by simpa only [Matrix.sum_apply] using
@@ -611,7 +609,7 @@ private lemma productEffect_sum {N k : ℕ}
 private lemma productEffect_probability {N k : ℕ}
     (F : Option (Fin N) → Matrix (Fin N) (Fin N) ℂ)
     (ψ : Fin N → Fin N → ℂ) (o : Fin k → Option (Fin N)) (x : Label N k) :
-    star (productState ψ x) ⬝ᵥ (productEffect F o *ᵥ productState ψ x) =
+    star (productState ψ x) ⬝ᵥ (productMap (fun _ : Fin k => Fin N) (fun j => F (o j)) *ᵥ productState ψ x) =
       ∏ j, star (ψ (x.val j)) ⬝ᵥ (F (o j) *ᵥ ψ (x.val j)) := by
   change (∑ a : Fin k → Fin N, star (∏ j, ψ (x.val j) (a j)) *
     (∑ b : Fin k → Fin N, (∏ j, F (o j) (a j) (b j)) * ∏ j, ψ (x.val j) (b j))) = _
@@ -663,7 +661,7 @@ private lemma processing_of_injection {N k : ℕ} {α : Type*} [Fintype α]
     (c : Label N k × α → (Fin k → Option (Fin N))) (hc : Function.Injective c) :
     ∃ d : (Fin k → Option (Fin N)) → Option (Label N k),
       ∀ (F : Option (Fin N) → Matrix (Fin N) (Fin N) ℂ) x,
-        inducedEffect F d (some x) = ∑ r : α, productEffect F (c (x, r)) := by
+        inducedEffect F d (some x) = ∑ r : α, productMap (fun _ : Fin k => Fin N) (fun j => F (c (x, r) j)) := by
   classical
   let d : (Fin k → Option (Fin N)) → Option (Label N k) :=
     fun o => if h : ∃ a, c a = o then some h.choose.1 else none
@@ -714,14 +712,10 @@ private lemma protocol_of_probabilities {N k : ℕ} (hkN : k ≤ N)
   · exact inducedEffect_sum F hsum d
   · intro x y hxy
     rw [hp, ite_eq_right hxy.symm]
-  · have hm : (Fintype.card (Label N k) : ℝ) ≠ 0 := by
-      have hpos := Fintype.card_pos_iff.mpr
-        (⟨⟨Fin.castLE hkN, Fin.castLE_injective hkN⟩⟩ : Nonempty (Label N k))
-      exact_mod_cast hpos.ne'
-    unfold averageSuccess
-    simp only [hp, ite_true, Complex.ofReal_re, Finset.sum_const, Finset.card_univ,
-      nsmul_eq_mul, one_div]
-    rw [← mul_assoc, inv_mul_cancel₀ hm, one_mul]
+  · letI : Nonempty (Label N k) :=
+      ⟨⟨Fin.castLE hkN, Fin.castLE_injective hkN⟩⟩
+    simp only [averageSuccess, readout, hp, ite_true, Complex.ofReal_re]
+    exact Fintype.expect_const p
 
 private lemma full_label_eq_off {N : ℕ} (x y : Label N N) (j : Fin N)
     (h : ∀ a, a ≠ j → x.val a = y.val a) : x = y := by
@@ -820,7 +814,7 @@ private lemma acceptedOutcome_probability {N : ℕ} (s : ℝ)
     (hprob : ∀ o j, star (ψ j) ⬝ᵥ (F o *ᵥ ψ j) =
       o.elim (s : ℂ) (fun i => if i = j then ((1 - s : ℝ) : ℂ) else 0))
     (x y : Label N N) (r : Option (Fin N)) :
-    star (productState ψ y) ⬝ᵥ (productEffect F (acceptedOutcome x r) *ᵥ productState ψ y) =
+    star (productState ψ y) ⬝ᵥ (productMap (fun _ : Fin N => Fin N) (fun j => F (acceptedOutcome x r j)) *ᵥ productState ψ y) =
       if x = y then
         r.elim (((1 - s : ℝ) : ℂ) ^ N)
           (fun _ => (s : ℂ) * ((1 - s : ℝ) : ℂ) ^ (N - 1))
