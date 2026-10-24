@@ -15,7 +15,10 @@ import shutil
 import subprocess
 import sys
 import time
-import tomllib
+try:
+    import tomllib
+except ModuleNotFoundError:  # Python 3.10 and earlier use the bundled tomli.
+    import tomli as tomllib
 
 
 def load(name, path):
