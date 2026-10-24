@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:35d418a46f676f9c8899d661e241bd88646c8f016847477921eafee75993c0eb
+  normalized_sha256: sha256:35d418a46f676f9c8899d661e241bd88646c8f016847477921eafee75993c0eb
+cas_ref: sha256:35d418a46f676f9c8899d661e241bd88646c8f016847477921eafee75993c0eb
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: Definition 193 specifies a support/balance domain, equality of V(r) readouts and the positive restriction. The equivalence and quotient algebra results are separate in Theorem 194.
+    previous_atom_id: 0171fcc6c0577994bb5a651aff8639c00b594103ab51cc574fa2df3e8b1b0375
+    next_atom_id: 8be68d0372dc1a3d3c7a1b1dca3bae9cd14f6bdfcbf544499d911f1ecba71f7e

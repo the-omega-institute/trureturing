@@ -175,7 +175,7 @@ It therefore exceeds the $K^2$ scale of that row-energy problem. An improvement 
 
 ## Exact-rescaling ceilings and density substitutions
 
-The external manuscript by `span_of_dilates`, [*Structural ceilings in the cubic-theta quasi-Riemann-hypothesis argument*, v2](https://rstation.ai/problems/riemann_hypothesis/papers/40/v2), records two restrictions on specified modifications of the OpenAI/Liu argument. Its [primary text](https://rstation.ai/api/v1/papers/riemann_hypothesis_40/versions/2/download), Propositions A–B, is the source for this section. These are literature results to reuse, not new repository theorems. The manuscript's introductory zero-free numbers do not replace the later tracker comparison above. No external Lean build or independent certification of its numerical tables is asserted here.
+The external manuscript by `span_of_dilates`, [*Structural ceilings in the cubic-theta quasi-Riemann-hypothesis argument*, v5](https://rstation.ai/problems/riemann_hypothesis/papers/40/v5), records two restrictions on specified modifications of the OpenAI/Liu argument. Its [primary text](https://rstation.ai/api/v1/papers/riemann_hypothesis_40/versions/5/download), Propositions A–B and §5, is the source for this section. These are literature results to reuse, not new repository theorems. The manuscript's introductory zero-free numbers do not replace the later tracker comparison above. No external Lean build or independent certification of its numerical tables is asserted here.
 
 **Exact compensation.** Proposition A permits a finite linear combination of rescaled copies of the same completed average,
 
@@ -214,6 +214,39 @@ For $A\ge A_*(1)=2.183363347\ldots$, the source states that the optimum of this 
 The extra density input must count the same family with its actual conductor, height, finite ray data and zero multiplicities. A single-$L$ height-density exponent or an all-character conductor estimate cannot be inserted by identifying its exponent symbol with $A$; its family and resource powers must first be transported. The manuscript's comparison with classical density exponents does not itself supply that transport.
 
 **Relation to the complete Möbius/plain energy.** Neither proposition estimates $\|(I-P_L)Ab\|_2^2$ or the full energy of the preceding original coefficient. The critical class and admissible system in Proposition B belong to Liu's zero-free comparison, rather than the maximization in (459.11). The complete-energy bound in §459, the narrow all-small-label projection in [§484](../../docs/develop/theory/FIBONACCI_ANALYTIC_FRONTIER_INTERFACES_II.md#484-全部小标记的反射主项与完整投影预算), and the final signed Robin restoration remain distinct targets. Reusing these scoped ceilings avoids repeating their parameter optimizations without treating them as a general impossibility theorem for RH.
+
+**The Gauss-source selection is already classified.** In v5, §5, Lemma G
+and Proposition S, restrict to the source's sextic setting over
+$\mathbb Q(\omega)$, with its primitive additive character, primary
+representatives, good squarefree modulus and fixed bad-prime data. Write
+$\gamma_j(c)=\tau(\chi_c^j)/\sqrt{q_c}$ for $j\not\equiv0\pmod6$.
+The equivalence $\equiv$ allows multiplication by a unitary Hecke
+character and a function of a fixed ray class. For integer exponents,
+the supplied selection rule is
+
+$$
+\prod_i\gamma_{k_i}^{e_i}\equiv\mu
+\quad\Longleftrightarrow\quad
+K+3(E+1)\equiv0\pmod6,
+\qquad E=\sum_i e_i,\quad K=\sum_i e_i k_i.
+$$
+
+For one cubic-theta source $\gamma_2$ and $k$ GL(1) Poisson duals
+$\gamma_{4+3\tau_i}$, $\tau_i\in\{0,1\}$, **with no conjugate duals**,
+this becomes $k\equiv1\pmod3$ and $k+\sum_i\tau_i$ even. Hence at most
+three duals give only the existing single quadratically twisted sextic
+dual. The next allowed cases have four duals. This classification
+should be reused when selecting another probe, rather than inferred
+from a numerical phase census.
+
+The no-conjugate restriction matters here: the same source explicitly
+allows $\gamma_2\overline{\gamma_1}^{\,2}\equiv\mu$ with two conjugate
+duals. Neither that allowed product nor the selection rule estimates
+its size, supplies the automorphic source, or pays the original
+Möbius/plain or inverse-square contraction. In particular, the conjugate
+pair in (C20) is outside the stated no-conjugate uniqueness class.
+The FIB composition rotation $C=MJ$ and five Zeckendorf window states
+are not identified with residue-character orders by this selection rule.
 
 ## Amplitude-resolved counts and the original complete energy
 
@@ -1194,148 +1227,26 @@ This rules out a particular black-box budget. Even granting a uniform ordinary s
 
 Consequently the newer source is available for its actual ordinary subenergies, while a transfer to $\sum_u\Omega|M_\xi S_\xi|^2$ or $\sum_u\Omega|M_\xi|^4$ remains unpaid. Merely substituting the smaller zero-free boundary also leaves the existing critical bin $a_*=(1+\delta_*)/2$, $\delta_*=(15-5\sqrt6)/6$, inside the allowed zero range, so it does not remove the maximum in (459.12). The small-gcd, long-conductor contraction specified above still requires a coefficient-sensitive estimate on the original object. The reusable literature advance is the stronger ordinary-source interface and endpoint; no full inverse-fourth improvement, strict Robin conclusion, analytic Lean certification or priority claim is supplied by this comparison.
 
-## Reusing Möbius--Gauss cancellation in the complete dual
+## Complete-dual estimates and the remaining head
 
-The [squarefree Gauss pairing](faveri2026fixedorder.md#known-estimates-for-the-squarefree-gauss-pairing)
-and its [additive-character transport](faveri2026fixedorder.md#exact-additive-character-transport)
-already supply the detector's `eq:signal`, pair-Gauss formula and shift to
-the DDDS convention. They must be reused rather than reconstructed from a
-rational conductor. In particular, on their stated equal-ray coprime
-squarefree packet, cancelling the two original Möbius signs in the root
-factor leaves angular and cubic Gauss coefficients. It does not remove
-the character of each complete dual ideal.
-
-**The joint matrix retains order six.** For a good primary squarefree
-column $x$, let $\chi_x$ be the original raw sextic character, including
-its zeros, and put $\kappa_x=\chi_x^2$, $\lambda_x=\chi_x^3$. In precisely
-the cited additive conventions, the already supplied shift gives
-
-$$
-B_{m,x}:=\lambda_x(m)\overline{\widetilde g_3(-3m,x)}
-=\overline{\gamma_2(x)}\,\overline{\chi_x(m)}.
-$$
-
-Indeed $\overline{\widetilde g_3(-3m,x)}
-=\overline{\gamma_2(x)}\kappa_x(m)$ and
-$\lambda_x\kappa_x=\overline{\chi_x}$. If $(m,x)>1$, both sides are
-zero, by the primitive cubic Gauss identity at the colliding prime.
-For any identical finite row and column sets, therefore,
-$B=\overline C\operatorname{diag}(\overline{\gamma_2})$, where
-$C_{m,x}=\chi_x(m)$. The diagonal is unitary. These two matrices have the
-same singular values; the same nonnegative separate row and column weights
-or real zero mask preserve the identity with the conjugated matrix.
-A complex coupled weight must be transported too. Thus this identity
-alone supplies no smaller cubic operator norm. It does not exclude extra
-cancellation for the actual coefficient vector.
-
-**Opening the actual coefficient repairs one applicability mismatch.**
-The fixed-twist numerator average in (B2) of the
-[growing-ray supplier](faveri2026fixedorder.md#a-tame-growing-ray-application-to-the-complete-classwise-pole)
-cannot simply be evaluated on a diagonal where both its quadratic twist
-and numerator are determined by $m$. There is, however, an admissible way
-to use that supplier for each fixed $m$: open $A_D$ itself.
-
-Consider only the $t_a=t_b=1$, common-column-gcd $h=1$,
-$\ell=r=1$ term in the existing complete Poisson majorant, within a fixed
-equal-ray packet and with fixed bad-prime data. Here $D=\sqrt U$,
-$q_x,q_y\asymp U$, the primitive good conductor is $xy$, and the natural
-dual range is $q_m\ll U$. This is a specified term of that majorant, not
-a positive domination claim for a signed subset of the earlier $E_6$.
-For a bounded selector $\omega_M$ on good dual ideals $q_m\asymp M$,
-$1\le M\le U$, define this normalized piece explicitly by
-
-$$
-\begin{aligned}
-\mathfrak E_1(M)=
-\sum_{\substack{x,y\ {\rm good\ sf},\ (x,y)=1\\t(x)=t(y)=\tau}}
-&g_D(x)\overline{g_D(y)}\epsilon_{x,y}
-\frac{U}{\sqrt{q_xq_y}}\\
-&\quad\times\sum_{m\ {\rm good}}\omega_M(m)
-\overline{\chi_{x,y}(m)}
-\mathscr W\!\left(\frac{q_mU}{q_xq_y}\right).
-\end{aligned}
-$$
-
-Here $\epsilon_{x,y}$ and $\chi_{x,y}$ retain the source root convention
-and original ratio zeros. Only this good-dual, equal-ray term is selected;
-other original terms are not deleted from the full moment.
-
-Detect $(x,y)=1$ by $\sum_{e\mid(x,y)}\mu(e)$. For each squarefree $e$,
-allocate $e=e_1e_2$ in the exact convolution
-$A_D(x,1)=\sum_{uv=x}V(q_u/D)V(q_v/D)$ and write $x=euv$ after
-allocation. The two remaining lengths are
-
-$$
-D'=D/q_{e_1},\qquad N'=D/q_{e_2},\qquad D'N'=U/E,
-\qquad E=q_e.
-$$
-
-Cubic Gauss CRT leaves a cubic symbol between $u$ and $v$. For fixed
-$m$, its full sextic dual factor is an allowed finite inducing twist
-on each variable, with extra good modulus $f_m=\operatorname{rad}(m)$ and
-$F_m=q_{f_m}\le q_m$, including any primes used only for zero extension.
-The theta numerator is the other convolution variable, with the existing
-$e$-shift; its coprimality with $m$ is enforced by the original dual zeros.
-This avoids the earlier numerator/conductor overlap. Keep every
-squarefree and finite-class constraint; the original denominator exclusions
-are retained in the application of (B2).
-
-Apply (B2) directly by Mellin inversion and Cauchy with the actual outer
-coefficient vector. There is no $\vartheta$ weight in this sum, so no
-bounded-multiplier contraction or deletion of such a weight is used.
-Both convolution factors have the angular conjugate-cubic Gauss form;
-choose the smaller one as the outer length. For each allocation the
-resulting scalar $S_{e,m}$ satisfies
-
-$$
-|S_{e,m}|^2\ll U^\varepsilon F_m E^{1/2}
-D'N'\min(D',N')
-\le U^\varepsilon F_m U^{3/2}/E.
-$$
-
-The allocation count is a divisor loss and $\sum_{q_e\ll U}q_e^{-1}
-\ll\log U$, so their sum costs $U^\varepsilon$. Alternatively the
-existing cubic large sieve gives the summed bound $U^{5/3+\varepsilon}$,
-independent of $m$: sum
-$D'N'(D'+N'+(D'N')^{2/3})$ over the same allocations. Its first two
-terms cost $U^{3/2+\varepsilon}$ and the last costs
-$U^{5/3+\varepsilon}$.
-
-The Poisson prefactor and the two original $D^{-1}$ coefficients leave
-$U^{-1}$ at $q_x,q_y\asymp U$. There are $O(M)$ dual ideals in the dyad
-and $F_m\ll M$. Consequently this specified procedure supplies
-
-$$
-|\mathfrak E_1(M)|\ll U^\varepsilon
-\min\{U^{1/2}M^2,\ U^{2/3}M\}.
-$$
-
-The coupled Poisson profile does not cost a power of $M$ here. Writing
-$s=M/U\le1$, $\rho_x=q_x/U$, $\rho_y=q_y/U$ and
-$\rho_m=q_m/M$, its scaled factor is
-$(\rho_x\rho_y)^{-1/2}
-\mathscr W(s\rho_m/(\rho_x\rho_y))$ on fixed compact annuli.
-Smoothness of the original radial Fourier transform at zero bounds all
-required logarithmic derivatives uniformly for $0<s\le1$; compact
-Mellin separation pays the resulting polynomial heights with the same
-fixed seminorm contract.
-
-The two certificates cross at $M=U^{1/6}$. The angular application
-improves the cubic certificate only below that point, where the cubic
-certificate was already below $U$. At the full natural length $M\asymp U$,
-the better of these certificates is merely $U^{5/3+\varepsilon}$.
-In particular the angular application does not enlarge the range
-$M<U^{B_*-2/3}$ already paid by this cubic certificate. This compares
-bounds produced by specified procedures, not lower bounds for the actual
-sum. The other common gcds, original row parameters, finite components
-and full long-conductor contraction remain outside this restricted
-calculation. The Gauss transport and analytic suppliers are reused;
-no improved full inverse-fourth exponent, signed Robin conclusion,
-literature-priority claim or Lean certification is supplied.
+The [complete-dual application note](../Fourier/liu2026quasirhdual.md) contains the
+Möbius--Gauss transport, cubic coefficient interface (J4)--(J6),
+all-row common-gcd estimate (J8), its cube-free low-repeat extension
+(J11)--(J13), and the weighted all-core bound (J17), which pays
+$P\ge U^{1/5}$ for actual Type-II coefficients without a repeat cutoff.
+The direct whole-tail bound (J22) instead permits a repeat cutoff
+$T=U^{1/12}$; retaining both core caps then pays $P\ge U^{1/6}$ by (J23).
+The note records the sufficient aggregate small-$P$ targets
+[(J15)](../Fourier/liu2026quasirhdual.md#truncate-before-the-positive-class-partition)
+and [(J20)](../Fourier/liu2026quasirhdual.md#an-untruncated-sufficient-target-for-the-actual-type-ii-factor),
+and the smaller-$P$, truncated actual-Type-II target
+[(J24)](../Fourier/liu2026quasirhdual.md#a-direct-repeat-tail-and-a-smaller-sufficient-head).
+None of these head estimates is supplied; the full inverse-fourth saving, signed Robin
+restoration and RH remain open.
 
 ## Actual-family finite measurements
 
-The [reproducible experiment at `919b49399f8a256b2e313e4efeddafff37f0c757`](https://github.com/the-omega-institute/trureturing-experiments/tree/919b49399f8a256b2e313e4efeddafff37f0c757/docs/reports/sextic-inverse-fourth) evaluates the actual inverse fourth moment at $D=\sqrt U$, with trivial fixed ray twist, good ideals prime to 2 and 3, every sixth-power-free row in $U<q_u<2U$, all six unit multiples and the original collision zeros. It retains the stated smooth profiles, actual ideal Möbius coefficients, parity-core blocks and full interference. Its code, complete data and comparison definitions are in the private experiments repository; this note adds only their research interface.
+The [reproducible experiment at `919b49399f8a256b2e313e4efeddafff37f0c757`](https://github.com/the-omega-institute/trureturing-experiments/tree/919b49399f8a256b2e313e4efeddafff37f0c757/docs/reports/sextic-inverse-fourth) evaluates the actual inverse fourth moment at $D=\sqrt U$, with trivial fixed ray twist, good ideals prime to 2 and 3, every sixth-power-free row in $U<q_u<2U$, all six unit multiples and the original collision zeros. It retains the stated smooth profiles, actual ideal Möbius coefficients, parity-core blocks and full interference. Its code, complete data and comparison definitions are in the experiments repository; this note adds only their research interface.
 
 Across five scales $U=256,1024,4096,16384,65536$, the program evaluates 158,322 physical rows. Its measured $E_6^\mu$ is approximately $-0.672730$ at $U=256$ and $45.893416$ at $U=65536$; the separately evaluated $t=1$ head also has both measured signs. At $U=65536$, the measured Möbius fourth moment is $2686.143572$, while replacing its signs by positive coefficients on the same squarefree support gives $2649.062665$. These finite observations do not support assuming a uniformly negative cross-core term or bounding the signed Möbius moment by the same-support positive-coefficient moment. Character arithmetic and collision tests use exact integers; profiles and moments use binary64 with independent scalar checks, not interval certificates. No uniform exponent, inverse-fourth improvement, strict Robin conclusion or RH proof follows. The missing analytic input remains an upper bound for the positive cross-core contribution with its actual coefficients, uniformly over the required original components and profiles.
 
@@ -1971,6 +1882,733 @@ improvement, signed Robin restoration and RH remain unproved. This is
 an application of the existing operator bounds, without a literature-priority
 claim or local Lean certification.
 
+
+## Removing a short Type-I part from the remaining coefficient
+
+The zero-slot plain fourth moment in [Xu–Sang v2, Theorem 2.2](https://arxiv.org/html/2610.17675v2),
+the existing full inverse-fourth bound, and (C18) permit a further exact
+source reduction. This is a `repo-derived` application of those inputs
+and the standard truncated Dirichlet-inverse identity; no new sieve or
+Möbius identity is claimed. Keep the same original physical rows,
+finite components, collision zeros and fixed or polylog cost contract.
+
+Fix one original presentation $\psi_u$, put $D=\sqrt U$, and choose
+fixed $0<a<b$ with $\operatorname{supp}V\subset[a,b]$. Let
+
+$$
+z=(bD)^{1/2},\qquad A=U^{1/25},\qquad
+\mu_z(d)=\mu(d)\mathbf1_{q_d\le z}.
+$$
+
+For sufficiently large $U$, $A<z<aD$. The familiar order-two truncated
+inverse formula is $\mu=2\mu_z-\mu_z*\mu_z*1$ on $q_d\le z^2$.
+It follows directly because $(\mu-\mu_z)*(\mu-\mu_z)*1$ has support
+$q_d>z^2$. On the original annulus $aD\le q_d\le bD$, the $2\mu_z$
+term vanishes. Multiplying the formula by $\mu^2(d)$ retains exactly the
+original squarefree support. Thus, with all ideals good, define
+
+$$
+\begin{aligned}
+\lambda_{\mathrm{II}}(d)
+&=-\mu^2(d)
+\sum_{\substack{rsc=d\\q_r,q_s\le z\\q_{rs}>A}}
+\mu(r)\mu(s),\\
+M_{\mathrm{II}}(u)
+&=D^{-1/2}\sum_d\lambda_{\mathrm{II}}(d)
+\psi_u(d)V(q_d/D),\\
+M_{\mathrm I}(u)
+&=-D^{-1/2}\sum_{\substack{q\ {\rm sf}\\q_q\le A}}
+\mu(q)\tau(q)\psi_u(q)
+\sum_{\substack{c\ {\rm sf}\\(c,q)=1}}
+\psi_u(c)V(q_qq_c/D).
+\end{aligned}
+\tag{C21}
+$$
+
+Here $\tau$ counts ideal divisors. The small-$rs$ terms have $rs=q$
+squarefree and $q_q\le A<z$, so every ordered factorization of $q$ is
+allowed and $\sum_{rs=q}\mu(r)\mu(s)=\mu(q)\tau(q)$. Consequently the
+original inverse polynomial satisfies the exact identity
+$M_\psi=M_{\mathrm I}+M_{\mathrm{II}}$. No original row or prime collision
+has been removed.
+
+**Pay the whole Type-I part without a moving-modulus theorem.** In its
+inner sum expand $\mu^2(c)=\sum_{e^2\mid c}\mu(e)$. The condition
+$(c,q)=1$ forces $(e,q)=1$. Detect the remaining coprimality by
+$\sum_{v\mid(c/e^2,q)}\mu(v)$ and write $c=e^2vn$. The row scalar
+$\psi_u(e^2v)$ has modulus at most one, including its zeros; the remaining
+$n$ sum is the original unpunctured plain polynomial at length
+$D/(q_qq_e^2q_v)$. This step introduces no extra inducing character or
+moving puncture into the plain supplier.
+
+For the weighted $L^4$ norm on the same original row set, that supplier
+and Minkowski therefore give
+
+$$
+\begin{aligned}
+\|M_{\mathrm I}\|_4
+&\ll U^{1/4+\varepsilon}
+\sum_{q_q\le A}\frac{\tau(q)}{\sqrt{q_q}}
+\sum_{v\mid q}q_v^{-1/2}
+\sum_{q_e\ll\sqrt{D/q_q}}q_e^{-1}\\
+&\ll U^{1/4+\varepsilon}A^{1/2},\\
+\mathcal T_{\mathrm I}:=\|M_{\mathrm I}\|_4^4
+&\ll U^{27/25+\varepsilon}.
+\end{aligned}
+\tag{C22}
+$$
+
+All nonempty subunit lengths are bounded below by the fixed support
+constant $1/b$ and use the usual bounded annular enlargement. Ideal
+counting and divisor bounds pay the sums; the $e$ sum costs only a
+logarithm. These are positive-norm estimates for the complete Type-I
+polynomial, not positivity assertions about a selected correlation.
+
+**Pay its full interference before applying any pair cut.** Reuse the
+original $\mathcal T_\mu:=\|M_\psi\|_4^4\ll U^{B_*+\varepsilon}$.
+Since $27/25<B_*$, the exact decomposition and Minkowski give
+$\mathcal T_{\mathrm{II}}:=\|M_{\mathrm{II}}\|_4^4
+\ll U^{B_*+\varepsilon}$. The reverse triangle inequality for the norms
+and the difference of fourth powers imply
+
+$$
+\begin{aligned}
+|\mathcal T_\mu-\mathcal T_{\mathrm{II}}|
+&\ll(\|M_\psi\|_4+\|M_{\mathrm{II}}\|_4)^3
+\|M_{\mathrm I}\|_4\\
+&\ll U^{C_*+\varepsilon},\qquad
+C_*:=\frac{3B_*+27/25}{4}
+=\frac{829-250\sqrt6}{200}<\frac{13}{12}.
+\end{aligned}
+\tag{C23}
+$$
+
+The exact margin is
+$13/12-C_*=(750\sqrt6-1837)/600>0$, since
+$6\cdot750^2-1837^2=431$. The finite components are restored coherently
+with the original common cost; the decomposition is made on each
+original presentation, without replacing any vector by an independently
+optimized one.
+
+**The remaining pair target has a specific new source.** The coefficient
+$\lambda_{\mathrm{II}}$ is squarefree-supported and
+$|\lambda_{\mathrm{II}}(d)|\le\tau_3(d)$. Hence
+
+$$
+g_{\mathrm{II}}(a)=D^{-1}\sum_{d_1d_2=a}
+\lambda_{\mathrm{II}}(d_1)\lambda_{\mathrm{II}}(d_2)
+V(q_{d_1}/D)V(q_{d_2}/D)\xi(a)
+$$
+
+has cube-free support, $q_a\asymp U$ and the normalized envelope
+$|g_{\mathrm{II}}(a)|\ll U^{-1/2+\varepsilon}$ used in (C18).
+The same full cubic block costs $U^{1+\varepsilon}$ for this coefficient,
+and its complete large-$P$ block costs $U^{13/12+\varepsilon}$.
+Subtract their two exact full/small/large decompositions and use (C23):
+
+$$
+\boxed{
+\left|E_{6,\,P<U^{1/4}}^\mu
+      -E_{6,\,P<U^{1/4}}(g_{\mathrm{II}})\right|
+\ll U^{13/12+\varepsilon}.
+}
+\tag{C24}
+$$
+
+This uses whole-moment interference and two separately paid whole
+large-$P$ blocks; it does not assert that a pair mask contracts an error.
+For every fixed $0<\nu<B_*-13/12$, (C20) may therefore equivalently be
+sought with this explicit $g_{\mathrm{II}}$ in place of $g_D$.
+
+The change is in the actual coefficient, not just its name. For squarefree
+$d$ put $d_{\le z}=\prod_{\mathfrak p\mid d,\ q_{\mathfrak p}\le z}
+\mathfrak p$. If $q_{d_{\le z}}\le A$, then
+$\lambda_{\mathrm{II}}(d)=0$: every allowed $rs$ divides $d_{\le z}$.
+Thus the remainder excludes prime $d$ and all $d=pm$ with $q_p>z$
+and $q_m\le A$. It changes coefficients on other columns, so (C24) is
+not a bound for deleting just those columns from the original moment.
+Balanced two-prime factors and their cross-correlations remain.
+
+No estimate below $B_*$ for this remaining Type-II contraction is
+supplied. The full inverse-fourth improvement, signed Robin restoration
+and RH remain open; this application has no local Lean certification or
+literature-priority claim.
+
+
+## A smooth Type-I cutoff using the existing reciprocal strip
+
+The paid support reduction can be enlarged by combining the same
+truncated inverse with a two-variable Euler correction. Reuse
+`lem:logarithmic-control`, `lem:deleted-euler-factors` and
+`lem:smooth-calculus` of the [pinned OpenAI primary manuscript](https://github.com/openai/math/blob/adc7f1241b42e322a6451854ab7e4b4c146bf78a/preprints/The-Quasi-Riemann-Hypothesis-September-30-2026/build/paper.tex),
+and the zero-slot plain fourth moment used in (C22). This is a
+`repo-derived` application of those analytic inputs, not a new zero-free
+region or truncated-inverse identity. Keep the same original physical
+rows, presentations, collision zeros and fixed or stated polylog costs.
+Use $\beta=7/8$ from that source; a Dirichlet-only nonvanishing statement
+would not supply the required Hecke-family reciprocal bound. The
+no-linear-term correction and absolute-mass transport reuse the mechanism
+of Collet's Chapter 25 described [above](#reusing-the-global-ordinary-source-frontier);
+the application here concerns the actual smooth Type-I coefficient.
+
+**Exact smooth split.** Choose a fixed smooth $0\le W\le1$, equal to $1$
+on $[0,1]$ and $0$ on $[2,\infty)$. With the same $z=(bD)^{1/2}$, now put
+$A=U^{1/20}$. For sufficiently large $U$, $2A<z<aD$. Define
+
+$$
+\begin{aligned}
+\lambda_{\mathrm{II},W}(d)
+&=-\mu^2(d)\sum_{\substack{rsc=d\\q_r,q_s\le z}}
+ \mu(r)\mu(s)\bigl(1-W(q_{rs}/A)\bigr),\\
+M_{\mathrm I,W}(u)
+&=-D^{-1/2}\sum_{\substack{q,c\ {\rm sf}\\(q,c)=1}}
+ \mu(q)\tau(q)\psi_u(qc)W(q_q/A)V(q_qq_c/D),\\
+M_{\mathrm{II},W}(u)
+&=D^{-1/2}\sum_d\lambda_{\mathrm{II},W}(d)
+ \psi_u(d)V(q_d/D).
+\end{aligned}
+\tag{C25}
+$$
+
+Then $M_\psi=M_{\mathrm I,W}+M_{\mathrm{II},W}$ exactly. Indeed, wherever
+$W(q_{rs}/A)$ is nonzero, $q_{rs}<2A<z$, so all ordered factorizations
+of $q=rs$ occur, with sum $\mu(q)\tau(q)$. The minus sign in
+$M_{\mathrm I,W}$ is global; its two-variable coefficient below is
+$\mu(q)\tau(q)$.
+
+**A summable correction preserves the plain factor.** On an absolutely
+convergent starting half-plane, the series for squarefree coprime
+$(q,c)$ has local factor $1-2x+y$, where
+$x=\psi_u(\mathfrak p)q_{\mathfrak p}^{-s}$ and
+$y=\psi_u(\mathfrak p)q_{\mathfrak p}^{-t}$. Factor it as
+
+$$
+\begin{aligned}
+F_u(s,t)&=L(s,\psi_u)^{-2}L(t,\psi_u)H_u(s,t),\\
+(H_u)_{\mathfrak p}
+&=\frac{(1-2x+y)(1-y)}{(1-x)^2}
+ =1-\frac{(x-y)^2}{(1-x)^2},\\
+H_u(s,t)&=\sum_{d,e}h(d,e)\psi_u(de)q_d^{-s}q_e^{-t}.
+\end{aligned}
+\tag{C26}
+$$
+
+The multiplicative coefficient $h(d,e)$ is independent of the row.
+All nonconstant local terms have total degree at least two. Hence, for
+$\sigma>1/2$, $\tau>1/2$ and $\sigma+\tau>1$,
+
+$$
+\sum_{d,e}|h(d,e)|q_d^{-\sigma}q_e^{-\tau}<\infty:
+\qquad
+\sum_{(j,k)\ne(0,0)}|h(\mathfrak p^j,\mathfrak p^k)|
+ q_{\mathfrak p}^{-j\sigma-k\tau}
+\le\frac{(q_{\mathfrak p}^{-\sigma}
+          +q_{\mathfrak p}^{-\tau})^2}
+         {(1-q_{\mathfrak p}^{-\sigma})^2}.
+$$
+
+Equality of coefficients in (C26) expresses the joint coefficient as
+an $h$-convolution of $(\mu*\mu)(r)\psi_u(r)$ in the first variable
+and the plain coefficient $\psi_u(n)$ in the second. This is a formal
+coefficient transport followed by finite polynomial estimates; no
+pointwise bound for $L(t,\psi_u)$ near the central line is invoked.
+Original zero-only primes give local factor $1$ throughout, including
+in the transported coefficient.
+
+For a smooth annular profile $P$ and length $R\gg1$, moving its Mellin
+line to $\sigma=\beta+v$, $v>0$, in the inverse-square series gives
+
+$$
+\sup_u\left|R^{-1/2}\sum_r(\mu*\mu)(r)\psi_u(r)P(q_r/R)\right|
+\ll U^\varepsilon R^{\sigma-1/2}\,p_J(P).
+$$
+
+Here $p_J$ is a fixed finite smooth seminorm, chosen after the desired
+loss. The source's full reciprocal strip controls $L(s,\psi_u)^{-2}$;
+its deleted-factor lemma includes both the primitive conductor and the
+complete original deletion radical. A principal reciprocal has a zero,
+rather than a pole, at $s=1$ and contributes no residue. The remaining
+plain factor uses the same original nonprincipal row supplier as (C22).
+For a fixed finite twist, a principal inducing character on a sixth-power-free
+physical row forces its good-prime support into the fixed twist support;
+with valuations at most five these rows are bounded, hence absent from
+sufficiently large annuli. Retain the original finite exceptional-row
+treatment at bounded scales; no arbitrary principal row is added to the
+plain moment theorem.
+
+Dyadically localize the total first variable at $q_q\asymp Q\ll A$ and
+the second at $q_c\asymp C=D/Q$. Their joint profile is smooth on a
+fixed compact annulus, uniformly in $Q/A$: derivatives of $W(Qx/A)$
+are bounded there. Separate it by a common logarithmic Fourier measure.
+Its rapidly decreasing transform pays the fixed polynomial growth of
+the two annular profile seminorms. These Fourier parameters belong to
+the profiles; the original row twists and their height contract are
+unchanged. The global reciprocal strip handles the inverse factor's
+internal Mellin heights.
+
+After $q=dr$, $c=en$, normalization contributes $(q_dq_e)^{-1/2}$.
+The inverse-square supremum and the plain $L^4$ bound therefore give,
+for this dyadic piece,
+
+$$
+\begin{aligned}
+\|M_{\mathrm I,W;Q}\|_4
+&\ll U^{1/4+\varepsilon}Q^{\sigma-1/2}
+ \sum_{\substack{q_d\ll Q\\q_e\ll C}}
+ |h(d,e)|q_d^{-\sigma}q_e^{-1/2}\\
+&\ll U^{1/4+\varepsilon}Q^{\sigma-1/2}C^\eta,
+ \qquad \eta>0.
+\end{aligned}
+$$
+
+The last step uses the absolute mass in (C26) at
+$(\sigma,1/2+\eta)$. Shifted lengths below a fixed positive support
+constant are empty; all remaining subunit lengths are bounded-factor
+annular scales. Thus none causes an extra power. Choose $v,\eta$ within
+the final loss, and sum $Q$ dyadically. At $\beta=7/8$ and $A=U^{1/20}$,
+
+$$
+\boxed{
+\mathcal T_{\mathrm I,W}
+ :=\|M_{\mathrm I,W}\|_4^4
+ \ll U^{1+\varepsilon}A^{4\beta-2}
+ =U^{43/40+\varepsilon}.
+}
+\tag{C27}
+$$
+
+**Whole interference and the same remaining target.** Since
+$43/40<B_*$, the full-moment argument of (C23) now gives
+
+$$
+\begin{aligned}
+|\mathcal T_\mu-\mathcal T_{\mathrm{II},W}|
+&\ll U^{C_W+\varepsilon},\\
+C_W&=\frac{3B_*+43/40}{4}
+ =\frac{663-200\sqrt6}{160}
+ =C_*-\frac1{800}<\frac{13}{12}.
+\end{aligned}
+$$
+
+The remainder is still squarefree-supported and bounded by $\tau_3$.
+Its actual square coefficient $g_{\mathrm{II},W}$ therefore has the
+same cube-free normalized envelope as $g_{\mathrm{II}}$. Pay its whole
+cubic and large-$P$ blocks separately, as in (C24), to obtain
+
+$$
+\boxed{
+\left|E_{6,\,P<U^{1/4}}^\mu
+      -E_{6,\,P<U^{1/4}}(g_{\mathrm{II},W})\right|
+\ll U^{13/12+\varepsilon}.
+}
+\tag{C28}
+$$
+
+All finite components are restored coherently with the same common
+cost. If $q_{d_{\le z}}\le A=U^{1/20}$, then every allowed $rs$ satisfies
+$W(q_{rs}/A)=1$, so $\lambda_{\mathrm{II},W}(d)=0$. This enlarges the
+paid support exclusion in (C24). Coefficients on other columns change
+as well; the operation is not deletion of only that set from the
+original moment. For $0<\nu<B_*-13/12$, the unpaid (C20) can be sought
+with this explicit smooth remainder. The required Type-II gain, full
+inverse-fourth improvement, signed Robin restoration and RH remain
+open. These source-conditional applications carry neither local Lean
+certification nor a literature-priority claim.
+
+
+## Combining two bounds on the same buffered Type-I bin
+
+The smooth cutoff can be enlarged further by using both sides of the
+already supplied local $L$-control. Reuse the exact coefficient
+transport (C26), the original buffered bins and counts from
+[§459](../../docs/develop/theory/FIBONACCI_ANALYTIC_FRONTIER_INTERFACES.md#459-缓冲零点分箱下的完整原卷积联合估计),
+and `lem:buffered-bins`, `lem:detector-dyads` and `lem:plain` of the
+[pinned OpenAI primary manuscript](https://github.com/openai/math/blob/adc7f1241b42e322a6451854ab7e4b4c146bf78a/preprints/The-Quasi-Riemann-Hypothesis-September-30-2026/build/paper.tex).
+This is a `repo-derived` application to the actual smooth Type-I
+coefficient, not a new zero-density, Euler-transport or bilinear theorem.
+
+In the exact identity (C25), take the cutoff
+$A_{\rm b}=U^{1/12}$, and denote the resulting components by
+$M_{\mathrm I,b}$, $M_{\mathrm{II},b}$ and
+$\lambda_{\mathrm{II},b}$. Eventually $2A_{\rm b}<z<aD$, as required.
+Keep the original floor $a_0=51/100$, the same physical row family,
+all original zero extensions and the same fixed or polylog cost
+contract. On a nonfloor bin $\mathcal B_{i,a}$ put $\delta=2a-1$.
+Its original counting exponent is
+
+$$
+R(\delta)=
+\begin{cases}
+(15-16\delta)/(15-6\delta),&1/50<\delta\le5/6,\\
+1-\delta,&5/6\le\delta\le1.
+\end{cases}
+$$
+
+For a dyadic block $q_q\asymp Q\ll A_{\rm b}$, $q_c\asymp C=D/Q$,
+write $T_Q(i,a)=\sum_{u\in\mathcal B_{i,a}}
+\Omega(u)|M_{\mathrm I,b;Q}(u)|^4$. Two existing estimates apply to
+this same positive quantity:
+
+$$
+\boxed{
+T_Q(i,a)\ll U^\varepsilon
+\min\left\{U^{R(\delta)+\delta},\ UQ^{2\delta}\right\}.
+}
+\tag{C29}
+$$
+
+**The first bound uses the local upper and reciprocal bounds together.**
+Apply double Mellin inversion to the uniformly smooth joint annular
+profile from (C26). Move its two finite contours to
+$\Re s=\Re t=a+8e$. The original buffered-bin lemma bounds both
+$L_{\rm orig}$ and its reciprocal on these contours; the mass of $H$
+is absolutely convergent there. Thus the same actual row satisfies
+
+$$
+|M_{\mathrm I,b;Q}(u)|
+\ll U^\varepsilon D^{-1/2}Q^{a+8e}C^{a+8e}
+=U^\varepsilon D^{a-1/2+8e},
+$$
+
+up to a negligible tail. Its fourth power costs
+$U^{\delta+O(e)+\varepsilon}$. Multiply by the same bin's count to
+obtain the first branch. This uses the local upper bound on that bin,
+not a global upper bound below $7/8$.
+
+**The second bound keeps the whole plain fourth moment.** Repeat the
+normalized $h$-convolution estimate preceding (C27), now using the
+inverse-square bound on the same finite local line $a+8e$. Its mass
+is taken at $(a+8e,1/2+\eta)$, paying the same $C^\eta$ factor. After
+bounding the row scalar $\psi_u(de)$ in modulus and applying Minkowski
+on the bin-restricted positive norm, enlarge only the plain positive
+fourth moment to the original full row family. The result is
+$T_Q(i,a)\ll U^{1+\varepsilon}Q^{2\delta+O(e)}$.
+Both bounds retain the same coefficient and same bin, so their minimum
+is legitimate. No selector is removed from a signed correlation.
+
+For both arguments, truncate the common two-variable Fourier measure
+and the internal Mellin frequencies inside a fixed fraction of the
+original buffer height $T_1$. The two variables share that budget.
+Only finite contour segments are shifted; the remaining tails stay
+on absolute lines. The original fixed polynomial bounds and arbitrary
+Fourier/Mellin decay pay those tails and the horizontal joins. Choose
+the bin losses and finite internal orders first, then the small buffer
+height exponent, and finally the outer decay order. This is the height
+order of §459 and the primary source, with no extension to infinite
+local contours or enlargement of the original row-twist contract.
+All finite profile costs, complete deletion radicals and finite
+presentations belong to one common envelope. The original nonprincipal
+physical rows allow the plain shift without a pole; bounded principal
+exceptions retain their original treatment.
+
+**Consume the two bounds before taking the worst bin.** Since
+$Q\ll U^{1/12}$, the second branch has exponent at most $1+\delta/6$.
+For $\delta\le1/2$ this is at most $13/12$. For
+$1/2\le\delta\le5/6$ the first branch suffices, because
+
+$$
+\frac{13}{12}-R(\delta)-\delta
+=\frac{(2\delta-1)(12\delta-5)}{4(15-6\delta)}\ge0.
+$$
+
+For $5/6\le\delta\le1$, $R(\delta)+\delta=1$.
+The original floor has $O(U)$ rows; applying only the second branch
+with $\delta_0=1/50$ gives $U^{301/300+\varepsilon}$, also below
+$U^{13/12+\varepsilon}$. No lowered floor is required. Choose the bin
+width and internal losses within the final $\varepsilon$, then sum the
+finitely many bins and dyadic blocks in the original norm and restore
+all finite components coherently. This gives
+
+$$
+\boxed{
+\mathcal T_{\mathrm I,b}:=\|M_{\mathrm I,b}\|_4^4
+\ll U^{13/12+\varepsilon},\qquad A_{\rm b}=U^{1/12}.
+}
+\tag{C30}
+$$
+
+**The larger cutoff has a different paid transfer error.** The complete
+inverse-fourth bound and (C30) imply, by the same full-interference
+inequality as (C23),
+
+$$
+\begin{aligned}
+|\mathcal T_\mu-\mathcal T_{\mathrm{II},b}|
+&\ll U^{C_{\rm b}+\varepsilon},\\
+C_{\rm b}&=\frac{3B_*+13/12}{4}
+=\frac{199-60\sqrt6}{48},\\
+B_*-C_{\rm b}&=\frac{B_*-13/12}{4}
+=\frac{49-20\sqrt6}{48}>0.
+\end{aligned}
+\tag{C31}
+$$
+
+The last inequality follows from $49^2-6\cdot20^2=1$. In particular
+$13/12<C_{\rm b}<B_*$: the smaller transfer error in (C28) is not being
+claimed for this enlarged cutoff. The new remainder is still
+squarefree-supported with $|\lambda_{\mathrm{II},b}|\le\tau_3$, so its
+actual square $g_{\mathrm{II},b}$ retains the same cube-free envelope.
+Subtract the two complete cubic/large-$P$/small-$P$ decompositions and
+pay each whole cubic and large-$P$ block as before. Since their exponent
+$13/12$ is smaller than $C_{\rm b}$, the result is
+
+$$
+\boxed{
+\left|E_{6,\,P<U^{1/4}}^\mu
+      -E_{6,\,P<U^{1/4}}(g_{\mathrm{II},b})\right|
+\ll U^{C_{\rm b}+\varepsilon}.
+}
+\tag{C32}
+$$
+
+Thus it remains sufficient to prove (C20) for this explicit remainder
+with any fixed $0<\nu<(B_*-13/12)/4$. The identity for the remainder
+now excludes $q_{d_{\le z}}\le U^{1/12}$, including the corresponding
+near-prime inverse factors. Its other coefficients also change.
+The smaller allowable saving is explicit and remains strictly positive;
+no such Type-II estimate is supplied. The complete inverse-fourth
+exponent, signed Robin restoration and RH are not improved by the
+support reduction alone. No local analytic Lean certification or
+literature-priority claim is made.
+
+
+## Rough support of the actual Type-II remainder
+
+The rough-prime theorem in [Xu–Sang v2, Proposition 7.2](https://arxiv.org/html/2610.17675v2)
+applies to a specific part of (C32). The following `repo-derived`
+interface uses that theorem and its finite-profile proof; it does not
+assume a contraction under coefficient masking. Fix
+$A=A_{\rm b}=U^{1/12}$, retain the original annulus
+$q_d\asymp D=\sqrt U$, and take a fixed smooth $0\le\rho\le1$ with
+$\rho=0$ on $[0,2]$ and $\rho=1$ on $[4,\infty)$. Put
+
+$$
+r_A(d)=\prod_{p\mid d}\rho(q_p/A),\qquad
+R(u)=D^{-1/2}\sum_d r_A(d)\lambda_{\mathrm{II},b}(d)
+\psi_u(d)V(q_d/D).
+$$
+
+On the nonzero rough support, only $q=1$ contributes to the Type-I
+coefficient in (C25), since $W(q_q/A)=0$ for $q_q>2A$.
+Its coefficient is $-1$, so the exact decomposition gives
+
+$$
+r_A(d)\lambda_{\mathrm{II},b}(d)
+=r_A(d)\mu^2(d)(1+\mu(d)).
+\tag{C33}
+$$
+
+For squarefree $d$ this is twice the rough weight when $\omega(d)$ is
+even, and zero when it is odd. For sufficiently large $U$, a supported
+$d$ has at most six prime factors, since all exceed $2U^{1/12}$ and
+$q_d\ll U^{1/2}$. The nonzero cases therefore have $2,4,6$ prime
+factors. This parity statement is restricted to the rough support.
+
+**Restore the actual coupled profiles.** For one original presentation,
+write $R^2=\sum_a g_R(a)\chi_a$ in its corresponding orientation,
+absorbing its fixed multiplicative ray twist into $g_R$. Split
+$g_R=g_{\rm sf}+g_{\rm rep}$ by whether the total column $a$ is
+squarefree. The first part consists of a fixed finite sum of convolutions
+of $4,6,8,10,12$ distinct primes, each exceeding $2A$.
+Partition their norms dyadically, retaining the two original $V$ factors
+and the fixed finite ordering/grouping coefficients.
+
+Proposition 7.2 is literally stated for independent smooth prime
+weights, so the two coupled product profiles require an interface.
+Apply log-Fourier inversion to each original $V$ factor. For a prime
+in a fixed dyad, the separated weight has the form
+$\eta(x)\rho(F_jx/A)x^{it}$, with a fixed compact annular cutoff $\eta$.
+The logarithmic derivatives of $\rho(F_jx/A)$ are uniformly bounded:
+where a derivative is nonzero, $F_jx/A$ lies in $[2,4]$.
+Lemma 7.1's proof uses a finite order $J>1+12/\tau$ after the fixed
+height parameter $\tau$ is selected. Its shifted segment, horizontal
+joins and absolute-line tails therefore cost a fixed finite profile
+seminorm, polynomially in $(1+|t|)^J$. The common log-Fourier measures
+of the two $V$ factors are Schwartz; Minkowski integrates these
+polynomial costs. No row spectral parameter is moved and no infinite
+local contour is assumed. This finite-seminorm dependence is extracted
+from the proof, rather than an arbitrary-coupled-weight hypothesis
+added to the literal proposition.
+
+The common family $\mathcal X_u$ in source §6.1 already includes the
+fixed finite $S$-ray twists and both orientations. It supplies this
+interface for the actual presentations, not arbitrary multiplicative
+modulus-one functions. Restore all original finite components by
+$L^4$ Minkowski, paying their interference and fixed constants.
+For the same nonnegative physical row weight $\Omega$, write
+$T_U(c)=\sum_u\Omega(u)|\sum_a c(a)\chi_a(u)|^2$.
+Use Proposition 7.2 with $Y=U$, $c=1/12$, $k_0=12$, and the actual
+squared-coefficient normalization $D^{-2}=U^{-1}$. It gives
+
+$$
+T_U(g_{\rm sf})\ll U^{B_*+\varepsilon}+U^{13/12+\varepsilon}.
+\tag{C34}
+$$
+
+Indeed its raw exponents are $\kappa_6=B_*+1$ and $13/6-c$.
+The repeated columns are still cube-free and each contains $p^2$ for
+some $q_p>2A$. Ideal counting and the existing divisor envelope give
+
+$$
+\#\operatorname{supp}g_{\rm rep}\ll U/A,\qquad
+\|g_{\rm rep}\|_2^2\ll A^{-1}U^\varepsilon.
+$$
+
+Here one sums $U/q_p^2$ over $q_p>2A$. The unchanged
+$F_6(U,U)\ll U^{7/6+\varepsilon}$ pays
+$T_U(g_{\rm rep})\ll U^{13/12+\varepsilon}$, and Cauchy pays the
+full cross term:
+
+$$
+|T_U(g_R)-T_U(g_{\rm sf})|
+\ll U^{(B_*+13/12)/2+\varepsilon}.
+\tag{C35}
+$$
+
+Thus the available rough-prime theorem returns the same $B_*$ for
+this component. This identifies an applicable existing supplier, not
+a strict inverse-fourth gain. In the exact decomposition
+$M_{\mathrm{II},b}=R+(M_{\mathrm{II},b}-R)$, the other part and its
+joint interference remain to be estimated. No domination by the full
+remainder or by a same-support positive coefficient is used.
+
+### The new remainder also excludes a norm-only payment
+
+Reuse the [Bohr–Haar coefficient inequality](#actual-inverse-coefficients-a-limit-of-norm-only-refinements)
+and the [fixed-ray prime-pair counting interface](#the-original-convolution-norm-before-sixth-power-compression)
+for a fixed nonzero smooth complex $V$. Choose a compact interval $I$
+with nonempty interior such that $|V(xy)|$ is bounded below for
+$x,y\in I$. Distinct good primes with
+$q_p,q_q\in\sqrt D\,I$ have $q_p,q_q\gg U^{1/4}\gg A$.
+Equation (C33), with $r_A(pq)=1$, gives
+$\lambda_{\mathrm{II},b}(pq)=2$.
+The existing prime-ideal theorem supplies
+$\gg\sqrt D/\log D$ primes in this interval; unique ideal
+factorization gives $\gg D/(\log D)^2$ distinct unordered products.
+Consequently the actual remainder has normalized coefficient mass
+
+$$
+D^{-1}\sum_d|\lambda_{\mathrm{II},b}(d)V(q_d/D)|^2
+\gg (\log D)^{-2}.
+$$
+
+For one fixed actual finite Fourier component, let
+$M_{\mathrm{II},b}^2=\sum_a g_{\mathrm{II},b}(a)\chi_a$,
+with its multiplicative unit-modulus ray twist included. The same finite
+Bohr lift and Haar Plancherel inequality give
+
+$$
+\|g_{\mathrm{II},b}\|_2^2
+\ge\left(D^{-1}\sum_d
+ |\lambda_{\mathrm{II},b}(d)V(q_d/D)|^2\right)^2
+\gg(\log D)^{-4}.
+\tag{C36}
+$$
+
+Paying a strict full inverse-fourth gain entirely by reducing this
+coefficient norm in the unchanged generic sieve would require
+$\|g_{\mathrm{II},b}\|_2^2\ll U^{B_*-7/6-\nu}$ for some fixed
+$\nu>0$, a negative power incompatible with (C36).
+This is the existing norm-only obstruction applied to the actual new
+remainder. It gives no lower bound for its physical row energy,
+a masked correlation or the recombination of different finite
+components. It assumes a fixed nonzero profile and makes no uniform
+varying-profile assertion. The prime theorem and Haar inequality are
+reused classical inputs; cancellation in the actual row kernel,
+(C20), signed Robin restoration and RH remain open. No analytic Lean
+certification or literature-priority claim is made.
+
+### Cofactor recursion and the actual prime-slot capacity
+
+The same truncated coefficient has an exact least-prime recursion.
+For squarefree good $d$, define the algebraic extensions
+
+$$
+K_A(d)=\sum_{e\mid d}\mu(e)2^{\omega(e)}W(q_e/A),\qquad
+\Lambda_A(d)=\mu(d)+K_A(d).
+$$
+
+On the original inverse annulus,
+$\lambda_{\mathrm{II},b}(d)=\Lambda_A(d)$ with $A=U^{1/12}$.
+For a smaller cofactor, $\Lambda_A$ is an algebraic extension, not a
+claim about the original truncated-inverse coefficient with the same
+$z$. Dividing the divisors of $pm$ according to whether they contain
+$p$, for $p\nmid m$, gives
+
+$$
+K_A(pm)=K_A(m)-2K_{A/q_p}(m),\qquad
+\Lambda_A(pm)=\Lambda_A(m)-2\Lambda_{A/q_p}(m).
+\tag{C37}
+$$
+
+Choose a fixed prime-ideal order refining norm, and let $P^-(m)$ be its
+least factor, with $P^-(1)=\infty$. The actual polynomial is therefore
+
+$$
+M_{\mathrm{II},b}(u)=D^{-1/2}
+\sum_{m\ {\rm sf}}\psi_u(m)
+\sum_{p\prec P^-(m)}\psi_u(p)V(q_pq_m/D)
+ \left[\Lambda_A(m)-2\Lambda_{A/q_p}(m)\right].
+\tag{C38}
+$$
+
+Its ordering restriction, threshold and cofactor phase remain joint
+weights. Even on a smoothly separated block $PC\asymp D$, using only
+a conditional prime bound $P^a$ and then taking absolute values over
+all cofactors costs $D^{-1/2}CP^a=D^{a-1/2}C^{1-a}$.
+It does not supply the original inverse bound without that extra
+factor. An estimate retaining the cofactor phase is still required.
+
+There is also a concrete limit on identifying the actual rough primes
+with the fine auxiliary slots in
+[Liu v2, §10.1 and Proposition 29.1](https://arxiv.org/html/2610.12234v2#S29).
+Within that source's full hypotheses, including
+$13/18\le\kappa_{\rm src}\le1$,
+$\beta_*\le(1+\kappa_{\rm src})/2$ and its auxiliary length reserve,
+the proof permits total selected widths
+
+$$
+z_M\le\frac{4-c}{20-4c}<\frac15,\qquad
+z_S\le\frac c{12}=\frac1{18\kappa_{\rm src}}\le\frac1{13},
+\qquad c=\frac2{3\kappa_{\rm src}}.
+\tag{C39}
+$$
+
+The source selects whole factors from sufficiently fine, fixed prime
+slots, with a fixed margin in its moment inequalities. Every actual
+rough prime here has exponent at least $1/12+o(1)>1/13$, so none
+fits the plain branch's capacity. The supported balanced semiprimes
+$pq$ have two exponents $1/4+o(1)$, exceeding even the inverse
+capacity $z_M<1/5$. A prime cannot be replaced by several smaller
+prime factors to meet that hypothesis. External fine auxiliary slots
+remain available, but their amplitudes have not been related to these
+actual cofactor sums by a joint moment. Equation (C39) limits this
+specified identification, rather than all amplitude-sensitive methods.
+
+Finally, fix a squarefree good ideal $b_0$. For sufficiently large $U$,
+$q_{b_0}\le A$, and distinct primes with $q_p,q_q>2A$ outside $b_0$ satisfy
+
+$$
+K_A(b_0pq)=K_A(b_0)=\mu(b_0),\qquad
+\lambda_{\mathrm{II},b}(b_0pq)=2\mu(b_0)
+\tag{C40}
+$$
+
+on the original annulus. For $b_0\ne1$ these terms lie in the
+nonrough complement; they still contain the same balanced semiprime
+cofactor, at scale $D/q_{b_0}$. If $S_X$ denotes the corresponding
+normalized polynomial over $c=pq$ with coefficient $2$, this exact
+subfamily contributes
+$\mu(b_0)q_{b_0}^{-1/2}\psi_u(b_0)S_{D/q_{b_0}}(u)$,
+including its original collision zeros. Thus removing the rough part
+does not remove these coarse prime slots from the remaining coefficient.
+This identity gives no lower bound for the whole row moment or for a
+masked correlation, and does not preclude cancellation between different
+small factors. The unproved input is a coarse-slot or conditional-cofactor
+joint estimate on the same rows. The recursions and source-capacity
+comparison are applications of existing arithmetic and moment inputs;
+no new prime theorem, full inverse-fourth gain or Lean certification
+is asserted.
 
 ## Finite signs in the remaining small-squarepart sector
 

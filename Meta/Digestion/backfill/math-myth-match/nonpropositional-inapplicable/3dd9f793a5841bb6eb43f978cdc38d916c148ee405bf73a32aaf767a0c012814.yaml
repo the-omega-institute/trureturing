@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:3dd9f793a5841bb6eb43f978cdc38d916c148ee405bf73a32aaf767a0c012814
+  normalized_sha256: sha256:3dd9f793a5841bb6eb43f978cdc38d916c148ee405bf73a32aaf767a0c012814
+cas_ref: sha256:3dd9f793a5841bb6eb43f978cdc38d916c148ee405bf73a32aaf767a0c012814
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 分别指定维特根斯坦前后期比较片段及意义即使用的解释范围。
+    previous_atom_id: 8c3e2accf1848ce05478afc888cf3563ea33a8f1552154a121beaad818540ae7
+    next_atom_id: 090bf8cb040e32f7d55152afd5d24cd2591229f9f8ec893808ca1cff27b8fb68

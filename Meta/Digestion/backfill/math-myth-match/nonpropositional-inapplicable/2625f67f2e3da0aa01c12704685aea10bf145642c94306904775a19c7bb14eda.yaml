@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:2625f67f2e3da0aa01c12704685aea10bf145642c94306904775a19c7bb14eda
+  normalized_sha256: sha256:2625f67f2e3da0aa01c12704685aea10bf145642c94306904775a19c7bb14eda
+cas_ref: sha256:2625f67f2e3da0aa01c12704685aea10bf145642c94306904775a19c7bb14eda
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 说明论语中仁、礼、情感与养成的语境，不将仁与德性直接等同为一个数学谓词。
+    previous_atom_id: 62bb57ac4039b928004336df843f7b724ad1dac01128fa2fee3e25bda51f22af
+    next_atom_id: 6641b3a19a042c99fd5410970cb9aaffc18d2e4e0d927d9baa1fa0fd3cfbf970

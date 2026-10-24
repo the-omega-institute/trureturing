@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:24481ffd034c406df7b8ef39e2f3a5dcb898387a770c4676fa2fd8ef7d321aa0
+  normalized_sha256: sha256:24481ffd034c406df7b8ef39e2f3a5dcb898387a770c4676fa2fd8ef7d321aa0
+cas_ref: sha256:24481ffd034c406df7b8ef39e2f3a5dcb898387a770c4676fa2fd8ef7d321aa0
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 区分救赎、解脱与涅槃的目标类型，目标集合只是可选建模接口，未断言可达性或最优性。
+    previous_atom_id: 5a42b718de9a75ee6cf46d6af64f565429689b6c2ecccb6ac936271d56082b33
+    next_atom_id: 69c853950b63431356d543f81e7a723cb2251755b7b3de1ba378b0978983c3aa
