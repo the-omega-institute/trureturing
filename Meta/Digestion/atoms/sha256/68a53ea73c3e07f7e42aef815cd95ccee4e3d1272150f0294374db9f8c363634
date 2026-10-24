@@ -1,9 +1,0 @@
-**定义 47.1（非空观察纤维）。** 取 $q:\Omega\to Y=q(\Omega)$，对 $A\subseteq\Omega$ 令
-
-$$
-q_\exists(A)=\{y:q^{-1}(y)\cap A\ne\varnothing\},\qquad
-q_\forall(A)=\{y:q^{-1}(y)\subseteq A\}.
-$$
-
-目标域取实际像，使每个纤维非空；$\Omega=\varnothing$ 时 $Y$ 也为空。
-

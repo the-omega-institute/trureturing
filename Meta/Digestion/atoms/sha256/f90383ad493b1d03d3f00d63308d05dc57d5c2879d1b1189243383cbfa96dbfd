@@ -1,6 +1,0 @@
-**Lemma 8.2 (baseline and forced attainment).** The baseline selection zero on $\Pi_1,\Pi_2$ and all zero profiles, and one on $\Pi_3,\Pi_4$, is correct everywhere for $T_8$ within two calls. Every universally successful preparer for this table at $L=2$ necessarily attains both bits within its preparer cap.
-
-Proof. On $\Pi_1$, entry zero sees alpha at $b_1$ and emits $R_1$. On $\Pi_2$ it sees branch at $b_1$ and alpha at $b_2$, emitting $R_2$. On every zero profile, if $b_1$ is beta it immediately emits $R_0$; otherwise $b_1$ is branch and $b_2$ is beta or branch, again giving $R_0$. On $\Pi_3$, entry one sees alpha at $b_3$ and emits $R_3$. On $\Pi_4$ it sees branch there and emits $R_4$. This verifies the baseline on all eleven cases.
-
-On every $\Pi_1$ source entry one instead returns $R_4$, a different whole row. Universal selected-entry success therefore forces preparer bit zero on every such source. On every $\Pi_3$ source entry zero sees branch at both $b_1,b_2$ and returns $R_0$, a different whole row. Success forces bit one there. Both profiles are actual and nonempty. Universal preparation termination supplies within-cap witnesses for these two forced bits. $\square$
-

@@ -1,4 +1,0 @@
-**引理 84.2（稳定子约束）。** 若 $\sigma$ 固定有序输入 $x,y$，则它固定 $x\star y$。
-
-证明（84.2）。由等变性，$\sigma(x\star y)=\sigma(x)\star\sigma(y)=x\star y$。因此输出必须属于两个输入的逐点稳定子所共同固定的集合。$\square$
-

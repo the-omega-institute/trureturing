@@ -1,3 +1,0 @@
-### 定义 251.1　完整 child 与目标相对逃逸
-对声明区域 $U\subseteq\{(p,v):p\ne24\}$，令 $C_\beta=C(p,v)$ 为支持卷 V §1 的全部合法完整世界 $W=(P(r,b),g,d)$，保留原始 parent、整条非零且次数至多三的 gain、drift、全部 companion、低次和零样本分支及严格守卫 $0<r<1,b>0$；令 $X_U=\bigsqcup_{\beta\in U}C_\beta$，$\pi(W)=\beta$。既有目标逃逸在此完整 child 上的应用为 $E_U(O;T)=\{(\beta,W,W'): \beta\in U,\ W,W'\in C_\beta,\ O(W)=O(W'),\ T(W)\ne T(W')\}$，完整来源目标为 $T_{\rm src}(W)=W$。对同一观察与确定性目标元组，$E_U(O;(T_1,T_2))=E_U(O;T_1)\cup E_U(O;T_2)$，因为元组不同恰是至少一分量不同；因此各分量均无逃逸时元组也无逃逸。这只是集合论恢复，不给出高效解码、有限精度稳定性或物理可取得性。
-

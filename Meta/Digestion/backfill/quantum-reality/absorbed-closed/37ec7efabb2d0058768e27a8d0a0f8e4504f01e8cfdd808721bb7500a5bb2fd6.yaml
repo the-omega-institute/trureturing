@@ -1,9 +1,0 @@
-fingerprints:
-  raw_sha256: sha256:37ec7efabb2d0058768e27a8d0a0f8e4504f01e8cfdd808721bb7500a5bb2fd6
-  normalized_sha256: sha256:37ec7efabb2d0058768e27a8d0a0f8e4504f01e8cfdd808721bb7500a5bb2fd6
-cas_ref: sha256:37ec7efabb2d0058768e27a8d0a0f8e4504f01e8cfdd808721bb7500a5bb2fd6
-coverage_gids:
-  - gid: D5/S3/Quantum/Magic/QuquintStrictDecrease.directional_decrease
-    target_statement_id: sha256:c2a26b8b991d2bdc18fad57064be16805ac803d90833454c6eaefd7efd4eaa97
-receipts:
-  unresolved_subitems: []

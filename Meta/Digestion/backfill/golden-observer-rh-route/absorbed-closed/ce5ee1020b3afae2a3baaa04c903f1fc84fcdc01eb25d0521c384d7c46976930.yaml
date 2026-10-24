@@ -1,9 +1,0 @@
-fingerprints:
-  raw_sha256: sha256:ce5ee1020b3afae2a3baaa04c903f1fc84fcdc01eb25d0521c384d7c46976930
-  normalized_sha256: sha256:ce5ee1020b3afae2a3baaa04c903f1fc84fcdc01eb25d0521c384d7c46976930
-cas_ref: sha256:ce5ee1020b3afae2a3baaa04c903f1fc84fcdc01eb25d0521c384d7c46976930
-coverage_gids:
-  - gid: D5/S3/Weil/ZeroInfinitude/ArchimedeanDivergence.archimedean_divergence_of_decay
-    target_statement_id: sha256:238ed1567cb63d2d6c6ac0b00e1a837408ca8337ea92f4818ecf70dc807d5b7d
-receipts:
-  unresolved_subitems: []

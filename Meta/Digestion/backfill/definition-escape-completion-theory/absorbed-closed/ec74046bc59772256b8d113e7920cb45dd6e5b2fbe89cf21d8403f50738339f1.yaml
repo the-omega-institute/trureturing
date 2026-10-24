@@ -1,9 +1,0 @@
-fingerprints:
-  raw_sha256: sha256:ec74046bc59772256b8d113e7920cb45dd6e5b2fbe89cf21d8403f50738339f1
-  normalized_sha256: sha256:ec74046bc59772256b8d113e7920cb45dd6e5b2fbe89cf21d8403f50738339f1
-cas_ref: sha256:ec74046bc59772256b8d113e7920cb45dd6e5b2fbe89cf21d8403f50738339f1
-coverage_gids:
-  - gid: D5/S3/ConceptDynamics/DefinitionEscapeAdjudication/QuotientParetoWeakOrder.quotientParetoWeak_iff_all_representatives
-    target_statement_id: sha256:a13f7e24c4616ee3b24d19ac67ad026d0be6c5d272cfbddd46f6efcfc90e4150
-receipts:
-  unresolved_subitems: []

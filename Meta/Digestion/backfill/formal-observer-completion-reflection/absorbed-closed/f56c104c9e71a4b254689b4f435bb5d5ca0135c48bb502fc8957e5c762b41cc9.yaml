@@ -1,9 +1,0 @@
-fingerprints:
-  raw_sha256: sha256:f56c104c9e71a4b254689b4f435bb5d5ca0135c48bb502fc8957e5c762b41cc9
-  normalized_sha256: sha256:f56c104c9e71a4b254689b4f435bb5d5ca0135c48bb502fc8957e5c762b41cc9
-cas_ref: sha256:f56c104c9e71a4b254689b4f435bb5d5ca0135c48bb502fc8957e5c762b41cc9
-coverage_gids:
-  - gid: D5/S3/Observer/Linear/PrimeTimeGramianEnergyIdentity.prime_time_gramian_energy_identity
-    target_statement_id: sha256:38fda4b3645134c1076d9a4adbf4771d4dd02b82a5ec274e152470872ae735e7
-receipts:
-  unresolved_subitems: []

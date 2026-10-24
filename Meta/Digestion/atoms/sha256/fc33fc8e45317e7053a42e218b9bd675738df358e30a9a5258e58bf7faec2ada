@@ -1,5 +1,0 @@
-由此有两种严格的联合极限：
-
-- 当 $n\sqrt\delta\to0$ 时，比值为 $\Theta((n^2\delta)^{-1})$ 并趋于无穷。因此，在这两个固定方向之间，对齐方向的预算渐近更小。
-- 当同时 $\delta\to0$ 且 $n\sqrt\delta\to\infty$ 时，临界方向的预算为 $\Theta(\delta^{-3/2})$，比值为 $\Theta((n\sqrt\delta)^{-1}+\sqrt\delta)$ 并趋于零。因此，在这两个方向之间，临界方向的预算渐近更小。
-

@@ -1,9 +1,0 @@
-fingerprints:
-  raw_sha256: sha256:54db6299e7e65dac6a5dc9949c8f9ef38eb75407819edb64324184d770949f49
-  normalized_sha256: sha256:54db6299e7e65dac6a5dc9949c8f9ef38eb75407819edb64324184d770949f49
-cas_ref: sha256:54db6299e7e65dac6a5dc9949c8f9ef38eb75407819edb64324184d770949f49
-coverage_gids:
-  - gid: D5/S3/ObserverMemory/Prediction/FiniteOrbitPeriodBound.finite_orbit_and_readout_eventually_periodic
-    target_statement_id: sha256:bd70ef59a10653f056f4ac5b0deb32b02b974892da08715be5667ddedd8df65c
-receipts:
-  unresolved_subitems: []

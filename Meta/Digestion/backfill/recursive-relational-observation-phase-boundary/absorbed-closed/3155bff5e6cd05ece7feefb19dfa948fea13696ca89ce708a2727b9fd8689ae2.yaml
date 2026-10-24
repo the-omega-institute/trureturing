@@ -1,9 +1,0 @@
-fingerprints:
-  raw_sha256: sha256:3155bff5e6cd05ece7feefb19dfa948fea13696ca89ce708a2727b9fd8689ae2
-  normalized_sha256: sha256:3155bff5e6cd05ece7feefb19dfa948fea13696ca89ce708a2727b9fd8689ae2
-cas_ref: sha256:3155bff5e6cd05ece7feefb19dfa948fea13696ca89ce708a2727b9fd8689ae2
-coverage_gids:
-  - gid: D5/S3/Estimation/ErrorExponents/SymmetricBinomialChiSquare.symmetric_binomial_chi_square
-    target_statement_id: sha256:dd80a45ebd9c95fe140461d0eda1b05b53decf976aa89564665ae819a7e383aa
-receipts:
-  unresolved_subitems: []

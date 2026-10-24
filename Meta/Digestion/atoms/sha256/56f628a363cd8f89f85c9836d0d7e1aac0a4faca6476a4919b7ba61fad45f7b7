@@ -1,4 +1,0 @@
-## 2. The sharp binary risk--information interval
-
-Assume now that $p=1/2$. Put $r_A(u)=\min\{\eta_A(u),1-\eta_A(u)\}$. Then $e(A)=\mathbb E[r_A(Q_A)]$ and $H(Y\mid Q_A)=\mathbb E[h_2(r_A(Q_A))]$.
-

@@ -1,9 +1,0 @@
-fingerprints:
-  raw_sha256: sha256:23aafe716094e06d3d443dea632e44a42c94e8e4dcc8ad5d0c624753bc122c58
-  normalized_sha256: sha256:23aafe716094e06d3d443dea632e44a42c94e8e4dcc8ad5d0c624753bc122c58
-cas_ref: sha256:23aafe716094e06d3d443dea632e44a42c94e8e4dcc8ad5d0c624753bc122c58
-coverage_gids:
-  - gid: D5/S3/Analytic/Adelic/ModFiveObserverDiagonalization.mod_five_observer_diagonalization
-    target_statement_id: sha256:6ab2611edf0ca256ac02d91668f9768f0390f2c0a412e8ed9dbd6409766c4be0
-receipts:
-  unresolved_subitems: []

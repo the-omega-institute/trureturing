@@ -1,9 +1,0 @@
-fingerprints:
-  raw_sha256: sha256:40a58f543a846134878caa8f6c0ac1a85436c58c2853b8f9c18af20cfcb3222c
-  normalized_sha256: sha256:40a58f543a846134878caa8f6c0ac1a85436c58c2853b8f9c18af20cfcb3222c
-cas_ref: sha256:40a58f543a846134878caa8f6c0ac1a85436c58c2853b8f9c18af20cfcb3222c
-coverage_gids:
-  - gid: D5/S3/Quantum/FixedAlgebra/ChannelFixedBlockDecomposition.channel_fixed_block_decomposition
-    target_statement_id: sha256:1519f4bf84d3b6a4ed3cb80b9a351bd58f173c7245aa95630c2eb49c3d8acc9b
-receipts:
-  unresolved_subitems: []

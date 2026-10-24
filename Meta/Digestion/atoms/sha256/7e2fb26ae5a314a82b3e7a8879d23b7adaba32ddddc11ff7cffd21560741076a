@@ -1,7 +1,0 @@
-**Counterexample 44.5 (separate policy minima are unattainable).** Suppose
-one policy has worst vector $(2,0)$ and another has worst vector $(1,1)$.
-The coordinatewise minima suggest $(1,0)$, but neither policy has that vector.
-The pair $(1,0)$ is therefore not a feasible budget unless a third policy is
-separately exhibited. A resource frontier must retain each complete policy and
-its same-source traces before taking minima.
-

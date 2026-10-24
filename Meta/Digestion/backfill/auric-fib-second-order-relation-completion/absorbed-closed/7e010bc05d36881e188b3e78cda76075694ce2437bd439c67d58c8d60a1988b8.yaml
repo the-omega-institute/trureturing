@@ -1,9 +1,0 @@
-fingerprints:
-  raw_sha256: sha256:7e010bc05d36881e188b3e78cda76075694ce2437bd439c67d58c8d60a1988b8
-  normalized_sha256: sha256:7e010bc05d36881e188b3e78cda76075694ce2437bd439c67d58c8d60a1988b8
-cas_ref: sha256:7e010bc05d36881e188b3e78cda76075694ce2437bd439c67d58c8d60a1988b8
-coverage_gids:
-  - gid: D5/S3/PrimeForms/Crossing/CrossingNormalForm.crossing_normal_form_unique_minimum
-    target_statement_id: sha256:14f5a0bb44bb281698b55052d3a959093ff6f364ffdc4dfd85614eb728660a14
-receipts:
-  unresolved_subitems: []

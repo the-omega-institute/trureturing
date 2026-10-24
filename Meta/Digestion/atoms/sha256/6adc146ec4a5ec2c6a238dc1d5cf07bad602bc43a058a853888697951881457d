@@ -1,6 +1,0 @@
-**定理 3.5（半单表示范畴中的张量理想）。** 若 $G$ 为复约化代数群，则 $\operatorname{Rep}(G)$ 的张量态射理想只有零理想和全部态射。
-
-**证明。** 若理想含非零 $f:V\to W$，由半单性可选简单表示 $S$ 与 $a:S\to V,b:W\to S$，经非零标量归一化使 $bfa=\operatorname{id}_S$。再张量 $\operatorname{id}_{S^*}$ 并取迹，理想中含 $(\dim S)\operatorname{id}_{\mathbf1}$。特征零使其可除，故含 $\operatorname{id}_{\mathbf1}$，继而包含每个 $\operatorname{id}_X$ 与所有态射。$□$
-
-五模式中的 $25\to15$ 实部分投影可以是等变线性映射，却不能充当上述全范畴的维数压缩纤维函子。这里的商是态射理想商，不排除表示限制函子、张量子范畴或具有不同语义的商。
-

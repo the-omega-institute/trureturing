@@ -1,9 +1,0 @@
-fingerprints:
-  raw_sha256: sha256:5e4df99134d30fa633c6b67846cea1849523fa8310c50e424fba1a8d6a44cc55
-  normalized_sha256: sha256:5e4df99134d30fa633c6b67846cea1849523fa8310c50e424fba1a8d6a44cc55
-cas_ref: sha256:5e4df99134d30fa633c6b67846cea1849523fa8310c50e424fba1a8d6a44cc55
-coverage_gids:
-  - gid: D5/S3/Weil/TestFunctions/FixedDepthLiClarkRecovery.fixed_depth_li_clark_recovery
-    target_statement_id: sha256:8e07bb9fb73c55c2590f342db4027097439ac6eb57f16537e93b904d6909e54f
-receipts:
-  unresolved_subitems: []

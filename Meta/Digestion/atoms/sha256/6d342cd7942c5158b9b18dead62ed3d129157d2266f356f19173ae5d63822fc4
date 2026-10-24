@@ -1,7 +1,0 @@
-其中：
-
-- `Reflect` 是阶段空间上的 FLOW；
-- `Revise` 改变四角色；
-- `Residual` 是失败下降的见证；
-- `Certify` 是 proof/counterexample 类型中的 ANCHOR。
-

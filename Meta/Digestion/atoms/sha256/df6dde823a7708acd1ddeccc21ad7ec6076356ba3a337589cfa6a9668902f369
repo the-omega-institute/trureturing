@@ -1,8 +1,0 @@
-但要把它升级成所需的 completed operator，还需要：
-
-* 一致性；
-* 完备化；
-* 有界性或闭性；
-* 正确的函数空间；
-* 与 \(\xi\) 或 explicit formula 的识别。
-

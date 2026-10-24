@@ -1,5 +1,0 @@
-$$
-\operatorname{El}(\operatorname{Enc}(X))=\operatorname{Enc}[X],\qquad
-\operatorname{El}(\operatorname{Pack}(B))=B,\qquad
-\operatorname{Pack}(\operatorname{El}(c))=c.
-$$

@@ -1,9 +1,0 @@
-fingerprints:
-  raw_sha256: sha256:5ee6432c48c1d3b7d2c638136edf3540d7f8e267f32c70485569cc7be1a66349
-  normalized_sha256: sha256:5ee6432c48c1d3b7d2c638136edf3540d7f8e267f32c70485569cc7be1a66349
-cas_ref: sha256:5ee6432c48c1d3b7d2c638136edf3540d7f8e267f32c70485569cc7be1a66349
-coverage_gids:
-  - gid: D5/S3/VertexAlgebra/PolynomialFockPowerOPE.power_state_coefficients
-    target_statement_id: sha256:7d6e9723709a841168637b15f23cd8f3327527a22d75c25da334cfb43df11166
-receipts:
-  unresolved_subitems: []

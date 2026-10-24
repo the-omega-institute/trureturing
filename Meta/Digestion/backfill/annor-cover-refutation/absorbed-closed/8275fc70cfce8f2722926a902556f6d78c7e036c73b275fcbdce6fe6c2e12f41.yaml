@@ -1,9 +1,0 @@
-fingerprints:
-  raw_sha256: sha256:8275fc70cfce8f2722926a902556f6d78c7e036c73b275fcbdce6fe6c2e12f41
-  normalized_sha256: sha256:8275fc70cfce8f2722926a902556f6d78c7e036c73b275fcbdce6fe6c2e12f41
-cas_ref: sha256:8275fc70cfce8f2722926a902556f6d78c7e036c73b275fcbdce6fe6c2e12f41
-coverage_gids:
-  - gid: D5/S3/ConceptDynamics/GraphColoring/AnnorCoverRefutation.annor_conjecture14_false
-    target_statement_id: sha256:019c28d773a51f304fec8222cc225381fcace5f264b198132ca98c349b891d87
-receipts:
-  unresolved_subitems: []

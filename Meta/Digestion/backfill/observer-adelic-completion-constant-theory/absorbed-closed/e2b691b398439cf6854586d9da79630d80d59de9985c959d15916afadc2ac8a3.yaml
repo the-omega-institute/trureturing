@@ -1,9 +1,0 @@
-fingerprints:
-  raw_sha256: sha256:e2b691b398439cf6854586d9da79630d80d59de9985c959d15916afadc2ac8a3
-  normalized_sha256: sha256:e2b691b398439cf6854586d9da79630d80d59de9985c959d15916afadc2ac8a3
-cas_ref: sha256:e2b691b398439cf6854586d9da79630d80d59de9985c959d15916afadc2ac8a3
-coverage_gids:
-  - gid: D5/S3/Constants/Limits/EulerResidualCancellation.harmonic_log_euler_residual_tendsto_zero
-    target_statement_id: sha256:88a0c08ce794d09fa5a9ff77730cff690cccb567f3c5d6c76e5b24a9f7285f99
-receipts:
-  unresolved_subitems: []

@@ -1,9 +1,0 @@
-fingerprints:
-  raw_sha256: sha256:74e0d04279174f875fe72b2bd9ac775f4c7eb448ff41e351c225b7f59356fde2
-  normalized_sha256: sha256:74e0d04279174f875fe72b2bd9ac775f4c7eb448ff41e351c225b7f59356fde2
-cas_ref: sha256:74e0d04279174f875fe72b2bd9ac775f4c7eb448ff41e351c225b7f59356fde2
-coverage_gids:
-  - gid: D5/S3/Weil/Separator/UnconditionalExplicitFormula.smallSupport_poincare_reduction
-    target_statement_id: sha256:2e5f1d0a6bbd674bec75b15861c86b31777468c148dd5f249c4c1d8313878302
-receipts:
-  unresolved_subitems: []

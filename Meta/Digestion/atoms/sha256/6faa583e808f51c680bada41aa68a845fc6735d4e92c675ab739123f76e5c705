@@ -1,7 +1,0 @@
-当前操作性概念 q_cert 取现有 theorem 面向消费者的粗商，而不是所有原始函数图：
-- q_tor^0：completedZeta×twist 是否对所选/全部 index 同时为零；暂不含导数塔。
-- q_temp：Re(s-1/2)=0 是否成立。
-- q_curv^cert：临界支撑/flatness 的真假、偶极总质量与符号类别；若显式保留整条曲率函数，则记作更强的 q_curv^raw。
-- q_budget^cert：固定有限层的可行/PSD/区间证书及“slack∈[0,1]”；不把隐藏 completion 或全部矩写入地址。
-- q_gold^0：O-5 的结构实部类别、或单一黄金环面 P5 是否为零；经典 zeta 与 eulerGerm 尚无 kernel bridge 时返回 unbridged。
-

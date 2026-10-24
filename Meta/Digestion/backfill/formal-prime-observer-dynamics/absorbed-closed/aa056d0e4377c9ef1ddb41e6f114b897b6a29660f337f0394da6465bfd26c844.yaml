@@ -1,9 +1,0 @@
-fingerprints:
-  raw_sha256: sha256:aa056d0e4377c9ef1ddb41e6f114b897b6a29660f337f0394da6465bfd26c844
-  normalized_sha256: sha256:aa056d0e4377c9ef1ddb41e6f114b897b6a29660f337f0394da6465bfd26c844
-cas_ref: sha256:aa056d0e4377c9ef1ddb41e6f114b897b6a29660f337f0394da6465bfd26c844
-coverage_gids:
-  - gid: D5/S3/Analytic/ZetaEntropyPlane/PrimeDensityEvidenceOrthogonality.counting_density_not_sufficient_for_summability
-    target_statement_id: sha256:00ed794465406ad6d344229edb4ed9f7034dedfb7449a5eacb0faa8a3cd904a8
-receipts:
-  unresolved_subitems: []
