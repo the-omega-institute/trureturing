@@ -266,11 +266,12 @@ def native_lock_holders(path):
         if result.stderr or result.returncode not in (0, 1):
             raise OSError("incomplete lsof inspection")
         rows = result.stdout.decode("ascii").splitlines()
-        if any(not row.startswith("p") or not row[1:].isdigit() for row in rows):
+        if any(not row.startswith("f") and (not row.startswith("p") or not row[1:].isdigit()) for row in rows):
             raise OSError("unrecognized lsof inspection")
-        if result.returncode == 0 and not rows or result.returncode == 1 and rows:
+        holders = [row[1:] for row in rows if row.startswith("p")]
+        if result.returncode == 0 and not holders or result.returncode == 1 and rows:
             raise OSError("incomplete lsof result")
-        return rows
+        return holders
     if not sys.platform.startswith("linux"):
         raise OSError("holder inspection unavailable")
     target = path.stat()
@@ -315,7 +316,10 @@ def clear_native_locks(source, path, locks):
         if holders:
             print(json.dumps(dict(evidence, status="held", holders=holders)), file=sys.stderr, flush=True)
             raise Refused("native_lock_held:" + str(lock))
-        after = lock.lstat()
+        try:
+            after = lock.lstat()
+        except FileNotFoundError as error:
+            raise Refused("native_lock_changed:" + str(lock)) from error
         fingerprint = lambda item: (item.st_dev, item.st_ino, item.st_size, item.st_mtime_ns)
         if fingerprint(before) != fingerprint(after):
             raise Refused("native_lock_changed:" + str(lock))

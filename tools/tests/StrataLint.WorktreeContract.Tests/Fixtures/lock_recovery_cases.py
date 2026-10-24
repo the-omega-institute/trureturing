@@ -23,6 +23,15 @@ class LockRecoveryCases:
         with ExitStack() as stack:
             protocol.tree_scope(stack, self.main, self.tree, True)
 
+    def test_detached_head_native_lock_can_recover_snapshot(self):
+        self.g(self.tree, "checkout", "--detach")
+        metadata = Path(self.g(self.tree, "rev-parse", "--absolute-git-dir").strip())
+        (metadata / "HEAD.lock").write_text("residual head transaction\n")
+        (self.tree / "owned").write_text("detached recovered bytes\n")
+        result = json.loads(self.remove().stdout)["items"][0]
+        self.assertEqual("detached recovered bytes\n", self.g(self.main, "show", result["recovery_branch"] + ":owned"))
+        self.assertEqual(str(metadata / "HEAD.lock"), result["checkpoint"]["native_locks"][0]["path"])
+
     def test_held_native_lock_retains_exact_blocker(self):
         metadata = Path(self.g(self.tree, "rev-parse", "--absolute-git-dir").strip())
         lock = metadata / "index.lock"
@@ -107,20 +116,24 @@ class LockRecoveryCases:
     def test_initialization_identity_changes_refuse_recovery(self):
         target, branch, token = self.owned_initialization()
         metadata = Path(self.g(target, "rev-parse", "--absolute-git-dir").strip())
-        for failure in ("token", "branch", "backlink"):
+        for failure in ("token", "branch", "backlink", "tip"):
             with self.subTest(failure=failure):
                 saved = (metadata / "gitdir").read_text()
                 if failure == "token":
                     (metadata / "locked").write_text("worktree-init:foreign\n")
                 elif failure == "branch":
                     self.g(target, "symbolic-ref", "HEAD", "refs/heads/" + self.branch)
-                else:
+                elif failure == "backlink":
                     (metadata / "gitdir").write_text(str(self.tree / ".git") + "\n")
+                else:
+                    self.g(target, "read-tree", "HEAD")
+                    self.g(target, "commit", "--allow-empty", "-m", "changed creation branch")
                 self.run_protocol("recover-init", "--path", target, "--branch", branch,
                                   "--base", self.base, "--skip-restore", expect=73)
                 (metadata / "locked").write_text(token + "\n")
                 (metadata / "gitdir").write_text(saved)
                 self.g(target, "symbolic-ref", "HEAD", "refs/heads/" + branch)
+                self.g(self.main, "update-ref", "refs/heads/" + branch, self.base)
         self.assertFalse((target / "owned").exists())
 
     def test_removal_record_mismatch_reconverges_and_keeps_both_roots(self):

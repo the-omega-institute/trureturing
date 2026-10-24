@@ -73,12 +73,14 @@ def interrupted_removal(target, metadata, stack, source, branch):
     commit = removal["commit"]
     if removal["recovery_branch"] != branch:
         acquire(stack, source, "ref:" + removal["recovery_branch"], True)
+    recorded_tip = git(target, "rev-parse", "--verify", removal["recovery_branch"] + "^{commit}", check=False)
     if (value(target, "rev-parse", "--verify", "HEAD^{commit}") != commit
-            or value(target, "rev-parse", "--verify", removal["recovery_branch"] + "^{commit}") != commit):
+            or recorded_tip.returncode or os.fsdecode(recorded_tip.stdout).strip() != commit):
         from worktree_publication import commit_snapshot, recovery_root
         # Pin the old object before checkpointing; its former branch can have moved.
         predecessor = dict(commit=commit, recovery_branch=recovery_root(stack, source, target, commit))
         predecessors = removal.get("predecessors", []) + [predecessor]
+        stack.recovery_roots += [root["recovery_branch"] for root in removal.get("predecessors", [])]
         snapshot = commit_snapshot(target, metadata, branch,
             b"Checkpoint current work after interrupted removal\n", stack, source)
         current_root = recovery_root(stack, source, target, snapshot["commit"])
@@ -216,12 +218,14 @@ def remove(options):
                 git(source, "worktree", "remove", *flags, "--", target,
                     timeout=None if options.force else 300)
                 outcomes.append(dict(path=str(target), outcome="removed", checkpoint=checkpoint,
-                                     recovery_branch=recovery_branch))
+                                     recovery_branch=recovery_branch,
+                                     recovery_roots=getattr(stack, "recovery_roots", [])))
         except (Refused, OSError, subprocess.SubprocessError) as error:
             outcomes.append(dict(path=str(target),
                 outcome="partial_or_indeterminate" if removing else "checkpoint_failed",
                 error=str(error), checkpoint=checkpoint, recovery_branch=recovery_branch,
-                recovery_branch_candidate=recovery_branch_candidate))
+                recovery_branch_candidate=recovery_branch_candidate,
+                recovery_roots=getattr(stack, "recovery_roots", [])))
 
     return dict(event="worktree_removal", items=outcomes,
                 status="failed" if any(item["outcome"] not in ("removed", "would_remove") for item in outcomes) else "succeeded")

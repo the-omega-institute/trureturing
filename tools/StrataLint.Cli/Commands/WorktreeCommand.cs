@@ -197,6 +197,7 @@ internal static class WorktreeCommand
         catch (Exception exception)
         {
             var cleanup = string.Empty;
+            string? recoveryResult = null;
             try
             {
                 // Either Git command can finish before acknowledging success.
@@ -210,7 +211,8 @@ internal static class WorktreeCommand
                     initializationScope?.Dispose();
                     initializationScope = null;
                     var recovered = RecoverInitialization(options, runner, creationLock);
-                    cleanup = recovered.Success ? recovered.Output.Trim() : recovered.Error.Trim();
+                    if (recovered.Success) recoveryResult = recovered.Output.Trim();
+                    cleanup = recovered.Success ? string.Empty : "initialization worktree retained: " + recovered.Error.Trim();
                 }
             }
             catch (Exception cleanupException) when (cleanupException is not OutOfMemoryException)
@@ -229,6 +231,7 @@ internal static class WorktreeCommand
                 reason = exception.Message,
                 cleanup_error = cleanup.Length == 0 ? null : cleanup.TrimStart(';', ' '),
                 retained_material = new { branch = options?.Branch, path = options?.Path },
+                recovery_result = recoveryResult,
                 recovery_action = "rerun make worktree with the same KIND/NAME/DEST; or reclaim the registered target with make worktree-remove",
             });
             return new CommandResult(

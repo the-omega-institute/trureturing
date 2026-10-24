@@ -3,6 +3,7 @@
 from contextlib import ExitStack
 import os
 from pathlib import Path
+import re
 import subprocess
 import uuid
 
@@ -16,15 +17,20 @@ def creation_witness(source, reference):
     log = common(source) / "logs" / reference
     if log.is_symlink() or not log.is_file():
         raise Refused("initialization_creation_witness_missing")
-    first = log.read_bytes().splitlines()[0].split(b"\t", 1)
+    lines = log.read_bytes().splitlines()
+    if not lines:
+        raise Refused("initialization_creation_witness_missing")
+    first = lines[0].split(b"\t", 1)
     fields = first[0].split()
     if (len(first) != 2 or len(fields) < 2 or set(fields[0]) != {ord("0")}
-            or len(fields[0]) != len(fields[1])):
+            or len(fields[0]) != len(fields[1])
+            or not re.fullmatch(rb"[0-9a-f]{40}|[0-9a-f]{64}", fields[1])):
         raise Refused("initialization_creation_witness_invalid")
     token = first[1].decode("ascii")
     creation = fields[1].decode("ascii")
-    if (not token.startswith("worktree-init:")
-            or value(source, "rev-parse", "--verify", reference + "^{commit}") != creation):
+    if not re.fullmatch(r"worktree-init:[0-9a-f]{32}", token):
+        raise Refused("branch already exists: initialization_creation_witness_invalid")
+    if value(source, "rev-parse", "--verify", reference + "^{commit}") != creation:
         raise Refused("initialization_branch_identity_changed")
     if git(source, "symbolic-ref", "--quiet", reference, check=False).returncode == 0:
         raise Refused("initialization_branch_identity_changed")
@@ -37,6 +43,7 @@ def recovery_root(stack, source, path, commit):
     git(path, "update-ref", "--no-deref", "--create-reflog", reference, commit, "0" * len(commit))
     if value(path, "rev-parse", "--verify", reference + "^{commit}") != commit:
         raise Refused("recovery_root_changed:" + reference)
+    stack.recovery_roots = getattr(stack, "recovery_roots", []) + [reference]
     return reference
 
 
@@ -78,8 +85,10 @@ def recover_initialization(options):
         text = pointer.read_text().strip()
         if not text.startswith("gitdir: ") or "\n" in text:
             raise Refused("initialization_git_pointer")
-        metadata = (path / text[8:]).resolve()
-        if (metadata.parent != common(options.source) / "worktrees" or metadata.is_symlink()
+        raw_metadata = path / text[8:]
+        metadata = raw_metadata.resolve()
+        if (metadata.parent != common(options.source) / "worktrees" or raw_metadata.is_symlink()
+                or metadata.parent.is_symlink()
                 or Path((metadata / "gitdir").read_text().strip()).resolve() != pointer.resolve()
                 or (metadata / (metadata / "commondir").read_text().strip()).resolve() != common(options.source)):
             raise Refused("initialization_metadata_identity_changed")
@@ -101,7 +110,7 @@ def recover_initialization(options):
         try:
             env = {"GIT_INDEX_FILE": str(alternate)}
             git(path, "read-tree", creation, env=env)
-            git(path, "add", "-A", "--", ".", env=env)
+            git(path, "add", "--ignore-removal", "--", ".", env=env)
             tree = value_from(git(path, "write-tree", env=env))
             if tree != value(path, "rev-parse", creation + "^{tree}"):
                 commit = value_from(git(path, "commit-tree", tree, "-p", creation,
@@ -109,13 +118,14 @@ def recover_initialization(options):
                 recovery = recovery_root(stack, options.source, path, commit)
         finally:
             alternate.unlink(missing_ok=True)
+        cleared = []
         try:
             git(path, "read-tree", creation)
         except GitFailure as error:
             locks = native_lock_candidates(path, metadata, reference, error)
             if not locks:
                 raise
-            clear_native_locks(options.source, path, locks)
+            cleared = clear_native_locks(options.source, path, locks)
             git(path, "read-tree", creation)
         missing = [name for name in git(path, "ls-files", "-z").stdout.split(b"\0")
                    if name and not os.path.lexists(path / os.fsdecode(name))]
@@ -144,7 +154,7 @@ def recover_initialization(options):
         creation_witness(options.source, reference)
         git(options.source, "worktree", "unlock", path)
         return dict(event="worktree_init", status="recovered", path=str(path), branch=options.branch,
-                    recovery_branch=recovery, creation_commit=creation)
+                    recovery_branch=recovery, creation_commit=creation, native_locks=cleared)
 
 
 def value_from(result):

@@ -287,6 +287,33 @@ public sealed class WorktreeProtocolTests(ITestOutputHelper output)
     }
 
     [Theory]
+    [InlineData("holderless_native_locks_checkpoint_once")]
+    [InlineData("detached_head_native_lock_can_recover_snapshot")]
+    [InlineData("held_native_lock_retains_exact_blocker")]
+    [InlineData("unverifiable_and_replaced_native_lock_retained")]
+    [InlineData("native_clearance_requires_exclusive_tree")]
+    [InlineData("dead_initializer_is_removable_without_lock_age")]
+    [InlineData("live_initializer_is_retained")]
+    [InlineData("failed_initialization_recovers_in_place_idempotently")]
+    [InlineData("owned_unregistered_branch_can_resume")]
+    [InlineData("initialization_identity_changes_refuse_recovery")]
+    [InlineData("removal_record_mismatch_reconverges_and_keeps_both_roots")]
+    [InlineData("reconvergence_interruption_retains_record_and_recovery_objects")]
+    public void LockTaxonomyAndRecoveryPreserveBothSnapshots(string probe)
+    {
+        if (OperatingSystem.IsWindows()) return;
+        var root = TestRepositoryLayout.FindRoot();
+        var result = CaptureCleanupOutput((stdout, stderr) => TestProcessRunner.Run("python3",
+            ["-B", Path.Combine(root,
+                "tools/tests/StrataLint.WorktreeContract.Tests/Fixtures/worktree_protocol_tests.py"),
+                root, "ProtocolTests.test_" + probe], root, TimeSpan.FromSeconds(90), 1024 * 1024,
+            standardOutput: stdout, standardError: stderr,
+            interruptBeforeKill: TestProcessRunner.InterruptPythonFixture), output.WriteLine);
+        Assert.True(result.ExitCode == 0,
+            Encoding.UTF8.GetString(result.StandardOutput) + Encoding.UTF8.GetString(result.StandardError));
+    }
+
+    [Theory]
     [InlineData(0)]
     [InlineData(1)]
     public void CooperativeProtocolPreservesRealProcessAndGitState(int part)

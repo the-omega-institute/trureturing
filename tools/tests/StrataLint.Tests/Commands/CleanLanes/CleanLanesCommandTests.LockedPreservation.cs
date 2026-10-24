@@ -29,7 +29,7 @@ public sealed partial class CleanLanesCommandTests
             return null;
         });
         var result = fixture.RunWithRaw(runner, "--force", "--lanes-only");
-        var failed = material is "index.lock" or "MERGE_HEAD";
+        var failed = material is "MERGE_HEAD";
         Assert.Equal(!failed, result.Success);
         Assert.Equal(failed, Directory.Exists(lane));
         Assert.True(fixture.BranchExists("harness/disposable-lock"));

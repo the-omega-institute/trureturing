@@ -13,7 +13,8 @@ internal static class RemoveWorktreesCommand
         + "Names are complete final directory names of registered worktrees, matched exactly (Ordinal). "
         + "Separate names with whitespace; directory names containing whitespace are unsupported. "
         + "All names are resolved before any deletion; duplicates are removed once. "
-        + "The main checkout is protected; all Git locks require at least 24 hours since lock-file modification.\n"
+        + "The main checkout is protected; intentional Git locks require at least 24 hours since lock-file modification. "
+        + "Initialization markers require exclusive tree entry; live initializers remain protected.\n"
         + "Removal checks target identity and lock age. Eligible trees commit ordinary outstanding changes before removal; checkpoint failure retains the tree. "
         + "The optional CLI --force disables the default 300-second removal timeout; inventory remains bounded. "
         + "It may appear before or after --names and does not override main checkout or lock protection. "
@@ -111,6 +112,11 @@ internal static class RemoveWorktreesCommand
                 {
                     RecoveryBranch = outcome.TryGetProperty("recovery_branch", out var recovery) ? recovery.GetString() : null,
                     RecoveryBranchCandidate = outcome.TryGetProperty("recovery_branch_candidate", out var candidate) ? candidate.GetString() : null,
+                    RecoveryRoots = outcome.TryGetProperty("recovery_roots", out var roots)
+                        ? roots.EnumerateArray().Select(root => root.GetString()!).ToArray() : null,
+                    NativeLocks = outcome.TryGetProperty("checkpoint", out var checkpoint)
+                        && checkpoint.ValueKind == JsonValueKind.Object
+                        && checkpoint.TryGetProperty("native_locks", out var locks) ? locks.Clone() : null,
                 };
                 return outcome.GetProperty("outcome").GetString() == "removed"
                     ? item with { Outcome = "removed" }
@@ -161,6 +167,8 @@ internal static class RemoveWorktreesCommand
                 error = item.Error,
                 recovery_branch = item.RecoveryBranch,
                 recovery_branch_candidate = item.RecoveryBranchCandidate,
+                recovery_roots = item.RecoveryRoots,
+                native_locks = item.NativeLocks,
             }));
         }
         var removed = items.Count(static item => item.Outcome == "removed");
@@ -170,5 +178,6 @@ internal static class RemoveWorktreesCommand
     }
 
     private sealed record RemovalItem(string Name, string? Path, string Outcome, string? Error, int ExitCode,
-        string? RecoveryBranch = null, string? RecoveryBranchCandidate = null);
+        string? RecoveryBranch = null, string? RecoveryBranchCandidate = null,
+        IReadOnlyList<string>? RecoveryRoots = null, JsonElement? NativeLocks = null);
 }

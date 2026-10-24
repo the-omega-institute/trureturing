@@ -1044,7 +1044,8 @@ if __name__ == "__main__":
         selected = None
         if len(sys.argv) == 3 and sys.argv[1] == "--part":
             part = int(sys.argv[2])
-            names = unittest.defaultTestLoader.getTestCaseNames(ProtocolTests)
+            names = [name for name in unittest.defaultTestLoader.getTestCaseNames(ProtocolTests)
+                     if name not in LockRecoveryCases.__dict__]
             selected = ["ProtocolTests." + name for name in names[part::2]]
             sys.argv[1:] = []
         unittest.main(verbosity=2, defaultTest=selected)

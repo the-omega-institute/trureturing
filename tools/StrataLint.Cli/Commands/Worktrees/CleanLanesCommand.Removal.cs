@@ -112,6 +112,12 @@ internal static partial class CleanLanesCommand
                     recoveryBranch = recovery.GetString();
                 if (outcome.Value.TryGetProperty("recovery_branch_candidate", out var candidate))
                     recoveryBranchCandidate = candidate.GetString();
+                if (outcome.Value.TryGetProperty("recovery_roots", out var roots))
+                    foreach (var root in roots.EnumerateArray())
+                        protectObservedWorktree?.Invoke(item with
+                        {
+                            Branch = root.GetString()!["refs/heads/".Length..],
+                        });
                 if (recoveryBranch is not null)
                     protectObservedWorktree?.Invoke(item with
                     {
