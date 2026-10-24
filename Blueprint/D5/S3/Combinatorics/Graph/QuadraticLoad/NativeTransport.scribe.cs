@@ -71,7 +71,6 @@ internal sealed class NativeTransportDocument : IScribeDocumentDefinition
     private static Formula All(string n, Formula t, Formula b) =>
         new Formula.Bind(FormulaQuantifier.ForAll, FormulaIdentifier.Create(n), t, b);
     private static Formula Imp(Formula a, Formula b) => new Formula.Logic(a, FormulaLogicOperator.Implies, b);
-    private static Formula And(Formula a, Formula b) => new Formula.Logic(a, FormulaLogicOperator.And, b);
     private static Formula Instance(Formula t, Formula b) => Seq(OpenBracket, t, CloseBracket, Sp, b);
 
     private static Formula Graphs(Formula body)
