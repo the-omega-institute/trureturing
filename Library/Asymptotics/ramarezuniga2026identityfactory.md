@@ -302,3 +302,63 @@ The final Robin consumer still includes the actual integer's pressure
 loss $d_N$ in $\Delta(N)=I_\psi(\log N)+R(\log N)+d_N$ as in
 [§§481, 491](../../docs/develop/theory/FIBONACCI_ATOMIC_RELATION_GENERATION_ROBIN_DYADIC_RESOLVENT.md).
 No sign for that complete quantity or proof of RH follows here.
+
+## A complete centered pairing with the positive curvature extension
+
+This application reuses the preceding actual-curvature formula and the
+same finite-filter centered error. It does not assert a new Laplace
+transform theorem or literature priority. Define, now on the whole
+nonnegative half-line,
+
+$$
+k_z(r)=\int_0^\infty e^{-rt}E_z(1+t)
+[-t^2\zeta'(1+t)]\,dt,\qquad r\ge0.
+$$
+
+It agrees with $\mathcal G_{z,x}''$ for $r\ge\log x$. Below that
+threshold it is an auxiliary extension, not an assertion about the
+actual low-domain second derivative. The density is positive, tends
+to $E_z(1)$ at zero, and is $O(t^2 2^{-t})$ at infinity. Thus $k_z$
+is finite and continuous at zero, positive everywhere, and
+$k_z(r)\sim E_z(1)/r$ as $r\to\infty$ for each fixed filter.
+
+Absolute Dirichlet integration gives, for every $t>0$,
+
+$$
+\int_0^\infty e^{-tr}\varepsilon_z(r)\,dr
+=\frac1{t^2\zeta(1+t)E_z(1+t)}-\frac{C_z}{t}<0.
+$$
+
+Indeed integrating each $(r-\log n)_+$ contributes
+$n^{-t}/t^2$, and $\sum |\mu(n)|n^{-1-t}$ is finite. The strict
+sign uses only the classical integral comparison
+$t\zeta(1+t)>1$ and $E_z(1+t)\ge E_z(1)=1/C_z$.
+It is a sign of the transform, not pointwise nonpositivity of
+$\varepsilon_z$.
+
+Corollary 7.5 gives $\varepsilon_z(r)=O_z(r^{-1})$ for fixed $z$.
+Together with local boundedness and the displayed curvature bounds,
+this pays $\int_0^\infty|\varepsilon_z(r)|k_z(r)dr<\infty$.
+Tonelli for the absolute integrand, followed by Fubini, therefore gives
+
+$$
+\boxed{\displaystyle
+\mathcal H_z:=\int_0^\infty\varepsilon_z(r)k_z(r)\,dr
+=\int_0^\infty[-\zeta'(1+t)]
+\left[\frac1{\zeta(1+t)}-C_ztE_z(1+t)\right]dt<0.}
+$$
+
+The cancellation takes place inside one integrand. With
+$S_z=\sum_{p\le z}\log p/(p-1)$, its limit at zero is
+$-(\gamma+S_z)$: use
+$\zeta(1+t)^{-1}=t-\gamma t^2+O(t^3)$ and
+$E_z(1+t)=E_z(1)(1+S_zt+O_z(t^2))$.
+At infinity it is $O_z((1+t)2^{-t})$. The individual pieces in
+square brackets cannot be integrated separately at zero.
+
+This determines a full signed pairing without discarding the common
+Euler factor. It does not determine the original Robin pairing:
+that consumer starts at $a\ge\log x$, retains the finite unit/head and
+both affine endpoints, and must subtract the whole interval $[0,a]$
+from $\mathcal H_z$. A sign for the auxiliary full half-line is not a
+sign for that truncated quantity.
