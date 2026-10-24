@@ -140,7 +140,10 @@ internal sealed class SmolinNoisyHilbertSchmidtDistanceDocument : IScribeDocumen
                         + "to the states separable for {1}:{2,3,4}, then to SepOneOneTwo, then to SepFull. "
                         + "For SepTwoTwo, choose noisy p itself to attain zero; nonnegativity of every "
                         + "Hilbert-Schmidt distance proves the remaining lower bound."))),
-                DescribeRole.Theorem))));
+                DescribeRole.Theorem,
+                openProblemResolutionClaim: new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("zhu-huang-zhang-nie-zhao-lu-2026-smolin-hilbert-schmidt-distance"),
+                    ResolutionKind.Proved)))));
 
     private static DocumentBlock Node(string id, string declaration, string title, Formula formula,
         string prose, AssessedProvenance provenance) => Describe.Lean(
