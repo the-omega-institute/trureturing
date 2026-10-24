@@ -486,13 +486,365 @@ private lemma upper_bound {N k : ℕ} (hN : 3 ≤ N) (hk : 2 ≤ k)
   obtain ⟨w, hw, he⟩ := kernel_eigenvector hN hk hkN s
   exact eigenvalue_bound s (averageSuccess (productState (k := k) ψ) E) (value N k s) hb w hw he
 
+private lemma single_system_measurement {N : ℕ} (s : ℝ) (hs : 0 < s) (hs1 : s < 1)
+    (ψ : Fin N → Fin N → ℂ) (hψ : IsEquiangular ψ s) :
+    ∃ F : Option (Fin N) → Matrix (Fin N) (Fin N) ℂ,
+      (∀ o, (F o).PosSemidef) ∧ (∑ o, F o) = 1 ∧
+      ∀ o j, star (ψ j) ⬝ᵥ (F o *ᵥ ψ j) =
+        match o with
+        | none => (s : ℂ)
+        | some i => if i = j then ((1 - s : ℝ) : ℂ) else 0 := by
+  classical
+  let A : Matrix (Fin N) (Fin N) ℂ := fun a i => ψ i a
+  let J : Matrix (Fin N) (Fin N) ℂ := vecMulVec (fun _ => 1) (fun _ => 1)
+  have hJ : J.PosSemidef := by
+    change (vecMulVec (fun _ : Fin N => (1 : ℂ)) (fun _ => 1)).PosSemidef
+    simpa only [Pi.star_def, star_one] using
+      Matrix.posSemidef_vecMulVec_self_star (fun _ : Fin N => (1 : ℂ))
+  have hG : (overlapMatrix N s).PosDef :=
+    ((Matrix.PosDef.one : (1 : Matrix (Fin N) (Fin N) ℂ).PosDef).smul
+      (show (0 : ℂ) < ((1 - s : ℝ) : ℂ) by exact_mod_cast sub_pos.mpr hs1)).add_posSemidef
+      (hJ.smul (show (0 : ℂ) ≤ (s : ℂ) by exact_mod_cast hs.le))
+  have hgram : Aᴴ * A = overlapMatrix N s := by
+    ext i j
+    change star (ψ i) ⬝ᵥ ψ j = _
+    rw [overlapMatrix_entry]
+    by_cases h : i = j
+    · subst j
+      rw [ite_eq_left rfl, hψ.1]
+    · rw [ite_eq_right h, hψ.2 _ _ h]
+  have hAdet : IsUnit A.det := by
+    have hdet := (Matrix.isUnit_iff_isUnit_det (overlapMatrix N s)).mp hG.isUnit
+    rw [← hgram, Matrix.det_mul] at hdet
+    exact isUnit_of_mul_isUnit_right hdet
+  let B := A⁻¹
+  have hAB : A * B = 1 := A.mul_nonsing_inv hAdet
+  have hBA : B * A = 1 := A.nonsing_inv_mul hAdet
+  let H : Option (Fin N) → Matrix (Fin N) (Fin N) ℂ :=
+    fun o => match o with
+      | none => (s : ℂ) • J
+      | some i => diagonal (Pi.single i ((1 - s : ℝ) : ℂ))
+  let F : Option (Fin N) → Matrix (Fin N) (Fin N) ℂ := fun o => Bᴴ * H o * B
+  have hH (o : Option (Fin N)) : (H o).PosSemidef := by
+    cases o with
+    | none => exact hJ.smul (show (0 : ℂ) ≤ (s : ℂ) by exact_mod_cast hs.le)
+    | some i =>
+      apply Matrix.PosSemidef.diagonal
+      intro j
+      change 0 ≤ (Pi.single i ((1 - s : ℝ) : ℂ) : Fin N → ℂ) j
+      by_cases h : j = i
+      · subst j
+        rw [Pi.single_eq_same]
+        exact_mod_cast (sub_pos.mpr hs1).le
+      · rw [Pi.single_eq_of_ne h]
+  have hsumH : (∑ o, H o) = overlapMatrix N s := by
+    rw [Fintype.sum_option]
+    ext a b
+    simp only [H, Matrix.add_apply, Matrix.sum_apply, Matrix.diagonal_apply,
+      Pi.single_apply]
+    unfold overlapMatrix
+    simp only [Matrix.add_apply, Matrix.smul_apply, smul_eq_mul, Matrix.one_apply]
+    by_cases hab : a = b
+    · subst b
+      simp only [ite_true, Finset.sum_ite_eq, Finset.mem_univ, ite_true, mul_one]
+      exact add_comm _ _
+    · simp only [hab, ite_false, Finset.sum_const_zero, mul_zero, zero_add, add_zero]
+      rfl
+  have hsumF : (∑ o, F o) = 1 := by
+    simp only [F, ← Matrix.sum_mul, ← Matrix.mul_sum, hsumH, ← hgram,
+      ← Matrix.mul_assoc, ← Matrix.conjTranspose_mul, hAB, Matrix.conjTranspose_one,
+      Matrix.one_mul, hAB]
+  have hcompression (o : Option (Fin N)) : Aᴴ * F o * A = H o := by
+    dsimp [F]
+    rw [← Matrix.mul_assoc, ← Matrix.mul_assoc, ← Matrix.conjTranspose_mul, hBA,
+      Matrix.conjTranspose_one, Matrix.one_mul, Matrix.mul_assoc, hBA, Matrix.mul_one]
+  refine ⟨F, fun o => (hH o).conjTranspose_mul_mul_same B, hsumF, ?_⟩
+  intro o j
+  have he := congrArg (fun M : Matrix (Fin N) (Fin N) ℂ => M j j) (hcompression o)
+  rw [Matrix.mul_assoc] at he
+  change star (ψ j) ⬝ᵥ (F o *ᵥ ψ j) = H o j j at he
+  rw [he]
+  cases o with
+  | none => change (s : ℂ) * (1 * 1) = (s : ℂ); ring
+  | some i =>
+    change diagonal (Pi.single i ((1 - s : ℝ) : ℂ)) j j = _
+    rw [Matrix.diagonal_apply_eq]
+    simp only [Pi.single_apply, eq_comm]
+
+private lemma productEffect_posSemidef {N k : ℕ}
+    (F : Option (Fin N) → Matrix (Fin N) (Fin N) ℂ)
+    (hF : ∀ o, (F o).PosSemidef) (o : Fin k → Option (Fin N)) :
+    (productEffect F o).PosSemidef := by
+  classical
+  have hprod (t : Finset (Fin k)) :
+      Matrix.PosSemidef (fun a b : Fin k → Fin N => ∏ j ∈ t, F (o j) (a j) (b j)) := by
+    induction t using Finset.induction_on with
+    | empty =>
+      have he : (fun a b : Fin k → Fin N => ∏ j ∈ (∅ : Finset (Fin k)),
+          F (o j) (a j) (b j)) = vecMulVec (fun _ => (1 : ℂ)) (star (fun _ => 1)) := by
+        ext a b
+        simp only [Finset.prod_empty, Matrix.vecMulVec_apply, Pi.star_apply, star_one, mul_one]
+      rw [he]
+      exact Matrix.posSemidef_vecMulVec_self_star _
+    | @insert j t hj ht =>
+      have he : (fun a b : Fin k → Fin N => ∏ l ∈ insert j t, F (o l) (a l) (b l)) =
+          (F (o j)).submatrix (fun a : Fin k → Fin N => a j) (fun a => a j) ⊙
+            (fun a b : Fin k → Fin N => ∏ l ∈ t, F (o l) (a l) (b l)) := by
+        ext a b
+        rw [Finset.prod_insert hj]
+        rfl
+      rw [he]
+      exact ((hF (o j)).submatrix (fun a : Fin k → Fin N => a j)).hadamard ht
+  exact hprod Finset.univ
+
+private lemma productEffect_sum {N k : ℕ}
+    (F : Option (Fin N) → Matrix (Fin N) (Fin N) ℂ) (hF : (∑ o, F o) = 1) :
+    (∑ o : Fin k → Option (Fin N), productEffect F o) = 1 := by
+  classical
+  have hentry (a b : Fin N) : (∑ o, F o a b) = (1 : Matrix (Fin N) (Fin N) ℂ) a b :=
+    by simpa only [Matrix.sum_apply] using
+      congrArg (fun M : Matrix (Fin N) (Fin N) ℂ => M a b) hF
+  ext a b
+  rw [Matrix.sum_apply]
+  change (∑ o : Fin k → Option (Fin N), ∏ j, F (o j) (a j) (b j)) = _
+  rw [← Fintype.prod_sum (fun j o => F o (a j) (b j))]
+  simp only [hentry, Matrix.one_apply]
+  by_cases h : a = b
+  · subst b
+    simp only [ite_true, Finset.prod_const_one]
+  · rw [ite_eq_right h]
+    obtain ⟨j, hj⟩ := Function.ne_iff.mp h
+    exact Finset.prod_eq_zero (Finset.mem_univ j) (ite_eq_right hj)
+
+private lemma productEffect_probability {N k : ℕ}
+    (F : Option (Fin N) → Matrix (Fin N) (Fin N) ℂ)
+    (ψ : Fin N → Fin N → ℂ) (o : Fin k → Option (Fin N)) (x : Label N k) :
+    star (productState ψ x) ⬝ᵥ (productEffect F o *ᵥ productState ψ x) =
+      ∏ j, star (ψ (x.val j)) ⬝ᵥ (F (o j) *ᵥ ψ (x.val j)) := by
+  change (∑ a : Fin k → Fin N, star (∏ j, ψ (x.val j) (a j)) *
+    (∑ b : Fin k → Fin N, (∏ j, F (o j) (a j) (b j)) * ∏ j, ψ (x.val j) (b j))) = _
+  simp only [star_prod, Finset.mul_sum, ← Finset.prod_mul_distrib]
+  have hinner (a : Fin k → Fin N) :
+      (∑ b : Fin k → Fin N, ∏ j,
+        star (ψ (x.val j) (a j)) * (F (o j) (a j) (b j) * ψ (x.val j) (b j))) =
+      ∏ j, ∑ b : Fin N,
+        star (ψ (x.val j) (a j)) * (F (o j) (a j) b * ψ (x.val j) b) :=
+    (Fintype.prod_sum (fun (j : Fin k) (b : Fin N) =>
+      star (ψ (x.val j) (a j)) * (F (o j) (a j) b * ψ (x.val j) b))).symm
+  simp_rw [hinner]
+  rw [← Fintype.prod_sum (fun (j : Fin k) (a : Fin N) => ∑ b : Fin N,
+    star (ψ (x.val j) a) * (F (o j) a b * ψ (x.val j) b))]
+  apply Finset.prod_congr rfl
+  intro j _
+  change (∑ a : Fin N, ∑ b : Fin N,
+      star (ψ (x.val j) a) * (F (o j) a b * ψ (x.val j) b)) =
+    ∑ a : Fin N, star (ψ (x.val j) a) * ∑ b : Fin N, F (o j) a b * ψ (x.val j) b
+  simp only [Finset.mul_sum]
+
+private lemma inducedEffect_posSemidef {N k : ℕ}
+    (F : Option (Fin N) → Matrix (Fin N) (Fin N) ℂ)
+    (hF : ∀ o, (F o).PosSemidef)
+    (d : (Fin k → Option (Fin N)) → Option (Label N k)) (z : Option (Label N k)) :
+    (inducedEffect F d z).PosSemidef := by
+  classical
+  unfold inducedEffect
+  apply Matrix.posSemidef_sum
+  intro o _
+  split_ifs
+  · exact productEffect_posSemidef F hF o
+  · exact Matrix.PosSemidef.zero
+
+private lemma inducedEffect_sum {N k : ℕ}
+    (F : Option (Fin N) → Matrix (Fin N) (Fin N) ℂ) (hF : (∑ o, F o) = 1)
+    (d : (Fin k → Option (Fin N)) → Option (Label N k)) :
+    (∑ x, inducedEffect F d (some x)) + inducedEffect F d none = 1 := by
+  classical
+  have h : (∑ z : Option (Label N k), inducedEffect F d z) = 1 := by
+    unfold inducedEffect
+    rw [Finset.sum_comm]
+    simp only [Finset.sum_ite_eq, Finset.mem_univ, ite_true]
+    exact productEffect_sum F hF
+  rw [Fintype.sum_option, add_comm] at h
+  exact h
+
+private lemma inducedEffect_probability {N k : ℕ}
+    (F : Option (Fin N) → Matrix (Fin N) (Fin N) ℂ)
+    (ψ : Fin N → Fin N → ℂ)
+    (d : (Fin k → Option (Fin N)) → Option (Label N k))
+    (z : Option (Label N k)) (x : Label N k) :
+    star (productState ψ x) ⬝ᵥ (inducedEffect F d z *ᵥ productState ψ x) =
+      ∑ o, if d o = z then
+        ∏ j, star (ψ (x.val j)) ⬝ᵥ (F (o j) *ᵥ ψ (x.val j)) else 0 := by
+  classical
+  unfold inducedEffect
+  rw [Matrix.sum_mulVec, dotProduct_sum]
+  apply Finset.sum_congr rfl
+  intro o _
+  split_ifs
+  · exact productEffect_probability F ψ o x
+  · rw [Matrix.zero_mulVec, dotProduct_zero]
+
+private lemma processing_of_injection {N k : ℕ} {α : Type*} [Fintype α]
+    (c : Label N k × α → (Fin k → Option (Fin N))) (hc : Function.Injective c) :
+    ∃ d : (Fin k → Option (Fin N)) → Option (Label N k),
+      ∀ (F : Option (Fin N) → Matrix (Fin N) (Fin N) ℂ) x,
+        inducedEffect F d (some x) = ∑ r : α, productEffect F (c (x, r)) := by
+  classical
+  let d : (Fin k → Option (Fin N)) → Option (Label N k) :=
+    fun o => if h : ∃ a, c a = o then some h.choose.1 else none
+  have hf (o : Fin k → Option (Fin N)) (x : Label N k) :
+      d o = some x ↔ ∃ r, c (x, r) = o := by
+    dsimp [d]
+    split_ifs with h
+    · constructor
+      · intro hx
+        have hx' : h.choose.1 = x := Option.some.inj hx
+        exact ⟨h.choose.2, by rw [← hx']; exact h.choose_spec⟩
+      · rintro ⟨r, hr⟩
+        have he := hc (h.choose_spec.trans hr.symm)
+        exact congrArg (fun a : Label N k × α => some a.1) he
+    · constructor
+      · intro hx
+        exact hx.elim
+      · rintro ⟨r, hr⟩
+        exact (h ⟨(x, r), hr⟩).elim
+  refine ⟨d, ?_⟩
+  intro F x
+  have himage : Finset.univ.filter (fun o => d o = some x) =
+      Finset.univ.image (fun r : α => c (x, r)) := by
+    ext o
+    simp only [Finset.mem_filter, Finset.mem_univ, true_and, Finset.mem_image, hf]
+  unfold inducedEffect
+  rw [← Finset.sum_filter, himage]
+  apply Finset.sum_image
+  intro r _ t _ h
+  exact congrArg Prod.snd (hc h)
+
+private lemma protocol_of_probabilities {N k : ℕ} (hkN : k ≤ N)
+    (F : Option (Fin N) → Matrix (Fin N) (Fin N) ℂ)
+    (hF : ∀ o, (F o).PosSemidef) (hsum : (∑ o, F o) = 1)
+    (ψ : Fin N → Fin N → ℂ)
+    (d : (Fin k → Option (Fin N)) → Option (Label N k)) (p : ℝ)
+    (hp : ∀ x y : Label N k,
+      star (productState ψ y) ⬝ᵥ (inducedEffect F d (some x) *ᵥ productState ψ y) =
+        if x = y then (p : ℂ) else 0) :
+    ∃ E E₀, IsProductProtocol F d E E₀ ∧
+      IsUnambiguousMeasurement (productState ψ) E E₀ ∧
+      averageSuccess (productState ψ) E = p := by
+  classical
+  refine ⟨(fun x => inducedEffect F d (some x)), inducedEffect F d none,
+    ⟨hF, hsum, fun _ => rfl, rfl⟩, ⟨?_, ?_, ?_, ?_⟩, ?_⟩
+  · exact fun x => inducedEffect_posSemidef F hF d (some x)
+  · exact inducedEffect_posSemidef F hF d none
+  · exact inducedEffect_sum F hsum d
+  · intro x y hxy
+    rw [hp, ite_eq_right hxy.symm]
+  · have hm : (Fintype.card (Label N k) : ℝ) ≠ 0 := by
+      have hpos := Fintype.card_pos_iff.mpr
+        (⟨⟨Fin.castLE hkN, Fin.castLE_injective hkN⟩⟩ : Nonempty (Label N k))
+      exact_mod_cast hpos.ne'
+    unfold averageSuccess
+    simp only [hp, ite_true, Complex.ofReal_re, Finset.sum_const, Finset.card_univ,
+      nsmul_eq_mul, one_div]
+    rw [← mul_assoc, inv_mul_cancel₀ hm, one_mul]
+
+private lemma full_label_eq_off {N : ℕ} (x y : Label N N) (j : Fin N)
+    (h : ∀ a, a ≠ j → x.val a = y.val a) : x = y := by
+  apply Subtype.ext
+  funext a
+  by_cases ha : a = j
+  · subst a
+    obtain ⟨b, hb⟩ := Finite.surjective_of_injective y.property (x.val j)
+    by_cases hbj : b = j
+    · simpa only [hbj] using hb.symm
+    · have he : x.val b = x.val j := (h b hbj).trans hb
+      exact (hbj (x.property he)).elim
+  · exact h a ha
+
+private def acceptedOutcome {N k : ℕ} (x : Label N k) (r : Option (Fin k)) :
+    Fin k → Option (Fin N) := fun j => if r = some j then none else some (x.val j)
+
+private lemma acceptedOutcome_injective (N : ℕ) :
+    Function.Injective (fun a : Label N N × Option (Fin N) => acceptedOutcome a.1 a.2) := by
+  classical
+  rintro ⟨x, r⟩ ⟨y, t⟩ he
+  have hrt : r = t := by
+    cases r with
+    | none =>
+      cases t with
+      | none => rfl
+      | some j =>
+        have h := congrFun he j
+        simp only [acceptedOutcome, reduceCtorEq, ite_false, ite_true] at h
+    | some i =>
+      cases t with
+      | none =>
+        have h := congrFun he i
+        simp only [acceptedOutcome, reduceCtorEq, ite_false, ite_true] at h
+      | some j =>
+        by_cases hij : i = j
+        · exact congrArg some hij
+        · have h := congrFun he i
+          simp only [acceptedOutcome, Option.some.injEq, hij, Ne.symm hij,
+            ite_true, ite_false, reduceCtorEq] at h
+  subst t
+  congr 1
+  cases r with
+  | none =>
+    apply Subtype.ext
+    funext j
+    have h := congrFun he j
+    simpa only [acceptedOutcome, reduceCtorEq, ite_false, Option.some.injEq] using h
+  | some i =>
+    apply full_label_eq_off x y i
+    intro j hji
+    have h := congrFun he j
+    simpa only [acceptedOutcome, Option.some.injEq, Ne.symm hji, ite_false] using h
+
+private lemma short_product_attainment {N k : ℕ} (hk : k < N)
+    (s : ℝ) (ψ : Fin N → Fin N → ℂ)
+    (F : Option (Fin N) → Matrix (Fin N) (Fin N) ℂ)
+    (hF : ∀ o, (F o).PosSemidef) (hsum : (∑ o, F o) = 1)
+    (hprob : ∀ o j, star (ψ j) ⬝ᵥ (F o *ᵥ ψ j) =
+      match o with
+      | none => (s : ℂ)
+      | some i => if i = j then ((1 - s : ℝ) : ℂ) else 0) :
+    ∃ d E E₀, IsProductProtocol F d E E₀ ∧
+      IsUnambiguousMeasurement (productState (k := k) ψ) E E₀ ∧
+      averageSuccess (productState (k := k) ψ) E = value N k s := by
+  classical
+  let c : Label N k × Unit → (Fin k → Option (Fin N)) := fun a j => some (a.1.val j)
+  have hc : Function.Injective c := by
+    rintro ⟨x, r⟩ ⟨y, t⟩ h
+    have hxy : x = y := Subtype.ext (funext (fun j => Option.some.inj (congrFun h j)))
+    exact Prod.ext hxy (Subsingleton.elim _ _)
+  obtain ⟨d, hd⟩ := processing_of_injection c hc
+  obtain ⟨E, E₀, hp, hu, hv⟩ := protocol_of_probabilities hk.le F hF hsum ψ d ((1 - s) ^ k) (by
+    intro x y
+    rw [hd, Fintype.sum_unique, productEffect_probability]
+    simp only [c, hprob]
+    by_cases hxy : x = y
+    · subst y
+      simp only [ite_true, Finset.prod_const, Finset.card_univ, Fintype.card_fin,
+        Complex.ofReal_pow]
+    · rw [ite_eq_right hxy]
+      have hvals : x.val ≠ y.val := fun h => hxy (Subtype.ext h)
+      obtain ⟨j, hj⟩ := Function.ne_iff.mp hvals
+      exact Finset.prod_eq_zero (Finset.mem_univ j) (ite_eq_right hj))
+  refine ⟨d, E, E₀, hp, hu, ?_⟩
+  rw [hv, value, ite_eq_left hk]
+
 private lemma product_attainment {N k : ℕ} (hN : 3 ≤ N) (hk : 2 ≤ k)
     (hkN : k ≤ N) (s : ℝ) (hs : 0 < s) (hs1 : s < 1)
     (ψ : Fin N → Fin N → ℂ) (hψ : IsEquiangular ψ s) :
     ∃ F d E E₀, IsProductProtocol (k := k) F d E E₀ ∧
       IsUnambiguousMeasurement (productState (k := k) ψ) E E₀ ∧
       averageSuccess (productState (k := k) ψ) E = value N k s := by
-  sorry
+  obtain ⟨F, hF, hsumF, hprob⟩ := single_system_measurement s hs hs1 ψ hψ
+  by_cases h : k < N
+  · obtain ⟨d, E, E₀, hp⟩ := short_product_attainment h s ψ F hF hsumF hprob
+    exact ⟨F, d, E, E₀, hp⟩
+  · sorry
 
 theorem result : claim := by
   intro N k hN hk hkN s hs hs1 ψ hψ
