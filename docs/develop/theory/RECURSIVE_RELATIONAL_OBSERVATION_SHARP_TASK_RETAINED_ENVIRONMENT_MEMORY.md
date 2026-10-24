@@ -2091,6 +2091,324 @@ The qutrit-output storage conclusions of §10 and the independent
 realization requirements of §12 retain their stated hypotheses.
 
 ## 追加锚（本行以下为增补区）
+
+## 14. Full-H labelled continuation through a finite coherent port
+
+**Definition 14.1 (the storage extension of the actual late task).**
+Keep Definitions 1.1–1.2 and 11.1 exactly: every real calibration
+$\theta$, known integer horizon $n\ge0$, every qutrit density input
+$\rho$ embedded by the specified $B$, the actual fair histories,
+and a complete input-independent finite or countable kernel $r(a\mid h)$.
+There is no intermediate quantum feedback. The physical terminal
+specimen, inaccessible untouched reference and history information
+are those of that acquisition, without a copy or alternative dilation.
+
+For an integer $q\ge1$ and each record $a$, allow an encoder and
+decoder
+
+$$
+\begin{aligned}
+ \operatorname{Enc}_a &:M_5\longrightarrow
+                      \bigoplus_{\ell\in\mathsf L_a}M_q,\\
+ \operatorname{Dec}_a((Y_\ell)_\ell)
+       &=\sum_{\ell\in\mathsf L_a}\operatorname{Dec}_{a\ell}(Y_\ell),
+ \qquad \operatorname{Dec}_{a\ell}:M_q\longrightarrow M_5,\\
+ \mathcal D_a&=\operatorname{Dec}_a\circ\operatorname{Enc}_a.
+\end{aligned}
+\tag{14.1}
+$$
+
+The flag alphabet $\mathsf L_a$ is finite, with no prescribed bound
+on its finite size. The encoder is CPTP into the direct sum and each
+decoder is CPTP on its **entire** block. The flags may depend on the
+unknown specimen. They are classical, with no coherent cross-flag
+carrier, and are consumed or discarded by decoding before the task.
+During the storage interval all input-dependent quantum information
+available for use passes through the $q$-dimensional block. The
+original specimen, an environment, a reference or preshared entanglement
+cannot bypass it. The history record is distinct from these new
+specimen-dependent flags; every accessible history-dependent classical
+carrier is already included in $a$.
+
+All maps are fixed, calibrated and installed before the unknown input
+and before the late task choice. They may depend on $a,n,\theta$,
+but not on that choice. Their full-$H$ output may leak outside $R$.
+Correctness is exactly the two alternatives of (11.2): immediate
+$(\widehat E,I_5-\widehat E)$, or one further actual **full-$H$**
+acquisition (11.1), retaining both $j$ and the terminal result $y$.
+There is no further correction after that acquisition. Thus this is a
+port-factorization restriction on the full-$H$ decoder contract, not
+an application of the qutrit-output theorem to leaked states.
+
+**Corollary 14.2 (exact coherent dimension with arbitrary full-H output).**
+For every $\theta\in\mathbb R$, $n\ge0$, complete kernel $r$ as
+above and integer $q\ge1$, maps (14.1) satisfying the whole task
+(11.2) exist if and only if
+
+$$
+ \left[r(a\mid h)r(a\mid g)>0\ \Longrightarrow\
+                [Q_h]=[Q_g]\right]\quad\text{for every }a,h,g,
+ \qquad q\ge3.
+ \tag{14.2}
+$$
+
+For every admissible supplied record, the exact minimum coherent port
+dimension is therefore three, with unrestricted full-$H$ output and
+arbitrarily many finite consumed classical flags. The record criterion
+and its alphabet minimum $m_n(\theta)$ are supplied by Theorem 11.2.
+Theorem 13.1 supplies the complete corrected-channel classification on
+the actual qutrit input corner, including every positive history/record
+branch. This corollary applies that classification to the finite-port
+factorization; it asserts no additional rigidity theorem.
+
+Proof. Each $\mathcal D_a$ in (14.1) is CPTP on all of $H$ and is
+applied before the same late choice. Theorem 11.2 gives the record
+necessity. All of Theorem 13.1's hypotheses also hold: the original
+weights are still $p_{h,a}=2^{-n}r(a\mid h)$, every qutrit density
+is allowed, and all immediate and future joint $(j,y)$ equations,
+including $y=0$, are required. Its conclusion (13.3) therefore gives
+$\Phi_{h,a}(X)=BXB^\dagger$ for every positive original branch.
+No output-in-$R$ condition is assumed in this application; it is a
+consequence of that supplied classification on the actual inputs.
+
+Fix any positive $(h,a)$. Finite rectangular Kraus representations for
+the encoder and the whole-block decoders give matrices
+$E_{a\ell u}:H\to\mathbb C^q$ and
+$D_{a\ell v}:\mathbb C^q\to H$, normalized by
+$\sum_{\ell,u}E_{a\ell u}^\dagger E_{a\ell u}=I_5$ and
+$\sum_vD_{a\ell v}^\dagger D_{a\ell v}=I_q$ for each flag.
+Thus the actual corrected branch has the finite Kraus family
+
+$$
+ K_{\ell vu}=D_{a\ell v}E_{a\ell u}BQ_h,
+ \qquad \operatorname{rank}K_{\ell vu}\le q,
+ \qquad \sum_{\ell,v,u}K_{\ell vu}^\dagger K_{\ell vu}=I_3.
+ \tag{14.3}
+$$
+
+This is the same-flag factorization supplied by [CoherentFlagPort][CFP]
+and [FiniteKrausRepresentation][KRAUS], now with input dimension three
+and output dimension five. The Choi matrix of this branch is the
+rank-one $|B\rangle\!\rangle\langle\!\langle B|$ by (13.3).
+The positive Choi support argument used in Theorem 13.1 consequently
+makes every $K_{\ell vu}$ a scalar multiple of $B$. Kraus
+normalization guarantees a nonzero member. That member has rank three,
+so (14.3) forces $q\ge3$. Choosing one positive branch suffices also
+when the history record is countable; no finite global record alphabet
+or new conditional-correctness assumption has been inserted. Such a
+branch exists by (13.6), including at $n=0$.
+
+For attainment suppose the record condition holds. For every positive
+$a$ choose a word-class representative $Q_a$, and fix any qutrit
+density $\tau$. For $q=3$ take a single constant storage flag and
+the whole-space maps
+
+$$
+ \operatorname{Enc}_a(X)
+   =Q_a^\dagger B^\dagger XBQ_a+
+                    \operatorname{Tr}((I_5-P_R)X)\tau,
+ \qquad \operatorname{Dec}(Y)=BYB^\dagger.
+ \tag{14.4}
+$$
+
+The first encoder term is CP with Kraus matrix $Q_a^\dagger B^\dagger$;
+the second is CP measure-and-prepare on the positive complement effect.
+Their traces sum to $\operatorname{Tr}X$. The decoder is CPTP since
+$B^\dagger B=I_3$. Thus the encoder acts on all of $H$, not only on
+promised inputs. On every actual compatible history,
+$Q_a^\dagger Q_h$ is scalar, so their composition restores
+$B\rho B^\dagger$ branchwise, and with any untouched finite reference.
+The immediate task and every actual future $j,y$ event then have their
+specified laws, including $y=0$.
+
+For $q>3$, choose an isometry $J:\mathbb C^3\to\mathbb C^q$,
+encode the right side of (14.4) by $Y\mapsto JYJ^\dagger$, and
+decode a whole block $Z$ by
+
+$$
+ BJ^\dagger ZJB^\dagger+
+         \operatorname{Tr}((I_q-JJ^\dagger)Z)\sigma,
+ \tag{14.5}
+$$
+
+where $\sigma$ is any density on $H$. This is a complete CPTP
+padding on unused directions and agrees on the encoded block. Zero
+probability records may have arbitrary fixed CPTP codecs. The construction
+also covers $n=0$, with the unique empty-word representative. It proves
+sufficiency and exact attainment of (14.2). $\square$
+
+## 15. Attained joint retention and continued use
+
+**Proposition 15.1 (the upper's complete interface).** For (14.4),
+retain the acquired history record through its representative inverse
+and keep its actual subrecords if the future task requests them.
+For every finite reference $Z$ and input density on $\mathbb C^3\otimes Z$,
+the history-resolved post-decoding joint law is
+
+$$
+ \sum_{h,a}p_{h,a}|h,a\rangle\langle h,a|\otimes
+                (B\otimes I_Z)\rho(B^\dagger\otimes I_Z).
+ \tag{15.1}
+$$
+
+Here $h$ indexes the actual acquisition events, not an additional
+accessible history register. Sum over its unretained components to
+obtain the retained-record interface. Any history subrecord kept for
+later use must actually have been acquired, included in the complete
+record $a$, and retained with its own backing and cost.
+
+After the one actual full-$H$ acquisition their joint successor is
+exactly
+
+$$
+ \sum_{h,a,j}p_{h,a}|h,a,j\rangle\langle h,a,j|\otimes
+        \tfrac12(BV_j\otimes I_Z)\rho
+                         (V_j^\dagger B^\dagger\otimes I_Z).
+ \tag{15.2}
+$$
+
+The storage flag is constant in this construction. Keeping it adds
+only that constant classical field. These formulas attain the stronger
+joint task that retains the old record as well as $j,y$. The existence
+criterion and coherent minimum stay (14.2) for that stronger task.
+
+Proof. Branchwise restoration in (14.4) gives each block of (15.1).
+Apply the very same $A_j$, using $A_jB=BV_j/\sqrt2$, to obtain
+(15.2). Composing the terminal binary test on each block gives the
+full joint $(a,j,y)$ law and any actually retained subrecord of $h$.
+Any specified common finite continuation instrument, including one
+controlled by that retained subrecord, composes with equal subnormalized
+blocks and therefore has equal joint outputs and successors. These
+identities describe the attained construction. The underlying branchwise
+recovery is also supplied for every successful unflagged scheme by
+Theorem 13.1; no new classification is inferred here. Necessity for the
+stronger task follows by forgetting the old record and applying
+Corollary 14.2; the upper just given proves sufficiency. $\square$
+
+For an arbitrary encoder with specimen-dependent flags, retaining a
+flag past decoding requires its actual CP instrument blocks
+$\mathcal K_{a\ell}=\operatorname{Dec}_{a\ell}\operatorname{Enc}_{a\ell}$,
+not an independent flag appended to the average (13.1). Its successor blocks are
+$p_{h,a}\mathcal A_j\mathcal K_{a\ell}
+(BQ_h\rho Q_h^\dagger B^\dagger)$, with the reference map when
+present. The unflagged task does not prescribe the probabilities of
+these added flag values. Its corrected-channel classification is Theorem 13.1; a
+flag-resolved comparison must still specify the actual instrument blocks
+and the intended flag law. The constant-flag upper fixes that law
+explicitly.
+
+At $\theta=\pi/6$, use the existing actual acquisition of all $n$
+labels and the $n$ inverse-letter invocations of ERM16.1 before the
+fixed $R$-to-qutrit storage encoding and $B$ decoder. At $\theta=0$,
+use its acquired full-word permutation accumulator and selected inverse:
+the reachable full-word counts are $1,2,4,6$ at $n=0,1,2,\ge3$,
+with the supplied known-horizon small-case encodings. These are
+full-word controls, not the smaller single-task suffix or three-position
+record of §3. One may factor (14.4) as this full-$H$ inverse followed
+by the fixed encoder, since the inverse is identity on $R^\perp$.
+This realizes the same channel, and makes explicit when the old
+record can be released. No inverse is needed for $n=0$.
+
+The same run pays $n$ fresh environment preparations, interactions,
+measurements and actual label acquisitions, all record writes and
+retained reads, inverse controls, one encoder, the three-dimensional
+coherent port for its holding interval, one decoder, calibration,
+schedule/address workspace, service permissions and any classical
+carrier. The old record must remain readable through inverse selection
+and invocation; keeping it longer costs its actual lifetime. The late
+continuation adds one actual preparation, interaction, measurement and
+new label acquisition, then one terminal binary test; the immediate
+choice adds that test alone. All those prices coexist. The port minimum
+does not minimize total memory, control count, energy, latency, or
+physical carrier dimension five. The inaccessible reference is preserved
+by the upper and supplies no usable storage bypass.
+
+For an arbitrary fixed real $\theta$, (14.2) is a finite-dimensional
+channel-existence theorem for a supplied kernel. It does not uniformly
+decide exact-real word equalities, acquire an unknown calibration,
+compile arbitrary representative tables or install exact codecs.
+The explicit acquired/effective upper accounts above are restricted
+to the supplied exact calibrations and installed controls. The
+existential theorem does not replace those operational prerequisites.
+
+## 16. Supplier correspondence and the remaining recovery scope
+
+The full-$H$ corrected-channel classification is Theorem 13.1,
+(13.2)–(13.5), on the exact original domain of Definition 11.1.
+Its evaluated residual calculation (13.14)–(13.21), including the
+actual complementary future outcomes, is the supplier that removes
+possible leakage on the actual corrected inputs. It is not an open
+classification problem here. The physical decoder's off-$R$ input
+behavior remains outside that classification.
+
+Corollary 14.2 expresses the finite consumed-flag storage consequence
+of that supplied theorem and the existing rank-through-port principle.
+The full-word record iff and $m_n$ are reused from Theorem 11.2;
+branchwise recovery, including an untouched finite reference, is reused
+from Theorem 13.1. In particular the existence, corrected-channel and
+reference conclusions already have their suppliers. The remaining
+storage application specifies the whole-$H$ encoder, whole-block
+padding, attained joint interface and the acquired-use resource cuts
+in §§14–15. It is an explicit application and attainment, not a new
+classification, rank inequality or independently new rigidity argument.
+It resolves the finite-flag coherent-port question left outside §13
+only on Definition 14.1's exact storage domain.
+
+[CoherentFlagPort][CFP] and its [owning Scribe][CFPB] supply the
+same-flag Kraus composition and complete complement-filled decoder
+construction; [FiniteKrausRepresentation][KRAUS] and its
+[owning Scribe][KRAUSB] supply finite rectangular CP representations.
+The square connected-probe statement
+`port_component_lower_bound` is not directly a theorem about an
+$M_3\to M_5$ channel. In (14.3) only the rectangular product and its
+rank bound are used; Theorem 13.1 supplies the actual channel to which
+that factorization is applied. The ordinary rank inequality for a
+product through $\mathbb C^q$ is the `rank_mul_le`/`rank_le_card_width`
+supplier in pinned mathlib's `Mathlib/LinearAlgebra/Matrix/Rank.lean`.
+
+Bluhm–Rauber–Wolf, [arXiv:1708.04898v4][BRW], Definition 4.1 and
+the proof of Lemma 5.2, supply the finite classical-quantum compression
+model and the rank-at-most-$q$ composite Kraus argument. The present
+input corner is the actual $R$ of the five-level source, rather than
+all five-level densities; (14.4) extends the attained encoder to the
+entire physical input algebra. The source-specific classification is
+credited to §13, not to a generic observable-compression theorem.
+These are ordinary analytical applications with no worldwide-priority
+or new Lean-certification claim.
+
+The independent full-$H$ real-filter classification in [MRQB], §§19–26,
+concerns contractive invertible filters, real/skew source coordinates,
+all-success-prefix detector laws and least filter depth. Its preparations,
+records, controls and output task differ from (11.2). It does not
+identify those filters with the codecs (14.1).
+
+[ERM II][ERMII], §§31–35, already supplies, for its fixed actual
+channel, the exact erased-history spectator–$e$ task value for every
+population $0<p<1$ and finite $n\ge2$, with a same-qutrit decoder
+and matching full-complex certificates. That quantitative boundary
+with zero $f$ population, including the reused balanced case, is
+supplied rather than a missing minimax result. It permits neither a
+retained history record nor the late joint task (11.2), and does not
+supply (14.2). Its interior with all three populations positive and
+uniform unbounded-horizon questions keep their own stated scope.
+The signed P/Q, autonomous STOP, fixed-apparatus, original-Q,
+parked-consumer and unchanged-initialization problems likewise retain
+their original conditions and remaining obligations.
+
+Chronology here is the actual label word with its acquisition count;
+the terminal task boundary is the stated immediate/future effect
+interface; memory is an acquired word-class record plus the coherent
+specimen with installed callable controls. Their common-source relation
+is (13.1) and the attained joint law (15.2). The count alone does not
+select a nontrivial word class. No independent acquired spatial
+incidence or metric view, physical-duration inverse, atomic/quantum
+common initialization, or alpha/beta universality is supplied. Unknown
+calibration acquisition, finite-precision stability and total-resource
+parsimony remain separate. Thus this full-$H$ port application is a
+bounded recovery/continued-use contribution toward the continuing
+programme, not unrestricted four-expression recovery.
+
+## 追加锚（本行以下为增补区）
 ## 13.3. Uniform finite-precision stability for the actual full-H tests
 
 **Theorem 13.3 (Uniform stability of the average corrected channel).**
