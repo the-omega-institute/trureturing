@@ -9,8 +9,10 @@
 import D5.S3.Quantum.Entanglement.RandomizedGraphNegativityRefutation
 import D5.S3.Quantum.Information.PartialTraceMutualInformation
 import Mathlib.Analysis.Complex.ExponentialBounds
+import Mathlib.InformationTheory.Hamming
 import D5.S3.Quantum.Matrix.TwoPointFunctionalCalculus
-import Mathlib.Analysis.CStarAlgebra.Projection
+
+/-! Uniformly dephased graph states can reverse the subsystem-size entropy ordering. -/
 
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
@@ -80,9 +82,6 @@ private instance bipartiteDecidable {m n : ℕ} (M : Fin m → Fin n → Bool) :
   intro x y
   cases x <;> cases y <;> dsimp only [bipartiteGraph] <;> infer_instance
 
-private def distance {n : ℕ} (x y : Fin n → Bool) : ℕ :=
-  ∑ i, if x i = y i then 0 else 1
-
 private lemma noisyQubit_entry (P : ℝ) (x y : Bool) :
     noisyQubit P x y = (1 / 2 : ℂ) * (if x = y then 1 else 2 * (P : ℂ) - 1) := by
   have hs : (Real.sqrt 2 : ℂ)⁻¹ * (Real.sqrt 2 : ℂ)⁻¹ = 1 / 2 := by
@@ -91,13 +90,14 @@ private lemma noisyQubit_entry (P : ℝ) (x y : Bool) :
       exact_mod_cast Real.mul_self_sqrt (show (0 : ℝ) ≤ 2 by norm_num)
     rw [h]
     norm_num
+  unfold noisyQubit
   cases x <;> cases y <;>
-    simp only [noisyQubit,
-      D5.S3.Quantum.Entanglement.RandomizedGraphNegativityRefutation.plusState,
+    simp only [D5.S3.Quantum.Entanglement.RandomizedGraphNegativityRefutation.plusState,
       pow_one, Complex.ofReal_inv, Matrix.add_apply, Matrix.smul_apply,
       Matrix.vecMulVec_apply, Pi.star_apply, Complex.star_def, Complex.conj_ofReal,
-      Complex.conj_inv, Bool.false_eq_true, Bool.true_eq_false, ite_false, ite_true, one_mul, neg_mul,
-      mul_neg, neg_neg, map_neg, map_one, Complex.ofReal_sub, Complex.ofReal_one] <;>
+      Complex.conj_inv, Bool.false_eq_true, Bool.true_eq_false, ite_false, ite_true, one_mul,
+      neg_mul,
+      mul_neg, neg_neg, map_neg, Complex.ofReal_sub, Complex.ofReal_one] <;>
     rw [hs] <;> ring
 
 private lemma character_sum {n : ℕ} (k : Fin n → ℕ) :
@@ -107,7 +107,7 @@ private lemma character_sum {n : ℕ} (k : Fin n → ℕ) :
   have hterm (j : Fin n) : (∑ b : Bool, (-1 : ℂ) ^ (k j * b.toNat)) =
       if Even (k j) then 2 else 0 := by
     simp only [Fintype.sum_bool, Bool.toNat_false, Bool.toNat_true,
-      Nat.mul_zero, Nat.mul_one, pow_zero, neg_one_pow_eq_ite]
+      Nat.mul_zero, Nat.mul_one, neg_one_pow_eq_ite]
     split_ifs <;> norm_num at *
   simp_rw [hterm]
   rw [Fintype.prod_ite_zero]
@@ -126,7 +126,7 @@ private lemma bipartite_phase {m n : ℕ} (N : Fin m → Fin n → Bool)
       cases x <;> cases y <;>
         simp only [SimpleGraph.mem_edgeFinset, SimpleGraph.mem_edgeSet] <;>
         dsimp only [bipartiteGraph] <;>
-        simp [Sym2.eq_iff]
+        simp
   unfold czPhase
   rw [hedges, Finset.prod_image]
   · rw [Finset.prod_filter, Fintype.prod_prod_type]
@@ -138,23 +138,24 @@ private lemma bipartite_phase {m n : ℕ} (N : Fin m → Fin n → Bool)
       D5.S3.Quantum.Entanglement.RandomizedGraphNegativityRefutation.czPhase,
       Sym2.lift_mk, Function.comp_apply, Equiv.symm_apply_apply]
     cases hN : N i j <;> cases ha : a i <;> cases hb : b j <;>
-      simp [hN, ha, hb]
+      simp [ha, hb]
   · intro x _ y _ h
     simpa only [Sym2.eq_iff, Sum.inl.injEq, Sum.inr.injEq, Sum.inl_ne_inr,
       Sum.inr_ne_inl, false_and, or_false, Prod.ext_iff] using h
 
 private lemma qubit_product {n : ℕ} (P : ℝ) (x y : Fin n → Bool) :
     (∏ i, noisyQubit P (x i) (y i)) =
-      (2 : ℂ)⁻¹ ^ n * (2 * (P : ℂ) - 1) ^ distance x y := by
+      (2 : ℂ)⁻¹ ^ n * (2 * (P : ℂ) - 1) ^ hammingDist x y := by
   simp_rw [noisyQubit_entry]
   rw [Finset.prod_mul_distrib]
   simp only [Finset.prod_const, Finset.card_univ, Fintype.card_fin, one_div]
   congr 1
-  unfold distance
+  unfold hammingDist
+  rw [Finset.card_eq_sum_ones, Finset.sum_filter]
   rw [← Finset.prod_pow_eq_pow_sum]
   apply Finset.prod_congr rfl
   intro i _
-  split_ifs <;> simp
+  by_cases h : x i = y i <;> simp [h]
 
 private lemma phase_pair_A {m n : ℕ} (N : Fin m → Fin n → Bool)
     (a a' : Fin m → Bool) (b : Fin n → Bool) :
@@ -199,54 +200,56 @@ private lemma phase_pair_B {m n : ℕ} (N : Fin m → Fin n → Bool)
 private lemma reduced_A {m n : ℕ} (M : Fin m → Fin n → Bool) (P : ℝ)
     (a a' : Fin m → Bool) :
     partialTraceRight (graphState (bipartiteGraph M) P) a a' =
-      (2 : ℂ)⁻¹ ^ m * (2 * (P : ℂ) - 1) ^ distance a a' *
+      (2 : ℂ)⁻¹ ^ m * (2 * (P : ℂ) - 1) ^ hammingDist a a' *
         (if ∀ j, Even (∑ i, (M i j && Bool.xor (a i) (a' i)).toNat)
           then 1 else 0) := by
   unfold partialTraceRight
   have hentry (b : Fin n → Bool) : graphState (bipartiteGraph M) P (a, b) (a', b) =
-      ((2 : ℂ)⁻¹ ^ m * (2 * (P : ℂ) - 1) ^ distance a a' * (2 : ℂ)⁻¹ ^ n) *
+      ((2 : ℂ)⁻¹ ^ m * (2 * (P : ℂ) - 1) ^ hammingDist a a' * (2 : ℂ)⁻¹ ^ n) *
         ∏ j, (-1 : ℂ) ^ ((∑ i, (M i j && Bool.xor (a i) (a' i)).toNat) *
           (b j).toNat) := by
     unfold graphState
     rw [Fintype.prod_sum_type]
     dsimp only [Sum.elim_inl, Sum.elim_inr]
-    rw [qubit_product, qubit_product, show distance b b = 0 by simp [distance], pow_zero,
+    rw [qubit_product, qubit_product, hammingDist_self b, pow_zero,
       mul_one]
     rw [show czPhase (bipartiteGraph M) (Sum.elim a b) *
-        ((2 : ℂ)⁻¹ ^ m * (2 * (P : ℂ) - 1) ^ distance a a' * (2 : ℂ)⁻¹ ^ n) *
+        ((2 : ℂ)⁻¹ ^ m * (2 * (P : ℂ) - 1) ^ hammingDist a a' * (2 : ℂ)⁻¹ ^ n) *
         star (czPhase (bipartiteGraph M) (Sum.elim a' b)) =
-      ((2 : ℂ)⁻¹ ^ m * (2 * (P : ℂ) - 1) ^ distance a a' * (2 : ℂ)⁻¹ ^ n) *
+      ((2 : ℂ)⁻¹ ^ m * (2 * (P : ℂ) - 1) ^ hammingDist a a' * (2 : ℂ)⁻¹ ^ n) *
         (czPhase (bipartiteGraph M) (Sum.elim a b) *
           star (czPhase (bipartiteGraph M) (Sum.elim a' b))) by ring,
       phase_pair_A]
-  simp_rw [hentry]
-  rw [← Finset.mul_sum, character_sum]
-  split_ifs <;> simp [mul_assoc, ← mul_pow]
+  have hsum := Finset.sum_congr rfl
+    (fun (b : Fin n → Bool) (_ : b ∈ Finset.univ) => hentry b)
+  rw [hsum, ← Finset.mul_sum, character_sum]
+  split_ifs <;> simp [mul_assoc]
 
 private lemma reduced_B {m n : ℕ} (M : Fin m → Fin n → Bool) (P : ℝ)
     (b b' : Fin n → Bool) :
     partialTraceLeft (graphState (bipartiteGraph M) P) b b' =
-      (2 : ℂ)⁻¹ ^ n * (2 * (P : ℂ) - 1) ^ distance b b' *
+      (2 : ℂ)⁻¹ ^ n * (2 * (P : ℂ) - 1) ^ hammingDist b b' *
         (if ∀ i, Even (∑ j, (M i j && Bool.xor (b j) (b' j)).toNat)
           then 1 else 0) := by
   unfold partialTraceLeft
   have hentry (a : Fin m → Bool) : graphState (bipartiteGraph M) P (a, b) (a, b') =
-      ((2 : ℂ)⁻¹ ^ n * (2 * (P : ℂ) - 1) ^ distance b b' * (2 : ℂ)⁻¹ ^ m) *
+      ((2 : ℂ)⁻¹ ^ n * (2 * (P : ℂ) - 1) ^ hammingDist b b' * (2 : ℂ)⁻¹ ^ m) *
         ∏ i, (-1 : ℂ) ^ ((∑ j, (M i j && Bool.xor (b j) (b' j)).toNat) *
           (a i).toNat) := by
     unfold graphState
     rw [Fintype.prod_sum_type]
     dsimp only [Sum.elim_inl, Sum.elim_inr]
-    rw [qubit_product, qubit_product, show distance a a = 0 by simp [distance], pow_zero,
+    rw [qubit_product, qubit_product, hammingDist_self a, pow_zero,
       mul_one]
     calc
-      _ = ((2 : ℂ)⁻¹ ^ n * (2 * (P : ℂ) - 1) ^ distance b b' * (2 : ℂ)⁻¹ ^ m) *
+      _ = ((2 : ℂ)⁻¹ ^ n * (2 * (P : ℂ) - 1) ^ hammingDist b b' * (2 : ℂ)⁻¹ ^ m) *
           (czPhase (bipartiteGraph M) (Sum.elim a b) *
             star (czPhase (bipartiteGraph M) (Sum.elim a b'))) := by ring
       _ = _ := by rw [phase_pair_B]
-  simp_rw [hentry]
-  rw [← Finset.mul_sum, character_sum]
-  split_ifs <;> simp [mul_assoc, ← mul_pow]
+  have hsum := Finset.sum_congr rfl
+    (fun (a : Fin m → Bool) (_ : a ∈ Finset.univ) => hentry a)
+  rw [hsum, ← Finset.mul_sum, character_sum]
+  split_ifs <;> simp [mul_assoc]
 
 private def M : Fin 5 → Fin 4 → Bool :=
   ![![true, true, false, false], ![true, true, false, false],
@@ -271,6 +274,7 @@ private def b₂ : ℝ := (1 - u ^ 2) / 16
 
 set_option maxRecDepth 10000 in
 set_option maxHeartbeats 3000000 in
+-- The rational projection identity checks all thirty-two computational basis states.
 private lemma projectionA_is_projection :
     IsStarProjection (CStarMatrix.ofMatrix projectionA) := by
   let q : Matrix (Fin 5 → Bool) (Fin 5 → Bool) ℚ :=
@@ -289,11 +293,13 @@ private lemma projectionA_is_projection :
     rw [hmap, ← map_mul, hq]
   · change projectionAᴴ = projectionA
     ext a a'
-    simp only [Matrix.conjTranspose_apply, projectionA, Bool.xor_comm]
+    unfold projectionA
+    simp only [Matrix.conjTranspose_apply, Bool.xor_comm]
     split_ifs <;> norm_num
 
 set_option maxRecDepth 10000 in
 set_option maxHeartbeats 3000000 in
+-- The rational projection identity checks all sixteen computational basis states.
 private lemma projectionB_is_projection :
     IsStarProjection (CStarMatrix.ofMatrix projectionB) := by
   let q : Matrix (Fin 4 → Bool) (Fin 4 → Bool) ℚ :=
@@ -313,15 +319,18 @@ private lemma projectionB_is_projection :
     rw [hmap, ← map_mul, hq]
   · change projectionBᴴ = projectionB
     ext b b'
-    simp only [Matrix.conjTranspose_apply, projectionB, flipB, Matrix.one_apply,
-      Matrix.smul_apply, Matrix.add_apply, star_smul, star_add, eq_comm, ne_comm]
+    unfold projectionB flipB
+    simp only [Matrix.conjTranspose_apply, Matrix.one_apply, Matrix.smul_apply, Matrix.add_apply,
+      star_smul, star_add, eq_comm, ne_comm]
     split_ifs <;> norm_num
 
 private lemma projection_traces : Matrix.trace projectionA = 8 ∧ Matrix.trace projectionB = 8 := by
   have hA (a : Fin 5 → Bool) : projectionA a a = 1 / 4 := by
-    simp [projectionA]
+    unfold projectionA
+    simp
   have hB (b : Fin 4 → Bool) : projectionB b b = 1 / 2 := by
-    simp [projectionB, flipB]
+    unfold projectionB flipB
+    simp
   constructor <;> simp [Matrix.trace, Matrix.diag_apply, hA, hB] <;> norm_num
 
 private lemma marginal_A_spectral :
@@ -329,18 +338,19 @@ private lemma marginal_A_spectral :
       a₁ • projectionA + a₂ • (1 - projectionA) := by
   have hweight : ∀ a a' : Fin 5 → Bool,
       (∀ j, Even (∑ i, (M i j && Bool.xor (a i) (a' i)).toNat)) →
-        a = a' ∨ distance a a' = 2 := by decide +kernel
+        a = a' ∨ hammingDist a a' = 2 := by decide +kernel
   ext a a'
   rw [reduced_A]
   by_cases heq : a = a'
   · subst a'
-    simp [projectionA, Matrix.one_apply, distance, a₁, a₂, u]
-    <;> norm_num <;> ring
+    unfold projectionA a₁ a₂ u
+    simp <;> norm_num
   · by_cases hk : ∀ j, Even (∑ i, (M i j && Bool.xor (a i) (a' i)).toNat)
     · have hd := (hweight a a' hk).resolve_left heq
-      simp [projectionA, hk, Matrix.one_apply, heq, hd, a₁, a₂, u]
-      <;> norm_num <;> ring
-    · simp [projectionA, hk, Matrix.one_apply, heq]
+      unfold projectionA a₁ a₂ u
+      simp [hk, heq, hd] <;> norm_num
+    · unfold projectionA
+      simp [hk, heq]
 
 private lemma marginal_B_spectral :
     partialTraceLeft (graphState (bipartiteGraph M) (255 / 256)) =
@@ -353,13 +363,14 @@ private lemma marginal_B_spectral :
   simp only [hkernel]
   by_cases heq : b = b'
   · subst b'
-    simp [projectionB, flipB, Matrix.one_apply, distance, b₁, b₂, u]
-    <;> norm_num <;> ring
+    unfold projectionB flipB b₁ b₂ u
+    simp <;> norm_num
   · by_cases hf : ∀ i, b i ≠ b' i
-    · have hd : distance b b' = 4 := by simp [distance, hf]
-      simp [projectionB, flipB, heq, hf, hd, Matrix.one_apply, b₁, b₂, u]
-      <;> norm_num <;> ring
-    · simp [projectionB, flipB, heq, hf, Matrix.one_apply]
+    · have hd : hammingDist b b' = 4 := by unfold hammingDist; simp [hf]
+      unfold projectionB flipB b₁ b₂ u
+      simp [heq, hf, hd] <;> norm_num
+    · unfold projectionB flipB
+      simp [heq, hf]
 
 private lemma spectral_data :
     IsStarProjection (CStarMatrix.ofMatrix projectionA) ∧
@@ -375,7 +386,7 @@ private lemma spectral_data :
 
 private lemma two_projection_entropy {ι : Type} [Fintype ι] [DecidableEq ι]
     (Q : Matrix ι ι ℂ) (hQ : IsStarProjection (CStarMatrix.ofMatrix Q))
-    (r s : ℝ) (hr : 0 < r) (hs : 0 < s) :
+    (r s : ℝ) :
     entropy2 (r • Q + s • (1 - Q)) =
       (-(Matrix.trace Q).re * r * Real.log r -
         (Fintype.card ι - (Matrix.trace Q).re) * s * Real.log s) / Real.log 2 := by
@@ -434,11 +445,9 @@ private lemma witness_entropies :
   obtain ⟨hQA, htA, hQB, htB, hA, hB⟩ := spectral_data
   rw [hA, hB]
   constructor
-  · rw [two_projection_entropy projectionA hQA a₁ a₂
-      (by norm_num [a₁, u]) (by norm_num [a₂, u]), htA]
+  · rw [two_projection_entropy projectionA hQA a₁ a₂, htA]
     norm_num
-  · rw [two_projection_entropy projectionB hQB b₁ b₂
-      (by norm_num [b₁, u]) (by norm_num [b₂, u]), htB]
+  · rw [two_projection_entropy projectionB hQB b₁ b₂, htB]
     norm_num
 
 private lemma numerical_inequality :
@@ -447,40 +456,41 @@ private lemma numerical_inequality :
   have h1 : Real.log a₁ = Real.log ((1 + 3 * u) / 4) - 3 * Real.log 2 := by
     unfold a₁
     rw [show (1 + 3 * u) / 32 = ((1 + 3 * u) / 4) / 2 ^ 3 by ring,
-      Real.log_div (by norm_num [u]) (by norm_num), Real.log_pow]
+      Real.log_div (by unfold u; norm_num) (by norm_num), Real.log_pow]
     norm_num
   have h2 : Real.log a₂ = Real.log (1 - u) - 5 * Real.log 2 := by
     unfold a₂
     rw [show (32 : ℝ) = 2 ^ 5 by norm_num,
-      Real.log_div (by norm_num [u]) (by norm_num), Real.log_pow]
+      Real.log_div (by unfold u; norm_num) (by norm_num), Real.log_pow]
     norm_num
   have h3 : Real.log b₁ = Real.log ((1 + u ^ 2) / 2) - 3 * Real.log 2 := by
     unfold b₁
     rw [show (1 + u ^ 2) / 16 = ((1 + u ^ 2) / 2) / 2 ^ 3 by ring,
-      Real.log_div (by norm_num [u]) (by norm_num), Real.log_pow]
+      Real.log_div (by unfold u; norm_num) (by norm_num), Real.log_pow]
     norm_num
   have h4 : Real.log b₂ = Real.log (1 - u) + Real.log (1 + u) - 4 * Real.log 2 := by
     unfold b₂
     rw [show (16 : ℝ) = 2 ^ 4 by norm_num,
-      Real.log_div (by norm_num [u]) (by norm_num), Real.log_pow,
+      Real.log_div (by unfold u; norm_num) (by norm_num), Real.log_pow,
       show 1 - u ^ 2 = (1 - u) * (1 + u) by ring,
-      Real.log_mul (by norm_num [u]) (by norm_num [u])]
+      Real.log_mul (by unfold u; norm_num) (by unfold u; norm_num)]
     norm_num
   have hc := Real.one_sub_inv_le_log_of_pos
-    (show 0 < (1 + 3 * u) / 4 by norm_num [u])
+    (show 0 < (1 + 3 * u) / 4 by unfold u; norm_num)
   have hd := Real.log_le_sub_one_of_pos
-    (show 0 < (1 + u ^ 2) / 2 by norm_num [u])
+    (show 0 < (1 + u ^ 2) / 2 by unfold u; norm_num)
   have he : Real.log (1 - u) ≤ -6 * Real.log 2 := by
-    have h := Real.log_le_log (by norm_num [u] : 0 < 1 - u)
-      (by norm_num [u] : 1 - u ≤ 1 / 64)
+    have h := Real.log_le_log (by unfold u; norm_num : 0 < 1 - u)
+      (by unfold u; norm_num : 1 - u ≤ 1 / 64)
     have hlog : Real.log (1 / 64 : ℝ) = -6 * Real.log 2 := by
       rw [show (1 / 64 : ℝ) = (2 ^ 6)⁻¹ by norm_num, Real.log_inv, Real.log_pow]
       ring
     rwa [hlog] at h
-  have hf := Real.log_le_log (by norm_num [u] : 0 < 1 + u)
-    (by norm_num [u] : 1 + u ≤ 2)
+  have hf := Real.log_le_log (by unfold u; norm_num : 0 < 1 + u)
+    (by unfold u; norm_num : 1 + u ≤ 2)
   rw [h1, h2, h3, h4]
-  norm_num [u, a₁, a₂, b₁, b₂] at hc hd he hf ⊢
+  dsimp only [a₁, a₂, b₁, b₂, u] at hc hd he hf ⊢
+  norm_num at hc hd he hf ⊢
   nlinarith [Real.log_two_lt_d9]
 
 private lemma witness_entropy_comparison :
