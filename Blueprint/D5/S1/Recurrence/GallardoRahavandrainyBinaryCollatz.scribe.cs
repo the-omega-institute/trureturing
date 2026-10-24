@@ -48,6 +48,26 @@ internal sealed class GallardoRahavandrainyBinaryCollatzDocument : IScribeDocume
                 + "(Conjecture 3.11, p. 15.) The exponent n is a natural number and "
                 + "collatzLength is the number of terms just defined.",
                 DescribeRole.Definition, AssessedProvenance.FromLiterature(Source)),
+            Node("nonzero_of_odd", "Evaluation one implies nonzero", NonzeroFromEvalFormula(),
+                "A polynomial whose value at zero is one is nonzero.",
+                DescribeRole.Theorem, AssessedProvenance.FromRepo(Source)),
+            Node("nonzero_eq_one", "The unique nonzero binary coefficient", BinaryCoefficientFormula(),
+                "Every nonzero element of ZMod 2 equals one.",
+                DescribeRole.Theorem, AssessedProvenance.FromRepo(Source)),
+            Node("eq_one_of_degree_zero", "An odd constant polynomial", ConstantOneFormula(),
+                "A polynomial of natural degree zero whose value at zero is one equals one.",
+                DescribeRole.Theorem, AssessedProvenance.FromRepo(Source)),
+            Node("degree_q", "Degree of the multiplier", Disp(Equal(
+                App(Q("Polynomial", "natDegree"), F.Id("M")), D(2))),
+                "The multiplier M has natural degree two.",
+                DescribeRole.Theorem, AssessedProvenance.FromRepo(Source)),
+            Node("q_ne_zero", "The multiplier is nonzero", Disp(NotEqual(F.Id("M"), D(0))),
+                "The multiplier M is nonzero.",
+                DescribeRole.Theorem, AssessedProvenance.FromRepo(Source)),
+            Node("oddPart_factor", "The odd part of a factored polynomial", OddPartFactorFormula(),
+                "If u takes value one at both zero and one, removing powers of X and X-C(1) "
+                + "from their product with u leaves exactly u.",
+                DescribeRole.Theorem, AssessedProvenance.FromRepo(Source)),
             Node("result", "Proof of Conjecture 3.11", Disp(ClaimBody()),
                 "Substitution of x(x+1) and polynomial reversal identify the odd sequence "
                 + "with the map f ↦ (1+X)f+X^(natDegree f+1). A degree-gap reduction proves "
@@ -65,7 +85,7 @@ internal sealed class GallardoRahavandrainyBinaryCollatzDocument : IScribeDocume
     private static DocumentBlock Node(string name, string title, Formula formula, string prose,
         DescribeRole role, AssessedProvenance provenance,
         OpenProblemResolutionClaim? resolution = null) =>
-        Describe.Lean(DescribeId.Create("grcollatz-" + name.ToLowerInvariant()),
+        Describe.Lean(DescribeId.Create("grcollatz-" + name.Replace('.', '-').Replace('_', '-').ToLowerInvariant()),
             DeclarationHandle.Create(Prefix + name), H(title), StatementSource.FromAuthor(formula),
             provenance, Blocks(Paragraph(Text(prose))), role, resolution);
 
@@ -122,4 +142,38 @@ internal sealed class GallardoRahavandrainyBinaryCollatzDocument : IScribeDocume
         var conclusion = Equal(Call("collatzLength", Pow(polynomial, n)), Add(n, D(1)));
         return All("n", Naturals(), Seq(Parenthesized(lower), Sp, Implies, Sp, Parenthesized(conclusion)));
     }
+    private static Formula Implication(Formula left, Formula right) =>
+        Seq(Parenthesized(left), Sp, Implies, Sp, Parenthesized(right));
+    private static Formula At(Formula f, Formula x) => App(Q("Polynomial", "eval"), x, f);
+
+    private static Formula NonzeroFromEvalFormula()
+    {
+        var f = F.Id("f");
+        return Disp(All("f", Polynomials(), Implication(Equal(At(f, D(0)), D(1)), NotEqual(f, D(0)))));
+    }
+
+    private static Formula BinaryCoefficientFormula()
+    {
+        var c = F.Id("c");
+        return Disp(All("c", Call("ZMod", D(2)), Implication(NotEqual(c, D(0)), Equal(c, D(1)))));
+    }
+
+    private static Formula ConstantOneFormula()
+    {
+        var f = F.Id("f");
+        return Disp(All("f", Polynomials(), Implication(Equal(At(f, D(0)), D(1)),
+            Implication(Equal(App(Q("Polynomial", "natDegree"), f), D(0)), Equal(f, D(1))))));
+    }
+
+    private static Formula OddPartFactorFormula()
+    {
+        var a = F.Id("a");
+        var b = F.Id("b");
+        var u = F.Id("u");
+        var factored = Multiply(Multiply(Pow(X(), a), Pow(Subtract(X(), App(Q("Polynomial", "C"), D(1))), b)), u);
+        return Disp(All("a", Naturals(), All("b", Naturals(), All("u", Polynomials(),
+            Implication(Equal(At(u, D(0)), D(1)), Implication(Equal(At(u, D(1)), D(1)),
+                Equal(Call("oddPart", factored), u)))))));
+    }
+
 }
