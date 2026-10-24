@@ -2091,3 +2091,412 @@ The qutrit-output storage conclusions of §10 and the independent
 realization requirements of §12 retain their stated hypotheses.
 
 ## 追加锚（本行以下为增补区）
+## 13.2. Uniform finite-precision stability for the actual full-H tests
+
+**Theorem 13.2 (Uniform stability of the average corrected channel).**
+Fix precisely the model of Definitions 1.1–1.2 and 11.1 and the
+actual coordinates used in Theorem 13.1. Thus
+$B:\mathbb C^3\to H=\mathbb C^5$ is the specified isometric
+embedding, $v=v_e$, $E=vv^\dagger$, $p=Bv$, $P=pp^\dagger$,
+$P_1=P$, and $P_0=I_5-P$. For each real calibration angle
+$\theta$, the instrument is fixed and known: its two operators
+$A_j=A_j(\theta)$, $j\in\{0,1\}$, are exactly the actual
+full-$H$ operators (11.1), acting on all five output dimensions.
+For every complex-linear CPTP map
+$T:M_3(\mathbb C)\to M_5(\mathbb C)$, let $T^\dagger$ denote
+its trace adjoint and define the actual test defect by
+
+$$
+\begin{aligned}
+\delta_\theta(T)=\max\Bigl\{&\|T^\dagger(P)-E\|_{\mathrm{op}},\\
+&\max_{j,y\in\{0,1\}}
+\bigl\|T^\dagger(A_j^\dagger P_yA_j)
+       -B^\dagger A_j^\dagger P_yA_jB\bigr\|_{\mathrm{op}}
+\Bigr\}.
+\end{aligned}
+\tag{13.23}
+$$
+
+Both outcomes of each labelled continuation are included; these are
+joint effects for the actual label $j$, without conditioning or
+renormalizing its probability. Uniformly for every real $\theta$,
+every such $T$, and every real $0<\varepsilon\le\varepsilon_0=1/2$,
+
+$$
+\delta_\theta(T)\le\varepsilon
+\quad\Longrightarrow\quad
+\|T-\operatorname{Ad}_B\|_\diamond
+ \le C\sqrt\varepsilon,\qquad
+C=800,\qquad \operatorname{Ad}_B(X)=BXB^\dagger.
+\tag{13.24}
+$$
+
+Here the diamond norm is unhalved and ranges over arbitrary finite
+untouched inaccessible references:
+
+$$
+\|\Lambda\|_\diamond
+ =\sup_{d\ge1}\ \sup_{0\ne X\in M_3(\mathbb C)\otimes M_d(\mathbb C)}
+ \frac{\|(\Lambda\otimes\operatorname{id}_{M_d})(X)\|_1}{\|X\|_1}.
+\tag{13.25}
+$$
+
+In particular the bound holds on every joint input density with such
+a reference. There is no restriction that $T$ have output in
+$R=B\mathbb C^3$, no assumed conditional branch correctness, no
+full-$H$ fairness law, and no assumption that the input state is
+known. The defect is a uniform input test: for each Hermitian effect
+difference its operator norm equals the supremum of the absolute
+expectation over all complex qutrit density inputs. The statement
+therefore retains all input coherences. When $T$ is the average
+corrected channel (13.1), (13.24) certifies that average; it does not
+assert a uniform approximate guarantee on every history/record
+branch of arbitrarily small weight.
+
+Proof. Fix an arbitrary real $\theta$ and a channel satisfying the
+hypotheses. Vector norms are Euclidean, and $\|\cdot\|_{\mathrm{HS}}$
+is the Hilbert–Schmidt norm. Put $Q=I_5-P$,
+$t_j=A_j^\dagger p$, and $F_j=w_jw_j^\dagger$, with the actual
+vectors from (13.7). In the orthonormal input frame $(\xi,e,f)$,
+these vectors and their frame operator are
+
+$$
+\begin{gathered}
+v=\frac{\xi+e}{\sqrt2},\qquad
+w_0=\frac{\xi-e/2+(\sqrt3/2)e^{2i\theta}f}{\sqrt2},\qquad
+w_1=\frac{\xi-e/2-(\sqrt3/2)e^{2i\theta}f}{\sqrt2},\\
+vv^\dagger+F_0+F_1
+ =\operatorname{diag}_{(\xi,e,f)}(3/2,3/4,3/4)
+ \succeq\tfrac34 I_3.
+\end{gathered}
+\tag{13.26}
+$$
+
+Indeed, $F_0+F_1$ is the outer product of $\xi-e/2$ with
+itself plus $(3/4)ff^\dagger$, whereas
+$vv^\dagger=(\xi+e)(\xi+e)^\dagger/2$; their mixed
+$\xi,e$ entries cancel. This is a uniformly conditioned
+nonorthogonal frame, not an orthogonal-probe assumption. The exact
+identities (13.8) and the ideal compression used in (13.9) give
+
+$$
+\begin{aligned}
+B^\dagger t_j&=e^{-i\theta}w_j/\sqrt2,&
+w_j^\dagger v&=1/4,&
+A_jBw_j&=e^{i\theta}p/\sqrt2,\\
+B^\dagger A_j^\dagger PA_jB&=F_j/2,&
+B^\dagger A_j^\dagger QA_jB&=(I_3-F_j)/2.
+\end{aligned}
+\tag{13.27}
+$$
+
+The last identity uses $A_jB=BV_j/\sqrt2$ only on the ideal
+embedded corner. It does not replace $A_j^\dagger A_j$ on $H$
+by $I_5/2$.
+
+We first quantify the full-$H$ kernel calculation of Theorem 13.1.
+To distinguish the physical vector from the input $v$, write
+$v_H=(e_1+e_4)/\sqrt2$, with $u=(e_0+e_3)/\sqrt2$ and
+$z=e_2$ as in (1.1). Put $c_\theta=\cos\theta$ and
+$s_\theta=\sin\theta$. The actual formulas (13.18) read
+
+$$
+\begin{aligned}
+A_0k&=(c_\theta k_0+i s_\theta k_1)u
+       +e^{i\theta}k_2v_H/\sqrt2
+       +(i s_\theta k_3+c_\theta k_4)z,\\
+A_1k&=(i s_\theta k_0+c_\theta k_1)u
+       +e^{i\theta}k_2v_H/\sqrt2
+       +(c_\theta k_3+i s_\theta k_4)z.
+\end{aligned}
+\tag{13.28}
+$$
+
+Their three rows in the orthonormal output frame $(u,v_H,z)$
+have disjoint coordinate supports and squared norms $1,1/2,1$.
+Consequently the nonzero singular values of each $A_j$ are
+$1,1,1/\sqrt2$, so $\|A_j\|_{\mathrm{op}}=1$ and
+$\|t_j\|\le1$. Orthonormal bases for their kernels are,
+respectively,
+
+$$
+\begin{aligned}
+\ker A_0&=\operatorname{span}\{
+ -i s_\theta e_0+c_\theta e_1,
+ c_\theta e_3-i s_\theta e_4\},\\
+\ker A_1&=\operatorname{span}\{
+ c_\theta e_0-i s_\theta e_1,
+ -i s_\theta e_3+c_\theta e_4\}.
+\end{aligned}
+\tag{13.29}
+$$
+
+Write $h=x$ times the first displayed kernel vector plus $y$ times
+the second for either $j$. As in (13.17)–(13.20), set
+
+$$
+\begin{gathered}
+\alpha=\frac{\sqrt2+1}{\sqrt{12}},\qquad
+\beta=\frac{\sqrt2-2}{\sqrt{12}},\qquad
+p=\alpha u+\alpha v_H+\beta z,\qquad
+\gamma=\alpha-\beta=\alpha+|\beta|=\frac{\sqrt3}{2},\\
+p^\dagger h=\frac{\alpha e^{-i\theta}}{\sqrt2}(x+y),
+\qquad t_{1-j}^\dagger h=\alpha x+\beta y.
+\end{gathered}
+\tag{13.30}
+$$
+
+For completeness, the second identity follows from
+$A_{1-j}h=xu+yz$ in both kernel bases; the first follows by
+substituting $u,v_H,z$ into $p$. If $m=x+y$ and
+$n=\alpha x+\beta y$, then
+$x=(n-\beta m)/\gamma$ and $y=(\alpha m-n)/\gamma$.
+Since $\sqrt2/\alpha<3$ and $2/\gamma<3$, it follows that
+
+$$
+\|h\|\le |x|+|y|
+ \le |m|+\frac{2}{\gamma}|n|
+ \le3\bigl(|p^\dagger h|+|t_{1-j}^\dagger h|\bigr).
+\tag{13.31}
+$$
+
+For arbitrary $k\in H$, decompose $k=h+r$ orthogonally with
+$h\in\ker A_j$. The singular values give
+$\|r\|\le\sqrt2\|A_jk\|$. Using (13.31),
+$\|p\|=1$, and $\|t_{1-j}\|\le1$, we obtain the uniform
+full-$H$ coercivity estimate
+
+$$
+\begin{aligned}
+\|k\|&\le
+ 3\bigl(|p^\dagger k|+|t_{1-j}^\dagger k|\bigr)+7\|r\|\\
+&\le 10\|A_jk\|+3|p^\dagger k|+3|t_{1-j}^\dagger k|,
+\qquad j=0,1.
+\end{aligned}
+\tag{13.32}
+$$
+
+Here $7\sqrt2<10$. No step divides by $\sin\theta$ or
+$\cos\theta$, so the constants include their zero cases.
+
+By the standard finite-dimensional CP/Kraus representation, choose
+$T(X)=\sum_\ell L_\ell XL_\ell^\dagger$ with
+$L_\ell:\mathbb C^3\to H$ and
+$\sum_\ell L_\ell^\dagger L_\ell=I_3$. One can obtain this
+finite family by diagonalizing the positive $15\times15$ Choi
+matrix. For each Kraus operator define nonnegative quadratic defects
+
+$$
+\begin{aligned}
+a_\ell&=\|QL_\ell v\|^2,&
+b_\ell&=\|p^\dagger L_\ell(I_3-E)\|_{\mathrm{HS}}^2,\\
+g_{\ell j}&=\|t_j^\dagger L_\ell(I_3-F_j)\|_{\mathrm{HS}}^2,&
+h_{\ell j}&=\|QA_jL_\ell w_j\|^2,\\
+q_\ell&=a_\ell+b_\ell+g_{\ell0}+g_{\ell1}
+                      +h_{\ell0}+h_{\ell1}.
+\end{aligned}
+\tag{13.33}
+$$
+
+Let $(x_1,x_2)$ and $(z_{j1},z_{j2})$ be orthonormal bases of
+$v^\perp$ and $w_j^\perp$, respectively. Trace preservation,
+(13.23), and (13.27) imply
+
+$$
+\begin{aligned}
+\sum_\ell a_\ell
+ &=1-\langle v,T^\dagger(P)v\rangle\le\varepsilon,\\
+\sum_\ell b_\ell
+ &=\sum_{a=1}^2\langle x_a,T^\dagger(P)x_a\rangle
+ \le2\varepsilon,\\
+\sum_\ell g_{\ell j}
+ &=\sum_{a=1}^2\langle z_{ja},T^\dagger(t_jt_j^\dagger)z_{ja}\rangle
+ \le2\varepsilon,\\
+\sum_\ell h_{\ell j}
+ &=\langle w_j,T^\dagger(A_j^\dagger QA_j)w_j\rangle
+ \le\varepsilon,\\
+\sum_\ell q_\ell&\le9\varepsilon.
+\end{aligned}
+\tag{13.34}
+$$
+
+Each quantity on the left is nonnegative. In the second and third
+lines the ideal expectation is zero on the indicated orthogonal
+complement, giving positive false-positive defects rather than
+cancellation estimates. In the fourth line the ideal expectation
+vanishes at $w_j$ because its compression is $(I_3-F_j)/2$.
+This line uses the actual $y=0$ effect and is essential for leaked
+outputs. The $y=1$ effect is $t_jt_j^\dagger$ and supplies the
+third line. Thus both continuation outcomes enter the estimate.
+
+For a single index $\ell$, suppress that index temporarily and put
+$c=p^\dagger Lv$ and $N=L-cB$. The definitions give
+
+$$
+Nv=QLv,\qquad \|Nv\|=\sqrt a,\qquad
+p^\dagger N=p^\dagger L(I_3-E),\qquad
+\|p^\dagger N\|=\sqrt b.
+\tag{13.35}
+$$
+
+Decompose $t_j^\dagger L=\lambda_jw_j^\dagger+\rho_j$ with
+$\rho_j=t_j^\dagger L(I_3-F_j)$ and
+$\|\rho_j\|=\sqrt{g_j}$. By (13.27),
+$t_j^\dagger B=e^{i\theta}w_j^\dagger/\sqrt2$.
+Hence $t_j^\dagger N=d_jw_j^\dagger+\rho_j$ for
+$d_j=\lambda_j-ce^{i\theta}/\sqrt2$. Evaluating this row at
+$v$ gives $d_j/4=t_j^\dagger Nv-\rho_jv$, and consequently
+
+$$
+|d_j|\le4(\sqrt a+\sqrt{g_j}),\qquad
+\|t_j^\dagger N\|\le4\sqrt a+5\sqrt{g_j}.
+\tag{13.36}
+$$
+
+Since $QA_jBw_j=0$, one has
+$\|QA_jNw_j\|=\sqrt{h_j}$. The remaining component of
+$A_jNw_j$ is $p^\dagger A_jNw_j=t_j^\dagger Nw_j$.
+Applying (13.36) and then (13.32) to $k=Nw_j$ proves the
+per-Kraus residual bounds
+
+$$
+\begin{aligned}
+\|A_jNw_j\|&\le\sqrt{h_j}+4\sqrt a+5\sqrt{g_j},\\
+\|Nw_j\|&\le
+ 52\sqrt a+3\sqrt b+50\sqrt{g_j}
+          +15\sqrt{g_{1-j}}+10\sqrt{h_j},\\
+\|Nw_j\|^2&\le5538q,
+\qquad 52^2+3^2+50^2+15^2+10^2=5538.
+\end{aligned}
+\tag{13.37}
+$$
+
+The last line is Cauchy–Schwarz applied to the five indicated
+nonnegative defects, whose sum is at most $q$. The coefficient
+$52$ in the second line is $10\cdot4+3\cdot4$; the other terms
+come directly from the three terms in (13.32). This also makes
+explicit where the complementary label $1-j$ supplies coercivity.
+
+The frame lower bound (13.26) now controls the whole rectangular
+operator, including its components outside $R$:
+
+$$
+\begin{aligned}
+\|N\|_{\mathrm{HS}}^2
+ &\le\tfrac43\bigl(\|Nv\|^2+\|Nw_0\|^2+\|Nw_1\|^2\bigr)\\
+ &\le\tfrac43(1+2\cdot5538)q
+   =\tfrac{44308}{3}q<15000q,\\
+\sum_\ell\|L_\ell-c_\ell B\|_{\mathrm{HS}}^2
+ &\le135000\varepsilon,
+ \qquad c_\ell=p^\dagger L_\ell v.
+\end{aligned}
+\tag{13.38}
+$$
+
+For the first inequality, take the trace of $N^\dagger N$ times
+the positive operator inequality (13.26). The last line uses
+(13.34); neither the number of Kraus operators nor $\theta$
+appears in its constant.
+
+Let $\mathcal K$ have orthonormal basis $|\ell\rangle$ indexed
+by this finite Kraus family. Define
+$Wx=\sum_\ell L_\ell x\otimes|\ell\rangle$ and
+$\mathbf c=\sum_\ell c_\ell|\ell\rangle$. Trace preservation
+makes $W$ an isometry. Positivity and the immediate defect give
+
+$$
+ r^2:=\|\mathbf c\|^2
+ =\langle v,T^\dagger(P)v\rangle\in[1-\varepsilon,1].
+\tag{13.39}
+$$
+
+Thus $r>0$ for the stated range of $\varepsilon$. Put
+$\eta=\mathbf c/r$ and $Ux=Bx\otimes\eta$; $U$ is an
+isometry inducing $\operatorname{Ad}_B$. If
+$W_cx=Bx\otimes\mathbf c$, then (13.38) bounds
+$\|W-W_c\|_{\mathrm{op}}$ by its Hilbert–Schmidt norm, and
+$\|W_c-U\|_{\mathrm{op}}=1-r$. Since
+$1-r=(1-r^2)/(1+r)\le\varepsilon\le\sqrt\varepsilon$, we get
+
+$$
+\|W-U\|_{\mathrm{op}}
+ \le\sqrt{135000\varepsilon}+1-r
+ \le(\sqrt{135000}+1)\sqrt\varepsilon.
+\tag{13.40}
+$$
+
+Finally let $Z=\mathbb C^d$ be any finite untouched reference and
+let $X$ be any complex matrix on $\mathbb C^3\otimes Z$, without
+assuming positivity or Hermiticity. Up to the canonical reordering
+of tensor factors, write $W_Z=W\otimes I_Z$ and
+$U_Z=U\otimes I_Z$. The difference before discarding
+$\mathcal K$ is
+
+$$
+W_ZXW_Z^\dagger-U_ZXU_Z^\dagger
+ =(W_Z-U_Z)XW_Z^\dagger
+      +U_ZX(W_Z^\dagger-U_Z^\dagger).
+\tag{13.41}
+$$
+
+The standard ideal-property estimate
+$\|AXB\|_1\le\|A\|_{\mathrm{op}}\|X\|_1\|B\|_{\mathrm{op}}$
+and the isometry norms bound this by
+$2\|W-U\|_{\mathrm{op}}\|X\|_1$. Partial trace over
+$\mathcal K$ is trace-norm contractive even for these arbitrary
+matrices: its trace-dual map sends $Y$ to $Y\otimes I_{\mathcal K}$,
+which has the same operator norm as $Y$, so trace/operator-norm
+duality proves the contraction. Therefore, simultaneously for all
+finite $d$ and all $X$,
+
+$$
+\begin{aligned}
+\|((T-\operatorname{Ad}_B)\otimes\operatorname{id}_{M_d})(X)\|_1
+ &\le2\|W-U\|_{\mathrm{op}}\|X\|_1,\\
+\|T-\operatorname{Ad}_B\|_\diamond
+ &\le2(\sqrt{135000}+1)\sqrt\varepsilon
+ <800\sqrt\varepsilon.
+\end{aligned}
+\tag{13.42}
+$$
+
+For the final numerical comparison, $135000<399^2$, so
+$2(\sqrt{135000}+1)<800$. This proves (13.24) with the full
+unhalved reference norm. $\square$
+
+The concrete use is finite-precision average-channel certification
+in this specified model: uniform error at most $\varepsilon$ in
+the immediate effect and the four actual labelled continuation
+effects certifies diamond error at most $800\sqrt\varepsilon$
+for the corrected average, including correlations with every finite
+inaccessible reference. Theorem 13.1 supplies exact rigidity and
+the source identities; (13.32)–(13.42) supply its quantitative
+continuation, rather than inferring a modulus from exact rigidity
+alone. Finite CP/Kraus representation, frame estimates, isometric
+dilations, the trace-norm ideal property and trace/operator-norm
+duality are standard finite-dimensional suppliers; see, for example,
+John Watrous, [The Theory of Quantum Information](https://cs.uwaterloo.ca/~watrous/TQI/),
+Chapters 2–3. The actual full-$H$ identities are (11.1),
+(13.7)–(13.8), and (13.17)–(13.20) of this volume, with fixed
+source version `e0e3018402506726c33d4521451e9d3153abd0bc`.
+The quantitative increment here is source-relative; no global
+literature novelty, optimal constant, or optimal exponent is claimed.
+
+This is an ordinary analytical result, with no Lean/kernel
+certification implied. It supplies no calibration-error model,
+physical realization, resource minimum, or additional exact
+record/resource classification. The known instrument is held fixed
+when the defect is evaluated. The estimate does not transfer to
+every rare history/record branch: approximate closeness of an
+average does not give Theorem 13.1's exact rank-one-mixture conclusion
+uniformly on branches with arbitrarily small weights. The original
+critical causal-memory and realization questions retain their own
+hypotheses and unresolved boundaries; the continuing quantum
+programme is not completed by this estimate.
+
+Sharpness remains an unselected open candidate: for these same
+actual tests, determine whether a uniform local linear modulus is
+available or whether lawful CPTP perturbations require square-root
+behavior. Neither alternative is resolved here.
+
+## 追加锚（本行以下为增补区）
