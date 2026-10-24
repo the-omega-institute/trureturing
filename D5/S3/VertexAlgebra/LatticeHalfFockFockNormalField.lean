@@ -50,7 +50,7 @@ def jetCurrent (D : LatticeData) (hu : IsUnit D.G.det) (index : Index D)
   jetScalar index.2 mode •
     LatticeHalfFock.tensorCurrent D (ActualGround D hu) index.1 mode
 
-private theorem tensor_current_same_sign (D : LatticeData) (hu : IsUnit D.G.det)
+theorem tensor_current_same_sign (D : LatticeData) (hu : IsUnit D.G.det)
     (first second : Fin D.rank) (left right : ℤ)
     (signs : (left < 0 ∧ right < 0) ∨ (0 ≤ left ∧ 0 ≤ right))
     (vector : ActualTensor D hu) :
