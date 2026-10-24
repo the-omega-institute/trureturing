@@ -106,7 +106,10 @@ internal sealed class NoisyGraphStateCoherentInformationRefutationDocument : ISc
                         "Finally apply the proposed ordering at sizes five and four, this graph, and P=255/256, which lies in [0,1]. "
                             + "Subtracting the same joint entropy from both marginal entropies preserves their strict order. "
                             + "The proposed inequality would therefore require the larger second marginal entropy to be at most the smaller first marginal entropy, a contradiction."))),
-                DescribeRole.Theorem))));
+                DescribeRole.Theorem,
+                openProblemResolutionClaim: new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("sajjad-kaur-goodenough-towsley-guha-2026-coherent-information-ordering-refutation"),
+                    ResolutionKind.Refuted)))));
 
     private static DocumentBlock Node(string id, string declaration, string title, Formula formula,
         string prose, AssessedProvenance provenance) => Describe.Lean(
