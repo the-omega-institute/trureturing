@@ -10,6 +10,10 @@ import D5.S3.VertexAlgebra.TwistedGround.CorrectedDualCoefficient
 import Mathlib.LinearAlgebra.Finsupp.LSum
 import Mathlib.Data.Set.Finite.Basic
 
+/-! The original corrected field detects infinitely many doubled norm-zero charges
+with one fixed pair of actual vacuum tensors. Charge support is distinct from
+energy restricted-dual support. The all-charge dual equivalence is reused. -/
+
 set_option autoImplicit false
 set_option backward.isDefEq.respectTransparency false
 noncomputable section
@@ -204,7 +208,11 @@ abbrev hyperbolic : LatticeData where
   even_diagonal := by intro i; fin_cases i <;> norm_num
 
 private theorem hyperbolic_unimodular : IsUnit hyperbolic.G.det := by
-  norm_num [hyperbolic, Matrix.det_fin_two]
+  have determinant : hyperbolic.G.det = -1 := by
+    change (Matrix.det (!![0, 1; 1, 0] : Matrix (Fin 2) (Fin 2) ℤ)) = -1
+    norm_num [Matrix.det_fin_two]
+  rw [determinant]
+  exact isUnit_neg_one
 
 /-- c(n)=(n,0), so the actual family in the theorem is q(n)=(2n,0). -/
 private def hyperbolicLine (n : ℕ) : Charge hyperbolic :=
@@ -213,8 +221,8 @@ private def hyperbolicLine (n : ℕ) : Charge hyperbolic :=
 private theorem hyperbolic_family_injective :
     Function.Injective (fun n => hyperbolicLine n + hyperbolicLine n) := by
   intro m n same
-  have at_zero := congrFun same (0 : Fin hyperbolic.rank)
-  simp only [Pi.add_apply, hyperbolicLine, if_pos rfl] at at_zero
+  have at_zero := congrFun same (0 : Fin 2)
+  change (m : ℤ) + (m : ℤ) = (n : ℤ) + (n : ℤ) at at_zero
   omega
 
 private theorem hyperbolic_family_isotropic (n : ℕ) :

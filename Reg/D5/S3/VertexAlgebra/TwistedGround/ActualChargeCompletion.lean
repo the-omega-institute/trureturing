@@ -46,12 +46,16 @@ theorem sourceBridge : (type_of% (@D5.S3.VertexAlgebra.TwistedGround.ActualCharg
 private theorem rejectedLaw : ¬ arena.Law complexFalse := by
   intro h
   have hu : IsUnit hyperbolic.G.det := by
-    norm_num [hyperbolic, Matrix.det_fin_two]
+    have determinant : hyperbolic.G.det = -1 := by
+      change (Matrix.det (!![0, 1; 1, 0] : Matrix (Fin 2) (Fin 2) ℤ)) = -1
+      norm_num [Matrix.det_fin_two]
+    rw [determinant]
+    exact isUnit_neg_one
   let c : ℕ → Charge hyperbolic := fun n i => if i = 0 then (n : ℤ) else 0
   have hi : Function.Injective (fun n => c n + c n) := by
     intro m n same
-    have at_zero := congrFun same (0 : Fin hyperbolic.rank)
-    simp only [Pi.add_apply, c, if_pos rfl] at at_zero
+    have at_zero := congrFun same (0 : Fin 2)
+    change (m : ℤ) + (m : ℤ) = (n : ℤ) + (n : ℤ) at at_zero
     omega
   have hz (n : ℕ) : chargeNorm hyperbolic (c n + c n) = 0 := by
     simp [chargeNorm, bilinear, hyperbolic, c, Fin.sum_univ_two]

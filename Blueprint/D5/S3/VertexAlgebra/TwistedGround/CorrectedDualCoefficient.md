@@ -6,7 +6,7 @@ Original Corrected Source with Two Twisted Inputs
 
 The original Carrier remains the source. For two actual twisted tensor inputs x,y, define K_L(e)(x,y)(a)=B((correctedField D hu a).coeff e x,y). This is a full algebraic dual coefficient, with the operator acting on the first input; no ground symmetry is used to identify it with a right orientation.
 
-The existing private corrected singleton coefficient proof in ChargedResidue.LatticeHalfFockChargedResidue is referenced in place using the repository-established private-name pattern. Its addition and scalar laws are likewise reused. No existing frozen proof or visibility is modified.
+The original corrected singleton coefficient proof in ChargedResidue.LatticeHalfFockChargedResidue is exposed under repository section 4.3 without changing its body and consumed in place. This macro-name adaptation is inherited compatibility, not new mathematics. Its existing private addition and scalar laws are likewise reused. Canonical repinning is deferred to eventual delivery.
 
 For every charge and each nonzero ground u, the charged adjoint consumer supplies an x with nonzero K_L(-N)(x,1 tensor u) on the original generator single a 1. The charged_ground_leading is an existing theorem, not a premise supplied by this module. This does not prove a full corrected-source adjoint, restricted-dual state, intertwining field, mixed Jacobi, fusion rule, Monster realization or complete string/AdS construction.
 

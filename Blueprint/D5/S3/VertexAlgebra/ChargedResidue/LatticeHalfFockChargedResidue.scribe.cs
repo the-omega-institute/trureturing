@@ -8,7 +8,7 @@ internal sealed class LatticeHalfFockChargedResidueDocument : IScribeDocumentDef
         "Charged projected-ground residue rows on the original actual half-Fock tensor carrier.",
         H("Charged Two-Order Physical Residue"),
         Blocks(
-            Describe.Lean(DescribeId.Create("exposed-corrected_singleton_coeff_charged"), DeclarationHandle.Create("D5/S3/VertexAlgebra/ChargedResidue/LatticeHalfFockChargedResidue.corrected_singleton_coeff_charged"), H("corrected_singleton_coeff_charged"), StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(), Blocks(Paragraph(Text("The original corrected field on single charge 1 agrees with the charged field at every exponent and every actual tensor input. The unchanged proof is exposed under section 4.3 and consumed by ActualChargeCompletion; canonical repinning is deferred."))), DescribeRole.Theorem),
+            Describe.Lean(DescribeId.Create("exposed-corrected-singleton-coeff-charged"), DeclarationHandle.Create("D5/S3/VertexAlgebra/ChargedResidue/LatticeHalfFockChargedResidue.corrected_singleton_coeff_charged"), H("corrected_singleton_coeff_charged"), StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(), Blocks(Paragraph(Text("The original corrected field on single charge 1 agrees with the charged field at every exponent and every actual tensor input. The unchanged proof is exposed under section 4.3 and consumed by ActualChargeCompletion; canonical repinning is deferred."))), DescribeRole.Theorem),
             
             Paragraph(Text("For D:LatticeData, hu:IsUnit D.G.det, signed charges sigma and tau, Boolean projected signs, "
                 + "signed lifts gamma, delta, r, n, and arbitrary x:ActualTensor D hu, the source and collision rows "

@@ -4,6 +4,18 @@
 
 Native charged coefficients on the actual twisted ground module
 
+**Theorem 1.1 (creation_zero).**
+
+Lean statement: `D5/S3/VertexAlgebra/LatticeHalfFockChargedTensorCoefficients.creation_zero`
+
+*Proof.* Machine-checked in Lean as `D5/S3/VertexAlgebra/LatticeHalfFockChargedTensorCoefficients.creation_zero` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+The existing zero creation coefficient is one for every lattice and charge. Its proof body is unchanged; section 4.3 visibility exposure enables the consumed doubled-isotropic vacuum calculation in ActualChargeCompletion.
+
 Let D be an integral symmetric even-diagonal lattice datum of arbitrary finite rank. Assume IsUnit D.G.det only to obtain the actual twisted ground representation. The oscillator algebra is the full native polynomial algebra P=MvPolynomial(Fin(D.rank) times N,C), with no occupation cutoff and no positivity assumption. groundRank and groundRepresentation choose the witnesses of actual_twisted_ground_representation D hu. The ground module is the supplier's function space Ground(groundRank D hu), not an arbitrary substitute. groundAction(a) is the actual representation of the quotient-group lift of (0,a). Its invertibility follows from the group representation; it is not an added hypothesis.
 
 Write q_a=B(a,a), s_a=2^(-q_a), C_a[k]=halfCreationCoeff D a k, and Q_a(p)=halfTranslatedPolynomial D a p. The cover variable is t with physical z=t^2. The cover prefactor is t^(-q_a). The coefficient at t^e on p tensor v is exactly s_a times (sum_d coeff_d(Q_a(p)) C_a[e+q_a+d]) tensor groundAction(a)v. The positive d offset arises because the native translation variable represents t^(-1), not t. Q_a substitutes X(i,k)-B(a,e_i)x^(2k+1), with no spurious factor 2.
@@ -22,7 +34,7 @@ The coefficient at N=0 is exactly the actual-ground dimension because the zero-e
 
 Here X counts twice the oscillator energy: N records the offset N/2 from rank/16. The normalized series has no fractional vacuum prefactor. The product uses PowerSeries.WithPiTopology, the formal coefficient topology; no substitution of a numerical X, ordinary analytic convergence, eta identity, modular transformation or physical completion follows from it.
 
-**Theorem 1.1 (Support of the exact native coefficient summand).**
+**Theorem 1.2 (Support of the exact native coefficient summand).**
 
 $$\forall D:LatticeData, a:\operatorname{Charge}\left(D\right), e:\mathbb{Z}, p:\operatorname{Oscillator}\left(D\right), \operatorname{support}\left(\operatorname{oscillatorTerm}\left(D, a, e, p\right)\right)\subseteq\operatorname{support}\left(\operatorname{Q}\left(a, p\right)\right)$$
 
@@ -34,7 +46,7 @@ $$\forall D:LatticeData, a:\operatorname{Charge}\left(D\right), e:\mathbb{Z}, p:
 
 For every D:LatticeData, a:Charge(D), e:Integer and p:Oscillator(D), oscillatorTerm(D,a,e,p,d)=coeff_d(Q_a(p)) C_a[e+q_a+d]. A nonzero term requires a nonzero translated polynomial coefficient, so its function support is contained in Q_a(p).support. No determinant hypothesis is used. This support helper is consumed by charged_term_finite_support, charged_native_expansion and oscillatorCoefficient_as_sum; it is not a separate content advance.
 
-**Theorem 1.2 (Finite internal coefficient sum on each polynomial).**
+**Theorem 1.3 (Finite internal coefficient sum on each polynomial).**
 
 $$\forall D:LatticeData, a:\operatorname{Charge}\left(D\right), e:\mathbb{Z}, p:\operatorname{Oscillator}\left(D\right), \operatorname{HasFiniteSupport}\left(\operatorname{oscillatorTerm}\left(D, a, e, p\right)\right)$$
 
@@ -46,7 +58,7 @@ $$\forall D:LatticeData, a:\operatorname{Charge}\left(D\right), e:\mathbb{Z}, p:
 
 The complete parameter group is D:LatticeData, a:Charge(D), e:Integer and p:Oscillator(D), without hu. The finite native polynomial support and term_support give finite function support for the natural summation degree. This consumed helper justifies finsum additivity and scalar compatibility in oscillatorCoefficient. It imposes no occupation cutoff and says nothing about finiteness of support in the external Laurent exponent e.
 
-**Theorem 1.3 (All-polynomial Laurent lower bound).**
+**Theorem 1.4 (All-polynomial Laurent lower bound).**
 
 $$\forall D:LatticeData, hu:\operatorname{IsUnit}\left(\operatorname{det}\left(\operatorname{G}\left(D\right)\right)\right), a:\operatorname{Charge}\left(D\right), p:\operatorname{Oscillator}\left(D\right), v:\operatorname{ActualGround}\left(D, hu\right), e:\mathbb{Z}, e<-\operatorname{q}\left(a\right)-\operatorname{W}\left(p\right)\implies\operatorname{A}\left(a, e, ptensorv\right)=0$$
 
@@ -60,7 +72,7 @@ W(p)=nativeOddWeightedDegree D p is the maximum native odd weight of a supported
 
 No homogeneity of p is required. The zero polynomial is covered by its empty support. At rank zero all oscillator polynomials are constants and W(p)=0. A negative q_a is allowed and simply moves the stated lower bound to positive cover exponent; q_a=0 leaves prefactor and scalar equal to one. No case changes the physical energy convention. Tensor induction gives a lower bound for every finite sum of simple tensors. chargedField is then a native HVertexOperator on the actual tensor carrier; no field truncation axiom is assumed.
 
-**Theorem 1.4 (Exact vacuum coefficient with the original normalization).**
+**Theorem 1.5 (Exact vacuum coefficient with the original normalization).**
 
 $$\forall D:LatticeData, hu:\operatorname{IsUnit}\left(\operatorname{det}\left(\operatorname{G}\left(D\right)\right)\right), a:\operatorname{Charge}\left(D\right), e:\mathbb{Z}, v:\operatorname{ActualGround}\left(D, hu\right), \operatorname{A}\left(a, e, 1tensorv\right)=\operatorname{s}\left(a\right) \operatorname{C}\left(a, e+\operatorname{q}\left(a\right)\right)tensor\operatorname{groundAction}\left(a, v\right)$$
 
@@ -72,7 +84,7 @@ $$\forall D:LatticeData, hu:\operatorname{IsUnit}\left(\operatorname{det}\left(\
 
 The source telescope is D:LatticeData, hu:IsUnit(det(G(D))), a:Charge(D), e:Integer and v:ActualGround(D,hu), including the zero vector. Translation of the oscillator unit is the constant polynomial one, whose support is {0}. The coefficient is therefore exactly s_a times C_a[e+q_a] tensor groundAction(a)v. The scalar stays 2^(-B(a,a)); no factor, sign or exponent is absorbed into groundAction. This evaluation helper is consumed by charged_ground_leading.
 
-**Theorem 1.5 (Nonzero actual ground leading coefficient).**
+**Theorem 1.6 (Nonzero actual ground leading coefficient).**
 
 $$\forall D:LatticeData, hu:\operatorname{IsUnit}\left(\operatorname{det}\left(\operatorname{G}\left(D\right)\right)\right), a:\operatorname{Charge}\left(D\right), v:\operatorname{ActualGround}\left(D, hu\right), v\neq0\implies\operatorname{A}\left(a, -\operatorname{q}\left(a\right), 1tensorv\right)\neq0$$
 
@@ -86,7 +98,7 @@ Native translation of one is one. Thus the complete vacuum coefficient formula i
 
 The scalar s_a is nonzero for every integer q_a. The monomial tensor-basis equivalence recovers groundAction(a)v as the coordinate at monomial zero of 1 tensor groundAction(a)v. If that tensor vanished, so would its coordinate. Applying the actual representation of the inverse quotient-group lift then gives v=0, contradicting precisely the stated nonzero-v hypothesis. This neither assumes a nonzero action nor reconstructs a duplicate projective representation.
 
-**Theorem 1.6 (Full integer-mode tensor current Ward identity).**
+**Theorem 1.7 (Full integer-mode tensor current Ward identity).**
 
 $$\forall D:LatticeData, hu:\operatorname{IsUnit}\left(\operatorname{det}\left(\operatorname{G}\left(D\right)\right)\right), i:\operatorname{Fin}\left(\operatorname{rank}\left(D\right)\right), a:\operatorname{Charge}\left(D\right), m:\mathbb{Z}, e:\mathbb{Z}, \operatorname{J}\left(i, m\right)\operatorname{A}\left(a, e\right)-\operatorname{A}\left(a, e\right)\operatorname{J}\left(i, m\right)=\operatorname{B}\left(\operatorname{unitCharge}\left(D, i\right), a\right) \operatorname{A}\left(a, e-(2m+1)\right)$$
 
@@ -125,6 +137,7 @@ Full Virasoro covariance, including the nonzero modes, and a full conformal twis
 - Truth anchor: `D5/S3/VertexAlgebra/LatticeHalfFockChargedTensorCoefficients.charged_tensor_current_ward`
 - Truth anchor: `D5/S3/VertexAlgebra/LatticeHalfFockChargedTensorCoefficients.charged_term_finite_support`
 - Truth anchor: `D5/S3/VertexAlgebra/LatticeHalfFockChargedTensorCoefficients.charged_vacuum_coefficient`
+- Truth anchor: `D5/S3/VertexAlgebra/LatticeHalfFockChargedTensorCoefficients.creation_zero`
 - Truth anchor: `D5/S3/VertexAlgebra/LatticeHalfFockChargedTensorCoefficients.term_support`
 - Dependency: [D5/S3/VertexAlgebra/LatticeHalfFockChargedCoefficients](LatticeHalfFockChargedCoefficients.md)
 - Dependency: [D5/S3/VertexAlgebra/LatticeHalfFockTensorFields](LatticeHalfFockTensorFields.md)

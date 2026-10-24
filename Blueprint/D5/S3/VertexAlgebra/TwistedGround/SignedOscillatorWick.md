@@ -4,6 +4,18 @@
 
 Signed Bilinear Oscillator Wick Form
 
+**Theorem 1.1 (wick_constant_left).**
+
+Lean statement: `D5/S3/VertexAlgebra/TwistedGround/SignedOscillatorWick.wick_constant_left`
+
+*Proof.* Machine-checked in Lean as `D5/S3/VertexAlgebra/TwistedGround/SignedOscillatorWick.wick_constant_left` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+For every oscillator q and complex c, the existing signed Wick form on C(c),q equals c times the constant coefficient of q. The proof body is unchanged; the exposed helper is consumed by ActualChargeCompletion to establish a nonzero vacuum pairing.
+
 For every original integral symmetric even lattice D, define a complex bilinear factorial form F on the original MvPolynomial oscillator, using the existing occupation factorial weight. Its creation/derivative identity reuses FactorialFockMetric.mul_X_pderiv_pairing by conjugating polynomial coefficients once. No Hermitian metric or positive-definiteness premise is substituted.
 
 At natural half-mode k use the signed matrix A_k=-(k+1/2)G. The existing OriginalCurrentMetric substitution and its inverse act on the same variables, at the same mode. W(p,q)=F(Phi(p),q). A polynomial generator chain rule and Leibniz extend the signed creation/lowering identities to arbitrary polynomials. Integer IsUnit D.G.det supplies the inverse matrix and both-sided nondegeneracy; no determinant or form symmetry is assumed as a new premise.
@@ -14,7 +26,7 @@ Rank zero, empty supports, zero charges, zero vectors and indefinite lattices re
 
 Information-escape registration remains unfinished: the faithful compiled Reg mirrors currently report declared_unresolved. The source-reconstruction diagnostics and missing binding certificates are recorded at https://github.com/the-omega-institute/trureturing/issues/21134 under the repository linked-issue exception. Compilation does not assert a validated registration.
 
-**Definition 1.1 (wick).**
+**Definition 1.2 (wick).**
 
 Lean statement: `D5/S3/VertexAlgebra/TwistedGround/SignedOscillatorWick.wick`
 
@@ -26,7 +38,7 @@ Lean statement: `D5/S3/VertexAlgebra/TwistedGround/SignedOscillatorWick.wick`
 
 Complex bilinear form W on the original Oscillator D, formed from the existing factorial weight and signed same-mode Gram substitution.
 
-**Theorem 1.2 (wick creation).**
+**Theorem 1.3 (wick creation).**
 
 Lean statement: `D5/S3/VertexAlgebra/TwistedGround/SignedOscillatorWick.wick_creation`
 
@@ -38,7 +50,7 @@ Lean statement: `D5/S3/VertexAlgebra/TwistedGround/SignedOscillatorWick.wick_cre
 
 Multiplication by X_(i,k) transposes to -(k+1/2) times the actual Gram-weighted annihilation map. This helper is consumed by the creation/translation proof.
 
-**Theorem 1.3 (wick lowering).**
+**Theorem 1.4 (wick lowering).**
 
 Lean statement: `D5/S3/VertexAlgebra/TwistedGround/SignedOscillatorWick.wick_lowering`
 
@@ -50,7 +62,7 @@ Lean statement: `D5/S3/VertexAlgebra/TwistedGround/SignedOscillatorWick.wick_low
 
 The converse transpose direction follows from the polynomial substitution chain rule. It is consumed by oscillator symmetry and the charged transpose induction.
 
-**Theorem 1.4 (wick nondegenerate).**
+**Theorem 1.5 (wick nondegenerate).**
 
 Lean statement: `D5/S3/VertexAlgebra/TwistedGround/SignedOscillatorWick.wick_nondegenerate`
 
@@ -62,7 +74,7 @@ Lean statement: `D5/S3/VertexAlgebra/TwistedGround/SignedOscillatorWick.wick_non
 
 Both separating directions are obtained from nonzero occupation factorials and the existing invertible substitution. Integer unimodularity is the only additional hypothesis; the tensor consumer uses both directions.
 
-**Definition 1.5 (translatedCoeff).**
+**Definition 1.6 (translatedCoeff).**
 
 Lean statement: `D5/S3/VertexAlgebra/TwistedGround/SignedOscillatorWick.translatedCoeff`
 
@@ -74,7 +86,7 @@ Lean statement: `D5/S3/VertexAlgebra/TwistedGround/SignedOscillatorWick.translat
 
 Signed coefficients of the actual finite translation polynomial, equal to zero for negative indices.
 
-**Theorem 1.6 (creation translation adjoint).**
+**Theorem 1.7 (creation translation adjoint).**
 
 Lean statement: `D5/S3/VertexAlgebra/TwistedGround/SignedOscillatorWick.creation_translation_adjoint`
 
@@ -86,7 +98,7 @@ Lean statement: `D5/S3/VertexAlgebra/TwistedGround/SignedOscillatorWick.creation
 
 The native half-creation coefficient transposes to the same-charge actual translation coefficient. The proof derives the lowering recurrence from the existing actual annihilation calculation and preserves all signed indices.
 
-**Theorem 1.7 (oscillator coefficient adjoint).**
+**Theorem 1.8 (oscillator coefficient adjoint).**
 
 Lean statement: `D5/S3/VertexAlgebra/TwistedGround/SignedOscillatorWick.oscillator_coefficient_adjoint`
 
@@ -104,6 +116,7 @@ For every integer exponent e and norm N=bilinear D a a, the native oscillator co
 - Truth anchor: `D5/S3/VertexAlgebra/TwistedGround/SignedOscillatorWick.oscillator_coefficient_adjoint`
 - Truth anchor: `D5/S3/VertexAlgebra/TwistedGround/SignedOscillatorWick.translatedCoeff`
 - Truth anchor: `D5/S3/VertexAlgebra/TwistedGround/SignedOscillatorWick.wick`
+- Truth anchor: `D5/S3/VertexAlgebra/TwistedGround/SignedOscillatorWick.wick_constant_left`
 - Truth anchor: `D5/S3/VertexAlgebra/TwistedGround/SignedOscillatorWick.wick_creation`
 - Truth anchor: `D5/S3/VertexAlgebra/TwistedGround/SignedOscillatorWick.wick_lowering`
 - Truth anchor: `D5/S3/VertexAlgebra/TwistedGround/SignedOscillatorWick.wick_nondegenerate`
