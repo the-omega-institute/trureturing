@@ -473,7 +473,7 @@ private theorem pairedKernel_bracket (a α β : ℝ) (m k : ℕ) (hk : k ≤ m /
     simp only [add_assoc, add_left_comm, add_comm, div_eq_mul_inv, mul_inv_rev, one_mul]
     ring
 
-/-- Lemma 4's weak sign pattern, including zero shifts: a positive paired
+/-- The weak sign pattern of `pairedKernel_sign`, including zero shifts: a positive paired
 entry cannot be followed by a negative paired entry. -/
 theorem pairedKernel_sign (a α β : ℝ) (ha : 0 < a) (hα : 0 ≤ α) (hβ : 0 ≤ β)
     (m : ℕ) : ∀ i ≤ m / 2, ∀ j ≤ m / 2, i < j →
@@ -567,7 +567,7 @@ def transformDelta (y : ℕ → ℝ) (a α β : ℝ) (N m : ℕ) : ℝ :=
   ∑ k ∈ range (m + 1), kernel a α β m k *
     productCoeff (fun r => y (2 * k + r)) (fun r => y (2 * (m - k) + r)) N
 
-/-- Theorem 5 in coefficient form, for every bidegree and arbitrary
+/-- `two_variable_nonneg` in coefficient form, for every bidegree and arbitrary
 nonnegative real shifts, with no growth or convergence assumption. -/
 theorem two_variable_nonneg (y : ℕ → ℝ)
     (hy : D5.S3.Analytic.KarpZhangReciprocal.Result.IsLogConcave y)

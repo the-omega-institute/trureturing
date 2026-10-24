@@ -4,7 +4,7 @@
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: [mathlib/module/Mathlib.Algebra.BigOperators.Group.Finset.Sigma]
    utility: none
-   digest: A positive diagonal transformation transfers Theorem 5 to the gamma-series Turanian. -/
+   digest: A positive diagonal transformation transfers two_variable_nonneg to the gamma-series Turanian. -/
 
 import D5.S3.Analytic.KarpZhangGamma.Result
 import Mathlib.Algebra.BigOperators.Group.Finset.Sigma
@@ -321,7 +321,7 @@ private theorem gammaCoeff_recurrence (t : ℝ) (ht : 0 < t) (n : ℕ) :
     show (n : ℝ) + 1 ≠ 0 by positivity, show (n : ℝ) + 1 + 1 ≠ 0 by positivity]
   <;> ring
 
-/-- Lemma 6, proved by finite recurrence simultaneously for all positive t. -/
+/-- `positive_beta_transform`, proved by finite recurrence simultaneously for all positive t. -/
 theorem positive_beta_transform (n : ℕ) : ∀ t : ℝ, 0 < t →
     gammaCoeff t n = scale t *
       ∑ j ∈ range (n / 2 + 1),
@@ -502,7 +502,7 @@ def gammaDelta (y : ℕ → ℝ) (μ α β : ℝ) (n : ℕ) : ℝ :=
     (y k * gammaCoeff (μ + α) k * (y (n - k) * gammaCoeff (μ + β) (n - k)) -
       y k * gammaCoeff μ k * (y (n - k) * gammaCoeff (μ + α + β) (n - k)))
 
-/-- Theorem 7: every coefficient is nonnegative, for all real nonnegative shifts. -/
+/-- `gamma_half`: every coefficient is nonnegative, for all real nonnegative shifts. -/
 theorem gamma_half (y : ℕ → ℝ) (hy : IsLogConcave y)
     (μ α β : ℝ) (hμ : 0 < μ) (hα : 0 ≤ α) (hβ : 0 ≤ β) (n : ℕ) :
     0 ≤ gammaDelta y μ α β n := by

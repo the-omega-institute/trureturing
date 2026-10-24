@@ -42,7 +42,7 @@ $$\forall n \in Nat,\; \forall t \in Real,\; 0 < t \Rightarrow \operatorname{gam
 
 *Commentary.*
 
-For every natural n and positive real t, gammaCoeff(t,n) equals scale(t) times the sum over j=0,...,floor(n/2) of the reciprocal of (n-2j) factorial times j factorial times Real.Gamma(t+1/2+j) times 2 to the natural power n-2j times 16 to the natural power j. This is Lemma 6 in finite coefficient form. Strong induction in n is simultaneous in every positive t. Gamma duplication supplies degree zero, Gamma recurrence supplies degree one, and both sides obey the same two-step recurrence involving t+1. There is no convergence hypothesis.
+For every natural n and positive real t, gammaCoeff(t,n) equals scale(t) times the sum over j=0,...,floor(n/2) of the reciprocal of (n-2j) factorial times j factorial times Real.Gamma(t+1/2+j) times 2 to the natural power n-2j times 16 to the natural power j. This is positive_beta_transform in finite coefficient form. Strong induction in n is simultaneous in every positive t. Gamma duplication supplies degree zero, Gamma recurrence supplies degree one, and both sides obey the same two-step recurrence involving t+1. There is no convergence hypothesis.
 
 **Definition 1.4 (The positive diagonal substitution).**
 

@@ -50,7 +50,7 @@ $$\forall f \in Nat \to Real,\; \forall g \in Nat \to Real,\; \forall N \in Nat,
 
 *Commentary.*
 
-For every pair of real sequences f,g and natural N, binomialProduct(f,g,N+1) equals binomialProduct(r maps to f(r+1),g,N) plus binomialProduct(f,r maps to g(r+1),N). This follows from Pascal's identity, retaining both endpoint terms exactly.
+For every pair of real sequences f,g and natural N, binomialProduct(f,g,N+1) equals binomialProduct(r maps to f(r+1),g,N) plus binomialProduct(f,r maps to g(r+1),N). Finset.sum_choose_succ_mul supplies the recurrence for the function (i,j) maps to f(i)g(j), retaining both endpoint terms exactly.
 
 **Theorem 1.5 (Commutativity of the finite convolution).**
 
