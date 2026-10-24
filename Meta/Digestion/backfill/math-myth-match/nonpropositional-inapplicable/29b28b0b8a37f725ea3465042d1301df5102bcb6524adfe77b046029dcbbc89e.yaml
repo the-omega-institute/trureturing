@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:29b28b0b8a37f725ea3465042d1301df5102bcb6524adfe77b046029dcbbc89e
+  normalized_sha256: sha256:29b28b0b8a37f725ea3465042d1301df5102bcb6524adfe77b046029dcbbc89e
+cas_ref: sha256:29b28b0b8a37f725ea3465042d1301df5102bcb6524adfe77b046029dcbbc89e
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 非命题结算：保留巴哈伊与耆那认识资格的差别，说明MMM共同表示的条件性；属于解释与未决边界。
+    previous_atom_id: f5cf1e63a807962808fa43edc16fa32047f67bc4f7e1d2956c84c237041459d1
+    next_atom_id: 744d54af8b56150bc840fe01fcc235775af23f486656b0a8e37c347ef73dd1ed
