@@ -6,6 +6,7 @@
    utility: kind=certified-instance; basis=refutes=gid:D5/S3/Quantum/Codes/StabilizerExtensionQuaternaryMinimalLength.claim; result=D5/S3/Quantum/Codes/StabilizerExtensionQuaternaryMinimalLength.result; claim=D5/S3/Quantum/Codes/StabilizerExtensionQuaternaryMinimalLength.claim
    digest: Explicit quaternary additive-code counterexamples refute the length-five expectation. -/
 
+import Mathlib.InformationTheory.Hamming
 import Mathlib.Tactic
 
 noncomputable section
@@ -119,27 +120,27 @@ def symp {n : ℕ} (u v : Fin n → A) : F4 :=
   tr (∑ i, ((u i).1 * (v i).2 - (v i).1 * (u i).2))
 
 def wt {n : ℕ} (u : Fin n → A) : ℕ :=
-  (Finset.univ.filter (fun i => u i ≠ 0)).card
+  hammingNorm u
 
 private lemma wt3_two_01 {u : Fin 3 → A} (h0 : u 0 ≠ 0) (h1 : u 1 ≠ 0)
     (h2 : u 2 = 0) : wt u = 2 := by
   have hp (i : Fin 3) : (u i ≠ 0) ↔ (i = 0 ∨ i = 1) := by
     fin_cases i <;> simp [h0, h1, h2]
-  rw [wt, Finset.filter_congr (by intro i hi; exact hp i)]
+  rw [wt, hammingNorm, Finset.filter_congr (by intro i hi; exact hp i)]
   decide
 
 private lemma wt3_two_02 {u : Fin 3 → A} (h0 : u 0 ≠ 0) (h1 : u 1 = 0)
     (h2 : u 2 ≠ 0) : wt u = 2 := by
   have hp (i : Fin 3) : (u i ≠ 0) ↔ (i = 0 ∨ i = 2) := by
     fin_cases i <;> simp [h0, h1, h2]
-  rw [wt, Finset.filter_congr (by intro i hi; exact hp i)]
+  rw [wt, hammingNorm, Finset.filter_congr (by intro i hi; exact hp i)]
   decide
 
 private lemma wt3_two_12 {u : Fin 3 → A} (h0 : u 0 = 0) (h1 : u 1 ≠ 0)
     (h2 : u 2 ≠ 0) : wt u = 2 := by
   have hp (i : Fin 3) : (u i ≠ 0) ↔ (i = 1 ∨ i = 2) := by
     fin_cases i <;> simp [h0, h1, h2]
-  rw [wt, Finset.filter_congr (by intro i hi; exact hp i)]
+  rw [wt, hammingNorm, Finset.filter_congr (by intro i hi; exact hp i)]
   decide
 
 def selfOrthogonal {n : ℕ} (C : AddSubgroup (Fin n → A)) : Prop :=
@@ -313,7 +314,7 @@ private lemma f1_weight : ∀ u : C1,
   rcases p with ⟨a, b⟩
   rcases zmod2_cases a with rfl | rfl <;>
     rcases zmod2_cases b with rfl | rfl <;>
-      simp [wt, c1Hom, d1Hom, f2, omega_ne_zero, omega_ne_one,
+      simp [wt, hammingNorm, c1Hom, d1Hom, f2, omega_ne_zero, omega_ne_one,
         omega_add_one_ne_zero, one_add_omega_ne_zero]
 
 private lemma selfOrthogonal_C3 : selfOrthogonal C3 := by
@@ -348,7 +349,7 @@ private lemma f3_weight : ∀ u : C3,
   rcases p with ⟨a, b⟩
   rcases zmod2_cases a with rfl | rfl
   · rcases zmod2_cases b with rfl | rfl
-    · simp [wt, c3Hom, d3Hom, f2, add_self_F4]
+    · simp [wt, hammingNorm, c3Hom, d3Hom, f2, add_self_F4]
     · have hc : wt (c3Hom (0, 1)) = 2 := by
         apply wt3_two_01
         · simp [c3Hom, f2, omega_ne_zero]
