@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:f05876c1763fe2d16fc817c0445288272bbd773c4f2d56fe3b537848407f6c7b
+  normalized_sha256: sha256:f05876c1763fe2d16fc817c0445288272bbd773c4f2d56fe3b537848407f6c7b
+cas_ref: sha256:f05876c1763fe2d16fc817c0445288272bbd773c4f2d56fe3b537848407f6c7b
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 研究程序中的轨道商接口定义及预期解释，未断言该接口充分或与某一概率律相等。
+    previous_atom_id: ba262aa818ba50091253ffc1affc79f8caefd610ec1bf7a42844d48550caa82f
+    next_atom_id: de6c47dc6d7ae9244ab0e5e67581f70200e150525610f616190b4f682053cbfe

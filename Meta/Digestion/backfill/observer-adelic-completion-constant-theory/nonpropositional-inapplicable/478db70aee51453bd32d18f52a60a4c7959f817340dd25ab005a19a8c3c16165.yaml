@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:478db70aee51453bd32d18f52a60a4c7959f817340dd25ab005a19a8c3c16165
+  normalized_sha256: sha256:478db70aee51453bd32d18f52a60a4c7959f817340dd25ab005a19a8c3c16165
+cas_ref: sha256:478db70aee51453bd32d18f52a60a4c7959f817340dd25ab005a19a8c3c16165
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 黄金递归解释中的术语列表项，没有数学断言。
+    previous_atom_id: 0ddafb7f08b75c0608c00f40e22f8c5e4335dbf558c3296b4221aeaa03889e33
+    next_atom_id: a505560eb7fc10e7046e4f847464255b41cb2e3f1cdf1e177efa72e1d037e4e1

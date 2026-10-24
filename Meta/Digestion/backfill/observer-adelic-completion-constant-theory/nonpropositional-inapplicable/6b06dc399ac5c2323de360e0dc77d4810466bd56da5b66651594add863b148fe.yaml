@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:6b06dc399ac5c2323de360e0dc77d4810466bd56da5b66651594add863b148fe
+  normalized_sha256: sha256:6b06dc399ac5c2323de360e0dc77d4810466bd56da5b66651594add863b148fe
+cas_ref: sha256:6b06dc399ac5c2323de360e0dc77d4810466bd56da5b66651594add863b148fe
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 以“若”和“可能”表述的后续研究设想及本体解释边界，不断言命名律不变量已经存在。
+    previous_atom_id: ce36012fc31fb7f06253cca1ad3ed53270e139cb58ac4829a6ffab17523ade44
+    next_atom_id: ab2985c91c6060955e68d0a91430ad8f5a099db5cefbedd495ba918da51f31d9

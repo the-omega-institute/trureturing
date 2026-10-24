@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:5721a477e747e5893e6c5ee4a2860088891cd18eee2b8da9ee6b294657ebfc17
+  normalized_sha256: sha256:5721a477e747e5893e6c5ee4a2860088891cd18eee2b8da9ee6b294657ebfc17
+cas_ref: sha256:5721a477e747e5893e6c5ee4a2860088891cd18eee2b8da9ee6b294657ebfc17
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 指出下一步需要证明的 decoder 等式并讨论困难；没有声称该等式或 retention gap 已成立。
+    previous_atom_id: eaf83715300bf4218e27555a642abf3db1cfe3e0def3a0a710ede4fa6b1b2afe
+    next_atom_id: d14b340464c3a86450df47323859e6b65f757659ec71f7236d7155cb19e5f54b

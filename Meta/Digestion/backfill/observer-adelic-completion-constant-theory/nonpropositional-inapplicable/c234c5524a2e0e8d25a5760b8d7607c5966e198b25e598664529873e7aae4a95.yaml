@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:c234c5524a2e0e8d25a5760b8d7607c5966e198b25e598664529873e7aae4a95
+  normalized_sha256: sha256:c234c5524a2e0e8d25a5760b8d7607c5966e198b25e598664529873e7aae4a95
+cas_ref: sha256:c234c5524a2e0e8d25a5760b8d7607c5966e198b25e598664529873e7aae4a95
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 待研究量的名称，未给出或断言熵恒等式。
+    previous_atom_id: e4a5170eff99930101ff3631bfc6f66482d7aaec43390360b2141a2375da40dd
+    next_atom_id: f800717109ae925df41b125781ebc75356bcd88ce2cc2f419733b5aac70d7cfa
