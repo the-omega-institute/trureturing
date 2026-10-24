@@ -1,0 +1,46 @@
+/- GID: D5/S3/Quantum/Entanglement/EJM/Frontier/Cuts/Part000/PreparedEJMCompleteFrontierResponses005
+   generality: I
+   mirror-B: D5/B/S3/Quantum/Entanglement/EJM/Frontier/Cuts/Part000/PreparedEJMCompleteFrontierResponses005
+   mirror-E: none(waiver:exact-original-context-mathematical-source)
+   anchors: []
+   utility: kind=numeric-reduction; basis=consumer=D5/S3/Quantum/Entanglement/EJM/PreparedEJMCompleteFrontierRoot.original_score_lower_bound; premises=D5/S3/Quantum/Entanglement/EJM/Frontier/Cuts/Part000/PreparedEJMCompleteFrontierResponses005.tableChunk005_responses
+   digest: Every literal leaf of this original table subtree receives its own canonical bad-event response. -/
+
+/- Generated prepared source. Not compiled or kernel accepted.
+All original coordinates, four values, F1/F2, 32 blocks and scale are retained. -/
+import D5.S3.Quantum.Entanglement.EJM.Frontier.Cuts.Part000.PreparedEJMCompleteFrontierData005
+import D5.S3.Quantum.Entanglement.EJM.Frontier.Raw.Part003.PreparedEJMCompleteFrontierRaw366
+import D5.S3.Quantum.Entanglement.EJM.Frontier.Raw.Part003.PreparedEJMCompleteFrontierRaw367
+import D5.S3.Quantum.Entanglement.EJM.Frontier.Raw.Part003.PreparedEJMCompleteFrontierRaw368
+import D5.S3.Quantum.Entanglement.EJM.Frontier.Raw.Part003.PreparedEJMCompleteFrontierRaw369
+import D5.S3.Quantum.Entanglement.EJM.Frontier.Raw.Part003.PreparedEJMCompleteFrontierRaw370
+import D5.S3.Quantum.Entanglement.EJM.Frontier.Raw.Part003.PreparedEJMCompleteFrontierRaw371
+import D5.S3.Quantum.Entanglement.EJM.Frontier.Raw.Part003.PreparedEJMCompleteFrontierRaw372
+import D5.S3.Quantum.Entanglement.EJM.Frontier.Raw.Part003.PreparedEJMCompleteFrontierRaw373
+import D5.S3.Quantum.Entanglement.EJM.Frontier.Raw.Part003.PreparedEJMCompleteFrontierRaw374
+import D5.S3.Quantum.Entanglement.EJM.Frontier.Raw.Part003.PreparedEJMCompleteFrontierRaw375
+import D5.S3.Quantum.Entanglement.EJM.Frontier.Raw.Part003.PreparedEJMCompleteFrontierRaw376
+import D5.S3.Quantum.Entanglement.EJM.Frontier.Raw.Part003.PreparedEJMCompleteFrontierRaw377
+import D5.S3.Quantum.Entanglement.EJM.Frontier.Raw.Part003.PreparedEJMCompleteFrontierRaw378
+import D5.S3.Quantum.Entanglement.EJM.Frontier.Raw.Part003.PreparedEJMCompleteFrontierRaw379
+import D5.S3.Quantum.Entanglement.EJM.Frontier.Raw.Part003.PreparedEJMCompleteFrontierRaw380
+import D5.S3.Quantum.Entanglement.EJM.Frontier.Raw.Part003.PreparedEJMCompleteFrontierRaw381
+import D5.S3.Quantum.Entanglement.EJM.Frontier.Raw.Part003.PreparedEJMCompleteFrontierRaw382
+import D5.S3.Quantum.Entanglement.EJM.Frontier.Raw.Part003.PreparedEJMCompleteFrontierRaw383
+import D5.S3.Quantum.Entanglement.EJM.Frontier.Raw.Part004.PreparedEJMCompleteFrontierRaw384
+import D5.S3.Quantum.Entanglement.EJM.Frontier.Raw.Part004.PreparedEJMCompleteFrontierRaw385
+import D5.S3.Quantum.Entanglement.EJM.Frontier.Raw.Part004.PreparedEJMCompleteFrontierRaw386
+import D5.S3.Quantum.Entanglement.EJM.Frontier.Raw.Part004.PreparedEJMCompleteFrontierRaw387
+import D5.S3.Quantum.Entanglement.EJM.Frontier.Raw.Part004.PreparedEJMCompleteFrontierRaw388
+import D5.S3.Quantum.Entanglement.EJM.Frontier.Raw.Part004.PreparedEJMCompleteFrontierRaw389
+import D5.S3.Quantum.Entanglement.EJM.Frontier.Raw.Part004.PreparedEJMCompleteFrontierRaw390
+set_option autoImplicit false
+set_option relaxedAutoImplicit false
+set_option maxHeartbeats 100000000
+set_option maxRecDepth 65536
+namespace D5.S3.Quantum.Entanglement.EJM.PreparedEJMCompleteFrontier
+open D5.S0.Certificates
+open EJMOriginalReplayAssembly (coordinate prefixCache prefixPartial)
+theorem tableChunk005_responses : tableChunk005.Responses :=
+  ⟨⟨⟨⟨⟨⟨⟨⟨response_cut_46925, response_cut_46926⟩, ⟨response_cut_46995, response_cut_47018⟩⟩, ⟨⟨response_cut_47019, response_cut_47020⟩, ⟨response_cut_47021, response_cut_47022⟩⟩⟩, ⟨⟨⟨response_cut_47023, response_cut_47092⟩, ⟨response_cut_47118, response_cut_47119⟩⟩, ⟨⟨response_cut_47120, response_cut_47121⟩, ⟨response_cut_47122, response_cut_47123⟩⟩⟩⟩, ⟨⟨⟨⟨response_cut_47189, response_cut_47212⟩, ⟨response_cut_47213, response_cut_47214⟩⟩, ⟨⟨response_cut_47215, response_cut_47216⟩, ⟨response_cut_47217, response_cut_47271⟩⟩⟩, ⟨⟨⟨response_cut_47297, response_cut_47302⟩, ⟨response_cut_47303, response_cut_47304⟩⟩, ⟨⟨response_cut_47305, response_cut_47365⟩, ⟨response_cut_47385, response_cut_47390⟩⟩⟩⟩⟩, ⟨⟨⟨⟨⟨response_cut_47391, response_cut_47392⟩, ⟨response_cut_47393, response_cut_47450⟩⟩, ⟨⟨response_cut_47476, response_cut_47485⟩, ⟨response_cut_47486, response_cut_47487⟩⟩⟩, ⟨⟨⟨response_cut_47550, response_cut_47573⟩, ⟨response_cut_47578, response_cut_47579⟩⟩, ⟨⟨response_cut_47580, response_cut_47581⟩, ⟨response_cut_47635, response_cut_47658⟩⟩⟩⟩, ⟨⟨⟨⟨response_cut_47663, response_cut_47664⟩, ⟨response_cut_47665, response_cut_47666⟩⟩, ⟨⟨response_cut_47723, response_cut_47740⟩, ⟨response_cut_47749, response_cut_47750⟩⟩⟩, ⟨⟨⟨response_cut_47751, response_cut_47811⟩, ⟨response_cut_47834, response_cut_47835⟩⟩, ⟨⟨response_cut_47840, response_cut_47841⟩, ⟨response_cut_47842, response_cut_47902⟩⟩⟩⟩⟩⟩, ⟨⟨⟨⟨⟨⟨response_cut_47922, response_cut_47923⟩, ⟨response_cut_47924, response_cut_47925⟩⟩, ⟨⟨response_cut_47926, response_cut_47927⟩, ⟨response_cut_47984, response_cut_48001⟩⟩⟩, ⟨⟨⟨response_cut_48010, response_cut_48011⟩, ⟨response_cut_48012, response_cut_48075⟩⟩, ⟨⟨response_cut_48092, response_cut_48093⟩, ⟨response_cut_48098, response_cut_48099⟩⟩⟩⟩, ⟨⟨⟨⟨response_cut_48100, response_cut_48157⟩, ⟨response_cut_48177, response_cut_48178⟩⟩, ⟨⟨response_cut_48183, response_cut_48184⟩, ⟨response_cut_48185, response_cut_48251⟩⟩⟩, ⟨⟨⟨response_cut_48268, response_cut_48269⟩, ⟨response_cut_48270, response_cut_48271⟩⟩, ⟨⟨response_cut_48272, response_cut_48273⟩, ⟨response_cut_48330, response_cut_48350⟩⟩⟩⟩⟩, ⟨⟨⟨⟨⟨response_cut_48351, response_cut_48352⟩, ⟨response_cut_48353, response_cut_48354⟩⟩, ⟨⟨response_cut_48355, response_cut_48418⟩, ⟨response_cut_48435, response_cut_48436⟩⟩⟩, ⟨⟨⟨response_cut_48437, response_cut_48438⟩, ⟨response_cut_48439, response_cut_48440⟩⟩, ⟨⟨response_cut_48500, response_cut_48520⟩, ⟨response_cut_48521, response_cut_48522⟩⟩⟩⟩, ⟨⟨⟨⟨response_cut_48523, response_cut_48524⟩, ⟨response_cut_48525, response_cut_48588⟩⟩, ⟨⟨response_cut_48611, response_cut_48612⟩, ⟨response_cut_48618, response_cut_48637⟩⟩⟩, ⟨⟨⟨response_cut_48638, response_cut_48650⟩, ⟨response_cut_48678, response_cut_48679⟩⟩, ⟨⟨response_cut_48729, response_cut_48746⟩, ⟨response_cut_48751, response_cut_48752⟩⟩⟩⟩⟩⟩⟩, ⟨⟨⟨⟨⟨⟨⟨response_cut_48753, response_cut_48754⟩, ⟨response_cut_48803, response_cut_48823⟩⟩, ⟨⟨response_cut_48828, response_cut_48829⟩, ⟨response_cut_48830, response_cut_48831⟩⟩⟩, ⟨⟨⟨response_cut_48862, response_cut_48867⟩, ⟨response_cut_48868, response_cut_48869⟩⟩, ⟨⟨response_cut_48870, response_cut_48871⟩, ⟨response_cut_48906, response_cut_48911⟩⟩⟩⟩, ⟨⟨⟨⟨response_cut_48953, response_cut_48970⟩, ⟨response_cut_48971, response_cut_48972⟩⟩, ⟨⟨response_cut_48973, response_cut_48974⟩, ⟨response_cut_48975, response_cut_49024⟩⟩⟩, ⟨⟨⟨response_cut_49044, response_cut_49045⟩, ⟨response_cut_49047, response_cut_49063⟩⟩, ⟨⟨response_cut_49064, response_cut_49075⟩, ⟨response_cut_49097, response_cut_49098⟩⟩⟩⟩⟩, ⟨⟨⟨⟨⟨response_cut_49109, response_cut_49138⟩, ⟨response_cut_49155, response_cut_49156⟩⟩, ⟨⟨response_cut_49157, response_cut_49158⟩, ⟨response_cut_49159, response_cut_49160⟩⟩⟩, ⟨⟨⟨response_cut_49203, response_cut_49223⟩, ⟨response_cut_49228, response_cut_49229⟩⟩, ⟨⟨response_cut_49230, response_cut_49231⟩, ⟨response_cut_49232, response_cut_49267⟩⟩⟩⟩, ⟨⟨⟨⟨response_cut_49284, response_cut_49289⟩, ⟨response_cut_49290, response_cut_49291⟩⟩, ⟨⟨response_cut_49292, response_cut_49340⟩, ⟨response_cut_49357, response_cut_49362⟩⟩⟩, ⟨⟨⟨response_cut_49363, response_cut_49364⟩, ⟨response_cut_49365, response_cut_49366⟩⟩, ⟨⟨response_cut_49404, response_cut_49424⟩, ⟨response_cut_49425, response_cut_49426⟩⟩⟩⟩⟩⟩, ⟨⟨⟨⟨⟨⟨response_cut_49427, response_cut_49428⟩, ⟨response_cut_49429, response_cut_49462⟩⟩, ⟨⟨response_cut_49479, response_cut_49484⟩, ⟨response_cut_49485, response_cut_49486⟩⟩⟩, ⟨⟨⟨response_cut_49487, response_cut_49488⟩, ⟨response_cut_49517, response_cut_49534⟩⟩, ⟨⟨response_cut_49535, response_cut_49536⟩, ⟨response_cut_49537, response_cut_49538⟩⟩⟩⟩, ⟨⟨⟨⟨response_cut_49539, response_cut_49581⟩, ⟨response_cut_49598, response_cut_49599⟩⟩, ⟨⟨response_cut_49600, response_cut_49601⟩, ⟨response_cut_49602, response_cut_49603⟩⟩⟩, ⟨⟨⟨response_cut_49645, response_cut_49662⟩, ⟨response_cut_49663, response_cut_49664⟩⟩, ⟨⟨response_cut_49665, response_cut_49666⟩, ⟨response_cut_49667, response_cut_49668⟩⟩⟩⟩⟩, ⟨⟨⟨⟨⟨response_cut_49697, response_cut_49714⟩, ⟨response_cut_49715, response_cut_49716⟩⟩, ⟨⟨response_cut_49717, response_cut_49718⟩, ⟨response_cut_49719, response_cut_49720⟩⟩⟩, ⟨⟨⟨response_cut_49746, response_cut_49763⟩, ⟨response_cut_49764, response_cut_49765⟩⟩, ⟨⟨response_cut_49766, response_cut_49767⟩, ⟨response_cut_49768, response_cut_49769⟩⟩⟩⟩, ⟨⟨⟨⟨response_cut_49801, response_cut_49818⟩, ⟨response_cut_49819, response_cut_49820⟩⟩, ⟨⟨response_cut_49821, response_cut_49822⟩, ⟨response_cut_49823, response_cut_49824⟩⟩⟩, ⟨⟨⟨response_cut_49856, response_cut_49873⟩, ⟨response_cut_49874, response_cut_49946⟩⟩, ⟨⟨response_cut_49947, response_cut_49952⟩, ⟨response_cut_49992, response_cut_49997⟩⟩⟩⟩⟩⟩⟩⟩
+end D5.S3.Quantum.Entanglement.EJM.PreparedEJMCompleteFrontier
