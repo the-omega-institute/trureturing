@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:fd5538cdd08a0c461f1c50dd580a3d955548684cf1b7cf1cfb099bbf27604107
+  normalized_sha256: sha256:fd5538cdd08a0c461f1c50dd580a3d955548684cf1b7cf1cfb099bbf27604107
+cas_ref: sha256:fd5538cdd08a0c461f1c50dd580a3d955548684cf1b7cf1cfb099bbf27604107
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 给整数 residue 奇偶命名为 n mod 2；属于分类定义，没有附带算术结论。
+    previous_atom_id: 9ae3434b7073064f671c281c0d977c4ec2bb786bbca6ce2b3c3921433ba0551a
+    next_atom_id: d749868e82e3e34059164961099ff422f0c85bcd9d6de42a8ceba5ef77ade4c6
