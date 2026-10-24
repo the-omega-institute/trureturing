@@ -160,6 +160,53 @@ retrospective paired-Dirac capture and Theorem A closed-copy
 prohibition. Problem 8.2 and the complete analytic endpoints remain
 unresolved by this local supplier; no official acceptance is asserted.
 
+## Uniform strong-dual norm separation
+
+`D5.S3.Topology.ExtremallyDisconnected.WeakStarNormSeparation.exists_pos_le_norm_sub`
+states that for every real normed space X, compact Hausdorff extremally
+disconnected space K, and weak-star continuous injective h : K → WeakDual ℝ X,
+there exists a real c > 0 such that
+
+$$
+  p\ne q\quad\Longrightarrow\quad
+  c\le \|\operatorname{WeakDual.toStrongDual}(h(p)-h(q))\|
+  \qquad(p,q\in K).
+$$
+
+There is no nonempty, nontrivial, completeness, positivity-of-functionals
+or global norm-bound premise. The weak-star and norm topologies remain
+distinct: no continuity of `WeakDual.toStrongDual` is asserted.
+
+The consumed private general lemma applies to every lower semicontinuous
+F : K × K → ℝ positive away from the diagonal. If no uniform lower bound
+exists, choose unequal pairs with F(p(n),q(n)) < 1/(n+1). For any clopen U,
+the symmetric cross (U × Uᶜ) ∪ (Uᶜ × U) is compact and disjoint from the
+diagonal. If nonempty, lower semicontinuity gives an attained strictly
+positive minimum. The chosen pair eventually lies outside this cross;
+an empty cross is always missed. Thus every clopen membership test
+agrees eventually. The point-pair theorem gives eventual equality,
+contradicting the chosen unequal pairs. Symmetry and triangle
+inequalities are not used.
+
+In the dual application subtraction is weak-star continuous. Pinned
+Mathlib's `WeakDual.isClosed_closedBall` makes the norm sublevel sets
+of the difference closed, hence the norm function is lower
+semicontinuous. Injectivity and the linear equivalence to the strong
+dual give positivity off the diagonal. `LowerSemicontinuousOn.exists_isMinOn`
+and `tendsto_one_div_add_atTop_nhds_zero_nat` provide the minimum and
+reciprocal-limit steps. These are ordinary library inputs; the compact
+cross composition is derived here from the supplied ordinary proof
+plan and the point-pair theorem, with no literature novelty claim.
+
+The consequence applies in particular to βℕ using the extremal
+disconnectedness obtained from `StoneCech.projective` and
+`CompactT2.Projective.extremallyDisconnected`. It supplies the local
+norm-gap implication. It does not construct the full signed dual ball,
+the CH recursion or conditions (A)–(G), the retrospective paired-Dirac
+capture, or the Theorem A closed-copy prohibition. Problem 8.2 and
+the complete CH/Talagrand endpoint remain unresolved here, and no
+official acceptance is asserted.
+
 ## Verified locator
 
 Canonical arXiv record: https://arxiv.org/abs/2607.06808v2.
