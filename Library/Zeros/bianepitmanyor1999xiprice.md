@@ -761,3 +761,89 @@ IPX34, a certified numerical starting scale, full strict Robin and
 RH remain unproved. IPX26--IPX33 are paper-level applications of
 the cited source and existing arithmetic estimates, without Lean
 certification or a literature-priority claim.
+
+## The complete first-layer response has a sharp conditional root benchmark
+
+IPX33's actual first-layer account also has a root-scale consumer.
+The inputs are the already owned complete signed explicit formula,
+NPC1's two-price benefit bound, and classical simultaneous phase
+recurrence. No new Ramanujan theorem, zero-distribution estimate or
+recurrence principle is introduced. Keep exactly the IPX source and
+observer, and the actual strict products $N_x$ of ACC, with
+$A=A_x=\log N_x$, $L=\log A$ and $T_A=\sqrt A L$.
+
+The classical xi logarithmic-derivative identity, already used in
+[GE1](../ArithSums/nicolas2025comparison.md#an-explicit-one-sided-bound-for-the-combined-gamma-remainder),
+and differentiation of IPX1's Mellin identity give
+
+$$
+c_0=2+\gamma-\log(4\pi)=2a_+,\qquad
+\kappa_\xi=c_0+2(1-b_+)>0.
+\tag{IPX35}
+$$
+
+Indeed $a_+=-2\xi'(0)=2\xi'(1)$ and $\xi(1)=1/2$;
+the classical zero weight is $2\xi'(1)/\xi(1)$.
+The positivity also follows directly from IPX1's strict Jensen
+inequalities. This connects existing constants; it is not a new
+identity for the zeta zeros.
+
+**Assume RH throughout the following conditional calculation.**
+The classical estimate $\vartheta(x)-x=O(\sqrt x\log^2x)$,
+ACC's literal first-layer bracket and its complete higher inventory
+give $A_x-x=O(\sqrt x\log^2x)$. In NPC1,
+$h=O(\log^2x/\sqrt x)$, so
+$T_Ad_A(N_x)\to0$. Since $0\le G_{2,A}(N_x)\le d_A(N_x)$,
+the same holds for its higher baseline. These facts apply to every
+large real price $x$, including strict endpoint conventions; no
+own-price equality $A_x=x$ is assumed.
+
+Reuse [the complete signed formula](../ArithSums/nicolas2025comparison.md#the-2026-signed-formula-and-the-available-absolute-error-scale),
+Broadbent--Fiori--Kadiri--Ng--Wilk, Proposition 13(i), as recorded
+there. Under RH its normalized form and IPX33's existing account give
+
+$$
+\begin{aligned}
+T_AI_\psi(A)&=-\mathcal B(\log A)+O(L^{-1}),\\
+\mathcal B(y)&=2\sum_{\tau>0}
+       \frac{\cos(\tau y)}{1/4+\tau^2},\\
+T_AD_{1,A}(N_x)&=-\mathcal B(\log A_x)-2(1-b_+)+o(1).
+\end{aligned}
+\tag{IPX36}
+$$
+
+Here $\tau$ runs over all positive nontrivial-zero ordinates with
+their multiplicities. No infinite-height tail is omitted. The leading
+factor of the exact formula is $1+1/L$; its complete integral
+remainder is $O(L^{-1})$ after normalization, by the convergent
+weight $\sum_\rho1/(|\rho||1-\rho|)$. The constant and trivial-zero
+corrections are root-small. On RH this weight is $c_0$, and the
+cosine series is absolutely and uniformly convergent.
+
+Its coefficients are positive, so $\mathcal B(y)\le\mathcal B(0)=c_0$.
+For any positive error tolerance, retain a finite head with smaller
+absolute tail. The classical simultaneous approximation theorem,
+as in [the existing Kronecker source](../Fourier/onishchik2020kronecker.md),
+returns arbitrarily large $y$ for which every head phase is arbitrarily
+close to one. This uses recurrence toward the identity, not density
+in the whole phase torus or rational independence of zero ordinates.
+The paid tail then gives $\limsup_{y\to\infty}\mathcal B(y)=c_0$.
+
+Set $x=e^y$ and retain its same strict integer $N_x$. Since
+$\log A_x-\log x\to0$, uniform continuity of this series transports
+the recurrence to $\log A_x$. The step-valued inventory therefore
+does not change the extremum. IPX36 yields the sharp conditional
+benchmark
+
+$$
+\boxed{\quad
+\mathrm{RH}\ \Longrightarrow\
+\liminf_{x\to\infty}
+ T_{A_x}D_{1,A_x}(N_x)=-\kappa_\xi<0.
+\quad}
+\tag{IPX37}
+$$
+
+This is a paper-level application at the specified observed first layer.
+The RH premise remains essential to its lower bound and sharp value;
+it is not an unconditional estimate for IPX34 or a Lean certification.
