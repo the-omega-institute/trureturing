@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:2615bf91808cfb4334f8ca9aa66e7b8e6122960b0f672086fe38674e16b21019
+  normalized_sha256: sha256:2615bf91808cfb4334f8ca9aa66e7b8e6122960b0f672086fe38674e16b21019
+cas_ref: sha256:2615bf91808cfb4334f8ca9aa66e7b8e6122960b0f672086fe38674e16b21019
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 本条仅通过式(42.3)定义跨长度可达荷集合的并，并通过式(42.4)定义按同字符合并的向量与路径概率记号；未断言正交性、容量或其他由定义推出的性质。
+    previous_atom_id: 2262c7ad60b9aba12c10ff2a27240d126d92a011302f5358d43178f8abca26ca
+    next_atom_id: 7ca36efb8be39fab54bc5201aac60f83c617fd3a752a76f04a33079695465c58
