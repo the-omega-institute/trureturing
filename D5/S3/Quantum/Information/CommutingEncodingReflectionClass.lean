@@ -8,6 +8,7 @@
 
 import D5.S3.Quantum.Information.CommutingEncoding.LocalSiteNormalForm
 import D5.S3.Quantum.Measurement.StabilizerPovmMaximalEntanglementRefutation
+import D5.S3.Quantum.Information.SeparableStateLocalUnitaryStabilizerObstruction
 
 /-! Commuting qubit product encodings and their local-reflection replacements. -/
 
@@ -63,8 +64,9 @@ private lemma product_encoding_conjugate {n : ℕ} (ψ : (Fin n → Fin 2) → �
   · intro a b; simp only [ht, ← map_mul, hU.2.1 a b]
   · intro a b; change star (tensorOp (fun j => V j * U a j * (V j)ᴴ) *ᵥ (T *ᵥ ψ)) ⬝ᵥ
       (tensorOp (fun j => V j * U b j * (V j)ᴴ) *ᵥ (T *ᵥ ψ)) = _
-    rw [he a, he b]; rw [Matrix.star_mulVec, Matrix.dotProduct_mulVec, Matrix.vecMul_vecMul,
-      hTtT, Matrix.vecMul_one]
+    rw [he a, he b,
+      D5.S3.Quantum.Information.SeparableStateLocalUnitaryStabilizerObstruction.unitary_preserves_overlap
+        T hTtT]
     exact hU.2.2 a b
 private lemma reflection_encoding_conjugate {n : ℕ} (ψ : (Fin n → Fin 2) → ℂ)
     (U : Fin (2 ^ n) → Fin n → Matrix (Fin 2) (Fin 2) ℂ) (hU : IsCommutingReflectionEncoding ψ U)
@@ -90,13 +92,9 @@ private def word_symbol {n : ℕ} (p : Fin n → Pauli) : (Fin n → ZMod 2) × 
 private lemma symbol_bijective : Function.Bijective pauli_symbol := by decide
 
 private lemma word_symbol_bijective (n : ℕ) : Function.Bijective (@word_symbol n) := by
-  constructor
-  · intro p q h; funext j; apply symbol_bijective.1
-    exact Prod.ext (congrFun (congrArg Prod.fst h) j) (congrFun (congrArg Prod.snd h) j)
-  · intro v
-    choose p hp using fun j => symbol_bijective.2 (v.1 j, v.2 j)
-    exact ⟨p, Prod.ext (funext fun j => congrArg Prod.fst (hp j))
-      (funext fun j => congrArg Prod.snd (hp j))⟩
+  exact ((Equiv.piCongrRight fun _ : Fin n =>
+      Equiv.ofBijective pauli_symbol symbol_bijective).trans
+    (Equiv.arrowProdEquivProdArrow (Fin n) (fun _ => ZMod 2) (fun _ => ZMod 2))).bijective
 
 private lemma word_symbol_mul {n : ℕ} (p q : Fin n → Pauli) :
     word_symbol (fun j => letterProduct (p j) (q j)) = word_symbol p + word_symbol q := by
@@ -274,15 +272,16 @@ private lemma local_forms_isotropic_span {n : ℕ}
         tensor_mul, tensor_trace] at hp
       exact fun j => Finset.prod_ne_zero_iff.mp hp j (Finset.mem_univ j)
 
-private def binary_character {n : ℕ} (x : Fin n → Fin 2) : AddChar (Fin n → Fin 2) ℂ where
-  toFun a := ∏ j, (-1 : ℂ) ^ ((a j).val * (x j).val)
-  map_zero_eq_one' := by simp
-  map_add_eq_mul' a b := by
-    rw [← Finset.prod_mul_distrib]; apply Finset.prod_congr rfl
-    intro j _; change (-1 : ℂ) ^ (((a j + b j) : Fin 2).val * (x j).val) = _; generalize a j = r
-    generalize b j = t
-    generalize x j = z
-    fin_cases r <;> fin_cases t <;> fin_cases z <;> norm_num
+private noncomputable def binary_character {n : ℕ} (x : Fin n → Fin 2) :
+    AddChar (Fin n → Fin 2) ℂ :=
+  ∑ j, (x j).val • (AddChar.zmodChar 2 (by norm_num : (-1 : ℂ) ^ 2 = 1)).compAddMonoidHom
+    (Pi.evalAddMonoidHom (fun _ : Fin n => Fin 2) j)
+
+private lemma binary_character_apply {n : ℕ} (x a : Fin n → Fin 2) :
+    binary_character x a = ∏ j, (-1 : ℂ) ^ ((a j).val * (x j).val) := by
+  rw [binary_character, AddChar.sum_apply]
+  change (∏ j, ((-1 : ℂ) ^ (a j).val) ^ (x j).val) = _
+  simp only [pow_mul]
 
 private lemma binary_character_frame {n : ℕ}
     (H : (Fin n → Fin 2) → Matrix (Fin n → Fin 2) (Fin n → Fin 2) ℂ) (hH : ∀ a, (H a).IsHermitian)
@@ -295,11 +294,10 @@ private lemma binary_character_frame {n : ℕ}
   let χ (a x : Fin n → Fin 2) : ℂ := binary_character x a
   have hχadd (a b x : Fin n → Fin 2) : χ (a + b) x = χ a x * χ b x :=
     (binary_character x).map_add_eq_mul a b
-  have hχstar (a x : Fin n → Fin 2) : star (χ a x) = χ a x := by simp [χ, binary_character]
+  have hχstar (a x : Fin n → Fin 2) : star (χ a x) = χ a x := by simp [χ, binary_character_apply]
   have haab (a b : Fin n → Fin 2) : a + (a + b) = b := by
-    funext j; change (a j + (a j + b j) : Fin 2) = b j; generalize a j = r
-    generalize b j = t
-    fin_cases r <;> fin_cases t <;> decide
+    funext j
+    exact CharTwo.add_cancel_left (R := ZMod 2) (a j) (b j)
   let P (x : Fin n → Fin 2) := ∑ a, χ a x • H a
   have hPeig (a x : Fin n → Fin 2) : H a * P x = χ a x • P x := by
     let e : (Fin n → Fin 2) ≃ (Fin n → Fin 2) := ⟨fun b => a + b, fun b => a + b, haab a, haab a⟩
@@ -312,7 +310,7 @@ private lemma binary_character_frame {n : ℕ}
       _ = _ := by simp only [hχadd, mul_smul, P, Finset.smul_sum]
   have hPne (x : Fin n → Fin 2) : P x ≠ 0 := by
     have ht : Matrix.trace (P x) = (2 ^ n : ℂ) := by
-      simp [P, Matrix.trace_sum, Matrix.trace_smul, htrace, χ, binary_character]
+      simp [P, Matrix.trace_sum, Matrix.trace_smul, htrace, χ, binary_character_apply]
     intro hz; rw [hz, Matrix.trace_zero] at ht
     exact (pow_ne_zero n (by norm_num : (2 : ℂ) ≠ 0)) ht.symm
   have hentry (x : Fin n → Fin 2) : ∃ r k, P x r k ≠ 0 := by
@@ -337,8 +335,8 @@ private lemma binary_character_frame {n : ℕ}
       χ a x • ((‖v x‖ : ℂ)⁻¹ • (fun t => P x t (k x)))
     rw [Matrix.mulVec_smul, hraw, smul_smul, smul_smul, mul_comm]
   have hsingle (x : Fin n → Fin 2) (j : Fin n) : χ (Pi.single j 1) x = (-1 : ℂ) ^ (x j).val := by
-    change (∏ i, (-1 : ℂ) ^ (((Pi.single j 1 : Fin n → Fin 2) i).val *
-      (x i).val)) = _
+    change binary_character x (Pi.single j 1) = _
+    rw [binary_character_apply]
     rw [Finset.prod_eq_single j]
     · simp [Pi.single_apply]
     · intro i _ hij; simp [Pi.single_apply, hij, Ne.symm hij]
@@ -376,7 +374,9 @@ private lemma binary_character_frame {n : ℕ}
     _ = Fᴴ * (H a * F) := Matrix.mul_assoc _ _ _
     _ = Fᴴ * (F * diagonal (χ a)) := by rw [hHF]
     _ = (Fᴴ * F) * diagonal (χ a) := (Matrix.mul_assoc _ _ _).symm
-    _ = _ := by rw [show Fᴴ * F = 1 from hF.1, Matrix.one_mul]; rfl
+    _ = _ := by
+      rw [show Fᴴ * F = 1 from hF.1, Matrix.one_mul]
+      simp only [χ, binary_character_apply]
 
 private lemma hermitian_phased_pauli_reflections {n : ℕ} (hn : 1 ≤ n)
     (c : ℂ) (p : Fin n → Pauli) (hc : star c * c = 1) (hh : (c • wordOp p).IsHermitian) :
@@ -397,11 +397,7 @@ private lemma hermitian_phased_pauli_reflections {n : ℕ} (hn : 1 ≤ n)
   have hpauli (q : Pauli) : (pauliMatrix q).IsHermitian ∧ pauliMatrix q * pauliMatrix q = 1 := by
     refine ⟨D5.S3.Quantum.Measurement.StabilizerPovmMaximalEntanglementRefutation.pauli_hermitian q,
       ?_⟩
-    rw [D5.S3.Quantum.Measurement.StabilizerPovmMaximalEntanglementRefutation.letter_mul]
-    cases q <;>
-      simp [D5.S3.Quantum.Measurement.StabilizerPovmMaximalEntanglementRefutation.letterPhase,
-        D5.S3.Quantum.Measurement.StabilizerPovmMaximalEntanglementRefutation.letterProduct,
-        pauliMatrix]
+    exact D5.S3.Quantum.Information.SeparableStateLocalUnitaryStabilizerObstruction.pauli_square q
   refine ⟨fun j => (if j = j₀ then c else 1) • pauliMatrix (p j), ?_, ?_⟩
   · intro j; dsimp only
     have hs : (if j = j₀ then c else 1) = 1 ∨ (if j = j₀ then c else 1) = -1 := by
@@ -507,8 +503,7 @@ private lemma lagrangian_phased_representation {n : ℕ}
   · intro a
     have hu : (H a)ᴴ * H a = 1 := by
       rw [he, Matrix.conjTranspose_smul, word_hermitian, smul_mul_smul, hc, one_smul, square]
-    have haa : a + a = 0 := by
-      funext j; change (a j + a j : Fin 2) = 0; generalize a j = x; fin_cases x <;> decide
+    have haa : a + a = 0 := funext fun j => CharTwo.add_self_eq_zero (R := ZMod 2) (a j)
     have hsq : H a * H a = 1 := by rw [← hmul, haa, hzero]
     change (H a)ᴴ = H a
     calc
@@ -680,8 +675,8 @@ private lemma flat_of_diagonal_encoding {n : ℕ} (ψ : (Fin n → Fin 2) → �
   have hp (v w : (Fin n → Fin 2) → ℂ) :
       (∑ x, star ((Fᴴ *ᵥ v) x) * (Fᴴ *ᵥ w) x) = ∑ x, star (v x) * w x := by
     change star (Fᴴ *ᵥ v) ⬝ᵥ (Fᴴ *ᵥ w) = star v ⬝ᵥ w
-    rw [Matrix.star_mulVec, Matrix.dotProduct_mulVec, Matrix.vecMul_vecMul,
-      Matrix.conjTranspose_conjTranspose, hFF, Matrix.vecMul_one]
+    exact D5.S3.Quantum.Information.SeparableStateLocalUnitaryStabilizerObstruction.unitary_preserves_overlap
+      Fᴴ (by simpa only [Matrix.conjTranspose_conjTranspose] using hFF) v w
   have hw := uniform_weights c (fun a => eig (e a)) (fun a x => heig (e a) x) (by
     intro a b; calc
       _ = ∑ x, star ((Fᴴ *ᵥ (tensorOp (U (e a)) *ᵥ ψ)) x) *
@@ -697,8 +692,7 @@ private lemma character_orthogonality {n : ℕ} (a b : Fin n → Fin 2) : (∑ x
   let ψ : AddChar (Fin n → Fin 2) ℂ := binary_character a + binary_character b
   have hsingle (v : Fin n → Fin 2) (j : Fin n) :
       binary_character v (Pi.single j 1) = (-1 : ℂ) ^ (v j).val := by
-    change (∏ i, (-1 : ℂ) ^ (((Pi.single j 1 : Fin n → Fin 2) i).val *
-      (v i).val)) = _
+    rw [binary_character_apply]
     rw [Finset.prod_eq_single j]
     · simp [Pi.single_apply]
     · intro i _ hij; simp [Pi.single_apply, hij, Ne.symm hij]
@@ -712,17 +706,15 @@ private lemma character_orthogonality {n : ℕ} (a b : Fin n → Fin 2) : (∑ x
       fin_cases r <;> fin_cases t <;> norm_num at *
     · rintro rfl
       ext x; change binary_character a x * binary_character a x = 1
-      change (∏ j, (-1 : ℂ) ^ ((x j).val * (a j).val)) *
-        (∏ j, (-1 : ℂ) ^ ((x j).val * (a j).val)) = 1
+      simp only [binary_character_apply]
       rw [← Finset.prod_mul_distrib]; apply Finset.prod_eq_one; intro j _; generalize x j = r
       generalize a j = t
       fin_cases r <;> fin_cases t <;> norm_num
   have hs := AddChar.sum_eq_ite ψ
   have hfun (x : Fin n → Fin 2) : ψ x = (∏ j, (-1 : ℂ) ^ ((a j).val * (x j).val)) *
         (∏ j, (-1 : ℂ) ^ ((b j).val * (x j).val)) := by
-    change (∏ j, (-1 : ℂ) ^ ((x j).val * (a j).val)) *
-      (∏ j, (-1 : ℂ) ^ ((x j).val * (b j).val)) = _
-    simp only [Nat.mul_comm]
+    change binary_character a x * binary_character b x = _
+    simp only [binary_character_apply, Nat.mul_comm]
   simpa only [hfun, hzero, Fintype.card_fun, Fintype.card_fin, Nat.cast_pow,
     Nat.cast_ofNat] using hs
 
@@ -755,8 +747,8 @@ private lemma reflection_encoding_of_flat_frame {n : ℕ} (ψ : (Fin n → Fin 2
   have hp (v w : (Fin n → Fin 2) → ℂ) :
       (∑ x, star ((Fᴴ *ᵥ v) x) * (Fᴴ *ᵥ w) x) = ∑ x, star (v x) * w x := by
     change star (Fᴴ *ᵥ v) ⬝ᵥ (Fᴴ *ᵥ w) = star v ⬝ᵥ w
-    rw [Matrix.star_mulVec, Matrix.dotProduct_mulVec, Matrix.vecMul_vecMul,
-      Matrix.conjTranspose_conjTranspose, hFF, Matrix.vecMul_one]
+    exact D5.S3.Quantum.Information.SeparableStateLocalUnitaryStabilizerObstruction.unitary_preserves_overlap
+      Fᴴ (by simpa only [Matrix.conjTranspose_conjTranspose] using hFF) v w
   have horth (a b : Fin n → Fin 2) :
       (∑ x, star ((tensorOp (R a) *ᵥ ψ) x) * (tensorOp (R b) *ᵥ ψ) x) = if a = b then 1 else 0 := by
     rw [← hp, he, he]; have hm (x) : star (c x * χ a x) * (c x * χ b x) =
@@ -801,16 +793,12 @@ private lemma product_encoding_to_reflections {n : ℕ} (hn : 1 ≤ n) (ψ : (Fi
     rw [show (tensorOp V)ᴴ * tensorOp V = 1 from (tensor_unitary V hV).1]; exact Matrix.one_mulVec ψ
   rw [hstate] at hback; exact ⟨_, hback⟩
 
-private lemma reflection_encoding_to_product {n : ℕ} (ψ : (Fin n → Fin 2) → ℂ)
-    (U : Fin (2 ^ n) → Fin n → Matrix (Fin 2) (Fin 2) ℂ)
-    (hU : IsCommutingReflectionEncoding ψ U) : IsCommutingProductEncoding ψ U := hU.1
-
 /-- Commuting product encodings admit commuting local-reflection replacements. -/
 theorem result : claim := by
   intro n hn ψ _hψ; constructor
   · rintro ⟨U, hU⟩
     exact product_encoding_to_reflections hn ψ U hU
   · rintro ⟨U, hU⟩
-    exact ⟨U, reflection_encoding_to_product ψ U hU⟩
+    exact ⟨U, hU.1⟩
 
 end D5.S3.Quantum.Information.CommutingEncodingReflectionClass
