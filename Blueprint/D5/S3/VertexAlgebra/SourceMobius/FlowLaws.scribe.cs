@@ -12,11 +12,5 @@ internal sealed class FlowLawsDocument : IScribeDocumentDefinition
                 H("sectorFlow_add"), StatementSource.WithoutFormula(),
                 AssessedProvenance.FromLiterature(Source),
                 Blocks(Paragraph(Text("Taylor translation and the coefficient differential equation prove the additive composition law on every oscillator polynomial."))), DescribeRole.Theorem),
-            Describe.Lean(
-                DescribeId.Create("sourcemobius-flowlaws-sectorflow-zero"),
-                DeclarationHandle.Create("D5/S3/VertexAlgebra/SourceMobius/FlowLaws.sectorFlow_zero"),
-                H("sectorFlow_zero"), StatementSource.WithoutFormula(),
-                AssessedProvenance.FromLiterature(Source),
-                Blocks(Paragraph(Text("The zero parameter is identity, including zero and constants."))), DescribeRole.Theorem),
             Paragraph(Text("The imported Sugawara architecture retains Kalle Kytola attribution. No literature novelty is claimed. Full all-source corrected-field adjointness, the K_L/K_R coefficient law and the complete Monster, VOA, CFT, fusion, string-theory and AdS/CFT goal remain open.")))));
 }

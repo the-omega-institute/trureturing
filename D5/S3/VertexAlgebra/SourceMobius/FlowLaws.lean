@@ -83,12 +83,4 @@ theorem sectorFlow_add (D : LatticeData) (a : Charge D) (u v : ℂ) (p : Oscilla
   rw [Polynomial.taylor_eval, ← map_add] at h
   exact h
 
-/-- Zero flow is identity, including constant and zero polynomials. -/
-theorem sectorFlow_zero (D : LatticeData) (a : Charge D) (p : Oscillator D) :
-    sectorFlow D a 0 p = p := by
-  change (flowPolynomial D a p).eval (C 0) = p
-  rw [map_zero]
-  rw [← Polynomial.coeff_zero_eq_eval_zero]
-  simpa using flowPolynomial_coeff D a p 0
-
 end D5.S3.VertexAlgebra.SourceMobius
