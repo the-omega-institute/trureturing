@@ -2068,3 +2068,195 @@ Robin margin, new source-clock exclusion or uniform bound as
 $A\to\infty$. The complete selected-source signed target and RH
 remain unproved. This reuses Bellotti and (W2), (W5), (W7), without
 reproving a density theorem or claiming Lean verification.
+
+## A seven-eighths ceiling in the complete positive-law Robin transport
+
+The [Nicolas comparison's GAD application](../ArithSums/nicolas2025comparison.md#project-application-density-weighted-order-nine-transport-reaches-3e47)
+already pays the complete signed response on
+$8\cdot10^{46}<A\le3\cdot10^{47}$. Its density integral extends to
+real part one. The following application adds the separately recorded
+[ASC1 seven-eighths ceiling](../ArithSums/nicolas2025comparison.md#project-application-a-seven-eighths-ceiling-lowers-the-actual-sample-cut)
+to that whole-law transport. The changed input removes real-part layers
+above $7/8$, permitting a lower-variance order-seven law. Under these
+inputs the new all-integer slab is
+
+$$
+3\cdot10^{47}<A=\log n\le6\cdot10^{47}.
+\tag{CDR1}
+$$
+
+The premises are all five primary analytic inputs in
+[GAK section 1](../ArithSums/nicolas2025comparison.md#1-exact-theorem-and-premises),
+the same unrestricted reserve and response identities GAK36–GAK39,
+the Chourasiya–Simonič density rows supplying (W1), and the additional
+condition
+
+$$
+\beta\le7/8\qquad\text{for every actual nontrivial zeta zero}.
+\tag{CDR2}
+$$
+
+The pinned supplier for (CDR2) is
+[`OAI.riemannZeta_ne_zero_of_seven_eighths_lt_re`](https://github.com/openai/math/blob/adc7f1241b42e322a6451854ab7e4b4c146bf78a/lean/OAI/NumberTheory/DirichletL/Nonvanishing.lean).
+It is an external analytic premise: its complete transitive proof closure
+has not been compiled or independently certified here. The project and
+upstream Lean toolchains remain distinct. GAK's five primary inputs and
+the density bound alone do not supply (CDR2). No primary proof, finite
+zero computation or density theorem is repeated. This is a source-
+conditional ordinary application, without Lean certification or a
+literature-priority claim.
+
+### Truncate the actual real-part population before bounding it
+
+Keep $H=3\cdot10^{12}$, $h=\log H$, $s=\log(Hh)$, $L=\log A$,
+$\alpha(\sigma)=(1+\sigma)/(2-\sigma)$ and the same positive-
+ordinate mass $B_2(A)$ from (W5), including analytic multiplicities.
+Reflection gives $\beta\ge1/8$ from (CDR2). Hence the actual reflected
+count $F_2(\sigma)$ in (W2) is zero for $\sigma>7/8$.
+Zeros on $\beta=7/8$ or $1/8$ remain included: their layers below the
+endpoint are retained, and a single integration endpoint has zero
+measure. Tonelli's existing nonnegative layer identity (W5), followed
+by (X1), therefore gives
+
+$$
+\begin{aligned}
+B_2(A)<{}&2A^{1/4}S_2(H)
+ +144Lh^4\int_{3/4}^{7/8}
+    A^{\sigma-1/2}(Hh)^{-\alpha(\sigma)}\,d\sigma\\
+&+30000H^{-2}(A^{3/8}-A^{1/4}).
+\end{aligned}
+\tag{CDR3}
+$$
+
+The last term is truncated along with the principal density term.
+This uses the same actual zero population at all heights above $H$;
+it does not extend the finite-height critical-line verification.
+
+For $f(\sigma)=L(\sigma-1/2)-s\alpha(\sigma)$,
+
+$$
+f'(\sigma)=L-\frac{3s}{(2-\sigma)^2}
+ \ge L-\frac{64}{27}s>0\qquad(3/4\le\sigma\le7/8).
+$$
+
+Reuse GAD's rational logarithm bounds $L>107$, $28<h<29$ and
+$s<32.1$; the larger lower endpoint in (CDR1) preserves them. Integrating
+the derivative bound toward $7/8$ gives
+
+$$
+\int_{3/4}^{7/8}e^{f(\sigma)}d\sigma
+ <\frac{A^{3/8}(Hh)^{-5/3}}{L-(64/27)s},\qquad
+\frac{L}{L-(64/27)s}<\frac{45}{13}<\frac72.
+\tag{CDR4}
+$$
+
+For uniform rational enclosures put $r=8\cdot10^{23}$. Then
+$r^2>6\cdot10^{47}$ and $A^{1/4}<10^{12}$. The exact power
+comparisons
+
+$$
+r^3<(8.5\cdot10^{17})^4,\qquad
+(84\cdot10^{12})^5>(1.6\cdot10^{23})^3
+$$
+
+give $A^{3/8}<8.5\cdot10^{17}$ and
+$(Hh)^{5/3}>1.6\cdot10^{23}$. Inserting these and the reused
+$S_2(H)<37/(25\cdot10^{12})$ into (CDR3) yields
+
+$$
+\begin{aligned}
+B_2(A)&<\frac{74}{25}
+ +144\frac72\,29^4\frac{8.5\cdot10^{17}}{1.6\cdot10^{23}}
+ +\frac{30000(8.5\cdot10^{17})}{H^2}\\
+&=\frac{2276049253}{1200000}<1900.
+\end{aligned}
+\tag{CDR5}
+$$
+
+The GAD5 reflection/conjugation identity is unchanged:
+$B_2(A)=\sum_{|\gamma|>H}m_\rho A^{\beta-1/2}/\gamma^2$.
+It already pays both ordinate signs. There is no further factor of two.
+
+### Consume the smaller mass with the complete order-seven law
+
+Use the existing GAK finite equal-width log-uniform construction with
+$k=7$ and width $\delta=51/(20H)$, keeping its exact whole-law
+normalization $\mathbb EC=1$. Put
+
+$$
+x=\delta^2,\qquad M_*=(1-14x)^{-1},\qquad
+V_*=\frac{7x}{3-10x},\qquad q=\frac{219}{1000}.
+\tag{CDR6}
+$$
+
+GAK3–GAK6 give positive denominators, full support in $(.99,1.01)$,
+$\mathbb EC^{-1}\le M_*$ and $\operatorname{Var}C\le V_*$.
+GAK41/GAK47's normalized scalar base is independent of $k$:
+
+$$
+q_*:=\frac{7/32+(20/51)\delta/(1-x)}{1-x}<q.
+$$
+
+Consequently the actual complex response satisfies
+$|H_C(\rho)|<q^7$ throughout $|\gamma|>H$, for all actual real
+parts. The head retains its bound $M_*$. The full integrated
+coefficient $F_A$, its GAK12 remainder and the absolute exchange
+in GAK15 are retained. In particular the tail needs no extra $M_*$.
+
+The complete allowances, using the same remainder factors as GAD6, are
+
+$$
+\begin{aligned}
+U_h&=\frac{108}{107}\frac{527}{500}\frac1{20}M_*,\\
+U_t&=\frac{108}{107}\frac{10001}{10000}q^7(1900),\\
+U_v&=\frac{260001}{500000}rV_*,\qquad
+U_e=\frac{5M_*}{10^{23}}.
+\end{aligned}
+\tag{CDR7}
+$$
+
+The GAK26 estimate $\eta_0(A)<10^{-6}$ and $\sqrt A>10^{23}$
+hold on the entire slab. Thus GAK23 gives the original signed integral,
+with its cutoff atoms, directed transport and full elementary response,
+
+$$
+-T_AI_\psi(A)<U_h+U_t+U_v+U_e<\frac{161}{200},
+\qquad T_A=\sqrt A L.
+\tag{CDR8}
+$$
+
+Sufficient exact rational comparisons are
+$U_h<.0532$, $U_t<.0464$, $U_v<.7014$ and
+$U_e<6\cdot10^{-23}$; their sum is less than $161/200$.
+The gain in high-zero mass is used to reduce smoothing order and hence
+variance cost. No zero-phase cancellation or favorable sample is assumed.
+
+### Keep the unrestricted reserve and each integer's own defect
+
+For every integer in (CDR1), take its own $A=\log n$ and
+$\lambda=1/(AL)$. Reuse exactly GAK37 and GAK39, including its
+nonnegative unrestricted-price defect $d_A(n)$ and
+$Q_R=67838284064811/83593750000000$. Since
+$Q_R-161/200>1/200$, (CDR8) implies, under all stated premises,
+
+$$
+T_A\left[\gamma+\log L-\log\frac{\sigma(n)}n\right]
+ >\frac1{200}+\frac{L}{(L+2)^3}+T_Ad_A(n)>0.
+\tag{CDR9}
+$$
+
+Here $\gamma$ denotes Euler's constant, not a zero ordinate. This is
+the strict Robin inequality for each integer in the slab. No CA or
+maximizer selection is required and no defect is set to zero. The earlier
+GAD slab is reused at its original scope; (CDR9) does not establish Robin
+for every smaller integer or give a least-counterexample bound.
+
+For this fixed $H$ and positive-variance law, the transport allowance
+still grows with $\sqrt A$. The additional strip premise therefore
+does not close the unbounded signed estimate or prove RH.
+
+The [existing rational certificate, extended with the capped scenario](https://github.com/the-omega-institute/trureturing-experiments/tree/a0f4aeb56177d88284985f07f51cf4c32d2f19b3/experiments/robin-density-transport-3e47)
+checks the logarithm and power enclosures, support, normalization and
+complete numerical allowances. Its baseline numerical result is preserved.
+These finite checks do not certify the external analytic premises or the
+complete inference in Lean.
