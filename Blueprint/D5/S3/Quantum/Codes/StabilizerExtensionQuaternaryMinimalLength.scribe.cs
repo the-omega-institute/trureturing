@@ -16,7 +16,7 @@ internal sealed class StabilizerExtensionQuaternaryMinimalLengthDocument : IScri
         H("A quaternary refutation of the length-five extension expectation"),
         Blocks(
             Node("tr", "The trace map on the quaternary field", TrFormula(),
-                "For an element x of K 1, tr x is x + x squared. The carrier K 1 is the four-element field 𝔽₄; this is the trace used in the source's identification of the quaternary label alphabet with 𝔽₄ (MzWi_Ext_Th.tex, lines 211–215)."),
+                "The carrier K 1 is the four-element field 𝔽₄, and tr x = x + x squared is its trace to the binary subfield. The label alphabet HilbertPhase (K 1) is A₄ = 𝔽₄² in the source's notation (MzWi_Ext_Th.tex, lines 211–217)."),
             Node("symp", "The trace-symplectic pairing", SympFormula(),
                 "For two vectors u and v of labels, sum the determinant-like terms u_i.1 v_i.2 − v_i.1 u_i.2 and apply tr. The carrier HilbertPhase (K 1) is the label alphabet 𝔽₄², and the expression is the coordinate form of the trace-symplectic pairing in the source (MzWi_Ext_Th.tex, lines 211–215)."),
             Node("selfOrthogonal", "Trace-symplectic self-orthogonality", SelfOrthogonalFormula(),
@@ -125,6 +125,9 @@ internal sealed class StabilizerExtensionQuaternaryMinimalLengthDocument : IScri
     private static Formula Imp(Formula left, Formula right) =>
         new Formula.Logic(Parenthesized(left), FormulaLogicOperator.Implies, Parenthesized(right));
 
+    private static Formula IffF(Formula left, Formula right) =>
+        new Formula.Logic(Parenthesized(left), FormulaLogicOperator.Iff, Parenthesized(right));
+
     private static Formula Add(Formula left, Formula right) =>
         new Formula.Binary(Parenthesized(left), FormulaBinaryOperator.Add, Parenthesized(right));
 
@@ -191,7 +194,8 @@ internal sealed class StabilizerExtensionQuaternaryMinimalLengthDocument : IScri
             Member(u, c),
             All("v", Vectors(n), Imp(Member(v, c),
                 Equal(Call("symp", u, v), Typed(D(0), K1()))))));
-        return All("n", Naturals(), All("C", Code(n), body));
+        return All("n", Naturals(), All("C", Code(n),
+            IffF(Call("selfOrthogonal", c), body)));
     }
 
     private static Formula QepWitnessFormula()
@@ -210,13 +214,14 @@ internal sealed class StabilizerExtensionQuaternaryMinimalLengthDocument : IScri
         var action = Equal(
             ApplyCoordinate(Coe(At(f, u)), i),
             Smul(At(tau, i),
-                ApplyCoordinate(Coe(u), At(At(QCall("Equiv", "symm"), pi), i))));
+                ApplyCoordinate(Coe(u), At(QCall("Equiv", "symm", pi), i))));
+        var witnessBody = And(All("i", Index(n), determinant),
+            All("u", CodeType(c), All("i", Index(n), action)));
         return All("n", Naturals(),
             All("C", Code(n), All("D", Code(n),
                 All("f", AddEquiv(c, d),
                     All(pi, Permutation(n), All(tau, Arrow(Index(n), Matrix2()),
-                        And(All("i", Index(n), determinant),
-                            All("u", CodeType(c), All("i", Index(n), action)))))))));
+                        IffF(Call("qepWitness", f, pi, tau), witnessBody)))))));
     }
 
     private static Formula QepFormula()
@@ -234,11 +239,11 @@ internal sealed class StabilizerExtensionQuaternaryMinimalLengthDocument : IScri
             Call("hammingNorm", Coe(u))));
         var conclusion = Some(pi, Permutation(n),
             Some(tau, Arrow(Index(n), Matrix2()), Call("qepWitness", f, pi, tau)));
-        return All("n", Naturals(),
-            All("C", Code(n), All("D", Code(n),
-                Imp(premise,
-                    Imp(Call("selfOrthogonal", d),
-                        All("f", AddEquiv(c, d), Imp(weight, conclusion)))))));
+        var qepBody = All("C", Code(n), All("D", Code(n),
+            Imp(premise,
+                Imp(Call("selfOrthogonal", d),
+                    All("f", AddEquiv(c, d), Imp(weight, conclusion))))));
+        return All("n", Naturals(), IffF(Call("QEP", n), qepBody));
     }
 
     private static Formula QepAddFormula()
@@ -257,26 +262,25 @@ internal sealed class StabilizerExtensionQuaternaryMinimalLengthDocument : IScri
         var action = Equal(
             ApplyCoordinate(Coe(At(f, u)), X("i")),
             At(At(tau, X("i")),
-                ApplyCoordinate(Coe(u), At(At(QCall("Equiv", "symm"), pi), X("i")))));
+                ApplyCoordinate(Coe(u), At(QCall("Equiv", "symm", pi), X("i")))));
         var coordinateEquation = All("u", CodeType(c), All("i", Index(n), action));
         var conclusion = Some(pi, Permutation(n),
             Some(tau, Arrow(Index(n), Call("AddEquiv", Labels(), Labels())),
                 coordinateEquation));
-        return All("n", Naturals(),
-            All("C", Code(n), All("D", Code(n),
-                Imp(premise,
-                    Imp(Call("selfOrthogonal", d),
-                        All("f", AddEquiv(c, d), Imp(weight, conclusion)))))));
+        var addBody = All("C", Code(n), All("D", Code(n),
+            Imp(premise,
+                Imp(Call("selfOrthogonal", d),
+                    All("f", AddEquiv(c, d), Imp(weight, conclusion))))));
+        return All("n", Naturals(), IffF(Call("QEPAdd", n), addBody));
     }
 
     private static Formula SetOfFailures(string predicate)
     {
         var n = X("n");
-        return new Formula.SetBuilder(
+        return Seq(OpenBrace, n, Sp, Colon, Sp, Naturals(), Sp, Mid, Sp,
             And(LessOrEqual(Typed(D(1), Naturals()), n),
                 new Formula.Not(Parenthesized(Call(predicate, n)))),
-            n,
-            Naturals());
+            CloseBrace);
     }
 
     private static Formula ClaimFormula()
