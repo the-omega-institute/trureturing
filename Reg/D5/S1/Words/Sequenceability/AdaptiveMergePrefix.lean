@@ -44,7 +44,7 @@ private theorem rejected_law : ¬ arena.{u}.Law rejected := by
     have hi2 : i < 2 := by omega
     have hc : (i=0 ∧ j=1) ∨ (i=0 ∧ j=2) ∨ (i=1 ∧ j=2) := by omega
     rcases hc with hc | hc | hc <;> rcases hc with ⟨rfl,rfl⟩ <;>
-      norm_num [prefixSum] at *
+      norm_num [prefixSum, _root_.D5.S1.Words.Sequenceability.SeparatedPrefixReflection.pref] at *
     have hbad := congrArg ULift.down heq
     norm_num at hbad
   exact (@h G inferInstance [1,2]).mp hg 0 1 (by omega) (by simp)

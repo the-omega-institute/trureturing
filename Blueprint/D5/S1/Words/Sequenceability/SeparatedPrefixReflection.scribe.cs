@@ -86,6 +86,7 @@ internal sealed class SeparatedPrefixReflectionDocument : IScribeDocumentDefinit
                 Call("Good",W))),("A",FinsetG),("a",G),("b",G),("w",ListG))),
             "Omega consists of actual permutations, with no successful-expansion premise."));
         blocks.Add(RepairNode());
+        blocks.AddRange(GenericSupplierNodes());
         blocks.Add(Paragraph(Text("The strict cone is extra structure. A nonempty strict cone cannot exist "
             + "in a finite group, and the nonempty block interior supplies a cone element. This result "
             + "does not settle finite torsion, unrestricted adaptive AM, or the original arbitrary-subset, "
@@ -111,6 +112,52 @@ internal sealed class SeparatedPrefixReflectionDocument : IScribeDocumentDefinit
         return DocumentDefinition.Create(ScribeNode.Create(
             "Separated reflection and repair in the SAME legal compression space.",
             H("Affine prefix geometry on actual words"),Blocks([.. blocks])));
+    }
+
+    private static DocumentBlock[] GenericSupplierNodes()
+    {
+        var l=X("L"); var r=X("R"); var x=X("x");
+        var joined=Call("append",l,r);
+        var old=Call("append",l,Call("cons",Add(Aa,Bb),r));
+        var expanded=Call("append",l,Call("cons",Aa,Call("cons",Bb,r)));
+        var prefixGood=B(Imp(And(Lt(I,J),Le(J,Len(W)),Eq(P(W,I),P(W,J))),
+            And(Eq(I,D(0)),Eq(J,Len(W)))),("i",Nat),("j",Nat));
+        var legalInventory=And(Call("mem",Aa,A),Call("mem",Bb,A),Ne(Aa,Bb),
+            Not(Call("mem",Add(Aa,Bb),A)),
+            Call("Perm",W,Call("toList",Call("compressed",A,Aa,Bb))),
+            Lt(T,Len(W)),Eq(Call("getElem",W,T),Add(Aa,Bb)));
+        return [
+            Theorem("good_iff","Original proper-interval and prefix equivalence",Group(B(
+                Iff(Call("Good",W),prefixGood),("w",ListG))),
+                "AdaptiveMergePrefix.good_iff_proper_intervals consumes this original equivalence in reverse. "
+                + "Only empty/full equality is exempt, including at zero total."),
+            Theorem("pref_append_left","Prefix before an append cut",Group(B(
+                Imp(Le(J,Len(l)),Eq(P(joined,J),P(l,J))),
+                ("L",ListG),("R",ListG),("j",Nat))),
+                "Consumed by AdaptiveMergePrefix.bad_expand_implies_collision to identify a left suffix collision. "
+                + "This is the original normalization helper."),
+            Theorem("pref_append_right","Prefix after an append cut",Group(B(
+                Imp(Le(Len(l),J),Eq(P(joined,J),Add(Sum(l),P(r,Sub(J,Len(l)))))),
+                ("L",ListG),("R",ListG),("j",Nat))),
+                "Consumed by AdaptiveMergePrefix.bad_expand_implies_collision to identify a right prefix collision. "
+                + "Both the append cut and the full cut are included."),
+            Theorem("mem_inventory","An inventory value has an actual bounded cut",Group(B(
+                Iff(Call("mem",x,Inv(W)),Ex("j",Nat,And(Le(J,Len(W)),Eq(P(W,J),x)))),
+                ("w",ListG),("x",G))),
+                "AdaptiveMergePrefix.bad_expand_implies_collision consumes the original finite-image equivalence. "
+                + "All cuts, including empty and full, are represented."),
+            Theorem("expansion_good","A fresh inserted value preserves proper intervals",Group(B(
+                Imp(And(Call("Good",old),Not(Call("mem",Add(Sum(l),Aa),Inv(old)))),
+                    Call("Good",expanded)),("L",ListG),("R",ListG),("a",G),("b",G))),
+                "This original theorem is used contrapositively by AdaptiveMergePrefix.bad_expand_implies_collision. "
+                + "It has no separation or strict-cone hypothesis and includes empty sides and zero-total words."),
+            Theorem("expansion_inventory","The prescribed expansion restores the original alphabet",Group(B(
+                Imp(legalInventory,Call("Perm",Call("expandAt",W,T,Aa,Bb),Call("toList",A))),
+                ("A",FinsetG),("a",G),("b",G),("w",ListG),("t",Nat))),
+                "AdaptiveMergeRepair.expanded_permutation consumes the original theorem at t = length(L), "
+                + "with w = L ++ [a+b] ++ R and the actual LegalPair membership, distinctness and sum-exclusion facts. "
+                + "This is a consumed bind-only normalization helper, also used by same_pair_repair; no new-content claim is made.")
+        ];
     }
 
     private static DocumentBlock ReflectionNode()

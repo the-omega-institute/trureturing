@@ -16,6 +16,7 @@ open _root_.D5.S1.Words.Sequenceability.AdaptiveMergePrefix
 open _root_.D5.S1.Words.Sequenceability.AdaptiveMergeSignedFork
 open _root_.D5.S1.Words.Sequenceability.AdaptiveMergeZeroCrossing
 open scoped Classical BigOperators
+open _root_.D5.S1.Words.Sequenceability
 variable {G : Type*} [AddCommGroup G]
 
 /-- Legal original-label edge; the sum lies outside A and is nonzero. -/
@@ -23,14 +24,14 @@ def LegalPair (A : Finset G) (a b : G) : Prop :=
   a ∈ A ∧ b ∈ A ∧ a ≠ b ∧ a + b ∉ insert 0 A
 
 def compressedAlphabet (A : Finset G) (a b : G) : Finset G :=
-  insert (a + b) ((A.erase a).erase b)
+  SeparatedPrefixReflection.compressed A a b
 
 /-- A genuine permutation of the actual alphabet with proper intervals nonzero. -/
 def GoodOrder (A : Finset G) (w : List G) : Prop :=
   w.Perm A.toList ∧ ProperIntervals w
 
 def GoodCompression (A : Finset G) (a b : G) (L R : List G) : Prop :=
-  GoodOrder (compressedAlphabet A a b) (L ++ [a + b] ++ R)
+  SeparatedPrefixReflection.Omega A a b (L ++ [a + b] ++ R)
 
 private lemma legal_nonzero {A : Finset G} {a b : G} (hab : LegalPair A a b) :
     a ≠ 0 ∧ b ≠ 0 := by
@@ -78,52 +79,13 @@ private lemma expanded_permutation {A : Finset G} {a b : G} {L R : List G}
     (hab : LegalPair A a b)
     (hp : (L ++ [a + b] ++ R).Perm (compressedAlphabet A a b).toList) :
     (L ++ [a, b] ++ R).Perm A.toList := by
-  obtain ⟨hL,hR,hLR⟩ := compression_sides hp
-  have haL : a ∉ L := fun hz =>
-    (Finset.mem_erase.mp (Finset.mem_of_mem_erase (hL.2 a hz))).1 rfl
-  have hbL : b ∉ L := fun hz => (Finset.mem_erase.mp (hL.2 b hz)).1 rfl
-  have haR : a ∉ R := fun hz =>
-    (Finset.mem_erase.mp (Finset.mem_of_mem_erase (hR.2 a hz))).1 rfl
-  have hbR : b ∉ R := fun hz => (Finset.mem_erase.mp (hR.2 b hz)).1 rfl
-  have hn : (L ++ [a, b] ++ R).Nodup := by
-    rw [List.append_assoc]
-    apply List.Nodup.append hL.1
-    · simpa using (show (a :: b :: R).Nodup by simp [hab.2.2.1,haR,hbR,hR.1])
-    · intro z hzL hzT
-      simp only [List.mem_append,List.mem_cons,List.mem_nil_iff,or_false] at hzT
-      rcases hzT with (rfl | rfl) | hzR
-      · exact haL hzL
-      · exact hbL hzL
-      · exact hLR z hzL hzR
-  apply (List.perm_ext_iff_of_nodup hn (Finset.nodup_toList A)).mpr
-  intro z
-  have hmemLR : (z ∈ L ∨ z ∈ R) ↔ z ∈ (A.erase a).erase b := by
-    constructor
-    · rintro (hz | hz)
-      · exact hL.2 z hz
-      · exact hR.2 z hz
-    · intro hz
-      have hzA := Finset.mem_of_mem_erase (Finset.mem_of_mem_erase hz)
-      have hzsum : z ≠ a+b := by
-        intro heq
-        subst z
-        exact hab.2.2.2 (Finset.mem_insert.mpr (Or.inr hzA))
-      have hzB : z ∈ (compressedAlphabet A a b).toList := by
-        simpa [compressedAlphabet] using (Finset.mem_insert.mpr (Or.inr hz) :
-          z ∈ insert (a+b) ((A.erase a).erase b))
-      have hzW := hp.mem_iff.mpr hzB
-      simpa [hzsum] using hzW
-  simp only [List.mem_append,List.mem_cons,List.mem_nil_iff,or_false,Finset.mem_toList]
-  have haA := hab.1
-  have hbA := hab.2.1
-  simp only [Finset.mem_erase] at hmemLR
-  by_cases hza : z = a
-  · subst z
-    simp [haA]
-  by_cases hzb : z = b
-  · subst z
-    simp [hbA]
-  simpa [hza,hzb] using hmemLR
+  let w := L ++ [a + b] ++ R
+  have ht : L.length < w.length := by simp [w]
+  have he : w[L.length] = a + b := by simp [w]
+  have hex := SeparatedPrefixReflection.expansion_inventory A a b hab.1 hab.2.1 hab.2.2.1
+    (fun hz => hab.2.2.2 (Finset.mem_insert_of_mem hz)) w hp ht he
+  have hdrop : L.drop (L.length + 1) = [] := List.drop_of_length_le (by omega)
+  simpa [SeparatedPrefixReflection.expandAt, w, List.take_append, List.drop_append, hdrop] using hex
 
 /-- Every actual Good compressed order whose two actual expansions fail has a static fork. -/
 theorem failed_expansions_force_fork {A : Finset G} {a b : G} {L R : List G}
@@ -140,7 +102,7 @@ theorem failed_expansions_force_fork {A : Finset G} {a b : G} {L R : List G}
     exact habBad ⟨expanded_permutation hab hw.1,(good_iff_proper_intervals _).mp hg⟩
   · intro hg
     exact hbaBad ⟨expanded_permutation hba (by simpa [add_comm,
-      compressedAlphabet,Finset.erase_right_comm] using hw.1),
+      compressedAlphabet,SeparatedPrefixReflection.compressed,Finset.erase_right_comm] using hw.1),
       (good_iff_proper_intervals _).mp hg⟩
 
 /-- A legal edge outside the static fork graph lifts EVERY actual Good compressed order. -/
@@ -156,10 +118,10 @@ private lemma compression_witness_of_order {A : Finset G} {a b : G}
     (hw : ∃ w : List G, GoodOrder (compressedAlphabet A a b) w) :
     ∃ L R : List G, GoodCompression A a b L R := by
   rcases hw with ⟨w,hp,hg⟩
-  have hr : a+b ∈ w := hp.mem_iff.mpr (by simp [compressedAlphabet])
+  have hr : a+b ∈ w := hp.mem_iff.mpr (by simp [compressedAlphabet, SeparatedPrefixReflection.compressed])
   obtain ⟨L,R,heq⟩ := List.mem_iff_append.mp hr
   have hsplit : w = L ++ [a + b] ++ R := by simpa [List.append_assoc] using heq
-  exact ⟨L,R,by simpa [GoodCompression,GoodOrder,← hsplit] using (And.intro hp hg)⟩
+  exact ⟨L,R,by simpa [GoodCompression,GoodOrder,SeparatedPrefixReflection.Omega,compressedAlphabet,ProperIntervals,← hsplit] using (And.intro hp hg)⟩
 
 /-- Adaptive lifting retains an actual legal compression, its Good order and actual expansion. -/
 def AdaptiveLifting (A : Finset G) : Prop :=

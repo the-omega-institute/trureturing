@@ -2,7 +2,7 @@
 
 ## Abstract
 
-LegalPair requires distinct a,b in A and a+b outside A union {0}. GoodOrder A w requires w to permute exactly A.toList and every nonempty proper contiguous interval to be nonzero. GoodCompression uses precisely the compressed alphabet (A minus {a,b}) union {a+b}. The source extracts the unique merged occurrence, derives all side membership and disjointness facts from the actual permutation, proves that both adjacent expansions permute A, and applies the generic collision theorem. No desired ordering is assumed in a premise.
+LegalPair requires distinct a,b in A and a+b outside A union {0}. GoodOrder A w requires w to permute exactly A.toList and every nonempty proper contiguous interval to be nonzero. GoodCompression uses precisely the compressed alphabet (A minus {a,b}) union {a+b}. The source extracts the unique merged occurrence, derives all side membership and disjointness facts from the actual permutation, uses the original SeparatedPrefixReflection.expansion_inventory at t = length(L) to obtain the prescribed adjacent expansion permutation of A, and applies the generic collision theorem. The compressedAlphabet and GoodCompression names transparently use the original compressed and Omega definitions; GoodOrder uses the same original interval condition. The permutation specialization is a consumed bind-only adapter. No desired ordering, strict cone or separated excursion is assumed in a premise.
 
 **Theorem 1.1 (The obstruction applies to every actual compressed permutation).**
 
@@ -14,7 +14,7 @@ Lean statement: `D5/S1/Words/Sequenceability/AdaptiveMergeRepair.failed_expansio
 
 *Commentary.*
 
-LegalPair requires distinct a,b in A and a+b outside A union {0}. GoodOrder A w requires w to permute exactly A.toList and every nonempty proper contiguous interval to be nonzero. GoodCompression uses precisely the compressed alphabet (A minus {a,b}) union {a+b}. The source extracts the unique merged occurrence, derives all side membership and disjointness facts from the actual permutation, proves that both adjacent expansions permute A, and applies the generic collision theorem. No desired ordering is assumed in a premise.
+LegalPair requires distinct a,b in A and a+b outside A union {0}. GoodOrder A w requires w to permute exactly A.toList and every nonempty proper contiguous interval to be nonzero. GoodCompression uses precisely the compressed alphabet (A minus {a,b}) union {a+b}. The source extracts the unique merged occurrence, derives all side membership and disjointness facts from the actual permutation, uses the original SeparatedPrefixReflection.expansion_inventory at t = length(L) to obtain the prescribed adjacent expansion permutation of A, and applies the generic collision theorem. The compressedAlphabet and GoodCompression names transparently use the original compressed and Omega definitions; GoodOrder uses the same original interval condition. The permutation specialization is a consumed bind-only adapter. No desired ordering, strict cone or separated excursion is assumed in a premise.
 
 **Theorem 1.2 (An edge outside the static fork graph lifts every Good compressed order).**
 
