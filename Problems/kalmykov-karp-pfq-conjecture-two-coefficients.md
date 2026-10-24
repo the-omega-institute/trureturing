@@ -248,3 +248,4 @@ and priority are unverified. Numerical agreement and signs are finite
 multiprecision observations rather than proofs of a uniform statement. No
 claim about the sign of the full Turanian or log-concavity at a fixed $x$
 follows solely from the negative coefficient.
+Four-slot escape registrations of the shared public Gamma and power helpers (and, for the two-block module, of `first_coefficient_eq`) are not completed; the gap is recorded at https://github.com/the-omega-institute/trureturing/issues/20966.

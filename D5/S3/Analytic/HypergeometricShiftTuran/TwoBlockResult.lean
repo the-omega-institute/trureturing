@@ -2,7 +2,7 @@
    generality: G
    mirror-B: D5/B/S3/Analytic/HypergeometricShiftTuran/TwoBlockResult
    mirror-E: none(waiver:external-open-problem-resolution)
-   anchors: [mathlib/module/Mathlib.RingTheory.Polynomial.Pochhammer, mathlib/module/Mathlib.Analysis.Real.Pi.Bounds, mathlib/module/Mathlib.Analysis.SpecialFunctions.Gamma.BohrMollerup]
+   anchors: [mathlib/module/Mathlib.RingTheory.Polynomial.Pochhammer]
    utility: kind=certified-instance; basis=refutes=gid:D5/S3/Analytic/HypergeometricShiftTuran/TwoBlockResult.claim; result=D5/S3/Analytic/HypergeometricShiftTuran/TwoBlockResult.result; claim=D5/S3/Analytic/HypergeometricShiftTuran/TwoBlockResult.claim
    digest: A nonempty shifted numerator gives negative first coefficients for all q ≥ 7. -/
 
@@ -36,8 +36,13 @@ Shared bind-only helpers and their consumers:
 * Defs.gamma_three_seven_halves_inv_pow_mul: first_coefficient_eq,
   Result.first_coefficient_eq.
 * Defs.pi_base_bound: half_parameter_family_neg, Result.half_parameter_family_neg.
-All six shared helpers have proof_shape: bind-only and escape_witness: none.
-The decisive Mathlib facts are Real.Gamma_two, Real.Gamma_nat_eq_factorial,
+* Defs.gamma_three: Defs.gamma_two_three_inv_pow_mul, TwoBlockResult.first_coefficient_eq.
+* Defs.gamma_two_three_inv_pow_mul: Result.first_coefficient_eq, TwoBlockResult.first_coefficient_eq.
+* Defs.base_pow_mul_half_pow: Result.half_parameter_family_neg,
+  TwoBlockResult.half_parameter_family_neg.
+All nine shared helpers have proof_shape: bind-only and escape_witness: none.
+Escape audit unfinished for the public helpers: https://github.com/the-omega-institute/trureturing/issues/20966
+The decisive Mathlib facts are Real.Gamma_two (through Defs), Real.Gamma_nat_eq_factorial,
 Real.pi_lt_d2, pow_le_pow_left₀,
 pow_le_pow_right₀ and Finset.esymm_map_val.
 The module certifies a parameter instance refuting TwoBlockResult.claim, so
@@ -46,8 +51,6 @@ the utility kind is certified-instance with basis refutes.
 
 import D5.S3.Analytic.HypergeometricShiftTuran.Defs
 import Mathlib.RingTheory.Polynomial.Pochhammer
-import Mathlib.Analysis.Real.Pi.Bounds
-import Mathlib.Analysis.SpecialFunctions.Gamma.BohrMollerup
 
 noncomputable section
 open scoped BigOperators
@@ -108,13 +111,7 @@ lemma first_coefficient_eq (q : ℕ) :
       Defs.coeff (fun _ : Fin 1 => (1 : ℝ)) (fun _ : Fin q => (1 / 2 : ℝ)) t =
         Real.Gamma (1 + t) * (Real.Gamma (1 / 2 + t))⁻¹ ^ q := by
     simp [Defs.coeff, div_eq_mul_inv, inv_pow]
-  have e1 : (Real.Gamma 2)⁻¹ ^ q * (Real.Gamma 3)⁻¹ ^ q = (1 / 2 : ℝ) ^ q := by
-    rw [Real.Gamma_two,
-      show Real.Gamma (3 : ℝ) = 2 by
-        rw [show (3 : ℝ) = ((2 : ℕ) : ℝ) + 1 by norm_num, Real.Gamma_nat_eq_factorial]
-        norm_num [Nat.factorial],
-      ← mul_pow]
-    norm_num
+  have e1 := Defs.gamma_two_three_inv_pow_mul q
   have gleading : 2 * (Real.Gamma (5 / 2) * Real.Gamma (7 / 2)) =
       45 * Real.pi / 16 := by
     rw [Defs.gamma_five_halves, Defs.gamma_seven_halves]
@@ -134,9 +131,7 @@ lemma first_coefficient_eq (q : ℕ) :
     norm_num <;> ring
   rw [expand, e1, Defs.gamma_five_halves_inv_pow_mul,
     Defs.gamma_three_seven_halves_inv_pow_mul, gleading, Real.Gamma_two,
-    show Real.Gamma (3 : ℝ) = 2 by
-      rw [show (3 : ℝ) = ((2 : ℕ) : ℝ) + 1 by norm_num, Real.Gamma_nat_eq_factorial]
-      norm_num [Nat.factorial],
+    Defs.gamma_three,
     show Real.Gamma (4 : ℝ) = 6 by
       rw [show (4 : ℝ) = ((3 : ℕ) : ℝ) + 1 by norm_num, Real.Gamma_nat_eq_factorial]
       norm_num [Nat.factorial]]
@@ -159,11 +154,7 @@ theorem half_parameter_family_neg (q : ℕ) (hq : 7 ≤ q) :
         pow_le_pow_left₀ (by norm_num) hbase.le 7
   have hpower : 45 * Real.pi / 64 < (32 / (9 * Real.pi)) ^ q :=
     hseven.trans_le (pow_le_pow_right₀ hone hq)
-  have hfactor : (32 / (9 * Real.pi)) ^ q * (1 / 2 : ℝ) ^ q =
-      (16 / (9 * Real.pi)) ^ q := by
-    rw [← mul_pow]
-    congr 1
-    ring
+  have hfactor := Defs.base_pow_mul_half_pow q
   have hleading := mul_lt_mul_of_pos_right hpower
     (by positivity : 0 < (1 / 2 : ℝ) ^ q)
   rw [hfactor] at hleading
