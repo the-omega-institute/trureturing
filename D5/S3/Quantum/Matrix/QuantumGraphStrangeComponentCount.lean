@@ -6,9 +6,9 @@
    utility: none
    digest: Quantum graph components equal graph components plus loop-free isolated strange edges. -/
 
-import D5.S3.Quantum.Foundation.FiniteKrausRepresentation
 import D5.S3.Quantum.Matrix.RecordCapacity
-import Mathlib.Combinatorics.SimpleGraph.Connectivity.Finite
+import D5.S3.Quantum.Matrix.CfmRadialDerivative
+import D5.S3.Quantum.QuantumChannels.CoherenceBreakingAmendment
 
 /-! # The component count of diagonal-orthogonal quantum graphs -/
 
@@ -19,11 +19,12 @@ noncomputable section
 
 namespace D5.S3.Quantum.Matrix.QuantumGraphStrangeComponentCount
 
-open scoped BigOperators ComplexOrder
+open scoped BigOperators ComplexOrder MatrixOrder
 open _root_.Matrix
 open D5.S3.Quantum.Foundation.FiniteKrausChannel.PhyslibLeaf
 
-abbrev Mat (n : ℕ) := Matrix (Fin n) (Fin n) ℂ
+open D5.S3.Quantum.Matrix.CfmRadialDerivative (Mat)
+open D5.S3.Quantum.QuantumChannels.CoherenceBreakingAmendment (offDiag)
 
 /-- The realigned projector, with the diagonal-coordinate block diagonal. -/
 def realignedProjector {n : ℕ} (A C : Mat n) (d : Fin n → ℂ) :
@@ -35,27 +36,12 @@ def realignedProjector {n : ℕ} (A C : Mat n) (d : Fin n → ℂ) :
     else if q = (p.2, p.1) then C p.1 p.2 else 0
 
 /-- Realignment reads the first and third indices as output indices. -/
-def adjacency {n : ℕ} (A C : Mat n) (d : Fin n → ℂ) : Mat n →ₗ[ℂ] Mat n where
-  toFun Z i k := ∑ j, ∑ l, realignedProjector A C d (i, j) (k, l) * Z j l
-  map_add' X Y := by
-    funext i k
-    change (∑ j, ∑ l, realignedProjector A C d (i, j) (k, l) * (X j l + Y j l)) =
-      (∑ j, ∑ l, realignedProjector A C d (i, j) (k, l) * X j l) +
-      (∑ j, ∑ l, realignedProjector A C d (i, j) (k, l) * Y j l)
-    simp only [mul_add, Finset.sum_add_distrib]
-  map_smul' a X := by
-    funext i k
-    change (∑ j, ∑ l, realignedProjector A C d (i, j) (k, l) * (a * X j l)) =
-      a * (∑ j, ∑ l, realignedProjector A C d (i, j) (k, l) * X j l)
-    simp only [Finset.mul_sum, mul_left_comm]
+def adjacency {n : ℕ} (A C : Mat n) (d : Fin n → ℂ) : Mat n →ₗ[ℂ] Mat n :=
+  MatrixMap.of_choi_matrix (realignedProjector A C d)
 
 /-- A self-adjoint idempotent matrix. -/
 def IsOrthogonalProjector {n : ℕ} (P : Mat n) : Prop :=
   P.IsHermitian ∧ P * P = P
-
-/-- Removing the diagonal gives the matrix governing undirectedness. -/
-def offDiagonal {n : ℕ} (A : Mat n) : Mat n :=
-  fun i j => if i = j then 0 else A i j
 
 /-- Nonzero projectors resolving the identity and separating left multiplication. -/
 def HasComponents {n : ℕ} (G : Mat n →ₗ[ℂ] Mat n) (k : ℕ) : Prop :=
@@ -95,7 +81,7 @@ def claim : Prop :=
     (∀ i, A i i = d i) → (∀ i, C i i = d i) →
     (realignedProjector A C d).IsHermitian →
     realignedProjector A C d * realignedProjector A C d = realignedProjector A C d →
-    (offDiagonal A).IsHermitian →
+    (offDiag A).IsHermitian →
     IsGreatest {k | HasComponents (adjacency A C d) k}
       (graphComponentCount A C + loopFreeStrangeComponentCount A C d)
 private def column {n : ℕ} (A C : Mat n) (d : Fin n → ℂ)
@@ -132,14 +118,17 @@ private theorem xr_mul_row {n : ℕ} (A C : Mat n) (d : Fin n → ℂ)
   simp
 private theorem block_hermitian {n : ℕ} (A C : Mat n) (d : Fin n → ℂ)
     (hH : (realignedProjector A C d).IsHermitian)
-    (hU : (offDiagonal A).IsHermitian) {i j : Fin n} (hij : i ≠ j) :
+    (hU : (offDiag A).IsHermitian) {i j : Fin n} (hij : i ≠ j) :
     A j i = A i j ∧ star (A i j) = A i j ∧ C j i = star (C i j) := by
   have ha : star (A i j) = A i j := by
     simpa [realignedProjector, hij] using hH.apply (i, j) (i, j)
   have ha' : star (A j i) = A j i := by
     simpa [realignedProjector, hij.symm] using hH.apply (j, i) (j, i)
   have hu : star (A j i) = A i j := by
-    simpa [offDiagonal, hij, hij.symm] using hU.apply i j
+    have h := hU.apply i j
+    change star (if j = i then (0 : ℂ) else A j i) =
+      (if i = j then 0 else A i j) at h
+    simpa only [if_neg hij, if_neg hij.symm] using h
   have hc : star (C i j) = C j i := by
     simpa [realignedProjector, hij, hij.symm] using hH.apply (j, i) (i, j)
   exact ⟨ha'.symm.trans hu, ha, hc.symm⟩
@@ -158,7 +147,7 @@ private theorem block_equations {n : ℕ} (A C : Mat n) (d : Fin n → ℂ)
 private theorem block_cases {n : ℕ} (A C : Mat n) (d : Fin n → ℂ)
     (hH : (realignedProjector A C d).IsHermitian)
     (hI : realignedProjector A C d * realignedProjector A C d = realignedProjector A C d)
-    (hU : (offDiagonal A).IsHermitian) {i j : Fin n} (hij : i ≠ j) :
+    (hU : (offDiag A).IsHermitian) {i j : Fin n} (hij : i ≠ j) :
     (A i j = 0 ∧ A j i = 0 ∧ C i j = 0 ∧ C j i = 0) ∨
     (A i j = 1 ∧ A j i = 1 ∧ C i j = 0 ∧ C j i = 0) ∨
     (A i j = (1 / 2 : ℂ) ∧ A j i = (1 / 2 : ℂ) ∧
@@ -190,7 +179,7 @@ private theorem block_cases {n : ℕ} (A C : Mat n) (d : Fin n → ℂ)
 private theorem edge_a_ne_zero {n : ℕ} (A C : Mat n) (d : Fin n → ℂ)
     (hH : (realignedProjector A C d).IsHermitian)
     (hI : realignedProjector A C d * realignedProjector A C d = realignedProjector A C d)
-    (hU : (offDiagonal A).IsHermitian) {i j : Fin n}
+    (hU : (offDiag A).IsHermitian) {i j : Fin n}
     (hij : (underlyingGraph A C).Adj i j) : A i j ≠ 0 := by
   rcases block_cases A C d hH hI hU hij.1 with h | h | h
   · rcases h with ⟨h₁, h₂, h₃, h₄⟩
@@ -203,7 +192,7 @@ private theorem edge_a_ne_zero {n : ℕ} (A C : Mat n) (d : Fin n → ℂ)
 private theorem commutant_diagonal_edge {n : ℕ} (A C : Mat n) (d : Fin n → ℂ)
     (hH : (realignedProjector A C d).IsHermitian)
     (hI : realignedProjector A C d * realignedProjector A C d = realignedProjector A C d)
-    (hU : (offDiagonal A).IsHermitian) (P : Mat n)
+    (hU : (offDiag A).IsHermitian) (P : Mat n)
     (hcomm : ∀ q, P * column A C d q = column A C d q * P)
     {i j : Fin n} (hij : (underlyingGraph A C).Adj i j) : P i i = P j j := by
   have h := congrArg (fun M => M i j) (hcomm (i, j))
@@ -215,7 +204,7 @@ private theorem commutant_diagonal_edge {n : ℕ} (A C : Mat n) (d : Fin n → �
 private theorem commutant_support_edge {n : ℕ} (A C : Mat n) (d : Fin n → ℂ)
     (hH : (realignedProjector A C d).IsHermitian)
     (hI : realignedProjector A C d * realignedProjector A C d = realignedProjector A C d)
-    (hU : (offDiagonal A).IsHermitian) (P : Mat n)
+    (hU : (offDiag A).IsHermitian) (P : Mat n)
     (hcomm : ∀ q, P * column A C d q = column A C d q * P)
     {i j r : Fin n} (hij : (underlyingGraph A C).Adj i j) (hri : r ≠ i) (hrj : r ≠ j) :
     P r i = 0 := by
@@ -265,7 +254,7 @@ private theorem component_pair {n : ℕ} (g : SimpleGraph (Fin n)) {i j : Fin n}
 private theorem commutant_diagonal_reachable {n : ℕ} (A C : Mat n) (d : Fin n → ℂ)
     (hH : (realignedProjector A C d).IsHermitian)
     (hI : realignedProjector A C d * realignedProjector A C d = realignedProjector A C d)
-    (hU : (offDiagonal A).IsHermitian) (P : Mat n)
+    (hU : (offDiag A).IsHermitian) (P : Mat n)
     (hcomm : ∀ q, P * column A C d q = column A C d q * P)
     {i j : Fin n} (hr : (underlyingGraph A C).Reachable i j) : P i i = P j j := by
   have ht := (SimpleGraph.reachable_iff_reflTransGen i j).mp hr
@@ -277,7 +266,7 @@ private theorem commutant_diagonal_reachable {n : ℕ} (A C : Mat n) (d : Fin n 
 private theorem commutant_offdiag_exceptional {n : ℕ} (A C : Mat n) (d : Fin n → ℂ)
     (hH : (realignedProjector A C d).IsHermitian)
     (hI : realignedProjector A C d * realignedProjector A C d = realignedProjector A C d)
-    (hU : (offDiagonal A).IsHermitian) (P : Mat n) (hP : P.IsHermitian)
+    (hU : (offDiag A).IsHermitian) (P : Mat n) (hP : P.IsHermitian)
     (hcomm : ∀ q, P * column A C d q = column A C d q * P)
     {i j : Fin n} (hij : i ≠ j) (hne : P i j ≠ 0)
     (hex : ∃ u, (underlyingGraph A C).Adj i u) :
@@ -318,8 +307,8 @@ private theorem adjacency_kraus {n : ℕ} (A C : Mat n) (d : Fin n → ℂ)
     adjacency A C d Z = ∑ q, column A C d q * Z * (column A C d q)ᴴ := by
   have hc : MatrixMap.choi_matrix (adjacency A C d) = realignedProjector A C d := by
     ext ⟨i, j⟩ ⟨k, l⟩
-    change (∑ a, ∑ b, realignedProjector A C d (i, a) (k, b) *
-      Matrix.single j l (1 : ℂ) a b) = realignedProjector A C d (i, j) (k, l)
+    change (∑ a, ∑ b, Matrix.single j l (1 : ℂ) a b *
+      realignedProjector A C d (i, a) (k, b)) = realignedProjector A C d (i, j) (k, l)
     simp [Matrix.single, ite_and]
   have hk : MatrixMap.choi_matrix (MatrixMap.of_kraus (column A C d) (column A C d)) =
       realignedProjector A C d := by
@@ -334,12 +323,9 @@ private theorem adjacency_kraus {n : ℕ} (A C : Mat n) (d : Fin n → ℂ)
     using congrArg (fun F : Mat n →ₗ[ℂ] Mat n => F Z) heq
 private theorem gram_sum_zero {n : ℕ} {ι : Type*} (T : Finset ι) (K : ι → Mat n)
     (h : (∑ r ∈ T, K r * (K r)ᴴ) = 0) : ∀ r ∈ T, K r = 0 := by
-  intro r hr
-  have ht : (∑ t ∈ T, Matrix.trace (K t * (K t)ᴴ)) = 0 := by
-    simpa only [Matrix.trace_sum, Matrix.trace_zero] using congrArg Matrix.trace h
-  exact Matrix.trace_mul_conjTranspose_self_eq_zero_iff.mp
-    ((Finset.sum_eq_zero_iff_of_nonneg
-      (fun t _ => (Matrix.posSemidef_self_mul_conjTranspose (K t)).trace_nonneg)).mp ht r hr)
+  simpa only [Matrix.self_mul_conjTranspose_eq_zero] using
+    (Finset.sum_eq_zero_iff_of_nonneg
+      (fun r (_ : r ∈ T) => (Matrix.posSemidef_self_mul_conjTranspose (K r)).nonneg)).mp h
 private theorem resolution_orthogonal {n k : ℕ} (P : Fin k → Mat n)
     (hP : ∀ s, IsOrthogonalProjector (P s)) (hsum : (∑ s, P s) = 1) :
     ∀ s t, s ≠ t → P s * P t = 0 := by
@@ -429,15 +415,10 @@ private theorem commutant_reduction {n : ℕ} (A C : Mat n) (d : Fin n → ℂ)
     apply (separating_iff (column A C d) (P s) (P t) (hP s).1 (hP t).1).mpr ?_ Z
     intro q
     rw [hcomm s q, Matrix.mul_assoc, ho s t hst, Matrix.mul_zero]
-private def representative {n : ℕ} (g : SimpleGraph (Fin n)) (Q : g.ConnectedComponent) : Fin n :=
-  Classical.choose Q.exists_rep
-private theorem representative_spec {n : ℕ} (g : SimpleGraph (Fin n))
-    (Q : g.ConnectedComponent) : g.connectedComponentMk (representative g Q) = Q :=
-  Classical.choose_spec Q.exists_rep
 private theorem exceptional_other_exists {n : ℕ} (A C : Mat n) (d : Fin n → ℂ)
     (Q : {Q : (underlyingGraph A C).ConnectedComponent // IsLoopFreeStrangeComponent A C d Q}) :
     ∃ j, (underlyingGraph A C).connectedComponentMk j = Q.val ∧
-      j ≠ representative (underlyingGraph A C) Q.val := by
+      j ≠ Q.val.out := by
   obtain ⟨i, j, hij, hpair, hrest⟩ := Q.prop
   have hi : (underlyingGraph A C).connectedComponentMk i = Q.val := by
     change i ∈ Q.val.supp
@@ -447,7 +428,7 @@ private theorem exceptional_other_exists {n : ℕ} (A C : Mat n) (d : Fin n → 
     change j ∈ Q.val.supp
     rw [hpair]
     simp
-  by_cases hr : representative (underlyingGraph A C) Q.val = i
+  by_cases hr : Q.val.out = i
   · exact ⟨j, hj, by simpa only [hr] using hij.symm⟩
   · exact ⟨i, hi, Ne.symm hr⟩
 private def otherVertex {n : ℕ} (A C : Mat n) (d : Fin n → ℂ)
@@ -456,13 +437,13 @@ private def otherVertex {n : ℕ} (A C : Mat n) (d : Fin n → ℂ)
 private theorem other_vertex_spec {n : ℕ} (A C : Mat n) (d : Fin n → ℂ)
     (Q : {Q : (underlyingGraph A C).ConnectedComponent // IsLoopFreeStrangeComponent A C d Q}) :
     (underlyingGraph A C).connectedComponentMk (otherVertex A C d Q) = Q.val ∧
-      otherVertex A C d Q ≠ representative (underlyingGraph A C) Q.val :=
+      otherVertex A C d Q ≠ Q.val.out :=
   Classical.choose_spec (exceptional_other_exists A C d Q)
 private abbrev CountIndex {n : ℕ} (A C : Mat n) (d : Fin n → ℂ) :=
   (underlyingGraph A C).ConnectedComponent ⊕
     {Q : (underlyingGraph A C).ConnectedComponent // IsLoopFreeStrangeComponent A C d Q}
 private def selectedVertex {n : ℕ} (A C : Mat n) (d : Fin n → ℂ) : CountIndex A C d → Fin n
-  | Sum.inl Q => representative (underlyingGraph A C) Q
+  | Sum.inl Q => Q.out
   | Sum.inr Q => otherVertex A C d Q
 private theorem selected_vertex_injective {n : ℕ} (A C : Mat n) (d : Fin n → ℂ) :
     Function.Injective (selectedVertex A C d) := by
@@ -472,18 +453,20 @@ private theorem selected_vertex_injective {n : ℕ} (A C : Mat n) (d : Fin n →
   | inl Q =>
     cases b with
     | inl R =>
-      simp only [selectedVertex, representative_spec] at hcomp
-      exact congrArg Sum.inl hcomp
+      exact congrArg Sum.inl
+        ((Quot.out_eq Q).symm.trans (hcomp.trans (Quot.out_eq R)))
     | inr R =>
-      change representative (underlyingGraph A C) Q = otherVertex A C d R at hab
-      simp only [selectedVertex, representative_spec, (other_vertex_spec A C d R).1] at hcomp
-      exact False.elim ((other_vertex_spec A C d R).2 (hab.symm.trans (congrArg _ hcomp)))
+      change Q.out = otherVertex A C d R at hab
+      have hQR : Q = R.val :=
+        (Quot.out_eq Q).symm.trans (hcomp.trans (other_vertex_spec A C d R).1)
+      exact False.elim ((other_vertex_spec A C d R).2 (hab.symm.trans (congrArg _ hQR)))
   | inr Q =>
     cases b with
     | inl R =>
-      change otherVertex A C d Q = representative (underlyingGraph A C) R at hab
-      simp only [selectedVertex, representative_spec, (other_vertex_spec A C d Q).1] at hcomp
-      exact False.elim ((other_vertex_spec A C d Q).2 (hab.trans (congrArg _ hcomp.symm)))
+      change otherVertex A C d Q = R.out at hab
+      have hRQ : R = Q.val :=
+        (Quot.out_eq R).symm.trans (hcomp.symm.trans (other_vertex_spec A C d Q).1)
+      exact False.elim ((other_vertex_spec A C d Q).2 (hab.trans (congrArg _ hRQ)))
     | inr R =>
       simp only [selectedVertex, (other_vertex_spec A C d Q).1,
         (other_vertex_spec A C d R).1] at hcomp
@@ -491,10 +474,10 @@ private theorem selected_vertex_injective {n : ℕ} (A C : Mat n) (d : Fin n →
 
 private theorem exceptional_supp_selected {n : ℕ} (A C : Mat n) (d : Fin n → ℂ)
     (Q : {Q : (underlyingGraph A C).ConnectedComponent // IsLoopFreeStrangeComponent A C d Q}) :
-    Q.val.supp = {representative (underlyingGraph A C) Q.val, otherVertex A C d Q} := by
+    Q.val.supp = {Q.val.out, otherVertex A C d Q} := by
   obtain ⟨i, j, hij, hpair, hrest⟩ := Q.prop
-  have hr : representative (underlyingGraph A C) Q.val ∈ Q.val.supp :=
-    representative_spec _ _
+  have hr : Q.val.out ∈ Q.val.supp :=
+    Quot.out_eq _
   have ho : otherVertex A C d Q ∈ Q.val.supp := (other_vertex_spec A C d Q).1
   have hne := (other_vertex_spec A C d Q).2
   rw [hpair] at hr ho ⊢
@@ -524,11 +507,10 @@ private theorem exceptional_mem_selected {n : ℕ} (A C : Mat n) (d : Fin n → 
 private theorem isolated_mem_selected {n : ℕ} (A C : Mat n) (d : Fin n → ℂ)
     (i : Fin n) (hi : (underlyingGraph A C).IsIsolated i) :
     i ∈ Set.range (selectedVertex A C d) := by
-  have hr : representative (underlyingGraph A C)
-      ((underlyingGraph A C).connectedComponentMk i) = i := by
+  have hr : ((underlyingGraph A C).connectedComponentMk i).out = i := by
     by_contra hne
     have hp := SimpleGraph.ConnectedComponent.exact
-      (representative_spec (underlyingGraph A C) ((underlyingGraph A C).connectedComponentMk i))
+      (Quot.out_eq ((underlyingGraph A C).connectedComponentMk i))
     obtain ⟨v, hv⟩ := hp.symm.nonempty_neighborSet_left (Ne.symm hne)
     exact hi v hv
   exact ⟨Sum.inl ((underlyingGraph A C).connectedComponentMk i), hr⟩
@@ -602,8 +584,8 @@ private theorem commutant_upper_bound_of_local {n : ℕ} (A C : Mat n) (d : Fin 
       · subst j
         let R := (underlyingGraph A C).connectedComponentMk i
         have hr : (underlyingGraph A C).Reachable i
-            (representative (underlyingGraph A C) R) :=
-          (SimpleGraph.ConnectedComponent.exact (representative_spec _ R)).symm
+            R.out :=
+          (SimpleGraph.ConnectedComponent.exact (Quot.out_eq R)).symm
         exact (hdiag (P s) (hcomm s) i _ hr).trans
           (congrArg (fun M : Matrix W W ℂ => M (Sum.inl R) (Sum.inl R)) hzero)
       · rw [← (hP s).1.1.apply i j, hz s i hi j hji, star_zero]
@@ -628,7 +610,7 @@ private theorem commutant_upper_bound {n : ℕ} (A C : Mat n) (d : Fin n → ℂ
     (hA : ∀ i, A i i = d i) (hC : ∀ i, C i i = d i)
     (hH : (realignedProjector A C d).IsHermitian)
     (hI : realignedProjector A C d * realignedProjector A C d = realignedProjector A C d)
-    (hU : (offDiagonal A).IsHermitian) (k : ℕ)
+    (hU : (offDiag A).IsHermitian) (k : ℕ)
     (h : CommutantResolution A C d k) :
     k ≤ graphComponentCount A C + loopFreeStrangeComponentCount A C d := by
   exact commutant_upper_bound_of_local A C d
@@ -679,9 +661,9 @@ private theorem component_projection_ne_zero {n : ℕ} (A C : Mat n)
     (Q : (underlyingGraph A C).ConnectedComponent) : componentProjection A C Q ≠ 0 := by
   classical
   intro hz
-  have h := congrArg (fun M => M (representative (underlyingGraph A C) Q)
-    (representative (underlyingGraph A C) Q)) hz
-  simpa [componentProjection, representative_spec] using h
+  have h := congrArg (fun M => M Q.out Q.out) hz
+  have hQ : (underlyingGraph A C).connectedComponentMk Q.out = Q := Quot.out_eq Q
+  simpa [componentProjection, hQ] using h
 
 private theorem component_projection_commutes {n : ℕ} (A C : Mat n) (d : Fin n → ℂ)
     (Q : (underlyingGraph A C).ConnectedComponent) (q : Fin n × Fin n) :
@@ -847,7 +829,7 @@ private theorem pair_commutes_all {n : ℕ} (A C : Mat n) (d : Fin n → ℂ)
 private theorem exceptional_split {n : ℕ} (A C : Mat n) (d : Fin n → ℂ)
     (hH : (realignedProjector A C d).IsHermitian)
     (hI : realignedProjector A C d * realignedProjector A C d = realignedProjector A C d)
-    (hU : (offDiagonal A).IsHermitian)
+    (hU : (offDiag A).IsHermitian)
     (Q : {Q : (underlyingGraph A C).ConnectedComponent // IsLoopFreeStrangeComponent A C d Q}) :
     Nonempty (ComponentSplit A C d Q.val) := by
   obtain ⟨i, j, hij, hpair, hadj, hhalf, hdi, hdj⟩ := Q.prop
@@ -972,7 +954,7 @@ private theorem commutant_attainment {n : ℕ} (A C : Mat n) (d : Fin n → ℂ)
     (hA : ∀ i, A i i = d i) (hC : ∀ i, C i i = d i)
     (hH : (realignedProjector A C d).IsHermitian)
     (hI : realignedProjector A C d * realignedProjector A C d = realignedProjector A C d)
-    (hU : (offDiagonal A).IsHermitian) :
+    (hU : (offDiag A).IsHermitian) :
     CommutantResolution A C d
       (graphComponentCount A C + loopFreeStrangeComponentCount A C d) := by
   exact resolution_from_splits A C d
