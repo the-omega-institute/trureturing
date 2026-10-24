@@ -1,9 +1,0 @@
-fingerprints:
-  raw_sha256: sha256:6129b2305cbdff18216de0308f8c57295af985f7b67fc005f75f1aafef895c27
-  normalized_sha256: sha256:6129b2305cbdff18216de0308f8c57295af985f7b67fc005f75f1aafef895c27
-cas_ref: sha256:6129b2305cbdff18216de0308f8c57295af985f7b67fc005f75f1aafef895c27
-coverage_gids:
-  - gid: D5/S3/Weil/Pick/UniversalNormalizedSaturationCell.universal_normalized_saturation_cell
-    target_statement_id: sha256:b968d7d386f91f123cadaa55a61e424a3221dd2da34d7428618273cf566dbb4c
-receipts:
-  unresolved_subitems: []

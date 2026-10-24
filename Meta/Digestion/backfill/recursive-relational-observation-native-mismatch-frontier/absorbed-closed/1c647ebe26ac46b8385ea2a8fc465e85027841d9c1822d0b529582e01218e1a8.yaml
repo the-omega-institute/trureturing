@@ -1,9 +1,0 @@
-fingerprints:
-  raw_sha256: sha256:1c647ebe26ac46b8385ea2a8fc465e85027841d9c1822d0b529582e01218e1a8
-  normalized_sha256: sha256:1c647ebe26ac46b8385ea2a8fc465e85027841d9c1822d0b529582e01218e1a8
-cas_ref: sha256:1c647ebe26ac46b8385ea2a8fc465e85027841d9c1822d0b529582e01218e1a8
-coverage_gids:
-  - gid: D5/S3/Arith/FibonacciAtomic/Geometry/NativeMismatchContraction.two_step_contraction
-    target_statement_id: sha256:9c791745145a04493d1accbfeb64e905d3b8fc7654184f69637a124e35eadf65
-receipts:
-  unresolved_subitems: []

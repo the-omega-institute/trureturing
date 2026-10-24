@@ -1,9 +1,0 @@
-fingerprints:
-  raw_sha256: sha256:42e8107cfff216ff1cd358145e10f6b8bb9292561c5885568712e1927c57be72
-  normalized_sha256: sha256:42e8107cfff216ff1cd358145e10f6b8bb9292561c5885568712e1927c57be72
-cas_ref: sha256:42e8107cfff216ff1cd358145e10f6b8bb9292561c5885568712e1927c57be72
-coverage_gids:
-  - gid: D5/S3/Quantum/FockSpace/ForbiddenNeighbourDeterminant.forbidden_neighbour_determinant
-    target_statement_id: sha256:ca9c31a7ee092c9c494d71d3381505b3397f6d34419eba169b3ca126b18a9a32
-receipts:
-  unresolved_subitems: []

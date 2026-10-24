@@ -1,9 +1,0 @@
-fingerprints:
-  raw_sha256: sha256:0046da99f46fa641501c17546899955354615038d51096dd2474dd253d255224
-  normalized_sha256: sha256:0046da99f46fa641501c17546899955354615038d51096dd2474dd253d255224
-cas_ref: sha256:0046da99f46fa641501c17546899955354615038d51096dd2474dd253d255224
-coverage_gids:
-  - gid: D5/S3/Observer/Budget/WorstCaseDepthInformationLowerBound.empty_and_singleton_depth_zero_audit
-    target_statement_id: sha256:58219c39e38c7340f81ffef53bfe8431dbcdd3e983eaf9362cc074da9120ec50
-receipts:
-  unresolved_subitems: []

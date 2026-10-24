@@ -1,9 +1,0 @@
-fingerprints:
-  raw_sha256: sha256:5a886c359ecc62edc45f55a8880c6dcba2bcaea49f22af66370040632d3c35bc
-  normalized_sha256: sha256:5a886c359ecc62edc45f55a8880c6dcba2bcaea49f22af66370040632d3c35bc
-cas_ref: sha256:5a886c359ecc62edc45f55a8880c6dcba2bcaea49f22af66370040632d3c35bc
-coverage_gids:
-  - gid: D5/S3/Factorization/Galois/GoldenCubicCommonCompletionAndGalois.actual_common_cubic_three_completion_collapses
-    target_statement_id: sha256:3aad7e8e5bcb05b073ef160d2b6e924e0387a05d7b84785eb4e48f36e8dcbff7
-receipts:
-  unresolved_subitems: []

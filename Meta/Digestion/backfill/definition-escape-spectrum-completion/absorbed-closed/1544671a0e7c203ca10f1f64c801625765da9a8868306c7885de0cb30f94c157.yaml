@@ -1,9 +1,0 @@
-fingerprints:
-  raw_sha256: sha256:1544671a0e7c203ca10f1f64c801625765da9a8868306c7885de0cb30f94c157
-  normalized_sha256: sha256:1544671a0e7c203ca10f1f64c801625765da9a8868306c7885de0cb30f94c157
-cas_ref: sha256:1544671a0e7c203ca10f1f64c801625765da9a8868306c7885de0cb30f94c157
-coverage_gids:
-  - gid: D5/S3/ConceptDynamics/EscapeSpectrum/SpectrumCommitmentSettlement.spectrum_commitment_local_settlement
-    target_statement_id: sha256:f3fe6d01461511a5d6d83c82065dfd3051e113433a79121392c545f6d0bbb0be
-receipts:
-  unresolved_subitems: []

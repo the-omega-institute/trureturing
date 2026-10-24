@@ -1,2 +1,0 @@
-import Reg.D5.S3.ConceptDynamics.Completion.CommutingCompletionExchange.InformationRoot
-import Reg.D5.S3.ConceptDynamics.Completion.CommutingCompletionExchange.TemplateShadow

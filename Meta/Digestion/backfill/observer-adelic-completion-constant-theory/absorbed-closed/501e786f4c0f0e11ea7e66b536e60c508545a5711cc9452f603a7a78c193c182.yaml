@@ -1,9 +1,0 @@
-fingerprints:
-  raw_sha256: sha256:501e786f4c0f0e11ea7e66b536e60c508545a5711cc9452f603a7a78c193c182
-  normalized_sha256: sha256:501e786f4c0f0e11ea7e66b536e60c508545a5711cc9452f603a7a78c193c182
-cas_ref: sha256:501e786f4c0f0e11ea7e66b536e60c508545a5711cc9452f603a7a78c193c182
-coverage_gids:
-  - gid: D5/S3/ContinuousObservables/DerivativeParityReadout.balanced_field_reflection_odd
-    target_statement_id: sha256:8c8bbafd13653dbbb49c0a078c251c2cca167a4dc9b1fd95ac22adbf9de0a8a2
-receipts:
-  unresolved_subitems: []

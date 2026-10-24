@@ -1,9 +1,0 @@
-fingerprints:
-  raw_sha256: sha256:662728d948b9599d2edbfd0dfcf82b1d004e454962272f8eaf9aed13594f79ed
-  normalized_sha256: sha256:662728d948b9599d2edbfd0dfcf82b1d004e454962272f8eaf9aed13594f79ed
-cas_ref: sha256:662728d948b9599d2edbfd0dfcf82b1d004e454962272f8eaf9aed13594f79ed
-coverage_gids:
-  - gid: D5/S3/Observer/LinearMemory/ObservabilityGramianKernelEnergy.observability_gramian_kernel_energy
-    target_statement_id: sha256:bb746bc34f26cf8a93188c00529e9a499b3bd1e1a119f572df2ba0e667106209
-receipts:
-  unresolved_subitems: []
