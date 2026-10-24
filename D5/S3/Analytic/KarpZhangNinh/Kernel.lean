@@ -68,7 +68,7 @@ def pairPoch (a b c : ℝ) (N k : ℕ) : ℝ :=
 lemma a_continuous (n : ℕ) : Continuous (a n) := by
   by_cases hn : n = 0
   · subst n
-    change Continuous (fun _ : ℝ => 0)
+    change Continuous (fun _ : ℝ => (0 : ℝ))
     exact continuous_const
   · change Continuous (fun t : ℝ => if n = 0 then 0 else
       (ascPochhammer ℝ (3*n)).eval t / ((3*n-1).factorial:ℝ))

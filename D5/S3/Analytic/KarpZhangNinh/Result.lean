@@ -29,7 +29,7 @@ namespace D5.S3.Analytic.KarpZhangNinh.Result
 open Kernel
 
 /-- The finite Cauchy coefficient; the zero endpoints vanish. -/
-/- proof_shape: bind-only definition; consumer: result. -/
+/- proof_shape: bind-only definition; consumer: claim, result. -/
 def delta (f : ℕ → ℝ) (μ α β : ℝ) (m : ℕ) : ℝ :=
   ∑ k ∈ range (m+1), f k * f (m-k) * raw μ α β m k
 
@@ -67,7 +67,7 @@ private theorem central_tail_of_sign (K : ℕ → ℝ) (m q : ℕ) (hq : 2*q≤m
     split_ifs <;> norm_num <;> omega
 
 
-/- proof_shape: bind-only definition; consumer: lift_normalization, Z_symm, full_tail_nonneg. -/
+/- proof_shape: bind-only definition; consumer: lift_normalization, Z_symm, Z_monotoneOn, full_tail_nonneg. -/
 def Z (m : ℕ) (u v : ℝ) : ℝ :=
   ∑ k ∈ range (m+1), a k u * a (m-k) v
 
@@ -76,8 +76,7 @@ private theorem factorial_product (n : ℕ) (hn : 0<n) :
     (n.factorial:ℝ) = n * ((n-1).factorial:ℝ) := by
   exact_mod_cast (Nat.mul_factorial_pred (Nat.ne_of_gt hn)).symm
 
-/- proof_shape: content; escape_witness: normalization_term (factorial computation);
-consumer: lift_normalization. -/
+/- proof_shape: bind-only; escape_witness: none; consumer: lift_normalization. -/
 private theorem normalization_term (m k : ℕ) (hk : k≤m) (u v : ℝ) :
     Homogeneous.coeff (3*m) (3*k) * (ascPochhammer ℝ (3*k)).eval u *
       (ascPochhammer ℝ (3*m-3*k)).eval v =
@@ -88,7 +87,7 @@ private theorem normalization_term (m k : ℕ) (hk : k≤m) (u v : ℝ) :
   by_cases hkm : k=m
   · subst k
     simp [Homogeneous.coeff,a]
-  have hsub : 3*m-3*k=3*(m-k) := by omega
+  have hsub : 3*m-3*k=3*(m-k) := (Nat.mul_sub_left_distrib 3 m k).symm
   have hfac := congrArg (fun n:ℕ => (n:ℝ))
     (Nat.choose_mul_factorial_mul_factorial (by omega : 3*k≤3*m))
   simp only [Nat.cast_mul] at hfac
@@ -105,7 +104,7 @@ private theorem normalization_term (m k : ℕ) (hk : k≤m) (u v : ℝ) :
   simp only [Nat.cast_mul, Nat.cast_ofNat, Nat.cast_sub hk]
   ring
 
-/- proof_shape: content; escape_witness: normalization_term; consumer: Z_monotoneOn. -/
+/- proof_shape: bind-only; escape_witness: none; consumer: Z_monotoneOn. -/
 private theorem lift_normalization (m : ℕ) (u v : ℝ) :
     Beta.lift (Homogeneous.coeff (3*m)) (3*m) u v = ((3*m).factorial:ℝ) * Z m u v := by
   unfold Beta.lift Z
@@ -196,7 +195,7 @@ private theorem full_tail_nonneg (m : ℕ) {μ α β : ℝ}
         rw [he, show S-(μ+β)=μ+α by dsimp [S]; ring, Z_symm]
     exact sub_nonneg.mpr (hright ▸ H)
   · have hm' : m=0 ∨ m=1 := by omega
-    rcases hm' with rfl | rfl <;> simp [raw, sum_range_succ]
+    rcases hm' with rfl | rfl <;> simp [raw, a, sum_range_succ]
 
 /- proof_shape: bind-only; consumer: tail_nonneg. -/
 private theorem tail_nonneg_pos (m q : ℕ) (hq : 2*q≤m) {μ α β : ℝ}

@@ -168,15 +168,12 @@ Karp–Zhang developments.
   log-convex nor coefficient-wise log-concave for $r\ge4$ by numerical
   computations. These are attributed source computations, not a formal
   all-parameter refutation or a new local experiment.
-- **OPEN:** A multiplier-four positivity theorem is not supplied by
-  single-sign-change alone; that sign mechanism also holds for four,
-  while the homogeneous positivity input fails there. The multiplier-three
-  assertion does not certify the source's stronger suggestion for every
-  multiplier greater than four.
-- **OPEN:** Coefficientwise positivity in all degrees of the full sheared
-  rising-factorial derivative quotient is stronger than the balancing
-  inequality and is not implied by beta lifting. Joint log-concavity of
-  arbitrary interval convolutions is neither asserted nor needed.
+- **OPEN:** The homogeneous positivity argument uses trisection. No formal
+  multiplier-four refutation or theorem for every multiplier greater than
+  four is included; the numerical failure boundary retains its source attribution.
+- **OPEN:** All-degree coefficient positivity of the full sheared
+  rising-factorial derivative quotient and joint log-concavity of arbitrary
+  interval convolutions are outside the settled claim.
 - **PROVED:** The exact multiplier-three conclusion
   resolves the source's remaining case; the source's multiplier-two result
   and reported multiplier-four failure keep their respective scopes.
@@ -184,10 +181,9 @@ Karp–Zhang developments.
 ## ASSUMED-UNVERIFIED
 
 Exhaustive literature coverage, citation-index completeness and priority
-are unverified. The source and literature checks in the preregistration
-are coordinating-line evidence, not a fresh online search by this offline
-implementation seat. The paper-proof attribution is also supplied by that
-line. Local compilation, freezing, publication and required CI are distinct.
+are unverified. The preregistration supplies the prior literature checks
+and attribution of the research proof. No new online search is included.
+Kernel compilation does not establish freezing, publication or required CI.
 The new public theorems have no completed four-slot escape registrations;
 the missing owner registrations are associated with preregistration #21124.
 The Proved Scribe resolution node requires a frozen declaration for

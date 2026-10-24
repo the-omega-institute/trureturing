@@ -33,20 +33,22 @@ open D5.S3.Analytic.KummerRatio.BetaIntegral
 open D5.S3.Analytic.IncompleteBeta.Comparison
 
 /- proof_shape: bind-only definition; escape_witness: none;
-consumer: polynomial_continuous, lift_eq_betaMean, lift_monotoneOn. -/
+consumer: lift_eq_betaMean, lift_monotoneOn, polynomial_continuous,
+polynomial_symm, Result.Z_monotoneOn. -/
 /-- A homogeneous polynomial written in its degree-`N` monomial basis. -/
 def polynomial (c : ℕ → ℝ) (N : ℕ) (x y : ℝ) : ℝ :=
   ∑ k ∈ Finset.range (N + 1), c k * x ^ k * y ^ (N - k)
 
 /- proof_shape: bind-only definition; escape_witness: none;
-consumer: lift_continuous, lift_eq_betaMean, lift_monotoneOn, Result.lift_normalization. -/
+consumer: lift_continuous, lift_eq_betaMean, lift_monotoneOn, lift_symm,
+Result.Z_monotoneOn, Result.lift_normalization. -/
 /-- The rising-factorial lift of a homogeneous polynomial. -/
 def lift (c : ℕ → ℝ) (N : ℕ) (u v : ℝ) : ℝ :=
   ∑ k ∈ Finset.range (N + 1),
     c k * (ascPochhammer ℝ k).eval u * (ascPochhammer ℝ (N - k)).eval v
 
 /- proof_shape: bind-only; escape_witness: none;
-consumer: lift_eq_betaMean, lift_monotoneOn. -/
+consumer: lift_monotoneOn. -/
 theorem polynomial_continuous (c : ℕ → ℝ) (N : ℕ) :
     Continuous (fun t : ℝ => polynomial c N t (1 - t)) := by
   unfold polynomial
