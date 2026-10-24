@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:df282e00a146c86bbe93b00cddde214923220995d9b6b57591c4833f06982150
+  normalized_sha256: sha256:df282e00a146c86bbe93b00cddde214923220995d9b6b57591c4833f06982150
+cas_ref: sha256:df282e00a146c86bbe93b00cddde214923220995d9b6b57591c4833f06982150
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 规定不预用 Fibonacci 下标的实验流程，并列出聚类步骤。
+    previous_atom_id: ae0c011d6d157a51105aa062ab34e3496c480d267e07ac6aed4aba6d41d9cd7e
+    next_atom_id: 5d55ca0aa9f7ec6b9ceb7ca95a1f6571d3718d293cbfe6b8d566da307a6a6261

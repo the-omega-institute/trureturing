@@ -1,0 +1,32 @@
+**定义 8.1（联合线性来源与未来探针）。** 固定有限维实内积空间 $J$ 作为声明的联合状态域，生成元为实际线性 $U_a:J\to J$，当前读出
+
+$$
+C x=(\langle p_1,x\rangle_J,\langle p_2,x\rangle_J,
+\langle p_3,x\rangle_J)^{\mathsf T},
+\qquad E_0=\operatorname{span}\{p_1,p_2,p_3\}.
+$$
+
+本节先允许独立但非正交的 $p_i$。几何向量 $e_i\in K$ 与联合探针 $p_i\in J$ 是不同类型；§10 才构造它们的兼容识别。设
+
+$$
+E_{m+1}=E_m+\operatorname{span}_{a\in\mathscr A}U_a^*E_m,
+\qquad E_\infty=\bigcup_{m\ge0}E_m.
+$$
+
+这里“和”是有限线性组合的空间和，菜单可无限。词的约定与第 1.1 条相同，$U_w=U_{a_n}\cdots U_{a_1}$。从 $E_0$ 开始归纳可得
+
+$$
+E_m=\operatorname{span}\{U_w^*p_i:|w|\le m,\ i=1,2,3\}.
+$$
+
+归纳步中 $U_a^*U_w^*=(U_wU_a)^*=U_{aw}^*$，对应先执行 $a$ 再执行 $w$，覆盖所有新增长度的词。递增链在有限维 $J$ 中有限步稳定；一旦 $E_{m+1}=E_m$，生成元伴随已保持该空间，后续不再增长。
+
+以下线性完成计算消费 [OBS] §12 的正交对偶和 §8 的全生成元语义：
+
+$$
+N_\infty=\bigcap_w\ker(CU_w)=E_\infty^\perp,
+\qquad Q_{\rm pred}=J/N_\infty.
+$$
+
+证明。$z\in\ker(CU_w)$ 当且仅当对全部 $i$，$\langle p_i,U_wz\rangle_J=\langle U_w^*p_i,z\rangle_J=0$；对全部词取交即得。$N_\infty$ 被每个 $U_a$ 保持，因为 $CU_wU_az=CU_{aw}z=0$。因此商承载诱导更新与当前读出；两个联合态的全部未来相等当且仅当其差在 $N_\infty$。任一保全部未来的线性摘要 $L$ 都有 $\ker L\subseteq N_\infty$，所以其像满射到此商，维数不小于 $\dim E_\infty$。这只是最小线性预测商，不是完整联合态恢复。
+

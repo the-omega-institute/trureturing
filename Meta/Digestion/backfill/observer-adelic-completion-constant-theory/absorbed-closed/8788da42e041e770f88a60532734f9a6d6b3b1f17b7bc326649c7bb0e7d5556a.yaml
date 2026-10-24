@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:8788da42e041e770f88a60532734f9a6d6b3b1f17b7bc326649c7bb0e7d5556a
+  normalized_sha256: sha256:8788da42e041e770f88a60532734f9a6d6b3b1f17b7bc326649c7bb0e7d5556a
+cas_ref: sha256:8788da42e041e770f88a60532734f9a6d6b3b1f17b7bc326649c7bb0e7d5556a
+coverage_gids:
+  - gid: D5/S3/Observer/DefectModularFirstLaw/EntropyDerivativeEqualsModularGap.entropy_derivative_equals_modular_gap
+    target_statement_id: sha256:1f2344d548ee876306e54be1795a106228d12048823860396f79115e4781dc55
+receipts:
+  unresolved_subitems: []

@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:229d3b8b1c9b670a194d6c4afafe0ef7b081c059fd9b73faab1293d1c195e4f8
+  normalized_sha256: sha256:229d3b8b1c9b670a194d6c4afafe0ef7b081c059fd9b73faab1293d1c195e4f8
+cas_ref: sha256:229d3b8b1c9b670a194d6c4afafe0ef7b081c059fd9b73faab1293d1c195e4f8
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 这是观察者平行四边形恒等式的章节标题和展开方法引语；本 atom 未列出等式，后续 894.1 至 894.4 数学断言仍单独保留。
+    previous_atom_id: 061e902b02c07f0a409ac69b18019088949095419d0f27e51fb25a248a13ca10
+    next_atom_id: 9474384f9bf49c9f2128c00f7ae9bd6c7d7831fab095719998d93ffc63da3f54

@@ -4,7 +4,63 @@
 
 Butera, Federbush and Pernici (arXiv:1502.06734) ask whether the bounds Delta^k ln(i! N(i)) <= 0 for k <= 4 always hold for regular biconnected graphs, where N(i) counts the configurations of i dimers. They do not: a 6-regular biconnected graph on 28 vertices, made of four copies of K_7 minus an edge joined in a ring, has a positive fourth difference at i = 10.
 
-**Definition 1.1 (Dimer configurations).**
+**Definition 1.1 (Two edges share no vertex).**
+
+$$\forall (V : Type)(e f : Sym2 V), (EdgeDisjoint e f)\iff((\forall (v : V), (v \in e)\to(\neg (v \in f))))$$
+
+*Formalization.* `D5/S3/StatisticalMechanics/DimerVirialFourthDifferenceRefutation.EdgeDisjoint` (`✓ std3`).
+
+*Source.* Repository-derived.
+
+*Acknowledgement.* Paolo Butera; Paul Federbush; Mario Pernici (2015). *Positivity of the virial coefficients in lattice dimer models and upper bounds on the number of matchings on graphs*. DOI: [10.1016/j.physa.2015.05.106](https://doi.org/10.1016/j.physa.2015.05.106). URL: <https://arxiv.org/abs/1502.06734v2>.
+
+*Commentary.*
+
+Two unordered edges are disjoint when every endpoint of the first is absent from the second.
+
+**Definition 1.2 (Finite matchings within an edge set).**
+
+$$\forall (V : Type)[Fintype V][DecidableEq V](E : Finset (Sym2 V))(i : \mathbb{N}), matchingsIn E i = (E . powersetCard i). filter (fun (S : Finset (Sym2 V))\mapsto \forall (e : Sym2 V), e \in S \to \forall (f : Sym2 V), f \in S \to e \neq f \to EdgeDisjoint e f)$$
+
+*Formalization.* `D5/S3/StatisticalMechanics/DimerVirialFourthDifferenceRefutation.matchingsIn` (`✓ std3`).
+
+*Source.* Repository-derived.
+
+*Acknowledgement.* Paolo Butera; Paul Federbush; Mario Pernici (2015). *Positivity of the virial coefficients in lattice dimer models and upper bounds on the number of matchings on graphs*. DOI: [10.1016/j.physa.2015.05.106](https://doi.org/10.1016/j.physa.2015.05.106). URL: <https://arxiv.org/abs/1502.06734v2>.
+
+*Commentary.*
+
+The finite collection consists of all i-element edge subsets whose distinct members have disjoint endpoints.
+
+**Definition 1.3 (The cardinality of the finite matching family).**
+
+$$\forall (V : Type)[Fintype V][DecidableEq V](E : Finset (Sym2 V))(i : \mathbb{N}), cnt E i = (matchingsIn E i). card$$
+
+*Formalization.* `D5/S3/StatisticalMechanics/DimerVirialFourthDifferenceRefutation.cnt` (`✓ std3`).
+
+*Source.* Repository-derived.
+
+*Acknowledgement.* Paolo Butera; Paul Federbush; Mario Pernici (2015). *Positivity of the virial coefficients in lattice dimer models and upper bounds on the number of matchings on graphs*. DOI: [10.1016/j.physa.2015.05.106](https://doi.org/10.1016/j.physa.2015.05.106). URL: <https://arxiv.org/abs/1502.06734v2>.
+
+*Commentary.*
+
+The sequence counts the finite matching families of each size.
+
+**Theorem 1.4 (Too few vertices for a matching).**
+
+$$\forall (V : Type)[Fintype V][DecidableEq V](E : Finset (Sym2 V))(s : Finset V), (\forall (e : Sym2 V), (e \in E)\to(\forall (v : V), (v \in e)\to(v \in s)))\to (\forall (e : Sym2 V), (e \in E)\to(\neg e . IsDiag))\to \forall (i : \mathbb{N}), s . card < 2 \cdot i \to matchingsIn E i = \emptyset$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/StatisticalMechanics/DimerVirialFourthDifferenceRefutation.matchingsIn_eq_empty` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Acknowledgement.* Paolo Butera; Paul Federbush; Mario Pernici (2015). *Positivity of the virial coefficients in lattice dimer models and upper bounds on the number of matchings on graphs*. DOI: [10.1016/j.physa.2015.05.106](https://doi.org/10.1016/j.physa.2015.05.106). URL: <https://arxiv.org/abs/1502.06734v2>.
+
+*Commentary.*
+
+An i-edge matching of loop-free edges covers 2i distinct vertices. Consequently no such matching fits inside a vertex set of cardinality less than 2i.
+
+**Definition 1.5 (Dimer configurations).**
 
 $$\forall n : \mathbb{N}, \forall G : \operatorname{SimpleGraph}\left(\operatorname{Fin}\left(n\right)\right), \forall i : \mathbb{N}, \operatorname{matchingCount}\left(G, i\right) = \operatorname{card}\left(\ \{M \mid M \in \operatorname{Matching}\left(n, i\right), M \subseteq \operatorname{edgeSet}\left(G\right)\ \}\right)$$
 
@@ -16,7 +72,7 @@ $$\forall n : \mathbb{N}, \forall G : \operatorname{SimpleGraph}\left(\operatorn
 
 N(i) is the number of configurations of i dimers on G, that is, of sets of i pairwise vertex-disjoint edges of G. Here Matching(n, i) is the set of sets of i unordered, loop-free, pairwise vertex-disjoint pairs of vertices of Fin(n), and N(G, i) is the number of its elements all of whose pairs are edges of G.
 
-**Definition 1.2 (The matching number).**
+**Definition 1.6 (The matching number).**
 
 $$\forall n : \mathbb{N}, \forall G : \operatorname{SimpleGraph}\left(\operatorname{Fin}\left(n\right)\right), \operatorname{matchingNumber}\left(G\right) = \operatorname{sSup}\left(\ \{i \mid i \in \mathbb{N}, 0 < \operatorname{matchingCount}\left(G, i\right)\ \}\right)$$
 
@@ -28,7 +84,7 @@ $$\forall n : \mathbb{N}, \forall G : \operatorname{SimpleGraph}\left(\operatorn
 
 The matching number nu(G) is the maximum number of pairwise disjoint edges of G; it is the supremum of the i with N(G, i) > 0.
 
-**Definition 1.3 (Biconnected graphs).**
+**Definition 1.7 (Biconnected graphs).**
 
 $$\forall V : \operatorname{Type}, \forall G : \operatorname{SimpleGraph}\left(V\right), (\operatorname{Biconnected}\left(G\right)) \Leftrightarrow ((\operatorname{Connected}\left(G\right)) \land (\forall v : V, \operatorname{Connected}\left(\operatorname{induce}\left(\operatorname{compl}\left(\ \{v\ \}\right), G\right)\right)))$$
 
@@ -40,7 +96,7 @@ $$\forall V : \operatorname{Type}, \forall G : \operatorname{SimpleGraph}\left(V
 
 A graph is biconnected when it is connected and remains connected after deleting any one vertex: the subgraph induced on the complement of {v} is connected for every vertex v.
 
-**Definition 1.4 (The question for k at most 4).**
+**Definition 1.8 (The question for k at most 4).**
 
 $$(claim) \Leftrightarrow (\forall n : \mathbb{N}, \forall G : \operatorname{SimpleGraph}\left(\operatorname{Fin}\left(n\right)\right), (\exists d : \mathbb{N}, \operatorname{IsRegularOfDegree}\left(G, d\right)) \Rightarrow ((\operatorname{Biconnected}\left(G\right)) \Rightarrow (\forall k : \mathbb{N}, \forall i : \mathbb{N}, (2 \le k) \Rightarrow ((k \le 4) \Rightarrow ((i + k \le \operatorname{matchingNumber}\left(G\right)) \Rightarrow ((\Delta^{k} (j\mapsto\operatorname{log}\left(j! \cdot \operatorname{matchingCount}\left(G, j\right)\right)))\left(i\right) \le 0))))))$$
 
@@ -52,9 +108,9 @@ $$(claim) \Leftrightarrow (\forall n : \mathbb{N}, \forall G : \operatorname{Sim
 
 The paper's Eq. (1) is Delta^k ln(i! N(i)) <= 0 for k = 2, ..., nu and i = 0, ..., nu - k, with Delta the forward difference in i, and its Section IV B asks whether these bounds for k <= 4 are always satisfied for regular biconnected graphs. The displayed statement reads the question as a universal statement over finite simple graphs on Fin(n): regularity is the existence of a common degree d, and Delta^k is the k-th iterate of the forward difference with step 1. For k = 2 the bound follows from the Heilmann-Lieb inequality.
 
-**Theorem 1.5 (The answer is negative).**
+**Theorem 1.9 (The answer is negative).**
 
-$$\neg claim$$
+$$\neg \forall n : \mathbb{N}, \forall G : \operatorname{SimpleGraph}\left(\operatorname{Fin}\left(n\right)\right), (\exists d : \mathbb{N}, \operatorname{IsRegularOfDegree}\left(G, d\right)) \Rightarrow ((\operatorname{Biconnected}\left(G\right)) \Rightarrow (\forall k : \mathbb{N}, \forall i : \mathbb{N}, (2 \le k) \Rightarrow ((k \le 4) \Rightarrow ((i + k \le \operatorname{matchingNumber}\left(G\right)) \Rightarrow ((\Delta^{k} (j\mapsto\operatorname{log}\left(j! \cdot \operatorname{matchingCount}\left(G, j\right)\right)))\left(i\right) \le 0)))))$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/StatisticalMechanics/DimerVirialFourthDifferenceRefutation.result` (`✓ std3`). ∎
 
@@ -73,8 +129,12 @@ Take the graph on the 28 vertices x = 7b + t, with block b in {0, 1, 2, 3} and p
 ## References
 
 - Truth anchor: `D5/S3/StatisticalMechanics/DimerVirialFourthDifferenceRefutation.Biconnected`
+- Truth anchor: `D5/S3/StatisticalMechanics/DimerVirialFourthDifferenceRefutation.EdgeDisjoint`
 - Truth anchor: `D5/S3/StatisticalMechanics/DimerVirialFourthDifferenceRefutation.claim`
+- Truth anchor: `D5/S3/StatisticalMechanics/DimerVirialFourthDifferenceRefutation.cnt`
 - Truth anchor: `D5/S3/StatisticalMechanics/DimerVirialFourthDifferenceRefutation.matchingCount`
 - Truth anchor: `D5/S3/StatisticalMechanics/DimerVirialFourthDifferenceRefutation.matchingNumber`
+- Truth anchor: `D5/S3/StatisticalMechanics/DimerVirialFourthDifferenceRefutation.matchingsIn`
+- Truth anchor: `D5/S3/StatisticalMechanics/DimerVirialFourthDifferenceRefutation.matchingsIn_eq_empty`
 - Truth anchor: `D5/S3/StatisticalMechanics/DimerVirialFourthDifferenceRefutation.result`
 - Dependency: [D5/S3/Zeros/Convolution/MatchingFiber](../Zeros/Convolution/MatchingFiber.md)

@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:52844f8b4c97c031e94df68655c5b44abcea7b87bce15462c160fe309fd32ba1
+  normalized_sha256: sha256:52844f8b4c97c031e94df68655c5b44abcea7b87bce15462c160fe309fd32ba1
+cas_ref: sha256:52844f8b4c97c031e94df68655c5b44abcea7b87bce15462c160fe309fd32ba1
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: Defines the symbol P_- as the chosen negative-time projection in the surrounding setup; it asserts no projection identity, existence theorem or RH criterion.
+    previous_atom_id: c787f90c065c9687d8fe42c80f4ded617d320869cd6deb4ddc8af7529498eee3
+    next_atom_id: 6c0c645605769e2f3240774031748453b89c598e848b107f2cfc9556e3cbfe5b

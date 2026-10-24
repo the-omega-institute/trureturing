@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:14fb598941720b93c070918be4756ee710725d7b2e196eb4080fcf7c2f9a663f
+  normalized_sha256: sha256:14fb598941720b93c070918be4756ee710725d7b2e196eb4080fcf7c2f9a663f
+cas_ref: sha256:14fb598941720b93c070918be4756ee710725d7b2e196eb4080fcf7c2f9a663f
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 对偶表列举 horizon determinant、有效观察指数及符号，是术语对照，未给出等式或性质。
+    previous_atom_id: ea2839d8b870f66b6c421164c9c70268cc89ec4095f59a2a5e7b2495353efdee
+    next_atom_id: 6c9c8e5e7d8c72372a89d7fcec894bac50be50a09a18cd338ddcab892812928d

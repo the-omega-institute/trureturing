@@ -1,0 +1,49 @@
+**推论 484.3（指定平衡扇区的全部小标记完整投影）。** 在同一条件和实际 G7 范围下，取
+
+$$
+U\asymp K,\quad D=N=\sqrt K,\quad L=K^\ell,
+\quad 0<\ell<10^{-6},\qquad 7\ell<\eta<8\ell,
+\tag{484.17}
+$$
+
+其中固定 $\eta$ 满足原谱避让条件，并取
+$T_1=K^{1/100}$、$T_2=K^{1/500}$、$T_3=K^{1/1000}$。若全部所需共同成本为 $\mathcal C=K^{o(1)}$，则对每个最终 $\varepsilon>0$，先分配内部小幂后，
+
+$$
+Q_{{\rm ref},L}\ll_\varepsilon\mathcal C^2K^{2-\ell+\varepsilon},
+\qquad
+\|P_LAb\|_2^2\ll_\varepsilon\mathcal C^2K^{2-\ell+\varepsilon}
+=o(K^2)
+\tag{484.18}
+$$
+
+其中最后取 $\varepsilon<\ell/2$，$P_L$ 是同一全部小标记的实际行投影。
+
+证明。(484.11) 临界项恢复 Mellin 后的裕度为 $2\eta-12\ell>2\ell$。其余各项的裕度依次为
+
+$$
+\begin{gathered}
+\tfrac18-2\eta-12\ell,\\
+\tfrac16-4\eta-12\ell
+-\tfrac{14/3+22\eta}{100}-\tfrac{3+20\eta}{500}
+-\tfrac{4/3+18\eta}{1000},\\
+\tfrac2{500}-2\eta-12\ell,\quad
+\tfrac9{2000}-2\eta-12\ell,\\
+\tfrac{1/2+6\eta}{100}-\eta-12\ell,\qquad
+\tfrac{1+4\eta}{100}-2\eta-12\ell.
+\end{gathered}
+\tag{484.19}
+$$
+
+在 (484.17) 的整个范围内，它们均大于 $2\ell$；例如第二个大于 $11/100$，最小的 powerful-tail 裕度大于 $39/10000$。保留 $\ell$ 作为共同节省即可分配内部小幂。原固定商空间的离散谱允许在非空区间 $(7\ell,8\ell)$ 内选择合法固定 $\eta$。
+
+另保留 §482 的留数输入及 §483 的连续原分子输入，将所有成本纳入同一包络。它们在本尺度和同一 $\eta$ 下有更大的正裕度。由同一精确分解
+
+$$
+\|P_LAb\|_2^2
+=\|G_L^{-1/2}(w_L+e_L^0+e_L^{\rm ref})\|_2^2
+\tag{484.20}
+$$
+
+使用有限和平方范数界，得到 (484.18)。完整补空间仍是同一个未被上述估计控制的 $\|(I-P_L)Ab\|_2^2$；其他长度、高度、原 growing-height allowance、F4 transfer 和 signed Robin restoration 也未由本推论供应。RH 与全部 $n>5040$ 的严格 Robin 不等式仍未由此推出。证毕。
+

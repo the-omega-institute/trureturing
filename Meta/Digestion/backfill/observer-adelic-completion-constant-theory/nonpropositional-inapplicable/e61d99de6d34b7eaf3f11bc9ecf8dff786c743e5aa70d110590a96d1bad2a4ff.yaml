@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:e61d99de6d34b7eaf3f11bc9ecf8dff786c743e5aa70d110590a96d1bad2a4ff
+  normalized_sha256: sha256:e61d99de6d34b7eaf3f11bc9ecf8dff786c743e5aa70d110590a96d1bad2a4ff
+cas_ref: sha256:e61d99de6d34b7eaf3f11bc9ecf8dff786c743e5aa70d110590a96d1bad2a4ff
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: Names bandwidth/support estimates as a research tool; no specific estimate is asserted.
+    previous_atom_id: d75b5e3897e371cdb2a9868aeec79cfd3048efbb5210d3f69c7e70e468841f1b
+    next_atom_id: 2bd5092aa684ce8959610a7b6bfe26e8c7a1714e3714bf7ac6a73e16c00810e3

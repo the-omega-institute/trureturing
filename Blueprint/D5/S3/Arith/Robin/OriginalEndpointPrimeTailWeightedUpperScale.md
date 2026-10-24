@@ -20,7 +20,20 @@ For u>=4, T<=9log(4)/(sqrt(u)log(u)). The original sharp local price upper bound
 
 Together with the existing positive complete-tail lower bound, this identifies the same endpoint tail's inverse square-root logarithmic scale. No density or PNT premise is supplied. The Mertens and logarithmic-clock terms in the exact original Robin residual still require joint sign control; this upper estimate does not prove the full Robin inequality or RH.
 
+**Theorem 1.2 (The actual higher-exponent part decays on the two-thirds scale).**
+
+Lean statement: `D5/S3/Arith/Robin/OriginalEndpointPrimeTailWeightedUpperScale.endpoint_higher_tail_le_eight_log4_rpow`
+
+*Proof.* Machine-checked in Lean as `D5/S3/Arith/Robin/OriginalEndpointPrimeTailWeightedUpperScale.endpoint_higher_tail_le_eight_log4_rpow` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+For the same q>0, original endpoint and u>=4, sum the complete layerTail(N,p) over exactly the actual support primes with factorization exponent at least two. This sum is at most 8log(4)/(u^(2/3)log(u)). At r=2u^(1/3), weighted price and theta control pay at most 4log(4)/(u^(2/3)log(u)) for the small part. On the large part the existing elementary logarithm remainder gives layerTail<=9/(8p^3); since p>r, reuse the finite reciprocal-square band bound with one extra factor 1/r. This pays 27log(4)/(8u^(2/3)log(u)); the resulting coefficient 59/8 is at most eight. The subset is the endpoint's actual exponent classification, and each retained summand is its complete original local Euler tail. No exponent cap, density hypothesis, replaced integer or final Robin sign is supplied. The remaining Robin residual terms and RH remain open.
+
 ## References
 
+- Truth anchor: `D5/S3/Arith/Robin/OriginalEndpointPrimeTailWeightedUpperScale.endpoint_higher_tail_le_eight_log4_rpow`
 - Truth anchor: `D5/S3/Arith/Robin/OriginalEndpointPrimeTailWeightedUpperScale.endpoint_tail_le_nine_log4_sqrt_log`
 - Dependency: [D5/S3/Arith/Robin/OriginalEndpointPrimeTail](OriginalEndpointPrimeTail.md)

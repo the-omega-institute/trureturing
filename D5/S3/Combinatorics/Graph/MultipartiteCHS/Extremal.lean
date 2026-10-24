@@ -6,6 +6,7 @@
    utility: none
    digest: Coefficient comparison and strict extremal partitions for multipartite reciprocal sequences. -/
 
+import D5.S3.Combinatorics.Graph.MultipartiteCHS.Defs
 import D5.S3.Combinatorics.Graph.MultipartiteCHS.Recurrence
 import Mathlib.Data.Set.Equitable
 import Mathlib.Logic.Equiv.Fintype
@@ -91,7 +92,7 @@ private lemma recH_sameParts {r : ℕ} {a b : Fin r → ℕ}
   · exact recH_mono _ _ (fun j _ => (esymmParts_perm b σ j).le) d
   · exact recH_mono _ _ (fun j _ => (esymmParts_perm b σ j).ge) d
 
-private lemma esymm_cons (x : ℕ) (s : Multiset ℕ) (k : ℕ) :
+lemma esymm_cons (x : ℕ) (s : Multiset ℕ) (k : ℕ) :
     (x ::ₘ s).esymm (k + 1) = s.esymm (k + 1) + x * s.esymm k := by
   simp [Multiset.esymm, Multiset.sum_map_mul_left]
 
