@@ -55,10 +55,61 @@ def claim : Prop :=
         (vacuumIndex N) (vacuumIndex N)).re =
       (propagator N J μ t last last - propagator N J μ t first last).re
 
+private lemma mixed_CAR {N : ℕ} (i j : Fin N) :
+    fullC i * (fullC j)ᴴ + (fullC j)ᴴ * fullC i =
+      if i = j then (1 : FullOperator N) else 0 := by
+  by_cases h : i = j
+  · subst j
+    simpa using fullC_CAR i
+  · rw [if_neg h]
+    rcases lt_or_gt_of_ne h with h | h
+    · exact fullC_mixed_anticomm_of_lt i j h
+    · have ht := congrArg Matrix.conjTranspose (fullC_mixed_anticomm_of_lt j i h)
+      simpa only [Matrix.conjTranspose_add, Matrix.conjTranspose_mul,
+        Matrix.conjTranspose_conjTranspose, Matrix.conjTranspose_zero, add_comm] using ht
+
+private lemma creation_anticomm {N : ℕ} (i j : Fin N) :
+    (fullC i)ᴴ * (fullC j)ᴴ + (fullC j)ᴴ * (fullC i)ᴴ = 0 := by
+  let g := D5.S3.Quantum.Fermionic.FockMajoranaCarrier.majorana (N := N)
+  have hc := (majorana_clifford_and_parity N).2.2.2.1
+  have h00 := hc (i, false) (j, false)
+  have h11 := hc (i, true) (j, true)
+  have h01 := hc (i, false) (j, true)
+  have h10 := hc (i, true) (j, false)
+  have hz : (4 : ℂ) • ((fullC i)ᴴ * (fullC j)ᴴ + (fullC j)ᴴ * (fullC i)ᴴ) = 0 := by
+    calc
+      _ = (g i false * g j false + g j false * g i false) -
+          (g i true * g j true + g j true * g i true) +
+          Complex.I • ((g i false * g j true + g j true * g i false) +
+            (g i true * g j false + g j false * g i true)) := by
+        dsimp [g, D5.S3.Quantum.Fermionic.FockMajoranaCarrier.majorana]
+        simp only [mul_add, add_mul, mul_sub, sub_mul, Matrix.smul_mul, Matrix.mul_smul,
+          smul_add, smul_sub, smul_smul, Complex.I_mul_I]
+        ext s t
+        simp only [Matrix.add_apply, Matrix.sub_apply, Matrix.smul_apply, smul_eq_mul]
+        ring
+      _ = 0 := by
+        change (_ - _ + Complex.I • (_ + _)) = 0
+        rw [h00, h11, h01, h10]
+        simp
+  exact (smul_eq_zero.mp hz).resolve_left (by norm_num)
+
 private lemma quadratic_commutator {N : ℕ} (J μ : ℝ) (j : Fin N) :
     hamiltonian N J μ * (fullC j)ᴴ - (fullC j)ᴴ * hamiltonian N J μ =
       ∑ i : Fin N, hopping N J μ i j • (fullC i)ᴴ := by
-  sorry
+  have hterm (i k : Fin N) :
+      ((fullC i)ᴴ * fullC k) * (fullC j)ᴴ -
+          (fullC j)ᴴ * ((fullC i)ᴴ * fullC k) =
+        if k = j then (fullC i)ᴴ else 0 := by
+    calc
+      _ = (fullC i)ᴴ * (fullC k * (fullC j)ᴴ + (fullC j)ᴴ * fullC k) -
+          ((fullC i)ᴴ * (fullC j)ᴴ + (fullC j)ᴴ * (fullC i)ᴴ) * fullC k := by
+        noncomm_ring
+      _ = _ := by rw [mixed_CAR, creation_anticomm]; split_ifs <;> simp
+  unfold hamiltonian
+  simp only [Finset.sum_mul, Finset.mul_sum, ← Finset.sum_sub_distrib,
+    Matrix.smul_mul, Matrix.mul_smul, ← smul_sub, hterm]
+  simp
 
 private lemma creation_evolution {N : ℕ} (J μ t : ℝ) (j : Fin N) :
     evolve J μ t (fullC j)ᴴ =
@@ -84,7 +135,16 @@ private lemma parity_stationary (N : ℕ) (J μ t : ℝ) :
 
 private lemma evolve_mul {N : ℕ} (J μ t : ℝ) (A B : FullOperator N) :
     evolve J μ t (A * B) = evolve J μ t A * evolve J μ t B := by
-  sorry
+  let K := ((t : ℂ) * Complex.I) • hamiltonian N J μ
+  have hinv : NormedSpace.exp (-K) * NormedSpace.exp K = 1 := by
+    rw [← Matrix.exp_add_of_commute (-K) K (Commute.refl K).neg_left]
+    simp
+  unfold evolve
+  change NormedSpace.exp K * (A * B) * NormedSpace.exp (-K) = _
+  calc
+    _ = NormedSpace.exp K * A * (NormedSpace.exp (-K) * NormedSpace.exp K) * B *
+        NormedSpace.exp (-K) := by rw [hinv]; simp only [mul_one, mul_assoc]
+    _ = _ := by simp only [K, mul_assoc]
 
 private lemma evolve_sub {N : ℕ} (J μ t : ℝ) (A B : FullOperator N) :
     evolve J μ t (A - B) = evolve J μ t A - evolve J μ t B := by
