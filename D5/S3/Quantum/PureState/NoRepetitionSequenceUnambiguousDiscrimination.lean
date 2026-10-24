@@ -16,7 +16,6 @@ namespace D5.S3.Quantum.PureState.NoRepetitionSequenceUnambiguousDiscrimination
 
 open scoped ComplexOrder Matrix MatrixOrder
 open Matrix
-open Classical
 
 noncomputable section
 
@@ -101,7 +100,19 @@ private def kernel {N k : ℕ} (s : ℝ) : Matrix (Label N k) (Label N k) ℂ :=
 
 private lemma product_gram {N k : ℕ} (ψ : Fin N → Fin N → ℂ) (s : ℝ)
     (hψ : IsEquiangular ψ s) : gram (productState (k := k) ψ) = kernel s := by
-  sorry
+  ext x y
+  change (∑ a : Fin k → Fin N,
+    star (∏ j, ψ (x.val j) (a j)) * ∏ j, ψ (y.val j) (a j)) =
+      ∏ j, if x.val j = y.val j then 1 else (s : ℂ)
+  simp only [star_prod, ← Finset.prod_mul_distrib]
+  rw [← Fintype.prod_sum (fun (j : Fin k) (a : Fin N) =>
+    star (ψ (x.val j) a) * ψ (y.val j) a)]
+  apply Finset.prod_congr rfl
+  intro j _
+  change star (ψ (x.val j)) ⬝ᵥ ψ (y.val j) = _
+  by_cases h : x.val j = y.val j
+  · rw [if_pos h, h, hψ.1]
+  · rw [if_neg h, hψ.2 _ _ h]
 
 private lemma measurement_gram_bound {N k : ℕ}
     (φ : Label N k → (Fin k → Fin N) → ℂ)
