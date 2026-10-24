@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:affc6c28057a7962bfbc537612f068375e84102d84271bd16b5d3ba26f7732b8
+  normalized_sha256: sha256:affc6c28057a7962bfbc537612f068375e84102d84271bd16b5d3ba26f7732b8
+cas_ref: sha256:affc6c28057a7962bfbc537612f068375e84102d84271bd16b5d3ba26f7732b8
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: Atom text is a continuation/list fragment (* Weil separator；); it contains no standalone mathematical assertion to formalize.
+    previous_atom_id: d7fde53d6576328402c56ff3f4aaec83b8e7465ceaf05eb62a31b28c227bac5b
+    next_atom_id: afdfb63b5917d705bb96129c94a85cf3b2a4faf0eade927ebc977ed9d5f4dd28
