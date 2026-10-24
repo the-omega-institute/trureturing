@@ -40,11 +40,58 @@ def claim : Prop := ∀ n : ℕ, 2 ≤ n →
     (∀ i, IsBitDistribution (p i)) ∧ (∀ i, IsBitDistribution (q i)) ∧
       c = coherenceMerit n (classicalMixture n γ p q)} (1 / 4)
 
+private lemma off_diagonal {α : Type*} [DecidableEq α] (s : Finset α) (r : α → ℝ) :
+    (∑ a ∈ s, ∑ b ∈ s, if a ≠ b then r a * r b else 0) =
+      (∑ a ∈ s, r a) ^ 2 - ∑ a ∈ s, (r a) ^ 2 := by
+  have hrow (a : α) (ha : a ∈ s) :
+      (∑ b ∈ s, if a ≠ b then r a * r b else 0) =
+        r a * (∑ b ∈ s, r b) - (r a) ^ 2 := by
+    calc
+      _ = ∑ b ∈ s, (r a * r b - if b = a then (r a) ^ 2 else 0) := by
+        apply Finset.sum_congr rfl
+        intro b _
+        by_cases h : b = a
+        · subst b; simp; ring
+        · simp [h, Ne.symm h]
+      _ = _ := by rw [Finset.sum_sub_distrib, ← Finset.mul_sum]; simp [ha]
+  simp_rw [Finset.sum_congr rfl hrow]
+  rw [Finset.sum_sub_distrib, ← Finset.sum_mul]
+  ring
+
+private lemma signed_sum (n : ℕ) (f : (Fin n → Bool) → ℝ) :
+    (∑ a, (-1 : ℝ) ^ (∑ i, (a i).toNat) * f a) =
+      (∑ a ∈ Finset.univ.filter (fun a => parity a = 0), f a) -
+      ∑ a ∈ Finset.univ.filter (fun a => parity a = 1), f a := by
+  classical
+  rw [Finset.sum_filter, Finset.sum_filter, ← Finset.sum_sub_distrib]
+  apply Finset.sum_congr rfl
+  intro a _
+  rw [neg_one_pow_eq_pow_mod_two]
+  change (-1 : ℝ) ^ parity a * f a = _
+  have hm : parity a < 2 := Nat.mod_lt _ (by decide)
+  interval_cases h : parity a <;> simp [h]
+
+private lemma parity_total (n : ℕ) (f : (Fin n → Bool) → ℝ) :
+    (∑ a ∈ Finset.univ.filter (fun a => parity a = 0), f a) +
+      (∑ a ∈ Finset.univ.filter (fun a => parity a = 1), f a) = ∑ a, f a := by
+  classical
+  rw [Finset.sum_filter, Finset.sum_filter, ← Finset.sum_add_distrib]
+  apply Finset.sum_congr rfl
+  intro a _
+  have hm : parity a < 2 := Nat.mod_lt _ (by decide)
+  interval_cases h : parity a <;> simp [h]
+
 private lemma parity_reduction (n : ℕ) (r : (Fin n → Bool) → ℝ)
     (hr : ∑ a, r a = 1) :
     coherenceMerit n r = (1 / 2) * |(∑ a, (-1 : ℝ) ^ (∑ i, (a i).toNat) * r a) -
       ∑ a, (-1 : ℝ) ^ (∑ i, (a i).toNat) * (r a) ^ 2| := by
-  sorry
+  classical
+  unfold coherenceMerit
+  rw [off_diagonal, off_diagonal, signed_sum, signed_sum]
+  have ht := parity_total n r
+  rw [hr] at ht
+  congr 2
+  nlinarith
 
 private lemma mixture_factorization (n : ℕ) (γ : ℝ) (hγ : γ ∈ Set.Icc (0 : ℝ) 1)
     (p q : Fin n → Bool → ℝ) (hp : ∀ i, IsBitDistribution (p i))
