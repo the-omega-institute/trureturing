@@ -6,11 +6,14 @@
    utility: none
    digest: The sharp classical coherence bound for mixtures of two binary product laws. -/
 
-import Mathlib.Data.Real.Basic
+import Mathlib.Basic.Real.Basic
 import Mathlib.Algebra.BigOperators.Fin
-import Mathlib.Algebra.BigOperators.Ring.Finset
-import Mathlib.Algebra.Order.BigOperators.Group.Finset
-import Mathlib.Tactic
+import Mathlib.Algebra.Order.BigOperators.Ring.Finset
+import Mathlib.Tactic.GCongr
+import Mathlib.Tactic.IntervalCases
+import Mathlib.Tactic.Linarith
+
+/-! The sharp parity coherence bound for convex mixtures of two binary product laws. -/
 
 open scoped BigOperators
 
@@ -69,7 +72,7 @@ private lemma signed_sum (n : ℕ) (f : (Fin n → Bool) → ℝ) :
   rw [neg_one_pow_eq_pow_mod_two]
   change (-1 : ℝ) ^ parity a * f a = _
   have hm : parity a < 2 := Nat.mod_lt _ (by decide)
-  interval_cases h : parity a <;> simp [h]
+  interval_cases parity a <;> simp
 
 private lemma parity_total (n : ℕ) (f : (Fin n → Bool) → ℝ) :
     (∑ a ∈ Finset.univ.filter (fun a => parity a = 0), f a) +
@@ -79,7 +82,7 @@ private lemma parity_total (n : ℕ) (f : (Fin n → Bool) → ℝ) :
   apply Finset.sum_congr rfl
   intro a _
   have hm : parity a < 2 := Nat.mod_lt _ (by decide)
-  interval_cases h : parity a <;> simp [h]
+  interval_cases parity a <;> simp
 
 private lemma parity_reduction (n : ℕ) (r : (Fin n → Bool) → ℝ)
     (hr : ∑ a, r a = 1) :
@@ -276,7 +279,8 @@ private lemma attainment (n : ℕ) (hn : 2 ≤ n) :
   have hP : (∏ i, (p i false - p i true)) = 1 := by simp [p]
   have hQ : (∏ i, (q i false - q i true)) = 1 := by
     simp only [Fin.prod_univ_succ]
-    simp [q]
+    have ht (i : Fin k) : ¬ i.val + 1 + 1 < 2 := by omega
+    simp [q, ht]
   have hD : (∏ i, ((p i false - p i true + (q i false - q i true)) / 2)) = 0 := by
     apply Finset.prod_eq_zero (Finset.mem_univ (⟨0, by omega⟩ : Fin (k + 2)))
     norm_num [p, q]
