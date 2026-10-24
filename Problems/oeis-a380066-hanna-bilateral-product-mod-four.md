@@ -36,23 +36,23 @@ The two public definitions retain the literal binding conventions. The proof use
 
 ## Motivation
 
-The source is an explicitly stated, externally published conjecture (tier 1). The settling GID is `D5/S1/Recurrence/Bilateral/BilateralProductModFourUnitExponent.result`, with admission basis `open-problem-resolution (#18805; Proved)`. It is frozen by `deposit-uncovered`, without an atom or coverage step. Its Scribe contains one `OpenProblemResolutionClaim`, with resolution `Proved`.
+The source is an explicitly stated, externally published conjecture (tier 1). The settling GID is `D5/S1/Recurrence/Bilateral/BilateralProductModFourUnitExponent.result`. Its proof shape is **bind-only**. The requested admission basis is `open-problem-resolution (#18805; Proved)`, whose literature condition remains unverified. The preregistration contains the literal source, complete binding conventions, tier and screen, and predates the original delivery; its existence alone does not discharge that condition. The candidate pin records compiled identity and supplies no admission exception. Its Scribe contains one `OpenProblemResolutionClaim`, with resolution `Proved`, describing mathematical truth rather than admission completion. This delivery remains Draft mathematical WIP for admission.
 
 ## Gap
 
 The frozen `BilateralProductModFour` family supplies the summands and series construction, but its generating-equation, uniqueness and congruence theorems assume $2\le c$. Those hypotheses do not cover $c=1$.
 
-The literature screen recorded in #18805 reads the OEIS entry. The search producer reports checking classical bilateral summations (DLMF sections 17.8 and 20.5), Schlosser's arXiv:math/0302270 and Kallat's arXiv:2610.15849; those readings are producer-reported. Strehl, Discrete Mathematics 99 (1992), is not read. The screen found no proof of this conjecture in its stated scope; completeness is `ASSUMED-UNVERIFIED`.
+The current OEIS internal entry retains the literal name, conjecture and offset, and contains no proof of the conjecture. The literature screen recorded in #18805 reads the OEIS entry. The search producer reports checking classical bilateral summations (DLMF sections 17.8 and 20.5), Schlosser's arXiv:math/0302270 and Kallat's arXiv:2610.15849; those readings are producer-reported. Strehl, Discrete Mathematics 99 (1992), is not read. The current bounded screen also reads DLMF sections 17.8 and 20.5, Schlosser's arXiv:math/0302270v4, Theorem 4.1 and Corollary 4.2, and the text of Kallat's arXiv:2610.15849. The DLMF sections state bilateral hypergeometric and theta product identities; no correspondence to this implicit integral-series congruence is established. Schlosser's two identities use infinite q-shifted products and require the stated parameter conditions; no specialization to this implicit integral-series congruence is established. These selected results are not a verification of the complete paper. Kallat's text concerns weighted permutation shift congruences and contains no A380066 occurrence; no reduction of this problem to its hypotheses is established. These limited readings do not close the missing literature obligation. Completeness remains `ASSUMED-UNVERIFIED`; in particular the complete Schlosser reduction and Strehl reference have not been verified. The latter is Strehl, “Identities of Rothe–Abel–Schläfli–Hurwitz-type”, Discrete Mathematics 99 (1992), 321–340, DOI `10.1016/0012-365X(92)90379-T`; publisher full text returned HTTP 403 and the alternate text endpoint returned HTTP 400. Search-engine responses supplied a bot challenge or unrelated results, and are not a completed literature search.
 
 ## Route
 
-For each $c\ge1$, write the nonzero-index remainder as $H=S_c(A)$. Positive summands have order at least their positive index; the negative summand at $-m$ has order at least $cm^2\ge m$. The private `term_order`, `outside_zero` and `finite_window` give coefficientwise finite windows. The consumed private contraction lemmas show that the fixed-point step improves agreement by one degree. The induction in `UnitExponent.approximation_stable` stabilizes the existing approximations; `generating_fixed` and `generating_equation` establish the normalized integral solution. The private `polynomial_unique` and `generating_unique` identify every normalized integral solution with it.
+For each $c\ge1$, write the nonzero-index remainder as $H=S_c(A)$. Positive summands have order at least their positive index; the negative summand at $-m$ has order at least $cm^2\ge m$. The private `term_order`, `outside_zero` and `finite_window` give coefficientwise finite windows. The consumed private contraction lemmas show that the fixed-point step improves agreement by one degree. The induction in `UnitExponent.approximation_stable` stabilizes the existing approximations; `generating_fixed` and `generating_equation` establish the normalized integral solution. The private `polynomial_unique` directly applies frozen `PowerSeriesNormalizedContraction.exists_unique_fixed` over $\mathbb Z$ to `step c`. The normalization premise follows from `step_zero`, even without normalized input; the strict-contraction premise follows from `step_agree`, even without the generic theorem's restrictions to normalized inputs and positive degree. Both agreement predicates unfold to equality of coefficients below the degree. The generic uniqueness projection identifies the arbitrary normalized solution and the constructed `generatingSeries c` with the same witness; `polynomial_form` and `generating_fixed` certify the latter's premises. `generating_unique` transfers the literal Laurent equation to that polynomial fixed-point equation.
 
 At the fixed point, $(1+x)(1+A)(1-2H)=2$. The private `coefficient_four_dvd` establishes divisibility by four of the difference from $2/(1+x)-1$, coefficientwise. `hanna_conjecture_general` yields residue two at every positive index for all $c\ge1$; `result` specializes to the source's parameter one and transports the conclusion to every normalized integral solution.
 
 ### Declaration classification
 
-The table expands the same-delivery helper graph to frozen and pinned-upstream boundaries. Names are relative to the module namespace; the consumers are extracted from elaborated proof terms.
+The table expands the same-delivery helper graph to frozen and pinned-upstream boundaries, including `PowerSeriesNormalizedContraction.exists_unique_fixed` on the protected baseline (module statement identity `sha256:6fde09331cce748985c92e44cd8bb294c09eb2f01eeea1d646183f03ab04baf4`). Names are relative to the module namespace. Construction statements name the specified approximations, diagonal series or its coefficients, and depend on `approximation_stable`. In contrast, `result` merely asserts existence and a property of every solution: the generic theorem can supply its witness, and the equation correspondence and coefficient algebra then give the claim by binding and normalization. Thus the construction is useful, but is not an escape witness for `result`. The terminal bind-only declaration requires the external-problem exception; admission remains pending its missing literature evidence.
 
 | declaration | proof_shape | escape_witness | direct consumers |
 | --- | --- | --- | --- |
@@ -62,13 +62,13 @@ The table expands the same-delivery helper graph to frozen and pinned-upstream b
 | UnitExponent.sum_zero | bind-only | none | UnitExponent.step_agree, UnitExponent.step_zero |
 | UnitExponent.term_agree | bind-only | none | UnitExponent.sum_agree |
 | UnitExponent.sum_agree | bind-only | none | UnitExponent.step_agree |
-| UnitExponent.step_zero | bind-only | none | UnitExponent.polynomial_form |
+| UnitExponent.step_zero | bind-only | none | UnitExponent.polynomial_form, UnitExponent.polynomial_unique |
 | UnitExponent.step_agree | bind-only | none | UnitExponent.approximation_stable, UnitExponent.generating_fixed, UnitExponent.polynomial_unique |
 | UnitExponent.approximation_stable | content | UnitExponent.approximation_stable | UnitExponent.generating_agree |
 | UnitExponent.generating_agree | content | UnitExponent.approximation_stable | UnitExponent.generating_fixed |
 | UnitExponent.generating_fixed | content | UnitExponent.approximation_stable | UnitExponent.coefficient_four_dvd, UnitExponent.polynomial_form, UnitExponent.polynomial_unique |
 | UnitExponent.polynomial_form | content | UnitExponent.approximation_stable | UnitExponent.generating_equation, UnitExponent.laurent_identity |
-| UnitExponent.polynomial_unique | content | UnitExponent.polynomial_unique | UnitExponent.generating_unique |
+| UnitExponent.polynomial_unique | content | UnitExponent.approximation_stable | UnitExponent.generating_unique |
 | UnitExponent.laurent_normalization | bind-only | none | UnitExponent.laurent_window |
 | UnitExponent.laurent_window | bind-only | none | UnitExponent.equation_of_laurent, UnitExponent.generating_equation |
 | UnitExponent.laurent_identity | content | UnitExponent.approximation_stable | UnitExponent.generating_equation |
@@ -77,7 +77,7 @@ The table expands the same-delivery helper graph to frozen and pinned-upstream b
 | UnitExponent.generating_unique | content | UnitExponent.approximation_stable | result |
 | UnitExponent.coefficient_four_dvd | content | UnitExponent.approximation_stable | UnitExponent.hanna_conjecture_general |
 | UnitExponent.hanna_conjecture_general | content | UnitExponent.approximation_stable | result |
-| result | content | UnitExponent.approximation_stable |  |
+| result | bind-only | none | none |
 
 ## Falsifier
 
@@ -114,7 +114,7 @@ The integral solution is unique. The proof makes no assertion about uniqueness a
 
 ## ASSUMED-UNVERIFIED
 
-Literature completeness is `ASSUMED-UNVERIFIED`. The bilateral interpretation is the explicit coefficientwise-window convention of #18805; no analytic summability or convergence assertion is made. Rational uniqueness, the symmetry question, and parameter zero remain outside this settlement.
+The bind-only terminal result has no verified §3.2 admission exception while literature completeness is `ASSUMED-UNVERIFIED`. This is an admission gap, independent of the kernel-checked statement and the unfinished §3.9 audits. The bilateral interpretation is the explicit coefficientwise-window convention of #18805; no analytic summability or convergence assertion is made. Rational uniqueness, the symmetry question, and parameter zero remain outside this settlement.
 
 The public agreement, geometric-series, fixed-point and Laurent correspondence interface is
 owned by `D5/S1/Recurrence/Bilateral/BilateralProductModFour`. Its original statements and
