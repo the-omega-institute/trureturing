@@ -149,7 +149,7 @@ internal sealed class ActualSuzukiDomainCounterexampleDocument : IScribeDocument
                 DescribeRole.Theorem),
             Describe.Lean(
                 DescribeId.Create("actual-gamma-weight-continuity"),
-                DeclarationHandle.Create(Owner + "Symbol.finiteGammaWeight_continuous"),
+                DeclarationHandle.Create(Owner + "finiteGammaWeight_continuous"),
                 H("Continuity of the actual reference Gamma weight"),
                 StatementSource.WithoutFormula(),
                 AssessedProvenance.FromRepo(),
@@ -160,7 +160,7 @@ internal sealed class ActualSuzukiDomainCounterexampleDocument : IScribeDocument
                 DescribeRole.Theorem),
             Describe.Lean(
                 DescribeId.Create("actual-gamma-weight-quadratic-upper"),
-                DeclarationHandle.Create(Owner + "Symbol.finiteGammaWeight_quadratic_upper"),
+                DeclarationHandle.Create(Owner + "finiteGammaWeight_quadratic_upper"),
                 H("A global quadratic upper bound for the actual Gamma weight"),
                 StatementSource.WithoutFormula(),
                 AssessedProvenance.FromRepo(),

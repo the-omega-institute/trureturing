@@ -40,19 +40,7 @@ Lean statement: `D5/S3/Weil/ZetaGamma/FormCore/ActualSuzukiDomainCounterexample.
 
 For t>=0 the profile is (pi exp(t))^(9/4) times TF(pi exp(t)); for t<0 it is zero. There is no B operator. The same actual profile is identified pointwise with a time compression of the centered tent times the real lacunary cosine series used in the Fourier proof: u(t)=counterProfile(t/kappa).
 
-**Definition 1.4 (Actual positive angular Fourier convention).**
-
-Lean statement: `D5/S3/Weil/ZetaGamma/FormCore/ActualSuzukiDomainCounterexample.unitarySourceFourier`
-
-*Formalization.* `D5/S3/Weil/ZetaGamma/FormCore/ActualSuzukiDomainCounterexample.unitarySourceFourier` (`✓ std3`).
-
-*Source.* Repository-derived.
-
-*Commentary.*
-
-The actual transform is (sqrt(2*pi))^(-1) times the mathlib Fourier transform at -xi/(2*pi). Equivalently its genuine L1 integral has kernel exp(i*xi*t) and unitary angular normalization.
-
-**Definition 1.5 (Literal reference Gamma weight).**
+**Definition 1.4 (Literal reference Gamma weight).**
 
 Lean statement: `D5/S3/Weil/ZetaGamma/FormCore/ActualSuzukiDomainCounterexample.gammaWeight`
 
@@ -64,7 +52,7 @@ Lean statement: `D5/S3/Weil/ZetaGamma/FormCore/ActualSuzukiDomainCounterexample.
 
 Write p0(xi)=gammaWeight(xi). Its literal value is (2/sqrt(pi))*((xi^2+1/16)/(xi^2+25/16)) *(Re digamma(1/4+i*xi)-log(pi))+1+4*sqrt(pi). The construction proves p0(xi)>1 and max(log(abs(xi)),0)<=C0*p0(xi) with a fixed finite nonnegative C0. Thus the relative shift c=0 is admissible.
 
-**Definition 1.6 (Literal constant-shifted Gamma form domain).**
+**Definition 1.5 (Literal constant-shifted Gamma form domain).**
 
 Lean statement: `D5/S3/Weil/ZetaGamma/FormCore/ActualSuzukiDomainCounterexample.originalGammaFormDomain`
 
@@ -78,7 +66,7 @@ For a real relative shift c and source F, originalGammaFormDomain(c,F) means gen
 
 For every admissible c, p0<=p0+c+abs(c) <=(1+abs(c))*(p0+c). Consequently max(log(abs(xi)),0) <=C0*(1+abs(c))*(p0(xi)+c). Finiteness of the shifted Gamma density alone would imply finiteness of the nonnegative positive-log density. This uses the literal weight; no identification with a separate formal V structure is asserted.
 
-**Theorem 1.7 (The exact cap range is K>1).**
+**Theorem 1.6 (The exact cap range is K>1).**
 
 Lean statement: `D5/S3/Weil/ZetaGamma/FormCore/ActualSuzukiDomainCounterexample.actual_h6_gamma_domain_escape_iff`
 
@@ -102,12 +90,38 @@ For the seed, the bands of radius one around exp(4^(n+1)) are pairwise disjoint.
 
 This theorem is an infinite analytic source-domain obstruction. It asserts neither a negative complete Weil energy nor RH or a Robin conclusion. The conclusion concerns the literal simultaneous Gamma-domain obstruction on the original physical source.
 
+**Theorem 1.7 (Continuity of the actual reference Gamma weight).**
+
+Lean statement: `D5/S3/Weil/ZetaGamma/FormCore/ActualSuzukiDomainCounterexample.finiteGammaWeight_continuous`
+
+*Proof.* Machine-checked in Lean as `D5/S3/Weil/ZetaGamma/FormCore/ActualSuzukiDomainCounterexample.finiteGammaWeight_continuous` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+The literal gammaWeight is continuous on the real frequency line. The proof rewrites its density through the existing smooth mu function and uses the nonsingular rational factor.
+
+**Theorem 1.8 (A global quadratic upper bound for the actual Gamma weight).**
+
+Lean statement: `D5/S3/Weil/ZetaGamma/FormCore/ActualSuzukiDomainCounterexample.finiteGammaWeight_quadratic_upper`
+
+*Proof.* Machine-checked in Lean as `D5/S3/Weil/ZetaGamma/FormCore/ActualSuzukiDomainCounterexample.finiteGammaWeight_quadratic_upper` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+There is a real G>0 such that gammaWeight(xi)<=G*(1+xi^2) for every real xi. The proof consumes the existing digamma strip estimate and the actual rational factor bounds. The finite cosine construction consumes this estimate with its proved Fourier decay to obtain a genuinely integrable Cauchy-kernel majorant; the growth bound alone asserts no energy finiteness for arbitrary H6 sources.
+
 ## References
 
 - Truth anchor: `D5/S3/Weil/ZetaGamma/FormCore/ActualSuzukiDomainCounterexample.actualGammaProfile`
 - Truth anchor: `D5/S3/Weil/ZetaGamma/FormCore/ActualSuzukiDomainCounterexample.actual_h6_gamma_domain_escape_iff`
+- Truth anchor: `D5/S3/Weil/ZetaGamma/FormCore/ActualSuzukiDomainCounterexample.finiteGammaWeight_continuous`
+- Truth anchor: `D5/S3/Weil/ZetaGamma/FormCore/ActualSuzukiDomainCounterexample.finiteGammaWeight_quadratic_upper`
 - Truth anchor: `D5/S3/Weil/ZetaGamma/FormCore/ActualSuzukiDomainCounterexample.fullTheta`
 - Truth anchor: `D5/S3/Weil/ZetaGamma/FormCore/ActualSuzukiDomainCounterexample.gammaWeight`
 - Truth anchor: `D5/S3/Weil/ZetaGamma/FormCore/ActualSuzukiDomainCounterexample.originalGammaFormDomain`
 - Truth anchor: `D5/S3/Weil/ZetaGamma/FormCore/ActualSuzukiDomainCounterexample.originalPhysicalH6`
-- Truth anchor: `D5/S3/Weil/ZetaGamma/FormCore/ActualSuzukiDomainCounterexample.unitarySourceFourier`
+- Dependency: [D5/S3/Weil/ZetaGamma/FormCore/ActualSuzukiLacunaryProfile](ActualSuzukiLacunaryProfile.md)
