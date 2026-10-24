@@ -2,6 +2,8 @@ fingerprints:
   raw_sha256: sha256:33adf121ab8d2e3c7021f9ea4783f34e2a003ea890e9293e3adaccfb6c0f807b
   normalized_sha256: sha256:33adf121ab8d2e3c7021f9ea4783f34e2a003ea890e9293e3adaccfb6c0f807b
 cas_ref: sha256:33adf121ab8d2e3c7021f9ea4783f34e2a003ea890e9293e3adaccfb6c0f807b
-coverage_gids: []
+coverage_gids:
+  - gid: D5/S0/Tower/Champions/GoldenSurvivorClassification.golden_nat_even_or_odd
+    target_statement_id: sha256:d6a9a385270e8dd434b649327c07ed6f577107d7341aea91b1b626ad4f7c748c
 receipts:
   unresolved_subitems: []

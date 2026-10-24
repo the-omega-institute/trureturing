@@ -5,3 +5,7 @@ cas_ref: sha256:d8e9e3920c9c5be3bdaa19077d7e3be35916d911383d843b91ad7ca8ffb807eb
 coverage_gids: []
 receipts:
   unresolved_subitems: []
+  nonpropositional:
+    justification: 新的研究目标的引言，只说明后文提出三个目标，没有给出数学结论。
+    previous_atom_id: 1799e3464b436f18899e23fce5be7335e9d90093e02adab566fbf54ad6707914
+    next_atom_id: ce8250c0c2c5b24057f8d7fdbe866d94ea4dda047467128edf17c771d92d1d68
