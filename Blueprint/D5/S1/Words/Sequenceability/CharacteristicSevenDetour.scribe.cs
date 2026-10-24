@@ -50,7 +50,7 @@ internal sealed class CharacteristicSevenDetourDocument : IScribeDocumentDefinit
         Formula body = Ex("r", Call("Units", K),
             And(Ne(new Formula.Binary(Call("coe", R), FormulaBinaryOperator.Add, D(1)), D(0)),
             And(cycles, And(Call("BijOn", Call("edgeLabel", R, C), Call("univ"), outside),
-            And(Call("BijOn", Call("vertex"), Call("univ"), outside), round))));
+            And(Call("BijOn", Call("vertex"), Call("univ"), outside), round)))));
         return Disp(FieldBind(All("char", Call("CharP", K, D(7)), All("c", K, body))));
     }
 

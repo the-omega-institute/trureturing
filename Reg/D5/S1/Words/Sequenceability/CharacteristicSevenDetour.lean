@@ -107,7 +107,7 @@ def liftAudit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
   sourceSelection := some {
     owner := `D5.S1.Words.Sequenceability.CharacteristicSevenDetour
     definition := none
-    coordinates := #[0, 4, 5]
+    coordinates := #[0, 1, 4, 5]
     readouts := #[{
       path := #["body", "body", "body", "body", "body", "arg", "body", "arg", "arg", "fn", "arg", "fn", "fn", "arg"]
       stateBinder := 0
@@ -161,7 +161,9 @@ abbrev seamsArena : Arena where
 private theorem seams_bad_law : ¬ seamsArena.{u}.Law seamsBad := by
   intro h
   let K := ULift.{u} (ZMod 7)
-  obtain ⟨_, _, _, _, he, _, _, _⟩ := h K 1 1 (by simp) (by norm_num)
+  have htwo : (2 : K) ≠ 0 := (CharP.cast_eq_zero_iff K 7 2).not.mpr (by decide)
+  obtain ⟨_, _, _, _, he, _, _, _⟩ := h K 1 1 (by simp)
+    (by simpa only [Units.val_one, one_add_one_eq_two] using htwo)
   have hz : (0 : K) = 1 := by
     simpa [seamsBad, realize] using congrArg Prod.snd he
   exact zero_ne_one hz
@@ -170,7 +172,7 @@ def seamsFamily : Registration seamsArena.{u}
     (type_of% (@six_column_splice_seams.{u})) where
   actual := seamsActual
   bridge := Iff.rfl
-  variation := ⟨six_column_splice_seams, seamsBad, seams_bad_law⟩
+  variation := ⟨@six_column_splice_seams.{u}, seamsBad, seams_bad_law⟩
   sensitivity := by
     constructor
     · intro i
@@ -203,16 +205,7 @@ def seamsAudit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
   sensitivity := .absent
   partialSensitivity := none
   escapeFrom := none
-  sourceSelection := some {
-    owner := `D5.S1.Words.Sequenceability.CharacteristicSevenDetour
-    definition := none
-    coordinates := #[0, 1, 3, 4]
-    readouts := #[{
-      path := #["body", "body", "body", "body", "body", "body", "body", "arg", "arg", "arg", "arg", "fn", "arg", "fn", "arg"]
-      stateBinder := 0
-      functionOperand := true
-      stateOperand := none
-      booleanPredicate := false }] }
+  sourceSelection := none
   continuation := .unknown
   familyRecord := none
   options := #[]
@@ -308,16 +301,7 @@ def pathAudit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
   sensitivity := .absent
   partialSensitivity := none
   escapeFrom := none
-  sourceSelection := some {
-    owner := `D5.S1.Words.Sequenceability.CharacteristicSevenDetour
-    definition := none
-    coordinates := #[0, 1, 4]
-    readouts := #[{
-      path := #["body", "body", "body", "body", "body", "body", "body", "arg", "body", "arg", "body", "arg", "arg", "arg", "arg", "fn", "arg", "body", "body", "fn", "arg"]
-      stateBinder := 0
-      functionOperand := true
-      stateOperand := none
-      booleanPredicate := false }] }
+  sourceSelection := none
   continuation := .unknown
   familyRecord := none
   options := #[]

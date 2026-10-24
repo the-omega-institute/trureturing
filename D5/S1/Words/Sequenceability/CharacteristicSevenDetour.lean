@@ -250,7 +250,7 @@ def alpha (r : Kˣ) (u : K) : K := ((r : K) + 1) * u / (3 * (r : K))
 
 def beta (r : Kˣ) (u : K) : K := u - alpha r u
 
-def carrier := (Fin 6 × K) ⊕ Fin 2
+abbrev carrier := (Fin 6 × K) ⊕ Fin 2
 
 def source : carrier (K := K) := Sum.inr 0
 
@@ -288,9 +288,6 @@ private theorem alpha_equation (r : Kˣ) (u : K) :
     3 * (r : K) * alpha r u = ((r : K) + 1) * u := by
   unfold alpha
   field_simp [alpha_den_ne_zero r, char7_three_ne_zero]
-
-private theorem alpha_beta_sum (r : Kˣ) (u : K) : alpha r u + beta r u = u := by
-  simp [beta]
 
 private theorem lift_predecessor_two (r : Kˣ) (u : K) :
     lift r (-alpha r u) (5, u - 2 * alpha r u) = (0, beta r u) := by
@@ -408,8 +405,7 @@ theorem six_column_splice_seams (r : Kˣ) (u : K) (hu : u ≠ 0)
         vertexWithEndpoints u target = (0, -u)) := by
   have hkey := splice_key_apply r u hu
   refine ⟨hkey.1, hkey.2.1, hkey.2.2.1, hkey.2.2.2, ?_, ?_, ?_, ?_⟩
-  · simp [vertexWithEndpoints, predecessorOne, headTwo, vertex, column, beta,
-      alpha_beta_sum]
+  · simp [vertexWithEndpoints, predecessorOne, headTwo, vertex, column, beta]
   · have hneg : (-5 : ZMod 7) = 2 := by decide
     simp [vertexWithEndpoints, predecessorTwo, target, vertex, column, hneg]
   · simp [vertexWithEndpoints, headOne, source, vertex, column]
@@ -797,13 +793,13 @@ private theorem marked_cycle_injective (r : Kˣ) (u : K) (hu : u ≠ 0)
     | exact (h12 (by simpa [markedPoint] using h)).elim
     | exact (h21 (by simpa [markedPoint] using h)).elim
     | (have he := htarget _ (by simpa [markedPoint] using h)
-       simp [headOne, headTwo, source, target] at he)
+       simp [headOne, headTwo, source, target, Fin.ext_iff] at he)
     | (have he := htarget _ (by simpa [markedPoint] using h.symm)
-       simp [headOne, headTwo, source, target] at he)
+       simp [headOne, headTwo, source, target, Fin.ext_iff] at he)
     | (have he := hsource _ (by simpa [markedPoint] using h)
-       simp [headOne, headTwo, source, target] at he)
+       simp [headOne, headTwo, source, target, Fin.ext_iff] at he)
     | (have he := hsource _ (by simpa [markedPoint] using h.symm)
-       simp [headOne, headTwo, source, target] at he)
+       simp [headOne, headTwo, source, target, Fin.ext_iff] at he)
 
 private theorem marked_return_data (r : Kˣ) (u : K) (hu : u ≠ 0)
     (hrgen : ∀ z : Kˣ, ∃ n : ℕ, r ^ n = z) :
@@ -911,6 +907,7 @@ private theorem splice_is_cycle (r : Kˣ) (u : K) (hu : u ≠ 0)
       obtain ⟨z, hz⟩ := hmeet x
       obtain ⟨n, hn⟩ := hz.exists_nat_pow_eq
       refine ⟨z, hn ▸ ?_⟩
+      clear hn
       induction n with
       | zero => exact Perm.SameCycle.refl f x
       | succ n ih =>
@@ -930,17 +927,24 @@ private theorem splice_is_cycle (r : Kˣ) (u : K) (hu : u ≠ 0)
 
 private theorem endpoint_vertices_injective (u : K) (hu : u ≠ 0) :
     Function.Injective (vertexWithEndpoints u) := by
+  obtain ⟨_, _, _, _, hvertices, _⟩ := exists_characteristic_seven_lift K 0
   intro x y h
   rcases x with x | i <;> rcases y with y | j
-  · exact congrArg Sum.inl ((vertices_bijective K).2.1 trivial trivial h)
-  · have hn := (vertices_bijective K).1 (show x ∈ Set.univ from trivial)
-    fin_cases j <;> exact (hn (congrArg Prod.fst h)).elim
-  · have hn := (vertices_bijective K).1 (show y ∈ Set.univ from trivial)
-    fin_cases i <;> exact (hn (congrArg Prod.fst h.symm)).elim
+  · exact congrArg Sum.inl (hvertices.2.1 trivial trivial h)
+  · have hn := hvertices.1 (show x ∈ Set.univ from trivial)
+    fin_cases j <;> apply False.elim <;> apply hn <;>
+      simpa [vertexWithEndpoints] using congrArg Prod.fst h
+  · have hn := hvertices.1 (show y ∈ Set.univ from trivial)
+    fin_cases i <;> apply False.elim <;> apply hn <;>
+      simpa [vertexWithEndpoints] using congrArg Prod.fst h.symm
   · fin_cases i <;> fin_cases j
     · rfl
-    · exact (hu (congrArg Prod.snd h).symm).elim
-    · exact (hu (congrArg Prod.snd h)).elim
+    · apply False.elim
+      apply hu
+      simpa [vertexWithEndpoints] using (congrArg Prod.snd h).symm
+    · apply False.elim
+      apply hu
+      simpa [vertexWithEndpoints] using congrArg Prod.snd h
     · rfl
 
 private def originalLabel (r : Kˣ) (u : K) : carrier (K := K) → ZMod 7 × K
@@ -952,51 +956,64 @@ private def labelReindex (r : Kˣ) (u : K) : Perm (carrier (K := K)) :=
 
 private theorem label_reindex_target (r : Kˣ) (u : K) :
     labelReindex r u target = target := by
-  simp [labelReindex, Perm.mul_apply, swap_apply_def, predecessorOne,
-    predecessorTwo, source, target]
+  simp [labelReindex, Perm.mul_apply, Function.comp_apply, swap_apply_def,
+    predecessorOne, predecessorTwo, source, target, Fin.ext_iff]
 
 private theorem splice_label_reindex (r : Kˣ) (u : K) (hu : u ≠ 0)
     (hr : (r : K) + 1 ≠ 0) (x : carrier (K := K)) :
     vertexWithEndpoints u (splice r u x) - vertexWithEndpoints u x =
       originalLabel r u (labelReindex r u x) := by
-  have hs := six_column_splice_seams r u hu hr
+  obtain ⟨hq1, hq2, hqs, hqt, hl1, hl2, hls, hlt⟩ := six_column_splice_seams r u hu hr
+  have he1 : originalLabel r u (predecessorOne r u) = (2, 2 * alpha r u) := by
+    apply Prod.ext
+    · change (3 : ZMod 7) - 1 = 2
+      decide
+    · change -(-alpha r u) - (-alpha r u) = 2 * alpha r u
+      ring
+  have he2 : originalLabel r u (predecessorTwo r u) = (3, alpha r u) := by
+    change edgeLabel r (-alpha r u) (5, u - 2 * alpha r u) = _
+    unfold edgeLabel
+    rw [lift_predecessor_two]
+    apply Prod.ext
+    · change (1 : ZMod 7) - 5 = 3
+      decide
+    · change beta r u - (u - 2 * alpha r u) = alpha r u
+      dsimp [beta]
+      ring
   by_cases h1 : x = predecessorOne r u
   · subst x
-    rw [hs.1]
-    simp [labelReindex, originalLabel, Perm.mul_apply, swap_apply_def,
-      predecessorOne, predecessorTwo, source, vertexWithEndpoints, headTwo,
-      vertex, column, beta]
+    rw [hq1, hl1]
+    have hidx : labelReindex r u (predecessorOne r u) = source := by
+      simp [labelReindex, Perm.mul_apply, Function.comp_apply, swap_apply_def,
+        predecessorOne, predecessorTwo, source, Fin.ext_iff]
+    rw [hidx]
+    simp [originalLabel, source]
   by_cases h2 : x = predecessorTwo r u
   · subst x
-    rw [hs.2.1]
-    simp [labelReindex, originalLabel, Perm.mul_apply, swap_apply_def,
-      predecessorOne, predecessorTwo, source, vertexWithEndpoints, target,
-      edgeLabel, vertex, column, lift]
+    rw [hq2, hl2]
+    have hidx : labelReindex r u (predecessorTwo r u) = predecessorOne r u := by
+      simp [labelReindex, Perm.mul_apply, Function.comp_apply, swap_apply_def,
+        predecessorOne, predecessorTwo, source, Fin.ext_iff]
+    rw [hidx, he1]
   by_cases hxS : x = source
   · subst x
-    rw [hs.2.2.1]
-    have he : edgeLabel r (-alpha r u) (5, u - 2 * alpha r u) =
-        (3, alpha r u) := by
-      unfold edgeLabel
-      rw [lift_predecessor_two]
-      apply Prod.ext
-      · norm_num [vertex, column]
-      · simp [vertex, beta]
-        ring
-    simpa [labelReindex, originalLabel, Perm.mul_apply, swap_apply_def,
-      predecessorOne, predecessorTwo, source, headOne, vertexWithEndpoints,
-      vertex, column] using he.symm
+    rw [hqs, hls]
+    have hidx : labelReindex r u source = predecessorTwo r u := by
+      simp [labelReindex, Perm.mul_apply, Function.comp_apply, swap_apply_def,
+        predecessorOne, predecessorTwo, source, Fin.ext_iff]
+    rw [hidx, he2]
   by_cases hxT : x = target
   · subst x
-    rw [hs.2.2.2, label_reindex_target]
-    simp [originalLabel, vertexWithEndpoints, target, source]
+    rw [hqt, hlt, label_reindex_target]
+    simp [originalLabel, target]
   have hreindex : labelReindex r u x = x := by
-    simp only [labelReindex, Perm.mul_apply]
+    change swap (predecessorOne r u) source (swap (predecessorTwo r u) source x) = x
     rw [swap_apply_of_ne_of_ne h2 hxS, swap_apply_of_ne_of_ne h1 hxS]
   rw [hreindex]
   rcases x with v | i
-  · have hp1 : liftWithEndpoints r (-alpha r u) (predecessorOne r u) =
-        headOne r u := by simp [liftWithEndpoints, predecessorOne, headOne, lift]
+  · have hp1 : liftWithEndpoints r (-alpha r u) (predecessorOne r u) = headOne r u := by
+      change Sum.inl (lift r (-alpha r u) (0, -alpha r u)) = Sum.inl (1, alpha r u)
+      simp [lift]
     have hp2 := lift_second_head r u
     have ha : liftWithEndpoints r (-alpha r u) (Sum.inl v) ≠ headOne r u := by
       intro h
@@ -1004,11 +1021,13 @@ private theorem splice_label_reindex (r : Kˣ) (u : K) (hu : u ≠ 0)
     have hb : liftWithEndpoints r (-alpha r u) (Sum.inl v) ≠ headTwo r u := by
       intro h
       exact h2 ((liftWithEndpoints r (-alpha r u)).injective (h.trans hp2.symm))
-    have hc : liftWithEndpoints r (-alpha r u) (Sum.inl v) ≠ target := by
-      exact Sum.inl_ne_inr
-    have hd : liftWithEndpoints r (-alpha r u) (Sum.inl v) ≠ source := by
-      exact Sum.inl_ne_inr
-    simp only [splice, Perm.mul_apply]
+    have hc : liftWithEndpoints r (-alpha r u) (Sum.inl v) ≠ target := Sum.inl_ne_inr
+    have hd : liftWithEndpoints r (-alpha r u) (Sum.inl v) ≠ source := Sum.inl_ne_inr
+    change vertexWithEndpoints u
+      (swap (headOne r u) source (swap (headOne r u) target
+        (swap (headOne r u) (headTwo r u)
+          (liftWithEndpoints r (-alpha r u) (Sum.inl v))))) -
+      vertexWithEndpoints u (Sum.inl v) = originalLabel r u (Sum.inl v)
     rw [swap_apply_of_ne_of_ne ha hb, swap_apply_of_ne_of_ne ha hc,
       swap_apply_of_ne_of_ne ha hd]
     rfl
@@ -1026,7 +1045,7 @@ private theorem original_labels_bijective (r : Kˣ) (u : K)
     rcases x with v | i
     · exact Or.inl (hb.1 trivial)
     · fin_cases i
-      · exact Or.inr rfl
+      · exact Or.inr (by simp [originalLabel])
       · exact (hx rfl).elim
   constructor
   · intro x hx y hy h
@@ -1047,7 +1066,7 @@ private theorem original_labels_bijective (r : Kˣ) (u : K)
     rcases hv with hv | rfl
     · obtain ⟨x, _, hx⟩ := hb.2.2 hv
       exact ⟨Sum.inl x, Sum.inl_ne_inr, hx⟩
-    · exact ⟨source, by simp [source, target], rfl⟩
+    · exact ⟨source, by simp [source, target, Fin.ext_iff], by simp [originalLabel, source]⟩
 
 private theorem splice_labels_bijective (r : Kˣ) (u : K) (hu : u ≠ 0)
     (hr : (r : K) + 1 ≠ 0) :
@@ -1057,10 +1076,15 @@ private theorem splice_labels_bijective (r : Kˣ) (u : K) (hu : u ≠ 0)
   have hfix := label_reindex_target r u
   have hmap : ∀ x, labelReindex r u x ≠ target ↔ x ≠ target := by
     intro x
-    rw [← hfix, (labelReindex r u).injective.eq_iff]
+    constructor
+    · intro h he
+      exact h (by rw [he, hfix])
+    · intro h he
+      exact h ((labelReindex r u).injective (he.trans hfix.symm))
   have hb := original_labels_bijective r u hr
   constructor
   · intro x hx
+    change vertexWithEndpoints u (splice r u x) - vertexWithEndpoints u x ∈ _
     rw [splice_label_reindex r u hu hr]
     exact hb.1 ((hmap x).mpr hx)
   constructor
@@ -1073,7 +1097,9 @@ private theorem splice_labels_bijective (r : Kˣ) (u : K) (hu : u ≠ 0)
     refine ⟨(labelReindex r u).symm x, ?_, ?_⟩
     · apply (hmap _).mp
       simpa using hx
-    · rw [splice_label_reindex r u hu hr, Equiv.apply_symm_apply, he]
+    · change vertexWithEndpoints u (splice r u ((labelReindex r u).symm x)) -
+        vertexWithEndpoints u ((labelReindex r u).symm x) = v
+      rw [splice_label_reindex r u hu hr, Equiv.apply_symm_apply, he]
 
 /-- The actual overlapping two-head surgery gives a complete relative path.
 The bounded functions also specify vertex and label lists, including all
@@ -1109,7 +1135,7 @@ theorem exists_characteristic_seven_relative_path (K : Type*)
   let N := 6 * Nat.card K + 1
   let q := splice r u
   have hc : Fintype.card (carrier (K := K)) = N + 1 := by
-    simp [carrier, N, Nat.card_eq_fintype_card]
+    simp [carrier, N, Nat.card_eq_fintype_card, Nat.add_assoc]
   have hcycle : q.IsCycleOn (Finset.univ : Finset (carrier (K := K))) := by
     refine ⟨?_, ?_⟩
     · simpa using q.bijective.bijOn_univ
@@ -1137,11 +1163,11 @@ theorem exists_characteristic_seven_relative_path (K : Type*)
     intro n hn he
     have hi : (⟨n, by omega⟩ : Fin (N + 1)) = ⟨N, by omega⟩ :=
       einj (he.trans eN.symm)
-    have := congrArg Fin.val hi
+    have hv : n = N := congrArg (fun i : Fin (N + 1) => i.val) hi
     omega
   let v : ℕ → ZMod 7 × K := fun n => vertexWithEndpoints u (e n)
   let w : ℕ → ZMod 7 × K := fun n => v (n + 1) - v n
-  have hv0 : v 0 = (0, 0) := rfl
+  have hv0 : v 0 = (0, 0) := by simp [v, e, vertexWithEndpoints, source]
   have hvN : v N = (0, u) := by simp [v, eN, vertexWithEndpoints, target]
   have vinj : Function.Injective (fun i : Fin (N + 1) => v i.val) := by
     intro i j h
@@ -1152,7 +1178,7 @@ theorem exists_characteristic_seven_relative_path (K : Type*)
     · exact ⟨x, rfl⟩
     · fin_cases i
       · have hi : (⟨n, by omega⟩ : Fin (N + 1)) = ⟨0, by dsimp [N]; omega⟩ := einj he
-        have := congrArg Fin.val hi
+        have hv : n = 0 := congrArg (fun i : Fin (N + 1) => i.val) hi
         omega
       · exact (enotT n hnN he).elim
   have interior : Set.range (fun i : Fin (N - 1) => v (i.val + 1)) = {z | z.1 ≠ 0} := by
@@ -1191,11 +1217,12 @@ theorem exists_characteristic_seven_relative_path (K : Type*)
     have heij : e i.val = e j.val := labelbij.2.1 (enotT _ i.isLt)
       (enotT _ j.isLt) (by simpa only [hw] using hij)
     have hi : (⟨i.val, by omega⟩ : Fin (N + 1)) = ⟨j.val, by omega⟩ := einj heij
-    exact Fin.ext (congrArg Fin.val hi)
+    exact Fin.ext (congrArg (fun i : Fin (N + 1) => i.val) hi)
   have labels : Set.range (fun i : Fin N => w i.val) = {z | z.1 ≠ 0 ∨ z = (0, u)} := by
     ext z
     constructor
     · rintro ⟨i, rfl⟩
+      change w i.val ∈ _
       rw [hw]
       exact labelbij.1 (enotT _ i.isLt)
     · intro hz
@@ -1207,13 +1234,16 @@ theorem exists_characteristic_seven_relative_path (K : Type*)
           exact hx (hi.symm.trans (by rw [heq, eN]))
         have := i.isLt
         omega
-      exact ⟨⟨i.val, hiN⟩, by rw [hw, hi]; exact he⟩
+      refine ⟨⟨i.val, hiN⟩, ?_⟩
+      change w i.val = z
+      rw [hw, hi]
+      exact he
   have hsum (n : ℕ) : (∑ i ∈ Finset.range n, w i) = v n := by
-    have h := Finset.sum_range_sub v n
-    simpa only [hv0, sub_zero] using h
+    change (∑ i ∈ Finset.range n, (v (i + 1) - v i)) = v n
+    rw [Finset.sum_range_sub, show v 0 = 0 from hv0, sub_zero]
   refine ⟨v, w, hv0, hvN, vinj, interior, (fun _ _ => rfl), winj, labels,
     ?_, ?_, ?_, ?_, (fun n _ => hsum n), ?_, ?_, ?_⟩
-  · simp [N]
+  · simp [N, Nat.add_assoc]
   · simp [N]
   · exact List.nodup_ofFn.mpr vinj
   · exact List.nodup_ofFn.mpr winj
@@ -1223,7 +1253,7 @@ theorem exists_characteristic_seven_relative_path (K : Type*)
       rw [Finset.sum_Ico_eq_sub _ hab.le, hsum, hsum]
     have heq : v b = v a := sub_eq_zero.mp (hi.symm.trans hzero)
     have hij : (⟨b, by omega⟩ : Fin (N + 1)) = ⟨a, by omega⟩ := vinj heq
-    have := congrArg Fin.val hij
+    have heab : b = a := congrArg (fun i : Fin (N + 1) => i.val) hij
     omega
   · rw [hsum, hvN]
 
