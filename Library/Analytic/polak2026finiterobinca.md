@@ -2660,3 +2660,196 @@ first-layer account. It is not an additional physical reserve or a
 proved bound for that account. A FIB address may supply this same
 integer and its verified arithmetic data; the address alone supplies
 no sign in FDW10. The complete joint comparison and RH remain open.
+
+## Actual strict CA sources have a root-small own-price higher baseline
+
+This application continues the fixed-degree account FDW1--FDW11 on
+one specified actual integer family. It reuses the complete higher
+inventory and defect in [HLD1--HLD8](../ArithSums/nicolas2025comparison.md#a-root-small-debit-for-the-complete-actual-higher-layer-defect),
+the actual strict products in ACC, and their unconditional own-clock
+comparison [NP0](../ArithSums/erdosnicolas1975repartition.md#actual-strict-ca-products-at-their-own-size-price).
+The added consumer bounds this family's nonnegative higher baseline,
+which FDW10 retained without an upper estimate. No new prime theorem,
+literature priority, Lean certification or Robin sign is claimed.
+
+For sufficiently large real $x$, keep the actual strict product
+
+$$
+N_x=\prod_p p^{a_p(x)},\qquad
+ a_p(x)=\#\{j\ge1:r_{p,j}>\lambda(x)\},\qquad
+A=\log N_x,\quad L=\log A,\quad T_A=\sqrt A L,
+$$
+
+$$
+\lambda(u)=\frac1{u\log u},\qquad
+K(u)=-\lambda'(u),\qquad
+\varepsilon_x=\frac{|A-x|}{x}
+=O(e^{-a\sqrt{\log x}})=o(1)
+\tag{HCB1}
+$$
+
+for the same positive constant $a$ as NP0. Every layer and every
+simultaneous activation is retained; equality layers are excluded in
+$N_x$. In particular $A\in[x/2,2x]$ eventually. No CA optimizer is
+substituted for an arbitrary integer: this paragraph concerns the
+literal family $n=N_x$.
+
+Write $\mathcal A_2(u)$ for HLD1's complete active mass over $j\ge2$.
+HLD3 and its actual second-cutoff input give
+$\mathcal A_2(u)=O(\sqrt x)$ uniformly on $u\in[x/2,2x]$.
+The higher layers of $N_x$ already optimize the higher pressure at
+$\lambda(x)$, including the zero cost of any equality layer. Thus
+$d_2(N_x,\lambda(x))=0$ and $L_2(N_x)=\mathcal A_2(x)$ in HLD7.
+
+On this compact price interval only finitely many actual layers can
+activate. Apply the finite pressure differentiation already used in
+[NPC5](../ArithSums/erdosnicolas1975repartition.md#keep-the-exact-inventory-between-both-prices)
+to HLD1's higher pressure. It gives, in either endpoint ordering,
+
+$$
+\begin{aligned}
+G_{2,A}(N_x)&=d_2(N_x,\lambda(A))\\
+ &=\int_x^A[\mathcal A_2(u)-\mathcal A_2(x)]K(u)\,du\\
+ &=\int_{\min(x,A)}^{\max(x,A)}
+       |\mathcal A_2(u)-\mathcal A_2(x)|K(u)\,du\ge0.
+\end{aligned}
+\tag{HCB2}
+$$
+
+The strict endpoint convention changes neither the pressure integral
+nor a layer's zero benefit at equality. Monotonicity of the complete
+inventory justifies the absolute-value expression. Its integrand
+contains all higher exponent layers, rather than only the square layer.
+The uniform inventory bound and
+$K(u)=O(1/(x^2\log x))$ on this interval imply
+
+$$
+0\le G_{2,A}(N_x)\le
+\frac{C|A-x|}{x^{3/2}\log x},\qquad
+\boxed{\quad 0\le T_AG_{2,A}(N_x)\le C'\varepsilon_x=o(1).\quad}
+\tag{HCB3}
+$$
+
+These constants are uniform over all sufficiently large real $x$,
+including activation events. The conclusion requires only $A\sim x$,
+not NPC2's stronger $|A-x|=o(x^{3/4})$. It does not bound the
+complete own-price defect, whose first-layer part can remain larger.
+
+Retain precisely the fixed source and observation FDW1--FDW2.
+FDW3 and exact mass and price give the actual observed higher part
+
+$$
+T_AD_{2,A}(N_x)=2\sqrt2q_*+
+ O(L^{-1}+\varepsilon_x).
+\tag{HCB4}
+$$
+
+The nonzero signed higher-pressure term is still present. HCB3
+controls the original nonnegative baseline; it does not make the
+signed observer positive or turn HCB4 into an $o(1)$ assertion.
+
+The BPY law is nondegenerate: its mean is one and its inverse first moment
+is $m>1$. Strict convexity therefore gives
+$b=\mathbb E C^{-1/2}>1$, while XLR2 gives $b\le\sqrt m<m$.
+Consequently $q_*=(1-b)(1-b/m)<0$, and HCB4 implies
+$T_AD_{2,A}(N_x)\to2\sqrt2q_*<0$ over the whole strict CA family.
+This is a negative signed average of the actual nonnegative
+higher-defect integrands. It determines neither the full signed
+defect nor the Robin margin.
+
+### The generating-price account retains the complete tangent compensation
+
+Use the unchanged FDW6 cuts at the original source's own $A=\log N_x$.
+Since $A\sim x$, eventually $2Y_A<x<P_A$.
+CPW4's actual activation inequality puts every $p\le Y_A$ in $N_x$.
+Every prime factor of $N_x$ is less than $x$, by ACC's first-layer
+activation bracket. Hence, for this same integer and observer,
+
+$$
+G_{\mathrm{low},A}(N_x)=0,\qquad
+D_{\mathrm{far},A}(N_x)=U_A.
+\tag{HCB5}
+$$
+
+The second equality retains FDW8's exact infinite pressure integral;
+its occupied-prime correction is zero because $P_A>x$.
+Combining FDW10, HCB3 and HCB5 gives the full central-plus-far account
+
+$$
+T_A\Delta(N_x)=T_A[C_A(N_x)+U_A]+c_*+
+ O(L^{-1}+\varepsilon_x),\qquad c_*=c_R+2q_*.
+\tag{HCB6}
+$$
+
+This is a consequence for the whole unconditional strict CA family,
+not merely for the own-price zero-defect sources of FDW11.
+No low baseline, occupied far prime or actual higher layer is left
+unaccounted for.
+
+The [existing generating-price identity](../ArithSums/nicolas2025comparison.md#project-application-actual-monotone-layers-at-a-shorter-successor)
+uses the nonnegative tangent loss
+
+$$
+\Gamma_x(A)=\log\log x+\lambda(x)(A-x)-\log\log A\ge0,
+$$
+
+$$
+\Delta(N_x)=I_\psi(x)+R(x)-\Gamma_x(A).
+\tag{HCB7}
+$$
+
+This is the same concavity term as
+[TC.4](../ArithSums/erdosnicolas1975repartition.md#an-explicit-thin-layer-capacity-for-the-same-arbitrary-host),
+with opposite sign to its $\kappa_x(A)$; it is not a new pressure
+identity. Keep it exact even when its root normalization is large.
+KTO1 and $A/x=1+O(\varepsilon_x)$ give
+$T_AR(x)=c_R+O(L^{-1}+\varepsilon_x)$.
+Consequently HCB6--HCB7 imply
+
+$$
+\boxed{\displaystyle
+T_A[C_A(N_x)+U_A]
+=T_A[I_\psi(x)-\Gamma_x(A)]-2q_*
+ +O(L^{-1}+\varepsilon_x).}
+\tag{HCB8}
+$$
+
+In particular the changed fixed-degree constant is compensated on
+all these actual integers, even when their own-price defects do not
+vanish. The far integral cannot be replaced here by
+$\beta_1/L(1+o(1))$: that relative error is not root-small.
+The signed prime integral and the exact tangent loss still need a
+joint estimate.
+
+For the root-scale comparison, suppose on a specified unbounded
+family that $|A-x|/x^{3/4}\to\ell<\infty$.
+The existing curvature of $\log\log x$ in TC.4 gives
+$T_A\Gamma_x(A)\to\ell^2/2$.
+Together with the owned own-price coefficient NPC9--NPC11,
+$T_A d_A(N_x)\to\ell^2/2$, the exact two margin accounts yield
+
+$$
+\begin{aligned}
+T_A[I_\psi(A)-I_\psi(x)]&=-\ell^2+o(1),\\
+T_A\Delta(N_x)&=T_AI_\psi(x)+c_R-\ell^2/2+o(1),\\
+T_A[C_A(N_x)+U_A]&=T_AI_\psi(x)-\ell^2/2-2q_*+o(1).
+\end{aligned}
+\tag{HCB9}
+$$
+
+Indeed subtract the accounts at $A$ and $x$; the difference of their
+root-normalized reserves tends to zero. The positive own-price
+coefficient and the negative generating-price coefficient therefore
+belong to compatible observations of the same source. Keeping the
+positive defect while leaving the prime integral unchanged would
+miss the full $-\ell^2$ transport.
+
+A sufficient signed premise on this specified family is
+$\liminf T_AI_\psi(x)>-c_R+\ell^2/2$; it would imply eventual
+strict Robin there. Neither that premise, a uniform full-family
+root bound, nor the central-plus-exact-far lower bound is supplied.
+The formula with finite $\ell$ does not cover larger displacements;
+HCB8 retains their exact tangent loss. RH and strict Robin for every
+integer above 5040 remain unresolved. These are paper applications
+of the cited inventory, pressure, curvature and prime-count inputs,
+with no Lean certification or literature-priority claim.
