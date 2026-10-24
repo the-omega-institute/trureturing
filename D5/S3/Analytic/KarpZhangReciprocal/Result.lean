@@ -73,7 +73,7 @@ def delta (y : ℕ → ℝ) (μ α β : ℝ) (m : ℕ) : ℝ :=
   ∑ k ∈ range (m + 1), y k * y (m - k) *
     (c k (μ + α) * c (m - k) (μ + β) - c k μ * c (m - k) (μ + α + β))
 
-private def increment (W : ℕ → ℝ) (q : ℕ) : ℝ :=
+def increment (W : ℕ → ℝ) (q : ℕ) : ℝ :=
   if q = 0 then W 0 else W q - W (q - 1)
 
 private theorem positive_between {y : ℕ → ℝ} (hy : IsLogConcave y)
@@ -168,7 +168,7 @@ private theorem layers (y : ℕ → ℝ) (m k : ℕ) (hk : k ≤ m) :
   · rw [min_eq_right (by omega : m - k ≤ k),
       show m - (m - k) = k by omega, mul_comm]
 
-private theorem tail_sum (K : ℕ → ℝ) (m q : ℕ) (hq : 2 * q ≤ m) :
+theorem tail_sum (K : ℕ → ℝ) (m q : ℕ) (hq : 2 * q ≤ m) :
     (∑ k ∈ range (m + 1), if q ≤ k ∧ q ≤ m - k then K k else 0) =
       ∑ i ∈ range (m - q - q + 1), K (q + i) := by
   rw [← sum_filter]
@@ -190,7 +190,7 @@ private theorem tail_sum (K : ℕ → ℝ) (m q : ℕ) (hq : 2 * q ≤ m) :
     congr 1
     omega
 
-private theorem abel_layers (y K : ℕ → ℝ) (m : ℕ) :
+theorem abel_layers (y K : ℕ → ℝ) (m : ℕ) :
     (∑ k ∈ range (m + 1), y k * y (m - k) * K k) =
       ∑ q ∈ range (m / 2 + 1), increment (fun i => y i * y (m - i)) q *
         (∑ i ∈ range (m - q - q + 1), K (q + i)) := by
