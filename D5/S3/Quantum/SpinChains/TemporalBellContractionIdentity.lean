@@ -172,11 +172,63 @@ private lemma creation_evolution {N : ℕ} (J μ t : ℝ) (j : Fin N) :
       simp only [smul_neg, mul_assoc]
     _ = _ := by rw [hinv]; simp only [one_mul, mul_one]
 
+private lemma hamiltonian_hermitian (N : ℕ) (J μ : ℝ) :
+    (hamiltonian N J μ).IsHermitian := by
+  have hh (i j : Fin N) : star (hopping N J μ i j) = hopping N J μ j i := by
+    by_cases hij : i = j
+    · subst j
+      simp [hopping]
+    · simp only [hopping, if_neg hij, if_neg (Ne.symm hij)]
+      split_ifs <;> simp_all
+  change (hamiltonian N J μ)ᴴ = _
+  unfold hamiltonian
+  simp only [Matrix.conjTranspose_sum, Matrix.conjTranspose_smul,
+    Matrix.conjTranspose_mul, Matrix.conjTranspose_conjTranspose, hh]
+  rw [Finset.sum_comm]
+
+private lemma evolve_adjoint {N : ℕ} (J μ t : ℝ) (A : FullOperator N) :
+    evolve J μ t Aᴴ = (evolve J μ t A)ᴴ := by
+  have hK : ((((t : ℂ) * Complex.I) • hamiltonian N J μ) : FullOperator N)ᴴ =
+      -(((t : ℂ) * Complex.I) • hamiltonian N J μ) := by
+    rw [Matrix.conjTranspose_smul, (hamiltonian_hermitian N J μ).eq]
+    simp [Complex.star_def]
+  unfold evolve
+  simp only [Matrix.conjTranspose_mul, ← Matrix.exp_conjTranspose,
+    Matrix.conjTranspose_neg, hK, neg_neg, mul_assoc]
+
 private lemma annihilation_evolution {N : ℕ} (J μ t : ℝ) (j : Fin N) :
     evolve J μ t (fullC j) =
       ∑ i : Fin N, star (propagator N J μ t i j) • fullC i := by
-  have hcreate := creation_evolution J μ t j
-  sorry
+  have hcreate := congrArg Matrix.conjTranspose (creation_evolution J μ t j)
+  rw [← evolve_adjoint] at hcreate
+  simpa only [Matrix.conjTranspose_conjTranspose, Matrix.conjTranspose_sum,
+    Matrix.conjTranspose_smul] using hcreate
+
+private lemma parity_odd {N : ℕ} (j : Fin N) :
+    numberParity N * fullC j + fullC j * numberParity N = 0 ∧
+      numberParity N * (fullC j)ᴴ + (fullC j)ᴴ * numberParity N = 0 := by
+  let P := numberParity N
+  have hc := majorana_clifford_and_parity N
+  have hsum := hc.2.2.2.2 (j, false)
+  change P * (fullC j + (fullC j)ᴴ) + (fullC j + (fullC j)ᴴ) * P = 0 at hsum
+  have hdiff : P * (fullC j - (fullC j)ᴴ) + (fullC j - (fullC j)ᴴ) * P = 0 := by
+    have ht := hc.2.2.2.2 (j, true)
+    change P * (Complex.I • (fullC j - (fullC j)ᴴ)) +
+      (Complex.I • (fullC j - (fullC j)ᴴ)) * P = 0 at ht
+    rw [Matrix.mul_smul, Matrix.smul_mul, ← smul_add] at ht
+    exact (smul_eq_zero.mp ht).resolve_left Complex.I_ne_zero
+  have hz : (2 : ℂ) • (P * fullC j + fullC j * P) = 0 := by
+    calc
+      _ = (P * (fullC j + (fullC j)ᴴ) + (fullC j + (fullC j)ᴴ) * P) +
+          (P * (fullC j - (fullC j)ᴴ) + (fullC j - (fullC j)ᴴ) * P) := by
+        simp only [two_smul]
+        noncomm_ring
+      _ = 0 := by rw [hsum, hdiff]; simp
+  have ha := (smul_eq_zero.mp hz).resolve_left (by norm_num : (2 : ℂ) ≠ 0)
+  refine ⟨ha, ?_⟩
+  have ht := congrArg Matrix.conjTranspose ha
+  simpa only [P, Matrix.conjTranspose_add, Matrix.conjTranspose_mul, hc.1.eq,
+    Matrix.conjTranspose_zero, add_comm] using ht
 
 private lemma sigmaXLast_parity (N : ℕ) (hN : 0 < N) :
     sigmaXLast N hN = numberParity N *
@@ -186,7 +238,27 @@ private lemma sigmaXLast_parity (N : ℕ) (hN : 0 < N) :
 
 private lemma parity_stationary (N : ℕ) (J μ t : ℝ) :
     evolve J μ t (numberParity N) = numberParity N := by
-  sorry
+  let P := numberParity N
+  let H := hamiltonian N J μ
+  let z := (t : ℂ) * Complex.I
+  have hterm (i j : Fin N) : P * ((fullC i)ᴴ * fullC j) = ((fullC i)ᴴ * fullC j) * P := by
+    have hi := eq_neg_of_add_eq_zero_left (parity_odd i).2
+    have hj := eq_neg_of_add_eq_zero_left (parity_odd j).1
+    calc
+      _ = (P * (fullC i)ᴴ) * fullC j := by simp only [mul_assoc]
+      _ = -((fullC i)ᴴ * (P * fullC j)) := by rw [hi]; noncomm_ring
+      _ = _ := by rw [hj]; noncomm_ring
+  have hPH : Commute P H := by
+    change P * (∑ i : Fin N, ∑ j : Fin N,
+        hopping N J μ i j • ((fullC i)ᴴ * fullC j)) =
+      (∑ i : Fin N, ∑ j : Fin N, hopping N J μ i j • ((fullC i)ᴴ * fullC j)) * P
+    simp only [Finset.mul_sum, Finset.sum_mul, Matrix.mul_smul, Matrix.smul_mul, hterm]
+  have hc := (hPH.smul_right z).exp_right
+  unfold evolve
+  change NormedSpace.exp (z • H) * P * NormedSpace.exp (-(z • H)) = P
+  rw [← hc.eq, mul_assoc,
+    ← Matrix.exp_add_of_commute _ _ (Commute.refl (z • H)).neg_right]
+  simp
 
 private lemma evolve_mul {N : ℕ} (J μ t : ℝ) (A B : FullOperator N) :
     evolve J μ t (A * B) = evolve J μ t A * evolve J μ t B := by
