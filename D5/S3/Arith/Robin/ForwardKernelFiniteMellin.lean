@@ -8,8 +8,7 @@
 
 import D5.S3.Arith.Robin.ForwardKernelAdjoint
 import D5.S3.Arith.Robin.ForwardKernelAnalytic
-import Mathlib.Analysis.Calculus.ParametricIntegral
-import Mathlib.Analysis.SpecialFunctions.Pow.Deriv
+import Mathlib.Analysis.MellinTransform
 
 namespace D5.S3.Arith.Robin.ForwardKernelFiniteMellin
 
@@ -24,60 +23,35 @@ theorem compact_mellin_entire {a b : ℝ} (ha : 0 < a) {f : ℝ → ℂ}
     (hf : IntegrableOn f (Icc a b)) :
     Differentiable ℂ (fun s : ℂ =>
       ∫ x in Icc a b, f x * (x : ℂ) ^ (-s - 1)) := by
-  intro s
-  let μ := volume.restrict (Icc a b)
-  let dp : ℂ × ℝ → ℂ := fun p =>
-    -(Complex.log (p.2 : ℂ)) * (p.2 : ℂ) ^ (-p.1 - 1)
-  have hdp : ContinuousOn dp (Metric.closedBall s 1 ×ˢ Icc a b) := by
-    apply ContinuousOn.mul
-    · exact ((Complex.continuous_ofReal.comp continuous_snd).continuousOn.clog
-        (fun p hp => Complex.ofReal_mem_slitPlane.mpr (ha.trans_le hp.2.1))).neg
-    · apply ContinuousOn.cpow
-      · exact (Complex.continuous_ofReal.comp continuous_snd).continuousOn
-      · fun_prop
-      · intro p hp
-        exact Complex.ofReal_mem_slitPlane.mpr (ha.trans_le hp.2.1)
-  obtain ⟨M, hM⟩ := ((isCompact_closedBall s 1).prod isCompact_Icc).bddAbove_image
-    hdp.norm
-  have hbound (z : ℂ) (hz : z ∈ Metric.ball s 1) (x : ℝ) (hx : x ∈ Icc a b) :
-      ‖dp (z, x)‖ ≤ max 0 M :=
-    (hM (mem_image_of_mem _ ⟨Metric.ball_subset_closedBall hz, hx⟩)).trans
-      (le_max_right _ _)
-  have hd (z : ℂ) (x : ℝ) (hx : x ∈ Icc a b) :
-      HasDerivAt (fun y : ℂ => f x * (x : ℂ) ^ (-y - 1))
-        (f x * dp (z, x)) z := by
-    have hx0 : (x : ℂ) ≠ 0 := Complex.ofReal_ne_zero.mpr (ha.trans_le hx.1).ne'
-    have hp := ((hasDerivAt_id z).neg.sub_const (1 : ℂ)).const_cpow (Or.inl hx0)
-    convert hp.const_mul (f x) using 1 <;> dsimp [dp] <;> ring
-  have hpmeas (z : ℂ) : Measurable (fun x : ℝ => (x : ℂ) ^ (-z - 1)) :=
-    Complex.measurable_ofReal.pow_const _
-  have hdmeas (z : ℂ) : Measurable (fun x : ℝ => dp (z, x)) := by
-    exact ((Complex.measurable_log.comp Complex.measurable_ofReal).neg).mul (hpmeas z)
-  have hbase : Integrable (fun x : ℝ => f x * (x : ℂ) ^ (-s - 1)) μ := by
-    apply hf.mul_continuousOn _ isCompact_Icc
-    apply Complex.continuous_ofReal.continuousOn.cpow_const
-    intro x hx
-    exact Complex.ofReal_mem_slitPlane.mpr (ha.trans_le hx.1)
-  have hmeas : ∀ᶠ z in 𝓝 s,
-      AEStronglyMeasurable (fun x : ℝ => f x * (x : ℂ) ^ (-z - 1)) μ :=
-    Eventually.of_forall fun z => hf.aestronglyMeasurable.mul (hpmeas z).aestronglyMeasurable
-  have hderivmeas : AEStronglyMeasurable (fun x : ℝ => f x * dp (s, x)) μ :=
-    hf.aestronglyMeasurable.mul (hdmeas s).aestronglyMeasurable
-  have hboundint : Integrable (fun x : ℝ => ‖f x‖ * max 0 M) μ :=
-    hf.norm.mul_const _
-  have hb : ∀ᵐ x : ℝ ∂μ, ∀ z ∈ Metric.ball s 1,
-      ‖f x * dp (z, x)‖ ≤ ‖f x‖ * max 0 M := by
-    filter_upwards [ae_restrict_mem measurableSet_Icc] with x hx z hz
-    rw [norm_mul]
-    exact mul_le_mul_of_nonneg_left (hbound z hz x hx) (norm_nonneg _)
-  have hdiff : ∀ᵐ x : ℝ ∂μ, ∀ z ∈ Metric.ball s 1,
-      HasDerivAt (fun y : ℂ => f x * (x : ℂ) ^ (-y - 1))
-        (f x * dp (z, x)) z := by
-    filter_upwards [ae_restrict_mem measurableSet_Icc] with x hx z _hz
-    exact hd z x hx
-  exact (hasDerivAt_integral_of_dominated_loc_of_deriv_le
-    (Metric.ball_mem_nhds s (by norm_num : (0 : ℝ) < 1)) hmeas hbase
-    hderivmeas hb hboundint hdiff).2.differentiableAt
+  let g : ℝ → ℂ := (Icc a b).indicator f
+  have hg : LocallyIntegrableOn g (Ioi 0) :=
+    (hf.integrable_indicator measurableSet_Icc).locallyIntegrable.locallyIntegrableOn _
+  have htop : g =ᶠ[atTop] 0 := by
+    filter_upwards [eventually_gt_atTop b] with x hx
+    exact indicator_of_notMem (fun h : x ∈ Icc a b => hx.not_ge h.2) f
+  have hbot : g =ᶠ[𝓝[>] 0] 0 := by
+    filter_upwards [(eventually_lt_nhds ha).filter_mono nhdsWithin_le_nhds] with x hx
+    exact indicator_of_notMem (fun h : x ∈ Icc a b => hx.not_ge h.1) f
+  have hm : Differentiable ℂ (mellin g) := by
+    intro z
+    exact mellin_differentiableAt_of_isBigO_rpow
+      (a := z.re + 1) (b := z.re - 1) hg
+      (htop.isBigO.trans (Asymptotics.isBigO_zero _ _)) (by linarith)
+      (hbot.isBigO.trans (Asymptotics.isBigO_zero _ _)) (by linarith)
+  have he (s : ℂ) : mellin g (-s) =
+      ∫ x in Icc a b, f x * (x : ℂ) ^ (-s - 1) := by
+    change (∫ x in Ioi (0 : ℝ),
+      (x : ℂ) ^ (-s - 1) * (Icc a b).indicator f x) = _
+    have hi : (fun x : ℝ => (x : ℂ) ^ (-s - 1) * (Icc a b).indicator f x) =
+        (Icc a b).indicator (fun x : ℝ => (x : ℂ) ^ (-s - 1) * f x) := by
+      funext x
+      exact (indicator_mul_right (Icc a b) (fun x : ℝ => (x : ℂ) ^ (-s - 1)) f
+        (i := x)).symm
+    rw [hi, integral_indicator measurableSet_Icc,
+      Measure.restrict_restrict_of_subset
+        (show Icc a b ⊆ Ioi 0 from fun x hx => ha.trans_le hx.1)]
+    simp only [mul_comm]
+  simpa only [Function.comp_def, Pi.neg_apply, id_eq, he] using hm.comp differentiable_id.neg
 
 /-- Every fixed evaluation point of the original adjoint has entire dependence
 on the Mellin parameter. -/

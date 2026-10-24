@@ -19,9 +19,10 @@ internal sealed class ForwardKernelFiniteMellinDocument : IScribeDocumentDefinit
                 Blocks(Paragraph(Text(
                     "If a>0 and f is complex-valued and integrable on [a,b], "
                     + "then the integral of f(x)*x^(-s-1) over that interval is entire "
-                    + "in s. On each compact parameter neighborhood, the parameter "
-                    + "derivative of the power is bounded uniformly in x. Its product "
-                    + "with |f(x)| is integrable, so differentiation passes under the integral."))),
+                    + "in s. Extend f by zero outside [a,b]. This integrable extension "
+                    + "vanishes near zero and at infinity, so Mathlib's "
+                    + "mellin_differentiableAt_of_isBigO_rpow applies at every complex "
+                    + "parameter. Composing with negation gives the stated exponent."))),
                 DescribeRole.Theorem),
             Describe.Lean(
                 DescribeId.Create("adjoint-kernel-entire"),
