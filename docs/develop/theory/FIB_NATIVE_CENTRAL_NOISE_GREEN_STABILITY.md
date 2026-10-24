@@ -2615,3 +2615,599 @@ none of these scalar asymptotics supplies an excluded realization.
 $\square$
 
 ## 追加锚（本行以下为增补区）
+
+## 18. The simple unit-cell ground state in the fixed supercritical regime
+
+**Definition 18.1 (fixed data, free norm and adapted cutoff comparison).**
+In §§18–20 retain Definition 15.1 and its supplier conventions.
+Fix $0<Z<1$, $r=1-Z$, $H=r/2$, $0<l<k_o<u<H$, the pole
+$o=(k_o,\alpha_o,\beta_o)$ and arbitrary preparation phases.
+The probabilities and signed amplitudes remain those of Definitions
+1.1 and 9.1, both phase periods are $2\pi$, and
+$d\mu=dk\,d\alpha\,d\beta$ on
+$\Omega=(l,u)\times\mathbb T^2$ is unnormalized. Fix
+$g>g_{\rm c}=2\pi m_0\lambda_0$, where $m_0=(2r)^{-1}$ and
+$\lambda_0$ is exactly Definition 16.2's horizontal constant.
+Only $\epsilon=|\nu|\downarrow0$ varies, with either sign of $\nu$.
+The law is (1.2), with its persistent independent covariance-$2$
+triple, zero area drift, both first-exit absorbing faces and original
+clock. The field is the full unit-source $\Gamma_{\epsilon,o}$,
+and the native domain is the entire complex $\mathcal F_\epsilon$.
+
+Use, without changing its domain, the unit problem of (15.2), and write
+
+$$
+\gamma=g/m_0,\qquad W=\mathcal G_1,\qquad
+e_g=e(\gamma),\qquad
+\|v\|_{\mathcal H_1}^2=\|v\|_2^2+\mathcal T_1[v],
+\qquad \langle v,w\rangle=\int\overline v w\,d\xi .
+\tag{18.1}
+$$
+
+Thus all cell integrals use $d\xi=dx\,dy\,d\theta$ and
+$\mathcal Q_\gamma=\mathcal T_1-\gamma\int W|\cdot|^2$.
+Choose once a nonnegative smooth partition $\chi,\psi$ as in
+(16.5): $\chi^2+\psi^2=1$, $\chi=1$ near $o$,
+$\operatorname{supp}\chi\Subset U_o$, and $\psi=0$ near $o$.
+It is independent of the state and $\epsilon$. Define
+
+$$
+\begin{aligned}
+(\mathcal B_\epsilon f)(\xi)
+ &=m_0^{1/2}\epsilon^2
+                 (\chi f)(\Phi_o(\delta_\epsilon\xi)),\\
+\delta_\epsilon(x,y,\theta)&=(\epsilon x,\epsilon y,\epsilon^2\theta),
+\qquad
+d\mu(\Phi_o(\delta_\epsilon\xi))=m_0\epsilon^4\,d\xi .
+\end{aligned}
+\tag{18.2}
+$$
+
+Extend the pullback by zero outside the rescaled chart. It is exactly
+(16.6), with a name for this fixed choice of cutoff. The chart is
+(15.1), including $\theta=z-xy/2$ and
+$z=-r\{\beta-\beta_o-c(k_o)y\}$. An uncut periodic lift and an
+isotropic three-coordinate dilation are different maps.
+
+**Theorem 18.2 (attainment, complex simplicity and free-form coercivity
+for the matched cell).** Under Definition 18.1, $-\infty<e_g<0$.
+Its infimum is attained by a unique normalized positive real function
+$h_g\in\mathcal H_1$, where positive means strictly positive almost
+everywhere. Every normalized complex minimizer is $\zeta h_g$ with
+one spatially constant $|\zeta|=1$. The bottom eigenvalue is isolated,
+and there is $c_g>0$ such that, for every complex $v\in\mathcal H_1$,
+
+$$
+\mathcal Q_\gamma[v]-e_g\|v\|_2^2
+ \ge c_g\|v-\langle h_g,v\rangle h_g\|_{\mathcal H_1}^2.
+\tag{18.3}
+$$
+
+Proof. Closedness, semiboundedness and the free-domain equivalence are
+Proposition 15.2. Theorem 16.3 gives $e_g<0$, since
+$g>g_{\rm c}\ge g_*$. These existing results supply the variational
+problem and the strict sign; what is needed here is compactness and
+its spectral consequences.
+
+Integration of (2.4), as in (3.5), at unit noise gives
+
+$$
+0<W(\xi)\le
+ \frac{C}{d_1(0,\xi)(1+d_1(0,\xi))}.
+\tag{18.4}
+$$
+
+Locally at zero $d_1(0,\xi)\asymp|\xi|$. Its bounded closed balls are
+compact by the regularized gauge in (2.4), so $W$ tends uniformly to
+zero at infinity and is bounded outside every pole neighbourhood.
+The whole-group heat input here is the classical
+Capogna–Citti–Manfredini,
+[arXiv:1212.6665v2, Propositions 2.1–2.2,
+(2.8)](https://arxiv.org/html/1212.6665v2).
+The group is precisely Definition 2.1's step-two group, the scaled
+frame is $(U,V,\kappa Z_H)$ and the coefficient matrix is $I_3$;
+here $\kappa=1$. Their (2.11), used for the existing zero-noise
+suppliers, is positive-time kernel convergence, not a ground-state
+or native killed-tail theorem. The native tail remains Theorem 1.3.
+
+The free domain also equals the space of $L^2$ functions whose three
+weak derivatives $Uv,Vv,Z_Hv$ are in $L^2$. To check the direction
+needed for Sobolev operations, such derivatives imply local Euclidean
+$H^1$, because
+$\partial_x=U+(y/2)Z_H$,
+$\partial_y=V-(x/2)Z_H$ and $\partial_\theta=Z_H$.
+For a fixed compact smooth cutoff $\kappa$ equal to one near zero,
+put $\kappa_R=\kappa\circ\delta_{1/R}$. Its horizontal derivatives
+are bounded by $C/R$ and its central derivative by $C/R^2$.
+The product rule and dominated convergence give
+$\kappa_Rv\to v$ in the free norm. Each compactly supported
+$\kappa_Rv$ can then be smoothed in a fixed larger compact set in
+ordinary $H^1$, hence in the frame norm. This puts $v$ in the closure
+(15.2). The reverse direction follows by weak derivative closure.
+Consequently the local Sobolev chain rule, compact local Rellich
+embedding and multiplication by the cutoffs used below apply on
+exactly $\mathcal H_1$, without a global Euclidean $H^1$ assumption.
+
+Here is control of the pole in the compactness argument. Take a fixed
+smooth coordinate cutoff $\zeta$ equal to one on a small ball about
+zero. The classical three-dimensional Hardy inequality gives
+
+$$
+\int |\xi|^{-2}|\zeta v|^2\,d\xi
+ \le4\int|\nabla(\zeta v)|^2\,d\xi
+ \le C\|v\|_{\mathcal H_1}^2.
+\tag{18.5}
+$$
+
+For compact smooth functions its first inequality follows by
+integrating
+$\operatorname{div}(\xi/|\xi|^2)=|\xi|^{-2}$
+against $|\zeta v|^2$ and applying Cauchy–Schwarz; the boundary
+term on a removed radius-$s$ sphere tends to zero as $s\downarrow0$.
+Density extends it to the local $H^1$ functions just obtained.
+The second inequality uses the bounded frame coefficients on the
+cutoff support. Thus (18.4) implies
+
+$$
+\int_{|\xi|<s}W|v|^2\,d\xi
+                  \le Cs\|v\|_{\mathcal H_1}^2
+                  \qquad(0<s<s_0).
+\tag{18.6}
+$$
+
+Multiplication $J:v\mapsto W^{1/2}v$ is therefore compact from
+$\mathcal H_1$ to $L^2$. Indeed, restricting it to a bounded region
+separated from zero gives a bounded multiplier after compact local
+Rellich restriction. The squared operator norm of the omitted pole
+part is $O(s)$ by (18.6). Outside a sufficiently large $d_1$ ball
+it is at most the supremum of $W$ there, which tends to zero by
+(18.4). The full $J$ is an operator-norm limit of these compact
+restrictions.
+
+This uses the classical form-domain compactness criterion of
+Lenz–Stollmann–Wingert,
+[arXiv:0903.0280v2, Theorem 1.3(v),
+(vii)](https://arxiv.org/html/0903.0280v2) in its precise bounded
+multiplier scope: their semibounded self-adjoint $H$ is
+$\mathcal L_1$, and each truncated multiplier
+$B=\mathbf1_K W^{1/2}$, with $K$ bounded and separated from zero,
+is bounded on $L^2$. Their (v) is compactness on the form domain,
+and (vii) gives norm convergence on form-bounded weakly zero
+sequences. The full singular $W^{1/2}$ is not a bounded $L^2$
+multiplier; (18.6) and the decaying exterior supply the required
+norm-limit step. No compactness of the free global form embedding
+is asserted.
+
+Let $v_n$ be any normalized cell minimizing sequence.
+Equation (15.8), with its parameter large enough to make the relative
+bound at most $1/2$, bounds $v_n$ in $\mathcal H_1$.
+Pass to a weakly convergent subsequence there, with limit $v$.
+Compactness of $J$ gives $Jv_n\to Jv$. Lower semicontinuity, the
+definition of the bottom also for nonunit vectors, and $e_g<0$ give
+
+$$
+e_g\ge\mathcal Q_\gamma[v]
+       \ge e_g\|v\|_2^2\ge e_g.
+\tag{18.7}
+$$
+
+The last inequality uses $\|v\|_2\le1$.
+Equality forces $\|v\|_2=1$, so $v_n\to v$ in $L^2$.
+Furthermore
+$\mathcal T_1[v_n]=\mathcal Q_\gamma[v_n]+\gamma\|Jv_n\|_2^2
+ \to\mathcal Q_\gamma[v]+\gamma\|Jv\|_2^2=\mathcal T_1[v]$.
+Weak convergence of the derivative vector and equality of its norm
+give convergence in the full free norm. This proves attainment and
+subsequential free-norm compactness of every normalized minimizing
+sequence, including complex ones. Variation gives the weak eigenvalue
+equation on all of $\mathcal H_1$.
+
+The Sobolev chain rule gives $|v|\in\mathcal H_1$ and
+$\mathcal T_1[|v|]\le\mathcal T_1[v]$, so a normalized nonnegative
+minimizer exists. To prove strict positivity without an assumed
+pointwise eigenfunction regularity, let $\mathsf A_g$ be the operator
+of $\mathcal Q_\gamma$, and set $W_N=W\wedge N$.
+The free heat kernel is strictly positive by (2.4).
+The bounded-potential Duhamel series, whose terms preserve
+nonnegativity, gives on the positive cone
+
+$$
+e^{-t(\mathcal L_1-\gamma W_N)}
+                   \ge e^{-t\mathcal L_1},\qquad t>0.
+\tag{18.8}
+$$
+
+This domination passes to $\mathsf A_g$. In detail, (18.4) puts
+$\{W>N\}$ inside $|\xi|<C/N$ for large $N$, and (18.6) yields
+
+$$
+0\le\int(W-W_N)|v|^2\,d\xi
+                    \le C N^{-1}\|v\|_{\mathcal H_1}^2.
+\tag{18.9}
+$$
+
+Polarization by weighted Cauchy–Schwarz bounds the corresponding
+sesquilinear tail by $C/N$ times the two free norms.
+Proposition 15.2 provides one common shift making every capped form
+and the full form coercive in that norm. Their variational resolvent
+solutions for a right side $F\in L^2$ have free norm at most
+$C\|F\|_2$. Subtract their equations and test on the difference;
+(18.9) bounds that difference in free norm by $CN^{-1}\|F\|_2$.
+Thus the shifted resolvents converge in operator norm on $L^2$.
+Their spectra have a common lower bound. On that half-line
+$e^{-t\lambda}$ is a continuous function of the shifted inverse,
+with value zero at inverse value zero. Polynomial approximation in
+this bounded inverse interval gives operator-norm convergence of
+the semigroups at every $t>0$. Since the positive cone is closed,
+(18.8) holds with the full operator on the left. A nonzero
+nonnegative minimizer $h$ therefore satisfies
+
+$$
+h=e^{te_g}e^{-t\mathsf A_g}h
+       \ge e^{te_g}e^{-t\mathcal L_1}h>0
+                         \quad\hbox{almost everywhere}.
+\tag{18.10}
+$$
+
+For a real ground eigenfunction, locality of the weak derivatives
+splits its form and squared norm into those of its positive and
+negative parts. Each part has energy at least $e_g$ times its squared
+norm. If both were nonzero, equality of the sum would make both
+normalized parts nonnegative minimizers. Both would then be strictly
+positive almost everywhere by (18.10), contradicting their disjoint
+supports. Thus every nonzero real ground eigenfunction has one sign.
+Two independent real ground eigenfunctions would give a nonzero real
+one orthogonal to a positive one, which is impossible. The real
+eigenspace is one dimensional. The form is real, so the real and
+imaginary parts of any complex ground eigenfunction belong to that
+real eigenspace. This proves complex simplicity, uniqueness of the
+normalized positive $h_g$ and the constant-phase description.
+
+If the infimum of $\mathcal Q_\gamma[p]$ over normalized
+$p\perp h_g$ were $e_g$, its minimizing sequence would, by (18.7),
+have a strongly convergent subsequence with unit ground-state limit
+still orthogonal to $h_g$. Simplicity excludes this. Hence there
+is $\delta_g>0$ with
+
+$$
+\mathcal Q_\gamma[p]-e_g\|p\|_2^2
+                       \ge\delta_g\|p\|_2^2
+                    \qquad(p\perp h_g).
+\tag{18.11}
+$$
+
+The spectral theorem makes the bottom isolated. Also (15.8) gives
+$\mathcal Q_\gamma[p]\ge\frac12\mathcal T_1[p]-C\|p\|_2^2$.
+Combining this with (18.11) bounds $\|p\|_{\mathcal H_1}^2$ by a
+constant times its energy deficit. For
+$v=\langle h_g,v\rangle h_g+p$, the weak eigenvalue equation
+cancels the cross terms in that deficit. This proves (18.3).
+All compactness, positivity and spectral arguments above are
+classical intermediates applied to this matched unit cell. $\square$
+
+## 19. Bounded native energy remainder and a coercive exterior estimate
+
+**Theorem 19.1 (bounded comparison with the complete native field).**
+Under Definition 18.1 there are $C<\infty$ and $\epsilon_g>0$,
+depending only on the fixed source data, partition and $g$, such that
+
+$$
+\left|E_\epsilon(g)-\epsilon^{-2}e_g\right|\le C,
+                       \qquad 0<\epsilon<\epsilon_g.
+\tag{19.1}
+$$
+
+For every complex $f\in\mathcal F_\epsilon$ in that range, putting
+$w=\mathcal B_\epsilon f$, one also has
+
+$$
+\begin{aligned}
+\epsilon^2q_{\epsilon,g}[f]-e_g\|f\|_2^2
+ \ge{}&\mathcal Q_\gamma[w]-e_g\|w\|_2^2
+                    +\epsilon^2T_\epsilon[\psi f]\\
+ &+\tfrac12|e_g|\|\psi f\|_2^2
+                    -C\epsilon^2\|f\|_2^2 .
+\end{aligned}
+\tag{19.2}
+$$
+
+Proof. The lower half of (19.1) is already (16.2).
+Use the full-domain cutoff and IMS facts in (16.5)–(16.7).
+In the notation (18.2), their exact norm and kinetic identities and
+the two-sided version of the local remainder are
+
+$$
+\begin{aligned}
+\|w\|_2^2&=\|\chi f\|_2^2,&
+\mathcal T_1[w]&=\epsilon^2T_\epsilon[\chi f],\\
+\left|\epsilon^2q_{\epsilon,g}[\chi f]
+                  -\mathcal Q_\gamma[w]\right|
+ &\le gB\epsilon^2\|\chi f\|_2^2 .
+\end{aligned}
+\tag{19.3}
+$$
+
+These are statements on the whole original domain, not additional
+localization hypotheses on $f$. For the last line, (3.2) bounds
+the error pointwise by $B$, while (2.5) and the raw Jacobian
+$m_0\epsilon^4$ turn the comparison potential into
+$\gamma\int W|w|^2$. This gives the absolute bound, rather than only
+the lower inequality used in (16.7).
+For domain passage, multiply a native smooth-core approximation
+by the fixed $\chi$, zero extend and rescale exactly as in (16.6).
+It converges in the cell free norm by the kinetic identity.
+Equation (15.8) makes its cell potential integrals converge, and
+the bounded remainder makes the native potential integrals converge
+as well. Thus (19.3) requires no pointwise regularity of $f$.
+The same transfer identities hold for any native form function
+supported compactly in this chart, with its direct pullback.
+
+On $\operatorname{supp}\psi$ use exactly the existing bound (15.4),
+say $\Gamma_{\epsilon,o}\le C_{\rm out}$ for $0<\epsilon\le1$.
+It includes both boundary collars. The fixed IMS coefficient in
+(16.5) has $0\le B_\epsilon\le C_{\rm IMS}$ there.
+Retaining the exterior kinetic term, that identity and (19.3) give
+
+$$
+\begin{aligned}
+\epsilon^2q_{\epsilon,g}[f]-e_g\|f\|_2^2
+ \ge{}&\mathcal Q_\gamma[w]-e_g\|w\|_2^2
+                   +\epsilon^2T_\epsilon[\psi f]\\
+ &+(|e_g|-gC_{\rm out}\epsilon^2)\|\psi f\|_2^2
+                   -(gB+C_{\rm IMS})\epsilon^2\|f\|_2^2 .
+\end{aligned}
+\tag{19.4}
+$$
+
+Here $\|f\|_2^2=\|w\|_2^2+\|\psi f\|_2^2$ exactly.
+Choose $\epsilon_g$ small enough to retain half of $|e_g|$.
+This proves (19.2), with all native wall and exterior contributions
+present. Its cell deficit is nonnegative, and (18.3) controls it in
+the fixed free norm.
+
+To supply the upper half of (19.1), let
+$\widehat\chi=\chi\circ\Phi_o$, zero extended to the group, and put
+$\varphi_\epsilon=\widehat\chi\circ\delta_\epsilon$.
+It is compactly supported, tends pointwise to one, and satisfies
+
+$$
+|U\varphi_\epsilon|+|V\varphi_\epsilon|\le C\epsilon,
+\qquad |Z_H\varphi_\epsilon|\le C\epsilon^2.
+\tag{19.5}
+$$
+
+The weak ground-state equation of Theorem 18.2 can be tested against
+$\varphi_\epsilon^2h_g\in\mathcal H_1$.
+For each of the three fields the product rule cancels the cross
+term against that equation. Summing gives the exact identity
+
+$$
+\begin{aligned}
+\mathcal Q_\gamma[\varphi_\epsilon h_g]
+          -e_g\|\varphi_\epsilon h_g\|_2^2
+ &=\int\bigl(|U\varphi_\epsilon|^2+|V\varphi_\epsilon|^2
+                  +|Z_H\varphi_\epsilon|^2\bigr)h_g^2\,d\xi\\
+ &\le C\epsilon^2.
+\end{aligned}
+\tag{19.6}
+$$
+
+All products belong to the established free domain, and all integrals
+are finite by (15.8). Dominated convergence gives
+$\|\varphi_\epsilon h_g\|_2\to1$.
+For small $\epsilon$ define the normalized native trial
+
+$$
+F_\epsilon(\Phi_o(\delta_\epsilon\xi))
+ =m_0^{-1/2}\epsilon^{-2}
+      \frac{\varphi_\epsilon(\xi)h_g(\xi)}
+           {\|\varphi_\epsilon h_g\|_2},
+\tag{19.7}
+$$
+
+with zero extension. Its support is compact inside the injective
+chart. Compactly supported cell free-domain approximation, or local
+$H^1$ smoothing on that support followed by the inverse chart,
+puts it in the full native $\mathcal F_\epsilon$ with both zero
+wall traces and the prescribed periodicity. Applying the supported
+version of (19.3) directly to $F_\epsilon$, followed by (19.6), gives
+$q_{\epsilon,g}[F_\epsilon]\le\epsilon^{-2}e_g+C$.
+The variational principle and (16.2) prove (19.1).
+No rate for the tail of $h_g$ was assumed: its weak equation and
+the derivative bound (19.5) provide the bounded remainder. $\square$
+
+## 20. Universal complex profiles and the exact consumer boundary
+
+**Theorem 20.1 (all near-minimizers, no lost mass and quantitative
+free-form profile).** Under Definition 18.1 let
+$f_\epsilon\in\mathcal F_\epsilon$ be any family of normalized
+complex states, for all sufficiently small positive $\epsilon$, with
+
+$$
+D_\epsilon=\epsilon^2
+       (q_{\epsilon,g}[f_\epsilon]-E_\epsilon(g))\longrightarrow0.
+\tag{20.1}
+$$
+
+There are $C<\infty$, $d>0$ and $\epsilon_g>0$, depending only on
+the fixed data and partition, such that whenever
+$0<\epsilon<\epsilon_g$ and $D_\epsilon\le d$, one can choose a
+single spatially constant phase $|\zeta_\epsilon|=1$ for that state
+so that
+
+$$
+\|\zeta_\epsilon^{-1}\mathcal B_\epsilon f_\epsilon
+                         -h_g\|_{\mathcal H_1}^2
+ +\|\psi f_\epsilon\|_2^2
+ +\epsilon^2T_\epsilon[\psi f_\epsilon]
+                         \le C(D_\epsilon+\epsilon^2).
+\tag{20.2}
+$$
+
+In particular the cutoff pullbacks converge strongly to $h_g$
+modulo those phases along the entire family, and the exterior
+scaled kinetic energy disappears. There is no extra eigenfunction,
+regularity, tail or tightness assumption on $f_\epsilon$.
+For $B_1(R)=\{\xi:d_1(0,\xi)<R\}$, every fixed $R>0$ satisfies
+
+$$
+\begin{aligned}
+\lim_{\epsilon\downarrow0}
+ \int_{\Phi_o(\delta_\epsilon B_1(R))}|f_\epsilon|^2\,d\mu
+     &=\int_{B_1(R)}h_g^2\,d\xi,\\
+\lim_{R\to\infty}\limsup_{\epsilon\downarrow0}
+ \int_{\Omega\setminus\Phi_o(\delta_\epsilon B_1(R))}
+                          |f_\epsilon|^2\,d\mu&=0 .
+\end{aligned}
+\tag{20.3}
+$$
+
+For fixed $R$ these chart images are used only for sufficiently small
+$\epsilon$, when they lie where $\chi=1$.
+The full native kinetic and matched-potential coefficients obey
+
+$$
+\epsilon^2T_\epsilon[f_\epsilon]\longrightarrow\mathcal T_1[h_g],
+\qquad
+\epsilon^2gV_\epsilon[f_\epsilon]
+                  \longrightarrow\gamma\int W h_g^2\,d\xi .
+\tag{20.4}
+$$
+
+Proof. Set $w_\epsilon=\mathcal B_\epsilon f_\epsilon$ and
+$r_\epsilon=\mathcal Q_\gamma[w_\epsilon]
+                         -e_g\|w_\epsilon\|_2^2\ge0$.
+Equations (19.1)–(19.2) give
+
+$$
+r_\epsilon+\epsilon^2T_\epsilon[\psi f_\epsilon]
+       +\tfrac12|e_g|\|\psi f_\epsilon\|_2^2
+                           \le D_\epsilon+C\epsilon^2 .
+\tag{20.5}
+$$
+
+Write $c_\epsilon=\langle h_g,w_\epsilon\rangle$ and
+$p_\epsilon=w_\epsilon-c_\epsilon h_g$.
+Coercivity (18.3) and the exact raw norm identity (19.3) imply
+
+$$
+\|p_\epsilon\|_{\mathcal H_1}^2\le C r_\epsilon,\qquad
+|c_\epsilon|^2
+   =1-\|\psi f_\epsilon\|_2^2-\|p_\epsilon\|_2^2 .
+\tag{20.6}
+$$
+
+Fix $d$ and $\epsilon_g$ small enough that the right side is positive,
+and choose $\zeta_\epsilon=c_\epsilon/|c_\epsilon|$.
+This is one scalar, constant over space.
+Since $|c_\epsilon|\le1$,
+
+$$
+\begin{aligned}
+\zeta_\epsilon^{-1}w_\epsilon-h_g
+ &=\zeta_\epsilon^{-1}p_\epsilon+(|c_\epsilon|-1)h_g,\\
+(1-|c_\epsilon|)^2
+ &\le1-|c_\epsilon|^2
+   =\|\psi f_\epsilon\|_2^2+\|p_\epsilon\|_2^2 .
+\end{aligned}
+\tag{20.7}
+$$
+
+The triangle inequality squared in the free Hilbert norm,
+(20.5) and (20.6) prove (20.2).
+Thus (20.1) implies the stated strong convergence without extracting
+a subsequence. An $\epsilon$-dependent constant phase is essential:
+multiplying any normalized recovery family by $e^{i/\epsilon}$
+leaves all its energies unchanged.
+
+For each fixed $R$, properness of $d_1$ implies the bounded ball is
+eventually mapped into $\chi=1$.
+Its native raw mass is then exactly
+$\int_{B_1(R)}|w_\epsilon|^2\,d\xi$.
+Strong $L^2$ convergence modulo phase gives
+$\||w_\epsilon|^2-h_g^2\|_1\to0$, proving the first line of (20.3).
+The total native mass and $\int h_g^2$ are both one; letting
+$R\to\infty$ proves the second line. This excludes mass loss
+both outside the fixed source chart and at infinity in the expanding
+cell coordinates.
+
+The kinetic IMS identity from (16.5) and (19.3) give
+
+$$
+\epsilon^2T_\epsilon[f_\epsilon]
+ =\mathcal T_1[w_\epsilon]
+       +\epsilon^2T_\epsilon[\psi f_\epsilon]+O(\epsilon^2).
+\tag{20.8}
+$$
+
+The first term converges by (20.2), and the second tends to zero
+by (20.5). For the potential, the partition splits its integral
+exactly, and (3.2) and (15.4) give
+
+$$
+\begin{aligned}
+\epsilon^2gV_\epsilon[\chi f_\epsilon]
+       &=\gamma\int W|w_\epsilon|^2\,d\xi+O(\epsilon^2),\\
+0\le\epsilon^2gV_\epsilon[\psi f_\epsilon]
+       &\le gC_{\rm out}\epsilon^2\|\psi f_\epsilon\|_2^2 .
+\end{aligned}
+\tag{20.9}
+$$
+
+Multiplication by $W^{1/2}$ is continuous in the fixed free norm by
+(15.8); hence the first integral converges to $\int W h_g^2$.
+This proves (20.4) on the entire native form domain.
+The native ground states of Theorem 4.1 are included by taking
+$D_\epsilon=0$, but no ground-state equation for a native state
+was used. $\square$
+
+**Definition 20.2 (supplier correspondence and remaining realization
+obligations).** The coefficient and domain in (18.1) are those already
+defined and proved in Definition 15.1 and Proposition 15.2.
+The leading limit and uniform lower remainder are Theorem 16.1,
+the sharp uniform threshold is Theorem 16.3, and fixed-neighbourhood
+mass concentration is Corollary 16.4. Theorems 18.2–20.1 add the
+matched cell's simple isolated ground state and free-form coercivity,
+the bounded upper remainder in (19.1), and the universal quantitative
+profile with full-domain exterior and coefficient control. They
+retain the fixed $g>g_{\rm c}$ regime; the existence of $g_*$ does
+not change that scope. The self-field occupation in §17 has its
+separate consumer and is not identified with a form-domain profile.
+
+The ordinary compactness and spectral intermediates in Theorem 18.2
+are credited there to the precise whole-group Gaussian and bounded
+multiplier criteria, together with classical local Hardy, Rellich,
+closed-form representation, positive Duhamel expansion and the
+spectral theorem. Their application, the weak-equation cutoff
+remainder and the exact native profile transfer are repo-derived
+composition for this fixed source. No worldwide novelty or Lean
+certification is part of these statements.
+
+A native operational realization continues to mean the same
+two-control chronology $j=\int a\,db$, original extrema guards,
+numerical command domains, actual own death, original clock, and
+unhalved charges (6.1). The analytic amplitudes $f_\epsilon$ and
+$h_g$ are variational variables, not additional preparation or
+actuation operations; choosing their comparison phase is not a
+sensing operation. Definition 6.1's ideal-history and paid-point
+observation contracts remain distinct. In the paid contract future
+Read times use only acquired paid records and the clock, its seed
+is independent of the persistent target drivers, and all failed
+outcomes and executed partial legs retain their charges. The exact
+finite-horizon capped family, positive initial hold, response and
+resources are Definitions 12.1 and 14.1, Theorem 12.2 and
+Corollary 13.1, with their fixed-positive-noise constants.
+Equations (19.1)–(20.4) supply no uniform service constants for that
+family and do not remove its uncapped-exposure obstruction.
+
+The adapted chart does not identify three physical Euclidean axes.
+The exact symbol, kinetic-distance and all-start original-clock
+full-response exclusions of §§9–11 remain applicable.
+A physical spatial correspondence still requires its common-source
+law, geometry, clock, observations, operations, service costs and
+recursive gluing maps. The spectral profile supplies no attractive
+sampler, copies or reset operation, finite-bit evaluator, total
+tariff, or recursive gluing construction. Equality of dimensions
+does not provide any of these missing correspondences.
+
+## 追加锚（本行以下为增补区）
