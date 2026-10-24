@@ -806,6 +806,105 @@ This $\nu$ is below both the low-head margin and the existing truncation margin 
 
 **Stronger printed input.** Yang, [*Relative Trace Formula and Twisted L-functions: the Burgess Bound*, arXiv:2305.10719v1, Corollary 1.2(1.3)](https://arxiv.org/html/2305.10719v1), states the uniform Hecke exponent $c=3/16$. Substitution into the same calculation would give $\alpha=19/48$ and the low-head exponent $17/16+\theta+43\eta/48$. The numerical bound above does not depend on this stronger preprint input. Its Hypothesis 2.1 uses $c_vT_v\le|\gamma_{j,v}|\le C_vT_v$, without $1+|\gamma_{j,v}|$, while subsequent estimates use negative powers of $T_v$. For $\pi=1\boxplus1$ and trivial infinite-type $\chi$, both local parameters vanish. The compact zero-parameter specialization, and the complex-place normalization of $T_v$ relative to analytic conductor, are not independently reconciled here; this is not a refutation of the printed corollary. Yang's [*Symmetric Spectral Reciprocity for GL(2) and Uniform Subconvexity*, arXiv:2607.04476v1](https://arxiv.org/html/2607.04476v1), Theorem B and Corollary 1.4 concern cuspidal GL2, and its Lemma 10.2 invokes the earlier Corollary 1.2. They do not give an independent replacement for the GL1 input used here.
 
+## Using the global strip in the complete row kernel
+
+The complete-row kernel can also use the **upper** global $L$-bound, rather than only the reciprocal bound already used for inverse polynomials. This gives a larger controlled conductor range under the cited zero-free supply. Fix $\beta=7/8$ using the main theorem and `lem:logarithmic-control` of the [pinned OpenAI primary manuscript](https://github.com/openai/math/blob/adc7f1241b42e322a6451854ab7e4b4c146bf78a/preprints/The-Quasi-Riemann-Hypothesis-September-30-2026/build/paper.tex). For every fixed $v>0$, that lemma supplies both $L$ and $1/L$ with analytic-conductor subpower growth on $\Re s\ge\beta+v$ for nonprincipal finite-order Hecke characters. Its principal reciprocal assertion is for $1/\zeta_F$; its principal upper bound is only for the regularized function. These are reused source inputs, not independently Lean-certified results here.
+
+**Move the complete kernel, with buffers.** Keep the exact $\chi_0$, original collision zeros and complete row family from the preceding kernel construction. Put
+
+$$
+b=\beta+v,\qquad \sigma=\beta/6+d,
+\qquad v,d>0,
+\qquad \frac12<1-\sigma<b<1.
+$$
+
+On the entire central line, reuse Wu and Blomer–Brumley's exponent $c=103/512$. On the right line $b$, the nonprincipal primitive numerator has the global upper bound $L(b+i\tau,\chi)\ll C_\tau^\varepsilon$, where $C_\tau\asymp_F q_{\mathfrak f}(1+|\tau|)^2$. Phragmén–Lindelöf interpolation between these two full vertical lines, followed by the primitive functional equation, gives
+
+$$
+\begin{aligned}
+|L(1-\sigma+i\tau,\chi)|
+&\ll C_\tau^{c(\sigma+b-1)/(b-1/2)+\varepsilon},\\
+|L(\sigma+i\tau,\chi)|
+&\ll C_\tau^{\alpha(\sigma,b)+\varepsilon},\\
+\alpha(\sigma,b)
+&=\frac12-\sigma+
+ c\frac{\sigma+b-1}{b-1/2}.
+\end{aligned}
+$$
+
+The source's polynomial strip growth supplies the interpolation growth condition. The numerator remains nonprincipal by the surviving good-prime component proved above. Thus no principal upper bound or pole removal for that numerator is being assumed.
+
+In the exact ratio $L(s,\chi_0)/L(6s,\chi_0^6)$, the primitive character inducing $\chi_0^6$ belongs to the same finite-order family. After the fixed ray expansion it can be nonprincipal; its good-prime components are principal and its remaining primitive conductor is supported in the fixed finite data. The global reciprocal bound applies on the whole contour deformation because $\Re(6s)\ge\beta+6d>\beta$. If the primitive denominator is principal, its pole at $6s=1$ is a removable zero of the reciprocal and contributes no residue. Every imprimitive numerator and reciprocal-denominator Euler factor is retained. Their finite products cost $U^\varepsilon$ on this fixed positive strip, including the original zero-only primes. Consequently Mellin inversion and the same profile decay give
+
+$$
+|\mathcal K_{U,\Omega}(a,b)|
+\ll U^{\sigma+\varepsilon}
+q_{\mathfrak f}^{\alpha(\sigma,b)+\varepsilon}.
+$$
+
+This is still a complete-row argument, not a deletion of selectors inside an adaptive zero bin. Required profile derivatives and fixed or specified polylog height costs obey the previous contract; no larger growing-height range is asserted.
+
+For each final loss, choose $v,d$ sufficiently small and fixed before the Mellin decay order. The limiting values are
+
+$$
+\sigma_0=\frac7{48},\qquad
+\alpha_0=\frac{17}{48}+\frac c{18}
+=\frac{3367}{9216}.
+$$
+
+Thus the kernel bound can be written $U^{\sigma_0+\varepsilon}q_{\mathfrak f}^{\alpha_0+\varepsilon}$. Neither the boundary line $6\Re s=\beta$ nor an unbuffered global $L$-bound is used.
+
+**Reuse the conductor-cap sum.** For the same $Q=U^{1+\eta}$, $T=U^\theta$, $H_0=U^{1/2-\theta-\eta/2}$ and $H_1=U^{1/2-\eta/2}$, replace the previous kernel exponents by $\sigma_0,\alpha_0$. The unchanged coefficient envelope, pair count and retained cap give
+
+$$
+\begin{aligned}
+\left|E_{6,\,q_{\mathfrak f}\le Q}^{\mu,\le T}\right|
+&\ll U^{1+\sigma_0+\varepsilon}
+ \left(Q^{\alpha_0}H_0^{-1}
+       +U^{2\alpha_0}H_1^{-1-2\alpha_0}\right)\\
+&\ll U^{r(\theta,\eta)+\varepsilon},\\
+r(\theta,\eta)
+&=\frac12+\sigma_0+\alpha_0+\theta+
+ (\tfrac12+\alpha_0)\eta\\
+&=1+\frac{103}{9216}+\theta+
+ \frac{7975}{9216}\eta.
+\end{aligned}
+$$
+
+Choose
+
+$$
+\theta=\frac1{1000},\qquad \eta=\frac2{25},\qquad
+H_0=U^{459/1000},\qquad H_1=U^{23/50}.
+$$
+
+Then
+
+$$
+\boxed{
+\left|E_{6,\,q_{\mathfrak f}\le U^{27/25}}^{\mu,\le U^{1/1000}}\right|
+\ll U^{415259/384000+\varepsilon}.
+}
+$$
+
+The exponent is $1.081403645833\ldots$, with
+
+$$
+\frac{13}{12}-\frac{415259}{384000}
+=\frac{247}{128000}>0,
+\qquad \frac{13}{12}<B_*.
+$$
+
+Therefore the missing sufficient head input is narrowed further to
+
+$$
+\operatorname{Re}E_{6,\,q_{\mathfrak f}>U^{27/25}}^{\mu,\le U^{1/1000}}
+\ll U^{B_*-\nu+\varepsilon},
+\qquad \nu=\frac1{100000}.
+$$
+
+This reserve is below both the displayed low-head margin and the previous truncation margin $1/50000$. The new bound pays the original conductor range through $U^{27/25}$ under the cited global-strip supply. The remaining contraction still has its actual Möbius coefficients, all original zeros, finite components, squarefree columns and $t=1$ packet. Its bound is not supplied. This is a source-conditional application of existing strip control, subconvexity, functional equations and the already derived cap sum; it is not a new general $L$-function theorem, a full inverse-fourth improvement, a signed Robin restoration or an RH proof. No literature-priority or local analytic Lean-certification claim is made.
+
 ## Fixed-order first moments and the unresolved head
 
 Gao–Zhao, [*First moment of central values of Hecke L-functions with Fixed Order Characters*, arXiv:2306.10726v3](https://arxiv.org/html/2306.10726v3), revised 1 December 2025, provides a nearby double-Dirichlet-series input. Its Theorem 1.3 is unconditional for $j=3,6$ over $K=\mathbb Q(\sqrt{-3})$ and $j=4$ over $\mathbb Q(i)$. It concerns a smoothed first moment of $L(1/2+\alpha,\chi\chi_j^{(n)})$, averaged over the fixed ray characters and all nonzero elements $n$, with
