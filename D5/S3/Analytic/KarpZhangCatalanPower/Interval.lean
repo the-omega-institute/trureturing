@@ -35,23 +35,26 @@ open D5.S3.Analytic.KarpZhangCatalanPower.Index
 namespace D5.S3.Analytic.KarpZhangCatalanPower.Interval
 
 /- proof_shape: bind-only definition; escape_witness: none;
-consumer: mem_left, left_reindex. -/
+consumer: derivative_difference, left_derivative_reindex, left_reindex, mem_left,
+reflected_interval. -/
 private def leftWindow (m q j : ℕ) : Finset ℕ :=
   (range (m - j + 1)).filter fun i => q ≤ i + j ∧ i + j ≤ m - q
 
 /- proof_shape: bind-only definition; escape_witness: none;
-consumer: mem_right, right_reindex. -/
+consumer: derivative_difference, mem_right, reflected_interval, right_derivative_reindex,
+right_reindex. -/
 private def rightWindow (m q j : ℕ) : Finset ℕ :=
   (range (m - j + 1)).filter fun i => q ≤ i ∧ i ≤ m - q
 
 /- proof_shape: bind-only definition; escape_witness: none;
-consumer: mem_R, reflected_interval, sliceDerivative. -/
+consumer: R_lt, R_one, derivative_difference, mem_R, reflected_interval, sliceDerivative,
+sliceDerivative_pos. -/
 /-- The left-only part of a pair of reflected truncated intervals. -/
 def R (m q j : ℕ) : Finset ℕ :=
   (range (m - j + 1)).filter fun i => q ≤ i + j ∧ i + j ≤ m - q ∧ i < q
 
 /- proof_shape: bind-only; escape_witness: none;
-consumer: reflected_interval, left_reindex. -/
+consumer: left_reindex, reflected_interval. -/
 private lemma mem_left {m q j i : ℕ} : i ∈ leftWindow m q j ↔
     i ≤ m - j ∧ q ≤ i + j ∧ i + j ≤ m - q := by
   simp only [leftWindow, mem_filter, mem_range, Nat.lt_succ_iff]
@@ -63,7 +66,7 @@ private lemma mem_right {m q j i : ℕ} : i ∈ rightWindow m q j ↔
   simp only [rightWindow, mem_filter, mem_range, Nat.lt_succ_iff]
 
 /- proof_shape: bind-only; escape_witness: none;
-consumer: R_lt, reflected_interval, derivative_difference, R_one. -/
+consumer: R_lt, R_one, derivative_difference, reflected_interval. -/
 private lemma mem_R {m q j i : ℕ} : i ∈ R m q j ↔
     i ≤ m - j ∧ q ≤ i + j ∧ i + j ≤ m - q ∧ i < q := by
   simp only [R, mem_filter, mem_range, Nat.lt_succ_iff]
@@ -162,12 +165,12 @@ private lemma right_reindex {m q : ℕ} (hmq : 2 * q ≤ m) (F : ℕ → ℕ →
     rfl
 
 /- proof_shape: bind-only definition; escape_witness: none;
-consumer: hasDerivAt_slice, Z_symm, balancing, tail_nonneg. -/
+consumer: Z_symm, balancing, hasDerivAt_slice, slice_strictMonoOn. -/
 /-- The central convolution interval. -/
 def Z (m q : ℕ) (u v : ℝ) : ℝ := ∑ k ∈ Icc q (m - q), a k u * a (m - k) v
 
 /- proof_shape: bind-only definition; escape_witness: none;
-consumer: derivative_difference, sliceDerivative_pos, hasDerivAt_slice. -/
+consumer: derivative_difference, hasDerivAt_slice, sliceDerivative_pos, slice_strictMonoOn. -/
 /-- The reflected determinant expression for a constant-sum derivative. -/
 def sliceDerivative (m q : ℕ) (u v : ℝ) : ℝ :=
   ∑ j ∈ Icc 1 m, b j * ∑ i ∈ R m q j,

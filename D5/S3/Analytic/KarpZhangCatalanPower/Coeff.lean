@@ -34,14 +34,20 @@ open Polynomial Finset
 namespace D5.S3.Analytic.KarpZhangCatalanPower.Coeff
 
 /- proof_shape: bind-only definition; escape_witness: none;
-consumer: a_eq_polynomial, a_zero_parameter, adjacent_ratio. -/
+consumer: Interval.Z, Interval.Z_symm, a_eq_polynomial, Index.a_hasDerivAt_poly, a_nonneg,
+a_pos, a_product, a_zero_parameter, adjacent_ratio, adjacent_tp2, Index.b, Index.b_eq_poly,
+Interval.derivative_difference, Index.hasDerivAt_a, Interval.hasDerivAt_slice, Index.index_law,
+Interval.left_derivative_reindex, Interval.right_derivative_reindex, Interval.sliceDerivative,
+Interval.sliceDerivative_pos, Interval.tail_nonneg, tp2, tp2_le. -/
 /-- The literal rising-factorial quotient in formula (15). -/
 def a (n : ℕ) (t : ℝ) : ℝ :=
   (ascPochhammer ℝ (2 * n)).eval t /
     ((ascPochhammer ℝ n).eval (t + 1) * (n.factorial : ℝ))
 
 /- proof_shape: bind-only definition; escape_witness: none;
-consumer: coeffPoly_succ_eval, Index.index_polynomial. -/
+consumer: a_eq_polynomial, Index.a_hasDerivAt_poly, a_product, Index.b_eq_centralBinom,
+Index.b_eq_poly, coeffPoly_succ_eval, Index.hasDerivAt_a, Index.index_law,
+Index.index_polynomial, Index.natural_coeff, Index.natural_index. -/
 /-- The polynomial continuation of the coefficient. -/
 def coeffPoly : ℕ → ℝ[X]
   | 0 => 1
@@ -49,7 +55,7 @@ def coeffPoly : ℕ → ℝ[X]
       (ascPochhammer ℝ n).comp (X + C (n + 2 : ℝ))
 
 /- proof_shape: bind-only; escape_witness: none;
-consumer: a_eq_polynomial, a_pos, adjacent_ratio. -/
+consumer: a_eq_polynomial, a_product, Index.natural_coeff. -/
 lemma coeffPoly_succ_eval (n : ℕ) (t : ℝ) :
     (coeffPoly (n + 1)).eval t =
       t * (ascPochhammer ℝ n).eval (t + n + 2) / ((n + 1).factorial : ℝ) := by
@@ -73,7 +79,7 @@ private lemma poch_split (n : ℕ) (t : ℝ) :
   ring
 
 /- proof_shape: bind-only; escape_witness: none;
-consumer: a_pos, a_nonneg, adjacent_ratio, Index.index_law. -/
+consumer: Index.a_hasDerivAt_poly, a_product, Index.hasDerivAt_a, Index.index_law. -/
 lemma a_eq_polynomial (n : ℕ) {t : ℝ} (ht : -1 < t) :
     a n t = (coeffPoly n).eval t := by
   cases n with
@@ -110,7 +116,7 @@ theorem a_product {n : ℕ} (hn : 1 ≤ n) {t : ℝ} (ht : -1 < t) :
   ring
 
 /- proof_shape: bind-only; escape_witness: none;
-consumer: adjacent_tp2, tp2, Interval.tail_nonneg. -/
+consumer: a_nonneg, adjacent_tp2, tp2. -/
 lemma a_pos (n : ℕ) {t : ℝ} (ht : 0 < t) : 0 < a n t := by
   cases n with
   | zero => norm_num [a]
@@ -171,7 +177,7 @@ private lemma adjacent_tp2 (n : ℕ) {u v : ℝ} (hu : 0 < u) (huv : u < v) :
 
 /- proof_shape: content; escape_witness: tp2 (induction propagates the
 adjacent cross-product order through arbitrary degree gaps);
-consumer: tp2_le, Interval.sliceDerivative_pos. -/
+consumer: Interval.sliceDerivative_pos, tp2_le. -/
 theorem tp2 {u v : ℝ} (hu : 0 < u) (huv : u < v) {i l : ℕ} (hil : i < l) :
     a l u * a i v < a i u * a l v := by
   have hv : 0 < v := hu.trans huv
@@ -294,7 +300,7 @@ private lemma natural_index (s t m : ℕ) :
   exact hcR.symm
 
 /- proof_shape: bind-only; escape_witness: none;
-consumer: index_law, hasDerivAt_a. -/
+consumer: hasDerivAt_a, index_law. -/
 theorem index_polynomial (s t : ℝ) (m : ℕ) :
     ∑ k ∈ Finset.range (m+1),
       (coeffPoly k).eval s * (coeffPoly (m-k)).eval t =
@@ -346,7 +352,9 @@ private lemma a_hasDerivAt_poly (n : ℕ) {t : ℝ} (ht : -1 < t) :
   exact a_eq_polynomial n hx
 
 /- proof_shape: bind-only definition; escape_witness: none;
-consumer: b_eq_poly, b_pos, hasDerivAt_a. -/
+consumer: b_eq_centralBinom, b_eq_poly, b_pos, Interval.derivative_difference, hasDerivAt_a,
+Interval.hasDerivAt_slice, Interval.left_derivative_reindex, Interval.right_derivative_reindex,
+Interval.sliceDerivative, Interval.sliceDerivative_pos. -/
 /-- The positive infinitesimal coefficients of the convolution semigroup. -/
 def b (j : ℕ) : ℝ := deriv (a j) 0
 
