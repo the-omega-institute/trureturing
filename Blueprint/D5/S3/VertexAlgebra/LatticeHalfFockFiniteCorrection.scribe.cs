@@ -41,7 +41,7 @@ internal sealed class LatticeHalfFockFiniteCorrectionDocument : IScribeDocumentD
         "Finite singleton and pair correction on the full ordinary lattice oscillator algebra.",
         H("Finite Twisted Correction"),
         Blocks(
-            Describe.Lean(DescribeId.Create("normal-transpose-wordWeight-occurrences"),
+            Describe.Lean(DescribeId.Create("normal-transpose-wordweight-occurrences"),
                 DeclarationHandle.Create(Prefix + "wordWeight_occurrences"),
                 H("wordWeight occurrences"), StatementSource.WithoutFormula(),
                 AssessedProvenance.FromRepo(), Blocks(Paragraph(Text("Existing exact occurrence-list weight equality, exposed without changing its statement or proof. It is consumed by the original source scalar transpose in HalfFock.NormalScalarTranspose."))),
