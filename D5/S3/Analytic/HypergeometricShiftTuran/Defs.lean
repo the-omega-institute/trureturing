@@ -2,11 +2,41 @@
    generality: G
    mirror-B: D5/B/S3/Analytic/HypergeometricShiftTuran/Defs
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
-   anchors: [mathlib/module/Mathlib.Analysis.SpecialFunctions.Gamma.Basic, mathlib/module/Mathlib.RingTheory.MvPolynomial.Symmetric.Defs]
+   anchors: [mathlib/module/Mathlib.Analysis.Real.Pi.Bounds, mathlib/module/Mathlib.Analysis.SpecialFunctions.Gaussian.GaussianIntegral, mathlib/module/Mathlib.RingTheory.MvPolynomial.Symmetric.Defs]
    utility: none
-   digest: Gamma product ratios, their shifted Turanian coefficients, and the coefficient nonnegativity assertion. -/
+   digest: Gamma ratios, shared special values, and shifted Turanian coefficients. -/
 
-import Mathlib.Analysis.SpecialFunctions.Gamma.Basic
+/-
+# Shared Gamma ratios and special values
+
+Per-declaration proof_shape:
+* coeff: bind-only definition; consumers: turanCoeff, TwoBlockResult.seriesCoeff.
+* turanCoeff: bind-only definition; consumers: claim, Result.first_coefficient_eq,
+  TwoBlockResult.empty_unshifted_eq.
+* esymm: bind-only definition; consumers: cond13, TwoBlockResult.half_parameter_cond13.
+* cond13: bind-only definition; consumers: claim, TwoBlockResult.claim,
+  TwoBlockResult.half_parameter_cond13.
+* claim: bind-only definition; consumer: Result.result.
+* gamma_three_halves: bind-only; consumer: gamma_three_seven_halves_inv_pow_mul.
+* gamma_five_halves: bind-only; consumers: gamma_five_halves_inv_pow_mul,
+  TwoBlockResult.first_coefficient_eq.
+* gamma_seven_halves: bind-only; consumers: gamma_three_seven_halves_inv_pow_mul,
+  TwoBlockResult.first_coefficient_eq.
+* gamma_five_halves_inv_pow_mul: bind-only; consumers: Result.first_coefficient_eq,
+  TwoBlockResult.first_coefficient_eq.
+* gamma_three_seven_halves_inv_pow_mul: bind-only;
+  consumers: Result.first_coefficient_eq, TwoBlockResult.first_coefficient_eq.
+* pi_base_bound: bind-only; consumers: Result.half_parameter_family_neg,
+  TwoBlockResult.half_parameter_family_neg.
+Each row has escape_witness: none and Direct frozen dependencies: none.
+This is the shared supporting dependency of the two settling Result modules;
+its consumed helpers supply neither an escape witness nor a separate admission basis.
+The utility is none: these definitions and general identities are supporting
+objects, not a bounded enumeration, checker, numeric reduction or certified instance.
+-/
+
+import Mathlib.Analysis.Real.Pi.Bounds
+import Mathlib.Analysis.SpecialFunctions.Gaussian.GaussianIntegral
 import Mathlib.RingTheory.MvPolynomial.Symmetric.Defs
 
 noncomputable section
@@ -43,5 +73,47 @@ def claim : Prop :=
     p ≤ q → (∀ i, 0 < a i) → (∀ j, 0 < b j) → cond13 a b →
       ∀ μ α β : ℝ, 1 ≤ μ → 0 ≤ α → 0 ≤ β → α ≤ β + 1 →
         ∀ m : ℕ, 0 ≤ turanCoeff a b μ α β m
+
+/-- The Gamma value at three halves. -/
+lemma gamma_three_halves : Real.Gamma (3 / 2) = Real.sqrt Real.pi / 2 := by
+  rw [show (3 / 2 : ℝ) = ((1 : ℕ) : ℝ) + 1 / 2 by norm_num, Real.Gamma_nat_add_half]
+  norm_num [Nat.doubleFactorial]
+
+/-- The Gamma value at five halves. -/
+lemma gamma_five_halves : Real.Gamma (5 / 2) = 3 * Real.sqrt Real.pi / 4 := by
+  rw [show (5 / 2 : ℝ) = ((2 : ℕ) : ℝ) + 1 / 2 by norm_num, Real.Gamma_nat_add_half]
+  norm_num [Nat.doubleFactorial]
+
+/-- The Gamma value at seven halves. -/
+lemma gamma_seven_halves : Real.Gamma (7 / 2) = 15 * Real.sqrt Real.pi / 8 := by
+  rw [show (7 / 2 : ℝ) = ((3 : ℕ) : ℝ) + 1 / 2 by norm_num, Real.Gamma_nat_add_half]
+  norm_num [Nat.doubleFactorial]
+
+/-- The balanced reciprocal Gamma power product. -/
+lemma gamma_five_halves_inv_pow_mul (q : ℕ) :
+    (Real.Gamma (5 / 2))⁻¹ ^ q * (Real.Gamma (5 / 2))⁻¹ ^ q =
+      (16 / (9 * Real.pi)) ^ q := by
+  have hsq : Real.sqrt Real.pi * Real.sqrt Real.pi = Real.pi :=
+    Real.mul_self_sqrt Real.pi_pos.le
+  rw [← mul_pow, gamma_five_halves]
+  congr 1
+  field_simp [ne_of_gt Real.pi_pos, ne_of_gt (Real.sqrt_pos.2 Real.pi_pos)]
+  nlinarith [hsq]
+
+/-- The outer reciprocal Gamma power product. -/
+lemma gamma_three_seven_halves_inv_pow_mul (q : ℕ) :
+    (Real.Gamma (3 / 2))⁻¹ ^ q * (Real.Gamma (7 / 2))⁻¹ ^ q =
+      (16 / (15 * Real.pi)) ^ q := by
+  have hsq : Real.sqrt Real.pi * Real.sqrt Real.pi = Real.pi :=
+    Real.mul_self_sqrt Real.pi_pos.le
+  rw [← mul_pow, gamma_three_halves, gamma_seven_halves]
+  congr 1
+  field_simp [ne_of_gt Real.pi_pos, ne_of_gt (Real.sqrt_pos.2 Real.pi_pos)]
+  nlinarith [hsq]
+
+/-- A rational lower bound for the exponential comparison base. -/
+lemma pi_base_bound : (640 / 567 : ℝ) < 32 / (9 * Real.pi) := by
+  apply (lt_div_iff₀ (by positivity : 0 < 9 * Real.pi)).2
+  nlinarith [Real.pi_lt_d2]
 
 end D5.S3.Analytic.HypergeometricShiftTuran.Defs

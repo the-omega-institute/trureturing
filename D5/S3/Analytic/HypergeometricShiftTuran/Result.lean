@@ -2,9 +2,9 @@
    generality: G
    mirror-B: D5/B/S3/Analytic/HypergeometricShiftTuran/Result
    mirror-E: none(waiver:external-open-problem-resolution)
-   anchors: [mathlib/module/Mathlib.Analysis.Real.Pi.Bounds, mathlib/module/Mathlib.Analysis.SpecialFunctions.Gaussian.GaussianIntegral]
+   anchors: [mathlib/module/Mathlib.Analysis.SpecialFunctions.Gamma.BohrMollerup]
    utility: kind=certified-instance; basis=refutes=gid:D5/S3/Analytic/HypergeometricShiftTuran/Defs.claim; result=D5/S3/Analytic/HypergeometricShiftTuran/Result.result; claim=D5/S3/Analytic/HypergeometricShiftTuran/Defs.claim
-   digest: Negative first coefficients for every denominator multiplicity at least six refute the universal coefficient assertion. -/
+   digest: Negative first coefficients for every denominator multiplicity at least six. -/
 
 /-
 # Negative first coefficient of the shifted Turanian
@@ -20,15 +20,26 @@ Per-declaration proof_shape:
 * result: bind-only; external conjecture settlement #20878.
 Each row has escape_witness: none and Direct frozen dependencies: none.
 The definitions coeff, turanCoeff, esymm, cond13 and claim of Defs are used by result.
-The decisive Mathlib facts are Real.Gamma_nat_eq_factorial, Real.Gamma_nat_add_half,
-Real.pi_lt_d2, pow_le_pow_left₀ and pow_le_pow_right₀.
+Shared bind-only helpers and their consumers:
+* Defs.gamma_three_halves: Defs.gamma_three_seven_halves_inv_pow_mul.
+* Defs.gamma_five_halves: Defs.gamma_five_halves_inv_pow_mul,
+  TwoBlockResult.first_coefficient_eq.
+* Defs.gamma_seven_halves: Defs.gamma_three_seven_halves_inv_pow_mul,
+  TwoBlockResult.first_coefficient_eq.
+* Defs.gamma_five_halves_inv_pow_mul: first_coefficient_eq,
+  TwoBlockResult.first_coefficient_eq.
+* Defs.gamma_three_seven_halves_inv_pow_mul: first_coefficient_eq,
+  TwoBlockResult.first_coefficient_eq.
+* Defs.pi_base_bound: half_parameter_family_neg, TwoBlockResult.half_parameter_family_neg.
+All six shared helpers have proof_shape: bind-only and escape_witness: none.
+The decisive Mathlib facts are Real.Gamma_two, Real.Gamma_nat_eq_factorial,
+pow_le_pow_left₀ and pow_le_pow_right₀.
 The module certifies one explicit parameter instance that refutes Defs.claim, so the
 utility kind is certified-instance with basis refutes.
 -/
 
 import D5.S3.Analytic.HypergeometricShiftTuran.Defs
-import Mathlib.Analysis.Real.Pi.Bounds
-import Mathlib.Analysis.SpecialFunctions.Gaussian.GaussianIntegral
+import Mathlib.Analysis.SpecialFunctions.Gamma.BohrMollerup
 
 noncomputable section
 open scoped BigOperators
@@ -45,40 +56,13 @@ private lemma first_coefficient_eq (q : ℕ) :
       coeff (fun _ : Fin 0 => 0) (fun _ : Fin q => (1 / 2 : ℝ)) t =
         (Real.Gamma (1 / 2 + t))⁻¹ ^ q := by
     simp [coeff, inv_pow]
-  have hsq : Real.sqrt Real.pi * Real.sqrt Real.pi = Real.pi :=
-    Real.mul_self_sqrt Real.pi_pos.le
-  have g2 : Real.Gamma 2 = 1 := by
-    rw [show (2 : ℝ) = ((1 : ℕ) : ℝ) + 1 by norm_num, Real.Gamma_nat_eq_factorial]
-    norm_num
-  have g3 : Real.Gamma 3 = 2 := by
-    rw [show (3 : ℝ) = ((2 : ℕ) : ℝ) + 1 by norm_num, Real.Gamma_nat_eq_factorial]
-    norm_num [Nat.factorial]
-  have g32 : Real.Gamma (3 / 2) = Real.sqrt Real.pi / 2 := by
-    rw [show (3 / 2 : ℝ) = ((1 : ℕ) : ℝ) + 1 / 2 by norm_num, Real.Gamma_nat_add_half]
-    norm_num [Nat.doubleFactorial]
-  have g52 : Real.Gamma (5 / 2) = 3 * Real.sqrt Real.pi / 4 := by
-    rw [show (5 / 2 : ℝ) = ((2 : ℕ) : ℝ) + 1 / 2 by norm_num, Real.Gamma_nat_add_half]
-    norm_num [Nat.doubleFactorial]
-  have g72 : Real.Gamma (7 / 2) = 15 * Real.sqrt Real.pi / 8 := by
-    rw [show (7 / 2 : ℝ) = ((3 : ℕ) : ℝ) + 1 / 2 by norm_num, Real.Gamma_nat_add_half]
-    norm_num [Nat.doubleFactorial]
-  have hpi : 0 < Real.pi := Real.pi_pos
-  have hs : 0 < Real.sqrt Real.pi := Real.sqrt_pos.2 hpi
-  -- the four Gamma arguments occurring in the first coefficient
   have e1 : (Real.Gamma 2)⁻¹ ^ q * (Real.Gamma 3)⁻¹ ^ q = (1 / 2 : ℝ) ^ q := by
-    rw [g2, g3, ← mul_pow]; norm_num
-  have e2 : (Real.Gamma (5 / 2))⁻¹ ^ q * (Real.Gamma (5 / 2))⁻¹ ^ q =
-      (16 / (9 * Real.pi)) ^ q := by
-    rw [← mul_pow, g52]
-    congr 1
-    field_simp
-    nlinarith [hsq]
-  have e3 : (Real.Gamma (3 / 2))⁻¹ ^ q * (Real.Gamma (7 / 2))⁻¹ ^ q =
-      (16 / (15 * Real.pi)) ^ q := by
-    rw [← mul_pow, g32, g72]
-    congr 1
-    field_simp
-    nlinarith [hsq]
+    rw [Real.Gamma_two,
+      show Real.Gamma (3 : ℝ) = 2 by
+        rw [show (3 : ℝ) = ((2 : ℕ) : ℝ) + 1 by norm_num, Real.Gamma_nat_eq_factorial]
+        norm_num [Nat.factorial],
+      ← mul_pow]
+    norm_num
   have expand :
       turanCoeff (fun _ : Fin 0 => 0) (fun _ : Fin q => (1 / 2 : ℝ))
         1 (1 / 2) (1 / 2) 1 =
@@ -90,7 +74,8 @@ private lemma first_coefficient_eq (q : ℕ) :
       Nat.cast_zero, Nat.cast_one, Nat.sub_zero, Nat.sub_self, Nat.factorial_zero,
       Nat.factorial_one, mul_one, div_one, add_zero]
     norm_num
-  rw [expand, mul_comm ((Real.Gamma 3)⁻¹ ^ q), e1, e2, e3]
+  rw [expand, mul_comm ((Real.Gamma 3)⁻¹ ^ q), e1, gamma_five_halves_inv_pow_mul,
+    gamma_three_seven_halves_inv_pow_mul]
   ring
 
 /-- Every denominator multiplicity at least six gives a negative first
@@ -98,9 +83,7 @@ coefficient at the positive half shifts and the unit base parameter. -/
 theorem half_parameter_family_neg (q : ℕ) (hq : 6 ≤ q) :
     turanCoeff (fun _ : Fin 0 => 0) (fun _ : Fin q => (1 / 2 : ℝ))
       1 (1 / 2) (1 / 2) 1 < 0 := by
-  have hbase : (640 / 567 : ℝ) < 32 / (9 * Real.pi) := by
-    apply (lt_div_iff₀ (by positivity : 0 < 9 * Real.pi)).2
-    nlinarith [Real.pi_lt_d2]
+  have hbase := Defs.pi_base_bound
   have hone : (1 : ℝ) ≤ 32 / (9 * Real.pi) := by
     linarith
   have hsix : (2 : ℝ) < (32 / (9 * Real.pi)) ^ 6 := by
