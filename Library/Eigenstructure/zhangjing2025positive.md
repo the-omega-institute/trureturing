@@ -8,6 +8,7 @@ url: https://doi.org/10.13001/ela.2025.9201
 claim: Question 2.14 asks whether positivity of the functional-calculus block is equivalent to normality under three scalar conditions on f and g.
 strata_touched:
   - D5/S3/Quantum/Matrix/ZhangJingBlockNormalityRefutation
+  - D5/S3/Quantum/Matrix/ZhangJingPowerCaseSettlement
 license: citation-only
 triage: anchor
 ---
@@ -35,6 +36,20 @@ The first quotation is the notation on p. 595; the second is Question 2.14 on p.
 The fixed example uses $g(x)=1+(x-1)/(1+(x-1)^2)$, $f(x)=x^2/g(x)$, and $A=\begin{pmatrix}0&3/2\\3&0\end{pmatrix}$. The two distinct singular values $3$ and $3/2$ have the same $g$-value $7/5$. The block has the Gram certificate $(5/7)Q^*Q$ for $Q=[A,(7/5)I]$, while $A^*A\ne AA^*$. Here $f(0)=0$; strict positivity of $f$ is restricted to positive inputs.
 
 This refutes the universal equivalence in Question 2.14. An injectivity repair, the general counterexample family, and the singular-matrix classification are outside this formal statement. The motivating power case at exponent $a=1$ has constant $g$ and must be separated from $1/2\le a<1$.
+
+## Source statements
+
+Notation, p. 595: “|A| = (A*A)^{1/2} and A* is the conjugate transpose of A”.
+
+Theorem 2.3, p. 597: “Let A ∈ M_n. Then [[|A|^{2a}, A*], [A, |A|^{2(1−a)}]] ≥ 0, for 0 ≤ a ≤ 1/2 if and only if A is normal.”
+
+After Remark 2.13, p. 601: “Due to the limitations of our research method, we cannot solve the problem that Theorem 2.3 holds for 1/2 ≤ a ≤ 1.”
+
+The matrix absolute value is `CFC.sqrt (Aᴴ * A)`. Real powers use `Real.rpow`, including the value x⁰ = 1, and matrix functions use the real continuous functional calculus. Normality is `Aᴴ * A = A * Aᴴ`. The formal statements quantify over every natural dimension and all complex square matrices, with no invertibility assumption.
+
+## Mathematical consequences
+
+The repository proves the equivalence for 1/2 ≤ a < 1, including singular matrices. At a = 1 the block is the Gram matrix of [A,I], so it is positive semidefinite for every A. The nonnormal matrix [[0,1],[2,0]] refutes the extension to the closed upper endpoint. The paper's lower interval is cited here and is not independently formalized by this module.
 
 ## Supporting computation
 
