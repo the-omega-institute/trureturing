@@ -13,7 +13,7 @@ triage: anchor
 
 # Complete-dual applications to the quasi-Riemann inverse fourth moment
 
-This companion to the [Liu source card](liu2026quasirh.md) records
+This companion to the [Liu source card](../Analytic/liu2026quasirh.md) records
 `repo-derived` applications, not additional theorems attributed to Liu.
 It reuses that card's pinned primary manuscript, original coefficients,
 physical rows, collision zeros and fixed or polylog profile/height
@@ -23,15 +23,15 @@ No new sieve, literature-priority claim or Lean certification is made.
 
 Here $D=\sqrt U$, $q_a$ denotes ideal norm, $t(a)$ the original fixed
 multiplicative ray class, and $\mathcal K_{U,\Omega}$ the complete
-physical-row kernel defined in the [actual-order-six correlation](liu2026quasirh.md#the-actual-order-six-correlation-for-the-inverse-fourth-moment).
+physical-row kernel defined in the [actual-order-six correlation](../Analytic/liu2026quasirh.md#the-actual-order-six-correlation-for-the-inverse-fourth-moment).
 The baseline exponent is $B_*=(31-10\sqrt6)/6$.
 The intrinsic product-squarepart norm $P$ and coefficient-envelope
-large-$P$ bound are [C16--C18](liu2026quasirh.md#localizing-the-remaining-contraction-by-the-product-squarepart).
+large-$P$ bound are [C16--C18](../Analytic/liu2026quasirh.md#localizing-the-remaining-contraction-by-the-product-squarepart).
 
 ## Reusing Möbius--Gauss cancellation in the complete dual
 
-The [squarefree Gauss pairing](faveri2026fixedorder.md#known-estimates-for-the-squarefree-gauss-pairing)
-and its [additive-character transport](faveri2026fixedorder.md#exact-additive-character-transport)
+The [squarefree Gauss pairing](../Analytic/faveri2026fixedorder.md#known-estimates-for-the-squarefree-gauss-pairing)
+and its [additive-character transport](../Analytic/faveri2026fixedorder.md#exact-additive-character-transport)
 already supply the detector's `eq:signal`, pair-Gauss formula and shift to
 the DDDS convention. They must be reused rather than reconstructed from a
 rational conductor. In particular, on their stated equal-ray coprime
@@ -64,7 +64,7 @@ cancellation for the actual coefficient vector.
 
 **Opening the actual coefficient repairs one applicability mismatch.**
 The fixed-twist numerator average in (B2) of the
-[growing-ray supplier](faveri2026fixedorder.md#a-tame-growing-ray-application-to-the-complete-classwise-pole)
+[growing-ray supplier](../Analytic/faveri2026fixedorder.md#a-tame-growing-ray-application-to-the-complete-classwise-pole)
 cannot simply be evaluated on a diagonal where both its quadratic twist
 and numerator are determined by $m$. There is, however, an admissible way
 to use that supplier for each fixed $m$: open $A_D$ itself.
@@ -186,7 +186,7 @@ $$
 $$
 
 **The matrix and the common gcd.** Reuse the
-[classwise pair-Gauss formula](faveri2026fixedorder.md#a-classwise-squarefree-column-pole-consumer-with-shared-gcds)
+[classwise pair-Gauss formula](../Analytic/faveri2026fixedorder.md#a-classwise-squarefree-column-pole-consumer-with-shared-gcds)
 in its original additive convention:
 $\epsilon_{x,y}=c_\tau\gamma_1(x)\overline{\gamma_1(y)}$,
 $|\gamma_1|=1$. The class constant includes the original
@@ -558,7 +558,7 @@ $$
 The support of $f_0$ lies in the symmetric difference of $t_a,t_c$;
 $F_0\le q_J$ and $F_0/(q_Aq_B)\le1$.
 The zero-only radical is $R=\operatorname{rad}(gABS)/f_0$.
-Reuse the [all-column finite CRT formula](faveri2026fixedorder.md#extending-the-classwise-pole-consumer-to-all-convolution-columns),
+Reuse the [all-column finite CRT formula](../Analytic/faveri2026fixedorder.md#extending-the-classwise-pole-consumer-to-all-convolution-columns),
 which already treats reduced valuations $1,2,-1,-2$.
 It supplies $\Gamma(\rho)\gamma_1(x)\gamma_{-1}(y)$,
 separate fixed-core twists in $x,y$ and a reciprocity phase fixed on
@@ -656,7 +656,7 @@ supplied by this argument.
 
 ### Truncate before the positive class partition
 
-For the **original Möbius source**, the [existing whole-tail estimate](liu2026quasirh.md#small-shared-gcd-localization-using-the-existing-inverse-l-input)
+For the **original Möbius source**, the [existing whole-tail estimate](../Analytic/liu2026quasirh.md#small-shared-gcd-localization-using-the-existing-inverse-l-input)
 can be combined with (J13) without estimating signed cross-class
 correlations. First set $g=g_D=g_{\le T}+g_{>T}$, and only then put
 $c_{\tau,T}=g_{\le T}\mathbf1_{t(a)=\tau}$.
@@ -737,3 +737,227 @@ The residual (J15), full inverse-fourth improvement, signed Robin
 restoration and RH remain open. These are source-conditional
 applications of existing suppliers, not Lean-certified results.
 
+### Summing every repeated core with unequal bulk norms
+
+Retaining the core weights and the two bulk lengths separately removes
+the low-repeat restriction from a further paid region. For $h_b$ in
+(J4), let $\mathcal E_{\tau,P}^{\rm all}(b)$ be the original equal-ray,
+unequal-parity contraction with $P\le P(a,c)<2P$, truncated at
+$P(a,c)<U^{1/4}$. Keep every cube-free column and all original rows.
+The same suppliers give
+
+$$
+\boxed{
+|\mathcal E_{\tau,P}^{\rm all}(b)|
+\ll C_b^4U^{7/6+\varepsilon}P^{-5/12},
+\qquad 1\le P<U^{1/4}.
+}
+\tag{J17}
+$$
+
+In particular, summing dyads pays $U^{1/5}\le P<U^{1/4}$ at
+$C_b^4U^{13/12+\varepsilon}$, with no repeated-core cutoff.
+
+**Keep the actual factor cap.** Reuse the fixed-core decomposition in
+(J11)--(J12), writing $t_a=c_0r_0$, $t_c=c_0s_0$, with $c_0,r_0,s_0$
+pairwise coprime and squarefree. Let $C,R,S,G$ be their norm dyads and
+that of $g$. Then $P\asymp C^2RSG$. The occupancy choices satisfy
+$d_a\mid s_0$, $d_c\mid r_0$, and exactly
+
+$$
+(A,B)=c_0^2d_ad_c,\qquad f_0=r_0s_0,\qquad F_0=q_{f_0}\asymp RS.
+$$
+
+The actual lengths remain $X=U/(q_AG)$, $Y=U/(q_BG)$, and the natural
+dual length is $M\ll\kappa UF_0/(q_Aq_BG^2)$.
+In the scalar allocation each original factor on the $a$ side contains
+$t_a$, so its remaining length is at most $D/q_{t_a}$.
+The calculation behind (J6), summing the allocations and the common
+coprimality ideal $e$, therefore gives for one fixed dual ideal
+
+$$
+\sum_e|H_{a,e}(m)|^2
+\ll C_b^4U^\varepsilon X\left(D/q_{t_a}+X^{2/3}\right)
+\ll C_b^4U^\varepsilon X^{5/3}.
+$$
+
+Indeed $D/q_{t_a}\le X^{2/3}$ is equivalent, up to fixed annular
+constants, to $q_{t_a}q_{d_a}^2G^2\le U^{1/2}$; its left side is at
+most $P^2$. The other side is identical with $a,c$ interchanged.
+No multiplicativity of $b$ is required.
+
+**Bound complete positive side norms separately.** Apply Cauchy to the
+full $(e,m)$ sum before choosing its internal core thresholds.
+For the $X$ side, its sixth-power-free dual core above $L$ costs
+
+$$
+C_b^4U^\varepsilon X
+\left[M+X(M/L)^{1/6}+M^{5/6}X^{1/3}+M^{1/3}X^{5/6}\right].
+$$
+
+Below $L$, the scalar certificate costs
+$C_b^4U^\varepsilon X^{5/3}M^{1/6}L^{5/6}$.
+At $L=X^{1/3}$ these give
+
+$$
+\begin{aligned}
+\sum_{e,m\sim M}|H_{a,e}(m)|^2
+&\ll C_b^4U^\varepsilon XQ(M,X),\\
+Q(M,X)&=M+M^{1/6}X^{17/18}
+       +M^{5/6}X^{1/3}+M^{1/3}X^{5/6}.
+\end{aligned}
+\tag{J18}
+$$
+
+If $M<X^{1/3}$, the all-row scalar bound $MX^{5/3}$ is already
+bounded by the second term of $XQ(M,X)$.
+The $Y$ norm chooses its own threshold $Y^{1/3}$. These choices need
+not agree: Cauchy uses two complete positive norms, not a common
+partition of the signed contraction. Common-$e$ and dual collision
+masks stay in the norms; fixed-core twists and $\bar\rho(m)$ remain
+bounded coefficient factors or row multipliers throughout.
+
+Poisson and the two original $D^{-1}$ coefficients now leave
+$\kappa^{-1}F_0^{-1/2}\sqrt{Q(M,X)Q(M,Y)}$ per fixed core and $g$.
+Counting their ideals in the dyads gives the positive majorant
+
+$$
+\frac{C_b^4U^\varepsilon GC\sqrt{RS}}{\kappa}
+\sqrt{Q(M,X_0)Q(M,Y_0)},\qquad
+\begin{cases}
+X_0=U/(C^2R^2G),\\
+Y_0=U/(C^2S^2G),\\
+M\ll\kappa U/(C^4RSG^2).
+\end{cases}
+\tag{J19}
+$$
+
+The occupancy ideals are omitted only from this increasing positive
+majorant: they decrease $X,Y,M$, and their count costs divisors.
+They have not been removed from the CRT identities or original zeros.
+Also $q_AG,q_BG\ll P^2$, so the actual $X,Y\gg U/P^2\gg U^{1/2}$;
+the bulk principal exception $x=y=1$ is absent.
+
+**Sum the original auxiliary rows and all core dyads.** Write
+$C=U^c,R=U^r,S=U^s,G=U^g$ and $p=2c+r+s+g$ for the norm scales.
+Fixed annular factors and dyads are absorbed in $U^\varepsilon$.
+In (J19) the length exponents, before the $\kappa$ factor, are
+
+$$
+x=1-2c-2r-g,\quad y=1-2c-2s-g,\quad
+m=1-4c-r-s-2g.
+$$
+
+Expand the two square roots into sixteen positive terms.
+The four $M$-powers in $Q$ are
+$\alpha=(1,1/6,5/6,1/3)$. A term $i,j$ has $\kappa$-power
+$(\alpha_i+\alpha_j)/2-1$; summing the original
+$q_\ell\ll U^{1/6}$ adds at most
+$\max(0,(\alpha_i+\alpha_j)/2-5/6)$ to its $U$ exponent.
+The zero-only $r$-divisors cost $U^\varepsilon$.
+For a dual part supported on the fixed bad primes, the decay power is
+$(\alpha_i+\alpha_j)/2>0$, so every such sum converges.
+The original transform's rapid decay pays dyads beyond the natural
+length. No original auxiliary expansion or bad-dual term is omitted.
+
+Each resulting exponent is affine in $c,r,s,g$.
+At $p=0$ all sixteen exponents are at most $7/6$.
+At $p=1/4$, the simplex vertices and maxima are
+
+| Nonzero core exponent | Maximum over the sixteen terms |
+|---|---|
+| $c=1/8$ | $11/12$ |
+| $r=1/4$ or $s=1/4$ | $17/16$ |
+| $g=1/4$ | $25/24$ |
+
+Thus every exponent on $0\le p\le1/4$ is at most
+$(1-4p)7/6+4p(17/16)=7/6-5p/12$. This proves (J17).
+This is an unequal-length and weighted-core application of the existing
+suppliers; no new sieve or literature-priority claim is made.
+
+### An untruncated sufficient target for the actual Type-II factor
+
+Combine (J17) with the coefficient-envelope bound (C18) for
+$P\ge U^{1/4}$. For any genuine $h_b$ in (J4), first take the positive
+finite class partition $c_\tau=h_b\mathbf1_{t(a)=\tau}$.
+The entire $P\ge U^{1/5}$ part is paid at
+$C_b^4U^{13/12+\varepsilon}$, and its cubic block at
+$C_b^4U^{1+\varepsilon}$. Consequently the additional sufficient input
+
+$$
+\operatorname{Re}\sum_\tau E_{6,\,P<U^{1/5}}(c_\tau)
+\ll U^{B_*-\sigma+\varepsilon},\qquad\sigma>0,
+\tag{J20}
+$$
+
+would imply $\mathcal T(h_b)\ll
+U^{\max(13/12,B_*-\sigma)+\varepsilon}$ for fixed $C_b$.
+The head here has no repeated-core truncation, so no Type-II tail
+estimate is needed. This supplies a different route from the smaller,
+truncated original-Möbius target (J15); neither residual is supplied.
+
+For the actual Type-II factor $b=\lambda_{\mathrm{II},b}$, use its exact
+polynomial identity with the paid Type-I part (C30) and apply the
+$L^4$ triangle inequality directly. Assuming (J20) uniformly for its
+original finite components and required profile derivatives, the
+original Möbius fourth moment then has the same exponent
+$\max(13/12,B_*-\sigma)$.
+Every fixed $0<\nu<\min(B_*-13/12,\sigma)$ would be a saving.
+The smaller $(B_*-13/12)/4$ transfer allowance in (C31)--(C32) belongs
+to their moment-difference comparison; this one-sided consumer does
+not compare those signed differences.
+No bound for (J20), complete inverse-fourth improvement, signed Robin
+restoration or RH is proved by the paid sector alone.
+
+### A small parity core in the full natural good-dual range
+
+A separate application pays an arithmetic part of the full natural dual
+range in precisely $\mathfrak E_{1,b}(M)$ from (J1)--(J6).
+Retain its good-dual selector, equal ray and
+$t_a=t_c=h=\ell=r=1$ restrictions, and select $q_{r_2(m)}\le A_0$.
+Then
+
+$$
+\boxed{
+|\mathfrak E_{1,b,\,q_{r_2(m)}\le A_0}(M)|
+\ll C_b^4U^\varepsilon U^{8/9}M^{1/6}A_0^{5/6},
+\qquad1\le A_0\le M\le U.
+}
+\tag{J21}
+$$
+
+Write uniquely $m=ab^2v^6$, where $a=r_2(m)$ is squarefree,
+$b$ is cubefree and $ab^2$ is sixth-power-free.
+No coprimality between $a,b,v$ is imposed. For fixed $a,v$,
+
+$$
+\overline{\chi_x(m)}=
+\overline{\chi_x(a)}\,\overline{\kappa_x(b)}
+\mathbf1_{(x,v)=1},\qquad \kappa_x=\chi_x^2.
+$$
+
+Thus the $b$ family is genuinely cubic. Its fixed $a$ twist and all
+$v$ and common-$e$ collisions remain in the separate coefficient
+vectors or row masks. This is a support restriction, not a global
+conversion of the sextic matrix to a cubic one.
+
+At norm dyads $q_a\asymp A$, $q_v\asymp V$, the cubic row length is
+$B\asymp(M/(AV^6))^{1/2}\le\sqrt U$.
+Reuse the [cubefree-index cubic supplier](../Analytic/faveri2026fixedorder.md#separating-the-lower-order-character-blocks)
+$\Theta_3(B,X)\ll(BX)^\varepsilon[B+X+(BX)^{2/3}]$.
+Here $X\le U$, so it costs at most $U^{1+\varepsilon}$.
+The J1 common-$e$ vector norms and $O(A V)$ choices of $a,v$ give
+$C_b^4U^{1+\varepsilon}AV$.
+Independently, J6 and ideal counting of these same duals give
+$C_b^4U^{2/3+\varepsilon}M^{1/2}A^{1/2}V^{-2}$.
+Their crossover is $V_0=U^{-1/9}M^{1/6}A^{-1/6}$.
+Summing the minimum over $V$, then over $A\le A_0$, gives (J21).
+When $V_0<1$, the scalar branch alone is smaller than that envelope.
+
+In particular $A_0\le U^{1/30}$ pays this selected support at
+$U^{13/12+\varepsilon}$ through $M\asymp U$, beyond J1's uniformly
+paid prefix $M\le U^{3/4}$.
+The remaining large parity cores, other original auxiliary expansions
+and bad duals are outside (J21). This restricted result does not supply
+(J15) or (J20). All results in this note remain source-conditional
+applications, without analytic Lean certification or an RH proof.

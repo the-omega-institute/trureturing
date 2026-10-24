@@ -1229,13 +1229,15 @@ Consequently the newer source is available for its actual ordinary subenergies, 
 
 ## Complete-dual estimates and the remaining head
 
-The [complete-dual application note](liu2026quasirhdual.md) contains the
+The [complete-dual application note](../Fourier/liu2026quasirhdual.md) contains the
 Möbius--Gauss transport, cubic coefficient interface (J4)--(J6),
-all-row common-gcd estimate (J8), and its cube-free low-repeat extension
-(J11)--(J13). For the original Möbius source, truncation before positive
-class partition gives the sufficient aggregate small-$P$ target
-[(J15)](liu2026quasirhdual.md#truncate-before-the-positive-class-partition).
-That target is not supplied; the full inverse-fourth saving, signed Robin
+all-row common-gcd estimate (J8), its cube-free low-repeat extension
+(J11)--(J13), and the weighted all-core bound (J17), which pays
+$P\ge U^{1/5}$ for actual Type-II coefficients without a repeat cutoff.
+The note also records the sufficient aggregate small-$P$ targets
+[(J15)](../Fourier/liu2026quasirhdual.md#truncate-before-the-positive-class-partition)
+and [(J20)](../Fourier/liu2026quasirhdual.md#an-untruncated-sufficient-target-for-the-actual-type-ii-factor).
+Neither target is supplied; the full inverse-fourth saving, signed Robin
 restoration and RH remain open.
 
 ## Actual-family finite measurements
