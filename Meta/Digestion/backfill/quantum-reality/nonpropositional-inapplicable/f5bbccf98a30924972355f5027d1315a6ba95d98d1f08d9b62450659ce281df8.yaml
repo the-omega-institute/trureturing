@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:f5bbccf98a30924972355f5027d1315a6ba95d98d1f08d9b62450659ce281df8
+  normalized_sha256: sha256:f5bbccf98a30924972355f5027d1315a6ba95d98d1f08d9b62450659ce281df8
+cas_ref: sha256:f5bbccf98a30924972355f5027d1315a6ba95d98d1f08d9b62450659ce281df8
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 非命题：此段说明既有纠错文献、仓内声明来源与形式化覆盖边界；不将引用文献或构建状态作为本段的新数学结论。
+    previous_atom_id: ee6618336967599c16dce20c081887dd8c68eacb6fdce641b6bddf97cd0a740e
+    next_atom_id: 62301f9c7ffa86a1be71fea3c3ea5ebb0e0e28dc4104afc2b872ba2e6f847671
