@@ -6,8 +6,8 @@
    utility: none
    digest: Temporal Bell endpoint contractions equal one-particle propagator entries for every N. -/
 
-import D5.S3.Quantum.SpinChains.SupersymmetricFermion.HardCoreCompression
-import D5.S3.Quantum.Fermionic.FockMajoranaCarrier
+import D5.S3.Quantum.Fermionic.PeriodicSshExcessPseudoEntropyRefutation
+import D5.S3.Quantum.Measurements.CliffordJointMeasurability.FourierCliffordVacuum
 
 /-! Endpoint vacuum contractions for the open XX chain in the Heisenberg picture. -/
 
@@ -16,6 +16,7 @@ open scoped BigOperators Matrix ComplexConjugate Matrix.Norms.L2Operator
 open D5.S3.Quantum.SpinChains.SupersymmetricFermion.JordanWigner
 open D5.S3.Quantum.SpinChains.SupersymmetricFermion.HardCoreCompression (fullC_entry)
 open D5.S3.Quantum.Fermionic.FockMajoranaCarrier (numberParity majorana_clifford_and_parity)
+open D5.S3.Quantum.Fermionic.PeriodicSshExcessPseudoEntropyRefutation (fullC_mixed)
 open PredictiveThermodynamic.Physical (Assignment)
 
 noncomputable section
@@ -53,19 +54,6 @@ def claim : Prop :=
       (fullC last * fullC first * X * (fullC last)ᴴ)
         (vacuumIndex N) (vacuumIndex N)).re =
       (propagator N J μ t last last - propagator N J μ t first last).re
-
-private lemma mixed_CAR {N : ℕ} (i j : Fin N) :
-    fullC i * (fullC j)ᴴ + (fullC j)ᴴ * fullC i =
-      if i = j then (1 : FullOperator N) else 0 := by
-  by_cases h : i = j
-  · subst j
-    simpa using fullC_CAR i
-  · rw [ite_eq_right h]
-    rcases lt_or_gt_of_ne h with h | h
-    · exact fullC_mixed_anticomm_of_lt i j h
-    · have ht := congrArg Matrix.conjTranspose (fullC_mixed_anticomm_of_lt j i h)
-      simpa only [Matrix.conjTranspose_add, Matrix.conjTranspose_mul,
-        Matrix.conjTranspose_conjTranspose, Matrix.conjTranspose_zero, add_comm] using ht
 
 private lemma creation_anticomm {N : ℕ} (i j : Fin N) :
     (fullC i)ᴴ * (fullC j)ᴴ + (fullC j)ᴴ * (fullC i)ᴴ = 0 := by
@@ -113,12 +101,13 @@ private lemma quadratic_commutator {N : ℕ} (J μ : ℝ) (j : Fin N) :
       _ = (fullC i)ᴴ * (fullC k * (fullC j)ᴴ + (fullC j)ᴴ * fullC k) -
           ((fullC i)ᴴ * (fullC j)ᴴ + (fullC j)ᴴ * (fullC i)ᴴ) * fullC k := by
         noncomm_ring
-      _ = _ := by rw [mixed_CAR, creation_anticomm]; split_ifs <;> simp
+      _ = _ := by rw [fullC_mixed, creation_anticomm]; split_ifs <;> simp
   unfold hamiltonian
   simp only [Finset.sum_mul, Finset.mul_sum, ← Finset.sum_sub_distrib,
     Matrix.smul_mul, Matrix.mul_smul, ← smul_sub, hterm]
   simp
 
+set_option backward.isDefEq.respectTransparency false in
 private lemma creation_evolution {N : ℕ} (J μ t : ℝ) (j : Fin N) :
     evolve J μ t (fullC j)ᴴ =
       ∑ i : Fin N, propagator N J μ t i j • (fullC i)ᴴ := by
@@ -166,8 +155,9 @@ private lemma creation_evolution {N : ℕ} (J μ t : ℝ) (j : Fin N) :
       NormedSpace.exp (z • H) = (fullC j)ᴴ := by
     simpa only [F, zero_smul, NormedSpace.exp_zero, one_mul, mul_one, hzero] using hc
   have hinv : NormedSpace.exp (z • H) * NormedSpace.exp (z • (-H)) = 1 := by
-    rw [smul_neg, ← Matrix.exp_add_of_commute _ _ (Commute.refl (z • H)).neg_right]
-    simp
+    rw [smul_neg]
+    exact (open scoped Matrix.Norms.Operator in
+      (NormedSpace.invertibleExp (z • H)).mul_invOf_self)
   change NormedSpace.exp (z • H) * (fullC j)ᴴ * NormedSpace.exp (-(z • H)) =
     L (NormedSpace.exp (z • h))
   rw [← hc']
@@ -339,9 +329,8 @@ private lemma endpoint_parity_factor {N : ℕ} (j : Fin N) :
     ((1 : FullOperator N) - (2 : ℂ) • ((fullC j)ᴴ * fullC j)) *
       (fullC j - (fullC j)ᴴ) = (fullC j)ᴴ + fullC j := by
   have hbb : (fullC j)ᴴ * (fullC j)ᴴ = 0 := by
-    have hz : (2 : ℂ) • ((fullC j)ᴴ * (fullC j)ᴴ) = 0 := by
-      simpa only [two_smul] using creation_anticomm j j
-    exact (smul_eq_zero.mp hz).resolve_left (by norm_num)
+    exact D5.S3.Quantum.Measurements.CliffordJointMeasurability.FourierCliffordVacuum.CAR_nilpotent
+      (fullC j)ᴴ (creation_anticomm j j)
   have haa : fullC j * fullC j = 0 := by
     have ht := congrArg Matrix.conjTranspose hbb
     simpa only [Matrix.conjTranspose_mul, Matrix.conjTranspose_conjTranspose,
@@ -364,6 +353,7 @@ private lemma sigmaXLast_parity (N : ℕ) (hN : 0 < N) :
   unfold sigmaXLast
   rw [← parity_prefix N hN, mul_assoc, endpoint_parity_factor]
 
+set_option backward.isDefEq.respectTransparency false in
 private lemma parity_stationary (N : ℕ) (J μ t : ℝ) :
     evolve J μ t (numberParity N) = numberParity N := by
   let P := numberParity N
@@ -381,30 +371,27 @@ private lemma parity_stationary (N : ℕ) (J μ t : ℝ) :
         hopping N J μ i j • ((fullC i)ᴴ * fullC j)) =
       (∑ i : Fin N, ∑ j : Fin N, hopping N J μ i j • ((fullC i)ᴴ * fullC j)) * P
     simp only [Finset.mul_sum, Finset.sum_mul, Matrix.mul_smul, Matrix.smul_mul, hterm]
-  have hc := (hPH.smul_right z).exp_right
   unfold evolve
   change NormedSpace.exp (z • H) * P * NormedSpace.exp (-(z • H)) = P
-  rw [← hc.eq, mul_assoc,
-    ← Matrix.exp_add_of_commute _ _ (Commute.refl (z • H)).neg_right]
-  simp
+  open scoped Matrix.Norms.Operator in
+    simpa only [neg_neg] using
+      (SemiconjBy.exp_neg_mul_mul_exp_eq_self (hPH.smul_right z).neg_right)
 
+set_option backward.isDefEq.respectTransparency false in
 private lemma evolve_mul {N : ℕ} (J μ t : ℝ) (A B : FullOperator N) :
     evolve J μ t (A * B) = evolve J μ t A * evolve J μ t B := by
-  let K := ((t : ℂ) * Complex.I) • hamiltonian N J μ
-  have hinv : NormedSpace.exp (-K) * NormedSpace.exp K = 1 := by
-    rw [← Matrix.exp_add_of_commute (-K) K (Commute.refl K).neg_left]
-    simp
-  unfold evolve
-  change NormedSpace.exp K * (A * B) * NormedSpace.exp (-K) = _
-  calc
-    _ = NormedSpace.exp K * A * (NormedSpace.exp (-K) * NormedSpace.exp K) * B *
-        NormedSpace.exp (-K) := by rw [hinv]; simp only [mul_one, mul_assoc]
-    _ = _ := by simp only [K, mul_assoc]
+  exact (open scoped Matrix.Norms.Operator in
+    let K := ((t : ℂ) * Complex.I) • hamiltonian N J μ
+    letI := NormedSpace.invertibleExp K
+    map_mul (MulSemiringAction.toRingEquiv _ (FullOperator N)
+      (ConjAct.toConjAct (unitOfInvertible (NormedSpace.exp K)))) A B)
 
 private lemma evolve_sub {N : ℕ} (J μ t : ℝ) (A B : FullOperator N) :
     evolve J μ t (A - B) = evolve J μ t A - evolve J μ t B := by
-  unfold evolve
-  noncomm_ring
+  exact map_sub ((AddMonoidHom.mulRight
+    (NormedSpace.exp (-(((t : ℂ) * Complex.I) • hamiltonian N J μ)))).comp
+      (AddMonoidHom.mulLeft
+        (NormedSpace.exp (((t : ℂ) * Complex.I) • hamiltonian N J μ)))) A B
 
 private lemma evolved_endpoint (N : ℕ) (hN : 0 < N) (J μ t : ℝ) :
     evolve J μ t (sigmaXLast N hN) = numberParity N *
@@ -431,7 +418,7 @@ private lemma vacuum_pair {N : ℕ} (i j : Fin N) :
     (fullC i * (fullC j)ᴴ) (vacuumIndex N) (vacuumIndex N) =
       if i = j then (1 : ℂ) else 0 := by
   have hc := congrArg (fun M : FullOperator N => M (vacuumIndex N) (vacuumIndex N))
-    (mixed_CAR i j)
+    (fullC_mixed N i j)
   simp only [Matrix.add_apply, vacuum_left_creation, add_zero] at hc
   by_cases hij : i = j <;> simpa [hij, Matrix.one_apply] using hc
 
@@ -443,7 +430,7 @@ private lemma vacuum_four {N : ℕ} (a b k r : Fin N) :
       fullC b * (fullC a * (fullC k)ᴴ + (fullC k)ᴴ * fullC a) * (fullC r)ᴴ -
         (fullC b * (fullC k)ᴴ + (fullC k)ᴴ * fullC b) * fullC a * (fullC r)ᴴ +
         (fullC k)ᴴ * fullC b * fullC a * (fullC r)ᴴ := by noncomm_ring
-  rw [he, mixed_CAR, mixed_CAR]
+  rw [he, fullC_mixed, fullC_mixed]
   by_cases hak : a = k <;> by_cases hbk : b = k <;>
     simp [hak, hbk, mul_assoc, vacuum_left_creation, vacuum_pair]
 
@@ -452,7 +439,7 @@ private lemma vacuum_annihilation_contraction {N : ℕ} (a b k r : Fin N) :
   have he : fullC b * fullC a * fullC k * (fullC r)ᴴ =
       fullC b * fullC a * (fullC k * (fullC r)ᴴ + (fullC r)ᴴ * fullC k) -
         (fullC b * fullC a * (fullC r)ᴴ) * fullC k := by noncomm_ring
-  rw [he, mixed_CAR]
+  rw [he, fullC_mixed]
   by_cases hkr : k = r <;>
     simp [hkr, Matrix.sub_apply, vacuum_right_annihilator]
 
