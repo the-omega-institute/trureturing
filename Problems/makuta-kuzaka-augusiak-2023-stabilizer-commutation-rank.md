@@ -65,7 +65,7 @@ The canonical source is `D5/S3/Quantum/Codes/StabilizerGenuineEntanglementCommut
 - **Proof.** It proves `result : claim`.
 - **Axioms.** It uses only the standard axioms `propext`, `Classical.choice` and `Quot.sound`; no `sorry`, `native_decide`, or new axiom.
 
-Frozen state: `Golden/Frozen/state/D5/S3/Quantum/Codes/StabilizerGenuineEntanglementCommutationRank.lean.json`, statement `sha256:c276c8afc2f5b7856b0fd2d053720e6b414e194a2fb8e7b7bc73bbaff8c95e77`.
+Frozen state: `Golden/Frozen/state/D5/S3/Quantum/Codes/StabilizerGenuineEntanglementCommutationRank.lean.json`, statement `sha256:24be0eabec9db221f80077ae04d8875184ecdb3842a40f402b863db489d78c8a`.
 
 Declaration statements:
 
