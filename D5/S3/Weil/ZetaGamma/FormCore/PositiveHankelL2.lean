@@ -75,7 +75,7 @@ private theorem normalized_row_integral :
       filter_upwards [ae_restrict_mem measurableSet_Ioi] with x hx
       exact normalized_row_substitution x hx
     _ = Real.pi := by
-      rw [integral_const_mul, integral_Ioi_inv_one_add_sq]
+      rw [integral_const_mul, integral_Ioi_inv_one_add_sq, Real.arctan_zero]
       ring
 
 private theorem schur_row_scaled (s y : ℝ) (hs : 0 < s) (hy : 0 < y) :
@@ -213,7 +213,7 @@ theorem carleman_actual_l2_domain (u : ℝ → ℂ) (hu : MemLp u 2 halfline) :
     (schurMajorant u z + schurMajorant u z.swap) / 2
   have hFswap : Integrable (fun z : ℝ × ℝ => schurMajorant u z.swap)
       (halfline.prod halfline) := by
-    simpa only [Function.comp_apply] using hF.swap
+    simpa only [Function.comp_def] using hF.swap
   have hM : Integrable M (halfline.prod halfline) := (hF.add hFswap).div_const 2
   have hm : AEStronglyMeasurable (carlemanAbsolute u) (halfline.prod halfline) := by
     have hd : Measurable (fun z : ℝ × ℝ => z.1 + z.2) := by fun_prop
@@ -324,7 +324,8 @@ private theorem hankel_actual_absolute_domain {k : ℝ} (hk : (1 / 2 : ℝ) ≤ 
       hankelAbsolute k u z ≤ carlemanAbsolute u z := by
     filter_upwards [positive_pair_ae] with z hz
     have h := mul_le_mul_of_nonneg_right
-      (hankel_kernel_le hk (add_pos hz.1 hz.2)).2 (mul_nonneg (norm_nonneg _) (norm_nonneg _))
+      (hankel_kernel_le hk (add_pos hz.1 hz.2)).2
+        (mul_nonneg (norm_nonneg (u z.1)) (norm_nonneg (u z.2)))
     simpa only [hankelAbsolute, carlemanAbsolute, div_eq_mul_inv, mul_comm] using h
   have hiA : Integrable (hankelAbsolute k u) (halfline.prod halfline) := by
     apply hc.mono' hmA
@@ -970,7 +971,7 @@ private theorem quarter_hankel_actual_absolute_domain {k : ℝ}
     (quarterSchurMajorant u z + quarterSchurMajorant u z.swap) / 2
   have hFswap : Integrable (fun z : ℝ × ℝ => quarterSchurMajorant u z.swap)
       (halfline.prod halfline) := by
-    simpa only [Function.comp_apply] using hF.swap
+    simpa only [Function.comp_def] using hF.swap
   have hM : Integrable M (halfline.prod halfline) := (hF.add hFswap).div_const 2
   have hmK : Measurable (fun z : ℝ × ℝ => positiveHankelKernel k (z.1 + z.2)) := by
     unfold positiveHankelKernel
