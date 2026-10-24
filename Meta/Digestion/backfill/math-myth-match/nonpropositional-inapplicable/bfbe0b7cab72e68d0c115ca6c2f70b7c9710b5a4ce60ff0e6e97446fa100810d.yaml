@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:bfbe0b7cab72e68d0c115ca6c2f70b7c9710b5a4ce60ff0e6e97446fa100810d
+  normalized_sha256: sha256:bfbe0b7cab72e68d0c115ca6c2f70b7c9710b5a4ce60ff0e6e97446fa100810d
+cas_ref: sha256:bfbe0b7cab72e68d0c115ca6c2f70b7c9710b5a4ce60ff0e6e97446fa100810d
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 'nonpropositional: James religious hypothesis, permission to accept and quotation attribution. The text gives historical interpretation, bibliographic scope or methodological advice, rather than a mathematical assertion.'
+    previous_atom_id: 21900c6ed50cfaab4c9a28f6a2513d1eb34e115c9d2837f28780d7531bcf162a
+    next_atom_id: 5158071f232b923e34318b02f4c8dfb081bcfd3a7beddcddfadafad9ad166b57
