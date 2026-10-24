@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:da410fb97397884b91b9fe3263d181ca9bfc204b68e1f0584e98b99c7c1c4435
+  normalized_sha256: sha256:da410fb97397884b91b9fe3263d181ca9bfc204b68e1f0584e98b99c7c1c4435
+cas_ref: sha256:da410fb97397884b91b9fe3263d181ca9bfc204b68e1f0584e98b99c7c1c4435
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 仅登记 Sion 论文和 Lessing 译本的出处及引用范围，不主张新的极小极大定理。
+    previous_atom_id: 89748be4eb8059b98c4b6dac6b4f8e9de6c2900ca29fba3c95ae74bf45b428c9
+    next_atom_id: 8236ff727ff91071c3213c7c373068a8c3ea22dc9b0e206b3fdfa62d798e36b1
