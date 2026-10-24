@@ -399,7 +399,7 @@ $$
 
 For $d\ge1$, three reads suffice by Theorem 2.1 of this volume, whose last three readings follow the same prefix. Two reads cannot suffice even for a fully adaptive continuation. For $d=0$, two reads suffice and one read cannot suffice.
 
-#### Proof for $d\ge1: the two-read lower bound
+#### Proof for $d\ge1$: the two-read lower bound
 
 Assume a protocol uses at most two continuation reads. Write $j=B+2$ and
 
@@ -508,7 +508,7 @@ q_{\mathrm{ad}}(d)\ge3\qquad(d\ge1).
 \tag{7.11}
 $$
 
-#### Proof for $d=0: the one-read lower bound
+#### Proof for $d=0$: the one-read lower bound
 
 Use the family
 
@@ -567,7 +567,7 @@ q_{\mathrm{ad}}(0)\ge2.
 \tag{7.16}
 $$
 
-#### Proof for $d=0: a two-read adaptive continuation
+#### Proof for $d=0$: a two-read adaptive continuation
 
 For the fixed prefix, define
 
@@ -681,38 +681,43 @@ On histories that do not satisfy the legal-world algebraic branches used above, 
 
 For $d\ge1$, Theorem 2.1 of this volume gives $q_{\mathrm{ad}}(d)\le3$. Combining (7.11), (7.16), and (7.27) proves (7.3). ∎
 
-## 8. Finite-history model validation obstruction
+#### Applicability: finite histories and declared future experiments
 
-The recovery theorem is conditional on the declared drift degree. Let a deterministic causal protocol acquire only finitely many readings at clock indices in a finite set $I$, while the admissible drift class contains arbitrary real polynomials. Fix the same $S$ and affine gain in two worlds, and let $D$ be the drift in the first. For any future index $t_*\notin I$, choose
-
-$$
-Q(t)=c\prod_{i\in I}(t-i),
-\qquad c\ne0,
-\tag{8.1}
-$$
-
-and put $D'(t)=D(t)+Q(t)$. Then $Q(i)=0$ for every acquired index, while $Q(t_*)\ne0$.
-
-### Proposition 8.1 (causal finite-history obstruction)
-
-The two worlds $(S,\kappa,D)$ and $(S,\kappa,D')$ have the same finite transcript and every causal action up to the last acquired index, but they give different readings at $t_*$. Thus no finite transcript can certify an unrestricted arbitrary-degree drift model at an unacquired clock index.
-
-#### Proof
-
-Proceed inductively over the acquired reads. Before the first read the worlds have the same initial state. If their histories agree through a read, causality selects the same next finite-composite word and the same stopping decision in both worlds. The cumulative matrix and clock index are therefore the same. At every acquired index $i\in I$, the added term $Q(i)$ is zero, so the next readings agree. The induction reaches the last acquired index, hence the complete histories and actions coincide. At $t_*$ the matrix, gain, and source are still the common ones, but
+Theorem 7.1 assumes the degree bound before acquisition. Its finite-history boundary is the arbitrary-degree drift observation in Corollary 39.4 of [FIB self-calibrating relation mathematics](FIB_SELF_CALIBRATING_RELATION_MATHEMATICS.md), applied here to the fixed-prefix continuation model. Keep the same positive source $S$ and affine gain in two whole worlds, and let the first world have drift $D$. For a history with $L$ acquired reads, the recorded indices are $I=\{0,\ldots,L-1\}$. Corollary 39.4 supplies the polynomial alternatives
 
 $$
-z'_{t_*}-z_{t_*}=Q(t_*)\ne0.
+D'(t)=D(t)+Q_I(t),\qquad
+Q_I(t)=c\prod_{i\in I}(t-i),\qquad c\ne0.
+\tag{7.28}
 $$
 
-This is the finite-history obstruction stated in Corollary 39.4 of [FIB self-calibrating relation mathematics](FIB_SELF_CALIBRATING_RELATION_MATHEMATICS.md); the induction supplies its causal same-history justification. ∎
+The empty product is one. All parameters, including the entire polynomial $D'$, are fixed before either run. On the acquired indices the added drift is zero. Consequently the two worlds have the same history: at each read, equality of the preceding history forces the same next word and stopping decision, and the vanishing added drift gives the same response. This causal application of the corollary covers every acquired read, including empty-word repeats and gain-zero reads. Any answer or stopping decision based on that finite history is therefore shared. If $D$ obeys the declared bound and $L>d$, then $D'$ has degree $L>d$; a finite history compatible with Theorem 7.1 cannot distinguish its degree-bounded world from all unrestricted-degree alternatives.
 
-## 9. Scope of the continuation result
+A future comparison must specify how a read is obtained. If a declared continuation takes a next read after this history, both worlds select the same next word and reach the same cumulative matrix at index $L$. Their readings differ by $Q_I(L)\ne0$. More generally, at any nominated unacquired index $N$, the two responses differ by $Q_I(N)$ when evaluated on the same explicitly prescribed future experiment, meaning the same cumulative matrix and recorded index. This is a comparison along a common experiment, not an assertion that two adaptive runs retain a common experiment after their responses have differed. Causality forces equal actions only while their observed histories remain equal. If the acquired policy stops, it has no subsequent read; a future comparison then requires a separately declared continuation from the stopped history. Without such a continuation, the conclusion is nonidentifiability from the acquired history alone.
 
-Theorem 7.1 concerns exact deterministic causal continuation after the fixed identity–$U$–$U^2$ calibration prefix. It does not determine the problem in which that initial prefix may itself be chosen adaptively. It also does not alter the fixed-path bounds: [FIB affine six-read sharp recovery, Section 10](FIB_AFFINE_SIX_READ_SHARP_RECOVERY.md) gives $C_{\mathrm{fix}}(d)=d+5$ for $d\ge1$ and $5\le C_{\mathrm{fix}}(0)\le6$, while Theorem 4.1 here gives the three-read optimum only inside the stated calibration-prefix class.
+There is also a valid arbitrary finite target statement for adaptive continuations. Fix the first whole world and its acquired history, declare a deterministic causal continuation $\pi$, and nominate an integer $N\ge L$. Assume that $\pi$, run in that first world from this history, actually reaches the read at index $N$. Choose instead the alternative
 
-The statements use exact real arithmetic and unrestricted data-dependent finite-composite words. They make no assertion about randomized protocols, noisy reads, bit complexity, physical time, atom cost, physical realization beyond the declared common-source assumptions, or any Lean or empirical certification. The $d=0$, $\kappa\ne0$ construction permits an unbounded data-dependent finite atom count because the integer $n$ is selected from the recovered real parameters. These limitations are part of the quantifier boundary and do not weaken the exact mathematical conclusion (7.3).
+$$
+D_N'(t)=D(t)+Q_N(t),\qquad
+Q_N(t)=c\prod_{i=0}^{N-1}(t-i),\qquad c\ne0.
+\tag{7.29}
+$$
 
-The separate polynomial-gain and every-atom cubic contracts remain outside this affine-prefix continuation theorem. Other calibration prefixes and the unrestricted adaptive-prefix problem are also outside its quantifiers.
+These are two fixed whole worlds, with the same $S$ and gain. Applying the same causal induction to every index $0,\ldots,N-1$ makes all prior readings equal, including every intervening continuation read. Hence $\pi$ makes the same words and stopping decisions through the action producing read $N$, and reaches the same cumulative matrix there in both worlds. At that common experiment,
+
+$$
+z_N'-z_N=Q_N(N)=cN!\ne0.
+\tag{7.30}
+$$
+
+This remains true when the gain at $N$ is zero, since the difference is additive drift. The construction is existential separately for each declared continuation and reached finite target; its alternative polynomial may depend on $N$. If the declared continuation stops before $N$ in the first world, the reachability hypothesis fails and no read at $N$ is asserted. A single perturbation vanishing only on the original prefix does not establish separation at every later adaptive index: after its first differing read the selected words, stopping decisions, and source signals may differ, and the source-signal difference can cancel the added drift.
+
+#### Scope and comparison with fixed paths
+
+Theorem 7.1 concerns exact deterministic causal continuation after the fixed identity–$U$–$U^2$ calibration prefix. The initial prefix is fixed, so the problem in which that prefix may itself be chosen adaptively remains outside its conclusion. The independent fixed-path comparison is $C_{\mathrm{fix}}(d)=d+5$ for every integer $d\ge1$ and $5\le C_{\mathrm{fix}}(0)\le6$: [FIB affine six-read sharp recovery, Sections 7 and 10](FIB_AFFINE_SIX_READ_SHARP_RECOVERY.md) combines its attaining constructions with the all-fixed-history lower bound credited there to Theorem 5.1 of this volume. Theorem 4.1 here gives the three-read optimum among predetermined continuations only inside the stated calibration-prefix class. Theorem 7.1 allows causal continuation choices within that same prefix class.
+
+The model uses exact real arithmetic and the recorded reading clock: every read advances the index and unread atoms do not. No regularity is imposed on the data-dependent choice of a finite-composite word. For $d=0$, $\kappa\ne0$, the integer $n>2+a/r$ in (7.24) is finite for each legal world, but its required size is unbounded over the domain. Thus the two-read guarantee permits a finite but unbounded data-dependent atom count; it is a reading-count result, with no uniform atom-count bound. Randomized choices, noisy observations, and finite-precision arithmetic are outside this exact deterministic model. No bounds on bit complexity or physical time are asserted. The source and fixed-instrument assumptions remain those of Sections 1 and 7.
+
+The separate polynomial-gain and every-atom cubic contracts, other calibration prefixes, and the unrestricted adaptive-prefix problem remain outside the quantifiers of Theorem 7.1.
 
 ## 追加锚（本行以下为增补区）
