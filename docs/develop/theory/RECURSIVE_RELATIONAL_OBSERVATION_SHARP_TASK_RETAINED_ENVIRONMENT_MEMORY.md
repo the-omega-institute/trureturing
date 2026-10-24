@@ -2091,9 +2091,9 @@ The qutrit-output storage conclusions of §10 and the independent
 realization requirements of §12 retain their stated hypotheses.
 
 ## 追加锚（本行以下为增补区）
-## 13.2. Uniform finite-precision stability for the actual full-H tests
+## 13.3. Uniform finite-precision stability for the actual full-H tests
 
-**Theorem 13.2 (Uniform stability of the average corrected channel).**
+**Theorem 13.3 (Uniform stability of the average corrected channel).**
 Fix precisely the model of Definitions 1.1–1.2 and 11.1 and the
 actual coordinates used in Theorem 13.1. Thus
 $B:\mathbb C^3\to H=\mathbb C^5$ is the specified isometric
