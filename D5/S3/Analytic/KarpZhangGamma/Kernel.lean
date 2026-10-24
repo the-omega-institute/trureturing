@@ -19,7 +19,8 @@ parameters. The finite Pascal recurrence and Gamma recurrence yield the
 invariant at the next degree. This is the finite Vandermonde recurrence
 route to identity (3.11), without analytic series or integrals.
 bind-only helper: gamma_balanced_shift -> kernel_sum_nonneg (Jensen applied
-twice to Real.convexOn_log_Gamma). binomialGamma_sum is content and consumed
+twice to Real.convexOn_log_Gamma); it is also consumed by
+Result.reciprocalPair_balanced. binomialGamma_sum is content and consumed
 by reciprocalGamma_sum; reciprocalGamma_sum is consumed by kernel_sum_nonneg.
 Direct frozen D5 dependencies: none on the mathematical proof path; the
 imported Smoothing identities are same-delivery helpers.
@@ -94,7 +95,7 @@ theorem reciprocalGamma_sum (b c : ℝ) (hb : 0 < b) (hc : 0 < c) (m : ℕ) :
       simp only [div_eq_mul_inv, mul_inv_rev]
       ring
 
-private theorem gamma_balanced_shift (a α β : ℝ) (ha : 0 < a)
+theorem gamma_balanced_shift (a α β : ℝ) (ha : 0 < a)
     (hα : 0 ≤ α) (hβ : 0 ≤ β) :
     Real.Gamma (a + α) * Real.Gamma (a + β) ≤
       Real.Gamma a * Real.Gamma (a + α + β) := by
