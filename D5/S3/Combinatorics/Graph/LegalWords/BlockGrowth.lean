@@ -212,8 +212,7 @@ theorem growth_constant :
     apply ht.congr'
     filter_upwards [eventually_ne_atTop 0] with n hn
     have hnr : (n : ℝ) ≠ 0 := Nat.cast_ne_zero.mpr hn
-    dsimp only
-    field_simp
+    exact div_mul_div_cancel₀ hnr
   let u : ℕ → ℝ := fun j => -K (j-1)
   have hu : Subadditive u := by
     intro n m
@@ -227,7 +226,10 @@ theorem growth_constant :
     rw [← he]
     linarith
   have hlinear (n : ℕ) : K n ≤ (n:ℝ) * K 1 := by
-    simpa [hz] using hs.apply_mul_add_le n 1 0
+    calc
+      K n = K (n*1+0) := congrArg (fun j : ℕ => K j) (by omega)
+      _ ≤ (n:ℝ) * K 1 + K 0 := hs.apply_mul_add_le n 1 0
+      _ = (n:ℝ) * K 1 := by rw [hz, add_zero]
   have hub : BddBelow (range (fun n => u n / (n:ℝ))) := by
     refine ⟨-K 1, ?_⟩
     rintro r ⟨n,rfl⟩
@@ -245,9 +247,16 @@ theorem growth_constant :
     simpa [u, Nat.cast_add, Nat.cast_one, neg_div] using hcshift.neg
   have hupper (n : ℕ) : K n / ((n:ℝ)+1) ≤ c := by
     have he := hu.lim_le_div hub (n := n+1) (by omega)
-    rw [huc] at he
-    simp only [u, Nat.add_sub_cancel, Nat.cast_add, Nat.cast_one, neg_div] at he
-    linarith
+    have hv : u (n+1) = -K n := by
+      change -K (n+1-1) = -K n
+      exact congrArg (fun j : ℕ => -K j) (by omega)
+    have heBound : -c ≤ -(K n / ((n:ℝ)+1)) := by
+      calc
+        -c = hu.lim := huc.symm
+        _ ≤ u (n+1) / ((n+1:ℕ):ℝ) := he
+        _ = (-K n) / ((n:ℝ)+1) := by rw [hv, Nat.cast_add, Nat.cast_one]
+        _ = -(K n / ((n:ℝ)+1)) := neg_div _ _
+    exact neg_le_neg_iff.mp heBound
   have hrat : BddAbove (range (fun n : ℕ => K n / ((n:ℝ)+1))) :=
     ⟨c, by rintro r ⟨n,rfl⟩; exact hupper n⟩
   refine ⟨hz, nearly_additive, c, hc, ?_, ?_, ?_⟩
@@ -259,7 +268,9 @@ theorem growth_constant :
   · intro n
     constructor
     · by_cases hn : n = 0
-      · simp [hn,hz]
+      · calc
+          c * (n:ℝ) = 0 := by rw [hn, Nat.cast_zero, mul_zero]
+          _ ≤ K n := native_nonneg n
       · exact (le_div_iff₀ (Nat.cast_pos.mpr (Nat.pos_of_ne_zero hn))).mp (hs.lim_le_div hb hn)
     · exact (div_le_iff₀ (by positivity : (0:ℝ)<n+1)).mp (hupper n)
 
