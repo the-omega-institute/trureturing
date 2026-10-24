@@ -114,14 +114,44 @@ $$\forall A: \operatorname{PowerSeries}\left(\mathbb{Z}\right), \operatorname{De
 
 Over ZMod 2, let U be the Catalan unit, so U=1+X U squared. Put E=1+X, O=EU, B=E squared+X O squared, and V=1+XU. Then B=E squared U=EO and UV=1. For each m>0, [X^m](B^m V)=0: an odd m selects an odd coefficient of a square, while an even m reduces to m/2 by the Catalan equation. This eliminates the even normalized rows of B; EO=B eliminates the odd rows. Uniqueness identifies B with the reduction of 1-A. For n>3 its coefficient is [X^n]U+[X^(n-2)]U. The frozen binary_catalan theorem says these summands are one when n+1 or n-1 is a power of two. They cannot both be one here, since two powers of two greater than two cannot differ by two. This proves the stated equivalence for every solution.
 
+**Theorem 1.9 (Derivative commutes with coefficient maps).**
+
+$$\forall R: Type, [\operatorname{CommRing}\left(R\right)], \forall S: Type, [\operatorname{CommRing}\left(S\right)], \forall hom: R \to^{+*} S, \forall F: \operatorname{PowerSeries}\left(R\right), \operatorname{map}\left(hom, \operatorname{derivative}\left(R, F\right)\right) = \operatorname{derivative}\left(S, \operatorname{map}\left(hom, F\right)\right)$$
+
+*Proof.* Machine-checked in Lean as `D5/S1/Recurrence/LinearRows/LinearExponentDyadicSupport.derivative_map` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Acknowledgement.* Paul D. Hanna (2026). *OEIS A397591: linear-exponent coefficient equations and dyadic neighbors*. URL: <https://oeis.org/A397591>.
+
+*Commentary.*
+
+Mapping coefficients along a commutative-ring homomorphism commutes with the formal power-series derivative.
+
+**Theorem 1.10 (Odd coefficients of a square vanish).**
+
+$$\forall F: \operatorname{PowerSeries}\left(\operatorname{ZMod}\left(2\right)\right), \forall n: \mathbb{N}, \operatorname{coeff}\left(((2) \cdot (n)) + (1), (F)^{2}\right) = 0$$
+
+*Proof.* Machine-checked in Lean as `D5/S1/Recurrence/LinearRows/LinearExponentDyadicSupport.square_odd` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Acknowledgement.* Paul D. Hanna (2026). *OEIS A397591: linear-exponent coefficient equations and dyadic neighbors*. URL: <https://oeis.org/A397591>.
+
+*Commentary.*
+
+Over ZMod 2, every coefficient of a square at an odd index is zero.
+
 ## References
 
 - Truth anchor: `D5/S1/Recurrence/LinearRows/LinearExponentDyadicSupport.Agree`
 - Truth anchor: `D5/S1/Recurrence/LinearRows/LinearExponentDyadicSupport.DefiningEquation`
 - Truth anchor: `D5/S1/Recurrence/LinearRows/LinearExponentDyadicSupport.a`
+- Truth anchor: `D5/S1/Recurrence/LinearRows/LinearExponentDyadicSupport.derivative_map`
 - Truth anchor: `D5/S1/Recurrence/LinearRows/LinearExponentDyadicSupport.generatingSeries`
 - Truth anchor: `D5/S1/Recurrence/LinearRows/LinearExponentDyadicSupport.generating_equation`
 - Truth anchor: `D5/S1/Recurrence/LinearRows/LinearExponentDyadicSupport.hanna_conjecture`
 - Truth anchor: `D5/S1/Recurrence/LinearRows/LinearExponentDyadicSupport.integer_exists_unique`
 - Truth anchor: `D5/S1/Recurrence/LinearRows/LinearExponentDyadicSupport.pow_change`
+- Truth anchor: `D5/S1/Recurrence/LinearRows/LinearExponentDyadicSupport.square_odd`
 - Dependency: [D5/S1/Recurrence/Invariants/CatalanCompositionSquareParity](../Invariants/CatalanCompositionSquareParity.md)

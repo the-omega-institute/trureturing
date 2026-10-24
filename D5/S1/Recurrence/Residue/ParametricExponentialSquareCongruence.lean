@@ -7,7 +7,6 @@
    digest: Odd parameters transport parity; endpoint separation gives residues modulo eight. -/
 
 /- Escape audit unfinished: https://github.com/the-omega-institute/trureturing/issues/19891; linear_ode_unique. -/
-
 import D5.S1.Recurrence.Residue.ExponentialSquareWeightCatalanParity
 import Mathlib.Algebra.BigOperators.Intervals
 import Mathlib.RingTheory.PowerSeries.Exp
@@ -413,5 +412,13 @@ theorem family_conjectures :
   ⟨parity_q5, parity_q3,
     ExponentialSquareWeightCatalanParity.hanna_conjecture, residues_q2⟩
 
+#print axioms family_conjectures
+#print axioms source_iff
+#print axioms log_derivative_identity
+#print axioms generating_unique
+#print axioms normalized_mod_eight
+#print axioms residues_q2
+#print axioms normalized_mod_two
+#print axioms odd_parameter_parity
 
 end D5.S1.Recurrence.Residue.ParametricExponentialSquareCongruence

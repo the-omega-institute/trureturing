@@ -7,7 +7,6 @@
    digest: Edge tests, first prime layers and prime replacement carry Robin's inequality. -/
 
 /- Escape audit unfinished: https://github.com/the-omega-institute/trureturing/issues/19891; sigma_prime_pow_succ. -/
-
 import Mathlib.NumberTheory.ArithmeticFunction.Misc
 import Mathlib.NumberTheory.Harmonic.EulerMascheroni
 import Mathlib.Analysis.Complex.ExponentialBounds
