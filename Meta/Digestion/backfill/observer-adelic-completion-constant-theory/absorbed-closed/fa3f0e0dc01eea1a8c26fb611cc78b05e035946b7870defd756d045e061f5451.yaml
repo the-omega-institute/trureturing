@@ -1,9 +1,0 @@
-fingerprints:
-  raw_sha256: sha256:fa3f0e0dc01eea1a8c26fb611cc78b05e035946b7870defd756d045e061f5451
-  normalized_sha256: sha256:fa3f0e0dc01eea1a8c26fb611cc78b05e035946b7870defd756d045e061f5451
-cas_ref: sha256:fa3f0e0dc01eea1a8c26fb611cc78b05e035946b7870defd756d045e061f5451
-coverage_gids:
-  - gid: D5/S3/Weil/ZetaGamma/ThresholdDangerSet.threshold_danger_set_definition
-    target_statement_id: sha256:a190fa95d25e2bf083c76bf136e0018698b80a41a6af666efa7b0a4dc91c2476
-receipts:
-  unresolved_subitems: []

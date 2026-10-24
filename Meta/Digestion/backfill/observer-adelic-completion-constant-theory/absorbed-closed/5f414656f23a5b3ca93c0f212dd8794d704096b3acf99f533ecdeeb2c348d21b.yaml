@@ -1,9 +1,0 @@
-fingerprints:
-  raw_sha256: sha256:5f414656f23a5b3ca93c0f212dd8794d704096b3acf99f533ecdeeb2c348d21b
-  normalized_sha256: sha256:5f414656f23a5b3ca93c0f212dd8794d704096b3acf99f533ecdeeb2c348d21b
-cas_ref: sha256:5f414656f23a5b3ca93c0f212dd8794d704096b3acf99f533ecdeeb2c348d21b
-coverage_gids:
-  - gid: D5/S3/Weil/ZetaCore/ResolventParitySignatures.cosh_correlation_signature
-    target_statement_id: sha256:11186d270f91f2213432e7718d482fc31468b70d2c965b8171a9dded253a736a
-receipts:
-  unresolved_subitems: []
