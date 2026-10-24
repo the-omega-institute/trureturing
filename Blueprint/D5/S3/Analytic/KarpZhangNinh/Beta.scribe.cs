@@ -56,7 +56,7 @@ internal sealed class BetaDocument : IScribeDocumentDefinition
                 BindCoefficients(Imp(CoefficientSymmetry(), Imp(Call("MonotoneOn", Slice(), HalfInterval()),
                     All("S", Rl(), Imp(Le(D(0), V("S")),
                         Call("MonotoneOn", LiftSlice(), Interval("Icc", D(0), Frac(V("S"), D(2))))))))),
-                "For positive shapes, the beta moment identity and comparison of symmetric beta means show that the lift increases toward equal coordinates. Continuity extends the inequality to shape zero. A zero total has only the point zero. This preservation theorem has no positivity hypothesis on c."))));
+                "For positive shapes, the beta moment identity and comparison of symmetric beta means show that the lift is nondecreasing as the coordinates approach equality. Continuity extends the inequality to shape zero. A zero total has only the point zero. This preservation theorem has no positivity hypothesis on c."))));
 
     private static DocumentBlock Entry(string declaration, string title, DescribeRole role, Formula formula, string text) =>
         Describe.Lean(DescribeId.Create("karp-zhang-ninh-beta-" + declaration.Replace("_", "-").ToLowerInvariant()),
