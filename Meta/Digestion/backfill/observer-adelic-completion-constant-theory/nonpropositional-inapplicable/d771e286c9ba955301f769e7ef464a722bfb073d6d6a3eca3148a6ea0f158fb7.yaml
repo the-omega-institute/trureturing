@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:d771e286c9ba955301f769e7ef464a722bfb073d6d6a3eca3148a6ea0f158fb7
+  normalized_sha256: sha256:d771e286c9ba955301f769e7ef464a722bfb073d6d6a3eca3148a6ea0f158fb7
+cas_ref: sha256:d771e286c9ba955301f769e7ef464a722bfb073d6d6a3eca3148a6ea0f158fb7
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 待构造对象列表中的 controllability Gramian 名称；未断言其存在、正性或任何等式。
+    previous_atom_id: cd2cae2370c591b28a66b0d1229f737e6af15a93f2519376f5ee6121a27fcc0b
+    next_atom_id: 0618f53018c35c577fa4a63f34737a29db0f5943e0bda504d74b9af816e3672c

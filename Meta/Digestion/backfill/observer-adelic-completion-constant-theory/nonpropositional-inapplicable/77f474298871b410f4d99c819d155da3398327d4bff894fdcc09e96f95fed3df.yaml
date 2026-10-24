@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:77f474298871b410f4d99c819d155da3398327d4bff894fdcc09e96f95fed3df
+  normalized_sha256: sha256:77f474298871b410f4d99c819d155da3398327d4bff894fdcc09e96f95fed3df
+cas_ref: sha256:77f474298871b410f4d99c819d155da3398327d4bff894fdcc09e96f95fed3df
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 元语言可以讨论的主题列表中的一致性一项；不声称 L0 一致或可自证一致。
+    previous_atom_id: e98ddd868f5ea7af503c64d591f5fad9cfa3293f8a995ae968b00a7e43973925
+    next_atom_id: e2e74d552d5457b2d6e874ba8b3e97d9c37de62226e2161bd982037ad70955e4
