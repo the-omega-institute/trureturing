@@ -313,14 +313,13 @@ lemma log_fraction_bound {t z : ℝ} (ht : 2 ≤ t)
   have hv0 : 0 < coordinate t z / t := div_pos hx ht0
   have hv1 : coordinate t z / t ≤ 1 := (div_le_one ht0).2 hb.2.1
   have hl0 := Real.log_nonpos hv0.le hv1
-  have hl := Real.one_sub_inv_le_log_of_pos hv0
+  have hδ0 : 0 ≤ 1 - coordinate t z / t := sub_nonneg.mpr hv1
+  have hδ1 : 1 - coordinate t z / t ≤ 1 / 2 := by linarith
+  have hl := D5.S3.Arith.Lattices.Klartag.neg_log_one_sub_le hδ0 hδ1
+  rw [sub_sub_cancel] at hl
   rw [abs_of_nonpos hl0]
   have hlin : -(Real.log (coordinate t z / t)) ≤ 2 * (1 - coordinate t z / t) := by
-    have hi : (coordinate t z / t)⁻¹ - 1 ≤ 2 * (1 - coordinate t z / t) := by
-      apply (mul_le_mul_iff_left₀ hv0).mp
-      have he : coordinate t z / t * (coordinate t z / t)⁻¹ = 1 := mul_inv_cancel₀ hv0.ne'
-      nlinarith
-    linarith
+    nlinarith
   exact hlin.trans (mul_le_mul_of_nonneg_left hb.2.2.2 (by norm_num))
 
 private lemma epsilon_le_one {t : ℝ} (ht : 1 ≤ t) : t ^ (-1 / 5 : ℝ) ≤ 1 := by

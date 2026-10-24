@@ -25,10 +25,6 @@ open ForwardKernelMellinConvergence (forwardMellin kernel_volume_eq_moment)
 
 noncomputable section
 
-local macro "rowSupplier%" name:ident : term =>
-  pure (Lean.mkIdent (((Lean.Name.num `_private.D5.S3.Arith.Robin.OriginalMovingCutRow 0).append
-    `D5.S3.Arith.Robin.OriginalMovingCutRow).append name.getId))
-
 private lemma kernel_row_integrable {x : ℝ} (hx : 4 ≤ x) : Integrable (kernel x) := by
   have hm : Measurable (kernel x) :=
     OriginalMovingCutAggregate.measurable_kernel_joint.comp (measurable_const.prodMk measurable_id)
@@ -36,8 +32,8 @@ private lemma kernel_row_integrable {x : ℝ} (hx : 4 ≤ x) : Integrable (kerne
     apply (integrableOn_const (C := (1 : ℝ)) (by simp : volume (Icc x (endpoint x)) ≠ ⊤)).mono'
       hm.aestronglyMeasurable
     filter_upwards [] with t
-    rw [Real.norm_eq_abs, abs_of_nonneg ((rowSupplier% kernel_nonneg) hx)]
-    exact (rowSupplier% kernel_le_one) hx
+    rw [Real.norm_eq_abs, abs_of_nonneg (OriginalMovingCutRow.kernel_nonneg hx)]
+    exact OriginalMovingCutRow.kernel_le_one hx
   apply hi.integrable_of_forall_notMem_eq_zero
   intro t ht
   unfold kernel
@@ -79,7 +75,7 @@ private lemma counting_row_norm {x : ℝ} (hx : 4 ≤ x) (c : ℂ) :
   intro i _
   rw [norm_mul, norm_mul, Complex.norm_real, Complex.norm_real, Real.norm_eq_abs,
     abs_of_nonneg (ArithmeticFunction.vonMangoldt_nonneg), Real.norm_eq_abs,
-    abs_of_nonneg ((rowSupplier% kernel_nonneg) hx)]
+    abs_of_nonneg (OriginalMovingCutRow.kernel_nonneg hx)]
   ring
 
 private lemma volume_row_norm {x : ℝ} (hx : 4 ≤ x) (c : ℂ) :
@@ -90,7 +86,7 @@ private lemma volume_row_norm {x : ℝ} (hx : 4 ≤ x) (c : ℂ) :
       exact Filter.Eventually.of_forall (fun t => by
         dsimp only
         rw [norm_mul, Complex.norm_real, Real.norm_eq_abs,
-          abs_of_nonneg ((rowSupplier% kernel_nonneg) hx)])
+          abs_of_nonneg (OriginalMovingCutRow.kernel_nonneg hx)])
     _ = _ := by rw [integral_const_mul, kernel_volume_eq_moment hx]
 
 private lemma weighted_volume_product_integrable {x0 : ℝ} (hx0 : 4 ≤ x0)
@@ -143,7 +139,7 @@ private lemma weighted_arithmetic_product_integrable {x0 : ℝ} (hx0 : 4 ≤ x0)
     have hrow : 0 ≤ weightedPrefix (kernel x) (endpoint x) := by
       unfold weightedPrefix QuotientIntegralBudget.arithmeticPrefix
       exact Finset.sum_nonneg (fun _ _ => mul_nonneg ArithmeticFunction.vonMangoldt_nonneg
-        ((rowSupplier% kernel_nonneg) (hx0.trans hx)))
+        (OriginalMovingCutRow.kernel_nonneg (hx0.trans hx)))
     rw [Real.norm_eq_abs, abs_of_nonneg (mul_nonneg (norm_nonneg _) hrow)]
     have hresponse := ForwardKernelAdjoint.forwardResponse_eq_prefix_kernel
       (show 1 < x by linarith)

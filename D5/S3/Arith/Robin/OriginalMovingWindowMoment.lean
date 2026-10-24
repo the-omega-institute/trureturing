@@ -209,7 +209,7 @@ private theorem endpoint_moment_bounds {t β : ℝ} (ht : 4 ≤ t) (hβ : 0 ≤ 
     convert hu using 1 <;> first | rfl |
       (field_simp [(Real.rpow_pos_of_pos ht0 (11 / 10 : ℝ)).ne'] <;> ring)
 
-private lemma negative_power_lower {δ c : ℝ} (hδ : 0 ≤ δ) (hc : 0 ≤ c) :
+lemma negative_power_lower {δ c : ℝ} (hδ : 0 ≤ δ) (hc : 0 ≤ c) :
     1 - c * δ ≤ (1 + δ) ^ (-c) := by
   have hd : ∀ x ∈ Icc (1 : ℝ) (1 + δ), HasDerivAt
       (fun y : ℝ => y ^ (-c) + c * y)

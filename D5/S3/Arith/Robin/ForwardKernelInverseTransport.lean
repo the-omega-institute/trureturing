@@ -26,10 +26,6 @@ open ForwardKernelAdjoint (adjointKernel)
 
 noncomputable section
 
-local macro "rowSupplier%" name:ident : term =>
-  pure (Lean.mkIdent (((Lean.Name.num `_private.D5.S3.Arith.Robin.OriginalMovingCutRow 0).append
-    `D5.S3.Arith.Robin.OriginalMovingCutRow).append name.getId))
-
 private lemma price_ratio_integral {x z : ℝ} (hx : 1 < x) (hz : z ∈ Icc (0 : ℝ) 1) :
     g (x + z * width x) - g (endpoint x) =
       width x * weight x * ∫ u in z..1, weightRatio x u := by
@@ -124,7 +120,7 @@ theorem adjointKernel_inverse_coordinates {x0 t : ℝ} (hx0 : 4 ≤ x0)
       (ForwardKernelRemainder.coordinate_equation ht0 (show (0 : ℝ) ≤ 1 by norm_num)).symm
   have hlow : x0 ≤ coordinate t 1 := by
     by_contra h
-    have hs := (rowSupplier% endpoint_strictMonoOn)
+    have hs := OriginalMovingCutRow.endpoint_strictMonoOn
       (show (1 : ℝ) ≤ coordinate t 1 by linarith)
       (show (1 : ℝ) ≤ x0 by linarith) (lt_of_not_ge h)
     rw [he] at hs
@@ -139,7 +135,7 @@ theorem adjointKernel_inverse_coordinates {x0 t : ℝ} (hx0 : 4 ≤ x0)
         by_contra h
         exact hx.2 ⟨le_of_not_gt h, hxt.le⟩
       have hxx0 : x0 ≤ x := hx.1
-      have hs := (rowSupplier% endpoint_strictMonoOn)
+      have hs := OriginalMovingCutRow.endpoint_strictMonoOn
         (show (1 : ℝ) ≤ x by linarith)
         (show (1 : ℝ) ≤ coordinate t 1 by linarith) hxlo
       rw [he] at hs

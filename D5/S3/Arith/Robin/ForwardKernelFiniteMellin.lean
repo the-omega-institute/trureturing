@@ -18,10 +18,6 @@ open scoped Topology
 
 noncomputable section
 
-local macro "rowSupplier%" name:ident : term =>
-  pure (Lean.mkIdent (((Lean.Name.num `_private.D5.S3.Arith.Robin.OriginalMovingCutRow 0).append
-    `D5.S3.Arith.Robin.OriginalMovingCutRow).append name.getId))
-
 /-- An integrable density on a compact interval of positive real centers has an
 entire Mellin transform, without any continuity assumption on that density. -/
 theorem compact_mellin_entire {a b : ℝ} (ha : 0 < a) {f : ℝ → ℂ}
@@ -141,12 +137,12 @@ theorem adjointKernel_finite_integral_entire {x0 b : ℝ} (hx0 : 4 ≤ x0) (hxb 
   apply norm_setIntegral_le_of_norm_le_const (by simp)
   intro x hx
   rw [norm_mul, Complex.norm_real, Real.norm_eq_abs,
-    abs_of_nonneg ((rowSupplier% kernel_nonneg) (hx0.trans hx.1))]
+    abs_of_nonneg (OriginalMovingCutRow.kernel_nonneg (hx0.trans hx.1))]
   have hpower : ‖(x : ℂ) ^ (-s - 1)‖ ≤ max 0 M :=
     (hM (mem_image_of_mem _ (show (s, x) ∈ K ×ˢ Icc x0 b from ⟨hs, hx⟩))).trans
       (le_max_right _ _)
   exact (mul_le_mul_of_nonneg_left
-    ((rowSupplier% kernel_le_one) (hx0.trans hx.1)) (norm_nonneg _)).trans
+    (OriginalMovingCutRow.kernel_le_one (hx0.trans hx.1)) (norm_nonneg _)).trans
       (by simpa only [mul_one] using hpower)
 
 /-- The bounded signed correction after subtracting the triangular principal kernel. -/

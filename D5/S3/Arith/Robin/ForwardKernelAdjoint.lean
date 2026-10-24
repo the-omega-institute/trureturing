@@ -24,10 +24,6 @@ open ForwardKernelTransport (forwardResponse)
 
 noncomputable section
 
-local macro "rowSupplier%" name:ident : term =>
-  pure (Lean.mkIdent (((Lean.Name.num `_private.D5.S3.Arith.Robin.OriginalMovingCutRow 0).append
-    `D5.S3.Arith.Robin.OriginalMovingCutRow).append name.getId))
-
 /-- The original price kernel transported against a compact interval of centers. -/
 def compactAdjoint (a b : ℝ) (f : ℝ → ℂ) (t : ℝ) : ℂ :=
   ∫ x in Icc a b, f x * (kernel x t : ℂ)
@@ -53,7 +49,7 @@ lemma adjointKernel_center_integrable {x0 : ℝ} (hx0 : 4 ≤ x0) (s : ℂ) (t :
     IntegrableOn (fun x : ℝ => (x : ℂ) ^ (-s - 1) * (kernel x t : ℂ))
       (Ici x0) := by
   have hk : IntegrableOn (fun x => kernel x t) (Icc x0 (max x0 t)) :=
-    (rowSupplier% kernel_integrableOn) hx0
+    OriginalMovingCutRow.kernel_integrableOn hx0
   have hc : IntegrableOn (fun x : ℝ => (x : ℂ) ^ (-s - 1) * (kernel x t : ℂ))
       (Icc x0 (max x0 t)) := by
     apply hk.ofReal.continuousOn_mul _ isCompact_Icc

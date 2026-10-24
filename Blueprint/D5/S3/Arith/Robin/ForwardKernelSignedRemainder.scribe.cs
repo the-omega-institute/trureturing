@@ -20,7 +20,8 @@ internal sealed class ForwardKernelSignedRemainderDocument : IScribeDocumentDefi
                     Paragraph(Text(
                         "Let E(t)=psi(t)-t and assume |E(t)|<=C*sqrt(t)*log(t)^2 "
                         + "for t>=2. Suppose a>=3, sigma>-1/5, A>=0, r'=dr on "
-                        + "[a,infinity), and dr is continuous there. If "
+                        + "[a,infinity), and dr is almost everywhere strongly measurable "
+                        + "with respect to Lebesgue measure restricted to that interval. If "
                         + "|r(t)|<=A*t^(-sigma-7/10) and "
                         + "|dr(t)|<=A*t^(-sigma-17/10), then as b tends to infinity, "
                         + "sum(Lambda(n)*r(n),floor(a)<n<=floor(b))-integral_a^b r(t) dt "

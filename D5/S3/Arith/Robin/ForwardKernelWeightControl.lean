@@ -146,24 +146,19 @@ theorem weightRatio_sub_one {x u : ℝ} (hx : 4 ≤ x) (hu : 0 ≤ u) (hu1 : u �
     (div_le_one hw).2 (OriginalMovingWindowMoment.weight_antitone (by linarith) hxy)
   have hlo : (x / y) ^ 4 ≤ weightRatio x u :=
     (le_div_iff₀ hw).2 (OriginalMovingWindowMoment.weight_ratio_lower hx hxy)
-  have hq0 : 0 ≤ x / y := (div_pos hx0 hy0).le
-  have hq1 : x / y ≤ 1 := (div_le_one hy0).2 hxy
-  have hq2 : (x / y) ^ 2 ≤ 1 := pow_le_one₀ hq0 hq1
-  have hq3 : (x / y) ^ 3 ≤ 1 := pow_le_one₀ hq0 hq1
-  have hpoly : 1 - (x / y) ^ 4 ≤ 4 * (1 - x / y) := by
-    have h := mul_le_mul_of_nonneg_left
-      (show 1 + x / y + (x / y) ^ 2 + (x / y) ^ 3 ≤ 4 by linarith)
-      (sub_nonneg.mpr hq1)
-    nlinarith
-  have hrel : 1 - x / y ≤ (y - x) / x := by
-    calc
-      _ = (y - x) / y := by field_simp [hy0.ne']
-      _ ≤ (y - x) / x := div_le_div_of_nonneg_left (sub_nonneg.mpr hxy) hx0 hxy
+  have hδ : 0 ≤ (y - x) / x := div_nonneg (sub_nonneg.mpr hxy) hx0.le
+  have hpower := OriginalMovingWindowMoment.negative_power_lower hδ (by norm_num : (0 : ℝ) ≤ 4)
+  have heq : 1 + (y - x) / x = y / x := by field_simp; ring
+  rw [heq, Real.rpow_neg (div_pos hy0 hx0).le, show (4 : ℝ) = (4 : ℕ) by norm_num,
+    Real.rpow_natCast] at hpower
+  have hrel : 1 - (x / y) ^ 4 ≤ 4 * ((y - x) / x) := by
+    rw [div_pow, inv_div] at hpower
+    rw [div_pow]
+    linarith
   rw [abs_of_nonpos (sub_nonpos.mpr hr)]
   calc
     _ ≤ 1 - (x / y) ^ 4 := by linarith
-    _ ≤ 4 * (1 - x / y) := hpoly
-    _ ≤ 4 * ((y - x) / x) := by gcongr
+    _ ≤ 4 * ((y - x) / x) := hrel
     _ = 4 * u * x ^ (-1 / 5 : ℝ) := by
       dsimp [y]
       rw [add_sub_cancel_left, mul_div_assoc, width_div hx0]
