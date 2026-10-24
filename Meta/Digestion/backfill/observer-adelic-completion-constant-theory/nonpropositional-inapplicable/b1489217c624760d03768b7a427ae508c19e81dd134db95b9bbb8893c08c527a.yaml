@@ -5,3 +5,7 @@ cas_ref: sha256:b1489217c624760d03768b7a427ae508c19e81dd134db95b9bbb8893c08c527a
 coverage_gids: []
 receipts:
   unresolved_subitems: []
+  nonpropositional:
+    justification: 非命题。主题清单中的 phase fibre，没有包含存在性、基数或结构断言。
+    previous_atom_id: 0b961a428c1139ff1cf6bbec8f7d8bc3e49913e41c9cc7f9a2fac7a5720b202d
+    next_atom_id: c2f53fbcf2715c3cdc4e55abbe956acd01895525d26f0faf40f64ffae99f9e8a
