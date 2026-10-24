@@ -217,5 +217,8 @@ internal sealed class NetworkCoherenceClassicalBoundDocument : IScribeDocumentDe
                         + "factorization gives exactly one quarter. Hence one quarter "
                         + "is a member of the attainable set; applying the upper bound "
                         + "to any other member proves that it is the greatest member."))),
-                DescribeRole.Theorem))));
+                DescribeRole.Theorem,
+                openProblemResolutionClaim: new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("bibak-del-santo-dakic-2024-classical-network-coherence-bound"),
+                    ResolutionKind.Proved)))));
 }
