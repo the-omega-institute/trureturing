@@ -4821,3 +4821,165 @@ The original target is still exactly (53.1), equivalently (59.2): some real $p\n
 
 ## 追加锚（本行以下为增补区）
 
+
+## 66. The entire child at the strict M-pair base
+
+**Definition 66.1 (A full-base rectangle).** Retain the exact worlds $W_2,W_3$ and base $(p_*,v_*)$ of Theorem 1.3. The following terminating decimals are exact rationals:
+
+$$
+\begin{aligned} p_c&=1.8057126623901333037270156505198680057908,\\ v_c&=172.2471680963226343182328451692107608678058,\\ \delta&=10^{-24},\qquad \mathcal B_*=[p_c-\delta,p_c+\delta]\times[v_c-\delta,v_c+\delta]. \end{aligned} \tag{66.1}
+$$
+
+**Theorem 66.2 (Entire-child inventory and J separation).** One has $(p_*,v_*)\in\mathcal B_*$. For every $(p,v)\in\mathcal B_*$, the entire original child $C(p,v)$ has at most two worlds, and its actual terminal-J response is injective. At the exact M-pair base,
+
+$$
+\boxed{C(p_*,v_*)=\{W_2,W_3\}.} \tag{66.2}
+$$
+
+Consequently the independently selected J pair required in Section 8 does not exist at this particular M-pair base. This conclusion concerns the whole original domain over $\mathcal B_*$, with no fixed terminal-M value and no restriction on gain degree, gain samples, drift, singular sources, exceptional sources or source width. It makes no exclusion outside this rectangle.
+
+**Definition 66.3 (The reused unsaturated carrier).** Use exactly $x=n/U$, the tail interpolant, $a_0,a_1,a_2$, $f,\mathcal K,A,B_f,C_f$, and $\alpha,\zeta,F_0,R$ of [Support X, equations (12.8)–(12.12)](FIB_STRICT_REAL_JOINT_INCIDENCE_SUPPORT_X.md). In particular
+
+$$
+\begin{gathered} D=x(x+1)(x+2),\\ F_0=405x^3+(975-18p+5v)x^2+(90-36p+5v)x-480,\\ \operatorname{Res}_d(f,\mathcal K)=256D^8F_0^2R,\\ f\mid A^3\mathcal K-(\alpha d+\zeta). \end{gathered} \tag{66.3}
+$$
+
+The normalization of $R$ is the exact quotient in that source; its $x$-degree is eighteen. Every actual world has $x>0$, satisfies $f=\mathcal K=0$, and therefore satisfies
+
+$$
+F_0(x,p,v)R(x,p,v)=0,\qquad \alpha(x,p,v)d+\zeta(x,p,v)=0. \tag{66.4}
+$$
+
+The factor $F_0$ is retained, including its zero-drift possibility. Neither the regular-source denominator nor the fixed-terminal inverse's quartic $K$ is divided out in (66.4).
+
+The all-world necessity is also immediate from the supplied original equations. For the tail interpolant $H=Ug$, clock zero gives $dU=-H_0$, and clock two gives $B_0U=H_2$, where $B_0=294/5-2d-H_2$. These imply $f=0$. Substituting $H_0=-dU$ and $xH_1-(24-d)=rH_1/U$ into $\mathcal K$ expresses it as the cleared original rank-one source relation. This proves $\mathcal K=0$ without division by $d$, so (66.4) applies also when $d=0$ and on singular sources.
+
+**Lemma 66.4 (Uniform exhaustive root rectangles).** Put $\rho=10^{-12}$ and $\sigma=10^{-24}$. In the following table each row specifies the exact Gaussian-rational centre $c=\operatorname{Re}c+i\operatorname{Im}c$. On every real $(p,v)\in\mathcal B_*$, the indicated polynomial has exactly one zero in the rectangle
+
+$$
+|\operatorname{Re}(x-c)|\le\rho,\qquad |\operatorname{Im}(x-c)|\le\rho. \tag{66.5}
+$$
+
+For a real centre this zero is real. Each zero lies in the smaller rectangle with $\rho$ replaced by $\sigma$. The eighteen $R$ rectangles exhaust all its complex roots, and the three $F_0$ rectangles exhaust all its complex roots.
+
+| Polynomial | Index | $\operatorname{Re}c$ | $\operatorname{Im}c$ |
+| --- | --- | --- | --- |
+| $R$ | 0 | $-4.4456018496430476255084308867226941368478$ | $0$ |
+| $R$ | 1 | $-1.3960913833252000635532565337091008407111$ | $0$ |
+| $R$ | 2 | $-1.3367773229729508691137384013103149327534$ | $0$ |
+| $R$ | 3 | $-1.3317500199574795120070031691555736550906$ | $0$ |
+| $R$ | 4 | $-1.1918275779629799043040789640343846279088$ | $0$ |
+| $R$ | 5 | $-1.1318389558362942853399530198752644616268$ | $0$ |
+| $R$ | 6 | $-1.0946327270963536193480655459922145687844$ | $0$ |
+| $R$ | 7 | $-0.3979561498320068203790677829921342455391$ | $0$ |
+| $R$ | 8 | $0.3549410397767158302233672842010199020803$ | $0$ |
+| $R$ | 9 | $0.4799723815645249004417903320577171426405$ | $0$ |
+| $R$ | 10 | $1.2236055502512175044814340191249725198430$ | $0$ |
+| $R$ | 11 | $1.4448053440162424804958404016071704680738$ | $0$ |
+| $R$ | 12 | $5.8477237005395326611385391944777539159123$ | $0$ |
+| $R$ | 13 | $5.8485513508859666460210391010131406006945$ | $0$ |
+| $R$ | 14 | $0.6972289686840034189043663693248429197356$ | $-0.1161110933488964046141522395468234074515$ |
+| $R$ | 15 | $0.6972289686840034189043663693248429197356$ | $0.1161110933488964046141522395468234074515$ |
+| $R$ | 16 | $0.8620293017101553026663874107927443949746$ | $-0.0326900792590044079795851745687301165823$ |
+| $R$ | 17 | $0.8620293017101553026663874107927443949746$ | $0.0326900792590044079795851745687301165823$ |
+| $F0$ | 0 | $-3.7947042767818410754177515062671600311838$ | $0$ |
+| $F0$ | 1 | $-0.9782331943877242154258535040382862156920$ | $0$ |
+| $F0$ | 2 | $0.3192757117656374584384742840419988882714$ | $0$ |
+
+Proof. For $\mathscr P\in\{R,F_0\}$ and a displayed centre, form the exact finite expansion
+
+$$
+\mathscr P(c+z,p_c+u,v_c+w)=\sum_{\ell,j,k}a_{\ell jk}z^\ell u^j w^k. \tag{66.6}
+$$
+
+For a real rational $q$, define
+
+$$
+\operatorname{rnd}_{100}(q)=10^{-100}\lfloor10^{100}q+1/2\rfloor,
+$$
+
+and extend it componentwise to Gaussian rationals. Set $\gamma=\operatorname{rnd}_{100}(1/a_{100})$, use $|a+ib|_1=|a|+|b|$, and put $s=\rho$ at real centres and $s=2\rho$ otherwise. The finite rational sums
+
+$$
+\begin{aligned} \eta&=\sum_{j,k}|\gamma a_{0jk}|_1\delta^{j+k},\\ q&=|1-\gamma a_{100}|_1+ \sum_{\substack{\ell\ge1,j,k\ge0\\(\ell,j,k)\ne(1,0,0)}} \ell|\gamma a_{\ell jk}|_1s^{\ell-1}\delta^{j+k} \end{aligned} \tag{66.7}
+$$
+
+satisfy, at every one of the twenty-one centres,
+
+$$
+\eta<2\cdot10^{-25},\qquad q<3\cdot10^{-9},\qquad \eta+q\rho<\rho,\qquad \frac{\eta}{1-q}<\sigma. \tag{66.8}
+$$
+
+These are rational inequalities obtained from (66.3), (66.6) and the printed centres. The coefficient of $x^{18}$ in $R$ is uniformly enclosed by
+
+$$
+1873044541936855184250 \le[x^{18}]R\le1873044541936855184251, \tag{66.9}
+$$
+
+and the leading coefficient of $F_0$ is $405$.
+
+For fixed real $(p,v)\in\mathcal B_*$, apply the map $x\mapsto x-\gamma\mathscr P(x,p,v)$ to the real interval $[c-\rho,c+\rho]$ when $c$ is real, and to the rectangle (66.5) otherwise. In each case (66.7) bounds its centre displacement and its derivative's induced maximum norm, so (66.8) makes it a contraction into the interior. For a complex rectangle, $|z|_1\le2\rho$ explains the value of $s$; complex multiplication has maximum-norm operator bound $|\cdot|_1$. The contraction argument of Theorem 4.3 therefore gives one zero in each specified set, real at every real centre, with displacement at most $\eta/(1-q)$.
+
+All eighteen $R$ rectangles are pairwise disjoint, as are the three $F_0$ rectangles: for every two relevant centres, at least one coordinate differs by more than $2\rho$. Since the degrees remain eighteen and three by (66.9), these distinct zeros exhaust the roots and give exactly one complex zero in each rectangle, including those with real centres. In particular this conclusion is not inferred from an incomplete list of numerical roots. ∎
+
+**Lemma 66.5 (Whole-source filters and separated J answers).** Over $\mathcal B_*$, only the $R$ roots with indices 12 and 13 can represent original worlds. Each determines at most one entire world. The possible terminal-J values at these two roots satisfy
+
+$$
+\begin{aligned} 994.82015996&\le a_{12}\le994.82015997,\\ 964.05127114&\le a_{13}\le964.05127115,\\ -30.76889&\le a_{13}-a_{12}\le-30.76888<0. \end{aligned} \tag{66.10}
+$$
+
+Proof. The first eight $R$ rectangles and first two $F_0$ rectangles have negative real roots. The last four $R$ rectangles are nonreal, since their imaginary coordinate intervals exclude zero. The remaining seven real roots have positive $x$.
+
+At every one of these positive-root boxes, evaluation gives the uniform pole separations
+
+$$
+|\alpha|>10^{14},\qquad \chi>40,\qquad |H_1|>1/25,\qquad |U|>1/10. \tag{66.11}
+$$
+
+Here, with $d=-\zeta/\alpha$, use exactly the zero-safe inverse of Support X, (12.8)–(12.9):
+
+$$
+\begin{gathered} h_3=(24-d)/x,\quad h_4=18-d,\quad h_5=(p-d)/(x+1),\quad h_6=(v-d)/(x+2),\\ H_0=20h_3-45h_4+36h_5-10h_6,\\ H_1=10h_3-20h_4+15h_5-4h_6,\\ H_2=4h_3-6h_4+4h_5-h_6,\quad H_7=-h_3+4h_4-6h_5+4h_6,\\ B_0=294/5-2d-H_2,\qquad \chi=d^2+B_0^2,\\ U=(-dH_0+B_0H_2)/\chi,\quad b=(U-1)/2,\\ j=U(24-d)/H_1,\qquad r=xU-j,\\ a=d+\left(\frac{1+1/U}{2}+2x+\frac{2r}{U}\right)H_7. \end{gathered} \tag{66.12}
+$$
+
+The last expression is the actual terminal J response because $H_7=Ug(7)$. In particular it uses the same whole gain as the acquired rows.
+
+All following endpoints are exact rationals and enclose the entire smaller root boxes of Lemma 66.4, uniformly over $\mathcal B_*$. The strict source tests eliminate every positive candidate except indices 12 and 13:
+
+| Polynomial | Index | $b$ enclosure | $r$ enclosure | Source test |
+| --- | --- | --- | --- | --- |
+| $R$ | 8 | $[27.49075770,27.49075771]$ | $[34.55368867,34.55368868]$ | r>1 |
+| $R$ | 9 | $[-3.17686801,-3.17686800]$ | $[0.67614939,0.67614940]$ | b<0 |
+| $R$ | 10 | $[-0.43583281,-0.43583280]$ | $[0.86342730,0.86342731]$ | b<0 |
+| $R$ | 11 | $[-0.55207424,-0.55207423]$ | $[-0.29745094,-0.29745093]$ | b<0 |
+| $R$ | 12 | $[0.04091698,0.04091699]$ | $[0.63750339,0.63750340]$ | retained |
+| $R$ | 13 | $[0.04078295,0.04078296]$ | $[0.39999999,0.40000001]$ | retained |
+| $F0$ | 2 | $[-1.45169779,-1.45169778]$ | $[-0.21103470,-0.21103469]$ | b<0 |
+
+For explicit finite interval evaluation of (66.11)–(66.12), use the endpoint operations of Definition 4.1 with grid denominator $10^{120}$. For $\alpha$ and $\zeta$, first enclose their centre values and apply
+
+$$
+P(y)\in P(y_c)+\sum_{k=1}^3(y_k-y_{c,k})\,\partial_kP(Y), \quad Y=[c-\sigma,c+\sigma]\times\mathcal B_*,\quad y_c=(c,p_c,v_c). \tag{66.13}
+$$
+
+Evaluate each polynomial by multivariate Horner evaluation in the variable order $x,p,v$, with coefficients accumulated in decreasing power order. Formula (66.13) follows from the fundamental theorem of calculus on the convex box and retains the dependence needed for these enclosures. Then evaluate the displayed rational inverse in its factored order. The nonzero lower bounds in (66.11), together with $x>0$, permit every reciprocal. This gives the table and (66.10) by outward rational interval operations.
+
+Every actual endpoint satisfies (66.4). Thus $\alpha\ne0$ fixes its drift at its root, including the retained $F_0$ branch. The four tail samples then fix its entire polynomial $H$, and (66.12) fixes $U,b,r$ and $g=H/U$. Hence there is at most one entire original world at each retained root, with no extra drift branch at any candidate root. ∎
+
+Proof of Theorem 66.2. Evaluate the first-source circuit of Definition 2.1 on the originally defining box $X$ of Section 3. The resulting inclusions give
+
+$$
+|p(2/5,b_0)-p_c|<10^{-30},\qquad |v(2/5,b_0)-v_c|<10^{-30} \quad\text{throughout }X. \tag{66.14}
+$$
+
+Therefore the exact $(p_*,v_*)$ lies in $\mathcal B_*$. This assertion concerns the exact root of Section 4, rather than a rounded replacement base.
+
+For any $(p,v)\in\mathcal B_*$ one has $p\ne24$. Every complete original world in its entire child supplies an $x>0$ satisfying (66.4), regardless of its terminal-M response. Lemmas 66.4–66.5 leave only two root slots, each representing at most one whole world, and their actual J values are disjoint by (66.10). Thus $|C(p,v)|\le2$ and the terminal J map is injective on the whole child.
+
+At $(p_*,v_*)$, Theorem 1.3 already supplies the two distinct entire worlds $W_2,W_3$. The upper bound proves (66.2). Their diagonal intervals identify $W_2$ with slot 13 and $W_3$ with slot 12. Consequently no independently chosen equal-J pair can be supplied by any other companion at that base. ∎
+
+The new `repo-derived` content is the full-base root cover, its guarded two-slot inventory and J separation on $\mathcal B_*$. The parent, literal response circuit, zero-safe inverse and carrier identities are reused with their original assumptions. Fixed-node interpolation and the contraction argument are the classical tools already cited in Section 7. The proof neither applies the seven-world bound with a free M response nor prescribes a common M response for the inventory.
+
+This strengthens the selected-pair statement of Section 8 to an entire-child exclusion at its particular exact base. The unrestricted independent-pair question still has both $p\ne24$ and $v$ free outside $\mathcal B_*$. The longer-history reconstruction of [the literal cubic matrix-polynomial frame](FIB_LITERAL_CLOCK_CUBIC_MATRIX_POLYNOMIAL_FRAME.md), Problem 6.5, does not settle that remaining same-seven-read incidence.
+
+## 追加锚（本行以下为增补区）
