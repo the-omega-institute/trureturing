@@ -99,7 +99,10 @@ internal sealed class SteeringPowerPreservationRefutationDocument : IScribeDocum
                             + "If claim held, apply it to the prime 5, the admissible phases φ and the projective family B with k = 0 and n = 2. "
                             + "Since 1 ≤ 2 ≤ 4, it would identify transformed 5 φ B 2 0 with (transformed 5 φ B 1 0)², forcing this same (0,3) entry to vanish. "
                             + "This contradiction proves the negation of claim."))),
-                DescribeRole.Theorem))));
+                DescribeRole.Theorem,
+                openProblemResolutionClaim: new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("orthey-augusiak-2025-steering-power-preservation-refutation"),
+                    ResolutionKind.Refuted)))));
 
     private static DocumentBlock Node(string declaration, string id, string title, Formula formula,
         string prose, AssessedProvenance provenance) =>
