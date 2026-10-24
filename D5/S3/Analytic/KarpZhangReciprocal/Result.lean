@@ -78,7 +78,12 @@ private theorem ratio_bound {y : ℕ → ℝ} (hy : IsLogConcave y)
     have hstep : y (a + (n + 1) + 1) / y (a + (n + 1)) ≤
         y (a + n + 1) / y (a + n) := by
       apply (div_le_div_iff₀ (by simpa only [Nat.add_assoc] using hmid) hprev).2
-      nlinarith [hlocal]
+      calc
+        y (a + (n + 1) + 1) * y (a + n) =
+            y (a + n) * y (a + (n + 1) + 1) := mul_comm _ _
+        _ ≤ y (a + n + 1) ^ 2 := hlocal
+        _ = y (a + n + 1) * y (a + (n + 1)) := by
+          rw [← Nat.add_assoc a n 1, pow_two]
     exact hstep.trans (ih hmid)
 
 private theorem balanced_step {y : ℕ → ℝ} (hy : IsLogConcave y)
@@ -116,7 +121,7 @@ private theorem telescope (W : ℕ → ℝ) (j : ℕ) :
   | succ j ih =>
     rw [sum_range_succ, ih]
     simp only [increment, Nat.add_eq_zero_iff, Nat.one_ne_zero, and_false,
-      if_false, Nat.add_sub_cancel]
+      ite_false, Nat.add_sub_cancel]
     ring
 
 private theorem layers (y : ℕ → ℝ) (m k : ℕ) (hk : k ≤ m) :
@@ -205,7 +210,7 @@ theorem abel_reduction (y : ℕ → ℝ) (μ α β : ℝ) (m : ℕ) :
   simp_rw [htail]
   rw [sum_range_succ']
   simp only [increment, Nat.add_eq_zero_iff, Nat.one_ne_zero, and_false,
-    if_false, Nat.add_sub_cancel, if_true, Nat.sub_zero, Nat.zero_add]
+    ite_false, Nat.add_sub_cancel, ite_true, Nat.sub_zero]
   ring
 
 /-- The reciprocal-Pochhammer half of Karp--Zhang Conjecture 5.2, for arbitrary
