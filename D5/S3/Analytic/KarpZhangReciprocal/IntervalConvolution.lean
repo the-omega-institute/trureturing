@@ -8,6 +8,7 @@
 
 import D5.S3.Analytic.KarpZhangReciprocal.Coeff
 import D5.S3.Analytic.KarpZhangReciprocal.BirthDeath
+import Mathlib.Algebra.BigOperators.Field
 import Mathlib.Analysis.Convex.Deriv
 
 /-!
@@ -160,7 +161,7 @@ private theorem score_variance_bound (m L n : ℕ) (hm : L + n ≤ m)
   have hπ (i : ℕ) (_ : i ≤ n) : 0 < π i := div_pos (weight_pos m L i hs ht) hZ
   have hprob : ∑ i ∈ range (n + 1), π i = 1 := by
     dsimp only [π]
-    rw [← sum_div]
+    rw [← Finset.sum_div]
     exact div_self (ne_of_gt hZ)
   have hp : p n = 0 := by simp [p, birth]
   have hr : r 0 = 0 := by simp [r, death]
@@ -216,7 +217,8 @@ private theorem score_variance_bound (m L n : ℕ) (hm : L + n ≤ m)
       (coefficient_calculus ell ht).2.2.2.2.2.2.2.1
     have hpval : p i = (ell : ℝ) * A := by simp only [p, birth, if_pos hi, ell, A, k]
     have hrval : r (i + 1) = (k + 1 : ℕ) * B := by
-      simp only [r, death, if_neg (by omega : i + 1 ≠ 0), hk', ← he', B]
+      dsimp only [r]
+      rw [death, if_neg (by omega : i + 1 ≠ 0), ← he', hk']
     have hC' : X ^ 2 / B ≤ chi (k + 1) s / r (i + 1) := by
       rw [hrval]
       apply (div_le_div_iff₀ hB (mul_pos (by positivity) hB)).2
@@ -327,19 +329,22 @@ private theorem slice_concave (m L n : ℕ) (hm : L + n ≤ m) (S : ℝ) :
     let C := fun i => curvature m L i s (S - s)
     have hp : ∑ i ∈ range (n + 1), π i = 1 := by
       dsimp only [π]
-      rw [← sum_div]
+      rw [← Finset.sum_div]
       exact div_self (ne_of_gt (hZ s hs))
     have hv := score_variance_bound m L n hm hs.1 (sub_pos.mpr hs.2)
     change BirthDeath.variance n π H ≤ ∑ i ∈ range (n + 1), π i * C i at hv
     rw [variance_expand n π H hp] at hv
     have hmean : (∑ i ∈ range (n + 1), π i * H i) = N s / Z s := by
       dsimp only [π, H, N]
-      simp only [div_mul_eq_mul_div, ← sum_div]
+      simp only [div_mul_eq_mul_div]
+      rw [← Finset.sum_div]
     have hQ : Q s / Z s = (∑ i ∈ range (n + 1), π i * H i ^ 2) -
         ∑ i ∈ range (n + 1), π i * C i := by
       dsimp only [Q, π, H, C]
-      simp only [mul_sub, sum_sub_distrib, sub_div, sum_div,
-        div_mul_eq_mul_div]
+      rw [Finset.sum_div, ← sum_sub_distrib]
+      apply sum_congr rfl
+      intro i _
+      ring
     rw [hmean] at hv
     have he : (Q s * Z s - N s ^ 2) / Z s ^ 2 = Q s / Z s - (N s / Z s) ^ 2 := by
       field_simp [ne_of_gt (hZ s hs)]
