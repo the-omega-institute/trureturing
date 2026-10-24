@@ -5,7 +5,7 @@ doi: 10.1007/s10476-017-0503-z
 url: https://arxiv.org/abs/1611.06724
 triage: theorem
 motivation_gids:
-  - D5/S3/Analytic/HypergeometricShiftTuran/TwoBlockDefs.claim
+  - D5/S3/Analytic/HypergeometricShiftTuran/TwoBlockResult.claim
   - D5/S3/Analytic/HypergeometricShiftTuran/TwoBlockResult.result
 ---
 
@@ -75,13 +75,13 @@ Formal correspondence. All Lean names below have prefix
 
 | Source object | Lean name | Correspondence |
 | --- | --- | --- |
-| Unshifted rising factorial ratio | `TwoBlockDefs.pochRatio` | Products of `(ascPochhammer ℝ n).eval` at the unshifted parameters. |
-| Equation (3) Taylor coefficient | `TwoBlockDefs.seriesCoeff` | Rising factorial ratio times `Defs.coeff` for the shifted block at $\mu+n$, divided by $n!$. |
-| Equation (2) Cauchy coefficient | `TwoBlockDefs.twoBlockTuranCoeff` | Exact finite sum with the factorials contained in `seriesCoeff`. |
+| Unshifted rising factorial ratio | `TwoBlockResult.pochRatio` | Products of `(ascPochhammer ℝ n).eval` at the unshifted parameters. |
+| Equation (3) Taylor coefficient | `TwoBlockResult.seriesCoeff` | Rising factorial ratio times `Defs.coeff` for the shifted block at $\mu+n$, divided by $n!$. |
+| Equation (2) Cauchy coefficient | `TwoBlockResult.twoBlockTuranCoeff` | Exact finite sum with the factorials contained in `seriesCoeff`. |
 | Shifted Gamma ratio and condition (13) | `Defs.coeff`, `Defs.esymm`, `Defs.cond13` | Reused definitions, with the ratio chain imposed separately on both blocks. |
-| Conjecture 2 coefficient clause | `TwoBlockDefs.claim` | All dimensions, positivity assumptions, both chains, nonempty shifted numerator, shifts and coefficient degrees. |
+| Conjecture 2 coefficient clause | `TwoBlockResult.claim` | All dimensions, positivity assumptions, both chains, nonempty shifted numerator, shifts and coefficient degrees. |
 | Negative coefficient family | `TwoBlockResult.half_parameter_family_neg` | Empty unshifted blocks, shifted numerator $(1)$, repeated half denominators, $\mu=1$, $\alpha=\beta=1/2$, and every $q\ge7$. |
-| Refutation | `TwoBlockResult.result` | Exactly $\neg\,\texttt{TwoBlockDefs.claim}$. |
+| Refutation | `TwoBlockResult.result` | Exactly $\neg\,\texttt{TwoBlockResult.claim}$. |
 
 ## Motivation
 
@@ -92,9 +92,9 @@ hypotheses. The witness here retains the shifted numerator $(1)$.
 
 ## Gap
 
-The explicit calculation in Route refutes the coefficient clause. The Lean
-sources encode the family inequality and its specialization at $q=7$;
-their compilation and axiom closure are unverified in this drafting delivery.
+The explicit calculation in Route refutes the coefficient clause. The D5
+modules of this delivery compile in the repository CI and encode the family
+inequality and its specialization at $q=7$.
 The separate assertion of log-concavity at a fixed nonnegative $x$ is not
 settled here.
 
@@ -161,45 +161,39 @@ requirements are satisfied, contradicting coefficient nonnegativity.
 
 A source requirement that either unshifted block be nonempty would invalidate
 this correspondence; the printed standing assumption expressly permits both
-to be empty. Both degree-one Cauchy summands must be present, with the
-shifted numerator Gamma factors and all factorials. Condition (13) for the
-shifted block must be checked rather than treated as vacuous. The claim must
-retain all coefficient degrees and both chains. The Lean identity and family
-inequality must compile without proof placeholders or new axioms.
+to be empty. The calculation contains both degree-one Cauchy summands, the shifted
+numerator Gamma factors and all factorials. Condition (13) for the shifted
+block is checked explicitly. The claim retains all coefficient degrees and
+both chains. The D5 modules of this delivery compile in the repository CI.
 
 ## Evidence
 
 The source is arXiv:1611.06724v1, pages 2 and 6, equations (2), (3), (13)
 and Conjecture 2; journal publication *Analysis Mathematica* 43 (2017),
-567–580, DOI 10.1007/s10476-017-0503-z. The Lean sources are
-`D5/S3/Analytic/HypergeometricShiftTuran/TwoBlockDefs.lean` and
+567–580, DOI 10.1007/s10476-017-0503-z. The Lean source is
 `D5/S3/Analytic/HypergeometricShiftTuran/TwoBlockResult.lean`.
-`TwoBlockResult.result` is written with type exactly `¬ TwoBlockDefs.claim`.
-No Lean compilation or kernel-verification reading is asserted for this draft.
+`TwoBlockResult.result` is written with type exactly `¬ TwoBlockResult.claim`.
+The D5 modules of this delivery compile in the repository CI.
 
-The witness, source comparison and literature checks were supplied by the
-Claude Code orchestrator on Claude Opus 5.5. The Lean draft was written by a
-codex-cli drafting seat. The supplied literature scope comprises all 15
-OpenAlex citing works checked by the orchestrator, arXiv and general web
-search, and repository search for the source identifier. No settlement of
-Conjecture 2 was found in that scope. Sokal's arXiv:2204.01045 concerns
+The orchestrator-reported literature scope comprises all 15 OpenAlex citing
+works, arXiv and general web search, and repository search for the source
+identifier. No settlement of Conjecture 2 was found in that scope. Sokal's arXiv:2204.01045 concerns
 Conjecture 3. These source and literature findings are orchestrator-reported,
 and do not certify priority or exhaustive coverage.
 
-The numerical entry uses
-[the experiments directory at revision c07877042ab4e3330e285b869fbe5d9e632a1c4b](https://github.com/the-omega-institute/trureturing-experiments/tree/c07877042ab4e3330e285b869fbe5d9e632a1c4b/experiments/kalmykov-karp-pfq-turanian),
-`common.py`, sha256
+The numerical entry uses the driver in
+[the-omega-institute/trureturing-experiments at revision ccf77c1917e9d1a2f3d101bcd815841d9ca7dcb1](https://github.com/the-omega-institute/trureturing-experiments/tree/ccf77c1917e9d1a2f3d101bcd815841d9ca7dcb1/experiments/kalmykov-karp-pfq-turanian):
+`experiments/kalmykov-karp-pfq-turanian/two_block_scan.py`, sha256
+`1a009ce42782cc93ea7bb3d21c4c154c1c4f6336dd1bed57790b6f6822e9c07d`,
+with `common.py`, sha256
 `99d8d5329e2fd15025ebf1f46f67bbfa245787a2628075c93c10b48a98c5d2d2`.
-Command: `python3 -`, exit 0, Python 3.12.13 and mpmath 1.4.1 with
-40 decimal digits. The calculation calls `common.delta` with shifted
-numerator $[1]$, denominator $[1/2]^q$, $\mu=1$, $\alpha=\beta=1/2$ and
-degree one, and compares it with the displayed closed form for
-$q=1,\ldots,11$. The maximum absolute discrepancy was
-$4.60\cdot10^{-41}$ rounded upward; all eleven discrepancies were below
-$10^{-37}$. At $q=5,6,7$, respectively, the values were
-$0.016930759280053665019$, $-0.0024826768606655972407$ and
-$-0.0084200603747557689755$. A call to `common.cond13` also accepted the
-shifted block at $q=7$.
+Command: `python3 two_block_scan.py`, run from that directory with Python
+3.12 and mpmath 1.4.1, exit 0. At 40 decimal digits, for
+$q=1,\ldots,11$ the closed form equals the direct Cauchy sum to a maximum
+absolute discrepancy of $4.6\cdot10^{-41}$. The shifted numerator is
+$[1]$, the denominator is $[1/2]^q$, $\mu=1$, $\alpha=\beta=1/2$ and
+the degree is one. The first coefficient is approximately $0.01693$ at
+$q=5$, $-0.002483$ at $q=6$ and $-0.008420$ at $q=7$.
 
 ## Triage
 
@@ -215,14 +209,22 @@ failure when both shifts are $1/2$.
 
 - **PROVED IN PROSE (Route):** the closed form above and its strict
   negativity for every $q\ge7$, with all source hypotheses satisfied at
-  $q=7$, refute the coefficient clause. The Lean draft of this argument is
+  $q=7$, refute the coefficient clause. The D5 argument is
   `TwoBlockResult.half_parameter_family_neg` followed by
-  `TwoBlockResult.result`; it has not been compiled in this delivery.
-- **COMPUTED (the Python entry in Evidence):** for $q=1,\ldots,11$ the
-  direct sum and closed form agree to absolute error below $10^{-37}$.
-  The first coefficient is approximately $+0.01693$ at $q=5$,
-  $-0.00248$ at $q=6$ and $-0.00842$ at $q=7$. Thus the proved sufficient
-  threshold $q\ge7$ is not claimed to be sharp.
+  `TwoBlockResult.result`; the D5 modules of this delivery compile in the
+  repository CI.
+- **COMPUTED:** `python3 two_block_scan.py`, exit 0, in
+  `experiments/kalmykov-karp-pfq-turanian` of
+  `the-omega-institute/trureturing-experiments` at revision
+  `ccf77c1917e9d1a2f3d101bcd815841d9ca7dcb1`, driver sha256
+  `1a009ce42782cc93ea7bb3d21c4c154c1c4f6336dd1bed57790b6f6822e9c07d`
+  (`common.py` sha256
+  `99d8d5329e2fd15025ebf1f46f67bbfa245787a2628075c93c10b48a98c5d2d2`),
+  Python 3.12 and mpmath 1.4.1: for $q=1,\ldots,11$ the closed form
+  equals the direct sum with maximum discrepancy $4.6\cdot10^{-41}$
+  at 40 digits. The first coefficient is approximately $0.01693$ at
+  $q=5$, $-0.002483$ at $q=6$ and $-0.008420$ at $q=7$. Thus the proved
+  sufficient threshold $q\ge7$ is not claimed to be sharp.
 - **PROVED in the source, not formalized here:** Theorem 3's integer-shift
   conclusions remain unaffected by this witness. With empty unshifted
   blocks the series is equation (10), and the shifts used here are
@@ -239,10 +241,9 @@ failure when both shifts are $1/2$.
 
 ## ASSUMED-UNVERIFIED
 
-Compilation of the Lean and Reg sources, their axiom closures, the emitted
-Blueprints, and the four-slot registration's binding evidence are unverified
-in this drafting delivery. The source and literature checks are supplied by
-the orchestrator; exhaustive literature coverage, citation-index completeness
+Axiom closure and Reg compilation: not recorded here. Emitted Blueprints
+and the four-slot registration's binding evidence: not recorded here. The
+source and literature checks are supplied by the orchestrator; exhaustive literature coverage, citation-index completeness
 and priority are unverified. Numerical agreement and signs are finite
 multiprecision observations rather than proofs of a uniform statement. No
 claim about the sign of the full Turanian or log-concavity at a fixed $x$

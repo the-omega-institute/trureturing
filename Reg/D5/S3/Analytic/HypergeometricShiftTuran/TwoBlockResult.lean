@@ -2,7 +2,6 @@ import LeanInformationAuditInterface.Contract.Registration
 import D5.S3.Analytic.HypergeometricShiftTuran.TwoBlockResult
 import Reg.Support.SingleDependentReadout
 
-open _root_.D5.S3.Analytic.HypergeometricShiftTuran.TwoBlockDefs
 open _root_.D5.S3.Analytic.HypergeometricShiftTuran.TwoBlockResult
 open _root_.D5.S3.ConceptDynamics.InformationEscape.DependentFamily
 open LeanInformationAudit
@@ -36,40 +35,12 @@ private theorem first_readout_pos :
     0 < twoBlockTuranCoeff (fun _ : Fin 0 => 0) (fun _ : Fin 0 => 0)
       (fun _ : Fin 1 => (1 : ℝ)) (fun _ : Fin 1 => (1 / 2 : ℝ))
       1 (1 / 2) (1 / 2) 1 := by
-  have g2 : Real.Gamma 2 = 1 := by
-    rw [show (2 : ℝ) = ((1 : ℕ) : ℝ) + 1 by norm_num, Real.Gamma_nat_eq_factorial]
-    norm_num
-  have g3 : Real.Gamma 3 = 2 := by
-    rw [show (3 : ℝ) = ((2 : ℕ) : ℝ) + 1 by norm_num, Real.Gamma_nat_eq_factorial]
-    norm_num [Nat.factorial]
-  have g4 : Real.Gamma 4 = 6 := by
-    rw [show (4 : ℝ) = ((3 : ℕ) : ℝ) + 1 by norm_num, Real.Gamma_nat_eq_factorial]
-    norm_num [Nat.factorial]
-  have g32 : Real.Gamma (3 / 2) = Real.sqrt Real.pi / 2 := by
-    rw [show (3 / 2 : ℝ) = ((1 : ℕ) : ℝ) + 1 / 2 by norm_num, Real.Gamma_nat_add_half]
-    norm_num [Nat.doubleFactorial]
-  have g52 : Real.Gamma (5 / 2) = 3 * Real.sqrt Real.pi / 4 := by
-    rw [show (5 / 2 : ℝ) = ((2 : ℕ) : ℝ) + 1 / 2 by norm_num, Real.Gamma_nat_add_half]
-    norm_num [Nat.doubleFactorial]
-  have g72 : Real.Gamma (7 / 2) = 15 * Real.sqrt Real.pi / 8 := by
-    rw [show (7 / 2 : ℝ) = ((3 : ℕ) : ℝ) + 1 / 2 by norm_num, Real.Gamma_nat_add_half]
-    norm_num [Nat.doubleFactorial]
-  have hs : 0 < Real.sqrt Real.pi := Real.sqrt_pos.2 Real.pi_pos
-  have hvalue :
-      twoBlockTuranCoeff (fun _ : Fin 0 => 0) (fun _ : Fin 0 => 0)
-        (fun _ : Fin 1 => (1 : ℝ)) (fun _ : Fin 1 => (1 / 2 : ℝ))
-        1 (1 / 2) (1 / 2) 1 =
-        45 * (Real.sqrt Real.pi) ^ 2 / 32 -
-          32 / (5 * (Real.sqrt Real.pi) ^ 2) -
-          64 / (9 * (Real.sqrt Real.pi) ^ 2) := by
-    norm_num [twoBlockTuranCoeff, seriesCoeff, pochRatio,
-      _root_.D5.S3.Analytic.HypergeometricShiftTuran.Defs.coeff,
-      Finset.sum_range_succ, g2, g3, g4, g32, g52, g72]
-    <;> field_simp [ne_of_gt hs] <;> ring
-  rw [hvalue]
-  simp only [Real.sq_sqrt Real.pi_pos.le]
-  have hr : 45 * Real.pi / 32 - 32 / (5 * Real.pi) - 64 / (9 * Real.pi) =
-      (2025 * Real.pi ^ 2 - 19456) / (1440 * Real.pi) := by
+  rw [first_coefficient_eq 1]
+  simp only [pow_one]
+  have hr :
+      (45 * Real.pi / 16) * (1 / 2 : ℝ) -
+          4 * (16 / (9 * Real.pi)) - 6 * (16 / (15 * Real.pi)) =
+        (2025 * Real.pi ^ 2 - 19456) / (1440 * Real.pi) := by
     field_simp [ne_of_gt Real.pi_pos]
     <;> ring
   rw [hr]

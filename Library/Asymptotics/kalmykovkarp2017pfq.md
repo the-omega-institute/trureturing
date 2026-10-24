@@ -5,11 +5,10 @@ year: 2017
 title: Log-concavity and Turán-type inequalities for the generalized hypergeometric function
 doi: 10.1007/s10476-017-0503-z
 url: https://arxiv.org/abs/1611.06724
-claim: "Conjecture 1 extends the conclusions of Theorem 3 to all nonnegative shifts when mu is at least one."
+claim: "Conjectures 1 and 2 assert coefficient nonnegativity for shifted hypergeometric Turanians when mu is at least one."
 strata_touched:
   - D5/S3/Analytic/HypergeometricShiftTuran/Defs
   - D5/S3/Analytic/HypergeometricShiftTuran/Result
-  - D5/S3/Analytic/HypergeometricShiftTuran/TwoBlockDefs
   - D5/S3/Analytic/HypergeometricShiftTuran/TwoBlockResult
 license: citation-only
 triage: anchor
@@ -24,7 +23,7 @@ DOI: 10.1007/s10476-017-0503-z
 Source: https://arxiv.org/abs/1611.06724
 
 Pinned version: https://arxiv.org/abs/1611.06724v1, Section 3,
-equations (9), (10), (13), Theorem 3 and Conjecture 1. Journal publication:
+equations (2), (3), (9), (10), (13), Theorem 3 and Conjectures 1 and 2. Journal publication:
 *Analysis Mathematica* 43 (2017), 567–580.
 
 ## Mathematical correspondence
@@ -86,3 +85,50 @@ refutes that coefficient clause.
 
 The bounded literature scope and its limitations are stated in
 `Problems/kalmykov-karp-pfq-conjecture-one-coefficients.md`.
+
+## Two parameter blocks and Conjecture 2
+
+Conjecture 2 on page 6 of arXiv:1611.06724v1 states verbatim:
+
+> Conjecture 2. Suppose p1 ≤ q1 , p2 ≤ q2 and conditions (13) hold for a1 , b1 and a2 , b2 . Then the function µ → f (µ; x) defined in (3) is log-concave on [1, ∞) and the corresponding generalized Turánian ∆f (α, β; x) has nonnegative coefficients at all powers of x.
+
+The standing assumption on page 2 states verbatim:
+
+> We will always assume that a2 is not empty (i.e. p2 ≥ 1), while all other subvectors are allowed to be empty.
+
+Equation (3) on page 2 is
+
+$$
+f(\mu;x)=\frac{\Gamma(\mathbf a_2+\mu)}{\Gamma(\mathbf b_2+\mu)}
+\,{}_pF_q(\mathbf a_1,\mathbf a_2+\mu;
+\mathbf b_1,\mathbf b_2+\mu;x),
+\qquad p=p_1+p_2,\quad q=q_1+q_2.
+$$
+
+Vector Gamma and rising factorial expressions mean products over the entries.
+The unshifted vectors are $\mathbf a_1,\mathbf b_1$; the shifted vectors
+are $\mathbf a_2,\mathbf b_2$. Its Taylor coefficients are
+
+$$
+F_n(\mu)=
+\frac{\prod_i(a_{1,i})_n}{\prod_j(b_{1,j})_n}
+\frac{\prod_i\Gamma(a_{2,i}+\mu+n)}
+{\prod_j\Gamma(b_{2,j}+\mu+n)}\frac{1}{n!}.
+$$
+
+`TwoBlockResult.pochRatio` is the unshifted rising factorial ratio,
+`TwoBlockResult.seriesCoeff` is $F_n(\mu)$, and
+`TwoBlockResult.twoBlockTuranCoeff` is the degree-$m$ finite Cauchy
+coefficient of equation (2). `TwoBlockResult.claim` imposes positivity,
+$p_1\le q_1$, $1\le p_2\le q_2$, and `Defs.cond13` separately on
+both blocks, with $\mu\ge1$ and arbitrary nonnegative shifts.
+`TwoBlockResult.result` refutes that coefficient clause with empty
+unshifted blocks, shifted numerator $(1)$, seven shifted denominator
+entries equal to $1/2$, and shifts $\alpha=\beta=1/2$ at $\mu=1$.
+The log-concavity clause at a fixed nonnegative $x$ is not settled here.
+
+The shared half-integer Gamma values in `Defs` follow from Mathlib's
+`Real.Gamma_nat_add_half`; their reciprocal power products and the bound
+$640/567<32/(9\pi)$ supply both coefficient calculations. The two-block
+family, correspondence and bounded literature scope are stated in
+`Problems/kalmykov-karp-pfq-conjecture-two-coefficients.md`.
