@@ -67,7 +67,7 @@ def cutPosterior (ell R : ℝ) (S : Set ℝ) : ℝ :=
   ∫ t in S, ∫ x in t..endpoint t,
     kernel t x * (divisorPosterior t x - averagedPosterior ell R x)
 
-private lemma measurable_kernel_joint : Measurable (fun p : ℝ × ℝ => kernel p.1 p.2) := by
+lemma measurable_kernel_joint : Measurable (fun p : ℝ × ℝ => kernel p.1 p.2) := by
   unfold kernel g weight endpoint width
   apply Measurable.ite
   · exact (measurableSet_lt measurable_fst measurable_snd).inter

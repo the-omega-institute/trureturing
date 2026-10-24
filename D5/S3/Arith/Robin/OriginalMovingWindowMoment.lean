@@ -47,7 +47,7 @@ lemma log_large {x : ℝ} (hx : 4 ≤ x) : 1 ≤ Real.log x := by
   have h4 : 1 ≤ Real.log (4 : ℝ) := by linarith
   exact h4.trans (Real.log_le_log (by norm_num) hx)
 
-private lemma weight_antitone {t y : ℝ} (ht : 1 < t) (hty : t ≤ y) :
+lemma weight_antitone {t y : ℝ} (ht : 1 < t) (hty : t ≤ y) :
     weight y ≤ weight t := by
   have ht0 : 0 < t := by linarith
   have hscaled := MellinWeightedVariation.scaleWeight_antitone
@@ -58,7 +58,7 @@ private lemma weight_antitone {t y : ℝ} (ht : 1 < t) (hty : t ≤ y) :
     (weight_pos (ht.trans_le hty)).le
   exact (mul_le_mul_iff_right₀ ht0).mp (hnormalize.trans hscaled)
 
-private lemma weight_ratio_lower {t y : ℝ} (ht : 4 ≤ t) (hty : t ≤ y) :
+lemma weight_ratio_lower {t y : ℝ} (ht : 4 ≤ t) (hty : t ≤ y) :
     (t / y) ^ 4 * weight t ≤ weight y := by
   have ht0 : 0 < t := by linarith
   have hy0 : 0 < y := ht0.trans_le hty
@@ -116,7 +116,7 @@ private lemma body_continuous {t b β : ℝ} (ht : 4 ≤ t) :
     ((continuousOn_id.sub continuousOn_const).rpow_const
       (fun x hx => Or.inl (by linarith [hx.1] : x - 2 ≠ 0)))
 
-private lemma triangle_integral (t b C : ℝ) :
+lemma triangle_integral (t b C : ℝ) :
     (∫ x in t..b, C * (b - x)) = C * (b - t) ^ 2 / 2 := by
   have hi : (∫ x in t..b, b - x) = (b - t) * b - (b ^ 2 - t ^ 2) / 2 := by
     simpa only [Pi.sub_apply, id_eq, intervalIntegral.integral_const, integral_id, smul_eq_mul]
@@ -263,7 +263,7 @@ private lemma negative_power_upper {z c : ℝ} (hz : (1 / 2 : ℝ) ≤ z)
   dsimp [C] at h
   nlinarith
 
-private lemma width_scale {t : ℝ} (ht : 0 < t) :
+lemma width_scale {t : ℝ} (ht : 0 < t) :
     width t ^ 2 / t ^ (11 / 10 : ℝ) = t ^ (1 / 2 : ℝ) := by
   unfold width
   rw [← Real.rpow_natCast, ← Real.rpow_mul ht.le, ← Real.rpow_sub ht]
