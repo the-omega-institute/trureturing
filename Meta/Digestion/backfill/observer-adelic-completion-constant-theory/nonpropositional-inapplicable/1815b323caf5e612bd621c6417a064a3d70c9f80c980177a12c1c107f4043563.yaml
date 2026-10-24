@@ -5,3 +5,7 @@ cas_ref: sha256:1815b323caf5e612bd621c6417a064a3d70c9f80c980177a12c1c107f4043563
 coverage_gids: []
 receipts:
   unresolved_subitems: []
+  nonpropositional:
+    justification: 仅接口主题名“固定深度 Toeplitz 特征值恢复”，没有具体数学断言。
+    previous_atom_id: 303b7592e485301b6110c7a13897d47a6a8dd918951590ac39e38ecc64ba2dff
+    next_atom_id: 28e463e3cfbcec329169726a14d2db0a289141b932114708011d58565498a903

@@ -5,3 +5,7 @@ cas_ref: sha256:ab0dd7fdf14826afbd48c18c6e69ce5fef0fdc3ff83533559c5d87a7d74e030f
 coverage_gids: []
 receipts:
   unresolved_subitems: []
+  nonpropositional:
+    justification: 仅建议未来模块目录与文件名，不断言建议目标已经证明。
+    previous_atom_id: 254e51b64e514c5b7e079172ed2a85382fd57d069543359ca06b6020cd230db8
+    next_atom_id: 97543861a3ef81036bc554ea012e1512a049feab4f5a7d4901dedfea0678f556

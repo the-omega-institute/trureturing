@@ -5,3 +5,7 @@ cas_ref: sha256:f9f307d2dd797d2f088a2f398dae5a29fb4b0e4e7816bab7d67da1ae87b9663c
 coverage_gids: []
 receipts:
   unresolved_subitems: []
+  nonpropositional:
+    justification: 仅三种实现的表标题、列头和分隔线，没有实现性质行。
+    previous_atom_id: 42f893ec66dabaeca5a7c32bc717a8006f6423c228d618b992255e3f1a79c454
+    next_atom_id: 6e8e5d04e92b6b61952656b56e2e003f5523258d17f5e3c5dd8644ce61ef34c5
