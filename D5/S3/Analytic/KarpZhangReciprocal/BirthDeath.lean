@@ -150,7 +150,7 @@ private theorem coercivity (n : ℕ) (π p r z : ℕ → ℝ)
       ∑ i ∈ range (n + 1), π i * (r i * z i - p i * z (i + 1)) ^ 2 := by
     apply sum_le_sum
     intro i hi
-    have hi' := Nat.le_of_lt_succ (mem_range.mp hi)
+    have hi' := Finset.mem_range_succ_iff.mp hi
     have hs := mul_nonneg
       (mul_nonneg (mul_nonneg (hπ i hi') (hpp i hi')) (hrr i hi'))
       (sq_nonneg (z i - z (i + 1)))
@@ -243,7 +243,7 @@ theorem variance_bound (n : ℕ) (π p r h : ℕ → ℝ)
         V * V = V ^ 2 := by ring
         _ ≤ A * E := hcs
         _ ≤ A * V := hAV
-  have hg (i : ℕ) : g (i + 1) - g i = h (i + 1) - h i := by dsimp [g]; ring
+  have hg (i : ℕ) : g (i + 1) - g i = h (i + 1) - h i := sub_sub_sub_cancel_right (h (i + 1)) (h i) a
   simpa only [V, A, variance, hg, g, a] using hVA
 
 end D5.S3.Analytic.KarpZhangReciprocal.BirthDeath

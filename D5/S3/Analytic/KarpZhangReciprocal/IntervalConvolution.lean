@@ -2,7 +2,7 @@
    generality: G
    mirror-B: D5/B/S3/Analytic/KarpZhangReciprocal/IntervalConvolution
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
-   anchors: [mathlib/module/Mathlib.RingTheory.Polynomial.Pochhammer, mathlib/module/Mathlib.Analysis.SpecialFunctions.Log.Deriv, mathlib/module/Mathlib.NumberTheory.Bernoulli, mathlib/module/Mathlib.Tactic.FieldSimp, mathlib/module/Mathlib.Tactic.GCongr, mathlib/module/Mathlib.Tactic.Linarith, mathlib/module/Mathlib.Tactic.Positivity, mathlib/module/Mathlib.Tactic.Ring, mathlib/module/Mathlib.Algebra.BigOperators.Field, mathlib/module/Mathlib.Analysis.Convex.Deriv]
+   anchors: [mathlib/module/Mathlib.RingTheory.Polynomial.Pochhammer, mathlib/module/Mathlib.Analysis.SpecialFunctions.Log.Deriv, mathlib/module/Mathlib.NumberTheory.Bernoulli, mathlib/module/Mathlib.Tactic.FieldSimp, mathlib/module/Mathlib.Tactic.GCongr, mathlib/module/Mathlib.Tactic.Linarith, mathlib/module/Mathlib.Tactic.Positivity, mathlib/module/Mathlib.Tactic.Ring, mathlib/module/Mathlib.Algebra.BigOperators.Field, mathlib/module/Mathlib.Analysis.Convex.Deriv, mathlib/module/Mathlib.Algebra.Order.BigOperators.Ring.Finset]
    utility: none
    digest: Symmetric interval convolutions increase when positive parameters are balanced. -/
 
@@ -18,6 +18,7 @@ import D5.S3.Analytic.KarpZhangReciprocal.BirthDeath
 import D5.S3.Analytic.KummerRatio.Series
 import Mathlib.Algebra.BigOperators.Field
 import Mathlib.Analysis.Convex.Deriv
+import Mathlib.Algebra.Order.BigOperators.Ring.Finset
 
 /-!
 admission_basis: escape-witness
@@ -93,6 +94,7 @@ prefix D5.S3.Analytic):
 * rate_curvature: proof_shape: bind-only; escape_witness: none;
   consumers: score_variance_bound.
 * square_split: proof_shape: bind-only; escape_witness: none;
+  reuse: Finset.sq_sum_div_le_sum_sq_div on Fin 2;
   consumers: score_variance_bound.
 * score_variance_bound: proof_shape: content; escape_witness: score_variance_bound;
   consumers: slice_concave.
@@ -166,7 +168,7 @@ private theorem lambda_antitone {t : ℝ} (ht : 0 < t) :
   intro i j hij
   have hi : 0 < t + i := by positivity
   have hj : 0 < t + j := by positivity
-  have hij' : (i : ℝ) ≤ j := by exact_mod_cast hij
+  have hij' : (i : ℝ) ≤ j := Nat.cast_le.mpr hij
   have hmul := mul_nonneg ht.le (sub_nonneg.mpr hij')
   change (2 * t + (j : ℝ)) / (t + j) ≤ (2 * t + (i : ℝ)) / (t + i)
   rw [div_le_div_iff₀ hj hi]
@@ -235,7 +237,7 @@ private theorem chi_nonneg (n : ℕ) {t : ℝ} (ht : 0 < t) : 0 ≤ chi n t := b
 private theorem curvature_summand {j N : ℕ} {t : ℝ} (ht : 0 < t) (hj : j ≤ N) :
     3 * (j : ℝ) ^ 2 / ((2 * t + N) ^ 2 * (t + N) ^ 2) ≤
       (j : ℝ) * (4 * t + 3 * j) / ((2 * t + j) ^ 2 * (t + j) ^ 2) := by
-  have hj' : (j : ℝ) ≤ N := by exact_mod_cast hj
+  have hj' : (j : ℝ) ≤ N := Nat.cast_le.mpr hj
   have hD : (2 * t + j) ^ 2 * (t + j) ^ 2 ≤
       (2 * t + N) ^ 2 * (t + N) ^ 2 := by
     gcongr
@@ -339,7 +341,7 @@ private theorem coefficient_step (k : ℕ) {s : ℝ} (hs : 0 < s) :
   have h : c (k + 1) s / c k s = lambda k s / ((k + 1 : ℕ) : ℝ) := by
     simpa only [Nat.cast_add, Nat.cast_one] using (coefficient_calculus k hs).2.2.1
   have hc := ne_of_gt (coefficient_calculus k hs).1
-  have hk : ((k + 1 : ℕ) : ℝ) ≠ 0 := by positivity
+  have hk : ((k + 1 : ℕ) : ℝ) ≠ 0 := Nat.cast_ne_zero.mpr (Nat.succ_ne_zero k)
   have h' := (div_eq_div_iff hc hk).mp h
   simpa only [mul_comm] using h'
 
@@ -347,11 +349,11 @@ private theorem balance (m L n : ℕ) (hm : L + n ≤ m)
     {s t : ℝ} (hs : 0 < s) (ht : 0 < t) (i : ℕ) (hi : i < n) :
     weight m L i s t * birth m L n s i =
       weight m L (i + 1) s t * death m L t (i + 1) := by
-  have hi0 : i + 1 ≠ 0 := by omega
+  have hi0 : i + 1 ≠ 0 := Nat.succ_ne_zero i
   have he : m - (L + i) = (m - (L + (i + 1))) + 1 := by omega
   have hleft := coefficient_step (L + i) hs
   have hright := coefficient_step (m - (L + (i + 1))) ht
-  have hidx : L + (i + 1) = (L + i) + 1 := by omega
+  have hidx : L + (i + 1) = (L + i) + 1 := (Nat.add_assoc L i 1).symm
   simp only [birth, if_pos hi, death, if_neg hi0, weight]
   rw [← he] at hright
   rw [hidx]
@@ -386,7 +388,7 @@ private theorem rate_curvature (m L n : ℕ) (hm : L + n ≤ m)
       nlinarith
   have hr : lambda (m - (L + (i + 1))) t ≤
       death m L t (i + 1) - death m L t i := by
-    have hnext : i + 1 ≠ 0 := by omega
+    have hnext : i + 1 ≠ 0 := Nat.succ_ne_zero i
     simp only [death, if_neg hnext]
     split_ifs with hzero
     · subst i
@@ -397,7 +399,7 @@ private theorem rate_curvature (m L n : ℕ) (hm : L + n ≤ m)
       have hcmp := hmono (show m - (L + (i + 1)) ≤ m - (L + i) by omega)
       have hmul := mul_nonneg (Nat.cast_nonneg (α := ℝ) (L + i))
         (sub_nonneg.mpr hcmp)
-      have he' : ((L + (i + 1) : ℕ) : ℝ) = (L + i : ℕ) + 1 := by push_cast; ring
+      have he' : ((L + (i + 1) : ℕ) : ℝ) = (L + i : ℕ) + 1 := Nat.cast_add_one (L + i)
       nlinarith
   unfold BirthDeath.kappa
   linarith
@@ -408,14 +410,11 @@ private theorem square_split {A B K X Y : ℝ} (hA : 0 < A) (hB : 0 < B)
     (X + Y) ^ 2 / K ≤ (X + Y) ^ 2 / (A + B) :=
       div_le_div_of_nonneg_left (sq_nonneg _) (add_pos hA hB) hK
     _ ≤ X ^ 2 / B + Y ^ 2 / A := by
-      apply (div_le_iff₀ (add_pos hA hB)).2
-      have heq : (X ^ 2 / B + Y ^ 2 / A) * (A + B) =
-          ((A * X ^ 2 + B * Y ^ 2) * (A + B)) / (A * B) := by
-        field_simp [ne_of_gt hA, ne_of_gt hB]
-        <;> ring
-      rw [heq]
-      apply (le_div_iff₀ (mul_pos hA hB)).2
-      nlinarith [sq_nonneg (A * X - B * Y)]
+      simpa [Fin.sum_univ_two, add_comm] using
+        (Finset.sq_sum_div_le_sum_sq_div (Finset.univ : Finset (Fin 2))
+          (fun i => if i = 0 then X else Y)
+          (g := fun i => if i = 0 then B else A)
+          (by intro i _; split_ifs <;> assumption))
 
 /-- The variance absorption step for an arbitrary interval, including a singleton. -/
 private theorem score_variance_bound (m L n : ℕ) (hm : L + n ≤ m)
@@ -437,7 +436,7 @@ private theorem score_variance_bound (m L n : ℕ) (hm : L + n ≤ m)
     rw [← Finset.sum_div]
     exact div_self (ne_of_gt hZ)
   have hp : p n = 0 := by simp [p, birth]
-  have hr : r 0 = 0 := by simp [r, death]
+  have hr : r 0 = 0 := rfl
   have hpp (i : ℕ) (hi : i < n) : 0 < p i := by
     dsimp only [p]
     rw [birth, if_pos hi]
@@ -467,8 +466,8 @@ private theorem score_variance_bound (m L n : ℕ) (hm : L + n ≤ m)
     let X := eta k s
     let Y := eta (ell - 1) t
     have he : ell = m - (L + (i + 1)) + 1 := by dsimp [ell]; omega
-    have he' : ell - 1 = m - (L + (i + 1)) := by omega
-    have hk' : L + (i + 1) = k + 1 := by dsimp [k]; omega
+    have he' : ell - 1 = m - (L + (i + 1)) := Nat.sub_sub m (L + i) 1
+    have hk' : L + (i + 1) = k + 1 := (Nat.add_assoc L i 1).symm
     have hA : 0 < A := (coefficient_calculus k hs).2.1
     have hB : 0 < B := (coefficient_calculus (ell - 1) ht).2.1
     have hK : A + B ≤ BirthDeath.kappa p r i := by
@@ -489,9 +488,7 @@ private theorem score_variance_bound (m L n : ℕ) (hm : L + n ≤ m)
     have hD : (ell : ℝ) * Y ^ 2 ≤ chi ell t :=
       (coefficient_calculus ell ht).2.2.2.2.2.2.1
     have hpval : p i = (ell : ℝ) * A := by simp only [p, birth, if_pos hi, ell, A, k]
-    have hrval : r (i + 1) = (k + 1 : ℕ) * B := by
-      dsimp only [r]
-      rw [death, if_neg (by omega : i + 1 ≠ 0), ← he', hk']
+    have hrval : r (i + 1) = (k + 1 : ℕ) * B := rfl
     have hC' : X ^ 2 / B ≤ chi (k + 1) s / r (i + 1) := by
       rw [hrval]
       apply (div_le_div_iff₀ hB (mul_pos (by positivity) hB)).2
@@ -513,7 +510,8 @@ private theorem score_variance_bound (m L n : ℕ) (hm : L + n ≤ m)
       _ = π (i + 1) * chi (k + 1) s + π i * chi ell t := by
         rw [mul_add]
         have hfirst : π i * p i * (chi (k + 1) s / r (i + 1)) =
-            (π i * p i / r (i + 1)) * chi (k + 1) s := by ring
+            (π i * p i / r (i + 1)) * chi (k + 1) s :=
+              (mul_comm_div (π i * p i) (r (i + 1)) (chi (k + 1) s)).symm
         rw [hfirst, hb']
         field_simp [ne_of_gt (hpp i hi)]
         <;> ring
@@ -665,9 +663,9 @@ theorem symmetric_tail (m q : ℕ) (hq : 2 * q ≤ m)
   have hpa : a ∈ Set.Ioo 0 S := ⟨ha, by dsimp [S]; linarith⟩
   have hpd : d ∈ Set.Ioo 0 S := ⟨hd, by dsimp [S]; linarith⟩
   have hmin := hconc.min_le_of_mem_Icc hpa hpd ⟨hab, hbc.trans hcd⟩
-  have hsa : S - a = d := by dsimp [S]; ring
-  have hsd : S - d = a := by dsimp [S]; ring
-  have hsb : S - b = c := by dsimp [S]; linarith
+  have hsa : S - a = d := add_sub_cancel_left a d
+  have hsd : S - d = a := add_sub_cancel_right a d
+  have hsb : S - b = c := (eq_sub_of_add_eq' hsum.symm).symm
   rw [hsa, hsd, hsb, ← symmetric m q hq a d, min_self] at hmin
   exact (Real.log_le_log_iff (total_pos m q (m - q - q) ha hd)
     (total_pos m q (m - q - q) hb hc)).mp hmin

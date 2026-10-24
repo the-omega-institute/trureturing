@@ -226,7 +226,7 @@ private def atom (a : ℝ) (r j : ℕ) : ℝ :=
 
 private theorem atom_rshift (a : ℝ) (r j : ℕ) :
     ((r + 1 : ℕ) : ℝ) * atom a (r + 1) j = (1 / 2 : ℝ) * atom a r j := by
-  have hr : (r : ℝ) + 1 ≠ 0 := by positivity
+  have hr : (r : ℝ) + 1 ≠ 0 := Nat.cast_add_one_ne_zero r
   simp only [atom, Nat.factorial_succ, Nat.cast_mul, Nat.cast_add, Nat.cast_one,
     pow_succ, div_eq_mul_inv, mul_inv_rev]
   calc
@@ -237,7 +237,7 @@ private theorem atom_rshift (a : ℝ) (r j : ℕ) :
 
 private theorem atom_jshift (a : ℝ) (r j : ℕ) :
     (2 * (j + 1) : ℝ) * atom a r (j + 1) = (1 / 8 : ℝ) * atom (a + 1) r j := by
-  have hj : (j : ℝ) + 1 ≠ 0 := by positivity
+  have hj : (j : ℝ) + 1 ≠ 0 := Nat.cast_add_one_ne_zero j
   have he : a + ((j + 1 : ℕ) : ℝ) = a + 1 + j := by push_cast; ring
   unfold atom
   rw [he]
@@ -304,7 +304,7 @@ private theorem gammaCoeff_recurrence (t : ℝ) (ht : 0 < t) (n : ℕ) :
   have hd1 : 0 < 2 * t + n + 1 := by positivity
   have hgf := ne_of_gt (Real.Gamma_pos_of_pos hd0)
   have hnf : (n.factorial : ℝ) ≠ 0 := by positivity
-  have he1 : t + 1 + (n : ℝ) = t + n + 1 := by ring
+  have he1 : t + 1 + (n : ℝ) = t + n + 1 := add_right_comm t 1 (n : ℝ)
   have he2 : 2 * (t + 1) + (n : ℝ) = (2 * t + n + 1) + 1 := by ring
   have he3 : t + ((n + 2 : ℕ) : ℝ) = (t + n + 1) + 1 := by push_cast; ring
   have he4 : 2 * t + ((n + 2 : ℕ) : ℝ) = (2 * t + n + 1) + 1 := by push_cast; ring
@@ -343,9 +343,9 @@ theorem positive_beta_transform (n : ℕ) : ∀ t : ℝ, 0 < t →
           have hdiag := diagonal_recurrence (t + 1 / 2) n
           rw [ih (n + 1) (by omega) t ht,
             ih n (by omega) (t + 1) (by linarith), scale_succ] at hrec
-          have ha : t + 1 + 1 / 2 = (t + 1 / 2) + 1 := by ring
+          have ha : t + 1 + 1 / 2 = (t + 1 / 2) + 1 := add_right_comm t 1 (1 / 2)
           rw [ha] at hrec
-          have hn : (0 : ℝ) < ((n + 2 : ℕ) : ℝ) := by positivity
+          have hn : (0 : ℝ) < ((n + 2 : ℕ) : ℝ) := Nat.ofNat_pos'
           have hscaled := congrArg (fun z : ℝ => scale t * z) hdiag
           apply mul_left_cancel₀ (ne_of_gt hn)
           nlinarith only [hrec, hscaled]
@@ -437,10 +437,8 @@ private theorem atom_product (a b : ℝ) (N m r k : ℕ) (hr : r ≤ N) (hk : k 
         (1 / ((k.factorial : ℝ) * ((m - k).factorial : ℝ) *
           Real.Gamma (a + k) * Real.Gamma (b + (m - k)))) *
         (1 / ((r.factorial : ℝ) * ((N - r).factorial : ℝ))) := by
-  have h2 : (2 : ℝ) ^ r * (2 : ℝ) ^ (N - r) = (2 : ℝ) ^ N := by
-    rw [← pow_add, show r + (N - r) = N by omega]
-  have h16 : (16 : ℝ) ^ k * (16 : ℝ) ^ (m - k) = (16 : ℝ) ^ m := by
-    rw [← pow_add, show k + (m - k) = m by omega]
+  have h2 : (2 : ℝ) ^ r * (2 : ℝ) ^ (N - r) = (2 : ℝ) ^ N := pow_mul_pow_sub (2 : ℝ) hr
+  have h16 : (16 : ℝ) ^ k * (16 : ℝ) ^ (m - k) = (16 : ℝ) ^ m := pow_mul_pow_sub (16 : ℝ) hk
   calc
     _ = (1 / (((2 : ℝ) ^ r * (2 : ℝ) ^ (N - r)) *
           ((16 : ℝ) ^ k * (16 : ℝ) ^ (m - k)))) *

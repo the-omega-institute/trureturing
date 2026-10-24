@@ -87,10 +87,10 @@ theorem balanced_product {y : ℕ → ℝ} (hy : IsLogConcave y)
       intro hd
       have hp := ih (by omega)
       have hstep := balanced_step hy m (L + d) (by omega)
-      have hidx : L + (d + 1) = L + d + 1 := by omega
+      have hidx : L + (d + 1) = L + d + 1 := (Nat.add_assoc L d 1).symm
       rw [hidx]
       exact hp.trans hstep
-  have hidx : L + (j - L) = j := by omega
+  have hidx : L + (j - L) = j := Nat.add_sub_of_le hjL
   have h := hincr (j - L) (by omega)
   rw [hidx, show m - L = R by dsimp [m]; omega] at h
   have heq : y j * y (m - j) = y u * y v := by
@@ -123,7 +123,7 @@ theorem binomialProduct_comm (f g : ℕ → ℝ) (N : ℕ) :
   rw [← sum_range_reflect (fun r => (N.choose r : ℝ) * f r * g (N - r)) (N + 1)]
   apply sum_congr rfl
   intro r hr
-  have hr' : r ≤ N := Nat.le_of_lt_succ (mem_range.mp hr)
+  have hr' : r ≤ N := Finset.mem_range_succ_iff.mp hr
   simp only [Nat.add_sub_cancel]
   rw [Nat.choose_symm hr', show N - (N - r) = r by omega]
   ring
@@ -135,7 +135,7 @@ theorem productCoeff_eq (f g : ℕ → ℝ) (N : ℕ) :
   rw [sum_div]
   apply sum_congr rfl
   intro r hr
-  have hr' : r ≤ N := Nat.le_of_lt_succ (mem_range.mp hr)
+  have hr' : r ≤ N := Finset.mem_range_succ_iff.mp hr
   have hc : (N.choose r : ℝ) * (r.factorial : ℝ) * ((N - r).factorial : ℝ) =
       (N.factorial : ℝ) := by
     exact_mod_cast Nat.choose_mul_factorial_mul_factorial hr'
@@ -211,7 +211,8 @@ theorem smoothed_weighting {y : ℕ → ℝ} (hy : IsLogConcave y)
       have hsecond := smoothing_minor hy (2 * k + 1) (q - 1) N
         (by dsimp [q]; omega)
       have hqm : q - 1 + 2 = q + 1 := by dsimp [q]; omega
-      have hqm' : q - 1 + 1 = q := by dsimp [q]; omega
+      have hqm' : q - 1 + 1 = q := Nat.add_right_cancel (show (q - 1 + 1) + 1 = q + 1 by
+        simpa only [Nat.add_assoc] using hqm)
       rw [hqm, hqm'] at hsecond
       rw [hq] at hfirst
       have h := hfirst.trans hsecond

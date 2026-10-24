@@ -56,7 +56,7 @@ theorem weighted_sum_nonneg (A W : ℕ → ℝ) (h : ℕ)
     have hq : q ≤ h ∧ 0 < A q := Nat.find_spec hp
     have hterm : ∀ i ∈ range (h + 1), 0 ≤ A i * (W i - W q) := by
       intro i hi
-      have hi' : i ≤ h := Nat.le_of_lt_succ (mem_range.mp hi)
+      have hi' : i ≤ h := Finset.mem_range_succ_iff.mp hi
       by_cases hiq : i < q
       · have hai : A i ≤ 0 := by
           by_contra hnot

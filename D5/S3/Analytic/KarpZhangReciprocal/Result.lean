@@ -86,7 +86,7 @@ private theorem positive_between {y : ℕ → ℝ} (hy : IsLogConcave y)
     rw [show i + (b - i) = b by omega] at he
     exact (ne_of_gt hb) he
   · have he := hleft (i - a) (Nat.sub_le i a)
-    have hidx : i - (i - a) = a := by omega
+    have hidx : i - (i - a) = a := Nat.sub_sub_self hai
     rw [hidx] at he
     exact (ne_of_gt ha) he
 
@@ -103,8 +103,8 @@ private theorem ratio_bound {y : ℕ → ℝ} (hy : IsLogConcave y)
     have hprev : 0 < y (a + n) :=
       positive_between hy ha hb (by omega) (by omega)
     have hlocal := hy.2.2.1 (a + n + 1) (by omega)
-    have hpred : a + n + 1 - 1 = a + n := by omega
-    have hsucc : a + n + 1 + 1 = a + (n + 1) + 1 := by omega
+    have hpred : a + n + 1 - 1 = a + n := Nat.add_succ_sub_one (a + n) 0
+    have hsucc : a + n + 1 + 1 = a + (n + 1) + 1 := Nat.add_right_comm (a + n) 1 1
     rw [hpred, hsucc] at hlocal
     have hstep : y (a + (n + 1) + 1) / y (a + (n + 1)) ≤
         y (a + n + 1) / y (a + n) := by
@@ -125,16 +125,8 @@ theorem balanced_step {y : ℕ → ℝ} (hy : IsLogConcave y)
   · rw [hz]
     exact mul_nonneg (hy.1 _) (hy.1 _)
   · have hw : 0 < y k * y (m - k) := lt_of_le_of_ne hnonneg (Ne.symm hz)
-    have ha : 0 < y k := by
-      by_contra h
-      have he : y k = 0 := le_antisymm (le_of_not_gt h) (hy.1 k)
-      simp only [he, zero_mul] at hw
-      exact lt_irrefl 0 hw
-    have hb : 0 < y (m - k) := by
-      by_contra h
-      have he : y (m - k) = 0 := le_antisymm (le_of_not_gt h) (hy.1 _)
-      simp only [he, mul_zero] at hw
-      exact lt_irrefl 0 hw
+    have ha : 0 < y k := pos_of_mul_pos_left hw (hy.1 _)
+    have hb : 0 < y (m - k) := (pos_iff_pos_of_mul_pos hw).mp ha
     let n := m - k - 1 - k
     have h1 : k + n = m - (k + 1) := by dsimp [n]; omega
     have h2 : k + n + 1 = m - k := by dsimp [n]; omega

@@ -122,7 +122,7 @@ private theorem binomialGamma_sum (m : ℕ) : ∀ b c : ℝ, 0 < b → 0 < c →
   rw [sum_mul, hv]
   apply sum_congr rfl
   intro k hk
-  have hkm : k ≤ m := Nat.le_of_lt_succ (mem_range.mp hk)
+  have hkm : k ≤ m := Finset.mem_range_succ_iff.mp hk
   dsimp only
   have hec : c + (m : ℝ) - 1 - k + 1 = c + (m - k : ℕ) := by rw [Nat.cast_sub hkm]; ring
   have heb : b + (m : ℝ) - 1 - (m - k : ℕ) + 1 = b + k := by rw [Nat.cast_sub hkm]; ring
@@ -164,7 +164,7 @@ theorem gamma_balanced_shift (a α β : ℝ) (ha : 0 < a)
       Real.Gamma a * Real.Gamma (a + α + β) := by
   by_cases hz : α + β = 0
   · have hαz : α = 0 := by linarith
-    have hβz : β = 0 := by linarith
+    have hβz : β = 0 := (eq_zero_iff_eq_zero_of_add_eq_zero hz).mp hαz
     simp [hαz, hβz]
   · have ht : 0 < α + β := lt_of_le_of_ne (add_nonneg hα hβ) (Ne.symm hz)
     have hw : β / (α + β) + α / (α + β) = 1 := by
@@ -253,8 +253,8 @@ theorem kernel_sum_nonneg (a α β : ℝ) (ha : 0 < a)
       have hn : 0 ≤ (n : ℝ) := Nat.cast_nonneg n
       linarith
   have hbal := gamma_balanced_shift (a + m) α β (by positivity) hα hβ
-  have harg1 : (a + (m : ℝ)) + α = a + α + m := by ring
-  have harg2 : (a + (m : ℝ)) + β = a + β + m := by ring
+  have harg1 : (a + (m : ℝ)) + α = a + α + m := add_right_comm a (m : ℝ) α
+  have harg2 : (a + (m : ℝ)) + β = a + β + m := add_right_comm a (m : ℝ) β
   have harg3 : (a + (m : ℝ)) + α + β = a + α + β + m := by ring
   rw [harg3, harg1, harg2] at hbal
   have hden : 0 < Real.Gamma (a + α + m) * Real.Gamma (a + β + m) :=
@@ -312,7 +312,7 @@ private theorem recurrenceFactor_increment (S x α β : ℝ) (hS : 1 ≤ S)
     (hα : 0 ≤ α) (hβ : 0 ≤ β) (hd : x + α + β < S) :
     recurrenceFactor S (x + β) - recurrenceFactor S x ≤
       recurrenceFactor S (x + α + β) - recurrenceFactor S (x + α) := by
-  have hd0 : 0 < S - (x + α + β) := by linarith
+  have hd0 : 0 < S - (x + α + β) := sub_pos.mpr hd
   have hd1 : 0 < S - (x + α) := by linarith
   have hd2 : 0 < S - (x + β) := by linarith
   have hd3 : 0 < S - x := by linarith
@@ -427,15 +427,14 @@ private theorem bracket_backward_nat (a α β : ℝ) (ha : 0 < a)
   have hstep (α β : ℝ) (hα : 0 ≤ α) (hαβ : α ≤ β)
       (h : fourBracket (a + (k + 1 : ℕ)) (a + (m - (k + 1))) α β ≤ 0) :
       fourBracket (a + k) (a + (m - k)) α β ≤ 0 := by
-    have hcast : ((k + 1 : ℕ) : ℝ) = (k : ℝ) + 1 := by simp only [Nat.cast_add, Nat.cast_one]
+    have hcast : ((k + 1 : ℕ) : ℝ) = (k : ℝ) + 1 := Nat.cast_add_one k
     have horder : k + 1 ≤ m - (k + 1) := by omega
-    have horder' : ((k + 1 : ℕ) : ℝ) ≤ ((m - (k + 1) : ℕ) : ℝ) := by
-      exact_mod_cast horder
+    have horder' : ((k + 1 : ℕ) : ℝ) ≤ ((m - (k + 1) : ℕ) : ℝ) := Nat.cast_le.mpr horder
     rw [Nat.cast_sub (by omega : k + 1 ≤ m), hcast] at horder'
     have h := fourBracket_backward (a + (k + 1 : ℕ))
       (a + (m - (k + 1))) α β (by
         rw [hcast]
-        have hk0 : (0 : ℝ) ≤ (k : ℝ) := by positivity
+        have hk0 : (0 : ℝ) ≤ (k : ℝ) := Nat.cast_nonneg' k
         linarith)
       (by rw [hcast]; linarith only [horder']) hα hαβ h
     have hxarg : a + ((k + 1 : ℕ) : ℝ) - 1 = a + k := by rw [hcast]; ring
