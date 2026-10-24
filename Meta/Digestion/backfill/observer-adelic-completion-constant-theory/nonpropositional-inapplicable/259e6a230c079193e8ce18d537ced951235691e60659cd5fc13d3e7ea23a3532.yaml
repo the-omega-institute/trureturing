@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:259e6a230c079193e8ce18d537ced951235691e60659cd5fc13d3e7ea23a3532
+  normalized_sha256: sha256:259e6a230c079193e8ce18d537ced951235691e60659cd5fc13d3e7ea23a3532
+cas_ref: sha256:259e6a230c079193e8ce18d537ced951235691e60659cd5fc13d3e7ea23a3532
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: A chapter introduction proposing four stages; no stage is claimed as a theorem here.
+    previous_atom_id: 8d2a78207905f5aa7e5364278c527dfb07a718b1e340c2f8475f3b6c9c90a925
+    next_atom_id: 1aa9ec8ae59a2f0bc6b48a11999765e8d7af481af811c90673e6641a0198f73f

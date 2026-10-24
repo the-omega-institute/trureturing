@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:4b56a5c01654be87f0d0f9a617ac812e7290bdd88a185f8f3fa2c9b8322524d4
+  normalized_sha256: sha256:4b56a5c01654be87f0d0f9a617ac812e7290bdd88a185f8f3fa2c9b8322524d4
+cas_ref: sha256:4b56a5c01654be87f0d0f9a617ac812e7290bdd88a185f8f3fa2c9b8322524d4
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: Names tools still needed for a global tail bound, without asserting such a bound.
+    previous_atom_id: 252aecb0aa947cbcbf05a0c64e34442257cae198c5f7af11dee7310e486646e6
+    next_atom_id: 254be122130d6131395467fd10bd968beb6f329569f66c431e0057d204fbf92d

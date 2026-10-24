@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:e00915465e5ee757c9f9fe8416dc27b2689d01986562b3fe6dd5734e4b61fde2
+  normalized_sha256: sha256:e00915465e5ee757c9f9fe8416dc27b2689d01986562b3fe6dd5734e4b61fde2
+cas_ref: sha256:e00915465e5ee757c9f9fe8416dc27b2689d01986562b3fe6dd5734e4b61fde2
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 《论语》父子相隐段落的解释及范围限制。
+    previous_atom_id: cde2d2792b5e14bc65bdb5e46c0e3a5a10f498d60a80653891d0e6c9ba39b6b8
+    next_atom_id: a2116c2882a5f755a7e1b6c51f839c0f05ed19a4dcfa114ac1fa48bd37bf957c

@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:2401765255d53b0203293336d7660d9ed505414f0f524cc94fea1193bd9f6b4c
+  normalized_sha256: sha256:2401765255d53b0203293336d7660d9ed505414f0f524cc94fea1193bd9f6b4c
+cas_ref: sha256:2401765255d53b0203293336d7660d9ed505414f0f524cc94fea1193bd9f6b4c
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 非命题结算：比较阿奎那与巴哈伊的缺失说明及各自根据，不提出同一数学结构即同一教义的断言。
+    previous_atom_id: 0832ae5729dbd0f780d7d616561e9d8c4e5be9a1050d472f354fad4f8af97db0
+    next_atom_id: fd8de8f70e6a54dbcaa8f2c59376dca17218a231b70d4db379a111f3e416b66f

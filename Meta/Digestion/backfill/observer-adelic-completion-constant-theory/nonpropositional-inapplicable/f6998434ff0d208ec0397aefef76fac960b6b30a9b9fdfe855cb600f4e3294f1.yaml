@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:f6998434ff0d208ec0397aefef76fac960b6b30a9b9fdfe855cb600f4e3294f1
+  normalized_sha256: sha256:f6998434ff0d208ec0397aefef76fac960b6b30a9b9fdfe855cb600f4e3294f1
+cas_ref: sha256:f6998434ff0d208ec0397aefef76fac960b6b30a9b9fdfe855cb600f4e3294f1
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 条件性研究设想中的应用领域名称，不断言黄金比例在其中必然出现。
+    previous_atom_id: a505560eb7fc10e7046e4f847464255b41cb2e3f1cdf1e177efa72e1d037e4e1
+    next_atom_id: 501e214deba141eac266c09c194173ad3958d0fd75234f1c7e3fe7317fe765a2

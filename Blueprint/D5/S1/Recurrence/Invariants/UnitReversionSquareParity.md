@@ -228,6 +228,30 @@ $$\forall n: \mathbb{N}, (1 \le n) \implies (\operatorname{Odd}\left(\operatorna
 
 The fixed-point equation gives coefficient 1 equal to 1. For n positive, coefficient n+1 is zero when n is odd, and is coefficient n/2 when n is even. The index n+1 is a positive Mersenne index exactly when n is even and n/2 is a positive Mersenne index. Strong induction, with constant coefficient zero, proves the support classification. An integer maps to 1 in ZMod(2) exactly when it is odd.
 
+**Theorem 1.19 (Zero is not a positive Mersenne index).**
+
+$$\neg (\exists k: \mathbb{N}, (1 \le k) \land (0 = (2)^{k} - 1))$$
+
+*Proof.* Machine-checked in Lean as `D5/S1/Recurrence/Invariants/UnitReversionSquareParity.mersenne_zero` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+No positive exponent gives zero after subtracting one from a power of two.
+
+**Theorem 1.20 (Mersenne indices halve at positive indices).**
+
+$$\forall n: \mathbb{N}, (0 < n) \implies ((\exists k: \mathbb{N}, (1 \le k) \land (n + 1 = (2)^{k} - 1)) \Leftrightarrow ((2 \mid n) \land (\exists k: \mathbb{N}, (1 \le k) \land (\operatorname{Nat}.div\left(n, 2\right) = (2)^{k} - 1))))$$
+
+*Proof.* Machine-checked in Lean as `D5/S1/Recurrence/Invariants/UnitReversionSquareParity.mersenne_step` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+At a positive index, being one less than a power of two is equivalent to evenness and the corresponding halved Mersenne condition.
+
 ## References
 
 - Truth anchor: `D5/S1/Recurrence/Invariants/UnitReversionSquareParity.Agree`
@@ -243,6 +267,8 @@ The fixed-point equation gives coefficient 1 equal to 1. For n positive, coeffic
 - Truth anchor: `D5/S1/Recurrence/Invariants/UnitReversionSquareParity.hanna_conjecture`
 - Truth anchor: `D5/S1/Recurrence/Invariants/UnitReversionSquareParity.innerSeries`
 - Truth anchor: `D5/S1/Recurrence/Invariants/UnitReversionSquareParity.lacunary_coeff`
+- Truth anchor: `D5/S1/Recurrence/Invariants/UnitReversionSquareParity.mersenne_step`
+- Truth anchor: `D5/S1/Recurrence/Invariants/UnitReversionSquareParity.mersenne_zero`
 - Truth anchor: `D5/S1/Recurrence/Invariants/UnitReversionSquareParity.mod_two_fixed`
 - Truth anchor: `D5/S1/Recurrence/Invariants/UnitReversionSquareParity.square_subst`
 - Truth anchor: `D5/S1/Recurrence/Invariants/UnitReversionSquareParity.subst_constant`

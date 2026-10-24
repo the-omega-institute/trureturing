@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:2ec5c060c51f9a454de136659466580e12167dbd93be909b4e9244ad75f2d40c
+  normalized_sha256: sha256:2ec5c060c51f9a454de136659466580e12167dbd93be909b4e9244ad75f2d40c
+cas_ref: sha256:2ec5c060c51f9a454de136659466580e12167dbd93be909b4e9244ad75f2d40c
+coverage_gids:
+  - gid: D5/S3/Weil/ZetaLinear/CompactCharacterMellinObstruction.compact_character_modulus_and_mellin_obstruction
+    target_statement_id: sha256:7161c25573285d765611032ffec09b1864beb057e3d8eff9176765d6cd23849b
+receipts:
+  unresolved_subitems: []

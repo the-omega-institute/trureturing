@@ -52,7 +52,43 @@ Lean statement: `D5/S3/Combinatorics/ConstraintRelations/RationalPositiveRealiza
 
 Representable P means that some finite natural hidden count m and factor count k admit an existing Network n m k. Each factor's existing Table is Strict, the existing partition is positive, and its existing normalized law equals P at every visible assignment. Factors have ordered triples of actual variables in Fin n plus Fin m, with repetition permitted. The weight is the finite product, including the empty product one; the marginal sums every hidden assignment.
 
-**Theorem 1.5 (All rational masses on every independent support).**
+**Theorem 1.5 (Strict canonical pin table).**
+
+$$\operatorname{Strict}\left(\mathrm{pinTable}\right)$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/ConstraintRelations/RationalPositiveRealization.pin_strict` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+The canonical full pinTable is positive at every allowed tuple of A.
+
+**Definition 1.6 (The induced visible exclusion graph).**
+
+Lean statement: `D5/S3/Combinatorics/ConstraintRelations/RationalPositiveRealization.induced`
+
+*Formalization.* `D5/S3/Combinatorics/ConstraintRelations/RationalPositiveRealization.induced` (`✓ std3`).
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+For a canonical Network, the induced LoopGraph joins original visible coordinates whenever they occur as the first or second and third terminals of one factor, in either direction. Scope repetitions retain diagonal edges.
+
+**Theorem 1.7 (Partition positivity and exact visible support).**
+
+$$\forall n \in \mathrm{Nat},\; \forall m \in \mathrm{Nat},\; \forall k \in \mathrm{Nat},\; \forall net \in \operatorname{Network}\left(n, m, k\right),\; {\forall j \in \operatorname{Fin}\left(k\right),\; \operatorname{Strict}\left(\operatorname{table}\left(\operatorname{factor}\left(net, j\right)\right)\right)} \Rightarrow {{0 < \operatorname{partition}\left(net\right)} \land {\forall a \in (\operatorname{Fin}\left(n\right)) \to \mathrm{Bool},\; {0 < \operatorname{law}\left(net, a\right)} \Leftrightarrow {\operatorname{Independent}\left(\operatorname{induced}\left(net\right), a\right)}}}$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/ConstraintRelations/RationalPositiveRealization.necessity` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+Every canonical Network whose complete factor tables are Strict has a positive partition. At every visible assignment its normalized law is positive exactly when the assignment is independent in the induced LoopGraph. Arbitrary hidden counts and empty factor sets are included.
+
+**Theorem 1.8 (All rational masses on every independent support).**
 
 $$\forall n \in \mathrm{Nat},\; \forall P \in ((\operatorname{Fin}\left(n\right)) \to \mathrm{Bool}) \to \mathrm{Rat},\; {{\forall a \in (\operatorname{Fin}\left(n\right)) \to \mathrm{Bool},\; 0 \le \operatorname{P}\left(a\right)} \land {\sum_{a \in (\operatorname{Fin}\left(n\right)) \to \mathrm{Bool}} \operatorname{P}\left(a\right) = 1}} \Rightarrow {{\exists m \in \mathrm{Nat},\; \exists k \in \mathrm{Nat},\; \exists net \in \operatorname{Network}\left(n, m, k\right),\; {\forall j \in \operatorname{Fin}\left(k\right),\; \operatorname{Strict}\left(\operatorname{table}\left(\operatorname{factor}\left(net, j\right)\right)\right)} \land {{0 < \operatorname{partition}\left(net\right)} \land {\forall a \in (\operatorname{Fin}\left(n\right)) \to \mathrm{Bool},\; \operatorname{law}\left(net, a\right) = \operatorname{P}\left(a\right)}}} \Leftrightarrow {\exists K \in \operatorname{LoopGraph}\left(n\right),\; \forall a \in (\operatorname{Fin}\left(n\right)) \to \mathrm{Bool},\; {0 < \operatorname{P}\left(a\right)} \Leftrightarrow {\operatorname{Independent}\left(K, a\right)}}}$$
 
@@ -84,5 +120,8 @@ The conclusion concerns globally normalized rational potentials. It supplies nei
 - Truth anchor: `D5/S3/Combinatorics/ConstraintRelations/RationalPositiveRealization.LoopGraph`
 - Truth anchor: `D5/S3/Combinatorics/ConstraintRelations/RationalPositiveRealization.Representable`
 - Truth anchor: `D5/S3/Combinatorics/ConstraintRelations/RationalPositiveRealization.Strict`
+- Truth anchor: `D5/S3/Combinatorics/ConstraintRelations/RationalPositiveRealization.induced`
+- Truth anchor: `D5/S3/Combinatorics/ConstraintRelations/RationalPositiveRealization.necessity`
+- Truth anchor: `D5/S3/Combinatorics/ConstraintRelations/RationalPositiveRealization.pin_strict`
 - Truth anchor: `D5/S3/Combinatorics/ConstraintRelations/RationalPositiveRealization.result`
 - Dependency: [D5/S3/Combinatorics/ConstraintRelations/RationalZeroRealization](RationalZeroRealization.md)

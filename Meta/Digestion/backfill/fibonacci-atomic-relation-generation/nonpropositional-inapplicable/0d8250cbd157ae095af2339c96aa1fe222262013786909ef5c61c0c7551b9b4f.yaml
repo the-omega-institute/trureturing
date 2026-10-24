@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:0d8250cbd157ae095af2339c96aa1fe222262013786909ef5c61c0c7551b9b4f
+  normalized_sha256: sha256:0d8250cbd157ae095af2339c96aa1fe222262013786909ef5c61c0c7551b9b4f
+cas_ref: sha256:0d8250cbd157ae095af2339c96aa1fe222262013786909ef5c61c0c7551b9b4f
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 同源 DAG 的模型定义与联合像约定；不作联合像等于边缘直积的假设，求值兼容性另列 83.2。
+    previous_atom_id: 4d0e36bd73a7eabd7762df2821482088f29868bf6dc7d6d84f2045ec920b7932
+    next_atom_id: d68af9b8d36948ad9e96af93537305128e58861842e6c994b0af0d3eac9a7227

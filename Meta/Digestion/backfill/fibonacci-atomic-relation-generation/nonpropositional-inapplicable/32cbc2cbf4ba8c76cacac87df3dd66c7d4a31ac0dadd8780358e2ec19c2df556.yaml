@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:32cbc2cbf4ba8c76cacac87df3dd66c7d4a31ac0dadd8780358e2ec19c2df556
+  normalized_sha256: sha256:32cbc2cbf4ba8c76cacac87df3dd66c7d4a31ac0dadd8780358e2ec19c2df556
+cas_ref: sha256:32cbc2cbf4ba8c76cacac87df3dd66c7d4a31ac0dadd8780358e2ec19c2df556
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 固定 β 后按存在冲突来源对定义行冲突图，没有断言其色数。
+    previous_atom_id: 6029e41fa40dba988445a8824105eacdb50903f6b38845a4870b87b4ca8c7055
+    next_atom_id: eed8b003e9264011918e0e5d8b91ee007ac251b636d682ab53e875af4c5f5622

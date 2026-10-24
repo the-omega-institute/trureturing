@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:da33f0c0c115689931012d73dfc4d6cf2a6b753ceca4003e2a1b13586215fa37
+  normalized_sha256: sha256:da33f0c0c115689931012d73dfc4d6cf2a6b753ceca4003e2a1b13586215fa37
+cas_ref: sha256:da33f0c0c115689931012d73dfc4d6cf2a6b753ceca4003e2a1b13586215fa37
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 只列举“黄金 Möbius 轴的平移长度”这一名称。
+    previous_atom_id: 51ffb731e86e093eb5e5b04489ce046df8950cf61336079b88e32f9690ea9e05
+    next_atom_id: 1c385955319ab26089710103d7613d7df522688d23f2867056ca9613833aa35f

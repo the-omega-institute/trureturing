@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:a556af998153b19de8693a6e97961bc877afdbf1dbac90bec8a9b634c09fa5bd
+  normalized_sha256: sha256:a556af998153b19de8693a6e97961bc877afdbf1dbac90bec8a9b634c09fa5bd
+cas_ref: sha256:a556af998153b19de8693a6e97961bc877afdbf1dbac90bec8a9b634c09fa5bd
+coverage_gids:
+  - gid: D5/S3/Weil/ZetaLinear/HorizonFreeEnergyDivergence.horizon_determinant_eq_div
+    target_statement_id: sha256:c5fc9e84dfe19234f8705c09227fb44b4c86581c9330046682b84d8b86ce7b34
+  - gid: D5/S3/Weil/ZetaLinear/HorizonFreeEnergyDivergence.horizon_free_energy_tendsto_atTop
+    target_statement_id: sha256:31a1dcbfcf51082f56312191e9d1eb37fd773dc23c678b3272d6996b5b1c08f7
+receipts:
+  unresolved_subitems: []

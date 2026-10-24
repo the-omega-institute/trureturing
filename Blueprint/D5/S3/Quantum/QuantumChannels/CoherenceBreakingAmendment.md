@@ -6,7 +6,19 @@ Every incoherent trace-preserving Kraus channel of finite coherence-breaking ind
 
 All matrices are complex and use the fixed incoherent basis indexed by Fin d. The superscript H denotes conjugate transpose, tr is the matrix trace, and a superscript [m] denotes m-fold function iteration. Subtraction in an iteration count is natural-number subtraction.
 
-**Definition 1.1 (Incoherent Kraus operators).**
+**Definition 1.1 (Erasing the diagonal).**
+
+$$\forall d \in \mathbb{N},\; \forall X \in \operatorname{Matrix}\left(\operatorname{Fin}\left(d\right), \operatorname{Fin}\left(d\right), \mathbb{C}\right),\; \forall i \in \operatorname{Fin}\left(d\right),\; \forall j \in \operatorname{Fin}\left(d\right),\; ((i = j) \Rightarrow (\operatorname{offDiag}\left(X\right)\left(i, j\right) = 0)) \land ((i \ne j) \Rightarrow (\operatorname{offDiag}\left(X\right)\left(i, j\right) = X\left(i, j\right)))$$
+
+*Formalization.* `D5/S3/Quantum/QuantumChannels/CoherenceBreakingAmendment.offDiag` (`✓ std3`).
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+The complex linear map offDiag replaces each diagonal entry by zero and preserves every other matrix entry.
+
+**Definition 1.2 (Incoherent Kraus operators).**
 
 $$\forall d \in \mathbb{N},\; \forall r \in \mathbb{N},\; \forall K \in \operatorname{Fin}\left(r\right) \to \operatorname{Matrix}\left(\operatorname{Fin}\left(d\right), \operatorname{Fin}\left(d\right), \mathbb{C}\right),\; \operatorname{IsIncoherentKraus}\left(K\right) \Leftrightarrow (\forall s \in \operatorname{Fin}\left(r\right),\; \forall j \in \operatorname{Fin}\left(d\right),\; \exists k \in \operatorname{Fin}\left(d\right),\; \forall i \in \operatorname{Fin}\left(d\right),\; (i \ne k) \Rightarrow (K\left(s, i, j\right) = 0))$$
 
@@ -18,7 +30,7 @@ $$\forall d \in \mathbb{N},\; \forall r \in \mathbb{N},\; \forall K \in \operato
 
 Section 2 calls a Kraus representation incoherent when each individual Kraus operator preserves incoherence on every incoherent input. Equivalently, each column of every Kraus operator has support in at most one row: each basis vector is sent to a scalar multiple of a basis vector. This predicate imposes no trace-preservation condition.
 
-**Definition 1.2 (Coherence-breaking maps).**
+**Definition 1.3 (Coherence-breaking maps).**
 
 $$\forall d \in \mathbb{N},\; \forall Phi \in \operatorname{Matrix}\left(\operatorname{Fin}\left(d\right), \operatorname{Fin}\left(d\right), \mathbb{C}\right) \to \operatorname{Matrix}\left(\operatorname{Fin}\left(d\right), \operatorname{Fin}\left(d\right), \mathbb{C}\right),\; \operatorname{IsCoherenceBreaking}\left(Phi\right) \Leftrightarrow (\forall rho \in \operatorname{Matrix}\left(\operatorname{Fin}\left(d\right), \operatorname{Fin}\left(d\right), \mathbb{C}\right),\; (\operatorname{PosSemidef}\left(rho\right)) \Rightarrow ((\operatorname{tr}\left(rho\right) = 1) \Rightarrow (\forall i \in \operatorname{Fin}\left(d\right),\; \forall j \in \operatorname{Fin}\left(d\right),\; (i \ne j) \Rightarrow (Phi\left(rho\right)\left(i, j\right) = 0))))$$
 
@@ -30,7 +42,7 @@ $$\forall d \in \mathbb{N},\; \forall Phi \in \operatorname{Matrix}\left(\operat
 
 The output of every positive semidefinite matrix of trace one has zero entries away from the diagonal. This is the coherence-breaking condition of Section 2. The predicate itself is defined for every matrix-valued function; in the conjecture it is applied to quantum channels and their composites.
 
-**Definition 1.3 (The same conjugation between successive channels).**
+**Definition 1.4 (The same conjugation between successive channels).**
 
 $$\forall d \in \mathbb{N},\; \forall r \in \mathbb{N},\; \forall K \in \operatorname{Fin}\left(r\right) \to \operatorname{Matrix}\left(\operatorname{Fin}\left(d\right), \operatorname{Fin}\left(d\right), \mathbb{C}\right),\; \forall U \in \operatorname{Matrix}\left(\operatorname{Fin}\left(d\right), \operatorname{Fin}\left(d\right), \mathbb{C}\right),\; \forall n \in \mathbb{N},\; \operatorname{amended}\left(K, U, n\right) = (\operatorname{krausApply}\left(K\right)) \circ (((\operatorname{LinearMap.mulLeftRight}\left(\mathbb{C}, (U, (U)^{H})\right)) \circ (\operatorname{krausApply}\left(K\right)))^{[n - 1]})$$
 
@@ -50,7 +62,7 @@ $$
 \forall d \in \mathbb{N},\; \forall U \in \operatorname{Matrix}\left(\operatorname{Fin}\left(d\right), \operatorname{Fin}\left(d\right), \mathbb{C}\right),\; \forall X \in \operatorname{Matrix}\left(\operatorname{Fin}\left(d\right), \operatorname{Fin}\left(d\right), \mathbb{C}\right),\; \operatorname{LinearMap.mulLeftRight}\left(\mathbb{C}, (U, (U)^{H})\right)\left(X\right) = ((U) \cdot (X)) \cdot ((U)^{H})
 $$
 
-**Definition 1.4 (The finite-index amendment conjecture).**
+**Definition 1.5 (The finite-index amendment conjecture).**
 
 $$\operatorname{claim} \Leftrightarrow (\forall d \in \mathbb{N},\; \forall r \in \mathbb{N},\; \forall K \in \operatorname{Fin}\left(r\right) \to \operatorname{Matrix}\left(\operatorname{Fin}\left(d\right), \operatorname{Fin}\left(d\right), \mathbb{C}\right),\; (\operatorname{IsKrausChannel}\left(K\right)) \Rightarrow ((\operatorname{IsIncoherentKraus}\left(K\right)) \Rightarrow (\forall n \in \mathbb{N},\; (2 \le n) \Rightarrow ((\operatorname{IsCoherenceBreaking}\left((\operatorname{krausApply}\left(K\right))^{[n]}\right)) \Rightarrow ((\forall k \in \mathbb{N},\; (1 \le k) \Rightarrow ((k < n) \Rightarrow (\neg (\operatorname{IsCoherenceBreaking}\left((\operatorname{krausApply}\left(K\right))^{[k]}\right))))) \Rightarrow (\exists U \in \operatorname{Matrix}\left(\operatorname{Fin}\left(d\right), \operatorname{Fin}\left(d\right), \mathbb{C}\right),\; (U \in \operatorname{Matrix.unitaryGroup}\left(\operatorname{Fin}\left(d\right), \mathbb{C}\right)) \land (\neg (\operatorname{IsCoherenceBreaking}\left(\operatorname{amended}\left(K, U, n\right)\right)))))))))$$
 
@@ -66,7 +78,7 @@ $$
 \forall d \in \mathbb{N},\; \forall r \in \mathbb{N},\; \forall K \in \operatorname{Fin}\left(r\right) \to \operatorname{Matrix}\left(\operatorname{Fin}\left(d\right), \operatorname{Fin}\left(d\right), \mathbb{C}\right),\; \operatorname{IsKrausChannel}\left(K\right) \Leftrightarrow (\sum_{(s:\operatorname{Fin}\left(r\right))} (((K\left(s\right))^{H}) \cdot (K\left(s\right))) = 1)
 $$
 
-**Theorem 1.5 (A permutation with fourth-root phases amends the channel).**
+**Theorem 1.6 (A permutation with fourth-root phases amends the channel).**
 
 $$\operatorname{claim}$$
 
@@ -94,6 +106,7 @@ Minimality of n >= 2 implies that Phi itself is not coherence-breaking, hence T 
 - Truth anchor: `D5/S3/Quantum/QuantumChannels/CoherenceBreakingAmendment.IsIncoherentKraus`
 - Truth anchor: `D5/S3/Quantum/QuantumChannels/CoherenceBreakingAmendment.amended`
 - Truth anchor: `D5/S3/Quantum/QuantumChannels/CoherenceBreakingAmendment.claim`
+- Truth anchor: `D5/S3/Quantum/QuantumChannels/CoherenceBreakingAmendment.offDiag`
 - Truth anchor: `D5/S3/Quantum/QuantumChannels/CoherenceBreakingAmendment.result`
 - Dependency: [D5/S3/Quantum/Entanglement/AbsoluteSeparability/GurvitsBarnumMoments](../Entanglement/AbsoluteSeparability/GurvitsBarnumMoments.md)
 - Dependency: [D5/S3/Quantum/Matrix/MonomialDiagonalPreserving](../Matrix/MonomialDiagonalPreserving.md)

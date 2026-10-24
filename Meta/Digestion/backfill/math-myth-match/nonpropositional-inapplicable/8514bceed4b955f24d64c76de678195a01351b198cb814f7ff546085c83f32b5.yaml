@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:8514bceed4b955f24d64c76de678195a01351b198cb814f7ff546085c83f32b5
+  normalized_sha256: sha256:8514bceed4b955f24d64c76de678195a01351b198cb814f7ff546085c83f32b5
+cas_ref: sha256:8514bceed4b955f24d64c76de678195a01351b198cb814f7ff546085c83f32b5
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 非命题结算：解释训练、使用条件与评价方向的关系，并列出对具体人归责仍需的前提。
+    previous_atom_id: e3d1ef31404cc8c7513e3617c219baf5a9245729814a05ff298b8f6e52ad0d13
+    next_atom_id: 3fbdbdf0e0caa13dfcbf1947ab29ffb8f18123a2e89d536c5db29f5551f4319a

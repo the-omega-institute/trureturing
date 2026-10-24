@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:d2c0c65a4f44f94933b79d740fd395d63c7d2b831651148b68a94b626078fa05
+  normalized_sha256: sha256:d2c0c65a4f44f94933b79d740fd395d63c7d2b831651148b68a94b626078fa05
+cas_ref: sha256:d2c0c65a4f44f94933b79d740fd395d63c7d2b831651148b68a94b626078fa05
+coverage_gids:
+  - gid: D5/S3/Weil/Probability/CanonicalLiDiskEquivalence.disk_mobius_re_half
+    target_statement_id: sha256:61d7a4f61c73022ea25cd74bb03a87c4ef5db4faa3f537d2abc2197711ace18f
+receipts:
+  unresolved_subitems: []

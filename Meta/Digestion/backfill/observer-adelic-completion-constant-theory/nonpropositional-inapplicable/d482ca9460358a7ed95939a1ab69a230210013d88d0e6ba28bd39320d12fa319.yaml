@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:d482ca9460358a7ed95939a1ab69a230210013d88d0e6ba28bd39320d12fa319
+  normalized_sha256: sha256:d482ca9460358a7ed95939a1ab69a230210013d88d0e6ba28bd39320d12fa319
+cas_ref: sha256:d482ca9460358a7ed95939a1ab69a230210013d88d0e6ba28bd39320d12fa319
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 将 Hankel logdet 指定为有效信息指数的定义约定，未断言真实 Jones 包含或新定理。
+    previous_atom_id: 974080a791adc29157a981a50ebe6d110cc641e5b99d49e070ccbadefbd437fa
+    next_atom_id: 37ffb91754f3cce1ccbe5d260506fe36039b53fee1da360047bae9b97beebe9a

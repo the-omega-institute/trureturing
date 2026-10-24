@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:dbb585f8a6651adb0bcfa840588df9bf4e770bb233a9b6a9b0c5f6d21a5548ad
+  normalized_sha256: sha256:dbb585f8a6651adb0bcfa840588df9bf4e770bb233a9b6a9b0c5f6d21a5548ad
+cas_ref: sha256:dbb585f8a6651adb0bcfa840588df9bf4e770bb233a9b6a9b0c5f6d21a5548ad
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 在该命名范畴的规格中将态射称为细化映射；仅术语定义，没有范畴公理、因子化或终对象断言。
+    previous_atom_id: 979f2399bab138f4f5f02b594b8a7fdc17351450bcaa2642ba025c990cef2dee
+    next_atom_id: 67eccdc3f360afb1f1a1c6cf67b798071ae860959f6a8dd5856d104a132e5f6e

@@ -1,0 +1,17 @@
+fingerprints:
+  raw_sha256: sha256:4ee15fdc88ea5105c54b3f097e061cc60175affbacd05833f1a2c6e3193bd46c
+  normalized_sha256: sha256:4ee15fdc88ea5105c54b3f097e061cc60175affbacd05833f1a2c6e3193bd46c
+cas_ref: sha256:4ee15fdc88ea5105c54b3f097e061cc60175affbacd05833f1a2c6e3193bd46c
+coverage_gids:
+  - gid: D5/S3/Zeros/CompletedZeta.xi_reading_reflection
+    target_statement_id: sha256:5987317f7aaa874060c8599c4899fbc6e5c9b1e919fe048aa0942de850e23ba4
+  - gid: D5/S3/Zeros/Symmetry/ReflectionFixedPointContrast.reflection_mirror_fixed_locus_contrast
+    target_statement_id: sha256:fd8fd3fb8622dd2712ab2218cf0616007766d60a01b4f957c6ea9032aa4241a6
+  - gid: D5/S3/Zeros/Symmetry/ZetaConjugationCovariance.xi_reading_conj
+    target_statement_id: sha256:0a97e93acd500181041a2ce46cfb5b07be645143879c09175d6f1b20994c325d
+receipts:
+  unresolved_subitems: []
+  chain_atoms:
+    - 8f18be52e517b6eda1e2c48f0194f625eb9029de96f52c0bb7fa2e8a8a5b0287
+    - 975667ccbb6b96b394d196195f04072641e6480c56bd2355e2aca5ec28aade33
+    - c8ca7e7e0db9ade709ee4f7f3f0464b8ff27a1da83674730fd9ae04b46f3eb59

@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:b5fdc6af5e59501d31cda46115ca4f70c5f3c5d002334a91d746dea324e00c34
+  normalized_sha256: sha256:b5fdc6af5e59501d31cda46115ca4f70c5f3c5d002334a91d746dea324e00c34
+cas_ref: sha256:b5fdc6af5e59501d31cda46115ca4f70c5f3c5d002334a91d746dea324e00c34
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 仅列共同零点抵消这一待处理问题。
+    previous_atom_id: 13a536d70bdc327b358c3e9eacf9a64bd5763e2c0dbcce03d829c73f07478bd4
+    next_atom_id: e92a288e5803044a63b277df616c7f06160a7d76ce34c0d813765afb1782e594
