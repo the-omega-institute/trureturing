@@ -120,7 +120,10 @@ internal sealed class GibbsStochasticSimpleSpectrumDocument : IScribeDocumentDef
                         + "thermalProcesses d. Apply Matrix.charpoly_map, the equality of the "
                         + "characteristic polynomials of P and S, and S = jacobiMatrix m a e. "
                         + "The simple complex spectrum of J then proves HasSimpleEigenvalues P."))),
-                DescribeRole.Theorem))));
+                DescribeRole.Theorem,
+                openProblemResolutionClaim: new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("vom-ende-2024-gibbs-stochastic-simple-spectrum"),
+                    ResolutionKind.Proved)))));
 
     private static Formula SimpleEigenvaluesDefinition() =>
         All("n", Naturals(), All("P", MatrixType(), IffOf(
