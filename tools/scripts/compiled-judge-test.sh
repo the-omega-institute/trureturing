@@ -1,6 +1,8 @@
 #!/usr/bin/env bash
 set -euo pipefail
 ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/../.." && pwd -P)"
+# Production probes select their own basis; declaration fixtures select fixture.
+unset SEARCH_REDUCTION_INDEX
 # Lake schedules library modules concurrently. Search-reduction fixtures execute
 # isolated compiler probes and are the high-memory part of this library, so
 # compile those modules one at a time before the ordinary aggregate build.
