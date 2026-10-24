@@ -187,9 +187,9 @@ internal sealed class StabilizerExtensionQuaternaryMinimalLengthDocument : IScri
         var c = X("C");
         var u = X("u");
         var v = X("v");
-        var body = All("u", CodeType(c), Imp(
+        var body = All("u", Vectors(n), Imp(
             Member(u, c),
-            All("v", CodeType(c), Imp(Member(v, c),
+            All("v", Vectors(n), Imp(Member(v, c),
                 Equal(Call("symp", u, v), Typed(D(0), K1()))))));
         return All("n", Naturals(), All("C", Code(n), body));
     }
@@ -210,7 +210,7 @@ internal sealed class StabilizerExtensionQuaternaryMinimalLengthDocument : IScri
         var action = Equal(
             ApplyCoordinate(Coe(At(f, u)), i),
             Smul(At(tau, i),
-                ApplyCoordinate(Coe(u), At(QCall("Equiv", "symm"), pi, i))));
+                ApplyCoordinate(Coe(u), At(At(QCall("Equiv", "symm"), pi), i))));
         return All("n", Naturals(),
             All("C", Code(n), All("D", Code(n),
                 All("f", AddEquiv(c, d),
@@ -254,11 +254,10 @@ internal sealed class StabilizerExtensionQuaternaryMinimalLengthDocument : IScri
         var weight = All("u", CodeType(c), Equal(
             Call("hammingNorm", Coe(At(f, u))),
             Call("hammingNorm", Coe(u))));
-        var additiveMap = Arrow(Labels(), Labels());
         var action = Equal(
             ApplyCoordinate(Coe(At(f, u)), X("i")),
             At(At(tau, X("i")),
-                ApplyCoordinate(Coe(u), At(QCall("Equiv", "symm"), pi, X("i")))));
+                ApplyCoordinate(Coe(u), At(At(QCall("Equiv", "symm"), pi), X("i")))));
         var coordinateEquation = All("u", CodeType(c), All("i", Index(n), action));
         var conclusion = Some(pi, Permutation(n),
             Some(tau, Arrow(Index(n), Call("AddEquiv", Labels(), Labels())),
