@@ -83,6 +83,9 @@ Chirre–Helfgott Proposition 9.1 supplies a quantitative absolute bound for thi
 The project already has [golden support-layer positivity induction](../../D5/S3/Weil/TestFunctions/GoldenPositivityInduction.lean), [infinite-complement leakage bounds](../../D5/S3/Weil/ZetaBridge/WeilInfiniteComplementLeakage.lean) and [an arithmetic boundary coupling jet](../../D5/S3/Weil/ZetaBridge/WeilArithmeticCouplingJet.lean). Their stated assumptions and Fourier/form-identification boundaries remain in force; this source review did not rebuild them. A generic recurrence or Schur-complement reduction should be reused. The remaining work is an estimate for the actual arithmetic form that pays for the coupling to each new test space, uniformly over all its coefficients and with the required scale and tail controls. Neither a positive shifted model nor fixed-window positivity supplies that estimate.
 
 
+The [Conrey–Li source](conreyli1998positivity.md) records an existing obstruction to two specified global imaginary-translation positivity conditions in reproducing-kernel function spaces. Their operators and translation domains require separate identification with the actual theta source. Their reported failure neither replaces the complete Weil criterion nor determines the sign on the selected physical-source class.
+
+
 ## Retain the theta model's metric in the derivative coordinates
 
 The [weighted window interface](https://github.com/the-omega-institute/trureturing-experiments/blob/main/docs/reports/theta-mixed-matrix/weighted-window-metric.md)
