@@ -56,6 +56,34 @@ class IdlePoolCases:
         self.assertEqual("cache bytes", (cache / "sentinel").read_text())
         self.assertEqual("already_idle", json.loads(self.pool_return().stdout)["status"])
 
+    def pool_return_checkpoint_without_native_lock_never_inspects_holders(self):
+        import worktree_pool as pool
+        import worktree_protocol as protocol
+        from types import SimpleNamespace
+        self.pool_github()
+        (self.tree / "owned").write_text("returned snapshot\n")
+        with patch.dict(os.environ, self.pool_env), \
+                patch.object(protocol, "native_lock_holders", side_effect=AssertionError("unneeded inspection")) as inspect:
+            result = pool.returned_snapshot(SimpleNamespace(source=self.main, path=self.tree, pr=42))
+        self.assertEqual("returned", result["status"])
+        self.assertEqual("returned snapshot\n", self.g(self.main, "show", self.branch + ":owned"))
+        inspect.assert_not_called()
+
+    def pool_return_checkpoint_reports_cleared_native_locks(self):
+        metadata = Path(self.g(self.tree, "rev-parse", "--absolute-git-dir").strip())
+        lock = metadata / "index.lock"
+        lock.write_text("residual transaction\n")
+        (self.tree / "owned").write_text("snapshot after clearance\n")
+        result = json.loads(self.pool_return().stdout)
+        self.assertEqual("returned", result["status"])
+        evidence, = result["checkpoint"]["native_locks"]
+        self.assertEqual(str(lock), evidence["path"])
+        self.assertEqual(len("residual transaction\n"), evidence["size"])
+        self.assertGreaterEqual(evidence["age_seconds"], 0)
+        self.assertEqual("native_lock_cleared", evidence["status"])
+        self.assertFalse(lock.exists())
+        self.assertEqual("snapshot after clearance\n", self.g(self.main, "show", self.branch + ":owned"))
+
     def pool_return_requires_join_and_real_merge_evidence(self):
         self.assertIn("host_must_join", self.pool_return(expect=73, joined=False).stderr)
         for changes, reason in [

@@ -29,6 +29,42 @@ public sealed partial class WorktreeCommandTests
         Assert.False(Directory.Exists(idle));
     }
 
+    [Fact]
+    public void ImplicitSameTaskRetryRecoversOwnedDeadInitializerAtActualPath()
+    {
+        using var repository = new TemporaryDirectory();
+        InitializeRepository(repository.Path);
+        const string branch = "lane/math/interrupted-init";
+        var target = Path.Combine(repository.Path, "retained-initialization");
+        var fallback = Path.Combine(repository.Path, "fallback");
+        var token = Guid.NewGuid().ToString("N");
+        var creation = WorktreeHookFixture.RunGit(repository.Path, "rev-parse", "HEAD").Trim();
+        TestGit.Run(repository.Path, "update-ref", "--create-reflog", "-m", "worktree-init:" + token,
+            "refs/heads/" + branch, creation, new string('0', creation.Length));
+        TestGit.Run(repository.Path, "worktree", "add", "--no-checkout", "--lock", "--reason",
+            "worktree-init:" + token, target, branch);
+        File.WriteAllText(Path.Combine(target, "README.md"), "partial initialization bytes\n");
+        string[] arguments = ["--kind", "math", "--name", "interrupted-init", "--base", "HEAD",
+            "--path", fallback, "--prefer-idle", "--skip-restore"];
+
+        var result = WorktreeCommand.Run(repository.Path, arguments);
+
+        Assert.True(result.Success, result.Error);
+        using var receipt = JsonDocument.Parse(result.Output);
+        Assert.Equal("recovered", receipt.RootElement.GetProperty("status").GetString());
+        var actual = WorktreeHookFixture.RunGit(target, "rev-parse", "--show-toplevel").Trim();
+        Assert.Equal(actual, receipt.RootElement.GetProperty("path").GetString());
+        Assert.Contains("worktree-recovered:" + token, WorktreeHookFixture.RunGit(target, "reflog", "--format=%gs"));
+        Assert.False(File.Exists(Path.Combine(GitWorktreeDirectory.Read(target)!, "locked")));
+        Assert.False(Directory.Exists(fallback));
+        Assert.Equal("partial initialization bytes\n", File.ReadAllText(Path.Combine(target, "README.md")));
+        var repeated = WorktreeCommand.Run(repository.Path, arguments);
+        Assert.True(repeated.Success, repeated.Error);
+        using var reuse = JsonDocument.Parse(repeated.Output);
+        Assert.Equal("reused", reuse.RootElement.GetProperty("status").GetString());
+        Assert.Equal(actual, reuse.RootElement.GetProperty("path").GetString());
+    }
+
     [Theory]
     [InlineData(false)]
     [InlineData(true)]

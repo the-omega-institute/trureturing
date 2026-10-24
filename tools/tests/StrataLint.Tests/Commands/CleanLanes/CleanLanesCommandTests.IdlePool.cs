@@ -143,6 +143,44 @@ public sealed partial class CleanLanesCommandTests
         Assert.Equal("deferred", ReadSummary(result.Output).GetProperty("extra_sweeps").GetString());
     }
 
+    [Theory]
+    [InlineData(false)]
+    [InlineData(true)]
+    public void IdlePoolCarriesNativeLocksAndProtectsPredecessorRoots(bool checkpointFailed)
+    {
+        using var fixture = new CleanLanesFixture();
+        const string branch = "lane/governance/idle-evidence";
+        const string predecessor = "harness/pool-predecessor";
+        const string control = "harness/pool-retirable-control";
+        var path = fixture.AddMergedLane(branch);
+        fixture.AddOrphan(predecessor, merged: true);
+        fixture.AddOrphan(control, merged: true);
+        var locks = new[] { new { path = path + "/index.lock", size = 9, age_seconds = 0.0,
+            action = "native_lock_cleared" } };
+        var payload = JsonSerializer.Serialize(new
+        {
+            @event = "worktree_pool", status = checkpointFailed ? "failed" : "succeeded", capacity = 4,
+            items = new[] { new { path, branch = "refs/heads/" + branch, head = fixture.Head(path),
+                outcome = checkpointFailed ? "checkpoint_failed" : "removed", reason = "idle_disk_pressure",
+                error = checkpointFailed ? "checkpoint retry failed" : null,
+                checkpoint = checkpointFailed ? null : new { native_locks = locks },
+                native_locks = checkpointFailed ? locks : null,
+                recovery_roots = new[] { "refs/heads/" + predecessor } } },
+        });
+        var runner = fixture.CreateRunner((file, args, _) => file == "python3" && args.Contains("pool")
+            ? new ProcessOutput(checkpointFailed ? 74 : 0, Encoding.UTF8.GetBytes(payload), []) : null);
+
+        var result = fixture.RunWithRaw(runner, "--force");
+
+        Assert.Equal(!checkpointFailed, result.Success);
+        var item = Assert.Single(ReadItems(result.Output), row => row.GetProperty("path").GetString() == path);
+        var evidence = Assert.Single(item.GetProperty("native_locks").EnumerateArray());
+        Assert.Equal(path + "/index.lock", evidence.GetProperty("path").GetString());
+        Assert.Equal(9, evidence.GetProperty("size").GetInt32());
+        Assert.True(fixture.BranchExists(predecessor));
+        Assert.Equal(checkpointFailed, fixture.BranchExists(control));
+    }
+
     [Fact]
     public void IdlePrefixedTaskKeepsOrdinaryAllocationProtection()
     {
