@@ -9,6 +9,8 @@ claim: "Conjecture 1 extends the conclusions of Theorem 3 to all nonnegative shi
 strata_touched:
   - D5/S3/Analytic/HypergeometricShiftTuran/Defs
   - D5/S3/Analytic/HypergeometricShiftTuran/Result
+  - D5/S3/Analytic/HypergeometricShiftTuran/TwoBlockDefs
+  - D5/S3/Analytic/HypergeometricShiftTuran/TwoBlockResult
 license: citation-only
 triage: anchor
 ---
