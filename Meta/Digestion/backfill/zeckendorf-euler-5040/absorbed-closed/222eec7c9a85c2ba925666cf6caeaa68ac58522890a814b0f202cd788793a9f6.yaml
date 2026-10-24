@@ -1,9 +1,0 @@
-fingerprints:
-  raw_sha256: sha256:222eec7c9a85c2ba925666cf6caeaa68ac58522890a814b0f202cd788793a9f6
-  normalized_sha256: sha256:222eec7c9a85c2ba925666cf6caeaa68ac58522890a814b0f202cd788793a9f6
-cas_ref: sha256:222eec7c9a85c2ba925666cf6caeaa68ac58522890a814b0f202cd788793a9f6
-coverage_gids:
-  - gid: D5/S3/Weil/PrimeValuationGap.bounded_prime_valuation_robin_ratio
-    target_statement_id: sha256:bc838c452b29c5fb044db4b392d8f36dd8e017c79b124c5e34eb23dc0543786b
-receipts:
-  unresolved_subitems: []

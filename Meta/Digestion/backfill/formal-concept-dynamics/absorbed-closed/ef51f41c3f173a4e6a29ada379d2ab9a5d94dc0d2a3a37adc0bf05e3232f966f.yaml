@@ -1,9 +1,0 @@
-fingerprints:
-  raw_sha256: sha256:ef51f41c3f173a4e6a29ada379d2ab9a5d94dc0d2a3a37adc0bf05e3232f966f
-  normalized_sha256: sha256:ef51f41c3f173a4e6a29ada379d2ab9a5d94dc0d2a3a37adc0bf05e3232f966f
-cas_ref: sha256:ef51f41c3f173a4e6a29ada379d2ab9a5d94dc0d2a3a37adc0bf05e3232f966f
-coverage_gids:
-  - gid: D5/S3/ConceptDynamics/MeasurableRefinement/MeasurableFactorInformationInclusion.measurable_factorization_generated_information_inclusion
-    target_statement_id: sha256:cb730e6fd9385c6e326ad05e5a9161b5ad75cd17320bb5d7a2aa27204f17c07c
-receipts:
-  unresolved_subitems: []

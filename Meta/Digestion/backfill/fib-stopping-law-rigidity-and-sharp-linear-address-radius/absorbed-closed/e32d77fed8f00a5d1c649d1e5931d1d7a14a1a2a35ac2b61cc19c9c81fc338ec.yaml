@@ -1,9 +1,0 @@
-fingerprints:
-  raw_sha256: sha256:e32d77fed8f00a5d1c649d1e5931d1d7a14a1a2a35ac2b61cc19c9c81fc338ec
-  normalized_sha256: sha256:e32d77fed8f00a5d1c649d1e5931d1d7a14a1a2a35ac2b61cc19c9c81fc338ec
-cas_ref: sha256:e32d77fed8f00a5d1c649d1e5931d1d7a14a1a2a35ac2b61cc19c9c81fc338ec
-coverage_gids:
-  - gid: D5/S3/Observer/ProbabilisticClosure/TrajectoryLaws/StoppingLaw/SignatureCompression.completed_rule_uniform_compression
-    target_statement_id: sha256:29cfabbaccd8c63f16eab42a068bfabf456496453963e7e3c14aba1abb264ce2
-receipts:
-  unresolved_subitems: []

@@ -1,7 +1,0 @@
-其中：
-
-* \(40\) 是候选构型维度；
-* \(2\) 是保证激活的最小点数；
-* 两个独立 primality insertions 构成二阶 source moment；
-* 两个接近采样点只产生一阶 divided-difference jet。
-

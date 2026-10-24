@@ -1,4 +1,0 @@
-### 证明
-
-\(\Pi\) 在 \(\mathcal H^1\) 上单射，故 \(p\) 至多对应一个 \(h_p\)；由 \(p\in\operatorname{im}\Pi\) 存在性成立。定理 360.2 给出所有解的 exact、harmonic、coexact 分解。Coulomb 条件去除 exact 变化，周期条件固定 harmonic，曲率固定 coexact，故只剩常数势的零作用。证毕。
-

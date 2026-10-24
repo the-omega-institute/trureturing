@@ -1,9 +1,0 @@
-fingerprints:
-  raw_sha256: sha256:d093a4843b29470af73c998bfff37dd780947d0facee06e670663f75a9c33412
-  normalized_sha256: sha256:d093a4843b29470af73c998bfff37dd780947d0facee06e670663f75a9c33412
-cas_ref: sha256:d093a4843b29470af73c998bfff37dd780947d0facee06e670663f75a9c33412
-coverage_gids:
-  - gid: D5/S3/Observer/Conditioning/SelectiveRecordConditioning.selective_record_conditioning
-    target_statement_id: sha256:b017acb11fd3649fb713cedfbfb6ee524bdf213d056f579d70a4246ec29e69c2
-receipts:
-  unresolved_subitems: []

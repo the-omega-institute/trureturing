@@ -1,9 +1,0 @@
-fingerprints:
-  raw_sha256: sha256:55bbd828daed6f6c3b88af9880abc6266277d37e4946d7074562aca424af5c0a
-  normalized_sha256: sha256:55bbd828daed6f6c3b88af9880abc6266277d37e4946d7074562aca424af5c0a
-cas_ref: sha256:55bbd828daed6f6c3b88af9880abc6266277d37e4946d7074562aca424af5c0a
-coverage_gids:
-  - gid: D5/S3/ConceptDynamics/RefinementAlgebra/PullbackAlgebraFiberAtoms.nonzero_pullback_atoms_are_effective_fibers
-    target_statement_id: sha256:d432df8896d1a07fd0783f1858d6ef5bc591a48402f84fb14703871c7e29a713
-receipts:
-  unresolved_subitems: []

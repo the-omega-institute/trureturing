@@ -1,4 +1,0 @@
-在 \(\nu\ll\widetilde\nu\)、\(Q(i,\cdot)\ll\widetilde Q(i,\cdot)\) 时，路径相对熵满足链式公式
-\[
-D_{\mathrm{KL}}(P_T^{\nu,Q}\|P_T^{\widetilde\nu,\widetilde Q})
-=

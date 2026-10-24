@@ -1,9 +1,0 @@
-fingerprints:
-  raw_sha256: sha256:08506b5bfe4d478c445ffaac3e3ea5cad238273737683cfcb5e9dc3cea5d2c15
-  normalized_sha256: sha256:08506b5bfe4d478c445ffaac3e3ea5cad238273737683cfcb5e9dc3cea5d2c15
-cas_ref: sha256:08506b5bfe4d478c445ffaac3e3ea5cad238273737683cfcb5e9dc3cea5d2c15
-coverage_gids:
-  - gid: D5/S3/Factorization/QuadraticIdeals/EisensteinOddQuotient.EisensteinOrder
-    target_statement_id: sha256:5777a8672ccaaa734745d3c159f7ab69ef71de2e4ae3ec16c252242669e7f610
-receipts:
-  unresolved_subitems: []

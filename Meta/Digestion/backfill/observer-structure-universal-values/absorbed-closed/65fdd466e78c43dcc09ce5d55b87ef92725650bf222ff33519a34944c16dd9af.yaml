@@ -1,9 +1,0 @@
-fingerprints:
-  raw_sha256: sha256:65fdd466e78c43dcc09ce5d55b87ef92725650bf222ff33519a34944c16dd9af
-  normalized_sha256: sha256:65fdd466e78c43dcc09ce5d55b87ef92725650bf222ff33519a34944c16dd9af
-cas_ref: sha256:65fdd466e78c43dcc09ce5d55b87ef92725650bf222ff33519a34944c16dd9af
-coverage_gids:
-  - gid: D5/S3/ConceptDynamics/NormativeOrbits/RoleSwapOrbitFactorization.role_swap_full_invariance_orbit_factorization
-    target_statement_id: sha256:1d806f69f38e547de529a420dcce677c022d004bae82d52dbdcfa96952c8184b
-receipts:
-  unresolved_subitems: []

@@ -1,9 +1,0 @@
-fingerprints:
-  raw_sha256: sha256:97f3aa88accf88058106ed7daa0d7d30f7163930a508b73f4d2e55737e85ceaa
-  normalized_sha256: sha256:97f3aa88accf88058106ed7daa0d7d30f7163930a508b73f4d2e55737e85ceaa
-cas_ref: sha256:97f3aa88accf88058106ed7daa0d7d30f7163930a508b73f4d2e55737e85ceaa
-coverage_gids:
-  - gid: D5/S3/Observer/Budget/ProjectiveStrongDuality.projective_strong_duality
-    target_statement_id: sha256:5620ea4fb7e105ec84bb60a1155cf1852bf2cec23569bac5c7d9484b64fa43eb
-receipts:
-  unresolved_subitems: []

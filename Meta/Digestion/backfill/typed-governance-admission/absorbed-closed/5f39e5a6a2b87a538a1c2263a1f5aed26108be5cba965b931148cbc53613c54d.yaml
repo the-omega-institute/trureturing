@@ -1,9 +1,0 @@
-fingerprints:
-  raw_sha256: sha256:5f39e5a6a2b87a538a1c2263a1f5aed26108be5cba965b931148cbc53613c54d
-  normalized_sha256: sha256:5f39e5a6a2b87a538a1c2263a1f5aed26108be5cba965b931148cbc53613c54d
-cas_ref: sha256:5f39e5a6a2b87a538a1c2263a1f5aed26108be5cba965b931148cbc53613c54d
-coverage_gids:
-  - gid: D5/S3/ConceptDynamics/Governance/ConsumptionProductionInputSeparation.consumption_not_inverse_to_production_input
-    target_statement_id: sha256:605833835264132c96db696158066d7fbdf3b97528110161983bcd206c81c960
-receipts:
-  unresolved_subitems: []

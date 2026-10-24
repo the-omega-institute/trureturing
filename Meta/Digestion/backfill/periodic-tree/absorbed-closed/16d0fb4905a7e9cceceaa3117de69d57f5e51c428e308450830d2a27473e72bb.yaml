@@ -1,9 +1,0 @@
-fingerprints:
-  raw_sha256: sha256:16d0fb4905a7e9cceceaa3117de69d57f5e51c428e308450830d2a27473e72bb
-  normalized_sha256: sha256:16d0fb4905a7e9cceceaa3117de69d57f5e51c428e308450830d2a27473e72bb
-cas_ref: sha256:16d0fb4905a7e9cceceaa3117de69d57f5e51c428e308450830d2a27473e72bb
-coverage_gids:
-  - gid: D5/S3/Observer/AgencyHolonomy/GoldenCharacterQuotient.goldenCharacter_eq_one_or_neg_one
-    target_statement_id: sha256:c25a907f3d638be465647e4ec9d70a65aab0d3de6e58fb1420dbd11b36f7ea32
-receipts:
-  unresolved_subitems: []

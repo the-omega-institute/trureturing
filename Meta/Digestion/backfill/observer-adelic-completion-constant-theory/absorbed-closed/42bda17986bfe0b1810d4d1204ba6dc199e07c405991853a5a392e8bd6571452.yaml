@@ -1,9 +1,0 @@
-fingerprints:
-  raw_sha256: sha256:42bda17986bfe0b1810d4d1204ba6dc199e07c405991853a5a392e8bd6571452
-  normalized_sha256: sha256:42bda17986bfe0b1810d4d1204ba6dc199e07c405991853a5a392e8bd6571452
-cas_ref: sha256:42bda17986bfe0b1810d4d1204ba6dc199e07c405991853a5a392e8bd6571452
-coverage_gids:
-  - gid: D5/S1/Words/AdmissibleWords/AdmissibleRelationSpaceGrowth.admissible_relation_space_growth
-    target_statement_id: sha256:3f8b356cbacffaf8b9a6b4dfe89f7aa33fc8616b9cf6375928ebea8dc48d6651
-receipts:
-  unresolved_subitems: []

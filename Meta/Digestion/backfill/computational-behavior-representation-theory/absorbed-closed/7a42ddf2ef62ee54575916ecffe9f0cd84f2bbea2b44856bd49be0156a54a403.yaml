@@ -1,9 +1,0 @@
-fingerprints:
-  raw_sha256: sha256:7a42ddf2ef62ee54575916ecffe9f0cd84f2bbea2b44856bd49be0156a54a403
-  normalized_sha256: sha256:7a42ddf2ef62ee54575916ecffe9f0cd84f2bbea2b44856bd49be0156a54a403
-cas_ref: sha256:7a42ddf2ef62ee54575916ecffe9f0cd84f2bbea2b44856bd49be0156a54a403
-coverage_gids:
-  - gid: D5/S3/Weil/Pick/PairedComplexChannelDimensionCapacity.paired_complex_channel_dimension_capacity
-    target_statement_id: sha256:ec3bb04a433e9d61d2ba5d5eb6c818c2c5de5093458d07ddcb9db8ec11a6cf2d
-receipts:
-  unresolved_subitems: []

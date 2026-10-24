@@ -1,7 +1,0 @@
-这正是 Yu Deng 式 primitive decomposition 的算术原型：
-
-* 原始对象中全部单位历史混合；
-* 对调节子圆做 Fourier 分解；
-* 每个 Fourier 模式成为不可再混合的乘法角色；
-* Gamma 因子自动给出 Archimedean 完成。
-

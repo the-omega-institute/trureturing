@@ -1,9 +1,0 @@
-fingerprints:
-  raw_sha256: sha256:f06504762b9f5678f32cf0d2fa61d221e0e0ad1b271648d9c4aa774345a6773f
-  normalized_sha256: sha256:f06504762b9f5678f32cf0d2fa61d221e0e0ad1b271648d9c4aa774345a6773f
-cas_ref: sha256:f06504762b9f5678f32cf0d2fa61d221e0e0ad1b271648d9c4aa774345a6773f
-coverage_gids:
-  - gid: D5/S3/ConceptDynamics/TargetRisk/RefinementRiskCostTradeoff.refinement_reduces_target_risk_and_raises_cost
-    target_statement_id: sha256:4e60f0da0cef03db8240915ccc787b6a8b50066270f5e10dbb385ded5b0e0803
-receipts:
-  unresolved_subitems: []

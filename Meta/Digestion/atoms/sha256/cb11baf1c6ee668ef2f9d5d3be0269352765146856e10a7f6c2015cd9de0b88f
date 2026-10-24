@@ -1,4 +1,0 @@
-**Proposition 264.3 (the forest condition is not sufficient).** Even a one-vertex coarse support graph need not give autonomous dynamics. On a two-vertex tree take $r=1$, $R_x=1$, $H=\operatorname{diag}(0,1)$, and the constant map $\pi$. Then $n_b=2$, the loop-free support is empty, and $\|D\|=1/2$.
-
-Proof. The normalized collective vector is $(1,1)/\sqrt2$. Its image under $H$ is $(0,1)/\sqrt2$, whose orthogonal residual is $(-1,1)/(2\sqrt2)$ and has norm $1/2$. The zero edge block is allowed. Thus absence of cycles does not remove diagonal inhomogeneity or other dynamical defects. □
-
