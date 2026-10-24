@@ -252,6 +252,9 @@ internal sealed class QuditTetrahedronGenuineRefutationDocument : IScribeDocumen
                     Paragraph(Text("Summing the reduced-matrix entries gives the identity matrix divided by 8 for party A and a diagonal matrix with two entries 1/2 and six entries zero for each of B, C and D. The base-two entropies are therefore 3, 1, 1 and 1.")),
                     Paragraph(Text("Subtract the A face equation from the sum of the other three face equations. Nonnegativity forces the BC, BD and CD coordinates to vanish, and the face equations then force AB, AC and AD to equal 1. The tuple (1,1,1,0,0,0) with ell equal to zero satisfies all three radical equations, so an admissible fill exists. Every radical factor in the volume is zero, hence the volume is zero.")),
                     Paragraph(Text("If the state factored across a nonempty proper cut, the resulting product-minor identity would hold for every pair of basis labels. Applying it to the three pairs formed from the zero label and the labels 4, 2 and 1, then checking the membership choices for all four parties, contradicts the support equations for every proper cut. Thus the state is not biseparable.")),
-                    Paragraph(Text("Applying the claimed implication at d equal to 8 to this normalized state, its admissible fill and its zero-volume property would give biseparability, contradicting the preceding minor argument. Therefore the full claim is false."))), DescribeRole.Theorem)
+                    Paragraph(Text("Applying the claimed implication at d equal to 8 to this normalized state, its admissible fill and its zero-volume property would give biseparability, contradicting the preceding minor argument. Therefore the full claim is false."))), DescribeRole.Theorem,
+                openProblemResolutionClaim: new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("xie-younis-mei-eberly-2024-qudit-tetrahedron-genuine-refutation"),
+                    ResolutionKind.Refuted))
         )));
 }
