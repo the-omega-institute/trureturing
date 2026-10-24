@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:09e148f057fc228f1aff4c3ec0ee6ca40a96defb62ecb046e7c15f9a0dccad45
+  normalized_sha256: sha256:09e148f057fc228f1aff4c3ec0ee6ca40a96defb62ecb046e7c15f9a0dccad45
+cas_ref: sha256:09e148f057fc228f1aff4c3ec0ee6ca40a96defb62ecb046e7c15f9a0dccad45
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 'nonpropositional: 审计表将 arithmetic conservative colligation 明确列为未闭合桥，不把它作为已证命题。'
+    previous_atom_id: cac7d7fbae9cbcd50d3763c4fc18e1650f339b315b95804e0d26c12fbc7ca12e
+    next_atom_id: e71289f5d7abb8819c50cf3e9cd1ba9db54e1beeede2a1d8a0655bb459fb65f4

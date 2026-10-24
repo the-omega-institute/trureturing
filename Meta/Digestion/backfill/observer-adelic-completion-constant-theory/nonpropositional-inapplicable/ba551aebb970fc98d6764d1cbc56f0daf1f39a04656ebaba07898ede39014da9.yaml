@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:ba551aebb970fc98d6764d1cbc56f0daf1f39a04656ebaba07898ede39014da9
+  normalized_sha256: sha256:ba551aebb970fc98d6764d1cbc56f0daf1f39a04656ebaba07898ede39014da9
+cas_ref: sha256:ba551aebb970fc98d6764d1cbc56f0daf1f39a04656ebaba07898ede39014da9
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: Atom text is a continuation/list fragment (* 不声称 RH。 这正是你的直觉在项目中的具体表现： $$ \\boxed{ \\text{每一有限阶可以消去一批模式， 但下一层仍有新的最低幸存模式。} } $$ 要使这条有限阶梯); it contains no standalone mathematical assertion to formalize.
+    previous_atom_id: adbd164f834dc9b19f8b421750438283d364c7df734fc35f9c65b44d12d5651a
+    next_atom_id: 834768ab60fc660553c35d4593e02407ff0132bb60d68e51ec48be23ca08aea7

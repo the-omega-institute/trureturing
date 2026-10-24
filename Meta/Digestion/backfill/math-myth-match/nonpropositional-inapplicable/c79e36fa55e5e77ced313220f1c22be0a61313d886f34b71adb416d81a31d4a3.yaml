@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:c79e36fa55e5e77ced313220f1c22be0a61313d886f34b71adb416d81a31d4a3
+  normalized_sha256: sha256:c79e36fa55e5e77ced313220f1c22be0a61313d886f34b71adb416d81a31d4a3
+cas_ref: sha256:c79e36fa55e5e77ced313220f1c22be0a61313d886f34b71adb416d81a31d4a3
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 提出 MMM 自我适用与共同指向的形而上学假设，没有在给定数学模型中断言新关系。
+    previous_atom_id: bc7f6eaa794c141d7875b48bb10c8845574c051881eaabeb008165856958b175
+    next_atom_id: 553358a54ea1bb5bb6b8058bc316530c0148ad80b55645c0cae2ae343407a15b

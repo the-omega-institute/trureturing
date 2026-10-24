@@ -1,0 +1,19 @@
+fingerprints:
+  raw_sha256: sha256:a0cdbd28187c1c5429f8a9b291b8c8cdaccf4ebbacc571dec989719395fb833b
+  normalized_sha256: sha256:a0cdbd28187c1c5429f8a9b291b8c8cdaccf4ebbacc571dec989719395fb833b
+cas_ref: sha256:a0cdbd28187c1c5429f8a9b291b8c8cdaccf4ebbacc571dec989719395fb833b
+coverage_gids:
+  - gid: D5/S3/ConceptDynamics/Agency/DeterministicSafePolicyExistence.deterministic_safe_policy_exists_iff
+    target_statement_id: sha256:d017219009782699d8096e37310ca467f18afceef074156a795ce2ca0d190797
+  - gid: D5/S3/ConceptDynamics/Agency/PlanCylinderCommitmentTelescoping.plan_cylinder_commitment_depth_telescopes
+    target_statement_id: sha256:9fa7ac232f0272209ccb50cf72335ee4197bb4f6eda14e164ecba46ce86ef2dc
+  - gid: D5/S3/ConceptDynamics/Contracts/ContractRefinement.strong_contract_refines_weak
+    target_statement_id: sha256:eec00e2b3a40608744e9cb95b4082b30771f44592a6509155ff7b6f4b0c21110
+  - gid: D5/S3/ConceptDynamics/Control/MaximalSafeControllableDomain.maximal_safe_controllable_domain
+    target_statement_id: sha256:98b5c833650e758812185373c277ec7104956ad9cc3023fb73672bbc45886d8b
+  - gid: D5/S3/ConceptDynamics/DefinitionEscapeAdjudication/TargetChangeSettlementConservation.append_only_old_settlement_unchanged
+    target_statement_id: sha256:45c867f6217084d3a800ee25732afe954289afa1c4088fa6bd3a4e9d2359ee19
+  - gid: D5/S3/ConceptDynamics/NormativeStructure/VoluntarinessActionFactorizationObstruction.action_result_does_not_identify_voluntariness
+    target_statement_id: sha256:5aba0811baa0ddb6bb89b6706d99bb4a0aece73b9c241bfe01349a718aac1802
+receipts:
+  unresolved_subitems: []

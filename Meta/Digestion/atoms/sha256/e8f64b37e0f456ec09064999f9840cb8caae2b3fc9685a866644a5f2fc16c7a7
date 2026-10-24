@@ -1,0 +1,12 @@
+**定义 9.3（已有共同环境返回输入）。** 消费 [SECOND] §110.4：系统 $S$、环境 $E$ 均为量子位，初态 $\varrho\otimes|0\rangle\langle0|$，$W$ 是以 $S$ 控制、$E$ 为目标的 CNOT。其计算为
+
+$$
+W|j,0\rangle=|j,j\rangle,
+\qquad W(\varrho\otimes|0\rangle\langle0|)W^\dagger
+=\sum_{j,k}\varrho_{jk}|j,j\rangle\langle k,k|.
+$$
+
+取环境迹消去 $j\ne k$，局部态成为 $\mathcal D_Z(\varrho)=(\varrho+Z\varrho Z)/2$。同一个 $W^2=I$，第二次作用于保留的同一环境，联合态与系统态都返回原值。若换成每次独立新准备环境，则是 $\mathcal D_Z^2=\mathcal D_Z$。例如 $\varrho=|+\rangle\langle+|$，共同环境第二步给 $|+\rangle\langle+|$，新环境第二步给 $I/2$。
+
+还可在同一实际菜单中给当前纤维对：从 $|+\rangle$ 与 $|-\rangle$ 各作用一次同样 CNOT，得到联合纯态 $(|00\rangle\pm|11\rangle)/\sqrt2$。它们当前局部态均为 $I/2$，再次作用同一 $W$ 后局部分别为 $|+\rangle$、$|-\rangle$，允许 $X$ 读出为 $+1,-1$。这是同源联合区别返回的量子见证。局部三参数、历史保真、各向同性和环境预测充分性分别有自己的条件；三参数格式不证其中任一额外条件。
+

@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:4631d7a37fdda69d91e20ede9260868802de91cf91a53753f634c68fa86a8613
+  normalized_sha256: sha256:4631d7a37fdda69d91e20ede9260868802de91cf91a53753f634c68fa86a8613
+cas_ref: sha256:4631d7a37fdda69d91e20ede9260868802de91cf91a53753f634c68fa86a8613
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 交代持续实践一批的文本来源及未验证的现实转移、成效与救度结果。
+    previous_atom_id: 4eb284578c8b21d84a3e8685efb5f54ecb95c2a57011ec114bc84a05593b8e5f
+    next_atom_id: 3b2495343423f8d8f1275ee11ad2543b0c92a014ee81c26c1089076a730b454e

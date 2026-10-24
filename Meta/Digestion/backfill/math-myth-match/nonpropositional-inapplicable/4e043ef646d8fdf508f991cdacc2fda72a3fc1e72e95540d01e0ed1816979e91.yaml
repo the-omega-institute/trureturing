@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:4e043ef646d8fdf508f991cdacc2fda72a3fc1e72e95540d01e0ed1816979e91
+  normalized_sha256: sha256:4e043ef646d8fdf508f991cdacc2fda72a3fc1e72e95540d01e0ed1816979e91
+cas_ref: sha256:4e043ef646d8fdf508f991cdacc2fda72a3fc1e72e95540d01e0ed1816979e91
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 非命题结算：列出神圣来源、实际全知和现实概率律等未经模型判定的事项；属于证据边界。
+    previous_atom_id: 38193d2838ebc4e6728945e88192ef72bd3d183cdf64053a8643cea493366494
+    next_atom_id: e04e8b62137cc099fdffc1b1485c600dab5c76daf441199d86b4698b2512e1d9

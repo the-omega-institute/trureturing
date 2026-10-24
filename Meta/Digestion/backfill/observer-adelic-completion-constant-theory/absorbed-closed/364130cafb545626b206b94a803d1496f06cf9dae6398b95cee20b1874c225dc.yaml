@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:364130cafb545626b206b94a803d1496f06cf9dae6398b95cee20b1874c225dc
+  normalized_sha256: sha256:364130cafb545626b206b94a803d1496f06cf9dae6398b95cee20b1874c225dc
+cas_ref: sha256:364130cafb545626b206b94a803d1496f06cf9dae6398b95cee20b1874c225dc
+coverage_gids:
+  - gid: D5/S0/Tower/Champions/GoldenSurvivorClassification.golden_inverse_sum
+    target_statement_id: sha256:f48da302730d7c9763a16a4a5c9b326a699b4813accb5b08a7e3d4331bc51fe2
+  - gid: D5/S3/Weil/Pick/GoldenHorizonMatching.golden_horizon_matching
+    target_statement_id: sha256:f20aec306a060440c10316565b8234a455b457b446da81bc383b6512c678b1f7
+receipts:
+  unresolved_subitems: []

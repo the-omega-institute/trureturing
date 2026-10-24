@@ -242,7 +242,7 @@ variable {X : Type*} [Finite X]
 
 omit [Finite X] in
 /-- Reattaching marked endpoints leaves every interior step unchanged. -/
-private theorem first_visit_reattach (q : Perm X) (S : Set X)
+theorem first_visit_reattach (q : Perm X) (S : Set X)
     [DecidablePred (· ∈ S)] (J : Perm S) (x : S) (n : ℕ)
     (hn : FirstVisit q S (J x) n) :
     FirstVisit (q * J.ofSubtype) S x n ∧
@@ -270,7 +270,7 @@ private theorem first_visit_reattach (q : Perm X) (S : Set X)
 
 /-- A permutation's cycles restricted to a marked subset are exactly the
 cycles of a proved first-return permutation. -/
-private theorem same_cycle_of_first_visit (f : Perm X) (S : Set X) (H : Perm S)
+theorem same_cycle_of_first_visit (f : Perm X) (S : Set X) (H : Perm S)
     (jump : ∀ x : S, ∃ n : ℕ, FirstVisit f S x n ∧ (f ^ n) x = H x)
     (x y : S) : f.SameCycle x y ↔ H.SameCycle x y := by
   classical

@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:92d9a7659a4029eb865129861c3cc666e8aa63ad347f331dd8da637a36eab305
+  normalized_sha256: sha256:92d9a7659a4029eb865129861c3cc666e8aa63ad347f331dd8da637a36eab305
+cas_ref: sha256:92d9a7659a4029eb865129861c3cc666e8aa63ad347f331dd8da637a36eab305
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 要求比较时保留效力争论的具体对象和神学条件，未提供新的数学推论。
+    previous_atom_id: 09c00d6fbd177f9ebb36193416adce8a984fd6a7682d4151ae073a8b8aac96a1
+    next_atom_id: 02cca8b327659d21142467098920e470c5c9f59a1bd7a19bc2545c0a0a9952df

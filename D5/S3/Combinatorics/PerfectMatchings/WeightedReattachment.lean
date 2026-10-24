@@ -70,7 +70,7 @@ private theorem powers_eq_of_reattached_avoids (q : Perm X) (S : Set X)
       Perm.ofSubtype_apply_of_not_mem J (hz n), ih]
     rw [← Perm.mul_apply, ← pow_succ']
 
-private theorem untouched_reattach_iff (q : Perm X) (S : Set X)
+theorem untouched_reattach_iff (q : Perm X) (S : Set X)
     (J : Perm S) (z : X) :
     (∀ x : S, ¬ (q * J.ofSubtype).SameCycle x z) ↔
       ∀ x : S, ¬ q.SameCycle x z := by

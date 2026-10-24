@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:49273456072c069fcc5494b4b8ba63adefaf576c3b6346aa60535b49dc9c4803
+  normalized_sha256: sha256:49273456072c069fcc5494b4b8ba63adefaf576c3b6346aa60535b49dc9c4803
+cas_ref: sha256:49273456072c069fcc5494b4b8ba63adefaf576c3b6346aa60535b49dc9c4803
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 非命题结算：说明数学表达在宗教会通中的对象、操作和解释位置；属于方法与适用范围。
+    previous_atom_id: 5a681e4c51ec72749a38caee4335e4aab41b73912f1b4315e3e0d5cf1e50ef1a
+    next_atom_id: 7c252c1c0b6bdeaeaa130252464fe13567e25a5663b4b258a6ea16bfdba3b9a8

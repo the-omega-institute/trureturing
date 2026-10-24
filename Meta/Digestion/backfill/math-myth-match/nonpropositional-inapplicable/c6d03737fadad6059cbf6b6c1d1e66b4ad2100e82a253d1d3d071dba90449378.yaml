@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:c6d03737fadad6059cbf6b6c1d1e66b4ad2100e82a253d1d3d071dba90449378
+  normalized_sha256: sha256:c6d03737fadad6059cbf6b6c1d1e66b4ad2100e82a253d1d3d071dba90449378
+cas_ref: sha256:c6d03737fadad6059cbf6b6c1d1e66b4ad2100e82a253d1d3d071dba90449378
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 《庄子》坐忘的文本解读和非字面删数据警戒。
+    previous_atom_id: 610f61bbd169523d037a74002601979c228a2be2cd0655d8a1c6d2fc61231a4e
+    next_atom_id: d06f8250e8d165ae29e48183b26474cfbad5c8a9bc741a99c84e30fb11d007f2

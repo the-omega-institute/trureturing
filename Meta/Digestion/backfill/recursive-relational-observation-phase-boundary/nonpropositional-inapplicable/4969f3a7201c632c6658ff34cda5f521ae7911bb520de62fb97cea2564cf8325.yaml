@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:4969f3a7201c632c6658ff34cda5f521ae7911bb520de62fb97cea2564cf8325
+  normalized_sha256: sha256:4969f3a7201c632c6658ff34cda5f521ae7911bb520de62fb97cea2564cf8325
+cas_ref: sha256:4969f3a7201c632c6658ff34cda5f521ae7911bb520de62fb97cea2564cf8325
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 本条只规定第43节共同来源与恢复合同，并区分周期纯环境假设和固定九行核心加正交交替环境假设的适用范围；关于两项结果的措辞是章节范围说明，本条未陈述任何容量数值或下界公式。
+    previous_atom_id: 350e8c59c71fe5c481bf290563a4dd9c703e22e6d66d993fd2f37a0dc9ed09d1
+    next_atom_id: 46d3c03cb6e022905a272e2b80cec3e25d404a985a340476ed75d28f35ca2601

@@ -984,3 +984,1192 @@ The existing FIB consumer is [Fiber Calculus Continuation II, Definitions 22.2 a
 The primary probability references for this section are Durrett, [*Probability: Theory and Examples*, fifth edition, Theorem A.3.1, pp.464–465, and Theorems 4.6.8–4.6.9, p.247](https://services.math.duke.edu/~rtd/PTE/PTE5_011119.pdf), for extension and upward conditional-expectation convergence; the finite-chain occupation statement is Theorem 5.6.1, pp.310–311, as well as the Levin–Peres–Wilmer source already cited in §10. The elementary finite-event and $L^1$ arguments above give the needed correspondences explicitly. Shalizi–Crutchfield's predictive-state conditioning frame cited in §7 retains its stationary entire-past and almost-sure scope. The source-specific deductions here concern every positive finite acquired history and every finite future horizon under the separate equation (11.1); capped-horizon, averaged, Bayesian-prior and eventual-learning targets have different quantifiers. The finite witness sizes need not have a uniform bound, and no efficient synthesis, effective arbitrary-real implementation or global novelty claim is made.
 
 ## 追加锚（本行以下为增补区）
+
+## 12. Checkpointed moving-current acquisition and finite continuation
+
+The static code of the ordered-tree source supplies an exact signature once its
+ancestor colours are available, and the companion's Theorem 5.1 supplies the
+whole-future diameter of a signature cell. The following controlled sampler
+joins actual acquisition of that signature to a forecast from the restored
+current source. Its interface is an additional assumption, not a consequence
+of the passive unit-seam heat law.
+
+**Definition 12.1 (the checkpointed parent sampler).** Retain the source
+$\mathcal P=\{L,R\}^{*}$, the fixed integer $m\ge3$, colour $q$, depth $d$,
+and source law of Definition 1.1 in the companion
+[FIB-ATOM finite-joint prediction](FIB_ATOM_RECURSIVE_HOLOGRAPHIC_BOUNDARY_GEOMETRY_FINITE_JOINT_PREDICTION.md).
+Write $\mathbb N_0=\{0,1,\ldots\}$. All budgets, depths, indices and counts
+below are integers in $\mathbb N_0$, with positive waiting-call indices in
+$\{1,2,\ldots\}$. The recursion and law are fixed public model data.
+The observer has a source-independent program and is initially bound to one
+actual source at an unknown address $p$. Its sole initial source readout is
+
+$$
+O(p)=(q(p),d(p)).
+$$
+
+The literal word $p$, unobserved ancestor colours and a precomputed signature
+are not inputs. The binding, current permissions, exact readout, finite record
+material and workspace are installation premises. During acquisition, return
+and prediction the passive heat clock is paused and no other actor changes
+the source or revokes these permissions. At a nonroot current address $x$,
+one **TryUp** call draws a fresh independent direction
+
+$$
+D\in\{\mathsf{up},\mathsf L,\mathsf R\},\qquad
+\mathbf P(D=\mathsf{up})=\mathbf P(D=\mathsf L)=\mathbf P(D=\mathsf R)=1/3.
+$$
+
+If $D=\mathsf{up}$, the source moves to $\operatorname{par}(x)$ and returns
+$O(\operatorname{par}(x))$ together with a one-use reverse token
+$\tau_x$. If $D=\mathsf L$ or $\mathsf R$, the source stays at $x$, returns
+$O(x)$, and returns no token. Token presence and the one-unit depth decrease
+identify acceptance; rejection supplies no new ancestor. The token is bound
+to this very traversed edge and this source. It permits exactly one reverse
+move from $\operatorname{par}(x)$ to $x$, only while that source is at
+$\operatorname{par}(x)$. Consumption revokes the capability and removes its
+stack entry; copying a token's description creates no additional right.
+The interface has no address query, reset, clone, source-correlated random
+seed or future-response oracle. All **TryUp** calls, including accepted and
+rejected calls, each count as one charged primitive call; each reverse
+consumption also counts as one. These counts are not bit or physical costs.
+
+Fix $k\in\mathbb N_0$ with $k\le n=d(p)$, and write
+$a_j=\operatorname{par}^{j}p$, $c_j=q(a_j)$ for $0\le j\le k$.
+These are proof notation, not extra observer inputs. **Acquire(k)** repeats
+**TryUp** until $k$ acceptances. After $j$ acceptances its data and live stack
+are, respectively,
+
+$$
+R_j=(n,c_0,\ldots,c_j)=S_j(p),\qquad
+K_j=(\tau_1,\ldots,\tau_j).
+$$
+
+Here $\tau_i$ reverses the actual move $a_{i-1}\to a_i$. The source is
+at $a_j$; colours are retained in acquisition order, and rejected trials
+leave $R_j,K_j$ unchanged. **Return(k)** starts with $(R_k,K_k)$ at $a_k$.
+At its return stage $i$ the source is at $a_i$ and precisely
+$\tau_1,\ldots,\tau_i$ remain live. It consumes $\tau_i$, reaches
+$a_{i-1}$ and removes that entry. Thus every consumption is legal, including
+when $a_k$ is the root. After the last consumption the prediction state is
+
+$$
+M_k:=R_k=S_k(p),\qquad K=\varnothing,\qquad x=p.
+$$
+
+No spent-token receipt is retained or used as predictor input. The retained
+source binding and pause permission remain current, but all acquired reverse
+rights have been spent. At $k=0$ both protocols are empty and
+$M_0=(d(p),q(p))$, just the reordered initial readout $O(p)$.
+Phase, budget/counter backing, data, live capabilities and transient reply
+storage are actual memory while used; discarded trial replies and the full
+trial chronology are not an uncharged archive. On resumption the same source
+evolves from its restored address under the unchanged heat generator, with
+future heat randomness independent of sampler trials. This Markov continuation
+is part of the controlled-interface assumption, not a reset or a new source.
+
+**Lemma 12.2 (uniform availability and primitive-call count).** For every
+address $p$ and $k\in\mathbb N_0$ with $k\le d(p)$, **Acquire(k)**
+terminates almost surely. If $N_k$ is its number of **TryUp** calls, then
+
+$$
+N_k=\sum_{j=1}^{k}G_j,\qquad
+\mathbf P(G_j=r)=\left(\frac23\right)^{r-1}\frac13\quad(r\ge1),\qquad
+\mathbf E_pN_k=3k.
+\tag{12.1}
+$$
+
+The $G_j$ are independent; $N_0=0$. For fixed $k$, the law of $N_k$ is
+independent of the admissible start $p$. **Return(k)** restores that very
+source to $p$ and leaves $(M_k,K)=(S_k(p),\varnothing)$. For a fixed
+$\ell\in\mathbb N_0$ completed prediction requests at that paused cut, the
+charged call/request count is $N_k+k+\ell$, of expectation $4k+\ell$.
+In particular acquisition
+uses $3k$ calls in expectation, acquisition plus return uses $4k$, and
+including one prediction request gives $4k+1$.
+
+**Proof.** At every nonroot address each trial is an independent Bernoulli
+success with probability $1/3$. The waiting time $G_j$ for the $j$th
+success is therefore geometric with the displayed mass function. Fresh
+independent draws after each acceptance make the successive waits independent;
+no colour-dependent decision changes their success probability. A finite sum of
+such variables is finite almost surely and has expectation $3k$. Before the
+$j$th success, $j\le k\le d(p)$, depth is $d(p)-j+1\ge1$; hence every
+**TryUp** call is at a nonroot, although its final success can reach the
+root. The returned observation at the $j$th success is the
+colour of $\operatorname{par}^{j}p$, and the reverse token is bound to that
+actual edge. Consuming the tokens in last-in-first-out order reverses the exact
+accepted path, removing each right as it is spent. It preserves the acquired
+colour data, so the post-return state is the one asserted. Add the actual
+$k$ reverse calls and $\ell$ requests. The empty-sum case gives all assertions
+at $k=0$ without calling **TryUp** at the root. No deterministic call cap is
+asserted for $k>0$. $\square$
+
+**Definition 12.3 (a callable finite prediction task).** Let
+$T\in[0,\infty)$ be finite and $H\in\mathbb N_0$. On a future heat path,
+let $\sigma_j$ be its $j$th actual jump time, $\sigma_0=0$, and
+$W_j=\sigma_j-\sigma_{j-1}$. The finite observed data for a task are $O(X_0)$
+and, for $1\le j\le H$, $(O(X_{\sigma_j}),W_j)$ if $\sigma_j\le T$,
+or a censoring symbol $\partial$ if $\sigma_j>T$. A requested cylinder $C$
+is specified by a finite Boolean combination of tests of initial or uncensored
+endpoint equality to specified values in $E=C_m\times\mathbb N_0$,
+censoring, and rational waiting-time
+intervals for uncensored jumps. It imposes no condition after the first $H$
+jumps. Censoring makes $C$ an event of the path restricted to $[0,T]$;
+jump times and these tests are measurable by companion Definition 1.2.
+At $H=0$ only the initial observation is tested. At $T=0$ all positive-index
+entries are $\partial$ almost surely.
+
+After **Acquire(k)** and **Return(k)** the exact legal variable predictor
+input is $(M_k,T,H,C)$, with the fixed public recursion and law installed.
+It has no token, actual address, discarded reply, old archive or future-read
+input. Write $s=M_k$ and infer $k$ from its colour-list length. The answer is
+
+$$
+\operatorname{Predict}_{T,H}(C;M_k):=\mathsf L_{r_k(s)}^{T}(C),
+\tag{12.2}
+$$
+
+where $r_k(s)$ is the lexicographically first address realizing the signature
+$s$, as in companion Definition 5.2. It is computed from the acquired data
+by enumerating the finite level of depth $n$ in $s$, testing the installed
+recursion and selecting the first matching signature. This supplies a
+computed representative, not an unobserved actual address.
+
+The answer is a symbolic finite sum of route probabilities and exponential
+waiting-time integrals, with the censoring inequalities included. There are
+at most $2^n$ candidate addresses and $3^H$ length-$H$ jump routes from a
+candidate, since each vertex has at most three neighbours. Conditional on
+each such route, the first $H$ waits are independent exponentials with
+the actual degree-two or degree-three rates. Integrating unused future
+waits includes the censored cases. This is a finite symbolic evaluation,
+not a bound on bit complexity or arithmetic runtime. An arbitrary real $T$
+is a parameter of that expression; no finite binary encoding, exact
+comparison or numerical evaluation of an arbitrary real is supplied.
+
+A request changes only request/work/output storage and leaves the same
+source paused at $p$. A finite number of further requests can reuse $M_k$,
+each counted separately. Resumption then gives the original heat law from
+$p$. Its subsequent realized jumps do not update $M_k$ to a new current
+signature: predictions here refer to this returned cut, not to all later cuts.
+
+**Theorem 12.4 (moving-current acquisition-to-forecast bridge).** Let $p$ be
+any deterministic source start, let $h\in\mathbb N_0$, and put
+
+$$
+k=\min\{h,d(p)\}.
+$$
+
+Run the checkpointed sampler, perform **Acquire(k)** and **Return(k)**, and then
+answer tasks (12.2) from the post-return $M_k$, with no live reverse tokens.
+For every finite $T\ge0$, $H\in\mathbb N_0$ and cylinder $C$ of
+Definition 12.3,
+
+$$
+\left|\mathsf L_p^T(C)-\operatorname{Predict}_{T,H}(C;M_k)\right|
+\le \min\{b_k(T),2^{-k}\},
+\tag{12.3}
+$$
+
+where $b_k$ is companion (4.1). The same representative law defines a coherent
+whole-future predictor and satisfies
+
+$$
+\left\|\mathsf L_p^\infty-\mathsf L_{r_k(S_k(p))}^\infty\right\|_{\rm TV}
+\le2^{-k}.
+\tag{12.4}
+$$
+
+If $d(p)\le h$, then $k=d(p)$, the error is zero, and the complete-signature
+classification gives $r_k(S_k(p))=p$. At $T=0$ the finite-window error is
+zero for every $k$, since the initial observations agree. For arbitrary $p$,
+acquisition is almost surely available and the call/request bounds for one
+request are
+
+$$
+\mathbf E_pN_k=3k\le3h,\qquad
+\mathbf E_p(N_k+k+1)=4k+1\le4h+1.
+$$
+
+**Proof.** Lemma 12.2 leaves exactly $M_k=S_k(p)$ and an empty reverse stack
+at the restored source address $p$. Thus (12.2) can use its stated input
+without a further observation or capability. If $d(p)\le h$, the signature
+contains the complete ancestor list; companion Theorem 2.1 and
+[V Theorem 121.3](FIB_ATOM_RECURSIVE_HOLOGRAPHIC_BOUNDARY_GEOMETRY_CONTINUATION_V.md)
+make its realization unique, so $r_k(S_k(p))=p$ and the representative law
+is $\mathsf L_p$. If $d(p)>h$, the representative and $p$ lie in one
+$S_k$-cell. The companion's
+Theorem 5.1 gives whole-future TV at most $2^{-k}$, and its direct
+same-signature finite-window bound (4.3) gives $b_k(T)$. Restriction to a
+finite cylinder cannot increase TV, proving (12.3); the whole-future statement
+is (12.4). At $T=0$, both restricted laws are the same point mass at the
+initial observation, also agreeing with $b_k(0)=0$. The resumed conditional
+heat law is $\mathsf L_p$ by Definition 12.1; the sampler has restored this
+very source, rather than replaced it by the representative. That address
+is used only for computation of a law. Lemma 12.2 supplies the call counts.
+No independently realized source or post-prefix reset is used. $\square$
+
+**Corollary 12.5 (accuracy target and growing acquired memory).** For a target
+$0<\varepsilon<1$, choose
+
+$$
+h_\varepsilon=\left\lceil\log_2(1/\varepsilon)\right\rceil,\qquad
+k_\varepsilon=\min\{h_\varepsilon,d(p)\}.
+$$
+
+The representative whole-future law has error at most $\varepsilon$, and
+every task (12.2) inherits that bound. The expected **TryUp** count is at
+most $3h_\varepsilon$; acquisition, return and one request together have
+expected call/request count at most $4h_\varepsilon+1$.
+
+The post-return data contain $k_\varepsilon$ newly acquired colours in
+addition to $O(p)$ and no live reverse token. Acquisition has peak stack
+length $k_\varepsilon$, and return reduces it to zero while retaining all
+these colours. These are counts of logical entries, not of token bits or
+simultaneous total memory. For fixed $m$, the new colour entries use a fixed
+finite alphabet. Depth, budget/counter backing, phase, live token material,
+current binding/permissions, transient readouts, request representation,
+representative-search workspace and symbolic output backing remain separate
+memory coordinates. Readout/input encoding, token material, representative
+computation, symbolic integration/output arithmetic and scratch clearing are
+additional work. These, sampler/clock installation and pause/resume work
+are not included in
+$4k_\varepsilon+1$; no total tariff or optimality is asserted. In particular
+an opaque edge capability is not assumed to occupy a constant number of bits.
+For fixed $\varepsilon$ the acquired prefix and peak token count are bounded
+by $h_\varepsilon$, but the depth coordinate is unbounded over all starts,
+and the displayed enumeration also uses unbounded address workspace.
+This is neither a finite total alphabet nor a uniform finite-memory
+all-cuts guarantee; companion Theorem 3.2 counts a different, static
+auxiliary alphabet with $O$ already supplied.
+
+**Proof.** Since $2^{-h_\varepsilon}\le\varepsilon$, (12.4) gives the claim,
+and Lemma 12.2 gives the costs. If $d(p)<h_\varepsilon$, the zero-error case
+of Theorem 12.4 applies. During acquisition every success appends one colour
+to $R_j$ and one capability to $K_j$. During return every consumption removes
+one capability without removing a colour. These exact list transitions prove
+the entry counts and the post-return description; they imply no material
+width bound for tokens or other fields. $\square$
+
+**Convention 12.6 (independent meanings and exact limits).** In this bridge,
+space is the actual ordered-tree current address exposed only through $O$ and
+the local edge relation; time is the ordered sampler chronology and its unit
+trial clock, distinct from the resumed passive heat time; boundary is the
+current-source future-law query (12.2); memory during acquisition is the
+actual colour data and live reverse stack, whereas prediction memory is the
+post-return $M_k$ with the retained source binding and no reverse rights.
+Only the data are arguments of the proved direction
+
+$$
+M_k\longrightarrow S_k(p)\longrightarrow\text{current-source forecast},
+$$
+
+with operational restoration supplied before prediction by consuming the
+actual stack. The forecast does not recover that spent capability. Apart from the
+proved exact-depth equality $r_{d(p)}(S_{d(p)}(p))=p$, no address output is part
+of the task; for $k<d(p)$ no literal starting-address recovery is claimed. No
+inverse from a forecast to $M_k$, no recovery of the full chronology or old
+archive, and no mutual recovery of the four views is claimed. The
+ordered-tree heat source remains countable and transient; finite
+stationary unifilar synchronization and entire-past causal-state results do not
+replace this contract. The static UniformSignatureCode and TrueJumpEndpoints
+constructions supply signature coding and endpoint laws, not this acquired
+sampler or its cost.
+
+**Physical-installation boundary.** The mathematical proof assumes a local
+direction sampler with independent $1/3$ trials, exact finite colour/depth
+readout, a one-use same-edge return capability, and a quiescent acquisition
+window. Installing such a sensor, preserving the token, and implementing its
+trial clock are separate physical assumptions and costs. This sampler is an
+alternative controlled interface to the source and differs from the original
+passive heat apparatus; no claim says that passive heat supplies **TryUp**, a
+pause, a return token, or exact online representative evaluation. The theorem
+also does not provide a universal $\alpha/\beta$ reduction, a fixed-memory
+all-cut guarantee, a full address or chronology archive, or a thermodynamic
+price.
+
+**Source and overlap statement.** In
+[Geometry Continuation V](FIB_ATOM_RECURSIVE_HOLOGRAPHIC_BOUNDARY_GEOMETRY_CONTINUATION_V.md),
+Definition 120.3 supplies the fixed ordered recursion, Proposition 120.4 the
+rate-three heat construction, Definition 121.1 the deterministic-start joint
+path law, and Theorem 121.3 complete-ancestor address uniqueness. In the
+[finite-joint companion](FIB_ATOM_RECURSIVE_HOLOGRAPHIC_BOUNDARY_GEOMETRY_FINITE_JOINT_PREDICTION.md),
+Definitions 1.1/1.3 fix this same source and $S_h$, Theorem 2.1 classifies
+the stopped experiment, Theorem 3.2 supplies its static auxiliary code,
+Theorems 4.1/5.1 give the very bounds used in (12.3)--(12.4), and
+Definition 5.2 supplies the representative. Its Proposition 6.1's
+fixed-budget nonclosure and Proposition 6.3's one-trace nonrecovery remain
+unchanged: the present controlled trials are additional access, not one
+passive trace. UniformSignatureCode supplies that existing static upper
+code, and TrueJumpEndpoints classifies the complete family of finite
+true-jump endpoint expectations; neither supplies acquisition, heat-path
+query evaluation or a return operation. The exact source correspondences
+here use their published statements at revision
+3345740d7052863ebbf662b371054295e29e2aa7.
+
+This finite-start volume's §§1--9 separately record their own static decoder,
+whole-law bound, nonclosure and one-trace boundary for the five-mode source.
+Its §§10--11 retain that finite stationary source, uniform hidden prior and
+authentic-calibration/conditional-update contracts. This volume's Theorem 5.1
+is a five-mode result; the ordered-tree bound used here is the companion's
+Theorem 5.1. The source-specific synthesis here is `repo-derived`;
+the elementary geometric waiting calculation, record/return method and
+static prediction bounds are credited ingredients, not proposed novelties.
+
+The directly relevant
+[Atomic Generation Acquisition](RECURSIVE_RELATIONAL_OBSERVATION_ATOMIC_GENERATION_ACQUISITION.md)
+suppliers have the following exact overlap and differences.
+
+| Supplier | Existing gain and hypotheses | Difference and remaining obligation in §12 |
+| --- | --- | --- |
+| AA §§19--21, especially Theorems 19.2, 20.3, 20.5 and 21.2 | On birth-typed LAB, a known actually allocated $\alpha$ seed grows by owned local $P/S$. Actual ancestral tapes record all generation events; framed recall/Next uses current backing and rights, prints a complete reply and returns to Ready. Supplemented geometry, causal/serial time and callable memory have exact task kernels and settled update agreement. | Here the source is the pre-existing infinite address tree at an unknown current placement. The acquired items are ancestor colours, not a journal of the observer's chosen growth. Return undoes the sampled navigation to the same unknown $p$; LAB Return restores service readiness/root cursor while preserving its growth. No implementation of either interface by the other, LAB chronology recovery, or four-way inverse follows. |
+| AA §22 and §23 | Same-run located writes, tape/journal alternatives, backed requests, bindings, grants, output, cleanup and variable reference widths are already counted separately. Its own source comparisons credit NCR, PVC, PR57, PG and the storage atlases for acquisition, paid conversion and callable continuation on their installations. AA §23 also credits NativeFullSourceProducer's stationary acquisition of an unknown finite Native tree. | Generic acquired use, unknown-tree traversal and paid return are not missing capabilities invented here. The count $N_k+k+1$ is only this sampler's call/request coordinate, with the other resources expressly separated. Neither a better whole price nor a simulation of those Native menus is proved. |
+| AA §35 | Adaptive LAB selection requires acquired local event-membership marks even with all selected side records; its correspondence installs these from the known seed and proves selected recall/Next use at completed marked cuts. | §12 has no event-selection predicate or old selected chronology. Its task input specifies a future-law cylinder, while the predictor's source-dependent data are only the acquired colours and depth. Acquiring a colour prefix does not recover omitted LAB membership, busy controller state or an unknown historical selection. |
+| AA §40 | Source-legal residual control on growing LAB has an effective equality criterion when a finite address presentation and exact correspondence are supplied, and a stated undecidability boundary for general total address programs. Full replies, legal source actions and future successors remain part of that task. | The present fixed recursion is public, and a finite-level search selects a representative for an approximate heat-path law. This is not that exact residual-control minimization, an extractor for arbitrary program presentations or a transition-stable update of $M_k$ under resumed heat. AA's effective and negative results retain their original domains. |
+| AA §46, with §§41--45 | Known-seed LAB with a finite public candidate installation family already has hidden-installation acquisition, exact self-contained future-task prediction and real subsequent use. Its depth-threshold family has sharp growth/request bounds, and its weaker program-presentation promise has a nonuniformity obstruction. | Unknown placement $p$ on a fixed infinite heat source is different from an unknown selector installation on a grown, known-seed LAB source. The present guarantee is approximate in the observed future-law metric, exact at acquired full depth, and assumes a new pause/local sampler/reverse interface. It proves none of those LAB price bounds anew and neither removes nor solves their unknown-seed, unknown-history, authority or original-Native obligations. |
+
+After removing these supplied methods, the bounded additional correspondence
+is precisely the actual-run invariant
+$(x,R_j,K_j)=(a_j,S_j(p),K_j)$, its lawful return to
+$(p,M_k,\varnothing)$, and the resulting use of the companion's same-cell
+law bound for that restored source from only $M_k$. The formerly static
+signature input is thereby obtained from one unknown placement under the
+declared controlled interface, with an explicit acquisition-depth/error
+and call-count relation. It does not assume an answer oracle or a supplied
+address to cross that bridge. This is a source-specific acquisition-to-law
+join, not a new geometric-waiting theorem, new static decoder, generic
+converter or improvement over LAB's stronger exact four-view result on
+its different task. It advances one acquisition/retained-use direction of
+the common-process question without replacing its mutual-recovery standard.
+
+The literature comparisons likewise preserve their hypotheses:
+[Travers--Crutchfield, arXiv:1008.4182v3](https://arxiv.org/pdf/1008.4182v3)
+studies synchronization of finite-state stationary unifilar sources by
+observed output; [Shalizi--Crutchfield, cond-mat/9907176v2, Theorems 2--3](https://arxiv.org/pdf/cond-mat/9907176v2)
+gives causal-state entropy minimality and almost-sure uniqueness in its
+stationary entire-past setting. Neither hypothesis set supplies this
+unknown-placement controlled tree acquisition; no synchronization rate,
+entropy minimum or global novelty assertion is transferred.
+
+The original fixed-$G_{\rm gc}$, original-$Q$, parked-consumer,
+unchanged-initialization, terminal and final-no-Ready obligations retain
+their exact statements and settlements. Installing the sampler on the
+passive or original Native apparatus, acquiring arbitrary unknown initial
+archives, recovering chronology or all four views, maintaining bounded
+memory at all cuts, and a universal $\alpha/\beta$ reduction remain
+unresolved. The present conditional bridge does not complete that programme.
+
+## 追加锚（本行以下为增补区）
+
+## 13. A common acquired start for the original three-axis experiment
+
+The calibration question in §§10–11 has a continuous-source counterpart:
+what can one passive observer learn before its actual source dies, and what
+true-source future law can it then return? Here the source is the
+[three-axis interface, §§24–30](AURIC_FIB_OBSERVER_INTERNAL_THREE_AXIS_GEOMETRY_AND_PREDICTIVE_INTERFACE.md),
+not the five-mode chain. The source-specific result consists of the
+preparation correspondence below, the complete-lifetime experiment of
+§§14–15, and its live continuation consequence in §17. The generic
+common-kernel and testing arguments are reused from
+[Gaussian adaptive record kernel, §§2–4](RECURSIVE_RELATIONAL_OBSERVATION_GAUSSIAN_ADAPTIVE_RECORD_KERNEL.md).
+
+**Assumption 13.1 (one unchanged source and one passive execution).** Use
+three-axis Assumption 24.1 and Definition 27.4 at source revision
+`da254d2c64fd05036726203ce2395a4b40f1a59b`. Thus the actual state is
+$(q,h,k)\in\mathbb R^3\times\mathbb R^2$, the task reads $q$ with its
+original Euclidean metric, the guard is exactly $q_3>0$, and the fields are
+
+$$
+\begin{aligned}
+X_0&=(ce_2,0,1),&X_1&=(e_1+a\sin h\,e_2,1,0),\\
+X_2&=(e_2,0,1),&X_3&=(e_3,0,0).
+\end{aligned}
+\tag{13.1}
+$$
+
+The fixed frequency, the whole-source analytic membership, coordinate
+calibration, preparation bounds, read permissions, error $\epsilon>0$,
+latencies and charges are premises, exactly as in that assumption. No
+finite observation verifies membership. Preparation supplies bounds
+$|q_i^p|\le R_0$, $q_3^p\ge H_{\min}>0$, $|h^p|\le\delta_h$ and
+$|k^p|\le K_0$; it need not disclose the exact prepared coordinates.
+
+Retain the first-read hold $\ell_0>0$, calibration hold $\tau_0$, named
+$X_1$ pulse of duration $\tau_1$ and cumulative effort $U$, and reporting
+hold $\Lambda$. They obey the original timing and effort certificates.
+Write
+
+$$
+L_0=\ell_0,\quad L_1=\ell_0+\tau_0,\quad
+L_2=\ell_0+\tau_0+\tau_1,\quad L_*=L_2+\Lambda,
+\qquad U_0=U_1=0,\quad U_2=U_*=U.
+\tag{13.2}
+$$
+
+All read, timing and computation durations remain in these original-clock
+intervals. Following this acquisition, execute one fixed permitted SPD
+covariance $Q$ from the original menu. It is never changed or selected using
+the unknown parameter during this execution. In particular the original
+menu permits the correlated setting
+$Q=I_3+(E_{23}+E_{32})/2$; none of the proofs requires independent original
+noise coordinates. During the passive phase there is no deterministic
+hold, pulse, reset, fresh source or intervention on these fields. Permitted
+nondestructive observations have the additional common-kernel contract of
+§16. They do not pause the original clock or change the guard.
+
+**Proposition 13.2 (an interval in one finite-record feasible set).** Fix
+$a\ne0$ with $|a|\le A_0$, an interior $c_0\in(-C_0,C_0)$, common allowed
+$q_1^p,z=q_3^p,h^p,k^p$, and an interior second prepared coordinate
+$b\in(-R_0,R_0)$. Fix the actual controls and durations in (13.2). There
+exist $\eta>0$, a nonempty open interval
+$\mathcal C=(c_0-\eta,c_0+\eta)$, and an admissible parameter-independent
+finite endpoint-report apparatus such that every $c\in\mathcal C$ has
+the same complete acquired finite transcript and the same exact execution
+state $(q_*,h_*,k_*)$. Its allowed prepared second coordinate is
+
+$$
+q_2^p(c)=b-(c-c_0)L_*.
+\tag{13.3}
+$$
+
+The transcript includes all three vector reports, their common timing and
+effort certificates, preparation-box and permission certificates, reporting
+arithmetic and clock records, and original bills. For the billing claim
+use the permitted instance $c_{\rm src}=c_Q=1$ with common finite
+preparation, read, timing, command, arithmetic, retention and failure
+prices. This is an explicit instance of the original contract; an
+arbitrary informative price oracle is not covered.
+
+**Proof.** Choose $\eta$ so that
+
+$$
+\eta<C_0-|c_0|,\qquad
+\eta L_*<\min\{R_0-|b|,\epsilon/2\}.
+\tag{13.4}
+$$
+
+The original exact acquisition equations give
+
+$$
+\begin{aligned}
+q_1^{(j)}&=q_1^p+U_j,&q_3^{(j)}&=z,\\
+q_2^{(j)}(c)&=b+c_0L_j
+ +a[\cos h^p-\cos(h^p+U_j)]
+ +(c-c_0)(L_j-L_*).
+\end{aligned}
+\tag{13.5}
+$$
+
+Thus (13.3) stays inside the same preparation box. At execution $L_j=L_*$
+and $U_j=U$, so the last term vanishes. Also
+$h_*=h^p+U$ and $k_*=k^p+L_*$ are common. The complete deterministic
+prefix has $q_3=z>0$, so every sample and reporting hold is lawful.
+
+For each second-coordinate endpoint let $m_j=q_2^{(j)}(c_0)$. Its entire
+interval of alternatives has distance less than $\eta L_*<\epsilon/2$
+from $m_j$. Choose a finite rational $R_j^2$ with
+$|R_j^2-m_j|<\epsilon-\eta L_*$; choose common finite rational first
+and third reports within $\epsilon$ of their common endpoints. Shrinking
+$\eta$ if needed leaves strict slack in all these choices. One common
+sensor can return these same reports on the corresponding endpoint
+neighbourhoods. Outside them use a finite rational mesh covering the
+original bounded acquisition range, with coordinate error at most
+$\epsilon$. The sample index is a common retained apparatus state; no
+branch tests $c$. This defines a parameter-independent, finite-output
+sensor on the allowed acquisition domain, with the original error bound.
+The two uses of the middle report use this one $R_1$.
+
+Keep the same original preparation-box, permission, clock and effort
+certificates and the same actual durations. Finite reporting arithmetic
+therefore has identical inputs and outputs. Include its latency in
+$\Lambda$. The constant-rate service integrals are equal over the common
+complete durations; all separate original charges can be identical. No
+charge has been dropped. This proves the full-record correspondence.
+$\square$
+
+**Boundary 13.3 (what this construction supplies).** This is a family of
+allowed preparations, not the same-prepared-state pair of three-axis
+Proposition 29.1. That earlier pair has different execution second
+coordinates. Here (13.3) makes the execution states identical and varies
+an unobserved prepared coordinate within its supplied bound. The
+construction describes feasible actual sources; it does not give an
+observer who lacks $c$ a preparation algorithm for (13.3). A uniform
+claim over all sources permitted by the original bound must include
+these sources. An authentic exact prepared-$q_2$ certificate, a sensor
+that encodes $c$ in its output error, or an informative billing channel
+changes the acquired experiment and must be included explicitly. The
+coordinate-error inequality alone neither guarantees a common record for
+every installed sensor nor gives the passive common-kernel premise.
+
+## 14. The complete stopped experiment with correlated noise
+
+**Definition 14.1 (the ideal converse observation).** On the family of
+Proposition 13.2 put $\theta=h_*-q_{*,1}$ and $P(x)=a\cos(x+\theta)$.
+Grant the observer the common exact $q_*,a,\theta,Q$, and the entire raw
+path through its original death, including the continuous boundary limit.
+This is the ideal observation $\mathcal O$; it is an information
+enhancement for a converse. It is not a sensor or a record returned alive.
+The execution time $t$ is elapsed time in the same original clock, whose
+common preparation/acquisition offset remains retained.
+
+By the source's Theorem 27.2, for Brownian motion with
+$\operatorname{Cov}(W_s,W_t)=\min(s,t)Q$,
+
+$$
+\begin{aligned}
+q_1(t)&=q_{*,1}+W_t^1,\\
+q_2(t)&=q_{*,2}+ct+W_t^2+P(q_{*,1})-P(q_1(t)),\\
+q_3(t)&=z+W_t^3,\qquad
+\tau=\inf\{t\ge0:z+W_t^3=0\}.
+\end{aligned}
+\tag{14.1}
+$$
+
+There is no hidden exit. The actual hidden paths remain
+$h(t)=h_*+W_t^1$, $k(t)=k_*+t+W_t^2$ for the original source and its
+bill; they are not added observations.
+
+Set $I=(1,3)$ in that order and define
+
+$$
+r=Q_{2I}Q_{II}^{-1},\qquad
+\nu=Q_{22}-Q_{2I}Q_{II}^{-1}Q_{I2}>0.
+\tag{14.2}
+$$
+
+For $0\le t\le\tau$ the following is a calculation on the granted path:
+
+$$
+X_t=q_2(t)+P(q_1(t))-q_{*,2}-P(q_{*,1})
+ -r\binom{q_1(t)-q_{*,1}}{q_3(t)-z}.
+\tag{14.3}
+$$
+
+Let $\mathbf P_c$ denote the law of $\mathcal O$ on the standard Borel
+space of finite-lifetime continuous stopped paths. Probability total
+variation is $\operatorname{TV}(P,Q)=\sup_A|P(A)-Q(A)|$.
+
+**Theorem 14.2 (exact residual and complete-lifetime likelihood).** The
+ideal experiment is equivalent by a parameter-independent invertible
+path calculation to the stopped ancillary path $(W^1,W^3)_{[0,\tau]}$
+and
+
+$$
+X_t=ct+\sqrt\nu B_t\quad(0\le t\le\tau),
+\tag{14.4}
+$$
+
+where $B$ is a standard Brownian motion independent of the entire
+ancillary Brownian path, hence independent of $\tau$. Almost surely
+$0<\tau<\infty$. For every $c,d\in\mathcal C$,
+
+$$
+\frac{d\mathbf P_c}{d\mathbf P_d}(\mathcal O)
+=\exp\left(\frac{(c-d)X_\tau-\tfrac12(c^2-d^2)\tau}{\nu}\right).
+\tag{14.5}
+$$
+
+This is a normalized finite positive likelihood on the complete stopped
+experiment, so the laws are equivalent. The pair $(\tau,X_\tau)$ is
+sufficient; on this open parameter interval it is minimal sufficient up
+to completion by common null sets.
+
+**Proof.** Positive definiteness gives the inverse in (14.2) and its
+positive Schur complement. The centered Gaussian process
+$W^2-r(W^1,W^3)^{\mathsf T}$ has covariance $\nu\min(s,t)$.
+Its covariance with either ancillary coordinate at any two times is
+zero. Joint Gaussian finite-dimensional distributions and continuity
+therefore make it $\sqrt\nu B$ independent of the full ancillary path.
+Substitution in (14.1) proves (14.4). Conversely the ancillary path and
+$X$ recover all raw coordinates by (14.3); this uses no unknown $c$.
+The one-dimensional reflection formula for $W^3$ gives finite positive
+$\tau$ almost surely, with its law calculated in §15.
+
+Condition on the ancillary stopped path and its duration $\tau=t$.
+Independence supplies a drifted Brownian path over a deterministic
+interval of length $t$. Its endpoint has density
+$\mathcal N(ct,\nu t)$. Given that endpoint, its centered bridge
+$X_{ut}-uX_t$, $0\le u\le1$, is drift independent and independent of
+the endpoint. Indeed at deterministic $t$ its mean is zero, its
+covariance is $\nu t(\min(u,v)-uv)$, and its covariance with $X_t$
+is zero. Thus the conditional path likelihood is just the ratio of the
+two endpoint normal densities, namely (14.5). It integrates to one for
+every ancillary path; integrating over their common distribution proves
+(14.5) on the entire stopped experiment. No optional-stopping assertion
+for an unbounded drift likelihood is needed.
+
+Conditionally on $(\tau,X_\tau)$ one can sample the common ancillary
+path conditional on $\tau$ and then the centered bridge just described.
+These regular conditional laws exist on these standard Borel spaces and
+are parameter independent. This proves sufficiency. For minimality fix
+$d\in\mathcal C$ and $u>0$ with $d-u,d+u\in\mathcal C$. The two log
+likelihoods against $d$ satisfy
+
+$$
+\log L_{d+u,d}+\log L_{d-u,d}=-u^2\tau/\nu,\qquad
+\log L_{d+u,d}-\log L_{d-u,d}=2u(X_\tau-d\tau)/\nu.
+\tag{14.6}
+$$
+
+For any sufficient statistic these likelihoods are measurable functions
+of that statistic, by the dominated sufficiency criterion. Equations
+(14.6) recover both $\tau$ and $X_\tau$. Together with sufficiency this
+is the stated minimality. $\square$
+
+**Corollary 14.3 (sufficiency is not archive recovery).** The sufficient
+pair does not recover the full raw path. In particular, conditional on it
+and on the ancillary stopped path,
+$X_{\tau/2}-X_\tau/2$ has variance $\nu\tau/4>0$. A finite-alphabet
+record cannot determine $(\tau,X_\tau)$ exactly, since conditional on
+$\tau=t$ the latter coordinate has a non-atomic normal law. Its exact
+real-valued sufficiency is not a finite-bit representation, a live
+terminal report, a callable memory installation or a recovery of the
+original chronology.
+
+**Proof.** Use the bridge covariance in Theorem 14.2. Non-atomicity
+excludes concentration on the finitely many possible decoded pairs of
+any finite alphabet. $\square$
+
+## 15. Exact boundary-dependent discrimination over the complete lifetime
+
+**Lemma 15.1 (the original external killing clock).** For $t>0$ and
+$s\ge0$ the common lifetime has
+
+$$
+\begin{aligned}
+\Pr(\tau>t)&=2\Phi\left(\frac z{\sqrt{Q_{33}t}}\right)-1,\\
+f_\tau(t)&=\frac z{\sqrt{2\pi Q_{33}}\,t^{3/2}}
+ \exp\left(-\frac{z^2}{2Q_{33}t}\right),\\
+\mathbb E e^{-s\tau}&=\exp\left(-z\sqrt{\frac{2s}{Q_{33}}}\right).
+\end{aligned}
+\tag{15.1}
+$$
+
+Also $\mathbb E\tau=\infty$, as already established in three-axis
+Proposition 30.1.
+
+Together with Theorem 14.2 this specifies the sufficient experiment
+completely: its joint density, for $t>0$ and $x\in\mathbb R$, is
+
+$$
+g_c(t,x)=\frac{z}{2\pi\sqrt{Q_{33}\nu}\,t^2}
+\exp\left(-\frac{z^2}{2Q_{33}t}-\frac{(x-ct)^2}{2\nu t}\right).
+\tag{15.1a}
+$$
+
+**Proof.** Reflection of the one-dimensional Brownian coordinate at
+$-z$ gives the survival formula; differentiation gives the density.
+For the transform, when $s>0$ put $v=\sqrt{2s/Q_{33}}$.
+The stopped process
+$\exp(-v(z+W^3_{t\wedge\tau})-s(t\wedge\tau))$ is a bounded
+martingale: the Brownian exponential has zero drift, and the stopped
+vertical coordinate is nonnegative. Its expectation is $e^{-vz}$.
+As $t\to\infty$, finite $\tau$ and continuity make it converge to
+$e^{-s\tau}$. Bounded convergence proves the last formula; $s=0$ is
+immediate. The survival formula tends to zero, proving a.s. finite
+lifetime; continuity at zero gives strictly positive lifetime. Its
+tail is bounded below by a positive multiple of $t^{-1/2}$ for all
+sufficiently large $t$, whose integral diverges. Multiplying its density
+by the conditional normal endpoint density in Theorem 14.2 gives
+(15.1a). $\square$
+
+**Theorem 15.2 (exact affinity, Bayes risk and minimax risk).** For the
+complete ideal experiment the Hellinger affinity is
+
+$$
+A(\mathbf P_c,\mathbf P_d)
+=\int\sqrt{d\mathbf P_c\,d\mathbf P_d}
+=\exp\left(-\frac{z|c-d|}{2\sqrt{Q_{33}\nu}}\right).
+\tag{15.2}
+$$
+
+For any $c_\pm=c_0\pm\delta\in\mathcal C$, $\delta>0$, put
+$\kappa=z\delta/\sqrt{Q_{33}\nu}$. The exact equal-weight testing
+risk and the exact binary minimax testing risk are both
+
+$$
+\begin{aligned}
+e(\kappa)
+&=\mathbb E\,\Phi\left(-\delta\sqrt{\tau/\nu}\right)\\
+&=\sqrt{\frac2\pi}\int_0^\infty
+ e^{-v^2/2}\,\Phi(-\kappa/v)\,dv
+=\frac{1-\operatorname{TV}(\mathbf P_{c_+},\mathbf P_{c_-})}{2}.
+\end{aligned}
+\tag{15.3}
+$$
+
+In particular
+
+$$
+0<\frac{1-\sqrt{1-e^{-2\kappa}}}{2}
+\le e(\kappa)\le\frac{e^{-\kappa}}2<\frac12.
+\tag{15.4}
+$$
+
+The exact risk is strictly decreasing in $\kappa>0$, tends to $1/2$
+as $\kappa\downarrow0$ and to zero as $\kappa\to\infty$.
+The equal weights are a two-source decision comparison, not a prior
+asserted for the unknown actual source.
+
+**Proof.** Condition as in Theorem 14.2. At duration $t$, the ancillary
+path and bridge carry no likelihood, while the normal endpoint affinity
+is $\exp(-(c-d)^2t/(8\nu))$. Integrate this over $\tau$ and apply
+(15.1), obtaining (15.2).
+
+For the symmetric pair, (14.5) exceeds one precisely when
+$X_\tau>c_0\tau$. The likelihood-ratio test therefore chooses plus on
+that event. Conditional on $\tau=t$, either error equals
+$\Phi(-\delta\sqrt{t/\nu})$. The threshold has zero equality mass.
+This test minimizes the equal-weight error by choosing the larger
+density pointwise. Its two errors agree, so its maximum error equals
+its optimal average; every maximum is at least that optimal average.
+This proves both optimalities and the first and last expressions in
+(15.3). In the density integral substitute
+$v=z/\sqrt{Q_{33}t}$ to obtain its middle expression.
+
+For probability densities $p,q$, write their overlap as
+$\int\min(p,q)=1-\operatorname{TV}(P,Q)$. It is at most their
+square-root affinity. Cauchy–Schwarz applied to
+$|p-q|=|\sqrt p-\sqrt q|(\sqrt p+\sqrt q)$ gives
+$\operatorname{TV}(P,Q)\le\sqrt{1-A^2}$. Here $A=e^{-\kappa}$,
+which proves (15.4). The integral in (15.3), with a positive half-normal
+weight, proves strict monotonicity and both limits by dominated
+convergence. $\square$
+
+**Corollary 15.3 (what the boundary controls).** For the concrete original
+correlated setting $Q=I_3+(E_{23}+E_{32})/2$, (14.2) gives
+$r=(0,1/2)$, $\nu=3/4$ and
+$\kappa=2z\delta/\sqrt3$. More generally the exact complete-lifetime
+risk depends on $Q,z,\delta$ only through $\kappa$, with $Q$ fixed
+throughout the run. A smaller starting boundary distance gives less
+complete-lifetime discrimination at fixed $Q,\delta$. This is a
+comparison of different allowed starts, not permission to move the
+boundary or change covariance during observation.
+
+Even this ideal experiment can meet a binary worst-error target
+$0<\beta<1/2$ only if $e(\kappa)\le\beta$; a simpler necessary
+condition is
+
+$$
+\frac{2z\delta}{\sqrt{Q_{33}\nu}}
+\ge\log\frac1{4\beta(1-\beta)}.
+\tag{15.5}
+$$
+
+**Proof.** Substitute the displayed $Q$ in (14.2); use monotonicity for
+the boundary comparison. The lower bound in (15.4), followed by
+squaring $\sqrt{1-e^{-2\kappa}}\ge1-2\beta\ge0$, proves (15.5).
+$\square$
+
+## 16. Actual passive acquisition, retention and calls
+
+**Assumption 16.1 (the common causal observation contract).** Fix a single
+installed observer on the family in Proposition 13.2. Its initial acquired
+transcript is the common one constructed there. All of its later
+observations, selected settings, reference identities, completed read
+values, clocks, memory updates, backing accesses, bills, stopping and
+outputs are generated by the same measurable causal rules from the
+already elapsed raw path and independent common-law apparatus randomness.
+Equivalently their complete record has a parameter-independent Markov
+kernel $K$ from $\mathcal O$ to the record space. For live outputs we
+require the causal realization of this kernel: decisions and records by
+time $t$ use no raw path after $t$ and no future source-correlated random
+input. An independent random seed can include future apparatus random
+bits; it is independent of the entire source Brownian motion. Use standard
+Borel record spaces. Finite physical controllers and their finite or
+countably extended records are included when they satisfy this contract.
+An arbitrary measurable kernel is an information relaxation, not an
+installation assertion.
+
+The contract includes every source-dependent channel used by a later
+call, whenever that observation or call is actually permitted. It grants
+no new read permission and requires no installed extra sensor for the
+converse. In the rate-one instance it includes the integral of the actual
+execution time, all fixed fees and any passive costs determined by acquired
+history and raw path. Every original charge remains payable. A hidden
+$k$-sensor, driver readout, source-bound authentic calibration label,
+parameter-dependent read error, exact prepared-$q_2$ label, or a bill
+revealing an additional hidden quantity need not satisfy this kernel
+contract. Such a channel is additional information, even if named
+“memory”, “reference” or “price”. Its presence must be checked on its
+actual law. Error bounds and zero hidden metric length do not prove
+parameter independence. Observations which perturb the source, active
+recalibration, new preparations and covariance switches are other
+experiments.
+
+**Proposition 16.2 (complete-record and continued-call floor).** Under
+Assumption 16.1, every binary decision made from the actual acquired and
+retained record, including any number of permitted passive rereads and
+record-only subsequent calls, satisfies
+
+$$
+\max\{\Pr_{c_+}(\text{failure}),\Pr_{c_-}(\text{failure})\}
+\ge\frac{\Pr_{c_+}(\text{failure})+
+          \Pr_{c_-}(\text{failure})}{2}
+\ge e(\kappa)
+\tag{16.1}
+$$
+
+when wrong decisions, death before return, abstention and nonreturn all
+count as failure. In particular none can identify the exact $c$ with
+zero error throughout $\mathcal C$. Unlimited retention of this one
+passive experiment does not remove the floor. The ideal optimum (15.3)
+is not asserted attainable by a live installed observer.
+
+**Proof.** The actual record laws are $\mathbf P_{c_+}K$ and
+$\mathbf P_{c_-}K$. The existing common-kernel data-processing argument
+gives TV at most the input TV. Thus every total binary decision has
+average error at least half the input overlap, which is $e(\kappa)$
+by (15.3). Complete any failed-return decision by an arbitrary binary
+answer; this can only decrease its total failure probability, so the
+bound remains. Exact identification would decide this pair exactly,
+contradicting the strictly positive floor. Retaining more of the same
+path or applying further record-only kernels is still a kernel from
+$\mathcal O$. $\square$
+
+**Resource boundary 16.3.** The exact acquisition bill remains three-axis
+(26.1), and its elapsed clock remains
+$T_{\rm prep}+\ell_0+\tau_0+\tau_1+\Lambda$. Preparation, three actual
+reads, timing/effort certificates, all arithmetic workspace and output,
+command, source service and retained backing are counted once at their
+original prices. Passive read latencies and call/evaluation latencies
+continue the source clock; they are not free pauses. The execution bill
+contains the original stochastic service integral, observation, command
+where applicable, retention and failure charges. At rate one its full
+service component is $\tau$, finite a.s. but of infinite expectation.
+Consequently no finite expected complete-lifetime price follows from
+a.s. death. Conversely paying this full service component still supplies
+no installed full-path sensor. The sufficient pair of §14 consists of
+exact reals, not a fixed number of physically stored bits. No total-cost
+optimum, storage minimum or sensor construction is inferred from (16.1).
+
+## 17. True-source future continuation after a live output
+
+**Definition 17.1 (the returned continuation task).** A policy satisfying
+Assumption 16.1 chooses a nonanticipating output time $S$, with
+$S=\infty$ allowed, and attempts to return a family of probability
+forecasts $D_n$ on the future raw endpoint, one for each integer
+$n\ge1$. The successful output event $R$ requires $S<\tau$ and a
+completed lawful return with all required backing and permissions.
+Anything else is failure. The family is determined by the data acquired
+at that output and independent apparatus randomness. A callable symbolic
+family is included only insofar as its outputs are functions of that same
+data and the request $n$. Future source observations are not arguments
+of an already returned family. An observer may start another learning
+and prediction episode, with a new live output and its own risk.
+
+As a further converse enhancement grant the exact raw state $x=q_S$ on
+$R$. At that state and fixed true $c$, the target for horizon $n$ is
+
+$$
+\mu_{c,x,n}(A)
+=\frac{K_n^{\lambda_c,Q}(x,A)}{p_Q(n,x_3)},\qquad
+\lambda_c=(a\cos\theta,a\sin\theta,c),\qquad
+p_Q(n,x_3)=2\Phi\left(\frac{x_3}{\sqrt{Q_{33}n}}\right)-1>0.
+\tag{17.1}
+$$
+
+Here $K$ is the original killed kernel of three-axis (27.5).
+This is the true-source endpoint law conditional on survival for that
+future horizon from that actual state. It is neither a posterior mixture
+nor an unnormalized killed response. At each law, its own stated future
+survival event is used. The source contract supplies fresh fixed-$Q$
+Brownian increments at this lawful stopping time, as required by
+three-axis Theorem 27.2. This is a Markov continuation premise, not a
+reset or independent new source.
+
+Let the all-horizon loss, including actual return failure, be
+
+$$
+\mathcal L_c=
+\begin{cases}
+\displaystyle\sup_{n\ge1}\operatorname{TV}(D_n,\mu_{c,q_S,n}),&R,\\
+1,&R^c.
+\end{cases}
+\tag{17.2}
+$$
+
+Forecast kernels are measurable; on these standard Borel endpoint spaces
+TV is a measurable supremum over a countable determining algebra, so the
+countable supremum in (17.2) defines a measurable loss. No coherence or
+self-generated-update requirement is imposed on $D_n$; any more
+restricted continuing decoder is included.
+
+**Lemma 17.2 (exact future separation at the same live state).** For every
+$x_3>0$, every fixed $n>0$ and $c,d\in\mathcal C$,
+
+$$
+\operatorname{TV}(\mu_{c,x,n},\mu_{d,x,n})
+=2\Phi\left(\frac{|c-d|\sqrt n}{2\sqrt\nu}\right)-1.
+\tag{17.3}
+$$
+
+In particular this distance tends to one as $n\to\infty$ whenever
+$c\ne d$, at every common live state $x$.
+
+**Proof.** At this actual state use the parameter-independent endpoint
+coordinate
+
+$$
+\psi_x(y)=y_2+P(y_1)-x_2-P(x_1)
+-r\binom{y_1-x_1}{y_3-x_3}.
+\tag{17.4}
+$$
+
+Under the true continuation it equals $cn+\sqrt\nu B_n$.
+The future survival event depends on the entire future $W^3$ prefix,
+which is independent of the entire residual $B$. Thus even after
+conditioning on survival the transformed endpoint
+$(y_1,y_3,\psi_x(y))$ has the product of a common ancillary endpoint
+law and $\mathcal N(cn,\nu n)$. This transformation is invertible:
+recover $y_2$ by solving (17.4). The TV distance is therefore exactly
+that of the two one-dimensional normal shifts. Their densities cross
+at $(c+d)n/2$, and integrating on either side gives (17.3).
+Strong Markov justifies these same increments from $S$ on each live
+output; no independence between $S$ and past source records is used.
+$\square$
+
+**Theorem 17.3 (complete-lifetime acquisition limits live continuation).**
+For every policy in Definition 17.1 and the pair
+$c_\pm=c_0\pm\delta\in\mathcal C$,
+
+$$
+\frac{\mathbb E_{c_+}\mathcal L_{c_+}
+      +\mathbb E_{c_-}\mathcal L_{c_-}}2\ge e(\kappa),
+\qquad
+\max_{\varsigma\in\{-,+\}}\mathbb E_{c_\varsigma}\mathcal L_{c_\varsigma}
+\ge e(\kappa).
+\tag{17.5}
+$$
+
+For every $0\le r_0<1/2$ there is also the failure-probability bound
+
+$$
+\frac12\sum_{\varsigma\in\{-,+\}}
+\Pr_{c_\varsigma}\left(R^c\ \text{or}\
+ \sup_{n\ge1}\operatorname{TV}(D_n,\mu_{c_\varsigma,q_S,n})>r_0\right)
+\ge e(\kappa).
+\tag{17.6}
+$$
+
+On the open interval $\mathcal C$, every such common policy satisfies
+
+$$
+\sup_{c\in\mathcal C}\mathbb E_c\mathcal L_c\ge\frac12.
+\tag{17.7}
+$$
+
+These are lower bounds on the declared continuation risks; no equality
+with their optimal values for an installed observer is asserted.
+
+**Proof.** Realize the common causal observer using the complete raw
+stopped path and a seed $V$ independent of it. Its joint input law is
+$\mathbf P_c\otimes\rho$ with the same seed law $\rho$ for all $c$.
+All acquisitions, choices, return status, $S$, $x=q_S$ on return, and
+the forecasts are the same functions of this canonical input. Compare
+the two losses on one such input, not on separately coupled realized
+outputs. On $R$, for each $n$ triangle inequality gives
+
+$$
+\operatorname{TV}(D_n,\mu_{c_+,x,n})+
+\operatorname{TV}(D_n,\mu_{c_-,x,n})
+\ge\operatorname{TV}(\mu_{c_+,x,n},\mu_{c_-,x,n}).
+$$
+
+Take the limit on the right in (17.3) and bound each term on the left
+by its own supremum. Thus $\mathcal L_{c_+}+\mathcal L_{c_-}\ge1$
+pointwise. On failed return both losses are one, so this inequality
+persists. With $p_+,p_-$ denoting the two densities relative to a common
+dominating input measure,
+
+$$
+\begin{aligned}
+\mathbb E_{c_+}\mathcal L_{c_+}
++\mathbb E_{c_-}\mathcal L_{c_-}
+&\ge\int\min(p_+,p_-)\,
+           (\mathcal L_{c_+}+\mathcal L_{c_-})\\
+&\ge\int\min(p_+,p_-)
+=1-\operatorname{TV}(\mathbf P_{c_+},\mathbf P_{c_-})
+=2e(\kappa).
+\end{aligned}
+$$
+
+Tensoring with the common seed preserves input TV. This proves (17.5).
+If both returned-family errors were at most $r_0<1/2$ on the same
+input, their sum would be less than one, contradicting the pointwise
+inequality. Hence at least one of the two failure indicators in (17.6)
+is one on every input. Integrating against the same minimum density
+proves (17.6). Finally choose symmetric distinct pairs with
+$\delta\downarrow0$ inside $\mathcal C$. Their execution state,
+height, covariance and observation rules stay fixed by Proposition
+13.2. Equations (15.3) and (17.5) give (17.7). $\square$
+
+**Boundary 17.4 (what continuation has and has not been obstructed).**
+The theorem concerns a family returned at one lawful live cut and accurate
+for the true source at every future integer horizon under each
+survival-conditioned normalization. Endpoints alone already force the
+bound, so predicting full normalized future paths with these marginals
+cannot evade it. No assertion requires observing survival of a future
+horizon before making the forecast. Small survival probabilities do not
+remove those normalized queries. Death and nonreturn during acquisition
+are counted, rather than conditioning them away or keeping only late
+successful observers.
+
+This does not contradict three-axis Theorem 28.3's horizon-uniform
+unnormalized killed-response bounds or its Corollary 29.3's finite-horizon
+conditional certificates. Multiplying (17.3) by the common survival
+probability gives the unnormalized endpoint separation, which tends to
+zero as the horizon grows. A fixed finite horizon, an error averaged over
+survival or horizons, Bayesian posterior prediction, or later forecasts
+using newly acquired data are distinct targets. The additional paid
+sensor and growing finite-horizon interfaces are not assumed here.
+Active recalibration and other generators are not ruled out by a
+passive-experiment converse. No finite-memory or physical impossibility
+for those different tasks follows.
+
+## 18. Correspondence, attribution and unresolved recovery directions
+
+**Definition 18.1 (independent views in this result).** Space exposes the
+actual raw location $q$ and its Euclidean task metric, with the original
+nonlinear source fields (13.1). Time is the ordered original acquisition
+and execution clock, including all read/report latencies and the actual
+killing time. Boundary has two separate meanings kept explicit: the
+physical killing guard is $q_3=0$, while a returned predictive boundary is
+the probability-family interface $D_n$ for the task (17.1). Memory is the
+actually acquired and backed record used by the observer and subsequent
+calls under Assumption 16.1. None of these is defined as an unrestricted
+copy of the others.
+
+The proved positive statistical direction is
+$\mathcal O\longrightarrow(\tau,X_\tau)$ with exactly the same
+$c$-likelihood information, and a parameter-independent conditional
+reconstruction of its experiment. This is not reconstruction of the
+realized path. The proved obstruction is from that maximal passive
+acquisition to true-source all-horizon continuation, quantitatively
+(15.3), (16.1) and (17.5)–(17.7). It identifies information that more
+passive record storage alone cannot supply. No inverse from a future law
+to an actually acquired archive, recovery of the hidden $k$, recovery of
+the full chronology, four-view mutual recovery, or parsimonious universal
+generator is proved.
+
+**Source correspondence 18.2.** The original three-axis supplier is
+[the complete volume at the stated source revision](https://github.com/the-omega-institute/trureturing/blob/da254d2c64fd05036726203ce2395a4b40f1a59b/docs/develop/theory/AURIC_FIB_OBSERVER_INTERNAL_THREE_AXIS_GEOMETRY_AND_PREDICTIVE_INTERFACE.md).
+Its Assumption 24.1 supplies exactly the source, finite preparation/read
+contract and actual permissions in (13.1)–(13.2); Definition 26.1 supplies
+all the charges retained here. Definition 27.4 and (27.9) supply the joint
+acquisition equations used in (13.5). Theorem 27.2 supplies (14.1), fixed
+calibration, the original continuous-prefix guard and the true killed
+continuation kernel. Its §28 already uses the correlated Schur complement
+for smoothing; that algebra is reused, with the whole residual Brownian
+path identified here for the stopped acquisition experiment. Proposition
+29.1 and Theorem 29.2 already obstruct prediction from the fixed three
+reports, with a same-prepared-state pair and $Q=I_3$. They do not analyze
+the information in all passive observations until the original death.
+The added correspondence (13.3) instead produces a whole feasible drift
+interval at one common execution state. The complete-lifetime likelihood,
+exact boundary-dependent testing risk and live true-source continuation
+risk consume that new correspondence. Proposition 30.1 already supplies
+a.s. death with infinite expected rate-one service cost.
+
+The generic full-record/data-processing/return-failure argument is supplied
+by [Gaussian adaptive record kernel, §§2–4](RECURSIVE_RELATIONAL_OBSERVATION_GAUSSIAN_ADAPTIVE_RECORD_KERNEL.md),
+on its different same-specimen quantum pointer model. No spectral pointer,
+fresh mode, QND instrument, adaptive-word Gaussian formula or sensor
+installation is transferred. The repository declarations
+`EquivalentMeasuresExcludePerfectSeparator.equivalent_probability_laws_exclude_perfect_separator`
+and
+`EquivalentLawPosteriorInterior.equivalent_law_posterior_stays_interior` in
+`D5/S3/Observer/MeasureSeparation/` give the generic measure-equivalence
+and posterior-interiority background with their owning Scribes. They
+supply no numerical boundary constant or source-specific acquisition law.
+The natural ownership/factorization principle is already the three-axis
+volume's Definition 1.1 and this volume's calibration/update contracts;
+it is not new content here. The natural-time bounded stopping/moment
+result `StoppedLikelihoodAbsorption.stopped_likelihood_bounds` and the
+strictly positive finite-alphabet `SequentialHellingerLocalization`
+trajectory results retain their respective domains; neither substitutes
+for (14.5)'s continuous complete stopped-path proof. Reading these sources
+is not a current Lean build or certification of this application.
+
+[Stopped-episode calibration unidentifiability, §§1 and 3](RECURSIVE_RELATIONAL_OBSERVATION_STOPPED_EPISODE_CALIBRATION_UNIDENTIFIABILITY.md)
+already compares an entire original stopped episode and an enhanced
+returned-cut-label experiment, with all legal adaptive prefixes obtained
+by common postprocessing. Its source is the once-drawn common Fibonacci
+depth and finite-letter native control, and its bound uses repeated
+private-label blocks. The full-episode converse method is therefore also
+an existing supplier. Its source law, label access and numerical constant
+are not this nonlinear diffusion's stopped drift experiment or (15.3).
+
+This volume's §§10–11 concern the finite five-mode chain, common positive
+finite-word support and authentic calibration. They give no automatic
+identification with the diffusion. The independently published
+[§12 at revision 3fde9266017c1b3c3bb5fe90338f86335371f90b](https://github.com/the-omega-institute/trureturing/blob/3fde9266017c1b3c3bb5fe90338f86335371f90b/docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION_FINITE_START_PREDICTIVE_MEMORY.md)
+uses a different ordered-tree source with paused heat time, TryUp and
+same-edge return rights. Its acquisition and restored-source forecast
+are constructive under that additional interface. The
+[native central-noise Green volume at revision 7913370b9ad5546da41bfd96c07ffb7179940ad4](https://github.com/the-omega-institute/trureturing/blob/7913370b9ad5546da41bfd96c07ffb7179940ad4/docs/develop/theory/FIB_NATIVE_CENTRAL_NOISE_GREEN_STABILITY.md)
+uses native fields on a double-wall cylinder, a different noise generator
+and a declared acquired paid interface. Its occupation/Green estimates
+are not stopped unknown-drift likelihoods. Neither source supplies the
+missing sensor or pause to this original three-axis passive apparatus.
+The NCR/PVC/PR57/PG/Atlas acquired-service results likewise keep their own
+sources, rights and resource orders; this is no new generic conversion,
+quotation mechanism or improvement of their prices.
+
+**Literature scope 18.3.** Reflection, Gaussian regression and bridge
+sufficiency, Brownian drift likelihoods, affinity, binary testing and
+common-kernel contraction are mature suppliers. For the directly used
+Brownian facts, see Mörters–Peres,
+[*Brownian Motion*](https://www.stat.berkeley.edu/~aldous/205B/bmbook.pdf),
+Chapter 2, Theorems 2.14 and 2.18 for strong Markov and reflection, and
+Lalley, [*Brownian Motion* notes](https://galton.uchicago.edu/~lalley/Courses/385/BrownianMotion.pdf),
+§§2.1, 2.4 and 4–5, especially §5.3 and formula (59) for first passage.
+The transform needed here is also derived in Lemma 15.1 with the explicit
+variance rate; no ambiguous extracted coefficient is used as a premise.
+The standard Gaussian drift likelihood has the correspondence
+$X/\sqrt\nu=(c/\sqrt\nu)t+B$; the stop is the independent external
+vertical-boundary time, not a chosen test stopping rule for that signal.
+
+Ekström–Vaicenavicius,
+[*Bayesian sequential testing of the drift of a Brownian motion*,
+arXiv:1509.00675v1](https://arxiv.org/pdf/1509.00675v1), §§1–2 and
+§3.1, Proposition 3.1 and its proof, treats an independent random drift
+prior, normal likelihood sufficiency and sequential decision with a time
+cost. Those mature likelihood ideas are used; its Bayesian prior,
+optimal stopping boundary and cost are not asserted for the present
+external killing clock. Brown–George–Xu,
+[*Admissible predictive density estimation*, arXiv:0806.2914v1](https://arxiv.org/pdf/0806.2914v1),
+§§1–2, uses independent Gaussian prediction and KL risk, a different
+future task from (17.1)–(17.2). Campbell–Engelund,
+[*Embedding martingale diffusions as binary posteriors in sequential
+inference*, arXiv:2607.20373v1](https://arxiv.org/pdf/2607.20373v1),
+§2.1, treats observation killed at the signal's own interval exit and
+its local likelihood/energy conditions. Here killing depends only on
+an independent ancillary coordinate after regression; its likelihood
+is proved by conditioning. No theorem from either different prediction
+or stopped-signal model is silently applied.
+
+**Status 18.4 (the exact additional result and the remaining programme).**
+The source-specific preparation/full-lifetime/continuation join of
+§§13–17 is `repo-derived`, with ordinary proofs; the Brownian and
+statistical suppliers above are `literature-attested`. The claim is this
+explicit application and its quantitative dependence on the original
+boundary and covariance, not global mathematical originality. No
+physical realization, empirical validation, new Lean result or completed
+formalization is claimed.
+
+The common-kernel, nondestructive-sensor, source-membership and fresh
+increment premises must be supplied for any actual installation to which
+the bounds are applied. Installing live sensors or finite-bit callable
+sufficient memory, handling informative hidden channels, constructing
+active-learning alternatives and proving their resource guarantees remain
+separate obligations. Original fixed-$G_{\rm gc}$, original-$Q$,
+parked-consumer, unchanged-initialization, terminal and final-no-Ready
+obligations retain their original scopes and settlements. Other sources,
+Bayesian tasks and growing finite-horizon tasks are not rejected by this
+converse. The four-expression common-process objective, unknown-archive
+acquisition, positive mutual recovery and any universal $\alpha/\beta$
+reduction remain unresolved. This bounded result does not complete that
+programme.
+
+## 追加锚（本行以下为增补区）

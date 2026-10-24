@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:0bebd85029039134b3bec1330e5196283cd2d690682ecc61437a9b9f5b391450
+  normalized_sha256: sha256:0bebd85029039134b3bec1330e5196283cd2d690682ecc61437a9b9f5b391450
+cas_ref: sha256:0bebd85029039134b3bec1330e5196283cd2d690682ecc61437a9b9f5b391450
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 指定 K、S、App 的树表示并另行规定执行归约规则，明确它们不是 Fibonacci 递推的推论；没有陈述归约正确性定理。
+    previous_atom_id: c4b6defa02a5fd9431dbbab652493c2d66ff20b2f98461bdda4824b80a0e48f8
+    next_atom_id: 2cd76b99b97ef774e0ce86de426608f5bd25780001a5a6ee4350d0e5b564354b

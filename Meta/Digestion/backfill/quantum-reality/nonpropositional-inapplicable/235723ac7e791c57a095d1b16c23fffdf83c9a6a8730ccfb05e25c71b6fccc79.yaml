@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:235723ac7e791c57a095d1b16c23fffdf83c9a6a8730ccfb05e25c71b6fccc79
+  normalized_sha256: sha256:235723ac7e791c57a095d1b16c23fffdf83c9a6a8730ccfb05e25c71b6fccc79
+cas_ref: sha256:235723ac7e791c57a095d1b16c23fffdf83c9a6a8730ccfb05e25c71b6fccc79
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: ADMIT 一行列初始独立性、接触许可、谱检验和松弛界作为准入条件。
+    previous_atom_id: 6c2e24e7ec198f8b3970b0fa8b6b593b8d4c25bfbde1bf47be2a9789cc2817fb
+    next_atom_id: 6593c614aa1053bf8742ec0dbcf688dd2d523e26e1d6a074072eb62060f466c3

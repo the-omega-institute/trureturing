@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:b547d3cab1ca1f1af3ce4781870d1d68a0c748b6b353ea7f5bbda5646b9b675d
+  normalized_sha256: sha256:b547d3cab1ca1f1af3ce4781870d1d68a0c748b6b353ea7f5bbda5646b9b675d
+cas_ref: sha256:b547d3cab1ca1f1af3ce4781870d1d68a0c748b6b353ea7f5bbda5646b9b675d
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 认识、喜好、行动、评价与规范依据的概念区分。
+    previous_atom_id: 2c799615df278b5dca26538a1c39949e7f3a01717b1d10f17200649196c3c725
+    next_atom_id: f501d22761f488256eae23caa3007ba97f770153a678b0d7994adbf1a3a676b2

@@ -17,6 +17,15 @@ internal sealed class BinaryStabilizerGraphNormalFormDocument : IScribeDocumentD
             Entry("sign-representative", "complex_sign_val", "The sign of the binary representative", SignRepresentative(),
                 "The complexSign value is −1 raised to the natural representative of a binary residue.",
                 DescribeRole.Lemma, AssessedProvenance.FromRepo()),
+            Entry("symplectic-form", "spForm", "The binary symplectic bilinear form", SymplecticForm(),
+                "The binary symplectic form pairs the translation coordinates of either vector with the phase coordinates of the other.",
+                DescribeRole.Definition, AssessedProvenance.FromRepo()),
+            Entry("symplectic-alternating", "sp_alt", "Alternation of the binary symplectic form", SymplecticProperty("IsAlt"),
+                "Every binary vector has zero symplectic pairing with itself.",
+                DescribeRole.Lemma, AssessedProvenance.FromRepo()),
+            Entry("symplectic-nondegenerate", "sp_nondegenerate", "Nondegeneracy of the binary symplectic form", SymplecticProperty("Nondegenerate"),
+                "A vector that pairs to zero with every binary vector is the zero vector.",
+                DescribeRole.Lemma, AssessedProvenance.FromRepo()),
             Entry("amplitude", "graphAmp", "The binary graph amplitude", Amplitude(),
                 "Each edge contributes its binary quadratic monomial. The ordered upper-triangular sum is normalExponent; graphAmp is the complexSign value of that exponent, equivalently −1 raised to its natural representative. This definition accepts every binary matrix, without a symmetry or diagonal hypothesis.",
                 DescribeRole.Definition, AssessedProvenance.FromLiterature(GraphStates)),
@@ -45,6 +54,17 @@ internal sealed class BinaryStabilizerGraphNormalFormDocument : IScribeDocumentD
     private static Formula SignRepresentative() => All(V("a"), Binary,
         Equal(Call("complexSign", V("a")),
             Pow(Typed(Seq(Minus, D(1)), Complex), Property(V("a"), "val"))));
+
+    private static Formula BinaryPhaseSpace => Parenthesized(Seq(
+        Arrow(Fin(V("N")), Binary), Sp, Times, Sp, Arrow(Fin(V("N")), Binary)));
+
+    private static Formula SymplecticForm() => All(V("N"), Nat,
+        All(V("u"), BinaryPhaseSpace, All(V("v"), BinaryPhaseSpace,
+            Equal(Apply(Call("spForm", V("N")), V("u"), V("v")),
+                Qualified("BinaryLagrangianGraphForm", "sp", V("u"), V("v"))))));
+
+    private static Formula SymplecticProperty(string property) => All(V("N"), Nat,
+        Property(Call("spForm", V("N")), property));
 
     private static Formula Amplitude() => All(V("N"), Nat,
         All(Gamma, Matrix(Fin(V("N")), Binary), All(V("x"), Arrow(Fin(V("N")), Fin(D(2))),
