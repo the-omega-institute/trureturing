@@ -14,12 +14,13 @@ import Mathlib.Tactic
 admission_basis: escape-witness
 The sign propagation for paired Pochhammer products is the content step.
 Per-declaration proof_shape and consumers:
-* a: definition; consumers: raw, paired_relation, a_zero, a_continuous, Result.delta.
-* raw: definition; consumers: paired, paired_relation, Result.delta.
+* a: definition; consumers: a_continuous, paired_relation, paired_sign, raw,
+  Result.Z, Result.Z_symm, Result.full_tail_nonneg, Result.lift_normalization,
+  Result.normalization_term, Result.tail_nonneg.
+* raw: definition; consumers: paired, paired_relation, paired_sign, Result.delta,
+  Result.full_tail_nonneg, Result.result, Result.tail_nonneg, Result.tail_nonneg_pos.
 * paired: definition; consumers: paired_relation, paired_sign, Result.tail_nonneg_pos.
 * pairPoch: definition; consumers: paired_sign_step, paired_relation, paired_sign.
-* a_zero: bind-only; escape_witness: none; consumers: paired_sign,
-  Result.full_tail_nonneg.
 * a_continuous: bind-only; escape_witness: none; consumers: Result.tail_nonneg.
 * strict_four_product: content; escape_witness: strict_four_product;
   consumers: pair_step_lengths.
@@ -63,12 +64,11 @@ def pairPoch (a b c : ℝ) (N k : ℕ) : ℝ :=
   (ascPochhammer ℝ k).eval a * (ascPochhammer ℝ (N-k)).eval (a+b+c) -
   (ascPochhammer ℝ k).eval (a+b+c) * (ascPochhammer ℝ (N-k)).eval a
 
-@[simp] theorem a_zero (t : ℝ) : a 0 t = 0 := rfl
-
 /-- Each coefficient is polynomial in its parameter, including degree zero. -/
 lemma a_continuous (n : ℕ) : Continuous (a n) := by
   by_cases hn : n = 0
-  · simp only [hn]
+  · subst n
+    change Continuous (fun _ : ℝ => 0)
     exact continuous_const
   · change Continuous (fun t : ℝ => if n = 0 then 0 else
       (ascPochhammer ℝ (3*n)).eval t / ((3*n-1).factorial:ℝ))
@@ -271,7 +271,7 @@ theorem paired_sign {μ α β : ℝ} (hμ : 0 < μ) (hα : 0 < α) (hβ : 0 < β
   have hi0 : 1 ≤ i := by
     by_contra h
     have he : i = 0 := by omega
-    simp [he, paired, raw] at hpos
+    simp [he, paired, raw, a] at hpos
   have hj0 : 1 ≤ j := by omega
   have heI := paired_relation μ α β m i hi0 (by omega)
   have heJ := paired_relation μ α β m j hj0 (by omega)
