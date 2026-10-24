@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:f3cfe568aab0ba9209e6a56d3f0ac5549e45bddf6543999ea0c8d3774d570ea6
+  normalized_sha256: sha256:f3cfe568aab0ba9209e6a56d3f0ac5549e45bddf6543999ea0c8d3774d570ea6
+cas_ref: sha256:f3cfe568aab0ba9209e6a56d3f0ac5549e45bddf6543999ea0c8d3774d570ea6
+coverage_gids:
+  - gid: D5/S3/ConceptDynamics/Identity/PluralIdentityTheoryJudgments.identity_theories_can_disagree_on_distinct_propositions
+    target_statement_id: sha256:e5465d12a191684eee5e4d506f556c921be79c964eb372a369c9c5ae0ca79103
+receipts:
+  unresolved_subitems: []

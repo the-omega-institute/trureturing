@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:a54c218af9049cff6c32a2d9c9bdebc9a0c4129ce3a20c5ed7f78b4d0429f02a
+  normalized_sha256: sha256:a54c218af9049cff6c32a2d9c9bdebc9a0c4129ce3a20c5ed7f78b4d0429f02a
+cas_ref: sha256:a54c218af9049cff6c32a2d9c9bdebc9a0c4129ce3a20c5ed7f78b4d0429f02a
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 库萨所描写异议群体的地位及外部诠释尺度的规范批评。
+    previous_atom_id: 6fe617f3828ab1fbe0fe51df5f6285b9f87866e149190284c50ffe15c9ce82fe
+    next_atom_id: e40aca3f2259ba2ce168d3f6600e60e5d634041ea72c5c513fa24fae1816eb59

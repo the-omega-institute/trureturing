@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:b1f1f87483fee0ff5434062e1c274d22db33268c7c36866ba12ed2db51f50897
+  normalized_sha256: sha256:b1f1f87483fee0ff5434062e1c274d22db33268c7c36866ba12ed2db51f50897
+cas_ref: sha256:b1f1f87483fee0ff5434062e1c274d22db33268c7c36866ba12ed2db51f50897
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 事实、规范、权利与改变权限的概念分类和伦理解释。
+    previous_atom_id: d3d36a909c8c256ddb2e0cf85ac652b94985b43b57d3498a53b37f654893723e
+    next_atom_id: f372e25a5029486c417e349a5b5fe0458ad4c8e7f1684b2fb641ce1fefc48b36

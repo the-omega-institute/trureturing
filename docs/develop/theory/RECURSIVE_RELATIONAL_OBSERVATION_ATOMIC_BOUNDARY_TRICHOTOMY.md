@@ -4464,3 +4464,485 @@ mutual recovery, universal two-atom reduction, physical realization,
 duration bound or completion of the full relational-observation goal.
 
 ## 追加锚（本行以下为增补区）
+
+## 38. Authentic interval advice for the actual original
+
+**Definition 38.1 (the interval domain and uniform target).** For integers
+$1\le A\le B$, retain Definitions 2.1,33.1 and put
+
+$$
+ \mathcal D_{[A,B]}=\bigcup_{n=A}^B\mathcal D_n
+ =\{(u,k,v):u\in\mathcal T,\ A\le\ell(u)\le B,
+                    \ k\ge1,\ v=\rho^{2k}u\}.
+\tag{ABT.38.1}
+$$
+
+The target is the actual $(u,k,n)$, where $n=\ell(u)$, on this entire
+domain. The interval is authentic advice about that original, including
+the positive-even same-original provenance in (ABT.38.1). It is not an
+estimate of the expanded register's size. For each fixed $(A,B)$ every
+member of the displayed union is included with the same advice; no
+primitive-origin promise, preferred shape or choice of leaf labels is
+imposed. Uniform acquisition means one deterministic effective program,
+with a finite instruction description independent of $A,B,u,k$, taking
+$(A,B)$ as numerical input, terminating on every promised finite source,
+and retaining the exact target in readable owned backing.
+
+**Assumption 38.2 (interval installation).** Keep Assumption 33.2 in full,
+replacing its initial numerical input $n$ by canonically encoded $(A,B)$.
+In particular there is one actual stationary register $v$, its same root
+binding and persistent ordered $L/R$ incidences, one currently authorized
+total paid absolute-word Read, and only its presence projection
+$P_v(q)=\mathbf1_{r_v(q)\ne\mathsf{absent}}$ reaches acquisition control.
+Absent and repeated invocations are paid. The actual writer appends every
+full word, four-valued reply, semantic epoch $2k$ and localStep; neither
+that writer nor any pre-entry archive is readable by the controller.
+No exact $n$, lag, size, source discriminator, timing observation or other
+source-dependent operand is supplied through authentication, identifiers,
+references, initial control, initial storage contents or observable capacity.
+Authenticity is a supplied relation, not an extra data channel; advice
+encodings have no source-dependent padding. At fixed advice the initial
+accessible non-source fields are common to all promised candidates.
+
+Owned backing for input, scratch, addresses and acquired output grows on
+actual finite requests; it is not allocated using an unknown $n$ or $k$.
+Every finite local computation, allocation and paid Read used here completes
+under the supplied scheduling grant. Stationarity includes output formation
+and handoff: no concurrent writer, source change, reroot, reset or clone is
+allowed. Authentication, installation, preparation, reference maintenance,
+writer, storage and scheduling retain their separate prices. Readable output
+retention and current rights persist through the declared continuation.
+Its menu is exactly absolute Read, localStep, applyRho and stop, with one
+forward actuator on this same register; acquisition issues no update.
+No relative cursor, graft, comparison, guard or revocation port is added.
+Thus these are conditional statements about an installed service, not a
+procedure to authenticate untrusted interval strings or create its rights.
+
+**Convention 38.3 (cost notation).** Write $Q,M_{\rm addr},W$ for the
+actual paid Read count, maximum submitted word length and sum of submitted
+letters as in Definition 33.3. Write $J$ for its localStep count, called
+$B$ there; here $B$ always denotes the advice endpoint. No word shares a
+free root-to-prefix traversal. The usable memory observation below is
+$\mathsf M$, distinct from the address-cost coordinate $M_{\rm addr}$.
+
+## 39. The source-specific separation and its exact failure boundary
+
+**Lemma 39.1 (the interval crossing).** Let $(u,k,v)\in\mathcal D_n$,
+and suppose $n\le B<2n$. For the actual trial prunings of Definition 34.1,
+
+$$
+\begin{aligned}
+ a_j(v)&=\ell(\rho^{2(k-j)}u)\ge2^{k-j}n &&(1\le j\le k),\\
+ a_j(v)\le B&\quad\Longleftrightarrow\quad j\ge k &&(j\ge1).
+\end{aligned}
+\tag{ABT.39.1}
+$$
+
+Consequently $k=\min\{j\ge1:a_j(v)\le B\}$. In particular the
+criterion holds simultaneously for every member of $\mathcal D_{[A,B]}$
+whenever $B<2A$.
+
+**Proof.** The existing composition law gives
+$\ell(\rho^2t)=2a+3b\ge2(a+b)=2\ell(t)$ when $t$ has composition
+$(a,b)$. This also follows by replacing each alpha leaf by the two-leaf
+$\rho^2\alpha$ and each beta leaf by the three-leaf $\rho^2\beta$,
+preserving every ordered pair. Iteration gives the displayed growth bound.
+For $1\le j\le k$, put $w=\rho^{2(k-j)}u$. The actual equality
+$v=\rho^{2j}w$ permits Theorem 34.2 with original $w$ and lag $j$,
+so $F_j(v)=\operatorname{sh}(w)$ and $a_j(v)=\ell(w)$.
+This is a proof parameter, not a tree or number delivered to the actor.
+If $j<k$, this count is at least $2n>B$. At $j=k$ it is $n\le B$;
+at $j>k$ the pruning monotonicity proved in (ABT.34.5) gives
+$a_j(v)\le a_k(v)=n$. These prove the equivalence and minimum, including
+$n=1$ and its later plateau. Finally $A\le n\le B<2A\le2n$ proves
+the simultaneous interval assertion. $\square$
+
+**Proposition 39.2 (indistinguishable authentic interval histories).**
+If $1\le A\le B$ and $B\ge2A$, no function of $(A,B)$ and even the
+complete labelled current tree recovers the target of Definition 38.1
+on its whole domain. No deterministic acquisition controller under
+Assumption 38.2 can terminate correctly on every promised source.
+
+**Proof.** Choose any ordered full binary shape with $A$ leaves and
+label every leaf alpha, giving $t$. Such a shape exists for every $A$:
+start with a leaf and repeatedly pair the previous shape with a leaf.
+Put $w=\rho^2t$ and $v=\rho^4t$. The same leaf replacement gives
+$\ell(t)=A$ and $\ell(w)=2A$. Both
+
+$$
+ (t,2,v)\in\mathcal D_{[A,B]},\qquad
+ (w,1,v)\in\mathcal D_{[A,B]}
+\tag{ABT.39.2}
+$$
+
+are authentic positive-even histories. Their targets differ in original,
+lag and count, while their entire current register, root convention,
+labelled replies and advice coincide. Hence the mathematical inverse
+already fails. These are alternatives for the actual initial history,
+not a permission to replace that history by its more primitive origin.
+
+For operational failure choose the same accessible initial control,
+binding and grants, and the same allocation and completion schedule.
+The possibly different preparation and semantic writer epochs are hidden
+by Assumption 38.2. Induct on accessible transitions: identical control
+selects identical local work or the same literal request, and the common
+$v$ gives identical presence bits and hence identical successor control.
+Allocation decisions also coincide because they use those acquired data.
+Thus stopping, output and retained accessible data coincide. If termination
+is required on both histories, that common result cannot equal both
+targets. Even exposing full current labels would not repair this pair.
+The obstruction is to this entire interval task with its declared advice,
+not to separately restricted source families or richer historical ports.
+$\square$
+
+## 40. A finite paid controller using the interval cap
+
+**Definition 40.1 (internally selected acquisition).** On input $(A,B)$
+first check $1\le A\le B<2A$ by finite local arithmetic; otherwise
+return a fixed out-of-contract result. On accepted advice use the following
+three phases, without changing the register.
+
+Find its maximal present right length $h$ by the exponential and binary
+search of Definition 35.1: query $R^1,R^2,R^4,\ldots$ through the first
+absent power, then halve the bracket between its last present and first
+absent lengths until they differ by one. Every test is a newly submitted
+complete absolute word. The promised domain has $h\ge1$; a zero answer
+at $R^1$ may return a fixed error outside that domain.
+
+Initialize $l=\max(1,h-B+1)$ and $z=h$. While $l<z$, choose
+$j=\lfloor(l+z)/2\rfloor$ and run Proposition 34.3 with cap $B$.
+Concretely its left-before-right traversal tests $pR^jL$ at the root
+and then at children of positively tested nodes, counting positive branch
+tests. Stop that comparison at the $B$th positive test, reporting
+$a_j(v)>B$, or at exhaustion of the pending stack, reporting
+$a_j(v)\le B$. In the former case set $l=j+1$; in the latter set
+$z=j$. At the singleton retain $K=l$.
+
+Now traverse confirmed original positions from the root. At each $p$
+execute both paid queries $pR^{K-1}LL$ and $pR^KL$ in that order.
+Their pairs $00,10,11$ mean alpha, beta and branch by §12.3. On a branch
+schedule its two children; on a leaf append that acquired label and
+increment a leaf counter initially zero. The pair $01$ returns a fixed
+error; it does not arise on promised inputs. Exhaustion constructs the
+ordered tree $U$ and the acquired count $\widehat n$. Retain
+$(U,K,\widehat n)$ with readable backing, actual binding and surviving
+grants, then stop or attach the stated continuation by paid local work.
+This last stopping rule uses the acquired stack, with no exact count input.
+
+These operations specify one deterministic effective controller: binary
+integer routines, stack push/pop, copying literal letters and emitting
+constructor/label bits have finite bit-level implementations with a fixed
+finite instruction repertoire. All choices use the input, phase and already
+paid presence bits. Their computations and address formation are actual
+localStep work. The variable stacks and buffers are owned storage, not
+finite-control states, a source-aware selector or an inverse oracle.
+
+**Theorem 40.2 (sharp uniform interval initialization with simultaneous
+costs).** For every fixed pair of integers $1\le A\le B$, uniform exact
+recovery and acquisition of the actual $(u,k,n)$ on all of
+$\mathcal D_{[A,B]}$, with Assumption 38.2's accessible resources and
+unchanged register, is possible if and only if $B<2A$.
+In that case Definition 40.1 terminates for every promised finite
+$(u,k,v)$, retains $(U,K,\widehat n)=(u,k,n)$ and leaves this same
+actual register equal to $v$ through handoff. For
+
+$$
+\begin{aligned}
+ h&=k+h_R(u),&m&=1+\lfloor\log_2h\rfloor,&d_B&=\lceil\log_2B\rceil,\\
+ q_*&=2m+(2B-1)d_B+4n-2,&
+ D_*&=\max\{2h,h+B,k+n\},
+\end{aligned}
+\tag{ABT.40.1}
+$$
+
+one and the same actual acquisition run satisfies
+
+$$
+ Q\le q_*,\qquad M_{\rm addr}\le D_*\le2(k+B),\qquad
+ W\le D_*q_*\le2(k+B)q_*.
+\tag{ABT.40.2}
+$$
+
+**Proof.** Necessity is Proposition 39.2. For sufficiency, Theorem 34.2
+gives $h=k+h_R(u)$ and $h_R(u)\le n-1\le B-1$. Thus $k$ lies
+in $[\max(1,h-B+1),h]$, an interval with at most $B$ integers.
+The right-spine presence answers are exactly those for lengths at most
+$h$. Its first absent power is $2^m$, so exponential search uses
+$m+1$ Reads. The last bracket has gap $2^{m-1}$; its $m-1$ midpoint
+tests finish the search. This pays exactly $2m$ Reads, with longest word
+$2^m\le2h$, as in the first phase of Theorem 35.2.
+
+Lemma 39.1 says the comparison answer at most $B$ is true exactly at
+$j\ge k$. Each midpoint update therefore preserves $k$ and reduces
+the interval size to at most its previous size divided by two, rounded
+up. At most $d_B$ comparisons leave its unique element $K=k$.
+Proposition 34.3 applies to every trial, including incorrect ones:
+each pays at most $2B-1$ Reads at words of length at most $j+B\le h+B$.
+Its cap and address bound follow from the actual pending-slot identity
+$1+b-l'>0$ before a query, with $b$ discovered branches and $l'$
+completed dots. No unacquired trial tree is used for control.
+
+At $K=k$, the two-probe label table holds at every confirmed original
+position. The root is confirmed by nonemptiness; a decoded branch alone
+confirms its children. Structural induction on $u$ now identifies the
+constructed ordered subtrees and their labels with $u$, and the leaf
+increments with its $n$ leaves. There are $2n-1$ visited nodes and
+exactly $4n-2$ final Reads, counting repetitions with earlier phases.
+Every original node has depth at most $n-1$, so these words have length
+at most $k+n$. This also proves termination of the last phase without
+using $n$ as an operand or allocating from it in advance.
+
+All searches, capped traversals and final recursion are finite, and each
+finite local routine and pending invocation completes by Assumption 38.2.
+No phase calls applyRho. Thus retention preparation also finishes on the
+unchanged register. Summing the three actual Read counts and taking their
+maximum address size proves (ABT.40.2), since $h\le k+n-1\le k+B-1$.
+The letter bound is $W\le M_{\rm addr}Q$, with every literal submission
+paid. The $n,k,h$ in these bounds describe the proved run; none is an
+unacquired initialization parameter. $\square$
+
+## 41. Authentic magnitude input, retained payload and other prices
+
+**Corollary 41.1 (dyadic initialization).** Replace the numerical advice
+of Assumption 38.2 by the authentic integer $s=\lfloor\log_2 n\rfloor$,
+$s\ge0$, with exactly the same prohibition on additional information.
+One common controller computes by paid local doubling
+$A_s=2^s$, $B_s=2^{s+1}-1$, then uses Definition 40.1. It acquires and
+retains the actual $(u,k,n)$ for every finite nonempty ordered original,
+every $k\ge1$ and $v=\rho^{2k}u$. Put
+
+$$
+ d_s=\lceil\log_2(2^{s+1}-1)\rceil,\qquad
+ q_s=2m+(2^{s+2}-3)d_s+4n-2,\qquad
+ L_s=2(k+2^{s+1}-1).
+\tag{ABT.41.1}
+$$
+
+The simultaneous bounds are $Q\le q_s$, $M_{\rm addr}\le L_s$ and
+$W\le L_sq_s$. Uniformly, these imply
+
+$$
+\begin{aligned}
+ Q&=O(\log(k+n+2)+n\log(n+1)),\\
+ M_{\rm addr}&=O(k+n),\\
+ W&=O((k+n)(\log(k+n+2)+n\log(n+1))).
+\end{aligned}
+\tag{ABT.41.2}
+$$
+
+**Proof.** Authenticity gives $2^s\le n\le2^{s+1}-1<2A_s$.
+Theorem 40.2 supplies all assertions and the displayed numerical bounds.
+Here $B_s\le2n-1$, $d_s\le s+1\le1+\log_2 n$, and
+$h\le k+n-1$ gives $m\le1+\log_2(k+n-1)$. Substitution gives
+(ABT.41.2), including $n=1$: then $s=0,B_s=1,d_s=0$, so no lag
+comparison is made and $k=h$. Constructing $A_s,B_s$ is finite
+local computation from $s$; exact $n$ first appears as the final acquired
+leaf count. Acquiring and authenticating the supplied $s$ is a separately
+paid entrance service, not an inference of $s$ from the current register.
+The same asymptotic bounds hold on every sharp interval, because
+$n\le B<2A\le2n$. They assert neither optimality nor physical duration.
+$\square$
+
+**Proposition 41.2 (separate simultaneous material coordinates).**
+For the successful run, retain $u$ by the preorder shape/label encoding
+of Proposition 35.3. With $b(t)=1+\lfloor\log_2t\rfloor$ for positive
+integers, its tree and numerical target payload occupies at most
+
+$$
+ 3n-1+b(k)+b(n)
+\tag{ABT.41.3}
+$$
+
+bits, before framing, references and grants. Additional working storage
+can be $O(k+B+B\log(k+B+2))$ bits. If the advice is retained too, its
+binary payload costs $b(A)+b(B)$, or $b(s+1)$ for magnitude input,
+plus framing. These statements do not bound the complete retained writer,
+source material, preparation or future consumer.
+
+**Proof.** There are $2n-1$ shape bits and $n$ leaf-label bits; the
+two acquired positive integers contribute the other two terms. The count
+is stored after acquisition, rather than supplied to the encoder in advance.
+A shared current path and stack of phase frames use at most $B$ frames
+in a capped comparison and at most $n\le B$ in final traversal.
+Each frame can use $O(\log(k+B+2))$ bits, storing phase, saved lengths
+and output positions instead of whole pending words. One growing literal
+address buffer of $2(k+B)$ letters suffices by (ABT.40.2); counters and
+search brackets have logarithmic bit width. Acquired output uses its own
+growing store. Ordinary depth-first stack manipulation and finite tape
+copying give the stated additional workspace bound. Allocation follows
+current counters, paths and actual constructor writes; the a posteriori
+bound is not an instruction to preallocate from unknown $k,n$.
+
+Let $J$ count all actual acquisition localSteps, including input arithmetic,
+projection, evaluator, address copying, allocation-control, output and
+handoff work. It is finite by the preceding proofs and is paid in addition
+to $Q$ Reads; zero updates occur, giving $Q+J$ new native events. There
+is no asserted backend-independent bound on $J$ or physical delay. Owned
+backing, each access/copy, framing and retention lifetime have their actual
+service prices; finite code does not imply a uniformly finite memory carrier.
+The binding, persistent ordered references and current grants have separate
+encoding, authentication and maintenance costs. Their existence and lawful
+continuation are supplied, never manufactured by a numerical decoder.
+
+The raw writer keeps $Q$ full Read entries, all $W$ literal letters,
+four-valued replies and epoch fields $2k$, and $J$ localStep markers.
+For ordinary self-delimiting binary serialization its new payload can be
+$O(J+W+Q\log(k+B+2))$ bits, besides the inaccessible old prefix and
+writer/storage metadata. This uses the bounds on word lengths and $k$;
+it does not give the controller a writer-read capability.
+If $u$ has $a$ alpha and $b$ beta leaves, its actual expanded source still
+has $aF_{2k+1}+bF_{2k+2}$ leaves and twice that number minus one nodes,
+by (ABT.35.8). Those material nodes are not paid by the sparse Read bound.
+Preparing from $u$ includes the $2k$ real substitutions, all intermediate
+rewrites, ingress, control and writer work; a supplied prepared source moves
+this price before acquisition rather than eliminating it. Installation,
+authentic interval or magnitude delivery, scheduling and source retention
+likewise remain separate. Any copied output, extra archive or subsequent
+expansion is additionally charged. $\square$
+
+## 42. Recovery routes and lawful retained continuation
+
+**Definition 42.1 (the four observations).** At a successful cut with
+fixed authentic interval, retain Definition 36.4's independent meanings:
+$S$ is the actual rooted ordered incidence of $v$ with leaf labels erased;
+$\partial$ is its actual terminal-address antichain, also unlabelled;
+$T=2k$ counts actual global substitutions from the authentic original;
+$\mathsf M$ is the acquired readable $(u,k,n)$ with its actual binding
+and current continuation grants. Thus $T$ contains no source labels,
+shape, duration or raw acquisition history, and $\mathsf M$ contains
+usable retained data, not merely a printed result or inaccessible pointer.
+Scratch and the inaccessible physical writer remain separate resources.
+
+**Theorem 42.2 (attained inverse directions and agreement).** If $B<2A$,
+then $(A,B,S)$ and $(A,B,\partial)$ each determine the same $(u,k,n)$
+retained in $\mathsf M$ on the whole domain. The routes through either
+incidence or terminal boundary agree; from the data in $\mathsf M$ one
+recovers the same $S,\partial,T$. These are data-recovery directions under
+the supplied reference/rights convention. $T$ alone, even supplemented by
+the authentic interval and exact $n$, does not determine $u$.
+
+**Proof.** Prefix closure of $\partial$ is exactly $S$, since every node
+of a finite tree extends to a leaf. Its maximal addresses return exactly
+$\partial$. Both constructions preserve the same root and ordered letters.
+All answers in Definition 40.1 are membership bits in this $S$; Theorem
+40.2 therefore makes its mathematical decoder a function of $(A,B,S)$.
+It returns exactly $(u,k,n)$ on every promised realization, proving both
+uniqueness and route agreement. Conversely $(u,k)$ computes the finite
+tree $\rho^{2k}u$, hence those actual incidence and terminal sets and
+$T=2k$. The two compositions return the original data on their attained
+domains. This expansion has its actual local and material costs and is
+not needed by the sparse acquisition protocol. Binding and grants persist
+by assumption; no inverse from incidence data creates them.
+
+For failure choose any $n\in[A,B]$, an $n$-leaf ordered shape and a
+fixed $k\ge1$. All-alpha and all-beta labellings have the same $n$,
+interval and $T=2k$, but distinct actual originals. Thus temporal count
+cannot supply that inverse. Proposition 39.2 already prevents uniform
+source-to-target recovery when $B\ge2A$. For magnitude advice use its
+computed interval; the same positive routes and time-only failure follow.
+$\square$
+
+**Theorem 42.3 (same-register retained use).** At Theorem 40.2's cut,
+or Corollary 41.1's cut, let $N=2K$ be computed from the acquired $K$.
+Every supplied effective source-free logical native program in ABT15's
+original menu, with initial control computed from its public input and
+the retained target, has that section's lawful compiled continuation on
+this very register and binding. It preserves all completed logical replies,
+including absence, continuation choices and entire terminal output. At
+each completed macro boundary after $e$ logical updates,
+
+$$
+ r_e=\rho^eu,\qquad \widehat r_e=\rho^{2k}r_e=\rho^{2k+e}u,
+ \qquad \widehat e=2k+e.
+\tag{ABT.42.1}
+$$
+
+**Proof.** Acquisition has now actually supplied exactly the initial
+relation, readable calibration and rights used in Theorem 36.1, including
+the formerly unknown $n$. Its proof applies with the newly obtained
+$(U,K,\widehat n)$: a single finite interpreter reads its retained $N$,
+and the initial attachment and all evaluator work are paid localSteps.
+For completeness a logical localStep changes only control; a Read runs
+ABT15's finite presence macro on the same $\widehat r_e$, returns exactly
+$r_{r_e}(p)$ even at original absent positions and invokes the original
+continuation only on macro completion. An update performs one actual
+applyRho and uses $\rho\rho^{2k}r_e=\rho^{2k}\rho r_e$; stop returns
+the same entire output. Induction on finite logical fragments gives
+(ABT.42.1) and the reply/choice claims. An unfinished macro preserves its
+pending request, phase and paid first bit, as in Definitions 15.2,36.2;
+resume continues it without repeating or erasing that paid event. Every
+attained finite fragment completes under the supplied progress grants;
+termination of a logical run implies termination of its compiled run.
+No assertion makes an arbitrary nonterminating logical program terminate.
+
+The acquired offset $2k$ stays fixed even when $2k+e$ is odd. The initial
+interval theorem is not reapplied to that odd absolute epoch. Consequently
+the recovered views refer to the same actual process and its lawful
+dynamics. If an attained continuation fragment has actual costs $Q_c,W_c$,
+$U_c$ updates, $L_c$ original localSteps and $J_c$ evaluator localSteps,
+the joint run pays $Q+Q_c$ Reads, $W+W_c$ letters, $U_c$ updates and
+$J+L_c+J_c$ localSteps. Its maximum submitted address is the maximum of
+the two actual maxima. ABT15.4's formulas price completed macros;
+unfinished ones retain their incurred actual prices. The raw writer remains
+$H_{\rm old}H_{\rm acq}H_{\rm cont}$, distinct from the decoded logical
+trace. Further source rewrites, output, working memory and retention are
+additional prices. This supplies exactly the old lawful continuation, not
+raw-log identity or transport of direct cursor, graft or guard operations.
+$\square$
+
+## 43. Supplier correspondence and the remaining domains
+
+**Convention 43.1 (mathematical attribution and scope).** Lemma 39.1,
+the sharp entire-interval criterion and its paid acquisition with magnitude
+input are `repo-derived` deductions in this specific actual-original task.
+The suppliers and distinctions are as follows.
+
+* ABT33–37 supply the exact-count acquisition contract, trial pruning,
+  monotonicity, capped comparisons, calibrated traversal, cost conventions
+  and ABT15 continuation. Here the cap is only the authentic upper endpoint;
+  the strict two-step size gap proves it sufficient exactly on the stated
+  all-source intervals, and the final traversal acquires the missing count.
+* [Joint-Memory §§36–39,65](RECURSIVE_RELATIONAL_OBSERVATION_JOINT_MOMENT_FIBERS.md)
+  supplies primitive rays, entire entrance fibers, their indistinguishability,
+  conditional record sizes and effective advice initialization under actual
+  entrance acquisition and complete-current-description contracts. These
+  general methods are reused, not new standalone results here. Its primitive
+  endpoint is not this task's actual original; its entrance record and full
+  acquired current tree are not extra inputs here. Proposition 39.2 uses its
+  indistinguishability principle on the explicit interval witness pair.
+* GenealogicalFiberTransport's Source/substitution/composition, the owning
+  Scribes, DelayedOriginalReadout's private clock_step and public clock laws,
+  and NativeErasedSupportKernels' private root/erased/support helpers fix the
+  same free ordered tree, right height and known-lag presence table.
+  NativeFullSourceProducer's private traverse/production_reads/stationary
+  and Scribe supply acquired-stack traversal, not unknown-size advice.
+  NativeSerialMachine supplies the source-blind Op and full writer semantics.
+  IntrinsicSubstitutionCoordinates, including its private ancestry helpers,
+  and Acquired Intrinsic Depth Calibration keep their maximal-depth and
+  prepared-defect/right-spine targets; neither is identified with this
+  unknown actual lag. Concurrent Native Cut Acquisition and Native Unknown
+  Epoch Gluing keep their own concurrency, stamp and retained-record grants.
+* Kenny Lau's FreeMagma constructors and lift in pinned mathlib
+  `56a005855ea17e0b0958f73ec801ae140b0a1679`, `Mathlib/Algebra/Free.lean`,
+  supply the ordered algebra. Berthé–Steiner–Thuswaldner–Yassawi,
+  [arXiv:1705.00167v2](https://arxiv.org/abs/1705.00167v2), §2 Definitions
+  2.1,2.3–2.4 and Theorem 3.1, treat centered representations of aperiodic
+  bi-infinite word points. Engelfriet–Inaba–Maneth,
+  [arXiv:1904.09203v3](https://arxiv.org/abs/1904.09203v3), §3, uses label
+  and child-number tests, walking and optional regular look-around with
+  output branching. Those primary models supply comparison terminology,
+  not this finite actual-original interval theorem or its absolute-word
+  paid interface. No label oracle, free walk or source copy is imported.
+
+The exact-count results remain in their original scope, and the no-advice
+collision of Convention 37.2 remains: interval advice is still authentic
+source information. Arbitrary parity retains §9's partner ambiguity.
+Authentication of the advice, creation of backing/references/rights,
+nonstationary or revoked presentations, lost retained data, arbitrary earlier
+histories, physical durations, whole-price optima and the old fixed-apparatus
+full tasks retain their separate obligations. Neither a general advice-growth
+theorem, a literature-priority assertion nor new Lean verification is claimed.
+There is no atomic-to-continuous transfer or unrestricted four-view inverse;
+the larger relational-observation objective remains open beyond these routes.
+
+## 追加锚（本行以下为增补区）

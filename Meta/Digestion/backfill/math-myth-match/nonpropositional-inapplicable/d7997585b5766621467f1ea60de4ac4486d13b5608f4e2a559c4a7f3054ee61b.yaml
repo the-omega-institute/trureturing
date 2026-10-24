@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:d7997585b5766621467f1ea60de4ac4486d13b5608f4e2a559c4a7f3054ee61b
+  normalized_sha256: sha256:d7997585b5766621467f1ea60de4ac4486d13b5608f4e2a559c4a7f3054ee61b
+cas_ref: sha256:d7997585b5766621467f1ea60de4ac4486d13b5608f4e2a559c4a7f3054ee61b
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: DeGroot及Golub–Jackson的书目信息、摘要范围和非原创性说明。
+    previous_atom_id: 368c976e42c4c4abea8f56339d09ae74b8290250f87e141f32bb1dfdbbbfafe8
+    next_atom_id: 9f3a7a33743bf4311503883bfb34e629dca3773bb82ce8b8c487d2f49fea23a1
