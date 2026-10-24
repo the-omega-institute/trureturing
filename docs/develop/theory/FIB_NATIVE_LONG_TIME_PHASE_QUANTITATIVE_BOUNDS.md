@@ -3332,6 +3332,515 @@ for periodic diffusion, circle inequalities or homogenization.
 
 ## 追加锚（本行以下为增补区）
 
+## 65. A hard moving envelope on the unchanged native history
+
+**Definition 65.1 (moving-envelope class and exact scale).** Fix the native
+experiment, the inherited G/C/N/F premises, the deterministic initial
+state, signed original coordinates and original clock of Definitions 41.1
+and 49.1. Keep both absorbing height faces, the complete cemetery-inclusive
+killed-history space and the predeclared unit normal $e$. Put
+
+$$
+X_t=e\cdot(y_t-y_0),\qquad
+h=J_\kappa^{\mathsf T}e,\qquad
+ a(k)=h\cdot c_\kappa(k),\qquad
+\widehat m=\int_Ia(k)^2\phi(k)^2\,dk,
+$$
+
+and fix $0<\alpha<1/2$ and $r>0$. Write
+
+$$
+R(t)=r(1+t)^\alpha,\qquad \beta=1-2\alpha,
+\qquad c_{\alpha,r}=\frac{\pi^2\widehat m}{4r^2\beta}.
+\tag{65.1}
+$$
+
+The class $\mathcal C_{\alpha,r}$ consists of probability laws $V$ on the
+original full infinite canonical killed-history space such that the initial
+state is the prescribed deterministic one,
+
+$$
+V\!\left(\zeta=\infty,\ |X_t|<R(t)\ \text{for every }t\ge0\right)=1,
+\tag{65.2}
+$$
+
+and, for every finite $T>0$, the literal full prefix $V_T$ is absolutely
+continuous with respect to the original cemetery-inclusive prefix
+$\mathbb P_T$ and has finite natural-logarithm divergence
+$D(V_T\Vert\mathbb P_T)$. No law is required to have a global density with
+respect to the killed reference. The class is defined on one infinite path
+space; it is not replaced by a family of unrelated horizon laws.
+
+The exact question is whether $\mathcal C_{\alpha,r}$ is nonempty and
+whether one law $V_*$, chosen independently of $T$, satisfies
+
+$$
+\begin{aligned}
+\lim_{T\to\infty}
+ \frac{D((V_*)_T\Vert\mathbb P_T)-\lambda T}{T^\beta}
+ &=c_{\alpha,r},\\
+\lim_{T\to\infty}
+ \frac{\inf_{V\in\mathcal C_{\alpha,r}}D(V_T\Vert\mathbb P_T)-\lambda T}{T^\beta}
+ &=c_{\alpha,r}.
+\end{aligned}
+\tag{65.3}
+$$
+
+The height law, the full killed-prefix convention and all native coefficients in
+these formulas are those already fixed above. In particular, no homogeneous
+generator, operational controller, uniform rate, physical interpretation or
+finite-horizon optimizer is part of this definition.
+
+## 66. One consistent law for every expanding tube
+
+**Proposition 66.1 (native cosine construction).** Under Definition 65.1,
+there is one probability law $V_*=V_{*,\alpha,r}$ on the full infinite native
+history space with the prescribed initial state such that (65.2) holds. Its
+finite-prefix density with respect to $\mathbb P_T$ is
+
+$$
+L_T=\mathbf1_{\{\zeta>T\}}e^{\lambda T}
+       \frac{\phi(K_T)}{\phi(k_0)}M_T,
+\tag{66.1}
+$$
+
+where, under the conservative ground-height law $\mathbb Q$ of Definition
+41.1,
+
+$$
+\begin{aligned}
+\omega(t)&=\frac{\pi}{2R(t)},
+&H(t,x)&=\cos(\omega(t)x),\\
+\sigma&=\inf\{t\ge0:|X_t|\ge R(t)\},
+&b(t,x)&=\partial_t\log H(t,x)
+ =\frac{R'(t)}{R(t)}\omega(t)x\tan(\omega(t)x),\\
+M_t&=\mathbf1_{\{t<\sigma\}}H(t,X_t)
+ \exp\!\left\{\int_0^t
+ [\omega(s)^2a(K_s)^2-b(s,X_s)]\,ds\right\}.
+\end{aligned}
+\tag{66.2}
+$$
+
+The zero extension in (66.2) is a true $\mathbb Q$-martingale on every
+finite interval and satisfies
+$\mathbb E_{\mathbb Q}[M_T\mid K_{[0,T]}]=1$. Hence the height marginal
+of $V_*$ is exactly the supplied $\mathbb Q$ height law on each finite
+prefix. The law in (66.1) is locally absolutely continuous and has finite
+relative entropy for every finite $T$.
+
+Proof. Under $\mathbb Q$, conditional on the complete height history, the
+projection $X$ starts at zero and has the stochastic-integral form
+
+$$
+X_t=\sqrt2\int_0^ta(K_s)\,dW_s^2,
+\tag{66.3}
+$$
+
+where $W^2$ is independent of the height driver. The native signed
+coordinate map is still the one in (49.2); no coordinate is rescaled.
+On the open strip $|x|<R(t)$, $H>0$ and
+
+$$
+\partial_x^2H=-\omega(t)^2H,
+\qquad
+\frac{1}{H}\,\partial_tH=b(t,x)\ge0,
+\tag{66.4}
+$$
+
+because $R'(t)\ge0$ and $x\tan(\omega(t)x)\ge0$. Applying Itô's formula
+before $\sigma$ and using the quadratic variation
+$d\langle X\rangle_t=2a(K_t)^2dt$ gives
+
+$$
+ dM_t=M_t\sqrt2\,a(K_t)\partial_x\log H(t,X_t)\,dW_t^2,
+ \qquad t<\sigma.
+\tag{66.5}
+$$
+
+For a fixed finite $T$, $|a|\le C_a$ and (66.4) imply the deterministic
+bound
+
+$$
+0\le M_t\le
+\exp\!\left(C_a^2\int_0^T\omega(s)^2ds\right),\qquad 0\le t\le T.
+\tag{66.6}
+$$
+
+Stop additionally before $H$ falls below $1/n$. On this stopped region
+$\partial_x\log H$ is bounded on $[0,T]$, so the stopped local martingale
+has constant mean one. If $\sigma\le T$, continuity gives $H(t,X_t)\to0$
+as $t\uparrow\sigma$, while the exponential factor in (66.2) remains
+bounded by (66.6). Thus the stopped variables converge to the zero
+extension in (66.2) at a finite boundary hit. Dominated convergence removes
+both stops and proves $\mathbb E_{\mathbb Q}M_T=1$ and the martingale
+property. The same argument with a fixed continuous height path leaves only
+the Brownian integral in (66.5), and proves the conditional mean-one
+identity.
+
+Consequently the measures $M_T\mathbb Q_T$ are consistent under literal
+restriction from $[0,T]$ to $[0,S]$. The standard countable projective
+extension on the continuous native path restrictions gives one law $V_*$
+on $[0,\infty)$. For each integer $n$, its restriction to $[0,n]$ assigns
+probability one to $\zeta>n$ and $\sigma>n$. A countable union therefore
+shows that $\zeta=\infty$ and $|X_t|<R(t)$ for every real $t\ge0$, by path
+continuity. The prescribed initial state and all other native path
+coordinates are retained by the change of density.
+
+The ground-state identity in Definition 41.1 gives the full density (66.1),
+including the cemetery indicator. Since $\phi$ is bounded and positive at
+$k_0$, (66.6) bounds $L_T$ by a finite deterministic constant for each
+fixed $T$. Therefore $L_T\log L_T$ has an integrable positive part, while
+$z\log z\ge-1/e$ controls its negative part under $\mathbb P_T$. Thus
+$V_{*,T}\ll\mathbb P_T$ and $D((V_*)_T\Vert\mathbb P_T)<\infty$.
+
+The cosine factor and the time-dependent exponential are the native
+specialization of the time-dependent generalized Doob path-density formula
+in Chetrite and Touchette, *Nonequilibrium Markov processes conditioned on
+large deviations*, arXiv:1405.5157v2, §IV.1, equations (71)--(80). That
+classical identity is used only as an intermediate guide: (66.4)--(66.6)
+check normalization at the moving zero boundary directly. No positive-interior
+formula is used as a conservativity assertion.
+$\square$
+
+**Lemma 66.2 (upper entropy estimate for the common law).** For every
+fixed $\alpha,r$ in Definition 65.1,
+
+$$
+D((V_*)_T\Vert\mathbb P_T)
+\le \lambda T+\frac{\pi^2}{4}\int_0^T\frac{\mathbb E_{\mathbb Q}[a(K_s)^2]}{R(s)^2}\,ds+O(1).
+\tag{66.7}
+$$
+
+The $O(1)$ depends on the fixed native data and on $\alpha,r$, but not on
+$T$. Moreover,
+
+$$
+\mathbb E_{\mathbb Q}[a(K_s)^2]=\widehat m+O(e^{-3\lambda s})\quad(s\ge1),
+\tag{66.8}
+$$
+
+so
+
+$$
+\limsup_{T\to\infty}
+\frac{D((V_*)_T\Vert\mathbb P_T)-\lambda T}{T^\beta}
+\le c_{\alpha,r}.
+\tag{66.9}
+$$
+
+Proof. On the support of $V_*$, (66.1)--(66.2) give
+
+$$
+\log L_T=\lambda T+\log\frac{\phi(K_T)}{\phi(k_0)}
+ +\log H(T,X_T)+\int_0^T[\omega(s)^2a(K_s)^2-b(s,X_s)]ds.
+\tag{66.10}
+$$
+
+The last two terms are nonpositive except for the displayed quadratic
+term. Conditional mean-one normalization in Proposition 66.1 leaves the
+entire height marginal equal to $\mathbb Q$, so taking expectations in
+(66.10), using $\log H\le0$, $b\ge0$ and
+$\log\phi(K_T)\le\log\|\phi\|_\infty$, proves (66.7). The relative-kernel estimate
+(41.3), applied to the bounded function $a^2$, gives (66.8); the integral
+over $[0,1]$ is bounded because $a$ is bounded. Since
+
+$$
+\int_0^T\omega(s)^2ds
+=\frac{\pi^2}{4r^2}\frac{(1+T)^\beta-1}{\beta},
+\tag{66.11}
+$$
+
+and $\int_1^\infty e^{-3\lambda s}\omega(s)^2ds<\infty$, (66.9) follows.
+$\square$
+
+## 67. The matching lower bound from native fixed-strip bands
+
+For the native lower-bound argument, put
+
+$$
+E_T=\{\zeta>T,\ |X_s|<R(s)\text{ for every }0\le s\le T\}.
+\tag{67.1}
+$$
+
+As a classical intermediate step, every $V\in\mathcal C_{\alpha,r}$
+satisfies $V_T(E_T)=1$, and therefore
+
+$$
+D(V_T\Vert\mathbb P_T)\ge-\log\mathbb P_T(E_T).
+\tag{67.2}
+$$
+
+Indeed, the event in (67.1) is measurable on the full original killed prefix,
+including the cemetery coordinate. The entropy partition identity, or the
+Gibbs inequality applied to the restriction to $E_T$, gives (67.2), with
+no replacement by an endpoint event or a larger horizon-dependent class.
+
+**Lemma 67.2 (moving-strip probability bound).** There is a constant
+$C_0<\infty$ depending only on the fixed native data and the deterministic
+initial state such that, for every $T>1$,
+
+$$
+-\log\mathbb P_T(E_T)
+\ge \int_1^T\Lambda_\kappa(\omega(s)h)\,ds
+ -\frac12\log\bigl(2(u-l)R(T)\bigr)-\log C_0.
+\tag{67.3}
+$$
+
+Here $\Lambda_\kappa$ is the same two-height-Dirichlet band as in D
+(36.4)--(36.6), evaluated at the native frequency vector $\omega(s)h$.
+
+Proof. Project the original killed process to $(K,X)$. Conditional on the
+complete height path, (66.3) gives the autonomous projected generator
+
+$$
+\mathcal A=\varepsilon^2\partial_k^2+a(k)^2\partial_x^2
+\tag{67.4}
+$$
+
+with both height faces killed. For a fixed $A>0$, kill this projection also
+at $x=\pm A$ and let $S_A(t)$ be its zero-extended semigroup on
+$L^2(I\times\mathbb R)$. The sine expansion in the $x$ variable separates
+the operator into the height fibres
+
+$$
+-\varepsilon^2\partial_k^2+
+ \frac{n^2\pi^2}{4A^2}a(k)^2,\qquad n=1,2,\ldots,
+\tag{67.5}
+$$
+
+with the same two Dirichlet height faces. Since the potential is
+nonnegative, the variational monotonicity of the bottom eigenvalue and
+$L^2$ orthogonality give
+
+$$
+\|S_A(t)\|_{2\to2}
+ \le \exp\{-t\Lambda_\kappa(\pi h/(2A))\}.
+\tag{67.6}
+$$
+
+This is the native variable-coefficient band, not a homogenized or
+constant-volatility substitute.
+
+It remains to control the entrance at time one in the same $L^2$ space.
+The projected free killed kernel has Fourier representation with height
+kernel $K_{\kappa,\xi h}(1;k_0,k)$. The supplied all-frequency estimate
+D (36.6), restricted to $\eta=\xi h$, and Plancherel imply
+
+$$
+\int_{\mathbb R}\int_I
+ |K_{\kappa,\xi h}(1;k_0,k)|^2\,dk\,d\xi<\infty,
+\tag{67.7}
+$$
+
+because the nonzero native collar makes $h\ne0$ and the right-hand side is
+bounded by a constant times
+$\int_{\mathbb R}\exp[-2c_0\Psi(|\xi h|)]d\xi$. Restricting to $E_1$
+only decreases the nonnegative density, so its time-one subdensity $f_1$
+has $\|f_1\|_2\le C_0$.
+
+Take any partition $1=t_0<t_1<\cdots<t_N=T$. On the block
+$[t_{j-1},t_j]$, the event $E_T$ is contained in the event that the
+projection stays in the fixed strip of half-width $R(t_j)$, because $R$
+is increasing. The Markov property, zero-extension contractions and (67.6)
+therefore yield
+
+$$
+\mathbb P_T(E_T)
+\le C_0\,[2(u-l)R(T)]^{1/2}
+ \exp\!\left\{-\sum_{j=1}^N(t_j-t_{j-1})
+ \Lambda_\kappa(\omega(t_j)h)\right\}.
+\tag{67.8}
+$$
+
+The constant is the same for every partition. Continuity of the band in its
+frequency and refinement of right-endpoint sums give (67.3). This argument
+uses the full native projection and its cemetery-inclusive starting density;
+no infinite partition probability or guessed moving-domain eigenfunction is
+introduced.
+$\square$
+
+**Theorem 67.3 (native lower asymptotics).** With $\beta=1-2\alpha$,
+
+$$
+\liminf_{T\to\infty}
+\frac{-\log\mathbb P_T(E_T)-\lambda T}{T^\beta}
+\ge c_{\alpha,r}.
+\tag{67.9}
+$$
+
+Proof. The inherited band expansion D (36.4) gives
+
+$$
+\Lambda_\kappa(\omega(s)h)
+=\lambda+\widehat m\,\omega(s)^2+O(\omega(s)^4)
+=\lambda+\frac{\pi^2\widehat m}{4R(s)^2}+O(R(s)^{-4}).
+\tag{67.10}
+$$
+
+The contribution of the fixed interval $[0,1]$ is $O(1)$. For
+$0<\alpha<1/2$, writing $\beta=1-2\alpha$ gives
+
+$$
+\int_1^T R(s)^{-2}ds
+=\frac{(1+T)^\beta}{r^2\beta}+O(1),
+\tag{67.11}
+$$
+
+while
+
+$$
+\int_1^T R(s)^{-4}ds=
+\begin{cases}
+O(T^{1-4\alpha}),&0<\alpha<1/4,\\
+O(\log T),&\alpha=1/4,\\
+O(1),&1/4<\alpha<1/2,
+\end{cases}
+=o(T^\beta).
+\tag{67.12}
+$$
+
+Also $\log R(T)=o(T^\beta)$. Substituting (67.10)--(67.12) into
+(67.3) proves (67.9).
+$\square$
+
+## 68. The exact frontier and its native consumer
+
+**Theorem 68.1 (one-law sharp moving-envelope entropy frontier).** For every
+fixed $0<\alpha<1/2$ and $r>0$, the class $\mathcal C_{\alpha,r}$ of
+Definition 65.1 is nonempty. The law $V_*$ of Proposition 66.1 belongs to
+that class, is independent of the terminal horizon, and satisfies
+
+$$
+\begin{aligned}
+\lim_{T\to\infty}
+ \frac{D((V_*)_T\Vert\mathbb P_T)-\lambda T}{T^{1-2\alpha}}
+ &=\frac{\pi^2\widehat m}{4r^2(1-2\alpha)},\\
+\lim_{T\to\infty}
+ \frac{\inf_{V\in\mathcal C_{\alpha,r}}D(V_T\Vert\mathbb P_T)-\lambda T}{T^{1-2\alpha}}
+ &=\frac{\pi^2\widehat m}{4r^2(1-2\alpha)}.
+\end{aligned}
+\tag{68.1}
+$$
+
+Both limits use natural logarithms and the same full cemetery-inclusive native
+prefixes. The attaining law has the prescribed deterministic initial history,
+keeps the original signed coordinates and clock, survives both height exits,
+and obeys the strict tube for every time. The theorem makes no assertion of
+uniqueness, finite-$T$ optimality, a uniform convergence rate, a homogeneous
+generator, a global infinite-horizon density relative to $\mathbb P$, or an
+operational implementation.
+
+Proof. By Proposition 66.1 and Lemma 66.2,
+
+$$
+\limsup_{T\to\infty}
+\frac{D((V_*)_T\Vert\mathbb P_T)-\lambda T}{T^\beta}
+\le c_{\alpha,r}.
+\tag{68.2}
+$$
+
+For every $V\in\mathcal C_{\alpha,r}$, the support inequality (67.2) gives
+$D(V_T\Vert\mathbb P_T)\ge-\log\mathbb P_T(E_T)$. Taking the infimum and
+using Theorem 67.3 yields
+
+$$
+\liminf_{T\to\infty}
+\frac{\inf_{V\in\mathcal C_{\alpha,r}}D(V_T\Vert\mathbb P_T)-\lambda T}{T^\beta}
+\ge c_{\alpha,r}.
+\tag{68.3}
+$$
+
+Since $V_*$ belongs to the same class for every $T$,
+
+$$
+-\log\mathbb P_T(E_T)\le
+ \inf_{V\in\mathcal C_{\alpha,r}}D(V_T\Vert\mathbb P_T)
+\le D((V_*)_T\Vert\mathbb P_T).
+\tag{68.4}
+$$
+
+Equations (68.2)--(68.4) squeeze both limits to $c_{\alpha,r}$ and establish
+all clauses of (68.1). Corollary 52.1, as consumed by Proposition 53.2,
+leaves projective consistency unasserted for its horizon laws. Here the single
+law $V_*$ supplies a consistent infinite-law successor for that native
+entropy-rate selection question. The lower bound ranges over exactly
+$\mathcal C_{\alpha,r}$, the class newly defined in Definition 65.1.
+This consumer conclusion follows from the full sandwich.
+
+The scalar power-envelope/Q-process construction of Oçafrain,
+*Quasi-stationarity for one-dimensional renormalized Brownian motion*,
+arXiv:1809.07547v2, supplies the prior one-dimensional mechanism and its
+power-envelope clock. In the constant native scalar case, the generator
+normalization here gives the corresponding coefficient
+$\pi^2a_0^2/(4r^2\beta)$ after the native time change. No scalar stationary
+prefactor is imported into (66.1)--(68.4); normalization there comes from
+$H(0,0)=1$ and the proved martingale identity. The general native argument
+cannot be reduced to replacing the deterministic scalar clock by
+$\widehat m t$, because the actual clock is
+$\int_0^ta(K_s)^2ds$ and the tube is imposed in the original time.
+
+The measure-level support inequality (67.2) is the finite-prefix
+Gibbs/relative-entropy principle, and the reversible spectral comparison in
+(67.5)--(67.6) is the classical Rayleigh correspondence. They are credited
+as intermediate tools to Chetrite and Touchette, *Variational and optimal
+control representations of conditioned and driven processes*,
+arXiv:1506.05291v3, §III.4, equations (52)--(56), and Appendix A.2,
+equations (90)--(93). Those classical formulas do not supply the native
+moving-strip scale, the full-prefix starting-density estimate, or a common
+infinite law; these are the deductions in Proposition 66.1 and Lemma 67.2.
+$\square$
+
+**Corollary 68.2 (compatibility with the homogeneous height-only frontier).**
+Theorem 68.1 and Proposition 59.1 quantify over different, non-nested
+subclasses of the same ambient class of consistent infinite native history
+laws with local absolute continuity and finite full-prefix entropy.
+Proposition 59.1 restricts selections to fixed, height-only,
+phase-translation-covariant controllers with a finite excess-rate budget and obtains a positive
+three-direction tensor. The law $V_*$ in Theorem 68.1 is a time-dependent
+phase-position reweighting selected for the expanding boundary; its entropy
+excess is of order $T^{1-2\alpha}$ and its density depends on the moving
+cosine. This law is not a member of the homogeneous height-only class
+used in Proposition 59.1. The two conclusions are compatible: 59.1 retains
+its positive transport conclusion under its controller restrictions,
+while 68.1 gives the sharp all-time leading cost in the class
+$\mathcal C_{\alpha,r}$ of consistent infinite tube laws. Neither theorem
+changes the other's native premises or consumer.
+
+Proof. Proposition 59.1 applies its rate and tensor estimates only after the
+controller restrictions (54.1)--(54.2) and the finite rate budget have been
+imposed. Definition 65.1 imposes instead the full path support condition
+(65.2), local absolute continuity and finite prefix entropy, with no
+height-only or time-homogeneity restriction. The cosine factor in (66.2)
+depends on $t$ and on the signed phase coordinate $X_t$; the leading entropy
+rate $\lambda$ alone does not impose the controller restrictions of 59.1.
+
+For a direct check of non-nesting, the law $\mathbb Q=\mathbb V_{\phi,0}$
+has zero excess-rate budget and belongs to the homogeneous height-only
+class. By (66.3), conditional on the height history, $X_T$ is centered
+Gaussian with variance $2\int_0^T a(K_s)^2ds$. Positivity of $\widehat m$
+and (66.8) imply that this variance is positive with positive probability
+for some finite $T$. Thus
+$\mathbb Q(|X_T|\ge R(T))>0$, so $\mathbb Q\notin\mathcal C_{\alpha,r}$.
+Conversely, Theorem 55.1 makes every homogeneous height-only law equivalent
+to $\mathbb Q$ on that finite prefix, while (65.2) gives
+$V_*(|X_T|\ge R(T))=0$. Hence $V_*\in\mathcal C_{\alpha,r}$ is outside
+the homogeneous height-only class. The two quantified conclusions are
+compatible without an inclusion between their admissible classes.
+$\square$
+
+**Definition 68.3 (scope of the native result).** The assertions above are
+ordinary mathematical consequences of the inherited native G/C/N/F premises.
+They concern one fixed native experiment and every fixed pair
+$(\alpha,r)$ in the stated range. The lower bound uses the same class of
+consistent infinite laws as the infimum, and the upper bound uses one law
+constructed without a terminal horizon. The full original history, both
+height deaths, deterministic INITIAL, signed coordinates and natural-log
+entropy remain in force. No physical claim, command-level acquisition,
+global absolute continuity, uniform asymptotic rate, uniqueness or worldwide
+priority statement is asserted.
+
+## 追加锚（本行以下为增补区）
+
 ## 69. Finite numerical permissions on the original signed source
 
 **Definition 69.1 (source, numerical data and the transport endpoint).**
