@@ -2,6 +2,8 @@ fingerprints:
   raw_sha256: sha256:2db370565cfb12a01500895f208c3d9d22ab9a8de8485b75f565ae9e2e375711
   normalized_sha256: sha256:2db370565cfb12a01500895f208c3d9d22ab9a8de8485b75f565ae9e2e375711
 cas_ref: sha256:2db370565cfb12a01500895f208c3d9d22ab9a8de8485b75f565ae9e2e375711
-coverage_gids: []
+coverage_gids:
+  - gid: D5/S3/Analytic/ReflectedSpectrum/SignedNormalLocalizingMatrix.signed_normal_hankel_posSemidef
+    target_statement_id: sha256:ddff27d0b2565201ac902200e9435ebc63bc77c3f2841a34c3d31106222c69ed
 receipts:
   unresolved_subitems: []

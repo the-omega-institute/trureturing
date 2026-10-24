@@ -2,6 +2,8 @@ fingerprints:
   raw_sha256: sha256:9ff786d31d5c184050d97e67d525637e57e1f69fdd5a0b14f1b28aa1d55488cc
   normalized_sha256: sha256:9ff786d31d5c184050d97e67d525637e57e1f69fdd5a0b14f1b28aa1d55488cc
 cas_ref: sha256:9ff786d31d5c184050d97e67d525637e57e1f69fdd5a0b14f1b28aa1d55488cc
-coverage_gids: []
+coverage_gids:
+  - gid: D5/S3/Arith/MoebiusLogarithmic/CoprimeConvolution.sum_supported_moebius
+    target_statement_id: sha256:0f49babb2af49bd40cae3612521c0959ec539e3885b8102daf93cf26250b00c5
 receipts:
   unresolved_subitems: []
