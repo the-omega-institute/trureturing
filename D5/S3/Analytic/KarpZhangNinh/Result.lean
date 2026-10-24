@@ -51,22 +51,20 @@ private theorem tail_pair (K : ℕ → ℝ) (m q : ℕ) (hq : 2*q≤m) :
   by_cases hqk : q≤k
   · have hqr : q≤m-k := by omega
     simp only [hqk, hqr, and_self, ite_true, mul_one]
-  · have hn : ¬ (q≤k ∧ q≤m-k) := by omega
-    have hn' : ¬ (q≤m-k ∧ q≤k) := by omega
-    simp [hqk]
+  · simp [hqk]
 
 /- proof_shape: bind-only; consumer: tail_nonneg_pos. -/
 private theorem central_tail_of_sign (K : ℕ → ℝ) (m q : ℕ) (hq : 2*q≤m)
     (hsign : ∀ i≤m/2, ∀ j≤m/2, i<j → 0<pair K m i → 0≤pair K m j)
     (htotal : 0≤∑ k ∈ range (m+1), K k) :
-    0≤∑ i ∈ range (m-q-q+1), K(q+i) := by
+    0≤∑ i ∈ range (m-q-q+1), K (q+i) := by
   rw [tail_pair K m q hq]
   apply KarpZhangGamma.Weighting.weighted_sum_nonneg (pair K m)
     (fun k => if q≤k then 1 else 0) (m/2) hsign
   · simpa only [pair] using (KarpZhangGamma.Result.pair_sum K m) ▸ htotal
   · intro i hi; split_ifs <;> norm_num
   · intro i hi j hj hij
-    split_ifs <;> first | norm_num | omega
+    split_ifs <;> norm_num <;> omega
 
 
 /- proof_shape: bind-only definition; consumer: lift_normalization, Z_symm, full_tail_nonneg. -/
@@ -78,7 +76,8 @@ private theorem factorial_product (n : ℕ) (hn : 0<n) :
     (n.factorial:ℝ) = n * ((n-1).factorial:ℝ) := by
   exact_mod_cast (Nat.mul_factorial_pred (Nat.ne_of_gt hn)).symm
 
-/- proof_shape: content; consumer: lift_normalization. -/
+/- proof_shape: content; escape_witness: normalization_term (factorial computation);
+consumer: lift_normalization. -/
 private theorem normalization_term (m k : ℕ) (hk : k≤m) (u v : ℝ) :
     Homogeneous.coeff (3*m) (3*k) * (ascPochhammer ℝ (3*k)).eval u *
       (ascPochhammer ℝ (3*m-3*k)).eval v =
@@ -106,7 +105,7 @@ private theorem normalization_term (m k : ℕ) (hk : k≤m) (u v : ℝ) :
   simp only [Nat.cast_mul, Nat.cast_ofNat, Nat.cast_sub hk]
   ring
 
-/- proof_shape: content; consumer: Z_monotoneOn. -/
+/- proof_shape: content; escape_witness: normalization_term; consumer: Z_monotoneOn. -/
 private theorem lift_normalization (m : ℕ) (u v : ℝ) :
     Beta.lift (Homogeneous.coeff (3*m)) (3*m) u v = ((3*m).factorial:ℝ) * Z m u v := by
   unfold Beta.lift Z
@@ -164,7 +163,8 @@ private theorem Z_monotoneOn (m : ℕ) (hm : 2≤m) {S : ℝ} (hS : 0≤S) :
   rw [lift_normalization, lift_normalization] at he
   exact (mul_le_mul_left (by positivity : (0:ℝ)<((3*m).factorial:ℝ))).mp he
 
-/- proof_shape: content; consumer: tail_nonneg_pos. -/
+/- proof_shape: content; escape_witness: Homogeneous.strictMonoOn_slice;
+consumer: tail_nonneg_pos. -/
 private theorem full_tail_nonneg (m : ℕ) {μ α β : ℝ}
     (hμ : 0≤μ) (hα : 0≤α) (hβ : 0≤β) :
     0≤∑ k ∈ range (m+1), raw μ α β m k := by
@@ -210,7 +210,8 @@ private theorem tail_nonneg_pos (m q : ℕ) (hq : 2*q≤m) {μ α β : ℝ}
     exact paired_sign hμ hα hβ m i hi j hj hij hpi
   · exact full_tail_nonneg m hμ.le hα.le hβ.le
 
-/- proof_shape: content; consumer: result. -/
+/- proof_shape: content; escape_witness: tail_nonneg_pos and the polynomial limit;
+consumer: result. -/
 private theorem tail_nonneg (m q : ℕ) (hq : 2*q≤m) {μ α β : ℝ}
     (hμ : 0≤μ) (hα : 0≤α) (hβ : 0≤β) :
     0≤∑ i ∈ range (m-q-q+1), raw μ α β m (q+i) := by
@@ -238,7 +239,8 @@ def claim : Prop :=
       0≤delta f μ α β m
 
 /-- The triple-Pochhammer coefficient assertion for every admissible sequence. -/
-/- proof_shape: bind-only; admission_basis: open-problem-resolution; consumer: external conjecture 3.8 settlement (#21124). -/
+/- proof_shape: content; escape_witness: full_tail_nonneg;
+admission_basis: open-problem-resolution; consumer: external conjecture 3.8 settlement (#21124). -/
 theorem result : claim := by
   intro f μ α β m hf hμ hα hβ
   rw [delta, KarpZhangReciprocal.Result.abel_layers]
