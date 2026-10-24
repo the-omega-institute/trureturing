@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:95aa91e334e3d0b67940760b11aea3474d6159b002bd27384250465825709865
+  normalized_sha256: sha256:95aa91e334e3d0b67940760b11aea3474d6159b002bd27384250465825709865
+cas_ref: sha256:95aa91e334e3d0b67940760b11aea3474d6159b002bd27384250465825709865
+coverage_gids:
+  - gid: D5/S3/QuantumBounds/GramRealizability.gram_realizability
+    target_statement_id: sha256:6554416dc945829550d1b987aed543d790f8a831d817e272bd8f0fe8c8ca6d0e
+receipts:
+  unresolved_subitems: []

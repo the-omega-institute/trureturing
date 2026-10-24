@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:56af71ede563d7dcd85632642bf9237cf9d7a1d694f93d31c6dac99316d52a0c
+  normalized_sha256: sha256:56af71ede563d7dcd85632642bf9237cf9d7a1d694f93d31c6dac99316d52a0c
+cas_ref: sha256:56af71ede563d7dcd85632642bf9237cf9d7a1d694f93d31c6dac99316d52a0c
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 此段要求把控制器通信与实施成本计入事件网络，属于建模纪律。
+    previous_atom_id: 4bbed7432ba9dce0214250cd8e0c34979d836e8b29cc52fd37e52c4860ad2381
+    next_atom_id: 8a433bd21760fcfb123b40cf8860c2be6005bd8c0b8e8dab50a4d0c2b88bacf6
