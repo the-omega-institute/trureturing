@@ -452,6 +452,61 @@ domain, methods for infinite groupoids and other representations are
 not excluded. Neither a stronger inverse-fourth estimate nor (J24),
 signed Robin restoration or RH follows from this model identification.
 
+#### The reflected star retains pairing and continuation obligations
+
+Under the same $q\equiv1\pmod{12}$ and order-six $\chi$ hypotheses,
+[Sawin--Whitehead, Theorem 4.7](https://arxiv.org/html/2507.08662v2#S4.Thmtheorem7)
+and [matrix transform (1.11)](https://arxiv.org/html/2507.08662v2#S1.E11)
+reflect the $m$-Dirichlet coordinate, in order $(u,v,m)$, to
+
+$$
+M_\star=\tau_m(M)=\begin{pmatrix}0&0&1\\0&0&1\\1&1&0\end{pmatrix}\pmod6.
+$$
+
+For $uv$ squarefree, Proposition 4.1 gives
+$a_{M_\star}(u,v,m)=(u/m)_\chi(v/m)_\chi$ for every monic $m$,
+including nonsquarefree $m$, with collision zeros retained. This is a
+**same-sign** character pairing. By contrast, Example 5.12's (5.15)
+uses a character and its conjugate for an absolute second moment.
+Theorem 4.7 acts on degree-residue vectors with a scattering matrix;
+a functional-equation conversion must retain its Gauss/root-number
+factors and degree shifts and costs. The original $b$ weights have not
+become canonical MDS coefficients. The separate central-moment route is
+[already assessed](../Analytic/liu2026quasirh.md#mollified-central-moments-retain-a-shorter-inverse-length).
+
+[Popa--Walsh, *A decomposition of Weyl group multiple Dirichlet series
+for symmetrizable Kac-Moody root systems*, arXiv:2607.11834v2](https://arxiv.org/html/2607.11834v2)
+provide genuine infinite-type continuation for a fixed symmetrizable
+Cartan matrix and its Chinta--Gunnells action, with distinct hypotheses.
+[Proposition 3.6](https://arxiv.org/html/2607.11834v2#S3.Thmdefinition6)
+continues the corrected average $D_{\mathrm{re}}\Delta_{\mathrm{im}}Z_\xi$
+holomorphically to the complexified Tits-cone interior, for a fixed
+$\xi\in P^+$. [Theorem 4.12](https://arxiv.org/html/2607.11834v2#S4.Thmdefinition12)
+requires Chinta--Gunnells invariance and Hypothesis $H(R)$ on $\Omega(R)$,
+with $R\ge\log_q r$: $D_{\mathrm{re}}Z$ must be holomorphic there and
+$Z$ must have the prescribed absolutely convergent Taylor expansion.
+Its decomposition converges normally in the stated polydisk.
+For their constructed global function-field WMDS, with $q\equiv1\pmod{2n}$,
+[Theorem 5.4](https://arxiv.org/html/2607.11834v2#S5.Thmdefinition4)
+gives normal convergence of $D_{\mathrm{re}}\mathcal Z$ on the explicit
+Weyl-invariant $X(R_{q,r})_{\mathbb C}$, $R_{q,r}=\max(1,\log_q r)$.
+This supplies meromorphic continuation on that subdomain, rather than
+unrestricted full-cone continuation or estimates for arbitrary insertions.
+
+In the displayed star basis, the bicharacter labels are $q_{ii}=-1$
+and $q_{um}q_{mu}=q_{vm}q_{mv}=\zeta_6$, a primitive sixth root.
+The ordinary diagonal Cartan-type relation
+$q_{ij}q_{ji}=q_{ii}^{a_{ij}}$ cannot hold on either nontrivial edge:
+no integer power of $-1$ equals $\zeta_6$. This excludes directly
+importing that conventional Cartan-type realization in this basis;
+it excludes neither alternative constructions nor other continuations.
+
+This is a `repo-derived` applicability check using the cited formulas.
+Identification of the actual coefficients, prime-power and angular/ray
+data, and a uniform bound with the original $b$ weights over the full
+natural dual length remain unproved bridges. No analytic saving,
+natural-boundary theorem, originality claim or RH conclusion follows.
+
 ### A common-gcd region with all original row expansions
 
 The same cubic interface and joint sextic estimate also pay an
