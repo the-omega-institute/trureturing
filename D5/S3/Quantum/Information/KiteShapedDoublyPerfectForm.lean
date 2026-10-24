@@ -6,7 +6,7 @@
    utility: none
    digest: Binary kite forms are doubly perfect exactly off one residue modulo three. -/
 
-import Mathlib.Data.ZMod.Basic
+import D5.S3.Quantum.FockSpace.ForbiddenNeighbourDeterminant
 import Mathlib.Algebra.Field.ZMod
 import Mathlib.Algebra.CharP.Two
 import Mathlib.LinearAlgebra.Matrix.SchurComplement
@@ -103,48 +103,30 @@ private lemma inverse_square (n : ℕ) :
   simp only [tridiagonal, inverseKite, Matrix.one_apply, Fin.val_rev, Fin.ext_iff]
   split_ifs <;> simp only [CharTwo.add_self_eq_zero, zero_add, add_zero] <;> omega
 
-private lemma tridiagonal_castSucc (n : ℕ) :
-    (tridiagonal (n + 1)).submatrix Fin.castSucc Fin.castSucc = tridiagonal n := by
-  ext i j
-  simp only [Matrix.submatrix_apply, tridiagonal, Fin.ext_iff, Fin.val_castSucc]
-
-private lemma tridiagonal_corner_minor (n : ℕ) :
-    ((tridiagonal (n + 2)).submatrix Fin.castSucc
-      (Fin.castSucc (Fin.last n)).succAbove).det = (tridiagonal n).det := by
-  let M := (tridiagonal (n + 2)).submatrix Fin.castSucc
-    (Fin.castSucc (Fin.last n)).succAbove
-  have hcol (i : Fin (n + 1)) : M i (Fin.last n) =
-      if i = Fin.last n then 1 else 0 := by
-    simp only [M, Matrix.submatrix_apply, Fin.succAbove_castSucc_self,
-      tridiagonal, Fin.ext_iff, Fin.val_castSucc, Fin.val_succ, Fin.val_last]
-    split_ifs <;> first | rfl | omega
-  have hminor : M.submatrix Fin.castSucc Fin.castSucc = tridiagonal n := by
-    ext i j
-    have hc : (Fin.castSucc (Fin.last n)).succAbove j.castSucc =
-        j.castSucc.castSucc :=
-      Fin.succAbove_castSucc_of_lt _ _ (Fin.castSucc_lt_last j)
-    simp only [M, Matrix.submatrix_apply, hc, tridiagonal, Fin.ext_iff, Fin.val_castSucc]
-  change M.det = _
-  rw [Matrix.det_succ_column M (Fin.last n)]
-  simp only [ZMod.neg_eq_self_mod_two, one_pow, one_mul, hcol, ite_mul, one_mul,
-    zero_mul, Finset.sum_ite_eq', Finset.mem_univ, ite_true, Fin.succAbove_last, hminor]
-
 private lemma tridiagonal_recurrence (n : ℕ) :
     (tridiagonal (n + 2)).det = (tridiagonal (n + 1)).det + (tridiagonal n).det := by
-  rw [Matrix.det_succ_row _ (Fin.last (n + 1))]
-  simp only [ZMod.neg_eq_self_mod_two, one_pow, one_mul]
-  rw [Fin.sum_univ_castSucc, Fin.sum_univ_castSucc]
-  have hz (j : Fin n) : tridiagonal (n + 2) (Fin.last (n + 1))
-      j.castSucc.castSucc = 0 := by
-    simp only [tridiagonal, Fin.ext_iff, Fin.val_last, Fin.val_castSucc]
+  let R := (tridiagonal (n + 2)).submatrix Fin.revPerm Fin.revPerm
+  have hr (j : Fin n) : R 0 j.succ.succ = 0 := by
+    simp only [R, Matrix.submatrix_apply, Fin.revPerm_apply, Fin.rev_zero, Fin.rev_succ,
+      tridiagonal, Fin.ext_iff, Fin.val_last, Fin.val_castSucc, Fin.val_rev]
     exact if_neg (by omega)
-  have ha : tridiagonal (n + 2) (Fin.last (n + 1)) (Fin.last n).castSucc = 1 := by
-    simp [tridiagonal]
-  have hb : tridiagonal (n + 2) (Fin.last (n + 1)) (Fin.last (n + 1)) = 1 := by
-    simp [tridiagonal]
-  simp only [hz, zero_mul, Finset.sum_const_zero, zero_add, ha, hb, one_mul,
-    Fin.succAbove_last, tridiagonal_castSucc, tridiagonal_corner_minor]
-  exact add_comm _ _
+  have hc (i : Fin n) : R i.succ.succ 0 = 0 := by
+    simp only [R, Matrix.submatrix_apply, Fin.revPerm_apply, Fin.rev_zero, Fin.rev_succ,
+      tridiagonal, Fin.ext_iff, Fin.val_last, Fin.val_castSucc, Fin.val_rev]
+    exact if_neg (by omega)
+  have ht : R.submatrix Fin.succ Fin.succ =
+      (tridiagonal (n + 1)).submatrix Fin.revPerm Fin.revPerm := by
+    ext i j
+    simp only [R, Matrix.submatrix_apply, Fin.revPerm_apply, Fin.rev_succ,
+      tridiagonal, Fin.ext_iff, Fin.val_castSucc]
+  have ht2 : R.submatrix (fun i : Fin n => i.succ.succ) (fun j : Fin n => j.succ.succ) =
+      (tridiagonal n).submatrix Fin.revPerm Fin.revPerm := by
+    ext i j
+    simp only [R, Matrix.submatrix_apply, Fin.revPerm_apply, Fin.rev_succ,
+      tridiagonal, Fin.ext_iff, Fin.val_castSucc]
+  have h := D5.S3.Quantum.FockSpace.ForbiddenNeighbourDeterminant.det_sparse_front R hr hc
+  rw [ht, ht2, Matrix.det_submatrix_equiv_self, Matrix.det_submatrix_equiv_self] at h
+  simpa [R, tridiagonal, Fin.ext_iff, Fin.val_rev, Fin.val_one', sub_eq_add_neg] using h
 
 private lemma tridiagonal_det_zero (n : ℕ) : (tridiagonal n).det = 0 ↔ n % 3 = 1 := by
   have values : ∀ k, (tridiagonal k).det = if k % 3 = 1 then 0 else 1 := by
