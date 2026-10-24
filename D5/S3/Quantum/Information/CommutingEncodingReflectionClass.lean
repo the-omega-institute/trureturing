@@ -239,6 +239,61 @@ private lemma diagonal_site_basis {κ : Type*}
   ext i j
   fin_cases i <;> fin_cases j <;> simp [Matrix.diagonal, hc01, hc10]
 
+private lemma traceless_unitary_phase_reflection (A : Matrix (Fin 2) (Fin 2) ℂ)
+    (hA : A ∈ Matrix.unitaryGroup (Fin 2) ℂ) (ht : Matrix.trace A = 0) :
+    ∃ (c : ℂ) (H : Matrix (Fin 2) (Fin 2) ℂ),
+      star c * c = 1 ∧ H.IsHermitian ∧ H * H = 1 ∧ A = c • H := by
+  classical
+  letI : IsStarNormal A := isStarNormal_of_mem_unitary hA
+  obtain ⟨K, hK, d, hd⟩ := Matrix.exists_mem_unitaryGroup_star_mul_mul_eq_diagonal A
+  have hKd : Kᴴ * A * K = diagonal d := hd
+  have hKK : K * Kᴴ = 1 := hK.2
+  have hKtK : Kᴴ * K = 1 := hK.1
+  have hd10 : d 1 = -d 0 := by
+    have hh : Matrix.trace (diagonal d) = 0 := by
+      rw [← hKd, Matrix.trace_mul_cycle, hKK, Matrix.one_mul, ht]
+    simp only [Matrix.trace_diagonal, Fin.sum_univ_two] at hh
+    linear_combination hh
+  have hdunit : diagonal d ∈ Matrix.unitaryGroup (Fin 2) ℂ := by
+    rw [← hKd]
+    exact (Matrix.unitaryGroup (Fin 2) ℂ).mul_mem
+      ((Matrix.unitaryGroup (Fin 2) ℂ).mul_mem (Unitary.star_mem hK) hA) hK
+  have hc : star (d 0) * d 0 = 1 :=
+    congrFun (Matrix.diagonal_mem_unitary.mp hdunit).1 0
+  open D5.S3.Quantum.FiniteDimensional in
+    obtain ⟨_, _, hZh, _, hZsq⟩ := qubit_weyl_star
+  let Z := D5.S3.Quantum.FiniteDimensional.qubitZ
+  have hZherm : Z.IsHermitian := hZh
+  have hZsquare : Z * Z = 1 := by simpa only [pow_two] using hZsq
+  have hdiag : diagonal d = d 0 • Z := by
+    ext i j
+    fin_cases i <;> fin_cases j <;>
+      simp [Matrix.diagonal, Z, D5.S3.Quantum.FiniteDimensional.qubitZ, hd10]
+  refine ⟨d 0, K * Z * Kᴴ, hc,
+    Matrix.isHermitian_mul_mul_conjTranspose K hZherm, ?_, ?_⟩
+  · calc
+      _ = K * Z * (Kᴴ * K) * Z * Kᴴ := by simp only [Matrix.mul_assoc]
+      _ = K * (Z * Z) * Kᴴ := by
+        rw [hKtK, Matrix.mul_one]; simp only [Matrix.mul_assoc]
+      _ = 1 := by rw [hZsquare, Matrix.mul_one, hKK]
+  · calc
+      A = K * (Kᴴ * A * K) * Kᴴ := by
+        symm
+        calc
+          _ = (K * Kᴴ) * A * (K * Kᴴ) := by simp only [Matrix.mul_assoc]
+          _ = _ := by rw [hKK, Matrix.one_mul, Matrix.mul_one]
+      _ = _ := by rw [hKd, hdiag, Matrix.mul_smul, Matrix.smul_mul]
+
+private lemma reflection_axes_pauli_frame {κ : Type*}
+    (H : κ → Matrix (Fin 2) (Fin 2) ℂ)
+    (hH : ∀ a, (H a).IsHermitian ∧ H a * H a = 1)
+    (hs : ∀ a b, H a * H b = H b * H a ∨ H a * H b = -(H b * H a)) :
+    ∃ V ∈ Matrix.unitaryGroup (Fin 2) ℂ,
+      ∃ (c : κ → ℂ) (p : κ → Pauli),
+        (∀ a, star (c a) * c a = 1) ∧
+        (∀ a, V * H a * Vᴴ = c a • pauliMatrix (p a)) := by
+  sorry
+
 private lemma pauli_site_frame {κ : Type*}
     (B : κ → Matrix (Fin 2) (Fin 2) ℂ)
     (hB : ∀ a, B a ∈ Matrix.unitaryGroup (Fin 2) ℂ)
@@ -248,7 +303,44 @@ private lemma pauli_site_frame {κ : Type*}
       ∃ (c : κ → ℂ) (p : κ → Pauli),
         (∀ a, star (c a) * c a = 1) ∧
         (∀ a, V * B a * Vᴴ = c a • pauliMatrix (p a)) := by
-  sorry
+  classical
+  have hnormalize (a : κ) : ∃ (c : ℂ) (H : Matrix (Fin 2) (Fin 2) ℂ),
+      star c * c = 1 ∧ H.IsHermitian ∧ H * H = 1 ∧ B a = c • H := by
+    by_cases ha : ∃ c : ℂ, B a = c • 1
+    · obtain ⟨c, hc⟩ := ha
+      have hu : diagonal (fun _ : Fin 2 => c) ∈ Matrix.unitaryGroup (Fin 2) ℂ := by
+        rw [← Matrix.smul_one_eq_diagonal, ← hc]
+        exact hB a
+      refine ⟨c, 1, congrFun (Matrix.diagonal_mem_unitary.mp hu).1 0,
+        Matrix.isHermitian_one, Matrix.one_mul _, hc⟩
+    · exact traceless_unitary_phase_reflection (B a) (hB a) (ht a ha)
+  choose c H hc hh hsq he using hnormalize
+  have hcn (a : κ) : c a ≠ 0 := by
+    intro hz
+    have hi := hc a
+    rw [hz, star_zero, zero_mul] at hi
+    exact zero_ne_one hi
+  have hmul (a b : κ) : B a * B b = (c a * c b) • (H a * H b) := by
+    rw [he a, he b, Matrix.smul_mul, Matrix.mul_smul, smul_smul]
+  have hsign (a b : κ) : H a * H b = H b * H a ∨ H a * H b = -(H b * H a) := by
+    have hn : c a * c b ≠ 0 := mul_ne_zero (hcn a) (hcn b)
+    rcases hs a b with hab | hab
+    · left
+      apply (smul_right_injective (Matrix (Fin 2) (Fin 2) ℂ) hn)
+      simpa only [hmul, mul_comm (c b) (c a)] using hab
+    · right
+      apply (smul_right_injective (Matrix (Fin 2) (Fin 2) ℂ) hn)
+      simpa only [hmul, mul_comm (c b) (c a), smul_neg] using hab
+  obtain ⟨V, hV, d, p, hd, hp⟩ :=
+    reflection_axes_pauli_frame H (fun a => ⟨hh a, hsq a⟩) hsign
+  refine ⟨V, hV, fun a => c a * d a, p, ?_, ?_⟩
+  · intro a
+    rw [star_mul]
+    calc
+      _ = (star (c a) * c a) * (star (d a) * d a) := by ring
+      _ = 1 := by rw [hc a, hd a, one_mul]
+  · intro a
+    rw [he a, Matrix.mul_smul, Matrix.smul_mul, hp a, smul_smul]
 
 private lemma local_site_normal_form {κ : Type*}
     (B : κ → Matrix (Fin 2) (Fin 2) ℂ)
