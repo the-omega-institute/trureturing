@@ -7,14 +7,17 @@ Programs that close inherited descriptors must enter again before accessing it.
 """
 
 import argparse
-from contextlib import ExitStack
+from contextlib import ExitStack, contextmanager
 import fcntl
 import hashlib
 import json
 import os
 from pathlib import Path
+import shutil
+import stat
 import subprocess
 import sys
+import time
 from urllib.parse import unquote, urlsplit
 
 if __name__ == "__main__":
@@ -173,6 +176,7 @@ def lock_file(directory, key, exclusive):
         fcntl.flock(fd, (fcntl.LOCK_EX if exclusive else fcntl.LOCK_SH) | fcntl.LOCK_NB)
         os.set_inheritable(fd, True)
         handle = os.fdopen(fd, "rb", buffering=0)
+        handle.scope_key = key
         OPEN_SCOPES.append(handle)
         return handle
     except BaseException:
@@ -226,9 +230,99 @@ def git_scope(stack, source, path):
     metadata = value(path, "rev-parse", "--absolute-git-dir")
     result = git(path, "symbolic-ref", "--quiet", "HEAD", check=False)
     branch = os.fsdecode(result.stdout).strip() if result.returncode == 0 else "HEAD"
-    acquire(stack, source, "ref:" + (branch if branch != "HEAD" else metadata + ":HEAD"), True)
+    for reference in sorted({metadata + ":HEAD", branch if branch != "HEAD" else metadata + ":HEAD"}):
+        acquire(stack, source, "ref:" + reference, True)
     acquire(stack, source, "index:" + metadata, True)
     return branch
+
+
+@contextmanager
+def exclusive_tree(stack, source, path):
+    """Promote this operation's entry only for a native-lock recovery attempt."""
+    key = "tree:" + str(Path(path).resolve())
+    local = next((handle for handle in getattr(stack, "scope_handles", [])
+                  if not handle.closed and handle.scope_key == key), None)
+    if local is None:
+        with ExitStack() as recovery:
+            tree_scope(recovery, source, path, True)
+            yield
+    else:
+        try:
+            fcntl.flock(local, fcntl.LOCK_EX | fcntl.LOCK_NB)
+        except BlockingIOError as error:
+            raise Refused("busy_scope:" + key) from error
+        try:
+            yield
+        finally:
+            fcntl.flock(local, fcntl.LOCK_SH)
+
+
+def native_lock_holders(path):
+    """Inspect the exact native lock; incomplete visibility is an error."""
+    inspector = shutil.which("lsof")
+    if inspector:
+        result = subprocess.run([inspector, "-nP", "-F", "p", "--", str(path)],
+                                stdout=subprocess.PIPE, stderr=subprocess.PIPE, timeout=30)
+        if result.stderr or result.returncode not in (0, 1):
+            raise OSError("incomplete lsof inspection")
+        rows = result.stdout.decode("ascii").splitlines()
+        if any(not row.startswith("p") or not row[1:].isdigit() for row in rows):
+            raise OSError("unrecognized lsof inspection")
+        if result.returncode == 0 and not rows or result.returncode == 1 and rows:
+            raise OSError("incomplete lsof result")
+        return rows
+    if not sys.platform.startswith("linux"):
+        raise OSError("holder inspection unavailable")
+    target = path.stat()
+    holders = []
+    for process in Path("/proc").iterdir():
+        if not process.name.isdigit():
+            continue
+        try:
+            for descriptor in (process / "fd").iterdir():
+                try:
+                    actual = descriptor.stat()
+                    if (actual.st_dev, actual.st_ino) == (target.st_dev, target.st_ino):
+                        holders.append(process.name)
+                except FileNotFoundError:
+                    pass
+        except FileNotFoundError:
+            pass
+    return holders
+
+
+def native_lock_candidates(path, metadata, branch, error):
+    candidates = [metadata / "index.lock", metadata / "HEAD.lock"]
+    if branch.startswith("refs/heads/"):
+        candidates.append(common(path) / (branch + ".lock"))
+    return [lock for lock in candidates if str(lock) in str(error) and os.path.lexists(lock)]
+
+
+def clear_native_locks(source, path, locks):
+    identity(source, path)
+    cleared = []
+    for lock in locks:
+        before = lock.lstat()
+        evidence = dict(event="worktree_native_lock", path=str(lock), size=before.st_size,
+                        age_seconds=time.time() - before.st_mtime)
+        try:
+            if not stat.S_ISREG(before.st_mode):
+                raise OSError("nonregular native lock")
+            holders = native_lock_holders(lock)
+        except (OSError, ValueError, subprocess.SubprocessError) as error:
+            print(json.dumps(dict(evidence, status="unverifiable")), file=sys.stderr, flush=True)
+            raise Refused("native_lock_unverifiable:" + str(lock)) from error
+        if holders:
+            print(json.dumps(dict(evidence, status="held", holders=holders)), file=sys.stderr, flush=True)
+            raise Refused("native_lock_held:" + str(lock))
+        after = lock.lstat()
+        fingerprint = lambda item: (item.st_dev, item.st_ino, item.st_size, item.st_mtime_ns)
+        if fingerprint(before) != fingerprint(after):
+            raise Refused("native_lock_changed:" + str(lock))
+        lock.unlink()
+        cleared.append(dict(evidence, status="native_lock_cleared"))
+        print(json.dumps(cleared[-1]), file=sys.stderr, flush=True)
+    return cleared
 
 
 def read_input(source, file):
@@ -303,6 +397,12 @@ def main(argv=None):
     joined.add_argument("--path", type=Path, required=True)
     joined.add_argument("--branch", required=True)
     joined.add_argument("--base", required=True)
+    recovery = commands.add_parser("recover-init")
+    recovery.add_argument("--path", type=Path, required=True)
+    recovery.add_argument("--branch", required=True)
+    recovery.add_argument("--base", required=True)
+    recovery.add_argument("--expected-token")
+    recovery.add_argument("--skip-restore", action="store_true")
     removal = commands.add_parser("remove")
     removal.add_argument("--names", default="")
     removal.add_argument("--path", action="append", type=Path, default=[])
@@ -341,6 +441,9 @@ def main(argv=None):
             with_command(options)
         elif options.action == "reuse":
             reuse(options)
+        elif options.action == "recover-init":
+            from worktree_publication import recover_initialization
+            print(json.dumps(recover_initialization(options)), flush=True)
         elif options.action == "remove":
             from worktree_preservation import remove
             result = remove(options)

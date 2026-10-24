@@ -141,6 +141,19 @@ internal static partial class CleanLanesCommand
     private static string? LockAgeBlockReason(RegisteredWorktree item, DateTimeOffset now)
     {
         if (!item.Locked) return null;
+        if (item.LockReason?.StartsWith("worktree-init:", StringComparison.Ordinal) == true)
+        {
+            try
+            {
+                using var scope = WorktreeInitializationScope.Acquire(item.Path, item.Path,
+                    item.Branch ?? "lane/governance/initialization-probe");
+                return null;
+            }
+            catch (IOException)
+            {
+                return "initialization_in_progress";
+            }
+        }
         try
         {
             var file = new FileInfo(Path.Combine(item.GitDirectory!, "locked"));

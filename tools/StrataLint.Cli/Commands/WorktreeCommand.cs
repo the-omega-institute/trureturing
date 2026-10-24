@@ -101,24 +101,26 @@ internal static class WorktreeCommand
         }
 
         WorktreeOptions? options = null;
-        var branchCreated = false;
         var worktreeCreated = false;
         string? branchOid = null;
         string? creationLock = null;
         string? creationMetadata = null;
         WorktreeBranchTracking? branchTracking = null;
         var halfBuiltRecovered = false;
+        var stage = "preflight";
         IDisposable? initializationScope = null;
         try
         {
             if (runner is ProductionWorktreeProcessRunner production)
                 runner = production.WithEnvironment(WorktreeProtocolCommand.InitializationEnvironment(repositoryRoot));
             options = ParseArguments(repositoryRoot, arguments);
-            if (Directory.Exists(options.Path))
+            if (Directory.Exists(options.Path) || RunProcess(runner, "git",
+                ["show-ref", "--verify", "--quiet", $"refs/heads/{options.Branch}"], options.Source,
+                BoundedProcessRunner.HangDetectionBudget).ExitCode == 0)
             {
-                var reused = WorktreeProtocolCommand.Run(options.Source,
-                    ["reuse", "--path", options.Path, "--branch", options.Branch, "--base", options.Base], runner);
-                if (!reused.Success) return reused;
+                stage = "recovery";
+                var reused = RecoverInitialization(options, runner);
+                if (!reused.Success) throw new InvalidOperationException(reused.Error);
                 if (LeanPinSet.TryReadWorktree(options.Path, out var reason) is null)
                     throw new InvalidOperationException(reason);
                 return reused;
@@ -132,6 +134,7 @@ internal static class WorktreeCommand
             branchTracking = WorktreeBranchTracking.Prepare(options, runner);
 
             creationLock = $"worktree-init:{Guid.NewGuid():N}";
+            stage = "branch";
             RunRequired(
                 runner,
                 "git",
@@ -140,8 +143,8 @@ internal static class WorktreeCommand
                 options.Source,
                 BoundedProcessRunner.HangDetectionBudget,
                 "git branch creation failed");
-            branchCreated = true;
             branchTracking?.Apply(options, runner);
+            stage = "registration";
             RunRequired(
                 runner,
                 "git",
@@ -153,10 +156,12 @@ internal static class WorktreeCommand
             worktreeCreated = true;
             creationMetadata = WorktreeCreationSafety.FindCreationMetadata(options, creationLock, runner);
             WorktreeCreationSafety.ValidateCreatedWorktree(options, runner);
+            stage = "checkout";
             WorktreeCreationSafety.CheckoutCreatedWorktree(options, runner);
             EnsureReviewScaffoldIgnores(options.Path);
             if (!options.SkipRestore)
             {
+                stage = "restore";
                 var restore = RunProcess(runner, "dotnet", ["restore", SolutionPath, "--locked-mode"],
                     options.Path, TimeSpan.FromSeconds(1800));
                 if (restore.ExitCode != 0)
@@ -165,6 +170,7 @@ internal static class WorktreeCommand
                 }
             }
             WorktreeCreationSafety.ValidateCreatedWorktree(options, runner);
+            stage = "unlock";
             RunRequired(
                 runner,
                 "git",
@@ -199,14 +205,12 @@ internal static class WorktreeCommand
                     creationMetadata ??= WorktreeCreationSafety.FindCreationMetadata(options, creationLock, runner);
                     if (worktreeCreated || creationMetadata is not null)
                         cleanup = Cleanup(options, creationLock, creationMetadata, runner);
-                    if (cleanup.Length == 0 && branchTracking is not null)
-                    {
-                        initializationScope?.Dispose();
-                        initializationScope = null;
-                        branchTracking.Rollback(options, runner);
-                    }
-                    if (branchCreated && creationMetadata is null && cleanup.Length == 0)
-                        cleanup = "initialization branch retained for recovery";
+                    // The runner has settled its owned commands before returning.
+                    // The common recovery path takes its own exclusive descriptor.
+                    initializationScope?.Dispose();
+                    initializationScope = null;
+                    var recovered = RecoverInitialization(options, runner, creationLock);
+                    cleanup = recovered.Success ? recovered.Output.Trim() : recovered.Error.Trim();
                 }
             }
             catch (Exception cleanupException) when (cleanupException is not OutOfMemoryException)
@@ -219,9 +223,13 @@ internal static class WorktreeCommand
                 status = "failed",
                 branch = options?.Branch,
                 path = options?.Path,
+                target = options?.Path,
+                stage,
                 base_revision = options?.Base,
                 reason = exception.Message,
                 cleanup_error = cleanup.Length == 0 ? null : cleanup.TrimStart(';', ' '),
+                retained_material = new { branch = options?.Branch, path = options?.Path },
+                recovery_action = "rerun make worktree with the same KIND/NAME/DEST; or reclaim the registered target with make worktree-remove",
             });
             return new CommandResult(
                 false,
@@ -564,7 +572,17 @@ internal static class WorktreeCommand
         IWorktreeProcessRunner runner)
     {
         WorktreeCreationSafety.ValidateCleanupOwnership(options, creationLock, creationMetadata, runner);
-        return "initialization worktree retained; later lock/time cleanup or alternate continuation is available";
+        return "initialization material retained for same-DEST recovery or reclaim";
+    }
+
+    private static CommandResult RecoverInitialization(WorktreeOptions options,
+        IWorktreeProcessRunner runner, string? token = null)
+    {
+        var arguments = new List<string> { "recover-init", "--path", options.Path,
+            "--branch", options.Branch, "--base", options.Base };
+        if (options.SkipRestore) arguments.Add("--skip-restore");
+        if (token is not null) arguments.AddRange(["--expected-token", token]);
+        return WorktreeProtocolCommand.Run(options.Source, arguments, runner, Timeout.InfiniteTimeSpan);
     }
 
     private static void RunRequired(

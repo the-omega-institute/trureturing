@@ -9,6 +9,66 @@ namespace StrataLint.Tests;
 public sealed partial class WorktreeCommandTests
 {
     [Theory]
+    [InlineData("checkout-timeout")]
+    [InlineData("checkout-nonzero")]
+    [InlineData("checkout-index-lock")]
+    [InlineData("branch-timeout")]
+    [InlineData("add-timeout")]
+    public void FailedInitializationResumesSameDestination(string failure)
+    {
+        using var repository = new TemporaryDirectory();
+        InitializeRepository(repository.Path);
+        var target = Path.Combine(repository.Path, "interrupted-init");
+        var failed = WorktreeCommand.Run(repository.Path, InitializationArguments(target),
+            new InitializationFailureRunner(target, failure));
+        Assert.False(failed.Success);
+        using var receipt = JsonDocument.Parse(failed.Error["WORKTREE_FAILED ".Length..]);
+        Assert.Equal(target, receipt.RootElement.GetProperty("target").GetString());
+        Assert.False(string.IsNullOrWhiteSpace(receipt.RootElement.GetProperty("stage").GetString()));
+        Assert.Contains("same", receipt.RootElement.GetProperty("recovery_action").GetString(), StringComparison.Ordinal);
+        for (var attempt = 0; attempt < 2; attempt++)
+        {
+            var recovered = WorktreeCommand.Run(repository.Path, InitializationArguments(target));
+            Assert.True(recovered.Success, recovered.Error);
+            AssertRegisteredAndUsable(repository.Path, target, "lane/math/interrupted-init");
+        }
+        if (failure.StartsWith("checkout-", StringComparison.Ordinal))
+            WorktreeFixtureFile.AssertContent(Path.Combine(target, "README.md"), "partial checkout\n");
+    }
+
+    [Theory]
+    [InlineData(false)]
+    [InlineData(true)]
+    public void RestoreFailureRecoversSameDestination(bool interrupted)
+    {
+        using var repository = new TemporaryDirectory();
+        InitializeRepository(repository.Path);
+        var target = Path.Combine(repository.Path, "interrupted-init");
+        var arguments = InitializationArguments(target).Where(value => value != "--skip-restore").ToArray();
+        var result = WorktreeCommand.Run(repository.Path, arguments, new RestoreFailureRunner(target, interrupted));
+        Assert.False(result.Success);
+        Assert.Contains("restore", result.Error, StringComparison.Ordinal);
+        var retry = WorktreeCommand.Run(repository.Path, InitializationArguments(target));
+        Assert.True(retry.Success, retry.Error);
+        WorktreeFixtureFile.AssertContent(Path.Combine(target, "retained.txt"), "restore bytes\n");
+    }
+
+    private sealed class RestoreFailureRunner(string target, bool interrupted) : IWorktreeProcessRunner
+    {
+        private readonly RecordingWorktreeProcessRunner inner = new();
+        public ProcessOutput Run(string fileName, IReadOnlyList<string> arguments, string workingDirectory, TimeSpan timeout)
+        {
+            if (fileName == "dotnet" && arguments.FirstOrDefault() == "restore")
+            {
+                File.WriteAllText(Path.Combine(target, "retained.txt"), "restore bytes\n");
+                if (interrupted) throw new TimeoutException("simulated restore interruption");
+                return new ProcessOutput(1, [], Encoding.UTF8.GetBytes("simulated restore failure"));
+            }
+            return inner.Run(fileName, arguments, workingDirectory, timeout);
+        }
+    }
+
+    [Theory]
     [InlineData("branch-timeout")]
     [InlineData("branch-nonzero")]
     [InlineData("branch-rejected")]

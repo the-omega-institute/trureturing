@@ -286,14 +286,17 @@ public sealed class WorktreeProtocolTests(ITestOutputHelper output)
             Encoding.UTF8.GetString(result.StandardOutput) + Encoding.UTF8.GetString(result.StandardError));
     }
 
-    [Fact]
-    public void CooperativeProtocolPreservesRealProcessAndGitState()
+    [Theory]
+    [InlineData(0)]
+    [InlineData(1)]
+    public void CooperativeProtocolPreservesRealProcessAndGitState(int part)
     {
         if (OperatingSystem.IsWindows()) return;
         var root = TestRepositoryLayout.FindRoot();
         var result = CaptureCleanupOutput((stdout, stderr) => TestProcessRunner.Run("python3",
             ["-B", Path.Combine(root,
-                "tools/tests/StrataLint.WorktreeContract.Tests/Fixtures/worktree_protocol_tests.py"), root],
+                "tools/tests/StrataLint.WorktreeContract.Tests/Fixtures/worktree_protocol_tests.py"), root,
+                "--part", part.ToString(System.Globalization.CultureInfo.InvariantCulture)],
             root, TimeSpan.FromSeconds(180), 1024 * 1024,
             standardOutput: stdout, standardError: stderr,
             interruptBeforeKill: TestProcessRunner.InterruptPythonFixture), output.WriteLine);

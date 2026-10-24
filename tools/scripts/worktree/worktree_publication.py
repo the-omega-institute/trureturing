@@ -3,9 +3,152 @@
 from contextlib import ExitStack
 import os
 from pathlib import Path
+import subprocess
+import uuid
 
-from worktree_protocol import (Refused, git, value, identity, tree_scope,
-                               git_scope, acquire, remote_endpoint, read_input)
+from worktree_protocol import (Refused, GitFailure, git, value, identity, tree_scope,
+                               git_scope, acquire, remote_endpoint, read_input,
+                               exclusive_tree, native_lock_candidates, clear_native_locks,
+                               common, inventory, reuse, scope_fds, git_environment)
+
+
+def creation_witness(source, reference):
+    log = common(source) / "logs" / reference
+    if log.is_symlink() or not log.is_file():
+        raise Refused("initialization_creation_witness_missing")
+    first = log.read_bytes().splitlines()[0].split(b"\t", 1)
+    fields = first[0].split()
+    if (len(first) != 2 or len(fields) < 2 or set(fields[0]) != {ord("0")}
+            or len(fields[0]) != len(fields[1])):
+        raise Refused("initialization_creation_witness_invalid")
+    token = first[1].decode("ascii")
+    creation = fields[1].decode("ascii")
+    if (not token.startswith("worktree-init:")
+            or value(source, "rev-parse", "--verify", reference + "^{commit}") != creation):
+        raise Refused("initialization_branch_identity_changed")
+    if git(source, "symbolic-ref", "--quiet", reference, check=False).returncode == 0:
+        raise Refused("initialization_branch_identity_changed")
+    return token, creation
+
+
+def recovery_root(stack, source, path, commit):
+    reference = "refs/heads/lane/governance/recovery-" + uuid.uuid4().hex
+    acquire(stack, source, "ref:" + reference, True)
+    git(path, "update-ref", "--no-deref", "--create-reflog", reference, commit, "0" * len(commit))
+    if value(path, "rev-parse", "--verify", reference + "^{commit}") != commit:
+        raise Refused("recovery_root_changed:" + reference)
+    return reference
+
+
+def recover_initialization(options):
+    """Resume an owned initializer, preserving extant ordinary bytes before checkout."""
+    reference = "refs/heads/" + options.branch
+    with ExitStack() as stack:
+        try:
+            path = tree_scope(stack, options.source, options.path, True)
+        except Refused as error:
+            raise Refused("initialization_in_progress") from error
+        acquire(stack, options.source, "ref:" + reference, True)
+        rows = [row for row in inventory(options.source) if Path(row["worktree"]).resolve() == path]
+        if rows and not rows[0].get("locked", "").startswith("worktree-init:"):
+            if "locked" in rows[0]:
+                raise Refused("intentional_worktree_lock")
+            # Ordinary reuse uses its own shared entry and index/ref scopes.
+            stack.close()
+            reuse(options)
+            return dict(event="worktree_init", status="already_initialized", path=str(path))
+        token, creation = creation_witness(options.source, reference)
+        expected = getattr(options, "expected_token", None)
+        if expected and expected != token:
+            raise Refused("initialization_token_changed")
+        if not rows:
+            if path.exists() or path.is_symlink() or any(row.get("branch") == reference
+                                                       for row in inventory(options.source)):
+                raise Refused("initialization_path_identity_changed")
+            if value(options.source, "rev-parse", "--verify", options.base + "^{commit}") != creation:
+                raise Refused("initialization_base_changed")
+            git(options.source, "worktree", "add", "--no-checkout", "--lock", "--reason", token,
+                path, options.branch)
+            rows = [row for row in inventory(options.source) if Path(row["worktree"]).resolve() == path]
+        if len(rows) != 1 or rows[0].get("locked") != token or path.is_symlink():
+            raise Refused("initialization_token_or_path_changed")
+        pointer = path / ".git"
+        if pointer.is_symlink() or not pointer.is_file():
+            raise Refused("initialization_git_pointer")
+        text = pointer.read_text().strip()
+        if not text.startswith("gitdir: ") or "\n" in text:
+            raise Refused("initialization_git_pointer")
+        metadata = (path / text[8:]).resolve()
+        if (metadata.parent != common(options.source) / "worktrees" or metadata.is_symlink()
+                or Path((metadata / "gitdir").read_text().strip()).resolve() != pointer.resolve()
+                or (metadata / (metadata / "commondir").read_text().strip()).resolve() != common(options.source)):
+            raise Refused("initialization_metadata_identity_changed")
+        if not (metadata / "HEAD").exists():
+            acquire(stack, options.source, "ref:" + str(metadata) + ":HEAD", True)
+            git(options.source, "--git-dir", metadata, "symbolic-ref", "HEAD", reference)
+        else:
+            if rows[0].get("branch") != reference:
+                raise Refused("initialization_branch_identity_changed")
+            acquire(stack, options.source, "ref:" + str(metadata) + ":HEAD", True)
+        item, verified = identity(options.source, path)
+        if verified != metadata or item.get("branch") != reference:
+            raise Refused("initialization_registration_changed")
+        acquire(stack, options.source, "index:" + str(metadata), True)
+        # A temporary native index snapshots partial checkout bytes without moving
+        # the creation branch, so the creation witness survives an interrupted retry.
+        alternate = metadata / ("initialization-index-" + uuid.uuid4().hex)
+        recovery = None
+        try:
+            env = {"GIT_INDEX_FILE": str(alternate)}
+            git(path, "read-tree", creation, env=env)
+            git(path, "add", "-A", "--", ".", env=env)
+            tree = value_from(git(path, "write-tree", env=env))
+            if tree != value(path, "rev-parse", creation + "^{tree}"):
+                commit = value_from(git(path, "commit-tree", tree, "-p", creation,
+                                       input=b"Preserve interrupted initialization snapshot\n"))
+                recovery = recovery_root(stack, options.source, path, commit)
+        finally:
+            alternate.unlink(missing_ok=True)
+        try:
+            git(path, "read-tree", creation)
+        except GitFailure as error:
+            locks = native_lock_candidates(path, metadata, reference, error)
+            if not locks:
+                raise
+            clear_native_locks(options.source, path, locks)
+            git(path, "read-tree", creation)
+        missing = [name for name in git(path, "ls-files", "-z").stdout.split(b"\0")
+                   if name and not os.path.lexists(path / os.fsdecode(name))]
+        if missing:
+            git(path, "checkout-index", "-z", "--stdin", input=b"\0".join(missing) + b"\0")
+        git(path, "hook", "run", "--ignore-missing", "post-checkout", "--",
+            "0" * len(creation), creation, "1")
+        if not options.skip_restore:
+            with subprocess.Popen(["dotnet", "restore", "tools/StrataLint.sln", "--locked-mode"],
+                                  cwd=path, env=git_environment(), pass_fds=scope_fds()) as process:
+                try:
+                    code = process.wait(timeout=1800)
+                except BaseException:
+                    process.terminate()
+                    try:
+                        process.wait(timeout=30)
+                    except subprocess.TimeoutExpired:
+                        process.kill()
+                        process.wait()
+                    raise
+                if code:
+                    raise Refused("initialization_restore_failed:" + str(code))
+        current, _ = identity(options.source, path)
+        if current.get("locked") != token or current.get("branch") != reference:
+            raise Refused("initialization_identity_changed")
+        creation_witness(options.source, reference)
+        git(options.source, "worktree", "unlock", path)
+        return dict(event="worktree_init", status="recovered", path=str(path), branch=options.branch,
+                    recovery_branch=recovery, creation_commit=creation)
+
+
+def value_from(result):
+    return os.fsdecode(result.stdout).strip()
 
 
 def confirm(root, remote, branch, commit, endpoint=None):
@@ -27,7 +170,20 @@ def confirm(root, remote, branch, commit, endpoint=None):
                 relation="equal" if commit == tip else "ancestor")
 
 
-def commit_snapshot(path, metadata, branch, message):
+def commit_snapshot(path, metadata, branch, message, stack, source):
+    try:
+        return ordinary_snapshot(path, metadata, branch, message)
+    except GitFailure as error:
+        locks = native_lock_candidates(path, metadata, branch, error)
+        if not locks:
+            raise
+        with exclusive_tree(stack, source, path):
+            cleared = clear_native_locks(source, path, locks)
+            # A second failure is returned intact; recovery never loops or broadens locks.
+            return dict(ordinary_snapshot(path, metadata, branch, message), native_locks=cleared)
+
+
+def ordinary_snapshot(path, metadata, branch, message):
     """Consume the ordinary index under the caller's Git operation scope."""
     if git(path, "ls-files", "--unmerged").stdout:
         raise Refused("unmerged_index")
@@ -55,7 +211,7 @@ def checkpoint(options):
             raise Refused("checkpoint_current_branch_required")
         message = (read_input(options.source, options.message_file) if options.message_file
                    else b"Checkpoint working tree before publication\n")
-        return commit_snapshot(path, metadata, branch, message)
+        return commit_snapshot(path, metadata, branch, message, stack, options.source)
 
 
 def publish(options):
