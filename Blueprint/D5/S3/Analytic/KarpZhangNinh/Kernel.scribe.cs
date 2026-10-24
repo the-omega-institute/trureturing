@@ -30,7 +30,7 @@ internal sealed class KernelDocument : IScribeDocumentDefinition
 
     private static DocumentBlock Node(string name, string title, DescribeRole role,
         Formula formula, string prose, bool literature = false) =>
-        Describe.Lean(DescribeId.Create("kz38-kernel-" + name.Replace('_', '-')),
+        Describe.Lean(DescribeId.Create("kz38-kernel-" + name.Replace('_', '-').ToLowerInvariant()),
             DeclarationHandle.Create("D5/S3/Analytic/KarpZhangNinh/Kernel." + name),
             H(title), StatementSource.FromAuthor(Disp(formula)),
             literature ? AssessedProvenance.FromLiterature(Source) : AssessedProvenance.FromRepo(),
@@ -99,7 +99,7 @@ internal sealed class KernelDocument : IScribeDocumentDefinition
     private static Formula R()=>F.Id("Real");
     private static Formula N()=>F.Id("Nat");
     private static Formula Call(string name,params Formula[] args)=>new Formula.FunctionCall(FormulaIdentifier.Create(name),[..args]);
-    private static Formula All(string name,Formula type,Formula body)=>new Formula.Bind(FormulaQuantifier.Forall,FormulaIdentifier.Create(name),type,body);
+    private static Formula All(string name,Formula type,Formula body)=>new Formula.Bind(FormulaQuantifier.ForAll,FormulaIdentifier.Create(name),type,body);
     private static Formula Eq(Formula a,Formula b)=>new Formula.Relation(a,FormulaRelationOperator.Equal,b);
     private static Formula Lt(Formula a,Formula b)=>new Formula.Relation(a,FormulaRelationOperator.LessThan,b);
     private static Formula Le(Formula a,Formula b)=>new Formula.Relation(a,FormulaRelationOperator.LessThanOrEqual,b);
@@ -108,6 +108,7 @@ internal sealed class KernelDocument : IScribeDocumentDefinition
     private static Formula Sub(Formula a,Formula b)=>new Formula.Binary(a,FormulaBinaryOperator.Subtract,b);
     private static Formula Mul(Formula a,Formula b)=>new Formula.Binary(a,FormulaBinaryOperator.Multiply,b);
     private static Formula Div(Formula a,Formula b)=>new Formula.Fraction(a,b);
+    private static Formula Parenthesized(Formula a)=>Seq(Open,a,Close);
     private static Formula Fact(Formula n)=>Seq(Parenthesized(n),Bang);
     private static Formula NSub(Formula a,Formula b)=>new Formula.Apply(Seq(Operatorname,Grp(Seq(X("Nat"),Dot,X("sub")))),[a,b]);
     private static Formula Poch(Formula n,Formula t)=>new Formula.Apply(Seq(Operatorname,Grp(Seq(X("Polynomial"),Dot,X("eval")))),[t,Call("ascPochhammer",R(),n)]);

@@ -160,7 +160,7 @@ Karp–Zhang developments.
   whose unit-sum slice is nondecreasing towards its centre has a
   rising-factorial lift with the same balancing property. The coefficients
   may have either sign; closed endpoints and total parameter zero are included.
-- **COMPUTED (source report):** Page 4 states: “In this section we will prove
+- **COMPUTED:** The source report on page 4 states: “In this section we will prove
   this conjecture for r = 2 and disprove numerically for r = 4 (strongly
   suggesting that is it also wrong for r > 4). The case r = 3 remains open
   and is formulated in the form of Conjecture 3.8.” Remark 3.7, page 8,

@@ -133,7 +133,7 @@ internal sealed class HomogeneousDocument : IScribeDocumentDefinition
                 Ns(["m"], Imp(Le(D(2), V("m")), C("StrictMonoOn",
                     Lambda("t", C("P", Mul(D(3), V("m")), V("t"), Sub(D(1), V("t")))),
                     App(Q("Set", "Ioc"), D(0), new Formula.Fraction(D(1), D(2)))))),
-                "For x and d positive, the n=3 coefficient is strictly positive because T(3,N)=3(N-3), while every other summand is nonnegative. On the left half interval d=1-2x is positive. The mean-value theorem gives strict increase, including comparisons with the midpoint."))));
+                "For x and d positive, the n=3 coefficient is strictly positive because T(3,N)=3(N-3), while every other summand is nonnegative. For 0<x<1/2, d=1-2x is positive. The mean-value theorem gives strict increase, including comparisons with the midpoint."))));
 
     private static DocumentBlock Def(string name, string title, Formula formula, string text) =>
         Entry(name, title, DescribeRole.Definition, formula, text);
