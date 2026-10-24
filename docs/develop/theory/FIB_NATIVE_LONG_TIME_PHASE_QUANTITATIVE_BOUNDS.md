@@ -1072,3 +1072,562 @@ finite measure, stipulated stopped phases, Q law and exact terminal
 survivor law have the separate conclusions proved above.
 
 ## 追加锚（本行以下为增补区）
+
+## 49. Native confinement of an entire winding history
+
+**Definition 49.1 (unchanged source, normal and precision).** Write
+[D](FIB_NATIVE_LONG_TIME_PHASE_DIFFUSION.md) for the original diffusion
+supplier and
+[G](FIB_NATIVE_TWO_CONTROL_GREEN_STABILITY.md) for its source supplier.
+Retain D Definition 35.1 and this volume's Definition 41.1,
+including their original five probabilities, immutable initial phases,
+initial height, two independent drivers, covariance, height guard,
+killing at both endpoints of $I$, and original clock. Fix a nonempty
+compact two-sided collar
+
+$$
+\mathcal K_\times=\{\kappa:\kappa_-\le|\kappa|\le\kappa_+\}
+\subset\mathcal K,\qquad 0<\kappa_-\le\kappa_+,
+\qquad E\Subset I.
+\tag{49.1}
+$$
+
+Here $E$ is a fixed nonempty compact subset of $I$.
+Each history starts from one fixed $k_0\in E$ and one fixed phase;
+uniformity in these choices does not randomize INITIAL. On the original
+winding lift put
+
+$$
+y=(\theta,v,D),\quad J_\kappa=\operatorname{diag}(1,1,\kappa),\quad
+\widehat c_\kappa=J_\kappa c_\kappa,\quad
+\widehat M_\kappa=J_\kappa M_\kappa J_\kappa^{\mathsf T}.
+\tag{49.2}
+$$
+
+Thus $dy_t=\sqrt2\widehat c_\kappa(K_t)dW_t^2$ until the original
+height exit $\zeta$. D Theorem 39.1 supplies precisely this signed
+coordinate map, not a different source. Select a Euclidean unit normal
+$e\in\mathbb R^3$ before the history and define
+
+$$
+\begin{aligned}
+h&=J_\kappa^{\mathsf T}e,& a(k)&=h\cdot c_\kappa(k),&
+\widehat m_{\kappa,e}&=e^{\mathsf T}\widehat M_\kappa e,\\
+A(T,R,e)&=\left\{\sup_{0\le t\le T}
+             |e\cdot(y_t-y_0)|<R\right\},&
+\delta&=R/\sqrt T,& \omega&=\pi/(2R),\\
+C_T&=\mathbb P(\,\cdot\mid\zeta>T),&
+p(T,R,e)&=C_T(A(T,R,e)).
+\end{aligned}
+\tag{49.3}
+$$
+
+Here $T,R>0$, $A$ is a live-history event, and $\mathbb P$ is exactly
+the original killed law. For definiteness $A$ is false on histories
+killed by $T$; this convention does not change its meaning under $C_T$.
+Let $\mathbb P_T$ be the probability law on full histories through $T$,
+including height death and its cemetery record. Initial phases cancel
+from (49.3). No wrapping, initial-height averaging, stationary height
+preparation or replacement of either driver is made.
+
+**Theorem 49.2 (uniform exact-band confinement probability).** Under
+Definition 49.1, as $R\to\infty$ and $T/R^2\to\infty$,
+
+$$
+p(T,R,e)=\left(\frac4\pi+o(1)\right)
+ \exp\left\{-T\left[
+ \Lambda_\kappa\!\left(\frac{\pi J_\kappa^{\mathsf T}e}{2R}\right)
+ -\lambda\right]\right\},
+\tag{49.4}
+$$
+
+uniformly over $\kappa\in\mathcal K_\times$, unit $e$, $k_0\in E$
+and initial phases. Here $\Lambda_\kappa$ is D's full-real Dirichlet
+height band, with $\Lambda_\kappa(0)=\lambda$.
+More precisely, let $v_{\kappa,\eta}$ be the positive, $L^2(dk)$-normalized
+height ground eigenfunction used in D (36.7)--(36.8), and put
+
+$$
+G_{\kappa,\eta}(k_0)=
+\frac{v_{\kappa,\eta}(k_0)\int_I v_{\kappa,\eta}(k)dk}
+     {\phi(k_0)J},\qquad J=\int_I\phi(k)dk.
+\tag{49.5}
+$$
+
+There are $R_0,T_0,c,C>0$ depending only on the fixed data such that,
+for $R\ge R_0$, $T\ge T_0$,
+
+$$
+\begin{aligned}
+p(T,R,e)&=\frac4\pi G_{\kappa,\omega h}(k_0)
+ e^{-T[\Lambda_\kappa(\omega h)-\lambda]}(1+\rho),\\
+|\rho|&\le C\left[e^{-2\lambda T}+e^{-cT/R^2}\right],\qquad
+|G_{\kappa,\omega h}(k_0)-1|\le C R^{-2}.
+\end{aligned}
+\tag{49.6}
+$$
+
+Proof. First condition on the entire surviving height history. By
+independence of $W^1,W^2$ and (41.6), the real process
+$X_t=e\cdot(y_t-y_0)$ has the same conditional continuous-path law as
+$B_{U_t}$, where $B$ is Brownian motion with generator $\partial_x^2$
+(starting at zero) and
+
+$$
+U_t=\int_0^t a(K_s)^2ds.
+\tag{49.7}
+$$
+
+This is equality of conditional laws; it adds no driver to the actual
+source. For each fixed height path, both are centered continuous
+Gaussian processes with covariance $2U_{\min(s,t)}$. The continuous
+nondecreasing map $t\mapsto U_t$ has range $[0,U_T]$, even if it has
+flat intervals. Consequently the all-prefix event, not just the endpoint,
+has conditional probability
+$H_R(U_T)$, where $H_R(u)=\mathbb P(\sup_{s\le u}|B_s|<R)$.
+
+The classical Dirichlet interval calculation gives
+
+$$
+H_R(u)=\frac4\pi\sum_{j=0}^\infty
+ \frac{(-1)^j}{2j+1}e^{-(2j+1)^2\omega^2u},\qquad u>0.
+\tag{49.8}
+$$
+
+Here is its normalization and the tail control needed here. The
+$L^2(-R,R)$-normalized eigenfunctions of $-\partial_x^2$ are
+$R^{-1/2}\sin(n\pi(x+R)/(2R))$, with eigenvalues $n^2\omega^2$.
+Apply their heat semigroup to the constant function one and evaluate
+at $x=0$. The integral coefficient is zero for even $n$ and
+$4\sqrt R/(n\pi)$ for odd $n$; the evaluation coefficient for
+$n=2j+1$ is $(-1)^j/\sqrt R$. This proves (49.8), with absolute
+convergence at every positive $u$. This heat solution equals killed
+Brownian survival: Itô's formula stopped at the two faces identifies
+the bounded Dirichlet heat solution with the killed expectation;
+apply it first away from initial time and pass to the bounded initial
+value one at interior points. At $u=0$, survival is one and the same
+series has its alternating-series value. Since its term magnitudes
+decrease, its first two partial sums bound its value for every $u\ge0$:
+
+$$
+\frac4\pi\left[e^{-\omega^2u}-\frac13e^{-9\omega^2u}\right]
+\le H_R(u)\le\frac4\pi e^{-\omega^2u}.
+\tag{49.9}
+$$
+
+Thus no interchange with an uncontrolled high-mode tail is required.
+Write
+
+$$
+F_T(\eta;k)=\mathbb E_k\left[
+ \mathbf1_{\{\zeta>T\}}
+ e^{-\int_0^T(\eta\cdot c_\kappa(K_s))^2ds}\right]
+       =(e^{-TH_{\kappa,\eta}}1)(k),\quad
+H_{\kappa,\eta}=-\varepsilon^2\partial_k^2+
+                         (\eta\cdot c_\kappa)^2.
+\tag{49.10}
+$$
+
+The operator domain is the same two-Dirichlet domain as D (36.5).
+The last equality is the bounded-potential killed Feynman--Kac identity:
+apply Itô's formula to the backward heat solution multiplied by
+$\exp[-\int_0^t(\eta\cdot c_\kappa(K_s))^2ds]$, stop at the height
+faces, and pass to the bounded terminal value one. All potentials
+here are bounded and nonnegative. In particular (49.10) is a Laplace
+transform on the original height law, not an added attractive field.
+Taking the expectation of (49.9) over that law yields the exact bounds
+
+$$
+\frac4\pi\left[F_T(\omega h;k_0)-\frac13F_T(3\omega h;k_0)\right]
+\le S_{k_0}(T)p(T,R,e)
+\le\frac4\pi F_T(\omega h;k_0).
+\tag{49.11}
+$$
+
+Consume D (36.7)--(36.8), rather than proving another band theorem.
+They supply, uniformly in a fixed small real-frequency ball,
+$v_{\kappa,\eta}/\phi=1+O(|\eta|^2)$ and the integrated remainder
+
+$$
+F_T(\eta;k)=e^{-T\Lambda_\kappa(\eta)}
+ v_{\kappa,\eta}(k)\int_Iv_{\kappa,\eta}
+ +O(\phi(k)J e^{-4\lambda T}),\qquad T\ge1.
+\tag{49.12}
+$$
+
+In that ball $\Lambda_\kappa(\eta)\le2\lambda$, so the error relative
+to the displayed leading term is $O(e^{-2\lambda T})$.
+D (37.4) supplies
+$S_k(T)=e^{-\lambda T}\phi(k)J[1+O(e^{-8\lambda T})]$.
+Division therefore gives
+
+$$
+\frac{F_T(\omega h;k_0)}{S_{k_0}(T)}
+=G_{\kappa,\omega h}(k_0)e^{-T[\Lambda_\kappa(\omega h)-\lambda]}
+ [1+O(e^{-2\lambda T})],\qquad G_{\kappa,\omega h}=1+O(R^{-2}).
+\tag{49.13}
+$$
+
+All constants are uniform: $h=J_\kappa^{\mathsf T}e$ stays in a compact
+annulus and
+
+$$
+0<m_-:=m\min(1,\kappa_-^2)
+\le\widehat m_{\kappa,e}=h^{\mathsf T}M_\kappa h
+\le M\max(1,\kappa_+^2)=:m_+<\infty.
+\tag{49.14}
+$$
+
+The quadratic band estimate D (36.4) then gives, for large enough $R$,
+
+$$
+\Lambda_\kappa(3\omega h)-\Lambda_\kappa(\omega h)
+ =8\widehat m_{\kappa,e}\omega^2+O(\omega^4)
+ \ge4m_-\omega^2.
+\tag{49.15}
+$$
+
+Apply (49.12) at both frequencies, making $R_0$ large enough that
+both lie in its ball. Their positive prefactors are uniformly comparable
+to $\phi(k_0)J$, and their relative errors are uniformly bounded for
+$T\ge T_0$. Hence
+
+$$
+0\le\frac{F_T(3\omega h;k_0)}{F_T(\omega h;k_0)}
+\le C e^{-4m_-\omega^2T}\le C e^{-cT/R^2}.
+\tag{49.16}
+$$
+
+Equations (49.11), (49.13) and (49.16) prove (49.6). Its three error
+terms vanish in the two asserted limits, proving (49.4). The estimate
+concerns the entire native winding history; no invariance-principle
+error has been used to estimate a rare event.
+
+The supplied autonomous original normal $e=(2,-2,1)/3$ retains its
+exact normalization: D Theorem 50.1 gives $a=1/3$, so
+$U_T=T/9$, $\widehat m_{\kappa,e}=1/9$, $G=1$ and
+$\Lambda_\kappa(\omega h)-\lambda=\omega^2/9$.
+For this direction (49.11) is directly the first-two-term bound of
+$H_R(T/9)$, consistent with both the coefficient $4/\pi$ and the
+original covariance factor two. $\square$
+
+## 50. Precision cost and the existing native quartic coefficient
+
+**Theorem 50.1 (uniform logarithmic law and relative-asymptotic scales).**
+In the joint regime of Theorem 49.2,
+
+$$
+-\log p(T,R,e)\sim
+ \frac{\pi^2}{4}\widehat m_{\kappa,e}\frac{T}{R^2}
+ =\frac{\pi^2}{4}\frac{e^{\mathsf T}\widehat M_\kappa e}{\delta^2},
+\tag{50.1}
+$$
+
+where the ratio tends to one uniformly in Definition 49.1's choices.
+For $h=J_\kappa^{\mathsf T}e$, the coefficient already supplied by
+D Definition 51.1 and Theorem 51.3 gives
+
+$$
+\begin{aligned}
+T[\Lambda_\kappa(\omega h)-\lambda]
+ &=\frac{\pi^2}{4}\widehat m_{\kappa,e}\frac{T}{R^2}
+ -\frac{\pi^4}{16}\mathcal B_\kappa(h)\frac{T}{R^4}
+ +O(T/R^6),\\
+-\log p(T,R,e)
+ &=T[\Lambda_\kappa(\omega h)-\lambda]-\log(4/\pi)+o(1).
+\end{aligned}
+\tag{50.2}
+$$
+
+No condition $T/R^4\to0$ is needed for (50.1). That condition is
+sufficient to replace the exact band by its quadratic term in the
+relative probability asymptotic (49.4); without it that replacement
+is not valid in general.
+
+Proof. D (51.6) applies to the unit vector $h/|h|$ and scalar
+$r=\omega|h|$. Its quadratic and quartic homogeneities give exactly
+the first line of (50.2); boundedness on the fixed annulus makes its
+remainder uniform. This consumes the native quartic coefficient and
+its sign and does not introduce a new one. The logarithm of (49.6),
+with $G=1+O(R^{-2})$, gives the second line. Divide both lines by
+$\widehat m_{\kappa,e}T/R^2$, bounded below by $m_-T/R^2$.
+The relative quartic and remainder errors are $O(R^{-2})$ and
+$O(R^{-4})$; the bounded prefactor contributes $O(R^2/T)$.
+All vanish under just the two stated limits, proving (50.1).
+
+For the relative probability, its quadratic replacement changes the
+exponent by $O(T/R^4)$, explaining the sufficient extra condition.
+For a fixed pair $(\kappa,e)$ with $\mathcal B_\kappa(h)>0$ and
+$R=T^{1/4}$, (49.4) and (50.2) give instead
+
+$$
+\frac{p(T,T^{1/4},e)}
+ {(4/\pi)\exp[-(\pi^2/4)\widehat m_{\kappa,e}\sqrt T]}
+\longrightarrow \exp[(\pi^4/16)\mathcal B_\kappa(h)]>1.
+\tag{50.3}
+$$
+
+Such native directions exist: $e=(0,0,1)$ makes
+$a=\kappa b_\kappa$ nonconstant by G (25.4), and D Theorem 51.2
+makes its quartic coefficient strictly positive. The collar is within
+the fixed small source neighbourhood. On autonomous directions
+D Theorem 50.1 gives constant $a^2$ and an exactly quadratic band;
+the additional scale condition is unnecessary there. $\square$
+
+## 51. Sharp information frontier on the same killed history space
+
+**Theorem 51.1 (attained survival-relative confinement optimum).** Use
+Definition 49.1 and natural logarithms. Fix $0\le\alpha<1$ and set
+$r=1-\alpha$. Whenever $0<p=p(T,R,e)<r$, among all probability
+laws $V$ on the original history space satisfying
+
+$$
+V\ll\mathbb P_T,\qquad V(\zeta>T)=1,\qquad V(A(T,R,e))\ge r,
+\tag{51.1}
+$$
+
+the exact minimum is
+
+$$
+\begin{aligned}
+\inf_V D(V\Vert\mathbb P_T)
+ &=-\log S_{k_0}(T)+d_{\rm bin}(r\Vert p),\\
+d_{\rm bin}(r\Vert p)
+ &=r\log(r/p)+(1-r)\log((1-r)/(1-p)).
+\end{aligned}
+\tag{51.2}
+$$
+
+The minimum is attained by
+
+$$
+V_* =r\,C_T(\,\cdot\mid A)+(1-r)\,C_T(\,\cdot\mid A^c).
+\tag{51.3}
+$$
+
+At $\alpha=0$ the second summand is omitted and $0\log0=0$.
+Survival alone has minimum $-\log S_{k_0}(T)$, attained by $C_T$.
+For every fixed $\alpha<1$, in Theorem 49.2's regime the minimum
+excess over survival is uniformly
+
+$$
+\inf_V\{D(V\Vert\mathbb P_T)+\log S_{k_0}(T)\}
+\sim (1-\alpha)\frac{\pi^2}{4}
+                    \frac{e^{\mathsf T}\widehat M_\kappa e}{\delta^2}.
+\tag{51.4}
+$$
+
+Proof. Positivity of $H_R(u)$ for every finite $u$ and boundedness of
+$a$ show $p>0$. By (49.4), $p\to0$ uniformly in the joint regime,
+so $p<r$ there eventually. Under survival, the original probability
+is $S_{k_0}(T)C_T$. Therefore every admissible $V$ obeys the exact
+entropy decomposition, including the value $+\infty$,
+
+$$
+D(V\Vert\mathbb P_T)=-\log S_{k_0}(T)+D(V\Vert C_T).
+\tag{51.5}
+$$
+
+This follows directly by factoring its Radon--Nikodym density on the
+surviving set. The mature nonnegativity and partition chain rule for
+relative entropy yield, with $q=V(A)$,
+
+$$
+\begin{aligned}
+D(V\Vert C_T)
+ ={}&d_{\rm bin}(q\Vert p)
+ +qD(V(\,\cdot\mid A)\Vert C_T(\,\cdot\mid A))\\
+ &+(1-q)D(V(\,\cdot\mid A^c)\Vert C_T(\,\cdot\mid A^c)).
+\end{aligned}
+\tag{51.6}
+$$
+
+For clarity, on $A$ the density factors as $(q/p)$ times the
+conditional density, and on $A^c$ as $((1-q)/(1-p))$ times its
+conditional density; integrate its logarithm on the two sets. Terms
+of zero $V$-mass are omitted. Nonnegativity follows from
+$z\log z\ge z-1$ integrated against the reference probability.
+These are classical measure identities, not a new entropy theorem.
+Their path-measure interpretation is also the abstract relative-entropy
+and Gibbs variational principle of Chetrite--Touchette,
+[*Variational and optimal control representations of conditioned and
+driven processes*, arXiv:1506.05291v3](https://arxiv.org/html/1506.05291v3),
+§III.4, equations (52) and (56). Only that measure-level principle is
+used; no diffusion-matrix inverse or control-cost representation is
+applied to this rank-two source.
+
+For $p<q<1$,
+$\partial_q d_{\rm bin}(q\Vert p)=\log[q(1-p)/(p(1-q))]>0$.
+Continuity at $q=1$ shows its minimum on $[r,1]$ is attained at $r$.
+Equation (51.3) has $q=r$ and both positive-mass conditional
+entropies zero, proving attainment and (51.2). Omitting the event
+constraint in (51.5) proves the survival-only minimum. Finally,
+
+$$
+d_{\rm bin}(r\Vert p)
+ =r(-\log p)+r\log r+(1-r)\log(1-r)
+                  -(1-r)\log(1-p).
+\tag{51.7}
+$$
+
+For fixed $r>0$ the last three terms are bounded as $p\to0$.
+Apply (50.1), whose leading term tends uniformly to infinity, to
+obtain (51.4). The attaining law is an analytic conditioning of
+existing histories, not a newly acquired native operation. $\square$
+
+## 52. What entropy rate fails to select
+
+**Corollary 52.1 (bounded excess and an attained subextensive collapse).**
+In the joint regime of Theorem 49.2, for probability laws
+$V\ll\mathbb P_T$ with $V(\zeta>T)=1$, a uniformly bounded excess
+$D(V\Vert\mathbb P_T)+\log S_{k_0}(T)$ cannot give fixed positive
+confidence of all-prefix $\delta$-closeness to any predeclared plane
+$\Pi_e=\{z:e\cdot z=0\}$ through the initial displacement.
+In fact, if that excess is at most $B<\infty$, then
+
+$$
+V(A(T,R,e))\le\frac{B+\log2}{\log(1/p(T,R,e))}\longrightarrow0
+\tag{52.1}
+$$
+
+uniformly over the same collar, normals and initial heights.
+Conversely choose $R=T^{1/4}$ and set $V_T=C_T(\,\cdot\mid A)$.
+Then for every $T$ this is a probability law absolutely continuous
+with respect to the unchanged original $\mathbb P_T$, and
+
+$$
+\begin{aligned}
+V_T\left(\zeta>T,\
+ \sup_{0\le s\le1}\operatorname{dist}
+   ((y_{Ts}-y_0)/\sqrt T,\Pi_e)<T^{-1/4}\right)&=1,\\
+D(V_T\Vert\mathbb P_T)+\log S_{k_0}(T)
+ &=\frac{\pi^2}{4}\widehat m_{\kappa,e}\sqrt T
+   -\frac{\pi^4}{16}\mathcal B_\kappa(h)-\log(4/\pi)+o(1),\\
+\frac1T D(V_T\Vert\mathbb P_T)&\longrightarrow\lambda.
+\end{aligned}
+\tag{52.2}
+$$
+
+Thus the minimum limiting survival entropy rate, among the
+finite-horizon laws quantified in (51.1), does not enforce retention
+of three macroscopic transport directions. The conclusion concerns
+whole histories, not endpoint flattening.
+
+Proof. Equation (51.6) gives
+$D(V\Vert C_T)\ge d_{\rm bin}(q\Vert p)
+\ge q\log(1/p)-\log2$: the binary negative entropy is at least
+$-\log2$, and $-(1-q)\log(1-p)\ge0$. Use (51.5) and the uniformly
+divergent logarithm (50.1) to prove (52.1).
+For the converse, Euclidean distance to $\Pi_e$ equals $|e\cdot z|$.
+The first line of (52.2) is consequently the very event used in
+(51.3) with $\alpha=0$, not a weaker terminal event. The exact
+minimum excess is $-\log p$. In (50.2), $T/R^2=\sqrt T$,
+$T/R^4=1$ and $T/R^6=T^{-1/2}$, proving the second line.
+D (37.4) gives $-\log S_{k_0}(T)=\lambda T-\log(\phi(k_0)J)+o(1)$,
+uniformly on $E$. Division by $T$ proves the last line.
+Every survival-supported law has entropy at least $-\log S_{k_0}(T)$
+by (51.5), so $\lambda$ is the minimum possible limiting rate and
+this planar-confined family attains it. This does not assert a
+nondegenerate limit within the plane. The laws $V_T$ are a family on
+varying horizons; no projective consistency, single time-homogeneous
+Markov generator or lawful feedback implementation is asserted.
+Those would be additional restrictions beyond this entropy-rate
+selection criterion. $\square$
+
+## 53. Source correspondence and the dimensional-selection boundary
+
+**Definition 53.1 (observation, operations and resource meaning).** The
+objects of §§49--52 are the actual source and two-driver killed paths
+of D Definition 35.1, with its fixed preparation rotations, original
+controls, common Brownian history, both height exits, refusal and Stop.
+The rational source coefficients are G (25.4); D (39.1) maps their
+resolved winding coordinate to the original signed $D$. The source
+parameter and $k_0$ are fixed before a path is generated. Uniformity
+in the collar compares those fixed experiments without coupling or
+restarting them. No reset, source smearing, extra hidden actuator,
+attractive potential, Fourier-sector selector or changed covariance
+is part of these definitions.
+
+The observation convention is a complete continuous winding history
+with a specified initial lift and known fixed calibration. A complete
+wrapped history has that unique mathematical lift; a wrapped endpoint
+or finitely many paid polls do not supply the same event. The metric
+is the declared Euclidean metric in the original coordinates
+$(\theta,v,D)$, with supremum over prefixes in the original clock.
+The plane normal is fixed before observing. A fitted plane, nonlinear
+encoder, unknown calibration, prepared-source observer metric,
+environmental metric and physical spatial distance are different
+tasks. The absolute phase radius is $R$, and the macroscopic precision
+is $\delta=R/\sqrt T$; the quantitative frontier assumes both
+$R\to\infty$ and $\delta\to0$.
+
+The cost is relative entropy in nats on that same path space. It is
+not a count of bits, Reads, samples, actuations, CPU operations or
+acquired services. $C_T$ and (51.3) specify distributions on existing
+histories. An operational interpretation would additionally require
+a permitted observation and selection or feedback service, its latency,
+its handling of survival failures, and a proved relation between its
+resource charge and the displayed divergence. Such a service is not
+among the original commands. All path selections retain the immutable
+initial state and the original path support.
+
+**Proposition 53.2 (the original consumer and the retained boundaries).**
+For a proposed selection of native transport by cheapest survival,
+Theorems 49.2, 50.1 and 51.1 provide its exact-band whole-history
+probability and the sharp confidence-versus-information condition
+(51.4), with the explicit native source and metric constant.
+Corollary 52.1 excludes entropy rate alone as a sufficient selection
+criterion among the specified absolutely continuous horizon laws.
+These conclusions do not identify physical axes or derive this native
+dynamics from bare FIB.
+
+Proof. On the nonzero collar D Theorem 36.1 and its original-coordinate
+map give the positive tensor (49.14). The selection cost in (51.4)
+therefore diverges for a shrinking macroscopic slab in every fixed
+normal, and (51.3) shows that the confidence bound is attainable on
+exactly the same histories. The family (52.2) simultaneously keeps
+the minimum asymptotic rate and confines every prefix to a vanishing
+macroscopic slab. This is the concrete obstruction for the survival
+rate criterion; it does not contradict the original law's rank-three
+long-time limit or assert an available command implementing $V_T$.
+
+Current-ray dimension four, direct-control rank two, instantaneous
+phase rank one, effective phase rank three and local homogeneous heat
+dimension seven have different definitions in the suppliers. None is
+a physical-space identification. At the actual $\kappa=0$ leaf,
+$D$ is frozen and there are two moving phases. If the collar is
+removed, original-coordinate covariance degenerates: for $e=(0,0,1)$,
+$\widehat m_{\kappa,e}=\kappa^2(M_\kappa)_{33}\to0$.
+Thus the uniform positive constant in (49.14) and its uniform
+three-direction entropy frontier cannot be retained. Dividing $D$
+by $\kappa$ changes the declared measurement scale. The fixed collar
+is a substantive source/metric condition, not an inferred dimension.
+$\square$
+
+**Definition 53.3 (reused mathematics and the additional bridge).** The
+reused native suppliers are D (36.1), (36.4), (36.7)--(36.8), (37.4),
+(39.1) and (51.6), and this volume's conditional-history identity
+(41.6). In particular, the covariance tensor, quartic coefficient,
+Doob transform and whole-horizon Gaussian limit are existing results.
+The path transport bounds in Theorem 42.2 supply no relative estimate
+for the exponentially small event here; no such inference is made.
+The generic interval sine calculation, killed Feynman--Kac identity,
+relative-entropy nonnegativity and partition chain rule are classical
+intermediate tools, with the measure-level path principle credited in
+Theorem 51.1 to the primary Chetrite--Touchette text. Its drift-control
+expressions do not provide an inverse for this degenerate native
+symbol, and no absorbing-chain or noncompact Q-process theorem is
+substituted for this source's fixed-height spectral estimates.
+
+The additional source-specific deductions are the all-prefix comparison
+(49.11), its uniform joint-limit error (49.16), the source-height
+prefactor (49.5)--(49.6), and their sharp information frontier and
+attained planar-collapse consequence. These are ordinary proofs from
+the explicitly retained native premises, not a new general small-
+deviation or entropy principle, a literature-priority claim, an
+empirical realization or a formal-kernel certificate. The separate
+Green, finite hidden-sector, free-quotient and prepared-source
+acquisition contracts retain their own operators and operation sets;
+none supplies the missing observation or selection service here.
+
+## 追加锚（本行以下为增补区）
