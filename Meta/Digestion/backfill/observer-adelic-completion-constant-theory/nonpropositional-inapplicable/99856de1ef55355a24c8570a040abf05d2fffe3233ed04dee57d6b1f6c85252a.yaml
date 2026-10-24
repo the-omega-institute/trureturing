@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:99856de1ef55355a24c8570a040abf05d2fffe3233ed04dee57d6b1f6c85252a
+  normalized_sha256: sha256:99856de1ef55355a24c8570a040abf05d2fffe3233ed04dee57d6b1f6c85252a
+cas_ref: sha256:99856de1ef55355a24c8570a040abf05d2fffe3233ed04dee57d6b1f6c85252a
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 列举 derivative evaluation 作为待采用工具，没有导数公式或恢复定理。
+    previous_atom_id: d958a87ba0d5e1eb4d9a72e6c1a80eb30a21390ecc7c582530fd6c2dd4d4528a
+    next_atom_id: 54b30ca39d60560456841607449045854962fd89fcef4668a4dc1537c24dfef9

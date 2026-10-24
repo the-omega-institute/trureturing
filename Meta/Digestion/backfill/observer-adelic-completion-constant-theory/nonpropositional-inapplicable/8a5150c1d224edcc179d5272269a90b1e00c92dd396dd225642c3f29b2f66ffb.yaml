@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:8a5150c1d224edcc179d5272269a90b1e00c92dd396dd225642c3f29b2f66ffb
+  normalized_sha256: sha256:8a5150c1d224edcc179d5272269a90b1e00c92dd396dd225642c3f29b2f66ffb
+cas_ref: sha256:8a5150c1d224edcc179d5272269a90b1e00c92dd396dd225642c3f29b2f66ffb
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 列举拟加入的 unimodularity 要求，不含行列式等式或指定对象性质断言。
+    previous_atom_id: 150ccc35da7fee2fcc577723d78ad0182977c10c81a10e095d17d60fad01a2d6
+    next_atom_id: a87e5e3b50f8b613a52650b753d2f0f43c9e85a13ec2bcf369996d15135ee139
