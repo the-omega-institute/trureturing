@@ -5,6 +5,32 @@ namespace StrataLint.InstructionContract.Tests;
 public sealed class RepositoryPolicyInstructionTests
 {
     [Fact]
+    public void FormalizationInstructionsPermitCheckpointHistoryBeforePublication()
+    {
+        var text = File.ReadAllText(Path.Combine(TestRepositoryLayout.FindRoot(),
+            "skills/codex-formalize/SKILL.md"), Encoding.UTF8);
+
+        Assert.DoesNotMatch(@"(?i)remain\s+uncommitted[^.]*Step 7", text);
+        Assert.DoesNotMatch(@"(?i)(?:one|single)\s+(?:explicit\s+)?builder(?:-owned)?\s+commit", text);
+        Assert.DoesNotMatch(@"(?i)single\s+explicit\s+commit\s+from\s+Step 7", text);
+        Assert.Contains("publication base", text, StringComparison.Ordinal);
+        Assert.Contains("publication tip", text, StringComparison.Ordinal);
+        Assert.Contains("cumulative diff", text, StringComparison.Ordinal);
+        Assert.Contains("Do not rewrite published history", text, StringComparison.Ordinal);
+    }
+
+    [Fact]
+    public void GoverningInstructionsDoNotRequirePublishingEveryLocalCheckpoint()
+    {
+        var text = File.ReadAllText(Path.Combine(TestRepositoryLayout.FindRoot(), "CLAUDE.md"), Encoding.UTF8);
+
+        Assert.DoesNotContain("提交即推", text, StringComparison.Ordinal);
+        Assert.DoesNotContain("及时提交、推送", text, StringComparison.Ordinal);
+        Assert.Contains("Local WIP checkpoints may remain unpublished", text, StringComparison.Ordinal);
+        Assert.Contains("complete, currently checked source/projection unit", text, StringComparison.Ordinal);
+    }
+
+    [Fact]
     public void WorktreeCheckpointInstructionsSeparateSavingFromDelivery()
     {
         var root = TestRepositoryLayout.FindRoot();
