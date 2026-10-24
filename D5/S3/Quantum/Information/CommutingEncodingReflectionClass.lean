@@ -7,6 +7,7 @@
    digest: Commuting product and reflection encodings give the same qubit state class. -/
 
 import D5.S3.Quantum.Information.BinaryStabilizerGraphNormalForm
+import D5.S3.Quantum.BlockNorm.EssentiallyHermitian
 
 /-! Commuting qubit product encodings and their local-reflection replacements. -/
 
@@ -37,6 +38,63 @@ def claim : Prop :=
     (∑ x, ‖ψ x‖ ^ 2 = 1) →
     ((∃ U, IsCommutingProductEncoding ψ U) ↔
       (∃ U, IsCommutingReflectionEncoding ψ U))
+
+private lemma product_encoding_conjugate {n : ℕ}
+    (ψ : (Fin n → Fin 2) → ℂ)
+    (U : Fin (2 ^ n) → Fin n → Matrix (Fin 2) (Fin 2) ℂ)
+    (hU : IsCommutingProductEncoding ψ U)
+    (V : Fin n → Matrix (Fin 2) (Fin 2) ℂ)
+    (hV : ∀ j, V j ∈ Matrix.unitaryGroup (Fin 2) ℂ) :
+    IsCommutingProductEncoding (tensorOp V *ᵥ ψ)
+      (fun a j => V j * U a j * (V j)ᴴ) := by
+  classical
+  let T := tensorOp V
+  have hT := tensor_unitary V hV
+  have hTtT : Tᴴ * T = 1 := hT.1
+  let C := Unitary.conjStarAlgAut ℂ (Matrix (Fin n → Fin 2) (Fin n → Fin 2) ℂ) ⟨T, hT⟩
+  have ht (a) : tensorOp (fun j => V j * U a j * (V j)ᴴ) = C (tensorOp (U a)) := by
+    change tensorOp (fun j => V j * U a j * (V j)ᴴ) =
+      tensorOp V * tensorOp (U a) * (tensorOp V)ᴴ
+    rw [tensor_adj, tensor_mul, tensor_mul]
+  have he (a) : tensorOp (fun j => V j * U a j * (V j)ᴴ) *ᵥ (T *ᵥ ψ) =
+      T *ᵥ (tensorOp (U a) *ᵥ ψ) := by
+    rw [ht]
+    change (T * tensorOp (U a) * Tᴴ) *ᵥ (T *ᵥ ψ) = _
+    simp only [← Matrix.mulVec_mulVec]
+    rw [Matrix.mulVec_mulVec ψ Tᴴ T, hTtT, Matrix.one_mulVec]
+  refine ⟨?_, ?_, ?_⟩
+  · intro a j
+    exact (Matrix.unitaryGroup (Fin 2) ℂ).mul_mem
+      ((Matrix.unitaryGroup (Fin 2) ℂ).mul_mem (hV j) (hU.1 a j))
+      (Unitary.star_mem (hV j))
+  · intro a b
+    simp only [ht, ← map_mul, hU.2.1 a b]
+  · intro a b
+    change star (tensorOp (fun j => V j * U a j * (V j)ᴴ) *ᵥ (T *ᵥ ψ)) ⬝ᵥ
+      (tensorOp (fun j => V j * U b j * (V j)ᴴ) *ᵥ (T *ᵥ ψ)) = _
+    rw [he a, he b]
+    rw [Matrix.star_mulVec, Matrix.dotProduct_mulVec, Matrix.vecMul_vecMul,
+      hTtT, Matrix.vecMul_one]
+    exact hU.2.2 a b
+
+private lemma reflection_encoding_conjugate {n : ℕ}
+    (ψ : (Fin n → Fin 2) → ℂ)
+    (U : Fin (2 ^ n) → Fin n → Matrix (Fin 2) (Fin 2) ℂ)
+    (hU : IsCommutingReflectionEncoding ψ U)
+    (V : Fin n → Matrix (Fin 2) (Fin 2) ℂ)
+    (hV : ∀ j, V j ∈ Matrix.unitaryGroup (Fin 2) ℂ) :
+    IsCommutingReflectionEncoding (tensorOp V *ᵥ ψ)
+      (fun a j => V j * U a j * (V j)ᴴ) := by
+  refine ⟨product_encoding_conjugate ψ U hU.1 V hV, ?_⟩
+  intro a j
+  refine ⟨Matrix.isHermitian_mul_mul_conjTranspose (V j) (hU.2 a j).1, ?_⟩
+  have hv : (V j)ᴴ * V j = 1 := (hV j).1
+  calc
+    _ = V j * U a j * ((V j)ᴴ * V j) * U a j * (V j)ᴴ := by
+      simp only [Matrix.mul_assoc]
+    _ = V j * (U a j * U a j) * (V j)ᴴ := by
+      rw [hv, Matrix.mul_one]; simp only [Matrix.mul_assoc]
+    _ = 1 := by rw [(hU.2 a j).2, Matrix.mul_one]; exact (hV j).2
 
 private lemma tensor_factors_proportional {n : ℕ}
     (X Y : Fin n → Matrix (Fin 2) (Fin 2) ℂ)
@@ -111,6 +169,131 @@ private lemma local_commutation_signs {n : ℕ}
   · right
     simpa using (congrArg Neg.neg he).symm
 
+private lemma trace_nonzero_commutes (A B : Matrix (Fin 2) (Fin 2) ℂ)
+    (hB : B ∈ Matrix.unitaryGroup (Fin 2) ℂ) (ht : Matrix.trace A ≠ 0)
+    (hs : A * B = B * A ∨ A * B = -(B * A)) : A * B = B * A := by
+  rcases hs with hs | hs
+  · exact hs
+  · exfalso
+    apply ht
+    have hi : Bᴴ * (A * B) = -A := by
+      rw [hs, mul_neg, ← Matrix.mul_assoc, show Bᴴ * B = 1 from hB.1, Matrix.one_mul]
+    have hh := congrArg Matrix.trace hi
+    rw [Matrix.trace_mul_cycle', ← Matrix.mul_assoc,
+      show B * Bᴴ = 1 from hB.2, Matrix.one_mul, Matrix.trace_neg] at hh
+    linear_combination (1 / 2 : ℂ) * hh
+
+private lemma diagonal_site_basis {κ : Type*}
+    (A : Matrix (Fin 2) (Fin 2) ℂ) (B : κ → Matrix (Fin 2) (Fin 2) ℂ)
+    (hA : A ∈ Matrix.unitaryGroup (Fin 2) ℂ)
+    (hB : ∀ a, B a ∈ Matrix.unitaryGroup (Fin 2) ℂ)
+    (ht : Matrix.trace A ≠ 0) (hn : ¬ ∃ c : ℂ, A = c • 1)
+    (hs : ∀ a, A * B a = B a * A ∨ A * B a = -(B a * A)) :
+    ∃ V ∈ Matrix.unitaryGroup (Fin 2) ℂ,
+      ∀ a, ∃ d : Fin 2 → ℂ, V * B a * Vᴴ = diagonal d := by
+  classical
+  letI : IsStarNormal A := isStarNormal_of_mem_unitary hA
+  obtain ⟨K, hK, d, hd⟩ := Matrix.exists_mem_unitaryGroup_star_mul_mul_eq_diagonal A
+  have hKd : Kᴴ * A * K = diagonal d := hd
+  have hKK : K * Kᴴ = 1 := hK.2
+  have hdne : d 0 ≠ d 1 := by
+    intro heq
+    apply hn
+    refine ⟨d 0, ?_⟩
+    have he : diagonal d = d 0 • (1 : Matrix (Fin 2) (Fin 2) ℂ) := by
+      ext i j
+      fin_cases i <;> fin_cases j <;> simp [Matrix.diagonal, heq]
+    calc
+      A = K * (Kᴴ * A * K) * Kᴴ := by
+        symm
+        calc
+          _ = (K * Kᴴ) * A * (K * Kᴴ) := by simp only [Matrix.mul_assoc]
+          _ = _ := by rw [hKK, Matrix.one_mul, Matrix.mul_one]
+      _ = K * (d 0 • (1 : Matrix (Fin 2) (Fin 2) ℂ)) * Kᴴ := by rw [hKd, he]
+      _ = _ := by rw [Matrix.mul_smul, Matrix.mul_one, Matrix.smul_mul, hKK]
+  refine ⟨Kᴴ, Unitary.star_mem hK, ?_⟩
+  intro a
+  let C := Kᴴ * B a * K
+  have hm (X Y : Matrix (Fin 2) (Fin 2) ℂ) :
+      (Kᴴ * X * K) * (Kᴴ * Y * K) = Kᴴ * (X * Y) * K := by
+    calc
+      _ = Kᴴ * X * (K * Kᴴ) * Y * K := by simp only [Matrix.mul_assoc]
+      _ = _ := by rw [hKK, Matrix.mul_one]; simp only [Matrix.mul_assoc]
+  have hc : diagonal d * C = C * diagonal d := by
+    rw [← hKd]
+    dsimp only [C]
+    rw [hm, hm, trace_nonzero_commutes A (B a) (hB a) ht (hs a)]
+  have hc01 : C 0 1 = 0 := by
+    have hh := congrFun (congrFun hc 0) 1
+    rw [Matrix.diagonal_mul, Matrix.mul_diagonal] at hh
+    have hz : (d 0 - d 1) * C 0 1 = 0 := by linear_combination hh
+    exact (mul_eq_zero.mp hz).resolve_left (sub_ne_zero.mpr hdne)
+  have hc10 : C 1 0 = 0 := by
+    have hh := congrFun (congrFun hc 1) 0
+    rw [Matrix.diagonal_mul, Matrix.mul_diagonal] at hh
+    have hz : (d 1 - d 0) * C 1 0 = 0 := by linear_combination hh
+    exact (mul_eq_zero.mp hz).resolve_left (sub_ne_zero.mpr hdne.symm)
+  refine ⟨fun i => C i i, ?_⟩
+  simp only [Matrix.conjTranspose_conjTranspose]
+  change C = diagonal (fun i => C i i)
+  ext i j
+  fin_cases i <;> fin_cases j <;> simp [Matrix.diagonal, hc01, hc10]
+
+private lemma pauli_site_frame {κ : Type*}
+    (B : κ → Matrix (Fin 2) (Fin 2) ℂ)
+    (hB : ∀ a, B a ∈ Matrix.unitaryGroup (Fin 2) ℂ)
+    (hs : ∀ a b, B a * B b = B b * B a ∨ B a * B b = -(B b * B a))
+    (ht : ∀ a, (¬ ∃ c : ℂ, B a = c • 1) → Matrix.trace (B a) = 0) :
+    ∃ V ∈ Matrix.unitaryGroup (Fin 2) ℂ,
+      ∃ (c : κ → ℂ) (p : κ → Pauli),
+        (∀ a, star (c a) * c a = 1) ∧
+        (∀ a, V * B a * Vᴴ = c a • pauliMatrix (p a)) := by
+  sorry
+
+private lemma local_site_normal_form {κ : Type*}
+    (B : κ → Matrix (Fin 2) (Fin 2) ℂ)
+    (hB : ∀ a, B a ∈ Matrix.unitaryGroup (Fin 2) ℂ)
+    (hs : ∀ a b, B a * B b = B b * B a ∨ B a * B b = -(B b * B a)) :
+    ∃ V ∈ Matrix.unitaryGroup (Fin 2) ℂ,
+      (∀ a, ∃ d : Fin 2 → ℂ, V * B a * Vᴴ = diagonal d) ∨
+      (∃ (c : κ → ℂ) (p : κ → Pauli),
+        (∀ a, star (c a) * c a = 1) ∧
+        (∀ a, V * B a * Vᴴ = c a • pauliMatrix (p a))) := by
+  classical
+  by_cases ht : ∃ a, (¬ ∃ c : ℂ, B a = c • 1) ∧ Matrix.trace (B a) ≠ 0
+  · obtain ⟨a, hn, ht⟩ := ht
+    obtain ⟨V, hV, hd⟩ := diagonal_site_basis (B a) B (hB a) hB ht hn (hs a)
+    exact ⟨V, hV, Or.inl hd⟩
+  · have htr : ∀ a, (¬ ∃ c : ℂ, B a = c • 1) → Matrix.trace (B a) = 0 := by
+      intro a ha
+      by_contra hh
+      exact ht ⟨a, ha, hh⟩
+    obtain ⟨V, hV, c, p, hc, hp⟩ := pauli_site_frame B hB hs htr
+    exact ⟨V, hV, Or.inr ⟨c, p, hc, hp⟩⟩
+
+private lemma stabilizer_frame_of_site_normal_forms {n : ℕ} (hn : 1 ≤ n)
+    (U : Fin (2 ^ n) → Fin n → Matrix (Fin 2) (Fin 2) ℂ)
+    (hU : ∀ a j, U a j ∈ Matrix.unitaryGroup (Fin 2) ℂ)
+    (hc : ∀ a b, tensorOp (U a) * tensorOp (U b) =
+      tensorOp (U b) * tensorOp (U a))
+    (V : Fin n → Matrix (Fin 2) (Fin 2) ℂ)
+    (hV : ∀ j, V j ∈ Matrix.unitaryGroup (Fin 2) ℂ)
+    (hsites : ∀ j,
+      (∀ a, ∃ d : Fin 2 → ℂ, V j * U a j * (V j)ᴴ = diagonal d) ∨
+      (∃ (c : Fin (2 ^ n) → ℂ) (p : Fin (2 ^ n) → Pauli),
+        (∀ a, star (c a) * c a = 1) ∧
+        (∀ a, V j * U a j * (V j)ᴴ = c a • pauliMatrix (p a)))) :
+    ∃ (F : Matrix (Fin n → Fin 2) (Fin n → Fin 2) ℂ)
+      (eig : Fin (2 ^ n) → (Fin n → Fin 2) → ℂ)
+      (R : (Fin n → Fin 2) → Fin n → Matrix (Fin 2) (Fin 2) ℂ),
+      F ∈ Matrix.unitaryGroup (Fin n → Fin 2) ℂ ∧
+      (∀ a x, star (eig a x) * eig a x = 1) ∧
+      (∀ a, Fᴴ * tensorOp (fun j => V j * U a j * (V j)ᴴ) * F = diagonal (eig a)) ∧
+      (∀ a j, (R a j).IsHermitian ∧ R a j * R a j = 1) ∧
+      (∀ a, Fᴴ * tensorOp (R a) * F =
+        diagonal (fun x => ∏ j, (-1 : ℂ) ^ ((a j).val * (x j).val))) := by
+  sorry
+
 private lemma spectral_frame_of_local_signs {n : ℕ} (hn : 1 ≤ n)
     (U : Fin (2 ^ n) → Fin n → Matrix (Fin 2) (Fin 2) ℂ)
     (hU : ∀ a j, U a j ∈ Matrix.unitaryGroup (Fin 2) ℂ)
@@ -118,16 +301,24 @@ private lemma spectral_frame_of_local_signs {n : ℕ} (hn : 1 ≤ n)
       tensorOp (U b) * tensorOp (U a))
     (hs : ∀ a b j, U a j * U b j = U b j * U a j ∨
       U a j * U b j = -(U b j * U a j)) :
-    ∃ (F : Matrix (Fin n → Fin 2) (Fin n → Fin 2) ℂ)
+    ∃ (V : Fin n → Matrix (Fin 2) (Fin 2) ℂ)
+      (F : Matrix (Fin n → Fin 2) (Fin n → Fin 2) ℂ)
       (eig : Fin (2 ^ n) → (Fin n → Fin 2) → ℂ)
       (R : (Fin n → Fin 2) → Fin n → Matrix (Fin 2) (Fin 2) ℂ),
+      (∀ j, V j ∈ Matrix.unitaryGroup (Fin 2) ℂ) ∧
       F ∈ Matrix.unitaryGroup (Fin n → Fin 2) ℂ ∧
       (∀ a x, star (eig a x) * eig a x = 1) ∧
-      (∀ a, Fᴴ * tensorOp (U a) * F = diagonal (eig a)) ∧
+      (∀ a, Fᴴ * tensorOp (fun j => V j * U a j * (V j)ᴴ) * F = diagonal (eig a)) ∧
       (∀ a j, (R a j).IsHermitian ∧ R a j * R a j = 1) ∧
       (∀ a, Fᴴ * tensorOp (R a) * F =
         diagonal (fun x => ∏ j, (-1 : ℂ) ^ ((a j).val * (x j).val))) := by
-  sorry
+  classical
+  have hsite (j : Fin n) := local_site_normal_form (fun a => U a j)
+    (fun a => hU a j) (fun a b => hs a b j)
+  choose V hV hv using hsite
+  obtain ⟨F, eig, R, hF, heig, hd, hR, hRd⟩ :=
+    stabilizer_frame_of_site_normal_forms hn U hU hc V hV hv
+  exact ⟨V, F, eig, R, hV, hF, heig, hd, hR, hRd⟩
 
 private lemma uniform_weights {ι : Type*} [Fintype ι] [DecidableEq ι]
     (c : ι → ℂ) (eig : ι → ι → ℂ)
@@ -302,11 +493,20 @@ private lemma product_encoding_to_reflections {n : ℕ} (hn : 1 ≤ n)
     (U : Fin (2 ^ n) → Fin n → Matrix (Fin 2) (Fin 2) ℂ)
     (hU : IsCommutingProductEncoding ψ U) :
     ∃ R, IsCommutingReflectionEncoding ψ R := by
-  obtain ⟨F, eig, R, hF, heig, hd, hR, hRd⟩ :=
+  obtain ⟨V, F, eig, R, hV, hF, heig, hd, hR, hRd⟩ :=
     spectral_frame_of_local_signs hn U hU.1 hU.2.1
       (local_commutation_signs U hU.1 hU.2.1)
-  exact reflection_encoding_of_flat_frame ψ F hF R hR hRd
-    (flat_of_diagonal_encoding ψ U hU F hF eig heig hd)
+  have hUV := product_encoding_conjugate ψ U hU V hV
+  obtain ⟨S, hS⟩ := reflection_encoding_of_flat_frame (tensorOp V *ᵥ ψ) F hF R hR hRd
+    (flat_of_diagonal_encoding (tensorOp V *ᵥ ψ) _ hUV F hF eig heig hd)
+  have hback := reflection_encoding_conjugate (tensorOp V *ᵥ ψ) S hS
+    (fun j => (V j)ᴴ) (fun j => Unitary.star_mem (hV j))
+  have hstate : tensorOp (fun j => (V j)ᴴ) *ᵥ (tensorOp V *ᵥ ψ) = ψ := by
+    rw [← tensor_adj, Matrix.mulVec_mulVec]
+    rw [show (tensorOp V)ᴴ * tensorOp V = 1 from (tensor_unitary V hV).1]
+    exact Matrix.one_mulVec ψ
+  rw [hstate] at hback
+  exact ⟨_, hback⟩
 
 private lemma reflection_encoding_to_product {n : ℕ}
     (ψ : (Fin n → Fin 2) → ℂ)
