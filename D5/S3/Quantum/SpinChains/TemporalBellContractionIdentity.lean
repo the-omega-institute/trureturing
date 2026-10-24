@@ -4,7 +4,7 @@
    mirror-E: none(waiver:external-open-problem-resolution)
    anchors: []
    utility: none
-   digest: Temporal Bell endpoint contractions equal one-particle propagator entries for every N. -/
+   digest: Temporal Bell endpoint contractions equal one-particle propagator entries for all N. -/
 
 import D5.S3.Quantum.Fermionic.PeriodicSshExcessPseudoEntropyRefutation
 import D5.S3.Quantum.Measurements.CliffordJointMeasurability.FourierCliffordVacuum

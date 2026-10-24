@@ -21,7 +21,7 @@ internal sealed class TemporalBellContractionIdentityDocument : IScribeDocumentD
                 + "Scalar multiplication is denoted by a centered dot, and adjacent matrix factors are multiplied in their displayed order. "
                 + "Complex.ofReal explicitly includes a real scalar in the complex numbers, and Fin.val takes a bounded index to its natural value. "
                 + "Natural subtraction is truncated at zero. Fin.mk displays its natural value with the bound proof suppressed; "
-                + "the positivity proof in sigmaXLast is also suppressed when it is determined by hN : 2 ≤ N. "
+                + "the positivity proof in sigmaXLast is also suppressed when it is determined by the hypothesis N ≥ 2. "
                 + "All other binders, including the positivity argument in the definition of sigmaXLast, are displayed.")),
             Node("hopping", "The open-chain one-particle Hamiltonian", HoppingFormula(),
                 "The diagonal entries are minus the chemical potential μ. Nearest-neighbor entries are minus the hopping strength J, "
@@ -51,14 +51,14 @@ internal sealed class TemporalBellContractionIdentityDocument : IScribeDocumentD
                 + "This is σˣ at the last site under the inverse Jordan–Wigner transformation, arxiv.tex lines 285–286 and 291.",
                 AssessedProvenance.FromLiterature(Source)),
             Node("vacuumIndex", "The empty occupation configuration", VacuumIndexFormula(),
-                "The vacuum has false occupation at every site. Its row and column select the vacuum matrix element of any full operator. "
+                "The pointwise defining equality states that the vacuum has false occupation at every site. Its row and column select the vacuum matrix element of any full operator. "
                 + "The argument x ranges over Fin N, including the empty type when N is zero.",
                 AssessedProvenance.FromRepo(Source)),
             Node("claim", "The endpoint contraction identity", ClaimFormula(),
                 "For every N at least two and every real J, μ and t, evolve the last-site spin observable and evaluate the two displayed "
                 + "vacuum contractions. Their sum has the same real part as the last diagonal propagator entry minus its first-row, last-column entry. "
                 + "This reads the conjecture in arxiv.tex lines 343–353 with G defined by the creation-operator evolution relation. "
-                + "The inequality hN makes first and last distinct and supplies the positive chain length needed by sigmaXLast.",
+                + "The hypothesis N ≥ 2 makes first and last distinct and supplies the positive chain length needed by sigmaXLast.",
                 AssessedProvenance.FromRepo(Source)),
             Describe.Lean(
                 DescribeId.Create("temporal-bell-result"),
@@ -161,8 +161,8 @@ internal sealed class TemporalBellContractionIdentityDocument : IScribeDocumentD
                 Multiply(product, Add(Adjoint(Annihilator(last)), Annihilator(last))))));
     }
 
-    private static Formula VacuumIndexFormula() => All("N", Naturals,
-        Equal(Typed(Call("vacuumIndex", V("N")), Assignment), LambdaOf("x", FinN, Q("Bool", "false"))));
+    private static Formula VacuumIndexFormula() => All("N", Naturals, All("x", FinN,
+        Equal(At(Typed(Call("vacuumIndex", V("N")), Assignment), V("x")), Q("Bool", "false"))));
 
     private static Formula ClaimFormula() => Equal(Typed(Call("claim"), Q("Prop")), Parenthesized(ContractionStatement()));
 
@@ -180,8 +180,9 @@ internal sealed class TemporalBellContractionIdentityDocument : IScribeDocumentD
         Formula body = Let("first", FinN, Typed(At(Q("Fin", "mk"), Typed(D(0), Naturals)), FinN),
             Let("last", FinN, Typed(At(Q("Fin", "mk"), LastValue), FinN),
                 Let("X", FullOperator, Call("evolve", V("J"), Mu, V("t"), Call("sigmaXLast", V("N"))), identity)));
-        return All("N", Naturals, All("hN", LessOrEqual(Typed(D(2), Naturals), V("N")),
-            All("J", Reals, All("μ", Reals, All("t", Reals, body)))));
+        return All("N", Naturals, new Formula.Logic(
+            Parenthesized(LessOrEqual(Typed(D(2), Naturals), V("N"))), FormulaLogicOperator.Implies,
+            Parenthesized(All("J", Reals, All("μ", Reals, All("t", Reals, body))))));
     }
 
     private static Formula Parameters(Formula body) => All("N", Naturals, All("J", Reals, All("μ", Reals, body)));
