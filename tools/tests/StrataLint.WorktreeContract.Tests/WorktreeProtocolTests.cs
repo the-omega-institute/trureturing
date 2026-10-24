@@ -286,6 +286,31 @@ public sealed class WorktreeProtocolTests(ITestOutputHelper output)
             Encoding.UTF8.GetString(result.StandardOutput) + Encoding.UTF8.GetString(result.StandardError));
     }
 
+    [Theory]
+    [InlineData("pool_return_preserves_post_merge_work_branch_and_cache")]
+    [InlineData("pool_return_requires_join_and_real_merge_evidence")]
+    [InlineData("pool_return_refuses_unretained_merge_wrong_head_and_busy_writer")]
+    [InlineData("pool_return_refuses_conflicts_operations_and_main")]
+    [InlineData("pool_claim_writes_immutable_allocation_and_preserves_cache")]
+    [InlineData("pool_claim_requires_matching_pins_and_clean_idle_attachment")]
+    [InlineData("pool_claim_accepts_returned_tip_ahead_of_tracking_dev")]
+    [InlineData("pool_claim_refuses_exact_symlink")]
+    [InlineData("pool_claim_concurrency_has_one_winner")]
+    [InlineData("pool_capacity_and_pressure_use_one_owner")]
+    public void IdlePoolPreservesNativeGitState(string probe)
+    {
+        if (OperatingSystem.IsWindows()) return;
+        var root = TestRepositoryLayout.FindRoot();
+        var result = CaptureCleanupOutput((stdout, stderr) => TestProcessRunner.Run("python3",
+            ["-B", Path.Combine(root,
+                "tools/tests/StrataLint.WorktreeContract.Tests/Fixtures/worktree_protocol_tests.py"),
+                root, "ProtocolTests." + probe], root, TestBudgets.ProtocolProbeHangGuard, 1024 * 1024,
+            standardOutput: stdout, standardError: stderr,
+            interruptBeforeKill: TestProcessRunner.InterruptPythonFixture), output.WriteLine);
+        Assert.True(result.ExitCode == 0,
+            Encoding.UTF8.GetString(result.StandardOutput) + Encoding.UTF8.GetString(result.StandardError));
+    }
+
     [Fact]
     public void CooperativeProtocolPreservesRealProcessAndGitState()
     {

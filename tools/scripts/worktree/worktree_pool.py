@@ -156,6 +156,8 @@ def return_tree(options):
 
 def returned_snapshot(options):
     with ExitStack() as stack:
+        if options.path.is_symlink():
+            raise Refused("linked_tree")
         path = tree_scope(stack, options.source, options.path, True)
         item = qualify(options.source, path)
         if "locked" in item:
@@ -228,6 +230,8 @@ def claim(options):
             allocated_branch = False
             try:
                 with ExitStack() as stack:
+                    if candidate.is_symlink():
+                        raise Refused("linked_tree")
                     path = tree_scope(stack, options.source, candidate, True)
                     tip = value(path, "rev-parse", "--verify", "HEAD^{commit}")
                     if git(path, "merge-base", "--is-ancestor", tip, dev, check=False).returncode:
@@ -266,6 +270,15 @@ def claim(options):
                             stderr=subprocess.PIPE, timeout=1800, check=False)
                         if result.returncode:
                             raise Refused("claim_restore_failed:" + result.stderr.decode(errors="replace"))
+                    attached, _ = identity(options.source, path)
+                    if attached.get("branch") != reference or attached.get("HEAD") != base:
+                        raise Refused("claim_identity_changed")
+                    for pin in PINS:
+                        if (path / pin).read_bytes() != expected[pin]:
+                            raise Refused("claim_pin_changed:" + pin)
+                    for marker in OPERATIONS:
+                        if (metadata / marker).exists():
+                            raise Refused("unfinished_operation:" + marker)
                     return dict(event="worktree_init", status="claimed", path=str(path), branch=options.branch,
                                 base_revision=base, allocation_time=allocated,
                                 dotnet_restore="skipped" if options.skip_restore else "restored")

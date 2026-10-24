@@ -34,7 +34,7 @@ class IdlePoolCases:
             args += ["--path", path]
         return self.run_protocol(*args, expect=expect)
 
-    def test_pool_return_preserves_post_merge_work_branch_and_cache(self):
+    def pool_return_preserves_post_merge_work_branch_and_cache(self):
         self.pool_github()
         cache = self.tree / ".lake"
         cache.mkdir()
@@ -54,7 +54,7 @@ class IdlePoolCases:
         self.assertEqual("cache bytes", (cache / "sentinel").read_text())
         self.assertEqual("already_idle", json.loads(self.pool_return().stdout)["status"])
 
-    def test_pool_return_requires_join_and_real_merge_evidence(self):
+    def pool_return_requires_join_and_real_merge_evidence(self):
         self.assertIn("host_must_join", self.pool_return(expect=73, joined=False).stderr)
         for changes, reason in [
             (dict(state="CLOSED"), "pr_closed_not_merged"),
@@ -68,7 +68,7 @@ class IdlePoolCases:
                 self.assertIn(reason, self.pool_return(expect=73).stderr)
                 self.assertEqual(self.branch, self.g(self.tree, "branch", "--show-current").strip())
 
-    def test_pool_return_refuses_unretained_merge_wrong_head_and_busy_writer(self):
+    def pool_return_refuses_unretained_merge_wrong_head_and_busy_writer(self):
         (self.tree / "owned").write_text("task\n")
         self.g(self.tree, "commit", "-am", "task")
         task = self.g(self.tree, "rev-parse", "HEAD").strip()
@@ -84,7 +84,7 @@ class IdlePoolCases:
         job.stdin.flush()
         job.communicate(timeout=10)
 
-    def test_pool_return_refuses_conflicts_operations_and_main(self):
+    def pool_return_refuses_conflicts_operations_and_main(self):
         self.pool_github()
         metadata = Path(self.g(self.tree, "rev-parse", "--absolute-git-dir").strip())
         (metadata / "MERGE_HEAD").write_text(self.base + "\n")
@@ -93,7 +93,7 @@ class IdlePoolCases:
         result = self.run_protocol("return", "--path", self.main, "--pr", "42", "--writers-joined", expect=73, env=self.pool_env)
         self.assertIn("main_worktree", result.stderr)
 
-    def test_pool_claim_writes_immutable_allocation_and_preserves_cache(self):
+    def pool_claim_writes_immutable_allocation_and_preserves_cache(self):
         self.pool_return()
         old = self.g(self.tree, "branch", "--show-current").strip()
         result = json.loads(self.pool_claim(path=self.tree).stdout)
@@ -107,7 +107,7 @@ class IdlePoolCases:
         self.assertEqual(result["allocation_time"], int(fields.rsplit(" ", 2)[1]))
         self.assertRegex(message, r"^worktree-allocation:[0-9a-f]{32}$")
 
-    def test_pool_claim_requires_matching_pins_and_clean_idle_attachment(self):
+    def pool_claim_requires_matching_pins_and_clean_idle_attachment(self):
         self.pool_return()
         (self.main / "lean-toolchain").write_text("other pins\n")
         self.g(self.main, "commit", "-am", "pins")
@@ -120,7 +120,7 @@ class IdlePoolCases:
         self.g(self.tree, "switch", "--detach", self.base)
         self.assertEqual("no_idle", json.loads(self.pool_claim().stdout)["status"])
 
-    def test_pool_claim_accepts_returned_tip_ahead_of_tracking_dev(self):
+    def pool_claim_accepts_returned_tip_ahead_of_tracking_dev(self):
         (self.main / "owned").write_text("new dev\n")
         self.g(self.main, "commit", "-am", "advance dev")
         self.g(self.main, "push", "origin", "dev")
@@ -128,7 +128,14 @@ class IdlePoolCases:
         self.g(self.main, "update-ref", "refs/remotes/origin/dev", self.base)
         self.assertEqual("claimed", json.loads(self.pool_claim(path=self.tree).stdout)["status"])
 
-    def test_pool_claim_concurrency_has_one_winner(self):
+    def pool_claim_refuses_exact_symlink(self):
+        self.pool_return()
+        alias = self.root / "alias"
+        alias.symlink_to(self.tree, target_is_directory=True)
+        self.assertIn("linked_tree", self.pool_claim(path=alias, expect=73).stderr)
+        self.assertTrue(self.g(self.tree, "branch", "--show-current").strip().startswith("lane/governance/idle-"))
+
+    def pool_claim_concurrency_has_one_winner(self):
         self.pool_return()
         commands = [[sys.executable, "-B", str(self.source_root / "tools/scripts/worktree/worktree_protocol.py"),
                      "--source", str(self.main), "claim", "--path", str(self.tree), "--base", self.base,
@@ -139,7 +146,7 @@ class IdlePoolCases:
         self.assertEqual(1, sum(code == 0 for _, code in results), results)
         self.assertTrue(all(code in (0, 73) for _, code in results), results)
 
-    def test_pool_capacity_and_pressure_use_one_owner(self):
+    def pool_capacity_and_pressure_use_one_owner(self):
         import worktree_pool as pool
         idle = []
         for i in range(5):

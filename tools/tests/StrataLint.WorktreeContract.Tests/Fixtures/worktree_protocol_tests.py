@@ -922,7 +922,7 @@ os.execv({real_git!r}, [{real_git!r}] + sys.argv[1:])
         self.assertIsNone(other.poll())
 
     def runlocal_consumer(self):
-        root = self.workspace("worktree-runlocal-")
+        root = self.workspace("worktree-runlocal-", "/tmp")
         dirty, snapshot, unknown = root / "dirty", root / "snapshot", root / "unknown"
         self.g(self.main, "worktree", "add", "-b", "runlocal-recovery", dirty, self.base)
         (dirty / "owned").write_text("unpublished recovery\n")

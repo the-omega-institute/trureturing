@@ -561,7 +561,7 @@ class FixtureDisposalTests(NativeFixture):
                             self.root = self.workspace("fixture-disposal-")
                             (self.root / "input").write_text("recoverable input\n")
                             if failure == "nested-input":
-                                self.nested = self.workspace("fixture-nested-")
+                                self.nested = self.workspace("fixture-nested-", "/tmp")
                                 (self.nested / "input").write_text("nested recovery\n")
                             def cleanup():
                                 # Every supported runtime temporarily resets this flag.
