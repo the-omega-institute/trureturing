@@ -327,11 +327,13 @@ def clear_native_locks(source, path, locks):
             raise Refused("native_lock_held:" + str(lock), [observation])
         try:
             after = lock.lstat()
-        except FileNotFoundError as error:
-            raise Refused("native_lock_changed:" + str(lock), [dict(evidence, status="changed")]) from error
+        except FileNotFoundError:
+            after = None
         fingerprint = lambda item: (item.st_dev, item.st_ino, item.st_size, item.st_mtime_ns)
-        if fingerprint(before) != fingerprint(after):
-            raise Refused("native_lock_changed:" + str(lock), [dict(evidence, status="changed")])
+        if after is None or fingerprint(before) != fingerprint(after):
+            observation = dict(evidence, status="changed")
+            print(json.dumps(observation), file=sys.stderr, flush=True)
+            raise Refused("native_lock_changed:" + str(lock), [observation])
         lock.unlink()
         cleared.append(dict(evidence, status="native_lock_cleared"))
         print(json.dumps(cleared[-1]), file=sys.stderr, flush=True)

@@ -159,8 +159,7 @@ internal static partial class CleanLanesCommand
         {
             try
             {
-                using var scope = WorktreeInitializationScope.Acquire(item.Path, item.Path,
-                    item.Branch ?? "lane/governance/initialization-probe");
+                using var scope = WorktreeInitializationScope.AcquireTree(item.Path, item.Path);
                 return null;
             }
             catch (IOException)
