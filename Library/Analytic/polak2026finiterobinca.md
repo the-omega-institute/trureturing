@@ -2756,3 +2756,100 @@ $T_AD_{2,A}(N_x)\to2\sqrt2q_*<0$ over the whole strict CA family.
 This is a negative signed average of the actual nonnegative
 higher-defect integrands. It determines neither the full signed
 defect nor the Robin margin.
+
+### The generating-price account retains the complete tangent compensation
+
+Use the unchanged FDW6 cuts at the original source's own $A=\log N_x$.
+Since $A\sim x$, eventually $2Y_A<x<P_A$.
+CPW4's actual activation inequality puts every $p\le Y_A$ in $N_x$.
+Every prime factor of $N_x$ is less than $x$, by ACC's first-layer
+activation bracket. Hence, for this same integer and observer,
+
+$$
+G_{\mathrm{low},A}(N_x)=0,\qquad
+D_{\mathrm{far},A}(N_x)=U_A.
+\tag{HCB5}
+$$
+
+The second equality retains FDW8's exact infinite pressure integral;
+its occupied-prime correction is zero because $P_A>x$.
+Combining FDW10, HCB3 and HCB5 gives the full central-plus-far account
+
+$$
+T_A\Delta(N_x)=T_A[C_A(N_x)+U_A]+c_*+
+ O(L^{-1}+\varepsilon_x),\qquad c_*=c_R+2q_*.
+\tag{HCB6}
+$$
+
+This is a consequence for the whole unconditional strict CA family,
+not merely for the own-price zero-defect sources of FDW11.
+No low baseline, occupied far prime or actual higher layer is left
+unaccounted for.
+
+The [existing generating-price identity](../ArithSums/nicolas2025comparison.md#project-application-actual-monotone-layers-at-a-shorter-successor)
+uses the nonnegative tangent loss
+
+$$
+\Gamma_x(A)=\log\log x+\lambda(x)(A-x)-\log\log A\ge0,
+$$
+
+$$
+\Delta(N_x)=I_\psi(x)+R(x)-\Gamma_x(A).
+\tag{HCB7}
+$$
+
+This is the same concavity term as
+[TC.4](../ArithSums/erdosnicolas1975repartition.md#an-explicit-thin-layer-capacity-for-the-same-arbitrary-host),
+with opposite sign to its $\kappa_x(A)$; it is not a new pressure
+identity. Keep it exact even when its root normalization is large.
+KTO1 and $A/x=1+O(\varepsilon_x)$ give
+$T_AR(x)=c_R+O(L^{-1}+\varepsilon_x)$.
+Consequently HCB6--HCB7 imply
+
+$$
+\boxed{\displaystyle
+T_A[C_A(N_x)+U_A]
+=T_A[I_\psi(x)-\Gamma_x(A)]-2q_*
+ +O(L^{-1}+\varepsilon_x).}
+\tag{HCB8}
+$$
+
+In particular the changed fixed-degree constant is compensated on
+all these actual integers, even when their own-price defects do not
+vanish. The far integral cannot be replaced here by
+$\beta_1/L(1+o(1))$: that relative error is not root-small.
+The signed prime integral and the exact tangent loss still need a
+joint estimate.
+
+For the root-scale comparison, suppose on a specified unbounded
+family that $|A-x|/x^{3/4}\to\ell<\infty$.
+The existing curvature of $\log\log x$ in TC.4 gives
+$T_A\Gamma_x(A)\to\ell^2/2$.
+Together with the owned own-price coefficient NPC9--NPC11,
+$T_A d_A(N_x)\to\ell^2/2$, the exact two margin accounts yield
+
+$$
+\begin{aligned}
+T_A[I_\psi(A)-I_\psi(x)]&=-\ell^2+o(1),\\
+T_A\Delta(N_x)&=T_AI_\psi(x)+c_R-\ell^2/2+o(1),\\
+T_A[C_A(N_x)+U_A]&=T_AI_\psi(x)-\ell^2/2-2q_*+o(1).
+\end{aligned}
+\tag{HCB9}
+$$
+
+Indeed subtract the accounts at $A$ and $x$; the difference of their
+root-normalized reserves tends to zero. The positive own-price
+coefficient and the negative generating-price coefficient therefore
+belong to compatible observations of the same source. Keeping the
+positive defect while leaving the prime integral unchanged would
+miss the full $-\ell^2$ transport.
+
+A sufficient signed premise on this specified family is
+$\liminf T_AI_\psi(x)>-c_R+\ell^2/2$; it would imply eventual
+strict Robin there. Neither that premise, a uniform full-family
+root bound, nor the central-plus-exact-far lower bound is supplied.
+The formula with finite $\ell$ does not cover larger displacements;
+HCB8 retains their exact tangent loss. RH and strict Robin for every
+integer above 5040 remain unresolved. These are paper applications
+of the cited inventory, pressure, curvature and prime-count inputs,
+with no Lean certification or literature-priority claim.
