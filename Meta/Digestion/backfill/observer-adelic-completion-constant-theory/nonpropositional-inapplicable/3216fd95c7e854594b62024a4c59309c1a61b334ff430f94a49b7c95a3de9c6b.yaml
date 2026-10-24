@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:3216fd95c7e854594b62024a4c59309c1a61b334ff430f94a49b7c95a3de9c6b
+  normalized_sha256: sha256:3216fd95c7e854594b62024a4c59309c1a61b334ff430f94a49b7c95a3de9c6b
+cas_ref: sha256:3216fd95c7e854594b62024a4c59309c1a61b334ff430f94a49b7c95a3de9c6b
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 对解释图景使用角向读数这一分类名称，没有角度、绕数或等式。
+    previous_atom_id: 46c6d817e7c947c9725982a30a3e2c92f6a20c5b4a0acbe715f6626703e298a0
+    next_atom_id: e9427a4d3af8ea44e91295addeb3d7b6d3379e959ae17cd9739a93db1809706a
