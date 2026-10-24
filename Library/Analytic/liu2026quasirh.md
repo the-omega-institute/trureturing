@@ -1199,3 +1199,97 @@ Consequently the newer source is available for its actual ordinary subenergies, 
 The [reproducible experiment at `919b49399f8a256b2e313e4efeddafff37f0c757`](https://github.com/the-omega-institute/trureturing-experiments/tree/919b49399f8a256b2e313e4efeddafff37f0c757/docs/reports/sextic-inverse-fourth) evaluates the actual inverse fourth moment at $D=\sqrt U$, with trivial fixed ray twist, good ideals prime to 2 and 3, every sixth-power-free row in $U<q_u<2U$, all six unit multiples and the original collision zeros. It retains the stated smooth profiles, actual ideal Möbius coefficients, parity-core blocks and full interference. Its code, complete data and comparison definitions are in the private experiments repository; this note adds only their research interface.
 
 Across five scales $U=256,1024,4096,16384,65536$, the program evaluates 158,322 physical rows. Its measured $E_6^\mu$ is approximately $-0.672730$ at $U=256$ and $45.893416$ at $U=65536$; the separately evaluated $t=1$ head also has both measured signs. At $U=65536$, the measured Möbius fourth moment is $2686.143572$, while replacing its signs by positive coefficients on the same squarefree support gives $2649.062665$. These finite observations do not support assuming a uniformly negative cross-core term or bounding the signed Möbius moment by the same-support positive-coefficient moment. Character arithmetic and collision tests use exact integers; profiles and moments use binary64 with independent scalar checks, not interval certificates. No uniform exponent, inverse-fourth improvement, strict Robin conclusion or RH proof follows. The missing analytic input remains an upper bound for the positive cross-core contribution with its actual coefficients, uniformly over the required original components and profiles.
+
+## The length cost of a complete Kloosterman character channel
+
+Blomer--Pascadi, [*Bilinear forms with Kloosterman sums via quadratic
+characters*, arXiv:2607.24311v1](https://arxiv.org/pdf/2607.24311v1),
+Theorem 1.1 and Remark 1.2, printed pp.1--2, supplies a uniform bound
+for arbitrary complex coefficients on integer intervals. At lengths
+$M=N\asymp\sqrt c$ its unnormalized Kloosterman matrix satisfies
+
+$$
+\left|\sum_{m\in I,n\in J}\alpha_m\beta_n S(am,n;c)
+\mathbf1_{(m,n,c)=1}\right|
+\ll c^{31/32+o(1)}\|\alpha\|_2\|\beta\|_2,
+\qquad a\in(\mathbb Z/c\mathbb Z)^\times.
+$$
+
+This is a cited preprint estimate, not a local Lean-certified input.
+There is an exact standard Gauss channel into this matrix, so lack of a
+formal character identity alone is not the transfer obstacle. Its complete
+length cost must also be retained. The calculation below is a repo-derived
+method comparison using the cited theorem, with no priority claim or
+estimate for the original inverse fourth moment.
+
+**Keep the complete character channel.** Let $c>1$ and let $\kappa$ be a
+primitive cubic Dirichlet character modulo $c$, extended by zero. Set
+$e_c(x)=e^{2\pi ix/c}$, $\tau(\kappa)=\sum_{m\bmod c}\kappa(m)e_c(m)$ and
+$G(\kappa)=\tau(\kappa)/\sqrt c$. With
+$S(m,n;c)=\sum_{x\in(\mathbb Z/c\mathbb Z)^\times}e_c(mx+nx^{-1})$,
+the primitive Gauss identity gives, for every integer $n$,
+
+$$
+\frac1c\sum_{m\bmod c}\kappa(m)S(am,n;c)
+=G(\kappa)^2\overline\kappa(an).
+$$
+
+Indeed, opening $S$ makes the inner $m$-sum
+$\tau(\kappa)\overline\kappa(ax)$. Substitution $y=x^{-1}$ in the remaining
+sum gives $\tau(\kappa)\overline\kappa(n)$, including its zero value when
+$(n,c)>1$. Thus the exact input vector is
+$\alpha_m=\kappa(m)/c$, with
+$\|\alpha\|_2=\sqrt{\varphi(c)}/c$. Its unit support automatically meets
+the theorem's condition $(m,n,c)=1$. A known unit phase changes no norm;
+a quadratic readout or prescribed zero mask in $n$ can remain in $\beta_n$.
+
+**Charge its actual length before using the short-interval saving.** Grant
+the additional favorable hypothesis that $n$ occupies an integer interval
+of length $N\asymp\sqrt c$. Partition $0\le m<c$ into intervals $I_j$
+of length at most $N$. Then
+
+$$
+\sum_j\|\alpha|_{I_j}\|_2
+\le\sqrt{\lceil c/N\rceil}\frac{\sqrt{\varphi(c)}}c
+\ll c^{-1/4}.
+$$
+
+The same quantity is at least
+$\varphi(c)/(c\sqrt N)=c^{-1/4-o(1)}$: on each interval its $\ell^1$
+norm is at most $\sqrt N$ times its $\ell^2$ norm, and the total $\ell^1$
+norm is $\varphi(c)/c$. Consequently the norm cost in this blockwise
+triangle procedure has this power, rather than an uncharged single-block
+length. Applying the displayed Blomer--Pascadi estimate on each block
+gives only
+
+$$
+\left|\sum_{n\in J}\beta_nG(\kappa)^2\overline\kappa(an)\right|
+\ll c^{23/32+o(1)}\|\beta\|_2.
+$$
+
+The represented character channel already has the elementary bound
+$\sqrt N\|\beta\|_2\ll c^{1/4}\|\beta\|_2$, since $|G(\kappa)|=1$.
+The blockwise certificate is worse by $c^{15/32+o(1)}$. This compares
+available bounds and the charged norm cost of this specified procedure;
+it is not a lower bound for the signed sum or an obstruction to every
+Kloosterman representation.
+
+Additive Fourier transformation does not shorten this primitive channel:
+$c^{-1/2}\sum_m\kappa(m)e_c(rm)=G(\kappa)\overline\kappa(r)$ has
+$\varphi(c)=c^{1-o(1)}$ nonzero coordinates. Multiplicative Fourier
+concentration instead returns the Gauss multiplier; the resulting operator
+is no longer the short additive-interval matrix in Theorem 1.1.
+
+**Original-object boundary.** The existing Gauss--Jacobi reduction,
+including the conductor sign in
+[Berg--Ryan--Young, Lemma 3.21](bergryanyoung2023sextictwists.md#the-source-already-supplies-the-sextic-gauss-factorization),
+must be reused with its hypotheses. Even granting a reduction to the fixed
+Dirichlet channel above does not provide the required original Hecke
+aggregate: its ideal variables, pair-dependent primitive conductor,
+Möbius convolution, quadratic readout and zero-only primes still require
+one common estimate. The integer-interval hypothesis used in the comparison
+has not been supplied for that aggregate. A useful further transport must
+preserve cancellation over the complete channel, or supply genuinely short
+separated inputs with a paid norm cost. The original $t=1$ long-conductor
+sector, strict improvement below $B_*$ and signed Robin restoration remain
+unpaid. No conclusion about RH follows from this method comparison.
