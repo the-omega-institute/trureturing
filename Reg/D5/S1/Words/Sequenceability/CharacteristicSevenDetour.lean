@@ -88,7 +88,8 @@ def liftFamily : Registration liftArena.{u}
 
 def liftAudit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
     (@exists_characteristic_seven_lift.{u}) (Realization liftSignature.{u}) Unit Unit where
-  unitName := `D5.S1.Words.Sequenceability.CharacteristicSevenDetour.exists_characteristic_seven_lift.__information_unit
+  unitName :=
+    `D5.S1.Words.Sequenceability.CharacteristicSevenDetour.exists_characteristic_seven_lift.__information_unit
   realizationName := `Reg.D5.S1.Words.Sequenceability.CharacteristicSevenDetour.liftFamily
   realizationSource := none
   generated := false
@@ -189,7 +190,8 @@ def seamsFamily : Registration seamsArena.{u}
 
 def seamsAudit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
     (@six_column_splice_seams.{u}) (Realization seamsSignature.{u}) Unit Unit where
-  unitName := `D5.S1.Words.Sequenceability.CharacteristicSevenDetour.six_column_splice_seams.__information_unit
+  unitName :=
+    `D5.S1.Words.Sequenceability.CharacteristicSevenDetour.six_column_splice_seams.__information_unit
   realizationName := `Reg.D5.S1.Words.Sequenceability.CharacteristicSevenDetour.seamsFamily
   realizationSource := none
   generated := false
@@ -211,65 +213,51 @@ def seamsAudit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
   options := #[]
 
 
-abbrev PathParams := Σ K : Type u, Field K
+abbrev FieldParams := Σ K : Type u, Field K
 
-abbrev pathSignature : Signature where
-  Params := PathParams.{u}
-  State p := (ℕ → ZMod 7 × p.1) × (ℕ → ZMod 7 × p.1)
+abbrev cycleSignature : Signature where
+  Params := FieldParams.{u}
+  State p := @Units p.1 p.2.toMonoid × p.1
   Role := Unit
   finiteRole := inferInstance
   nonemptyRole := inferInstance
-  Output _ p := ℕ → ZMod 7 × p.1
+  Output _ p := Equiv.Perm (Fin 6 × p.1)
   Anchor := Empty
   finiteAnchor := inferInstance
 
-def pathActual : Realization pathSignature.{u} :=
-  realize pathSignature (fun _ _ p => p.2) (fun e => nomatch e)
-
-def pathBad : Realization pathSignature.{u} :=
-  realize pathSignature (fun _ p _ _ => by
+def cycleActual : Realization cycleSignature.{u} :=
+  realize cycleSignature (fun _ p rc => by
     letI := p.2
-    exact (0, 0)) (fun e => nomatch e)
+    exact lift rc.1 rc.2) (fun e => nomatch e)
 
-abbrev pathArena : Arena where
-  signature := pathSignature.{u}
-  Law R := ∀ (K : Type u) [f : Field K] [Finite K] [CharP K 7]
-    (u : K) (_hu : u ≠ 0),
-    let N := 6 * Nat.card K + 1;
-    ∃ v w : ℕ → ZMod 7 × K,
-      v 0 = (0, 0) ∧ v N = (0, u) ∧
-      Function.Injective (fun i : Fin (N + 1) => v i.val) ∧
-      Set.range (fun i : Fin (N - 1) => v (i.val + 1)) = {z | z.1 ≠ 0} ∧
-      (∀ n < N, (R.readout () ⟨K, f⟩ (v, w)) n = v (n + 1) - v n) ∧
-      Function.Injective (fun i : Fin N => (R.readout () ⟨K, f⟩ (v, w)) i.val) ∧
-      Set.range (fun i : Fin N => (R.readout () ⟨K, f⟩ (v, w)) i.val) = {z | z.1 ≠ 0 ∨ z = (0, u)} ∧
-      (List.ofFn (fun i : Fin (N + 1) => v i.val)).length = 6 * Nat.card K + 2 ∧
-      (List.ofFn (fun i : Fin N => (R.readout () ⟨K, f⟩ (v, w)) i.val)).length = 6 * Nat.card K + 1 ∧
-      (List.ofFn (fun i : Fin (N + 1) => v i.val)).Nodup ∧
-      (List.ofFn (fun i : Fin N => (R.readout () ⟨K, f⟩ (v, w)) i.val)).Nodup ∧
-      (∀ n ≤ N, (∑ i ∈ Finset.range n, (R.readout () ⟨K, f⟩ (v, w)) i) = v n) ∧
-      Function.Injective (fun n : Fin (N + 1) => ∑ i ∈ Finset.range n.val, (R.readout () ⟨K, f⟩ (v, w)) i) ∧
-      (∀ a b : ℕ, a < b → b ≤ N → (∑ i ∈ Finset.Ico a b, (R.readout () ⟨K, f⟩ (v, w)) i) ≠ 0) ∧
-      (∑ i ∈ Finset.range N, (R.readout () ⟨K, f⟩ (v, w)) i) = (0, u)
+def cycleBad : Realization cycleSignature.{u} :=
+  realize cycleSignature (fun _ _ _ => 1) (fun e => nomatch e)
 
-private theorem path_bad_law : ¬ pathArena.{u}.Law pathBad := by
+abbrev cycleArena : Arena where
+  signature := cycleSignature.{u}
+  Law R := ∀ (K : Type u) [f : Field K] [Finite K] (r : Kˣ)
+    (_hr : ∀ z : Kˣ, ∃ n : ℕ, r ^ n = z) (c : K) (v w : Fin 6 × K),
+    (R.readout () ⟨K, f⟩ (r, c)).SameCycle v w ↔
+      (initialRow v = c ↔ initialRow w = c)
+
+private theorem cycle_bad_law : ¬ cycleArena.{u}.Law cycleBad := by
   intro h
   let K := ULift.{u} (ZMod 7)
-  obtain ⟨v, w, _, _, _, _, _, _, _, _, _, _, _, _, _, _, htotal⟩ :=
-    h K 1 (by simp)
-  have hz : (0 : K) = 1 := by
-    simpa [pathBad, realize] using congrArg Prod.snd htotal
-  exact zero_ne_one hz
+  obtain ⟨r, hr⟩ := IsCyclic.exists_generator (α := Kˣ)
+  have hn : ∀ z : Kˣ, ∃ n : ℕ, r ^ n = z := fun z =>
+    (Submonoid.mem_powers_iff z r).mp (mem_powers_iff_mem_zpowers.mpr (hr z))
+  have he := (h K r hn 0 (0, 0) (1, 0)).mpr (by simp [initialRow])
+  have hv : (0 : Fin 6) = 1 := congrArg Prod.fst (Equiv.Perm.sameCycle_one.mp he)
+  exact (by decide : (0 : Fin 6) ≠ 1) hv
 
-def pathFamily : Registration pathArena.{u}
-    (type_of% (@exists_characteristic_seven_relative_path.{u})) where
-  actual := pathActual
+def cycleFamily : Registration cycleArena.{u} (type_of% (@lift_same_cycle.{u})) where
+  actual := cycleActual
   bridge := Iff.rfl
-  variation := ⟨exists_characteristic_seven_relative_path, pathBad, path_bad_law⟩
+  variation := ⟨@lift_same_cycle.{u}, cycleBad, cycle_bad_law⟩
   sensitivity := by
     constructor
     · intro i
-      refine ⟨pathBad, ?_, rfl, path_bad_law⟩
+      refine ⟨cycleBad, ?_, rfl, cycle_bad_law⟩
       intro j hj
       exact (hj (Subsingleton.elim _ _)).elim
     · intro e
@@ -277,26 +265,191 @@ def pathFamily : Registration pathArena.{u}
   dependence := by
     intro i
     let K := ULift.{u} (ZMod 7)
-    refine ⟨⟨K, inferInstance⟩, ((fun _ => (0, (0 : K))), (fun _ => (0, 0))),
-      ((fun _ => (0, (0 : K))), (fun _ => (0, 1))), ?_⟩
+    refine ⟨⟨K, inferInstance⟩, (-1, 0), (-1, 1), ?_⟩
     intro he
-    have hz : (0 : K) = 1 := congrArg (fun f => (f 0).2) he
-    exact zero_ne_one hz
+    have h := congrArg (fun p : Equiv.Perm (Fin 6 × K) => (p (5, 0)).2) he
+    have htwo : (2 : K) ≠ 0 := (CharP.cast_eq_zero_iff K 7 2).not.mpr (by decide)
+    apply htwo
+    simpa [cycleActual, realize, lift, one_add_one_eq_two,
+      _root_.D5.S1.Words.Sequenceability.RowOrbitLift.rowReturn] using h.symm
 
-def pathAudit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
-    (@exists_characteristic_seven_relative_path.{u}) (Realization pathSignature.{u}) Unit Unit where
-  unitName := `D5.S1.Words.Sequenceability.CharacteristicSevenDetour.exists_characteristic_seven_relative_path.__information_unit
-  realizationName := `Reg.D5.S1.Words.Sequenceability.CharacteristicSevenDetour.pathFamily
+abbrev generatorSignature : Signature where
+  Params := FieldParams.{u}
+  State p := @Units p.1 p.2.toMonoid
+  Role := Unit
+  finiteRole := inferInstance
+  nonemptyRole := inferInstance
+  Output _ p := p.1
+  Anchor := Empty
+  finiteAnchor := inferInstance
+
+def generatorActual : Realization generatorSignature.{u} :=
+  realize generatorSignature (fun _ p r => by
+    letI := p.2
+    exact (r : p.1) + 1) (fun e => nomatch e)
+
+def generatorBad : Realization generatorSignature.{u} :=
+  realize generatorSignature (fun _ p _ => by
+    letI := p.2
+    exact 0) (fun e => nomatch e)
+
+abbrev generatorArena : Arena where
+  signature := generatorSignature.{u}
+  Law R := ∀ (K : Type u) [f : Field K] [CharP K 7] (r : Kˣ)
+    (_hn : ∀ z : Kˣ, ∃ n : ℕ, r ^ n = z), R.readout () ⟨K, f⟩ r ≠ 0
+
+private theorem generator_bad_law : ¬ generatorArena.{u}.Law generatorBad := by
+  intro h
+  let K := ULift.{u} (ZMod 7)
+  obtain ⟨r, hr⟩ := IsCyclic.exists_generator (α := Kˣ)
+  have hn : ∀ z : Kˣ, ∃ n : ℕ, r ^ n = z := fun z =>
+    (Submonoid.mem_powers_iff z r).mp (mem_powers_iff_mem_zpowers.mpr (hr z))
+  exact (h K r hn) rfl
+
+def generatorFamily : Registration generatorArena.{u}
+    (type_of% (@generator_add_one_ne_zero.{u})) where
+  actual := generatorActual
+  bridge := Iff.rfl
+  variation := ⟨@generator_add_one_ne_zero.{u}, generatorBad, generator_bad_law⟩
+  sensitivity := by
+    constructor
+    · intro i
+      refine ⟨generatorBad, ?_, rfl, generator_bad_law⟩
+      intro j hj
+      exact (hj (Subsingleton.elim _ _)).elim
+    · intro e
+      exact nomatch e
+  dependence := by
+    intro i
+    let K := ULift.{u} (ZMod 7)
+    refine ⟨⟨K, inferInstance⟩, 1, -1, ?_⟩
+    intro he
+    have htwo : (2 : K) ≠ 0 := (CharP.cast_eq_zero_iff K 7 2).not.mpr (by decide)
+    exact htwo (by simpa [generatorActual, realize, one_add_one_eq_two] using he)
+
+abbrev inventorySignature : Signature where
+  Params := LiftParams.{u}
+  State p := carrier (K := p.1)
+  Role := Unit
+  finiteRole := inferInstance
+  nonemptyRole := inferInstance
+  Output _ p := ZMod 7 × p.1
+  Anchor := Empty
+  finiteAnchor := inferInstance
+
+def inventoryActual : Realization inventorySignature.{u} :=
+  realize inventorySignature (fun _ p x => by
+    letI := p.2.1
+    exact vertexWithEndpoints p.2.2.2 (splice p.2.2.1 p.2.2.2 x) -
+      vertexWithEndpoints p.2.2.2 x) (fun e => nomatch e)
+
+def inventoryBad : Realization inventorySignature.{u} :=
+  realize inventorySignature (fun _ p _ => by
+    letI := p.2.1
+    exact (0, 0)) (fun e => nomatch e)
+
+abbrev inventoryArena : Arena where
+  signature := inventorySignature.{u}
+  Law R := ∀ (K : Type u) [f : Field K] [Finite K] [CharP K 7] (r : Kˣ) (u : K)
+    (_hu : u ≠ 0) (_hr : (r : K) + 1 ≠ 0),
+    Set.BijOn (R.readout () ⟨K, f, r, u⟩) {x | x ≠ target}
+      {v | v.1 ≠ 0 ∨ v = (0, u)}
+
+private theorem inventory_bad_law : ¬ inventoryArena.{u}.Law inventoryBad := by
+  intro h
+  let K := ULift.{u} (ZMod 7)
+  have htwo : (2 : K) ≠ 0 := (CharP.cast_eq_zero_iff K 7 2).not.mpr (by decide)
+  have hb := h K 1 1 (by simp) (by simpa only [Units.val_one, one_add_one_eq_two] using htwo)
+  have hz := hb.1 (show source (K := K) ≠ target from by simp [source, target, Fin.ext_iff])
+  simp [inventoryBad, realize] at hz
+
+def inventoryFamily : Registration inventoryArena.{u}
+    (type_of% (@splice_labels_bijective.{u})) where
+  actual := inventoryActual
+  bridge := Iff.rfl
+  variation := ⟨@splice_labels_bijective.{u}, inventoryBad, inventory_bad_law⟩
+  sensitivity := by
+    constructor
+    · intro i
+      refine ⟨inventoryBad, ?_, rfl, inventory_bad_law⟩
+      intro j hj
+      exact (hj (Subsingleton.elim _ _)).elim
+    · intro e
+      exact nomatch e
+  dependence := by
+    intro i
+    let K := ULift.{u} (ZMod 7)
+    refine ⟨⟨K, inferInstance, 1, 1⟩, source, predecessorOne 1 1, ?_⟩
+    intro he
+    have htwo : (2 : K) ≠ 0 := (CharP.cast_eq_zero_iff K 7 2).not.mpr (by decide)
+    have hb := splice_labels_bijective (1 : Kˣ) 1 (by simp) (by simpa only [Units.val_one, one_add_one_eq_two] using htwo)
+    have heq : source (K := K) = predecessorOne 1 1 := hb.2.1
+      (by simp [source, target]) Sum.inl_ne_inr he
+    exact Sum.inr_ne_inl heq
+
+def cycleAudit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
+    (@lift_same_cycle.{u}) (Realization cycleSignature.{u}) Unit Unit where
+  unitName :=
+    `D5.S1.Words.Sequenceability.CharacteristicSevenDetour.lift_same_cycle.__information_unit
+  realizationName := `Reg.D5.S1.Words.Sequenceability.CharacteristicSevenDetour.cycleFamily
   realizationSource := none
   generated := false
-  arena := .source ⟨pathArena⟩
-  objectArena := .source ⟨pathArena⟩
+  arena := .source ⟨cycleArena⟩
+  objectArena := .source ⟨cycleArena⟩
   catalog := Lean.Name.anonymous
   localNames := false
-  realization := .source pathArena ⟨pathFamily⟩
+  realization := .source cycleArena ⟨cycleFamily⟩
   correspondence := { stage := .evidence, objectStage := .evidence }
   bundleNonempty := .absent
-  readout := some (realize pathSignature pathActual.readout pathActual.anchor)
+  readout := some (realize cycleSignature cycleActual.readout cycleActual.anchor)
+  variation := .absent
+  sensitivity := .absent
+  partialSensitivity := none
+  escapeFrom := none
+  sourceSelection := none
+  continuation := .unknown
+  familyRecord := none
+  options := #[]
+
+def generatorAudit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
+    (@generator_add_one_ne_zero.{u}) (Realization generatorSignature.{u}) Unit Unit where
+  unitName :=
+    `D5.S1.Words.Sequenceability.CharacteristicSevenDetour.generator_add_one_ne_zero.__information_unit
+  realizationName := `Reg.D5.S1.Words.Sequenceability.CharacteristicSevenDetour.generatorFamily
+  realizationSource := none
+  generated := false
+  arena := .source ⟨generatorArena⟩
+  objectArena := .source ⟨generatorArena⟩
+  catalog := Lean.Name.anonymous
+  localNames := false
+  realization := .source generatorArena ⟨generatorFamily⟩
+  correspondence := { stage := .evidence, objectStage := .evidence }
+  bundleNonempty := .absent
+  readout := some (realize generatorSignature generatorActual.readout generatorActual.anchor)
+  variation := .absent
+  sensitivity := .absent
+  partialSensitivity := none
+  escapeFrom := none
+  sourceSelection := none
+  continuation := .unknown
+  familyRecord := none
+  options := #[]
+
+def inventoryAudit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
+    (@splice_labels_bijective.{u}) (Realization inventorySignature.{u}) Unit Unit where
+  unitName :=
+    `D5.S1.Words.Sequenceability.CharacteristicSevenDetour.splice_labels_bijective.__information_unit
+  realizationName := `Reg.D5.S1.Words.Sequenceability.CharacteristicSevenDetour.inventoryFamily
+  realizationSource := none
+  generated := false
+  arena := .source ⟨inventoryArena⟩
+  objectArena := .source ⟨inventoryArena⟩
+  catalog := Lean.Name.anonymous
+  localNames := false
+  realization := .source inventoryArena ⟨inventoryFamily⟩
+  correspondence := { stage := .evidence, objectStage := .evidence }
+  bundleNonempty := .absent
+  readout := some (realize inventorySignature inventoryActual.readout inventoryActual.anchor)
   variation := .absent
   sensitivity := .absent
   partialSensitivity := none
