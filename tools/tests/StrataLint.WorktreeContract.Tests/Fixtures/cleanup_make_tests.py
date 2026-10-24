@@ -393,6 +393,141 @@ class CleanupMakeTests(NativeFixture):
                         (self.dirty, self.local, self.cache, self.busy)])), flush=True)
 
 
+
+class IntegrationPerformanceProbeTests(CleanupMakeTests):
+    def setUp(self):
+        import hashlib
+        import platform
+        self.fixture_started = time.monotonic()
+        self.mark_phase("initialize")
+        self.root = self.workspace("ordinary-performance-")
+        self.repository = self.root / "checkout"
+        self.repository.mkdir()
+        self.environment = dict(os.environ, MSBUILDDISABLENODEREUSE="1",
+            DOTNET_CLI_USE_MSBUILD_SERVER="0", UseSharedCompilation="false",
+            GIT_AUTHOR_DATE="1700000000 +0000", GIT_COMMITTER_DATE="1700000000 +0000")
+        self.git("init", "--initial-branch=dev")
+        self.git("config", "user.name", "Ordinary Performance Fixture")
+        self.git("config", "user.email", "ordinary-performance@example.invalid")
+        (self.repository / "owned").write_text("preserved\n")
+        (self.repository / "other").write_text("tracked deletion\n")
+        (self.repository / ".gitignore").write_text("tools/\nMakefile\nDirectory.*\nglobal.json\n")
+        self.git("add", ".")
+        self.git("commit", "-m", "ordinary fixture")
+        self.baseline = self.git("rev-parse", "HEAD")
+        self.remote = self.root / "endpoint.git"
+        self.git("init", "--bare", self.remote)
+        self.git("remote", "add", "origin", self.remote)
+        self.git("push", "origin", "dev")
+        self.mark_phase("source-copy")
+        copy_source(SOURCE, self.repository)
+        self.identities = {}
+        for name in ("worktree_protocol", "worktree_preservation", "worktree_publication"):
+            data = (self.repository / "tools/scripts/worktree" / (name + ".py")).read_bytes()
+            self.identities[name] = hashlib.sha256(data).hexdigest()
+        build_started = time.monotonic()
+        self.build_cli(self.repository)
+        print(json.dumps(dict(event="performance_build", elapsed_seconds=time.monotonic()-build_started,
+            initial_cli_outputs="absent", source_modules=self.identities)), flush=True)
+        assembly = (self.repository / "tools/StrataLint.Cli/bin/Release/net10.0/StrataLint.dll").read_bytes()
+        for name in self.identities:
+            self.assertIn((self.repository / "tools/scripts/worktree" / (name + ".py")).read_bytes(), assembly)
+        executable = shutil.which("git")
+        wrapper = self.root / "instrumented-bin"
+        wrapper.mkdir()
+        script = wrapper / "git"
+        script.write_text('#!/bin/sh\nGIT_TRACE2_EVENT="$P4_TRACE" exec "$P4_NATIVE_GIT" "$@"\n')
+        script.chmod(0o755)
+        self.trace = self.root / "git-trace.jsonl"
+        self.environment.update(PATH=str(wrapper) + os.pathsep + self.environment["PATH"],
+            P4_TRACE=str(self.trace), P4_NATIVE_GIT=executable)
+        print(json.dumps(dict(event="performance_environment", source_modules=self.identities,
+            embedded_module_bytes_verified=True, fixture_sha256=hashlib.sha256(Path(__file__).read_bytes()).hexdigest(),
+            machine=platform.machine(), platform=platform.platform(), cpu_count=os.cpu_count(),
+            python=sys.version, git=self.git("--version"),
+            dotnet=self.run_command(["dotnet", "--version"]).stdout.strip(),
+            guards=dict(outer_seconds=180, command_seconds=120, output_bytes=1048576))), flush=True)
+
+    def measured(self, case, arguments, cwd=None):
+        import resource
+        self.mark_phase(case)
+        self.trace.write_text("")
+        before = resource.getrusage(resource.RUSAGE_CHILDREN)
+        build_outputs = list((self.repository / "tools").glob("*/obj/Release/net10.0/*.dll"))
+        mtimes = {str(p): p.stat().st_mtime_ns for p in build_outputs}
+        started = time.monotonic()
+        result = self.run_command(arguments, cwd, phase=case)
+        elapsed = time.monotonic() - started
+        after = resource.getrusage(resource.RUSAGE_CHILDREN)
+        traces = [json.loads(line) for line in self.trace.read_text().splitlines()]
+        starts = [item["argv"] for item in traces if item.get("event") == "start"]
+        print(json.dumps(dict(event="performance_case", case=case, elapsed_seconds=elapsed,
+            child_user_seconds=after.ru_utime-before.ru_utime,
+            child_system_seconds=after.ru_stime-before.ru_stime, maxrss=after.ru_maxrss,
+            stdout_bytes=len(result.stdout.encode()), stderr_bytes=len(result.stderr.encode()),
+            git_commands=starts, git_command_count=len(starts), trace_bytes=self.trace.stat().st_size,
+            changed_compiled_outputs=[str(p.relative_to(self.repository)) for p in build_outputs
+                if p.stat().st_mtime_ns != mtimes[str(p)]],
+            returncode=result.returncode)), flush=True)
+        return result
+
+    def test_matched_ordinary_native_operations(self):
+        import hashlib
+        manifest = dict(cases=["clean-attached", "clean-detached", "dirty-attached", "dirty-detached",
+            "deleted-only-resume", "checkpoint", "publication"], owned="preserved\n",
+            other="tracked deletion\n", final="final ordinary snapshot\n", untracked="ordinary untracked\n")
+        print(json.dumps(dict(event="performance_manifest", manifest=manifest,
+            sha256=hashlib.sha256(json.dumps(manifest, sort_keys=True).encode()).hexdigest())), flush=True)
+        for case in manifest["cases"][:5]:
+            tree = self.root / ("tree-" + case)
+            branch = "lane/governance/" + case
+            self.git("worktree", "add", "-b", branch, tree, self.baseline)
+            if "detached" in case:
+                self.git("checkout", "--detach", cwd=tree)
+            if case.startswith("dirty"):
+                (tree / "owned").write_text("intermediate staged\n")
+                self.git("add", "owned", cwd=tree)
+                (tree / "owned").write_text(manifest["final"])
+                (tree / "other").unlink()
+                (tree / "untracked").write_text(manifest["untracked"])
+            if case == "deleted-only-resume":
+                metadata = Path(self.git("rev-parse", "--absolute-git-dir", cwd=tree))
+                (metadata / "worktree-removal").write_text(json.dumps(dict(commit=self.baseline,
+                    recovery_branch="refs/heads/" + branch)))
+                (tree / "owned").unlink()
+                (tree / "other").unlink()
+            result = self.measured(case, ["make", "--no-print-directory", "worktree-remove", "NAMES=" + tree.name])
+            removal = next(json.loads(line) for line in result.stdout.splitlines() if line.startswith('{"name":'))
+            self.assertEqual("removed", removal["outcome"])
+            expected_status = "committed" if case.startswith("dirty") else "resumed" if case == "deleted-only-resume" else "unchanged"
+            self.assertFalse(tree.exists())
+            reference = removal["recovery_branch"]
+            snapshot = self.git("rev-parse", reference)
+            recovery = self.root / ("recovered-" + case)
+            self.measured("recovery-" + case, ["git", "worktree", "add", "--detach", recovery, reference])
+            self.assertEqual(manifest["final"] if case.startswith("dirty") else manifest["owned"], (recovery / "owned").read_text())
+            self.assertEqual(not case.startswith("dirty"), (recovery / "other").exists())
+            if case.startswith("dirty"):
+                self.assertEqual(manifest["untracked"], (recovery / "untracked").read_text())
+            commits = int(self.git("rev-list", "--count", self.baseline + ".." + reference))
+            self.assertEqual(1 if case.startswith("dirty") else 0, commits)
+            print(json.dumps(dict(event="performance_recovery", case=case, snapshot=snapshot,
+                reference=reference, expected_checkpoint_status=expected_status, new_commits=commits,
+                recovery_worktrees=1, exact_bytes=True)), flush=True)
+            self.git("worktree", "remove", recovery)
+        (self.repository / "owned").write_text(manifest["final"])
+        message = self.root / "message"
+        message.write_text("ordinary checkpoint\n")
+        self.measured("checkpoint", ["make", "--no-print-directory", "worktree-checkpoint", "MESSAGE=" + str(message)])
+        snapshot = self.git("rev-parse", "HEAD")
+        self.assertEqual(manifest["final"], self.git("show", "HEAD:owned") + "\n")
+        result = self.measured("publication", ["make", "--no-print-directory", "worktree-publish", "HEAD=dev"])
+        publication = next(item for item in self.events(result) if item["event"] == "worktree_publication")
+        self.assertEqual(("confirmed", "equal", snapshot), (publication["status"], publication["relation"], publication["observed_tip"]))
+        self.assertEqual(snapshot, self.git("rev-parse", "dev", cwd=self.remote))
+        self.mark_phase("complete")
+
+
 class SourceCopyTests(NativeFixture):
     def test_current_tracked_untracked_and_deleted_inputs(self):
         self.root = self.workspace("cleanup-source-")
