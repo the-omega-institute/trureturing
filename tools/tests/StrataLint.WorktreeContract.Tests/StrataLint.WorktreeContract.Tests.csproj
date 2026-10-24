@@ -1,8 +1,9 @@
-<Project Sdk="Microsoft.NET.Sdk">
+<Project Sdk="Microsoft.NET.Sdk" TreatAsLocalProperty="VSTestLogger">
   <PropertyGroup>
     <DisableTransitiveProjectReferences>true</DisableTransitiveProjectReferences>
     <IsPackable>false</IsPackable>
     <IsTestProject>true</IsTestProject>
+    <VSTestLogger>$(VSTestLogger);console%3Bverbosity=detailed</VSTestLogger>
     <RootNamespace>StrataLint.WorktreeContract.Tests</RootNamespace>
     <AssemblyName>StrataLint.WorktreeContract.Tests</AssemblyName>
   </PropertyGroup>
