@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:486d76976618a2134c824400b6e830c38c3b4563dc18f6e903ed51336968d967
+  normalized_sha256: sha256:486d76976618a2134c824400b6e830c38c3b4563dc18f6e903ed51336968d967
+cas_ref: sha256:486d76976618a2134c824400b6e830c38c3b4563dc18f6e903ed51336968d967
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: Defines the predicate for a minimal state beyond the size cutoff and names its set; the count of such states is not asserted in this atom.
+    previous_atom_id: d1fff3c7231aac57dc1612578a4ac83c5e898b1263ca3cfe3493912d6ceca7dc
+    next_atom_id: 0b6d1ca8ffa094d599f7e0977eb98071051f7d0dba64d6e43ac35444c4442bee

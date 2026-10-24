@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:8f1fdccb942308c92b694bf049d24820e34dce03c9460141ac57c71a45144165
+  normalized_sha256: sha256:8f1fdccb942308c92b694bf049d24820e34dce03c9460141ac57c71a45144165
+cas_ref: sha256:8f1fdccb942308c92b694bf049d24820e34dce03c9460141ac57c71a45144165
+coverage_gids:
+  - gid: D5/S3/ConceptDynamics/Communication/MutualRecognitionIsJointRealizability.mutually_recognized_iff_joint_witness
+    target_statement_id: sha256:4c275fa84468cde0f56a28fc1e3de4ac1708899ac2f93eff7a22dcac6c6bc7c1
+receipts:
+  unresolved_subitems: []

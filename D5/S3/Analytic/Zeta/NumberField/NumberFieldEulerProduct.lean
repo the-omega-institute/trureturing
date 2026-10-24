@@ -62,7 +62,7 @@ exponent of each `𝔭` into a vector `e : ↥S → ℕ`. The induction re-index
 
 /-- Combinatorial heart of the finite Euler-factor identity: for `‖g i‖ < 1`,
 `∏ i ∈ s, (1 - g i)⁻¹` is the norm-summable `tsum` over exponent vectors of `∏ i, g i ^ e i`. -/
-private lemma finsetGeometricProd_summable_and_hasSum {ι : Type*} (g : ι → ℂ)
+lemma finsetGeometricProd_summable_and_hasSum {ι : Type*} (g : ι → ℂ)
     (hg : ∀ i, ‖g i‖ < 1) (s : Finset ι) :
     (Summable fun e : {i // i ∈ s} → ℕ ↦ ‖∏ i ∈ s.attach, g i.1 ^ e i‖) ∧
       HasSum (fun e : {i // i ∈ s} → ℕ ↦ ∏ i ∈ s.attach, g i.1 ^ e i)
