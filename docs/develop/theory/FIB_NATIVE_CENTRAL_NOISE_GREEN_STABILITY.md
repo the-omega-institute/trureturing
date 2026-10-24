@@ -810,3 +810,444 @@ are reused intermediates. No worldwide novelty or formal certification
 is asserted.
 
 ## 追加锚（本行以下为增补区）
+
+## 9. Fixed central noise and exact local Euclidean compatibility
+
+**Definition 9.1 (the original source and the candidate comparison).**
+Retain Definitions 1.1–1.2 and 2.1, with fixed $\epsilon=|\nu|>0$.
+In particular, $0<Z<1$, $r=1-Z$, $H=r/2$, $X=Y=H$,
+$0<l<u<H$, and $\Omega=(l,u)\times\mathbb T^2$.
+For arbitrary fixed preparation phases $\theta_s^0$, the signed native
+representative, in mode order $(0,1,2,3,13)$, is
+
+$$
+\psi(k,\alpha,\beta)=\left(
+ \sqrt{k}e^{-i(\theta_0^0+\beta)},\,
+ \sqrt{H-k}e^{-i(\theta_1^0+\beta-\alpha)},\,
+ \sqrt Z e^{-i\theta_2^0},\,
+ \sqrt{H-k}e^{-i(\theta_3^0+\beta-\alpha)},\,
+ \sqrt{k}e^{-i(\theta_{13}^0+\beta)}\right).
+\tag{9.1}
+$$
+
+Both increment coordinates have period $2\pi$; equal increments do not
+identify the preparation phases. The raw measure is
+$d\mu=dk\,d\alpha\,d\beta$. The immutable initial preparation and the
+fixed interior pole $o=(k_o,\alpha_o,\beta_o)$ of (1.5) remain specified.
+The conditional law is exactly (1.2): three independent covariance-$2$
+Brownian motions, area drift zero, signed central coefficient $\nu$,
+and killing at the first hit of either $k=l$ or $k=u$.
+Its interior generator and symbol are
+
+$$
+\begin{aligned}
+G_\epsilon&=P^2+Q^2+\epsilon^2Z_c^2=-L_\epsilon\quad
+                       \text{on interior smooth tests},\\
+\mathsf A_\epsilon&=P\otimes P+Q\otimes Q+
+                         \epsilon^2Z_c\otimes Z_c,\\
+P&=\partial_k,\quad Q=\tfrac12\partial_\alpha+
+                  (\tfrac12-k/r)\partial_\beta,\quad
+Z_c=-r^{-1}\partial_\beta .
+\end{aligned}
+\tag{9.2}
+$$
+
+The clock is $H_t^\epsilon=e^{-tL_\epsilon}$, with no survival
+normalization. Let $g_\epsilon$ be the Riemannian metric whose
+orthonormal frame is $(P,Q,\epsilon Z_c)$; equivalently,
+$g_\epsilon^{-1}=\mathsf A_\epsilon$.
+In the exact first-kind chart (2.1)–(2.2),
+
+$$
+\begin{aligned}
+g_\epsilon&=dx^2+dy^2+\epsilon^{-2}
+       (d\theta+\tfrac y2dx-\tfrac x2dy)^2,\\
+d\mu&=m_0\,dx\,dy\,d\theta,\qquad m_0=(2r)^{-1}.
+\end{aligned}
+\tag{9.3}
+$$
+
+Its local length distance is the distance $d_\epsilon$ of Definition
+2.1, restricted to sufficiently small normal neighbourhoods. It is a
+kinetic distance, not a task-output error or a primitive-command cost.
+
+For a nonempty interior open set $U\subset\Omega$, a candidate exact
+comparison consists of a smooth map $F:U\to V$, with
+$V\subset\mathbb R^3$ open, a smooth scalar $a:U\to(0,\infty)$,
+an arbitrary smooth source vector field $B$ on $U$, and
+
+$$
+\mathcal A_{\mathsf D,b}f
+ =\sum_{i,j=1}^3\mathsf D^{ij}\partial_i\partial_j f
+       +\sum_{i=1}^3 b^i\partial_i f,
+\qquad \mathsf D=\mathsf D^{\mathsf T}>0\text{ constant},
+\quad b\in C^\infty(V,\mathbb R^3).
+\tag{9.4}
+$$
+
+Thus $2\mathsf D\,dt$ is the target diffusion covariance, and its
+constant kinetic metric is $\mathsf D^{-1}$. Isotropic diffusion is the
+special case $\mathsf D=cI_3$, $c>0$. The factor $a$ and both drifts
+are analytical relaxations in this comparison. They do not change the
+law (1.2), supply a clock service, or add a central native command.
+Native histories still have $j=\int a_{\rm cmd}\,db_{\rm cmd}$,
+the original extrema guard, and all four unhalved resources (6.1).
+Here $a_{\rm cmd}$ is the height control, distinct from the scalar $a$.
+
+**Theorem 9.2 (no exact full-test constant-diffusion readout).**
+For every fixed $\epsilon>0$ and every nonempty interior open $U$,
+there is no candidate of Definition 9.1 satisfying
+
+$$
+(aG_\epsilon+B)(f\circ F)
+       =(\mathcal A_{\mathsf D,b}f)\circ F
+             \quad\text{on }U,\qquad f\in C_c^\infty(V).
+\tag{9.5}
+$$
+
+No rank, injectivity or inverse assumption on $F$ is needed.
+The obstruction concerns the exact rank-three kinetic symbol, even
+with variable positive scalar retiming and arbitrary first-order drifts.
+
+Proof. At $q\in U$, choose a compactly supported test with zero gradient
+and arbitrary symmetric Hessian at $F(q)$. The second-order chain rule
+in (9.5) forces
+
+$$
+a(q)\,dF_q\,\mathsf A_\epsilon(q)\,dF_q^{\mathsf T}
+                 =\mathsf D .
+\tag{9.6}
+$$
+
+Since $\mathsf D$ is positive definite, $dF_q$ has rank three at
+every $q$. The inverse function theorem therefore supplies local
+inverse branches; this conclusion has not been assumed.
+Inverting (9.6) on any branch gives
+
+$$
+F^*(\mathsf D^{-1})=a^{-1}g_\epsilon .
+\tag{9.7}
+$$
+
+The left side is flat. Hence (9.5) would require $g_\epsilon$ to
+be conformally flat on a nonempty open set. First-order coefficients
+cannot change this requirement. More explicitly, the remaining
+coefficient equations are just
+$aG_\epsilon F^i+BF^i=b^i\circ F$. If a local diffeomorphism
+satisfied (9.6), these equations could always be met locally by
+$B=(dF)^{-1}(b\circ F-aG_\epsilon F)$. Thus the contradiction below
+is in the symbol, rather than a restriction on available drift choices.
+
+Here is the geometric calculation with one fixed convention. Put
+$E_1=P$, $E_2=Q$, $E_3=\epsilon Z_c$ and $h=\epsilon^{-1}$.
+Then $[E_1,E_2]=hE_3$ and the other two brackets vanish.
+Use
+
+$$
+\begin{aligned}
+R(X,Y)Z&=\nabla_X\nabla_YZ-\nabla_Y\nabla_XZ-\nabla_{[X,Y]}Z,\\
+\operatorname{Ric}(Y,Z)&=\sum_i g_\epsilon(R(E_i,Y)Z,E_i),\\
+S&=\operatorname{Ric}-\tfrac14\operatorname{Scal}\,g_\epsilon,\\
+C(X,Y,Z)&=(\nabla_XS)(Y,Z)-(\nabla_YS)(X,Z).
+\end{aligned}
+\tag{9.8}
+$$
+
+The last line specifies a covariant three-tensor, antisymmetric in its
+first two slots; no Cotton–York dualization is being used. Koszul's
+formula gives the full connection table, with row $i$, column $j$
+equal to $\nabla_{E_i}E_j$:
+
+$$
+\begin{pmatrix}
+0&\frac h2E_3&-\frac h2E_2\\
+-\frac h2E_3&0&\frac h2E_1\\
+-\frac h2E_2&\frac h2E_1&0
+\end{pmatrix}.
+\tag{9.9}
+$$
+
+For example the formula used is
+$2g_\epsilon(\nabla_{E_i}E_j,E_k)
+ =g_\epsilon([E_i,E_j],E_k)-g_\epsilon([E_j,E_k],E_i)
+  +g_\epsilon([E_k,E_i],E_j)$.
+Substitution of (9.9) into (9.8) gives
+
+$$
+\begin{aligned}
+R(E_1,E_2)E_2&=-\tfrac{3h^2}4E_1,&
+R(E_1,E_3)E_3&=\tfrac{h^2}4E_1,&
+R(E_2,E_3)E_3&=\tfrac{h^2}4E_2,\\
+\operatorname{Ric}&=\operatorname{diag}(-h^2/2,-h^2/2,h^2/2),&
+\operatorname{Scal}&=-h^2/2,&
+S&=\operatorname{diag}(-3h^2/8,-3h^2/8,5h^2/8).
+\end{aligned}
+\tag{9.10}
+$$
+
+All off-diagonal Ricci entries vanish by the same table. The entries
+of $S$ are constant in this frame, but its covariant derivative is not
+zero. In particular,
+
+$$
+\begin{aligned}
+(\nabla_{E_1}S)(E_2,E_3)
+ &=-S(\tfrac h2E_3,E_3)-S(E_2,-\tfrac h2E_2)=-h^3/2,\\
+(\nabla_{E_2}S)(E_1,E_3)
+ &=-S(-\tfrac h2E_3,E_3)-S(E_1,\tfrac h2E_1)=h^3/2,\\
+C(E_1,E_2,E_3)&=-h^3=-\epsilon^{-3}\ne0 .
+\end{aligned}
+\tag{9.11}
+$$
+
+The classical three-dimensional conformal-curvature criterion says
+that a conformally flat smooth metric has zero covariant Cotton tensor.
+Its conformal invariance and this necessary condition are supplied by
+García–Hehl–Heinicke–Macías, *The Cotton tensor in Riemannian
+spacetimes*, [§§IV–V, (86), (95)](https://arxiv.org/html/gr-qc/0309008v2).
+Our derivative-slot convention is that of Kişisel–Sarıoğlu–Tekin,
+*Cotton flow*, [Appendix B, (43)–(46)](https://arxiv.org/html/0803.1603v2);
+(9.8) also fixes the curvature sign used for every entry above.
+The nonzero component was computed from (9.9), not transferred from a
+differently indexed Cotton or Cotton–York component. Only vanishing is
+used from the conformal criterion.
+Equation (9.11) holds at every point of the native chart. Such charts
+exist about every interior point, with the same brackets. Consequently
+no nonempty interior open subset can satisfy (9.7), contradicting
+(9.6) and proving the theorem. $\square$
+
+**Corollary 9.3 (the exact intrinsic-distance comparison also fails).**
+For fixed $\epsilon>0$, let $a>0$ be any smooth function on a nonempty
+interior open $U$, and let $d_{a^{-1}g_\epsilon}$ be its Riemannian
+length distance. No smooth $F:U\to\mathbb R^3$ and constant
+$\mathsf D>0$ can preserve the lengths of every local smooth curve
+from $a^{-1}g_\epsilon$ to $\mathsf D^{-1}$. Nor can they satisfy
+
+$$
+d_{a^{-1}g_\epsilon}(q,q')
+ =\big((F(q')-F(q))^{\mathsf T}\mathsf D^{-1}
+                              (F(q')-F(q))\big)^{1/2}
+\tag{9.12}
+$$
+
+for every sufficiently close pair in every neighbourhood of $U$.
+In particular this excludes an exact local Euclidean kinetic-distance
+readout for the original clock $a=1$.
+
+Proof. Length preservation on all short curve restrictions, followed
+by division by their parameter length, gives
+$g_\epsilon(v,v)/a=(dFv)^{\mathsf T}\mathsf D^{-1}dFv$
+for every tangent vector $v$. Under the distance hypothesis the same
+identity follows from
+$d_g(q,\gamma(t))/|t|\to\sqrt{g_q(\dot\gamma(0),\dot\gamma(0))}$
+for a smooth curve through $q$, applied to $g=a^{-1}g_\epsilon$.
+Polarization gives (9.7); positivity forces $dF$ to be invertible.
+The calculation (9.8)–(9.11) and the conformal criterion contradict
+(9.7) exactly as in Theorem 9.2. $\square$
+
+## 10. The original-clock full-response consumer
+
+**Definition 10.1 (all-start killed response, with its test class).**
+For each analytic starting point $q\in\Omega$, use (1.2) with that
+starting point, the same fixed source parameters, and the same two
+absorbing height faces. This defines the transition family
+$H_t^\epsilon$ of Theorem 1.3. Varying the analytic starting point
+supplies no actual reset or preparation operation. The point-source
+field (1.5) still has its single specified pole $o$.
+
+Let $D\subset\mathbb R^3$ be open, $\mathsf D$ a constant symmetric
+positive definite matrix, and $b$ smooth on $D$. Let $S_t^D$ be the
+transition semigroup of a diffusion with generator
+$\mathcal A_{\mathsf D,b}$, killed on first exit from $D$, with no
+interior killing or survival conditioning. Assume the diffusion exists
+and has no explosion before that exit. Send each cemetery to a
+cemetery and give every test value zero there.
+A proposed full-response correspondence consists of one smooth
+$F:\Omega\to D$ for which, on a nonempty interior open $U$, for some
+$t_*>0$,
+
+$$
+H_t^\epsilon(f\circ F)(q)=S_t^D f(F(q)),\qquad
+q\in U,\quad 0<t<t_*,\quad f\in C_c^\infty(D).
+\tag{10.1}
+$$
+
+In particular any correspondence of all-start killed transition laws,
+or all-start killed path laws, with the same clock and readout contains
+(10.1): apply equality of the time-$t$ distributions to the indicated
+bounded tests. A bounded-Borel full-test identity is stronger than the
+displayed requirement. No $L^2$-only or exceptional-start interpretation
+is included in (10.1).
+
+For a target with a Lebesgue transition density, (10.1) means exactly
+
+$$
+\int_\Omega p^\Omega_\epsilon(t,q,q')f(F(q'))\,d\mu(q')
+ =\int_D p^D_{\mathsf D,b}(t,F(q),y)f(y)\,dy .
+\tag{10.2}
+$$
+
+The left kernel uses the unnormalized raw measure and both original
+absorbing faces. There is no adjustment of pole strength, Jacobian,
+lifetime, or time integral implicit in this formula.
+
+**Theorem 10.2 (full killed response would force the excluded identity).**
+For every fixed $\epsilon>0$, Definition 10.1's original-clock
+full-response correspondence is impossible. More precisely, (10.1)
+would imply the pointwise interior identity
+
+$$
+G_\epsilon(f\circ F)(q)
+       =(\mathcal A_{\mathsf D,b}f)(F(q)),\qquad
+q\in U,\quad f\in C_c^\infty(D),
+\tag{10.3}
+$$
+
+which is the forbidden case $a=1$, $B=0$ of (9.5).
+This implication does not require $f\circ F$ to be in the global
+Dirichlet generator domain, or any a priori rank or global injectivity
+of $F$.
+
+Proof. Fix $q\in U$ and $f\in C_c^\infty(D)$. The function
+$u=f\circ F$ is bounded and smooth in $\Omega$, but its trace at a
+height face need not vanish. Choose nested interior coordinate balls
+about $q$, and a smooth compactly supported cutoff $\chi$ which is
+one on the larger of those balls. Then $v=\chi u\in C_c^\infty(\Omega)$,
+with $G_\epsilon v(q)=G_\epsilon u(q)$.
+
+Let $\sigma$ be the source diffusion's first exit from the smaller
+ball. Before $\sigma$ the local Itô coefficients are bounded on its
+closure. The fourth-moment martingale maximal estimate, together with
+the bounded drift, gives
+$\mathbb E_q\sup_{s\le t}|X_{s\wedge\sigma}-q|^4
+ \le C(t^2+t^4)$ in these coordinates.
+At exit the displacement has a fixed positive radius; hence
+$\mathbb P_q(\sigma\le t)=O(t^2)=o(t)$.
+Paths cannot reach either native absorbing face without this exit.
+Since $u=v$ before exit and both are bounded, their killed expectations
+at time $t$ differ by $o(t)$. Itô's formula for the compactly supported
+$v$, with value zero at the cemetery, gives
+
+$$
+\lim_{t\downarrow0}
+ \frac{H_t^\epsilon u(q)-u(q)}t
+   =G_\epsilon v(q)=G_\epsilon u(q).
+\tag{10.4}
+$$
+
+For completeness, the martingale estimate used here is the classical
+fourth-moment maximal inequality
+$\mathbb E\sup_{s\le t}|M_s|^4\le C\mathbb E[M]_t^2$;
+local bounded diffusion coefficients make its right side $O(t^2)$,
+and the drift supremum contributes $O(t^4)$. This is localization
+within the fixed covariance-$2$ law, not a change of clock or a
+conditioning on remaining alive.
+
+The same interior localization for the target, whose drift is bounded
+on a compact ball around $F(q)$ and whose diffusion covariance is
+$2\mathsf D$, gives
+
+$$
+\lim_{t\downarrow0}
+ \frac{S_t^D f(F(q))-f(F(q))}t
+       =\mathcal A_{\mathsf D,b}f(F(q)).
+\tag{10.5}
+$$
+
+Subtract the common time-zero value in (10.1), divide by $t$ and
+use (10.4)–(10.5). This proves (10.3) at every $q\in U$ for every
+indicated test. Theorem 9.2 gives the contradiction. The passage from
+killed path-law equality to (10.1) uses only its time-$t$ marginal
+and the fixed zero value at death, so it needs no reconstruction from
+one Green field. $\square$
+
+## 11. Correspondence, attribution and the surviving realization boundary
+
+**Definition 11.1 (classical suppliers and source-specific consequence).**
+The conformal-curvature facts in the proof of Theorem 9.2 are
+literature-attested intermediates, with the following precise uses.
+
+| Primary source | Mathematical correspondence and scope |
+| --- | --- |
+| García–Hehl–Heinicke–Macías, *The Cotton tensor in Riemannian spacetimes*, [arXiv:gr-qc/0309008v2](https://arxiv.org/html/gr-qc/0309008v2), §§IV–V | The three-dimensional conformal invariance and the necessity of vanishing Cotton for conformal flatness, particularly (86) and (95). They are applied to the smooth positive metric (9.3) and its hypothetical conformal rescaling (9.7); only the zero-tensor criterion is transferred. |
+| Kişisel–Sarıoğlu–Tekin, *Cotton flow*, [arXiv:0803.1603v2](https://arxiv.org/html/0803.1603v2), §§2–3, §5 and §5.5, Appendices A–B | Classical Cotton and homogeneous Nil geometry, with the covariant derivative-slot convention of Appendix B, (43)–(46). Our orthonormal frame has sole bracket $[E_1,E_2]=\epsilon^{-1}E_3$. Using their §5 bracket convention, their Nil choice $(\lambda,\mu,\nu)=(-1,0,0)$ and metric coefficients $A=(2\epsilon)^{-1}$, $B=C=\sqrt{2\epsilon}$ have $ABC=1$; the orthonormal frame $(F_2/\sqrt B,F_3/\sqrt C,-F_1/\sqrt A)$ has precisely our bracket. These supplier symbols are unrelated to the central-noise coefficient $\nu$ in (1.2). No flow equation or borrowed numerical Cotton component enters the proof. |
+| Capogna–Citti, *Regularity for subelliptic PDE through uniform estimates in multi-scale geometries*, [arXiv:1504.04762v1](https://arxiv.org/html/1504.04762v1), §2.3, Lemma 2.13 and Remark 2.16 | Regularized intrinsic-distance comparability and local Euclidean bi-Lipschitz behaviour, not an exact constant-symbol identification. Their displayed fields have $(x_1,x_2,x_3)=(x,y,2\theta)$ and regularization parameter $2\epsilon$: the pushforwards of $(U,V,\epsilon Z_H)$ are exactly $(X_1,X_2,2\epsilon\partial_{x_3})$. No time rescaling is made. |
+
+The source-specific consequence is repo-derived: on the original
+five-mode cylinder, (9.6) forces a local inverse and the conformal
+relation (9.7), which the nonzero tensor (9.11) forbids. Corollary 9.3
+translates this to exact kinetic lengths and distances; Theorem 10.2
+translates the original-clock all-start full response to the same
+necessary operator identity. Homogeneous Nil curvature is a classical
+supplier within this argument, not a separate new conclusion.
+No literature novelty or Lean certification is asserted.
+
+For comparison with the existing native consumers,
+N, Theorem 10.5 concerns two-field generators of the form
+$\sum_{i,j\le2}a^{ij}X_iX_j+\sum_{i\le2}b^iX_i$, with
+$(X_1,X_2)=(P,Q)$. Its symbol has rank two, so its no-ellipticity proof
+does not apply to $G_\epsilon$ at fixed $\epsilon>0$.
+K, Definition 33.1 and Proposition 40.1 supply the independent central
+noise and rank-three covariance. Here their area drift is zero,
+$\nu^2=\epsilon^2$, and their killing, signs and preparations are exactly
+(9.1)–(9.2). The rank-three gap is exact local constant-symbol geometry;
+it is closed by (9.6)–(9.11), without undoing that supplied noise.
+The all-start test distinction is the one used in
+[Native free diffusion descent and hidden-circle rigidity, Definition
+2.3 and Theorem 3.1](FIB_NATIVE_FREE_DIFFUSION_QUOTIENT_RIGIDITY.md):
+its carrier and target are the full cylinder and its two-dimensional
+bottom quotient, whereas (10.1) asks for a three-dimensional constant-SPD
+target. Its lower-dimensional descent is not contradicted.
+The long-time tensor in
+[Long-time native phase diffusion, §40](FIB_NATIVE_LONG_TIME_PHASE_DIFFUSION.md)
+is an occupation-averaged winding limit of a different rank-two law,
+not (9.5) on a fixed interior neighbourhood.
+
+The carrier in
+[Acquisition of a persistent global port orientation, Definitions
+1.1–1.3 and Theorem 3.1](RECURSIVE_RELATIONAL_OBSERVATION_ATOMIC_GLOBAL_PORT_ORIENTATION.md)
+is a free ordered substitution algebra with one unknown bijection
+between physical port names and semantic address names. Its acquired
+adapter acts on paid literal-address bits; it supplies no map satisfying
+(9.6), no diffusion law on (9.1), and no kinetic-distance or clock
+identification. It therefore does not discharge the hypotheses of
+(9.5) or (10.1).
+
+**Definition 11.2 (the exact excluded contract and its limits).**
+An exact flat kinetic realization in this section means a smooth
+three-dimensional readout satisfying (9.5), or the exact length/distance
+contract of Corollary 9.3. An exact full propagation realization in the
+original clock means a correspondence containing Definition 10.1's
+all-start, full-test killed-semigroup identity. A realization which also
+claims to identify the full kinetic-plus-Green response must in
+particular meet this free propagation requirement; such a joint
+contract is therefore excluded by Theorem 10.2.
+
+Equality of a single fitted scalar field $\Gamma_{\epsilon,o}$, or
+one pole's integrated occupation data, is not (10.1) or (9.5); no
+exclusion is inferred here from that weaker premise. In particular
+Theorem 6.2's fixed-start bounded-continuous occupation transfer is not
+upgraded to all-start generator correspondence. A nonempty open family
+of starts and the full local test class enter Theorem 10.2 explicitly.
+
+The symbols and metrics being compared are the kinetic ones in
+(9.2)–(9.4). The conclusions impose no ban on variable anisotropic
+coefficients in Euclidean coordinates, curved three-manifolds,
+lower-dimensional factors, local or asymptotic metric comparability,
+or homogenized Euclidean limits. Nor do they identify an arbitrary
+task metric with $g_\epsilon$. The scalar $a$ in Theorem 9.2 grants
+no execution retiming: (1.2), (1.5), (6.1) and (10.1) retain their
+original clock. Source and target drifts in (9.5) are relaxed comparison
+data; the actual law still has no such added drift.
+
+The matched attractive form remains precisely $q_{\epsilon,g}$ of
+(1.5), with the same raw unit-source Green field, fixed pole,
+periodicity and both absorbing faces. For every fixed $\epsilon>0$
+and every $g>0$, its closure, semiboundedness and attained finite
+minimum are those of Theorem 4.1. The supercritical small-noise rate is
+still Theorem 5.1; nonflatness supplies no additional instability
+statement. Physical spatial identification would require its own
+source, law, measurement, geometry, clock, operation and resource
+correspondence. Equality of dimensions supplies none of those premises.
+
+## 追加锚（本行以下为增补区）
