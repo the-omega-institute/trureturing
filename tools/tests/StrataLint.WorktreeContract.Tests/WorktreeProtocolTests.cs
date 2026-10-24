@@ -297,6 +297,7 @@ public sealed class WorktreeProtocolTests(ITestOutputHelper output)
     [InlineData("pool_claim_refuses_exact_symlink")]
     [InlineData("pool_claim_concurrency_has_one_winner")]
     [InlineData("pool_capacity_and_pressure_use_one_owner")]
+    [InlineData("pool_return_accepts_squash_and_merge_histories")]
     [InlineData("pool_sweep_confirms_returned_tip_beyond_stale_tracking")]
     [InlineData("pool_sweep_refuses_non_dev_idle_tip")]
     [InlineData("pool_eviction_failures_preserve_receipt_and_exit")]

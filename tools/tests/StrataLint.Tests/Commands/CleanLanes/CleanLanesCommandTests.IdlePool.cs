@@ -52,7 +52,7 @@ public sealed partial class CleanLanesCommandTests
         var result = fixture.RunAt(fixture.CreationTime(path).AddHours(1), "--force", "--lanes-only");
         Assert.True(result.Success, result.Error);
         var item = Assert.Single(ReadItems(result.Output), row => row.GetProperty("path").GetString() == path);
-        Assert.Equal("stale_worktree", item.GetProperty("kind").GetString());
+        Assert.Equal("lane_worktree", item.GetProperty("kind").GetString());
         Assert.Equal("skipped", item.GetProperty("action").GetString());
         Assert.Equal("recently_updated", item.GetProperty("reason").GetString());
         Assert.True(Directory.Exists(path));

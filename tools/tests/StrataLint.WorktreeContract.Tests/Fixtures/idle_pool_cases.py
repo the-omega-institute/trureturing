@@ -111,11 +111,14 @@ class IdlePoolCases:
 
     def pool_claim_requires_matching_pins_and_clean_idle_attachment(self):
         self.pool_return()
-        (self.main / "lean-toolchain").write_text("other pins\n")
-        self.g(self.main, "commit", "-am", "pins")
-        other = self.g(self.main, "rev-parse", "HEAD").strip()
-        self.assertEqual("no_idle", json.loads(self.pool_claim(base=other).stdout)["status"])
-        self.assertIn("incompatible_pin", self.pool_claim(path=self.tree, base=other, expect=73).stderr)
+        for pin in ("lean-toolchain", "lake-manifest.json"):
+            with self.subTest(pin=pin):
+                self.g(self.main, "reset", "--hard", self.base)
+                (self.main / pin).write_text("other pins\n")
+                self.g(self.main, "commit", "-am", "pins")
+                other = self.g(self.main, "rev-parse", "HEAD").strip()
+                self.assertEqual("no_idle", json.loads(self.pool_claim(base=other).stdout)["status"])
+                self.assertIn("incompatible_pin:" + pin, self.pool_claim(path=self.tree, base=other, expect=73).stderr)
         (self.tree / "owned").write_text("new work\n")
         self.assertIn("idle_dirty", self.pool_claim(path=self.tree, expect=73).stderr)
         self.g(self.tree, "reset", "--hard", self.base)
@@ -247,3 +250,26 @@ class IdlePoolCases:
         self.g(target, "update-ref", "--create-reflog", "-m", "worktree-idle:" + token,
                reference, commit, "0" * len(commit))
         self.g(target, "switch", reference.removeprefix("refs/heads/"))
+
+    def pool_return_accepts_squash_and_merge_histories(self):
+        for shape in ("squash", "merge"):
+            with self.subTest(shape=shape):
+                self.branch = "lane/governance/" + shape
+                self.g(self.tree, "switch", "-c", self.branch)
+                (self.tree / "owned").write_text(shape + " task\n")
+                self.g(self.tree, "commit", "-am", "task")
+                task = self.g(self.tree, "rev-parse", "HEAD").strip()
+                if shape == "squash":
+                    self.g(self.main, "merge", "--squash", self.branch)
+                    self.g(self.main, "commit", "-m", "squashed task")
+                else:
+                    self.g(self.main, "merge", "--no-ff", "-m", "merge task", self.branch)
+                merged = self.g(self.main, "rev-parse", "HEAD").strip()
+                self.assertNotEqual(task, merged)
+                self.g(self.main, "push", "origin", "dev")
+                self.pool_github(headRefOid=task, mergeCommit=dict(oid=merged))
+                result = json.loads(self.pool_return().stdout)
+                self.assertEqual("returned", result["status"])
+                self.assertEqual(merged, result["dev_commit"])
+                self.assertEqual(merged, self.g(self.tree, "rev-parse", "HEAD").strip())
+                self.assertEqual(task, self.g(self.main, "rev-parse", self.branch).strip())

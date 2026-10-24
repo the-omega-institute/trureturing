@@ -16,7 +16,7 @@ public sealed partial class WorktreeCommandTests
         var idleBranch = "refs/heads/lane/governance/idle-" + token;
         TestGit.Run(repository.Path, "update-ref", "--create-reflog", "-m", "worktree-idle:" + token,
             idleBranch, "HEAD");
-        TestGit.Run(repository.Path, "worktree", "add", idle, idleBranch);
+        TestGit.Run(repository.Path, "worktree", "add", idle, idleBranch["refs/heads/".Length..]);
 
         var result = CleanLanesCommand.Run(repository.Path, ["--force", "--lanes-only"],
             new DateTimeOffset(2030, 1, 2, 0, 0, 0, TestBudgets.ZeroDuration));
@@ -42,7 +42,7 @@ public sealed partial class WorktreeCommandTests
         var idleBranch = "refs/heads/lane/governance/idle-" + token;
         TestGit.Run(repository.Path, "update-ref", "--create-reflog", "-m", "worktree-idle:" + token,
             idleBranch, "HEAD");
-        TestGit.Run(repository.Path, "worktree", "add", idle, idleBranch);
+        TestGit.Run(repository.Path, "worktree", "add", idle, idleBranch["refs/heads/".Length..]);
         TestGit.Run(repository.Path, "config", "core.excludesFile", Path.Combine(repository.Path, "ignore"));
         File.WriteAllText(Path.Combine(repository.Path, "ignore"), ".lake/\n");
         Directory.CreateDirectory(Path.Combine(idle, ".lake"));
