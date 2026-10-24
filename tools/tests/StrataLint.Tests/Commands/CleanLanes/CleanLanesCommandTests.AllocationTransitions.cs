@@ -85,4 +85,26 @@ public sealed partial class CleanLanesCommandTests
         Assert.Equal("merged_to_dev", ReasonFor(elapsed.Output, lane));
         Assert.False(Directory.Exists(lane));
     }
+
+    [Theory]
+    [InlineData(false)]
+    [InlineData(true)]
+    public void CheckoutOfExistingBranchDoesNotAllocateTree(bool explicitAllocation)
+    {
+        using var fixture = new CleanLanesFixture();
+        var lane = fixture.AddWorkedLane("harness/existing-branch-origin");
+        var old = fixture.LastUpdate(lane);
+        var checkout = old.AddDays(2);
+        if (explicitAllocation)
+            CleanLanesFixture.GitAt(lane, old, "update-ref", "-m",
+                "worktree-allocation:0123456789abcdef0123456789abcdef", "HEAD", fixture.Head(lane), fixture.Head(lane));
+        CleanLanesFixture.GitAt(lane, checkout.AddMinutes(-1), "branch", "harness/existing-branch-destination");
+        CleanLanesFixture.GitAt(lane, checkout, "switch", "harness/existing-branch-destination");
+
+        var result = fixture.RunAt(checkout.AddHours(1), "--force", "--lanes-only");
+
+        Assert.True(result.Success, result.Error);
+        Assert.Equal("merged_to_dev", ReasonFor(result.Output, lane));
+        Assert.False(Directory.Exists(lane));
+    }
 }

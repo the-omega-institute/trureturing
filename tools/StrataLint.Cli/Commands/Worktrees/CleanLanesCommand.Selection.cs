@@ -48,7 +48,17 @@ internal static partial class CleanLanesCommand
             }
             if (branchLog.Error is not null)
                 return new("update_unknown", "update_unknown", "branch_" + branchLog.Error);
-            allocated = Math.Max(allocated, branchLog.Allocated!.Value);
+            var creation = branchLog.FirstRecord!;
+            if (creation.Updated > now.ToUnixTimeSeconds())
+                return new("age_unverifiable", "age_unverifiable");
+            if (creation.OldHead.All(static c => c == '0'))
+            {
+                if (log.Checkouts!.TryGetValue(branch, out var entries)
+                    && entries.Any(entry => entry.Updated == creation.Updated && entry.NewHead == creation.NewHead))
+                    allocated = Math.Max(allocated, creation.Updated);
+            }
+            else if (creation.Updated > allocated)
+                return new("update_unknown", "update_unknown", "branch_allocation_unverifiable");
         }
         var ageAnchor = Math.Max(updated.Value, allocated);
 
@@ -96,11 +106,13 @@ internal static partial class CleanLanesCommand
             using var reader = new StringReader(Decode(bytes));
             long? allocated = null;
             string? newHead = null;
-            var branches = new HashSet<string>(StringComparer.Ordinal);
+            var checkouts = new Dictionary<string, List<HeadLogRecord>>(StringComparer.Ordinal);
             var explicitAllocation = false;
+            HeadLogRecord? firstRecord = null;
             while (reader.ReadLine() is { } line)
             {
                 if (!TryParseHeadLogRecord(line, out var record)) return new(Error: "reflog_invalid");
+                firstRecord ??= record;
                 allocated ??= record!.Updated;
                 newHead = record!.NewHead;
                 const string allocationPrefix = "worktree-allocation:";
@@ -112,7 +124,7 @@ internal static partial class CleanLanesCommand
                         return new(Error: "allocation_record_invalid");
                     allocated = Math.Max(allocated.Value, record.Updated);
                     explicitAllocation = true;
-                    branches.Clear();
+                    checkouts.Clear();
                 }
                 const string prefix = "checkout: moving from ";
                 if (treeLog && record.Message.StartsWith(prefix, StringComparison.Ordinal)
@@ -120,13 +132,17 @@ internal static partial class CleanLanesCommand
                     && separator >= prefix.Length)
                 {
                     var branch = record.Message[(separator + 4)..];
-                    if (IsAllocationBranchName(branch)) branches.Add(branch);
+                    if (IsAllocationBranchName(branch))
+                    {
+                        if (!checkouts.TryGetValue(branch, out var entries)) checkouts.Add(branch, entries = []);
+                        entries.Add(record);
+                    }
                 }
             }
             if (allocated is null) return new(Error: "reflog_empty");
             if (!string.Equals(newHead, observedHead, StringComparison.Ordinal))
                 return new(Error: "reflog_head_mismatch");
-            return new(allocated, Branches: branches, ExplicitAllocation: explicitAllocation);
+            return new(allocated, Checkouts: checkouts, ExplicitAllocation: explicitAllocation, FirstRecord: firstRecord);
         }
         catch (Exception exception) when (exception is not OutOfMemoryException)
         {
@@ -136,7 +152,7 @@ internal static partial class CleanLanesCommand
 
     private static IEnumerable<string> AllocationBranches(AllocationLog log, string? attached)
     {
-        var branches = new HashSet<string>(log.Branches!, StringComparer.Ordinal);
+        var branches = new HashSet<string>(log.Checkouts!.Keys, StringComparer.Ordinal);
         if (attached is not null && !log.ExplicitAllocation) branches.Add(attached);
         return branches;
     }
@@ -151,7 +167,8 @@ internal static partial class CleanLanesCommand
             && !part.EndsWith(".lock", StringComparison.Ordinal));
 
     private sealed record AllocationLog(long? Allocated = null, string? Error = null,
-        HashSet<string>? Branches = null, bool ExplicitAllocation = false);
+        Dictionary<string, List<HeadLogRecord>>? Checkouts = null, bool ExplicitAllocation = false,
+        HeadLogRecord? FirstRecord = null);
 
     private sealed record ReclaimSelection(string? BlockReason, string Reason,
         string? Detail = null, long? LockModifiedTicks = null)
