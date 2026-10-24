@@ -35,7 +35,13 @@ private theorem pullback_load_le (f : V → W) (hi : Function.Injective f)
     _ = ∑ c ∈ (G.neighborFinset v).image f, (a (f v) c) ^ 2 :=
       (sum_image (fun x _ y _ h => hi h)).symm
     _ ≤ _ := by
-    
+      apply sum_le_sum_of_subset_of_nonneg
+      · intro w hw
+        obtain ⟨u, hu, rfl⟩ := mem_image.mp hw
+        exact (H.mem_neighborFinset _ _).mpr (hf _ _ ((G.mem_neighborFinset _ _).mp hu))
+      · intro w hw hn
+        exact sq_nonneg _
+
 /-- Every ambient allocation restricts to the injectively embedded native graph. -/
 theorem kappa_le_of_injective_hom (f : V → W) (hi : Function.Injective f)
     (hf : ∀ v w, G.Adj v w → H.Adj (f v) (f w)) : kappa G ≤ kappa H := by
@@ -159,7 +165,7 @@ private theorem exists_lower_law : ∃ p ∈ stdSimplex ℝ V,
   apply sup'_le
   intro v hv
   have he := hsp b hb (Pi.single v 1) (single_mem_stdSimplex ℝ v)
-  simpa [payoff] using he
+  simpa [payoff, Pi.single_apply] using he
 
 /-- The native infimum tensorizes without excluding zero probability masses. -/
 theorem kappa_box : kappa (G □ H) = kappa G + kappa H := by
