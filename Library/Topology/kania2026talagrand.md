@@ -174,8 +174,10 @@ $$
 $$
 
 There is no nonempty, nontrivial, completeness, positivity-of-functionals
-or global norm-bound premise. The weak-star and norm topologies remain
-distinct: no continuity of `WeakDual.toStrongDual` is asserted.
+or global norm-bound premise. The argument uses the weak-star topology
+on `WeakDual` and the operator norm on `StrongDual` separately; it
+establishes lower semicontinuity and does not use continuity of
+`WeakDual.toStrongDual`.
 
 The consumed private general lemma applies to every lower semicontinuous
 F : K × K → ℝ positive away from the diagonal. If no uniform lower bound

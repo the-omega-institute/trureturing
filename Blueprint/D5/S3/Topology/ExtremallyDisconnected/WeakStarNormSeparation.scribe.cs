@@ -63,6 +63,6 @@ internal sealed class WeakStarNormSeparationDocument : IScribeDocumentDefinition
                     "The compact-minimum composition is derived here from the supplied ordinary argument and the point-pair theorem. "
                     + "The CH/Talagrand research context is described in Library/Topology/kania2026talagrand.md. "
                     + "This theorem concerns arbitrary dual functionals, including both signs. It does not construct the CH recursion, "
-                    + "the signed dual ball, or the full analytic endpoint, and makes no literature novelty or official completion claim."))),
+                    + "the signed dual ball, or the full analytic endpoint."))),
             DescribeRole.Theorem))));
 }

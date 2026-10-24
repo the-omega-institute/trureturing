@@ -20,7 +20,7 @@ More generally, a lower semicontinuous real function F on K times K that is posi
 
 For the norm theorem, subtraction is continuous in the weak-star topology. Pinned Mathlib's WeakDual.isClosed_closedBall makes every norm sublevel set of the difference closed. This proves lower semicontinuity without asserting continuity of WeakDual.toStrongDual. Injectivity of h and of the linear equivalence toStrongDual gives strict positivity off the diagonal.
 
-The compact-minimum composition is derived here from the supplied ordinary argument and the point-pair theorem. The CH/Talagrand research context is described in Library/Topology/kania2026talagrand.md. This theorem concerns arbitrary dual functionals, including both signs. It does not construct the CH recursion, the signed dual ball, or the full analytic endpoint, and makes no literature novelty or official completion claim.
+The compact-minimum composition is derived here from the supplied ordinary argument and the point-pair theorem. The CH/Talagrand research context is described in Library/Topology/kania2026talagrand.md. This theorem concerns arbitrary dual functionals, including both signs. It does not construct the CH recursion, the signed dual ball, or the full analytic endpoint.
 
 ## References
 
