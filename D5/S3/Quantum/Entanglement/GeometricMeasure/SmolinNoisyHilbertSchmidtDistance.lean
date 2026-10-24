@@ -13,6 +13,7 @@ import D5.S3.Quantum.Matrix.CartesianVariance
 import D5.S3.Quantum.QuantumChannels.PositiveFilterTransposeRefutation
 import D5.S3.Quantum.Magic.WignerDistanceMinimum
 import D5.S3.Quantum.Information.EntanglementDistanceBellDiagonalRefutation
+import D5.S3.Quantum.Measurement.StabilizerPovmMaximalEntanglementRefutation
 
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
@@ -218,17 +219,21 @@ private theorem low_full (p : ℝ) (hp : 0 ≤ p) (hp' : p ≤ 1 / 3) :
     (by positivity) (by linarith) (by ring)
 
 private theorem trace_S : Matrix.trace S = 0 := by
+  have ht (p : D5.S3.Quantum.Information.StabilizerPairLocalUnitaryInequivalence.Pauli)
+      (hp : p ≠ .I) :
+      Matrix.trace (D5.S3.Quantum.Information.StabilizerPairLocalUnitaryInequivalence.pauliMatrix p) = 0 := by
+    have h := D5.S3.Quantum.Measurement.StabilizerPovmMaximalEntanglementRefutation.pauli_trace_pair p .I
+    simpa only [show
+      D5.S3.Quantum.Information.StabilizerPairLocalUnitaryInequivalence.pauliMatrix .I = 1 from rfl,
+      Matrix.mul_one, if_neg hp] using h
   simp only [S, four, Matrix.trace_add, Matrix.trace_kronecker]
-  norm_num [sigma, D5.S3.Quantum.Information.StabilizerPairLocalUnitaryInequivalence.pauliMatrix,
-    D5.S3.Quantum.FiniteDimensional.qubitX, D5.S3.Quantum.FiniteDimensional.qubitZ,
-    Matrix.trace, Matrix.mul_apply, Fin.sum_univ_two]
+  norm_num [sigma, ht .X (by decide), ht .Y (by decide), ht .Z (by decide)]
 
 private theorem trace_S_sq : Matrix.trace (S * S) = 48 := by
   simp only [S, Matrix.add_mul, Matrix.mul_add, Matrix.trace_add, four,
     ← Matrix.mul_kronecker_mul, Matrix.trace_kronecker]
-  norm_num [sigma, D5.S3.Quantum.Information.StabilizerPairLocalUnitaryInequivalence.pauliMatrix,
-    D5.S3.Quantum.FiniteDimensional.qubitX, D5.S3.Quantum.FiniteDimensional.qubitZ,
-    Matrix.trace, Matrix.mul_apply, Fin.sum_univ_two]
+  norm_num [sigma,
+    D5.S3.Quantum.Measurement.StabilizerPovmMaximalEntanglementRefutation.pauli_trace_pair]
 
 private theorem trace_S_noisy (p : ℝ) : (Matrix.trace (S * noisy p)).re = 3 * p := by
   simp [noisy, smolin, Matrix.mul_add, Matrix.mul_smul, Matrix.trace_add,
@@ -249,12 +254,15 @@ private theorem triple_square (j : Fin 3) : triple j * triple j = 1 := by
 private theorem triple_anti (i j : Fin 3) (h : i ≠ j) :
     triple i * triple j = -(triple j * triple i) := by
   have hb : sigma i.succ * sigma j.succ = -(sigma j.succ * sigma i.succ) := by
-    fin_cases i <;> fin_cases j <;> try contradiction
-    all_goals ext a b; fin_cases a <;> fin_cases b
-    all_goals norm_num [sigma,
-      D5.S3.Quantum.Information.StabilizerPairLocalUnitaryInequivalence.pauliMatrix,
-      D5.S3.Quantum.FiniteDimensional.qubitX, D5.S3.Quantum.FiniteDimensional.qubitZ,
-      Matrix.mul_apply, Fin.sum_univ_two]
+    rw [← axis_sigma i, ← axis_sigma j]
+    have hs : D5.S3.Quantum.Information.StabilizerPairLocalUnitaryInequivalence.sgn
+        (axis i) (axis j) = -1 := by
+      fin_cases i <;> fin_cases j <;> simp_all [axis,
+        D5.S3.Quantum.Information.StabilizerPairLocalUnitaryInequivalence.sgn,
+        D5.S3.Quantum.Information.StabilizerPairLocalUnitaryInequivalence.anticomm]
+    simpa only [hs, Int.cast_neg, Int.cast_one, neg_one_smul] using
+      D5.S3.Quantum.Measurement.StabilizerPovmMaximalEntanglementRefutation.letter_comm
+        (axis i) (axis j)
   simp only [triple, ← Matrix.mul_kronecker_mul, hb]
   ext a b
   simp [Matrix.kroneckerMap_apply]
