@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:d4d67df9e31a56576ed74c79c44a30ffe81f73de86507de260807e72e7402032
+  normalized_sha256: sha256:d4d67df9e31a56576ed74c79c44a30ffe81f73de86507de260807e72e7402032
+cas_ref: sha256:d4d67df9e31a56576ed74c79c44a30ffe81f73de86507de260807e72e7402032
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 建议目录和文件名组成的实施路线图，不断言列出模块或定理已存在。
+    previous_atom_id: 75a9eb09b1d409cb1a97166e09b44bdbe37b292623f336e86e69cdee2c6e9309
+    next_atom_id: c1fe68cddab52226cf431d6a75822c4ec3f43be6676acd765ce91fff46be86be

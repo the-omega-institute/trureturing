@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:b05fcb23905c58b5bdf55b889c5000b25f516210abab22fefdfde25ccd544127
+  normalized_sha256: sha256:b05fcb23905c58b5bdf55b889c5000b25f516210abab22fefdfde25ccd544127
+cas_ref: sha256:b05fcb23905c58b5bdf55b889c5000b25f516210abab22fefdfde25ccd544127
+coverage_gids:
+  - gid: D5/S3/Analytic/Hardy/FiniteBlaschkeMultiplier.phase_fibre
+    target_statement_id: sha256:d9031e2136e88f25a945e2fc4c61018fa6f9925eb9e155e69f6fe03b6bf7ed70
+receipts:
+  unresolved_subitems: []

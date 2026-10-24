@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:61c14a33e286ea2559338af90460442ac73110e0ec16801630a12c21f75ded9a
+  normalized_sha256: sha256:61c14a33e286ea2559338af90460442ac73110e0ec16801630a12c21f75ded9a
+cas_ref: sha256:61c14a33e286ea2559338af90460442ac73110e0ec16801630a12c21f75ded9a
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 列出 Gamma/pole correction 的识别要求并限制模型解释范围，未断言识别成立。
+    previous_atom_id: 88d9f5ea12b4e3dc7b990cc2068885e4e756061ac324ab8c7118fff31c5d6922
+    next_atom_id: 20135b9f1ac0a785f2c2470ba59f1e0c50e797c22d5b563dfd227fa504aff5f3

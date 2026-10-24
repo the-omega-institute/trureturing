@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:33a039b1e0b44f7b390d1749d50a8183c28dc83bf8adf71090c2b50338a23ae1
+  normalized_sha256: sha256:33a039b1e0b44f7b390d1749d50a8183c28dc83bf8adf71090c2b50338a23ae1
+cas_ref: sha256:33a039b1e0b44f7b390d1749d50a8183c28dc83bf8adf71090c2b50338a23ae1
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 参数表命名递归层数及词长读数；未给出计数公式或推论。
+    previous_atom_id: 5d65e3e63a79684961cedb177bcecaafb830760ee31cb75f4a1dfc64598758ce
+    next_atom_id: 75e08711fbffb89818f67bf610dfd21d50e81b7cfed768ef7ce1f6f2bffe00d3
