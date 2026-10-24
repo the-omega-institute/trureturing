@@ -244,7 +244,7 @@ $$\forall G \in Type,\; [AddCommGroup\left(G\right)] \forall A \in Finset\left(G
 
 *Commentary.*
 
-AdaptiveMergeRepair.expanded_permutation consumes the original theorem at t = length(L), with w = L ++ [a+b] ++ R and the actual LegalPair membership, distinctness and sum-exclusion facts. This is a consumed bind-only normalization helper, also used by same_pair_repair; no new-content claim is made.
+AdaptiveMergeRepair.expanded_permutation consumes the original theorem at t = length(L), with w = L ++ [a+b] ++ R and the actual LegalPair membership, distinctness and sum-exclusion facts. This normalization helper is also used by same_pair_repair.
 
 The strict cone is extra structure. A nonempty strict cone cannot exist in a finite group, and the nonempty block interior supplies a cone element. This result does not settle finite torsion, unrestricted adaptive AM, or the original arbitrary-subset, same-M, original-coordinate, coefficient-one parent. The missing global inference is that nonempty Omega for every legal pair forces a usable escape for some actual order. No universal escape, termination, or H-to-cap implication is proved.
 

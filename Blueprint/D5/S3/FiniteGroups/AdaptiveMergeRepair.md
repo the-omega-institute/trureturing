@@ -2,25 +2,25 @@
 
 ## Abstract
 
-LegalPair requires distinct a,b in A and a+b outside A union {0}. GoodOrder A w requires w to permute exactly A.toList and every nonempty proper contiguous interval to be nonzero. GoodCompression uses precisely the compressed alphabet (A minus {a,b}) union {a+b}. The source extracts the unique merged occurrence, derives all side membership and disjointness facts from the actual permutation, uses the original SeparatedPrefixReflection.expansion_inventory at t = length(L) to obtain the prescribed adjacent expansion permutation of A, and applies the generic collision theorem. The compressedAlphabet and GoodCompression names transparently use the original compressed and Omega definitions; GoodOrder uses the same original interval condition. The permutation specialization is a consumed bind-only adapter. No desired ordering, strict cone or separated excursion is assumed in a premise.
+LegalPair requires distinct a,b in A and a+b outside A union {0}. GoodOrder A w requires w to permute exactly A.toList and every nonempty proper contiguous interval to be nonzero. GoodCompression uses precisely the compressed alphabet (A minus {a,b}) union {a+b}. The source extracts the unique merged occurrence, derives all side membership and disjointness facts from the actual permutation, uses the original SeparatedPrefixReflection.expansion_inventory at t = length(L) to obtain the prescribed adjacent expansion permutation of A, and applies the generic collision theorem. The compressedAlphabet and GoodCompression names transparently use the original compressed and Omega definitions; GoodOrder uses the same original interval condition. The permutation specialization uses the original expansion theorem. No desired ordering, strict cone or separated excursion is assumed in a premise.
 
 **Theorem 1.1 (The obstruction applies to every actual compressed permutation).**
 
-Lean statement: `D5/S1/Words/Sequenceability/AdaptiveMergeRepair.failed_expansions_force_fork`
+Lean statement: `D5/S3/FiniteGroups/AdaptiveMergeRepair.failed_expansions_force_fork`
 
-*Proof.* Machine-checked in Lean as `D5/S1/Words/Sequenceability/AdaptiveMergeRepair.failed_expansions_force_fork` (`✓ std3`). ∎
+*Proof.* Machine-checked in Lean as `D5/S3/FiniteGroups/AdaptiveMergeRepair.failed_expansions_force_fork` (`✓ std3`). ∎
 
 *Source.* Repository-derived.
 
 *Commentary.*
 
-LegalPair requires distinct a,b in A and a+b outside A union {0}. GoodOrder A w requires w to permute exactly A.toList and every nonempty proper contiguous interval to be nonzero. GoodCompression uses precisely the compressed alphabet (A minus {a,b}) union {a+b}. The source extracts the unique merged occurrence, derives all side membership and disjointness facts from the actual permutation, uses the original SeparatedPrefixReflection.expansion_inventory at t = length(L) to obtain the prescribed adjacent expansion permutation of A, and applies the generic collision theorem. The compressedAlphabet and GoodCompression names transparently use the original compressed and Omega definitions; GoodOrder uses the same original interval condition. The permutation specialization is a consumed bind-only adapter. No desired ordering, strict cone or separated excursion is assumed in a premise.
+LegalPair requires distinct a,b in A and a+b outside A union {0}. GoodOrder A w requires w to permute exactly A.toList and every nonempty proper contiguous interval to be nonzero. GoodCompression uses precisely the compressed alphabet (A minus {a,b}) union {a+b}. The source extracts the unique merged occurrence, derives all side membership and disjointness facts from the actual permutation, uses the original SeparatedPrefixReflection.expansion_inventory at t = length(L) to obtain the prescribed adjacent expansion permutation of A, and applies the generic collision theorem. The compressedAlphabet and GoodCompression names transparently use the original compressed and Omega definitions; GoodOrder uses the same original interval condition. The permutation specialization uses the original expansion theorem. No desired ordering, strict cone or separated excursion is assumed in a premise.
 
 **Theorem 1.2 (An edge outside the static fork graph lifts every Good compressed order).**
 
-Lean statement: `D5/S1/Words/Sequenceability/AdaptiveMergeRepair.outside_fork_lifts_every_order`
+Lean statement: `D5/S3/FiniteGroups/AdaptiveMergeRepair.outside_fork_lifts_every_order`
 
-*Proof.* Machine-checked in Lean as `D5/S1/Words/Sequenceability/AdaptiveMergeRepair.outside_fork_lifts_every_order` (`✓ std3`). ∎
+*Proof.* Machine-checked in Lean as `D5/S3/FiniteGroups/AdaptiveMergeRepair.outside_fork_lifts_every_order` (`✓ std3`). ∎
 
 *Source.* Repository-derived.
 
@@ -30,9 +30,9 @@ For any legal pair outside ForkEdge and every actual Good compressed order L,(a+
 
 **Theorem 1.3 (Conditional adaptive lifting under the exact smaller-set existence hypothesis).**
 
-Lean statement: `D5/S1/Words/Sequenceability/AdaptiveMergeRepair.adaptive_repair_under_H`
+Lean statement: `D5/S3/FiniteGroups/AdaptiveMergeRepair.adaptive_repair_under_H`
 
-*Proof.* Machine-checked in Lean as `D5/S1/Words/Sequenceability/AdaptiveMergeRepair.adaptive_repair_under_H` (`✓ std3`). ∎
+*Proof.* Machine-checked in Lean as `D5/S3/FiniteGroups/AdaptiveMergeRepair.adaptive_repair_under_H` (`✓ std3`). ∎
 
 *Source.* Repository-derived.
 
@@ -42,9 +42,9 @@ H says only that every legal compression has some actual Good order. If at least
 
 **Theorem 1.4 (Adaptive failure confines every legal edge to the fork graph).**
 
-Lean statement: `D5/S1/Words/Sequenceability/AdaptiveMergeRepair.adaptive_failure_forces_fork_inclusion`
+Lean statement: `D5/S3/FiniteGroups/AdaptiveMergeRepair.adaptive_failure_forces_fork_inclusion`
 
-*Proof.* Machine-checked in Lean as `D5/S1/Words/Sequenceability/AdaptiveMergeRepair.adaptive_failure_forces_fork_inclusion` (`✓ std3`). ∎
+*Proof.* Machine-checked in Lean as `D5/S3/FiniteGroups/AdaptiveMergeRepair.adaptive_failure_forces_fork_inclusion` (`✓ std3`). ∎
 
 *Source.* Repository-derived.
 
@@ -54,9 +54,9 @@ Under exactly H, failure of AdaptiveLifting implies every legal pair is a ForkEd
 
 **Theorem 1.5 (The crossing exclusion yields the full conditional repair).**
 
-Lean statement: `D5/S1/Words/Sequenceability/AdaptiveMergeRepair.adaptive_of_no_singleton_crossing`
+Lean statement: `D5/S3/FiniteGroups/AdaptiveMergeRepair.adaptive_of_no_singleton_crossing`
 
-*Proof.* Machine-checked in Lean as `D5/S1/Words/Sequenceability/AdaptiveMergeRepair.adaptive_of_no_singleton_crossing` (`✓ std3`). ∎
+*Proof.* Machine-checked in Lean as `D5/S3/FiniteGroups/AdaptiveMergeRepair.adaptive_of_no_singleton_crossing` (`✓ std3`). ∎
 
 *Source.* Repository-derived.
 
@@ -66,9 +66,9 @@ Under H and existence of a legal pair, absence of singleton-region crossings amo
 
 **Theorem 1.6 (Laminarity repairs lifting under H and a legal edge).**
 
-Lean statement: `D5/S1/Words/Sequenceability/AdaptiveMergeRepair.adaptive_of_laminar`
+Lean statement: `D5/S3/FiniteGroups/AdaptiveMergeRepair.adaptive_of_laminar`
 
-*Proof.* Machine-checked in Lean as `D5/S1/Words/Sequenceability/AdaptiveMergeRepair.adaptive_of_laminar` (`✓ std3`). ∎
+*Proof.* Machine-checked in Lean as `D5/S3/FiniteGroups/AdaptiveMergeRepair.adaptive_of_laminar` (`✓ std3`). ∎
 
 *Source.* Repository-derived.
 
@@ -78,9 +78,9 @@ Under H and nonempty legal edges, laminarity of the nonempty proper zero-sum fam
 
 **Theorem 1.7 (The structural classification supplies only legal-pair existence).**
 
-Lean statement: `D5/S1/Words/Sequenceability/AdaptiveMergeRepair.adaptive_of_laminar_nonsubgroup`
+Lean statement: `D5/S3/FiniteGroups/AdaptiveMergeRepair.adaptive_of_laminar_nonsubgroup`
 
-*Proof.* Machine-checked in Lean as `D5/S1/Words/Sequenceability/AdaptiveMergeRepair.adaptive_of_laminar_nonsubgroup` (`✓ std3`). ∎
+*Proof.* Machine-checked in Lean as `D5/S3/FiniteGroups/AdaptiveMergeRepair.adaptive_of_laminar_nonsubgroup` (`✓ std3`). ∎
 
 *Source.* Repository-derived.
 
@@ -90,9 +90,9 @@ For a finite nonzero alphabet A of cardinality at least three, assume insert 0 A
 
 **Theorem 1.8 (A common block partition gives the second conditional repair).**
 
-Lean statement: `D5/S1/Words/Sequenceability/AdaptiveMergeRepair.adaptive_of_partition_blocks`
+Lean statement: `D5/S3/FiniteGroups/AdaptiveMergeRepair.adaptive_of_partition_blocks`
 
-*Proof.* Machine-checked in Lean as `D5/S1/Words/Sequenceability/AdaptiveMergeRepair.adaptive_of_partition_blocks` (`✓ std3`). ∎
+*Proof.* Machine-checked in Lean as `D5/S3/FiniteGroups/AdaptiveMergeRepair.adaptive_of_partition_blocks` (`✓ std3`). ∎
 
 *Source.* Repository-derived.
 
@@ -104,13 +104,13 @@ The unrestricted adaptive principle and original arbitrary-subset parent remain 
 
 ## References
 
-- Truth anchor: `D5/S1/Words/Sequenceability/AdaptiveMergeRepair.adaptive_failure_forces_fork_inclusion`
-- Truth anchor: `D5/S1/Words/Sequenceability/AdaptiveMergeRepair.adaptive_of_laminar`
-- Truth anchor: `D5/S1/Words/Sequenceability/AdaptiveMergeRepair.adaptive_of_laminar_nonsubgroup`
-- Truth anchor: `D5/S1/Words/Sequenceability/AdaptiveMergeRepair.adaptive_of_no_singleton_crossing`
-- Truth anchor: `D5/S1/Words/Sequenceability/AdaptiveMergeRepair.adaptive_of_partition_blocks`
-- Truth anchor: `D5/S1/Words/Sequenceability/AdaptiveMergeRepair.adaptive_repair_under_H`
-- Truth anchor: `D5/S1/Words/Sequenceability/AdaptiveMergeRepair.failed_expansions_force_fork`
-- Truth anchor: `D5/S1/Words/Sequenceability/AdaptiveMergeRepair.outside_fork_lifts_every_order`
-- Dependency: [D5/S1/Words/Sequenceability/AdaptiveMergeZeroCrossing](AdaptiveMergeZeroCrossing.md)
-- Dependency: [D5/S3/FiniteGroups/RestrictedPairSumClassification](../../../S3/FiniteGroups/RestrictedPairSumClassification.md)
+- Truth anchor: `D5/S3/FiniteGroups/AdaptiveMergeRepair.adaptive_failure_forces_fork_inclusion`
+- Truth anchor: `D5/S3/FiniteGroups/AdaptiveMergeRepair.adaptive_of_laminar`
+- Truth anchor: `D5/S3/FiniteGroups/AdaptiveMergeRepair.adaptive_of_laminar_nonsubgroup`
+- Truth anchor: `D5/S3/FiniteGroups/AdaptiveMergeRepair.adaptive_of_no_singleton_crossing`
+- Truth anchor: `D5/S3/FiniteGroups/AdaptiveMergeRepair.adaptive_of_partition_blocks`
+- Truth anchor: `D5/S3/FiniteGroups/AdaptiveMergeRepair.adaptive_repair_under_H`
+- Truth anchor: `D5/S3/FiniteGroups/AdaptiveMergeRepair.failed_expansions_force_fork`
+- Truth anchor: `D5/S3/FiniteGroups/AdaptiveMergeRepair.outside_fork_lifts_every_order`
+- Dependency: [D5/S1/Words/Sequenceability/AdaptiveMergeZeroCrossing](../../S1/Words/Sequenceability/AdaptiveMergeZeroCrossing.md)
+- Dependency: [D5/S3/FiniteGroups/RestrictedPairSumClassification](RestrictedPairSumClassification.md)
