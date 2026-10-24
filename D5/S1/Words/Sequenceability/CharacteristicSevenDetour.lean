@@ -211,12 +211,7 @@ theorem generator_add_one_ne_zero {K : Type*} [Field K] [CharP K 7]
   obtain ⟨n, h⟩ := hn (Units.mk0 2 htwo)
   have h' : (-1 : K) ^ n = 2 := by
     simpa [he'] using congrArg (fun z : Kˣ => (z : K)) h
-  have hpall : ∀ m : ℕ, (-1 : K) ^ m = 1 ∨ (-1 : K) ^ m = -1 := by
-    intro m
-    induction m with
-    | zero => exact Or.inl (by simp)
-    | succ m ih => rcases ih with ih | ih <;> simp [pow_succ, ih]
-  rcases hpall n with hp | hp
+  rcases neg_one_pow_eq_or K n with hp | hp
   · apply one_ne_zero (α := K); linear_combination hp - h'
   · apply hthree; linear_combination hp - h'
 
@@ -319,33 +314,6 @@ private theorem splice_key_apply (r : Kˣ) (u : K) (hu : u ≠ 0) :
     intro h
     have h' := congrArg (fun z => (z : Fin 6 × K).1) (Sum.inl.inj h)
     norm_num [headOne, headTwo] at h'
-  have hp₁ : predecessorOne r u ≠ predecessorTwo r u := by
-    intro h
-    have h' := congrArg (fun z => (z : Fin 6 × K).1) (Sum.inl.inj h)
-    norm_num [predecessorOne, predecessorTwo] at h'
-  have hp₁h₁ : predecessorOne r u ≠ headOne r u := by
-    intro h
-    have h' := congrArg (fun z => (z : Fin 6 × K).1) (Sum.inl.inj h)
-    norm_num [predecessorOne, headOne] at h'
-  have hp₁h₂ : predecessorOne r u ≠ headTwo r u := by
-    intro h
-    change (Sum.inl (0, -alpha r u) : carrier (K := K)) =
-      Sum.inl (0, beta r u) at h
-    have h' := congrArg Prod.snd (Sum.inl.inj h)
-    simp [beta] at h'
-    have hz : u = 0 := by
-      calc
-        u = (u - alpha r u) - (-alpha r u) := by ring
-        _ = 0 := by rw [← h']; ring
-    exact hu hz
-  have hp₂h₁ : predecessorTwo r u ≠ headOne r u := by
-    intro h
-    have h' := congrArg (fun z => (z : Fin 6 × K).1) (Sum.inl.inj h)
-    norm_num [predecessorTwo, headOne] at h'
-  have hp₂h₂ : predecessorTwo r u ≠ headTwo r u := by
-    intro h
-    have h' := congrArg (fun z => (z : Fin 6 × K).1) (Sum.inl.inj h)
-    norm_num [predecessorTwo, headTwo] at h'
   have hs : source ≠ headTwo r u := by
     change Sum.inr _ ≠ Sum.inl _
     exact Sum.inr_ne_inl
