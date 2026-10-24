@@ -96,6 +96,7 @@ public sealed partial class MakeWorkflowTests
         "search-reduction-index",
         "search-reduction-index-run",
         "search-reduction-index-fixtures",
+        "search-reduction-fixture-cache-test",
         "search-reduction-source-module",
         "search-reduction-membership-index-run",
         "search-reduction-membership-compare",
