@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:c41b7df88e1db637114a0589ce5ad5011b0c63b9c8905726c9f6c357563ac563
+  normalized_sha256: sha256:c41b7df88e1db637114a0589ce5ad5011b0c63b9c8905726c9f6c357563ac563
+cas_ref: sha256:c41b7df88e1db637114a0589ce5ad5011b0c63b9c8905726c9f6c357563ac563
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: Defines the Fibonacci codeword by appending a terminator to the assumed canonical digits; prefix-freeness and length estimates are separate atoms.
+    previous_atom_id: cd00221ae3d50f1a7db2c6ebd72bbda19c98cf4996752fd196082090b7777c90
+    next_atom_id: a0b90c8ea7aae102198648695efd79124a4d493dde7b222af16ed9943d0ad6d1
