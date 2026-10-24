@@ -105,7 +105,8 @@ internal sealed class MirroredOptimalWitnessSumDocument : IScribeDocumentDefinit
     private static DocumentBlock Definition(string id, string declaration, string title,
         Formula formula, string prose) => Describe.Lean(
             DescribeId.Create(id), DeclarationHandle.Create(Prefix + declaration), H(title),
-            StatementSource.FromAuthor(Disp(formula)), AssessedProvenance.FromLiterature(Source),
+            StatementSource.FromAuthor(Disp(formula)),
+            declaration == "claim" ? AssessedProvenance.FromRepo(Source) : AssessedProvenance.FromLiterature(Source),
             Blocks(Paragraph(Text(prose))), DescribeRole.Definition);
 
     private static Formula WitnessFormula() => WithOperator(IffTo(Call("IsWitness", X("A")),
