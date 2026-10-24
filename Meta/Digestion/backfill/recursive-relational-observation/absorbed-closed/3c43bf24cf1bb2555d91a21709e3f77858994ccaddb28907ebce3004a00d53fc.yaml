@@ -2,7 +2,9 @@ fingerprints:
   raw_sha256: sha256:3c43bf24cf1bb2555d91a21709e3f77858994ccaddb28907ebce3004a00d53fc
   normalized_sha256: sha256:3c43bf24cf1bb2555d91a21709e3f77858994ccaddb28907ebce3004a00d53fc
 cas_ref: sha256:3c43bf24cf1bb2555d91a21709e3f77858994ccaddb28907ebce3004a00d53fc
-coverage_gids: []
+coverage_gids:
+  - gid: D5/S3/Observer/Completion/HistoryDecoderRepresentativeAsymmetry.no_exact_history_decoder
+    target_statement_id: sha256:41725c6a9ae39c4eda6a8ff54ea6c8889bafc8dc1e6027d242643c97b53c0a7a
 receipts:
   unresolved_subitems: []
   chain_atoms:
