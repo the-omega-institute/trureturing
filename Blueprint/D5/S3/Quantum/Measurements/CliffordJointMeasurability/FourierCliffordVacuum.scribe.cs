@@ -80,16 +80,16 @@ internal sealed class FourierCliffordVacuumDocument : IScribeDocumentDefinition
     private static Formula Call(string name) => Seq(Operatorname, Grp(F.Id(name)));
     private static Formula Parenthesized(Formula value) => Seq(Open, value, Close);
     private static Formula NilpotentFormula() => Disp(new Formula.Aligned([
-        Seq(Forall, Sp, Parenthesized(Seq(F.Id("R"), Colon, Call("Type"))), Comma),
-        Seq(OpenBracket, Call("Ring"), Sp, F.Id("R"), CloseBracket, Comma),
-        Seq(OpenBracket, Call("Algebra"), Sp, Seq(Mathbb, Grp(F.Id("C"))), Sp,
+        Seq(Forall, Sp, OpenBrace, F.Id("R"), Colon, Call("Type"), CloseBrace, Comma),
+        Seq(Grp(), OpenBracket, Call("Ring"), Sp, F.Id("R"), CloseBracket, Comma),
+        Seq(Grp(), OpenBracket, Call("Algebra"), Sp, Seq(Mathbb, Grp(F.Id("C"))), Sp,
             F.Id("R"), CloseBracket, Comma),
-        Seq(OpenBracket, Call("StarRing"), Sp, F.Id("R"), CloseBracket, Comma),
-        Seq(OpenBracket, Call("StarModule"), Sp, Seq(Mathbb, Grp(F.Id("C"))), Sp,
+        Seq(Grp(), OpenBracket, Call("StarRing"), Sp, F.Id("R"), CloseBracket, Comma),
+        Seq(Grp(), OpenBracket, Call("StarModule"), Sp, Seq(Mathbb, Grp(F.Id("C"))), Sp,
             F.Id("R"), CloseBracket, Comma),
         Seq(Forall, Sp, Parenthesized(Seq(F.Id("b"), Colon, F.Id("R"))), Comma),
-        Seq(Parenthesized(Seq(F.Id("b"), Cdot, F.Id("b"), Plus, F.Id("b"), Cdot,
-            F.Id("b"), Eq, D(0))), Sp, To, Sp, F.Id("b"), Cdot, F.Id("b"), Eq, D(0))
+        Seq(Parenthesized(Seq(F.Id("b"), Cdot, Sp, F.Id("b"), Plus, F.Id("b"), Cdot,
+            Sp, F.Id("b"), Eq, D(0))), Sp, To, Sp, F.Id("b"), Cdot, Sp, F.Id("b"), Eq, D(0))
     ]));
     private static Formula F0() => Disp(new Formula.Aligned([
             Seq(Forall, Sp, Parenthesized(Seq(F.Id("R"), Sp, Colon, Sp, Call("Type"))), Comma),
