@@ -1967,6 +1967,10 @@ limits, §9](FIB_NATIVE_SINGULAR_OCCUPATION_AND_COMMAND_CAP_LIMITS.md)
 have different source and execution hypotheses and do not supply
 (14.13) for this independent-central-noise target.
 
+For the following crossover citation only, the repository revision is
+`08b8b995f0fd5b1e08c03e5f153282687ba8e15d`, qualifying
+Definition 1.1's reference convention for this supplier.
+
 The resource correspondence is the existing one of [Uniform joint
 noise and tolerance native resource crossover, Definitions 1.2–1.4 and
 Theorems 5.1, 6.1](FIB_NATIVE_UNIFORM_JOINT_NOISE_TOLERANCE_RESOURCE_CROSSOVER.md).
