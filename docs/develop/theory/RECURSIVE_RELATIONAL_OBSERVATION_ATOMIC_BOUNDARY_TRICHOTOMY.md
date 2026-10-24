@@ -3784,3 +3784,683 @@ to close any of these remaining obligations.
 [ABT-DMSS]: https://arxiv.org/html/1406.0670v4
 
 ## 追加锚（本行以下为增补区）
+
+## 33. An authentic leaf count and an unknown positive even lag
+
+**Definition 33.1 (the acquisition domain).** Retain the free ordered
+source, substitution, actual addresses and total four-valued Read of
+Definitions 2.1 and §13.1. Write $\ell(t)$ for the number of leaves of
+$t$, and $P_t(q)=\mathbf1_{r_t(q)\ne\mathsf{absent}}$. The promised
+domain is
+
+$$
+\mathcal D_n=
+ \{(u,k,v):u\in\mathcal T,\ \ell(u)=n,\ k\in\mathbb N_{\ge1},
+                         \ v=\rho^{2k}u\},\qquad n\ge1.
+\tag{ABT.33.1}
+$$
+
+The actual stationary register is $v$, with one actual root and the
+original ordered $L/R$ interpretation. The target is the actual pair
+$(u,k)$ in this relation, retained as a tree and an integer. It is not
+an arbitrary predecessor, a normal-form origin, or merely a description
+of some source having the same observation. The supplied integer $n$
+is the authentic *original* leaf count. The authenticity premise
+asserts membership in (ABT.33.1), including positivity, evenness and
+same-original provenance; its certificate supplies neither a value of
+$k$ nor any further source-dependent operand.
+Provenance concerns the actual forward substitution stages from this
+original; $2k$ is their relative count, not an external clock reading.
+
+**Assumption 33.2 (the installed common-run contract).** There is one
+fixed deterministic effective acquisition program, common to every
+$n,u,k$ and every presentation satisfying Definition 33.1. Its initial
+numerical input is $n$. The following actual resources are supplied.
+
+1. One source binding and one root reference address this very $v$.
+   The two incidence interpretations $L,R$ are ordered and persistent.
+   They are the references used in every submitted absolute word.
+   Neither a symbolic tree nor an inverse manufactures this binding.
+2. One currently authorized total paid Read capability accepts every
+   finite absolute word $q$. It returns $r_v(q)$, including absent for
+   unreached words. Every invocation is paid, including repetitions and
+   absence. The acquisition continuation receives only $P_v(q)$.
+   An interface that physically returns four values is composed with
+   this projection before its continuation; it exposes no other reply
+   distinction to that continuation.
+3. An actual append writer records every physical Read with its full
+   literal word and four-valued reply, and every local transition.
+   Its epoch field is the semantic $2k$ relative to the promised
+   original. The controller has no writer-read capability. It receives
+   no epoch, source size, hidden subtree, source identity discriminator,
+   previous archive, timing observation or source-dependent initializer.
+   Any pre-entry writer prefix remains outside its accessible state.
+4. The actor owns accessible backing for the supplied count, acquired
+   data, scratch and address construction, and has the rights to retain
+   and read its acquired output at handoff. Backing can grow in response
+   to actual allocation requests. Initially it carries only the common
+   code and declared input; its initial contents or observable capacity
+   do not encode an unknown parameter. Every finite allocation and local
+   calculation used below completes. This is a variable-storage premise,
+   not a fixed finite carrier or a free memory oracle.
+5. The register remains stationary throughout acquisition, including
+   output preparation and the handoff cut. No concurrent writer, source
+   swap, reroot, clone or reset occurs. Scheduling permits each pending
+   finite local calculation and paid Read to complete, without a bound
+   on physical delay. Installation, authentication, reference maintenance,
+   storage, event writing and scheduling are separately priced services.
+6. For continued action, the same binding has current rights for the
+   original absolute-address Read, localStep, applyRho and stop menu
+   of §15. These rights survive the stated continuation. There is one
+   forward actuator on this same register. Acquisition does not use it.
+   No relative-cursor, graft, comparison, guard or revocation operation
+   is included.
+
+Thus the callable source resources are one total Read capability and,
+at continuation, one forward actuator, with one root binding and two
+ordered incidence interpretations. The physical writer is an additional
+resource, not a callable archive for this controller. Retained data and
+scratch are distinct fields even if one owned store backs both. Every
+internal choice, address and stopping decision below is computed from
+$n$, the program phase and previously acquired presence bits. Rights
+and backing are premises about the actor; their existence is not a
+conclusion of source identifiability.
+
+**Definition 33.3 (measured acquisition coordinates).** For the actual
+submitted words $q_1,\ldots,q_Q$, put
+
+$$
+ M=\max_i|q_i|,\qquad W=\sum_{i=1}^Q|q_i|.
+\tag{ABT.33.2}
+$$
+
+There is no prefix-sharing discount: each word starts at the actual
+root. Let $B$ be the actual number of acquisition localStep events,
+including any evaluator, projection, allocation-control, output and
+handoff phases represented by such steps. There are zero acquisition
+updates and $Q+B$ new native events. Native stop itself adds no Event.
+The costs of storing or writing these records are additional coordinates.
+
+## 34. A pruning criterion that orders correct and incorrect lags
+
+**Definition 34.1 (trial-lag pruning).** For a finite actual tree $x$,
+let $h_R(x)$ be the length of its maximal right-only path: zero on a
+leaf, and $1+h_R(y)$ on $\langle z,y\rangle$. For $j\ge0$ and a
+present address $p$, define
+
+$$
+ c_j^x(p)=P_x(pR^jL).
+\tag{ABT.34.1}
+$$
+
+Define an unlabelled full binary tree $F_j(x)$ from the root, making
+$p$ a branch exactly when $c_j^x(p)=1$, and in that case continuing at
+$pL,pR$. Otherwise make $p$ a terminal dot. Equivalently, on a present
+subtree $y$, stop when $h_R(y)\le j$, and otherwise recurse into its
+two children. A positive probe entails that $p$ is an actual branch,
+so the recursive child addresses exist. This recursion terminates
+because each recursive call is on a proper subtree of $x$.
+Put $a_j(x)=\ell(F_j(x))$.
+
+The object $F_j(x)$ is a trial pruning, not an assertion that $x$ lies
+in an inverse-substitution image at lag $2j$. Its leaf dots carry no
+guessed $\alpha/\beta$ labels. Its branch test uses one actual paid
+presence projection at the displayed word; knowing the mathematical
+function $F_j$ does not provide its value as an input.
+
+**Theorem 34.2 (the exact leaf-count crossing).** For every
+$(u,k,v)\in\mathcal D_n$, let $h=h_R(v)$. Then
+
+$$
+ h=k+h_R(u),\qquad
+ k\in[\max(1,h-n+1),h],\qquad
+ F_k(v)=\operatorname{sh}(u).
+\tag{ABT.34.2}
+$$
+
+For every integer $j\ge1$ the following is an exact criterion:
+
+$$
+ \boxed{a_j(v)>n\ \Longleftrightarrow\ j<k,
+ \qquad a_j(v)\le n\ \Longleftrightarrow\ j\ge k.}
+\tag{ABT.34.3}
+$$
+
+If $n>1$, equality $a_j(v)=n$ holds exactly at $j=k$; if $n=1$,
+it holds exactly for $j\ge k$, and $k=h$. In all cases
+
+$$
+ k=\min\{j\ge1:a_j(v)\le n\}.
+\tag{ABT.34.4}
+$$
+
+**Proof.** First record the pruning structure used in the criterion.
+In a full binary tree,
+
+$$
+ P_x(pR^{j+1}L)=1\quad\Longrightarrow\quad P_x(pR^jL)=1:
+\tag{ABT.34.5}
+$$
+
+the former word reaches a child below $pR^{j+1}$, so its parent
+$pR^j$ is a branch and also has its left child. Therefore $F_{j+1}(x)$
+is obtained from $F_j(x)$ by replacing some complete rooted subtrees
+by dots. This conclusion also follows recursively at their common
+retained nodes. In particular $a_{j+1}(x)\le a_j(x)$.
+
+There is strict decrease whenever $j<h_R(x)$. Set $H=h_R(x)$ and
+$p=R^{H-j-1}$. Every proper prefix $R^i$ of $p$ has right height
+$H-i\ge j+2$, and is a branch in both prunings. At $p$ the right
+height is $j+1$, so $F_j(x)$ has a branch but $F_{j+1}(x)$ has a
+dot. At least two leaves have been replaced by one; elsewhere the
+second pruning cannot add leaves. Thus
+
+$$
+ a_{j+1}(x)<a_j(x)\quad(0\le j<H),
+ \qquad a_j(x)=1\quad(j\ge H).
+\tag{ABT.34.6}
+$$
+
+These are finite tree facts inside the proof, requiring the ordered
+full-binary source and its actual prefix-closed support, rather than an
+unconstrained family of binary test answers.
+
+The right-spine supplier in DelayedOriginalReadout gives
+$\operatorname{rightClock}(x)=2h_R(x)+\epsilon(x)$, where
+$\epsilon(x)\in\{0,1\}$ records its rightmost leaf label, and
+$\operatorname{rightClock}(\rho^{2k}u)=
+\operatorname{rightClock}(u)+2k$. Taking integer halves proves
+$h=k+h_R(u)$. This is also the direct consequence of
+$T_{r+2}=\langle T_{r+1},T_r\rangle$ along the rightmost original
+leaf. A right spine of length $d$ has $d$ distinct off-spine sibling
+subtrees, each containing a leaf, in addition to its terminal leaf.
+Consequently $h_R(u)\le n-1$, giving the interval in (ABT.34.2).
+
+At every confirmed original position $p$, the existing §12.3 label
+table says precisely
+
+$$
+ P_v(pR^kL)=1\quad\Longleftrightarrow\quad r_u(p)=\mathsf{branch}.
+\tag{ABT.34.7}
+$$
+
+Starting with the original root, recurse only on this positive answer.
+Induction on $u$ identifies the retained addresses and gives
+$F_k(v)=\operatorname{sh}(u)$, hence $a_k(v)=n$. This application
+uses only the branch part of that supplied table, not a putative
+original-position test at a newly born address.
+
+Now $k\le h$. The strict decreases (ABT.34.6) before $h$, followed
+by the constant value one, prove (ABT.34.3). If $n>1$, then $k<h$:
+a nonleaf full binary tree has positive right height. Every $j>k$
+therefore has $a_j(v)<n$, and every $j<k$ has $a_j(v)>n$.
+If $n=1$, $h_R(u)=0$ and $h=k$, giving exactly the stated plateau.
+The least crossing is $k$ in both cases. $\square$
+
+**Proposition 34.3 (a capped comparison with actual probes).** Given
+$n\ge1$ and $j\ge1$, one deterministic traversal decides
+$a_j(v)>n$ using at most $2n-1$ paid Reads, with every submitted word
+of length at most $j+n$. It requires no putative inverse at $j$, and
+the bound holds for every finite full binary $v$.
+
+**Proof.** Traverse $F_j(v)$ in left-before-right depth-first order,
+with a stack of pending children and a counter $b$ of positive branch
+tests. Start at $p=\varepsilon$, and execute exactly the one Read
+$pR^jL$ at each visited address. A zero answer completes a dot. A
+positive answer increments $b$. If $b=n$, stop immediately with
+the answer $a_j(v)>n$; otherwise schedule the two actual children.
+If the stack becomes empty first, stop with $a_j(v)\le n$.
+
+A finite full binary tree with $b_*$ branches has $b_*+1$ leaves,
+by structural induction. Reaching $n$ branches certifies more than
+$n$ leaves even though many may remain unread. If the traversal
+finishes without that event, its exact branch count is at most $n-1$,
+which certifies at most $n$ leaves.
+
+Before a query the number of completed dots is at most the number of
+branches already found: the pending-slot count is $1+b-l>0$.
+Thus at the $n$th positive test there have been at most $n-1$ zeros,
+for at most $2n-1$ queries in total. A finished traversal with at
+most $n-1$ branches has at most $2n-1$ nodes as well. Every queried
+address $p$ has one already discovered branch at each proper prefix;
+there are at most $n-1$ such branches before that query. Hence
+$|p|\le n-1$ and $|pR^jL|\le j+n$.
+
+The pending addresses are constructed from the actual positive tests.
+They are not selected by inspecting an unacquired pruning. Finite
+source size or the branch cap forces termination; all stack work and
+counter arithmetic are finite local computations. $\square$
+
+## 35. Sparse actual calibration and retained original acquisition
+
+**Definition 35.1 (the common acquisition controller).** The following
+three phases use Assumption 33.2 without changing the register.
+
+First query $R^1,R^2,R^4,\ldots,R^{2^m}$, stopping at the first zero
+presence bit. Binary search between the last present and first absent
+lengths to find the maximal present right length $h$. On the promised
+domain $h\ge1$, so a last present length exists. For a presentation
+with $h=0$ the controller may return a fixed out-of-promise error.
+Binary search always submits the complete new word from the root.
+
+Next initialize
+
+$$
+ A=\max(1,h-n+1),\qquad Z=h.
+\tag{ABT.35.1}
+$$
+
+While $A<Z$, take $j=\lfloor(A+Z)/2\rfloor$ and perform
+Proposition 34.3. For its at-most answer set $Z=j$; for its
+greater-than answer set $A=j+1$. At $A=Z$, retain $K=A$.
+Neither these choices nor the comparison's early stop uses a label,
+epoch field or raw-writer entry.
+
+Finally use the existing full-source traversal, now with §12.3's
+two fixed presence probes at each confirmed original position:
+
+$$
+ pR^{K-1}LL,\qquad pR^KL.
+\tag{ABT.35.2}
+$$
+
+Their pairs $00,10,11$ return $\alpha,\beta,\mathsf{branch}$.
+On a branch recurse into the two children; on a leaf construct its
+label in owned memory. The root is confirmed by nonemptiness, and
+children are confirmed only by the decoded parent branch. The unused
+pair $01$ can stop with a fixed error; it never occurs in this phase
+on the promised domain. Complete the tree $U$ in memory, retain
+$(U,K,n)$, and stop or hand it to the declared continuation. The
+traversal is the acquired-stack supplier of §16.1, not a new free
+operation on an unknown subtree. A stored $U$ is assembled from the
+paid replies, not passed to the program by its proof.
+
+**Theorem 35.2 (unknown-original and unknown-even-lag acquisition).**
+For every $n\ge1$, every $(u,k,v)\in\mathcal D_n$, and every actual
+installation satisfying Assumption 33.2, Definition 35.1 terminates
+after finitely many events, retains $U=u$, $K=k$ and the original
+count $n$, and leaves that same actual register equal to $v$.
+All source-dependent choices use only paid non-absence bits.
+Let
+
+$$
+ m=\lfloor\log_2 h\rfloor+1,\qquad
+ d_n=\lceil\log_2 n\rceil,\qquad h=k+h_R(u).
+\tag{ABT.35.3}
+$$
+
+The same actual run satisfies the simultaneous bounds
+
+$$
+\begin{aligned}
+ Q&\le 2m+(2n-1)d_n+4n-2,\\
+ M&\le 2(k+n),\\
+ W&\le 2(k+n)\bigl(2m+(2n-1)d_n+4n-2\bigr).
+\end{aligned}
+\tag{ABT.35.4}
+$$
+
+In particular these give, uniformly over this domain,
+
+$$
+\begin{aligned}
+ Q&=O\bigl(\log(k+n+2)+n\log(n+1)\bigr),\\
+ M&=O(k+n),\\
+ W&=O\bigl((k+n)(\log(k+n+2)+n\log(n+1))\bigr).
+\end{aligned}
+\tag{ABT.35.5}
+$$
+
+These are upper bounds for one protocol, with no cost-optimality claim.
+
+**Proof.** Presence on $R^s$ is one precisely for $0\le s\le h$.
+The finite tree has finite $h$, and the first absent power is $2^m$,
+where $m$ is as in (ABT.35.3). The exponential phase makes $m+1$
+Reads and establishes a present length $2^{m-1}$ and absent length
+$2^m$. Their gap is $2^{m-1}$. Exactly $m-1$ midpoint tests reduce
+this power-of-two gap to one, determining $h$. Thus this phase uses
+$2m$ Reads and maximum length $2^m\le2h$.
+
+Theorem 34.2 places the actual $k$ in (ABT.35.1). That interval has
+at most $n$ integers. Its comparison predicate is false precisely
+below $k$ and true at and above $k$. Every update of $A,Z$ therefore
+retains $k$, and the interval size becomes at most the ceiling of
+half its previous size. After at most $d_n$ comparisons it is a
+singleton, necessarily $K=k$. Proposition 34.3 supplies at most
+$2n-1$ actual Reads per comparison, all on the still stationary $v$.
+The largest candidate is at most $h$, so their word lengths are at
+most $h+n$.
+
+With $K=k$, each probe pair (ABT.35.2) has the §12.3 interpretation
+at every address the final traversal reaches. Structural induction
+identifies its acquired subtree with the corresponding subtree of $u$.
+The existing stack traversal terminates, visiting each of the $2n-1$
+original nodes once; the fixed two-probe implementation therefore makes
+exactly $4n-2$ Reads. Even when a pair coincides with an earlier
+query, both invocations are executed and counted here. An original
+node has depth at most $n-1$, since its path has a distinct off-path
+leaf at each proper branch. Each of these final words has length
+$|p|+k+1\le k+n$.
+
+Adding the three phases gives the first bound. For the other bounds,
+$h\le k+n-1$ implies
+
+$$
+ M\le\max(2h,h+n,k+n)\le2(k+n),\qquad W\le MQ.
+\tag{ABT.35.6}
+$$
+
+Every counted Read is an actual invocation at its actual phase. No
+comparison, inverse evaluation or repeated address is a free source
+query. Local calculations in each finite phase terminate by Assumption
+33.2, giving a finite full run. None of the phases calls applyRho,
+so stationarity holds through retained output preparation. Finally
+$m=O(\log(k+n+2))$ and $d_n=O(\log(n+1))$ give (ABT.35.5).
+
+If $n=1$, the candidate interval is $[h,h]$ and makes no comparison.
+The true $k=h$ is acquired by the first phase, and the last two
+Reads distinguish the two original leaf labels. Thus the equality
+plateau of Theorem 34.2 causes neither ambiguity nor nontermination.
+$\square$
+
+**Proposition 35.3 (separate retained, working, writer and source
+resources).** Under the same assumptions, one may retain the tree
+using $2n-1$ preorder shape bits and $n$ leaf-label bits, together
+with binary $k,n$ and the actual binding and current grants. For
+$b(s)=1+\lfloor\log_2s\rfloor$ on positive integers, the numerical
+and tree payload has at most
+
+$$
+ 3n-1+b(k)+b(n)
+\tag{ABT.35.7}
+$$
+
+bits before any record framing or reference encoding. The writer,
+scratch, expanded source, preparation and later actions have separate
+costs; (ABT.35.7) bounds none of their complete states.
+
+**Proof.** A preorder branch/leaf bit at each of the $2n-1$ nodes,
+followed by the label bit of each encountered leaf, reconstructs the
+ordered tree uniquely. Appending the two binary integers gives the
+displayed bound. The actor retains readable backing for these actual
+bytes, rather than just a pointer to inaccessible output. Its binding
+and grants are additionally retained capabilities, with their actual
+encoding and maintenance costs.
+
+For example a depth-first evaluator may use a shared current path,
+finite phase frames and counters instead of storing all literal
+pending paths. Each capped comparison has at most $n$ frames, and
+the final traversal at most $n$ frames and $O(n)$ acquired tree
+constructors. One scratch address buffer of $2(k+n)$ letters suffices
+by (ABT.35.6). Allowing $O(\log(k+n+2))$ bits per frame and counter
+gives the conservative additional workspace bound
+$O(k+n+n\log(k+n+2))$ bits, excluding the output, binding and writer.
+The exponential search and interval arithmetic use finite binary
+counters of the same logarithmic order. Frames and address letters
+are created and copied by paid local work. This description is an
+ordinary finite algorithm with variable work storage; no quantitative
+bound on local transitions $B$ or physical duration is asserted.
+
+The actual raw acquisition writer has exactly $Q$ Read entries and
+$B$ localStep entries. Its Read entries retain all $W$ literal
+letters, $Q$ full replies and $Q$ epoch fields $2k$, even though the
+controller uses only one bit per reply and never reads those fields.
+For an ordinary self-delimiting binary serialization, the new writer
+payload is $O(B+W+Q\log(k+n+2))$ bits, in addition to any old prefix
+and storage-service metadata. Every localStep marker is still present.
+No source reconstruction or logical trace interpretation erases it.
+
+If $a,b$ are the numbers of original $\alpha,\beta$ leaves and
+$F_0=0,F_1=1$, the existing composition recurrence gives the actual
+expanded register
+
+$$
+ \ell(v)=aF_{2k+1}+bF_{2k+2},\qquad
+ |\operatorname{Pos}(v)|=2\ell(v)-1.
+\tag{ABT.35.8}
+$$
+
+These source nodes exist in the actual presentation; the sparse Read
+bound is not a material-size bound. If preparation starts from $u$
+and performs the $2k$ substitutions, it includes those $2k$ real
+updates, their event writing, control and all intermediate source
+rewrites. If instead an authentic prepared presentation is supplied,
+its preparation price is outside the acquisition interval, not zero.
+Subsequent expansion, output copying, retention lifetime and every
+later computation or request incur their own costs. In particular a
+finite program supplies no fixed complete memory bound. $\square$
+
+## 36. Handoff to the fixed-offset lawful continuation
+
+**Theorem 36.1 (acquired calibration supplies ABT15's initial relation).**
+At the successful retained cut of Theorem 35.2, set the *acquired*
+fixed parameter $N=2K=2k$. Fix any supplied effective logical
+source-free native program $\delta$, and initialize it at logical
+epoch zero with control $c_0$ computed
+effectively from its public task input and the retained $(U,K,n)$.
+Its source interface is exactly §15's Op signature. Then §15's
+compiled continuation runs on the same actual register with the same
+binding and the current rights of Assumption 33.2. Every attained
+finite logical fragment has its finite compiled execution; terminal
+output, completed logical Read replies including absence, and lawful
+source-free continuation choices agree. At every completed macro
+boundary after $e$ logical updates,
+
+$$
+ r_e=\rho^e u,\qquad
+ \widehat r_e=\rho^{2k}r_e=\rho^{2k+e}u,
+ \qquad \widehat e=e+2k.
+\tag{ABT.36.1}
+$$
+
+The calibration $K$ stays fixed when $e$ increases, including at odd
+absolute physical epochs. If the logical program terminates, so does
+the compiled continuation with the same entire output. No termination
+of an arbitrary nonterminating logical program is asserted.
+
+**Proof.** Theorem 35.2 supplies retained $U=u,K=k$ and the unchanged
+actual register $v=\rho^{2k}u$. Its provenance is the supplied
+same-original provenance, now with its numerical witness correctly
+acquired. At the handoff $e_0=0$, the logical proof source is $u$,
+and the actual physical source and semantic epoch are exactly
+$(\rho^N u,N)$. These are §15.1's initial hypotheses; they are
+derived from the successful actual run, not assumed as the
+controller's original numeric advice.
+
+The acquired $N$ is placed in retained control. A single finite
+interpreter parameterized by that stored integer implements the §15
+macros; no source-dependent code is supplied from outside. The actual
+root, ordered addresses, Read rights and forward actuator persist
+from Assumption 33.2. Finite address formation and evaluator work use
+the owned backing and remain paid local computation. Thus Theorem
+15.3 applies with this acquired fixed $N$ and $c_0$. Its finite-step
+induction, causal interpretation and partial-macro invariant give
+all the continuation conclusions. Its update equation (ABT.51)
+gives (ABT.36.1). The finite computation of $c_0$ and its control
+attachment are additional continuation local work, included in $B_c$
+below. Their backing and output costs are also additional; they do
+not enlarge the acquisition workspace claim of Proposition 35.3.
+The attachment uses a real localStep instead of stopping at the
+acquisition output, as in §16.1.
+$\square$
+
+**Definition 36.2 (raw and decoded traces across the cut).** Let
+$H_{\rm acq}$ be the actual complete acquisition event word and
+$H_{\rm cont}$ a physical continuation prefix. The raw writer has
+the literal concatenation
+$H_{\rm old}H_{\rm acq}H_{\rm cont}$, with no deletions. Start
+§15.3's logical interpreter at the acquired cut, in the declared
+finite initialization phase followed by $\mathsf{Ready}(c_0)$.
+The initialization's localStep events emit no logical events.
+It interprets $H_{\rm cont}$ with the now stored $N$; it does
+not reclassify acquisition probes as original-program Reads. An
+unfinished continuation macro retains its actual pending phase,
+request and paid first bit. The initial word $H_{\rm acq}$ is an
+actual acquisition chronology and remains distinct from the logical
+program's subsequent trace.
+
+**Corollary 36.3 (additive same-run continuation costs).** Let $R,U,L$
+be the numbers of logical Reads, updates and original localSteps in
+an attained continuation fragment ending at a completed macro boundary,
+and let $Q_c,W_c$ be its actual
+compiled Read and literal-letter costs from (ABT.52) or (ABT.53),
+with the acquired fixed $k$. If its additional evaluator uses $B_c$
+localSteps, the acquisition plus continuation pays
+
+$$
+ Q+Q_c\text{ Reads},\qquad W+W_c\text{ letters},\qquad
+ U\text{ updates},\qquad B+L+B_c\text{ localSteps}.
+\tag{ABT.36.2}
+$$
+
+The new native event count is $Q+Q_c+U+B+L+B_c$.
+
+**Proof.** Acquisition has no updates and never discounts a paid
+invocation. Theorem 36.1 supplies one actual continuation on that
+same register. Concatenating the real event words adds all four
+coordinates, and Proposition 15.4 counts the continuation coordinates.
+For a prefix inside a macro, the same additive identities use its
+actual incurred $Q_c,W_c$, including the pending macro's paid probes;
+(ABT.52)–(ABT.53) apply only to its completed part. Definition 36.2
+preserves these raw multiplicities and pending phases. Event copying,
+source rewrites, subsequent retained logical
+history and outputs remain additional material and computational costs.
+$\square$
+
+**Definition 36.4 (four independently specified observations).** At a
+successful acquisition cut, with $n$ and the installed reference
+convention fixed, consider the following observations of this one
+actual process.
+
+* $S$: the actual ordered rooted edge incidence of $v$, with leaf
+  labels erased; equivalently its full present-address set.
+* $\partial$: the actual terminal address antichain of $v$, with
+  leaf labels erased. These are current source leaves, not guessed
+  original leaves or an arbitrarily selected cut.
+* $T$: the count $2k$ of completed global substitutions relative to
+  the authentic original, with its order as repeated forward steps.
+  It is a semantic temporal observation, initially unavailable to the
+  acquisition controller. It gives no original leaf labels or bracket
+  structure, no acquisition durations and no raw event archive.
+* $M$: the actor's actually acquired readable $(u,k,n)$, together
+  with the binding and current grants for the stated continuation.
+  Scratch and the inaccessible raw writer are additional resources;
+  their contents are not smuggled into this memory observation.
+
+**Proposition 36.5 (attained recovery routes and a temporal failure).**
+On the domain of Theorem 35.2, $S$ and $\partial$, together with the
+authentic common $n$, each determine the same $(u,k)$ acquired in
+$M$. The routes $\partial\to S\to(u,k)$ and $S\to(u,k)$ agree,
+and reconstruction from the tree/count part of $M$ returns those same
+$S,\partial,T$. The observation $T$ alone, even with $n$, does not
+recover $u$. None of these mathematical reconstructions creates a
+root binding, a grant, or an unpriced invocation.
+
+**Proof.** Every present address of a finite tree is a prefix of a
+terminal address. Thus prefix closure recovers $S$ from $\partial$,
+and the maximal addresses of $S$ recover $\partial$. Both operations
+preserve the actual root and $L/R$ convention. Every paid answer used
+in Definition 35.1 is a membership bit in $S$. Running its finite
+mathematical decoder on these bits returns $(u,k)$ by Theorem 35.2.
+Consequently if two promised presentations have the same $S$ and
+$n$, they have the same acquired $u,k$. Conversely the retained
+tree and integer compute the finite expanded tree $\rho^{2k}u$,
+and hence its incidence, terminal antichain and count $2k$.
+Expansion is finite computation with the size cost (ABT.35.8), not
+a sparse source query or a free materialization.
+
+All these routes return the same actual $u,k$ and the same actual
+expanded tree, proving agreement on the attained domain. Operational
+acquisition does not require that full expansion: it is the sparse
+protocol already proved. For the failure, fix any $n\ge1$, any
+ordered $n$-leaf shape and any $k\ge1$. Label all its leaves $\alpha$
+in one original and $\beta$ in the other. Both actual preparations
+have the same $n$ and $T=2k$, but distinct originals. Thus there is
+no decoder from $(n,T)$ to $u$ on the promised domain.
+
+After handoff the actual temporal count is $2k+e$. The lawful
+evolution and decoded replies are (ABT.36.1) and Theorem 36.1,
+with $k$ retained. The initial unknown-positive-even theorem is not
+reapplied to $2k+e$ as though it were a fresh even calibration.
+This proves the stated dynamics correspondence without a four-way
+inverse, a raw-history identity or a real-cursor equivalence.
+$\square$
+
+## 37. Source correspondence and the surviving acquisition boundary
+
+**Mathematical attribution 37.1 (suppliers and the uncovered criterion).**
+Theorem 34.2's trial-pruning crossing, its branch-capped actual
+comparison and their simultaneous sparse acquisition bounds are
+`repo-derived` source-specific deductions. They select an unknown
+positive even lag from actual support and an authentic original leaf
+count. The existing history identifiability, fixed-lag inverse,
+stationary tree traversal and continuation compiler are suppliers.
+They do not alone specify this monotone wrong-lag test or its sparse
+actual acquisition run.
+
+| Original supplier | Parameter correspondence and exact use |
+| --- | --- |
+| FARG Definitions 2.1,3.1 and structure/finite-path results; this volume §§8–9 | The same free ordered two-label source and unchanged pair-distributing $\rho$. The known-original-count history classification does not already acquire an unknown even lag from paid support. No universality or two-operation claim follows from having two leaf labels. |
+| This volume §§12–14; NativeErasedSupportKernels and its owning Scribe | The known-lag branch/label table and erased-support correspondence, with the same root, order and actual register. The new test constructs unlabelled prunings even for incorrect trial lags; it assumes no inverse image or original-node advice at those lags. |
+| DelayedOriginalReadout, including private clock_step and public right_clock_iterate, right_clock_readout, address_clock_bounds; its owning Scribe | The right clock is $2h_R+\epsilon$ and shifts by the certified number of substitutions. Its known-$N$ arbitrary-address decoder and presence guard are reused by ABT15, not asserted to discover $N$. |
+| GenealogicalFiberTransport and ActualTreeReadoutAcquisition, with their owning Scribes | Source is FreeMagma Bool, true is $\alpha$, false is $\beta$, false address letter is $L$, true letter is $R$; substitution, literal readout and acquired node order retain these exact meanings. The latter module's distinct-address cost objective is not used: every native invocation here is charged. |
+| NativeFullSourceProducer and its owning Scribe, including private traverse, production_reads and stationary | The actual stack reconstructs only acquired subtrees; one original node visit and two local switches/combinations per branch. Its sourceControl is a supplier for the final traversal, not a new unknown-lag theorem. |
+| NativeSerialMachine and its owning Scribe; NativeSerialEffective as used in §15 | The actual source-blind Op, full Event, finite Run and paid evaluator contract. Epoch is a writer field, not a controller observation. A finite code or effective selector does not bound workspace or implement source binding. |
+| Acquired Intrinsic Depth Calibration §§4–8; Concurrent Native Cut Acquisition §§1–5,21–22; Native Unknown Epoch Gluing §§7–9 | Retention and authentic later entry, genuine same-source Read, stationarity/progress and the distinction between semantic feasibility, acquired witnesses and retained callable data. Their respective calibrated right-spine, concurrent/stamped and proposed-record domains are unchanged. |
+| AFFINE Finite Reply Recovery §§15–18 | Complete usable state includes backing, counters, rights and accessible archives. Its $5/2$ all-handoff and $5/4$ first-handoff minimax results belong to its noisy quadratic-clock finite-report source. No numeric bound is transferred to these trees or variable-memory acquisitions. |
+
+The upstream free-magma supplier is Kenny Lau's
+`Mathlib/Algebra/Free.lean` at mathlib revision
+`56a005855ea17e0b0958f73ec801ae140b0a1679`: its free ordered constructors
+and lift fix the algebraic correspondence, not the acquisition port.
+The original sources and declaration bodies listed above include their
+private helpers; absence of an API name is not used as a novelty or
+impossibility argument. These are ordinary proofs, without a new
+Lean-certification assertion.
+
+Berthé--Steiner--Thuswaldner--Yassawi,
+[*Recognizability for sequences of morphisms*, arXiv:1705.00167v2](https://arxiv.org/abs/1705.00167v2),
+§2 Definitions 2.1,2.3–2.4 and §3 Theorem 3.1, concern non-erasing
+word morphisms, centered representations and aperiodic bi-infinite
+points. Their two-letter sufficient condition is not a theorem for
+finite ordered trees, an unknown iteration count, or paid presence
+acquisition. Engelfriet--Inaba--Maneth,
+[*Linear Bounded Composition of Tree-Walking Tree Transducers:
+Linear Size Increase and Complexity*,
+arXiv:1904.09203v3](https://arxiv.org/abs/1904.09203v3), §3, define
+walking configurations with input-label/child-number tests and optional
+regular look-around, and output branching into copies. Those are not
+the absolute-word, presence-only, one-register operations here. No
+label test, free walk, look-around or parallel source copy is imported.
+These primary definitions provide classical comparison domains,
+not the new leaf-count crossing or its cost bound. The generic finite
+simulation precedent in Lynch--Vaandrager, *Forward and Backward
+Simulations, Part I: Untimed Systems*, §3.2, remains the background
+already attributed in §17; Theorem 36.1 applies the concrete ABT15
+macros, rather than using generic trace inclusion to identify raw logs.
+This is a bounded comparison with those sources, not an exhaustive
+literature search or a global priority claim.
+
+**Convention 37.2 (unclosed domains and tasks).** The authentic $n$,
+positive-even same-original provenance, actual bound root/order,
+stationarity, current rights and sufficient variable owned backing are
+hypotheses. The theorem acquires their unknown numerical/tree witnesses
+$(u,k)$ under those hypotheses; it neither authenticates those premises
+from untrusted strings nor acquires the references or grants themselves.
+Without $n$, even-lag histories $(u,k+1)$ and $(\rho^2u,k)$ have the
+same current tree and different originals and lags. With arbitrary
+parity, §9's equal-original-count $\alpha/\beta$ partner histories
+remain. In particular the intrinsic count $2k$ is not physical duration.
+
+The actor retains $(u,k,n)$ rather than passing a complete finite
+memory cut. Loss of this data or of its backing does not become
+recoverable merely because a tree was once printed. Arbitrary histories,
+unrecorded earlier choices, concurrent or revoked sources, relative
+cursor/graft/guard menus, and old fixed-apparatus/full-$Q$ tasks retain
+their previous obligations. Actual four-view cycles elsewhere keep
+their own initializations and readouts. The present restricted routes,
+with the explicit failure of $T\to u$, establish no unrestricted
+mutual recovery, universal two-atom reduction, physical realization,
+duration bound or completion of the full relational-observation goal.
+
+## 追加锚（本行以下为增补区）
