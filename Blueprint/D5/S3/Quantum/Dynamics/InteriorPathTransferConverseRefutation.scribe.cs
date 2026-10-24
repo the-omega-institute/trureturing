@@ -81,7 +81,10 @@ internal sealed class InteriorPathTransferConverseRefutationDocument : IScribeDo
                             + "Thus there is no endpoint transfer at any real time s. "
                             + "Applying the asserted implication to m = 4, these positive weights, zero potentials, and j = 1 would give endpoint transfer at a positive time, a contradiction. "
                             + "The zero-eigenvalue vector vanishes at both interior vertices and therefore imposes no interior phase condition, while its nonzero endpoint entries force γ = 1."))),
-                DescribeRole.Theorem))));
+                DescribeRole.Theorem,
+                openProblemResolutionClaim: new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("kirkland-2019-interior-pst-converse-refutation"),
+                    ResolutionKind.Refuted)))));
 
     private static Formula ClaimFormula()
     {
