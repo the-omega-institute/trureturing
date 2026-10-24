@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:d4d6468d8c2e9dd50c83a00476a04dde8eecdd14adf66191476ddbb0fa4a5c33
+  normalized_sha256: sha256:d4d6468d8c2e9dd50c83a00476a04dde8eecdd14adf66191476ddbb0fa4a5c33
+cas_ref: sha256:d4d6468d8c2e9dd50c83a00476a04dde8eecdd14adf66191476ddbb0fa4a5c33
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: A proposed directory and module-name list; the code block contains no Lean declaration or mathematical assertion.
+    previous_atom_id: 79441670ab7395a5b2f07bb43b65fe63dca0d28fc9d78d59da60bddd33bac3ae
+    next_atom_id: 4ef1cf30054f1771766eba25c5a68aa665c7ba2954a17ee0890bced04cadbea7

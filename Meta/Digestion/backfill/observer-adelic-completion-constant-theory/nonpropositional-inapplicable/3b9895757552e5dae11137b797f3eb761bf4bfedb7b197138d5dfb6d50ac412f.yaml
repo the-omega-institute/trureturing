@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:3b9895757552e5dae11137b797f3eb761bf4bfedb7b197138d5dfb6d50ac412f
+  normalized_sha256: sha256:3b9895757552e5dae11137b797f3eb761bf4bfedb7b197138d5dfb6d50ac412f
+cas_ref: sha256:3b9895757552e5dae11137b797f3eb761bf4bfedb7b197138d5dfb6d50ac412f
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: A file-link reference to formula extracts, with no mathematical assertion.
+    previous_atom_id: db7b2e8746edd812d5d65e8dcb38b4b31ab01be1bb6b2dd3818ec073b837e8b9
+    next_atom_id: 23063083f9eb79509ac406195df2ac57a09ff677e00511c0e97b65caebe03a2d
