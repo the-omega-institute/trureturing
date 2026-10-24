@@ -108,7 +108,7 @@ private lemma character_sum {n : ℕ} (k : Fin n → ℕ) :
       if Even (k j) then 2 else 0 := by
     simp only [Fintype.sum_bool, Bool.toNat_false, Bool.toNat_true,
       Nat.mul_zero, Nat.mul_one, pow_zero, neg_one_pow_eq_ite]
-    split_ifs <;> norm_num
+    split_ifs <;> norm_num at *
   simp_rw [hterm]
   rw [Fintype.prod_ite_zero]
   simp
@@ -281,17 +281,16 @@ private lemma projectionA_is_projection :
     decide +kernel
   have hmap : projectionA = (Rat.castHom ℂ).mapMatrix q := by
     ext a a'
-    change (if ∀ j, Even (∑ i, (M i j && Bool.xor (a i) (a' i)).toNat)
-        then (1 / 4 : ℂ) else 0) =
-      ((if ∀ j, Even (∑ i, (M i j && Bool.xor (a i) (a' i)).toNat)
-        then (1 / 4 : ℚ) else 0) : ℂ)
+    rw [RingHom.mapMatrix_apply, Matrix.map_apply]
+    dsimp only [projectionA, q]
     split_ifs <;> norm_num
   constructor
   · change projectionA * projectionA = projectionA
     rw [hmap, ← map_mul, hq]
   · change projectionAᴴ = projectionA
     ext a a'
-    simp [Matrix.conjTranspose_apply, projectionA, Bool.xor_comm]
+    simp only [Matrix.conjTranspose_apply, projectionA, Bool.xor_comm]
+    split_ifs <;> norm_num
 
 set_option maxRecDepth 10000 in
 set_option maxHeartbeats 3000000 in
@@ -308,14 +307,15 @@ private lemma projectionB_is_projection :
     change (1 / 2 : ℂ) * ((if b = b' then 1 else 0) +
         (if ∀ i, b i ≠ b' i then 1 else 0)) = (q b b' : ℂ)
     dsimp only [q]
-    push_cast
-    ring
+    split_ifs <;> norm_num
   constructor
   · change projectionB * projectionB = projectionB
     rw [hmap, ← map_mul, hq]
   · change projectionBᴴ = projectionB
     ext b b'
-    simp [Matrix.conjTranspose_apply, projectionB, flipB, Matrix.one_apply, ne_comm, eq_comm]
+    simp only [Matrix.conjTranspose_apply, projectionB, flipB, Matrix.one_apply,
+      Matrix.smul_apply, Matrix.add_apply, star_smul, star_add, eq_comm, ne_comm]
+    split_ifs <;> norm_num
 
 private lemma projection_traces : Matrix.trace projectionA = 8 ∧ Matrix.trace projectionB = 8 := by
   have hA (a : Fin 5 → Bool) : projectionA a a = 1 / 4 := by
@@ -495,5 +495,7 @@ theorem result : ¬ claim := by
   have hle := h 5 4 (by norm_num) (bipartiteGraph M) (255 / 256) (by norm_num)
   unfold coherentInfoA coherentInfoB at hle
   exact (not_le_of_gt witness_entropy_comparison) ((sub_le_sub_iff_right _).mp hle)
+
+end
 
 end D5.S3.Quantum.Information.NoisyGraphStateCoherentInformationRefutation
