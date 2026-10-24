@@ -55,8 +55,7 @@ internal sealed class ChannelTimeReversalNoGoDocument : IScribeDocumentDefinitio
         Pauli("X"), Comma, Sp, Pauli("Y"), Comma, Sp, Pauli("Z"), CloseBracket);
     private static Formula Pauli(string name) => Qualified(
         "D5", "S3", "Quantum", "Information", "StabilizerPairLocalUnitaryInequivalence", "Pauli", name);
-    private static Formula BoolIndex(Formula e) =>
-        Seq(Call("if"), Sp, Eq(e, V("true")), Sp, Call("then"), Sp, D(1), Sp, Call("else"), Sp, D(0));
+    private static Formula BoolIndex(Formula e) => Call("ite", Eq(e, V("true")), D(1), D(0));
     private static Formula Named(string name) => Seq(Operatorname, Grp(V(name)));
     private static Formula Q(string owner, string name) => Seq(Named(owner), Dot, Named(name));
     private static Formula Qualified(params string[] parts)

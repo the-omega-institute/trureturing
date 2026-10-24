@@ -6,14 +6,8 @@
    utility: none
    digest: Exact Hilbert–Schmidt distances of noisy Smolin states for four partitions. -/
 
-import D5.S3.QuantumChannels.PauliThreeWeightBayesianInverseUniqueness
 import D5.S3.QuantumChannels.ChannelTimeReversalNoGo
-import D5.S3.Quantum.QuantumChannels.IptPptSquaredEquivalence
-import D5.S3.Quantum.Information.SLDSpectralEnergy
-import D5.S3.Quantum.QuantumChannels.PositiveFilterTransposeRefutation
 import D5.S3.Quantum.Information.EntanglementDistanceBellDiagonalRefutation
-import D5.S3.Quantum.Measurement.StabilizerPovmMaximalEntanglementRefutation
-import D5.S3.Quantum.Information.SeparableStateLocalUnitaryStabilizerObstruction
 
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
