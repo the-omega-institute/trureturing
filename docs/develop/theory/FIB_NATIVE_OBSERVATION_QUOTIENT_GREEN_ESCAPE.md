@@ -1889,3 +1889,659 @@ coupling equality, moving-data uniformity and $\varepsilon\to0$ uniformity
 are outside the assertions. $\square$
 
 ## 追加锚（本行以下为增补区）
+
+## 14. Finite hidden Fourier sectors of the unchanged native point field
+
+**Definition 14.1 (source, sector and natural domain).** Fix Definition
+10.1, including its immutable $\kappa\ne0$, preparation, probabilities,
+$\varepsilon>0$, pole $o=(q_0,0)$, raw measures, and three $2\pi$ circles.
+Write $\Gamma_\kappa=\Gamma_{\kappa,o}$. The fields are still exactly
+$P,Q_\kappa$ of (10.3), and the Green field is still
+$\int_0^\infty p_\kappa^\Omega(t,o,\cdot)dt$ for $e^{-tL_\kappa}$,
+with Dirichlet height killing. In particular no source averaging, spatial
+cap, time cutoff or change of clock is made.
+The native guard remains $k+a(t)\in J_\kappa$
+with $J_\kappa=(\max(0,2\kappa),H+\kappa)$; restriction to $I$ is the
+additional whole-path guard of [G, Definition 12.1]. Refusal and Stop,
+actual common histories, preparation rotations and the original full read
+menu are retained. The analytic state spaces below add no native command.
+
+Let $\varnothing\ne S\subset\mathbb Z$ be finite, $M=|S|$, and put
+
+$$
+\begin{aligned}
+\mathcal H_S&=\left\{f(q,D)=(2\pi)^{-1/2}
+                \sum_{n\in S}z_n(q)e^{inD}:z_n\in L^2(B,d\nu)\right\},\\
+t_{\kappa,n}[z]&=\int_B\left(\varepsilon^2|\partial_kz|^2+
+                  |(R_\kappa+inC_\kappa)z|^2\right)d\nu,\\
+\mathcal F_{\kappa,S}&=\overline{
+ (2\pi)^{-1/2}\sum_{n\in S}C_c^\infty(B)e^{inD}
+ }^{(\|\cdot\|_2^2+T_\kappa)^{1/2}},\\
+T_{\kappa,S}[f]&=\sum_{n\in S}t_{\kappa,n}[z_n],\qquad
+V_{\kappa,S}[f]=\int_\Omega\Gamma_\kappa|f|^2d\mu,\\
+h_{\kappa,S,g}[f]&=T_{\kappa,S}[f]-gV_{\kappa,S}[f].
+\end{aligned}
+\tag{14.1}
+$$
+
+Thus $\|f\|_2^2=\sum_n\|z_n\|_2^2$. This is an explicitly changed
+analytic amplitude class; the multiplier is the original unsmoothed full
+point field. No bound on the two retained angular frequencies is imposed.
+
+**Proposition 14.2 (completed sector and its actual potential).** The
+sector is a reducing subspace for the free operator. Its completed form
+domain is exactly
+
+$$
+\mathcal F_{\kappa,S}=
+ \left\{(2\pi)^{-1/2}\sum_{n\in S}z_ne^{inD}:
+                      z_n\in\mathcal F_\kappa^B\right\}.
+\tag{14.2}
+$$
+
+The free sector form is densely defined and closed on $\mathcal H_S$,
+and its form domain embeds compactly in that Hilbert space. Its potential
+in (14.1) is finite on this whole domain and is the actual point-field
+integral, with the exact formula
+
+$$
+\begin{gathered}
+\gamma_{\kappa,j}(q)=\frac1{2\pi}\int_{\mathbb T}
+                     \Gamma_\kappa(q,D)e^{-ijD}dD,\qquad
+\gamma_{\kappa,0}=\frac{G_\kappa}{2\pi},\\
+V_{\kappa,S}[f]=\int_B\sum_{n,m\in S}
+       \gamma_{\kappa,m-n}(q)z_n(q)\overline{z_m(q)}d\nu.
+\end{gathered}
+\tag{14.3}
+$$
+
+The coefficients are defined pointwise for $q\ne q_0$ and as $L^1$
+functions across the source. No finite value at $q_0$ is required.
+
+Proof. Fourier projection in $D$ preserves the smooth height core and
+commutes with both free fields. Parseval gives the kinetic identity in
+(14.1), and projection is contractive for the free form norm. This proves
+free reduction by the same closed-domain argument as (10.7).
+Since $C_\kappa$ is bounded, for every $0<\delta<1$,
+
+$$
+(1-\delta)\mathcal E_\kappa[z]-C_{\delta,n}\|z\|_2^2
+ \le t_{\kappa,n}[z]
+ \le(1+\delta)\mathcal E_\kappa[z]+C_{\delta,n}\|z\|_2^2.
+\tag{14.4}
+$$
+
+Core completion gives (14.2) with equivalent norms. Compactness now follows
+from Theorem 10.2 and the finite direct sum. These are form domains, not
+assertions about intersection domains of differential operators.
+
+Pointwise Cauchy--Schwarz and the same-source marginal (12.1) give
+
+$$
+|f(q,D)|^2\le\frac{M}{2\pi}\sum_{n\in S}|z_n(q)|^2,
+\qquad
+0\le V_{\kappa,S}[f]\le\frac{M}{2\pi}
+               \sum_n\int_BG_\kappa|z_n|^2d\nu.
+\tag{14.5}
+$$
+
+Theorem 10.2 makes this finite and continuous in the completed kinetic
+norm. The marginal also gives
+$|\gamma_{\kappa,j}|\le G_\kappa/(2\pi)$ and
+$\gamma_{\kappa,-j}=\overline{\gamma_{\kappa,j}}$.
+Fubini first on the smooth core and then weighted $L^2$ completion proves
+(14.3). This argument identifies the integral itself, rather than defining
+an unrelated matrix potential by completion. $\square$
+
+## 15. The common Green coefficient of all finitely many mode differences
+
+**Definition 15.1 (exact source chart and sharp supplied constant).** Use
+$(\xi,\eta,\zeta)$, $b_o=b_\kappa(k_0)$ and $m_\kappa$ of (10.11).
+Set
+
+$$
+\begin{gathered}
+\tau=\zeta-\xi\eta/2,\qquad X=(\xi,\eta,\tau),\qquad
+R(X)=\big((\xi^2+\eta^2)^2+16\tau^2\big)^{1/4},\\
+U=\partial_\xi-\tfrac\eta2\partial_\tau,\qquad
+V=\partial_\eta+\tfrac\xi2\partial_\tau,\qquad
+\delta_rX=(r\xi,r\eta,r^2\tau),\\
+\varepsilon P=U,\quad R_\kappa=a_\kappa^{\rm loc}(X)V,
+\quad a_\kappa^{\rm loc}(X)=b_\kappa(k_0+\varepsilon\xi)/b_o,\quad
+ d\nu=m_\kappa dX,\quad
+ m_\kappa=\frac{\varepsilon^2b_o^2}{H+\kappa}.
+\end{gathered}
+\tag{15.1}
+$$
+
+Denote this local chart by $\Psi_\kappa$. The symbol
+$a_\kappa^{\rm loc}$ is distinct from $a_\kappa$ in (10.2).
+The radius $R$ is used for exact coefficients. The gauge $N$ in (10.12)
+is comparable to $R$, but is not substituted for it in a fundamental
+solution or a sharp constant.
+
+Let $\lambda_H$ be exactly $\lambda_0$ of
+[V, Definition 10.1 and Theorem 10.2], where
+[V] denotes [Variable-coefficient Green stability](FIB_NATIVE_VARIABLE_COEFFICIENT_GREEN_STABILITY.md).
+Explicitly it is the lowest eigenvalue of
+
+$$
+-4(\cos a\,\phi')'+\cos a\,\phi=\lambda_H\phi,
+\qquad -\pi/2<a<\pi/2,
+\tag{15.2}
+$$
+
+on $\{b\in L^2: b\in AC_{\rm loc},\sqrt{\cos a}\,b'\in L^2\}$,
+with natural endpoint conditions, not Dirichlet endpoint conditions.
+Thus $0<\lambda_H<2/\pi$ and the supplied sharp inequality is
+
+$$
+\int_{\mathbb R^3}(|Uu|^2+|Vu|^2)dX
+ \ge\lambda_H\int_{\mathbb R^3}R^{-2}|u|^2dX.
+\tag{15.3}
+$$
+
+Its class contains all complex compact punctured smooth tests, including
+all angular and logarithmic radial frequencies. The supplied annular
+sharpness tests are also used below. No weighted radial Hardy constant
+or symmetry-restricted constant is substituted.
+
+**Lemma 15.2 (same-source finite-mode Green coefficients).** For every
+finite $F\subset\mathbb Z$ there are a source neighborhood and finite
+constants $C_F,B_F$ such that, for $j\in F$ and $0<R(X)<r_0$,
+
+$$
+\left|\gamma_{\kappa,j}(\Psi_\kappa^{-1}X)
+       -\frac{1}{4\pi^2m_\kappa}R(X)^{-2}\right|
+ \le C_FR(X)^{-1}.
+\tag{15.4}
+$$
+
+On the exterior of that neighborhood $|\gamma_{\kappa,j}|\le B_F$.
+The coefficients are those of the full killed-time Green field in
+(14.3). Both estimates can be chosen uniformly for the base/modal
+extension over any closed parameter interval $[-a,a]\subset K$.
+For this last statement the full-source interpretation is asserted only
+for $\kappa\ne0$; at zero it means the modal kernels defined in the proof.
+
+Proof. Let $L_{\kappa,j}$ be the operator of $t_{\kappa,j}$ on
+$L^2(B,d\nu)$ and $K_{\kappa,j}(t;q,p)$ its kernel, in the convention
+$e^{-tL_{\kappa,j}}z(q)=\int K_{\kappa,j}(t;q,p)z(p)d\nu(p)$.
+Hidden Fourier extraction from the free full kernel gives
+
+$$
+\gamma_{\kappa,j}(q)=\frac1{2\pi}G_{\kappa,j}(q,q_0),\qquad
+G_{\kappa,j}(q,p)=\int_0^\infty K_{\kappa,j}(t;q,p)dt.
+\tag{15.5}
+$$
+
+The factor follows from the orthonormal hidden basis
+$e^{ijD}/\sqrt{2\pi}$ evaluated at the pole $D=0$.
+It is not a change of the point source's unit charge.
+
+There is a useful direct domination, without any attractive evolution.
+Along the retained free killed diffusion in Theorem 10.2, lift
+$dD_t=\sqrt2C_\kappa(K_t)dB_t^2$, with the same $B^2$ that drives both
+retained phases. For a test $z(q)e^{ijD}$, its free conditional expectation
+contains the unit-modulus factor
+$\exp(ij\sqrt2\int C_\kappa(K_s)dB_s^2)$.
+The Itô correction is exactly the $-j^2C_\kappa^2$ term, and the cross
+variation gives $2ijC_\kappa R_\kappa$; $R_\kappa C_\kappa=0$.
+Consequently its generator is
+$\varepsilon^2\partial_k^2+(R_\kappa+ijC_\kappa)^2$ with the same
+height killing. Taking absolute values proves semigroup domination and,
+by smooth kernels,
+
+$$
+|K_{\kappa,j}(t;q,p)|\le p_\kappa^B(t,q,p),\qquad
+|G_{\kappa,j}(q,p)|\le G_\kappa^B(q,p),
+\tag{15.6}
+$$
+
+where $G_\kappa^B(q,p)=\int_0^\infty p_\kappa^B(t,q,p)dt$.
+Here $G_\kappa(q)=G_\kappa^B(q,q_0)$.
+These formulas also define the modal extension at $\kappa=0$, where
+$C_0=0$. No full four-coordinate point kernel is invoked at zero.
+
+The contact Gaussian and localization argument of Theorem 10.2, with
+its center allowed to range over the compact support of a source-chart
+cutoff, gives uniformly
+
+$$
+G_\kappa^B(q,p)\le C d_\kappa(q,p)^{-2}+C,
+\qquad
+\int_{t_0}^\infty |K_{\kappa,j}(t;q,p)|dt\le C_{t_0}.
+\tag{15.7}
+$$
+
+In the first bound $q,p$ lie in a fixed larger source chart and
+$d_\kappa$ is its horizontal distance; outside a smaller source
+neighborhood the kernel with source $q_0$ is bounded. To check the
+uniform use, (10.10) keeps the contact determinant separated from zero,
+(15.1) gives ball volume comparable to $r^4$, and all coefficient and
+inverse-chart derivatives are bounded on the compact parameter set.
+The compact contact extension and domain domination used for (10.13)
+apply at every such center. The common height gap
+$\varepsilon^2\pi^2/(u-l)^2$, positive-time diagonal bounds and the
+semigroup identity give the second estimate and the bounded term of
+the first. Thus (15.7) includes the entire large-time tail; it is not an
+integration of a tangent limit with an uncontrolled tail.
+The classical intermediate upper Gaussian estimate is [J, Theorem 2,
+p.849]; its lifting/finite-iteration construction on pp.848--850 has
+bounded coefficients for this compact contact family, exactly as tracked
+in Theorem 10.2. Interior Dirichlet localization is also [H, Theorem 3.2]
+under its uniform strong Hörmander and uniform semigroup hypotheses.
+
+In (15.1), put $c_\kappa(X)=C_\kappa(k_0+\varepsilon\xi)$ and
+$a=a_\kappa^{\rm loc}$. Both depend on $\xi$ alone, so $Va=Vc_\kappa=0$.
+The exact modal expression is
+
+$$
+L_{\kappa,j}=-U^2-a^2V^2-2ijac_\kappa V+j^2c_\kappa^2.
+\tag{15.8}
+$$
+
+Let $G_H=(2\pi m_\kappa)^{-1}R^{-2}$.
+The source normalization is the one in [V, (10.7)]: the outward flux
+of $-\nabla_HR^{-2}$ is $2\pi$, and $d\nu=m_\kappa dX$.
+Choose a smooth cutoff $\chi$ equal to one near zero inside the chart.
+Since $a(0)=1$, $a-1=O(R)$ and
+$\nabla_H^d R^{-2}=O(R^{-2-d})$ for $d=1,2$, (15.8) yields, in
+distributions relative to $d\nu$,
+
+$$
+L_{\kappa,j}(\chi G_H)=\delta_{q_0}+F_{\kappa,j},\qquad
+|F_{\kappa,j}(X)|\le C_F R(X)^{-3}\quad(0<R<r_0).
+\tag{15.9}
+$$
+
+The residual is compactly supported and smooth off zero. Its order
+$R^{-3}$ is locally integrable in volume dimension four. The terms
+$-2ijac_\kappa VG_H$ and $j^2c_\kappa^2G_H$ have orders at most
+$R^{-3}$ and $R^{-2}$. No modal term changes the delta coefficient:
+the coefficient error in the principal flux tends to zero as $R\to0$,
+and the first-order flux is $O(R)$.
+All these bounds are uniform for finitely many $j$ on $[-a,a]$.
+
+The exact residual resolvent identity, with the full Dirichlet resolvent,
+is
+
+$$
+G_{\kappa,j}(q,q_0)=\chi(q)G_H(q)
+ -\int_B G_{\kappa,j}(q,p)F_{\kappa,j}(p)d\nu(p).
+\tag{15.10}
+$$
+
+For justification, test (15.9) against $L_{\kappa,j}^{-1}\psi$ with
+$\psi\in C_c^\infty(B)$. Local hypoellipticity makes this inverse smooth
+near the cutoff support. It is bounded, since (15.6), short-time
+$L^\infty$ contraction of the base semigroup and the common gap control
+its resolvent on bounded data. Integrability of $F_{\kappa,j}$ permits
+absolute Fubini; self-adjointness of the modal resolvent, with complex
+conjugation when moving it between slots, gives (15.10) in distributions.
+It holds pointwise off $q_0$ by the smooth resolvent representative.
+This argument does not assume $G_H$ belongs to the kinetic domain.
+
+For $s=R(q)$, the integral in (15.10) is $O(s^{-1})$.
+Indeed split its source-chart part into $R(p)<c s$, $R(p)\asymp s$,
+and $R(p)>C s$. In the first part $d_\kappa(p,q)\asymp s$ and
+$\int_{R<cs}R^{-3}dX=O(s)$, giving $O(s^{-1})$ by (15.7).
+In the middle part the residual is $O(s^{-3})$ and
+$\int_{d_\kappa(p,q)<C's}d_\kappa(p,q)^{-2}d\nu(p)=O(s^2)$.
+In the last part distance is comparable to $R(p)$ and the radial
+integral is $O(\int_{Cs}^{r_0}r^{-2}dr)=O(s^{-1})$.
+The bounded kernel term and the smooth cutoff annulus contribute $O(1)$.
+The triangle comparisons and volumes are uniform by (15.1).
+Finally divide by $2\pi$ in (15.5), proving (15.4), including its
+normalization and complete killed-time contribution. $\square$
+
+## 16. The exact strict stability boundary in each finite native sector
+
+**Theorem 16.1 (sharp strict finite-sector threshold).** With the source
+of Definition 14.1 and the full-complex $\lambda_H$ of (15.2), put
+
+$$
+g_S(\kappa)=\frac{4\pi^2m_\kappa\lambda_H}{M}.
+\tag{16.1}
+$$
+
+For every $0<g<g_S(\kappa)$, $h_{\kappa,S,g}$ is a densely defined
+closed semibounded Hermitian form on exactly $\mathcal F_{\kappa,S}$.
+For some $c>0$ and finite $B$,
+
+$$
+h_{\kappa,S,g}[f]\ge cT_{\kappa,S}[f]-B\|f\|_2^2.
+\tag{16.2}
+$$
+
+Its sufficiently shifted form norm is equivalent to the natural kinetic
+norm. Its representation operator on $\mathcal H_S$ has compact
+resolvent, and $\inf_{\|f\|_2=1}h_{\kappa,S,g}[f]$ is finite and
+attained in $\mathcal F_{\kappa,S}$.
+For every $g>g_S(\kappa)$ there are normalized smooth sector functions,
+supported away from the full pole, whose energies tend to $-\infty$.
+No assertion here concerns $g=g_S(\kappa)$, including closure,
+completion or attainment at equality.
+
+Proof. Apply Lemma 15.2 to $F=S-S$. With
+$c_{G,\kappa}=(4\pi^2m_\kappa)^{-1}$, its local matrix has the form
+
+$$
+\big(\gamma_{\kappa,m-n}(q)\big)_{m,n\in S}
+ = c_{G,\kappa}R(q)^{-2}\mathbf1\mathbf1^*+\mathcal R_\kappa(q),
+\qquad \|\mathcal R_\kappa(q)\|\le C_S R(q)^{-1}.
+\tag{16.3}
+$$
+
+Here $\mathbf1$ has $M$ entries equal to one. Its rank-one matrix has
+largest eigenvalue $M$. This coefficient identity, not just a marginal
+inequality, determines both directions of the threshold.
+
+For detail on localization, the elementary diamagnetic chain rule gives
+
+$$
+\mathcal E_\kappa[|z|]\le t_{\kappa,n}[z].
+\tag{16.4}
+$$
+
+For the retained direction this follows from
+$R_\kappa|z|=\operatorname{Re}(\overline z(R_\kappa+inC_\kappa)z)/|z|$
+on $z\ne0$; regularize the modulus and pass to the limit to include its
+zero set and the completed domain. The height direction is the ordinary
+modulus inequality. On a source neighborhood of radius $b$,
+$a_\kappa^{\rm loc}=1+O(b)$, so (15.3), applied to a source cutoff
+of $|z|$, gives a localized bound with leading constant arbitrarily close
+to $1/\lambda_H$ relative to $t_{\kappa,n}$.
+A two-cutoff partition $\chi_0^2+\chi_1^2=1$ avoids a fixed factor loss:
+
+$$
+\sum_{i=0}^1t_{\kappa,n}[\chi_i z]
+ =t_{\kappa,n}[z]+\int_B
+   \sum_i(\varepsilon^2|P\chi_i|^2+|R_\kappa\chi_i|^2)|z|^2d\nu.
+\tag{16.5}
+$$
+
+The cutoff errors are bounded multipliers for fixed $b$.
+Also $R^{-1}\le\delta R^{-2}+(4\delta)^{-1}$ for every $\delta>0$.
+Combining this with (16.3), $|\sum_nz_n|^2\le M\sum_n|z_n|^2$,
+(16.4)--(16.5), and the bounded exterior coefficient gives, for every
+$\eta>0$, a finite $B_\eta$ such that
+
+$$
+0\le V_{\kappa,S}[f]
+ \le\left(g_S(\kappa)^{-1}+\eta\right)T_{\kappa,S}[f]
+                  +B_\eta\|f\|_2^2.
+\tag{16.6}
+$$
+
+The Hardy inequality extends across the source by free-form density:
+a cutoff on a ball of radius $r$ has energy $O(r^2)$ in volume dimension
+four when multiplied by a fixed smooth function. Thus punctured tests
+approximate the smooth core. Formula (14.5) then identifies the weighted
+completion with the actual integral on (14.2).
+
+Choose $\eta$ so that $g(g_S^{-1}+\eta)<1$.
+KLMN [T, Theorem 6.24] applies with this strict relative bound and
+proves closedness on exactly (14.2) and (16.2). The other inequality
+$h_{\kappa,S,g}\le T_{\kappa,S}$ proves shifted norm equivalence.
+The operator is specified by form representation:
+
+$$
+\begin{aligned}
+D(H_{\kappa,S,g})=\{f\in\mathcal F_{\kappa,S}:\ &\exists F\in\mathcal H_S,
+\ h_{\kappa,S,g}(f,w)=\langle F,w\rangle\ \forall w\in\mathcal F_{\kappa,S}\},\\
+&H_{\kappa,S,g}f=F,
+\end{aligned}
+\tag{16.7}
+$$
+
+using the linear-first-slot convention. Compactness of (14.2) and norm
+equivalence imply compact resolvent. A normalized minimizing sequence is
+bounded in this Hilbert form norm, has a weak form limit and a strong
+$L^2$ limit, and weak lower semicontinuity proves attainment. No
+positivity or uniqueness assertion about a multi-mode ground state is
+needed, and the minimum need not be negative relative to zero.
+
+For sharpness, suppose $g>g_S(\kappa)$. The annular sharpness part of
+[V, Theorem 10.2, (10.12)--(10.13)] supplies one fixed smooth annular
+$u$ on the full Heisenberg group, normalized in $L^2(dX)$, with
+
+$$
+E_H[u]-gc_{G,\kappa}M D_H[u]<0,\qquad
+E_H[u]=\int(|Uu|^2+|Vu|^2)dX,\quad
+D_H[u]=\int R^{-2}|u|^2dX.
+\tag{16.8}
+$$
+
+There is no angular symmetry restriction on the inequality being tested;
+these particular allowed annular tests suffice to attain its infimum.
+For sufficiently small $r$ put
+
+$$
+\begin{gathered}
+u_r(\Psi_\kappa^{-1}X)=m_\kappa^{-1/2}r^{-2}
+                                  u(\delta_{1/r}X),\\
+p_S(D)=\frac1{\sqrt{2\pi M}}\sum_{n\in S}e^{inD},
+\qquad f_r(q,D)=u_r(q)p_S(D).
+\end{gathered}
+\tag{16.9}
+$$
+
+Zero extension outside the chart is smooth because $u$ is compactly
+supported in an annulus. Both factors have norm one, $|p_S(0)|^2=M/(2\pi)$, and $f_r$ is in the
+original smooth core and in the declared sector. Exact measure in
+(15.1), $a_\kappa^{\rm loc}-1=O(r)$ on its support, bounded fixed
+$nC_\kappa$, and (16.3) give
+
+$$
+\begin{aligned}
+T_{\kappa,S}[f_r]&=r^{-2}E_H[u]+O(r^{-1}),\\
+V_{\kappa,S}[f_r]&=r^{-2}c_{G,\kappa}M D_H[u]+O(r^{-1}).
+\end{aligned}
+\tag{16.10}
+$$
+
+For the first line the magnetic cross term has order at most $r^{-1}$
+and its square term is $O(1)$. For the second line the remainder
+$R^{-1}$ integrates to $O(r^{-1})$ against the normalized state.
+The constants may depend on the actual frequency locations, $\kappa,S,u$.
+The strictly negative coefficient in (16.8) proves collapse in this
+same finite sector. This proves the exact strict boundary (16.1),
+without resolving its equality case. $\square$
+
+**Corollary 16.2 (the retained zero mode and its source factor).** For
+$S=\{0\}$ the form in Theorem 16.1 is exactly
+
+$$
+h_{\kappa,\{0\},g}[Jz]=\mathcal E_\kappa[z]
+              -\frac{g}{2\pi}\int_BG_\kappa|z|^2d\nu,
+\qquad g_{\{0\}}=4\pi^2m_\kappa\lambda_H.
+\tag{16.11}
+$$
+
+Proof. Equations (14.1)--(14.3) and $Jz=(2\pi)^{-1/2}z$ give the
+identity. A unit base source has leading coefficient
+$(2\pi m_\kappa)^{-1}R^{-2}$ and strict boundary
+$2\pi m_\kappa\lambda_H$ for its own coupling. Writing the base
+coupling as $g/(2\pi)$ gives precisely (16.11).
+This extends the sufficient window of (11.1), without identifying its
+nonsharp symbol $g_*$ with the new sharp boundary. $\square$
+
+## 17. A common two-sided window and the obstruction to soft hidden costs
+
+**Theorem 17.1 (fixed-sector uniform source collars).** Fix
+$0<b<a\le\kappa_1$ with $[-a,a]\subset K$ as in Definition 10.1, and
+consider the compact two-sided collar
+
+$$
+\mathcal K_{a,b}=[-a,-b]\cup[b,a].
+\tag{17.1}
+$$
+
+The source has $\kappa\ne0$ everywhere on this collar. Preparation,
+$Z,I,k_0$, the common additional guard $I$ and $\varepsilon>0$ are fixed. For fixed finite $S$ let
+
+$$
+\begin{aligned}
+\underline g_S(a)&=\frac{4\pi^2\lambda_H}{M}
+                         \min_{|\kappa|\le a}m_\kappa>0,\\
+m_\kappa&=
+\frac{\varepsilon^2(H+\kappa)(k_0-2\kappa)^2}
+ {4H^2(k_0-\kappa(H+\kappa)/H)^2}.
+\end{aligned}
+\tag{17.2}
+$$
+
+Every $0<g<\underline g_S(a)$ gives the closed, compact-resolvent,
+attained-minimum conclusions of Theorem 16.1 at every point of the
+collar. For $0<g\le\underline g_S(a)/2$ there is a single finite $B$,
+independent of $\kappa$ and $g$ in these ranges, for which
+
+$$
+h_{\kappa,S,g}[f]\ge\tfrac14T_{\kappa,S}[f]-B\|f\|_2^2.
+\tag{17.3}
+$$
+
+For the ranges in (17.3), the shifted normalized form balls are
+collectively relatively compact in $L^2(\Omega)$. Constants can in fact be chosen independently of
+$b>0$ with $a,S$ fixed; this is a statement for $0<|\kappa|\le a$,
+not a full-source construction at zero.
+
+Proof. The explicit positive expression in (17.2) follows from (10.2)
+and (15.1). Positivity and smoothness on $[-a,a]$ make its minimum
+positive. Lemma 15.2 is uniform for the finite set $S-S$ there. The
+source cutoffs in (16.5), contact coefficient errors and lower-order
+bounds in (16.4)--(16.6) can therefore be chosen uniformly. In
+particular (16.6) holds with common $B_\eta$ and coefficient
+$\underline g_S(a)^{-1}+\eta$. Taking
+$\eta=(2\underline g_S(a))^{-1}$ makes the relative bound at most
+$3/4$ for $g\le\underline g_S(a)/2$, proving (17.3).
+For any fixed $g<\underline g_S(a)$ take a smaller common $\eta$.
+The uniform version of (14.4) and collective compactness in Theorem
+10.2 prove the last claim. This uses only modal extension at zero to
+choose constants on a compact set. It postulates neither a
+four-coordinate Green density at zero nor an identification of artificial
+nonzero hidden modes there with the native double-wall leaf.
+No uniformity as $M\to\infty$, as frequency locations diverge,
+as $\varepsilon\to0$, or as the pole or height faces move is asserted.
+$\square$
+
+**Definition 17.2 (a genuinely hidden-only soft quadratic cost).** Let
+$\mathfrak a$ be any nonnegative Hermitian quadratic form on a linear
+subspace of $L^2(\mathbb T_D,dD)$ containing every trigonometric
+polynomial, with finite value on each such polynomial. A hidden-only
+cost on product states, and on every larger domain where it is defined,
+is
+
+$$
+\mathcal A[f]=\int_B\mathfrak a[f(q,\cdot)]d\nu(q),\qquad
+\mathcal A[u(q)p(D)]=\|u\|_2^2\mathfrak a[p].
+\tag{17.4}
+$$
+
+No translation invariance, diagonal Fourier representation, boundedness
+or closability of $\mathfrak a$ is required. A chosen finite prefactor
+can be included in $\mathfrak a$. The cost does not depend on $q$ or on
+retained derivatives. Finiteness on every polynomial distinguishes it
+from a hard domain restriction that excludes modes altogether.
+
+**Theorem 17.3 (no soft hidden-only quadratic cost stabilizes the full
+original point field).** For fixed nonzero $\kappa$ of Definition 10.1,
+any $g>0$ and every cost (17.4),
+
+$$
+\inf_{\substack{\|f\|_2=1\\f\text{ a smooth sector product as in }(16.9)}}
+ \left(T_\kappa[f]+\mathcal A[f]
+                   -g\int_\Omega\Gamma_\kappa|f|^2d\mu\right)=-\infty,
+\tag{17.5}
+$$
+
+where the union over all finite hidden sectors is allowed in the infimum.
+Consequently no larger unrestricted-domain realization agreeing with
+these energy values can be semibounded.
+
+Proof. Choose an integer $M>4\pi^2m_\kappa\lambda_H/g$ and any fixed
+set $S$ of that cardinality. Then $g>g_S(\kappa)$.
+Take the annular sequence $f_r=u_rp_S$ from (16.8)--(16.10).
+Its hidden penalty is the single finite number
+$\mathfrak a[p_S]$, independent of $r$, since $\|u_r\|_2=1$.
+The kinetic minus attractive energy has a strictly negative
+$r^{-2}$ coefficient and an $O(r^{-1})$ remainder.
+Adding the finite penalty cannot prevent divergence to $-\infty$.
+The choice of $M$ and $p_S$ is made once, before $r\downarrow0$;
+no estimate uniform in growing $M$ is needed. $\square$
+
+## 18. Supplier correspondence and the native consumer's exact boundary
+
+**Definition 18.1 (attributed supplies and the source-specific synthesis).**
+The source and operator correspondences used in §§14--17 are as follows.
+
+| Supplier | Consumed statement and preserved conditions |
+| --- | --- |
+| [N], Definitions 2.1, 3.1, 8.1 and Theorem 8.2; [G], Definition 12.1 and Calculation 12.2 | The actual five probabilities, negative phase convention, immutable source means, preparation translations, original two controls, all-prefix height guards and unimodular $q,D$ coordinates. Current-ray reachability supplies neither analytic amplitude preparation nor a Fourier-sector selector. |
+| This volume, Theorems 10.2, 11.1 and 12.1 | Natural retained kinetic domain, compactness, uniform contact estimates, exact raw hidden marginal and the normalized $1/(2\pi)$ zero-mode energy. Lemma 15.2 adds the nonzero complex mode differences; these were not supplied by the scalar marginal. |
+| [V], §§10--13, especially Theorems 10.2 and 11.1 | Exact Heisenberg flux $2\pi$, full-complex angular constant $\lambda_H=\lambda_0$, annular sharpness and the residual-convolution method. The local correspondence here is (15.1): density $m_\kappa$, coefficient matrix $\operatorname{diag}(1,(a_\kappa^{\rm loc})^2)$, plus the explicitly retained magnetic first-order and bounded terms (15.8). The proof of Lemma 15.2 supplies those extra terms directly; a global different native source is not substituted. The supplier's critical completion is not transferred to this matrix problem. |
+| [J] Jerison--Sánchez-Calle, *Estimates for the Heat Kernel for a Sum of Squares of Vector Fields*, Indiana Univ. Math. J. 35 (1986), 835--854, [primary text](https://www.iumj.indiana.edu/IUMJ/FTDLOAD/1986/35/35043/pdf), Theorem 2, p.849, and pp.848--850 | The compact smooth Hörmander-field upper bound is $C\mu(B(q,\sqrt t))^{-1}\exp(-\beta d(q,p)^2/t)$ for $0<t<1$. The contact extension and its uniform coefficient/volume checks are those of Theorem 10.2 and (15.7); killing returns to the original cylinder by domination. This is a free-kernel supply, not a sharp Hardy constant. |
+| [H] Colin de Verdière--Hillairet--Trélat, *Small-time asymptotics of hypoelliptic heat kernels near the diagonal, nilpotentization and related results*, [doi:10.5802/ahl.93](https://ahl.centre-mersenne.org/item/10.5802/ahl.93.pdf), Theorem B, §3.1.2 and Theorem 3.2 | The local free fields have step-two strong Hörmander generation, positive smooth density and self-adjoint contraction realizations. The compact-family hypotheses of Theorem 3.2 hold for the base extension used in (15.7). Theorem B's smooth nilpotent heat limit alone supplies neither the complete Green tail nor the $O(R^{-1})$ resolvent error; these are proved in (15.7)--(15.10). No theorem about a real free operator is silently applied to an attractive singular matrix operator. |
+| [R] Ciatti--Cowling--Ricci, *Hardy and uncertainty inequalities on stratified Lie groups*, [arXiv:1308.2373v1](https://arxiv.org/pdf/1308.2373v1), §2, (2.1), (2.6)--(2.7), Corollary 3.2 | Heat/Riesz normalization and unweighted control with $p=2$, $\alpha=1$, $Q=4$ are mature supplies. The strict requirement $0<1<4/2$ holds. That corollary provides a finite control constant, not the sharp full-complex $\lambda_H$ of (15.2). |
+| [T] Teschl, *Mathematical Methods in Quantum Mechanics*, [primary text](https://www.mat.univie.ac.at/~gerald/ftp/book-schroe/schroe.pdf), Theorem 6.24 and Theorem 2.13 | KLMN uses only the strict relative bound $g(g_S^{-1}+\eta)<1$ on the already closed natural sector form. Representation gives (16.7). Compactness and attainment use Proposition 14.2 separately. This invocation gives no equality assertion. |
+| [C], [Recursive holographic boundary geometry, continuation III](FIB_ATOM_RECURSIVE_HOLOGRAPHIC_BOUNDARY_GEOMETRY_CONTINUATION_III.md), §§84--85 | Its carrier is $H^1\times\mathbb R$, with three direct fields, noncompact hidden fibre, volume exponent five and a Coulomb marginal on a Euclidean three-dimensional base. Its finite central band has infinitesimal relative form bound for every fixed bandwidth. Here there are two original fields, a compact hidden circle and a contact inverse-square base singularity with a finite strict coupling boundary. Neither its all-coupling finite-band stability nor its noncompact attainment hypotheses are transferred. |
+
+The Fourier evaluation inequality, classical free heat estimates, form
+representation and KLMN are `literature-attested` intermediate ingredients.
+The `repo-derived` synthesis is the original nearby native point field's
+finite-mode coefficient matrix with exact raw-source normalization,
+its cardinality-dependent strict boundary, and the resulting hard-sector
+versus soft-cost separation. It is not a new general Hardy theorem or a
+republication of [C]'s finite-band theorem. This attribution makes no
+world-priority or exhaustive literature-search claim.
+
+**Proposition 18.2 (what this supplies to the full4/retained3 comparison).**
+At every fixed nearby native source with $\kappa\ne0$, the original full
+point field admits a stable, compact, attained restricted variational
+problem on the declared finite sector for every coupling strictly below
+(16.1), and collapses within that very sector above it. Its threshold
+scales as $1/M$ and depends on frequency locations only through
+lower-order estimates. Hence no positive attraction is stable on all
+finite sectors at once, even after any cost of Definition 17.2.
+These conclusions provide an analytic stability control, and do not
+identify physical spatial dimension or acquire that control natively.
+
+Proof. Theorems 16.1 and 17.3 give the assertions, with equality excluded
+throughout. The zero-mode instance is exactly the original retained3
+consumer by Corollary 16.2, and Theorem 17.1 supplies a common two-sided
+source window. The full4 parent still has the all-positive-coupling
+instability supplied by [G, Theorem 3.1]; no bounded attractive parent
+heat semigroup is available to justify repeated projection or a Trotter
+construction. Free sector reduction in Proposition 14.2 is therefore
+not such a protocol. Analytic sector selection and a soft penalty are
+also different from a sensor, an attractive sampler, a finite-bit
+implementation or an operation preparing amplitudes from the original
+immutable INITIAL. None is among Definition 14.1's allowed operations.
+
+The paid producer of [Paid-point observation tracking](FIB_NATIVE_PAID_POINT_OBSERVATION_TRACKING.md),
+§§51--53, has a positive initial grid hold at its starting pole; its
+Theorem 53.2 concerns bounded original-clock occupations and the stated
+cap/limit order. That producer has its own source and operation contract,
+not an automatic realization of Definition 14.1. A hold of duration
+$h>0$ at a pole where $\Gamma=+\infty$ gives infinite uncapped
+occupation, however small $h$ is. The positive-hold obstruction of
+[Central-noise Green stability](FIB_NATIVE_CENTRAL_NOISE_GREEN_STABILITY.md),
+§7, therefore survives paid tracking. The different coefficient-access
+polygon family [V, §§29--30] and its
+[Point-source occupation and finite-command cap limits](FIB_NATIVE_SINGULAR_OCCUPATION_AND_COMMAND_CAP_LIMITS.md)
+have their own singular integrability results. None supplies an uncapped
+paid-producer transfer for the present full point field, and none is
+used as one here.
+The actual source, law, history, observation, density, metric, clock,
+resources and acquisition permissions still require their own proved
+correspondence for any operational consumer.
+Finally, the current-ray count four, retained-coordinate count three,
+direct-control rank two and contact volume exponent four describe
+different objects. The only new state-space premise here is finite
+hidden Fourier support; it neither removes original readable rays nor
+constructs a source-to-physical-space map. Critical equality and any
+finite-resource realization of this premise remain outside these
+statements. $\square$
+
+## 追加锚（本行以下为增补区）

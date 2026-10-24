@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:7e71e041c09d17f8690fda89144f53fca87543e062c5418ad1dc629b5356b40f
+  normalized_sha256: sha256:7e71e041c09d17f8690fda89144f53fca87543e062c5418ad1dc629b5356b40f
+cas_ref: sha256:7e71e041c09d17f8690fda89144f53fca87543e062c5418ad1dc629b5356b40f
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 非命题结算：区分资源、机会、实际行动与生活评价，举出语义与实际条件的差别；属于研究问题设置。
+    previous_atom_id: aee039ef4b6b3205679aa980f4dbed54abd7fc34148b82f088396a80d5333d81
+    next_atom_id: 1546524b3419fb01c852bba032163ded3e809302a23aee9d0c638ce41f58a48b

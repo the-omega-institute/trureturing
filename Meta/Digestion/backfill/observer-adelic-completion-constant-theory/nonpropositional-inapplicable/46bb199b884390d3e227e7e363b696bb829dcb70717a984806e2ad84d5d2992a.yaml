@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:46bb199b884390d3e227e7e363b696bb829dcb70717a984806e2ad84d5d2992a
+  normalized_sha256: sha256:46bb199b884390d3e227e7e363b696bb829dcb70717a984806e2ad84d5d2992a
+cas_ref: sha256:46bb199b884390d3e227e7e363b696bb829dcb70717a984806e2ad84d5d2992a
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 'nonpropositional: 比喻对象列表中的 Cauchy 光影名称，没有分布等式。'
+    previous_atom_id: 28b50c86e757981d43445e006471e4da95422cc2dfcbf5ced3c12d334fdf15a2
+    next_atom_id: 0b98bb9dd29930949b5815723693d98a572ee0aa9b5351d3f474a945f47b667d

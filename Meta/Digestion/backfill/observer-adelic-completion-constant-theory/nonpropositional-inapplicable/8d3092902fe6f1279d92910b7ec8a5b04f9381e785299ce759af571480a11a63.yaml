@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:8d3092902fe6f1279d92910b7ec8a5b04f9381e785299ce759af571480a11a63
+  normalized_sha256: sha256:8d3092902fe6f1279d92910b7ec8a5b04f9381e785299ce759af571480a11a63
+cas_ref: sha256:8d3092902fe6f1279d92910b7ec8a5b04f9381e785299ce759af571480a11a63
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 列举 pair rapidity 与 determinant cross-ratio 为候选读出，不断言其极限或相等关系。
+    previous_atom_id: 29619d256d0182419a1ebc6715b4f8f883979a57260914acfad39574b1cf4cf4
+    next_atom_id: 7fd1af1ec628e5ede79a9d5004f0dcf754f5785df3ccab91e1a8db18aef4390f

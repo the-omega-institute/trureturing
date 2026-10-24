@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:2d1cbc8a263cb52c6acf0d74874819c459e098929e514211cf0db0c0df297326
+  normalized_sha256: sha256:2d1cbc8a263cb52c6acf0d74874819c459e098929e514211cf0db0c0df297326
+cas_ref: sha256:2d1cbc8a263cb52c6acf0d74874819c459e098929e514211cf0db0c0df297326
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 非命题结算：列举笛卡尔模态形而上学的竞争解释与比较任务，不将其中一项解释当作数学结算。
+    previous_atom_id: be630e192abe084192b18f9d53d320289861aebf2496165630af79c4d3b23dda
+    next_atom_id: f92e79f27a54dfcecbf1dda068d2d72814bfff39c8edcb0a5cda58b233331eb1

@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:fdc7acfb1643e19f3dd6872ef4e0a3fcdd7edb6cae49fcf0d1b48a84686feac0
+  normalized_sha256: sha256:fdc7acfb1643e19f3dd6872ef4e0a3fcdd7edb6cae49fcf0d1b48a84686feac0
+cas_ref: sha256:fdc7acfb1643e19f3dd6872ef4e0a3fcdd7edb6cae49fcf0d1b48a84686feac0
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: “它负责”用途清单中的 Fourier duality 名目，没有给出待证的对偶同构。
+    previous_atom_id: 517201842d56cd5d53519ba8b5e5a5d8f8416478971b3d5e118f87d6aafb6c11
+    next_atom_id: 738fcc36ff736ce368e9ee73e3afe2df532c4dd06ab15446bbf11f99009530bc

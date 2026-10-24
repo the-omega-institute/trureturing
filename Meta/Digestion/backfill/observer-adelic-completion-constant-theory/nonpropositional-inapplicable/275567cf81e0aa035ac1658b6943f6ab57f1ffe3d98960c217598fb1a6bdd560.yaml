@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:275567cf81e0aa035ac1658b6943f6ab57f1ffe3d98960c217598fb1a6bdd560
+  normalized_sha256: sha256:275567cf81e0aa035ac1658b6943f6ab57f1ffe3d98960c217598fb1a6bdd560
+cas_ref: sha256:275567cf81e0aa035ac1658b6943f6ab57f1ffe3d98960c217598fb1a6bdd560
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: Specifies the intended anti-concentration property in an analogy table; does not claim zeta energy satisfies it.
+    previous_atom_id: 3d055bda75e1aef0ae8e0e799bd939ad9ffdb107b7fbc2133d9d45e5107dcdbd
+    next_atom_id: cbce2d349d0e2b68a08cfaac529fbb3cf0587780c400465f2f336a77971cdb3b

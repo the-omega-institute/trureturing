@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:be832b17b79ccb51346f9a13997cb9883950878b9966390305e994ee39972b2a
+  normalized_sha256: sha256:be832b17b79ccb51346f9a13997cb9883950878b9966390305e994ee39972b2a
+cas_ref: sha256:be832b17b79ccb51346f9a13997cb9883950878b9966390305e994ee39972b2a
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 理论审计表的标题、列名与分隔行，不含表内数学断言。
+    previous_atom_id: c8b4c31bf170f62d9a8c1c7834d6ac2c47d41375ecf3733a2b3a91839ed8a6e3
+    next_atom_id: af0239204ea9a1d6dcdad49e60e0df2d27f6d5334bc9d0fae7017b20a43ea22c

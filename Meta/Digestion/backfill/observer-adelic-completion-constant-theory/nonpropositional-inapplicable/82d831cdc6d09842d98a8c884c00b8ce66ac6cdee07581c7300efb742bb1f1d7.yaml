@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:82d831cdc6d09842d98a8c884c00b8ce66ac6cdee07581c7300efb742bb1f1d7
+  normalized_sha256: sha256:82d831cdc6d09842d98a8c884c00b8ce66ac6cdee07581c7300efb742bb1f1d7
+cas_ref: sha256:82d831cdc6d09842d98a8c884c00b8ce66ac6cdee07581c7300efb742bb1f1d7
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: Audit-section heading and empty table header/separator only; contains no result row.
+    previous_atom_id: f0a81768cb40f384f6ea291fb5a5e0737102b81b0310ca974711a0d53eac7f44
+    next_atom_id: c74f883eaedd376230c66d971962718d094ffe3402d6f84e00d755795a8acfba

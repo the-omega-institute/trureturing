@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:8b752913cd789cec0f0fd88d4822d0c244739334c8ee2c440059612295af85a4
+  normalized_sha256: sha256:8b752913cd789cec0f0fd88d4822d0c244739334c8ee2c440059612295af85a4
+cas_ref: sha256:8b752913cd789cec0f0fd88d4822d0c244739334c8ee2c440059612295af85a4
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 非命题结算：保留《已答之问》第84章对善行的肯定与精神完备条件；属于神学文本解释。
+    previous_atom_id: 856230de2e42116a403453fdc8933d6a99a01821b1507d0242028d7e27013db7
+    next_atom_id: a4229d60916f71ea4cf1569fadf53afb340b51004d1c8b332491392ee87b3bd5

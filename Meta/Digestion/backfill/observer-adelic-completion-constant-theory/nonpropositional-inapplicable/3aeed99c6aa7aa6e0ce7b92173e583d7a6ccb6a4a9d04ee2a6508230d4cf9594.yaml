@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:3aeed99c6aa7aa6e0ce7b92173e583d7a6ccb6a4a9d04ee2a6508230d4cf9594
+  normalized_sha256: sha256:3aeed99c6aa7aa6e0ce7b92173e583d7a6ccb6a4a9d04ee2a6508230d4cf9594
+cas_ref: sha256:3aeed99c6aa7aa6e0ce7b92173e583d7a6ccb6a4a9d04ee2a6508230d4cf9594
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 指定 pair rapidity 的读出及待比较极限；未断言任一极限成立。
+    previous_atom_id: c74e3d377ecbe234f6ce01ef32456f062bd6b69dec4e01d36e4a700d12208938
+    next_atom_id: ae0c011d6d157a51105aa062ab34e3496c480d267e07ac6aed4aba6d41d9cd7e

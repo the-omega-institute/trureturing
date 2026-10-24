@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:dbfc485b62130e6d11b700df1c0ac5c432aaf335837712504593137858ff0d33
+  normalized_sha256: sha256:dbfc485b62130e6d11b700df1c0ac5c432aaf335837712504593137858ff0d33
+cas_ref: sha256:dbfc485b62130e6d11b700df1c0ac5c432aaf335837712504593137858ff0d33
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 定义模 n 状态空间与 M、方向提取闭包条件，明确尚未假设子结构的因子分类；不声称分类结论。
+    previous_atom_id: 76761d9e953da0a834b65e92436fa3d3a5ac1a44437e6055c793794143c22d05
+    next_atom_id: 3a7e2af3e8d193c51e06be38b472cff76b45da795e3642553df9b7d35e8fd4e0

@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:f1fa57b8e179c4d9106de0ad3fe16e7515845ace69b504a54292a2ba3503a3e6
+  normalized_sha256: sha256:f1fa57b8e179c4d9106de0ad3fe16e7515845ace69b504a54292a2ba3503a3e6
+cas_ref: sha256:f1fa57b8e179c4d9106de0ad3fe16e7515845ace69b504a54292a2ba3503a3e6
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 'nonpropositional: Mach and Poincare retain distinct philosophical commitments. The text gives historical interpretation, bibliographic scope or methodological advice, rather than a mathematical assertion.'
+    previous_atom_id: 25645470da4fc94a5a39a639e581d92986a7c40533c133aad378d5cb56e087c2
+    next_atom_id: 98eb40f43428a710aab9c2101302a0df161d6530504e7f6b04dc64efc2f81d25

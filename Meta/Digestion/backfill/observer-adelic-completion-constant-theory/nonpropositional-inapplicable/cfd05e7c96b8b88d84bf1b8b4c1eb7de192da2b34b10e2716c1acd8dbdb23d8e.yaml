@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:cfd05e7c96b8b88d84bf1b8b4c1eb7de192da2b34b10e2716c1acd8dbdb23d8e
+  normalized_sha256: sha256:cfd05e7c96b8b88d84bf1b8b4c1eb7de192da2b34b10e2716c1acd8dbdb23d8e
+cas_ref: sha256:cfd05e7c96b8b88d84bf1b8b4c1eb7de192da2b34b10e2716c1acd8dbdb23d8e
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 列举可能额外加入的 fusion rule；没有断言具体规则成立。
+    previous_atom_id: e1d6cb3e91e5d9e83d1d57bea0107e6c36732d4e34f4283d6e3627e7fbb7efd1
+    next_atom_id: 296185c00e3ebb591355a03cffffda55d0cce483b316c24d874f1d5b3227529e

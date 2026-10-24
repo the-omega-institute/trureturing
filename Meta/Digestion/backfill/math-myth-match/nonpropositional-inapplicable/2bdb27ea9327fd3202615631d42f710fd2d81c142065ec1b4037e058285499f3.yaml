@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:2bdb27ea9327fd3202615631d42f710fd2d81c142065ec1b4037e058285499f3
+  normalized_sha256: sha256:2bdb27ea9327fd3202615631d42f710fd2d81c142065ec1b4037e058285499f3
+cas_ref: sha256:2bdb27ea9327fd3202615631d42f710fd2d81c142065ec1b4037e058285499f3
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 分析真实语叙事中的时间限定及医疗效力边界，未给出形式化时间区间命题。
+    previous_atom_id: 169aac8b20f3ee9e905c4ce86ec6a850dfc1196a393bbe540ee8da8caacef2d0
+    next_atom_id: f90d6689945ff9ffa908add0cc7eb181aa81fecb2d5bd0e19c7bbaa2787690e9
