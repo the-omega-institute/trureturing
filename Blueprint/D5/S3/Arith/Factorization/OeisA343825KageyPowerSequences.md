@@ -70,6 +70,10 @@ $$\forall k \in \mathrm{Nat},\; (1 \le k) \Rightarrow (\exists N \in \mathrm{Nat
 
 *Proof.* Machine-checked in Lean as `D5/S3/Arith/Factorization/OeisA343825KageyPowerSequences.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/oeis-a343825-kagey-power-sequences` (proved) by `D5/S3/Arith/Factorization/OeisA343825KageyPowerSequences.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"oeis-a343825-kagey-power-sequences","declaration_gid":"D5/S3/Arith/Factorization/OeisA343825KageyPowerSequences.result","resolution_kind":"proved"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* P. Kagey; OEIS Foundation Inc. (2021). *OEIS A343825, prime-power sequence minima and A071537*. URL: <https://oeis.org/A343825>.

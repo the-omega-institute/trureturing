@@ -69,7 +69,10 @@ internal sealed class OeisA343825KageyPowerSequencesDocument : IScribeDocumentDe
                     + "many thresholds and the upper threshold proves the equality, including k=1. "
                     + "The argument leaves an explicit threshold, a characterization of exceptional "
                     + "primes, and the separate prime-row permutation assertion open."))),
-                DescribeRole.Theorem))));
+                DescribeRole.Theorem,
+                openProblemResolutionClaim: new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("oeis-a343825-kagey-power-sequences"),
+                    ResolutionKind.Proved)))));
 
     private static DocumentBlock Node(string name, string title, Formula formula,
         string prose, AssessedProvenance provenance) => Describe.Lean(
