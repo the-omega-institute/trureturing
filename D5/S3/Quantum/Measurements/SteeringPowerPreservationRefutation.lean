@@ -12,7 +12,6 @@ import Mathlib.Tactic.FinCases
 import Mathlib.Tactic.IntervalCases
 import Mathlib.Tactic.LinearCombination
 import Mathlib.Tactic.NormNum
-import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.Ring
 
 /-! A five-dimensional counterexample to steering power preservation. -/
@@ -78,10 +77,17 @@ private lemma root_relations :
     windowRoot 5 ^ 5 = 1 ∧
     1 + windowRoot 5 + windowRoot 5 ^ 2 + windowRoot 5 ^ 3 + windowRoot 5 ^ 4 = 0 ∧
     star (windowRoot 5) = windowRoot 5 ^ 4 := by
-  sorry
+  have h := windowRoot_isPrimitiveRoot 5
+  refine ⟨h.pow_eq_one, ?_, ?_⟩
+  · simpa [Finset.sum_range_succ] using h.geom_sum_eq_zero (by norm_num)
+  · have hi : (windowRoot 5)⁻¹ = windowRoot 5 ^ 4 := by
+      apply inv_eq_of_mul_eq_one_left
+      simpa only [← pow_succ] using h.pow_eq_one
+    exact (RCLike.inv_eq_conj (h.norm'_eq_one (by norm_num))).symm.trans hi
 
 private lemma phases_zero (y : Fin 5) : ∑ j, phases j y = 0 := by
-  sorry
+  simp [phases, t, Fin.sum_univ_succ]
+  ring
 
 private lemma coefficient_orthogonality (n : ℕ) (hn : 1 ≤ n) (hn' : n ≤ 4)
     (y y' : Fin 5) :
@@ -127,11 +133,32 @@ private lemma defect_entry :
   sorry
 
 private lemma g_nontrivial : g ≠ 0 ∧ g ≠ 1 := by
-  sorry
+  have hs : (windowRoot 5 + windowRoot 5 ^ 4) ^ 2 +
+      (windowRoot 5 + windowRoot 5 ^ 4) = 1 := by
+    calc
+      _ = windowRoot 5 ^ 8 + 2 * windowRoot 5 ^ 5 + windowRoot 5 ^ 4 +
+          windowRoot 5 ^ 2 + windowRoot 5 := by ring
+      _ = 1 := by
+        rw [pow_eq_pow_mod 8 root_relations.1, root_relations.1]
+        norm_num only [Nat.reduceMod]
+        linear_combination root_relations.2.1
+  constructor
+  · intro hz
+    have hg : windowRoot 5 + windowRoot 5 ^ 4 = -3 := by
+      unfold g at hz
+      linear_combination 5 * hz
+    rw [hg] at hs
+    norm_num at hs
+  · intro ho
+    have hg : windowRoot 5 + windowRoot 5 ^ 4 = 2 := by
+      unfold g at ho
+      linear_combination 5 * ho
+    rw [hg] at hs
+    norm_num at hs
 
 theorem result : ¬ claim := by
   intro h
-  have heq := h 5 (by norm_num) phases phases_admissible B witness_projective 0 2
+  have heq := h 5 Nat.prime_five phases phases_admissible B witness_projective 0 2
     (by norm_num) (by norm_num)
   have hz : g * (g - 1) * (windowRoot 5 - 1) ^ 2 = 0 := by
     rw [← defect_entry, ← heq, sub_self]
