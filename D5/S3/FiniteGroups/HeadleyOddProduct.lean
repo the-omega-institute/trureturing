@@ -554,20 +554,10 @@ private theorem coverage (r : RStar X) (ds : List OddRadix)
     ⟨((j + 1 : ℕ) : ℤ), by rw [zpow_natCast]; exact hp'⟩
   exact ((anchor_cycle r ds (-t)).trans (by simpa using gadget_cycle r ds (-t))).trans hc
 
-private theorem nonzero_bijOn {G : Type*} [Zero G] (s : Equiv.Perm G) (hz : s 0 = 0) :
-    Set.BijOn s {x : G | x ≠ 0} {x : G | x ≠ 0} := by
-  refine ⟨?_, s.injective.injOn, ?_⟩
-  · intro x hx he
-    exact hx (s.injective (he.trans hz.symm))
-  · intro y hy
-    refine ⟨s.symm y, ?_, s.apply_symm_apply y⟩
-    intro he
-    exact hy (by simpa only [s.apply_symm_apply, hz] using congrArg s he)
-
 /-- One cycle on the entire nonzero carrier; all seams and closure are permutation edges. -/
 theorem nonzero_cycle (r : RStar X) (ds : List OddRadix) :
     (successor r ds).IsCycleOn {v : X × Box ds | v ≠ 0} := by
-  refine ⟨nonzero_bijOn _ (successor_zero r ds), ?_⟩
+  refine ⟨bijOn_complement _ 0 (successor_zero r ds), ?_⟩
   intro x hx y hy
   exact (coverage r ds x hx).symm.trans (coverage r ds y hy)
 
@@ -596,44 +586,25 @@ def boxRStar (r : RStar X) (ds : List OddRadix) : RStar (X × Box ds) where
 
 end FiniteBase
 
-private theorem transport_power {G K : Type*} [AddCommGroup G] [AddCommGroup K]
-    (e : G ≃+ K) (s : Equiv.Perm K) (n : ℕ) (x : G) :
-    (e.symm.toEquiv.permCongr s ^ n) x = e.symm ((s ^ n) (e x)) := by
-  induction n with
-  | zero => simp
-  | succ n ih =>
-    rw [pow_succ', Equiv.Perm.mul_apply, ih]
-    simp [pow_succ', Equiv.Perm.mul_apply]
-
 private def transportRStar {G K : Type*} [AddCommGroup G] [Finite G]
-    [AddCommGroup K] [Finite K] (e : G ≃+ K) (r : RStar K) : RStar G where
-  successor := e.symm.toEquiv.permCongr r.successor
-  successor_zero := by simp [r.successor_zero]
-  nonzero_cycle := by
-    refine ⟨nonzero_bijOn _ (by simp [r.successor_zero]), ?_⟩
-    intro x hx y hy
-    have hex : e x ≠ 0 := by simpa using hx
-    have hey : e y ≠ 0 := by simpa using hy
-    obtain ⟨n, hn⟩ := (r.nonzero_cycle.2 hex hey).exists_nat_pow_eq
-    refine ⟨(n : ℤ), ?_⟩
-    rw [zpow_natCast, transport_power, hn, e.symm_apply_apply]
-  difference := e.symm.toEquiv.permCongr r.difference
-  difference_spec x := by
-    change e.symm (r.difference (e x)) = e.symm (r.successor (e x)) - x
-    rw [r.difference_spec, map_sub, e.symm_apply_apply]
-  even_card := (Nat.card_congr e.toEquiv).symm ▸ r.even_card
-  a := e.symm r.a
-  b := e.symm r.b
-  c := e.symm r.c
-  a_ne_zero := by simpa using r.a_ne_zero
-  b_ne_zero := by simpa using r.b_ne_zero
-  c_ne_zero := by simpa using r.c_ne_zero
-  pairwise_distinct := ⟨fun h => r.pairwise_distinct.1 (e.symm.injective h),
-    fun h => r.pairwise_distinct.2.1 (e.symm.injective h),
-    fun h => r.pairwise_distinct.2.2 (e.symm.injective h)⟩
-  successor_a := by simp [r.successor_a]
-  successor_b := by simp [r.successor_b]
-  triple_sum := by rw [← map_add, r.triple_sum]
+    [AddCommGroup K] [Finite K] (e : G ≃+ K) (r : RStar K) : RStar G := by
+  letI : Fintype G := Fintype.ofFinite G
+  letI : Fintype K := Fintype.ofFinite K
+  exact {
+    toRCycle := transportCycle e.symm r.toRCycle
+    even_card := (Nat.card_congr e.toEquiv).symm ▸ r.even_card
+    a := e.symm r.a
+    b := e.symm r.b
+    c := e.symm r.c
+    a_ne_zero := by simpa using r.a_ne_zero
+    b_ne_zero := by simpa using r.b_ne_zero
+    c_ne_zero := by simpa using r.c_ne_zero
+    pairwise_distinct := ⟨fun h => r.pairwise_distinct.1 (e.symm.injective h),
+      fun h => r.pairwise_distinct.2.1 (e.symm.injective h),
+      fun h => r.pairwise_distinct.2.2 (e.symm.injective h)⟩
+    successor_a := by simp [transportCycle, r.successor_a]
+    successor_b := by simp [transportCycle, r.successor_b]
+    triple_sum := by rw [← map_add, r.triple_sum] }
 
 /-- An even R-star base times any odd finite abelian group retains the prescribed triple.
 No decomposition, generator, orthomorphism, row inventory or cycle certificate is an input. -/
