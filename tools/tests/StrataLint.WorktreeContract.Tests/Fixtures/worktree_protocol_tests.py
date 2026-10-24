@@ -17,6 +17,7 @@ import unittest
 from unittest.mock import patch
 
 from native_fixture import NativeFixture
+from idle_pool_cases import IdlePoolCases
 from mirror_fixture import MirrorCases
 from cleanup_anchor_cases import CleanupAnchorCases
 from detached_recovery_cases import DetachedRecoveryCases
@@ -28,7 +29,7 @@ import worktree_protocol as protocol
 import worktree_preservation as preservation
 
 
-class ProtocolTests(DetachedRecoveryCases, CleanupAnchorCases, MirrorCases, NativeFixture):
+class ProtocolTests(IdlePoolCases, DetachedRecoveryCases, CleanupAnchorCases, MirrorCases, NativeFixture):
     source_root = ROOT
 
     def setUp(self):
@@ -921,7 +922,7 @@ os.execv({real_git!r}, [{real_git!r}] + sys.argv[1:])
         self.assertIsNone(other.poll())
 
     def runlocal_consumer(self):
-        root = self.workspace("worktree-runlocal-", "/tmp")
+        root = self.workspace("worktree-runlocal-")
         dirty, snapshot, unknown = root / "dirty", root / "snapshot", root / "unknown"
         self.g(self.main, "worktree", "add", "-b", "runlocal-recovery", dirty, self.base)
         (dirty / "owned").write_text("unpublished recovery\n")

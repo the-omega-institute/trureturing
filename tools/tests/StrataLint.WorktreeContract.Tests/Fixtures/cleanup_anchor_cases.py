@@ -27,7 +27,7 @@ class CleanupAnchorCases:
 
     def runlocal_anchor(self, mode):
         ROOT = self.source_root
-        root = self.workspace("runlocal-anchor-", "/tmp")
+        root = self.workspace("runlocal-anchor-")
         first, second, artifact = root / "first source", root / "second tree", root / "artifact"
         for target, branch in ((first, "anchor-first"), (second, "anchor-second")):
             self.g(self.main, "worktree", "add", "-b", branch, target, self.base)

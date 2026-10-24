@@ -250,8 +250,11 @@ internal static partial class CleanLanesCommand
             else incomplete = true;
         }
 
+        InspectIdlePool(repositoryRoot, devCommit, force, inventory, events, runner);
         foreach (var item in inventory.OrderByDescending(static item => item.Path.Length))
         {
+            if (item.Branch?.StartsWith(WorktreePoolCommand.IdlePrefix, StringComparison.Ordinal) == true)
+                continue;
             if (string.Equals(item.Path, inventory[0].Path, StringComparison.Ordinal)
                 || string.Equals(item.GitDirectory, commonGitDirectory, StringComparison.Ordinal))
             {

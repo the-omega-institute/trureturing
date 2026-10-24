@@ -303,6 +303,18 @@ def main(argv=None):
     joined.add_argument("--path", type=Path, required=True)
     joined.add_argument("--branch", required=True)
     joined.add_argument("--base", required=True)
+    returned = commands.add_parser("return")
+    returned.add_argument("--path", type=Path, default=Path.cwd())
+    returned.add_argument("--pr", type=int, required=True)
+    returned.add_argument("--writers-joined", action="store_true")
+    claimed = commands.add_parser("claim")
+    claimed.add_argument("--path", type=Path)
+    claimed.add_argument("--branch", required=True)
+    claimed.add_argument("--base", required=True)
+    claimed.add_argument("--skip-restore", action="store_true")
+    pool = commands.add_parser("pool")
+    pool.add_argument("--dev", required=True)
+    pool.add_argument("--force", action="store_true")
     removal = commands.add_parser("remove")
     removal.add_argument("--names", default="")
     removal.add_argument("--path", action="append", type=Path, default=[])
@@ -341,6 +353,11 @@ def main(argv=None):
             with_command(options)
         elif options.action == "reuse":
             reuse(options)
+        elif options.action in ("return", "claim", "pool"):
+            from worktree_pool import return_tree, claim, sweep
+            result = (return_tree(options) if options.action == "return" else claim(options)
+                      if options.action == "claim" else sweep(options.source, options.dev, options.force))
+            print(json.dumps(result), flush=True)
         elif options.action == "remove":
             from worktree_preservation import remove
             result = remove(options)
