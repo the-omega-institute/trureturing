@@ -1293,3 +1293,235 @@ preserve cancellation over the complete channel, or supply genuinely short
 separated inputs with a paid norm cost. The original $t=1$ long-conductor
 sector, strict improvement below $B_*$ and signed Robin restoration remain
 unpaid. No conclusion about RH follows from this method comparison.
+
+
+## A larger conductor cut from exact gcd grouping
+
+The [sixth-order operator supplier](faveri2026fixedorder.md#the-large-sieve-statement)
+and the [sixth-power-free-row cubic supplier](faveri2026fixedorder.md#separating-the-lower-order-character-blocks)
+can be applied before Poisson summation. Retaining a sharp conductor
+selector as an operator mask, rather than taking absolute values of each
+row kernel, gives a stronger low-conductor application. This reuses the
+existing sieves and finite triangular truncation; it is not a new
+large-sieve theorem or a full inverse-fourth improvement.
+
+Work with the same complete positive row majorant used above, the actual
+cube-free coefficient
+
+$$
+c(a)=g_{\le T}(a),\qquad q_a\asymp U,\qquad
+|c(a)|\ll U^{-1/2+\varepsilon},
+$$
+
+and its original zero-extended characters. The implied constants retain
+the same fixed or polylog profile and finite-data costs. The argument
+applies afresh to this complete moment: no signed selector is removed
+from an adaptive row bin. Let $E_6(c;Q)$ be its original ordered
+unequal-parity contraction with the additional condition
+$q_{\mathfrak f}\le Q$, using the primitive ratio conductor in each
+original fixed row-Fourier component. These components are summed
+coherently after the estimates. Then
+
+$$
+\boxed{
+|E_6(c;Q)|\ll U^\varepsilon
+\left(U+U^{5/6}T^{1/3}Q^{1/6}\right).
+}
+\tag{C1}
+$$
+
+Here the original annuli and finite data are fixed, $T,Q\ge1$, and the
+normalization is the existing $D^{-1}$ in $g_D$ at $D=\sqrt U$.
+
+**The sharp selector costs only logarithms.** The finite estimate needed
+here is the elementary upper-bound form of classical triangular
+truncation; see Kwapień--Pełczyński,
+[*The main triangle projection in matrix spaces and its applications*](https://doi.org/10.4064/sm-34-1-43-67).
+For a rectangular matrix $K$ and positive independent column keys
+$k_i,l_j$, its staircase mask obeys
+
+$$
+\left\|\bigl(K_{ij}\mathbf1_{k_i l_j\le R}\bigr)_{ij}\right\|
+\ll \log(2+N)\|K\|,
+\tag{C2}
+$$
+
+where $N$ is the total number of row and column indices and the norms
+are Euclidean operator norms. The required finite proof is short. Merge
+the row keys $k_i$ and column thresholds $R/l_j$ in increasing order,
+placing a row key before a tied threshold. In a balanced binary tree on
+this list, each permitted pair has a unique node where its row is in
+the left child and its column threshold is in the right child. At each
+depth these rectangles have disjoint row supports and disjoint column
+supports, so the corresponding sum of compressions of $K$ has norm at
+most $\|K\|$. There are $O(\log(2+N))$ depths. This proves (C2), including
+ties, without claiming that the masked matrix is positive. Since all
+indices below have norm $O(U)$, this logarithm is an epsilon loss.
+
+For the original exact gcd write $a=hx$, $b=hy$, $(x,y)=1$. Cube-freeness
+ensures that every good prime of $xy$ has a nonzero reduced exponent
+modulo six. Thus the good part of the primitive ratio conductor is
+exactly $\operatorname{rad}(x)\operatorname{rad}(y)$. Partition the
+original finite column ray data far enough to fix their $S$-local
+characters. Within each resulting pair of classes, the bad conductor
+norm is one fixed factor $c_S$, and
+
+$$
+q_{\mathfrak f}=c_S q_{\operatorname{rad}(x)}
+                         q_{\operatorname{rad}(y)}.
+\tag{C3}
+$$
+
+There are only a fixed number of these class pairs. In each row-Fourier
+component any extra row character is a diagonal multiplier of modulus
+at most one. For the coprimality expansion below, extend the selector
+*off* the coprime locus by the same product on the right of (C3), not by
+the primitive conductor of the newly introduced pair. This extension
+depends on $x,y$, not on the divisor used to detect their gcd, so the
+Möbius cancellation is exact.
+
+**The complete gcd block.** Temporarily include the equal-parity terms.
+Detect $(x,y)=1$ by $\sum_{e\mid(x,y)}\mu(e)$ and write $x=er$, $y=es$.
+For fixed $h,e$ the two original common factors cancel on the coprime
+row locus and leave exactly the row mask $(u,he)=1$. Without the
+conductor selector, the scalar is the quadratic form with coefficients
+$c(her)$ in the Gram matrix
+
+$$
+K_{he}=C^*W_{he}C,\qquad C_{u,r}=\chi_r(u).
+$$
+
+Here $W_{he}$ retains the original nonnegative row weight, its
+$(u,he)=1$ mask and, in a row-Fourier component, its fixed diagonal
+character. Finite column-class blocks are the corresponding rectangular
+compressions. Bound this unmasked operator first using the existing
+positive row moment; a bounded row multiplier cannot increase that
+operator bound. Then apply (C2), with key
+$k_r=q_{\operatorname{rad}(er)}$. In particular no row restriction is
+deleted inside a nonpositive conductor-masked form.
+
+Put $q_h\asymp H$, $q_e\asymp E$. Every surviving column $r$ is cube-free,
+its norm is $O(U/(HE))$, and the actual coefficient envelope gives
+
+$$
+\sum_r|c(her)|^2\ll U^\varepsilon/(HE).
+\tag{C4}
+$$
+
+For a rectangular class pair use the product of the two coefficient
+norms, with the same bound. Reuse
+
+$$
+F_6(U,B)=U+B+U^{5/6}B^{1/3}+U^{1/3}B^{5/6}
+$$
+
+at $B\asymp U/(HE)$. There are $O(H)$ ideals $h$ and $O(E)$ squarefree
+ideals $e$ in these dyads. Triangle over their Möbius coefficients is
+now legitimate because the positive operator bound has already been
+applied to each actual fixed pair. Summing $E$ over dyads gives
+
+$$
+|\mathcal T_H(Q)|\ll U^\varepsilon
+\left(U+\frac UH+
+U^{7/6}H^{-1/3}+U^{7/6}H^{-5/6}\right),
+\tag{C5}
+$$
+
+for the conductor-masked total exact-gcd block. The $U$ term has only a
+logarithmic number of dyads; all other $E$ powers are summable.
+
+**Subtract the lower-order pairs with their masks retained.** On the
+original coprime locus, $r_2(a)=r_2(b)$ holds precisely when both $x,y$
+are squares. Write $x=z^2$, $y=w^2$ with $z,w$ squarefree and coprime.
+Detect $(z,w)=1$ by a squarefree divisor $e$ and use the actual vector
+$c(he^2r^2)$ against the cubic characters $\chi_r^2$. Its remaining
+length and squared norm satisfy
+
+$$
+B_r\asymp \frac{\sqrt{U/H}}E,\qquad
+\sum_r|c(he^2r^2)|^2\ll U^\varepsilon B_r/U.
+$$
+
+Apply (C2) to the corresponding cubic Gram as well; its independent
+keys are again $q_{\operatorname{rad}(er)}$. The already supplied cubic
+row bound is
+
+$$
+F_3^{(6\mathrm f)}(U,B_r)
+=U+U^{1/3}B_r+U^{2/3}B_r^{2/3}.
+$$
+
+Counting $h,e$ and summing the dyads therefore gives the equal-parity
+subtraction, including its diagonal,
+
+$$
+|\mathcal P_H(Q)|\ll U^\varepsilon
+\left((UH)^{1/2}+U^{1/3}+U^{1/2}H^{1/6}\right)
+\ll U^{1+\varepsilon},\qquad H\ll U.
+\tag{C6}
+$$
+
+Thus the unequal-parity block is the exact difference
+$\mathcal T_H(Q)-\mathcal P_H(Q)$ and satisfies (C5) with an additional
+$O(U^{1+\varepsilon})$, already present there. It is not obtained by
+asserting positivity of an unequal-parity or conductor selector.
+
+**Consume the actual small-$t$ condition.** Reuse the conductor lower
+bound already established above:
+
+$$
+q_{\mathfrak f}\gg_S\frac{U^2}{q_h^2T^2}.
+$$
+
+Consequently only $H\gg U/(T\sqrt Q)$ can occur in the original
+low-conductor sum. Omit the other exact-gcd blocks before the
+coprimality expansion, where their absence is an exact support fact.
+Sum (C5)--(C6) over the remaining dyads. For
+$H_0\asymp\max\{1,U/(T\sqrt Q)\}$ the result is
+
+$$
+|E_6(c;Q)|\ll U^\varepsilon
+\left(U+U^{7/6}H_0^{-1/3}\right)
+\ll U^\varepsilon\left(U+U^{5/6}T^{1/3}Q^{1/6}\right),
+$$
+
+which is (C1). All original squarefree columns, the $t=1$ packet,
+shared primes, finite class components and collision zeros remain.
+The staircase step imposes no transform-height or moving-conductor
+cost; the same original bounded or polylog profile contract is used.
+
+In particular choose $T=U^{1/1000}$ and $Q=U^{3/2}$. Then
+
+$$
+\boxed{
+|E_{6,\,q_{\mathfrak f}\le U^{3/2}}^{\mu,\le U^{1/1000}}|
+\ll U^{3251/3000+\varepsilon},
+\qquad
+B_*-\frac{3251}{3000}
+=\frac{12249-5000\sqrt6}{3000}>0.
+}
+\tag{C7}
+$$
+
+The sign of the last margin follows from $12249^2>6\cdot5000^2$.
+More generally $T=U^\theta$, $Q=U^q$ gives the exponent
+$(5+q+2\theta)/6$ when this exceeds $1$; it is below $B_*$ for
+$q<26-10\sqrt6-2\theta$.
+
+This replaces the earlier sufficient high-conductor target by the exact
+complement
+
+$$
+\operatorname{Re}E_{6,\,q_{\mathfrak f}>U^{3/2}}^{\mu,\le U^{1/1000}}
+\ll U^{B_*-1/100000+\varepsilon}.
+\tag{C8}
+$$
+
+Such an estimate, still not supplied here, would combine with (C7) and
+the existing truncation/interference margin $1/50000$ to improve the
+full inverse-fourth exponent by $1/100000$. No squarefree column or
+finite component is discarded from that remaining target. The present
+application enlarges the controlled conductor range; it does not prove
+(C8), improve the full inverse-fourth moment, restore the signed Robin
+expression or prove RH. It carries no local Lean certification or
+literature-priority claim.
