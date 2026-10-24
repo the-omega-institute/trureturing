@@ -679,6 +679,52 @@ $$
 
 Its conductor cut is defined separately in each fixed finite ray character component; these components are then summed coherently. The same source, coefficient signs, all squarefree columns and original collision zeros remain. With this unproved input, the paid lower-order block, low-conductor sum and preceding truncation error would give the full inverse-fourth exponent $B_*-\nu$, and hence the existing complete-energy consumer at $\kappa_{\rm joint}-\nu/2$. No such long-conductor estimate is supplied. This application narrows that missing input; it neither improves the full moment on its own nor restores the signed Robin expression. Classical convexity, Euler products, conductor identities and ideal counting are reused, with no analytic Lean certification or literature-priority claim.
 
+## Fixed-order first moments and the unresolved head
+
+Gao–Zhao, [*First moment of central values of Hecke L-functions with Fixed Order Characters*, arXiv:2306.10726v3](https://arxiv.org/html/2306.10726v3), revised 1 December 2025, provides a nearby double-Dirichlet-series input. Its Theorem 1.3 is unconditional for $j=3,6$ over $K=\mathbb Q(\sqrt{-3})$ and $j=4$ over $\mathbb Q(i)$. It concerns a smoothed first moment of $L(1/2+\alpha,\chi\chi_j^{(n)})$, averaged over the fixed ray characters and all nonzero elements $n$, with
+
+$$
+0<\Re\alpha<1/2.
+$$
+
+The family is not restricted to squarefree or sixth-power-free parameters and its characters need not be primitive. For $j=6$ the reported error exponent is $2/3-\Re\alpha+\varepsilon$. This is a signed first $L$-value moment, not an upper bound for a positive inverse fourth moment with the actual Möbius polynomial. The quadratic GRH assumptions elsewhere in the paper should neither be attached to this theorem nor discarded when citing those separate quadratic results.
+
+**The fixed-twist scope must remain fixed.** Lemma 2.13 assumes a fixed Hecke twist $\chi$ of trivial infinite type modulo $q$, with $N(q)\le M$, and states its $L$-value mean with an implicit constant $\ll_M$. For $j\ge3$, Lemma 2.14 defines
+
+$$
+h_j(r,s;\chi)
+=\sum_{m\ {\rm primary}}
+\frac{\chi(m)g_K(r,\chi_{j,m})}{N(m)^s}
+$$
+
+under the explicit assumptions that the norm of the modulus of $\chi$ is bounded and that $\chi(m)=0$ whenever $\chi_{j,m}$ is undefined. With $\sigma_1=3/2+\varepsilon$ and $\sigma_1-1/2\le\sigma=\Re s\le\sigma_1$, its bound is
+
+$$
+\left|\big((j(s-1))^2-1\big)h_j(r,s;\chi)\right|
+\ll
+N(r)^{(\sigma_1-\sigma+\varepsilon)/2}
+(1+|s|^2)^{(\sigma_1-\sigma+\varepsilon)(j-1)/2}.
+$$
+
+The displayed $N(r)$ dependence concerns the additive Gauss numerator. It does not specify dependence on a growing conductor of $\chi$. The paper traces this lemma to Patterson's lemma on p.200 and proof on p.205; this citation alone supplies no conductor-uniform estimate. Consequently a fixed-twist bound cannot be used uniformly over the long primitive pair conductors above by hiding their growth in its implicit constant. This limitation of the printed statement does not exclude deriving a conductor-indexed bound from the underlying arguments.
+
+**The v3 main-term normalization requires clarification.** Put $w=1/2+\alpha$, let $S=S_{K,j}$ be the paper's fixed ray modulus, and write
+
+$$
+R_j(w)=\frac{r_K}{\#h_{(S)}}
+\sum_{\chi\bmod S}\frac{L(jw,\chi^j)}{L(1+jw,\chi^j)}.
+$$
+
+Theorem 1.3, display (1.5), prints the leading term $X\widehat\Phi(1)R_j(w)$. However, the same paper's display (3.10) gives
+
+$$
+\operatorname{Res}_{s=1}A_j(s,w)=|U_K|R_j(w).
+$$
+
+The definition of $A_j$ in (3.2) and the Mellin identity (3.4) use the same all-nonzero-element sum and the same ray average as (1.5). The paper explicitly defines $r_K=\operatorname{Res}_{s=1}\zeta_K(s)$; this is not a unit-averaged residue. The ideal/primary-generator convention for the inner $L$-series in (3.1) does not insert a unit average into that outer element sum. Thus the two displayed leading coefficients differ by $|U_K|$, which is six in the Eisenstein case. The difference occurs in the primary TeX and [PDF, pp.3 and 14](https://arxiv.org/pdf/2306.10726v3), as well as the HTML. This note does not select a repaired theorem or adopt the unresolved exact main-term constant.
+
+**Application boundary.** Directly matching the existing kernel's $L$-argument $w=1/6+\delta$, $0<\delta<1/3$, would require $\Re\alpha=-1/3+\delta<0$, outside Theorem 1.3. The missing head also retains its actual Möbius coefficients, natural collision zeros and coherent finite components, and includes primitive pair-conductor norm exceeding $U^{1+\eta}$. Neither a first-moment identity nor fixed-modulus Gauss continuation supplies that joint estimate. The already recorded sufficient inverse-fourth target remains $B<B_*=(31-10\sqrt6)/6$; this source comparison gives no improvement to $B$, complete Robin bound or Lean certification.
+
 ## Reusing the global ordinary-source frontier
 
 At the immutable [QuasiRiemannTracker snapshot `0ce80fdddebb03128d30a917006d8520e7a774b8`](https://github.com/GTimG/QuasiRiemannTracker/tree/0ce80fdddebb03128d30a917006d8520e7a774b8), the merged submissions [Collet #69](https://github.com/GTimG/QuasiRiemannTracker/pull/69) and [Lewko #70](https://github.com/GTimG/QuasiRiemannTracker/pull/70) state stronger boundaries than the Gao value compared above:
