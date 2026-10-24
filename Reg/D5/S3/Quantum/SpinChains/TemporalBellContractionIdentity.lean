@@ -45,7 +45,7 @@ theorem rejected_law : ¬ arena.Law rejected := by
   have htrue := result 2 (by decide) 0 0 0
   have hone : (propagator 2 0 0 0 (1 : Fin 2) 1 -
       propagator 2 0 0 0 (0 : Fin 2) 1).re = 1 := by
-    simp [propagator, Matrix.one_apply]
+    simp [propagator]
   exact zero_ne_one (hbad.symm.trans (htrue.trans hone))
 
 theorem dependence : ObservationalDependence signature actual := by
