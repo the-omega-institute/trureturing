@@ -59,7 +59,7 @@ private lemma ne_neg_nat_of_isNontrivialZero {rho : ℂ} (h : IsNontrivialZero r
   simp at hpos
   exact (not_lt.mpr (Nat.cast_nonneg n)) hpos
 
-private theorem exists_multiplicity {rho : ℂ} (h : IsNontrivialZero rho) :
+theorem exists_multiplicity {rho : ℂ} (h : IsNontrivialZero rho) :
     ∃ m, HasZetaZeroMultiplicity rho m := by
   have hrho1 : rho ≠ 1 := ne_one_of_isNontrivialZero h
   have han : AnalyticAt ℂ riemannZeta rho := analyticOn_riemannZeta rho hrho1

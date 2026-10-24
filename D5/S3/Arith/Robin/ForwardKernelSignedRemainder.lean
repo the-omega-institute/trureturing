@@ -80,9 +80,10 @@ private lemma signed_partial_summation {a b : ℝ} (ha : 0 ≤ a) (hab : a ≤ b
 /-- Partial summation preserves all prime-power atoms and identifies the
 convergent signed remainder with its absolutely integrable error tail. -/
 theorem signed_remainder_tendsto
-    (hvK : ∃ C : ℝ, ∀ t : ℝ, 2 ≤ t →
-      |Chebyshev.psi t - t| ≤ C * Real.sqrt t * (Real.log t) ^ 2)
-    {a σ A : ℝ} (ha : 3 ≤ a) (hσ : -(1 / 5 : ℝ) < σ) (hA : 0 ≤ A)
+    {α : ℝ} (hα : 0 ≤ α)
+    (hE : ∃ C t0 : ℝ, ∀ t : ℝ, t0 ≤ t →
+      |Chebyshev.psi t - t| ≤ C * t ^ α)
+    {a σ A : ℝ} (ha : 3 ≤ a) (hσ : (α - 7 / 10) < σ) (hA : 0 ≤ A)
     {r dr : ℝ → ℂ}
     (hd : ∀ t : ℝ, a ≤ t → HasDerivAt r (dr t) t)
     (hc : AEStronglyMeasurable dr (volume.restrict (Ici a)))
@@ -96,7 +97,7 @@ theorem signed_remainder_tendsto
   have hm : AEStronglyMeasurable dr (volume.restrict (Ioi a)) :=
     hc.mono_set Ioi_subset_Ici_self
   obtain ⟨hint, hbdry⟩ :=
-    ForwardKernelRemainderContinuation.remainder_tail_converges hvK ha hσ hA hr hdr hm
+    ForwardKernelRemainderContinuation.remainder_tail_converges hα hE ha hσ hA hr hdr hm
   have hlim := (hbdry.sub_const ((discrepancy a : ℂ) * r a)).sub
     (intervalIntegral_tendsto_integral_Ioi a hint tendsto_id)
   simp only [zero_sub, neg_mul] at hlim

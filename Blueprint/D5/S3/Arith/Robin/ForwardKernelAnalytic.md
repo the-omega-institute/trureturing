@@ -50,7 +50,7 @@ Lean statement: `D5/S3/Arith/Robin/ForwardKernelAnalytic.adjointRemainder_tail_h
 
 *Commentary.*
 
-Assume a real constant C satisfies |psi(t)-t|<=C*sqrt(t)*log(t)^2 for every t>=2. For every fixed x0>8, integral_(x0,infinity) (psi(t)-t)*partial_t r(t,s) dt is holomorphic for Re(s)>-1/5. The actual compact C1 remainder bound gives |partial_t r(t,s)|<=A_K*t^(-Re(s)-17/10) on each compact K. Derivatives as functions of t are measurable; countable parameter difference quotients provide the remaining measurability. The Chebyshev remainder integral theorem then applies with these proved properties of the actual kernel.
+Assume alpha>=0 and there are real C and t0 such that |psi(t)-t|<=C*t^alpha for every t>=t0. For every fixed x0>8, integral_(x0,infinity) (psi(t)-t)*partial_t r(t,s) dt is holomorphic for Re(s)>alpha-7/10. The actual compact C1 remainder bound gives |partial_t r(t,s)|<=A_K*t^(-Re(s)-17/10) on each compact K. Derivatives as functions of t are measurable; countable parameter difference quotients provide the remaining measurability. The Chebyshev remainder integral theorem then applies with these proved properties of the actual kernel.
 
 ## References
 

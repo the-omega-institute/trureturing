@@ -214,9 +214,10 @@ private lemma adjointKernel_below_one {x0 t : ℝ} (hx0 : 4 ≤ x0)
 
 /-- The complete signed adjoint truncations converge to the original Mellin integral. -/
 theorem forwardMellin_adjoint_tendsto
-    (hvK : ∃ C : ℝ, ∀ t : ℝ, 2 ≤ t →
-      |Chebyshev.psi t - t| ≤ C * Real.sqrt t * (Real.log t) ^ 2)
-    {x0 : ℝ} (hx0 : 4 ≤ x0) {s : ℂ} (hs : 1 / 2 < s.re) :
+    {α : ℝ} (hα : 0 ≤ α)
+    (hE : ∃ C t0 : ℝ, ∀ t : ℝ, t0 ≤ t →
+      |Chebyshev.psi t - t| ≤ C * t ^ α)
+    {x0 : ℝ} (hx0 : 4 ≤ x0) {s : ℂ} (hs : max (1 / 2) (α - 3 / 10) < s.re) :
     IntegrableOn (adjointKernel x0 s) (Ioi (1 : ℝ)) ∧
     Tendsto (fun b : ℝ =>
       (∑ n ∈ Finset.Icc 0 ⌊b⌋₊,
@@ -228,11 +229,11 @@ theorem forwardMellin_adjoint_tendsto
   have hT : IntegrableOn (fun x => ‖f x‖ * |forwardResponse x|) (Ici x0) := by
     have hi : IntegrableOn
         (fun x : ℝ => ‖(forwardResponse x : ℂ) * (x : ℂ) ^ (-s - 1)‖) (Ioi x0) :=
-      (ForwardKernelMellinConvergence.forwardMellin_integrable hvK
-        (show 3 ≤ x0 by linarith) (show 1 / 5 < s.re by linarith)).norm
+      (ForwardKernelMellinConvergence.forwardMellin_integrable hα hE
+        (show 3 ≤ x0 by linarith) (lt_of_le_of_lt (le_max_right _ _) hs)).norm
     have hi' := (integrableOn_Ici_iff_integrableOn_Ioi (by finiteness)).mpr hi
     simpa only [f, norm_mul, Complex.norm_real, Real.norm_eq_abs, mul_comm] using hi'
-  have hV := ForwardKernelMellinConvergence.kernel_mellin_majorant_integrable hx0 hs
+  have hV := ForwardKernelMellinConvergence.kernel_mellin_majorant_integrable hx0 (lt_of_le_of_lt (le_max_left _ _) hs)
   obtain ⟨hq, hsum, hidentity⟩ := unbounded_forward_adjoint hx0 hf hT hV
   change Integrable (adjointKernel x0 s) at hq
   change Summable (fun i : ℕ =>

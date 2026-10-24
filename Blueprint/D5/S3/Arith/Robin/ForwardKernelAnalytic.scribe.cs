@@ -63,10 +63,10 @@ internal sealed class ForwardKernelAnalyticDocument : IScribeDocumentDefinition
                 StatementSource.WithoutFormula(),
                 AssessedProvenance.FromRepo(),
                 Blocks(Paragraph(Text(
-                    "Assume a real constant C satisfies "
-                    + "|psi(t)-t|<=C*sqrt(t)*log(t)^2 for every t>=2. "
+                    "Assume alpha>=0 and there are real C and t0 such that "
+                    + "|psi(t)-t|<=C*t^alpha for every t>=t0. "
                     + "For every fixed x0>8, integral_(x0,infinity) "
-                    + "(psi(t)-t)*partial_t r(t,s) dt is holomorphic for Re(s)>-1/5. "
+                    + "(psi(t)-t)*partial_t r(t,s) dt is holomorphic for Re(s)>alpha-7/10. "
                     + "The actual compact C1 remainder bound gives "
                     + "|partial_t r(t,s)|<=A_K*t^(-Re(s)-17/10) on each compact K. "
                     + "Derivatives as functions of t are measurable; countable parameter "

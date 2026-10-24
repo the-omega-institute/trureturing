@@ -12,6 +12,8 @@ import D5.S3.Arith.Robin.ForwardKernelSignedRemainder
 import D5.S3.Arith.Robin.ForwardKernelInverseTransport
 import D5.S3.Arith.Robin.ForwardKernelFubini
 
+/-! Mellin continuation under an eventual power bound for the complete Chebyshev error. -/
+
 namespace D5.S3.Arith.Robin.ForwardKernelMellinResidue
 
 open Set MeasureTheory Filter
@@ -88,11 +90,12 @@ private lemma actual_adjoint_remainder {x0 t : ℝ} (hx0 : 4 ≤ x0) (ht : 8 < t
   ring
 
 private theorem forward_kernel_mellin_residue_four
-    (hvK : ∃ C : ℝ, ∀ t : ℝ, 2 ≤ t →
-      |Chebyshev.psi t - t| ≤ C * Real.sqrt t * (Real.log t) ^ 2)
+    {α : ℝ} (hα : 0 ≤ α)
+    (hE : ∃ C t0 : ℝ, ∀ t : ℝ, t0 ≤ t →
+      |Chebyshev.psi t - t| ≤ C * t ^ α)
     {x0 : ℝ} (hx0 : 4 ≤ x0) :
-    ∃ R : ℂ → ℂ, DifferentiableOn ℂ R {s : ℂ | -(1 / 5 : ℝ) < s.re} ∧
-      ∀ s : ℂ, 1 / 2 < s.re →
+    ∃ R : ℂ → ℂ, DifferentiableOn ℂ R {s : ℂ | (α - 7 / 10) < s.re} ∧
+      ∀ s : ℂ, max (1 / 2) (α - 3 / 10) < s.re →
         forwardMellin x0 s = -(1 / 2 : ℂ) *
           (deriv riemannZeta (s + 1 / 2) / riemannZeta (s + 1 / 2)) -
             1 / (2 * (s - 1 / 2)) + R s := by
@@ -105,14 +108,16 @@ private theorem forward_kernel_mellin_residue_four
   let R : ℂ → ℂ := fun s => finiteCorrection x0 a s -
     (discrepancy a : ℂ) * adjointRemainder a s -
       ∫ t in Ioi a, (discrepancy t : ℂ) * deriv (fun y => adjointRemainder y s) t
-  have hR : DifferentiableOn ℂ R {s : ℂ | -(1 / 5 : ℝ) < s.re} :=
+  have hR : DifferentiableOn ℂ R {s : ℂ | (α - 7 / 10) < s.re} :=
     ((finiteCorrection_entire hx0 hxa).differentiableOn.sub
       ((ForwardKernelAnalytic.adjointRemainder_entire ha).const_mul
         (discrepancy a : ℂ)).differentiableOn).sub
-      (ForwardKernelAnalytic.adjointRemainder_tail_holomorphic hvK ha)
+      (ForwardKernelAnalytic.adjointRemainder_tail_holomorphic hα hE ha)
   refine ⟨R, hR, ?_⟩
   intro s hs
-  have hq := ForwardKernelFubini.forwardMellin_adjoint_tendsto hvK hx0 hs
+  have hsα : α - 3 / 10 < s.re := lt_of_le_of_lt (le_max_right _ _) hs
+  have hshalf : 1 / 2 < s.re := lt_of_le_of_lt (le_max_left _ _) hs
+  have hq := ForwardKernelFubini.forwardMellin_adjoint_tendsto hα hE hx0 hs
   obtain ⟨C, hC, hbound⟩ := inverseAdjoint_uniform_C1_remainder {s} isCompact_singleton
   have hr : ∀ t : ℝ, a ≤ t →
       ‖adjointRemainder t s‖ ≤ C * t ^ (-s.re - 7 / 10) := by
@@ -130,14 +135,14 @@ private theorem forward_kernel_mellin_residue_four
     rw [mul_assoc, ← Real.rpow_add (by linarith : 0 < t)]
     congr 2
     ring
-  have htail := ForwardKernelSignedRemainder.signed_remainder_tendsto hvK ha3
-    (show -(1 / 5 : ℝ) < s.re by linarith) hC.le
+  have htail := ForwardKernelSignedRemainder.signed_remainder_tendsto hα hE ha3
+    (show (α - 7 / 10) < s.re by linarith) hC.le
     (fun t ht => (inverseAdjoint_C1_remainder_estimate (ha.trans_le ht) s).2.1.hasDerivAt)
     (aestronglyMeasurable_deriv (fun t => adjointRemainder t s) _) hr hdr
   have hp : IntegrableOn (fun t : ℝ => (1 / 2 : ℂ) * (t : ℂ) ^ (-s - 1 / 2))
       (Ioi (1 : ℝ)) :=
     (integrableOn_Ioi_cpow_of_lt (by norm_num; linarith) zero_lt_one).const_mul _
-  have hlim := ((ForwardKernelPrincipalTerm.principal_signed_tendsto hs).add_const
+  have hlim := ((ForwardKernelPrincipalTerm.principal_signed_tendsto hshalf).add_const
     (finiteCorrection x0 a s)).add htail
   have hcombined : Tendsto (fun b : ℝ =>
       (∑ n ∈ Finset.Icc 0 ⌊b⌋₊,
@@ -172,44 +177,47 @@ private theorem forward_kernel_mellin_residue_four
   linear_combination h
 
 /-- The actual complete forward response has the logarithmic-derivative principal
-term and a holomorphic remainder on Re(s)>-1/5. The only classical hypothesis is
-the displayed von Koch bound for the complete Chebyshev function. -/
+term and a holomorphic remainder on Re(s)>alpha-7/10 under an eventual
+power bound for the complete Chebyshev error. -/
 theorem forward_kernel_mellin_residue
-    (hvK : ∃ C : ℝ, ∀ t : ℝ, 2 ≤ t →
-      |Chebyshev.psi t - t| ≤ C * Real.sqrt t * (Real.log t) ^ 2)
+    {α : ℝ} (hα : 0 ≤ α)
+    (hE : ∃ C t0 : ℝ, ∀ t : ℝ, t0 ≤ t →
+      |Chebyshev.psi t - t| ≤ C * t ^ α)
     {x0 : ℝ} (hx0 : 3 ≤ x0) :
-    ∃ R : ℂ → ℂ, DifferentiableOn ℂ R {s : ℂ | -(1 / 5 : ℝ) < s.re} ∧
-      ∀ s : ℂ, 1 / 2 < s.re →
+    ∃ R : ℂ → ℂ, DifferentiableOn ℂ R {s : ℂ | (α - 7 / 10) < s.re} ∧
+      ∀ s : ℂ, max (1 / 2) (α - 3 / 10) < s.re →
         forwardMellin x0 s = -(1 / 2 : ℂ) *
           (deriv riemannZeta (s + 1 / 2) / riemannZeta (s + 1 / 2)) -
             1 / (2 * (s - 1 / 2)) + R s := by
   let y : ℝ := max 4 x0
   have hy : 4 ≤ y := le_max_left _ _
   have hxy : x0 ≤ y := le_max_right _ _
+  obtain ⟨C, hCp, hC⟩ := ForwardKernelMellinConvergence.error_power_bound hα hE
   have hi : IntegrableOn
       (fun x : ℝ => (ForwardKernelTransport.forwardResponse x : ℂ)) (Icc x0 y) := by
-    have h := ForwardKernelMellinConvergence.forwardMellin_integrable hvK hx0
-      (s := (1 : ℂ)) (by norm_num)
-    have hIci : IntegrableOn (fun x : ℝ =>
-        (ForwardKernelTransport.forwardResponse x : ℂ) * (x : ℂ) ^ (-(1 : ℂ) - 1))
-        (Ici x0) := (integrableOn_Ici_iff_integrableOn_Ioi).2 h
-    have hm := (hIci.mono_set Icc_subset_Ici_self).mul_continuousOn
-      (show ContinuousOn (fun x : ℝ => (x : ℂ) ^ (2 : ℕ)) (Icc x0 y) by fun_prop)
-      isCompact_Icc
-    apply hm.congr_fun _ measurableSet_Icc
-    intro x hx
-    have hxne : (x : ℂ) ≠ 0 := Complex.ofReal_ne_zero.mpr (by linarith [hx.1])
-    norm_num [Complex.cpow_neg, Complex.cpow_ofNat]
-    field_simp
+    have hm : IntegrableOn (fun x : ℝ => (2 * C * (2 : ℝ) ^ α) *
+        x ^ (α - 3 / 10)) (Icc x0 y) := by
+      apply ContinuousOn.integrableOn_Icc
+      apply ContinuousOn.const_mul
+      apply continuousOn_id.rpow_const
+      intro t ht
+      exact Or.inl (by linarith [ht.1] : t ≠ 0)
+    apply hm.mono' (Complex.measurable_ofReal.comp
+      ForwardKernelMellinConvergence.response_measurable).aestronglyMeasurable
+    filter_upwards [ae_restrict_mem measurableSet_Icc] with x hx
+    change ‖(ForwardKernelTransport.forwardResponse x : ℂ)‖ ≤ _
+    rw [Complex.norm_real, Real.norm_eq_abs]
+    exact ForwardKernelMellinConvergence.forwardResponse_power_bound hCp hα hC (hx0.trans hx.1)
   let G : ℂ → ℂ := fun s => ∫ x in Icc x0 y,
     (ForwardKernelTransport.forwardResponse x : ℂ) * (x : ℂ) ^ (-s - 1)
   have hG : Differentiable ℂ G := compact_mellin_entire (by linarith) hi
-  obtain ⟨R, hR, hidentity⟩ := forward_kernel_mellin_residue_four hvK hy
+  obtain ⟨R, hR, hidentity⟩ := forward_kernel_mellin_residue_four hα hE hy
   refine ⟨fun s => G s + R s, hG.differentiableOn.add hR, ?_⟩
   intro s hs
-  have hi0 := ForwardKernelMellinConvergence.forwardMellin_integrable hvK hx0
+  have hsα : α - 3 / 10 < s.re := lt_of_le_of_lt (le_max_right _ _) hs
+  have hi0 := ForwardKernelMellinConvergence.forwardMellin_integrable hα hE hx0
     (s := s) (by linarith)
-  have hiy := ForwardKernelMellinConvergence.forwardMellin_integrable hvK
+  have hiy := ForwardKernelMellinConvergence.forwardMellin_integrable hα hE
     (show 3 ≤ y by linarith) (s := s) (by linarith)
   have hsplit := intervalIntegral.integral_interval_add_Ioi hi0 hiy
   have hfinite : (∫ x in x0..y,

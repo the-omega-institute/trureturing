@@ -4,7 +4,7 @@
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
    utility: none
-   digest: A von Koch bound makes the differentiated forward-kernel remainder integrable with zero boundary. -/
+   digest: A power error bound makes the differentiated forward-kernel remainder integrable with zero boundary. -/
 
 import D5.S3.Arith.Robin.ForwardKernelMellinConvergence
 import Mathlib.Analysis.SpecialFunctions.Pow.Asymptotics
@@ -23,39 +23,33 @@ noncomputable section
 /-- The remainder size and its differentiated size yield both convergence facts
 needed at the infinite endpoint of partial summation. -/
 theorem remainder_tail_converges
-    (hvK : ∃ C : ℝ, ∀ t : ℝ, 2 ≤ t →
-      |Chebyshev.psi t - t| ≤ C * Real.sqrt t * (Real.log t) ^ 2)
-    {x0 σ A : ℝ} (hx0 : 3 ≤ x0) (hσ : -(1 / 5 : ℝ) < σ) (hA : 0 ≤ A)
+    {α : ℝ} (hα : 0 ≤ α)
+    (hE : ∃ C t0 : ℝ, ∀ t : ℝ, t0 ≤ t →
+      |Chebyshev.psi t - t| ≤ C * t ^ α)
+    {x0 σ A : ℝ} (hx0 : 3 ≤ x0) (hσ : (α - 7 / 10) < σ) (hA : 0 ≤ A)
     {r dr : ℝ → ℂ}
     (hr : ∀ t : ℝ, x0 ≤ t → ‖r t‖ ≤ A * t ^ (-σ - 7 / 10))
     (hdr : ∀ t : ℝ, x0 ≤ t → ‖dr t‖ ≤ A * t ^ (-σ - 17 / 10))
     (hm : AEStronglyMeasurable dr (volume.restrict (Ioi x0))) :
     IntegrableOn (fun t : ℝ => (discrepancy t : ℂ) * dr t) (Ioi x0) ∧
       Tendsto (fun t : ℝ => (discrepancy t : ℂ) * r t) atTop (𝓝 0) := by
-  obtain ⟨C, hC⟩ := hvK
-  have hCp : 0 ≤ C := by
-    have h := (abs_nonneg (Chebyshev.psi 2 - 2)).trans (hC 2 le_rfl)
-    have hp : 0 < Real.sqrt (2 : ℝ) * (Real.log 2) ^ 2 := by
-      positivity [Real.log_pos (by norm_num : (1 : ℝ) < 2)]
-    nlinarith
-  let η : ℝ := (σ + 1 / 5) / 4
-  let p : ℝ := -σ - 1 / 5 + 2 * η
-  let D : ℝ := (C / η ^ 2) * A
-  have hη : 0 < η := by dsimp [η]; linarith
-  have hp : p < 0 := by dsimp [p, η]; linarith
+  obtain ⟨C, hCp, hC⟩ := error_power_bound hα hE
+  let p : ℝ := α - σ - 7 / 10
+  let D : ℝ := C * A
+  have hp : p < 0 := by dsimp [p]; linarith
   have hsize {k : ℝ → ℂ} {e : ℝ}
       (hk : ∀ t : ℝ, x0 ≤ t → ‖k t‖ ≤ A * t ^ e)
       (t : ℝ) (ht : x0 ≤ t) :
-      ‖(discrepancy t : ℂ) * k t‖ ≤ D * t ^ (1 / 2 + 2 * η + e) := by
+      ‖(discrepancy t : ℂ) * k t‖ ≤ D * t ^ (α + e) := by
     have ht2 : 2 ≤ t := by linarith
     have ht0 : 0 < t := by linarith
     rw [norm_mul, Complex.norm_real, Real.norm_eq_abs]
     calc
-      _ ≤ ((C / η ^ 2) * t ^ (1 / 2 + 2 * η)) * (A * t ^ e) := by
+      _ ≤ (C * t ^ α) * (A * t ^ e) := by
         gcongr
-        · exact error_power_bound hCp hη ht2 (hC t ht2)
+        · exact hC t ht2
         · exact hk t ht
-      _ = D * t ^ (1 / 2 + 2 * η + e) := by
+      _ = D * t ^ (α + e) := by
         rw [mul_mul_mul_comm, ← Real.rpow_add ht0]
   constructor
   · have hi : IntegrableOn (fun t : ℝ => D * t ^ (p - 1)) (Ioi x0) :=
@@ -85,30 +79,31 @@ theorem remainder_tail_converges
 /-- Compact bounds on a holomorphic parameter family give a holomorphic
 Chebyshev-weighted remainder integral in the enlarged half-plane. -/
 theorem remainder_integral_holomorphic
-    (hvK : ∃ C : ℝ, ∀ t : ℝ, 2 ≤ t →
-      |Chebyshev.psi t - t| ≤ C * Real.sqrt t * (Real.log t) ^ 2)
+    {α : ℝ} (hα : 0 ≤ α)
+    (hE : ∃ C t0 : ℝ, ∀ t : ℝ, t0 ≤ t →
+      |Chebyshev.psi t - t| ≤ C * t ^ α)
     {x0 : ℝ} (hx0 : 3 ≤ x0) {d : ℂ → ℝ → ℂ}
-    (hmeas : ∀ s : ℂ, -(1 / 5 : ℝ) < s.re →
+    (hmeas : ∀ s : ℂ, (α - 7 / 10) < s.re →
       AEStronglyMeasurable (d s) (volume.restrict (Ioi x0)))
     (hhol : ∀ t : ℝ, x0 < t →
-      DifferentiableOn ℂ (fun s => d s t) {s : ℂ | -(1 / 5 : ℝ) < s.re})
-    (hderiv_meas : ∀ s : ℂ, -(1 / 5 : ℝ) < s.re →
+      DifferentiableOn ℂ (fun s => d s t) {s : ℂ | (α - 7 / 10) < s.re})
+    (hderiv_meas : ∀ s : ℂ, (α - 7 / 10) < s.re →
       AEStronglyMeasurable (fun t => deriv (fun z => d z t) s)
         (volume.restrict (Ioi x0)))
-    (hbound : ∀ K : Set ℂ, IsCompact K → K ⊆ {s : ℂ | -(1 / 5 : ℝ) < s.re} →
+    (hbound : ∀ K : Set ℂ, IsCompact K → K ⊆ {s : ℂ | (α - 7 / 10) < s.re} →
       ∃ A : ℝ, 0 ≤ A ∧ ∀ s ∈ K, ∀ t : ℝ, x0 ≤ t →
         ‖d s t‖ ≤ A * t ^ (-s.re - 17 / 10)) :
     DifferentiableOn ℂ (fun s => ∫ t in Ioi x0, (discrepancy t : ℂ) * d s t)
-      {s : ℂ | -(1 / 5 : ℝ) < s.re} := by
+      {s : ℂ | (α - 7 / 10) < s.re} := by
   intro s hs
-  change -(1 / 5 : ℝ) < s.re at hs
-  let U : Set ℂ := {z : ℂ | -(1 / 5 : ℝ) < z.re}
+  change (α - 7 / 10) < s.re at hs
+  let U : Set ℂ := {z : ℂ | (α - 7 / 10) < z.re}
   have hU : IsOpen U := isOpen_lt continuous_const Complex.continuous_re
-  let radius : ℝ := (s.re + 1 / 5) / 4
+  let radius : ℝ := (s.re - α + 7 / 10) / 4
   let σ : ℝ := s.re - 2 * radius
   let K : Set ℂ := Metric.closedBall s (2 * radius)
   have hradius : 0 < radius := by dsimp [radius]; linarith
-  have hσ : -(1 / 5 : ℝ) < σ := by dsimp [σ, radius]; linarith
+  have hσ : (α - 7 / 10) < σ := by dsimp [σ, radius]; linarith
   have hKre (z : ℂ) (hz : z ∈ K) : σ ≤ z.re := by
     change dist z s ≤ 2 * radius at hz
     rw [dist_eq_norm] at hz
@@ -150,7 +145,7 @@ theorem remainder_integral_holomorphic
       (hfm : AEStronglyMeasurable f (volume.restrict (Ioi x0)))
       (hfb : ∀ t : ℝ, x0 ≤ t → ‖f t‖ ≤ B * t ^ (-σ - 17 / 10)) :
       IntegrableOn (fun t : ℝ => (discrepancy t : ℂ) * f t) (Ioi x0) := by
-    exact (remainder_tail_converges hvK hx0 hσ hB
+    exact (remainder_tail_converges hα hE hx0 hσ hB
       (r := fun _ => 0) (dr := f)
       (by intro t ht; simp only [norm_zero]; positivity [show 0 ≤ t by linarith]) hfb hfm).1
   let b : ℝ → ℝ := fun t => (A / radius) * t ^ (-σ - 17 / 10)

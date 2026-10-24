@@ -4,7 +4,7 @@
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
    utility: none
-   digest: A von Koch bound gives absolute convergence of the original forward Mellin integral. -/
+   digest: A power error bound gives absolute convergence of the original forward Mellin integral. -/
 
 import D5.S3.Arith.Robin.ForwardKernelTransport
 import D5.S3.Arith.Robin.OriginalMovingCutAggregate
@@ -32,7 +32,7 @@ private lemma weight_measurable : Measurable weight := by
 lemma discrepancy_measurable : Measurable discrepancy :=
   Chebyshev.psi_mono.measurable.sub measurable_id
 
-private lemma response_measurable : Measurable forwardResponse := by
+lemma response_measurable : Measurable forwardResponse := by
   have hw : Measurable width := by unfold width; fun_prop
   let f : ℝ × ℝ → ℝ := fun p =>
     (discrepancy (p.1 + p.2) - discrepancy p.1) * (weight (p.1 + p.2) / weight p.1)
@@ -66,54 +66,56 @@ private lemma response_measurable : Measurable forwardResponse := by
   simp_rw [heq] at hIJ
   exact (Real.continuous_sqrt.measurable.div (hw.pow_const 2)).mul hIJ
 
-lemma error_power_bound {C η t : ℝ} (hC : 0 ≤ C) (hη : 0 < η) (ht : 2 ≤ t)
-    (hE : |Chebyshev.psi t - t| ≤ C * Real.sqrt t * (Real.log t) ^ 2) :
-    |discrepancy t| ≤ (C / η ^ 2) * t ^ (1 / 2 + 2 * η) := by
-  have ht0 : 0 < t := by linarith
-  have hl : 0 ≤ Real.log t := Real.log_nonneg (by linarith)
-  have hlog := Real.log_le_rpow_div ht0.le hη
-  have hs : (Real.log t) ^ 2 ≤ (t ^ η / η) ^ 2 := by
-    exact pow_le_pow_left₀ hl hlog 2
-  calc
-    |discrepancy t| ≤ C * Real.sqrt t * (Real.log t) ^ 2 := hE
-    _ ≤ C * Real.sqrt t * (t ^ η / η) ^ 2 := by gcongr
-    _ = (C / η ^ 2) * (t ^ (1 / 2 : ℝ) * (t ^ η) ^ 2) := by
-      rw [Real.sqrt_eq_rpow]
-      ring
-    _ = (C / η ^ 2) * t ^ (1 / 2 + 2 * η) := by
-      rw [← Real.rpow_natCast (t ^ η) 2, ← Real.rpow_mul ht0.le, ← Real.rpow_add ht0]
-      congr 2
-      ring
+/-- An eventual power estimate extends to the fixed half-line by monotonicity of psi. -/
+lemma error_power_bound {α : ℝ} (hα : 0 ≤ α)
+    (hE : ∃ C t0 : ℝ, ∀ t : ℝ, t0 ≤ t →
+      |Chebyshev.psi t - t| ≤ C * t ^ α) :
+    ∃ C : ℝ, 0 ≤ C ∧ ∀ t : ℝ, 2 ≤ t → |discrepancy t| ≤ C * t ^ α := by
+  obtain ⟨C, t0, hC⟩ := hE
+  let B : ℝ := max 2 t0
+  let D : ℝ := max |C| (Chebyshev.psi B + B)
+  have hD : 0 ≤ D := (abs_nonneg C).trans (le_max_left _ _)
+  refine ⟨D, hD, ?_⟩
+  intro t ht
+  by_cases htail : t0 ≤ t
+  · exact (hC t htail).trans (mul_le_mul_of_nonneg_right
+      ((le_abs_self C).trans (le_max_left _ _)) (Real.rpow_nonneg (by linarith) _))
+  · have htB : t ≤ B := (le_of_not_ge htail).trans (le_max_right _ _)
+    calc
+      |discrepancy t| ≤ Chebyshev.psi t + t := by
+        unfold discrepancy
+        exact (abs_sub _ _).trans_eq (by rw [abs_of_nonneg (Chebyshev.psi_nonneg t),
+          abs_of_nonneg (by linarith : 0 ≤ t)])
+      _ ≤ Chebyshev.psi B + B := add_le_add (Chebyshev.psi_mono htB) htB
+      _ ≤ D := le_max_right _ _
+      _ ≤ D * t ^ α := le_mul_of_one_le_right hD (Real.one_le_rpow (by linarith) hα)
 
-/-- A small power absorbs the logarithmic loss in the von Koch estimate. -/
-theorem forwardResponse_power_bound {C η x : ℝ} (hC : 0 ≤ C) (hη : 0 < η)
-    (hvK : ∀ t : ℝ, 2 ≤ t →
-      |Chebyshev.psi t - t| ≤ C * Real.sqrt t * (Real.log t) ^ 2)
+/-- A power bound for the Chebyshev error bounds the complete forward increment. -/
+theorem forwardResponse_power_bound {C α x : ℝ} (hC : 0 ≤ C) (hα : 0 ≤ α)
+    (hE : ∀ t : ℝ, 2 ≤ t → |discrepancy t| ≤ C * t ^ α)
     (hx : 3 ≤ x) :
     |forwardResponse x| ≤
-      (2 * (C / η ^ 2) * (2 : ℝ) ^ (1 / 2 + 2 * η)) *
-        x ^ (1 / 5 + 2 * η) := by
+      (2 * C * (2 : ℝ) ^ α) * x ^ (α - 3 / 10) := by
   have hx0 : 0 < x := by linarith
   have hx1 : 1 ≤ x := by linarith
   have hwidth : 0 < width x := Real.rpow_pos_of_pos hx0 _
   have hwx : width x ≤ x := by
     unfold width
     exact Real.rpow_le_self_of_one_le hx1 (by norm_num)
-  let b : ℝ := 1 / 2 + 2 * η
-  let A : ℝ := (C / η ^ 2) * (2 * x) ^ b
-  have hb : 0 ≤ b := by dsimp [b]; linarith
+  let b : ℝ := α
+  let A : ℝ := C * (2 * x) ^ b
+  have hb : 0 ≤ b := hα
   have hA : 0 ≤ A := by dsimp [A]; positivity
   have hinc (u : ℝ) (hu : u ∈ Icc (0 : ℝ) (width x)) :
       ‖(discrepancy (x + u) - discrepancy x) * (weight (x + u) / weight x)‖ ≤ 2 * A := by
     have hxu : x ≤ x + u := by linarith [hu.1]
     have hxu2 : x + u ≤ 2 * x := by linarith [hu.2]
     have hEx : |discrepancy x| ≤ A := by
-      exact (error_power_bound hC hη (by linarith) (hvK x (by linarith))).trans
+      exact (hE x (by linarith)).trans
         (mul_le_mul_of_nonneg_left (Real.rpow_le_rpow hx0.le (by linarith) hb)
           (by positivity))
     have hExu : |discrepancy (x + u)| ≤ A := by
-      exact (error_power_bound hC hη (by linarith [hu.1])
-        (hvK (x + u) (by linarith [hu.1]))).trans
+      exact (hE (x + u) (by linarith [hu.1])).trans
         (mul_le_mul_of_nonneg_left (Real.rpow_le_rpow (by linarith [hu.1]) hxu2 hb)
           (by positivity))
     have hw : 0 ≤ weight (x + u) / weight x :=
@@ -140,7 +142,7 @@ theorem forwardResponse_power_bound {C η x : ℝ} (hC : 0 ≤ C) (hη : 0 < η)
         intervalIntegral.integral_mono_on hwidth.le hint.norm intervalIntegrable_const hinc
       _ = _ := by simp; ring
   have hfac : 0 ≤ Real.sqrt x / width x ^ 2 := by positivity
-  have heq : Real.sqrt x * x ^ b / width x = x ^ (1 / 5 + 2 * η) := by
+  have heq : Real.sqrt x * x ^ b / width x = x ^ (α - 3 / 10) := by
     rw [Real.sqrt_eq_rpow, width, ← Real.rpow_add hx0, ← Real.rpow_sub hx0]
     congr 1
     dsimp [b]
@@ -150,7 +152,7 @@ theorem forwardResponse_power_bound {C η x : ℝ} (hC : 0 ≤ C) (hη : 0 < η)
   calc
     _ ≤ (Real.sqrt x / width x ^ 2) * (2 * A * width x) :=
       mul_le_mul_of_nonneg_left hi hfac
-    _ = (2 * (C / η ^ 2) * (2 : ℝ) ^ b) *
+    _ = (2 * C * (2 : ℝ) ^ b) *
         (Real.sqrt x * x ^ b / width x) := by
       dsimp [A]
       rw [Real.mul_rpow (by norm_num : (0 : ℝ) ≤ 2) hx0.le]
@@ -159,22 +161,15 @@ theorem forwardResponse_power_bound {C η x : ℝ} (hC : 0 ≤ C) (hη : 0 < η)
     _ = _ := by rw [heq]
 
 /-- Absolute convergence in the half-plane supplied directly by the pointwise error bound. -/
-theorem forwardMellin_integrable
-    (hvK : ∃ C : ℝ, ∀ t : ℝ, 2 ≤ t →
-      |Chebyshev.psi t - t| ≤ C * Real.sqrt t * (Real.log t) ^ 2)
-    {x0 : ℝ} (hx0 : 3 ≤ x0) {s : ℂ} (hs : 1 / 5 < s.re) :
+theorem forwardMellin_integrable {α : ℝ} (hα : 0 ≤ α)
+    (hE : ∃ C t0 : ℝ, ∀ t : ℝ, t0 ≤ t →
+      |Chebyshev.psi t - t| ≤ C * t ^ α)
+    {x0 : ℝ} (hx0 : 3 ≤ x0) {s : ℂ} (hs : α - 3 / 10 < s.re) :
     IntegrableOn (fun x : ℝ => (forwardResponse x : ℂ) * (x : ℂ) ^ (-s - 1)) (Ioi x0) := by
-  obtain ⟨C, hC⟩ := hvK
-  have hCp : 0 ≤ C := by
-    have h := (abs_nonneg (Chebyshev.psi 2 - 2)).trans (hC 2 le_rfl)
-    have hp : 0 < Real.sqrt (2 : ℝ) * (Real.log 2) ^ 2 := by
-      positivity [Real.log_pos (by norm_num : (1 : ℝ) < 2)]
-    nlinarith
-  let η : ℝ := (s.re - 1 / 5) / 4
-  let A : ℝ := 2 * (C / η ^ 2) * (2 : ℝ) ^ (1 / 2 + 2 * η)
-  have hη : 0 < η := by dsimp [η]; linarith
-  have hi : IntegrableOn (fun x : ℝ => A * x ^ (1 / 5 + 2 * η - s.re - 1)) (Ioi x0) :=
-    (integrableOn_Ioi_rpow_of_lt (by dsimp [η]; linarith) (by linarith)).const_mul A
+  obtain ⟨C, hCp, hC⟩ := error_power_bound hα hE
+  let A : ℝ := 2 * C * (2 : ℝ) ^ α
+  have hi : IntegrableOn (fun x : ℝ => A * x ^ (α - 3 / 10 - s.re - 1)) (Ioi x0) :=
+    (integrableOn_Ioi_rpow_of_lt (by linarith) (by linarith)).const_mul A
   have hm : AEStronglyMeasurable
       (fun x : ℝ => (forwardResponse x : ℂ) * (x : ℂ) ^ (-s - 1))
       (volume.restrict (Ioi x0)) := by
@@ -188,10 +183,10 @@ theorem forwardMellin_integrable
     Complex.norm_cpow_eq_rpow_re_of_pos hxpos]
   simp only [Complex.sub_re, Complex.neg_re, Complex.one_re]
   calc
-    _ ≤ (A * x ^ (1 / 5 + 2 * η)) * x ^ (-s.re - 1) := by
+    _ ≤ (A * x ^ (α - 3 / 10)) * x ^ (-s.re - 1) := by
       gcongr
-      exact forwardResponse_power_bound hCp hη hC hx3
-    _ = A * x ^ (1 / 5 + 2 * η - s.re - 1) := by
+      exact forwardResponse_power_bound hCp hα hC hx3
+    _ = A * x ^ (α - 3 / 10 - s.re - 1) := by
       rw [mul_assoc, ← Real.rpow_add hxpos]
       congr 2
       ring

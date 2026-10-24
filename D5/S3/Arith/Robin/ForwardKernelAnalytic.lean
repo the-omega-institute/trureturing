@@ -211,20 +211,21 @@ theorem adjointRemainder_timeDerivative_entire {t : ℝ} (ht : 8 < t) :
 
 /-- The actual differentiated remainder has a holomorphic Chebyshev integral. -/
 theorem adjointRemainder_tail_holomorphic
-    (hvK : ∃ C : ℝ, ∀ t : ℝ, 2 ≤ t →
-      |Chebyshev.psi t - t| ≤ C * Real.sqrt t * (Real.log t) ^ 2)
+    {α : ℝ} (hα : 0 ≤ α)
+    (hE : ∃ C t0 : ℝ, ∀ t : ℝ, t0 ≤ t →
+      |Chebyshev.psi t - t| ≤ C * t ^ α)
     {x0 : ℝ} (hx0 : 8 < x0) :
     DifferentiableOn ℂ
       (fun s => ∫ t in Ioi x0,
         (discrepancy t : ℂ) * deriv (fun y => adjointRemainder y s) t)
-      {s : ℂ | -(1 / 5 : ℝ) < s.re} := by
+      {s : ℂ | (α - 7 / 10) < s.re} := by
   let d : ℂ → ℝ → ℂ := fun s t => deriv (fun y => adjointRemainder y s) t
   have hmeas (s : ℂ) : AEStronglyMeasurable (d s) (volume.restrict (Ioi x0)) :=
     aestronglyMeasurable_deriv (fun t => adjointRemainder t s) _
   have hd : ∀ᵐ t : ℝ ∂volume.restrict (Ioi x0), Differentiable ℂ (fun s => d s t) := by
     filter_upwards [ae_restrict_mem measurableSet_Ioi] with t ht
     exact adjointRemainder_timeDerivative_entire (hx0.trans ht)
-  apply ForwardKernelRemainderContinuation.remainder_integral_holomorphic hvK (by linarith)
+  apply ForwardKernelRemainderContinuation.remainder_integral_holomorphic hα hE (by linarith)
     (fun s _ => hmeas s)
     (fun t ht => (adjointRemainder_timeDerivative_entire (hx0.trans ht)).differentiableOn)
     (fun s _ => parameter_derivative_measurable hmeas hd s)

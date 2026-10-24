@@ -28,9 +28,9 @@ Lean statement: `D5/S3/Arith/Robin/ForwardKernelFubini.forwardMellin_adjoint_ten
 
 *Commentary.*
 
-Assume the von Koch bound abs(psi(t)-t)<=C*sqrt(t)*log(t)^2 for all t>=2. For x0>=4 and Re(s)>1/2, the actual adjoint q_s(t) is integrable over t>1. The difference between the sum of Lambda(n)*q_s(n) for 0<=n<=floor(b) and the integral of q_s(t) from 1 to b tends to the original forward Mellin integral as b tends to infinity.
+Assume alpha>=0 and an eventual power bound abs(psi(t)-t)<=C*t^alpha for all t>=t0. For x0>=4 and Re(s)>max(1/2,alpha-3/10), the actual adjoint q_s(t) is integrable over t>1. The difference between the sum of Lambda(n)*q_s(n) for 0<=n<=floor(b) and the integral of q_s(t) from 1 to b tends to the original forward Mellin integral as b tends to infinity.
 
-The established response convergence and continuous-kernel moment bound supply the two absolute majorants. The adjoint vanishes for t<=1. Absolute summability gives the arithmetic truncation limit, and integrability gives the continuous truncation limit. The von Koch estimate is an explicit hypothesis.
+The established response convergence and continuous-kernel moment bound supply the two absolute majorants. The adjoint vanishes for t<=1. Absolute summability gives the arithmetic truncation limit, and integrability gives the continuous truncation limit. The power error estimate is an explicit hypothesis.
 
 ## References
 
