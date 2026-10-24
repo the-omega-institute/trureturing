@@ -45,6 +45,37 @@ public sealed partial class CleanLanesCommandTests
     }
 
     [Fact]
+    public void IdlePoolReceiptIncludesTreeReturnedAfterInventory()
+    {
+        using var fixture = new CleanLanesFixture();
+        fixture.AddMergedLane("lane/governance/idle-trigger");
+        string? returnedPath = null;
+        var runner = fixture.CreateRunner((file, args, _) =>
+        {
+            if (file != "python3" || !args.Contains("pool")) return null;
+            const string branch = "lane/governance/idle-late";
+            returnedPath = fixture.AddMergedLane(branch);
+            var payload = JsonSerializer.Serialize(new
+            {
+                @event = "worktree_pool", status = "failed", capacity = 4,
+                items = new[] { new { path = returnedPath, branch = "refs/heads/" + branch,
+                    head = fixture.Head(returnedPath), outcome = "checkpoint_failed",
+                    reason = "idle_disk_pressure", error = "checkpoint blocker",
+                    recovery_branch = "refs/heads/" + branch } },
+            });
+            return new ProcessOutput(74, Encoding.UTF8.GetBytes(payload), []);
+        });
+
+        var result = fixture.RunWithRaw(runner, "--force");
+
+        Assert.False(result.Success);
+        var item = Assert.Single(ReadItems(result.Output), row => row.GetProperty("path").GetString() == returnedPath);
+        Assert.Equal("failed", item.GetProperty("action").GetString());
+        Assert.Equal("checkpoint_failed:checkpoint blocker", item.GetProperty("reason").GetString());
+        Assert.Equal("deferred", ReadSummary(result.Output).GetProperty("extra_sweeps").GetString());
+    }
+
+    [Fact]
     public void IdlePrefixedTaskKeepsOrdinaryAllocationProtection()
     {
         using var fixture = new CleanLanesFixture();

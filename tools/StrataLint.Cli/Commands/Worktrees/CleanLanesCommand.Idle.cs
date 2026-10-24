@@ -45,7 +45,11 @@ internal static partial class CleanLanesCommand
             if (outcome == "not_idle") continue;
             var path = row.GetProperty("path").GetString()!;
             handled.Add(path);
-            var item = inventory.Single(item => item.Path == path);
+            var observed = inventory.SingleOrDefault(item => item.Path == path);
+            var item = new RegisteredWorktree(path, row.GetProperty("head").GetString()!,
+                row.GetProperty("branch").GetString()?.Replace("refs/heads/", string.Empty, StringComparison.Ordinal),
+                observed?.GitDirectory, observed?.Locked ?? false, observed?.LockReason);
+            protectObservedWorktree(item);
             var reason = row.GetProperty("reason").GetString()!;
             string? ReadOptional(string name) => row.TryGetProperty(name, out var field) ? field.GetString() : null;
             var recovery = ReadOptional("recovery_branch");
