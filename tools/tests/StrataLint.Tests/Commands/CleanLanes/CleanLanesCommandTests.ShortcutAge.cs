@@ -29,13 +29,13 @@ public sealed partial class CleanLanesCommandTests
     [InlineData(false, 10800, true)]
     [InlineData(true, 10799, false)]
     [InlineData(true, 10800, true)]
-    public void NewMergedCleanLaneRequiresThreeHours(bool reset, int seconds, bool reclaim)
+    public void FreshMergedAllocationRequiresThreeHoursEvenAfterReset(bool reset, int seconds, bool reclaim)
     {
         using var fixture = new CleanLanesFixture();
         var lane = fixture.AddMergedLane("harness/new-shortcut-age");
         if (reset) CleanLanesFixture.Git(lane, "reset", "--hard", "HEAD");
         else fixture.KeepInitializationRecord(lane);
-        var now = fixture.LastUpdate(lane).AddSeconds(seconds);
+        var now = fixture.CreationTime(lane).AddSeconds(seconds);
 
         var preview = fixture.RunAt(now, "--lanes-only");
         var force = fixture.RunAt(now, "--force", "--lanes-only");
