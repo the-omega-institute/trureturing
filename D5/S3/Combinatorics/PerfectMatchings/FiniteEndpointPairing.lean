@@ -29,10 +29,10 @@ private theorem return_exists (q : Perm X) (S : Set X) (x : X) (hx : x ∈ S) :
   refine ⟨orderOf q, orderOf_pos q, ?_⟩
   simpa only [pow_orderOf_eq_one, Perm.one_apply] using hx
 
-noncomputable def visitTime (q : Perm X) (S : Set X) (x : X) (hx : x ∈ S) : ℕ :=
+private noncomputable def visitTime (q : Perm X) (S : Set X) (x : X) (hx : x ∈ S) : ℕ :=
   Nat.find (return_exists q S x hx)
 
-theorem first_visit_visit_time (q : Perm X) (S : Set X) (x : X) (hx : x ∈ S) :
+private theorem first_visit_visit_time (q : Perm X) (S : Set X) (x : X) (hx : x ∈ S) :
     FirstVisit q S x (visitTime q S x hx) := by
   classical
   unfold visitTime
@@ -52,7 +52,7 @@ private theorem FirstVisit.unique {q : Perm X} {S : Set X} {x : X} {m n : ℕ}
   · exact hmi n hnp h hns
 
 /-- The actual next marked point, not a supplied boundary pairing. -/
-noncomputable def nextVisit (q : Perm X) (S : Set X) (x : S) : S :=
+private noncomputable def nextVisit (q : Perm X) (S : Set X) (x : S) : S :=
   ⟨(q ^ visitTime q S x x.property) x,
     (first_visit_visit_time q S x x.property).2.1⟩
 

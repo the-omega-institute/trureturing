@@ -10,6 +10,7 @@
 import D5.S1.Words.Sequenceability.RowOrbitLift
 import D5.S3.Combinatorics.PerfectMatchings.FiniteEndpointPairing
 import D5.S3.Combinatorics.PerfectMatchings.FiniteReturnTowers
+import D5.S3.Combinatorics.PerfectMatchings.FiniteBandSwitch
 import Mathlib.GroupTheory.Perm.Cycle.Basic
 import Mathlib.RingTheory.IntegralDomain
 import Mathlib.GroupTheory.SpecificGroups.Cyclic.Subgroup
@@ -26,6 +27,7 @@ set_option relaxedAutoImplicit false
 namespace D5.S1.Words.Sequenceability.CharacteristicSevenDetour
 
 open Equiv
+open scoped BigOperators
 open D5.S1.Words.Sequenceability.RowOrbitLift
 open D5.S3.Combinatorics.PerfectMatchings.FiniteEndpointPairing
 open D5.S3.Combinatorics.PerfectMatchings.FiniteReturnTowers
@@ -200,6 +202,24 @@ private theorem labels_bijective {K : Type*} [Field K] [CharP K 7] (r : Kˣ)
       · simp [edgeLabel, lift, vertex]
         field_simp [htwo, hr] <;> ring
 
+private theorem generator_add_one_ne_zero {K : Type*} [Field K] [CharP K 7]
+    (r : Kˣ) (hn : ∀ z : Kˣ, ∃ n : ℕ, r ^ n = z) : (r : K) + 1 ≠ 0 := by
+  intro he
+  have he' : (r : K) = -1 := by linear_combination he
+  have htwo : (2 : K) ≠ 0 := (CharP.cast_eq_zero_iff K 7 2).not.mpr (by decide)
+  have hthree : (3 : K) ≠ 0 := (CharP.cast_eq_zero_iff K 7 3).not.mpr (by decide)
+  obtain ⟨n, h⟩ := hn (Units.mk0 2 htwo)
+  have h' : (-1 : K) ^ n = 2 := by
+    simpa [he'] using congrArg (fun z : Kˣ => (z : K)) h
+  have hpall : ∀ m : ℕ, (-1 : K) ^ m = 1 ∨ (-1 : K) ^ m = -1 := by
+    intro m
+    induction m with
+    | zero => exact Or.inl (by simp)
+    | succ m ih => rcases ih with ih | ih <;> simp [pow_succ, ih]
+  rcases hpall n with hp | hp
+  · apply one_ne_zero (α := K); linear_combination hp - h'
+  · apply hthree; linear_combination hp - h'
+
 /-- The six-column lift has the exact two-cycle row criterion and the complete
 nonzero-column vertex and edge-label inventories. -/
 theorem exists_characteristic_seven_lift (K : Type*) [Field K] [Finite K] [CharP K 7]
@@ -214,22 +234,7 @@ theorem exists_characteristic_seven_lift (K : Type*) [Field K] [Finite K] [CharP
   have hn : ∀ z : Kˣ, ∃ n : ℕ, r ^ n = z := by
     intro z
     exact (Submonoid.mem_powers_iff z r).mp (mem_powers_iff_mem_zpowers.mpr (hr z))
-  have hrn : (r : K) + 1 ≠ 0 := by
-    intro he
-    have he' : (r : K) = -1 := by linear_combination he
-    have htwo : (2 : K) ≠ 0 := (CharP.cast_eq_zero_iff K 7 2).not.mpr (by decide)
-    have hthree : (3 : K) ≠ 0 := (CharP.cast_eq_zero_iff K 7 3).not.mpr (by decide)
-    obtain ⟨n, h⟩ := hn (Units.mk0 2 htwo)
-    have h' : (-1 : K) ^ n = 2 := by
-      simpa [he'] using congrArg (fun z : Kˣ => (z : K)) h
-    have hpall : ∀ m : ℕ, (-1 : K) ^ m = 1 ∨ (-1 : K) ^ m = -1 := by
-      intro m
-      induction m with
-      | zero => exact Or.inl (by simp)
-      | succ m ih => rcases ih with ih | ih <;> simp [pow_succ, ih]
-    rcases hpall n with hp | hp
-    · apply one_ne_zero (α := K); linear_combination hp - h'
-    · apply hthree; linear_combination hp - h'
+  have hrn := generator_add_one_ne_zero r hn
   exact ⟨r, hrn, lift_same_cycle r hn c, labels_bijective r hrn c,
     vertices_bijective K, lift_round r c⟩
 
@@ -494,6 +499,7 @@ private theorem markedCycle_sameCycle (i j : Fin 4) :
     | exact h12.trans (h23.trans h30)
     | exact h23.trans h30
     | exact h30.trans h01
+    | exact h30.trans (h01.trans h12)
 
 private theorem q_same_cycle_head (r : Kˣ)
     (hrgen : ∀ z : Kˣ, ∃ n : ℕ, r ^ n = z) (u : K)
@@ -669,80 +675,6 @@ private theorem splice_inverse_reattach (r : Kˣ) (u : K) :
   simp only [splice, mul_inv_rev, Equiv.swap_inv]
   group
 
-private theorem reattached_all_same_cycle {X : Type*} [Finite X]
-    (p : Perm X) (S : Set X) [DecidablePred (· ∈ S)] (J : Perm S)
-    (hmeet : ∀ x : X, ∃ z : S, p.SameCycle x z)
-    (hreturn : ∀ z : S, ∃ n : ℕ,
-      FirstVisit p S z n ∧ (p ^ n) z = z)
-    (hJcycle : ∀ x y : S, J.SameCycle x y) :
-    ∀ x y : X, (p * J.ofSubtype).SameCycle x y := by
-  classical
-  let f : Perm X := p * J.ofSubtype
-  have hjump : ∀ z : S, ∃ n : ℕ,
-      FirstVisit p S (J z) n ∧ (p ^ n) (J z) = J z := by
-    intro z
-    obtain ⟨n, hn, hend⟩ := hreturn (J z)
-    exact ⟨n, hn, hend⟩
-  have hmarked : ∀ x y : S, f.SameCycle x y := by
-    intro x y
-    rw [show f = p * J.ofSubtype from rfl]
-    rw [same_cycle_of_first_visit (p * J.ofSubtype) S J]
-    · exact hJcycle x y
-    · intro z
-      obtain ⟨n, hn, hend⟩ := hreturn (J z)
-      obtain ⟨hfirst, hjump⟩ := first_visit_reattach p S J z n hn
-      exact ⟨n, hfirst, hjump.trans hend⟩
-  have hto : ∀ x : X, ∃ z : S, f.SameCycle x z := by
-    intro x
-    obtain ⟨z, hz⟩ := hmeet x
-    obtain ⟨n, hn⟩ := hz.exists_nat_pow_eq
-    let H : ℕ → Prop := fun k => (p ^ k) x ∈ S
-    have hHex : ∃ k, H k := by
-      refine ⟨n, ?_⟩
-      change (p ^ n) x ∈ S
-      rw [hn]
-      exact z.property
-    let m := Nat.find hHex
-    have hm : H m := Nat.find_spec hHex
-    have hmS : (p ^ m) x ∈ S := hm
-    by_cases hm0 : m = 0
-    · subst m
-      have hxS : x ∈ S := by
-        have hmzero : (p ^ 0) x ∈ S := by simpa [hm0] using hmS
-        simpa using hmzero
-      refine ⟨⟨x, hxS⟩, ?_⟩
-      exact Perm.SameCycle.refl f x
-    · have hx0 : x ∉ S := by
-        intro hx
-        have hle : m ≤ 0 := Nat.find_min' hHex (by simpa [H, hx])
-        omega
-      have hmin : ∀ k, k < m → (p ^ k) x ∉ S := by
-        intro k hkm hk
-        have hle : m ≤ k := Nat.find_min' hHex (by simpa [H] using hk)
-        omega
-      have hseg : ∀ k, k ≤ m →
-          (f ^ k) x = (p ^ k) x := by
-        intro k hk
-        induction k with
-        | zero => rfl
-        | succ k ih =>
-          rw [pow_succ', Perm.mul_apply, ih (by omega)]
-          have hnot : (p ^ k) x ∉ S := by
-            by_cases hk0 : k = 0
-            · simpa [hk0] using hx0
-            · exact hmin k (by omega)
-          simp only [f, Perm.mul_apply]
-          rw [Perm.ofSubtype_apply_of_not_mem J hnot]
-          rw [pow_succ']
-          simp only [Perm.mul_apply]
-      refine ⟨⟨(p ^ m) x, hm⟩, ?_⟩
-      refine ⟨(m : ℤ), ?_⟩
-      simpa only [f, zpow_natCast, hseg m le_rfl]
-  intro x y
-  obtain ⟨zx, hx⟩ := hto x
-  obtain ⟨zy, hy⟩ := hto y
-  exact hx.trans ((hmarked zx zy).trans hy.symm)
-
 private theorem q_same_cycle_head_two (r : Kˣ)
     (hrgen : ∀ z : Kˣ, ∃ n : ℕ, r ^ n = z) (u : K) (hu : u ≠ 0)
     (v : Fin 6 × K) :
@@ -860,22 +792,18 @@ private theorem marked_cycle_injective (r : Kˣ) (u : K) (hu : u ≠ 0)
     rw [hs'] at hn
     exact hn.symm
   fin_cases i <;> fin_cases j
-  · rfl
-  · exact (h12 (by simpa [markedPoint] using h)).elim
-  · exact (htarget _ (by simpa [markedPoint] using h)).elim
-  · exact (hsource _ (by simpa [markedPoint] using h)).elim
-  · exact (h21 (by simpa [markedPoint] using h)).elim
-  · rfl
-  · exact (htarget _ (by simpa [markedPoint] using h)).elim
-  · exact (hsource _ (by simpa [markedPoint] using h)).elim
-  · exact (htarget _ (by simpa [markedPoint] using h)).elim
-  · exact (htarget _ (by simpa [markedPoint] using h)).elim
-  · rfl
-  · exact (htarget _ (by simpa [markedPoint] using h)).elim
-  · exact (hsource _ (by simpa [markedPoint] using h)).elim
-  · exact (hsource _ (by simpa [markedPoint] using h)).elim
-  · exact (hsource _ (by simpa [markedPoint] using h)).elim
-  · rfl
+  all_goals first
+    | rfl
+    | exact (h12 (by simpa [markedPoint] using h)).elim
+    | exact (h21 (by simpa [markedPoint] using h)).elim
+    | (have he := htarget _ (by simpa [markedPoint] using h)
+       simp [headOne, headTwo, source, target] at he)
+    | (have he := htarget _ (by simpa [markedPoint] using h.symm)
+       simp [headOne, headTwo, source, target] at he)
+    | (have he := hsource _ (by simpa [markedPoint] using h)
+       simp [headOne, headTwo, source, target] at he)
+    | (have he := hsource _ (by simpa [markedPoint] using h.symm)
+       simp [headOne, headTwo, source, target] at he)
 
 private theorem marked_return_data (r : Kˣ) (u : K) (hu : u ≠ 0)
     (hrgen : ∀ z : Kˣ, ∃ n : ℕ, r ^ n = z) :
@@ -954,22 +882,44 @@ private theorem splice_is_cycle (r : Kˣ) (u : K) (hu : u ≠ 0)
     rw [hxi, hyj]
     have hsc : (markedCycle⁻¹).SameCycle i j :=
       (Equiv.Perm.sameCycle_inv).mpr (markedCycle_sameCycle i j)
-    obtain ⟨n, hn⟩ := hsc.exists_nat_pow_eq
-    have hp : ∀ n : ℕ,
-        ((markedEquiv r u).permCongr (markedCycle⁻¹) ^ n)
-          ((markedEquiv r u) i) = (markedEquiv r u) ((markedCycle⁻¹ ^ n) i) := by
-      intro n
+    exact (D5.S3.Combinatorics.PerfectMatchings.FiniteBandSwitch.same_cycle_perm_congr
+      (markedEquiv r u) markedCycle⁻¹ i j).mpr hsc
+  let f : Perm (carrier (K := K)) := p⁻¹ * J.ofSubtype
+  have hmarked : ∀ x y : S, f.SameCycle x y := by
+    intro x y
+    apply (same_cycle_of_first_visit f S J ?_ x y).mpr (hJcycle x y)
+    intro z
+    obtain ⟨n, hn, hend⟩ := hreturn (J z)
+    obtain ⟨hfirst, hjump⟩ := first_visit_reattach p⁻¹ S J z n hn
+    exact ⟨n, hfirst, hjump.trans hend⟩
+  -- Every old inverse edge is connected by the repaired orbit. At marked
+  -- tails, the already proved four-point return supplies the missing link.
+  have hstep : ∀ x : carrier (K := K), f.SameCycle x (p⁻¹ x) := by
+    intro x
+    by_cases hx : x ∈ S
+    · let z : S := ⟨x, hx⟩
+      have he : f (J⁻¹ z : S) = p⁻¹ x := by
+        simp [f, Perm.mul_apply, Perm.ofSubtype_apply_coe, z]
+      exact (hmarked z (J⁻¹ z)).trans
+        (he ▸ (Perm.SameCycle.refl f (J⁻¹ z : S)).apply_right)
+    · have he : f x = p⁻¹ x := by
+        simp [f, Perm.mul_apply, Perm.ofSubtype_apply_of_not_mem J hx]
+      exact he ▸ (Perm.SameCycle.refl f x).apply_right
+  have hfull : ∀ x y : carrier (K := K), f.SameCycle x y := by
+    have hto : ∀ x : carrier (K := K), ∃ z : S, f.SameCycle x z := by
+      intro x
+      obtain ⟨z, hz⟩ := hmeet x
+      obtain ⟨n, hn⟩ := hz.exists_nat_pow_eq
+      refine ⟨z, hn ▸ ?_⟩
       induction n with
-      | zero => rfl
+      | zero => exact Perm.SameCycle.refl f x
       | succ n ih =>
-        simp [pow_succ', Perm.mul_apply, Equiv.permCongr_apply, ih]
-    refine ⟨(n : ℤ), ?_⟩
-    change ((markedEquiv r u).permCongr (markedCycle⁻¹) ^ n)
-      ((markedEquiv r u) i) = (markedEquiv r u) j
-    rw [hp n, hn]
-  have hfull : ∀ x y : carrier (K := K),
-      (p⁻¹ * J.ofSubtype).SameCycle x y := by
-    exact reattached_all_same_cycle p⁻¹ S J hmeet hreturn hJcycle
+        rw [pow_succ', Perm.mul_apply]
+        exact ih.trans (hstep ((p⁻¹ ^ n) x))
+    intro x y
+    obtain ⟨zx, hx⟩ := hto x
+    obtain ⟨zy, hy⟩ := hto y
+    exact hx.trans ((hmarked zx zy).trans hy.symm)
   intro x y
   have hinv : (splice r u)⁻¹ = p⁻¹ * J.ofSubtype := by
     simpa [p, J] using splice_inverse_reattach r u
@@ -977,6 +927,305 @@ private theorem splice_is_cycle (r : Kˣ) (u : K) (hu : u ≠ 0)
     rw [hinv]
     exact hfull x y
   exact (Equiv.Perm.sameCycle_inv).mp hxy
+
+private theorem endpoint_vertices_injective (u : K) (hu : u ≠ 0) :
+    Function.Injective (vertexWithEndpoints u) := by
+  intro x y h
+  rcases x with x | i <;> rcases y with y | j
+  · exact congrArg Sum.inl ((vertices_bijective K).2.1 trivial trivial h)
+  · have hn := (vertices_bijective K).1 (show x ∈ Set.univ from trivial)
+    fin_cases j <;> exact (hn (congrArg Prod.fst h)).elim
+  · have hn := (vertices_bijective K).1 (show y ∈ Set.univ from trivial)
+    fin_cases i <;> exact (hn (congrArg Prod.fst h.symm)).elim
+  · fin_cases i <;> fin_cases j
+    · rfl
+    · exact (hu (congrArg Prod.snd h).symm).elim
+    · exact (hu (congrArg Prod.snd h)).elim
+    · rfl
+
+private def originalLabel (r : Kˣ) (u : K) : carrier (K := K) → ZMod 7 × K
+  | Sum.inl v => edgeLabel r (-alpha r u) v
+  | Sum.inr i => if i = 0 then (0, u) else (0, -u)
+
+private def labelReindex (r : Kˣ) (u : K) : Perm (carrier (K := K)) :=
+  swap (predecessorOne r u) source * swap (predecessorTwo r u) source
+
+private theorem label_reindex_target (r : Kˣ) (u : K) :
+    labelReindex r u target = target := by
+  simp [labelReindex, Perm.mul_apply, swap_apply_def, predecessorOne,
+    predecessorTwo, source, target]
+
+private theorem splice_label_reindex (r : Kˣ) (u : K) (hu : u ≠ 0)
+    (hr : (r : K) + 1 ≠ 0) (x : carrier (K := K)) :
+    vertexWithEndpoints u (splice r u x) - vertexWithEndpoints u x =
+      originalLabel r u (labelReindex r u x) := by
+  have hs := six_column_splice_seams r u hu hr
+  by_cases h1 : x = predecessorOne r u
+  · subst x
+    rw [hs.1]
+    simp [labelReindex, originalLabel, Perm.mul_apply, swap_apply_def,
+      predecessorOne, predecessorTwo, source, vertexWithEndpoints, headTwo,
+      vertex, column, beta]
+  by_cases h2 : x = predecessorTwo r u
+  · subst x
+    rw [hs.2.1]
+    simp [labelReindex, originalLabel, Perm.mul_apply, swap_apply_def,
+      predecessorOne, predecessorTwo, source, vertexWithEndpoints, target,
+      edgeLabel, vertex, column, lift]
+  by_cases hxS : x = source
+  · subst x
+    rw [hs.2.2.1]
+    have he : edgeLabel r (-alpha r u) (5, u - 2 * alpha r u) =
+        (3, alpha r u) := by
+      unfold edgeLabel
+      rw [lift_predecessor_two]
+      apply Prod.ext
+      · norm_num [vertex, column]
+      · simp [vertex, beta]
+        ring
+    simpa [labelReindex, originalLabel, Perm.mul_apply, swap_apply_def,
+      predecessorOne, predecessorTwo, source, headOne, vertexWithEndpoints,
+      vertex, column] using he.symm
+  by_cases hxT : x = target
+  · subst x
+    rw [hs.2.2.2, label_reindex_target]
+    simp [originalLabel, vertexWithEndpoints, target, source]
+  have hreindex : labelReindex r u x = x := by
+    simp only [labelReindex, Perm.mul_apply]
+    rw [swap_apply_of_ne_of_ne h2 hxS, swap_apply_of_ne_of_ne h1 hxS]
+  rw [hreindex]
+  rcases x with v | i
+  · have hp1 : liftWithEndpoints r (-alpha r u) (predecessorOne r u) =
+        headOne r u := by simp [liftWithEndpoints, predecessorOne, headOne, lift]
+    have hp2 := lift_second_head r u
+    have ha : liftWithEndpoints r (-alpha r u) (Sum.inl v) ≠ headOne r u := by
+      intro h
+      exact h1 ((liftWithEndpoints r (-alpha r u)).injective (h.trans hp1.symm))
+    have hb : liftWithEndpoints r (-alpha r u) (Sum.inl v) ≠ headTwo r u := by
+      intro h
+      exact h2 ((liftWithEndpoints r (-alpha r u)).injective (h.trans hp2.symm))
+    have hc : liftWithEndpoints r (-alpha r u) (Sum.inl v) ≠ target := by
+      exact Sum.inl_ne_inr
+    have hd : liftWithEndpoints r (-alpha r u) (Sum.inl v) ≠ source := by
+      exact Sum.inl_ne_inr
+    simp only [splice, Perm.mul_apply]
+    rw [swap_apply_of_ne_of_ne ha hb, swap_apply_of_ne_of_ne ha hc,
+      swap_apply_of_ne_of_ne ha hd]
+    rfl
+  · fin_cases i
+    · exact (hxS rfl).elim
+    · exact (hxT rfl).elim
+
+private theorem original_labels_bijective (r : Kˣ) (u : K)
+    (hr : (r : K) + 1 ≠ 0) :
+    Set.BijOn (originalLabel r u) {x | x ≠ target}
+      {v | v.1 ≠ 0 ∨ v = (0, u)} := by
+  have hb := labels_bijective r hr (-alpha r u)
+  constructor
+  · intro x hx
+    rcases x with v | i
+    · exact Or.inl (hb.1 trivial)
+    · fin_cases i
+      · exact Or.inr rfl
+      · exact (hx rfl).elim
+  constructor
+  · intro x hx y hy h
+    rcases x with v | i <;> rcases y with w | j
+    · exact congrArg Sum.inl (hb.2.1 trivial trivial h)
+    · fin_cases j
+      · exact ((hb.1 (show v ∈ Set.univ from trivial)) (congrArg Prod.fst h)).elim
+      · exact (hy rfl).elim
+    · fin_cases i
+      · exact ((hb.1 (show w ∈ Set.univ from trivial)) (congrArg Prod.fst h.symm)).elim
+      · exact (hx rfl).elim
+    · fin_cases i <;> fin_cases j
+      · rfl
+      · exact (hy rfl).elim
+      · exact (hx rfl).elim
+      · exact (hx rfl).elim
+  · intro v hv
+    rcases hv with hv | rfl
+    · obtain ⟨x, _, hx⟩ := hb.2.2 hv
+      exact ⟨Sum.inl x, Sum.inl_ne_inr, hx⟩
+    · exact ⟨source, by simp [source, target], rfl⟩
+
+private theorem splice_labels_bijective (r : Kˣ) (u : K) (hu : u ≠ 0)
+    (hr : (r : K) + 1 ≠ 0) :
+    Set.BijOn (fun x => vertexWithEndpoints u (splice r u x) -
+      vertexWithEndpoints u x) {x | x ≠ target}
+      {v | v.1 ≠ 0 ∨ v = (0, u)} := by
+  have hfix := label_reindex_target r u
+  have hmap : ∀ x, labelReindex r u x ≠ target ↔ x ≠ target := by
+    intro x
+    rw [← hfix, (labelReindex r u).injective.eq_iff]
+  have hb := original_labels_bijective r u hr
+  constructor
+  · intro x hx
+    rw [splice_label_reindex r u hu hr]
+    exact hb.1 ((hmap x).mpr hx)
+  constructor
+  · intro x hx y hy h
+    simp only [splice_label_reindex r u hu hr] at h
+    exact (labelReindex r u).injective
+      (hb.2.1 ((hmap x).mpr hx) ((hmap y).mpr hy) h)
+  · intro v hv
+    obtain ⟨x, hx, he⟩ := hb.2.2 hv
+    refine ⟨(labelReindex r u).symm x, ?_, ?_⟩
+    · apply (hmap _).mp
+      simpa using hx
+    · rw [splice_label_reindex r u hu hr, Equiv.apply_symm_apply, he]
+
+/-- The actual overlapping two-head surgery gives a complete relative path.
+The bounded functions also specify vertex and label lists, including all
+prefixes, the full interval, and both endpoint values. -/
+theorem exists_characteristic_seven_relative_path (K : Type*)
+    [Field K] [Finite K] [CharP K 7] (u : K) (hu : u ≠ 0) :
+    let N := 6 * Nat.card K + 1
+    ∃ v w : ℕ → ZMod 7 × K,
+      v 0 = (0, 0) ∧ v N = (0, u) ∧
+      Function.Injective (fun i : Fin (N + 1) => v i.val) ∧
+      Set.range (fun i : Fin (N - 1) => v (i.val + 1)) = {z | z.1 ≠ 0} ∧
+      (∀ n < N, w n = v (n + 1) - v n) ∧
+      Function.Injective (fun i : Fin N => w i.val) ∧
+      Set.range (fun i : Fin N => w i.val) = {z | z.1 ≠ 0 ∨ z = (0, u)} ∧
+      (List.ofFn (fun i : Fin (N + 1) => v i.val)).length = 6 * Nat.card K + 2 ∧
+      (List.ofFn (fun i : Fin N => w i.val)).length = 6 * Nat.card K + 1 ∧
+      (List.ofFn (fun i : Fin (N + 1) => v i.val)).Nodup ∧
+      (List.ofFn (fun i : Fin N => w i.val)).Nodup ∧
+      (∀ n ≤ N, (∑ i ∈ Finset.range n, w i) = v n) ∧
+      Function.Injective (fun n : Fin (N + 1) => ∑ i ∈ Finset.range n.val, w i) ∧
+      (∀ a b : ℕ, a < b → b ≤ N → (∑ i ∈ Finset.Ico a b, w i) ≠ 0) ∧
+      (∑ i ∈ Finset.range N, w i) = (0, u) := by
+  classical
+  letI : Fintype K := Fintype.ofFinite K
+  letI : Fintype (carrier (K := K)) := by
+    change Fintype ((Fin 6 × K) ⊕ Fin 2)
+    infer_instance
+  obtain ⟨r, hr⟩ := IsCyclic.exists_generator (α := Kˣ)
+  have hrgen : ∀ z : Kˣ, ∃ n : ℕ, r ^ n = z := by
+    intro z
+    exact (Submonoid.mem_powers_iff z r).mp (mem_powers_iff_mem_zpowers.mpr (hr z))
+  have hrn := generator_add_one_ne_zero r hrgen
+  let N := 6 * Nat.card K + 1
+  let q := splice r u
+  have hc : Fintype.card (carrier (K := K)) = N + 1 := by
+    simp [carrier, N, Nat.card_eq_fintype_card]
+  have hcycle : q.IsCycleOn (Finset.univ : Finset (carrier (K := K))) := by
+    refine ⟨?_, ?_⟩
+    · simpa using q.bijective.bijOn_univ
+    · intro x _ y _
+      exact splice_is_cycle r u hu hrgen x y
+  let e : ℕ → carrier (K := K) := fun n => (q ^ n) source
+  have einj : Function.Injective (fun i : Fin (N + 1) => e i.val) := by
+    intro i j hij
+    apply Fin.ext
+    exact hcycle.injOn_pow_apply (Finset.mem_univ source)
+      (by simpa [hc] using i.isLt) (by simpa [hc] using j.isLt) hij
+  have esurj : ∀ x : carrier (K := K), ∃ i : Fin (N + 1), e i.val = x := by
+    intro x
+    obtain ⟨n, hn, he⟩ := hcycle.exists_pow_eq (Finset.mem_univ source) (Finset.mem_univ x)
+    exact ⟨⟨n, by simpa [hc] using hn⟩, he⟩
+  have eN : e N = target := by
+    apply q.injective
+    have hclose := (splice_key_apply r u hu).2.2.2
+    change q (e N) = q target
+    rw [hclose]
+    change (q * q ^ N) source = source
+    rw [← pow_succ']
+    simpa [hc] using hcycle.pow_card_apply (Finset.mem_univ source)
+  have enotT : ∀ n < N, e n ≠ target := by
+    intro n hn he
+    have hi : (⟨n, by omega⟩ : Fin (N + 1)) = ⟨N, by omega⟩ :=
+      einj (he.trans eN.symm)
+    have := congrArg Fin.val hi
+    omega
+  let v : ℕ → ZMod 7 × K := fun n => vertexWithEndpoints u (e n)
+  let w : ℕ → ZMod 7 × K := fun n => v (n + 1) - v n
+  have hv0 : v 0 = (0, 0) := rfl
+  have hvN : v N = (0, u) := by simp [v, eN, vertexWithEndpoints, target]
+  have vinj : Function.Injective (fun i : Fin (N + 1) => v i.val) := by
+    intro i j h
+    exact einj (endpoint_vertices_injective u hu h)
+  have einterior : ∀ n, 0 < n → n < N → ∃ x : Fin 6 × K, e n = Sum.inl x := by
+    intro n hn hnN
+    rcases he : e n with x | i
+    · exact ⟨x, rfl⟩
+    · fin_cases i
+      · have hi : (⟨n, by omega⟩ : Fin (N + 1)) = ⟨0, by dsimp [N]; omega⟩ := einj he
+        have := congrArg Fin.val hi
+        omega
+      · exact (enotT n hnN he).elim
+  have interior : Set.range (fun i : Fin (N - 1) => v (i.val + 1)) = {z | z.1 ≠ 0} := by
+    ext z
+    constructor
+    · rintro ⟨i, rfl⟩
+      obtain ⟨x, hx⟩ := einterior (i.val + 1) (by omega) (by have := i.isLt; dsimp [N] at *; omega)
+      change (vertexWithEndpoints u (e (i.val + 1))).1 ≠ 0
+      rw [hx]
+      exact (vertices_bijective K).1 trivial
+    · intro hz
+      obtain ⟨x, _, hx⟩ := (vertices_bijective K).2.2 hz
+      obtain ⟨i, hi⟩ := esurj (Sum.inl x)
+      have hi0 : 0 < i.val := by
+        by_contra h
+        have hi0 : i.val = 0 := by omega
+        have hbad : source (K := K) = Sum.inl x := by simpa [e, hi0] using hi
+        exact Sum.inr_ne_inl hbad
+      have hiN : i.val < N := by
+        have hne : i.val ≠ N := by
+          intro he
+          have hbad : target (K := K) = Sum.inl x := by simpa [he, eN] using hi
+          exact Sum.inr_ne_inl hbad
+        have := i.isLt
+        omega
+      refine ⟨⟨i.val - 1, by omega⟩, ?_⟩
+      change vertexWithEndpoints u (e (i.val - 1 + 1)) = z
+      rw [Nat.sub_add_cancel (by omega), hi]
+      exact hx
+  have hw (n : ℕ) : w n = vertexWithEndpoints u (q (e n)) - vertexWithEndpoints u (e n) := by
+    dsimp [w, v, e]
+    rw [pow_succ', Perm.mul_apply]
+  have labelbij := splice_labels_bijective r u hu hrn
+  have winj : Function.Injective (fun i : Fin N => w i.val) := by
+    intro i j hij
+    have heij : e i.val = e j.val := labelbij.2.1 (enotT _ i.isLt)
+      (enotT _ j.isLt) (by simpa only [hw] using hij)
+    have hi : (⟨i.val, by omega⟩ : Fin (N + 1)) = ⟨j.val, by omega⟩ := einj heij
+    exact Fin.ext (congrArg Fin.val hi)
+  have labels : Set.range (fun i : Fin N => w i.val) = {z | z.1 ≠ 0 ∨ z = (0, u)} := by
+    ext z
+    constructor
+    · rintro ⟨i, rfl⟩
+      rw [hw]
+      exact labelbij.1 (enotT _ i.isLt)
+    · intro hz
+      obtain ⟨x, hx, he⟩ := labelbij.2.2 hz
+      obtain ⟨i, hi⟩ := esurj x
+      have hiN : i.val < N := by
+        have hne : i.val ≠ N := by
+          intro heq
+          exact hx (hi.symm.trans (by rw [heq, eN]))
+        have := i.isLt
+        omega
+      exact ⟨⟨i.val, hiN⟩, by rw [hw, hi]; exact he⟩
+  have hsum (n : ℕ) : (∑ i ∈ Finset.range n, w i) = v n := by
+    have h := Finset.sum_range_sub v n
+    simpa only [hv0, sub_zero] using h
+  refine ⟨v, w, hv0, hvN, vinj, interior, (fun _ _ => rfl), winj, labels,
+    ?_, ?_, ?_, ?_, (fun n _ => hsum n), ?_, ?_, ?_⟩
+  · simp [N]
+  · simp [N]
+  · exact List.nodup_ofFn.mpr vinj
+  · exact List.nodup_ofFn.mpr winj
+  · simpa only [hsum] using vinj
+  · intro a b hab hb hzero
+    have hi : (∑ i ∈ Finset.Ico a b, w i) = v b - v a := by
+      rw [Finset.sum_Ico_eq_sub _ hab.le, hsum, hsum]
+    have heq : v b = v a := sub_eq_zero.mp (hi.symm.trans hzero)
+    have hij : (⟨b, by omega⟩ : Fin (N + 1)) = ⟨a, by omega⟩ := vinj heq
+    have := congrArg Fin.val hij
+    omega
+  · rw [hsum, hvN]
 
 end
 

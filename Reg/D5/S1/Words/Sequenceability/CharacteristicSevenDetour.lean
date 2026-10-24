@@ -16,6 +16,7 @@ namespace Reg.D5.S1.Words.Sequenceability.CharacteristicSevenDetour
 open _root_.D5.S1.Words.Sequenceability.CharacteristicSevenDetour
 open _root_.D5.S3.ConceptDynamics.InformationEscape.DependentFamily
 open LeanInformationAudit
+open scoped BigOperators
 
 local instance : Fact (Nat.Prime 7) := ⟨by decide⟩
 
@@ -109,6 +110,210 @@ def liftAudit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
     coordinates := #[0, 4, 5]
     readouts := #[{
       path := #["body", "body", "body", "body", "body", "arg", "body", "arg", "arg", "fn", "arg", "fn", "fn", "arg"]
+      stateBinder := 0
+      functionOperand := true
+      stateOperand := none
+      booleanPredicate := false }] }
+  continuation := .unknown
+  familyRecord := none
+  options := #[]
+
+
+abbrev SeamsParams := Σ K : Type u, Σ f : Field K, K
+
+abbrev seamsSignature : Signature where
+  Params := SeamsParams.{u}
+  State p := carrier (K := p.1)
+  Role := Unit
+  finiteRole := inferInstance
+  nonemptyRole := inferInstance
+  Output _ p := ZMod 7 × p.1
+  Anchor := Empty
+  finiteAnchor := inferInstance
+
+def seamsActual : Realization seamsSignature.{u} :=
+  realize seamsSignature (fun _ p v => by
+    letI := p.2.1
+    exact vertexWithEndpoints p.2.2 v) (fun e => nomatch e)
+
+def seamsBad : Realization seamsSignature.{u} :=
+  realize seamsSignature (fun _ p _ => by
+    letI := p.2.1
+    exact (0, 0)) (fun e => nomatch e)
+
+abbrev seamsArena : Arena where
+  signature := seamsSignature.{u}
+  Law R := ∀ (K : Type u) [f : Field K] [CharP K 7]
+    (r : Kˣ) (u : K) (_hu : u ≠ 0) (_hr : (r : K) + 1 ≠ 0),
+    (splice r u (predecessorOne r u) = headTwo r u) ∧
+    (splice r u (predecessorTwo r u) = target) ∧
+    (splice r u source = headOne r u) ∧
+    (splice r u target = source) ∧
+    (R.readout () ⟨K, f, u⟩ (headTwo r u) -
+        R.readout () ⟨K, f, u⟩ (predecessorOne r u) = (0, u)) ∧
+    (R.readout () ⟨K, f, u⟩ target -
+        R.readout () ⟨K, f, u⟩ (predecessorTwo r u) = (2, 2 * alpha r u)) ∧
+    (R.readout () ⟨K, f, u⟩ (headOne r u) -
+        R.readout () ⟨K, f, u⟩ source = (3, alpha r u)) ∧
+    (R.readout () ⟨K, f, u⟩ source -
+        R.readout () ⟨K, f, u⟩ target = (0, -u))
+
+private theorem seams_bad_law : ¬ seamsArena.{u}.Law seamsBad := by
+  intro h
+  let K := ULift.{u} (ZMod 7)
+  obtain ⟨_, _, _, _, he, _, _, _⟩ := h K 1 1 (by simp) (by norm_num)
+  have hz : (0 : K) = 1 := by
+    simpa [seamsBad, realize] using congrArg Prod.snd he
+  exact zero_ne_one hz
+
+def seamsFamily : Registration seamsArena.{u}
+    (type_of% (@six_column_splice_seams.{u})) where
+  actual := seamsActual
+  bridge := Iff.rfl
+  variation := ⟨six_column_splice_seams, seamsBad, seams_bad_law⟩
+  sensitivity := by
+    constructor
+    · intro i
+      refine ⟨seamsBad, ?_, rfl, seams_bad_law⟩
+      intro j hj
+      exact (hj (Subsingleton.elim _ _)).elim
+    · intro e
+      exact nomatch e
+  dependence := by
+    intro i
+    let K := ULift.{u} (ZMod 7)
+    refine ⟨⟨K, inferInstance, 1⟩, source, target, ?_⟩
+    simp [seamsActual, realize, vertexWithEndpoints, source, target]
+
+def seamsAudit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
+    (@six_column_splice_seams.{u}) (Realization seamsSignature.{u}) Unit Unit where
+  unitName := `D5.S1.Words.Sequenceability.CharacteristicSevenDetour.six_column_splice_seams.__information_unit
+  realizationName := `Reg.D5.S1.Words.Sequenceability.CharacteristicSevenDetour.seamsFamily
+  realizationSource := none
+  generated := false
+  arena := .source ⟨seamsArena⟩
+  objectArena := .source ⟨seamsArena⟩
+  catalog := Lean.Name.anonymous
+  localNames := false
+  realization := .source seamsArena ⟨seamsFamily⟩
+  correspondence := { stage := .evidence, objectStage := .evidence }
+  bundleNonempty := .absent
+  readout := some (realize seamsSignature seamsActual.readout seamsActual.anchor)
+  variation := .absent
+  sensitivity := .absent
+  partialSensitivity := none
+  escapeFrom := none
+  sourceSelection := some {
+    owner := `D5.S1.Words.Sequenceability.CharacteristicSevenDetour
+    definition := none
+    coordinates := #[0, 1, 3, 4]
+    readouts := #[{
+      path := #["body", "body", "body", "body", "body", "body", "body", "arg", "arg", "arg", "arg", "fn", "arg", "fn", "arg"]
+      stateBinder := 0
+      functionOperand := true
+      stateOperand := none
+      booleanPredicate := false }] }
+  continuation := .unknown
+  familyRecord := none
+  options := #[]
+
+
+abbrev PathParams := Σ K : Type u, Field K
+
+abbrev pathSignature : Signature where
+  Params := PathParams.{u}
+  State p := (ℕ → ZMod 7 × p.1) × (ℕ → ZMod 7 × p.1)
+  Role := Unit
+  finiteRole := inferInstance
+  nonemptyRole := inferInstance
+  Output _ p := ℕ → ZMod 7 × p.1
+  Anchor := Empty
+  finiteAnchor := inferInstance
+
+def pathActual : Realization pathSignature.{u} :=
+  realize pathSignature (fun _ _ p => p.2) (fun e => nomatch e)
+
+def pathBad : Realization pathSignature.{u} :=
+  realize pathSignature (fun _ p _ _ => by
+    letI := p.2
+    exact (0, 0)) (fun e => nomatch e)
+
+abbrev pathArena : Arena where
+  signature := pathSignature.{u}
+  Law R := ∀ (K : Type u) [f : Field K] [Finite K] [CharP K 7]
+    (u : K) (_hu : u ≠ 0),
+    let N := 6 * Nat.card K + 1;
+    ∃ v w : ℕ → ZMod 7 × K,
+      v 0 = (0, 0) ∧ v N = (0, u) ∧
+      Function.Injective (fun i : Fin (N + 1) => v i.val) ∧
+      Set.range (fun i : Fin (N - 1) => v (i.val + 1)) = {z | z.1 ≠ 0} ∧
+      (∀ n < N, (R.readout () ⟨K, f⟩ (v, w)) n = v (n + 1) - v n) ∧
+      Function.Injective (fun i : Fin N => (R.readout () ⟨K, f⟩ (v, w)) i.val) ∧
+      Set.range (fun i : Fin N => (R.readout () ⟨K, f⟩ (v, w)) i.val) = {z | z.1 ≠ 0 ∨ z = (0, u)} ∧
+      (List.ofFn (fun i : Fin (N + 1) => v i.val)).length = 6 * Nat.card K + 2 ∧
+      (List.ofFn (fun i : Fin N => (R.readout () ⟨K, f⟩ (v, w)) i.val)).length = 6 * Nat.card K + 1 ∧
+      (List.ofFn (fun i : Fin (N + 1) => v i.val)).Nodup ∧
+      (List.ofFn (fun i : Fin N => (R.readout () ⟨K, f⟩ (v, w)) i.val)).Nodup ∧
+      (∀ n ≤ N, (∑ i ∈ Finset.range n, (R.readout () ⟨K, f⟩ (v, w)) i) = v n) ∧
+      Function.Injective (fun n : Fin (N + 1) => ∑ i ∈ Finset.range n.val, (R.readout () ⟨K, f⟩ (v, w)) i) ∧
+      (∀ a b : ℕ, a < b → b ≤ N → (∑ i ∈ Finset.Ico a b, (R.readout () ⟨K, f⟩ (v, w)) i) ≠ 0) ∧
+      (∑ i ∈ Finset.range N, (R.readout () ⟨K, f⟩ (v, w)) i) = (0, u)
+
+private theorem path_bad_law : ¬ pathArena.{u}.Law pathBad := by
+  intro h
+  let K := ULift.{u} (ZMod 7)
+  obtain ⟨v, w, _, _, _, _, _, _, _, _, _, _, _, _, _, _, htotal⟩ :=
+    h K 1 (by simp)
+  have hz : (0 : K) = 1 := by
+    simpa [pathBad, realize] using congrArg Prod.snd htotal
+  exact zero_ne_one hz
+
+def pathFamily : Registration pathArena.{u}
+    (type_of% (@exists_characteristic_seven_relative_path.{u})) where
+  actual := pathActual
+  bridge := Iff.rfl
+  variation := ⟨exists_characteristic_seven_relative_path, pathBad, path_bad_law⟩
+  sensitivity := by
+    constructor
+    · intro i
+      refine ⟨pathBad, ?_, rfl, path_bad_law⟩
+      intro j hj
+      exact (hj (Subsingleton.elim _ _)).elim
+    · intro e
+      exact nomatch e
+  dependence := by
+    intro i
+    let K := ULift.{u} (ZMod 7)
+    refine ⟨⟨K, inferInstance⟩, ((fun _ => (0, (0 : K))), (fun _ => (0, 0))),
+      ((fun _ => (0, (0 : K))), (fun _ => (0, 1))), ?_⟩
+    intro he
+    have hz : (0 : K) = 1 := congrArg (fun f => (f 0).2) he
+    exact zero_ne_one hz
+
+def pathAudit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
+    (@exists_characteristic_seven_relative_path.{u}) (Realization pathSignature.{u}) Unit Unit where
+  unitName := `D5.S1.Words.Sequenceability.CharacteristicSevenDetour.exists_characteristic_seven_relative_path.__information_unit
+  realizationName := `Reg.D5.S1.Words.Sequenceability.CharacteristicSevenDetour.pathFamily
+  realizationSource := none
+  generated := false
+  arena := .source ⟨pathArena⟩
+  objectArena := .source ⟨pathArena⟩
+  catalog := Lean.Name.anonymous
+  localNames := false
+  realization := .source pathArena ⟨pathFamily⟩
+  correspondence := { stage := .evidence, objectStage := .evidence }
+  bundleNonempty := .absent
+  readout := some (realize pathSignature pathActual.readout pathActual.anchor)
+  variation := .absent
+  sensitivity := .absent
+  partialSensitivity := none
+  escapeFrom := none
+  sourceSelection := some {
+    owner := `D5.S1.Words.Sequenceability.CharacteristicSevenDetour
+    definition := none
+    coordinates := #[0, 1, 4]
+    readouts := #[{
+      path := #["body", "body", "body", "body", "body", "body", "body", "arg", "body", "arg", "body", "arg", "arg", "arg", "arg", "fn", "arg", "body", "body", "fn", "arg"]
       stateBinder := 0
       functionOperand := true
       stateOperand := none
