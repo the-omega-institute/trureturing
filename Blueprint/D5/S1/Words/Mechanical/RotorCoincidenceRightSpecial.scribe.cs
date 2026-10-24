@@ -173,7 +173,10 @@ internal sealed class RotorCoincidenceRightSpecialDocument : IScribeDocumentDefi
                         + "right-special w of that length to equal u; conversely, equality with u "
                         + "gives the right-special condition. These are the two directions of "
                         + "the claimed equivalence."))),
-                DescribeRole.Theorem))));
+                DescribeRole.Theorem,
+                openProblemResolutionClaim: new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("krishnaswami-rameshan-2026-rotor-right-special-word"),
+                    ResolutionKind.Proved)))));
 
     private static Formula CuttingFormula()
     {
