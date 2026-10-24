@@ -12,7 +12,7 @@ internal sealed class HeadleyTwoGroupInductionDocument : IScribeDocumentDefiniti
                 DescribeId.Create("headley-all-noncyclic-two-groups-r-cycle"),
                 DeclarationHandle.Create("D5/S3/FiniteGroups/HeadleyTwoGroupInduction.finite_noncyclic_two_group_r_cycle"),
                 H("The unbounded two-primary induction"),
-                StatementSource.FromLean(), AssessedProvenance.FromRepo(),
+                StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
                 Blocks(
                     Paragraph(Text("Let G be a finite additive abelian group whose multiplicative type tag is a two-group, and suppose G is not cyclic. Then G has an RCycle: a permutation fixing zero and acting as a single cycle on every nonzero element, together with a permutation equal to successor(x)-x at every x. The conclusion includes all elementary ranks at least two, in particular C2 cubed, and the R-only group C2 times C4.")),
                     Paragraph(Text("The finite abelian structure theorem gives cyclic prime-power coordinates. Every positive factor prime divides the two-primary group cardinality and is therefore two; zero exponents are retained as trivial factors. Noncyclicity forces two positive exponents. Induction is on their unrestricted natural exponent sum and is generalized over all finite coordinate families.")),
