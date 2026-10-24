@@ -27,17 +27,20 @@ internal static partial class CleanLanesCommand
         if (merged is null)
             return new("merged_state_unknown", "merged_state_unknown");
 
-        var log = ReadAllocationLog(Path.Combine(item.GitDirectory!, "logs", "HEAD"), item.Head);
+        var log = ReadAllocationLog(Path.Combine(item.GitDirectory!, "logs", "HEAD"), item.Head, treeLog: true);
         if (log.Error is not null)
             return new("update_unknown", "update_unknown", log.Error);
         var allocated = log.Allocated!.Value;
-        if (item.Branch is not null)
+        var branches = AllocationBranches(log, item.Branch);
+        foreach (var branch in branches)
         {
             AllocationLog branchLog;
             try
             {
                 var common = ResolveCommonGitDirectory(item.Path, runner);
-                branchLog = ReadAllocationLog(Path.Combine(common, "logs", "refs", "heads", item.Branch), item.Head);
+                var tip = branch == item.Branch ? item.Head
+                    : ResolveCommit(item.Path, "refs/heads/" + branch, runner);
+                branchLog = ReadAllocationLog(Path.Combine(common, "logs", "refs", "heads", branch), tip);
             }
             catch (Exception exception) when (exception is not OutOfMemoryException)
             {
@@ -82,7 +85,7 @@ internal static partial class CleanLanesCommand
         }
     }
 
-    private static AllocationLog ReadAllocationLog(string path, string observedHead)
+    private static AllocationLog ReadAllocationLog(string path, string observedHead, bool treeLog = false)
     {
         try
         {
@@ -93,16 +96,37 @@ internal static partial class CleanLanesCommand
             using var reader = new StringReader(Decode(bytes));
             long? allocated = null;
             string? newHead = null;
+            var branches = new HashSet<string>(StringComparer.Ordinal);
+            var explicitAllocation = false;
             while (reader.ReadLine() is { } line)
             {
                 if (!TryParseHeadLogRecord(line, out var record)) return new(Error: "reflog_invalid");
                 allocated ??= record!.Updated;
                 newHead = record!.NewHead;
+                const string allocationPrefix = "worktree-allocation:";
+                if (treeLog && record.Message.StartsWith(allocationPrefix, StringComparison.Ordinal))
+                {
+                    var token = record.Message[allocationPrefix.Length..];
+                    if (token.Length != 32 || token.Any(static c => c is not (>= '0' and <= '9' or >= 'a' and <= 'f'))
+                        || record.OldHead != record.NewHead)
+                        return new(Error: "allocation_record_invalid");
+                    allocated = Math.Max(allocated.Value, record.Updated);
+                    explicitAllocation = true;
+                    branches.Clear();
+                }
+                const string prefix = "checkout: moving from ";
+                if (treeLog && record.Message.StartsWith(prefix, StringComparison.Ordinal)
+                    && record.Message.LastIndexOf(" to ", StringComparison.Ordinal) is var separator
+                    && separator >= prefix.Length)
+                {
+                    var branch = record.Message[(separator + 4)..];
+                    if (IsAllocationBranchName(branch)) branches.Add(branch);
+                }
             }
             if (allocated is null) return new(Error: "reflog_empty");
             if (!string.Equals(newHead, observedHead, StringComparison.Ordinal))
                 return new(Error: "reflog_head_mismatch");
-            return new(allocated);
+            return new(allocated, Branches: branches, ExplicitAllocation: explicitAllocation);
         }
         catch (Exception exception) when (exception is not OutOfMemoryException)
         {
@@ -110,7 +134,24 @@ internal static partial class CleanLanesCommand
         }
     }
 
-    private sealed record AllocationLog(long? Allocated = null, string? Error = null);
+    private static IEnumerable<string> AllocationBranches(AllocationLog log, string? attached)
+    {
+        var branches = new HashSet<string>(log.Branches!, StringComparer.Ordinal);
+        if (attached is not null && !log.ExplicitAllocation) branches.Add(attached);
+        return branches;
+    }
+
+    private static bool IsAllocationBranchName(string value) =>
+        value.Length != 0 && value != "HEAD" && !IsObjectOid(value)
+        && value[0] != '/' && value[^1] is not ('/' or '.')
+        && !value.Contains("..", StringComparison.Ordinal)
+        && !value.Contains("@{", StringComparison.Ordinal)
+        && !value.Any(static c => c <= ' ' || c is '~' or '^' or ':' or '?' or '*' or '[' or '\\' or '\u007f')
+        && value.Split('/').All(static part => part.Length != 0 && part[0] != '.'
+            && !part.EndsWith(".lock", StringComparison.Ordinal));
+
+    private sealed record AllocationLog(long? Allocated = null, string? Error = null,
+        HashSet<string>? Branches = null, bool ExplicitAllocation = false);
 
     private sealed record ReclaimSelection(string? BlockReason, string Reason,
         string? Detail = null, long? LockModifiedTicks = null)

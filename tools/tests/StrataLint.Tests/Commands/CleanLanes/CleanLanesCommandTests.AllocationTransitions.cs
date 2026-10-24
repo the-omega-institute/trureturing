@@ -57,4 +57,32 @@ public sealed partial class CleanLanesCommandTests
         Assert.Equal("merged_to_dev", ReasonFor(result.Output, lane));
         Assert.False(Directory.Exists(lane));
     }
+
+    [Theory]
+    [InlineData(false)]
+    [InlineData(true)]
+    public void ExplicitAllocationRecordSurvivesBranchRetirement(bool detach)
+    {
+        using var fixture = new CleanLanesFixture();
+        var lane = fixture.AddWorkedLane("harness/allocation-record-origin");
+        var allocated = fixture.LastUpdate(lane).AddDays(2);
+        var saved = fixture.Head(lane);
+        CleanLanesFixture.GitAt(lane, allocated, "switch", "-c", "harness/allocation-record-claim");
+        CleanLanesFixture.GitAt(lane, allocated, "update-ref", "-m",
+            "worktree-allocation:0123456789abcdef0123456789abcdef", "HEAD", saved, saved);
+        if (detach)
+            CleanLanesFixture.GitAt(lane, allocated.AddSeconds(60), "checkout", "--detach", "HEAD");
+        else
+            CleanLanesFixture.GitAt(lane, allocated.AddSeconds(60), "switch", "harness/allocation-record-origin");
+        CleanLanesFixture.Git(lane, "branch", "-D", "harness/allocation-record-claim");
+
+        var recent = fixture.RunAt(allocated.AddSeconds(10799), "--force", "--lanes-only");
+        var elapsed = fixture.RunAt(allocated.AddSeconds(10800), "--force", "--lanes-only");
+
+        Assert.True(recent.Success, recent.Error);
+        Assert.True(elapsed.Success, elapsed.Error);
+        Assert.Equal("recently_updated", ReasonFor(recent.Output, lane));
+        Assert.Equal("merged_to_dev", ReasonFor(elapsed.Output, lane));
+        Assert.False(Directory.Exists(lane));
+    }
 }

@@ -116,7 +116,7 @@ internal static partial class CleanLanesCommand
         // The message separator follows the complete identity, timestamp and
         // timezone; a committer name can itself contain a TAB.
         var match = Regex.Match(line,
-            @"^(?<old>[0-9a-fA-F]+) (?<new>[0-9a-fA-F]+) (?<name>[^<>]+) <[^<>]*> (?<time>[0-9]+) (?<zone>[+-][0-9]{4})(?:\t.*)?$",
+            @"^(?<old>[0-9a-fA-F]+) (?<new>[0-9a-fA-F]+) (?<name>[^<>]+) <[^<>]*> (?<time>[0-9]+) (?<zone>[+-][0-9]{4})(?:\t(?<message>.*))?$",
             RegexOptions.CultureInvariant);
         var oldHead = match.Groups["old"].Value;
         var newHead = match.Groups["new"].Value;
@@ -127,11 +127,11 @@ internal static partial class CleanLanesCommand
             || !long.TryParse(match.Groups["time"].Value, NumberStyles.None,
                 CultureInfo.InvariantCulture, out var timestamp)
             || !IsTimezone(match.Groups["zone"].Value)) return false;
-        record = new(newHead, timestamp);
+        record = new(oldHead, newHead, timestamp, match.Groups["message"].Value);
         return true;
     }
 
-    private sealed record HeadLogRecord(string NewHead, long Updated);
+    private sealed record HeadLogRecord(string OldHead, string NewHead, long Updated, string Message);
 
     private static bool IsTimezone(string value) =>
         value.Length == 5
