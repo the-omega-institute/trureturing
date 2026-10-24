@@ -62,11 +62,15 @@ internal sealed class ZhangTianSteinerTreeRadiusDocument : IScribeDocumentDefini
                 "Choose terminal sets attaining the Steiner diameter and the anchored radius. "
                     + "The pointwise inequality retains the entire anchor hull, whose edge count is at least r−1. "
                     + "This supplies the additive r(r−1) correction. Division by the positive rational k−r gives the displayed inequality.",
-                DescribeRole.Theorem, AssessedProvenance.FromRepo(Source))),
+                DescribeRole.Theorem, AssessedProvenance.FromRepo(Source),
+                new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("zhang-tian-2025-steiner-diameter-radius-trees"),
+                    ResolutionKind.Proved))),
         []));
 
     private static DocumentBlock Node(string name, string title, Formula formula, string prose,
-        DescribeRole role, AssessedProvenance provenance) => Describe.Lean(
+        DescribeRole role, AssessedProvenance provenance,
+        OpenProblemResolutionClaim? resolution = null) => Describe.Lean(
             DescribeId.Create(name switch {
                 "steinerDist" => "zt-distance", "steinerEcc" => "zt-eccentricity",
                 "steinerDiam" => "zt-diameter", "steinerSetEcc" => "zt-set-eccentricity",
@@ -74,7 +78,7 @@ internal sealed class ZhangTianSteinerTreeRadiusDocument : IScribeDocumentDefini
                 "cutEdges" => "zt-cut-edges", "steinerDist_cut" => "zt-cut-characterization",
                 "pointwise_bound" => "zt-pointwise", _ => "zt-" + name
             }), DeclarationHandle.Create(Prefix + name), H(title),
-            StatementSource.FromAuthor(formula), provenance, Blocks(Paragraph(Text(prose))), role);
+            StatementSource.FromAuthor(formula), provenance, Blocks(Paragraph(Text(prose))), role, resolution);
 
     private static Formula Call(string name, params Formula[] args) =>
         new Formula.Apply(Seq(Operatorname, Grp(F.Id(name))), [.. args]);

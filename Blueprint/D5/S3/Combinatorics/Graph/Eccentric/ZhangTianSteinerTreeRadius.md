@@ -138,6 +138,10 @@ $$\forall (V : Type), [\operatorname{Fintype}\left(V\right)], [\operatorname{Dec
 
 *Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/Graph/Eccentric/ZhangTianSteinerTreeRadius.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/zhang-tian-2025-steiner-diameter-radius-trees` (proved) by `D5/S3/Combinatorics/Graph/Eccentric/ZhangTianSteinerTreeRadius.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"zhang-tian-2025-steiner-diameter-radius-trees","declaration_gid":"D5/S3/Combinatorics/Graph/Eccentric/ZhangTianSteinerTreeRadius.result","resolution_kind":"proved"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* Qingnan Zhang; Yingzhi Tian (2025). *On the Steiner k-diameter and Steiner (k, k′)-radius of trees*. DOI: [10.48550/arXiv.2511.22492](https://doi.org/10.48550/arXiv.2511.22492). URL: <https://arxiv.org/abs/2511.22492v1>.
