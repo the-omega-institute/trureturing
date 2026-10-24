@@ -20,18 +20,12 @@ def kite (n : ℕ) : Matrix (Fin n) (Fin n) (ZMod 2) :=
 def quadraticForm (n : ℕ) : Matrix (Fin n ⊕ Fin n) (Fin n ⊕ Fin n) (ZMod 2) :=
   Matrix.fromBlocks (kite n) 0 0 (kite n)
 
-def symplecticForm (n : ℕ) : Matrix (Fin n ⊕ Fin n) (Fin n ⊕ Fin n) (ZMod 2) :=
-  Matrix.fromBlocks 0 1 (-1) 0
-
-def TrivialKernel {ι : Type*} [Fintype ι] (M : Matrix ι ι (ZMod 2)) : Prop :=
-  ∀ v, M.mulVec v = 0 → v = 0
-
 def claim : Prop :=
   ∀ n : ℕ, 1 ≤ n →
     (kite n).IsSymm ∧
-    TrivialKernel (kite n) ∧ TrivialKernel (quadraticForm n) ∧
-    (TrivialKernel (kite n * kite n - 1) ↔ n % 3 ≠ 1) ∧
-    (TrivialKernel (quadraticForm n + symplecticForm n) ↔ n % 3 ≠ 1)
+    (kite n).SeparatingRight ∧ (quadraticForm n).SeparatingRight ∧
+    ((kite n * kite n - 1).SeparatingRight ↔ n % 3 ≠ 1) ∧
+    ((quadraticForm n + Matrix.J (Fin n) (ZMod 2)).SeparatingRight ↔ n % 3 ≠ 1)
 
 private def inverseKite (n : ℕ) : Matrix (Fin n) (Fin n) (ZMod 2) :=
   fun i j => (if i.val + j.val + 1 = n then 1 else 0) +
@@ -40,17 +34,6 @@ private def inverseKite (n : ℕ) : Matrix (Fin n) (Fin n) (ZMod 2) :=
 private def tridiagonal (n : ℕ) : Matrix (Fin n) (Fin n) (ZMod 2) :=
   fun i j => if (i = j ∧ i.val ≠ 0) ∨ i.val + 1 = j.val ∨ j.val + 1 = i.val
     then 1 else 0
-
-private lemma kernel_iff_det {ι : Type*} [Fintype ι] [DecidableEq ι]
-    (M : Matrix ι ι (ZMod 2)) : TrivialKernel M ↔ M.det ≠ 0 := by
-  classical
-  constructor
-  · intro h hd
-    obtain ⟨v, hv, hz⟩ := M.exists_mulVec_eq_zero_iff.mpr hd
-    exact hv (h v hz)
-  · intro hd v hz
-    by_contra hv
-    exact hd (M.exists_mulVec_eq_zero_iff.mp ⟨v, hv, hz⟩)
 
 private lemma kite_symmetric (n : ℕ) : (kite n).IsSymm := by
   ext i j
@@ -81,16 +64,8 @@ private lemma kite_inverse (n : ℕ) : kite n * inverseKite n = 1 := by
   split_ifs <;> simp only [CharTwo.add_self_eq_zero, zero_add, add_zero] <;> omega
 
 private lemma kite_det (n : ℕ) : (kite n).det = 1 := by
-  have h := congrArg Matrix.det (kite_inverse n)
-  rw [Matrix.det_mul, Matrix.det_one] at h
-  have hn : (kite n).det ≠ 0 := by
-    intro hz
-    simp [hz] at h
-  have hv := ZMod.val_lt (kite n).det
-  have hvn := (ZMod.val_ne_zero _).2 hn
-  apply (ZMod.val_injective 2)
-  simpa only [ZMod.val_one_eq_one_mod, Nat.one_mod] using
-    (show ((kite n).det).val = 1 by omega)
+  have hn : (kite n).det ≠ 0 := Matrix.det_ne_zero_of_right_inverse (kite_inverse n)
+  exact Fin.eq_one_of_ne_zero _ hn
 
 private lemma inverse_square (n : ℕ) :
     tridiagonal n = 1 + inverseKite n * inverseKite n := by
@@ -150,7 +125,7 @@ private lemma square_det (n : ℕ) :
       _ = 1 := by rw [kite_inverse, Matrix.mul_one, kite_inverse]
   have hn : -(1 : Matrix (Fin n) (Fin n) (ZMod 2)) = 1 := by
     ext i j
-    simp [Matrix.one_apply]
+    exact CharTwo.neg_eq _
   rw [sub_eq_add_neg, hn, ← hp, Matrix.det_mul, Matrix.det_mul, kite_det]
   simp
 
@@ -158,13 +133,13 @@ private lemma quadratic_det (n : ℕ) : (quadraticForm n).det = 1 := by
   simp [quadraticForm, Matrix.det_fromBlocks_zero₂₁, kite_det]
 
 private lemma symplectic_det (n : ℕ) :
-    (quadraticForm n + symplecticForm n).det = (kite n * kite n - 1).det := by
+    (quadraticForm n + Matrix.J (Fin n) (ZMod 2)).det = (kite n * kite n - 1).det := by
   let : Invertible (kite n) := invertibleOfRightInverse _ _ (kite_inverse n)
   have hi : ⅟(kite n) = inverseKite n := invOf_eq_right_inv (kite_inverse n)
-  have hb : quadraticForm n + symplecticForm n =
+  have hb : quadraticForm n + Matrix.J (Fin n) (ZMod 2) =
       Matrix.fromBlocks (kite n) 1 1 (kite n) := by
     ext i j
-    cases i <;> cases j <;> simp [quadraticForm, symplecticForm, Matrix.one_apply]
+    cases i <;> cases j <;> simp [quadraticForm, Matrix.J, Matrix.one_apply]
   rw [hb, Matrix.det_fromBlocks₁₁, kite_det, one_mul, Matrix.one_mul, Matrix.mul_one, hi]
   have h := Matrix.det_mul (kite n) (kite n - inverseKite n)
   rw [Matrix.mul_sub, kite_inverse, kite_det, one_mul] at h
@@ -172,12 +147,14 @@ private lemma symplectic_det (n : ℕ) :
 
 theorem result : claim := by
   intro n _hn
-  refine ⟨kite_symmetric n, (kernel_iff_det _).2 ?_, (kernel_iff_det _).2 ?_, ?_, ?_⟩
+  refine ⟨kite_symmetric n, Matrix.separatingRight_iff_det_ne_zero.mpr ?_,
+    Matrix.separatingRight_iff_det_ne_zero.mpr ?_, ?_, ?_⟩
   · rw [kite_det]
     exact one_ne_zero
   · rw [quadratic_det]
     exact one_ne_zero
-  · rw [kernel_iff_det, square_det, ne_eq, tridiagonal_det_zero]
-  · rw [kernel_iff_det, symplectic_det, square_det, ne_eq, tridiagonal_det_zero]
+  · rw [Matrix.separatingRight_iff_det_ne_zero, square_det, ne_eq, tridiagonal_det_zero]
+  · rw [Matrix.separatingRight_iff_det_ne_zero, symplectic_det, square_det, ne_eq,
+      tridiagonal_det_zero]
 
 end D5.S3.Quantum.Information.KiteShapedDoublyPerfectForm
