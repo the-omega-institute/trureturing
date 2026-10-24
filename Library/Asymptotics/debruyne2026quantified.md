@@ -94,7 +94,8 @@ $$
 \ll T^\eta(\log T)^\beta,
 $$
 
-for both signs, all $T\ge e$ and all $Z\ge e/2$, with $\eta>0$ and
+for both signs, all $Z\ge e/2$ and those $T\ge e$ whose corresponding
+dyadic vertical segment contains no pole of $D(s)/s$, with $\eta>0$ and
 $\beta\ge0$. The residue expansion then has power saving
 $\delta/\max\{\eta,1\}$ and the source's explicit logarithmic factor.
 This is a weaker growth-input interface than the pointwise PTBZ
