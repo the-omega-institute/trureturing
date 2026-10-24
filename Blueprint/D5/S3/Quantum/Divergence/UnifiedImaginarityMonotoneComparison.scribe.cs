@@ -125,7 +125,10 @@ internal sealed class UnifiedImaginarityMonotoneComparisonDocument : IScribeDocu
                         + "Finally imaginarityH α β ρ is nonnegative, by applying divergence nonnegativity "
                         + "to ρ and its conjugate. Combining these facts gives imaginarityE α β ρ "
                         + "≤ unifiedDivergence α β ρ τ ≤ imaginarityH α β ρ / 2 ≤ imaginarityH α β ρ."))),
-                DescribeRole.Theorem))));
+                DescribeRole.Theorem,
+                openProblemResolutionClaim: new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("wu-wu-2025-unified-imaginarity-monotone-comparison"),
+                    ResolutionKind.Proved)))));
 
     private static Formula DivergenceFormula() => Parameters(All("σ", MatrixType(),
         Equal(Typed(LocalCall("unifiedDivergence", Alpha, Beta, Rho, SigmaLower), Reals()),
