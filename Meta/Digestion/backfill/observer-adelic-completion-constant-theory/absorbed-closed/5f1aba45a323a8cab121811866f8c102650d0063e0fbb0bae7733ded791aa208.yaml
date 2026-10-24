@@ -1,0 +1,13 @@
+fingerprints:
+  raw_sha256: sha256:5f1aba45a323a8cab121811866f8c102650d0063e0fbb0bae7733ded791aa208
+  normalized_sha256: sha256:5f1aba45a323a8cab121811866f8c102650d0063e0fbb0bae7733ded791aa208
+cas_ref: sha256:5f1aba45a323a8cab121811866f8c102650d0063e0fbb0bae7733ded791aa208
+coverage_gids:
+  - gid: D5/S3/Observer/AgencyHolonomy/SecondMagnusKernelNormSquare.second_magnus_swap_kernel_half_turn_norm_sq
+    target_statement_id: sha256:6fa1be396035aac1e5f3ace9ae8b988271f6570514b4a969024787debfcf0712
+  - gid: D5/S3/Observer/AgencyHolonomy/SecondMagnusKernelNormSquare.second_magnus_swap_kernel_norm_sq
+    target_statement_id: sha256:68061970ae1bfef3972e1691a3a00b3eb88c5e47c871e2c10d900d5e0abdb17e
+  - gid: D5/S3/Weil/HolonomyBridge/OffLineOrbitParityDecomposition.off_line_orbit_parity_decomposition
+    target_statement_id: sha256:e9c3bd1747b450a0dae5ea505a9e8496a7d3b27181a1a728ca80b9677c8d03bd
+receipts:
+  unresolved_subitems: []

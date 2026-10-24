@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:2e5966138f85b55cac38383c079c0b9eb3b16a08867edbd8aee1f05543605025
+  normalized_sha256: sha256:2e5966138f85b55cac38383c079c0b9eb3b16a08867edbd8aee1f05543605025
+cas_ref: sha256:2e5966138f85b55cac38383c079c0b9eb3b16a08867edbd8aee1f05543605025
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 给拟议箭头 Div 规定读取零点除子的角色，没有提出性质命题。
+    previous_atom_id: af3001357726710f04186ba89dce797e2b4fa9178f25e7c1574c9a27adfd2806
+    next_atom_id: d9142e74a88b34cc85a67ad0a967f7d7bd51465f10f2d2537a148c71b02a61b3

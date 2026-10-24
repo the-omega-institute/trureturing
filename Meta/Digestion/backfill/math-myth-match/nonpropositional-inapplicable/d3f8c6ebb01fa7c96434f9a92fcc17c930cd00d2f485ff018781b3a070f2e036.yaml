@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:d3f8c6ebb01fa7c96434f9a92fcc17c930cd00d2f485ff018781b3a070f2e036
+  normalized_sha256: sha256:d3f8c6ebb01fa7c96434f9a92fcc17c930cd00d2f485ff018781b3a070f2e036
+cas_ref: sha256:d3f8c6ebb01fa7c96434f9a92fcc17c930cd00d2f485ff018781b3a070f2e036
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 指定Peirce、James和Dewey的实用主义入口并避免合并其真理论，属于文献解释。
+    previous_atom_id: 0d4727a99e7791856d4346955088b6cffe545f1bf02b5af261e9b53c0ccdb620
+    next_atom_id: f774c52fa90856151ab859781c55b27867d53554e578ea0364b254c88a7f200d

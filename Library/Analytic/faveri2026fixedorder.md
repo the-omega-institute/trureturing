@@ -2977,7 +2977,7 @@ The later de Faveri--Dunn--Hoffstein paper records the relevant obstruction
 from the other side: its cubic and quartic lower bounds show that the
 corresponding character families are not perfectly orthogonal, and its
 fixed-order conjecture predicts the $K^{7/6+o(1)}$ balanced scale for order
-six. See the separate [non-orthogonality card](faveridunnhoffstein2026nonorthogonality.md).
+six. See the separate [non-orthogonality card](../Fourier/faveridunnhoffstein2026nonorthogonality.md).
 Those results do not estimate (J), but they rule out replacing its complete
 signed kernel by a diagonal orthogonality heuristic.
 
@@ -2988,12 +2988,12 @@ matched. See the separate [cubic cancellation card](hamdar2025cubicawaycentral.m
 That source also records why the transfer is currently blocked at order six:
 the required higher-order Gauss-series residue formulas are not available.
 
-The sextic-twist literature adds a second boundary condition: the full
-composite-even family can mix unitary and orthogonal sectors, with a slower
-Gauss-sum equidistribution rate than the totally sextic subfamily. See the
-[sextic mixed-family card](bergryanyoung2023sextictwists.md). Thus a
-quadratic--cubic factorization of (J) needs cross-sector estimates rather
-than an independence assumption.
+The sextic-twist literature distinguishes proved Gauss-square
+equidistribution for the totally sextic subfamily from Conjecture 3.24 for
+the full family; see the [sextic mixed-family card](bergryanyoung2023sextictwists.md). Its
+mixed-family discussion and selected-moment asymptotics do not estimate (J).
+A quadratic--cubic factorization of (J) still needs a joint cross-sector
+estimate; separate equidistribution does not supply one.
 
 For the same actual primitive adjoint, the [complete balanced-sector consumer](../../docs/develop/theory/FIBONACCI_ANALYTIC_FRONTIER_INTERFACES.md#457-保留谱幂次与平方部分权重的完整素标记预算) retains the two distinct I11 polar scalars together with the abscissa gain and weighted squareparts. Under the stated analytical inputs it bounds the entire specified continuous vector, including the former critical reflection family, while preserving the original coefficients and inverse Gram pairing; the orthogonal complement, other sectors and signed Robin transfer remain open.
 

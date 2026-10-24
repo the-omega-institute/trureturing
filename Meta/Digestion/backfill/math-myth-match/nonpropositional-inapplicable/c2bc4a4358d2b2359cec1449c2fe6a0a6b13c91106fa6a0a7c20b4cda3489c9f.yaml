@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:c2bc4a4358d2b2359cec1449c2fe6a0a6b13c91106fa6a0a7c20b4cda3489c9f
+  normalized_sha256: sha256:c2bc4a4358d2b2359cec1449c2fe6a0a6b13c91106fa6a0a7c20b4cda3489c9f
+cas_ref: sha256:c2bc4a4358d2b2359cec1449c2fe6a0a6b13c91106fa6a0a7c20b4cda3489c9f
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 目标转化的实践价值和事实条件；属于引文解释、建模约定或研究建议，没有另立待证数学断言，本收据不验证其文献或经验真值。
+    previous_atom_id: d754f2d73f26db1cfea8b5b3376ad2605f38ad315d8b624bba9898aa99d03fdd
+    next_atom_id: b51aebb554f40d2de42cb18b45ff8bd76f20248d6a644e4f13376b100b98c0ef

@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:268e9157258f7dfcefe9111aa03d46e386860a203f02a703da09d2f9038d1593
+  normalized_sha256: sha256:268e9157258f7dfcefe9111aa03d46e386860a203f02a703da09d2f9038d1593
+cas_ref: sha256:268e9157258f7dfcefe9111aa03d46e386860a203f02a703da09d2f9038d1593
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 非对象化立场中的名词列表项，不断言范畴存在或具有性质。
+    previous_atom_id: 49c33ec431956061e1421baa94de9afe323fa0699bf9c0d25d0966a454fa6f95
+    next_atom_id: 3bb037c425e038872255e8b3429f1278495e7765a0f7ab59346668a691bdac00

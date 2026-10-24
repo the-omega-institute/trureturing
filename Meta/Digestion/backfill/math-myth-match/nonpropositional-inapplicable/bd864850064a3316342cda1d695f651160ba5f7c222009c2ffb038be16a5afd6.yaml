@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:bd864850064a3316342cda1d695f651160ba5f7c222009c2ffb038be16a5afd6
+  normalized_sha256: sha256:bd864850064a3316342cda1d695f651160ba5f7c222009c2ffb038be16a5afd6
+cas_ref: sha256:bd864850064a3316342cda1d695f651160ba5f7c222009c2ffb038be16a5afd6
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 非命题：858.1解释詹姆斯关于宗教科学、宗教生活和实践效果的区别；其条件性实践讨论不含概率等式或数学定理。
+    previous_atom_id: cba4be8ed5f468cf51823ec370b2fc6bbb4e00a6043de03df3ee592df784eeed
+    next_atom_id: 6d183e1acecff769a79cd51aea13239796398ce1240840aa2a27406f51f24cbf

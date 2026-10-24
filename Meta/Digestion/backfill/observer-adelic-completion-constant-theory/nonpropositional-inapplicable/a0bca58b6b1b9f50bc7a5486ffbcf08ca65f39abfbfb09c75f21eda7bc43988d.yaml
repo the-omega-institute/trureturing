@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:a0bca58b6b1b9f50bc7a5486ffbcf08ca65f39abfbfb09c75f21eda7bc43988d
+  normalized_sha256: sha256:a0bca58b6b1b9f50bc7a5486ffbcf08ca65f39abfbfb09c75f21eda7bc43988d
+cas_ref: sha256:a0bca58b6b1b9f50bc7a5486ffbcf08ca65f39abfbfb09c75f21eda7bc43988d
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: Poisson 光影的明示有理密度就是 Cauchy 密度；质量一由钉版 Mathlib 直接供应。D5 搜索命中 Cauchy KL、曲率导数和中心 Poisson Fourier，未命中该一般 location–scale 密度归一化声明。 实际上游声明：ProbabilityTheory.cauchyPDFReal_def, ProbabilityTheory.integral_cauchyPDFReal_eq_one, ProbabilityTheory.instIsProbabilityMeasure_cauchyMeasure。钉版 mathlib 修订 56a005855ea17e0b0958f73ec801ae140b0a1679。搜索范围：全 D5/**/*.lean（含 private），按能量分解、逆数/除法、log_inv、Cauchy/Poisson 密度及质量一形状搜索；复查 Observer、Quantum/Bogoliubov、Weil/Pick、Divergence 供应。未找到不引入新载体即可直接供应本完整关系的冻结声明；上游精确命中后无需第三方搜索。
+    previous_atom_id: 2a4ed4d89f188f0c1f5475a159f9091ae6d3753311de9ef7047ea410c929a571
+    next_atom_id: 4cdb158fea64c27226700bbdd07d7566f1a52888babbf0e2a9b86b6cab274b23

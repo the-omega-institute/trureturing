@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:694b696aeec4178dc748a834a7a8a7ac83d14fd4adcd8dd1ff6fe5ded8ea1231
+  normalized_sha256: sha256:694b696aeec4178dc748a834a7a8a7ac83d14fd4adcd8dd1ff6fe5ded8ea1231
+cas_ref: sha256:694b696aeec4178dc748a834a7a8a7ac83d14fd4adcd8dd1ff6fe5ded8ea1231
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 推理结构的类型放置和不得由类型声明冒领实例的形式化原则；没有给定载体上的实例存在性或数学定理。
+    previous_atom_id: bb27f75f13134bf67db08ae6ac00fe035e98a6db671c92d466c21d0b7df52b3f
+    next_atom_id: 05da80e647110bee670f8c843ea36e7aaf6e7fae7eb55fd4ea7ffeaf38d6ac01

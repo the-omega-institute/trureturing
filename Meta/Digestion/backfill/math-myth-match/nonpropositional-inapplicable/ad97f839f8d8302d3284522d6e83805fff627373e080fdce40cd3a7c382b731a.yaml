@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:ad97f839f8d8302d3284522d6e83805fff627373e080fdce40cd3a7c382b731a
+  normalized_sha256: sha256:ad97f839f8d8302d3284522d6e83805fff627373e080fdce40cd3a7c382b731a
+cas_ref: sha256:ad97f839f8d8302d3284522d6e83805fff627373e080fdce40cd3a7c382b731a
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 非命题结算：提出静态术语对应应接受的实践检验问题；所列区别是比较目标，不是指定数学模型上的新增断言。
+    previous_atom_id: 61000f2da42e0390827fb89ef6b4eea7d8763d813805b31be400af58ad90e7f5
+    next_atom_id: cee179b55b16db258fbecaf4dc964eda8895c1786aad5dd1cefb9b644d8ece8e

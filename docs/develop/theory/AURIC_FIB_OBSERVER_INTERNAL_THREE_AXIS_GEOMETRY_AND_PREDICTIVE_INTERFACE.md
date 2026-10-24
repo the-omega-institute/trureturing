@@ -2019,3 +2019,1775 @@ $\mathsf j_\phi(\gamma)(v,w)=*_\phi((\iota_v\phi)\wedge(\iota_w\phi)\wedge\gamma
 这些供应者各有上述限定；任意积的定量估计与等号刚性由定理 19.2 的完整推导承担。原下确界由定理 20.1 的全类下界及定理 20.3 的全域达到者共同给出，定理 21.2 仅在假设 21.1 的全部精确共同实现条件下消费该估计。
 
 ## 追加锚（本行以下为增补区）
+
+## 23. Small projected values can conceal a finite killed-response error
+
+**Definition 23.1 (fixed source and comparison).** Use the actual product realization (16.9):
+$J=\mathbb R^3\times\mathbb R^2$, $K=\mathbb R^3$,
+$\Pi(q,h,k)=q$, and $g_D((q,h,k),(q',h',k'))=q\cdot q'$.
+The original open source and base guards in this section are
+
+$$
+S=\{(q,h,k):q_3>0\},\qquad B=\{q:q_3>0\}.
+\tag{23.1}
+$$
+
+The original clock is $t$; there is no time change. Fix the six SPD settings of
+Proposition 17.5, denoted by $\mathcal Q$; they include $I_3$ and span
+$\operatorname{Sym}_3$. Their labels and the permission to execute them are fixed.
+For actual fields $X_a$ write $v_a=\Pi X_a$, including $a=0$.
+For comparison fields $V_a$ on $K$, let $r_a=v_a-V_a\circ\Pi$.
+A value comparison concerns these $r_a$ and the projected covariance
+$A_Q=\sum_{a,b=1}^3Q_{ab}v_av_b^{\mathsf T}$.
+It does not, by definition, include actual Itô first moments.
+The derivative $X_ar_b=Dr_b\,X_a$ uses the complete actual source field,
+including its hidden components.
+
+The sharp area–Jacobi budgets in §§19–22 concern the bilinear relation
+product on its given inner-product carrier. The comparisons below concern
+the actual source fields on (16.9). No estimate relating those algebraic
+budgets to the residuals (23.5) is assumed; the positive transport bounds
+use the explicit source membership of Assumption 24.1.
+
+**Theorem 23.2 (hidden-derivative obstruction with matched deaths).** For
+$0<\varepsilon\le1$, on this same source, projection, metric, menu and guard set
+
+$$
+\begin{aligned}
+X_0^\varepsilon&=(0,-\varepsilon^{-4}h,-k),\\
+X_1^\varepsilon&=(e_1+\varepsilon\tanh(h/\varepsilon)e_2,1,0),\\
+X_2^\varepsilon&=(e_2,0,1),\qquad X_3^\varepsilon=(e_3,0,0).
+\end{aligned}
+\tag{23.2}
+$$
+
+Its comparison source $Z^{0,\varepsilon}$ has exactly the same fields except
+that $X_1^{0,\varepsilon}=(e_1,1,0)$. Thus both members of each pair retain the
+same evolving hidden records, rather than choosing separate marginal sources.
+The comparison base fields are $V_0=0$, $V_a=e_a$.
+Every field is smooth; for every fixed $\varepsilon$, every initial source
+state and every $Q\in\mathcal Q$, both full-space SDEs are nonexplosive.
+For every source state,
+
+$$
+\max_{0\le a\le3}|r_a|\le\varepsilon,\qquad
+\|A_Q^\varepsilon-Q\|\le2\varepsilon\|Q\|+\varepsilon^2Q_{11}.
+\tag{23.3}
+$$
+
+The actual signed calibration $q_1(1)-q_1(0)=1$ under the deterministic
+unit $X_1$ pulse is the same in both sources. It is lawful at every $q_3>0$.
+Their original killing times are equal pathwise under common driving noise.
+Nevertheless, at the common start $q=(0,0,1)$, $h=k=0$, for $Q=I_3$ and the
+bounded observable $\varphi(q)=\sin q_2$, with value zero at the cemetery,
+
+$$
+\begin{aligned}
+\mathbb E[\varphi(\Pi Z^{0,\varepsilon}_1)\mathbf1_{1<\tau}]&=0,\\
+\lim_{\varepsilon\downarrow0}
+\mathbb E[\varphi(\Pi Z^\varepsilon_1)\mathbf1_{1<\tau}]
+&=(2\Phi(1)-1)e^{-1/2}\sin(1/2)>0.
+\end{aligned}
+\tag{23.4}
+$$
+
+Here $\Phi$ is the standard normal distribution function. In particular,
+uniformly accurate projected values, every covariance in this fixed finite
+menu, and an actual signed anchor do not alone give a vanishing error for
+the original killed response.
+
+Proof. First derive the actual residual which is relevant to this comparison.
+For any $C^2$ base function $\psi$, the ordinary chain rule gives
+
+$$
+X_aX_b(\psi\circ\Pi)
+=D^2\psi[v_a,v_b]+D\psi\,X_av_b.
+$$
+
+Consequently the exact difference from the comparison generator is
+
+$$
+\begin{aligned}
+\mathcal L_Q(\psi\circ\Pi)-(
+ V_0\psi+\tfrac12\sum_{a,b}Q_{ab}V_aV_b\psi)\circ\Pi
+&=\beta_Q\cdot D\psi+\tfrac12 H_Q:D^2\psi,\\
+\beta_Q&=r_0+\tfrac12\sum_{a,b}Q_{ab}
+ \bigl(DV_b\,r_a+X_ar_b\bigr),\\
+H_Q&=\sum_{a,b}Q_{ab}
+ \bigl(V_ar_b^{\mathsf T}+r_aV_b^{\mathsf T}+r_ar_b^{\mathsf T}\bigr).
+\end{aligned}
+\tag{23.5}
+$$
+
+All base values in this formula are evaluated at $\Pi(q,h,k)$.
+Indeed $X_av_b=DV_b(V_a+r_a)+X_ar_b$. In product coordinates the last
+source derivative is
+$D_qr_b\,v_a+(\partial_hr_b)X_a^h+(\partial_kr_b)X_a^k$;
+replacing it by a derivative only in $q$ deletes a real term.
+This is the standard Stratonovich generator and Itô correction, used here
+as an intermediate calculation, not as a new calculus theorem; compare
+Hochgerner–Ratiu, arXiv:1204.6438v1, Theorem 3.1 and the drift formula on
+PDF pages 21–22.
+
+For (23.2), $r_1=\varepsilon\tanh(h/\varepsilon)e_2$ and
+
+$$
+X_1^\varepsilon r_1=\operatorname{sech}^2(h/\varepsilon)e_2,
+\qquad
+\beta_Q=\tfrac12Q_{11}\operatorname{sech}^2(h/\varepsilon)e_2.
+\tag{23.6}
+$$
+
+Writing $V=I+s e_2e_1^{\mathsf T}$, $s=\varepsilon\tanh(h/\varepsilon)$,
+expands $VQV^{\mathsf T}-Q$ into two linear terms of norm at most
+$|s|\|Q\|$ and one quadratic term of norm $s^2Q_{11}$, proving (23.3).
+The source Itô drift is
+$(\beta_Q,-\varepsilon^{-4}h,-k)$; the hidden covariance has constant
+coefficients. The sum of the squared norms of its three source noise
+fields is at most $6$. Thus the radial left side of (16.5b) is at most
+
+$$
+|q|^2+Q_{11}^2/4+6\|Q\|.
+$$
+
+The same bound holds for the comparison source. The stopped Itô–Lyapunov
+argument already proved in (16.8a) therefore gives nonexplosion at every
+start, even with a constant independent of $\varepsilon$. The hidden
+coordinates are also explicitly linear Ornstein–Uhlenbeck equations.
+The local uniqueness supplier alone would not prove this conclusion.
+
+Couple each pair with the same $Q$-Brownian motion $W$. Both have
+$q_3(t)=q_3(0)+W_t^3$, so their full original deaths are the same first
+hit of zero, with no additional hidden death. For $Q=I_3$ and $h_0=0$,
+
+$$
+\mathbb E h_t^2
+=\tfrac12\varepsilon^4(1-e^{-2t/\varepsilon^4}).
+$$
+
+The second projected coordinate has the exact Itô expression
+
+$$
+q_2^\varepsilon(t)=W_t^2+
+ \varepsilon\int_0^t\tanh(h_s/\varepsilon)\,dW_s^1
+ +\tfrac12\int_0^t\operatorname{sech}^2(h_s/\varepsilon)\,ds.
+\tag{23.7}
+$$
+
+The Itô isometry, $|\tanh x|\le\min(1,|x|)$ and
+$1-\operatorname{sech}^2x=\tanh^2x$ give
+
+$$
+\mathbb E|q_2^\varepsilon(t)-W_t^2-t/2|
+\le\varepsilon\sqrt t+\varepsilon^2t/4.
+\tag{23.8}
+$$
+
+For this setting $W^2$, $W^3$ and the hidden system driven by $W^1$ are
+independent. Reflection gives survival probability
+$2\Phi(1/\sqrt t)-1$; the Gaussian characteristic function gives
+$\mathbb E\sin(W_t^2+t/2)=e^{-t/2}\sin(t/2)$.
+The sine function is $1$-Lipschitz, so (23.8) proves (23.4), with absolute
+error at most $\varepsilon+\varepsilon^2/4$ at $t=1$.
+The reflection supplier is Mörters–Peres, *Brownian Motion*,
+[public draft](https://www.stat.berkeley.edu/~aldous/205B/bmbook.pdf),
+Theorem 2.18, page 50.
+
+The source scale is not fixed in this limit: hidden relaxation has rate
+$\varepsilon^{-4}$ and correlation time $\varepsilon^4$, and the shear
+varies on hidden scale $\varepsilon$.
+Although $r_1\to0$, $X_1r_1$ does not tend to zero;
+$\partial_h^2r_1$ has size of order $\varepsilon^{-1}$ and
+$\partial_hX_0^h=-\varepsilon^{-4}$.
+No uniform source derivative or service-cost bound for these scales was
+included in (23.3). For deterministic controls with finite
+$\int_0^T|u_1|dt$, the projected path error is at most
+$\varepsilon\int_0^T|u_1|dt$, which does vanish. The obstruction concerns
+the second-order consumer, not that finite-variation statement.
+Measuring the actual Itô drift would distinguish the pair through (23.6);
+such first-moment data are additional information, not part of (23.3). QED.
+
+## 24. Finite endpoint records identify a fixed-frequency source
+
+**Assumption 24.1 (analytic membership, actual permissions and acquisition).**
+Keep (23.1), $J,\Pi,g_D$, the original clock and $\mathcal Q$. Fix finite
+known bounds $A_0,C_0>0$. A single source has parameters $(a,c)$, fixed
+through acquisition and execution, with $|a|\le A_0$, $|c|\le C_0$, and
+its complete actual fields on all of $J$ are
+
+$$
+\begin{aligned}
+X_0&=(c e_2,0,1),&
+X_1&=(e_1+a\sin h\,e_2,1,0),\\
+X_2&=(e_2,0,1),&X_3&=(e_3,0,0).
+\end{aligned}
+\tag{24.1}
+$$
+
+The unit of the hidden phase and the frequency $1$ in $\sin h$ are fixed
+parts of membership. Full-space continuations are auxiliary; operations
+remain restricted by (23.1). Membership on the whole declared source is an
+independent premise, not a conclusion from observations. In particular it
+excludes the changing hidden scale of (23.2).
+The joint inner product, distance and coordinate labels have the actual
+common calibration (16.9); the acquisition below estimates $(a,c)$, not
+an unknown $\Pi$ or an unknown ambient dimension.
+
+The actual deterministic equation includes $X_0$ in the original clock:
+$\dot Z=X_0+\sum_a u_aX_a$. The original operation contract separately
+permits a hold $u=0$, a bounded piecewise $C^1$ pulse of the named control
+$X_1$, and each selected $Q$-Brownian execution in (16.6).
+These are permissions of this abstract source; they do not follow from
+the native FIB $P,Q$ menu.
+
+The preparation contract supplies one actual initial source with
+$|h_0|\le\delta_h$, $|q_i|\le R_0$, $q_3\ge H_{\min}>0$ and
+$|k_0|\le K_0$, with finite declared preparation time and charge.
+A permitted nondestructive sensor returns a vector $R_j\in\mathbb R^3$
+whose coordinate errors relative to $q(s_j)$ are at most $\epsilon>0$.
+Each read has its own finite duration and charge, and can complete while
+the prescribed control continues. Its sample time $s_j$ is its completion
+time; the source evolves by (24.1) throughout the read. No hidden-coordinate
+sensor is assumed. Before the first sample only a hold is applied, so the
+prepared bound on $h_0$ is preserved. Let this first-read duration satisfy
+$0\le\ell_0\le\ell_{\max}<\infty$, with a declared bound; absorb
+earlier preparation evolution into the stated preparation contract.
+
+There are three endpoint samples, at $s_0<s_1<s_2$, on this same evolving
+source. On $[s_0,s_1]$ execute a hold; on $[s_1,s_2]$ execute only the
+named $X_1$ pulse. Certified original-clock and command records give
+
+$$
+\begin{gathered}
+\tau_j=s_{j+1}-s_j,\quad |\tau_j-1|\le\delta_t<1
+\quad(j=0,1),\\
+U=\int_{s_1}^{s_2}u_1(t)dt,\quad |U-\tau_1|\le\delta_u,
+\quad |u_1(t)|\le U_*<\infty,\qquad u_2=u_3=0.
+\end{gathered}
+\tag{24.2}
+$$
+
+Read latencies, timing actions and command switches after $s_0$ occur
+inside these intervals; the apparatus must actually be able to meet
+(24.2). Their durations are not removed from $\tau_j$.
+All error bounds include the stated sensor and timing calibration;
+permission and finite price for obtaining these records are separate
+premises. No independent preparations, reset, exact instantaneous field
+sensor, derivative oracle or covariance-rate oracle is supplied.
+
+**Theorem 24.2 (record-to-actual-coefficient bounds).** Under Assumption 24.1
+put $\rho_0=R_1^2-R_0^2$, $\rho_1=R_2^2-R_1^2$, and $d=1-\cos1$. Define
+
+$$
+\begin{aligned}
+E_0&=2\epsilon+C_0\delta_t,\\
+E_1&=2\epsilon+C_0\delta_t+
+ A_0(2\delta_h+\delta_u+\delta_t).
+\end{aligned}
+\tag{24.3}
+$$
+
+Let finite arithmetic return rational centers $\widehat c,\widehat a$
+with certified bounds
+
+$$
+|\widehat c-\rho_0|\le\eta_c,\qquad
+|d\widehat a-(\rho_1-\rho_0)|\le\eta_a.
+\tag{24.4}
+$$
+
+Use upward bounds in the following finite computations:
+
+$$
+C=E_0+\eta_c,\qquad
+R_a=\tfrac{24}{11}(E_0+E_1+\eta_a),\qquad
+A=|\widehat a|+R_a.
+\tag{24.5}
+$$
+
+Then $|c-\widehat c|\le C$, $|a-\widehat a|\le R_a$ and $|a|\le A$.
+If $2\epsilon+\delta_t+\delta_u<1$, the acquired directed coordinate
+$R_2^1-R_1^1$ is strictly positive, furnishing an actual signed $X_1$
+anchor. For the three-axis comparison
+$V_0=\widehat c e_2$, $V_a=e_a$, at every source point and every setting,
+
+$$
+\begin{aligned}
+|v_1-e_1|&\le A,&v_2&=e_2,&v_3&=e_3,\\
+\|A_Q-Q\|&\le2A\|Q\|+A^2Q_{11},\\
+|b_Q^\Pi-\widehat c e_2|&\le C+\tfrac12Q_{11}A,
+\end{aligned}
+\tag{24.6}
+$$
+
+where $b_Q^\Pi$ is the actual projected Itô drift, not $v_0$.
+More precisely the actual generator residual is
+
+$$
+\begin{aligned}
+b_Q^\Pi&=(c+\tfrac12Q_{11}a\cos h)e_2,\\
+\mathcal L_Q(\psi\circ\Pi)
+ -(\widehat c\,\partial_2\psi+\tfrac12 Q:D^2\psi)\circ\Pi
+&=(c-\widehat c+\tfrac12Q_{11}a\cos h)\partial_2\psi
+ +\tfrac12(A_Q-Q):D^2\psi.
+\end{aligned}
+\tag{24.7}
+$$
+
+Thus these finitely acquired records control the source derivative needed
+by the actual second-order consumer on the entire declared template.
+
+Proof. Write $U_a(t)=\int_0^tu_a(s)ds$, with time measured from any
+chosen start. The complete deterministic solution, before killing, is
+
+$$
+\begin{aligned}
+h_t&=h_0+U_1(t),&k_t&=k_0+t+U_2(t),\\
+q_1(t)&=q_1(0)+U_1(t),&q_3(t)&=q_3(0)+U_3(t),\\
+q_2(t)&=q_2(0)+ct+U_2(t)
+ +a\{\cos h_0-\cos(h_0+U_1(t))\}.
+\end{aligned}
+\tag{24.8}
+$$
+
+Differentiation verifies all five equations and their initial values;
+local uniqueness then proves these are the actual paths. They exist for
+every finite-integral control. During acquisition $q_3$ is constant and
+positive, so every prefix, including every read, obeys the original guard.
+The hold leaves $h$ unchanged. Its second-coordinate increment is $c\tau_0$;
+the pulse increment is $c\tau_1+a(\cos h_0-\cos(h_0+U))$.
+Since $|U-1|\le\delta_u+\delta_t$ and cosine is $1$-Lipschitz,
+
+$$
+|\cos h_0-\cos(h_0+U)-d|
+\le2\delta_h+\delta_u+\delta_t.
+$$
+
+Endpoint errors add at most $2\epsilon$ to each increment, even though
+they share the middle record and need not be independent.
+This proves $|\rho_0-c|\le E_0$ and $|\rho_1-c-ad|\le E_1$.
+The alternating cosine series at $1$ gives
+$11/24\le d\le1/2$. Subtracting the increments and using (24.4)
+proves (24.5). This is the explicit two-parameter inverse inside this
+consumer, not an additional inverse or joint-diagonalization theorem.
+For example, a degree-$2N$ cosine truncation has remainder at most
+$1/(2N+2)!$; rational interval arithmetic therefore certifies (24.4)
+with finitely many operations, including output rounding in $\eta_a,\eta_c$.
+The first-coordinate pulse increment is $U$; its reported value is at
+least $1-\delta_u-\delta_t-2\epsilon$, proving the signed anchor.
+
+Finally $X_1r_1=a\cos h\,e_2$ and the other $X_ar_b$ vanish.
+The calculation (23.5), now inside (24.1), gives (24.7);
+the shear covariance expansion in the proof of (23.3) gives (24.6).
+Here global control of the derivative comes from the declared fixed-frequency
+source and the acquired parameter interval. Finitely many observations
+alone would not supply that membership premise, as Proposition 17.4
+already shows. At the pulse endpoint the actual hidden coordinates are
+$h_0+U$ and $k(s_0)+\tau_0+\tau_1$; they are retained, not reset. QED.
+
+## 25. Finite acquisition to transport and original killed response
+
+**Theorem 25.1 (all-start finite-time correspondence).** Suppose the records
+of Theorem 24.2 have been lawfully acquired for a source satisfying
+Assumption 24.1. At every actual execution start
+$\zeta=(q,h,k)\in S$, with arbitrary hidden records, compare with the
+three-dimensional process starting at that same $q$ and using the same
+actual controls, setting and original elapsed clock. For deterministic
+execution include the same common drift convention as (24.8). If
+$Y_t=q+\widehat c t e_2+\sum_a U_a(t)e_a$, then for every finite $T$
+
+$$
+\sup_{t\le T}|\Pi Z_t-Y_t|
+\le CT+A\min\left(2,\int_0^T|u_1(s)|ds\right)
+\le D_T:=CT+2A.
+\tag{25.1}
+$$
+
+This is an estimate for the full-space continuations, and therefore for
+their live paths. It uses exactly $d_D(\zeta,\zeta')=|\Pi\zeta-\Pi\zeta'|$
+when comparing source task distances. The complete original deaths are
+identical: both are the first time $q_3+U_3$ reaches zero.
+
+For each $Q\in\mathcal Q$, on the same $Q$-Brownian motion the full-space
+source is a unique nonexplosive strong solution at every start, with
+
+$$
+\begin{aligned}
+h_t&=h+W_t^1,&k_t&=k+t+W_t^2,\\
+q_1(t)&=q_1+W_t^1,&q_3(t)&=q_3+W_t^3,\\
+q_2(t)&=q_2+ct+W_t^2+a\{\cos h-\cos(h+W_t^1)\}.
+\end{aligned}
+\tag{25.2}
+$$
+
+The comparison $Y_t=q+\widehat c\,t e_2+W_t$ satisfies
+$\sup_{t\le T}|\Pi Z_t-Y_t|\le D_T$ pathwise.
+Both killed processes use exactly
+
+$$
+\tau=\inf\{t\ge0:q_3+W_t^3\le0\},\qquad
+p_Q(t,q_3)=\mathbb P(t<\tau)
+=2\Phi\left(\frac{q_3}{\sqrt{Q_{33}t}}\right)-1
+\quad(t>0).
+\tag{25.3}
+$$
+
+In particular killing is nontrivial: $0<p_Q(t,q_3)<1$ at every interior
+start and every $t>0$. Give the cemetery value zero. For every bounded
+$L$-Lipschitz $\varphi$ on $K$,
+
+$$
+\left|\mathbb E_\zeta[\varphi(\Pi Z_t)\mathbf1_{t<\tau}]
+ -\mathbb E_q[\varphi(Y_t)\mathbf1_{t<\tau}]\right|
+\le L D_t p_Q(t,q_3).
+\tag{25.4}
+$$
+
+There is also a bound for every bounded Borel observable, with no
+continuity assumption. Put $I=\{1,3\}$ and
+
+$$
+\nu_Q=Q_{22}-Q_{2I}Q_{II}^{-1}Q_{I2}>0.
+$$
+
+If $|\varphi|\le M$, then
+
+$$
+\left|\mathbb E_\zeta[\varphi(\Pi Z_t)\mathbf1_{t<\tau}]
+ -\mathbb E_q[\varphi(Y_t)\mathbf1_{t<\tau}]\right|
+\le M p_Q(t,q_3)
+ \min\left(2,\sqrt{\frac2\pi}\frac{D_t}{\sqrt{\nu_Qt}}\right).
+\tag{25.5}
+$$
+
+These assertions hold for each start, uniformly in its hidden records;
+they do not assert one null set valid for all uncountably many starts.
+The source remains five-dimensional and evolves both hidden records.
+Its projected response is not asserted to be an exact base Markov
+semigroup when $a\ne0$; (25.4)–(25.5) compare it with the indicated base
+semigroup at the same original lifetime.
+
+Proof. Subtract $Y$ from (24.8). Only the second coordinate differs.
+The primitive difference is bounded both by $2$ and by $|U_1(t)|$,
+giving (25.1). The third coordinate of each continuation is exactly
+$q_3+U_3$, and all source states with positive third coordinate are
+allowed irrespective of $h,k$. Thus the original lifetime equality is
+proved from the full source solution, not assumed from a local generator.
+
+Apply the ordinary Stratonovich chain rule to $\cos(h+W^1)$ to verify
+(25.2) directly, for correlated as well as independent components.
+These formulas are finite and continuous on each finite interval.
+Smooth coefficients and local uniqueness identify them with the actual
+solutions; no explosion or hidden exit can occur. Subtraction gives the
+pathwise bound $D_T$. Their third coordinates are equal, establishing
+(25.3) before any expectation is taken. Reflection and Brownian scaling
+give its probability formula. The same indicator multiplies both
+observables, so Lipschitz continuity proves (25.4).
+
+For (25.5), the SPD Schur complement permits the Gaussian decomposition
+
+$$
+W_t^2=Q_{2I}Q_{II}^{-1}(W_t^1,W_t^3)^{\mathsf T}
+ +\sqrt{\nu_Q}\,\beta_t,
+$$
+
+where $\beta$ is a standard Brownian motion independent of the entire
+$(W^1,W^3)$ path. This follows directly by subtracting the displayed
+linear combination: its cross-covariances at every pair of times vanish;
+joint Gaussianity gives independence, and its covariance is $\nu_Q\min(s,t)$.
+Condition on those two paths through $t$. Their common survival indicator,
+first and third coordinates, and the second-coordinate shift
+
+$$
+\Delta_t=(c-\widehat c)t+a\{\cos h-\cos(h+W_t^1)\}
+$$
+
+are then fixed. Only the independent second-coordinate Gaussian remains,
+with variance $\nu_Qt$, and $|\Delta_t|\le D_t$.
+If $g_\sigma$ is the centered Gaussian density with standard deviation
+$\sigma$, the fundamental theorem of calculus and Fubini give
+
+$$
+\int|g_\sigma(x-\Delta)-g_\sigma(x)|dx
+\le |\Delta|\int|g_\sigma'(x)|dx
+=\sqrt{2/\pi}\,|\Delta|/\sigma;
+$$
+
+its left side is also at most $2$. Integrating $\varphi$ against these
+conditional densities and then the common survival indicator proves
+(25.5). This elementary Gaussian smoothing estimate is only an
+intermediate step of this source-specific killed-response calculation.
+For a fixed finite menu the minimum of its $\nu_Q$ is positive, so the
+bound can be made uniform over the menu. At $t=0$ both responses agree
+exactly; (25.5) is stated only for $t>0$.
+
+For $a\ne0$, the two starts $(q,\pi/2,k)$ and $(q,-\pi/2,k)$ have
+actual labelled $X_1$ values differing by $2a e_2$; their $Q=I_3$
+projected covariance entry $(1,2)$ also differs by $2a$. Thus an exact
+all-fibre labelled or diffusion quotient is absent in this inhabited
+source. When $\widehat c=c$, the lawful deterministic pulse with
+$U_1(T)=\pi$, $U_2=U_3=0$ and $h=0$ attains error $2|a|$ while the
+original guard stays alive. The term $2A$ in a uniform bound for this
+control class therefore measures real omitted information.
+
+The Brownian strong Markov supplier is Mörters–Peres, Theorem 2.14,
+page 48 of the cited draft. It permits the same argument after an almost
+surely finite nonanticipating acquisition completion time, conditional on
+the retained source state and records, provided the original execution
+contract supplies the corresponding fresh Brownian increments. It does
+not permit an anticipatory selection of the execution noise. QED.
+
+**Corollary 25.2 (finite precision at the actual execution start).**
+The same source also admits the following finite-record initialization.
+After $s_2$ hold for a finite arithmetic/reporting duration $\Lambda$;
+a clock record gives $|\Lambda-\widehat\Lambda|\le\delta_\Lambda$
+and $0\le\Lambda\le\Lambda_{\max}$.
+With second-coordinate arithmetic error at most $\eta_s$, use
+
+$$
+\widehat q=(R_2^1,\ R_2^2+\widehat c\widehat\Lambda,\ R_2^3).
+$$
+
+At this actual execution start put
+
+$$
+\delta_2=\epsilon+C\Lambda_{\max}
+ +|\widehat c|\delta_\Lambda+\eta_s,\qquad
+E=\sqrt{2\epsilon^2+\delta_2^2}.
+\tag{25.6}
+$$
+
+Then $|q-\widehat q|\le E$ and $|q_3-\widehat q_3|\le\epsilon$;
+$h$ is unchanged during this hold and $k$ increases by $\Lambda$.
+Assume the acquired guard margin $\widehat q_3>\epsilon$.
+For a reference starting at $\widehat q$, deterministic full-space
+accuracy is at most $E+D_T$. In particular, if
+$\inf_{s\le T}(\widehat q_3+U_3(s))>\epsilon$, both original guards
+survive through $T$. A zero margin alone certifies no deterministic
+lifetime agreement.
+
+For Brownian execution let $\widehat\tau$ be the reference's first hit
+of its original boundary $q_3=0$. For every $t>0$,
+
+$$
+\begin{aligned}
+\mathbb P\bigl(\mathbf1_{t<\tau}\ne\mathbf1_{t<\widehat\tau}\bigr)
+&=2\left|\Phi\left(\frac{q_3}{\sqrt{Q_{33}t}}\right)
+ -\Phi\left(\frac{\widehat q_3}{\sqrt{Q_{33}t}}\right)\right|\\
+&\le\kappa_t:=\min\left(1,\sqrt{\frac2\pi}
+ \frac{\epsilon}{\sqrt{Q_{33}t}}\right).
+\end{aligned}
+\tag{25.7}
+$$
+
+Hence for $|\varphi|\le M$ and Lipschitz constant $L$ the actual killed
+response error is at most
+
+$$
+L(E+D_t)+M\kappa_t.
+\tag{25.8}
+$$
+
+This is a source-specific initial-record correction for the original
+half-space guard, not a shifted execution boundary or a general
+perturbation theorem for guards.
+
+Proof. During the reporting hold, only $q_2$ changes in the projection,
+by $c\Lambda$. Subtracting its predicted increment gives the bound
+$C\Lambda_{\max}+|\widehat c|\delta_\Lambda+\eta_s$; endpoint sensor
+errors prove (25.6). The deterministic bound follows from (24.8).
+For the same Brownian path the two survival events are nested, since
+they are the conditions $\min_{s\le t}W_s^3>-q_3$ and
+$\min_{s\le t}W_s^3>-\widehat q_3$.
+Subtract their reflection probabilities to obtain (25.7); the normal
+density is at most $1/\sqrt{2\pi}$. On common survival use the Lipschitz
+bound; when exactly one process survives, only one observable of size
+at most $M$ remains. This proves (25.8). Arbitrary bounded Borel functions
+with unequal initial coordinates are not covered by (25.8)'s Lipschitz
+claim or by (25.5)'s equal-start smoothing argument. QED.
+
+## 26. Finite charges, nonconstant inhabitants and scope of the correspondence
+
+**Definition 26.1 (actual acquisition and execution resources).** All
+preparation, sensing, timing, arithmetic, storage, command, retention and
+failure charges are those of the original source contract. In particular
+$g_D$ assigns zero length to hidden differences but assigns them no zero
+service cost. Let $C_{\rm prep}$ include the complete preparation,
+$C_{{\rm read},j}$ its three actual sensor charges,
+$C_{{\rm clock},j}$ the certificates for $\tau_0,\tau_1,\Lambda$,
+$C_{\rm command}$ the pulse/effort certificate and
+$C_{\rm arithmetic}$ the finite interval computation, including its
+actual workspace/output/backing charges. If the original deterministic
+source-service rate is $c_{\rm src}(u,Z)$, the actual acquisition bill is
+
+$$
+C_{\rm acq}=C_{\rm prep}+\sum_{j=0}^2C_{{\rm read},j}
+ +\sum_{j=0}^2C_{{\rm clock},j}+C_{\rm command}+C_{\rm arithmetic}
+ +\int_{\rm after\ preparation}^{\rm execution\ start}
+ c_{\rm src}(u_s,Z_s)\,ds.
+\tag{26.1}
+$$
+
+Separate terms mean separate original charges; if the contract bundles
+one into another it is counted once. The actual elapsed acquisition
+clock is
+
+$$
+T_{\rm acq}=T_{\rm prep}+\ell_0+\tau_0+\tau_1+\Lambda.
+\tag{26.2}
+$$
+
+The later read and timing durations are already inside the $\tau_j$ or
+$\Lambda$, as required by Assumption 24.1. Computational latency is a
+real hold of the source, not deleted time. The two calibration intervals
+consume at most $2(1+\delta_t)$ clock units and pulse effort at most
+$U_*(1+\delta_t)$. At every actual execution, the original source-service
+integral to $T\wedge\tau$, plus its original command, retention and
+failure terms, is still charged. For stochastic execution write its
+original rate as $c_Q(Z)$; Brownian controls are not replaced by a
+finite-variation command bill.
+
+The finite alphabet of the nine scalar endpoint reports can be priced
+explicitly. From (24.8) a valid endpoint-report range through $s_2$ is
+
+$$
+R=R_0+C_0\ell_{\max}+2C_0(1+\delta_t)
+ +2A_0+1+\delta_t+\delta_u.
+\tag{26.3}
+$$
+
+A quantizer of mesh $2\epsilon$ on $[-R,R]$, including covering end
+levels, needs at most $\lceil R/\epsilon\rceil+2$ levels, hence at most
+$9\lceil\log_2(\lceil R/\epsilon\rceil+2)\rceil$ endpoint-output bits.
+The clock, effort, preparation and arithmetic certificates have their
+own additionally declared finite widths and prices. This count supplies
+neither a physical sensor nor a rate for obtaining a covariance matrix.
+The deterministic interval/noise distinction and pricing of independent
+repeats, when separately permitted, are already supplied by
+[Obtainable predictive bundles, §§2 and 6](AURIC_FIB_OBTAINABLE_PREDICTIVE_BUNDLE_THEORY.md);
+no new concentration or repeat-price assertion is needed here.
+
+**Proposition 26.2 (finite resources and an inhabited strict margin).**
+If the separately declared charges in Definition 26.1 are finite, the
+source-service rate is locally bounded on the permitted bounded-control
+calibration path, and all latencies meet the acquisition contract, then
+(26.1) is finite on this same source. If, additionally, the original
+stochastic source contract has the rate bound
+$c_Q(\zeta)\le C_Q^{\rm cost}(1+|\zeta|^2)$, its expected execution
+service charge to $T\wedge\tau$ is at most
+
+$$
+C_Q^{\rm cost}\int_0^T(1+M_Q(s;\zeta))ds,
+\tag{26.4}
+$$
+
+where the following completely specified polynomial is sufficient:
+
+$$
+\begin{aligned}
+M_Q(s;\zeta)={}&q_1^2+q_3^2+h^2+(|k|+s)^2
+ +3(|q_2|+C_0s)^2\\
+&+(2Q_{11}+4Q_{22}+Q_{33})s+12A_0^2.
+\end{aligned}
+\tag{26.5}
+$$
+
+Other original cost terms must still be added; no cost optimum is
+asserted. In particular this is not the native finite-bit tracking
+problem of [Paid point observation, §§44–49](FIB_NATIVE_PAID_POINT_OBSERVATION_TRACKING.md).
+
+The response margins are inhabited by a nonconstant source with evolving
+hidden records and nontrivial killing. For example, take
+
+$$
+A_0=C_0=1,\quad a=1/100,\quad c=1/10,\qquad
+\epsilon=\delta_t=\delta_h=\delta_u=\eta_a=\eta_c=10^{-6}.
+\tag{26.6}
+$$
+
+Whenever the permitted acquisition apparatus meets these finite error
+contracts, $C=4\cdot10^{-6}$, $R_a=24\cdot10^{-6}$ and
+$A\le0.010048$. Consequently $D_1\le0.020100<1/40$,
+and the actual Itô drift error at $Q=I_3$ is at most $0.005028$.
+Thus every equal-start $1$-Lipschitz killed observable has error less
+than $1/40$ at time $1$, and every equal-start Borel observable bounded
+by $1$ also has error less than $1/40$ by (25.5), since $\nu_{I_3}=1$.
+These bounds hold for all source starts, not only the calibration state.
+For the fully acquired start of Corollary 25.2, also take
+$H_{\min}=1$, $\Lambda_{\max}\le1$ and
+$\delta_\Lambda=\eta_s=10^{-6}$. Then its guard margin holds,
+$E<7\cdot10^{-6}$, and at $t=1$, $Q=I_3$, every observable with
+$M=L=1$ has the finite-record killed-response error less than
+$0.020108<1/40$. This last assertion uses the actual post-acquisition
+state and the reporting hold, rather than an exact current-state sensor.
+
+Proof. Under (24.8) a bounded-control acquisition in finite time stays
+in a compact part of $J$: $h$ changes by its finite control integral,
+$k$ by elapsed time, and the shear contribution to $q_2$ is at most
+$2A_0$. A locally bounded service rate is bounded on this compact
+state/control set. This proves finiteness of the actual integral.
+Formula (26.3) follows by bounding each endpoint coordinate in (24.8),
+including the initial $c\ell_0$ drift during the first read.
+A scalar quantizer with the indicated mesh gives its bit count.
+
+For execution, (25.2) gives the exact second moments of $q_1,q_3,h,k$.
+For the remaining coordinate use
+
+$$
+\mathbb E q_2(s)^2
+\le3(|q_2|+C_0s)^2+3Q_{22}s+12A_0^2.
+$$
+
+Summing proves $\mathbb E|Z_s|^2\le M_Q(s;\zeta)$ regardless of
+correlations among $W$'s components. Integrating the rate bound and
+using $\mathbf1_{s<\tau}\le1$ proves (26.4).
+
+For (26.6), $E_0=3\cdot10^{-6}$ and $E_1=7\cdot10^{-6}$;
+(24.5) gives the stated $C,R_a$ and
+$A\le|a|+2R_a=0.010048$. The arithmetic bounds in (24.4) are attainable
+with finite rational cosine enclosures and positive rounding budgets.
+The exact hold and unit pulse, with a finite-latency sensor completing
+within the specified intervals, exhibit a permitted acquisition in this
+conditional apparatus domain; the positive tolerance budgets allow
+finite-precision records. There is no reset between the two intervals.
+The source coefficient $a\sin h$ is nonconstant; $h$ is changed by
+$X_1$ and $k$ by both elapsed time and $X_2$. The survival probability in (25.3) is strictly
+between zero and one. Finally $CT+2A$ and $C+Q_{11}A/2$ give the stated
+numbers. In the finite-record initialization example,
+$|\widehat c|\le0.100004$, hence
+$\delta_2\le6.100004\cdot10^{-6}$ and
+$E^2\le(2+6.100004^2)10^{-12}<49\cdot10^{-12}$.
+Also $\widehat q_3\ge1-10^{-6}>\epsilon$ and
+$\kappa_1\le10^{-6}$. Substitution in (25.8) proves the final strict
+margin. QED.
+
+**Definition 26.3 (falsifiable conditions and mathematical limits).**
+For declared finite targets $T,\delta_{\rm path},\delta_{\rm drift}$,
+the source-specific sufficient margins are
+
+$$
+CT+2A<\delta_{\rm path},\qquad
+\max_{Q\in\mathcal Q}(C+Q_{11}A/2)<\delta_{\rm drift},
+\tag{26.7}
+$$
+
+together with the signed-anchor margin, acquired intervals intersecting
+$[-A_0,A_0]\times[-C_0,C_0]$, and, for finite-record initialization,
+$\widehat q_3>\epsilon$ and the explicit response target in (25.8).
+For equal starts the chosen response target is checked directly against
+(25.4) or (25.5). A set of acquired increments admitting no $(a,c)$ in
+the declared box
+with $|\rho_0-c|\le E_0$ and $|\rho_1-c-ad|\le E_1$ falsifies that
+conjunction of membership, common calibration and acquisition-error
+premises. So does a certified first-moment interval disjoint from
+(24.6), or a certified response interval disjoint from its applicable
+bound; uncertified point estimates alone do not supply these tests.
+Passing finitely many records does not certify arbitrary global smooth membership. Hidden phase preparation, sensor access, simultaneous
+read/control operation and their durations remain distinct premises.
+
+The mature local SDE and drift suppliers used inside (23.5) and (25.2)
+are Hochgerner–Ratiu, Theorem 3.1 and the following connection drift
+formula; nonexplosion and lifetime agreement here follow from the displayed
+source calculations. The Brownian reflection and strong Markov suppliers
+are precisely Mörters–Peres, Theorems 2.18 and 2.14.
+Bouchard–Geiss–Gobet, arXiv:1307.4247v2, §2.1 Assumption (P), has explicit
+boundary-distance and noncharacteristic requirements; no general exit
+estimate is imported without those hypotheses. Gobet–Menozzi,
+arXiv:0706.4042v2, abstract, concern a discretely stopped Euler
+scheme in a shifted domain; they grant no permission to change (23.1).
+The present derivation instead uses the unchanged third coordinate to
+prove (25.3), and reflection to compute only the specific initial-record
+mismatch (25.7). The finite-menu identification background of §18 and
+Kleinsteuber–Shen does not supply either the missing derivative in (23.6)
+or a calibration sensor for (24.2).
+
+The new mathematical composition is the obstruction (23.2)–(23.8) and the
+particular acquired-source correspondence (24.1)–(26.7); the calculus,
+Gaussian inversion and stability steps are credited intermediate inputs.
+The changing-scale negative sequence does not refute the fixed-template
+positive theorem. Conversely, the positive theorem gives no uniform
+certificate over all smooth sources, no new native actuator and no
+identification of this source with native FIB $P,Q$ transport.
+The three-axis task metric remains the one in (16.9), not the full
+source metric. Reducing instrument errors makes $C,R_a$ tend to zero
+but leaves $A$ tending to $|a|$ at a fixed nonzero source parameter;
+the attained pulse error in the proof of Theorem 25.1 cannot be removed
+by reporting more digits. Finite $T$ and finite tolerances are essential
+to the claimed estimates; neither physical/ambient dimension nor infinite-time
+uniform stability follows. No assertion about the universe's dimension
+is implied by this conditional interface correspondence.
+
+## 追加锚（本行以下为增补区）
+
+## 27. Prepared-source calibration and three evolving task coordinates
+
+**Definition 27.1 (fixed calibration and the predictive carrier).** Keep
+exactly Assumption 24.1, including its whole-source membership premise,
+original task metric, operation permissions, clock and half-space guard.
+For an actual source state set
+
+$$
+\theta=h-q_1,\qquad
+\alpha=a\cos\theta,\quad \gamma=a\sin\theta,\qquad
+\lambda=(\alpha,\gamma,c),
+\quad P_\lambda(x)=\alpha\cos x-\gamma\sin x.
+\tag{27.1}
+$$
+
+The carrier for current and future raw-task records and death is
+$(q;\lambda)$. Its three evolving task coordinates are precisely the
+original $q$, with distance $|q-q'|$; $\lambda$ is fixed calibration,
+not three further evolving task coordinates. The original source still
+has $h,k$, and its service bill still uses the original source trajectory.
+Neither the task carrier nor the zero hidden length in $g_D$ discards that
+billing obligation or claims that $k$ has been sensed.
+
+**Theorem 27.2 (source-derived exact transport and continuation).** For
+(24.1), $\theta,\alpha,\gamma,c$ are invariant under every permitted
+finite-integral deterministic control and every fixed permitted
+$Q$-Brownian execution. At fixed $\lambda$ the exact raw-task flow is
+
+$$
+F_{t,U}^\lambda(q)=
+(q_1+U_1,\ q_2+ct+U_2+P_\lambda(q_1)-P_\lambda(q_1+U_1),\ q_3+U_3).
+\tag{27.2}
+$$
+
+Here $U$ is the actual cumulative command, or the actual Brownian
+increment, not a newly available actuator. Its actual fields on the
+three task coordinates are
+
+$$
+V_0=ce_2,\quad
+V_1=e_1+(\alpha\sin q_1+\gamma\cos q_1)e_2,\quad V_2=e_2,\quad V_3=e_3.
+\tag{27.3}
+$$
+
+The original lifetime is exactly the first zero of $q_3+U_3$.
+For deterministic concatenations and, pathwise, Brownian increments,
+
+$$
+F_{s,V}^\lambda\circ F_{t,U}^\lambda=F_{t+s,U+V}^\lambda.
+\tag{27.4}
+$$
+
+This equality includes killing when each segment is killed on its own
+continuous third-coordinate prefix and the cemetery is absorbing. A
+segment's positive endpoint alone is not its survival certificate.
+For a single fixed permitted $Q$ let
+
+$$
+K_t^{\lambda,Q}f(q)=
+\mathbb E[f(F_{t,W_t}^\lambda(q))
+ \mathbf1_{\min_{0\le r\le t}(q_3+W_r^3)>0}],\qquad f(\dagger)=0.
+\tag{27.5}
+$$
+
+Then $K_{t+s}^{\lambda,Q}=K_t^{\lambda,Q}K_s^{\lambda,Q}$. The same
+kernel is the exact conditional continuation of the original source
+from every live source state with this calibration, including after an
+a.s. finite permitted nonanticipating acquisition or join, if the
+execution contract supplies fresh Brownian increments there. This is a
+family indexed by the true calibration, not exact calibration recovery
+from a positive-tolerance record. No change of $Q$ at a join is supplied.
+
+Proof. Subtract the $q_1$ equation from the $h$ equation in (24.1).
+The difference has zero drift and zero coefficient for every control or
+Stratonovich increment. Thus $h=q_1+\theta$ on the complete actual
+continuation. The addition formula gives
+$a\cos h=P_\lambda(q_1)$ and
+$a\sin h=\alpha\sin q_1+\gamma\cos q_1$. Substitution in (24.8) and
+(25.2) proves (27.2) and (27.3); it also proves the stated original
+lifetime, since (24.1) has no hidden exit and has the complete guard
+(23.1). Hidden coordinates are reconstructed on the source as
+$h_t=h+U_1(t)$, $k_t=k+t+U_2(t)$ when they are needed for its bill.
+
+The two primitive differences in a composition telescope:
+$P_\lambda(q_1)-P_\lambda(q_1+U_1)$ plus
+$P_\lambda(q_1+U_1)-P_\lambda(q_1+U_1+V_1)$. Drift and the other
+increments add. The continuous guard prefix on the concatenated path
+is the conjunction of the two live-prefix conditions. This proves
+(27.4), also for paths killed in the first segment.
+
+For existence on every finite interval one can equivalently compute
+
+$$
+D_\lambda(q)=(q_1,q_2+P_\lambda(q_1),q_3),\qquad
+D_\lambda^{-1}(y)=(y_1,y_2-P_\lambda(y_1),y_3),
+\tag{27.6}
+$$
+
+under which $D_\lambda(F_{t,U}^\lambda(q))=D_\lambda(q)+ct e_2+U$.
+These globally defined expressions and the reconstructed hidden paths
+are finite on each finite interval. The ordinary Stratonovich chain
+rule verifies the original equations, and local uniqueness identifies
+them with their actual solutions. In particular the raw generator is
+
+$$
+\mathcal L_{\lambda,Q}f=
+(c+\tfrac12Q_{11}P_\lambda(q_1))\partial_2f+
+\tfrac12(VQV^{\mathsf T}):D^2f,
+\quad V=I+(\alpha\sin q_1+\gamma\cos q_1)e_2e_1^{\mathsf T}.
+\tag{27.7}
+$$
+
+The hidden source derivative in (24.7) has therefore been preserved,
+not estimated by differentiating inaccurate projected values.
+Independent Brownian increments, (27.4), the live-prefix conjunction
+and conditioning give (27.5)'s semigroup identity. Brownian strong
+Markov gives its stated continuation at stopping times.
+The intermediate local SDE/chain-rule supplier is Hochgerner–Ratiu,
+[arXiv:1204.6438v1](https://arxiv.org/pdf/1204.6438v1), Theorem 3.1,
+PDF page 21, with the drift formula on page 22; strong Markov is
+Mörters–Peres, [*Brownian Motion*](https://www.stat.berkeley.edu/~aldous/205B/bmbook.pdf),
+Theorem 2.14, page 48. Globality, fixed calibration, the original guard
+and this acquisition's continuation have been proved above.
+$D_\lambda$ is a mathematical computation. It is generally not an
+isometry of the raw-$q$ metric and creates no permitted change of the
+source, sensor, control or guard. QED.
+
+**Proposition 27.3 (all-fibre information versus a calibrated task).**
+For the current raw-task and death task, on the whole family (24.1),
+equality of $(q;\lambda)$ implies identical deterministic future
+records and every fixed permitted $Q$-response. If the original named
+control permits an open interval of pulse efforts, or one repeatable
+effort $u\notin\pi\mathbb Z$, this condition is also necessary for
+equality of all deterministic future records. The near-unit pulse
+used in Proposition 28.5 has this separating property. This condition
+is a statement about the original pulse permissions, not a permission
+to add new commands. The summary $q$ alone does not suffice on the
+whole family with that separating pulse.
+At a fixed calibration only three task coordinates evolve. This
+assertion excludes bills or hidden-coordinate readouts as additional
+targets; those require their original additional source information.
+
+Proof. Sufficiency follows from (27.2), including every guard prefix.
+The empty word determines $q$. Holds determine $c$, since their
+second-coordinate increment is $ct$. At a common $q,c$, equality of
+named-pulse responses on an open interval of pulse efforts $u$ forces
+$H(q_1)-H(q_1+u)=0$, where
+$H(x)=(\alpha-\alpha')\cos x-(\gamma-\gamma')\sin x$.
+Thus $H$ is constant on an open interval. There $H'=0$ and
+$H''=-H=0$, and hence $H=0$. At any point of that interval the two
+linear equations $H=H'=0$ have determinant of absolute value one;
+therefore $\alpha=\alpha'$ and $\gamma=\gamma'$. These derivatives
+are a proof about the allowed pulse family, not a derivative sensor.
+Alternatively, for a single repeatable $u\notin\pi\mathbb Z$, the
+one-pulse and two-pulse records force
+$H(q_1)=H(q_1+u)=H(q_1+2u)$. The two equations on the sine/cosine
+coefficients have determinant of absolute value
+$2|\sin u|(1-\cos u)>0$, so the same conclusion follows. In this
+case the equal-$q$ starts $h=0,\pi$ already differ by
+$2a(1-\cos u)$ after one such pulse, with the same live $q_3$.
+When $a=0$ the carrier correctly forgets the immaterial phase, and it
+also identifies $(a,\theta)$ and $(-a,\theta+\pi)$.
+Thus $q$ alone cannot be an all-fibre carrier under those original
+separating permissions. QED.
+
+**Definition 27.4 (one joint finite record and its feasible sources).**
+Let $q^p,h^p,k^p$ denote the actual prepared state, and set
+
+$$
+L_0=\ell_0,\quad L_1=\ell_0+\tau_0,\quad
+L_2=\ell_0+\tau_0+\tau_1,\quad L_*=L_2+\Lambda,
+\qquad \mathsf U_0=\mathsf U_1=0,\quad \mathsf U_2=\mathsf U_*=U.
+\tag{27.8}
+$$
+
+The acquired transcript contains the three actual finite reports,
+their certified timing/effort intervals, the preparation/permission
+certificates, reporting-hold clock certificate, and the original
+billing records. Actual values inside a timing interval are latent;
+they are not declared exact observations. Execution time $t$ is an
+elapsed increment in that same original clock; its origin, preparation
+time and all read/hold durations remain in the transcript, rather
+than resetting the source clock. Its feasible set consists
+of all prepared states, fixed $(a,c)$ and actual durations/effort
+satisfying those same certificates, (24.1)–(24.2), and simultaneously
+
+$$
+\begin{aligned}
+q^{(j)}_1&=q^p_1+\mathsf U_j,&q^{(j)}_3&=q^p_3,\\
+q^{(j)}_2&=q^p_2+cL_j+a[\cos h^p-\cos(h^p+\mathsf U_j)],&
+|R_j^i-q^{(j)}_i|&\le\epsilon\quad(j=0,1,2;\ i=1,2,3).
+\end{aligned}
+\tag{27.9}
+$$
+
+At execution replace $j$ by $*$ in the same formula; in addition
+$h_*=h^p+U$, $k_*=k^p+L_*$ and $\theta=h^p-q^p_1$.
+Actual source charges use these actual paths and original rates; if
+bills carry additional information it is also intersected into this
+feasible set. One cannot assign independent errors to the two uses
+of $R_1$, or reselect a different feasible calibration at each join.
+
+**Theorem 27.5 (lawful finite acquisition of retained calibration).**
+For an actual transcript of Assumption 24.1 and Corollary 25.2 use their
+same $\widehat a,\widehat c,R_a,C,\widehat q,E,\delta_2$, and set
+
+$$
+\widehat\theta=-R_1^1,\qquad
+\widehat h_*=\widehat q_1+\widehat\theta=R_2^1-R_1^1,\qquad
+\eta_h=\delta_h+2\epsilon,
+\quad
+\widehat\lambda=(\widehat a\cos\widehat\theta,
+                  \widehat a\sin\widehat\theta,\widehat c).
+\tag{27.10}
+$$
+
+Every feasible source has
+
+$$
+\begin{gathered}
+|\theta-\widehat\theta|\le\delta_h+\epsilon,\qquad
+|h_*-\widehat h_*|\le\eta_h,\qquad
+|a-\widehat a|\le R_a,\quad |c-\widehat c|\le C,\\
+|q_*-\widehat q|\le E,\qquad
+|q_{*,1}-\widehat q_1|,|q_{*,3}-\widehat q_3|\le\epsilon,
+\quad |q_{*,2}-\widehat q_2|\le\delta_2.
+\end{gathered}
+\tag{27.11}
+$$
+
+In particular the nominal execution phase is near $U$, not near zero.
+The same $\widehat\lambda$ is retained through all joins. The exact
+feasible predictive family is the image of (27.9) under
+$(q_*;a\cos\theta,a\sin\theta,c)$; the displayed radii are a sufficient
+enclosure of it, not a statement that arbitrary points of the enclosure
+are jointly feasible or independent.
+
+Proof. During the first read and calibration hold $q_1=q^p_1$ and
+$h=h^p$, with $|h^p|\le\delta_h$. Hence
+$|h^p-q^p_1+R_1^1|\le\delta_h+\epsilon$.
+During the pulse both $h$ and $q_1$ acquire the same actual $U$.
+Subtracting the two first-coordinate reports gives
+$|(R_2^1-R_1^1)-U|\le2\epsilon$. The reporting hold changes neither
+of these coordinates; this proves the phase assertion at the actual
+execution start, including the pulse and all its timing error.
+The coefficient bounds follow from the two dependent increments of
+these same records in Theorem 24.2, without a new observation.
+The second-coordinate reporting correction is exactly (25.6), including
+$C\Lambda_{\max}$, $|\widehat c|\delta_\Lambda$ and $\eta_s$.
+The other initial coordinates stay fixed during that hold. This proves
+all of (27.11), with the complete first-read duration included in
+(27.9). Rational subtraction uses finite arithmetic; any additional
+rounding of (27.10) must be added to its phase radius. There is no reset,
+no hidden sensor and no acquisition of the exact $k_*$: its prepared
+interval and actual source evolution remain available for billing.
+QED.
+
+## 28. Finite records, original killing and horizon-uniform endpoint accuracy
+
+**Theorem 28.1 (one calibration, no join factor).** Compare the actual
+execution with $F^{\widehat\lambda}$ from its acquired $\widehat q$,
+using the same actual commands or $Q$-Brownian path and elapsed clock.
+Write $h=h_*$, $\widehat h=\widehat h_*$, and put
+
+$$
+D=2R_a+2|\widehat a|\eta_h,\qquad B_T=CT+D.
+\tag{28.1}
+$$
+
+For every finite $T$, their full-space continuations satisfy
+
+$$
+\sup_{0\le t\le T}|q_t-\widehat q_t|\le E+B_T.
+\tag{28.2}
+$$
+
+Each is killed at its own original $q_3=0$ boundary; on common survival
+(28.2) is the actual raw-task error. It holds through every finite
+legal segmentation without a factor equal to the number of joins.
+If $\inf_{s\le T}(\widehat q_3+U_3(s))>\epsilon$, both deterministic
+executions survive through $T$.
+
+Proof. Both primitive solutions use their actual execution-start phases:
+
+$$
+\begin{aligned}
+q_2(t)&=q_2+ct+U_2(t)+a[\cos h-\cos(h+U_1(t))],\\
+\widehat q_2(t)&=\widehat q_2+\widehat ct+U_2(t)
+ +\widehat a[\cos\widehat h-\cos(\widehat h+U_1(t))].
+\end{aligned}
+\tag{28.3}
+$$
+
+Their shear difference is at most $2R_a+2|\widehat a|\eta_h$, using
+$|\cos x-\cos y|\le|x-y|$. Apart from the initial vector difference
+only this second-coordinate difference and $(c-\widehat c)t$ remain.
+The triangle inequality proves (28.2); it does not change the metric to
+that of $D_\lambda$. The initial third coordinates differ by at most
+$\epsilon$, proving the deterministic guard assertion. Applying the
+complete formula once, and using (27.4) with the same fixed calibration,
+proves the absence of a join factor. QED.
+
+**Theorem 28.2 (finite killed response with two original deaths).** Fix
+one $Q\in\mathcal Q$, and let $\tau,\widehat\tau$ be the two original
+killing times under common noise. Put $b=\sqrt{2/\pi}$,
+$z=q_3$, $\widehat z=\widehat q_3$,
+
+$$
+\begin{aligned}
+p_Q(t,z)&=2\Phi(z/\sqrt{Q_{33}t})-1,\\
+J_t&=|p_Q(t,z)-p_Q(t,\widehat z)|,\qquad
+p_{\min}(t)=p_Q(t,\min(z,\widehat z)),\\
+H_-&=\widehat z-\epsilon>0,\quad H_+=\widehat z+\epsilon,\qquad
+j_*=\min(1,\sqrt{2/(\pi e)}\,\epsilon/H_-),\\
+\nu_Q&=Q_{22}-Q_{2I}Q_{II}^{-1}Q_{I2}>0,\qquad I=\{1,3\}.
+\end{aligned}
+\tag{28.4}
+$$
+
+For a raw-task observable with $|\varphi|\le M$ and Lipschitz constant
+$L$, write $\mathcal R_t$ and $\widehat{\mathcal R}_t$ for its two
+unnormalized killed responses. Then, for every $t>0$,
+
+$$
+|\mathcal R_t-\widehat{\mathcal R}_t|
+ \le L(E+B_t)p_{\min}(t)+MJ_t,
+\qquad
+J_t\le\min(1,b\epsilon/\sqrt{Q_{33}t},j_*).
+\tag{28.5}
+$$
+
+For equal initial $q$, the stronger Borel estimate, requiring only
+$|\varphi|\le M$, is
+
+$$
+|\mathcal R_t-\widehat{\mathcal R}_t|
+\le Mp_Q(t,z)\min(2,bB_t/\sqrt{\nu_Qt}).
+\tag{28.6}
+$$
+
+The Borel equal-start assertion does not extend to arbitrary unequal
+first/third coordinates by inserting $E$ in its one-coordinate shift.
+A separate unequal-start estimate is given in Theorem 28.4.
+
+Proof. Under the common continuous $W^3$ path the survival events are
+nested, with intersection probability $p_{\min}(t)$ and symmetric
+difference probability $J_t$. Reflection gives the formula for $p_Q$;
+this is Mörters–Peres, Theorem 2.18, page 50, used inside this particular
+original-guard calculation. On common survival use (28.2); on the
+symmetric difference only one observable of magnitude at most $M$
+remains. This proves (28.5)'s first inequality.
+
+The derivative of $p_Q(t,r)$ with respect to $r$ is
+$b(Q_{33}t)^{-1/2}e^{-r^2/(2Q_{33}t)}$. Its maximum over $t>0$, at a
+fixed $r>0$, is $\sqrt{2/(\pi e)}/r$. Integration between $z$ and
+$\widehat z$, which are at least $H_-$, proves $J_t\le j_*$; dropping
+the exponential gives the other bound. At $t=0$ the survival mismatch
+is zero and the Lipschitz error is at most $LE$.
+
+For (28.6) use the independent residual
+$W^2-Q_{2I}Q_{II}^{-1}(W^1,W^3)^{\mathsf T}$, a Brownian motion with
+variance rate $\nu_Q$. Vanishing cross-covariances at every pair of
+times and joint Gaussianity prove independence from the entire
+$(W^1,W^3)$ path. Conditional on those paths, the two second endpoints
+are translates of the same independent Gaussian, by at most $B_t$;
+the first/third endpoints and the death indicator coincide.
+For the one-dimensional Gaussian density $g_\sigma$,
+$\int|g_\sigma'(x)|dx=b/\sigma$, so the fundamental theorem of calculus
+bounds its translation distance in $L^1$ by
+$\min(2,b|d|/\sigma)$. Multiplication by the common survival indicator
+and integration prove (28.6). QED.
+
+**Theorem 28.3 (positive-error uniform deterministic-horizon response).**
+With the actually finite-acquired information of Theorem 27.5, for
+any single fixed permitted $Q$ and every $|\varphi|\le M$ with raw-task
+Lipschitz constant $L$,
+
+$$
+\sup_{0\le t<\infty}|\mathcal R_t-\widehat{\mathcal R}_t|
+\le L(E+D)+M\left[
+ \min\left(2,\frac{2CH_+}{\pi\sqrt{Q_{33}\nu_Q}}\right)+j_*\right].
+\tag{28.7}
+$$
+
+All $R_a,\eta_h,C,E,\epsilon$ may be strictly positive. The statement
+is about each deterministic endpoint time, uniformly in that time,
+not pathwise accuracy, arbitrary stopping times, survival-conditioned
+accuracy, or a finite price for executing forever. A sufficient
+checkable condition for a requested uniform error $r$ is that the
+right side of (28.7), plus any separately requested numerical output
+error, is strictly below $r$, with $H_->0$. For a finite permitted menu
+one may take the maximum of these fixed-$Q$ bounds; this supplies no
+covariance switching capability.
+
+Proof. Insert an intermediate execution with the actual $q,h,a$ and
+only its drift changed from $c$ to $\widehat c$. It shares the actual
+original death. The Gaussian residual argument in the proof of (28.6)
+compares it with the actual source by
+
+$$
+Mp_Q(t,z)\min(2,bC\sqrt{t/\nu_Q}).
+\tag{28.8}
+$$
+
+Reflection also gives $p_Q(t,z)\le\min(1,bz/\sqrt{Q_{33}t})$.
+Multiplying these bounds gives, for every $t>0$, both $2M$ and
+$Mb^2Cz/\sqrt{Q_{33}\nu_Q}$ as upper bounds on (28.8). This step uses
+simultaneously the survival decay and smoothing; it does not optimize
+them on two different realizations. The intermediate and nominal
+executions have equal drift and a constant raw-task discrepancy at
+most $E+D$ on common survival by (28.3), while their actual two death
+indicators differ by $J_t\le j_*$. Their response difference is
+therefore at most $L(E+D)+Mj_*$. Use $z\le H_+$ and the triangle
+inequality. The $t=0$ discrepancy is at most $LE$, proving (28.7).
+In particular a positive phase/amplitude error is handled by raw-task
+Lipschitz control at short times, rather than by a false assertion of
+Gaussian smoothing at time zero. QED.
+
+**Theorem 28.4 (unequal-start Borel endpoints on the original guard).**
+For the same two executions put $d_i=|q_i-\widehat q_i|$ and, for a
+fixed permitted $Q$, define
+
+$$
+\begin{aligned}
+r_i&=Q_{i3}/Q_{33}\quad(i=1,2),&
+v&=Q_{11}-Q_{13}^2/Q_{33}>0,\\
+\beta&=(Q_{21}-Q_{23}Q_{13}/Q_{33})/v,&
+d_1'&=d_1+|r_1|d_3,\\
+F&=d_2+|r_2|d_3+|\beta|d_1'
+       +2R_a+|\widehat a|(2\eta_h+d_1).
+\end{aligned}
+\tag{28.9}
+$$
+
+For every bounded Borel $|\varphi|\le M$ and $t>0$,
+
+$$
+|\mathcal R_t-\widehat{\mathcal R}_t|
+\le M\left\{p_Q(t,z)
+ \min\left(2,b\left[\frac{d_1'}{\sqrt{vt}}+
+                         \frac{F+Ct}{\sqrt{\nu_Qt}}\right]\right)
+ +\min\left(p_Q(t,z)+p_Q(t,\widehat z),
+                    \frac{2bd_3}{\sqrt{Q_{33}t}}\right)\right\}.
+\tag{28.10}
+$$
+
+In particular, for any declared $t_0>0$, a uniform bound for all
+deterministic $t\ge t_0$ is
+
+$$
+M\left[
+ b\left(\frac{d_1'}{\sqrt{v t_0}}+
+         \frac{F}{\sqrt{\nu_Q t_0}}\right)
+ +\frac{2CH_+}{\pi\sqrt{Q_{33}\nu_Q}}
+ +\frac{2bd_3}{\sqrt{Q_{33}t_0}}\right].
+\tag{28.11}
+$$
+
+No uniform small Borel bound down to $t=0$ is implied for unequal
+acquired starts. Indeed, for $q_1\ne\widehat q_1$, the two first-coordinate
+normal marginals separate in total variation as $t\downarrow0$,
+while both original survival probabilities tend to one. A half-space
+threshold between their initial first coordinates has response
+difference tending to one. Thus positive start uncertainty precludes
+that stronger observable class at arbitrarily short times, even though
+(28.7) holds for all unit bounded/unit Lipschitz observables.
+
+Proof. Write $g_{\sigma^2t}$ for a centred normal density of variance
+$\sigma^2t$. Reflection in the third coordinate gives the killed
+vertical density, for $x_3>0$,
+
+$$
+H_t(z,x_3)=g_{Q_{33}t}(x_3-z)-g_{Q_{33}t}(x_3+z).
+\tag{28.12}
+$$
+
+One obtains it by reflecting after the first zero: paths reaching a
+positive $x_3$ after a hit correspond, with the same Gaussian density,
+to paths from $-z$ to $x_3$. In particular $H_t\ge0$, with mass
+$p_Q(t,z)$; no endpoint-only replacement of the death event is made.
+The processes $\widetilde W^i=W^i-r_iW^3$, $i=1,2$, are jointly
+Gaussian Brownian motions independent of the entire $W^3$ path.
+Their first variance rate is $v$, and
+$\widetilde W^2=\beta\widetilde W^1+\sqrt{\nu_Q}\,B$ with an
+independent standard $B$. This follows by computing all cross-time
+covariances; its last variance is exactly the Schur complement in
+(28.4).
+
+Consequently the actual killed endpoint density in the original raw
+coordinates is $H_t(z,x_3)f_{z,q,h,a,c}(x_1,x_2\mid x_3)$, where the
+conditional horizontal probability density is the product of normals
+of variances $vt$ and $\nu_Qt$ with means
+
+$$
+\begin{aligned}
+m_1(x_3)&=q_1+r_1(x_3-z),\\
+m_2(x_1,x_3)&=q_2+ct+r_2(x_3-z)
+ +\beta[x_1-q_1-r_1(x_3-z)]\\
+&\hspace{12mm}+a[\cos h-\cos(h+x_1-q_1)].
+\end{aligned}
+\tag{28.13}
+$$
+
+The same formula, with hats, gives the other actual killed density.
+At a common $x_3$ the first means differ by at most $d_1'$; at a
+common $(x_1,x_3)$ the second means differ by at most $F+Ct$.
+For the latter assertion split the shear into its amplitude difference
+(at most $2R_a$), initial cosine phase difference (at most
+$|\widehat a|\eta_h$), and endpoint cosine phase difference (at most
+$|\widehat a|(\eta_h+d_1)$). The other terms of (28.13) give the
+remaining terms in $F$. This comparison is uniform in both endpoints.
+Telescoping the two conditional product densities and applying the
+Gaussian $L^1$ translation estimate proves their $L^1$ difference is
+at most the first minimum in (28.10).
+
+Next telescope $H_tf-\widehat H_t\widehat f$ as
+$H_t(f-\widehat f)+(H_t-\widehat H_t)\widehat f$ and integrate.
+The first term has the multiplier $p_Q(t,z)$.
+For the second, translating each of the two normals in (28.12) gives
+$\|H_t(z,\cdot)-H_t(\widehat z,\cdot)\|_1
+ \le2bd_3/\sqrt{Q_{33}t}$; its norm is also at most the sum of their
+masses. This proves (28.10) for bounded Borel observables, accounting
+for both original deaths and unequal endpoint coordinates.
+For (28.11), drop the minima, bound the constant-over-$\sqrt t$ terms
+at $t_0$, and use
+$p_Q(t,z)bC\sqrt{t/\nu_Q}\le2CH_+/(\pi\sqrt{Q_{33}\nu_Q})$.
+Finally the threshold assertion uses only the unchanged first-coordinate
+Gaussian and the fact that killing probability tends to zero, and
+therefore is valid for correlated $Q$ as well. QED.
+
+**Proposition 28.5 (strict non-small-amplitude finite-record consumer).**
+Retain the original unknown box $A_0=C_0=1$ and all the positive error
+budgets in (26.6), and take the actual source
+
+$$
+a=\tfrac12,\qquad c=\tfrac1{10},\qquad
+\epsilon=\delta_t=\delta_h=\delta_u=
+\eta_a^{\rm arith}=\eta_c^{\rm arith}=10^{-6}.
+\tag{28.14}
+$$
+
+Use $\Lambda_{\max}\le1$, $\delta_\Lambda=\eta_s=10^{-6}$ as in the
+finite-start example in §26, the same original preparation margin
+$H_{\min}=1$, and an acquired height satisfying
+$1-10^{-6}\le\widehat q_3\le1+10^{-6}$.
+No parameter box has been tightened to the actual values.
+The centres come from (24.4) and (27.10), not a sensor for $h,a,c$.
+For every such lawful transcript,
+
+$$
+\begin{gathered}
+E_0=3\cdot10^{-6},\quad E_1=7\cdot10^{-6},\quad
+C=4\cdot10^{-6},\quad R_a=24\cdot10^{-6},\\
+|\widehat a|\le0.500024,\quad |\widehat c|\le0.100004,\quad
+\eta_h=3\cdot10^{-6},\\
+\delta_2\le6.100004\cdot10^{-6},\quad E<6.262\cdot10^{-6},\quad
+D\le51.000144\cdot10^{-6},\quad B_1\le55.000144\cdot10^{-6}.
+\end{gathered}
+\tag{28.15}
+$$
+
+For $Q=I_3$, every unit bounded/unit raw-Lipschitz observable has
+
+$$
+|\mathcal R_1-\widehat{\mathcal R}_1|<6.207\cdot10^{-5}<10^{-4},
+\qquad
+\sup_{t\ge0}|\mathcal R_t-\widehat{\mathcal R}_t|
+ <6.030\cdot10^{-5}<1/200.
+\tag{28.16}
+$$
+
+In addition every bounded Borel observable of absolute value at most
+one has error less than $5.1\cdot10^{-5}$ uniformly for all
+$t\ge1$, by the unequal-start estimate (28.11).
+A separately requested numerical evaluation with certified absolute
+error $\rho\le10^{-6}$ adds $\rho$ to each of these bounds; in
+particular the first target remains below $6.307\cdot10^{-5}<10^{-4}$
+and the uniform Lipschitz target below $6.130\cdot10^{-5}<1/200$.
+Its entire latency must be included in the permitted reporting hold
+and $\Lambda_{\max}$ used here; without that contract the numerical
+version of these constants is not asserted.
+
+Proof. Substitution in (24.3)–(24.5) proves $E_0,E_1,C,R_a$.
+The true $a,c$ and their acquired radii give the two centre bounds.
+Theorem 27.5 gives $\eta_h$, including the actual pulse and reporting
+hold. Formula (25.6) gives the displayed $\delta_2$ and
+$E^2\le[2+(6.100004)^2]10^{-12}<(6.262)^2 10^{-12}$.
+Equation (28.1) then gives $D,B_1$.
+At time one (28.5) is at most
+$(6.262+55.000144+0.8)10^{-6}<6.207\cdot10^{-5}$.
+For (28.7), $\nu_I=Q_{33}=1$,
+$H_-\ge1-2\cdot10^{-6}$ and $H_+\le1+2\cdot10^{-6}$.
+The rational upper bounds $2/\pi<0.637$ and
+$\sqrt{2/(\pi e)}<0.484$ give
+
+$$
+\begin{aligned}
+E+D+\frac{2CH_+}{\pi}+j_*
+&<(6.262+51.000144)10^{-6}
+  +0.637(4\cdot10^{-6})(1+2\cdot10^{-6})
+  +\frac{0.484\cdot10^{-6}}{1-2\cdot10^{-6}}\\
+&<60.30\cdot10^{-6}.
+\end{aligned}
+\tag{28.17}
+$$
+
+For the Borel estimate $r_1=r_2=\beta=0$, $v=\nu=1$,
+$d_1,d_3\le10^{-6}$ and
+$F\le(6.100004+48+0.500024\cdot7)10^{-6}
+=57.600172\cdot10^{-6}$. With $b<0.798$, (28.11) at $t_0=1$ is
+at most
+$[0.798(1+57.600172)+2.548006+1.596]10^{-6}<51\cdot10^{-6}$.
+These estimates use positive phase, amplitude, drift and start error
+radii throughout.
+
+For an explicit inhabitant of the same permissions, let the prepared
+$q^p=(0,0,1)$, $h^p=10^{-6}/2$, $k^p=0$, take a first-read hold of
+duration $1/10$, the hold and unit named pulse of actual durations
+$\tau_0=\tau_1=1$, effort $U=1$, and a reporting hold of duration
+$1/10$. Assume, as the original contract requires, that the permitted
+sensor, clock and finite computations fit inside these declared
+durations; $U_*\ge1$, $R_0\ge1$ and $K_0\ge0$ suffice for their
+stated preparation bounds. Every actual prefix has $q_3=1$.
+Let $\varepsilon=10^{-6}$. Choose finite rational reports with
+$R_0^1=\varepsilon/4$, $R_1^1=\varepsilon/4$,
+$R_2^1=1-\varepsilon/4$ and all $R_j^3=1+\varepsilon/4$.
+Take $R_0^2=1/100+\varepsilon/4$,
+$R_1^2=11/100+\varepsilon/4$, and explicitly
+
+$$
+R_2^2=\frac{87969836487}{200000000000},\qquad
+\widehat a=\frac{100000057}{200000000},\qquad
+\widehat c=\frac{200001}{2000000}.
+\tag{28.18}
+$$
+
+The actual second endpoint is
+$21/100+[\cos(\varepsilon/2)-\cos(1+\varepsilon/2)]/2$.
+Expanding each cosine through degree $24$, with the next-term
+alternating-series error bound, places $R_2^2$ strictly between
+that endpoint plus $\varepsilon/8$ and plus $\varepsilon/4$.
+The same rational cosine enclosures at $1$ verify
+$|(1-\cos1)\widehat a-(\rho_1-\rho_0)|<\varepsilon$;
+also $\rho_0=1/10$ and $|\widehat c-\rho_0|=\varepsilon/2$.
+Thus all these finite reports and arithmetic outputs obey the original
+positive budgets strictly, with $\widehat a\ne1/2$ and
+$\widehat c\ne1/10$. For example, take
+$\widehat\Lambda=1/10+\varepsilon/4$ and output
+$\widehat q_2=R_2^2+\widehat c\widehat\Lambda+\varepsilon/4
+=3598796059481/8000000000000$; this last rounding is strictly below
+$\eta_s$. Other clock centres can likewise have a nonzero
+$\varepsilon/4$ error within their existing certificates.
+Here the actual execution phase is $1+\varepsilon/2$, whereas the
+finite-record phase is $1-\varepsilon/2$; the actual phase error is
+nonzero. Amplitude, drift and reported-start errors can likewise be
+nonzero. All original error budgets stay positive, and the parameter
+box remains $[-1,1]^2$. Thus the strict inequalities are not obtained
+by declaring the acquired phase/amplitude exact.
+
+The reference response is the mathematical kernel (27.5). A finite
+numerical evaluator, when requested, needs a separate permitted
+observable evaluation contract and a certified error $\rho$; no
+algorithm for arbitrary noncomputable Borel observables is implied.
+For a computable bounded Lipschitz observable at a declared computable
+time $t>0$ and computable fixed $Q$, (28.12)–(28.13) give one finite
+route: truncate the Gaussian residual and vertical endpoint tails
+with an assigned error, use the explicit continuous density and
+known observable Lipschitz bound for a finite quadrature on the
+remaining box, and enclose cosines and exponentials with assigned
+positive interval errors. Gaussian tails make the omitted mass tend
+to zero; uniform continuity on the compact box makes the quadrature
+error tend to zero. The strictly positive budgets can therefore be
+split to total $\rho$, using finitely many function evaluations,
+bits and arithmetic operations for each declared finite input time.
+Those evaluations, their precision and latency remain paid original
+operations; their duration is not removed from the reporting hold.
+QED.
+
+## 29. Finite-horizon sufficiency and a lawful same-record obstruction
+
+**Proposition 29.1 (same finite record including the first read).**
+Fix nonzero $a$, an interior $c\in(-C_0,C_0)$, a common permitted
+prepared $q^p,h^p,k^p$ with $q_3^p>0$, and common actual acquisition
+controls and finite durations as in (27.8). They include a positive
+first-read duration $\ell_0$, the actual calibration hold and pulse,
+and the complete reporting hold $\Lambda$. If
+
+$$
+0<\delta<\min(C_0-|c|,\epsilon/(2L_2)),
+\tag{29.1}
+$$
+
+the two sources $c_\pm=c\pm\delta$ can produce exactly the same three
+finite representable reports and the same preparation, timing,
+command and reporting-clock certificates, under the actual acquisition
+contract. At execution their first/third coordinates, $h,k,a$ agree,
+and their second-coordinate difference is
+$d_0=2\delta L_*>0$.
+
+This is also a same-total-bill counterexample for a permitted original
+instance with a common constant source-service rate, e.g.
+$c_{\rm src}=c_Q=1$, common fixed preparation/read/clock/command/
+retention charges and identical failure prices. If a separately
+specified bill reveals additional exact state information, it must
+instead enter (27.9); no same-bill claim for an arbitrary
+state-sensitive billing oracle is made. The contract (24.1)–(26.1)
+alone does not require such an additional sensor, and the constant-rate
+instance suffices to refute a uniform guarantee from that contract.
+
+Proof. Starting from the same actually prepared state, (27.9) gives
+$q_2^{+,j}-q_2^{-,j}=2\delta L_j$ for every $j=0,1,2$;
+in particular the first read already includes $2\delta\ell_0$.
+Let $m_j$ be the midpoint of the two actual second endpoints. Since
+$\delta L_j<\epsilon/2$, choose a rational $R_j^2$ with
+$|R_j^2-m_j|<\epsilon/2-\delta L_j$.
+This open interval contains a finite rational, so both coordinate
+errors are strictly less than $\epsilon$. Approximate their common
+first/third endpoints by the same finite rational reports within the
+remaining positive sensor tolerance. This construction preserves
+one shared $R_1$, rather than choosing the two increments independently.
+The original timing/effort certificates and all read durations are
+identical. During the reporting hold the difference increases by
+$2\delta\Lambda$, giving the stated $d_0$; the common output of any
+finite deterministic reporting arithmetic is identical because its
+input records are identical. The complete deterministic acquisition
+has constant positive third coordinate, so every read and prefix is
+lawful under the original guard. $h$ has the same pulse and $k$ the
+same elapsed time, including the first read and reporting hold.
+A constant original service rate has identical integral over these
+identical durations, and all separate declared charges can be the
+same finite rational charges. This proves the asserted admissible
+same-bill instance without omitting or modifying any charge. QED.
+
+**Theorem 29.2 (survivor event-TV and its minimax implication).**
+For the pair in Proposition 29.1 execute the same single permitted
+$Q=I_3$. Use the same raw-task killing boundary. With
+
+$$
+m_t=(q_2^++q_2^-)/2+ct,\qquad E_t=\{x:x_2\le m_t\},\qquad
+s_t=\delta t+d_0/2-2|a|,
+\tag{29.2}
+$$
+
+the two survivor-conditioned endpoint laws $\mu_t^-,\mu_t^+$ obey
+
+$$
+\mu_t^-(E_t)-\mu_t^+(E_t)
+ \ge 1-2\Phi(-s_t/\sqrt t)\longrightarrow1.
+\tag{29.3}
+$$
+
+Here $\operatorname{TV}(\mu,\nu)=\sup_E|\mu(E)-\nu(E)|$.
+Every method assigning a survivor-conditioned predictive law $P_t$
+from only the common finite transcript therefore satisfies
+
+$$
+\max_{\varsigma\in\{-,+\}}
+ \operatorname{TV}(P_t,\mu_t^\varsigma)
+ \ge\tfrac12[1-2\Phi(-s_t/\sqrt t)].
+\tag{29.4}
+$$
+
+The same lower bound holds for the larger of the two errors in any
+single transcript-based probability assigned to the displayed event.
+For every proposed uniform error $r<1/2$, some finite deterministic
+$t$ violates it; indeed any sufficiently large $t$ with
+$s_t/\sqrt t>\Phi^{-1}(1/2+r)$ does so. Randomization based only on
+that transcript cannot remove this worst-source lower bound in
+expected error. It does not assert impossibility of the trivial
+bound one, or a failure of every particular observable at every time.
+
+Proof. Under the same Brownian path,
+$q_2^\pm(t)=q_2^\pm+(c\pm\delta)t+Y_t$ with
+$Y_t=W_t^2+a[\cos h-\cos(h+W_t^1)]$.
+The latter shear has magnitude at most $2|a|$.
+The two thresholds relative to the midpoint leave distance
+$\delta t+d_0/2$ on each side. The upper tail of $Y_t$ beyond that
+distance, and its lower tail below the negative distance, are each
+at most $\Phi(-s_t/\sqrt t)$. This remains a valid, if uninformative,
+bound when $s_t<0$. Subtraction proves (29.3).
+For $Q=I_3$ the original survival event depends only on $W^3$ and is
+independent of $(W^1,W^2)$, so the same calculation is exactly the
+survivor-conditioned one. Its probability is the common strictly
+positive $p_I(t,q_3)$ at each finite $t$. Since $\delta>0$,
+$s_t/\sqrt t\to\infty$.
+
+The triangle inequality for event probabilities gives
+$|\mu_t^-(E_t)-\mu_t^+(E_t)|
+\le|\mu_t^-(E_t)-P_t(E_t)|+|P_t(E_t)-\mu_t^+(E_t)|$.
+Each term is at most its corresponding TV error, which proves
+(29.4). This also proves the assertion for any event-probability
+predictor. For a randomized common predictor integrate the same
+pointwise inequality: the sum of expected errors is still at least
+the event separation, so their maximum is at least half of it.
+The unnormalized killed response difference for this event is instead
+$p_I(t,q_3)$ times (29.3)'s left side and tends to zero, since
+$p_I(t,q_3)\to0$. Eventual killing thus supplies no surviving-accuracy
+conclusion and is consistent with Theorem 28.3. QED.
+
+**Corollary 29.3 (explicit finite-horizon conditional sufficiency).**
+For the actually acquired nominal start of Theorem 27.5 and a fixed
+permitted $Q$, let
+$p_*=2\Phi(H_-/\sqrt{Q_{33}T})-1>0$ for a declared finite $T>0$.
+For every raw-task $|\varphi|\le M$, $L$-Lipschitz,
+
+$$
+\sup_{0\le t\le T}
+\left|\mathbb E[\varphi(q_t)\mid t<\tau]
+ -\mathbb E[\varphi(\widehat q_t)\mid t<\widehat\tau]\right|
+\le\frac{L(E+CT+D)+2Mj_*}{p_*}.
+\tag{29.5}
+$$
+
+At time zero both conditioning events have probability one.
+A requested finite-horizon conditional tolerance is certified by the
+right side, plus any requested numerical error, being strictly below
+that tolerance. At equal starts a sharper bound is $LB_T$;
+for bounded Borel observables at equal starts it is
+$M\min(2,bB_t/\sqrt{\nu_Qt})$ at each positive $t$.
+Unequal-start Borel predictions on a declared $t_0\le t\le T$ can
+instead use (28.10), normalization below, and the same $p_*$.
+
+Proof. Put $p=p_Q(t,z)$, $\widehat p=p_Q(t,\widehat z)$.
+Both are at least $p_*$ when $t\le T$. Since
+$|\widehat{\mathcal R}_t|\le M\widehat p$,
+
+$$
+\left|\frac{\mathcal R_t}{p}-
+       \frac{\widehat{\mathcal R}_t}{\widehat p}\right|
+\le\frac{|\mathcal R_t-\widehat{\mathcal R}_t|+M|p-\widehat p|}{p}.
+\tag{29.6}
+$$
+
+Insert (28.5), use $p_{\min}\le1$, $J_t\le j_*$ and $B_t\le CT+D$.
+For equal starts the probabilities coincide and cancel their common
+factor in (28.5) or (28.6). This proves all asserted finite-horizon
+statements. The bound loses force when $p_*\downarrow0$ as
+$T\to\infty$, and Theorem 29.2 proves a real all-horizon obstruction,
+not merely that this sufficient estimate becomes loose. QED.
+
+**Proposition 29.4 (the all-time Borel strengthening is impossible).**
+With positive sensor tolerance, the same acquisition permissions also
+admit a pair inside the original prepared box for which every report,
+clock, command and, in the constant-rate instance of Proposition 29.1,
+every bill agrees, but the raw first coordinates at execution differ.
+For any transcript-only endpoint predictor, the worst-source
+unnormalized event-probability error has lower limit at least $1/2$
+as $t\downarrow0$. Thus a uniform bound below $1/200$ for all bounded
+Borel observables at all deterministic times cannot be certified from
+this finite record contract. This strengthening is false; the
+all-time unit bounded/unit Lipschitz target in (28.16) and the
+positive-lower-time Borel target are separate, explicitly stated results.
+
+Proof. Take identical $a,c,h^p,k^p,q_2^p,q_3^p$, and prepared first
+coordinates $q_1^{p,\pm}=\pm d$, with
+$0<d<\min(R_0,\epsilon/2)$ and an interior prepared first-coordinate
+margin. All actual second/third coordinates and hidden phases agree
+throughout the acquisition, first read and reporting hold, because
+(24.8)'s second-coordinate expression uses $h^p,U$, not $q_1^p$.
+Their first coordinates differ by $2d$ at each endpoint. A common
+finite report within $\epsilon-d$ of each first-coordinate midpoint
+is lawful; the other common reports are obtained by finite rational
+rounding as in Proposition 29.1. Timings and all original constant-rate
+charges are identical. In the original $Q=I_3$ execution the first
+coordinates are $q_1^{*,\pm}+W_t^1$. Let $E$ be the half-space below
+the midpoint of these two initial first coordinates. The unnormalized
+killed event-probability separation is exactly
+
+$$
+p_I(t,q_3)\,[2\Phi(d/\sqrt t)-1]\longrightarrow1
+\qquad(t\downarrow0),
+\tag{29.7}
+$$
+
+since $W^3$ is independent of $W^1$. The event-probability triangle
+inequality used in (29.4) gives half this separation as a worst-source
+lower bound for any common prediction, also in expected error for
+randomized predictions. This is an acquired-start obstruction using
+the two original deaths, without altering the source metric or guard.
+It does not affect Lipschitz tests, which cannot resolve an arbitrarily
+small fixed first-coordinate gap with a unit-amplitude step. QED.
+
+## 30. Source correspondence, precision and resource boundaries
+
+**Proposition 30.1 (finite charges and falsifiable sufficient conditions).**
+Assume the original finite-charge premises in Proposition 26.2 for
+this same preparation, reads, intervals, hold and execution. Forming
+(27.10) adds only finite rational arithmetic and finite storage to the
+same three reports. Its exact symbolic nominal kernel is determined
+by finite centres; it does not require storing an exact trigonometric
+real as a finite binary numeral. Any evaluated coefficient, endpoint
+or response has its own certified rounding/error budget and price.
+The acquisition clock and bill remain precisely (26.1)–(26.2), with
+all newly requested arithmetic/evaluation latency inside their actual
+reporting hold and all extra operations paid. A changed total latency
+requires recomputing (25.6) and the numerical targets, not deleting
+the elapsed source drift. If numerical approximations of several
+kernels or task states are composed, their certified total numerical
+error must also be added, for example the sum of their separately
+allocated error budgets for sub-Markov contractions. The no-join
+factor in (28.2) concerns the retained-source correspondence, not
+unbounded repeated rounding or free precision.
+
+For each finite horizon, permitted commands, the original guard
+certificate and the applicable strict bound in (28.2), (28.5),
+(28.7), (28.10) or (29.5) are sufficient conditions on this source.
+An empty feasible set (27.9), a certified pulse/response outside the
+applicable interval, an invalid acquired guard margin, or an elapsed
+hold outside its certificate falsifies the relevant conjunction of
+membership, calibration, operation and acquisition assumptions.
+Agreement with finite records alone does not verify whole-source
+analytic membership. Source records and actual charges remain in the
+original accounting, even when they are invisible in the task metric.
+
+The horizon-uniform endpoint inequality (28.7) does not grant finite
+infinite-time acquisition or execution resources. For example, in the
+same constant-rate instance used in Proposition 29.1, the original
+expected stochastic service charge up to death is infinite, despite
+a.s. eventual death and the uniform endpoint bound.
+
+Proof. The report widths are finite by (26.3); rational sums and
+differences of finitely many such numerals have finite width.
+The coefficient arithmetic is the finite interval computation in
+Theorem 24.2. Any requested computable observable evaluation has the
+additional finite-input construction in Proposition 28.5, conditional
+on its declared operation and latency permissions. For every finite
+$T$, the actual source-service integral retains the bound (26.4) when
+its original rate premise holds; its full $k,h,q$ dependence has not
+been replaced by a three-coordinate price. Thus the additional
+information retained here causes no unpaid source operation.
+The sufficient and falsification statements are the direct logical
+forms of the displayed equations and inequalities, keeping their
+stated observable classes and horizons.
+
+For the last assertion put $\sigma=\sqrt{Q_{33}}$ and $z=q_3>0$.
+For $t\ge z^2/Q_{33}$, $x=z/(\sigma\sqrt t)\le1$, and
+$p_Q(t,z)=b\int_0^x e^{-r^2/2}dr\ge be^{-1/2}z/(\sigma\sqrt t)$.
+Hence $\int_0^\infty p_Q(t,z)dt=\infty$.
+Tonelli identifies this integral with $\mathbb E\tau$ and with the
+expected integral of the original rate one until death. In contrast
+$p_Q(t,z)\to0$, proving $\tau<\infty$ a.s. These are compatible facts,
+and neither is a survivor-conditioned accuracy bound. QED.
+
+**Definition 30.2 (scope of the correspondence and its suppliers).**
+The correspondence in §§27–29 is for the common, prepared source
+(24.1), its joint finite records and its original raw-$q$ metric,
+controls, clock and lifetime. Its all-fibre predictive carrier is
+$(q;\lambda)$, whereas at a fixed calibration only the three task
+coordinates evolve. Finite records retain a feasible calibration
+family, never an exact unknown law selected from a positive tolerance
+interval. The bounds distinguish finite deterministic control paths,
+finite stochastic horizons, every deterministic endpoint horizon,
+and survivor-conditioned predictions. Unit bounded/unit Lipschitz
+uniformity holds down to time zero; the larger Borel class with unequal
+start records requires a positive lower time as in (28.11).
+The same-record minimax obstruction concerns all-horizon
+survivor-conditioned event-TV accuracy, including actual first-read
+and reporting durations.
+
+Ordinary Stratonovich calculus/local uniqueness, Brownian reflection
+and strong Markov are the intermediate classical inputs attached to
+Theorems 27.2 and 28.2. The killed density, joint-record calibration,
+fixed-calibration continuation and quantitative consumers are derived
+here for the declared source. Continuous retention of that calibration
+is essential, in agreement with the distinct reset/continuation
+experiments in [*Symplectic predictive completion*, §11.2](SYMPLECTIC_PREDICTIVE_COMPLETION.md).
+There is no sensor for hidden coordinates, no new preparation/reset
+permission, actuator or covariance switch, no theorem for arbitrary
+hidden guards, no second-order native FIB realization, and no deduction
+of physical, ambient or unknown source dimension.
+
+## 追加锚（本行以下为增补区）

@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:82a974293ca699fc85e0eed013de605f96305732c6c7f99bb2665d322cb2fda4
+  normalized_sha256: sha256:82a974293ca699fc85e0eed013de605f96305732c6c7f99bb2665d322cb2fda4
+cas_ref: sha256:82a974293ca699fc85e0eed013de605f96305732c6c7f99bb2665d322cb2fda4
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 关于道、道迹及形式系统研究边界的哲学与方法论约定；符号元组是此前命名方式的举例，不断言结构的存在或数学性质。
+    previous_atom_id: 2f5edf55d2c0b351245f156fb22121872e3eaeef502e12622f7256b119118c7a
+    next_atom_id: f8767d582295a04437d1511bea2a6691adcd3bee26a344f55b0d1354b7bf7721

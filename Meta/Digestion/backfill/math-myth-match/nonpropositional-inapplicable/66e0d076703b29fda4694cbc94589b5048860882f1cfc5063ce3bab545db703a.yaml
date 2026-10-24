@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:66e0d076703b29fda4694cbc94589b5048860882f1cfc5063ce3bab545db703a
+  normalized_sha256: sha256:66e0d076703b29fda4694cbc94589b5048860882f1cfc5063ce3bab545db703a
+cas_ref: sha256:66e0d076703b29fda4694cbc94589b5048860882f1cfc5063ce3bab545db703a
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 爱、怜悯、公正的共同问题与不同理由；属于引文解释、建模约定或研究建议，没有另立待证数学断言，本收据不验证其文献或经验真值。
+    previous_atom_id: 227cc2df224f6755d3b8e8a554cbbe937320e1b3cf1698566c0da200cf74525c
+    next_atom_id: dfd772ad15429b4cb687ae7797dd6d92850fc13c3fd4c705c3b13d3ff4c2d845

@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:fd8de8f70e6a54dbcaa8f2c59376dca17218a231b70d4db379a111f3e416b66f
+  normalized_sha256: sha256:fd8de8f70e6a54dbcaa8f2c59376dca17218a231b70d4db379a111f3e416b66f
+cas_ref: sha256:fd8de8f70e6a54dbcaa8f2c59376dca17218a231b70d4db379a111f3e416b66f
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 非命题结算：登记SN36.6译文与身体苦受、后续反应的经文范围，避免让譬喻代替其他佛教论证。
+    previous_atom_id: 2401765255d53b0203293336d7660d9ed505414f0f524cc94fea1193bd9f6b4c
+    next_atom_id: 6f1192f75ab34ca67783b328394e6e065ec74f3229a70155ed72ba6d12a93817

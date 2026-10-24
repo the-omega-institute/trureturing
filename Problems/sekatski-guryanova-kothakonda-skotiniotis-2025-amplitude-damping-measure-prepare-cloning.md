@@ -101,6 +101,180 @@ The module is admitted under the open-problem-resolution basis of CLAUDE.md §3.
 - *Neighbouring questions.* The formal result covers arbitrary finite $N$ and all positive $M$, including $M<N$, $M=N$ and $M>N$. It supplies no numerical approximation bound. Removing the finite-outcome restriction, proving the tester and fidelity bridges in Lean, and bounding the optimal fidelity away from one remain outside this settlement; no conclusion on those questions is asserted.
 - *Effect on the paper.* With the stated tester and fidelity bridges, the conjectured exactness separation at $N=M\geq1$ is established for finite-outcome processes: the coherent construction is exact, while each such measure-and-prepare process misses at least one amplitude-damping channel. The source's approximate comparisons near $M=N$ (TeX lines 1687–1695), its separate SDP/PPT comparison for $1\to2$ (lines 1088 and 2898–2912), and its asymptotic replication estimates (lines 1574–1607 and 1673–1679) receive no quantitative verification from this result. No theorem conditional on the conjecture is identified in the source's performance-comparison and conclusion passages (lines 1662–1771); the settlement supplies the exact finite-outcome separation proposed there.
 
+### Application to finite adaptive testers in a fixed causal order
+
+The [existing quantum-network source](../Library/QuantumChannels/chiribella2009networks.md)
+supplies the following modeling bridge for the operational class specified
+here. This is an ordinary source-backed application of its comb results
+to `claim`, not an additional declaration or kernel verification. The
+formal statement and evidence above retain their stated scope.
+
+**Operational assumptions.** Fix finite $N\geq1$, finite $L$, finite
+input and output spaces $A,B$, and fixed product bases. There are exactly
+$N$ chronological slots, each invoking the same unknown memoryless CPTP
+map $\mathcal E:A\to B$. Every invocation has fresh inaccessible
+environment: a device with persistent hidden memory need not meet this
+contract. The initial state, finite-dimensional quantum memories, finite
+classical record registers, controls and final measurement are fixed
+independently of $\mathcal E$. A fixed finite adaptive policy may
+condition controls on earlier records. Its record probabilities depend
+on $\mathcal E$; its control table does not. The final outcome set is
+$\{1,\ldots,L\}$, with all outcomes, including failures, retained and
+total probability one. There is no source-dependent postselection in
+this normalized tester.
+
+After outcome $\ell$, prepare a fixed global CPTP channel
+$\mathcal F_\ell:C\to D$, independently of the unknown parameter and
+with no further call to $\mathcal E$. For the cloning application,
+$A=B=\mathbb C^2$ and $C=D=(\mathbb C^2)^{\otimes M}$.
+These are channel preparations, not preparations of Choi states, and
+need not be tensor powers of a one-qubit channel.
+
+**Source and convention map.** CDP §II.A, Eqs. (1)–(4) and Lemmas 1
+and 3, use the unnormalized output-first operator
+$C_{\mathcal E}=(\mathcal E\otimes\mathrm{id}) (|\Omega\rangle\langle\Omega|)$.
+The module instead uses
+
+$$
+J_{\mathcal E}=(\mathrm{id}\otimes\mathcal E)
+ (|\Omega\rangle\langle\Omega|),\qquad
+|\Omega\rangle=\sum_a|a,a\rangle,\qquad
+\operatorname{Tr}_{B}J_{\mathcal E}=I_A.
+$$
+
+Thus $\operatorname{Tr}J_{\mathcal E}=\dim A$, with no normalization
+factor. The two conventions differ by a swap, not a partial transpose.
+Label the tested ports $H_{2j-2}=A_j,\ H_{2j-1}=B_j$,
+$1\leq j\leq N$, and choose the source factor order
+
+$$
+D_N=B_N\otimes A_N\otimes\cdots\otimes B_1\otimes A_1.
+$$
+
+The module's sitewise assignment coordinates correspond to
+$F_N=\bigotimes_{j=1}^N(A_j\otimes B_j)$. Fix the real permutation
+unitary $U_N:F_N\to D_N$ by
+
+$$
+|a_1,b_1,\ldots,a_N,b_N\rangle
+ \longmapsto |b_N,a_N,\ldots,b_1,a_1\rangle.
+$$
+
+Disjoint memoryless channel slots have tested comb
+
+$$
+R_{\mathcal E}=U_NJ_{\mathcal E}^{\otimes N}U_N^\dagger
+$$
+
+by the link product on disjoint ports (CDP §II.B, Eq. (15)).
+This tensor expression describes the inserted process; the adaptive
+surrounding circuit need not run in parallel.
+
+CDP Corollary 2 and Eq. (38) give the forward composition-to-probability
+rule. Definition 11/Eq. (66), Lemma 8 and Theorem 11 (§IV.E, PDF p. 17)
+characterize and realize the finite testers: the surrounding experiment
+has fixed $P_\ell\succeq0$ with
+
+$$
+p_\ell(\mathcal E)=\operatorname{Tr}(P_\ell^{\mathsf T}R_{\mathcal E})
+ =\operatorname{Tr}(T_\ell J_{\mathcal E}^{\otimes N}),\qquad
+T_\ell=U_N^\dagger P_\ell^{\mathsf T}U_N\succeq0.
+$$
+
+Here ${\mathsf T}$ is full ordinary matrix transpose in the fixed
+product basis, not an adjoint or a partial transpose. All $T_\ell$
+are independent of $\mathcal E$. Finite adaptive records can be
+included as orthogonal memory states: an instrument writes a record,
+and later fixed CPTP controls read it. Coarse-graining the final
+histories sums positive tester elements. This is within CDP's
+finite-dimensional network and instrument realization (§III.C,
+Theorems 3–4; §IV.D, Definition 10 and Theorem 10).
+
+**Causal normalization.** Use Lemma 8 with the general deterministic
+comb recursion, CDP Eq. (25), equivalently Theorem 5/Eq. (40).
+The tester's own ports are
+$\widetilde H_0=\mathbb C,\ \widetilde H_{2j-1}=A_j,\ \widetilde H_{2j}=B_j,\ \widetilde H_{2N+1}=\mathbb C$.
+Removing these scalar endpoints gives
+
+$$
+\begin{aligned}
+\sum_\ell P_\ell&=I_{B_N}\otimes\Theta_N,&
+\Theta_k&\succeq0,\\
+\operatorname{Tr}_{A_k}\Theta_k
+ &=I_{B_{k-1}}\otimes\Theta_{k-1}\quad(2\leq k\leq N),&
+\operatorname{Tr}\Theta_1&=1,
+\end{aligned}
+$$
+
+where, for $2\leq k\leq N$, $\Theta_k$ acts on
+$A_k\otimes B_{k-1}\otimes A_{k-1}\otimes\cdots\otimes B_1\otimes A_1$,
+and $\Theta_1$ on $A_1$. Consequently, with $X_k=\Theta_k^{\mathsf T}$,
+
+$$
+\sum_\ell T_\ell=U_N^\dagger(I_{B_N}\otimes X_N)U_N,\qquad
+\operatorname{Tr}_{A_k}X_k=I_{B_{k-1}}\otimes X_{k-1}
+ \quad(2\leq k\leq N),\qquad
+\operatorname{Tr}X_1=1.
+$$
+
+Each $X_k\succeq0$. These identities are obtained by the stated port relabeling of the
+general recursion; the pairing consistently follows Eqs. (38) and
+(66). They are not the ordinary POVM condition
+$\sum_\ell T_\ell=I_{F_N}$.
+Indeed, for a deterministic tested comb,
+$\operatorname{Tr}_{B_k}R^{(k)}=I_{A_k}\otimes R^{(k-1)}$.
+In the total pairing, first trace $B_N$, then use
+$\operatorname{Tr}_{A_N}X_N=I_{B_{N-1}}\otimes X_{N-1}$, and repeat.
+The total reduces to $\operatorname{Tr}X_1=1$.
+Positive $T_\ell$ and $J_{\mathcal E}^{\otimes N}$ make the weights
+real and nonnegative. At $N=1$ the normalization is
+$\sum_\ell T_\ell=X_1\otimes I_B$, with $X_1$ a density matrix.
+
+The [single-slot super-instrument source](../Library/QuantumContext/burniston2020necessary.md)
+also gives this scalar-output pairing and its parallel grouped-slot
+specialization. Its common-preprocessor theorem is not being used as
+an adaptive $N$-slot theorem.
+
+**Application to the existing obstruction.** Let $K_\ell=J_{\mathcal F_\ell}$,
+with the fixed shuffle to sitewise reference/output coordinates.
+Positivity and $\operatorname{Tr}_{D}K_\ell=I_C$ are exactly
+`IsChannelChoi` at the chosen $M$. Linearity gives
+
+$$
+J_{\mathrm{out}}(\mathcal E)
+ =\sum_{\ell=1}^L\operatorname{Tr}
+       (T_\ell J_{\mathcal E}^{\otimes N})K_\ell.
+$$
+
+Physical testers therefore supply a sufficient subclass of the
+module's allowed arbitrary $T_\ell$: they obey additional positivity
+and causal normalization that `claim` does not require.
+Specialize $\mathcal E=\mathcal E_\gamma$ to amplitude damping.
+Under the operational assumptions above, `result` excludes a single
+such measure-and-prepare process reproducing
+$\mathcal E_\gamma^{\otimes M}$ for every $\gamma\in[0,1]$,
+for any finite $N\geq1$ and $M\geq1$, including $M=N$.
+For $N=0$, the separate scalar pairing
+$J_{\mathcal E}^{\otimes0}=1,\ T_\ell=p_\ell$, with fixed normalized
+probabilities, connects the same no-query class to `claim`.
+
+This supplies the stated tester modeling premise for this finite
+operational class; its physical-to-matrix correspondence remains an
+ordinary derivation outside the Lean module. Theorem 11's existence of
+a realization supplies no bound meeting a separately prescribed memory,
+gate, time or efficiency budget. No continuous outcomes, unbounded
+records, infinite memory, indefinite causal order, coherently controlled
+unknown dilation or fidelity gap/rate are included. Retaining and
+normalizing only successful outcomes would change the probability
+contract; failures here remain part of the deterministic mixture.
+The native same-source state task in
+[VIII, §§248–250](../docs/develop/theory/FIB_ATOM_RECURSIVE_HOLOGRAPHIC_BOUNDARY_GEOMETRY_CONTINUATION_VIII.md)
+has no supplied callable-channel interface. This application grants it
+no queries, state-to-channel conversion or resources and settles neither
+its uniform conditional error nor its polynomial original success
+$P_q^k s_{\mathcal E}(q)$.
+
+
 ## ASSUMED-UNVERIFIED
 
 The bounded literature check does not establish exhaustive worldwide novelty or priority. The INSPIRE, OpenAlex, MathDB, formal-conjectures, citing-work and historical repository-search readings are reported in #20683 and are not independently reproduced. The source reading covers arXiv:2509.08059v1; no journal publication is identified on its abstract page. The DOI is the arXiv-issued DOI, recorded also in the Library note.

@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:1321bea11563a2642dafc28797ec7f53b2325366b9cf316d7c61f8c6cd83f8cb
+  normalized_sha256: sha256:1321bea11563a2642dafc28797ec7f53b2325366b9cf316d7c61f8c6cd83f8cb
+cas_ref: sha256:1321bea11563a2642dafc28797ec7f53b2325366b9cf316d7c61f8c6cd83f8cb
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 后文条件命题的假设清单项无额外尺度；没有尺度不变性的数学等式或结论。
+    previous_atom_id: e78a6da0072d3baea86a1ba2c451631f5d5e62b1dff0a71dd8c4bb0702c528f8
+    next_atom_id: f58e2acc9ed1a6b697968050d84b59cc089ac4a2fd3f504be789a7015778857c

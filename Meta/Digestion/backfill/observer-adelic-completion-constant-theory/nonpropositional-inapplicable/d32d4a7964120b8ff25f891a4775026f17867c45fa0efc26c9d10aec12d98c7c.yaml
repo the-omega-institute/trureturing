@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:d32d4a7964120b8ff25f891a4775026f17867c45fa0efc26c9d10aec12d98c7c
+  normalized_sha256: sha256:d32d4a7964120b8ff25f891a4775026f17867c45fa0efc26c9d10aec12d98c7c
+cas_ref: sha256:d32d4a7964120b8ff25f891a4775026f17867c45fa0efc26c9d10aec12d98c7c
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 仅规定 causal profile 拟保留的 shifted 深度观测分量；不声称分离性或轨道基数结论。
+    previous_atom_id: 8c2ac5b9c64946a5a2e6575b2f51c0c272f1b4a32bc345471dad1d2a85cc37b6
+    next_atom_id: 65b0cc1b72013a633592bc977f227659edf0e24720160aa40d602ab169202a08

@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:7c110aaa597c8621992f160eb1c462c2d8b2d9b13661f72930958399441f9ffb
+  normalized_sha256: sha256:7c110aaa597c8621992f160eb1c462c2d8b2d9b13661f72930958399441f9ffb
+cas_ref: sha256:7c110aaa597c8621992f160eb1c462c2d8b2d9b13661f72930958399441f9ffb
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 仅列举完成式的“Archimedean Gamma 通道”组件。
+    previous_atom_id: 70cbd95252671d44a3555e4473a31d8ca85da32c9258631012f6fca1398ea257
+    next_atom_id: 729c796e792ed24913d41c225d9460083b586028e2e6149071c745288bf91250

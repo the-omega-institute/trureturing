@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:7018f5cf4158ffb25afbeb78ba2fb4a09c3f9e3a86e04ce80eefacc711cb21da
+  normalized_sha256: sha256:7018f5cf4158ffb25afbeb78ba2fb4a09c3f9e3a86e04ce80eefacc711cb21da
+cas_ref: sha256:7018f5cf4158ffb25afbeb78ba2fb4a09c3f9e3a86e04ce80eefacc711cb21da
+coverage_gids:
+  - gid: D5/S3/Zeros/Symmetry/ZetaConjugationCovariance.xi_reading_one_sub_conj
+    target_statement_id: sha256:306cf22e3ce2375fb07d20735b8d5cd6c1abb416298f8c1785717afd5c17e704
+receipts:
+  unresolved_subitems: []

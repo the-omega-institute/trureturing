@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:eef52a9a3fde6a3061c0da1f45837a1404bff645f806e25eefd974fdf669f1fb
+  normalized_sha256: sha256:eef52a9a3fde6a3061c0da1f45837a1404bff645f806e25eefd974fdf669f1fb
+cas_ref: sha256:eef52a9a3fde6a3061c0da1f45837a1404bff645f806e25eefd974fdf669f1fb
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: Atom text is a continuation/list fragment (* Pick／Nevanlinna 正性；); it contains no standalone mathematical assertion to formalize.
+    previous_atom_id: a8972ec6c69148c0a713c8000404b911e0892d80b74cf73a826160050af6dbff
+    next_atom_id: e9ce723723b2efac63c80ac1a0bafa38f0d2219e2e2ee60fbb075f5e953d72ba
