@@ -15,6 +15,7 @@ import Mathlib.Tactic.Linarith
 import Mathlib.Tactic.Positivity
 import Mathlib.Tactic.Ring
 import D5.S3.Analytic.KarpZhangReciprocal.BirthDeath
+import D5.S3.Analytic.KummerRatio.Series
 import Mathlib.Algebra.BigOperators.Field
 import Mathlib.Analysis.Convex.Deriv
 
@@ -46,6 +47,7 @@ prefix D5.S3.Analytic):
 * Coeff.lambda_pos: proof_shape: bind-only; escape_witness: none;
   consumers: coefficient_calculus.
 * Coeff.c_succ: proof_shape: bind-only; escape_witness: none;
+  reuse: KummerRatio.Series.coeff_succ at s := 2*t and c := t;
   consumers: Coeff.c_deriv, coefficient_calculus.
 * Coeff.lambda_antitone: proof_shape: bind-only; escape_witness: none;
   consumers: coefficient_calculus.
@@ -109,8 +111,9 @@ prefix D5.S3.Analytic):
 * shift_tail: proof_shape: content; escape_witness: score_variance_bound;
   consumers: KarpZhangReciprocal.Result.reciprocal_half.
 
-Direct frozen D5 dependencies: none; all KarpZhang dependencies are
-same-delivery declarations. Consumers are taken from compiled proof
+Direct frozen D5 dependency: KummerRatio.Series.coeff_succ, used by
+Coeff.c_succ and through it by coefficient_calculus and the interval estimates.
+All KarpZhang dependencies are same-delivery declarations. Consumers are taken from compiled proof
 terms, with declaration types also counted for definitions. The listed
 content witnesses remain on the corresponding live mathematical paths.
 Utility is none: all statements are general identities or inequalities,
@@ -154,14 +157,9 @@ private theorem lambda_pos (j : ℕ) {t : ℝ} (ht : 0 < t) : 0 < lambda j t := 
 
 private theorem c_succ (n : ℕ) {t : ℝ} (ht : 0 < t) :
     c (n + 1) t = c n t * lambda n t / (n + 1 : ℝ) := by
-  have hp := ne_of_gt (ascPochhammer_pos n t ht)
-  have hf : (n.factorial : ℝ) ≠ 0 := by positivity
-  have hn : t + n ≠ 0 := by positivity
-  have hs : (n : ℝ) + 1 ≠ 0 := by positivity
-  simp only [c, lambda, ascPochhammer_succ_eval, Nat.factorial_succ,
-    Nat.cast_mul, Nat.cast_add, Nat.cast_one]
-  field_simp [hp, hf, hn, hs]
-  <;> ring
+  have h := D5.S3.Analytic.KummerRatio.Series.coeff_succ (2 * t) ht n
+  simpa only [D5.S3.Analytic.KummerRatio.Defs.kummerCoeff, c, lambda,
+    div_mul_eq_mul_div, mul_comm] using h
 
 private theorem lambda_antitone {t : ℝ} (ht : 0 < t) :
     Antitone (fun j : ℕ => lambda j t) := by

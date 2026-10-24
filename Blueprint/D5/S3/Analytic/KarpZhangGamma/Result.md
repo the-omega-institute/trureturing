@@ -139,3 +139,4 @@ For x=a+k, z=a+m-k and alpha <= beta, let u,v,r,s be the reciprocal Gamma produc
 - Truth anchor: `D5/S3/Analytic/KarpZhangGamma/Result.transformDelta`
 - Truth anchor: `D5/S3/Analytic/KarpZhangGamma/Result.two_variable_nonneg`
 - Dependency: [D5/S3/Analytic/KarpZhangGamma/Smoothing](Smoothing.md)
+- Dependency: [D5/S3/Analytic/KummerRatio/BetaIntegral](../KummerRatio/BetaIntegral.md)
