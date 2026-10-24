@@ -9,11 +9,13 @@
 import D5.S3.Quantum.SpinChains.SupersymmetricFermion.HardCoreCompression
 import D5.S3.Quantum.Fermionic.FockMajoranaCarrier
 import Mathlib.Analysis.Normed.Algebra.MatrixExponential
+import Mathlib.Analysis.SpecialFunctions.Exponential
+import Mathlib.Analysis.Calculus.MeanValue
 
 /-! Endpoint vacuum contractions for the open XX chain in the Heisenberg picture. -/
 
 open Matrix
-open scoped BigOperators Matrix ComplexConjugate
+open scoped BigOperators Matrix ComplexConjugate Matrix.Norms.L2Operator
 open D5.S3.Quantum.SpinChains.SupersymmetricFermion.JordanWigner
 open D5.S3.Quantum.SpinChains.SupersymmetricFermion.HardCoreCompression (fullC_entry)
 open D5.S3.Quantum.Fermionic.FockMajoranaCarrier (numberParity majorana_clifford_and_parity)
@@ -114,8 +116,61 @@ private lemma quadratic_commutator {N : ℕ} (J μ : ℝ) (j : Fin N) :
 private lemma creation_evolution {N : ℕ} (J μ t : ℝ) (j : Fin N) :
     evolve J μ t (fullC j)ᴴ =
       ∑ i : Fin N, propagator N J μ t i j • (fullC i)ᴴ := by
-  have hcomm := quadratic_commutator (N := N) J μ
-  sorry
+  let H := hamiltonian N J μ
+  let h := hopping N J μ
+  let L : Matrix (Fin N) (Fin N) ℂ →ₗ[ℂ] FullOperator N :=
+    { toFun := fun M => ∑ i : Fin N, M i j • (fullC i)ᴴ
+      map_add' := by intro M Q; simp [add_smul, Finset.sum_add_distrib]
+      map_smul' := by intro c M; simp [Finset.smul_sum, smul_smul] }
+  have hL (M : Matrix (Fin N) (Fin N) ℂ) : H * L M - L M * H = L (h * M) := by
+    change H * (∑ i, M i j • (fullC i)ᴴ) -
+      (∑ i, M i j • (fullC i)ᴴ) * H = ∑ i, (h * M) i j • (fullC i)ᴴ
+    simp only [Finset.mul_sum, Finset.sum_mul, ← Finset.sum_sub_distrib,
+      Matrix.mul_smul, Matrix.smul_mul, ← smul_sub]
+    simp only [H, quadratic_commutator, Finset.smul_sum, smul_smul,
+      Matrix.mul_apply, Finset.sum_smul]
+    rw [Finset.sum_comm]
+    apply Finset.sum_congr rfl
+    intro i hi
+    apply Finset.sum_congr rfl
+    intro k hk
+    rw [mul_comm]
+  let F (z : ℂ) := NormedSpace.exp (z • (-H)) *
+    L (NormedSpace.exp (z • h)) * NormedSpace.exp (z • H)
+  have hd (z : ℂ) : HasDerivAt F 0 z := by
+    have hC := L.toContinuousLinearMap.hasFDerivAt.comp_hasDerivAt z
+      (hasDerivAt_exp_smul_const' h z)
+    have hraw := ((hasDerivAt_exp_smul_const (-H) z).mul hC).mul
+      (hasDerivAt_exp_smul_const' H z)
+    apply hraw.congr_deriv
+    change ((NormedSpace.exp (z • (-H)) * (-H)) * L (NormedSpace.exp (z • h)) +
+      NormedSpace.exp (z • (-H)) * L (h * NormedSpace.exp (z • h))) *
+        NormedSpace.exp (z • H) +
+      (NormedSpace.exp (z • (-H)) * L (NormedSpace.exp (z • h))) *
+        (H * NormedSpace.exp (z • H)) = 0
+    rw [← hL]
+    noncomm_ring
+  let z := (t : ℂ) * Complex.I
+  have hc := is_const_of_deriv_eq_zero (fun w => (hd w).differentiableAt)
+    (fun w => (hd w).deriv) z 0
+  have hzero : L (1 : Matrix (Fin N) (Fin N) ℂ) = (fullC j)ᴴ := by
+    change (∑ i, (1 : Matrix (Fin N) (Fin N) ℂ) i j • (fullC i)ᴴ) = _
+    simp [Matrix.one_apply]
+  have hc' : NormedSpace.exp (z • (-H)) * L (NormedSpace.exp (z • h)) *
+      NormedSpace.exp (z • H) = (fullC j)ᴴ := by
+    simpa only [F, zero_smul, NormedSpace.exp_zero, one_mul, mul_one, hzero] using hc
+  have hinv : NormedSpace.exp (z • H) * NormedSpace.exp (z • (-H)) = 1 := by
+    rw [smul_neg, ← Matrix.exp_add_of_commute _ _ (Commute.refl (z • H)).neg_right]
+    simp
+  change NormedSpace.exp (z • H) * (fullC j)ᴴ * NormedSpace.exp (-(z • H)) =
+    L (NormedSpace.exp (z • h))
+  rw [← hc']
+  calc
+    _ = (NormedSpace.exp (z • H) * NormedSpace.exp (z • (-H))) *
+        L (NormedSpace.exp (z • h)) *
+        (NormedSpace.exp (z • H) * NormedSpace.exp (z • (-H))) := by
+      simp only [smul_neg, mul_assoc]
+    _ = _ := by rw [hinv]; simp only [one_mul, mul_one]
 
 private lemma annihilation_evolution {N : ℕ} (J μ t : ℝ) (j : Fin N) :
     evolve J μ t (fullC j) =
