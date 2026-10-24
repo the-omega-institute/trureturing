@@ -1,0 +1,14 @@
+### Definition 60.6 (history-label number)
+
+Assume each \(B_i\) is individually in \(\mathcal W_n\). Define
+
+$$
+\kappa_n^{\mathrm{hist}}
+  =\min\left\{|{\mathcal P}|:
+    {\mathcal P}\text{ is a partition of }I,\
+    P\in\mathcal K_n\text{ for every }P\in{\mathcal P}\right\}.
+$$
+
+This is a static label count. It does not count an action phase, an output
+register, or the memory needed to update a label after a response.
+
