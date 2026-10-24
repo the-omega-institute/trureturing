@@ -40,21 +40,15 @@ The induction stabilizes the approximations for every c >= 1.
 | result | content | UnitExponent.approximation_stable |  |
 admission_basis: open-problem-resolution (#18805; Proved)
 Escape audit: result — https://github.com/the-omega-institute/trureturing/issues/20261.
-Direct frozen dependencies: BilateralProductModFour.laurentTerm (sha256:376c1a862fdd901131b6ce6b839a230a385199b6d8908eaa9acad48868601e0e), bilateralTerm (sha256:93ca9c7b68470ac5db5c4e197fdaacc6a38e37e6bade38df4244ecb4ea20e3fc), nonzeroSum (sha256:5b27d604826938f9c12ad4ca71d8aff5c710b2525327b2788e3ac851619ec203), generatingSeries (sha256:84e4cc046d08d9d34c19ab24cfec587a6c179c2d641c9330f6ec9a7e7aa04728), a (sha256:d1fd34c260df28d6a8ffbb60cb1faaeefb4bdb43c652c75cb58f984c2ed8270b); private owners Agree (sha256:81371ab5f236f52665c836befe987abe2c238c2ad1a09929b2d932b14b557be7), approximation (sha256:21e66904f2406378d82aa3d96245aaa1fa1c25f26cdd0b90556a2af7e370beea), step (sha256:e594efea638591ca1b1fbf09182ee696f5716f038d13b0ec28cfb3ca9fcbb3d3), geometric (sha256:081a25f95093c6453bbdc2a20f9a009701ce2c16e67d86a2b9079c74b0f24c57), embed (sha256:0bd1c43f5ed3ac3be778ebc90be3618a8ef3cb5984dd6a924907e8d8f5c06f1d), positiveTerm (sha256:606cb881803cd3edf13172330b742224520692d1e67eafd8cb73578af5fe8871), negativeTerm (sha256:81daea39837d82b596ea5e7718e28850912c0edac89daae681d548e5025d1dc5), and their consumed lemmas are accessed with OpenPrivate.
+Direct frozen dependencies: BilateralProductModFour.laurentTerm (sha256:376c1a862fdd901131b6ce6b839a230a385199b6d8908eaa9acad48868601e0e), bilateralTerm (sha256:93ca9c7b68470ac5db5c4e197fdaacc6a38e37e6bade38df4244ecb4ea20e3fc), nonzeroSum (sha256:5b27d604826938f9c12ad4ca71d8aff5c710b2525327b2788e3ac851619ec203), generatingSeries (sha256:84e4cc046d08d9d34c19ab24cfec587a6c179c2d641c9330f6ec9a7e7aa04728), a (sha256:d1fd34c260df28d6a8ffbb60cb1faaeefb4bdb43c652c75cb58f984c2ed8270b); published owners Agree (sha256:81371ab5f236f52665c836befe987abe2c238c2ad1a09929b2d932b14b557be7), approximation (sha256:21e66904f2406378d82aa3d96245aaa1fa1c25f26cdd0b90556a2af7e370beea), step (sha256:e594efea638591ca1b1fbf09182ee696f5716f038d13b0ec28cfb3ca9fcbb3d3), geometric (sha256:081a25f95093c6453bbdc2a20f9a009701ce2c16e67d86a2b9079c74b0f24c57), embed (sha256:0bd1c43f5ed3ac3be778ebc90be3618a8ef3cb5984dd6a924907e8d8f5c06f1d), positiveTerm (sha256:606cb881803cd3edf13172330b742224520692d1e67eafd8cb73578af5fe8871), negativeTerm (sha256:81daea39837d82b596ea5e7718e28850912c0edac89daae681d548e5025d1dc5), and their consumed lemmas are public at the original owner and applied directly.
 -/
 
-import Batteries.Tactic.OpenPrivate
 import D5.S1.Recurrence.Bilateral.BilateralProductModFour
 
 set_option autoImplicit false
 
 /-! The unit-exponent bilateral product has a normalized integral fixed series. -/
 
-open private Agree agree_iff agree_refl agree_add agree_mul agree_pow agree_inverse agree_shift
-  geometric geometric_spec geometric_coeff step approximation
-  equation_iff embed embed_coeff embed_injective embed_inverse negative_factorization
-  laurent_zero zeroTerm_series positiveTerm negativeTerm
-  from D5.S1.Recurrence.Bilateral.BilateralProductModFour
 
 namespace D5.S1.Recurrence.Bilateral.BilateralProductModFourUnitExponent
 
