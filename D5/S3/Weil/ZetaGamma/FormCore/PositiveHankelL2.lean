@@ -4,7 +4,8 @@
    mirror-E: none(waiver:actual-positive-halfline-Hankel-domain)
    anchors: []
    utility: none
-   digest: Actual half-line L2 Hankel domains, complete positive Laplace-square series, and the quarter-rate pi Schur bound. -/
+   digest: Actual half-line L2 Hankel domains, complete positive Laplace-square series,
+     and the quarter-rate pi Schur bound. -/
 /- SOURCE_ONLY / UNCOMPILED canonical integration candidate, 2026-10-25.
 All private suppliers and their consumers live in this single owner module.
 Assembled from the HalfRate, AllPositiveRates, and QuarterSharpSchur source
@@ -73,7 +74,9 @@ private theorem normalized_row_integral :
       apply integral_congr_ae
       filter_upwards [ae_restrict_mem measurableSet_Ioi] with x hx
       exact normalized_row_substitution x hx
-    _ = Real.pi := by rw [integral_const_mul, integral_Ioi_inv_one_add_sq]; norm_num
+    _ = Real.pi := by
+      rw [integral_const_mul, integral_Ioi_inv_one_add_sq]
+      ring
 
 private theorem schur_row_scaled (s y : ℝ) (hs : 0 < s) (hy : 0 < y) :
     schurRow s (s * y) = s⁻¹ * normalizedRow y := by
@@ -182,6 +185,7 @@ private theorem schur_majorant_domain (u : ℝ → ℂ) (hu : MemLp u 2 halfline
     apply (integrable_prod_iff hm).2
     constructor
     · filter_upwards [ae_restrict_mem measurableSet_Ioi] with s hs
+      change Integrable (fun t : ℝ => ‖u s‖ ^ 2 * schurRow s t) halfline
       exact (schur_row_integrable hs).const_mul _
     · apply (hsq.mul_const Real.pi).congr
       filter_upwards [ae_restrict_mem measurableSet_Ioi] with s hs
@@ -207,16 +211,25 @@ theorem carleman_actual_l2_domain (u : ℝ → ℂ) (hu : MemLp u 2 halfline) :
   obtain ⟨hF, hmass⟩ := schur_majorant_domain u hu
   let M : ℝ × ℝ → ℝ := fun z =>
     (schurMajorant u z + schurMajorant u z.swap) / 2
-  have hM : Integrable M (halfline.prod halfline) := (hF.add hF.swap).div_const 2
+  have hFswap : Integrable (fun z : ℝ × ℝ => schurMajorant u z.swap)
+      (halfline.prod halfline) := by
+    simpa only [Function.comp_apply] using hF.swap
+  have hM : Integrable M (halfline.prod halfline) := (hF.add hFswap).div_const 2
   have hm : AEStronglyMeasurable (carlemanAbsolute u) (halfline.prod halfline) := by
-    have hd : Measurable (fun z : ℝ × ℝ => (z.1 + z.2)⁻¹) := by fun_prop
-    simpa only [carlemanAbsolute, div_eq_mul_inv] using
-      ((hu.aestronglyMeasurable.comp_fst.norm.mul
-        hu.aestronglyMeasurable.comp_snd.norm).mul hd.aestronglyMeasurable)
+    have hd : Measurable (fun z : ℝ × ℝ => z.1 + z.2) := by fun_prop
+    change AEStronglyMeasurable
+      ((fun z : ℝ × ℝ => ‖u z.1‖ * ‖u z.2‖) / (fun z => z.1 + z.2))
+      (halfline.prod halfline)
+    exact (hu.aestronglyMeasurable.comp_fst.norm.mul
+      hu.aestronglyMeasurable.comp_snd.norm).div₀ hd.aestronglyMeasurable
   have hbound : ∀ᵐ z : ℝ × ℝ ∂halfline.prod halfline,
       ‖carlemanAbsolute u z‖ ≤ M z := by
     filter_upwards [positive_pair_ae] with z hz
-    rw [Real.norm_eq_abs, abs_of_nonneg (by unfold carlemanAbsolute; positivity)]
+    have hnonneg : 0 ≤ carlemanAbsolute u z := by
+      unfold carlemanAbsolute
+      exact div_nonneg (mul_nonneg (norm_nonneg _) (norm_nonneg _))
+        (add_pos hz.1 hz.2).le
+    rw [Real.norm_of_nonneg hnonneg]
     exact schur_amgm z.1 z.2 ‖u z.1‖ ‖u z.2‖ hz.1 hz.2
   have hi := hM.mono' hm hbound
   refine ⟨hi, ?_⟩
@@ -225,7 +238,8 @@ theorem carleman_actual_l2_domain (u : ℝ → ℂ) (hu : MemLp u 2 halfline) :
       integral_mono_ae hi hM (hbound.mono fun z hz => (le_abs_self _).trans hz)
     _ = Real.pi * ∫ s : ℝ, ‖u s‖ ^ 2 ∂halfline := by
       dsimp only [M]
-      rw [integral_div, integral_add hF hF.swap, integral_prod_swap, hmass]
+      rw [integral_div, integral_add hF hFswap,
+        integral_prod_swap (schurMajorant u), hmass]
       ring
 
 def positiveHankelKernel (k x : ℝ) : ℝ :=
@@ -275,7 +289,7 @@ def hankelAbsolute (k : ℝ) (u : ℝ → ℂ) (z : ℝ × ℝ) : ℝ :=
   positiveHankelKernel k (z.1 + z.2) * (‖u z.1‖ * ‖u z.2‖)
 
 def hankelIntegrand (k : ℝ) (u : ℝ → ℂ) (z : ℝ × ℝ) : ℂ :=
-  (positiveHankelKernel k (z.1 + z.2) : ℂ) * (Complex.conj (u z.1) * u z.2)
+  (positiveHankelKernel k (z.1 + z.2) : ℂ) * ((starRingEnd ℂ) (u z.1) * u z.2)
 
 def actualHankel (k : ℝ) (u : ℝ → ℂ) : ℂ :=
   ∫ z : ℝ × ℝ, hankelIntegrand k u z ∂halfline.prod halfline
@@ -315,9 +329,11 @@ private theorem hankel_actual_absolute_domain {k : ℝ} (hk : (1 / 2 : ℝ) ≤ 
   have hiA : Integrable (hankelAbsolute k u) (halfline.prod halfline) := by
     apply hc.mono' hmA
     filter_upwards [positive_pair_ae, hle] with z hz h
-    rw [Real.norm_of_nonneg (by unfold hankelAbsolute; exact
-      mul_nonneg (hankel_kernel_le hk (add_pos hz.1 hz.2)).1
-        (mul_nonneg (norm_nonneg _) (norm_nonneg _)))]
+    have hznonneg : 0 ≤ hankelAbsolute k u z := by
+      dsimp only [hankelAbsolute]
+      exact mul_nonneg (hankel_kernel_le hk (add_pos hz.1 hz.2)).1
+        (mul_nonneg (norm_nonneg _) (norm_nonneg _))
+    rw [Real.norm_of_nonneg hznonneg]
     exact h
   have hiC : Integrable (hankelIntegrand k u) (halfline.prod halfline) :=
     hiA.mono' hmC (hnorm.mono fun _ h => h.le)
@@ -338,13 +354,13 @@ private theorem exponential_hankel_series {k x : ℝ} (hx : 0 < x) :
   simpa only [← hterm, positiveHankelKernel, div_eq_mul_inv] using h
 
 private def laplacePairTerm (k : ℝ) (u : ℝ → ℂ) (n : ℕ) (z : ℝ × ℝ) : ℂ :=
-  (Real.exp (-(k + n) * (z.1 + z.2)) : ℂ) * (Complex.conj (u z.1) * u z.2)
+  (Real.exp (-(k + n) * (z.1 + z.2)) : ℂ) * ((starRingEnd ℂ) (u z.1) * u z.2)
 
 private theorem laplace_pair_integral (k : ℝ) (u : ℝ → ℂ) (n : ℕ) :
     (∫ z : ℝ × ℝ, laplacePairTerm k u n z ∂halfline.prod halfline) =
       (Complex.normSq (literalLaplace (k + n) u) : ℂ) := by
   have heq : laplacePairTerm k u n = fun z : ℝ × ℝ =>
-      Complex.conj ((Real.exp (-(k + n) * z.1) : ℂ) * u z.1) *
+      (starRingEnd ℂ) ((Real.exp (-(k + n) * z.1) : ℂ) * u z.1) *
         ((Real.exp (-(k + n) * z.2) : ℂ) * u z.2) := by
     funext z
     have he : Real.exp (-(k + n) * (z.1 + z.2)) =
@@ -354,8 +370,20 @@ private theorem laplace_pair_integral (k : ℝ) (u : ℝ → ℂ) (n : ℕ) :
       ring
     simp only [laplacePairTerm, map_mul, Complex.conj_ofReal, he, Complex.ofReal_mul]
     ring
-  rw [heq, integral_prod_mul, integral_conj]
-  exact (Complex.normSq_eq_conj_mul_self (z := literalLaplace (k + n) u)).symm
+  calc
+    _ = (∫ s : ℝ, (starRingEnd ℂ)
+          ((Real.exp (-(k + n) * s) : ℂ) * u s) ∂halfline) *
+        (∫ t : ℝ, (Real.exp (-(k + n) * t) : ℂ) * u t ∂halfline) := by
+      rw [heq]
+      exact integral_prod_mul
+        (fun s : ℝ => (starRingEnd ℂ) ((Real.exp (-(k + n) * s) : ℂ) * u s))
+        (fun t : ℝ => (Real.exp (-(k + n) * t) : ℂ) * u t)
+    _ = _ := by
+      rw [integral_conj]
+      change (starRingEnd ℂ) (literalLaplace (k + n) u) *
+          literalLaplace (k + n) u =
+        (Complex.normSq (literalLaplace (k + n) u) : ℂ)
+      exact (Complex.normSq_eq_conj_mul_self (z := literalLaplace (k + n) u)).symm
 
 /-- Complete actual L2 Hankel domain and positive Laplace-square series.
 The required absolute convergence is a conclusion supplied by Schur's test. -/
@@ -402,7 +430,7 @@ theorem positive_hankel_actual_l2_domain {k : ℝ} (hk : (1 / 2 : ℝ) ≤ k)
     have h := Complex.ofRealCLM.hasSum
       (exponential_hankel_series (k := k) (add_pos hz.1 hz.2))
     simpa only [Complex.ofRealCLM_apply, laplacePairTerm, hankelIntegrand] using
-      h.mul_right (Complex.conj (u z.1) * u z.2)
+      h.mul_right ((starRingEnd ℂ) (u z.1) * u z.2)
   have hS := hasSum_integral_of_dominated_convergence bound hFm hFnorm
     (hpoint.mono fun _ h => h.summable) hbi hFsum
   simp_rw [laplace_pair_integral] at hS
@@ -410,7 +438,7 @@ theorem positive_hankel_actual_l2_domain {k : ℝ} (hk : (1 / 2 : ℝ) ≤ k)
     (actualHankel k u) at hS
   have hSR : HasSum (fun n : ℕ => Complex.normSq (literalLaplace (k + n) u))
       (actualHankel k u).re := by
-    simpa only [Complex.ofReal_re] using Complex.reCLM.hasSum hS
+    simpa only [Complex.reCLM_apply, Complex.ofReal_re] using Complex.reCLM.hasSum hS
   have hreal : actualHankel k u = ((actualHankel k u).re : ℂ) :=
     hS.unique (Complex.ofRealCLM.hasSum hSR)
   have hnonneg : 0 ≤ (actualHankel k u).re := by
@@ -433,7 +461,8 @@ theorem positive_hankel_actual_l2_domain {k : ℝ} (hk : (1 / 2 : ℝ) ≤ k)
           abs_of_nonneg (hankel_kernel_le hk (add_pos hz.1 hz.2)).1]
       _ ≤ _ := hAbound
   refine ⟨hAi, hAbound, hHi, hL, hSR.summable, ?_, hnonneg, him, hupper⟩
-  rw [hSR.tsum_eq]
+  rw [← Complex.ofReal_tsum
+    (fun n : ℕ => Complex.normSq (literalLaplace (k + n) u)), hSR.tsum_eq]
   exact hreal
 
 private theorem positive_hankel_kernel_split {k x : ℝ} (hx : 0 < x) :
@@ -495,14 +524,14 @@ private theorem positive_hankel_rank_domain {k : ℝ} (hk : 0 < k)
   have hIR : Integrable (laplacePairTerm k u 0) (halfline.prod halfline) :=
     hR.mono' hmeas (Eventually.of_forall fun z => (hnorm z).le)
   have hLap : rightExponentialTail k w 0 =
-      ((∫ s : ℝ, a s ∂halfline) : ℂ) := by
-    unfold rightExponentialTail
-    simp only [zero_add]
-    rw [← integral_complex_ofReal]
-    apply integral_congr_ae
-    exact Eventually.of_forall fun s => by
-      dsimp [w, a]
-      exact (Complex.ofReal_mul _ _).symm
+      Complex.ofReal (∫ s : ℝ, a s ∂halfline) := by
+    calc
+      _ = ∫ s : ℝ, (a s : ℂ) ∂halfline := by
+        unfold rightExponentialTail
+        apply integral_congr_ae
+        exact Eventually.of_forall fun s => by
+          simp only [zero_add, w, a, Complex.ofReal_mul]
+      _ = Complex.ofReal (∫ s : ℝ, a s ∂halfline) := integral_complex_ofReal
   have hmass : (∫ s : ℝ, a s ∂halfline) ^ 2 ≤
       (1 / (2 * k)) * ∫ s : ℝ, ‖u s‖ ^ 2 ∂halfline := by
     simpa only [hLap, w, Complex.norm_real, Real.norm_eq_abs,
@@ -510,8 +539,8 @@ private theorem positive_hankel_rank_domain {k : ℝ} (hk : 0 < k)
   refine ⟨hR, hIR, ?_⟩
   calc
     _ = (∫ s : ℝ, a s ∂halfline) ^ 2 := by
-      rw [integral_prod_mul]
-      ring
+      simpa only [pow_two, a] using
+        (integral_prod_mul (μ := halfline) (ν := halfline) a a)
     _ ≤ _ := hmass
 
 /-- Every positive rate, including the actual quarter rate, has its
@@ -594,12 +623,17 @@ theorem positive_hankel_actual_l2_domain_all_positive_rates
     rw [hzero]
     congr 1
     exact tsum_congr hshift
-  have hH : actualHankel k u = ((∑' n : ℕ, f n) : ℂ) := by
-    rw [hHd, hHT, hsum, Complex.ofReal_add]
+  have hHreal : actualHankel k u = Complex.ofReal (∑' n : ℕ, f n) := by
+    rw [hHd, hHT,
+      ← Complex.ofReal_tsum
+        (fun n : ℕ => Complex.normSq (literalLaplace ((k + 1) + n) u)),
+      hsum, Complex.ofReal_add]
+  have hH : actualHankel k u = ((∑' n : ℕ, f n) : ℂ) :=
+    hHreal.trans (Complex.ofReal_tsum f)
   have hnonneg : 0 ≤ (actualHankel k u).re := by
-    rw [hH, Complex.ofReal_re]
+    rw [hHreal, Complex.ofReal_re]
     exact tsum_nonneg fun n => Complex.normSq_nonneg _
-  have him : (actualHankel k u).im = 0 := by rw [hH, Complex.ofReal_im]
+  have him : (actualHankel k u).im = 0 := by rw [hHreal, Complex.ofReal_im]
   have hupper : (actualHankel k u).re ≤
       (Real.pi + 1 / (2 * k)) * ∫ s : ℝ, ‖u s‖ ^ 2 ∂halfline := by
     calc
@@ -646,7 +680,7 @@ private theorem quarter_cauchy_domain {b : ℝ} (hb : 0 < b) :
     exact Eventually.of_forall fun q => (hscale q).symm
   have hi : Integrable (quarterCauchy b) halfline := by
     have h := (integrableOn_Ioi_comp_mul_left_iff (quarterCauchy b) 0 hb).1 hscaled
-    simpa only [mul_zero] using h
+    simpa only [mul_zero, IntegrableOn, halfline] using h
   refine ⟨hi, ?_⟩
   calc
     _ = b * ∫ q : ℝ in Ioi 0, quarterCauchy b (b * q) := by
@@ -667,7 +701,7 @@ private def quarterSchurChangeDeriv (q : ℝ) : ℝ := 2 * q / (1 + q ^ 2)
 private theorem quarter_schur_change_deriv (q : ℝ) :
     HasDerivAt quarterSchurChange (quarterSchurChangeDeriv q) q := by
   have hbase : HasDerivAt (fun x : ℝ => 1 + x ^ 2) (2 * q) q := by
-    convert (hasDerivAt_const q (1 : ℝ)).add ((hasDerivAt_id q).pow 2) using 1 <;> ring
+    simpa using (hasDerivAt_pow 2 q).const_add (1 : ℝ)
   exact hbase.log (by positivity)
 
 private theorem quarter_schur_change_pos {q : ℝ} (hq : 0 < q) :
@@ -692,6 +726,8 @@ private theorem quarter_schur_change_image :
 private theorem quarter_schur_change_inj :
     InjOn quarterSchurChange (Ioi (0 : ℝ)) := by
   intro x hx y hy hxy
+  change 0 < x at hx
+  change 0 < y at hy
   have he := congrArg Real.exp hxy
   simp only [quarterSchurChange, Real.exp_log (by positivity : 0 < 1 + x ^ 2),
     Real.exp_log (by positivity : 0 < 1 + y ^ 2)] at he
@@ -737,6 +773,10 @@ private theorem quarter_schur_row_substitution {t q : ℝ} (ht : 0 < t) (hq : 0 
   have hA : 0 < 1 - Real.exp (-t) := by
     have := Real.exp_lt_one_iff.mpr (by linarith : -t < 0)
     linarith
+  have hnormalizedDen : 1 + q ^ 2 - Real.exp (-t) ≠ 0 := by
+    have hpos : 0 < 1 + q ^ 2 - Real.exp (-t) := by
+      linarith [sq_nonneg q]
+    exact hpos.ne'
   have hden : 1 - Real.exp (-t) * (1 + q ^ 2)⁻¹ ≠ 0 := by
     have hlt : Real.exp (-t) * Real.exp (-quarterSchurChange q) < 1 := by
       rw [← Real.exp_add, Real.exp_lt_one_iff]
@@ -748,7 +788,7 @@ private theorem quarter_schur_row_substitution {t q : ℝ} (ht : 0 < t) (hq : 0 
     positivity
   rw [abs_of_pos hd, smul_eq_mul, quarter_hankel_row_product, hhalf, hsqrt, he]
   unfold quarterSchurChangeDeriv
-  field_simp [hq.ne', hQ.ne', (Real.sqrt_pos.2 hQ).ne', hden,
+  field_simp [hq.ne', hQ.ne', (Real.sqrt_pos.2 hQ).ne', hden, hnormalizedDen,
     show q ^ 2 + (1 - Real.exp (-t)) ≠ 0 by positivity]
   <;> ring
 
@@ -785,7 +825,7 @@ private theorem quarter_schur_weighted_row_domain {t : ℝ} (ht : 0 < t) :
   have hi : Integrable R halfline := by
     have h := (integrableOn_image_iff_integrableOn_abs_deriv_smul
       measurableSet_Ioi hD quarter_schur_change_inj R).2 hT
-    simpa only [quarter_schur_change_image] using h
+    simpa only [quarter_schur_change_image, IntegrableOn, halfline] using h
   refine ⟨hi, ?_⟩
   change (∫ s : ℝ in Ioi 0, R s) = _
   calc
@@ -905,6 +945,7 @@ private theorem quarter_schur_majorant_domain (u : ℝ → ℂ) (hu : MemLp u 2 
     apply (integrable_prod_iff hm).2
     constructor
     · filter_upwards [ae_restrict_mem measurableSet_Ioi] with s hs
+      change Integrable (fun t : ℝ => ‖u s‖ ^ 2 * quarterSchurRow s t) halfline
       exact (quarter_schur_row_domain hs).1.const_mul _
     · apply (hsq.mul_const Real.pi).congr
       filter_upwards [ae_restrict_mem measurableSet_Ioi] with s hs
@@ -927,7 +968,10 @@ private theorem quarter_hankel_actual_absolute_domain {k : ℝ}
   obtain ⟨hF, hmass⟩ := quarter_schur_majorant_domain u hu
   let M : ℝ × ℝ → ℝ := fun z =>
     (quarterSchurMajorant u z + quarterSchurMajorant u z.swap) / 2
-  have hM : Integrable M (halfline.prod halfline) := (hF.add hF.swap).div_const 2
+  have hFswap : Integrable (fun z : ℝ × ℝ => quarterSchurMajorant u z.swap)
+      (halfline.prod halfline) := by
+    simpa only [Function.comp_apply] using hF.swap
+  have hM : Integrable M (halfline.prod halfline) := (hF.add hFswap).div_const 2
   have hmK : Measurable (fun z : ℝ × ℝ => positiveHankelKernel k (z.1 + z.2)) := by
     unfold positiveHankelKernel
     fun_prop
@@ -948,7 +992,8 @@ private theorem quarter_hankel_actual_absolute_domain {k : ℝ}
       integral_mono_ae hi hM (hbound.mono fun z hz => (le_abs_self _).trans hz)
     _ = Real.pi * ∫ s : ℝ, ‖u s‖ ^ 2 ∂halfline := by
       dsimp only [M]
-      rw [integral_div, integral_add hF hF.swap, integral_prod_swap, hmass]
+      rw [integral_div, integral_add hF hFswap,
+        integral_prod_swap (quarterSchurMajorant u), hmass]
       ring
 
 /-- The true L2 Hankel domain at every k>=1/4 has the pi bound, including
