@@ -120,6 +120,14 @@ class IdlePoolCases:
         self.g(self.tree, "switch", "--detach", self.base)
         self.assertEqual("no_idle", json.loads(self.pool_claim().stdout)["status"])
 
+    def test_pool_claim_accepts_returned_tip_ahead_of_tracking_dev(self):
+        (self.main / "owned").write_text("new dev\n")
+        self.g(self.main, "commit", "-am", "advance dev")
+        self.g(self.main, "push", "origin", "dev")
+        self.pool_return()
+        self.g(self.main, "update-ref", "refs/remotes/origin/dev", self.base)
+        self.assertEqual("claimed", json.loads(self.pool_claim(path=self.tree).stdout)["status"])
+
     def test_pool_claim_concurrency_has_one_winner(self):
         self.pool_return()
         commands = [[sys.executable, "-B", str(self.source_root / "tools/scripts/worktree/worktree_protocol.py"),

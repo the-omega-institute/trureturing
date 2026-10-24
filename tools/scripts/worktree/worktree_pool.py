@@ -69,6 +69,7 @@ def available_fraction(source):
 
 def sweep_locked(source, dev, force=False):
     """The caller holds the clone's pool operation scope."""
+    source = Path(inventory(source)[0]["worktree"])
     candidates, outcomes = [], []
     for item in inventory(source):
         if not idle_reference(item.get("branch", "")):
@@ -228,6 +229,9 @@ def claim(options):
             try:
                 with ExitStack() as stack:
                     path = tree_scope(stack, options.source, candidate, True)
+                    tip = value(path, "rev-parse", "--verify", "HEAD^{commit}")
+                    if git(path, "merge-base", "--is-ancestor", tip, dev, check=False).returncode:
+                        dev = confirm(path, "origin", "dev", tip)["observed_tip"]
                     state = idle_state(options.source, path, dev)
                     _, metadata = identity(options.source, path)
                     git_scope(stack, options.source, path)

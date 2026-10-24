@@ -15,7 +15,7 @@ public sealed partial class WorktreeCommandTests
         TestGit.Run(repository.Path, "worktree", "add", "-b", "lane/governance/idle-fixture", idle, "HEAD");
 
         var result = CleanLanesCommand.Run(repository.Path, ["--force", "--lanes-only"],
-            DateTimeOffset.UtcNow.AddDays(2));
+            new DateTimeOffset(2030, 1, 2, 0, 0, 0, TestBudgets.ZeroDuration));
 
         Assert.True(result.Success, result.Error);
         Assert.True(Directory.Exists(idle));
