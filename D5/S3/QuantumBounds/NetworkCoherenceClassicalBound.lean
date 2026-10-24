@@ -6,11 +6,9 @@
    utility: none
    digest: The sharp classical coherence bound for mixtures of two binary product laws. -/
 
-import Mathlib.Basic.Real.Basic
-import Mathlib.Algebra.BigOperators.Fin
-import Mathlib.Algebra.Order.BigOperators.Ring.Finset
-import Mathlib.Tactic.IntervalCases
-import Mathlib.Tactic.Linarith
+import D5.S3.TotalVariation.CycleSingleCutMinimax
+import D5.S3.Entropy.NamingWindow.GreenClassWindowEntropy
+import D5.S3.Quantum.FockSpace.ForbiddenNeighbourDeterminant
 
 /-! The sharp parity coherence bound for convex mixtures of two binary product laws. -/
 
@@ -20,14 +18,15 @@ noncomputable section
 
 namespace D5.S3.QuantumBounds.NetworkCoherenceClassicalBound
 
-def parity {n : ℕ} (a : Fin n → Bool) : ℕ := (∑ i, (a i).toNat) % 2
+open D5.S3.TotalVariation.CycleSingleCutMinimax (Probability)
+open D5.S3.Entropy.NamingWindow.GreenClassWindowEntropy (windowLaw windowLaw_sum_eq_one)
+open D5.S3.Quantum.FockSpace.ForbiddenNeighbourDeterminant (occupationCount)
 
-def IsBitDistribution (p : Bool → ℝ) : Prop :=
-  0 ≤ p false ∧ 0 ≤ p true ∧ p false + p true = 1
+def parity {n : ℕ} (a : Fin n → Bool) : ℕ := occupationCount a % 2
 
 def classicalMixture (n : ℕ) (γ : ℝ) (p q : Fin n → Bool → ℝ) :
     (Fin n → Bool) → ℝ :=
-  fun a => γ * ∏ i, p i (a i) + (1 - γ) * ∏ i, q i (a i)
+  fun a => γ * windowLaw p a + (1 - γ) * windowLaw q a
 
 def coherenceMerit (n : ℕ) (r : (Fin n → Bool) → ℝ) : ℝ :=
   (1 / 2) * |(∑ a ∈ Finset.univ.filter (fun a => parity a = 0),
@@ -39,7 +38,7 @@ def coherenceMerit (n : ℕ) (r : (Fin n → Bool) → ℝ) : ℝ :=
 
 def claim : Prop := ∀ n : ℕ, 2 ≤ n →
   IsGreatest {c : ℝ | ∃ γ ∈ Set.Icc (0 : ℝ) 1, ∃ p q : Fin n → Bool → ℝ,
-    (∀ i, IsBitDistribution (p i)) ∧ (∀ i, IsBitDistribution (q i)) ∧
+    (∀ i, Probability (p i)) ∧ (∀ i, Probability (q i)) ∧
       c = coherenceMerit n (classicalMixture n γ p q)} (1 / 4)
 
 private lemma off_diagonal {α : Type*} [DecidableEq α] (s : Finset α) (r : α → ℝ) :
@@ -77,11 +76,10 @@ private lemma parity_total (n : ℕ) (f : (Fin n → Bool) → ℝ) :
     (∑ a ∈ Finset.univ.filter (fun a => parity a = 0), f a) +
       (∑ a ∈ Finset.univ.filter (fun a => parity a = 1), f a) = ∑ a, f a := by
   classical
-  rw [Finset.sum_filter, Finset.sum_filter, ← Finset.sum_add_distrib]
-  apply Finset.sum_congr rfl
-  intro a _
-  have hm : parity a < 2 := Nat.mod_lt _ (by decide)
-  interval_cases parity a <;> simp
+  have h (a : Fin n → Bool) : (¬ parity a = 0) ↔ parity a = 1 :=
+    Nat.mod_two_not_eq_zero
+  simpa only [h] using Finset.sum_filter_add_sum_filter_not Finset.univ
+    (fun a : Fin n → Bool => parity a = 0) f
 
 private lemma parity_reduction (n : ℕ) (r : (Fin n → Bool) → ℝ)
     (hr : ∑ a, r a = 1) :
@@ -95,14 +93,6 @@ private lemma parity_reduction (n : ℕ) (r : (Fin n → Bool) → ℝ)
   congr 2
   nlinarith
 
-private lemma product_mass (n : ℕ) (p : Fin n → Bool → ℝ)
-    (hp : ∀ i, IsBitDistribution (p i)) : (∑ a : Fin n → Bool, ∏ i, p i (a i)) = 1 := by
-  rw [← Fintype.prod_sum]
-  have hs (i : Fin n) : (∑ b : Bool, p i b) = 1 := by
-    simpa [add_comm] using (hp i).2.2
-  simp_rw [hs]
-  simp
-
 private lemma signed_product (n : ℕ) (w : Fin n → Bool → ℝ) :
     (∑ a : Fin n → Bool, (-1 : ℝ) ^ (∑ i, (a i).toNat) * ∏ i, w i (a i)) =
       ∏ i, (w i false - w i true) := by
@@ -113,8 +103,8 @@ private lemma signed_product (n : ℕ) (w : Fin n → Bool → ℝ) :
   simp [sub_eq_add_neg, add_comm]
 
 private lemma mixture_factorization (n : ℕ) (γ : ℝ) (hγ : γ ∈ Set.Icc (0 : ℝ) 1)
-    (p q : Fin n → Bool → ℝ) (hp : ∀ i, IsBitDistribution (p i))
-    (hq : ∀ i, IsBitDistribution (q i)) :
+    (p q : Fin n → Bool → ℝ) (hp : ∀ i, Probability (p i))
+    (hq : ∀ i, Probability (q i)) :
     coherenceMerit n (classicalMixture n γ p q) = γ * (1 - γ) / 2 *
       |(∏ i, (p i false - p i true)) + (∏ i, (q i false - q i true)) -
         2 * ∏ i, ((p i false - p i true + (q i false - q i true)) / 2)| := by
@@ -122,7 +112,8 @@ private lemma mixture_factorization (n : ℕ) (γ : ℝ) (hγ : γ ∈ Set.Icc (
   have hm : (∑ a : Fin n → Bool, classicalMixture n γ p q a) = 1 := by
     unfold classicalMixture
     rw [Finset.sum_add_distrib, ← Finset.mul_sum, ← Finset.mul_sum,
-      product_mass n p hp, product_mass n q hq]
+      windowLaw_sum_eq_one p (fun i => (hp i).2),
+      windowLaw_sum_eq_one q (fun i => (hq i).2)]
     ring
   rw [parity_reduction n _ hm]
   have hT : (∑ a : Fin n → Bool, (-1 : ℝ) ^ (∑ i, (a i).toNat) * classicalMixture n γ p q a) =
@@ -134,7 +125,7 @@ private lemma mixture_factorization (n : ℕ) (γ : ℝ) (hγ : γ ∈ Set.Icc (
         rw [Finset.mul_sum, Finset.mul_sum, ← Finset.sum_add_distrib]
         apply Finset.sum_congr rfl
         intro a _
-        unfold classicalMixture
+        unfold classicalMixture windowLaw
         ring
       _ = _ := by rw [signed_product, signed_product]
   have hp2 : (∑ a : Fin n → Bool, (-1 : ℝ) ^ (∑ i, (a i).toNat) * (∏ i, p i (a i)) ^ 2) =
@@ -143,7 +134,7 @@ private lemma mixture_factorization (n : ℕ) (γ : ℝ) (hγ : γ ∈ Set.Icc (
     rw [signed_product n (fun i b => p i b ^ 2)]
     apply Finset.prod_congr rfl
     intro i _
-    have hi := (hp i).2.2
+    have hi : p i false + p i true = 1 := by simpa [add_comm] using (hp i).2
     nlinarith
   have hq2 : (∑ a : Fin n → Bool, (-1 : ℝ) ^ (∑ i, (a i).toNat) * (∏ i, q i (a i)) ^ 2) =
       ∏ i, (q i false - q i true) := by
@@ -151,7 +142,7 @@ private lemma mixture_factorization (n : ℕ) (γ : ℝ) (hγ : γ ∈ Set.Icc (
     rw [signed_product n (fun i b => q i b ^ 2)]
     apply Finset.prod_congr rfl
     intro i _
-    have hi := (hq i).2.2
+    have hi : q i false + q i true = 1 := by simpa [add_comm] using (hq i).2
     nlinarith
   have hpq : (∑ a : Fin n → Bool, (-1 : ℝ) ^ (∑ i, (a i).toNat) *
       ((∏ i, p i (a i)) * ∏ i, q i (a i))) =
@@ -160,8 +151,12 @@ private lemma mixture_factorization (n : ℕ) (γ : ℝ) (hγ : γ ∈ Set.Icc (
     rw [signed_product n (fun i b => p i b * q i b)]
     apply Finset.prod_congr rfl
     intro i _
-    have hi : p i true = 1 - p i false := by linarith [(hp i).2.2]
-    have hj : q i true = 1 - q i false := by linarith [(hq i).2.2]
+    have hi : p i true = 1 - p i false := by
+      have hs : p i false + p i true = 1 := by simpa [add_comm] using (hp i).2
+      linarith
+    have hj : q i true = 1 - q i false := by
+      have hs : q i false + q i true = 1 := by simpa [add_comm] using (hq i).2
+      linarith
     rw [hi, hj]
     ring
   have hU : (∑ a : Fin n → Bool, (-1 : ℝ) ^ (∑ i, (a i).toNat) * (classicalMixture n γ p q a) ^ 2) =
@@ -177,7 +172,7 @@ private lemma mixture_factorization (n : ℕ) (γ : ℝ) (hγ : γ ∈ Set.Icc (
           ← Finset.sum_add_distrib, ← Finset.sum_add_distrib]
         apply Finset.sum_congr rfl
         intro a _
-        unfold classicalMixture
+        unfold classicalMixture windowLaw
         ring
       _ = _ := by rw [hp2, hq2, hpq]
   rw [hT, hU]
@@ -247,33 +242,38 @@ private lemma cube_bound (n : ℕ) (x y : Fin n → ℝ)
   exact aux Finset.univ
 
 private lemma upper_bound (n : ℕ) (γ : ℝ) (hγ : γ ∈ Set.Icc (0 : ℝ) 1)
-    (p q : Fin n → Bool → ℝ) (hp : ∀ i, IsBitDistribution (p i))
-    (hq : ∀ i, IsBitDistribution (q i)) :
+    (p q : Fin n → Bool → ℝ) (hp : ∀ i, Probability (p i))
+    (hq : ∀ i, Probability (q i)) :
     coherenceMerit n (classicalMixture n γ p q) ≤ 1 / 4 := by
   rw [mixture_factorization n γ hγ p q hp hq]
   have hb := cube_bound n (fun i => p i false - p i true)
     (fun i => q i false - q i true)
-    (fun i => by have hi := hp i; constructor <;> linarith [hi.1, hi.2.1, hi.2.2])
-    (fun i => by have hi := hq i; constructor <;> linarith [hi.1, hi.2.1, hi.2.2])
+    (fun i => by
+      have hs : p i false + p i true = 1 := by simpa [add_comm] using (hp i).2
+      constructor <;> linarith [(hp i).1 false, (hp i).1 true])
+    (fun i => by
+      have hs : q i false + q i true = 1 := by simpa [add_comm] using (hq i).2
+      constructor <;> linarith [(hq i).1 false, (hq i).1 true])
   have hnon : 0 ≤ γ * (1 - γ) := mul_nonneg hγ.1 (sub_nonneg.mpr hγ.2)
   nlinarith [sq_nonneg (γ - 1 / 2)]
 
 private lemma attainment (n : ℕ) (hn : 2 ≤ n) :
     ∃ γ ∈ Set.Icc (0 : ℝ) 1, ∃ p q : Fin n → Bool → ℝ,
-      (∀ i, IsBitDistribution (p i)) ∧ (∀ i, IsBitDistribution (q i)) ∧
+      (∀ i, Probability (p i)) ∧ (∀ i, Probability (q i)) ∧
         (1 / 4 : ℝ) = coherenceMerit n (classicalMixture n γ p q) := by
   classical
   obtain ⟨k, rfl⟩ : ∃ k, n = k + 2 := ⟨n - 2, by omega⟩
   let p : Fin (k + 2) → Bool → ℝ := fun _ b => if b then 0 else 1
   let q : Fin (k + 2) → Bool → ℝ :=
     fun i b => if i.val < 2 then (if b then 1 else 0) else (if b then 0 else 1)
-  have hp : ∀ i, IsBitDistribution (p i) := by
+  have hp : ∀ i, Probability (p i) := by
     intro i
-    unfold IsBitDistribution
-    norm_num [p]
-  have hq : ∀ i, IsBitDistribution (q i) := by
+    unfold Probability
+    norm_num [p, Bool.forall_bool]
+  have hq : ∀ i, Probability (q i) := by
     intro i
-    unfold IsBitDistribution
+    unfold Probability
+    simp only [Bool.forall_bool, Fintype.sum_bool]
     dsimp [q]
     split_ifs <;> norm_num
   refine ⟨1 / 2, by norm_num, p, q, hp, hq, ?_⟩
@@ -281,8 +281,7 @@ private lemma attainment (n : ℕ) (hn : 2 ≤ n) :
   have hP : (∏ i, (p i false - p i true)) = 1 := by simp [p]
   have hQ : (∏ i, (q i false - q i true)) = 1 := by
     simp only [Fin.prod_univ_succ]
-    have ht (i : Fin k) : ¬ i.val + 1 + 1 < 2 := by omega
-    simp [q, ht]
+    simp [q]
   have hD : (∏ i, ((p i false - p i true + (q i false - q i true)) / 2)) = 0 := by
     apply Finset.prod_eq_zero (Finset.mem_univ (⟨0, by omega⟩ : Fin (k + 2)))
     norm_num [p, q]
