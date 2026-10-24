@@ -8,7 +8,6 @@
 
 import D5.S3.Observer.MatrixUnitCertificate
 import D5.S3.Quantum.Algebra.WeylDisplacementPowers
-import Mathlib.LinearAlgebra.UnitaryGroup
 
 /-! A five-dimensional counterexample to steering power preservation. -/
 
