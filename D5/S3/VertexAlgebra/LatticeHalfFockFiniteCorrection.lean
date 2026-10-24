@@ -557,7 +557,7 @@ theorem Corr_monomial_enumeration (D : LatticeData) (charge : Charge D)
             (LatticeAllStateField.occurrences D exponent))) (monomial exponent 1))) = _
   rw [basis, ← correctionWord_permutation D charge word _ enumeration]
 
-private theorem wordWeight_occurrences (D : LatticeData) (exponent : Index D →₀ ℕ) :
+theorem wordWeight_occurrences (D : LatticeData) (exponent : Index D →₀ ℕ) :
     wordWeight D (LatticeAllStateField.occurrences D exponent) =
       Finsupp.weight (sourceWeight D) exponent := by
   classical

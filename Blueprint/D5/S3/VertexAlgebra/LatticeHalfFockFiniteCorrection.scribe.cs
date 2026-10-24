@@ -41,6 +41,11 @@ internal sealed class LatticeHalfFockFiniteCorrectionDocument : IScribeDocumentD
         "Finite singleton and pair correction on the full ordinary lattice oscillator algebra.",
         H("Finite Twisted Correction"),
         Blocks(
+            Describe.Lean(DescribeId.Create("normal-transpose-wordWeight-occurrences"),
+                DeclarationHandle.Create(Prefix + "wordWeight_occurrences"),
+                H("wordWeight occurrences"), StatementSource.WithoutFormula(),
+                AssessedProvenance.FromRepo(), Blocks(Paragraph(Text("Existing exact occurrence-list weight equality, exposed without changing its statement or proof. It is consumed by the original source scalar transpose in HalfFock.NormalScalarTranspose."))),
+                DescribeRole.Theorem),
             Paragraph(Text("LatticeData consists of an arbitrary finite rank and a symmetric integral Gram matrix with even diagonal. Rank zero, degeneracy and indefinite forms are allowed. The source weight of (i,k) is k+1; the native half-Fock weight is 2k+1. The extra polynomial variable records physical negative shifts. Singleton weights are binomial(-1/2,m) times the charge pairing; pair weights are mn binomial(-1/2,m) binomial(-1/2,n)/(m+n) times the Gram pairing. No inverse Gram matrix, positivity, rank condition or occupation cutoff occurs.")),
             Describe.Lean(
                 DescribeId.Create("half-fock-positive-source-convolution"),
