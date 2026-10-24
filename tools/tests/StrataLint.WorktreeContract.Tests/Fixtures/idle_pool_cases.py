@@ -158,16 +158,21 @@ class IdlePoolCases:
             target = self.tree if i == 0 else self.root / ("idle-" + str(i))
             if i:
                 self.g(self.main, "worktree", "add", "-b", "lane/governance/extra-" + str(i), target, self.base)
-            self.make_idle(target, self.base)
+            with patch.dict(os.environ, GIT_COMMITTER_DATE="@" + str(1000000000 + (i + 1) // 2) + " +0000"):
+                self.make_idle(target, self.base)
             idle.append(target)
         with patch.object(pool, "available_fraction", return_value=1):
             result = pool.sweep(self.main, self.base, force=False)
-            self.assertEqual(1, sum(row["outcome"] == "would_remove" for row in result["items"]))
+            self.assertEqual([str(idle[0])], [row["path"] for row in result["items"] if row["outcome"] == "would_remove"])
             result = pool.sweep(self.main, self.base, force=True)
-            self.assertEqual(1, sum(row["outcome"] == "removed" for row in result["items"]))
+            self.assertEqual([str(idle[0])], [row["path"] for row in result["items"] if row["outcome"] == "removed"])
+        with patch.object(pool, "available_fraction", side_effect=[0.04, 1, 1, 1]):
+            result = pool.sweep(self.main, self.base, force=True)
+            self.assertEqual([str(idle[1])], [row["path"] for row in result["items"] if row["outcome"] == "removed"])
+            self.assertTrue(all(target.exists() for target in idle[2:]))
         with patch.object(pool, "available_fraction", return_value=0.04):
             result = pool.sweep(self.main, self.base, force=True)
-            self.assertEqual(4, sum(row["outcome"] == "removed" for row in result["items"]))
+            self.assertEqual(3, sum(row["outcome"] == "removed" for row in result["items"]))
         self.assertFalse(any(target.exists() for target in idle))
 
     def pool_sweep_confirms_returned_tip_beyond_stale_tracking(self):
@@ -224,6 +229,137 @@ class IdlePoolCases:
                     self.assertEqual(reference, item["recovery_branch"])
                     self.assertEqual(self.base, item["checkpoint"]["commit"])
                 self.assertTrue(self.tree.exists())
+
+    def pool_pair(self, commit=None, suffix=""):
+        targets = [self.root / (name + suffix) for name in ("older", "newer")]
+        for i, target in enumerate(targets):
+            self.g(self.main, "worktree", "add", "-b", "lane/governance/pair-" + uuid.uuid4().hex,
+                   target, commit or self.base)
+            with patch.dict(os.environ, GIT_COMMITTER_DATE="@" + str(1000000000 + i) + " +0000"):
+                self.make_idle(target, commit or self.base)
+        return targets
+
+    def pool_validation_failures(self, action):
+        import worktree_pool as pool
+        import worktree_protocol as protocol
+        errors = [subprocess.TimeoutExpired("git status", 300), subprocess.SubprocessError("native failure"),
+                  protocol.Refused("validation refused"), OSError("validation I/O"),
+                  ValueError("validation value"), RuntimeError("unexpected validation failure")]
+        for i, error in enumerate(errors):
+            with self.subTest(action=action, error=type(error).__name__):
+                older, newer = self.pool_pair(suffix=action + str(i))
+                reference = self.g(older, "symbolic-ref", "HEAD").strip()
+                head = self.g(older, "rev-parse", "HEAD").strip()
+                native = pool.git
+                validations = 0
+                def fail_validation(root, *args, **kwargs):
+                    nonlocal validations
+                    if Path(root) == newer and args[:1] == ("status",):
+                        validations += 1
+                        if validations == 2:
+                            self.assertFalse(older.exists())
+                            raise error
+                    return native(root, *args, **kwargs)
+                if action == "return":
+                    self.pool_github()
+                    arguments = ["return", "--path", str(self.tree), "--pr", "42", "--writers-joined"]
+                else:
+                    arguments = ["pool", "--dev", self.base, "--force"]
+                output = StringIO()
+                with patch.object(pool, "available_fraction", return_value=0.04), \
+                        patch.object(pool, "git", side_effect=fail_validation), \
+                        patch.dict(os.environ, getattr(self, "pool_env", {})), redirect_stdout(output):
+                    code = protocol.main(["--source", str(self.main)] + arguments)
+                self.assertEqual(74, code, output.getvalue())
+                result = json.loads(output.getvalue())
+                if action == "return":
+                    self.assertIn(result["status"], ("returned", "already_idle"))
+                    result = result["pool"]
+                self.assertEqual("failed", result["status"])
+                removed = next(row for row in result["items"] if row["path"] == str(older))
+                self.assertEqual("removed", removed["outcome"])
+                self.assertEqual(reference, removed["recovery_branch"])
+                self.assertEqual(head, removed["checkpoint"]["commit"])
+                failed = next(row for row in result["items"] if row["path"] == str(newer))
+                self.assertEqual("sweep_failed", failed["outcome"])
+                self.assertEqual("revalidate", failed["stage"])
+                self.assertIn(str(error), failed["error"])
+                self.assertTrue(newer.exists())
+                self.g(self.main, "worktree", "remove", newer)
+
+    def pool_validation_failure_after_eviction_preserves_receipt(self):
+        self.pool_validation_failures("pool")
+
+    def pool_return_validation_failure_after_eviction_preserves_receipt(self):
+        self.pool_validation_failures("return")
+
+    def pool_pressure_failure_after_eviction_preserves_receipt(self):
+        import worktree_pool as pool
+        import worktree_protocol as protocol
+        older, newer = self.pool_pair()
+        output = StringIO()
+        with patch.object(pool, "available_fraction", side_effect=[0.04, OSError("disk reading failed")]), \
+                redirect_stdout(output):
+            code = protocol.main(["--source", str(self.main), "pool", "--dev", self.base, "--force"])
+        self.assertEqual(74, code)
+        result = json.loads(output.getvalue())
+        self.assertEqual(["removed", "sweep_failed"], [row["outcome"] for row in result["items"]])
+        self.assertEqual(str(newer), result["items"][1]["path"])
+        self.assertEqual("disk_pressure", result["items"][1]["stage"])
+        self.assertFalse(older.exists())
+        self.assertTrue(newer.exists())
+
+    def pool_confirmation_timeout_after_eviction_preserves_receipt(self):
+        import worktree_pool as pool
+        import worktree_protocol as protocol
+        import worktree_publication as publication
+        (self.main / "owned").write_text("new dev\n")
+        self.g(self.main, "commit", "-am", "advance dev")
+        tip = self.g(self.main, "rev-parse", "HEAD").strip()
+        self.g(self.main, "push", "origin", "dev")
+        older, newer = self.pool_pair(commit=tip)
+        native = publication.git
+        confirmations = 0
+        def fail_confirmation(root, *args, **kwargs):
+            nonlocal confirmations
+            if Path(root) == newer and args[:1] == ("fetch",):
+                confirmations += 1
+                if confirmations == 2:
+                    self.assertFalse(older.exists())
+                    raise subprocess.TimeoutExpired("git fetch", 300)
+            return native(root, *args, **kwargs)
+        output = StringIO()
+        with patch.object(pool, "available_fraction", return_value=0.04), \
+                patch.object(publication, "git", side_effect=fail_confirmation), redirect_stdout(output):
+            code = protocol.main(["--source", str(self.main), "pool", "--dev", self.base, "--force"])
+        self.assertEqual(74, code)
+        result = json.loads(output.getvalue())
+        self.assertEqual(["removed", "sweep_failed"], [row["outcome"] for row in result["items"]])
+        self.assertIn("git fetch", result["items"][1]["error"])
+        self.assertTrue(newer.exists())
+
+    def pool_unexpected_removal_failure_preserves_recovery(self):
+        import worktree_pool as pool
+        import worktree_protocol as protocol
+        import worktree_preservation as preservation
+        self.pool_return()
+        reference = self.g(self.tree, "symbolic-ref", "HEAD").strip()
+        native = preservation.git
+        def fail_remove(root, *args, **kwargs):
+            if args[:2] == ("worktree", "remove"):
+                raise RuntimeError("unexpected native failure")
+            return native(root, *args, **kwargs)
+        output = StringIO()
+        with patch.object(pool, "available_fraction", return_value=0.04), \
+                patch.object(preservation, "git", side_effect=fail_remove), redirect_stdout(output):
+            code = protocol.main(["--source", str(self.main), "pool", "--dev", self.base, "--force"])
+        self.assertEqual(74, code)
+        result = json.loads(output.getvalue())
+        item, = result["items"]
+        self.assertEqual("partial_or_indeterminate", item["outcome"])
+        self.assertEqual(reference, item["recovery_branch"])
+        self.assertEqual(self.base, item["checkpoint"]["commit"])
+        self.assertIn("unexpected native failure", item["error"])
 
     def pool_idle_prefixed_task_is_never_released_by_allocation(self):
         import worktree_pool as pool

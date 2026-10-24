@@ -8,6 +8,74 @@ namespace StrataLint.Tests;
 
 public sealed partial class CleanLanesCommandTests
 {
+    [Fact]
+    public void IdlePoolSweepFailureKeepsCompletedEvictionsAndDefersExtraSweeps()
+    {
+        using var fixture = new CleanLanesFixture();
+        const string removedBranch = "lane/governance/idle-removed";
+        const string failedBranch = "lane/governance/idle-failed";
+        var removedPath = fixture.AddMergedLane(removedBranch);
+        var failedPath = fixture.AddMergedLane(failedBranch);
+        fixture.AddOrphan("harness/retained-after-sweep-failure", merged: true);
+        var payload = JsonSerializer.Serialize(new
+        {
+            @event = "worktree_pool", status = "failed", capacity = 4,
+            items = new[]
+            {
+                new { path = removedPath, branch = "refs/heads/" + removedBranch, head = fixture.Head(removedPath),
+                    outcome = "removed", reason = "idle_disk_pressure", stage = (string?)null, error = (string?)null,
+                    recovery_branch = (string?)("refs/heads/" + removedBranch) },
+                new { path = failedPath, branch = "refs/heads/" + failedBranch, head = fixture.Head(failedPath),
+                    outcome = "sweep_failed", reason = "idle_sweep_failed", stage = (string?)"revalidate",
+                    error = (string?)"git fetch timed out", recovery_branch = (string?)null },
+            },
+        });
+        var runner = fixture.CreateRunner((file, args, _) => file == "python3" && args.Contains("pool")
+            ? new ProcessOutput(74, Encoding.UTF8.GetBytes(payload), []) : null);
+
+        var result = fixture.RunWithRaw(runner, "--force");
+
+        Assert.False(result.Success);
+        var items = ReadItems(result.Output);
+        var removed = Assert.Single(items, row => row.GetProperty("path").GetString() == removedPath);
+        Assert.Equal("removed", removed.GetProperty("action").GetString());
+        Assert.Equal("refs/heads/" + removedBranch, removed.GetProperty("recovery_branch").GetString());
+        var failed = Assert.Single(items, row => row.GetProperty("path").GetString() == failedPath);
+        Assert.Equal("failed", failed.GetProperty("action").GetString());
+        Assert.Contains("revalidate", failed.GetProperty("reason").GetString(), StringComparison.Ordinal);
+        Assert.Contains("git fetch timed out", failed.GetProperty("reason").GetString(), StringComparison.Ordinal);
+        var summary = ReadSummary(result.Output);
+        Assert.Equal(1, summary.GetProperty("removed_count").GetInt32());
+        Assert.Equal(1, summary.GetProperty("failed_count").GetInt32());
+        Assert.Equal("deferred", summary.GetProperty("extra_sweeps").GetString());
+        Assert.True(fixture.BranchExists("harness/retained-after-sweep-failure"));
+    }
+
+    [Theory]
+    [InlineData(false)]
+    [InlineData(true)]
+    public void IdlePoolUnresolvedAggregateIsFailedRatherThanSkipped(bool hasReceipt)
+    {
+        using var fixture = new CleanLanesFixture();
+        var path = fixture.AddMergedLane("lane/governance/idle-unresolved");
+        fixture.AddOrphan("harness/retained-after-unresolved-pool", merged: true);
+        var payload = hasReceipt ? JsonSerializer.Serialize(new
+        {
+            @event = "worktree_pool", status = "failed", capacity = 4,
+            items = Array.Empty<object>(),
+        }) : string.Empty;
+        var runner = fixture.CreateRunner((file, args, _) => file == "python3" && args.Contains("pool")
+            ? new ProcessOutput(74, Encoding.UTF8.GetBytes(payload), Encoding.UTF8.GetBytes("native failure")) : null);
+
+        var result = fixture.RunWithRaw(runner, "--force");
+
+        Assert.False(result.Success);
+        Assert.Contains(ReadItems(result.Output), row => row.GetProperty("action").GetString() == "failed");
+        Assert.Equal("deferred", ReadSummary(result.Output).GetProperty("extra_sweeps").GetString());
+        Assert.True(Directory.Exists(path));
+        Assert.True(fixture.BranchExists("harness/retained-after-unresolved-pool"));
+    }
+
     [Theory]
     [InlineData("checkpoint_failed", "failed")]
     [InlineData("partial_or_indeterminate", "partially_removed")]

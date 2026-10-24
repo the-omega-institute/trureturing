@@ -302,6 +302,11 @@ public sealed class WorktreeProtocolTests(ITestOutputHelper output)
     [InlineData("pool_sweep_refuses_non_dev_idle_tip")]
     [InlineData("pool_eviction_failures_preserve_receipt_and_exit")]
     [InlineData("pool_idle_prefixed_task_is_never_released_by_allocation")]
+    [InlineData("pool_validation_failure_after_eviction_preserves_receipt")]
+    [InlineData("pool_return_validation_failure_after_eviction_preserves_receipt")]
+    [InlineData("pool_pressure_failure_after_eviction_preserves_receipt")]
+    [InlineData("pool_confirmation_timeout_after_eviction_preserves_receipt")]
+    [InlineData("pool_unexpected_removal_failure_preserves_recovery")]
     public void IdlePoolPreservesNativeGitState(string probe)
     {
         if (OperatingSystem.IsWindows()) return;
