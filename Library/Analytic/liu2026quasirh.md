@@ -1970,3 +1970,44 @@ unpaid input. The large parity-disagreement estimate (C20), full moment
 improvement, signed Robin restoration and RH remain unproved. This is
 an application of the existing operator bounds, without a literature-priority
 claim or local Lean certification.
+
+
+## Finite signs in the remaining small-squarepart sector
+
+The [original-family program and data](https://github.com/the-omega-institute/trureturing-experiments/tree/907f48d6d61c17f24628d2ed31f3f115598a3515/docs/reports/sextic-inverse-fourth#product-squarepart-correlation)
+also evaluate the $P<U^{1/4}$ contraction in (C20) at the reported finite
+scales, with the fixed trivial ray twist, every original good sixth-power-free row in
+$U<q_u<2U$, all six unit multiples and the original collision zeros.
+The strict cut is tested as the integer inequality $P^4<U$.
+
+For unit weights on the inverse annulus $D/2<q_d<3D/2$ and the row
+annulus $U<q_u<2U$, the integer-arithmetic computation at $U=2048$ gives
+
+$$
+E_{6,\,P<U^{1/4}}^\mu=\frac{747}{64}>0.
+$$
+
+Here $U^{1/4}<7$, the least good prime-ideal norm, so every retained pair
+has $P=1$. This is the coprime squarefree-column sector. The flat values
+on these finite norm grids can be realized by smooth profiles supported
+in the same open annuli, placing the transitions between adjacent sampled
+norms. This assertion supplies a fixed profile for that finite example;
+it does not supply one common profile or uniform derivative costs across
+scales. The positive value prevents a blanket all-scales nonpositive-sign
+substitute for (C20); it does not disprove eventual nonpositivity for a
+specified fixed profile.
+
+A separate integer checker visits the four original ordered inverse-factor
+slots and every physical unit row, without the grouped inverse plan,
+pair plan or unit-orthogonality shortcut. It reproduces $747/64$. The
+fixed smooth bumps from the earlier actual-family experiment also give
+both observed signs for the small-$P$ contraction: approximately
+$-0.1603369703$ at $U=128$ and $0.2490045477$ at $U=4096$. Those bump
+values use binary64 and are not interval certificates.
+
+The new split reconstructs the complete signed identity
+$\mathcal T=H_2+E_{6,\,\mathrm{small}\ P}+E_{6,\,\mathrm{large}\ P}$;
+its full smooth moments agree with the retained earlier baseline. These
+finite outputs give no uniform power estimate or local Lean certification.
+The upper bound required in (C20), full inverse-fourth improvement,
+signed Robin restoration and RH remain unproved.
