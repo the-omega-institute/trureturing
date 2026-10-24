@@ -7,7 +7,6 @@
    digest: Optimal unambiguous discrimination of injectively labelled product sequences. -/
 
 import D5.S3.Quantum.Recovery.PurifiedLocalPath
-import Mathlib.Logic.Equiv.Fintype
 import Mathlib.Tactic.Linarith
 import Mathlib.Tactic.Ring
 
