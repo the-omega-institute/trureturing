@@ -27,7 +27,7 @@ attribute [local instance] Classical.propDecidable
 
 /-- Swapping outgoing attachments joins two disjoint cycles, including singleton
 cycles, without requiring the ambient permutation to have only those cycles. -/
-private theorem merge_cycles {X : Type*} [Finite X] [DecidableEq X] (f : Perm X)
+theorem merge_cycles {X : Type*} [Finite X] [DecidableEq X] (f : Perm X)
     (A B : Set X) (hA : f.IsCycleOn A) (hB : f.IsCycleOn B)
     (hd : Disjoint A B) (a b : X) (ha : a ∈ A) (hb : b ∈ B) :
     (f * swap a b).IsCycleOn (A ∪ B) := by
