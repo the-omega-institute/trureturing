@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:8edc5f51914832d6e6e84185d110709097b8fd59d295b38e7561bc5ab93ae7b1
+  normalized_sha256: sha256:8edc5f51914832d6e6e84185d110709097b8fd59d295b38e7561bc5ab93ae7b1
+cas_ref: sha256:8edc5f51914832d6e6e84185d110709097b8fd59d295b38e7561bc5ab93ae7b1
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 引理 6.1 的证明阐释段，承接前一 atom 的同一引理陈述，不是另立的待覆盖命题。引理的度数恒等式、计数上界及等号刻画由既有冻结声明 D5/S3/Combinatorics/Graph/LegalWordDegree.degree_eq_flippable_add_occupation 与 D5/S3/Combinatorics/Graph/LegalWordDegree.flippable_bound_and_equality 提供；此处按证明阐释结算，不声称这些结论逐步形式化了本段的受阻零计数论证、中间位置不等式或具体证明路线。后一 atom 的定理 6.2 不在此收据范围。
+    previous_atom_id: 07860ea7cda26db64fad5adafdd26a465ba50210f697cc473b1b01e1f8779adc
+    next_atom_id: 30454b1261c8d4b7aee388867a8f9df099d8db3923f7196e9e143e5ff0bb4ce2
