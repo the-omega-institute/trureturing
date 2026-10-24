@@ -93,13 +93,97 @@ private lemma parity_reduction (n : ℕ) (r : (Fin n → Bool) → ℝ)
   congr 2
   nlinarith
 
+private lemma product_mass (n : ℕ) (p : Fin n → Bool → ℝ)
+    (hp : ∀ i, IsBitDistribution (p i)) : (∑ a : Fin n → Bool, ∏ i, p i (a i)) = 1 := by
+  rw [← Fintype.prod_sum]
+  have hs (i : Fin n) : (∑ b : Bool, p i b) = 1 := by
+    simpa [add_comm] using (hp i).2.2
+  simp_rw [hs]
+  simp
+
+private lemma signed_product (n : ℕ) (w : Fin n → Bool → ℝ) :
+    (∑ a : Fin n → Bool, (-1 : ℝ) ^ (∑ i, (a i).toNat) * ∏ i, w i (a i)) =
+      ∏ i, (w i false - w i true) := by
+  simp_rw [← Finset.prod_pow_eq_pow_sum, ← Finset.prod_mul_distrib]
+  rw [← Fintype.prod_sum (fun (i : Fin n) (b : Bool) => (-1 : ℝ) ^ b.toNat * w i b)]
+  apply Finset.prod_congr rfl
+  intro i _
+  simp [sub_eq_add_neg, add_comm]
+
 private lemma mixture_factorization (n : ℕ) (γ : ℝ) (hγ : γ ∈ Set.Icc (0 : ℝ) 1)
     (p q : Fin n → Bool → ℝ) (hp : ∀ i, IsBitDistribution (p i))
     (hq : ∀ i, IsBitDistribution (q i)) :
     coherenceMerit n (classicalMixture n γ p q) = γ * (1 - γ) / 2 *
       |(∏ i, (p i false - p i true)) + (∏ i, (q i false - q i true)) -
         2 * ∏ i, ((p i false - p i true + (q i false - q i true)) / 2)| := by
-  sorry
+  classical
+  have hm : (∑ a : Fin n → Bool, classicalMixture n γ p q a) = 1 := by
+    unfold classicalMixture
+    rw [Finset.sum_add_distrib, ← Finset.mul_sum, ← Finset.mul_sum,
+      product_mass n p hp, product_mass n q hq]
+    ring
+  rw [parity_reduction n _ hm]
+  have hT : (∑ a : Fin n → Bool, (-1 : ℝ) ^ (∑ i, (a i).toNat) * classicalMixture n γ p q a) =
+      γ * (∏ i, (p i false - p i true)) +
+        (1 - γ) * (∏ i, (q i false - q i true)) := by
+    calc
+      _ = γ * (∑ a : Fin n → Bool, (-1 : ℝ) ^ (∑ i, (a i).toNat) * ∏ i, p i (a i)) +
+          (1 - γ) * (∑ a : Fin n → Bool, (-1 : ℝ) ^ (∑ i, (a i).toNat) * ∏ i, q i (a i)) := by
+        rw [Finset.mul_sum, Finset.mul_sum, ← Finset.sum_add_distrib]
+        apply Finset.sum_congr rfl
+        intro a _
+        unfold classicalMixture
+        ring
+      _ = _ := by rw [signed_product, signed_product]
+  have hp2 : (∑ a : Fin n → Bool, (-1 : ℝ) ^ (∑ i, (a i).toNat) * (∏ i, p i (a i)) ^ 2) =
+      ∏ i, (p i false - p i true) := by
+    simp_rw [← Finset.prod_pow]
+    rw [signed_product n (fun i b => p i b ^ 2)]
+    apply Finset.prod_congr rfl
+    intro i _
+    have hi := (hp i).2.2
+    nlinarith
+  have hq2 : (∑ a : Fin n → Bool, (-1 : ℝ) ^ (∑ i, (a i).toNat) * (∏ i, q i (a i)) ^ 2) =
+      ∏ i, (q i false - q i true) := by
+    simp_rw [← Finset.prod_pow]
+    rw [signed_product n (fun i b => q i b ^ 2)]
+    apply Finset.prod_congr rfl
+    intro i _
+    have hi := (hq i).2.2
+    nlinarith
+  have hpq : (∑ a : Fin n → Bool, (-1 : ℝ) ^ (∑ i, (a i).toNat) *
+      ((∏ i, p i (a i)) * ∏ i, q i (a i))) =
+      ∏ i, ((p i false - p i true + (q i false - q i true)) / 2) := by
+    simp_rw [← Finset.prod_mul_distrib]
+    rw [signed_product n (fun i b => p i b * q i b)]
+    apply Finset.prod_congr rfl
+    intro i _
+    have hi : p i true = 1 - p i false := by linarith [(hp i).2.2]
+    have hj : q i true = 1 - q i false := by linarith [(hq i).2.2]
+    rw [hi, hj]
+    ring
+  have hU : (∑ a : Fin n → Bool, (-1 : ℝ) ^ (∑ i, (a i).toNat) * (classicalMixture n γ p q a) ^ 2) =
+      γ ^ 2 * (∏ i, (p i false - p i true)) +
+      (1 - γ) ^ 2 * (∏ i, (q i false - q i true)) +
+      2 * γ * (1 - γ) * ∏ i, ((p i false - p i true + (q i false - q i true)) / 2) := by
+    calc
+      _ = γ ^ 2 * (∑ a : Fin n → Bool, (-1 : ℝ) ^ (∑ i, (a i).toNat) * (∏ i, p i (a i)) ^ 2) +
+          (1 - γ) ^ 2 * (∑ a : Fin n → Bool, (-1 : ℝ) ^ (∑ i, (a i).toNat) * (∏ i, q i (a i)) ^ 2) +
+          2 * γ * (1 - γ) * (∑ a : Fin n → Bool, (-1 : ℝ) ^ (∑ i, (a i).toNat) *
+            ((∏ i, p i (a i)) * ∏ i, q i (a i))) := by
+        rw [Finset.mul_sum, Finset.mul_sum, Finset.mul_sum,
+          ← Finset.sum_add_distrib, ← Finset.sum_add_distrib]
+        apply Finset.sum_congr rfl
+        intro a _
+        unfold classicalMixture
+        ring
+      _ = _ := by rw [hp2, hq2, hpq]
+  rw [hT, hU]
+  have hid (A B D : ℝ) : γ * A + (1 - γ) * B -
+      (γ ^ 2 * A + (1 - γ) ^ 2 * B + 2 * γ * (1 - γ) * D) =
+      γ * (1 - γ) * (A + B - 2 * D) := by ring
+  rw [hid, abs_mul, abs_of_nonneg (mul_nonneg hγ.1 (sub_nonneg.mpr hγ.2))]
+  ring
 
 private lemma cube_bound (n : ℕ) (x y : Fin n → ℝ)
     (hx : ∀ i, x i ∈ Set.Icc (-1 : ℝ) 1)
