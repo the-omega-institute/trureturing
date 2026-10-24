@@ -40,6 +40,7 @@ internal sealed class IntervalConvolutionDocument : IScribeDocumentDefinition
             Blocks(Paragraph(Text(text))), role);
 
     private static StatementSource TheoremStatement(string name) =>
+        name == "F" ? StatementSource.FromAuthor(Disp(All("m", F.Id("Nat"), All("L", F.Id("Nat"), All("U", F.Id("Nat"), All("s", F.Id("Real"), All("t", F.Id("Real"), Equal(Call("F", F.Id("m"), F.Id("L"), F.Id("U"), F.Id("s"), F.Id("t")), SumRange("i", Add(Subtract(F.Id("U"), F.Id("L")), Num(1)), Multiply(Call("c", Add(F.Id("L"), F.Id("i")), F.Id("s")), Call("c", Subtract(F.Id("m"), Add(F.Id("L"), F.Id("i"))), F.Id("t")))))))))))) :
         name == "symmetric_tail" ? StatementSource.FromAuthor(Disp(All("m", F.Id("Nat"), All("q", F.Id("Nat"), Implies(Le(Multiply(Num(2), F.Id("q")), F.Id("m")), All("a", F.Id("Real"), All("b", F.Id("Real"), All("c", F.Id("Real"), All("d", F.Id("Real"), Implies(Lt(Num(0), F.Id("a")), Implies(Le(F.Id("a"), F.Id("b")), Implies(Le(F.Id("b"), F.Id("c")), Implies(Le(F.Id("c"), F.Id("d")), Implies(Equal(Add(F.Id("a"), F.Id("d")), Add(F.Id("b"), F.Id("c"))), Le(Call("F", F.Id("m"), F.Id("q"), Subtract(F.Id("m"), F.Id("q")), F.Id("a"), F.Id("d")), Call("F", F.Id("m"), F.Id("q"), Subtract(F.Id("m"), F.Id("q")), F.Id("b"), F.Id("c"))))))))))))))))) :
         name == "shift_tail" ? StatementSource.FromAuthor(Disp(All("m", F.Id("Nat"), All("q", F.Id("Nat"), Implies(Le(Multiply(Num(2), F.Id("q")), F.Id("m")), All("mu", F.Id("Real"), All("alpha", F.Id("Real"), All("beta", F.Id("Real"), Implies(Lt(Num(0), F.Id("mu")), Implies(Le(Num(0), F.Id("alpha")), Implies(Le(Num(0), F.Id("beta")), Le(Call("F", F.Id("m"), F.Id("q"), Subtract(F.Id("m"), F.Id("q")), F.Id("mu"), Add(Add(F.Id("mu"), F.Id("alpha")), F.Id("beta"))), Call("F", F.Id("m"), F.Id("q"), Subtract(F.Id("m"), F.Id("q")), Add(F.Id("mu"), F.Id("alpha")), Add(F.Id("mu"), F.Id("beta"))))))))))))))) :
         StatementSource.WithoutFormula();
@@ -61,11 +62,24 @@ internal sealed class IntervalConvolutionDocument : IScribeDocumentDefinition
             Blocks(Paragraph(Text(text))), role);
 
     private static StatementSource CoeffEntryStatement(string name) =>
+        name == "chi" ? StatementSource.FromAuthor(Disp(All("n", F.Id("Nat"), All("t", F.Id("Real"), Equal(Call("chi", F.Id("n"), F.Id("t")), SumRange("j", F.Id("n"), new Formula.Fraction(Multiply(F.Id("j"), Add(Multiply(Num(4), F.Id("t")), Multiply(Num(3), F.Id("j")))), Multiply(new Formula.Power(Add(Multiply(Num(2), F.Id("t")), F.Id("j")), Num(2)), new Formula.Power(Add(F.Id("t"), F.Id("j")), Num(2)))))))))) :
+        name == "psi" ? StatementSource.FromAuthor(Disp(All("n", F.Id("Nat"), All("t", F.Id("Real"), Equal(Call("psi", F.Id("n"), F.Id("t")), SumRange("j", F.Id("n"), Call("eta", F.Id("j"), F.Id("t")))))))) :
+        name == "eta" ? StatementSource.FromAuthor(Disp(All("j", F.Id("Nat"), All("t", F.Id("Real"), Equal(Call("eta", F.Id("j"), F.Id("t")), new Formula.Fraction(F.Id("j"), Multiply(Add(Multiply(Num(2), F.Id("t")), F.Id("j")), Add(F.Id("t"), F.Id("j"))))))))) :
+        name == "lambda" ? StatementSource.FromAuthor(Disp(All("j", F.Id("Nat"), All("t", F.Id("Real"), Equal(Call("lambda", F.Id("j"), F.Id("t")), new Formula.Fraction(Add(Multiply(Num(2), F.Id("t")), F.Id("j")), Add(F.Id("t"), F.Id("j")))))))) :
+        name == "c" ? StatementSource.FromAuthor(Disp(All("n", F.Id("Nat"), All("t", F.Id("Real"), Equal(Call("c", F.Id("n"), F.Id("t")), new Formula.Fraction(App(Qualified("Polynomial", "eval"), Multiply(Num(2), F.Id("t")), Call("ascPochhammer", F.Id("Real"), F.Id("n"))), Multiply(App(Qualified("Polynomial", "eval"), F.Id("t"), Call("ascPochhammer", F.Id("Real"), F.Id("n"))), App(Qualified("Nat", "factorial"), F.Id("n"))))))))) :
         name == "coefficient_calculus" ? StatementSource.FromAuthor(Disp(All("n", F.Id("Nat"), All("t", F.Id("Real"), Implies(Lt(Num(0), F.Id("t")), And(Lt(Num(0), Call("c", F.Id("n"), F.Id("t"))), And(Lt(Num(0), Call("lambda", F.Id("n"), F.Id("t"))), And(Equal(new Formula.Fraction(Call("c", Add(F.Id("n"), Num(1)), F.Id("t")), Call("c", F.Id("n"), F.Id("t"))), new Formula.Fraction(Call("lambda", F.Id("n"), F.Id("t")), Add(F.Id("n"), Num(1)))), And(Call("HasDerivAt", Call("c", F.Id("n")), Multiply(Call("c", F.Id("n"), F.Id("t")), Call("psi", F.Id("n"), F.Id("t"))), F.Id("t")), And(Call("HasDerivAt", Call("psi", F.Id("n")), new Formula.Negate(Call("chi", F.Id("n"), F.Id("t"))), F.Id("t")), And(Le(Num(0), Call("chi", F.Id("n"), F.Id("t"))), And(Le(Multiply(F.Id("n"), new Formula.Power(Call("eta", Subtract(F.Id("n"), Num(1)), F.Id("t")), Num(2))), Call("chi", F.Id("n"), F.Id("t"))), Call("Antitone", LambdaOf("j", Call("lambda", F.Id("j"), F.Id("t")))))))))))))))) :
         StatementSource.WithoutFormula();
 
+    private static Formula App(Formula f, params Formula[] args) => new Formula.Apply(f, [.. args]);
+    private static Formula Qualified(string owner, string name) =>
+        Seq(Operatorname, Grp(F.Id(owner)), Dot, Operatorname, Grp(F.Id(name)));
+    private static Formula SumRange(string name, Formula upper, Formula body) =>
+        Seq(Sum, Sp, Underscore, Grp(F.Id(name), Sp, InMacro, Sp,
+            App(Qualified("Finset", "range"), upper)), Sp, Parenthesized(body));
+
     private static Formula And(Formula a, Formula b) =>
         new Formula.Logic(a, FormulaLogicOperator.And, b);
+    private static Formula Parenthesized(Formula value) => Seq(Open, value, Close);
     private static Formula LambdaOf(string name, Formula body) =>
-        Seq(Operatorname, Grp(F.Id("fun")), Sp, F.Id(name), Sp, Mapsto, Sp, body);
+        Seq(Operatorname, Grp(F.Id("fun")), Sp, Parenthesized(Seq(F.Id(name), Colon, F.Id("Nat"))), Sp, Mapsto, Sp, body);
 }

@@ -6,7 +6,7 @@ The positive transformation and the gamma-series half of Conjecture 5.2.
 
 **Definition 1.1 (Literal gamma-series coefficients).**
 
-Lean statement: `D5/S3/Analytic/KarpZhangGamma/Series.gammaCoeff`
+$$\forall t \in Real,\; \forall n \in Nat,\; \operatorname{gammaCoeff}\left(t, n\right) = \frac{\operatorname{Real}.\operatorname{Gamma}\left(t + n\right)}{\operatorname{Real}.\operatorname{Gamma}\left(2 \cdot t + n\right) \cdot \operatorname{Nat}.\operatorname{factorial}\left(n\right)}$$
 
 *Formalization.* `D5/S3/Analytic/KarpZhangGamma/Series.gammaCoeff` (`✓ std3`).
 
@@ -18,7 +18,7 @@ For real t and natural n, gammaCoeff(t,n) is Real.Gamma(t+n) divided by the prod
 
 **Definition 1.2 (Positive parameter factor).**
 
-Lean statement: `D5/S3/Analytic/KarpZhangGamma/Series.scale`
+$$\forall t \in Real,\; \operatorname{scale}\left(t\right) = \operatorname{Real}.\operatorname{sqrt}\left(\operatorname{Real}.\operatorname{pi}\right) \cdot 2^{1 - 2 \cdot t}$$
 
 *Formalization.* `D5/S3/Analytic/KarpZhangGamma/Series.scale` (`✓ std3`).
 
@@ -32,7 +32,7 @@ For real t, scale(t) is Real.sqrt(Real.pi) times 2 to the real power 1-2t. It is
 
 **Theorem 1.3 (The finite positive beta transformation).**
 
-$$\forall n \in Nat,\; \forall t \in Real,\; 0 < t \Rightarrow \operatorname{gammaCoeff}\left(t, n\right) = \operatorname{scale}\left(t\right) \cdot \sum_{j \in \operatorname{Finset}.\operatorname{range}\left(\operatorname{Nat}.\operatorname{div}\left(n, 2\right) + 1\right)} \frac{1}{\operatorname{Nat}.\operatorname{factorial}\left(n - 2 \cdot j\right) \cdot \operatorname{Nat}.\operatorname{factorial}\left(j\right) \cdot \operatorname{Real}.\operatorname{Gamma}\left(t + \frac{1}{2} + j\right) \cdot 2^{n - 2 \cdot j} \cdot 16^{j}}$$
+$$\forall n \in Nat,\; \forall t \in Real,\; 0 < t \Rightarrow \operatorname{gammaCoeff}\left(t, n\right) = \operatorname{scale}\left(t\right) \cdot \sum _{j \in \operatorname{Finset}.\operatorname{range}\left(\operatorname{Nat}.\operatorname{div}\left(n, 2\right) + 1\right)} (\frac{1}{\operatorname{Nat}.\operatorname{factorial}\left(n - 2 \cdot j\right) \cdot \operatorname{Nat}.\operatorname{factorial}\left(j\right) \cdot \operatorname{Real}.\operatorname{Gamma}\left(t + \frac{1}{2} + j\right) \cdot 2^{n - 2 \cdot j} \cdot 16^{j}})$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Analytic/KarpZhangGamma/Series.positive_beta_transform` (`✓ std3`). ∎
 
@@ -46,7 +46,7 @@ For every natural n and positive real t, gammaCoeff(t,n) equals scale(t) times t
 
 **Definition 1.4 (The positive diagonal substitution).**
 
-Lean statement: `D5/S3/Analytic/KarpZhangGamma/Series.transformCoeff`
+$$\forall y \in Nat \to Real,\; \forall a \in Real,\; \forall n \in Nat,\; \operatorname{transformCoeff}\left(y, a, n\right) = \sum _{j \in \operatorname{Finset}.\operatorname{range}\left(\operatorname{Nat}.\operatorname{div}\left(n, 2\right) + 1\right)} (\frac{y\left(n\right)}{\operatorname{Nat}.\operatorname{factorial}\left(n - 2 \cdot j\right) \cdot \operatorname{Nat}.\operatorname{factorial}\left(j\right) \cdot \operatorname{Real}.\operatorname{Gamma}\left(a + j\right) \cdot 2^{n - 2 \cdot j} \cdot 16^{j}})$$
 
 *Formalization.* `D5/S3/Analytic/KarpZhangGamma/Series.transformCoeff` (`✓ std3`).
 
@@ -74,7 +74,7 @@ For every real sequence y, positive real t and natural n, y(n)gammaCoeff(t,n)=sc
 
 **Definition 1.6 (Finite Cauchy coefficient of the gamma Turanian).**
 
-Lean statement: `D5/S3/Analytic/KarpZhangGamma/Series.gammaDelta`
+$$\forall y \in Nat \to Real,\; \forall mu \in Real,\; \forall alpha \in Real,\; \forall beta \in Real,\; \forall n \in Nat,\; \operatorname{gammaDelta}\left(y, mu, alpha, beta, n\right) = \sum _{k \in \operatorname{Finset}.\operatorname{range}\left(n + 1\right)} (y\left(k\right) \cdot \operatorname{gammaCoeff}\left(mu + alpha, k\right) \cdot y\left(n - k\right) \cdot \operatorname{gammaCoeff}\left(mu + beta, n - k\right) - y\left(k\right) \cdot \operatorname{gammaCoeff}\left(mu, k\right) \cdot y\left(n - k\right) \cdot \operatorname{gammaCoeff}\left(mu + alpha + beta, n - k\right))$$
 
 *Formalization.* `D5/S3/Analytic/KarpZhangGamma/Series.gammaDelta` (`✓ std3`).
 

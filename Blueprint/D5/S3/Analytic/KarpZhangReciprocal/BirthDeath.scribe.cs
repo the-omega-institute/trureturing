@@ -28,6 +28,8 @@ internal sealed class BirthDeathDocument : IScribeDocumentDefinition
             Blocks(Paragraph(Text(text))), role);
 
     private static StatementSource TheoremStatement(string name) =>
+        name == "variance" ? StatementSource.FromAuthor(Disp(All("n", F.Id("Nat"), All("pi", new Formula.TypeArrow(F.Id("Nat"), F.Id("Real")), All("h", new Formula.TypeArrow(F.Id("Nat"), F.Id("Real")), Equal(Call("variance", F.Id("n"), F.Id("pi"), F.Id("h")), SumRange("i", Add(F.Id("n"), Num(1)), Multiply(App(F.Id("pi"), F.Id("i")), new Formula.Power(Subtract(App(F.Id("h"), F.Id("i")), SumRange("j", Add(F.Id("n"), Num(1)), Multiply(App(F.Id("pi"), F.Id("j")), App(F.Id("h"), F.Id("j"))))), Num(2)))))))))) :
+        name == "kappa" ? StatementSource.FromAuthor(Disp(All("p", new Formula.TypeArrow(F.Id("Nat"), F.Id("Real")), All("r", new Formula.TypeArrow(F.Id("Nat"), F.Id("Real")), All("i", F.Id("Nat"), Equal(Call("kappa", F.Id("p"), F.Id("r"), F.Id("i")), Subtract(Add(Subtract(App(F.Id("p"), F.Id("i")), App(F.Id("p"), Add(F.Id("i"), Num(1)))), App(F.Id("r"), Add(F.Id("i"), Num(1)))), App(F.Id("r"), F.Id("i"))))))))) :
         name == "variance_bound" ? StatementSource.FromAuthor(Disp(All("n", F.Id("Nat"), All("pi", new Formula.TypeArrow(F.Id("Nat"), F.Id("Real")), All("p", new Formula.TypeArrow(F.Id("Nat"), F.Id("Real")), All("r", new Formula.TypeArrow(F.Id("Nat"), F.Id("Real")), All("h", new Formula.TypeArrow(F.Id("Nat"), F.Id("Real")), Implies(All("i", F.Id("Nat"), Implies(Le(F.Id("i"), F.Id("n")), Lt(Num(0), App(F.Id("pi"), F.Id("i"))))), Implies(Equal(SumRange("i", Add(F.Id("n"), Num(1)), App(F.Id("pi"), F.Id("i"))), Num(1)), Implies(Equal(App(F.Id("p"), F.Id("n")), Num(0)), Implies(Equal(App(F.Id("r"), Num(0)), Num(0)), Implies(All("i", F.Id("Nat"), Implies(Lt(F.Id("i"), F.Id("n")), Lt(Num(0), App(F.Id("p"), F.Id("i"))))), Implies(All("i", F.Id("Nat"), Implies(Lt(Num(0), F.Id("i")), Implies(Le(F.Id("i"), F.Id("n")), Lt(Num(0), App(F.Id("r"), F.Id("i")))))), Implies(All("i", F.Id("Nat"), Implies(Lt(F.Id("i"), F.Id("n")), Equal(Multiply(App(F.Id("pi"), F.Id("i")), App(F.Id("p"), F.Id("i"))), Multiply(App(F.Id("pi"), Add(F.Id("i"), Num(1))), App(F.Id("r"), Add(F.Id("i"), Num(1))))))), Implies(All("i", F.Id("Nat"), Implies(Lt(F.Id("i"), F.Id("n")), Lt(Num(0), Call("kappa", F.Id("p"), F.Id("r"), F.Id("i"))))), Le(Call("variance", F.Id("n"), F.Id("pi"), F.Id("h")), SumRange("i", F.Id("n"), Multiply(new Formula.Fraction(Multiply(App(F.Id("pi"), F.Id("i")), App(F.Id("p"), F.Id("i"))), Call("kappa", F.Id("p"), F.Id("r"), F.Id("i"))), new Formula.Power(Subtract(App(F.Id("h"), Add(F.Id("i"), Num(1))), App(F.Id("h"), F.Id("i"))), Num(2)))))))))))))))))))) :
         StatementSource.WithoutFormula();
 
@@ -40,9 +42,10 @@ internal sealed class BirthDeathDocument : IScribeDocumentDefinition
     private static Formula Lt(Formula a, Formula b) =>
         new Formula.Relation(a, FormulaRelationOperator.LessThan, b);
     private static Formula App(Formula f, params Formula[] args) => new Formula.Apply(f, [.. args]);
+    private static Formula Parenthesized(Formula value) => Seq(Open, value, Close);
     private static Formula SumRange(string name, Formula upper, Formula body) =>
-        Seq(Sum, Underscore, Grp(F.Id(name), Sp, InMacro, Sp,
-            App(Qualified("Finset", "range"), upper)), Sp, body);
+        Seq(Sum, Sp, Underscore, Grp(F.Id(name), Sp, InMacro, Sp,
+            App(Qualified("Finset", "range"), upper)), Sp, Parenthesized(body));
     private static Formula Qualified(string owner, string name) =>
         Seq(Operatorname, Grp(F.Id(owner)), Dot, Operatorname, Grp(F.Id(name)));
 }

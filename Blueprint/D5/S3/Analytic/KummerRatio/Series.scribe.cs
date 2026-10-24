@@ -1,4 +1,6 @@
 using static StrataLint.Scribe.DefinitionDsl;
+using static StrataLint.Scribe.FormulaDsl;
+using F = StrataLint.Scribe.FormulaDsl;
 
 namespace StrataLint.Scribe.Blueprint.D5.S3.Analytic.KummerRatio;
 
@@ -27,6 +29,14 @@ internal sealed class SeriesDocument : IScribeDocumentDefinition
     private static DocumentBlock Entry(string id, string name, string title, string text) =>
         Describe.Lean(DescribeId.Create(id),
             DeclarationHandle.Create("D5/S3/Analytic/KummerRatio/Series." + name),
-            H(title), StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
+            H(title), name == "coeff_succ" ? StatementSource.FromAuthor(Disp(All("s", F.Id("Real"), All("c", F.Id("Real"), Implies(Lt(Num(0), F.Id("c")), All("n", F.Id("Nat"), Equal(Call("kummerCoeff", F.Id("s"), F.Id("c"), Add(F.Id("n"), Num(1))), Multiply(new Formula.Fraction(new Formula.Fraction(Add(F.Id("s"), F.Id("n")), Add(F.Id("c"), F.Id("n"))), Add(F.Id("n"), Num(1))), Call("kummerCoeff", F.Id("s"), F.Id("c"), F.Id("n"))))))))))
+                : StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
             Blocks(Paragraph(Text(text))), DescribeRole.Theorem);
+
+    private static Formula All(string name, Formula type, Formula body) =>
+        new Formula.Bind(FormulaQuantifier.ForAll, FormulaIdentifier.Create(name), type, body);
+    private static Formula Implies(Formula a, Formula b) =>
+        new Formula.Logic(a, FormulaLogicOperator.Implies, b);
+    private static Formula Lt(Formula a, Formula b) =>
+        new Formula.Relation(a, FormulaRelationOperator.LessThan, b);
 }

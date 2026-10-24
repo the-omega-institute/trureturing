@@ -6,7 +6,7 @@ Paired reciprocal-gamma kernels and the two-variable transform.
 
 **Theorem 1.1 (Closed form for the finite convolution).**
 
-$$\forall b \in Real,\; \forall c \in Real,\; 0 < b \Rightarrow \left(0 < c \Rightarrow \left(\forall m \in Nat,\; \sum_{k \in \operatorname{Finset}.\operatorname{range}\left(m + 1\right)} \frac{1}{\operatorname{Nat}.\operatorname{factorial}\left(k\right) \cdot \operatorname{Nat}.\operatorname{factorial}\left(m - k\right) \cdot \operatorname{Real}.\operatorname{Gamma}\left(b + k\right) \cdot \operatorname{Real}.\operatorname{Gamma}\left(c + m - k\right)} = \frac{\operatorname{Polynomial}.\operatorname{eval}\left(b + c + m - 1, \operatorname{ascPochhammer}\left(Real, m\right)\right)}{\operatorname{Nat}.\operatorname{factorial}\left(m\right) \cdot \operatorname{Real}.\operatorname{Gamma}\left(b + m\right) \cdot \operatorname{Real}.\operatorname{Gamma}\left(c + m\right)}\right)\right)$$
+$$\forall b \in Real,\; \forall c \in Real,\; 0 < b \Rightarrow \left(0 < c \Rightarrow \left(\forall m \in Nat,\; \sum _{k \in \operatorname{Finset}.\operatorname{range}\left(m + 1\right)} (\frac{1}{\operatorname{Nat}.\operatorname{factorial}\left(k\right) \cdot \operatorname{Nat}.\operatorname{factorial}\left(m - k\right) \cdot \operatorname{Real}.\operatorname{Gamma}\left(b + k\right) \cdot \operatorname{Real}.\operatorname{Gamma}\left(c + (m - k)\right)}) = \frac{\operatorname{Polynomial}.\operatorname{eval}\left(b + c + m - 1, \operatorname{ascPochhammer}\left(Real, m\right)\right)}{\operatorname{Nat}.\operatorname{factorial}\left(m\right) \cdot \operatorname{Real}.\operatorname{Gamma}\left(b + m\right) \cdot \operatorname{Real}.\operatorname{Gamma}\left(c + m\right)}\right)\right)$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Analytic/KarpZhangGamma/Result.reciprocalGamma_sum` (`✓ std3`). ∎
 
@@ -30,7 +30,7 @@ For every positive real a and nonnegative real alpha,beta, Real.Gamma(a+alpha) t
 
 **Definition 1.3 (Unpaired scalar kernel).**
 
-Lean statement: `D5/S3/Analytic/KarpZhangGamma/Result.kernel`
+$$\forall a \in Real,\; \forall alpha \in Real,\; \forall beta \in Real,\; \forall m \in Nat,\; \forall k \in Nat,\; \operatorname{kernel}\left(a, alpha, beta, m, k\right) = \frac{1}{\operatorname{Nat}.\operatorname{factorial}\left(k\right) \cdot \operatorname{Nat}.\operatorname{factorial}\left(m - k\right)} \cdot \left(\frac{1}{\operatorname{Real}.\operatorname{Gamma}\left(a + alpha + k\right) \cdot \operatorname{Real}.\operatorname{Gamma}\left(a + beta + (m - k)\right)} - \frac{1}{\operatorname{Real}.\operatorname{Gamma}\left(a + k\right) \cdot \operatorname{Real}.\operatorname{Gamma}\left(a + alpha + beta + (m - k)\right)}\right)$$
 
 *Formalization.* `D5/S3/Analytic/KarpZhangGamma/Result.kernel` (`✓ std3`).
 
@@ -42,7 +42,7 @@ For real a,alpha,beta and natural m,k, kernel(a,alpha,beta,m,k) equals 1/[k fact
 
 **Theorem 1.4 (Nonnegative total kernel).**
 
-$$\forall a \in Real,\; \forall alpha \in Real,\; \forall beta \in Real,\; 0 < a \Rightarrow \left(0 \le alpha \Rightarrow \left(0 \le beta \Rightarrow \left(\forall m \in Nat,\; 0 \le \sum_{k \in \operatorname{Finset}.\operatorname{range}\left(m + 1\right)} \operatorname{kernel}\left(a, alpha, beta, m, k\right)\right)\right)\right)$$
+$$\forall a \in Real,\; \forall alpha \in Real,\; \forall beta \in Real,\; 0 < a \Rightarrow \left(0 \le alpha \Rightarrow \left(0 \le beta \Rightarrow \left(\forall m \in Nat,\; 0 \le \sum _{k \in \operatorname{Finset}.\operatorname{range}\left(m + 1\right)} (\operatorname{kernel}\left(a, alpha, beta, m, k\right))\right)\right)\right)$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Analytic/KarpZhangGamma/Result.kernel_sum_nonneg` (`✓ std3`). ∎
 
@@ -54,7 +54,7 @@ For every positive real a, nonnegative real alpha,beta and natural m, the sum of
 
 **Definition 1.5 (Paired scalar kernel).**
 
-Lean statement: `D5/S3/Analytic/KarpZhangGamma/Result.pairedKernel`
+$$\forall a \in Real,\; \forall alpha \in Real,\; \forall beta \in Real,\; \forall m \in Nat,\; \forall k \in Nat,\; \operatorname{pairedKernel}\left(a, alpha, beta, m, k\right) = \operatorname{ite}\left(2 \cdot k < m, \operatorname{kernel}\left(a, alpha, beta, m, k\right) + \operatorname{kernel}\left(a, alpha, beta, m, m - k\right), \operatorname{kernel}\left(a, alpha, beta, m, k\right)\right)$$
 
 *Formalization.* `D5/S3/Analytic/KarpZhangGamma/Result.pairedKernel` (`✓ std3`).
 
@@ -78,7 +78,7 @@ For every positive real a, nonnegative real alpha,beta and natural m, take any n
 
 **Theorem 1.7 (Finite pairing with symmetric weights).**
 
-$$\forall a \in Real,\; \forall alpha \in Real,\; \forall beta \in Real,\; \forall m \in Nat,\; \forall W \in Nat \to Real,\; \left(\forall k \in Nat,\; k \le m \Rightarrow W\left(m - k\right) = W\left(k\right)\right) \Rightarrow \sum_{k \in \operatorname{Finset}.\operatorname{range}\left(m + 1\right)} \operatorname{kernel}\left(a, alpha, beta, m, k\right) \cdot W\left(k\right) = \sum_{k \in \operatorname{Finset}.\operatorname{range}\left(\operatorname{Nat}.\operatorname{div}\left(m, 2\right) + 1\right)} \operatorname{pairedKernel}\left(a, alpha, beta, m, k\right) \cdot W\left(k\right)$$
+$$\forall a \in Real,\; \forall alpha \in Real,\; \forall beta \in Real,\; \forall m \in Nat,\; \forall W \in Nat \to Real,\; \left(\forall k \in Nat,\; k \le m \Rightarrow W\left(m - k\right) = W\left(k\right)\right) \Rightarrow \sum _{k \in \operatorname{Finset}.\operatorname{range}\left(m + 1\right)} (\operatorname{kernel}\left(a, alpha, beta, m, k\right) \cdot W\left(k\right)) = \sum _{k \in \operatorname{Finset}.\operatorname{range}\left(\operatorname{Nat}.\operatorname{div}\left(m, 2\right) + 1\right)} (\operatorname{pairedKernel}\left(a, alpha, beta, m, k\right) \cdot W\left(k\right))$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Analytic/KarpZhangGamma/Result.finite_pairing` (`✓ std3`). ∎
 
@@ -90,7 +90,7 @@ For real a,alpha,beta, natural m and a real sequence W satisfying W(m-k)=W(k) fo
 
 **Theorem 1.8 (Nonnegative total paired kernel).**
 
-$$\forall a \in Real,\; \forall alpha \in Real,\; \forall beta \in Real,\; 0 < a \Rightarrow \left(0 \le alpha \Rightarrow \left(0 \le beta \Rightarrow \left(\forall m \in Nat,\; 0 \le \sum_{k \in \operatorname{Finset}.\operatorname{range}\left(\operatorname{Nat}.\operatorname{div}\left(m, 2\right) + 1\right)} \operatorname{pairedKernel}\left(a, alpha, beta, m, k\right)\right)\right)\right)$$
+$$\forall a \in Real,\; \forall alpha \in Real,\; \forall beta \in Real,\; 0 < a \Rightarrow \left(0 \le alpha \Rightarrow \left(0 \le beta \Rightarrow \left(\forall m \in Nat,\; 0 \le \sum _{k \in \operatorname{Finset}.\operatorname{range}\left(\operatorname{Nat}.\operatorname{div}\left(m, 2\right) + 1\right)} (\operatorname{pairedKernel}\left(a, alpha, beta, m, k\right))\right)\right)\right)$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Analytic/KarpZhangGamma/Result.pairedKernel_sum_nonneg` (`✓ std3`). ∎
 
@@ -102,7 +102,7 @@ For every positive real a, nonnegative real alpha,beta and natural m, the sum of
 
 **Definition 1.9 (A finite coefficient of the transformed Turanian).**
 
-Lean statement: `D5/S3/Analytic/KarpZhangGamma/Result.transformDelta`
+$$\forall y \in Nat \to Real,\; \forall a \in Real,\; \forall alpha \in Real,\; \forall beta \in Real,\; \forall N \in Nat,\; \forall m \in Nat,\; \operatorname{transformDelta}\left(y, a, alpha, beta, N, m\right) = \sum _{k \in \operatorname{Finset}.\operatorname{range}\left(m + 1\right)} (\operatorname{kernel}\left(a, alpha, beta, m, k\right) \cdot \operatorname{productCoeff}\left(\operatorname{fun} (r:Nat) \mapsto y\left(2 \cdot k + r\right), \operatorname{fun} (r:Nat) \mapsto y\left(2 \cdot \left(m - k\right) + r\right), N\right))$$
 
 *Formalization.* `D5/S3/Analytic/KarpZhangGamma/Result.transformDelta` (`✓ std3`).
 

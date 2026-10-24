@@ -6,7 +6,7 @@ The reciprocal-Pochhammer half of Karp-Zhang Conjecture 5.2.
 
 **Definition 1.1 (The sequence convention).**
 
-Lean statement: `D5/S3/Analytic/KarpZhangReciprocal/Result.IsLogConcave`
+$$\forall y \in Nat \to Real,\; \operatorname{IsLogConcave}\left(y\right) \Leftrightarrow \left(\left(\forall k \in Nat,\; 0 \le y\left(k\right)\right) \land \left(\left(\exists k \in Nat,\; y\left(k\right) \ne 0\right) \land \left(\left(\forall k \in Nat,\; 1 \le k \Rightarrow y\left(k - 1\right) \cdot y\left(k + 1\right) \le y\left(k\right)^{2}\right) \land \left(\forall N \in Nat,\; y\left(N\right) = 0 \Rightarrow \left(\left(\forall i \in Nat,\; y\left(N + i\right) = 0\right) \lor \left(\forall i \in Nat,\; i \le N \Rightarrow y\left(N - i\right) = 0\right)\right)\right)\right)\right)\right)$$
 
 *Formalization.* `D5/S3/Analytic/KarpZhangReciprocal/Result.IsLogConcave` (`✓ std3`).
 
@@ -14,13 +14,13 @@ Lean statement: `D5/S3/Analytic/KarpZhangReciprocal/Result.IsLogConcave`
 
 *Commentary.*
 
-Definition 1.1, page 2: Let $\{f_{k}\}_{k=0}^{\infty}$ be a non-negative nontrivial real sequence. We call $\{f_{k}\}_{k=0}^{\infty}$ log-concave (or Pólya frequency two – $PF_{2}$, or doubly positive) if $f_{k}^{2} \ge f_{k - 1}f_{k + 1}$ for each $k\in\mathbb{N}$, and $\{f_{k}\}_{k=0}^{\infty}$ is supported on an interval of integers (i.e., $f_{N} = 0$ implies either $f_{N + i} = 0$ for all $i\in\mathbb{N}_{0}$ or $f_{N - i} = 0$ for $i=0,...,N$).
+Definition 1.1, page 2: Let $\{f_{k}\}_{k=0}^{\infty}$ be a non-negative nontrivial real sequence. We call $\{f_{k}\}_{k=0}^{\infty}$ log-concave (or Pólya frequency two – $PF_{2}$, or doubly positive) if $f_{k}^{2} \ge f_{k - 1}f_{k + 1}$ for each $k\in \mathbb{N}$, and $\{f_{k}\}_{k=0}^{\infty}$ is supported on an interval of integers (i.e., $f_{N} = 0$ implies either $f_{N + i} = 0$ for all $i\in \mathbb{N}_{0}$ or $f_{N - i} = 0$ for $i=0,...,N$).
 
 The Lean predicate retains all four conditions: nonnegativity at every natural index, an index with nonzero value, the adjacent-product inequality for k ≥ 1, and the stated disjunction for every zero entry. Natural subtraction is used only with the stated bounds.
 
 **Definition 1.2 (Finite Cauchy coefficient).**
 
-Lean statement: `D5/S3/Analytic/KarpZhangReciprocal/Result.delta`
+$$\forall y \in Nat \to Real,\; \forall mu \in Real,\; \forall alpha \in Real,\; \forall beta \in Real,\; \forall m \in Nat,\; \operatorname{delta}\left(y, mu, alpha, beta, m\right) = \sum _{k \in \operatorname{Finset}.\operatorname{range}\left(m + 1\right)} (y\left(k\right) \cdot y\left(m - k\right) \cdot \left(\operatorname{c}\left(k, mu + alpha\right) \cdot \operatorname{c}\left(m - k, mu + beta\right) - \operatorname{c}\left(k, mu\right) \cdot \operatorname{c}\left(m - k, mu + alpha + beta\right)\right))$$
 
 *Formalization.* `D5/S3/Analytic/KarpZhangReciprocal/Result.delta` (`✓ std3`).
 
@@ -46,7 +46,7 @@ For every real sequence y satisfying IsLogConcave, natural m and natural k stric
 
 **Theorem 1.4 (Abel summation identity).**
 
-$$\forall y \in Nat \to Real,\; \forall mu \in Real,\; \forall alpha \in Real,\; \forall beta \in Real,\; \forall m \in Nat,\; \operatorname{delta}\left(y, mu, alpha, beta, m\right) = y\left(0\right) \cdot y\left(m\right) \cdot \left(\operatorname{F}\left(m, 0, m, mu + alpha, mu + beta\right) - \operatorname{F}\left(m, 0, m, mu, mu + alpha + beta\right)\right) + \sum_{q \in \operatorname{Finset}.\operatorname{range}\left(\operatorname{Nat}.\operatorname{div}\left(m, 2\right)\right)} \left(y\left(q + 1\right) \cdot y\left(m - \left(q + 1\right)\right) - y\left(q\right) \cdot y\left(m - q\right)\right) \cdot \left(\operatorname{F}\left(m, q + 1, m - \left(q + 1\right), mu + alpha, mu + beta\right) - \operatorname{F}\left(m, q + 1, m - \left(q + 1\right), mu, mu + alpha + beta\right)\right)$$
+$$\forall y \in Nat \to Real,\; \forall mu \in Real,\; \forall alpha \in Real,\; \forall beta \in Real,\; \forall m \in Nat,\; \operatorname{delta}\left(y, mu, alpha, beta, m\right) = y\left(0\right) \cdot y\left(m\right) \cdot \left(\operatorname{F}\left(m, 0, m, mu + alpha, mu + beta\right) - \operatorname{F}\left(m, 0, m, mu, mu + alpha + beta\right)\right) + \sum _{q \in \operatorname{Finset}.\operatorname{range}\left(\operatorname{Nat}.\operatorname{div}\left(m, 2\right)\right)} (\left(y\left(q + 1\right) \cdot y\left(m - \left(q + 1\right)\right) - y\left(q\right) \cdot y\left(m - q\right)\right) \cdot \left(\operatorname{F}\left(m, q + 1, m - \left(q + 1\right), mu + alpha, mu + beta\right) - \operatorname{F}\left(m, q + 1, m - \left(q + 1\right), mu, mu + alpha + beta\right)\right))$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Analytic/KarpZhangReciprocal/Result.abel_reduction` (`✓ std3`). ∎
 

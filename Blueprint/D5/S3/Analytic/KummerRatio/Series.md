@@ -6,7 +6,7 @@ Convergence, regularity, positivity and recurrences of the Kummer series.
 
 **Theorem 1.1 (Successive Kummer coefficients).**
 
-Lean statement: `D5/S3/Analytic/KummerRatio/Series.coeff_succ`
+$$\forall s \in Real,\; \forall c \in Real,\; 0 < c \Rightarrow \left(\forall n \in Nat,\; \operatorname{kummerCoeff}\left(s, c, n + 1\right) = \frac{\frac{s + n}{c + n}}{n + 1} \cdot \operatorname{kummerCoeff}\left(s, c, n\right)\right)$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Analytic/KummerRatio/Series.coeff_succ` (`✓ std3`). ∎
 

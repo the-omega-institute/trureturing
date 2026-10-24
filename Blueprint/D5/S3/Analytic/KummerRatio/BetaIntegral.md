@@ -30,7 +30,7 @@ For positive shape parameters, the real beta weight is integrable over the unit 
 
 **Theorem 1.3 (Gamma shifts and rising factorials).**
 
-Lean statement: `D5/S3/Analytic/KummerRatio/BetaIntegral.gamma_pochhammer`
+$$\forall s \in Real,\; 0 < s \Rightarrow \left(\forall n \in Nat,\; \operatorname{Real}.\operatorname{Gamma}\left(s + n\right) = \operatorname{Polynomial}.\operatorname{eval}\left(s, \operatorname{ascPochhammer}\left(Real, n\right)\right) \cdot \operatorname{Real}.\operatorname{Gamma}\left(s\right)\right)$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Analytic/KummerRatio/BetaIntegral.gamma_pochhammer` (`✓ std3`). ∎
 

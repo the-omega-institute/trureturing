@@ -35,9 +35,10 @@ internal sealed class WeightingDocument : IScribeDocumentDefinition
     private static Formula Lt(Formula a, Formula b) =>
         new Formula.Relation(a, FormulaRelationOperator.LessThan, b);
     private static Formula App(Formula f, params Formula[] args) => new Formula.Apply(f, [.. args]);
+    private static Formula Parenthesized(Formula value) => Seq(Open, value, Close);
     private static Formula SumRange(string name, Formula upper, Formula body) =>
-        Seq(Sum, Underscore, Grp(F.Id(name), Sp, InMacro, Sp,
-            App(Qualified("Finset", "range"), upper)), Sp, body);
+        Seq(Sum, Sp, Underscore, Grp(F.Id(name), Sp, InMacro, Sp,
+            App(Qualified("Finset", "range"), upper)), Sp, Parenthesized(body));
     private static Formula Qualified(string owner, string name) =>
         Seq(Operatorname, Grp(F.Id(owner)), Dot, Operatorname, Grp(F.Id(name)));
 }

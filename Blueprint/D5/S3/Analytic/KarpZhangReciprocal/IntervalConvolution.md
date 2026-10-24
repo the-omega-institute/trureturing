@@ -6,7 +6,7 @@ Balancing positive parameters in reciprocal Pochhammer interval convolutions.
 
 **Definition 1.1 (Reciprocal coefficients).**
 
-Lean statement: `D5/S3/Analytic/KarpZhangReciprocal/IntervalConvolution.c`
+$$\forall n \in Nat,\; \forall t \in Real,\; \operatorname{c}\left(n, t\right) = \frac{\operatorname{Polynomial}.\operatorname{eval}\left(2 \cdot t, \operatorname{ascPochhammer}\left(Real, n\right)\right)}{\operatorname{Polynomial}.\operatorname{eval}\left(t, \operatorname{ascPochhammer}\left(Real, n\right)\right) \cdot \operatorname{Nat}.\operatorname{factorial}\left(n\right)}$$
 
 *Formalization.* `D5/S3/Analytic/KarpZhangReciprocal/IntervalConvolution.c` (`✓ std3`).
 
@@ -18,7 +18,7 @@ For every natural n and real t, c(n,t) is the evaluation of ascPochhammer at 2t 
 
 **Definition 1.2 (Adjacent degree ratio).**
 
-Lean statement: `D5/S3/Analytic/KarpZhangReciprocal/IntervalConvolution.lambda`
+$$\forall j \in Nat,\; \forall t \in Real,\; \operatorname{lambda}\left(j, t\right) = \frac{2 \cdot t + j}{t + j}$$
 
 *Formalization.* `D5/S3/Analytic/KarpZhangReciprocal/IntervalConvolution.lambda` (`✓ std3`).
 
@@ -32,7 +32,7 @@ For every natural j and real t, lambda(j,t) equals (2t+j)/(t+j).
 
 **Definition 1.3 (Score increment).**
 
-Lean statement: `D5/S3/Analytic/KarpZhangReciprocal/IntervalConvolution.eta`
+$$\forall j \in Nat,\; \forall t \in Real,\; \operatorname{eta}\left(j, t\right) = \frac{j}{\left(2 \cdot t + j\right) \cdot \left(t + j\right)}$$
 
 *Formalization.* `D5/S3/Analytic/KarpZhangReciprocal/IntervalConvolution.eta` (`✓ std3`).
 
@@ -46,7 +46,7 @@ For every natural j and real t, eta(j,t) equals j/((2t+j)(t+j)). In particular t
 
 **Definition 1.4 (Finite score sum).**
 
-Lean statement: `D5/S3/Analytic/KarpZhangReciprocal/IntervalConvolution.psi`
+$$\forall n \in Nat,\; \forall t \in Real,\; \operatorname{psi}\left(n, t\right) = \sum _{j \in \operatorname{Finset}.\operatorname{range}\left(n\right)} (\operatorname{eta}\left(j, t\right))$$
 
 *Formalization.* `D5/S3/Analytic/KarpZhangReciprocal/IntervalConvolution.psi` (`✓ std3`).
 
@@ -60,7 +60,7 @@ For every natural n and real t, psi(n,t) is the sum of eta(j,t) over 0 <= j < n.
 
 **Definition 1.5 (Finite curvature sum).**
 
-Lean statement: `D5/S3/Analytic/KarpZhangReciprocal/IntervalConvolution.chi`
+$$\forall n \in Nat,\; \forall t \in Real,\; \operatorname{chi}\left(n, t\right) = \sum _{j \in \operatorname{Finset}.\operatorname{range}\left(n\right)} (\frac{j \cdot \left(4 \cdot t + 3 \cdot j\right)}{\left(2 \cdot t + j\right)^{2} \cdot \left(t + j\right)^{2}})$$
 
 *Formalization.* `D5/S3/Analytic/KarpZhangReciprocal/IntervalConvolution.chi` (`✓ std3`).
 
@@ -74,7 +74,7 @@ For every natural n and real t, chi(n,t) is the sum over 0 <= j < n of j(4t+3j)/
 
 **Theorem 1.6 (Uniform score and curvature estimates).**
 
-$$\forall n \in Nat,\; \forall t \in Real,\; 0 < t \Rightarrow \left(0 < \operatorname{c}\left(n, t\right) \land \left(0 < \operatorname{lambda}\left(n, t\right) \land \left(\frac{\operatorname{c}\left(n + 1, t\right)}{\operatorname{c}\left(n, t\right)} = \frac{\operatorname{lambda}\left(n, t\right)}{n + 1} \land \left(\operatorname{HasDerivAt}\left(\operatorname{c}\left(n\right), \operatorname{c}\left(n, t\right) \cdot \operatorname{psi}\left(n, t\right), t\right) \land \left(\operatorname{HasDerivAt}\left(\operatorname{psi}\left(n\right), -\operatorname{chi}\left(n, t\right), t\right) \land \left(0 \le \operatorname{chi}\left(n, t\right) \land \left(n \cdot \operatorname{eta}\left(n - 1, t\right)^{2} \le \operatorname{chi}\left(n, t\right) \land \operatorname{Antitone}\left(\operatorname{fun} j \mapsto \operatorname{lambda}\left(j, t\right)\right)\right)\right)\right)\right)\right)\right)\right)$$
+$$\forall n \in Nat,\; \forall t \in Real,\; 0 < t \Rightarrow \left(0 < \operatorname{c}\left(n, t\right) \land \left(0 < \operatorname{lambda}\left(n, t\right) \land \left(\frac{\operatorname{c}\left(n + 1, t\right)}{\operatorname{c}\left(n, t\right)} = \frac{\operatorname{lambda}\left(n, t\right)}{n + 1} \land \left(\operatorname{HasDerivAt}\left(\operatorname{c}\left(n\right), \operatorname{c}\left(n, t\right) \cdot \operatorname{psi}\left(n, t\right), t\right) \land \left(\operatorname{HasDerivAt}\left(\operatorname{psi}\left(n\right), -\operatorname{chi}\left(n, t\right), t\right) \land \left(0 \le \operatorname{chi}\left(n, t\right) \land \left(n \cdot \operatorname{eta}\left(n - 1, t\right)^{2} \le \operatorname{chi}\left(n, t\right) \land \operatorname{Antitone}\left(\operatorname{fun} (j:Nat) \mapsto \operatorname{lambda}\left(j, t\right)\right)\right)\right)\right)\right)\right)\right)\right)$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Analytic/KarpZhangReciprocal/IntervalConvolution.coefficient_calculus` (`✓ std3`). ∎
 
@@ -88,7 +88,7 @@ For every natural n and positive real t, c(n,t) and lambda(n,t) are positive; c(
 
 **Definition 1.7 (Interval convolution).**
 
-Lean statement: `D5/S3/Analytic/KarpZhangReciprocal/IntervalConvolution.F`
+$$\forall m \in Nat,\; \forall L \in Nat,\; \forall U \in Nat,\; \forall s \in Real,\; \forall t \in Real,\; \operatorname{F}\left(m, L, U, s, t\right) = \sum _{i \in \operatorname{Finset}.\operatorname{range}\left(U - L + 1\right)} (\operatorname{c}\left(L + i, s\right) \cdot \operatorname{c}\left(m - \left(L + i\right), t\right))$$
 
 *Formalization.* `D5/S3/Analytic/KarpZhangReciprocal/IntervalConvolution.F` (`✓ std3`).
 

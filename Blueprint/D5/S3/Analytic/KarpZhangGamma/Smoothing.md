@@ -6,7 +6,7 @@ Coefficientwise balancing of exponential derivatives.
 
 **Definition 1.1 (Factorial-scaled coefficient).**
 
-Lean statement: `D5/S3/Analytic/KarpZhangGamma/Smoothing.binomialProduct`
+$$\forall f \in Nat \to Real,\; \forall g \in Nat \to Real,\; \forall N \in Nat,\; \operatorname{binomialProduct}\left(f, g, N\right) = \sum _{r \in \operatorname{Finset}.\operatorname{range}\left(N + 1\right)} (\operatorname{Nat}.\operatorname{choose}\left(N, r\right) \cdot f\left(r\right) \cdot g\left(N - r\right))$$
 
 *Formalization.* `D5/S3/Analytic/KarpZhangGamma/Smoothing.binomialProduct` (`✓ std3`).
 
@@ -18,7 +18,7 @@ For real sequences f,g and natural N, binomialProduct(f,g,N) is the sum over r=0
 
 **Definition 1.2 (Ordinary coefficient).**
 
-Lean statement: `D5/S3/Analytic/KarpZhangGamma/Smoothing.productCoeff`
+$$\forall f \in Nat \to Real,\; \forall g \in Nat \to Real,\; \forall N \in Nat,\; \operatorname{productCoeff}\left(f, g, N\right) = \sum _{r \in \operatorname{Finset}.\operatorname{range}\left(N + 1\right)} (\frac{f\left(r\right) \cdot g\left(N - r\right)}{\operatorname{Nat}.\operatorname{factorial}\left(r\right) \cdot \operatorname{Nat}.\operatorname{factorial}\left(N - r\right)})$$
 
 *Formalization.* `D5/S3/Analytic/KarpZhangGamma/Smoothing.productCoeff` (`✓ std3`).
 
@@ -42,7 +42,7 @@ Let y satisfy D5.S3.Analytic.KarpZhangReciprocal.Result.IsLogConcave. For natura
 
 **Theorem 1.4 (Finite Leibniz recurrence).**
 
-$$\forall f \in Nat \to Real,\; \forall g \in Nat \to Real,\; \forall N \in Nat,\; \operatorname{binomialProduct}\left(f, g, N + 1\right) = \operatorname{binomialProduct}\left(\operatorname{fun} r \mapsto f\left(r + 1\right), g, N\right) + \operatorname{binomialProduct}\left(f, \operatorname{fun} r \mapsto g\left(r + 1\right), N\right)$$
+$$\forall f \in Nat \to Real,\; \forall g \in Nat \to Real,\; \forall N \in Nat,\; \operatorname{binomialProduct}\left(f, g, N + 1\right) = \operatorname{binomialProduct}\left(\operatorname{fun} (r:Nat) \mapsto f\left(r + 1\right), g, N\right) + \operatorname{binomialProduct}\left(f, \operatorname{fun} (r:Nat) \mapsto g\left(r + 1\right), N\right)$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Analytic/KarpZhangGamma/Smoothing.binomialProduct_succ` (`✓ std3`). ∎
 
@@ -78,7 +78,7 @@ For every pair of real sequences f,g and natural N, productCoeff(f,g,N) equals b
 
 **Theorem 1.7 (Every smoothed minor is nonnegative).**
 
-$$\forall y \in Nat \to Real,\; \operatorname{IsLogConcave}\left(y\right) \Rightarrow \left(\forall p \in Nat,\; \forall q \in Nat,\; \forall N \in Nat,\; p \le q + 1 \Rightarrow \operatorname{productCoeff}\left(\operatorname{fun} r \mapsto y\left(p + r\right), \operatorname{fun} r \mapsto y\left(q + 2 + r\right), N\right) \le \operatorname{productCoeff}\left(\operatorname{fun} r \mapsto y\left(p + 1 + r\right), \operatorname{fun} r \mapsto y\left(q + 1 + r\right), N\right)\right)$$
+$$\forall y \in Nat \to Real,\; \operatorname{IsLogConcave}\left(y\right) \Rightarrow \left(\forall p \in Nat,\; \forall q \in Nat,\; \forall N \in Nat,\; p \le q + 1 \Rightarrow \operatorname{productCoeff}\left(\operatorname{fun} (r:Nat) \mapsto y\left(p + r\right), \operatorname{fun} (r:Nat) \mapsto y\left(q + 2 + r\right), N\right) \le \operatorname{productCoeff}\left(\operatorname{fun} (r:Nat) \mapsto y\left(p + 1 + r\right), \operatorname{fun} (r:Nat) \mapsto y\left(q + 1 + r\right), N\right)\right)$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Analytic/KarpZhangGamma/Smoothing.smoothing_minor` (`✓ std3`). ∎
 
@@ -90,7 +90,7 @@ For every real sequence y satisfying IsLogConcave and all natural p,q,N with p <
 
 **Theorem 1.8 (Weighted transformed minors).**
 
-$$\forall y \in Nat \to Real,\; \operatorname{IsLogConcave}\left(y\right) \Rightarrow \left(\forall A \in Nat \to Real,\; \forall m \in Nat,\; \left(\forall i \in Nat,\; i \le \operatorname{Nat}.\operatorname{div}\left(m, 2\right) \Rightarrow \left(\forall j \in Nat,\; j \le \operatorname{Nat}.\operatorname{div}\left(m, 2\right) \Rightarrow \left(i < j \Rightarrow \left(0 < A\left(i\right) \Rightarrow 0 \le A\left(j\right)\right)\right)\right)\right) \Rightarrow \left(0 \le \sum_{i \in \operatorname{Finset}.\operatorname{range}\left(\operatorname{Nat}.\operatorname{div}\left(m, 2\right) + 1\right)} A\left(i\right) \Rightarrow \left(\forall N \in Nat,\; 0 \le \sum_{k \in \operatorname{Finset}.\operatorname{range}\left(\operatorname{Nat}.\operatorname{div}\left(m, 2\right) + 1\right)} A\left(k\right) \cdot \operatorname{productCoeff}\left(\operatorname{fun} r \mapsto y\left(2 \cdot k + r\right), \operatorname{fun} r \mapsto y\left(2 \cdot \left(m - k\right) + r\right), N\right)\right)\right)\right)$$
+$$\forall y \in Nat \to Real,\; \operatorname{IsLogConcave}\left(y\right) \Rightarrow \left(\forall A \in Nat \to Real,\; \forall m \in Nat,\; \left(\forall i \in Nat,\; i \le \operatorname{Nat}.\operatorname{div}\left(m, 2\right) \Rightarrow \left(\forall j \in Nat,\; j \le \operatorname{Nat}.\operatorname{div}\left(m, 2\right) \Rightarrow \left(i < j \Rightarrow \left(0 < A\left(i\right) \Rightarrow 0 \le A\left(j\right)\right)\right)\right)\right) \Rightarrow \left(0 \le \sum _{i \in \operatorname{Finset}.\operatorname{range}\left(\operatorname{Nat}.\operatorname{div}\left(m, 2\right) + 1\right)} (A\left(i\right)) \Rightarrow \left(\forall N \in Nat,\; 0 \le \sum _{k \in \operatorname{Finset}.\operatorname{range}\left(\operatorname{Nat}.\operatorname{div}\left(m, 2\right) + 1\right)} (A\left(k\right) \cdot \operatorname{productCoeff}\left(\operatorname{fun} (r:Nat) \mapsto y\left(2 \cdot k + r\right), \operatorname{fun} (r:Nat) \mapsto y\left(2 \cdot \left(m - k\right) + r\right), N\right))\right)\right)\right)$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Analytic/KarpZhangGamma/Smoothing.smoothed_weighting` (`✓ std3`). ∎
 

@@ -36,6 +36,8 @@ internal sealed class ResultDocument : IScribeDocumentDefinition
                 : Blocks(Paragraph(Text(text))), role);
 
     private static StatementSource TheoremStatement(string name) =>
+        name == "delta" ? StatementSource.FromAuthor(Disp(All("y", new Formula.TypeArrow(F.Id("Nat"), F.Id("Real")), All("mu", F.Id("Real"), All("alpha", F.Id("Real"), All("beta", F.Id("Real"), All("m", F.Id("Nat"), Equal(Call("delta", F.Id("y"), F.Id("mu"), F.Id("alpha"), F.Id("beta"), F.Id("m")), SumRange("k", Add(F.Id("m"), Num(1)), Multiply(Multiply(App(F.Id("y"), F.Id("k")), App(F.Id("y"), Subtract(F.Id("m"), F.Id("k")))), Subtract(Multiply(Call("c", F.Id("k"), Add(F.Id("mu"), F.Id("alpha"))), Call("c", Subtract(F.Id("m"), F.Id("k")), Add(F.Id("mu"), F.Id("beta")))), Multiply(Call("c", F.Id("k"), F.Id("mu")), Call("c", Subtract(F.Id("m"), F.Id("k")), Add(Add(F.Id("mu"), F.Id("alpha")), F.Id("beta"))))))))))))))) :
+        name == "IsLogConcave" ? StatementSource.FromAuthor(Disp(All("y", new Formula.TypeArrow(F.Id("Nat"), F.Id("Real")), new Formula.Logic(Call("IsLogConcave", F.Id("y")), FormulaLogicOperator.Iff, new Formula.Logic(All("k", F.Id("Nat"), Le(Num(0), App(F.Id("y"), F.Id("k")))), FormulaLogicOperator.And, new Formula.Logic(new Formula.Bind(FormulaQuantifier.Exists, FormulaIdentifier.Create("k"), F.Id("Nat"), new Formula.Relation(App(F.Id("y"), F.Id("k")), FormulaRelationOperator.NotEqual, Num(0))), FormulaLogicOperator.And, new Formula.Logic(All("k", F.Id("Nat"), Implies(Le(Num(1), F.Id("k")), Le(Multiply(App(F.Id("y"), Subtract(F.Id("k"), Num(1))), App(F.Id("y"), Add(F.Id("k"), Num(1)))), new Formula.Power(App(F.Id("y"), F.Id("k")), Num(2))))), FormulaLogicOperator.And, All("N", F.Id("Nat"), Implies(Equal(App(F.Id("y"), F.Id("N")), Num(0)), new Formula.Logic(All("i", F.Id("Nat"), Equal(App(F.Id("y"), Add(F.Id("N"), F.Id("i"))), Num(0))), FormulaLogicOperator.Or, All("i", F.Id("Nat"), Implies(Le(F.Id("i"), F.Id("N")), Equal(App(F.Id("y"), Subtract(F.Id("N"), F.Id("i"))), Num(0)))))))))))))) :
         name == "balanced_step" ? StatementSource.FromAuthor(Disp(All("y", new Formula.TypeArrow(F.Id("Nat"), F.Id("Real")), Implies(Call("IsLogConcave", F.Id("y")), All("m", F.Id("Nat"), All("k", F.Id("Nat"), Implies(Lt(F.Id("k"), App(Qualified("Nat", "div"), F.Id("m"), Num(2))), Le(Multiply(App(F.Id("y"), F.Id("k")), App(F.Id("y"), Subtract(F.Id("m"), F.Id("k")))), Multiply(App(F.Id("y"), Add(F.Id("k"), Num(1))), App(F.Id("y"), Subtract(F.Id("m"), Add(F.Id("k"), Num(1))))))))))))) :
         name == "abel_reduction" ? StatementSource.FromAuthor(Disp(All("y", new Formula.TypeArrow(F.Id("Nat"), F.Id("Real")), All("mu", F.Id("Real"), All("alpha", F.Id("Real"), All("beta", F.Id("Real"), All("m", F.Id("Nat"), Equal(Call("delta", F.Id("y"), F.Id("mu"), F.Id("alpha"), F.Id("beta"), F.Id("m")), Add(Multiply(Multiply(App(F.Id("y"), Num(0)), App(F.Id("y"), F.Id("m"))), Subtract(Call("F", F.Id("m"), Num(0), F.Id("m"), Add(F.Id("mu"), F.Id("alpha")), Add(F.Id("mu"), F.Id("beta"))), Call("F", F.Id("m"), Num(0), F.Id("m"), F.Id("mu"), Add(Add(F.Id("mu"), F.Id("alpha")), F.Id("beta"))))), SumRange("q", App(Qualified("Nat", "div"), F.Id("m"), Num(2)), Multiply(Subtract(Multiply(App(F.Id("y"), Add(F.Id("q"), Num(1))), App(F.Id("y"), Subtract(F.Id("m"), Add(F.Id("q"), Num(1))))), Multiply(App(F.Id("y"), F.Id("q")), App(F.Id("y"), Subtract(F.Id("m"), F.Id("q"))))), Subtract(Call("F", F.Id("m"), Add(F.Id("q"), Num(1)), Subtract(F.Id("m"), Add(F.Id("q"), Num(1))), Add(F.Id("mu"), F.Id("alpha")), Add(F.Id("mu"), F.Id("beta"))), Call("F", F.Id("m"), Add(F.Id("q"), Num(1)), Subtract(F.Id("m"), Add(F.Id("q"), Num(1))), F.Id("mu"), Add(Add(F.Id("mu"), F.Id("alpha")), F.Id("beta"))))))))))))))) :
         name == "reciprocal_half" ? StatementSource.FromAuthor(Disp(All("y", new Formula.TypeArrow(F.Id("Nat"), F.Id("Real")), Implies(Call("IsLogConcave", F.Id("y")), All("mu", F.Id("Real"), All("alpha", F.Id("Real"), All("beta", F.Id("Real"), Implies(Lt(Num(0), F.Id("mu")), Implies(Le(Num(0), F.Id("alpha")), Implies(Le(Num(0), F.Id("beta")), All("m", F.Id("Nat"), Le(Num(0), Call("delta", F.Id("y"), F.Id("mu"), F.Id("alpha"), F.Id("beta"), F.Id("m")))))))))))))) :
@@ -52,9 +54,10 @@ internal sealed class ResultDocument : IScribeDocumentDefinition
     private static Formula App(Formula f, params Formula[] args) => new Formula.Apply(f, [.. args]);
     private static Formula Qualified(string owner, string name) =>
         Seq(Operatorname, Grp(F.Id(owner)), Dot, Operatorname, Grp(F.Id(name)));
+    private static Formula Parenthesized(Formula value) => Seq(Open, value, Close);
     private static Formula SumRange(string name, Formula upper, Formula body) =>
-        Seq(Sum, Underscore, Grp(F.Id(name), Sp, InMacro, Sp,
-            App(Qualified("Finset", "range"), upper)), Sp, body);
+        Seq(Sum, Sp, Underscore, Grp(F.Id(name), Sp, InMacro, Sp,
+            App(Qualified("Finset", "range"), upper)), Sp, Parenthesized(body));
 
     private static DocumentBlock SourceDefinition() => Paragraph(
         Text("Definition 1.1, page 2: Let "), Math(SourceSequence()),
@@ -67,14 +70,14 @@ internal sealed class ResultDocument : IScribeDocumentDefinition
             FormulaRelationOperator.GreaterThanOrEqual,
             Seq(new Formula.Subscript(F.Id("f"), Subtract(F.Id("k"), Num(1))),
                 new Formula.Subscript(F.Id("f"), Add(F.Id("k"), Num(1)))))),
-        Text(" for each "), Math(Seq(F.Id("k"), InMacro, Mathbb, Grp(F.Id("N")))),
+        Text(" for each "), Math(Seq(F.Id("k"), InMacro, Sp, Mathbb, Grp(F.Id("N")))),
         Text(", and "), Math(SourceSequence()),
         Text(" is supported on an interval of integers (i.e., "),
         Math(Equal(new Formula.Subscript(F.Id("f"), F.Id("N")), Num(0))),
         Text(" implies either "),
         Math(Equal(new Formula.Subscript(F.Id("f"), Add(F.Id("N"), F.Id("i"))), Num(0))),
         Text(" for all "),
-        Math(Seq(F.Id("i"), InMacro, Mathbb, Grp(F.Id("N")), Underscore, Grp(Num(0)))),
+        Math(Seq(F.Id("i"), InMacro, Sp, Mathbb, Grp(F.Id("N")), Underscore, Grp(Num(0)))),
         Text(" or "),
         Math(Equal(new Formula.Subscript(F.Id("f"), Subtract(F.Id("N"), F.Id("i"))), Num(0))),
         Text(" for "),

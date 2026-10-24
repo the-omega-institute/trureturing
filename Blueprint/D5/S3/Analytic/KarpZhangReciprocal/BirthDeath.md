@@ -6,7 +6,7 @@ A finite variance inequality for reversible birth-and-death rates.
 
 **Definition 1.1 (Edge curvature).**
 
-Lean statement: `D5/S3/Analytic/KarpZhangReciprocal/BirthDeath.kappa`
+$$\forall p \in Nat \to Real,\; \forall r \in Nat \to Real,\; \forall i \in Nat,\; \operatorname{kappa}\left(p, r, i\right) = p\left(i\right) - p\left(i + 1\right) + r\left(i + 1\right) - r\left(i\right)$$
 
 *Formalization.* `D5/S3/Analytic/KarpZhangReciprocal/BirthDeath.kappa` (`✓ std3`).
 
@@ -20,7 +20,7 @@ For all real sequences p and r and every natural i, kappa(p,r,i) equals p(i)-p(i
 
 **Definition 1.2 (Finite variance).**
 
-Lean statement: `D5/S3/Analytic/KarpZhangReciprocal/BirthDeath.variance`
+$$\forall n \in Nat,\; \forall pi \in Nat \to Real,\; \forall h \in Nat \to Real,\; \operatorname{variance}\left(n, pi, h\right) = \sum _{i \in \operatorname{Finset}.\operatorname{range}\left(n + 1\right)} (pi\left(i\right) \cdot \left(h\left(i\right) - \sum _{j \in \operatorname{Finset}.\operatorname{range}\left(n + 1\right)} (pi\left(j\right) \cdot h\left(j\right))\right)^{2})$$
 
 *Formalization.* `D5/S3/Analytic/KarpZhangReciprocal/BirthDeath.variance` (`✓ std3`).
 
@@ -34,7 +34,7 @@ For a natural n and real sequences pi and h, set a equal to the sum of pi(j)h(j)
 
 **Theorem 1.3 (Curvature-weighted variance bound).**
 
-$$\forall n \in Nat,\; \forall pi \in Nat \to Real,\; \forall p \in Nat \to Real,\; \forall r \in Nat \to Real,\; \forall h \in Nat \to Real,\; \left(\forall i \in Nat,\; i \le n \Rightarrow 0 < pi\left(i\right)\right) \Rightarrow \left(\sum_{i \in \operatorname{Finset}.\operatorname{range}\left(n + 1\right)} pi\left(i\right) = 1 \Rightarrow \left(p\left(n\right) = 0 \Rightarrow \left(r\left(0\right) = 0 \Rightarrow \left(\left(\forall i \in Nat,\; i < n \Rightarrow 0 < p\left(i\right)\right) \Rightarrow \left(\left(\forall i \in Nat,\; 0 < i \Rightarrow \left(i \le n \Rightarrow 0 < r\left(i\right)\right)\right) \Rightarrow \left(\left(\forall i \in Nat,\; i < n \Rightarrow pi\left(i\right) \cdot p\left(i\right) = pi\left(i + 1\right) \cdot r\left(i + 1\right)\right) \Rightarrow \left(\left(\forall i \in Nat,\; i < n \Rightarrow 0 < \operatorname{kappa}\left(p, r, i\right)\right) \Rightarrow \operatorname{variance}\left(n, pi, h\right) \le \sum_{i \in \operatorname{Finset}.\operatorname{range}\left(n\right)} \frac{pi\left(i\right) \cdot p\left(i\right)}{\operatorname{kappa}\left(p, r, i\right)} \cdot \left(h\left(i + 1\right) - h\left(i\right)\right)^{2}\right)\right)\right)\right)\right)\right)\right)$$
+$$\forall n \in Nat,\; \forall pi \in Nat \to Real,\; \forall p \in Nat \to Real,\; \forall r \in Nat \to Real,\; \forall h \in Nat \to Real,\; \left(\forall i \in Nat,\; i \le n \Rightarrow 0 < pi\left(i\right)\right) \Rightarrow \left(\sum _{i \in \operatorname{Finset}.\operatorname{range}\left(n + 1\right)} (pi\left(i\right)) = 1 \Rightarrow \left(p\left(n\right) = 0 \Rightarrow \left(r\left(0\right) = 0 \Rightarrow \left(\left(\forall i \in Nat,\; i < n \Rightarrow 0 < p\left(i\right)\right) \Rightarrow \left(\left(\forall i \in Nat,\; 0 < i \Rightarrow \left(i \le n \Rightarrow 0 < r\left(i\right)\right)\right) \Rightarrow \left(\left(\forall i \in Nat,\; i < n \Rightarrow pi\left(i\right) \cdot p\left(i\right) = pi\left(i + 1\right) \cdot r\left(i + 1\right)\right) \Rightarrow \left(\left(\forall i \in Nat,\; i < n \Rightarrow 0 < \operatorname{kappa}\left(p, r, i\right)\right) \Rightarrow \operatorname{variance}\left(n, pi, h\right) \le \sum _{i \in \operatorname{Finset}.\operatorname{range}\left(n\right)} (\frac{pi\left(i\right) \cdot p\left(i\right)}{\operatorname{kappa}\left(p, r, i\right)} \cdot \left(h\left(i + 1\right) - h\left(i\right)\right)^{2})\right)\right)\right)\right)\right)\right)\right)$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Analytic/KarpZhangReciprocal/BirthDeath.variance_bound` (`✓ std3`). ∎
 

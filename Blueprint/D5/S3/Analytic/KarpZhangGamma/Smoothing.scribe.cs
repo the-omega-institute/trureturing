@@ -34,6 +34,8 @@ internal sealed class SmoothingDocument : IScribeDocumentDefinition
             Blocks(Paragraph(Text(text))), role);
 
     private static StatementSource TheoremStatement(string name) =>
+        name == "productCoeff" ? StatementSource.FromAuthor(Disp(All("f", new Formula.TypeArrow(F.Id("Nat"), F.Id("Real")), All("g", new Formula.TypeArrow(F.Id("Nat"), F.Id("Real")), All("N", F.Id("Nat"), Equal(Call("productCoeff", F.Id("f"), F.Id("g"), F.Id("N")), SumRange("r", Add(F.Id("N"), Num(1)), new Formula.Fraction(Multiply(App(F.Id("f"), F.Id("r")), App(F.Id("g"), Subtract(F.Id("N"), F.Id("r")))), Multiply(App(Qualified("Nat", "factorial"), F.Id("r")), App(Qualified("Nat", "factorial"), Subtract(F.Id("N"), F.Id("r")))))))))))) :
+        name == "binomialProduct" ? StatementSource.FromAuthor(Disp(All("f", new Formula.TypeArrow(F.Id("Nat"), F.Id("Real")), All("g", new Formula.TypeArrow(F.Id("Nat"), F.Id("Real")), All("N", F.Id("Nat"), Equal(Call("binomialProduct", F.Id("f"), F.Id("g"), F.Id("N")), SumRange("r", Add(F.Id("N"), Num(1)), Multiply(Multiply(App(Qualified("Nat", "choose"), F.Id("N"), F.Id("r")), App(F.Id("f"), F.Id("r"))), App(F.Id("g"), Subtract(F.Id("N"), F.Id("r"))))))))))) :
         name == "balanced_product" ? StatementSource.FromAuthor(Disp(All("y", new Formula.TypeArrow(F.Id("Nat"), F.Id("Real")), Implies(Call("IsLogConcave", F.Id("y")), All("L", F.Id("Nat"), All("R", F.Id("Nat"), All("u", F.Id("Nat"), All("v", F.Id("Nat"), Implies(Le(F.Id("L"), F.Id("u")), Implies(Le(F.Id("L"), F.Id("v")), Implies(Le(F.Id("u"), F.Id("R")), Implies(Le(F.Id("v"), F.Id("R")), Implies(Equal(Add(F.Id("u"), F.Id("v")), Add(F.Id("L"), F.Id("R"))), Le(Multiply(App(F.Id("y"), F.Id("L")), App(F.Id("y"), F.Id("R"))), Multiply(App(F.Id("y"), F.Id("u")), App(F.Id("y"), F.Id("v"))))))))))))))))) :
         name == "binomialProduct_succ" ? StatementSource.FromAuthor(Disp(All("f", new Formula.TypeArrow(F.Id("Nat"), F.Id("Real")), All("g", new Formula.TypeArrow(F.Id("Nat"), F.Id("Real")), All("N", F.Id("Nat"), Equal(Call("binomialProduct", F.Id("f"), F.Id("g"), Add(F.Id("N"), Num(1))), Add(Call("binomialProduct", LambdaOf("r", App(F.Id("f"), Add(F.Id("r"), Num(1)))), F.Id("g"), F.Id("N")), Call("binomialProduct", F.Id("f"), LambdaOf("r", App(F.Id("g"), Add(F.Id("r"), Num(1)))), F.Id("N"))))))))) :
         name == "binomialProduct_comm" ? StatementSource.FromAuthor(Disp(All("f", new Formula.TypeArrow(F.Id("Nat"), F.Id("Real")), All("g", new Formula.TypeArrow(F.Id("Nat"), F.Id("Real")), All("N", F.Id("Nat"), Equal(Call("binomialProduct", F.Id("f"), F.Id("g"), F.Id("N")), Call("binomialProduct", F.Id("g"), F.Id("f"), F.Id("N")))))))) :
@@ -53,9 +55,10 @@ internal sealed class SmoothingDocument : IScribeDocumentDefinition
     private static Formula App(Formula f, params Formula[] args) => new Formula.Apply(f, [.. args]);
     private static Formula Qualified(string owner, string name) =>
         Seq(Operatorname, Grp(F.Id(owner)), Dot, Operatorname, Grp(F.Id(name)));
+    private static Formula Parenthesized(Formula value) => Seq(Open, value, Close);
     private static Formula LambdaOf(string name, Formula body) =>
-        Seq(Operatorname, Grp(F.Id("fun")), Sp, F.Id(name), Sp, Mapsto, Sp, body);
+        Seq(Operatorname, Grp(F.Id("fun")), Sp, Parenthesized(Seq(F.Id(name), Colon, F.Id("Nat"))), Sp, Mapsto, Sp, body);
     private static Formula SumRange(string name, Formula upper, Formula body) =>
-        Seq(Sum, Underscore, Grp(F.Id(name), Sp, InMacro, Sp,
-            App(Qualified("Finset", "range"), upper)), Sp, body);
+        Seq(Sum, Sp, Underscore, Grp(F.Id(name), Sp, InMacro, Sp,
+            App(Qualified("Finset", "range"), upper)), Sp, Parenthesized(body));
 }
