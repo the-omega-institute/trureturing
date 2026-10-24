@@ -115,7 +115,7 @@ theorem cost_length (p : Address) : p.length ≤ pathCost p := by
   | nil => rfl
   | cons b p ih => cases b <;> simp [pathCost, List.length_cons] at * <;> omega
 
-private theorem threshold_last (p : Address) (hp : p ≠ []) :
+theorem threshold_last (p : Address) (hp : p ≠ []) :
     pathThreshold p = max (pathCost p) (pathCost p.dropLast + 2) := by
   induction p with
   | nil => exact False.elim (hp rfl)
