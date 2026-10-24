@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:c73ea89d32937a94a4c6d10f56fc0d213f2eebbde588bef7cf2d4fe90ac3b35a
+  normalized_sha256: sha256:c73ea89d32937a94a4c6d10f56fc0d213f2eebbde588bef7cf2d4fe90ac3b35a
+cas_ref: sha256:c73ea89d32937a94a4c6d10f56fc0d213f2eebbde588bef7cf2d4fe90ac3b35a
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: Research-output category Formalizable cumulant algebra; no cumulant identity is stated in this fragment.
+    previous_atom_id: 19904479920d893fdb6297645393b519d6978220d34b9e0d43358f429f448ae0
+    next_atom_id: 1a4903843c2c806be40b4155b507a1a782070309a558bf186b3702f0da8f62d5
