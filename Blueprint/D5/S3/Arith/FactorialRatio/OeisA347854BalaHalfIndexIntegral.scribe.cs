@@ -57,11 +57,12 @@ internal sealed class OeisA347854BalaHalfIndexIntegralDocument : IScribeDocument
             Node("even_dvd", All("m", Seq(Mathbb, Grp(F.Id("N"))), Dvd(Mul(App(Q("Nat", "factorial"), Mul(D(6), V("m"))), Mul(App(Q("Nat", "factorial"), Mul(D(4), V("m"))), App(Q("Nat", "factorial"), Mul(D(3), V("m"))))), Mul(App(Q("Nat", "factorial"), Mul(D(1,2), V("m"))), App(Q("Nat", "factorial"), Mul(D(1), V("m")))))),
                 "The denominator of the even-index factorial expression divides its numerator. This supplies both the half-index sequence and the third-index sequence at multiples of three.", DescribeRole.Theorem, AssessedProvenance.FromRepo(Source)),
             Node("result", ClaimBody(),
-                "Every natural index has an integer value. Reduction to factorial quotients and comparison of prime valuations give an integer cast.", DescribeRole.Theorem, AssessedProvenance.FromRepo(Source)))));
+                "Every natural index has an integer value. Reduction to factorial quotients and comparison of prime valuations give an integer cast.", DescribeRole.Theorem, AssessedProvenance.FromRepo(Source), new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("oeis-a347854-bala-half-index-integrality"), ResolutionKind.Proved)))));
 
-    private static DocumentBlock Node(string name, Formula formula, string prose, DescribeRole role, AssessedProvenance provenance) =>
+    private static DocumentBlock Node(string name, Formula formula, string prose, DescribeRole role, AssessedProvenance provenance, OpenProblemResolutionClaim? resolution = null) =>
         Describe.Lean(DescribeId.Create("bala-" + name.Replace('_', '-')), DeclarationHandle.Create(Prefix + name), H(name),
-            StatementSource.FromAuthor(Disp(formula)), provenance, Blocks(Paragraph(Text(prose))), role);
+            StatementSource.FromAuthor(Disp(formula)), provenance, Blocks(Paragraph(Text(prose))), role, openProblemResolutionClaim: resolution);
 
     private static Formula V(string name) => F.Id(name);
     private static Formula Named(string name) => Seq(Operatorname, Grp(F.Id(name)));

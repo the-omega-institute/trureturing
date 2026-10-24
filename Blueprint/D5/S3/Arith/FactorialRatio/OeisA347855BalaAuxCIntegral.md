@@ -34,6 +34,10 @@ $$\forall n \in \mathbb{N},\; \exists z \in \mathbb{Z},\; (z: \mathbb{Q}) = \ope
 
 *Proof.* Machine-checked in Lean as `D5/S3/Arith/FactorialRatio/OeisA347855BalaAuxCIntegral.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/oeis-a347855-bala-aux-c-integrality` (proved) by `D5/S3/Arith/FactorialRatio/OeisA347855BalaAuxCIntegral.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"oeis-a347855-bala-aux-c-integrality","declaration_gid":"D5/S3/Arith/FactorialRatio/OeisA347855BalaAuxCIntegral.result","resolution_kind":"proved"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* Peter Bala (2021). *OEIS A347854–A347858: fractional factorial ratios*. URL: <https://oeis.org/A347854>.

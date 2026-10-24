@@ -302,6 +302,10 @@ $$\forall n \in \mathbb{N},\; \exists z \in \mathbb{Z},\; (z: \mathbb{R}) = \ope
 
 *Proof.* Machine-checked in Lean as `D5/S3/Arith/FactorialRatio/OeisA347854BalaHalfIndexIntegral.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/oeis-a347854-bala-half-index-integrality` (proved) by `D5/S3/Arith/FactorialRatio/OeisA347854BalaHalfIndexIntegral.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"oeis-a347854-bala-half-index-integrality","declaration_gid":"D5/S3/Arith/FactorialRatio/OeisA347854BalaHalfIndexIntegral.result","resolution_kind":"proved"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* Peter Bala (2021). *OEIS A347854–A347858: fractional factorial ratios*. URL: <https://oeis.org/A347854>.
