@@ -50,6 +50,7 @@ noncomputable def sourceRegistration : Registration arena (type_of% (@lower_sum_
       exact nomatch a
   dependence := by
     intro role
+    cases role
     refine ⟨⟨2,(0,1)⟩, (fun _ => 1), (fun _ => 2), ?_⟩
     decide
 
