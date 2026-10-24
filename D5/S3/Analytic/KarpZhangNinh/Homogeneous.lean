@@ -2,7 +2,7 @@
    generality: G
    mirror-B: D5/B/S3/Analytic/KarpZhangNinh/Homogeneous
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
-   anchors: [mathlib/module/Mathlib.Data.Nat.Choose.Sum, mathlib/module/Mathlib.Analysis.Calculus.Deriv.MeanValue]
+   anchors: [mathlib/module/Mathlib.Data.Nat.Choose.Sum, mathlib/module/Mathlib.Analysis.Calculus.Deriv.MeanValue, mathlib/module/Mathlib.Analysis.Calculus.Deriv.Pow, mathlib/module/Mathlib.Tactic.Ring, mathlib/module/Mathlib.Tactic.NormNum, mathlib/module/Mathlib.Tactic.Positivity, mathlib/module/Mathlib.Tactic.IntervalCases, mathlib/module/Mathlib.Tactic.LinearCombination, mathlib/module/Mathlib.Tactic.Linarith, mathlib/module/Mathlib.Tactic.Push]
    utility: none
    digest: Homogeneous trisection balancing and its positive coefficient expansion. -/
 import Mathlib.Data.Nat.Choose.Sum
@@ -40,7 +40,7 @@ private lemma residue_succ (n r : ℕ) (hr : r < 3) :
   apply sum_congr rfl
   intro k hk
   have hm : (k+1)%3=r ↔ k%3=(r+2)%3 := by omega
-  rw [hm]
+  simp only [hm]
 
 /- proof_shape: bind-only definition; escape_witness: none; consumer: residue_filter. -/
 def periodic (q : ℕ) : ℤ :=
@@ -52,7 +52,7 @@ def periodic (q : ℕ) : ℤ :=
   | 4 => -1
   | _ => 1
 
-/- proof_shape: content; escape_witness: residue_filter; consumer: weighted_filter. -/
+/- proof_shape: content; escape_witness: residue_filter; consumer: A_formula, T_formula. -/
 theorem residue_filter (n : ℕ) :
     (3 * residue n 0 = 2^n + periodic n) ∧
     (3 * residue n 1 = 2^n + periodic (n+4)) ∧
@@ -87,7 +87,7 @@ private lemma weighted_succ (n r : ℕ) (hr : r < 3) :
   simp only [Nat.cast_add, Nat.cast_one]
   rw [hc]
   have hm : (k+1)%3=r ↔ k%3=(r+2)%3 := by omega
-  rw [hm]
+  simp only [hm]
   ring
 
 /- proof_shape: bind-only definition; escape_witness: none; consumer: second_succ, T. -/
@@ -110,7 +110,7 @@ private lemma second_succ (n r : ℕ) (hr : r < 3) :
   simp only [Nat.cast_add, Nat.cast_one]
   rw [hc]
   have hm : (k+1)%3=r ↔ k%3=(r+2)%3 := by omega
-  rw [hm]
+  simp only [hm]
   ring
 
 /- proof_shape: bind-only definition; escape_witness: none; consumer: A_formula, A_nonneg, T_formula. -/
@@ -195,7 +195,7 @@ private lemma power_quadratic_one (n : ℕ) (hn : 7 ≤ n) :
     rw [pow_succ (2:ℤ) n]
     have hn' : (7:ℤ) ≤ n := by exact_mod_cast hn
     push_cast
-    nlinarith
+    nlinarith [sq_nonneg ((n:ℤ)-3)]
 
 /- proof_shape: content; escape_witness: power_quadratic_two; consumer: T_nonneg. -/
 private lemma power_quadratic_two (n : ℕ) (hn : 8 ≤ n) :
@@ -207,7 +207,7 @@ private lemma power_quadratic_two (n : ℕ) (hn : 8 ≤ n) :
     rw [he, pow_succ (2:ℤ) (n-1)]
     have hn' : (8:ℤ) ≤ n := by exact_mod_cast hn
     push_cast
-    nlinarith
+    nlinarith [sq_nonneg ((n:ℤ)-4)]
 
 /- proof_shape: content; escape_witness: power_linear; consumer: T_nonneg. -/
 theorem A_nonneg (n : ℕ) (hn : 1 ≤ n) : 0 ≤ A n := by
@@ -221,7 +221,7 @@ theorem A_nonneg (n : ℕ) (hn : 1 ≤ n) : 0 ≤ A n := by
     omega
 
 /- proof_shape: content; escape_witness: power_quadratic_one, power_quadratic_two;
-consumer: derivative_nonneg, derivative_pos. -/
+consumer: K_pos. -/
 theorem T_nonneg (n N : ℕ) (hn : 1 ≤ n) (hN : N % 3 = 0) (hnN : n < N) :
     0 ≤ T n N := by
   have hf := T_formula n N hn
@@ -232,7 +232,7 @@ theorem T_nonneg (n N : ℕ) (hn : 1 ≤ n) (hN : N % 3 = 0) (hnN : n < N) :
   have hm : n % 6 < 6 := Nat.mod_lt _ (by omega)
   have hn' : (1:ℤ) ≤ n := by exact_mod_cast hn
   have hgap : (1:ℤ) ≤ (N:ℤ)-n := by omega
-  interval_cases h : n % 6
+  interval_cases h : n % 6 <;> simp only [alpha, h] at ha0
   · simp [alpha, beta, h] at hf ha
     nlinarith [mul_nonneg (by omega : (0:ℤ) ≤ (N:ℤ)-n) ha0]
   · by_cases he : n=1
@@ -262,12 +262,12 @@ theorem T_nonneg (n N : ℕ) (hn : 1 ≤ n) (hN : N % 3 = 0) (hnN : n < N) :
     nlinarith [mul_nonneg (by omega : (0:ℤ) ≤ (N:ℤ)-n) ha0]
 
 /- proof_shape: bind-only definition; escape_witness: none;
-consumer: P, betaLift. -/
+consumer: P, Result.normalization_term, Result.Z_monotoneOn. -/
 def coeff (N k : ℕ) : ℝ :=
   if k % 3 = 0 then (k:ℝ) * (N-k) * N.choose k else 0
 
 /- proof_shape: bind-only definition; escape_witness: none;
-consumer: derivative_expansion, strictMonoOn_slice, BetaLifting.lift_monoOn. -/
+consumer: shear, strictMonoOn_slice, Result.Z_monotoneOn. -/
 def P (N : ℕ) (x y : ℝ) : ℝ :=
   ∑ k ∈ range (N+1), coeff N k * x^k * y^(N-k)
 
@@ -307,7 +307,7 @@ private lemma moment_sum (N n : ℕ) (hn : n ≤ N) :
   have hkN : k ≤ N := (Nat.le_of_lt_succ (mem_range.mp hk)).trans hn
   split_ifs <;> simp <;> ring
 
-/- proof_shape: bind-only; escape_witness: none; consumer: derivative_expansion. -/
+/- proof_shape: bind-only; escape_witness: none; consumer: hasDerivAt_slice. -/
 private theorem shear (N : ℕ) (x d : ℝ) :
     P N x (x+d) = ∑ t ∈ range (N+1), B N t*x^(N-t)*d^t := by
   unfold P
@@ -365,7 +365,7 @@ private theorem shear (N : ℕ) (x d : ℝ) :
           · simp
         _ = B N t := by rw [moment_sum N (N-t) (by omega)]; rfl
 
-/- proof_shape: bind-only; escape_witness: none; consumer: derivative_expansion. -/
+/- proof_shape: bind-only; escape_witness: none; consumer: hasDerivAt_slice. -/
 private lemma derivative_coeff (N t : ℕ) (ht : t < N) :
     (N-t:ℕ)*B N t - 2*(t+1:ℕ)*B N (t+1) =
       (N-t:ℕ)*(N.choose t:ℝ)*(T (N-t) N:ℝ) := by
@@ -378,7 +378,7 @@ private lemma derivative_coeff (N t : ℕ) (ht : t < N) :
   push_cast at hc ⊢
   linear_combination -2 * (((N:ℝ)-1)*(weighted (N-t-1) 0:ℝ)-(second (N-t-1) 0:ℝ)) * hc
 
-/- proof_shape: bind-only; escape_witness: none; consumer: derivative_expansion. -/
+/- proof_shape: bind-only; escape_witness: none; consumer: hasDerivAt_slice. -/
 private lemma collect_derivative (N : ℕ) (x d : ℝ) :
     (∑ t ∈ range (N+1), B N t *
       (((N-t:ℕ):ℝ)*x^(N-t-1)*d^t - 2*(t:ℝ)*x^(N-t)*d^(t-1))) =
@@ -413,21 +413,22 @@ theorem hasDerivAt_slice (N : ℕ) (S x : ℝ) :
     (((hasDerivAt_id x).pow (N-t)).const_mul (B N t)).mul
       (((hasDerivAt_const x S).sub ((hasDerivAt_id x).const_mul 2)).pow t))
   convert hder using 1
-  have hD : D N x (S-2*x) =
-      ∑ t ∈ range (N+1), B N t *
-        (((N-t:ℕ):ℝ)*x^(N-t-1)*(S-2*x)^t -
-          2*(t:ℝ)*x^(N-t)*(S-2*x)^(t-1)) := by
-    rw [collect_derivative]
-    unfold D
+  · funext s
+    simp only [Pi.mul_apply, Pi.pow_apply, Pi.sub_apply, id_eq]
+  · have hD : D N x (S-2*x) =
+        ∑ t ∈ range (N+1), B N t *
+          (((N-t:ℕ):ℝ)*x^(N-t-1)*(S-2*x)^t -
+            2*(t:ℝ)*x^(N-t)*(S-2*x)^(t-1)) := by
+      rw [collect_derivative]
+      unfold D
+      apply sum_congr rfl
+      intro t ht
+      rw [derivative_coeff N t (mem_range.mp ht)]
+    rw [hD]
+    simp only [Pi.mul_apply, Pi.pow_apply, Pi.sub_apply, id_eq, mul_one, zero_sub]
     apply sum_congr rfl
     intro t ht
-    rw [derivative_coeff N t (mem_range.mp ht)]
-  rw [hD]
-  simp only [id_eq, mul_one, zero_sub]
-  apply sum_congr rfl
-  intro t ht
-  ring
-
+    ring
 /- proof_shape: bind-only; escape_witness: none;
 consumer: derivative_expansion. -/
 private lemma T_diagonal (N : ℕ) (hN : N%3=0) : T N N = 0 := by
@@ -473,7 +474,7 @@ theorem derivative_expansion (N : ℕ) (hN : N%3=0) (x d : ℝ) :
       apply sum_congr rfl
       intro n hn
       have he : N-n=(N-n-1)+1 := by simp only [mem_Icc] at hn; omega
-      rw [show d^(N-n)=d^(N-n-1)*d by rw [he, pow_succ]]
+      conv_lhs => rw [he, pow_succ]
       ring
 
 /- proof_shape: content; escape_witness: T_nonneg; consumer: strictMonoOn_slice. -/
@@ -487,12 +488,13 @@ private theorem K_pos (N : ℕ) (hN : N%3=0) (h6 : 6 ≤ N) {x d : ℝ}
     positivity
   · refine ⟨3, by simp only [mem_Icc]; omega, ?_⟩
     have hT : T 3 N = 3*((N:ℤ)-3) := by norm_num [T, A, weighted, second, sum_range_succ]; ring
-    have hTp : (0:ℝ) < (T 3 N:ℝ) := by rw [hT]; push_cast; exact_mod_cast (by omega : (0:ℤ) < 3*((N:ℤ)-3))
+    have hTpZ : (0:ℤ) < T 3 N := by rw [hT]; omega
+    have hTp : (0:ℝ) < (T 3 N:ℝ) := by exact_mod_cast hTpZ
     have hc : (0:ℝ) < (N.choose 3:ℝ) := by exact_mod_cast Nat.choose_pos (by omega : 3≤N)
     positivity
 
 /- proof_shape: content; escape_witness: K_pos;
-consumer: Result.full_tail_nonneg. -/
+consumer: Result.Z_monotoneOn. -/
 theorem strictMonoOn_slice (m : ℕ) (hm : 2 ≤ m) :
     StrictMonoOn (fun t => P (3*m) t (1-t)) (Set.Ioc 0 (1/2:ℝ)) := by
   apply strictMonoOn_of_deriv_pos (convex_Ioc 0 (1/2:ℝ))
