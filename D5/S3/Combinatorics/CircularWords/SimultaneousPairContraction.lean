@@ -119,7 +119,7 @@ theorem joint_pair_card (A : Finset α) (F : Finset (Finset α))
       rw [card_insert_of_notMem hSF] at hsize
       omega
     have he := Nat.card_congr (jointStepEquiv A S F hS ⟨a,ha⟩ hv hF a ha)
-    rw [he,Nat.card_prod,Nat.card_eq_fintype_card,Fintype.card_coe,orders_card,hS2] 
+    rw [he,Nat.card_prod,Nat.card_eq_fintype_card,Fintype.card_coe,orders_card,hS2]
     rw [ih (contracted A S a) hsub' htwo' hd' hz,hcard,card_insert_of_notMem hSF]
     simp only [Nat.factorial_succ,Nat.factorial_zero]
     have hidx : A.card-1-F.card-1 = A.card-(F.card+1)-1 := by omega
