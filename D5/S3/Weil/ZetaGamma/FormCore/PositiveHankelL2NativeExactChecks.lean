@@ -55,6 +55,7 @@ private theorem exponential_laplace {a b : ℝ} (hab : 0 < b + a) :
       rw [integral_complex_ofReal,
         integral_exp_mul_Ioi (by linarith : -(b + a) < 0) 0]
       norm_num
+      rw [← neg_add, neg_div_neg_eq, one_div, add_comm]
 
 private theorem exponential_laplace_sq {a b : ℝ} (hab : 0 < b + a) :
     Complex.normSq (literalLaplace b (exponentialInput a)) =
@@ -79,7 +80,10 @@ example {a k : ℝ} (ha : 0 < a) (hk : 0 < k) :
     exact exponential_laplace_sq (by
       have hn : (0 : ℝ) ≤ n := Nat.cast_nonneg n
       linarith)
-  rw [hterm] at hS hH
+  rw [hterm] at hS
+  rw [← Complex.ofReal_tsum
+    (fun n : ℕ => Complex.normSq (literalLaplace (k + n) (exponentialInput a))),
+    hterm] at hH
   exact ⟨hS, hH⟩
 
 /- The improved pi bound is also checked on the same genuinely noncompact

@@ -6,14 +6,7 @@
    utility: none
    digest: Actual half-line L2 Hankel domains, complete positive Laplace-square series,
      and the quarter-rate pi Schur bound. -/
-/- SOURCE_ONLY / UNCOMPILED canonical integration candidate, 2026-10-25.
-All private suppliers and their consumers live in this single owner module.
-Assembled from the HalfRate, AllPositiveRates, and QuarterSharpSchur source
-candidates without changing their proof bodies. No Gamma profile, Fourier
-graph, compactness, trace, or full-energy premise is introduced.
-The original k>0 range remains available; the pi bound covers k>=1/4.
-This candidate has not been elaborated, kernel-checked, registered or frozen.
--/
+
 
 import D5.S3.Weil.ZetaGamma.FormCore.RightExponentialTailL2
 import Mathlib.Analysis.SpecialFunctions.ImproperIntegrals
@@ -23,6 +16,16 @@ import Mathlib.MeasureTheory.Integral.Prod
 import Mathlib.MeasureTheory.Integral.DominatedConvergence
 import Mathlib.Analysis.Complex.Basic
 import Mathlib.Tactic
+
+/-!
+# Actual positive half-line Hankel domains
+
+All private suppliers and their consumers live in this owner module.
+The actual complex L2 inputs need no trace or compact-support condition.
+The full positive Laplace-square series holds for every k>0, and the pi
+upper bound holds for k>=1/4. No Gamma/Fourier or full-energy identity is
+introduced by these integral domain and Schur estimates.
+-/
 
 set_option autoImplicit false
 set_option relaxedAutoImplicit false

@@ -1,14 +1,15 @@
-/- SOURCE_ONLY / UNCOMPILED, 2026-10-25.
-Faithful full-telescope source registrations for the four original public
-theorems, following the native/scoped accepted standalone RightExponentialTailL2
-DependentFamily registration. Actual positive-halfline L2 mass is the selected
-observable; actual domains and complete Laplace series remain in each Law.
-No declared_validated, elaboration, kernel, or binding-check status is claimed.
--/
 import LeanInformationAuditInterface.Contract.Registration
 import D5.S3.Weil.ZetaGamma.FormCore.PositiveHankelL2
 import Reg.Support.DependentFamily
 import Mathlib.Tactic.NormNum
+
+/-!
+# Full source registrations for the actual Hankel domains
+
+The actual positive-half-line L2 mass is selected once in each complete
+source law. Actual integrability and complete Laplace-square outputs remain
+in the law. Binding evidence is supplied by the canonical scoped report.
+-/
 
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
@@ -97,7 +98,7 @@ def familyRegistration : Registration arena
 is the actual L2 mass in the first absolute-integral bound. All other
 conjuncts are retained verbatim, including the original final form bound.
 The original profile u is state binder 0; no source coordinate is fixed.
-The readout path below is prepared source, awaiting native binding checks. -/
+The readout path below selects this original mass occurrence. -/
 def registration : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
     (@carleman_actual_l2_domain) (Realization signature) Type Unit where
   unitName := `D5.S3.Weil.ZetaGamma.FormCore.PositiveHankelL2.carleman_actual_l2_domain.__information_unit
@@ -181,7 +182,7 @@ def familyRegistration : Registration arena
 is the actual L2 mass in the first absolute-integral bound. All other
 conjuncts are retained verbatim, including the original final form bound.
 The original profile u is state binder 2; no source coordinate is fixed.
-The readout path below is prepared source, awaiting native binding checks. -/
+The readout path below selects this original mass occurrence. -/
 def registration : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
     (@positive_hankel_actual_l2_domain) (Realization signature) Type Unit where
   unitName := `D5.S3.Weil.ZetaGamma.FormCore.PositiveHankelL2.positive_hankel_actual_l2_domain.__information_unit
@@ -265,7 +266,7 @@ def familyRegistration : Registration arena
 is the actual L2 mass in the first absolute-integral bound. All other
 conjuncts are retained verbatim, including the original final form bound.
 The original profile u is state binder 2; no source coordinate is fixed.
-The readout path below is prepared source, awaiting native binding checks. -/
+The readout path below selects this original mass occurrence. -/
 def registration : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
     (@positive_hankel_actual_l2_domain_all_positive_rates) (Realization signature) Type Unit where
   unitName := `D5.S3.Weil.ZetaGamma.FormCore.PositiveHankelL2.positive_hankel_actual_l2_domain_all_positive_rates.__information_unit
@@ -348,7 +349,7 @@ def familyRegistration : Registration arena
 is the actual L2 mass in the first absolute-integral bound. All other
 conjuncts are retained verbatim, including the original final form bound.
 The original profile u is state binder 2; no source coordinate is fixed.
-The readout path below is prepared source, awaiting native binding checks. -/
+The readout path below selects this original mass occurrence. -/
 def registration : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
     (@positive_hankel_actual_l2_domain_quarter_sharp) (Realization signature) Type Unit where
   unitName := `D5.S3.Weil.ZetaGamma.FormCore.PositiveHankelL2.positive_hankel_actual_l2_domain_quarter_sharp.__information_unit

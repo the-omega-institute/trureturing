@@ -1,4 +1,3 @@
-// SOURCE_ONLY / UNCOMPILED integration candidate, 2026-10-25.
 using static StrataLint.Scribe.DefinitionDsl;
 
 namespace StrataLint.Scribe.Blueprint.D5.S3.Weil.ZetaGamma.FormCore;
@@ -53,7 +52,7 @@ internal sealed class PositiveHankelL2Document : IScribeDocumentDefinition
                 Paragraph(Text("Use the positive Schur weight h(s)=exp(-s/4)/sqrt(1-exp(-s)), s>0. The weight is singular at zero and is not used as an L2 vector. The substitution s=log(1+q^2) has positive Jacobian 2*q/(1+q^2) and transforms K_(1/4)(t+s)*h(s)*ds exactly to 2*exp(-t/4)/(q^2+1-exp(-t))*dq.")),
                 Paragraph(Text("The existing actual Cauchy integral gives integral(K_(1/4)(t+s)*h(s),s>0)=pi*h(t). The injective Jacobian integrability equivalence proves the actual row L1 domain before the row is used. Normalizing by h(t), applying weighted AM-GM, and proving the real product majorant integrable gives the absolute Hankel bound pi times the original L2 mass.")),
                 Paragraph(Text("Exponential monotonicity gives 0<=K_k<=K_(1/4) for k>=1/4. The final theorem preserves the same complete nine-clause domain and Laplace-series output and improves both bounds to pi. It reuses the all-positive-rate series rather than duplicating its proof.")),
-                Paragraph(Text("The quarter row and normalization are recorded in the 2026-10-25 HalfRate, AllPositiveRates, and QuarterSharpSchur source candidates; their exact hashes and the accepted standalone-L2 source reference are pinned by the companion bundle receipt. Mathlib supplies integrable_inv_one_add_sq, integral_Ioi_inv_one_add_sq, and the injective real Jacobian integral and integrability formulas.")),
+                Paragraph(Text("Mathlib supplies integrable_inv_one_add_sq, integral_Ioi_inv_one_add_sq, and the injective real Jacobian integral and integrability formulas.")),
                 Paragraph(Text("The result concerns this literal positive Hankel form. It proves an upper bound, not equality of the operator norm with pi, and it does not identify an original Gamma/Fourier energy or establish complete-energy positivity or RH."))),
             DescribeRole.Theorem))));
 }
