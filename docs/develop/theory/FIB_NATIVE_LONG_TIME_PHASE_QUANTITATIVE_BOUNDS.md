@@ -1631,3 +1631,910 @@ acquisition contracts retain their own operators and operation sets;
 none supplies the missing observation or selection service here.
 
 ## 追加锚（本行以下为增补区）
+
+## 54. Persistent height feedback on the same original source
+
+**Definition 54.1 (source, analytic permissions and controller class).**
+Retain D Definition 35.1, G Definition 25.1 and Definition 49.1,
+including the five original probabilities, rational coefficients,
+immutable INITIAL $=(k_0,y_0)$ with $k_0\in E\Subset I$, the fixed
+$\varepsilon,I$, original time and original signed winding coordinates
+$y=(\theta,v,D)$. The parameter is fixed in the nonzero two-sided
+collar $\mathcal K_\times$ of (49.1). In particular
+$\widehat c_\kappa=J_\kappa c_\kappa$ is exactly (49.2).
+The reference $\mathbb P$ is the original killed probability on full
+native histories, including both absorbing faces and cemetery histories.
+The full continuous winding history has its specified initial lift.
+No change of INITIAL or random stationary preparation is made.
+
+The added analytic controller permission is exact continuous height
+observation and bias of the original two driver/control columns. A
+controller is a pair selected before any horizon,
+
+$$
+\psi=\phi f,\qquad f\in C^\infty([l,u];\mathbb R),\qquad
+\min_{[l,u]}f>0,\qquad \int_I\psi^2dk=1,\qquad
+w\in C^\infty([l,u];\mathbb R).
+\tag{54.1}
+$$
+
+Here smoothness on the closed interval means smooth extension to a
+neighborhood; in particular the real phase current $w$ is bounded
+up to both faces. The amplitude is positive in $I$, has simple zeroes
+at both faces, and is normalized in real $L^2(dk)$, not in raw phase
+volume. Replacing $f$ by $-f$ or by a complex phase is not allowed.
+No common positive lower bound on $f$, or common bound on $w$ or
+their derivatives, is imposed across the class. Uniform assertions
+below range over this whole class, not over a compact set of policies.
+
+The controller is time homogeneous, height only and covariant under
+phase translations. Its prescribed dynamics are
+
+$$
+\begin{aligned}
+dK_t&=\sqrt2\varepsilon\,dB_t^1
+       +2\varepsilon^2\frac{\psi'}\psi(K_t)dt,\\
+dy_t&=\sqrt2\widehat c_\kappa(K_t)dB_t^2
+       +\widehat c_\kappa(K_t)w(K_t)dt,
+\end{aligned}
+\tag{54.2}
+$$
+
+where $(B^1,B^2)$ is standard two-dimensional Brownian motion.
+Its two components are independent. Both changes of drift lie in
+the original columns; there is no phase-position dependence, hidden
+state, extra noise, reset, horizon dependence or change of clock.
+These feedback permissions are model assumptions, not commands
+already obtained by the native acquisition theories. The singular
+height bias keeps a controlled history alive; the reference still
+contains its original death and refusal/Stop semantics.
+
+Write $\mathbb V_{\psi,w}$ for the law constructed below, and use
+$\mathcal F_t$ for the full native path filtration. Define
+
+$$
+\rho=\psi^2,\quad
+\mathcal E(\psi)=\varepsilon^2\int_I|\psi'|^2dk,\quad
+R(\psi,w)=\lim_{T\to\infty}\frac1T
+ D(\mathbb V_{\psi,w}|_{\mathcal F_T}\Vert
+                      \mathbb P|_{\mathcal F_T}).
+\tag{54.3}
+$$
+
+Existence of this limit, rather than its existence as an assumption,
+is part of Theorem 55.1. The divergence uses natural logarithms.
+The real vector $j$, the tensor $D_{\rm eff}$ and their centering are
+defined in Theorem 56.1. A controller may depend on the fixed source,
+budget and declared direction, but none of these is chosen from the
+observed history. An asymptotic assertion for each controller always
+keeps that controller fixed as $T\to\infty$.
+
+## 55. Exact native prefix likelihood and its survival entropy rate
+
+**Theorem 55.1 (one conservative law, exact likelihood and minimum).**
+Each controller (54.1) has a conservative continuous infinite path
+law satisfying (54.2), from the fixed INITIAL. On every finite
+$\mathcal F_T$ it is equivalent to the original Q law and absolutely
+continuous with respect to the full killed reference $\mathbb P_T$.
+Under Q put
+
+$$
+u_1(k)=\sqrt2\varepsilon\frac{f'}f(k),\qquad
+u_2(k)=\frac{w(k)}{\sqrt2},\qquad
+Z_T=\exp\left\{\sum_{i=1}^2\int_0^T u_i(K_t)dW_t^{Q,i}
+             -\frac12\int_0^T(u_1^2+u_2^2)(K_t)dt\right\}.
+\tag{55.1}
+$$
+
+The Q drivers are those of D (37.8), in the signed coordinates (49.2).
+The exact full-path density is zero on histories dead by $T$, and
+on surviving histories is
+
+$$
+\frac{d\mathbb V_T}{d\mathbb P_T}
+ =e^{\lambda T}\frac{\phi(K_T)}{\phi(k_0)}Z_T.
+\tag{55.2}
+$$
+
+In particular these densities are consistent prefixes of one law.
+Its finite entropy has both expressions
+
+$$
+\begin{aligned}
+D(\mathbb V_T\Vert\mathbb P_T)
+ &=\lambda T+\mathbb E_{\mathbb V}
+       \log\frac{\phi(K_T)}{\phi(k_0)}
+    +\mathbb E_{\mathbb V}\int_0^T
+       \left[\varepsilon^2\left(\frac{f'}f\right)^2
+                           +\frac14w^2\right](K_t)dt\\
+ &=\mathbb E_{\mathbb V}\int_0^T
+       \left[\varepsilon^2\left(\frac{\psi'}\psi\right)^2
+                           +\frac14w^2\right](K_t)dt.
+\end{aligned}
+\tag{55.3}
+$$
+
+The long-time full-native-path rate exists and equals
+
+$$
+R(\psi,w)=\mathcal E(\psi)+\frac14\int_I w^2\psi^2dk
+        =\lambda+\varepsilon^2\int_I\phi^2|f'|^2dk
+                         +\frac14\int_Iw^2\psi^2dk\ge\lambda.
+\tag{55.4}
+$$
+
+Equality holds exactly for $\psi=\phi,w=0$. Thus the unique
+minimum-rate controller is the already supplied Q law, with the
+rank-three original-coordinate phase limit of D §§38--39 on this
+collar. No infinite-horizon absolute continuity with respect to
+$\mathbb P$ is asserted.
+
+Proof. The normalized height Q process and its prefix density
+$\mathbf1_{\{\zeta>T\}}e^{\lambda T}\phi(K_T)/\phi(k_0)$ are D
+(37.2), (37.8). Both $u_i$ in (55.1) are bounded for each controller.
+Here are the precise bounded-exponential facts needed from classical
+Girsanov theory. Stop its stochastic exponential at increasing levels.
+If $|u|^2\le C$, Itô's formula and Gronwall give
+$\mathbb E_Q Z_{T\wedge\tau_n}^p\le\exp[p(p-1)CT/2]$ for $p>1$.
+Uniform integrability removes the stops and gives $\mathbb E_QZ_T=1$.
+Under the tilted law, integration by parts with $Z$ makes
+$W^{Q,i}-\int_0^\cdot u_i(K_t)dt$ continuous local martingales with
+bracket matrix $t\,\mathrm{Id}_2$. The Brownian characterization
+therefore makes them independent standard Brownian components.
+This proves the required two-driver change of law without an inverse
+of the degenerate four-state covariance. Substitution in D (37.8)
+gives (54.2), since $\psi'/\psi=\phi'/\phi+f'/f$.
+
+The exponential is positive, so these finite laws are equivalent to
+Q, have no finite height death and extend consistently to continuous
+paths on every compact time interval, hence to $[0,\infty)$.
+Interior smoothness gives pathwise uniqueness up to a boundary hit;
+nonexplosion of this law makes that uniqueness global for the fixed
+initial point. Composition of the two prefix densities proves (55.2),
+including its normalization on the cemetery probability space.
+No driver information has been discarded from this calculation:
+under Q, $W^{Q,1}$ is reconstructed from $K$ and its stated drift,
+and $W^{Q,2}$ from $dv/(\sqrt2 B_\kappa(K))$. The original rational
+coefficient $B_\kappa$ in G (25.4) is nowhere zero on the fixed
+rectangle because the original probabilities are positive there.
+Thus $Z_T$ is a functional of the native paths themselves. This is
+a scalar recovery of a driver along an existing nonzero column,
+not inversion of the state diffusion matrix or division by $\kappa$.
+Consequently (55.2)--(55.3) concern exactly native-path entropy,
+not a possibly larger entropy of an enlarged driver record.
+
+The height generator and its invariant probability are
+
+$$
+\mathcal L_\psi h=\varepsilon^2\rho^{-1}(\rho h')',
+\qquad \rho(k)dk=\phi(k)^2f(k)^2dk.
+\tag{55.5}
+$$
+
+For clarity, the endpoint and fixed-start facts needed here can be
+obtained directly in this one-dimensional problem. Its scale density
+is $\rho^{-1}$, whose integral diverges at both faces because
+$\rho$ is comparable to squared distance to the boundary. The finite
+speed density is $\rho/\varepsilon^2$. Equivalently the reversible
+energy form is $\varepsilon^2\int |h'|^2\rho$ in $L^2(\rho dk)$;
+integration by parts on the interior gives (55.5). Smooth cutoffs of
+one, differing from one only within distance $\delta$ of the faces,
+have energy $O(\delta)$ and converge to one in $L^2(\rho)$.
+The form realization thus contains the constant one with zero
+energy, is conservative and preserves $\rho dk$. It has the same
+interior diffusion generator as the already constructed nonexplosive
+law; uniqueness up to exit identifies their semigroups. This proves
+invariance for the height, without an invariant probability on the
+full phase cover. Comparison with the supplied Q Poincare inequality
+gives, if $m_f=\min f,M_f=\max f$,
+
+$$
+\operatorname{Var}_\rho h\le
+ \frac{M_f^2}{3\lambda m_f^2}
+          \varepsilon^2\int_I|h'|^2\rho dk.
+\tag{55.6}
+$$
+
+Indeed minimize over the additive constant, compare $\rho=f^2\phi^2$
+to $\phi^2$, use Q's gap $3\lambda$, then compare back. In particular
+the invariant height probability is unique. None of these comparisons
+asserts a mixing rate uniform over all controllers.
+
+The endpoint logarithms and singular original bias cause no lost
+integrability. At each fixed positive time, the supplied Q relative
+height kernel is bounded. Cauchy--Schwarz, the finite second moment
+of $Z_1$ and D (37.9) show that the height law under $\mathbb V$ at
+time one has an $L^2(\rho)$ density. Subsequent $L^2(\rho)$ contraction
+keeps its norm bounded. Since $\log\phi\in L^2(\rho)$, this proves
+
+$$
+\sup_{T\ge1}\mathbb E_{\mathbb V}|\log\phi(K_T)|<\infty.
+\tag{55.7}
+$$
+
+For $0<T<1$ the same argument at that fixed time proves finiteness.
+A useful stronger finite-interval check is as follows. Put
+$d(k)=\min(k-l,u-k)$. For $k_0\in E$, the Dirichlet heat kernel and
+its first spatial derivative, away from $k_0$, give
+$h_I(t;k_0,k)\le C_A d(k)$ near either face, uniformly for
+$0<t\le A$. One obtains this bound directly by differentiating the
+reflected Gaussian series: the separation from $E$ makes the small
+$t$ Gaussian derivatives bounded. The Q density there is therefore
+at most $C_A d(k)^2$. On the remaining interior interval $d$ has a
+positive lower bound. It follows that
+
+$$
+\sup_{0\le t\le A}\mathbb E_Q d(K_t)^{-r}<\infty\quad(0<r<3).
+\tag{55.8}
+$$
+
+Choose $1<p<3/2$ and apply Holder to $Z_t d(K_t)^{-2}$, using its
+conjugate exponential moment and (55.8) at $r=2p$. Thus
+$\sup_{t\le A}\mathbb E_{\mathbb V}d(K_t)^{-2}<\infty$.
+Both $\psi'/\psi=O(d^{-1})$ and $\psi''/\psi=O(d^{-1})$ are
+integrable to the powers required below. Every finite original
+height-bias square integral in (55.3) is finite.
+
+The logarithm of $Z_T$, expressed in the new Brownian drivers,
+has mean $\tfrac12\mathbb E_{\mathbb V}\int |u|^2$; the remaining
+stochastic integral has mean zero. Together with (55.2) and the
+endpoint integrability this proves the first line of (55.3).
+Itô's formula for $\log f(K)$ also rewrites the height part of
+(55.2) as
+
+$$
+\frac{\psi(K_T)}{\psi(k_0)}
+ \exp\left[-\varepsilon^2\int_0^T\frac{\psi''}{\psi}(K_t)dt\right].
+\tag{55.9}
+$$
+
+This formula is on survival only; its zero extension to dead paths
+is understood. Applying Itô to $\log\psi(K)$ under (54.2), first
+on interior stopped intervals, makes the logarithm of (55.9) equal
+to a mean-zero square-integrable martingale plus
+$\varepsilon^2\int_0^T(\psi'/\psi)^2(K_t)dt$. The estimates just
+proved remove the stops. The phase exponential contributes
+$\tfrac14\mathbb E_{\mathbb V}\int w^2$, proving the second line.
+In particular the singular expression (55.9) is justified by the
+bounded change relative to Q, not by an unverified exponential
+moment for a boundary-singular potential.
+
+To take the long-time limit without assuming stationarity at time
+zero, let $a$ be any smooth bounded function and center it by its
+$\rho$ mean. An explicit solution of
+$-\mathcal L_\psi U=a-\int a\rho$, centered by $\int U\rho=0$, is
+specified by
+
+$$
+U'(k)=-\frac{\int_l^k(a(z)-\int_Ia\rho)\rho(z)dz}
+                   {\varepsilon^2\rho(k)}.
+\tag{55.10}
+$$
+
+At either face the numerator vanishes to third order; at the upper
+face use its zero total integral. Hence $U'=O(d)$ and $U,U'$ extend
+smoothly and are bounded. Itô's formula yields
+
+$$
+\int_0^t(a(K_r)-\textstyle\int a\rho)dr
+ =U(k_0)-U(K_t)+\sqrt2\varepsilon\int_0^t U'(K_r)dB_r^1.
+\tag{55.11}
+$$
+
+Taking expectations gives convergence of expected time averages;
+Doob's inequality also gives convergence uniformly in macroscopic
+time after division by $T$. Apply this to the bounded integrand in
+the first line of (55.3), and use (55.7). The rate becomes
+$\lambda+\varepsilon^2\int\phi^2|f'|^2+\tfrac14\int w^2\rho$.
+Finally integration by parts, using $\phi(l)=\phi(u)=0$ and
+$-\varepsilon^2\phi''=\lambda\phi$, gives
+
+$$
+\varepsilon^2\int_I|(\phi f)'|^2
+ =\lambda\int_I\phi^2f^2+\varepsilon^2\int_I\phi^2|f'|^2.
+\tag{55.12}
+$$
+
+The boundary term $\phi\phi'f^2$ is zero at both faces. Normalization
+proves (55.4). Equality forces $f$ constant and $w=0$ on $I$;
+positivity and real normalization then force $f=1$. Conversely these
+values give Q exactly. The original killed source dies eventually
+almost surely by D (37.4), while $\mathbb V$ never dies. Their
+infinite path laws are consequently singular, despite every finite
+prefix being absolutely continuous in the stated direction.
+$\square$
+
+## 56. Ballistic centering and the controlled three-phase path limit
+
+**Theorem 56.1 (fixed-start native homogenization with a current).**
+For each fixed controller let
+
+$$
+v(k)=\widehat c_\kappa(k)w(k),\qquad
+j=\int_Iv\rho dk,\qquad g=v-j.
+\tag{56.1}
+$$
+
+Let $\chi:I\to\mathbb R^3$ be the unique centered Poisson solution
+
+$$
+-\mathcal L_\psi\chi=g,\qquad \int_I\chi\rho dk=0,\qquad
+\chi'(k)=-\frac{\int_l^k g(z)\rho(z)dz}{\varepsilon^2\rho(k)}.
+\tag{56.2}
+$$
+
+The solution has zero boundary flux $\rho\chi'=0$ at both faces;
+$\chi,\chi'$ are bounded and smooth up to the faces, with
+$\chi'(l)=\chi'(u)=0$. For any fixed $b>0$, from the immutable INITIAL,
+
+$$
+\left(\frac{y_{Ts}-y_0-jTs}{\sqrt T}\right)_{0\le s\le b}
+ \ \Longrightarrow\ \mathcal W_{D_{\rm eff},b}
+\quad\hbox{in }C([0,b],\mathbb R^3),
+\tag{56.3}
+$$
+
+where the topology is uniform, the limit is Brownian motion with
+covariance $2\min(s,t)D_{\rm eff}$, and
+
+$$
+D_{\rm eff}(\psi,w)=
+ \int_I\widehat c_\kappa\widehat c_\kappa^{\mathsf T}\rho dk
+ +\varepsilon^2\int_I\chi'\chi'^{\mathsf T}\rho dk.
+\tag{56.4}
+$$
+
+Thus the centered phase current adds a positive semidefinite tensor;
+it cannot cancel the phase-noise contribution. The convergence is
+controllerwise. No common convergence time over (54.1), or over
+budgets growing with $T$, is part of this assertion.
+
+Proof. The endpoint calculation in (55.10) applies componentwise to
+$g$, since its $\rho$ mean is exactly zero. It proves every stated
+regularity and flux property in (56.2). If two solutions differ,
+$(\rho(\chi_1-\chi_2)')'=0$; zero flux forces a constant difference,
+and centering fixes that constant. In particular this Poisson object
+is for the actual current $\widehat c_\kappa w-j$, not for an
+unrelated scalar band or an uncentered height forcing.
+
+Combining Itô's formula with (54.2) gives the exact decomposition
+
+$$
+\begin{aligned}
+y_t-y_0-jt
+ &=M_t+\chi(k_0)-\chi(K_t),\\
+M_t&=\sqrt2\int_0^t\widehat c_\kappa(K_r)dB_r^2
+       +\sqrt2\varepsilon\int_0^t\chi'(K_r)dB_r^1,\\
+\langle M\rangle_t
+ &=2\int_0^t\left[
+    \widehat c_\kappa\widehat c_\kappa^{\mathsf T}
+                 +\varepsilon^2\chi'\chi'^{\mathsf T}\right](K_r)dr.
+\end{aligned}
+\tag{56.5}
+$$
+
+The two drivers have zero mutual bracket even though the integrands
+depend on the first driver's height. This is why there is no negative
+cross term. Each entry of the bracket integrand is smooth and bounded.
+Apply (55.10)--(55.11) to its centered entries. Doob's inequality
+and boundedness of the correctors show, for this fixed controller,
+
+$$
+\sup_{0\le s\le b}
+ \left\|T^{-1}\langle M\rangle_{Ts}-2sD_{\rm eff}\right\|
+       \longrightarrow0\quad\hbox{in probability}.
+\tag{56.6}
+$$
+
+Indeed each squared martingale supremum after division by $T^2$ is
+$O(1/T)$, and its bounded remainder is $O(1/T)$. No stationary
+initial law has entered this argument. The scaled martingales are
+continuous, start at zero and are square integrable on finite
+intervals. Their jumps and bracket jumps are identically zero.
+These are exactly the conditions of Whitt,
+[*Proofs of the martingale FCLT*, arXiv:0712.1929v2,
+Theorem 2.1(ii)](https://arxiv.org/html/0712.1929v2), with covariance
+matrix $C=2D_{\rm eff}$. That classical theorem gives the Brownian
+limit in Skorohod topology; for continuous paths and continuous
+limit it gives the stated uniform-path weak convergence. The
+bounded corrector in (56.5), divided by $\sqrt T$, vanishes uniformly.
+This proves (56.3)--(56.4), including every factor two.
+
+When $w=0$, $j=0$ and $\chi=0$. When additionally $\psi=\phi$,
+(56.4) is exactly the supplied $\widehat M_\kappa$ and (56.3)
+is the already owned Q-law limit, rather than a new proof of that
+supplier counted as an additional result. $\square$
+
+## 57. Exact all-budget directional frontier in the original metric
+
+**Theorem 57.1 (native control frontier and complete attainment cases).**
+For every fixed $\kappa\in\mathcal K_\times$, unit original-coordinate
+normal $e$ and budget $B\ge0$, put
+
+$$
+\begin{aligned}
+h&=J_\kappa^{\mathsf T}e,& a(k)&=e\cdot\widehat c_\kappa(k),&
+V_e(k)&=a(k)^2,\\
+\mu(s)&=\Lambda_\kappa(\sqrt s\,h)\quad(s\ge0),&
+F_{\kappa,e}(B)&=
+ \inf_{\substack{(\psi,w)\text{ as in }(54.1)\\R(\psi,w)\le\lambda+B}}
+                        e^{\mathsf T}D_{\rm eff}(\psi,w)e.
+\end{aligned}
+\tag{57.1}
+$$
+
+Here $\Lambda_\kappa$ is the inherited full-real Dirichlet band of
+D (36.5), not a small-frequency approximation. Then
+
+$$
+F_{\kappa,e}(B)
+ =\sup_{s>0}\frac{\Lambda_\kappa(\sqrt s\,J_\kappa^{\mathsf T}e)
+                                      -\lambda-B}{s}.
+\tag{57.2}
+$$
+
+The primal infimum is always attained in the positive controller
+class. Its precise cases are these.
+
+For $B=0$ its unique controller is $\psi=\phi,w=0$, and
+$F_{\kappa,e}(0)=\int_I V_e\phi^2dk$. If $V_e$ is nonconstant, the
+dual value is reached only as $s\downarrow0$, with no finite maximizing
+$s$. For nonconstant $V_e$ and $B>0$, write $z_s$ for the positive
+real $L^2$-normalized first Dirichlet eigenfunction of
+$-\varepsilon^2\partial_k^2+sV_e$. There is a unique $s_B\in(0,\infty)$
+satisfying
+
+$$
+\varepsilon^2\int_I|z_{s_B}'|^2dk
+ =\mu(s_B)-s_B\mu'(s_B)=\lambda+B.
+\tag{57.3}
+$$
+
+The unique primal controller is $\psi=z_{s_B},w=0$, the unique
+finite dual maximizer is $s_B$, and
+$F_{\kappa,e}(B)=\mu'(s_B)=\int V_ez_{s_B}^2$.
+In particular every asserted optimizer has $z_{s_B}/\phi$ smooth
+and strictly positive on the closed height interval.
+
+The constant-potential directions are exactly
+$e=\pm(2,-2,1)/3$. In either case $V_e\equiv1/9$ and
+$F_{\kappa,e}(B)=1/9$ for every $B$. For $B>0$ the dual value is
+only a limit as $s\to\infty$, not a finite-multiplier optimum;
+for $B=0$ every $s>0$ is a dual maximizer. The primal optimizers
+in the constant case are exactly the controllers with $w$ constant
+and $\mathcal E(\psi)+w^2/4\le\lambda+B$.
+
+Proof. The phase-current term in (56.4) is nonnegative in every
+direction, and its entropy charge in (55.4) is also nonnegative.
+Consequently the controlled problem reduces exactly to
+
+$$
+F_{\kappa,e}(B)=
+ \inf_{\substack{\psi=\phi f\text{ as in }(54.1)\\
+                         \mathcal E(\psi)\le\lambda+B}}
+                       \int_I V_e\psi^2dk.
+\tag{57.4}
+$$
+
+One inequality discards these two nonnegative current charges;
+the opposite inequality sets $w=0$, for which $\chi=j=0$.
+For each normalized $\psi\in H_0^1(I)$, the already supplied
+Dirichlet Rayleigh characterization gives
+
+$$
+\mu(s)\le\mathcal E(\psi)+s\int_I V_e\psi^2dk.
+\tag{57.5}
+$$
+
+It implies that every value on the right of (57.2) is a lower bound
+in (57.4). This is classical Rayleigh duality, used here as an
+intermediate tool, not claimed as a new general spectral principle.
+It remains to prove equality and attainment in the exact source
+class, including arbitrarily large finite budgets.
+
+The bounded smooth potential has a simple positive first Dirichlet
+eigenfunction for every finite $s\ge0$. These are the same scalar
+fibres as D (36.5); positivity and simplicity follow from the scalar
+ODE and its Wronskian as in D §36. At each face $z_s$ has a nonzero
+inward derivative. Otherwise its value and derivative would vanish
+there and ODE uniqueness would give $z_s=0$. Dividing two smooth
+functions with simple zeroes therefore makes $z_s/\phi$ smooth up
+to the faces with positive endpoint limits. Compactness then gives
+a strictly positive minimum for that ratio for each fixed $s$.
+Thus all these eigenfunctions are actually admitted by (54.1),
+not merely elements of a relaxed Sobolev optimization problem.
+
+The following ordinary one-parameter differentiation spells out the
+needed spectral facts, beyond the inherited near-zero band expansion.
+A bounded perturbation of a simple isolated eigenvalue has a locally
+convergent resolvent series, giving analytic $\mu,z_s$ at every finite
+$s$. Differentiate its normalized real eigenvalue equation, choosing
+$\langle z_s,\partial_s z_s\rangle=0$. With
+$q_s=(V_e-\mu'(s))z_s$ this gives
+
+$$
+\begin{aligned}
+\mu'(s)&=\int_I V_ez_s^2dk,\\
+\mu''(s)&=-2\langle q_s,
+          (H_s-\mu(s))_{z_s^\perp}^{-1}q_s\rangle,\qquad
+H_s=-\varepsilon^2\partial_k^2+sV_e.
+\end{aligned}
+\tag{57.6}
+$$
+
+The inverse is positive on the orthogonal complement because the
+first eigenvalue is simple and separated from the second. If $V_e$
+is nonconstant, $q_s\ne0$: positivity of $z_s$ would otherwise
+force $V_e$ constant. Hence $\mu''(s)<0$ for every finite $s$.
+The height energy
+$E_s=\mu(s)-s\mu'(s)=\mathcal E(z_s)$ obeys
+$E_0=\lambda$ and $E_s'=-s\mu''(s)>0$ for $s>0$.
+
+For this native rational potential, $E_s$ tends to infinity.
+Here is the reason this conclusion is not assumed for arbitrary
+smooth potentials with a flat minimum. The common denominator in
+G (26.7) is nonzero on $[l,u]$, and the numerator of $a=h\cdot c_\kappa$
+is a polynomial of degree at most two. If $V_e$ is nonconstant,
+its minimum set on $[l,u]$ is finite: the equation $V_e=m_e$, where
+$m_e=\min_{[l,u]}V_e$, becomes a nonzero polynomial equation after
+multiplication by the squared denominator. Normalized smooth tests
+supported arbitrarily near a minimizing point, from inside $I$ even
+if it is a face, show
+
+$$
+\lim_{s\to\infty}\frac{\mu(s)}s=m_e,\qquad
+\lim_{s\to\infty}\int_I V_ez_s^2dk=m_e.
+\tag{57.7}
+$$
+
+Indeed the Rayleigh upper bound of such a fixed test is
+$E_{\rm test}/s+m_e+\eta$, while the lower bound is $m_e$.
+Also $m_e\le\int V_ez_s^2\le\mu(s)/s$ because $E_s\ge0$.
+If $E_s$ stayed bounded along a sequence tending to infinity,
+compactness of $H_0^1(I)\hookrightarrow L^2(I)$ would give a
+normalized limit $z$. Equation (57.7) would force
+$\int(V_e-m_e)|z|^2=0$, so $z$ would be supported on that finite
+set, impossible for a normalized $L^2$ function. This proves
+$E_s\to\infty$, including potentials minimized only at the faces.
+
+For every $B>0$ there is therefore exactly one solution of (57.3).
+Use its admitted $z_{s_B}$ and $w=0$ in (57.5). The Rayleigh
+inequality is an equality and its energy is exactly the budget;
+this proves (57.2). Moreover
+
+$$
+\frac{d}{ds}\frac{\mu(s)-\lambda-B}s
+       =\frac{\lambda+B-E_s}{s^2},
+\tag{57.8}
+$$
+
+so this dual optimum is unique. Any other primal optimizer must
+have equality in its Rayleigh bound and spend the entire energy
+budget. Simplicity and positivity force $\psi=z_{s_B}$; the full
+budget already spent on height leaves $\int w^2\rho=0$, hence
+$w=0$. This also rules out a current improving the optimum through
+ballistic cancellation.
+
+At $B=0$, Theorem 55.1 already fixes $\psi=\phi,w=0$.
+Since $\mu(0)=\lambda$, (57.6) gives the dual limit
+$\lim_{s\downarrow0}(\mu(s)-\lambda)/s=\int V_e\phi^2$.
+Strict concavity makes it smaller at every finite $s>0$ when
+$V_e$ is nonconstant. This proves the zero-budget statement without
+mistaking the limiting multiplier for an attained one.
+
+Finally, if $a^2$ is constant, continuity on the connected height
+interval makes $a$ itself constant (including the zero case).
+D Theorem 50.1 supplies exactly the constant-coefficient line
+$h=t(2,-2,\kappa)$ with $a=t$; its polynomial independence excludes
+a zero constant for nonzero $h$. Since $h=J_\kappa^{\mathsf T}e$,
+the original unit normals are precisely $\pm(2,-2,1)/3$, with
+$a=\pm1/3$. Here $\mu(s)=\lambda+s/9$ and the dual expression is
+$1/9-B/s$, proving all its limiting cases. The directional current
+contribution vanishes exactly when $(e\cdot\chi)'=0$. By (56.2)
+this is equivalent to $a w-j\cdot e=0$ pointwise; $a\ne0$ makes
+$w$ constant. Every such controller satisfying the entropy constraint
+is an optimizer, and no other one is. $\square$
+
+## 58. Sharp uniform protection of the weakest transport direction
+
+**Theorem 58.1 (all-budget positive rank and matching admitted family).**
+There are constants $0<c_*\le C_*<\infty$, depending only on the
+fixed native data and nonzero collar, such that for all $B\ge0$ and
+$\kappa\in\mathcal K_\times$,
+
+$$
+c_*(1+B)^{-2}\le
+F_\kappa^{\rm weak}(B):=
+ \inf_{\substack{(\psi,w)\text{ as in }(54.1)\\R\le\lambda+B}}
+                    \lambda_{\min}(D_{\rm eff})
+ =\min_{|e|=1}F_{\kappa,e}(B)
+ \le C_*(1+B)^{-2}.
+\tag{58.1}
+$$
+
+In particular every controller of finite rate budget has three
+strictly positive effective transport eigenvalues, with the same
+lower bound for every controller, normal and parameter in that
+budget and collar. The large-budget upper bound is realized as an
+order bound by a family of positive controllers of (54.1), selected
+before the horizon from the same fixed INITIAL. It is not merely
+an estimate by amplitudes vanishing on part of $I$.
+
+Proof. First consume the inherited native polynomial sublevel
+estimate G (26.7)--(26.8). The signed map sends every unit $e$ to
+$h=J_\kappa^{\mathsf T}e$ in a fixed compact annulus:
+
+$$
+d_-:=\min(1,\kappa_-)\le|h|\le\max(1,\kappa_+)=:d_+.
+\tag{58.2}
+$$
+
+Applying that estimate to $h/|h|$ gives, with uniform $C_0,r_0>0$,
+
+$$
+|\{k\in I:|a(k)|\le r\}|\le C_0\sqrt r\quad(0<r\le r_0).
+\tag{58.3}
+$$
+
+This reuses the strongest supplied source coercivity; no generic
+subelliptic estimate is reconstructed as a new result.
+For an admitted normalized amplitude with
+$\mathcal E(\psi)\le\lambda+B$, the one-dimensional Dirichlet
+Sobolev inequality gives
+$\|\psi\|_\infty^2\le2\|\psi'\|_2\le2\sqrt{\lambda+B}/\varepsilon$.
+Set $A_e=\int_Ia^2\psi^2$. Splitting the unit mass over the set in
+(58.3) and its complement yields
+
+$$
+1\le\frac{2C_0}{\varepsilon}\sqrt{r(\lambda+B)}
+                              +\frac{A_e}{r^2}.
+\tag{58.4}
+$$
+
+Choose a fixed $\eta>0$ small enough that $\eta\le r_0$ and
+$2C_0\sqrt{\eta\max(\lambda,1)}/\varepsilon\le1/2$.
+For $r=\eta/(1+B)$ the first term is at most $1/2$, and hence
+
+$$
+e^{\mathsf T}D_{\rm eff}e\ge A_e
+             \ge\frac{\eta^2}{2(1+B)^2}.
+\tag{58.5}
+$$
+
+The entropy constraint in Theorem 55.1 implies exactly the energy
+bound used here, regardless of $w$. Thus (58.5) is uniform over the
+whole class; it does not depend on a controllerwise mixing or
+positivity constant.
+
+For sharpness fix one $k_*\in I$, independently of INITIAL and of
+all budgets. At each $\kappa$ choose the deterministic unit normal
+
+$$
+e_\kappa=
+ \frac{\widehat c_\kappa(k_*)\mathbin{\times}\widehat c_\kappa'(k_*)}
+ {|\widehat c_\kappa(k_*)\mathbin{\times}\widehat c_\kappa'(k_*)|}.
+\tag{58.6}
+$$
+
+G (32.2), transformed by the same signed matrix, gives
+
+$$
+\det(\widehat c_\kappa,\widehat c_\kappa',\widehat c_\kappa'')
+ =\kappa\det(c_\kappa,c_\kappa',c_\kappa'')\ne0.
+\tag{58.7}
+$$
+
+The cross product in (58.6) is therefore nonzero and has a uniform
+positive lower norm on the collar. For
+$a_\kappa=e_\kappa\cdot\widehat c_\kappa$ this implies
+$a_\kappa(k_*)=a_\kappa'(k_*)=0$ and
+$a_\kappa''(k_*)\ne0$. Bounded coefficient derivatives give the
+uniform estimate
+$|a_\kappa(k)|\le C_a|k-k_*|^2$ near $k_*$. This is an actual
+double contact of the native coefficient curve with its selected
+normal, not an extra flat direction of the source.
+
+Choose a nonnegative real $\eta_0\in C_c^\infty(-1,1)$ with
+$\int\eta_0^2=1$ and a fixed
+$0<\delta_0<\min(1,k_*-l,u-k_*)$. For $0<\delta\le\delta_0$ put
+
+$$
+b_\delta(k)=\delta^{-1/2}\eta_0((k-k_*)/\delta),\qquad
+\psi_\delta=
+ \frac{b_\delta+\delta^2\phi}{\|b_\delta+\delta^2\phi\|_2},\qquad
+w_\delta=0.
+\tag{58.8}
+$$
+
+The normalization denominator is at least one. The ratio
+$\psi_\delta/\phi$ is smooth on $[l,u]$ and is at least
+$\delta^2/\|b_\delta+\delta^2\phi\|_2>0$, including at both faces.
+Thus this family is in the precise positive class. In particular
+the small background term is present at every finite budget.
+Direct norm bounds, uniformly in the collar, give
+
+$$
+\begin{aligned}
+\mathcal E(\psi_\delta)
+ &\le2\varepsilon^2\|\eta_0'\|_2^2\delta^{-2}
+                             +2\lambda\delta^4
+ \le C_E\delta^{-2},\\
+\int_Ia_\kappa^2\psi_\delta^2dk
+ &\le2C_a^2\delta^4\int_{-1}^1 z^4\eta_0(z)^2dz
+                    +2\delta^4\int_Ia_\kappa^2\phi^2dk
+ \le C_A\delta^4,
+\end{aligned}
+\tag{58.9}
+$$
+
+where, for example, take
+$C_E=2\varepsilon^2\|\eta_0'\|_2^2+2\lambda$.
+For $\lambda+B\ge C_E/\delta_0^2$ select
+$\delta=\sqrt{C_E/(\lambda+B)}$. Its entropy rate is its height
+energy and is at most $\lambda+B$, while $j=\chi=0$. Consequently
+
+$$
+\lambda_{\min}(D_{\rm eff}(\psi_\delta,0))
+ \le e_\kappa^{\mathsf T}D_{\rm eff}(\psi_\delta,0)e_\kappa
+ \le C_A C_E^2(\lambda+B)^{-2}.
+\tag{58.10}
+$$
+
+For the remaining bounded budgets choose $\psi=\phi,w=0$ and
+increase $C_*$ using the uniform upper bound on $\widehat M_\kappa$.
+Since $\lambda$ is fixed and positive, $(\lambda+B)^{-2}$ and
+$(1+B)^{-2}$ are comparable. This proves the two bounds for all
+budgets. The initial height has never moved to $k_*$; only the
+invariant amplitude of the fixed controller has been concentrated
+there. Its transient duration need not be uniform as $B\to\infty$.
+
+Finally, infima over controllers and unit normals commute. The
+energy sublevel of normalized $H_0^1$ amplitudes is compact in
+$L^2$, and $V_e$ depends continuously on $e$ in supremum norm.
+Alternatively (57.4) directly gives
+$|F_{\kappa,e}(B)-F_{\kappa,e'}(B)|\le\|V_e-V_{e'}\|_\infty$.
+The directional minimum is thus attained on the unit sphere.
+Theorem 57.1 supplies an admitted controller at that normal, proving
+the equality in (58.1) as well as primal attainment for the weakest
+frontier. The matching exponent concerns this weakest-direction
+optimization. It does not say that every fixed normal has that
+large-budget decay: the constant directions keep value $1/9$.
+$\square$
+
+## 59. The conditional transport-selection consumer and its boundaries
+
+**Proposition 59.1 (a positive sufficient condition for the existing
+survival-selection task).** For the source and transport-selection
+consumer of Proposition 53.2, restrict admissible selections to
+(54.1)--(54.2), with a fixed finite excess-rate budget $B$. Then
+minimum rate selects the supplied Q controller exactly; every
+admitted selection with rate at most $\lambda+B$, after subtracting
+its own $j$, has a three-direction continuous-path Brownian limit
+whose tensor is bounded below by $c_*(1+B)^{-2}\mathrm{Id}$.
+The exact directional cost frontier is (57.2), and this uniform
+weakest-direction order cannot be strengthened to a larger order
+as $B\to\infty$ within the same class.
+
+Proof. Theorem 55.1 fixes the minimum and its equality case on full
+native paths. Theorem 56.1 uses the same law, source, clock and
+INITIAL to identify the centered path limit. Theorems 57.1 and 58.1
+apply to that identical rate and tensor, so their lower bounds and
+positive admitted upper family are simultaneously valid consumers
+of the entropy calculation, not separately optimized quantities
+from incompatible histories. They prove every assertion.
+
+This restriction changes the quantified selection class in a
+substantive way. Corollary 52.1 quantifies over arbitrary
+absolutely continuous finite-horizon reweightings; its attaining
+planar laws are not supplied as prefixes of a fixed homogeneous
+height-only policy. It therefore retains its obstruction to entropy
+rate alone in that larger class. The present sufficient condition
+uses persistence, phase-translation covariance, independent drivers,
+height-only state dependence, the fixed collar and finite rate
+budget together. No conclusion is drawn for arbitrary phase
+feedback, hidden-memory controllers, nonstationary reweightings,
+or policies changed with the observation horizon.
+$\square$
+
+**Definition 59.2 (mathematical correspondence and remaining bridges).**
+The correspondence to the original task is as follows. The objects
+are the original native source histories and the controlled laws
+on that same path space. Their common source data are D Definition
+35.1 and G (25.2)--(25.5). The original preparation, probabilities,
+rational coefficients, two columns, height guard and both killed
+faces are retained; the only added drift permissions are the
+explicit feedback ones in Definition 54.1. D (39.1) is used solely
+as the signed linear map to the original $y$; neither its metric
+nor its clock is rescaled. The initial point is deterministic in
+every experiment, even when theorems range over a collar or budget.
+The two Brownian drivers, current and corrector belong to one common
+controlled history, so the covariance and entropy bounds require
+no independent attainment or coupling assumption.
+
+The observation permission is a complete continuous height history
+and access to the two driver biases, with known fixed calibration.
+A specified continuous winding lift is the mathematical phase
+record for the path statements. A wrapped endpoint, finite paid
+Reads, an estimator with finite precision, or an unknown calibration
+is a different observation service. D Theorem 55.2 supplies height
+recovery from an already supplied ideal continuous phase record in
+its stated experiment; D §§55--60 do not acquire that record or
+install driver biases. The metric is the declared
+Euclidean metric on the original $(\theta,v,D)$ and the uniform
+metric on centered continuous paths over $[0,b]$. Ballistic
+centering uses that controller's own mean $j$; it does not remove
+its independent phase martingale. There is no vanishing-resolution
+tube constraint in (57.2). The precision is the diffusive $\sqrt T$
+scaling and weak continuous-path convergence, with exact analytic
+height feedback. The resource is full-path relative entropy in
+nats per unit original time. It is not a Read count, fixed number
+of bits, total command variation, physical energy, or installed
+actuator cost. Theorems 55.1 and 56.1 are controllerwise limits;
+Theorems 57.1 and 58.1 are uniform mathematical bounds on the
+resulting rates and tensors for all controllers and collar
+parameters. They do not interchange those limits with a
+budget-dependent horizon or give a uniform acquisition latency.
+
+The strongest reused suppliers are D (36.1), (36.4)--(36.5),
+(37.2), (37.8)--(37.9), §§38--39 and Theorem 50.1; G (26.7)--(26.8)
+and (32.2); and the original entropy consumer in §§49--53.
+The Q-law covariance, its rank, scalar Dirichlet band, rational
+sublevel bound, nonzero native second-jet determinant and autonomous
+line are their existing results. The bounded-corrector method in
+this volume §43 is also existing mathematics. The new consumption
+is the fixed-source controller's full-path likelihood and rate,
+its actual-current corrector tensor, exact budget optimization and
+positive sharp all-budget weakest-direction law, combined in
+Proposition 59.1. No old Q limit, Carnot rank, fixed-source Green
+law or finite-horizon tube frontier is counted again as new content.
+
+The measure-level entropy principle and its reversible spectral
+comparison are classical. Chetrite--Touchette,
+[*Variational and optimal control representations of conditioned and
+driven processes*, arXiv:1506.05291v3](https://arxiv.org/html/1506.05291v3),
+§III.4 (52)--(56) and Appendix A.2 (90)--(94), provide the
+relative-entropy and reversible Rayleigh/Donsker--Varadhan
+correspondence. Their §IV current-cost expressions, including (76),
+use $D^{-1}$; those formulas are not applied to this degenerate native
+state matrix. Here the scalar band is exactly
+$-\varepsilon^2\partial_k^2+s(e\cdot\widehat c_\kappa)^2$ with two
+Dirichlet faces, its ground amplitude is positive and normalized in
+$dk$, and its sign is a nonnegative potential for a lowest
+eigenvalue. The full proof (57.5)--(57.8) supplies the correspondence,
+attainment and endpoint cases for this source without importing an
+ergodic full-state probability or an invertible diffusion matrix.
+The original Donsker--Varadhan PNAS text is not an additional premise.
+Whitt Theorem 2.1(ii), cited at its application in Theorem 56.1,
+supplies only the classical martingale FCLT: local square
+integrability, zero jumps and convergence of every predictable
+bracket entry are checked there explicitly. The two-driver
+exponential change, endpoint integrability, source-specific
+optimization and sharp positive test family are proved above.
+These tools are credited classical intermediates; the native
+combination is `repo-derived`, with no global originality claim.
+
+Remaining implementation and interpretation obligations are exact
+continuous-height acquisition, installed bias access with its
+latency and cost, any robustness to finite precision or delay, and
+a lawful correspondence to existing native commands and their
+refusal/Stop handling. No theorem here provides such a service or
+turns the killed reference's failure histories into an acquired
+ability to refuse death. The original paths and legal operations
+retain their source semantics; the controller law is a conditional
+analytic model. No full-cover invariant phase probability is assumed
+or constructed: only the height density $\rho dk$ is a probability.
+
+The collar is essential to the uniform original-coordinate rank
+statement. At the actual $\kappa=0$ leaf the original $D$ coordinate
+is frozen, so no extension of its positive three-direction bound
+or division by $\kappa$ is made. Local control rank, predictive
+state dimension, effective diffusion rank, spectral or homogeneous
+dimension, and physical spatial dimension remain separate notions.
+The result supplies a sufficient selection condition for three
+effective transport directions under its explicit premises. It
+neither identifies physical axes nor derives the diffusion or the
+physical relevance of persistent height-only feedback from bare
+FIB. These are ordinary mathematical proofs from the stated native
+premises, with no Lean/kernel certification or empirical claim.
+
+## 追加锚（本行以下为增补区）
