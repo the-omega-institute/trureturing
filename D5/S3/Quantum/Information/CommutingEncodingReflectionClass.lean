@@ -616,6 +616,100 @@ private lemma local_site_normal_form {κ : Type*}
     obtain ⟨V, hV, c, p, hc, hp⟩ := pauli_site_frame B hB hs htr
     exact ⟨V, hV, Or.inr ⟨c, p, hc, hp⟩⟩
 
+private def pauli_symbol : Pauli → ZMod 2 × ZMod 2
+  | .I => (0, 0)
+  | .X => (1, 0)
+  | .Y => (1, 1)
+  | .Z => (0, 1)
+
+private def word_symbol {n : ℕ} (p : Fin n → Pauli) :
+    (Fin n → ZMod 2) × (Fin n → ZMod 2) :=
+  (fun j => (pauli_symbol (p j)).1, fun j => (pauli_symbol (p j)).2)
+
+private lemma finite_isotropic_extension {n : ℕ}
+    (B : LinearMap.BilinForm (ZMod 2) ((Fin n → ZMod 2) × (Fin n → ZMod 2)))
+    (hAlt : B.IsAlt) (hNd : B.Nondegenerate)
+    (S : Submodule (ZMod 2) ((Fin n → ZMod 2) × (Fin n → ZMod 2)))
+    (hS : ∀ u ∈ S, ∀ v ∈ S, B u v = 0) :
+    ∃ L : Submodule (ZMod 2) ((Fin n → ZMod 2) × (Fin n → ZMod 2)),
+      S ≤ L ∧ (∀ u ∈ L, ∀ v ∈ L, B u v = 0) ∧ Module.finrank (ZMod 2) L = n := by
+  classical
+  obtain ⟨L, hSL, hmax⟩ := Finite.exists_le_maximal
+    (p := fun L : Submodule (ZMod 2) ((Fin n → ZMod 2) × (Fin n → ZMod 2)) =>
+      ∀ u ∈ L, ∀ v ∈ L, B u v = 0) hS
+  have hL := hmax.1
+  have hperp : B.orthogonal L = L := by
+    apply le_antisymm
+    · intro x hx
+      have hT : ∀ u ∈ L ⊔ Submodule.span (ZMod 2) {x},
+          ∀ v ∈ L ⊔ Submodule.span (ZMod 2) {x}, B u v = 0 := by
+        intro u hu v hv
+        obtain ⟨u, huL, u', hu', rfl⟩ := Submodule.mem_sup.mp hu
+        obtain ⟨v, hvL, v', hv', rfl⟩ := Submodule.mem_sup.mp hv
+        obtain ⟨a, rfl⟩ := Submodule.mem_span_singleton.mp hu'
+        obtain ⟨b, rfl⟩ := Submodule.mem_span_singleton.mp hv'
+        have hxu : B x v = 0 := (hAlt.eq_iff).mp (hx v hvL)
+        simp [map_add, hL u huL v hvL, hx u huL, hxu, hAlt.self_eq_zero]
+      apply hmax.2 hT le_sup_left
+      exact Submodule.mem_sup.mpr
+        ⟨0, L.zero_mem, x, Submodule.mem_span_singleton_self x, zero_add x⟩
+    · intro x hx y hy
+      exact hL y hy x hx
+  have hd := B.finrank_orthogonal hNd L
+  rw [hperp] at hd
+  have hE : Module.finrank (ZMod 2) ((Fin n → ZMod 2) × (Fin n → ZMod 2)) = n + n := by
+    simp [Module.finrank_prod]
+  rw [hE] at hd
+  exact ⟨L, hSL, hL, by omega⟩
+
+private lemma diagonal_on_span {ι : Type*} [Fintype ι] [DecidableEq ι]
+    (F : Matrix ι ι ℂ) (s : Set (Matrix ι ι ℂ))
+    (hs : ∀ A ∈ s, (Fᴴ * A * F).IsDiag)
+    (A : Matrix ι ι ℂ) (hA : A ∈ Submodule.span ℂ s) :
+    (Fᴴ * A * F).IsDiag := by
+  induction hA using Submodule.span_induction with
+  | mem A hA => exact hs A hA
+  | zero => simpa only [Matrix.mul_zero, Matrix.zero_mul] using
+      (Matrix.isDiag_zero : (0 : Matrix ι ι ℂ).IsDiag)
+  | add A B _ _ hA hB =>
+      simpa only [Matrix.mul_add, Matrix.add_mul] using hA.add hB
+  | smul c A _ hA =>
+      simpa only [Matrix.mul_smul, Matrix.smul_mul] using hA.smul c
+
+private lemma local_forms_isotropic_span {n : ℕ}
+    (U : Fin (2 ^ n) → Fin n → Matrix (Fin 2) (Fin 2) ℂ)
+    (hU : ∀ a j, U a j ∈ Matrix.unitaryGroup (Fin 2) ℂ)
+    (hc : ∀ a b, tensorOp (U a) * tensorOp (U b) =
+      tensorOp (U b) * tensorOp (U a))
+    (V : Fin n → Matrix (Fin 2) (Fin 2) ℂ)
+    (hV : ∀ j, V j ∈ Matrix.unitaryGroup (Fin 2) ℂ)
+    (hsites : ∀ j,
+      (∀ a, ∃ d : Fin 2 → ℂ, V j * U a j * (V j)ᴴ = diagonal d) ∨
+      (∃ (c : Fin (2 ^ n) → ℂ) (p : Fin (2 ^ n) → Pauli),
+        (∀ a, star (c a) * c a = 1) ∧
+        (∀ a, V j * U a j * (V j)ᴴ = c a • pauliMatrix (p a)))) :
+    ∃ (B : LinearMap.BilinForm (ZMod 2) ((Fin n → ZMod 2) × (Fin n → ZMod 2)))
+      (S : Submodule (ZMod 2) ((Fin n → ZMod 2) × (Fin n → ZMod 2))),
+      B.IsAlt ∧ B.Nondegenerate ∧
+      (∀ u v, B u v = BinaryLagrangianGraphForm.sp u v) ∧
+      (∀ u ∈ S, ∀ v ∈ S, B u v = 0) ∧
+      (∀ a, tensorOp (fun j => V j * U a j * (V j)ᴴ) ∈
+        Submodule.span ℂ (wordOp '' {p | word_symbol p ∈ S})) := by
+  sorry
+
+private lemma lagrangian_character_frame {n : ℕ} (hn : 1 ≤ n)
+    (L : Submodule (ZMod 2) ((Fin n → ZMod 2) × (Fin n → ZMod 2)))
+    (hL : ∀ u ∈ L, ∀ v ∈ L, BinaryLagrangianGraphForm.sp u v = 0)
+    (hdim : Module.finrank (ZMod 2) L = n) :
+    ∃ (F : Matrix (Fin n → Fin 2) (Fin n → Fin 2) ℂ)
+      (R : (Fin n → Fin 2) → Fin n → Matrix (Fin 2) (Fin 2) ℂ),
+      F ∈ Matrix.unitaryGroup (Fin n → Fin 2) ℂ ∧
+      (∀ a j, (R a j).IsHermitian ∧ R a j * R a j = 1) ∧
+      (∀ a, Fᴴ * tensorOp (R a) * F =
+        diagonal (fun x => ∏ j, (-1 : ℂ) ^ ((a j).val * (x j).val))) ∧
+      (∀ p, word_symbol p ∈ L → (Fᴴ * wordOp p * F).IsDiag) := by
+  sorry
+
 private lemma stabilizer_frame_of_site_normal_forms {n : ℕ} (hn : 1 ≤ n)
     (U : Fin (2 ^ n) → Fin n → Matrix (Fin 2) (Fin 2) ℂ)
     (hU : ∀ a j, U a j ∈ Matrix.unitaryGroup (Fin 2) ℂ)
@@ -637,7 +731,42 @@ private lemma stabilizer_frame_of_site_normal_forms {n : ℕ} (hn : 1 ≤ n)
       (∀ a j, (R a j).IsHermitian ∧ R a j * R a j = 1) ∧
       (∀ a, Fᴴ * tensorOp (R a) * F =
         diagonal (fun x => ∏ j, (-1 : ℂ) ^ ((a j).val * (x j).val))) := by
-  sorry
+  classical
+  obtain ⟨B, S, hAlt, hNd, hB, hS, hspan⟩ :=
+    local_forms_isotropic_span U hU hc V hV hsites
+  obtain ⟨L, hSL, hL, hdim⟩ := finite_isotropic_extension B hAlt hNd S hS
+  have hsp : ∀ u ∈ L, ∀ v ∈ L, BinaryLagrangianGraphForm.sp u v = 0 := by
+    intro u hu v hv
+    rw [← hB]
+    exact hL u hu v hv
+  obtain ⟨F, R, hF, hR, hRd, hdiag⟩ := lagrangian_character_frame hn L hsp hdim
+  have hd (a) : (Fᴴ * tensorOp (fun j => V j * U a j * (V j)ᴴ) * F).IsDiag := by
+    refine diagonal_on_span F (wordOp '' {p : Fin n → Pauli | word_symbol p ∈ L})
+      ?_ _ ?_
+    · rintro A ⟨p, hp, rfl⟩
+      exact hdiag p hp
+    · have hincl : wordOp '' {p : Fin n → Pauli | word_symbol p ∈ S} ⊆
+          wordOp '' {p : Fin n → Pauli | word_symbol p ∈ L} :=
+        Set.image_mono (fun p hp => hSL hp)
+      exact Submodule.span_mono hincl (hspan a)
+  let eig (a : Fin (2 ^ n)) :=
+    Matrix.diag (Fᴴ * tensorOp (fun j => V j * U a j * (V j)ᴴ) * F)
+  have he (a) : Fᴴ * tensorOp (fun j => V j * U a j * (V j)ᴴ) * F =
+      diagonal (eig a) := (hd a).diagonal_diag.symm
+  refine ⟨F, eig, R, hF, ?_, he, hR, hRd⟩
+  intro a x
+  have hu : tensorOp (fun j => V j * U a j * (V j)ᴴ) ∈
+      Matrix.unitaryGroup (Fin n → Fin 2) ℂ := by
+    apply tensor_unitary
+    intro j
+    exact (Matrix.unitaryGroup (Fin 2) ℂ).mul_mem
+      ((Matrix.unitaryGroup (Fin 2) ℂ).mul_mem (hV j) (hU a j))
+      (Unitary.star_mem (hV j))
+  have hdu : diagonal (eig a) ∈ Matrix.unitaryGroup (Fin n → Fin 2) ℂ := by
+    rw [← he a]
+    exact (Matrix.unitaryGroup (Fin n → Fin 2) ℂ).mul_mem
+      ((Matrix.unitaryGroup (Fin n → Fin 2) ℂ).mul_mem (Unitary.star_mem hF) hu) hF
+  exact congrFun (Matrix.diagonal_mem_unitary.mp hdu).1 x
 
 private lemma spectral_frame_of_local_signs {n : ℕ} (hn : 1 ≤ n)
     (U : Fin (2 ^ n) → Fin n → Matrix (Fin 2) (Fin 2) ℂ)
