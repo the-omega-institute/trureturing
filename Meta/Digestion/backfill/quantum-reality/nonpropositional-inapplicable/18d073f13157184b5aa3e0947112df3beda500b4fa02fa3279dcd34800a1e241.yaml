@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:18d073f13157184b5aa3e0947112df3beda500b4fa02fa3279dcd34800a1e241
+  normalized_sha256: sha256:18d073f13157184b5aa3e0947112df3beda500b4fa02fa3279dcd34800a1e241
+cas_ref: sha256:18d073f13157184b5aa3e0947112df3beda500b4fa02fa3279dcd34800a1e241
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 保真检查和零点检查不可互替的研究方法要求，无给定对象上的等式、不等式或存在性断言。
+    previous_atom_id: 6e7f5a414cb1ca3ddddcd7c6e2d478f9bd784249554453dfc6e8f0ac7d7cd127
+    next_atom_id: 4dd1f9fefde73812a82183c5b37f29e9f6375822b1c1ba93e926df84a80de8d7
