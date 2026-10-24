@@ -154,7 +154,10 @@ internal sealed class CommutingEncodingReflectionClassDocument : IScribeDocument
                         + "additional Hermitian and involution conditions. The forward construction "
                         + "already obtains normalization from the orthonormal orbit; it does not "
                         + "need the separate unit-vector hypothesis in the displayed statement."))),
-                DescribeRole.Theorem))));
+                DescribeRole.Theorem,
+                openProblemResolutionClaim: new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("pauwels-guhne-2026-commuting-encoding-reflection-class"),
+                    ResolutionKind.Proved)))));
 
     private static Formula ProductDefinition() => EncodingBinders(Equal(
         LocalCall("IsCommutingProductEncoding", Psi, V("U")), Parenthesized(ProductBody())));
