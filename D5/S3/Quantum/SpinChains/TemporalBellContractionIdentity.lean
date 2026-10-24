@@ -271,11 +271,91 @@ private lemma number_factor_diagonal {N : ℕ} (j : Fin N) :
     cases hs : s j <;> norm_num [hs]
   · simp [Matrix.diagonal_apply, hst, Matrix.one_apply]
 
+private lemma parity_prefix (N : ℕ) (hN : 0 < N) :
+    (((List.finRange N).filter (fun j => j.val < N - 1)).map
+      (fun j => (1 : FullOperator N) - (2 : ℂ) • ((fullC j)ᴴ * fullC j))).prod *
+        ((1 : FullOperator N) - (2 : ℂ) •
+          ((fullC ⟨N - 1, Nat.sub_lt hN (by decide)⟩)ᴴ *
+            fullC ⟨N - 1, Nat.sub_lt hN (by decide)⟩)) = numberParity N := by
+  let last : Fin N := ⟨N - 1, Nat.sub_lt hN (by decide)⟩
+  let S (j : Fin N) : Assignment N → ℂ := fun s => if s j then -1 else 1
+  have hlist (l : List (Fin N)) :
+      (l.map (fun j => (1 : FullOperator N) - (2 : ℂ) • ((fullC j)ᴴ * fullC j))).prod =
+        Matrix.diagonal (fun s => (l.map (fun j => S j s)).prod) := by
+    simp_rw [number_factor_diagonal]
+    change (l.map ((Matrix.diagonalRingHom (Assignment N) ℂ) ∘ S)).prod = _
+    rw [List.prod_map_hom]
+    change Matrix.diagonal ((l.map S).prod) = Matrix.diagonal _
+    congr 1
+    funext s
+    simp only [Pi.list_prod_apply, List.map_map, Function.comp_apply]
+    rfl
+  have he : (Finset.univ.filter (fun j : Fin N => j.val < N - 1)) =
+      Finset.univ.erase last := by
+    ext j
+    simp only [Finset.mem_filter, Finset.mem_univ, true_and, Finset.mem_erase,
+      and_true]
+    change j.val < N - 1 ↔ j ≠ last
+    constructor
+    · intro hj heq
+      have hv := congrArg Fin.val heq
+      change j.val = N - 1 at hv
+      omega
+    · intro hne
+      have hj := j.isLt
+      have hv : j.val ≠ N - 1 := by
+        intro hv
+        exact hne (Fin.ext hv)
+      omega
+  have hpre (s : Assignment N) :
+      (((List.finRange N).filter (fun j => j.val < N - 1)).map (fun j => S j s)).prod =
+        ∏ j ∈ Finset.univ.erase last, S j s := by
+    rw [← List.prod_toFinset _ ((List.nodup_finRange N).filter _)]
+    simp only [List.toFinset_filter, List.toFinset_finRange, decide_eq_true_eq, he]
+  have hall (s : Assignment N) :
+      (∏ j : Fin N, S j s) =
+        (-1 : ℂ) ^ D5.S3.Quantum.FockSpace.ForbiddenNeighbourDeterminant.occupationCount s := by
+    rw [D5.S3.Quantum.FockSpace.ForbiddenNeighbourDeterminant.occupationCount,
+      ← Finset.prod_pow_eq_pow_sum]
+    apply Finset.prod_congr rfl
+    intro j hj
+    cases hs : s j <;> simp [S, hs]
+  rw [hlist, number_factor_diagonal, Matrix.diagonal_mul_diagonal,
+    D5.S3.Quantum.Fermionic.FockMajoranaCarrier.numberParity_eq_diagonal]
+  congr 1
+  funext s
+  change (((List.finRange N).filter (fun j => j.val < N - 1)).map (fun j => S j s)).prod *
+    S last s = _
+  rw [hpre, Finset.prod_erase_mul _ _ (Finset.mem_univ last), hall]
+
+private lemma endpoint_parity_factor {N : ℕ} (j : Fin N) :
+    ((1 : FullOperator N) - (2 : ℂ) • ((fullC j)ᴴ * fullC j)) *
+      (fullC j - (fullC j)ᴴ) = (fullC j)ᴴ + fullC j := by
+  have hbb : (fullC j)ᴴ * (fullC j)ᴴ = 0 := by
+    have hz : (2 : ℂ) • ((fullC j)ᴴ * (fullC j)ᴴ) = 0 := by
+      simpa only [two_smul] using creation_anticomm j j
+    exact (smul_eq_zero.mp hz).resolve_left (by norm_num)
+  have haa : fullC j * fullC j = 0 := by
+    have ht := congrArg Matrix.conjTranspose hbb
+    simpa only [Matrix.conjTranspose_mul, Matrix.conjTranspose_conjTranspose,
+      Matrix.conjTranspose_zero] using ht
+  have hbaa : ((fullC j)ᴴ * fullC j) * fullC j = 0 := by
+    rw [mul_assoc, haa, mul_zero]
+  have hbab : ((fullC j)ᴴ * fullC j) * (fullC j)ᴴ = (fullC j)ᴴ := by
+    calc
+      _ = (fullC j)ᴴ * (fullC j * (fullC j)ᴴ + (fullC j)ᴴ * fullC j) -
+          ((fullC j)ᴴ * (fullC j)ᴴ) * fullC j := by noncomm_ring
+      _ = _ := by rw [fullC_CAR, hbb]; simp
+  rw [sub_mul, one_mul, Matrix.smul_mul, mul_sub, hbaa, hbab]
+  simp only [zero_sub, smul_neg, two_smul]
+  noncomm_ring
+
 private lemma sigmaXLast_parity (N : ℕ) (hN : 0 < N) :
     sigmaXLast N hN = numberParity N *
       (fullC ⟨N - 1, Nat.sub_lt hN (by decide)⟩ -
         (fullC ⟨N - 1, Nat.sub_lt hN (by decide)⟩)ᴴ) := by
-  sorry
+  unfold sigmaXLast
+  rw [← parity_prefix N hN, mul_assoc, endpoint_parity_factor]
 
 private lemma parity_stationary (N : ℕ) (J μ t : ℝ) :
     evolve J μ t (numberParity N) = numberParity N := by
