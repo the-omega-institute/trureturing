@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:ce1627e382cf42924a790eaee03ae90c3f1431e0f00184eaa8927a2420e1b9c4
+  normalized_sha256: sha256:ce1627e382cf42924a790eaee03ae90c3f1431e0f00184eaa8927a2420e1b9c4
+cas_ref: sha256:ce1627e382cf42924a790eaee03ae90c3f1431e0f00184eaa8927a2420e1b9c4
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 'Nonpropositional bibliographic/scope row: identifies section 24 of the quantitative-diagonalization volume as the existing source of unary discounted geometry, recursion, truncation and semiconjugacy. The second clause states what this volume treats as already supplied. It states no new quantified mathematical relation. Searched scope: the entire row and its source-table context; D5 observer metric geometry and naturality names referenced by the adjacent rows.'
+    previous_atom_id: 69384a7d7a24a25aa55d6765a9ff856a8853486884f4cdbf41155b5cbe7d45ad
+    next_atom_id: c0192157445625699d663cecb7b9a59a6163bf9215255a1ad3c1b29fb85f5372

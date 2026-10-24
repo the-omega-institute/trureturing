@@ -130,7 +130,8 @@ need a mathematical skill. A contribution request you can paste:
 
 1. Define the expected improvement using [Choose a starting point](#choose-a-starting-point)
    and read the linked rules before editing.
-2. Follow [Your first change](#your-first-change) to create or reuse a worktree;
+2. Follow [Your first change](#your-first-change) to reuse a suitable linked worktree
+   or create one when isolation is needed;
    open that directory as the agent's workspace for the contribution.
 3. [Edit the owning source](#edit-the-owning-source), run
    [focused validation](#check-your-change), and arrange independent review of
@@ -174,8 +175,18 @@ git clone https://github.com/YOUR-USERNAME/trureturing.git
 cd trureturing
 ```
 
-From your `dev` checkout, run `git worktree list --porcelain`; reuse this
-session's worktree if listed. Otherwise replace `SESSION-ID` with your actual
+For reading, search, statistics, diff, viewing commits/PRs/issues and
+creating/editing GitHub issues, use the main checkout or a suitable existing worktree;
+no new worktree or build is required. Prefer `git show <commit>:<path>` for
+pinned-revision reads. Never switch a shared checkout's branch for reading.
+
+For repository edits, worktree-mutating tests/verification, checkout changes,
+incompatible builds and builds with write side effects, first reuse a suitable linked worktree;
+create one only when isolation is needed. Builds that write are not read-only.
+From your `dev` checkout, run `git worktree list --porcelain`; check registration,
+repository identity, branch/commit and pin compatibility, existing material and
+cooperative scopes under CLAUDE.md §6.1 before reuse. Reuse can cross sessions.
+When isolation requires a new tree, replace `SESSION-ID` with your actual
 session ID and run the following, adding `upstream` only if absent:
 
 ```sh
