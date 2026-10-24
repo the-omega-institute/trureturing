@@ -189,7 +189,30 @@ private theorem marginal_leaf (i : Fin 4) (hi : i ≠ 0) :
 private theorem entropies :
     entropy2 (rho1 psi 0) = 3 ∧ entropy2 (rho1 psi 1) = 1 ∧
     entropy2 (rho1 psi 2) = 1 ∧ entropy2 (rho1 psi 3) = 1 := by
-  sorry
+  have hlog : Real.log (8 : ℝ) = 3 * Real.log 2 := by
+    rw [show (8 : ℝ) = 2 ^ 3 by norm_num, Real.log_pow]
+    norm_num
+  have hne : Real.log (2 : ℝ) ≠ 0 := Real.log_ne_zero_of_pos_of_ne_one (by norm_num) (by norm_num)
+  have hA : entropy2 (rho1 psi 0) = 3 := by
+    rw [marginal_A, entropy2]
+    rw [show (1 / 8 : ℂ) = ((1 / 8 : ℝ) : ℂ) by norm_num, entropy_diagonal]
+    simp only [Finset.sum_const, Finset.card_univ, Fintype.card_fin, nsmul_eq_mul]
+    apply (div_eq_iff hne).mpr
+    norm_num [Real.negMulLog, Real.log_div, hlog]
+    <;> ring
+  have hL (i : Fin 4) (hi : i ≠ 0) : entropy2 (rho1 psi i) = 1 := by
+    rw [marginal_leaf i hi, entropy2]
+    let w : Fin 8 → ℝ := fun a => if a.val < 2 then 1 / 2 else 0
+    have hdiag : (fun a : Fin 8 => if a.val < 2 then (1 / 2 : ℂ) else 0) =
+        (fun a => (w a : ℂ)) := by
+      funext a
+      dsimp [w]
+      split_ifs <;> norm_num
+    rw [hdiag, entropy_diagonal]
+    apply (div_eq_iff hne).mpr
+    norm_num [w, Fin.sum_univ_succ, Real.negMulLog, Real.log_div]
+    <;> ring
+  exact ⟨hA, hL 1 (by decide), hL 2 (by decide), hL 3 (by decide)⟩
 
 private theorem forced_fill (σ : Fin 6 → ℝ) (ell : ℝ) (h : AdmissibleFill psi σ ell) :
     σ = ![1, 1, 1, 0, 0, 0] := by
