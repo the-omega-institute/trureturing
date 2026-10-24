@@ -6,8 +6,7 @@
    utility: kind=certified-instance; basis=refutes=gid:D5/S3/Quantum/Measurements/SteeringPowerPreservationRefutation.claim; result=D5/S3/Quantum/Measurements/SteeringPowerPreservationRefutation.result; claim=D5/S3/Quantum/Measurements/SteeringPowerPreservationRefutation.claim
    digest: An admissible five-dimensional projective family fails steering power preservation. -/
 
-import D5.S3.Observer.MatrixUnitCertificate
-import D5.S3.Quantum.Algebra.WeylDisplacementPowers
+import D5.S3.Quantum.Information.StabilizerAutocorrelationNormRefutation
 
 /-! A five-dimensional counterexample to steering power preservation. -/
 
@@ -15,6 +14,7 @@ namespace D5.S3.Quantum.Measurements.SteeringPowerPreservationRefutation
 
 open scoped BigOperators
 open D5.S3.Observer.WindowRegister
+open D5.S3.Quantum.Information.StabilizerAutocorrelationNormRefutation (shift clock)
 
 noncomputable section
 
@@ -54,14 +54,8 @@ private def t (j y : Fin 5) : ℤ :=
 
 private def phases (j y : Fin 5) : ℝ := (2 * Real.pi / 5) * (t j y : ℝ)
 
-private def X : Matrix (Fin 5) (Fin 5) ℂ :=
-  (shiftMatrix 5).submatrix (ZMod.finEquiv 5) (ZMod.finEquiv 5)
-
-private def Z : Matrix (Fin 5) (Fin 5) ℂ :=
-  (clockMatrix 5).submatrix (ZMod.finEquiv 5) (ZMod.finEquiv 5)
-
 private def R (y : Fin 5) : Matrix (Fin 5) (Fin 5) ℂ :=
-  ∑ k : Fin 5, star (coeff 5 phases 1 y k) • (X * Z ^ k.val)
+  ∑ k : Fin 5, star (coeff 5 phases 1 y k) • (shift * clock ^ k.val)
 
 private def B (y : Fin 5) : Matrix (Fin 5) (Fin 5) ℂ :=
   if y = 0 then windowRoot 5 • R y else R y
@@ -126,7 +120,9 @@ private lemma coefficient_orthogonality (n : ℕ) (hn : 1 ≤ n) (hn' : n ≤ 4)
     ∑ k, star (coeff 5 phases n y' k) * coeff 5 phases n y k =
       if y = y' then 1 else 0 := by
   have h4 : windowRoot 5 ^ 4 = -1 - windowRoot 5 - windowRoot 5 ^ 2 - windowRoot 5 ^ 3 := by
-    linear_combination root_relations.2.1
+    simpa [Finset.sum_range_succ, sub_eq_add_neg, neg_add_rev, add_assoc, add_comm,
+      add_left_comm] using
+      (windowRoot_isPrimitiveRoot 5).pow_sub_one_eq (by norm_num : 1 < (5 : ℕ))
   interval_cases n <;> fin_cases y <;> fin_cases y' <;>
     norm_num [coefficient_formula, t, Fin.sum_univ_succ, Finset.sum_range_succ,
       star_mul, star_pow, root_relations.2.2] <;>
@@ -137,29 +133,26 @@ private lemma coefficient_orthogonality (n : ℕ) (hn : 1 ≤ n) (hn' : n ≤ 4)
 private lemma phases_admissible : Admissible 5 phases := by
   exact ⟨phases_zero, coefficient_orthogonality⟩
 
-private lemma shift_entry (i j : Fin 5) : X i j = if i = j + 1 then 1 else 0 := by
-  calc
-    X i j = (shiftMatrix 5 ^ 1) ((ZMod.finEquiv 5) i) ((ZMod.finEquiv 5) j) := by
-      rw [pow_one]
-      rfl
-    _ = if (ZMod.finEquiv 5) i - (ZMod.finEquiv 5) j = (1 : ZMod 5)
-        then 1 else 0 :=
-      D5.S3.Observer.MatrixUnitCertificate.shift_matrix_pow_apply (M := 5) 1 _ _
-    _ = _ := by fin_cases i <;> fin_cases j <;> rfl
+private lemma shift_entry (i j : Fin 5) :
+    shift i j = if i = j + 1 then 1 else 0 := by
+  simpa only [Fin.val_one, pow_one] using
+    D5.S3.Quantum.Information.StabilizerAutocorrelationNormRefutation.shift_power 1 i j
 
 set_option maxHeartbeats 2000000 in
 -- Fourier inversion leaves twenty-five nonzero matrix entries.
 private lemma reference_entry (y i j : Fin 5) :
     R y i j = if i = j + 1 then
       windowRoot 5 ^ ((![0, 4, 1, 0, 0] j + y.val * j.val) % 5) else 0 := by
-  have hz : Z = Matrix.diagonal (fun j : Fin 5 => windowRoot 5 ^ j.val) := rfl
+  have hz : clock = Matrix.diagonal (fun j : Fin 5 => windowRoot 5 ^ j.val) := rfl
   simp only [R, hz, Matrix.diagonal_pow, Pi.pow_apply, Matrix.mul_diagonal,
     Matrix.sum_apply, Matrix.smul_apply, smul_eq_mul, shift_entry]
   by_cases hij : i = j + 1
   · subst i
     simp only [ite_true, one_mul]
     have h4 : windowRoot 5 ^ 4 = -1 - windowRoot 5 - windowRoot 5 ^ 2 - windowRoot 5 ^ 3 := by
-      linear_combination root_relations.2.1
+      simpa [Finset.sum_range_succ, sub_eq_add_neg, neg_add_rev, add_assoc, add_comm,
+        add_left_comm] using
+        (windowRoot_isPrimitiveRoot 5).pow_sub_one_eq (by norm_num : 1 < (5 : ℕ))
     fin_cases y <;> fin_cases j <;>
       norm_num [coefficient_formula, t, Fin.sum_univ_succ, Finset.sum_range_succ,
         star_mul, star_pow, root_relations.2.2] <;>
@@ -182,8 +175,8 @@ private lemma diagonal_unitary : U ∈ Matrix.unitaryGroup (Fin 5) ℂ := by
 set_option maxHeartbeats 2000000 in
 -- The diagonal conjugation is checked on the twenty-five nonzero entries.
 private lemma reference_factorization (y : Fin 5) :
-    R y = U * (X * Z ^ y.val) * star U := by
-  have hz : Z = Matrix.diagonal (fun j : Fin 5 => windowRoot 5 ^ j.val) := rfl
+    R y = U * (shift * clock ^ y.val) * star U := by
+  have hz : clock = Matrix.diagonal (fun j : Fin 5 => windowRoot 5 ^ j.val) := rfl
   ext i j
   simp only [reference_entry, U, Matrix.star_eq_conjTranspose,
     Matrix.diagonal_conjTranspose, Matrix.mul_diagonal, Matrix.diagonal_mul,
@@ -198,16 +191,16 @@ private lemma reference_factorization (y : Fin 5) :
   · simp [hij]
 
 set_option maxHeartbeats 1000000 in
--- Transporting the frozen Weyl power law unfolds the finite matrix indices.
+-- The frozen Weyl power law gives order five before diagonal conjugation.
 private lemma reference_projective (y : Fin 5) :
     R y ∈ Matrix.unitaryGroup (Fin 5) ℂ ∧ R y ^ 5 = 1 := by
-  have hx : X ∈ Matrix.unitaryGroup (Fin 5) ℂ := by
+  have hx : shift ∈ Matrix.unitaryGroup (Fin 5) ℂ := by
     apply Matrix.mem_unitaryGroup_iff'.2
     exact (window_unitary (M := 5)).1
-  have hz : Z ∈ Matrix.unitaryGroup (Fin 5) ℂ := by
+  have hz : clock ∈ Matrix.unitaryGroup (Fin 5) ℂ := by
     apply Matrix.mem_unitaryGroup_iff'.2
     exact (window_unitary (M := 5)).2
-  have hm : X * Z ^ y.val ∈ Matrix.unitaryGroup (Fin 5) ℂ :=
+  have hm : shift * clock ^ y.val ∈ Matrix.unitaryGroup (Fin 5) ℂ :=
     (Matrix.unitaryGroup (Fin 5) ℂ).mul_mem hx
       ((Matrix.unitaryGroup (Fin 5) ℂ).pow_mem hz _)
   constructor
@@ -215,10 +208,10 @@ private lemma reference_projective (y : Fin 5) :
     exact (Matrix.unitaryGroup (Fin 5) ℂ).mul_mem
       ((Matrix.unitaryGroup (Fin 5) ℂ).mul_mem diagonal_unitary hm)
       (Unitary.star_mem diagonal_unitary)
-  · have hp : (X * Z ^ y.val) ^ 5 = 1 := by
+  · have hp : (shift * clock ^ y.val) ^ 5 = 1 := by
       let e := Matrix.reindexRingEquiv ℂ (ZMod.finEquiv 5).toEquiv.symm
-      have hX : e (shiftMatrix 5) = X := rfl
-      have hZ : e (clockMatrix 5) = Z := rfl
+      have hX : e (shiftMatrix 5) = shift := rfl
+      have hZ : e (clockMatrix 5) = clock := rfl
       have hbase : D5.S3.Quantum.Algebra.WeylDisplacement.displacement
           5 1 ((ZMod.finEquiv 5) y) ^ 5 = 1 := by
         rw [D5.S3.Quantum.Algebra.WeylDisplacementPowers.displacement_pow]
@@ -229,7 +222,7 @@ private lemma reference_projective (y : Fin 5) :
       have hmap := congrArg e hbase
       rw [map_pow, map_one] at hmap
       have he : e (D5.S3.Quantum.Algebra.WeylDisplacement.displacement
-          5 1 ((ZMod.finEquiv 5) y)) = X * Z ^ y.val := by
+          5 1 ((ZMod.finEquiv 5) y)) = shift * clock ^ y.val := by
         have h1 : (1 : ZMod 5).val = 1 := rfl
         have hy : ((ZMod.finEquiv 5) y).val = y.val := rfl
         simp only [D5.S3.Quantum.Algebra.WeylDisplacement.displacement,
@@ -237,10 +230,9 @@ private lemma reference_projective (y : Fin 5) :
       rw [he] at hmap
       exact hmap
     let u : (Matrix (Fin 5) (Fin 5) ℂ)ˣ :=
-      ⟨U, star U, Unitary.mul_star_self_of_mem diagonal_unitary,
-        Unitary.star_mul_self_of_mem diagonal_unitary⟩
+      Unitary.toUnits ⟨U, diagonal_unitary⟩
     rw [reference_factorization]
-    change ((u : Matrix (Fin 5) (Fin 5) ℂ) * (X * Z ^ y.val) *
+    change ((u : Matrix (Fin 5) (Fin 5) ℂ) * (shift * clock ^ y.val) *
       ((u⁻¹ : (Matrix (Fin 5) (Fin 5) ℂ)ˣ) : Matrix (Fin 5) (Fin 5) ℂ)) ^ 5 = 1
     rw [Units.conj_pow, hp, mul_one, Units.mul_inv]
 
@@ -250,20 +242,21 @@ private lemma witness_projective : IsProjectiveFamily 5 B := by
   · subst y
     rw [B, if_pos rfl]
     constructor
-    · apply Matrix.mem_unitaryGroup_iff'.2
-      rw [star_smul, Matrix.smul_mul, Matrix.mul_smul, smul_smul,
-        Unitary.star_mul_self_of_mem (reference_projective 0).1,
-        root_relations.2.2, ← pow_succ, root_relations.1, one_smul]
+    · apply Unitary.smul_mem_of_mem _ (reference_projective 0).1
+      apply Unitary.mem_iff_star_mul_self.mpr
+      rw [root_relations.2.2, ← pow_succ, root_relations.1]
     · rw [smul_pow, root_relations.1, (reference_projective 0).2, one_smul]
   · simpa only [B, if_neg hy] using reference_projective y
 
 set_option maxHeartbeats 3000000 in
 -- Each reconstruction uses only twenty-five matrix-entry identities.
 private lemma reconstruction :
-    (∑ y, coeff 5 phases 1 y 0 • R y) = X ∧
-    (∑ y, coeff 5 phases 2 y 0 • R y ^ 2) = X ^ 2 := by
+    (∑ y, coeff 5 phases 1 y 0 • R y) = shift ∧
+    (∑ y, coeff 5 phases 2 y 0 • R y ^ 2) = shift ^ 2 := by
   have h4 : windowRoot 5 ^ 4 = -1 - windowRoot 5 - windowRoot 5 ^ 2 - windowRoot 5 ^ 3 := by
-    linear_combination root_relations.2.1
+    simpa [Finset.sum_range_succ, sub_eq_add_neg, neg_add_rev, add_assoc, add_comm,
+      add_left_comm] using
+      (windowRoot_isPrimitiveRoot 5).pow_sub_one_eq (by norm_num : 1 < (5 : ℕ))
   constructor <;> ext i j <;> fin_cases i <;> fin_cases j <;>
     norm_num [coefficient_formula, t, Fin.sum_univ_succ, Finset.sum_range_succ,
       Matrix.sum_apply, Matrix.smul_apply, smul_eq_mul, pow_two, Matrix.mul_apply,
@@ -278,7 +271,7 @@ private lemma special_coefficients : coeff 5 phases 1 0 0 = g ∧
     norm_num [coefficient_formula, t, g, Fin.sum_univ_succ, Finset.sum_range_succ] <;> ring
 
 private lemma transformed_one :
-    transformed 5 phases B 1 0 = X + ((windowRoot 5 - 1) * g) • R 0 := by
+    transformed 5 phases B 1 0 = shift + ((windowRoot 5 - 1) * g) • R 0 := by
   unfold transformed
   rw [← reconstruction.1]
   simp only [Fin.sum_univ_succ, B, Fin.succ_ne_zero, ite_false, ite_true, pow_one]
@@ -288,7 +281,7 @@ private lemma transformed_one :
   abel
 
 private lemma transformed_two :
-    transformed 5 phases B 2 0 = X ^ 2 + ((windowRoot 5 ^ 2 - 1) * g) • R 0 ^ 2 := by
+    transformed 5 phases B 2 0 = shift ^ 2 + ((windowRoot 5 ^ 2 - 1) * g) • R 0 ^ 2 := by
   unfold transformed
   rw [← reconstruction.2]
   simp only [Fin.sum_univ_succ, B, Fin.succ_ne_zero, ite_false, ite_true]
