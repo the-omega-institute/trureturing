@@ -419,9 +419,92 @@ private theorem boundary_distance (p : ℝ) :
   ring
 
 
+private def bellSigns : Fin 4 → Fin 3 → ℂ :=
+  ![![1, -1, 1], ![-1, 1, 1], ![1, 1, -1], ![-1, -1, -1]]
+
+private theorem bell_pauli (μ : Fin 4) :
+    D5.S3.Quantum.Information.EntanglementDistanceBellDiagonalRefutation.bellProjector μ =
+      (1 / 4 : ℂ) • (1 +
+        bellSigns μ 0 • (sigma 1 ⊗ₖ sigma 1) +
+        bellSigns μ 1 • (sigma 2 ⊗ₖ sigma 2) +
+        bellSigns μ 2 • (sigma 3 ⊗ₖ sigma 3)) := by
+  fin_cases μ
+  all_goals ext ⟨a, b⟩ ⟨c, d⟩
+  all_goals fin_cases a <;> fin_cases b <;> fin_cases c <;> fin_cases d
+  all_goals norm_num [
+    D5.S3.Quantum.Information.EntanglementDistanceBellDiagonalRefutation.bellProjector,
+    D5.S3.QuantumBounds.CHSHWitness.bellDensity,
+    D5.S3.QuantumBounds.CHSHWitness.bellVector, Matrix.vecMulVec_apply, Pi.star_apply,
+    D5.S3.Quantum.QubitWitnesses.bellCoefficients,
+    D5.S3.QuantumBounds.CHSHWitness.complex_sqrt_two_inv_mul_self,
+    bellSigns, sigma,
+    D5.S3.Quantum.Information.StabilizerPairLocalUnitaryInequivalence.pauliMatrix,
+    D5.S3.Quantum.FiniteDimensional.qubitX, D5.S3.Quantum.FiniteDimensional.qubitZ,
+    Matrix.kroneckerMap_apply, Matrix.mul_apply, Fin.sum_univ_two]
+
+set_option maxHeartbeats 1000000 in
+private theorem bell_density (μ : Fin 4) : IsDensity
+    (D5.S3.Quantum.Information.EntanglementDistanceBellDiagonalRefutation.bellProjector μ) := by
+  let U := sigma (![0, 3, 1, 2] μ) ⊗ₖ (1 : Matrix (Fin 2) (Fin 2) ℂ)
+  have he : D5.S3.Quantum.Information.EntanglementDistanceBellDiagonalRefutation.bellProjector μ =
+      U * D5.S3.QuantumBounds.CHSHWitness.bellDensity * Uᴴ := by
+    fin_cases μ
+    all_goals ext ⟨a, b⟩ ⟨c, d⟩
+    all_goals fin_cases a <;> fin_cases b <;> fin_cases c <;> fin_cases d
+    all_goals norm_num [U,
+      D5.S3.Quantum.Information.EntanglementDistanceBellDiagonalRefutation.bellProjector,
+      D5.S3.QuantumBounds.CHSHWitness.bellDensity,
+      D5.S3.QuantumBounds.CHSHWitness.bellVector, Matrix.vecMulVec_apply, Pi.star_apply,
+      D5.S3.Quantum.QubitWitnesses.bellCoefficients,
+      D5.S3.QuantumBounds.CHSHWitness.complex_sqrt_two_inv_mul_self,
+      sigma, D5.S3.Quantum.Information.StabilizerPairLocalUnitaryInequivalence.pauliMatrix,
+      D5.S3.Quantum.FiniteDimensional.qubitX, D5.S3.Quantum.FiniteDimensional.qubitZ,
+      Matrix.kroneckerMap_apply, Matrix.mul_apply, Fintype.sum_prod_type,
+      Fin.sum_univ_two, Matrix.conjTranspose_apply]
+    all_goals apply Complex.ext <;> norm_num [Complex.mul_re, Complex.mul_im]
+  rw [he]
+  have hB := D5.S3.QuantumBounds.CHSHWitness.bell_density_is_state
+  have hU : Uᴴ * U = 1 := by
+    simp only [U, Matrix.conjTranspose_kronecker, Matrix.conjTranspose_one,
+      (sigma_properties _).1, ← Matrix.mul_kronecker_mul,
+      (sigma_properties _).2, Matrix.one_mul, Matrix.one_kronecker_one]
+  refine ⟨hB.1.mul_mul_conjTranspose_same U, ?_⟩
+  rw [Matrix.trace_mul_cycle, hU, Matrix.one_mul, hB.2]
+
+private theorem smolin_bell : smolin.submatrix
+    (Equiv.prodAssoc (Fin 2) (Fin 2) (Fin 2 × Fin 2))
+    (Equiv.prodAssoc (Fin 2) (Fin 2) (Fin 2 × Fin 2)) =
+      ∑ μ : Fin 4, (1 / 4 : ℂ) •
+        (D5.S3.Quantum.Information.EntanglementDistanceBellDiagonalRefutation.bellProjector μ ⊗ₖ
+         D5.S3.Quantum.Information.EntanglementDistanceBellDiagonalRefutation.bellProjector μ) := by
+  have hf (j : Fin 4) : (four j).submatrix
+      (Equiv.prodAssoc (Fin 2) (Fin 2) (Fin 2 × Fin 2))
+      (Equiv.prodAssoc (Fin 2) (Fin 2) (Fin 2 × Fin 2)) =
+        (sigma j ⊗ₖ sigma j) ⊗ₖ (sigma j ⊗ₖ sigma j) := by
+    ext i k
+    simp [four, Matrix.kroneckerMap_apply, mul_assoc]
+  simp only [smolin, S, Matrix.submatrix_smul, Matrix.submatrix_add,
+    Matrix.submatrix_one_equiv, hf, Fin.sum_univ_four, bell_pauli]
+  norm_num [bellSigns]
+  have hnL (a b : Matrix (Fin 2 × Fin 2) (Fin 2 × Fin 2) ℂ) :
+      (-a) ⊗ₖ b = -(a ⊗ₖ b) := by ext i k; simp [Matrix.kroneckerMap_apply]
+  have hnR (a b : Matrix (Fin 2 × Fin 2) (Fin 2 × Fin 2) ℂ) :
+      a ⊗ₖ (-b) = -(a ⊗ₖ b) := by ext i k; simp [Matrix.kroneckerMap_apply]
+  simp only [Matrix.add_kronecker, Matrix.kronecker_add, Matrix.smul_kronecker,
+    Matrix.kronecker_smul, Matrix.one_kronecker_one, smul_smul, hf, hnL, hnR, neg_neg]
+  module
+
+private theorem smolin_twoTwo : smolin ∈ SepTwoTwo := by
+  refine ⟨4, fun _ => 1 / 4,
+    D5.S3.Quantum.Information.EntanglementDistanceBellDiagonalRefutation.bellProjector,
+    D5.S3.Quantum.Information.EntanglementDistanceBellDiagonalRefutation.bellProjector,
+    by norm_num, by norm_num, fun μ => ⟨bell_density μ, bell_density μ⟩, ?_⟩
+  simpa using smolin_bell
+
 private theorem noisy_twoTwo (p : ℝ) (hp : p ∈ Set.Icc (0 : ℝ) 1) :
     noisy p ∈ SepTwoTwo := by
-  sorry
+  exact sep_convex smolin_twoTwo (full_subset_twoTwo mixed_full) hp.1
+    (sub_nonneg.mpr hp.2) (by ring)
 
 private theorem least_refinement (K : Set (Matrix Q Q ℂ))
     (hFK : SepFull ⊆ K) (hK : K ⊆ SepOneThree)
