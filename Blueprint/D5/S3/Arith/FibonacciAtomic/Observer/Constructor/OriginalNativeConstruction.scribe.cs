@@ -4,6 +4,18 @@ internal sealed class OriginalNativeConstructionDocument : IScribeDocumentDefini
 {
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "OriginalNativeConstruction", H("Native completed solutions of functional cases"), Blocks(
+            Describe.Lean(DescribeId.Create("native-simultaneous-equations"),
+                DeclarationHandle.Create("D5/S3/Arith/FibonacciAtomic/Observer/Constructor/OriginalNativeConstruction.native_solution"),
+                H("The native corecursor satisfies every simultaneous equation"),
+                StatementSource.FromLean(), AssessedProvenance.FromRepo(), Blocks(
+                    Paragraph(Text("For a system with no variable at a defining root, the constructed native vector satisfies every definition and agrees exactly with the supplied completed assignment at every undefined state. Constants and literal Omega are permitted defining roots; recursive state occurrences are below pairs. The root-link normalization theorem derives this shape from the original functional system."))
+                ), DescribeRole.Theorem),
+            Describe.Lean(DescribeId.Create("native-conditional-uniqueness"),
+                DeclarationHandle.Create("D5/S3/Arith/FibonacciAtomic/Observer/Constructor/OriginalNativeConstruction.native_unique"),
+                H("Uniqueness conditional on all free values"),
+                StatementSource.FromLean(), AssessedProvenance.FromRepo(), Blocks(
+                    Paragraph(Text("Every native solution with the given free assignment equals the constructed vector. Expression evaluation is a coalgebra morphism: the source equations justify each defined root, the free assignment justifies every undefined root, and ordered-pair children retain the same expression valuation. Final-coalgebra uniqueness then applies to this concrete native morphism."))
+                ), DescribeRole.Theorem),
             Describe.Lean(DescribeId.Create("original-native-construction"),
                 DeclarationHandle.Create("D5/S3/Arith/FibonacciAtomic/Observer/Constructor/OriginalNativeConstruction.original_native_construction"),
                 H("Simultaneous construction, conditional uniqueness and exact reconstruction"),

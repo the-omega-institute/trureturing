@@ -96,9 +96,12 @@ private theorem run_head (E : Definitions k m) (mode : Fin k → Bool) (p : Fin 
       rw [hf, PFunctor.id_map]
     rw [eq, PFunctor.M.mk_dest]
   cases e <;> simp only [head, copy]
+  rename_i l r
   apply congrArg PFunctor.M.mk
-  apply Sigma.ext rfl
-  apply heq_of_eq
+  change (⟨.inr (), fun b : Bool => run E mode p g (.inl (if b then r else l))⟩ :
+    Σ a : completionFunctor.A, completionFunctor.B a → CompletionTree) =
+      ⟨.inr (), fun b : Bool => if b then run E mode p g (.inl r) else run E mode p g (.inl l)⟩
+  congr 1
   funext b
   cases b <;> rfl
 
@@ -134,7 +137,7 @@ private theorem run_var (E : Definitions k m) (mode : Fin k → Bool) (p : Fin k
           (head mode p g (power a e))) := by
   conv_lhs => rw [run, PFunctor.M.corec_def]
   cases he : E i with
-  | none => simpa only [step, he] using run_head E mode p g (.var a i)
+  | none => simpa only [step, he, run] using run_head E mode p g (.var a i)
   | some e => simp only [step, he]; rfl
 
 private theorem run_power (E : Definitions k m) (guarded : PairGuarded E)
@@ -218,8 +221,8 @@ private theorem run_power (E : Definitions k m) (guarded : PairGuarded E)
                   simp only [node, PFunctor.M.dest_mk]
                   rfl
                 · intro t; cases t
-                  · exact Or.inr ⟨a, power b l, by rw [power_add], rfl⟩
-                  · exact Or.inr ⟨a, power b r, by rw [power_add], rfl⟩
+                  · exact Or.inr ⟨a, power b l, by rw [power_add]; rfl, rfl⟩
+                  · exact Or.inr ⟨a, power b r, by rw [power_add]; rfl, rfl⟩
 
 private theorem run_value (E : Definitions k m) (guarded : PairGuarded E)
     (mode : Fin k → Bool) (p : Fin k → Nat) (g : Fin m → CompletionTree) (e : Expr k m) :
@@ -233,7 +236,7 @@ private theorem run_value (E : Definitions k m) (guarded : PairGuarded E)
       simpa only [power, Nat.add_zero, value, native] using h
   | pair l r ihl ihr => simp only [run_pair, value, ihl, ihr]
 
-private theorem native_solution (E : Definitions k m) (guarded : PairGuarded E)
+theorem native_solution (E : Definitions k m) (guarded : PairGuarded E)
     (mode : Fin k → Bool) (p : Fin k → Nat) (g : Fin m → CompletionTree) :
     Solution E mode p (native E mode p g) ∧
       ∀ i, E i = none → native E mode p g i = g i := by
@@ -248,13 +251,13 @@ private theorem native_solution (E : Definitions k m) (guarded : PairGuarded E)
     | token j c => simpa only [power, Nat.zero_add, run_head] using (run_token E mode p g j c).symm
     | omega => simpa only [power, run_head] using (run_omega E mode p g).symm
     | pair l r =>
-        rw [run_head]
+        simp only [power, run_head]
         have h := run_power E guarded mode p g 0 (.pair l r)
         simpa only [power, run_pair, Function.iterate_zero_apply] using congrArg (fun X => X) h
   · intro i he
     simp only [native, run_var, he, Function.iterate_zero_apply]
 
-private theorem native_unique (E : Definitions k m) (guarded : PairGuarded E)
+theorem native_unique (E : Definitions k m) (guarded : PairGuarded E)
     (mode : Fin k → Bool) (p : Fin k → Nat) (g v : Fin m → CompletionTree)
     (hv : Solution E mode p v) (free : ∀ i, E i = none → v i = g i) :
     v = native E mode p g := by
@@ -271,9 +274,10 @@ private theorem native_unique (E : Definitions k m) (guarded : PairGuarded E)
     | token j c => exact (copy _).symm
     | omega => exact (copy Omega).symm
     | pair l r =>
-        simp only [value, head, node, PFunctor.M.dest_mk, PFunctor.map]
-        apply Sigma.ext rfl
-        apply heq_of_eq
+        change (⟨.inr (), fun b : Bool => if b then value mode p v r else value mode p v l⟩ :
+          Σ a : completionFunctor.A, completionFunctor.B a → CompletionTree) =
+            ⟨.inr (), fun b : Bool => value mode p v (if b then r else l)⟩
+        congr 1
         funext b
         cases b <;> rfl
   have morph : ∀ x, PFunctor.M.dest (interp x) =
