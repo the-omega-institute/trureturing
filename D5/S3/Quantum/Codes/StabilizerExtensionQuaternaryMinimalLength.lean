@@ -6,7 +6,6 @@
    utility: kind=certified-instance; basis=refutes=gid:D5/S3/Quantum/Codes/StabilizerExtensionQuaternaryMinimalLength.claim; result=D5/S3/Quantum/Codes/StabilizerExtensionQuaternaryMinimalLength.result; claim=D5/S3/Quantum/Codes/StabilizerExtensionQuaternaryMinimalLength.claim
    digest: Explicit quaternary additive-code counterexamples refute the length-five expectation. -/
 
-import Mathlib.Data.Matrix.Basic
 import Mathlib.LinearAlgebra.Matrix.Determinant.Basic
 import Mathlib.Algebra.Group.Subgroup.Basic
 import Mathlib.Tactic
