@@ -224,7 +224,7 @@ internal sealed class QuditTetrahedronGenuineRefutationDocument : IScribeDocumen
             Describe.Lean(DescribeId.Create("qudit-rho2"), DeclarationHandle.Create(Module + ".rho2"),
                 H("Two-party reduced density matrix"), StatementSource.FromAuthor(Disp(Rho2Formula())),
                 AssessedProvenance.FromRepo(Source), Blocks(Paragraph(Text(
-                    "For distinct parties i and j, rho2 ψ i j is the two-party reduced density matrix. The entry indexed by (a,a') sums the coefficient product over labels whose i and j coordinates are the two components of a, replacing those coordinates by the components of a'."))), DescribeRole.Definition),
+                    "For any two party indices i and j, rho2 ψ i j is the two-party reduced density matrix. The entry indexed by (a,a') sums the coefficient product over labels whose i and j coordinates are the two components of a, replacing those coordinates by the components of a'."))), DescribeRole.Definition),
             Describe.Lean(DescribeId.Create("qudit-entropy2"), DeclarationHandle.Create(Module + ".entropy2"),
                 H("Base-two spectral entropy"), StatementSource.FromAuthor(Disp(Entropy2Formula())),
                 AssessedProvenance.FromLiterature(Source), Blocks(Paragraph(Text(
