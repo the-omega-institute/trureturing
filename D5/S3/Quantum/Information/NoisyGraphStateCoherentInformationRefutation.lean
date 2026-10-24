@@ -8,8 +8,6 @@
 
 import D5.S3.Quantum.Entanglement.RandomizedGraphNegativityRefutation
 import D5.S3.Quantum.Information.PartialTraceMutualInformation
-import Mathlib.Analysis.Complex.ExponentialBounds
-import Mathlib.InformationTheory.Hamming
 import D5.S3.Quantum.Matrix.TwoPointFunctionalCalculus
 
 /-! Uniformly dephased graph states can reverse the subsystem-size entropy ordering. -/
