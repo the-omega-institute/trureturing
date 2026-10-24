@@ -171,7 +171,7 @@ private lemma omega_table (n : ℕ) :
   rw [← omega_mod]
   exact root_table ⟨n % 5, Nat.mod_lt _ (by norm_num)⟩
 
-private lemma shift_power (p : Fin 5) (i j : Fin 5) :
+lemma shift_power (p : Fin 5) (i j : Fin 5) :
     (shift ^ p.val) i j = if i = j + p then 1 else 0 := by
   have h (p i j : ZMod 5) :
       (shift ^ p.val) i j = if i = j + p then 1 else 0 := by
