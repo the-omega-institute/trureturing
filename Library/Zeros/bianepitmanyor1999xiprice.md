@@ -847,3 +847,60 @@ $$
 This is a paper-level application at the specified observed first layer.
 The RH premise remains essential to its lower bound and sharp value;
 it is not an unconditional estimate for IPX34 or a Lean certification.
+
+## Actual negative first-layer responses persist without an RH premise
+
+For the complementary case reuse
+[the existing actual regular-source family S5](../Arith/caveney2012sacaga.md#retain-the-original-oscillation-exponent-on-the-regular-ga1-source).
+If RH fails, it supplies an unbounded family of actual event-free
+own-price integers $N=C_A$, $A=\log N$, with
+$G(N)>e^\gamma(1+c_\eta A^{-\eta})$ for fixed
+$c_\eta>0$ and $0<\eta<1/2$. The source's already retained
+prime-local bridge gives the strict identity $N=N_A$; there is no
+new replacement of tied endpoints or separately chosen integer.
+On this same family,
+
+$$
+T_A\Delta(N)
+\le-\frac{c_\eta}{2}A^{1/2-\eta}L\longrightarrow-\infty.
+$$
+
+IPX11 and $G_{2,A}(N)\ge0$ then give
+$T_AD_{1,A}(N)\le T_A\Delta(N)-c_++O(L^{-1})\to-\infty$.
+Together with IPX37 this establishes the paper-level dichotomy
+
+$$
+\liminf_{x\to\infty}T_{A_x}D_{1,A_x}(N_x)=
+\begin{cases}
+-\kappa_\xi,&\text{if RH holds},\\
+-\infty,&\text{if RH fails}.
+\end{cases}
+\tag{IPX38}
+$$
+
+In particular, without assuming either answer to RH,
+$\liminf_{x\to\infty}T_{A_x}D_{1,A_x}(N_x)\le-\kappa_\xi<0$.
+Thus on an unbounded family of these actual strict CA integers,
+
+$$
+T_A[\mathfrak N_A(N_x)-\mathfrak P_A(N_x)]
+>\kappa_\xi/2.
+\tag{IPX39}
+$$
+
+This rules out eventual nonnegativity of the **complete** observed
+first layer on the actual CA family. It does not follow merely from
+IPX13's negative far tail: here the occupied and positive absent
+responses have also been retained. In particular IPX33's ratio tending
+to one coexists with an actual negative difference at the root scale.
+
+The sufficient target IPX34 remains a lower bound for the complete
+joint account, and has not been proved. It allows the negative values
+above: the constant gap $c_+-\kappa_\xi=c_R-c_0>0$ is the classical
+RH-conditional Ramanujan margin, as in
+[the existing Ramanujan source](../Analytic/musin2020strongramanujan.md#the-positive-margin-already-assumes-rh),
+rather than an extra unconditional reserve created by this observer.
+IPX38 is a quantitative consumer for the specified source, not a new
+RH criterion or a proof of either branch's premise. No numerical
+starting threshold, stronger unconditional Robin bound, mathematical
+priority or Lean certification is claimed.
