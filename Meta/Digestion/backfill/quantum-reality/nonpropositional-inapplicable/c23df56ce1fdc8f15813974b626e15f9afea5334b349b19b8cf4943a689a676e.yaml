@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:c23df56ce1fdc8f15813974b626e15f9afea5334b349b19b8cf4943a689a676e
+  normalized_sha256: sha256:c23df56ce1fdc8f15813974b626e15f9afea5334b349b19b8cf4943a689a676e
+cas_ref: sha256:c23df56ce1fdc8f15813974b626e15f9afea5334b349b19b8cf4943a689a676e
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 'Nonpropositional: 本条只询问制备初态、加工耦合和保存输出的资源，并限制当前处理层次，没有给出资源估计。'
+    previous_atom_id: 37603dd913a10aa3b3b748e7ce2823e0a06a60e443bd8239b30c64731fb79e5a
+    next_atom_id: 4cff13eb8f4ea73aefe71cc8d2f7f29ae4025276cce4ab9c0c98411f884c53c6

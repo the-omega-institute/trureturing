@@ -1,0 +1,27 @@
+fingerprints:
+  raw_sha256: sha256:de26836789004e6851339507c082d1a44bd9f6a9d1afffe5c1c64c861a476f49
+  normalized_sha256: sha256:de26836789004e6851339507c082d1a44bd9f6a9d1afffe5c1c64c861a476f49
+cas_ref: sha256:de26836789004e6851339507c082d1a44bd9f6a9d1afffe5c1c64c861a476f49
+coverage_gids:
+  - gid: D5/S0/Conventions/WDigits.wValue_add_two
+    target_statement_id: sha256:bbc15c135e228bce4e68e42e08289f696b0fcaae1983de303468271a9ff9c1e5
+  - gid: D5/S0/Conventions/WDigits.wValue_one
+    target_statement_id: sha256:027020f066fe99e34e39510a648eee969bb5e0c7bfbed0f24768b88731ad9760
+  - gid: D5/S0/Conventions/WDigits.wValue_two
+    target_statement_id: sha256:5aced3f5900219eb07fde76fda0e9d34bdbc89fa324e9edc9fb5a0e1100c4bae
+  - gid: D5/S0/Conventions/WDigits.wValue_zero
+    target_statement_id: sha256:e19ad2d942bd85e9fd27c6cb0dfa867d7b540d653578f33058b6834986a6198a
+  - gid: D5/S1/Digit/PrimeAxisEncoding.canonicalRawValueEquiv
+    target_statement_id: sha256:78aa532033b64da2a1c2ac18e8359b0c5fbdf6e844fd21c2cb9cbf7ba0a758f8
+  - gid: D5/S1/Digit/PrimeAxisEncoding.canonicalRawValueEquiv_zero
+    target_statement_id: sha256:899a9ef2262c40018945ce6f32b0990a62540a0aa0456d82dfd025ddea47f8a2
+  - gid: D5/S1/Digit/PrimeAxisEncoding.tableRowsEquiv
+    target_statement_id: sha256:9b2f3448341a5b9f6af4d0cb8c71fad927921a1f04891f929828697ef7628bd0
+  - gid: D5/S1/Digit/Raw.CanonicalRaw
+    target_statement_id: sha256:01a296a634af6286f96787460eac5222849f4cbf97fa0495d57c57b5d5e61226
+  - gid: D5/S1/Digit/Raw.rawValue_add
+    target_statement_id: sha256:91d1dcdd561f0ed29f011360ff0564b5fc6a4ad8805ab98c115c99025a1ac6d8
+  - gid: D5/S1/Digit/Raw.rawValue_single
+    target_statement_id: sha256:a4b60a056b821cab48fb8fd0b17b40ee4c399ba8205c154f6433d251ef4d2ff3
+receipts:
+  unresolved_subitems: []

@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:3843d7f3b3a5d6ffa2b9df714ddc4d5915de6bf1cc0c2c697874a7ddca1ac001
+  normalized_sha256: sha256:3843d7f3b3a5d6ffa2b9df714ddc4d5915de6bf1cc0c2c697874a7ddca1ac001
+cas_ref: sha256:3843d7f3b3a5d6ffa2b9df714ddc4d5915de6bf1cc0c2c697874a7ddca1ac001
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 提醒不同 Hamiltonian 的适用结论不可无条件叠加，属于组合模型结论的使用纪律，不另给算子关系。
+    previous_atom_id: 2810fdf217025c11331a230d8414b9f83d0fc7405330f19e975d06683632d3c2
+    next_atom_id: 4c869b762219d06364f641fbc84a6a80a07702af0433edeee1b4ef4de56ee794

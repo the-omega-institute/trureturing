@@ -168,3 +168,15 @@ pays fixed-filter convergence; the uniform coefficient bound pays
 finite intervals. Neither separately pays the signed integral with
 a growing filter, its affine endpoints and the original unit head.
 That common-filter estimate remains an additional obligation.
+
+
+The exact joint real-axis alternative in the
+[actual-kernel application](ramarezuniga2026identityfactory.md#exact-real-axis-payment-of-the-truncated-centered-tail)
+pairs this same centered error before applying an absolute envelope.
+It expresses the whole tail using finite prefix data and one combined
+$\zeta/E_z$ bracket, with both zero-end cancellations retained. The
+associated prime-resolution law transfers equal and opposite amounts
+between the auxiliary full pair and its original-source compensation.
+These applications do not turn either pointwise allowance into a
+uniformly vanishing error; the full same-integer Robin lower bound is
+still required.

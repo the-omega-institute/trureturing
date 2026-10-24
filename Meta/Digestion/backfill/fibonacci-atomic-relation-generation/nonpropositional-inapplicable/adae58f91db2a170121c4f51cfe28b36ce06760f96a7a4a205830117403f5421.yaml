@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:adae58f91db2a170121c4f51cfe28b36ce06760f96a7a4a205830117403f5421
+  normalized_sha256: sha256:adae58f91db2a170121c4f51cfe28b36ce06760f96a7a4a205830117403f5421
+cas_ref: sha256:adae58f91db2a170121c4f51cfe28b36ce06760f96a7a4a205830117403f5421
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 'Nonpropositional literature/interface assessment: N_g=1+F_r*g names the target family; the paragraph requests a transport or pointwise estimate and does not assert such an estimate.'
+    previous_atom_id: f4f9337f0b59c756f0e04f5b80b697d3e649175ed8771c77bae843f998c037a0
+    next_atom_id: 0c03e9de0d554f803228f3d1f196d2c4a18fece56cee079648cf545c991a5c69
