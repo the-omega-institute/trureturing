@@ -360,6 +360,98 @@ a stronger hypothesis than the cubic sieve requires. Neither the
 full natural dual range nor the other original terms follow from
 this coefficient interface.
 
+### A multiple-Dirichlet-series model of the raw phase
+
+The Gauss numerator shift and (J5) identify a precise model for a
+specified scalar, before applying a bound. On the squarefree coprime
+support of (J5), its moving phase, with the fixed-$e$ factors left in
+the actual coefficient vectors, is
+
+$$
+\gamma_1(uv)\overline{\chi_{uv}(m)}
+=q_{uv}^{-1/2}\sum_{z\bmod uv}\chi_{uv}(z)e(mz/(uv)).
+$$
+
+This is the normalized **sextic** Gauss sum with numerator $m$.
+Both sides vanish when $(m,uv)>1$. The original $b(e_1u)$,
+$b(e_2v)$, profiles, fixed-core twists and masks remain present;
+the identity does not turn them into standard Dirichlet-series
+coefficients. It reuses the pinned Gauss shift, rather than lowering
+the order of the original dual character.
+
+An exact function-field model of this raw phase can be read from
+[Sawin--Whitehead, *Functional equations of axiomatic multiple Dirichlet
+series, Weyl groupoids, and quantum algebra*, arXiv:2507.08662v2,
+Lemma 2.2 and Proposition 4.1](https://arxiv.org/html/2507.08662v2).
+This is a `repo-derived` parameter match using their existing formulas,
+not an analytic estimate attributed to that paper. Let $q\equiv1\pmod{12}$
+be a prime power, let $\chi$ have order six on $\mathbb F_q^\times$,
+and let $u,v,m$ be monic polynomials, with $uv$ squarefree. The variable
+order is $(u,v,m)$. In their notation the required symmetric matrix is
+
+$$
+M=\begin{pmatrix}4&2&5\\2&4&5\\5&5&0\end{pmatrix}\pmod6.
+$$
+
+Indeed their quadratic character is $\xi=\chi^3$, so Lemma 2.2 uses
+the derivative character $\xi\chi=\chi^4$. Splitting the derivative of
+$uv$ gives diagonal exponents $4,4$ and cross exponent $4+4\equiv2$;
+the numerator shift gives exponents $-1\equiv5$ against $m$.
+Reciprocity has no sign for this choice of $q$. Proposition 4.1,
+since $M_{33}=0$, permits arbitrary $m$, including nonsquarefree $m$.
+With $a_M$ denoting their axiomatic coefficient and $g_\chi$ their
+finite-field Gauss sum, the exact normalization is
+
+$$
+q^{-(\deg u+\deg v)/2}g_\chi(m,uv)
+=\left(\frac{g_\chi}{\sqrt q}\right)^{\deg u+\deg v}a_M(u,v,m).
+$$
+
+For $(m,uv)=1$ this follows from Lemma 2.2 and (4.1); on a collision
+both sides are zero. The remaining factor depends only on degrees
+and has modulus one, so it is transported by a change of the first
+two series variables.
+
+**The finite-root-system continuation hypothesis fails for this model.**
+In the bicharacter convention of their Section 5, let $\zeta$ be a
+primitive sixth root of unity. The $u,v$ diagonal labels are
+$-\zeta^4=\zeta$, and their mutual label is $\zeta^2$. The reflection
+exponent in either direction is therefore
+
+$$
+m_{uv}=m_{vu}
+=\min\{k\ge0:\zeta^{k+1}=1\text{ or }\zeta^{k+2}=1\}=4.
+$$
+
+Both directions satisfy Theorem 3.10's divisibility condition:
+$\gcd(6,4+3)=1$ divides every incident entry. Lemma 5.16(2) preserves
+the parameter matrix under each of these two reflections, so the
+reflections can be composed repeatedly. On the invariant span of the
+first two basis vectors their matrices and product are
+
+$$
+s_u=\begin{pmatrix}-1&4\\0&1\end{pmatrix},\qquad
+s_v=\begin{pmatrix}1&0\\4&-1\end{pmatrix},\qquad
+s_us_v=\begin{pmatrix}15&-4\\4&-1\end{pmatrix}.
+$$
+
+The product has eigenvalues $7\pm4\sqrt3$ and hence infinite order.
+Thus the reflection groupoid has infinitely many morphisms, even
+though these two reflections preserve its parameter matrix. This
+model does not meet the finite arithmetic-root-system hypothesis of
+Theorem 5.5. Finiteness of the set of parameter matrices alone would
+not supply that hypothesis.
+
+This calculation concerns the unweighted function-field model and
+uses classical Gauss identities and the cited reflection formulas.
+It supplies no number-field continuation or bound for the actual
+$b$-weighted scalar. In particular it does not identify all prime-power
+coefficients with the original source, transport its angular/ray data,
+or pay the other original Poisson terms. Continuation on a smaller
+domain, methods for infinite groupoids and other representations are
+not excluded. Neither a stronger inverse-fourth estimate nor (J24),
+signed Robin restoration or RH follows from this model identification.
+
 ### A common-gcd region with all original row expansions
 
 The same cubic interface and joint sextic estimate also pay an
