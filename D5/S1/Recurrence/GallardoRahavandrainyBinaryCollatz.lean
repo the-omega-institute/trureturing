@@ -10,6 +10,8 @@
 admission_basis: open-problem-resolution (#19299; Proved)
 escape_witness: Dynamics.square_doubling, Dynamics.q_square_doubling
 Escape audit unfinished: https://github.com/the-omega-institute/trureturing/issues/19534 (result).
+Escape audit unfinished for the six public Dynamics prerequisites:
+https://github.com/the-omega-institute/trureturing/issues/20796.
 Direct frozen dependencies: none (all imports are pinned Mathlib).
 The source's oddness predicate is used directly as IsCoprime A (X * (X + 1)).
 Composition is used directly as Polynomial.comp; the auxiliary polynomial q is M
@@ -219,10 +221,10 @@ private theorem h_step (f : (ZMod 2)[X]) (hne : f ≠ 1) (hf : Terminates (R f))
       have := h_min (R f) j heq
       omega
 
-private theorem nonzero_of_odd (f : (ZMod 2)[X]) (hf : f.eval 0 = 1) : f ≠ 0 := by
+theorem nonzero_of_odd (f : (ZMod 2)[X]) (hf : f.eval 0 = 1) : f ≠ 0 := by
   intro he; simp [he] at hf
 
-private theorem nonzero_eq_one (c : ZMod 2) (h : c ≠ 0) : c = 1 := by
+theorem nonzero_eq_one (c : ZMod 2) (h : c ≠ 0) : c = 1 := by
   exact Fin.eq_one_of_ne_zero c h
 
 private theorem monic_of_nezero (f : (ZMod 2)[X]) (hf : f ≠ 0) : f.Monic := by
@@ -237,11 +239,11 @@ private theorem m_odd : m.eval 0 = 1 := by simp [m]
 
 private theorem q_odd : M.eval 0 = 1 := by simp [M]
 
-private theorem degree_q : M.natDegree = 2 := by
+theorem degree_q : M.natDegree = 2 := by
   dsimp [M]
   compute_degree; exact one_ne_zero
 
-private theorem q_ne_zero : M ≠ 0 := nonzero_of_odd M q_odd
+theorem q_ne_zero : M ≠ 0 := nonzero_of_odd M q_odd
 
 private theorem odd_R (f : (ZMod 2)[X]) (hf : f.eval 0 = 1) : (R f).eval 0 = 1 := by
   simp [R,m_odd,hf]
@@ -329,7 +331,7 @@ private theorem erase_degree_lt (f : (ZMod 2)[X]) (hf : f.eval 0 = 1) (hd : 0 < 
   exact natDegree_lt_natDegree (nonzero_of_odd _ (odd_erase f hf hd))
     (degree_eraseLead_lt (nonzero_of_odd f hf))
 
-private theorem eq_one_of_degree_zero (f : (ZMod 2)[X]) (hf : f.eval 0 = 1) (hd : f.natDegree=0) : f=1 := by
+theorem eq_one_of_degree_zero (f : (ZMod 2)[X]) (hf : f.eval 0 = 1) (hd : f.natDegree=0) : f=1 := by
   rw [eq_C_of_natDegree_eq_zero hd]
   simp only [coeff_zero_eq_eval_zero,hf,C_1]
 
@@ -689,7 +691,7 @@ private theorem iota_injective : Function.Injective (fun f : (ZMod 2)[X] => f.co
         (by omega)
         (by rw [hm.leadingCoeff]; exact one_mem _)))
 
-private theorem oddPart_factor (a b : ℕ) (u : (ZMod 2)[X])
+theorem oddPart_factor (a b : ℕ) (u : (ZMod 2)[X])
     (hu0 : u.eval 0 = 1) (hu1 : u.eval 1 = 1) :
     D5.S1.Recurrence.GallardoRahavandrainyBinaryCollatz.oddPart
       (X ^ a * (X - C 1) ^ b * u) = u := by

@@ -197,7 +197,7 @@ private theorem local_star_mul (UA UB : Matrix.unitaryGroup (Fin 2) ℂ) : (loca
   have hB := Matrix.mem_unitaryGroup_iff'.mp UB.property
   simp only [Matrix.star_eq_conjTranspose] at hA hB
   rw [hA,hB,Matrix.one_kronecker_one]
-private theorem unitary_preserves_overlap {n : Type*} [Fintype n] [DecidableEq n] (A : Matrix n n ℂ) (hA : Aᴴ * A = 1) (x y : n → ℂ) : star (A *ᵥ x) ⬝ᵥ (A *ᵥ y) = star x ⬝ᵥ y := by
+theorem unitary_preserves_overlap {n : Type*} [Fintype n] [DecidableEq n] (A : Matrix n n ℂ) (hA : Aᴴ * A = 1) (x y : n → ℂ) : star (A *ᵥ x) ⬝ᵥ (A *ᵥ y) = star x ⬝ᵥ y := by
   rw [Matrix.star_mulVec, ← Matrix.dotProduct_mulVec, Matrix.mulVec_mulVec,
     hA, Matrix.one_mulVec]
 private theorem local_preserves_unit (UA UB : Matrix.unitaryGroup (Fin 2) ℂ) {ψ : (Fin 2 × Fin 2 → ℂ)} (h : unitVector ψ) : unitVector (localMatrix UA UB *ᵥ ψ) := by

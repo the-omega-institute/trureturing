@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:25ef5da3f90dea7a69d096d00f3026766767de2fa2174c048f1f2fc527abad51
+  normalized_sha256: sha256:25ef5da3f90dea7a69d096d00f3026766767de2fa2174c048f1f2fc527abad51
+cas_ref: sha256:25ef5da3f90dea7a69d096d00f3026766767de2fa2174c048f1f2fc527abad51
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 哲学来源范围和明确留待研究的数学、解释问题清单，不宣告所列未完目标成立。
+    previous_atom_id: 71dc123c3ab133d04f7041d9692e70eb2620435dd3ed29fe6f2d68fd0e0284a8
+    next_atom_id: fc34a70a2fa1b1322cb2a0d5b6b7d828922e3dca24a70c69b5420c4a573513a9

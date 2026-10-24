@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:46d3ae212b142bc20c89fac63d1ee3248a845c22db20af4e8a9a399b57ee2fcb
+  normalized_sha256: sha256:46d3ae212b142bc20c89fac63d1ee3248a845c22db20af4e8a9a399b57ee2fcb
+cas_ref: sha256:46d3ae212b142bc20c89fac63d1ee3248a845c22db20af4e8a9a399b57ee2fcb
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 提出四类主证明目标的引言，不断言任何目标已证。
+    previous_atom_id: dd30bcfbca9b5a0d7d6f1c64197fe84b09545ff46a1009f4e79b7a541d1980d4
+    next_atom_id: 93eb696e01115e794c2c177ab20b9b4148a0dcb840dd8aa28c351ce775801a76

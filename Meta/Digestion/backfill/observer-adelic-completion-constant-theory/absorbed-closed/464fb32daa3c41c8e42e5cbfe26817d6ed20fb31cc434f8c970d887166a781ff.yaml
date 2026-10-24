@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:464fb32daa3c41c8e42e5cbfe26817d6ed20fb31cc434f8c970d887166a781ff
+  normalized_sha256: sha256:464fb32daa3c41c8e42e5cbfe26817d6ed20fb31cc434f8c970d887166a781ff
+cas_ref: sha256:464fb32daa3c41c8e42e5cbfe26817d6ed20fb31cc434f8c970d887166a781ff
+coverage_gids:
+  - gid: D5/S3/Weil/Scattering/ScatteringZetaReconstruction.scattering_zeta_reconstruction
+    target_statement_id: sha256:872eb8c660e4f1d9a7aa8cb59a25b7c8b68b17ec0cb0c6ee504f77e5d5d40be9
+receipts:
+  unresolved_subitems: []

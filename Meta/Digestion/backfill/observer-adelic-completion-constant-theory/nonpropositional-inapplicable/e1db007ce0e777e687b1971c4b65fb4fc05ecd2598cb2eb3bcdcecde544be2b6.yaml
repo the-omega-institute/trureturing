@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:e1db007ce0e777e687b1971c4b65fb4fc05ecd2598cb2eb3bcdcecde544be2b6
+  normalized_sha256: sha256:e1db007ce0e777e687b1971c4b65fb4fc05ecd2598cb2eb3bcdcecde544be2b6
+cas_ref: sha256:e1db007ce0e777e687b1971c4b65fb4fc05ecd2598cb2eb3bcdcecde544be2b6
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 给参数 delta 标注“尺度／深度”的术语含义。
+    previous_atom_id: cd65ee973917a0e46b0a1aa0eaf531327c553ad0fcc4ca489cd6721b29868fbe
+    next_atom_id: 4e58ad57c5f6cc7310cc0a46a50f05742056edb898fb8acacc1667887db29280

@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:ee097ce98b91467fe342b62b227296e4388f2fd937e5c4802be1608f3832bd23
+  normalized_sha256: sha256:ee097ce98b91467fe342b62b227296e4388f2fd937e5c4802be1608f3832bd23
+cas_ref: sha256:ee097ce98b91467fe342b62b227296e4388f2fd937e5c4802be1608f3832bd23
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: Discussion of where a proposed golden-ratio argument would enter a proof, rather than a zero-location theorem.
+    previous_atom_id: 4ea1bbee0ce5246ce9b37fa604d05a855f2f92fb9b3ec0482df35d6793943a80
+    next_atom_id: cd377d090739ec70067be7df71a5f72b90e2e6239fdb104546823b9231ed00a0

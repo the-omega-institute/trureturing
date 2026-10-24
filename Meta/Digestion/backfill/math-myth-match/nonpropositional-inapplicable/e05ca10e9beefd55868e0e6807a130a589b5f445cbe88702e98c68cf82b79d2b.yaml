@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:e05ca10e9beefd55868e0e6807a130a589b5f445cbe88702e98c68cf82b79d2b
+  normalized_sha256: sha256:e05ca10e9beefd55868e0e6807a130a589b5f445cbe88702e98c68cf82b79d2b
+cas_ref: sha256:e05ca10e9beefd55868e0e6807a130a589b5f445cbe88702e98c68cf82b79d2b
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 仅解释 Schleiermacher 的功能区分与生活关联；数学桥梁只作比较背景。
+    previous_atom_id: 4eecac24e9bc0e64a5249073f5f00ed618c3a00c144b7fed6811d20469d29d98
+    next_atom_id: 40c63d9edd2685a238c042613ab45a0a97e33ea6b1fee5c4d91e645b192ade6c

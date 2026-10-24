@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:96f7c8e0f05cd1856db64891d6f117db369bef7a43899220c3c0652b81be035d
+  normalized_sha256: sha256:96f7c8e0f05cd1856db64891d6f117db369bef7a43899220c3c0652b81be035d
+cas_ref: sha256:96f7c8e0f05cd1856db64891d6f117db369bef7a43899220c3c0652b81be035d
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 佛教与巴哈伊概念的语境保留要求，无数学断言。
+    previous_atom_id: 8696ab4b7d99e79f5685e88aa89d70ce71d911bc152fde453a44f1cc932e02d6
+    next_atom_id: 44333b8fe244676699b6639300496f90ca9c83a206cb219feb95e7f7311953a0

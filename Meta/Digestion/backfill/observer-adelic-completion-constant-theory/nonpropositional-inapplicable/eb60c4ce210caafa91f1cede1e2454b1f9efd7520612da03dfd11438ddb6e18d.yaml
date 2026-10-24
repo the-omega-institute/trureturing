@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:eb60c4ce210caafa91f1cede1e2454b1f9efd7520612da03dfd11438ddb6e18d
+  normalized_sha256: sha256:eb60c4ce210caafa91f1cede1e2454b1f9efd7520612da03dfd11438ddb6e18d
+cas_ref: sha256:eb60c4ce210caafa91f1cede1e2454b1f9efd7520612da03dfd11438ddb6e18d
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 形式化建议的文件名与模块路径清单，不断言所列目标已闭合。
+    previous_atom_id: 3cf9d708788579b0d421f21689751b4d194d7462563c0788999cbc17d540101d
+    next_atom_id: 3b05e3cef7e3f3624410bc226f7a445e28142b76e43f55de7ab1fcd34114dd6c

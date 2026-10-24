@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:7c8adc17432d409a7d207116a647430079d2054a0412604ab9aa0faa1f6d540f
+  normalized_sha256: sha256:7c8adc17432d409a7d207116a647430079d2054a0412604ab9aa0faa1f6d540f
+cas_ref: sha256:7c8adc17432d409a7d207116a647430079d2054a0412604ab9aa0faa1f6d540f
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 仅列收敛正规化，并要求另证全局等号，不断言该等号成立。
+    previous_atom_id: e92a288e5803044a63b277df616c7f06160a7d76ce34c0d813765afb1782e594
+    next_atom_id: 104fb31e3fcd9507f1df02a747c954b292b121b88b7fa5122f15a11efd2380f3

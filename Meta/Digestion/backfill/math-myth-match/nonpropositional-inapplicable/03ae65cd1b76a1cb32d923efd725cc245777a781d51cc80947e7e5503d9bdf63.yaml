@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:03ae65cd1b76a1cb32d923efd725cc245777a781d51cc80947e7e5503d9bdf63
+  normalized_sha256: sha256:03ae65cd1b76a1cb32d923efd725cc245777a781d51cc80947e7e5503d9bdf63
+cas_ref: sha256:03ae65cd1b76a1cb32d923efd725cc245777a781d51cc80947e7e5503d9bdf63
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 区分事实、术语与规范分歧的方法论要求。
+    previous_atom_id: 267eabc918543eb92c85883e8c22caf464853aacd2f5815652c077d6c2226dde
+    next_atom_id: 3ea0c863b4ce86037d1c553b6bac3c9f0710d643513f5f7cd99a0097078aade5

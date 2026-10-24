@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:52b73b38c7f34258365d9fb1a1ce3ad800dc14b14f5985f2ffd122313c76fd25
+  normalized_sha256: sha256:52b73b38c7f34258365d9fb1a1ce3ad800dc14b14f5985f2ffd122313c76fd25
+cas_ref: sha256:52b73b38c7f34258365d9fb1a1ce3ad800dc14b14f5985f2ffd122313c76fd25
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 条件式地为既给结构命名，并开始列举组成项；本片没有导出的等式或性质。
+    previous_atom_id: e53034edc3950d7ebca638c82f49081a80f0b526d89f0245766bba16c6e30072
+    next_atom_id: fe26178738c6b6cc529ccb9a2d457aa80f7d543cf0b8dc3fea5193cc3e3f6f53

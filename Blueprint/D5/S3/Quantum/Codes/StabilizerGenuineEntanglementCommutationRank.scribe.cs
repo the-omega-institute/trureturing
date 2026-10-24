@@ -113,6 +113,38 @@ internal sealed class StabilizerGenuineEntanglementCommutationRankDocument : ISc
         }
     }
 
+    private static Formula CoordinateProductStatement(bool multiplication)
+    {
+        Formula i = F.Id("I");
+        Formula a = F.Id("T");
+        Formula m = F.Id("M");
+        Formula l = F.Id("L");
+        Formula n = F.Id("n");
+        Formula u = F.Id("u");
+        Formula v = F.Id("v");
+        Formula matrix = Call("Matrix", a, a, Complexes);
+        Formula familyType = Arrow(i, matrix);
+        Formula configuration = Arrow(i, a);
+        Formula ProductEntries(Formula entry) => App(Qualified("Matrix", "of"),
+            LambdaTerm(u, configuration, LambdaTerm(v, configuration,
+                Seq(new Formula.Subscript(Prod, Seq(n, Colon, Sp, i)), Sp,
+                    Parenthesized(entry)))));
+        Formula Product(Formula family) => ProductEntries(
+            App(App(family, n), App(u, n), App(v, n)));
+        Formula body = multiplication
+            ? All(m, familyType, All(l, familyType,
+                EqF(Mul(Product(m), Product(l)),
+                    Product(LambdaTerm(n, i, Mul(App(m, n), App(l, n)))))))
+            : EqF(ProductEntries(App(Typed(D(1), matrix), App(u, n), App(v, n))),
+                Typed(D(1), Call("Matrix", Parenthesized(configuration),
+                    Parenthesized(configuration), Complexes)));
+        body = multiplication
+            ? Instance(Call("DecidableEq", i), Instance(Call("Fintype", a), body))
+            : Instance(Call("DecidableEq", a), body);
+        return All(i, Named("Type"), All(a, Named("Type"),
+            Instance(Call("Fintype", i), body)));
+    }
+
     private static Formula SubspaceDefinition => OverGenerators(Call("NeZero", P),
         EqF(Typed(Call("stabilizerSubspace", G), Call("Submodule", Complexes, Parenthesized(States))),
             Call("iInf", LambdaTerm(F.Id("i"), Call("Fin", K),
@@ -235,6 +267,28 @@ internal sealed class StabilizerGenuineEntanglementCommutationRankDocument : ISc
                     "At party n the commutation exponent is a.z(n)b.x(n) minus a.x(n)b.z(n), computed in ZMod p. "
                     + "Thus the global phases of a and b do not affect this vector. This is the coordinate "
                     + "form of the local commutation exponents in final_5.tex, lines 375–382."))), DescribeRole.Definition),
+            Describe.Lean(
+                DescribeId.Create("coordinate-product-mul"),
+                DeclarationHandle.Create(Module + ".coordinate_product_mul"),
+                H("Multiplication of coordinate-product matrices"),
+                StatementSource.FromAuthor(Disp(CoordinateProductStatement(true))),
+                AssessedProvenance.FromRepo(Source),
+                Blocks(Paragraph(Text(
+                    "For finite coordinate and local index types, multiplying two matrices whose entries "
+                    + "are products of local entries gives the coordinate product of the local matrix "
+                    + "products. The sum over intermediate configurations factors into independent "
+                    + "sums over each local index."))), DescribeRole.Theorem),
+            Describe.Lean(
+                DescribeId.Create("coordinate-product-one"),
+                DeclarationHandle.Create(Module + ".coordinate_product_one"),
+                H("The coordinate product of identity matrices"),
+                StatementSource.FromAuthor(Disp(CoordinateProductStatement(false))),
+                AssessedProvenance.FromRepo(Source),
+                Blocks(Paragraph(Text(
+                    "For finitely many coordinates and any local index type with decidable equality, "
+                    + "the coordinate product of identity matrices is the identity on configurations. "
+                    + "Each entry is one exactly when the two configurations agree at every coordinate. "
+                    + "The local index type need not be finite."))), DescribeRole.Theorem),
             Describe.Lean(
                 DescribeId.Create("stabilizer-subspace"), DeclarationHandle.Create(Module + ".stabilizerSubspace"),
                 H("The common fixed subspace"), StatementSource.FromAuthor(Disp(SubspaceDefinition)),

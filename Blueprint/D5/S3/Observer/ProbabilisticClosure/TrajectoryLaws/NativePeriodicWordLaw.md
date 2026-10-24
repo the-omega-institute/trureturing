@@ -114,6 +114,18 @@ $$\forall r:unitInterval, (\operatorname{realMass}\left(\operatorname{explicitSt
 
 For every r in the closed unit interval, the complete pure suspended law assigns mass 1-r to the singleton word [beta]. The endpoints r=0 and r=1 are included.
 
+**Theorem 1.9 (Uniform geometric domination orders the rates).**
+
+$$\forall x:Real, (\forall y:Real, (\forall A:Real, (\forall B:Real, (((0<y)\land((0<A)\land(\forall n:Nat, (A \cdot {x}^{n}\le B \cdot {y}^{n}))))\Rightarrow(x\le y)))))$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/Observer/ProbabilisticClosure/TrajectoryLaws/NativePeriodicWordLaw.geometric_rate_bound` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+For arbitrary real rates x,y and coefficients A,B, a strictly positive comparison rate y and coefficient A make uniform domination A*x^n<=B*y^n force x<=y. There are no installed-source parameter assumptions. The periodic source rate bounds and generated-exit comparisons use this same estimate.
+
 These statements concern the periodic source-specific reversible common generator and its full native laws. They give neither an event-midpoint identity nor a total-variation attainment conclusion. The prior and update kernels remain those in the parameterized construction.
 
 ## References
@@ -122,6 +134,7 @@ These statements concern the periodic source-specific reversible common generato
 - Truth anchor: `D5/S3/Observer/ProbabilisticClosure/TrajectoryLaws/NativePeriodicWordLaw.endpoint_coordinates`
 - Truth anchor: `D5/S3/Observer/ProbabilisticClosure/TrajectoryLaws/NativePeriodicWordLaw.endpoint_immediate`
 - Truth anchor: `D5/S3/Observer/ProbabilisticClosure/TrajectoryLaws/NativePeriodicWordLaw.fixed_coord`
+- Truth anchor: `D5/S3/Observer/ProbabilisticClosure/TrajectoryLaws/NativePeriodicWordLaw.geometric_rate_bound`
 - Truth anchor: `D5/S3/Observer/ProbabilisticClosure/TrajectoryLaws/NativePeriodicWordLaw.native_full_box_criterion`
 - Truth anchor: `D5/S3/Observer/ProbabilisticClosure/TrajectoryLaws/NativePeriodicWordLaw.native_noncompletion`
 - Truth anchor: `D5/S3/Observer/ProbabilisticClosure/TrajectoryLaws/NativePeriodicWordLaw.native_word_identification`

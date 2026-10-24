@@ -29,6 +29,7 @@ Direct frozen dependencies (declaration statement_id):
 - D5/S1/Recurrence/Bilateral/BilateralProductModFour.ofSeries_inverse (sha256:6c9f94677b0c4cdb1baddca0a042a6a268121bc80d543b562f3b0b0d63f3a0de).
 - D5/S1/Recurrence/Invariants/UnitReversionSquareParity.agree_X (sha256:cb4bbeb74f9bb4de6a237dc609532d94ac61147a4a3cd321ca192132b9b26215).
 Claims retain the issue's literal conventions; proofs reuse existing owners through private consumed adapters.
+Escape audit unfinished: https://github.com/the-omega-institute/trureturing/issues/19820; symmetric_pair.
 -/
 
 import D5.S1.Recurrence.Parity.ScaledQuadraticReversionModSixteen
@@ -355,7 +356,7 @@ end D5.S1.Recurrence.Bilateral.HannaThetaFourModFour
 namespace D5.S1.Recurrence.Bilateral.HannaThetaFourModFour
 variable {R : Type*} [CommRing R]
 
-private theorem symmetric_pair {T : Type*} [AddCommMonoid T] (f : ℤ → T) (K : ℕ) :
+theorem symmetric_pair {T : Type*} [AddCommMonoid T] (f : ℤ → T) (K : ℕ) :
     (∑ j ∈ Finset.Icc (-(K : ℤ)) K, f j) =
       f 0 + ∑ k ∈ Finset.range K, (f (k + 1) + f (-(k : ℤ) - 1)) := by
   induction K with

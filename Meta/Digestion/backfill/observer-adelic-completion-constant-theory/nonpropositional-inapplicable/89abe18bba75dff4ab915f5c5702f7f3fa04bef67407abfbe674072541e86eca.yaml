@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:89abe18bba75dff4ab915f5c5702f7f3fa04bef67407abfbe674072541e86eca
+  normalized_sha256: sha256:89abe18bba75dff4ab915f5c5702f7f3fa04bef67407abfbe674072541e86eca
+cas_ref: sha256:89abe18bba75dff4ab915f5c5702f7f3fa04bef67407abfbe674072541e86eca
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 'nonpropositional: 约定拟议命名 groupoid 的对象，没有声称范畴公理或等价已经成立。'
+    previous_atom_id: f89421cd240a4d4e88ece35a9d61cad7b7ef24c4e019412cff0b8bb3fa0517ea
+    next_atom_id: 39986192ed08a2f4771b733e77be4def884d8b36ad9959c98b841fc5fb83108d

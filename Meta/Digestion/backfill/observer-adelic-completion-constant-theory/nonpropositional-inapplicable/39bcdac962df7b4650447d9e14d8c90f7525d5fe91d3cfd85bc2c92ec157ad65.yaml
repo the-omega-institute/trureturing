@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:39bcdac962df7b4650447d9e14d8c90f7525d5fe91d3cfd85bc2c92ec157ad65
+  normalized_sha256: sha256:39bcdac962df7b4650447d9e14d8c90f7525d5fe91d3cfd85bc2c92ec157ad65
+cas_ref: sha256:39bcdac962df7b4650447d9e14d8c90f7525d5fe91d3cfd85bc2c92ec157ad65
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: Dependency-table introduction and column headings only; mathematical data rows are separate atoms.
+    previous_atom_id: 2bd5092aa684ce8959610a7b6bfe26e8c7a1714e3714bf7ac6a73e16c00810e3
+    next_atom_id: b203770a45a6929eb88346c75ef12e80b0e008af3468e04510921f435ed01dd9

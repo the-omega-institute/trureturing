@@ -1,0 +1,14 @@
+fingerprints:
+  raw_sha256: sha256:508b0f914f73a890e9dcd575cb821b2c029b2e4fd7a9c76f06c4db687d412e86
+  normalized_sha256: sha256:508b0f914f73a890e9dcd575cb821b2c029b2e4fd7a9c76f06c4db687d412e86
+cas_ref: sha256:508b0f914f73a890e9dcd575cb821b2c029b2e4fd7a9c76f06c4db687d412e86
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 第95—102节导航仅分配言说、理解、行动和翻译的讨论主题。
+    previous_atom_id: 0a6fb8d70bb94f60dd7982d01a822fa08d8d71c22f58af739af6d6a21218744a
+    next_atom_id: e210cb087efde5844e36c04806c9cea635ee13e6e1d46f579f611ab55a9a6b85
+  chain_atoms:
+    - 594fb5b4556cc3a3385ac37004e12d4bb45af9782a900cef41e31dcbb85a234c
+    - eac7f84262bc10dd59417400dd3ad9fa1c7434dcd754dde8ab74089d9fb5490e
