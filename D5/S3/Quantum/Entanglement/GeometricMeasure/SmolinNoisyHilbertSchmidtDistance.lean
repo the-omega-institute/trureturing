@@ -38,8 +38,6 @@ def smolin : Matrix Q Q ℂ := (1 / 16 : ℂ) • (1 + S)
 def noisy (p : ℝ) : Matrix Q Q ℂ :=
   p • smolin + (1 - p) • ((1 / 16 : ℂ) • 1)
 
-def SepOneThree : Set (Matrix Q Q ℂ) := {ρ | IsSeparable ρ}
-
 def SepOneOneTwo : Set (Matrix Q Q ℂ) :=
   convexHull ℝ {ρ | ∃ (a b : Matrix (Fin 2) (Fin 2) ℂ)
     (c : Matrix (Fin 2 × Fin 2) (Fin 2 × Fin 2) ℂ),
@@ -61,16 +59,14 @@ def f (p : ℝ) : ℝ :=
   if p ≤ 1 / 3 then 0 else Real.sqrt 3 / 4 * (p - 1 / 3)
 
 def claim : Prop := ∀ p ∈ Set.Icc (0 : ℝ) 1,
-  IsLeast {d | ∃ σ ∈ SepOneThree, d = hsDist (noisy p) σ} (f p) ∧
+  IsLeast {d | ∃ σ, IsSeparable σ ∧ d = hsDist (noisy p) σ} (f p) ∧
   IsLeast {d | ∃ σ ∈ SepOneOneTwo, d = hsDist (noisy p) σ} (f p) ∧
   IsLeast {d | ∃ σ ∈ SepFull, d = hsDist (noisy p) σ} (f p) ∧
   IsLeast {d | ∃ σ ∈ SepTwoTwo, d = hsDist (noisy p) σ} 0
 
-private theorem hsDist_nonneg (X Y : Matrix Q Q ℂ) : 0 ≤ hsDist X Y := by
-  exact Real.sqrt_nonneg _
-
 private theorem hsDist_self (X : Matrix Q Q ℂ) : hsDist X X = 0 := by
-  simp [hsDist]
+  simpa only [hsDist, sub_self, Matrix.conjTranspose_zero, zero_mul, Matrix.trace_zero,
+    Complex.zero_re] using Real.sqrt_zero
 
 private theorem density_kron {A B : Type*} [Fintype A] [Fintype B]
     [DecidableEq A] [DecidableEq B] {a : Matrix A A ℂ} {b : Matrix B B ℂ}
@@ -112,7 +108,8 @@ private theorem full_subset_oneOneTwo : SepFull ⊆ SepOneOneTwo := by
   rintro ρ ⟨a, b, c, d, ha, hb, hc, hd, rfl⟩
   exact ⟨a, b, c ⊗ₖ d, ha, hb, density_kron hc hd, rfl⟩
 
-private theorem oneOneTwo_subset_oneThree : SepOneOneTwo ⊆ SepOneThree := by
+private theorem oneOneTwo_subset_oneThree :
+    SepOneOneTwo ⊆ (IsSeparable : Set (Matrix Q Q ℂ)) := by
   apply convexHull_min _ sep_convex
   rintro ρ ⟨a, b, c, ha, hb, hc, rfl⟩
   exact sep_product ha (density_kron hb hc)
@@ -335,7 +332,7 @@ private theorem witness_product (a : Matrix (Fin 2) (Fin 2) ℂ)
   nlinarith
 
 
-private theorem witness_separable (σ : Matrix Q Q ℂ) (hσ : σ ∈ SepOneThree) :
+private theorem witness_separable (σ : Matrix Q Q ℂ) (hσ : IsSeparable σ) :
     (Matrix.trace (S * σ)).re ≤ 1 := by
   obtain ⟨n, p, a, b, hp, hsum, hd, he⟩ := hσ
   rw [he]
@@ -380,16 +377,17 @@ private theorem witness_cauchy (X : Matrix Q Q ℂ) :
 
 
 private theorem distance_lower (p : ℝ) (σ : Matrix Q Q ℂ)
-    (hσ : σ ∈ SepOneThree) : f p ≤ hsDist (noisy p) σ := by
+    (hσ : IsSeparable σ) : f p ≤ hsDist (noisy p) σ := by
   by_cases hp : p ≤ 1 / 3
-  · simpa only [f, if_pos hp] using hsDist_nonneg (noisy p) σ
+  · simp only [f, if_pos hp]
+    exact Real.sqrt_nonneg _
   · have hw := witness_separable σ hσ
     have hc := witness_cauchy (noisy p - σ)
     have hdist : hsDist (noisy p - σ) 0 = hsDist (noisy p) σ := by
       simp [hsDist]
     rw [hdist] at hc
     rw [Matrix.mul_sub, Matrix.trace_sub, Complex.sub_re, trace_S_noisy] at hc
-    have hd := hsDist_nonneg (noisy p) σ
+    have hd : 0 ≤ hsDist (noisy p) σ := Real.sqrt_nonneg _
     have hs : Real.sqrt 48 = 4 * Real.sqrt 3 := by
       rw [show (48 : ℝ) = 16 * 3 by norm_num, Real.sqrt_mul (by norm_num)]
       norm_num
@@ -514,7 +512,7 @@ private theorem noisy_twoTwo (p : ℝ) (hp : p ∈ Set.Icc (0 : ℝ) 1) :
     (sub_nonneg.mpr hp.2) (by ring)
 
 private theorem least_refinement (K : Set (Matrix Q Q ℂ))
-    (hFK : SepFull ⊆ K) (hK : K ⊆ SepOneThree)
+    (hFK : SepFull ⊆ K) (hK : K ⊆ (IsSeparable : Set (Matrix Q Q ℂ)))
     (p : ℝ) (hp : p ∈ Set.Icc (0 : ℝ) 1) :
     IsLeast {d | ∃ σ ∈ K, d = hsDist (noisy p) σ} (f p) := by
   constructor
@@ -528,14 +526,14 @@ private theorem least_refinement (K : Set (Matrix Q Q ℂ))
 
 theorem result : claim := by
   intro p hp
-  have hF : SepFull ⊆ SepOneThree :=
+  have hF : SepFull ⊆ (IsSeparable : Set (Matrix Q Q ℂ)) :=
     full_subset_oneOneTwo.trans oneOneTwo_subset_oneThree
-  refine ⟨least_refinement SepOneThree hF (fun _ h => h) p hp,
+  refine ⟨least_refinement IsSeparable hF (fun _ h => h) p hp,
     least_refinement SepOneOneTwo full_subset_oneOneTwo oneOneTwo_subset_oneThree p hp,
     least_refinement SepFull (fun _ h => h) hF p hp, ?_⟩
   constructor
   · exact ⟨noisy p, noisy_twoTwo p hp, (hsDist_self _).symm⟩
   · rintro d ⟨σ, _, rfl⟩
-    exact hsDist_nonneg _ _
+    exact Real.sqrt_nonneg _
 
 end D5.S3.Quantum.Entanglement.GeometricMeasure.SmolinNoisyHilbertSchmidtDistance
