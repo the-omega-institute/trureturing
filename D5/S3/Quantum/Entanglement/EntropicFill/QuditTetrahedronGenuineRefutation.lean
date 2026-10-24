@@ -82,8 +82,6 @@ private def psi (x : Fin 4 → Fin 8) : ℂ := by
   classical
   exact if supported x then ((Real.sqrt 8)⁻¹ : ℝ) else 0
 
-open scoped Classical
-
 private def label (t : Fin 8) : Fin 4 → Fin 8 :=
   ![t, ⟨t.val / 4, by omega⟩, ⟨t.val / 2 % 2, by omega⟩, ⟨t.val % 2, by omega⟩]
 
@@ -97,6 +95,7 @@ private theorem label_reconstruct (x : Fin 4 → Fin 8) (hx : supported x) :
   funext i
   fin_cases i <;> apply Fin.ext <;> simp [label] <;> omega
 
+open Classical in
 private theorem sum_supported {α : Type*} [AddCommMonoid α]
     (f : (Fin 4 → Fin 8) → α) :
     (∑ x, if supported x then f x else 0) = ∑ t : Fin 8, f (label t) := by
@@ -111,11 +110,6 @@ private theorem sum_supported {α : Type*} [AddCommMonoid α]
     simpa [label] using congrFun h 0
   · intro x hx
     exact ⟨x 0, Finset.mem_univ _, label_reconstruct x (Finset.mem_filter.mp hx).2⟩
-
-private theorem amplitude_square :
-    ((Real.sqrt 8)⁻¹ : ℝ) ^ 2 = 1 / 8 := by
-  rw [inv_pow, Real.sq_sqrt (by norm_num)]
-  norm_num
 
 private theorem supported_update (x : Fin 4 → Fin 8) (hx : supported x)
     (i : Fin 4) (a : Fin 8) : supported (Function.update x i a) ↔ a = x i := by
@@ -135,7 +129,8 @@ private theorem normalized : ∑ x, ‖psi x‖ ^ 2 = 1 := by
       intro x _
       by_cases hx : supported x
       · simp only [psi, ite_eq_left hx, Complex.norm_real, Real.norm_eq_abs, sq_abs]
-        exact amplitude_square
+        rw [inv_pow, Real.sq_sqrt (by norm_num)]
+        norm_num
       · simp [psi, hx]
     _ = ∑ _t : Fin 8, (1 / 8 : ℝ) := sum_supported (fun _ => (1 / 8 : ℝ))
     _ = 1 := by norm_num
@@ -147,7 +142,9 @@ private theorem marginal_entries (i : Fin 4) (a b : Fin 8) :
   have hsq : ((Real.sqrt 8 : ℂ)⁻¹) ^ 2 = (1 / 8 : ℂ) := by
     calc
       _ = (((Real.sqrt 8)⁻¹ ^ 2 : ℝ) : ℂ) := by push_cast; rfl
-      _ = ((1 / 8 : ℝ) : ℂ) := congrArg (fun r : ℝ => (r : ℂ)) amplitude_square
+      _ = ((1 / 8 : ℝ) : ℂ) := congrArg (fun r : ℝ => (r : ℂ)) (by
+        rw [inv_pow, Real.sq_sqrt (by norm_num)]
+        norm_num)
       _ = _ := by norm_num
   unfold rho1
   trans ∑ x, if supported x then
@@ -171,7 +168,7 @@ private theorem marginal_A : rho1 psi 0 = Matrix.diagonal (fun _ => (1 / 8 : ℂ
   by_cases hab : b = a
   · subst b
     simp [marginal_entries, label]
-  · simp [marginal_entries, hab, Ne.symm hab, Matrix.diagonal_apply]
+  · simp [marginal_entries, hab, Ne.symm hab]
 
 private theorem marginal_leaf (i : Fin 4) (hi : i ≠ 0) :
     rho1 psi i = Matrix.diagonal (fun a => if a.val < 2 then (1 / 2 : ℂ) else 0) := by
@@ -184,7 +181,7 @@ private theorem marginal_leaf (i : Fin 4) (hi : i ≠ 0) :
     fin_cases i
     · exact (hi rfl).elim
     all_goals fin_cases a <;> norm_num [label, Fin.sum_univ_succ]
-  · simp [hab, Ne.symm hab, Matrix.diagonal_apply]
+  · simp [hab, Ne.symm hab]
 
 private theorem entropies :
     entropy2 (rho1 psi 0) = 3 ∧ entropy2 (rho1 psi 1) = 1 ∧
@@ -216,7 +213,14 @@ private theorem entropies :
 
 private theorem forced_fill (σ : Fin 6 → ℝ) (ell : ℝ) (h : AdmissibleFill psi σ ell) :
     σ = ![1, 1, 1, 0, 0, 0] := by
-  sorry
+  rcases h with ⟨hn, hA, hB, hC, hD, _⟩
+  rcases entropies with ⟨eA, eB, eC, eD⟩
+  rw [eA] at hA
+  rw [eB] at hB
+  rw [eC] at hC
+  rw [eD] at hD
+  funext k
+  fin_cases k <;> simp <;> linarith [hn 3, hn 4, hn 5]
 
 private theorem exists_fill : ∃ σ ell, AdmissibleFill psi σ ell := by
   sorry
