@@ -10,15 +10,46 @@ import D5.S3.Analytic.KarpZhangReciprocal.IntervalConvolution
 
 /-!
 admission_basis: escape-witness
-content theorem: reciprocal_half, through balanced_step and abel_reduction.
-escape_witness: the interval-support condition propagates positivity between
-endpoints; local log-concavity then compares distant successive ratios and
-makes the balanced products increase. A finite layer decomposition expresses
-the Turanian coefficient as a nonnegative combination of symmetric tails.
-All private helpers are consumed on this path. Direct D5 dependencies:
-IntervalConvolution.F, IntervalConvolution.shift_tail, Coeff.c.
-The source's nontriviality and exact interval-support convention are retained.
-No claim is made about the other half of Conjecture 5.2.
+content theorem: reciprocal_half, through ratio_bound and IntervalConvolution.shift_tail.
+escape_witness: The interval-support condition gives positivity between endpoints. The
+ratio_bound induction then propagates adjacent log-concavity to distant
+successive ratios and balanced_step. Finite Abel summation expresses delta
+as a nonnegative combination of symmetric tails. The source nontriviality
+and exact zero-support convention are retained.
+
+Per-declaration proof_shape (local names belong to this namespace;
+cross-module names have prefix D5.S3.Analytic):
+* IsLogConcave: proof_shape: definition; escape_witness: none;
+  consumers: KarpZhangConjecture.Result.claim, KarpZhangConjecture.Result.result, KarpZhangGamma.Result.two_variable_nonneg, KarpZhangGamma.Series.gamma_half, KarpZhangGamma.Smoothing.balanced_product, KarpZhangGamma.Smoothing.binomial_minor, KarpZhangGamma.Smoothing.smoothed_weighting, KarpZhangGamma.Smoothing.smoothing_minor, balanced_step, positive_between, ratio_bound, reciprocal_half.
+* delta: proof_shape: definition; escape_witness: none;
+  consumers: KarpZhangConjecture.Result.claim, KarpZhangConjecture.Result.result, abel_reduction, reciprocal_half.
+* increment: proof_shape: definition; escape_witness: none;
+  consumers: abel_layers, abel_reduction, layers, telescope.
+* positive_between: proof_shape: bind-only; escape_witness: none;
+  consumers: balanced_step, ratio_bound.
+* ratio_bound: proof_shape: content; escape_witness: ratio_bound;
+  consumers: balanced_step.
+* balanced_step: proof_shape: content; escape_witness: ratio_bound;
+  consumers: KarpZhangGamma.Smoothing.balanced_product, reciprocal_half.
+* telescope: proof_shape: bind-only; escape_witness: none;
+  consumers: layers.
+* layers: proof_shape: bind-only; escape_witness: none;
+  consumers: abel_layers.
+* tail_sum: proof_shape: bind-only; escape_witness: none;
+  consumers: abel_layers.
+* abel_layers: proof_shape: bind-only; escape_witness: none;
+  consumers: abel_reduction.
+* abel_reduction: proof_shape: bind-only; escape_witness: none;
+  consumers: reciprocal_half.
+* reciprocal_half: proof_shape: content; escape_witness: KarpZhangReciprocal.IntervalConvolution.score_variance_bound;
+  consumers: KarpZhangConjecture.Result.result.
+
+Direct frozen D5 dependencies: none; all KarpZhang dependencies are
+same-delivery declarations. Consumers are taken from compiled proof
+terms, with declaration types also counted for definitions. The listed
+content witnesses remain on the corresponding live mathematical paths.
+Utility is none: all statements are general identities or inequalities,
+not bounded enumeration, checkers, numerical reductions or certified instances.
 -/
 
 noncomputable section

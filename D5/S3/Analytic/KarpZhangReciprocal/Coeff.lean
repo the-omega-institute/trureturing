@@ -17,11 +17,59 @@ import Mathlib.Tactic.Ring
 /-!
 admission_basis: escape-witness
 content theorem: coefficient_calculus, through curvature_bound.
-escape_witness: the comparison of every summand with a common terminal
-denominator, followed by a degree-uniform lower bound on the sum of squares.
-The remaining private calculus and positivity lemmas are consumed helpers.
-Direct frozen D5 dependencies: none.
-The coefficient is the reciprocal series in Karp--Zhang, Conjecture 5.2.
+escape_witness: The uniform score-curvature estimate compares each rational summand with a
+common terminal denominator. square_sum_lower supplies the degree-uniform
+sum-of-squares inequality by induction; curvature_bound sums the estimates.
+Positivity, rational differentiation and the Pochhammer recurrence are
+consumed normalization helpers.
+
+Per-declaration proof_shape (local names belong to this namespace;
+cross-module names have prefix D5.S3.Analytic):
+* c: proof_shape: definition; escape_witness: none;
+  consumers: c_deriv, c_pos, c_succ, coefficient_calculus, log_c_deriv, KarpZhangReciprocal.IntervalConvolution.F, KarpZhangReciprocal.IntervalConvolution.balance, KarpZhangReciprocal.IntervalConvolution.coefficient_step, KarpZhangReciprocal.IntervalConvolution.rate_curvature, KarpZhangReciprocal.IntervalConvolution.score_deriv, KarpZhangReciprocal.IntervalConvolution.score_variance_bound, KarpZhangReciprocal.IntervalConvolution.symmetric, KarpZhangReciprocal.IntervalConvolution.weight, KarpZhangReciprocal.IntervalConvolution.weight_deriv, KarpZhangReciprocal.IntervalConvolution.weight_pos, KarpZhangReciprocal.Result.abel_reduction, KarpZhangReciprocal.Result.delta.
+* lambda: proof_shape: definition; escape_witness: none;
+  consumers: c_deriv, c_succ, coefficient_calculus, lambda_antitone, lambda_deriv, lambda_pos, KarpZhangReciprocal.IntervalConvolution.balance, KarpZhangReciprocal.IntervalConvolution.birth, KarpZhangReciprocal.IntervalConvolution.coefficient_step, KarpZhangReciprocal.IntervalConvolution.death, KarpZhangReciprocal.IntervalConvolution.rate_curvature, KarpZhangReciprocal.IntervalConvolution.score_deriv, KarpZhangReciprocal.IntervalConvolution.score_variance_bound, KarpZhangReciprocal.IntervalConvolution.weight_deriv, KarpZhangReciprocal.IntervalConvolution.weight_pos.
+* eta: proof_shape: definition; escape_witness: none;
+  consumers: c_deriv, coefficient_calculus, curvature_bound, eta_deriv, lambda_deriv, psi, psi_deriv, KarpZhangReciprocal.IntervalConvolution.coefficient_step, KarpZhangReciprocal.IntervalConvolution.rate_curvature, KarpZhangReciprocal.IntervalConvolution.score_deriv, KarpZhangReciprocal.IntervalConvolution.score_variance_bound, KarpZhangReciprocal.IntervalConvolution.weight_deriv, KarpZhangReciprocal.IntervalConvolution.weight_pos.
+* psi: proof_shape: definition; escape_witness: none;
+  consumers: c_deriv, coefficient_calculus, log_c_deriv, psi_deriv, KarpZhangReciprocal.IntervalConvolution.coefficient_step, KarpZhangReciprocal.IntervalConvolution.rate_curvature, KarpZhangReciprocal.IntervalConvolution.score, KarpZhangReciprocal.IntervalConvolution.score_deriv, KarpZhangReciprocal.IntervalConvolution.score_variance_bound, KarpZhangReciprocal.IntervalConvolution.weight_deriv, KarpZhangReciprocal.IntervalConvolution.weight_pos.
+* chi: proof_shape: definition; escape_witness: none;
+  consumers: chi_nonneg, coefficient_calculus, curvature_bound, psi_deriv, KarpZhangReciprocal.IntervalConvolution.coefficient_step, KarpZhangReciprocal.IntervalConvolution.curvature, KarpZhangReciprocal.IntervalConvolution.rate_curvature, KarpZhangReciprocal.IntervalConvolution.score_deriv, KarpZhangReciprocal.IntervalConvolution.score_variance_bound, KarpZhangReciprocal.IntervalConvolution.weight_deriv, KarpZhangReciprocal.IntervalConvolution.weight_pos.
+* c_pos: proof_shape: bind-only; escape_witness: none;
+  consumers: coefficient_calculus, log_c_deriv.
+* lambda_pos: proof_shape: bind-only; escape_witness: none;
+  consumers: coefficient_calculus.
+* c_succ: proof_shape: bind-only; escape_witness: none;
+  consumers: c_deriv, coefficient_calculus.
+* lambda_antitone: proof_shape: bind-only; escape_witness: none;
+  consumers: coefficient_calculus.
+* lambda_deriv: proof_shape: bind-only; escape_witness: none;
+  consumers: c_deriv.
+* eta_deriv: proof_shape: bind-only; escape_witness: none;
+  consumers: psi_deriv.
+* c_deriv: proof_shape: bind-only; escape_witness: none;
+  consumers: coefficient_calculus, log_c_deriv.
+* log_c_deriv: proof_shape: bind-only; escape_witness: none;
+  consumers: coefficient_calculus.
+* psi_deriv: proof_shape: bind-only; escape_witness: none;
+  consumers: coefficient_calculus.
+* chi_nonneg: proof_shape: bind-only; escape_witness: none;
+  consumers: coefficient_calculus.
+* curvature_summand: proof_shape: bind-only; escape_witness: none;
+  consumers: curvature_bound.
+* square_sum_lower: proof_shape: content; escape_witness: square_sum_lower;
+  consumers: curvature_bound.
+* curvature_bound: proof_shape: content; escape_witness: square_sum_lower;
+  consumers: coefficient_calculus.
+* coefficient_calculus: proof_shape: content; escape_witness: curvature_bound;
+  consumers: KarpZhangReciprocal.IntervalConvolution.coefficient_step, KarpZhangReciprocal.IntervalConvolution.rate_curvature, KarpZhangReciprocal.IntervalConvolution.score_deriv, KarpZhangReciprocal.IntervalConvolution.score_variance_bound, KarpZhangReciprocal.IntervalConvolution.weight_deriv, KarpZhangReciprocal.IntervalConvolution.weight_pos.
+
+Direct frozen D5 dependencies: none; all KarpZhang dependencies are
+same-delivery declarations. Consumers are taken from compiled proof
+terms, with declaration types also counted for definitions. The listed
+content witnesses remain on the corresponding live mathematical paths.
+Utility is none: all statements are general identities or inequalities,
+not bounded enumeration, checkers, numerical reductions or certified instances.
 -/
 
 noncomputable section

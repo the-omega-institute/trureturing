@@ -9,6 +9,14 @@ claim: "Conjecture 5.2 asserts coefficient-wise log-concavity of both the recipr
 strata_touched:
   - D5/S3/Analytic/KarpZhangReciprocal/Coeff
   - D5/S3/Analytic/KarpZhangReciprocal/BirthDeath
+  - D5/S3/Analytic/KarpZhangReciprocal/IntervalConvolution
+  - D5/S3/Analytic/KarpZhangReciprocal/Result
+  - D5/S3/Analytic/KarpZhangGamma/Weighting
+  - D5/S3/Analytic/KarpZhangGamma/Smoothing
+  - D5/S3/Analytic/KarpZhangGamma/Kernel
+  - D5/S3/Analytic/KarpZhangGamma/Result
+  - D5/S3/Analytic/KarpZhangGamma/Series
+  - D5/S3/Analytic/KarpZhangConjecture/Result
 license: citation-only
 triage: anchor
 ---
@@ -55,6 +63,11 @@ finite sums. `Coeff.coefficient_calculus` includes the degree-uniform
 curvature estimate.
 
 `BirthDeath.variance_bound` is a finite variance estimate used to control
-the score variance in interval convolutions. The coefficient estimates and
-variance bound are supporting mathematics; these modules state neither a
-settlement of the reciprocal assertion nor a result for the full conjecture.
+the score variance in interval convolutions. `IntervalConvolution.shift_tail`
+and finite Abel summation give `KarpZhangReciprocal.Result.reciprocal_half`.
+Exponential smoothing, the one-sign-change reciprocal-gamma kernel and the
+positive diagonal transformation give `KarpZhangGamma.Series.gamma_half`.
+`KarpZhangConjecture.Result.claim` states the conjunction of the two
+coefficient assertions using those exact finite coefficients, and
+`KarpZhangConjecture.Result.result` proves it for the source's full sequence
+and parameter range.

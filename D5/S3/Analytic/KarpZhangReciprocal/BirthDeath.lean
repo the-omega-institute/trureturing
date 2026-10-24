@@ -14,15 +14,37 @@ import Mathlib.Tactic.Positivity
 
 /-!
 admission_basis: escape-witness
-content theorem: variance_bound.
-escape_witness: a cumulative-mass construction solves the finite divergence
-equation; detailed balance and a pointwise square inequality give coercivity,
-and weighted Cauchy--Schwarz closes the variance estimate.
-Private left_sum, right_sum, integration_by_parts and coercivity are consumed
-bind-only algebraic helpers. mean_zero_flux is the constructive content step.
-Direct frozen D5 dependencies: none.
-Vertices are 0,...,n; translating an arbitrary finite interval preserves all
-of the hypotheses and the bound. The singleton case n=0 is included.
+content theorem: variance_bound, through mean_zero_flux.
+escape_witness: The cumulative centered masses construct an edge flux solving the finite
+divergence equation. Detailed balance, coercivity and weighted Cauchy--Schwarz
+then prove the variance estimate. Vertices are 0,...,n, with both endpoint
+rates zero; the singleton case is included.
+
+Per-declaration proof_shape (local names belong to this namespace;
+cross-module names have prefix D5.S3.Analytic):
+* kappa: proof_shape: definition; escape_witness: none;
+  consumers: coercivity, variance_bound, KarpZhangReciprocal.IntervalConvolution.rate_curvature, KarpZhangReciprocal.IntervalConvolution.score_variance_bound.
+* variance: proof_shape: definition; escape_witness: none;
+  consumers: variance_bound, KarpZhangReciprocal.IntervalConvolution.score_variance_bound, KarpZhangReciprocal.IntervalConvolution.slice_concave, KarpZhangReciprocal.IntervalConvolution.variance_expand.
+* left_sum: proof_shape: bind-only; escape_witness: none;
+  consumers: coercivity, integration_by_parts.
+* right_sum: proof_shape: bind-only; escape_witness: none;
+  consumers: coercivity, integration_by_parts.
+* mean_zero_flux: proof_shape: content; escape_witness: mean_zero_flux;
+  consumers: variance_bound.
+* integration_by_parts: proof_shape: bind-only; escape_witness: none;
+  consumers: variance_bound.
+* coercivity: proof_shape: bind-only; escape_witness: none;
+  consumers: variance_bound.
+* variance_bound: proof_shape: content; escape_witness: mean_zero_flux;
+  consumers: KarpZhangReciprocal.IntervalConvolution.score_variance_bound.
+
+Direct frozen D5 dependencies: none; all KarpZhang dependencies are
+same-delivery declarations. Consumers are taken from compiled proof
+terms, with declaration types also counted for definitions. The listed
+content witnesses remain on the corresponding live mathematical paths.
+Utility is none: all statements are general identities or inequalities,
+not bounded enumeration, checkers, numerical reductions or certified instances.
 -/
 
 noncomputable section

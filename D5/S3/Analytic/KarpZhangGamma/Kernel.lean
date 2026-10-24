@@ -12,20 +12,33 @@ import Mathlib.RingTheory.Polynomial.Pochhammer
 
 /-!
 admission_basis: escape-witness
-content theorems: reciprocalGamma_sum, kernel_sum_nonneg.
-escape_witness: binomialGamma_sum carries the exact rising-factorial
-convolution invariant by induction in degree, simultaneously for all positive
-parameters. The finite Pascal recurrence and Gamma recurrence yield the
-invariant at the next degree. This is the finite Vandermonde recurrence
-route to identity (3.11), without analytic series or integrals.
-bind-only helper: gamma_balanced_shift -> kernel_sum_nonneg (Jensen applied
-twice to Real.convexOn_log_Gamma); it is also consumed by
-Result.reciprocalPair_balanced. binomialGamma_sum is content and consumed
-by reciprocalGamma_sum; reciprocalGamma_sum is consumed by kernel_sum_nonneg.
-Direct frozen D5 dependencies: none on the mathematical proof path; the
-imported Smoothing identities are same-delivery helpers.
-These general identities and inequalities are not computational-content
-instances. The paired-kernel sign pattern is not asserted in this module.
+content theorem: reciprocalGamma_sum and kernel_sum_nonneg, through binomialGamma_sum.
+escape_witness: The degree induction in binomialGamma_sum carries the rising-factorial
+convolution invariant simultaneously in both positive real parameters.
+Pascal and Gamma recurrence propagate the finite Vandermonde identity.
+gamma_balanced_shift applies log-convexity of Gamma by two Jensen inequalities;
+it supplies no separate escape witness. The total-kernel bound does not
+assert the paired-kernel sign pattern.
+
+Per-declaration proof_shape (local names belong to this namespace;
+cross-module names have prefix D5.S3.Analytic):
+* binomialGamma_sum: proof_shape: content; escape_witness: binomialGamma_sum;
+  consumers: reciprocalGamma_sum.
+* reciprocalGamma_sum: proof_shape: content; escape_witness: binomialGamma_sum;
+  consumers: kernel_sum_nonneg.
+* gamma_balanced_shift: proof_shape: bind-only; escape_witness: none;
+  consumers: kernel_sum_nonneg, KarpZhangGamma.Result.reciprocalPair_balanced.
+* kernel: proof_shape: definition; escape_witness: none;
+  consumers: kernel_sum_nonneg, KarpZhangGamma.Result.finite_pairing, KarpZhangGamma.Result.pairedKernel, KarpZhangGamma.Result.pairedKernel_bracket, KarpZhangGamma.Result.pairedKernel_sum_nonneg, KarpZhangGamma.Result.transformDelta, KarpZhangGamma.Result.two_variable_nonneg, KarpZhangGamma.Series.transformed_delta.
+* kernel_sum_nonneg: proof_shape: content; escape_witness: binomialGamma_sum;
+  consumers: KarpZhangGamma.Result.pairedKernel_sum_nonneg.
+
+Direct frozen D5 dependencies: none; all KarpZhang dependencies are
+same-delivery declarations. Consumers are taken from compiled proof
+terms, with declaration types also counted for definitions. The listed
+content witnesses remain on the corresponding live mathematical paths.
+Utility is none: all statements are general identities or inequalities,
+not bounded enumeration, checkers, numerical reductions or certified instances.
 -/
 
 noncomputable section

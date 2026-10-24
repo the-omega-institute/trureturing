@@ -15,22 +15,40 @@ import Mathlib.Algebra.BigOperators.Field
 /-!
 admission_basis: escape-witness
 content theorem: smoothing_minor, through binomial_minor.
-escape_witness: simultaneous induction in the coefficient degree for every
-pair of derivative indices. Pascal's identity expresses the next minor as
-the sum of two current minors. At the adjacent-index boundary the first
-minor vanishes by commutativity. The degree-zero invariant is supplied by
-the existing Result.balanced_step, via balanced_product.
-The recurrence replaces the finite Cauchy--Binet expansion with an entirely
-finite induction proving the same coefficientwise inequality.
-bind-only helpers and consumers: balanced_product -> binomial_minor;
-binomialProduct_succ -> binomial_minor, Kernel.reciprocalGamma_sum;
-binomialProduct_comm -> binomial_minor, Result.two_variable_nonneg; productCoeff_eq -> smoothing_minor,
-Kernel.reciprocalGamma_sum.
-The content helper binomial_minor is consumed by smoothing_minor;
-smoothed_weighting consumes smoothing_minor and Weighting.coefficientwise_weighting.
-Direct frozen D5 dependencies: KarpZhangReciprocal.Result.IsLogConcave,
-KarpZhangReciprocal.Result.balanced_step. General finite identities and
-inequalities only; none of the four computational-content kinds applies.
+escape_witness: Simultaneous induction in coefficient degree for all derivative indices
+preserves the balanced minor inequality. Pascal recurrence gives two
+current minors; the adjacent-index boundary vanishes by commutativity.
+The degree-zero step uses balanced_product and the same-delivery
+KarpZhangReciprocal.Result.balanced_step. smoothed_weighting combines these
+minors with Weighting.coefficientwise_weighting.
+
+Per-declaration proof_shape (local names belong to this namespace;
+cross-module names have prefix D5.S3.Analytic):
+* binomialProduct: proof_shape: definition; escape_witness: none;
+  consumers: KarpZhangGamma.Kernel.binomialGamma_sum, KarpZhangGamma.Kernel.reciprocalGamma_sum, KarpZhangGamma.Result.two_variable_nonneg, binomialProduct_comm, binomialProduct_succ, binomial_minor, productCoeff_eq, smoothing_minor.
+* productCoeff: proof_shape: definition; escape_witness: none;
+  consumers: KarpZhangGamma.Kernel.reciprocalGamma_sum, KarpZhangGamma.Result.transformDelta, KarpZhangGamma.Result.two_variable_nonneg, KarpZhangGamma.Series.transformed_delta, KarpZhangGamma.Series.transformed_product, productCoeff_eq, smoothed_weighting, smoothing_minor.
+* balanced_product: proof_shape: content; escape_witness: KarpZhangReciprocal.Result.ratio_bound;
+  consumers: binomial_minor.
+* binomialProduct_succ: proof_shape: bind-only; escape_witness: none;
+  consumers: KarpZhangGamma.Kernel.binomialGamma_sum, binomial_minor.
+* binomialProduct_comm: proof_shape: bind-only; escape_witness: none;
+  consumers: KarpZhangGamma.Result.two_variable_nonneg, binomial_minor.
+* productCoeff_eq: proof_shape: bind-only; escape_witness: none;
+  consumers: KarpZhangGamma.Kernel.reciprocalGamma_sum, KarpZhangGamma.Result.two_variable_nonneg, smoothing_minor.
+* binomial_minor: proof_shape: content; escape_witness: binomial_minor;
+  consumers: smoothing_minor.
+* smoothing_minor: proof_shape: content; escape_witness: binomial_minor;
+  consumers: smoothed_weighting.
+* smoothed_weighting: proof_shape: content; escape_witness: binomial_minor;
+  consumers: KarpZhangGamma.Result.two_variable_nonneg.
+
+Direct frozen D5 dependencies: none; all KarpZhang dependencies are
+same-delivery declarations. Consumers are taken from compiled proof
+terms, with declaration types also counted for definitions. The listed
+content witnesses remain on the corresponding live mathematical paths.
+Utility is none: all statements are general identities or inequalities,
+not bounded enumeration, checkers, numerical reductions or certified instances.
 -/
 
 noncomputable section
