@@ -46,7 +46,7 @@ theorem rejected_law : ¬ arena.Law rejected := by
   obtain ⟨W, M, _, _, hsum, _⟩ := h 3 (by norm_num)
   obtain ⟨ρ, _, hnegative⟩ := hsum.1.2.2
   change ((0 : Matrix (Fin 3 × Fin 3) (Fin 3 × Fin 3) ℂ) * ρ).trace.re < 0 at hnegative
-  simpa using hnegative
+  simp at hnegative
 
 theorem dependence : ObservationalDependence signature actual := by
   intro i
