@@ -3225,3 +3225,748 @@ ordinary on-paper mathematical results, without a claim of Lean
 verification or physical realization.
 
 ## 追加锚（本行以下为增补区）
+
+## 17. Fixed real-filter drift for the original nominal decoder
+
+**Definition 17.1 (unchanged detectors and fixed real drift).** Use the
+lawful sources, fixed frame and orientation of Definition 6.1 and the
+skew coordinates $a(A)$, map $U$ and norms of Definition 13.1. Write
+$\beta(A)=b(A)=*_5(a_A\wedge a_A)$ for the five Hodge coordinates;
+$K(A)=-A^2$. For any real contraction $H\in M_5(\mathbb R)$ set
+$A_j^H=H^jA(H^j)^T$ and define $Q_H(A)\in\mathbb R^{50}$ by
+
+$$
+Q_H(A)=\left(
+ \left(\frac{K(A)_{ik}}{M_{ik}}\right)_{i\le k},
+ \left(\frac{\beta(A)_r}{5/2}\right)_{r=1}^5,
+ \left(\frac{K(A_1^H)_{ik}}{M_{ik}}\right)_{i\le k},
+ \left(\frac{K(A_2^H)_{ik}}{M_{ik}}\right)_{i\le k}
+ \right),\qquad
+M_{ii}=2,\quad M_{ik}=7/4\ (i<k).
+\tag{17.1}
+$$
+
+Thus the depths are exactly $0,1,2$, with twenty coordinates at depth
+zero and fifteen at each later depth. These are the base detector
+normalizations of (10.1) and Definition 13.1, including at nonzero
+depth. Put
+
+$$
+\mathsf B_H(u,v)=\tfrac14\{Q_H(U(u+v))-Q_H(U(u-v))\},\qquad
+F=\operatorname{diag}(1,2,3,4,5)/6,
+$$
+
+$$
+\gamma=c_F=\frac1{40310784000},\qquad
+K_0=K_F=\gamma^{-1},\qquad
+\mathcal C=\frac{16\sqrt{10}}7.
+\tag{17.2}
+$$
+
+The nominal certificate is exactly Theorem 13.4:
+$\|\mathsf B_F(u,v)\|_2\ge\gamma\|u\|_2\|v\|_2$.
+The equivalent real quadratic coefficient matrices are those at the end
+of §13, with dimension ten, fifty outputs and squared lower frame bound
+$\gamma^2$. Their general nonsingular-polarization and product-distance
+suppliers are Wang--Xu,
+[*Generalized phase retrieval*, Theorem 2.1](https://arxiv.org/html/1605.08034v3),
+and Zhuang,
+[*On stability of generalized phase retrieval and generalized affine
+phase retrieval*, Theorem 2.3, (2.3)](https://doi.org/10.1186/s13660-019-1968-z).
+
+Fix $\eta\ge0$. Throughout every attempt and every depth of the actual
+schedule, the success Kraus operator is one and the same real
+contraction $\widetilde F$, with
+$\|\widetilde F-F\|_{\mathrm{op}}\le\eta$; its failure Kraus operator
+is $\widetilde L=(I-\widetilde F^T\widetilde F)^{1/2}$.
+Preparations remain stationary independent copies of the fixed
+$\rho=S+iA$, instruments have independent initial environments, and
+the fifteen single-copy instruments and twenty base joint detector
+designs remain those of Definition 10.1. The schedule and complete
+record grammar remain those of Definitions 10.1 and 15.1. Both chains
+are executed independently even if the other member fails; all failure
+prefixes are retained, and the denominator of every mean is $N$, the
+number of all attempts. No invertibility or strictly positive success
+probability is imposed on $\widetilde F$. An all-success branch is used
+only in its unnormalized form
+$\widetilde F^j\rho(\widetilde F^j)^T$. A zero-probability branch has
+zero mass and requires no conditional state.
+
+The public number $\eta$ and this fixed-drift assumption are supplied
+calibration premises. They include neither an estimator of the drift
+nor an acquisition of its certified bound. The decoder is exactly
+$\mathsf{Dec}_b$ of Definition 15.2, using the nominal $Q_F$ and its
+fixed integer polynomials; it receives no matrix $\widetilde F$.
+
+**Theorem 17.2 (radius and perturbation of this detector certificate).**
+Every lawful $S+iA$ has $r_A=\|a(A)\|_2\le1/2$, and this radius is
+attained by a pure source. For all real $u,v\in\mathbb R^{10}$, the
+fixed-drift model satisfies
+
+$$
+\|\mathsf B_{\widetilde F}(u,v)-\mathsf B_F(u,v)\|_2
+ \le\mathcal C\eta\|u\|_2\|v\|_2,
+\tag{17.3}
+$$
+
+$$
+\|\mathsf B_{\widetilde F}(u,v)\|_2
+ \ge(\gamma-\mathcal C\eta)\|u\|_2\|v\|_2.
+\tag{17.4}
+$$
+
+Consequently, if $\eta<\gamma/\mathcal C$, the actual map
+$Q_{\widetilde F}$ is injective on all real skew matrices modulo one
+common sign and obeys
+
+$$
+d_\pm(A,B)D_\pm(A,B)
+ \le\frac{\|Q_{\widetilde F}(A)-Q_{\widetilde F}(B)\|_2}
+ {\gamma-\mathcal C\eta}.
+\tag{17.5}
+$$
+
+Here $d_\pm,D_\pm$ are exactly (14.1). The positive-radius hypothesis
+in (17.5) is a sufficient condition for this actual-map certificate;
+it is not a necessary calibration threshold.
+
+Proof. Since $\rho$ and $\overline\rho$ are positive semidefinite,
+$\operatorname{tr}(\rho\overline\rho)\ge0$ (write the trace as that
+of $\rho^{1/2}\overline\rho\rho^{1/2}$). Also
+$\operatorname{tr}\rho^2\le(\operatorname{tr}\rho)^2=1$.
+Expanding the two traces gives
+
+$$
+2\|A\|_{\mathrm F}^2
+ =\operatorname{tr}\rho^2-\operatorname{tr}(\rho\overline\rho)
+ \le1,\qquad \|A\|_{\mathrm F}^2=2\|a(A)\|_2^2.
+\tag{17.6}
+$$
+
+For $\psi=(e_1+ie_2)/\sqrt2$, the density $\psi\psi^\dagger$ has
+$A_{12}=-1/2$ as its only nonzero upper skew entry, proving sharpness.
+
+A real skew matrix has two nonnegative singular-value pairs and one
+zero singular value. Thus
+$\|U(u)\|_{\mathrm{op}}\le\|u\|_2$ and
+$\|U(u)\|_{\mathrm F}=\sqrt2\|u\|_2$. The contraction-power
+identity, valid without commutativity, is
+
+$$
+\widetilde F^j-F^j
+ =\sum_{k=0}^{j-1}\widetilde F^{j-1-k}(\widetilde F-F)F^k,
+\qquad \|\widetilde F^j-F^j\|_{\mathrm{op}}\le j\eta.
+\tag{17.7}
+$$
+
+Write $A_j(u)=F^jU(u)(F^j)^T$ and
+$\widetilde A_j(u)=\widetilde F^jU(u)(\widetilde F^j)^T$.
+Splitting the difference into its left-factor and right-factor changes
+and using contraction of both powers gives
+
+$$
+\begin{aligned}
+\|\widetilde A_j(u)-A_j(u)\|_{\mathrm{op}}
+ &\le2j\eta\|u\|_2,\\
+\|\widetilde A_j(u)-A_j(u)\|_{\mathrm F}
+ &\le2\sqrt2j\eta\|u\|_2.
+\end{aligned}
+\tag{17.8}
+$$
+
+The polarization of $K$ on skew matrices is
+$\mathsf K(C,D)=-(CD+DC)/2$. Its depth-$j$ difference splits as
+
+$$
+\mathsf K(\widetilde A_j(u)-A_j(u),\widetilde A_j(v))
+ +\mathsf K(A_j(u),\widetilde A_j(v)-A_j(v)).
+$$
+
+The inequalities $\|CD\|_{\mathrm F}\le
+\|C\|_{\mathrm{op}}\|D\|_{\mathrm F}$ and their right-multiplication
+versions bound each summand by
+$2\sqrt2j\eta\|u\|_2\|v\|_2$. Hence their sum has Frobenius norm
+at most $4\sqrt2j\eta\|u\|_2\|v\|_2$.
+Upper-triangular coordinate norm is no greater than Frobenius norm,
+and the largest inverse base $K$ divisor is $4/7$. All depth-zero
+coordinates, including $\beta$, are unchanged. Combining just the
+nonzero-depth blocks in Euclidean norm gives
+
+$$
+\tfrac47\,4\sqrt2\sqrt{1^2+2^2}
+ =\frac{16\sqrt{10}}7=\mathcal C,
+$$
+
+which proves (17.3). The triangle inequality with Theorem 13.4 proves
+(17.4). Finally
+$Q_H(A)-Q_H(B)=\mathsf B_H(a(A)-a(B),a(A)+a(B))$ for every $H$.
+Its two input norms have product $d_\pm D_\pm$. Dividing (17.4) by
+its strictly positive coefficient proves (17.5), and equal outputs
+then force $A=B$ or $A=-B$. The only invoked inverse result is the
+existing nominal certificate; the perturbation calculation above
+concerns the particular depth blocks (17.1). $\square$
+
+**Theorem 17.3 (linear drift error for the same rational decoder).**
+For every fixed lawful source, integer $N\ge1$, integer $b\ge3$,
+$0<\delta<1$ and fixed drift as in Definition 17.1, execute the original
+schedule once with the actual instrument and apply the nominal
+$\mathsf{Dec}_b$. Its output $T+iB$ is lawful on every grammatical
+record. With probability at least $1-\delta$, put
+
+$$
+E=24\sqrt{\frac{\log(130/\delta)}N}+512\,2^{-b},
+\qquad r_A=\|a(A)\|_2.
+\tag{17.9}
+$$
+
+The following inequalities hold simultaneously:
+
+$$
+\begin{aligned}
+\|S-T\|_{\mathrm F}&\le E+2\mathcal C\eta r_A^2,\\
+d_\pm(A,B)D_\pm(A,B)&\le K_0E+2K_0\mathcal C\eta r_A^2,\\
+d_\pm(A,B)&\le\sqrt{K_0E}+2K_0\mathcal C\eta r_A,\\
+\mathfrak d(S+iA,T+iB)
+ &\le\sqrt{(E+2\mathcal C\eta r_A^2)^2
+            +2(\sqrt{K_0E}+2K_0\mathcal C\eta r_A)^2}\\
+ &\le\sqrt{(E+\mathcal C\eta/2)^2
+            +2(\sqrt{K_0E}+K_0\mathcal C\eta)^2}.
+\end{aligned}
+\tag{17.10}
+$$
+
+No restriction $\eta<\gamma/\mathcal C$ is required in this theorem.
+The bound includes $A=0$, singular sources and repeated spectra.
+At fixed confidence its global error order is
+$O(N^{-1/4}+2^{-b/2}+\eta)$, with constants depending on the fixed
+certificate. It concerns the common-conjugation orbit metric (15.2),
+not an actual state preparation or a callable continuation.
+
+Proof. For each actual pair attempt the subnormalized all-success
+input is $\tau=\widetilde F^j\rho(\widetilde F^j)^T$. Equation (10.2)
+therefore gives $\mathbb E Z_\nu=Q_{\widetilde F}(A)_\nu$,
+including when that branch has probability zero. Failure attempts have
+$Z_\nu=0$. Single-copy means remain the fifteen probabilities of $S$.
+Thus the bounded-independent-variable argument of Proposition 14.2
+applies to these actual means, with the same fifty variables of range
+length two and fifteen variables of range length one. In particular,
+writing $s_N=\sqrt{\log(130/\delta)/N}$, the exact count extractions
+(15.1) satisfy, on one event of probability at least $1-\delta$,
+
+$$
+\|y-Q_{\widetilde F}(A)\|_2\le10s_N,\qquad
+\|\widehat S-S\|_{\mathrm F}\le\sqrt{85/2}\,s_N.
+\tag{17.11}
+$$
+
+The concentration supplier is Hoeffding,
+[*Probability Inequalities for Sums of Bounded Random Variables*,
+Theorem 2, (2.6)](https://doi.org/10.1080/01621459.1963.10500830),
+with the two-sided tails and $65$-setting union bound of (14.9).
+No success-conditioned sample count is used.
+
+Taking $u=v=a(A)$ in (17.3) gives
+$\|Q_{\widetilde F}(A)-Q_F(A)\|_2\le\mathcal C\eta r_A^2$.
+Consequently the same record has nominal joint error
+
+$$
+\begin{aligned}
+e&=\left(\|\widehat S-S\|_{\mathrm F}^2
+                 +\|y-Q_F(A)\|_2^2\right)^{1/2}\\
+ &\le\sqrt{100+85/2}\,s_N+\mathcal C\eta r_A^2
+ \le12s_N+\mathcal C\eta r_A^2.
+\end{aligned}
+\tag{17.12}
+$$
+
+Apply the deterministic Theorem 15.3 to the nominal decoder, using
+$\nu=2e+512\,2^{-b}\le E+2\mathcal C\eta r_A^2$.
+Its symmetric and product-distance conclusions are the first two lines
+of (17.10). This application uses Theorem 13.4 for $Q_F$, not (17.5).
+It therefore imposes no positive-radius condition on the actual map.
+
+For the linear drift term set $a=a(A)$, $c=a(B)$, $d=d_\pm(A,B)$,
+$D=D_\pm(A,B)$ and $t=\sqrt{K_0E}$. The parallelogram identity gives
+
+$$
+D^2\ge\tfrac12(\|a-c\|_2^2+\|a+c\|_2^2)
+ =r_A^2+\|c\|_2^2,\qquad D\ge\max\{d,r_A\}.
+\tag{17.13}
+$$
+
+If $D<t$, then $d<t$. If $D\ge t$ and $D>0$, division of the
+product bound by $D$ gives
+
+$$
+d\le\frac{K_0E}{D}
+       +\frac{2K_0\mathcal C\eta r_A^2}{D}
+ \le t+2K_0\mathcal C\eta r_A.
+\tag{17.14}
+$$
+
+For $D=0$ one has $d=r_A=0$, so the conclusion also holds.
+Finally $\mathfrak d^2=\|S-T\|_{\mathrm F}^2+2d^2$ by (15.2),
+and $r_A\le1/2$ by (17.6), proving the last two lines of (17.10).
+Using (17.13) before coarsening the radius is essential: taking only a
+square-root inverse of a source-independent mean bias would give a
+weaker calibration term. $\square$
+
+**Corollary 17.4 (complete resource contract of the drift consumer).**
+In Theorem 17.3 take the classical bit model, readable input and
+write-only output tapes, signed-binary arithmetic and self-delimiting
+encodings of Definition 15.4. Let $B_0$ be the length of its metadata
+string, including any explicitly represented source, frame, calibration
+and occurrence labels. With the exact parameter correspondence
+
+$$
+n=\lceil\log_2(N+1)\rceil,\qquad
+\ell_0=\lceil\log_2(B_0+2)\rceil,\qquad
+w=b+n+\ell_0+64,\qquad
+G_b=(2^{b+1}+1)^{50}-1,
+\tag{17.15}
+$$
+
+the same actual acquisition and nominal scan have the bounds
+
+$$
+\begin{array}{c|c}
+\text{setting attempts}&65N=15N+50N\\
+\text{pair attempts}&50N\\
+\text{source preparations}&115N\\
+\text{single-copy detector calls}&15N\\
+\text{local filter calls}&60N+U_1\le90N\\
+\text{joint detector calls}&20N+C_T\le50N\\
+\text{retained padded outcome bits}&155N
+\end{array}
+\tag{17.16}
+$$
+
+$$
+\begin{aligned}
+\text{nominal scan bit time}
+ &=O((B_0+155N+G_b+1)w^2),\\
+\text{additional arithmetic workspace}&=O(w)\text{ bits},\\
+\text{matrix-description output}&\le60b+200\text{ bits},\\
+\text{total output including binding copy}
+ &\le B_0+2\ell_0+60b+210\text{ bits},\\
+\text{separately retained input}
+ &=155N+B_0+O(n+\log(b+1)+\ell_0)\text{ bits}.
+\end{aligned}
+\tag{17.17}
+$$
+
+The fixed program and its readable backing, allocation of input/output
+and actual permissions remain separate resources. Metadata is copied,
+not authenticated or reconstructed, by the scan. Descriptions and
+calibration of the actual instruments and acquisition of a certified
+$\eta$ are additional supplied resources. The rows do not convert
+calls or bit transitions into elementary gates, physical time or energy.
+
+Proof. Proposition 10.2's counting applies to the identical schedule
+with the actual instrument: $U_1$ counts first successes among the
+$30N$ individual specimens at depth two, and $C_T$ counts double
+successes at the prescribed depth among the $30N$ filtered pairs.
+There are $30N$ depth-one calls, $30N$ first depth-two calls and $U_1$
+second calls. The $20N$ unfiltered pairs always use their detector;
+the others do so exactly on the $C_T$ double successes. Two-bit
+prefixes at depth two and one-bit flags at depth one give payload
+$15N+20N+3(15N)+5(15N)=155N$. This includes all failures and the
+padding for unexecuted detectors, with no free replacement.
+
+For computation, the program is literally Definition 15.2. It extracts
+(15.1) in one forward record pass, scans the $G_b$ nonzero Gaussian
+integer matrices, and uses the integer polynomials with denominator
+$C=70\,6^8$ and exact score cross-comparisons (15.5)--(15.6).
+Neither these polynomials nor the bank are changed to depend on
+$\widetilde F$. Hence Theorem 15.5 applies with exactly (17.15), on
+every grammatical actual record. It supplies (17.17), counting all bit
+reads and writes, odometer enumeration, score arithmetic, the stored
+best candidate and the binding copy. In particular the bounds are
+independent of $\eta$ and of the success counts. Input backing and
+emitted output are excluded from its additional-workspace account,
+exactly as in (15.16)--(15.17); the ordered record is retained even
+though the scan subsequently uses just its counts.
+
+For an explicit sufficient prescription take $0<h\le1$,
+$0<\delta\le1/4$ and
+
+$$
+N\ge(768K_0)^2h^{-4}\log(130/\delta),\qquad
+2^{-b}\le\frac{h^2}{16384K_0},\qquad
+\eta\le\frac{h}{4K_0\mathcal C}.
+$$
+
+Then $E\le h^2/(16K_0)$, so (17.10) gives $d_\pm\le h/2$
+and $\|S-T\|_{\mathrm F}\le3h/(16K_0)\le3h/16$.
+Thus $\mathfrak d^2\le(9/256+1/2)h^2<h^2$. Taking the least
+admissible integer $N$ and dyadic precision $b$ gives
+$N=O(h^{-4}\log(1/\delta))$, $2^{-b}=O(h^2)$ and the sufficient
+calibration order $\eta=O(h)$, since
+$\log(130/\delta)=O(\log(1/\delta))$ uniformly for $\delta\le1/4$.
+These are sufficient prescriptions for this certificate. The bank
+exponent fifty and the displayed resource coordinates remain unchanged;
+this proves neither efficient decoding nor a necessary calibration law
+for other estimation or self-calibration procedures. $\square$
+
+## 18. Adaptive terminal real-pair acquisition and precision-confidence order
+
+**Definition 18.1 (experiment class and full classical history).** Fix
+an integer $m\ge0$ and a stationary independent preparation service for an unknown lawful
+$\rho\in\mathcal D(\mathbb C^5)$ in the frame of Definition 6.1.
+A controller may select a finite-outcome POVM on one or two fresh copies
+as a measurable function of all past classical observations and common
+randomness. Each single-copy total effect on the unfiltered input is a
+real symmetric positive matrix, summing to $I_5$; each pair total effect
+is real symmetric positive, summing to $I_{25}$. This includes real
+filtering followed by terminal measurement when every local prefix and
+failure is recorded as part of the complete outcome. Source-dependent
+postselection or advice is not supplied.
+
+The controller seed, all common random draws used, settings, source-call
+positions, both chain prefixes, detector outcomes, failures, decisions
+to stop and any randomized output belong to the classical history.
+Their initial law and all randomization rules are the same for all
+sources. Any auxiliary starting state is source-independent, and its
+induced input POVM must satisfy the preceding realness condition.
+After each attempt all source registers, their successors and every
+source-dependent quantum environment are discarded. No
+source-dependent quantum system passes between attempts. Only classical
+history informs later actions. Each run stops after a finite history;
+there are at most $m$ pair attempts on every run. Arbitrarily many
+single-copy insertions are allowed subject to this finite-history
+condition. Pair budget is charged per attempted pair, including failures,
+not per successful detector call or as an expected stopping time.
+
+The optimization class grants mathematical choice of these finite real
+POVMs and common classical processing. Their actual installation,
+calibration, record backing and processing are additional operational
+resources; class membership supplies no such implementation. The
+original ideal depth protocol is a member, with $m=50N$ and the extra
+resource contract (16.5), (15.16)--(15.17). The coherent $r$-copy
+consumer of Definition 12.3 and experiments retaining source-dependent
+quantum memory between attempts are outside this class.
+
+**Theorem 18.2 (conditional real-pair information bound).** Let
+$Y=iJ_{12}$, $\rho_\theta=I_5/5+\theta Y$, $0\le\theta\le1/10$,
+and let $P_\theta$ be the complete classical-history law for any common
+experiment of Definition 18.1. At each fixed history $h$ preceding a
+pair, its conditional record law is $q_\theta K_h$, where $K_h$ is a
+source-independent classical probability kernel and
+
+$$
+q_\theta(a,b)=\frac1{25}+\theta^2y_ay_b,
+\qquad y=(1,-1,0,0,0),\quad 1\le a,b\le5.
+\tag{18.1}
+$$
+
+The single-pair defect is $\chi^2(q_\theta\Vert q_0)=100\theta^4$.
+For the complete stopped histories, with likelihood
+$L_m=dP_\theta/dP_0$ after padding unused pair slots,
+
+$$
+\begin{aligned}
+\mathbb E_0L_m^2
+ =1+\chi^2(P_\theta\Vert P_0)&\le(1+100\theta^4)^m,\\
+D_{\mathrm{KL}}(P_\theta\Vert P_0)
+ &\le m\log(1+100\theta^4),\\
+\operatorname{TV}(P_\theta,P_0)
+ &\le\tfrac12\sqrt{(1+100\theta^4)^m-1}.
+\end{aligned}
+\tag{18.2}
+$$
+
+Here $\chi^2(P\Vert Q)=\int(dP/dQ-1)^2dQ$, logarithms are natural,
+and total variation has the half-$L^1$ convention of Theorem 12.2.
+The estimates include settings, failures, finite stopping, all common
+randomness and any common randomized postprocessing.
+
+Proof. The source eigenvalues $1/5\pm\theta,1/5,1/5,1/5$ are
+strictly positive. Conditional on the same classical history (including
+the controller seed), fresh inputs still have state
+$\rho_\theta^{\otimes2}$. For a chosen complete real pair effect
+$Q_{h,z}$, the odd term in this tensor square is purely imaginary
+with skew transpose, so its trace pairing with $Q_{h,z}$ vanishes.
+The exact supplier calculation (12.4)--(12.8) therefore applies at
+this history:
+
+$$
+\operatorname{tr}(Q_{h,z}\rho_\theta^{\otimes2})
+ =\operatorname{tr}(Q_{h,z}\sigma_\theta),\qquad
+\sigma_\theta=I_{25}/25+\theta^2Y\otimes Y.
+\tag{18.3}
+$$
+
+In a fixed eigenbasis $u_a$ of $Y$, set
+
+$$
+K_h(z\mid a,b)=
+\langle u_a\otimes u_b,Q_{h,z}(u_a\otimes u_b)\rangle.
+\tag{18.4}
+$$
+
+Positivity and completeness make this a probability kernel, giving
+(18.1). It depends on the same supplied policy and the fixed history,
+not on the unknown parameter. The labels $(a,b)$ are a mathematical
+probability representation, not available outcomes or nonreal controls.
+Directly,
+
+$$
+\chi^2(q_\theta\Vert q_0)
+ =25\theta^4\sum_{a,b}y_a^2y_b^2=100\theta^4.
+\tag{18.5}
+$$
+
+This is Theorem 12.2's existing defect, with its symmetric-binomial
+correspondence $B=2$, $z=5\theta$ and both-active weight $4/25$.
+The actual service has one fixed $\theta$ throughout: (18.3) does not
+replace it by a fresh random choice of conjugation sign on each call.
+
+Under $q_0K_h$, the observed likelihood factor $\ell_h$ is the
+conditional expectation of the spectral likelihood
+$R(a,b)=q_\theta(a,b)/q_0(a,b)$ given the output. Jensen gives
+
+$$
+\mathbb E_0(\ell_h\mid h)=1,\qquad
+\mathbb E_0(\ell_h^2\mid h)\le1+100\theta^4.
+\tag{18.6}
+$$
+
+These are the ordinary data-processing steps for order-two divergence;
+see van Erven--Harremoës,
+[*Rényi Divergence and Kullback--Leibler Divergence*,
+Theorems 1 and 9, Example 2](https://arxiv.org/html/1206.2459v2).
+Single-copy real effects have probability
+$\operatorname{tr}(PI_5/5)$ and hence likelihood factor one.
+The seed and subsequent random draws also have factor one conditional
+on their past, and settings and stopping decisions use the same
+classical policy at the same history.
+
+To accommodate an unbounded but finite number of single-copy
+insertions, group their full records and intervening common draws
+into the block before the first pair, and then the block after each
+pair until the next pair or stop. Conditional on the preceding history,
+a block containing only these single-copy actions and common draws has
+a source-independent law, even when its length is random: each finite
+path has the same successive kernels, and the finite paths have total
+mass one by the stopping assumption. The initial such block has a
+common law. A later block consists of the current real pair followed
+by a common classical kernel, and therefore still satisfies (18.6).
+This accounts for every recorded single-copy action and every stop
+decision, without assuming a uniform bound on their number.
+
+After stopping, append a fixed, source-independent dummy symbol at
+each remaining pair slot up to $m$. The stopped history is recovered
+by deleting dummy slots, and the padding is determined by that history;
+no information is lost or added. Let $\mathcal H_t$ include the seed
+and the full first $t$ blocks, and $L_t$ their likelihood. Then
+
+$$
+L_t=L_{t-1}\ell_t,\qquad
+\mathbb E_0(L_t^2\mid\mathcal H_{t-1})
+ \le(1+100\theta^4)L_{t-1}^2.
+\tag{18.7}
+$$
+
+Iterating $m$ times from $L_0=1$ proves the first line of (18.2).
+All likelihood factors lie in $[3/4,5/4]$, since the spectral factors
+do and $25\theta^2\le1/4$; dummy factors equal one. Thus the final
+log likelihood is integrable, including with a continuous seed and
+random finite block lengths. For one conditional block, Jensen also gives
+
+$$
+D(p_h\Vert p_{0,h})=\mathbb E_{p_h}\log\ell_h
+ \le\log\mathbb E_{p_h}\ell_h
+ =\log\mathbb E_{p_{0,h}}\ell_h^2
+ \le\log(1+100\theta^4).
+\tag{18.8}
+$$
+
+This is the order-one/order-two comparison in van Erven--Harremoës,
+Theorem 3, with $D_2=\log(1+\chi^2)$.
+The product identity for $L_m$ and conditional expectation give the
+relative-entropy chain rule here as
+$D(P_\theta\Vert P_0)=\sum_{t=1}^m
+\mathbb E_\theta[D(p_{\mathcal H_{t-1}}\Vert
+p_{0,\mathcal H_{t-1}})]$. Equation (18.8) proves its bound.
+Finally Cauchy--Schwarz gives
+$\operatorname{TV}=\tfrac12\mathbb E_0|L_m-1|
+\le\tfrac12\sqrt{\mathbb E_0L_m^2-1}$.
+The proof explicitly uses terminal discard: a surviving
+source-dependent quantum carrier would not be part of the common
+classical kernels just constructed. $\square$
+
+**Proposition 18.3 (attainable information on this two-point family).**
+For the family in Theorem 18.2, the one-pair chi-square bound is attained
+by a three-outcome real projective measurement. Its one-pair relative
+entropy is exactly
+
+$$
+\kappa(\theta)=\frac2{25}
+ \{(1+a)\log(1+a)+(1-a)\log(1-a)\},\qquad a=25\theta^2,
+\tag{18.9}
+$$
+
+which is also the maximum one-pair relative entropy over all allowed
+real POVMs for comparison with $\theta=0$. Independent repetition of
+this measurement $m$ times attains
+$\mathbb E_0L_m^2=(1+100\theta^4)^m$ and
+$D(P_\theta\Vert P_0)=m\kappa(\theta)$.
+These are properties of the selected subfamily, not optimal constants
+for estimating all lawful state orbits.
+
+Proof. Put $Z=Y\otimes Y$ and $K=Y^2\otimes Y^2$. Both are real
+symmetric, $Z^2=K$, $K^2=K$ and $KZ=Z$. Therefore
+
+$$
+Q_+=(K+Z)/2,\qquad Q_-=(K-Z)/2,\qquad Q_0=I-K
+\tag{18.10}
+$$
+
+are mutually orthogonal real projections summing to $I_{25}$.
+They have ranks $2,2,21$, and $Z$ acts as $+1,-1,0$ on their ranges.
+The projection Kraus operators are real, so terminal measurement and
+discard is a legal attempt of Definition 18.1. By (18.3) its
+probabilities are
+
+$$
+p_\theta(+)=2/25+2\theta^2,\qquad
+p_\theta(-)=2/25-2\theta^2,\qquad p_\theta(0)=21/25.
+\tag{18.11}
+$$
+
+Thus $\chi^2(p_\theta\Vert p_0)
+=2(2\theta^2)^2/(2/25)=100\theta^4$, and direct substitution gives
+(18.9). The spectral likelihood (18.1) is constant on the three
+sets $y_ay_b=1,-1,0$, so this aggregation preserves both divergences
+of $q_\theta$ relative to $q_0$. Every other real POVM is a kernel
+of that spectral law by (18.4), and data processing bounds its
+relative entropy by the same value. Independent attempts multiply
+second moments and add relative entropies, proving the asserted
+repetition formulas. This exact calculation supplies no uniform
+state-estimation risk constant or efficient all-state decoder. $\square$
+
+**Theorem 18.4 (precision-confidence lower bound in this experiment class).**
+Fix $0<h\le1/40$ and $0<\delta\le1/4$. If a common randomized
+estimator in Definition 18.1 returns a density-orbit description within
+$\mathfrak d$-distance $h$ with probability at least $1-\delta$ for
+every lawful source, its uniform pair budget satisfies
+
+$$
+\begin{aligned}
+m&\ge
+\frac{\max\{\log(1+4(1-2\delta)^2),\ \log(1/(4\delta))\}}
+ {\log(1+25600h^4)}\\
+ &\ge\frac{\log(1/\delta)}{102400h^4}.
+\end{aligned}
+\tag{18.12}
+$$
+
+The conclusion already follows if success is required only for
+$\rho_0$ and $\rho_{4h}$.
+
+Proof. Set $\theta=4h\le1/10$. The two source orbits have distance
+$\sqrt2\theta>2h$. The metric (15.2) is the quotient metric by the
+isometric common-conjugation action; its triangle inequality follows
+by composing the two sign choices and applying the Frobenius triangle
+inequality. Hence the two closed $h$-balls are disjoint. A test that
+selects $\rho_\theta$ when the estimate lies in its $h$-ball has
+both errors at most $\delta$. The two-point testing supplier used
+in Theorem 12.5 therefore gives
+$\operatorname{TV}(P_\theta,P_0)\ge1-2\delta$, also for randomized
+estimators with the seed included. Combining with (18.2) proves the
+first numerator term in (18.12).
+
+For the confidence dependence let
+$\alpha=\int\sqrt{dP_\theta\,dP_0}$ be the affinity. Jensen under
+$P_\theta$ gives
+
+$$
+\alpha=\mathbb E_\theta L_m^{-1/2}
+ \ge\exp\{-D(P_\theta\Vert P_0)/2\}.
+$$
+
+For densities $p,q$ with respect to one dominating measure,
+Cauchy--Schwarz on
+$|p-q|=|\sqrt p-\sqrt q|(\sqrt p+\sqrt q)$ gives
+$\operatorname{TV}\le\sqrt{1-\alpha^2}$. Thus any test has error
+sum at least
+
+$$
+1-\operatorname{TV}\ge1-\sqrt{1-\alpha^2}
+ \ge\alpha^2/2\ge\tfrac12e^{-D(P_\theta\Vert P_0)}.
+\tag{18.13}
+$$
+
+These are classical affinity and testing inequalities, not additional
+state-measurement assumptions. Equivalently the affinity step is
+$D_{1/2}=-2\log\alpha\le D_1$, the order comparison in
+van Erven--Harremoës, Theorem 3. Since the two errors sum to at most
+$2\delta$, (18.13) and (18.2) yield
+$m\log(1+100\theta^4)\ge\log(1/(4\delta))$.
+Now $100(4h)^4=25600h^4$, proving the first line of (18.12).
+
+Finally $\log(1+x)\le x$. If $1/16\le\delta\le1/4$, the first
+numerator term is at least $\log2\ge\tfrac14\log(1/\delta)$.
+If $0<\delta<1/16$, the second is at least
+$\tfrac12\log(1/\delta)$. Division by $25600h^4$ proves the
+uniform second line. Integer budgets obey the ceilings of these
+bounds. $\square$
+
+**Corollary 18.5 (matching pair-budget order, with its operational scope).**
+Under ideal calibration and stationary independent preparations let
+$m_*(h,\delta)$ be the minimum uniform pair budget among the
+experiments of Definition 18.1 achieving $\mathfrak d$-error at most
+$h$ and failure probability at most $\delta$ for every lawful source.
+For $0<h\le1/40$, $0<\delta\le1/4$,
+
+$$
+m_*(h,\delta)=\Theta(h^{-4}\log(1/\delta)),
+\tag{18.14}
+$$
+
+with constants independent of $h,\delta$. This is statistical
+pair-budget optimality in this exact terminal-discard real experiment
+class. The constants are not asserted optimal; neither are decoding
+time, total storage or drift calibration optimized. No assertion about
+a quantum-memory experiment class follows.
+
+Proof. The lower bound is Theorem 18.4. For the upper bound use the
+existing original fixed protocol and nominal rational decoder of
+Corollary 16.2, with the precise correspondence
+
+$$
+s=\lceil\log_2(1/h)\rceil,\qquad
+ d=\lceil\log_2(1/\delta)\rceil,\qquad A_*=2K_0+1,
+$$
+
+$$
+b=47+2s,\qquad N=2304(d+8)A_*^2\,2^{4s},\qquad m=50N.
+\tag{18.15}
+$$
+
+That supplier gives output error at most $2^{-s}\le h$ except with
+probability $2^{-d}\le\delta$. Its fixed experiments are complete
+real pair POVMs including failed chains, with no source-dependent
+quantum carrier surviving attempts, and its $15N$ single-copy
+observations are allowed insertions. Hence it belongs to exactly the
+class optimized here. Since $2^s<2/h$ and
+$d\le\log_2(1/\delta)+1$, one has
+
+$$
+50N<1843200 A_*^2h^{-4}
+ \{\log_2(1/\delta)+9\}
+ =O(h^{-4}\log(1/\delta))
+$$
+
+uniformly on the stated confidence range. Its full acquisition and
+classical costs remain (16.5), (15.16)--(15.17), equivalently
+(17.15)--(17.17) with ideal drift. In particular the exhaustive bank
+is retained rather than replaced by an unproved efficient optimizer.
+Nonreal effects, coherent access to more than two fresh copies in one
+attempt, surviving source-dependent quantum memory, or new
+source-dependent starting resources invalidate the conditional
+reduction (18.3)--(18.7) and define a different optimization problem.
+The separate all-size continuation and native acquisition interfaces
+of §§11--12 retain their own contracts. $\square$
+
+## 追加锚（本行以下为增补区）

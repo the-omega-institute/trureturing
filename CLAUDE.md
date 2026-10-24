@@ -8,7 +8,7 @@
 
 | 用途 | 命令 |
 |---|---|
-| 创建会话 worktree（已有则复用） | `make worktree KIND=<kind> NAME=<任务码> DEST=../trureturing-<session-id>` |
+| 仓库修改先复用兼容 linked worktree，需隔离时创建；只读与 issue 操作复用现有检出（第 6.1 条） | `make worktree KIND=<kind> NAME=<任务码> DEST=../trureturing-<session-id>` |
 | 编译指定 Lean 模块及依赖 | `make lean LEAN_TARGETS="<点分模块名>"`（省略 `LEAN_TARGETS` 为全项目） |
 | 核对指定 Lean 模块、utility 输入及 imports / 发射所选 Scribe | `make lean-report-scoped LEAN_TARGETS="<点分模块名>"` / `make emit [PATHS=<NUL分隔路径文件>]` |
 | 显式整库 Lean 报告（CI / 整库核验） | `make lean-report` |
@@ -450,15 +450,15 @@ backfill 条目由 residual-open 迁入 absorbed-closed        消化闭合
 
 ### 5.4 遇题即解与实施让渡
 
-**遇题即解,立案不等于处置**：纯消化一致性偏差按第 1.2 条简注，不触发本款的立案和实施要求。其余问题在既有单更新或立案后，随即在所属 session 的独立 worktree 实施(创建与复用见第 6.1 条),用 `/sshx` 或按第 5.9 条直接实施,经 PR 落地;不得以“已提 issue/等回应”为完成态。
+**遇题即解,立案不等于处置**：纯消化一致性偏差按第 1.2 条简注，不触发本款的立案和实施要求。任务范围包含仓库修改时，其余问题在既有单更新或立案后，随即按第 6.1 条先复用适合任务的 linked worktree，仅在需要隔离时创建，用 `/sshx` 或按第 5.9 条直接实施，经 PR 落地；不得以“已提 issue/等回应”为完成态。仅阅读、调查或创建/编辑 GitHub issue 的任务按第 6.1 条使用主检出或合适的现有 worktree，不要求新建 worktree，也不据此扩张为仓库实施任务。
 **让渡仅限**①对方已认领且有实测读数或在飞 PR 证明在动;或②唯一真源明确属对方,自己动手会造第二真源。让渡仍写被堵面与恢复动作;对方停滞即在单上认领收回。默认先动手,发现上述条件再让渡,不先设等待窗。
-*成熟锚*:fix-forward、owner-until-handoff、patch 随 issue。〔守护:**全软**·及时动手靠评审/反思;硬投影=立案处置计划须有相应 worktree/PR 或让渡依据,否则属冒领〕
+*成熟锚*:fix-forward、owner-until-handoff、patch 随 issue。〔守护:**全软**·及时动手靠评审/反思;硬投影=需仓库实施的立案处置计划须有相应 worktree/PR 或让渡依据,否则属冒领〕
 
 ### 5.5 目标阻塞与最小 hotfix
 
 **目标途中遇阻及时 hotfix,不要等。** 本款对基础设施的最小修复优先于第 5.4 条立案、第 7.11 条权限外转向与第 5.9 条等灯亮;无论阻塞属谁的面,默认当场修通,立案并行。“已立案/等裁决/等对方/等定时任务”都不是完成态或停摆理由。本款不扩张内容语义裁决权,也不把缺失搜索能力说成可用。
-**四项边界**:①所属 session 的独立 worktree(按第 6.1 条创建或复用),PR 直接对 `dev`,走全部 required checks;不 admin、不改预算掩盖、不降检测。CI hotfix 的完整验证及集成条数例外见第 8.12 条,不套第 8.14 条多层流程。②先作最小可通路修复(受预算正门重建/补缺种子路径/拆一层目标),完整根因另开 lane,两个 PR(第 6.2 条)。③仅内容语义 τ=0 裁决(真值口径/冻结/axiom/spec 数学)记 open 等 owner;基础设施/缓存/脚本/CI 拓扑/工具链自己修。④同单保留修复结果与必要读数,修好结案,不保存过程。
-绕开只解决本 lane,不得称阻塞已修;未开 worktree 就写“等灯亮/只立案”、让同一阻塞反复挡别的 lane 均违规。*成熟锚*:fix-forward、owner-until-handoff、Andon 当场处理、Boy Scout Rule。〔守护:**全软**·及时修复靠评审/反思;硬投影=登记基础设施/脚本/CI/缓存阻塞时同处给 hotfix worktree 或 PR 号;τ=0 例外须点名待裁决语义,只写等 owner 不算〕
+**四项边界**:①仓库修复按第 6.1 条先复用合适的 linked worktree，仅在需要隔离时创建；只读调查按第 6.1 条使用现有检出。PR 直接对 `dev`,走全部 required checks;不 admin、不改预算掩盖、不降检测。CI hotfix 的完整验证及集成条数例外见第 8.12 条,不套第 8.14 条多层流程。②先作最小可通路修复(受预算正门重建/补缺种子路径/拆一层目标),完整根因另开 lane,两个 PR(第 6.2 条)。③仅内容语义 τ=0 裁决(真值口径/冻结/axiom/spec 数学)记 open 等 owner;基础设施/缓存/脚本/CI 拓扑/工具链自己修。④同单保留修复结果与必要读数,修好结案,不保存过程。
+绕开只解决本 lane,不得称阻塞已修;需要实施修复却只写“等灯亮/只立案”、让同一阻塞反复挡别的 lane 均违规。*成熟锚*:fix-forward、owner-until-handoff、Andon 当场处理、Boy Scout Rule。〔守护:**全软**·及时修复靠评审/反思;硬投影=需仓库修复的基础设施/脚本/CI/缓存阻塞处置同处给 hotfix worktree 或 PR 号;τ=0 例外须点名待裁决语义,只写等 owner 不算〕
 
 ### 5.6 利益回避与旗判分离
 
@@ -512,6 +512,8 @@ backfill 条目由 residual-open 迁入 absorbed-closed        消化闭合
 ### 6.1 Reusable collaborative worktrees and MERGED delivery
 
 Keep the main checkout on dev for authorized synchronization/observation. Implement, stage and switch branches in linked worktrees. Inspect Git registration, repository identity, branch/commit compatibility, existing material first. `make worktree` creates or validates compatible reuse across sessions; a task can cooperatively join the same tree. Session and directory have no permanent bijection. Directory names may retain session IDs; branch creation still follows section 7.4. An immutable dispatched baseline does not require chasing later dev tips.
+
+**Read/write routing.** For reading, search, statistics, diff, viewing commits/PRs/issues and creating/editing GitHub issues, use the main checkout or a suitable existing worktree by default; these tasks do not require a new worktree. For pinned-revision reads prefer `git show <commit>:<path>`. Never switch a shared checkout's branch for reading. Repository edits, worktree-mutating tests, mutation verification, checkout changes, incompatible builds and builds with write side effects first reuse a suitable linked worktree after the compatibility checks above; create one only when isolation is needed. Builds that write are not read-only. Suitability includes the required revision, pins, existing material and cooperative scopes; preserve other tasks' work.
 
 **主检出不承载修改**：主检出只用于 dev 同步、观测与缓存预热，一切修改都在 linked worktree 中进行。主检出上的任何本地修改——已跟踪文件改动、暂存内容、未跟踪文件与本地提交——均不规范、不受保护，任何 agent 可随时用 `git reset --hard origin/dev` 与 `git clean -fd` 丢弃，无需确认、等待或交还产生者；`git clean` 不加 `-x`，被 Git 忽略的 `.lake` 等构建缓存不在丢弃范围。
 
@@ -730,7 +732,7 @@ CI、非 dev 和 detached 主检出不进行可选刷新。相符的种子按原
 
 普通 required CI 显式选择 `LEAN_REPORT_CACHE_MISS_POLICY=fetch-or-fail`。独立手动/PR producer 和 Release publisher 显式选择 `LEAN_REPORT_CACHE_MISS_POLICY=reuse-or-build`，该路径跳过报告恢复。入口策略由参数选择，不由环境变量判断本地或 CI；直接 `inspect.sh` 默认 `reuse-or-build`，可用 `--cache-miss-policy fetch-or-fail` 选择本地守护。
 
-**Start with compatible reuse**: follow section 6.1; validate an existing linked tree or create through `make worktree` with explicit DEST. Creation does not materialize Lean caches; existing cache doors remain required. **Lean 构建一律走本层门(`make lean` / `make lean-report-scoped` / `make lean-report`,内含 lean-cache ensure 走缓存;预热即 `make lean-cache-ensure`),禁止任何冷裸 `lake build`/`lake env lean`(案号 #2762)**:现行 ensure 行为以 `LeanCacheEnsureCommand` 及其测试为准。linked worktree 没有 `.lake` 时从主检出整份 clonefile;`.lake` 在位且 stamp 匹配时不再播种,项目层为冷则拒绝并给出补救;stamp 不匹配、缺失或损坏时从主检出重新播种(整份或 build 层),主检出不可用时失败并给出补救。主检出另有已登记 donor clonefile、Release 归档、`lake exe cache get` 与原地重产等路径。裸 `lake` 可能留下无 stamp 的 `.lake`,下一次 ensure 即按上述规则处理;裸 `lake` 仅允许在 stamp 在位的热树上做增量调试;凡 `.lake` 缺失或无 stamp,一律先过 `make lean-cache-ensure`。〔守护:**软 + 硬投影**·意图不可 lint;硬投影=派席 brief 的构建步骤必须写 make 目标而非裸 lake,评审席按 #2762 打回;worker 侧违律的判据即 ensure 收据 `stamp_miss:missing` + `clonefile_attempts:0` 同现〕;
+**Start with compatible reuse**: follow section 6.1; observation-only tasks need no new tree or cache preparation. For edits or builds that write, validate and reuse a suitable linked tree first; create through `make worktree` with explicit DEST only when isolation is needed. Creation does not materialize Lean caches; existing cache doors remain required. **Lean 构建一律走本层门(`make lean` / `make lean-report-scoped` / `make lean-report`,内含 lean-cache ensure 走缓存;预热即 `make lean-cache-ensure`),禁止任何冷裸 `lake build`/`lake env lean`(案号 #2762)**:现行 ensure 行为以 `LeanCacheEnsureCommand` 及其测试为准。linked worktree 没有 `.lake` 时从主检出整份 clonefile;`.lake` 在位且 stamp 匹配时不再播种,项目层为冷则拒绝并给出补救;stamp 不匹配、缺失或损坏时从主检出重新播种(整份或 build 层),主检出不可用时失败并给出补救。主检出另有已登记 donor clonefile、Release 归档、`lake exe cache get` 与原地重产等路径。裸 `lake` 可能留下无 stamp 的 `.lake`,下一次 ensure 即按上述规则处理;裸 `lake` 仅允许在 stamp 在位的热树上做增量调试;凡 `.lake` 缺失或无 stamp,一律先过 `make lean-cache-ensure`。〔守护:**软 + 硬投影**·意图不可 lint;硬投影=派席 brief 的构建步骤必须写 make 目标而非裸 lake,评审席按 #2762 打回;worker 侧违律的判据即 ensure 收据 `stamp_miss:missing` + `clonefile_attempts:0` 同现〕;
 
 ### 8.4 诊断信号与产生处的质量
 
