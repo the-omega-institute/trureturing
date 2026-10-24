@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:239507f16252a7fc1af98d2a42682a7f453865a503678aacdf7e02d6c023e6fd
+  normalized_sha256: sha256:239507f16252a7fc1af98d2a42682a7f453865a503678aacdf7e02d6c023e6fd
+cas_ref: sha256:239507f16252a7fc1af98d2a42682a7f453865a503678aacdf7e02d6c023e6fd
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 'nonpropositional: 说明无相邻规则用作局部关系的定义性角色，不附加性质断言。'
+    previous_atom_id: 1227213cb23b83beaea6a8e54bf638fc2e2638cb7418d20a5cd8a38d3146f5f1
+    next_atom_id: 2eced8ee957e3b989dc9824c2be9b30916828b8cac82754d661e33272f36bb92

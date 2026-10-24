@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:34e9e704013c0c88e2e526b037e1fb36f85e76dfaa217ab63672bf7fadf0dbe4
+  normalized_sha256: sha256:34e9e704013c0c88e2e526b037e1fb36f85e76dfaa217ab63672bf7fadf0dbe4
+cas_ref: sha256:34e9e704013c0c88e2e526b037e1fb36f85e76dfaa217ab63672bf7fadf0dbe4
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 'nonpropositional: 额外条件清单中的 substitution covariance 名称，没有断言协变性。'
+    previous_atom_id: 13d0ec53e7ba2083ca08c06146158ea42a7c6c46ec6c71442d06a5dbe84c9d65
+    next_atom_id: 95b25fb60c3551f30d72a3d990af6552da124992b805efdf1568ea9f565bb39e

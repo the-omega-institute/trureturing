@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:e672350f689d08e5a09ea6a4432524b3c99caa2034184d6de96d31d82085b135
+  normalized_sha256: sha256:e672350f689d08e5a09ea6a4432524b3c99caa2034184d6de96d31d82085b135
+cas_ref: sha256:e672350f689d08e5a09ea6a4432524b3c99caa2034184d6de96d31d82085b135
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 'nonpropositional: 待补桥清单中的 total positivity 名称，没有具体矩阵及正性断言。'
+    previous_atom_id: 15e4a2ab5876afc8ecdfbe89663d564e63521cf432cbad9c1f4e5349ca2c7ad0
+    next_atom_id: 39d1267e8326be6f45b890bb7c711cad4837c38c77b12697f60ad265867fd18c
