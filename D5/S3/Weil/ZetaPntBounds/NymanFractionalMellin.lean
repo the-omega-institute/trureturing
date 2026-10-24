@@ -301,6 +301,19 @@ private theorem mellin_integral_split_real (k : ℝ) (hk : 1 ≤ k)
     ((intervalIntegrable_iff_integrableOn_Ioc_of_le (by norm_num)).mpr h0)
     ((intervalIntegrable_iff_integrableOn_Ioc_of_le hk).mpr h1)).symm
 
+/-- Pointwise reciprocal-tail reduction, extracted from the existing `mellin_tail_real`
+    proof so that the finite and whole-half-line Mellin consumers share the same source.
+    The complex exponent is arbitrary; only the real base is required to exceed one. -/
+theorem fractionalMellin_tail_integrand_eq_cpow (s : ℂ) {u : ℝ} (hu : 1 < u) :
+    ((Int.fract (1 / u) : ℝ) : ℂ) * (u : ℂ) ^ (s - 1) = (u : ℂ) ^ (s - 2) := by
+  have hu0 : 0 < u := lt_trans (by norm_num) hu
+  have hu_ne : (u : ℂ) ≠ 0 := Complex.ofReal_ne_zero.mpr hu0.ne'
+  have hf : Int.fract (1 / u) = 1 / u :=
+    Int.fract_eq_self.mpr ⟨by positivity, (div_lt_one hu0).mpr hu⟩
+  rw [hf, one_div, Complex.ofReal_inv,
+    show (s - 2 : ℂ) = -1 + (s - 1) from by ring,
+    cpow_add (-1) (s - 1) hu_ne, cpow_neg_one]
+
 private theorem mellin_tail_real (k : ℝ) (hk : 1 ≤ k) (s : ℂ) (hs1 : s ≠ 1) :
     (∫ u in Ioo (1 : ℝ) k, ((Int.fract (1 / u) : ℝ) : ℂ) * (u : ℂ) ^ (s - 1)) =
     ((k : ℂ) ^ (s - 1) - 1) / (s - 1) := by
@@ -309,14 +322,7 @@ private theorem mellin_tail_real (k : ℝ) (hk : 1 ≤ k) (s : ℂ) (hs1 : s ≠
       (fun u : ℝ => ((Int.fract (1 / u) : ℝ) : ℂ) * (u : ℂ) ^ (s - 1))
       (fun u : ℝ => (u : ℂ) ^ (s - 2)) (Ioc 1 k) := by
     intro u hu
-    have hu0 : 0 < u := lt_trans (by norm_num) hu.1
-    have hu_ne : (u : ℂ) ≠ 0 := Complex.ofReal_ne_zero.mpr hu0.ne'
-    have hf : Int.fract (1 / u) = 1 / u :=
-      Int.fract_eq_self.mpr ⟨by positivity, (div_lt_one hu0).mpr hu.1⟩
-    dsimp only
-    rw [hf, one_div, Complex.ofReal_inv,
-      show (s - 2 : ℂ) = -1 + (s - 1) from by ring,
-      cpow_add (-1) (s - 1) hu_ne, cpow_neg_one]
+    exact fractionalMellin_tail_integrand_eq_cpow s hu.1
   rw [setIntegral_congr_fun measurableSet_Ioc heq,
     ← intervalIntegral.integral_of_le hk]
   have hne : s - 2 ≠ -1 := by intro h; apply hs1; linear_combination h
