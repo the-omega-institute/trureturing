@@ -286,14 +286,51 @@ public sealed class WorktreeProtocolTests(ITestOutputHelper output)
             Encoding.UTF8.GetString(result.StandardOutput) + Encoding.UTF8.GetString(result.StandardError));
     }
 
-    [Fact]
-    public void CooperativeProtocolPreservesRealProcessAndGitState()
+    [Theory]
+    [InlineData("holderless_native_locks_checkpoint_once")]
+    [InlineData("detached_head_native_lock_can_recover_snapshot")]
+    [InlineData("held_native_lock_retains_exact_blocker")]
+    [InlineData("unverifiable_and_replaced_native_lock_retained")]
+    [InlineData("native_lock_failure_receipts_keep_lock_observations")]
+    [InlineData("native_clearance_requires_exclusive_tree")]
+    [InlineData("dead_initializer_is_removable_without_lock_age")]
+    [InlineData("live_initializer_is_retained")]
+    [InlineData("native_clearance_keeps_dead_initializer_exclusive_until_removal")]
+    [InlineData("failed_initialization_recovers_in_place_idempotently")]
+    [InlineData("owned_unregistered_branch_can_resume")]
+    [InlineData("ordinary_recovery_routing_keeps_shared_reuse_and_base_protection")]
+    [InlineData("partial_registration_repairs_worktree_head_in_its_own_ref_store")]
+    [InlineData("native_clearance_survives_failed_checkpoint_retry")]
+    [InlineData("reconvergence_receipt_retains_native_clearance")]
+    [InlineData("resume_validates_and_coordinates_recorded_predecessors")]
+    [InlineData("initialization_identity_changes_refuse_recovery")]
+    [InlineData("removal_record_mismatch_reconverges_and_keeps_both_roots")]
+    [InlineData("reconvergence_interruption_retains_record_and_recovery_objects")]
+    public void LockTaxonomyAndRecoveryPreserveBothSnapshots(string probe)
     {
         if (OperatingSystem.IsWindows()) return;
         var root = TestRepositoryLayout.FindRoot();
         var result = CaptureCleanupOutput((stdout, stderr) => TestProcessRunner.Run("python3",
             ["-B", Path.Combine(root,
-                "tools/tests/StrataLint.WorktreeContract.Tests/Fixtures/worktree_protocol_tests.py"), root],
+                "tools/tests/StrataLint.WorktreeContract.Tests/Fixtures/worktree_protocol_tests.py"),
+                root, "ProtocolTests.test_" + probe], root, TimeSpan.FromSeconds(90), 1024 * 1024,
+            standardOutput: stdout, standardError: stderr,
+            interruptBeforeKill: TestProcessRunner.InterruptPythonFixture), output.WriteLine);
+        Assert.True(result.ExitCode == 0,
+            Encoding.UTF8.GetString(result.StandardOutput) + Encoding.UTF8.GetString(result.StandardError));
+    }
+
+    [Theory]
+    [InlineData(0)]
+    [InlineData(1)]
+    public void CooperativeProtocolPreservesRealProcessAndGitState(int part)
+    {
+        if (OperatingSystem.IsWindows()) return;
+        var root = TestRepositoryLayout.FindRoot();
+        var result = CaptureCleanupOutput((stdout, stderr) => TestProcessRunner.Run("python3",
+            ["-B", Path.Combine(root,
+                "tools/tests/StrataLint.WorktreeContract.Tests/Fixtures/worktree_protocol_tests.py"), root,
+                "--part", part.ToString(System.Globalization.CultureInfo.InvariantCulture)],
             root, TimeSpan.FromSeconds(180), 1024 * 1024,
             standardOutput: stdout, standardError: stderr,
             interruptBeforeKill: TestProcessRunner.InterruptPythonFixture), output.WriteLine);
