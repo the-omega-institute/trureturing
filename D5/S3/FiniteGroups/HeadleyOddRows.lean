@@ -122,7 +122,7 @@ theorem odd_box {H : Type*} [AddCommGroup H] [Fintype H]
   obtain ⟨cs, ⟨e⟩⟩ := finite_abelian_presentation H
   rcases case_transport e (chain_classification cs) with ⟨_, ds, he⟩ | ⟨a, ha, ds, ⟨f⟩⟩ | ⟨he, _⟩
   · exact ⟨ds, he⟩
-  · exact (ho.not_even (card_even_of_power_box a ha ds f)).elim
-  · exact (ho.not_even he).elim
+  · exact ((Nat.not_even_iff_odd.mpr ho) (card_even_of_power_box a ha ds f)).elim
+  · exact ((Nat.not_even_iff_odd.mpr ho) he).elim
 
 end D5.S3.FiniteGroups.HeadleyOddRows

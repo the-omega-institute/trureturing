@@ -368,16 +368,15 @@ private theorem tail_power (r : RStar X) (ds : List OddRadix) (j : ℕ)
   have ht := support_three r
   induction j with
   | zero =>
-    rw [show 0 + 1 = 1 from rfl, pow_one]
+    change successor r ds (r.c, h) = (column r 3, (rowZero ds ^ 0) (rowOne ds h))
     rw [successor_ordinary r ds _ r.pairwise_distinct.2.1.symm
       r.pairwise_distinct.2.2.symm r.c_ne_zero]
-    simp [rowLift, ← column_two r, column_next]
+    simp only [rowLift, if_pos rfl, pow_zero, Equiv.Perm.one_apply]
+    exact Prod.ext (by simpa only [column_two] using column_next r 2) rfl
   | succ j ih =>
-    rw [show j + 1 + 1 = (j + 1) + 1 from rfl, pow_succ', Equiv.Perm.mul_apply,
-      ih (by omega)]
+    rw [pow_succ', Equiv.Perm.mul_apply, ih (by omega)]
     rw [tail_step r ds (j + 3) (by omega) (by omega)]
     simp only [pow_succ', Equiv.Perm.mul_apply]
-    congr 1
 
 private theorem row_zero_even (ds : List OddRadix) {n : ℕ} (hn : Even n) :
     rowZero ds ^ n = 1 := by
@@ -522,6 +521,7 @@ private theorem coverage (r : RStar X) (ds : List OddRadix)
   change column r i = x at he
   have hi3 : 3 ≤ i := by
     by_contra hh
+    have hilt : i < 3 := by omega
     interval_cases i
     · exact hx (Or.inr (Or.inl (he.symm.trans (column_zero r))))
     · exact hx (Or.inr (Or.inr (Or.inl (he.symm.trans (column_one r)))))
