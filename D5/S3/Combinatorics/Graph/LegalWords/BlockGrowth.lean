@@ -65,10 +65,10 @@ private theorem split_adj (n m : ℕ) (a b : Legal (n+m))
     · apply (adj_iff n _ _).mpr
       refine ⟨⟨i.val,hin⟩, hi, ?_⟩
       intro j hj
-      exact haw ⟨j.val,by omega⟩ (by intro he; apply hj; exact Fin.ext (congrArg Fin.val he))
+      exact haw ⟨j.val,by omega⟩ (by intro he; apply hj; exact Fin.ext (congrArg (fun k : Fin (n+m) => k.val) he))
     · apply Subtype.ext
       funext j
-      exact haw ⟨n+j.val,by omega⟩ (by intro he; have := congrArg Fin.val he; omega)
+      exact haw ⟨n+j.val,by omega⟩ (by intro he; have hv : n+j.val = i.val := congrArg (fun k : Fin (n+m) => k.val) he; omega)
   · apply Or.inr
     constructor
     · apply (adj_iff m _ _).mpr
@@ -79,7 +79,7 @@ private theorem split_adj (n m : ℕ) (a b : Legal (n+m))
           intro he; apply hj; apply Fin.ext; have := congrArg Fin.val he; simp only [Fin.val_mk] at *; omega)
     · apply Subtype.ext
       funext j
-      exact haw ⟨j.val,by omega⟩ (by intro he; have := congrArg Fin.val he; omega)
+      exact haw ⟨j.val,by omega⟩ (by intro he; have hv : j.val = i.val := congrArg (fun k : Fin (n+m) => k.val) he; omega)
 
 private def zeroWord (n m : ℕ) (b : Legal n) (c : Legal m) :
     Fin (n+m+1) → Bool := fun i =>
@@ -144,7 +144,7 @@ private theorem zeroJoin_adj (n m : ℕ) (x y : Legal n × Legal m)
     intro j hj
     by_cases hjn : j.val < n
     · simpa [zeroJoin, zeroWord, hjn] using haw ⟨j.val,hjn⟩ (by
-        intro he; apply hj; apply Fin.ext; exact congrArg Fin.val he)
+        intro he; apply hj; apply Fin.ext; exact congrArg (fun k : Fin n => k.val) he)
     · simp [zeroJoin, zeroWord, hjn]
   · change b = b' at hbb
     subst b'
@@ -209,7 +209,7 @@ theorem growth_constant :
   have hcshift : Tendsto (fun n : ℕ => K n / ((n:ℝ)+1)) atTop (𝓝 c) := by
     have ht := hc.mul hr
     simp only [mul_one] at ht
-    apply ht.congr′
+    apply ht.congr'
     filter_upwards [eventually_ne_atTop 0] with n hn
     have hnr : (n : ℝ) ≠ 0 := Nat.cast_ne_zero.mpr hn
     dsimp only
