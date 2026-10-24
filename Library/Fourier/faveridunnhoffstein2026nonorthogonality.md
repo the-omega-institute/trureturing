@@ -104,6 +104,19 @@ has not been established. Lemmas 6.1–6.2 verify membership for specific
 prime-product sequences under Hecke GRH; that route would not discharge
 an unconditional RH proof obligation.
 
+[Remark 6.3](https://arxiv.org/html/2109.07463v3#S6) already permits
+summing the prime-count index $R$ over any subset of its prescribed
+range in those two membership lemmas. Selecting even prime counts is
+therefore supported for those specified sequences. It does not remove
+the GRH premise or establish membership for the actual coupled weights.
+With $\chi_b$ the original raw sextic character, if its quadratic factor $\lambda_b(m)=\chi_b(m)^3$ is
+absorbed into the inner coefficients, Definition 3.1 must be verified
+for the resulting sequence $(\beta_b\lambda_b(m))_b$, uniformly in the
+moving dual parameter $m$ and the retained twists and masks. The
+source's angular, norm and cubic tests for $(\beta_b)_b$ do not by
+themselves give this additional quadratic-twist condition. No such
+unconditional uniform membership estimate is supplied here.
+
 The theta correction retains the row-dependent condition $(a,b)=1$.
 It is not identified with the actual finite Gauss-row projection $P_L$
 without an additional kernel and normalization comparison. Even if such
@@ -140,5 +153,34 @@ the small-label projection in
 [§484](../../docs/develop/theory/FIBONACCI_ANALYTIC_FRONTIER_INTERFACES_II.md#484-全部小标记的反射主项与完整投影预算),
 and the complement lacking the required sub-$K^2$ bound therefore retain
 distinct scopes.
+
+### Prescribed self-convolutions and sextic lower-bound witnesses
+
+The later [Xu–Sang sextic lower bound, v2,
+§5.4](https://arxiv.org/html/2610.17675v2#S5.SS4) uses a prescribed
+Gauss-sum coefficient on squarefree columns, with a fixed ray filter
+and a small extracted twist $h$. It is not already a genuine
+self-convolution $h_b$ from
+[(J4)](liu2026quasirhdual.md#a-coefficient-interface-for-the-cubic-low-core-estimate).
+At $D=\sqrt U$, that self-convolution only uses columns admitting two
+factors in the original $D$-scale annuli; prime columns are absent once
+both factor annuli lie above $1$. At column scale $B=U$, the
+lower-bound vector allows $U$-scale prime columns. Moreover, the Gauss CRT formula in (J5)
+contains a cubic symbol between the two factors: placing their separate
+Gauss phases in $b$ does not automatically reproduce the composite
+Gauss phase.
+
+A transfer of this lower bound would require one actual divisor-bounded $b$
+realizing or approximating an appropriate witness, with a lower bound
+for the retained physical row energy and a paid error. Restricting to
+columns admitting balanced factors has not been shown to preserve that
+energy. The extracted squarefree response row also lies at the
+$A/Nh$ scale in the source's Remark 5.4; no map identifies it with the
+original complete-dual variable in (J21). Consequently the cited
+operator lower bound neither refutes the sufficient target (J24) for
+all genuine $h_b$ nor proves a lower bound for the prescribed Type-II
+factor. It also does not rule out such a structural lower bound by
+another argument.
+
 These applicability statements carry no independent Lean certification
 or new large-sieve theorem.
