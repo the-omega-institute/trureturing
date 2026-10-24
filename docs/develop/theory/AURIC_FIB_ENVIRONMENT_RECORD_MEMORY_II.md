@@ -1032,13 +1032,19 @@ branches; none of their balanced formulas is redefined here.
 
 The Heisenberg correction framework is literature-attested in
 Bény–Kempf–Kribs, Definition 8, equation (7), Theorem 9 and Corollary 10
-[BKKDOI]. Its exact algebra-correction criterion and the elementary
-single-task interface in [BKKNOTE] are intermediate tools. The
-fixed-effect loss (31.4) is distinct from the worst-case entanglement
+[BKKDOI]. Its exact algebra-correction criterion has a different objective from
+(31.4). The elementary single-task interface used here is the one in
+[BKKNOTE]. The fixed-effect loss (31.4) is also distinct from the
+worst-case entanglement
 fidelity in Bény–Oreshkov, *General conditions for approximate quantum
 error correction and near-optimal recovery channels*, Theorem 1,
 [arXiv:0907.5391v4](https://arxiv.org/html/0907.5391v4).
-No equality with that fidelity optimization is assumed. The additional
+The approximate algebra-correction estimates in Bény, *Conditions for
+the approximate correction of algebras*, Theorem 3.2,
+[arXiv:0907.4207v1](https://arxiv.org/html/0907.4207v1), use a diamond
+and completely bounded norm criterion with an auxiliary identity factor.
+No equality of (31.4) with either of these different objectives is
+assumed. The additional
 branch formulas and spectral classification below are repo-derived
 from (31.3) and finite-dimensional norm duality. No global literature
 novelty or priority assertion is made.
@@ -1957,7 +1963,7 @@ leaving its target pairing fixed. Rescaling would again contradict
 optimality. We can therefore write
 
 $$
-Y=A\oplus(-\mu),\qquad A=A^{\mathsf T}\in M_2(\mathbb R),quad \mu\ge0.
+Y=A\oplus(-\mu),\qquad A=A^{\mathsf T}\in M_2(\mathbb R),\quad \mu\ge0.
 \tag{34.3}
 $$
 
@@ -2346,7 +2352,7 @@ one has
 
 $$
 \begin{gathered}
-0\le K\le I_3,quad 0\le B\le I_3,quad Y=Y^\dagger,quad
+0\le K\le I_3,\quad 0\le B\le I_3,\quad Y=Y^\dagger,\quad
 \|Y\|_1=1,\\
 \eta_n(E_p)=t=\|(F^n)^\dagger(B)-E_p\|_{\rm op}
  =\operatorname{Tr}(YE_p)-\operatorname{Tr}((F^n(Y))_+),\\
@@ -2410,7 +2416,7 @@ $\ker E_p$. The matrices
 $$
 L_j=\sqrt{b_j}\,|v_p\rangle\langle u_j|,\qquad
 M_{kj}=\sqrt{(1-b_j)/2}\,|w_k\rangle\langle u_j|,\qquad
-1\le j\le3,quad 1\le k\le2
+1\le j\le3,\quad 1\le k\le2
 \tag{35.3}
 $$
 
@@ -2447,8 +2453,9 @@ of the density matrix. $\square$
 
 **Corollary 35.2 (Complementary sharp task and scope).**
 For each task in Theorem 35.1 the complementary projection $I_3-E_p$
-has the same value, by [ERM, Proposition 27.8][ERM]. This does not give
-one common decoder for different prescribed tasks or horizons.
+has the same value, by [ERM, Proposition 27.8][ERM]. The same decoder
+serves this complementary binary pair. No common decoder for arbitrary
+collections of prescribed tasks or for different horizons is asserted.
 The result supplies the whole $r=0,pq>0$ quantitative boundary named
 in [ERM, Definition 27.10][ERM]; it does not assert the remaining
 $p,q,r>0$ interior, retained-memory recovery or uniform recovery over
@@ -2457,10 +2464,10 @@ unbounded horizons.
 Proof. The affine bijection $B\mapsto I_3-B$ negates the Hermitian
 residual for complementary targets, so preserves its operator norm.
 Exchange the prepared range and kernel states in the task/effect
-realization (27.5) to realize the complementary target. The task and
-horizon are fixed separately in each instance of this construction;
-none of its equalities quantifies a single decoder serving several
-instances. The other parameter and resource domains do not occur
+realization (27.5) to realize the complementary target. The exchanged
+construction with effect $I_3-B$ is exactly the channel (35.1), and
+its adjoint sends $I_3-E_p$ to $I_3-B$. The choice of $p,n$ is still
+fixed in each instance. The other parameter and resource domains do not occur
 in (31.1) or (35.2). $\square$
 
 ## 追加锚（本行以下为增补区）
