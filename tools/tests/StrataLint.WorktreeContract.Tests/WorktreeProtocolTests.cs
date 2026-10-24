@@ -294,6 +294,7 @@ public sealed class WorktreeProtocolTests(ITestOutputHelper output)
     [InlineData("native_clearance_requires_exclusive_tree")]
     [InlineData("dead_initializer_is_removable_without_lock_age")]
     [InlineData("live_initializer_is_retained")]
+    [InlineData("native_clearance_keeps_dead_initializer_exclusive_until_removal")]
     [InlineData("failed_initialization_recovers_in_place_idempotently")]
     [InlineData("owned_unregistered_branch_can_resume")]
     [InlineData("initialization_identity_changes_refuse_recovery")]

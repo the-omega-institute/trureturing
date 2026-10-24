@@ -91,6 +91,7 @@ internal static partial class CleanLanesCommand
 
         string? recoveryBranch = null;
         string? recoveryBranchCandidate = null;
+        System.Text.Json.JsonElement? nativeLocks = null;
         try
         {
             var arguments = new List<string> { "remove", "--path", item.Path };
@@ -112,6 +113,10 @@ internal static partial class CleanLanesCommand
                     recoveryBranch = recovery.GetString();
                 if (outcome.Value.TryGetProperty("recovery_branch_candidate", out var candidate))
                     recoveryBranchCandidate = candidate.GetString();
+                if (outcome.Value.TryGetProperty("checkpoint", out var checkpoint)
+                    && checkpoint.ValueKind == System.Text.Json.JsonValueKind.Object
+                    && checkpoint.TryGetProperty("native_locks", out var locks))
+                    nativeLocks = locks.Clone();
                 if (outcome.Value.TryGetProperty("recovery_roots", out var roots))
                     foreach (var root in roots.EnumerateArray())
                         protectObservedWorktree?.Invoke(item with
@@ -141,7 +146,7 @@ internal static partial class CleanLanesCommand
 
         // Retain both observed branches and refs created for detached recovery
         // through the invocation's later orphan sweep.
-        return new(LaneRemovalOutcome.Removed, selection.RemovalReason(), recoveryBranch);
+        return new(LaneRemovalOutcome.Removed, selection.RemovalReason(), recoveryBranch, NativeLocks: nativeLocks);
     }
 
     private static string? LockAgeBlockReason(RegisteredWorktree item, DateTimeOffset now)
@@ -196,7 +201,8 @@ internal static partial class CleanLanesCommand
                     "partially_removed",
                     result.Reason),
             _ => throw new InvalidOperationException($"unknown lane removal outcome: {result.Outcome}"),
-        }) with { RecoveryBranch = result.RecoveryBranch, RecoveryBranchCandidate = result.RecoveryBranchCandidate };
+        }) with { RecoveryBranch = result.RecoveryBranch, RecoveryBranchCandidate = result.RecoveryBranchCandidate,
+            NativeLocks = result.NativeLocks };
 
     private enum LaneRemovalOutcome
     {
@@ -207,5 +213,6 @@ internal static partial class CleanLanesCommand
     }
 
     private sealed record LaneRemovalResult(LaneRemovalOutcome Outcome, string Reason,
-        string? RecoveryBranch = null, string? RecoveryBranchCandidate = null);
+        string? RecoveryBranch = null, string? RecoveryBranchCandidate = null,
+        System.Text.Json.JsonElement? NativeLocks = null);
 }

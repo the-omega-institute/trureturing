@@ -34,6 +34,14 @@ public sealed partial class CleanLanesCommandTests
         Assert.Equal(failed, Directory.Exists(lane));
         Assert.True(fixture.BranchExists("harness/disposable-lock"));
         if (failed) Assert.StartsWith("checkpoint_failed:", ReasonFor(result.Output, lane));
+        if (material == "index.lock")
+        {
+            var receipt = Assert.Single(ReadItems(result.Output), item => item.GetProperty("path").GetString() == lane);
+            var clearance = Assert.Single(receipt.GetProperty("native_locks").EnumerateArray());
+            Assert.EndsWith("index.lock", clearance.GetProperty("path").GetString());
+            Assert.True(clearance.GetProperty("size").GetInt64() > 0);
+            Assert.True(clearance.GetProperty("age_seconds").GetDouble() >= 0);
+        }
     }
 
     [Fact]

@@ -177,6 +177,7 @@ def lock_file(directory, key, exclusive):
         os.set_inheritable(fd, True)
         handle = os.fdopen(fd, "rb", buffering=0)
         handle.scope_key = key
+        handle.scope_exclusive = exclusive
         OPEN_SCOPES.append(handle)
         return handle
     except BaseException:
@@ -246,15 +247,19 @@ def exclusive_tree(stack, source, path):
         with ExitStack() as recovery:
             tree_scope(recovery, source, path, True)
             yield
+    elif local.scope_exclusive:
+        yield
     else:
         try:
             fcntl.flock(local, fcntl.LOCK_EX | fcntl.LOCK_NB)
         except BlockingIOError as error:
             raise Refused("busy_scope:" + key) from error
+        local.scope_exclusive = True
         try:
             yield
         finally:
             fcntl.flock(local, fcntl.LOCK_SH)
+            local.scope_exclusive = False
 
 
 def native_lock_holders(path):

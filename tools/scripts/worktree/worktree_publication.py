@@ -1,10 +1,12 @@
 """Ordinary checkpoints and non-force publication, using native Git objects."""
 
 from contextlib import ExitStack
+import json
 import os
 from pathlib import Path
 import re
 import subprocess
+import sys
 import uuid
 
 from worktree_protocol import (Refused, GitFailure, git, value, identity, tree_scope,
@@ -40,16 +42,18 @@ def creation_witness(source, reference):
 def recovery_root(stack, source, path, commit):
     reference = "refs/heads/lane/governance/recovery-" + uuid.uuid4().hex
     acquire(stack, source, "ref:" + reference, True)
+    stack.recovery_roots = getattr(stack, "recovery_roots", []) + [reference]
     git(path, "update-ref", "--no-deref", "--create-reflog", reference, commit, "0" * len(commit))
     if value(path, "rev-parse", "--verify", reference + "^{commit}") != commit:
         raise Refused("recovery_root_changed:" + reference)
-    stack.recovery_roots = getattr(stack, "recovery_roots", []) + [reference]
     return reference
 
 
 def recover_initialization(options):
     """Resume an owned initializer, preserving extant ordinary bytes before checkout."""
     reference = "refs/heads/" + options.branch
+    if options.path.is_symlink():
+        raise Refused("linked_tree")
     with ExitStack() as stack:
         try:
             path = tree_scope(stack, options.source, options.path, True)
@@ -57,6 +61,8 @@ def recover_initialization(options):
             raise Refused("initialization_in_progress") from error
         acquire(stack, options.source, "ref:" + reference, True)
         rows = [row for row in inventory(options.source) if Path(row["worktree"]).resolve() == path]
+        if not rows and path.exists():
+            identity(options.source, path)
         if rows and not rows[0].get("locked", "").startswith("worktree-init:"):
             if "locked" in rows[0]:
                 raise Refused("intentional_worktree_lock")
@@ -72,6 +78,10 @@ def recover_initialization(options):
             if path.exists() or path.is_symlink() or any(row.get("branch") == reference
                                                        for row in inventory(options.source)):
                 raise Refused("initialization_path_identity_changed")
+            for row in inventory(options.source):
+                if row.get("locked", "").startswith("worktree-init:") and (
+                        row["locked"] == token or not row.get("HEAD") or set(row["HEAD"]) == {"0"}):
+                    raise Refused("initialization_registration_unverifiable")
             if value(options.source, "rev-parse", "--verify", options.base + "^{commit}") != creation:
                 raise Refused("initialization_base_changed")
             git(options.source, "worktree", "add", "--no-checkout", "--lock", "--reason", token,
@@ -94,7 +104,8 @@ def recover_initialization(options):
             raise Refused("initialization_metadata_identity_changed")
         if not (metadata / "HEAD").exists():
             acquire(stack, options.source, "ref:" + str(metadata) + ":HEAD", True)
-            git(options.source, "--git-dir", metadata, "symbolic-ref", "HEAD", reference)
+            git(options.source, "symbolic-ref", "-m", token,
+                "worktrees/" + metadata.name + "/HEAD", reference)
         else:
             if rows[0].get("branch") != reference:
                 raise Refused("initialization_branch_identity_changed")
@@ -279,6 +290,18 @@ def validate_mirror(root, head, integration_tip, landing, message):
 
 
 def prepare_mirror(options):
+    options.initialization_stage = "preflight"
+    try:
+        return initialize_mirror(options)
+    except (Refused, OSError, subprocess.SubprocessError) as error:
+        print("WORKTREE_FAILED " + json.dumps(dict(stage=options.initialization_stage,
+            target=str(options.path), retained_material=dict(path=str(options.path), branch=options.branch),
+            recovery_action="reclaim the registered mirror with make worktree-remove NAMES=" + options.path.name,
+            reason=str(error))), file=sys.stderr, flush=True)
+        raise
+
+
+def initialize_mirror(options):
     """Producer-owned temporary checkout operation; failure leaves its source."""
     import uuid
     with ExitStack() as stack:
@@ -292,6 +315,7 @@ def prepare_mirror(options):
         existing = git(options.source, "rev-parse", "--verify", reference, check=False)
         args = [] if existing.returncode == 0 else ["-b", options.branch]
         token = "worktree-init:" + uuid.uuid4().hex
+        options.initialization_stage = "registration"
         git(options.source, "worktree", "add", "--lock", "--reason", token,
             *args, path, options.branch if not args else options.base)
         _, metadata = identity(options.source, path)
@@ -300,14 +324,19 @@ def prepare_mirror(options):
         if value(path, "rev-parse", "HEAD") == value(options.source, "rev-parse", options.base):
             parents = value(path, "show", "-s", "--format=%P", landing).split()
             mainline = ["--mainline", "1"] if len(parents) > 1 else []
+            options.initialization_stage = "checkout"
             git(path, "cherry-pick", "--no-commit", *mainline, landing)
+            options.initialization_stage = "commit"
             git(path, "commit", "--allow-empty", "-m", options.message +
                 "\n\nOriginal-Dev-Commit: " + landing)
         head = value(path, "rev-parse", "HEAD")
         validate_mirror(path, head, options.base, landing, options.message)
+        options.initialization_stage = "publication"
         git(path, "push", "--", endpoint, head + ":" + reference)
+        options.initialization_stage = "confirmation"
         evidence = confirm(path, options.remote, options.branch, head, endpoint)
         if (metadata / "locked").read_text().strip() != token:
             raise Refused("mirror_initialization_identity_changed")
+        options.initialization_stage = "unlock"
         git(options.source, "worktree", "unlock", path)
         return dict(event="worktree_mirror", status="confirmed", commit=head, **evidence)

@@ -41,6 +41,7 @@ internal static class WorktreeCommand
         + "StrataLint worktree --kind KIND --name TASK_CODE --path DIR "
         + "[--base REV] [--source REPO_ROOT] [--skip-restore]. "
         + $"Allowed worktree kinds: {CreationKindList}. "
+        + "Repeat the same kind/name/path to resume an owned failed initialization. "
         + "The .lake cache is materialized by the first Lean command; symlink sharing is forbidden.\n"
         + RemoveWorktreesCommand.Usage;
 
@@ -108,6 +109,7 @@ internal static class WorktreeCommand
         WorktreeBranchTracking? branchTracking = null;
         var halfBuiltRecovered = false;
         var stage = "preflight";
+        int? failureExitCode = null;
         IDisposable? initializationScope = null;
         try
         {
@@ -120,7 +122,11 @@ internal static class WorktreeCommand
             {
                 stage = "recovery";
                 var reused = RecoverInitialization(options, runner);
-                if (!reused.Success) throw new InvalidOperationException(reused.Error);
+                if (!reused.Success)
+                {
+                    failureExitCode = Directory.Exists(options.Path) ? reused.ExitCode : null;
+                    throw new InvalidOperationException(reused.Error);
+                }
                 if (LeanPinSet.TryReadWorktree(options.Path, out var reason) is null)
                     throw new InvalidOperationException(reason);
                 return reused;
@@ -237,7 +243,7 @@ internal static class WorktreeCommand
             return new CommandResult(
                 false,
                 string.Empty,
-                $"WORKTREE_FAILED {receipt}\n");
+                $"WORKTREE_FAILED {receipt}\n", failureExitCode);
         }
         finally
         {

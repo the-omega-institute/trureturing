@@ -82,6 +82,30 @@ class LockRecoveryCases:
         self.assertIn("initialization_in_progress", result.stderr)
         self.assertTrue(self.tree.exists())
 
+    def test_native_clearance_keeps_dead_initializer_exclusive_until_removal(self):
+        import worktree_protocol as protocol
+        import worktree_preservation as preservation
+        self.g(self.main, "worktree", "lock", "--reason", "worktree-init:dead", self.tree)
+        metadata = Path(self.g(self.tree, "rev-parse", "--absolute-git-dir").strip())
+        (metadata / "index.lock").write_text("residual\n")
+        (self.tree / "owned").write_text("recover before removal\n")
+        original_git = preservation.git
+        checked = []
+        def guarded_git(path, *arguments, **options):
+            if arguments[:2] == ("worktree", "remove"):
+                with ExitStack() as contender:
+                    with self.assertRaisesRegex(protocol.Refused, "busy_scope:tree:"):
+                        protocol.tree_scope(contender, self.main, self.tree)
+                checked.append(True)
+            return original_git(path, *arguments, **options)
+        options = argparse.Namespace(source=self.main, names="tree", path=[], force=False,
+                                     preview=False, expected=[])
+        with patch.object(preservation, "git", side_effect=guarded_git):
+            result = preservation.remove(options)
+        self.assertEqual("succeeded", result["status"])
+        self.assertEqual([True], checked)
+        self.assertFalse(self.tree.exists())
+
     def owned_initialization(self, registered=True):
         import worktree_protocol as protocol
         token = "worktree-init:" + "a" * 32
