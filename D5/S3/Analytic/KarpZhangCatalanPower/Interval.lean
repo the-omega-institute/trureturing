@@ -282,23 +282,19 @@ private lemma sliceDerivative_pos
 /- proof_shape: bind-only; escape_witness: none;
 consumer: balancing. -/
 lemma Z_symm {m q : ℕ} (hmq : 2 * q ≤ m) (u v : ℝ) : Z m q u v = Z m q v u := by
-  apply sum_bij (fun k _ => m - k)
-  · intro k hk
-    simp only [mem_Icc] at hk ⊢
-    omega
-  · intro k hk l hl he
-    simp only [mem_Icc] at hk hl
-    omega
-  · intro k hk
-    refine ⟨m - k, ?_, ?_⟩
-    · simp only [mem_Icc] at hk ⊢
-      omega
-    · simp only [mem_Icc] at hk
-      omega
-  · intro k hk
-    simp only [mem_Icc] at hk
-    rw [show m - (m - k) = k by omega]
-    exact mul_comm _ _
+  unfold Z
+  simp only [← Finset.Ico_succ_right_eq_Icc, Nat.succ_eq_succ, Nat.succ_eq_add_one]
+  have h := Finset.sum_Ico_reflect (fun k => a k v * a (m - k) u) q
+    (m := m - q + 1) (n := m) (by omega)
+  have hlo : m + 1 - (m - q + 1) = q := by omega
+  have hhi : m + 1 - q = m - q + 1 := by omega
+  rw [hlo, hhi] at h
+  rw [h.symm]
+  apply sum_congr rfl
+  intro k hk
+  have hk' := mem_Ico.mp hk
+  rw [Nat.sub_sub_self (by omega : k ≤ m)]
+  exact mul_comm _ _
 
 
 /- proof_shape: content; escape_witness: sliceDerivative_pos;

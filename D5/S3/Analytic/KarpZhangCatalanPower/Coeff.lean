@@ -94,9 +94,20 @@ lemma a_eq_polynomial (n : ℕ) {t : ℝ} (ht : -1 < t) :
 consumer: a_product. -/
 private lemma poch_prod (n : ℕ) (t : ℝ) :
     (ascPochhammer ℝ n).eval t = ∏ j ∈ range n, (t + j) := by
-  induction n with
-  | zero => simp
-  | succ n ih => rw [ascPochhammer_succ_eval, ih, prod_range_succ]
+  calc
+    _ = (-1 : ℝ) ^ n * (descPochhammer ℝ n).eval (-t) := by
+      simpa only [neg_neg] using ascPochhammer_eval_neg_eq_descPochhammer ℝ (-t) n
+    _ = (-1 : ℝ) ^ n * ∏ j ∈ range n, (-t - j) := by
+      rw [descPochhammer_eval_eq_prod_range]
+    _ = (-1 : ℝ) ^ n * ((-1 : ℝ) ^ n * ∏ j ∈ range n, (t + j)) := by
+      congr 1
+      calc
+        _ = ∏ j ∈ range n, (-1 : ℝ) * (t + j) := by
+          apply prod_congr rfl
+          intro j hj
+          ring
+        _ = _ := by rw [prod_mul_distrib]; simp
+    _ = _ := by rw [← mul_assoc, ← mul_pow]; norm_num
 
 /- proof_shape: bind-only; escape_witness: none;
 consumer: a_pos. -/
@@ -277,10 +288,11 @@ private lemma natural_coeff (n t : ℕ) :
     push_cast
     have hcast : (ascPochhammer ℝ n).eval ((t:ℝ)+n+2) =
         (((ascPochhammer ℚ n).eval ((t+n+2:ℕ):ℚ) : ℚ):ℝ) := by
-      have hn := ascPochhammer_nat_eq_natCast_ascFactorial ℝ (t+n+2) n
-      have hq := ascPochhammer_nat_eq_natCast_ascFactorial ℚ (t+n+2) n
-      rw [hq]
-      convert hn using 1 <;> push_cast <;> ring
+      rw [ascPochhammer_eval₂ (Rat.castHom ℝ)]
+      simpa only [Rat.coe_castHom, Rat.cast_add, Rat.cast_natCast, Rat.cast_ofNat,
+        Nat.cast_add, Nat.cast_ofNat] using
+        Polynomial.eval₂_at_apply (p := ascPochhammer ℚ n)
+          (Rat.castHom ℝ) ((t + n + 2 : ℕ) : ℚ)
     rw [hcast]
     push_cast
     rfl
@@ -386,7 +398,7 @@ theorem b_eq_centralBinom (j : ℕ) (hj : 1 ≤ j) :
   rw [hreal, Nat.factorial_succ]
   have hc := Nat.choose_succ_succ' (2*n+1) n
   have hsym : (2*n+1).choose (n+1)=(2*n+1).choose n :=
-    Nat.choose_symm_of_eq_add (by omega)
+    Nat.choose_symm_half n
   rw [hsym] at hc
   rw [show 2*n+1+1=2*(n+1) by omega] at hc
   have hcR : ((2*(n+1)).choose (n+1):ℝ)=2*((2*n+1).choose n:ℝ) := by
@@ -416,10 +428,8 @@ theorem hasDerivAt_a (n : ℕ) {t : ℝ} (ht : 0 ≤ t) :
         (coeffPoly j).eval s * (coeffPoly (n-j)).eval t)
       (∑ j ∈ Finset.range (n+1),
         (coeffPoly j).derivative.eval 0 * (coeffPoly (n-j)).eval t) 0 := by
-    convert (HasDerivAt.sum (u := Finset.range (n+1)) (fun j _ =>
-      ((coeffPoly j).hasDerivAt 0).mul_const ((coeffPoly (n-j)).eval t))) using 1
-    funext s
-    simp only [Finset.sum_apply]
+    exact HasDerivAt.fun_sum (fun j _ =>
+      ((coeffPoly j).hasDerivAt 0).mul_const ((coeffPoly (n-j)).eval t))
   have hright : HasDerivAt (fun s:ℝ => (coeffPoly n).eval (s+t))
       ((coeffPoly n).derivative.eval t) 0 := by
     simpa only [id_eq, zero_add, mul_one, Function.comp_def] using

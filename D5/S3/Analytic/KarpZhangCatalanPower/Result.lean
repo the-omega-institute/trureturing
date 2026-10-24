@@ -61,9 +61,7 @@ private lemma zero_tail {h : ℕ → ℝ} (hh : IsLogConvex h) (hz : h 1 = 0)
   | succ n ih =>
     have he := hh.2.2 (n + 2) (by omega)
     rw [show n + 2 - 1 = n + 1 by omega, ih, zero_mul] at he
-    have hn := hh.1 (n + 2)
-    have : h (n + 2) = 0 := by nlinarith only [he, hn, sq_nonneg (h (n + 2))]
-    simpa only [Nat.add_assoc] using this
+    simpa only [Nat.add_assoc] using (sq_nonpos_iff (h (n + 2))).mp he
 
 private lemma positive_all {h : ℕ → ℝ} (hh : IsLogConvex h) (h1 : 0 < h 1)
     (n : ℕ) : 0 < h n := by
