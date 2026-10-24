@@ -89,11 +89,55 @@ private lemma phases_zero (y : Fin 5) : ∑ j, phases j y = 0 := by
   simp [phases, t, Fin.sum_univ_succ]
   ring
 
+private lemma phase_exponential (m : ℤ) :
+    Complex.exp (-Complex.I * (((2 * Real.pi / 5) * (m : ℝ) : ℝ) : ℂ)) =
+      windowRoot 5 ^ ((-m) % 5).toNat := by
+  let u : ℂˣ := Units.mk0 (windowRoot 5) (by
+    exact Complex.exp_ne_zero _)
+  have hu : u ^ 5 = 1 := Units.ext root_relations.1
+  have hm := congrArg (fun v : ℂˣ => (v : ℂ)) (zpow_eq_zpow_emod' (-m) hu)
+  simp only [Units.val_zpow_eq_zpow_val] at hm
+  change windowRoot 5 ^ (-m) = windowRoot 5 ^ ((-m) % 5 : ℤ) at hm
+  rw [show -Complex.I * (((2 * Real.pi / 5) * (m : ℝ) : ℝ) : ℂ) =
+      ((-m : ℤ) : ℂ) * (2 * Real.pi * Complex.I / 5) by push_cast; ring,
+    Complex.exp_int_mul]
+  change windowRoot 5 ^ (-m) = _
+  rw [hm, ← Int.toNat_of_nonneg (Int.emod_nonneg _ (by norm_num : (5 : ℤ) ≠ 0))]
+  rfl
+
+private lemma coefficient_formula (n : ℕ) (y k : Fin 5) :
+    coeff 5 phases n y k =
+      (1 / (5 : ℂ)) * windowRoot 5 ^ ((k.val * n * (n - 1) / 2) % 5) *
+        ∑ l : Fin 5,
+          windowRoot 5 ^ ((-(∑ m ∈ Finset.range n,
+            t ⟨(l.val + m + 1) % 5, by omega⟩ y)) % 5).toNat *
+            windowRoot 5 ^ ((k.val * n * l.val) % 5) := by
+  unfold coeff
+  rw [pow_eq_pow_mod (k.val * n * (n - 1) / 2) root_relations.1]
+  congr 1
+  apply Finset.sum_congr rfl
+  intro l _
+  have hs : (∑ m ∈ Finset.range n,
+      phases ⟨(l.val + m + 1) % 5, by omega⟩ y) =
+      (2 * Real.pi / 5) * ((∑ m ∈ Finset.range n,
+        t ⟨(l.val + m + 1) % 5, by omega⟩ y : ℤ) : ℝ) := by
+    simp [phases, Finset.mul_sum]
+  rw [hs, phase_exponential, pow_eq_pow_mod (k.val * n * l.val) root_relations.1]
+
+set_option maxHeartbeats 5000000 in
+-- The four powers require one hundred finite coefficient identities.
 private lemma coefficient_orthogonality (n : ℕ) (hn : 1 ≤ n) (hn' : n ≤ 4)
     (y y' : Fin 5) :
     ∑ k, star (coeff 5 phases n y' k) * coeff 5 phases n y k =
       if y = y' then 1 else 0 := by
-  sorry
+  have h4 : windowRoot 5 ^ 4 = -1 - windowRoot 5 - windowRoot 5 ^ 2 - windowRoot 5 ^ 3 := by
+    linear_combination root_relations.2.1
+  interval_cases n <;> fin_cases y <;> fin_cases y' <;>
+    norm_num [coefficient_formula, t, Fin.sum_univ_succ, Finset.sum_range_succ,
+      star_mul, star_pow, root_relations.2.2] <;>
+    ring_nf <;>
+    simp only [pow_eq_pow_mod _ root_relations.1, Nat.reduceMod, pow_zero, pow_one] <;>
+    rw [h4] <;> ring
 
 private lemma phases_admissible : Admissible 5 phases := by
   exact ⟨phases_zero, coefficient_orthogonality⟩
@@ -117,15 +161,30 @@ private lemma reconstruction :
 
 private lemma special_coefficients : coeff 5 phases 1 0 0 = g ∧
     coeff 5 phases 2 0 0 = g := by
-  sorry
+  constructor <;>
+    norm_num [coefficient_formula, t, g, Fin.sum_univ_succ, Finset.sum_range_succ] <;> ring
 
 private lemma transformed_one :
     transformed 5 phases B 1 0 = X + ((windowRoot 5 - 1) * g) • R 0 := by
-  sorry
+  unfold transformed
+  rw [← reconstruction.1]
+  simp only [Fin.sum_univ_succ, B, Fin.succ_ne_zero, ite_false, ite_true, pow_one]
+  rw [special_coefficients.1]
+  simp only [sub_mul, one_mul, sub_smul, mul_smul]
+  rw [smul_comm g (windowRoot 5)]
+  abel
 
 private lemma transformed_two :
     transformed 5 phases B 2 0 = X ^ 2 + ((windowRoot 5 ^ 2 - 1) * g) • R 0 ^ 2 := by
-  sorry
+  unfold transformed
+  rw [← reconstruction.2]
+  simp only [Fin.sum_univ_succ, B, Fin.succ_ne_zero, ite_false, ite_true]
+  rw [special_coefficients.2]
+  rw [show (windowRoot 5 • R 0) ^ 2 = windowRoot 5 ^ 2 • R 0 ^ 2 by
+    simp only [pow_two, Matrix.smul_mul, Matrix.mul_smul, smul_smul]]
+  simp only [sub_mul, one_mul, sub_smul, mul_smul]
+  rw [smul_comm g (windowRoot 5 ^ 2)]
+  abel
 
 private lemma defect_entry :
     ((transformed 5 phases B 1 0) ^ 2 - transformed 5 phases B 2 0) 0 3 =
