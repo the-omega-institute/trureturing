@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:44f68566d536a8551b63a3e5daed1e216d11ff6a54e1649dd63619df01259c82
+  normalized_sha256: sha256:44f68566d536a8551b63a3e5daed1e216d11ff6a54e1649dd63619df01259c82
+cas_ref: sha256:44f68566d536a8551b63a3e5daed1e216d11ff6a54e1649dd63619df01259c82
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 仅说明使用 RH 推导的式（28）不得充当无条件 RH 证明，并提出后续研究目标；无新增数论断言。
+    previous_atom_id: 58ef0f518a22979ed3a47ba28d33a809ac245788bd04d72c79eb1a7517026839
+    next_atom_id: 01629a6d23c7c875cbd8e11dbf5f25297836d2caf51c610303aadfdd7fa3754d

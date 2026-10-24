@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:81f9372662a676aaaec4bee6094b4baced8117f081185f73233ca668ddeae29a
+  normalized_sha256: sha256:81f9372662a676aaaec4bee6094b4baced8117f081185f73233ca668ddeae29a
+cas_ref: sha256:81f9372662a676aaaec4bee6094b4baced8117f081185f73233ca668ddeae29a
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 给出理论名称的研究范围和工作流程，并声明后续只做纸面推理；没有把流程箭头当成已建立的数学映射。
+    previous_atom_id: 2efa755a82b008d4716181ce0e9c42713e8b50bf06eb27e8123687b8f50c2153
+    next_atom_id: 08be4a76f130c1953ad983070ffd1b07cc4972091146d9d51a24053e1f3ac774

@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:bb7709c3eb80d73bfb83961924e74edeb05ac457ef3737bdb286ba45eaaeef98
+  normalized_sha256: sha256:bb7709c3eb80d73bfb83961924e74edeb05ac457ef3737bdb286ba45eaaeef98
+cas_ref: sha256:bb7709c3eb80d73bfb83961924e74edeb05ac457ef3737bdb286ba45eaaeef98
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 在“反向需要使用”清单中引用 Stieltjes 表示唯一性这一所需接口，没有提出新的测度唯一性命题。
+    previous_atom_id: cc8c552cd682ce62d875322c282782d4ffe5d34927a60a96f1088ede3ea0b6f7
+    next_atom_id: d17c1c9f2b45bd7db4d532a84e28cc70cc8ebebdb2b53fbea17fa76ffd11f8ce

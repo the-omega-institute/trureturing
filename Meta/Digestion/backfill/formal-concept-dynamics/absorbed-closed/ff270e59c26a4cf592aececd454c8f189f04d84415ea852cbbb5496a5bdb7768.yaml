@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:ff270e59c26a4cf592aececd454c8f189f04d84415ea852cbbb5496a5bdb7768
+  normalized_sha256: sha256:ff270e59c26a4cf592aececd454c8f189f04d84415ea852cbbb5496a5bdb7768
+cas_ref: sha256:ff270e59c26a4cf592aececd454c8f189f04d84415ea852cbbb5496a5bdb7768
+coverage_gids:
+  - gid: D5/S3/ConceptDynamics/Attribution/SymmetricEventNoUniqueCulprit.symmetric_event_admits_no_equivariant_culprit
+    target_statement_id: sha256:ee9823dc81037c2e299fe3d3211c7df9e8078fef0a8938f895cfdbcf08dd9da3
+  - gid: D5/S3/ConceptDynamics/Attribution/SymmetricResponsibilityAllocation.symmetric_responsibility_is_uniform
+    target_statement_id: sha256:ca736a263fdb4472878c95010fd9416d4053fd4d7cc2fcc498dfb9307ed86b92
+receipts:
+  unresolved_subitems: []
