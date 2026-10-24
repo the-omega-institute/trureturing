@@ -225,6 +225,7 @@ def remove(options):
                 outcome="partial_or_indeterminate" if removing else "checkpoint_failed",
                 error=str(error), checkpoint=checkpoint, recovery_branch=recovery_branch,
                 recovery_branch_candidate=recovery_branch_candidate,
+                native_locks=getattr(error, "native_locks", []),
                 recovery_roots=getattr(stack, "recovery_roots", [])))
 
     return dict(event="worktree_removal", items=outcomes,

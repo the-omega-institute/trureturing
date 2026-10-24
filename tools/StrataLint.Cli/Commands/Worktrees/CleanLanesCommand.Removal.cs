@@ -117,6 +117,8 @@ internal static partial class CleanLanesCommand
                     && checkpoint.ValueKind == System.Text.Json.JsonValueKind.Object
                     && checkpoint.TryGetProperty("native_locks", out var locks))
                     nativeLocks = locks.Clone();
+                else if (outcome.Value.TryGetProperty("native_locks", out var failedLocks))
+                    nativeLocks = failedLocks.Clone();
                 if (outcome.Value.TryGetProperty("recovery_roots", out var roots))
                     foreach (var root in roots.EnumerateArray())
                         protectObservedWorktree?.Invoke(item with
@@ -134,7 +136,8 @@ internal static partial class CleanLanesCommand
                 if (removal.ExitCode is 68 or 73) return Refused("identity_or_lock_refused");
                 if (outcome?.GetProperty("outcome").GetString() == "checkpoint_failed")
                     return new(LaneRemovalOutcome.CheckpointFailed,
-                        "checkpoint_failed:" + outcome.Value.GetProperty("error").GetString(), recoveryBranch, recoveryBranchCandidate);
+                        "checkpoint_failed:" + outcome.Value.GetProperty("error").GetString(), recoveryBranch, recoveryBranchCandidate,
+                        NativeLocks: nativeLocks);
                 return new(LaneRemovalOutcome.WorktreeRemoveFailed, "worktree_remove_failed_state_indeterminate", recoveryBranch, recoveryBranchCandidate);
             }
         }

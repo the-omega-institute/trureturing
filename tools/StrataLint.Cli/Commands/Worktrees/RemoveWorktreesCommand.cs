@@ -116,7 +116,8 @@ internal static class RemoveWorktreesCommand
                         ? roots.EnumerateArray().Select(root => root.GetString()!).ToArray() : null,
                     NativeLocks = outcome.TryGetProperty("checkpoint", out var checkpoint)
                         && checkpoint.ValueKind == JsonValueKind.Object
-                        && checkpoint.TryGetProperty("native_locks", out var locks) ? locks.Clone() : null,
+                        && checkpoint.TryGetProperty("native_locks", out var locks) ? locks.Clone()
+                        : outcome.TryGetProperty("native_locks", out var failedLocks) ? failedLocks.Clone() : null,
                 };
                 return outcome.GetProperty("outcome").GetString() == "removed"
                     ? item with { Outcome = "removed" }

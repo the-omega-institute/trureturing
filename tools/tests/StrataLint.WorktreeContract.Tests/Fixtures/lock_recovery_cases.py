@@ -62,6 +62,27 @@ class LockRecoveryCases:
                 publication.checkpoint(options)
         self.assertEqual("replacement bytes\n", lock.read_text())
 
+    def test_native_lock_failure_receipts_keep_lock_observations(self):
+        import worktree_protocol as protocol
+        import worktree_preservation as preservation
+        metadata = Path(self.g(self.tree, "rev-parse", "--absolute-git-dir").strip())
+        lock = metadata / "index.lock"
+        lock.write_text("residual\n")
+        options = argparse.Namespace(source=self.main, names="tree", path=[], force=False,
+                                     preview=False, expected=[])
+        for inspection in (["holder"], OSError("inspection denied")):
+            with patch.object(protocol, "native_lock_holders", side_effect=(
+                    inspection if isinstance(inspection, Exception) else lambda _: inspection)):
+                result = preservation.remove(options)
+            item = result["items"][0]
+            self.assertEqual("checkpoint_failed", item["outcome"])
+            evidence = item["native_locks"][0]
+            self.assertEqual(str(lock), evidence["path"])
+            self.assertEqual(len("residual\n"), evidence["size"])
+            self.assertIsInstance(evidence["age_seconds"], float)
+            self.assertTrue(lock.exists())
+            self.assertTrue(self.tree.exists())
+
     def test_native_clearance_requires_exclusive_tree(self):
         metadata = Path(self.g(self.tree, "rev-parse", "--absolute-git-dir").strip())
         lock = metadata / "index.lock"

@@ -45,7 +45,9 @@ def scope_fds():
 
 
 class Refused(RuntimeError):
-    pass
+    def __init__(self, reason, native_locks=None):
+        super().__init__(reason)
+        self.native_locks = native_locks or []
 
 
 class GitFailure(Refused):
@@ -316,18 +318,20 @@ def clear_native_locks(source, path, locks):
                 raise OSError("nonregular native lock")
             holders = native_lock_holders(lock)
         except (OSError, ValueError, subprocess.SubprocessError) as error:
-            print(json.dumps(dict(evidence, status="unverifiable")), file=sys.stderr, flush=True)
-            raise Refused("native_lock_unverifiable:" + str(lock)) from error
+            observation = dict(evidence, status="unverifiable")
+            print(json.dumps(observation), file=sys.stderr, flush=True)
+            raise Refused("native_lock_unverifiable:" + str(lock), [observation]) from error
         if holders:
-            print(json.dumps(dict(evidence, status="held", holders=holders)), file=sys.stderr, flush=True)
-            raise Refused("native_lock_held:" + str(lock))
+            observation = dict(evidence, status="held", holders=holders)
+            print(json.dumps(observation), file=sys.stderr, flush=True)
+            raise Refused("native_lock_held:" + str(lock), [observation])
         try:
             after = lock.lstat()
         except FileNotFoundError as error:
-            raise Refused("native_lock_changed:" + str(lock)) from error
+            raise Refused("native_lock_changed:" + str(lock), [dict(evidence, status="changed")]) from error
         fingerprint = lambda item: (item.st_dev, item.st_ino, item.st_size, item.st_mtime_ns)
         if fingerprint(before) != fingerprint(after):
-            raise Refused("native_lock_changed:" + str(lock))
+            raise Refused("native_lock_changed:" + str(lock), [dict(evidence, status="changed")])
         lock.unlink()
         cleared.append(dict(evidence, status="native_lock_cleared"))
         print(json.dumps(cleared[-1]), file=sys.stderr, flush=True)

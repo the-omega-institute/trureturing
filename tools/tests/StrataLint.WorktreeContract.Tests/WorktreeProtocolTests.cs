@@ -291,6 +291,7 @@ public sealed class WorktreeProtocolTests(ITestOutputHelper output)
     [InlineData("detached_head_native_lock_can_recover_snapshot")]
     [InlineData("held_native_lock_retains_exact_blocker")]
     [InlineData("unverifiable_and_replaced_native_lock_retained")]
+    [InlineData("native_lock_failure_receipts_keep_lock_observations")]
     [InlineData("native_clearance_requires_exclusive_tree")]
     [InlineData("dead_initializer_is_removable_without_lock_age")]
     [InlineData("live_initializer_is_retained")]
