@@ -223,7 +223,12 @@ private theorem forced_fill (σ : Fin 6 → ℝ) (ell : ℝ) (h : AdmissibleFill
   fin_cases k <;> simp <;> linarith [hn 3, hn 4, hn 5]
 
 private theorem exists_fill : ∃ σ ell, AdmissibleFill psi σ ell := by
-  sorry
+  rcases entropies with ⟨eA, eB, eC, eD⟩
+  refine ⟨![1, 1, 1, 0, 0, 0], 0, ?_⟩
+  constructor
+  · intro k
+    fin_cases k <;> norm_num
+  · norm_num [eA, eB, eC, eD]
 
 private theorem all_volume_zero (σ : Fin 6 → ℝ) (ell : ℝ)
     (h : AdmissibleFill psi σ ell) : volume σ = 0 := by
