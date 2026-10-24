@@ -254,7 +254,8 @@ def familyRegistration : Registration arena (type_of% (@actual_quadratic_gauss_s
   sensitivity := sensitivity
   dependence := dependence
 
-def registration : LeanInformationAudit.Contract.Registration (@actual_quadratic_gauss_sum)
+def registration : LeanInformationAudit.Contract.Registration.{_, _, _, 0, 0, 0, _, _, _, _, _, 0}
+    (@actual_quadratic_gauss_sum)
     (type_of% (realize signature actual.readout actual.anchor)) Unit Unit where
   unitName := Lean.Name.str
     `D5.S3.VertexAlgebra.TwistedGround.GaussElimination.actual_quadratic_gauss_sum

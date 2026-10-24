@@ -22,7 +22,20 @@ If the product determinant is u^2*d modulo eight, where u is odd and d is an int
 
 This theorem evaluates a supplied binary decomposition. It does not construct the decomposition of a general integral lattice Gram matrix, identify its half-norm under a change of coordinates, or assert symmetry of the pairing on ActualGround. Those additional implications require their respective mathematical bridges.
 
+**Theorem 1.2 (The Binary Block Sum).**
+
+Lean statement: `D5/S3/VertexAlgebra/TwistedGround/BinaryGauss.block_sum`
+
+*Proof.* Machine-checked in Lean as `D5/S3/VertexAlgebra/TwistedGround/BinaryGauss.block_sum` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+For every binary block over Z/8 with odd off-diagonal coefficient b, the sign sum of its quadratic half-norm over the four mod-two coordinates is 2*chi_8(det H). In binary Schur elimination, this value multiplies the Gauss sum of the residual quadratic form. It permits either Gauss sign and imposes no integer-unit determinant premise.
+
 ## References
 
 - Truth anchor: `D5/S3/VertexAlgebra/TwistedGround/BinaryGauss.binary_gauss_of_integral_unit_congruence`
+- Truth anchor: `D5/S3/VertexAlgebra/TwistedGround/BinaryGauss.block_sum`
 - Dependency: [D5/S3/VertexAlgebra/LatticeTwistedGroundRealization](../LatticeTwistedGroundRealization.md)

@@ -27,6 +27,6 @@ internal sealed class BinaryGaussDocument : IScribeDocumentDefinition
                 StatementSource.WithoutFormula(),
                 AssessedProvenance.FromRepo(),
                 Blocks(
-                    Paragraph(Text("For every binary block over Z/8 with odd off-diagonal coefficient b, the sign sum of its quadratic half-norm over the four mod-two coordinates is 2*chi_8(det H). This existing calculation supplies the binary factor on the live global elimination proof path. It permits either Gauss sign and imposes no integer-unit determinant premise."))),
+                    Paragraph(Text("For every binary block over Z/8 with odd off-diagonal coefficient b, the sign sum of its quadratic half-norm over the four mod-two coordinates is 2*chi_8(det H). In binary Schur elimination, this value multiplies the Gauss sum of the residual quadratic form. It permits either Gauss sign and imposes no integer-unit determinant premise."))),
                 DescribeRole.Theorem))));
 }

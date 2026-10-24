@@ -231,7 +231,8 @@ def familyRegistration : Registration arena (type_of% (@block_sum)) where
   sensitivity := sensitivity
   dependence := dependence
 
-def registration : LeanInformationAudit.Contract.Registration (@block_sum)
+def registration : LeanInformationAudit.Contract.Registration.{_, _, _, 0, 0, 0, _, _, _, _, _, 0}
+    (@block_sum)
     (type_of% (realize signature actual.readout actual.anchor)) Unit Unit where
   unitName := Lean.Name.str `D5.S3.VertexAlgebra.TwistedGround.BinaryGauss.block_sum
     "__information_unit"
