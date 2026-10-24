@@ -231,7 +231,7 @@ private lemma no_endpoint_transfer (s : ℝ) : ¬ HasPST H s 0 4 := by
 theorem result : ¬ claim := by
   intro hc
   obtain ⟨s, _, hs⟩ := hc 4 (by omega) weights weights_pos 0 1
-    (by decide) (by decide) (by decide) (by simpa [H] using interior_transfer)
+    (by decide) (by decide) (by decide) interior_transfer
   exact no_endpoint_transfer s hs
 
 end D5.S3.Quantum.Dynamics.InteriorPathTransferConverseRefutation
