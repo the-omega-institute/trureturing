@@ -7,7 +7,7 @@ public sealed partial class CleanLanesCommandTests
     [Theory]
     [InlineData(10799, false)]
     [InlineData(10800, true)]
-    public void MergedCleanLaneRequiresThreeHoursWithoutGitUpdates(int seconds, bool reclaim)
+    public void MergedCleanLaneRequiresThreeHoursOfSavedWorkAndAllocationAge(int seconds, bool reclaim)
     {
         using var fixture = new CleanLanesFixture();
         var lane = fixture.AddWorkedLane("harness/shortcut-age");
@@ -80,7 +80,7 @@ public sealed partial class CleanLanesCommandTests
     [InlineData("earlier-reflog", -1, "age_unverifiable")]
     [InlineData("earlier-reflog", 10799, "recently_updated")]
     [InlineData("earlier-reflog", 10800, "merged_to_dev")]
-    public void MergedShortcutUsesMaximumReflogAndHeadCommitTime(string source, int seconds, string reason)
+    public void MergedShortcutRequiresBothCommitAndFirstRecordAge(string source, int seconds, string reason)
     {
         using var fixture = new CleanLanesFixture();
         var lane = fixture.AddWorkedLane("harness/latest-update-age");

@@ -97,7 +97,7 @@ internal static partial class CleanLanesCommand
             {
                 if (!TryParseHeadLogRecord(line, out var record)) return new(Error: "reflog_invalid");
                 allocated ??= record!.Updated;
-                newHead = record.NewHead;
+                newHead = record!.NewHead;
             }
             if (allocated is null) return new(Error: "reflog_empty");
             if (!string.Equals(newHead, observedHead, StringComparison.Ordinal))

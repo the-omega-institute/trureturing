@@ -159,6 +159,68 @@ public sealed partial class CleanLanesCommandTests
         Assert.True(Directory.Exists(lane));
     }
 
+    [Theory]
+    [InlineData(false)]
+    [InlineData(true)]
+    public void ReflogExpiryCanOnlyExtendAllocationProtection(bool expire)
+    {
+        using var fixture = new CleanLanesFixture();
+        var lane = fixture.AddWorkedLane("harness/expired-allocation");
+        var allocated = fixture.LastUpdate(lane);
+        var later = allocated.AddDays(2);
+        CleanLanesFixture.GitAt(lane, later, "reset", "--hard", "HEAD");
+        if (expire)
+        {
+            foreach (var log in new[] { fixture.BranchLogPath(lane), Path.Combine(fixture.WorktreeGitDirectory(lane), "logs", "HEAD") })
+                File.WriteAllLines(log, File.ReadAllLines(log).TakeLast(1).ToArray());
+        }
+
+        var result = fixture.RunAt(later.AddHours(1), "--force", "--lanes-only");
+
+        Assert.True(result.Success, result.Error);
+        Assert.Equal(expire ? "recently_updated" : "merged_to_dev", ReasonFor(result.Output, lane));
+        Assert.Equal(expire, Directory.Exists(lane));
+    }
+
+    [Fact]
+    public void AbnormalWorkerExitLeavesOrdinaryBytesForRecyclingCheckpoint()
+    {
+        if (OperatingSystem.IsWindows()) return;
+        using var fixture = new CleanLanesFixture();
+        var lane = fixture.AddWorkedLane("harness/abnormal-worker");
+        var saved = fixture.Head(lane);
+        var job = WorktreeProtocolCommand.Run(fixture.RepositoryWorkingDirectory,
+            ["with", "--path", lane, "--write", "unsaved.txt", "--", "/bin/sh", "-c",
+                "printf 'recover after abnormal exit\\n' > unsaved.txt; exit 17"], fixture.CreateRunner());
+        Assert.Equal(17, job.ExitCode);
+        Assert.Equal(saved, fixture.Head(lane));
+        fixture.AdvanceBase(300);
+
+        var result = fixture.RunAt(fixture.LastUpdate(lane).AddDays(2), "--force", "--lanes-only");
+
+        Assert.True(result.Success, result.Error);
+        Assert.Equal("stale_behind", ReasonFor(result.Output, lane));
+        Assert.False(Directory.Exists(lane));
+        Assert.Equal("recover after abnormal exit\n", CleanLanesFixture.Git(fixture.RepositoryWorkingDirectory,
+            "show", "harness/abnormal-worker:unsaved.txt"));
+    }
+
+    [Fact]
+    public void MissingHeadCommitIsReportedAsUnknownSavedWorkTime()
+    {
+        using var fixture = new CleanLanesFixture();
+        var lane = fixture.AddWorkedLane("harness/missing-commit", landed: false);
+        var head = fixture.Head(lane);
+        File.Delete(Path.Combine(fixture.RepositoryRoot, ".git", "objects", head[..2], head[2..]));
+
+        var result = fixture.Run("--force", "--lanes-only");
+
+        Assert.True(result.Success, result.Error);
+        Assert.Equal("update_unknown", ReasonFor(result.Output, lane));
+        AssertItemProperty(ReadItems(result.Output), "path", lane, "selection_detail", "head_commit_unreadable");
+        Assert.True(Directory.Exists(lane));
+    }
+
     private sealed partial class CleanLanesFixture
     {
         internal string BranchLogPath(string path) => Path.Combine(RepositoryRoot, ".git", "logs", "refs", "heads",
