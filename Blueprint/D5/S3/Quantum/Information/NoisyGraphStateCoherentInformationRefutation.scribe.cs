@@ -119,7 +119,7 @@ internal sealed class NoisyGraphStateCoherentInformationRefutationDocument : ISc
         Formula plus = X("plus"), minus = X("minus"), b = X("b"), p = X("P");
         Formula plusValue = LambdaOf("b", Booleans,
             At(Qualified("D5", "S3", "Quantum", "Entanglement", "RandomizedGraphNegativityRefutation", "plusState"),
-                Typed(D(1), Naturals), LambdaOf("x", FinOf(D(1)), b)));
+                Typed(D(1), Naturals), At(Qualified("Function", "const"), FinOf(D(1)), b)));
         Formula minusValue = LambdaOf("b", Booleans,
             Multiply(At(Qualified("ite"), Equal(b, Qualified("Bool", "true")),
                 new Formula.Negate(Typed(D(1), Complexes)), Typed(D(1), Complexes)), At(plus, b)));
