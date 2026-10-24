@@ -917,4 +917,70 @@ $$
 
 by the ordinary prime-ideal theorem over the fixed field, after deleting the fixed bad set. It cannot be absorbed into $U^\varepsilon$ for every $\varepsilon>0$ at $D=\sqrt U$. This is an algebraic comparison with the existing absolute-mass method, not a nonrepresentation theorem or an obstruction to a different transport retaining cancellation.
 
+### Cost of absorbing the Möbius sign into Hecke phases
+
+A different proposed transport is to express the actual Möbius coefficient as a mixture of ordinary Hecke twists. Its total variation cannot be treated as a subpower cost, even on the original $t=1$ packet. This is an application of the existing inverse-$L$ identity and zero-free input, not a new zero-free theorem or an actual-moment lower bound.
+
+Fix a nonnegative, nonzero smooth annular profile $V$, and on good squarefree ideals put
+
+$$
+w_D(s)=A_D(s,1)=\sum_{ef=s}V(q_e/D)V(q_f/D),
+\qquad W_D=\sum_s w_D(s).
+$$
+
+A fixed subinterval on which $V$ is bounded below, and the ordinary prime-ideal theorem applied to distinct prime ideals $e,f$ in that subinterval, give
+
+$$
+W_D\gg D^2/(\log D)^2.
+$$
+
+Let $\beta\in[1/2,1)$ be a uniform zero-free boundary for the finite-order Hecke family, with the reciprocal-strip control used above. For $\beta=7/8$, the inputs are the main theorem and `lem:logarithmic-control` of the [pinned OpenAI primary manuscript](https://github.com/openai/math/blob/adc7f1241b42e322a6451854ab7e4b4c146bf78a/preprints/The-Quasi-Riemann-Hypothesis-September-30-2026/build/paper.tex). Its reciprocal statement includes the principal character. The analytic input is cited, not independently Lean-certified here.
+
+Allow phases $\eta(a)=\eta_0(a)q_a^{it}$, where $\eta_0$ is a finite-order Hecke character covered by that input. Its conductor norm, any additional zero-extension modulus norm, and $|t|$ are at most $(\log D)^C$ for a fixed $C$. No nonzero angular infinite type or unrestricted moving conductor is included. The same $t=1$ double inverse-$L$ identity gives
+
+$$
+\begin{aligned}
+R_D(\eta)&=\sum_s\mu(s)w_D(s)\eta(s)\\
+&=\sum_{\substack{e,f\ {\rm squarefree}\\(e,f)=1}}
+ \mu(e)\mu(f)V(q_e/D)V(q_f/D)\eta(ef),\\
+\sup_\eta|R_D(\eta)|&\ll D^{2\beta+\varepsilon}.
+\end{aligned}
+$$
+
+Indeed, the double Euler product is
+
+$$
+\prod_{\mathfrak p\notin S}
+ (1-\eta(\mathfrak p)q_{\mathfrak p}^{-z}
+    -\eta(\mathfrak p)q_{\mathfrak p}^{-w})
+=\frac{\mathscr H(z,w;\eta)}{L_S(z,\eta)L_S(w,\eta)}.
+$$
+
+The correction $\mathscr H$ is the already used coprimality correction, bounded on fixed lines $\Re z,\Re w>1/2$; its reciprocal is not used. Moving both Mellin lines to $\beta+v$, with $v$ chosen within the final loss, gives the displayed bound. The cited global reciprocal strip supplies the height control, Mellin decay pays its polynomial costs, and all fixed exclusions and phase zero-only factors are retained. Polylog conductor and norm-twist costs are absorbed in $D^\varepsilon$.
+
+Suppose a finite complex measure $\nu_D$ gives $r_D(s)=\int\eta(s)\,d\nu_D(\eta)$ on the support of $w_D$, and, for a fixed $0\le\rho<1$,
+
+$$
+\sum_s w_D(s)|r_D(s)-\mu(s)|\le\rho W_D.
+$$
+
+Pairing with $w_D(s)\mu(s)$ and interchanging a finite ideal sum with the measure integral gives
+
+$$
+(1-\rho)W_D
+\le\left|\int R_D(\eta)\,d\nu_D(\eta)\right|
+\le\|\nu_D\|_{\rm TV}\sup_\eta|R_D(\eta)|.
+$$
+
+Consequently, for every final $\varepsilon>0$,
+
+$$
+\boxed{\|\nu_D\|_{\rm TV}
+\gg (1-\rho)D^{2-2\beta-\varepsilon}.}
+$$
+
+Exact coefficient transport is the case $\rho=0$. At $D=\sqrt U$, $\beta=7/8$, even fixed-relative-error transport requires $\|\nu_D\|_{\rm TV}\gg U^{1/8-\varepsilon}$. The original fixed factor $D^{-1}\xi(s)$ can be multiplied back into the coefficient representation; original row collision zeros then remain term by term. The approximate version is a coefficient-error statement and supplies no row-energy error estimate.
+
+This rules out a particular black-box budget. Even granting a uniform ordinary squarefree-total-product energy bound $U^{1+\varepsilon}$ for every transported phase, applying only that bound and Minkowski produces the certificate $U^{1+\varepsilon}\|\nu_D\|_{\rm TV}^2$. A certificate with target exponent $B<B_*$ would require a total-variation exponent below $(B_*-1)/2=0.042091881\ldots$, whereas the necessary exponent is at least $1/8$. In general this template's coefficient-cost threshold is $3-2\beta$, equal to $5/4$ here. This is a limitation of the uniform-per-phase bound plus total variation, not a lower bound for the actual moment or for a norm-aware or cancellation-preserving transport. It does not rule out a joint phase estimate, a larger-cost phase family paid by another argument, or a direct estimate of the original long-conductor kernel. The full inverse-fourth and Robin estimates remain unpaid.
+
 Consequently the newer source is available for its actual ordinary subenergies, while a transfer to $\sum_u\Omega|M_\xi S_\xi|^2$ or $\sum_u\Omega|M_\xi|^4$ remains unpaid. Merely substituting the smaller zero-free boundary also leaves the existing critical bin $a_*=(1+\delta_*)/2$, $\delta_*=(15-5\sqrt6)/6$, inside the allowed zero range, so it does not remove the maximum in (459.12). The small-gcd, long-conductor contraction specified above still requires a coefficient-sensitive estimate on the original object. The reusable literature advance is the stronger ordinary-source interface and endpoint; no full inverse-fourth improvement, strict Robin conclusion, analytic Lean certification or priority claim is supplied by this comparison.
