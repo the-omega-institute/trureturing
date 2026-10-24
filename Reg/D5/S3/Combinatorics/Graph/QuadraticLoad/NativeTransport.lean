@@ -76,39 +76,6 @@ def injectionFamily : Registration injectionArena.{u,v}
   · intro i
     exact ⟨(), 0, 1, by norm_num [actual, realize]⟩
 
-abbrev boxArena : Arena where
-  signature := signature
-  Law R := ∀ {V : Type u} {W : Type v} [Fintype V] [Fintype W] [Nonempty V] [Nonempty W]
-    (G : SimpleGraph V) (H : SimpleGraph W) [DecidableRel G.Adj] [DecidableRel H.Adj],
-    kappa (G □ H) = R.readout () () (kappa G + kappa H)
-
-def boxFamily : Registration boxArena.{u,v} (type_of% @kappa_box.{u,v}) := by
-  have hn : ¬boxArena.{u,v}.Law rejected := by
-    intro h
-    let V := ULift.{u} Unit
-    let W := ULift.{v} Unit
-    let G : SimpleGraph V := ⊥
-    let H : SimpleGraph W := ⊥
-    have he := h G H
-    change kappa (G □ H) = -1 at he
-    have hz := native_nonnegative (G □ H)
-    linarith
-  have hp : boxArena.{u,v}.Law actual := @kappa_box.{u,v}
-  refine {
-    actual := actual
-    bridge := Iff.rfl
-    variation := ⟨hp, rejected, hn⟩
-    sensitivity := ?_
-    dependence := ?_ }
-  · constructor
-    · intro i
-      refine ⟨rejected, ?_, rfl, hn⟩
-      intro j hj
-      exact (hj (Subsingleton.elim _ _)).elim
-    · intro i; exact nomatch i
-  · intro i
-    exact ⟨(), 0, 1, by norm_num [actual, realize]⟩
-
 def injectionAudit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
     (@D5.S3.Combinatorics.Graph.QuadraticLoad.NativeTransport.kappa_le_of_injective_hom.{u,v})
     (Realization signature) Type Unit where
@@ -133,31 +100,6 @@ def injectionAudit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
   familyRecord := none
   options := #[]
 
-def boxAudit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
-    (@D5.S3.Combinatorics.Graph.QuadraticLoad.NativeTransport.kappa_box.{u,v})
-    (Realization signature) Type Unit where
-  unitName := `Reg.D5.S3.Combinatorics.Graph.QuadraticLoad.NativeTransport.boxUnit
-  realizationName := `Reg.D5.S3.Combinatorics.Graph.QuadraticLoad.NativeTransport.boxFamily
-  realizationSource := none
-  generated := false
-  arena := .source ⟨boxArena.{u,v}⟩
-  objectArena := .source ⟨boxArena.{u,v}⟩
-  catalog := Lean.Name.anonymous
-  localNames := false
-  realization := .source boxArena.{u,v} ⟨boxFamily.{u,v}⟩
-  correspondence := { stage := .evidence, objectStage := .evidence }
-  bundleNonempty := .absent
-  readout := some (realize signature actual.readout actual.anchor)
-  variation := .absent
-  sensitivity := .absent
-  partialSensitivity := none
-  escapeFrom := none
-  sourceSelection := none
-  continuation := .unknown
-  familyRecord := none
-  options := #[]
-
 #print axioms injectionFamily
-#print axioms boxFamily
 end
 end Reg.D5.S3.Combinatorics.Graph.QuadraticLoad.NativeTransport
