@@ -59,6 +59,38 @@ theorem successor_ne_self (r : RCycle H) {h : H} (hh : h ≠ 0) :
   apply (difference_ne_zero r h).2 hh
   rw [r.difference_spec, he, sub_self]
 
+/-- The given nonzero cycle, indexed by its actual bounded sigma orbit. -/
+private def nonzeroOrbit (r : RCycle H) (a : H) (ha : a ≠ 0) :
+    Fin (Nat.card H - 1) ≃ {h : H // h ≠ 0} := by
+  classical
+  letI := Fintype.ofFinite H
+  let s : Finset H := Finset.univ.erase 0
+  have hs : r.successor.IsCycleOn (s : Set H) := by
+    have he : (s : Set H) = {h : H | h ≠ 0} := by ext h; simp [s]
+    rw [he]
+    exact r.nonzero_cycle
+  have hcard : s.card = Nat.card H - 1 := by
+    simp [s, Nat.card_eq_fintype_card]
+  have hzero (n : ℕ) : (r.successor ^ n) 0 = 0 := by
+    induction n with
+    | zero => rfl
+    | succ n ih => simp [pow_succ', Equiv.Perm.mul_apply, ih, r.successor_zero]
+  refine Equiv.ofBijective (fun j : Fin (Nat.card H - 1) =>
+    ⟨(r.successor ^ j.val) a, fun he =>
+      ha ((r.successor ^ j.val).injective (he.trans (hzero j.val).symm))⟩) ?_
+  constructor
+  · intro i j hij
+    apply Fin.ext
+    exact hs.injOn_pow_apply (a := a) (by simp [s, ha])
+      (by simpa only [Set.mem_Iio, hcard] using i.isLt)
+      (by simpa only [Set.mem_Iio, hcard] using j.isLt)
+      (congrArg Subtype.val hij)
+  · intro b
+    obtain ⟨j, hj, he⟩ := hs.exists_pow_eq (a := a) (b := b.val) (by simp [s, ha])
+      (by simp [s, b.property])
+    refine ⟨⟨j, by simpa only [hcard] using hj⟩, ?_⟩
+    exact Subtype.ext he
+
 def row (r : RCycle H) (last a : K) : Equiv.Perm H :=
   if a = 0 ∨ a = last then r.successor else Equiv.neg H
 
@@ -236,11 +268,36 @@ theorem joined_nonzero_cycle [Finite K] (r : RCycle H)
     have he := cycle_invariant g N hNg hc
     simpa [N, hu] using he
   obtain ⟨hzw, preserve2⟩ := swap_joins g (V (.inr (iz, 0))) (V (.inr (iw, u))) hzw
+  have input_connection (a b : H) (ha : a ≠ 0) (hb : b ≠ 0) :
+      r.successor.SameCycle a b := by
+    letI := Fintype.ofFinite H
+    let s : Finset H := Finset.univ.erase 0
+    have hs : r.successor.IsCycleOn (s : Set H) := by
+      have he : (s : Set H) = {h : H | h ≠ 0} := by ext h; simp [s]
+      rw [he]
+      exact r.nonzero_cycle
+    have hcard : s.card = Nat.card H - 1 := by
+      simp [s, Nat.card_eq_fintype_card]
+    have hpos : 0 < Nat.card H - 1 := by
+      rw [← hcard]
+      exact Finset.card_pos.mpr ⟨a, by simp [s, ha]⟩
+    let O := nonzeroOrbit r (r.successor a) ((successor_ne_zero r a).2 ha)
+    let last : Fin (Nat.card H - 1) := ⟨Nat.card H - 1 - 1, by omega⟩
+    have closing : (O last).val = a := by
+      change (r.successor ^ (Nat.card H - 1 - 1)) (r.successor a) = a
+      rw [← Equiv.Perm.mul_apply, ← pow_succ, Nat.sub_add_cancel (by omega)]
+      simpa only [hcard] using hs.pow_card_apply (a := a) (by simp [s, ha])
+    have endpoint : r.successor.SameCycle (r.successor a) a :=
+      ⟨(last.val : ℤ), by rw [zpow_natCast]; exact closing⟩
+    obtain ⟨j, hj⟩ := O.surjective ⟨b, hb⟩
+    have path : r.successor.SameCycle (r.successor a) b :=
+      ⟨(j.val : ℤ), by rw [zpow_natCast]; exact congrArg Subtype.val hj⟩
+    exact endpoint.symm.trans path
   have left (a b : H) (ha : a ≠ 0) (hb : b ≠ 0) :
       f.SameCycle (V (.inl a)) (V (.inl b)) := by
     rw [hf]
     exact (same_cycle_perm_congr V base _ _).2
-      (sum_sameCycle_left r.successor _ (r.nonzero_cycle.2 ha hb))
+      (sum_sameCycle_left r.successor _ (input_connection a b ha hb))
   have right (i j : Fin 7) (a b : H) (hab : r.successor.SameCycle a b) :
       f.SameCycle (V (.inr (i, a))) (V (.inr (j, b))) := by
     rw [hf]
@@ -261,7 +318,7 @@ theorem joined_nonzero_cycle [Finite K] (r : RCycle H)
         exact preserve2 _ _ (hxy.trans (preserve1 _ _ (right iy i 0 0 (.refl _ _))))
       · exact (preserve2 _ _ hxz).trans
           (hzw.trans (preserve2 _ _ (preserve1 _ _
-            (right iw i u a (r.nonzero_cycle.2 hu ha)))))
+            (right iw i u a (input_connection u a hu ha)))))
   have hz : h 0 = 0 := by
     have h0 : V (.inl 0) = 0 := rfl
     have hX : V (.inl 0) ≠ V (.inl v) := by simpa using hv.symm

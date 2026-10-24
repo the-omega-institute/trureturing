@@ -25,6 +25,16 @@ private def e : K := (1, 0)
 private def f : K := (1, 2)
 private def g : K := (0, 1)
 
+private theorem residue01 : (0 : ZMod 4) ≠ 1 := by decide
+private theorem residue10 : (1 : ZMod 4) ≠ 0 := by decide
+private theorem residue03 : (0 : ZMod 4) ≠ 3 := by decide
+private theorem residue12 : (1 : ZMod 4) ≠ 2 := by decide
+private theorem residue13 : (1 : ZMod 4) ≠ 3 := by decide
+private theorem residue20 : (2 : ZMod 4) ≠ 0 := by decide
+private theorem residue21 : (2 : ZMod 4) ≠ 1 := by decide
+private theorem residue23 : (2 : ZMod 4) ≠ 3 := by decide
+attribute [local simp] residue01 residue10 residue03 residue12 residue13 residue20 residue21 residue23
+
 private def column (i : Fin 7) : K := ![f, g, a, b, c, d, e] i
 
 private def columns : Fin 7 ≃ {x : K // x ≠ 0} where
@@ -88,6 +98,7 @@ private def coefficientCycle : RCycle K where
 
 variable {H : Type*} [AddCommGroup H] [Finite H]
 attribute [local instance] Classical.propDecidable
+local instance : DecidableEq K := fun _ _ => Classical.propDecidable _
 
 private def q (r : RCycle H) (v : H) : H :=
   -(r.successor v - v)
@@ -95,7 +106,8 @@ private def q (r : RCycle H) (v : H) : H :=
 private theorem q_ne_zero (r : RCycle H) {v : H} (hv : v ≠ 0) : q r v ≠ 0 := by
   intro he
   apply successor_ne_self r hv
-  have hd0 : r.successor v - v = 0 := by simpa [q] using he
+  have hd0 : r.successor v - v = 0 :=
+    neg_eq_zero.mp (show -(r.successor v - v) = 0 from he)
   exact sub_eq_zero.mp hd0
 
 private def shift (r : RCycle H) (v : H) (x : K) : H :=
@@ -150,22 +162,40 @@ private theorem difference_spec (r : RCycle H) (hH : Odd (Nat.card H)) (v : H)
   change shiftedDifference r hH P Q (shift r v) e (labelSources v x) = _
   rw [shifted_difference_spec r hH P Q (shift r v) e (fun _ => rfl)]
   change S0 r v (labelSources v x) - labelSources v x = successor r v x - x
+  have h0Y : (0 : K) ≠ g := by norm_num [g, Prod.ext_iff]
+  have h0Z : (0 : K) ≠ d := by norm_num [d, Prod.ext_iff]
+  have h0W : (0 : K) ≠ e := by norm_num [e, Prod.ext_iff]
+  have hYZ : g ≠ d := by norm_num [g, d, Prod.ext_iff]
+  have hYW : g ≠ e := by norm_num [g, e, Prod.ext_iff]
+  have hZW : d ≠ e := by norm_num [d, e, Prod.ext_iff]
   by_cases hX : x = (0, v)
   · subst x
-    simp [labelSources, successor, Equiv.Perm.mul_apply, S0_X, S0_Y, S0_Z, S0_W,
-      a, b, c, d, e, f, g]
+    simp [labelSources, successor, Equiv.Perm.mul_apply, Equiv.swap_apply_def,
+      Prod.mk.injEq, h0Y, h0Z, h0W, hYZ, hYW, hZW,
+      h0Y.symm, h0Z.symm, h0W.symm, hYZ.symm, hYW.symm, hZW.symm,
+      S0_X, S0_Y, S0_Z, S0_W] <;>
+      norm_num [a, b, c, d, e, f, g, Prod.ext_iff] <;> decide
   by_cases hY : x = (g, v)
   · subst x
-    simp [labelSources, successor, Equiv.Perm.mul_apply, S0_X, S0_Y, S0_Z, S0_W,
-      a, b, c, d, e, f, g]
+    simp [labelSources, successor, Equiv.Perm.mul_apply, Equiv.swap_apply_def,
+      Prod.mk.injEq, h0Y, h0Z, h0W, hYZ, hYW, hZW,
+      h0Y.symm, h0Z.symm, h0W.symm, hYZ.symm, hYW.symm, hZW.symm,
+      S0_X, S0_Y, S0_Z, S0_W] <;>
+      norm_num [a, b, c, d, e, f, g, Prod.ext_iff] <;> decide
   by_cases hZ : x = (d, v)
   · subst x
-    simp [labelSources, successor, Equiv.Perm.mul_apply, S0_X, S0_Y, S0_Z, S0_W,
-      a, b, c, d, e, f, g]
+    simp [labelSources, successor, Equiv.Perm.mul_apply, Equiv.swap_apply_def,
+      Prod.mk.injEq, h0Y, h0Z, h0W, hYZ, hYW, hZW,
+      h0Y.symm, h0Z.symm, h0W.symm, hYZ.symm, hYW.symm, hZW.symm,
+      S0_X, S0_Y, S0_Z, S0_W] <;>
+      norm_num [a, b, c, d, e, f, g, Prod.ext_iff] <;> decide
   by_cases hW : x = (e, v)
   · subst x
-    simp [labelSources, successor, Equiv.Perm.mul_apply, S0_X, S0_Y, S0_Z, S0_W,
-      a, b, c, d, e, f, g]
+    simp [labelSources, successor, Equiv.Perm.mul_apply, Equiv.swap_apply_def,
+      Prod.mk.injEq, h0Y, h0Z, h0W, hYZ, hYW, hZW,
+      h0Y.symm, h0Z.symm, h0W.symm, hYZ.symm, hYW.symm, hZW.symm,
+      S0_X, S0_Y, S0_Z, S0_W] <;>
+      norm_num [a, b, c, d, e, f, g, Prod.ext_iff] <;> decide
   · simp [labelSources, successor, Equiv.Perm.mul_apply,
       Equiv.swap_apply_of_ne_of_ne hX hY, Equiv.swap_apply_of_ne_of_ne hZ hW,
       Equiv.swap_apply_of_ne_of_ne hX hZ, Equiv.swap_apply_of_ne_of_ne hY hW,
@@ -173,10 +203,10 @@ private theorem difference_spec (r : RCycle H) (hH : Odd (Nat.card H)) (v : H)
 
 private theorem successor_zero (r : RCycle H) {v : H} (hv : v ≠ 0) :
     successor r v 0 = 0 := by
-  have hX : (0 : K × H) ≠ (0, v) := by simpa using hv.symm
-  have hY : (0 : K × H) ≠ (g, v) := by simp [g]
-  have hZ : (0 : K × H) ≠ (d, v) := by simp [d]
-  have hW : (0 : K × H) ≠ (e, v) := by simp [e]
+  have hX : (0 : K × H) ≠ (0, v) := by simpa [Prod.ext_iff] using hv.symm
+  have hY : (0 : K × H) ≠ (g, v) := by simp [Prod.ext_iff, g]
+  have hZ : (0 : K × H) ≠ (d, v) := by simp [Prod.ext_iff, d]
+  have hW : (0 : K × H) ≠ (e, v) := by simp [Prod.ext_iff, e]
   simp only [successor, Equiv.Perm.mul_apply,
     Equiv.swap_apply_of_ne_of_ne hZ hW, Equiv.swap_apply_of_ne_of_ne hX hY]
   change S0 r v (0, 0) = 0
@@ -201,6 +231,8 @@ private theorem nonzero_cycle (r : RCycle H) {v : H} (hv : v ≠ 0) :
     abel
   have hc := joined_nonzero_cycle r P (shift r v) columns P_zero
     (by simp [shift]) P_column v hv 1 5 6 (q r v) (q_ne_zero r hv)
+  dsimp only at hc
+  rw [show (columns 6).val = e by rfl] at hc
   change (S0 r v * Equiv.swap (V (.inl v)) (V (.inr (1, 0))) *
     Equiv.swap (V (.inr (5, 0))) (V (.inr (6, q r v)))).IsCycleOn {x | x ≠ 0} at hc
   rw [hX, hY, hZ, hW] at hc
@@ -212,15 +244,18 @@ def c2c4_odd_product (r : RCycle H) (hH : Odd (Nat.card H)) :
   classical
   letI := Fintype.ofFinite H
   by_cases hn : ∃ v : H, v ≠ 0
-  · obtain ⟨v, hv⟩ := hn
-    exact { successor := successor r v
-             successor_zero := successor_zero r hv
-             nonzero_cycle := nonzero_cycle r hv
-             difference := difference r hH v
-             difference_spec := difference_spec r hH v }
+  · let v := Classical.choose hn
+    have hv : v ≠ 0 := Classical.choose_spec hn
+    exact {
+      successor := successor r v
+      successor_zero := successor_zero r hv
+      nonzero_cycle := nonzero_cycle r hv
+      difference := difference r hH v
+      difference_spec := difference_spec r hH v
+    }
   · have hz (h : H) : h = 0 := by by_contra hne; exact hn ⟨h, hne⟩
     letI : Subsingleton H := ⟨fun x y => (hz x).trans (hz y).symm⟩
     letI : Unique H := { default := 0, uniq := hz }
-    exact transportCycle (AddEquiv.prodUnique K H).symm coefficientCycle
+    exact transportCycle (AddEquiv.prodUnique : K × H ≃+ K).symm coefficientCycle
 
 end D5.S3.FiniteGroups.HeadleyC2C4OddProduct

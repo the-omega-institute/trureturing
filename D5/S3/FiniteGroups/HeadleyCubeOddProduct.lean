@@ -88,6 +88,7 @@ private def coefficientCycle : RCycle K where
 
 variable {H : Type*} [AddCommGroup H] [Finite H]
 attribute [local instance] Classical.propDecidable
+local instance : DecidableEq K := fun _ _ => Classical.propDecidable _
 
 private def q (r : RCycle H) (v : H) : H :=
   r.successor.symm (r.successor v - v)
@@ -148,22 +149,40 @@ private theorem difference_spec (r : RCycle H) (hH : Odd (Nat.card H)) (v : H)
   change shiftedDifference r hH P Q (shift r v) l (labelSources v x) = _
   rw [shifted_difference_spec r hH P Q (shift r v) l (fun _ => rfl)]
   change S0 r v (labelSources v x) - labelSources v x = successor r v x - x
+  have h0Y : (0 : K) ≠ c := by norm_num [c, Prod.ext_iff]
+  have h0Z : (0 : K) ≠ e := by norm_num [e, Prod.ext_iff]
+  have h0W : (0 : K) ≠ l := by norm_num [l, Prod.ext_iff]
+  have hYZ : c ≠ e := by norm_num [c, e, Prod.ext_iff]
+  have hYW : c ≠ l := by norm_num [c, l, Prod.ext_iff]
+  have hZW : e ≠ l := by norm_num [e, l, Prod.ext_iff]
   by_cases hX : x = (0, v)
   · subst x
-    simp [labelSources, successor, Equiv.Perm.mul_apply, S0_X, S0_Y, S0_Z, S0_W,
-      e, b, c, t, p, k, l]
+    simp [labelSources, successor, Equiv.Perm.mul_apply, Equiv.swap_apply_def,
+      Prod.mk.injEq, h0Y, h0Z, h0W, hYZ, hYW, hZW,
+      h0Y.symm, h0Z.symm, h0W.symm, hYZ.symm, hYW.symm, hZW.symm,
+      S0_X, S0_Y, S0_Z, S0_W] <;>
+      norm_num [e, b, c, t, p, k, l, Prod.ext_iff] <;> decide
   by_cases hY : x = (c, v)
   · subst x
-    simp [labelSources, successor, Equiv.Perm.mul_apply, S0_X, S0_Y, S0_Z, S0_W,
-      e, b, c, t, p, k, l]
+    simp [labelSources, successor, Equiv.Perm.mul_apply, Equiv.swap_apply_def,
+      Prod.mk.injEq, h0Y, h0Z, h0W, hYZ, hYW, hZW,
+      h0Y.symm, h0Z.symm, h0W.symm, hYZ.symm, hYW.symm, hZW.symm,
+      S0_X, S0_Y, S0_Z, S0_W] <;>
+      norm_num [e, b, c, t, p, k, l, Prod.ext_iff] <;> decide
   by_cases hZ : x = (e, v)
   · subst x
-    simp [labelSources, successor, Equiv.Perm.mul_apply, S0_X, S0_Y, S0_Z, S0_W,
-      e, b, c, t, p, k, l]
+    simp [labelSources, successor, Equiv.Perm.mul_apply, Equiv.swap_apply_def,
+      Prod.mk.injEq, h0Y, h0Z, h0W, hYZ, hYW, hZW,
+      h0Y.symm, h0Z.symm, h0W.symm, hYZ.symm, hYW.symm, hZW.symm,
+      S0_X, S0_Y, S0_Z, S0_W] <;>
+      norm_num [e, b, c, t, p, k, l, Prod.ext_iff] <;> decide
   by_cases hW : x = (l, v)
   · subst x
-    simp [labelSources, successor, Equiv.Perm.mul_apply, S0_X, S0_Y, S0_Z, S0_W,
-      e, b, c, t, p, k, l]
+    simp [labelSources, successor, Equiv.Perm.mul_apply, Equiv.swap_apply_def,
+      Prod.mk.injEq, h0Y, h0Z, h0W, hYZ, hYW, hZW,
+      h0Y.symm, h0Z.symm, h0W.symm, hYZ.symm, hYW.symm, hZW.symm,
+      S0_X, S0_Y, S0_Z, S0_W] <;>
+      norm_num [e, b, c, t, p, k, l, Prod.ext_iff] <;> decide
   · simp [labelSources, successor, Equiv.Perm.mul_apply,
       Equiv.swap_apply_of_ne_of_ne hX hY, Equiv.swap_apply_of_ne_of_ne hZ hW,
       Equiv.swap_apply_of_ne_of_ne hX hZ, Equiv.swap_apply_of_ne_of_ne hY hW,
@@ -171,10 +190,10 @@ private theorem difference_spec (r : RCycle H) (hH : Odd (Nat.card H)) (v : H)
 
 private theorem successor_zero (r : RCycle H) {v : H} (hv : v ≠ 0) :
     successor r v 0 = 0 := by
-  have hX : (0 : K × H) ≠ (0, v) := by simpa using hv.symm
-  have hY : (0 : K × H) ≠ (c, v) := by simp [c]
-  have hZ : (0 : K × H) ≠ (e, v) := by simp [e]
-  have hW : (0 : K × H) ≠ (l, v) := by simp [l]
+  have hX : (0 : K × H) ≠ (0, v) := by simpa [Prod.ext_iff] using hv.symm
+  have hY : (0 : K × H) ≠ (c, v) := by simp [Prod.ext_iff, c]
+  have hZ : (0 : K × H) ≠ (e, v) := by simp [Prod.ext_iff, e]
+  have hW : (0 : K × H) ≠ (l, v) := by simp [Prod.ext_iff, l]
   simp only [successor, Equiv.Perm.mul_apply,
     Equiv.swap_apply_of_ne_of_ne hZ hW, Equiv.swap_apply_of_ne_of_ne hX hY]
   change S0 r v (0, 0) = 0
@@ -195,6 +214,8 @@ private theorem nonzero_cycle (r : RCycle H) {v : H} (hv : v ≠ 0) :
     simp [shift, e, b, c, t, p, k, l]
   have hc := joined_nonzero_cycle r P (shift r v) columns P_zero
     (by simp [shift]) P_column v hv 2 0 6 (q r v) (q_ne_zero r hv)
+  dsimp only at hc
+  rw [show (columns 6).val = l by rfl] at hc
   change (S0 r v * Equiv.swap (V (.inl v)) (V (.inr (2, 0))) *
     Equiv.swap (V (.inr (0, 0))) (V (.inr (6, q r v)))).IsCycleOn {x | x ≠ 0} at hc
   rw [hX, hY, hZ, hW] at hc
@@ -206,15 +227,18 @@ def cube_odd_product (r : RCycle H) (hH : Odd (Nat.card H)) :
   classical
   letI := Fintype.ofFinite H
   by_cases hn : ∃ v : H, v ≠ 0
-  · obtain ⟨v, hv⟩ := hn
-    exact { successor := successor r v
-             successor_zero := successor_zero r hv
-             nonzero_cycle := nonzero_cycle r hv
-             difference := difference r hH v
-             difference_spec := difference_spec r hH v }
+  · let v := Classical.choose hn
+    have hv : v ≠ 0 := Classical.choose_spec hn
+    exact {
+      successor := successor r v
+      successor_zero := successor_zero r hv
+      nonzero_cycle := nonzero_cycle r hv
+      difference := difference r hH v
+      difference_spec := difference_spec r hH v
+    }
   · have hz (h : H) : h = 0 := by by_contra hne; exact hn ⟨h, hne⟩
     letI : Subsingleton H := ⟨fun x y => (hz x).trans (hz y).symm⟩
     letI : Unique H := { default := 0, uniq := hz }
-    exact transportCycle (AddEquiv.prodUnique K H).symm coefficientCycle
+    exact transportCycle (AddEquiv.prodUnique : K × H ≃+ K).symm coefficientCycle
 
 end D5.S3.FiniteGroups.HeadleyCubeOddProduct
