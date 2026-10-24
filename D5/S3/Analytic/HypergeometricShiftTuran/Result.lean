@@ -27,7 +27,9 @@ private lemma first_coefficient_eq (q : ℕ) :
     simp [coeff, inv_pow]
   have hsq : Real.sqrt Real.pi * Real.sqrt Real.pi = Real.pi :=
     Real.mul_self_sqrt Real.pi_pos.le
-  have g2 : Real.Gamma 2 = 1 := Real.Gamma_two
+  have g2 : Real.Gamma 2 = 1 := by
+    rw [show (2 : ℝ) = 1 + 1 by norm_num, Real.Gamma_add_one (by norm_num), Real.Gamma_one]
+    norm_num
   have g3 : Real.Gamma 3 = 2 := by
     rw [show (3 : ℝ) = 2 + 1 by norm_num, Real.Gamma_add_one (by norm_num), g2]
     norm_num
