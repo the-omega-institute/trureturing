@@ -12,6 +12,9 @@ strata_touched:
   - D5/S3/Analytic/KarpZhangReciprocal/Result
   - D5/S3/Analytic/KarpZhangGamma/Series
   - D5/S3/Analytic/KarpZhangConjecture/Result
+  - D5/S3/Analytic/KarpZhangCatalanPower/Coeff
+  - D5/S3/Analytic/KarpZhangCatalanPower/Interval
+  - D5/S3/Analytic/KarpZhangCatalanPower/Result
 license: citation-only
 triage: anchor
 ---
@@ -66,3 +69,32 @@ positive diagonal transformation give `KarpZhangGamma.Series.gamma_half`.
 coefficient assertions using those exact finite coefficients, and
 `KarpZhangConjecture.Result.result` proves it for the source's full sequence
 and parameter range.
+
+## Conjecture 4.2, page 8
+
+> Assume that $\{h_k\}_{k=0}^{\infty}$ is log-concave (log-convex ) and independent of $\mu$. Then the function $\mu\to h(\mu;x)$ defined in (15) is coefficient-wise log-concave (log-convex ).
+
+Formula (15) is
+
+$$
+h(\mu;x)=\sum_{k=0}^{\infty}h_k\frac{(\mu)_{2k}}{(\mu+1)_k k!}x^k.
+$$
+
+The log-convex clause of Definition 1.1, page 2, reads:
+
+> If $f_k^2\le f_{k-1}f_{k+1}$ for all $k\in\mathbb N$, the sequence is called log-convex (this inequality implies that a nontrivial sequence is strictly positive).
+
+The initial nonnegative, nontrivial sequence assumption applies to both
+classes. Here $\mathbb N=\{1,2,\ldots\}$. Taken literally, the
+log-convex inequalities also allow a nontrivial sequence supported on
+$\{0\}$; the coefficient assertion includes that case and imposes no
+extra positivity hypothesis.
+
+`KarpZhangCatalanPower.Coeff.a` is the quotient in (15).
+`KarpZhangCatalanPower.Index.index_law` is its convolution index law.
+`KarpZhangCatalanPower.Index.b_eq_centralBinom` identifies the positive
+derivative generator. `KarpZhangCatalanPower.Interval.tail_nonneg` proves
+nonnegative central tails by reflected-interval cancellation and balancing.
+`KarpZhangCatalanPower.Result.result` proves both coefficient signs for
+all nonnegative base parameters and nonnegative real shifts, reusing the sequence class
+and finite Abel identity from `KarpZhangReciprocal.Result`.
