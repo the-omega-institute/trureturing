@@ -196,7 +196,7 @@ private theorem entropies :
     simp only [Finset.sum_const, Finset.card_univ, Fintype.card_fin, nsmul_eq_mul]
     apply (div_eq_iff hne).mpr
     norm_num [Real.negMulLog, Real.log_div, hlog]
-    <;> ring
+    ring
   have hL (i : Fin 4) (hi : i ≠ 0) : entropy2 (rho1 psi i) = 1 := by
     rw [marginal_leaf i hi, entropy2]
     let w : Fin 8 → ℝ := fun a => if a.val < 2 then 1 / 2 else 0
@@ -208,7 +208,7 @@ private theorem entropies :
     rw [hdiag, entropy_diagonal]
     apply (div_eq_iff hne).mpr
     norm_num [w, Fin.sum_univ_succ, Real.negMulLog, Real.log_div]
-    <;> ring
+    ring
   exact ⟨hA, hL 1 (by decide), hL 2 (by decide), hL 3 (by decide)⟩
 
 private theorem forced_fill (σ : Fin 6 → ℝ) (ell : ℝ) (h : AdmissibleFill psi σ ell) :
@@ -235,8 +235,44 @@ private theorem all_volume_zero (σ : Fin 6 → ℝ) (ell : ℝ)
   rw [forced_fill σ ell h]
   norm_num [volume, Real.zero_rpow]
 
+set_option maxHeartbeats 800000 in
+-- The three product-minor constraints are evaluated over all sixteen party assignments.
 private theorem not_biseparable : ¬ Biseparable psi := by
-  sorry
+  classical
+  rintro ⟨X, hX, hY, φ, χ, hφ, hχ, hprod⟩
+  have minor (x y : Fin 4 → Fin 8) : psi x * psi y =
+      psi (fun i => if i ∈ X then x i else y i) *
+      psi (fun i => if i ∈ X then y i else x i) := by
+    have hφx : φ (fun i => if i ∈ X then x i else y i) = φ x :=
+      hφ _ _ (by intro i hi; simp [hi])
+    have hχy : χ (fun i => if i ∈ X then x i else y i) = χ y :=
+      hχ _ _ (by intro i hi; simp [hi])
+    have hφy : φ (fun i => if i ∈ X then y i else x i) = φ y :=
+      hφ _ _ (by intro i hi; simp [hi])
+    have hχx : χ (fun i => if i ∈ X then y i else x i) = χ x :=
+      hχ _ _ (by intro i hi; simp [hi])
+    rw [hprod x, hprod y, hprod _, hprod _, hφx, hχy, hφy, hχx]
+    ring
+  have hsq : ((Real.sqrt 8 : ℂ)⁻¹) ^ 2 = (1 / 8 : ℂ) := by
+    calc
+      _ = (((Real.sqrt 8)⁻¹ ^ 2 : ℝ) : ℂ) := by push_cast; rfl
+      _ = ((1 / 8 : ℝ) : ℂ) := congrArg (fun r : ℝ => (r : ℂ)) (by
+        rw [inv_pow, Real.sq_sqrt (by norm_num)]
+        norm_num)
+      _ = _ := by norm_num
+  have hB := minor (fun _ => 0) (label 4)
+  have hC := minor (fun _ => 0) (label 2)
+  have hD := minor (fun _ => 0) (label 1)
+  by_cases h0 : (0 : Fin 4) ∈ X <;> by_cases h1 : (1 : Fin 4) ∈ X <;>
+    by_cases h2 : (2 : Fin 4) ∈ X <;> by_cases h3 : (3 : Fin 4) ∈ X
+  all_goals norm_num [psi, supported, label, h0, h1, h2, h3, ← pow_two, hsq] at hB
+  all_goals norm_num [psi, supported, label, h0, h1, h2, h3, ← pow_two, hsq] at hC
+  all_goals norm_num [psi, supported, label, h0, h1, h2, h3, ← pow_two, hsq] at hD
+  all_goals
+    obtain ⟨i, hi⟩ := hX
+    obtain ⟨j, hj⟩ := hY
+    have hj' := Finset.mem_compl.mp hj
+    fin_cases i <;> fin_cases j <;> contradiction
 
 theorem result : ¬ claim := by
   intro h
