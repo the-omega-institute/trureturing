@@ -219,12 +219,12 @@ internal sealed class QuditTetrahedronGenuineRefutationDocument : IScribeDocumen
         Blocks(
             Describe.Lean(DescribeId.Create("qudit-rho1"), DeclarationHandle.Create(Module + ".rho1"),
                 H("One-party reduced density matrix"), StatementSource.FromAuthor(Disp(Rho1Formula())),
-                AssessedProvenance.FromRepo(Source), Blocks(Paragraph(Text(
+                AssessedProvenance.FromLiterature(Source), Blocks(Paragraph(Text(
                     "For a four-party coefficient function ψ, rho1 ψ i is the reduced density matrix of party i in the computational basis. Its (a,a') entry sums ψ(x) times the conjugate of the coefficient obtained by replacing the i-th coordinate of x by a', over all basis labels x whose i-th coordinate equals a."))), DescribeRole.Definition),
             Describe.Lean(DescribeId.Create("qudit-rho2"), DeclarationHandle.Create(Module + ".rho2"),
                 H("Two-party reduced density matrix"), StatementSource.FromAuthor(Disp(Rho2Formula())),
-                AssessedProvenance.FromRepo(Source), Blocks(Paragraph(Text(
-                    "For any two party indices i and j, rho2 ψ i j is the two-party reduced density matrix. The entry indexed by (a,a') sums the coefficient product over labels whose i and j coordinates are the two components of a, replacing those coordinates by the components of a'."))), DescribeRole.Definition),
+                AssessedProvenance.FromLiterature(Source), Blocks(Paragraph(Text(
+                    "For distinct party indices i and j, rho2 ψ i j is the two-party reduced density matrix. The entry indexed by (a,a') sums the coefficient product over labels whose i and j coordinates are the two components of a, replacing those coordinates by the components of a'."))), DescribeRole.Definition),
             Describe.Lean(DescribeId.Create("qudit-entropy2"), DeclarationHandle.Create(Module + ".entropy2"),
                 H("Base-two spectral entropy"), StatementSource.FromAuthor(Disp(Entropy2Formula())),
                 AssessedProvenance.FromLiterature(Source), Blocks(Paragraph(Text(

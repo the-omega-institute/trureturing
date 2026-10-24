@@ -83,7 +83,7 @@ internal sealed class FourMUBBoundEntanglementRefutationDocument : IScribeDocume
     private static Formula ScaleFormula(bool complex)
     {
         Formula scale = Parenthesized(Seq(
-            new Formula.Fraction(D(1), App(Qualified("Real", "sqrt"), D(8))), Colon, RealType));
+            Pow(Parenthesized(App(Qualified("Real", "sqrt"), D(8))), new Formula.Negate(D(1))), Colon, RealType));
         if (complex) scale = Parenthesized(Seq(scale, Colon, ComplexType));
         return Disp(Eq(Pow(scale, D(2)), Parenthesized(Seq(
             new Formula.Fraction(D(1), D(8)), Colon, complex ? ComplexType : RealType))));

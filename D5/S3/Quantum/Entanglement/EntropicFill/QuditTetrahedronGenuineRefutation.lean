@@ -4,7 +4,7 @@
    mirror-E: none(waiver:kernel-checked-refutation)
    anchors: []
    utility: kind=certified-instance; basis=refutes=gid:D5/S3/Quantum/Entanglement/EntropicFill/QuditTetrahedronGenuineRefutation.claim; result=D5/S3/Quantum/Entanglement/EntropicFill/QuditTetrahedronGenuineRefutation.result; claim=D5/S3/Quantum/Entanglement/EntropicFill/QuditTetrahedronGenuineRefutation.claim
-   digest: A four-party eight-level pure state has only zero-volume fills and is not biseparable. -/
+   digest: A pure four-qudit state has only zero-volume fills and is not biseparable. -/
 
 import D5.S3.Quantum.Information.ChenKatoBrandaoCMIRefutation
 import D5.S3.Quantum.Entanglement.FourMUBBoundEntanglementRefutation
