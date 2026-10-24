@@ -655,6 +655,7 @@ private theorem component_projection_projector {n : ℕ} (A C : Mat n)
     (Q : (underlyingGraph A C).ConnectedComponent) :
     IsStarProjection (componentProjection A C Q) := by
   classical
+  rw [isStarProjection_iff']
   constructor
   · change componentProjection A C Q * componentProjection A C Q = componentProjection A C Q
     simp only [componentProjection, Matrix.diagonal_mul_diagonal]
@@ -756,6 +757,7 @@ private theorem edge_projection_data {n : ℕ} {i j : Fin n} (hij : i ≠ j)
     have hz'' : z * (starRingEnd ℂ) z = 1 := hz
     simp [pairDiagonal, edgeFlip, add_mul, mul_add, hij, hij.symm, hz', hz'', add_comm]
   have hproj : IsStarProjection (edgeProjection i j z) := by
+    rw [isStarProjection_iff']
     constructor
     · change edgeProjection i j z * edgeProjection i j z = edgeProjection i j z
       simp only [edgeProjection, Matrix.smul_mul, Matrix.mul_smul, smul_smul,
