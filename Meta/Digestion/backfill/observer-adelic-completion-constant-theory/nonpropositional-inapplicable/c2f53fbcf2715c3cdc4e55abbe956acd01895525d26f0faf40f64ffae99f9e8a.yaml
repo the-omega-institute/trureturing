@@ -5,3 +5,7 @@ cas_ref: sha256:c2f53fbcf2715c3cdc4e55abbe956acd01895525d26f0faf40f64ffae99f9e8a
 coverage_gids: []
 receipts:
   unresolved_subitems: []
+  nonpropositional:
+    justification: 非命题。主题关系先于对象及依赖顺序的解释性评述，没有形式量词或数学结论。
+    previous_atom_id: b1489217c624760d03768b7a427ae508c19e81dd134db95b9bbb8893c08c527a
+    next_atom_id: b6d176d997e7bac925ac1bd3faf512be6a007b738c07e9207f328af45e36200f
