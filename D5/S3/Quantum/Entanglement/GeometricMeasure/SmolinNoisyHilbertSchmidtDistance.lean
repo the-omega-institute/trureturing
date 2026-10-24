@@ -143,8 +143,67 @@ private theorem mixed_full : ((1 / 16 : ℂ) • (1 : Matrix Q Q ℂ)) ∈ SepFu
   norm_num [a, Matrix.smul_kronecker, Matrix.kronecker_smul,
     Matrix.one_kronecker_one, smul_smul]
 
+private def axis : Fin 3 →
+    D5.S3.Quantum.Information.StabilizerPairLocalUnitaryInequivalence.Pauli :=
+  ![.X, .Y, .Z]
+
+private theorem axis_sigma (j : Fin 3) :
+    D5.S3.Quantum.Information.StabilizerPairLocalUnitaryInequivalence.pauliMatrix (axis j) =
+      sigma j.succ := by
+  fin_cases j <;> rfl
+
+private theorem spectral_density (j : Fin 3) (s : Bool) :
+    IsDensity (D5.S3.Quantum.Magic.WignerDistanceMinimum.spectral (axis j)
+      (if s then 1 else 0)) := by
+  have hj : axis j ≠ .I := by fin_cases j <;> decide
+  obtain ⟨_, U, _, _, _, hn, _, he⟩ :=
+    D5.S3.Quantum.Magic.WignerDistanceMinimum.spectral_stabilizer (axis j)
+      (if s then 1 else 0) hj
+  rw [he]
+  refine ⟨Matrix.posSemidef_vecMulVec_self_star _, ?_⟩
+  simpa only [Matrix.trace, Matrix.diag_apply, Matrix.vecMulVec_apply, Pi.star_apply,
+    Complex.star_def, Complex.mul_conj', ← Complex.ofReal_sum, ← Complex.ofReal_pow,
+    hn, Complex.ofReal_one]
+
+private def parityProduct (j : Fin 3) (s : Bool × Bool × Bool) : Matrix Q Q ℂ :=
+  let P := D5.S3.Quantum.Magic.WignerDistanceMinimum.spectral (axis j)
+  P (if s.1 then 1 else 0) ⊗ₖ (P (if s.2.1 then 1 else 0) ⊗ₖ
+    (P (if s.2.2 then 1 else 0) ⊗ₖ
+      P (if Bool.xor s.1 (Bool.xor s.2.1 s.2.2) then 1 else 0)))
+
+private def tau (j : Fin 3) : Matrix Q Q ℂ :=
+  (1 / 16 : ℂ) • (1 + four j.succ)
+
+private theorem tau_mixture (j : Fin 3) :
+    tau j = ∑ s : Bool × Bool × Bool, (1 / 8 : ℝ) • parityProduct j s := by
+  simp [tau, parityProduct, Fintype.sum_prod_type, Fintype.sum_bool,
+    D5.S3.Quantum.Magic.WignerDistanceMinimum.spectral, axis_sigma,
+    RCLike.real_smul_eq_coe_smul (K := ℂ), four,
+    Matrix.add_kronecker, Matrix.kronecker_add, Matrix.smul_kronecker,
+    Matrix.kronecker_smul, Matrix.one_kronecker_one, smul_smul]
+  <;> module
+
+private theorem tau_full (j : Fin 3) : tau j ∈ SepFull := by
+  rw [tau_mixture]
+  apply (convex_convexHull ℝ _).sum_mem
+  · intro s _
+    norm_num
+  · norm_num
+  · intro s _
+    apply subset_convexHull ℝ _
+    refine ⟨_, _, _, _, spectral_density j s.1, spectral_density j s.2.1,
+      spectral_density j s.2.2,
+      spectral_density j (Bool.xor s.1 (Bool.xor s.2.1 s.2.2)), rfl⟩
+
 private theorem boundary_full : noisy (1 / 3) ∈ SepFull := by
-  sorry
+  have he : noisy (1 / 3) = ∑ j : Fin 3, (1 / 3 : ℝ) • tau j := by
+    ext i k
+    simp [noisy, smolin, tau, S, Fin.sum_univ_three, Matrix.smul_apply,
+      RCLike.real_smul_eq_coe_mul]
+    <;> ring
+  rw [he]
+  exact (convex_convexHull ℝ _).sum_mem (by intros; norm_num) (by norm_num)
+    (fun j _ => tau_full j)
 
 private theorem low_full (p : ℝ) (hp : 0 ≤ p) (hp' : p ≤ 1 / 3) :
     noisy p ∈ SepFull := by
