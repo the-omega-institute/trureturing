@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:eb6718de1e0108f7c56669e5fc945bac67d6ada8370fa37b013168fcae92968f
+  normalized_sha256: sha256:eb6718de1e0108f7c56669e5fc945bac67d6ada8370fa37b013168fcae92968f
+cas_ref: sha256:eb6718de1e0108f7c56669e5fc945bac67d6ada8370fa37b013168fcae92968f
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 'Nonpropositional definition of a sufficient residual record: the displayed decoder equation is the defining requirement on e and d, not an assertion that such an encoder or decoder exists. The remaining sentences specify known inputs and capacity accounting.'
+    previous_atom_id: 601da8d1c0f0a0eb1be0fa538d3b53ef408ca2f5e01869684c2e76d1d9d1cb57
+    next_atom_id: 643effa4965208ffa7764b30235f4fc6b97d8ede07776d3bdd850b145c6a7391

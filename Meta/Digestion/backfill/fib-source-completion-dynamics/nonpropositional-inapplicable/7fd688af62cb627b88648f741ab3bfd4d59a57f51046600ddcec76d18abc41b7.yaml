@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:7fd688af62cb627b88648f741ab3bfd4d59a57f51046600ddcec76d18abc41b7
+  normalized_sha256: sha256:7fd688af62cb627b88648f741ab3bfd4d59a57f51046600ddcec76d18abc41b7
+cas_ref: sha256:7fd688af62cb627b88648f741ab3bfd4d59a57f51046600ddcec76d18abc41b7
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 'Nonpropositional chapter conventions: fixes the inherited low-to-high window direction and the notation M and q, and explains the meanings and limits of the words time and space. No mathematical consequence is asserted.'
+    previous_atom_id: f98b9fc74104b3237b6e9fd26798e88deb245c9c378cee0605bc13f3bf7ec26d
+    next_atom_id: a096fe7129b1cfa342429dfd6046c7256563386f80e061c61e481928b24d5a0c
