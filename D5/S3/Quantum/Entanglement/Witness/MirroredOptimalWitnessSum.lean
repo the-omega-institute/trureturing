@@ -147,6 +147,7 @@ private theorem omega_expectation {d : ℕ} [NeZero d] (r : Fin d) (hr : r ≠ 0
   field_simp
   ring
 
+/-- Complex linear combinations of conjugate product vectors recover every basis vector. -/
 private theorem conjugate_products_span (d : ℕ) :
     Submodule.span ℂ (Set.range (fun x : Fin d → ℂ => tensor x (star x))) = ⊤ := by
   classical
@@ -176,6 +177,7 @@ private theorem conjugate_products_span (d : ℕ) :
   rw [pi_eq_sum_univ' v]
   exact V.sum_mem (fun p _ => V.smul_mem _ (he p.1 p.2))
 
+/-- A spanning set of zero product vectors forbids every nonzero PSD subtraction. -/
 private theorem spanning_optimal {d : ℕ}
     (A : Matrix (Fin d × Fin d) (Fin d × Fin d) ℂ) (hA : IsWitness A)
     (S : Set (Fin d × Fin d → ℂ)) (hS : Submodule.span ℂ S = ⊤)
@@ -266,7 +268,7 @@ private theorem detection_separation {d : ℕ} [NeZero d] (r s : Fin d)
   · exact ⟨omega_density, by rw [omega_expectation r hr]; exact hneg⟩
   · exact ⟨omega_density, by rw [omega_expectation s hs]; exact hneg⟩
 
-/-- Every local dimension at least three admits the required generalized mirrored pair. -/
+/-- Optimal witnesses can have an optimal sum and incomparable, overlapping detection sets. -/
 theorem result : claim := by
   intro d hd
   let : NeZero d := ⟨by omega⟩
