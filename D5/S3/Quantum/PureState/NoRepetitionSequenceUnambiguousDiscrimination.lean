@@ -111,8 +111,8 @@ private lemma product_gram {N k : ℕ} (ψ : Fin N → Fin N → ℂ) (s : ℝ)
   intro j _
   change star (ψ (x.val j)) ⬝ᵥ ψ (y.val j) = _
   by_cases h : x.val j = y.val j
-  · rw [if_pos h, h, hψ.1]
-  · rw [if_neg h, hψ.2 _ _ h]
+  · rw [ite_eq_left h, h, hψ.1]
+  · rw [ite_eq_right h, hψ.2 _ _ h]
 
 private lemma measurement_gram_bound {N k : ℕ}
     (φ : Label N k → (Fin k → Fin N) → ℂ)
@@ -347,14 +347,15 @@ private lemma short_eigenvector {N k : ℕ} (h : k < N) (s : ℝ) :
     change (Pi.single (e i) 1 : Fin N → ℂ) (e j) -
       (Pi.single z 1 : Fin N → ℂ) (e j) = _
     rw [Pi.single_eq_of_ne (hne j).symm, sub_zero]
-    simp only [Pi.single_apply, Matrix.one_apply, e, Fin.castLE_inj, eq_comm]
+    simp only [Pi.single_apply, Matrix.one_apply, e, Fin.castLE_inj]
   refine ⟨w, ?_, ?_⟩
   · intro hz
     have he := congrFun hz x₀
     change det (fun j i => u i (x₀.val j)) = 0 at he
     rw [hmatrix, Matrix.det_one] at he
     exact one_ne_zero he
-  · rw [value, ite_eq_left h]
+  · unfold value
+    rw [ite_eq_left h]
     simpa only [Finset.prod_const, Finset.card_univ, Fintype.card_fin,
       Complex.ofReal_pow] using alternant_kernel s u (fun _ => ((1 - s : ℝ) : ℂ)) hU
 
@@ -432,7 +433,7 @@ private lemma full_eigenvector (n : ℕ) (s : ℝ) :
     rw [Fin.sum_univ_castSucc] at he
     simp only [u, Fin.lastCases_last, Fin.lastCases_castSucc, Pi.sub_apply,
       Pi.single_apply, Fin.castSucc_ne_last, ite_false, sub_zero, Fin.castSucc_inj,
-      mul_ite, ite_mul, one_mul, zero_mul, Finset.sum_ite_eq', Finset.mem_univ,
+      ite_mul, one_mul, zero_mul, Finset.sum_ite_eq', Finset.mem_univ,
       ite_true, hlast, add_zero, Finset.sum_ite_eq] at he
     exact he
   let w : Label (n + 1) (n + 1) → ℂ := fun x => det (fun j i => u i (x.val j))
@@ -491,9 +492,7 @@ private lemma single_system_measurement {N : ℕ} (s : ℝ) (hs : 0 < s) (hs1 : 
     ∃ F : Option (Fin N) → Matrix (Fin N) (Fin N) ℂ,
       (∀ o, (F o).PosSemidef) ∧ (∑ o, F o) = 1 ∧
       ∀ o j, star (ψ j) ⬝ᵥ (F o *ᵥ ψ j) =
-        match o with
-        | none => (s : ℂ)
-        | some i => if i = j then ((1 - s : ℝ) : ℂ) else 0 := by
+        o.elim (s : ℂ) (fun i => if i = j then ((1 - s : ℝ) : ℂ) else 0) := by
   classical
   let A : Matrix (Fin N) (Fin N) ℂ := fun a i => ψ i a
   let J : Matrix (Fin N) (Fin N) ℂ := vecMulVec (fun _ => 1) (fun _ => 1)
@@ -521,9 +520,8 @@ private lemma single_system_measurement {N : ℕ} (s : ℝ) (hs : 0 < s) (hs1 : 
   have hAB : A * B = 1 := A.mul_nonsing_inv hAdet
   have hBA : B * A = 1 := A.nonsing_inv_mul hAdet
   let H : Option (Fin N) → Matrix (Fin N) (Fin N) ℂ :=
-    fun o => match o with
-      | none => (s : ℂ) • J
-      | some i => diagonal (Pi.single i ((1 - s : ℝ) : ℂ))
+    fun o => o.elim ((s : ℂ) • J)
+      (fun i => diagonal (Pi.single i ((1 - s : ℝ) : ℂ)))
   let F : Option (Fin N) → Matrix (Fin N) (Fin N) ℂ := fun o => Bᴴ * H o * B
   have hH (o : Option (Fin N)) : (H o).PosSemidef := by
     cases o with
@@ -540,7 +538,7 @@ private lemma single_system_measurement {N : ℕ} (s : ℝ) (hs : 0 < s) (hs1 : 
   have hsumH : (∑ o, H o) = overlapMatrix N s := by
     rw [Fintype.sum_option]
     ext a b
-    simp only [H, Matrix.add_apply, Matrix.sum_apply, Matrix.diagonal_apply,
+    simp only [H, Option.elim_none, Option.elim_some, Matrix.add_apply, Matrix.sum_apply, Matrix.diagonal_apply,
       Pi.single_apply]
     unfold overlapMatrix
     simp only [Matrix.add_apply, Matrix.smul_apply, smul_eq_mul, Matrix.one_apply]
@@ -553,7 +551,7 @@ private lemma single_system_measurement {N : ℕ} (s : ℝ) (hs : 0 < s) (hs1 : 
   have hsumF : (∑ o, F o) = 1 := by
     simp only [F, ← Matrix.sum_mul, ← Matrix.mul_sum, hsumH, ← hgram,
       ← Matrix.mul_assoc, ← Matrix.conjTranspose_mul, hAB, Matrix.conjTranspose_one,
-      Matrix.one_mul, hAB]
+      Matrix.one_mul]
   have hcompression (o : Option (Fin N)) : Aᴴ * F o * A = H o := by
     dsimp [F]
     rw [← Matrix.mul_assoc, ← Matrix.mul_assoc, ← Matrix.conjTranspose_mul, hBA,
@@ -569,7 +567,7 @@ private lemma single_system_measurement {N : ℕ} (s : ℝ) (hs : 0 < s) (hs1 : 
   | some i =>
     change diagonal (Pi.single i ((1 - s : ℝ) : ℂ)) j j = _
     rw [Matrix.diagonal_apply_eq]
-    simp only [Pi.single_apply, eq_comm]
+    simp only [Pi.single_apply, eq_comm, Option.elim_some]
 
 private lemma productEffect_posSemidef {N k : ℕ}
     (F : Option (Fin N) → Matrix (Fin N) (Fin N) ℂ)
@@ -667,23 +665,6 @@ private lemma inducedEffect_sum {N k : ℕ}
   rw [Fintype.sum_option, add_comm] at h
   exact h
 
-private lemma inducedEffect_probability {N k : ℕ}
-    (F : Option (Fin N) → Matrix (Fin N) (Fin N) ℂ)
-    (ψ : Fin N → Fin N → ℂ)
-    (d : (Fin k → Option (Fin N)) → Option (Label N k))
-    (z : Option (Label N k)) (x : Label N k) :
-    star (productState ψ x) ⬝ᵥ (inducedEffect F d z *ᵥ productState ψ x) =
-      ∑ o, if d o = z then
-        ∏ j, star (ψ (x.val j)) ⬝ᵥ (F (o j) *ᵥ ψ (x.val j)) else 0 := by
-  classical
-  unfold inducedEffect
-  rw [Matrix.sum_mulVec, dotProduct_sum]
-  apply Finset.sum_congr rfl
-  intro o _
-  split_ifs
-  · exact productEffect_probability F ψ o x
-  · rw [Matrix.zero_mulVec, dotProduct_zero]
-
 private lemma processing_of_injection {N k : ℕ} {α : Type*} [Fintype α]
     (c : Label N k × α → (Fin k → Option (Fin N))) (hc : Function.Injective c) :
     ∃ d : (Fin k → Option (Fin N)) → Option (Label N k),
@@ -775,17 +756,20 @@ private lemma acceptedOutcome_injective (N : ℕ) :
       | none => rfl
       | some j =>
         have h := congrFun he j
-        simp only [acceptedOutcome, reduceCtorEq, ite_false, ite_true] at h
+        unfold acceptedOutcome at h
+        simp only [reduceCtorEq, ite_false, ite_true] at h
     | some i =>
       cases t with
       | none =>
         have h := congrFun he i
-        simp only [acceptedOutcome, reduceCtorEq, ite_false, ite_true] at h
+        unfold acceptedOutcome at h
+        simp only [reduceCtorEq, ite_false, ite_true] at h
       | some j =>
         by_cases hij : i = j
         · exact congrArg some hij
         · have h := congrFun he i
-          simp only [acceptedOutcome, Option.some.injEq, hij, Ne.symm hij,
+          unfold acceptedOutcome at h
+          simp only [Option.some.injEq, Ne.symm hij,
             ite_true, ite_false, reduceCtorEq] at h
   subst t
   congr 1
@@ -794,21 +778,21 @@ private lemma acceptedOutcome_injective (N : ℕ) :
     apply Subtype.ext
     funext j
     have h := congrFun he j
-    simpa only [acceptedOutcome, reduceCtorEq, ite_false, Option.some.injEq] using h
+    unfold acceptedOutcome at h
+    simpa only [reduceCtorEq, ite_false, Option.some.injEq] using h
   | some i =>
     apply full_label_eq_off x y i
     intro j hji
     have h := congrFun he j
-    simpa only [acceptedOutcome, Option.some.injEq, Ne.symm hji, ite_false] using h
+    unfold acceptedOutcome at h
+    simpa only [Option.some.injEq, Ne.symm hji, ite_false] using h
 
 private lemma short_product_attainment {N k : ℕ} (hk : k < N)
     (s : ℝ) (ψ : Fin N → Fin N → ℂ)
     (F : Option (Fin N) → Matrix (Fin N) (Fin N) ℂ)
     (hF : ∀ o, (F o).PosSemidef) (hsum : (∑ o, F o) = 1)
     (hprob : ∀ o j, star (ψ j) ⬝ᵥ (F o *ᵥ ψ j) =
-      match o with
-      | none => (s : ℂ)
-      | some i => if i = j then ((1 - s : ℝ) : ℂ) else 0) :
+      o.elim (s : ℂ) (fun i => if i = j then ((1 - s : ℝ) : ℂ) else 0)) :
     ∃ d E E₀, IsProductProtocol F d E E₀ ∧
       IsUnambiguousMeasurement (productState (k := k) ψ) E E₀ ∧
       averageSuccess (productState (k := k) ψ) E = value N k s := by
@@ -822,7 +806,7 @@ private lemma short_product_attainment {N k : ℕ} (hk : k < N)
   obtain ⟨E, E₀, hp, hu, hv⟩ := protocol_of_probabilities hk.le F hF hsum ψ d ((1 - s) ^ k) (by
     intro x y
     rw [hd, Fintype.sum_unique, productEffect_probability]
-    simp only [c, hprob]
+    simp only [c, hprob, Option.elim_some]
     by_cases hxy : x = y
     · subst y
       simp only [ite_true, Finset.prod_const, Finset.card_univ, Fintype.card_fin,
@@ -832,21 +816,20 @@ private lemma short_product_attainment {N k : ℕ} (hk : k < N)
       obtain ⟨j, hj⟩ := Function.ne_iff.mp hvals
       exact Finset.prod_eq_zero (Finset.mem_univ j) (ite_eq_right hj))
   refine ⟨d, E, E₀, hp, hu, ?_⟩
-  rw [hv, value, ite_eq_left hk]
+  rw [hv]
+  unfold value
+  rw [ite_eq_left hk]
 
 private lemma acceptedOutcome_probability {N : ℕ} (s : ℝ)
     (ψ : Fin N → Fin N → ℂ)
     (F : Option (Fin N) → Matrix (Fin N) (Fin N) ℂ)
     (hprob : ∀ o j, star (ψ j) ⬝ᵥ (F o *ᵥ ψ j) =
-      match o with
-      | none => (s : ℂ)
-      | some i => if i = j then ((1 - s : ℝ) : ℂ) else 0)
+      o.elim (s : ℂ) (fun i => if i = j then ((1 - s : ℝ) : ℂ) else 0))
     (x y : Label N N) (r : Option (Fin N)) :
     star (productState ψ y) ⬝ᵥ (productEffect F (acceptedOutcome x r) *ᵥ productState ψ y) =
       if x = y then
-        match r with
-        | none => ((1 - s : ℝ) : ℂ) ^ N
-        | some _ => (s : ℂ) * ((1 - s : ℝ) : ℂ) ^ (N - 1)
+        r.elim (((1 - s : ℝ) : ℂ) ^ N)
+          (fun _ => (s : ℂ) * ((1 - s : ℝ) : ℂ) ^ (N - 1))
       else 0 := by
   classical
   rw [productEffect_probability]
@@ -856,18 +839,18 @@ private lemma acceptedOutcome_probability {N : ℕ} (s : ℝ)
         if x.val j = y.val j then ((1 - s : ℝ) : ℂ) else 0 := by
     unfold acceptedOutcome
     by_cases hr : r = some j
-    · rw [ite_eq_left hr, ite_eq_left hr, hprob]
-    · rw [ite_eq_right hr, ite_eq_right hr, hprob]
+    · rw [ite_eq_left hr, ite_eq_left hr, hprob, Option.elim_none]
+    · rw [ite_eq_right hr, ite_eq_right hr, hprob, Option.elim_some]
   simp_rw [hcoord]
   by_cases hxy : x = y
   · subst y
     rw [ite_eq_left rfl]
     cases r with
     | none =>
-      simp only [reduceCtorEq, ite_false, ite_true, Finset.prod_const,
+      simp only [reduceCtorEq, ite_false, ite_true, Option.elim_none, Finset.prod_const,
         Finset.card_univ, Fintype.card_fin]
     | some j =>
-      simp only [Option.some.injEq, ite_true]
+      simp only [Option.some.injEq, ite_true, Option.elim_some]
       rw [← Finset.mul_prod_erase Finset.univ
         (fun a : Fin N => if j = a then (s : ℂ) else ((1 - s : ℝ) : ℂ))
         (Finset.mem_univ j), ite_eq_left rfl]
@@ -900,9 +883,7 @@ private lemma full_product_attainment {N : ℕ} (hN : 1 ≤ N)
     (F : Option (Fin N) → Matrix (Fin N) (Fin N) ℂ)
     (hF : ∀ o, (F o).PosSemidef) (hsum : (∑ o, F o) = 1)
     (hprob : ∀ o j, star (ψ j) ⬝ᵥ (F o *ᵥ ψ j) =
-      match o with
-      | none => (s : ℂ)
-      | some i => if i = j then ((1 - s : ℝ) : ℂ) else 0) :
+      o.elim (s : ℂ) (fun i => if i = j then ((1 - s : ℝ) : ℂ) else 0)) :
     ∃ d E E₀, IsProductProtocol F d E E₀ ∧
       IsUnambiguousMeasurement (productState (k := N) ψ) E E₀ ∧
       averageSuccess (productState (k := N) ψ) E = value N N s := by
@@ -929,7 +910,7 @@ private lemma full_product_attainment {N : ℕ} (hN : 1 ≤ N)
       simp only [acceptedOutcome_probability s ψ F hprob]
       by_cases hxy : x = y
       · subst y
-        simp only [ite_true, Fintype.sum_option, Finset.sum_const, Finset.card_univ,
+        simp only [ite_true, Fintype.sum_option, Option.elim_none, Option.elim_some, Finset.sum_const, Finset.card_univ,
           Fintype.card_fin, nsmul_eq_mul]
         exact hweight
       · simp only [hxy, ite_false, Finset.sum_const_zero])
