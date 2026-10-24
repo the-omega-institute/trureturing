@@ -679,6 +679,133 @@ $$
 
 Its conductor cut is defined separately in each fixed finite ray character component; these components are then summed coherently. The same source, coefficient signs, all squarefree columns and original collision zeros remain. With this unproved input, the paid lower-order block, low-conductor sum and preceding truncation error would give the full inverse-fourth exponent $B_*-\nu$, and hence the existing complete-energy consumer at $\kappa_{\rm joint}-\nu/2$. No such long-conductor estimate is supplied. This application narrows that missing input; it neither improves the full moment on its own nor restores the signed Robin expression. Classical convexity, Euler products, conductor identities and ideal counting are reused, with no analytic Lean certification or literature-priority claim.
 
+## Retaining the conductor cap with Hecke subconvexity
+
+The same original low-conductor sub-sum admits a stronger bound by reusing a uniform Hecke subconvexity theorem and retaining its conductor cap during summation. Fix $F=\mathbb Q(\sqrt{-3})$. Suppose that for all unitary Hecke characters of $F$ one has
+
+$$
+|L(1/2,\chi)|\ll_{F,\varepsilon} C(\chi)^{c+\varepsilon},
+\qquad 0\le c\le1/4,
+$$
+
+with the constant independent of the character and its analytic conductor. Han Wu, [*Burgess-like subconvexity for GL1*, Theorem 1.1, arXiv:1604.08551v6](https://arxiv.org/html/1604.08551v6), published with [DOI 10.1112/S0010437X19007309](https://doi.org/10.1112/S0010437X19007309), supplies
+
+$$
+c=\frac14-\frac{1-2\theta_{\rm RP}}{16}.
+$$
+
+The paper's character convention is unitary. Blomer–Brumley, [*On the Ramanujan conjecture over number fields*, Theorem 1 and Hypothesis $H_n(\delta)$, arXiv:1003.0559v4](https://arxiv.org/abs/1003.0559v4), [DOI 10.4007/annals.2011.174.1.18](https://doi.org/10.4007/annals.2011.174.1.18), gives $\theta_{\rm RP}=7/64$ over any number field and at every place, including the complex place here. The totally-real restriction in its following twisted-GL2 application is not a restriction on Theorem 1. Thus an unconditional published input is
+
+$$
+c=\frac{103}{512},\qquad \alpha=\frac{1+c}{3}=\frac{205}{512}.
+$$
+
+**Transport to the complete row kernel.** Applying the central bound to $\chi|\cdot|^{i\tau}$ controls the whole central vertical line, with
+
+$$
+C_\tau\asymp_F q_{\mathfrak f}(1+|\tau|)^2.
+$$
+
+Interpolate between $\Re s=1/2$ and the absolutely convergent line $1+\varepsilon$ to obtain the exponent $c/3+\varepsilon$ at $5/6+i\tau$. The functional equation then gives
+
+$$
+|L(1/6+i\tau,\chi)|
+\ll_{F,\varepsilon} C_\tau^{\alpha+\varepsilon},
+\qquad \alpha=\frac13+\frac c3.
+$$
+
+This uses a bound on the entire central line before interpolation, rather than interpolating an isolated central value leftwards. Apply it on the same $1/6+\varepsilon$ Mellin line to the exact imprimitive ratio $L(s,\chi_0)/L(6s,\chi_0^6)$ above. The nonprincipal primitive numerator has no pole to cross, the inverse denominator is absolutely bounded there, and every original collision zero and zero-only Euler factor is retained. Mellin decay absorbs the polynomial height cost, giving
+
+$$
+|\mathcal K_{U,\Omega}(a,b)|
+\ll U^{1/6+\varepsilon}q_{\mathfrak f}^{\alpha+\varepsilon}.
+$$
+
+The original finite ray components and required profile derivatives obey the same fixed or polylog cost contract. This does not enlarge its growing-height range or insert a complete-row argument inside an adaptive bin.
+
+The unchanged coefficient envelope and pair count give, for $1\le G\ll U$,
+
+$$
+\begin{aligned}
+\sum_{\substack{r_2(a)\ne r_2(b)\\q_{(a,b)}\ge G}}
+ |g_{\le T}(a)\overline{g_{\le T}(b)}\mathcal K_{U,\Omega}(a,b)|
+&\ll U^{7/6+2\alpha+\varepsilon}
+ \sum_{q_h\ge G}q_h^{-2-2\alpha}\\
+&\ll U^{7/6+2\alpha+\varepsilon}G^{-1-2\alpha}.
+\end{aligned}
+$$
+
+**Keep both conductor bounds in the low head.** Put $Q=U^{1+\eta}$, $T=U^\theta$, with $\eta\ge0$, $\theta>0$ and $\theta+\eta/2<1/2$. The preceding conductor lower bound restricts the low head to $q_h\gg H_0$, where
+
+$$
+H_0=U^{1/2-\theta-\eta/2},\qquad
+H_1=U^{1/2-\eta/2}.
+$$
+
+Keep the actual upper bounds together:
+
+$$
+q_{\mathfrak f}^{\alpha}
+\ll \min\{Q,(U/q_h)^2\}^{\alpha}.
+$$
+
+Ordinary ideal counting in the two ranges $H_0\ll q_h\le H_1$ and $q_h\ge H_1$ gives
+
+$$
+\begin{aligned}
+\left|E_{6,\,q_{\mathfrak f}\le Q}^{\mu,\le T}\right|
+&\ll U^{7/6+\varepsilon}
+ \left(Q^\alpha\sum_{H_0\ll q_h\le H_1}q_h^{-2}
+       +U^{2\alpha}\sum_{q_h\ge H_1}q_h^{-2-2\alpha}\right)\\
+&\ll U^{7/6+\varepsilon}
+ \left(Q^\alpha H_0^{-1}+U^{2\alpha}H_1^{-1-2\alpha}\right)\\
+&\ll U^{2/3+\alpha+\theta+(1/2+\alpha)\eta+\varepsilon}.
+\end{aligned}
+$$
+
+Fixed conductor-comparison constants only move the two cutoffs by fixed factors. The coefficient of $\theta$ is now $1$ because the conductor cap was kept inside the sum; this improvement does not depend on subconvexity. With convexity alone, $\alpha=5/12$, the same cap gives $13/12+\theta+11\eta/12$. The additional decrease in $\alpha$ is supplied by Wu and Blomer–Brumley, not by a new subconvexity theorem here.
+
+For their published input, the low-head exponent is
+
+$$
+\frac{1639}{1536}+\theta+\frac{461}{512}\eta.
+$$
+
+In particular, take
+
+$$
+\theta=\frac1{1000},\quad \eta=\frac1{100},\quad
+H_0=U^{247/500},\quad H_1=U^{99/200}.
+$$
+
+Then the same original low-conductor contribution satisfies
+
+$$
+\boxed{
+\left|E_{6,\,q_{\mathfrak f}\le U^{101/100}}^{\mu,\le U^{1/1000}}\right|
+\ll U^{827183/768000+\varepsilon}.
+}
+$$
+
+Here $827183/768000=1.077061197916\ldots$ and
+
+$$
+\frac{13}{12}-\frac{827183}{768000}
+=\frac{4817}{768000}>0,\qquad \frac{13}{12}<B_*.
+$$
+
+Thus the missing sufficient input can be restricted to
+
+$$
+\operatorname{Re}E_{6,\,q_{\mathfrak f}>U^{101/100}}^{\mu,\le U^{1/1000}}
+\ll U^{B_*-\nu+\varepsilon},
+\qquad \nu=\frac1{100000}.
+$$
+
+This $\nu$ is below both the low-head margin and the existing truncation margin $\theta/50=1/50000$. The remaining sum retains its actual Möbius coefficients, original zeros, all squarefree columns, the $t=1$ packet and coherent finite components. Its estimate is not supplied. The controlled portion of the original head is larger; the full inverse-fourth exponent, complete-energy improvement and signed Robin restoration remain unproved. This is a source-conditional application of the cited analytic results, without Lean certification or a literature-priority claim.
+
+**Stronger printed input.** Yang, [*Relative Trace Formula and Twisted L-functions: the Burgess Bound*, arXiv:2305.10719v1, Corollary 1.2(1.3)](https://arxiv.org/html/2305.10719v1), states the uniform Hecke exponent $c=3/16$. Substitution into the same calculation would give $\alpha=19/48$ and the low-head exponent $17/16+\theta+43\eta/48$. The numerical bound above does not depend on this stronger preprint input. Its Hypothesis 2.1 uses $c_vT_v\le|\gamma_{j,v}|\le C_vT_v$, without $1+|\gamma_{j,v}|$, while subsequent estimates use negative powers of $T_v$. For $\pi=1\boxplus1$ and trivial infinite-type $\chi$, both local parameters vanish. The compact zero-parameter specialization, and the complex-place normalization of $T_v$ relative to analytic conductor, are not independently reconciled here; this is not a refutation of the printed corollary. Yang's [*Symmetric Spectral Reciprocity for GL(2) and Uniform Subconvexity*, arXiv:2607.04476v1](https://arxiv.org/html/2607.04476v1), Theorem B and Corollary 1.4 concern cuspidal GL2, and its Lemma 10.2 invokes the earlier Corollary 1.2. They do not give an independent replacement for the GL1 input used here.
+
 ## Fixed-order first moments and the unresolved head
 
 Gao–Zhao, [*First moment of central values of Hecke L-functions with Fixed Order Characters*, arXiv:2306.10726v3](https://arxiv.org/html/2306.10726v3), revised 1 December 2025, provides a nearby double-Dirichlet-series input. Its Theorem 1.3 is unconditional for $j=3,6$ over $K=\mathbb Q(\sqrt{-3})$ and $j=4$ over $\mathbb Q(i)$. It concerns a smoothed first moment of $L(1/2+\alpha,\chi\chi_j^{(n)})$, averaged over the fixed ray characters and all nonzero elements $n$, with
