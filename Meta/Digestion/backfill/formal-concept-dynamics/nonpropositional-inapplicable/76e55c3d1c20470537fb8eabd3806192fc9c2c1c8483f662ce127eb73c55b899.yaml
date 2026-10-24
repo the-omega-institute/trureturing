@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:76e55c3d1c20470537fb8eabd3806192fc9c2c1c8483f662ce127eb73c55b899
+  normalized_sha256: sha256:76e55c3d1c20470537fb8eabd3806192fc9c2c1c8483f662ce127eb73c55b899
+cas_ref: sha256:76e55c3d1c20470537fb8eabd3806192fc9c2c1c8483f662ce127eb73c55b899
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 'Nonpropositional: A stipulated case-premise list item about different expressible opposition; it asserts no general voting-system property.'
+    previous_atom_id: 8f148f8b5045ed23596d98cfa3fa19c83a34a9c1612e823edfff4d908bd52788
+    next_atom_id: 13b596410e3b37675e831bce5a0793c0ef2fc6cb72795281665633a0cd11db41

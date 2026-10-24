@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:beb2747b20a98e5bb0e72d5995e71369527c28ea26edc5b36e937b09ee45c182
+  normalized_sha256: sha256:beb2747b20a98e5bb0e72d5995e71369527c28ea26edc5b36e937b09ee45c182
+cas_ref: sha256:beb2747b20a98e5bb0e72d5995e71369527c28ea26edc5b36e937b09ee45c182
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 本句只指定 Y 为外部观察空间，没有赋予其需要证明的性质。
+    previous_atom_id: f27979911f47db60250c62e35f672e9ffde9c890d16c4175ad8953c2b648d1d7
+    next_atom_id: 669738b970a43ca6d932a16381c2082e8120770aaee59a52fab2042a2f195fe9

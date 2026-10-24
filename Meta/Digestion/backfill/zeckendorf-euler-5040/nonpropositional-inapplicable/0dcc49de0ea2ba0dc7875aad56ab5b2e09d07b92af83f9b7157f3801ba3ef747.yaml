@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:0dcc49de0ea2ba0dc7875aad56ab5b2e09d07b92af83f9b7157f3801ba3ef747
+  normalized_sha256: sha256:0dcc49de0ea2ba0dc7875aad56ab5b2e09d07b92af83f9b7157f3801ba3ef747
+cas_ref: sha256:0dcc49de0ea2ba0dc7875aad56ab5b2e09d07b92af83f9b7157f3801ba3ef747
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: Section heading and forward reference to expressing the demand staircase through prime distribution; no equation or quantified estimate is given here.
+    previous_atom_id: 780ac1e2f2ef6fbbd58bbd82a6ae27de651b06e8b215c89eefab3d137f22ded8
+    next_atom_id: 78decf310de92ffa4d95d8ab40294a94db3d1b969607f39eac8a96ac2bf10e87

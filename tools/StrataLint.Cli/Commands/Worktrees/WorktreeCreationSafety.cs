@@ -105,7 +105,7 @@ internal static class WorktreeCreationSafety
         }
 
         // A dangling registration does not certify the contents of its directory.
-        throw new InvalidOperationException("unregistered worktree material retained; use an alternate destination");
+        throw new InvalidOperationException("unregistered worktree material retained; verify identity before same-destination recovery or reclaim");
     }
 
     internal static void ValidateCreatedWorktree(
