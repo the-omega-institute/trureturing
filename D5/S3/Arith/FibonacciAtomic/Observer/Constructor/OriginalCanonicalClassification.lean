@@ -261,7 +261,7 @@ private theorem approximate_agrees (E : Definitions k m) (guarded : PairGuarded 
         simpa only [approximate, he] using bush_agrees (n+1)
     | some e =>
         rw [sol.1 i e he]
-        change Agree (n+1) (embed (finiteEval mode p (n+1) (approximate E mode p n) e)) _
+        simp only [approximate, he]
         cases e with
         | var a j => exact (guarded i a j he).elim
         | ground t => intro a _; rfl
@@ -378,18 +378,18 @@ private def zeroCycle : Definitions 0 1 := fun _ => some (.var 0 0)
   decide (prefixReply positiveCycle Fin.elim0 Fin.elim0 3 (.var 0 0) [true, false] = .branch),
   decide (prefixReply zeroCycle Fin.elim0 Fin.elim0 3 (.var 0 0) [false, true] = .branch)])
 
-example : IsFinite (value (fun _ => true) (fun _ => 0)
+example : IsFinite (value (k := 2) (fun _ => true) (fun _ => 0)
     (canonical edgeSystem (fun _ => true) (fun _ => 0)) (.var 0 0)) :=
-  ((original_canonical_synthesis edgeSystem (fun _ => true) (fun _ => 0)).2.1 _).mp (by decide)
+  ((original_canonical_synthesis edgeSystem (fun _ => true) (fun _ => 0)).2.1 _).mp (by decide +kernel)
 
-example : ¬ IsFinite (value (fun _ => true) (fun _ => 0)
+example : ¬ IsFinite (value (k := 2) (fun _ => true) (fun _ => 0)
     (canonical edgeSystem (fun _ => true) (fun _ => 0)) (.var 0 2)) :=
-  (original_canonical_synthesis edgeSystem (fun _ => true) (fun _ => 0)).2.2.2.1 _ (by decide)
+  (original_canonical_synthesis edgeSystem (fun _ => true) (fun _ => 0)).2.2.2.1 _ (by decide +kernel)
 
 example (v : Fin 4 → CompletionTree) (hv : Solution edgeSystem (fun _ => true) (fun _ => 0) v) :
-    value (fun _ => true) (fun _ => 0) v (.var 0 0) = embed (.of true) := by
+    value (k := 2) (fun _ => true) (fun _ => 0) v (.var 0 0) = embed (.of true) := by
   have h := (original_canonical_synthesis edgeSystem (fun _ => true) (fun _ => 0)).2.2.1
-    (.var 0 0) (.power 0 (.token 0 0)) (by decide) v hv
+    (.var 0 0) (.power 0 (.token 0 0)) (by decide +kernel) v hv
   simpa [OriginalFiniteResolution.finiteValue] using h
 
 example {r : Nat} (C : FunctionalCase k m r) (p : Fin k → Nat) (_guard : C.guard p)

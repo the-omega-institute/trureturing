@@ -52,7 +52,6 @@ internal sealed class OriginalCanonicalClassificationDocument : IScribeDocumentD
     private static Formula Vector => FnCall("Function", Fm, V("CompletionTree"));
     private static Formula Modes => FnCall("Function", Fk, V("Bool"));
     private static Formula Parameters => FnCall("Function", Fk, Nat);
-    private static Formula Reconstructions => FnCall("Function", Fm, Expressions);
     private static Formula FiniteExpressions => FnCall("FiniteExpr", V("k"));
     private static Formula Par(Formula value) => StrataLint.Scribe.FormulaDsl.Seq(
         StrataLint.Scribe.FormulaDsl.Open, value, StrataLint.Scribe.FormulaDsl.Close);
@@ -60,8 +59,6 @@ internal sealed class OriginalCanonicalClassificationDocument : IScribeDocumentD
         new Formula.Apply(StrataLint.Scribe.FormulaDsl.Seq(
             StrataLint.Scribe.FormulaDsl.Operatorname,
             StrataLint.Scribe.FormulaDsl.Grp(V(name))), [.. arguments]);
-    private static Formula App(Formula function, params Formula[] arguments) =>
-        new Formula.Apply(function, [.. arguments]);
     private static Formula EqOf(Formula left, Formula right) =>
         StrataLint.Scribe.FormulaDsl.Seq(left, StrataLint.Scribe.FormulaDsl.Sp,
             StrataLint.Scribe.FormulaDsl.Eq, StrataLint.Scribe.FormulaDsl.Sp, right);
@@ -81,18 +78,9 @@ internal sealed class OriginalCanonicalClassificationDocument : IScribeDocumentD
                 StrataLint.Scribe.FormulaDsl.Sp, Par(body));
         return body;
     }
-    private static Formula Some(string name, Formula type, Formula body) =>
-        StrataLint.Scribe.FormulaDsl.Seq(StrataLint.Scribe.FormulaDsl.Exists,
-            StrataLint.Scribe.FormulaDsl.Sp, V(name), StrataLint.Scribe.FormulaDsl.Colon,
-            StrataLint.Scribe.FormulaDsl.Sp, type, StrataLint.Scribe.FormulaDsl.Comma,
-            StrataLint.Scribe.FormulaDsl.Sp, Par(body));
     private static Formula KM(Formula body) => For(body, ("k", Nat), ("m", Nat));
     private static Formula Value(Formula v, Formula e) => FnCall("value", V("mode"), V("p"), v, e);
     private static Formula Sol(Formula e, Formula v) => FnCall("Solution", e, V("mode"), V("p"), v);
-    private static Formula Rec(Formula r, Formula v) => FnCall("reconstruct", V("mode"), V("p"), r, v);
-    private static Formula Native(Formula e, Formula g) => FnCall("native", e, V("mode"), V("p"), g);
-    private static Formula Free(Formula e, Formula u, Formula g) => For(
-        Imp(EqOf(App(e, V("i")), V("none")), EqOf(App(u, V("i")), App(g, V("i")))), ("i", Fm));
     private static StatementSource Statement(Formula formula) => StatementSource.FromAuthor(
         StrataLint.Scribe.FormulaDsl.Disp(formula));
 
