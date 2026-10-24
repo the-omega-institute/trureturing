@@ -66,7 +66,91 @@ $$(claim) \iff (\forall (n: \mathbb{N}), (2 \le n) \implies (\operatorname{colla
 
 "If A = (M² + M + 1)ⁿ with n ≥ 2, then ℓ_A equals n + 1." (Conjecture 3.11, p. 15.) The exponent n is a natural number and collatzLength is the number of terms just defined.
 
-**Theorem 1.6 (Proof of Conjecture 3.11).**
+**Theorem 1.6 (Evaluation one implies nonzero).**
+
+$$\forall (f: \operatorname{Polynomial}\left(\operatorname{ZMod}\left(2\right)\right)), (\operatorname{Polynomial}.\operatorname{eval}\left(0, f\right) = 1) \implies (f \ne 0)$$
+
+*Proof.* Machine-checked in Lean as `D5/S1/Recurrence/GallardoRahavandrainyBinaryCollatz.nonzero_of_odd` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Acknowledgement.* Luis H. Gallardo and Olivier Rahavandrainy (2023). *On Collatz Conjecture for binary polynomials*. DOI: [10.48550/arXiv.2308.01181](https://doi.org/10.48550/arXiv.2308.01181). URL: <https://arxiv.org/abs/2308.01181v2>.
+
+*Commentary.*
+
+A polynomial whose value at zero is one is nonzero.
+
+**Theorem 1.7 (The unique nonzero binary coefficient).**
+
+$$\forall (c: \operatorname{ZMod}\left(2\right)), (c \ne 0) \implies (c = 1)$$
+
+*Proof.* Machine-checked in Lean as `D5/S1/Recurrence/GallardoRahavandrainyBinaryCollatz.nonzero_eq_one` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Acknowledgement.* Luis H. Gallardo and Olivier Rahavandrainy (2023). *On Collatz Conjecture for binary polynomials*. DOI: [10.48550/arXiv.2308.01181](https://doi.org/10.48550/arXiv.2308.01181). URL: <https://arxiv.org/abs/2308.01181v2>.
+
+*Commentary.*
+
+Every nonzero element of ZMod 2 equals one.
+
+**Theorem 1.8 (An odd constant polynomial).**
+
+$$\forall (f: \operatorname{Polynomial}\left(\operatorname{ZMod}\left(2\right)\right)), (\operatorname{Polynomial}.\operatorname{eval}\left(0, f\right) = 1) \implies ((\operatorname{Polynomial}.\operatorname{natDegree}\left(f\right) = 0) \implies (f = 1))$$
+
+*Proof.* Machine-checked in Lean as `D5/S1/Recurrence/GallardoRahavandrainyBinaryCollatz.eq_one_of_degree_zero` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Acknowledgement.* Luis H. Gallardo and Olivier Rahavandrainy (2023). *On Collatz Conjecture for binary polynomials*. DOI: [10.48550/arXiv.2308.01181](https://doi.org/10.48550/arXiv.2308.01181). URL: <https://arxiv.org/abs/2308.01181v2>.
+
+*Commentary.*
+
+A polynomial of natural degree zero whose value at zero is one equals one.
+
+**Theorem 1.9 (Degree of the multiplier).**
+
+$$\operatorname{Polynomial}.\operatorname{natDegree}\left(M\right) = 2$$
+
+*Proof.* Machine-checked in Lean as `D5/S1/Recurrence/GallardoRahavandrainyBinaryCollatz.degree_q` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Acknowledgement.* Luis H. Gallardo and Olivier Rahavandrainy (2023). *On Collatz Conjecture for binary polynomials*. DOI: [10.48550/arXiv.2308.01181](https://doi.org/10.48550/arXiv.2308.01181). URL: <https://arxiv.org/abs/2308.01181v2>.
+
+*Commentary.*
+
+The multiplier M has natural degree two.
+
+**Theorem 1.10 (The multiplier is nonzero).**
+
+$$M \ne 0$$
+
+*Proof.* Machine-checked in Lean as `D5/S1/Recurrence/GallardoRahavandrainyBinaryCollatz.q_ne_zero` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Acknowledgement.* Luis H. Gallardo and Olivier Rahavandrainy (2023). *On Collatz Conjecture for binary polynomials*. DOI: [10.48550/arXiv.2308.01181](https://doi.org/10.48550/arXiv.2308.01181). URL: <https://arxiv.org/abs/2308.01181v2>.
+
+*Commentary.*
+
+The multiplier M is nonzero.
+
+**Theorem 1.11 (The odd part of a factored polynomial).**
+
+$$\forall (a: \mathbb{N}), \forall (b: \mathbb{N}), \forall (u: \operatorname{Polynomial}\left(\operatorname{ZMod}\left(2\right)\right)), (\operatorname{Polynomial}.\operatorname{eval}\left(0, u\right) = 1) \implies ((\operatorname{Polynomial}.\operatorname{eval}\left(1, u\right) = 1) \implies (\operatorname{oddPart}\left((\operatorname{Polynomial}.\operatorname{X})^{a} \cdot (\operatorname{Polynomial}.\operatorname{X} - \operatorname{Polynomial}.\operatorname{C}\left(1\right))^{b} \cdot u\right) = u))$$
+
+*Proof.* Machine-checked in Lean as `D5/S1/Recurrence/GallardoRahavandrainyBinaryCollatz.oddPart_factor` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Acknowledgement.* Luis H. Gallardo and Olivier Rahavandrainy (2023). *On Collatz Conjecture for binary polynomials*. DOI: [10.48550/arXiv.2308.01181](https://doi.org/10.48550/arXiv.2308.01181). URL: <https://arxiv.org/abs/2308.01181v2>.
+
+*Commentary.*
+
+If u takes value one at both zero and one, removing powers of X and X-C(1) from their product with u leaves exactly u.
+
+**Theorem 1.12 (Proof of Conjecture 3.11).**
 
 $$\forall (n: \mathbb{N}), (2 \le n) \implies (\operatorname{collatzLength}\left(((M)^{2} + M + 1)^{n}\right) = n + 1)$$
 
@@ -89,6 +173,12 @@ Substitution of x(x+1) and polynomial reversal identify the odd sequence with th
 - Truth anchor: `D5/S1/Recurrence/GallardoRahavandrainyBinaryCollatz.M`
 - Truth anchor: `D5/S1/Recurrence/GallardoRahavandrainyBinaryCollatz.claim`
 - Truth anchor: `D5/S1/Recurrence/GallardoRahavandrainyBinaryCollatz.collatzLength`
+- Truth anchor: `D5/S1/Recurrence/GallardoRahavandrainyBinaryCollatz.degree_q`
+- Truth anchor: `D5/S1/Recurrence/GallardoRahavandrainyBinaryCollatz.eq_one_of_degree_zero`
+- Truth anchor: `D5/S1/Recurrence/GallardoRahavandrainyBinaryCollatz.nonzero_eq_one`
+- Truth anchor: `D5/S1/Recurrence/GallardoRahavandrainyBinaryCollatz.nonzero_of_odd`
 - Truth anchor: `D5/S1/Recurrence/GallardoRahavandrainyBinaryCollatz.oddPart`
+- Truth anchor: `D5/S1/Recurrence/GallardoRahavandrainyBinaryCollatz.oddPart_factor`
 - Truth anchor: `D5/S1/Recurrence/GallardoRahavandrainyBinaryCollatz.oddSeq`
+- Truth anchor: `D5/S1/Recurrence/GallardoRahavandrainyBinaryCollatz.q_ne_zero`
 - Truth anchor: `D5/S1/Recurrence/GallardoRahavandrainyBinaryCollatz.result`

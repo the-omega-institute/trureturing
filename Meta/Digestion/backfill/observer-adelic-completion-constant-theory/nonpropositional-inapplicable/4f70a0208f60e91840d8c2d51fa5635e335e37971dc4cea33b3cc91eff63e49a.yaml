@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:4f70a0208f60e91840d8c2d51fa5635e335e37971dc4cea33b3cc91eff63e49a
+  normalized_sha256: sha256:4f70a0208f60e91840d8c2d51fa5635e335e37971dc4cea33b3cc91eff63e49a
+cas_ref: sha256:4f70a0208f60e91840d8c2d51fa5635e335e37971dc4cea33b3cc91eff63e49a
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 'Section title plus historical provenance and preregistration metadata only: named workers, source revisions, searches and earlier implementation readings. The rectangle Rouche obligation is stated in following atoms; this atom contains no zero-count equation, mathematical hypotheses or theorem conclusion.'
+    previous_atom_id: e76cfdcae5f187272cce14a9bedb604adcf014e7858934723a3fa8f3105e8296
+    next_atom_id: 14b5ee52bce2907075c4bc08556416ad4bf9ce006e4934b5efc305964590275f

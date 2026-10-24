@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:89c14d1f7c14a9a675689e77aa36785764c1e163fd3fd6ebb1c2c566ed9587d8
+  normalized_sha256: sha256:89c14d1f7c14a9a675689e77aa36785764c1e163fd3fd6ebb1c2c566ed9587d8
+cas_ref: sha256:89c14d1f7c14a9a675689e77aa36785764c1e163fd3fd6ebb1c2c566ed9587d8
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: Normative research-route recommendation through square functions and sticky/nonsticky grains, without asserting coercivity.
+    previous_atom_id: 57ae2636cd372f12ef5de558590679b7f40dd65d357c5611f70bd5f6f5f9dac7
+    next_atom_id: 4132d81f6bd77cfeae67bc516b100a669d1b6eba236935f7bb0aa99cbdee20be
