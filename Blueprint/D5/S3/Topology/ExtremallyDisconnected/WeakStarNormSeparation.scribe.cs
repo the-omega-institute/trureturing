@@ -11,6 +11,8 @@ internal sealed class WeakStarNormSeparationDocument : IScribeDocumentDefinition
         Seq(Forall, Sp, V(name), Colon, Sp, type, Comma, Sp);
     private static Formula Inst(string name, Formula type) =>
         Seq(OpenBracket, Call(name, type), CloseBracket, Sp);
+    private static Formula ToStrong(Formula value) =>
+        new Formula.Apply(Seq(Operatorname, Grp(V("WeakDual"), Dot, V("toStrongDual"))), [value]);
     private static Formula Statement => Disp(new Formula.Aligned([
         Seq(All("u", V("UniverseLevel")), All("v", V("UniverseLevel"))),
         Seq(All("X", Seq(V("Type"), Underscore, Grp(V("u")))),
@@ -23,10 +25,10 @@ internal sealed class WeakStarNormSeparationDocument : IScribeDocumentDefinition
             Call("Continuous", V("h")), Sp, Rightarrow, Sp,
             Call("Injective", V("h")), Sp, Rightarrow, Sp),
         Seq(Exists, Sp, V("c"), Colon, Sp, V("Real"), Comma, Sp,
-            D(0), Sp, Lt, Sp, V("c"), Sp, Wedge, Sp,
+            D(0), Sp, Lt, Sp, V("c"), Sp, Land, Sp,
             All("p", V("K")), All("q", V("K")), V("p"), Sp, Neq, Sp, V("q"),
             Sp, Rightarrow, Sp, V("c"), Sp, Le, Sp,
-            Call("norm", Call("WeakDual.toStrongDual", Grp(Seq(
+            Call("norm", ToStrong( Grp(Seq(
                 Call("h", V("p")), Sp, Minus, Sp, Call("h", V("q")))))))
     ]));
 
