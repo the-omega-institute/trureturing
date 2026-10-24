@@ -9,7 +9,6 @@
 import D5.S3.Quantum.Information.BinaryStabilizerGraphNormalForm
 import D5.S3.Quantum.BlockNorm.EssentiallyHermitian
 import D5.S3.Quantum.Measurement.StabilizerPovmMaximalEntanglementRefutation
-import Mathlib.Algebra.Group.AddChar
 
 /-! Commuting qubit product encodings and their local-reflection replacements. -/
 
