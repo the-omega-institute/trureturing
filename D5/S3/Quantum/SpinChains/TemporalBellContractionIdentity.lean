@@ -285,6 +285,49 @@ private lemma evolved_endpoint (N : ℕ) (hN : 0 < N) (J μ t : ℝ) :
   rw [sigmaXLast_parity, evolve_mul, parity_stationary, evolve_sub,
     annihilation_evolution, creation_evolution]
 
+private lemma vacuum_annihilator {N : ℕ} (j : Fin N) (s : Assignment N) :
+    fullC j s (vacuumIndex N) = 0 := by
+  rw [fullC_entry]
+  simp [vacuumIndex]
+
+private lemma vacuum_right_annihilator {N : ℕ} (j : Fin N) (M : FullOperator N)
+    (s : Assignment N) : (M * fullC j) s (vacuumIndex N) = 0 := by
+  simp only [Matrix.mul_apply, vacuum_annihilator, mul_zero, Finset.sum_const_zero]
+
+private lemma vacuum_left_creation {N : ℕ} (j : Fin N) (M : FullOperator N)
+    (s : Assignment N) : ((fullC j)ᴴ * M) (vacuumIndex N) s = 0 := by
+  simp only [Matrix.mul_apply, Matrix.conjTranspose_apply, vacuum_annihilator,
+    star_zero, zero_mul, Finset.sum_const_zero]
+
+private lemma vacuum_pair {N : ℕ} (i j : Fin N) :
+    (fullC i * (fullC j)ᴴ) (vacuumIndex N) (vacuumIndex N) =
+      if i = j then (1 : ℂ) else 0 := by
+  have hc := congrArg (fun M : FullOperator N => M (vacuumIndex N) (vacuumIndex N))
+    (mixed_CAR i j)
+  simp only [Matrix.add_apply, vacuum_left_creation, add_zero] at hc
+  by_cases hij : i = j <;> simpa [hij, Matrix.one_apply] using hc
+
+private lemma vacuum_four {N : ℕ} (a b k r : Fin N) :
+    (fullC b * fullC a * (fullC k)ᴴ * (fullC r)ᴴ) (vacuumIndex N) (vacuumIndex N) =
+      (if a = k then (if b = r then (1 : ℂ) else 0) else 0) -
+        (if b = k then (if a = r then (1 : ℂ) else 0) else 0) := by
+  have he : fullC b * fullC a * (fullC k)ᴴ * (fullC r)ᴴ =
+      fullC b * (fullC a * (fullC k)ᴴ + (fullC k)ᴴ * fullC a) * (fullC r)ᴴ -
+        (fullC b * (fullC k)ᴴ + (fullC k)ᴴ * fullC b) * fullC a * (fullC r)ᴴ +
+        (fullC k)ᴴ * fullC b * fullC a * (fullC r)ᴴ := by noncomm_ring
+  rw [he, mixed_CAR, mixed_CAR]
+  by_cases hak : a = k <;> by_cases hbk : b = k <;>
+    simp [hak, hbk, mul_assoc, vacuum_left_creation, vacuum_pair]
+
+private lemma vacuum_annihilation_contraction {N : ℕ} (a b k r : Fin N) :
+    (fullC b * fullC a * fullC k * (fullC r)ᴴ) (vacuumIndex N) (vacuumIndex N) = 0 := by
+  have he : fullC b * fullC a * fullC k * (fullC r)ᴴ =
+      fullC b * fullC a * (fullC k * (fullC r)ᴴ + (fullC r)ᴴ * fullC k) -
+        (fullC b * fullC a * (fullC r)ᴴ) * fullC k := by noncomm_ring
+  rw [he, mixed_CAR]
+  by_cases hkr : k = r <;>
+    simp [hkr, Matrix.sub_apply, vacuum_right_annihilator]
+
 private lemma vacuum_contractions {N : ℕ} (a b : Fin N) (hab : a ≠ b)
     (u v : Fin N → ℂ) :
     (fullC b * fullC a *
@@ -295,7 +338,32 @@ private lemma vacuum_contractions {N : ℕ} (a b : Fin N) (hab : a ≠ b)
         (numberParity N * ((∑ i : Fin N, u i • fullC i) -
           ∑ i : Fin N, v i • (fullC i)ᴴ)) * (fullC b)ᴴ)
         (vacuumIndex N) (vacuumIndex N) = v b - v a := by
-  sorry
+  let P := numberParity N
+  have ha := eq_neg_of_add_eq_zero_right (parity_odd a).1
+  have hb := eq_neg_of_add_eq_zero_right (parity_odd b).1
+  have hp : fullC b * fullC a * P = P * (fullC b * fullC a) := by
+    calc
+      _ = fullC b * (fullC a * P) := by simp only [mul_assoc]
+      _ = fullC b * (-(P * fullC a)) := by rw [ha]
+      _ = -(fullC b * P) * fullC a := by noncomm_ring
+      _ = _ := by rw [hb]; noncomm_ring
+  have hclean (M R : FullOperator N) :
+      (fullC b * fullC a * (P * M) * R) (vacuumIndex N) (vacuumIndex N) =
+        (fullC b * fullC a * M * R) (vacuumIndex N) (vacuumIndex N) := by
+    have he : fullC b * fullC a * (P * M) * R = P * (fullC b * fullC a * M * R) := by
+      calc
+        _ = (fullC b * fullC a * P) * M * R := by noncomm_ring
+        _ = _ := by rw [hp]; noncomm_ring
+    rw [he]
+    dsimp only [P]
+    rw [D5.S3.Quantum.Fermionic.FockMajoranaCarrier.numberParity_eq_diagonal,
+      Matrix.diagonal_mul]
+    simp [D5.S3.Quantum.FockSpace.ForbiddenNeighbourDeterminant.occupationCount, vacuumIndex]
+  rw [hclean, hclean]
+  simp only [mul_sub, sub_mul, Finset.mul_sum, Finset.sum_mul, Matrix.mul_smul,
+    Matrix.smul_mul, Matrix.sub_apply, Matrix.sum_apply, Matrix.smul_apply, smul_eq_mul,
+    vacuum_annihilation_contraction, vacuum_four]
+  simp [hab, Ne.symm hab, eq_comm, sub_eq_add_neg]
 
 private lemma complex_identity (N : ℕ) (hN : 2 ≤ N) (J μ t : ℝ) :
     let first : Fin N := ⟨0, by omega⟩
