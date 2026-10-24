@@ -81,7 +81,10 @@ internal sealed class QuantumGraphStrangeComponentCountDocument : IScribeDocumen
                 StatementSource.FromAuthor(Disp(ClaimFormula())),
                 AssessedProvenance.FromRepo(Source),
                 ResultArgument(),
-                DescribeRole.Theorem))));
+                DescribeRole.Theorem,
+                openProblemResolutionClaim: new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("spitzer-nechita-2026-quantum-graph-component-count"),
+                    ResolutionKind.Proved)))));
 
     private static DocumentBlock Node(string id, string declaration, string title, Formula formula,
         AssessedProvenance provenance, string prose) =>
