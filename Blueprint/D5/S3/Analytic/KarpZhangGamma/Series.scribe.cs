@@ -1,4 +1,6 @@
 using static StrataLint.Scribe.DefinitionDsl;
+using static StrataLint.Scribe.FormulaDsl;
+using F = StrataLint.Scribe.FormulaDsl;
 
 namespace StrataLint.Scribe.Blueprint.D5.S3.Analytic.KarpZhangGamma;
 
@@ -29,7 +31,28 @@ internal sealed class SeriesDocument : IScribeDocumentDefinition
     private static DocumentBlock Entry(string id, string name, string title, string text, DescribeRole role) =>
         Describe.Lean(DescribeId.Create(id),
             DeclarationHandle.Create("D5/S3/Analytic/KarpZhangGamma/Series." + name),
-            H(title), StatementSource.WithoutFormula(),
+            H(title), TheoremStatement(name),
             name == "gammaCoeff" ? AssessedProvenance.FromLiterature(Source) : AssessedProvenance.FromRepo(Source),
             Blocks(Paragraph(Text(text))), role);
+
+    private static StatementSource TheoremStatement(string name) =>
+        name == "positive_beta_transform" ? StatementSource.FromAuthor(Disp(All("n", F.Id("Nat"), All("t", F.Id("Real"), Implies(Lt(Num(0), F.Id("t")), Equal(Call("gammaCoeff", F.Id("t"), F.Id("n")), Multiply(Call("scale", F.Id("t")), SumRange("j", Add(App(Qualified("Nat", "div"), F.Id("n"), Num(2)), Num(1)), new Formula.Fraction(Num(1), Multiply(Multiply(Multiply(Multiply(App(Qualified("Nat", "factorial"), Subtract(F.Id("n"), Multiply(Num(2), F.Id("j")))), App(Qualified("Nat", "factorial"), F.Id("j"))), App(Qualified("Real", "Gamma"), Add(Add(F.Id("t"), new Formula.Fraction(Num(1), Num(2))), F.Id("j")))), new Formula.Power(Num(2), Subtract(F.Id("n"), Multiply(Num(2), F.Id("j"))))), new Formula.Power(Num(16), F.Id("j")))))))))))) :
+        name == "series_identification" ? StatementSource.FromAuthor(Disp(All("y", new Formula.TypeArrow(F.Id("Nat"), F.Id("Real")), All("t", F.Id("Real"), Implies(Lt(Num(0), F.Id("t")), All("n", F.Id("Nat"), Equal(Multiply(App(F.Id("y"), F.Id("n")), Call("gammaCoeff", F.Id("t"), F.Id("n"))), Multiply(Call("scale", F.Id("t")), Call("transformCoeff", F.Id("y"), Add(F.Id("t"), new Formula.Fraction(Num(1), Num(2))), F.Id("n")))))))))) :
+        name == "gamma_half" ? StatementSource.FromAuthor(Disp(All("y", new Formula.TypeArrow(F.Id("Nat"), F.Id("Real")), Implies(Call("IsLogConcave", F.Id("y")), All("mu", F.Id("Real"), All("alpha", F.Id("Real"), All("beta", F.Id("Real"), Implies(Lt(Num(0), F.Id("mu")), Implies(Le(Num(0), F.Id("alpha")), Implies(Le(Num(0), F.Id("beta")), All("n", F.Id("Nat"), Le(Num(0), Call("gammaDelta", F.Id("y"), F.Id("mu"), F.Id("alpha"), F.Id("beta"), F.Id("n")))))))))))))) :
+        StatementSource.WithoutFormula();
+
+    private static Formula All(string name, Formula type, Formula body) =>
+        new Formula.Bind(FormulaQuantifier.ForAll, FormulaIdentifier.Create(name), type, body);
+    private static Formula Implies(Formula a, Formula b) =>
+        new Formula.Logic(a, FormulaLogicOperator.Implies, b);
+    private static Formula Le(Formula a, Formula b) =>
+        new Formula.Relation(a, FormulaRelationOperator.LessThanOrEqual, b);
+    private static Formula Lt(Formula a, Formula b) =>
+        new Formula.Relation(a, FormulaRelationOperator.LessThan, b);
+    private static Formula App(Formula f, params Formula[] args) => new Formula.Apply(f, [.. args]);
+    private static Formula Qualified(string owner, string name) =>
+        Seq(Operatorname, Grp(F.Id(owner)), Dot, Operatorname, Grp(F.Id(name)));
+    private static Formula SumRange(string name, Formula upper, Formula body) =>
+        Seq(Sum, Underscore, Grp(F.Id(name), Sp, InMacro, Sp,
+            App(Qualified("Finset", "range"), upper)), Sp, body);
 }

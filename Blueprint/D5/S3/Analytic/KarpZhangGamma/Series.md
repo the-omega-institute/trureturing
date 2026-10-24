@@ -32,7 +32,7 @@ For real t, scale(t) is Real.sqrt(Real.pi) times 2 to the real power 1-2t. It is
 
 **Theorem 1.3 (The finite positive beta transformation).**
 
-Lean statement: `D5/S3/Analytic/KarpZhangGamma/Series.positive_beta_transform`
+$$\forall n \in Nat,\; \forall t \in Real,\; 0 < t \Rightarrow \operatorname{gammaCoeff}\left(t, n\right) = \operatorname{scale}\left(t\right) \cdot \sum_{j \in \operatorname{Finset}.\operatorname{range}\left(\operatorname{Nat}.\operatorname{div}\left(n, 2\right) + 1\right)} \frac{1}{\operatorname{Nat}.\operatorname{factorial}\left(n - 2 \cdot j\right) \cdot \operatorname{Nat}.\operatorname{factorial}\left(j\right) \cdot \operatorname{Real}.\operatorname{Gamma}\left(t + \frac{1}{2} + j\right) \cdot 2^{n - 2 \cdot j} \cdot 16^{j}}$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Analytic/KarpZhangGamma/Series.positive_beta_transform` (`✓ std3`). ∎
 
@@ -60,7 +60,7 @@ For a real sequence y, real a and natural n, transformCoeff(y,a,n) is the sum ov
 
 **Theorem 1.5 (Identification with the transformed series).**
 
-Lean statement: `D5/S3/Analytic/KarpZhangGamma/Series.series_identification`
+$$\forall y \in Nat \to Real,\; \forall t \in Real,\; 0 < t \Rightarrow \left(\forall n \in Nat,\; y\left(n\right) \cdot \operatorname{gammaCoeff}\left(t, n\right) = \operatorname{scale}\left(t\right) \cdot \operatorname{transformCoeff}\left(y, t + \frac{1}{2}, n\right)\right)$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Analytic/KarpZhangGamma/Series.series_identification` (`✓ std3`). ∎
 
@@ -88,7 +88,7 @@ For a real sequence y, real mu,alpha,beta and natural n, gammaDelta(y,mu,alpha,b
 
 **Theorem 1.7 (Every coefficient of the gamma-series Turanian is nonnegative).**
 
-Lean statement: `D5/S3/Analytic/KarpZhangGamma/Series.gamma_half`
+$$\forall y \in Nat \to Real,\; \operatorname{IsLogConcave}\left(y\right) \Rightarrow \left(\forall mu \in Real,\; \forall alpha \in Real,\; \forall beta \in Real,\; 0 < mu \Rightarrow \left(0 \le alpha \Rightarrow \left(0 \le beta \Rightarrow \left(\forall n \in Nat,\; 0 \le \operatorname{gammaDelta}\left(y, mu, alpha, beta, n\right)\right)\right)\right)\right)$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Analytic/KarpZhangGamma/Series.gamma_half` (`✓ std3`). ∎
 

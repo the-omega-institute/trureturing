@@ -1,4 +1,6 @@
 using static StrataLint.Scribe.DefinitionDsl;
+using static StrataLint.Scribe.FormulaDsl;
+using F = StrataLint.Scribe.FormulaDsl;
 
 namespace StrataLint.Scribe.Blueprint.D5.S3.Analytic.KarpZhangReciprocal;
 
@@ -11,7 +13,7 @@ internal sealed class ResultDocument : IScribeDocumentDefinition
         "The reciprocal-Pochhammer half of Karp-Zhang Conjecture 5.2.",
         H("Reciprocal coefficients and Abel reduction"), Blocks(
             Entry("karp-zhang-reciprocal-log-concave-sequence", "IsLogConcave", "The sequence convention",
-                "Definition 1.1, page 2: Let (f_k), k >= 0, be a non-negative nontrivial real sequence. We call (f_k) log-concave (or Polya frequency two, PF2, or doubly positive) if f_k^2 >= f_(k-1) f_(k+1) for each natural k >= 1, and (f_k) is supported on an interval of integers (i.e., f_N = 0 implies either f_(N+i) = 0 for all natural i or f_(N-i) = 0 for i = 0, ..., N). The Lean predicate retains all four conditions: nonnegativity at every natural index, an index with nonzero value, the adjacent-product inequality for k >= 1, and the stated disjunction for every zero entry. Natural subtraction is used only with the stated bounds.", DescribeRole.Definition),
+                "The Lean predicate retains all four conditions: nonnegativity at every natural index, an index with nonzero value, the adjacent-product inequality for k ≥ 1, and the stated disjunction for every zero entry. Natural subtraction is used only with the stated bounds.", DescribeRole.Definition),
             Entry("karp-zhang-reciprocal-turanian-coefficient", "delta", "Finite Cauchy coefficient",
                 "For a real sequence y, real mu, alpha, beta and natural m, delta(y,mu,alpha,beta,m) is the sum over k=0,...,m of y(k)y(m-k) times [c(k,mu+alpha)c(m-k,mu+beta)-c(k,mu)c(m-k,mu+alpha+beta)]. It is exactly the degree-m coefficient of the difference of the two formal Cauchy products of the reciprocal series. No analytic convergence hypothesis is imposed.", DescribeRole.Definition),
             Entry("karp-zhang-reciprocal-balanced-step", "balanced_step", "Balancing one pair of indices",
@@ -26,8 +28,60 @@ internal sealed class ResultDocument : IScribeDocumentDefinition
     private static DocumentBlock Entry(string id, string name, string title, string text, DescribeRole role) =>
         Describe.Lean(DescribeId.Create(id),
             DeclarationHandle.Create("D5/S3/Analytic/KarpZhangReciprocal/Result." + name),
-            H(title), StatementSource.WithoutFormula(),
+            H(title), TheoremStatement(name),
             name == "IsLogConcave" || name == "delta"
                 ? AssessedProvenance.FromLiterature(Source) : AssessedProvenance.FromRepo(Source),
-            Blocks(Paragraph(Text(text))), role);
+            name == "IsLogConcave"
+                ? Blocks(SourceDefinition(), Paragraph(Text(text)))
+                : Blocks(Paragraph(Text(text))), role);
+
+    private static StatementSource TheoremStatement(string name) =>
+        name == "balanced_step" ? StatementSource.FromAuthor(Disp(All("y", new Formula.TypeArrow(F.Id("Nat"), F.Id("Real")), Implies(Call("IsLogConcave", F.Id("y")), All("m", F.Id("Nat"), All("k", F.Id("Nat"), Implies(Lt(F.Id("k"), App(Qualified("Nat", "div"), F.Id("m"), Num(2))), Le(Multiply(App(F.Id("y"), F.Id("k")), App(F.Id("y"), Subtract(F.Id("m"), F.Id("k")))), Multiply(App(F.Id("y"), Add(F.Id("k"), Num(1))), App(F.Id("y"), Subtract(F.Id("m"), Add(F.Id("k"), Num(1))))))))))))) :
+        name == "abel_reduction" ? StatementSource.FromAuthor(Disp(All("y", new Formula.TypeArrow(F.Id("Nat"), F.Id("Real")), All("mu", F.Id("Real"), All("alpha", F.Id("Real"), All("beta", F.Id("Real"), All("m", F.Id("Nat"), Equal(Call("delta", F.Id("y"), F.Id("mu"), F.Id("alpha"), F.Id("beta"), F.Id("m")), Add(Multiply(Multiply(App(F.Id("y"), Num(0)), App(F.Id("y"), F.Id("m"))), Subtract(Call("F", F.Id("m"), Num(0), F.Id("m"), Add(F.Id("mu"), F.Id("alpha")), Add(F.Id("mu"), F.Id("beta"))), Call("F", F.Id("m"), Num(0), F.Id("m"), F.Id("mu"), Add(Add(F.Id("mu"), F.Id("alpha")), F.Id("beta"))))), SumRange("q", App(Qualified("Nat", "div"), F.Id("m"), Num(2)), Multiply(Subtract(Multiply(App(F.Id("y"), Add(F.Id("q"), Num(1))), App(F.Id("y"), Subtract(F.Id("m"), Add(F.Id("q"), Num(1))))), Multiply(App(F.Id("y"), F.Id("q")), App(F.Id("y"), Subtract(F.Id("m"), F.Id("q"))))), Subtract(Call("F", F.Id("m"), Add(F.Id("q"), Num(1)), Subtract(F.Id("m"), Add(F.Id("q"), Num(1))), Add(F.Id("mu"), F.Id("alpha")), Add(F.Id("mu"), F.Id("beta"))), Call("F", F.Id("m"), Add(F.Id("q"), Num(1)), Subtract(F.Id("m"), Add(F.Id("q"), Num(1))), F.Id("mu"), Add(Add(F.Id("mu"), F.Id("alpha")), F.Id("beta"))))))))))))))) :
+        name == "reciprocal_half" ? StatementSource.FromAuthor(Disp(All("y", new Formula.TypeArrow(F.Id("Nat"), F.Id("Real")), Implies(Call("IsLogConcave", F.Id("y")), All("mu", F.Id("Real"), All("alpha", F.Id("Real"), All("beta", F.Id("Real"), Implies(Lt(Num(0), F.Id("mu")), Implies(Le(Num(0), F.Id("alpha")), Implies(Le(Num(0), F.Id("beta")), All("m", F.Id("Nat"), Le(Num(0), Call("delta", F.Id("y"), F.Id("mu"), F.Id("alpha"), F.Id("beta"), F.Id("m")))))))))))))) :
+        StatementSource.WithoutFormula();
+
+    private static Formula All(string name, Formula type, Formula body) =>
+        new Formula.Bind(FormulaQuantifier.ForAll, FormulaIdentifier.Create(name), type, body);
+    private static Formula Implies(Formula a, Formula b) =>
+        new Formula.Logic(a, FormulaLogicOperator.Implies, b);
+    private static Formula Le(Formula a, Formula b) =>
+        new Formula.Relation(a, FormulaRelationOperator.LessThanOrEqual, b);
+    private static Formula Lt(Formula a, Formula b) =>
+        new Formula.Relation(a, FormulaRelationOperator.LessThan, b);
+    private static Formula App(Formula f, params Formula[] args) => new Formula.Apply(f, [.. args]);
+    private static Formula Qualified(string owner, string name) =>
+        Seq(Operatorname, Grp(F.Id(owner)), Dot, Operatorname, Grp(F.Id(name)));
+    private static Formula SumRange(string name, Formula upper, Formula body) =>
+        Seq(Sum, Underscore, Grp(F.Id(name), Sp, InMacro, Sp,
+            App(Qualified("Finset", "range"), upper)), Sp, body);
+
+    private static DocumentBlock SourceDefinition() => Paragraph(
+        Text("Definition 1.1, page 2: Let "), Math(SourceSequence()),
+        Text(" be a non-negative nontrivial real sequence. We call "), Math(SourceSequence()),
+        Text(" log-concave (or Pólya frequency two – "),
+        Math(new Formula.Subscript(F.Id("PF"), Num(2))),
+        Text(", or doubly positive) if "),
+        Math(new Formula.Relation(
+            Seq(F.Id("f"), Underscore, Grp(F.Id("k")), Caret, Grp(Num(2))),
+            FormulaRelationOperator.GreaterThanOrEqual,
+            Seq(new Formula.Subscript(F.Id("f"), Subtract(F.Id("k"), Num(1))),
+                new Formula.Subscript(F.Id("f"), Add(F.Id("k"), Num(1)))))),
+        Text(" for each "), Math(Seq(F.Id("k"), InMacro, Mathbb, Grp(F.Id("N")))),
+        Text(", and "), Math(SourceSequence()),
+        Text(" is supported on an interval of integers (i.e., "),
+        Math(Equal(new Formula.Subscript(F.Id("f"), F.Id("N")), Num(0))),
+        Text(" implies either "),
+        Math(Equal(new Formula.Subscript(F.Id("f"), Add(F.Id("N"), F.Id("i"))), Num(0))),
+        Text(" for all "),
+        Math(Seq(F.Id("i"), InMacro, Mathbb, Grp(F.Id("N")), Underscore, Grp(Num(0)))),
+        Text(" or "),
+        Math(Equal(new Formula.Subscript(F.Id("f"), Subtract(F.Id("N"), F.Id("i"))), Num(0))),
+        Text(" for "),
+        Math(Seq(F.Id("i"), Eq, Num(0), Comma, Dot, Dot, Dot, Comma, F.Id("N"))),
+        Text(")."));
+
+    private static Formula SourceSequence() =>
+        Seq(OpenBrace, new Formula.Subscript(F.Id("f"), F.Id("k")), CloseBrace,
+            Underscore, Grp(F.Id("k"), Eq, Num(0)), Caret, Grp(Infty));
 }

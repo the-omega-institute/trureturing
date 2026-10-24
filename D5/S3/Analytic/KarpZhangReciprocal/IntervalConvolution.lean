@@ -2,11 +2,18 @@
    generality: G
    mirror-B: D5/B/S3/Analytic/KarpZhangReciprocal/IntervalConvolution
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
-   anchors: [mathlib/module/Mathlib.Analysis.Convex.Deriv]
+   anchors: [mathlib/module/Mathlib.RingTheory.Polynomial.Pochhammer, mathlib/module/Mathlib.Analysis.SpecialFunctions.Log.Deriv, mathlib/module/Mathlib.NumberTheory.Bernoulli, mathlib/module/Mathlib.Tactic.FieldSimp, mathlib/module/Mathlib.Tactic.GCongr, mathlib/module/Mathlib.Tactic.Linarith, mathlib/module/Mathlib.Tactic.Positivity, mathlib/module/Mathlib.Tactic.Ring, mathlib/module/Mathlib.Algebra.BigOperators.Field, mathlib/module/Mathlib.Analysis.Convex.Deriv]
    utility: none
    digest: Symmetric interval convolutions increase when positive parameters are balanced. -/
 
-import D5.S3.Analytic.KarpZhangReciprocal.Coeff
+import Mathlib.RingTheory.Polynomial.Pochhammer
+import Mathlib.Analysis.SpecialFunctions.Log.Deriv
+import Mathlib.NumberTheory.Bernoulli
+import Mathlib.Tactic.FieldSimp
+import Mathlib.Tactic.GCongr
+import Mathlib.Tactic.Linarith
+import Mathlib.Tactic.Positivity
+import Mathlib.Tactic.Ring
 import D5.S3.Analytic.KarpZhangReciprocal.BirthDeath
 import Mathlib.Algebra.BigOperators.Field
 import Mathlib.Analysis.Convex.Deriv
@@ -17,12 +24,50 @@ content theorem: symmetric_tail, through score_variance_bound.
 escape_witness: Reversible rates on an arbitrary finite interval absorb the score variance
 into expected coefficient curvature, including both endpoints. The resulting
 logarithmic concavity on lines s+t=S and symmetry imply the tail comparison.
-Only this direction of concavity is asserted. Projections of coefficient_calculus
-that use only positivity, derivatives or ratio monotonicity do not inherit
-the discarded curvature estimate as content.
+Only this direction of concavity is asserted. Coefficient calculus, including
+the curvature estimate obtained from Mathlib Faulhaber (sum_range_pow), is
+bind-only and supplies inputs to the reversible-rate variance argument.
 
-Per-declaration proof_shape (local names belong to this namespace;
-cross-module names have prefix D5.S3.Analytic):
+Per-declaration proof_shape (Coeff names belong to the coefficient namespace;
+other local names belong to IntervalConvolution; cross-module names have
+prefix D5.S3.Analytic):
+* Coeff.c: proof_shape: definition; escape_witness: none;
+  consumers: Coeff.c_deriv, Coeff.c_pos, Coeff.c_succ, Coeff.coefficient_calculus, F, balance, coefficient_step, rate_curvature, score_deriv, score_variance_bound, symmetric, weight, weight_deriv, weight_pos, KarpZhangReciprocal.Result.abel_reduction, KarpZhangReciprocal.Result.delta.
+* Coeff.lambda: proof_shape: definition; escape_witness: none;
+  consumers: Coeff.c_deriv, Coeff.c_succ, Coeff.coefficient_calculus, Coeff.lambda_antitone, Coeff.lambda_deriv, Coeff.lambda_pos, balance, birth, coefficient_step, death, rate_curvature, score_deriv, score_variance_bound, weight_deriv, weight_pos.
+* Coeff.eta: proof_shape: definition; escape_witness: none;
+  consumers: Coeff.c_deriv, Coeff.coefficient_calculus, Coeff.curvature_bound, Coeff.eta_deriv, Coeff.lambda_deriv, Coeff.psi, Coeff.psi_deriv, coefficient_step, rate_curvature, score_deriv, score_variance_bound, weight_deriv, weight_pos.
+* Coeff.psi: proof_shape: definition; escape_witness: none;
+  consumers: Coeff.c_deriv, Coeff.coefficient_calculus, Coeff.psi_deriv, coefficient_step, rate_curvature, score, score_deriv, score_variance_bound, weight_deriv, weight_pos.
+* Coeff.chi: proof_shape: definition; escape_witness: none;
+  consumers: Coeff.chi_nonneg, Coeff.coefficient_calculus, Coeff.curvature_bound, Coeff.psi_deriv, coefficient_step, curvature, rate_curvature, score_deriv, score_variance_bound, weight_deriv, weight_pos.
+* Coeff.c_pos: proof_shape: bind-only; escape_witness: none;
+  consumers: coefficient_calculus.
+* Coeff.lambda_pos: proof_shape: bind-only; escape_witness: none;
+  consumers: coefficient_calculus.
+* Coeff.c_succ: proof_shape: bind-only; escape_witness: none;
+  consumers: Coeff.c_deriv, coefficient_calculus.
+* Coeff.lambda_antitone: proof_shape: bind-only; escape_witness: none;
+  consumers: coefficient_calculus.
+* Coeff.lambda_deriv: proof_shape: bind-only; escape_witness: none;
+  consumers: c_deriv.
+* Coeff.eta_deriv: proof_shape: bind-only; escape_witness: none;
+  consumers: psi_deriv.
+* Coeff.c_deriv: proof_shape: bind-only; escape_witness: none;
+  consumers: coefficient_calculus.
+* Coeff.psi_deriv: proof_shape: bind-only; escape_witness: none;
+  consumers: coefficient_calculus.
+* Coeff.chi_nonneg: proof_shape: bind-only; escape_witness: none;
+  consumers: coefficient_calculus.
+* Coeff.curvature_summand: proof_shape: bind-only; escape_witness: none;
+  consumers: curvature_bound.
+* Coeff.square_sum_lower: proof_shape: bind-only; escape_witness: none;
+  consumers: curvature_bound.
+* Coeff.curvature_bound: proof_shape: bind-only; escape_witness: none;
+  consumers: coefficient_calculus.
+* Coeff.coefficient_calculus: proof_shape: bind-only; escape_witness: none;
+  consumers: coefficient_step, rate_curvature, score_deriv, score_variance_bound, weight_deriv, weight_pos.
+
 * F: proof_shape: definition; escape_witness: none;
   consumers: shift_tail, symmetric, symmetric_tail, KarpZhangReciprocal.Result.abel_reduction, KarpZhangReciprocal.Result.reciprocal_half.
 * weight: proof_shape: definition; escape_witness: none;
@@ -75,6 +120,186 @@ not bounded enumeration, checkers, numerical reductions or certified instances.
 noncomputable section
 open scoped BigOperators Topology
 open Finset
+
+open Polynomial
+
+namespace D5.S3.Analytic.KarpZhangReciprocal.Coeff
+
+/-- The coefficient of the reciprocal-Pochhammer series. -/
+def c (n : ℕ) (t : ℝ) : ℝ :=
+  (ascPochhammer ℝ n).eval (2 * t) /
+    ((ascPochhammer ℝ n).eval t * (n.factorial : ℝ))
+
+/-- The unnormalised adjacent-degree ratio. -/
+def lambda (j : ℕ) (t : ℝ) : ℝ := (2 * t + j) / (t + j)
+
+/-- The adjacent-degree score increment, including its zero value at degree zero. -/
+def eta (j : ℕ) (t : ℝ) : ℝ := (j : ℝ) / ((2 * t + j) * (t + j))
+
+/-- The logarithmic score, written as a finite sum including the zero summand. -/
+def psi (n : ℕ) (t : ℝ) : ℝ := ∑ j ∈ range n, eta j t
+
+/-- Negative logarithmic curvature, written as an explicit finite sum. -/
+def chi (n : ℕ) (t : ℝ) : ℝ :=
+  ∑ j ∈ range n, (j : ℝ) * (4 * t + 3 * j) /
+    ((2 * t + j) ^ 2 * (t + j) ^ 2)
+
+private theorem c_pos (n : ℕ) {t : ℝ} (ht : 0 < t) : 0 < c n t := by
+  exact div_pos (ascPochhammer_pos n _ (by linarith))
+    (mul_pos (ascPochhammer_pos n t ht) (by exact_mod_cast n.factorial_pos))
+
+private theorem lambda_pos (j : ℕ) {t : ℝ} (ht : 0 < t) : 0 < lambda j t := by
+  unfold lambda
+  positivity
+
+private theorem c_succ (n : ℕ) {t : ℝ} (ht : 0 < t) :
+    c (n + 1) t = c n t * lambda n t / (n + 1 : ℝ) := by
+  have hp := ne_of_gt (ascPochhammer_pos n t ht)
+  have hf : (n.factorial : ℝ) ≠ 0 := by positivity
+  have hn : t + n ≠ 0 := by positivity
+  have hs : (n : ℝ) + 1 ≠ 0 := by positivity
+  simp only [c, lambda, ascPochhammer_succ_eval, Nat.factorial_succ,
+    Nat.cast_mul, Nat.cast_add, Nat.cast_one]
+  field_simp [hp, hf, hn, hs]
+  <;> ring
+
+private theorem lambda_antitone {t : ℝ} (ht : 0 < t) :
+    Antitone (fun j : ℕ => lambda j t) := by
+  intro i j hij
+  have hi : 0 < t + i := by positivity
+  have hj : 0 < t + j := by positivity
+  have hij' : (i : ℝ) ≤ j := by exact_mod_cast hij
+  have hmul := mul_nonneg ht.le (sub_nonneg.mpr hij')
+  change (2 * t + (j : ℝ)) / (t + j) ≤ (2 * t + (i : ℝ)) / (t + i)
+  rw [div_le_div_iff₀ hj hi]
+  nlinarith
+
+private theorem lambda_deriv (j : ℕ) {t : ℝ} (ht : 0 < t) :
+    HasDerivAt (lambda j) (lambda j t * eta j t) t := by
+  have hd := (((hasDerivAt_id t).const_mul 2).add_const (j : ℝ)).div
+    ((hasDerivAt_id t).add_const (j : ℝ)) (by positivity : t + j ≠ 0)
+  apply hd.congr_deriv
+  dsimp [lambda, eta]
+  field_simp [ne_of_gt (show 0 < t + j by positivity),
+    ne_of_gt (show 0 < 2 * t + j by positivity)]
+  <;> ring
+
+private theorem eta_deriv (j : ℕ) {t : ℝ} (ht : 0 < t) :
+    HasDerivAt (eta j)
+      (-((j : ℝ) * (4 * t + 3 * j) / ((2 * t + j) ^ 2 * (t + j) ^ 2))) t := by
+  have hd := (hasDerivAt_const t (j : ℝ)).div
+    ((((hasDerivAt_id t).const_mul 2).add_const (j : ℝ)).mul
+      ((hasDerivAt_id t).add_const (j : ℝ)))
+    (by positivity : (2 * t + j) * (t + j) ≠ 0)
+  apply hd.congr_deriv
+  dsimp
+  field_simp [ne_of_gt (show 0 < t + j by positivity),
+    ne_of_gt (show 0 < 2 * t + j by positivity)]
+  <;> ring
+
+private theorem c_deriv (n : ℕ) {t : ℝ} (ht : 0 < t) :
+    HasDerivAt (c n) (c n t * psi n t) t := by
+  induction n with
+  | zero =>
+    have hc : c 0 = (fun _ : ℝ => 1) := by
+      funext u
+      simp only [c, ascPochhammer_zero, eval_one, Nat.factorial_zero,
+        Nat.cast_one, mul_one, div_one]
+    rw [hc]
+    simpa only [psi, sum_range_zero, mul_zero] using (hasDerivAt_const t (1 : ℝ))
+  | succ n ih =>
+    have hd := (ih.mul (lambda_deriv n ht)).div_const (n + 1 : ℝ)
+    have he : c (n + 1) =ᶠ[nhds t]
+        (fun u => c n u * lambda n u / (n + 1 : ℝ)) := by
+      exact (eventually_gt_nhds ht).mono (fun u hu => c_succ n hu)
+    have hd' := hd.congr_of_eventuallyEq he
+    convert hd' using 1
+    rw [c_succ n ht]
+    simp only [psi, sum_range_succ]
+    ring
+
+private theorem psi_deriv (n : ℕ) {t : ℝ} (ht : 0 < t) :
+    HasDerivAt (psi n) (-chi n t) t := by
+  change HasDerivAt (fun u : ℝ => ∑ j ∈ range n, eta j u) (-chi n t) t
+  have hd := HasDerivAt.fun_sum (u := range n) (fun j _ => eta_deriv j ht)
+  apply hd.congr_deriv
+  change (∑ j ∈ range n,
+    -((j : ℝ) * (4 * t + 3 * j) / ((2 * t + j) ^ 2 * (t + j) ^ 2))) =
+      -(∑ j ∈ range n,
+        (j : ℝ) * (4 * t + 3 * j) / ((2 * t + j) ^ 2 * (t + j) ^ 2))
+  rw [sum_neg_distrib]
+
+private theorem chi_nonneg (n : ℕ) {t : ℝ} (ht : 0 < t) : 0 ≤ chi n t := by
+  unfold chi
+  exact sum_nonneg (fun j _ => by positivity)
+
+/-- A denominator comparison retains enough of every summand for a degree-uniform bound. -/
+private theorem curvature_summand {j N : ℕ} {t : ℝ} (ht : 0 < t) (hj : j ≤ N) :
+    3 * (j : ℝ) ^ 2 / ((2 * t + N) ^ 2 * (t + N) ^ 2) ≤
+      (j : ℝ) * (4 * t + 3 * j) / ((2 * t + j) ^ 2 * (t + j) ^ 2) := by
+  have hj' : (j : ℝ) ≤ N := by exact_mod_cast hj
+  have hD : (2 * t + j) ^ 2 * (t + j) ^ 2 ≤
+      (2 * t + N) ^ 2 * (t + N) ^ 2 := by
+    gcongr
+  exact div_le_div₀ (by positivity)
+    (by nlinarith [mul_nonneg ht.le (Nat.cast_nonneg (α := ℝ) j)])
+    (by positivity) hD
+
+private theorem square_sum_lower (N : ℕ) :
+    ((N : ℝ) + 1) * (N : ℝ) ^ 2 ≤ ∑ j ∈ range (N + 1), 3 * (j : ℝ) ^ 2 := by
+  have h := sum_range_pow (N + 1) 2
+  norm_num [Finset.sum_range_succ] at h
+  rw [← Finset.sum_range_succ] at h
+  have hreal := congrArg (fun x : ℚ => (x : ℝ)) h
+  push_cast at hreal
+  rw [← mul_sum]
+  nlinarith [Nat.cast_nonneg (α := ℝ) N]
+
+/-- The scalar estimate used to absorb score variance into coefficient curvature. -/
+private theorem curvature_bound (n : ℕ) {t : ℝ} (ht : 0 < t) :
+    (n : ℝ) * eta (n - 1) t ^ 2 ≤ chi n t := by
+  cases n with
+  | zero => simp [eta, chi]
+  | succ N =>
+    have hD : 0 < (2 * t + N) ^ 2 * (t + N) ^ 2 := by positivity
+    calc
+      ((N + 1 : ℕ) : ℝ) * eta (N + 1 - 1) t ^ 2 =
+          (((N : ℝ) + 1) * (N : ℝ) ^ 2) /
+            ((2 * t + N) ^ 2 * (t + N) ^ 2) := by
+        simp only [Nat.add_sub_cancel, eta, Nat.cast_add, Nat.cast_one]
+        field_simp [ne_of_gt (show 0 < t + N by positivity),
+          ne_of_gt (show 0 < 2 * t + N by positivity)]
+        <;> ring
+      _ ≤ (∑ j ∈ range (N + 1), 3 * (j : ℝ) ^ 2) /
+          ((2 * t + N) ^ 2 * (t + N) ^ 2) :=
+        (div_le_div_iff_of_pos_right hD).2 (square_sum_lower N)
+      _ = ∑ j ∈ range (N + 1),
+          3 * (j : ℝ) ^ 2 / ((2 * t + N) ^ 2 * (t + N) ^ 2) := by
+        simp only [div_eq_mul_inv, sum_mul]
+      _ ≤ chi (N + 1) t := by
+        apply sum_le_sum
+        intro j hj
+        exact curvature_summand ht (Nat.le_of_lt_succ (mem_range.mp hj))
+
+/-- Coefficient calculus and the uniform score-curvature estimate, for every positive parameter.
+The `n = 0` curvature clause uses the zero score increment, so no exceptional index is needed. -/
+theorem coefficient_calculus (n : ℕ) {t : ℝ} (ht : 0 < t) :
+    0 < c n t ∧
+    0 < lambda n t ∧
+    c (n + 1) t / c n t = lambda n t / (n + 1 : ℝ) ∧
+    HasDerivAt (c n) (c n t * psi n t) t ∧
+    HasDerivAt (psi n) (-chi n t) t ∧
+    0 ≤ chi n t ∧
+    (n : ℝ) * eta (n - 1) t ^ 2 ≤ chi n t ∧
+    Antitone (fun j : ℕ => lambda j t) := by
+  refine ⟨c_pos n ht, lambda_pos n ht, ?_, c_deriv n ht,
+    psi_deriv n ht, chi_nonneg n ht, curvature_bound n ht, lambda_antitone ht⟩
+  rw [c_succ n ht]
+  field_simp [ne_of_gt (c_pos n ht), ne_of_gt (show 0 < (n : ℝ) + 1 by positivity)]
+  <;> ring
+
+end D5.S3.Analytic.KarpZhangReciprocal.Coeff
+
 
 namespace D5.S3.Analytic.KarpZhangReciprocal.IntervalConvolution
 
@@ -151,7 +376,7 @@ private theorem rate_curvature (m L n : ℕ) (hm : L + n ≤ m)
   have hp : lambda (L + i) s ≤ birth m L n s i - birth m L n s (i + 1) := by
     simp only [birth, if_pos hi]
     split_ifs with hnext
-    · have hmono := (coefficient_calculus 0 hs).2.2.2.2.2.2.2.2
+    · have hmono := (coefficient_calculus 0 hs).2.2.2.2.2.2.2
       have hcmp := hmono (show L + i ≤ L + (i + 1) by omega)
       have hmul := mul_nonneg (Nat.cast_nonneg (α := ℝ)
         (m - (L + (i + 1)))) (sub_nonneg.mpr hcmp)
@@ -170,7 +395,7 @@ private theorem rate_curvature (m L n : ℕ) (hm : L + n ≤ m)
       have hdeg : (1 : ℝ) ≤ (L + (0 + 1) : ℕ) := by exact_mod_cast (show 1 ≤ L + (0 + 1) by omega)
       have hmul := mul_nonneg (sub_nonneg.mpr hdeg) hB.le
       nlinarith
-    · have hmono := (coefficient_calculus 0 ht).2.2.2.2.2.2.2.2
+    · have hmono := (coefficient_calculus 0 ht).2.2.2.2.2.2.2
       have hcmp := hmono (show m - (L + (i + 1)) ≤ m - (L + i) by omega)
       have hmul := mul_nonneg (Nat.cast_nonneg (α := ℝ) (L + i))
         (sub_nonneg.mpr hcmp)
@@ -262,9 +487,9 @@ private theorem score_variance_bound (m L n : ℕ) (hm : L + n ≤ m)
       ring
     have hC : (k + 1 : ℕ) * X ^ 2 ≤ chi (k + 1) s := by
       simpa only [X, Nat.add_sub_cancel] using
-        (coefficient_calculus (k + 1) hs).2.2.2.2.2.2.2.1
+        (coefficient_calculus (k + 1) hs).2.2.2.2.2.2.1
     have hD : (ell : ℝ) * Y ^ 2 ≤ chi ell t :=
-      (coefficient_calculus ell ht).2.2.2.2.2.2.2.1
+      (coefficient_calculus ell ht).2.2.2.2.2.2.1
     have hpval : p i = (ell : ℝ) * A := by simp only [p, birth, if_pos hi, ell, A, k]
     have hrval : r (i + 1) = (k + 1 : ℕ) * B := by
       dsimp only [r]
@@ -302,9 +527,9 @@ private theorem score_variance_bound (m L n : ℕ) (hm : L + n ≤ m)
     rw [sum_range_succ' (fun i => π i * chi (L + i) s),
       sum_range_succ (fun i => π i * chi (m - (L + i)) t)]
     have h0 := mul_nonneg (hπ 0 (by omega)).le
-      (coefficient_calculus (L + 0) hs).2.2.2.2.2.2.1
+      (coefficient_calculus (L + 0) hs).2.2.2.2.2.1
     have hn := mul_nonneg (hπ n le_rfl).le
-      (coefficient_calculus (m - (L + n)) ht).2.2.2.2.2.2.1
+      (coefficient_calculus (m - (L + n)) ht).2.2.2.2.2.1
     linarith
   exact hv.trans (hsum.trans hends)
 
@@ -340,8 +565,8 @@ private theorem score_deriv (m L i : ℕ) (S : ℝ) {s : ℝ}
     (hs : 0 < s) (ht : 0 < S - s) :
     HasDerivAt (fun u => score m L i u (S - u))
       (-curvature m L i s (S - s)) s := by
-  have hd := (coefficient_calculus (L + i) hs).2.2.2.2.2.1
-  have he := ((coefficient_calculus (m - (L + i)) ht).2.2.2.2.2.1).comp s
+  have hd := (coefficient_calculus (L + i) hs).2.2.2.2.1
+  have he := ((coefficient_calculus (m - (L + i)) ht).2.2.2.2.1).comp s
     ((hasDerivAt_id s).const_sub S)
   apply (hd.sub he).congr_deriv
   dsimp [curvature]

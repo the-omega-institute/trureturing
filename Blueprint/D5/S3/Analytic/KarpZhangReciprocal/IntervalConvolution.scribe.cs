@@ -1,4 +1,6 @@
 using static StrataLint.Scribe.DefinitionDsl;
+using static StrataLint.Scribe.FormulaDsl;
+using F = StrataLint.Scribe.FormulaDsl;
 
 namespace StrataLint.Scribe.Blueprint.D5.S3.Analytic.KarpZhangReciprocal;
 
@@ -10,6 +12,18 @@ internal sealed class IntervalConvolutionDocument : IScribeDocumentDefinition
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "Balancing positive parameters in reciprocal Pochhammer interval convolutions.",
         H("Symmetric interval convolutions"), Blocks(
+            CoeffEntry("karp-zhang-reciprocal-coefficient", "c", "Reciprocal coefficients",
+                "For every natural n and real t, c(n,t) is the evaluation of ascPochhammer at 2t divided by the product of its evaluation at t and n factorial. For t positive this is the coefficient (2t)n/((t)n n!) in the reciprocal series of Conjecture 5.2, page 12.", DescribeRole.Definition),
+            CoeffEntry("karp-zhang-reciprocal-ratio", "lambda", "Adjacent degree ratio",
+                "For every natural j and real t, lambda(j,t) equals (2t+j)/(t+j).", DescribeRole.Definition),
+            CoeffEntry("karp-zhang-reciprocal-score-increment", "eta", "Score increment",
+                "For every natural j and real t, eta(j,t) equals j/((2t+j)(t+j)). In particular the increment at j=0 is zero.", DescribeRole.Definition),
+            CoeffEntry("karp-zhang-reciprocal-score", "psi", "Finite score sum",
+                "For every natural n and real t, psi(n,t) is the sum of eta(j,t) over 0 <= j < n. The zero index contributes zero, so this equals the sum over 1 <= j < n.", DescribeRole.Definition),
+            CoeffEntry("karp-zhang-reciprocal-curvature", "chi", "Finite curvature sum",
+                "For every natural n and real t, chi(n,t) is the sum over 0 <= j < n of j(4t+3j)/((2t+j)^2(t+j)^2).", DescribeRole.Definition),
+            CoeffEntry("karp-zhang-reciprocal-coefficient-calculus", "coefficient_calculus", "Uniform score and curvature estimates",
+                "For every natural n and positive real t, c(n,t) and lambda(n,t) are positive; c(n+1,t)/c(n,t) equals lambda(n,t)/(n+1); the derivative of c(n,t) is c(n,t)psi(n,t), the derivative of psi(n,t) is -chi(n,t). Curvature is nonnegative and at least n times eta(n-1,t) squared. The function j -> lambda(j,t) is antitone. Natural subtraction makes the n=0 curvature estimate meaningful, with both sides zero.", DescribeRole.Theorem),
             Entry("karp-zhang-reciprocal-interval-convolution", "F", "Interval convolution",
                 "For natural m, L, U and real s, t, F(m,L,U,s,t) is the sum of c(L+i,s)c(m-(L+i),t) over 0 <= i < U-L+1, with natural subtraction. When L <= U <= m this is exactly the convolution over L <= k <= U.", DescribeRole.Definition),
             Entry("karp-zhang-reciprocal-symmetric-tail", "symmetric_tail", "Balancing inequality",
@@ -22,6 +36,36 @@ internal sealed class IntervalConvolutionDocument : IScribeDocumentDefinition
     private static DocumentBlock Entry(string id, string name, string title, string text, DescribeRole role) =>
         Describe.Lean(DescribeId.Create(id),
             DeclarationHandle.Create("D5/S3/Analytic/KarpZhangReciprocal/IntervalConvolution." + name),
-            H(title), StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(Source),
+            H(title), TheoremStatement(name), AssessedProvenance.FromRepo(Source),
             Blocks(Paragraph(Text(text))), role);
+
+    private static StatementSource TheoremStatement(string name) =>
+        name == "symmetric_tail" ? StatementSource.FromAuthor(Disp(All("m", F.Id("Nat"), All("q", F.Id("Nat"), Implies(Le(Multiply(Num(2), F.Id("q")), F.Id("m")), All("a", F.Id("Real"), All("b", F.Id("Real"), All("c", F.Id("Real"), All("d", F.Id("Real"), Implies(Lt(Num(0), F.Id("a")), Implies(Le(F.Id("a"), F.Id("b")), Implies(Le(F.Id("b"), F.Id("c")), Implies(Le(F.Id("c"), F.Id("d")), Implies(Equal(Add(F.Id("a"), F.Id("d")), Add(F.Id("b"), F.Id("c"))), Le(Call("F", F.Id("m"), F.Id("q"), Subtract(F.Id("m"), F.Id("q")), F.Id("a"), F.Id("d")), Call("F", F.Id("m"), F.Id("q"), Subtract(F.Id("m"), F.Id("q")), F.Id("b"), F.Id("c"))))))))))))))))) :
+        name == "shift_tail" ? StatementSource.FromAuthor(Disp(All("m", F.Id("Nat"), All("q", F.Id("Nat"), Implies(Le(Multiply(Num(2), F.Id("q")), F.Id("m")), All("mu", F.Id("Real"), All("alpha", F.Id("Real"), All("beta", F.Id("Real"), Implies(Lt(Num(0), F.Id("mu")), Implies(Le(Num(0), F.Id("alpha")), Implies(Le(Num(0), F.Id("beta")), Le(Call("F", F.Id("m"), F.Id("q"), Subtract(F.Id("m"), F.Id("q")), F.Id("mu"), Add(Add(F.Id("mu"), F.Id("alpha")), F.Id("beta"))), Call("F", F.Id("m"), F.Id("q"), Subtract(F.Id("m"), F.Id("q")), Add(F.Id("mu"), F.Id("alpha")), Add(F.Id("mu"), F.Id("beta"))))))))))))))) :
+        StatementSource.WithoutFormula();
+
+    private static Formula All(string name, Formula type, Formula body) =>
+        new Formula.Bind(FormulaQuantifier.ForAll, FormulaIdentifier.Create(name), type, body);
+    private static Formula Implies(Formula a, Formula b) =>
+        new Formula.Logic(a, FormulaLogicOperator.Implies, b);
+    private static Formula Le(Formula a, Formula b) =>
+        new Formula.Relation(a, FormulaRelationOperator.LessThanOrEqual, b);
+    private static Formula Lt(Formula a, Formula b) =>
+        new Formula.Relation(a, FormulaRelationOperator.LessThan, b);
+
+    private static DocumentBlock CoeffEntry(string id, string name, string title, string text, DescribeRole role) =>
+        Describe.Lean(DescribeId.Create(id),
+            DeclarationHandle.Create("D5/S3/Analytic/KarpZhangReciprocal/IntervalConvolution." + name),
+            H(title), CoeffEntryStatement(name),
+            name == "c" ? AssessedProvenance.FromLiterature(Source) : AssessedProvenance.FromRepo(Source),
+            Blocks(Paragraph(Text(text))), role);
+
+    private static StatementSource CoeffEntryStatement(string name) =>
+        name == "coefficient_calculus" ? StatementSource.FromAuthor(Disp(All("n", F.Id("Nat"), All("t", F.Id("Real"), Implies(Lt(Num(0), F.Id("t")), And(Lt(Num(0), Call("c", F.Id("n"), F.Id("t"))), And(Lt(Num(0), Call("lambda", F.Id("n"), F.Id("t"))), And(Equal(new Formula.Fraction(Call("c", Add(F.Id("n"), Num(1)), F.Id("t")), Call("c", F.Id("n"), F.Id("t"))), new Formula.Fraction(Call("lambda", F.Id("n"), F.Id("t")), Add(F.Id("n"), Num(1)))), And(Call("HasDerivAt", Call("c", F.Id("n")), Multiply(Call("c", F.Id("n"), F.Id("t")), Call("psi", F.Id("n"), F.Id("t"))), F.Id("t")), And(Call("HasDerivAt", Call("psi", F.Id("n")), new Formula.Negate(Call("chi", F.Id("n"), F.Id("t"))), F.Id("t")), And(Le(Num(0), Call("chi", F.Id("n"), F.Id("t"))), And(Le(Multiply(F.Id("n"), new Formula.Power(Call("eta", Subtract(F.Id("n"), Num(1)), F.Id("t")), Num(2))), Call("chi", F.Id("n"), F.Id("t"))), Call("Antitone", LambdaOf("j", Call("lambda", F.Id("j"), F.Id("t")))))))))))))))) :
+        StatementSource.WithoutFormula();
+
+    private static Formula And(Formula a, Formula b) =>
+        new Formula.Logic(a, FormulaLogicOperator.And, b);
+    private static Formula LambdaOf(string name, Formula body) =>
+        Seq(Operatorname, Grp(F.Id("fun")), Sp, F.Id(name), Sp, Mapsto, Sp, body);
 }

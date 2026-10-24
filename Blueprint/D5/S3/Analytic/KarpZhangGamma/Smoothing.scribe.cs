@@ -1,4 +1,6 @@
 using static StrataLint.Scribe.DefinitionDsl;
+using static StrataLint.Scribe.FormulaDsl;
+using F = StrataLint.Scribe.FormulaDsl;
 
 namespace StrataLint.Scribe.Blueprint.D5.S3.Analytic.KarpZhangGamma;
 
@@ -28,6 +30,32 @@ internal sealed class SmoothingDocument : IScribeDocumentDefinition
     private static DocumentBlock Entry(string id, string name, string title, string text, DescribeRole role) =>
         Describe.Lean(DescribeId.Create(id),
             DeclarationHandle.Create("D5/S3/Analytic/KarpZhangGamma/Smoothing." + name),
-            H(title), StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
+            H(title), TheoremStatement(name), AssessedProvenance.FromRepo(),
             Blocks(Paragraph(Text(text))), role);
+
+    private static StatementSource TheoremStatement(string name) =>
+        name == "balanced_product" ? StatementSource.FromAuthor(Disp(All("y", new Formula.TypeArrow(F.Id("Nat"), F.Id("Real")), Implies(Call("IsLogConcave", F.Id("y")), All("L", F.Id("Nat"), All("R", F.Id("Nat"), All("u", F.Id("Nat"), All("v", F.Id("Nat"), Implies(Le(F.Id("L"), F.Id("u")), Implies(Le(F.Id("L"), F.Id("v")), Implies(Le(F.Id("u"), F.Id("R")), Implies(Le(F.Id("v"), F.Id("R")), Implies(Equal(Add(F.Id("u"), F.Id("v")), Add(F.Id("L"), F.Id("R"))), Le(Multiply(App(F.Id("y"), F.Id("L")), App(F.Id("y"), F.Id("R"))), Multiply(App(F.Id("y"), F.Id("u")), App(F.Id("y"), F.Id("v"))))))))))))))))) :
+        name == "binomialProduct_succ" ? StatementSource.FromAuthor(Disp(All("f", new Formula.TypeArrow(F.Id("Nat"), F.Id("Real")), All("g", new Formula.TypeArrow(F.Id("Nat"), F.Id("Real")), All("N", F.Id("Nat"), Equal(Call("binomialProduct", F.Id("f"), F.Id("g"), Add(F.Id("N"), Num(1))), Add(Call("binomialProduct", LambdaOf("r", App(F.Id("f"), Add(F.Id("r"), Num(1)))), F.Id("g"), F.Id("N")), Call("binomialProduct", F.Id("f"), LambdaOf("r", App(F.Id("g"), Add(F.Id("r"), Num(1)))), F.Id("N"))))))))) :
+        name == "binomialProduct_comm" ? StatementSource.FromAuthor(Disp(All("f", new Formula.TypeArrow(F.Id("Nat"), F.Id("Real")), All("g", new Formula.TypeArrow(F.Id("Nat"), F.Id("Real")), All("N", F.Id("Nat"), Equal(Call("binomialProduct", F.Id("f"), F.Id("g"), F.Id("N")), Call("binomialProduct", F.Id("g"), F.Id("f"), F.Id("N")))))))) :
+        name == "productCoeff_eq" ? StatementSource.FromAuthor(Disp(All("f", new Formula.TypeArrow(F.Id("Nat"), F.Id("Real")), All("g", new Formula.TypeArrow(F.Id("Nat"), F.Id("Real")), All("N", F.Id("Nat"), Equal(Call("productCoeff", F.Id("f"), F.Id("g"), F.Id("N")), new Formula.Fraction(Call("binomialProduct", F.Id("f"), F.Id("g"), F.Id("N")), App(Qualified("Nat", "factorial"), F.Id("N"))))))))) :
+        name == "smoothing_minor" ? StatementSource.FromAuthor(Disp(All("y", new Formula.TypeArrow(F.Id("Nat"), F.Id("Real")), Implies(Call("IsLogConcave", F.Id("y")), All("p", F.Id("Nat"), All("q", F.Id("Nat"), All("N", F.Id("Nat"), Implies(Le(F.Id("p"), Add(F.Id("q"), Num(1))), Le(Call("productCoeff", LambdaOf("r", App(F.Id("y"), Add(F.Id("p"), F.Id("r")))), LambdaOf("r", App(F.Id("y"), Add(Add(F.Id("q"), Num(2)), F.Id("r")))), F.Id("N")), Call("productCoeff", LambdaOf("r", App(F.Id("y"), Add(Add(F.Id("p"), Num(1)), F.Id("r")))), LambdaOf("r", App(F.Id("y"), Add(Add(F.Id("q"), Num(1)), F.Id("r")))), F.Id("N"))))))))))) :
+        name == "smoothed_weighting" ? StatementSource.FromAuthor(Disp(All("y", new Formula.TypeArrow(F.Id("Nat"), F.Id("Real")), Implies(Call("IsLogConcave", F.Id("y")), All("A", new Formula.TypeArrow(F.Id("Nat"), F.Id("Real")), All("m", F.Id("Nat"), Implies(All("i", F.Id("Nat"), Implies(Le(F.Id("i"), App(Qualified("Nat", "div"), F.Id("m"), Num(2))), All("j", F.Id("Nat"), Implies(Le(F.Id("j"), App(Qualified("Nat", "div"), F.Id("m"), Num(2))), Implies(Lt(F.Id("i"), F.Id("j")), Implies(Lt(Num(0), App(F.Id("A"), F.Id("i"))), Le(Num(0), App(F.Id("A"), F.Id("j"))))))))), Implies(Le(Num(0), SumRange("i", Add(App(Qualified("Nat", "div"), F.Id("m"), Num(2)), Num(1)), App(F.Id("A"), F.Id("i")))), All("N", F.Id("Nat"), Le(Num(0), SumRange("k", Add(App(Qualified("Nat", "div"), F.Id("m"), Num(2)), Num(1)), Multiply(App(F.Id("A"), F.Id("k")), Call("productCoeff", LambdaOf("r", App(F.Id("y"), Add(Multiply(Num(2), F.Id("k")), F.Id("r")))), LambdaOf("r", App(F.Id("y"), Add(Multiply(Num(2), Subtract(F.Id("m"), F.Id("k"))), F.Id("r")))), F.Id("N")))))))))))))) :
+        StatementSource.WithoutFormula();
+
+    private static Formula All(string name, Formula type, Formula body) =>
+        new Formula.Bind(FormulaQuantifier.ForAll, FormulaIdentifier.Create(name), type, body);
+    private static Formula Implies(Formula a, Formula b) =>
+        new Formula.Logic(a, FormulaLogicOperator.Implies, b);
+    private static Formula Le(Formula a, Formula b) =>
+        new Formula.Relation(a, FormulaRelationOperator.LessThanOrEqual, b);
+    private static Formula Lt(Formula a, Formula b) =>
+        new Formula.Relation(a, FormulaRelationOperator.LessThan, b);
+    private static Formula App(Formula f, params Formula[] args) => new Formula.Apply(f, [.. args]);
+    private static Formula Qualified(string owner, string name) =>
+        Seq(Operatorname, Grp(F.Id(owner)), Dot, Operatorname, Grp(F.Id(name)));
+    private static Formula LambdaOf(string name, Formula body) =>
+        Seq(Operatorname, Grp(F.Id("fun")), Sp, F.Id(name), Sp, Mapsto, Sp, body);
+    private static Formula SumRange(string name, Formula upper, Formula body) =>
+        Seq(Sum, Underscore, Grp(F.Id(name), Sp, InMacro, Sp,
+            App(Qualified("Finset", "range"), upper)), Sp, body);
 }

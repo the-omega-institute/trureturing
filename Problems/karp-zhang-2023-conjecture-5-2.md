@@ -26,11 +26,13 @@ $$
 \widehat y(\mu;x)=\sum_{k=0}^{\infty}y_k\frac{\Gamma(\mu+k)}{\Gamma(2\mu+k)k!}x^k.
 $$
 
-Here $(a)_k$ is the rising factorial. Definition 1.1, page 2, requires a
-nonnegative, nontrivial real sequence, the inequalities
-$y_k^2\ge y_{k-1}y_{k+1}$ for $k\ge1$, and support on an interval of integers.
-Its exact zero condition is that $y_N=0$ implies either $y_{N+i}=0$ for every
-$i\ge0$, or $y_{N-i}=0$ for every $0\le i\le N$.
+Here $(a)_k$ is the rising factorial. Definition 1.1, page 2:
+
+> Let $\{f_k\}_{k=0}^{\infty}$ be a non-negative nontrivial real sequence. We call $\{f_k\}_{k=0}^{\infty}$ log-concave (or Pólya frequency two – $PF_2$, or doubly positive) if $f_k^2\ge f_{k-1}f_{k+1}$ for each $k\in\mathbb N$, and $\{f_k\}_{k=0}^{\infty}$ is supported on an interval of integers (i.e., $f_N=0$ implies either $f_{N+i}=0$ for all $i\in\mathbb N_0$ or $f_{N-i}=0$ for $i=0,\ldots,N$).
+
+The Lean predicate retains nonnegativity, nontriviality, adjacent inequalities
+for positive natural indices, and the printed zero-support disjunction.
+Natural subtraction is used only with the stated bounds.
 
 For either series $f$, coefficientwise log-concavity means that every
 coefficient of
@@ -148,9 +150,9 @@ additional axioms.
 The source is arXiv:2305.09029v3, pages 2 and 12, with DOI
 10.1007/s13540-023-00238-0; the quotation and sequence convention are recorded
 in `Library/Asymptotics/karpzhang2023pochhammer.md`. The reciprocal proof is in
-`D5/S3/Analytic/KarpZhangReciprocal/{Coeff,BirthDeath,IntervalConvolution,Result}.lean`;
+`D5/S3/Analytic/KarpZhangReciprocal/{BirthDeath,IntervalConvolution,Result}.lean`;
 the gamma proof is in
-`D5/S3/Analytic/KarpZhangGamma/{Weighting,Smoothing,Kernel,Result,Series}.lean`.
+`D5/S3/Analytic/KarpZhangGamma/{Weighting,Smoothing,Result,Series}.lean`.
 `D5/S3/Analytic/KarpZhangConjecture/Result.lean` states `claim` and proves it as
 `result` by the two imported half theorems.
 
@@ -197,5 +199,5 @@ unverified. Numerical support for Conjectures 3.8 and 4.2 is supplied by the
 research line; no numerical experiment or uniform extension is certified by
 this delivery. The producer attribution above is supplied by the coordinating
 research line. Four-slot escape registrations for the public theorems of the
-nine supporting modules and for the settling `result` are not completed in
+seven supporting modules and for the settling `result` are not completed in
 this delivery; their mathematical proofs do not constitute those registrations.
