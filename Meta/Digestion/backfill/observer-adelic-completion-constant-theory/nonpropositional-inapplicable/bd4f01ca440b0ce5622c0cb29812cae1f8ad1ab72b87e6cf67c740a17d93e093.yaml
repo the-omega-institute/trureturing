@@ -5,3 +5,7 @@ cas_ref: sha256:bd4f01ca440b0ce5622c0cb29812cae1f8ad1ab72b87e6cf67c740a17d93e093
 coverage_gids: []
 receipts:
   unresolved_subitems: []
+  nonpropositional:
+    justification: 报告 actual Li–Clark moments 的证明状态为尚未证明，不断言正定命题成立。
+    previous_atom_id: baf3e1055ae6ffff5705d8087f9711fb209c1bff5e497b0038019ef81188d5cc
+    next_atom_id: 88ce5da63a5327cdbafaa9aed512d5b96ffa07370e351bbbb6bd6f69381ba8ab
