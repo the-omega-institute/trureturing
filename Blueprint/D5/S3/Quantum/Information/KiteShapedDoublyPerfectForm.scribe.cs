@@ -151,5 +151,8 @@ internal sealed class KiteShapedDoublyPerfectFormDocument : IScribeDocumentDefin
                         + "so this block determinant equals det(KK-1), and hence det T. Finally, a square matrix "
                         + "over ZMod 2 is right-separating exactly when its determinant is nonzero. The determinant "
                         + "values give the two unconditional trivial-kernel assertions and both equivalences for every positive n."))),
-                DescribeRole.Theorem))));
+                DescribeRole.Theorem,
+                openProblemResolutionClaim: new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("gross-goedicke-2025-kite-shaped-quadratic-forms"),
+                    ResolutionKind.Proved)))));
 }
