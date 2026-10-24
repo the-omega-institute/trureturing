@@ -27,8 +27,9 @@ internal sealed class QuantumGraphStrangeComponentCountDocument : IScribeDocumen
                     + "This is the direct sum in content/groupactions.tex, lines 172–177, with the trivial middle matrix specified in lines 246–249. "
                     + "The definition itself allows arbitrary A, C and d; self-adjointness and idempotence are separate hypotheses."),
             Node("adjacency", "adjacency", "The adjacency operator by realignment",
-                AdjacencyFormula(), AssessedProvenance.FromRepo(Source),
-                "The notation ofChoiMatrix denotes D5.S3.Quantum.Foundation.FiniteKrausChannel.PhyslibLeaf.MatrixMap.of_choi_matrix. "
+                AdjacencyFormula(), AssessedProvenance.FromLiterature(Source),
+                "Here MatrixMap.of_choi_matrix denotes D5.S3.Quantum.Foundation.FiniteKrausChannel.PhyslibLeaf.MatrixMap.of_choi_matrix. "
+                    + "Nested subscripts in the displayed declaration name encode underscores. "
                     + "It converts the displayed matrix into a complex linear adjacency operator. Writing X^R for realignedProjector A C d and G for adjacency A C d, "
                     + "the realignment formula is (GZ)_{ik} = ∑_{j,l} X^R_{(i,j),(k,l)} Z_{jl}. "
                     + "In particular, the output indices are the first and third indices of the realigned matrix. "
@@ -49,7 +50,8 @@ internal sealed class QuantumGraphStrangeComponentCountDocument : IScribeDocumen
                     + "Without those hypotheses it still defines the simple support graph of the four entries."),
             Node("loop-free-strange-component", "IsLoopFreeStrangeComponent", "An isolated strange edge without endpoint loops",
                 ExceptionalFormula(), AssessedProvenance.FromRepo(Source),
-                "The support of Q must consist of exactly two distinct adjacent vertices i and j, with A i j = 1/2 and d i = d j = 0. "
+                "This predicate is introduced here to state the exact component count. "
+                    + "The support of Q must consist of exactly two distinct adjacent vertices i and j, with A i j = 1/2 and d i = d j = 0. "
                     + "Under the projector and undirectedness hypotheses, A i j = 1/2 identifies a strange edge, "
                     + "whose conjugate off-diagonal coefficients have product 1/4. The predicate places no restriction on its phase. "
                     + "It is a condition on a whole connected component, so the edge is isolated from all other vertices."),
@@ -60,7 +62,8 @@ internal sealed class QuantumGraphStrangeComponentCountDocument : IScribeDocumen
                     + "The cardinality is already a natural number; no scalar conversion is involved."),
             Node("loop-free-strange-component-count", "loopFreeStrangeComponentCount", "The exceptional component count",
                 ExceptionalCountFormula(), AssessedProvenance.FromRepo(Source),
-                "This natural number counts precisely the connected components satisfying IsLoopFreeStrangeComponent. "
+                "This natural number is introduced here to state the exact component count. "
+                    + "It counts precisely the connected components satisfying IsLoopFreeStrangeComponent. "
                     + "Each unordered two-vertex component is counted once, independently of the choice of its two endpoints. "
                     + "The subtype cardinality is a natural number, with no scalar conversion."),
             Node("claim", "claim", "The exact-count assertion",
@@ -166,7 +169,7 @@ internal sealed class QuantumGraphStrangeComponentCountDocument : IScribeDocumen
     }
 
     private static Formula AdjacencyFormula() => Parameters(
-        Equal(Typed(Adjacency(), LinearEnd()), App(Qualified("MatrixMap", "ofChoiMatrix"), Realigned())));
+        Equal(Typed(Adjacency(), LinearEnd()), App(Qualified("MatrixMap", "of_choi_matrix"), Realigned())));
 
     private static Formula RealignmentFormula()
     {
@@ -242,9 +245,17 @@ internal sealed class QuantumGraphStrangeComponentCountDocument : IScribeDocumen
     private static Formula X(string name) => F.Id(name);
     private static Formula Name(string name) => Seq(Operatorname, Grp(F.Id(name)));
     private static Formula Qualified(string first, string second) =>
-        Seq(Operatorname, Grp(F.Id(first), Dot, F.Id(second)));
+        Seq(Operatorname, Grp(F.Id(first), Dot, Identifier(second)));
     private static Formula Qualified(string first, string second, string third) =>
         Seq(Operatorname, Grp(F.Id(first), Dot, F.Id(second), Dot, F.Id(third)));
+    private static Formula Identifier(string name)
+    {
+        var parts = name.Split('_');
+        Formula value = F.Id(parts[^1]);
+        for (var i = parts.Length - 2; i >= 0; --i)
+            value = Seq(F.Id(parts[i]), Underscore, Grp(value));
+        return value;
+    }
     private static Formula Parenthesized(Formula value) => Seq(Open, value, Close);
     private static Formula Typed(Formula value, Formula type) => Parenthesized(Seq(value, Colon, Sp, type));
     private static Formula App(Formula function, params Formula[] arguments) => new Formula.Apply(function, [.. arguments]);
