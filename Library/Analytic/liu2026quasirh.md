@@ -679,6 +679,388 @@ $$
 
 Its conductor cut is defined separately in each fixed finite ray character component; these components are then summed coherently. The same source, coefficient signs, all squarefree columns and original collision zeros remain. With this unproved input, the paid lower-order block, low-conductor sum and preceding truncation error would give the full inverse-fourth exponent $B_*-\nu$, and hence the existing complete-energy consumer at $\kappa_{\rm joint}-\nu/2$. No such long-conductor estimate is supplied. This application narrows that missing input; it neither improves the full moment on its own nor restores the signed Robin expression. Classical convexity, Euler products, conductor identities and ideal counting are reused, with no analytic Lean certification or literature-priority claim.
 
+## Retaining the conductor cap with Hecke subconvexity
+
+The same original low-conductor sub-sum admits a stronger bound by reusing a uniform Hecke subconvexity theorem and retaining its conductor cap during summation. Fix $F=\mathbb Q(\sqrt{-3})$. Suppose that for all unitary Hecke characters of $F$ one has
+
+$$
+|L(1/2,\chi)|\ll_{F,\varepsilon} C(\chi)^{c+\varepsilon},
+\qquad 0\le c\le1/4,
+$$
+
+with the constant independent of the character and its analytic conductor. Han Wu, [*Burgess-like subconvexity for GL1*, Theorem 1.1, arXiv:1604.08551v6](https://arxiv.org/html/1604.08551v6), published with [DOI 10.1112/S0010437X19007309](https://doi.org/10.1112/S0010437X19007309), supplies
+
+$$
+c=\frac14-\frac{1-2\theta_{\rm RP}}{16}.
+$$
+
+The paper's character convention is unitary. Blomer–Brumley, [*On the Ramanujan conjecture over number fields*, Theorem 1 and Hypothesis $H_n(\delta)$, arXiv:1003.0559v4](https://arxiv.org/abs/1003.0559v4), [DOI 10.4007/annals.2011.174.1.18](https://doi.org/10.4007/annals.2011.174.1.18), gives $\theta_{\rm RP}=7/64$ over any number field and at every place, including the complex place here. The totally-real restriction in its following twisted-GL2 application is not a restriction on Theorem 1. Thus an unconditional published input is
+
+$$
+c=\frac{103}{512},\qquad \alpha=\frac{1+c}{3}=\frac{205}{512}.
+$$
+
+**Transport to the complete row kernel.** Applying the central bound to $\chi|\cdot|^{i\tau}$ controls the whole central vertical line, with
+
+$$
+C_\tau\asymp_F q_{\mathfrak f}(1+|\tau|)^2.
+$$
+
+Interpolate between $\Re s=1/2$ and the absolutely convergent line $1+\varepsilon$ to obtain the exponent $c/3+\varepsilon$ at $5/6+i\tau$. The functional equation then gives
+
+$$
+|L(1/6+i\tau,\chi)|
+\ll_{F,\varepsilon} C_\tau^{\alpha+\varepsilon},
+\qquad \alpha=\frac13+\frac c3.
+$$
+
+This uses a bound on the entire central line before interpolation, rather than interpolating an isolated central value leftwards. Apply it on the same $1/6+\varepsilon$ Mellin line to the exact imprimitive ratio $L(s,\chi_0)/L(6s,\chi_0^6)$ above. The nonprincipal primitive numerator has no pole to cross, the inverse denominator is absolutely bounded there, and every original collision zero and zero-only Euler factor is retained. Mellin decay absorbs the polynomial height cost, giving
+
+$$
+|\mathcal K_{U,\Omega}(a,b)|
+\ll U^{1/6+\varepsilon}q_{\mathfrak f}^{\alpha+\varepsilon}.
+$$
+
+The original finite ray components and required profile derivatives obey the same fixed or polylog cost contract. This does not enlarge its growing-height range or insert a complete-row argument inside an adaptive bin.
+
+The unchanged coefficient envelope and pair count give, for $1\le G\ll U$,
+
+$$
+\begin{aligned}
+\sum_{\substack{r_2(a)\ne r_2(b)\\q_{(a,b)}\ge G}}
+ |g_{\le T}(a)\overline{g_{\le T}(b)}\mathcal K_{U,\Omega}(a,b)|
+&\ll U^{7/6+2\alpha+\varepsilon}
+ \sum_{q_h\ge G}q_h^{-2-2\alpha}\\
+&\ll U^{7/6+2\alpha+\varepsilon}G^{-1-2\alpha}.
+\end{aligned}
+$$
+
+**Keep both conductor bounds in the low head.** Put $Q=U^{1+\eta}$, $T=U^\theta$, with $\eta\ge0$, $\theta>0$ and $\theta+\eta/2<1/2$. The preceding conductor lower bound restricts the low head to $q_h\gg H_0$, where
+
+$$
+H_0=U^{1/2-\theta-\eta/2},\qquad
+H_1=U^{1/2-\eta/2}.
+$$
+
+Keep the actual upper bounds together:
+
+$$
+q_{\mathfrak f}^{\alpha}
+\ll \min\{Q,(U/q_h)^2\}^{\alpha}.
+$$
+
+Ordinary ideal counting in the two ranges $H_0\ll q_h\le H_1$ and $q_h\ge H_1$ gives
+
+$$
+\begin{aligned}
+\left|E_{6,\,q_{\mathfrak f}\le Q}^{\mu,\le T}\right|
+&\ll U^{7/6+\varepsilon}
+ \left(Q^\alpha\sum_{H_0\ll q_h\le H_1}q_h^{-2}
+       +U^{2\alpha}\sum_{q_h\ge H_1}q_h^{-2-2\alpha}\right)\\
+&\ll U^{7/6+\varepsilon}
+ \left(Q^\alpha H_0^{-1}+U^{2\alpha}H_1^{-1-2\alpha}\right)\\
+&\ll U^{2/3+\alpha+\theta+(1/2+\alpha)\eta+\varepsilon}.
+\end{aligned}
+$$
+
+Fixed conductor-comparison constants only move the two cutoffs by fixed factors. The coefficient of $\theta$ is now $1$ because the conductor cap was kept inside the sum; this improvement does not depend on subconvexity. With convexity alone, $\alpha=5/12$, the same cap gives $13/12+\theta+11\eta/12$. The additional decrease in $\alpha$ is supplied by Wu and Blomer–Brumley, not by a new subconvexity theorem here.
+
+For their published input, the low-head exponent is
+
+$$
+\frac{1639}{1536}+\theta+\frac{461}{512}\eta.
+$$
+
+In particular, take
+
+$$
+\theta=\frac1{1000},\quad \eta=\frac1{100},\quad
+H_0=U^{247/500},\quad H_1=U^{99/200}.
+$$
+
+Then the same original low-conductor contribution satisfies
+
+$$
+\boxed{
+\left|E_{6,\,q_{\mathfrak f}\le U^{101/100}}^{\mu,\le U^{1/1000}}\right|
+\ll U^{827183/768000+\varepsilon}.
+}
+$$
+
+Here $827183/768000=1.077061197916\ldots$ and
+
+$$
+\frac{13}{12}-\frac{827183}{768000}
+=\frac{4817}{768000}>0,\qquad \frac{13}{12}<B_*.
+$$
+
+Thus the missing sufficient input can be restricted to
+
+$$
+\operatorname{Re}E_{6,\,q_{\mathfrak f}>U^{101/100}}^{\mu,\le U^{1/1000}}
+\ll U^{B_*-\nu+\varepsilon},
+\qquad \nu=\frac1{100000}.
+$$
+
+This $\nu$ is below both the low-head margin and the existing truncation margin $\theta/50=1/50000$. The remaining sum retains its actual Möbius coefficients, original zeros, all squarefree columns, the $t=1$ packet and coherent finite components. Its estimate is not supplied. The controlled portion of the original head is larger; the full inverse-fourth exponent, complete-energy improvement and signed Robin restoration remain unproved. This is a source-conditional application of the cited analytic results, without Lean certification or a literature-priority claim.
+
+**Stronger printed input.** Yang, [*Relative Trace Formula and Twisted L-functions: the Burgess Bound*, arXiv:2305.10719v1, Corollary 1.2(1.3)](https://arxiv.org/html/2305.10719v1), states the uniform Hecke exponent $c=3/16$. Substitution into the same calculation would give $\alpha=19/48$ and the low-head exponent $17/16+\theta+43\eta/48$. The numerical bound above does not depend on this stronger preprint input. Its Hypothesis 2.1 uses $c_vT_v\le|\gamma_{j,v}|\le C_vT_v$, without $1+|\gamma_{j,v}|$, while subsequent estimates use negative powers of $T_v$. For $\pi=1\boxplus1$ and trivial infinite-type $\chi$, both local parameters vanish. The compact zero-parameter specialization, and the complex-place normalization of $T_v$ relative to analytic conductor, are not independently reconciled here; this is not a refutation of the printed corollary. Yang's [*Symmetric Spectral Reciprocity for GL(2) and Uniform Subconvexity*, arXiv:2607.04476v1](https://arxiv.org/html/2607.04476v1), Theorem B and Corollary 1.4 concern cuspidal GL2, and its Lemma 10.2 invokes the earlier Corollary 1.2. They do not give an independent replacement for the GL1 input used here.
+
+## Using the global strip in the complete row kernel
+
+The complete-row kernel can also use the **upper** global $L$-bound, rather than only the reciprocal bound already used for inverse polynomials. This gives a larger controlled conductor range under the cited zero-free supply. Fix $\beta=7/8$ using the main theorem and `lem:logarithmic-control` of the [pinned OpenAI primary manuscript](https://github.com/openai/math/blob/adc7f1241b42e322a6451854ab7e4b4c146bf78a/preprints/The-Quasi-Riemann-Hypothesis-September-30-2026/build/paper.tex). For every fixed $v>0$, that lemma supplies both $L$ and $1/L$ with analytic-conductor subpower growth on $\Re s\ge\beta+v$ for nonprincipal finite-order Hecke characters. Its principal reciprocal assertion is for $1/\zeta_F$; its principal upper bound is only for the regularized function. These are reused source inputs, not independently Lean-certified results here.
+
+**Move the complete kernel, with buffers.** Keep the exact $\chi_0$, original collision zeros and complete row family from the preceding kernel construction. Put
+
+$$
+b=\beta+v,\qquad \sigma=\beta/6+d,
+\qquad v,d>0,
+\qquad \frac12<1-\sigma<b<1.
+$$
+
+On the entire central line, reuse Wu and Blomer–Brumley's exponent $c=103/512$. On the right line $b$, the nonprincipal primitive numerator has the global upper bound $L(b+i\tau,\chi)\ll C_\tau^\varepsilon$, where $C_\tau\asymp_F q_{\mathfrak f}(1+|\tau|)^2$. Phragmén–Lindelöf interpolation between these two full vertical lines, followed by the primitive functional equation, gives
+
+$$
+\begin{aligned}
+|L(1-\sigma+i\tau,\chi)|
+&\ll C_\tau^{c(\sigma+b-1)/(b-1/2)+\varepsilon},\\
+|L(\sigma+i\tau,\chi)|
+&\ll C_\tau^{\alpha(\sigma,b)+\varepsilon},\\
+\alpha(\sigma,b)
+&=\frac12-\sigma+
+ c\frac{\sigma+b-1}{b-1/2}.
+\end{aligned}
+$$
+
+The source's polynomial strip growth supplies the interpolation growth condition. The numerator remains nonprincipal by the surviving good-prime component proved above. Thus no principal upper bound or pole removal for that numerator is being assumed.
+
+In the exact ratio $L(s,\chi_0)/L(6s,\chi_0^6)$, the primitive character inducing $\chi_0^6$ belongs to the same finite-order family. After the fixed ray expansion it can be nonprincipal; its good-prime components are principal and its remaining primitive conductor is supported in the fixed finite data. The global reciprocal bound applies on the whole contour deformation because $\Re(6s)\ge\beta+6d>\beta$. If the primitive denominator is principal, its pole at $6s=1$ is a removable zero of the reciprocal and contributes no residue. Every imprimitive numerator and reciprocal-denominator Euler factor is retained. Their finite products cost $U^\varepsilon$ on this fixed positive strip, including the original zero-only primes. Consequently Mellin inversion and the same profile decay give
+
+$$
+|\mathcal K_{U,\Omega}(a,b)|
+\ll U^{\sigma+\varepsilon}
+q_{\mathfrak f}^{\alpha(\sigma,b)+\varepsilon}.
+$$
+
+This is still a complete-row argument, not a deletion of selectors inside an adaptive zero bin. Required profile derivatives and fixed or specified polylog height costs obey the previous contract; no larger growing-height range is asserted.
+
+For each final loss, choose $v,d$ sufficiently small and fixed before the Mellin decay order. The limiting values are
+
+$$
+\sigma_0=\frac7{48},\qquad
+\alpha_0=\frac{17}{48}+\frac c{18}
+=\frac{3367}{9216}.
+$$
+
+Thus the kernel bound can be written $U^{\sigma_0+\varepsilon}q_{\mathfrak f}^{\alpha_0+\varepsilon}$. Neither the boundary line $6\Re s=\beta$ nor an unbuffered global $L$-bound is used.
+
+**Reuse the conductor-cap sum.** For the same $Q=U^{1+\eta}$, $T=U^\theta$, $H_0=U^{1/2-\theta-\eta/2}$ and $H_1=U^{1/2-\eta/2}$, replace the previous kernel exponents by $\sigma_0,\alpha_0$. The unchanged coefficient envelope, pair count and retained cap give
+
+$$
+\begin{aligned}
+\left|E_{6,\,q_{\mathfrak f}\le Q}^{\mu,\le T}\right|
+&\ll U^{1+\sigma_0+\varepsilon}
+ \left(Q^{\alpha_0}H_0^{-1}
+       +U^{2\alpha_0}H_1^{-1-2\alpha_0}\right)\\
+&\ll U^{r(\theta,\eta)+\varepsilon},\\
+r(\theta,\eta)
+&=\frac12+\sigma_0+\alpha_0+\theta+
+ (\tfrac12+\alpha_0)\eta\\
+&=1+\frac{103}{9216}+\theta+
+ \frac{7975}{9216}\eta.
+\end{aligned}
+$$
+
+Choose
+
+$$
+\theta=\frac1{1000},\qquad \eta=\frac2{25},\qquad
+H_0=U^{459/1000},\qquad H_1=U^{23/50}.
+$$
+
+Then
+
+$$
+\boxed{
+\left|E_{6,\,q_{\mathfrak f}\le U^{27/25}}^{\mu,\le U^{1/1000}}\right|
+\ll U^{415259/384000+\varepsilon}.
+}
+$$
+
+The exponent is $1.081403645833\ldots$, with
+
+$$
+\frac{13}{12}-\frac{415259}{384000}
+=\frac{247}{128000}>0,
+\qquad \frac{13}{12}<B_*.
+$$
+
+Therefore the missing sufficient head input is narrowed further to
+
+$$
+\operatorname{Re}E_{6,\,q_{\mathfrak f}>U^{27/25}}^{\mu,\le U^{1/1000}}
+\ll U^{B_*-\nu+\varepsilon},
+\qquad \nu=\frac1{100000}.
+$$
+
+This reserve is below both the displayed low-head margin and the previous truncation margin $1/50000$. The new bound pays the original conductor range through $U^{27/25}$ under the cited global-strip supply. The remaining contraction still has its actual Möbius coefficients, all original zeros, finite components, squarefree columns and $t=1$ packet. Its bound is not supplied. This is a source-conditional application of existing strip control, subconvexity, functional equations and the already derived cap sum; it is not a new general $L$-function theorem, a full inverse-fourth improvement, a signed Robin restoration or an RH proof. No literature-priority or local analytic Lean-certification claim is made.
+
+## Fixed-order first moments and the unresolved head
+
+Gao–Zhao, [*First moment of central values of Hecke L-functions with Fixed Order Characters*, arXiv:2306.10726v3](https://arxiv.org/html/2306.10726v3), revised 1 December 2025, provides a nearby double-Dirichlet-series input. Its Theorem 1.3 is unconditional for $j=3,6$ over $K=\mathbb Q(\sqrt{-3})$ and $j=4$ over $\mathbb Q(i)$. It concerns a smoothed first moment of $L(1/2+\alpha,\chi\chi_j^{(n)})$, averaged over the fixed ray characters and all nonzero elements $n$, with
+
+$$
+0<\Re\alpha<1/2.
+$$
+
+The family is not restricted to squarefree or sixth-power-free parameters and its characters need not be primitive. For $j=6$ the reported error exponent is $2/3-\Re\alpha+\varepsilon$. This is a signed first $L$-value moment, not an upper bound for a positive inverse fourth moment with the actual Möbius polynomial. The quadratic GRH assumptions elsewhere in the paper should neither be attached to this theorem nor discarded when citing those separate quadratic results.
+
+**The fixed-twist scope must remain fixed.** Lemma 2.13 assumes a fixed Hecke twist $\chi$ of trivial infinite type modulo $q$, with $N(q)\le M$, and states its $L$-value mean with an implicit constant $\ll_M$. For $j\ge3$, Lemma 2.14 defines
+
+$$
+h_j(r,s;\chi)
+=\sum_{m\ {\rm primary}}
+\frac{\chi(m)g_K(r,\chi_{j,m})}{N(m)^s}
+$$
+
+under the explicit assumptions that the norm of the modulus of $\chi$ is bounded and that $\chi(m)=0$ whenever $\chi_{j,m}$ is undefined. With $\sigma_1=3/2+\varepsilon$ and $\sigma_1-1/2\le\sigma=\Re s\le\sigma_1$, its bound is
+
+$$
+\left|\big((j(s-1))^2-1\big)h_j(r,s;\chi)\right|
+\ll
+N(r)^{(\sigma_1-\sigma+\varepsilon)/2}
+(1+|s|^2)^{(\sigma_1-\sigma+\varepsilon)(j-1)/2}.
+$$
+
+The displayed $N(r)$ dependence concerns the additive Gauss numerator. It does not specify dependence on a growing conductor of $\chi$. The paper traces this lemma to Patterson's lemma on p.200 and proof on p.205; this citation alone supplies no conductor-uniform estimate. Consequently a fixed-twist bound cannot be used uniformly over the long primitive pair conductors above by hiding their growth in its implicit constant. This limitation of the printed statement does not exclude deriving a conductor-indexed bound from the underlying arguments.
+
+**The v3 main-term normalization requires clarification.** Put $w=1/2+\alpha$, let $S=S_{K,j}$ be the paper's fixed ray modulus, and write
+
+$$
+R_j(w)=\frac{r_K}{\#h_{(S)}}
+\sum_{\chi\bmod S}\frac{L(jw,\chi^j)}{L(1+jw,\chi^j)}.
+$$
+
+Theorem 1.3, display (1.5), prints the leading term $X\widehat\Phi(1)R_j(w)$. However, the same paper's display (3.10) gives
+
+$$
+\operatorname{Res}_{s=1}A_j(s,w)=|U_K|R_j(w).
+$$
+
+The definition of $A_j$ in (3.2) and the Mellin identity (3.4) use the same all-nonzero-element sum and the same ray average as (1.5). The paper explicitly defines $r_K=\operatorname{Res}_{s=1}\zeta_K(s)$; this is not a unit-averaged residue. The ideal/primary-generator convention for the inner $L$-series in (3.1) does not insert a unit average into that outer element sum. Thus the two displayed leading coefficients differ by $|U_K|$, which is six in the Eisenstein case. The difference occurs in the primary TeX and [PDF, pp.3 and 14](https://arxiv.org/pdf/2306.10726v3), as well as the HTML. This note does not select a repaired theorem or adopt the unresolved exact main-term constant.
+
+**Application boundary.** Directly matching the existing kernel's $L$-argument $w=1/6+\delta$, $0<\delta<1/3$, would require $\Re\alpha=-1/3+\delta<0$, outside Theorem 1.3. The missing head also retains its actual Möbius coefficients, natural collision zeros and coherent finite components, and includes primitive pair-conductor norm exceeding $U^{1+\eta}$. Neither a first-moment identity nor fixed-modulus Gauss continuation supplies that joint estimate. The already recorded sufficient inverse-fourth target remains $B<B_*=(31-10\sqrt6)/6$; this source comparison gives no improvement to $B$, complete Robin bound or Lean certification.
+
+## Mollified central moments retain a shorter inverse length
+
+The relevant literature already treats mollified higher-order Hecke moments.
+Its central-value observable, field hypothesis and mollifier range must be
+retained before attempting to use it for the actual $M_\xi S_\xi$ moment.
+
+**The existing cubic supplier.** David–de Faveri–Dunn–Stucky,
+[*Non-vanishing for cubic Hecke $L$-functions*, arXiv:2410.03048v3](https://arxiv.org/html/2410.03048v3#S1.SS2),
+equations (1.26)–(1.27) and the following mollifier-length discussion,
+obtain an unconditional second mollified central-moment asymptotic with
+mollifier length $M\le X^{1/6-\delta}$ for fixed $\delta>0$. This is the
+squarefree cubic row family over the Eisenstein field. The cubic sieve
+and Gauss-series moments already used in the
+[fixed-order note](faveri2026fixedorder.md) remain reused inputs. The
+mollifier discussion supplies neither a sixth-order row theorem nor the
+balanced inverse length $D=\sqrt U$. Güloğlu–Yeşilyurt,
+[*Mollified moments of cubic Dirichlet $L$-functions over the Eisenstein field*,
+arXiv:2301.10979v3](https://arxiv.org/abs/2301.10979v3), published with
+[DOI 10.1016/j.jmaa.2023.128014](https://doi.org/10.1016/j.jmaa.2023.128014),
+obtain their higher mollified moments under GRH; their unconditional
+first mollified moment does not replace that assumption.
+
+**A general-order source.** Diaconu–Ion–Paşol–Popa,
+[*On the second moment and non-vanishing of central values of Hecke
+$L$-functions of $r$-th order characters*, arXiv:2607.27131v1](https://arxiv.org/html/2607.27131v1),
+Theorem 10.5.2, gives twisted second central moments for both squarefree
+rows ($\kappa=1$) and $r$-th-power-free rows ($\kappa=0$). The latter
+retains the positive local weight
+$Q_{\mathfrak a}=\prod_{\mathfrak p\mid\mathfrak a}v_{\mathfrak p}(\mathfrak a)$;
+the family is ordered by ideal norm rather than primitive conductor.
+The stated standing hypothesis in §1.1.1 and §2.1 is that the number
+field contains $\mu_{2r}$. For $r=6$, the current field
+$\mathbb Q(\sqrt{-3})$ does not satisfy that hypothesis. No extension
+removing it or transport from a larger number field is used here.
+Sections 1.4.1 and 4.1.8 explicitly discuss relaxing this premise through
+additional technical work; this leaves an extension to verify rather
+than a general obstruction.
+
+Even within a field allowed by that theorem, its published mollifier
+range is shorter than the required balanced length. Section 10.6,
+equation (38) and Proposition 10.6.3, give
+
+$$
+\theta_\kappa=
+\frac{1-\widetilde\delta_\kappa}
+ {1+(2r-1)(1-\widetilde\delta_\kappa)},
+\qquad M=X^{\theta_\kappa-\varepsilon}.
+$$
+
+For $r=6$ the source parameters specialize to
+
+| Row family | $\widetilde\delta_\kappa$ | $\theta_\kappa$ |
+|---|---|---|
+| Squarefree, $\kappa=1$ | $13/14$ | $1/25$ |
+| Sixth-power-free, $\kappa=0$ | $8/11$ | $3/44$ |
+
+Section 10.1, equation (29), already preserves primes used solely for
+zero extension when reducing a twist: a vanished residue exponent is
+replaced by exponent $r$ at that prime. Its collision zeros must be
+reused, rather than reported as missing from this central-moment source.
+
+The coefficient normalization itself need not be an obstruction. In the
+source's convention the mollifier is
+$\sum_{\mathfrak b}\lambda_{\mathfrak b}q_{\mathfrak b}^{1/2}
+\chi_{\mathfrak a}(\mathfrak b)$ with
+$\lambda_{\mathfrak b}\ll q_{\mathfrak b}^{-1+\varepsilon}$.
+For the current annular inverse factor the candidate coefficients are
+
+$$
+\lambda_{\mathfrak b}
+=D^{-1/2}\mu(\mathfrak b)\xi(\mathfrak b)
+ V(q_{\mathfrak b}/D)q_{\mathfrak b}^{-1/2}.
+$$
+
+On its fixed annulus this satisfies the same coefficient envelope.
+The source takes real mollifier coefficients; for a positive upper
+bound, split a complex candidate into its real and imaginary coefficient
+sequences, with at most a fixed factor two.
+The actual support still has length $D$, however; setting $X=U$ and
+$D=\sqrt U$ does not fit either displayed mollifier range. The published
+absolute summation of its twisted error has envelope
+
+$$
+X^{\widetilde\delta_\kappa+\varepsilon}
+ M^{1+(2r-1)(1-\widetilde\delta_\kappa)+\varepsilon}.
+$$
+
+At the formal balanced substitution $r=6$, $M=\sqrt X$, its exponents
+are $51/28$ for $\kappa=1$ and $30/11$ for $\kappa=0$. These are
+exponents of an available error bound, not lower bounds for the actual
+mollified moments. Retaining additional cancellation in this error
+would require another estimate.
+
+There is also an observable to transport: a bound for
+$|L^S(1/2,\chi_{\mathfrak a})\mathcal M(\mathfrak a)|^2$ does not by
+itself bound the arbitrary annular polynomial product
+$|M_\xi S_\xi|^2$. A central value combines the approximate-functional-
+equation pieces, which can cancel. No positive domination of each
+individual piece follows by deleting the others.
+
+McGoldrick's [*Distribution of central values of Hecke $L$-functions of
+$n$-th order characters*, arXiv:2610.17144v1](https://arxiv.org/html/2610.17144v1),
+Theorems 1.1–1.2, reuses the general-order twisted moment to obtain an
+upper-tail central limit bound and positive moments of order $2k$,
+$0<k<1$, on a squarefree family with the same $\mu_{2n}$ field premise.
+It supplies no inverse fourth moment or estimate of the present signed
+mixed polynomial. These are external analytic inputs with explicit
+application limits, not a new mixed-moment bound, an impossibility
+result, a Robin proof or Lean certification.
+
 ## Reusing the global ordinary-source frontier
 
 At the immutable [QuasiRiemannTracker snapshot `0ce80fdddebb03128d30a917006d8520e7a774b8`](https://github.com/GTimG/QuasiRiemannTracker/tree/0ce80fdddebb03128d30a917006d8520e7a774b8), the merged submissions [Collet #69](https://github.com/GTimG/QuasiRiemannTracker/pull/69) and [Lewko #70](https://github.com/GTimG/QuasiRiemannTracker/pull/70) state stronger boundaries than the Gao value compared above:
@@ -743,6 +1125,72 @@ $$
 $$
 
 by the ordinary prime-ideal theorem over the fixed field, after deleting the fixed bad set. It cannot be absorbed into $U^\varepsilon$ for every $\varepsilon>0$ at $D=\sqrt U$. This is an algebraic comparison with the existing absolute-mass method, not a nonrepresentation theorem or an obstruction to a different transport retaining cancellation.
+
+### Cost of absorbing the Möbius sign into Hecke phases
+
+A different proposed transport is to express the actual Möbius coefficient as a mixture of ordinary Hecke twists. Its total variation cannot be treated as a subpower cost, even on the original $t=1$ packet. This is an application of the existing inverse-$L$ identity and zero-free input, not a new zero-free theorem or an actual-moment lower bound.
+
+Fix a nonnegative, nonzero smooth annular profile $V$, and on good squarefree ideals put
+
+$$
+w_D(s)=A_D(s,1)=\sum_{ef=s}V(q_e/D)V(q_f/D),
+\qquad W_D=\sum_s w_D(s).
+$$
+
+A fixed subinterval on which $V$ is bounded below, and the ordinary prime-ideal theorem applied to distinct prime ideals $e,f$ in that subinterval, give
+
+$$
+W_D\gg D^2/(\log D)^2.
+$$
+
+Let $\beta\in[1/2,1)$ be a uniform zero-free boundary for the finite-order Hecke family, with the reciprocal-strip control used above. For $\beta=7/8$, the inputs are the main theorem and `lem:logarithmic-control` of the [pinned OpenAI primary manuscript](https://github.com/openai/math/blob/adc7f1241b42e322a6451854ab7e4b4c146bf78a/preprints/The-Quasi-Riemann-Hypothesis-September-30-2026/build/paper.tex). Its reciprocal statement includes the principal character. The analytic input is cited, not independently Lean-certified here.
+
+Allow phases $\eta(a)=\eta_0(a)q_a^{it}$, where $\eta_0$ is a finite-order Hecke character covered by that input. Its conductor norm, any additional zero-extension modulus norm, and $|t|$ are at most $(\log D)^C$ for a fixed $C$. No nonzero angular infinite type or unrestricted moving conductor is included. The same $t=1$ double inverse-$L$ identity gives
+
+$$
+\begin{aligned}
+R_D(\eta)&=\sum_s\mu(s)w_D(s)\eta(s)\\
+&=\sum_{\substack{e,f\ {\rm squarefree}\\(e,f)=1}}
+ \mu(e)\mu(f)V(q_e/D)V(q_f/D)\eta(ef),\\
+\sup_\eta|R_D(\eta)|&\ll D^{2\beta+\varepsilon}.
+\end{aligned}
+$$
+
+Indeed, the double Euler product is
+
+$$
+\prod_{\mathfrak p\notin S}
+ (1-\eta(\mathfrak p)q_{\mathfrak p}^{-z}
+    -\eta(\mathfrak p)q_{\mathfrak p}^{-w})
+=\frac{\mathscr H(z,w;\eta)}{L_S(z,\eta)L_S(w,\eta)}.
+$$
+
+The correction $\mathscr H$ is the already used coprimality correction, bounded on fixed lines $\Re z,\Re w>1/2$; its reciprocal is not used. Moving both Mellin lines to $\beta+v$, with $v$ chosen within the final loss, gives the displayed bound. The cited global reciprocal strip supplies the height control, Mellin decay pays its polynomial costs, and all fixed exclusions and phase zero-only factors are retained. Polylog conductor and norm-twist costs are absorbed in $D^\varepsilon$.
+
+Suppose a finite complex measure $\nu_D$ gives $r_D(s)=\int\eta(s)\,d\nu_D(\eta)$ on the support of $w_D$, and, for a fixed $0\le\rho<1$,
+
+$$
+\sum_s w_D(s)|r_D(s)-\mu(s)|\le\rho W_D.
+$$
+
+Pairing with $w_D(s)\mu(s)$ and interchanging a finite ideal sum with the measure integral gives
+
+$$
+(1-\rho)W_D
+\le\left|\int R_D(\eta)\,d\nu_D(\eta)\right|
+\le\|\nu_D\|_{\rm TV}\sup_\eta|R_D(\eta)|.
+$$
+
+Consequently, for every final $\varepsilon>0$,
+
+$$
+\boxed{\|\nu_D\|_{\rm TV}
+\gg (1-\rho)D^{2-2\beta-\varepsilon}.}
+$$
+
+Exact coefficient transport is the case $\rho=0$. At $D=\sqrt U$, $\beta=7/8$, even fixed-relative-error transport requires $\|\nu_D\|_{\rm TV}\gg U^{1/8-\varepsilon}$. The original fixed factor $D^{-1}\xi(s)$ can be multiplied back into the coefficient representation; original row collision zeros then remain term by term. The approximate version is a coefficient-error statement and supplies no row-energy error estimate.
+
+This rules out a particular black-box budget. Even granting a uniform ordinary squarefree-total-product energy bound $U^{1+\varepsilon}$ for every transported phase, applying only that bound and Minkowski produces the certificate $U^{1+\varepsilon}\|\nu_D\|_{\rm TV}^2$. A certificate with target exponent $B<B_*$ would require a total-variation exponent below $(B_*-1)/2=0.042091881\ldots$, whereas the necessary exponent is at least $1/8$. In general this template's coefficient-cost threshold is $3-2\beta$, equal to $5/4$ here. This is a limitation of the uniform-per-phase bound plus total variation, not a lower bound for the actual moment or for a norm-aware or cancellation-preserving transport. It does not rule out a joint phase estimate, a larger-cost phase family paid by another argument, or a direct estimate of the original long-conductor kernel. The full inverse-fourth and Robin estimates remain unpaid.
 
 Consequently the newer source is available for its actual ordinary subenergies, while a transfer to $\sum_u\Omega|M_\xi S_\xi|^2$ or $\sum_u\Omega|M_\xi|^4$ remains unpaid. Merely substituting the smaller zero-free boundary also leaves the existing critical bin $a_*=(1+\delta_*)/2$, $\delta_*=(15-5\sqrt6)/6$, inside the allowed zero range, so it does not remove the maximum in (459.12). The small-gcd, long-conductor contraction specified above still requires a coefficient-sensitive estimate on the original object. The reusable literature advance is the stronger ordinary-source interface and endpoint; no full inverse-fourth improvement, strict Robin conclusion, analytic Lean certification or priority claim is supplied by this comparison.
 
