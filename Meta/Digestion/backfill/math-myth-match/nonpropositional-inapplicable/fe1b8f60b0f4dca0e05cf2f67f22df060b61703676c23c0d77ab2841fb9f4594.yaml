@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:fe1b8f60b0f4dca0e05cf2f67f22df060b61703676c23c0d77ab2841fb9f4594
+  normalized_sha256: sha256:fe1b8f60b0f4dca0e05cf2f67f22df060b61703676c23c0d77ab2841fb9f4594
+cas_ref: sha256:fe1b8f60b0f4dca0e05cf2f67f22df060b61703676c23c0d77ab2841fb9f4594
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 权利实现与义务人、权限和手段的建模要求。
+    previous_atom_id: e1e77838622534e605cb78e45e441b055ef88b9bf2da15e05ab45acb3acffd9a
+    next_atom_id: f0c88201cf2d01dbc7bcd3dcb21bdfaec52b1c868128e9d906bb0bc8d6b76cf1
