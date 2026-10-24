@@ -67,21 +67,7 @@ theorem degree_source_bridge : (type_of% (@Corr_coefficient_bidegree)) ↔ degre
   · intro law D q p R hp s m hn
     exact law ⟨D, q⟩ p R hp s m hn
 
-def vanishingArena : Arena where
-  signature := signature
-  Law readout := ∀ parameter p R,
-    IsWeightedHomogeneous (sourceWeight parameter.1) p R → ∀ s, R < s →
-      readout.readout () parameter (p, s) = 0
-
-theorem vanishing_source_bridge : (type_of% (@Corr_above_weight)) ↔ vanishingArena.Law actual := by
-  constructor
-  · intro source parameter p R hp s hs
-    exact source parameter.1 parameter.2 p R hp s hs
-  · intro law D q p R hp s hs
-    exact law ⟨D, q⟩ p R hp s hs
-
 abbrev degreeRealizationObligation := Registration degreeArena (type_of% (@Corr_coefficient_bidegree))
-abbrev vanishingRealizationObligation := Registration vanishingArena (type_of% (@Corr_above_weight))
 end Coefficients
 
 namespace Scalar

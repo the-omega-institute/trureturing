@@ -10,7 +10,7 @@ The normal reflection fixes u and sends X(i,r) to the finite sum for 0<=s<=r of 
 
 The identification of affine coefficients with (-1)^R*delta_q^t(p)/t! remains a separate source-L1 dependency. Ground symmetry, Wick and charged adjointness, full corrected-field inversion, Jacobi, fusion and the full Monster/VOA/string/AdS-CFT program are not established here. The classical twisted-lattice coordinate-change background is FLM; the native original-map assembly and its finite scalar consumer are the present library work.
 
-The escape audit of these four public results and the three exposed original helpers is unfinished under CLAUDE 3.9: https://github.com/the-omega-institute/trureturing/issues/21172. The Reg mirror reconstructs the full source laws, but does not assert completed variation, sensitivity, observational dependence or declared_validated bindings.
+The escape audit of these three public results and the three exposed original helpers is unfinished under CLAUDE 3.9: https://github.com/the-omega-institute/trureturing/issues/21172. The Reg mirror reconstructs the full source laws, but does not assert completed variation, sensitivity, observational dependence or declared_validated bindings.
 
 **Theorem 1.1 (Covariance of the original correction map).**
 
@@ -40,21 +40,7 @@ Lean statement: `D5/S3/VertexAlgebra/HalfFock/ActualCorrCovariance.Corr_coeffici
 
 For any sourceWeight-homogeneous original oscillator polynomial p of natural weight R, every nonzero coefficient at exponent m in Corr D q p s satisfies s+Finsupp.weight(sourceWeight D,m)=R. The proof uses the exact original matching recurrence, labelledRemainders_size and wordWeight_occurrences, followed by optionEquivLeft coefficient identification. Zero polynomials and degenerate fibres are included; no finite-dimensional total weight-space assumption occurs.
 
-**Theorem 1.3 (Vanishing beyond the source weight).**
-
-Lean statement: `D5/S3/VertexAlgebra/HalfFock/ActualCorrCovariance.Corr_above_weight`
-
-*Proof.* Machine-checked in Lean as `D5/S3/VertexAlgebra/HalfFock/ActualCorrCovariance.Corr_above_weight` (`✓ std3`). ∎
-
-*Source.* Repository-derived.
-
-*Acknowledgement.* Igor B. Frenkel, James Lepowsky, and Arne Meurman (1988). *Vertex Operator Algebras and the Monster*. DOI: [10.1016/S0079-8169(08)X6136-7](https://doi.org/10.1016/S0079-8169(08)X6136-7).
-
-*Commentary.*
-
-For every original homogeneous p of weight R and every natural s>R, Corr D q p s=0. The coefficient-wise proof consumes the exact bidegree theorem and retains the zero-source and rank-zero cases.
-
-**Theorem 1.4 (Finite scalar exchange for every original source).**
+**Theorem 1.3 (Finite scalar exchange for every original source).**
 
 Lean statement: `D5/S3/VertexAlgebra/HalfFock/ActualCorrCovariance.Corr_reflection_readout`
 
@@ -70,7 +56,6 @@ For every p and every family ell:Nat -> Module.Dual Complex (Oscillator D), the 
 
 ## References
 
-- Truth anchor: `D5/S3/VertexAlgebra/HalfFock/ActualCorrCovariance.Corr_above_weight`
 - Truth anchor: `D5/S3/VertexAlgebra/HalfFock/ActualCorrCovariance.Corr_coefficient_bidegree`
 - Truth anchor: `D5/S3/VertexAlgebra/HalfFock/ActualCorrCovariance.Corr_reflection_readout`
 - Truth anchor: `D5/S3/VertexAlgebra/HalfFock/ActualCorrCovariance.correctionPolynomial_reflection`

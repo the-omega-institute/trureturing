@@ -610,16 +610,6 @@ theorem Corr_coefficient_bidegree (D : LatticeData) (q : Charge D)
     (correctionPolynomial_homogeneous D q p R hp) s m
   simpa only [E_Cbar, ← Corr_coeff] using nonzero
 
-theorem Corr_above_weight (D : LatticeData) (q : Charge D)
-    (p : Oscillator D) (R : ℕ) (hp : IsWeightedHomogeneous (sourceWeight D) p R)
-    (s : ℕ) (hs : R < s) : Corr D q p s = 0 := by
-  apply MvPolynomial.ext
-  intro m
-  change (Corr D q p s).coeff m = 0
-  by_contra hn
-  have h := Corr_coefficient_bidegree D q p R hp s m hn
-  omega
-
 /-! Finite scalar contraction for the actual downstream normal-coefficient
 consumer. ℓ k is any ℂ-linear oscillator readout, e.g. the actual bilinear
 normal-field coefficient at -e-2N-4R+2k. There is NO transpose/covariance
