@@ -18,6 +18,8 @@ import Mathlib.Tactic.Linarith
 import Mathlib.Tactic.Positivity
 import Mathlib.Tactic.Ring
 
+/-! Exact half-line energy balance for the literal right exponential tail. -/
+
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
 noncomputable section
@@ -46,9 +48,9 @@ private theorem integral_translate_halfline (f : ℝ → ℂ) (t : ℝ) :
       exact Eventually.of_forall fun s => by
         by_cases hs : 0 < s
         · have ht : t < t + s := by linarith
-          simp only [Set.indicator_of_mem hs, Set.indicator_of_mem ht]
+          simp only [Set.indicator_apply, Set.mem_Ioi, if_pos hs, if_pos ht]
         · have ht : ¬ t < t + s := by linarith
-          simp only [Set.indicator_of_notMem hs, Set.indicator_of_notMem ht]
+          simp only [Set.indicator_apply, Set.mem_Ioi, if_neg hs, if_neg ht]
     _ = ∫ s : ℝ, (Ioi t).indicator f s := integral_add_left_eq_self _ t
     _ = ∫ s : ℝ in Ioi t, f s := integral_indicator measurableSet_Ioi
 
@@ -106,7 +108,7 @@ private theorem tail_eq_interval {u : ℝ → ℂ}
   have hzero : (∫ s : ℝ in Ioi R, weightedInput k u s) = 0 := by
     apply integral_eq_zero_of_ae
     filter_upwards [ae_restrict_mem measurableSet_Ioi] with s hS
-    simp only [weightedInput, hz s hS.le, mul_zero]
+    simp only [weightedInput, hz s hS.le, mul_zero, Pi.zero_apply]
   have he := intervalIntegral.integral_Ioi_sub_Ioi'
     (a := t) (b := R) hi.integrableOn hi.integrableOn
   rw [hzero, sub_zero] at he
@@ -119,7 +121,7 @@ private theorem tail_zero_above {u : ℝ → ℂ}
   have hzero : (∫ s : ℝ in Ioi t, weightedInput k u s) = 0 := by
     apply integral_eq_zero_of_ae
     filter_upwards [ae_restrict_mem measurableSet_Ioi] with s hS
-    simp only [weightedInput, hz s (ht.trans hS.le), mul_zero]
+    simp only [weightedInput, hz s (ht.trans hS.le), mul_zero, Pi.zero_apply]
   rw [tail_eq_weighted, hzero, mul_zero]
 
 private theorem tail_hasDerivAt {u : ℝ → ℂ}
@@ -135,7 +137,8 @@ private theorem tail_hasDerivAt {u : ℝ → ℂ}
       hw.aestronglyMeasurable.stronglyMeasurableAtFilter hw.continuousAt
   have hExp : HasDerivAt (fun x : ℝ => (Real.exp (k * x) : ℂ))
       ((Real.exp (k * t) * k : ℝ) : ℂ) t := by
-    exact (((hasDerivAt_id t).const_mul k).exp).ofReal_comp
+    simpa only [id_eq, mul_one] using
+      (((hasDerivAt_id t).const_mul k).exp).ofReal_comp
   have he : (Real.exp (k * t) : ℂ) * (Real.exp (-k * t) : ℂ) = 1 := by
     rw [← Complex.ofReal_mul, ← Real.exp_add]
     simp
@@ -183,7 +186,7 @@ private theorem tail_normSq_hasDerivAt {u : ℝ → ℂ}
     exact Complex.normSq_apply _
   rw [hfun]
   apply ((hr.mul hr).add (hi.mul hi)).congr_deriv
-  simp only [Complex.reCLM_apply, Complex.imCLM_apply, Complex.sub_re, Complex.sub_im,
+  simp only [Function.comp_apply, Complex.reCLM_apply, Complex.imCLM_apply, Complex.sub_re, Complex.sub_im,
     Complex.mul_re, Complex.mul_im, Complex.ofReal_re, Complex.ofReal_im,
     zero_mul, mul_zero, sub_zero, zero_add, realPairing, Complex.normSq_apply]
   ring
@@ -235,9 +238,12 @@ theorem right_exponential_tail_energy_balance
   have hb : Continuous (fun t : ℝ => Complex.normSq (u t - (c : ℂ) * v t)) := by
     apply Complex.continuous_normSq.comp
     exact hu.sub (continuous_const.mul hv)
-  have hiq := hq.intervalIntegrable 0 R
-  have hiu := huq.intervalIntegrable 0 R
-  have hip := hp.intervalIntegrable 0 R
+  have hiq : IntervalIntegrable (fun t : ℝ => Complex.normSq (v t)) volume 0 R :=
+    hq.intervalIntegrable 0 R
+  have hiu : IntervalIntegrable (fun t : ℝ => Complex.normSq (u t)) volume 0 R :=
+    huq.intervalIntegrable 0 R
+  have hip : IntervalIntegrable (realPairing u v) volume 0 R :=
+    hp.intervalIntegrable 0 R
   have hD := intervalIntegral.integral_eq_sub_of_hasDerivAt
     (a := (0 : ℝ)) (b := R)
     (fun t _ => tail_normSq_hasDerivAt hu hs k t)

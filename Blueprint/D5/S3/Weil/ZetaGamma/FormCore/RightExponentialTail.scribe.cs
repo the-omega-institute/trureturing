@@ -53,10 +53,12 @@ internal sealed class RightExponentialTailDocument : IScribeDocumentDefinition
                     Paragraph(Text(
                         "For 0<=c<=2*k the two displayed correction terms are "
                             + "nonnegative, yielding the half-line contraction. In the "
-                            + "actual logarithmic Hardy map used by the physical Weil "
-                            + "form, k=5/4 and c=3/2 make both coefficients equal to "
-                            + "3/2. That application still needs its source-coordinate "
-                            + "identification. This norm balance does not construct the "
+                            + "W338 logarithmic coordinate u=x^(9/4)*U, k=5/4 and "
+                            + "c=3/2 make both coefficients equal to 3/2. In the W314 "
+                            + "coordinate g_U=x^(5/2)*U, the same c=3/2 instead gives "
+                            + "k=3/2, a tail coefficient 9/4, and an endpoint coefficient "
+                            + "3/2. These applications still need their actual "
+                            + "source-coordinate identifications. This norm balance does not construct the "
                             + "complete arithmetic debit, identify its Weil value, bound "
                             + "the full logarithmic Gamma form by physical moments, "
                             + "or determine the sign required for RH."))),
