@@ -2338,6 +2338,162 @@ open. These source-conditional applications carry neither local Lean
 certification nor a literature-priority claim.
 
 
+## Combining two bounds on the same buffered Type-I bin
+
+The smooth cutoff can be enlarged further by using both sides of the
+already supplied local $L$-control. Reuse the exact coefficient
+transport (C26), the original buffered bins and counts from
+[§459](../../docs/develop/theory/FIBONACCI_ANALYTIC_FRONTIER_INTERFACES.md#459-缓冲零点分箱下的完整原卷积联合估计),
+and `lem:buffered-bins`, `lem:detector-dyads` and `lem:plain` of the
+[pinned OpenAI primary manuscript](https://github.com/openai/math/blob/adc7f1241b42e322a6451854ab7e4b4c146bf78a/preprints/The-Quasi-Riemann-Hypothesis-September-30-2026/build/paper.tex).
+This is a `repo-derived` application to the actual smooth Type-I
+coefficient, not a new zero-density, Euler-transport or bilinear theorem.
+
+In the exact identity (C25), take the cutoff
+$A_{\rm b}=U^{1/12}$, and denote the resulting components by
+$M_{\mathrm I,b}$, $M_{\mathrm{II},b}$ and
+$\lambda_{\mathrm{II},b}$. Eventually $2A_{\rm b}<z<aD$, as required.
+Keep the original floor $a_0=51/100$, the same physical row family,
+all original zero extensions and the same fixed or polylog cost
+contract. On a nonfloor bin $\mathcal B_{i,a}$ put $\delta=2a-1$.
+Its original counting exponent is
+
+$$
+R(\delta)=
+\begin{cases}
+(15-16\delta)/(15-6\delta),&1/50<\delta\le5/6,\\
+1-\delta,&5/6\le\delta\le1.
+\end{cases}
+$$
+
+For a dyadic block $q_q\asymp Q\ll A_{\rm b}$, $q_c\asymp C=D/Q$,
+write $T_Q(i,a)=\sum_{u\in\mathcal B_{i,a}}
+\Omega(u)|M_{\mathrm I,b;Q}(u)|^4$. Two existing estimates apply to
+this same positive quantity:
+
+$$
+\boxed{
+T_Q(i,a)\ll U^\varepsilon
+\min\left\{U^{R(\delta)+\delta},\ UQ^{2\delta}\right\}.
+}
+\tag{C29}
+$$
+
+**The first bound uses the local upper and reciprocal bounds together.**
+Apply double Mellin inversion to the uniformly smooth joint annular
+profile from (C26). Move its two finite contours to
+$\Re s=\Re t=a+8e$. The original buffered-bin lemma bounds both
+$L_{\rm orig}$ and its reciprocal on these contours; the mass of $H$
+is absolutely convergent there. Thus the same actual row satisfies
+
+$$
+|M_{\mathrm I,b;Q}(u)|
+\ll U^\varepsilon D^{-1/2}Q^{a+8e}C^{a+8e}
+=U^\varepsilon D^{a-1/2+8e},
+$$
+
+up to a negligible tail. Its fourth power costs
+$U^{\delta+O(e)+\varepsilon}$. Multiply by the same bin's count to
+obtain the first branch. This uses the local upper bound on that bin,
+not a global upper bound below $7/8$.
+
+**The second bound keeps the whole plain fourth moment.** Repeat the
+normalized $h$-convolution estimate preceding (C27), now using the
+inverse-square bound on the same finite local line $a+8e$. Its mass
+is taken at $(a+8e,1/2+\eta)$, paying the same $C^\eta$ factor. After
+bounding the row scalar $\psi_u(de)$ in modulus and applying Minkowski
+on the bin-restricted positive norm, enlarge only the plain positive
+fourth moment to the original full row family. The result is
+$T_Q(i,a)\ll U^{1+\varepsilon}Q^{2\delta+O(e)}$.
+Both bounds retain the same coefficient and same bin, so their minimum
+is legitimate. No selector is removed from a signed correlation.
+
+For both arguments, truncate the common two-variable Fourier measure
+and the internal Mellin frequencies inside a fixed fraction of the
+original buffer height $T_1$. The two variables share that budget.
+Only finite contour segments are shifted; the remaining tails stay
+on absolute lines. The original fixed polynomial bounds and arbitrary
+Fourier/Mellin decay pay those tails and the horizontal joins. Choose
+the bin losses and finite internal orders first, then the small buffer
+height exponent, and finally the outer decay order. This is the height
+order of §459 and the primary source, with no extension to infinite
+local contours or enlargement of the original row-twist contract.
+All finite profile costs, complete deletion radicals and finite
+presentations belong to one common envelope. The original nonprincipal
+physical rows allow the plain shift without a pole; bounded principal
+exceptions retain their original treatment.
+
+**Consume the two bounds before taking the worst bin.** Since
+$Q\ll U^{1/12}$, the second branch has exponent at most $1+\delta/6$.
+For $\delta\le1/2$ this is at most $13/12$. For
+$1/2\le\delta\le5/6$ the first branch suffices, because
+
+$$
+\frac{13}{12}-R(\delta)-\delta
+=\frac{(2\delta-1)(12\delta-5)}{4(15-6\delta)}\ge0.
+$$
+
+For $5/6\le\delta\le1$, $R(\delta)+\delta=1$.
+The original floor has $O(U)$ rows; applying only the second branch
+with $\delta_0=1/50$ gives $U^{301/300+\varepsilon}$, also below
+$U^{13/12+\varepsilon}$. No lowered floor is required. Choose the bin
+width and internal losses within the final $\varepsilon$, then sum the
+finitely many bins and dyadic blocks in the original norm and restore
+all finite components coherently. This gives
+
+$$
+\boxed{
+\mathcal T_{\mathrm I,b}:=\|M_{\mathrm I,b}\|_4^4
+\ll U^{13/12+\varepsilon},\qquad A_{\rm b}=U^{1/12}.
+}
+\tag{C30}
+$$
+
+**The larger cutoff has a different paid transfer error.** The complete
+inverse-fourth bound and (C30) imply, by the same full-interference
+inequality as (C23),
+
+$$
+\begin{aligned}
+|\mathcal T_\mu-\mathcal T_{\mathrm{II},b}|
+&\ll U^{C_{\rm b}+\varepsilon},\\
+C_{\rm b}&=\frac{3B_*+13/12}{4}
+=\frac{199-60\sqrt6}{48},\\
+B_*-C_{\rm b}&=\frac{B_*-13/12}{4}
+=\frac{49-20\sqrt6}{48}>0.
+\end{aligned}
+\tag{C31}
+$$
+
+The last inequality follows from $49^2-6\cdot20^2=1$. In particular
+$13/12<C_{\rm b}<B_*$: the smaller transfer error in (C28) is not being
+claimed for this enlarged cutoff. The new remainder is still
+squarefree-supported with $|\lambda_{\mathrm{II},b}|\le\tau_3$, so its
+actual square $g_{\mathrm{II},b}$ retains the same cube-free envelope.
+Subtract the two complete cubic/large-$P$/small-$P$ decompositions and
+pay each whole cubic and large-$P$ block as before. Since their exponent
+$13/12$ is smaller than $C_{\rm b}$, the result is
+
+$$
+\boxed{
+\left|E_{6,\,P<U^{1/4}}^\mu
+      -E_{6,\,P<U^{1/4}}(g_{\mathrm{II},b})\right|
+\ll U^{C_{\rm b}+\varepsilon}.
+}
+\tag{C32}
+$$
+
+Thus it remains sufficient to prove (C20) for this explicit remainder
+with any fixed $0<\nu<(B_*-13/12)/4$. The identity for the remainder
+now excludes $q_{d_{\le z}}\le U^{1/12}$, including the corresponding
+near-prime inverse factors. Its other coefficients also change.
+The smaller allowable saving is explicit and remains strictly positive;
+no such Type-II estimate is supplied. The complete inverse-fourth
+exponent, signed Robin restoration and RH are not improved by the
+support reduction alone. No local analytic Lean certification or
+literature-priority claim is made.
+
+
 ## Finite signs in the remaining small-squarepart sector
 
 The [original-family program and data](https://github.com/the-omega-institute/trureturing-experiments/tree/907f48d6d61c17f24628d2ed31f3f115598a3515/docs/reports/sextic-inverse-fourth#product-squarepart-correlation)
