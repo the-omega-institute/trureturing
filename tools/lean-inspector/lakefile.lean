@@ -67,6 +67,15 @@ private structure ReportState where
 package_facet reportBatch (_pkg : Package) : ReportState := do
   Job.async do return ⟨← IO.mkRef {}, ← IO.mkRef none, ← IO.mkRef {}, ← Std.Mutex.new ()⟩
 
+-- Graph registration can await Lake's header jobs while holding the mutex.
+-- Keep both lock holders and contenders off the bounded worker pool needed
+-- by those jobs. This changes scheduling, not the graph or compiler options.
+private def withReportGraph [OptDataKind α] (state : ReportState)
+    (action : FetchM α) : FetchM α := do
+  let job ← Job.async (prio := .dedicated) do
+    state.graphFetch.atomically fun _ => JobM.runFetchM action
+  job.await
+
 -- A compiler import is shared by many report targets. Resolve its source path
 -- once in this Lake invocation, including paths excluded from the whitelist.
 -- This memo is never persisted or mixed into an artifact trace.
@@ -253,7 +262,7 @@ private def prepareNativeModuleReport (mod : Module) : FetchM (Job PreparedArtif
   -- Lake's lookup/create/store is not atomic. Serialize graph registration,
   -- while compiler jobs and input classification continue asynchronously.
   let (deps, projection, inspector, exports, sourceModules, closures, reported) ←
-      reportState.graphFetch.atomically fun _ => do
+      withReportGraph reportState do
     let deps ← fetch <| pkg.facet `reportProducer
     let projection ← fetch <| mod.facet `judgeInputs
     let inspector ← reportInspector.fetch
@@ -297,8 +306,7 @@ private def prepareNativeModuleReport (mod : Module) : FetchM (Job PreparedArtif
     unless ownInputs.size == fibInputs.size do
       let some registry := (← getWorkspace).findModule? `LeanInformationAudit.TemplateEnrollment
         | error "IE-C050 reason=incomplete_closure rule=dtr.report_producer"
-      let enrollment ← reportState.graphFetch.atomically fun _ =>
-        JobM.runFetchM registry.exportInfo.fetch
+      let enrollment ← withReportGraph reportState registry.exportInfo.fetch
       deps := deps.add enrollment
     deps := deps.mix (← inputBinFile mod.leanFile)
     deps := deps.mix (← inputBinFile utility)
@@ -386,8 +394,7 @@ private def buildNativeModuleReport (mod : Module) : FetchM (Job ReportArtifact)
             let some analyzer := workspace.findModule? `LeanInformationAuditRegAnalysis.AuricFib.Main
               | error "fib.analysis_program_missing"
             observePhase "lake-analyzer-await" "start"
-            let analyzerJob ← reportState.graphFetch.atomically fun _ =>
-              JobM.runFetchM analyzer.exportInfo.fetch
+            let analyzerJob ← withReportGraph reportState analyzer.exportInfo.fetch
             discard <| analyzerJob.await
             observePhase "lake-analyzer-await" "finish"
           proc { (← nativeCommand pkg (#["module-finish"] ++ staged)) with env := request.env }
@@ -463,7 +470,7 @@ private def collectNativeReports (pkg : Package) (names : Array String) :
   try observePhase "lake-prepare-register" "start" catch _ => pure ()
   -- Start every compiler projection before awaiting classifications below.
   -- This keeps compilation parallel while shared graph registration is serial.
-  reportState.graphFetch.atomically fun _ => do
+  withReportGraph reportState do
     for name in names do
       let some mod := (← getWorkspace).findModule? name.toName
         | error s!"registered report module is not in the Lake workspace: {name}"

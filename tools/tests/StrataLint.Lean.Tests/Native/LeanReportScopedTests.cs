@@ -3,6 +3,7 @@ using StrataLint.TestSupport;
 
 namespace StrataLint.Lean.Tests;
 
+[Collection("Lean cold production integration")]
 public sealed class LeanReportScopedTests(InspectorCompilerFixture compiler) : IClassFixture<InspectorCompilerFixture>
 {
     [Theory]
@@ -32,7 +33,9 @@ public sealed class LeanReportScopedTests(InspectorCompilerFixture compiler) : I
         string[] environment = native ? [$"STRATALINT_NATIVE_COMPILER_SEED={compiler.Path}"] : [];
         var result = TestProcessRunner.Run("env", [.. environment, "python3", "-B",
             Path.Combine(root, "tools/tests/StrataLint.Lean.Tests/Native/lean_report_scoped_fixture.py"), scenario],
-            root, TestBudgets.ReportSupervisorHangGuard, 1024 * 1024);
+            root, TestBudgets.ReportSupervisorHangGuard, 1024 * 1024,
+            standardError: native ? Console.OpenStandardError() : null,
+            interruptBeforeKill: native ? InspectorNativeTestRunner.Interrupt : null);
         InspectorNativeTestRunner.WriteCommandObservations(result.StandardOutput);
         InspectorNativeTestRunner.WriteCommandObservations(result.StandardError);
         Assert.True(result.ExitCode == 0, "[FAIL] " + scenario + ": "

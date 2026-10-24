@@ -11,6 +11,98 @@ class GuardedCommandTests(unittest.TestCase):
         self.fixture.env = dict(os.environ)
         self.addCleanup(self.fixture.cleanup_fixture)
 
+    def test_leaf_entry_preserves_complete_unittest_loader_selection(self):
+        def flatten(test):
+            if isinstance(test, unittest.TestSuite):
+                return [name for child in test for name in flatten(child)]
+            return [test.id()]
+
+        for selection in ('test_native.NativeSemanticTests', 'test_native.NativeReportTests', 'test_local_entry',
+                          'test_native.NativeRoutingTests'):
+            with self.subTest(selection=selection):
+                loader = unittest.TestLoader()
+                expected = flatten(loader.loadTestsFromName(selection))
+                self.assertEqual(loader.errors, [])
+                result = subprocess.run([sys.executable, '-B', str(HERE / 'tests/test_native_support.py'),
+                    '--list', selection], text=True, capture_output=True, timeout=120)
+                self.assertEqual(result.returncode, 0, result.stderr)
+                actual = json.loads(result.stdout)
+                self.assertEqual(actual, expected)
+                self.assertEqual(len(set(actual)), len(actual))
+                self.assertEqual([name for leaf in actual for name in flatten(loader.loadTestsFromName(leaf))], expected)
+
+    def test_outer_interruption_settles_sessions_before_removing_fixture(self):
+        self._interrupted_entry(script_entry=False)
+
+    def test_script_entry_interruption_settles_sessions_before_removing_fixture(self):
+        self._interrupted_entry(script_entry=True)
+
+    def _interrupted_entry(self, *, script_entry):
+        root = self.fixture.root
+        self.fixture.write('interrupted_fixture.py', '''
+from test_native_support import *
+class InterruptedFixture(NativeTestSupport, unittest.TestCase):
+    @classmethod
+    def setUpClass(cls): pass
+    def setUp(self):
+        self.temporary = tempfile.TemporaryDirectory(dir=os.environ['FIXTURE_PARENT'])
+        self.root = Path(self.temporary.name)
+        self.env = dict(os.environ)
+        self.addCleanup(self.cleanup_fixture)
+        (Path(os.environ['FIXTURE_PARENT']) / 'fixture-root').write_text(str(self.root))
+    def test_interrupted(self):
+        writer = "import os,signal,sys; from pathlib import Path; Path(sys.argv[1]).write_text(str(os.getpid())); signal.pause()"
+        parent = "import os,subprocess,sys; children=[subprocess.Popen([sys.executable,'-c',sys.argv[1],sys.argv[2]+'.'+str(i)], start_new_session=bool(i)) for i in range(2)]; [child.wait() for child in children]"
+        self.guarded_command([sys.executable, '-c', parent, writer, str(Path(os.environ['FIXTURE_PARENT']) / 'writer')])
+if __name__ == '__main__':
+    sys.exit(native_test_main('__main__.InterruptedFixture.test_interrupted'))
+''')
+        env = dict(os.environ, FIXTURE_PARENT=str(root),
+                   PYTHONPATH=os.pathsep.join([str(root), str(HERE / 'tests')]),
+                   STRATALINT_NATIVE_COMMAND_OBSERVATION='1')
+        control = subprocess.Popen([sys.executable, '-c', 'import signal; signal.pause()'])
+        identities = {}
+        command = ([sys.executable, '-B', str(root / 'interrupted_fixture.py')] if script_entry else
+            [sys.executable, '-B', str(HERE / 'tests/test_native_support.py'),
+             '--run', 'interrupted_fixture.InterruptedFixture.test_interrupted'])
+        process = subprocess.Popen(command, env=env,
+            stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True)
+        try:
+            deadline = time.monotonic() + 10
+            while not all((root / ('writer.' + str(i))).exists() for i in range(2)):
+                if time.monotonic() >= deadline or process.poll() is not None:
+                    self.fail('infrastructure-hang-guard expired before writers were ready')
+                try:
+                    process.wait(timeout=0.05)
+                except subprocess.TimeoutExpired:
+                    pass
+            rows = self.fixture.command_processes()
+            identities = {int((root / ('writer.' + str(i))).read_text()): None for i in range(2)}
+            identities = {pid: rows[pid]['identity'] for pid in identities}
+            process.terminate()
+            out, err = process.communicate(timeout=20)
+            self.assertEqual(process.returncode, 143, out + err)
+            self.assertIn('NATIVE_FIXTURE_SETTLEMENT {"owned_live_processes": 0, "exit_code": 143}', err)
+            self.assertFalse(Path((root / 'fixture-root').read_text()).exists())
+            for pid in identities:
+                with self.assertRaises(ProcessLookupError):
+                    os.kill(pid, 0)
+            self.assertIsNone(control.poll(), 'unrelated process must remain alive')
+        finally:
+            if process.poll() is None:
+                process.kill()
+            process.communicate(timeout=5)
+            # A broken settlement implementation must not strand probe writers.
+            for pid, identity in identities.items():
+                row = self.fixture.command_processes().get(pid)
+                if row and row['identity'] == identity:
+                    try:
+                        os.kill(pid, signal.SIGKILL)
+                    except ProcessLookupError:
+                        pass
+            control.kill()
+            control.wait(timeout=5)
+
     def test_artifact_donor_cleanup_failure_fails_owning_suite(self):
         class Consumer(NativeArtifactTestSupport, unittest.TestCase):
             def setUp(self):
@@ -36,6 +128,24 @@ class GuardedCommandTests(unittest.TestCase):
         self.assertEqual(len(result.errors), 1)
         self.assertIn('owned donor cleanup failed', result.errors[0][1])
         self.assertFalse(result.wasSuccessful())
+
+    def test_compiler_staging_propagates_cleanup_failure(self):
+        output = self.fixture.root / 'compiler-stage'
+        output.mkdir()
+        error = RuntimeError('owned compiler cleanup failed')
+
+        def prepare(fixture):
+            fixture.root = self.fixture.root
+            fixture.temporary = object()
+            fixture.addCleanup(fixture.cleanup_fixture)
+
+        with patch.object(NativeTestSupport, 'setUpClass'), \
+                patch.object(NativeTestSupport, 'setUp', prepare), \
+                patch.object(NativeTestSupport, 'run_lake'), \
+                patch.object(NativeTestSupport, 'cleanup_fixture', side_effect=error):
+            with self.assertRaises(RuntimeError) as failure:
+                stage_compiler(output)
+        self.assertIs(failure.exception, error)
 
     def test_dependency_consumers_start_private_and_cold_with_unconsumed_compiler_seed(self):
         class Consumers(NativeDependencyTestSupport, unittest.TestCase):
@@ -107,7 +217,8 @@ class GuardedCommandTests(unittest.TestCase):
                 if not enabled:
                     self.assertEqual(output.getvalue(), '')
                     continue
-                observation = json.loads(output.getvalue().removeprefix('\nNATIVE_COMMAND_OBSERVATION '))
+                observation = json.loads(next(line.removeprefix('NATIVE_COMMAND_OBSERVATION ')
+                    for line in output.getvalue().splitlines() if line.startswith('NATIVE_COMMAND_OBSERVATION ')))
                 self.assertEqual(observation['raw_exit'], status)
                 self.assertEqual(observation['outcome'], 'returned')
                 self.assertGreater(observation['process_scan_count'], 0)
@@ -122,7 +233,8 @@ class GuardedCommandTests(unittest.TestCase):
                 patch.object(sys, 'stderr', output):
             result = self.fixture.guarded_command([sys.executable, '-c', 'raise SystemExit(7)'])
         self.assertEqual(result.returncode, 7)
-        observation = json.loads(output.getvalue().removeprefix('\nNATIVE_COMMAND_OBSERVATION '))
+        observation = json.loads(next(line.removeprefix('NATIVE_COMMAND_OBSERVATION ')
+                    for line in output.getvalue().splitlines() if line.startswith('NATIVE_COMMAND_OBSERVATION ')))
         self.assertIsNone(observation['elapsed_seconds'])
         self.assertIsNone(observation['reaped_children_cpu_seconds'])
         self.assertIsNone(observation['process_scan_seconds'])

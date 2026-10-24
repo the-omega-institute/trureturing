@@ -18,7 +18,7 @@ sys.path.insert(0, str(ROOT / 'tools/lean-inspector'))
 import materials
 import publication
 from test_reuse import ReuseTests, EXECUTION
-from test_native_support import NativeDependencyTestSupport
+from test_native_support import NativeDependencyTestSupport, native_test_main
 
 
 def api(case):
@@ -408,5 +408,6 @@ class NativeScopedContracts(NativeDependencyTestSupport, unittest.TestCase):
 
 if __name__ == '__main__':
     scenario = sys.argv[1]
-    owner = NativeScopedContracts if scenario.startswith('test_native_') else ScopedContracts
-    unittest.main(argv=[sys.argv[0], owner.__name__ + '.' + scenario], verbosity=2)
+    if scenario.startswith('test_native_'):
+        sys.exit(native_test_main('__main__.NativeScopedContracts.' + scenario))
+    unittest.main(argv=[sys.argv[0], 'ScopedContracts.' + scenario], verbosity=2)

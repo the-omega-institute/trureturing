@@ -16,6 +16,7 @@ import tempfile
 import threading
 import time
 import unittest
+import weakref
 from unittest.mock import patch
 import zipfile
 import zlib
@@ -96,6 +97,14 @@ ROOT = Path(os.environ.get('STRATALINT_NATIVE_SOURCE_ROOT', ROOT)).resolve()
 sys.path.insert(0, str(HERE))
 import publication
 import materials
+
+ACTIVE_FIXTURES = weakref.WeakSet()
+SPAWNING_COMMAND = False
+INTERRUPT_PENDING = False
+
+
+class FixtureInterrupted(KeyboardInterrupt):
+    pass
 
 
 class NativeTestSupport:
@@ -383,6 +392,7 @@ defaultFacets = ["static"]
             self.temporary._finalizer.detach()
             raise
         self.temporary.cleanup()
+        ACTIVE_FIXTURES.discard(self)
 
     def guarded_command(self, args, *, cwd=None, env=None, text=True, capture_output=True, timeout=120,
                         observe_output=None):
@@ -399,6 +409,13 @@ defaultFacets = ["static"]
         self._command_observation = observation
         self._command_sequence = getattr(self, '_command_sequence', 0) + 1
         sequence = self._command_sequence
+        try:
+            print('\nNATIVE_COMMAND_START ' + json.dumps(dict(
+                suite=self.id() if isinstance(self, unittest.TestCase) else type(self).__name__,
+                sequence=sequence, command=list(args), monotonic_seconds=started,
+                timeout_seconds=timeout)), file=sys.stderr, flush=True)
+        except Exception:
+            pass
         result = None
         try:
             result = self._guarded_command(args, cwd=cwd, env=env, text=text, capture_output=capture_output,
@@ -425,8 +442,10 @@ defaultFacets = ["static"]
 
     def _guarded_command(self, args, *, cwd=None, env=None, text=True, capture_output=True, timeout=120,
                          observe_output=None):
+        global SPAWNING_COMMAND, INTERRUPT_PENDING
         if timeout != 120 or not text or not capture_output:
             raise ValueError('native fixture commands require the 120s guard and text capture')
+        ACTIVE_FIXTURES.add(self)
         temporary = self.root / 'tmp'
         temporary.mkdir(exist_ok=True)
         environment = dict(self.env if env is None else env, TMPDIR=str(temporary))
@@ -447,12 +466,21 @@ defaultFacets = ["static"]
                     value = decoders[name].decode(data, final=final)
                     if value:
                         observe_output(name, value)
-            process = subprocess.Popen(args, cwd=cwd or self.root, env=environment,
-                stdout=stdout, stderr=stderr, start_new_session=True)
-            command = (process, {})
-            if not hasattr(self, '_commands'):
-                self._commands = []
-            self._commands.append(command)
+            # Deliver fixture interruption only after its new session has an
+            # owner; otherwise a signal inside Popen can strand the child.
+            SPAWNING_COMMAND = True
+            try:
+                process = subprocess.Popen(args, cwd=cwd or self.root, env=environment,
+                    stdout=stdout, stderr=stderr, start_new_session=True)
+                command = (process, {})
+                if not hasattr(self, '_commands'):
+                    self._commands = []
+                self._commands.append(command)
+            finally:
+                SPAWNING_COMMAND = False
+            if INTERRUPT_PENDING:
+                INTERRUPT_PENDING = False
+                raise FixtureInterrupted()
             completed = threading.Event()
             stop_observer = threading.Event()
             outcome = {}
@@ -494,6 +522,13 @@ defaultFacets = ["static"]
             finally:
                 try:
                     self.join_command(command)
+                    if os.environ.get('STRATALINT_NATIVE_COMMAND_OBSERVATION') == '1':
+                        try:
+                            print('NATIVE_COMMAND_SETTLED ' + json.dumps(dict(
+                                pid=process.pid, direct_child_exit=process.returncode,
+                                owned_live_processes=0)), file=sys.stderr, flush=True)
+                        except Exception:
+                            pass
                 finally:
                     # Cleanup failure retains ownership, but must not leave
                     # this observer waiting out the command's remaining budget.
@@ -713,11 +748,87 @@ def stage_compiler(output):
         for path in output.iterdir():
             path.chmod(path.stat().st_mode & ~0o222)
     finally:
-        fixture.doCleanups()
+        # This fixture is not run by unittest. Propagate settlement failures
+        # rather than letting doCleanups swallow them without a TestResult.
+        if hasattr(fixture, 'temporary'):
+            fixture.cleanup_fixture()
 
 
 
+
+
+def leaf_ids(selection):
+    loader = unittest.TestLoader()
+    suite = loader.loadTestsFromName(selection)
+    if loader.errors:
+        raise RuntimeError('\n'.join(loader.errors))
+
+    def flatten(test):
+        if isinstance(test, unittest.TestSuite):
+            return [name for child in test for name in flatten(child)]
+        return [test.id()]
+
+    names = flatten(suite)
+    if not names or len(set(names)) != len(names):
+        raise ValueError('selection must contain nonempty, unique unittest leaves')
+    return names
+
+
+def native_test_main(selection=None):
+    import argparse
+    parser = argparse.ArgumentParser(description=__doc__)
+    modes = parser.add_mutually_exclusive_group(required=True)
+    modes.add_argument('--list')
+    modes.add_argument('--run')
+    modes.add_argument('--stage', type=Path)
+    args = parser.parse_args(['--run', selection] if selection is not None else None)
+    if args.list:
+        print(json.dumps(leaf_ids(args.list)))
+        return 0
+
+    def interrupt(_signum, _frame):
+        global INTERRUPT_PENDING
+        if SPAWNING_COMMAND:
+            INTERRUPT_PENDING = True
+        else:
+            raise FixtureInterrupted()
+
+    previous = signal.signal(signal.SIGTERM, interrupt)
+    code = 1
+    try:
+        if args.stage is not None:
+            stage_compiler(args.stage.resolve())
+            code = 0
+        else:
+            loader = unittest.TestLoader()
+            suite = loader.loadTestsFromName(args.run)
+            if loader.errors:
+                raise RuntimeError('\n'.join(loader.errors))
+            result = unittest.TextTestRunner(verbosity=2).run(suite)
+            code = 0 if result.wasSuccessful() else 1
+    except FixtureInterrupted:
+        code = 128 + signal.SIGTERM
+    finally:
+        # A class setup interrupted by unittest has not yet registered its
+        # class cleanup. Settle every native owner before the interpreter exits.
+        try:
+            for fixture in list(ACTIVE_FIXTURES):
+                fixture.cleanup_fixture()
+        except BaseException:
+            print('NATIVE_FIXTURE_SETTLEMENT unresolved', file=sys.stderr, flush=True)
+            raise
+        else:
+            print('NATIVE_FIXTURE_SETTLEMENT ' + json.dumps(dict(
+                owned_live_processes=0, exit_code=code)), file=sys.stderr, flush=True)
+        finally:
+            signal.signal(signal.SIGTERM, previous)
+    return code
 
 
 if __name__ == '__main__':
-    stage_compiler(Path(sys.argv[1]).resolve())
+    # The loader and its imported mixins must share this invocation's owners.
+    sys.modules['test_native_support'] = sys.modules[__name__]
+    if len(sys.argv) == 2 and not sys.argv[1].startswith('--'):
+        stage_compiler(Path(sys.argv[1]).resolve())
+    else:
+        sys.exit(native_test_main())

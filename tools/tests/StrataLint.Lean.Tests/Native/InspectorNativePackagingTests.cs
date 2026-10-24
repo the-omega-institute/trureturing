@@ -1,5 +1,6 @@
 namespace StrataLint.Lean.Tests;
 
+[Collection("Lean cold production integration")]
 public sealed class InspectorNativePackagingTests(InspectorCompilerFixture compiler) : IClassFixture<InspectorCompilerFixture>
 {
     // Producer inputs, seeds, packaging and release partitions use a class-owned compiler stage.

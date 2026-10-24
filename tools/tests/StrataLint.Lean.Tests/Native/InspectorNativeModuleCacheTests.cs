@@ -1,5 +1,6 @@
 namespace StrataLint.Lean.Tests;
 
+[Collection("Lean cold production integration")]
 public sealed class InspectorNativeModuleCacheTests(InspectorCompilerFixture compiler) : IClassFixture<InspectorCompilerFixture>
 {
     // Module cache validation uses a class-owned compiler stage.

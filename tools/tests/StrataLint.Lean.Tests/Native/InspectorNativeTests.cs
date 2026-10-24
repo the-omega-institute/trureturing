@@ -13,10 +13,15 @@ public sealed class InspectorNativeTests(InspectorCompilerFixture compiler) : IC
     [InlineData("test_streaming")]
     [InlineData("test_entry_regressions.EntryRegressionTests")]
     [InlineData("test_reuse")]
-    [InlineData("test_local_entry")]
     [InlineData("test_guarded_command.GuardedCommandTests")]
     [InlineData("test_native.NativeTests.test_coordinates_use_private_temporary_memo_and_clean_up_failures")]
     public void InspectorArtifactBehavior(string suite) => InspectorNativeTestRunner.Run(compiler, suite);
+
+    public static IEnumerable<object[]> LocalEntryCases() => InspectorNativeTestRunner.Cases("test_local_entry");
+
+    [Theory]
+    [MemberData(nameof(LocalEntryCases))]
+    public void LocalEntryBehavior(string test) => InspectorNativeTestRunner.Run(compiler, test);
 
     [Fact]
     public void PublicationConsumersStartWithPrivateColdProjects() => InspectorNativeTestRunner.Run(compiler,
@@ -26,13 +31,36 @@ public sealed class InspectorNativeTests(InspectorCompilerFixture compiler) : IC
     public void LocalRestoredSeedKeepsNativeIncrementalExtraction() => InspectorNativeTestRunner.Run(compiler,
         "test_native.NativeLocalReportTests");
 
-    [Fact]
-    public void ReportConsumersStartWithPrivateColdProjects() => InspectorNativeTestRunner.Run(compiler,
-        "test_native.NativeReportTests");
+    public static IEnumerable<object[]> ReportCases() => InspectorNativeTestRunner.Cases("test_native.NativeReportTests");
+
+    [Theory]
+    [MemberData(nameof(ReportCases))]
+    public void ReportConsumersStartWithPrivateColdProjects(string test) => InspectorNativeTestRunner.Run(compiler, test);
 }
 
 internal static class InspectorNativeTestRunner
 {
+    internal static void Interrupt(System.Diagnostics.Process process)
+    {
+        TestProcessRunner.InterruptPythonFixture(process);
+        if (process.ExitCode != 143)
+            throw new InvalidOperationException("native fixture did not acknowledge settled interruption: " + process.ExitCode);
+    }
+
+    internal static IEnumerable<object[]> Cases(string selection)
+    {
+        if (OperatingSystem.IsWindows()) return [[selection]];
+        var root = TestRepositoryLayout.FindRoot();
+        var result = TestProcessRunner.Run("python3",
+            ["-B", "test_native_support.py", "--list", selection],
+            Path.Combine(root, "tools/lean-inspector/tests"), TestBudgets.ReportSupervisorHangGuard, 1024 * 1024);
+        Assert.True(result.ExitCode == 0, Encoding.UTF8.GetString(result.StandardError));
+        var names = JsonSerializer.Deserialize<string[]>(result.StandardOutput)!;
+        Assert.NotEmpty(names);
+        Assert.Equal(names.Length, names.Distinct(StringComparer.Ordinal).Count());
+        return names.Select(name => new object[] { name });
+    }
+
     internal static void Run(InspectorCompilerFixture compiler, string suite)
     {
         if (OperatingSystem.IsWindows()) return;
@@ -47,9 +75,10 @@ internal static class InspectorNativeTestRunner
             utc = clock.GetUtcNow(), elapsed_ms = clock.GetElapsedTime(prepared).TotalMilliseconds }));
         var executed = clock.GetTimestamp();
         var result = TestProcessRunner.Run("env",
-            [.. environment, "STRATALINT_NATIVE_COMMAND_OBSERVATION=1", "python3", "-B", "-m", "unittest", suite, "-v"],
+            [.. environment, "STRATALINT_NATIVE_COMMAND_OBSERVATION=1", "python3", "-B", "test_native_support.py", "--run", suite],
             Path.Combine(root, "tools/lean-inspector/tests"), TestBudgets.ReportSupervisorHangGuard, 1024 * 1024,
-            standardOutput: Console.OpenStandardOutput(), standardError: Console.OpenStandardError());
+            standardOutput: Console.OpenStandardOutput(), standardError: Console.OpenStandardError(),
+            interruptBeforeKill: Interrupt);
         Console.WriteLine("NATIVE_CASE " + JsonSerializer.Serialize(new { phase = "child-exit", suite,
             utc = clock.GetUtcNow(), elapsed_ms = clock.GetElapsedTime(executed).TotalMilliseconds, raw_exit = result.ExitCode,
             stdout_bytes = result.StandardOutput.Length, stderr_bytes = result.StandardError.Length }));
@@ -104,9 +133,10 @@ public sealed class InspectorCompilerFixture : IDisposable
         using var source = new TemporaryDirectory();
         var root = TestRepositoryLayout.FindRoot();
         var result = TestProcessRunner.Run("env",
-            ["STRATALINT_NATIVE_COMMAND_OBSERVATION=1", "python3", "-B", "test_native_support.py", source.Path],
+            ["STRATALINT_NATIVE_COMMAND_OBSERVATION=1", "python3", "-B", "test_native_support.py", "--stage", source.Path],
             System.IO.Path.Combine(root, "tools/lean-inspector/tests"),
-            TestBudgets.ReportSupervisorHangGuard, 1024 * 1024);
+            TestBudgets.ReportSupervisorHangGuard, 1024 * 1024,
+            interruptBeforeKill: InspectorNativeTestRunner.Interrupt);
         InspectorNativeTestRunner.WriteCommandObservations(result.StandardOutput);
         InspectorNativeTestRunner.WriteCommandObservations(result.StandardError);
         Assert.True(result.ExitCode == 0, Encoding.UTF8.GetString(result.StandardOutput)
