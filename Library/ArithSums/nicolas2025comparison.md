@@ -15895,3 +15895,121 @@ $$
 The rational square comparison $(707/500)^2<2$ pays the bound on
 $\sqrt2$. This positive constant is a complete fixed-degree budget,
 not a lower bound for the signed first-layer defect in FDW4.
+
+
+### A polylogarithmic window for the unpaid first-prime account
+
+Use the uniform real-order constant $C_m\ge1$ already supplied by
+GMW1, and put, for sufficiently large $A$,
+
+$$
+B_*=8(C_m+1),\qquad
+Y_A=\frac{A}{(L+2)^{B_*}},\qquad
+P_A=A(\log L+2)^{B_*}.
+\tag{FDW6}
+$$
+
+These are exactly CPW1 and GMW2 with the fixed degree $k=1$.
+The source, clamp and observer remain FDW1--FDW2. Define
+$G_{\mathrm{low},A}(n)$ by CPW7 at the new $Y_A$; it is the
+nonnegative own-price cost of the same integer's missing primes
+$p\le Y_A$. Define $C_A(n)$ and $D_{\mathrm{far},A}(n)$ by
+averaging the complete actual first-layer defect on, respectively,
+$Y_A<p\le P_A$ and $p>P_A$. Both occupied and absent primes are
+included, with the original occupation pattern.
+
+The order-$L$ negative-moment calculation CPW3--CPW6 gives
+
+$$
+D_{\mathrm{low},A}(n)=G_{\mathrm{low},A}(n)+O(\rho_A),\qquad
+\rho_A=4e^{-(3C_m+4)L\log(L+2)},\qquad
+T_A\rho_A=o(L^{-1}).
+\tag{FDW7}
+$$
+
+All low primes lie above their original-price activation, by CPW4.
+For source clocks below $2Y_A/A$, CPW5 pays the inverse-price factor;
+for every other source clock the entire low-prime hinge integral is
+zero. Thus this estimate includes the clamped clocks and the complete
+infinite observation-kernel tail, not just a source mass bound.
+
+For the upper cut, use GMW3 at the growing real order $t=\log L$.
+Its whole weighted clock-tail allowance, including GMW5's
+additional factor, is
+$O((1+\log L)\exp[-(C_m+2)(\log L)\log(\log L+2)])
+=o(L^{-1})$.
+The actual activation formula JPT5 and the complete prime-tail
+calculation GMW4--GMW8 therefore give
+
+$$
+U_A:=\int\sum_{p>P_A}\log p\,(r_p-\lambda(Av))_+
+       \,d\omega_A(v)
+=\frac{\beta_1}{L}(1+o(1))>0,
+\qquad r_p=\frac{\log(1+1/p)}{\log p}.
+\tag{FDW8}
+$$
+
+Here $\beta_1>0$ is ACP3's fixed node-$1$ slope. The Gamma comparison
+uses $k=1$, $Z=\log P_A=L+O(\log\log L)$ and $\Gamma(1)=1$.
+The effective-PNT and activation errors are $o(L^{-1})$; no claim
+that this far-sector error is root-small is made.
+The scalar hinge identity and exact mass and price keep the actual
+occupied-prime correction:
+
+$$
+D_{\mathrm{far},A}(n)=U_A+
+ \sum_{\substack{p>P_A\\p\mid n}}(\lambda(A)-r_p)\log p
+\ge U_A.
+\tag{FDW9}
+$$
+
+Each correction is nonnegative because $p>P_A>A$ and
+$r_p<\lambda(p)<\lambda(A)$. All infinite prime sums after
+observation are absolutely integrable by JPT3's complete-pressure
+majorant; the same proof uses only fixed source moments here.
+
+Substitute the exact disjoint decomposition
+$D_{1,A}=D_{\mathrm{low},A}+C_A+D_{\mathrm{far},A}$ into FDW4.
+The resulting full original-integer account is
+
+$$
+\boxed{\begin{aligned}
+T_A\Delta(n)={}&T_A\bigl[C_A(n)+D_{\mathrm{far},A}(n)
+ +G_{\mathrm{low},A}(n)+G_{2,A}(n)\bigr]\\
+&+c_*+O(L^{-1}).
+\end{aligned}}
+\tag{FDW10}
+$$
+
+No actual higher layer, low-prime baseline or occupied far prime is
+omitted. The undecided first-prime window has endpoints
+$A/(\log A+2)^{B_*}$ and $A(\log\log A+2)^{B_*}$, with a fixed
+exponent $B_*$. This is narrower than the growing-degree window;
+it does not assert that either endpoint divided by $A$ tends to one.
+There is no numerical common threshold because $C_m$ and the reused
+asymptotic inputs have not been made jointly effective here.
+
+A sufficient still-unproved joint estimate is
+$T_A[C_A(n)+D_{\mathrm{far},A}(n)]\ge-33/40$ eventually for all
+original integers. FDW5, FDW10 and the two nonnegative baselines would
+then give strict eventual Robin; lower finite scales would still need
+their own coverage. The exact far account in this condition cannot be
+replaced by its leading term with an $o(L^{-1})$ error: that allowance
+is larger than the required root scale. ACC's actual-integer
+cancellation obstruction must still be respected.
+
+For any actual own-price zero-defect source, all scalar nonnegative
+baseline defects vanish. Combining FDW10 with the original
+$\Delta(n)=I_\psi(A)+R(A)$ then gives
+
+$$
+T_A[C_A(n)+D_{\mathrm{far},A}(n)]
+=T_AI_\psi(A)-2q_*+O(L^{-1}).
+\tag{FDW11}
+$$
+
+Thus the changed root constant is compensated in the same signed
+first-layer account. It is not an additional physical reserve or a
+proved bound for that account. A FIB address may supply this same
+integer and its verified arithmetic data; the address alone supplies
+no sign in FDW10. The complete joint comparison and RH remain open.
