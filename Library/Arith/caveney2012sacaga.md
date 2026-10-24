@@ -1695,3 +1695,41 @@ signed estimate, or prove RH or strict Robin for every integer above
 5040. The Laplace integration and Landau principle are classical,
 not new project theorems. This paper application has no Lean/kernel
 certification or claim of literature priority.
+
+
+## A published small source certifies every future comparison
+
+The primary's proof of Theorem 5(i), printed pp.14--15, supplies a
+small actual source for (FR1), including its all-integer quantifier.
+This uses the proof, not an inference from GA2 comparisons with multiples.
+Equation (24), obtained there from Robin's finite verification, gives
+
+$$
+5040<m<e^{19747}\quad\Longrightarrow\quad G(m)<e^\gamma.
+$$
+
+For $\log m\ge19747$, Case 2 uses Robin's unconditional bound (2) to give
+
+$$
+G(m)<e^\gamma+\frac{0.6483}{(\log19747)^2}
+       <G(5040)<G(2520).
+$$
+
+Although that case writes $m=ar$, both estimates use only the displayed
+size range of $m$; neither uses divisibility by $r$. The exact set $R$
+on printed p.14, also tabulated in Table 1, has only $2520$ and $5040$
+in $[2520,5040]$. All remaining integers in that interval have
+$G(m)<e^\gamma$. Consequently these published inputs give
+
+$$
+G(m)<G(2520)\qquad\text{for every integer }m>2520.
+\tag{FR9}
+$$
+
+The ordinary prime-layer test at $A=\log2520$ is strict:
+$N=2520=2^3 3^2 5\cdot7=C_A$, with $B(A)=A$. Thus this is an
+event-free own-price source and the complete future conditions
+(FR1)--(FR2) apply. No RH premise, new global record classification,
+rerun of Robin's finite verification, or Lean certification is supplied
+or required by this reuse of the published estimates. The source lies
+below $5040$; it cannot by itself test a claim restricted to larger sources.
