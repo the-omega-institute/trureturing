@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:b121b3f359d2743ee96960ed9175673a32445bcc8ad920d98ae7c639bcfc9bbf
+  normalized_sha256: sha256:b121b3f359d2743ee96960ed9175673a32445bcc8ad920d98ae7c639bcfc9bbf
+cas_ref: sha256:b121b3f359d2743ee96960ed9175673a32445bcc8ad920d98ae7c639bcfc9bbf
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 制度内权限有效性与伦理正当性的区分。
+    previous_atom_id: 04b335202e504ca3eb5c87ea15e118dbc56ffea546ad23bc518a748f38378c4a
+    next_atom_id: 1ac4741d3d3ca46efd8cbdd2f99e92c02ede983e7c186c169d2bb7209f9f2643
