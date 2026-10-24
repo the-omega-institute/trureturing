@@ -6,8 +6,8 @@
    utility: none
    digest: Optimal unambiguous discrimination of injectively labelled product sequences. -/
 
+import D5.S3.Quantum.Recovery.PurifiedLocalPath
 import Mathlib.Analysis.Matrix.Order
-import Mathlib.LinearAlgebra.Matrix.Determinant.Basic
 import Mathlib.Logic.Equiv.Fintype
 import Mathlib.Tactic.Linarith
 import Mathlib.Tactic.Ring
@@ -16,6 +16,7 @@ namespace D5.S3.Quantum.PureState.NoRepetitionSequenceUnambiguousDiscrimination
 
 open scoped ComplexOrder Matrix MatrixOrder
 open Matrix
+open D5.S3.Quantum.Recovery.ProductPrefixRigidity (gram productMap)
 
 noncomputable section
 
@@ -54,7 +55,7 @@ def averageSuccess {N k : ℕ}
 def productEffect {N k : ℕ}
     (F : Option (Fin N) → Matrix (Fin N) (Fin N) ℂ)
     (o : Fin k → Option (Fin N)) : Matrix (Fin k → Fin N) (Fin k → Fin N) ℂ :=
-  fun a b => ∏ j, F (o j) (a j) (b j)
+  productMap (fun _ : Fin k => Fin N) (fun j => F (o j))
 
 /-- Classical processing sums the product effects assigned to the same output. -/
 noncomputable def inducedEffect {N k : ℕ}
@@ -87,9 +88,6 @@ def claim : Prop :=
       IsUnambiguousMeasurement (productState (k := k) ψ) E E₀ ∧
       averageSuccess (productState (k := k) ψ) E = value N k s
 
-private def gram {N k : ℕ} (φ : Label N k → (Fin k → Fin N) → ℂ) :
-    Matrix (Label N k) (Label N k) ℂ := fun x y => star (φ x) ⬝ᵥ φ y
-
 private def probabilities {N k : ℕ}
     (φ : Label N k → (Fin k → Fin N) → ℂ)
     (E : Label N k → Matrix (Fin k → Fin N) (Fin k → Fin N) ℂ) : Label N k → ℝ :=
@@ -99,7 +97,7 @@ private def kernel {N k : ℕ} (s : ℝ) : Matrix (Label N k) (Label N k) ℂ :=
   fun x y => ∏ j, if x.val j = y.val j then 1 else (s : ℂ)
 
 private lemma product_gram {N k : ℕ} (ψ : Fin N → Fin N → ℂ) (s : ℝ)
-    (hψ : IsEquiangular ψ s) : gram (productState (k := k) ψ) = kernel s := by
+    (hψ : IsEquiangular ψ s) : gram (fun a x => productState (k := k) ψ x a) = kernel s := by
   ext x y
   change (∑ a : Fin k → Fin N,
     star (∏ j, ψ (x.val j) (a j)) * ∏ j, ψ (y.val j) (a j)) =
@@ -119,7 +117,7 @@ private lemma measurement_gram_bound {N k : ℕ}
     (E : Label N k → Matrix (Fin k → Fin N) (Fin k → Fin N) ℂ)
     (E₀ : Matrix (Fin k → Fin N) (Fin k → Fin N) ℂ)
     (hE : IsUnambiguousMeasurement φ E E₀) :
-    (gram φ - diagonal (fun x => (probabilities φ E x : ℂ))).PosSemidef := by
+    (gram (fun a x => φ x a) - diagonal (fun x => (probabilities φ E x : ℂ))).PosSemidef := by
   classical
   let A : Matrix (Fin k → Fin N) (Label N k) ℂ := fun a x => φ x a
   have hzero (x y : Label N k) (hy : y ≠ x) : E x *ᵥ φ y = 0 :=
@@ -156,11 +154,11 @@ private lemma measurement_gram_bound {N k : ℕ}
       · rw [hzero x z hzx, dotProduct_zero]
   have htotal : E₀ = 1 - ∑ x, E x := by
     exact eq_sub_of_add_eq' hE.2.2.1
-  have hgram : Aᴴ * A = gram φ := by
+  have hgram : Aᴴ * A = gram (fun a x => φ x a) := by
     ext x y
     rfl
   have hidentity : Aᴴ * E₀ * A =
-      gram φ - diagonal (fun x => (probabilities φ E x : ℂ)) := by
+      gram (fun a x => φ x a) - diagonal (fun x => (probabilities φ E x : ℂ)) := by
     rw [htotal, Matrix.mul_sub, Matrix.sub_mul, Matrix.mul_one, hgram, hcompression]
   rw [← hidentity]
   exact hE.2.1.conjTranspose_mul_mul_same A
