@@ -118,7 +118,7 @@ def familyRegistration : Registration arena.{u}
   sensitivity := sensitivity
   dependence := dependence
 
-def registration : LeanInformationAudit.Contract.Registration
+def registration : LeanInformationAudit.Contract.Registration.{_, _, _, 0, 0, 0, _, _, _, _, _, 0}
     (@binary_gauss_of_integral_unit_congruence.{u})
     (type_of% (realize signature.{u} actual.{u}.readout actual.{u}.anchor)) Unit Unit where
   unitName := Lean.Name.str

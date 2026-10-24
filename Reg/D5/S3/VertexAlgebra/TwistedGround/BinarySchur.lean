@@ -128,7 +128,7 @@ def familyRegistration : Registration arena.{u} (type_of% (@even_binary_eliminat
   sensitivity := sensitivity
   dependence := dependence
 
-def registration : LeanInformationAudit.Contract.Registration
+def registration : LeanInformationAudit.Contract.Registration.{_, _, _, 0, 0, 0, _, _, _, _, _, 0}
     (@even_binary_elimination.{u})
     (type_of% (realize signature.{u} actual.{u}.readout actual.{u}.anchor)) Unit Unit where
   unitName := Lean.Name.str
