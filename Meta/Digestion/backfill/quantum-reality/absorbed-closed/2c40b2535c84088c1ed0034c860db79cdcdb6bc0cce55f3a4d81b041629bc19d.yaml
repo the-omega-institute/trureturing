@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:2c40b2535c84088c1ed0034c860db79cdcdb6bc0cce55f3a4d81b041629bc19d
+  normalized_sha256: sha256:2c40b2535c84088c1ed0034c860db79cdcdb6bc0cce55f3a4d81b041629bc19d
+cas_ref: sha256:2c40b2535c84088c1ed0034c860db79cdcdb6bc0cce55f3a4d81b041629bc19d
+coverage_gids:
+  - gid: D5/S3/Quantum/QubitWitnesses.bell_coefficients_are_not_product
+    target_statement_id: sha256:0d54c32903e14d268173a993a963a82faee352eeb70f0ca1a56573c397a5eeb0
+receipts:
+  unresolved_subitems: []
