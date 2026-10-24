@@ -267,7 +267,10 @@ private lemma attainment (n : ℕ) (hn : 2 ≤ n) :
   let p : Fin (k + 2) → Bool → ℝ := fun _ b => if b then 0 else 1
   let q : Fin (k + 2) → Bool → ℝ :=
     fun i b => if i.val < 2 then (if b then 1 else 0) else (if b then 0 else 1)
-  have hp : ∀ i, IsBitDistribution (p i) := by intro i; norm_num [IsBitDistribution, p]
+  have hp : ∀ i, IsBitDistribution (p i) := by
+    intro i
+    unfold IsBitDistribution
+    norm_num [p]
   have hq : ∀ i, IsBitDistribution (q i) := by
     intro i
     unfold IsBitDistribution
