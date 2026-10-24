@@ -154,9 +154,12 @@ class LockRecoveryCases:
 
     def test_owned_unregistered_branch_can_resume(self):
         target, branch, token = self.owned_initialization(registered=False)
+        self.g(self.main, "commit", "--allow-empty", "-m", "advance requested base")
+        advanced = self.g(self.main, "rev-parse", "HEAD").strip()
         self.run_protocol("recover-init", "--path", target, "--branch", branch,
-                          "--base", self.base, "--skip-restore")
+                          "--base", advanced, "--skip-restore")
         self.assertEqual("original\n", (target / "owned").read_text())
+        self.assertEqual(self.base, self.g(target, "rev-parse", "HEAD").strip())
 
     def test_initialization_identity_changes_refuse_recovery(self):
         target, branch, token = self.owned_initialization()

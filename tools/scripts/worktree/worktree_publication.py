@@ -82,8 +82,6 @@ def recover_initialization(options):
                 if row.get("locked", "").startswith("worktree-init:") and (
                         row["locked"] == token or not row.get("HEAD") or set(row["HEAD"]) == {"0"}):
                     raise Refused("initialization_registration_unverifiable")
-            if value(options.source, "rev-parse", "--verify", options.base + "^{commit}") != creation:
-                raise Refused("initialization_base_changed")
             git(options.source, "worktree", "add", "--no-checkout", "--lock", "--reason", token,
                 path, options.branch)
             rows = [row for row in inventory(options.source) if Path(row["worktree"]).resolve() == path]
