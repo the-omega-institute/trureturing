@@ -52,6 +52,8 @@ structure LookupTable where
   complete : Bool := true
   enabled : Bool := true
   disk? : Option DiskLookup.Index := none
+  /-- Only explicit test tables may resolve the synthetic fixture. -/
+  fixture : Bool := false
   load? : Option (DiskLookup.Entry → Option Name → Expr → MetaM LookupCandidate) := none
   close? : Option (IO Unit) := none
   finish? : Option (Environment → Expr → MetaM Expr) := none
@@ -131,10 +133,10 @@ private def candidateValue (table : LookupTable) (entry : DiskLookup.Entry) (hea
 
 private def tableIndex (table : LookupTable) : IO (Option DiskLookup.Index) := do
   if table.disk?.isSome then return table.disk?
-  let directory := (← IO.getEnv "SEARCH_REDUCTION_INDEX").getD
-    "build/lean-inspector/lookup-index/fixture"
+  unless table.fixture do return none
   try
-    return some (← DiskLookup.openIndex directory "fixture"
+    return some (← DiskLookup.openFixtureIndex
+      "build/lean-inspector/search-reduction-test-index/fixture" "fixture"
       "56a005855ea17e0b0958f73ec801ae140b0a1679")
   catch _ => return none
 

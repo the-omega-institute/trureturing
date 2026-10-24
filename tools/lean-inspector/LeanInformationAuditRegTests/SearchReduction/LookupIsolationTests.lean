@@ -7,6 +7,40 @@ open LeanInformationAudit.Tests.SearchReduction.LookupBaseline
 set_option Elab.async false
 set_option maxHeartbeats 0
 
+run_cmd do
+  let directory : System.FilePath :=
+    "build/lean-inspector/search-reduction-test-index/legacy-scoped-rejection"
+  IO.FS.createDirAll directory
+  let manifest : DiskLookup.Manifest := {}
+  let text := (toJson manifest).compress
+  IO.FS.writeFile (directory / "manifest.json") text
+  let header : DiskLookup.Header := {
+    basis := "b530df86e6e9c4709edecd3009bb96c3d4ebc8be",
+    mathlib := mathlibRevision, inputs := 0, storage := ".", root := "manifest.json",
+    digest := hash text, complete := true, modules := 1,
+    declarations := 0, indexed := 0, missing := #[]}
+  IO.FS.writeFile (directory / "header.json") (toJson header).compress
+  IO.FS.writeFile (directory / "import-partitions.json")
+    (toJson (#[#["Mathlib"]] : Array (Array String))).compress
+  let rejected ← try
+    discard <| DiskLookup.openIndex directory header.basis mathlibRevision
+    pure false
+    catch _ => pure true
+  unless rejected do throwError "production accepted a complete=true scoped test snapshot"
+  logInfo "LOOKUP_PRODUCTION_SCOPE legacy_scoped=rejected complete_true=true"
+  IO.FS.writeFile (directory / "header.json") (toJson {header with scope := "test"}).compress
+  let fixture ← DiskLookup.openFixtureIndex directory header.basis mathlibRevision
+  unless fixture.header.complete do throwError "test API lost its complete fixture"
+  let rejected ← try
+    discard <| DiskLookup.openIndex directory header.basis mathlibRevision
+    pure false
+    catch _ => pure true
+  unless rejected do throwError "production accepted an explicitly tagged test snapshot"
+  let production ← resolveLookupTable {environment := ← getEnv}
+  unless production.disk?.isNone && !production.complete do
+    throwError "missing production index fell back to a test fixture"
+  logInfo "LOOKUP_PRODUCTION_SCOPE tagged_scoped=rejected fallback=none test_api=accepted"
+
 run_cmd liftTermElabM do
   let timeout : MetaM LocalResult := do
     IO.addHeartbeats (localBudget * 1000 + 1)
@@ -45,7 +79,7 @@ run_cmd liftTermElabM do
   logInfo "LOOKUP_COPY_BUDGET enclosing=true timeout=unknown"
 
 run_cmd liftTermElabM do
-  let directory : System.FilePath := "build/lean-inspector/lookup-index/colliding-owner-fixture"
+  let directory : System.FilePath := "build/lean-inspector/search-reduction-test-index/colliding-owner-fixture"
   IO.FS.createDirAll directory
   let type := mkConst ``True
   let keys ← DiscrTree.mkPath type

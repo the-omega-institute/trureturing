@@ -11,7 +11,7 @@ run_cmd do
   enableInitializersExecution
   let base ← importModules #[{module := `Lean}] {} 0
     (leakEnv := false) (loadExts := true)
-  let index ← DiskLookup.openIndex "build/lean-inspector/lookup-index/lookup-fixture"
+  let index ← DiskLookup.openFixtureIndex "build/lean-inspector/search-reduction-test-index/lookup-fixture"
     "lookup-fixture" "56a005855ea17e0b0958f73ec801ae140b0a1679"
   liftTermElabM do
     let source ← getEnv

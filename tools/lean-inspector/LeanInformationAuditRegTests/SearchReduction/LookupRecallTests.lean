@@ -13,8 +13,8 @@ run_cmd do
     `LeanInformationAuditRegTests.SearchReduction.LookupBaseline}] {} 0
     (leakEnv := false) (loadExts := true)
   liftTermElabM do
-    let index ← DiskLookup.openIndex
-      "build/lean-inspector/lookup-index/lookup-fixture" "lookup-fixture"
+    let index ← DiskLookup.openFixtureIndex
+      "build/lean-inspector/search-reduction-test-index/lookup-fixture" "lookup-fixture"
       "56a005855ea17e0b0958f73ec801ae140b0a1679"
     let table : LookupTable := {environment := base, disk? := some index}
     let cases ← #[

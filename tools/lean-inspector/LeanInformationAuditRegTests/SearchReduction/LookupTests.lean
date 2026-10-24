@@ -30,7 +30,7 @@ run_cmd do
 
 run_cmd do
   let directory : System.FilePath :=
-    "build/lean-inspector/lookup-index/placeholder-fixture"
+    "build/lean-inspector/search-reduction-test-index/placeholder-fixture"
   let storage := directory / "members"
   IO.FS.createDirAll storage
   let plan := directory / "plan.json"
@@ -75,8 +75,8 @@ run_cmd liftTermElabM do
   let right ← instantiateMVars right
   unless (← DiskLookup.membershipKey left) == (← DiskLookup.membershipKey right) do
     throwError "membership lost alpha/beta/zeta or binder-annotation invariance"
-  let index ← DiskLookup.openIndex
-    "build/lean-inspector/lookup-index/lookup-fixture" "lookup-fixture"
+  let index ← DiskLookup.openFixtureIndex
+    "build/lean-inspector/search-reduction-test-index/lookup-fixture" "lookup-fixture"
     "56a005855ea17e0b0958f73ec801ae140b0a1679"
   let hits ← DiskLookup.queryMembership index left
   unless hits.complete && hits.entries.any (·.leanName == ``pair) do

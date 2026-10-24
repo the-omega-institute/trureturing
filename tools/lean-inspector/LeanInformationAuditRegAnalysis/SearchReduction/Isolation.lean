@@ -496,7 +496,7 @@ private unsafe def runCore (source base : Environment) (request : Request)
 /-- Fork only immutable module storage. Candidate extensions are never merged
 into the baseline environment used for local reconstruction. -/
 unsafe def run (source : Environment) (request : Request)
-    (sharedImports : ImportState := default) : IO Observation := do
+    (sharedImports : ImportState := default) (fixture : Bool := false) : IO Observation := do
   unless source.contains request.target do
     return {
       target := request.target, verdict := .insufficient, base := .incomplete .missing,
@@ -518,10 +518,16 @@ unsafe def run (source : Environment) (request : Request)
       pure (base, state)
     profilePhase "query/base-import-end"
     let catalog ← baselineCatalog request.baselineCommit delivery base
-    let directory := (← IO.getEnv "SEARCH_REDUCTION_INDEX").getD
-      s!"build/lean-inspector/lookup-index/{request.baselineCommit}"
     let disk? ← try
-      pure (some (← DiskLookup.openIndex directory request.baselineCommit mathlibRevision catalog.excluded))
+      if fixture then
+        pure (some (← DiskLookup.openFixtureIndex
+          s!"build/lean-inspector/search-reduction-test-index/{request.baselineCommit}"
+          request.baselineCommit mathlibRevision catalog.excluded))
+      else
+        let directory := (← IO.getEnv "SEARCH_REDUCTION_INDEX").getD
+          s!"build/lean-inspector/lookup-index/{request.baselineCommit}"
+        pure (some (← DiskLookup.openIndex directory
+          request.baselineCommit mathlibRevision catalog.excluded))
       catch _ => pure none
     let result ← runCore source base request disk?.isSome disk? (some baseImports) (some ancestors)
     let used := request.additions.filter fun name =>

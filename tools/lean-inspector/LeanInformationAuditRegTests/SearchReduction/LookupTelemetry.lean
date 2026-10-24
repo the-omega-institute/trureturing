@@ -8,8 +8,8 @@ set_option Elab.async false
 set_option maxHeartbeats 0
 
 run_cmd liftTermElabM do
-  let index ← DiskLookup.openIndex
-    "build/lean-inspector/lookup-index/lookup-fixture" "lookup-fixture"
+  let index ← DiskLookup.openFixtureIndex
+    "build/lean-inspector/search-reduction-test-index/lookup-fixture" "lookup-fixture"
     "56a005855ea17e0b0958f73ec801ae140b0a1679"
   let table : LookupTable := {environment := ← getEnv, disk? := some index}
   let target := mkApp (mkConst ``Mark) (mkNatLit 9)
@@ -22,8 +22,8 @@ run_cmd liftTermElabM do
   logInfo s!"LOOKUP_TELEMETRY cost=zero kernel=true source={result.lookup.source?} complete={result.lookup.complete}"
 
 run_cmd liftTermElabM do
-  let index ← DiskLookup.openIndex
-    "build/lean-inspector/lookup-index/lookup-fixture" "lookup-fixture"
+  let index ← DiskLookup.openFixtureIndex
+    "build/lean-inspector/search-reduction-test-index/lookup-fixture" "lookup-fixture"
     "56a005855ea17e0b0958f73ec801ae140b0a1679"
   let target ← Term.elabType (← `(Mark 9 ∧ (First → Last)))
   Term.synthesizeSyntheticMVarsNoPostponing
@@ -46,7 +46,7 @@ run_cmd liftTermElabM do
 
 run_cmd liftTermElabM do
   unless (← IO.getEnv "SEARCH_REDUCTION_RESUME").any (!·.isEmpty) do return
-  let index ← DiskLookup.openIndex "build/lean-inspector/lookup-index/lookup-fixture"
+  let index ← DiskLookup.openFixtureIndex "build/lean-inspector/search-reduction-test-index/lookup-fixture"
     "lookup-fixture" "56a005855ea17e0b0958f73ec801ae140b0a1679"
   let table : LookupTable := {environment := ← getEnv, disk? := some index}
   let target := mkApp (mkConst ``Mark) (mkNatLit 9)

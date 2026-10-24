@@ -75,6 +75,8 @@ private def nameParts : Name → Array (String × Nat)
 
 structure Header where
   format : String := version
+  /-- Explicit-root snapshots are test populations, never full production B0. -/
+  scope : String := ""
   basis : String
   mathlib : String
   inputs : UInt64
@@ -511,6 +513,7 @@ unsafe def produceMature (directory : System.FilePath) (basis mathlib : String)
   let mut todo := roots
   let mut seen : NameSet := {}
   let mut modules : Array Name := #[]
+  let mut inputFiles : Array String := #[]
   let mut missing : Array String := #[]
   let mut inputs : UInt64 := hash (version, basis, mathlib, Lean.versionString)
   let mut owners : Std.HashMap Name (Array String) := {}
@@ -536,9 +539,11 @@ unsafe def produceMature (directory : System.FilePath) (basis mathlib : String)
         let previous := owners[n]?.getD #[]
         unless previous.contains name.toString do owners := owners.insert n (previous.push name.toString)
       let olean ← findOLean name
+      inputFiles := inputFiles.push (← IO.FS.realPath olean).toString
       let mut fileFingerprint := hash (← IO.FS.readBinFile olean)
       for level in #[OLeanLevel.server, OLeanLevel.private] do
         let part := level.adjustFileName olean
+        inputFiles := inputFiles.push part.toString
         if ← part.pathExists then
           fileFingerprint := mixHash fileFingerprint (hash (← IO.FS.readBinFile part))
       inputs := mixHash inputs (mixHash (hash name) (mixHash fingerprint fileFingerprint))
@@ -546,6 +551,8 @@ unsafe def produceMature (directory : System.FilePath) (basis mathlib : String)
       modules := modules.push name
       if modules.size % 1000 == 0 then IO.eprintln s!"lookup.inputs_summarized={modules.size}"
     catch ex => missing := missing.push s!"{name}: {ex}"
+  writeJson (directory / "input-files.json") inputFiles
+  let scope := if checkSources then "production" else "test"
   let selected := (modules.qsort Name.quickLt).filter fun name =>
     !name.toString.startsWith "D5." || basisModules.contains name
   let collisions := owners.toArray.filterMap fun (n, ms) =>
@@ -557,6 +564,8 @@ unsafe def produceMature (directory : System.FilePath) (basis mathlib : String)
         old.inputs == inputs && old.complete && old.modules == selected.size then
       let manifestText ← IO.FS.readFile (directory / old.storage / old.root)
       if hash manifestText == old.digest then
+        let old := {old with scope}
+        writeJson (directory / "header.json") old
         IO.println (toJson old).compress
         return old
   catch _ => pure ()
@@ -579,7 +588,7 @@ unsafe def produceMature (directory : System.FilePath) (basis mathlib : String)
   let manifest : Manifest := {roots := routes.toArray.map fun (root, files) => (root, files.qsort (· < ·))}
   writeJson (storage / "manifest.json") manifest
   let header : Header := {
-    basis, mathlib, inputs, storage := storage.fileName.getD storage.toString,
+    scope, basis, mathlib, inputs, storage := storage.fileName.getD storage.toString,
     root := "manifest.json", digest := hash (toJson manifest).compress,
     complete := all.missing.isEmpty && all.coverage.size == selected.size,
     modules := selected.size, declarations := all.coverage.foldl (fun n m => n + m.declarations) 0,
@@ -672,6 +681,17 @@ unsafe def produceMembership (directory : System.FilePath) : IO MembershipHeader
   let header : Header ← readJson (directory / "header.json")
   unless header.format == version && header.complete do
     throw <| IO.userError "lookup.membership_requires_complete_candidate_index"
+  try
+    let old : MembershipHeader ← readJson (directory / "membership-header.json")
+    if old.format == membershipVersion && old.inputs == header.inputs && old.complete &&
+        old.missing.isEmpty then
+      let mut available := true
+      for bucket in [:256] do
+        available := available && (← (directory / old.storage / membershipFile bucket).pathExists)
+      if available then
+        IO.println (toJson old).compress
+        return old
+  catch _ => pure ()
   let storage := directory / s!"membership-alpha-syntax-v5-qualified-parts-memo-2000000-{header.inputs}"
   IO.FS.createDirAll storage
   let partitions : Array (Array String) ← readJson (directory / "import-partitions.json")
@@ -744,7 +764,7 @@ unsafe def compareMembership (directory oldHeader : System.FilePath) : IO Bool :
     ("comparison", toJson "UTF-8 JSON of membership key and full candidate metadata, per (module, Name)")]).compress
   return equal
 
-def openIndex (directory : System.FilePath) (basis mathlib : String)
+private def openIndexCore (directory : System.FilePath) (basis mathlib : String)
     (excluded : Array Name := #[]) : IO Index := do
   let header : Header ← readJson (directory / "header.json")
   let sameBasis ← if header.basis == basis then pure true else
@@ -761,6 +781,37 @@ def openIndex (directory : System.FilePath) (basis mathlib : String)
     pure (if member.format == membershipVersion && member.inputs == header.inputs then some member else none)
     catch _ => pure none
   return {directory := storage, header, excluded, manifest := manifest.roots, membership?}
+
+/-- Production requires the complete frozen root population even for legacy
+headers. A complete flag for a smaller explicit-root population is insufficient. -/
+def openIndex (directory : System.FilePath) (basis mathlib : String)
+    (excluded : Array Name := #[]) : IO Index := do
+  let index ← openIndexCore directory basis mathlib excluded
+  unless index.header.scope == "" || index.header.scope == "production" do
+    throw <| IO.userError "lookup.test_snapshot_in_production"
+  let partitions : Array (Array String) ← readJson (directory / "import-partitions.json")
+  let modules := partitions.foldl (fun names part =>
+    part.foldl (fun names name => names.insert name) names) ({} : Std.HashSet String)
+  unless index.header.complete && index.header.missing.isEmpty &&
+      modules.size == index.header.modules && modules.contains "Mathlib" do
+    throw <| IO.userError "lookup.incomplete_production_population"
+  let frozen ← runGit #["ls-tree", "-r", "--name-only", basis,
+    "--", "Golden/Frozen/state/D5"]
+  for path in frozen.splitOn "\n" do
+    if path.endsWith ".lean.json" then
+      let module := ((path.drop "Golden/Frozen/state/".length).toString.dropEnd
+        ".lean.json".length).toString.replace "/" "."
+      unless modules.contains module do
+        throw <| IO.userError s!"lookup.incomplete_production_population:{module}"
+  return index
+
+/-- Test callers opt in explicitly; production never routes through this API. -/
+def openFixtureIndex (directory : System.FilePath) (basis mathlib : String)
+    (excluded : Array Name := #[]) : IO Index := do
+  let index ← openIndexCore directory basis mathlib excluded
+  unless index.header.scope == "test" do
+    throw <| IO.userError "lookup.expected_test_snapshot"
+  return index
 
 /-- One disk hash bucket, followed by an expected constant-time hash lookup.
 No implication candidates or baseline declarations are enumerated here. -/

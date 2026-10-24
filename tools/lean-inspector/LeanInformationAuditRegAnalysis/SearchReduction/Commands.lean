@@ -30,6 +30,7 @@ private unsafe def importSource (owners : Array Import) : IO (Environment × Imp
 The reference is cleared before returning; it never caches across targets. -/
 private initialize activeProbe : IO.Ref (Option (Environment × ImportState)) ← IO.mkRef none
 private initialize activeReferenceRequest : IO.Ref (Option Request) ← IO.mkRef none
+private initialize activeReferenceFixture : IO.Ref Bool ← IO.mkRef false
 
 private initialize submittedCertificates : IO.Ref (Array CertificateNomination) ← IO.mkRef #[]
 private initialize submittedEdgeCertificates : IO.Ref (Array (Name × CertificateNomination)) ← IO.mkRef #[]
@@ -71,15 +72,18 @@ probe context even when the negative guard raises an exception. -/
 def withReferenceProbeContext {m : Type → Type} [Monad m]
     [MonadLiftT (ST IO.RealWorld) m]
     [MonadFinally m] {α : Type} (source : Environment) (shared : ImportState)
-    (action : m α) (request? : Option Request := none) : m α := do
+    (action : m α) (request? : Option Request := none) (fixture : Bool := false) : m α := do
   let previous ← activeProbe.get
   let previousRequest ← activeReferenceRequest.get
+  let previousFixture ← activeReferenceFixture.get
   activeProbe.set (some (source, shared))
   activeReferenceRequest.set request?
+  activeReferenceFixture.set fixture
   try action
   finally
     activeProbe.set previous
     activeReferenceRequest.set previousRequest
+    activeReferenceFixture.set previousFixture
 
 
 private def runJson : Run → Json
@@ -430,7 +434,7 @@ without rolling the diagnostic back as an ordinary tactic exception. -/
     let request := replay.getD {
       target := target.getId, «baseline» := bs.getElems.map (fun x => x.getId),
       baselineCommit := sha.getString }
-    let result ← run source request shared
+    let result ← run source request shared (← activeReferenceFixture.get)
     if result.presentation == .found then
       evalTactic (← `(tactic| exact True.intro))
       return
@@ -453,7 +457,7 @@ syntax (name := searchReductionProbeCmd) "#search_reduction_probe " ident " at "
 /-- Name ASTs cross the process boundary in a Lean module's binary expression
 payload. Numeric segments never pass through identifier syntax or text parsing. -/
 private def writeRequest (path : System.FilePath) (request : Request)
-    (owners : Array Name) (result : Name) : CommandElabM Unit := do
+    (owners : Array Name) (result : Name) (fixture : Bool := false) : CommandElabM Unit := do
   let env ← match ← requestEnvironment.get with
     | some env => pure env
     | none => do
@@ -467,7 +471,8 @@ private def writeRequest (path : System.FilePath) (request : Request)
         (`informationApplication, toExpr request.informationApplication),
         (`certificates, toExpr (request.certificates.map CertificateNomination.encode)),
         (`edgeCertificates, toExpr (request.edgeCertificates.map fun (owner, n) => (owner, n.encode))),
-        (`owners, toExpr owners), (`result, toExpr result), (`commit, toExpr request.baselineCommit)] do
+        (`owners, toExpr owners), (`result, toExpr result), (`commit, toExpr request.baselineCommit),
+        (`fixture, toExpr fixture)] do
       let type ← inferType value
       addDecl (.defnDecl {
         name, levelParams := [], type, value, hints := .abbrev, safety := .safe})
@@ -513,13 +518,14 @@ private def auditProbeCertificates (source : Environment) (request : Request)
       ("assembled_zero", toJson (if arm == "baseline" then reading.baselineProof?.isSome
         else reading.pairedProof?.isSome))] |>.compress}"
 
-unsafe def executeProbe (request : Request) (owners : Array Name) (name : Name) : CommandElabM Unit := do
+unsafe def executeProbe (request : Request) (owners : Array Name) (name : Name)
+    (fixture : Bool := false) : CommandElabM Unit := do
   let auditModule := s!"SearchReductionAudit_{hash request.target}_{← IO.monoNanosNow}"
   let auditDirectory : System.FilePath := "build/lean-inspector/search-reduction-audits/" ++ auditModule
   IO.FS.createDirAll auditDirectory
   let auditDirectory ← IO.FS.realPath auditDirectory
   let auditPayload := auditDirectory / "request.olean"
-  writeRequest auditPayload request owners name
+  writeRequest auditPayload request owners name fixture
   let auditSource := auditDirectory / (auditModule ++ ".lean")
   IO.FS.writeFile auditSource
     ("import LeanInformationAuditRegAnalysis.SearchReduction.Commands\n" ++
@@ -531,7 +537,7 @@ unsafe def executeProbe (request : Request) (owners : Array Name) (name : Name) 
   -- Exported proof expressions retain source module storage; transient
   -- environment maps and extension states need not be made persistent.
   probeRegions.modify (· ++ source.header.regions)
-  let computational ← run source request shared
+  let computational ← run source request shared fixture
   profilePhase "probe/information-start"
   let information ← acquireInformation source request.target request.additions request.informationApplication
   profilePhase "probe/information-end"
@@ -545,7 +551,7 @@ unsafe def executeProbe (request : Request) (owners : Array Name) (name : Name) 
       let sha := Syntax.mkStrLit request.baselineCommit
       let bs := request.baseline.map mkIdent
       let os := owners.map mkIdent
-      withReferenceProbeContext (request? := some request) source shared do
+      withReferenceProbeContext (request? := some request) (fixture := fixture) source shared do
         return some (← synthesizeUsingTactic' (u := .zero) (mkConst ``True)
           (← `(tactic|
             (fail_if_success (reference_baseline $target at $sha baseline [$bs,*] from [$os,*]))
@@ -606,6 +612,9 @@ unsafe def executeProbeFile (path : System.FilePath) : CommandElabM Unit := do
       (← getValue `owners)
     let name ← evalExpr Name (mkConst ``Name) (← getValue `result)
     let commit ← evalExpr String (mkConst ``String) (← getValue `commit)
+    let fixture ← match data.constants.find? (·.name == `fixture) with
+      | some (.defnInfo info) => evalExpr Bool (mkConst ``Bool) info.value
+      | _ => pure false
     let request : Request := {
       target := target
       «baseline» := bs
@@ -614,8 +623,8 @@ unsafe def executeProbeFile (path : System.FilePath) : CommandElabM Unit := do
       informationApplication := informationApplication
       certificates
       edgeCertificates }
-    pure (request, owners, name)
-  executeProbe requestData.1 requestData.2.1 requestData.2.2
+    pure (request, owners, name, fixture)
+  executeProbe requestData.1 requestData.2.1 requestData.2.2.1 requestData.2.2.2
 
 @[command_elab searchReductionProbeCmd] unsafe def elabSearchReductionProbe : CommandElab := fun stx => do
   match stx with
@@ -627,6 +636,7 @@ unsafe def executeProbeFile (path : System.FilePath) : CommandElabM Unit := do
       certificates := ← submittedCertificates.get,
       edgeCertificates := ← submittedEdgeCertificates.get}
       (owners.getElems.map (·.getId)) name.getId
+      ((← getEnv).header.mainModule.toString.startsWith "LeanInformationAuditRegTests.SearchReduction.")
   | _ => throwUnsupportedSyntax
 
 /-- Recheck child publication data and proofs in the parent environment. -/
@@ -708,6 +718,7 @@ indexes. Only compiled Lean declarations are read back; JSON is print-only. -/
       informationApplication := app.map (·.getId),
       certificates := ← submittedCertificates.get,
       edgeCertificates := ← submittedEdgeCertificates.get} modules name.getId
+      (source.header.mainModule.toString.startsWith "LeanInformationAuditRegTests.SearchReduction.")
     let command := s!"run_cmd LeanInformationAudit.SearchReduction.executeProbeFile {repr payload.toString}\n"
     IO.FS.writeFile input (imports ++ command)
     let workers := min 8 <| max 1 <|
