@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:7000239d4c12f885f66102c65c6ef65a2ff10d73a56e91be3c9a186485807ba6
+  normalized_sha256: sha256:7000239d4c12f885f66102c65c6ef65a2ff10d73a56e91be3c9a186485807ba6
+cas_ref: sha256:7000239d4c12f885f66102c65c6ef65a2ff10d73a56e91be3c9a186485807ba6
+coverage_gids:
+  - gid: D5/S3/Weil/EulerProduct.finite_euler_denominator_eq_zero_iff
+    target_statement_id: sha256:f8469d84964052284662d92acce119abad631038abb8084cd1b23b8b15d7d56e
+receipts:
+  unresolved_subitems: []

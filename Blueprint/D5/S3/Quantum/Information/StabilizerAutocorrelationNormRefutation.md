@@ -42,7 +42,21 @@ $$X = (\lambda (i: \operatorname{Fin}\left(5\right)) \mapsto ((\lambda (j: \oper
 
 The shift sends the computational vector at j to the vector at j + 1. Addition is in Fin(5).
 
-**Definition 1.4 (The clock matrix).**
+**Theorem 1.4 (Powers of the cyclic shift).**
+
+$$\forall (p: \operatorname{Fin}\left(5\right)), (\forall (i: \operatorname{Fin}\left(5\right)), (\forall (j: \operatorname{Fin}\left(5\right)), (\left((X)^{\operatorname{val}\left(p\right)}\right)\left(i, j\right) = (\operatorname{if} (i = j + p) \operatorname{then} (1) \operatorname{else} (0)))))$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/Quantum/Information/StabilizerAutocorrelationNormRefutation.shift_power` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Acknowledgement.* Blake C. Stacey (2025). *SICs, the Stabilizer Polytope and Majorization*. URL: <https://arxiv.org/abs/2509.16819v1>.
+
+*Commentary.*
+
+The val(p)-th power of the cyclic shift has entry one exactly when the row equals the column plus p modulo five.
+
+**Definition 1.5 (The clock matrix).**
 
 $$Z = \operatorname{diagonal}\left((\lambda (j: \operatorname{Fin}\left(5\right)) \mapsto ((\omega)^{\operatorname{val}\left(j\right)}))\right)$$
 
@@ -54,7 +68,7 @@ $$Z = \operatorname{diagonal}\left((\lambda (j: \operatorname{Fin}\left(5\right)
 
 The clock is diagonal, with entry ω to the power val(j) at j. Together X and Z are the standard Weyl generators.
 
-**Definition 1.5 (Weyl–Heisenberg displacements).**
+**Definition 1.6 (Weyl–Heisenberg displacements).**
 
 $$\forall (p: \operatorname{Fin}\left(5\right)), (\forall (q: \operatorname{Fin}\left(5\right)), (\operatorname{D}\left(p, q\right) = ((\tau)^{(\operatorname{val}\left(p\right)) \cdot (\operatorname{val}\left(q\right))}) \cdot (((X)^{\operatorname{val}\left(p\right)}) \cdot ((Z)^{\operatorname{val}\left(q\right)}))))$$
 
@@ -66,7 +80,7 @@ $$\forall (p: \operatorname{Fin}\left(5\right)), (\forall (q: \operatorname{Fin}
 
 The phase exponent uses the product of the natural representatives of p and q. Scalar multiplication is denoted by a centered dot; the two matrix powers are multiplied in the order X then Z.
 
-**Definition 1.6 (The six MUB projector families).**
+**Definition 1.7 (The six MUB projector families).**
 
 $$(\forall (j: \operatorname{Fin}\left(5\right)), (\operatorname{P}\left(\infty, j\right) = (\frac{1}{5}) \cdot (\sum_{r: \operatorname{Fin}\left(5\right)} (((\omega)^{\operatorname{val}\left((-j) \cdot (r)\right)}) \cdot (\operatorname{D}\left(r, 0\right)))))) \land (\forall (m: \operatorname{Fin}\left(5\right)), (\forall (j: \operatorname{Fin}\left(5\right)), (\operatorname{P}\left(\operatorname{some}\left(m\right), j\right) = (\frac{1}{5}) \cdot (\sum_{r: \operatorname{Fin}\left(5\right)} (((\omega)^{\operatorname{val}\left((-j) \cdot (r)\right)}) \cdot (\operatorname{D}\left((m) \cdot (r), r\right)))))))$$
 
@@ -78,7 +92,7 @@ $$(\forall (j: \operatorname{Fin}\left(5\right)), (\operatorname{P}\left(\infty,
 
 These are the standard spectral projectors of the Weyl lines. The infinite line uses D(r,0), and the finite line m uses D(mr,r). The product −jr is taken modulo five before val supplies the exponent; the finite-line product mr is also in Fin(5). Each sum runs over all five residues.
 
-**Definition 1.7 (Born probabilities).**
+**Definition 1.8 (Born probabilities).**
 
 $$\forall (v: (\operatorname{Fin}\left(5\right) \to \mathbb{C})), (\forall (m: \operatorname{Option}\left(\operatorname{Fin}\left(5\right)\right)), (\forall (j: \operatorname{Fin}\left(5\right)), (\operatorname{p}\left(v, m, j\right) = \Re\left(\operatorname{dotProduct}\left(\operatorname{star}\left(v\right), \operatorname{mulVec}\left(\operatorname{P}\left(m, j\right), v\right)\right)\right))))$$
 
@@ -90,7 +104,7 @@ $$\forall (v: (\operatorname{Fin}\left(5\right) \to \mathbb{C})), (\forall (m: \
 
 Section III uses the probability of outcome j in basis m. Here it is the real part of the expectation of P(m,j). The star on a vector conjugates each coordinate, and dotProduct is the bilinear sum of coordinate products. The definition is given for every complex vector; normalization is imposed in claim.
 
-**Definition 1.8 (The rectangular autocorrelation matrix).**
+**Definition 1.9 (The rectangular autocorrelation matrix).**
 
 $$\forall (v: (\operatorname{Fin}\left(5\right) \to \mathbb{C})), (\operatorname{A}\left(v\right) = (\lambda (m: \operatorname{Option}\left(\operatorname{Fin}\left(5\right)\right)) \mapsto ((\lambda (k: \operatorname{Fin}\left(5\right)) \mapsto (\sum_{j: \operatorname{Fin}\left(5\right)} ((\operatorname{p}\left(v, m, j\right)) \cdot (\operatorname{p}\left(v, m, j + k\right))))))))$$
 
@@ -102,7 +116,7 @@ $$\forall (v: (\operatorname{Fin}\left(5\right) \to \mathbb{C})), (\operatorname
 
 Section III defines A by the cyclic autocorrelation of each MUB probability vector. It is a real matrix with six rows and five columns. The outcome j + k is computed modulo five.
 
-**Definition 1.9 (The Clifford condition).**
+**Definition 1.10 (The Clifford condition).**
 
 $$\forall (U: \operatorname{Matrix}\left(\operatorname{Fin}\left(5\right), \operatorname{Fin}\left(5\right), \mathbb{C}\right)), (\operatorname{IsClifford}\left(U\right) \Leftrightarrow ((((U)^{*}) \cdot (U) = 1) \land (((U) \cdot ((U)^{*}) = 1) \land ((\exists (p: \operatorname{Fin}\left(5\right)), (\exists (q: \operatorname{Fin}\left(5\right)), (\exists (z: \mathbb{C}), ((\left\lVert z \right\rVert = 1) \land (((U) \cdot (X)) \cdot ((U)^{*}) = (z) \cdot (\operatorname{D}\left(p, q\right))))))) \land (\exists (p: \operatorname{Fin}\left(5\right)), (\exists (q: \operatorname{Fin}\left(5\right)), (\exists (z: \mathbb{C}), ((\left\lVert z \right\rVert = 1) \land (((U) \cdot (Z)) \cdot ((U)^{*}) = (z) \cdot (\operatorname{D}\left(p, q\right)))))))))))$$
 
@@ -114,7 +128,7 @@ $$\forall (U: \operatorname{Matrix}\left(\operatorname{Fin}\left(5\right), \oper
 
 The matrix is unitary on both sides and conjugates each Weyl generator to a displacement times a unit-modulus phase. The displacement labels and phase may differ for X and Z. This is the standard normalizer condition on the two generators.
 
-**Definition 1.10 (Clifford invariance of the Euclidean operator norm).**
+**Definition 1.11 (Clifford invariance of the Euclidean operator norm).**
 
 $$\operatorname{claim} \Leftrightarrow (\forall (v: (\operatorname{Fin}\left(5\right) \to \mathbb{C})), ((\sum_{i: \operatorname{Fin}\left(5\right)} (\operatorname{normSq}\left(v\left(i\right)\right)) = 1) \Rightarrow (\forall (U: \operatorname{Matrix}\left(\operatorname{Fin}\left(5\right), \operatorname{Fin}\left(5\right), \mathbb{C}\right)), ((\operatorname{IsClifford}\left(U\right)) \Rightarrow (\left\lVert \operatorname{A}\left(\operatorname{mulVec}\left(U, v\right)\right) \right\rVert_{\operatorname{op}} = \left\lVert \operatorname{A}\left(v\right) \right\rVert_{\operatorname{op}})))))$$
 
@@ -126,7 +140,7 @@ $$\operatorname{claim} \Leftrightarrow (\forall (v: (\operatorname{Fin}\left(5\r
 
 Section III asserts that Clifford action permutes the rows and columns of A and hence preserves every unitarily invariant norm. The proposition here is its Euclidean operator-norm consequence in dimension five. It quantifies over every vector whose squared complex moduli sum to one and every matrix satisfying IsClifford. The function normSq is the squared complex modulus.
 
-**Definition 1.11 (The Fourier matrix).**
+**Definition 1.12 (The Fourier matrix).**
 
 $$F = (\lambda (i: \operatorname{Fin}\left(5\right)) \mapsto ((\lambda (j: \operatorname{Fin}\left(5\right)) \mapsto (\frac{(\omega)^{\operatorname{val}\left((i) \cdot (j)\right)}}{(\sqrt{5}: \mathbb{C})}))))$$
 
@@ -140,7 +154,7 @@ $$F = (\lambda (i: \operatorname{Fin}\left(5\right)) \mapsto ((\lambda (j: \oper
 
 Choose the positive-exponent Fourier matrix. Its row and column labels multiply modulo five before val is taken; the denominator is the positive real square root, regarded as a complex number.
 
-**Definition 1.12 (A two-coordinate unit vector).**
+**Definition 1.13 (A two-coordinate unit vector).**
 
 $$\psi = (\lambda (j: \operatorname{Fin}\left(5\right)) \mapsto ((\operatorname{if} ((j = 0) \lor (j = 1)) \operatorname{then} (((\sqrt{2}: \mathbb{C}))^{-1}) \operatorname{else} (0))))$$
 
@@ -154,7 +168,7 @@ $$\psi = (\lambda (j: \operatorname{Fin}\left(5\right)) \mapsto ((\operatorname{
 
 Choose ψ = (1,1,0,0,0)/√2 in computational order. Its squared moduli sum to one.
 
-**Theorem 1.13 (The operator norm changes under a Fourier Clifford).**
+**Theorem 1.14 (The operator norm changes under a Fourier Clifford).**
 
 $$\neg (\operatorname{claim})$$
 
@@ -192,6 +206,7 @@ The squared Frobenius norm of A(ψ)*A(ψ) is (2961 + 19√5)/1600. The operator 
 - Truth anchor: `D5/S3/Quantum/Information/StabilizerAutocorrelationNormRefutation.psi`
 - Truth anchor: `D5/S3/Quantum/Information/StabilizerAutocorrelationNormRefutation.result`
 - Truth anchor: `D5/S3/Quantum/Information/StabilizerAutocorrelationNormRefutation.shift`
+- Truth anchor: `D5/S3/Quantum/Information/StabilizerAutocorrelationNormRefutation.shift_power`
 - Truth anchor: `D5/S3/Quantum/Information/StabilizerAutocorrelationNormRefutation.tau`
 - Dependency: [D5/S3/Arith/Lattices/Klartag/Walk/StepInputs2](../../Arith/Lattices/Klartag/Walk/StepInputs2.md)
 - Dependency: [D5/S3/Observer/MatrixUnitCertificate](../../Observer/MatrixUnitCertificate.md)

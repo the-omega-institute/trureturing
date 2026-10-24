@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:1521155796f324564e89e1b1a4d08f5f91e56f8501753adcb42ed7f9b61fb1a2
+  normalized_sha256: sha256:1521155796f324564e89e1b1a4d08f5f91e56f8501753adcb42ed7f9b61fb1a2
+cas_ref: sha256:1521155796f324564e89e1b1a4d08f5f91e56f8501753adcb42ed7f9b61fb1a2
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 记录38项及21个能量点的历史核验范围和脚本引用，不展开或认证所列数学结果。
+    previous_atom_id: 11bc11e599bd1f4ea0fb133c42df3778569f6523f0d0f3a8d921efd6b0956686
+    next_atom_id: a5f37d0a76ec94e8b958fb42f2105af43ce05ecde58f602035f8d04a113d9751
