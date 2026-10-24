@@ -14,7 +14,6 @@ import Mathlib.LinearAlgebra.Dual.Defs
 set_option autoImplicit false
 set_option backward.isDefEq.respectTransparency false
 set_option maxHeartbeats 200000
-set_option diagnostics true
 
 noncomputable section
 namespace D5.S3.VertexAlgebra.HalfFock.ActualCorrCovariance
@@ -52,7 +51,8 @@ private theorem derivation_sum_apply (D : LatticeData) (s : Finset ℕ)
 
 private theorem derivation_a (D : LatticeData) (i j : Index D) (s : ℕ) :
     pairDerivation D i (a D j s) = 0 := by
-  simp [a, u, Derivation.leibniz, smul_eq_mul, pairDerivation_shift]
+  simp only [a, u, Derivation.leibniz, MvPolynomial.derivation_C,
+    pairDerivation_shift, smul_eq_mul, mul_zero, zero_add, add_zero]
 
 /-- Reuse the existing singleton transform; do not reprove its binomial induction. -/
 private theorem singleton_scalar (r : ℕ) :
@@ -89,21 +89,29 @@ private theorem pair_covariance (D : LatticeData) (i j : Index D) :
           (D.G i.1 j.1 : ℂ)) * u D ^ (i.2 + 1 + (j.2 + 1)) := by
     have hs' : s ≤ i.2 := by have := Finset.mem_range.mp hs; omega
     have ht' : t ≤ j.2 := by have := Finset.mem_range.mp ht; omega
-    simp only [a, pairPolynomial, sourceWeight, c]
-    simp only [← C_mul]
+    simp only [a, pairPolynomial, sourceWeight]
     calc
       _ = C (c i.2 s * c j.2 t * pairScalar (s + 1) (t + 1) *
           (D.G i.1 j.1 : ℂ)) *
           u D ^ ((i.2 - s) + (j.2 - t) + (s + 1 + (t + 1))) := by
             simp only [c, u, pow_add, map_mul]
             ring
-      _ = _ := by congr 1; omega
+      _ = _ := by
+        rw [show (i.2 - s) + (j.2 - t) + (s + 1 + (t + 1)) =
+          i.2 + 1 + (j.2 + 1) by omega]
   calc
     _ = ∑ s ∈ Finset.range (i.2 + 1), ∑ t ∈ Finset.range (j.2 + 1),
         a D i s * (a D j t * pairPolynomial D (i.1,s) (j.1,t)) := by
       simp only [reflectedDerivation, normalImage, derivation_sum_apply,
         Derivation.smul_apply, map_sum, Derivation.leibniz, smul_eq_mul,
-        derivation_a, mul_zero, zero_add, add_zero, pairDerivation_variable, Finset.mul_sum]
+        derivation_a, mul_zero, zero_add, add_zero, pairDerivation_variable, Finset.mul_sum,
+        Finset.sum_const_zero]
+      rw [Finset.sum_comm]
+      apply Finset.sum_congr rfl
+      intro s hs
+      apply Finset.sum_congr rfl
+      intro t ht
+      ring
     _ = ∑ s ∈ Finset.range (i.2 + 1), ∑ t ∈ Finset.range (j.2 + 1),
         C (c i.2 s * c j.2 t * pairScalar (s + 1) (t + 1) *
           (D.G i.1 j.1 : ℂ)) * u D ^ (i.2 + 1 + (j.2 + 1)) := by
@@ -141,7 +149,7 @@ private theorem derivation_covariance (D : LatticeData) (i : Index D) (f : P D) 
         simp [pairPolynomial, normalReflection, u]
     rw [Derivation.leibniz, map_add]
     simp only [smul_eq_mul, map_mul, hf, hx]
-    rw [← Derivation.leibniz]
+    simp only [Derivation.leibniz, smul_eq_mul]
 
 private theorem singleton_covariance (D : LatticeData) (q : Charge D) (i : Index D) :
     normalImage D i + singletonPolynomial D q i =
@@ -161,7 +169,8 @@ private theorem singleton_covariance (D : LatticeData) (q : Charge D) (i : Index
             u D ^ ((i.2 - s) + (s + 1)) := by
               simp only [u, pow_add, map_mul]
               ring
-      _ = _ := by congr 1; omega
+      _ = _ := by
+        rw [show (i.2 - s) + (s + 1) = i.2 + 1 by omega]
   rw [show (∑ s ∈ Finset.range (i.2 + 1),
       a D i s * (X (some (i.1,s)) + singletonPolynomial D q (i.1,s))) =
       normalImage D i + (∑ s ∈ Finset.range (i.2 + 1),
@@ -171,6 +180,7 @@ private theorem singleton_covariance (D : LatticeData) (q : Charge D) (i : Index
   simp only [singletonPolynomial, sourceWeight, chargeImage, ← Finset.sum_mul,
     ← map_sum, ← map_mul, ← add_mul, ← map_add]
   rw [singleton_scalar]
+  simp only [map_add, map_mul, u]
   ring
 
 
@@ -187,7 +197,7 @@ private theorem insertion_reflection (D : LatticeData) (q : Charge D) (i : Index
     normalReflection D (insertion D q i f) =
       reflectedInsertion D q i (normalReflection D f) := by
   rw [insertion, LinearMap.add_apply, LinearMap.mulLeft_apply, map_add, map_mul,
-    derivation_covariance]
+    Derivation.coeFn_coe, derivation_covariance]
   have hs : normalReflection D (X (some i) + singletonPolynomial D q i) =
       normalImage D i + singletonPolynomial D q i := by
     simp [normalReflection, singletonPolynomial, u]
@@ -195,7 +205,12 @@ private theorem insertion_reflection (D : LatticeData) (q : Charge D) (i : Index
   simp only [reflectedInsertion, reflectedDerivation, LinearMap.add_apply,
     LinearMap.sum_apply, LinearMap.comp_apply, LinearMap.mulLeft_apply,
     insertion, derivation_sum_apply, Derivation.smul_apply, Derivation.coeFn_coe]
-  simp only [add_mul, mul_add, Finset.sum_mul, Finset.sum_add_distrib, mul_assoc]
+  simp only [add_mul, Finset.sum_mul]
+  rw [add_right_comm _ (chargeImage D q i * normalReflection D f) _,
+    ← Finset.sum_add_distrib]
+  congr 1
+  apply Finset.sum_congr rfl
+  intro s hs
   ring
 
 /-! Original-map assembly. No recursively defined reflected source is used below.
@@ -218,7 +233,9 @@ private theorem E_embed (D : LatticeData) (p : Oscillator D) :
   induction p using MvPolynomial.induction_on with
   | C z => simp [embed, E, rename_C]
   | add p q hp hq => simp only [map_add, hp, hq]
-  | mul_X p i hp => simp [embed, E, map_mul, hp]
+  | mul_X p i hp =>
+    rw [map_mul (embed D), map_mul (E D), hp]
+    simp only [embed, rename_X, E, optionEquivLeft_X_some, Polynomial.C_mul]
 
 private theorem E_symm_C (D : LatticeData) (p : Oscillator D) :
     (E D).symm (Polynomial.C p) = embed D p := by
@@ -229,6 +246,19 @@ private theorem E_Cbar (D : LatticeData) (q : Charge D) (p : Oscillator D) :
     E D (Cbar D q p) = correctionPolynomial D q p := by
   simp only [Cbar, LinearMap.comp_apply, AlgEquiv.toLinearMap_apply,
     AlgEquiv.apply_symm_apply]
+
+private theorem shift_expansion (D : LatticeData) (f : P D) :
+    f = ∑ s ∈ (E D f).support, u D ^ s * embed D ((E D f).coeff s) := by
+  calc
+    f = (E D).symm (E D f) := (AlgEquiv.symm_apply_apply (E D) f).symm
+    _ = _ := by
+      conv_lhs => rw [(E D f).as_sum_support_C_mul_X_pow]
+      rw [map_sum]
+      apply Finset.sum_congr rfl
+      intro s hs
+      rw [map_mul, map_pow, E_symm_C]
+      simp only [E, optionEquivLeft_symm_X, u]
+      exact mul_comm _ _
 
 private theorem Cbar_monomial (D : LatticeData) (q : Charge D)
     (m : Index D →₀ ℕ) :
@@ -266,7 +296,7 @@ private theorem Cbar_X_mul (D : LatticeData) (q : Charge D)
 
 /-- Canonical scalar extension of the ORIGINAL correction map in the original
 finite shift variable. It is ℂ-linear by construction. Its ℂ[u]-linearity is
-proved as corrLift_shiftScalar_mul, without a changed coefficient ring. -/
+proved below from finite shift expansion, without a changed coefficient ring. -/
 def corrLift (D : LatticeData) (q : Charge D) : P D →ₗ[ℂ] P D :=
   (Finsupp.lsum ℂ (fun s : ℕ =>
     (LinearMap.mulLeft ℂ (u D ^ s)).comp (Cbar D q))).comp
@@ -282,13 +312,6 @@ private theorem corrLift_expansion (D : LatticeData) (q : Charge D) (f : P D) :
     corrLift D q f = ∑ s ∈ (E D f).support,
       u D ^ s * Cbar D q ((E D f).coeff s) := by
   rfl
-
-private theorem corrLift_monomial (D : LatticeData) (q : Charge D)
-    (n : Option (Index D) →₀ ℕ) (z : ℂ) :
-    corrLift D q (monomial n z) = u D ^ (n none) * Cbar D q (monomial n.some z) := by
-  simp only [corrLift, LinearMap.comp_apply, AlgEquiv.toLinearMap_apply,
-    E, optionEquivLeft_monomial, shifts_monomial, Finsupp.lsum_single,
-    LinearMap.mulLeft_apply]
 
 private theorem corrLift_shift_embed (D : LatticeData) (q : Charge D)
     (s : ℕ) (p : Oscillator D) :
@@ -309,18 +332,13 @@ private theorem corrLift_C (D : LatticeData) (q : Charge D) (z : ℂ) :
 
 private theorem corrLift_u_mul (D : LatticeData) (q : Charge D) (f : P D) :
     corrLift D q (u D * f) = u D * corrLift D q f := by
-  have maps : (corrLift D q).comp (LinearMap.mulLeft ℂ (u D)) =
-      (LinearMap.mulLeft ℂ (u D)).comp (corrLift D q) := by
-    apply (basisMonomials (Option (Index D)) ℂ).ext
-    intro n
-    change corrLift D q (u D * monomial n 1) = u D * corrLift D q (monomial n 1)
-    simp only [u, X, monomial_mul_monomial, one_mul, corrLift_monomial,
-      Finsupp.add_apply, Finsupp.single_eq_same, Finsupp.some_add,
-      Finsupp.some_single_none, zero_add]
-    rw [pow_add]
-    simp only [pow_one]
-    ring
-  exact LinearMap.congr_fun maps f
+  classical
+  conv_lhs => rw [shift_expansion D f]
+  rw [Finset.mul_sum, map_sum, corrLift_expansion, Finset.mul_sum]
+  apply Finset.sum_congr rfl
+  intro s hs
+  rw [← mul_assoc, ← pow_succ', corrLift_shift_embed, pow_succ']
+  ring
 
 private theorem corrLift_u_pow_mul (D : LatticeData) (q : Charge D)
     (s : ℕ) (f : P D) :
@@ -330,23 +348,21 @@ private theorem corrLift_u_pow_mul (D : LatticeData) (q : Charge D)
   | succ s ih =>
     rw [pow_succ, mul_comm (u D ^ s) (u D), mul_assoc,
       corrLift_u_mul, ih, ← mul_assoc]
-    rw [mul_comm (u D) (u D ^ s), ← pow_succ]
 
 private theorem corrLift_C_mul (D : LatticeData) (q : Charge D) (z : ℂ) (f : P D) :
     corrLift D q (C z * f) = C z * corrLift D q f := by
   simpa only [smul_eq_C_mul] using (corrLift D q).map_smul z f
 
-/-- Explicit scalar-linearity over the finite shift algebra ℂ[u]. The base
-oscillator and correction coefficient rings stay ℂ throughout. -/
+/-- Scalar linearity over the original finite shift algebra; this is
+consumed by the triangular reflection coefficients below. -/
 private theorem corrLift_shiftScalar_mul (D : LatticeData) (q : Charge D)
     (h : Polynomial ℂ) (f : P D) :
-    corrLift D q ((Polynomial.aeval (u D) h) * f) =
+    corrLift D q (Polynomial.aeval (u D) h * f) =
       Polynomial.aeval (u D) h * corrLift D q f := by
   induction h using Polynomial.induction_on' with
   | add h k hh hk => simp only [map_add, add_mul, hh, hk]
   | monomial s z =>
-    rw [← Polynomial.C_mul_X_pow_eq_monomial, map_mul, map_pow]
-    simp only [Polynomial.aeval_C, Polynomial.aeval_X, algebraMap_eq]
+    rw [Polynomial.aeval_monomial, algebraMap_eq]
     rw [mul_assoc, corrLift_C_mul, corrLift_u_pow_mul, ← mul_assoc]
 
 private theorem insertion_u_pow_mul (D : LatticeData) (q : Charge D)
@@ -360,22 +376,15 @@ private theorem insertion_u_pow_mul (D : LatticeData) (q : Charge D)
 private theorem corrLift_X_mul (D : LatticeData) (q : Charge D)
     (i : Index D) (f : P D) :
     corrLift D q (X (some i) * f) = insertion D q i (corrLift D q f) := by
-  have maps : (corrLift D q).comp (LinearMap.mulLeft ℂ (X (some i))) =
-      (insertion D q i).comp (corrLift D q) := by
-    apply (basisMonomials (Option (Index D)) ℂ).ext
-    intro n
-    change corrLift D q (X (some i) * monomial n 1) =
-      insertion D q i (corrLift D q (monomial n 1))
-    rw [show (X (some i) : P D) * monomial n (1 : ℂ) =
-        monomial (Finsupp.single (some i) 1 + n) (1 : ℂ) by
-          simp only [X, monomial_mul_monomial, one_mul], corrLift_monomial]
-    simp only [Finsupp.add_apply, Finsupp.single_apply, Option.some_ne_none,
-      if_false, zero_add, Finsupp.some_add, Finsupp.some_single_some]
-    rw [show (monomial (Finsupp.single i 1 + n.some) (1 : ℂ) : Oscillator D) =
-        X i * monomial n.some (1 : ℂ) by
-          simp only [X, monomial_mul_monomial, one_mul],
-      Cbar_X_mul, corrLift_monomial, insertion_u_pow_mul]
-  exact LinearMap.congr_fun maps f
+  classical
+  conv_lhs => rw [shift_expansion D f]
+  rw [Finset.mul_sum, map_sum, corrLift_expansion, map_sum]
+  apply Finset.sum_congr rfl
+  intro s hs
+  rw [show X (some i) * (u D ^ s * embed D ((E D f).coeff s)) =
+      u D ^ s * embed D (X i * (E D f).coeff s) by
+        simp only [map_mul, embed, rename_X]
+        ring, corrLift_shift_embed, Cbar_X_mul, insertion_u_pow_mul]
 
 /-- The affine source transformation on P, fixing the original shift variable. -/
 def affineReflection (D : LatticeData) (q : Charge D) : P D →ₐ[ℂ] P D :=
@@ -398,9 +407,8 @@ private theorem affineReflection_X (D : LatticeData) (q : Charge D) (i : Index D
 private theorem corrLift_a_mul (D : LatticeData) (q : Charge D)
     (i : Index D) (s : ℕ) (f : P D) :
     corrLift D q (a D i s * f) = a D i s * corrLift D q f := by
-  simpa only [a, map_mul, map_pow, Polynomial.aeval_C, Polynomial.aeval_X,
-    algebraMap_eq] using corrLift_shiftScalar_mul D q
-      (Polynomial.C (c i.2 s) * Polynomial.X ^ (i.2 - s)) f
+  simpa only [Polynomial.aeval_monomial, algebraMap_eq, a] using
+    corrLift_shiftScalar_mul D q (Polynomial.monomial (i.2 - s) (c i.2 s)) f
 
 private theorem corrLift_charge_mul (D : LatticeData) (q : Charge D)
     (i : Index D) (f : P D) :
@@ -432,8 +440,8 @@ private theorem corrLift_reflection (D : LatticeData) (q : Charge D) (f : P D) :
       change normalReflection D (corrLift D q (f * u D)) =
         corrLift D q (affineReflection D q (f * u D))
       rw [mul_comm f (u D), corrLift_u_mul, map_mul, normalReflection_u,
-        hf, map_mul, affineReflection_u,
-        mul_comm (affineReflection D q f) (u D), corrLift_u_mul]
+        hf, map_mul, affineReflection_u]
+      exact (corrLift_u_mul D q _).symm
     | some i =>
       calc
         _ = normalReflection D (insertion D q i (corrLift D q f)) := by
@@ -444,7 +452,8 @@ private theorem corrLift_reflection (D : LatticeData) (q : Charge D) (f : P D) :
         _ = corrLift D q ((normalImage D i + chargeImage D q i) *
             affineReflection D q f) := (corrLift_affine_mul D q i _).symm
         _ = corrLift D q (affineReflection D q (f * X (some i))) := by
-          rw [map_mul, affineReflection_X, mul_comm]
+          rw [map_mul (affineReflection D q), affineReflection_X,
+            mul_comm (affineReflection D q f) (normalImage D i + chargeImage D q i)]
 
 /-- The requested identity on the ORIGINAL correctionPolynomial, transported
 through the canonical Option/Polynomial equivalence. No new corrected field. -/
@@ -458,24 +467,12 @@ private theorem Corr_coeff (D : LatticeData) (q : Charge D)
     (p : Oscillator D) (s : ℕ) :
     Corr D q p s = (correctionPolynomial D q p).coeff s := by rfl
 
-private theorem shift_expansion (D : LatticeData) (f : P D) :
-    f = ∑ s ∈ (E D f).support, u D ^ s * embed D ((E D f).coeff s) := by
-  calc
-    f = (E D).symm (E D f) := (AlgEquiv.symm_apply_apply (E D) f).symm
-    _ = _ := by
-      conv_lhs => rw [(E D f).as_sum_support_C_mul_X_pow]
-      rw [map_sum]
-      apply Finset.sum_congr rfl
-      intro s hs
-      rw [map_mul, map_pow, E_symm_C]
-      simp only [E, optionEquivLeft_symm_X, u]
-      exact mul_comm _ _
-
 private theorem Cbar_expansion (D : LatticeData) (q : Charge D) (p : Oscillator D) :
     Cbar D q p = ∑ s ∈ (Corr D q p).support,
       u D ^ s * embed D (Corr D q p s) := by
-  simpa only [E_Cbar, Corr, LinearMap.comp_apply, shiftCoefficients,
-    Polynomial.support, Corr_coeff] using shift_expansion D (Cbar D q p)
+  change Cbar D q p = ∑ s ∈ (correctionPolynomial D q p).support,
+    u D ^ s * embed D ((correctionPolynomial D q p).coeff s)
+  simpa only [E_Cbar] using shift_expansion D (Cbar D q p)
 
 private theorem corrLift_E_expansion (D : LatticeData) (q : Charge D) (f : P D) :
     E D (corrLift D q f) = ∑ s ∈ (E D f).support,
@@ -488,7 +485,8 @@ private theorem reflected_Cbar_E_expansion (D : LatticeData) (q : Charge D)
     E D (normalReflection D (Cbar D q p)) = ∑ s ∈ (Corr D q p).support,
       Polynomial.X ^ s * E D (normalReflection D (embed D (Corr D q p s))) := by
   rw [Cbar_expansion, map_sum, map_sum]
-  simp only [map_mul, map_pow, normalReflection_u, u, E, optionEquivLeft_X_none]
+  simp only [map_mul, map_pow, normalReflection_u]
+  simp only [u, E, optionEquivLeft_X_none]
 
 /-! Exact grading. This extends, rather than substitutes for, the original
 sourceWeight. There is a single additional coordinate, of weight one. -/
@@ -509,7 +507,7 @@ private theorem weight_optionElim (D : LatticeData) (m : Index D →₀ ℕ) (s 
 
 private theorem u_pow_homogeneous (D : LatticeData) (s : ℕ) :
     IsWeightedHomogeneous (optionWeight D) (u D ^ s) s := by
-  simpa only [optionWeight, Option.elim_none, nsmul_eq_mul, mul_one] using
+  simpa only [u, optionWeight, Option.elim_none, nsmul_eq_mul, mul_one, Nat.cast_id] using
     (isWeightedHomogeneous_X ℂ (optionWeight D) none).pow s
 
 private theorem singleton_homogeneous (D : LatticeData) (q : Charge D) (i : Index D) :
@@ -578,7 +576,7 @@ private theorem Cbar_monomial_scalar (D : LatticeData) (q : Charge D)
 
 /-- Exact homogeneity for every homogeneous original oscillator polynomial,
 not just a bound on its largest shift. -/
-theorem correctionPolynomial_homogeneous (D : LatticeData) (q : Charge D)
+private theorem correctionPolynomial_homogeneous (D : LatticeData) (q : Charge D)
     (p : Oscillator D) (R : ℕ) (hp : IsWeightedHomogeneous (sourceWeight D) p R) :
     IsWeightedHomogeneous (optionWeight D) (Cbar D q p) R := by
   classical
@@ -612,14 +610,6 @@ theorem Corr_coefficient_bidegree (D : LatticeData) (q : Charge D)
     (correctionPolynomial_homogeneous D q p R hp) s m
   simpa only [E_Cbar, ← Corr_coeff] using nonzero
 
-theorem Corr_coefficient_homogeneous (D : LatticeData) (q : Charge D)
-    (p : Oscillator D) (R : ℕ) (hp : IsWeightedHomogeneous (sourceWeight D) p R)
-    (s : ℕ) :
-    IsWeightedHomogeneous (sourceWeight D) (Corr D q p s) (R - s) := by
-  intro m hm
-  have h := Corr_coefficient_bidegree D q p R hp s m hm
-  omega
-
 theorem Corr_above_weight (D : LatticeData) (q : Charge D)
     (p : Oscillator D) (R : ℕ) (hp : IsWeightedHomogeneous (sourceWeight D) p R)
     (s : ℕ) (hs : R < s) : Corr D q p s = 0 := by
@@ -629,161 +619,6 @@ theorem Corr_above_weight (D : LatticeData) (q : Charge D)
   by_contra hn
   have h := Corr_coefficient_bidegree D q p R hp s m hn
   omega
-
-/-! Homogeneity of the explicit normal/affine source transformations.
-The next helper is only over the actual ℂ oscillator and Option algebras.
-Its generator premise is proved explicitly below, not a covariance premise. -/
-private theorem source_hom_monomial (D : LatticeData)
-    (F : Oscillator D →ₐ[ℂ] P D)
-    (hF : ∀ i, IsWeightedHomogeneous (optionWeight D) (F (X i)) (sourceWeight D i))
-    (m : Index D →₀ ℕ) (z : ℂ) :
-    IsWeightedHomogeneous (optionWeight D) (F (monomial m z))
-      (Finsupp.weight (sourceWeight D) m) := by
-  induction m using Finsupp.induction with
-  | zero =>
-    change IsWeightedHomogeneous (optionWeight D) (F (C z)) 0
-    rw [show F (C z) = C z from F.commutes z]
-    exact isWeightedHomogeneous_C (optionWeight D) z
-  | single_add i n tail hi hn ih =>
-    rw [monomial_single_add, map_mul, map_pow, map_add, Finsupp.weight_single]
-    exact ((hF i).pow n).mul ih
-
-private theorem source_hom_homogeneous (D : LatticeData)
-    (F : Oscillator D →ₐ[ℂ] P D)
-    (hF : ∀ i, IsWeightedHomogeneous (optionWeight D) (F (X i)) (sourceWeight D i))
-    (p : Oscillator D) (R : ℕ) (hp : IsWeightedHomogeneous (sourceWeight D) p R) :
-    IsWeightedHomogeneous (optionWeight D) (F p) R := by
-  classical
-  rw [p.as_sum, map_sum]
-  apply IsWeightedHomogeneous.sum
-  intro m hm
-  have h := source_hom_monomial D F hF m (p.coeff m)
-  rwa [hp (MvPolynomial.mem_support_iff.mp hm)] at h
-
-private theorem normalImage_homogeneous (D : LatticeData) (i : Index D) :
-    IsWeightedHomogeneous (optionWeight D) (normalImage D i) (sourceWeight D i) := by
-  classical
-  apply IsWeightedHomogeneous.sum
-  intro s hs
-  have hs' : s ≤ i.2 := by have := Finset.mem_range.mp hs; omega
-  have ht := ((u_pow_homogeneous D (i.2 - s)).C_mul (c i.2 s)).mul
-    (isWeightedHomogeneous_X ℂ (optionWeight D) (some (i.1,s)))
-  change IsWeightedHomogeneous (optionWeight D)
-    (a D i s * X (some (i.1,s))) ((i.2 - s) + (s + 1)) at ht
-  convert ht using 1 <;> simp only [sourceWeight] <;> omega
-
-private theorem chargeImage_homogeneous (D : LatticeData) (q : Charge D) (i : Index D) :
-    IsWeightedHomogeneous (optionWeight D) (chargeImage D q i) (sourceWeight D i) :=
-  (u_pow_homogeneous D (i.2 + 1)).C_mul _
-
-private theorem affineSource_homogeneous (D : LatticeData) (q : Charge D)
-    (p : Oscillator D) (R : ℕ) (hp : IsWeightedHomogeneous (sourceWeight D) p R) :
-    IsWeightedHomogeneous (optionWeight D) (affineSource D q p) R := by
-  apply source_hom_homogeneous D (affineSource D q) _ p R hp
-  intro i
-  simpa only [affineSource, AlgHom.comp_apply, embed, rename_X, affineReflection_X] using
-    (normalImage_homogeneous D i).add (chargeImage_homogeneous D q i)
-
-private theorem affine_coefficient_homogeneous (D : LatticeData) (q : Charge D)
-    (p : Oscillator D) (R : ℕ) (hp : IsWeightedHomogeneous (sourceWeight D) p R)
-    (t : ℕ) :
-    IsWeightedHomogeneous (sourceWeight D) ((E D (affineSource D q p)).coeff t) (R - t) := by
-  intro m hm
-  have h := option_coefficient_bidegree D _ R
-    (affineSource_homogeneous D q p R hp) t m hm
-  omega
-
-/-- Bigrading of the genuine all-source RHS coefficient law: the affine loss
-t and the ORIGINAL Corr shift s are additive and exhaust the lost weight. -/
-theorem Corr_affine_coefficient_bidegree (D : LatticeData) (q : Charge D)
-    (p : Oscillator D) (R : ℕ) (hp : IsWeightedHomogeneous (sourceWeight D) p R)
-    (t s : ℕ) (m : Index D →₀ ℕ)
-    (hn : (Corr D q ((E D (affineSource D q p)).coeff t) s).coeff m ≠ 0) :
-    t + s + Finsupp.weight (sourceWeight D) m = R := by
-  have ha : (E D (affineSource D q p)).coeff t ≠ 0 := by
-    intro hz
-    apply hn
-    simp [hz]
-  obtain ⟨n, hnc⟩ := MvPolynomial.exists_coeff_ne_zero ha
-  have ht := option_coefficient_bidegree D _ R
-    (affineSource_homogeneous D q p R hp) t n hnc
-  have hs := Corr_coefficient_bidegree D q _ (R - t)
-    (affine_coefficient_homogeneous D q p R hp t) s m hn
-  omega
-
-/-- In particular the combined affine/Corr coefficient is zero for t+s>R;
-the Nat subtraction in the homogeneous statement hides no out-of-range term. -/
-theorem Corr_affine_above_weight (D : LatticeData) (q : Charge D)
-    (p : Oscillator D) (R : ℕ) (hp : IsWeightedHomogeneous (sourceWeight D) p R)
-    (t s : ℕ) (h : R < t + s) :
-    Corr D q ((E D (affineSource D q p)).coeff t) s = 0 := by
-  apply MvPolynomial.ext
-  intro m
-  change (Corr D q ((E D (affineSource D q p)).coeff t) s).coeff m = 0
-  by_contra hn
-  have hw := Corr_affine_coefficient_bidegree D q p R hp t s m hn
-  omega
-
-private theorem normalSource_homogeneous (D : LatticeData)
-    (p : Oscillator D) (R : ℕ) (hp : IsWeightedHomogeneous (sourceWeight D) p R) :
-    IsWeightedHomogeneous (optionWeight D) (normalReflection D (embed D p)) R := by
-  apply source_hom_homogeneous D ((normalReflection D).comp (embed D)) _ p R hp
-  intro i
-  simpa only [AlgHom.comp_apply, embed, rename_X, normalReflection, aeval_X,
-    Option.elim_some] using normalImage_homogeneous D i
-
-/-- Bigrading on the other side: original Corr shift s and normal-reflection
-loss t also add, including repeated variables and the constant correction. -/
-theorem Corr_reflected_coefficient_bidegree (D : LatticeData) (q : Charge D)
-    (p : Oscillator D) (R : ℕ) (hp : IsWeightedHomogeneous (sourceWeight D) p R)
-    (s t : ℕ) (m : Index D →₀ ℕ)
-    (hn : ((E D (normalReflection D (embed D (Corr D q p s)))).coeff t).coeff m ≠ 0) :
-    s + t + Finsupp.weight (sourceWeight D) m = R := by
-  have hq : Corr D q p s ≠ 0 := by
-    intro hz
-    apply hn
-    simp [hz]
-  obtain ⟨n, hnc⟩ := MvPolynomial.exists_coeff_ne_zero hq
-  have hs := Corr_coefficient_bidegree D q p R hp s n hnc
-  have ht := option_coefficient_bidegree D _ (R - s)
-    (normalSource_homogeneous D (Corr D q p s) (R - s)
-      (Corr_coefficient_homogeneous D q p R hp s)) t m hn
-  omega
-
-/-- Exact transport of the ORIGINAL e+2s shift through normal inversion.
-N is any signed integer; instantiate it by the original chargeNorm D q.
-No nonnegative norm or positivity inference is present. -/
-theorem Corr_exponent_transport (D : LatticeData) (q : Charge D)
-    (p : Oscillator D) (R : ℕ) (hp : IsWeightedHomogeneous (sourceWeight D) p R)
-    (s t : ℕ) (m : Index D →₀ ℕ) (hn : (Corr D q p s).coeff m ≠ 0)
-    (e N : ℤ) :
-    -(e + 2 * (s : ℤ)) - 2 * N -
-        4 * (Finsupp.weight (sourceWeight D) m : ℤ) + 2 * (t : ℤ) =
-      -e - 2 * N - 4 * (R : ℤ) + 2 * ((s + t : ℕ) : ℤ) := by
-  have hw := Corr_coefficient_bidegree D q p R hp s m hn
-  have hz : (s : ℤ) + (Finsupp.weight (sourceWeight D) m : ℤ) = (R : ℤ) := by
-    exact_mod_cast hw
-  push_cast
-  omega
-
-/-- Genuine all-source coefficient consumer. Both finite sums use ORIGINAL
-Corr. This is the equality of normal-reflected Corr coefficients and Corr of
-the affine-reflected ORIGINAL source; it does not mention reflectedWord. -/
-theorem Corr_reflection_coefficient (D : LatticeData) (q : Charge D)
-    (p : Oscillator D) (k : ℕ) :
-    (∑ s ∈ (Corr D q p).support,
-      if s ≤ k then
-        (E D (normalReflection D (embed D (Corr D q p s)))).coeff (k - s)
-      else 0) =
-    ∑ t ∈ (E D (affineSource D q p)).support,
-      if t ≤ k then Corr D q ((E D (affineSource D q p)).coeff t) (k - t)
-      else 0 := by
-  have h := congrArg (fun f : P D => (E D f).coeff k)
-    (correctionPolynomial_reflection D q p)
-  rw [reflected_Cbar_E_expansion, corrLift_E_expansion] at h
-  simpa only [Polynomial.finsetSum_coeff, Polynomial.coeff_X_pow_mul',
-    ← Corr_coeff] using h
-
 
 /-! Finite scalar contraction for the actual downstream normal-coefficient
 consumer. ℓ k is any ℂ-linear oscillator readout, e.g. the actual bilinear
@@ -828,14 +663,8 @@ theorem Corr_reflection_readout (D : LatticeData) (q : Charge D) (p : Oscillator
     ∑ t ∈ (E D (affineSource D q p)).support,
       ∑ s ∈ (Corr D q ((E D (affineSource D q p)).coeff t)).support,
         ℓ (t + s) (Corr D q ((E D (affineSource D q p)).coeff t) s) := by
-  have coefficients : E D (normalReflection D (Cbar D q p)) =
-      E D (corrLift D q (affineSource D q p)) := by
-    apply Polynomial.ext
-    intro k
-    rw [reflected_Cbar_E_expansion, corrLift_E_expansion]
-    simpa only [Polynomial.finsetSum_coeff, Polynomial.coeff_X_pow_mul',
-      ← Corr_coeff] using Corr_reflection_coefficient D q p k
-  have h := congrArg (scalarReadout D ℓ) coefficients
+  have h := congrArg (fun f : P D => scalarReadout D ℓ (E D f))
+    (correctionPolynomial_reflection D q p)
   rw [reflected_Cbar_E_expansion, corrLift_E_expansion] at h
   simpa only [map_sum, scalarReadout_shift, ← Corr_support, ← Corr_coeff] using h
 
