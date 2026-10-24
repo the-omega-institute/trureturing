@@ -57,7 +57,7 @@ private theorem binary_sum (a c : F₂) :
   have evaluated := congrArg (Int.cast : ℤ → ℂ) (table a c)
   simpa [complexSign] using evaluated
 
-private theorem block_sum (a b c : ZMod 8) (hb : residue b = 1) :
+theorem block_sum (a b c : ZMod 8) (hb : residue b = 1) :
     (∑ x : F₂ × F₂, complexSign (quadratic a b c x)) =
       2 * (ZMod.χ₈ (gram a b c).det : ℂ) := by
   simp only [quadratic, hb, one_mul]
