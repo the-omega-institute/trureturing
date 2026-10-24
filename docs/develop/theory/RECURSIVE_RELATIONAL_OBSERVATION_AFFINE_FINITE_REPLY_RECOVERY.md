@@ -2738,3 +2738,573 @@ spatial world or exact raw noise. Exact four-view mutual recovery and the
 full parsimonious relational-process objective remain unresolved.
 
 ## 追加锚（本行以下为增补区）
+
+## 15. Finite complete states at every acquisition handoff
+
+**Definition 15.1 (cuts, public operands and complete usable state).**
+Keep the entire source (FW.1), the finite delivery relation (FW.2),
+$h=2^{-8}$, and the three-read menu $0,u,v$ of Definition 11.1.
+A side-frame handoff is the cut after the complete frame has been
+processed and before the next source request. A deterministic
+frame-synchronous receiver has one fixed finite nonempty carrier $Q$
+for its complete usable state at each such cut. The stage, current
+index, selected next index and finite controller may be included in
+$Q$; adjoining these finite fields does not change the condition.
+Between cuts a whole finite word may be processed with arbitrary
+terminating local work. This is a cut condition, not a bound on all
+intermediate parser configurations or on incoming frame lengths.
+
+Fix the public operands and receiver before choosing a world.
+Public query arguments, calibration, code and advice are the same in
+compared runs and supply no unknown source parameter. Completeness
+means that everything from the processed prefix which can influence a
+later permitted request or answer factors through the cut state and
+these fixed operands. It includes accessible records, controller and
+program position, saved lengths and counters, address values and
+accessible backing, pending commands, informative timing or schedules,
+and source writes usable as memory. An emitted word that a later
+consumer can consult is an accessible record. A fixed handle binds the
+actual source and its rights; it is not permission to inspect the
+source's hidden parameters or to reread a discarded report. Immutable
+hidden source parameters are not receiver registers: their subsequent
+influence is only through the declared source interface. A short
+reference to unbounded accessible backing does not satisfy the finite
+condition. Discarded bytes may physically exist, but cannot remain an
+operand outside $Q$. The final origin answer is a function of the last
+cut state and fixed public operands.
+
+The next side index is chosen lawfully and may depend on the current
+state. There is no restriction to a preselected triple. All four errors
+and all delivery choices are fixed before the run; the worst case ranges
+over this full relation. The receiver must finish on every lawful run.
+For a receiver $\mathcal R$ write
+
+$$
+\operatorname{err}(\mathcal R)
+ =\sup_{\substack{\tau\in[-4,1],\ A\ge1,\ B\in\mathbb R\\
+                   \eta\in[-1,1]^4,\ \text{legal deliveries}}}
+       |\widehat\tau_{\mathcal R}-\tau|.
+\tag{AC.1}
+$$
+
+The finite carrier is fixed over this supremum; its size is otherwise
+arbitrary. These conditions exclude using the source, a requester,
+physical frame delay or an external archive as uncounted memory.
+They do not remove a channel from a receiver that actually has it:
+that receiver must count it and may fail the finite-carrier premise.
+
+**Theorem 15.2 (exact all-handoff origin minimax).** In Definition 15.1,
+
+$$
+\inf_{\substack{\mathcal R\text{ deterministic, lawful}\\
+                \text{one fixed finite complete carrier}}}
+       \operatorname{err}(\mathcal R)=\frac52.
+\tag{AC.2}
+$$
+
+Every receiver in this class has worst-case error at least $5/2$
+already with $\eta=0$, integer $A\ge1$ and integer $B$, and exact
+integer-valued raw reports delivered by $k_i=256y_i$. The infimum is
+attained by a constant-answer receiver. The statement does not say that
+every receiver attains the infimum.
+
+**Proof.** Use the following classical consequence of Hales--Jewett:
+for a finite coloring $C:\mathbb Z\to F$ and a nonempty finite
+$S\subset\mathbb Z$, there are integers $a>0$, $b$ such that
+$C(b+as)$ is constant on $S$. To obtain this consequence, use $S$ as
+the finite word alphabet and color a word by the color of the sum of
+its letters. A monochromatic combinatorial line has a nonempty set of
+variable positions. If their number is $a$ and the sum of its fixed
+letters is $b$, its sums are exactly $b+aS$. The supplier and its
+precise library statement are given in Definition 18.1. There is no
+regularity condition on the coloring.
+
+For an integer $x$, let $\Phi_i(x)$ be the complete canonical side
+frame at index $i$ with integer payload $256x$. It is a lawful delivery
+of the raw value $x$. With public operands fixed, processing this frame
+from a state $q$ at a stage $j$ induces a macro transition
+$T_{j,i}(q,x)$ to the next cut state. Include all stage/index/control
+fields in that state. On off-path combinations on which no such
+transition finishes, use one extra symbol $\bot$. There are finitely
+many $q,j,i$, and each outcome is in the finite set $Q\cup\{\bot\}$.
+Consequently
+
+$$
+C(x)=\bigl(T_{j,i}(q,x)\bigr)_{q,j,i}
+\tag{AC.3}
+$$
+
+is a finite coloring of $\mathbb Z$. It is a coloring by transition
+outcomes, not by raw frames: different integers can have different
+frame bytes, lengths and local processing while inducing the same
+complete usable outcomes.
+
+Apply the supplier to $S=\{0,1,4,9,16\}$. Obtain integer $a\ge1$
+and $b$ for which all $b+as$ have the same color. Consider the two
+complete worlds
+
+$$
+(\tau_-,A_-,B_-,\eta_-)=(-4,a,b,0),\qquad
+(\tau_+,A_+,B_+,\eta_+)=(1,a,b,0).
+\tag{AC.4}
+$$
+
+Their four raw vectors are respectively
+
+$$
+b+a(16,9,4,1),\qquad b+a(1,4,9,16).
+\tag{AC.5}
+$$
+
+Every coordinate therefore has the common color. Deliver every
+coordinate exactly as $256$ times its raw integer, including the unread
+coordinates. The initial states agree. Equal colors give equal states
+after the first frame, hence the same chosen $u$. They then give equal
+states after the second frame, hence the same chosen $v$, and equal
+states after the third frame. All these transitions terminate because
+the worlds and deliveries are lawful. The final answers are equal,
+although the discarded raw histories need not be equal. Since
+$|\tau_+-\tau_-|=5$, the scalar triangle inequality forces error at
+least $5/2$ in one world. No range argument about an unbounded offset
+or about answer word lengths has been used.
+
+For the reverse inequality choose the legal indices $0,1,2$, ignore
+the numeric data and always answer $-3/2$. Its error on $[-4,1]$ is
+at most $5/2$. A finite controller can pass over each productive frame
+until its delimiter and completion, retaining only its stage, so this
+is a receiver of the declared kind. It proves attainment. $\square$
+
+The lower bound also allows a terminal scalar answer to be written
+while processing the last frame, without retaining that answer in $Q$.
+Adjoin to (AC.3), for every possible pre-final state and index, the
+one-bit class specifying whether this terminal answer is less than
+$-3/2$. Use a default class off path. The coloring is still finite,
+and the same construction gives equal answer classes in the endpoint
+worlds. In the class below $-3/2$ the $\tau=1$ world has error greater
+than $5/2$; in the other class the $\tau=-4$ world has error at least
+$5/2$. This variant prevents a final streaming-output convention from
+supplying an exception. A word saved for subsequent use is still memory
+under Definition 15.1.
+
+## 16. Compressing only the first handoff
+
+**Definition 16.1 (first-state risk with unrestricted later records).**
+For the noiseless experiment set $\eta=0$ in (FW.1). At the first
+handoff retain only $q=e(y_0)$, where $e:\mathbb R\to Q$ is any
+fixed map into a finite nonempty carrier. All the completeness and
+public-operand conditions of Definition 15.1 apply at this first cut.
+Thereafter allow exact real reports and unrestricted retention and
+local computation. A continuation chooses
+
+$$
+u=f(q)\in\{1,2\},\qquad
+v=g(q,u,y_u)\in\{u+1,\ldots,3\},\qquad
+\widehat\tau=D(q,u,v,y_u,y_v).
+\tag{AC.6}
+$$
+
+The functions are deterministic and total on legal inputs. Define
+
+$$
+R_0(e)=\inf_{f,g,D}
+ \sup_{\tau\in[-4,1],\ A\ge1,\ B\in\mathbb R}
+       |D(e(y_0),u,v,y_u,y_v)-\tau|.
+\tag{AC.7}
+$$
+
+Thus the continuation is optimized for the supplied map $e$; this is
+not a statement that every fixed continuation has optimal risk. A
+controller's first-report-dependent choice of next index is itself
+usable first-state information and must be included when describing
+its actual map. A contract that independently forces a particular
+second index is an additional restriction on (AC.7).
+
+**Theorem 16.2 (sharp noiseless first-cut risk, including adaptive
+indices).** For every map $e$ of Definition 16.1,
+
+$$
+R_0(e)=\frac54.
+\tag{AC.8}
+$$
+
+The lower bound permits both later indices to be chosen as in (AC.6).
+It holds without a measurability, effectiveness or geometry assumption
+on the finite fibers of $e$.
+
+**Proof.** The upper bound ignores $q$ and takes $u=1$, $v=2$.
+The noiseless difference is
+
+$$
+y_2-y_1=A(3+2\tau).
+\tag{AC.9}
+$$
+
+If this difference is negative, answer $-11/4$; if positive, answer
+$-1/4$; if zero, answer $-3/2$. Positive $A$ makes these the midpoints
+of the respective prior strata $[-4,-3/2)$ and $(-3/2,1]$, with exact
+recovery at the separating point. The error is at most $5/4$.
+
+For the lower bound fix a rational $s$ with $-3/2<s<1$, and put $t=1$.
+Let $\mathcal P=\{(1,2),(1,3),(2,3)\}$. For every $(u,v)\in\mathcal P$
+put
+
+$$
+\begin{aligned}
+H_s^{uv}&=u+v+2s>0,& H_t^{uv}&=u+v+2t>0,\\
+a_{uv}&=-H_t^{uv}u(u+2s),&
+b_{uv}&=-H_s^{uv}u(u+2t).
+\end{aligned}
+\tag{AC.10}
+$$
+
+All these numbers are rational. Choose a positive integer $L$ which
+clears their denominators and those of
+$H_t^{uv}s^2,H_s^{uv}t^2,H_t^{uv},H_s^{uv},2sH_t^{uv},2tH_s^{uv}$,
+and is large enough that $LH_s^{uv},LH_t^{uv}\ge1$ for every pair.
+This is possible because there are only three pairs and all six
+$H$'s are positive. In particular
+
+$$
+S=\{La_{uv},Lb_{uv}:(u,v)\in\mathcal P\}\subset\mathbb Z
+\tag{AC.11}
+$$
+
+is finite and nonempty. Color an integer $x$ by $e(x)$. The classical
+supplier used in Theorem 15.2 gives integers $d>0,c$ such that all
+$c+dS$ have one color $q_*$. Put $r=Ld$. For each pair construct two
+candidate worlds with first reports
+
+$$
+x_s^{uv}=c+ra_{uv},\qquad x_t^{uv}=c+rb_{uv},
+\tag{AC.12}
+$$
+
+and parameters
+
+$$
+\begin{aligned}
+A_s^{uv}&=rH_t^{uv},&
+B_s^{uv}&=x_s^{uv}-A_s^{uv}s^2,\\
+A_t^{uv}&=rH_s^{uv},&
+B_t^{uv}&=x_t^{uv}-A_t^{uv}t^2.
+\end{aligned}
+\tag{AC.13}
+$$
+
+These are finite legal parameters, with gains at least one. Both gains
+and offsets are integers by the choice of $L$. Write
+$p_s^{uv}(i)=A_s^{uv}(i+s)^2+B_s^{uv}$ and similarly for $t$.
+Direct expansion gives
+
+$$
+\begin{aligned}
+p_s^{uv}(u)&=p_t^{uv}(u)=c,\\
+p_s^{uv}(i)-p_t^{uv}(i)&=2r(t-s)(i-u)(i-v).
+\end{aligned}
+\tag{AC.14}
+$$
+
+Indeed the quadratic coefficient of the difference is
+$r(H_t^{uv}-H_s^{uv})=2r(t-s)$, its linear coefficient is
+$2r(H_t^{uv}s-H_s^{uv}t)=-2r(u+v)(t-s)$, and its constant
+coefficient is $r(a_{uv}-b_{uv})=2ruv(t-s)$. Substitution at $u$
+using $a_{uv},b_{uv}$ gives the first line; the second gives equality
+at $v$. All four reports in both worlds are integers: their polynomial
+coefficients are respectively $x_s^{uv},A_s^{uv},2sA_s^{uv}$ and
+$x_t^{uv},A_t^{uv},2tA_t^{uv}$, all integers by the choice of $L$.
+This last fact is not needed for the exact-real argument, but makes
+the finite-delivery embedding exact.
+
+The same $q_*$ is obtained from every first report in (AC.12), for
+all three pairs simultaneously. The actual continuation therefore
+chooses $u_*=f(q_*)$. In each candidate with this second index the
+second report is the same number $c$. It consequently chooses
+$v_*=g(q_*,u_*,c)$. Select the pair $(u_*,v_*)$ from the constructed
+collection. Its two worlds have the same available first state, the
+same second exact report, the same final exact report, and the same
+selected indices. Their answers coincide and one has error at least
+$(t-s)/2$. This selection is a choice of two complete worlds before
+running the receiver, not a change of a world after a decision. Every
+candidate had all four reports fixed.
+
+Let rational $s$ decrease to $-3/2$. The separations $t-s$ tend to
+$5/2$, so the supremum error of any continuation is at least $5/4$.
+No collision at $s=-3/2$ is asserted: the positive gains are finite at
+every chosen $s$, with no uniform upper bound. Taking the infimum over
+continuations and combining with (AC.9) proves (AC.8). $\square$
+
+**Corollary 16.3 (first-cut lower bound in the original noisy finite
+contract).** Keep the full four-error cube and finite port of Definition
+11.1. Suppose only the first side-frame handoff has a fixed finite
+complete usable carrier; later acquired frames, records and computation
+are unrestricted, and both later indices may be adaptive. Every such
+deterministic receiver has worst-case origin error at least $5/4$.
+This is a lower bound for that original contract, not a claimed exact
+noisy risk or a noisy upper bound.
+
+**Proof.** Fix the receiver and color an integer $x$ by its complete
+first cut state on the exact frame $\Phi_0(x)$ with payload $256x$.
+Use (AC.10)--(AC.14) with this finite coloring. The first states again
+have one common value $q_*$ across all three candidate pairs. All
+candidate raw reports are integers, so fix the four deliveries in each
+world as $k_i=256p(i)$ and all four errors as zero. They are members of
+the original relation, whose worst case also admits nonzero errors
+and nonexact deliveries. The second frame has the same index $u$ and
+payload $256c$ in every candidate with that second index. Thus the
+actual $u$ and $v$ select one constructed pair as in Theorem 16.2.
+Its two final frames coincide as well. Their complete usable inputs
+from the first cut onward agree, and their origin separation is $t-s$.
+The limiting half-separation bound is $5/4$. All unread errors and
+deliveries have been fixed in these worlds before execution. Allowing
+later exact real values in addition could not distinguish these paired
+later reports either. $\square$
+
+In particular (AC.9) supplies no noisy upper bound: in the noisy
+experiment its right side has the additional term $\eta_2-\eta_1$,
+and finite delivery introduces another difference error. The sign
+partition for the upper bound was a noiseless argument.
+
+## 17. The actual original-coordinate consumer after a memory cut
+
+**Definition 17.1 (same-source composition and accessible channels).**
+Use the product source, native atoms, immediate main reads and finite
+main port of Definition 12.1, with the same shared $\tau$, independent
+side $A,B$, and independent main intercept $b_0$. Acquisition takes
+place on the one actual native trajectory through the three side
+indices $0,u,v$. It has at most three native advances, with every
+mandatory intervening main read included. Side-frame cuts are the
+frame-synchronous cuts of Definition 15.1; there is no extra side read
+or reset. Native action choices may depend causally on the permitted
+acquired information. After readiness allow any permitted finite
+continuation by native atoms and their mandatory main reads, as well
+as local calls and causal stopping. The service in Definition 12.2
+uses $J$; allowing the whole native menu $\{M,J\}$ strengthens the
+negative conclusion below. Requests have a common fixed public stream,
+or are chosen deterministically from accessible data. A requester
+whose private knowledge distinguishes the worlds supplies an extra
+operand.
+
+For an all-handoff finite receiver, its alleged finite carrier must
+include the whole receiver/consumer state usable across each cut,
+including any accessible main archive and source writes. For a
+first-cut finite receiver this requirement applies at the first cut;
+all later main and side records may be retained without a finite
+bound. The source handle, rights and main initialization are the same
+in the compared runs. A handle cannot inspect the side parameters or
+call back a discarded side value. Informative physical timing,
+source-dependent advice, copies, backing and mutable external records
+are channels under Definition 15.1. No resource is made free by calling
+only the origin register finite.
+
+**Theorem 17.2 (transport through lawful main continuation).** For the
+actual original-coordinate target $G_\tau(x)=x-\tau+b_0$ in (FW.10),
+the following lower bounds hold in Definition 17.1, even on the
+subfamily $b_0=0$:
+
+* Complete finite states at every side-frame cut force worst-case
+  error at least $5/2$ for an original-coordinate value at any fixed
+  rational $x$.
+* A finite complete first cut, with arbitrary later storage, forces
+  worst-case error at least $5/4$ for that value. This holds for
+  noiseless exact reports as well as as a lower bound in the full noisy
+  finite-delivery contract.
+
+Both bounds also hold for a function answer in uniform norm on any
+nonempty compact original-coordinate set. They survive all the stated
+later main continuations and causal stopping. They are not lower
+bounds for the origin-independent local chart $H_n(t)=t+n+b_0$.
+
+**Proof.** Restrict the independently available main parameter to
+$b_0=0$. For every native word $U_n$, (FW.11) gives
+
+$$
+z_n=n\operatorname{tr}(U_nR_0),
+\tag{AC.15}
+$$
+
+which is independent of $\tau,A,B,\eta$. All entries of $U_n$ are
+integers. Since $R_0$ has entries $1/2$, $z_n$ is a half-integer and
+$256z_n$ is an integer. Fix, on the entire native action tree, the
+exact legal main delivery $\ell_n=256z_n$. This defines replies before
+any receiver decisions and gives a common main backend for the paired
+runs. In particular the initial main frame is the common zero frame.
+No exact-real main archive has been added to the finite contract.
+
+For the all-handoff case, the native action word during acquisition
+has length at most three. There are only finitely many such words,
+and each determines all its indices, exact main frames and archive.
+Adjoin this actual finite word to the receiver's alleged finite state
+when forming (AC.3). This is a finite augmentation, not omission of
+the live main source state. It includes any choice of $M$ rather than
+$J$ used as a source write. Processing a side frame and consequent
+lawful acquisition moves has a well-defined macro outcome in this
+augmented finite carrier: main replies along those moves are fixed
+by (AC.15). Equal colors give equal augmented handoffs, including the
+actual native prefix, regardless of whether local processing used the
+side bytes to select that prefix. Applying (AC.4)--(AC.5) yields the
+endpoint origins and the same complete usable readiness state with
+the same actual main prefix. Discarded side frames can differ; this
+argument does not assert equality of those erased histories.
+
+For the first-cut case, the initial main state and frame are fixed.
+Absorb their processing and all first-report-dependent finite control
+in the finite first-state map. After that cut, along each hypothetical
+second report $c$, the deterministic main actions and main replies
+before the final side read are determined by this state and the fixed
+backend (AC.15). Thus the effective second-index and final-index
+choices are functions $f(q)$ and $g(q,u,c)$ as in (AC.6), even if the
+implementation intersperses main actions and saves their entire
+archive. Apply (AC.10)--(AC.14), or the finite-word version in
+Corollary 16.3. Choosing the actual pair leaves identical accessible
+data and the same actual native prefix at readiness in the two worlds,
+with origin separation $t-s$.
+
+In either case start a later continuation from the paired readiness
+states. Identical accessible data and public requests give the same
+next local output, native action or stopping decision. A common native
+action gives the same updated $U_n$ and index; (AC.15) supplies the
+same mandatory main frame. Local arithmetic changes no source.
+Induction gives identical subsequent accessible records, requests,
+outputs and stopping decisions at every finite continuation prefix.
+It covers arbitrary finite lengths and, prefixwise, an infinite
+continuation; an answer promised after finite work must occur at a
+finite prefix. No answer after an infinite execution is presumed.
+The underlying clock worlds remain different but no fourth side read,
+parameter inspection or raw-first-report callback is available.
+
+For any fixed $x$, their original values obey
+
+$$
+|G_s(x)-G_t(x)|=|t-s|.
+\tag{AC.16}
+$$
+
+A common scalar answer has error at least half this separation in one
+world. The endpoint construction gives $5/2$; letting $s$ decrease to
+$-3/2$ in the first-cut construction gives $5/4$. For function answers
+on a nonempty compact set, the two true functions have uniform
+distance $|t-s|$. The same triangle inequality gives the identical
+lower bounds; bounded-error candidate functions suffice, and an
+unbounded error already satisfies the conclusion. This argument uses
+a fixed bounded subfamily of target values at each $x$, since $b_0=0$
+and $\tau\in[-4,1]$. It uses no unbounded-intercept obstruction.
+
+If the all-handoff receiver writes its terminal scalar answer while
+processing the last side frame, the final one-bit coloring variant of
+Theorem 15.2 applies, using the threshold $x+3/2$ for $G_\tau(x)$
+and the endpoint values $x+4$ and $x-1$. Later main computations with
+the fixed backend can be included in that terminal-answer function.
+For a function output use its value at one fixed point of the nonempty
+domain. If an output is saved for a later consumer, it is an accessible
+record subject to the cut condition. Finally the actual local chart
+is $t+n+b_0$ by (FW.13); it loses the origin even before compression,
+so (AC.16) pertains specifically to the original-coordinate task.
+$\square$
+
+**Corollary 17.3 (bounded final field and necessary earlier capacity).**
+The finite origin payload of Theorem 11.4 and service of Theorem 12.3
+coexist with Theorems 15.2 and 17.2. Under the unchanged complete-state
+and no-extra-channel conditions, any uniformly correct origin scheme
+of error strictly less than $5/4$ must have infinitely many possible
+complete usable states at its first side handoff. In particular the
+bound $e_0=1297/1536$ cannot be acquired with a fixed finite complete
+first state, even if every later acquisition operand has unrestricted
+memory. It also cannot be acquired with fixed finite complete states
+at all handoffs. A finite alphabet only for the final origin field
+imposes neither restriction.
+
+**Proof.** A finite complete first state would satisfy Corollary 16.3,
+contradicting the strict bound below $5/4$. The all-handoff assertion
+also follows from Theorem 15.2. In the positive construction the first
+acquired integer and later rational operands remain usable during
+acquisition. Only after three reports and the rational endpoint
+calculation are they replaced, for the origin service, by one of 321
+values. Its archive, consumer datum, controller, counter, binding,
+query and scratch remain distinct charged resources as in Definitions
+12.1--12.2 and Proposition 13.3. Its first complete state is not
+alleged to lie in a fixed finite carrier; the bounded final field is
+consistent with both lower bounds. $\square$
+
+## 18. Mathematical correspondence and resource boundaries for the cuts
+
+**Definition 18.1 (classical supplier and source-specific delta).** The
+finite homothetic-copy result used inside the proofs is a classical
+consequence of Hales--Jewett. William Gasarch,
+[*A Color Focusing Proof of the Hales-Jewett Theorem*, Sections 0.3--0.4,
+Theorem 0.4.1, and Section 0.8](https://www.cs.umd.edu/~gasarch/TOPICS/vdw/hj.pdf),
+states the finite-alphabet combinatorial-line theorem and its
+arithmetic application. The direct sum-of-letters deduction in the
+proof of Theorem 15.2 specifies the signed-integer version required.
+At mathlib revision `56a005855ea17e0b0958f73ec801ae140b0a1679`,
+[Combinatorics.exists_mono_homothetic_copy in
+Mathlib/Combinatorics/HalesJewett.lean](https://github.com/leanprover-community/mathlib4/blob/56a005855ea17e0b0958f73ec801ae140b0a1679/Mathlib/Combinatorics/HalesJewett.lean)
+states this supplier for any finitely colored additive commutative
+monoid and finite subset: its positive natural dilation, monoid
+translation and common color specialize to $a,b,C$ above with the
+monoid $\mathbb Z$. Neither that classical theorem nor its library
+proof is claimed as new content here.
+
+The source correspondence is exactly (FW.1)--(FW.2), including the
+full error cube, positive unbounded gain, arbitrary offset, actual
+finite frames and adaptive increasing menu; the witnesses are legal
+subfamilies of that domain. The transition-table coloring and
+source-specific square pattern (AC.5) give the complete finite-cut
+obstruction for a bounded origin target. The simultaneous three-pair
+pattern (AC.10)--(AC.14) supplies the adaptive first-cut lower bound.
+Theorem 10.2 already gives fixed-pair noiseless finite-first-state
+risks, and its pair $(1,2)$ supplies the $5/4$ upper bound used in
+(AC.9). It does not choose both indices adaptively or provide the
+common-state, common-second-report construction across all three
+pairs. Theorem 10.3's one-sided noisy plateau has different prior
+conditions. Propositions 11.5 and 12.4 treat preselected triples with
+uncompressed side acquisition; the cut restrictions and constants here
+are different. The main transport uses the original $M,J,R_0$ and
+read rule of (FW.10)--(FW.11), with the explicit $b_0=0$ subfamily
+and finite-prefix augmentation. It grants no source-blind restriction
+on otherwise lawful causal main action choices.
+
+The fixed-before-values report-support quantifiers in
+[FIB_UNCALIBRATED_QUADRATIC_CLOCK_UNIFORM_REPORT_DESIGNS, Sections 24--26](FIB_UNCALIBRATED_QUADRATIC_CLOCK_UNIFORM_REPORT_DESIGNS.md)
+concern which indices are retained across prior widths; Section 26's
+unbounded grid-size requirement is not a bound on a receiver's
+acquisition cut state at this four-position source. The native
+Brownian paid-point model in
+[FIB_NATIVE_PAID_POINT_OBSERVATION_TRACKING, Sections 50 and 54](FIB_NATIVE_PAID_POINT_OBSERVATION_TRACKING.md)
+uses wrapped points, a seed-generated conditional history, native
+control costs and a chance-class target. Its continuous internal
+records and randomization are not finite complete carriers in this
+deterministic polynomial experiment. The finite quantizer and
+productive rational-word suppliers and their owning Scribes compared
+in Definition 14.2 retain their stated scopes. They neither acquire
+this clock nor assert these cut obstructions. These are source-specific
+ordinary deductions, without a claim of global originality or new
+Lean certification.
+
+**Definition 18.2 (same-run accounting and remaining conclusions).**
+Acquisition still has exactly three side reads, $v$ native atoms and
+$v+1$ mandatory main reads. A continuation of $N$ atoms adds $N$ main
+reads and no side reads. All actual main frames, their action/index
+identities, controller, source binding, rights, accessible backing,
+query, outputs and local work are resources of that same run. The
+finite condition bounds distinguishable usable states at the named
+cuts; it gives no acquisition word-length bound, uniform running time,
+bound on within-frame scratch, or optimal bit-growth rate as gain or
+offset increases. The homothetic-copy supplier selects finite witness
+parameters without an optimized scale estimate.
+
+The unchanged meanings in Definition 13.1 remain independent: temporal
+order and a native count do not expose an absolute spatial origin;
+actual boundary words may acquire it; memory must retain enough of
+those words until later reports arrive; and a retained approximate
+origin can then support the original-coordinate consumer. These
+statements add necessary acquisition conditions to the proved positive
+recovery directions in Proposition 13.2. They give no noisy $5/4$
+upper bound for a finite first cut, arbitrary-randomness lower bound,
+universal equivalence of four views, physical memory impossibility,
+or alpha/beta reduction of this supplied main/clock product. A finite
+program with variable records is outside the fixed finite carrier
+condition. Original fixed-$G_{\rm gc}$, original-$Q$, parked-consumer,
+unchanged-initialization and full relational-process objectives retain
+their stated open obligations.
+
+## 追加锚（本行以下为增补区）
