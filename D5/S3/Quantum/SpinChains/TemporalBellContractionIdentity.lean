@@ -230,6 +230,47 @@ private lemma parity_odd {N : ℕ} (j : Fin N) :
   simpa only [P, Matrix.conjTranspose_add, Matrix.conjTranspose_mul, hc.1.eq,
     Matrix.conjTranspose_zero, add_comm] using ht
 
+private lemma number_factor_diagonal {N : ℕ} (j : Fin N) :
+    (1 : FullOperator N) - (2 : ℂ) • ((fullC j)ᴴ * fullC j) =
+      Matrix.diagonal (fun s : Assignment N => if s j then (-1 : ℂ) else 1) := by
+  have hn : (fullC j)ᴴ * fullC j =
+      Matrix.diagonal (fun s : Assignment N => if s j then (1 : ℂ) else 0) := by
+    ext s t
+    by_cases ht : t j = true
+    · rw [Matrix.mul_apply, Finset.sum_eq_single (Function.update t j false)]
+      · simp only [Matrix.conjTranspose_apply]
+        have hft : fullC j (Function.update t j false) t = (-1 : ℂ) ^ prefixCount t j := by
+          rw [fullC_entry]
+          simp [ht]
+        rw [hft, fullC_entry]
+        by_cases hst : s = t
+        · subst s
+          simp [ht, ← mul_pow]
+        · have hbad : ¬(s j = true ∧ Function.update t j false = Function.update s j false) := by
+            rintro ⟨hs, he⟩
+            apply hst
+            funext k
+            by_cases hk : k = j
+            · subst k
+              simp only [hs, ht]
+            · have he' := congrFun he k
+              simpa only [Function.update_of_ne hk] using he'.symm
+          simp [hbad, Matrix.diagonal_apply, hst]
+      · intro u hu hne
+        have hz : fullC j u t = 0 := by rw [fullC_entry]; simp [ht, hne]
+        rw [hz, mul_zero]
+      · intro hmem
+        exact (hmem (Finset.mem_univ _)).elim
+    · have hz (u : Assignment N) : fullC j u t = 0 := by rw [fullC_entry]; simp [ht]
+      simp only [Matrix.mul_apply, hz, mul_zero, Finset.sum_const_zero]
+      by_cases hst : s = t <;> simp [Matrix.diagonal_apply, hst, ht]
+  rw [hn]
+  ext s t
+  by_cases hst : s = t
+  · subst t
+    cases hs : s j <;> norm_num [hs]
+  · simp [Matrix.diagonal_apply, hst, Matrix.one_apply]
+
 private lemma sigmaXLast_parity (N : ℕ) (hN : 0 < N) :
     sigmaXLast N hN = numberParity N *
       (fullC ⟨N - 1, Nat.sub_lt hN (by decide)⟩ -
