@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:6ea65fd8316714c0831ebb66b60970fa76840e01ff79f8661b431994846f71c4
+  normalized_sha256: sha256:6ea65fd8316714c0831ebb66b60970fa76840e01ff79f8661b431994846f71c4
+cas_ref: sha256:6ea65fd8316714c0831ebb66b60970fa76840e01ff79f8661b431994846f71c4
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 'nonpropositional: 待构造目标清单中的 positive exterior traces 名称，没有声称迹已为正。'
+    previous_atom_id: befcb85f763f88baa09bfce768aeb41f82079dbf77bb00e54cb2d265b4cc6ccd
+    next_atom_id: 0ea4c749afcc3877f1112b6f38836f593bd19924a51aac63e86d5e0b4cac7098

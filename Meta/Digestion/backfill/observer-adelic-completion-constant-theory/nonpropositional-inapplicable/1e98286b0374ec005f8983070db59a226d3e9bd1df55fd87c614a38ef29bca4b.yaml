@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:1e98286b0374ec005f8983070db59a226d3e9bd1df55fd87c614a38ef29bca4b
+  normalized_sha256: sha256:1e98286b0374ec005f8983070db59a226d3e9bd1df55fd87c614a38ef29bca4b
+cas_ref: sha256:1e98286b0374ec005f8983070db59a226d3e9bd1df55fd87c614a38ef29bca4b
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 'nonpropositional: adelic 归一化组成项列表中的 Archimedean Gamma 因子名称，没有性质或等式断言。'
+    previous_atom_id: 6bb05631bb3d54e4eee0509cfd0abefdb6339eebf76e87242211b35c77c1507c
+    next_atom_id: 70cbd95252671d44a3555e4473a31d8ca85da32c9258631012f6fca1398ea257
