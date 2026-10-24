@@ -27,13 +27,18 @@ def confirm(root, remote, branch, commit, endpoint=None):
                 relation="equal" if commit == tip else "ancestor")
 
 
-def commit_snapshot(path, metadata, branch, message):
-    """Consume the ordinary index under the caller's Git operation scope."""
+def preflight_snapshot(path, metadata):
+    """Refuse unresolved Git state before checkpointing or removing its tree."""
     if git(path, "ls-files", "--unmerged").stdout:
         raise Refused("unmerged_index")
     for marker in ("MERGE_HEAD", "CHERRY_PICK_HEAD", "REVERT_HEAD", "rebase-merge", "rebase-apply", "sequencer"):
         if (metadata / marker).exists():
             raise Refused("unfinished_operation:" + marker)
+
+
+def commit_snapshot(path, metadata, branch, message):
+    """Consume the ordinary index under the caller's Git operation scope."""
+    preflight_snapshot(path, metadata)
     parent = value(path, "rev-parse", "--verify", "HEAD^{commit}")
     git(path, "add", "-A", "--", ".")
     difference = git(path, "diff", "--cached", "--quiet", "--exit-code", check=False)

@@ -111,7 +111,7 @@ class NativeFixture(unittest.TestCase):
             evidence = dict(event="fixture_command", phase=phase, command=arguments, cwd=cwd,
                             pid=process.pid, guard_seconds=timeout,
                             fixture_elapsed_seconds=started - self.fixture_started)
-            print(json.dumps(dict(evidence, status="started")), flush=True)
+            print(json.dumps(dict(evidence, status="started"), separators=(",", ":")), flush=True)
             expired = False
             interrupted = None
             before = []
@@ -126,10 +126,8 @@ class NativeFixture(unittest.TestCase):
                     offsets[index] += len(data)
                     text = decoders[index].decode(data, final=final)
                     if text:
-                        print(json.dumps(dict(event="fixture_command_output", phase=phase,
-                                              command=arguments, pid=process.pid, stream=name,
-                                              output=text, byte_offset=offsets[index],
-                                              fixture_elapsed_seconds=time.monotonic() - self.fixture_started)),
+                        print(json.dumps(dict(event="fixture_command_output", pid=process.pid, stream=name,
+                                              output=text, byte_offset=offsets[index]), separators=(",", ":")),
                               flush=True)
             try:
                 deadline = started + timeout
@@ -216,7 +214,13 @@ class NativeFixture(unittest.TestCase):
                                         snapshot_seconds=evidence["snapshot_seconds"]))
         if settlement_error is not None:
             evidence.update(status="unsettled", error=settlement_error, inputs_retained=str(self.root))
-        print(json.dumps(evidence), flush=True)
+        # The start record owns command metadata; successful completion and
+        # output records refer to it by pid. Failures retain the full context.
+        published = evidence
+        if not interrupted and not expired and settlement_error is None and process.returncode == 0:
+            published = {key: value for key, value in evidence.items()
+                         if key not in ("phase", "command", "cwd", "guard_seconds", "fixture_elapsed_seconds")}
+        print(json.dumps(published, separators=(",", ":")), flush=True)
         if settlement_error is not None:
             self.fail(json.dumps(dict(evidence, stdout=output, stderr=errors)))
         if interrupted is not None:
