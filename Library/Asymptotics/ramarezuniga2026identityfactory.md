@@ -5,7 +5,7 @@ year: 2026
 title: "Möbius function and primes: an identity factory with applications"
 doi: 10.1090/mcom/4216
 url: https://arxiv.org/abs/2312.05138v3
-claim: "Theorems 1.1–1.2 supply a finite weighted identity and uniform coprime logarithmic Möbius positivity; the actual filtered Robin kernel has a positive logarithmic-scale curvature and an exact centered second-Abel application, while its growing-filter signed estimate remains open."
+claim: "Theorems 1.1–1.2 supply a finite weighted identity and uniform coprime logarithmic Möbius positivity; the actual filtered Robin kernel has a positive logarithmic-scale curvature, an exact centered second-Abel and real-axis application, and a compensated prime-resolution transfer; the complete Robin lower bound remains open."
 strata_touched: []
 license: citation-only
 triage: anchor
@@ -362,3 +362,180 @@ that consumer starts at $a\ge\log x$, retains the finite unit/head and
 both affine endpoints, and must subtract the whole interval $[0,a]$
 from $\mathcal H_z$. A sign for the auxiliary full half-line is not a
 sign for that truncated quantity.
+
+## Exact real-axis payment of the truncated centered tail
+
+Keep an integer $D\ge x\ge e$ and write $a=\log D$. All arithmetic
+objects use the same actual filter. Put
+
+$$
+U_{z,D}(t)=\sum_{\substack{n\le D\\(n,P_z)=1}}
+\frac{\mu(n)}{n^{1+t}},\qquad
+m=m_z(a),\quad \epsilon=\varepsilon_z(a),
+$$
+
+$$
+\mathcal B_{z,D}(t)=\frac1{\zeta(1+t)}
+-E_z(1+t)U_{z,D}(t)
++E_z(1+t)e^{-at}(m+t\epsilon).
+$$
+
+Then the entire tail has the exact expression
+
+$$
+\boxed{\displaystyle
+\mathcal T_{z,D}:=\int_a^\infty\varepsilon_z(r)k_z(r)\,dr
+=\int_0^\infty[-\zeta'(1+t)]\mathcal B_{z,D}(t)\,dt.}
+$$
+
+To see the finite-head compensation, integrate the original ramps
+before applying the positive mixture:
+
+$$
+\int_a^\infty e^{-tr}\varepsilon_z(r)dr
+=\frac{[\zeta(1+t)E_z(1+t)]^{-1}-U_{z,D}(t)}{t^2}
++e^{-at}\left(\frac m{t^2}+\frac\epsilon t\right).
+$$
+
+Atoms $n\le D$ give the last two terms; atoms $n>D$ give the
+Dirichlet-series remainder. This includes the atom at $D$ in the
+finite prefix, consistently with the existing right-continuous Abel
+convention. Multiplication by $E_z(1+t)[-t^2\zeta'(1+t)]$ gives the
+boxed identity. The same fixed-filter absolute budget as above pays
+the interchange. In particular this is an exact identity for every
+finite $z,D$, not a limit obtained by treating fixed-filter constants
+as uniform in a growing primorial.
+
+Both cancellations at $t=0$ can be read from finite moments. Let
+
+$$
+A_{z,D}^{(2)}=\sum_{\substack{n\le D\\(n,P_z)=1}}
+\frac{\mu(n)}n(a-\log n)^2.
+$$
+
+The constant and linear Taylor coefficients of $\mathcal B_{z,D}$
+vanish, and the complete integrand has the finite limit
+
+$$
+\lim_{t\downarrow0}[-\zeta'(1+t)]\mathcal B_{z,D}(t)
+=a-\gamma-S_z-\frac{A_{z,D}^{(2)}}{2C_z}.
+$$
+
+Indeed
+$e^{-at}(m+t\epsilon)-U_{z,D}(t)
+=-C_zt+(aC_z-A_{z,D}^{(2)}/2)t^2+O_{z,D}(t^3)$.
+At infinity the full integrand is $O_{z,D}((1+t)2^{-t})$.
+These statements establish ordinary absolute convergence of the
+combined real-axis integral. Its separate terms would each have
+nonintegrable zero-end pieces.
+
+The original complete consumer is therefore
+
+$$
+\boxed{\begin{aligned}
+I_\psi(x)={}&\sum_{\substack{n\le D\\(n,P_z)=1}}
+\mu(n)P_x^{\eta_z}(n)
+-\mathcal G_{z,x}(a)m
++\mathcal G_{z,x}'(a)\epsilon
++\mathcal T_{z,D}.
+\end{aligned}}
+$$
+
+This consumes the earlier twice-Abel identity without dropping its
+finite unit, its lower-cut atom convention or either affine endpoint.
+It replaces an infinite centered Möbius tail by one explicit real-axis
+integral and finite prefix data. No growing-modulus pointwise error
+factor is substituted for that signed integral.
+
+For $D\le z$, the prefix is just the unit, so $m=1$,
+$\epsilon=a-C_z$ and $U_{z,D}=1$. More generally, the existing
+unit-and-prime range $D\le z^2$ gives
+
+$$
+\begin{aligned}
+U_{z,D}(t)&=1-\sum_{z<p\le D}p^{-1-t},\\
+m&=1-\sum_{z<p\le D}p^{-1},\\
+\epsilon&=a-C_z-\sum_{z<p\le D}\frac{\log(D/p)}p,\\
+\sum_{\substack{n\le D\\(n,P_z)=1}}\mu(n)P_x^{\eta_z}(n)
+&=P_x^{\eta_z}(1)-\sum_{z<p\le D}P_x^{\eta_z}(p).
+\end{aligned}
+$$
+
+These are the same actual unit-and-prime inputs already used in
+[Alladi's application](../Analytic/alladi1982roughmobius.md);
+they are not a new rough-number estimate. At $D=\lceil x\rceil\le z^2$
+the finite data use only the unit and primes between $z$ and that
+source cutoff. This is an exact representation, not a computational
+cost or numerical-certification claim: the original factorial kernels
+and the combined real-axis integral still have to be evaluated or
+bounded.
+
+For an actual integer $N$ and its chosen common filter, set $x=\log N$
+and use the same $D\ge x$. The remaining sufficient target is a lower
+bound on the entire displayed expression that beats
+$-R(\log N)-d_N$. The sign $\mathcal H_z<0$ supplies no such lower
+bound: the subtracted low interval, the head and the endpoints must
+be combined. The original same-integer loss $d_N$, all low rows and
+the signed real-axis bracket remain present. No Robin-safe integer
+range, global Robin sign, RH proof or Lean verification is claimed.
+
+## A prime-resolution change transfers the signed account exactly
+
+There is also a precise cost for refining this prime section. Let $p$
+be the next prime after the prefix $P_z$, and write $P_{z'}=pP_z$.
+The elementary finite-product relation is
+
+$$
+C_{z'}E_{z'}(1+t)=C_zE_z(1+t)
+\left(1+\frac{1-p^{-t}}{p-1}\right).
+$$
+
+Consequently the full centered pair satisfies
+
+$$
+\boxed{\displaystyle
+\mathcal H_{z'}-\mathcal H_z=-\delta_{z,p}<0,\qquad
+\delta_{z,p}=\frac1{p-1}\int_0^\infty
+t[-\zeta'(1+t)]C_zE_z(1+t)(1-p^{-t})\,dt>0.}
+$$
+
+Including the prefactor $1/(p-1)$, the integrand has finite limit
+$\log p/(p-1)$ at zero and an exponentially decaying tail. Thus this difference is an ordinary
+convergent positive integral, not a subtraction of divergent budgets.
+
+For the same $x,D$ define the explicit complementary account
+
+$$
+\begin{aligned}
+\mathcal L_{x,z,D}={}&
+\sum_{\substack{n\le D\\(n,P_z)=1}}\mu(n)P_x^{\eta_z}(n)
+-\mathcal G_{z,x}(a)m_z(a)
++\mathcal G_{z,x}'(a)\varepsilon_z(a)\\
+&-\int_0^a\varepsilon_z(r)k_z(r)dr.
+\end{aligned}
+$$
+
+The last integral uses only finite prefix data up to $D$; its curvature
+below $\log x$ is the declared auxiliary extension. The complete
+same-source identity now reads
+
+$$
+I_\psi(x)=\mathcal H_z+\mathcal L_{x,z,D}.
+$$
+
+The already established filter invariance of $I_\psi$ in CP.2 then
+forces the exact companion transfer
+
+$$
+\boxed{\displaystyle
+\mathcal L_{x,z',D}-\mathcal L_{x,z,D}=\delta_{z,p}.}
+$$
+
+Thus every added prime makes the auxiliary full pair strictly more
+negative and raises the complementary account by exactly the same
+amount. Prime-section refinement redistributes the original response;
+it does not create an extra Robin reserve. A FIB candidate can use this
+section only with the same actual integer, $x=\log N$, its certified
+prime data and its original loss $d_N$. Neither a recursive address nor
+this conservation identity supplies the still missing one-sided bound
+for their complete sum.
