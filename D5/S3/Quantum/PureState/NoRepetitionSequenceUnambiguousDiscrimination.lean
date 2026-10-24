@@ -358,6 +358,97 @@ private lemma short_eigenvector {N k : ℕ} (h : k < N) (s : ℝ) :
     simpa only [Finset.prod_const, Finset.card_univ, Fintype.card_fin,
       Complex.ofReal_pow] using alternant_kernel s u (fun _ => ((1 - s : ℝ) : ℂ)) hU
 
+private lemma full_eigenvector (n : ℕ) (s : ℝ) :
+    ∃ w : Label (n + 1) (n + 1) → ℂ, w ≠ 0 ∧
+      kernel s *ᵥ w = (value (n + 1) (n + 1) s : ℂ) • w := by
+  classical
+  let u : Fin (n + 1) → Fin (n + 1) → ℂ :=
+    Fin.lastCases (fun _ => 1)
+      (fun i : Fin n => Pi.single i.castSucc 1 - Pi.single (Fin.last n) 1)
+  let ev : Fin (n + 1) → ℂ :=
+    Fin.lastCases ((1 + (n : ℝ) * s : ℝ) : ℂ) (fun _ => ((1 - s : ℝ) : ℂ))
+  have hU (i : Fin (n + 1)) : overlapMatrix (n + 1) s *ᵥ u i = ev i • u i := by
+    refine Fin.lastCases ?_ (fun i => ?_) i
+    · simp only [u, ev, Fin.lastCases_last]
+      change overlapMatrix (n + 1) s *ᵥ (fun _ => 1) =
+        ((1 + (n : ℝ) * s : ℝ) : ℂ) • (fun _ => 1)
+      unfold overlapMatrix
+      ext a
+      simp only [Matrix.add_mulVec, Matrix.smul_mulVec, Matrix.one_mulVec,
+        Pi.add_apply, Pi.smul_apply, smul_eq_mul]
+      change _ + (s : ℂ) * (∑ b : Fin (n + 1), (1 : ℂ) * 1 * 1) = _
+      simp only [mul_one, Finset.sum_const, Finset.card_univ, Fintype.card_fin,
+        nsmul_eq_mul, Nat.cast_add, Nat.cast_one, Complex.ofReal_add,
+        Complex.ofReal_mul, Complex.ofReal_sub, Complex.ofReal_natCast,
+        Complex.ofReal_one]
+      ring
+    · simp only [u, ev, Fin.lastCases_castSucc]
+      change overlapMatrix (n + 1) s *ᵥ
+          (Pi.single i.castSucc 1 - Pi.single (Fin.last n) 1) =
+        ((1 - s : ℝ) : ℂ) • (Pi.single i.castSucc 1 - Pi.single (Fin.last n) 1)
+      have hJ : vecMulVec (fun _ : Fin (n + 1) => (1 : ℂ)) (fun _ => 1) *ᵥ
+          (Pi.single i.castSucc 1 - Pi.single (Fin.last n) 1) = 0 := by
+        rw [Matrix.mulVec_sub, Matrix.mulVec_single_one, Matrix.mulVec_single_one]
+        ext a
+        change (1 : ℂ) * 1 - 1 * 1 = 0
+        ring
+      unfold overlapMatrix
+      simp only [Matrix.add_mulVec, Matrix.smul_mulVec, Matrix.one_mulVec,
+        hJ, smul_zero, add_zero]
+  let M : Matrix (Fin (n + 1)) (Fin (n + 1)) ℂ := fun j i => u i j
+  have hcol (i : Fin (n + 1)) : ∑ j, M j i =
+      if i = Fin.last n then ((n + 1 : ℕ) : ℂ) else (0 : ℂ) := by
+    refine Fin.lastCases ?_ (fun i => ?_) i
+    · simp only [M, u, Fin.lastCases_last]
+      change (∑ _ : Fin (n + 1), (1 : ℂ)) = _
+      simp only [ite_true, Finset.sum_const, Finset.card_univ, Fintype.card_fin,
+        nsmul_eq_mul, mul_one]
+    · simp only [M, u, Fin.lastCases_castSucc]
+      change (∑ j : Fin (n + 1),
+        ((Pi.single i.castSucc 1 : Fin (n + 1) → ℂ) j -
+          (Pi.single (Fin.last n) 1 : Fin (n + 1) → ℂ) j)) = _
+      rw [Finset.sum_sub_distrib, Fintype.sum_pi_single', Fintype.sum_pi_single']
+      simp only [Fin.castSucc_ne_last, ite_false, sub_self]
+  have hdet : M.det ≠ 0 := by
+    apply isUnit_iff_ne_zero.mp
+    apply (Matrix.isUnit_iff_isUnit_det M).mp
+    apply Matrix.mulVec_injective_iff_isUnit.mp
+    apply (LinearMap.ker_eq_bot (f := M.mulVecLin)).mp
+    apply LinearMap.ker_eq_bot'.mpr
+    intro v hv
+    have hsum : (n + 1 : ℂ) * v (Fin.last n) = 0 := by
+      have he := congrArg (fun z : Fin (n + 1) → ℂ => ∑ j, z j) hv
+      change (∑ j, ∑ i, M j i * v i) = ∑ j : Fin (n + 1), 0 at he
+      rw [Finset.sum_comm] at he
+      simp only [← Finset.sum_mul, hcol, ite_mul, zero_mul,
+        Finset.sum_ite_eq', Finset.mem_univ, ite_true, Finset.sum_const_zero] at he
+      simpa only [Nat.cast_add, Nat.cast_one] using he
+    have hlast : v (Fin.last n) = 0 :=
+      (mul_eq_zero.mp hsum).resolve_left (by exact_mod_cast Nat.succ_ne_zero n)
+    ext j
+    refine Fin.lastCases hlast (fun j => ?_) j
+    have he := congrFun hv j.castSucc
+    change (∑ i : Fin (n + 1), u i j.castSucc * v i) = 0 at he
+    rw [Fin.sum_univ_castSucc] at he
+    simp only [u, Fin.lastCases_last, Fin.lastCases_castSucc, Pi.sub_apply,
+      Pi.single_apply, Fin.castSucc_ne_last, ite_false, sub_zero, Fin.castSucc_inj,
+      mul_ite, ite_mul, one_mul, zero_mul, Finset.sum_ite_eq', Finset.mem_univ,
+      ite_true, hlast, add_zero, Finset.sum_ite_eq] at he
+    exact he
+  let w : Label (n + 1) (n + 1) → ℂ := fun x => det (fun j i => u i (x.val j))
+  refine ⟨w, ?_, ?_⟩
+  · intro hz
+    exact hdet (congrFun hz (⟨id, Function.injective_id⟩ : Label (n + 1) (n + 1)))
+  · have hev : (∏ i, ev i) = (value (n + 1) (n + 1) s : ℂ) := by
+      rw [Fin.prod_univ_castSucc]
+      simp only [ev, Fin.lastCases_last, Fin.lastCases_castSucc,
+        Finset.prod_const, Finset.card_univ, Fintype.card_fin]
+      unfold value
+      simp only [lt_self_iff_false, ite_false, Nat.add_sub_cancel,
+        Complex.ofReal_mul, Complex.ofReal_pow]
+    rw [← hev]
+    exact alternant_kernel s u ev hU
+
 private lemma kernel_eigenvector {N k : ℕ} (hN : 3 ≤ N) (hk : 2 ≤ k)
     (hkN : k ≤ N) (s : ℝ) :
     ∃ w : Label N k → ℂ, w ≠ 0 ∧ kernel s *ᵥ w = (value N k s : ℂ) • w := by
@@ -365,7 +456,9 @@ private lemma kernel_eigenvector {N k : ℕ} (hN : 3 ≤ N) (hk : 2 ≤ k)
   · exact short_eigenvector h s
   · have heq : k = N := Nat.le_antisymm hkN (Nat.le_of_not_gt h)
     subst k
-    sorry
+    cases N with
+    | zero => omega
+    | succ n => exact full_eigenvector n s
 
 private lemma eigenvalue_bound {N k : ℕ} (s a v : ℝ)
     (h : (kernel (N := N) (k := k) s - (a : ℂ) • 1).PosSemidef)
