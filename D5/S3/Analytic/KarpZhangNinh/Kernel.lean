@@ -70,7 +70,9 @@ lemma a_continuous (n : ℕ) : Continuous (a n) := by
   by_cases hn : n = 0
   · simp only [hn, a_zero]
     exact continuous_const
-  · simp only [a, if_neg hn]
+  · change Continuous (fun t : ℝ => if n = 0 then 0 else
+      (ascPochhammer ℝ (3*n)).eval t / ((3*n-1).factorial:ℝ))
+    simp only [if_neg hn]
     exact (ascPochhammer ℝ (3*n)).continuous.div_const _
 
 private theorem strict_four_product (n : ℕ) {a b c : ℝ}
@@ -85,7 +87,9 @@ private theorem strict_four_product (n : ℕ) {a b c : ℝ}
         Nat.cast_zero, add_zero, one_mul]; nlinarith [mul_pos hb hc]
     | succ n =>
       have hip := ih (by omega)
-      simp only [ascPochhammer_succ_eval]
+      rw [ascPochhammer_succ_eval (n+1) a,
+        ascPochhammer_succ_eval (n+1) (a+b+c),
+        ascPochhammer_succ_eval (n+1) (a+b), ascPochhammer_succ_eval (n+1) (a+c)]
       have hh : (a+((n+1:ℕ):ℝ))*(a+b+c+(n+1:ℕ)) <
           (a+b+(n+1:ℕ))*(a+c+(n+1:ℕ)) := by nlinarith [mul_pos hb hc]
       have hbase : 0 < (ascPochhammer ℝ (n+1)).eval a *
@@ -234,7 +238,7 @@ theorem paired_sign_step {a b c : ℝ} (ha : 0 < a) (hb : 0 < b)
     dsimp [pairPoch] at h
     linarith)
   have he : N-n = N-(n+1)+1 := by omega
-  simp only [pairPoch, Nat.add_sub_cancel, he]
+  simp only [pairPoch, Nat.succ_sub_one, he]
   linarith
 
 private theorem paired_relation (μ α β : ℝ) (m k : ℕ)
