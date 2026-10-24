@@ -183,6 +183,8 @@ def remove(options):
                 if qualify(source, target) != qualified[target]:
                     raise Refused("observed_identity_changed")
                 _, metadata = identity(source, target)
+                from worktree_publication import commit_snapshot, preflight_snapshot
+                preflight_snapshot(target, metadata)
                 resumed = interrupted_removal(target, metadata)
                 if resumed:
                     # The earlier removal verified this snapshot clean before native
@@ -194,7 +196,6 @@ def remove(options):
                         acquire(stack, source, "ref:" + recovery_branch, True)
                     refreshed = qualified[target]
                 else:
-                    from worktree_publication import commit_snapshot
                     checkpoint = commit_snapshot(target, metadata, branch,
                         b"Checkpoint working tree before recycling\n")
                     if branch.startswith("refs/heads/"):

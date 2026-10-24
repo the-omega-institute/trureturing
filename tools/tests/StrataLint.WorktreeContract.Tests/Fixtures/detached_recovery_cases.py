@@ -178,6 +178,75 @@ class DetachedRecoveryCases:
         self.g(self.main, "worktree", "add", self.tree, result["recovery_branch"].removeprefix("refs/heads/"))
         self.assertEqual("unfinished snapshot\n", (self.tree / "owned").read_text())
 
+    def removal_state(self, metadata):
+        def files(root):
+            return {str(path.relative_to(root)): path.read_bytes()
+                    for path in root.rglob("*") if path.is_file()}
+        return dict(metadata=files(metadata), working=files(self.tree),
+                    refs=self.g(self.main, "show-ref"),
+                    source_head=(self.main / ".git/HEAD").read_bytes(),
+                    source_index=(self.main / ".git/index").read_bytes(),
+                    source={str(path.relative_to(self.main)): path.read_bytes()
+                            for path in self.main.rglob("*")
+                            if path.is_file() and ".git" not in path.relative_to(self.main).parts})
+
+    def pending_merge_retained(self, resumed):
+        self.g(self.tree, "commit", "--allow-empty", "-m", "merge left")
+        side = self.g(self.tree, "commit-tree", "HEAD^{tree}", "-p", self.base,
+                      "-m", "merge right").strip()
+        if resumed:
+            self.interrupted_removal()
+        self.g(self.tree, "merge", "--no-commit", "--no-ff", side)
+        metadata = Path(self.g(self.tree, "rev-parse", "--absolute-git-dir").strip())
+        self.assertEqual(side + "\n", (metadata / "MERGE_HEAD").read_text())
+        self.assertEqual("", self.g(self.tree, "diff", "--cached", "--name-only"))
+        before = self.removal_state(metadata)
+        result = json.loads(self.remove(74).stdout)["items"][0]
+        self.assertEqual("checkpoint_failed", result["outcome"])
+        self.assertEqual("unfinished_operation:MERGE_HEAD", result["error"])
+        self.assertIsNone(result["checkpoint"])
+        self.assertEqual(before, self.removal_state(metadata))
+        self.assertEqual(resumed, (metadata / "worktree-removal").exists())
+
+    def test_pending_merge_retained_before_ordinary_removal(self):
+        self.pending_merge_retained(resumed=False)
+
+    def test_pending_merge_retained_before_recorded_resume(self):
+        self.pending_merge_retained(resumed=True)
+
+    def test_recorded_resume_unfinished_and_unmerged_retained(self):
+        import worktree_protocol as protocol
+        self.g(self.tree, "checkout", "--detach")
+        reference = self.interrupted_removal()["recovery_branch"]
+        metadata = Path(self.g(self.tree, "rev-parse", "--absolute-git-dir").strip())
+        for name in ("MERGE_HEAD", "CHERRY_PICK_HEAD", "REVERT_HEAD", "rebase-merge", "rebase-apply", "sequencer"):
+            with self.subTest(marker=name):
+                marker = metadata / name
+                if name.endswith("HEAD"):
+                    marker.write_text(self.base + "\n")
+                else:
+                    marker.mkdir()
+                    (marker / "state").write_text("unfinished operation\n")
+                before = self.removal_state(metadata)
+                result = json.loads(self.remove(74).stdout)["items"][0]
+                self.assertEqual("unfinished_operation:" + name, result["error"])
+                self.assertIsNone(result["checkpoint"])
+                self.assertEqual(before, self.removal_state(metadata))
+                if marker.is_dir():
+                    (marker / "state").unlink()
+                    marker.rmdir()
+                else:
+                    marker.unlink()
+        oid = self.g(self.tree, "rev-parse", "HEAD:owned").strip()
+        protocol.git(self.tree, "update-index", "--index-info",
+                     input=f"0 {'0' * len(oid)}\towned\n100644 {oid} 1\towned\n100644 {oid} 2\towned\n".encode())
+        before = self.removal_state(metadata)
+        result = json.loads(self.remove(74).stdout)["items"][0]
+        self.assertEqual("unmerged_index", result["error"])
+        self.assertIsNone(result["checkpoint"])
+        self.assertEqual(before, self.removal_state(metadata))
+        self.assertEqual(self.base, self.g(self.main, "rev-parse", reference).strip())
+
     def interrupted_ignore_snapshot(self):
         (self.tree / ".gitignore").write_text("/cache/\n*.tmp\n")
         (self.tree / "nested").mkdir()
