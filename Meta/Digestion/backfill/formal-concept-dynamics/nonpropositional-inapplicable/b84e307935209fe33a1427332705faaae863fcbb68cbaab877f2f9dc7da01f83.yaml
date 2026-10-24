@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:b84e307935209fe33a1427332705faaae863fcbb68cbaab877f2f9dc7da01f83
+  normalized_sha256: sha256:b84e307935209fe33a1427332705faaae863fcbb68cbaab877f2f9dc7da01f83
+cas_ref: sha256:b84e307935209fe33a1427332705faaae863fcbb68cbaab877f2f9dc7da01f83
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 仅说明图中垂直箭头采用概念界面的解释角色。
+    previous_atom_id: c34666c0138355d255e9af12e76aedf65297e7b1c01a20d9066110a4df31486b
+    next_atom_id: 0014fb8191d24b2b2af5d5eefed1b82b5a6fc44cdcde1401081d8c7f947dcc18

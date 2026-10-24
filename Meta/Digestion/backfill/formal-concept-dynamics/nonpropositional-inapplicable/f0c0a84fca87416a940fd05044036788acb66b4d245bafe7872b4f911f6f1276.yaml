@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:f0c0a84fca87416a940fd05044036788acb66b4d245bafe7872b4f911f6f1276
+  normalized_sha256: sha256:f0c0a84fca87416a940fd05044036788acb66b4d245bafe7872b4f911f6f1276
+cas_ref: sha256:f0c0a84fca87416a940fd05044036788acb66b4d245bafe7872b4f911f6f1276
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 本子项解释 Prop、证明项和六种存在用语，并描述形式主义立场；类型判断是术语示例，不主张任意 P 可证或任意 X 非空。
+    previous_atom_id: 30bc3e08c8c31146b5f320c9e789f7da84b9aeaec9ad7a486a8e7f8ef426646f
+    next_atom_id: ae3c20a51c920aec6d40ad41499ee6d44a6d4d0f0d8c3ef6bef345777cdafcfa
