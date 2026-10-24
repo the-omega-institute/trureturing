@@ -165,12 +165,93 @@ private lemma measurement_gram_bound {N k : ℕ}
   rw [← hidentity]
   exact hE.2.1.conjTranspose_mul_mul_same A
 
+private def relabel {N k : ℕ} (σ : Equiv.Perm (Fin N)) : Label N k ≃ Label N k where
+  toFun x := ⟨σ ∘ x.val, σ.injective.comp x.property⟩
+  invFun x := ⟨σ.symm ∘ x.val, σ.symm.injective.comp x.property⟩
+  left_inv x := Subtype.ext (funext (fun j => σ.symm_apply_apply (x.val j)))
+  right_inv x := Subtype.ext (funext (fun j => σ.apply_symm_apply (x.val j)))
+
 private lemma symmetrized_bound {N k : ℕ} (hk : k ≤ N) (s : ℝ)
     (q : Label N k → ℝ)
     (hq : (kernel s - diagonal (fun x => (q x : ℂ))).PosSemidef) :
     (kernel s - (((1 / (Fintype.card (Label N k) : ℝ)) * ∑ x, q x : ℝ) : ℂ) •
       (1 : Matrix (Label N k) (Label N k) ℂ)).PosSemidef := by
-  sorry
+  classical
+  let c : ℝ := Fintype.card (Equiv.Perm (Fin N))
+  let m : ℝ := Fintype.card (Label N k)
+  let b : ℝ := (1 / m) * ∑ x, q x
+  let t (x : Label N k) : ℝ := ∑ σ : Equiv.Perm (Fin N), q (relabel σ x)
+  have hc : c ≠ 0 := by
+    dsimp [c]
+    exact_mod_cast Fintype.card_ne_zero (α := Equiv.Perm (Fin N))
+  have hm : m ≠ 0 := by
+    dsimp [m]
+    have hpos : 0 < Fintype.card (Label N k) :=
+      Fintype.card_pos_iff.mpr ⟨⟨Fin.castLE hk, Fin.castLE_injective hk⟩⟩
+    exact_mod_cast hpos.ne'
+  have hconst (x y : Label N k) : t x = t y := by
+    obtain ⟨τ, hτ⟩ := Equiv.Perm.exists_extending_pair x.val y.val x.property y.property
+    have hy : relabel τ x = y := Subtype.ext (funext hτ)
+    rw [← hy]
+    change (∑ σ : Equiv.Perm (Fin N), q (relabel σ x)) =
+      ∑ σ : Equiv.Perm (Fin N), q (relabel (σ * τ) x)
+    exact (Equiv.sum_comp (Equiv.mulRight τ) (fun σ => q (relabel σ x))).symm
+  have hmean (x : Label N k) : t x = c * b := by
+    have htotal : m * t x = c * ∑ y, q y := by
+      calc
+        m * t x = ∑ y : Label N k, t y := by
+          simp only [← hconst x, Finset.sum_const, Finset.card_univ, nsmul_eq_mul, m]
+        _ = ∑ σ : Equiv.Perm (Fin N), ∑ y : Label N k, q (relabel σ y) := by
+          exact Finset.sum_comm
+        _ = c * ∑ y, q y := by
+          simp only [Equiv.sum_comp (relabel _) q, Finset.sum_const, Finset.card_univ,
+            nsmul_eq_mul, c]
+    calc
+      t x = m⁻¹ * (m * t x) := by rw [← mul_assoc, inv_mul_cancel₀ hm, one_mul]
+      _ = m⁻¹ * (c * ∑ y, q y) := by rw [htotal]
+      _ = c * b := by dsimp [b]; rw [one_div]; ring
+  have hkernel (σ : Equiv.Perm (Fin N)) (x y : Label N k) :
+      kernel s (relabel σ x) (relabel σ y) = kernel s x y := by
+    unfold kernel
+    apply Finset.prod_congr rfl
+    intro j _
+    change (if σ (x.val j) = σ (y.val j) then (1 : ℂ) else (s : ℂ)) = _
+    simp only [σ.injective.eq_iff]
+  let A : Matrix (Label N k) (Label N k) ℂ :=
+    ∑ σ : Equiv.Perm (Fin N),
+      (kernel s - diagonal (fun x => (q x : ℂ))).submatrix (relabel σ) (relabel σ)
+  have hA : A.PosSemidef :=
+    Matrix.posSemidef_sum _ (fun σ _ => hq.submatrix (relabel σ))
+  have hidentity : A = (c : ℂ) • (kernel s - (b : ℂ) • 1) := by
+    have hentry (σ : Equiv.Perm (Fin N)) (x y : Label N k) :
+        (kernel s - diagonal (fun x => (q x : ℂ))).submatrix (relabel σ) (relabel σ) x y =
+        kernel s x y - diagonal (fun x => (q (relabel σ x) : ℂ)) x y := by
+      change kernel s (relabel σ x) (relabel σ y) - _ = _
+      rw [hkernel]
+      congr 1
+      exact congrArg (fun B : Matrix (Label N k) (Label N k) ℂ => B x y)
+        (Matrix.submatrix_diagonal_equiv (fun x => (q x : ℂ)) (relabel σ))
+    have htc (x : Label N k) :
+        (∑ σ : Equiv.Perm (Fin N), (q (relabel σ x) : ℂ)) = (c : ℂ) * (b : ℂ) := by
+      exact_mod_cast hmean x
+    ext x y
+    simp only [A, Matrix.sum_apply, hentry, Finset.sum_sub_distrib,
+      Finset.sum_const, Finset.card_univ, nsmul_eq_mul, Matrix.smul_apply,
+      Matrix.sub_apply, smul_eq_mul]
+    by_cases hxy : x = y
+    · subst y
+      simp only [Matrix.diagonal_apply_eq, Matrix.one_apply_eq, htc, mul_one]
+      change (c : ℂ) * kernel s x x - (c : ℂ) * (b : ℂ) =
+        (c : ℂ) * (kernel s x x - (b : ℂ))
+      ring
+    · simp only [Matrix.diagonal_apply_ne _ hxy, Matrix.one_apply_ne hxy,
+        Finset.sum_const_zero, mul_zero, sub_zero]
+      rfl
+  have hscale := hA.smul (show (0 : ℂ) ≤ (c⁻¹ : ℝ) from by
+    exact_mod_cast inv_nonneg.mpr (Nat.cast_nonneg (Fintype.card (Equiv.Perm (Fin N)))))
+  rw [hidentity, smul_smul, ← Complex.ofReal_mul, inv_mul_cancel₀ hc,
+    Complex.ofReal_one, one_smul] at hscale
+  exact hscale
 
 private lemma kernel_eigenvector {N k : ℕ} (hN : 3 ≤ N) (hk : 2 ≤ k)
     (hkN : k ≤ N) (s : ℝ) :
