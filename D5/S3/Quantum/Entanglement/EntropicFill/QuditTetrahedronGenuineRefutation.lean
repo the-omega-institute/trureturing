@@ -140,12 +140,51 @@ private theorem normalized : ∑ x, ‖psi x‖ ^ 2 = 1 := by
     _ = ∑ _t : Fin 8, (1 / 8 : ℝ) := sum_supported (fun _ => (1 / 8 : ℝ))
     _ = 1 := by norm_num
 
+private theorem marginal_entries (i : Fin 4) (a b : Fin 8) :
+    rho1 psi i a b =
+      ∑ t : Fin 8, if label t i = a ∧ b = a then (1 / 8 : ℂ) else 0 := by
+  classical
+  have hsq : ((Real.sqrt 8 : ℂ)⁻¹) ^ 2 = (1 / 8 : ℂ) := by
+    calc
+      _ = (((Real.sqrt 8)⁻¹ ^ 2 : ℝ) : ℂ) := by push_cast; rfl
+      _ = ((1 / 8 : ℝ) : ℂ) := congrArg (fun r : ℝ => (r : ℂ)) amplitude_square
+      _ = _ := by norm_num
+  unfold rho1
+  trans ∑ x, if supported x then
+    (if x i = a ∧ b = a then (1 / 8 : ℂ) else 0) else 0
+  · apply Finset.sum_congr rfl
+    intro x _
+    by_cases hs : supported x
+    · have hu := supported_update x hs i b
+      by_cases ha : x i = a
+      · by_cases hb : b = a
+        · have hup : supported (Function.update x i a) :=
+            (supported_update x hs i a).mpr ha.symm
+          simp [psi, hs, hup, ha, hb, ← pow_two, hsq]
+        · simp [psi, hs, hu, ha, hb]
+      · simp [ha]
+    · simp [psi, hs]
+  · exact sum_supported _
+
 private theorem marginal_A : rho1 psi 0 = Matrix.diagonal (fun _ => (1 / 8 : ℂ)) := by
-  sorry
+  ext a b
+  by_cases hab : b = a
+  · subst b
+    simp [marginal_entries, label]
+  · simp [marginal_entries, hab, Ne.symm hab, Matrix.diagonal_apply]
 
 private theorem marginal_leaf (i : Fin 4) (hi : i ≠ 0) :
     rho1 psi i = Matrix.diagonal (fun a => if a.val < 2 then (1 / 2 : ℂ) else 0) := by
-  sorry
+  ext a b
+  rw [marginal_entries]
+  by_cases hab : b = a
+  · subst b
+    rw [Matrix.diagonal_apply_eq]
+    simp only [and_true]
+    fin_cases i
+    · exact (hi rfl).elim
+    all_goals fin_cases a <;> norm_num [label, Fin.sum_univ_succ]
+  · simp [hab, Ne.symm hab, Matrix.diagonal_apply]
 
 private theorem entropies :
     entropy2 (rho1 psi 0) = 3 ∧ entropy2 (rho1 psi 1) = 1 ∧
