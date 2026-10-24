@@ -69,8 +69,9 @@ private theorem mean_zero_flux (n : ℕ) (π p r h : ℕ → ℝ)
     · subst i
       simp only [hp, mul_zero, zero_mul, hm, neg_zero]
     · have hit : i < n := lt_of_le_of_ne hi hin
-      dsimp [z]
-      simp only [Nat.add_sub_cancel]
+      change π i * p i *
+        (-(∑ j ∈ range (i + 1), π j * h j) / (π i * p i)) =
+          -(∑ j ∈ range (i + 1), π j * h j)
       field_simp [ne_of_gt (hπ i hi), ne_of_gt (hpp i hit)]
       <;> ring
   have hin (i : ℕ) (hi : i ≤ n) :
@@ -122,8 +123,8 @@ private theorem coercivity (n : ℕ) (π p r z : ℕ → ℝ)
       ∑ i ∈ range (n + 1), π i * (r i * z i - p i * z (i + 1)) ^ 2 := by
   have hpoint :
       (∑ i ∈ range (n + 1),
-        π i * r i * ((r i - p i) * z i ^ 2) +
-        π i * p i * ((p i - r i) * z (i + 1) ^ 2)) ≤
+        (π i * r i * ((r i - p i) * z i ^ 2) +
+        π i * p i * ((p i - r i) * z (i + 1) ^ 2))) ≤
       ∑ i ∈ range (n + 1), π i * (r i * z i - p i * z (i + 1)) ^ 2 := by
     apply sum_le_sum
     intro i hi
@@ -134,8 +135,8 @@ private theorem coercivity (n : ℕ) (π p r z : ℕ → ℝ)
     nlinarith
   calc
     _ = ∑ i ∈ range (n + 1),
-        π i * r i * ((r i - p i) * z i ^ 2) +
-        π i * p i * ((p i - r i) * z (i + 1) ^ 2) := by
+        (π i * r i * ((r i - p i) * z i ^ 2) +
+        π i * p i * ((p i - r i) * z (i + 1) ^ 2)) := by
       rw [sum_add_distrib,
         left_sum n π p r (fun i => (r i - p i) * z i ^ 2) hr hb,
         right_sum n π p (fun i => (p i - r i) * z (i + 1) ^ 2) hp,

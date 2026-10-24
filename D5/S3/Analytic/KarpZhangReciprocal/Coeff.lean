@@ -75,7 +75,8 @@ private theorem lambda_antitone {t : ℝ} (ht : 0 < t) :
   have hj : 0 < t + j := by positivity
   have hij' : (i : ℝ) ≤ j := by exact_mod_cast hij
   have hmul := mul_nonneg ht.le (sub_nonneg.mpr hij')
-  rw [lambda, lambda, div_le_div_iff₀ hj hi]
+  change (2 * t + (j : ℝ)) / (t + j) ≤ (2 * t + (i : ℝ)) / (t + i)
+  rw [div_le_div_iff₀ hj hi]
   nlinarith
 
 private theorem lambda_deriv (j : ℕ) {t : ℝ} (ht : 0 < t) :
@@ -104,7 +105,13 @@ private theorem eta_deriv (j : ℕ) {t : ℝ} (ht : 0 < t) :
 private theorem c_deriv (n : ℕ) {t : ℝ} (ht : 0 < t) :
     HasDerivAt (c n) (c n t * psi n t) t := by
   induction n with
-  | zero => simpa [c, psi] using (hasDerivAt_const t (1 : ℝ))
+  | zero =>
+    have hc : c 0 = (fun _ : ℝ => 1) := by
+      funext u
+      simp only [c, ascPochhammer_zero, eval_one, Nat.factorial_zero,
+        Nat.cast_one, mul_one, div_one]
+    rw [hc]
+    simpa only [psi, sum_range_zero, mul_zero] using (hasDerivAt_const t (1 : ℝ))
   | succ n ih =>
     have hd := (ih.mul (lambda_deriv n ht)).div_const (n + 1 : ℝ)
     have he : c (n + 1) =ᶠ[nhds t]
@@ -123,8 +130,14 @@ private theorem log_c_deriv (n : ℕ) {t : ℝ} (ht : 0 < t) :
 
 private theorem psi_deriv (n : ℕ) {t : ℝ} (ht : 0 < t) :
     HasDerivAt (psi n) (-chi n t) t := by
+  change HasDerivAt (fun u : ℝ => ∑ j ∈ range n, eta j u) (-chi n t) t
   have hd := HasDerivAt.fun_sum (u := range n) (fun j _ => eta_deriv j ht)
-  simpa only [psi, chi, sum_neg_distrib] using hd
+  apply hd.congr_deriv
+  change (∑ j ∈ range n,
+    -((j : ℝ) * (4 * t + 3 * j) / ((2 * t + j) ^ 2 * (t + j) ^ 2))) =
+      -(∑ j ∈ range n,
+        (j : ℝ) * (4 * t + 3 * j) / ((2 * t + j) ^ 2 * (t + j) ^ 2))
+  rw [sum_neg_distrib]
 
 private theorem chi_nonneg (n : ℕ) {t : ℝ} (ht : 0 < t) : 0 ≤ chi n t := by
   unfold chi
