@@ -1194,6 +1194,145 @@ This rules out a particular black-box budget. Even granting a uniform ordinary s
 
 Consequently the newer source is available for its actual ordinary subenergies, while a transfer to $\sum_u\Omega|M_\xi S_\xi|^2$ or $\sum_u\Omega|M_\xi|^4$ remains unpaid. Merely substituting the smaller zero-free boundary also leaves the existing critical bin $a_*=(1+\delta_*)/2$, $\delta_*=(15-5\sqrt6)/6$, inside the allowed zero range, so it does not remove the maximum in (459.12). The small-gcd, long-conductor contraction specified above still requires a coefficient-sensitive estimate on the original object. The reusable literature advance is the stronger ordinary-source interface and endpoint; no full inverse-fourth improvement, strict Robin conclusion, analytic Lean certification or priority claim is supplied by this comparison.
 
+## Reusing Möbius--Gauss cancellation in the complete dual
+
+The [squarefree Gauss pairing](faveri2026fixedorder.md#known-estimates-for-the-squarefree-gauss-pairing)
+and its [additive-character transport](faveri2026fixedorder.md#exact-additive-character-transport)
+already supply the detector's `eq:signal`, pair-Gauss formula and shift to
+the DDDS convention. They must be reused rather than reconstructed from a
+rational conductor. In particular, on their stated equal-ray coprime
+squarefree packet, cancelling the two original Möbius signs in the root
+factor leaves angular and cubic Gauss coefficients. It does not remove
+the character of each complete dual ideal.
+
+**The joint matrix retains order six.** For a good primary squarefree
+column $x$, let $\chi_x$ be the original raw sextic character, including
+its zeros, and put $\kappa_x=\chi_x^2$, $\lambda_x=\chi_x^3$. In precisely
+the cited additive conventions, the already supplied shift gives
+
+$$
+B_{m,x}:=\lambda_x(m)\overline{\widetilde g_3(-3m,x)}
+=\overline{\gamma_2(x)}\,\overline{\chi_x(m)}.
+$$
+
+Indeed $\overline{\widetilde g_3(-3m,x)}
+=\overline{\gamma_2(x)}\kappa_x(m)$ and
+$\lambda_x\kappa_x=\overline{\chi_x}$. If $(m,x)>1$, both sides are
+zero, by the primitive cubic Gauss identity at the colliding prime.
+For any identical finite row and column sets, therefore,
+$B=\overline C\operatorname{diag}(\overline{\gamma_2})$, where
+$C_{m,x}=\chi_x(m)$. The diagonal is unitary. These two matrices have the
+same singular values; the same nonnegative separate row and column weights
+or real zero mask preserve the identity with the conjugated matrix.
+A complex coupled weight must be transported too. Thus this identity
+alone supplies no smaller cubic operator norm. It does not exclude extra
+cancellation for the actual coefficient vector.
+
+**Opening the actual coefficient repairs one applicability mismatch.**
+The fixed-twist numerator average in (B2) of the
+[growing-ray supplier](faveri2026fixedorder.md#a-tame-growing-ray-application-to-the-complete-classwise-pole)
+cannot simply be evaluated on a diagonal where both its quadratic twist
+and numerator are determined by $m$. There is, however, an admissible way
+to use that supplier for each fixed $m$: open $A_D$ itself.
+
+Consider only the $t_a=t_b=1$, common-column-gcd $h=1$,
+$\ell=r=1$ term in the existing complete Poisson majorant, within a fixed
+equal-ray packet and with fixed bad-prime data. Here $D=\sqrt U$,
+$q_x,q_y\asymp U$, the primitive good conductor is $xy$, and the natural
+dual range is $q_m\ll U$. This is a specified term of that majorant, not
+a positive domination claim for a signed subset of the earlier $E_6$.
+For a bounded selector $\omega_M$ on good dual ideals $q_m\asymp M$,
+$1\le M\le U$, define this normalized piece explicitly by
+
+$$
+\begin{aligned}
+\mathfrak E_1(M)=
+\sum_{\substack{x,y\ {\rm good\ sf},\ (x,y)=1\\t(x)=t(y)=\tau}}
+&g_D(x)\overline{g_D(y)}\epsilon_{x,y}
+\frac{U}{\sqrt{q_xq_y}}\\
+&\quad\times\sum_{m\ {\rm good}}\omega_M(m)
+\overline{\chi_{x,y}(m)}
+\mathscr W\!\left(\frac{q_mU}{q_xq_y}\right).
+\end{aligned}
+$$
+
+Here $\epsilon_{x,y}$ and $\chi_{x,y}$ retain the source root convention
+and original ratio zeros. Only this good-dual, equal-ray term is selected;
+other original terms are not deleted from the full moment.
+
+Detect $(x,y)=1$ by $\sum_{e\mid(x,y)}\mu(e)$. For each squarefree $e$,
+allocate $e=e_1e_2$ in the exact convolution
+$A_D(x,1)=\sum_{uv=x}V(q_u/D)V(q_v/D)$ and write $x=euv$ after
+allocation. The two remaining lengths are
+
+$$
+D'=D/q_{e_1},\qquad N'=D/q_{e_2},\qquad D'N'=U/E,
+\qquad E=q_e.
+$$
+
+Cubic Gauss CRT leaves a cubic symbol between $u$ and $v$. For fixed
+$m$, its full sextic dual factor is an allowed finite inducing twist
+on each variable, with extra good modulus $f_m=\operatorname{rad}(m)$ and
+$F_m=q_{f_m}\le q_m$, including any primes used only for zero extension.
+The theta numerator is the other convolution variable, with the existing
+$e$-shift; its coprimality with $m$ is enforced by the original dual zeros.
+This avoids the earlier numerator/conductor overlap. Keep every
+squarefree and finite-class constraint; the original denominator exclusions
+are retained in the application of (B2).
+
+Apply (B2) directly by Mellin inversion and Cauchy with the actual outer
+coefficient vector. There is no $\vartheta$ weight in this sum, so no
+bounded-multiplier contraction or deletion of such a weight is used.
+Both convolution factors have the angular conjugate-cubic Gauss form;
+choose the smaller one as the outer length. For each allocation the
+resulting scalar $S_{e,m}$ satisfies
+
+$$
+|S_{e,m}|^2\ll U^\varepsilon F_m E^{1/2}
+D'N'\min(D',N')
+\le U^\varepsilon F_m U^{3/2}/E.
+$$
+
+The allocation count is a divisor loss and $\sum_{q_e\ll U}q_e^{-1}
+\ll\log U$, so their sum costs $U^\varepsilon$. Alternatively the
+existing cubic large sieve gives the summed bound $U^{5/3+\varepsilon}$,
+independent of $m$: sum
+$D'N'(D'+N'+(D'N')^{2/3})$ over the same allocations. Its first two
+terms cost $U^{3/2+\varepsilon}$ and the last costs
+$U^{5/3+\varepsilon}$.
+
+The Poisson prefactor and the two original $D^{-1}$ coefficients leave
+$U^{-1}$ at $q_x,q_y\asymp U$. There are $O(M)$ dual ideals in the dyad
+and $F_m\ll M$. Consequently this specified procedure supplies
+
+$$
+|\mathfrak E_1(M)|\ll U^\varepsilon
+\min\{U^{1/2}M^2,\ U^{2/3}M\}.
+$$
+
+The coupled Poisson profile does not cost a power of $M$ here. Writing
+$s=M/U\le1$, $\rho_x=q_x/U$, $\rho_y=q_y/U$ and
+$\rho_m=q_m/M$, its scaled factor is
+$(\rho_x\rho_y)^{-1/2}
+\mathscr W(s\rho_m/(\rho_x\rho_y))$ on fixed compact annuli.
+Smoothness of the original radial Fourier transform at zero bounds all
+required logarithmic derivatives uniformly for $0<s\le1$; compact
+Mellin separation pays the resulting polynomial heights with the same
+fixed seminorm contract.
+
+The two certificates cross at $M=U^{1/6}$. The angular application
+improves the cubic certificate only below that point, where the cubic
+certificate was already below $U$. At the full natural length $M\asymp U$,
+the better of these certificates is merely $U^{5/3+\varepsilon}$.
+In particular the angular application does not enlarge the range
+$M<U^{B_*-2/3}$ already paid by this cubic certificate. This compares
+bounds produced by specified procedures, not lower bounds for the actual
+sum. The other common gcds, original row parameters, finite components
+and full long-conductor contraction remain outside this restricted
+calculation. The Gauss transport and analytic suppliers are reused;
+no improved full inverse-fourth exponent, signed Robin conclusion,
+literature-priority claim or Lean certification is supplied.
+
 ## Actual-family finite measurements
 
 The [reproducible experiment at `919b49399f8a256b2e313e4efeddafff37f0c757`](https://github.com/the-omega-institute/trureturing-experiments/tree/919b49399f8a256b2e313e4efeddafff37f0c757/docs/reports/sextic-inverse-fourth) evaluates the actual inverse fourth moment at $D=\sqrt U$, with trivial fixed ray twist, good ideals prime to 2 and 3, every sixth-power-free row in $U<q_u<2U$, all six unit multiples and the original collision zeros. It retains the stated smooth profiles, actual ideal Möbius coefficients, parity-core blocks and full interference. Its code, complete data and comparison definitions are in the private experiments repository; this note adds only their research interface.
