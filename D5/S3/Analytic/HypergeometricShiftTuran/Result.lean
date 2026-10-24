@@ -1,10 +1,30 @@
 /- GID: D5/S3/Analytic/HypergeometricShiftTuran/Result
    generality: G
    mirror-B: D5/B/S3/Analytic/HypergeometricShiftTuran/Result
-   mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
+   mirror-E: none(waiver:external-open-problem-resolution)
    anchors: [mathlib/module/Mathlib.Analysis.Real.Pi.Bounds, mathlib/module/Mathlib.Analysis.SpecialFunctions.Gaussian.GaussianIntegral]
    utility: kind=certified-instance; basis=refutes=gid:D5/S3/Analytic/HypergeometricShiftTuran/Defs.claim; result=D5/S3/Analytic/HypergeometricShiftTuran/Result.result; claim=D5/S3/Analytic/HypergeometricShiftTuran/Defs.claim
    digest: Negative first coefficients for every denominator multiplicity at least six refute the universal coefficient assertion. -/
+
+/-
+# Negative first coefficient of the shifted Turanian
+
+admission_basis: open-problem-resolution (#20878; Refuted)
+escape_witness: none
+Direct frozen dependencies: none (the only D5 import is Defs from the same delivery; the
+other imports are pinned Mathlib).
+
+Per-declaration proof_shape:
+* first_coefficient_eq: bind-only; consumers: half_parameter_family_neg.
+* half_parameter_family_neg: bind-only; consumers: result.
+* result: bind-only; external conjecture settlement #20878.
+Each row has escape_witness: none and Direct frozen dependencies: none.
+The definitions coeff, turanCoeff, esymm, cond13 and claim of Defs are used by result.
+The decisive Mathlib facts are Real.Gamma_nat_eq_factorial, Real.Gamma_nat_add_half,
+Real.pi_lt_d2, pow_le_pow_left₀ and pow_le_pow_right₀.
+The module certifies one explicit parameter instance that refutes Defs.claim, so the
+utility kind is certified-instance with basis refutes.
+-/
 
 import D5.S3.Analytic.HypergeometricShiftTuran.Defs
 import Mathlib.Analysis.Real.Pi.Bounds

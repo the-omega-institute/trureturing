@@ -114,46 +114,78 @@ The mathematical source is arXiv:1611.06724v1, Section 3, with the journal
 publication *Analysis Mathematica* 43 (2017), 567–580, DOI
 10.1007/s10476-017-0503-z. The Lean sources are
 `D5/S3/Analytic/HypergeometricShiftTuran/Defs.lean` and
-`D5/S3/Analytic/HypergeometricShiftTuran/Result.lean`; both D5 modules build in
-the repository CI. The registration mirror is compiled at landing. The axiom
-closure of `Result.result` is to be recorded at landing, and is not stated here
-as completed.
+`D5/S3/Analytic/HypergeometricShiftTuran/Result.lean`; `Result.result` has type
+exactly `¬ Defs.claim`.
 
-The refutation route was derived with the assistance of the ChatGPT Pro model.
-OpenAlex citing works of the paper were checked. Sokal's arXiv:2204.01045
-refutes Conjecture 3 of the same paper, not Conjecture 1. Liu's Zenodo record
-concerns the 2012 reciprocal Gamma conjecture. This bounded literature scope
-does not establish exhaustive citation-index coverage or priority.
+The counterexample family and the numerical readings were obtained with the
+assistance of the Claude Opus 5.5 model, and the Lean proof was drafted with the
+assistance of the gpt-6.1-sol model.
+Searches covered the works citing the paper in OpenAlex, arXiv and general web
+search. Sokal's arXiv:2204.01045 refutes Conjecture 3 of the same paper, not
+Conjecture 1. Liu's Zenodo record 22729164 concerns the 2012 reciprocal Gamma
+conjecture of the same authors. No settlement of Conjecture 1 was found in that
+scope; this is not a priority certification.
+
+The numerical programs are in the-omega-institute/trureturing-experiments at revision c07877042ab4e3330e285b869fbe5d9e632a1c4b, directory `experiments/kalmykov-karp-pfq-turanian`
+(`common.py` sha256 `99d8d5329e2fd15025ebf1f46f67bbfa245787a2628075c93c10b48a98c5d2d2`,
+`coeff_scan.py` sha256 `25ff5ca287cbae1bddc7deb49d652f5fb2f35f51557831470564572de435cd4b`,
+`random_control.py` sha256 `42d60926364e157fc9793fffb066dab72ef0973f7bc2d13a96f00b38b3a6e596`,
+`turanian_scan.py` sha256 `c03c640c50f9cd684e99bc690cd46e542894219ef58990e1a5e5af24a9f9610c`),
+run from that directory with Python 3.12 and mpmath 1.4.1.
 
 ## Triage
 
-- **PROVED (Lean):** For $p=0$, $b=(1/2,\ldots,1/2)\in\mathbb R^q$,
-  $\mu=1$, $\alpha=\beta=1/2$,
+### What the settlement shows
+
+The conjecture fails through strong log-concavity of the Gamma ratio
+$c(t)=\Gamma(t+1/2)^{-q}$ for large $q$: the degree-one coefficient pairs the
+balanced product $c(2)^2=\Gamma(5/2)^{-2q}$ against the unbalanced products
+$c(3/2)c(5/2)$, and since $(32/(9\pi))^q>2$ for $q\ge6$ the balanced product
+dominates. Shifts $\alpha,\beta<1$ are needed: Theorem 3 of the source covers
+$\alpha\in\mathbb N$, and the threshold $\mu\ge1$ does not compensate for
+fractional shifts once $q$ is large. The nearest statements that survive are
+the integer-shift case of Theorem 3 and, numerically, the regime of few
+denominator parameters.
+
+- **PROVED (Lean, `Result.half_parameter_family_neg`, `Result.result`):** For
+  $p=0$, $b=(1/2,\ldots,1/2)\in\mathbb R^q$, $\mu=1$, $\alpha=\beta=1/2$,
   $$\delta_1=2\cdot2^{-q}-\left(\frac{16}{9\pi}\right)^q-
   \left(\frac{16}{15\pi}\right)^q,$$
   and $\delta_1<0$ for every $q\ge6$; hence the coefficient clause of
-  Conjecture 1 fails. Mechanism: $(32/(9\pi))^q>2$ for $q\ge6$, so the
-  $k=1$ product term $\Gamma(5/2)^{-2q}$ exceeds the positive term.
-- **COMPUTED (40-digit mpmath, not formalized):** $\delta_1<0$ already at
-  $q=5$ ($\delta_1\approx-4.03\cdot10^{-5}$); with $b=1/2$ the least $q$
-  giving $\delta_1<0$ at $\alpha=\beta=1/2$ is $5,7,8,10$ for
-  $\mu=1,1.5,2,3$; for $q=6$, $b=1/2$, $\mu=1$ the sign of $\delta_1$ is
-  negative on the grid points with $\alpha,\beta\le0.75$ sampled and
-  nonnegative for $\alpha\ge1$ (consistent with Theorem 3); $p=1$,
-  $a\in\{1,2,3\}$, $b=(1/2)^6$, $\mu=1$, $\alpha=\beta=1/2$ also give
-  $\delta_1<0$ ($\delta_1/\delta_0\approx-0.0024,-0.0073,-0.0122$).
-- **COMPUTED (50-digit mpmath, series truncated at 400 terms, $x$ on the
-  grid of step $1/4$ in $[0,100)$):** With
-  $b=(0.01,\ldots,0.01)\in\mathbb R^q$, $\mu=1$, $\alpha=\beta=1/2$,
-  $\Delta_f$ itself is negative for $q\ge7$ on that grid, for example
-  $\Delta_f/f(\mu;x)^2\approx-2.2\cdot10^{-4}$ at $(q,x)=(7,25.25)$ and
-  $\approx-6.0\cdot10^{-3}$ at $(10,36.5)$; for $b=1/2$ and $b=1$ with
-  $q\le11$ the scanned $\Delta_f$ stayed positive. This is finite numerical
-  evidence that the first conclusion of Conjecture 1 also fails; it is not a
-  theorem.
-- **OPEN:** Whether the coefficient clause holds for $p=q$ (where
-  log-concavity of the Gamma ratio is weaker); whether a lower bound on $\mu$
-  depending on $q$ restores it; and Conjecture 2 of the same paper
-  (log-concavity on $[1,\infty)$ for the two-block family).
-- **PROVED in the source, not formalized here:** Theorem 3's integer-shift case ($\alpha\in\mathbb N$)
-  is unaffected.
+  Conjecture 1 fails.
+- **PROVED in the source, not formalized here:** Theorem 3's integer-shift case
+  ($\alpha\in\mathbb N$) is unaffected.
+- **COMPUTED (40-digit mpmath, outside the Lean development; command
+  `python3 coeff_scan.py`, exit 0):** the closed form above agrees with the
+  direct sum for $q=1,\ldots,8$, and $\delta_1<0$ already at $q=5$
+  ($\delta_1\approx-4.03\cdot10^{-5}$). With $b=1/2$ and $\alpha=\beta=1/2$
+  the least $q$ giving $\delta_1<0$ is $5,7,8,10$ for $\mu=1,1.5,2,3$. For
+  $q=6$, $b=1/2$, $\mu=1$, on the grid $\alpha\in\{0.1,0.25,0.5,0.75,1,1.25,1.5,2\}$,
+  $\beta\in\{0.1,0.25,0.5,0.75,1,1.5,2\}$, $\delta_1<0$ occurs only at points with
+  $\alpha,\beta\le0.75$ and never for $\alpha\ge1$. For $p=1$, $a\in\{1,2,3\}$,
+  $b=(1/2)^6$, $\mu=1$, $\alpha=\beta=1/2$: $\delta_1/\delta_0\approx-0.0024,-0.0073,-0.0122$.
+- **COMPUTED (40-digit mpmath, outside the Lean development; command
+  `python3 random_control.py 3 3000`, exit 0):** of 3000 random draws with
+  $p\le q\le4$, positive parameters, $\mu\ge1$ and $\alpha,\beta\in[0,3]$,
+  2095 satisfy condition (13), and none of them has a negative $\delta_m$ for
+  $m\le15$.
+- **COMPUTED (50-digit mpmath, series truncated at 400 terms, $x\in\{0,1/4,\ldots,99.75\}$,
+  outside the Lean development; commands `python3 turanian_scan.py 0.01 7 10`,
+  `python3 turanian_scan.py 0.5 6 11`, `python3 turanian_scan.py 1 7 11`, each
+  exit 0):** with $p=0$, $\mu=1$, $\alpha=\beta=1/2$ and $b=(0.01,\ldots,0.01)$,
+  $\min_x\Delta_f/f(\mu;x)^2$ is $\approx-2.2\cdot10^{-4}$ (at $x=25.25$) for
+  $q=7$ and $\approx-6.0\cdot10^{-3}$ (at $x=36.5$) for $q=10$; for $b=1/2$
+  ($q=6,11$) and $b=1$ ($q=7,11$) the minimum over the grid is positive. This
+  is finite numerical evidence that the first conclusion of Conjecture 1
+  ($\Delta_f\ge0$ for $x\ge0$) also fails; it is not a theorem.
+- **OPEN:** whether the coefficient clause holds for $p=q$, where the
+  log-concavity of the Gamma ratio is weaker; whether a lower bound on $\mu$
+  depending on $q$ restores it; a proof that $\Delta_f<0$ somewhere on
+  $(0,\infty)$ for the parameters above; and Conjecture 2 of the same paper.
+
+## ASSUMED-UNVERIFIED
+
+Exhaustive literature coverage, citation-index completeness and priority are
+unverified. The numerical readings are finite multiprecision observations, not
+proofs; the sign of $\Delta_f$ itself is established only on the stated grid
+and truncation.
