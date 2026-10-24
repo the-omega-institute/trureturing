@@ -112,7 +112,9 @@ $$(\operatorname{claim}) \Leftrightarrow (\forall (n: \mathbb{N}), (\forall (A: 
 
 *Formalization.* `D5/S3/Quantum/Matrix/QuantumGraphStrangeComponentCount.claim` (`✓ std3`).
 
-*Citation.* Gian Luca Spitzer; Ion Nechita (2026). *Quantum Graph Theory by Example*. DOI: [10.22331/q-2026-10-06-2228](https://doi.org/10.22331/q-2026-10-06-2228). URL: <https://arxiv.org/abs/2603.23651v3>.
+*Source.* Repository-derived.
+
+*Acknowledgement.* Gian Luca Spitzer; Ion Nechita (2026). *Quantum Graph Theory by Example*. DOI: [10.22331/q-2026-10-06-2228](https://doi.org/10.22331/q-2026-10-06-2228). URL: <https://arxiv.org/abs/2603.23651v3>.
 
 *Commentary.*
 
