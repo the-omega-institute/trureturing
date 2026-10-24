@@ -23,7 +23,6 @@ open Matrix
 open D5.S3.Quantum.Information.SLDSpectralEnergy (IsDensity)
 open D5.S3.Quantum.Tomography.MUB.MUBCompletionRelativeGramEquivalence (entrywiseConj)
 
-local notation "IsState" => IsDensity
 
 /-- The unified relative entropy for real parameters. -/
 def unifiedDivergence {d : ℕ} (α β : ℝ) (ρ σ : Matrix (Fin d) (Fin d) ℂ) : ℝ :=
@@ -35,11 +34,11 @@ def imaginarityH {d : ℕ} (α β : ℝ) (ρ : Matrix (Fin d) (Fin d) ℂ) : ℝ
 
 /-- Imaginarity measured by the infimum of divergences from real states. -/
 def imaginarityE {d : ℕ} (α β : ℝ) (ρ : Matrix (Fin d) (Fin d) ℂ) : ℝ :=
-  sInf {x | ∃ σ, IsState σ ∧ entrywiseConj σ = σ ∧ x = unifiedDivergence α β ρ σ}
+  sInf {x | ∃ σ, IsDensity σ ∧ entrywiseConj σ = σ ∧ x = unifiedDivergence α β ρ σ}
 
 /-- The comparison includes every finite positive dimension and singular density matrices. -/
 def claim : Prop :=
-  ∀ (d : ℕ), 1 ≤ d → ∀ ρ : Matrix (Fin d) (Fin d) ℂ, IsState ρ →
+  ∀ (d : ℕ), 1 ≤ d → ∀ ρ : Matrix (Fin d) (Fin d) ℂ, IsDensity ρ →
     ∀ α ∈ Set.Ioo (0 : ℝ) 1, ∀ β ∈ Set.Ioc (0 : ℝ) 1,
       imaginarityE α β ρ ≤ imaginarityH α β ρ
 
@@ -48,7 +47,7 @@ variable {d : ℕ} {ρ σ : Matrix (Fin d) (Fin d) ℂ} {α β : ℝ}
 private def realCompetitor (ρ : Matrix (Fin d) (Fin d) ℂ) :
     Matrix (Fin d) (Fin d) ℂ := (1 / 2 : ℂ) • (ρ + entrywiseConj ρ)
 
-private lemma conjugate_state (hρ : IsState ρ) : IsState (entrywiseConj ρ) := by
+private lemma conjugate_state (hρ : IsDensity ρ) : IsDensity (entrywiseConj ρ) := by
   have he : entrywiseConj ρ = ρ.transpose := by
     ext i j
     simpa only [entrywiseConj, Matrix.transpose_apply, Matrix.conjTranspose_apply] using
@@ -56,8 +55,8 @@ private lemma conjugate_state (hρ : IsState ρ) : IsState (entrywiseConj ρ) :=
   rw [he]
   exact ⟨hρ.1.transpose, by simpa using hρ.2⟩
 
-private lemma real_competitor (hρ : IsState ρ) :
-    IsState (realCompetitor ρ) ∧ entrywiseConj (realCompetitor ρ) = realCompetitor ρ := by
+private lemma real_competitor (hρ : IsDensity ρ) :
+    IsDensity (realCompetitor ρ) ∧ entrywiseConj (realCompetitor ρ) = realCompetitor ρ := by
   have hc := conjugate_state hρ
   constructor
   · refine ⟨(hρ.1.add hc.1).smul
@@ -76,7 +75,7 @@ private lemma overlap_nonneg (ρ σ : Matrix (Fin d) (Fin d) ℂ) (α : ℝ) :
     (CFC.rpow_nonneg (a := ρ) (y := α)).posSemidef
     (CFC.rpow_nonneg (a := σ) (y := 1 - α)).posSemidef
 
-private lemma overlap_le_one (hρ : IsState ρ) (hσ : IsState σ)
+private lemma overlap_le_one (hρ : IsDensity ρ) (hσ : IsDensity σ)
     (hα : α ∈ Set.Ioo (0 : ℝ) 1) :
     (ρ ^ α * σ ^ (1 - α)).trace.re ≤ 1 := by
   let A := ρ ^ α
@@ -140,7 +139,7 @@ private lemma overlap_le_one (hρ : IsState ρ) (hσ : IsState σ)
       simp only [← Finset.mul_sum, hrow, hcol, mul_one, hsA, hsB]
       ring
 
-private lemma midpoint_overlap (hρ : IsState ρ) (hα : α ∈ Set.Ioo (0 : ℝ) 1) :
+private lemma midpoint_overlap (hρ : IsDensity ρ) (hα : α ∈ Set.Ioo (0 : ℝ) 1) :
     (1 + (ρ ^ α * (entrywiseConj ρ) ^ (1 - α)).trace.re) / 2 ≤
       (ρ ^ α * (realCompetitor ρ) ^ (1 - α)).trace.re := by
   have hc := conjugate_state hρ
@@ -189,7 +188,7 @@ private lemma scalar_midpoint {q r : ℝ} (hq : 0 ≤ q) (hr : (1 + q) / 2 ≤ r
       show (1 / 2 : ℝ) * 1 + 1 / 2 * q ^ β = (1 + q ^ β) / 2 by ring] using hc
   exact hm.trans (Real.rpow_le_rpow (by positivity) hr hβ.1.le)
 
-private lemma divergence_nonneg (hρ : IsState ρ) (hσ : IsState σ)
+private lemma divergence_nonneg (hρ : IsDensity ρ) (hσ : IsDensity σ)
     (hα : α ∈ Set.Ioo (0 : ℝ) 1) (hβ : β ∈ Set.Ioc (0 : ℝ) 1) :
     0 ≤ unifiedDivergence α β ρ σ := by
   have hq0 := overlap_nonneg ρ σ α
@@ -198,7 +197,7 @@ private lemma divergence_nonneg (hρ : IsState ρ) (hσ : IsState σ)
     simpa using Real.rpow_le_rpow hq0 hq1 hβ.1.le
   exact div_nonneg_of_nonpos (by linarith) (by nlinarith [hα.2, hβ.1])
 
-private lemma competitor_half (hρ : IsState ρ) (hα : α ∈ Set.Ioo (0 : ℝ) 1)
+private lemma competitor_half (hρ : IsDensity ρ) (hα : α ∈ Set.Ioo (0 : ℝ) 1)
     (hβ : β ∈ Set.Ioc (0 : ℝ) 1) :
     unifiedDivergence α β ρ (realCompetitor ρ) ≤ imaginarityH α β ρ / 2 := by
   have hs := scalar_midpoint (overlap_nonneg ρ (entrywiseConj ρ) α) (midpoint_overlap hρ hα) hβ
@@ -209,14 +208,14 @@ private lemma competitor_half (hρ : IsState ρ) (hα : α ∈ Set.Ioo (0 : ℝ)
   rw [div_le_div_right_of_neg hd]
   linarith
 
-private lemma values_bddBelow (hρ : IsState ρ) (hα : α ∈ Set.Ioo (0 : ℝ) 1)
+private lemma values_bddBelow (hρ : IsDensity ρ) (hα : α ∈ Set.Ioo (0 : ℝ) 1)
     (hβ : β ∈ Set.Ioc (0 : ℝ) 1) :
-    BddBelow {x | ∃ σ, IsState σ ∧ entrywiseConj σ = σ ∧ x = unifiedDivergence α β ρ σ} := by
+    BddBelow {x | ∃ σ, IsDensity σ ∧ entrywiseConj σ = σ ∧ x = unifiedDivergence α β ρ σ} := by
   refine ⟨0, ?_⟩
   rintro x ⟨σ, hσ, _, rfl⟩
   exact divergence_nonneg hρ hσ hα hβ
 
-private lemma inf_le_competitor (hρ : IsState ρ) (hα : α ∈ Set.Ioo (0 : ℝ) 1)
+private lemma inf_le_competitor (hρ : IsDensity ρ) (hα : α ∈ Set.Ioo (0 : ℝ) 1)
     (hβ : β ∈ Set.Ioc (0 : ℝ) 1) :
     imaginarityE α β ρ ≤ unifiedDivergence α β ρ (realCompetitor ρ) := by
   apply csInf_le (values_bddBelow hρ hα hβ)

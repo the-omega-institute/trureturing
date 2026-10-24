@@ -4,9 +4,21 @@
 
 Three cuts join the two row-lift cycles into an exact relative path.
 
+**Theorem 1.1 (Joining disjoint finite permutation cycles).**
+
+Lean statement: `D5/S3/Combinatorics/PerfectMatchings/CharacteristicFiveDetour.merge_cycles`
+
+*Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/PerfectMatchings/CharacteristicFiveDetour.merge_cycles` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+The original proof is exposed by removing only private, so the universal relative-path construction can reuse it directly. Swapping outgoing attachments joins two disjoint cycles, including singleton cycles, and does not require other ambient cycles to be absent.
+
 Let K be any finite field of characteristic five and let u be nonzero. Write B for the vectors (a,h) in ZMod(5) times K with a nonzero. All directed labels are differences of actual vertices with coefficient one.
 
-**Theorem 1.1 (A path with exact vertices, labels and bounded sums).**
+**Theorem 1.2 (A path with exact vertices, labels and bounded sums).**
 
 $$\forall K \in \operatorname{Type}\left(\right),\; [\operatorname{Field}\left(K\right)] [\operatorname{Finite}\left(K\right)] [\operatorname{CharP}\left(K, 5\right)] \forall u \in K,\; u \ne 0 \Rightarrow \operatorname{let} M=4\cdot\operatorname{card}\left(K\right) + 1;\exists v \in \operatorname{Nat}\left(\right)\to \operatorname{ZMod}\left(5\right) \times K,\; \operatorname{v}\left(0\right) = (0,0) \land \left(\operatorname{v}\left(M\right) = (0,u) \land \left(\operatorname{Injective}\left((n:\operatorname{Fin}\left(M + 1\right)\mapsto \operatorname{v}\left(\operatorname{val}\left(n\right)\right))\right) \land \left(\operatorname{BijOn}\left(v, \operatorname{Ioo}\left(0, M\right), \{z:\operatorname{ZMod}\left(5\right) \times K\mid\operatorname{fst}\left(z\right) \ne 0\}\right) \land \left(\operatorname{BijOn}\left((n:\operatorname{Nat}\left(\right)\mapsto \operatorname{v}\left(n + 1\right) - \operatorname{v}\left(n\right)), \operatorname{Iio}\left(M\right), \{z:\operatorname{ZMod}\left(5\right) \times K\mid\operatorname{fst}\left(z\right) \ne 0\}\cup\{(0,u)\}\right) \land \left(\operatorname{Injective}\left((k:\operatorname{Fin}\left(M + 1\right)\mapsto \sum_{i<\operatorname{val}\left(k\right)}(\operatorname{v}\left(i + 1\right) - \operatorname{v}\left(i\right)))\right) \land \left(\left(\forall a \in \operatorname{Nat}\left(\right),\; \forall b \in \operatorname{Nat}\left(\right),\; \left(a < b \land b \le M\right) \Rightarrow \sum_{a\le i<b}(\operatorname{v}\left(i + 1\right) - \operatorname{v}\left(i\right)) \ne 0\right) \land \sum_{i<M}(\operatorname{v}\left(i + 1\right) - \operatorname{v}\left(i\right)) = (0,u)\right)\right)\right)\right)\right)\right)$$
 
@@ -31,5 +43,6 @@ This relative path can replace an edge of an existing path in the zero column: t
 ## References
 
 - Truth anchor: `D5/S3/Combinatorics/PerfectMatchings/CharacteristicFiveDetour.exists_characteristic_five_relative_path`
+- Truth anchor: `D5/S3/Combinatorics/PerfectMatchings/CharacteristicFiveDetour.merge_cycles`
 - Dependency: [D5/S1/Words/Sequenceability/RowOrbitLift](../../../S1/Words/Sequenceability/RowOrbitLift.md)
 - Dependency: [D5/S3/Combinatorics/PerfectMatchings/WeightedReattachment](WeightedReattachment.md)

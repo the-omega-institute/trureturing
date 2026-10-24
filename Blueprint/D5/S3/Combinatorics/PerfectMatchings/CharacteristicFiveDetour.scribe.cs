@@ -57,6 +57,14 @@ internal sealed class CharacteristicFiveDetourDocument : IScribeDocumentDefiniti
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "Three cuts join the two row-lift cycles into an exact relative path.",
         H("Characteristic-five relative paths"), Blocks(
+            Describe.Lean(DescribeId.Create("characteristic-five-cycle-merge"),
+                DeclarationHandle.Create("D5/S3/Combinatorics/PerfectMatchings/CharacteristicFiveDetour.merge_cycles"),
+                H("Joining disjoint finite permutation cycles"),
+                StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("The original proof is exposed by removing only private, "
+                    + "so the universal relative-path construction can reuse it directly. Swapping "
+                    + "outgoing attachments joins two disjoint cycles, including singleton cycles, "
+                    + "and does not require other ambient cycles to be absent."))), DescribeRole.Theorem),
             Paragraph(Text("Let K be any finite field of characteristic five and let u be nonzero. "
                 + "Write B for the vectors (a,h) in ZMod(5) times K with a nonzero. "
                 + "All directed labels are differences of actual vertices with coefficient one.")),

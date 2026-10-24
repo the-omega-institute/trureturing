@@ -8,8 +8,8 @@ internal sealed class RightExponentialTailDocument : IScribeDocumentDefinition
         "D5/S3/Weil/ZetaGamma/FormCore/RightExponentialTail.";
 
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
-        "An exact half-line energy balance for the actual right exponential tail "
-            + "retains its boundary value at zero and both real and imaginary channels.",
+        "Exact half-line energy balances for the actual right exponential tail "
+            + "retain its boundary value at zero, both complex channels, and the derivative-of-weight charge.",
         H("Right exponential tail and its half-line energy balance"),
         Blocks(
             Describe.Lean(
@@ -62,5 +62,36 @@ internal sealed class RightExponentialTailDocument : IScribeDocumentDefinition
                             + "complete arithmetic debit, identify its Weil value, bound "
                             + "the full logarithmic Gamma form by physical moments, "
                             + "or determine the sign required for RH."))),
+                DescribeRole.Theorem),
+            Describe.Lean(
+                DescribeId.Create("right-exponential-tail-weighted-energy-balance"),
+                DeclarationHandle.Create(Owner + "right_exponential_tail_weighted_energy_balance"),
+                H("Weighted energy balance with the actual endpoint and interior charge"),
+                StatementSource.WithoutFormula(),
+                AssessedProvenance.FromRepo(),
+                Blocks(
+                    Paragraph(Text(
+                        "Keep the same continuous compactly supported complex input u. "
+                            + "Let w and dw be arbitrary continuous real functions on the real line, "
+                            + "with w'=dw required only at positive t. For arbitrary real k and c, "
+                            + "all integrals over t>0 satisfy "
+                            + "integral(w*|u-c*R_k u|^2)+c*(2*k-c)*integral(w*|R_k u|^2) "
+                            + "+c*w(0)*|R_k u(0)|^2+c*integral(dw*|R_k u|^2) "
+                            + "=integral(w*|u|^2). No positivity of the weight, its derivative, "
+                            + "or the parameters is assumed in this equality.")),
+                    Paragraph(Text(
+                        "The proof reuses the actual tail derivative and common support cutoff, "
+                            + "differentiates w*|R_k u|^2 on the open positive interval, "
+                            + "and integrates to the cutoff. The product rule produces the "
+                            + "interior dw charge; continuity at zero retains the actual "
+                            + "weighted endpoint without imposing differentiability there.")),
+                    Paragraph(Text(
+                        "At the W314 rate k=c=3/2, the weighted tail coefficient is 9/4, "
+                            + "while the endpoint and dw coefficients are both 3/2. "
+                            + "With w(t)=t, dw(t)=1 and k=c=1, w(0)=0 removes the weighted "
+                            + "endpoint, but the unweighted interior tail integral remains. "
+                            + "These are compact-core applications. A weighted noncompact "
+                            + "extension still requires actual integral identification and "
+                            + "control of every retained output charge."))),
                 DescribeRole.Theorem))));
 }

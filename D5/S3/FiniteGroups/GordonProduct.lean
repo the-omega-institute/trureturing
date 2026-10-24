@@ -19,10 +19,10 @@ theorem volume_odd (ds : List OddRadix) : Odd (volume ds) := by
   | nil => exact odd_one
   | cons d ds ih => exact d.odd.mul ih
 
-private theorem box_card (ds : List OddRadix) : Fintype.card (Box ds) = volume ds := by
+theorem box_card (ds : List OddRadix) : Fintype.card (Box ds) = volume ds := by
   exact (Fintype.card_congr (rankEquiv ds)).trans (Fintype.card_fin _)
 
-private theorem residue_eq_iff (ds : List OddRadix) (u v : ℕ) :
+theorem residue_eq_iff (ds : List OddRadix) (u v : ℕ) :
     residue ds u = residue ds v ↔ u ≡ v [MOD volume ds] := by
   constructor
   · intro h

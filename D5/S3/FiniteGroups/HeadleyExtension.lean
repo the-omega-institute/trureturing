@@ -885,7 +885,7 @@ private theorem splice_labels {E Q : Type*} [AddCommGroup E] [AddCommGroup Q]
     rw [← hsum]
     try rw [hFv]
     abel
-private theorem bijOn_complement {X : Type*} (f : Equiv.Perm X) (z : X)
+theorem bijOn_complement {X : Type*} (f : Equiv.Perm X) (z : X)
     (hz : f z = z) : Set.BijOn f {x | x ≠ z} {x | x ≠ z} := by
   refine ⟨?_, f.injective.injOn, ?_⟩
   · intro x hx he
@@ -896,7 +896,7 @@ private theorem bijOn_complement {X : Type*} (f : Equiv.Perm X) (z : X)
     have h := congrArg f he
     rw [f.apply_symm_apply, hz] at h
     exact hy h
-private noncomputable def transportCycle {G H : Type*} [AddCommGroup G]
+noncomputable def transportCycle {G H : Type*} [AddCommGroup G]
     [AddCommGroup H] [Fintype G] [Fintype H] (e : G ≃+ H) (r : RCycle G) :
     RCycle H where
   successor := e.toEquiv.permCongr r.successor

@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:a7e2893c438e8ab3d9d89efa23b8bcd31d8a6bc93d080b090a532d0b746fcd67
+  normalized_sha256: sha256:a7e2893c438e8ab3d9d89efa23b8bcd31d8a6bc93d080b090a532d0b746fcd67
+cas_ref: sha256:a7e2893c438e8ab3d9d89efa23b8bcd31d8a6bc93d080b090a532d0b746fcd67
+coverage_gids:
+  - gid: D5/S1/Words/AdmissibleWords/PathStableSetPolytope.convexHull_three_pyramid
+    target_statement_id: sha256:cb8453432b773cbb3f2a94a0877e8c4351c6c0b9a00b22f2129c58922ce7f4f5
+  - gid: D5/S3/Quantum/Fibers/FiveModeRealResponse.orthogonal_pair_same_actual_responses
+    target_statement_id: sha256:25f018c1bd962699ebfb45056d3d10525e0f153dd4245fdb3b4624b0df40ff2c
+receipts:
+  unresolved_subitems: []
