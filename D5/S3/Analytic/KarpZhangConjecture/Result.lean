@@ -19,14 +19,14 @@ Per-declaration proof_shape:
   consumer: external Conjecture 5.2 settlement.
 Direct frozen D5 dependencies, with same-delivery helpers recursively inlined:
 * F1: GID D5/S3/Analytic/KummerRatio/BetaIntegral.gamma_pochhammer;
-  owning-module statement_id:
-  sha256:403cdfeb53a9066b63e47ab5a9e7588edbec1f5a1bdd02e2b97fb4c3d6bcdc40.
+  declaration statement_id:
+  sha256:1059688f4875284d841121819603b9b49cf825aab8e4de735ff76c3e200ab797.
 * F2: GID D5/S3/Analytic/KummerRatio/Defs.kummerCoeff;
-  owning-module statement_id:
-  sha256:5cf079c6c6485353b23899a601d983d268c87e75ce41e4e0775c9e2d03598d79.
+  declaration statement_id:
+  sha256:2ada6e56e131a4bdb7cccbc60aec3a351bc0b05a8b9544c75077cb676503abe7.
 * F3: GID D5/S3/Analytic/KummerRatio/Series.coeff_succ;
-  owning-module statement_id:
-  sha256:cfdc803ed0e195e906152759e46264c46d5a946b91774cfa8e7653e0aba3e17b.
+  declaration statement_id:
+  sha256:65529d42eed8f7a2af577c9bed21aaa15e926d5c89a7a18bc06b6b51c9936da9.
 Per-declaration live-path dependencies (F labels above; omitted declarations: none):
 * KarpZhangConjecture.Result.result: F1, F2, F3.
 All KarpZhang dependencies are same-delivery declarations.

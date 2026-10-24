@@ -81,8 +81,8 @@ cross-module names have prefix D5.S3.Analytic):
 
 Direct frozen D5 dependencies, with same-delivery helpers recursively inlined:
 * F1: GID D5/S3/Analytic/KummerRatio/BetaIntegral.gamma_pochhammer;
-  owning-module statement_id:
-  sha256:403cdfeb53a9066b63e47ab5a9e7588edbec1f5a1bdd02e2b97fb4c3d6bcdc40.
+  declaration statement_id:
+  sha256:1059688f4875284d841121819603b9b49cf825aab8e4de735ff76c3e200ab797.
 Per-declaration live-path dependencies (F labels above; omitted declarations: none):
 * KarpZhangGamma.Series.gamma_half: F1.
 All KarpZhang dependencies are same-delivery declarations.
