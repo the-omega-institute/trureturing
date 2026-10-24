@@ -368,7 +368,7 @@ def with_command(options):
         os.execvpe(options.argv[0], options.argv, git_environment())
 
 
-def reuse(options, allow_creation_base=False):
+def reuse(options, allow_recovered_base=False):
     with ExitStack() as stack:
         if options.path.is_symlink():
             raise Refused("linked_tree")
@@ -385,13 +385,16 @@ def reuse(options, allow_creation_base=False):
         base = value(options.source, "rev-parse", "--verify", options.base + "^{commit}")
         pin_revision = base
         if git(path, "merge-base", "--is-ancestor", base, "HEAD", check=False).returncode:
-            if not allow_creation_base:
+            if not allow_recovered_base:
                 raise Refused("incompatible_base")
             from worktree_publication import creation_witness
             try:
-                _, creation = creation_witness(options.source, item["branch"])
+                token, creation = creation_witness(options.source, item["branch"])
             except Refused as error:
                 raise Refused("incompatible_base") from error
+            recovered = (creation + "\0worktree-recovered:" + token.removeprefix("worktree-init:")).encode("ascii")
+            if recovered not in git(path, "reflog", "show", "--format=%H%x00%gs", "HEAD").stdout.splitlines():
+                raise Refused("incompatible_base")
             if git(path, "merge-base", "--is-ancestor", creation, base, check=False).returncode:
                 raise Refused("incompatible_base")
             pin_revision = creation

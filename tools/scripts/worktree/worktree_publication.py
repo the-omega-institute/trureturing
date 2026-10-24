@@ -57,7 +57,7 @@ def recover_initialization(options):
     rows = [row for row in inventory(options.source)
             if Path(row["worktree"]).resolve() == options.path.resolve()]
     if rows and "locked" not in rows[0]:
-        reuse(options, allow_creation_base=True)
+        reuse(options, allow_recovered_base=True)
         return dict(event="worktree_init", status="already_initialized", path=str(options.path.resolve()))
     with ExitStack() as stack:
         try:
@@ -73,7 +73,7 @@ def recover_initialization(options):
                 raise Refused("intentional_worktree_lock")
             # Ordinary reuse uses its own shared entry and index/ref scopes.
             stack.close()
-            reuse(options, allow_creation_base=True)
+            reuse(options, allow_recovered_base=True)
             return dict(event="worktree_init", status="already_initialized", path=str(path))
         token, creation = creation_witness(options.source, reference)
         expected = getattr(options, "expected_token", None)
@@ -169,6 +169,8 @@ def recover_initialization(options):
         if current.get("locked") != token or current.get("branch") != reference:
             raise Refused("initialization_identity_changed")
         creation_witness(options.source, reference)
+        git(path, "symbolic-ref", "-m", "worktree-recovered:" + token.removeprefix("worktree-init:"),
+            "HEAD", reference)
         git(options.source, "worktree", "unlock", path)
         return dict(event="worktree_init", status="recovered", path=str(path), branch=options.branch,
                     recovery_branch=recovery, creation_commit=creation, native_locks=cleared)

@@ -39,6 +39,35 @@ public sealed partial class WorktreeCommandTests
     [Theory]
     [InlineData(false)]
     [InlineData(true)]
+    public void SuccessfulCanonicalInitializationRefusesAdvancedBase(bool changePin)
+    {
+        using var repository = new TemporaryDirectory();
+        InitializeRepository(repository.Path);
+        var target = Path.Combine(repository.Path, "interrupted-init");
+        ProcessOutput Initialize() => TestProcessRunner.Run("dotnet",
+            [typeof(WorktreeCommand).Assembly.Location, "worktree", .. InitializationArguments(target)],
+            repository.Path, BoundedProcessRunner.HangDetectionBudget, 1024 * 1024);
+        var created = Initialize();
+        Assert.Equal(0, created.ExitCode);
+        var creation = WorktreeHookFixture.RunGit(target, "rev-parse", "HEAD");
+        var pin = File.ReadAllText(Path.Combine(target, "lean-toolchain"));
+        Assert.False(File.Exists(Path.Combine(GitWorktreeDirectory.Read(target)!, "locked")));
+        if (changePin)
+            File.WriteAllText(Path.Combine(repository.Path, "lean-toolchain"), "leanprover/lean4:v4.34.2\n");
+        WorktreeHookFixture.RunGit(repository.Path, "add", "lean-toolchain");
+        WorktreeHookFixture.RunGit(repository.Path, "commit", "--allow-empty", "-m", "Advance requested base");
+
+        var reused = Initialize();
+
+        Assert.NotEqual(0, reused.ExitCode);
+        Assert.Contains("incompatible_base", Encoding.UTF8.GetString(reused.StandardError), StringComparison.Ordinal);
+        Assert.Equal(creation, WorktreeHookFixture.RunGit(target, "rev-parse", "HEAD"));
+        Assert.Equal(pin, File.ReadAllText(Path.Combine(target, "lean-toolchain")));
+    }
+
+    [Theory]
+    [InlineData(false)]
+    [InlineData(true)]
     public void RestoreFailureRecoversSameDestination(bool interrupted)
     {
         using var repository = new TemporaryDirectory();
