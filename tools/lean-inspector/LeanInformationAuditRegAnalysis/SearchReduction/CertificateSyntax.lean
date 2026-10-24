@@ -1,4 +1,5 @@
 import Lean
+import Mathlib.Tactic.ToExpr
 
 namespace LeanInformationAudit.SearchReduction
 open Lean
@@ -11,7 +12,7 @@ inductive ObviousCertificate where
   | close
   | lookup (name : Name)
   | member (name : Name)
-  deriving Inhabited, Repr, DecidableEq
+  deriving Inhabited, Repr, DecidableEq, ToExpr
 
 declare_syntax_cat obvious_certificate
 syntax "by_close" : obvious_certificate
@@ -34,7 +35,7 @@ def ObviousCertificate.render : ObviousCertificate → String
 structure CertificateNomination where
   certificate : ObviousCertificate
   provenance : String
-  deriving Inhabited, Repr, DecidableEq
+  deriving Inhabited, Repr, DecidableEq, ToExpr
 
 def ObviousCertificate.toExpr : ObviousCertificate → Expr
   | .close => mkConst ``ObviousCertificate.close

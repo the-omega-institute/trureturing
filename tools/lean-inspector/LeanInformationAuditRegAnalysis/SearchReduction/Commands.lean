@@ -241,6 +241,29 @@ private def edgeCostExpr : EdgeCost → Expr
   | .one => mkConst ``EdgeCost.one
   | .unknown => mkConst ``EdgeCost.unknown
 
+/- The live graph contains compiler expressions and checked proof terms whose
+   source environment is intentionally not imported by an audit module.  The
+   classifier reads only the finite graph/interval/run data below, so publish
+   a dependency-free GraphReading value with expression payloads erased. -/
+private def kernelGraphReading (reading : GraphReading) : GraphReading :=
+  { reading with
+    graph := { reading.graph with
+      vertices := reading.graph.vertices.map fun vertex =>
+        { vertex with
+          type := .sort .zero
+          structureProof? := none
+          origin := .sort .zero }
+      edges := reading.graph.edges.map fun edge =>
+        { edge with zeroProof := none, pairedZeroProof := none }
+    }
+    baselineProof? := none
+    pairedProof? := none }
+
+private def verdictExpr : Verdict → Expr
+  | .bindOnly => mkConst ``Verdict.bindOnly
+  | .nonBindOnly => mkConst ``Verdict.nonBindOnly
+  | .insufficient => mkConst ``Verdict.insufficient
+
 /-- Only dependencies of checked witness terms are exported. No source
 extension entries are copied into the proof environment. -/
 private partial def exportConstant (source : Environment) (target n : Name) : MetaM Unit := do
@@ -298,13 +321,30 @@ def publish (name : Name) (r : Observation) (source? : Option Environment := non
     discard <| checkProof (name ++ `presentationConversion) info.levelParams
       evidence.conversionType evidence.conversion
     discard <| checkProof (name ++ `presentationProof) info.levelParams info.type evidence.proof
-  let value := mkConst <| match r.verdict with
-    | .bindOnly => ``Verdict.bindOnly
-    | .nonBindOnly => ``Verdict.nonBindOnly
-    | .insufficient => ``Verdict.insufficient
+  let reading := kernelGraphReading (r.graph?.getD {})
+  let graphName := name ++ `graphReading
+  let graphValue := toExpr reading
+  addAndCompile (.defnDecl {
+    name := graphName, levelParams := [], type := mkConst ``GraphReading,
+    value := graphValue, hints := .abbrev, safety := .safe })
+  let value := mkApp (mkConst ``classifyGraph) (mkConst graphName)
   addAndCompile (.defnDecl {
     name, levelParams := [], type := mkConst ``Verdict,
     value, hints := .abbrev, safety := .safe })
+  let equalityType := mkApp2 (mkApp (mkConst ``Eq [1]) (mkConst ``Verdict))
+    (mkApp (mkConst ``classifyGraph) (mkConst graphName)) (verdictExpr r.verdict)
+  let equalityProof ← synthesizeUsingTactic' (u := .zero) equalityType (← `(tactic| decide))
+  addAndCompile (.thmDecl {
+    name := name ++ `verdictProof, levelParams := [], type := equalityType,
+    value := equalityProof })
+  let baselineProbe := mkApp (mkConst ``GraphReading.baselineProbe) (mkConst graphName)
+  let baselineOutcome := mkApp (mkConst ``ProbeResult.outcome) baselineProbe
+  let noHitType ← mkArrow (mkApp (mkConst ``NoHit) baselineOutcome) equalityType
+  let noHitProof ← synthesizeUsingTactic' (u := .zero) noHitType
+    (← `(tactic| intro _; decide))
+  addAndCompile (.thmDecl {
+    name := name ++ `verdictWithNoHit, levelParams := [], type := noHitType,
+    value := noHitProof })
   if let some reading := r.graph? then
     let source := source?.getD (← getEnv)
     for (edge, i) in reading.graph.edges.zipIdx do
@@ -662,7 +702,9 @@ indexes. Only compiled Lean declarations are read back; JSON is print-only. -/
           name.getId ++ `loadedCount, name.getId ++ `catalogCount, name.getId ++ `loadedModules,
           name.getId ++ `catalogExcluded, name.getId ++ `pairedStructureUse,
           name.getId ++ `catalogVerified, name.getId ++ `presentationSource,
-          name.getId ++ `presentationConversion, name.getId ++ `presentationProof, name.getId,
+          name.getId ++ `presentationConversion, name.getId ++ `presentationProof,
+          name.getId ++ `graphReading, name.getId ++ `verdictProof,
+          name.getId ++ `verdictWithNoHit, name.getId,
           name.getId ++ `baselineProof, name.getId ++ `pairedProof,
           name.getId ++ `baselineFailureGuard] do
         match projected.constants.find? (·.name == n) with

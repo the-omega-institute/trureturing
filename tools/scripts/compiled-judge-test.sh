@@ -7,7 +7,7 @@ ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/../.." && pwd -P)"
 make -C "$ROOT" search-reduction-index-fixtures
 search_reduction_modules=(
   GraphCandidates GraphModel LookupModel LookupBaseline LookupTests LookupRecallTests LookupColdTests LookupCacheTests LookupIsolationTests GraphCalibration Baseline Model FiniteModel PresentationBaseline Candidates PresentationCandidates
-  FaultPaths SingleSourceModel PresentationCoverage RawOriginsTests SingleSourceTests
+  FaultPaths SingleSourceModel PresentationCoverage RawOriginsTests SingleSourceTests PublicationMutation
   Calibration Faults RealNegative
   VocabularyCandidates VocabularyModel VocabularyTransport VocabularyTests InformationTests
 )

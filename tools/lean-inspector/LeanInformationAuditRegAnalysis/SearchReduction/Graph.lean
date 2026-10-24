@@ -1,4 +1,5 @@
 import Lean
+import Mathlib.Tactic.ToExpr
 import LeanInformationAuditRegAnalysis.SearchReduction.CertificateSyntax
 import Lean.Elab.Tactic.Omega
 import Lean.Elab.Tactic.Simp
@@ -18,15 +19,15 @@ open Lean Meta
 
 inductive Failure where
   | missing | isolation | execution | heartbeat | timeout | cancelled | undecided
-  deriving DecidableEq, Repr
+  deriving DecidableEq, Repr, ToExpr
 
 inductive Run where
   | found | exhausted | incomplete (reason : Failure)
-  deriving DecidableEq, Repr
+  deriving DecidableEq, Repr, ToExpr
 
 inductive Verdict where
   | bindOnly | nonBindOnly | insufficient
-  deriving DecidableEq, Repr
+  deriving DecidableEq, Repr, ToExpr
 
 def unionRun : Run → Run → Run
   | .found, _ | _, .found => .found
@@ -54,21 +55,21 @@ def classifyCertified (targetChecked : Bool) (presentation base : Run)
 
 inductive Closure where
   | zero | partial_
-  deriving DecidableEq, Repr
+  deriving DecidableEq, Repr, ToExpr
 
 inductive EdgeCost where
   | zero | one | unknown
-  deriving DecidableEq, Repr
+  deriving DecidableEq, Repr, ToExpr
 
 inductive Bound where
   | finite (value : Nat)
   | top
-  deriving DecidableEq, Repr
+  deriving DecidableEq, Repr, ToExpr
 
 structure Interval where
   lower : Bound
   upper : Bound
-  deriving DecidableEq, Repr
+  deriving DecidableEq, Repr, ToExpr
 
 structure GraphVertex where
   id : Nat
@@ -83,7 +84,7 @@ structure GraphVertex where
   independentLookupDetail : String := "not-queried"
   reverseLookup : Run := .incomplete .undecided
   reverseLookupDetail : String := "not-queried"
-  deriving Inhabited
+  deriving Inhabited, ToExpr
 
 structure GraphEdge where
   conclusion : Nat
@@ -105,7 +106,7 @@ structure GraphEdge where
   detail : String := ""
   window : Nat := 1
   sharedData? : Option Bool := none
-  deriving Inhabited
+  deriving Inhabited, ToExpr
 
 /-- Statement visibility depends only on seed membership and the analytic
 relation, preserving the author's premise order. -/
@@ -118,7 +119,7 @@ structure ProofGraph where
   root : Nat := 0
   complete : Bool := true
   issues : List String := []
-  deriving Inhabited
+  deriving Inhabited, ToExpr
 
 structure ProbeResult where
   outcome : Run := .incomplete .undecided
@@ -127,7 +128,7 @@ structure ProbeResult where
   proof? : Option Expr := none
   certificate? : Option ObviousCertificate := none
   detail : String := ""
-  deriving Inhabited
+  deriving Inhabited, ToExpr
 
 /-- The production attachment preserves the actual support and checked term;
 the opposing arm receives no negative information from this operation. -/
@@ -173,7 +174,7 @@ structure GraphReading where
   certificatePool : Array CertificateNomination := #[]
   certificateBindings : Array (Name × CertificateNomination) := #[]
   queryAnswerMemoization : Bool := false
-  deriving Inhabited
+  deriving Inhabited, ToExpr
 
 def NoHit (run : Run) : Prop := run = .exhausted
 
