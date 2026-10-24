@@ -32,4 +32,4 @@ exec dotnet run \
   --name "$NAME" \
   --path "$TARGET" \
   --base "$BASE" \
-  "${creation_arguments[@]}"
+  ${creation_arguments[@]+"${creation_arguments[@]}"}
