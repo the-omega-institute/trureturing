@@ -834,6 +834,107 @@ private lemma short_product_attainment {N k : ℕ} (hk : k < N)
   refine ⟨d, E, E₀, hp, hu, ?_⟩
   rw [hv, value, ite_eq_left hk]
 
+private lemma acceptedOutcome_probability {N : ℕ} (s : ℝ)
+    (ψ : Fin N → Fin N → ℂ)
+    (F : Option (Fin N) → Matrix (Fin N) (Fin N) ℂ)
+    (hprob : ∀ o j, star (ψ j) ⬝ᵥ (F o *ᵥ ψ j) =
+      match o with
+      | none => (s : ℂ)
+      | some i => if i = j then ((1 - s : ℝ) : ℂ) else 0)
+    (x y : Label N N) (r : Option (Fin N)) :
+    star (productState ψ y) ⬝ᵥ (productEffect F (acceptedOutcome x r) *ᵥ productState ψ y) =
+      if x = y then
+        match r with
+        | none => ((1 - s : ℝ) : ℂ) ^ N
+        | some _ => (s : ℂ) * ((1 - s : ℝ) : ℂ) ^ (N - 1)
+      else 0 := by
+  classical
+  rw [productEffect_probability]
+  have hcoord (j : Fin N) :
+      star (ψ (y.val j)) ⬝ᵥ (F (acceptedOutcome x r j) *ᵥ ψ (y.val j)) =
+      if r = some j then (s : ℂ) else
+        if x.val j = y.val j then ((1 - s : ℝ) : ℂ) else 0 := by
+    unfold acceptedOutcome
+    by_cases hr : r = some j
+    · rw [ite_eq_left hr, ite_eq_left hr, hprob]
+    · rw [ite_eq_right hr, ite_eq_right hr, hprob]
+  simp_rw [hcoord]
+  by_cases hxy : x = y
+  · subst y
+    rw [ite_eq_left rfl]
+    cases r with
+    | none =>
+      simp only [reduceCtorEq, ite_false, ite_true, Finset.prod_const,
+        Finset.card_univ, Fintype.card_fin]
+    | some j =>
+      simp only [Option.some.injEq, ite_true]
+      rw [← Finset.mul_prod_erase Finset.univ
+        (fun a : Fin N => if j = a then (s : ℂ) else ((1 - s : ℝ) : ℂ))
+        (Finset.mem_univ j), ite_eq_left rfl]
+      congr 1
+      have hp : (∏ a ∈ Finset.univ.erase j,
+          if j = a then (s : ℂ) else ((1 - s : ℝ) : ℂ)) =
+          ∏ _a ∈ Finset.univ.erase j, ((1 - s : ℝ) : ℂ) := by
+        apply Finset.prod_congr rfl
+        intro a ha
+        exact ite_eq_right ((Finset.mem_erase.mp ha).1.symm)
+      rw [hp, Finset.prod_const]
+      simp only [Finset.card_erase_of_mem (Finset.mem_univ j), Finset.card_univ, Fintype.card_fin]
+  · rw [ite_eq_right hxy]
+    cases r with
+    | none =>
+      have hvals : x.val ≠ y.val := fun h => hxy (Subtype.ext h)
+      obtain ⟨j, hj⟩ := Function.ne_iff.mp hvals
+      apply Finset.prod_eq_zero (Finset.mem_univ j)
+      simp only [reduceCtorEq, ite_false, ite_eq_right hj]
+    | some i =>
+      have hne : ¬∀ a, a ≠ i → x.val a = y.val a :=
+        fun h => hxy (full_label_eq_off x y i h)
+      obtain ⟨j, hj⟩ := not_forall.mp hne
+      obtain ⟨hji, hdiff⟩ := not_imp.mp hj
+      apply Finset.prod_eq_zero (Finset.mem_univ j)
+      simp only [Option.some.injEq, ite_eq_right hji.symm, ite_eq_right hdiff]
+
+private lemma full_product_attainment {N : ℕ} (hN : 1 ≤ N)
+    (s : ℝ) (ψ : Fin N → Fin N → ℂ)
+    (F : Option (Fin N) → Matrix (Fin N) (Fin N) ℂ)
+    (hF : ∀ o, (F o).PosSemidef) (hsum : (∑ o, F o) = 1)
+    (hprob : ∀ o j, star (ψ j) ⬝ᵥ (F o *ᵥ ψ j) =
+      match o with
+      | none => (s : ℂ)
+      | some i => if i = j then ((1 - s : ℝ) : ℂ) else 0) :
+    ∃ d E E₀, IsProductProtocol F d E E₀ ∧
+      IsUnambiguousMeasurement (productState (k := N) ψ) E E₀ ∧
+      averageSuccess (productState (k := N) ψ) E = value N N s := by
+  classical
+  obtain ⟨d, hd⟩ := processing_of_injection
+    (fun a : Label N N × Option (Fin N) => acceptedOutcome a.1 a.2)
+    (acceptedOutcome_injective N)
+  have hweight : (((1 - s : ℝ) : ℂ) ^ N +
+      (N : ℂ) * ((s : ℂ) * ((1 - s : ℝ) : ℂ) ^ (N - 1))) = (value N N s : ℂ) := by
+    have he : N - 1 + 1 = N := Nat.sub_add_cancel hN
+    have hp : (1 - (s : ℂ)) ^ N =
+        (1 - (s : ℂ)) ^ (N - 1) * (1 - (s : ℂ)) := by
+      rw [← pow_succ, he]
+    have hNc : (N : ℂ) = ((N - 1 : ℕ) : ℂ) + 1 := by exact_mod_cast he.symm
+    unfold value
+    simp only [lt_self_iff_false, ite_false, Complex.ofReal_mul, Complex.ofReal_pow,
+      Complex.ofReal_add, Complex.ofReal_natCast, Complex.ofReal_one, Complex.ofReal_sub]
+    rw [hp, hNc]
+    ring
+  obtain ⟨E, E₀, hp, hu, hv⟩ := protocol_of_probabilities (Nat.le_refl N)
+    F hF hsum ψ d (value N N s) (by
+      intro x y
+      rw [hd, Matrix.sum_mulVec, dotProduct_sum]
+      simp only [acceptedOutcome_probability s ψ F hprob]
+      by_cases hxy : x = y
+      · subst y
+        simp only [ite_true, Fintype.sum_option, Finset.sum_const, Finset.card_univ,
+          Fintype.card_fin, nsmul_eq_mul]
+        exact hweight
+      · simp only [hxy, ite_false, Finset.sum_const_zero])
+  exact ⟨d, E, E₀, hp, hu, hv⟩
+
 private lemma product_attainment {N k : ℕ} (hN : 3 ≤ N) (hk : 2 ≤ k)
     (hkN : k ≤ N) (s : ℝ) (hs : 0 < s) (hs1 : s < 1)
     (ψ : Fin N → Fin N → ℂ) (hψ : IsEquiangular ψ s) :
@@ -844,7 +945,10 @@ private lemma product_attainment {N k : ℕ} (hN : 3 ≤ N) (hk : 2 ≤ k)
   by_cases h : k < N
   · obtain ⟨d, E, E₀, hp⟩ := short_product_attainment h s ψ F hF hsumF hprob
     exact ⟨F, d, E, E₀, hp⟩
-  · sorry
+  · have heq : k = N := Nat.le_antisymm hkN (Nat.le_of_not_gt h)
+    subst k
+    obtain ⟨d, E, E₀, hp⟩ := full_product_attainment (by omega) s ψ F hF hsumF hprob
+    exact ⟨F, d, E, E₀, hp⟩
 
 theorem result : claim := by
   intro N k hN hk hkN s hs hs1 ψ hψ
