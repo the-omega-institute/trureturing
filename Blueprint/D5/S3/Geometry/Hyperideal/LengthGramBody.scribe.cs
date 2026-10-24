@@ -88,8 +88,10 @@ internal sealed class LengthGramBodyDocument : IScribeDocumentDefinition
                         + "sinh(l_q)>0 for every original positive length, every v_q is zero. Thus Dalpha_l is "
                         + "injective at every l in U, using six independent length inputs.")),
                     Paragraph(Text("This establishes nonsingularity of the actual source-angle derivative on the full genuine "
-                        + "domain U. Symmetry and positive definiteness of the angle Jacobian or co-volume Hessian, "
-                        + "global geometric rigidity, and convexity of U require their separate arguments.")),
+                        + "domain U. The full-domain symmetry and positive-definiteness application below combines "
+                        + "this injectivity with the complementary-edge differential and connectedness. Physical "
+                        + "co-volume identification, global geometric rigidity, and convexity of U require "
+                        + "their separate arguments.")),
                     Paragraph(Text("Application: a smooth native-coordinate family anchored at the entire original frame. Fix six positive lengths l0, an invertible original frame M0 with G(l0)=M0*J*transpose(M0), and an original radial realization f0 on the complete closed C(l0), where J=diag(1,1,1,-1). Put H(l)=inverse(M0)*G(l)*transpose(inverse(M0)). Then H(l0)=J. The construction below preserves every entry of M0 at the base parameter.")),
                     Paragraph(Text("For a symmetric H define r0=H00 and c00=sqrt(r0); c10=H10/c00, c20=H20/c00, c30=H30/c00. Next set r1=H11-c10^2, c11=sqrt(r1), c21=(H21-c20*c10)/c11, c31=(H31-c30*c10)/c11. Set r2=H22-c20^2-c21^2, c22=sqrt(r2), c32=(H32-c30*c20-c31*c21)/c22. Finally set r3=-H33+c30^2+c31^2+c32^2 and c33=sqrt(r3). Let C(H) be the lower triangular matrix with these entries and zeros above the diagonal. All four r are one at J. On their positive domain the ten scalar equations give C(H)*J*transpose(C(H))=H and det(C(H))>0. This is the signed Cholesky construction; the last radicand uses the negative coordinate of J.")),
                     Paragraph(Text("Positive square roots and nonzero denominators make every entry smooth on this open domain. Thus M(l)=M0*C(H(l)) is smooth on an open neighborhood of l0 within positive lengths, has nonzero determinant, satisfies M(l)*J*transpose(M(l))=G(l), and obeys M(l0)=M0 exactly. Constant inverse cancellation proves the Gram identity; no smoothness of a separately selected frame is assumed.")),
@@ -545,13 +547,54 @@ internal sealed class LengthGramBodyDocument : IScribeDocumentDefinition
                 + "prescribed lengths, inverse identification of P with a source cut-body realization, "
                 + "all-face recognition and rigidity remain unresolved. It asserts no global length-domain, "
                 + "topology, volume, Schlaefli variation or gluing conclusion.")),
-            Paragraph(Text("Application: the derivative of the six original angle formulas. Keep six independent lengths in the existing order 01,02,03,23,13,12, and put x_e=cosh(l_e), sigma_e=sinh(l_e), Delta(x)=-det(G(x)). The parameter domain Omega consists exactly of all l_e>0 and Delta(x)>0, for the existing lengthGram matrix. In each original frame, the two positive source radicands A_e,B_e and source numerator N_e satisfy A_e*B_e-N_e^2=(x_e^2-1)*Delta(x). Since the source cosine is N_e/(sqrt(A_e)*sqrt(B_e)), its strict bounds -1<phi_e<1 are equivalent to Delta(x)>0. This preserves the six original source formulas rather than introducing a substitute angle map.")),
-            Paragraph(Text("Define alpha_e(l)=arccos(phi_e(l)). Let J_ef be the e-th component of the Frechet derivative of alpha at l applied to the f-th standard basis vector. Thus rows are output angles and columns are independent input lengths. The preceding native angle-germ application identifies these same alpha_e with the prescribed actual side/side angle germs of the same original body. The source formulas are smooth on Omega because all source radicands and 1-phi_e^2 are strictly positive there.")),
-            Paragraph(Text("Differentiating the original signed-cofactor normalization gives K(l)*J(l)=I, where K_ef=sigma_e*W_ef(x)*sigma_f/sqrt(Delta(x)). For x=(a,b,c,d,e,f), the symmetric W has diagonal p0/(a^2-1),p1/(b^2-1),p2/(c^2-1),p3/(d^2-1),p4/(e^2-1),p5/(f^2-1). Its opposite entries W03,W14,W25 are -1. Its remaining upper-triangular entries are W01=c,W02=b,W04=f,W05=e,W12=a,W13=f,W15=d,W23=e,W24=d,W34=c,W35=b,W45=a. Here p0=be+cf+a(bc+ef), p1=ad+cf+b(ac+fd), p2=ad+be+c(ab+ed), p3=be+cf+d(bf+ce), p4=ad+cf+e(af+cd), and p5=ad+be+f(ae+bd). Both symmetric off-diagonal variations are included in the Gram differential; the output slot uses its complementary vertex pair. Contraction of that differential with G on both sides cancels the diagonal normalization terms and supplies the six entries of the inverse identity for every input direction. Invertibility is therefore derived from the original angle formulas.")),
-            Paragraph(Text("K is continuous and symmetric on Omega: x_e^2-1 and sqrt(Delta(x)) never vanish. The identity KJ=I makes det(K) nonzero. Coordinatewise cosh and arcosh give a homeomorphism from Omega to the entire six-coordinate domain x_e>1,Delta(x)>0. Applying "), Ref("D5/S3/Geometry/Hyperideal/GramDomainContraction.full_domain_contractible"), Text(" makes Omega contractible, hence connected; no additional radial-preservation or cube-membership premise is used.")),
-            Paragraph(Text("At the interior parameter l_e=arcosh(2) for every e, Delta=135 and sigma_e^2=3, so K=W2/sqrt(15). W2 has diagonal 8, opposite entries -1 and all remaining off-diagonal entries 2. For a nonzero real six-vector v, its quadratic form is 3*sum_e(v_e^2)+3*((v0-v3)^2+(v1-v4)^2+(v2-v5)^2)+2*(sum_e v_e)^2>0. This equal-length point supplies only one basepoint; it does not restrict the variable domain.")),
-            Paragraph(Text("Positive definiteness is open relative to real symmetric matrices, by upper semicontinuity of the real spectrum and the spectral characterization using eigenvalues. Positive semidefiniteness is closed. For the present everywhere-invertible family K, positive semidefiniteness is equivalent to positive definiteness. Hence the positive-definite locus in Omega is both open and closed, and it is nonempty by the displayed basepoint. Connectedness makes it all of Omega. Finally KJ=I gives J=inverse(K), and the inverse of a positive-definite matrix is positive definite. This proves symmetry and positive definiteness of the actual full six-by-six derivative at every original interior parameter, with no assumed positivity of J.")),
-            Paragraph(Text("This application uses the existing full-domain contraction, matrix differential and inverse identities, spectral topology and matrix positivity. It retains all six independent lengths and the exact original interior domain. It asserts no extension through Delta=0 or zero lengths, no variation formula for the measured native volume, and no Schlaefli or geometric co-volume conclusion. Those require the separate volume-variation bridge.")),
+            Paragraph(Text("Application: symmetry and positive definiteness of the six original angle derivatives. Keep the full "
+                + "domain U above: six independent positive lengths, all six original source cosines strictly between -1 and "
+                + "1, and alpha_e(l)=arccos(c_e(l)) on its original branch. In zero-based vertex labels the edge order is "
+                + "(01,02,03,23,13,12), equivalently (12,13,14,34,24,23) in one-based labels. Write "
+                + "J_ef=Dalpha_e(l)[single(f,1)], so rows are output angles and columns are independent input lengths. The "
+                + "preceding native angle-germ application identifies these same alpha_e with the prescribed side/side angle "
+                + "germs.")),
+            Paragraph(Text("Put delta=-det(G(l))>0 and A=inverse(G(l)). For output edge e let k,m be its complementary vertices; for "
+                + "input edge f let p,q be its endpoints. Define m_e=A_kk*A_mm-A_km^2 and "
+                + "T_ef=A_kp*A_mq+A_kq*A_mp-A_km*(A_kp*A_kq/A_kk+A_mp*A_mq/A_mm). The actual Gram has diagonal one and edge "
+                + "entries -cosh(l_e); its inverse has positive diagonal throughout U. The complementary-minor identity "
+                + "gives m_e=sinh(l_e)^2/delta. Differentiating the normalized inverse entry, which equals -cos(alpha_e(l)), "
+                + "and using sin(alpha_e(l))*sqrt(A_kk)*sqrt(A_mm)=sinh(l_e)/sqrt(delta), gives "
+                + "J_ef=sqrt(delta)*sinh(l_f)/sinh(l_e)*T_ef.")),
+            Paragraph(Text("For any symmetric four-by-four A with nonzero diagonal, the six complementary-edge expressions satisfy "
+                + "m_f*T_ef=m_e*T_fe. This is a finite algebraic identity with the stated complementary output and ordinary "
+                + "input endpoints; clearing the diagonal denominators reduces it to polynomial identities. Substituting the "
+                + "actual complementary minors gives sinh(l_f)^2*T_ef=sinh(l_e)^2*T_fe. The positive sinh factors in the "
+                + "actual derivative formula therefore give J_ef=J_fe on all of U.")),
+            Paragraph(Text("At a regular point l_e=t>0, set x=cosh(t)>1. Differentiation in all six independent coordinates gives "
+                + "J=F(t)*B(x), where F(t)=(1/sqrt(1-(x/(2*x-1))^2))*sinh(t)/((x+1)*(2*x-1)^2)>0. The diagonal entries of B "
+                + "are 2*x^2, the opposite entries at (0,3),(1,4),(2,5) and their transposes are (x-1)*(2*x-1), and the "
+                + "remaining off-diagonal entries are -x*(x-1). This calculates the entire derivative, including transverse "
+                + "variations at the regular point.")),
+            Paragraph(Text("For a real six-vector v put D=(v0-v3)^2+(v1-v4)^2+(v2-v5)^2, s0=v0+v3, s1=v1+v4, s2=v2+v5, "
+                + "E=(s0-s1)^2+(s0-s2)^2+(s1-s2)^2 and S=s0+s1+s2. Direct expansion gives v transpose B "
+                + "v=(3*x-1)*D/2+(3*x-1)*(2*x-1)*E/6+(x+1)*S^2/6. Every coefficient is positive. If the sum vanishes, "
+                + "D=E=S^2=0, forcing all coordinates of v to be zero. Thus J is positive definite at every regular point "
+                + "t>0.")),
+            Paragraph(Text("The original cosine-determinant interface identifies U with the positive-length domain delta>0: for "
+                + "x_e=cosh(l_e), each original positive radicand pair R_e,S_e and numerator N_e satisfy "
+                + "R_e*S_e-N_e^2=(x_e^2-1)*delta. Coordinatewise cosh and arcosh give a homeomorphism between U and the "
+                + "entire cosh-coordinate domain x_e>1,-det(G(x))>0. Apply the existing full_domain_contractible result of "
+                + "GramDomainContraction to that full domain. Consequently U is connected, with no added connectivity, "
+                + "radial-preservation or cube-membership hypothesis. Convexity of U is not needed.")),
+            Paragraph(Text("The actual J is continuous and symmetric on U. Its nonsingularity follows from the normalized-inverse "
+                + "tangent injectivity application above. Positive definiteness is open relative to real symmetric matrices "
+                + "by spectral positivity, and positive semidefiniteness is closed. For this nonsingular family, positive "
+                + "semidefiniteness implies positive definiteness. The positive-definite locus is therefore both open and "
+                + "closed relative to U. It contains the regular point t=1, so connectedness makes it all of U. This proves "
+                + "symmetry and positive definiteness of the actual full six-by-six source-angle derivative at every "
+                + "original interior parameter.")),
+            Paragraph(Text("This application reuses the original cosine-determinant interface, normalized-inverse differential, "
+                + "complementary-edge identities, full-domain contraction and pinned Mathlib matrix differentiation, "
+                + "spectral topology and positivity. It retains the exact original arccos branches and six independent "
+                + "lengths. No extension through delta=0 or zero lengths is asserted. Physical Schlaefli and co-volume "
+                + "Hessian identification, global geometric rigidity and the complete actual flow/convergence argument "
+                + "require their separate bridges.")),
             Paragraph(Text("Application: actual reference-simplex integration. For a>=0 let A_a={(y,z): y>=0,z>=0,y+z<=a} and T_a={(x,y,z): x>=0,y>=0,z>=0,x+y+z<=a}. Every integral here is the Bochner integral with the restriction of ordinary product Lebesgue volume. The target E may be any complete real normed space. These are actual measurable closed subsets, not formal face labels or assigned volume values. Both sets are compact, so continuity on them supplies integrability.")),
             Paragraph(Text("For continuous D on T_a, the x-section over (y,z) is [0,a-y-z] when (y,z) belongs to A_a and is empty otherwise. Apply integral_prod_symm to the measurable indicator of T_a, then replace each closed-interval set integral by its interval integral. This gives integral_T_a D=integral_A_a(integral_0^(a-y-z) D(x,y,z) dx) dy dz. The same argument gives the triangle formula integral_A_a H=integral_0^a(integral_0^(a-z) H(y,z) dy) dz. Compactness supplies the joint integrability required by Fubini; section and endpoint conventions are established for these literal sets.")),
             Paragraph(Text("Let P1,P2,P3 and D1,D2,D3 be continuous E-valued functions on T_a. Along every nonempty open coordinate slice, suppose the ordinary derivative of Pi in coordinate i is Di; this includes slices whose other two coordinates lie on the boundary of A_a. The fundamental theorem of calculus gives each directional integral as its top trace minus its coordinate-zero trace. No derivative is required at the slice endpoints, and a zero-length slice imposes no derivative condition. Continuity gives integrability of all six individual top and bottom traces by composition with their affine maps from A_a.")),
