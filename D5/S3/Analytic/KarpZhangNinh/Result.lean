@@ -163,7 +163,7 @@ private theorem Z_monotoneOn (m : ℕ) (hm : 2≤m) {S : ℝ} (hS : 0≤S) :
   change Beta.lift (Homogeneous.coeff (3*m)) (3*m) x (S-x) ≤
     Beta.lift (Homogeneous.coeff (3*m)) (3*m) y (S-y) at he
   rw [lift_normalization, lift_normalization] at he
-  exact (mul_le_mul_left (by positivity : (0:ℝ)<((3*m).factorial:ℝ))).mp he
+  exact (mul_le_mul_iff_right₀ (by positivity : (0:ℝ)<((3*m).factorial:ℝ))).mp he
 
 /- proof_shape: content; escape_witness: Homogeneous.strictMonoOn_slice;
 consumer: tail_nonneg_pos. -/
@@ -232,7 +232,9 @@ private theorem tail_nonneg (m q : ℕ) (hq : 2*q≤m) {μ α β : ℝ}
   have ht := hc.continuousAt.tendsto.mono_left (show 𝓝[>] (0:ℝ) ≤ 𝓝 0 from inf_le_left)
   apply ge_of_tendsto (by simpa only [add_zero] using ht)
   filter_upwards [self_mem_nhdsWithin] with e he
-  exact tail_nonneg_pos m q hq (by linarith) (by linarith) (by linarith)
+  change 0 < e at he
+  exact tail_nonneg_pos m q hq (add_pos_of_nonneg_of_pos hμ he)
+    (add_pos_of_nonneg_of_pos hα he) (add_pos_of_nonneg_of_pos hβ he)
 
 /-- The exact universal coefficient inequality of Conjecture 3.8. -/
 /- proof_shape: bind-only definition; consumer: result. -/

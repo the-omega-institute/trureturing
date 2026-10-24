@@ -61,9 +61,9 @@ The sequence must be fixed independently of the parameters.
 ## Gap
 
 The required conclusion is the exact universal `Result.claim`.
-The implementation's mathematical status is determined by the kernel
-check of `Result.result`; a proof supplied in prose or finite numerical
-evidence alone does not constitute that check.
+`Result.result` proves it through a nonnegative full convolution sum,
+one-sign-change central tails and the existing finite Abel decomposition.
+The homogeneous and beta-lifting inequalities are uniform in the degree.
 
 ## Route
 
@@ -82,9 +82,9 @@ $$
 3T_n(N)=(N-n)2^{n-1}+(N-1)\alpha_n-(n-1)\beta_n,
 $$
 
-where $\alpha_n,\beta_n$ depend on $n$ modulo six. Elementary uniform
+where the formulas for $\alpha_n,\beta_n$ are selected by $n$ modulo six. Elementary uniform
 exponential bounds make both quantities nonnegative for $1\le n<N$
-and $3\mid N$. The shear $y=x+d$ gives
+and $3\mid N$. For $d>0$, the shear $y=x+d$ gives
 
 $$
 \frac{(\partial_x-\partial_y)P_N(x,y)}{y-x}\bigg|_{y=x+d}
@@ -140,6 +140,8 @@ The Lean sources are
 `D5/S3/Analytic/KarpZhangNinh/Beta.lean`,
 `D5/S3/Analytic/KarpZhangNinh/Kernel.lean` and
 `D5/S3/Analytic/KarpZhangNinh/Result.lean`.
+`Result.result : Result.claim` is kernel-checked by the scoped settling-module
+build. This is distinct from freezing and Scribe resolution admission.
 The generic beta comparison and gamma–Pochhammer moment machinery are
 reused from their existing D5 owners. The sequence predicate, balanced
 products, finite pairing and Abel identity are reused from the existing
@@ -149,11 +151,11 @@ Karp–Zhang developments.
 
 ### What the settlement shows
 
-- **OPEN (kernel acceptance):** The decisive mechanism is homogeneous
+- **PROVED:** The decisive mechanism is homogeneous
   trisection positivity, followed by symmetric beta lifting, paired-sign
   propagation and finite Abel weighting. The exact universal target is
   `KarpZhangNinh.Result.result : KarpZhangNinh.Result.claim`.
-- **OPEN (kernel acceptance):** The reusable tool is the general theorem
+- **PROVED:** The reusable tool is the general theorem
   `KarpZhangNinh.Beta.lift_monotoneOn`: a symmetric homogeneous polynomial
   whose unit-sum slice is nondecreasing towards its centre has a
   rising-factorial lift with the same balancing property. The coefficients
@@ -175,7 +177,7 @@ Karp–Zhang developments.
   rising-factorial derivative quotient is stronger than the balancing
   inequality and is not implied by beta lifting. Joint log-concavity of
   arbitrary interval convolutions is neither asserted nor needed.
-- **OPEN (kernel acceptance):** The exact multiplier-three conclusion
+- **PROVED:** The exact multiplier-three conclusion
   resolves the source's remaining case; the source's multiplier-two result
   and reported multiplier-four failure keep their respective scopes.
 
