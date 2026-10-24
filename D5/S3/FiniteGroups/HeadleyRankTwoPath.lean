@@ -6,10 +6,12 @@
    utility: none
    digest: The unbounded native circular-length path for the Headley rank-two base. -/
 
-import Mathlib.Data.Nat.Dist
-import Mathlib.Data.List.Intervals
-import Mathlib.Data.List.NodupEquivFin
-import Mathlib.Tactic
+module
+
+public import Mathlib.Data.Nat.Dist
+public import Mathlib.Data.List.Intervals
+public import Mathlib.Data.List.NodupEquivFin
+public import Mathlib.Tactic
 
 /-! The native reconstruction of the rank-two base in the R-sequenceability
 construction of Headley (1994). The R-to-L and L-to-R transitions are combined
@@ -18,6 +20,8 @@ L(0), R(1), and early L(2) completions. No ordering search is used. -/
 
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
+
+public section
 
 namespace D5.S3.FiniteGroups.HeadleyRankTwoPath
 
@@ -55,27 +59,19 @@ private theorem circular_arithmetic (n x y d : ℕ)
 
 private theorem right_one (n : ℕ) (hn : 6 < n) :
     steps n 1 (rightTail n 1) = [2, 3] := by
-  simp only [rightTail, ↓reduceIte, steps, List.cons.injEq]
-  simp only [circularLength, Nat.dist]
-  omega
+  simp [rightTail, steps, circularLength, Nat.dist] <;> omega
 
 private theorem right_three (n : ℕ) (hn : 14 < n) :
     steps n 3 (rightTail n 3) = [6, 7, 5, 2, 3, 4] := by
-  simp only [rightTail, ↓reduceIte, steps, List.cons.injEq]
-  simp only [circularLength, Nat.dist]
-  omega
+  simp [rightTail, steps, circularLength, Nat.dist] <;> omega
 
 private theorem right_four (n : ℕ) (hn : 18 < n) :
     steps n 4 (rightTail n 4) = [8, 9, 7, 5, 6, 4, 2, 3] := by
-  simp only [rightTail, ↓reduceIte, steps, List.cons.injEq]
-  simp only [circularLength, Nat.dist]
-  omega
+  simp [rightTail, steps, circularLength, Nat.dist] <;> omega
 
 private theorem right_five (n : ℕ) (hn : 22 < n) :
     steps n 5 (rightTail n 5) = [10, 11, 9, 6, 7, 8, 5, 2, 3, 4] := by
-  simp only [rightTail, ↓reduceIte, steps, List.cons.injEq]
-  simp only [circularLength, Nat.dist]
-  omega
+  simp [rightTail, steps, circularLength, Nat.dist] <;> omega
 
 private theorem right_block (n a : ℕ) (ha : 6 ≤ a) (hn : 4 * a + 2 < n) :
     steps n a (rightTail n a) =
@@ -87,9 +83,7 @@ private theorem right_block (n a : ℕ) (ha : 6 ≤ a) (hn : 4 * a + 2 < n) :
     simp only [show a ≠ 1 by omega, show a ≠ 3 by omega,
       show a ≠ 4 by omega, show a ≠ 5 by omega, ha, ↓reduceIte]
   rw [he]
-  simp only [List.cons_append, List.nil_append, steps, List.cons.injEq]
-  simp only [circularLength, Nat.dist]
-  omega
+  simp [steps, circularLength, Nat.dist] <;> omega
 
 /-- Both finite inventories of every reachable right state. The strict bound
 ensures all declared lengths are shorter than the diameter. This is proved by
@@ -106,54 +100,38 @@ private theorem right_inventory (n a : ℕ) (ha : 1 ≤ a) (ha2 : a ≠ 2)
     · subst a
       rw [right_one n hn]
       refine ⟨?_, ?_, by decide, ?_⟩
-      · simp only [rightTail, ↓reduceIte, List.nodup_cons, List.nodup_nil,
-          List.mem_cons, List.mem_singleton, List.not_mem_nil, not_false_eq_true, and_true]
-        omega
+      · simp [rightTail] <;> omega
       · intro x
-        simp only [rightTail, ↓reduceIte, List.mem_cons, List.mem_singleton, rightUnused]
-        omega
+        simp [rightTail, rightUnused] <;> omega
       · intro d
-        simp only [List.mem_cons, List.mem_singleton]
-        omega
+        simp <;> omega
     by_cases h3 : a = 3
     · subst a
       rw [right_three n hn]
       refine ⟨?_, ?_, by decide, ?_⟩
-      · simp only [rightTail, ↓reduceIte, List.nodup_cons, List.nodup_nil,
-          List.mem_cons, List.mem_singleton, List.not_mem_nil, not_false_eq_true, and_true]
-        omega
+      · simp [rightTail] <;> omega
       · intro x
-        simp only [rightTail, ↓reduceIte, List.mem_cons, List.mem_singleton, rightUnused]
-        omega
+        simp [rightTail, rightUnused] <;> omega
       · intro d
-        simp only [List.mem_cons, List.mem_singleton]
-        omega
+        simp <;> omega
     by_cases h4 : a = 4
     · subst a
       rw [right_four n hn]
       refine ⟨?_, ?_, by decide, ?_⟩
-      · simp only [rightTail, ↓reduceIte, List.nodup_cons, List.nodup_nil,
-          List.mem_cons, List.mem_singleton, List.not_mem_nil, not_false_eq_true, and_true]
-        omega
+      · simp [rightTail] <;> omega
       · intro x
-        simp only [rightTail, ↓reduceIte, List.mem_cons, List.mem_singleton, rightUnused]
-        omega
+        simp [rightTail, rightUnused] <;> omega
       · intro d
-        simp only [List.mem_cons, List.mem_singleton]
-        omega
+        simp <;> omega
     by_cases h5 : a = 5
     · subst a
       rw [right_five n hn]
       refine ⟨?_, ?_, by decide, ?_⟩
-      · simp only [rightTail, ↓reduceIte, List.nodup_cons, List.nodup_nil,
-          List.mem_cons, List.mem_singleton, List.not_mem_nil, not_false_eq_true, and_true]
-        omega
+      · simp [rightTail] <;> omega
       · intro x
-        simp only [rightTail, ↓reduceIte, List.mem_cons, List.mem_singleton, rightUnused]
-        omega
+        simp [rightTail, rightUnused] <;> omega
       · intro d
-        simp only [List.mem_cons, List.mem_singleton]
-        omega
+        simp <;> omega
     have h6 : 6 ≤ a := by omega
     obtain ⟨hV, hM, hD, hL⟩ := ih (a-3) (by omega) (by omega) (by omega) (by omega)
     have he : rightTail n a =
@@ -253,6 +231,7 @@ private theorem zig_lengths (s k : ℕ) (hs : 1 ≤ s) (hk : k+1 ≤ 2*s) :
     rw [he]
     simp only [steps, zig_step s k (by omega), List.cons_append, List.nil_append]
     rw [List.range'_1_concat]
+    simp only [List.cons_append,Nat.add_comm]
 
 /-- A Hamilton path beginning at zero and the diameter, with one diameter edge
 and exactly two occurrences of every other positive circular length. -/
@@ -284,15 +263,13 @@ private theorem continuation_lengths (s : ℕ) (hs : 8 ≤ s) :
   obtain ⟨hV,hM,hD,hL⟩ := right_inventory (4*s) (s-2) (by omega) (by omega) (by omega)
   have he : steps (4*s) s (continuation s) =
       [2*s-1,1,2*s-2] ++ steps (4*s) (s-2) (rightTail (4*s) (s-2)) := by
-    simp only [continuation, List.cons_append, List.nil_append, steps, List.cons.injEq]
-    simp only [circularLength, Nat.dist]
-    omega
+    simp [continuation, steps, circularLength, Nat.dist] <;> omega
   have hd : (steps (4*s) s (continuation s)).Nodup := by
     rw [he]
     simp only [List.cons_append, List.nil_append, List.nodup_cons, List.mem_cons,
       hD,hL,and_true]
     omega
-  apply (List.perm_ext_iff_of_nodup hd (List.nodup_range' _ _)).mpr
+  apply (List.perm_ext_iff_of_nodup hd (List.nodup_range')).mpr
   intro d
   rw [he]
   simp only [List.cons_append, List.nil_append, List.mem_cons, hL, List.mem_range'_1]
@@ -320,10 +297,9 @@ private theorem large_vertices (s : ℕ) (hs : 8 ≤ s) :
   have hP : (largePath s).Nodup := by
     rw [largePath, List.nodup_append]
     refine ⟨hZ,hC,?_⟩
-    rw [List.disjoint_left]
-    intro x hx hxc
+    intro x hx y hy he
     have hz := (hZM x).mp hx
-    have hc := (hCM x).mp hxc
+    have hc := (hCM y).mp hy
     omega
   apply (List.perm_ext_iff_of_nodup (List.nodup_cons.mpr ⟨h0,hP⟩)
     List.nodup_range).mpr
@@ -336,8 +312,7 @@ private theorem large_lengths (s : ℕ) (hs : 8 ≤ s) :
       (2*s :: (List.range' 1 (2*s-1) ++ List.range' 1 (2*s-1))) := by
   have hk : 2*s = (2*s-1)+1 := by omega
   have hz : steps (4*s) 0 (zigWalk (2*s) (2*s)) = 2*s :: List.range' 1 (2*s-1) := by
-    conv_lhs => arg 3; rw [hk]
-    exact zig_lengths s (2*s-1) (by omega) (by omega)
+    simpa only [← hk] using zig_lengths s (2*s-1) (by omega) (by omega)
   have ht : (zigWalk (2*s) (2*s)).getLastD 0 = s := by
     conv_lhs => arg 1; rw [hk,zigWalk]
     rw [List.getLastD_concat]
@@ -350,8 +325,8 @@ private theorem large_lengths (s : ℕ) (hs : 8 ≤ s) :
 private def largeLengthPath (s : ℕ) (hs : 8 ≤ s) : LengthPath (2*s) where
   tail := largePath s
   start := large_start s hs
-  vertex_inventory := by simpa only [Nat.mul_assoc] using large_vertices s hs
-  length_inventory := by simpa only [Nat.mul_assoc] using large_lengths s hs
+  vertex_inventory := by simpa only [show 2*(2*s)=4*s by omega] using large_vertices s hs
+  length_inventory := by simpa only [show 2*(2*s)=4*s by omega] using large_lengths s hs
 
 /-- The single unbounded path construction for every cyclic factor of order
 2^a, a at least three. The m=4 and m=8 words are consumed leaves of this function;
@@ -359,12 +334,18 @@ all larger exponents use the strictly descending symbolic right-state algorithm.
 def powerTwoPath (a : ℕ) (ha : 3 ≤ a) : LengthPath (2^(a-1)) := by
   by_cases h3 : a = 3
   · subst a
-    exact { tail := [4,1,3,2,5,7,6], start := rfl,
-      vertex_inventory := by decide, length_inventory := by decide }
+    exact {
+      tail := [4,1,3,2,5,7,6]
+      start := rfl
+      vertex_inventory := by decide
+      length_inventory := by decide }
   by_cases h4 : a = 4
   · subst a
-    exact { tail := [8,1,7,2,6,3,5,4,11,15,9,14,13,10,12], start := rfl,
-      vertex_inventory := by decide, length_inventory := by decide }
+    exact {
+      tail := [8,1,7,2,6,3,5,4,11,15,9,14,13,10,12]
+      start := rfl
+      vertex_inventory := by decide
+      length_inventory := by decide }
   let s := 2^(a-2)
   have hs : 8 ≤ s := by
     dsimp [s]
