@@ -186,5 +186,5 @@ and attribution of the research proof. No new online search is included.
 Kernel compilation does not establish freezing, publication or required CI.
 The new public theorems have no completed four-slot escape registrations;
 the missing owner registrations are associated with preregistration #21124.
-The Proved Scribe resolution node requires a frozen declaration for
-emission; this implementation does not write frozen state.
+The scoped Scribe emission includes the Proved resolution node. This does
+not establish freezing; this implementation does not write frozen state.
