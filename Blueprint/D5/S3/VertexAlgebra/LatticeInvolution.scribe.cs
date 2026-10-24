@@ -39,6 +39,34 @@ internal sealed class LatticeInvolutionDocument : IScribeDocumentDefinition
                         + "is identity and gives an actual linear equivalence."))),
                 DescribeRole.Theorem),
             Describe.Lean(
+                DescribeId.Create("positive-rank-reflection-nontrivial"),
+                DeclarationHandle.Create(Prefix + "theta_nontrivial_of_rank_pos"),
+                H("At positive rank the reflection is nonidentity"),
+                StatementSource.WithoutFormula(),
+                AssessedProvenance.FromRepo(Background),
+                Blocks(Paragraph(Text("For every lattice datum D with 0 < D.rank, "
+                    + "theta D differs from the identity complex-linear equivalence. "
+                    + "Take i=0 in Fin(D.rank) and the nonzero state "
+                    + "v=single(0,X_(i,0)). Reflection sends v to -v. "
+                    + "If theta were identity, then 2 smul v=0 over the complex "
+                    + "numbers, contradicting v nonzero. The symmetric integral "
+                    + "Gram matrix may be degenerate or indefinite; only the "
+                    + "positive-rank hypothesis is added."))),
+                DescribeRole.Theorem),
+            Describe.Lean(
+                DescribeId.Create("positive-rank-reflection-exact-order"),
+                DeclarationHandle.Create(Prefix + "theta_orderOf_eq_two_of_rank_pos"),
+                H("At positive rank the reflection has exact order two"),
+                StatementSource.WithoutFormula(),
+                AssessedProvenance.FromRepo(Background),
+                Blocks(Paragraph(Text("For every D with 0 < D.rank, orderOf(theta D)=2 "
+                    + "in the group of complex-linear self-equivalences of the actual "
+                    + "carrier. The square identity supplies theta squared equals "
+                    + "identity; the nonzero oscillator witness excludes order one. "
+                    + "The final step applies mathlib's orderOf_eq_prime at 2. "
+                    + "No exact-order assertion at rank zero is made."))),
+                DescribeRole.Theorem),
+            Describe.Lean(
                 DescribeId.Create("actual-reflection-vacuum"),
                 DeclarationHandle.Create(Prefix + "theta_vacuum"),
                 H("The actual vacuum is fixed"),
