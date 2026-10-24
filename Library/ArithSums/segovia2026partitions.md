@@ -5,7 +5,7 @@ year: 2026
 title: The Riemann Hypothesis through the looking of partitions
 doi: null
 url: https://arxiv.org/abs/2601.22413v4
-claim: The preprint gives unconditional fixed-branch cutoff and actual-divisor-block asymptotics on superabundant integers; a growing finite progression window follows by applying its harmonic criterion and positive hook coefficients, without proving saturation or RH.
+claim: The preprint gives unconditional fixed-branch SA realization; classical ultrafriable counts and reciprocal-tail estimates also yield a uniform actual-inventory tail interface, without controlling the signed Robin budget.
 strata_touched: []
 license: citation-only
 triage: anchor
@@ -222,6 +222,209 @@ for each fixed $N$ nor covers that integer's arbitrarily late branches.
 It supplies no uniform fixed-branch asymptotic in that growing range,
 no complete signed Robin margin, and no FIB-to-divisor source map.
 The endpoint $c=e^\gamma$ and optimality of this window are not asserted.
+
+## Uniform tails from the ultrafriable comparison
+
+The actual-inventory transfer can reuse a published counting theorem.
+Tenenbaum, *On ultrafriable integers*, Quarterly Journal of Mathematics
+**66** (2015), 333–351, DOI [10.1093/qmath/hau025](https://doi.org/10.1093/qmath/hau025),
+Theorem 1.1, (1.10), compares ultrafriable and smooth counts. The inspected
+[HAL v1 manuscript](https://hal.science/hal-01281588v1/document) has SHA-256
+`ed4ef5bc5e26457e78ff99ac314bb8a70f33eafd8f94f62be619e176224a3578`.
+Its missing-prime-power method is already in §3.1; no new sieve method
+or originality claim is made here.
+
+For the reciprocal tail use Tenenbaum, *Integers with a large friable
+component*, Acta Arithmetica **124** (2006), 287–291, DOI
+[10.4064/aa124-3-6](https://doi.org/10.4064/aa124-3-6).
+The inspected [published PDF](https://www.impan.pl/shop/publication/transaction/download/product/83889?download.pdf)
+has SHA-256 `999f2f0b2eea5a329f614c122e5916fe9633a38edee0cb7c53a0a2e996ab8b58`.
+The following application keeps the same actual $N$; it is ordinary
+mathematics, without Lean certification.
+
+### Reused count and tail estimates
+
+Put $\ell=\log P$, and distinguish the Dickman tail from the divisor
+count by writing
+
+$$
+\mathcal T(u)=\int_u^\infty\varrho(t)\,dt,
+\qquad
+T(P,x)=\sum_{\substack{P^+(m)\le P\\m>x}}\frac1m,
+\qquad T_N(x)=\sum_{\substack{d\mid N\\d>x}}\frac1d.
+$$
+
+For each fixed $0<\epsilon<3/5$, the 2006 formulas (1.2)–(1.3) state,
+uniformly for $P\ge2$ and $1\le x\le\exp\exp(\ell^{3/5-\epsilon})$,
+with $u=\log x/\ell$,
+
+$$
+T(P,x)=\ell\mathcal T(u)
+ \left(1+O_\epsilon\!\left(\frac{\log(u+2)}\ell\right)\right).
+$$
+
+Lemma 2.1, (2.2), retains the next term:
+
+$$
+T(P,P^u)=\ell\mathcal T(u)-\gamma\varrho(u)
+ +O_\epsilon\!\left(\frac{\varrho(u)\log(u+2)}\ell+P^{-u}\right).
+$$
+
+These are uniform source statements, including growing $u$. They need
+no fixed-branch approximation from Segovia.
+
+Write $\Psi(t,P)$ for the smooth count and $\Upsilon(t,P)$ for the
+count of integers $m\le t$ in which every full prime-power factor is at
+most $P$. The latter integers are exactly the divisors of
+$C_P=\operatorname{lcm}(1,\ldots,\lfloor P\rfloor)$.
+The 2015 theorem states, for each fixed $\eta>0$,
+
+$$
+\Upsilon(t,P)=\Psi(t,P)
+ \left(1+O_\eta\!\left(\frac{v\log(2v)}{\sqrt P\,\ell}\right)\right),
+\quad v=\frac{\log t}\ell,
+\quad t\ge P\ge(\log t)^{2+\eta}.
+$$
+
+For SA $N$, initial prime support and the fact
+$p^{v_p(N)+1}>P$ from Segovia's Lemma 19 give $C_P\mid N$. Thus
+
+$$
+\{d:d\mid C_P\}\subseteq\{d:d\mid N\}
+ \subseteq\{m:P^+(m)\le P\}.
+$$
+
+This inclusion is the common-source bridge to the actual divisor
+inventory. It does not identify the inventory with all smooth integers.
+
+### Transfer by partial summation
+
+Fix $a>0$ and $0<\epsilon<3/5$, and put
+
+$$
+U_P=\frac{\exp(\ell^{3/5-\epsilon})}\ell,
+\qquad a\le u\le U_P,\qquad x=P^u,
+\qquad X=P^{P^{1/4}}.
+$$
+
+Let $D(t)=\Psi(t,P)-\Upsilon(t,P)\ge0$. It vanishes for $t<P$.
+Apply the 2015 theorem with fixed $\eta=1/4$. Throughout $P\le t\le X$
+its domain holds for sufficiently large $P$, and its error gives
+$D(t)\ll P^{-1/4}\Psi(t,P)$. By the inventory inclusion and partial
+summation, retaining the nonpositive endpoint term $-D(x)/x$ as an
+upper-bound omission,
+
+$$
+\begin{aligned}
+0\le T(P,x)-T_N(x)
+&\le\int_x^\infty\frac{D(t)}{t^2}\,dt-\frac{D(x)}x\\
+&\le P^{-1/4}O\!\left(T(P,x)+\frac{\Psi(x,P)}x\right)
+       +\int_X^\infty\frac{\Psi(t,P)}{t^2}\,dt.
+\end{aligned}
+$$
+
+Here $x<X$ throughout the displayed range for sufficiently large $P$.
+The 2006 formulas (2.3), (1.2) and the coarse comparison
+$\mathcal T(u)\asymp\varrho(u)/\log(u+2)$ on $u\ge a$ give
+$\Psi(x,P)/x\ll_a T(P,x)$. For $a\le u<1$ this also follows from
+$\Psi(x,P)/x\le1$ and $T(P,x)\gg\ell$.
+
+For the remaining integral, take $\sigma=1-1/\ell$. The classical
+Rankin bound and the crude Euler-product bound
+$\zeta(\sigma,P)=\prod_{p\le P}(1-p^{-\sigma})^{-1}\le P^C$ give
+
+$$
+\int_X^\infty\frac{\Psi(t,P)}{t^2}\,dt
+ \le\ell e^{-P^{1/4}}\zeta(\sigma,P).
+$$
+
+The coarse Dickman lower bound recalled in the 2006 paper gives
+$T(P,P^u)\ge\exp(-P^{o(1)})$ uniformly for $a\le u\le U_P$.
+The last integral divided by that tail is therefore smaller than every
+fixed negative power of $P$. Consequently the published count and tail
+estimates imply the uniform actual-inventory transfer
+
+$$
+0\le1-\frac{T_N(P^u)}{T(P,P^u)}\ll_{a,\epsilon}P^{-1/4},
+\qquad a\le u\le U_P.
+$$
+
+The exponent $1/4$ is only a sufficient choice in this application;
+no optimality is asserted. More generally the same comparison applies
+whenever $C_P\mid N$ and every prime factor of $N$ is at most $P$.
+
+### Density-scale precision and the remaining signed budget
+
+The transfer error is small at the next-term scale:
+
+$$
+\frac{P^{-1/4}\ell\mathcal T(u)}{\varrho(u)}
+ \ll_a\frac{P^{-1/4}\ell}{\log(u+2)}=o(1)
+$$
+
+uniformly in the displayed range. The same coarse Dickman lower bound
+shows
+
+$$
+\frac{P^{-u}}{\varrho(u)}
+ \le\exp\!\bigl(-u\ell+O_a(u\log(u+2))\bigr)=o(1).
+$$
+
+The 2006 formula (2.2) therefore gives
+
+$$
+T_N(P^u)=\ell\mathcal T(u)-\gamma\varrho(u)+o(\varrho(u)),
+\qquad a\le u\le U_P,
+$$
+
+with a uniform remainder. For each fixed $c>0$, the classical derivative
+estimate $|\varrho'(u)|\ll_a\varrho(u)\log(u+2)$ recalled before
+Lemma 2.1 gives, by $u\mapsto u+\log c/\ell$,
+
+$$
+T_N(cP^u)=\ell\mathcal T(u)
+ -(\log c+\gamma)\varrho(u)+o(\varrho(u)).
+$$
+
+Use the source parameter $\epsilon/2$ while keeping the displayed range
+with $\epsilon$, so multiplication by fixed $c$ stays inside its domain.
+The lower bound $a$ keeps the shifted argument positive.
+
+In particular define the actual divisor quantile for this tail target by
+
+$$
+D_N(u)=\max\{d\mid N:T_N(d)\ge\ell\mathcal T(u)\}.
+$$
+
+For sufficiently large $P$ this set is nonempty and
+$D_N(u)/(e^{-\gamma}P^u)\to1$ uniformly. Indeed, fix $t>0$ and use
+$c=e^{-\gamma-t},e^{-\gamma-t/2},e^{-\gamma+t}$. The first two tails
+exceed the target, and their difference is
+$(t/2)\varrho(u)+o(\varrho(u))>0$, giving an actual divisor between
+them. The third tail is below the target. This brackets the largest
+admissible divisor by the same inversion used for fixed branches.
+
+This is a specified tail quantile, distinct from the original branch's
+prefix budget. For the latter put
+
+$$
+L=\log\log N,\quad\delta_N=L-\ell,\quad
+Q_N=Z(N)-e^\gamma L.
+$$
+
+At an actual branch cutoff the exact relation is
+
+$$
+T_N(d^{(r)}(N))
+ =\mathcal T(\alpha_r)L+Q_N+\varepsilon_r(N).
+$$
+
+Thus its target differs from $\ell\mathcal T(\alpha_r)$ by
+$Q_N+\mathcal T(\alpha_r)\delta_N$, before rounding. The transfer does
+not estimate this signed quantity, place an original growing-branch
+cutoff in its domain, or determine the sign of $Q_N$. It supplies the
+actual-inventory tail approximation from existing literature; the
+signed Robin comparison and FIB-to-divisor map remain separate gaps.
 
 ## Additional reused inputs and the remaining Robin target
 
