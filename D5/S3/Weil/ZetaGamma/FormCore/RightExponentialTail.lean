@@ -4,7 +4,7 @@
    mirror-E: none(waiver:half-line-analytic-operator)
    anchors: []
    utility: none
-   digest: Exact half-line exponential-tail energy balance with its actual boundary value. -/
+   digest: Exact half-line exponential-tail balances with actual endpoint and derivative-of-weight charges. -/
 
 import Mathlib.Analysis.Complex.RealDeriv
 import Mathlib.Analysis.SpecialFunctions.ExpDeriv
@@ -18,7 +18,7 @@ import Mathlib.Tactic.Linarith
 import Mathlib.Tactic.Positivity
 import Mathlib.Tactic.Ring
 
-/-! Exact half-line energy balance for the literal right exponential tail. -/
+/-! Exact half-line energy balances for the literal right exponential tail. -/
 
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
@@ -214,6 +214,102 @@ private theorem normSq_sub_real_mul (z w : ℂ) (c : ℝ) :
     zero_mul, mul_zero, sub_zero, zero_add]
   ring
 
+/-- Weighted energy balance with the actual endpoint and derivative-of-weight
+charges. All real rates and coefficients are allowed on this compact core. -/
+theorem right_exponential_tail_weighted_energy_balance
+    (u : ℝ → ℂ) (hu : Continuous u) (hs : HasCompactSupport u)
+    (w dw : ℝ → ℝ) (hw : Continuous w) (hdw : Continuous dw)
+    (hwderiv : ∀ t : ℝ, 0 < t → HasDerivAt w (dw t) t)
+    (k c : ℝ) :
+    (∫ t : ℝ in Ioi 0,
+      w t * Complex.normSq (u t - (c : ℂ) * rightExponentialTail k u t)) +
+      c * (2 * k - c) *
+        (∫ t : ℝ in Ioi 0, w t * Complex.normSq (rightExponentialTail k u t)) +
+      c * w 0 * Complex.normSq (rightExponentialTail k u 0) +
+      c * (∫ t : ℝ in Ioi 0, dw t * Complex.normSq (rightExponentialTail k u t)) =
+      ∫ t : ℝ in Ioi 0, w t * Complex.normSq (u t) := by
+  obtain ⟨R, hR, hz⟩ := exists_upper_zero hs
+  let v : ℝ → ℂ := rightExponentialTail k u
+  have hv : Continuous v := tail_continuous hu hs k
+  have hvz (t : ℝ) (ht : R ≤ t) : v t = 0 := tail_zero_above k R t hz ht
+  have hq : Continuous (fun t : ℝ => Complex.normSq (v t)) :=
+    Complex.continuous_normSq.comp hv
+  have huq : Continuous (fun t : ℝ => Complex.normSq (u t)) :=
+    Complex.continuous_normSq.comp hu
+  have hp : Continuous (realPairing u v) := realPairing_continuous hu hv
+  have hb : Continuous (fun t : ℝ => Complex.normSq (u t - (c : ℂ) * v t)) :=
+    Complex.continuous_normSq.comp (hu.sub (continuous_const.mul hv))
+  have hwq : Continuous (fun t : ℝ => w t * Complex.normSq (v t)) := hw.mul hq
+  have hwu : Continuous (fun t : ℝ => w t * Complex.normSq (u t)) := hw.mul huq
+  have hwp : Continuous (fun t : ℝ => w t * realPairing u v t) := hw.mul hp
+  have hdwq : Continuous (fun t : ℝ => dw t * Complex.normSq (v t)) := hdw.mul hq
+  have hwb : Continuous (fun t : ℝ =>
+      w t * Complex.normSq (u t - (c : ℂ) * v t)) := hw.mul hb
+  have hiq : IntervalIntegrable (fun t : ℝ => w t * Complex.normSq (v t)) volume 0 R :=
+    hwq.intervalIntegrable 0 R
+  have hiu : IntervalIntegrable (fun t : ℝ => w t * Complex.normSq (u t)) volume 0 R :=
+    hwu.intervalIntegrable 0 R
+  have hip : IntervalIntegrable (fun t : ℝ => w t * realPairing u v t) volume 0 R :=
+    hwp.intervalIntegrable 0 R
+  have hid : IntervalIntegrable (fun t : ℝ => dw t * Complex.normSq (v t)) volume 0 R :=
+    hdwq.intervalIntegrable 0 R
+  have hDderiv (t : ℝ) (ht : t ∈ Ioo (0 : ℝ) R) :
+      HasDerivAt (fun x : ℝ => w x * Complex.normSq (v x))
+        (dw t * Complex.normSq (v t) +
+          2 * k * (w t * Complex.normSq (v t)) -
+          2 * (w t * realPairing u v t)) t := by
+    apply ((hwderiv t ht.1).mul (tail_normSq_hasDerivAt hu hs k t)).congr_deriv
+    ring
+  have hD := intervalIntegral.integral_eq_sub_of_hasDerivAt_of_le
+    (a := (0 : ℝ)) (b := R) hR.le hwq.continuousOn hDderiv
+    (((hdwq.add (hwq.const_mul (2 * k))).sub (hwp.const_mul 2)).intervalIntegrable 0 R)
+  change (∫ t : ℝ in (0 : ℝ)..R,
+      dw t * Complex.normSq (v t) + 2 * k * (w t * Complex.normSq (v t)) -
+        2 * (w t * realPairing u v t)) =
+      w R * Complex.normSq (v R) - w 0 * Complex.normSq (v 0) at hD
+  rw [hvz R le_rfl, Complex.normSq_zero, mul_zero, zero_sub,
+    intervalIntegral.integral_sub (hid.add (hiq.const_mul (2 * k))) (hip.const_mul 2),
+    intervalIntegral.integral_add hid (hiq.const_mul (2 * k)),
+    intervalIntegral.integral_const_mul, intervalIntegral.integral_const_mul] at hD
+  have hExpand :
+      (∫ t : ℝ in (0 : ℝ)..R,
+        w t * Complex.normSq (u t - (c : ℂ) * v t)) =
+      (∫ t : ℝ in (0 : ℝ)..R, w t * Complex.normSq (u t)) +
+        c ^ 2 * (∫ t : ℝ in (0 : ℝ)..R, w t * Complex.normSq (v t)) -
+        2 * c * (∫ t : ℝ in (0 : ℝ)..R, w t * realPairing u v t) := by
+    calc
+      _ = ∫ t : ℝ in (0 : ℝ)..R,
+          w t * Complex.normSq (u t) + c ^ 2 * (w t * Complex.normSq (v t)) -
+            2 * c * (w t * realPairing u v t) := by
+        apply intervalIntegral.integral_congr
+        intro t _
+        change w t * Complex.normSq (u t - (c : ℂ) * v t) =
+          w t * Complex.normSq (u t) + c ^ 2 * (w t * Complex.normSq (v t)) -
+            2 * c * (w t * realPairing u v t)
+        rw [normSq_sub_real_mul]
+        dsimp only [realPairing]
+        ring
+      _ = _ := by
+        rw [intervalIntegral.integral_sub (hiu.add (hiq.const_mul (c ^ 2)))
+            (hip.const_mul (2 * c)),
+          intervalIntegral.integral_add hiu (hiq.const_mul (c ^ 2)),
+          intervalIntegral.integral_const_mul, intervalIntegral.integral_const_mul]
+  change (∫ t : ℝ in Ioi 0, w t * Complex.normSq (u t - (c : ℂ) * v t)) +
+      c * (2 * k - c) * (∫ t : ℝ in Ioi 0, w t * Complex.normSq (v t)) +
+      c * w 0 * Complex.normSq (v 0) +
+      c * (∫ t : ℝ in Ioi 0, dw t * Complex.normSq (v t)) =
+      ∫ t : ℝ in Ioi 0, w t * Complex.normSq (u t)
+  rw [halfline_eq_interval hwb R (fun t ht => by
+        simp only [hz t ht, hvz t ht, mul_zero, sub_self, Complex.normSq_zero]),
+    halfline_eq_interval hwq R (fun t ht => by
+        simp only [hvz t ht, Complex.normSq_zero, mul_zero]),
+    halfline_eq_interval hdwq R (fun t ht => by
+        simp only [hvz t ht, Complex.normSq_zero, mul_zero]),
+    halfline_eq_interval hwu R (fun t ht => by
+        simp only [hz t ht, Complex.normSq_zero, mul_zero]),
+    hExpand]
+  linear_combination c * hD
+
 /-- The exact half-line norm balance of the actual exponential-tail map.
 All scalar parameters are real. Compact support makes the half-line integrals
 finite even when the rate is nonpositive. The boundary term is the actual tail
@@ -226,57 +322,13 @@ theorem right_exponential_tail_energy_balance
         (∫ t : ℝ in Ioi 0, Complex.normSq (rightExponentialTail k u t)) +
       c * Complex.normSq (rightExponentialTail k u 0) =
       ∫ t : ℝ in Ioi 0, Complex.normSq (u t) := by
-  obtain ⟨R, _hR, hz⟩ := exists_upper_zero hs
-  let v : ℝ → ℂ := rightExponentialTail k u
-  have hv : Continuous v := tail_continuous hu hs k
-  have hvz (t : ℝ) (ht : R ≤ t) : v t = 0 := tail_zero_above k R t hz ht
-  have hq : Continuous (fun t : ℝ => Complex.normSq (v t)) :=
-    Complex.continuous_normSq.comp hv
-  have huq : Continuous (fun t : ℝ => Complex.normSq (u t)) :=
-    Complex.continuous_normSq.comp hu
-  have hp : Continuous (realPairing u v) := realPairing_continuous hu hv
-  have hb : Continuous (fun t : ℝ => Complex.normSq (u t - (c : ℂ) * v t)) := by
-    apply Complex.continuous_normSq.comp
-    exact hu.sub (continuous_const.mul hv)
-  have hiq : IntervalIntegrable (fun t : ℝ => Complex.normSq (v t)) volume 0 R :=
-    hq.intervalIntegrable 0 R
-  have hiu : IntervalIntegrable (fun t : ℝ => Complex.normSq (u t)) volume 0 R :=
-    huq.intervalIntegrable 0 R
-  have hip : IntervalIntegrable (realPairing u v) volume 0 R :=
-    hp.intervalIntegrable 0 R
-  have hD := intervalIntegral.integral_eq_sub_of_hasDerivAt
-    (a := (0 : ℝ)) (b := R)
-    (fun t _ => tail_normSq_hasDerivAt hu hs k t)
-    (((hq.const_mul (2 * k)).sub (hp.const_mul 2)).intervalIntegrable 0 R)
-  change (∫ t : ℝ in (0 : ℝ)..R,
-      2 * k * Complex.normSq (v t) - 2 * realPairing u v t) =
-      Complex.normSq (v R) - Complex.normSq (v 0) at hD
-  rw [hvz R le_rfl, Complex.normSq_zero, zero_sub,
-    intervalIntegral.integral_sub (hiq.const_mul (2 * k)) (hip.const_mul 2),
-    intervalIntegral.integral_const_mul, intervalIntegral.integral_const_mul] at hD
-  have hExpand :
-      (∫ t : ℝ in (0 : ℝ)..R, Complex.normSq (u t - (c : ℂ) * v t)) =
-        (∫ t : ℝ in (0 : ℝ)..R, Complex.normSq (u t)) +
-          c ^ 2 * (∫ t : ℝ in (0 : ℝ)..R, Complex.normSq (v t)) -
-          2 * c * (∫ t : ℝ in (0 : ℝ)..R, realPairing u v t) := by
-    simp_rw [normSq_sub_real_mul]
-    change (∫ t : ℝ in (0 : ℝ)..R,
-        Complex.normSq (u t) + c ^ 2 * Complex.normSq (v t) -
-          2 * c * realPairing u v t) = _
-    rw [intervalIntegral.integral_sub (hiu.add (hiq.const_mul (c ^ 2)))
-        (hip.const_mul (2 * c)),
-      intervalIntegral.integral_add hiu (hiq.const_mul (c ^ 2)),
-      intervalIntegral.integral_const_mul, intervalIntegral.integral_const_mul]
-  change (∫ t : ℝ in Ioi 0, Complex.normSq (u t - (c : ℂ) * v t)) +
-      c * (2 * k - c) * (∫ t : ℝ in Ioi 0, Complex.normSq (v t)) +
-      c * Complex.normSq (v 0) = ∫ t : ℝ in Ioi 0, Complex.normSq (u t)
-  rw [halfline_eq_interval hb R (fun t ht => by simp only [hz t ht, hvz t ht,
-      mul_zero, sub_self, Complex.normSq_zero]),
-    halfline_eq_interval hq R (fun t ht => by simp only [hvz t ht, Complex.normSq_zero]),
-    halfline_eq_interval huq R (fun t ht => by simp only [hz t ht, Complex.normSq_zero]),
-    hExpand]
-  linear_combination c * hD
+  simpa only [one_mul, mul_one, zero_mul, integral_zero, mul_zero, add_zero] using
+    right_exponential_tail_weighted_energy_balance u hu hs
+      (fun _ : ℝ => (1 : ℝ)) (fun _ : ℝ => (0 : ℝ))
+      continuous_const continuous_const
+      (fun t _ => hasDerivAt_const t (1 : ℝ)) k c
 
 #print axioms right_exponential_tail_energy_balance
+#print axioms right_exponential_tail_weighted_energy_balance
 
 end D5.S3.Weil.ZetaGamma.FormCore.RightExponentialTail
