@@ -10,7 +10,6 @@ import Mathlib.FieldTheory.Finite.GaloisField
 import Mathlib.Data.Matrix.Basic
 import Mathlib.LinearAlgebra.Matrix.Determinant.Basic
 import Mathlib.Algebra.Group.Subgroup.Basic
-import Mathlib.Algebra.Group.Subgroup.Ker
 import Mathlib.Tactic
 
 noncomputable section
