@@ -5,3 +5,7 @@ cas_ref: sha256:23b92837f35d441cab2ec7f4e054fa4bd9fd5602979a16f423eb8f67cf3096be
 coverage_gids: []
 receipts:
   unresolved_subitems: []
+  nonpropositional:
+    justification: 非命题。列举待澄清依赖顺序的主题黄金维数，没有给出维数值或等式。
+    previous_atom_id: 97649d659fd89bd9dba68843a8c9418ce8be38efcb59ec2e99ffbde623b922b2
+    next_atom_id: dcf38bf21e7ff61482ae3898b8b8f009d6d34594a0c03a0ca5b8f8ffde583aab

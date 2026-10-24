@@ -5,3 +5,7 @@ cas_ref: sha256:2c853ebb6e23ab7484d6c0d4fd74c847f1abeca88455198d9f1cf2b0d92ff8cb
 coverage_gids: []
 receipts:
   unresolved_subitems: []
+  nonpropositional:
+    justification: 非命题。建议补充的观察信息清单中的名词项 phase derivative，没有数值或性质断言。
+    previous_atom_id: 3304d5fdf4a1338b3d15eb5e07cd5a55c2040d5e4c227a3ba434807784293fd2
+    next_atom_id: b1e8d553fc13a4e5dda8778a323bf705bb43178bd3d7044c03ab80b7d2c49d39
