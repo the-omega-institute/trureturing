@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:db54eb7f8d6ddda7370365118848589ef39c91a5ef956b0deffd682bfee1e438
+  normalized_sha256: sha256:db54eb7f8d6ddda7370365118848589ef39c91a5ef956b0deffd682bfee1e438
+cas_ref: sha256:db54eb7f8d6ddda7370365118848589ef39c91a5ef956b0deffd682bfee1e438
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 'Nonpropositional: 未解决的全局完成问题中列出的操作名称 analytic continuation；没有附加等式或性质。'
+    previous_atom_id: 35032089b787c78e53c6959927552bcad008865e78110895f49b83d317328ca2
+    next_atom_id: 7dc9982379a707de8ce2473410fc3d5740bc7f5f621bb6a460929a16df98a42a
