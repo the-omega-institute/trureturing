@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:8f1020ba34d266e4175e7581b7e9734a78b50ac36bde412ad66cbb18f971a620
+  normalized_sha256: sha256:8f1020ba34d266e4175e7581b7e9734a78b50ac36bde412ad66cbb18f971a620
+cas_ref: sha256:8f1020ba34d266e4175e7581b7e9734a78b50ac36bde412ad66cbb18f971a620
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 库萨否定神学与肯定称谓适切性的解释；没有统计残差或其他形式数学主张。
+    previous_atom_id: 607d44553fb21bc54f94a03ba9e995d4ace9f445b6b2b876aa45622f730360a9
+    next_atom_id: e9c71e878687a72059c2af2dff4e448c18f6d802d80621d5837d47f47827404c

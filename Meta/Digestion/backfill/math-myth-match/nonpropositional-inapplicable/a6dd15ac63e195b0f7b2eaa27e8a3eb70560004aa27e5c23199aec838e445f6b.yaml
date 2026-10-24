@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:a6dd15ac63e195b0f7b2eaa27e8a3eb70560004aa27e5c23199aec838e445f6b
+  normalized_sha256: sha256:a6dd15ac63e195b0f7b2eaa27e8a3eb70560004aa27e5c23199aec838e445f6b
+cas_ref: sha256:a6dd15ac63e195b0f7b2eaa27e8a3eb70560004aa27e5c23199aec838e445f6b
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: Paul 的发现和 Callard 志向形成的学术解释。
+    previous_atom_id: d2e20e9e184e77dca7a927dc21db8c3afd4079fc51c785a763299a12eef45b8f
+    next_atom_id: c48a86fbf185353d6570d90877f40914e565b3a4a9b111cde6b354ee6cffeb5e

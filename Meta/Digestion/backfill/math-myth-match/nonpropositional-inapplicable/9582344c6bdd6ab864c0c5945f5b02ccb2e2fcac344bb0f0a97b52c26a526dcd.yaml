@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:9582344c6bdd6ab864c0c5945f5b02ccb2e2fcac344bb0f0a97b52c26a526dcd
+  normalized_sha256: sha256:9582344c6bdd6ab864c0c5945f5b02ccb2e2fcac344bb0f0a97b52c26a526dcd
+cas_ref: sha256:9582344c6bdd6ab864c0c5945f5b02ccb2e2fcac344bb0f0a97b52c26a526dcd
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 仅记录 Schleiermacher 的 Oman 译本及正文、导言、后加说明的版本区分。
+    previous_atom_id: 329409df8807b92e4d5bf610aae42d7d5ddc5e32036d11c89d46949c5652a996
+    next_atom_id: 4eecac24e9bc0e64a5249073f5f00ed618c3a00c144b7fed6811d20469d29d98

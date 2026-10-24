@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:213a39f697402f0766ae3f287dcb3ed724784380d46c1301cb4909f8f60e486a
+  normalized_sha256: sha256:213a39f697402f0766ae3f287dcb3ed724784380d46c1301cb4909f8f60e486a
+cas_ref: sha256:213a39f697402f0766ae3f287dcb3ed724784380d46c1301cb4909f8f60e486a
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: Defines the total-variation normalization as one half of the sum of absolute mass differences. The heading identifies the next topic; the body makes no convergence claim.
+    previous_atom_id: b8a6dae609ea7edc2165f131514027eaecb791269b5d6e391fcc5bdbdd6ebf92
+    next_atom_id: 74b4edfb3f9a2cbed76cb36423318ed4316684c2f5016d53d8345fffcd753940

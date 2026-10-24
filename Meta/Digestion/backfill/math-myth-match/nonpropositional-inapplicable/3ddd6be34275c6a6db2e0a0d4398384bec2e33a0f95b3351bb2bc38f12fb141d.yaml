@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:3ddd6be34275c6a6db2e0a0d4398384bec2e33a0f95b3351bb2bc38f12fb141d
+  normalized_sha256: sha256:3ddd6be34275c6a6db2e0a0d4398384bec2e33a0f95b3351bb2bc38f12fb141d
+cas_ref: sha256:3ddd6be34275c6a6db2e0a0d4398384bec2e33a0f95b3351bb2bc38f12fb141d
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 保留耆那教全知、解脱与实体承诺，区分其与 MMM、中观的哲学立场。
+    previous_atom_id: e39da4f21c119b141e93145bc3c9eecd8aa4d0c0a73aac7a205176d3f797daee
+    next_atom_id: 201d418c205071f3d2ead52e6a40e49198cd9e8389a43d9637d24c30e1626f2a

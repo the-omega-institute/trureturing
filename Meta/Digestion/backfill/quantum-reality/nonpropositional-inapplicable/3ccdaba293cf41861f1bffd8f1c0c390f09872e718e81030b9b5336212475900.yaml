@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:3ccdaba293cf41861f1bffd8f1c0c390f09872e718e81030b9b5336212475900
+  normalized_sha256: sha256:3ccdaba293cf41861f1bffd8f1c0c390f09872e718e81030b9b5336212475900
+cas_ref: sha256:3ccdaba293cf41861f1bffd8f1c0c390f09872e718e81030b9b5336212475900
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 只列原作者的检查数量、涵盖主题和脚本链接，不将实验报告当作一般数学结论。
+    previous_atom_id: eb2b6d59bd34eb7fbbbc396b05e434e0f6484e92123eb3c511243372e69a0f58
+    next_atom_id: 423b9c7147d63b3a5030368addd594b0222c703038d1e565c630696f3d9619b9

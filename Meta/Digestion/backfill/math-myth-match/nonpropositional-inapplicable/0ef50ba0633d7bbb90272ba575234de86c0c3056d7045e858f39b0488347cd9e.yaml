@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:0ef50ba0633d7bbb90272ba575234de86c0c3056d7045e858f39b0488347cd9e
+  normalized_sha256: sha256:0ef50ba0633d7bbb90272ba575234de86c0c3056d7045e858f39b0488347cd9e
+cas_ref: sha256:0ef50ba0633d7bbb90272ba575234de86c0c3056d7045e858f39b0488347cd9e
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 道、空、佛性与神的语义及解释边界，不是随机参数或概率断言。
+    previous_atom_id: 6a83ccf253e84e1e30652af46643827fba26848ee6c804b06b46607dccd68edb
+    next_atom_id: 1e5a01807a55d25bbba97f8a22400b8bda758180d694aafc2c7224422afc575a

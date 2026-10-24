@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:c9f536f3d17e229f2a543806664011693bdc4091791f09ae4caa8ceb5aed171e
+  normalized_sha256: sha256:c9f536f3d17e229f2a543806664011693bdc4091791f09ae4caa8ceb5aed171e
+cas_ref: sha256:c9f536f3d17e229f2a543806664011693bdc4091791f09ae4caa8ceb5aed171e
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 古兰经17:36的认识责任与译文范围；属于引文解释、建模约定或研究建议，没有另立待证数学断言，本收据不验证其文献或经验真值。
+    previous_atom_id: 564a07a0e641ab76e9ad9a357b697083af5e84f9f0c1153cd31f49111ea126a6
+    next_atom_id: f31c77d1293ad05db94cba6e4a1f800c6bb1cf28dc856350d958b5e4da055978

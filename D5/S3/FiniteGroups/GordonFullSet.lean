@@ -17,7 +17,7 @@ open scoped BigOperators DirectSum
 
 namespace D5.S3.FiniteGroups.Gordon
 
-private def total (G : Type*) [AddCommGroup G] [Fintype G] : G := ∑ x : G, x
+def total (G : Type*) [AddCommGroup G] [Fintype G] : G := ∑ x : G, x
 
 private theorem total_map {G H : Type*} [AddCommGroup G] [Fintype G]
     [AddCommGroup H] [Fintype H] (e : G ≃+ H) : e (total G) = total H := by
@@ -55,21 +55,21 @@ structure CyclicFactor where
   isPrime : Nat.Prime prime
   exponent : ℕ
 
-private def CyclicFactor.modulus (c : CyclicFactor) : ℕ := c.prime ^ c.exponent
+def CyclicFactor.modulus (c : CyclicFactor) : ℕ := c.prime ^ c.exponent
 
 instance (c : CyclicFactor) : NeZero c.modulus :=
   ⟨pow_ne_zero _ c.isPrime.ne_zero⟩
 
-@[reducible] private def Chain : List CyclicFactor → Type
+@[reducible] def Chain : List CyclicFactor → Type
   | [] => PUnit
   | c :: cs => ZMod c.modulus × Chain cs
 
-private instance chainGroup : (cs : List CyclicFactor) → AddCommGroup (Chain cs)
+instance chainGroup : (cs : List CyclicFactor) → AddCommGroup (Chain cs)
   | [] => inferInstanceAs (AddCommGroup PUnit)
   | c :: cs => letI := chainGroup cs
                inferInstanceAs (AddCommGroup (ZMod c.modulus × Chain cs))
 
-private instance chainFintype : (cs : List CyclicFactor) → Fintype (Chain cs)
+instance chainFintype : (cs : List CyclicFactor) → Fintype (Chain cs)
   | [] => inferInstanceAs (Fintype PUnit)
   | c :: cs => letI := chainFintype cs
                inferInstanceAs (Fintype (ZMod c.modulus × Chain cs))
@@ -96,13 +96,13 @@ private def piChain : (n : ℕ) → (f : Fin n → CyclicFactor) →
     exact (piSplit f).trans ((AddEquiv.refl _).prodCongr (piChain n (fun i => f i.succ)))
 
 /-- The three cases distinguish no even factor, one even factor, and vanishing total. -/
-private def DecompositionCase (G : Type*) [AddCommGroup G] [Fintype G] : Prop :=
+def DecompositionCase (G : Type*) [AddCommGroup G] [Fintype G] : Prop :=
   (Odd (Fintype.card G) ∧ ∃ ds : List OddRadix, Nonempty (G ≃+ Box ds)) ∨
   (∃ a : ℕ, 0 < a ∧ ∃ ds : List OddRadix,
     Nonempty (G ≃+ ZMod (2 ^ a) × Box ds)) ∨
   (Even (Fintype.card G) ∧ total G = 0)
 
-private theorem case_transport {G H : Type*} [AddCommGroup G] [Fintype G]
+theorem case_transport {G H : Type*} [AddCommGroup G] [Fintype G]
     [AddCommGroup H] [Fintype H] (e : G ≃+ H) (hh : DecompositionCase H) :
     DecompositionCase G := by
   have hc := Fintype.card_congr e.toEquiv
@@ -112,7 +112,7 @@ private theorem case_transport {G H : Type*} [AddCommGroup G] [Fintype G]
   · refine Or.inr (Or.inr ⟨hc ▸ he, e.injective ?_⟩)
     rw [total_map, hz, map_zero]
 
-private theorem card_even_of_power_box {G : Type*} [AddCommGroup G] [Fintype G]
+theorem card_even_of_power_box {G : Type*} [AddCommGroup G] [Fintype G]
     (a : ℕ) (ha : 0 < a) (ds : List OddRadix)
     (e : G ≃+ ZMod (2 ^ a) × Box ds) : Even (Fintype.card G) := by
   rw [Fintype.card_congr e.toEquiv, Fintype.card_prod, ZMod.card]
@@ -127,7 +127,7 @@ private theorem total_prod_zero_even (G H : Type*) [AddCommGroup G] [Fintype G]
   rw [total_prod, even_nsmul_total G _ hh, even_nsmul_total H _ hg]
   rfl
 
-private theorem chain_classification (cs : List CyclicFactor) :
+theorem chain_classification (cs : List CyclicFactor) :
     DecompositionCase (Chain cs) := by
   induction cs with
   | nil =>
@@ -180,7 +180,7 @@ private theorem chain_classification (cs : List CyclicFactor) :
             rw [total_prod, hct, hz, nsmul_zero, nsmul_zero]
             rfl
 
-private theorem finite_abelian_presentation (G : Type*) [AddCommGroup G] [Fintype G] :
+theorem finite_abelian_presentation (G : Type*) [AddCommGroup G] [Fintype G] :
     ∃ cs : List CyclicFactor, Nonempty (G ≃+ Chain cs) := by
   classical
   obtain ⟨ι, _, p, hp, n, ⟨e⟩⟩ := AddCommGroup.equiv_directSum_zmod_of_finite G

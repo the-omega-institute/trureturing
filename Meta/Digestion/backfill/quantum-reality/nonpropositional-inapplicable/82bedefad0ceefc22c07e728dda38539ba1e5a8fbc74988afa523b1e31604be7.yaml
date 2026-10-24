@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:82bedefad0ceefc22c07e728dda38539ba1e5a8fbc74988afa523b1e31604be7
+  normalized_sha256: sha256:82bedefad0ceefc22c07e728dda38539ba1e5a8fbc74988afa523b1e31604be7
+cas_ref: sha256:82bedefad0ceefc22c07e728dda38539ba1e5a8fbc74988afa523b1e31604be7
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 几何桥梁一行列 Killing 或共形 Killing 及共同钟标定为应补的证明。
+    previous_atom_id: 6593c614aa1053bf8742ec0dbcf688dd2d523e26e1d6a074072eb62060f466c3
+    next_atom_id: 9d40a40b3f36145428984221d00d4ae667b66610b603c7b25695f3f612490644

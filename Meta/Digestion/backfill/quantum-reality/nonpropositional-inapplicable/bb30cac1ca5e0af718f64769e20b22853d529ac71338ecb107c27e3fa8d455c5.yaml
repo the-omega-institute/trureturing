@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:bb30cac1ca5e0af718f64769e20b22853d529ac71338ecb107c27e3fa8d455c5
+  normalized_sha256: sha256:bb30cac1ca5e0af718f64769e20b22853d529ac71338ecb107c27e3fa8d455c5
+cas_ref: sha256:bb30cac1ca5e0af718f64769e20b22853d529ac71338ecb107c27e3fa8d455c5
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 'Nonpropositional: 表句要求用合法密度矩阵产生新增控制见证，没有给出该见证或断言它已构造。'
+    previous_atom_id: 93b990384970b2dff4e45dcdd94fbc98dbdbb741a08628f7ac5bc3b7aad48a1b
+    next_atom_id: 0d46dee260a0b30523744a69778b7b0463aa48c8d931449510364eb3891b6d15

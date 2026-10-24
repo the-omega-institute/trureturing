@@ -1,0 +1,14 @@
+fingerprints:
+  raw_sha256: sha256:6e77ff548b029be5eb948312cddecb2a08bbf94f86592513c8fd49a417ba00c6
+  normalized_sha256: sha256:6e77ff548b029be5eb948312cddecb2a08bbf94f86592513c8fd49a417ba00c6
+cas_ref: sha256:6e77ff548b029be5eb948312cddecb2a08bbf94f86592513c8fd49a417ba00c6
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 第147节标题与导航及不同观察合同的范围说明，无独立数学命题；链子项先结算。
+    previous_atom_id: 36367811b7d78c12009b1c0892151b5b5a9f6eb1b01417d1323c0bef5b08cfc3
+    next_atom_id: 33cce640bb9ac65bc38efeaf6f129a4967e811e53decfdbd596d614c16d49c2d
+  chain_atoms:
+    - d06d1981db399bdf214097783564b5b63985a3a1e83131eb099049a2238f8418
+    - 203a78d14a50c918116c6d939f34bb1e71f9f2b5caf3ea436bef9ccaa10f265c

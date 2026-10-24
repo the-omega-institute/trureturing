@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:91f21cd4a5b739f2bc7adebfabae47eb6df7f7ec9e78bc2ac7bbd9e3650db3dc
+  normalized_sha256: sha256:91f21cd4a5b739f2bc7adebfabae47eb6df7f7ec9e78bc2ac7bbd9e3650db3dc
+cas_ref: sha256:91f21cd4a5b739f2bc7adebfabae47eb6df7f7ec9e78bc2ac7bbd9e3650db3dc
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 薄伽梵歌指定译注中求问、师承、顺服和服务的神学解释。
+    previous_atom_id: 8b0a4e4b6bd45f1e245f178ee5027fa468d79f3df50d4b2ee6209b65bb84691c
+    next_atom_id: 8990a81405c31f5047f74e4a37dd94261d7494d2e8b74a1a8e9b98befaca7054
