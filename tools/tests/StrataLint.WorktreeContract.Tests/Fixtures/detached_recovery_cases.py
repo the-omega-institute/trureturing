@@ -4,6 +4,7 @@ import argparse
 from contextlib import ExitStack
 import json
 from pathlib import Path
+import sys
 from unittest.mock import patch
 import uuid
 
@@ -375,3 +376,65 @@ class DetachedRecoveryCases:
         result = json.loads(self.remove(74).stdout)["items"][0]
         self.assertIn("interrupted_removal_snapshot_moved", result["error"])
         self.assertTrue((self.tree / "cache/generated").is_file())
+
+    def test_committed_ignore_context_preserves_candidate_type(self):
+        import worktree_protocol as protocol
+        # Native Git on the actual candidate and committed rules is the oracle;
+        # the resume projection must make the same decision after rule deletion.
+        for kind in ("file", "link", "directory"):
+            for pattern in ("/nested/", "/nested"):
+                self.note("candidate_type_begin", kind=kind, pattern=pattern)
+                (self.tree / ".gitignore").write_text(pattern + "\n")
+                (self.tree / "nested").mkdir(exist_ok=True)
+                (self.tree / "nested/.gitignore").write_text("unrelated\n")
+                self.g(self.tree, "add", "-f", ".gitignore", "nested/.gitignore")
+                self.g(self.tree, "commit", "-m", "candidate type ignore rules")
+                snapshot = self.interrupted_removal()["checkpoint"]["commit"]
+                writer = self.run_protocol("with", "--path", self.tree, "--write", "nested",
+                    "--", sys.executable, "-c", r"""
+from pathlib import Path
+import sys
+p = Path('nested')
+(p / '.gitignore').unlink()
+kind = sys.argv[1]
+if kind == 'directory':
+    (p / 'later').write_text('later bytes\n')
+else:
+    p.rmdir()
+    if kind == 'link':
+        p.symlink_to('dir', target_is_directory=True)
+    else:
+        p.write_text('later bytes\n')
+""", kind)
+                native = protocol.git(self.tree, "check-ignore", "--no-index", "-q", "--", "nested",
+                                      check=False)
+                ignored = kind == "directory" or pattern == "/nested"
+                self.assertEqual(0 if ignored else 1, native.returncode)
+                self.run_protocol("with", "--path", self.tree, "--write", ".gitignore",
+                    "--", sys.executable, "-c", "from pathlib import Path; Path('.gitignore').unlink()")
+                before = self.g(self.tree, "status", "--porcelain", "--untracked-files=all")
+                result = json.loads(self.remove(0 if ignored else 74).stdout)["items"][0]
+                self.note("candidate_type_resume", kind=kind, pattern=pattern,
+                          writer_exit=writer.returncode, native_ignore_exit=native.returncode,
+                          before_status=before, removal=result, target_exists=self.tree.exists(),
+                          snapshot=snapshot, recovery_tip=self.g(self.main, "rev-parse", self.branch).strip())
+                self.assertEqual(snapshot, self.g(self.main, "rev-parse", self.branch).strip())
+                if ignored:
+                    self.assertEqual(("removed", "resumed"),
+                                     (result["outcome"], result["checkpoint"]["status"]))
+                    self.assertFalse(self.tree.exists())
+                    self.g(self.main, "worktree", "add", self.tree, self.branch)
+                else:
+                    self.assertEqual("checkpoint_failed", result["outcome"])
+                    self.assertEqual("interrupted_removal_tree_changed", result["error"])
+                    self.assertIsNone(result["checkpoint"])
+                    candidate = self.tree / "nested"
+                    if kind == "link":
+                        self.assertTrue(candidate.is_symlink())
+                        self.assertEqual("dir", str(candidate.readlink()))
+                    else:
+                        self.assertEqual("later bytes\n", candidate.read_text())
+                    candidate.unlink()
+                    self.g(self.tree, "restore", "--worktree", "--", ".")
+                    metadata = Path(self.g(self.tree, "rev-parse", "--absolute-git-dir").strip())
+                    (metadata / "worktree-removal").unlink()

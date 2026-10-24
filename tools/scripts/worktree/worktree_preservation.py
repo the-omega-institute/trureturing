@@ -68,6 +68,8 @@ def snapshot_ignored(target, commit, paths):
     """Classify exposed files with native Git and the checkpoint's ignore hierarchy."""
     with tempfile.TemporaryDirectory(prefix="worktree-removal-ignore-") as temporary:
         context = Path(temporary)
+        candidates = [Path(os.fsdecode(name)) for name in paths]
+        ancestors = {parent for name in candidates for parent in name.parents}
         # The index is unchanged: the caller accepts only unstaged deletions and
         # untracked paths. Read its ignore-file names, but take bytes from commit.
         entries = git(target, "ls-files", "--stage", "-z", "--",
@@ -78,10 +80,25 @@ def snapshot_ignored(target, commit, paths):
             fields, name = entry.split(b"\t", 1)
             if fields.split()[0] not in (b"100644", b"100755"):
                 continue  # Native Git does not follow symlinked .gitignore files.
-            name = os.fsdecode(name)
+            name = Path(os.fsdecode(name))
+            # Only ancestor rules can affect a candidate. Descendant ignore
+            # files must not create a directory in place of a candidate leaf.
+            if name.parent not in ancestors:
+                continue
             ignore = context / name
             ignore.parent.mkdir(parents=True, exist_ok=True)
-            ignore.write_bytes(git(target, "show", commit + ":" + name).stdout)
+            ignore.write_bytes(git(target, "show", commit + ":" + str(name)).stdout)
+        # Git consults the filesystem for directory-only patterns. Project
+        # candidate kinds as well as rule bytes; links remain links to Git.
+        for name in candidates:
+            actual, projected = target / name, context / name
+            projected.parent.mkdir(parents=True, exist_ok=True)
+            if actual.is_symlink():
+                projected.symlink_to(os.readlink(actual))
+            elif actual.is_dir():
+                projected.mkdir(exist_ok=True)
+            else:
+                projected.touch()
         result = git(target, "--work-tree=" + str(context), "check-ignore",
                      "--no-index", "-z", "--stdin", input=b"\0".join(paths) + b"\0", check=False)
         if result.returncode not in (0, 1):
