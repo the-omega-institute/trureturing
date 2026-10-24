@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:a5641a696a3a9a6f5a0072309f66703f9b0c578c2e79e6ddfaeeb86df77c125f
+  normalized_sha256: sha256:a5641a696a3a9a6f5a0072309f66703f9b0c578c2e79e6ddfaeeb86df77c125f
+cas_ref: sha256:a5641a696a3a9a6f5a0072309f66703f9b0c578c2e79e6ddfaeeb86df77c125f
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: Peirce 1878 年论文的版本、篇节与哲学解释范围。
+    previous_atom_id: 105126d1e96a55996f756b7f32194979e7a6d7469442847e068907c96798081c
+    next_atom_id: fef4f9ae8b84700863e8cdf2e74aedbfb34a5f8e46ec56fb54bfeb74053c8041

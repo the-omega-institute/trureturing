@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:27d32723f9b34b5ce7aedfcca1920359e6c4c148c7e8d799862e301b491a4c5b
+  normalized_sha256: sha256:27d32723f9b34b5ce7aedfcca1920359e6c4c148c7e8d799862e301b491a4c5b
+cas_ref: sha256:27d32723f9b34b5ce7aedfcca1920359e6c4c148c7e8d799862e301b491a4c5b
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 非命题结算：限定覆盖模型充分对应的教义解释与实际指涉；引用命题266.1而不将其当作所有会通的必要形式。
+    previous_atom_id: 8236e0ec3411f4137f7130a875988fa200784cf2ed8897d7ca68c2a815abc9a6
+    next_atom_id: 06c7bdcb80063b96b88afe69822ac32fb7c2a8994721c10713e500781f0725fe

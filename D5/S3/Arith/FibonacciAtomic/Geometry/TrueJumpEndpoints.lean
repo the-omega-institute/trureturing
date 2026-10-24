@@ -74,14 +74,14 @@ private theorem q_child (m : ℕ) (p : Address) (b : Bool) :
     q m (child p b) = q m p + ((childIncrement (delta m p) b).value : ZMod m) := by
   simp [q, delta, code_child, update]
 
-private theorem delta_child (m : ℕ) (p : Address) (b : Bool) :
+theorem delta_child (m : ℕ) (p : Address) (b : Bool) :
     delta m (child p b) = childIncrement (delta m p) b := by
   simp [delta, code_child, update]
 
-private theorem ancestor_zero (p : Address) : ancestor p 0 = p := by
+theorem ancestor_zero (p : Address) : ancestor p 0 = p := by
   simp [ancestor]
 
-private theorem ancestor_past (p : Address) (k : ℕ) (hk : p.length ≤ k) :
+theorem ancestor_past (p : Address) (k : ℕ) (hk : p.length ≤ k) :
     ancestor p k = [] := by
   simp [ancestor, Nat.sub_eq_zero_of_le hk]
 
@@ -90,13 +90,13 @@ private theorem ancestor_child_succ (p : Address) (b : Bool) (k : ℕ) :
   simp [ancestor, child, List.take_append, Nat.add_sub_add_right,
     Nat.sub_eq_zero_of_le (Nat.sub_le _ _)]
 
-private theorem parent_child (p : Address) (b : Bool) : parent (child p b) = p := by
+theorem parent_child (p : Address) (b : Bool) : parent (child p b) = p := by
   simpa [parent, ancestor] using ancestor_child_succ p b 0
 
 private theorem length_parent (p : Address) : (parent p).length = p.length - 1 := by
   simp [parent]
 
-private theorem ancestor_parent (p : Address) (k : ℕ) :
+theorem ancestor_parent (p : Address) (k : ℕ) :
     ancestor (parent p) k = ancestor p (k + 1) := by
   unfold ancestor
   rw [length_parent]
@@ -104,10 +104,10 @@ private theorem ancestor_parent (p : Address) (k : ℕ) :
   congr 1
   omega
 
-private def Same (m h : ℕ) (p p' : Address) : Prop :=
+def Same (m h : ℕ) (p p' : Address) : Prop :=
   p.length = p'.length ∧ ∀ k, k ≤ h → q m (ancestor p k) = q m (ancestor p' k)
 
-private theorem signature_eq_iff (m h : ℕ) (p p' : Address) :
+theorem signature_eq_iff (m h : ℕ) (p p' : Address) :
     signature m h p = signature m h p' ↔ Same m h p p' := by
   constructor
   · intro he
@@ -131,7 +131,7 @@ private theorem signature_eq_iff (m h : ℕ) (p p' : Address) :
     intro k hk
     exact hc k (by have := List.mem_range.mp hk; omega)
 
-private theorem incoming (m : ℕ) (p : Address) (hp : p ≠ []) :
+theorem incoming (m : ℕ) (p : Address) (hp : p ≠ []) :
     q m p = q m (parent p) + ((delta m p).value : ZMod m) := by
   induction p using List.reverseRecOn with
   | nil => contradiction

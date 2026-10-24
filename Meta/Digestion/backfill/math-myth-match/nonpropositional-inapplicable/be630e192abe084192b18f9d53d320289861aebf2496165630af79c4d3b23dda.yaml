@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:be630e192abe084192b18f9d53d320289861aebf2496165630af79c4d3b23dda
+  normalized_sha256: sha256:be630e192abe084192b18f9d53d320289861aebf2496165630af79c4d3b23dda
+cas_ref: sha256:be630e192abe084192b18f9d53d320289861aebf2496165630af79c4d3b23dda
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 非命题结算：解释笛卡尔知道与穷尽的区别及投影比喻的限制；明确不宣称任意对象不可穷尽的定理。
+    previous_atom_id: f18f9e45c59d6774e3573cf83b709cbe7741fdaf34b4be25386052cd3edb085c
+    next_atom_id: 2d1cbc8a263cb52c6acf0d74874819c459e098929e514211cf0db0c0df297326

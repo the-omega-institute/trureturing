@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:6087f9671b12c764e98f015ba6545eac48774e49a72e31f977957627886d49a2
+  normalized_sha256: sha256:6087f9671b12c764e98f015ba6545eac48774e49a72e31f977957627886d49a2
+cas_ref: sha256:6087f9671b12c764e98f015ba6545eac48774e49a72e31f977957627886d49a2
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 'UPSTREAM-ONLY: 固定经典命题p的双重否定与p等值直接应用Classical.not_not；余句限定该恒等式不能独自承担描述承诺变化或宗教超越的语义。 Declarations: Classical.not_not. 全D5/*.lean（含private）按not_not/double_neg/¬ ¬、Not (Not)、Not.*And/¬.*∧.*¬及上下文语义形状搜索；阅读ConceptDynamics/Epistemic、InvolutionLogic/BooleanInvolutionObservables、Evidence/PositiveSupportNonexplosion，未找到直接供应该经典满足/双否定子句的冻结GID。mathlib=56a005855ea17e0b0958f73ec801ae140b0a1679及其钉版Lean闭包。'
+    previous_atom_id: 15fe787978797908360812651f8406709cd98bf3d7f49a8635206cb5d9f32a2e
+    next_atom_id: 1b00738932ca1653e1d8c16ab8cf2c0af6e0db154d86ba9f62ae6482437fc096

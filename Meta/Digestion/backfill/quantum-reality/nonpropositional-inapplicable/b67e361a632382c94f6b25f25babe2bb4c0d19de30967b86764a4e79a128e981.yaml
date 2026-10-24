@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:b67e361a632382c94f6b25f25babe2bb4c0d19de30967b86764a4e79a128e981
+  normalized_sha256: sha256:b67e361a632382c94f6b25f25babe2bb4c0d19de30967b86764a4e79a128e981
+cas_ref: sha256:b67e361a632382c94f6b25f25babe2bb4c0d19de30967b86764a4e79a128e981
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 观察限制条目约定操作的含义及固定模型边界，不推出可访问代数或量子通道的任何新性质。
+    previous_atom_id: f78b7cdf4c9503fcae2a93bfb5c376e2558b5be46482437584c3cdcf73474193
+    next_atom_id: 1e44c4568db6c2d4d4d92c934dcae70e2025fe0258fdff23ae5233919ff50afa

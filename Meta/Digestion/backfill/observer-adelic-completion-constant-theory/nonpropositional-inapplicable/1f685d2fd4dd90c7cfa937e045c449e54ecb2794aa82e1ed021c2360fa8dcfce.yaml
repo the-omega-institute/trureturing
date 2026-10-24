@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:1f685d2fd4dd90c7cfa937e045c449e54ecb2794aa82e1ed021c2360fa8dcfce
+  normalized_sha256: sha256:1f685d2fd4dd90c7cfa937e045c449e54ecb2794aa82e1ed021c2360fa8dcfce
+cas_ref: sha256:1f685d2fd4dd90c7cfa937e045c449e54ecb2794aa82e1ed021c2360fa8dcfce
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 这是 Jet、支撑和 Sticky 三种研究深度的章节导语与分类安排，没有给出有限性、独立性定理或深度传输估计。
+    previous_atom_id: e285e9667917a1d1ff889b7b5c92ffed90aeb2907689f811fe3f75f932cf8ae7
+    next_atom_id: 074e93a850389d499ed019c26b4b1c5d7f40f5f3d8e8e21cd0734ddc39eb5112

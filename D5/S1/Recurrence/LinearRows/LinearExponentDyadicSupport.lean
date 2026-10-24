@@ -6,6 +6,7 @@
    utility: none
    digest: The exponent-n integer series has odd support at dyadic neighbors. -/
 
+/- Escape audit unfinished for square_odd, derivative_map: https://github.com/the-omega-institute/trureturing/issues/19834. -/
 import D5.S1.Recurrence.Invariants.CatalanCompositionSquareParity
 import Mathlib.RingTheory.PowerSeries.Derivative
 import Mathlib.RingTheory.PowerSeries.WellKnown
@@ -90,7 +91,7 @@ private theorem square_expand (F : PowerSeries F2) : F^2 = expand 2 (by decide) 
 private theorem square_even (F : PowerSeries F2) (n : ℕ) : coeff (2*n) (F^2) = coeff n F := by
   rw [square_expand, coeff_expand_mul]
 
-private theorem square_odd (F : PowerSeries F2) (n : ℕ) : coeff (2*n+1) (F^2) = 0 := by
+theorem square_odd (F : PowerSeries F2) (n : ℕ) : coeff (2*n+1) (F^2) = 0 := by
   rw [square_expand, coeff_expand_of_not_dvd]
   omega
 
@@ -253,7 +254,7 @@ private theorem integer_normalized_iff (F : PowerSeries ℤ) (n : ℕ) (hn : 0 <
 private theorem geom_map {S : Type*} [CommRing S] (f : R →+* S) (n : ℕ) :
     (geom (R := R) n).map f = geom n := by ext k; simp [geom]
 
-private theorem derivative_map {S : Type*} [CommRing S] (f : R →+* S) (F : PowerSeries R) :
+theorem derivative_map {S : Type*} [CommRing S] (f : R →+* S) (F : PowerSeries R) :
     (PowerSeries.derivative (R := R) F).map f = PowerSeries.derivative (R := S) (F.map f) := by ext k; simp [coeff_derivative]
 
 private theorem normalized_map {S : Type*} [CommRing S] (f : R →+* S)

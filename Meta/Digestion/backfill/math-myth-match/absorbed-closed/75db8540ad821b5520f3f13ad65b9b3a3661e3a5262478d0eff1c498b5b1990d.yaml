@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:75db8540ad821b5520f3f13ad65b9b3a3661e3a5262478d0eff1c498b5b1990d
+  normalized_sha256: sha256:75db8540ad821b5520f3f13ad65b9b3a3661e3a5262478d0eff1c498b5b1990d
+cas_ref: sha256:75db8540ad821b5520f3f13ad65b9b3a3661e3a5262478d0eff1c498b5b1990d
+coverage_gids:
+  - gid: D5/S3/ConceptDynamics/Evidence/ConflictingEvidenceAggregation.negative_evidence_moves_true_only_to_both
+    target_statement_id: sha256:415d3761b6dd4f497046b6401d2389f906697ece4ff8d8e2202470506784911c
+receipts:
+  unresolved_subitems: []

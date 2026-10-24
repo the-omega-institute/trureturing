@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:26098b33c3e4c1d71e31842258cd0c2235209c41e8a0f9f052556d12fe51265d
+  normalized_sha256: sha256:26098b33c3e4c1d71e31842258cd0c2235209c41e8a0f9f052556d12fe51265d
+cas_ref: sha256:26098b33c3e4c1d71e31842258cd0c2235209c41e8a0f9f052556d12fe51265d
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 补充预测词汇及限定目标的建设性研究方向，不承诺所有系统均有有限补完。
+    previous_atom_id: e90142d54018c634be28d4276fb2cabd3d29ee142b454a18a08ea71ccd5e27e1
+    next_atom_id: 38fcae22589e06c41636034ef6c43f47612b6eb9de7b39cac42e00b562f62843

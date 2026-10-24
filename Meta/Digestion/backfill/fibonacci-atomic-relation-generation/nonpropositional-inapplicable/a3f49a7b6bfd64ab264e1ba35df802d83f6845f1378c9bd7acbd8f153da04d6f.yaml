@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:a3f49a7b6bfd64ab264e1ba35df802d83f6845f1378c9bd7acbd8f153da04d6f
+  normalized_sha256: sha256:a3f49a7b6bfd64ab264e1ba35df802d83f6845f1378c9bd7acbd8f153da04d6f
+cas_ref: sha256:a3f49a7b6bfd64ab264e1ba35df802d83f6845f1378c9bd7acbd8f153da04d6f
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 假设四时刻联合单射，定义相干态及 k_A、k_B；未断言该态的谱或归一化定理。
+    previous_atom_id: a20e3b4ca041d07b0400aca910e0c2df0a3e81c22f1c548f3f47e4cfe71f1082
+    next_atom_id: 8d693ef60eb6d2b3ea51ebf921579db2b4803640a17b557fa93cb5b118b5784d

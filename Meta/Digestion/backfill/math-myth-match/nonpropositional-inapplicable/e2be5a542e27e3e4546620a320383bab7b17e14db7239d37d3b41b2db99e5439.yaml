@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:e2be5a542e27e3e4546620a320383bab7b17e14db7239d37d3b41b2db99e5439
+  normalized_sha256: sha256:e2be5a542e27e3e4546620a320383bab7b17e14db7239d37d3b41b2db99e5439
+cas_ref: sha256:e2be5a542e27e3e4546620a320383bab7b17e14db7239d37d3b41b2db99e5439
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 愿心、具体承担与训练之间的实践比较；属于引文解释、建模约定或研究建议，没有另立待证数学断言，本收据不验证其文献或经验真值。
+    previous_atom_id: 885d08388079d7f17d1970245f6adfbed219726415ab80d63023147fd0ee2507
+    next_atom_id: 21e799d1f2b6c619cb0a51afae9861bcb25b77b6dca831a4fe230216d21041a3

@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:1f584375fa791c8fb72ee8416ca2a16310b5ba77fb9e799ab8e881d485c1d562
+  normalized_sha256: sha256:1f584375fa791c8fb72ee8416ca2a16310b5ba77fb9e799ab8e881d485c1d562
+cas_ref: sha256:1f584375fa791c8fb72ee8416ca2a16310b5ba77fb9e799ab8e881d485c1d562
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 待构造对象列表中的 storage operator 名称；未断言其存在或正性。
+    previous_atom_id: d98e542f23581ebb2b4ed289f806fc77b279801afc6247a9f0933221cf260803
+    next_atom_id: 094e9d34509428d38b66106a4e9e87a6eac54929430039f787f13b04e03811a8

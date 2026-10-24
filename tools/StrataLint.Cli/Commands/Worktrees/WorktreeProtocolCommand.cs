@@ -27,10 +27,10 @@ internal static class WorktreeProtocolCommand
 
     internal static IReadOnlyDictionary<string, string> InitializationEnvironment(string root)
     {
-        // Use the protocol's environment policy without exporting environment values.
+        // Use the protocol's inherited-environment policy without exporting environment values.
         var result = new ProductionWorktreeProcessRunner().Run("python3",
             ["-IB", "-c", Program.Value
-                + "import json\nprint(json.dumps(list(sys.modules['worktree_protocol'].git_environment())))\n"],
+                + "import json\nprint(json.dumps(list(sys.modules['worktree_protocol'].inherited_environment())))\n"],
             root, BoundedProcessRunner.HangDetectionBudget);
         if (result.ExitCode != 0)
             throw new InvalidOperationException(Encoding.UTF8.GetString(result.StandardError));

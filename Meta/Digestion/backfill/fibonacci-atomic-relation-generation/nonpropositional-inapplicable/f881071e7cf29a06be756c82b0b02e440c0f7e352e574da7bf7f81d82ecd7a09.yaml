@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:f881071e7cf29a06be756c82b0b02e440c0f7e352e574da7bf7f81d82ecd7a09
+  normalized_sha256: sha256:f881071e7cf29a06be756c82b0b02e440c0f7e352e574da7bf7f81d82ecd7a09
+cas_ref: sha256:f881071e7cf29a06be756c82b0b02e440c0f7e352e574da7bf7f81d82ecd7a09
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 指定自由交换群、数量关系及其商作为模型定义，并声明观察层的解释边界；未推导该关系或商的性质。
+    previous_atom_id: baeeac4d0392b36a6bb50dc6942cccc611a3b81ed7177eabe297b99edfb29ef5
+    next_atom_id: 8441ff6b1cf0fbff0ee885bb71c3e4cfaa16098568c535c97685e058785561cc

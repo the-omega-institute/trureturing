@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:54d8271a103904b2aa5e0868fbd1040e1114a5f0774f0cddadfcd75286e5fc7b
+  normalized_sha256: sha256:54d8271a103904b2aa5e0868fbd1040e1114a5f0774f0cddadfcd75286e5fc7b
+cas_ref: sha256:54d8271a103904b2aa5e0868fbd1040e1114a5f0774f0cddadfcd75286e5fc7b
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 仅列举商去对象“永久不可见 kernel”。
+    previous_atom_id: e003b99b7e83a63f8da0494aee3133d6efd1a3be976aafa412c9abfe4b9dda8d
+    next_atom_id: 62479064226e8cdfce1090c3d48d1bd488147b5c6c38c8fe0c076c47b88149a9

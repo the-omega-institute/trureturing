@@ -28,6 +28,14 @@ internal sealed class CyclicExtensionRefutationDocument : IScribeDocumentDefinit
                 "For a finite vertex type V, CN has zero diagonal. At distinct i and j, its entry is the cardinality, cast to the reals, of the vertices k different from both i and j and adjacent to both. The displayed set ranges over all k in V. Thus CN is the source's common-neighbour count matrix, rather than the zero-one common-neighbour graph."),
             Node("sourceMatrix", "Adjacency, degree and the four matrices", MatricesFormula(),
                 "A is Mathlib SimpleGraph.adjMatrix over the reals, with entry one on an edge and zero otherwise. D is SimpleGraph.degMatrix, the diagonal of the actual neighbour counts. L is SimpleGraph.lapMatrix = D-A; Q is D+A. The fourth choice is the literal commonNeighbourMatrix. All four matrices are Hermitian: the first three use the corresponding Mathlib symmetry results, and CN is symmetric by interchange of its two counted-neighbour conditions."),
+            Node("source_matrix_isHermitian", "Each source matrix is Hermitian",
+                Disp(All("V", F.Id("Type"), Instance(Call("Fintype", F.Id("V")),
+                    All("g", Call("SimpleGraph", F.Id("V")),
+                        All("kind", F.Id("MatrixKind"),
+                            new Formula.Apply(Seq(F.Id("Matrix"), Dot, F.Id("IsHermitian")),
+                                [Call("sourceMatrix", F.Id("g"), F.Id("kind"))])))))),
+                "For every finite vertex type V, simple graph g and matrix choice kind, sourceMatrix g kind is Hermitian. The adjacency, Laplacian and degree matrices are real symmetric; interchanging the vertices preserves the common-neighbour count. The graphSpectrum definition uses this theorem to enumerate the real eigenvalues with multiplicities.",
+                DescribeRole.Theorem),
             Node("graphSpectrum", "Actual spectra with multiplicity", SpectrumFormula(),
                 "Let M = sourceMatrix(g,kind), and let hM be its Hermitian proof. The multiset maps hM.eigenvalues over the entire finite index type V. The definition also applies RCLike.ofReal, which is the identity in the real field. Mathlib Matrix.IsHermitian.roots_charpoly_eq_eigenvalues identifies this multiset with M.charpoly.roots. Consequently algebraic multiplicity is retained and no integer-valued surrogate or selected subset of eigenvalues is used."),
             Node("IntegralSpectrum", "Integer eigenvalues", IntegralFormula(),
@@ -48,7 +56,7 @@ internal sealed class CyclicExtensionRefutationDocument : IScribeDocumentDefinit
 
     private static DocumentBlock Node(string selector, string title, Formula formula, string prose,
         DescribeRole role = DescribeRole.Definition, OpenProblemResolutionClaim? resolution = null) =>
-        Describe.Lean(DescribeId.Create("sgb-" + selector.ToLowerInvariant()), DeclarationHandle.Create(Prefix + selector),
+        Describe.Lean(DescribeId.Create("sgb-" + selector.ToLowerInvariant().Replace('_', '-')), DeclarationHandle.Create(Prefix + selector),
             H(title), StatementSource.FromAuthor(formula),
             role == DescribeRole.Theorem ? AssessedProvenance.FromRepo(Source) : AssessedProvenance.FromLiterature(Source),
             Blocks(Paragraph(Text(prose))), role, resolution);

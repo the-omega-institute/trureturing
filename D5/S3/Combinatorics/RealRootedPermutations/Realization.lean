@@ -6,6 +6,7 @@
    utility: none
    digest: Integer heights and dominant prefix products realize every unimodal coefficient ordering strictly. -/
 
+/- Escape audit unfinished: https://github.com/the-omega-institute/trureturing/issues/19903; product_zpow. -/
 import D5.S3.Combinatorics.RealRootedPermutations.Defs
 import Mathlib.Algebra.Polynomial.BigOperators
 import Mathlib.Algebra.BigOperators.Ring.Finset
@@ -157,7 +158,7 @@ private lemma subset_sum_le {n k : ℕ} (π : Equiv.Perm (Fin (n + 1)))
     _ = height π k := by
       simpa only [initialSegment, Finset.sum_map, Fin.coe_castLEEmb] using initialSegment_sum π hk
 
-private lemma product_zpow {ι : Type*} (S : Finset ι) (b : ι → ℤ) (T : ℝ)
+lemma product_zpow {ι : Type*} (S : Finset ι) (b : ι → ℤ) (T : ℝ)
     (hT : T ≠ 0) : ∏ i ∈ S, T ^ b i = T ^ (∑ i ∈ S, b i) := by
   classical
   induction S using Finset.induction_on with

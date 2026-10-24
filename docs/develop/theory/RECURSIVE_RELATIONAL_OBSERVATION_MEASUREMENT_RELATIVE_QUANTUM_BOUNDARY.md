@@ -2564,3 +2564,664 @@ native acquisition/certification bridges retain their separate scopes.
 No Lean verification or physical realization is asserted.
 
 ## 追加锚（本行以下为增补区）
+
+## 15. A total rational Gram decoder for the original complete record
+
+**Definition 15.1 (record input, precision and output task).** Keep the
+entire lawful domain $\mathcal L$ of (6.1), the ideal stationary
+independent preparation service of Assumption 6.2, and precisely the depth
+instrument, terminal instruments and fixed schedule of Definitions 9.2,
+10.1 and Proposition 10.2. In particular the filter is
+$F=\operatorname{diag}(1,2,3,4,5)/6$, the base detector normalizations are
+those in Definition 13.1 at every depth, and there is no calibration error
+in these matrices. Let $N\ge1$ be an integer. A grammatical record is any
+word of the original depth schedule's padded grammar, with its fifteen
+single-copy blocks and fifty pair blocks of $N$ attempts each, in their
+public order. It includes both chains of each pair, every actual failure
+prefix and every actual detector outcome. The source/frame/calibration
+binding and occurrence labels retain their meanings in Definitions 10.3
+and 12.1. They are not numerical advice about the source.
+
+For definiteness, a detector outcome bit $o$ means $2o-1$. A depth-one
+chain uses flag $0$ for failure and $1$ for success. A depth-two chain
+uses $00,10,11$ for first failure, success then failure, and two successes,
+respectively. The pair's detector bit is zero padding unless both chains
+succeed. These codes merely give the three-bit and five-bit payloads of
+(10.5); padding is never interpreted as an attempted measurement. At depth
+zero there is only the detector bit. A single-copy bit is the indicator
+of its projector outcome. Grammatical words need not be likely, or even
+have positive probability under a particular singular source.
+
+For pair configuration $\nu$ let $w_\nu$ be its sum of the variables
+$Z_f$ in Definition 10.1, including zero for every failed attempt. For
+single-copy setting $P_i$ or $P_{ij}$ let $c_i,c_{ij}$ count its indicators.
+Define the exact rational extractions
+
+$$
+\begin{aligned}
+y_\nu&=w_\nu/N,\\
+s_{ii}&=2c_i,&
+s_{ij}&=2c_{ij}-c_i-c_j\quad(i<j),&s_{ji}&=s_{ij},\\
+\widehat S&=(s_{ij}/(2N))_{i,j=1}^5.
+\end{aligned}
+\tag{15.1}
+$$
+
+Thus $y=\overline q$ and $\widehat S=S_N$ of Proposition 14.2. Each
+pair mean has denominator $N$ of all attempts, regardless of the number
+of successes. Counting does not replace the retained ordered word by a
+count-only record for other tasks.
+
+The additional public precision input is an integer $b\ge3$, independent
+of the unknown source, and $m=2^b$. An output is a rational density
+$\widehat\rho=T+iB$ in the same fixed frame, interpreted as the source-orbit
+description $(T,\{B,-B\})$. For comparison with $\rho=S+iA$ use
+
+$$
+\mathfrak d(\rho,\widehat\rho)
+=\min_{\sigma\in\{-1,1\}}
+  \|S+iA-(T+i\sigma B)\|_{\mathrm F}.
+\tag{15.2}
+$$
+
+Only this one common conjugation sign is forgotten. Orthogonal changes
+of frame, independent signs for different registers, and equality of
+spectra are not additional identifications.
+
+**Definition 15.2 (finite bank and exact minimum rule).** In the fixed
+row-major order of the real and imaginary entries, enumerate all
+$5\times5$ Gaussian-integer matrices $X=(r_{ik}+it_{ik})$ with
+$r_{ik},t_{ik}\in\{-m,\ldots,m\}$, omitting the zero matrix. Use
+lexicographic order in these fifty integers. Set
+
+$$
+\begin{aligned}
+U_{X,ik}&=\sum_{\ell=1}^5
+ (r_{i\ell}r_{k\ell}+t_{i\ell}t_{k\ell}),\\
+V_{X,ik}&=\sum_{\ell=1}^5
+ (t_{i\ell}r_{k\ell}-r_{i\ell}t_{k\ell}),\\
+D_X&=\sum_{i,\ell}(r_{i\ell}^2+t_{i\ell}^2),\\
+\rho_X&=XX^\dagger/D_X=T_X+iB_X,
+\qquad T_X=U_X/D_X,\quad B_X=V_X/D_X.
+\end{aligned}
+\tag{15.3}
+$$
+
+For the original normalized map $Q_F$ of Definition 13.1, minimize the
+rational squared residual
+
+$$
+J_X=\|T_X-\widehat S\|_{\mathrm F}^2
+       +\|Q_F(B_X)-y\|_2^2
+\tag{15.4}
+$$
+
+over this finite bank, keeping the first candidate in a tie. The decoder
+$\mathsf{Dec}_b(W)$ returns its $D_X$, fifteen upper-triangular entries of
+$U_X$, and ten strictly upper-triangular entries of $V_X$. Symmetry and
+skew symmetry fill the other entries. No reduction to lowest terms is
+required. This is a rational matrix description, with denominator $D_X$,
+and not a program to prepare that state. A single Gram candidate supplies
+both $T_X$ and $B_X$, so their positive compatibility is enforced jointly
+throughout the search. Its residual uses precisely the fifteen single
+extractions and fifty original pair means.
+
+Here is an integer specification of the comparisons in (15.4). Put
+
+$$
+C=70\,6^8,\qquad
+P_\nu(v)=C\,Q_F(U(v))_\nu\quad(1\le\nu\le50),
+\tag{15.5}
+$$
+
+where $U(v)$ is the skew-coordinate map of Definition 13.1. These are
+fixed homogeneous degree-two integer polynomials, as verified in
+Theorem 15.5. For a candidate abbreviate $D=D_X$, $U=U_X$, $V=V_X$, and
+use $P_\nu(V)$ to mean evaluation on its ten upper skew entries. Compute
+
+$$
+\begin{aligned}
+E_X&=2CND^2,\\
+\alpha_{ik}&=CD(2NU_{ik}-Ds_{ik}),\\
+\beta_\nu&=2\{NP_\nu(V)-CD^2w_\nu\},\\
+H_X&=\sum_i\alpha_{ii}^2
+        +2\sum_{i<k}\alpha_{ik}^2+\sum_{\nu=1}^{50}\beta_\nu^2.
+\end{aligned}
+\tag{15.6}
+$$
+
+Then $J_X=H_X/E_X^2$. A new candidate replaces the stored one exactly
+when $H_X E_{\rm stored}^2<H_{\rm stored}E_X^2$. All denominators are
+positive integers. Enumeration, this integer inequality and the fixed
+tie rule completely specify the selection; no exact-real comparison,
+feasibility oracle or unspecified minimizer is part of the algorithm.
+
+**Theorem 15.3 (lawful total output and uniform deterministic error).**
+For every $N\ge1$, $b\ge3$ and grammatical finite record $W$, the decoder
+of Definition 15.2 terminates and returns $(T,B)\in\mathcal L$ with
+rational entries. For every lawful source $(S,A)$ and all nonnegative
+numbers $e_S,e_Q$ for which that record satisfies
+
+$$
+\|S-\widehat S\|_{\mathrm F}\le e_S,
+\qquad \|Q_F(A)-y\|_2\le e_Q,
+\tag{15.7}
+$$
+
+put
+
+$$
+e=(e_S^2+e_Q^2)^{1/2},\qquad
+\nu=2e+512\,2^{-b},\qquad K_F=40310784000.
+\tag{15.8}
+$$
+
+Its actual output satisfies
+
+$$
+\begin{aligned}
+\bigl(\|T-\widehat S\|_{\mathrm F}^2
+       +\|Q_F(B)-y\|_2^2\bigr)^{1/2}
+ &\le e+512\,2^{-b},\\
+\|S-T\|_{\mathrm F}&\le\nu,\\
+d_\pm(A,B)D_\pm(A,B)&\le K_F\nu,\\
+d_\pm(A,B)&\le\sqrt{K_F\nu},\\
+\mathfrak d(S+iA,T+iB)&\le\sqrt{\nu^2+2K_F\nu}.
+\end{aligned}
+\tag{15.9}
+$$
+
+These are deterministic implications for every such record, including
+records outside any confidence event. There is no lower bound on a
+source eigenvalue, on $\|A\|_{\rm sk}$ or on a spectral gap. In
+particular real sources $A=0$, all singular faces, and repeated-spectrum
+sources are included.
+
+Proof. Each nonzero $X$ has $1\le D_X\le50m^2$ and
+$XX^\dagger\succeq0$, with trace $D_X$. Its real and imaginary parts
+are symmetric and skew, respectively. This proves lawfulness and
+rationality directly, without testing principal minors. The bank has
+exactly $(2m+1)^{50}-1$ indexed candidates; duplicates as density matrices
+cause no difficulty. There is a nonzero candidate, for example a single
+entry equal to one. Hence a complete finite scan with the tie rule
+returns one lawful candidate on every grammatical word. No statistical
+premise is needed for this conclusion.
+
+We next give two estimates used to control this particular scan. The
+normalized Gram representation and rounding used in the first estimate
+are standard finite-dimensional tools; they are intermediate steps, not
+an additional general tomography theorem. Given any lawful
+$\rho=S+iA$, let $R=\rho^{1/2}$. The finite Hermitian spectral theorem
+gives $R R^\dagger=\rho$ and $\|R\|_{\mathrm F}=1$, even when $\rho$
+is singular. Each real and imaginary entry of $R$ lies in $[-1,1]$.
+Round the fifty real coordinates of $mR$ to nearest integers in
+$[-m,m]$, obtaining a bank matrix $X$, and put $Y=X/m$. Then
+
+$$
+\eta:=\|Y-R\|_{\mathrm F}
+   \le\frac{\sqrt{50}}{2m}\le\frac4m\le\frac12.
+\tag{15.10}
+$$
+
+Thus $Y\ne0$. With $Z=Y/\|Y\|_{\mathrm F}$, the reverse triangle
+inequality gives
+
+$$
+\|Z-R\|_{\mathrm F}
+ \le\|Z-Y\|_{\mathrm F}+\|Y-R\|_{\mathrm F}
+ =|1-\|Y\|_{\mathrm F}|+\eta\le2\eta.
+$$
+
+For matrices $P,Q$, the inequality
+$\|PQ\|_{\mathrm F}\le\|P\|_{\mathrm F}\|Q\|_{\mathrm{op}}$
+follows by summing squared row norms, and the version with the two norms
+interchanged follows by adjoints. Apply these inequalities to
+$ZZ^\dagger-RR^\dagger=(Z-R)Z^\dagger+R(Z^\dagger-R^\dagger)$.
+Both $Z,R$ have operator norm at most one. Consequently this bank
+candidate obeys
+
+$$
+\|\rho_X-\rho\|_{\mathrm F}
+=\|ZZ^\dagger-RR^\dagger\|_{\mathrm F}
+\le2\|Z-R\|_{\mathrm F}\le4\eta\le16/m.
+\tag{15.11}
+$$
+
+The square root and rounding in this argument exhibit a near candidate
+for the proof. The decoder never receives $R$, computes it, or selects
+the displayed candidate using source access.
+
+For the second estimate define
+$\mathcal O(\rho)=(\operatorname{Re}\rho,Q_F(\operatorname{Im}\rho))$
+with squared norm equal to the sum of squared Frobenius and Euclidean
+norms. For original pair configuration $\nu$ at depth $j$, the expectation
+of its complete-attempt variable is
+
+$$
+\mathbb E_\rho Z_\nu
+ =\operatorname{tr}(D_\nu\rho^{\otimes2}),\qquad
+D_\nu=(F^j\otimes F^j)(H_f/M_f)(F^j\otimes F^j).
+\tag{15.12}
+$$
+
+This is (10.3), with zero on failures. The effects are those of (10.1),
+so $D_\nu$ is Hermitian and $\|D_\nu\|_{\mathrm{op}}\le1$.
+For a Hermitian $\Delta=\sum_a\lambda_a u_au_a^\dagger$ and such a
+contraction, $|\operatorname{tr}(D_\nu\Delta)|\le\sum_a|\lambda_a|
+=\|\Delta\|_1$. The eigenvalues of a tensor product of Hermitian
+matrices are their pairwise products; in particular
+$\|\Delta\otimes\sigma\|_1=\|\Delta\|_1$ for a density $\sigma$.
+The identity
+
+$$
+\rho^{\otimes2}-\sigma^{\otimes2}
+=(\rho-\sigma)\otimes\rho+\sigma\otimes(\rho-\sigma)
+$$
+
+and the trace-norm triangle inequality therefore bound each coordinate
+difference in (15.12) by $2\|\rho-\sigma\|_1$. Cauchy--Schwarz on
+the five real eigenvalues of $\rho-\sigma$ bounds this by
+$2\sqrt5\|\rho-\sigma\|_{\mathrm F}$. Also
+$\|\operatorname{Re}(\rho-\sigma)\|_{\mathrm F}
+\le\|\rho-\sigma\|_{\mathrm F}$. There are exactly fifty pair
+coordinates, whence
+
+$$
+\|\mathcal O(\rho)-\mathcal O(\sigma)\|
+\le\sqrt{1+50(2\sqrt5)^2}\,\|\rho-\sigma\|_{\mathrm F}
+=\sqrt{1001}\,\|\rho-\sigma\|_{\mathrm F}
+\le32\|\rho-\sigma\|_{\mathrm F}.
+\tag{15.13}
+$$
+
+This estimate concerns only the supplied complete-attempt means. It
+introduces no new measured observable.
+
+Combine (15.11) and (15.13). For the true source there exists a bank
+candidate with observation distance at most $512/m$. The data point
+$(\widehat S,y)$ is at distance at most $e$ from its true observation
+by (15.7). The triangle inequality makes that candidate's residual at
+most $e+512/m$. The exact minimum rule makes the chosen candidate's
+residual no larger, proving the first line of (15.9). A second triangle
+inequality gives
+
+$$
+\|\mathcal O(S+iA)-\mathcal O(T+iB)\|\le2e+512/m=\nu.
+\tag{15.14}
+$$
+
+Each component is at most $\nu$. Apply the already proved original-map
+inequality (14.2) to its quadratic component to obtain
+$d_\pm D_\pm\le K_F\nu$. Since $D_\pm\ge d_\pm$, this bounds
+$d_\pm^2$. Finally the squared error after the better one common sign
+is $\|S-T\|_{\mathrm F}^2+2d_\pm^2$, which proves the last line.
+Every use of the inverse certificate is within its stated all-skew
+domain; no exact inverse branch, rank decision or conditioning margin
+was substituted for finite arithmetic. $\square$
+
+**Definition 15.4 (classical execution and separate storage accounts).**
+The execution model is a deterministic multitape Turing machine over a
+fixed finite alphabet. One transition reads or writes a bounded number
+of bits and moves each tape head by at most one cell. Integers are in
+signed binary; addition, multiplication and comparison are performed by
+bit arithmetic, not unit-cost operations on unbounded words. The fixed
+program contains the fifty polynomials (15.5), the original schedule
+parser, and fixed matrix dimensions. It has no source-dependent advice.
+
+The retained input tape contains the complete original padded word,
+$N$, $b$, and a finite metadata string of length $B_0\ge0$ giving its
+source/frame/calibration and occurrence bindings. Implicit occurrence
+positions and the fixed schedule are represented by their public program;
+any explicitly supplied further labels are included in this string.
+Lengths and integers have self-delimiting binary encodings. The input is
+readable and is not overwritten. Its existing allocation and backing are
+charged separately. The output tape is write-only and its allocation is
+also separate. The metadata and its length are copied to the output so
+that the matrix remains attached to the same binding; this copy does
+not authenticate or regenerate the preparation service. Additional
+workspace includes the counters, matrices, best-candidate description,
+integer arithmetic scratch, finite control and numerical head/address
+cursors. It does not include the retained input or emitted output.
+
+For an explicit matrix encoding, prefix $b$ by the Elias gamma code of
+$b+1$: if $k$ has binary length $a$, its gamma code is $a-1$ zeros
+followed by the $a$ binary digits, of length $2a-1$. Then write $D_X$
+in $2b+6$ bits, and each of the twenty-five independent real numerators
+in one sign bit and $2b+4$ magnitude bits. The meanings of these fields
+are fixed by Definition 15.2. A gamma code of $B_0+1$ followed by its
+$B_0$ metadata bits supplies the separate binding copy. Leading zero
+padding in the fixed-width fields is allowed.
+
+**Theorem 15.5 (bit time, workspace and output of the specified scan).**
+Let
+
+$$
+\begin{aligned}
+n&=\lceil\log_2(N+1)\rceil,\qquad
+\ell_0=\lceil\log_2(B_0+2)\rceil,\\
+w&=b+n+\ell_0+64,\qquad
+G_b=(2^{b+1}+1)^{50}-1.
+\end{aligned}
+\tag{15.15}
+$$
+
+The decoder has an implementation in Definition 15.4's bit model with
+worst-case bounds
+
+$$
+\begin{aligned}
+\text{bit time}&=O\bigl((B_0+155N+G_b+1)w^2\bigr),\\
+\text{additional workspace}&=O(w)\text{ bits},\\
+\text{matrix-description output}&\le60b+200\text{ bits},\\
+\text{total output with copied binding}
+ &\le B_0+2\ell_0+60b+210\text{ bits}.
+\end{aligned}
+\tag{15.16}
+$$
+
+The constants in the two $O$ bounds are absolute for one fixed machine
+implementing this algorithm. They are independent of the source, its
+rank or eigenvalues, the record, $N,b,B_0$, and its data errors.
+The retained input occupies
+
+$$
+155N+B_0+O\bigl(n+\log(b+1)+\ell_0\bigr)\text{ bits},
+\tag{15.17}
+$$
+
+in addition to the fixed program and its readable backing. Its size is
+not included in the additional-workspace bound.
+
+Proof. First verify that (15.5)--(15.6) require integer operations only.
+At depth $j\le2$, the $(i,k)$ entry of $F^jU(v)F^j$ is
+$i^jk^jv_{ik}/6^{2j}$. Every coefficient of its $K$ entries has
+denominator dividing $6^{4j}$. The normalized diagonal and off-diagonal
+$K$ entries multiply these coefficients by $1/2$ and $4/7$,
+respectively. At depth zero the five normalized $b$ entries have
+coefficients $4/5$ times the three oriented monomials in (13.3).
+Consequently all fifty coefficient denominators divide $70\,6^8=C$.
+This uses exactly the base $M_f$ of Definition 13.1, including at depths
+one and two. Thus the fifty $P_\nu$ are explicit integer polynomials
+with finitely many fixed coefficients. They can be formed once from
+(13.2)--(13.3), without any data-dependent compilation.
+
+Homogeneity gives
+$Q_F(B_X)_\nu=P_\nu(V_X)/(CD_X^2)$. Multiplying the symmetric and
+quadratic residuals in (15.4) by $E_X=2CND_X^2$ gives exactly
+$\alpha_{ik}$ and $\beta_\nu$ in (15.6). The factor two on off-diagonal
+squares is precisely the Frobenius norm of a symmetric matrix. This
+proves $J_X=H_X/E_X^2$ and the integer cross-comparison rule. In
+particular residual evaluation and selection have zero rounding error.
+
+A single sequential pass through the padded record, decoding each
+constant-length attempt and checking its grammar, obtains all fifty
+$w_\nu$ and fifteen counts. Each is at most $N$ in absolute value;
+$|s_{ik}|\le2N$. A fixed number of $O(n)$-bit registers and block
+counters suffices. Updating even by a full binary scan costs $O(n+1)$
+bit transitions per attempt. Streaming the metadata copy and parsing
+its length need no buffer of length $B_0$. Binary length counters and
+explicit input/output cursors fit in $O(w)$ bits. Allowing $O(w^2)$
+transitions per input bit covers these operations, parsing, and the
+initial construction of the $b+1$-bit integer $2^b$.
+
+Enumerate the fifty bounded integers by an odometer, with fifty
+$O(b+1)$-bit fields. Incrementing or carrying costs $O(b+1)$ per field,
+and there are a fixed fifty fields. Termination is detected at their
+maximum tuple; no list of candidates or counter of length $G_b$ is
+stored. Skip the all-zero tuple by an integer zero test. Each other
+iteration forms (15.3), evaluates the fixed quadratic polynomials,
+forms (15.6), and compares one candidate with the stored best. The
+number of integer additions and multiplications in this iteration is
+bounded by an absolute constant because all matrix and panel dimensions
+are fixed.
+
+For completeness, the widths do not hide growth during that scan.
+The bounds
+
+$$
+1\le D_X\le50\,2^{2b},\qquad
+|U_{X,ik}|,|V_{X,ik}|\le10\,2^{2b}
+\tag{15.18}
+$$
+
+follow by counting the fifty squares and the ten products per entry.
+Thus these integers have $2b+O(1)$ bits. Each $P_\nu(V_X)$ has
+$4b+O(1)$ bits. Each $E_X,\alpha_{ik},\beta_\nu$ has at most
+$n+4b+O(1)$ bits; $H_X$ has at most $2n+8b+O(1)$ bits. The comparison
+products have at most $4n+16b+O(1)$ bits. All constants here depend
+only on the displayed fixed coefficients. Storing only the current
+candidate, the best tuple and its score, the counts, and a fixed number
+of arithmetic scratch registers therefore costs $O(w)$ bits. These
+registers are overwritten at each iteration; expression evaluation is
+of fixed depth.
+
+On binary tapes, adding or comparing $q$-bit integers takes $O(q)$
+transitions and $O(q)$ scratch space. School multiplication forms the
+sum of at most $q$ shifted rows, each of length at most $2q$, giving
+$O(q^2)$ transitions and $O(q)$ space; a tape scan between the fixed
+number of registers adds at most the same order. Hence each candidate
+costs $O(w^2)$ bit transitions and $O(w)$ additional space. There are
+exactly $G_b$ nonzero candidates. Adding the input pass and final
+matrix formation proves the first two lines of (15.16). Numerical
+cursors, including addresses into the retained input and copied
+metadata, have length $O(n+\ell_0+b+1)$ and are covered by this same
+space bound.
+
+By (15.18), the fixed-width output fields of Definition 15.4 fit. Their
+length, including the gamma prefix for $b+1$, is
+
+$$
+(2\lfloor\log_2(b+1)\rfloor+1)
+ +(2b+6)+25(2b+5)
+ =52b+132+2\lfloor\log_2(b+1)\rfloor
+ \le60b+200.
+\tag{15.19}
+$$
+
+The metadata prefix and copy add at most $2\ell_0+1+B_0$ bits, which
+is within (15.16). Writing these bits is included in the time bound.
+The analogous input prefix lengths give (15.17). No retained copy of
+the word, the grid or the metadata was charged as scratch. Conversely
+(15.17) explicitly retains the original word and backing rather than
+claiming that $O(w)$ bits suffice for the whole observer. $\square$
+
+## 16. Finite-record confidence for the rational point output
+
+**Theorem 16.1 (uniform confidence consequence for the original record).**
+For every fixed lawful source, every positive integer $N$, every
+integer $b\ge3$ and $0<\delta<1$, execute the original complete depth
+schedule once and apply $\mathsf{Dec}_b$ to its record. Put
+
+$$
+L_\delta=\log(130/\delta),\qquad
+\nu_{N,b,\delta}=24\sqrt{L_\delta/N}+512\,2^{-b}.
+\tag{16.1}
+$$
+
+With probability at least $1-\delta$, the returned lawful rational
+$(T,B)$ obeys
+
+$$
+\begin{aligned}
+\|S-T\|_{\mathrm F}&\le\nu_{N,b,\delta},\\
+d_\pm(A,B)&\le\sqrt{K_F\nu_{N,b,\delta}},\\
+\mathfrak d(S+iA,T+iB)
+ &\le\sqrt{\nu_{N,b,\delta}^2+2K_F\nu_{N,b,\delta}}.
+\end{aligned}
+\tag{16.2}
+$$
+
+The same constants work for every source in the original full domain.
+Output remains lawful and the scan still terminates on the complementary
+event. The confidence assertion neither removes improbable records nor
+conditions on filter success.
+
+Proof. Proposition 14.2 applies to exactly the extractions (15.1), with
+no arithmetic tolerance: they are rational counts evaluated exactly.
+Its one common event of probability at least $1-\delta$ gives
+
+$$
+e_Q=10\sqrt{L_\delta/N},\qquad
+e_S=\sqrt{85/2}\sqrt{L_\delta/N}.
+$$
+
+Therefore $e\le\sqrt{285/2}\sqrt{L_\delta/N}
+\le12\sqrt{L_\delta/N}$. Theorem 15.3 and monotonicity of its
+nonnegative bounds give (16.2). Selection after reading the record
+needs no candidate union bound, since Theorem 15.3 is deterministic
+on this event. The independence and ranges needed for the reused
+concentration are exactly the independent attempts of Assumption 6.2,
+$Z_\nu\in[-1,1]$ including failures, and single indicators in $[0,1]$.
+Hoeffding's Theorem 2, (2.6), applied also to the negatives, gives
+$2e^{-Nt^2/2}$ and $2e^{-2Nt^2}$ for their two-sided tails; summing
+at the radii of (14.6) over fifty plus fifteen settings gives $\delta$.
+This use of the original bounded-variable theorem has no dependence
+on its unresolved footnote exponent. $\square$
+
+**Corollary 16.2 (integer precision prescription and the same-run bill).**
+Write $K_F=40310784000$ and $A_*=2K_F+1=80621568001$. For arbitrary
+integers $s\ge0$ and $d\ge1$, choose the source-independent integers
+
+$$
+b=47+2s,\qquad
+N=2304(d+8)A_*^2\,2^{4s}.
+\tag{16.3}
+$$
+
+The original acquisition followed by the decoder then returns a lawful
+rational density with
+
+$$
+\Pr_\rho\!\left\{
+ \mathfrak d(\rho,\mathsf{Dec}_b(W))\le2^{-s}\right\}
+ \ge1-2^{-d}
+\quad\text{for every fixed lawful }\rho.
+\tag{16.4}
+$$
+
+There is no exact-real operation in this parameter prescription.
+For this one run the acquisition charges remain
+
+$$
+\begin{array}{c|c}
+\text{source preparations}&115N\\
+\text{single-copy detector calls}&15N\\
+\text{local filter calls}&60N+U_1\le90N\\
+\text{joint detector calls}&20N+C_T\le50N\\
+\text{retained padded outcome bits}&155N
+\end{array}
+\tag{16.5}
+$$
+
+The decoder adds one forward pass through these payload bits,
+the metadata/header access and binding copy, and the bit time, workspace
+and output of (15.16), which charge all bit reads and writes. It requests
+no further source specimens or instruments. Storage of the complete
+record, its actual readable backing
+and the output remains additional to arithmetic workspace. The counts
+$U_1,C_T$ are those of the same actual run, not expected counts or
+counts from a successful replacement run.
+
+Proof. Put $v=2^{-2s}/A_*\le1$ and $\delta=2^{-d}$. The elementary
+inequalities $\exp(1)>2$ and $130<2^8$ give
+$L_\delta=\log130+d\log2\le d+8$. Substitution of (16.3) gives
+
+$$
+24\sqrt{L_\delta/N}\le v/2.
+$$
+
+Also $A_*<2^{37}$, so
+$2^b=2^{47+2s}\ge1024A_*2^{2s}=1024/v$ and
+$512\,2^{-b}\le v/2$. Thus $\nu_{N,b,\delta}\le v$.
+Since $v\le1$,
+
+$$
+v^2+2K_Fv\le(1+2K_F)v=A_*v=2^{-2s}.
+$$
+
+Theorem 16.1 proves (16.4). The integers (16.3) are obtained by binary
+addition, multiplication by fixed integers and shifts. Their construction
+uses $O((s+\log(d+1)+1)^2)$ bit time and
+$O(s+\log(d+1)+1)$ scratch bits with school arithmetic; those costs
+are contained in (15.16) for these $N,b$. The precision and confidence
+integers are public inputs, not advice from a source oracle.
+
+The row counts in (16.5) follow from the original schedule: fifty pairs
+and fifteen singles per repetition, both first chains at depth two even
+when the other fails, a second local call precisely on each first
+success counted by $U_1$, and a terminal joint call precisely for each
+filtered double success counted by $C_T$ in addition to the twenty
+unfiltered configurations. The padding count is
+$15N+20N+3(15N)+5(15N)=155N$. The extraction in (15.1) scans these
+bits once and all later candidates use only the stored counts. This
+proves the stated addition to, rather than substitution for, the
+original same-run bill. $\square$
+
+Theorems 15.3 and 15.5 supply the candidate-and-arithmetic conclusion
+left separate in §14: a specified total finite search, positive
+semidefinite trace-one rational output on every grammatical word, exact residual
+comparisons, and proved bit time, extra workspace and output length.
+Theorem 16.1 connects that specific point output to the actual complete
+record's confidence event. Its analytic inverse ingredient is exactly
+Theorem 13.4 and Proposition 14.1, with the original fifty normalized
+means; its concentration ingredient is exactly Proposition 14.2.
+The returned point need not belong to the confidence region (14.10)
+with its original radii. Its guarantee is instead (15.9) and (16.2),
+which include the paid finite-bank approximation. No nonemptiness test
+for that region is invoked.
+
+Attribution for these statements. Normalized Gram factorization,
+finite nets, finite minimum search, binary school arithmetic and bounded
+independent concentration are established methods. Wang--Xu,
+[*Generalized phase retrieval*, Theorem 2.1](https://arxiv.org/html/1605.08034v3),
+and Zhuang,
+[*On stability of generalized phase retrieval and generalized affine
+phase retrieval*, Theorem 2.3](https://doi.org/10.1186/s13660-019-1968-z),
+are the general injectivity and product-distance suppliers already
+specialized in §§13--14. Hoeffding,
+[*Probability Inequalities for Sums of Bounded Random Variables*,
+Theorem 2](https://doi.org/10.1080/01621459.1963.10500830),
+is the concentration supplier. The contribution here is a
+repository-derived construction for this particular record and lawful
+image: the fixed integer polynomials with denominator $70\,6^8$,
+normalized rational bank and exact score (15.6), all-source error and
+finite execution bounds, and their common-record confidence consequence.
+This does not claim a new general phase-retrieval principle, global
+literature originality, optimal constants, or measured implementation
+speed. The exhaustive bank's exponent fifty is an upper construction,
+not a minimal dimension or complexity assertion.
+
+The output's meaning is the approximate source orbit in (15.2).
+Proposition 10.4's obstruction to exact finite recovery is unchanged.
+No source-dependent quantum register survives this acquisition, and
+$T+iB$ describes neither the actual realized past nor an actual joint
+successor at a later cut. Section 11's requirements on a common source
+representative, retained executed branch maps, full joint carriers and
+current controller state still govern later use. In particular the
+matrix description supplies neither state preparation nor an installed,
+calibrated, authorized callable continuation. Its backing and arithmetic
+resources must actually be supplied to execute the mathematical
+machine. The confidence consequence assumes the ideal instruments and
+stationary independence above. Changes in calibration or preparation
+require separate probability bounds establishing (15.7); the deterministic
+implication of Theorem 15.3 still applies whenever those inequalities
+hold. Unreadable backing falls outside the execution model.
+
+Section 12's separately supplied coherent-consumer event, its size
+parameter and necessary acquisition budget retain their distinct task.
+No uniform accuracy for that consumer over all sizes, joint-state
+reconstruction, or efficient consumer evaluation follows from (16.4).
+Likewise the native installation and four-view recovery obligations of
+§11 remain separate. The independent preparation and measurement
+interfaces here are not generated by the tree syntax or the integer
+linear operation completeness of
+[FARG §§1--4 and 19](FIBONACCI_ATOMIC_RELATION_GENERATION.md).
+No full $\alpha/\beta$ generation, physical space/time identification,
+or recovery of actual retained memory from a probability law is
+licensed. The earlier fixed-$G_{gc}$, original-$Q$, parked-consumer,
+unchanged-initialization, original-root late-target, $M_1(D)$ and
+sharp-$\lambda$ questions keep their original scopes. These are
+ordinary on-paper mathematical results, without a claim of Lean
+verification or physical realization.
+
+## 追加锚（本行以下为增补区）

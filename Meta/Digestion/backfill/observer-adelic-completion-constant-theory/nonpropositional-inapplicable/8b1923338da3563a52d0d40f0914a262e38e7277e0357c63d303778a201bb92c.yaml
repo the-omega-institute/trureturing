@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:8b1923338da3563a52d0d40f0914a262e38e7277e0357c63d303778a201bb92c
+  normalized_sha256: sha256:8b1923338da3563a52d0d40f0914a262e38e7277e0357c63d303778a201bb92c
+cas_ref: sha256:8b1923338da3563a52d0d40f0914a262e38e7277e0357c63d303778a201bb92c
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 这里只用负测试支撑半径集合的下确界引入 L_* 的记号，没有声称集合非空、下确界取得或 L_* 有限。
+    previous_atom_id: 074e93a850389d499ed019c26b4b1c5d7f40f5f3d8e8e21cd0734ddc39eb5112
+    next_atom_id: 6171cb0795d718512cb526936661336b77df041e939b1b527e1813cfdb321175

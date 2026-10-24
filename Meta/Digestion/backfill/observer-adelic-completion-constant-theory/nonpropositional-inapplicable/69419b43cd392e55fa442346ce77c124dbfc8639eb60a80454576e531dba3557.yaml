@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:69419b43cd392e55fa442346ce77c124dbfc8639eb60a80454576e531dba3557
+  normalized_sha256: sha256:69419b43cd392e55fa442346ce77c124dbfc8639eb60a80454576e531dba3557
+cas_ref: sha256:69419b43cd392e55fa442346ce77c124dbfc8639eb60a80454576e531dba3557
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 列举补回方向信息的 Hardy 时间通道，未陈述通道构造或恢复定理。
+    previous_atom_id: ec1559a54302f997feb6cc8d10064a83336c0509f826fb136723e5a930998797
+    next_atom_id: 7cc3fef8b89f825ce639be20f71a0a712c82caaace790e13101925f3af22d905

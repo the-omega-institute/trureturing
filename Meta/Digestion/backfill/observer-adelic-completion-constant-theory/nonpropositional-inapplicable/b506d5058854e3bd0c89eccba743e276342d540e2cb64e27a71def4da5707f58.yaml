@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:b506d5058854e3bd0c89eccba743e276342d540e2cb64e27a71def4da5707f58
+  normalized_sha256: sha256:b506d5058854e3bd0c89eccba743e276342d540e2cb64e27a71def4da5707f58
+cas_ref: sha256:b506d5058854e3bd0c89eccba743e276342d540e2cb64e27a71def4da5707f58
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 概念表将指数读作隐藏复杂度的解释，无指数分类断言。
+    previous_atom_id: afa6a29d761826a32e1d6fa387972fcfc29ea0fb266849a3150f2cea0fdfd8a2
+    next_atom_id: 3a87d41560f77678a3d5f119af64ae1c78cc786b91323d316824649533b5e9c7

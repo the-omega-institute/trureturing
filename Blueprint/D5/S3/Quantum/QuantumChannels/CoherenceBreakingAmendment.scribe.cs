@@ -15,6 +15,9 @@ internal sealed class CoherenceBreakingAmendmentDocument : IScribeDocumentDefini
         H("Amending coherence-breaking iterates with one unitary"),
         Blocks(
             Paragraph(Text("All matrices are complex and use the fixed incoherent basis indexed by Fin d. The superscript H denotes conjugate transpose, tr is the matrix trace, and a superscript [m] denotes m-fold function iteration. Subtraction in an iteration count is natural-number subtraction.")),
+            Node("off-diagonal", "Erasing the diagonal", OffDiagonalFormula(),
+                "offDiag", DescribeRole.Definition, AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("The complex linear map offDiag replaces each diagonal entry by zero and preserves every other matrix entry.")))),
             Node("incoherent-kraus", "Incoherent Kraus operators", IncoherentFormula(),
                 "IsIncoherentKraus", DescribeRole.Definition, AssessedProvenance.FromLiterature(Source),
                 Blocks(Paragraph(Text("Section 2 calls a Kraus representation incoherent when each individual Kraus operator preserves incoherence on every incoherent input. Equivalently, each column of every Kraus operator has support in at most one row: each basis vector is sent to a scalar multiple of a basis vector. This predicate imposes no trace-preservation condition.")))),
@@ -105,6 +108,16 @@ internal sealed class CoherenceBreakingAmendmentDocument : IScribeDocumentDefini
         Parenthesized(Seq(u, Comma, Sp, Adjoint(u))));
     private static Formula KrausBinders(Formula body) =>
         All("d", Field("N"), All("r", Field("N"), All("K", Family(V("d"), V("r")), body)));
+
+    private static Formula OffDiagonalFormula()
+    {
+        Formula entry = At(Call("offDiag", V("X")), V("i"), V("j"));
+        Formula action = And(
+            Implies(Equal(V("i"), V("j")), Equal(entry, D(0))),
+            Implies(NotEqual(V("i"), V("j")), Equal(entry, At(V("X"), V("i"), V("j")))));
+        return Disp(All("d", Field("N"), All("X", Mat(V("d")),
+            All("i", Fin(V("d")), All("j", Fin(V("d")), action)))));
+    }
 
     private static Formula IncoherentFormula()
     {

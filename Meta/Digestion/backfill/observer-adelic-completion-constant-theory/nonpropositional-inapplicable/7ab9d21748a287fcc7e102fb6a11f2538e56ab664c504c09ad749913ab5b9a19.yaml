@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:7ab9d21748a287fcc7e102fb6a11f2538e56ab664c504c09ad749913ab5b9a19
+  normalized_sha256: sha256:7ab9d21748a287fcc7e102fb6a11f2538e56ab664c504c09ad749913ab5b9a19
+cas_ref: sha256:7ab9d21748a287fcc7e102fb6a11f2538e56ab664c504c09ad749913ab5b9a19
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 信息代价定义的左端排版片段，等式右端和性质位于其他 atom。
+    previous_atom_id: 414ff72ace24e1ac57e7a4a8bb77171d1824067ef7f5319300f4e09d59e20d2c
+    next_atom_id: 1813c9d71d2ab0fcb0a2cebfc888b118f30c6dc8446d081ee2f63662fbd211c8
