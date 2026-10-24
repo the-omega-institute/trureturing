@@ -22,7 +22,6 @@ This is classical graded Wick orthogonality, with no literature novelty claim.
 
 set_option autoImplicit false
 set_option maxRecDepth 4096
-set_option maxHeartbeats 2000000
 set_option backward.isDefEq.respectTransparency false
 
 noncomputable section
@@ -47,7 +46,9 @@ private theorem substitution_monomial_homogeneous (D : LatticeData)
     apply IsWeightedHomogeneous.sum
     intro j _
     exact (weightedHomogeneousSubmodule ℂ (omega D) (omega D i)).smul_mem _
-      (by simpa only [omega] using isWeightedHomogeneous_X ℂ (omega D) (j, i.2))
+      (by
+        change IsWeightedHomogeneous (omega D) (X (j, i.2)) (omega D i)
+        simpa only [omega] using isWeightedHomogeneous_X ℂ (omega D) (j, i.2))
   have h := eval2_totalWeight (omega D) (omega D)
     (fun i => Polynomial.C (OriginalCurrentMetric.variableImage A i))
     (fun i => HasTotalWeight.C (hX i)) (monomial d c) (oddWeight D d)
@@ -117,9 +118,11 @@ theorem actualForm_oddGrade_orthogonal (D : LatticeData) (hu : IsUnit D.G.det)
   simp only [Finsupp.linearCombination_apply, Finsupp.sum, map_sum,
     LinearMap.sum_apply, map_smul, LinearMap.smul_apply]
   apply Finset.sum_eq_zero
-  intro i hi
-  apply Finset.sum_eq_zero
   intro j hj
+  apply smul_eq_zero.mpr
+  right
+  apply Finset.sum_eq_zero
+  intro i hi
   have hw : wick D (monomial i.1 1) (monomial j.1 1) = 0 := by
     apply wick_monomial_orthogonal D i.1 j.1
     intro he
