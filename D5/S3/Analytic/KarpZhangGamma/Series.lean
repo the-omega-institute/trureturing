@@ -11,16 +11,81 @@ import Mathlib.Algebra.BigOperators.Group.Finset.Sigma
 
 /-!
 admission_basis: escape-witness
-content theorem: positive_beta_transform, consumed by series_identification
-and gamma_half. Its strong induction carries the scalar transformation
-simultaneously for every positive real parameter. Duplication supplies the
-two initial coefficients; a finite weighted-degree recurrence propagates
-the identity. No integral substitution or convergence premise is needed.
-All other proof helpers are consumed bind-only identities: finite fiber
-reindexing, factorial and Gamma recurrence, or positive rescaling.
-Theorem 5 is reused as Result.two_variable_nonneg, without extra hypotheses.
-The predicate IsLogConcave is imported from KarpZhangReciprocal.Result.
-Compiled dependency identities require the scoped CI report.
+content theorem: positive_beta_transform, consumed through series_identification by gamma_half.
+escape_witness: Strong induction carries the positive diagonal transformation simultaneously
+for every positive real parameter. Gamma duplication supplies degree zero;
+the Gamma recurrence supplies degree one and the two-step degree recurrence.
+The finite fibers r+2j=n justify the diagonal Cauchy identities. Positive
+scale products transfer Result.two_variable_nonneg to gamma_half.
+There is no convergence or growth hypothesis.
+
+Per-declaration proof_shape (local names belong to this namespace;
+cross-module names have prefix D5.S3.Analytic):
+* gammaCoeff: proof_shape: definition; escape_witness: none;
+  consumers: gammaCoeff_one, gammaCoeff_recurrence, gammaCoeff_zero, gammaDelta, gamma_half, positive_beta_transform, series_identification.
+* scale: proof_shape: definition; escape_witness: none;
+  consumers: gammaCoeff_zero, gamma_half, positive_beta_transform, scale_neutral, scale_pos, scale_succ, series_identification.
+* indices: proof_shape: definition; escape_witness: none;
+  consumers: diagonal, diagonal_eq, diagonal_jshift, diagonal_mul_left, diagonal_recurrence, diagonal_rshift, mem_indices.
+* mem_indices: proof_shape: bind-only; escape_witness: none;
+  consumers: diagonal_eq, diagonal_jshift, diagonal_recurrence, diagonal_rshift.
+* diagonal: proof_shape: definition; escape_witness: none;
+  consumers: diagonal_eq, diagonal_jshift, diagonal_mul_left, diagonal_product, diagonal_recurrence, diagonal_rshift, positive_beta_transform, transformCoeff_diagonal, transformed_product.
+* diagonal_eq: proof_shape: bind-only; escape_witness: none;
+  consumers: diagonal_product, positive_beta_transform, transformCoeff_diagonal.
+* diagonal_mul_left: proof_shape: bind-only; escape_witness: none;
+  consumers: diagonal_recurrence.
+* diagonal_rshift: proof_shape: bind-only; escape_witness: none;
+  consumers: diagonal_recurrence.
+* diagonal_jshift: proof_shape: bind-only; escape_witness: none;
+  consumers: diagonal_recurrence.
+* atom: proof_shape: definition; escape_witness: none;
+  consumers: atom_jshift, atom_product, atom_rshift, diagonal_recurrence, positive_beta_transform, transformCoeff_diagonal, transformed_product.
+* atom_rshift: proof_shape: bind-only; escape_witness: none;
+  consumers: diagonal_recurrence.
+* atom_jshift: proof_shape: bind-only; escape_witness: none;
+  consumers: diagonal_recurrence.
+* diagonal_recurrence: proof_shape: bind-only; escape_witness: none;
+  consumers: positive_beta_transform.
+* scale_succ: proof_shape: bind-only; escape_witness: none;
+  consumers: positive_beta_transform.
+* gammaCoeff_zero: proof_shape: bind-only; escape_witness: none;
+  consumers: positive_beta_transform.
+* gammaCoeff_one: proof_shape: bind-only; escape_witness: none;
+  consumers: positive_beta_transform.
+* gammaCoeff_recurrence: proof_shape: bind-only; escape_witness: none;
+  consumers: positive_beta_transform.
+* positive_beta_transform: proof_shape: content; escape_witness: positive_beta_transform;
+  consumers: series_identification.
+* transformCoeff: proof_shape: definition; escape_witness: none;
+  consumers: gamma_half, series_identification, transformCoeff_diagonal, transformed_delta, transformed_product.
+* series_identification: proof_shape: content; escape_witness: positive_beta_transform;
+  consumers: gamma_half.
+* transformCoeff_diagonal: proof_shape: bind-only; escape_witness: none;
+  consumers: transformed_product.
+* scale_neutral: proof_shape: bind-only; escape_witness: none;
+  consumers: gamma_half.
+* scale_pos: proof_shape: bind-only; escape_witness: none;
+  consumers: gamma_half.
+* diagonal_product: proof_shape: bind-only; escape_witness: none;
+  consumers: transformed_product.
+* atom_product: proof_shape: bind-only; escape_witness: none;
+  consumers: transformed_product.
+* transformed_product: proof_shape: bind-only; escape_witness: none;
+  consumers: transformed_delta.
+* transformed_delta: proof_shape: bind-only; escape_witness: none;
+  consumers: gamma_half.
+* gammaDelta: proof_shape: definition; escape_witness: none;
+  consumers: KarpZhangConjecture.Result.claim, KarpZhangConjecture.Result.result, gamma_half.
+* gamma_half: proof_shape: content; escape_witness: positive_beta_transform;
+  consumers: KarpZhangConjecture.Result.result.
+
+Direct frozen D5 dependencies: none; all KarpZhang dependencies are
+same-delivery declarations. Consumers are taken from compiled proof
+terms, with declaration types also counted for definitions. The listed
+content witnesses remain on the corresponding live mathematical paths.
+Utility is none: all statements are general identities or inequalities,
+not bounded enumeration, checkers, numerical reductions or certified instances.
 -/
 
 noncomputable section

@@ -11,23 +11,58 @@ import D5.S3.Analytic.KarpZhangGamma.Kernel
 /-!
 admission_basis: escape-witness
 content theorem: pairedKernel_sign, consumed by two_variable_nonneg.
-escape_witness: backward nonpositivity across arbitrary index gaps is an
-inductive invariant for the four-term Gamma bracket. Gamma balancing gives
-r <= u <= v; a nonpositive bracket then gives v <= s. The Gamma recurrence
-and increasing increments of (x-1)/(S-x) propagate nonpositivity backwards.
-The middle index is normalized by twice the factorial product.
-Consumed bind-only helpers: reciprocalPair_balanced, reciprocalPair_step,
-recurrenceFactor_mono, recurrenceFactor_increment -> fourBracket_backward;
-fourBracket_backward, fourBracket_swap -> bracket_backward_nat;
-bracket_backward_nat, pairedKernel_bracket -> pairedKernel_sign;
-pair_sum -> finite_pairing; finite_pairing, Kernel.kernel_sum_nonneg ->
-pairedKernel_sum_nonneg; pairedKernel_sign, pairedKernel_sum_nonneg and
-Smoothing.smoothed_weighting -> two_variable_nonneg. The last theorem
-has the sign-propagation invariant on its live path when helpers are inlined.
-Direct frozen D5 dependency on this path: IsLogConcave and balanced_step
-in KarpZhangReciprocal.Result, via Smoothing. All helpers are consumed.
-No computational-content classification applies. This module establishes
-Theorem 5; it does not assert the gamma-series identification or gamma_half.
+escape_witness: The Gamma recurrence and increasing increments of (x-1)/(S-x) give the
+backward step for the four-term bracket. pairedKernel_sign inductively
+propagates nonpositivity across arbitrary index gaps, contradicting an
+earlier positive entry. Pairing counts the middle term once. The nonnegative
+total and increasing smoothed weights prove two_variable_nonneg.
+The gamma-series identification is supplied by Series, not this module.
+
+Per-declaration proof_shape (local names belong to this namespace;
+cross-module names have prefix D5.S3.Analytic):
+* pairedKernel: proof_shape: definition; escape_witness: none;
+  consumers: finite_pairing, pairedKernel_bracket, pairedKernel_sign, pairedKernel_sum_nonneg, two_variable_nonneg.
+* reciprocalPair: proof_shape: definition; escape_witness: none;
+  consumers: fourBracket, fourBracket_backward, fourBracket_swap, pairedKernel_bracket, reciprocalPair_balanced, reciprocalPair_step.
+* fourBracket: proof_shape: definition; escape_witness: none;
+  consumers: bracket_backward_nat, fourBracket_backward, fourBracket_swap, pairedKernel_bracket, pairedKernel_sign.
+* reciprocalPair_balanced: proof_shape: bind-only; escape_witness: none;
+  consumers: fourBracket_backward.
+* reciprocalPair_step: proof_shape: bind-only; escape_witness: none;
+  consumers: fourBracket_backward.
+* recurrenceFactor: proof_shape: definition; escape_witness: none;
+  consumers: fourBracket_backward, recurrenceFactor_increment, recurrenceFactor_mono.
+* recurrenceFactor_mono: proof_shape: bind-only; escape_witness: none;
+  consumers: fourBracket_backward.
+* recurrenceFactor_increment: proof_shape: bind-only; escape_witness: none;
+  consumers: fourBracket_backward.
+* fourBracket_backward: proof_shape: bind-only; escape_witness: none;
+  consumers: bracket_backward_nat.
+* fourBracket_swap: proof_shape: bind-only; escape_witness: none;
+  consumers: bracket_backward_nat.
+* bracket_backward_nat: proof_shape: bind-only; escape_witness: none;
+  consumers: pairedKernel_sign.
+* pairedKernel_bracket: proof_shape: bind-only; escape_witness: none;
+  consumers: pairedKernel_sign.
+* pairedKernel_sign: proof_shape: content; escape_witness: pairedKernel_sign;
+  consumers: two_variable_nonneg.
+* pair_sum: proof_shape: bind-only; escape_witness: none;
+  consumers: finite_pairing.
+* finite_pairing: proof_shape: bind-only; escape_witness: none;
+  consumers: pairedKernel_sum_nonneg, two_variable_nonneg.
+* pairedKernel_sum_nonneg: proof_shape: content; escape_witness: KarpZhangGamma.Kernel.binomialGamma_sum;
+  consumers: two_variable_nonneg.
+* transformDelta: proof_shape: definition; escape_witness: none;
+  consumers: two_variable_nonneg, KarpZhangGamma.Series.gamma_half, KarpZhangGamma.Series.transformed_delta.
+* two_variable_nonneg: proof_shape: content; escape_witness: pairedKernel_sign;
+  consumers: KarpZhangGamma.Series.gamma_half.
+
+Direct frozen D5 dependencies: none; all KarpZhang dependencies are
+same-delivery declarations. Consumers are taken from compiled proof
+terms, with declaration types also counted for definitions. The listed
+content witnesses remain on the corresponding live mathematical paths.
+Utility is none: all statements are general identities or inequalities,
+not bounded enumeration, checkers, numerical reductions or certified instances.
 -/
 
 noncomputable section

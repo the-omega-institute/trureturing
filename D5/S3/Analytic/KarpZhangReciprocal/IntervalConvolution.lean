@@ -14,12 +14,62 @@ import Mathlib.Analysis.Convex.Deriv
 /-!
 admission_basis: escape-witness
 content theorem: symmetric_tail, through score_variance_bound.
-escape_witness: reversible rates on an arbitrary finite interval absorb the
-score variance into expected coefficient curvature, including both endpoints.
-The other private lemmas are consumed algebraic and calculus helpers.
-Direct D5 dependencies: Coeff.coefficient_calculus, BirthDeath.variance_bound.
-Only the direction (1,-1) is needed; no two-variable differentiability claim
-is made. The interval is indexed from zero to match BirthDeath.variance_bound.
+escape_witness: Reversible rates on an arbitrary finite interval absorb the score variance
+into expected coefficient curvature, including both endpoints. The resulting
+logarithmic concavity on lines s+t=S and symmetry imply the tail comparison.
+Only this direction of concavity is asserted. Projections of coefficient_calculus
+that use only positivity, derivatives or ratio monotonicity do not inherit
+the discarded curvature estimate as content.
+
+Per-declaration proof_shape (local names belong to this namespace;
+cross-module names have prefix D5.S3.Analytic):
+* F: proof_shape: definition; escape_witness: none;
+  consumers: shift_tail, symmetric, symmetric_tail, KarpZhangReciprocal.Result.abel_reduction, KarpZhangReciprocal.Result.reciprocal_half.
+* weight: proof_shape: definition; escape_witness: none;
+  consumers: balance, score_variance_bound, slice_concave, symmetric_tail, total_pos, weight_deriv, weight_pos.
+* score: proof_shape: definition; escape_witness: none;
+  consumers: score_deriv, score_variance_bound, slice_concave, weight_deriv.
+* curvature: proof_shape: definition; escape_witness: none;
+  consumers: score_deriv, score_variance_bound, slice_concave.
+* birth: proof_shape: definition; escape_witness: none;
+  consumers: balance, rate_curvature, score_variance_bound.
+* death: proof_shape: definition; escape_witness: none;
+  consumers: balance, rate_curvature, score_variance_bound.
+* weight_pos: proof_shape: bind-only; escape_witness: none;
+  consumers: score_variance_bound, total_pos.
+* total_pos: proof_shape: bind-only; escape_witness: none;
+  consumers: score_variance_bound, slice_concave, symmetric_tail.
+* coefficient_step: proof_shape: bind-only; escape_witness: none;
+  consumers: balance.
+* balance: proof_shape: bind-only; escape_witness: none;
+  consumers: score_variance_bound.
+* rate_curvature: proof_shape: bind-only; escape_witness: none;
+  consumers: score_variance_bound.
+* square_split: proof_shape: bind-only; escape_witness: none;
+  consumers: score_variance_bound.
+* score_variance_bound: proof_shape: content; escape_witness: score_variance_bound;
+  consumers: slice_concave.
+* variance_expand: proof_shape: bind-only; escape_witness: none;
+  consumers: slice_concave.
+* weight_deriv: proof_shape: bind-only; escape_witness: none;
+  consumers: slice_concave.
+* score_deriv: proof_shape: bind-only; escape_witness: none;
+  consumers: slice_concave.
+* slice_concave: proof_shape: content; escape_witness: score_variance_bound;
+  consumers: symmetric_tail.
+* symmetric: proof_shape: bind-only; escape_witness: none;
+  consumers: shift_tail, symmetric_tail.
+* symmetric_tail: proof_shape: content; escape_witness: score_variance_bound;
+  consumers: shift_tail.
+* shift_tail: proof_shape: content; escape_witness: score_variance_bound;
+  consumers: KarpZhangReciprocal.Result.reciprocal_half.
+
+Direct frozen D5 dependencies: none; all KarpZhang dependencies are
+same-delivery declarations. Consumers are taken from compiled proof
+terms, with declaration types also counted for definitions. The listed
+content witnesses remain on the corresponding live mathematical paths.
+Utility is none: all statements are general identities or inequalities,
+not bounded enumeration, checkers, numerical reductions or certified instances.
 -/
 
 noncomputable section

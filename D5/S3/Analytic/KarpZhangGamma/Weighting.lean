@@ -15,13 +15,25 @@ import Mathlib.Tactic.Ring
 /-!
 admission_basis: escape-witness
 content theorem: weighted_sum_nonneg.
-escape_witness: a least positive index separates the nonpositive prefix from
-the nonnegative suffix; if no positive index exists, the total-sum condition
-forces every summand to vanish. Subtraction of the separating weight then
-gives a nonnegative weighted sum, including zero entries and empty sign groups.
-coefficientwise_weighting is bind-only, consumed by Smoothing.smoothed_weighting.
-Direct frozen D5 dependencies: none. These are general finite inequalities,
-not bounded enumeration, certified instances, checkers or numerical reductions.
+escape_witness: A least positive index separates the nonpositive prefix from the
+nonnegative suffix. If there is no positive index, the nonnegative total
+forces all summands to vanish. Subtracting the separating weight proves
+the inequality, including zeros and empty sign groups. The coefficientwise
+specialization inherits this same-delivery content.
+
+Per-declaration proof_shape (local names belong to this namespace;
+cross-module names have prefix D5.S3.Analytic):
+* weighted_sum_nonneg: proof_shape: content; escape_witness: weighted_sum_nonneg;
+  consumers: coefficientwise_weighting.
+* coefficientwise_weighting: proof_shape: content; escape_witness: weighted_sum_nonneg;
+  consumers: KarpZhangGamma.Smoothing.smoothed_weighting.
+
+Direct frozen D5 dependencies: none; all KarpZhang dependencies are
+same-delivery declarations. Consumers are taken from compiled proof
+terms, with declaration types also counted for definitions. The listed
+content witnesses remain on the corresponding live mathematical paths.
+Utility is none: all statements are general identities or inequalities,
+not bounded enumeration, checkers, numerical reductions or certified instances.
 -/
 
 noncomputable section
