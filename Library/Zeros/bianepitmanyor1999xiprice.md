@@ -853,7 +853,7 @@ it is not an unconditional estimate for IPX34 or a Lean certification.
 For the complementary case reuse
 [the existing actual regular-source family S5](../Arith/caveney2012sacaga.md#retain-the-original-oscillation-exponent-on-the-regular-ga1-source).
 If RH fails, it supplies an unbounded family of actual event-free
-own-price integers $N=C_A$, $A=\log N$, with
+own-price integers $N$, $A=\log N$, with
 $G(N)>e^\gamma(1+c_\eta A^{-\eta})$ for fixed
 $c_\eta>0$ and $0<\eta<1/2$. The source's already retained
 prime-local bridge gives the strict identity $N=N_A$; there is no
@@ -897,7 +897,7 @@ to one coexists with an actual negative difference at the root scale.
 The sufficient target IPX34 remains a lower bound for the complete
 joint account, and has not been proved. It allows the negative values
 above: the constant gap $c_+-\kappa_\xi=c_R-c_0>0$ is the classical
-RH-conditional Ramanujan margin, as in
+RH-conditional Ramanujan margin in this logarithmic normalization, as in
 [the existing Ramanujan source](../Analytic/musin2020strongramanujan.md#the-positive-margin-already-assumes-rh),
 rather than an extra unconditional reserve created by this observer.
 IPX38 is a quantitative consumer for the specified source, not a new
