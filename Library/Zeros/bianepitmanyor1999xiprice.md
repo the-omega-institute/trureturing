@@ -530,3 +530,234 @@ joint arithmetic estimate, strict Robin above 5040 and RH remain
 unproved. These are paper-level applications of the cited BPY tail
 and the existing full kernel response, with no Lean certification or
 literature-priority claim.
+
+
+## The complete negative first-prime mass at the natural sign boundary
+
+IPX22--IPX25 locate the negative responses. Their complete size can
+also be estimated on the actual prime set. The inputs are GP's owned
+absolute-weight Fubini and primitive, the unconditional Chebyshev and
+effective PNT bounds already used in JPT and ACC, and the unchanged
+calibrated source. No new prime-counting theorem or qualitative
+cancellation mechanism is used.
+
+Keep $A$ sufficiently large and put
+$B_*=t_*/A$, $s_*=\log B_*$, $v_*=\log t_*$ and
+$u_*=B_*/z_A$. In addition to $a_A$ and $M_{2,A}$, use the uniform
+third absolute logarithmic moment $M_{3,A}=\mathbb E|X|^3=O(1)$.
+For every actual first-prime activation $\lambda(t_p)=r_{p,1}$ define
+
+$$
+g_A(t)=(-\mathcal H_A(t))_+,\qquad
+\mathfrak N_A=\sum_p\log p\,g_A(t_p),\qquad
+\mathfrak n_A=\int_{t_*}^\infty g_A(t)\,dt.
+\tag{IPX26}
+$$
+
+The sum uses every actual prime, not a prime-density model.
+For an integer $n$, its actual negative first-layer part includes only
+$p\nmid n$, so it is bounded by $\mathfrak N_A$. Equality requires
+that all primes with $t_p>t_*$ be absent; it is not assumed for an
+arbitrary integer. The continuous quantity $\mathfrak n_A$ is only
+an intermediate comparison.
+
+For $B\ge1$, write $s=\log B$, $v=L+s$. GP's absolute convergence
+permits the full-source primitive
+
+$$
+J_A(B):=\int_{AB}^\infty\mathcal H_A(t)\,dt
+=\mathbb E\log\!\left(1-\frac{\min(X,s)}v\right)
+ -\frac{\mathcal S_A(B)}L.
+\tag{IPX27}
+$$
+
+For a source value $X<s$, the primitive is $\log(1-X/v)$.
+For $X\ge s$, it is $\log(L/v)-(1-e^{s-X})/L$.
+Thus IPX27 includes the entire capped source, rather than extending
+the reciprocal logarithm across its pole. It uses absolutely
+convergent differences, with no subtraction of two divergent
+$\lambda$ integrals. By IPX25, $\mathfrak n_A=-J_A(B_*)$.
+
+Write $S=\mathcal S_A(B_*)$ and
+
+$$
+R_1=\int_{s_*}^\infty\mathcal S_A(e^w)\,dw,\qquad
+R_2=\int_{s_*}^\infty\mathcal T_A(w)\,dw,\qquad
+k_*=2\pi u_*^2-1\asymp\log L.
+$$
+
+IPX21 gives
+$R_1\le S/k_*$,
+$\mathcal T_A(s_*)=S+R_1$ and
+$R_2\le(1+1/k_*)S/k_*$.
+For $Y=\min(X,s_*)$ the first two moments are exactly
+
+$$
+\mathbb EY=a_A-\mathcal T_A(s_*),\qquad
+\mathbb EY^2=M_{2,A}-2s_*\mathcal T_A(s_*)-2R_2.
+$$
+
+Taylor expansion in IPX27 therefore yields
+
+$$
+\begin{aligned}
+J_A(B_*)={}&-\frac{a_A}{v_*}-\frac{M_{2,A}}{2v_*^2}
+ +\frac{R_1}{v_*}+\frac{s_*R_1}{v_*^2}
+ +\frac{R_2}{v_*^2}-\frac{s_*^2S}{Lv_*^2}
+ +O(L^{-3}),\\
+\mathfrak n_A={}&\frac{a_A}{v_*}
+ +\frac{M_{2,A}}{2v_*^2}
+ +O\!\left(\frac1{L^2\log L}\right).
+\end{aligned}
+\tag{IPX28}
+$$
+
+The expansion does not require $|X|<v_*$. For the unbounded negative
+part use
+$|\log(1+z)-z+z^2/2|\le z^3/3$ for $z\ge0$; for the positive
+part, $Y\le s_*=o(v_*)$ gives the same third-moment allowance.
+The second-order cap terms are retained: their cancellation uses
+$S/v_*+s_*S/v_*^2-S/L=-s_*^2S/(Lv_*^2)$.
+Finally $S=O(1/L)$, $s_*=O(\log\log L)$ and the bounds on $R_1,R_2$
+make all remaining boundary terms
+$O(1/(L^2\log L))$.
+
+For the literal activations, differentiate IPX16 at fixed $A$:
+
+$$
+\mathcal H_A'(t)=-K(t)
+ +\mathbb E[C_A^{-2}K(t/C_A);C_A<t/A].
+$$
+
+On $t\ge t_*$ the last kernel has $\log(t/C_A)\ge L$, so
+$|g_A'(t)|\le C/(t^2L)$ almost everywhere, with $g_A(t_*)=0$.
+Below $t_*$, $g_A$ is zero. The already owned bracket
+$p<t_p<p+1$ and the Chebyshev bound consequently give
+
+$$
+\begin{aligned}
+\left|\sum_p\log p\,[g_A(t_p)-g_A(p)]\right|
+&\le\frac C L\sum_{p>t_*-1}\frac{\log p}{p^2}
+ =O\!\left(\frac1{t_*L}\right),\\
+T_A\left|\sum_p\log p\,[g_A(t_p)-g_A(p)]\right|&=o(1).
+\end{aligned}
+\tag{IPX29}
+$$
+
+There is no factor counting primes, divisors or exponent layers.
+This activation shift is controlled at the root scale.
+
+Retain the exact primary-prime quadrature error
+
+$$
+\mathfrak E_A
+=\int_{t_*}^\infty g_A(t)\,d(\vartheta(t)-t)
+=-\int_{t_*}^\infty(\vartheta(t)-t)g_A'(t)\,dt.
+\tag{IPX30}
+$$
+
+The boundary terms vanish. The same effective PNT supplier used in
+ACC gives $|\vartheta(t)-t|\le Ct e^{-d\sqrt{\log t}}$
+for a fixed $d>0$ and all sufficiently large $t$. Hence
+
+$$
+|\mathfrak E_A|
+\le\frac C L\int_{\log t_*}^\infty e^{-d\sqrt u}\,du
+=O\!\left(\frac{e^{-d\sqrt L}}{\sqrt L}\right).
+\tag{IPX31}
+$$
+
+This allowance is smaller than every fixed negative power of $L$.
+It is insufficient to guarantee a root-small actual quadrature error;
+the exact $\mathfrak E_A$ remains available when that precision is
+required.
+
+Combining IPX28--IPX31 gives the full literal-prime expansion
+
+$$
+\boxed{\quad
+\mathfrak N_A
+=\frac{a_A}{v_*}+\frac{M_{2,A}}{2v_*^2}
+ +O\!\left(\frac1{L^2\log L}\right)
+\sim\frac{a_+}{L}.\quad}
+\tag{IPX32}
+$$
+
+In particular this includes all negative first-prime responses from
+the natural boundary onward, rather than just IPX13's artificial
+$p>A^{16}$ tail. The continuous integral is used only with its paid
+literal activation and prime-quadrature errors. No improvement of
+the underlying PNT is asserted.
+
+For the same original integer $n$, let $h_{p,A}(n)$ be the observed
+first-layer response before multiplication by $\log p$: it is IPX7's
+nonnegative expectation when $p\mid n$ and
+$\mathcal H_A(t_p)$ when $p\nmid n$. Define its complete positive
+and negative first-layer parts by
+
+$$
+\mathfrak P_A(n)=\sum_p\log p\,(h_{p,A}(n))_+,\qquad
+\mathfrak N_A(n)=\sum_{p\nmid n}\log p\,g_A(t_p).
+$$
+
+The owned absolute convergence gives
+$D_{1,A}(n)=\mathfrak P_A(n)-\mathfrak N_A(n)$ and
+$\mathfrak N_A(n)\le\mathfrak N_A$.
+Reuse [ACC3--ACC5's actual strict products](../ArithSums/nicolas2025comparison.md#use-actual-strict-products-at-their-own-size)
+$N_x$, with $A=\log N_x\sim x$. Every prime factor lies below $x$,
+whereas $t_*/x\to\infty$. Thus eventually all negative first primes
+are absent from this same $N_x$, and
+$\mathfrak N_A(N_x)=\mathfrak N_A$ exactly.
+
+ACC5 also gives $0\le G_{2,A}(N_x)\le d_A(N_x)$ and
+$d_A(N_x)=O(e^{-d\sqrt L}/L)$ for some $d>0$.
+Use the unchanged exact account
+$\Delta(N_x)=d_A(N_x)+I_\psi(A)+R(A)$, IPX11 and the owned
+$R(A)=c_R/T_A+O(1/(T_AL))$. They give
+
+$$
+\begin{aligned}
+D_{1,A}(N_x)
+&=d_A(N_x)-G_{2,A}(N_x)+I_\psi(A)
+  -\frac{2(1-b_+)}{T_A}+O\!\left(\frac1{T_AL}\right)\\
+&=O(e^{-d_1\sqrt L})+O(T_A^{-1})
+ =o(L^{-m})\qquad\text{for every fixed }m>0,
+\end{aligned}
+$$
+
+for a fixed $d_1>0$, by the same effective PNT input as ACC2.
+Consequently on these actual integers,
+
+$$
+\mathfrak P_A(N_x)
+=\frac{a_A}{v_*}+\frac{M_{2,A}}{2v_*^2}
+ +O\!\left(\frac1{L^2\log L}\right),\qquad
+\frac{\mathfrak P_A(N_x)}{\mathfrak N_A(N_x)}\longrightarrow1.
+\tag{IPX33}
+$$
+
+Both parts use the same integer, source and literal prime set. This
+quantifies the full sign split at the natural boundary; ACC already
+owns the actual-integer qualitative compensation mechanism.
+
+The surviving sufficient estimate for IPX11 is, for some fixed
+$\epsilon>0$ and every sufficiently large original integer $n$,
+
+$$
+T_A[\mathfrak P_A(n)-\mathfrak N_A(n)+G_{2,A}(n)]
+\ge -c_++\epsilon,\qquad c_+=c_R+2(1-b_+).
+\tag{IPX34}
+$$
+
+It would imply eventual strict Robin; a complete proof above 5040
+would also have to cover the remaining integers. On the actual
+family in IPX33 the residual scale $T_A^{-1}$ is of relative order
+$A^{-1/2}$ compared with either sign part $\sim a_+/L$.
+The logarithmic remainder in IPX32--IPX33 and the unconditional
+prime-quadrature allowance do not supply that one-sided precision.
+A larger positive residual is favorable: no two-sided smallness of
+the actual difference is required or claimed. The joint bound
+IPX34, a certified numerical starting scale, full strict Robin and
+RH remain unproved. IPX26--IPX33 are paper-level applications of
+the cited source and existing arithmetic estimates, without Lean
+certification or a literature-priority claim.
