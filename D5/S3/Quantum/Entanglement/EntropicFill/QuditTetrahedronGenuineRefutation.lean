@@ -232,7 +232,8 @@ private theorem exists_fill : ∃ σ ell, AdmissibleFill psi σ ell := by
 
 private theorem all_volume_zero (σ : Fin 6 → ℝ) (ell : ℝ)
     (h : AdmissibleFill psi σ ell) : volume σ = 0 := by
-  sorry
+  rw [forced_fill σ ell h]
+  norm_num [volume, Real.zero_rpow]
 
 private theorem not_biseparable : ¬ Biseparable psi := by
   sorry
