@@ -38,7 +38,7 @@ Lean statement: `D5/S3/FiniteGroups/HeadleyDoubledCoordinates.kernelEquiv`
 
 *Commentary.*
 
-The literal subgroup kernel is additively equivalent to the original coordinate product with exactly the selected two exponents lowered by one. Product-kernel and subgroup-product equivalences retain every other factor.
+The lowered coordinate product embeds into the original group through the two cyclic kernel inclusions, with every other factor retained. Its image is the doubled-coordinate range. The proved equality of that range with the literal reduction kernel supplies the codomain of the embedding equivalence used to transport the recursive R-cycle.
 
 **Definition 1.4 (The actual quotient is E4).**
 
@@ -62,7 +62,7 @@ Lean statement: `D5/S3/FiniteGroups/HeadleyDoubledCoordinates.kernel_eq_doubled_
 
 *Commentary.*
 
-Conjugating doubling on the two selected coordinates by the coordinate chart gives an endomorphism of the original product. Its range is exactly the selected kernel.
+Conjugating doubling on the two selected coordinates by the coordinate chart gives an endomorphism of the original product. Its range is exactly the selected kernel. This equality identifies the actual image of the lowered-coordinate embedding with the subgroup used by the nonsplit extension construction.
 
 ## References
 

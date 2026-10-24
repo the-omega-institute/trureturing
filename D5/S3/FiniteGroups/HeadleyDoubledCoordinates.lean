@@ -40,11 +40,6 @@ theorem quotientHom_surjective (hi : 0 < e i) (hj : 0 < e j) :
   rw [AddEquiv.apply_symm_apply]
   exact Prod.ext hx hy
 
-private def kernelCompEquiv {A B C : Type*} [AddCommGroup A] [AddCommGroup B]
-    [AddCommGroup C] (f : B →+ C) (E : A ≃+ B) : (f.comp E.toAddMonoidHom).ker ≃+ f.ker :=
-  (AddEquiv.addSubgroupCongr (AddMonoidHom.ker_comp_addEquiv f E)).trans
-    (E.symm.addSubgroupMap f.ker).symm
-
 private def lowerChart : Coordinates (lower e i j) ≃+
     (ZMod (2 ^ (e i - 1)) × ZMod (2 ^ (e j - 1))) × Rest e i j hji :=
   (chart (lower e i j) i j hji).trans
@@ -58,18 +53,29 @@ private def lowerChart : Coordinates (lower e i j) ≃+
           have hkj : k.val.val ≠ j := fun h => k.property (Subtype.ext h)
           simp [lower, hki, hkj])).toAddEquiv))
 
-/-- The actual subgroup type, not a cardinal surrogate, has the two lowered exponents. -/
-noncomputable def kernelEquiv (hi : 0 < e i) (hj : 0 < e j) :
-    (quotientHom e i j hji hi hj).ker ≃+ Coordinates (lower e i j) :=
-  ((kernelCompEquiv
-      (((reduction (e i) hi).prodMap (reduction (e j) hj)).comp
-        (AddMonoidHom.fst _ (Rest e i j hji))) (chart e i j hji)).trans
-    ((projectionKernelEquiv ((reduction (e i) hi).prodMap (reduction (e j) hj))).trans
-      ((AddEquiv.prodCongr (productKernelEquiv _ _) (AddEquiv.refl _)).trans
-        (AddEquiv.prodCongr
-          (AddEquiv.prodCongr (reductionKernelEquiv (e i) hi)
-            (reductionKernelEquiv (e j) hj)) (AddEquiv.refl _))))).trans
-              (lowerChart e i j hji).symm
+private noncomputable def kernelChartEquiv (hi : 0 < e i) (hj : 0 < e j) :
+    (((reduction (e i) hi).prodMap (reduction (e j) hj)).comp
+      (AddMonoidHom.fst _ (Rest e i j hji))).ker ≃+ Coordinates (lower e i j) :=
+  ((projectionKernelEquiv ((reduction (e i) hi).prodMap (reduction (e j) hj))).trans
+    ((AddEquiv.prodCongr (productKernelEquiv _ _) (AddEquiv.refl _)).trans
+      (AddEquiv.prodCongr
+        (AddEquiv.prodCongr (reductionKernelEquiv (e i) hi)
+          (reductionKernelEquiv (e j) hj)) (AddEquiv.refl _)))).trans
+            (lowerChart e i j hji).symm
+
+/-- Embed lowered coordinates in the original group through the two cyclic kernel
+inclusions; the coordinate chart restores every unselected factor. -/
+private noncomputable def lowerEmbedding (hi : 0 < e i) (hj : 0 < e j) :
+    Coordinates (lower e i j) →+ Coordinates e :=
+  (chart e i j hji).symm.toAddMonoidHom.comp
+    ((((reduction (e i) hi).prodMap (reduction (e j) hj)).comp
+      (AddMonoidHom.fst _ (Rest e i j hji))).ker.subtype.comp
+        (kernelChartEquiv e i j hji hi hj).symm.toAddMonoidHom)
+
+private theorem lowerEmbedding_injective (hi : 0 < e i) (hj : 0 < e j) :
+    Injective (lowerEmbedding e i j hji hi hj) :=
+  (chart e i j hji).symm.injective.comp
+    (Subtype.val_injective.comp (kernelChartEquiv e i j hji hi hj).symm.injective)
 
 /-- The quotient is E4, by the existing surjective first-isomorphism equivalence. -/
 noncomputable def quotientEquiv (hi : 0 < e i) (hj : 0 < e j) :
@@ -118,5 +124,26 @@ theorem kernel_eq_doubled_range (hi : 0 < e i) (hj : 0 < e j) :
     · change reduction (e j) hj (2 • _) = 0
       rw [map_nsmul]
       exact CharTwo.two_nsmul _
+
+private theorem lowerEmbedding_range (hi : 0 < e i) (hj : 0 < e j) :
+    (lowerEmbedding e i j hji hi hj).range = (doubleCoordinates e i j hji).range := by
+  have hid : (AddMonoidHom.id (Rest e i j hji)).range = ⊤ :=
+    AddMonoidHom.range_eq_top.mpr surjective_id
+  simp only [lowerEmbedding, doubleCoordinates, AddMonoidHom.range_comp,
+    AddEquiv.toAddMonoidHom_eq_coe, AddEquiv.range_eq_top, AddSubgroup.map_top,
+    AddSubgroup.range_subtype, AddMonoidHom.range_prodMap, hid]
+  congr 1
+  rw [← reduction_kernel_eq_doubled (e i) hi,
+    ← reduction_kernel_eq_doubled (e j) hj]
+  ext x
+  simp [AddMonoidHom.mem_ker, AddSubgroup.mem_prod, Prod.ext_iff]
+
+/-- The actual subgroup type, not a cardinal surrogate, has the two lowered exponents.
+The embedding image is the doubled range, identified with the literal kernel. -/
+noncomputable def kernelEquiv (hi : 0 < e i) (hj : 0 < e j) :
+    (quotientHom e i j hji hi hj).ker ≃+ Coordinates (lower e i j) :=
+  ((AddMonoidHom.ofInjective (lowerEmbedding_injective e i j hji hi hj)).trans
+    (AddEquiv.addSubgroupCongr ((lowerEmbedding_range e i j hji hi hj).trans
+      (kernel_eq_doubled_range e i j hji hi hj).symm))).symm
 
 end D5.S3.FiniteGroups.HeadleyDoubledCoordinates
