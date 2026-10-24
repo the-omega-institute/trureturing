@@ -68,14 +68,16 @@ private theorem residue_weight_cancellation (A k : ℤ) :
         ring
       · rw [if_pos left, if_neg right]
         have high : N < (-(-A-(N : ℤ)-2)-1).toNat := by omega
-        simp [BinomialKernelDelta.chooseSign, Ring.choose_natCast,
-          Nat.choose_eq_zero_of_lt high]
+        simp only [BinomialKernelDelta.chooseSign, Ring.choose_natCast,
+          Int.cast_natCast, Nat.choose_eq_zero_of_lt high, Nat.cast_zero,
+          mul_zero, sub_zero]
     · rw [if_neg left]
       by_cases right : A < 0
       · rw [if_pos right]
         have high : N < (-A-1).toNat := by omega
-        simp [BinomialKernelDelta.chooseSign, Ring.choose_natCast,
-          Nat.choose_eq_zero_of_lt high]
+        simp only [BinomialKernelDelta.chooseSign, Ring.choose_natCast,
+          Int.cast_natCast, Nat.choose_eq_zero_of_lt high, Nat.cast_zero,
+          mul_zero, sub_zero]
       · rw [if_neg right]
         ring
 
