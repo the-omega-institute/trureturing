@@ -1348,3 +1348,399 @@ Ludwig，*Asymptotic Approximation of Convex Curves; the Hausdorff Metric Case*�
 本节给出普通数学证明，未经过 Lean 编译；该极限命题的精确形式化仍未结算。
 
 ## 追加锚（本行以下为增补区）
+
+## 29. 正有限容差下统一报告量的精确奇数阶梯
+
+### 定义 29.1（原始风险、容差与整数参数）
+
+沿用定义 26.1、27.1。固定整数 $R\ge3$，令 $N=2R$、
+$I_R=\{0,1,\ldots,N\}$。给定 $m>0$、$\varepsilon>0$ 和
+$c=2\varepsilon/m$，每个已知宽度 $H>0$ 对应原始报告实验
+
+$$
+\begin{gathered}
+y_k=A(k+\tau)^2+B+\eta_k\quad(k\in I_R),\\
+\tau\in[-R-H/2,-R+H/2],\qquad
+m\le A<\infty,\quad B\in\mathbb R,\quad
+\eta\in[-\varepsilon,\varepsilon]^{I_R}.
+\end{gathered}
+\tag{29.1}
+$$
+
+每个世界的所有坐标共享同一有限增益 $A$ 和有限自由零位 $B$；不同世界可以分别选择。
+对任意 $S\subseteq I_R$，子实验只保留原始坐标 $y|_S$，其误差合同是上述完整联合
+立方体的坐标投影，没有独立指定系数误差。记原点绝对误差的极小极大风险为
+
+$$
+\mathscr R_S(H)=
+\inf_{T:\mathbb R^S\to\mathbb R}
+\sup_{\substack{\tau\in[-R-H/2,-R+H/2]\\
+                 m\le A<\infty,\ B\in\mathbb R\\
+                 \eta\in[-\varepsilon,\varepsilon]^{I_R}}}
+\left|T\bigl((A(k+\tau)^2+B+\eta_k)_{k\in S}\bigr)-\tau\right|.
+\tag{29.2}
+$$
+
+恢复规则为任意确定性函数，可使用该次分别已知的 $H,m,\varepsilon$。
+空集、单项和二项报告也按 (29.2) 定义。报告除以 $m$ 后，风险仅依赖噪声比 $c$。
+定义 27.1 的量因而仍为
+
+$$
+\begin{aligned}
+\mathcal M_R(c,\delta)
+ &=\min\left\{|J|:\ J\subseteq I_R,\quad
+       \forall H>0,\ \mathscr R_J(H)\le(1+\delta)\mathscr R_{I_R}(H)\right\},\\
+K(\delta)&=\sup_{\substack{R\in\mathbb Z,\ R\ge3\\c>0}}
+                      \mathcal M_R(c,\delta).
+\end{aligned}
+\tag{29.3}
+$$
+
+每个 $J$ 都是无权重的原整数位置子集，在全部 $H$、报告及实现世界之前固定；
+(29.3) 允许它依赖 $R,c,\delta$。每个风险比较的两侧使用同一个已知 $H$，
+没有要求宽度未知时仍用同一个恢复函数。容差要求中的等号是允许的。
+
+以下固定 $0<\delta\le1/35$，并记
+
+$$
+\begin{gathered}
+e=\frac{\delta}{1+\delta},\qquad
+Q=e^{-1/2}=\sqrt{\frac{1+\delta}{\delta}},\\
+n=\left\lceil\frac{Q-1}{2}\right\rceil,\qquad L=2n+1.
+\end{gathered}
+\tag{29.4}
+$$
+
+于是 $Q\ge6$、$n\ge3$，且 $2n-1<Q\le2n+1=L$。
+这里的 $L$ 只表示整数报告数；三索引设计卷定理 18.2 中的先验长度在此为 $H$。
+
+### 定理 29.2（精确奇数阶梯及正有限参数的最大值）
+
+在定义 29.1 的原始实验下，对每个实数 $0<\delta\le1/35$，有
+
+$$
+\boxed{
+K(\delta)=2\left\lceil
+\frac{\sqrt{(1+\delta)/\delta}-1}{2}\right\rceil+1=L.}
+\tag{29.5}
+$$
+
+它是大于或等于 $Q$ 的最小奇整数。对每个整数 $n\ge3$，其精确区间为
+
+$$
+K(\delta)=2n+1
+\quad\Longleftrightarrow\quad
+\delta\in
+\left[\frac1{4n(n+1)},\frac1{4n(n-1)}\right)
+\cap(0,1/35].
+\tag{29.6}
+$$
+
+特别地，$K=7$ 对应 $[1/48,1/35]$，$K=9$ 对应 $[1/80,1/48)$，
+其余正容差由 (29.6) 给出。下端点包含而上端点排除：
+在 $\delta=1/(4n(n+1))$ 时有 $Q=2n+1$，允许极差保证恰好达到容差；
+在 $\delta=1/(4n(n-1))$ 且仍属所述定义域时，值已是 $2n-1$。
+本定理不把 $\delta=0$ 或 $\delta>1/35$ 纳入结论。
+
+更具体地，对任意整数 $R\ge3$，从 $x_0=R$ 开始递推
+
+$$
+x_{j+1}=\min\left\{N,x_j+\max\{1,\lfloor x_j/n\rfloor\}\right\},
+\qquad x_M=N,
+\tag{29.7}
+$$
+
+在第一次到达 $N=2R$ 时停止，并取
+
+$$
+J=\{x_0,\ldots,x_M\}\cup\{N-x_0,\ldots,N-x_M\}.
+\tag{29.8}
+$$
+
+该无权重整数设计只依赖 $R,\delta$，满足
+
+$$
+M\le n,\qquad |J|=2M+1\le L,\qquad
+\forall c>0\ \forall H>0:\quad
+\mathscr R_J(H)\le(1+\delta)\mathscr R_{I_R}(H).
+\tag{29.9}
+$$
+
+另一方面，取下列严格正且有限的噪声比与有限网格：
+
+$$
+R=n,\qquad N=2n,\qquad
+c=\frac{Q^2-(2n-1)^2}{4}>0.
+\tag{29.10}
+$$
+
+则每个真子集 $J\subsetneq I_n$ 都在某个正有限宽度上严格违反容差，故
+
+$$
+\mathcal M_n(c,\delta)=2n+1=K(\delta).
+\tag{29.11}
+$$
+
+因此 (29.3) 的上确界由 (29.10) 的一对有限参数取得。
+这不分类全部最优子集或全部最大化参数对，也不把参数最大值的取得性等同于
+任意报告族上确界的取得性。
+
+本定理相对于定义 26.1、27.1 及第 28 节界的精确强化属于 `repo-derived`：
+新增承重部分为 (29.7) 的整数构造、其计数及相对间隙估计，以及 (29.10) 对严格删除
+见证的统一容差比较。原始共同校准与截断风险律复用
+[三索引设计卷假设 18.1、定理 18.2](FIB_UNCALIBRATED_QUADRATIC_CLOCK_THREE_INDEX_DESIGN.md)，
+完整包络复用 (26.4) 和引理 26.2，充分风险传递复用引理 27.2。
+定义 27.6 所引 AHV 作者稿定理 3.7 给一般宽度核的 $O(e^{-1/2})$ 数目界，
+定义 28.6 所引 Ludwig 引言 (1) 给光滑凸曲线自由顶点的 Hausdorff 渐近式；
+这两个所引段落没有给出 (29.5) 的原始风险精确整数等式。
+此来源划分不对两篇全文或全部文献作不存在性、穷尽性或全局新颖性断言。
+
+**证明。** （一）先证明 (29.7) 的构造合法且至多用 $n$ 步。
+每一步至少前进一个整数，故有限终止；所有位置均在 $[R,N]$ 的整数网格内。
+反射的两半仅在 $R$ 相交，所以 $0,R,N\in J$ 且 $|J|=2M+1$。
+若 $R<n$，从 $R$ 到 $2R$ 至多需要 $R<n$ 步。
+
+若 $R\ge n$，写 $R=kn+r$，其中 $k\ge1$、$0\le r<n$。
+暂去掉 (29.7) 的上端截断，记递推为 $y_0=R$、
+$y_{j+1}=y_j+\max\{1,\lfloor y_j/n\rfloor\}$。
+因 $y_j\ge R$，每步至少为 $k$。前 $n-r$ 步之后有
+
+$$
+\begin{aligned}
+y_{n-r}&\ge R+k(n-r),\\
+R+k(n-r)-(k+1)n&=(k-1)(n-r)\ge0.
+\end{aligned}
+\tag{29.12}
+$$
+
+因此余下的 $r$ 步每步至少为 $k+1$，总共 $n$ 步的前进量至少为
+
+$$
+y_n-R\ge k(n-r)+(k+1)r=kn+r=R.
+\tag{29.13}
+$$
+
+当 $r=0$ 时余下部分为空，同一式仍成立。不截断的递推在第 $n$ 步之前或当步已到达
+或越过 $N$；截断递推在此前与它相同，在首次越过时直接落到 $N$，不会延迟到达。
+故 $M\le n$，得到 (29.9) 的数目界。
+
+（二）证明此设计的相对极差保证。对任意实 $U,V$，记
+$p(k)=Uk^2+Vk$，极差 $W_S(U,V)$ 按 (27.2) 定义。
+$U=0$ 时，保留 $0,N$ 就保持全部极差；用 $-p$ 代替 $p$ 不改变极差，故其余情形可设
+$U>0$。配方写成 $p(k)=U(k-v)^2+\text{常数}$。
+两端点保留最大值；若 $v\notin[0,N]$，最小值也由端点保持。
+当 $v\in[0,N]$ 时，由 (29.8) 的反射对称性，只需处理 $R\le v\le N$。
+
+若 $v\in J$，最小值无损。否则令 $a<b$ 是右半边包围 $v$ 的两个相邻保留位置，
+设
+
+$$
+h=b-a,\qquad d=\operatorname{dist}(v,I_R),\qquad
+z=\operatorname{dist}(v,J)=\min\{v-a,b-v\}.
+\tag{29.14}
+$$
+
+因为 $v\ge R$，离顶点较远的端点是 $0$，从而
+
+$$
+W_{I_R}(U,V)=U(v^2-d^2),\qquad
+W_J(U,V)=U(v^2-z^2).
+\tag{29.15}
+$$
+
+这里 $0\le d\le z\le v$、$d\le1/2$，且 $v\ge R\ge3$，所以分母 $v^2-d^2$ 严格为正。
+当 $h=1$ 时，最近的原整数已在 $\{a,b\}$ 中，故 $d=z$，没有极差损失。
+当 $h\ge2$ 时，(29.7) 的步长给出
+
+$$
+h\le\lfloor a/n\rfloor,\qquad a\ge nh,\qquad
+a+b=2a+h\ge(2n+1)h=Lh.
+\tag{29.16}
+$$
+
+若末步被截短，第一项仍是上界；因 $h\ge2$，步长定义中的 $\max\{1,\cdot\}$
+在此不会引入例外。
+
+必须控制的是顶点相对距离，而非仅控制绝对间隙。在区间 $[a,(a+b)/2]$ 上，
+$z/v=(v-a)/v=1-a/v$ 递增；在 $[(a+b)/2,b]$ 上，
+$z/v=(b-v)/v=b/v-1$ 递减。因而最大值恰在中点，且
+
+$$
+\frac zv\le\frac{h}{a+b}\le\frac1L.
+\tag{29.17}
+$$
+
+再由 $d^2(v^2-z^2)\ge0$，交叉相乘得到
+
+$$
+\begin{aligned}
+\frac{W_{I_R}(U,V)-W_J(U,V)}{W_{I_R}(U,V)}
+ &=\frac{z^2-d^2}{v^2-d^2}\\
+ &\le\frac{z^2}{v^2}
+ \le\frac{h^2}{(a+b)^2}
+ \le\frac1{L^2}
+ \le\frac1{Q^2}=e.
+\end{aligned}
+\tag{29.18}
+$$
+
+最后一步使用 $Q\le L$，包括 $Q=L$ 的等号情形。反射、线性及负首项系数的情形
+已处理，所以对全部 $U,V\in\mathbb R$ 均有
+
+$$
+W_J(U,V)\ge(1-e)W_{I_R}(U,V).
+\tag{29.19}
+$$
+
+（三）把充分极差保证回接实际原始风险。
+$J$ 至少含 $0,R,N$ 三个位置，故引理 27.2 适用。
+具体而言，该引理 (27.5)--(27.6) 的原始联合系数集合与径向比值目标给出
+$D_J(H)\le tD_{I_R}(H)$，其中 $t=(1-e)^{-1}=1+\delta$。
+此处目标的增益分母仍是 $m+U$；没有换用独立系数噪声或反向假设极差条件必要。
+再用同一引理 (27.7) 的实际先验截断，有
+
+$$
+\begin{aligned}
+2\mathscr R_J(H)
+ &=\min\{H,D_J(H)\}\\
+ &\le\min\{H,tD_{I_R}(H)\}
+ \le t\min\{H,D_{I_R}(H)\}
+ =2t\mathscr R_{I_R}(H).
+\end{aligned}
+\tag{29.20}
+$$
+
+(29.19) 的设计与 $c,H$ 无关，故 (29.20) 对全部 $c>0,H>0$ 同时成立，
+从而 $K(\delta)\le L$。
+
+（四）现取 (29.10) 的参数，证明全部内部位置必要。
+由 $N-1<Q$ 可知 $0<c<\infty$。对 $i\in\{R,\ldots,N-1\}$，有
+
+$$
+i^2+2c\le(N-1)^2+2c
+ =\frac{Q^2+(N-1)^2}{2}<Q^2,
+\qquad Q^2-1=\frac1\delta.
+\tag{29.21}
+$$
+
+令 $S_i=I_R\setminus\{i\}$，使用引理 26.2 的原宽度
+
+$$
+H_i=N-i+\frac{2c}{i},\qquad
+D_{I_R}(H_i)=\frac ci,\qquad
+H_i>\frac{2c}{i},\qquad
+\mathscr R_{I_R}(H_i)=\frac{c}{2i}.
+\tag{29.22}
+$$
+
+删除后 $i-1,i+1$ 是相邻位置，因此 $\lambda=2i$ 是定理 18.2 的合法候选和。
+在 $S_i$ 上，$k^2-2ik$ 的最大值为 $0$，最小值为 $1-i^2$，极差是 $i^2-1$。
+在 $i=R$ 时两个端点均取最大值 $0$，所以中央位置也包括在内。
+定理 18.2 的 (18.3) 在此使用 $a+b=-N$、先验长度 $H_i$，给出候选
+
+$$
+\begin{aligned}
+E_i&=\frac{c(H_i+2i-N)}{i^2-1+2c}\\
+   &=\frac ci\left(1+\frac1{i^2-1+2c}\right).
+\end{aligned}
+\tag{29.23}
+$$
+
+(29.21) 保证 $0<i^2-1+2c<Q^2-1=1/\delta$，故
+$E_i>(1+\delta)c/i$。又因 $t=1+\delta\le36/35<2$，有
+$H_i>2c/i>tc/i$。于是实际截断之后仍严格成立
+
+$$
+2\mathscr R_{S_i}(H_i)
+ =\min\{H_i,D_{S_i}(H_i)\}
+ \ge\min\{H_i,E_i\}
+ >\frac{tc}{i}=2t\mathscr R_{I_R}(H_i).
+\tag{29.24}
+$$
+
+原始反射为 $k\mapsto N-k$、$\tau\mapsto-N-\tau$，报告与误差坐标相应置换。
+它保持中心为 $-R$ 的同一先验、共同有限 $A,B$、完整联合立方体及绝对原点损失，
+故同一宽度上的风险比较也强迫保留 $N-i$。
+$i=R,\ldots,N-1$ 与其反射覆盖全部 $1,\ldots,N-1$，所以每个内部位置的单点删除
+都在某个已知宽度严格违反容差。
+
+（五）端点需要另用完整包络比较。取正有限宽度
+
+$$
+H_*=\frac{2c}{N}.
+\tag{29.25}
+$$
+
+在 (26.4) 的完整网格包络中，跨度项是 $Z=c/N$；中央候选满足
+
+$$
+F_0(H_*)=\frac cN\frac{2c}{R^2+2c}\le\frac cN.
+\tag{29.26}
+$$
+
+对每个 $R\le j\le N-1$，候选 $F_j(H_*)\le c/N$ 所需的分母比较完整写为
+
+$$
+\begin{aligned}
+j(j+1)+2c-N(H_*+2j+1-N)
+ &=j(j+1)-N(2j+1-N)\\
+ &=(N-j)(N-j-1)\ge0.
+\end{aligned}
+\tag{29.27}
+$$
+
+这是两个相邻非负整数的乘积，在 $j=N-1$ 取零。因此全部候选不超过 $Z$，
+并非只比较包络中的一个分支；实际完整风险为
+
+$$
+D_{I_R}(H_*)=\frac cN,\qquad
+2\mathscr R_{I_R}(H_*)=\min\{H_*,c/N\}=\frac cN.
+\tag{29.28}
+$$
+
+删除右端点，令 $S_N=I_R\setminus\{N\}$。
+其跨度为 $N-1$，定理 18.2 的跨度候选给出 $D_{S_N}(H_*)\ge c/(N-1)$。
+因 $N=2n\ge6$，有 $H_*=2c/N>c/(N-1)$，所以
+
+$$
+2\mathscr R_{S_N}(H_*)\ge
+\min\{H_*,c/(N-1)\}=\frac c{N-1}.
+\tag{29.29}
+$$
+
+又由 $Q>N-1$ 及 $(N-1)^2>N$，有
+
+$$
+\delta=\frac1{Q^2-1}<\frac1{N-1},\qquad
+\frac{\mathscr R_{S_N}(H_*)}{\mathscr R_{I_R}(H_*)}
+ \ge\frac N{N-1}>1+\delta.
+\tag{29.30}
+$$
+
+这给出右端点的严格截断风险见证；同一原始反射给出左端点 $0$ 的见证。
+以上全部单点删除实验保留 $N\ge6$ 个位置，故定理 18.2 的至少三位置条件满足。
+所有宽度与噪声比均严格正且有限；原始有限增益、有限零位及合法误差的实现由该定理
+承担，不以无限校准参数代替合法世界。
+
+（六）最后涵盖任意真子集，包括空集及小支撑。
+若 $J\subsetneq I_R$，取某个遗漏位置 $k$，则 $J\subseteq S_k=I_R\setminus\{k\}$。
+对 $J$ 的任意恢复规则，先从 $S_k$ 的报告投影到 $J$ 再应用它，就得到 $S_k$ 的合法
+恢复规则；误差合同仍是同一联合立方体的坐标投影。因此对每个相同的已知宽度，
+
+$$
+\mathscr R_J(H)\ge\mathscr R_{S_k}(H).
+\tag{29.31}
+$$
+
+在 (29.24) 或 (29.30) 已给出的相应宽度上，右侧严格超过
+$(1+\delta)\mathscr R_{I_R}(H)$，所以 $J$ 也失败。
+此推论直接来自原风险定义的投影单调性，同时包含零项、一项和二项支撑，
+没有对这些小支撑应用三位置候选公式，也不需要另立二报告公式。
+完整 $I_n$ 自然满足容差，故 (29.11) 成立。
+
+将 (29.11) 与 (29.9) 的全参数上界合并，即得 (29.5) 和所述有限最大化参数对，
+无需再调用一般的有限整数上确界取得性论证。
+最后，由 $n-1<(Q-1)/2\le n$ 等价于 $2n-1<Q\le2n+1$，再用
+$Q^2=1+1/\delta$，得到 (29.6) 的左闭右开区间及其全部等号约定。∎
+
+## 追加锚（本行以下为增补区）
