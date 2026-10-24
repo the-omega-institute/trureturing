@@ -190,3 +190,4 @@ Exhaustive literature coverage, citation-index completeness and priority are
 unverified. The numerical readings are finite multiprecision observations, not
 proofs; the sign of $\Delta_f$ itself is established only on the stated grid
 and truncation.
+Four-slot escape registrations of the shared public Gamma and power helpers (and, for the two-block module, of `first_coefficient_eq`) are not completed; the gap is recorded at https://github.com/the-omega-institute/trureturing/issues/20966.

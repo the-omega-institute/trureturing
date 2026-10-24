@@ -2,12 +2,14 @@
    generality: G
    mirror-B: D5/B/S3/Analytic/HypergeometricShiftTuran/Defs
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
-   anchors: [mathlib/module/Mathlib.Analysis.Real.Pi.Bounds, mathlib/module/Mathlib.Analysis.SpecialFunctions.Gaussian.GaussianIntegral, mathlib/module/Mathlib.RingTheory.MvPolynomial.Symmetric.Defs]
+   anchors: [mathlib/module/Mathlib.Analysis.Real.Pi.Bounds, mathlib/module/Mathlib.Analysis.SpecialFunctions.Gamma.BohrMollerup, mathlib/module/Mathlib.Analysis.SpecialFunctions.Gaussian.GaussianIntegral, mathlib/module/Mathlib.RingTheory.MvPolynomial.Symmetric.Defs]
    utility: none
    digest: Gamma ratios, shared special values, and shifted Turanian coefficients. -/
 
 /-
 # Shared Gamma ratios and special values
+
+Escape audit unfinished for the public helpers: https://github.com/the-omega-institute/trureturing/issues/20966
 
 Per-declaration proof_shape:
 * coeff: bind-only definition; consumers: turanCoeff, TwoBlockResult.seriesCoeff.
@@ -26,6 +28,12 @@ Per-declaration proof_shape:
   TwoBlockResult.first_coefficient_eq.
 * gamma_three_seven_halves_inv_pow_mul: bind-only;
   consumers: Result.first_coefficient_eq, TwoBlockResult.first_coefficient_eq.
+* gamma_three: bind-only; consumers: gamma_two_three_inv_pow_mul,
+  TwoBlockResult.first_coefficient_eq.
+* gamma_two_three_inv_pow_mul: bind-only; consumers: Result.first_coefficient_eq,
+  TwoBlockResult.first_coefficient_eq.
+* base_pow_mul_half_pow: bind-only; consumers: Result.half_parameter_family_neg,
+  TwoBlockResult.half_parameter_family_neg.
 * pi_base_bound: bind-only; consumers: Result.half_parameter_family_neg,
   TwoBlockResult.half_parameter_family_neg.
 Each row has escape_witness: none and Direct frozen dependencies: none.
@@ -36,6 +44,7 @@ objects, not a bounded enumeration, checker, numeric reduction or certified inst
 -/
 
 import Mathlib.Analysis.Real.Pi.Bounds
+import Mathlib.Analysis.SpecialFunctions.Gamma.BohrMollerup
 import Mathlib.Analysis.SpecialFunctions.Gaussian.GaussianIntegral
 import Mathlib.RingTheory.MvPolynomial.Symmetric.Defs
 
@@ -115,5 +124,23 @@ lemma gamma_three_seven_halves_inv_pow_mul (q : ℕ) :
 lemma pi_base_bound : (640 / 567 : ℝ) < 32 / (9 * Real.pi) := by
   apply (lt_div_iff₀ (by positivity : 0 < 9 * Real.pi)).2
   nlinarith [Real.pi_lt_d2]
+
+/-- The Gamma value at three. -/
+lemma gamma_three : Real.Gamma 3 = 2 := by
+  rw [show (3 : ℝ) = ((2 : ℕ) : ℝ) + 1 by norm_num, Real.Gamma_nat_eq_factorial]
+  norm_num [Nat.factorial]
+
+/-- The integer reciprocal Gamma power product. -/
+lemma gamma_two_three_inv_pow_mul (q : ℕ) :
+    (Real.Gamma 2)⁻¹ ^ q * (Real.Gamma 3)⁻¹ ^ q = (1 / 2 : ℝ) ^ q := by
+  rw [Real.Gamma_two, gamma_three, ← mul_pow]
+  norm_num
+
+/-- The comparison base times one half is the balanced base. -/
+lemma base_pow_mul_half_pow (q : ℕ) :
+    (32 / (9 * Real.pi)) ^ q * (1 / 2 : ℝ) ^ q = (16 / (9 * Real.pi)) ^ q := by
+  rw [← mul_pow]
+  congr 1
+  ring
 
 end D5.S3.Analytic.HypergeometricShiftTuran.Defs

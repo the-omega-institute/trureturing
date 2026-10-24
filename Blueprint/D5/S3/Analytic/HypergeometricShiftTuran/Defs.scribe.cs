@@ -32,6 +32,14 @@ internal sealed class DefsDocument : IScribeDocumentDefinition
             Lemma("gamma-three-seven-halves-reciprocal-power-product",
                 "gamma_three_seven_halves_inv_pow_mul", "The outer reciprocal power product",
                 "For every natural q, the product of the qth powers of the reciprocals of Real.Gamma at 3/2 and 7/2 is (16/(15 pi))^q. Apply the two Gamma values and the square-root identity."),
+            Lemma("gamma-three", "gamma_three", "Gamma at three",
+                "Real.Gamma at 3 equals 2, the factorial formula at two."),
+            Lemma("gamma-two-three-reciprocal-power-product", "gamma_two_three_inv_pow_mul",
+                "The integer reciprocal power product",
+                "For every natural q, the product of the qth powers of the reciprocals of Real.Gamma at 2 and at 3 is (1/2)^q, since Real.Gamma at 2 is 1 and Real.Gamma at 3 is 2."),
+            Lemma("base-power-times-half-power", "base_pow_mul_half_pow",
+                "The base times one half",
+                "For every natural q, (32/(9 pi))^q times (1/2)^q equals (16/(9 pi))^q."),
             Lemma("pi-exponential-base-bound", "pi_base_bound", "A rational lower bound for the base",
                 "The inequality 640/567 < 32/(9 pi) follows from pi < 3.15 and positivity of pi. It supplies the common base estimate for the two negative coefficient families."))));
 
