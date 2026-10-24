@@ -280,8 +280,15 @@ private partial def exportConstant (source : Environment) (target n : Name) : Me
     discard <| checkProof n value.levelParams value.type value.value
   | _ => transportVocabulary {source, target} n
 
+/-- Publication compiles finite constructor data and checks proofs independently
+of the search and of the request wrapper's elaborator recursion limit. -/
+def withPublicationContext {α : Type} (action : MetaM α) : MetaM α :=
+  withOptions (fun opts => opts.set `maxRecDepth (max 100000 (maxRecDepth.get opts))) <|
+    withTheReader Core.Context (fun ctx => {ctx with maxHeartbeats := 0}) action
+
 /-- The typed result is computed by the same compiled classifier as A1. -/
-def publish (name : Name) (r : Observation) (source? : Option Environment := none) : MetaM Unit := do
+def publish (name : Name) (r : Observation) (source? : Option Environment := none) : MetaM Unit :=
+    withPublicationContext do
   unless (r.presentation == .found) == r.presentationEvidence?.isSome do
     throwError "search.presentation_witness_mismatch"
   let baseName := name ++ `baseline

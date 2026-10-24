@@ -27,3 +27,14 @@ run_cmd liftTermElabM do
     verdict := .insufficient
     graph? := some ({ graph := {}, presentationCertified := true } : GraphReading) }
   logInfo "publication mutation tests: verdict and decisive reading rejected"
+
+/- Publication must not inherit a request wrapper's recursion limit. -/
+run_cmd liftTermElabM <| withOptions (fun opts => opts.set `maxRecDepth (32 : Nat)) do
+  let reading : GraphReading := {
+    graph := { vertices := (List.range 128).map fun id => { id } } }
+  publish `largePublication {
+    target := `largePublication, base := .incomplete .undecided,
+    paired := .incomplete .undecided, verdict := .insufficient, graph? := some reading }
+  let axioms ← collectAxioms `largePublication.verdictProof
+  unless standardAxioms axioms do throwError "large publication has nonstandard axioms"
+  logInfo "large GraphReading publication: kernel equality checked"
