@@ -2,7 +2,11 @@ fingerprints:
   raw_sha256: sha256:d600b9a4b7f4775ca991f835680e2b45ac08440dc397956edf756943fa892aca
   normalized_sha256: sha256:d600b9a4b7f4775ca991f835680e2b45ac08440dc397956edf756943fa892aca
 cas_ref: sha256:d600b9a4b7f4775ca991f835680e2b45ac08440dc397956edf756943fa892aca
-coverage_gids: []
+coverage_gids:
+  - gid: D5/S3/Quantum/Entanglement/LocalObservationPartialTraceEquivalence.local_observation_partial_trace_equivalence
+    target_statement_id: sha256:2de3a24c72cab4a2fa357c2b4c6e9ab90c84eeaa21d0aed6052bc89890d3fa87
+  - gid: D5/S3/Quantum/Foundation/FiniteKrausChannel.finite_kraus_quantum_channel
+    target_statement_id: sha256:0ede64813b26e6161a0898eec4e0ff5c4fffc9727c0094b5bcfbc6a77c6ef9a0
 receipts:
   unresolved_subitems: []
   chain_atoms:
