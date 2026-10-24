@@ -7,6 +7,7 @@
    digest: A four-party eight-level pure state has only zero-volume fills and is not biseparable. -/
 
 import D5.S3.Quantum.Information.ChenKatoBrandaoCMIRefutation
+import D5.S3.Quantum.Entanglement.FourMUBBoundEntanglementRefutation
 
 /-! A pure four-qudit counterexample to the genuine requirement for entropic tetrahedra. -/
 
@@ -129,8 +130,7 @@ private theorem normalized : ∑ x, ‖psi x‖ ^ 2 = 1 := by
       intro x _
       by_cases hx : supported x
       · simp only [psi, ite_eq_left hx, Complex.norm_real, Real.norm_eq_abs, sq_abs]
-        rw [inv_pow, Real.sq_sqrt (by norm_num)]
-        norm_num
+        exact D5.S3.Quantum.Entanglement.FourMUBBoundEntanglementRefutation.scale_sq
       · simp [psi, hx]
     _ = ∑ _t : Fin 8, (1 / 8 : ℝ) := sum_supported (fun _ => (1 / 8 : ℝ))
     _ = 1 := by norm_num
@@ -140,12 +140,8 @@ private theorem marginal_entries (i : Fin 4) (a b : Fin 8) :
       ∑ t : Fin 8, if label t i = a ∧ b = a then (1 / 8 : ℂ) else 0 := by
   classical
   have hsq : ((Real.sqrt 8 : ℂ)⁻¹) ^ 2 = (1 / 8 : ℂ) := by
-    calc
-      _ = (((Real.sqrt 8)⁻¹ ^ 2 : ℝ) : ℂ) := by push_cast; rfl
-      _ = ((1 / 8 : ℝ) : ℂ) := congrArg (fun r : ℝ => (r : ℂ)) (by
-        rw [inv_pow, Real.sq_sqrt (by norm_num)]
-        norm_num)
-      _ = _ := by norm_num
+    simpa only [Complex.ofReal_inv] using
+      D5.S3.Quantum.Entanglement.FourMUBBoundEntanglementRefutation.scale_complex_sq
   unfold rho1
   trans ∑ x, if supported x then
     (if x i = a ∧ b = a then (1 / 8 : ℂ) else 0) else 0
@@ -254,12 +250,8 @@ private theorem not_biseparable : ¬ Biseparable psi := by
     rw [hprod x, hprod y, hprod _, hprod _, hφx, hχy, hφy, hχx]
     ring
   have hsq : ((Real.sqrt 8 : ℂ)⁻¹) ^ 2 = (1 / 8 : ℂ) := by
-    calc
-      _ = (((Real.sqrt 8)⁻¹ ^ 2 : ℝ) : ℂ) := by push_cast; rfl
-      _ = ((1 / 8 : ℝ) : ℂ) := congrArg (fun r : ℝ => (r : ℂ)) (by
-        rw [inv_pow, Real.sq_sqrt (by norm_num)]
-        norm_num)
-      _ = _ := by norm_num
+    simpa only [Complex.ofReal_inv] using
+      D5.S3.Quantum.Entanglement.FourMUBBoundEntanglementRefutation.scale_complex_sq
   have hB := minor (fun _ => 0) (label 4)
   have hC := minor (fun _ => 0) (label 2)
   have hD := minor (fun _ => 0) (label 1)
