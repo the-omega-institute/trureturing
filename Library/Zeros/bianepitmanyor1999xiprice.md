@@ -5,7 +5,7 @@ year: 1999
 title: Probability laws related to the Jacobi theta and Riemann zeta functions, and Brownian excursions
 doi: null
 url: https://arxiv.org/abs/math/9912170v1
-claim: The classical positive xi law admits positive inverse-moment calibration for the Robin price observer. Every occupied exponent layer then has nonnegative observed cost, and the complete higher-layer cost is eventually positive; the negative far-prime tail and the full signed Robin comparison remain unpaid.
+claim: The classical positive xi law admits positive inverse-moment calibration for the Robin price observer. Occupied layers have nonnegative cost, and absent-layer responses have a unique asymptotic sign boundary determined by an exact theta budget; the full signed Robin comparison remains unpaid.
 strata_touched: []
 license: citation-only
 triage: anchor
@@ -293,3 +293,240 @@ neither supplies a sufficient lower bound for the remaining first-prime
 account. Its center and exact negative far tail still need a joint
 estimate. No improved finite verification range, unbounded Robin bound,
 RH proof or new Lean theorem follows from these applications.
+
+
+## An exact theta budget for the absent-layer sign
+
+The same positive source admits a more precise absent-layer analysis.
+Reuse GP's already owned weight $w_c(t)=c^{-1}\lambda(\max\{A,t/c\})$
+in the [Nicolas card](../ArithSums/nicolas2025comparison.md#a-directed-prime-weight-comparison-for-the-complete-gamma-response).
+Its complete response, the mass/price identities and IPX7 are inputs,
+not new formulas to reprove. The additional classical input is BPY,
+Proposition 1(ii), equation (23), printed p.7. The estimates below
+control the cap residual for IPX2's broad positive source; GP2's
+ordinary-mean-one hypothesis does not hold for this source.
+
+Fix $A$ sufficiently large. Write $C_A$ for a variable of law $\eta_A$,
+$X=\log C_A$, $a_A=\mathbb EX=a_++O(A^{-3})>0$, and
+$M_{2,A}=\mathbb EX^2=O(1)$. For an actual absent layer with
+$\lambda(t)=r_{p,j}$, its full observed hinge is
+
+$$
+\mathcal H_A(t)
+=\int(r_{p,j}-\lambda(Av))_+d\omega_A(v)
+=\lambda(t)-\mathbb E\frac{\lambda(\max\{A,t/C_A\})}{C_A}.
+\tag{IPX16}
+$$
+
+The second equality follows from IPX7 and the exact mass and price
+identities, using $(r-q)_+-(q-r)_+=r-q$. It retains the lower atom and the entire signed
+kernel tail. It is also the negative of GP's existing weight difference
+for $t\ge A$, rather than a new smoothing kernel.
+
+For $t=AB\ge A$ set $s=\log B$, $v=L+s$, and define
+
+$$
+\mathcal S_A(B)=\mathbb E(1-B/C_A)_+,\qquad
+\mathcal P_A(s)=\mathbb P(X\ge s),\qquad
+\mathcal T_A(s)=\mathbb E(X-s)_+.
+\tag{IPX17}
+$$
+
+Split the expectation in IPX16 at $C_A=B$. On $X<s$ use the exact
+identity
+$(v-X)^{-1}=v^{-1}+Xv^{-2}+X^2/[v^2(v-X)]$.
+The resulting cap account is
+
+$$
+\begin{aligned}
+v^2t\mathcal H_A(t)
+={}&\frac{v^2}{L}\mathcal S_A(B)-a_A+\mathcal T_A(s)\\
+&-\frac{s^2}{L}\mathcal P_A(s)
+ -\mathbb E\!\left[\frac{X^2}{v-X};X<s\right].
+\end{aligned}
+\tag{IPX18}
+$$
+
+Here $v-X\ge L$ on the last event, and
+$s^2\mathcal P_A(s)\le M_{2,A}$. Since $s\ge0$ and $a_A>0$,
+multiplying by $L^2/v^2$ gives the uniform lower bound; dropping the
+last two nonpositive terms gives the upper bound:
+
+$$
+\begin{aligned}
+L^2t\mathcal H_A(t)&\ge
+ L\mathcal S_A(B)-a_A-\frac{2M_{2,A}}L,\\
+v^2t\mathcal H_A(t)&\le
+ \frac{v^2}{L}\mathcal S_A(B)-a_A+\mathcal T_A(s).
+\end{aligned}
+\tag{IPX19}
+$$
+
+These bounds apply to every $B\ge1$. No term involving the cap or
+source tail has been treated as a root-small prime error.
+
+Put $C_0=1/Y$. BPY's cited equation gives for every $u>0$
+
+$$
+\mathbb P(C_0>u)=4\pi u^3\sum_{n\ge1}n^2e^{-\pi n^2u^2}.
+$$
+
+Tonelli's theorem therefore evaluates its positive cap budget exactly:
+
+$$
+\mathcal S_0(B)
+=B\int_B^\infty\frac{\mathbb P(C_0>u)}{u^2}\,du
+=2B\sum_{n\ge1}e^{-\pi n^2B^2},\qquad
+\mathcal S_A(B)=\mathcal S_0(B/z_A)\quad(B\ge1).
+\tag{IPX20}
+$$
+
+The last equality is exact: for sufficiently large $A$,
+$z_A\tau_A<1$, so the positive part in IPX17 vanishes on the entire
+clamped part of the source. Scaling the surviving upper source by
+$z_A$ is the only change. No estimate for a newly truncated law is
+being substituted for $\eta_A$.
+
+For $u=B/z_A\ge1$, differentiation of the absolutely convergent
+positive series yields
+
+$$
+\begin{aligned}
+\frac d{ds}\mathcal S_A(e^s)
+ &=\mathcal S_A(e^s)-\mathcal P_A(s)
+ \le(1-2\pi u^2)\mathcal S_A(e^s)<0,\\
+\mathcal T_A(s)
+ &=\mathcal S_A(e^s)+\int_s^\infty\mathcal S_A(e^w)\,dw
+ \le\left(1+\frac1{2\pi-1}\right)\mathcal S_A(e^s).
+\end{aligned}
+\tag{IPX21}
+$$
+
+Thus IPX19 has an explicit decreasing theta budget, with a uniformly
+controlled logarithmic tail. The statement concerns the full absent
+response of the fixed source, rather than positivity of $\omega_A$.
+
+
+## A unique absent-layer sign boundary and its scale
+
+There is, for every sufficiently large $A$, exactly one $t_*(A)>A$
+where IPX16 vanishes. Its position is determined by the actual
+calibrated source:
+
+$$
+\boxed{\quad
+\pi\left(\frac{t_*(A)}{Az_A}\right)^2
+=\log L+\frac12\log\log L
+ +\log\frac{2}{a_+\sqrt\pi}+o(1),\qquad
+ t_*(A)\sim A\sqrt{\frac{\log\log A}{\pi}}.\quad}
+\tag{IPX22}
+$$
+
+The statement is asymptotic: no certified numerical starting $A$ is
+specified. All source parameters remain those of IPX2; a new source
+is not chosen as $t$ varies.
+
+To prove existence and locate every possible zero, define $B_-,B_+>1$
+by
+
+$$
+L\mathcal S_A(B_-)=2a_A,\qquad
+L\mathcal S_A(B_+)=a_A/2.
+$$
+
+For large $A$ these unique numbers exist by IPX20--IPX21. The first
+term of the positive theta series, with its exponentially smaller
+remaining terms, gives for both endpoints
+
+$$
+\pi(B_\pm/z_A)^2
+=\log L+\tfrac12\log\log L+O(1).
+\tag{IPX23}
+$$
+
+IPX19's lower bound proves $\mathcal H_A(AB)>0$ for every
+$1\le B\le B_-$. For $B\ge1$ and $L>2$, the upper-bound supplier
+
+$$
+\frac{(L+\log B)^2}{L}\mathcal S_A(B)
+ +\mathcal T_A(\log B)
+$$
+
+strictly decreases: IPX21 bounds the logarithmic derivative of its
+first positive term by $2/(L+\log B)+1-2\pi(B/z_A)^2<0$, and the
+second term decreases. At $B_+$ this supplier is
+$a_A/2+o(1)<a_A$. IPX19 therefore proves
+$\mathcal H_A(AB)<0$ for every $B\ge B_+$, including arbitrarily
+large $B$. Every zero is confined to $[AB_-,AB_+]$; no uncontrolled
+outer region remains.
+
+For uniqueness, differentiate at fixed $A$ and put
+$Q_A(s)=L^2Ae^s\mathcal H_A(Ae^s)$. The only source atom is below
+$C_A=1$, so the BPY density makes this differentiation valid for
+$s\ge0$. Differentiating the two cap pieces cancels their boundary
+terms and gives
+
+$$
+\begin{aligned}
+Q_A'(s)={}&L\frac d{ds}\mathcal S_A(e^s)\\
+&+L^2\left[-\frac1{v^2}
+ +\mathbb E\!\left[\frac1{(v-X)^2};X<s\right]\right],\\
+\left|L^2\left[-\frac1{v^2}
+ +\mathbb E\!\left[\frac1{(v-X)^2};X<s\right]\right]\right|
+&\le\mathcal P_A(s)+\frac{2\mathbb E|X|}{L}.
+\end{aligned}
+\tag{IPX24}
+$$
+
+For the last bound, subtract $v^{-2}$ inside the expectation on
+$X<s$ and apply the mean value theorem; both denominators are at
+least $L$. The omitted probability contributes at most
+$\mathcal P_A(s)$.
+On $B_-\le e^s\le B_+$, IPX20 gives
+$\mathcal P_A(s)=O((\log L)/L)$, while IPX21 and IPX23 give
+$L\,d\mathcal S_A(e^s)/ds\le-c\log L$ for some fixed $c>0$.
+Thus $Q_A'<0$ throughout this whole band for sufficiently large $A$.
+Continuity and the endpoint signs yield exactly one zero.
+
+At the zero, IPX18, IPX21, bounded $M_{2,A}$ and IPX23 imply
+$L\mathcal S_A(t_*/A)=a_A+o(1)$. Write $u=t_*/(Az_A)$.
+Using $\mathcal S_A(t_*/A)=2u e^{-\pi u^2}
+(1+O(e^{-3\pi u^2}))$ and $a_A\to a_+>0$, taking logarithms
+first gives $u^2\sim(\log L)/\pi$ and then IPX22, including its
+constant $\log(2/(a_+\sqrt\pi))$.
+
+For $1<t<A$, IPX7 gives
+$\mathcal H_A(t)\ge\lambda(t)-\lambda(A)>0$.
+At $t=A$, every source value except $C_A=1$ has
+$C_A^{-1}\lambda(\max\{A,A/C_A\})<\lambda(A)$, so
+nondegeneracy gives strict positivity there as well. The complete
+single-layer classification is consequently
+
+$$
+\mathcal H_A(t)>0\ (1<t<t_*),\qquad
+\mathcal H_A(t_*)=0,\qquad
+\mathcal H_A(t)<0\ (t>t_*).
+\tag{IPX25}
+$$
+
+This locates the actual absent-layer sign; it does not assert that
+all actual primes are present below that boundary. For first layers,
+$\lambda(t_p)=r_{p,1}$ satisfies $p<t_p<p+1$: use
+$1/(p+1)<\log(1+1/p)<1/p$ and monotonicity of $\lambda$.
+Thus an absent first prime $p\le t_*-1$ has positive response and an
+absent first prime $p\ge t_*$ has negative response. IPX7 separately
+keeps every occupied response nonnegative. Negative observed terms
+can therefore occur only in absent layers whose actual activation
+threshold exceeds $t_*$.
+
+The unique boundary improves the sign description, rather than the
+proved complete Robin margin. The positive and negative prime sums
+still use the same source and actual integer; neither may be omitted
+from IPX11. In particular the negative far contribution in IPX13 is
+still present, and no root-small replacement for its exact prime sum
+has been supplied. A sign boundary at $A\sqrt{\log\log A/\pi}$
+does not make the full comparison error root-small. The quantitative
+joint arithmetic estimate, strict Robin above 5040 and RH remain
+unproved. These are paper-level applications of the cited BPY tail
+and the existing full kernel response, with no Lean certification or
+literature-priority claim.
