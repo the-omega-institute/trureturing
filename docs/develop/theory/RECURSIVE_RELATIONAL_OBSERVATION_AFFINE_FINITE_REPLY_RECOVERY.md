@@ -2052,3 +2052,689 @@ full programme remains open.
 
 
 ## 追加锚（本行以下为增补区）
+
+## 11. Finite-word causal acquisition on the complete uncalibrated clock
+
+**Definition 11.1 (raw source and productive delivery contract).** In this
+section CLOCK denotes
+[FIB_UNCALIBRATED_QUADRATIC_CLOCK_THREE_INDEX_DESIGN](FIB_UNCALIBRATED_QUADRATIC_CLOCK_THREE_INDEX_DESIGN.md).
+Its Definition 23.1 supplies the complete raw worlds
+
+$$
+\tau\in[-4,1],\qquad A\ge1,\qquad B\in\mathbb R,\qquad
+\eta\in[-1,1]^4,\qquad y_i=A(i+\tau)^2+B+\eta_i\quad(0\le i\le3).
+\tag{FW.1}
+$$
+
+The entire world, including all four errors, is fixed before execution.
+There is no bound on $A$ or $B$, no rationality assumption on any parameter,
+and no independence or distribution assumption. The side menu is the
+original strictly increasing controlled-index menu: read at $0$, then a
+chosen $u\in\{1,2\}$, then a chosen $v\in\{u+1,\ldots,3\}$, without
+reset, duplication or an additional side read.
+
+The following is an added delivery interface, not an assertion that the
+original apparatus already implements a finite sensor. Fix
+
+$$
+h=2^{-8},\qquad
+\mathcal P_h(x)=\{k\in\mathbb Z:|hk-x|\le h\}.
+\tag{FW.2}
+$$
+
+A side request at $i$ returns one $k_i\in\mathcal P_h(y_i)$. Its complete
+frame consists of a side tag, the requested index, the fixed precision tag
+$8$, a canonical signed binary integer, a delimiter and completion. Zero
+has one spelling; nonzero magnitudes have no leading zeroes. Framing has
+no other variable field. Thus the integer part is supplied in full, with
+arbitrary finite length. All legal choices in (FW.2) are admitted. An
+augmented world fixes the four choices before execution, including unread ones;
+none of the proofs chooses a new raw error after observing a prefix.
+
+The interface is source independent: (FW.2) and the framing rule are the
+same for every real input and every source. The observer receives no exact
+real operand, extra calibration, unknown seed, source-dependent reference,
+price, delay measurement or private-work output. A productive port is
+assumed to finish each reached read in finite time. Installation, lawful
+read binding and service are supplied resources with costs; their existence
+is not derived from the existence of a real number. For example, a port
+that productively supplies a rational approximation within $h/4$ can round
+that rational to a nearest $h$-grid point and satisfy (FW.2), with error at
+most $3h/4$. This sufficient implementation does not decide whether an
+unknown real lies exactly on a rounding wall.
+
+Local calculation and port delivery do not advance the native index or
+change (FW.1). Only an issued native advance does so. No physical elapsed
+time is read, and completion and scheduling carry no additional numerical
+channel. These are controlled-timing assumptions of the added model.
+They give no uniform bound on service latency or computation time. In
+particular they are not a pause or a control right borrowed from a passive
+diffusion source.
+
+**Definition 11.2 (finite causal program).** Read at $0$ and $1$ and put
+$r=hk_0$, $s=hk_1$. The actual third side index is
+
+$$
+v=\begin{cases}3,&k_1-k_0\le0,\\2,&k_1-k_0>0.\end{cases}
+\qquad z=hk_v,\qquad E=1+h.
+\tag{FW.3}
+$$
+
+No report at the skipped side index is requested. Choose the rational prior
+
+$$
+J_-=[-4,1/2+h]\quad(v=3),\qquad
+J_+=[-3/2-h,1]\quad(v=2).
+\tag{FW.4}
+$$
+
+In variables $(\lambda,t,\omega)$ form the rational polyhedron
+
+$$
+\begin{aligned}
+P=\{(\lambda,t,\omega):\;&0\le\lambda\le1,\quad t\in J_\pm,\\
+&|\lambda q_i-i^2-2ti-\omega|\le E\lambda
+       \quad(i=0,1,v)\},\qquad(q_0,q_1,q_v)=(r,s,z).
+\end{aligned}
+\tag{FW.5}
+$$
+
+There are ten scalar non-strict inequalities. Enumerate the at most
+$\binom{10}{3}=120$ triples of boundary hyperplanes. For each triple with
+nonzero determinant solve its three equations by rational arithmetic,
+and keep the solution if it satisfies all ten inequalities. Take the
+smallest and largest $t$ among the retained solutions and their midpoint
+$m$. If no solution is retained use $m=0$. This specifies a terminating
+rational program even on unattainable integer inputs.
+
+Round $m$ to a nearest member of
+
+$$
+\mathcal T=\{-4+j/64: j=0,\ldots,320\},
+\tag{FW.6}
+$$
+
+choosing the smaller index at a tie. Output the index $j$ and discard the
+side acquisition operands when they are no longer needed. The retained
+origin answer is $\widehat\tau=-4+j/64$. The program has a fixed finite
+instruction description; its integer and rational operands have variable
+length.
+
+**Lemma 11.3 (robust prefix and shared-error diameter).** On every lawful
+run of Definition 11.2 the actual $\tau$ belongs to the $t$-projection of
+$P$. This projection has diameter at most $5E/3$. The conclusion holds for
+every common acquired prefix, including prefixes whose raw difference
+$y_1-y_0$ has the opposite sign from $k_1-k_0$.
+
+**Proof.** Write $e_i=hk_i-y_i$ and $\xi_i=\eta_i+e_i$. Then
+$|e_i|\le h$, $|\xi_i|\le E$, and each acquired rational report is
+$A(i+\tau)^2+B+\xi_i$. This enlarged cube is only a proof relaxation of
+the specified finite delivery of the original cube; it is not a replacement
+of (FW.1). In particular
+
+$$
+s-r=A(1+2\tau)+\xi_1-\xi_0.
+\tag{FW.7}
+$$
+
+For every candidate origin and gain giving the same rational prefix with
+errors in $[-E,E]$, $s-r\le0$ implies
+$1+2t\le2E/A\le2E$, hence $t\le1/2+h$. If $s-r>0$, then
+$1+2t>-2E/A\ge-2E$, hence $t>-3/2-h$. Thus all such candidates, not just
+the actual one, lie in the selected closed prior (FW.4). The program's
+integer sign test is precisely this rational prefix test.
+
+For these rational reports the positive-denominator correspondence in
+CLOCK Theorem 3.1 is
+
+$$
+\lambda=1/A,\qquad t=\tau,\qquad\omega=t^2+B/A;
+\qquad A=1/\lambda,\quad B=(\omega-t^2)/\lambda.
+\tag{FW.8}
+$$
+
+It identifies (FW.5) with the enlarged-noise compatible fiber on the
+selected prior. Its constraints still share a single $\omega$ and hence a
+single zero-index residual. Equivalently, for any fixed candidate $t,A$,
+the two difference residuals and $0$ have range at most $2E$; they are not
+independent errors in $[-2E,2E]$.
+
+Apply the per-fiber diameter bound of CLOCK Theorem 3.1 with
+$(m,\varepsilon,c)=(1,E,2E)$. Its five rational candidates, before taking
+the maximum and the prior-width truncation, are as follows.
+
+| Selected prior and design | $d_0$ | $d_R$ | $e_R$ | $d_L$ | $e_L$ |
+| --- | --- | --- | --- | --- | --- |
+| $J_-,(1,3)$ | $2E/3$ | $2E(5+2h)/(7+4h)$ | $2E(4+2h)/(6+4h)$ | $14E/(10+4h)$ | $10E/(6+4h)$ |
+| $J_+,(1,2)$ | $E$ | $10E/(6+4h)$ | $8E/(5+4h)$ | $2E(2+2h)/(6+4h)$ | $2E(1+2h)/(5+4h)$ |
+
+For $0\le h\le1/4$, divide by $E$ and bound numerators upwards and
+positive denominators downwards. The first row is bounded coordinatewise
+by $(2/3,11/7,3/2,7/5,5/3)$ and the second by
+$(1,5/3,8/5,5/6,3/5)$. Each coordinate is at most $5/3$.
+The prior-width truncation cannot increase this bound. This use of the
+supplier is on an explicitly enlarged compatible set with a verified
+parameter correspondence. The actual world belongs to that set by
+(FW.7)--(FW.8), proving both assertions. ∎
+
+**Theorem 11.4 (finite acquisition and bounded retained origin).** Over
+all complete worlds (FW.1) and all deliveries (FW.2), Definition 11.2 uses
+exactly three actual side reads and terminates after finite computation.
+The retained origin field takes values in a 321-symbol alphabet, can occupy nine bits,
+and satisfies the uniform bound
+
+$$
+|\widehat\tau-\tau|\le e_0:=\frac{1297}{1536}<\frac67,
+\qquad \frac67-e_0=\frac{137}{10752}.
+\tag{FW.9}
+$$
+
+No uniform bound on the acquisition word lengths is part of this claim.
+
+**Proof.** The side sequence is $(0,1,3)$ or $(0,1,2)$, chosen from the
+actual two-word prefix. Each reached reply is finite by the port
+assumption. It remains to justify that the rational program computes the
+required midpoint rather than calling an exact-real optimization oracle.
+
+The polyhedron (FW.5) is nonempty on a lawful run by Lemma 11.3. It contains
+no point with $\lambda=0$: otherwise the monic polynomial
+$i^2+2ti+\omega$ vanishes at the three distinct indices $0,1,v$, which is
+impossible. It is bounded, since $\lambda\in[0,1]$, $t\in J_\pm$ and the
+zero-index constraint gives $|\omega|\le |r|+E$. It is closed, hence
+compact. In particular its positive $\lambda$ has a positive minimum, so
+the inverse in (FW.8) gives finite legal enlarged-model parameters at
+every point. Its $t$-projection is a nonempty compact interval.
+
+Both coordinate extrema occur at points with three linearly independent
+active constraint normals. Here is also a justification when the
+polyhedron has dimension less than three. At a $t$-maximizer, suppose the
+active normals have rank less than three. Choose a nonzero vector
+orthogonal to them. Small moves in both directions remain feasible,
+because all other inequalities are strict. Its $t$ component must be zero,
+since otherwise one direction increases $t$. Move in this direction to an
+endpoint of the feasible segment, which exists by boundedness. At least
+one new active normal is independent of the previous ones: it has a
+nonzero inner product with the motion vector. The new point still
+maximizes $t$. Repeat until the rank is three. The same argument applies
+to a minimum. Consequently each extremum is among the enumerated
+nonsingular three-plane intersections. Exact determinant tests,
+substitution and rational comparisons decide the entire list in finite
+time; a fixed lexicographic enumeration resolves irrelevant ties.
+
+Thus on a lawful run $m$ is the true midpoint of this outer interval,
+not the default. Lemma 11.3 gives $|m-\tau|\le5E/6$ and $m\in[-4,1]$.
+The grid (FW.6) includes both endpoints and has spacing $1/64$, so its
+rounding error is at most $1/128$. Therefore
+
+$$
+|\widehat\tau-\tau|
+ \le\frac{5(257/256)}6+\frac1{128}
+ =\frac{1297}{1536}.
+$$
+
+Multiplying by the positive common denominator $10752$ gives the strict
+gap in (FW.9). The 321 grid indices have distinct nine-bit encodings.
+This is a bound on the final origin field, not on the operands used to
+obtain it. ∎
+
+**Proposition 11.5 (transport of the fixed-triple obstruction).** Let a
+fixed-triple competitor choose $(u,v)$ before observing any source data
+and use only its three side frames at $0,u,v$, with delivery (FW.2). Even
+an unrestricted deterministic decoder of those frames has worst-case
+origin error at least $6/5$ for $(1,2)$ and at least $6/7$ for $(1,3)$ or
+$(2,3)$. Hence the finite program in Theorem 11.4 strictly beats every
+fixed triple under the declared finite-report relation.
+
+**Proof.** Use the complete original-world pairs displayed in CLOCK
+Theorem 23.2. Their selected raw reports are respectively identical
+triples $(0,-9,-12)$, $(0,1,13)$ and $(0,-12,-13)$, and their origin
+separations are respectively $12/5$, $12/7$ and $12/7$. These are finite
+gain and offset worlds in the full original cube, not pairs of freely
+chosen difference errors. For each common raw coordinate choose the same
+integer in its nonempty set (FW.2) in both worlds; choose all unread
+coordinates legally before execution as well. Equal integers give equal
+complete frames, including lengths, index and completion. The deterministic
+decoder therefore gives a common answer. The triangle inequality forces
+at least half the origin separation as error in one of the two worlds.
+This proves a lower bound for the worst case over the finite relation.
+If the port instead uses a particular deterministic source-independent
+encoding satisfying (FW.2), equal raw inputs still have equal encodings,
+so this lower-bound argument remains valid. It does not assert that
+finite-report and raw-report fixed-triple risks are equal. ∎
+
+## 12. A same-run original-coordinate consumer with native continuation
+
+**Definition 12.1 (main source and actual acquisition schedule).** Couple
+(FW.1) to the nonconstant main family of CLOCK Proposition 8.2 with known
+slope $C=1$. Independently choose $b_0\in\mathbb R$ and set
+
+$$
+R_0=\frac12\begin{pmatrix}1&1\\1&1\end{pmatrix},\qquad
+G(x)=x-\tau+b_0,\qquad D=0.
+\tag{FW.10}
+$$
+
+The shared $\tau$ is the actual original-coordinate origin. The side
+gain $A$, side offset $B$ and main intercept $b_0$ have no hidden coupling.
+Every clock world (FW.1) and every $b_0$ are admitted. The initial
+matrix $R_0$ has strictly positive entries, rank one and trace one, and
+$G$ is a nonzero degree-one polynomial. Allowing $\tau\in\mathbb R$
+before imposing its prior gives the translation-closed underlying main
+class required by CLOCK Section 7. The main native
+atoms and raw read rule are the original ones from
+[FIB_SELF_CALIBRATING_RELATION_MATHEMATICS_II, Section 77](FIB_SELF_CALIBRATING_RELATION_MATHEMATICS_II.md):
+
+$$
+M=\begin{pmatrix}0&1\\1&1\end{pmatrix},\qquad
+J=\begin{pmatrix}0&1\\1&0\end{pmatrix},\qquad
+U_0=I,\quad U_{n+1}=E_nU_n,
+\quad z_n=(n+b_0)\operatorname{tr}(U_nR_0).
+\tag{FW.11}
+$$
+
+The program uses $E_n=J$ throughout; it does not replace the native menu
+by a continuously chosen control. Since $JR_0=R_0$, its actual main
+reports are $z_n=n+b_0$. Every native atom advances the index by one and
+requires an immediate main read, with the initial main read at index zero.
+
+Main delivery is expressly also finite: at every mandatory main read
+acquire $\ell_n\in\mathcal P_h(z_n)$ in a frame with a main tag, the
+requested index in binary, precision tag $8$, canonical integer, delimiter
+and completion. The raw rule (FW.11) is unchanged; an exact-real main
+archive is not supplied. All legal finite delivery choices are permitted,
+with the same productivity, timing and no-extra-channel conditions as in
+Definition 11.1. They can be fixed before the run. For a policy using other
+native words, the same relation applies at each actual main read; possible
+reply assignments on the native action tree specify a world of the port,
+not a table accessible to the observer.
+
+Initially take the mandatory main read and the side read at zero. Store a
+separate consumer copy of $\ell_0$ and put $\widehat b=h\ell_0$, so
+$|\widehat b-b_0|\le h$. Issue $J$, take the mandatory main read and side
+read at one, and perform the branch test (FW.3). Issue $J$ until index
+$v$ is reached, taking and retaining every intervening mandatory main
+frame; take the third side read only at $v$. Now compute and retain $j$
+by Definition 11.2. The main and side sources, all controls and all these
+readings belong to this one actual run. Selection uses only the acquired
+side words; no main report, unread side coordinate or future action is
+used in that test.
+
+The source handle and continuation rights are fixed nonnumerical binding
+resources, supplied independently of the unknown parameters. Lawful $J$
+advances and their mandatory main reads remain available for every finite
+requested continuation. Their installation, storage and invocation are
+charged; a reference is not an additional origin sensor.
+
+**Definition 12.2 (retained service).** At readiness the origin payload is
+$j$ alone. Keep its nine-bit field separate from the consumer datum
+$\ell_0$, the complete main-frame/action archive, the finite controller,
+the live binary native counter $n=v$, source binding and rights, and
+scratch space. The acquired side words are dispensable after producing
+$j$; keeping copies instead incurs separate storage.
+
+A call supplies one of the following finite requests. Rational arguments
+are given as signed integer numerators and positive integer denominators.
+
+* `Origin` returns $\widehat\tau=-4+j/64$.
+* `Value(x)` returns the rational $\widehat G(x)=x-\widehat\tau+\widehat b$
+  in the original coordinate $x$.
+* `Chart(t)` returns $\widehat H_n(t)=t+n+\widehat b$ in the current
+  local coordinate $t$.
+* `Advance` issues one actual $J$, takes and appends its mandatory main
+  frame and action identity, increments $n$, and returns readiness at the
+  new index. It requests no side report.
+
+The first three calls perform finite rational arithmetic on retained
+fields and their argument, without source reads, archive reads, replay or
+native updates. Copies, output words and query scratch space are not part
+of the nine-bit payload. Calls are serialized. No source moves during
+local work; each `Advance` performs exactly its specified native move.
+
+**Theorem 12.3 (continued use and commuting coordinates).** Under
+Definitions 11.1 and 12.1 every finite sequence of the calls in Definition
+12.2 terminates lawfully on the same source. On every reached index $n$
+and every rational argument, its original-coordinate consumer satisfies
+
+$$
+|\widehat G(x)-G(x)|\le e_0+h=\frac{1303}{1536}<\frac67,
+\qquad \frac67-\frac{1303}{1536}=\frac{95}{10752}.
+\tag{FW.12}
+$$
+
+The same uniform inequality holds for the affine extensions to all real
+$x$; the program itself accepts finite rational arguments. Both $G$ and
+$\widehat G$ have slope one and are nonconstant.
+
+Let the true and estimated current origins be
+$\theta_n=n+\tau$ and $\widehat\theta_n=n+\widehat\tau$, and let
+$H_n(t)=G(t+\theta_n)$. Then the following agreements are exact:
+
+$$
+\begin{aligned}
+\theta_{n+1}&=\theta_n+1,&
+\widehat\theta_{n+1}&=\widehat\theta_n+1,\\
+H_n(t)&=t+n+b_0,&\widehat H_n(t)&=t+n+\widehat b,\\
+H_{n+1}(t)&=H_n(t+1),&
+\widehat H_{n+1}(t)&=\widehat H_n(t+1),\\
+G(x)&=H_n(x-\theta_n),&
+\widehat G(x)&=\widehat H_n(x-\widehat\theta_n),\\
+G(t+\theta_n)&=H_n(t),&
+\widehat G(t+\widehat\theta_n)&=\widehat H_n(t).
+\end{aligned}
+\tag{FW.13}
+$$
+
+Also $|\widehat\theta_n-\theta_n|\le e_0$ and
+$|\widehat H_n(t)-H_n(t)|\le h$, uniformly over all reached $n$.
+
+**Proof.** At readiness all stored numeric fields are finite words by
+Theorem 11.4 and productivity of the finitely many main reads. Each
+record-only request requires finitely many rational operations. At an
+`Advance`, lawful continuing rights provide $J$ and its mandatory read;
+productivity finishes that read, and incrementing a finite integer and
+appending a finite frame terminate. Induction on any finite call sequence
+gives the termination and same-source assertions. For an infinite stream
+this means every finite prefix finishes, not that an infinite stream has
+a final completion event.
+
+The value error is
+$|\tau-\widehat\tau+\widehat b-b_0|\le e_0+h$, proving (FW.12).
+Formula (FW.11) and $JR_0=R_0$ hold on the actual continued path.
+Substituting (FW.10) into $G(t+n+\tau)$ gives $H_n(t)=t+n+b_0$.
+The other equations in (FW.13) follow by substitution, with identical
+unit translations in both routes. The two remaining bounds follow from
+(FW.9) and $|\widehat b-b_0|\le h$. Thus translation of the retained
+origin, evaluation in the original coordinate, and the current chart
+agree under actual native updates, without re-estimating or accumulating
+rounding error. This does not identify future main delivery errors: the
+prediction $n+\widehat b$ is within $h$ of raw $z_n$, and within $2h$ of
+the delivered number $h\ell_n$. ∎
+
+**Proposition 12.4 (fixed triples cannot obtain the consumer advantage
+from main continuation).** In the common source of Definition 12.1 a
+deterministic competitor with one preselected side triple, no other side
+read and no extra numerical channel still has the origin lower bounds of
+Proposition 11.5 even if it uses every mandatory main frame, chooses
+native actions causally, makes finitely many continuing calls and stops
+causally. Requests are public, with the same request stream in the paired
+runs, or are chosen deterministically from the acquired history; an
+external source-dependent requester is an extra channel. For an
+original-coordinate value at any specified rational $x$,
+or a function answer in uniform norm on any nonempty compact original
+coordinate domain, its worst-case error has the same lower bound.
+
+**Proof.** Pair each of the two clock worlds used in Proposition 11.5
+with the same $b_0$ and $R_0$. For any common native word $U_n$, not only
+for repetitions of $J$, the raw main value is
+$(n+b_0)\operatorname{tr}(U_nR_0)$ in both worlds by (FW.11).
+Choose equal legal main frames at every common action prefix, and equal
+side frames at the three selected indices as in Proposition 11.5.
+These choices can be fixed throughout the action tree before execution;
+there is no need to resample an error after a decision. They use the full
+original clock domain and the declared product with the main family.
+Induction from the initial read now gives the same complete acquired
+history, actions, frame lengths, counters, requests, replies and stopping
+decisions in the two worlds. Backing and continuation rights are the same;
+physical delay observations are excluded by the contract. Hence all
+answers are equal. The origins have the supplier's separation, and the
+two original functions $x-\tau+b_0$ differ everywhere by that same constant
+separation. The scalar triangle inequality, or its uniform-norm version,
+therefore gives half the separation in one world. This lower bound uses
+no assertion that the main finite archive is exact. ∎
+
+## 13. Independent meanings, retained sufficiency and actual resource bounds
+
+**Definition 13.1 (four views of this common process).** The spatial
+object is the original affine coordinate line with its order and distance,
+the actual event positions $n+\tau$, and the nonconstant scalar field
+$G$ in (FW.10). In particular the distance between positions $m+\tau$
+and $n+\tau$ is $|m-n|$; the absolute origin is not silently included in
+the temporal record. This is one-dimensional original-coordinate
+geometry, not a claim about ambient physical space. The temporal view is the order of native actions,
+read completions and calls, together with the count of native unit
+advances from the initial index zero. It exposes neither $\tau$ nor the
+numerical side values and is not a measurement of physical elapsed time.
+The boundary view is the typed finite main and side frames at their
+actual read cuts, with index identities. This boundary is an observation
+interface, not an absorbing or reflecting spatial wall. The memory view
+consists of the records actually retained by Definition 12.2, including
+its distinct numeric fields, archive and bindings; it is not an unrestricted
+copy of an unobserved history. These meanings are specified by the source,
+event order and interfaces before choosing a decoding map.
+
+**Proposition 13.2 (the recovery directions established here).** The
+three actual side boundary frames acquire a finite origin payload giving
+the task error (FW.9). Together with the initial main datum it supplies
+the original spatial field consumer (FW.12), and together with the native
+counter it supplies the current chart and position estimates (FW.13).
+All routes through these retained fields commute with actual native
+advances. No omitted side frame or retrospective choice of a world is
+required. These are approximate task-sufficiency claims, not exact
+mutual recovery of the four views.
+
+**Proof.** Acquisition is Definition 11.2 and Theorem 11.4. Subsequent
+origin calls access only $j$, and value calls access only $(j,\ell_0)$
+and their argument. Current charts additionally access $n$; the main
+archive supplies no hidden operand to these calls. The estimates and
+agreements are those proved in Theorem 12.3 on the same continued run.
+As a quantitative statement of retained equivalence, two admitted runs
+with the same $j$ have a common origin answer within $e_0$ of each
+origin, so their origins differ by at most $2e_0$. With the same
+$(j,\ell_0)$ they have the same $\widehat G$ and their original fields
+differ by at most $2(e_0+h)$ uniformly. With the same $n$ they also have
+the same estimated current chart. These statements do not infer equality
+of the worlds or recover their gain, offset, errors or full histories. ∎
+
+**Proposition 13.3 (source and finite-word accounting).** Suppose
+acquisition ends at $v\in\{2,3\}$, followed by $N$ `Advance` calls and
+$Q$ record-only calls. The actual source counts are
+
+$$
+\begin{aligned}
+\text{native main atoms}&=v+N,\\
+\text{mandatory main reads}&=v+N+1,\\
+\text{side reads}&=3,\\
+\text{source reads for the }Q\text{ record-only calls}&=0.
+\end{aligned}
+\tag{FW.14}
+$$
+
+For nonnegative unit source costs the source bill is
+$c_A(v+N)+c_M(v+N+1)+3c_S$. It is only the source component of the bill.
+The numeric origin field has nine bits. Acquisition words, the main
+consumer datum, archive, source handle and continuing rights, controller,
+live counter, incoming query, rational scratch, output, port installation,
+framing and service must be accounted separately.
+
+For a bit-cost bound excluding physical port service, let $L$ be the
+complete acquisition-frame length, including all three side integers and
+all main frames through $v$. One may implement the numerical acquisition
+with $O(L+1)$-bit operands and numerical scratch, and $O((L+1)^2)$ bit
+work using elementary integer arithmetic. These are per-run bounds with
+absolute constants for this fixed program. For a record-only call whose
+rational argument has length $B_x$, numerical workspace beyond the
+already stored archive, controller and counter is at most
+
+$$
+O(B_x+|\ell_0|+\log(n+2)+1),
+\tag{FW.15}
+$$
+
+and the square of that quantity suffices for numerical bit work. Here
+$|\ell_0|$ denotes its binary word length. An `Advance` additionally pays
+for its new main frame, archive append, binding invocation and service.
+
+**Proof.** Acquisition issues $v$ actual atoms and reads at every index
+$0,\ldots,v$, with side reads only at $0,1,v$. Each `Advance` adds one
+atom and one mandatory main read. None of the other calls touches the
+source. This proves (FW.14), including the branch with an unobserved side
+index but an observed mandatory main index.
+
+All coefficients in (FW.5) are rational functions of fixed small
+integers and the three acquired integers. Each has bit length $O(L+1)$.
+There are at most 120 systems of dimension three. Determinant expressions
+have a fixed number of products and sums, so their numerators and
+denominators have $O(L+1)$ bits. Feasibility, running extrema and comparison
+against the 321 grid points require only a fixed number of such
+operations. Rational pairs need not be reduced: positivity of denominators
+and cross multiplication suffice for comparisons. Elementary multiplication
+and division on these operands give the stated quadratic work bound;
+streaming the candidate list with running extrema gives the scratch bound.
+The finite input words and retained archive themselves have their own
+$L$-bit storage bill. The call formulas use a fixed number of rational
+operations on their argument, fixed-grid $\widehat\tau$, $h\ell_0$ and,
+for `Chart`, $n$. Their operand lengths give (FW.15). Writing outputs and
+reading input frames are included in the respective per-run word costs.
+
+After continuation to index $n$, let $T_n$ be the sum of all retained
+main-frame, action-identity and archive-framing lengths. Ready internal
+storage is this $T_n$, the nine-bit origin field, the separate
+$|\ell_0|$-bit consumer copy, the $O(\log(n+2))$-bit counter and the
+fixed finite controller and binding fields. During a call, its input,
+scratch and output are additional storage. Any implementation backing
+the supplied port or continuation rights has separate storage and service
+cost; neither its size nor latency is bounded by these internal numerical
+bounds. None of these charges is assigned to the origin field. Unbounded $B$ makes the raw initial side
+value $A\tau^2+B+\eta_0$ unbounded, so the full integer frames in (FW.2)
+have no uniform length bound; sequentially reading them likewise has no
+uniform time bound. Unbounded $b_0$ makes the separate main datum
+unbounded. More generally a wholly finite-state retained service with no
+backing or source access could not approximate
+$G(0)=b_0-\tau$ with any fixed finite uniform error over all $b_0$:
+finitely many states give finitely many answers at zero, whose bounded
+union of fixed-radius intervals cannot cover the real line. Thus the
+nine-bit claim cannot be promoted to a bound on all callable storage.
+All actual finite prefixes still have finite frames, archive, counter
+and workspace by productivity and finite arithmetic. ∎
+
+**Definition 13.4 (parsimony relative to the stated task).** The source
+uses the original native menu and a single actual initialization. The
+program's action alphabet is the singleton $\{J\}$ within that menu;
+one finite sign test selects between the legal third side positions.
+Some nonfixed selection is indispensable to strict improvement over all
+fixed triples under this contract, by Proposition 11.5. Three reports,
+the particular grid, nine origin bits and the vertex enumeration are not
+claimed minimal. The retained origin payload replaces the large side
+acquisition words for subsequent origin use; the separate unbounded main
+datum is needed for the unbounded-intercept consumer, and the archive and
+counter remain actual resources. This is a task-relative compression and
+acquisition result, not a physical optimum or a universal generator theorem.
+
+## 14. Source correspondence, uncovered join and remaining scope
+
+**Definition 14.1 (supplier correspondence and mathematical delta).**
+CLOCK Definition 23.1 and Theorem 23.2 supply (FW.1), the published ideal
+causal advantage $5/6<6/7$ and the fixed-triple world pairs. CLOCK Theorem
+3.1 supplies the five-formula diameter law and positive-denominator fiber
+geometry; its Proposition 8.2 and Section 7 supply the nonconstant main
+family and the same-orbit lower-bound method. The identification is
+$\alpha=A$, $\beta=B$, $m=1$, original $\varepsilon=1$, prior $[-4,1]$
+and original horizon $3$. Only the outer proof calculation uses
+$\varepsilon=E$; the observed world still has error cube $[-1,1]^4$.
+The main family's intercept is $b_0$, not the clock offset $B$.
+
+Sections 5--8 of this volume supply productive rational-reply,
+quantization and retained-use distinctions. Section 9 treats a different
+calibrated bounded clock and arbitrary-map exact-cap answers; Section 10
+compresses a first real report before later exact-real operands and proves
+its sharp retention boundary. Neither is an implementation of (FW.3):
+here the first finite word can have arbitrary length, remains available
+through acquisition, and is compressed into a bounded field only after
+all three finite reports. No Section 10 saturation statement is changed.
+
+The new source-specific join is the robust same-prefix enlargement
+(FW.4)--(FW.7), its finite rational endpoint computation, the nine-bit
+retention bound strictly below $6/7$, the explicit finite-report transport
+of the original fixed-triple obstruction, and the actual common-run
+consumer and continuation (FW.10)--(FW.15). The exact-report causal
+advantage, generic interpolation, scalar midpoint rule, linear programming,
+rational arithmetic and finite-grid quantization are suppliers, not new
+results claimed here. In particular an infimum/supremum definition alone
+would not supply this program or its finite operands.
+
+The relevant later published supplements have different conclusions.
+[FIB_UNCALIBRATED_QUADRATIC_CLOCK_UNIFORM_REPORT_DESIGNS, Sections 24--25](FIB_UNCALIBRATED_QUADRATIC_CLOCK_UNIFORM_REPORT_DESIGNS.md)
+classifies report sets fixed before values, including the six-position
+menu $\{0,1,2,8,9,10\}$ and minimal subsets for uniform target widths;
+it does not provide this three-read finite causal acquisition/retention
+join. The distinct stochastic source in
+[FIB_NATIVE_UNIFORM_JOINT_NOISE_TOLERANCE_RESOURCE_CROSSOVER, Sections 1, 5--8](FIB_NATIVE_UNIFORM_JOINT_NOISE_TOLERANCE_RESOURCE_CROSSOVER.md)
+uses native paths, noise tubes and a stopped-history resource comparison.
+Its domain, stopping and continuation are not (FW.1) or (FW.11).
+[FINITE_START_PREDICTIVE_MEMORY, Sections 13--18](RECURSIVE_RELATIONAL_OBSERVATION_FINITE_START_PREDICTIVE_MEMORY.md)
+uses a killed three-axis diffusion, for which observation time continues
+to consume lifetime. No control, pause, productive port or cost exponent
+is transported from either source to this construction.
+
+The fixed-source acquisition and installation distinctions of
+[NATIVE_PAID_VIEW_CONVERSION](RECURSIVE_RELATIONAL_OBSERVATION_NATIVE_PAID_VIEW_CONVERSION.md),
+the acquired backing and continuing-call distinctions of
+[NATIVE_CALLABLE_STORAGE_ATLAS](RECURSIVE_RELATIONAL_OBSERVATION_NATIVE_CALLABLE_STORAGE_ATLAS.md),
+and the acquired tapes of
+[NATIVE_CLOCKED_RECOVERY_AND_ORDER](RECURSIVE_RELATIONAL_OBSERVATION_NATIVE_CLOCKED_RECOVERY_AND_ORDER.md)
+remain suppliers for how to state the missing operational obligations.
+They do not install the port (FW.2) on this clock. The actual-complex
+channel bound in
+[AURIC_OMEGA_PHASE_GAIN_AND_QUTRIT_RECOVERY, Section 18](AURIC_OMEGA_PHASE_GAIN_AND_QUTRIT_RECOVERY.md)
+is not identified with this polynomial main/clock product.
+
+**Definition 14.2 (literature and formal-library boundaries).** The
+bounded-error strip-intersection framework is literature-attested in
+M. Casini, A. Garulli and A. Vicino,
+[*A linear programming approach to online set membership parameter
+estimation for linear regression models*, Sections 2--5, especially
+Section 4, equations (7)--(10)](https://control.dii.unisi.it/~casini/pdf/IJACSP_2017a.pdf),
+DOI [10.1002/acs.2701](https://doi.org/10.1002/acs.2701).
+The regression vector here is $(i^2,i,1)$ and its unknown coefficient
+vector is $(A,2A\tau,A\tau^2+B)$. The desired origin is a ratio, not a
+coordinate of that vector. The positive-denominator conversion (FW.8)
+is the supplier's exact joint construction. No coordinate outer box or
+recursive outer approximation from the paper is substituted for it.
+
+D. Krieg, E. Novak and M. Ullrich,
+[*On the power of adaption and randomization*, Sections 1--2 and 4](https://doi.org/10.1017/fms.2025.10101),
+provides context for adaptive information, not the constant in (FW.9).
+As CLOCK Section 23 explains, including the fixed four noise coordinates
+makes each raw report linear in the enlarged coefficient/noise input,
+but the target remains the nonlinear ratio $q_1/(2q_2)$ on a nonsymmetric
+input class. The strictly increasing index menu also is not an arbitrary
+linear information class. No general no-adaptation theorem is being
+violated or applied without its hypotheses.
+
+The repository's
+[D5 QuantizedWordApproximation](../../../D5/S3/ObserverMemory/Prediction/QuantizedWordApproximation.lean)
+and its
+[owning Scribe](../../../Blueprint/D5/S3/ObserverMemory/Prediction/QuantizedWordApproximation.scribe.cs)
+supply finite quantized words and error propagation on their stated
+systems, not acquisition of this sensor. The retained clock origin here
+is not repeatedly quantized under an update: the counter supplies an
+exact integer translation. The different productive grammar of
+[RationalResponseRefinement](../../../D5/S0/Computability/RationalResponseRefinement.lean)
+and its
+[owning Scribe](../../../Blueprint/D5/S0/Computability/RationalResponseRefinement.scribe.cs)
+is likewise not an installed clock port. The pinned mathlib revision
+`56a005855ea17e0b0958f73ec801ae140b0a1679`,
+[Mathlib/Analysis/Convex/Extreme.lean](https://github.com/leanprover-community/mathlib4/blob/56a005855ea17e0b0958f73ec801ae140b0a1679/Mathlib/Analysis/Convex/Extreme.lean),
+contains general extreme-point infrastructure. The elementary finite
+rank argument in Theorem 11.4 supplies the specific degeneracy-safe
+algorithm here. These comparisons and ordinary proofs assert neither a
+new compiled Lean theorem nor global mathematical originality.
+
+**Definition 14.3 (remaining model and programme obligations).** The
+productive finite port, controlled timing, source binding and continuing
+rights are explicit supplied premises. This mathematics does not construct
+an original-apparatus sensor, calibrate unknown gain or offset exactly,
+provide a uniform acquisition bit/time bound, or prove physical optimality.
+It gives approximate recovery and genuine subsequent original-coordinate
+use in the named common source. It does not identify that source with the
+original affine instrument of Section 1, with an alpha/beta-generated
+universal apparatus, with fixed-$G_{\rm gc}$ or original-$Q$ tasks, or
+with parked-consumer and unchanged-initialization models elsewhere.
+All such original-model settlements retain their original statements.
+The independently meaningful views of Definition 13.1 have only the
+proved directions of Proposition 13.2; temporal order alone does not
+supply the numerical boundary words, and memory does not recover a whole
+spatial world or exact raw noise. Exact four-view mutual recovery and the
+full parsimonious relational-process objective remain unresolved.
+
+## 追加锚（本行以下为增补区）
