@@ -2,7 +2,7 @@
    generality: G
    mirror-B: D5/B/S3/Analytic/KarpZhangNinh/Kernel
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
-   anchors: [mathlib/module/Mathlib.RingTheory.Polynomial.Pochhammer, mathlib/module/Mathlib.Topology.Algebra.Polynomial]
+   anchors: [mathlib/module/Mathlib.RingTheory.Polynomial.Pochhammer, mathlib/module/Mathlib.Topology.Algebra.Polynomial, mathlib/module/Mathlib.Tactic]
    utility: none
    digest: Paired rising-factorial kernels have at most one negative-to-positive sign change. -/
 
@@ -18,8 +18,8 @@ Per-declaration proof_shape and consumers:
 * raw: definition; consumers: paired, paired_relation, Result.delta.
 * paired: definition; consumers: paired_relation, paired_sign, Result.tail_nonneg_pos.
 * pairPoch: definition; consumers: paired_sign_step, paired_relation, paired_sign.
-* a_zero: bind-only; escape_witness: none; consumers: a_continuous, paired_sign,
-  Result.tail_nonneg_pos.
+* a_zero: bind-only; escape_witness: none; consumers: paired_sign,
+  Result.full_tail_nonneg.
 * a_continuous: bind-only; escape_witness: none; consumers: Result.tail_nonneg.
 * strict_four_product: content; escape_witness: strict_four_product;
   consumers: pair_step_lengths.
@@ -63,12 +63,12 @@ def pairPoch (a b c : ℝ) (N k : ℕ) : ℝ :=
   (ascPochhammer ℝ k).eval a * (ascPochhammer ℝ (N-k)).eval (a+b+c) -
   (ascPochhammer ℝ k).eval (a+b+c) * (ascPochhammer ℝ (N-k)).eval a
 
-@[simp] theorem a_zero (t : ℝ) : a 0 t = 0 := by simp [a]
+@[simp] theorem a_zero (t : ℝ) : a 0 t = 0 := rfl
 
 /-- Each coefficient is polynomial in its parameter, including degree zero. -/
 lemma a_continuous (n : ℕ) : Continuous (a n) := by
   by_cases hn : n = 0
-  · simp only [hn, a_zero]
+  · simp only [hn]
     exact continuous_const
   · change Continuous (fun t : ℝ => if n = 0 then 0 else
       (ascPochhammer ℝ (3*n)).eval t / ((3*n-1).factorial:ℝ))
