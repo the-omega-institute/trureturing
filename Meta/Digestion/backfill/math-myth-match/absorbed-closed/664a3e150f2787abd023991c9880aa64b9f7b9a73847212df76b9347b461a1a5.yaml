@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:664a3e150f2787abd023991c9880aa64b9f7b9a73847212df76b9347b461a1a5
+  normalized_sha256: sha256:664a3e150f2787abd023991c9880aa64b9f7b9a73847212df76b9347b461a1a5
+cas_ref: sha256:664a3e150f2787abd023991c9880aa64b9f7b9a73847212df76b9347b461a1a5
+coverage_gids:
+  - gid: D5/S3/ConceptDynamics/Control/MaximalSafeControllableDomain.maximal_safe_controllable_domain
+    target_statement_id: sha256:98b5c833650e758812185373c277ec7104956ad9cc3023fb73672bbc45886d8b
+receipts:
+  unresolved_subitems: []

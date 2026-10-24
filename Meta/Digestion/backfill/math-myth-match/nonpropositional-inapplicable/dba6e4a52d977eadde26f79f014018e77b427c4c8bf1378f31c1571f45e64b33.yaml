@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:dba6e4a52d977eadde26f79f014018e77b427c4c8bf1378f31c1571f45e64b33
+  normalized_sha256: sha256:dba6e4a52d977eadde26f79f014018e77b427c4c8bf1378f31c1571f45e64b33
+cas_ref: sha256:dba6e4a52d977eadde26f79f014018e77b427c4c8bf1378f31c1571f45e64b33
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 共同问题、所需建模关系和文本承担内容的概念表。
+    previous_atom_id: 5fe26b2738e2d9b375e56ee88ec59ba21d12654ccb04df15f9f1bc32dfa0adda
+    next_atom_id: 5f471e9e5632d2e1751d42bb266f73b48b0861c250fff3d7c35b5c5449fcdce0

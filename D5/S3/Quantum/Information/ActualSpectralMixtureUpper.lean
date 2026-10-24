@@ -7,6 +7,7 @@
    digest: Signed amplitude mixtures satisfy the pointwise spectral SLD upper bound. -/
 
 import D5.S3.Quantum.Information.ActualPureQubitGeometry
+import D5.S3.Quantum.Information.SLDSpectralEnergy
 open scoped InnerProductSpace ComplexOrder Matrix.Norms.Elementwise Topology
 open Matrix Set Filter Finset
 set_option autoImplicit false
@@ -141,92 +142,6 @@ theorem actual_spectral_mixture_upper {n J : Type*} [Fintype n] [DecidableEq n] 
           simp only [M, mul_smul_comm, smul_mul_assoc, ← Matrix.mul_assoc, hu, one_mul]
           simp only [Matrix.mul_assoc, hu, mul_one]
 
-  have spectral_energy (rho B L : Matrix n n ℂ) (hp : rho.PosSemidef)
-      (hL : L.IsHermitian) (hsolve : L * rho + rho * L = (2 : ℂ) • B) :
-      (L * rho * L).trace.re = spectralQFI rho B hp := by
-    classical
-    let U := hp.isHermitian.eigenvectorUnitary
-    let d : n → ℂ := fun i => (hp.isHermitian.eigenvalues i : ℂ)
-    let M := star (U : Matrix n n ℂ) * B * U
-    let N := star (U : Matrix n n ℂ) * L * U
-    have hs : rho = (U : Matrix n n ℂ) * diagonal d * star (U : Matrix n n ℂ) := by
-      simpa [U, d, Unitary.conjStarAlgAut_apply, Function.comp_def] using hp.isHermitian.spectral_theorem
-    have hN : N.IsHermitian := Matrix.isHermitian_conjTranspose_mul_mul _ hL
-    have hu : star (U : Matrix n n ℂ) * (U : Matrix n n ℂ) = 1 := U.property.1
-    have hu' : (U : Matrix n n ℂ) * star (U : Matrix n n ℂ) = 1 := U.property.2
-    have hdiag : star (U : Matrix n n ℂ) * rho * (U : Matrix n n ℂ) = diagonal d := by
-      rw [hs]
-      simp only [← Matrix.mul_assoc, hu, one_mul]
-      simp only [Matrix.mul_assoc, hu, mul_one]
-    have hentry (i j : n) : N i j * (d i + d j) = 2 * M i j := by
-      have he := congrArg (fun X : Matrix n n ℂ =>
-        (star (U : Matrix n n ℂ) * X * (U : Matrix n n ℂ)) i j) hsolve
-      have heq : star (U : Matrix n n ℂ) * (L * rho + rho * L) * U =
-          N * diagonal d + diagonal d * N := by
-        rw [← hdiag]
-        dsimp only [N]
-        simp only [mul_add, add_mul, Matrix.mul_assoc, ← mul_assoc (U : Matrix n n ℂ), hu', one_mul]
-      rw [heq] at he
-      change (N * diagonal d + diagonal d * N) i j = _ at he
-      simp only [Matrix.add_apply, mul_diagonal, diagonal_mul, Matrix.mul_smul,
-        Matrix.smul_mul, Matrix.smul_apply, smul_eq_mul] at he
-      change N i j * d j + d i * N i j = 2 * M i j at he
-      linear_combination he
-    have hterm (i j : n) :
-        2 * Complex.normSq (M i j) /
-          (hp.isHermitian.eigenvalues i + hp.isHermitian.eigenvalues j) =
-        (hp.isHermitian.eigenvalues i + hp.isHermitian.eigenvalues j) / 2 *
-          Complex.normSq (N i j) := by
-      have he := hentry i j
-      have hm : M i j = ((d i + d j) / 2) * N i j := by linear_combination -he / 2
-      rw [hm, map_mul]
-      have hd : (d i + d j) / 2 =
-          (((hp.isHermitian.eigenvalues i + hp.isHermitian.eigenvalues j) / 2 : ℝ) : ℂ) := by
-        simp [d]
-      rw [hd, Complex.normSq_ofReal]
-      by_cases hz : hp.isHermitian.eigenvalues i + hp.isHermitian.eigenvalues j = 0
-      · simp [hz]
-      · field_simp
-        <;> ring
-    have heTrace : (L * rho * L).trace = (N * diagonal d * N).trace := by
-      rw [← hdiag]
-      dsimp only [N]
-      simp only [Matrix.mul_assoc, ← mul_assoc (U : Matrix n n ℂ), hu', one_mul]
-      rw [trace_mul_comm (star (U : Matrix n n ℂ))]
-      simp only [Matrix.mul_assoc, hu', mul_one]
-    have heSum : (L * rho * L).trace.re =
-        ∑ i, ∑ j, hp.isHermitian.eigenvalues j * Complex.normSq (N i j) := by
-      rw [heTrace]
-      simp only [Matrix.trace, Matrix.diag]
-      simp only [Matrix.mul_apply (M := N * diagonal d) (N := N), mul_diagonal, Complex.re_sum]
-      apply Finset.sum_congr rfl
-      intro i _
-      apply Finset.sum_congr rfl
-      intro j _
-      have hn : N j i = star (N i j) := by simpa using (hN.apply j i).symm
-      rw [hn]
-      have : N i j * d j * star (N i j) = d j * (Complex.normSq (N i j) : ℂ) := by
-        rw [Complex.normSq_eq_conj_mul_self]
-        change _ = d j * (star (N i j) * N i j)
-        ring
-      rw [this]
-      simp [d]
-    have hswap : (∑ i, ∑ j, hp.isHermitian.eigenvalues i * Complex.normSq (N i j)) =
-        ∑ i, ∑ j, hp.isHermitian.eigenvalues j * Complex.normSq (N i j) := by
-      rw [Finset.sum_comm]
-      apply Finset.sum_congr rfl
-      intro i _
-      apply Finset.sum_congr rfl
-      intro j _
-      rw [← hN.apply i j]
-      simp only [Complex.star_def, Complex.normSq_conj]
-    rw [heSum]
-    unfold spectralQFI
-    change _ = ∑ i, ∑ j, 2 * Complex.normSq (M i j) / _
-    simp_rw [hterm, add_div, add_mul]
-    simp only [Finset.sum_add_distrib, div_mul_eq_mul_div, ← Finset.sum_div]
-    rw [hswap]
-    ring
 
   let M : ℝ → Matrix n n ℂ := fun u => ∑ i, (g i u ^ 2) • rho i u
   have hpos : ∀ᶠ u in 𝓝 t, (M u).PosSemidef := by
@@ -302,7 +217,7 @@ theorem actual_spectral_mixture_upper {n J : Type*} [Fintype n] [DecidableEq n] 
         htrLi i, (hr.self_of_nhds i).2, Complex.one_re, mul_zero, zero_mul]
       linear_combination -(g i t ^ 2) * hcross i
     rw [hexp] at hn
-    rw [spectral_energy (rho i t) (deriv (rho i) t) (Li i)
+    rw [D5.S3.Quantum.Information.SLDSpectralEnergy.spectral_energy (rho i t) (deriv (rho i) t) (Li i)
       (hr.self_of_nhds i).1 (hLi i) (hsoli i)] at hn
     linarith
   have hs := Finset.sum_le_sum (fun i (_ : i ∈ Finset.univ) => hterm i)
@@ -326,7 +241,7 @@ theorem actual_spectral_mixture_upper {n J : Type*} [Fintype n] [DecidableEq n] 
   have hbound : spectralQFI (M t) (deriv M t) hpos.self_of_nhds ≤
       (∑ i, g i t ^ 2 * spectralQFI (rho i t) (deriv (rho i) t) (hr.self_of_nhds i).1) +
       4 * ∑ i, deriv (g i) t ^ 2 := by
-    rw [hdt, ← spectral_energy (M t) B L hpos.self_of_nhds hL hsolve]
+    rw [hdt, ← D5.S3.Quantum.Information.SLDSpectralEnergy.spectral_energy (M t) B L hpos.self_of_nhds hL hsolve]
     linarith
   exact ⟨hpos.self_of_nhds, htrace, hd.differentiableAt, hdt, hbound⟩
 

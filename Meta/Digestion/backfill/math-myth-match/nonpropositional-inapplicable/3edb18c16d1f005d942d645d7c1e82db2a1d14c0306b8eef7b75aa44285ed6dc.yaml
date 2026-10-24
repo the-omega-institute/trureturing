@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:3edb18c16d1f005d942d645d7c1e82db2a1d14c0306b8eef7b75aa44285ed6dc
+  normalized_sha256: sha256:3edb18c16d1f005d942d645d7c1e82db2a1d14c0306b8eef7b75aa44285ed6dc
+cas_ref: sha256:3edb18c16d1f005d942d645d7c1e82db2a1d14c0306b8eef7b75aa44285ed6dc
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 1906 年杜恒版本、页码、篇节与现代重述归属的文献说明；不把历史引述另作数学命题。
+    previous_atom_id: a6771ac2cda8d5aae15d9e3c250240e237c19c5f6e17afac254f215f89ec2b8c
+    next_atom_id: 89a0fb799863d5baa24a02186b31a38d561b000a4522ba0fb38525dd8bbd7067

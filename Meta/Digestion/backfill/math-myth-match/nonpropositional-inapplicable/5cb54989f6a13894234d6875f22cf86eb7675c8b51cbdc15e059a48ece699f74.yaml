@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:5cb54989f6a13894234d6875f22cf86eb7675c8b51cbdc15e059a48ece699f74
+  normalized_sha256: sha256:5cb54989f6a13894234d6875f22cf86eb7675c8b51cbdc15e059a48ece699f74
+cas_ref: sha256:5cb54989f6a13894234d6875f22cf86eb7675c8b51cbdc15e059a48ece699f74
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 列出业与罪的比较入口和选取具体来源的要求，没有建立统一的数学奖惩模型。
+    previous_atom_id: 40aa13c0de3a6d6a4362ad647f99453da9f17c2946450fafed406399303c808a
+    next_atom_id: 4f292fc4b906e1dc0d81b7afe7016baaa6652e3d031cae2d37750caa15333882

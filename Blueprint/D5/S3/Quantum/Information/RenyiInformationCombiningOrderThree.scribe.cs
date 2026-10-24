@@ -198,7 +198,7 @@ internal sealed class RenyiInformationCombiningOrderThreeDocument : IScribeDocum
     }
 
     private static Formula Density(Formula s) => All("x", Fin(Num(2)),
-        App(Q("GHZMeasureBiseparableBound", "IsDensity"), App(s, F.Id("x"))));
+        App(Q("SLDSpectralEnergy", "IsDensity"), App(s, F.Id("x"))));
 
     private static Formula ClaimFormula()
     {

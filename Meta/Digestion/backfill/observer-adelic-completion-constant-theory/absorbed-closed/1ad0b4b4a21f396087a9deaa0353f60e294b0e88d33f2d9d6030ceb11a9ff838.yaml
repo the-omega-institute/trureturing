@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:1ad0b4b4a21f396087a9deaa0353f60e294b0e88d33f2d9d6030ceb11a9ff838
+  normalized_sha256: sha256:1ad0b4b4a21f396087a9deaa0353f60e294b0e88d33f2d9d6030ceb11a9ff838
+cas_ref: sha256:1ad0b4b4a21f396087a9deaa0353f60e294b0e88d33f2d9d6030ceb11a9ff838
+coverage_gids:
+  - gid: D5/S3/Factorization/FreeCommMonoid.primeFactorMulEquiv
+    target_statement_id: sha256:92d2236c7f62cf4d7f67fb2a1d7c670e0026f0ebe2f67f2d7ed74155a54c3411
+receipts:
+  unresolved_subitems: []

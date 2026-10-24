@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:b5efaef5ee162ec700180079018941f11bf44ab82b08711668c3949cbe37eea4
+  normalized_sha256: sha256:b5efaef5ee162ec700180079018941f11bf44ab82b08711668c3949cbe37eea4
+cas_ref: sha256:b5efaef5ee162ec700180079018941f11bf44ab82b08711668c3949cbe37eea4
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 拟输出的 finite atomic residual 字段名称，并未断言该 residual 已存在。
+    previous_atom_id: e3d07c962488cbb434ee066061f4794b31693827477ebc3a0a836b279b5bfdd8
+    next_atom_id: 721fbd50e2ba1cacac0f0172cbe2e5c0853ad1ff18013813026ffb40ab66b132

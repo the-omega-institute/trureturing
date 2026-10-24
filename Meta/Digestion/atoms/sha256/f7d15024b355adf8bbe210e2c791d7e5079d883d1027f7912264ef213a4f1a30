@@ -1,0 +1,37 @@
+**Theorem 13.4 (evaluated detector-normalized certificate).** The
+polarization of the original fifty means satisfies
+
+$$
+\boxed{
+\|B_F(u,v)\|_2\ge c_F\|u\|_2\|v\|_2,
+\qquad c_F=\frac1{40310784000}>0,
+\qquad u,v\in\mathbb R^{10}.
+}
+\tag{13.17}
+$$
+
+Proof. Combine (13.9) with
+$\|\Phi_F\|_2\le(5/2)\|B_F\|_2$ from Definition 13.1 and the exact
+identity $(5/2)16124313600=40310784000$. $\square$
+
+For correspondence with the general suppliers, write the $\nu$th
+coordinate of $Q_F\circ U$ as $u^T R_\nu u$. Each $R_\nu$ is the real
+symmetric $10\times10$ coefficient matrix, with half the mixed
+coefficient in each off-diagonal position. Then
+$B_F(u,v)_\nu=u^T R_\nu v$. There are exactly fifty such matrices,
+and their entries include the base $M_f^{-1}$ at every depth.
+Wang–Xu, [*Generalized phase retrieval*, Theorem 2.1](https://arxiv.org/html/1605.08034v3),
+equates real quadratic phase retrieval with nonsingularity of this
+bilinear map. Its hypotheses hold here by Theorem 9.1 on all real skew
+matrices. Zhuang, [*On stability of generalized phase retrieval and
+generalized affine phase retrieval*, Lemma 2.1, Theorem 2.3 and
+(2.3)](https://link.springer.com/article/10.1186/s13660-019-1968-z),
+supplies the general positive frame bound and product-distance stability.
+Those results apply to real symmetric coefficient matrices without a
+positive-semidefiniteness requirement; the square-root measurement
+results later in that paper have extra hypotheses and are not used.
+The number $c_F^2$ is an evaluated lower choice for its squared frame
+bound $a_0$. The source-specific contribution here is the bound
+(13.17), obtained from the original moments by (13.6)–(13.16), rather
+than a new general phase-retrieval or compactness theorem.
+

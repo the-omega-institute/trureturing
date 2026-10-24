@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:81c10a105dda45490fd82b3e7a01d1981f5b4186e4fdcdbe4db2dad7ce56b5bf
+  normalized_sha256: sha256:81c10a105dda45490fd82b3e7a01d1981f5b4186e4fdcdbe4db2dad7ce56b5bf
+cas_ref: sha256:81c10a105dda45490fd82b3e7a01d1981f5b4186e4fdcdbe4db2dad7ce56b5bf
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 'Nonpropositional: 实验验收工具列表项：极零消去。'
+    previous_atom_id: eadb8d750a0bceffb6825ad52ab45e742a7fcdd10c16a5e07d8fbe3ab5da9581
+    next_atom_id: a33b3378fa03bc65b1cbca3c21dba9fb60c6d30d288846ed18cbaa5ed1bad9fb

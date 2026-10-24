@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:937e8ec8f21abd5bf1464cb7d3ee29347c366bb9c129125bd210f7d560397394
+  normalized_sha256: sha256:937e8ec8f21abd5bf1464cb7d3ee29347c366bb9c129125bd210f7d560397394
+cas_ref: sha256:937e8ec8f21abd5bf1464cb7d3ee29347c366bb9c129125bd210f7d560397394
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 跨命名自然迹的候选清单项“Hankel rank”，不含秩公式或自然性定理。
+    previous_atom_id: 4a27cbbc983781b25c7289e8fb2985f73bed02d6c41a030412d89749f5919ad8
+    next_atom_id: e25157a244f9a8240cebc861820cfa23258210386adb4b844a77630c96b6a15d

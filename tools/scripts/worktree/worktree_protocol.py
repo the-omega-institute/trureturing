@@ -21,6 +21,10 @@ if __name__ == "__main__":
     sys.modules["worktree_protocol"] = sys.modules[__name__]
 
 OPEN_SCOPES = []
+GIT_TERMINATION_GRACE_SECONDS = 30
+# An empty core.fsmonitor disables it both where Git reads a boolean and where
+# older Git reads a hook path; "false" would name a hook program there.
+SCOPED_GIT_CONFIG = (("core.fsmonitor", ""), ("maintenance.auto", "false"), ("gc.auto", "0"))
 
 
 def scope_fds():
@@ -45,23 +49,52 @@ class GitFailure(Refused):
     """A failed Git operation, distinct from an eligibility refusal."""
 
 
-def git_environment(overrides=None):
+def inherited_environment():
     # Ambient location/index/object overrides must never redirect canonical
     # inspection. Keep transport and author identity settings.
     permitted = {"GIT_SSH", "GIT_SSH_COMMAND", "GIT_SSH_VARIANT", "GIT_ASKPASS",
                  "GIT_TERMINAL_PROMPT", "GIT_AUTHOR_NAME", "GIT_AUTHOR_EMAIL",
                  "GIT_AUTHOR_DATE", "GIT_COMMITTER_NAME", "GIT_COMMITTER_EMAIL",
                  "GIT_COMMITTER_DATE"}
-    environment = {key: val for key, val in os.environ.items()
-                   if not key.startswith("GIT_") or key in permitted}
+    return {key: val for key, val in os.environ.items()
+            if not key.startswith("GIT_") or key in permitted}
+
+
+def git_environment(overrides=None):
+    environment = inherited_environment()
+    # A builtin fsmonitor daemon or detached automatic maintenance outlives the
+    # command that starts it and inherits open scope descriptors, so it would
+    # hold the scope after the job ends.
+    for index, (key, setting) in enumerate(SCOPED_GIT_CONFIG):
+        environment[f"GIT_CONFIG_KEY_{index}"] = key
+        environment[f"GIT_CONFIG_VALUE_{index}"] = setting
+    environment["GIT_CONFIG_COUNT"] = str(len(SCOPED_GIT_CONFIG))
     environment.update(overrides or {})
     return environment
 
 
 def git(root, *args, env=None, input=None, check=True, timeout=300):
-    result = subprocess.run(["git", "-C", str(root), *map(str, args)], input=input,
-                            stdout=subprocess.PIPE, stderr=subprocess.PIPE,
-                            env=git_environment(env), timeout=timeout, pass_fds=scope_fds())
+    command = ["git", "-C", str(root), *map(str, args)]
+    with subprocess.Popen(command, stdin=subprocess.PIPE if input is not None else None,
+                          stdout=subprocess.PIPE, stderr=subprocess.PIPE,
+                          env=git_environment(env), pass_fds=scope_fds()) as process:
+        try:
+            stdout, stderr = process.communicate(input, timeout=timeout)
+        except subprocess.TimeoutExpired:
+            # Git removes its lock files on SIGTERM; SIGKILL would leave index.lock behind.
+            process.terminate()
+            try:
+                process.wait(timeout=GIT_TERMINATION_GRACE_SECONDS)
+            except subprocess.TimeoutExpired:
+                process.kill()
+            except BaseException:
+                process.kill()
+                raise
+            raise
+        except BaseException:
+            process.kill()
+            raise
+    result = subprocess.CompletedProcess(command, process.returncode, stdout, stderr)
     if check and result.returncode:
         raise GitFailure(result.stderr.decode(errors="replace").strip() or "git failed")
     return result

@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:725f79785d307e796111c3df9fcfd86dc4128911c9d9c9613b9bcdf11eed6707
+  normalized_sha256: sha256:725f79785d307e796111c3df9fcfd86dc4128911c9d9c9613b9bcdf11eed6707
+cas_ref: sha256:725f79785d307e796111c3df9fcfd86dc4128911c9d9c9613b9bcdf11eed6707
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 'nonpropositional: 候选计算方法 positivity-preserving continuation 的名称，没有成功性断言。'
+    previous_atom_id: 197090d2720998a84e6f9fdb05a9c3671a9baa20b1839e4563bd7bd58cdd6914
+    next_atom_id: d273ae50b98d46a565b54a628013dc673475b653d3cb2126122a91a59a7a43f2

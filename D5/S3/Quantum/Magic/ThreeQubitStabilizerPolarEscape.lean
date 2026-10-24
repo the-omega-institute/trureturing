@@ -5,6 +5,7 @@
    anchors: []
    utility: none
    digest: Seven anticommuting Paulis support a three-qubit stabilizer polar escape. -/
+import D5.S3.Quantum.Information.SLDSpectralEnergy
 import D5.S3.Quantum.Measurement.StabilizerPovmMaximalEntanglementRefutation
 import D5.S3.Quantum.Entanglement.NandiMutualPredictabilityLOCCRefutation
 import D5.S3.Quantum.Entanglement.GHZMeasureBiseparableBound
@@ -29,7 +30,7 @@ namespace D5.S3.Quantum.Magic.ThreeQubitStabilizerPolarEscape
 abbrev Bits (n : ℕ) := Fin n → Fin 2
 abbrev Op (n : ℕ) := Operator n
 def IsState {n : ℕ} (ρ : Op n) : Prop :=
-  D5.S3.Quantum.Entanglement.GHZMeasureBiseparableBound.IsDensity ρ
+  D5.S3.Quantum.Information.SLDSpectralEnergy.IsDensity ρ
 def tr {n : ℕ} (A : Op n) : ℝ := RHLinalg.rtrace A
 def conjugate {n : ℕ} (A : Op n) : Op n := A.map star
 private def splitBits (n m : ℕ) (x : Bits (n + m)) : Bits n × Bits m :=

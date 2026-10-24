@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:6b08a689db2b69eb73ecc61d392e6b3d66d37abedb3f0965b92ca20713f8a8b1
+  normalized_sha256: sha256:6b08a689db2b69eb73ecc61d392e6b3d66d37abedb3f0965b92ca20713f8a8b1
+cas_ref: sha256:6b08a689db2b69eb73ecc61d392e6b3d66d37abedb3f0965b92ca20713f8a8b1
+coverage_gids:
+  - gid: D5/S3/Zeros/Jensen/SourceJensenPositiveExtension.source_jensen_positive_extension
+    target_statement_id: sha256:aff726c2285de50e35bd19fe5256d773f97e4d4aa967a601cee7df2aeb215989
+receipts:
+  unresolved_subitems: []

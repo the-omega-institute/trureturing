@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:4df0f35c060b0bb39c9bf9cc13032ae52ba716014010bb3b12504367a96cf694
+  normalized_sha256: sha256:4df0f35c060b0bb39c9bf9cc13032ae52ba716014010bb3b12504367a96cf694
+cas_ref: sha256:4df0f35c060b0bb39c9bf9cc13032ae52ba716014010bb3b12504367a96cf694
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 受“目标是”统领的“分析 atomic residual”任务项；未断言 residual 的结构性质。
+    previous_atom_id: 163b334959d3c1383565a8c83cea4ab567710ce9f4c7644c7f33f6851b5a2f2f
+    next_atom_id: 90372af68e9691ecceff40ee5a089ad4f0726cccb6c14d7c8df4db837d7c75be

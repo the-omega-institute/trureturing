@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:38559420a1c023faa14de9ce3403f1e9b074d14039b42440c2a0a5444bc3b38e
+  normalized_sha256: sha256:38559420a1c023faa14de9ce3403f1e9b074d14039b42440c2a0a5444bc3b38e
+cas_ref: sha256:38559420a1c023faa14de9ce3403f1e9b074d14039b42440c2a0a5444bc3b38e
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 'nonpropositional: Choices of scales and truncation depths and requirements for an SDP design; no assertion of feasibility.'
+    previous_atom_id: 0e50d06a3201e10caa62892347b8f951be4644d7892fd985762af1e57009ddc7
+    next_atom_id: 275c7b1fe7884c433b6e051ef57640f9259cc1dcaddf35d5e3b2807f327634c9

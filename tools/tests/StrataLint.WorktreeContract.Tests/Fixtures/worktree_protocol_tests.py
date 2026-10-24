@@ -155,6 +155,55 @@ class ProtocolTests(DetachedRecoveryCases, CleanupAnchorCases, MirrorCases, Nati
         finally:
             os.kill(child, signal.SIGKILL)
 
+    def scoped_git_configuration_disables_background_git(self):
+        for key, setting in (("core.fsmonitor", "true"), ("maintenance.auto", "true"), ("gc.auto", "1")):
+            self.g(self.main, "config", key, setting)
+        expected = "core.fsmonitor= maintenance.auto=false gc.auto=0"
+        observed = " ".join(f"{key}={protocol.value(self.tree, 'config', '--get', key)}"
+                            for key in ("core.fsmonitor", "maintenance.auto", "gc.auto"))
+        self.assertEqual(expected, observed)
+        script = ('for k in core.fsmonitor maintenance.auto gc.auto; do '
+                  'printf "%s=%s " "$k" "$(git config --get "$k")"; done')
+        job = self.run_protocol("with", "--path", self.tree, "--git", "--", "sh", "-c", script)
+        self.assertEqual(expected, job.stdout.strip())
+
+    def timed_out_git_releases_index_lock(self):
+        ready = self.root / "filter.ready"
+        os.mkfifo(ready)
+        clean = self.root / "slow-clean"
+        clean.write_text(f"#!/bin/sh\necho $$ > '{ready}'\nexec sleep 60\n")
+        clean.chmod(0o755)
+        attributes = self.root / "attributes"
+        attributes.write_text("owned filter=slow\n")
+        self.g(self.tree, "config", "core.attributesFile", attributes)
+        self.g(self.tree, "config", "filter.slow.clean", clean)
+        (self.tree / "owned").write_text("filtered\n")
+        lock = Path(protocol.value(self.tree, "rev-parse", "--absolute-git-dir")) / "index.lock"
+        reader = os.open(ready, os.O_RDONLY | os.O_NONBLOCK)
+        filters = []
+
+        def expire_while_filter_holds_lock(process, input=None, timeout=None):
+            # The clean filter runs while Git holds index.lock; its readiness is the
+            # synchronization point, so the injected expiry never races lock acquisition.
+            self.assertTrue(select.select([reader], [], [], 30)[0], "filter readiness timeout")
+            filters.append(int(os.read(reader, 64).decode()))
+            self.assertTrue(lock.exists())
+            raise subprocess.TimeoutExpired(process.args, timeout)
+
+        try:
+            with patch.object(subprocess.Popen, "communicate", expire_while_filter_holds_lock):
+                with self.assertRaises(subprocess.TimeoutExpired):
+                    protocol.git(self.tree, "add", "owned")
+            self.assertEqual(1, len(filters))
+            self.assertFalse(lock.exists())
+        finally:
+            os.close(reader)
+            for pid in filters:
+                try:
+                    os.kill(pid, signal.SIGKILL)
+                except ProcessLookupError:
+                    pass
+
     def test_ordinary_checkpoint_commits_final_working_snapshot(self):
         self.hold("--write", "other")
         (self.tree / "other").write_text("staged version\n")

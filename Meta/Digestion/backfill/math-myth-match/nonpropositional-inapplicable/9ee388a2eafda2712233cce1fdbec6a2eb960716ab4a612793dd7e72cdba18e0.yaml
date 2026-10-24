@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:9ee388a2eafda2712233cce1fdbec6a2eb960716ab4a612793dd7e72cdba18e0
+  normalized_sha256: sha256:9ee388a2eafda2712233cce1fdbec6a2eb960716ab4a612793dd7e72cdba18e0
+cas_ref: sha256:9ee388a2eafda2712233cce1fdbec6a2eb960716ab4a612793dd7e72cdba18e0
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 薄伽梵歌4.39—40信与疑的译注及不同传统的比较边界。
+    previous_atom_id: 8990a81405c31f5047f74e4a37dd94261d7494d2e8b74a1a8e9b98befaca7054
+    next_atom_id: 07ac8489d7342fa6c9703a2e3003a7840ea886695706894127172ad3593d166e

@@ -86,7 +86,7 @@ open scoped ENNReal
 noncomputable section
 namespace D5.S3.Quantum.Measurement.QubitIncompatibilityProbability
 
-private def squareDomain : Set (ℝ × ℝ) := Ioo (0 : ℝ) 1 ×ˢ Ioo (0 : ℝ) 1
+def squareDomain : Set (ℝ × ℝ) := Ioo (0 : ℝ) 1 ×ˢ Ioo (0 : ℝ) 1
 
 private def squareMap (p : ℝ × ℝ) : ℝ × ℝ := (p.1, p.1 * p.2 ^ 2)
 
@@ -164,7 +164,7 @@ end D5.S3.Quantum.Measurement.QubitIncompatibilityProbability
 
 namespace D5.S3.Quantum.Measurement.QubitIncompatibilityProbability
 
-private def triangleMap (p : ℝ × ℝ) : ℝ × ℝ := (p.1*p.2, p.1*(1-p.2))
+def triangleMap (p : ℝ × ℝ) : ℝ × ℝ := (p.1*p.2, p.1*(1-p.2))
 
 private def triangleDerivative (p : ℝ × ℝ) : ℝ × ℝ →L[ℝ] ℝ × ℝ :=
   (Matrix.toLin (.finTwoProd ℝ) (.finTwoProd ℝ)
@@ -214,7 +214,7 @@ private theorem triangleDerivative_det (p : ℝ × ℝ) : (triangleDerivative p)
     Matrix.det_fin_two_of]
   ring
 
-private theorem triangle_change_lintegral (f : ℝ × ℝ → ℝ≥0∞) :
+theorem triangle_change_lintegral (f : ℝ × ℝ → ℝ≥0∞) :
     (∫⁻ p in radialBody, f p) = ∫⁻ p in squareDomain,
       ENNReal.ofReal p.1 * f (triangleMap p) := by
   have hm : MeasurableSet squareDomain := measurableSet_Ioo.prod measurableSet_Ioo

@@ -23,7 +23,7 @@ proof_shape: result: bind-only; the settling result for the external conjecture.
 escape_witness: none.
 admission_basis: open-problem-resolution (#19494; Refuted).
 Direct frozen dependencies:
-  D5/S3/Quantum/Entanglement/GHZMeasureBiseparableBound.IsDensity
+  D5/S3/Quantum/Information/SLDSpectralEnergy.IsDensity
     statement_id: sha256:fc9bb0824d5818ff419f72f26095faecc04e62ab59bf26f4f2bcefbb2d380448
   D5/S3/Quantum/Entanglement/LocalObservationPartialTraceEquivalence.partialTraceFirst
     statement_id: sha256:60de08083a292a636d655dff7f5b06843146c051021ffe2d0b604db457edc565
@@ -35,6 +35,7 @@ no pinned Mathlib partial trace provides the literal expression required by #194
 `result` is the designated refutation result of the line-6 utility record and is exempt from four-slot registration under CLAUDE.md §3.9.
 -/
 
+import D5.S3.Quantum.Information.SLDSpectralEnergy
 import D5.S3.Weil.ZetaLinear.PosIndex
 import D5.S3.Quantum.Foundation.FiniteDensityPurification
 import D5.S3.Quantum.Entanglement.LocalObservationPartialTraceEquivalence
@@ -48,7 +49,7 @@ subadditivity (24) `ĥ(ρ_AB) ≤ ĥ(ρ_A) + ĥ(ρ_B)` for every bipartite state
 namespace D5.S3.Quantum.Entanglement.PartialNegativity.GuoHatSubadditivityRefutation
 
 open Matrix
-open D5.S3.Quantum.Entanglement.GHZMeasureBiseparableBound (IsDensity)
+open D5.S3.Quantum.Information.SLDSpectralEnergy (IsDensity)
 open D5.S3.Quantum.Entanglement.LocalObservationPartialTraceEquivalence (partialTraceFirst)
 
 /-- `δ₁(X), δ₂(X)`: the two largest eigenvalues of a Hermitian matrix, counted with multiplicity (`0` for `δ₂` on a
@@ -73,7 +74,7 @@ end D5.S3.Quantum.Entanglement.PartialNegativity.GuoHatSubadditivityRefutation
 noncomputable section
 namespace D5.S3.Quantum.Entanglement.PartialNegativity.GuoHatSubadditivityRefutation
 open Matrix
-open D5.S3.Quantum.Entanglement.GHZMeasureBiseparableBound (IsDensity)
+open D5.S3.Quantum.Information.SLDSpectralEnergy (IsDensity)
 open D5.S3.Quantum.Entanglement.LocalObservationPartialTraceEquivalence (partialTraceFirst)
 open scoped ComplexOrder
 set_option maxHeartbeats 1000000

@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:84cc2161cc9bcf63cb56d5b18ea819c302d01e1a5805962e32f7be4b9a72ad6d
+  normalized_sha256: sha256:84cc2161cc9bcf63cb56d5b18ea819c302d01e1a5805962e32f7be4b9a72ad6d
+cas_ref: sha256:84cc2161cc9bcf63cb56d5b18ea819c302d01e1a5805962e32f7be4b9a72ad6d
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: This taxonomy label genus-zero self-replication model ends with an explicit disclaimer that the discussion is not an RH proof; no genus-zero or Hecke identity is stated in this fragment.
+    previous_atom_id: 132342d5f7cd714726c5e402a30f486d1e5ee033efb2702411eac5e70affbce4
+    next_atom_id: fc9ac451c26fcd4be8b86c37eb85e8caf9aa543f98ec1adc13cccbe49697faf2

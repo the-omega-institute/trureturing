@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:37293898fe0e5964caaceb4ad56288dc719fa799368e9b92b66fd9b0f7cb0931
+  normalized_sha256: sha256:37293898fe0e5964caaceb4ad56288dc719fa799368e9b92b66fd9b0f7cb0931
+cas_ref: sha256:37293898fe0e5964caaceb4ad56288dc719fa799368e9b92b66fd9b0f7cb0931
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 非命题结算：依据《答顾东桥书》与综述比较意向、经验和工夫；不提出确定数学系统中的结论。
+    previous_atom_id: 75c542e64c519867c8d8f3624e8dd993982e24dc301c7d4fa1d2be1329d2efe2
+    next_atom_id: 2911b83fa87a1b102927b71271f932657a22196f279afd0e436d0701576c11c8

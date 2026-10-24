@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:dec54e41250736b5949f3e771833abccad7551676089a246e94c9863ab305e7d
+  normalized_sha256: sha256:dec54e41250736b5949f3e771833abccad7551676089a246e94c9863ab305e7d
+cas_ref: sha256:dec54e41250736b5949f3e771833abccad7551676089a246e94c9863ab305e7d
+coverage_gids:
+  - gid: D5/S3/Weil/Pick/CayleyNevanlinnaKernelEquivalence.cayley_nevanlinna_kernel_posSemidef_iff
+    target_statement_id: sha256:ef7d465945cf03f29427c38449a96efe948dd77609dc8b7df88ad25e19786fe7
+receipts:
+  unresolved_subitems: []

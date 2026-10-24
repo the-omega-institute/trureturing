@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:b2dd8667f5ccc5260654e511353bd8186773b2059096a08212a6d2abc5ba6f3e
+  normalized_sha256: sha256:b2dd8667f5ccc5260654e511353bd8186773b2059096a08212a6d2abc5ba6f3e
+cas_ref: sha256:b2dd8667f5ccc5260654e511353bd8186773b2059096a08212a6d2abc5ba6f3e
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 'nonpropositional: 本行明确标记正算术函子连接尚未建立，是研究状态说明，没有宣称连接已经成立。'
+    previous_atom_id: 3132e241ec08ab75156b419617b1bf7d0eaeda6966422131ed5b6f17935c0e48
+    next_atom_id: 7bd257b2bf4e9424c99b2f91f771c3f00f1c9d29c973a9226c3b34f5d4755d77

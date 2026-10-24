@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:115403a504f46ae9cf269a6ab1f368e7d1961fd352968bc18909959e855e0cd1
+  normalized_sha256: sha256:115403a504f46ae9cf269a6ab1f368e7d1961fd352968bc18909959e855e0cd1
+cas_ref: sha256:115403a504f46ae9cf269a6ab1f368e7d1961fd352968bc18909959e855e0cd1
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: Bare geometric topic name in an expository topic list; no conditional-negative-definiteness claim is stated in this fragment.
+    previous_atom_id: 42c65e924fb293ce86aefc1568e3751bcaa9b84341638caad4473a105cee20c5
+    next_atom_id: b9c236e66852d194721f0662c511b3fac22ca3a92cffcbf182df176bd5da84e0

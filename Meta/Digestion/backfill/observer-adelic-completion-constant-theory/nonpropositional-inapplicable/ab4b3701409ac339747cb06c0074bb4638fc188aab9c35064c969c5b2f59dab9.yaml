@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:ab4b3701409ac339747cb06c0074bb4638fc188aab9c35064c969c5b2f59dab9
+  normalized_sha256: sha256:ab4b3701409ac339747cb06c0074bb4638fc188aab9c35064c969c5b2f59dab9
+cas_ref: sha256:ab4b3701409ac339747cb06c0074bb4638fc188aab9c35064c969c5b2f59dab9
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 'nonpropositional: Explicit inventory of still-open bridges and a literature-novelty audit task.'
+    previous_atom_id: 1fd51e2c707d49aac0d19ff6f7a4d5621e3fbe468238fed60de2d84b9a84046c
+    next_atom_id: a672e35fab174c400556c100755388a9ec73c1410d369f6d3c8c2b47e5d70729

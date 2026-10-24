@@ -696,3 +696,3098 @@ $$
 [VP]: ../../../Library/Geometry/darpo2009vectorproduct.md
 
 ## 追加锚（本行以下为增补区）
+
+## 11. 全域鲁棒面积—Jacobi 合同
+
+**定义 11.1（固定尺度的全域缺陷）。** 令 $K$ 是有限维实正定内积空间，$d=\dim K\ge2$，并令 $B:K\times K\to K$ 是全域双线性映射。置
+
+$$
+T(u,v,w)=\langle B(u,v),w\rangle_K,
+\qquad
+\mathcal J_B(u,v,w)=B(u,B(v,w))+B(v,B(w,u))+B(w,B(u,v)).
+$$
+
+本节的结构假设是 $T$ 对三个变量完全交错；因此它是精确的反对称性假设，而不是有误差的反交错测量。固定一个已校准的归一化尺度，并取 $\alpha,\beta\ge0$。全域面积预算和全域 Jacobi 预算分别是
+
+$$
+\left|\|B(u,v)\|_K^2-\bigl(\|u\|_K^2\|v\|_K^2-\langle u,v\rangle_K^2\bigr)\right|
+\le \alpha\|u\|_K^2\|v\|_K^2, \tag{11.1}
+$$
+
+$$
+\|\mathcal J_B(u,v,w)\|_K
+\le \beta\|u\|_K\|v\|_K\|w\|_K. \tag{11.2}
+$$
+
+这两个量词都遍历全部 $u,v,w\in K$，包括零向量；预算是相对于同一个尺度的无量纲数。若 $B$ 被乘以 $\kappa$，面积缺陷的目标系数变为 $\kappa^2$，所以不能在未校准增益时把一个任意比例的积称为满足 (11.1)。
+
+**定理 11.2（严格鲁棒阈值）。** 在定义 11.1 的条件下，若
+
+$$
+5\alpha+\beta<1, \tag{11.3}
+$$
+
+则 $d=3$。更具体地，若 $d\ge4$ 且 $0\le\alpha<1$，则存在正交单位向量 $u,v,z$ 使得
+
+$$
+\|\mathcal J_B(u,v,z)\|_K\ge 1-5\alpha. \tag{11.4}
+$$
+
+所以任何满足 (11.1) 的 $d\ge4$ 载体都必须有
+
+$$
+\beta\ge 1-5\alpha. \tag{11.5}
+$$
+
+当 $\alpha<1/5$ 时，右端是明确的正缺陷下界。阈值外不作三维结论：若 $\alpha<1$，这些假设仍只无条件给出 $d\ge3$；若 $\alpha\ge1$，由这些预算本身不能排除 $d=2$。
+
+**证明。** 记 $L_x y=B(x,y)$，并记面积残差为
+
+$$
+D(x,y)=\|B(x,y)\|_K^2-\bigl(\|x\|_K^2\|y\|_K^2-\langle x,y\rangle_K^2\bigr).
+$$
+
+完全交错性给 $L_x^*=-L_x$，并给 $B(x,y)\perp x,y$。取正交单位 $u,v$，置 $c=B(u,v)$。由 (11.1)，
+
+$$
+1-\alpha\le\|c\|_K^2\le1+\alpha. \tag{11.6}
+$$
+
+当 $\alpha<1$ 时 $c\ne0$；若 $d\ge4$，可取正交单位 $z$ 垂直于 $u,v,c$。
+
+先估计反对易项。对单位向量 $w$，四次有限差分的双线性展开给出
+
+$$
+\begin{aligned}
+&Q(u+v,z+w)-Q(u+v,z-w)\\
+&\quad-Q(u-v,z+w)+Q(u-v,z-w)\\
+&=8\bigl(\langle B(u,z),B(v,w)\rangle_K
+       +\langle B(u,w),B(v,z)\rangle_K\bigr),
+\end{aligned} \tag{11.7}
+$$
+
+其中 $Q(x,y)=\|B(x,y)\|_K^2$。把 $Q$ 换成面积式
+$A(x,y)=\|x\|^2\|y\|^2-\langle x,y\rangle^2$，同一差分为零：这是直接展开，使用 $u,v,z$ 两两正交；$w$ 不需要再与它们正交。因此 (11.7)、(11.1) 以及
+$\|u+v\|^2=\|u-v\|^2=2$ 给出
+
+$$
+\left|\langle B(u,z),B(v,w)\rangle_K
++\langle B(u,w),B(v,z)\rangle_K\right|
+\le\frac{\alpha}{8}
+\bigl(\|u+v\|^2+\|u-v\|^2\bigr)\cdot
+\bigl(\|z+w\|^2+\|z-w\|^2\bigr)
+=2\alpha. \tag{11.8}
+$$
+
+而
+
+$$
+R=(L_uL_v+L_vL_u)z
+$$
+
+满足
+
+$$
+\langle R,w\rangle_K
+=-\langle B(v,z),B(u,w)\rangle_K
+ -\langle B(u,z),B(v,w)\rangle_K.
+$$
+
+对所有单位 $w$ 使用 (11.8)，得到
+
+$$
+\|R\|_K\le2\alpha. \tag{11.9}
+$$
+
+令 $x=L_vz$. 交错性和 $z\perp c$ 给
+
+$$
+\langle x,v\rangle=\langle x,z\rangle=0,\qquad
+\langle x,u\rangle=T(v,z,u)=T(u,v,z)=\langle c,z\rangle=0. \tag{11.10}
+$$
+
+两次使用 (11.1)，并注意 $\alpha<1$，便有
+
+$$
+\|x\|^2\ge1-\alpha,\qquad
+\|L_ux\|^2\ge(1-\alpha)\|x\|^2\ge(1-\alpha)^2,
+$$
+
+从而
+
+$$
+\|L_uL_vz\|\ge1-\alpha. \tag{11.11}
+$$
+
+同理，$c\perp z$，故由 (11.6) 和 (11.1)
+
+$$
+\|L_cz\|^2\le(1+\alpha)\|c\|^2\le(1+\alpha)^2,\qquad
+\|L_cz\|\le1+\alpha. \tag{11.12}
+$$
+
+最后，交错性把 Jacobi 和写成
+
+$$
+\mathcal J_B(u,v,z)=L_uL_vz-L_vL_uz-L_cz
+=2L_uL_vz-L_cz-R. \tag{11.13}
+$$
+
+反三角不等式、(11.9)、(11.11)、(11.12) 给出 (11.4)。若 (11.2) 成立，单位三元组又给
+$\beta\ge\|\mathcal J_B(u,v,z)\|\ge1-5\alpha$，即 (11.5)。在 (11.3) 下 $\alpha<1/5<1$，故 $d\ge4$ 不可能。另一方面，(11.6) 在 $\alpha<1$ 时排除 $d=2$：非零的 $c$ 同时垂直于两个正交单位向量，必须提供第三方向。因此 $d=3$。证毕。
+
+**推论 11.3（低维、缩放与阈值外边界）。** 在维数二，完全交错性使 $B(u,v)$ 同时垂直于 $K$ 的两个独立方向，所以 $B=0$；它的最小面积预算是 $\alpha=1$，而 Jacobi 预算为 $\beta=0$。在维数三，取任意定向正交叉积 $\times$ 和 $B_\kappa=\kappa\times$，则
+
+$$
+|D_\kappa(u,v)|=|\kappa^2-1|
+ (\|u\|^2\|v\|^2-\langle u,v\rangle^2),\qquad
+\mathcal J_{B_\kappa}=0. \tag{11.14}
+$$
+
+**证明。** 二维时三线性完全交错形式为零，内积非退化故 $B=0$；取正交单位对使面积项为一，得到最小 $\alpha=1$。三维标准叉积的范数恒等式和 Jacobi 恒等式分别把两项缩放为 $\kappa^2$ 倍和零，故 (11.14) 成立；正交单位对达到面积比的上确界，因而预算是最小的。$\kappa=\pm1$ 保留零面积缺陷下的两种手性。对 $\alpha<1$，定理 11.2 的无条件结论确实是至少三维；超过严格阈值时不能把三维结论冒称为已证。
+
+**命题 11.4（七维精确供应者的分析边界）。** 令 $K=\operatorname{Im}\mathbb O$ 为正定实八元数的虚部，取
+$B(u,v)=(uv-vu)/2$。为固定乘法和符号，取 $\mathbb O=\mathbb H\oplus\mathbb H$，约定
+
+$$
+(a,b)(c,d)=(ac-\bar d b,\;da+b\bar c),\qquad
+\overline{(a,b)}=(\bar a,-b),\qquad
+N(a,b)=|a|^2+|b|^2.
+$$
+
+四元数基满足 $ij=k$、$jk=i$、$ki=j$，反序变号，且 $i^2=j^2=k^2=-1$。取正交单位基
+
+$$
+e_1=(i,0),\ e_2=(j,0),\ e_3=(k,0),\ e_4=(0,1),
+e_5=(0,i),\ e_6=(0,j),\ e_7=(0,k).
+$$
+
+由此乘法得到的有向三元组是
+
+$$
+(1,2,3),(1,4,5),(1,7,6),(2,4,6),
+(2,5,7),(3,4,7),(3,6,5),
+$$
+
+使 $e_i\times e_j=e_k$ 沿有向三元组循环、反序变号，并令 $e_i\times e_i=0$；这里 $\times=B$。Darpö 的 Theorem 1 与 Baez 的 §4.1 在此只供应经典精确七维向量积的背景；本条用上述明确约定核对范数律和所需边界。在此同一正交标架中，面积预算为零，最小全域 Jacobi 预算为 $3$；对任意实数 $\kappa$，$\kappa B$ 的最小预算是 $(|\kappa^2-1|,3\kappa^2)$。直接取
+$u=e_3,v=e_5,w=e_7$ 得
+
+$$
+\begin{aligned}
+ e_3\times(e_5\times e_7)&=-e_1,\\
+ e_5\times(e_7\times e_3)&=-e_1,\\
+ e_7\times(e_3\times e_5)&=-e_1,
+\end{aligned}
+\qquad
+\mathcal J_B(e_3,e_5,e_7)=-3e_1. \tag{11.15}
+$$
+
+**证明。** 把上述七个基代入二元组乘法，得到所列有向表；每个无序异基对恰在一个三元组中，故该表确定同一个 $B$ 的全部系数。$\langle B(e_i,e_j),e_k\rangle$ 在每个有向三元组的偶置换上为 $1$、奇置换上为 $-1$，其余为零，三线性展开给完全交错性。
+
+范数律须对全部输入核对。四元数范数的乘法性和实部的循环不变性给
+
+$$
+\begin{aligned}
+N((a,b)(c,d))
+&=|ac-\bar d b|^2+|da+b\bar c|^2\\
+&=|a|^2|c|^2+|d|^2|b|^2+|d|^2|a|^2+|b|^2|c|^2\\
+&\quad-2\operatorname{Re}(ac\bar b d)+2\operatorname{Re}(dac\bar b)\\
+&=(|a|^2+|b|^2)(|c|^2+|d|^2).
+\end{aligned}
+$$
+
+最后的交叉项相消只用结合的四元数乘法与 $\operatorname{Re}(rs)=\operatorname{Re}(sr)$，未把八元数乘法当作结合。对虚八元数 $u=(a,b)$，$\bar a=-a$，同一乘法给 $u^2=-N(u)1$。极化得
+$uv+vu=-2\langle u,v\rangle1$；共轭公式又给 $\overline{uv}=\bar v\bar u=vu$，故 $B(u,v)$ 为虚部，且
+
+$$
+uv=-\langle u,v\rangle1+B(u,v),\qquad
+\|u\|^2\|v\|^2=N(uv)=\langle u,v\rangle^2+\|B(u,v)\|^2.
+$$
+
+这证明所列同一个积的全输入面积律，包括零输入和平行输入。作为同一符号约定的具体核对，
+$B(e_1+e_2,e_4+e_7)=e_5+e_6+e_6-e_5=2e_6$，平方范数与面积平方都为 $4$。
+
+表中 $e_5\times e_7=e_2$、$e_7\times e_3=e_4$、$e_3\times e_5=-e_6$，而
+$e_3\times e_2=e_5\times e_4=-e_1$、$e_7\times e_6=e_1$，逐项给出 (11.15)。面积律使每个嵌套项的范数至多为 $\|u\|\|v\|\|w\|$，三角不等式给全域上界 $3$；(11.15) 在单位三元组上达到 $3$，所以最小全域 Jacobi 预算正是 $3$。缩放后的面积残差为
+$(\kappa^2-1)(\|u\|^2\|v\|^2-\langle u,v\rangle^2)$，Jacobi 为 $\kappa^2\mathcal J_B$，得到所列最小预算；面积预算由正交单位对达到。该七维计算不把 $\Lambda^2K\to K$ 要求为同构，也不加入比向量积范数恒等式更强的 Gram 恒等式。
+
+## 12. 完整已知标架上的有限系数误差证书
+
+**定义 12.1（完整标架和取得条件）。** 另行供应一个已知维数 $d$ 以及完整正交单位标架
+$e_1,\ldots,e_d$，即 $K=\operatorname{span}\{e_i\}$ 且
+$\langle e_i,e_j\rangle=\delta_{ij}$ 是独立校准的精确事实。这里“完整”是来源合同中的已知覆盖，不是从有限样本发现未知环境维数。对每个有序 $(i,j)$，在同一来源版本、同一尺度和同一控制条件下准备 $(e_i,e_j)$，执行有序二元操作，并用第 $k$ 个标架探针取得
+
+$$
+ b_{kij}=\langle B(e_i,e_j),e_k\rangle.
+$$
+
+若一次操作会破坏来源，必须由同一来源身份的重复准备和控制完成全部 $d^3$ 个三标量；若操作可逆，则重复控制仍须证明标定没有漂移。重复准备、复位、共同初态、探针归属、动作次序和读出宽度都是实际额外假设；原生菜单没有它们时，本证书不替代这些权限。
+
+设标量取得给出已认证的确定性区间
+
+$$
+|\widehat b_{kij}-b_{kij}|\le\epsilon_{kij},\qquad
+E=\left(\sum_{k,i,j=1}^d\epsilon_{kij}^2\right)^{1/2}. \tag{12.1}
+$$
+
+若所有标量误差都由一个上界 $\epsilon$ 控制，则可直接取 $E\le d^{3/2}\epsilon$。区间须包含制备、控制、标量读数和共同校准的全部确定性误差；统计置信度若要使用，必须另给其抽样与失败合同，不能把概率保证写成 (12.1)。
+
+由测得系数定义双线性张量
+
+$$
+\widehat B(x,y)=\sum_{k,i,j}\widehat b_{kij}x_i y_j e_k,
+\qquad
+M=\left(\sum_{k,i,j}\widehat b_{kij}^{\,2}\right)^{1/2}.
+$$
+
+测得的 $\widehat b_{kij}$ 不要求任何交错关系，$\widehat B$ 可不反对称；真实 $T$ 的精确完全交错性是维数选择所需的独立结构前提，不能从它推断测量噪声也交错。
+
+把有限多项式
+
+$$
+P_A(x,y)=\|\widehat B(x,y)\|^2-
+(\|x\|^2\|y\|^2-\langle x,y\rangle^2)
+$$
+
+唯一收集成
+$P_A(x,y)=\sum_{|\mu|=|\nu|=2}a_{\mu\nu}x^\mu y^\nu$，并置
+$R_A=\sum_{\mu,\nu}|a_{\mu\nu}|$。同样，把
+
+$$
+P_J(x,y,z)=\widehat B(x,\widehat B(y,z))
++\widehat B(y,\widehat B(z,x))
++\widehat B(z,\widehat B(x,y))
+$$
+
+的每个坐标唯一收集成
+$P_{J,k}(x,y,z)=\sum_{i,j,l}q_{kijl}x_i y_j z_l$，置
+$R_J=\sum_{k,i,j,l}|q_{kijl}|$。直接按上式的参数次序展开，系数为
+
+$$
+q_{kijl}=\sum_{m=1}^d\left(
+\widehat b_{kim}\widehat b_{mjl}
++\widehat b_{kjm}\widehat b_{mli}
++\widehat b_{klm}\widehat b_{mij}\right).
+$$
+
+这些是分别只有
+$\binom{d+1}{2}^2$ 和 $d^4$ 个有限系数的确定性和，不是紧致性给出的未知常数。
+
+若实际算术程序输出 $M_0,R_{A,0},R_{J,0}$ 以及已认证的绝对上误差
+$\eta_M,\eta_A,\eta_J$，使用
+
+$$
+\overline M=M_0+\eta_M\ge M,\qquad
+\overline R_A=R_{A,0}+\eta_A\ge R_A,\qquad
+\overline R_J=R_{J,0}+\eta_J\ge R_J. \tag{12.2}
+$$
+
+区间向上舍入直接给出同样的三个上界；精确有理或代数算术时相应 $\eta$ 可以为零。定义可直接验算的预算
+
+$$
+\alpha_{\rm cert}=\overline R_A+(2\overline M+E)E, \tag{12.3}
+$$
+
+$$
+\beta_{\rm cert}=\overline R_J+3(2\overline M+E)E. \tag{12.4}
+$$
+
+若该有限算术结果满足 $5\alpha_{\rm cert}+\beta_{\rm cert}<1$，且完全交错性是独立的精确结构假设，则定理 11.2 认证 $\dim K=3$。
+
+**定理 12.2（证书的正确性）。** 在定义 12.1 的完整标架和 (12.1)–(12.2) 下，真实 $B$ 满足 (11.1)–(11.2)，其中可以取
+$\alpha=\alpha_{\rm cert}$、$\beta=\beta_{\rm cert}$。
+
+**证明。** 对任意 $x,y$，Cauchy–Schwarz 直接给
+
+$$
+\|(B-\widehat B)(x,y)\|
+\le E\|x\|\|y\|. \tag{12.5}
+$$
+
+故 $\|\widehat B(x,y)\|\le M\|x\|\|y\|$，而
+$\|B(x,y)\|\le(M+E)\|x\|\|y\|$。对单位 $x,y$，平方范数的差满足
+
+$$
+\bigl|\|B(x,y)\|^2-\|\widehat B(x,y)\|^2\bigr|
+\le(2M+E)E. \tag{12.6}
+$$
+
+每个 $P_A$ 单项在单位球上的绝对值不超过一，所以
+$|P_A(x,y)|\le R_A\le\overline R_A$；(12.6) 给出 (11.1) 和 (12.3)，再按齐次性推广到任意 $x,y$。
+
+令 $\Delta=B-\widehat B$。对 $P_J$ 定义中相同参数次序的一项，双线性给出精确分解
+
+$$
+B(x,B(y,z))-\widehat B(x,\widehat B(y,z))
+=\Delta(x,B(y,z))+\widehat B(x,\Delta(y,z)).
+$$
+
+因此，不论 $\widehat B$ 是否交错，均有
+
+$$
+\begin{aligned}
+&\|B(x,B(y,z))-\widehat B(x,\widehat B(y,z))\|\\
+&\quad\le E\|x\|\|B(y,z)\|
+ +M\|x\|\|B(y,z)-\widehat B(y,z)\|\\
+&\quad\le(2M+E)E\|x\|\|y\|\|z\|.
+\end{aligned} \tag{12.7}
+$$
+
+对另两项循环置换 $x,y,z$ 后相加，得到
+$\|\mathcal J_B(x,y,z)-P_J(x,y,z)\|\le3(2M+E)E\|x\|\|y\|\|z\|$。
+对单位 $x,y,z$，每个坐标单项的绝对值不超过一，故
+
+$$
+\|P_J(x,y,z)\|_2
+\le\sum_k|P_{J,k}(x,y,z)|
+\le\sum_{k,i,j,l}|q_{kijl}|=R_J\le\overline R_J.
+$$
+
+三角不等式及 $M\le\overline M$ 给 (12.4) 的预算；按三线性齐次性推广到任意输入，任一输入为零时两边均为零，得到 (11.2)。这一证明从未交换 $\widehat B$ 的两个参数，也未从真实 $T$ 的完全交错性给它增加结构先验。证毕。
+
+**说明 12.3（零误差和七维检查）。** 对精确三维标准叉积系数，$E=\eta_M=\eta_A=\eta_J=0$，有 $R_A=R_J=0$，所以证书给出 $(\alpha_{\rm cert},\beta_{\rm cert})=(0,0)$。对命题 11.4 的明确乘法和正交标架，取精确七维系数及零算术误差，则该命题的全输入面积律使 $P_A$ 为零多项式，故唯一收集后的全部 $a_{\mu\nu}=0$，$R_A=0$。同一张量的 Jacobi 系数有 $168$ 个非零项，每项绝对值为 $3$：有序互异三元组共 $7\cdot6\cdot5=210$ 个，其中七条 Fano 线上的 $7\cdot6=42$ 个为零，其余 $168$ 个各只输出一个带符号的 $3e_k$。因此 $R_J=504$，本系数绝对值和证书给 $\beta_{\rm cert}=504$，而 (11.15) 和全域上界给出的真实最小预算是 $3$。这一有限证书允许保守上界，不把 $R_J$ 冒称为最小常数；两种预算均不通过严格三维阈值。因此本证书检验的是平方面积残差，而不是强加一个七维不成立的全 Gram 或楔平方同型条件。
+
+## 13. 只替换代数供应者时的 §10 同源消费者
+
+**假设 13.1（精确桥的保留面）。** 只把 §10 中“精确面积—Jacobi 代数供应者”替换为定理 11.2、12.2 的供应者，仍保留以下精确条件：共同来源和共同零参照 $O$；态域 $J$ 的有限维全向量模型；$h_1,\ldots,h_N$ 张成 $J$；同一来源上的全域二次距离律 $d_D(x,y)^2=g_D(x-y,x-y)$；$G\succeq0$ 的锚定距离数据；正交单位实际探针 $p_1,p_2,p_3$；全部 (10.1) 的有限距离—读出校准；允许二元操作的全部 (10.2) 双线性读出校准；以及每个实际线性生成元的
+$U_a^*E_0\subseteq E_0$、完整菜单和同源执行条件。若要消费二元响应，$D$ 的三个方向读出仍须对同一来源双线性；计数、守卫、失败和历史槽仍按原 §10 单独保留。
+
+在载体 $K$ 中选正交单位 $a,b$，并用有符号次序定义
+
+$$
+c=B(b,a),\qquad s=\|c\|,\qquad e_3=c/s. \tag{13.1}
+$$
+
+在 $5\alpha+\beta<1$ 下，定理 11.2 给 $\dim K=3$，而 (11.1) 给
+$s^2\in[1-\alpha,1+\alpha]$，故 $s>0$，$(a,b,e_3)$ 是完整正交单位标架。这里的 $e_3$ 保留 $c$ 的实际符号和手性；不能以 $|c|$ 或未经说明的反向向量替换它。
+
+若原标定是对 $c$ 通道的标量，替换后的精确校准式必须明确写为
+
+$$
+C_3(h_j)=\langle e_3,v_j\rangle_K
+=s^{-1}\langle c,v_j\rangle_K,\qquad
+\beta_3(h_j,h_k)=\langle e_3,B(v_j,v_k)\rangle_K
+=s^{-1}\langle c,B(v_j,v_k)\rangle_K. \tag{13.2}
+$$
+
+也可以直接把 $e_3$ 作为独立正交探针校准；两者都要求实际的尺度 $s$ 和符号归属已经由同源合同供应。代数式 $c=B(b,a)$ 本身不授权制备端点 $c$，因此本消费者不假定能够准备归一化端点；它只要求一个实际的第三探针或一组共同距离/读出校准来承载 (13.2)。
+
+**定理 13.2（条件消费者）。** 假设 13.1、定理 11.2 的严格阈值以及 (13.2) 的精确归一化校准成立，则 §10 的定理 10.2、其映射 $\Pi$、核等式、距离等距性、二元读出因子化和生成元预测闭合均按原证明成立，只需把原来的第三基向量替换为 (13.1) 的 $e_3$。有限系数的噪声只认证 $\alpha_{\rm cert},\beta_{\rm cert}$ 和维数选择；它不把近似系数自动提升为 (10.1)、(10.2) 的精确共同来源等式。
+
+**证明。** 定理 11.2 供应三维性，(13.1) 供应带符号的正交单位第三方向，(13.2) 正是 (10.1)、(10.2) 的第三坐标版本。其余两坐标和所有距离、张成、探针、生成元不变及菜单条件没有改变。因此 §10 证明中的矩阵 $S$、$G=S^{\mathsf T}S$、商映射 $\Pi$、二元双线性展开和词长归纳逐字适用；唯一改变是第三行使用 $e_3$，并在原始 $c$ 读数时显式除以 $s$。证毕。
+
+**边界 13.3（本单元未解决的取得问题）。** 近似交错、近似内积、未知或不完整方向、全套带噪的 (10.1)/(10.2) 校准、把有限标定外推到未知方向，以及无限时间的近似预测都不由定理 12.2 或定理 13.2 解决。若标架不是完整的，证书只作用于其张成子空间；若共同来源、复位／重复准备或实际第三探针不具备，相关式只能标为附加假设。已知完整标架的有限证书是模型一致性检查，不是发现未知环境维数。
+
+## 14. 来源范围、复用和适用边界
+
+本批的仓内推导是定理 11.2 的鲁棒反对易估计、定理 12.2 的有限系数误差传播和定理 13.2 的条件消费者。命题 11.4 复用经典七维八元数积，并在明确的乘法和正交标架中核对全输入面积律、Jacobi 缺陷及缩放边界；它不把经典向量积另算为新发现。已有卷 [STABLE] §8.2 的完整有限群 Hilbert–Schmidt 标准、[FIB] §§7–8 的原生切面与外部方向障碍、[量子测量相对边界](RECURSIVE_RELATIONAL_OBSERVATION_MEASUREMENT_RELATIVE_QUANTUM_BOUNDARY.md) §§13–14 的固定五模逆／样本预算只作为供应者复用，不在此重写，也不把它们的有限样本升级为全域近似选择。
+
+Darpö, *Vector product algebras*, arXiv:0810.5464v1, Theorem 1 是带相容形式的精确向量积分类；Baez, *The Octonions*, §4.1 是精确的八元数与 $G_2$ 背景。钉版 mathlib Mathlib/LinearAlgebra/CrossProduct.lean 的 cross_dot_cross 与 jacobi_cross 只供应固定 Fin 3 的精确恒等式，不能替代未知维数的全域近似选择。本地 mathlib 不作为本批前提，公开生态检索也未覆盖全部近似向量积、稳健秩识别或有限关系检验文献；这里不作全局原创性或穷尽检索声明。所有实际物理端点、重复准备、控制复位、标量精度和来源身份仍须由相应合同另行供应。
+
+## 追加锚（本行以下为增补区）
+
+
+## 15. 有限协方差菜单与带标签的运输场
+
+本节把第 10 节的同一来源 $J$、同一映射 $\Pi:J\to K$ 和同一 $g_D$ 保持不变。新增的对象是一个实际许可的有限运输菜单；它不是第 10 节的二元读出，也不是把一个括号运算重新命名为第三个噪声方向。写 $B:=\Pi(S)\subseteq K$，其中 $S\subseteq J$ 是实际允许的来源域。令 $X_0,X_1,\ldots,X_m$ 是 $S$ 邻域上的光滑向量场。$X_a$ 的标签是实际合同中的控制名称，$X_0$ 是同一合同中的共同漂移。对一个常数实对称半正定矩阵 $Q$，定义
+
+$$
+\mathcal L_Q f=X_0f+\frac12\sum_{a,b=1}^mQ_{ab}X_aX_bf,
+\qquad
+\Gamma_Q(f,g)=\sum_{a,b=1}^mQ_{ab}(X_af)(X_bg).
+\tag{15.1}
+$$
+
+这里 $\Gamma_Q$ 是该实际时钟中二阶矩率；它不是一组已经取得的有限样本。称一个有限菜单 $(Q^1,\ldots,Q^r)$ 为完整的，若每个 $Q^\ell$ 是实际允许的正定协方差，且
+
+$$
+\operatorname{span}_{\mathbb R}\{Q^1,\ldots,Q^r\}=\operatorname{Sym}_m.
+\tag{15.2}
+$$
+
+对 $x\in S$ 写
+
+$$
+v_a(x):=d\Pi_xX_a(x)\in T_{\Pi(x)}K,
+\qquad
+T_{ab}(x):=\tfrac12(v_a\otimes v_b+v_b\otimes v_a).
+\tag{15.3}
+$$
+
+**定义 15.1（来源匹配的菜单证书）。** 完整菜单满足下列条件时，称 $(S,\Pi,X_0,\ldots,X_m)$ 有一个菜单证书。先要求 $S$ 是允许带边界的光滑源域，$B$ 是光滑域，且 $\Pi|_S:S\to B$ 是满射光滑下沉；每个纤维 $F_y=S\cap\Pi^{-1}(y)$ 非空。
+
+1. 对每个 $\ell$ 和每个 $\varphi\in C^\infty(B)$，存在 $\overline{\mathcal L}_{\ell}\varphi\in C^\infty(B)$，使 $\mathcal L_{Q^\ell}(\varphi\circ\Pi)=(\overline{\mathcal L}_{\ell}\varphi)\circ\Pi$ 在 $S$ 上成立。
+2. 对每个连通的纤维 $F_y=S\cap\Pi^{-1}(y)$，实际控制合同提供一个光滑的带符号锚：在 $B$ 的每个坐标邻域内，选一个标签 $a_*$ 和一个光滑余向量 $\lambda_y$，使选定的光滑向量场 $\widehat v_{a_*}$ 满足 $\lambda_y(\widehat v_{a_*})>0$（在其非零域上）、$\widehat v_{a_*}\otimes\widehat v_{a_*}=T_{a_*a_*}$，并且其符号由一次实际的同源有符号校准固定。不同邻域的锚在重叠处相等。零点要求由这些非零域上的光滑延拓承担；若某个纤维上所有控制投影都为零，则全部场在那里定义为零。这个条件只供应方向和手性，不供应新的控制权限。
+3. $S$、$B$ 和全部控制流的共同生存域已经给定；控制只能在该域的守卫内执行。若 $S$ 有边界，退出边界就是声明的死亡事件。
+
+条件 2 是有意写出的非协方差条件。协方差只给平方和，不能给一个有标签向量的正向。条件 3 也不从投影自动得到；它是源、守卫和寿命的合同。
+
+**引理 15.2（有限菜单恢复带标签的二阶张量）。** 若菜单证书的第 1 项成立，则每个 $T_{ab}$ 在每个连通纤维上为常数。若 $F_y$ 连通，则在给定锚之后存在唯一的光滑向量场 $\overline X_a$、$a=1,\ldots,m$，使
+
+$$
+d\Pi\,X_a=(\overline X_a\circ\Pi)\quad\text{在 }S\text{ 上}.
+\tag{15.4}
+$$
+
+证明。对基本函数 $f=\varphi\circ\Pi$、$g=\psi\circ\Pi$，由 (15.1) 和第 1 项，$\Gamma_{Q^\ell}(f,g)$ 在 $F_y$ 上为常数。其值是
+
+$$
+\sum_{a,b}Q^\ell_{ab}\,d\varphi(T_{ab})d\psi.
+\tag{15.5}
+$$
+
+由 (15.2) 和对称矩阵的线性独立性，所有 $T_{ab}$ 在纤维上为常数。现在用一个初等事实：若实向量组 $(u_a)$、$(w_a)$ 满足
+
+$$
+\operatorname{sym}(u_a\otimes u_b)=
+\operatorname{sym}(w_a\otimes w_b)\quad\text{对所有 }a,b,
+\tag{15.6}
+$$
+
+则或者两组都全为零，或者存在一个 $\epsilon\in\{+1,-1\}$ 使 $w_a=\epsilon u_a$ 对所有 $a$ 成立。事实上，选 $u_{a_*}\ne0$；对 $a=b=a_*$，秩一张量给 $w_{a_*}=\epsilon u_{a_*}$。映射 $z\mapsto\operatorname{sym}(u_{a_*}\otimes z)$ 是单射，故交叉项给 $w_b=\epsilon u_b$。若没有非零向量，结论显然。
+
+把这个事实应用于纤维中的两个点。$T_{ab}$ 常数，所以它们之间的符号只能是一个共同的 $\epsilon$；在非零区域它随点连续，连通性使其在整个 $F_y$ 上恒定。条件 2 的带符号锚取 $\epsilon=+1$，并用 (15.6) 恢复每个其余标签。重叠锚的一致性使所得场光滑；在全为零的开集上令相应场为零，并由锚的重叠延拓。于是 (15.4) 成立且唯一。证毕。
+
+**定理 15.3（共同漂移也下降）。** 在引理 15.2 的条件下，存在唯一的光滑向量场 $\overline X_0$ 在 $B$ 上，使
+
+$$
+d\Pi\,X_0=(\overline X_0\circ\Pi)\quad\text{在 }S\text{ 上},
+\tag{15.7}
+$$
+
+并且每个菜单生成元满足
+
+$$
+\overline{\mathcal L}_{\ell}\varphi
+=\overline X_0\varphi
++\frac12\sum_{a,b}Q^\ell_{ab}\overline X_a\overline X_b\varphi.
+\tag{15.8}
+$$
+
+证明。由 (15.4)，对基本函数有
+
+$$
+X_aX_b(\varphi\circ\Pi)=
+(\overline X_a\overline X_b\varphi)\circ\Pi.
+\tag{15.9}
+$$
+
+从任意一个菜单成员中减去右端的二阶项，得到 $(X_0\varphi)\circ\Pi$。第 1 项说明这个一阶量在每个纤维上恒定；对坐标函数 $\varphi=y^i$，这些常数正是 $d\Pi X_0$ 的坐标，组成光滑向量场 $\overline X_0$。代回即得 (15.8)。若两个场满足 (15.7)，它们在每个坐标函数上的值相等，故唯一。证毕。
+
+**推论 15.4（有限菜单的充分性与识别边界）。** 完整菜单的条件是一个有限、源匹配的充分条件：它把每个实际命名控制的投影场和共同漂移都下降到 $B$。对不完整菜单，令 $M=\operatorname{span}\{Q^1,\ldots,Q^r\}$；菜单值保证能以线性组合恢复 $\sum_{a,b}Q_{ab}T_{ab}$、$Q\in M$。在把 $T_{ab}$ 当作独立未知张量的线性反演中，$M$ 之外没有这样的普遍线性恢复式；这不排除使用 $T_{ab}=\operatorname{sym}(v_a\otimes v_b)$ 的共同因子约束作非线性识别。即使菜单完整，仅凭协方差而没有带符号锚，也只能确定
+
+$$
+\{\overline X_a\}\quad\text{模共同纤维内符号 }\overline X_a\mapsto-\overline X_a,
+\tag{15.10}
+$$
+
+而不能从协方差数据选择带标签控制的共同正向。
+
+证明。完整菜单的结论由引理 15.2 和定理 15.3 给出。线性恢复式的系数恰给 $Q$ 为菜单矩阵的线性组合；反向由同一组合直接恢复。共同因子约束则不是线性未知量的自由变化，故该线性判据不提供一般的不可识别性结论。
+
+具体地，在 $\dim K=m$ 且实际投影帧矩阵 $V=(v_1,\ldots,v_m)$ 可逆时，任意同数据帧 $W$ 都形如 $W=VR$，其中
+
+$$
+G_{\mathcal Q}:=\{R\in\operatorname{GL}_m(\mathbb R):
+RQ^\ell R^{\mathsf T}=Q^\ell\text{ 对所有 }\ell\},
+\qquad R\in G_{\mathcal Q}.
+\tag{15.10a}
+$$
+
+任一 $Q^\ell$ 正定且 $V$ 可逆，使同数据的 $WQ^\ell W^{\mathsf T}$ 正定，故 $W$ 也可逆。将 $WQ^\ell W^{\mathsf T}=VQ^\ell V^{\mathsf T}$ 左右乘以 $V^{-1}$、$V^{-\mathsf T}$ 即得上述等价变形。因此该共同合同稳定子若为 $\{I,-I\}$，即使菜单不完整也能识别全部帧至共同符号；同源带符号锚再固定该符号。此判据限定于可逆方帧，不冒充任意退化矩阵的分类。
+
+一个严格的不完整例子是 $m=3$、$V=I_3$，以及实际许可的三个正定协方差
+
+$$
+Q^1=I_3,\qquad Q^2=\operatorname{diag}(1,2,3),\qquad
+Q^3=I_3+uu^{\mathsf T},\qquad u=(1,1,1)^{\mathsf T}.
+\tag{15.10b}
+$$
+
+它们只有三维线性张成，未张成六维 $\operatorname{Sym}_3$。若 $WQ^\ell W^{\mathsf T}=Q^\ell$，第一式迫使 $W$ 正交，第二式迫使它与具有不同特征值的 $Q^2$ 交换，故 $W=\operatorname{diag}(s_1,s_2,s_3)$、$s_i\in\{\pm1\}$。第三式给 $s_is_j=1$ 对全部 $i,j$，所以 $W=\pm I_3$。于是 $T_{11}=E_{11}$ 也由这些数据唯一确定，尽管 $E_{11}\notin M$：若 $E_{11}=\alpha I+\beta Q^2+\gamma Q^3$，非对角项先给 $\gamma=0$，第 2、3 个对角项再给 $\alpha=\beta=0$，与第 1 项矛盾。
+
+上述例子可放在 (16.9) 的同一个线性来源和投影上，取常值投影帧 $V=I_3$ 和同一有符号坐标校准；三个设置只改变 $Q$，不更换来源或标签。它证明完整张成不是非线性识别的必要条件。反之，单个正定 $Q$ 的共同合同稳定子为 $Q^{1/2}O(m)Q^{-1/2}$；在 $m\ge2$ 的可逆方帧类中，它一般保留标签混合歧义，命题 17.1 给出同纤维的实际例子。最后，任意菜单均在共同换号下不变，故不能单凭协方差消除 (15.10)。证毕。以上是精确数据的识别结论，未给出有限精度的稳定性或取得这些矩率的费用；它们仍须原取得合同。定理不把一个二阶括号、一个统计连接或一条投影扩散律变成新的原生控制。
+
+**命题 15.5（受限来源与不连通纤维）。** 若 $F_y$ 不连通，令 $\mathscr C_y=\pi_0(F_y)$。在完整菜单和第 1 项下，对每个 $C\in\mathscr C_y$ 存在 $\epsilon_{y,C}\in\{\pm1\}$，使
+
+$$
+d\Pi X_a|_C=\epsilon_{y,C}\,v_a(y),
+\tag{15.11}
+$$
+
+其中 $v_a(y)$ 是任一选定分支的向量；共同漂移的投影则是依赖分支的量 $v_0(y,C)$。因此 $K$ 上的带标签商存在，当且仅当对每个 $y$ 所有分支的 $\epsilon_{y,C}v_a(y)$（每个 $a$）相等，并且所有 $v_0(y,C)$ 相等；再加上各分支的符号锚相容。充分性由把这些共同值定义为 $\overline X_a(y)$、$\overline X_0(y)$，并重复定理 15.3 的证明得到。
+
+若这些相等式失败，精确商只能取为 $\widetilde B=\{(y,C):C\in\mathscr C_y\}$ 或保留相应的分支标签。不能以总空间连通、一个协方差值或一个代表分支替代这些条件。特别地，一个有限样本的同值读数不证明 (15.11) 在未读的来源分支上成立。
+
+## 16. 距离、实际路径与同一时钟的二阶传播
+
+**假设 16.1（旧距离和控制合同）。** 沿用 §10 的全域二次距离律
+
+$$
+d_D(x,x')^2=g_D(x-x',x-x')
+=\langle\Pi x-\Pi x',\Pi x-\Pi x'\rangle_K.
+\tag{16.1}
+$$
+
+一个实际确定性控制 $u=(u_1,\ldots,u_m)$ 是分段 $C^1$；控制合同还要求在声明的有限时段内存在唯一完整提升 $z:[0,T]\to S$，并满足
+
+$$
+\dot z(t)=\sum_{a=1}^m u_a(t)X_a(z(t)),
+\tag{16.2}
+$$
+
+在所有时刻通过守卫。若合同把共同漂移也作为确定性执行的一部分，则在 (16.2) 右端另加 $X_0(z(t))$；下文始终明确采用哪一种时钟和方程。实际成本是合同给出的
+
+$$
+\operatorname{Cost}(u,z)=\int_0^T c(u(t),z(t))\,dt,
+\tag{16.3}
+$$
+
+它包含同时控制的费用、守卫、源服务、保留和失败收费；投影不会删除任何一项。
+
+**定理 16.2（旧距离的精确消费与路径提升）。** 在定理 15.3 和假设 16.1 下，每个有限实际路径的投影 $y=\Pi\circ z$ 满足
+
+$$
+\dot y(t)=\sum_a u_a(t)\overline X_a(y(t)),
+\qquad
+d_D(z(s),z(t))=\|y(s)-y(t)\|_K.
+\tag{16.4}
+$$
+
+若固定初点 $z(0)$ 和一条满足该完整性合同的合法控制 $u$，则 (16.2) 的提升在其源寿命内唯一，故 (16.4) 对所有 $0\le s,t\le T$ 同时成立。若要由解析条件推出该合同，可另加 $X_a$ 在声明源域上的线性增长和守卫闭合；局部光滑性单独不排除有限时间爆炸。旧距离任务在终点上的值恰为 $\|y(T)-y(0)\|_K$；实际控制成本仍是 (16.3)，不等同于该欧氏距离。不同隐藏初点的提升可以有不同的完整记录而有同一个 $y$ 路径。
+
+证明。链式法则和 (15.4) 给出第一式。把 $z(t)-z(s)$ 代入 (16.1) 给第二式；它是同一来源的精确度量律。局部光滑性给出提升的局部唯一性；完整提升和守卫由控制合同承担（或由上述线性增长条件推出）。长度和费用的区分由 (16.3) 的定义直接保持。证毕。
+
+**假设 16.3（同一时钟的扩散合同）。** 取菜单中的一个 $Q$，令 $W$ 为协方差 $Q$ 的布朗运动。沿用定理 15.3 的实际场、来源和投影。本合同以 $S,B$ 的内部为生存域，仍记为 $S,B$；碰边界时杀死，边界初点的寿命为零。以下解析条件须对每个拟消费的菜单成员分别成立。
+
+使用 $J$ 原有正定内积的范数控制爆炸，不替代 $g_D$ 或 $K$ 的旧度量。要求源场及其已下降的基场分别有全空间 $J,K$ 上的光滑延拓。下列全空间估计中的场指这些延拓，在生存域内仍是原实际场。延拓只用于构造直到退出的解，不授予域外操作权限。对 $H=J,K$，分别令 $U_i^J=X_i$、$U_i^K=\overline X_i$，定义实际 Itô 漂移和噪声矩率
+
+$$
+b_Q^H(u)=U_0^H(u)+\frac12\sum_{a,b}Q_{ab}
+DU_b^H(u)\,U_a^H(u),
+\qquad
+a_Q^H(u)=\sum_{a,b}Q_{ab}
+\langle U_a^H(u),U_b^H(u)\rangle_H.
+\tag{16.5a}
+$$
+
+要求存在常数 $C_Q^H\ge0$，使在各自全空间上
+
+$$
+2\langle u,b_Q^H(u)\rangle_H+a_Q^H(u)
+\le C_Q^H(1+\|u\|_H^2).
+\tag{16.5b}
+$$
+
+这是对实际 Itô 生成元的径向估计。一个更强的充分条件是 $b_Q^H$ 和 $U_a^H$ 都线性增长；仅 $U_0^H,\ldots,U_m^H$ 线性增长不控制 (16.5a) 中的导数修正。
+
+对任意完整连续源路径 $z_\cdot$，记 $\tau_S(z)=\inf\{t\ge0:z_t\notin S\}$，基域同样定义。令 $\widetilde Z$ 表示未杀死的全空间源解；要求对每个源初点，几乎必然有
+
+$$
+\tau_S(\widetilde Z)=\tau_B(\Pi\widetilde Z).
+\tag{16.5}
+$$
+
+这是原源守卫与投影守卫的匹配条件。若原守卫已满足 $S=\Pi^{-1}(B)$，该等式逐连续路径成立；一般受限来源须另证，不能删掉隐藏守卫以制造匹配。所需全空间解的存在由 (16.5b) 及下述证明给出，故 (16.5) 不预设一个未经建立的非爆炸结论。源 SDE 采用原时钟
+
+$$
+dZ_t=X_0(Z_t)\,dt+\sum_aX_a(Z_t)\circ dW_t^a.
+\tag{16.6}
+$$
+
+**定理 16.4（全起点有限时间的同一时钟传播）。** 在定理 15.3 和假设 16.3 下，对每个 $z\in S$，源与基的全空间辅助解在每个有限时间窗均不爆炸。实际源解为它在 $\tau_S$ 杀死的唯一强解，并且 $Y_t=\Pi(Z_t)$ 在生存时是唯一解
+
+$$
+dY_t=\overline X_0(Y_t)\,dt
++\sum_a\overline X_a(Y_t)\circ dW_t^a
+\tag{16.7}
+$$
+
+直到 $\tau_B=\tau_S$。两者在死亡时均送入同一个吸收墓地 $\dagger$，约定 $\Pi\dagger=\dagger$、$\varphi(\dagger)=0$。这里的非爆炸性逐起点成立，不声称存在一个对全部不可数起点通用的零测集。对任意有界 Borel 函数 $\varphi$、任意 $t\ge0$，
+
+$$
+\mathbb E_z[\varphi(\Pi Z_t)\mathbf1_{t<\tau_S}]
+=\mathbb E_{\Pi z}[\varphi(Y_t)\mathbf1_{t<\tau_B}]
+:=P_t^B\varphi(\Pi z).
+\tag{16.8}
+$$
+
+所以 $(P_t^B)_{t\ge0}$ 是同一原时钟中的杀死扩散半群；(16.8) 是全有限时间的路径和半群陈述，不只是一个生成元恒等式。无有限边界退出时，实际寿命为无穷；有边界时，寿命由 (16.5) 的共同退出决定，有限时间的无穷远爆炸已由 (16.5b) 排除。不同全空间延拓在退出前给出同一个解。
+
+证明。先分别在 $H=J,K$ 上构造未杀死解。把 $W$ 写成 $Q^{1/2}\beta$，其中 $\beta$ 为标准布朗运动，则 Itô 方程的漂移恰为 (16.5a)，扩散列为 $\sum_aU_a^H(Q^{1/2})_{aj}$。光滑性给局部 Lipschitz；在每个球上截断为全局 Lipschitz 系数并用局部存在唯一性拼接，得到直到无穷远爆炸的最大强解。这一局部 SDE 事实参见 Hochgerner–Ratiu，Theorem 3.1；该定理本身只给直到爆炸的结论。
+
+记 $V_H(u)=1+\|u\|_H^2$，$\rho_R=\inf\{t:\|U_t\|_H\ge R\}$，其中 $R>\|U_0\|_H$。对截断解应用停止的 Itô 公式，球内的随机积分期望为零；(16.5b) 和 Gronwall 不等式给
+
+$$
+\begin{aligned}
+\mathbb E V_H(U_{t\wedge\rho_R})
+&\le V_H(U_0)+C_Q^H\int_0^t
+\mathbb E V_H(U_{s\wedge\rho_R})\,ds
+\le V_H(U_0)e^{C_Q^Ht},\\
+\mathbb P(\rho_R\le T)
+&\le\frac{V_H(U_0)e^{C_Q^HT}}{1+R^2}
+\longrightarrow0.
+\end{aligned}
+\tag{16.8a}
+$$
+
+因此任意固定起点在每个有限 $T$ 前爆炸的概率为零；对整数 $T$ 取可数并即得全寿命存在。此论证在源和基上分别成立，不用 Stratonovich 场的线性增长代替导数估计。
+
+在同一 $W$ 上耦合源解 $\widetilde Z$ 与从 $\Pi z$ 开始的基解 $\widetilde Y$。在任一解退出前，Stratonovich 链式法则及 (15.4)、(15.7) 给 $\Pi\widetilde Z$ 满足 (16.7)。以两个退出时刻的较小者局部化，路径唯一性给两路径在该时刻前相等；连续性和 (16.5) 排除一个先于另一个退出。因此 $\tau_S=\tau_B$，两路径直到共同死亡相等，此后均为 $\dagger$。这逐路径给出 (16.8)，包括所有有界 Borel 函数，无须用生成元恒等式推断寿命。局部唯一性还说明更换域外延拓不改变退出前路径或退出时刻。
+
+系数和生存域不随时间改变。强解唯一性及布朗增量的 Markov 性说明，在 $s<\tau_B$ 条件下，随后 $t$ 时长的杀死期望为 $P_t^B\varphi(Y_s)$；死亡后该量为零。取期望即得 $P_{s+t}^B=P_s^BP_t^B$。方程保留同一个 $Q$、$1/2$ 归一化、时钟、守卫、隐藏记录和源寿命；既未重新采样来源，也未赋予额外控制。证毕。
+
+**模型 16.5（有真实隐藏记录的正模型）。** 取
+
+$$
+J=\mathbb R^3\times\mathbb R^2,
+\quad K=\mathbb R^3,
+\quad\Pi(q,h)=q,
+\quad g_D((q,h),(q',h'))=q\cdot q'.
+\tag{16.9}
+$$
+
+令 $e'_1,e'_2$ 是隐藏因子的标准基，取全局光滑且线性增长的 $b(q)=Aq+c$，以及
+
+$$
+X_0(q,h)=(b(q),-\lambda h),\quad
+X_1=(e_1,e'_1),\quad X_2=(e_2,e'_2),\quad X_3=(e_3,0),
+\quad \lambda>0.
+\tag{16.10}
+$$
+
+任意完整的正定菜单满足 (15.2)，并取显示的有符号坐标校准；投影条件由常系数控制直接满足，且 $\overline X_0=b$、$\overline X_a=e_a$。取 $S=J$、$B=K$，两退出时刻均为无穷。在 $J$ 上取标准乘积范数。控制场的导数为零，所以 $b_Q^J=(Aq+c,-\lambda h)$、$b_Q^K=Aq+c$，而 $a_Q^J=2Q_{11}+2Q_{22}+Q_{33}$、$a_Q^K=\operatorname{tr}Q$。由 $2q\cdot c\le\|q\|^2+\|c\|^2$ 和 $2q\cdot Aq\le2\|A\|\|q\|^2$，(16.5b) 对两空间均成立，例如可共同取 $C_Q=2\|A\|+1+\|c\|^2+2Q_{11}+2Q_{22}+Q_{33}$。这给出定理 16.4 的一个全起点消费者。
+
+初始记录 $(q,h)$ 与 $(q,\widetilde h)$ 在 $h\ne\widetilde h$ 时是真正不同的来源记录；$h$ 还受漂移和前两个实际控制改变。取锚列 $h_1=(e_1,0),h_2=(e_2,0),h_3=(e_3,0),h_4=(0,e'_1),h_5=(0,e'_2)$ 即得到张成 $J$ 的同源有限标定列。三维距离、二阶传播和五维隐藏记录在同一个 $J$ 上共存；模型没有声称隐藏坐标是物理空间，也没有把投影变成对 $h$ 的取得权限。
+
+## 17. 分离反模型与可证伪边界
+
+**命题 17.1（单一协方差律不固定命名控制）。** 取 $S=\mathbb R^3\times S^1$、$\Pi(q,\theta)=q$，在 $e_1e_2$ 平面令 $R_\theta$ 为旋转，定义
+
+$$
+X_1=(R_\theta e_1,0),\quad
+X_2=(R_\theta e_2,0),\quad X_3=(e_3,0),\quad X_0=0.
+\tag{17.1}
+$$
+
+对唯一介入 $Q=I_3$，投影协方差恒为 $I_3$，所以投影扩散律不依赖 $\theta$；但同名的 $X_1$、$X_2$ 随纤维改变。证明是 $R_\theta(e_1e_1^{\mathsf T}+e_2e_2^{\mathsf T})R_\theta^{\mathsf T}=e_1e_1^{\mathsf T}+e_2e_2^{\mathsf T}$。完整菜单正是为排除这一标签旋转而要求的额外信息。
+
+**命题 17.2（不连通纤维的标签逃逸）。** 取 $S=\mathbb R^3\times\{-1,+1\}$、$\Pi(q,\sigma)=q$，并令 $X_a(q,\sigma)=(\sigma e_a,0)$、$X_0=0$。对每个协方差 $Q$，
+
+$$
+\sum_{a,b}Q_{ab}\,d\Pi X_a\otimes d\Pi X_b=Q
+\tag{17.2}
+$$
+
+在两个分支相同；但标签 $a$ 的有向控制在两个分支相反。这里每个分支的菜单证书都有一个符号，然而 $\epsilon_{y,+}=-\epsilon_{y,-}$，故命题 15.5 的兼容性失败。只保留 $q$ 的协方差和距离不能把两个分支压成带标签的 $K$ 商。
+
+**命题 17.3（手性与隐藏漂移的两个独立失败）。**
+
+1. 在连通 $S=\mathbb R^3\times\mathbb R$ 上，模型 A 取 $X_a=(e_a,0)$，模型 B 取 $X_a=(-e_a,0)$，两者 $X_0=0$。任意完整协方差菜单的所有二阶张量相同，但同名控制的方向相反；没有实际有符号锚时，(15.10) 不能被消除。
+2. 取 $S=\mathbb R^3\times\mathbb R$、$X_a=(e_a,0)$，而 $X_0(q,h)=(h e_1,0)$。所有协方差读数和全部控制场相同，但漂移 $d\Pi X_0=h e_1$ 随纤维变化；投影扩散的漂移因而不是 $K$ 上的单值函数。任何只检查二阶矩率而不检查 (15.7) 的证书都会错误通过。
+
+证明。第 1 项由 $(-v_a)\otimes(-v_b)=v_a\otimes v_b$；第 2 项由 $\Gamma_Q$ 不含 $X_0$ 且 (15.7) 在 $h\ne\widetilde h$ 时失败。两项都满足相同的正定性和光滑性，故失败不是退化或不连续造成的。证毕。
+
+**命题 17.4（有限读取不能替代全源条件）。** 对任意有限的读取点集 $E\subset S$，存在两个光滑控制系统，它们在 $E$ 上的全部菜单矩率、漂移和校准值相同，而在 $S\setminus E$ 上的带标签运输不同。取一个不在 $E$ 上的光滑紧支撑函数 $\chi$，把一个控制的投影场从 $e_1$ 改为 $e_1+\chi e_2$ 即可；若需要保持有限点的全部二阶读数，则让 $\chi$ 在这些点的邻域恒为零。故有限精度和有限采样不能认证“所有来源纤维”的精确证书；一个有限菜单也不是在无界来源上只取有限观察。
+
+同样，实测频率是有限样本的获取结果，$\Gamma_Q$ 是假设的精确矩率。前者可用于统计误差合同，不能把一个近似相等升级为 (15.5) 的全域恒等式。若同一来源的新读取发现 $T_{ab}$、漂移残差、守卫或死亡时间在同一 $\Pi$ 纤维的两个代表上不同，证书立即被否证；若发现锚的有向读数相反，则否证的是带标签版本而非无向协方差版本。
+
+**命题 17.5（有界 Stratonovich 控制仍可有限时间爆炸）。** 在 (16.9) 的同一个 $J,K,\Pi,g_D$ 上取 $S=J$、$B=K$，写 $q=(x,y,z)$，并令
+
+$$
+\begin{aligned}
+\theta(q)&=xy^2,&
+V_1(q)&=(\cos\theta,\sin\theta,0),&
+V_2(q)&=(-\sin\theta,\cos\theta,0),\\
+X_1(q,h)&=(V_1(q),e'_1),&
+X_2(q,h)&=(V_2(q),e'_2),&
+X_3(q,h)&=(e_3,0),&
+X_0(q,h)&=(0,-\lambda h),\quad\lambda>0.
+\end{aligned}
+\tag{17.3}
+$$
+
+这些控制光滑且有界，漂移线性增长，纤维是连通的 $\mathbb R^2$，全部场已通过同一 $\Pi$ 下降。实际带符号锚可取 $\widehat v_1=V_1$ 及其欧氏对偶，锚读数恒为 $1$。令实际许可的完整菜单为 $I$、$I+E_{11}$、$I+E_{22}$ 和 $I+(E_{ij}+E_{ji})/2$、$1\le i<j\le3$；它们正定且张成 $\operatorname{Sym}_3$。所有菜单生成元均为基本的，故 §15 的识别条件不能排除此模型。有限分段 $C^1$ 控制的确定性路径也完整：$q$ 的速度被 $\sum_a|u_a|$ 控制，$h$ 满足线性受迫方程。但 $Q=I$ 的同一原时钟扩散从某些起点以正概率在有限时间爆炸。
+
+证明。对旋转角的任意光滑函数 $\theta$，直接微分给
+
+$$
+\frac12\bigl((DV_1)V_1+(DV_2)V_2\bigr)
+=\frac12(-\partial_y\theta,\partial_x\theta,0)
+=(-xy,y^2/2,0).
+\tag{17.4}
+$$
+
+因此基的 Itô 漂移为 $(-xy,y^2/2,0)$，扩散协方差为 $I_3$。对驱动的前两个分量作沿解的适应正交旋转，其积分是布朗运动 $\beta$；在最大寿命后以单位旋转延拓该积分仍为布朗运动。第二坐标在寿命前满足
+
+$$
+Y_t=4+\beta_t^2+\frac12\int_0^tY_s^2\,ds
+\tag{17.5}
+$$
+
+当 $Y_0=4$ 时，事件 $\inf_{0\le s\le1}\beta_s^2\ge-1$ 的概率由布朗反射原理为 $2\Phi(1)-1>0$，其中 $\Phi$ 为标准正态分布函数。在此事件上、只要有限解仍存在，令 $v(t)=3+\frac12\int_0^tY_s^2ds$，则 $Y_t\ge v(t)>0$ 且 $v'\ge v^2/2$，故 $v(t)\ge3/(1-3t/2)$ 对 $t<2/3$ 成立。若解活过 $2/3$，连续性将与这个发散下界矛盾，因此最大寿命至多为 $2/3$。源的隐藏坐标是线性方程，不会消除此爆炸；源和基均无有限边界可用于解释它。
+
+模型不满足 (16.5b)：在基的 $x=z=0$、$y\to+\infty$ 上，其左侧为 $y^3+3$。这也显示新增估计确实检验了一个未由光滑性、有界噪声、完整菜单、定向和生成元投影保证的条件。对已声明的 $C_Q^H$，一个精确违例即否证该常数下的合同；有限点通过不认证全空间估计，有限精度读数只能按其误差合同排除候选。证毕。
+
+**命题 17.6（非爆炸不替代守卫匹配）。** 在同一 $J,K,\Pi,g_D$ 上取受限来源 $S=\mathbb R^3\times(-1,1)\times\mathbb R$，$B=\mathbb R^3$，控制仍为 (16.10) 的三个常场，但令 $X_0=0$。用相同完整菜单和有符号校准，全部场可下降，且常系数全空间延拓满足 (16.5b)。然而，按原隐藏守卫杀死源不能得到无边界基过程的 (16.8)。
+
+证明。取 $Q=I$ 和隐藏第一坐标初值 $0$，则源的该坐标等于 $W_t^1$，源死亡时刻为 $\tau_S=\inf\{t:|W_t^1|\ge1\}$。基过程是三维布朗运动且 $\tau_B=\infty$。对每个 $t>0$，事件 $|W_t^1|\ge1$ 有正概率并蕴含 $\tau_S\le t$，故以 $\varphi=1$ 比较时，源侧期望 $\mathbb P(\tau_S>t)<1$，基侧为 $1$。因此 (16.5) 是独立条件；常系数、同钟、非爆炸和精确局部生成元均不能删除它。证毕。
+
+## 18. 来源、复用与边界
+
+本增补的有限菜单重建是对第 10 节同源商的一个源特定消费者：它使用协方差张成 $\operatorname{Sym}_m$、纤维连通性或显式分支兼容性，以及一份实际带符号校准。它没有把一般的 projectability、Frobenius 条件、joint diagonalization 或统计投影联络单独包装成新结果。
+
+Elworthy–Le Jan–Li, *The Geometry of Filtering*, arXiv:0810.2253v1，引言关于 symbol 投影的说明、§1.4 Proposition 1.4.4 及第 2 章式 (2.3) 供应扩散算子、symbol 和光滑映射之间的标准关系。Hochgerner–Ratiu, *Geometry of non-holonomic diffusion*, arXiv:1204.6438v1, Theorem 3.1（PDF 第 21 页）只供应直到爆炸的存在唯一性，随后第 22 页给出联络漂移 $X_0+\frac12\sum_a\nabla_{X_a}X_a$；Theorem 3.2（第 24--25 页）区分 Stratonovich 算子本身的可投影性与扩散及生成元的可投影性。(16.5a) 在同一线性坐标和协方差 $Q$ 上使用该标准修正，(16.8a) 另以停止的 Itô 公式证明非爆炸；(16.5) 另承担原守卫匹配。(16.7)--(16.8) 因而保留了带标签场、原时钟和完整源寿命，不从局部生成元投影单独推断这些结论。Kleinsteuber–Shen, *Uniqueness Analysis of Non-Unitary Matrix Joint Diagonalization*, arXiv:1111.7088v3, Theorems 1--3（尤其 Theorem 1 的 essential uniqueness 条件）是多矩阵二阶识别的成熟背景；推论 15.4 使用共同合同稳定子的直接计算，未把线性张成等同于非线性可识别性，也不声称复制其算法或全部模型。
+
+仓内复用边界如下。[可取得预测丛卷](AURIC_FIB_OBTAINABLE_PREDICTIVE_BUNDLE_THEORY.md) §1 和命题 2.13 把精确秩、条件数和取得资源分开；[二次时钟卷](FIB_UNCALIBRATED_QUADRATIC_CLOCK_THREE_INDEX_DESIGN.md) §11 保留原风险和标定；[相对测量卷](RECURSIVE_RELATIONAL_OBSERVATION_MEASUREMENT_RELATIVE_QUANTUM_BOUNDARY.md) §§15--16 把有限记录、确定性/置信界和 bit time、workspace、output、backing 分开。[FIB 原生自由扩散卷](FIB_NATIVE_FREE_DIFFUSION_QUOTIENT_RIGIDITY.md) §§1--3 已给实际原生 rank-two 场、守卫、密度和完整 killed-semigroup 条件；[概率相位卷](AURIC_FIB_ATOM_PROBABILITY_PHASE_TRANSPORT_AND_HOLONOMY.md) §10.4--§10.5 的两控制 principal-symbol 障碍不能因本节的抽象菜单而取得第三个原生噪声方向。[递归边界卷 Continuation III](FIB_ATOM_RECURSIVE_HOLOGRAPHIC_BOUNDARY_GEOMETRY_CONTINUATION_III.md) §§81--83 的同源空间/Green 要求和三维 Brownian factor、[Continuation IX](FIB_ATOM_RECURSIVE_HOLOGRAPHIC_BOUNDARY_GEOMETRY_CONTINUATION_IX.md) §§243--246 的 affine holonomy 与局部三框架到整体载体条件，分别是边界条件和整体运输的既有供应者；本节只在 (15.1)--(16.10) 的明确同源合同上消费它们。所有这些引用仍是理论来源或仓内综合，不是本节的 Lean 认证，也不产生原生 FIB 的实际控制、取得、未知环境维数、无限时间稳定性或物理实现。
+
+本批的结论范围是：在完整有限协方差菜单、带符号校准、来源守卫、光滑性、(16.5b) 所保证的非爆炸性和 (16.5) 的同一死亡时钟这些明确条件下，三轴任务商同时成为每个实际命名控制和共同漂移的精确商，并给出 (16.4)、(16.8) 的距离与传播对应。完整张成是线性重建的充分条件，非线性识别可用更小菜单；对应的精确例子见推论 15.4。标签旋转、分支、定向、漂移和有限读取的边界见命题 17.1--17.4；无穷远爆炸与隐藏守卫的独立失败见命题 17.5--17.6。以上条件既不证明物理实现、无限时间稳定性，也未解决“为什么宇宙是三维”或 native FIB 的控制取得问题。
+
+## 追加锚（本行以下为增补区）
+
+## 19. 任意交错积的定量 Jacobi 下界与等号刚性
+
+**定义 19.1（同一欧氏度量中的两个极值）。** 设 $V$ 为有限维实正定内积空间，$d=\dim V\ge4$，$B:V\times V\to V$ 双线性，且
+$T(u,v,w)=\langle B(u,v),w\rangle$ 精确完全交错。所有范数、正交性、伴随和体积均取自这个给定内积。记
+
+$$
+A(u,v)=\|u\|^2\|v\|^2-\langle u,v\rangle^2,
+\qquad
+\mathcal J_B(u,v,w)=B(u,B(v,w))+B(v,B(w,u))+B(w,B(u,v)),
+$$
+
+$$
+m(B)=\min_{\substack{\|u\|=\|v\|=1\\\langle u,v\rangle=0}}
+       \|B(u,v)\|^2,
+\qquad
+j(B)=\max_{\|u\|=\|v\|=\|w\|=1}\|\mathcal J_B(u,v,w)\|. \tag{19.1}
+$$
+
+第二个极值的三个单位输入彼此独立，不附加正交条件。两个极值均由非空紧集上的连续函数取得。取四元数 $\mathbb H$ 的正交单位基 $(1,i,j,k)$，约定
+$i^2=j^2=k^2=-1$、$ij=k$、$jk=i$、$ki=j$，反向乘积变号；$\bar x$ 表示四元数共轭。在正交直和 $\operatorname{Im}\mathbb H\oplus\mathbb H$ 上定义
+
+$$
+C((p,x),(q,y))=
+\bigl(p\times q+\operatorname{Im}(x\bar y),\,-py+qx\bigr),
+\qquad p\times q=\frac{pq-qp}{2}. \tag{19.2}
+$$
+
+这里直和内积为
+$\langle(p,x),(q,y)\rangle=p\mathbin{\cdot}q+\operatorname{Re}(x\bar y)$。
+
+**定理 19.2（任意积的齐次定量界及全部等号情形）。** 在定义 19.1 下，若 $m(B)>0$，则
+
+$$
+d=7,\qquad j(B)\ge3m(B). \tag{19.3}
+$$
+
+等号 $j(B)=3m(B)$ 成立，当且仅当存在正交同构
+$U:\operatorname{Im}\mathbb H\oplus\mathbb H\to V$，使对全部 $u,v\in V$ 有
+
+$$
+B(u,v)=\sqrt{m(B)}\,U C(U^{-1}u,U^{-1}v). \tag{19.4}
+$$
+
+**证明。** 记 $m=m(B)>0$、$\sigma=\sqrt m$。完全交错性和内积非退化性给出
+
+$$
+B(u,v)=-B(v,u),\qquad B(u,v)\perp u,v,
+\qquad L_u^*=-L_u,\quad L_uv=B(u,v). \tag{19.5}
+$$
+
+先说明维数供应者的适用性。若 $a,b$ 线性无关，置
+$b_\perp=b-\langle b,a\rangle a/\|a\|^2$。则 $b_\perp\ne0$，且
+
+$$
+B(a,b)=B(a,b_\perp),\qquad
+\|B(a,b)\|\ge\sigma\|a\|\|b_\perp\|>0. \tag{19.6}
+$$
+
+Draisma–Shaw, *Some noteworthy alternating trilinear forms*,
+[arXiv:1102.4768v1](https://arxiv.org/html/1102.4768v1)，定义 (2) 与 Theorem 2，说明在实维数 $d>2$ 且 $d\notin\{3,7\}$ 时，每个交错三形式都有奇异射影直线；其确切含义是存在独立 $a,b$，使 $T(a,b,x)=0$ 对全部 $x$ 成立。在本题给定的同一非退化内积中，这等价于 $B(a,b)=0$，与 (19.6) 矛盾。因此 $d\ge4$ 的全部可行情形均有 $d=7$。这里只复用该经典维数排除结论；尚未对 $B$ 增加精确范数恒等式。
+
+（一）极小对导出的不变三平面。取达到 $m$ 的正交单位对 $u,v$，置 $c_*=B(u,v)$。对任意 $h\perp u,v$，以
+$u(t)=(u+th)/\sqrt{1+t^2\|h\|^2}$ 变分，极小性给
+
+$$
+0=\langle B(h,v),c_*\rangle
+ =\langle B(v,c_*),h\rangle.
+$$
+
+故 $B(v,c_*)\in\operatorname{span}\{u,v\}$。由交错性，其 $v$ 系数为零，而
+$\langle B(v,c_*),u\rangle=T(v,c_*,u)=\|c_*\|^2=m$。
+对 $v$ 作同样的受约束变分，则
+$\langle B(u,h),c_*\rangle=\langle B(c_*,u),h\rangle=0$，从而
+
+$$
+B(v,c_*)=mu,\qquad B(c_*,u)=mv. \tag{19.7}
+$$
+
+于是 $e_1=u,e_2=v,e_3=c_*/\sigma$ 是某个三平面 $E$ 的定向正交单位基，且
+
+$$
+B(a,b)=\sigma\,a\times_E b\quad(a,b\in E). \tag{19.8}
+$$
+
+令 $W=E^\perp$，则 $\dim W=4$。对 $a\in E,x\in W,b\in E$，有
+$\langle B(a,x),b\rangle=-\langle x,B(a,b)\rangle=0$。
+因此 $A_ax=B(a,x)$ 将 $W$ 保持在自身内，且为斜伴随算子。由 $a\perp x$ 和 $m$ 的定义，齐次性给出
+
+$$
+\|A_ax\|\ge\sigma\|a\|\|x\|\qquad(a\in E,\ x\in W). \tag{19.9}
+$$
+
+三平面及此一致下界均由极小性导出。
+
+（二）四维斜算子的两项分解。将 $W$ 等距识别为 $\mathbb H$。对虚四元数 $p,q$，记
+$L_px=px$、$R_qx=xq$。两类算子均斜伴随，各成三维线性子空间，且交为零：若 $L_p=R_q$，代入 $1$ 得 $p=q$，再代入任意 $x$ 得 $p$ 与所有四元数对易，故虚部 $p=0$。由于 $\dim\mathfrak{so}(4)=6$，存在唯一线性映射
+$P,Q:E\to\operatorname{Im}\mathbb H$，使
+
+$$
+A_a=L_{Pa}+R_{Qa}. \tag{19.10}
+$$
+
+当 $\|x\|=1$ 时，右乘 $x^{-1}$ 保范，故
+$\|px+xq\|=|p+xqx^{-1}|$。单位四元数共轭在给定半径的虚球面上传递作用：虚单位 $n,m$ 且 $m\ne-n$ 时，非零的 $r=1-mn$ 满足 $rn=mr$；若 $m=-n$，可取与 $n$ 正交的虚单位 $r$。将 $r$ 单位化即得所需共轭。因此三角界的两个端点都可取到，包括某一虚部为零的情形，且
+
+$$
+\min_{\|x\|=1}\|(L_p+R_q)x\|=\bigl||p|-|q|\bigr|,
+\qquad
+\|L_p+R_q\|_{\rm op}=|p|+|q|. \tag{19.11}
+$$
+
+(19.9) 给 $\bigl||Pa|-|Qa|\bigr|\ge\sigma\|a\|$。
+在 $E$ 的单位球面上连续函数 $|Pa|-|Qa|$ 不为零，球面连通使其符号恒定。若符号为负，以 $x\mapsto\bar x$ 改换 $W$ 的等距识别，则
+$\overline{p\bar x+\bar xq}=-qx-xp$，将两项交换并变号。因此可以且以下固定为
+
+$$
+|Pa|-|Qa|\ge\sigma\|a\|\qquad(a\in E). \tag{19.12}
+$$
+
+特别地，$P$ 的每个奇异值至少为 $\sigma$。
+
+（三）由非奇异性确定定向。在上述定向基中，记 $e^r$ 为 $E$ 的对偶基，$e^{123}=e^1\wedge e^2\wedge e^3$，令
+$\omega_r(x,y)=\langle A_{e_r}x,y\rangle$。由于 $T(E,E,W)=0$，完整的三形式恰有分解
+
+$$
+T=\sigma e^{123}+\sum_{r=1}^3e^r\wedge\omega_r+\rho,
+\qquad \rho\in\Lambda^3W^*. \tag{19.13}
+$$
+
+这里 $\rho$ 任意，并未删除 $W$ 上的三次项。设 $(\theta^0,\theta^1,\theta^2,\theta^3)$ 为 $(1,i,j,k)$ 的对偶基，固定
+
+$$
+\operatorname{vol}=e^{123}\wedge\theta^0\wedge\theta^1\wedge\theta^2\wedge\theta^3,
+\qquad
+\chi(z)\operatorname{vol}=\frac16(\iota_zT)\wedge(\iota_zT)\wedge T. \tag{19.14}
+$$
+
+对任意 $z\ne0$，$\omega=\iota_zT$ 在 $z^\perp$ 上非退化。事实上，若 $y\in z^\perp$ 且 $\omega(y,x)=0$ 对全部 $x\in z^\perp$ 成立，则 $B(z,y)$ 与 $z^\perp$ 正交，又由 (19.5) 与 $z$ 正交，所以 $B(z,y)=0$；(19.6) 或其正交齐次界迫使 $y=0$。令
+$\eta=\langle z,\cdot\rangle/\|z\|^2$，则 $\eta(z)=1$，并可写
+$T=\eta\wedge\omega+\rho_z$，其中 $\iota_z\rho_z=0$。在六维 $z^\perp$ 上，非退化性给 $\omega^3\ne0$，而水平七形式为零，故
+
+$$
+(\iota_zT)^2\wedge T=\eta\wedge\omega^3\ne0. \tag{19.15}
+$$
+
+上标表示楔幂。于是二次函数 $\chi$ 在连通的 $V\setminus\{0\}$ 上处处不为零且同号。
+
+为确定该符号及 $P$ 的定向，写出 $L_i,L_j,L_k$ 对应的二形式：
+
+$$
+\theta^0\wedge\theta^1+\theta^2\wedge\theta^3,\qquad
+\theta^0\wedge\theta^2-\theta^1\wedge\theta^3,\qquad
+\theta^0\wedge\theta^3+\theta^1\wedge\theta^2.
+$$
+
+$R_i,R_j,R_k$ 的二形式分别将每式的第二项变号。这六个式子直接给出 $L_p+R_q$ 对应的二形式 $\omega_{p,q}$ 满足
+
+$$
+\omega_{p,q}^2=2(|p|^2-|q|^2)
+\theta^0\wedge\theta^1\wedge\theta^2\wedge\theta^3. \tag{19.16}
+$$
+
+由 $\iota_{e_1}T=\sigma e^2\wedge e^3+\omega_1$，(19.13) 的展开中仅留下
+$3\sigma e^{123}\wedge\omega_1^2$，所以
+
+$$
+\chi(e_1)=\sigma(|Pe_1|^2-|Qe_1|^2)>0. \tag{19.17}
+$$
+
+再在 $1\in W$ 处求值。将虚四元数向量 $Pe_r+Qe_r$ 的欧氏对偶记为 $d_r$。在 $1^\perp=E\oplus\operatorname{Im}\mathbb H$ 上有
+
+$$
+\iota_1T=-\sum_{r=1}^3e^r\wedge d_r+\iota_1\rho,
+\qquad
+(\iota_1T)^3=6\det(P+Q)e^{123}\wedge\theta^1\wedge\theta^2\wedge\theta^3. \tag{19.18}
+$$
+
+含 $\iota_1\rho$ 的项至少含四个 $\operatorname{Im}\mathbb H$ 方向，故全为零；其余三项的重排符号给上式的正号。用 $\eta=\theta^0$ 代入 (19.15)，再把 $\theta^0$ 移过三个 $E$ 协向量，得到
+
+$$
+\chi(1)=-\det(P+Q)>0. \tag{19.19}
+$$
+
+因此 $\det(P+Q)<0$。对 $0\le t\le1$，(19.12) 给
+$|(P+tQ)a|\ge|Pa|-t|Qa|\ge\sigma\|a\|$，故这些映射全部可逆，行列式符号不变，最终得
+
+$$
+\det P<0. \tag{19.20}
+$$
+
+这个符号来自给定度量下的非奇异性；(19.14) 没有以三形式诱导的新度量替换原内积。
+
+
+（四）Jacobi 的定量下界。由 (19.20)，可以选 $E$ 的定向正交奇异基 $a_1,a_2,a_3$，以及 $\operatorname{Im}\mathbb H$ 的定向正交基 $f_1,f_2,f_3$，使
+
+$$
+Pa_1=\lambda_1f_1,\quad Pa_2=\lambda_2f_2,\quad
+Pa_3=-\lambda_3f_3,\qquad
+\lambda_1,\lambda_2,\lambda_3\ge\sigma,\quad f_1\times f_2=f_3.
+$$
+
+左乘与右乘彼此对易，且四元数结合律给
+
+$$
+[L_p,L_r]=2L_{p\times r},\qquad
+[R_q,R_t]=-2R_{q\times t}. \tag{19.21}
+$$
+
+右乘的负号来自 $R_qR_tx=x(tq)$。由于 $B(a_1,a_2)=\sigma a_3$，对 $x\in W$，Jacobi 三项按原次序相加恰为
+
+$$
+\begin{aligned}
+\mathcal J_B(a_1,a_2,x)
+&=([A_{a_1},A_{a_2}]-\sigma A_{a_3})x\\
+&=\bigl(L_{(2\lambda_1\lambda_2+\sigma\lambda_3)f_3}
+ +R_{-2(Qa_1\times Qa_2)-\sigma Qa_3}\bigr)x.
+\end{aligned} \tag{19.22}
+$$
+
+对单位 $x\in W$ 取最大值，(19.11) 给出左右两项的算子范数之和，因而
+
+$$
+j(B)\ge2\lambda_1\lambda_2+\sigma\lambda_3
+\ge3\sigma^2=3m. \tag{19.23}
+$$
+
+所有基变换均为原欧氏内积的等距变换。
+
+（五）等号迫使全部剩余结构消失。若 $j(B)=3m$，(19.23) 和 $\lambda_r\ge\sigma$ 迫使
+$\lambda_1=\lambda_2=\lambda_3=\sigma$。所以 $P/\sigma$ 为反定向等距映射，(19.12) 随即给 $Q=0$。以定向等距映射 $-P/\sigma$ 将 $E$ 识别为 $\operatorname{Im}\mathbb H$，便有
+
+$$
+B(p,q)=\sigma(p\times q),\qquad
+B(p,x)=-\sigma px\quad(p,q\in E,\ x\in W). \tag{19.24}
+$$
+
+于是任意单位 $p\in E,x\in W$ 都是 $\|B(p,x)\|^2=m$ 的极小正交对。取任意 $y\in W\cap x^\perp$，以
+$p(t)=(p+ty)/\sqrt{1+t^2\|y\|^2}$ 变分，得到
+
+$$
+0=\langle B(y,x),B(p,x)\rangle
+=-\sigma\rho(y,x,px). \tag{19.25}
+$$
+
+对固定单位 $x$，映射 $p\mapsto px$ 将 $\operatorname{Im}\mathbb H$ 等距映到 $W\cap x^\perp$，故
+$\rho(y,x,z)=0$ 对全部 $y,z\perp x$ 成立。任意 $y,z$ 可减去各自沿 $x$ 的分量，交错性使值不变，遂得 $\rho=0$。这也覆盖任意非零 $x$ 的齐次倍数，$x=0$ 时当然为零。
+
+剩下的 $B(x,y)$ 属于 $E$，由交错性及 (19.24)，对任意虚四元数 $p$ 有
+
+$$
+\langle B(x,y),p\rangle
+=\langle B(p,x),y\rangle
+=-\sigma\operatorname{Re}(px\bar y)
+=\sigma\langle p,\operatorname{Im}(x\bar y)\rangle.
+$$
+
+因此 $B(x,y)=\sigma\operatorname{Im}(x\bar y)$，连同 (19.24) 即为 (19.4)。等号分类的必要性由任意 $B$ 推出。
+
+（六）模型恒等式及等号的反向。式 (19.2) 是经典虚八元数半交换子的一个正交表示；半交换子归一化参见 Baez, *The Octonions*, [§4.1](https://math.ucr.edu/home/baez/octonions/node14.html)。以下在本式的四元数约定中直接核对所需恒等式。$C$ 的三形式在 $E^3$ 上为普通体积，在 $E^2W$ 和 $W^3$ 上为零；混合分量满足
+
+$$
+\langle C(p,x),y\rangle=-\operatorname{Re}(px\bar y)
+=\langle p,\operatorname{Im}(x\bar y)\rangle
+=\langle p,C(x,y)\rangle.
+$$
+
+因 $\operatorname{Im}(y\bar x)=-\operatorname{Im}(x\bar y)$，这些分量精确完全交错。
+
+置 $t=x\bar y$、$r=\operatorname{Re}t$、$a_0=p\mathbin{\cdot}q$。由
+$pq=-a_0+p\times q$，有
+
+$$
+2\langle p\times q,\operatorname{Im}t\rangle
+=-2\operatorname{Re}(pqt)-2a_0r.
+$$
+
+第二分量的平方为
+
+$$
+|-py+qx|^2=|p|^2|y|^2+|q|^2|x|^2
++2\operatorname{Re}(py\bar xq).
+$$
+
+实部的循环不变性和共轭不变性给
+$\operatorname{Re}(py\bar xq)=\operatorname{Re}(qx\bar yp)=\operatorname{Re}(pqt)$。
+这两个混合项相加恰为 $-2a_0r$。又
+$|p\times q|^2=|p|^2|q|^2-a_0^2$，
+$|\operatorname{Im}t|^2=|x|^2|y|^2-r^2$，所以对全部 $U=(p,x),V=(q,y)$ 有
+
+$$
+\begin{aligned}
+\|C(U,V)\|^2
+&=(|p|^2+|x|^2)(|q|^2+|y|^2)-(a_0+r)^2\\
+&=\|U\|^2\|V\|^2-\langle U,V\rangle^2=A(U,V).
+\end{aligned} \tag{19.26}
+$$
+
+因此 $m(C)=1$，且 $\|C(U,V)\|\le\|U\|\|V\|$。每个嵌套 Jacobi 项的范数至多为三个输入范数之积，故 $j(C)\le3$。对明确的单位三元组
+
+$$
+U=(i,0),\qquad V=(j,0),\qquad X=(0,1),
+$$
+
+内层积依次为 $C(V,X)=(0,-j)$、$C(X,U)=(0,i)$、$C(U,V)=(k,0)$，外层三项分别为
+
+$$
+C(U,C(V,X))=(0,k),\quad
+C(V,C(X,U))=(0,k),\quad
+C(X,C(U,V))=(0,k). \tag{19.27}
+$$
+
+故 $j(C)=3$。正交运输不改两个极值，正标量 $\sigma$ 则给
+$m(\sigma C)=\sigma^2$、$\mathcal J_{\sigma C}=\sigma^2\mathcal J_C$、$j(\sigma C)=3\sigma^2$，证明等号分类的充分性。证毕。
+
+## 20. 原全域预算的锐界、下确界与全部达到者
+
+**定理 20.1（原分母和全参数域上的锐不等式）。** 对每个整数 $d\ge4$、每个实数 $0\le\alpha<1$、$\beta\ge0$，设 $V$ 为 $d$ 维实欧氏空间，$B:V\times V\to V$ 双线性，$T(u,v,w)=\langle B(u,v),w\rangle$ 精确完全交错。在同一给定欧氏内积和一个共同校准尺度下，若对全部 $u,v,w\in V$，包括零向量，均有
+
+$$
+\bigl|\|B(u,v)\|^2-A(u,v)\bigr|
+\le\alpha\|u\|^2\|v\|^2,\qquad
+\|\mathcal J_B(u,v,w)\|\le\beta\|u\|\|v\|\|w\|, \tag{20.1}
+$$
+
+则
+
+$$
+d=7,\qquad \beta\ge3(1-\alpha). \tag{20.2}
+$$
+
+这里面积残差的分母仍是 $\|u\|^2\|v\|^2$，并未改为 $A(u,v)$；Jacobi 输入也不要求正交。
+
+**证明。** 在正交单位对上，(20.1) 给
+$m(B)\ge1-\alpha>0$；在三个独立单位输入上，给 $\beta\ge j(B)$。故定理 19.2 适用，并给
+
+$$
+\beta\ge j(B)\ge3m(B)\ge3(1-\alpha).
+$$
+
+维数七是对所有 $d\ge4$ 的排除结论，非预设的子类限制。证毕。
+
+**定义 20.2（原最优化及固定维数最优化）。** 对每个 $\alpha\in[0,1)$，令
+
+$$
+f(\alpha)=\inf\{\beta\ge0:\ \text{存在整数 }d\ge4\text{ 及满足定理 20.1 全部条件的 }(V,B)\}, \tag{20.3}
+$$
+
+空集下确界约定为 $+\infty$。将 $d$ 固定后的同一下确界记作 $f_d(\alpha)$。
+
+**定理 20.3（全区间的值与穷尽达到分类）。** 对全部 $\alpha\in[0,1)$，可行集非空，且
+
+$$
+f(\alpha)=f_7(\alpha)=3(1-\alpha),\qquad
+f_d(\alpha)=+\infty\quad(d\ge4,\ d\ne7). \tag{20.4}
+$$
+
+全域预算达到此下确界的资料恰为
+
+$$
+\beta=3(1-\alpha),\quad d=7,\quad
+B(u,v)=\sqrt{1-\alpha}\,U C(U^{-1}u,U^{-1}v), \tag{20.5}
+$$
+
+其中 $U:\operatorname{Im}\mathbb H\oplus\mathbb H\to V$ 为任意正交同构。
+
+**证明。** 固定 $\alpha\in[0,1)$，置 $\kappa=\sqrt{1-\alpha}$，在定义 19.1 的直和欧氏内积和同一校准尺度下取 $B=\kappa C$。由 (19.26)，对全部 $u,v$ 有精确残差
+
+$$
+\|B(u,v)\|^2-A(u,v)=-\alpha A(u,v),\qquad
+0\le A(u,v)\le\|u\|^2\|v\|^2. \tag{20.6}
+$$
+
+故原面积预算在所有输入上成立，零向量和平行向量亦包括在内。由
+$\mathcal J_B=\kappa^2\mathcal J_C$ 和 $j(C)=3$，原 Jacobi 预算以
+$\beta=3(1-\alpha)$ 全域成立，(19.27) 的单位三元组取得该预算。张量交错性由 $C$ 的交错性继承。因此这是原条件的全域达到者，配合定理 20.1 的下界给出 (20.4)；固定非七维的可行集由同一定理为空。
+
+反之，若某可行资料有 $\beta=3(1-\alpha)$，则
+
+$$
+3(1-\alpha)=\beta\ge j(B)\ge3m(B)\ge3(1-\alpha)
+$$
+
+迫使 $j(B)=3m(B)$ 和 $m(B)=1-\alpha$。定理 19.2 的等号分类遂精确给出 (20.5)。其每个正交运输由前段验证又都满足原条件并达到下确界，故分类穷尽。证毕。
+
+
+## 21. 锐阈值下的原同源条件消费者
+
+**假设 21.1（保留的来源、距离、标定和菜单条件）。** 采用假设 13.1 的共同实现，以下仅替换其代数维数阈值。具体保留如下条件。
+
+1. $J$ 为有限维实内积空间，态域是整个 $J$；共同来源身份、来源版本、控制条件、校准尺度和共同零参照 $O$ 固定。真实同源差异 $h_1,\ldots,h_N$ 张成 $J$，$F:\mathbb R^N\to J$、$F\xi=\sum_j\xi_jh_j$。有对称双线性形式 $g_D$，在整个态域满足
+   $d_D(x,y)^2=g_D(x-y,x-y)$、$d_D(x,y)\ge0$。同一组 $0,h_1,\ldots,h_N$ 按定义 2.1 构造的锚定 Gram 矩阵 $G$ 满足 $G\succeq0$，且由全域距离律有 $G_{jk}=g_D(h_j,h_k)$。取实际商载体
+   $K=\mathbb R^N/\ker G$、$v_j=[\epsilon_j]$，内积为 $\langle[\xi],[\eta]\rangle_K=\xi^{\mathsf T}G\eta$，并保留定义 11.1 的 $d=\dim K\ge2$。
+2. 在此同一个 $K$、此同一个内积和一个共同校准尺度上，有全域双线性 $B:K\times K\to K$，真实 $T(u,v,w)=\langle B(u,v),w\rangle_K$ 精确完全交错。真实积以非负预算 $\alpha,\beta$ 对全部输入满足原式 (11.1)–(11.2)，其分母、输入范围和归一化均不变。
+3. $J$ 中有三个实际正交单位探针 $p_1,p_2,p_3$，读口为 $C_i(x)=\langle p_i,x\rangle_J$。在 $K$ 中选择正交单位 $a,b$，严格按有符号次序置
+
+   $$
+   c=B(b,a),\qquad s=\|c\|_K,\qquad e_1=a,\quad e_2=b,\quad e_3=c/s. \tag{21.1}
+   $$
+
+   在下述 $\alpha<1$ 条件下 $s>0$。对每个 $i$，选择形式系数 $\zeta_i$ 使 $[\zeta_i]=e_i$。保留全部精确同源距离—读出标定
+
+   $$
+   C_i(h_j)=\zeta_i^{\mathsf T}G\epsilon_j
+   =\langle e_i,v_j\rangle_K
+   \quad(i=1,2,3;\ j=1,\ldots,N). \tag{21.2}
+   $$
+
+4. 对菜单中包含的实际有序二元操作 $D:J\times J\to J$，每个方向读出 $\beta_i(x,y)=C_i(D(x,y))$ 为同一来源上的双线性函数，且保留全部精确标定
+
+   $$
+   \beta_i(h_j,h_k)=\langle e_i,B(v_j,v_k)\rangle_K
+   \quad(i=1,2,3;\ j,k=1,\ldots,N). \tag{21.3}
+   $$
+
+   若该操作不在菜单中，省去此项及二元操作结论；不因此给 $D$ 的计数、守卫、失败或历史记录槽增加双线性假设。
+5. 令 $E_0=\operatorname{span}\{p_1,p_2,p_3\}$。对完整实际线性菜单中的每个生成元 $U_\gamma:J\to J$，保留 $U_\gamma^*E_0\subseteq E_0$，并保留全部共同来源执行条件。计数、守卫、失败和历史槽的规则及保留责任均按 §10 的原任务定义，不并入三维方向接口。
+
+第三通道的 (21.2)–(21.3) 必须特别具有下列精确值：
+
+$$
+C_3(h_j)=\langle e_3,v_j\rangle_K
+=s^{-1}\langle c,v_j\rangle_K,\qquad
+\beta_3(h_j,h_k)=\langle e_3,B(v_j,v_k)\rangle_K
+=s^{-1}\langle c,B(v_j,v_k)\rangle_K. \tag{21.4}
+$$
+
+这些等式由独立校准的实际 $e_3$ 方向，或由实际 $c$ 通道及其同源尺度 $s$ 的归一化供应，保留 $c=B(b,a)$ 的符号和手性。形式系数 $\zeta_i$ 的存在及代数式 $c=B(b,a)$ 均不给任何端点的制备权限；三个实际探针及其精确等式仍是条件。
+
+若用 §12 的有限系数证书供应预算，还完整保留定义 12.1 的取得条件：已知维数 $d$ 和独立精确校准的完整正交单位标架 $f_1,\ldots,f_d$，$K=\operatorname{span}\{f_r\}$；所有有序同源系数
+$b_{kij}=\langle B(f_i,f_j),f_k\rangle_K$ 在同一版本、尺度和控制下取得。全部制备、控制、读出和共同校准的确定性误差进入 (12.1) 的 $\epsilon_{kij}$ 和 $E$；全部算术上误差或向上舍入进入 (12.2) 的 $\overline M,\overline R_A,\overline R_J$。所需共同初态、实际复位或同身份重复准备、动作次序、探针归属和读出宽度仍由来源条件供应；若操作可逆，重复控制也须保持标定不漂移。真实 $T$ 的精确完全交错性独立给定，测得的 $\widehat B$ 不要求交错。这里用 $f_r$ 区别证书的完整标架与 (21.1) 的三个带符号方向。
+
+**定理 21.2（定理 13.2 的锐阈值版本）。** 在假设 21.1 的全部条件下，将原代数阈值 $5\alpha+\beta<1$ 替换为且仅替换为
+
+$$
+0\le\alpha<1,\qquad 0\le\beta<3(1-\alpha). \tag{21.5}
+$$
+
+则 $\dim K=3$，且
+
+$$
+s^2\in[1-\alpha,1+\alpha],\qquad s>0, \tag{21.6}
+$$
+
+$(a,b,e_3)$ 是 $K$ 的完整正交单位基。保留精确第三通道 (21.4) 后，存在唯一满射线性映射 $\Pi:J\to K$，满足定理 10.2 的全部相应结论：
+
+$$
+\Pi h_j=v_j,\qquad
+C_i(x)=\langle e_i,\Pi x\rangle_K,\qquad
+g_D(x,y)=\langle\Pi x,\Pi y\rangle_K,
+$$
+
+$$
+\ker\Pi=\ker C=E_0^\perp=E_\infty^\perp,\qquad
+\Pi D(x,y)=B(\Pi x,\Pi y). \tag{21.7}
+$$
+
+其中 $C=(C_1,C_2,C_3)$，$E_\infty$ 是所有允许有限线性操作词的回传探针的张成空间，包含空词的探针。对每个实际生成元有唯一 $A_\gamma:K\to K$，且对每个有限词 $w$ 有
+
+$$
+\Pi U_\gamma=A_\gamma\Pi,\qquad
+\Pi U_w=A_w\Pi. \tag{21.8}
+$$
+
+因此距离商、联合正交商和几何商由原构造等距识别；所列同源有限操作表达式的方向读出、任务距离及二元响应因子化通过同一个 $\Pi$。阈值 (21.5) 的等号边界不能仅由这些预算纳入三维结论。
+
+**证明。** 在 $d=2$ 时，完全交错三形式必为零；由内积非退化性 $B=0$。对正交单位对，面积预算则要求 $1\le\alpha$，与 (21.5) 矛盾。因此 $d\ne2$。若 $d\ge4$，定理 20.1 给
+$\beta\ge3(1-\alpha)$，也与 (21.5) 矛盾。保留 $d\ge2$ 的原定义后，唯一剩下的是 $d=3$。对原来选定的正交单位 $a,b$，面积预算给 (21.6)；交错性给 $c\perp a,b$，故保留有符号 $e_3=c/s$ 后得到完整正交单位基。定理 20.3 的七维达到族在
+$\beta=3(1-\alpha)$ 满足全部代数预算，故由这些预算单独进行维数选择时必须保留严格不等号。
+
+为核对精确消费者，记 $S_{ij}=\langle e_i,v_j\rangle_K$。基的完整性和 (21.2) 分别给
+
+$$
+G=S^{\mathsf T}S,\qquad CF=S. \tag{21.9}
+$$
+
+若 $F\xi=0$，则 $S\xi=CF\xi=0$，从而
+$\xi^{\mathsf T}G\xi=0$。因 $G\succeq0$，有 $\xi\in\ker G$。所以
+
+$$
+\Pi(F\xi)=[\xi] \tag{21.10}
+$$
+
+不依赖系数选择。$F$ 满射，且 $v_j$ 张成 $K$，故 (21.10) 定义唯一满射线性 $\Pi$。再对 $x=F\xi,y=F\eta$，
+
+$$
+C_i(x)=(S\xi)_i=\langle e_i,\Pi x\rangle_K,\qquad
+g_D(x,y)=\xi^{\mathsf T}G\eta
+=\langle\Pi x,\Pi y\rangle_K. \tag{21.11}
+$$
+
+三个基坐标分离 $K$，所以 $\ker\Pi=\ker C=E_0^\perp$。定义
+$\iota:K\to J$，$\iota(\sum_i t_ie_i)=\sum_i t_ip_i$。
+实际探针正交单位使 $\iota$ 等距；(21.11) 给 $\Pi^*e_i=p_i$，并由
+$C_i(p_j)=\delta_{ij}$ 给 $\Pi p_j=e_j$。于是
+
+$$
+\Pi\iota=I_K,\qquad \iota\Pi=P_{E_0},\qquad
+J=E_0\oplus\ker\Pi. \tag{21.12}
+$$
+
+商类的正交代表 $P_{E_0}x$ 的 $J$ 范数等于 $\|\Pi x\|_K$，(21.11) 则给其任务度量；这证明原有两个商到 $K$ 的等距性，度量并未另换。
+
+若二元操作在菜单中，对 $x=F\xi,y=F\eta$，读出双线性及 (21.3) 给
+
+$$
+\begin{aligned}
+C_i(D(x,y))
+&=\sum_{j,k}\xi_j\eta_k\beta_i(h_j,h_k)\\
+&=\left\langle e_i,B\left(\sum_j\xi_jv_j,\sum_k\eta_kv_k\right)\right\rangle_K\\
+&=\langle e_i,B(\Pi x,\Pi y)\rangle_K.
+\end{aligned}
+$$
+
+结合 (21.11) 及基分离性，得到 (21.7) 的二元因子化。此结论只涉及方向任务，没有改变其他记录槽。
+
+对 $z\in E_0^\perp$ 和 $p\in E_0$，
+$\langle p,U_\gamma z\rangle_J=\langle U_\gamma^*p,z\rangle_J=0$。
+因此 $\ker\Pi$ 被全部实际生成元保持，
+$A_\gamma(\Pi x)=\Pi U_\gamma x$ 良定义，满射性给唯一性，且可写
+$A_\gamma=\Pi U_\gamma\iota$。对词长归纳，空词为恒等式，追加一生成元时用
+$\Pi U_\gamma U_w=A_\gamma\Pi U_w$，便得 (21.8)。伴随不变性使每个回传探针仍在 $E_0$，空词又给反向包含，故 $E_\infty=E_0$，完成全部核等式。
+
+同样按允许有限表达式的结构归纳，将上述线性桥和二元桥组合，便保持其 $\Pi$ 值；(21.11) 保持读出和距离。这正是原来的有限操作预测范围。任意保全部当前及未来线性读出的线性摘要 $L$ 必有 $\ker L\subseteq\ker\Pi$，所以其像满射到三维 $K$，维数至少三；$\Pi$ 达到该下界。又 $G=S^{\mathsf T}S$ 且 $v_j$ 张成三维 $K$，故 $G$ 秩三，原锚定距离的张成几何实现也至少三维。两个最小性由同一映射接合。证毕。
+
+**推论 21.3（原有限证书的充分检验区域）。** 在假设 21.1 的全部精确消费者条件以及定义 12.1、定理 12.2 的全部证书条件下，仍取原公式
+
+$$
+\alpha_{\rm cert}=\overline R_A+(2\overline M+E)E,\qquad
+\beta_{\rm cert}=\overline R_J+3(2\overline M+E)E. \tag{21.13}
+$$
+
+若
+
+$$
+0\le\alpha_{\rm cert}<1,\qquad
+0\le\beta_{\rm cert}<3(1-\alpha_{\rm cert}), \tag{21.14}
+$$
+
+则定理 21.2 适用。
+
+**证明。** 定理 12.2 在同一真实 $B$ 上，以 (21.13) 为上界预算证明原 (11.1)–(11.2)。因此可直接取
+$\alpha=\alpha_{\rm cert}$、$\beta=\beta_{\rm cert}$ 代入定理 21.2，保留其余精确条件不变。
+
+(21.13) 是保守上界，不等于真实积的最小预算。具体地，若将真实最小面积预算记为
+
+$$
+\alpha_{\rm act}(B)=
+\max_{\|u\|=\|v\|=1}
+\bigl|\|B(u,v)\|^2-A(u,v)\bigr|,
+$$
+
+则齐次性和零输入的直接代入说明它正是原面积分母下的最小常数，而真实最小 Jacobi 预算为 $j(B)$。证书只给
+$\alpha_{\rm act}(B)\le\alpha_{\rm cert}$、$j(B)\le\beta_{\rm cert}$。
+定理 20.3 的锐界和达到分类涉及 (20.1) 的实际可行预算，不声称 (21.13) 达到该锐边界。例如 §12.3 的精确七维模型已有真实最小 Jacobi 预算 $3$，同一系数绝对值和证书却给 $504$。
+
+有限系数误差仅用于上述预算，不供应 (21.2)–(21.4) 的精确校准。完整已知标架、共同来源及制备、复位、控制条件均作为假设保留；这些条件不推出物理实现，也不从未知或不完整标架推出维数，不把带噪校准变成精确等式。有限词和有限表达式的结论不提供无限时间的预测保证。证毕。
+
+## 22. 定量推导中经典供应者的范围
+
+**文献范围 22.1。** Draisma–Shaw, *Some noteworthy alternating trilinear forms*,
+[arXiv:1102.4768v1](https://arxiv.org/html/1102.4768v1)，定义 (2)、Theorem 2，只供应实交错三形式的奇异直线及维数排除；(19.6) 明确给出它与本题同一内积下的积非零条件的对应。该定理不要求精确面积恒等式，也不供应 (19.23) 的定量常数。
+
+Darpö, *Vector product algebras*,
+[arXiv:0810.5464v1](https://arxiv.org/html/0810.5464v1)，定义中的相容非退化对称形式、反对称乘法及精确范数恒等式是 Theorem 1 的前提。它供应精确向量积分类，适用于这里 $\alpha=0$ 的相应边界，不能直接用于一般 $\alpha>0$。定理 19.2 的等号结构通过极小三平面、定向符号及 $\rho=0$ 导出，不以该精确分类作为任意积的前提。
+
+Baez, *The Octonions*, [§4.1](https://math.ucr.edu/home/baez/octonions/node14.html)，供应经典虚八元数叉积、半交换子归一化、范数恒等式和交错三形式的背景。式 (19.2)、(19.26)–(19.27) 在同一四元数约定中给出所需全输入恒等式和达到三元组；经典模型及其标量缩放不另作独立的新分类定理。
+
+Bryant, *Some remarks on $G_2$-structures*,
+[arXiv:math/0305124v5](https://arxiv.org/html/math/0305124v5)，§2.6，式 (2.18)，在标准 $G_2$ 形式 $\phi$ 的度量和星算子下定义
+$\mathsf j_\phi(\gamma)(v,w)=*_\phi((\iota_v\phi)\wedge(\iota_w\phi)\wedge\gamma)$，并有 $\mathsf j_\phi(\phi)=6g_\phi$。它是收缩—楔积构造的背景；(19.14)–(19.20) 对任意本题资料使用给定欧氏体积，直接证明非零性和两处符号，不假设该资料的给定内积等于某个诱导 $G_2$ 度量。
+
+这些供应者各有上述限定；任意积的定量估计与等号刚性由定理 19.2 的完整推导承担。原下确界由定理 20.1 的全类下界及定理 20.3 的全域达到者共同给出，定理 21.2 仅在假设 21.1 的全部精确共同实现条件下消费该估计。
+
+## 追加锚（本行以下为增补区）
+
+## 23. Small projected values can conceal a finite killed-response error
+
+**Definition 23.1 (fixed source and comparison).** Use the actual product realization (16.9):
+$J=\mathbb R^3\times\mathbb R^2$, $K=\mathbb R^3$,
+$\Pi(q,h,k)=q$, and $g_D((q,h,k),(q',h',k'))=q\cdot q'$.
+The original open source and base guards in this section are
+
+$$
+S=\{(q,h,k):q_3>0\},\qquad B=\{q:q_3>0\}.
+\tag{23.1}
+$$
+
+The original clock is $t$; there is no time change. Fix the six SPD settings of
+Proposition 17.5, denoted by $\mathcal Q$; they include $I_3$ and span
+$\operatorname{Sym}_3$. Their labels and the permission to execute them are fixed.
+For actual fields $X_a$ write $v_a=\Pi X_a$, including $a=0$.
+For comparison fields $V_a$ on $K$, let $r_a=v_a-V_a\circ\Pi$.
+A value comparison concerns these $r_a$ and the projected covariance
+$A_Q=\sum_{a,b=1}^3Q_{ab}v_av_b^{\mathsf T}$.
+It does not, by definition, include actual Itô first moments.
+The derivative $X_ar_b=Dr_b\,X_a$ uses the complete actual source field,
+including its hidden components.
+
+The sharp area–Jacobi budgets in §§19–22 concern the bilinear relation
+product on its given inner-product carrier. The comparisons below concern
+the actual source fields on (16.9). No estimate relating those algebraic
+budgets to the residuals (23.5) is assumed; the positive transport bounds
+use the explicit source membership of Assumption 24.1.
+
+**Theorem 23.2 (hidden-derivative obstruction with matched deaths).** For
+$0<\varepsilon\le1$, on this same source, projection, metric, menu and guard set
+
+$$
+\begin{aligned}
+X_0^\varepsilon&=(0,-\varepsilon^{-4}h,-k),\\
+X_1^\varepsilon&=(e_1+\varepsilon\tanh(h/\varepsilon)e_2,1,0),\\
+X_2^\varepsilon&=(e_2,0,1),\qquad X_3^\varepsilon=(e_3,0,0).
+\end{aligned}
+\tag{23.2}
+$$
+
+Its comparison source $Z^{0,\varepsilon}$ has exactly the same fields except
+that $X_1^{0,\varepsilon}=(e_1,1,0)$. Thus both members of each pair retain the
+same evolving hidden records, rather than choosing separate marginal sources.
+The comparison base fields are $V_0=0$, $V_a=e_a$.
+Every field is smooth; for every fixed $\varepsilon$, every initial source
+state and every $Q\in\mathcal Q$, both full-space SDEs are nonexplosive.
+For every source state,
+
+$$
+\max_{0\le a\le3}|r_a|\le\varepsilon,\qquad
+\|A_Q^\varepsilon-Q\|\le2\varepsilon\|Q\|+\varepsilon^2Q_{11}.
+\tag{23.3}
+$$
+
+The actual signed calibration $q_1(1)-q_1(0)=1$ under the deterministic
+unit $X_1$ pulse is the same in both sources. It is lawful at every $q_3>0$.
+Their original killing times are equal pathwise under common driving noise.
+Nevertheless, at the common start $q=(0,0,1)$, $h=k=0$, for $Q=I_3$ and the
+bounded observable $\varphi(q)=\sin q_2$, with value zero at the cemetery,
+
+$$
+\begin{aligned}
+\mathbb E[\varphi(\Pi Z^{0,\varepsilon}_1)\mathbf1_{1<\tau}]&=0,\\
+\lim_{\varepsilon\downarrow0}
+\mathbb E[\varphi(\Pi Z^\varepsilon_1)\mathbf1_{1<\tau}]
+&=(2\Phi(1)-1)e^{-1/2}\sin(1/2)>0.
+\end{aligned}
+\tag{23.4}
+$$
+
+Here $\Phi$ is the standard normal distribution function. In particular,
+uniformly accurate projected values, every covariance in this fixed finite
+menu, and an actual signed anchor do not alone give a vanishing error for
+the original killed response.
+
+Proof. First derive the actual residual which is relevant to this comparison.
+For any $C^2$ base function $\psi$, the ordinary chain rule gives
+
+$$
+X_aX_b(\psi\circ\Pi)
+=D^2\psi[v_a,v_b]+D\psi\,X_av_b.
+$$
+
+Consequently the exact difference from the comparison generator is
+
+$$
+\begin{aligned}
+\mathcal L_Q(\psi\circ\Pi)-(
+ V_0\psi+\tfrac12\sum_{a,b}Q_{ab}V_aV_b\psi)\circ\Pi
+&=\beta_Q\cdot D\psi+\tfrac12 H_Q:D^2\psi,\\
+\beta_Q&=r_0+\tfrac12\sum_{a,b}Q_{ab}
+ \bigl(DV_b\,r_a+X_ar_b\bigr),\\
+H_Q&=\sum_{a,b}Q_{ab}
+ \bigl(V_ar_b^{\mathsf T}+r_aV_b^{\mathsf T}+r_ar_b^{\mathsf T}\bigr).
+\end{aligned}
+\tag{23.5}
+$$
+
+All base values in this formula are evaluated at $\Pi(q,h,k)$.
+Indeed $X_av_b=DV_b(V_a+r_a)+X_ar_b$. In product coordinates the last
+source derivative is
+$D_qr_b\,v_a+(\partial_hr_b)X_a^h+(\partial_kr_b)X_a^k$;
+replacing it by a derivative only in $q$ deletes a real term.
+This is the standard Stratonovich generator and Itô correction, used here
+as an intermediate calculation, not as a new calculus theorem; compare
+Hochgerner–Ratiu, arXiv:1204.6438v1, Theorem 3.1 and the drift formula on
+PDF pages 21–22.
+
+For (23.2), $r_1=\varepsilon\tanh(h/\varepsilon)e_2$ and
+
+$$
+X_1^\varepsilon r_1=\operatorname{sech}^2(h/\varepsilon)e_2,
+\qquad
+\beta_Q=\tfrac12Q_{11}\operatorname{sech}^2(h/\varepsilon)e_2.
+\tag{23.6}
+$$
+
+Writing $V=I+s e_2e_1^{\mathsf T}$, $s=\varepsilon\tanh(h/\varepsilon)$,
+expands $VQV^{\mathsf T}-Q$ into two linear terms of norm at most
+$|s|\|Q\|$ and one quadratic term of norm $s^2Q_{11}$, proving (23.3).
+The source Itô drift is
+$(\beta_Q,-\varepsilon^{-4}h,-k)$; the hidden covariance has constant
+coefficients. The sum of the squared norms of its three source noise
+fields is at most $6$. Thus the radial left side of (16.5b) is at most
+
+$$
+|q|^2+Q_{11}^2/4+6\|Q\|.
+$$
+
+The same bound holds for the comparison source. The stopped Itô–Lyapunov
+argument already proved in (16.8a) therefore gives nonexplosion at every
+start, even with a constant independent of $\varepsilon$. The hidden
+coordinates are also explicitly linear Ornstein–Uhlenbeck equations.
+The local uniqueness supplier alone would not prove this conclusion.
+
+Couple each pair with the same $Q$-Brownian motion $W$. Both have
+$q_3(t)=q_3(0)+W_t^3$, so their full original deaths are the same first
+hit of zero, with no additional hidden death. For $Q=I_3$ and $h_0=0$,
+
+$$
+\mathbb E h_t^2
+=\tfrac12\varepsilon^4(1-e^{-2t/\varepsilon^4}).
+$$
+
+The second projected coordinate has the exact Itô expression
+
+$$
+q_2^\varepsilon(t)=W_t^2+
+ \varepsilon\int_0^t\tanh(h_s/\varepsilon)\,dW_s^1
+ +\tfrac12\int_0^t\operatorname{sech}^2(h_s/\varepsilon)\,ds.
+\tag{23.7}
+$$
+
+The Itô isometry, $|\tanh x|\le\min(1,|x|)$ and
+$1-\operatorname{sech}^2x=\tanh^2x$ give
+
+$$
+\mathbb E|q_2^\varepsilon(t)-W_t^2-t/2|
+\le\varepsilon\sqrt t+\varepsilon^2t/4.
+\tag{23.8}
+$$
+
+For this setting $W^2$, $W^3$ and the hidden system driven by $W^1$ are
+independent. Reflection gives survival probability
+$2\Phi(1/\sqrt t)-1$; the Gaussian characteristic function gives
+$\mathbb E\sin(W_t^2+t/2)=e^{-t/2}\sin(t/2)$.
+The sine function is $1$-Lipschitz, so (23.8) proves (23.4), with absolute
+error at most $\varepsilon+\varepsilon^2/4$ at $t=1$.
+The reflection supplier is Mörters–Peres, *Brownian Motion*,
+[public draft](https://www.stat.berkeley.edu/~aldous/205B/bmbook.pdf),
+Theorem 2.18, page 50.
+
+The source scale is not fixed in this limit: hidden relaxation has rate
+$\varepsilon^{-4}$ and correlation time $\varepsilon^4$, and the shear
+varies on hidden scale $\varepsilon$.
+Although $r_1\to0$, $X_1r_1$ does not tend to zero;
+$\partial_h^2r_1$ has size of order $\varepsilon^{-1}$ and
+$\partial_hX_0^h=-\varepsilon^{-4}$.
+No uniform source derivative or service-cost bound for these scales was
+included in (23.3). For deterministic controls with finite
+$\int_0^T|u_1|dt$, the projected path error is at most
+$\varepsilon\int_0^T|u_1|dt$, which does vanish. The obstruction concerns
+the second-order consumer, not that finite-variation statement.
+Measuring the actual Itô drift would distinguish the pair through (23.6);
+such first-moment data are additional information, not part of (23.3). QED.
+
+## 24. Finite endpoint records identify a fixed-frequency source
+
+**Assumption 24.1 (analytic membership, actual permissions and acquisition).**
+Keep (23.1), $J,\Pi,g_D$, the original clock and $\mathcal Q$. Fix finite
+known bounds $A_0,C_0>0$. A single source has parameters $(a,c)$, fixed
+through acquisition and execution, with $|a|\le A_0$, $|c|\le C_0$, and
+its complete actual fields on all of $J$ are
+
+$$
+\begin{aligned}
+X_0&=(c e_2,0,1),&
+X_1&=(e_1+a\sin h\,e_2,1,0),\\
+X_2&=(e_2,0,1),&X_3&=(e_3,0,0).
+\end{aligned}
+\tag{24.1}
+$$
+
+The unit of the hidden phase and the frequency $1$ in $\sin h$ are fixed
+parts of membership. Full-space continuations are auxiliary; operations
+remain restricted by (23.1). Membership on the whole declared source is an
+independent premise, not a conclusion from observations. In particular it
+excludes the changing hidden scale of (23.2).
+The joint inner product, distance and coordinate labels have the actual
+common calibration (16.9); the acquisition below estimates $(a,c)$, not
+an unknown $\Pi$ or an unknown ambient dimension.
+
+The actual deterministic equation includes $X_0$ in the original clock:
+$\dot Z=X_0+\sum_a u_aX_a$. The original operation contract separately
+permits a hold $u=0$, a bounded piecewise $C^1$ pulse of the named control
+$X_1$, and each selected $Q$-Brownian execution in (16.6).
+These are permissions of this abstract source; they do not follow from
+the native FIB $P,Q$ menu.
+
+The preparation contract supplies one actual initial source with
+$|h_0|\le\delta_h$, $|q_i|\le R_0$, $q_3\ge H_{\min}>0$ and
+$|k_0|\le K_0$, with finite declared preparation time and charge.
+A permitted nondestructive sensor returns a vector $R_j\in\mathbb R^3$
+whose coordinate errors relative to $q(s_j)$ are at most $\epsilon>0$.
+Each read has its own finite duration and charge, and can complete while
+the prescribed control continues. Its sample time $s_j$ is its completion
+time; the source evolves by (24.1) throughout the read. No hidden-coordinate
+sensor is assumed. Before the first sample only a hold is applied, so the
+prepared bound on $h_0$ is preserved. Let this first-read duration satisfy
+$0\le\ell_0\le\ell_{\max}<\infty$, with a declared bound; absorb
+earlier preparation evolution into the stated preparation contract.
+
+There are three endpoint samples, at $s_0<s_1<s_2$, on this same evolving
+source. On $[s_0,s_1]$ execute a hold; on $[s_1,s_2]$ execute only the
+named $X_1$ pulse. Certified original-clock and command records give
+
+$$
+\begin{gathered}
+\tau_j=s_{j+1}-s_j,\quad |\tau_j-1|\le\delta_t<1
+\quad(j=0,1),\\
+U=\int_{s_1}^{s_2}u_1(t)dt,\quad |U-\tau_1|\le\delta_u,
+\quad |u_1(t)|\le U_*<\infty,\qquad u_2=u_3=0.
+\end{gathered}
+\tag{24.2}
+$$
+
+Read latencies, timing actions and command switches after $s_0$ occur
+inside these intervals; the apparatus must actually be able to meet
+(24.2). Their durations are not removed from $\tau_j$.
+All error bounds include the stated sensor and timing calibration;
+permission and finite price for obtaining these records are separate
+premises. No independent preparations, reset, exact instantaneous field
+sensor, derivative oracle or covariance-rate oracle is supplied.
+
+**Theorem 24.2 (record-to-actual-coefficient bounds).** Under Assumption 24.1
+put $\rho_0=R_1^2-R_0^2$, $\rho_1=R_2^2-R_1^2$, and $d=1-\cos1$. Define
+
+$$
+\begin{aligned}
+E_0&=2\epsilon+C_0\delta_t,\\
+E_1&=2\epsilon+C_0\delta_t+
+ A_0(2\delta_h+\delta_u+\delta_t).
+\end{aligned}
+\tag{24.3}
+$$
+
+Let finite arithmetic return rational centers $\widehat c,\widehat a$
+with certified bounds
+
+$$
+|\widehat c-\rho_0|\le\eta_c,\qquad
+|d\widehat a-(\rho_1-\rho_0)|\le\eta_a.
+\tag{24.4}
+$$
+
+Use upward bounds in the following finite computations:
+
+$$
+C=E_0+\eta_c,\qquad
+R_a=\tfrac{24}{11}(E_0+E_1+\eta_a),\qquad
+A=|\widehat a|+R_a.
+\tag{24.5}
+$$
+
+Then $|c-\widehat c|\le C$, $|a-\widehat a|\le R_a$ and $|a|\le A$.
+If $2\epsilon+\delta_t+\delta_u<1$, the acquired directed coordinate
+$R_2^1-R_1^1$ is strictly positive, furnishing an actual signed $X_1$
+anchor. For the three-axis comparison
+$V_0=\widehat c e_2$, $V_a=e_a$, at every source point and every setting,
+
+$$
+\begin{aligned}
+|v_1-e_1|&\le A,&v_2&=e_2,&v_3&=e_3,\\
+\|A_Q-Q\|&\le2A\|Q\|+A^2Q_{11},\\
+|b_Q^\Pi-\widehat c e_2|&\le C+\tfrac12Q_{11}A,
+\end{aligned}
+\tag{24.6}
+$$
+
+where $b_Q^\Pi$ is the actual projected Itô drift, not $v_0$.
+More precisely the actual generator residual is
+
+$$
+\begin{aligned}
+b_Q^\Pi&=(c+\tfrac12Q_{11}a\cos h)e_2,\\
+\mathcal L_Q(\psi\circ\Pi)
+ -(\widehat c\,\partial_2\psi+\tfrac12 Q:D^2\psi)\circ\Pi
+&=(c-\widehat c+\tfrac12Q_{11}a\cos h)\partial_2\psi
+ +\tfrac12(A_Q-Q):D^2\psi.
+\end{aligned}
+\tag{24.7}
+$$
+
+Thus these finitely acquired records control the source derivative needed
+by the actual second-order consumer on the entire declared template.
+
+Proof. Write $U_a(t)=\int_0^tu_a(s)ds$, with time measured from any
+chosen start. The complete deterministic solution, before killing, is
+
+$$
+\begin{aligned}
+h_t&=h_0+U_1(t),&k_t&=k_0+t+U_2(t),\\
+q_1(t)&=q_1(0)+U_1(t),&q_3(t)&=q_3(0)+U_3(t),\\
+q_2(t)&=q_2(0)+ct+U_2(t)
+ +a\{\cos h_0-\cos(h_0+U_1(t))\}.
+\end{aligned}
+\tag{24.8}
+$$
+
+Differentiation verifies all five equations and their initial values;
+local uniqueness then proves these are the actual paths. They exist for
+every finite-integral control. During acquisition $q_3$ is constant and
+positive, so every prefix, including every read, obeys the original guard.
+The hold leaves $h$ unchanged. Its second-coordinate increment is $c\tau_0$;
+the pulse increment is $c\tau_1+a(\cos h_0-\cos(h_0+U))$.
+Since $|U-1|\le\delta_u+\delta_t$ and cosine is $1$-Lipschitz,
+
+$$
+|\cos h_0-\cos(h_0+U)-d|
+\le2\delta_h+\delta_u+\delta_t.
+$$
+
+Endpoint errors add at most $2\epsilon$ to each increment, even though
+they share the middle record and need not be independent.
+This proves $|\rho_0-c|\le E_0$ and $|\rho_1-c-ad|\le E_1$.
+The alternating cosine series at $1$ gives
+$11/24\le d\le1/2$. Subtracting the increments and using (24.4)
+proves (24.5). This is the explicit two-parameter inverse inside this
+consumer, not an additional inverse or joint-diagonalization theorem.
+For example, a degree-$2N$ cosine truncation has remainder at most
+$1/(2N+2)!$; rational interval arithmetic therefore certifies (24.4)
+with finitely many operations, including output rounding in $\eta_a,\eta_c$.
+The first-coordinate pulse increment is $U$; its reported value is at
+least $1-\delta_u-\delta_t-2\epsilon$, proving the signed anchor.
+
+Finally $X_1r_1=a\cos h\,e_2$ and the other $X_ar_b$ vanish.
+The calculation (23.5), now inside (24.1), gives (24.7);
+the shear covariance expansion in the proof of (23.3) gives (24.6).
+Here global control of the derivative comes from the declared fixed-frequency
+source and the acquired parameter interval. Finitely many observations
+alone would not supply that membership premise, as Proposition 17.4
+already shows. At the pulse endpoint the actual hidden coordinates are
+$h_0+U$ and $k(s_0)+\tau_0+\tau_1$; they are retained, not reset. QED.
+
+## 25. Finite acquisition to transport and original killed response
+
+**Theorem 25.1 (all-start finite-time correspondence).** Suppose the records
+of Theorem 24.2 have been lawfully acquired for a source satisfying
+Assumption 24.1. At every actual execution start
+$\zeta=(q,h,k)\in S$, with arbitrary hidden records, compare with the
+three-dimensional process starting at that same $q$ and using the same
+actual controls, setting and original elapsed clock. For deterministic
+execution include the same common drift convention as (24.8). If
+$Y_t=q+\widehat c t e_2+\sum_a U_a(t)e_a$, then for every finite $T$
+
+$$
+\sup_{t\le T}|\Pi Z_t-Y_t|
+\le CT+A\min\left(2,\int_0^T|u_1(s)|ds\right)
+\le D_T:=CT+2A.
+\tag{25.1}
+$$
+
+This is an estimate for the full-space continuations, and therefore for
+their live paths. It uses exactly $d_D(\zeta,\zeta')=|\Pi\zeta-\Pi\zeta'|$
+when comparing source task distances. The complete original deaths are
+identical: both are the first time $q_3+U_3$ reaches zero.
+
+For each $Q\in\mathcal Q$, on the same $Q$-Brownian motion the full-space
+source is a unique nonexplosive strong solution at every start, with
+
+$$
+\begin{aligned}
+h_t&=h+W_t^1,&k_t&=k+t+W_t^2,\\
+q_1(t)&=q_1+W_t^1,&q_3(t)&=q_3+W_t^3,\\
+q_2(t)&=q_2+ct+W_t^2+a\{\cos h-\cos(h+W_t^1)\}.
+\end{aligned}
+\tag{25.2}
+$$
+
+The comparison $Y_t=q+\widehat c\,t e_2+W_t$ satisfies
+$\sup_{t\le T}|\Pi Z_t-Y_t|\le D_T$ pathwise.
+Both killed processes use exactly
+
+$$
+\tau=\inf\{t\ge0:q_3+W_t^3\le0\},\qquad
+p_Q(t,q_3)=\mathbb P(t<\tau)
+=2\Phi\left(\frac{q_3}{\sqrt{Q_{33}t}}\right)-1
+\quad(t>0).
+\tag{25.3}
+$$
+
+In particular killing is nontrivial: $0<p_Q(t,q_3)<1$ at every interior
+start and every $t>0$. Give the cemetery value zero. For every bounded
+$L$-Lipschitz $\varphi$ on $K$,
+
+$$
+\left|\mathbb E_\zeta[\varphi(\Pi Z_t)\mathbf1_{t<\tau}]
+ -\mathbb E_q[\varphi(Y_t)\mathbf1_{t<\tau}]\right|
+\le L D_t p_Q(t,q_3).
+\tag{25.4}
+$$
+
+There is also a bound for every bounded Borel observable, with no
+continuity assumption. Put $I=\{1,3\}$ and
+
+$$
+\nu_Q=Q_{22}-Q_{2I}Q_{II}^{-1}Q_{I2}>0.
+$$
+
+If $|\varphi|\le M$, then
+
+$$
+\left|\mathbb E_\zeta[\varphi(\Pi Z_t)\mathbf1_{t<\tau}]
+ -\mathbb E_q[\varphi(Y_t)\mathbf1_{t<\tau}]\right|
+\le M p_Q(t,q_3)
+ \min\left(2,\sqrt{\frac2\pi}\frac{D_t}{\sqrt{\nu_Qt}}\right).
+\tag{25.5}
+$$
+
+These assertions hold for each start, uniformly in its hidden records;
+they do not assert one null set valid for all uncountably many starts.
+The source remains five-dimensional and evolves both hidden records.
+Its projected response is not asserted to be an exact base Markov
+semigroup when $a\ne0$; (25.4)–(25.5) compare it with the indicated base
+semigroup at the same original lifetime.
+
+Proof. Subtract $Y$ from (24.8). Only the second coordinate differs.
+The primitive difference is bounded both by $2$ and by $|U_1(t)|$,
+giving (25.1). The third coordinate of each continuation is exactly
+$q_3+U_3$, and all source states with positive third coordinate are
+allowed irrespective of $h,k$. Thus the original lifetime equality is
+proved from the full source solution, not assumed from a local generator.
+
+Apply the ordinary Stratonovich chain rule to $\cos(h+W^1)$ to verify
+(25.2) directly, for correlated as well as independent components.
+These formulas are finite and continuous on each finite interval.
+Smooth coefficients and local uniqueness identify them with the actual
+solutions; no explosion or hidden exit can occur. Subtraction gives the
+pathwise bound $D_T$. Their third coordinates are equal, establishing
+(25.3) before any expectation is taken. Reflection and Brownian scaling
+give its probability formula. The same indicator multiplies both
+observables, so Lipschitz continuity proves (25.4).
+
+For (25.5), the SPD Schur complement permits the Gaussian decomposition
+
+$$
+W_t^2=Q_{2I}Q_{II}^{-1}(W_t^1,W_t^3)^{\mathsf T}
+ +\sqrt{\nu_Q}\,\beta_t,
+$$
+
+where $\beta$ is a standard Brownian motion independent of the entire
+$(W^1,W^3)$ path. This follows directly by subtracting the displayed
+linear combination: its cross-covariances at every pair of times vanish;
+joint Gaussianity gives independence, and its covariance is $\nu_Q\min(s,t)$.
+Condition on those two paths through $t$. Their common survival indicator,
+first and third coordinates, and the second-coordinate shift
+
+$$
+\Delta_t=(c-\widehat c)t+a\{\cos h-\cos(h+W_t^1)\}
+$$
+
+are then fixed. Only the independent second-coordinate Gaussian remains,
+with variance $\nu_Qt$, and $|\Delta_t|\le D_t$.
+If $g_\sigma$ is the centered Gaussian density with standard deviation
+$\sigma$, the fundamental theorem of calculus and Fubini give
+
+$$
+\int|g_\sigma(x-\Delta)-g_\sigma(x)|dx
+\le |\Delta|\int|g_\sigma'(x)|dx
+=\sqrt{2/\pi}\,|\Delta|/\sigma;
+$$
+
+its left side is also at most $2$. Integrating $\varphi$ against these
+conditional densities and then the common survival indicator proves
+(25.5). This elementary Gaussian smoothing estimate is only an
+intermediate step of this source-specific killed-response calculation.
+For a fixed finite menu the minimum of its $\nu_Q$ is positive, so the
+bound can be made uniform over the menu. At $t=0$ both responses agree
+exactly; (25.5) is stated only for $t>0$.
+
+For $a\ne0$, the two starts $(q,\pi/2,k)$ and $(q,-\pi/2,k)$ have
+actual labelled $X_1$ values differing by $2a e_2$; their $Q=I_3$
+projected covariance entry $(1,2)$ also differs by $2a$. Thus an exact
+all-fibre labelled or diffusion quotient is absent in this inhabited
+source. When $\widehat c=c$, the lawful deterministic pulse with
+$U_1(T)=\pi$, $U_2=U_3=0$ and $h=0$ attains error $2|a|$ while the
+original guard stays alive. The term $2A$ in a uniform bound for this
+control class therefore measures real omitted information.
+
+The Brownian strong Markov supplier is Mörters–Peres, Theorem 2.14,
+page 48 of the cited draft. It permits the same argument after an almost
+surely finite nonanticipating acquisition completion time, conditional on
+the retained source state and records, provided the original execution
+contract supplies the corresponding fresh Brownian increments. It does
+not permit an anticipatory selection of the execution noise. QED.
+
+**Corollary 25.2 (finite precision at the actual execution start).**
+The same source also admits the following finite-record initialization.
+After $s_2$ hold for a finite arithmetic/reporting duration $\Lambda$;
+a clock record gives $|\Lambda-\widehat\Lambda|\le\delta_\Lambda$
+and $0\le\Lambda\le\Lambda_{\max}$.
+With second-coordinate arithmetic error at most $\eta_s$, use
+
+$$
+\widehat q=(R_2^1,\ R_2^2+\widehat c\widehat\Lambda,\ R_2^3).
+$$
+
+At this actual execution start put
+
+$$
+\delta_2=\epsilon+C\Lambda_{\max}
+ +|\widehat c|\delta_\Lambda+\eta_s,\qquad
+E=\sqrt{2\epsilon^2+\delta_2^2}.
+\tag{25.6}
+$$
+
+Then $|q-\widehat q|\le E$ and $|q_3-\widehat q_3|\le\epsilon$;
+$h$ is unchanged during this hold and $k$ increases by $\Lambda$.
+Assume the acquired guard margin $\widehat q_3>\epsilon$.
+For a reference starting at $\widehat q$, deterministic full-space
+accuracy is at most $E+D_T$. In particular, if
+$\inf_{s\le T}(\widehat q_3+U_3(s))>\epsilon$, both original guards
+survive through $T$. A zero margin alone certifies no deterministic
+lifetime agreement.
+
+For Brownian execution let $\widehat\tau$ be the reference's first hit
+of its original boundary $q_3=0$. For every $t>0$,
+
+$$
+\begin{aligned}
+\mathbb P\bigl(\mathbf1_{t<\tau}\ne\mathbf1_{t<\widehat\tau}\bigr)
+&=2\left|\Phi\left(\frac{q_3}{\sqrt{Q_{33}t}}\right)
+ -\Phi\left(\frac{\widehat q_3}{\sqrt{Q_{33}t}}\right)\right|\\
+&\le\kappa_t:=\min\left(1,\sqrt{\frac2\pi}
+ \frac{\epsilon}{\sqrt{Q_{33}t}}\right).
+\end{aligned}
+\tag{25.7}
+$$
+
+Hence for $|\varphi|\le M$ and Lipschitz constant $L$ the actual killed
+response error is at most
+
+$$
+L(E+D_t)+M\kappa_t.
+\tag{25.8}
+$$
+
+This is a source-specific initial-record correction for the original
+half-space guard, not a shifted execution boundary or a general
+perturbation theorem for guards.
+
+Proof. During the reporting hold, only $q_2$ changes in the projection,
+by $c\Lambda$. Subtracting its predicted increment gives the bound
+$C\Lambda_{\max}+|\widehat c|\delta_\Lambda+\eta_s$; endpoint sensor
+errors prove (25.6). The deterministic bound follows from (24.8).
+For the same Brownian path the two survival events are nested, since
+they are the conditions $\min_{s\le t}W_s^3>-q_3$ and
+$\min_{s\le t}W_s^3>-\widehat q_3$.
+Subtract their reflection probabilities to obtain (25.7); the normal
+density is at most $1/\sqrt{2\pi}$. On common survival use the Lipschitz
+bound; when exactly one process survives, only one observable of size
+at most $M$ remains. This proves (25.8). Arbitrary bounded Borel functions
+with unequal initial coordinates are not covered by (25.8)'s Lipschitz
+claim or by (25.5)'s equal-start smoothing argument. QED.
+
+## 26. Finite charges, nonconstant inhabitants and scope of the correspondence
+
+**Definition 26.1 (actual acquisition and execution resources).** All
+preparation, sensing, timing, arithmetic, storage, command, retention and
+failure charges are those of the original source contract. In particular
+$g_D$ assigns zero length to hidden differences but assigns them no zero
+service cost. Let $C_{\rm prep}$ include the complete preparation,
+$C_{{\rm read},j}$ its three actual sensor charges,
+$C_{{\rm clock},j}$ the certificates for $\tau_0,\tau_1,\Lambda$,
+$C_{\rm command}$ the pulse/effort certificate and
+$C_{\rm arithmetic}$ the finite interval computation, including its
+actual workspace/output/backing charges. If the original deterministic
+source-service rate is $c_{\rm src}(u,Z)$, the actual acquisition bill is
+
+$$
+C_{\rm acq}=C_{\rm prep}+\sum_{j=0}^2C_{{\rm read},j}
+ +\sum_{j=0}^2C_{{\rm clock},j}+C_{\rm command}+C_{\rm arithmetic}
+ +\int_{\rm after\ preparation}^{\rm execution\ start}
+ c_{\rm src}(u_s,Z_s)\,ds.
+\tag{26.1}
+$$
+
+Separate terms mean separate original charges; if the contract bundles
+one into another it is counted once. The actual elapsed acquisition
+clock is
+
+$$
+T_{\rm acq}=T_{\rm prep}+\ell_0+\tau_0+\tau_1+\Lambda.
+\tag{26.2}
+$$
+
+The later read and timing durations are already inside the $\tau_j$ or
+$\Lambda$, as required by Assumption 24.1. Computational latency is a
+real hold of the source, not deleted time. The two calibration intervals
+consume at most $2(1+\delta_t)$ clock units and pulse effort at most
+$U_*(1+\delta_t)$. At every actual execution, the original source-service
+integral to $T\wedge\tau$, plus its original command, retention and
+failure terms, is still charged. For stochastic execution write its
+original rate as $c_Q(Z)$; Brownian controls are not replaced by a
+finite-variation command bill.
+
+The finite alphabet of the nine scalar endpoint reports can be priced
+explicitly. From (24.8) a valid endpoint-report range through $s_2$ is
+
+$$
+R=R_0+C_0\ell_{\max}+2C_0(1+\delta_t)
+ +2A_0+1+\delta_t+\delta_u.
+\tag{26.3}
+$$
+
+A quantizer of mesh $2\epsilon$ on $[-R,R]$, including covering end
+levels, needs at most $\lceil R/\epsilon\rceil+2$ levels, hence at most
+$9\lceil\log_2(\lceil R/\epsilon\rceil+2)\rceil$ endpoint-output bits.
+The clock, effort, preparation and arithmetic certificates have their
+own additionally declared finite widths and prices. This count supplies
+neither a physical sensor nor a rate for obtaining a covariance matrix.
+The deterministic interval/noise distinction and pricing of independent
+repeats, when separately permitted, are already supplied by
+[Obtainable predictive bundles, §§2 and 6](AURIC_FIB_OBTAINABLE_PREDICTIVE_BUNDLE_THEORY.md);
+no new concentration or repeat-price assertion is needed here.
+
+**Proposition 26.2 (finite resources and an inhabited strict margin).**
+If the separately declared charges in Definition 26.1 are finite, the
+source-service rate is locally bounded on the permitted bounded-control
+calibration path, and all latencies meet the acquisition contract, then
+(26.1) is finite on this same source. If, additionally, the original
+stochastic source contract has the rate bound
+$c_Q(\zeta)\le C_Q^{\rm cost}(1+|\zeta|^2)$, its expected execution
+service charge to $T\wedge\tau$ is at most
+
+$$
+C_Q^{\rm cost}\int_0^T(1+M_Q(s;\zeta))ds,
+\tag{26.4}
+$$
+
+where the following completely specified polynomial is sufficient:
+
+$$
+\begin{aligned}
+M_Q(s;\zeta)={}&q_1^2+q_3^2+h^2+(|k|+s)^2
+ +3(|q_2|+C_0s)^2\\
+&+(2Q_{11}+4Q_{22}+Q_{33})s+12A_0^2.
+\end{aligned}
+\tag{26.5}
+$$
+
+Other original cost terms must still be added; no cost optimum is
+asserted. In particular this is not the native finite-bit tracking
+problem of [Paid point observation, §§44–49](FIB_NATIVE_PAID_POINT_OBSERVATION_TRACKING.md).
+
+The response margins are inhabited by a nonconstant source with evolving
+hidden records and nontrivial killing. For example, take
+
+$$
+A_0=C_0=1,\quad a=1/100,\quad c=1/10,\qquad
+\epsilon=\delta_t=\delta_h=\delta_u=\eta_a=\eta_c=10^{-6}.
+\tag{26.6}
+$$
+
+Whenever the permitted acquisition apparatus meets these finite error
+contracts, $C=4\cdot10^{-6}$, $R_a=24\cdot10^{-6}$ and
+$A\le0.010048$. Consequently $D_1\le0.020100<1/40$,
+and the actual Itô drift error at $Q=I_3$ is at most $0.005028$.
+Thus every equal-start $1$-Lipschitz killed observable has error less
+than $1/40$ at time $1$, and every equal-start Borel observable bounded
+by $1$ also has error less than $1/40$ by (25.5), since $\nu_{I_3}=1$.
+These bounds hold for all source starts, not only the calibration state.
+For the fully acquired start of Corollary 25.2, also take
+$H_{\min}=1$, $\Lambda_{\max}\le1$ and
+$\delta_\Lambda=\eta_s=10^{-6}$. Then its guard margin holds,
+$E<7\cdot10^{-6}$, and at $t=1$, $Q=I_3$, every observable with
+$M=L=1$ has the finite-record killed-response error less than
+$0.020108<1/40$. This last assertion uses the actual post-acquisition
+state and the reporting hold, rather than an exact current-state sensor.
+
+Proof. Under (24.8) a bounded-control acquisition in finite time stays
+in a compact part of $J$: $h$ changes by its finite control integral,
+$k$ by elapsed time, and the shear contribution to $q_2$ is at most
+$2A_0$. A locally bounded service rate is bounded on this compact
+state/control set. This proves finiteness of the actual integral.
+Formula (26.3) follows by bounding each endpoint coordinate in (24.8),
+including the initial $c\ell_0$ drift during the first read.
+A scalar quantizer with the indicated mesh gives its bit count.
+
+For execution, (25.2) gives the exact second moments of $q_1,q_3,h,k$.
+For the remaining coordinate use
+
+$$
+\mathbb E q_2(s)^2
+\le3(|q_2|+C_0s)^2+3Q_{22}s+12A_0^2.
+$$
+
+Summing proves $\mathbb E|Z_s|^2\le M_Q(s;\zeta)$ regardless of
+correlations among $W$'s components. Integrating the rate bound and
+using $\mathbf1_{s<\tau}\le1$ proves (26.4).
+
+For (26.6), $E_0=3\cdot10^{-6}$ and $E_1=7\cdot10^{-6}$;
+(24.5) gives the stated $C,R_a$ and
+$A\le|a|+2R_a=0.010048$. The arithmetic bounds in (24.4) are attainable
+with finite rational cosine enclosures and positive rounding budgets.
+The exact hold and unit pulse, with a finite-latency sensor completing
+within the specified intervals, exhibit a permitted acquisition in this
+conditional apparatus domain; the positive tolerance budgets allow
+finite-precision records. There is no reset between the two intervals.
+The source coefficient $a\sin h$ is nonconstant; $h$ is changed by
+$X_1$ and $k$ by both elapsed time and $X_2$. The survival probability in (25.3) is strictly
+between zero and one. Finally $CT+2A$ and $C+Q_{11}A/2$ give the stated
+numbers. In the finite-record initialization example,
+$|\widehat c|\le0.100004$, hence
+$\delta_2\le6.100004\cdot10^{-6}$ and
+$E^2\le(2+6.100004^2)10^{-12}<49\cdot10^{-12}$.
+Also $\widehat q_3\ge1-10^{-6}>\epsilon$ and
+$\kappa_1\le10^{-6}$. Substitution in (25.8) proves the final strict
+margin. QED.
+
+**Definition 26.3 (falsifiable conditions and mathematical limits).**
+For declared finite targets $T,\delta_{\rm path},\delta_{\rm drift}$,
+the source-specific sufficient margins are
+
+$$
+CT+2A<\delta_{\rm path},\qquad
+\max_{Q\in\mathcal Q}(C+Q_{11}A/2)<\delta_{\rm drift},
+\tag{26.7}
+$$
+
+together with the signed-anchor margin, acquired intervals intersecting
+$[-A_0,A_0]\times[-C_0,C_0]$, and, for finite-record initialization,
+$\widehat q_3>\epsilon$ and the explicit response target in (25.8).
+For equal starts the chosen response target is checked directly against
+(25.4) or (25.5). A set of acquired increments admitting no $(a,c)$ in
+the declared box
+with $|\rho_0-c|\le E_0$ and $|\rho_1-c-ad|\le E_1$ falsifies that
+conjunction of membership, common calibration and acquisition-error
+premises. So does a certified first-moment interval disjoint from
+(24.6), or a certified response interval disjoint from its applicable
+bound; uncertified point estimates alone do not supply these tests.
+Passing finitely many records does not certify arbitrary global smooth membership. Hidden phase preparation, sensor access, simultaneous
+read/control operation and their durations remain distinct premises.
+
+The mature local SDE and drift suppliers used inside (23.5) and (25.2)
+are Hochgerner–Ratiu, Theorem 3.1 and the following connection drift
+formula; nonexplosion and lifetime agreement here follow from the displayed
+source calculations. The Brownian reflection and strong Markov suppliers
+are precisely Mörters–Peres, Theorems 2.18 and 2.14.
+Bouchard–Geiss–Gobet, arXiv:1307.4247v2, §2.1 Assumption (P), has explicit
+boundary-distance and noncharacteristic requirements; no general exit
+estimate is imported without those hypotheses. Gobet–Menozzi,
+arXiv:0706.4042v2, abstract, concern a discretely stopped Euler
+scheme in a shifted domain; they grant no permission to change (23.1).
+The present derivation instead uses the unchanged third coordinate to
+prove (25.3), and reflection to compute only the specific initial-record
+mismatch (25.7). The finite-menu identification background of §18 and
+Kleinsteuber–Shen does not supply either the missing derivative in (23.6)
+or a calibration sensor for (24.2).
+
+The new mathematical composition is the obstruction (23.2)–(23.8) and the
+particular acquired-source correspondence (24.1)–(26.7); the calculus,
+Gaussian inversion and stability steps are credited intermediate inputs.
+The changing-scale negative sequence does not refute the fixed-template
+positive theorem. Conversely, the positive theorem gives no uniform
+certificate over all smooth sources, no new native actuator and no
+identification of this source with native FIB $P,Q$ transport.
+The three-axis task metric remains the one in (16.9), not the full
+source metric. Reducing instrument errors makes $C,R_a$ tend to zero
+but leaves $A$ tending to $|a|$ at a fixed nonzero source parameter;
+the attained pulse error in the proof of Theorem 25.1 cannot be removed
+by reporting more digits. Finite $T$ and finite tolerances are essential
+to the claimed estimates; neither physical/ambient dimension nor infinite-time
+uniform stability follows. No assertion about the universe's dimension
+is implied by this conditional interface correspondence.
+
+## 追加锚（本行以下为增补区）
+
+## 27. Prepared-source calibration and three evolving task coordinates
+
+**Definition 27.1 (fixed calibration and the predictive carrier).** Keep
+exactly Assumption 24.1, including its whole-source membership premise,
+original task metric, operation permissions, clock and half-space guard.
+For an actual source state set
+
+$$
+\theta=h-q_1,\qquad
+\alpha=a\cos\theta,\quad \gamma=a\sin\theta,\qquad
+\lambda=(\alpha,\gamma,c),
+\quad P_\lambda(x)=\alpha\cos x-\gamma\sin x.
+\tag{27.1}
+$$
+
+The carrier for current and future raw-task records and death is
+$(q;\lambda)$. Its three evolving task coordinates are precisely the
+original $q$, with distance $|q-q'|$; $\lambda$ is fixed calibration,
+not three further evolving task coordinates. The original source still
+has $h,k$, and its service bill still uses the original source trajectory.
+Neither the task carrier nor the zero hidden length in $g_D$ discards that
+billing obligation or claims that $k$ has been sensed.
+
+**Theorem 27.2 (source-derived exact transport and continuation).** For
+(24.1), $\theta,\alpha,\gamma,c$ are invariant under every permitted
+finite-integral deterministic control and every fixed permitted
+$Q$-Brownian execution. At fixed $\lambda$ the exact raw-task flow is
+
+$$
+F_{t,U}^\lambda(q)=
+(q_1+U_1,\ q_2+ct+U_2+P_\lambda(q_1)-P_\lambda(q_1+U_1),\ q_3+U_3).
+\tag{27.2}
+$$
+
+Here $U$ is the actual cumulative command, or the actual Brownian
+increment, not a newly available actuator. Its actual fields on the
+three task coordinates are
+
+$$
+V_0=ce_2,\quad
+V_1=e_1+(\alpha\sin q_1+\gamma\cos q_1)e_2,\quad V_2=e_2,\quad V_3=e_3.
+\tag{27.3}
+$$
+
+The original lifetime is exactly the first zero of $q_3+U_3$.
+For deterministic concatenations and, pathwise, Brownian increments,
+
+$$
+F_{s,V}^\lambda\circ F_{t,U}^\lambda=F_{t+s,U+V}^\lambda.
+\tag{27.4}
+$$
+
+This equality includes killing when each segment is killed on its own
+continuous third-coordinate prefix and the cemetery is absorbing. A
+segment's positive endpoint alone is not its survival certificate.
+For a single fixed permitted $Q$ let
+
+$$
+K_t^{\lambda,Q}f(q)=
+\mathbb E[f(F_{t,W_t}^\lambda(q))
+ \mathbf1_{\min_{0\le r\le t}(q_3+W_r^3)>0}],\qquad f(\dagger)=0.
+\tag{27.5}
+$$
+
+Then $K_{t+s}^{\lambda,Q}=K_t^{\lambda,Q}K_s^{\lambda,Q}$. The same
+kernel is the exact conditional continuation of the original source
+from every live source state with this calibration, including after an
+a.s. finite permitted nonanticipating acquisition or join, if the
+execution contract supplies fresh Brownian increments there. This is a
+family indexed by the true calibration, not exact calibration recovery
+from a positive-tolerance record. No change of $Q$ at a join is supplied.
+
+Proof. Subtract the $q_1$ equation from the $h$ equation in (24.1).
+The difference has zero drift and zero coefficient for every control or
+Stratonovich increment. Thus $h=q_1+\theta$ on the complete actual
+continuation. The addition formula gives
+$a\cos h=P_\lambda(q_1)$ and
+$a\sin h=\alpha\sin q_1+\gamma\cos q_1$. Substitution in (24.8) and
+(25.2) proves (27.2) and (27.3); it also proves the stated original
+lifetime, since (24.1) has no hidden exit and has the complete guard
+(23.1). Hidden coordinates are reconstructed on the source as
+$h_t=h+U_1(t)$, $k_t=k+t+U_2(t)$ when they are needed for its bill.
+
+The two primitive differences in a composition telescope:
+$P_\lambda(q_1)-P_\lambda(q_1+U_1)$ plus
+$P_\lambda(q_1+U_1)-P_\lambda(q_1+U_1+V_1)$. Drift and the other
+increments add. The continuous guard prefix on the concatenated path
+is the conjunction of the two live-prefix conditions. This proves
+(27.4), also for paths killed in the first segment.
+
+For existence on every finite interval one can equivalently compute
+
+$$
+D_\lambda(q)=(q_1,q_2+P_\lambda(q_1),q_3),\qquad
+D_\lambda^{-1}(y)=(y_1,y_2-P_\lambda(y_1),y_3),
+\tag{27.6}
+$$
+
+under which $D_\lambda(F_{t,U}^\lambda(q))=D_\lambda(q)+ct e_2+U$.
+These globally defined expressions and the reconstructed hidden paths
+are finite on each finite interval. The ordinary Stratonovich chain
+rule verifies the original equations, and local uniqueness identifies
+them with their actual solutions. In particular the raw generator is
+
+$$
+\mathcal L_{\lambda,Q}f=
+(c+\tfrac12Q_{11}P_\lambda(q_1))\partial_2f+
+\tfrac12(VQV^{\mathsf T}):D^2f,
+\quad V=I+(\alpha\sin q_1+\gamma\cos q_1)e_2e_1^{\mathsf T}.
+\tag{27.7}
+$$
+
+The hidden source derivative in (24.7) has therefore been preserved,
+not estimated by differentiating inaccurate projected values.
+Independent Brownian increments, (27.4), the live-prefix conjunction
+and conditioning give (27.5)'s semigroup identity. Brownian strong
+Markov gives its stated continuation at stopping times.
+The intermediate local SDE/chain-rule supplier is Hochgerner–Ratiu,
+[arXiv:1204.6438v1](https://arxiv.org/pdf/1204.6438v1), Theorem 3.1,
+PDF page 21, with the drift formula on page 22; strong Markov is
+Mörters–Peres, [*Brownian Motion*](https://www.stat.berkeley.edu/~aldous/205B/bmbook.pdf),
+Theorem 2.14, page 48. Globality, fixed calibration, the original guard
+and this acquisition's continuation have been proved above.
+$D_\lambda$ is a mathematical computation. It is generally not an
+isometry of the raw-$q$ metric and creates no permitted change of the
+source, sensor, control or guard. QED.
+
+**Proposition 27.3 (all-fibre information versus a calibrated task).**
+For the current raw-task and death task, on the whole family (24.1),
+equality of $(q;\lambda)$ implies identical deterministic future
+records and every fixed permitted $Q$-response. If the original named
+control permits an open interval of pulse efforts, or one repeatable
+effort $u\notin\pi\mathbb Z$, this condition is also necessary for
+equality of all deterministic future records. The near-unit pulse
+used in Proposition 28.5 has this separating property. This condition
+is a statement about the original pulse permissions, not a permission
+to add new commands. The summary $q$ alone does not suffice on the
+whole family with that separating pulse.
+At a fixed calibration only three task coordinates evolve. This
+assertion excludes bills or hidden-coordinate readouts as additional
+targets; those require their original additional source information.
+
+Proof. Sufficiency follows from (27.2), including every guard prefix.
+The empty word determines $q$. Holds determine $c$, since their
+second-coordinate increment is $ct$. At a common $q,c$, equality of
+named-pulse responses on an open interval of pulse efforts $u$ forces
+$H(q_1)-H(q_1+u)=0$, where
+$H(x)=(\alpha-\alpha')\cos x-(\gamma-\gamma')\sin x$.
+Thus $H$ is constant on an open interval. There $H'=0$ and
+$H''=-H=0$, and hence $H=0$. At any point of that interval the two
+linear equations $H=H'=0$ have determinant of absolute value one;
+therefore $\alpha=\alpha'$ and $\gamma=\gamma'$. These derivatives
+are a proof about the allowed pulse family, not a derivative sensor.
+Alternatively, for a single repeatable $u\notin\pi\mathbb Z$, the
+one-pulse and two-pulse records force
+$H(q_1)=H(q_1+u)=H(q_1+2u)$. The two equations on the sine/cosine
+coefficients have determinant of absolute value
+$2|\sin u|(1-\cos u)>0$, so the same conclusion follows. In this
+case the equal-$q$ starts $h=0,\pi$ already differ by
+$2a(1-\cos u)$ after one such pulse, with the same live $q_3$.
+When $a=0$ the carrier correctly forgets the immaterial phase, and it
+also identifies $(a,\theta)$ and $(-a,\theta+\pi)$.
+Thus $q$ alone cannot be an all-fibre carrier under those original
+separating permissions. QED.
+
+**Definition 27.4 (one joint finite record and its feasible sources).**
+Let $q^p,h^p,k^p$ denote the actual prepared state, and set
+
+$$
+L_0=\ell_0,\quad L_1=\ell_0+\tau_0,\quad
+L_2=\ell_0+\tau_0+\tau_1,\quad L_*=L_2+\Lambda,
+\qquad \mathsf U_0=\mathsf U_1=0,\quad \mathsf U_2=\mathsf U_*=U.
+\tag{27.8}
+$$
+
+The acquired transcript contains the three actual finite reports,
+their certified timing/effort intervals, the preparation/permission
+certificates, reporting-hold clock certificate, and the original
+billing records. Actual values inside a timing interval are latent;
+they are not declared exact observations. Execution time $t$ is an
+elapsed increment in that same original clock; its origin, preparation
+time and all read/hold durations remain in the transcript, rather
+than resetting the source clock. Its feasible set consists
+of all prepared states, fixed $(a,c)$ and actual durations/effort
+satisfying those same certificates, (24.1)–(24.2), and simultaneously
+
+$$
+\begin{aligned}
+q^{(j)}_1&=q^p_1+\mathsf U_j,&q^{(j)}_3&=q^p_3,\\
+q^{(j)}_2&=q^p_2+cL_j+a[\cos h^p-\cos(h^p+\mathsf U_j)],&
+|R_j^i-q^{(j)}_i|&\le\epsilon\quad(j=0,1,2;\ i=1,2,3).
+\end{aligned}
+\tag{27.9}
+$$
+
+At execution replace $j$ by $*$ in the same formula; in addition
+$h_*=h^p+U$, $k_*=k^p+L_*$ and $\theta=h^p-q^p_1$.
+Actual source charges use these actual paths and original rates; if
+bills carry additional information it is also intersected into this
+feasible set. One cannot assign independent errors to the two uses
+of $R_1$, or reselect a different feasible calibration at each join.
+
+**Theorem 27.5 (lawful finite acquisition of retained calibration).**
+For an actual transcript of Assumption 24.1 and Corollary 25.2 use their
+same $\widehat a,\widehat c,R_a,C,\widehat q,E,\delta_2$, and set
+
+$$
+\widehat\theta=-R_1^1,\qquad
+\widehat h_*=\widehat q_1+\widehat\theta=R_2^1-R_1^1,\qquad
+\eta_h=\delta_h+2\epsilon,
+\quad
+\widehat\lambda=(\widehat a\cos\widehat\theta,
+                  \widehat a\sin\widehat\theta,\widehat c).
+\tag{27.10}
+$$
+
+Every feasible source has
+
+$$
+\begin{gathered}
+|\theta-\widehat\theta|\le\delta_h+\epsilon,\qquad
+|h_*-\widehat h_*|\le\eta_h,\qquad
+|a-\widehat a|\le R_a,\quad |c-\widehat c|\le C,\\
+|q_*-\widehat q|\le E,\qquad
+|q_{*,1}-\widehat q_1|,|q_{*,3}-\widehat q_3|\le\epsilon,
+\quad |q_{*,2}-\widehat q_2|\le\delta_2.
+\end{gathered}
+\tag{27.11}
+$$
+
+In particular the nominal execution phase is near $U$, not near zero.
+The same $\widehat\lambda$ is retained through all joins. The exact
+feasible predictive family is the image of (27.9) under
+$(q_*;a\cos\theta,a\sin\theta,c)$; the displayed radii are a sufficient
+enclosure of it, not a statement that arbitrary points of the enclosure
+are jointly feasible or independent.
+
+Proof. During the first read and calibration hold $q_1=q^p_1$ and
+$h=h^p$, with $|h^p|\le\delta_h$. Hence
+$|h^p-q^p_1+R_1^1|\le\delta_h+\epsilon$.
+During the pulse both $h$ and $q_1$ acquire the same actual $U$.
+Subtracting the two first-coordinate reports gives
+$|(R_2^1-R_1^1)-U|\le2\epsilon$. The reporting hold changes neither
+of these coordinates; this proves the phase assertion at the actual
+execution start, including the pulse and all its timing error.
+The coefficient bounds follow from the two dependent increments of
+these same records in Theorem 24.2, without a new observation.
+The second-coordinate reporting correction is exactly (25.6), including
+$C\Lambda_{\max}$, $|\widehat c|\delta_\Lambda$ and $\eta_s$.
+The other initial coordinates stay fixed during that hold. This proves
+all of (27.11), with the complete first-read duration included in
+(27.9). Rational subtraction uses finite arithmetic; any additional
+rounding of (27.10) must be added to its phase radius. There is no reset,
+no hidden sensor and no acquisition of the exact $k_*$: its prepared
+interval and actual source evolution remain available for billing.
+QED.
+
+## 28. Finite records, original killing and horizon-uniform endpoint accuracy
+
+**Theorem 28.1 (one calibration, no join factor).** Compare the actual
+execution with $F^{\widehat\lambda}$ from its acquired $\widehat q$,
+using the same actual commands or $Q$-Brownian path and elapsed clock.
+Write $h=h_*$, $\widehat h=\widehat h_*$, and put
+
+$$
+D=2R_a+2|\widehat a|\eta_h,\qquad B_T=CT+D.
+\tag{28.1}
+$$
+
+For every finite $T$, their full-space continuations satisfy
+
+$$
+\sup_{0\le t\le T}|q_t-\widehat q_t|\le E+B_T.
+\tag{28.2}
+$$
+
+Each is killed at its own original $q_3=0$ boundary; on common survival
+(28.2) is the actual raw-task error. It holds through every finite
+legal segmentation without a factor equal to the number of joins.
+If $\inf_{s\le T}(\widehat q_3+U_3(s))>\epsilon$, both deterministic
+executions survive through $T$.
+
+Proof. Both primitive solutions use their actual execution-start phases:
+
+$$
+\begin{aligned}
+q_2(t)&=q_2+ct+U_2(t)+a[\cos h-\cos(h+U_1(t))],\\
+\widehat q_2(t)&=\widehat q_2+\widehat ct+U_2(t)
+ +\widehat a[\cos\widehat h-\cos(\widehat h+U_1(t))].
+\end{aligned}
+\tag{28.3}
+$$
+
+Their shear difference is at most $2R_a+2|\widehat a|\eta_h$, using
+$|\cos x-\cos y|\le|x-y|$. Apart from the initial vector difference
+only this second-coordinate difference and $(c-\widehat c)t$ remain.
+The triangle inequality proves (28.2); it does not change the metric to
+that of $D_\lambda$. The initial third coordinates differ by at most
+$\epsilon$, proving the deterministic guard assertion. Applying the
+complete formula once, and using (27.4) with the same fixed calibration,
+proves the absence of a join factor. QED.
+
+**Theorem 28.2 (finite killed response with two original deaths).** Fix
+one $Q\in\mathcal Q$, and let $\tau,\widehat\tau$ be the two original
+killing times under common noise. Put $b=\sqrt{2/\pi}$,
+$z=q_3$, $\widehat z=\widehat q_3$,
+
+$$
+\begin{aligned}
+p_Q(t,z)&=2\Phi(z/\sqrt{Q_{33}t})-1,\\
+J_t&=|p_Q(t,z)-p_Q(t,\widehat z)|,\qquad
+p_{\min}(t)=p_Q(t,\min(z,\widehat z)),\\
+H_-&=\widehat z-\epsilon>0,\quad H_+=\widehat z+\epsilon,\qquad
+j_*=\min(1,\sqrt{2/(\pi e)}\,\epsilon/H_-),\\
+\nu_Q&=Q_{22}-Q_{2I}Q_{II}^{-1}Q_{I2}>0,\qquad I=\{1,3\}.
+\end{aligned}
+\tag{28.4}
+$$
+
+For a raw-task observable with $|\varphi|\le M$ and Lipschitz constant
+$L$, write $\mathcal R_t$ and $\widehat{\mathcal R}_t$ for its two
+unnormalized killed responses. Then, for every $t>0$,
+
+$$
+|\mathcal R_t-\widehat{\mathcal R}_t|
+ \le L(E+B_t)p_{\min}(t)+MJ_t,
+\qquad
+J_t\le\min(1,b\epsilon/\sqrt{Q_{33}t},j_*).
+\tag{28.5}
+$$
+
+For equal initial $q$, the stronger Borel estimate, requiring only
+$|\varphi|\le M$, is
+
+$$
+|\mathcal R_t-\widehat{\mathcal R}_t|
+\le Mp_Q(t,z)\min(2,bB_t/\sqrt{\nu_Qt}).
+\tag{28.6}
+$$
+
+The Borel equal-start assertion does not extend to arbitrary unequal
+first/third coordinates by inserting $E$ in its one-coordinate shift.
+A separate unequal-start estimate is given in Theorem 28.4.
+
+Proof. Under the common continuous $W^3$ path the survival events are
+nested, with intersection probability $p_{\min}(t)$ and symmetric
+difference probability $J_t$. Reflection gives the formula for $p_Q$;
+this is Mörters–Peres, Theorem 2.18, page 50, used inside this particular
+original-guard calculation. On common survival use (28.2); on the
+symmetric difference only one observable of magnitude at most $M$
+remains. This proves (28.5)'s first inequality.
+
+The derivative of $p_Q(t,r)$ with respect to $r$ is
+$b(Q_{33}t)^{-1/2}e^{-r^2/(2Q_{33}t)}$. Its maximum over $t>0$, at a
+fixed $r>0$, is $\sqrt{2/(\pi e)}/r$. Integration between $z$ and
+$\widehat z$, which are at least $H_-$, proves $J_t\le j_*$; dropping
+the exponential gives the other bound. At $t=0$ the survival mismatch
+is zero and the Lipschitz error is at most $LE$.
+
+For (28.6) use the independent residual
+$W^2-Q_{2I}Q_{II}^{-1}(W^1,W^3)^{\mathsf T}$, a Brownian motion with
+variance rate $\nu_Q$. Vanishing cross-covariances at every pair of
+times and joint Gaussianity prove independence from the entire
+$(W^1,W^3)$ path. Conditional on those paths, the two second endpoints
+are translates of the same independent Gaussian, by at most $B_t$;
+the first/third endpoints and the death indicator coincide.
+For the one-dimensional Gaussian density $g_\sigma$,
+$\int|g_\sigma'(x)|dx=b/\sigma$, so the fundamental theorem of calculus
+bounds its translation distance in $L^1$ by
+$\min(2,b|d|/\sigma)$. Multiplication by the common survival indicator
+and integration prove (28.6). QED.
+
+**Theorem 28.3 (positive-error uniform deterministic-horizon response).**
+With the actually finite-acquired information of Theorem 27.5, for
+any single fixed permitted $Q$ and every $|\varphi|\le M$ with raw-task
+Lipschitz constant $L$,
+
+$$
+\sup_{0\le t<\infty}|\mathcal R_t-\widehat{\mathcal R}_t|
+\le L(E+D)+M\left[
+ \min\left(2,\frac{2CH_+}{\pi\sqrt{Q_{33}\nu_Q}}\right)+j_*\right].
+\tag{28.7}
+$$
+
+All $R_a,\eta_h,C,E,\epsilon$ may be strictly positive. The statement
+is about each deterministic endpoint time, uniformly in that time,
+not pathwise accuracy, arbitrary stopping times, survival-conditioned
+accuracy, or a finite price for executing forever. A sufficient
+checkable condition for a requested uniform error $r$ is that the
+right side of (28.7), plus any separately requested numerical output
+error, is strictly below $r$, with $H_->0$. For a finite permitted menu
+one may take the maximum of these fixed-$Q$ bounds; this supplies no
+covariance switching capability.
+
+Proof. Insert an intermediate execution with the actual $q,h,a$ and
+only its drift changed from $c$ to $\widehat c$. It shares the actual
+original death. The Gaussian residual argument in the proof of (28.6)
+compares it with the actual source by
+
+$$
+Mp_Q(t,z)\min(2,bC\sqrt{t/\nu_Q}).
+\tag{28.8}
+$$
+
+Reflection also gives $p_Q(t,z)\le\min(1,bz/\sqrt{Q_{33}t})$.
+Multiplying these bounds gives, for every $t>0$, both $2M$ and
+$Mb^2Cz/\sqrt{Q_{33}\nu_Q}$ as upper bounds on (28.8). This step uses
+simultaneously the survival decay and smoothing; it does not optimize
+them on two different realizations. The intermediate and nominal
+executions have equal drift and a constant raw-task discrepancy at
+most $E+D$ on common survival by (28.3), while their actual two death
+indicators differ by $J_t\le j_*$. Their response difference is
+therefore at most $L(E+D)+Mj_*$. Use $z\le H_+$ and the triangle
+inequality. The $t=0$ discrepancy is at most $LE$, proving (28.7).
+In particular a positive phase/amplitude error is handled by raw-task
+Lipschitz control at short times, rather than by a false assertion of
+Gaussian smoothing at time zero. QED.
+
+**Theorem 28.4 (unequal-start Borel endpoints on the original guard).**
+For the same two executions put $d_i=|q_i-\widehat q_i|$ and, for a
+fixed permitted $Q$, define
+
+$$
+\begin{aligned}
+r_i&=Q_{i3}/Q_{33}\quad(i=1,2),&
+v&=Q_{11}-Q_{13}^2/Q_{33}>0,\\
+\beta&=(Q_{21}-Q_{23}Q_{13}/Q_{33})/v,&
+d_1'&=d_1+|r_1|d_3,\\
+F&=d_2+|r_2|d_3+|\beta|d_1'
+       +2R_a+|\widehat a|(2\eta_h+d_1).
+\end{aligned}
+\tag{28.9}
+$$
+
+For every bounded Borel $|\varphi|\le M$ and $t>0$,
+
+$$
+|\mathcal R_t-\widehat{\mathcal R}_t|
+\le M\left\{p_Q(t,z)
+ \min\left(2,b\left[\frac{d_1'}{\sqrt{vt}}+
+                         \frac{F+Ct}{\sqrt{\nu_Qt}}\right]\right)
+ +\min\left(p_Q(t,z)+p_Q(t,\widehat z),
+                    \frac{2bd_3}{\sqrt{Q_{33}t}}\right)\right\}.
+\tag{28.10}
+$$
+
+In particular, for any declared $t_0>0$, a uniform bound for all
+deterministic $t\ge t_0$ is
+
+$$
+M\left[
+ b\left(\frac{d_1'}{\sqrt{v t_0}}+
+         \frac{F}{\sqrt{\nu_Q t_0}}\right)
+ +\frac{2CH_+}{\pi\sqrt{Q_{33}\nu_Q}}
+ +\frac{2bd_3}{\sqrt{Q_{33}t_0}}\right].
+\tag{28.11}
+$$
+
+No uniform small Borel bound down to $t=0$ is implied for unequal
+acquired starts. Indeed, for $q_1\ne\widehat q_1$, the two first-coordinate
+normal marginals separate in total variation as $t\downarrow0$,
+while both original survival probabilities tend to one. A half-space
+threshold between their initial first coordinates has response
+difference tending to one. Thus positive start uncertainty precludes
+that stronger observable class at arbitrarily short times, even though
+(28.7) holds for all unit bounded/unit Lipschitz observables.
+
+Proof. Write $g_{\sigma^2t}$ for a centred normal density of variance
+$\sigma^2t$. Reflection in the third coordinate gives the killed
+vertical density, for $x_3>0$,
+
+$$
+H_t(z,x_3)=g_{Q_{33}t}(x_3-z)-g_{Q_{33}t}(x_3+z).
+\tag{28.12}
+$$
+
+One obtains it by reflecting after the first zero: paths reaching a
+positive $x_3$ after a hit correspond, with the same Gaussian density,
+to paths from $-z$ to $x_3$. In particular $H_t\ge0$, with mass
+$p_Q(t,z)$; no endpoint-only replacement of the death event is made.
+The processes $\widetilde W^i=W^i-r_iW^3$, $i=1,2$, are jointly
+Gaussian Brownian motions independent of the entire $W^3$ path.
+Their first variance rate is $v$, and
+$\widetilde W^2=\beta\widetilde W^1+\sqrt{\nu_Q}\,B$ with an
+independent standard $B$. This follows by computing all cross-time
+covariances; its last variance is exactly the Schur complement in
+(28.4).
+
+Consequently the actual killed endpoint density in the original raw
+coordinates is $H_t(z,x_3)f_{z,q,h,a,c}(x_1,x_2\mid x_3)$, where the
+conditional horizontal probability density is the product of normals
+of variances $vt$ and $\nu_Qt$ with means
+
+$$
+\begin{aligned}
+m_1(x_3)&=q_1+r_1(x_3-z),\\
+m_2(x_1,x_3)&=q_2+ct+r_2(x_3-z)
+ +\beta[x_1-q_1-r_1(x_3-z)]\\
+&\hspace{12mm}+a[\cos h-\cos(h+x_1-q_1)].
+\end{aligned}
+\tag{28.13}
+$$
+
+The same formula, with hats, gives the other actual killed density.
+At a common $x_3$ the first means differ by at most $d_1'$; at a
+common $(x_1,x_3)$ the second means differ by at most $F+Ct$.
+For the latter assertion split the shear into its amplitude difference
+(at most $2R_a$), initial cosine phase difference (at most
+$|\widehat a|\eta_h$), and endpoint cosine phase difference (at most
+$|\widehat a|(\eta_h+d_1)$). The other terms of (28.13) give the
+remaining terms in $F$. This comparison is uniform in both endpoints.
+Telescoping the two conditional product densities and applying the
+Gaussian $L^1$ translation estimate proves their $L^1$ difference is
+at most the first minimum in (28.10).
+
+Next telescope $H_tf-\widehat H_t\widehat f$ as
+$H_t(f-\widehat f)+(H_t-\widehat H_t)\widehat f$ and integrate.
+The first term has the multiplier $p_Q(t,z)$.
+For the second, translating each of the two normals in (28.12) gives
+$\|H_t(z,\cdot)-H_t(\widehat z,\cdot)\|_1
+ \le2bd_3/\sqrt{Q_{33}t}$; its norm is also at most the sum of their
+masses. This proves (28.10) for bounded Borel observables, accounting
+for both original deaths and unequal endpoint coordinates.
+For (28.11), drop the minima, bound the constant-over-$\sqrt t$ terms
+at $t_0$, and use
+$p_Q(t,z)bC\sqrt{t/\nu_Q}\le2CH_+/(\pi\sqrt{Q_{33}\nu_Q})$.
+Finally the threshold assertion uses only the unchanged first-coordinate
+Gaussian and the fact that killing probability tends to zero, and
+therefore is valid for correlated $Q$ as well. QED.
+
+**Proposition 28.5 (strict non-small-amplitude finite-record consumer).**
+Retain the original unknown box $A_0=C_0=1$ and all the positive error
+budgets in (26.6), and take the actual source
+
+$$
+a=\tfrac12,\qquad c=\tfrac1{10},\qquad
+\epsilon=\delta_t=\delta_h=\delta_u=
+\eta_a^{\rm arith}=\eta_c^{\rm arith}=10^{-6}.
+\tag{28.14}
+$$
+
+Use $\Lambda_{\max}\le1$, $\delta_\Lambda=\eta_s=10^{-6}$ as in the
+finite-start example in §26, the same original preparation margin
+$H_{\min}=1$, and an acquired height satisfying
+$1-10^{-6}\le\widehat q_3\le1+10^{-6}$.
+No parameter box has been tightened to the actual values.
+The centres come from (24.4) and (27.10), not a sensor for $h,a,c$.
+For every such lawful transcript,
+
+$$
+\begin{gathered}
+E_0=3\cdot10^{-6},\quad E_1=7\cdot10^{-6},\quad
+C=4\cdot10^{-6},\quad R_a=24\cdot10^{-6},\\
+|\widehat a|\le0.500024,\quad |\widehat c|\le0.100004,\quad
+\eta_h=3\cdot10^{-6},\\
+\delta_2\le6.100004\cdot10^{-6},\quad E<6.262\cdot10^{-6},\quad
+D\le51.000144\cdot10^{-6},\quad B_1\le55.000144\cdot10^{-6}.
+\end{gathered}
+\tag{28.15}
+$$
+
+For $Q=I_3$, every unit bounded/unit raw-Lipschitz observable has
+
+$$
+|\mathcal R_1-\widehat{\mathcal R}_1|<6.207\cdot10^{-5}<10^{-4},
+\qquad
+\sup_{t\ge0}|\mathcal R_t-\widehat{\mathcal R}_t|
+ <6.030\cdot10^{-5}<1/200.
+\tag{28.16}
+$$
+
+In addition every bounded Borel observable of absolute value at most
+one has error less than $5.1\cdot10^{-5}$ uniformly for all
+$t\ge1$, by the unequal-start estimate (28.11).
+A separately requested numerical evaluation with certified absolute
+error $\rho\le10^{-6}$ adds $\rho$ to each of these bounds; in
+particular the first target remains below $6.307\cdot10^{-5}<10^{-4}$
+and the uniform Lipschitz target below $6.130\cdot10^{-5}<1/200$.
+Its entire latency must be included in the permitted reporting hold
+and $\Lambda_{\max}$ used here; without that contract the numerical
+version of these constants is not asserted.
+
+Proof. Substitution in (24.3)–(24.5) proves $E_0,E_1,C,R_a$.
+The true $a,c$ and their acquired radii give the two centre bounds.
+Theorem 27.5 gives $\eta_h$, including the actual pulse and reporting
+hold. Formula (25.6) gives the displayed $\delta_2$ and
+$E^2\le[2+(6.100004)^2]10^{-12}<(6.262)^2 10^{-12}$.
+Equation (28.1) then gives $D,B_1$.
+At time one (28.5) is at most
+$(6.262+55.000144+0.8)10^{-6}<6.207\cdot10^{-5}$.
+For (28.7), $\nu_I=Q_{33}=1$,
+$H_-\ge1-2\cdot10^{-6}$ and $H_+\le1+2\cdot10^{-6}$.
+The rational upper bounds $2/\pi<0.637$ and
+$\sqrt{2/(\pi e)}<0.484$ give
+
+$$
+\begin{aligned}
+E+D+\frac{2CH_+}{\pi}+j_*
+&<(6.262+51.000144)10^{-6}
+  +0.637(4\cdot10^{-6})(1+2\cdot10^{-6})
+  +\frac{0.484\cdot10^{-6}}{1-2\cdot10^{-6}}\\
+&<60.30\cdot10^{-6}.
+\end{aligned}
+\tag{28.17}
+$$
+
+For the Borel estimate $r_1=r_2=\beta=0$, $v=\nu=1$,
+$d_1,d_3\le10^{-6}$ and
+$F\le(6.100004+48+0.500024\cdot7)10^{-6}
+=57.600172\cdot10^{-6}$. With $b<0.798$, (28.11) at $t_0=1$ is
+at most
+$[0.798(1+57.600172)+2.548006+1.596]10^{-6}<51\cdot10^{-6}$.
+These estimates use positive phase, amplitude, drift and start error
+radii throughout.
+
+For an explicit inhabitant of the same permissions, let the prepared
+$q^p=(0,0,1)$, $h^p=10^{-6}/2$, $k^p=0$, take a first-read hold of
+duration $1/10$, the hold and unit named pulse of actual durations
+$\tau_0=\tau_1=1$, effort $U=1$, and a reporting hold of duration
+$1/10$. Assume, as the original contract requires, that the permitted
+sensor, clock and finite computations fit inside these declared
+durations; $U_*\ge1$, $R_0\ge1$ and $K_0\ge0$ suffice for their
+stated preparation bounds. Every actual prefix has $q_3=1$.
+Let $\varepsilon=10^{-6}$. Choose finite rational reports with
+$R_0^1=\varepsilon/4$, $R_1^1=\varepsilon/4$,
+$R_2^1=1-\varepsilon/4$ and all $R_j^3=1+\varepsilon/4$.
+Take $R_0^2=1/100+\varepsilon/4$,
+$R_1^2=11/100+\varepsilon/4$, and explicitly
+
+$$
+R_2^2=\frac{87969836487}{200000000000},\qquad
+\widehat a=\frac{100000057}{200000000},\qquad
+\widehat c=\frac{200001}{2000000}.
+\tag{28.18}
+$$
+
+The actual second endpoint is
+$21/100+[\cos(\varepsilon/2)-\cos(1+\varepsilon/2)]/2$.
+Expanding each cosine through degree $24$, with the next-term
+alternating-series error bound, places $R_2^2$ strictly between
+that endpoint plus $\varepsilon/8$ and plus $\varepsilon/4$.
+The same rational cosine enclosures at $1$ verify
+$|(1-\cos1)\widehat a-(\rho_1-\rho_0)|<\varepsilon$;
+also $\rho_0=1/10$ and $|\widehat c-\rho_0|=\varepsilon/2$.
+Thus all these finite reports and arithmetic outputs obey the original
+positive budgets strictly, with $\widehat a\ne1/2$ and
+$\widehat c\ne1/10$. For example, take
+$\widehat\Lambda=1/10+\varepsilon/4$ and output
+$\widehat q_2=R_2^2+\widehat c\widehat\Lambda+\varepsilon/4
+=3598796059481/8000000000000$; this last rounding is strictly below
+$\eta_s$. Other clock centres can likewise have a nonzero
+$\varepsilon/4$ error within their existing certificates.
+Here the actual execution phase is $1+\varepsilon/2$, whereas the
+finite-record phase is $1-\varepsilon/2$; the actual phase error is
+nonzero. Amplitude, drift and reported-start errors can likewise be
+nonzero. All original error budgets stay positive, and the parameter
+box remains $[-1,1]^2$. Thus the strict inequalities are not obtained
+by declaring the acquired phase/amplitude exact.
+
+The reference response is the mathematical kernel (27.5). A finite
+numerical evaluator, when requested, needs a separate permitted
+observable evaluation contract and a certified error $\rho$; no
+algorithm for arbitrary noncomputable Borel observables is implied.
+For a computable bounded Lipschitz observable at a declared computable
+time $t>0$ and computable fixed $Q$, (28.12)–(28.13) give one finite
+route: truncate the Gaussian residual and vertical endpoint tails
+with an assigned error, use the explicit continuous density and
+known observable Lipschitz bound for a finite quadrature on the
+remaining box, and enclose cosines and exponentials with assigned
+positive interval errors. Gaussian tails make the omitted mass tend
+to zero; uniform continuity on the compact box makes the quadrature
+error tend to zero. The strictly positive budgets can therefore be
+split to total $\rho$, using finitely many function evaluations,
+bits and arithmetic operations for each declared finite input time.
+Those evaluations, their precision and latency remain paid original
+operations; their duration is not removed from the reporting hold.
+QED.
+
+## 29. Finite-horizon sufficiency and a lawful same-record obstruction
+
+**Proposition 29.1 (same finite record including the first read).**
+Fix nonzero $a$, an interior $c\in(-C_0,C_0)$, a common permitted
+prepared $q^p,h^p,k^p$ with $q_3^p>0$, and common actual acquisition
+controls and finite durations as in (27.8). They include a positive
+first-read duration $\ell_0$, the actual calibration hold and pulse,
+and the complete reporting hold $\Lambda$. If
+
+$$
+0<\delta<\min(C_0-|c|,\epsilon/(2L_2)),
+\tag{29.1}
+$$
+
+the two sources $c_\pm=c\pm\delta$ can produce exactly the same three
+finite representable reports and the same preparation, timing,
+command and reporting-clock certificates, under the actual acquisition
+contract. At execution their first/third coordinates, $h,k,a$ agree,
+and their second-coordinate difference is
+$d_0=2\delta L_*>0$.
+
+This is also a same-total-bill counterexample for a permitted original
+instance with a common constant source-service rate, e.g.
+$c_{\rm src}=c_Q=1$, common fixed preparation/read/clock/command/
+retention charges and identical failure prices. If a separately
+specified bill reveals additional exact state information, it must
+instead enter (27.9); no same-bill claim for an arbitrary
+state-sensitive billing oracle is made. The contract (24.1)–(26.1)
+alone does not require such an additional sensor, and the constant-rate
+instance suffices to refute a uniform guarantee from that contract.
+
+Proof. Starting from the same actually prepared state, (27.9) gives
+$q_2^{+,j}-q_2^{-,j}=2\delta L_j$ for every $j=0,1,2$;
+in particular the first read already includes $2\delta\ell_0$.
+Let $m_j$ be the midpoint of the two actual second endpoints. Since
+$\delta L_j<\epsilon/2$, choose a rational $R_j^2$ with
+$|R_j^2-m_j|<\epsilon/2-\delta L_j$.
+This open interval contains a finite rational, so both coordinate
+errors are strictly less than $\epsilon$. Approximate their common
+first/third endpoints by the same finite rational reports within the
+remaining positive sensor tolerance. This construction preserves
+one shared $R_1$, rather than choosing the two increments independently.
+The original timing/effort certificates and all read durations are
+identical. During the reporting hold the difference increases by
+$2\delta\Lambda$, giving the stated $d_0$; the common output of any
+finite deterministic reporting arithmetic is identical because its
+input records are identical. The complete deterministic acquisition
+has constant positive third coordinate, so every read and prefix is
+lawful under the original guard. $h$ has the same pulse and $k$ the
+same elapsed time, including the first read and reporting hold.
+A constant original service rate has identical integral over these
+identical durations, and all separate declared charges can be the
+same finite rational charges. This proves the asserted admissible
+same-bill instance without omitting or modifying any charge. QED.
+
+**Theorem 29.2 (survivor event-TV and its minimax implication).**
+For the pair in Proposition 29.1 execute the same single permitted
+$Q=I_3$. Use the same raw-task killing boundary. With
+
+$$
+m_t=(q_2^++q_2^-)/2+ct,\qquad E_t=\{x:x_2\le m_t\},\qquad
+s_t=\delta t+d_0/2-2|a|,
+\tag{29.2}
+$$
+
+the two survivor-conditioned endpoint laws $\mu_t^-,\mu_t^+$ obey
+
+$$
+\mu_t^-(E_t)-\mu_t^+(E_t)
+ \ge 1-2\Phi(-s_t/\sqrt t)\longrightarrow1.
+\tag{29.3}
+$$
+
+Here $\operatorname{TV}(\mu,\nu)=\sup_E|\mu(E)-\nu(E)|$.
+Every method assigning a survivor-conditioned predictive law $P_t$
+from only the common finite transcript therefore satisfies
+
+$$
+\max_{\varsigma\in\{-,+\}}
+ \operatorname{TV}(P_t,\mu_t^\varsigma)
+ \ge\tfrac12[1-2\Phi(-s_t/\sqrt t)].
+\tag{29.4}
+$$
+
+The same lower bound holds for the larger of the two errors in any
+single transcript-based probability assigned to the displayed event.
+For every proposed uniform error $r<1/2$, some finite deterministic
+$t$ violates it; indeed any sufficiently large $t$ with
+$s_t/\sqrt t>\Phi^{-1}(1/2+r)$ does so. Randomization based only on
+that transcript cannot remove this worst-source lower bound in
+expected error. It does not assert impossibility of the trivial
+bound one, or a failure of every particular observable at every time.
+
+Proof. Under the same Brownian path,
+$q_2^\pm(t)=q_2^\pm+(c\pm\delta)t+Y_t$ with
+$Y_t=W_t^2+a[\cos h-\cos(h+W_t^1)]$.
+The latter shear has magnitude at most $2|a|$.
+The two thresholds relative to the midpoint leave distance
+$\delta t+d_0/2$ on each side. The upper tail of $Y_t$ beyond that
+distance, and its lower tail below the negative distance, are each
+at most $\Phi(-s_t/\sqrt t)$. This remains a valid, if uninformative,
+bound when $s_t<0$. Subtraction proves (29.3).
+For $Q=I_3$ the original survival event depends only on $W^3$ and is
+independent of $(W^1,W^2)$, so the same calculation is exactly the
+survivor-conditioned one. Its probability is the common strictly
+positive $p_I(t,q_3)$ at each finite $t$. Since $\delta>0$,
+$s_t/\sqrt t\to\infty$.
+
+The triangle inequality for event probabilities gives
+$|\mu_t^-(E_t)-\mu_t^+(E_t)|
+\le|\mu_t^-(E_t)-P_t(E_t)|+|P_t(E_t)-\mu_t^+(E_t)|$.
+Each term is at most its corresponding TV error, which proves
+(29.4). This also proves the assertion for any event-probability
+predictor. For a randomized common predictor integrate the same
+pointwise inequality: the sum of expected errors is still at least
+the event separation, so their maximum is at least half of it.
+The unnormalized killed response difference for this event is instead
+$p_I(t,q_3)$ times (29.3)'s left side and tends to zero, since
+$p_I(t,q_3)\to0$. Eventual killing thus supplies no surviving-accuracy
+conclusion and is consistent with Theorem 28.3. QED.
+
+**Corollary 29.3 (explicit finite-horizon conditional sufficiency).**
+For the actually acquired nominal start of Theorem 27.5 and a fixed
+permitted $Q$, let
+$p_*=2\Phi(H_-/\sqrt{Q_{33}T})-1>0$ for a declared finite $T>0$.
+For every raw-task $|\varphi|\le M$, $L$-Lipschitz,
+
+$$
+\sup_{0\le t\le T}
+\left|\mathbb E[\varphi(q_t)\mid t<\tau]
+ -\mathbb E[\varphi(\widehat q_t)\mid t<\widehat\tau]\right|
+\le\frac{L(E+CT+D)+2Mj_*}{p_*}.
+\tag{29.5}
+$$
+
+At time zero both conditioning events have probability one.
+A requested finite-horizon conditional tolerance is certified by the
+right side, plus any requested numerical error, being strictly below
+that tolerance. At equal starts a sharper bound is $LB_T$;
+for bounded Borel observables at equal starts it is
+$M\min(2,bB_t/\sqrt{\nu_Qt})$ at each positive $t$.
+Unequal-start Borel predictions on a declared $t_0\le t\le T$ can
+instead use (28.10), normalization below, and the same $p_*$.
+
+Proof. Put $p=p_Q(t,z)$, $\widehat p=p_Q(t,\widehat z)$.
+Both are at least $p_*$ when $t\le T$. Since
+$|\widehat{\mathcal R}_t|\le M\widehat p$,
+
+$$
+\left|\frac{\mathcal R_t}{p}-
+       \frac{\widehat{\mathcal R}_t}{\widehat p}\right|
+\le\frac{|\mathcal R_t-\widehat{\mathcal R}_t|+M|p-\widehat p|}{p}.
+\tag{29.6}
+$$
+
+Insert (28.5), use $p_{\min}\le1$, $J_t\le j_*$ and $B_t\le CT+D$.
+For equal starts the probabilities coincide and cancel their common
+factor in (28.5) or (28.6). This proves all asserted finite-horizon
+statements. The bound loses force when $p_*\downarrow0$ as
+$T\to\infty$, and Theorem 29.2 proves a real all-horizon obstruction,
+not merely that this sufficient estimate becomes loose. QED.
+
+**Proposition 29.4 (the all-time Borel strengthening is impossible).**
+With positive sensor tolerance, the same acquisition permissions also
+admit a pair inside the original prepared box for which every report,
+clock, command and, in the constant-rate instance of Proposition 29.1,
+every bill agrees, but the raw first coordinates at execution differ.
+For any transcript-only endpoint predictor, the worst-source
+unnormalized event-probability error has lower limit at least $1/2$
+as $t\downarrow0$. Thus a uniform bound below $1/200$ for all bounded
+Borel observables at all deterministic times cannot be certified from
+this finite record contract. This strengthening is false; the
+all-time unit bounded/unit Lipschitz target in (28.16) and the
+positive-lower-time Borel target are separate, explicitly stated results.
+
+Proof. Take identical $a,c,h^p,k^p,q_2^p,q_3^p$, and prepared first
+coordinates $q_1^{p,\pm}=\pm d$, with
+$0<d<\min(R_0,\epsilon/2)$ and an interior prepared first-coordinate
+margin. All actual second/third coordinates and hidden phases agree
+throughout the acquisition, first read and reporting hold, because
+(24.8)'s second-coordinate expression uses $h^p,U$, not $q_1^p$.
+Their first coordinates differ by $2d$ at each endpoint. A common
+finite report within $\epsilon-d$ of each first-coordinate midpoint
+is lawful; the other common reports are obtained by finite rational
+rounding as in Proposition 29.1. Timings and all original constant-rate
+charges are identical. In the original $Q=I_3$ execution the first
+coordinates are $q_1^{*,\pm}+W_t^1$. Let $E$ be the half-space below
+the midpoint of these two initial first coordinates. The unnormalized
+killed event-probability separation is exactly
+
+$$
+p_I(t,q_3)\,[2\Phi(d/\sqrt t)-1]\longrightarrow1
+\qquad(t\downarrow0),
+\tag{29.7}
+$$
+
+since $W^3$ is independent of $W^1$. The event-probability triangle
+inequality used in (29.4) gives half this separation as a worst-source
+lower bound for any common prediction, also in expected error for
+randomized predictions. This is an acquired-start obstruction using
+the two original deaths, without altering the source metric or guard.
+It does not affect Lipschitz tests, which cannot resolve an arbitrarily
+small fixed first-coordinate gap with a unit-amplitude step. QED.
+
+## 30. Source correspondence, precision and resource boundaries
+
+**Proposition 30.1 (finite charges and falsifiable sufficient conditions).**
+Assume the original finite-charge premises in Proposition 26.2 for
+this same preparation, reads, intervals, hold and execution. Forming
+(27.10) adds only finite rational arithmetic and finite storage to the
+same three reports. Its exact symbolic nominal kernel is determined
+by finite centres; it does not require storing an exact trigonometric
+real as a finite binary numeral. Any evaluated coefficient, endpoint
+or response has its own certified rounding/error budget and price.
+The acquisition clock and bill remain precisely (26.1)–(26.2), with
+all newly requested arithmetic/evaluation latency inside their actual
+reporting hold and all extra operations paid. A changed total latency
+requires recomputing (25.6) and the numerical targets, not deleting
+the elapsed source drift. If numerical approximations of several
+kernels or task states are composed, their certified total numerical
+error must also be added, for example the sum of their separately
+allocated error budgets for sub-Markov contractions. The no-join
+factor in (28.2) concerns the retained-source correspondence, not
+unbounded repeated rounding or free precision.
+
+For each finite horizon, permitted commands, the original guard
+certificate and the applicable strict bound in (28.2), (28.5),
+(28.7), (28.10) or (29.5) are sufficient conditions on this source.
+An empty feasible set (27.9), a certified pulse/response outside the
+applicable interval, an invalid acquired guard margin, or an elapsed
+hold outside its certificate falsifies the relevant conjunction of
+membership, calibration, operation and acquisition assumptions.
+Agreement with finite records alone does not verify whole-source
+analytic membership. Source records and actual charges remain in the
+original accounting, even when they are invisible in the task metric.
+
+The horizon-uniform endpoint inequality (28.7) does not grant finite
+infinite-time acquisition or execution resources. For example, in the
+same constant-rate instance used in Proposition 29.1, the original
+expected stochastic service charge up to death is infinite, despite
+a.s. eventual death and the uniform endpoint bound.
+
+Proof. The report widths are finite by (26.3); rational sums and
+differences of finitely many such numerals have finite width.
+The coefficient arithmetic is the finite interval computation in
+Theorem 24.2. Any requested computable observable evaluation has the
+additional finite-input construction in Proposition 28.5, conditional
+on its declared operation and latency permissions. For every finite
+$T$, the actual source-service integral retains the bound (26.4) when
+its original rate premise holds; its full $k,h,q$ dependence has not
+been replaced by a three-coordinate price. Thus the additional
+information retained here causes no unpaid source operation.
+The sufficient and falsification statements are the direct logical
+forms of the displayed equations and inequalities, keeping their
+stated observable classes and horizons.
+
+For the last assertion put $\sigma=\sqrt{Q_{33}}$ and $z=q_3>0$.
+For $t\ge z^2/Q_{33}$, $x=z/(\sigma\sqrt t)\le1$, and
+$p_Q(t,z)=b\int_0^x e^{-r^2/2}dr\ge be^{-1/2}z/(\sigma\sqrt t)$.
+Hence $\int_0^\infty p_Q(t,z)dt=\infty$.
+Tonelli identifies this integral with $\mathbb E\tau$ and with the
+expected integral of the original rate one until death. In contrast
+$p_Q(t,z)\to0$, proving $\tau<\infty$ a.s. These are compatible facts,
+and neither is a survivor-conditioned accuracy bound. QED.
+
+**Definition 30.2 (scope of the correspondence and its suppliers).**
+The correspondence in §§27–29 is for the common, prepared source
+(24.1), its joint finite records and its original raw-$q$ metric,
+controls, clock and lifetime. Its all-fibre predictive carrier is
+$(q;\lambda)$, whereas at a fixed calibration only the three task
+coordinates evolve. Finite records retain a feasible calibration
+family, never an exact unknown law selected from a positive tolerance
+interval. The bounds distinguish finite deterministic control paths,
+finite stochastic horizons, every deterministic endpoint horizon,
+and survivor-conditioned predictions. Unit bounded/unit Lipschitz
+uniformity holds down to time zero; the larger Borel class with unequal
+start records requires a positive lower time as in (28.11).
+The same-record minimax obstruction concerns all-horizon
+survivor-conditioned event-TV accuracy, including actual first-read
+and reporting durations.
+
+Ordinary Stratonovich calculus/local uniqueness, Brownian reflection
+and strong Markov are the intermediate classical inputs attached to
+Theorems 27.2 and 28.2. The killed density, joint-record calibration,
+fixed-calibration continuation and quantitative consumers are derived
+here for the declared source. Continuous retention of that calibration
+is essential, in agreement with the distinct reset/continuation
+experiments in [*Symplectic predictive completion*, §11.2](SYMPLECTIC_PREDICTIVE_COMPLETION.md).
+There is no sensor for hidden coordinates, no new preparation/reset
+permission, actuator or covariance switch, no theorem for arbitrary
+hidden guards, no second-order native FIB realization, and no deduction
+of physical, ambient or unknown source dimension.
+
+## 追加锚（本行以下为增补区）

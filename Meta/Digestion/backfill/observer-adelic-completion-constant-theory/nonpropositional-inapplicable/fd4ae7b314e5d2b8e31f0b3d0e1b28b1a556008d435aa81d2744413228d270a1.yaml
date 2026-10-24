@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:fd4ae7b314e5d2b8e31f0b3d0e1b28b1a556008d435aa81d2744413228d270a1
+  normalized_sha256: sha256:fd4ae7b314e5d2b8e31f0b3d0e1b28b1a556008d435aa81d2744413228d270a1
+cas_ref: sha256:fd4ae7b314e5d2b8e31f0b3d0e1b28b1a556008d435aa81d2744413228d270a1
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 此片仅列理论分支名称「Li」，不单独声称 Li 系数等式或正性。
+    previous_atom_id: 8cdc8ba2e5932a2427b1f6e2ceb3870856596652c5addb87e849d8fb1b44ace6
+    next_atom_id: ed2f321754b6b2b643c11b930796928b245b5b2157125a8f08a1231d53299ec1

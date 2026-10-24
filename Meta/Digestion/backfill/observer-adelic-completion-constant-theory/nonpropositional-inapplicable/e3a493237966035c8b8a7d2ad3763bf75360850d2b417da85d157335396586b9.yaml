@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:e3a493237966035c8b8a7d2ad3763bf75360850d2b417da85d157335396586b9
+  normalized_sha256: sha256:e3a493237966035c8b8a7d2ad3763bf75360850d2b417da85d157335396586b9
+cas_ref: sha256:e3a493237966035c8b8a7d2ad3763bf75360850d2b417da85d157335396586b9
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 仅为“熵的图表依赖”标题及冒号引导；连续与离散熵的实际断言属于后续独立 atom，不在本条结算。
+    previous_atom_id: 09b5f96d638018999eb90ee3c1990ded195645942e341ca77cadb5883b117ebb
+    next_atom_id: 65a9214c035f79923c6fcde67de8ee1438dc4592db15169409629012ba454dbe

@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:17c9a271598886c50cc2b8eae7ce55d8861a8bc92c9f05c4b8698ce318a10816
+  normalized_sha256: sha256:17c9a271598886c50cc2b8eae7ce55d8861a8bc92c9f05c4b8698ce318a10816
+cas_ref: sha256:17c9a271598886c50cc2b8eae7ce55d8861a8bc92c9f05c4b8698ce318a10816
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 受“进一步假设”统领的 full strong duality 前提说明；当前 atom 没有结论，不是声称强对偶成立的定理。
+    previous_atom_id: a406f5c2fe3a050ffbd4f4aac1add2777a5c145217371ace910854d7d6c643ab
+    next_atom_id: b0f0c7e92e0e83f73f51a2b09ccba5f7cfde0235a51c4fb75a645e93647312e9

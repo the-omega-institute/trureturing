@@ -20,7 +20,7 @@ internal sealed class GuoHatSubadditivityRefutationDocument : IScribeDocumentDef
                 DescribeRole.Definition, AssessedProvenance.FromLiterature(Source)),
             Node("claim", "Guo's subadditivity conjecture (24)", "claim",
                 Seq(V("claim"), Sp, Leftrightarrow, Sp, Parenthesized(ClaimBody())),
-                "Guo, arXiv:2301.00334v3, p. 5: “We conjecture that ĥ is subadditive, i.e., ĥ(ρAB) ⩽ ĥ(ρA) + ĥ(ρB) (24) holds for any ρAB ∈ S^{AB}. In what follows, we always assume that hF′, hAF, and ĥ are subadditive, and that ĥ is concave.” The carrier Fin dA × Fin dB represents the tensor-product basis. GHZMeasureBiseparableBound.IsDensity means positive semidefinite with trace one. Matrix.traceRight traces out the second factor, and LocalObservationPartialTraceEquivalence.partialTraceFirst traces out the first. Hermitian proof arguments of hHat in the inequality are suppressed: positivity supplies the global proof, Matrix.IsHermitian.traceRight supplies the first marginal proof, and summing the Hermitian entry identities supplies the other.",
+                "Guo, arXiv:2301.00334v3, p. 5: “We conjecture that ĥ is subadditive, i.e., ĥ(ρAB) ⩽ ĥ(ρA) + ĥ(ρB) (24) holds for any ρAB ∈ S^{AB}. In what follows, we always assume that hF′, hAF, and ĥ are subadditive, and that ĥ is concave.” The carrier Fin dA × Fin dB represents the tensor-product basis. SLDSpectralEnergy.IsDensity means positive semidefinite with trace one. Matrix.traceRight traces out the second factor, and LocalObservationPartialTraceEquivalence.partialTraceFirst traces out the first. Hermitian proof arguments of hHat in the inequality are suppressed: positivity supplies the global proof, Matrix.IsHermitian.traceRight supplies the first marginal proof, and summing the Hermitian entry identities supplies the other.",
                 DescribeRole.Definition, AssessedProvenance.FromLiterature(Source)),
             Node("result", "The conjectured inequality fails", "result",
                 Seq(Neg, Sp, Parenthesized(ClaimBody())),
@@ -55,7 +55,7 @@ internal sealed class GuoHatSubadditivityRefutationDocument : IScribeDocumentDef
         Formula a = Call("Fin", V("dA"));
         Formula b = Call("Fin", V("dB"));
         Formula carrier = Parenthesized(Seq(a, Sp, Times, Sp, b));
-        Formula density = Apply(Qualified(V("GHZMeasureBiseparableBound"), "IsDensity"), Rho);
+        Formula density = Apply(Qualified(V("SLDSpectralEnergy"), "IsDensity"), Rho);
         Formula left = Call("hHat", Rho);
         Formula rightA = Call("hHat", Qualified(Rho, "traceRight"));
         Formula rightB = Call("hHat", Apply(

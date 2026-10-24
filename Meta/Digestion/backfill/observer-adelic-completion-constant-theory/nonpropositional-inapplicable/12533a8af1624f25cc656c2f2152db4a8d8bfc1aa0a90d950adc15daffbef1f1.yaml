@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:12533a8af1624f25cc656c2f2152db4a8d8bfc1aa0a90d950adc15daffbef1f1
+  normalized_sha256: sha256:12533a8af1624f25cc656c2f2152db4a8d8bfc1aa0a90d950adc15daffbef1f1
+cas_ref: sha256:12533a8af1624f25cc656c2f2152db4a8d8bfc1aa0a90d950adc15daffbef1f1
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 比较有限指数的研究检查项及禁止仅凭维数/群表示认同格的证据纪律；未断言两格等价或不等价。
+    previous_atom_id: b9b8d4696ea410a14553db2d0d190dd913d69def7c08c30e2ada421be394c339
+    next_atom_id: 03b7c4bec585fb0478af5946d9b3df169c5fd81e9605cbc1b23c7d2e8f6a4bc1

@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:1fe6be915984bf2e57413ec1dea86654bb9a64b30a5f0154322874ca96a3db64
+  normalized_sha256: sha256:1fe6be915984bf2e57413ec1dea86654bb9a64b30a5f0154322874ca96a3db64
+cas_ref: sha256:1fe6be915984bf2e57413ec1dea86654bb9a64b30a5f0154322874ca96a3db64
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 此片列研究可利用的 relative trace 正项，并作路线约束评注；未定义 trace 或断言某个具体项非负。
+    previous_atom_id: 0cd8250ae1e8b413bd06ac9acb5e01fa2f1d1ebcec83f040c353eee23f8763c7
+    next_atom_id: 1fd7d1fbe9b24365f3cc7bede86749f609cad8e4f240997d3b80cb3d7d1d398b

@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:f074b9bc5b7bddb5ef6df5db8262e9385323bdc61ff85661be405427b6f8569a
+  normalized_sha256: sha256:f074b9bc5b7bddb5ef6df5db8262e9385323bdc61ff85661be405427b6f8569a
+cas_ref: sha256:f074b9bc5b7bddb5ef6df5db8262e9385323bdc61ff85661be405427b6f8569a
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 此片陈述研究困难定位于全局完成与 Archimedean 平衡，是研究评注，未声称该平衡不等式已经成立。
+    previous_atom_id: a7b4e5631b1956ae9524028b829d608ebb04e282d29c5b0fdda674f87acbe859
+    next_atom_id: a2a4466ab789deb840d73cd41f50bc3595cd36c19df3c198cd97eaf803c3e43c

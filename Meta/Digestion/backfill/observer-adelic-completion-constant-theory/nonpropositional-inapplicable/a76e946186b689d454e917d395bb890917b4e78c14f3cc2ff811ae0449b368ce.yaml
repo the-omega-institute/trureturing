@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:a76e946186b689d454e917d395bb890917b4e78c14f3cc2ff811ae0449b368ce
+  normalized_sha256: sha256:a76e946186b689d454e917d395bb890917b4e78c14f3cc2ff811ae0449b368ce
+cas_ref: sha256:a76e946186b689d454e917d395bb890917b4e78c14f3cc2ff811ae0449b368ce
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: “即使”列表中仅列证书所需容许的横向距离情形。
+    previous_atom_id: 1eb7618af2a468d3164344f0061b856601c03420d77c75ec0e70e42887990e82
+    next_atom_id: 4e1e9b637831d96e55e65a0e25e76b8cd067d7d61e563ff9c5bcd013b3811e49

@@ -18,7 +18,7 @@ Guo, arXiv:2301.00334v3, pp. 4–5: “ĥ(ρ) = √(δ1 δ2), … and δ1, δ2 a
 
 **Definition 1.2 (Guo's subadditivity conjecture (24)).**
 
-$$claim \Leftrightarrow (\forall dA: \mathbb{N}, \forall dB: \mathbb{N}, \forall \rho: \operatorname{Matrix}\left((\operatorname{Fin}\left(dA\right) \times \operatorname{Fin}\left(dB\right)), (\operatorname{Fin}\left(dA\right) \times \operatorname{Fin}\left(dB\right)), \mathbb{C}\right), GHZMeasureBiseparableBound.\operatorname{IsDensity}(\rho) \Rightarrow \operatorname{hHat}\left(\rho\right) \leq \operatorname{hHat}\left(\rho.\operatorname{traceRight}\right) + \operatorname{hHat}\left(LocalObservationPartialTraceEquivalence.\operatorname{partialTraceFirst}(\rho)\right))$$
+$$claim \Leftrightarrow (\forall dA: \mathbb{N}, \forall dB: \mathbb{N}, \forall \rho: \operatorname{Matrix}\left((\operatorname{Fin}\left(dA\right) \times \operatorname{Fin}\left(dB\right)), (\operatorname{Fin}\left(dA\right) \times \operatorname{Fin}\left(dB\right)), \mathbb{C}\right), SLDSpectralEnergy.\operatorname{IsDensity}(\rho) \Rightarrow \operatorname{hHat}\left(\rho\right) \leq \operatorname{hHat}\left(\rho.\operatorname{traceRight}\right) + \operatorname{hHat}\left(LocalObservationPartialTraceEquivalence.\operatorname{partialTraceFirst}(\rho)\right))$$
 
 *Formalization.* `D5/S3/Quantum/Entanglement/PartialNegativity/GuoHatSubadditivityRefutation.claim` (`✓ std3`).
 
@@ -26,11 +26,11 @@ $$claim \Leftrightarrow (\forall dA: \mathbb{N}, \forall dB: \mathbb{N}, \forall
 
 *Commentary.*
 
-Guo, arXiv:2301.00334v3, p. 5: “We conjecture that ĥ is subadditive, i.e., ĥ(ρAB) ⩽ ĥ(ρA) + ĥ(ρB) (24) holds for any ρAB ∈ S^{AB}. In what follows, we always assume that hF′, hAF, and ĥ are subadditive, and that ĥ is concave.” The carrier Fin dA × Fin dB represents the tensor-product basis. GHZMeasureBiseparableBound.IsDensity means positive semidefinite with trace one. Matrix.traceRight traces out the second factor, and LocalObservationPartialTraceEquivalence.partialTraceFirst traces out the first. Hermitian proof arguments of hHat in the inequality are suppressed: positivity supplies the global proof, Matrix.IsHermitian.traceRight supplies the first marginal proof, and summing the Hermitian entry identities supplies the other.
+Guo, arXiv:2301.00334v3, p. 5: “We conjecture that ĥ is subadditive, i.e., ĥ(ρAB) ⩽ ĥ(ρA) + ĥ(ρB) (24) holds for any ρAB ∈ S^{AB}. In what follows, we always assume that hF′, hAF, and ĥ are subadditive, and that ĥ is concave.” The carrier Fin dA × Fin dB represents the tensor-product basis. SLDSpectralEnergy.IsDensity means positive semidefinite with trace one. Matrix.traceRight traces out the second factor, and LocalObservationPartialTraceEquivalence.partialTraceFirst traces out the first. Hermitian proof arguments of hHat in the inequality are suppressed: positivity supplies the global proof, Matrix.IsHermitian.traceRight supplies the first marginal proof, and summing the Hermitian entry identities supplies the other.
 
 **Theorem 1.3 (The conjectured inequality fails).**
 
-$$\neg (\forall dA: \mathbb{N}, \forall dB: \mathbb{N}, \forall \rho: \operatorname{Matrix}\left((\operatorname{Fin}\left(dA\right) \times \operatorname{Fin}\left(dB\right)), (\operatorname{Fin}\left(dA\right) \times \operatorname{Fin}\left(dB\right)), \mathbb{C}\right), GHZMeasureBiseparableBound.\operatorname{IsDensity}(\rho) \Rightarrow \operatorname{hHat}\left(\rho\right) \leq \operatorname{hHat}\left(\rho.\operatorname{traceRight}\right) + \operatorname{hHat}\left(LocalObservationPartialTraceEquivalence.\operatorname{partialTraceFirst}(\rho)\right))$$
+$$\neg (\forall dA: \mathbb{N}, \forall dB: \mathbb{N}, \forall \rho: \operatorname{Matrix}\left((\operatorname{Fin}\left(dA\right) \times \operatorname{Fin}\left(dB\right)), (\operatorname{Fin}\left(dA\right) \times \operatorname{Fin}\left(dB\right)), \mathbb{C}\right), SLDSpectralEnergy.\operatorname{IsDensity}(\rho) \Rightarrow \operatorname{hHat}\left(\rho\right) \leq \operatorname{hHat}\left(\rho.\operatorname{traceRight}\right) + \operatorname{hHat}\left(LocalObservationPartialTraceEquivalence.\operatorname{partialTraceFirst}(\rho)\right))$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Quantum/Entanglement/PartialNegativity/GuoHatSubadditivityRefutation.result` (`✓ std3`). ∎
 
@@ -54,3 +54,4 @@ For r = 0, 1, let uᵣ(i,j) be 1 when j = i + r in Fin 5 and 0 otherwise. Put R 
 - Dependency: [D5/S3/Quantum/Entanglement/GHZMeasureBiseparableBound](../GHZMeasureBiseparableBound.md)
 - Dependency: [D5/S3/Quantum/Entanglement/LocalObservationPartialTraceEquivalence](../LocalObservationPartialTraceEquivalence.md)
 - Dependency: [D5/S3/Quantum/Foundation/FiniteDensityPurification](../../Foundation/FiniteDensityPurification.md)
+- Dependency: [D5/S3/Quantum/Information/SLDSpectralEnergy](../../Information/SLDSpectralEnergy.md)

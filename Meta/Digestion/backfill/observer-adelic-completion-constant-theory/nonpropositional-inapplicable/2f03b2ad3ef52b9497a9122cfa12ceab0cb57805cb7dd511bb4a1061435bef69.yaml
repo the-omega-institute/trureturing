@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:2f03b2ad3ef52b9497a9122cfa12ceab0cb57805cb7dd511bb4a1061435bef69
+  normalized_sha256: sha256:2f03b2ad3ef52b9497a9122cfa12ceab0cb57805cb7dd511bb4a1061435bef69
+cas_ref: sha256:2f03b2ad3ef52b9497a9122cfa12ceab0cb57805cb7dd511bb4a1061435bef69
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 非命题：明确以“仍属开放桥梁”列出四个待研究对象或问题，不断言桥的存在或已解决。
+    previous_atom_id: 9a6e54d62cc04e99edb312ccbebce82be43a8b765e95da373cb23706ff04527f
+    next_atom_id: ac010038c19522fb2b0cac045b357683cb3504f14756b1dd5410562b73ea925e

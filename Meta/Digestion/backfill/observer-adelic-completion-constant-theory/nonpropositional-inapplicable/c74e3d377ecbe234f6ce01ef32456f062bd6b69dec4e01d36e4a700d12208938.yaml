@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:c74e3d377ecbe234f6ce01ef32456f062bd6b69dec4e01d36e4a700d12208938
+  normalized_sha256: sha256:c74e3d377ecbe234f6ce01ef32456f062bd6b69dec4e01d36e4a700d12208938
+cas_ref: sha256:c74e3d377ecbe234f6ce01ef32456f062bd6b69dec4e01d36e4a700d12208938
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 要求计算相邻系数乘积并检验是否趋零；未断言检验结果。
+    previous_atom_id: 83029b9b26d6a796d6bae05652b4789aa0c66a4c0bab92a02843329aca639bfe
+    next_atom_id: 3aeed99c6aa7aa6e0ce7b92173e583d7a6ccb6a4a9d04ee2a6508230d4cf9594

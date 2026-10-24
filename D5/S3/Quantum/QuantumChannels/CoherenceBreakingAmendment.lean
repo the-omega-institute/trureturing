@@ -51,7 +51,7 @@ def claim : Prop :=
       (∀ k, 1 ≤ k → k < n → ¬ IsCoherenceBreaking (krausApply K)^[k]) →
       ∃ U ∈ Matrix.unitaryGroup (Fin d) ℂ, ¬ IsCoherenceBreaking (amended K U n)
 
-private def offDiag {d : ℕ} :
+def offDiag {d : ℕ} :
     Module.End ℂ (Matrix (Fin d) (Fin d) ℂ) where
   toFun X i j := if i = j then 0 else X i j
   map_add' X Y := by

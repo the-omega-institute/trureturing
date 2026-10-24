@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:3e48bf2a0c4d9c2d0303ff4f9ad151861dd4d0459ef9c44393b70275b5da8a3d
+  normalized_sha256: sha256:3e48bf2a0c4d9c2d0303ff4f9ad151861dd4d0459ef9c44393b70275b5da8a3d
+cas_ref: sha256:3e48bf2a0c4d9c2d0303ff4f9ad151861dd4d0459ef9c44393b70275b5da8a3d
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 研究输入清单末项 observer completion quotient，随后要求导出非人为 J；这是待办目标而非构造存在性定理。
+    previous_atom_id: 09563f8f3a9c59a5bfa1565fbb0161fb11f22819a070af4ea7c8e4513981c9e8
+    next_atom_id: 194e2d71ea01a3d2bf6414ba8264304173e1c8e57b0049772831cf45cc3db135

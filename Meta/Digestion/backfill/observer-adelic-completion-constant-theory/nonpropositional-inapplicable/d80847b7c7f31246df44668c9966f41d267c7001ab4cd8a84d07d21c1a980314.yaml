@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:d80847b7c7f31246df44668c9966f41d267c7001ab4cd8a84d07d21c1a980314
+  normalized_sha256: sha256:d80847b7c7f31246df44668c9966f41d267c7001ab4cd8a84d07d21c1a980314
+cas_ref: sha256:d80847b7c7f31246df44668c9966f41d267c7001ab4cd8a84d07d21c1a980314
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 这里只给定共同定义域自伴算子族，列出非负性、二阶导数和初值相容性作为重建定理的假设，并定义 H；未断言这类族存在或 H 已被证明自伴。
+    previous_atom_id: 557e29ce9e885878704dd499542aacd428474941216aab404ac4ef57914ab617
+    next_atom_id: 5cdb7a37fb2994d7869124f15e687d275e0dbe0bac737050723b5246a2d34594

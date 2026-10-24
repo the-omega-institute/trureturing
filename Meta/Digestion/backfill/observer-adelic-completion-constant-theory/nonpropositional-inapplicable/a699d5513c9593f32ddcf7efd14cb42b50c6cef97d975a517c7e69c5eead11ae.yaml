@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:a699d5513c9593f32ddcf7efd14cb42b50c6cef97d975a517c7e69c5eead11ae
+  normalized_sha256: sha256:a699d5513c9593f32ddcf7efd14cb42b50c6cef97d975a517c7e69c5eead11ae
+cas_ref: sha256:a699d5513c9593f32ddcf7efd14cb42b50c6cef97d975a517c7e69c5eead11ae
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 'nonpropositional: 在上述术语翻译表中将 B 块命名为入射耦合，没有代数结论。'
+    previous_atom_id: 82b2e852bcd8caa8511c896e55cc722bf7e9699d0ce87554f7eab0f88e5f6a16
+    next_atom_id: 55be97a31dffcc07f806db59183b0f63fab57ee8b5503a4730079e959d061271

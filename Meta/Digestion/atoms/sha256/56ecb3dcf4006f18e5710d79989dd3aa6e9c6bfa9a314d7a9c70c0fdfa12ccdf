@@ -1,0 +1,55 @@
+**Definition 11.3 (conditions for executed later use).** A later call
+using an orbit description requires an actually acquired, source-bound
+representation at its promised precision, retained readable backing,
+installed decoding/arithmetic and continuation instructions, workspace,
+and current authorization to execute them. The actual record $m$ is
+also required; it is not recoverable from $\mathcal G$. A finite sample
+word supplies its recorded outcomes, not exact law input. An exact-data
+promise must state its encoding and acquisition separately. These
+conditions are independent of existence of the mathematical inverse.
+They retain the distinction between representation, delivery and
+callability in
+[Native Structural Storage Atlas, §§7 and 9](RECURSIVE_RELATIONAL_OBSERVATION_NATIVE_STRUCTURAL_STORAGE_ATLAS.md)
+and [Native Paid View Conversion, §§1, 3 and 7](RECURSIVE_RELATIONAL_OBSERVATION_NATIVE_PAID_VIEW_CONVERSION.md).
+No new callable-storage theorem is asserted here.
+
+The real-Kraus framework is the established one in Wu et al.,
+[*Operational Resource Theory of Imaginarity*](https://arxiv.org/html/2007.14847v2).
+The geometry in (8.6)–(8.7) is classical, as cited in the proof.
+Generalized quadratic phase retrieval, including fixed-family injectivity
+criteria and generic measurement theorems, is treated by Wang–Xu,
+[*Generalized phase retrieval: measurement number, matrix recovery and
+beyond*, Theorems 2.1 and 4.1](https://arxiv.org/html/1605.08034v3).
+Known-dynamics tomography has different feasibility and almost-all-POVM
+hypotheses; see Kech,
+[*Dynamical Quantum Tomography*, §§III–IV](https://arxiv.org/html/1605.06786v2).
+These are intermediate frameworks and comparisons, not suppliers of an
+unverified assertion about this fixed $q$. The source-specific synthesis
+proved here is its universal conformal-filter criterion, the all-support
+directional criterion, and the three-depth recovery relation. No claim
+of global literature originality is needed for these proofs.
+
+If all complete two-copy effects of AURIC–Langlands Proposition 6.3 are
+already callable, their existing full-tensor recovery remains sufficient;
+one can use that result directly. The restricted-interface gain here is
+that a supplied $q$-detector family, supplemented by the declared controls,
+separates its lost distinctions without first granting all fifty-five
+quadratic-coordinate detectors. It is not greater identification power
+than full tensor data. The calibrated nonreal-reference theorem in its
+§5 remains a different interface, which can remove the final conjugation
+ambiguity. No such reference is generated here. Its representation
+splitting and conditional Hecke naturality in §§6–7 are unchanged and
+supply no experiment-to-geometric-realization functor for these controls.
+
+The conclusions recover source laws for the declared real-operation
+continuation class, not an actual realized past. Neither the directional
+nor the depth result recovers finite retained memory from a probability
+law, or physical space/time from the fixed mode indices and control
+words. The original fixed-$G_{gc}$, original-$Q$, parked-consumer and
+unchanged-initialization obligations remain in their original domains.
+The original-root late-target, $M_1(D)$, sharp-$\lambda$ and all-size
+acquisition/certification questions are not altered. No generation or
+installation of the present preparations, filters, joint detectors or
+receiver by native $\alpha/\beta$ operations has been proved. These
+remaining bridges are separate from the closure and recovery theorems.
+

@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:b4d9b18de0a860641ccf95f732174c8384b8997f99b6210a997ac417d2c95495
+  normalized_sha256: sha256:b4d9b18de0a860641ccf95f732174c8384b8997f99b6210a997ac417d2c95495
+cas_ref: sha256:b4d9b18de0a860641ccf95f732174c8384b8997f99b6210a997ac417d2c95495
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 提出临界线 tomography 与排除正宽 Poisson component 的研究目标，未断言目标成立。
+    previous_atom_id: eaa9a157d3dbaaf639e0eb734d25813e2fab507cf07fd632f425d4eea3c16e2d
+    next_atom_id: fa6bde43dc2d83982a4b78b373388bef685b66dc89602773840839da6a106866

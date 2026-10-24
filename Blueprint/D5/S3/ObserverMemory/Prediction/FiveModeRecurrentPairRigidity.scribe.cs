@@ -42,6 +42,10 @@ internal sealed class FiveModeRecurrentPairRigidityDocument : IScribeDocumentDef
                     Seq(new Formula.Subscript(Sum, Seq(Y, InMacro, Sp, Visible)), Sp,
                         Call("ifThenElse", Equal(Call("actualStep", O, T, Y), U),
                             Row(T, Y), Zero))))))),
+            Entry("guarantee_accurate", DescribeRole.Lemma, SourceParameters(All("epsilon", Real,
+                Implies(And(Call("admissible", P, Q, R), Guarantee),
+                    Call("Accurate", Call("toObserver", O), P, Q, R, Epsilon, Call("true"))))),
+                "The guarantee at positive future horizons also gives the zero-horizon bound by normalization. This applies to arbitrary real epsilon and includes the positive empty actual history."),
             Entry("recurrent_pair_rigidity", DescribeRole.Theorem, MainStatement,
                 "For all admissible sources, all finite unrestricted normalized self-generated observers, and every real epsilon<1 satisfying the complete actual-history guarantee, all displayed conclusions hold simultaneously."))));
 

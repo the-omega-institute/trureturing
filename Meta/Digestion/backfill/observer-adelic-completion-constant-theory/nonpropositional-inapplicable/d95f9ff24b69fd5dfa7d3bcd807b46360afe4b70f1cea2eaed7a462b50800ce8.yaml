@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:d95f9ff24b69fd5dfa7d3bcd807b46360afe4b70f1cea2eaed7a462b50800ce8
+  normalized_sha256: sha256:d95f9ff24b69fd5dfa7d3bcd807b46360afe4b70f1cea2eaed7a462b50800ce8
+cas_ref: sha256:d95f9ff24b69fd5dfa7d3bcd807b46360afe4b70f1cea2eaed7a462b50800ce8
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 建议模块路径与形式化顺序，及外部接口/待证义务的工程建议；不声称所列定理已成立。
+    previous_atom_id: 5a5543e5deea3826797df73df7d2b1b0f8ed7028b09b18b984dec0dc034b292e
+    next_atom_id: 82891672689c4c3504edc0176bdd12b27ad9e6eef3ccef1c1dffadd9b44ab11b

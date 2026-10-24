@@ -1,0 +1,107 @@
+**定理 3.1（实投影端口及其达到的菜单误差）。** 对每个 $q\in\{1,2,3,4,5\}$，存在定义 1.3 中的固定编解码器，$q<5$ 时可取 $|F|\le120$，使其帧中复合通道为
+
+$$
+\widehat T_q(X)=\alpha_qX+\beta_qX^T+
+\beta_q\operatorname{tr}(X)I_5,
+\qquad
+\alpha_q=\frac{6q-2}{28},\quad
+\beta_q=\frac{5-q}{28}.
+\tag{3.1}
+$$
+
+它遍历全部复密度输入及全部实际有限协议的最坏误差恰为
+
+$$
+e(T_q)=\frac{5-q}{7}.
+\tag{3.2}
+$$
+
+$q=5$ 时取单一 flag 与恒等编解码。式 (3.2) 是这个通道达到的误差，不断言它在实际菜单中最优。
+
+证明。在 $D$ 帧中，令 $P$ 为实秩 $q$ 正交投影，按正交共轭的不变概率分布取平均，先定义数学映射
+
+$$
+\Theta_q(X)=\frac5q\mathbb E[PXP].
+\tag{3.3}
+$$
+
+每个夹乘在任意参考扩张上完全正，平均亦完全正。正交不变性与 $\operatorname{tr}P=q$ 给 $\mathbb E P=(q/5)I_5$；因 $P^2=P$，式 (3.3) 保迹。随后将这个平均精确换成有限个固定分支，不把连续随机标签作为端口。
+
+其第二矩可直接求得。坐标独立符号翻转消去每个有奇数次指标出现的项；坐标置换使剩余项只由
+
+$$
+u=\mathbb E[P_{ii}^2],\qquad
+a=\mathbb E[P_{ii}P_{jj}],\qquad
+b=\mathbb E[P_{ij}^2]\quad(i\ne j)
+$$
+
+决定。在 $i,j$ 坐标平面作 $45$ 度正交旋转，新的对角元为 $(P_{ii}+P_{jj}+2P_{ij})/2$；交叉奇项消去，得 $u=(2u+2a+4b)/4$，即 $u=a+2b$。因此完整张量为
+
+$$
+\mathbb E[P_{ij}P_{kl}]
+=a\delta_{ij}\delta_{kl}
++b(\delta_{ik}\delta_{jl}+\delta_{il}\delta_{jk}).
+$$
+
+对 $(\operatorname{tr}P)^2=q^2$ 与 $\operatorname{tr}(P^2)=q$ 分别缩并，得
+
+$$
+25a+10b=q^2,\qquad5a+30b=q,
+\qquad
+a=\frac{q(6q-2)}{140},\quad
+b=\frac{q(5-q)}{140}.
+$$
+
+逐项缩并 $PXP$ 给式 (3.1)。其对任意复 $X$ 成立；这里的转置项只是一个完全正组合的表达式，未把转置本身称为物理通道。
+
+为得到有限分支，把实对称 $P$ 视为十五维实向量空间 $\operatorname{Sym}_5(\mathbb R)$ 中的向量。矩阵
+
+$$
+Z(P)=\frac{|\operatorname{vec}P\rangle
+\langle\operatorname{vec}P|}{q}
+$$
+
+是该十五维空间上的实对称迹一矩阵，位于仿射维数至多 $15\cdot16/2-1=119$ 的空间。所有秩 $q$ 正交投影构成紧集，故这些 $Z(P)$ 也构成紧集。有限维 Carathéodory 定理使其凸包中每一点可由至多 120 项表示；由紧集的 120 重积及紧单纯形的连续像，该凸包紧而闭。平均 $\mathbb E Z(P)$ 属于这个凸包，因为有限和逼近其积分。因此有固定投影 $P_f$ 与权重 $w_f\ge0$，$\sum_fw_f=1$，$|F|\le120$，满足
+
+$$
+\sum_fw_fZ(P_f)=\mathbb E Z(P).
+\tag{3.4}
+$$
+
+这一步复用有限维凸表示定理，而不是给未知输入无限精度经典描述。向量化的外积是夹乘映射的 Choi 矩阵，式 (3.4) 给第二矩及通道完全相同；缩并指标并用 $P_f^2=P_f$，还给
+
+$$
+\sum_fw_fP_f=\frac q5I_5.
+$$
+
+选实列的等距映射 $V_f:\mathbb C^q\to\mathbb C^5$，$V_fV_f^\dagger=P_f$、$V_f^\dagger V_f=I_q$。在原坐标中定义
+
+$$
+\begin{aligned}
+B_f&=\sqrt{5w_f/q}\,V_f^\dagger D^\dagger,\qquad R_f=DV_f,\\
+\operatorname{Enc}_f(X)&=B_fXB_f^\dagger,\qquad
+\operatorname{Dec}_f(Y)=R_fYR_f^\dagger.
+\end{aligned}
+\tag{3.5}
+$$
+
+有 $\sum_fB_f^\dagger B_f=I_5$，总编码 CPTP；$R_f^\dagger R_f=I_q$ 使每个解码器在整个 $M_q$ 上 CPTP。其复合为 $T_q(X)=D\Theta_q(D^\dagger XD)D^\dagger$，全部量子信息通过 $q$ 维块；没有保留原输入或额外量子通路。投影、权重与这些矩阵均在输入及未来协议之前固定。它们属于所声明的任意 CPTP 存储合同，未把正交共轭或 $D$ 加入后续行走菜单。
+
+每个实际 $Q_s(t)$ 实对称且迹一，故对任意复密度 $X$，$\operatorname{tr}(Q_s(t)X^T)=\operatorname{tr}(Q_s(t)X)$。若原首读分布为 $p$，经通道后为
+
+$$
+p'_s=\lambda_qp_s+\beta_q,\qquad
+\lambda_q=\alpha_q+\beta_q=\frac{5q+3}{28},\qquad
+\beta_q=\frac{1-\lambda_q}{5}.
+$$
+
+令 $u_5=(1/5,\ldots,1/5)$，则
+
+$$
+\operatorname{TV}(p,p')=(1-\lambda_q)
+\operatorname{TV}(p,u_5)
+\le(1-\lambda_q)\frac45=\frac{5-q}{7}.
+$$
+
+任意概率向量是五个点质量的凸组合，TV 凸性及每个点质量距 $u_5$ 为 $4/5$ 给所用不等式。取 $t=0$、输入 $\Pi_s$，原分布就是点质量，达到等号。定理 2.1 将同一上界扩到所有有限深度。$q=5$ 时式 (3.1) 为恒等，单一 flag 即可。$\square$
+

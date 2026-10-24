@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:e8293b8e2e2259265c22bb6d80f0270daad25b11d99c31c740b96c8fe1d26c84
+  normalized_sha256: sha256:e8293b8e2e2259265c22bb6d80f0270daad25b11d99c31c740b96c8fe1d26c84
+cas_ref: sha256:e8293b8e2e2259265c22bb6d80f0270daad25b11d99c31c740b96c8fe1d26c84
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 非命题：列出建议加入的观察信息 extension class，未断言某扩张类存在或足够。
+    previous_atom_id: 0bbacc293a22d1e359e89e33314c3744374c9a3a439bc0d21fd9ac94a2be90f7
+    next_atom_id: b9474ee3a5f8a74d8a442f1d8f63b07237ff0c8874c3b285ab02b38c3b57d950

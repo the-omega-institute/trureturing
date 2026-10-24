@@ -1,0 +1,26 @@
+### 定理 78.2（轨道记录的有限签名判据）
+
+在上述合同下，令 $\operatorname{Rec}_{\pi,H,I}(W)$ 表示确定性策略 $\pi$ 的完整主
+读数、动作、停止信息以及预定索引集 $I$ 上的侧读数。对任意 $W\in\mathscr W$ 和
+任意 $h\in\mathbb R$，若 $T_hW\in\mathscr W$，则
+
+$$
+\operatorname{Rec}_{\pi,H,I}(W)=\operatorname{Rec}_{\pi,H,I}(T_hW)
+\quad\Longleftrightarrow\quad
+S_{H,I}(\tau)=S_{H,I}(\tau-h).
+\tag{78.2}
+$$
+
+这里 $T_h$ 仍采用 (77.3) 的约定，所以 $T_hW$ 的原点坐标为 $\tau-h$。
+
+**证明。** 若两个签名相同，按预定索引的记录顺序归纳。归纳假设给出此前的完整
+记录相同，故确定性策略选择同一个动作或同时停止。主读数相同，因为
+
+$$
+G(i+\tau-h+h)=G(i+\tau),\qquad
+D(i+\tau-h+h)=D(i+\tau),
+$$
+
+且相同签名给出相同侧读数。于是整个主记录、动作、停止信息和侧记录都相同。
+反向地，完整记录相同包含每个 $i\in I$ 的侧读数相同，故两个签名相同。∎
+

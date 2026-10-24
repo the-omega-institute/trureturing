@@ -1,0 +1,31 @@
+**约定 1.4（被动实帧与既有精确结论）。** 复用 AURIC 第 65.2–65.3、79.1–79.4 条，置
+
+$$
+\begin{gathered}
+D=\operatorname{diag}(1,i,i,i,1),\qquad
+A=-iD^\dagger KD=
+\begin{pmatrix}
+0&1&1&1&0\\
+-1&0&0&0&-1\\
+-1&0&0&0&0\\
+-1&0&0&0&-1\\
+0&1&0&1&0
+\end{pmatrix},\\
+O(t)=D^\dagger U(t)D=\exp(tA),\qquad
+Q_s(t)=O(t)^T\Pi_sO(t),\qquad
+E_s(t)=U(t)^\dagger\Pi_sU(t)=DQ_s(t)D^\dagger.
+\end{gathered}
+$$
+
+$A$ 实反对称，$O(t)$ 实正交，$Q_s(t)$ 为实秩一正交投影。对复矩阵 $X$，其转置 $X^T$ 始终指这个固定实帧中的转置；$X^\dagger$ 指伴随。映射 $T^\dagger$ 则指迹配对对偶，满足 $\operatorname{tr}(ET(X))=\operatorname{tr}(T^\dagger(E)X)$。通道在此帧中写为
+
+$$
+\widehat T(X)=D^\dagger T(DXD^\dagger)D.
+$$
+
+$D$ 只作数学坐标识别，未成为未来菜单的一项控制。
+
+既有精确效果张成是 $D\operatorname{Sym}_5(\mathbb R)D^\dagger$，实维数十五。其非负等待右导数证书的累积秩为 $5,9,12,14,15$，指定十五列行列式为 $-72$；右导数用于证明张成，不是额外可执行效果。精确保留全部输入的全部实际历史，因而保持全部实对称期望。对实单位 $v$，输入与期望测试取 $vv^T$，输出正性和迹一使 $\widehat T(vv^T)=vv^T$。在任意 Kraus 表示中，各 Kraus 算子于是将每个实 $v$ 送到它自己的直线；取标准基及两两之和使每个算子为标量恒等，故 $T=\mathrm{id}_5$。端口复合的各 Kraus 秩不超过 $q$，非零标量恒等的秩为五，给既有精确成本 $q\ge5$。
+
+对角菜单的五维张成与精确 $q=1$、另加独立相位菜单的二十五维张成与精确 $q=5$，属于 AURIC 第 79.4 条的其他菜单。以下近似量度始终使用定义 1.2，不以这些比较菜单替换它，也不将十五个预测坐标认作物理端口维数。
+

@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:2aee11e28da921fe1fc0fddb8dbab21842be750a37506f92575fe13d455c6552
+  normalized_sha256: sha256:2aee11e28da921fe1fc0fddb8dbab21842be750a37506f92575fe13d455c6552
+cas_ref: sha256:2aee11e28da921fe1fc0fddb8dbab21842be750a37506f92575fe13d455c6552
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 'nonpropositional: 依次定义中心矩、端点 jet 及修正分布，没有断言矩消去或零作用性质。'
+    previous_atom_id: 302e9afebc84078eb519ca12811126283aac295661c782c8dccdb7a5dddca551
+    next_atom_id: 0df187b93b07ba8b4cdc47fb0fe626df7dfb49c9ade983252b4a3f9a7680c495

@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:e8202c06eace73516603893310f640a8bf7d59756586afcef593b9400fc61b5a
+  normalized_sha256: sha256:e8202c06eace73516603893310f640a8bf7d59756586afcef593b9400fc61b5a
+cas_ref: sha256:e8202c06eace73516603893310f640a8bf7d59756586afcef593b9400fc61b5a
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: This bullet describes what the proposed Deng layer is meant to do with repeated words. It is a methodological role label, not a uniqueness/existence theorem for a primitive-orbit decomposition.
+    previous_atom_id: e0c89e6b7c5af94f048ddee43508bac53f95ecc2612d82c1ffa0e78202eed94a
+    next_atom_id: 4ea44e7ef5205d652e4efb922599162825490d2ccab065b797ac85f3d135bd03

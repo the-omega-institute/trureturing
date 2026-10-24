@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:b51de4bd6e685f8248c47135d496ef8eb897ff7be3c70dce26d50cd302ffe7e0
+  normalized_sha256: sha256:b51de4bd6e685f8248c47135d496ef8eb897ff7be3c70dce26d50cd302ffe7e0
+cas_ref: sha256:b51de4bd6e685f8248c47135d496ef8eb897ff7be3c70dce26d50cd302ffe7e0
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 'Nonpropositional: 定义逃逸关系、要求的嵌套条件和极限交集；不主张某个具体层满足严格改进。'
+    previous_atom_id: 5279f166f3b196abc690dcc1d1a979ab0bddc15bd8d1ec62fc4572bb54407599
+    next_atom_id: 0367a08a1df33f0b4a41cd9f7aecb11e21a0be4769622f00077a39df7d62be28

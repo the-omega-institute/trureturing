@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:217af9b600c4b9b5ee369ec17325fac62d15f216114b33852ca7ceb999dd432e
+  normalized_sha256: sha256:217af9b600c4b9b5ee369ec17325fac62d15f216114b33852ca7ceb999dd432e
+cas_ref: sha256:217af9b600c4b9b5ee369ec17325fac62d15f216114b33852ca7ceb999dd432e
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 规定黄金规律的五项双盲审计条件及解释性分类，不断言任何对象满足这些条件。
+    previous_atom_id: fa6bde43dc2d83982a4b78b373388bef685b66dc89602773840839da6a106866
+    next_atom_id: 17785f41b57c3f9d295fb7ed12ff2123702275d45bce45ce96c92583242c9045

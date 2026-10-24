@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:86e6ffe14254201500875adaaa6c540071630e3f56f288921285b186d1d46e63
+  normalized_sha256: sha256:86e6ffe14254201500875adaaa6c540071630e3f56f288921285b186d1d46e63
+cas_ref: sha256:86e6ffe14254201500875adaaa6c540071630e3f56f288921285b186d1d46e63
+coverage_gids:
+  - gid: D5/S3/Arith/Lattices/FiveModularLatticeSimilarity.five_modular_lattice_similarity
+    target_statement_id: sha256:2356984cc2616e24b3900b7890d68b8d45fae36edde70b261d02b2e9dde9487a
+receipts:
+  unresolved_subitems: []

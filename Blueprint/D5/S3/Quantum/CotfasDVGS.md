@@ -107,4 +107,5 @@ Scaling reduces the Planck parameter to d. Poisson summation identifies the exac
 - Truth anchor: `D5/S3/Quantum/CotfasDVGS.wSum`
 - Dependency: [D5/S3/Estimation/GaussianThermometryJointMeasurementRefutation](../Estimation/GaussianThermometryJointMeasurementRefutation.md)
 - Dependency: [D5/S3/Quantum/Entanglement/GHZMeasureBiseparableBound](Entanglement/GHZMeasureBiseparableBound.md)
+- Dependency: [D5/S3/Quantum/Information/SLDSpectralEnergy](Information/SLDSpectralEnergy.md)
 - Dependency: [D5/S3/Weil/Probability/FiniteGaussianSchoenberg](../Weil/Probability/FiniteGaussianSchoenberg.md)

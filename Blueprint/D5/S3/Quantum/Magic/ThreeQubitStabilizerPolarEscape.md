@@ -30,7 +30,7 @@ Op refers to D5.S3.Quantum.Measurement.StabilizerPovmMaximalEntanglementRefutati
 
 **Definition 1.3 (Density matrices).**
 
-$$\forall n \in \mathbb{N},\; \forall rho \in \operatorname{D5.S3.Quantum.Magic.ThreeQubitStabilizerPolarEscape.Op}\left(n\right),\; (\operatorname{D5.S3.Quantum.Magic.ThreeQubitStabilizerPolarEscape.IsState}\left(rho\right)) \Leftrightarrow (\operatorname{D5.S3.Quantum.Entanglement.GHZMeasureBiseparableBound.IsDensity}\left(rho\right))$$
+$$\forall n \in \mathbb{N},\; \forall rho \in \operatorname{D5.S3.Quantum.Magic.ThreeQubitStabilizerPolarEscape.Op}\left(n\right),\; (\operatorname{D5.S3.Quantum.Magic.ThreeQubitStabilizerPolarEscape.IsState}\left(rho\right)) \Leftrightarrow (\operatorname{D5.S3.Quantum.Information.SLDSpectralEnergy.IsDensity}\left(rho\right))$$
 
 *Formalization.* `D5/S3/Quantum/Magic/ThreeQubitStabilizerPolarEscape.IsState` (`✓ std3`).
 
@@ -38,7 +38,7 @@ $$\forall n \in \mathbb{N},\; \forall rho \in \operatorname{D5.S3.Quantum.Magic.
 
 *Commentary.*
 
-IsState refers to D5.S3.Quantum.Entanglement.GHZMeasureBiseparableBound.IsDensity: positive semidefiniteness and complex trace one, as in §2.
+IsState refers to D5.S3.Quantum.Information.SLDSpectralEnergy.IsDensity: positive semidefiniteness and complex trace one, as in §2.
 
 **Definition 1.4 (Real part of the trace).**
 
@@ -309,5 +309,6 @@ For 1/3 < s and 7s² < 1, the two positive definite three-qubit operators each h
 - Dependency: [D5/S3/Quantum/Entanglement/NandiMutualPredictabilityLOCCRefutation](../Entanglement/NandiMutualPredictabilityLOCCRefutation.md)
 - Dependency: [D5/S3/Quantum/Fibers/PhysicalFiber](../Fibers/PhysicalFiber.md)
 - Dependency: [D5/S3/Quantum/Information/BinaryStabilizerGraphNormalForm](../Information/BinaryStabilizerGraphNormalForm.md)
+- Dependency: [D5/S3/Quantum/Information/SLDSpectralEnergy](../Information/SLDSpectralEnergy.md)
 - Dependency: [D5/S3/Quantum/Measurement/StabilizerPovmMaximalEntanglementRefutation](../Measurement/StabilizerPovmMaximalEntanglementRefutation.md)
 - Dependency: [D5/S3/Quantum/Measurements/CliffordJointMeasurability/CliffordPathRealizations](../Measurements/CliffordJointMeasurability/CliffordPathRealizations.md)

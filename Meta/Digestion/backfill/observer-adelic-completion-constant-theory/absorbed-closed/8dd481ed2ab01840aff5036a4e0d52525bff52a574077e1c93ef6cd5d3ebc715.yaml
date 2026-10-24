@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:8dd481ed2ab01840aff5036a4e0d52525bff52a574077e1c93ef6cd5d3ebc715
+  normalized_sha256: sha256:8dd481ed2ab01840aff5036a4e0d52525bff52a574077e1c93ef6cd5d3ebc715
+cas_ref: sha256:8dd481ed2ab01840aff5036a4e0d52525bff52a574077e1c93ef6cd5d3ebc715
+coverage_gids:
+  - gid: D5/S3/Weil/CayleyLaguerre/CompactifiedSquaredDistanceSupport.compactified_squared_distance_support_criterion
+    target_statement_id: sha256:c1c074d0a79948a9861fcd76abb23d8815bd250828845280fc5eb7120fb7b24a
+receipts:
+  unresolved_subitems: []

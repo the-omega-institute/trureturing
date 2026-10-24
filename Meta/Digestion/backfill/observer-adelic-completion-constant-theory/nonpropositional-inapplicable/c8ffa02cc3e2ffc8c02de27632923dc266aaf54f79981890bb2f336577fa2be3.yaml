@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:c8ffa02cc3e2ffc8c02de27632923dc266aaf54f79981890bb2f336577fa2be3
+  normalized_sha256: sha256:c8ffa02cc3e2ffc8c02de27632923dc266aaf54f79981890bb2f336577fa2be3
+cas_ref: sha256:c8ffa02cc3e2ffc8c02de27632923dc266aaf54f79981890bb2f336577fa2be3
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 'Nonpropositional: 定义输入来源说明；说明 ξ 未指定黄金数域嵌入，不是关于零点位置的新命题。'
+    previous_atom_id: 27331dc47a9b62d8a7cb1cb230b2ba4ead183ba6971028a8816ab37d728d246f
+    next_atom_id: 1824b82200c5b7a3706084e4b7092cbeb4e931a6fbc59450061e97b6fe84cb89

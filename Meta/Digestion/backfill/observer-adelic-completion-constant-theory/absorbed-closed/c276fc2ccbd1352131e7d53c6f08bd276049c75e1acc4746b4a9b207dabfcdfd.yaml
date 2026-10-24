@@ -1,0 +1,13 @@
+fingerprints:
+  raw_sha256: sha256:c276fc2ccbd1352131e7d53c6f08bd276049c75e1acc4746b4a9b207dabfcdfd
+  normalized_sha256: sha256:c276fc2ccbd1352131e7d53c6f08bd276049c75e1acc4746b4a9b207dabfcdfd
+cas_ref: sha256:c276fc2ccbd1352131e7d53c6f08bd276049c75e1acc4746b4a9b207dabfcdfd
+coverage_gids:
+  - gid: D5/S3/Observer/LinearMemory/HankelGramianSingularValues.hankel_gramian_singular_values
+    target_statement_id: sha256:7d13ea2c096e63a5fa084ddb305245bc1797caeae83ba6d27b769c4613a0d05c
+  - gid: D5/S3/Weil/Scattering/FiniteScatteringCascade.finite_scattering_cascade
+    target_statement_id: sha256:8303d1345e4e443204dcb6839743b8c61e5491a615fa82e7c3b95ff6d130462b
+  - gid: D5/S3/Weil/Scattering/PrimePoissonResummation.prime_poisson_resummation
+    target_statement_id: sha256:a63eee6f5323128fd95adfb96d85d2d58e58de31f473cb25dd03ea4a6f840e48
+receipts:
+  unresolved_subitems: []

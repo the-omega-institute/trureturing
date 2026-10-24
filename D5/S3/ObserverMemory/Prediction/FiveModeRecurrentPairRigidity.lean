@@ -221,7 +221,7 @@ private lemma limiting_step {p q r : ℝ} (hp : admissible p q r)
   simp_rw [← affinity_step hp O t] at hright
   exact tendsto_nhds_unique hleft hright
 
-private lemma guarantee_accurate {p q r ε : ℝ} (hp : admissible p q r)
+lemma guarantee_accurate {p q r ε : ℝ} (hp : admissible p q r)
     (O : GeneratedObserver Z)
     (hacc : ∀ h : List Visible, 0 < historyMass p q r h → ∀ H : Nat, 0 < H →
       totalVariation (actualFutureWordWeight p q r h H)

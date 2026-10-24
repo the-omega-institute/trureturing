@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:1aecc6532ac1b15e0d808f8f0e56e851f5d5a667f42c5fea99904334b105f044
+  normalized_sha256: sha256:1aecc6532ac1b15e0d808f8f0e56e851f5d5a667f42c5fea99904334b105f044
+cas_ref: sha256:1aecc6532ac1b15e0d808f8f0e56e851f5d5a667f42c5fea99904334b105f044
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 区分证据、语境、修正与本体立场的哲学术语，并以壶的日常例子说明误译；未提出固定数学模型内的命题。
+    previous_atom_id: b86fee8f02f462c54ad97bc94f5125d5e8611654c03831a6e5689d4681983c2c
+    next_atom_id: f67bb70d03d49c4e5a6f35c8d947ca679d0a6a4c7233046173f1737ba7c00a4f

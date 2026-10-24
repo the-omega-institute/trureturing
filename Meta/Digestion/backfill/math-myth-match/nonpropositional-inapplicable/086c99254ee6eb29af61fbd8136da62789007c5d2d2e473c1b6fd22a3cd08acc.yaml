@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:086c99254ee6eb29af61fbd8136da62789007c5d2d2e473c1b6fd22a3cd08acc
+  normalized_sha256: sha256:086c99254ee6eb29af61fbd8136da62789007c5d2d2e473c1b6fd22a3cd08acc
+cas_ref: sha256:086c99254ee6eb29af61fbd8136da62789007c5d2d2e473c1b6fd22a3cd08acc
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 概述《路加福音》的反复宽恕规范，明确不把频率转成经验规律或识别定理。
+    previous_atom_id: f90d6689945ff9ffa908add0cc7eb181aa81fecb2d5bd0e19c7bbaa2787690e9
+    next_atom_id: fd9a112a42fb8abcaaac3f8de33004a2bfd7ce017964b19b8953a293844db0ac

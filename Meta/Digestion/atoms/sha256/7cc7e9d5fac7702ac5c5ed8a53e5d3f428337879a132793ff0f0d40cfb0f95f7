@@ -1,0 +1,71 @@
+### 定理 79.3（可达的精确绝对误差半径）
+
+令
+
+$$
+D_h=\max\{d\in[0,L]:f_h(d)\le2\varepsilon\}.
+$$
+
+则
+
+$$
+\boxed{R_h^*=D_h/2.}
+\tag{79.5}
+$$
+
+一个最优决策以及达到该风险的报告、真实原点和允许误差均存在。
+
+**证明。** 集合包含零且闭于紧区间，故 $D_h$ 存在。对于任一可取得的报告，令
+
+$$
+C(y)=\{t\in[a,b]:|y_0-t^2|\le\varepsilon,
+                         \ |y_h-(t+h)^2|\le\varepsilon\}.
+$$
+
+它非空且紧，但可以不连通。取
+
+$$
+\delta_*(y)=\frac{\min C(y)+\max C(y)}2;
+$$
+
+在不可取得的报告上任意延拓。对 $s,t\in C(y)$，三角不等式给出
+
+$$
+f_h(|s-t|)\le\|S_h(s)-S_h(t)\|_\infty\le2\varepsilon.
+$$
+
+因此 $\operatorname{diam}C(y)\le D_h$；每个兼容真原点到两端中点的距离
+至多 $D_h/2$。这个证明不把 $C(y)$ 替换成区间，也不要求中点仍然兼容。
+
+反向取 $x=x_{D_h}$ 和 $t=x+D_h$，使用同一个报告
+
+$$
+y_* =\frac{S_h(x)+S_h(x+D_h)}2.
+\tag{79.6}
+$$
+
+在真实原点 $x$ 和 $x+D_h$ 下，误差分别为
+$\eta_x=[S_h(x+D_h)-S_h(x)]/2$ 和 $-\eta_x$，最大范数均为
+$f_h(D_h)/2\le\varepsilon$。完整闭立方体使这两个误差都合法，包括等号情形。
+任何实数决策 $z=\delta(y_*)$ 满足
+
+$$
+\max(|z-x|,|z-(x+D_h)|)\ge D_h/2.
+$$
+
+这证明匹配下界。又因 $C(y_*)$ 包含上述相距 $D_h$ 的两点，且直径至多
+$D_h$，其最小、最大值恰为 $x,x+D_h$；故 $\delta_*(y_*)=x+D_h/2$，
+在两端都达到误差 $D_h/2$。$D_h=0$ 的情形同样成立。∎
+
+证明中的共同报告和极值居中只作为经典最优恢复的中间步骤使用。其仓内先例为
+[《关系纤维演算续 V》定理 59.3 的噪声步骤](FIB_RELATIONAL_FIBER_CALCULUS_CONTINUATION_V.md)：
+原文的 “full closed report balls” 和 “the decoder is not claimed measurable or effective”
+分别对应这里的完整闭误差合同与任意决策。经典来源包括 Micchelli 与 Rivlin，
+[*A Survey of Optimal Recovery*](https://doi.org/10.1007/978-1-4684-2388-4_1)。
+Foucart，[*Learning the Maximum of a Hölder Function from Inexact Data*，定理 1](https://arxiv.org/html/2509.25209v1)
+给出兼容上下目标的中点和半差；其条件是 Hölder 函数模型、有界逐坐标观测误差，
+以及 “a monotone quantity of interest” 取值于 Banach 格。这里不把二次签名逆问题
+当作该 Hölder 模型的实例，只使用其证明中的两兼容对象三角不等式与实值极值居中，
+并已直接证明所需步骤。(79.3)--(79.4) 的带符号区间极小化及下述反演、采集消费者，
+是从本卷第 77--78 节合同出发的仓内推导（repo-derived）。
+

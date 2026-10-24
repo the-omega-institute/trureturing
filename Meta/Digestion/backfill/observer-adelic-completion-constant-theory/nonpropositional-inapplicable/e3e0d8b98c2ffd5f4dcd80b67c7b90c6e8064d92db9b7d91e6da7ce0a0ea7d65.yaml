@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:e3e0d8b98c2ffd5f4dcd80b67c7b90c6e8064d92db9b7d91e6da7ce0a0ea7d65
+  normalized_sha256: sha256:e3e0d8b98c2ffd5f4dcd80b67c7b90c6e8064d92db9b7d91e6da7ce0a0ea7d65
+cas_ref: sha256:e3e0d8b98c2ffd5f4dcd80b67c7b90c6e8064d92db9b7d91e6da7ce0a0ea7d65
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 'Nonpropositional: 定义“幽灵离线线程”类别的条件；不声称这种线程在真实 ξ 中存在。'
+    previous_atom_id: c1f602207f6882e446c23fb045e8c9b52e217f80492047084ab2109871a918fc
+    next_atom_id: 7f361684f277a983c0f3c0148c7cc9c1b17f8c972ee1fa511849f1d00076590a

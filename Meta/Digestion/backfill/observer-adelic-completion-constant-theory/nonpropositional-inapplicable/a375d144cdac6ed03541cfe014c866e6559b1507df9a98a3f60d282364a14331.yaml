@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:a375d144cdac6ed03541cfe014c866e6559b1507df9a98a3f60d282364a14331
+  normalized_sha256: sha256:a375d144cdac6ed03541cfe014c866e6559b1507df9a98a3f60d282364a14331
+cas_ref: sha256:a375d144cdac6ed03541cfe014c866e6559b1507df9a98a3f60d282364a14331
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 'List of proposed research ingredients: indefinite even/odd pairing; no pairing existence or Lorentz-cone derivation.'
+    previous_atom_id: d681b9123652b312b2d7540dca9a872338d1014e6ae3bdc0617df99b57ad75c2
+    next_atom_id: 3c3a95ea12adc13dcca6f3cb3c3632b7fcc98483f01bdb11a54b5ddd655b372e

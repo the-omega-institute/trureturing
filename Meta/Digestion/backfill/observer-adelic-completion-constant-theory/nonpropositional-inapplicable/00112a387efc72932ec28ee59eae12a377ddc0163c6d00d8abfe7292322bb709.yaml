@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:00112a387efc72932ec28ee59eae12a377ddc0163c6d00d8abfe7292322bb709
+  normalized_sha256: sha256:00112a387efc72932ec28ee59eae12a377ddc0163c6d00d8abfe7292322bb709
+cas_ref: sha256:00112a387efc72932ec28ee59eae12a377ddc0163c6d00d8abfe7292322bb709
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 此片仅命名计划测量的「多素数 eigenvector alignment」，未给出对齐关系或界。
+    previous_atom_id: 14e2815bd30df83373ce7309dfb7559fcf03a61413b8c9977a322f6512131be8
+    next_atom_id: e2ea33f3f05a1cab3c09c1b3fdc1a724ff0a3ebf944eaff5b9c6c0ca7ca039cc

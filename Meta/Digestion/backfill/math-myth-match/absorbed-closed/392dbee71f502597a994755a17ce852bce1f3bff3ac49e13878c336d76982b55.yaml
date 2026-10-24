@@ -1,0 +1,13 @@
+fingerprints:
+  raw_sha256: sha256:392dbee71f502597a994755a17ce852bce1f3bff3ac49e13878c336d76982b55
+  normalized_sha256: sha256:392dbee71f502597a994755a17ce852bce1f3bff3ac49e13878c336d76982b55
+cas_ref: sha256:392dbee71f502597a994755a17ce852bce1f3bff3ac49e13878c336d76982b55
+coverage_gids:
+  - gid: D5/S3/Observer/AgencyHolonomy/VisibleLoopHolonomy.faithful_joint_readout_kills_hidden_holonomy
+    target_statement_id: sha256:8d83ffa8c5f87f15cb5184020555e17c4fd73001d81ab0285a8e974fd9c54566
+  - gid: D5/S3/Observer/AgencyHolonomy/VisibleLoopHolonomy.strategy_factorization_makes_visible_loops_invisible
+    target_statement_id: sha256:01f2835651ce990d9dc9f98a89650cf9e7f287d6392047c3359e6581beceef7a
+  - gid: D5/S3/Observer/AgencyHolonomy/VisibleLoopHolonomy.visible_loop_policy_change_witnesses_pointed_holonomy
+    target_statement_id: sha256:35e06a497bdf1ea4a108bed0b851be34e241a65a30bddd4842cce3b0c270f40b
+receipts:
+  unresolved_subitems: []

@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:ed40befafbf338d7f2c2292eaaa6f19fa7208ca4eddab55cd8966943c3f35f36
+  normalized_sha256: sha256:ed40befafbf338d7f2c2292eaaa6f19fa7208ca4eddab55cd8966943c3f35f36
+cas_ref: sha256:ed40befafbf338d7f2c2292eaaa6f19fa7208ca4eddab55cd8966943c3f35f36
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 'nonpropositional: 求正谱完成的任务和候选方法名称，没有断言 primal 可行。'
+    previous_atom_id: 6edd8e42ae3e41493814ec5479af195594c199154f5a01f2314c11d4ade019d1
+    next_atom_id: e35ebf008af6930237cf66fffef5c685ad96040147005fe715f8efe7a17a87b3
