@@ -70,6 +70,10 @@ $$(\forall u : \mathbb{R}, (\forall v : \mathbb{R}, ((\frac{1}{2} \le u) \Righta
 
 *Proof.* Machine-checked in Lean as `D5/S3/Quantum/QuantumChannels/FockAttenuator/VacuumOnePhotonWignerMajorization.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/de-boer-di-giulio-keski-vakkuri-tonni-2024-wigner-majorization-chains` (proved) by `D5/S3/Quantum/QuantumChannels/FockAttenuator/VacuumOnePhotonWignerMajorization.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"de-boer-di-giulio-keski-vakkuri-tonni-2024-wigner-majorization-chains","declaration_gid":"D5/S3/Quantum/QuantumChannels/FockAttenuator/VacuumOnePhotonWignerMajorization.result","resolution_kind":"proved"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* Jan de Boer, Giuseppe Di Giulio, Esko Keski-Vakkuri, Erik Tonni (2025). *Continuous majorization in quantum phase space for Wigner-positive states and proposals for Wigner-negative states*. DOI: [10.1103/w561-h3z5](https://doi.org/10.1103/w561-h3z5). URL: <https://arxiv.org/abs/2412.19698v3>.
