@@ -8,6 +8,7 @@
 
 import D5.S3.Quantum.Information.BinaryStabilizerGraphNormalForm
 import D5.S3.Quantum.BlockNorm.EssentiallyHermitian
+import D5.S3.Quantum.Measurement.StabilizerPovmMaximalEntanglementRefutation
 
 /-! Commuting qubit product encodings and their local-reflection replacements. -/
 
@@ -291,7 +292,8 @@ private lemma pauli_of_two_signs (A : Matrix (Fin 2) (Fin 2) ℂ)
     (hX : A * qubitX = qubitX * A ∨ A * qubitX = -(qubitX * A)) :
     ∃ (c : ℂ) (p : Pauli), star c * c = 1 ∧ A = c • pauliMatrix p := by
   have hs := congrArg (fun M : Matrix (Fin 2) (Fin 2) ℂ => M 0 0) hsq
-  simp only [Matrix.mul_apply, Matrix.vecMul, dotProduct, Fin.sum_univ_two, Matrix.one_apply_eq] at hs
+  simp only [Matrix.mul_apply, Matrix.vecMul, dotProduct, Fin.sum_univ_two,
+    Matrix.one_apply_eq] at hs
   have phase (c : ℂ) (hc : c ^ 2 = 1) : star c * c = 1 := by
     rcases sq_eq_one_iff.mp hc with rfl | rfl <;> simp
   rcases hZ with hZ | hZ
@@ -333,8 +335,8 @@ private lemma pauli_of_two_signs (A : Matrix (Fin 2) (Fin 2) ℂ)
       refine ⟨Complex.I * A 0 1, .Y, phase _ hc, ?_⟩
       ext i j
       fin_cases i <;> fin_cases j <;>
-        simp [pauliMatrix, qubitX, qubitZ, Matrix.mul_apply, Matrix.vecMul, dotProduct, Fin.sum_univ_two,
-          h00, h11, hx, mul_assoc] <;> ring_nf <;> simp
+        simp [pauliMatrix, qubitX, qubitZ, Matrix.mul_apply, Matrix.vecMul, dotProduct,
+          Fin.sum_univ_two, h00, h11, hx, mul_assoc] <;> ring_nf <;> simp
 
 private lemma nonscalar_reflection_frame (A : Matrix (Fin 2) (Fin 2) ℂ)
     (hA : A.IsHermitian) (hsq : A * A = 1) (hn : ¬ ∃ c : ℂ, A = c • 1) :
@@ -616,11 +618,9 @@ private lemma local_site_normal_form {κ : Type*}
     obtain ⟨V, hV, c, p, hc, hp⟩ := pauli_site_frame B hB hs htr
     exact ⟨V, hV, Or.inr ⟨c, p, hc, hp⟩⟩
 
-private def pauli_symbol : Pauli → ZMod 2 × ZMod 2
-  | .I => (0, 0)
-  | .X => (1, 0)
-  | .Y => (1, 1)
-  | .Z => (0, 1)
+private def pauli_symbol (p : Pauli) : ZMod 2 × ZMod 2 :=
+  let b := D5.S3.Quantum.Measurement.StabilizerPovmMaximalEntanglementRefutation.bellInput p
+  (b.2, b.1)
 
 private def word_symbol {n : ℕ} (p : Fin n → Pauli) :
     (Fin n → ZMod 2) × (Fin n → ZMod 2) :=
@@ -697,6 +697,142 @@ private lemma local_forms_isotropic_span {n : ℕ}
         Submodule.span ℂ (wordOp '' {p | word_symbol p ∈ S})) := by
   sorry
 
+private lemma binary_character_frame {n : ℕ}
+    (H : (Fin n → Fin 2) → Matrix (Fin n → Fin 2) (Fin n → Fin 2) ℂ)
+    (hH : ∀ a, (H a).IsHermitian)
+    (hmul : ∀ a b, H (a + b) = H a * H b)
+    (htrace : ∀ a, Matrix.trace (H a) = if a = 0 then (2 ^ n : ℂ) else 0) :
+    ∃ F : Matrix (Fin n → Fin 2) (Fin n → Fin 2) ℂ,
+      F ∈ Matrix.unitaryGroup (Fin n → Fin 2) ℂ ∧
+      ∀ a, Fᴴ * H a * F =
+        diagonal (fun x => ∏ j, (-1 : ℂ) ^ ((a j).val * (x j).val)) := by
+  classical
+  let χ (a x : Fin n → Fin 2) : ℂ := ∏ j, (-1 : ℂ) ^ ((a j).val * (x j).val)
+  have hχadd (a b x : Fin n → Fin 2) : χ (a + b) x = χ a x * χ b x := by
+    dsimp only [χ]
+    rw [← Finset.prod_mul_distrib]
+    apply Finset.prod_congr rfl
+    intro j _
+    change (-1 : ℂ) ^ (((a j + b j) : Fin 2).val * (x j).val) = _
+    generalize a j = r
+    generalize b j = t
+    generalize x j = z
+    fin_cases r <;> fin_cases t <;> fin_cases z <;> norm_num
+  have hχstar (a x : Fin n → Fin 2) : star (χ a x) = χ a x := by simp [χ]
+  have haab (a b : Fin n → Fin 2) : a + (a + b) = b := by
+    funext j
+    change (a j + (a j + b j) : Fin 2) = b j
+    generalize a j = r
+    generalize b j = t
+    fin_cases r <;> fin_cases t <;> decide
+  let P (x : Fin n → Fin 2) := ∑ a, χ a x • H a
+  have hPeig (a x : Fin n → Fin 2) : H a * P x = χ a x • P x := by
+    let e : (Fin n → Fin 2) ≃ (Fin n → Fin 2) :=
+      ⟨fun b => a + b, fun b => a + b, haab a, haab a⟩
+    calc
+      _ = ∑ b, χ b x • H (a + b) := by
+        simp only [P, Matrix.mul_sum, Matrix.mul_smul, ← hmul]
+      _ = ∑ b, χ (a + b) x • H b := by
+        apply Fintype.sum_equiv e
+        intro b
+        change χ b x • H (a + b) = χ (a + (a + b)) x • H (a + b)
+        rw [haab]
+      _ = _ := by simp only [hχadd, mul_smul, P, Finset.smul_sum]
+  have hPne (x : Fin n → Fin 2) : P x ≠ 0 := by
+    have ht : Matrix.trace (P x) = (2 ^ n : ℂ) := by
+      simp [P, Matrix.trace_sum, Matrix.trace_smul, htrace, χ]
+    intro hz
+    rw [hz, Matrix.trace_zero] at ht
+    exact (pow_ne_zero n (by norm_num : (2 : ℂ) ≠ 0)) ht.symm
+  have hentry (x : Fin n → Fin 2) : ∃ r k, P x r k ≠ 0 := by
+    by_contra! hz
+    apply hPne x
+    ext r k
+    exact hz r k
+  choose r k hentry using hentry
+  let v (x : Fin n → Fin 2) : EuclideanSpace ℂ (Fin n → Fin 2) :=
+    WithLp.toLp 2 (fun t => P x t (k x))
+  have hv (x) : v x ≠ 0 := by
+    intro hz
+    apply hentry x
+    have hh := congrArg (fun w : EuclideanSpace ℂ (Fin n → Fin 2) => w (r x)) hz
+    exact hh
+  let f (x : Fin n → Fin 2) : EuclideanSpace ℂ (Fin n → Fin 2) :=
+    (‖v x‖ : ℂ)⁻¹ • v x
+  have hnorm (x) : ‖f x‖ = 1 := norm_smul_inv_norm (hv x)
+  have hraw (a x : Fin n → Fin 2) :
+      H a *ᵥ (fun t => P x t (k x)) = χ a x • (fun t => P x t (k x)) := by
+    funext t
+    exact congrArg (fun M : Matrix (Fin n → Fin 2) (Fin n → Fin 2) ℂ => M t (k x))
+      (hPeig a x)
+  have heig (a x : Fin n → Fin 2) :
+      H a *ᵥ (f x) = χ a x • (f x : (Fin n → Fin 2) → ℂ) := by
+    change H a *ᵥ ((‖v x‖ : ℂ)⁻¹ • (fun t => P x t (k x))) =
+      χ a x • ((‖v x‖ : ℂ)⁻¹ • (fun t => P x t (k x)))
+    rw [Matrix.mulVec_smul, hraw, smul_smul, smul_smul, mul_comm]
+  have hsingle (x : Fin n → Fin 2) (j : Fin n) :
+      χ (Pi.single j 1) x = (-1 : ℂ) ^ (x j).val := by
+    dsimp only [χ]
+    rw [Finset.prod_eq_single j]
+    · simp [Pi.single_apply]
+    · intro i _ hij
+      simp [Pi.single_apply, hij, Ne.symm hij]
+    · simp
+  have horth (x y : Fin n → Fin 2) (hxy : x ≠ y) :
+      (∑ t, star (f x t) * f y t) = 0 := by
+    obtain ⟨j, hj⟩ := Function.ne_iff.mp hxy
+    let a : Fin n → Fin 2 := Pi.single j 1
+    have hne : χ a y ≠ χ a x := by
+      rw [hsingle, hsingle]
+      generalize hx : x j = r at *
+      generalize hy : y j = t at *
+      fin_cases r <;> fin_cases t <;> norm_num at *
+    have hh : star (f x : (Fin n → Fin 2) → ℂ) ⬝ᵥ (H a *ᵥ f y) =
+        star (H a *ᵥ f x) ⬝ᵥ (f y) := by
+      rw [Matrix.star_mulVec, (hH a).eq, Matrix.dotProduct_mulVec]
+    rw [heig, heig, star_smul, smul_dotProduct, dotProduct_smul, hχstar] at hh
+    have hz : (χ a y - χ a x) * (∑ t, star (f x t) * f y t) = 0 := by
+      change (χ a y - χ a x) * (star (f x : (Fin n → Fin 2) → ℂ) ⬝ᵥ f y) = 0
+      linear_combination hh
+    exact (mul_eq_zero.mp hz).resolve_left (sub_ne_zero.mpr hne)
+  have hself (x : Fin n → Fin 2) : (∑ t, star (f x t) * f x t) = 1 := by
+    have hh : inner ℂ (f x) (f x) = 1 := by
+      simp [inner_self_eq_norm_sq_to_K, hnorm]
+    simpa only [EuclideanSpace.inner_eq_star_dotProduct, dotProduct, Pi.star_apply, mul_comm] using hh
+  let F : Matrix (Fin n → Fin 2) (Fin n → Fin 2) ℂ := fun t x => f x t
+  have hF : F ∈ Matrix.unitaryGroup (Fin n → Fin 2) ℂ := by
+    apply Matrix.mem_unitaryGroup_iff'.mpr
+    ext x y
+    change (∑ t, star (f x t) * f y t) = if x = y then 1 else 0
+    by_cases hxy : x = y
+    · subst y
+      simpa using hself x
+    · simpa [hxy] using horth x y hxy
+  refine ⟨F, hF, ?_⟩
+  intro a
+  have hHF : H a * F = F * diagonal (χ a) := by
+    ext t x
+    rw [Matrix.mul_diagonal]
+    change (H a *ᵥ (f x)) t = f x t * χ a x
+    simpa only [Pi.smul_apply, smul_eq_mul, mul_comm] using congrFun (heig a x) t
+  calc
+    _ = Fᴴ * (H a * F) := Matrix.mul_assoc _ _ _
+    _ = Fᴴ * (F * diagonal (χ a)) := by rw [hHF]
+    _ = (Fᴴ * F) * diagonal (χ a) := (Matrix.mul_assoc _ _ _).symm
+    _ = _ := by rw [show Fᴴ * F = 1 from hF.1, Matrix.one_mul]
+
+private lemma lagrangian_reflection_representation {n : ℕ} (hn : 1 ≤ n)
+    (L : Submodule (ZMod 2) ((Fin n → ZMod 2) × (Fin n → ZMod 2)))
+    (hL : ∀ u ∈ L, ∀ v ∈ L, BinaryLagrangianGraphForm.sp u v = 0)
+    (hdim : Module.finrank (ZMod 2) L = n) :
+    ∃ R : (Fin n → Fin 2) → Fin n → Matrix (Fin 2) (Fin 2) ℂ,
+      (∀ a j, (R a j).IsHermitian ∧ R a j * R a j = 1) ∧
+      (∀ a b, tensorOp (R (a + b)) = tensorOp (R a) * tensorOp (R b)) ∧
+      (∀ a, Matrix.trace (tensorOp (R a)) = if a = 0 then (2 ^ n : ℂ) else 0) ∧
+      (∀ p, word_symbol p ∈ L →
+        wordOp p ∈ Submodule.span ℂ (Set.range (fun a => tensorOp (R a)))) := by
+  sorry
+
 private lemma lagrangian_character_frame {n : ℕ} (hn : 1 ≤ n)
     (L : Submodule (ZMod 2) ((Fin n → ZMod 2) × (Fin n → ZMod 2)))
     (hL : ∀ u ∈ L, ∀ v ∈ L, BinaryLagrangianGraphForm.sp u v = 0)
@@ -708,7 +844,21 @@ private lemma lagrangian_character_frame {n : ℕ} (hn : 1 ≤ n)
       (∀ a, Fᴴ * tensorOp (R a) * F =
         diagonal (fun x => ∏ j, (-1 : ℂ) ^ ((a j).val * (x j).val))) ∧
       (∀ p, word_symbol p ∈ L → (Fᴴ * wordOp p * F).IsDiag) := by
-  sorry
+  classical
+  obtain ⟨R, hR, hmul, htrace, hspan⟩ := lagrangian_reflection_representation hn L hL hdim
+  have hH (a) : (tensorOp (R a)).IsHermitian := by
+    change (tensorOp (R a))ᴴ = tensorOp (R a)
+    rw [tensor_adj]
+    congr 1
+    funext j
+    exact (hR a j).1.eq
+  obtain ⟨F, hF, he⟩ := binary_character_frame (fun a => tensorOp (R a)) hH hmul htrace
+  refine ⟨F, R, hF, hR, he, ?_⟩
+  intro p hp
+  apply diagonal_on_span F (Set.range (fun a => tensorOp (R a))) ?_ _ (hspan p hp)
+  rintro A ⟨a, rfl⟩
+  rw [he a]
+  exact Matrix.isDiag_diagonal _
 
 private lemma stabilizer_frame_of_site_normal_forms {n : ℕ} (hn : 1 ≤ n)
     (U : Fin (2 ^ n) → Fin n → Matrix (Fin 2) (Fin 2) ℂ)
