@@ -62,8 +62,8 @@ family of failures at odd orders at least three.
 ## Gap
 
 The universal assertion has the mathematical counterexample
-$(k,n,x)=(3,1,1)$. The Lean proof source is a draft awaiting compilation;
-no kernel or axiom-closure check is claimed in this dossier.
+$(k,n,x)=(3,1,1)$. The Lean module proves this instance and its contradiction with the
+assertion; the axiom closure is not asserted in this dossier.
 The individual source results at orders one and two remain applicable.
 The existence of negative instances at every even order at least four,
 and the full positivity regions for higher orders, remain unsettled here.
@@ -136,7 +136,8 @@ The numerical readings below were computed with mpmath at 60 decimal digits,
 outside the Lean development, by the program
 `experiments/sitnik-exp-remainder-differences/differences_scan.py` of
 the-omega-institute/trureturing-experiments at revision
-993fe8ecf15ae7c5ebafaa3774b4f597562573c3 (sha256
+993fe8ecf15ae7c5ebafaa3774b4f597562573c3
+(<https://github.com/the-omega-institute/trureturing-experiments/tree/993fe8ecf15ae7c5ebafaa3774b4f597562573c3/experiments/sitnik-exp-remainder-differences>) (sha256
 `5b6d8e0fbb432fac6791131d47da263a980f59c769fbcd877d3a96b83dfe734a`), run from
 that directory as `python3 differences_scan.py` with Python 3.12 and mpmath
 1.4.1, exit code 0.
@@ -195,7 +196,7 @@ that directory as `python3 differences_scan.py` with Python 3.12 and mpmath
   $k=3$, each of $x=0.001,1,5$ gives negative values for all
   $n=1,\ldots,8$. At $x=1$ the values at $n=1$ and $n=2$ are
   respectively $-0.0191991$ and $-0.008813$, after rounding.
- 
+
 - **OPEN.** Whether every even $k\ge4$ has a negative instance,
   beyond the computed range $k\le12$; in particular the
   existence question for every even $k\ge14$. Also open here is the
