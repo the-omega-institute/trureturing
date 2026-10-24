@@ -2,12 +2,13 @@
    generality: G
    mirror-B: D5/B/S3/Analytic/HypergeometricShiftTuran/FunctionResult
    mirror-E: none(waiver:external-open-problem-resolution)
-   anchors: [mathlib/module/Mathlib.Analysis.SpecificLimits.Normed]
+   anchors: []
    utility: kind=certified-instance; basis=refutes=gid:D5/S3/Analytic/HypergeometricShiftTuran/FunctionResult.claim; result=D5/S3/Analytic/HypergeometricShiftTuran/FunctionResult.result; claim=D5/S3/Analytic/HypergeometricShiftTuran/FunctionResult.claim
    digest: A convergent Gamma-series counterexample to function nonnegativity in Conjecture 1. -/
 
 import D5.S3.Analytic.HypergeometricShiftTuran.Defs
-import Mathlib.Analysis.SpecificLimits.Normed
+
+/-! A function-level refutation using convergent positive Gamma series. -/
 
 noncomputable section
 open scoped BigOperators
@@ -50,12 +51,12 @@ private lemma term_ratio (t : ℝ) (ht : 1 ≤ t) (n : ℕ) (hn : 8 ≤ n) :
     term t (n+1) ≤ (1/2:ℝ) * term t n := by
   rw [term_step t (by linarith) n]
   apply mul_le_mul_of_nonneg_right _ (term_nonneg t n)
-  have hn' : (8 : ℝ) ≤ n := by exact_mod_cast hn
-  have hp : (9 : ℝ)^12 ≤ (t+n)^12 := pow_le_pow_left₀ (by norm_num) (by linarith) 12
+  have hn' : (8 : ℝ) ≤ n := Nat.ofNat_le_cast.mpr hn
+  have hp : (9 : ℝ)^12 ≤ (t+n)^12 := pow_le_pow_left₀ (Nat.ofNat_nonneg' 9) (by linarith) 12
   apply (div_le_iff₀ (by positivity : 0 < ((n:ℝ)+1)*(t+n)^12)).2
   nlinarith
 private lemma term_summable (t : ℝ) (ht : 1 ≤ t) : Summable (term t) := by
-  apply summable_of_ratio_norm_eventually_le (by norm_num : (1/2:ℝ)<1)
+  apply summable_of_ratio_norm_eventually_le one_half_lt_one
   filter_upwards [eventually_ge_atTop 8] with n hn
   simpa only [Real.norm_eq_abs, abs_of_nonneg (term_nonneg t _)] using term_ratio t ht n hn
 
@@ -76,7 +77,7 @@ private lemma term_integer (n : ℕ) : term 2 n = aterm n := by
 private lemma term_half (k n : ℕ) :
     term ((k:ℝ)+1/2) n = Real.pi⁻¹^6 * hterm k n := by
   have hs : (Real.sqrt Real.pi)^12 = Real.pi^6 := by
-    rw [show 12 = 2*6 by norm_num, pow_mul, Real.sq_sqrt Real.pi_pos.le]
+    rw [show 12 = 2*6 from (Nat.succ_mul_succ 1 5).symm, pow_mul, Real.sq_sqrt Real.pi_pos.le]
   unfold term hterm
   rw [show (k:ℝ)+1/2+n = ((n+k:ℕ):ℝ)+1/2 by push_cast; ring,
     Real.Gamma_nat_add_half]
@@ -89,12 +90,12 @@ private def rho : ℝ := 5000 / (9 * 10^12)
 
 private lemma aterm_ratio (n : ℕ) (hn : 8 ≤ n) :
     term 2 (n+1) ≤ rho * term 2 n := by
-  rw [term_step 2 (by norm_num) n]
+  rw [term_step 2 zero_lt_two n]
   apply mul_le_mul_of_nonneg_right _ (term_nonneg 2 n)
-  have hn' : (8:ℝ) ≤ n := by exact_mod_cast hn
-  have hp : (10:ℝ)^12 ≤ (2+n)^12 := pow_le_pow_left₀ (by norm_num) (by linarith) 12
+  have hn' : (8:ℝ) ≤ n := Nat.ofNat_le_cast.mpr hn
+  have hp : (10:ℝ)^12 ≤ (2+n)^12 := pow_le_pow_left₀ (Nat.ofNat_nonneg' 10) (by linarith) 12
   unfold rho
-  apply div_le_div_of_nonneg_left (by norm_num) (by norm_num)
+  apply div_le_div_of_nonneg_left (Nat.ofNat_nonneg' 5000) (by norm_num)
   nlinarith
 
 private lemma aterm_upper :
@@ -103,12 +104,12 @@ private lemma aterm_upper :
   have hr1 : rho < 1 := by norm_num [rho]
   have hm (n : ℕ) : term 2 (n+8) ≤ rho^n * term 2 8 := by
     simpa only [zero_add] using le_geom (u := fun n => term 2 (n+8)) hr0 n
-      (fun k _ => aterm_ratio (k+8) (by omega))
+      (fun k _ => aterm_ratio (k+8) (Nat.le_add_left 8 k))
   have htail := Summable.tsum_le_tsum hm
-    ((summable_nat_add_iff 8).2 (term_summable 2 (by norm_num)))
+    ((summable_nat_add_iff 8).2 (term_summable 2 one_le_two))
     ((summable_geometric_of_lt_one hr0 hr1).mul_right (term 2 8))
   rw [tsum_mul_right, tsum_geometric_of_lt_one hr0 hr1, term_integer] at htail
-  have he := Summable.sum_add_tsum_nat_add 8 (term_summable 2 (by norm_num))
+  have he := Summable.sum_add_tsum_nat_add 8 (term_summable 2 one_le_two)
   simp_rw [term_integer] at he
   simp_rw [term_integer] at htail
   simp_rw [term_integer]
@@ -121,7 +122,7 @@ private lemma aterm_upper_numeric :
 
 private lemma hterm_lower (k : ℕ) :
     (∑ n ∈ Finset.range 2, hterm k n) ≤ ∑ n ∈ Finset.range 8, hterm k n := by
-  apply Finset.sum_le_sum_of_subset_of_nonneg (Finset.range_mono (by norm_num))
+  apply Finset.sum_le_sum_of_subset_of_nonneg (Finset.range_mono Nat.AtLeastTwo.prop)
   intro n _ _
   unfold hterm
   positivity
@@ -131,17 +132,21 @@ private lemma half_lower (k : ℕ) (hk : 1 ≤ k) :
   have h := Summable.sum_le_tsum (Finset.range 8)
     (fun n _ => term_nonneg ((k:ℝ)+1/2) n)
     (term_summable ((k:ℝ)+1/2) (by
-      have h : (1:ℝ) ≤ k := by exact_mod_cast hk
+      have h : (1:ℝ) ≤ k := Nat.one_le_cast.mpr hk
       linarith))
   simpa only [term_half, Finset.mul_sum] using h
 
-private lemma fval_eq (μ : ℝ) :
+private lemma fval_eq (μ : ℝ) (hμ : 1 ≤ μ) :
     fval (fun _ : Fin 0 => 0) (fun _ : Fin 12 => (1/2:ℝ)) μ 5000 =
       ∑' n, term (μ+1/2) n := by
-  unfold fval term
-  congr 1
-  funext n
-  simp [coeff, inv_pow, add_left_comm, add_assoc, add_comm]
+  unfold fval
+  have hsum : HasSum (fun n : ℕ =>
+      coeff (fun _ : Fin 0 => 0) (fun _ : Fin 12 => (1/2:ℝ)) (μ+n) *
+        5000^n / (n.factorial : ℝ)) (∑' n, term (μ+1/2) n) := by
+    convert (term_summable (μ+1/2) (by linarith)).hasSum using 1
+    ext n
+    simp [coeff, term, inv_pow, add_left_comm, add_assoc, add_comm]
+  exact hsum.tsum_eq
 
 private lemma witness_negative :
     turanian (fun _ : Fin 0 => 0) (fun _ : Fin 12 => (1/2:ℝ))
@@ -156,14 +161,14 @@ private lemma witness_negative :
     norm_num [hterm, Finset.sum_range_succ, Nat.doubleFactorial]
   have hr' : Real.pi⁻¹^6 * 161000 ≤ ∑' n, term (3/2) n := by
     exact (mul_le_mul_of_nonneg_left hr (by positivity)).trans
-      (by convert half_lower 1 (by norm_num) using 1 <;> norm_num)
+      (by convert half_lower 1 NeZero.one_le using 1 <;> norm_num)
   have hs' : Real.pi⁻¹^6 * 34 ≤ ∑' n, term (5/2) n := by
     exact (mul_le_mul_of_nonneg_left hs (by positivity)).trans
-      (by convert half_lower 2 (by norm_num) using 1 <;> norm_num)
+      (by convert half_lower 2 NeZero.one_le using 1 <;> norm_num)
   have hpi : (9/4:ℝ)^2 * Real.pi^12 < 161000*34 := by
     calc
       _ ≤ (9/4:ℝ)^2 * (3.1416:ℝ)^12 := mul_le_mul_of_nonneg_left
-        (pow_le_pow_left₀ Real.pi_pos.le Real.pi_lt_d4.le 12) (by norm_num)
+        (pow_le_pow_left₀ Real.pi_pos.le Real.pi_lt_d4.le 12) (sq_nonneg (9/4))
       _ < _ := by norm_num
   have hnum : (9/4:ℝ)^2 < (Real.pi⁻¹^6 * 161000) * (Real.pi⁻¹^6 * 34) := by
     have he : (Real.pi⁻¹^6 * 161000) * (Real.pi⁻¹^6 * 34) =
@@ -175,7 +180,9 @@ private lemma witness_negative :
     (tsum_nonneg (term_nonneg (3/2)))
   have hmid := mul_self_le_mul_self ha0 ha
   unfold turanian
-  simp only [fval_eq]
+  norm_num only
+  simp only [fval_eq (3/2) (by norm_num), fval_eq 1 (le_refl 1),
+    fval_eq 2 one_le_two]
   norm_num only at *
   nlinarith
 
@@ -183,9 +190,10 @@ private lemma witness_negative :
 theorem result : ¬ claim := by
   intro hclaim
   have h := hclaim 0 12 (fun _ : Fin 0 => 0) (fun _ : Fin 12 => (1/2:ℝ))
-    (by norm_num) (by intro i; exact Fin.elim0 i) (by intro j; norm_num)
+    (Nat.zero_le 12) (by intro i; exact Fin.elim0 i) (fun _ => one_half_pos)
     (by intro j hj; exact (Nat.not_lt_zero j hj).elim)
-    1 (1/2) (1/2) 5000 (by norm_num) (by norm_num) (by norm_num) (by norm_num)
+    1 (1/2) (1/2) 5000 (le_refl 1) (by norm_num) (by norm_num)
+    (Nat.ofNat_nonneg' 5000)
   exact (not_lt_of_ge h) witness_negative
 
 end D5.S3.Analytic.HypergeometricShiftTuran.FunctionResult
