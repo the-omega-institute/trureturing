@@ -9,9 +9,7 @@
 import D5.S3.QuantumChannels.PauliThreeWeightBayesianInverseUniqueness
 import D5.S3.Quantum.QuantumChannels.IptPptSquaredEquivalence
 import D5.S3.Quantum.Information.SLDSpectralEnergy
-import D5.S3.Quantum.Matrix.CartesianVariance
 import D5.S3.Quantum.QuantumChannels.PositiveFilterTransposeRefutation
-import D5.S3.Quantum.Magic.WignerDistanceMinimum
 import D5.S3.Quantum.Information.EntanglementDistanceBellDiagonalRefutation
 import D5.S3.Quantum.Measurement.StabilizerPovmMaximalEntanglementRefutation
 import D5.S3.Quantum.Information.SeparableStateLocalUnitaryStabilizerObstruction
