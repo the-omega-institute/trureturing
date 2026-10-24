@@ -2157,6 +2157,187 @@ and RH remain open; this application has no local Lean certification or
 literature-priority claim.
 
 
+## A smooth Type-I cutoff using the existing reciprocal strip
+
+The paid support reduction can be enlarged by combining the same
+truncated inverse with a two-variable Euler correction. Reuse
+`lem:logarithmic-control`, `lem:deleted-euler-factors` and
+`lem:smooth-calculus` of the [pinned OpenAI primary manuscript](https://github.com/openai/math/blob/adc7f1241b42e322a6451854ab7e4b4c146bf78a/preprints/The-Quasi-Riemann-Hypothesis-September-30-2026/build/paper.tex),
+and the zero-slot plain fourth moment used in (C22). This is a
+`repo-derived` application of those analytic inputs, not a new zero-free
+region or truncated-inverse identity. Keep the same original physical
+rows, presentations, collision zeros and fixed or stated polylog costs.
+Use $\beta=7/8$ from that source; a Dirichlet-only nonvanishing statement
+would not supply the required Hecke-family reciprocal bound. The
+no-linear-term correction and absolute-mass transport reuse the mechanism
+of Collet's Chapter 25 described [above](#reusing-the-global-ordinary-source-frontier);
+the application here concerns the actual smooth Type-I coefficient.
+
+**Exact smooth split.** Choose a fixed smooth $0\le W\le1$, equal to $1$
+on $[0,1]$ and $0$ on $[2,\infty)$. With the same $z=(bD)^{1/2}$, now put
+$A=U^{1/20}$. For sufficiently large $U$, $2A<z<aD$. Define
+
+$$
+\begin{aligned}
+\lambda_{\mathrm{II},W}(d)
+&=-\mu^2(d)\sum_{\substack{rsc=d\\q_r,q_s\le z}}
+ \mu(r)\mu(s)\bigl(1-W(q_{rs}/A)\bigr),\\
+M_{\mathrm I,W}(u)
+&=-D^{-1/2}\sum_{\substack{q,c\ {\rm sf}\\(q,c)=1}}
+ \mu(q)\tau(q)\psi_u(qc)W(q_q/A)V(q_qq_c/D),\\
+M_{\mathrm{II},W}(u)
+&=D^{-1/2}\sum_d\lambda_{\mathrm{II},W}(d)
+ \psi_u(d)V(q_d/D).
+\end{aligned}
+\tag{C25}
+$$
+
+Then $M_\psi=M_{\mathrm I,W}+M_{\mathrm{II},W}$ exactly. Indeed, wherever
+$W(q_{rs}/A)$ is nonzero, $q_{rs}<2A<z$, so all ordered factorizations
+of $q=rs$ occur, with sum $\mu(q)\tau(q)$. The minus sign in
+$M_{\mathrm I,W}$ is global; its two-variable coefficient below is
+$\mu(q)\tau(q)$.
+
+**A summable correction preserves the plain factor.** On an absolutely
+convergent starting half-plane, the series for squarefree coprime
+$(q,c)$ has local factor $1-2x+y$, where
+$x=\psi_u(\mathfrak p)q_{\mathfrak p}^{-s}$ and
+$y=\psi_u(\mathfrak p)q_{\mathfrak p}^{-t}$. Factor it as
+
+$$
+\begin{aligned}
+F_u(s,t)&=L(s,\psi_u)^{-2}L(t,\psi_u)H_u(s,t),\\
+(H_u)_{\mathfrak p}
+&=\frac{(1-2x+y)(1-y)}{(1-x)^2}
+ =1-\frac{(x-y)^2}{(1-x)^2},\\
+H_u(s,t)&=\sum_{d,e}h(d,e)\psi_u(de)q_d^{-s}q_e^{-t}.
+\end{aligned}
+\tag{C26}
+$$
+
+The multiplicative coefficient $h(d,e)$ is independent of the row.
+All nonconstant local terms have total degree at least two. Hence, for
+$\sigma>1/2$, $\tau>1/2$ and $\sigma+\tau>1$,
+
+$$
+\sum_{d,e}|h(d,e)|q_d^{-\sigma}q_e^{-\tau}<\infty:
+\qquad
+\sum_{(j,k)\ne(0,0)}|h(\mathfrak p^j,\mathfrak p^k)|
+ q_{\mathfrak p}^{-j\sigma-k\tau}
+\le\frac{(q_{\mathfrak p}^{-\sigma}
+          +q_{\mathfrak p}^{-\tau})^2}
+         {(1-q_{\mathfrak p}^{-\sigma})^2}.
+$$
+
+Equality of coefficients in (C26) expresses the joint coefficient as
+an $h$-convolution of $(\mu*\mu)(r)\psi_u(r)$ in the first variable
+and the plain coefficient $\psi_u(n)$ in the second. This is a formal
+coefficient transport followed by finite polynomial estimates; no
+pointwise bound for $L(t,\psi_u)$ near the central line is invoked.
+Original zero-only primes give local factor $1$ throughout, including
+in the transported coefficient.
+
+For a smooth annular profile $P$ and length $R\gg1$, moving its Mellin
+line to $\sigma=\beta+v$, $v>0$, in the inverse-square series gives
+
+$$
+\sup_u\left|R^{-1/2}\sum_r(\mu*\mu)(r)\psi_u(r)P(q_r/R)\right|
+\ll U^\varepsilon R^{\sigma-1/2}\,p_J(P).
+$$
+
+Here $p_J$ is a fixed finite smooth seminorm, chosen after the desired
+loss. The source's full reciprocal strip controls $L(s,\psi_u)^{-2}$;
+its deleted-factor lemma includes both the primitive conductor and the
+complete original deletion radical. A principal reciprocal has a zero,
+rather than a pole, at $s=1$ and contributes no residue. The remaining
+plain factor uses the same original nonprincipal row supplier as (C22).
+For a fixed finite twist, a principal inducing character on a sixth-power-free
+physical row forces its good-prime support into the fixed twist support;
+with valuations at most five these rows are bounded, hence absent from
+sufficiently large annuli. Retain the original finite exceptional-row
+treatment at bounded scales; no arbitrary principal row is added to the
+plain moment theorem.
+
+Dyadically localize the total first variable at $q_q\asymp Q\ll A$ and
+the second at $q_c\asymp C=D/Q$. Their joint profile is smooth on a
+fixed compact annulus, uniformly in $Q/A$: derivatives of $W(Qx/A)$
+are bounded there. Separate it by a common logarithmic Fourier measure.
+Its rapidly decreasing transform pays the fixed polynomial growth of
+the two annular profile seminorms. These Fourier parameters belong to
+the profiles; the original row twists and their height contract are
+unchanged. The global reciprocal strip handles the inverse factor's
+internal Mellin heights.
+
+After $q=dr$, $c=en$, normalization contributes $(q_dq_e)^{-1/2}$.
+The inverse-square supremum and the plain $L^4$ bound therefore give,
+for this dyadic piece,
+
+$$
+\begin{aligned}
+\|M_{\mathrm I,W;Q}\|_4
+&\ll U^{1/4+\varepsilon}Q^{\sigma-1/2}
+ \sum_{\substack{q_d\ll Q\\q_e\ll C}}
+ |h(d,e)|q_d^{-\sigma}q_e^{-1/2}\\
+&\ll U^{1/4+\varepsilon}Q^{\sigma-1/2}C^\eta,
+ \qquad \eta>0.
+\end{aligned}
+$$
+
+The last step uses the absolute mass in (C26) at
+$(\sigma,1/2+\eta)$. Shifted lengths below a fixed positive support
+constant are empty; all remaining subunit lengths are bounded-factor
+annular scales. Thus none causes an extra power. Choose $v,\eta$ within
+the final loss, and sum $Q$ dyadically. At $\beta=7/8$ and $A=U^{1/20}$,
+
+$$
+\boxed{
+\mathcal T_{\mathrm I,W}
+ :=\|M_{\mathrm I,W}\|_4^4
+ \ll U^{1+\varepsilon}A^{4\beta-2}
+ =U^{43/40+\varepsilon}.
+}
+\tag{C27}
+$$
+
+**Whole interference and the same remaining target.** Since
+$43/40<B_*$, the full-moment argument of (C23) now gives
+
+$$
+\begin{aligned}
+|\mathcal T_\mu-\mathcal T_{\mathrm{II},W}|
+&\ll U^{C_W+\varepsilon},\\
+C_W&=\frac{3B_*+43/40}{4}
+ =\frac{663-200\sqrt6}{160}
+ =C_*-\frac1{800}<\frac{13}{12}.
+\end{aligned}
+$$
+
+The remainder is still squarefree-supported and bounded by $\tau_3$.
+Its actual square coefficient $g_{\mathrm{II},W}$ therefore has the
+same cube-free normalized envelope as $g_{\mathrm{II}}$. Pay its whole
+cubic and large-$P$ blocks separately, as in (C24), to obtain
+
+$$
+\boxed{
+\left|E_{6,\,P<U^{1/4}}^\mu
+      -E_{6,\,P<U^{1/4}}(g_{\mathrm{II},W})\right|
+\ll U^{13/12+\varepsilon}.
+}
+\tag{C28}
+$$
+
+All finite components are restored coherently with the same common
+cost. If $q_{d_{\le z}}\le A=U^{1/20}$, then every allowed $rs$ satisfies
+$W(q_{rs}/A)=1$, so $\lambda_{\mathrm{II},W}(d)=0$. This enlarges the
+paid support exclusion in (C24). Coefficients on other columns change
+as well; the operation is not deletion of only that set from the
+original moment. For $0<\nu<B_*-13/12$, the unpaid (C20) can be sought
+with this explicit smooth remainder. The required Type-II gain, full
+inverse-fourth improvement, signed Robin restoration and RH remain
+open. These source-conditional applications carry neither local Lean
+certification nor a literature-priority claim.
+
+
 ## Finite signs in the remaining small-squarepart sector
 
 The [original-family program and data](https://github.com/the-omega-institute/trureturing-experiments/tree/907f48d6d61c17f24628d2ed31f3f115598a3515/docs/reports/sextic-inverse-fourth#product-squarepart-correlation)
