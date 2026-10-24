@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:84b8de8e98faa336c13a4883ff0f97cf9e353adb66396cf72d868d9b579d48e9
+  normalized_sha256: sha256:84b8de8e98faa336c13a4883ff0f97cf9e353adb66396cf72d868d9b579d48e9
+cas_ref: sha256:84b8de8e98faa336c13a4883ff0f97cf9e353adb66396cf72d868d9b579d48e9
+coverage_gids:
+  - gid: D5/S1/Dynamics/ProfiniteCharacter.residueProjection
+    target_statement_id: sha256:75aeff462891dd4eb41b107ede22e1128ad1f73825fc64c7f71e7c26ef241215
+  - gid: D5/S1/Dynamics/ProfiniteIntegers.ProfiniteIntegers
+    target_statement_id: sha256:1bf0e4d16d50b2e6770b017cc11ce1839655106031412598188aef3de43b2e07
+receipts:
+  unresolved_subitems: []

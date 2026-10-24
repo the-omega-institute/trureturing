@@ -1720,3 +1720,374 @@ structure for the continuing programme.
 [BRW]: https://arxiv.org/abs/1708.04898v4
 
 ## 追加锚（本行以下为增补区）
+
+## 13. Exact rectangular rigidity for the actual retained-label task
+
+**Theorem 13.1 (All successful full-H corrected channels).**
+Use exactly Definitions 1.1–1.2 and 11.1, with their actual embedding
+$B:\mathbb C^3\to H=\mathbb C^5$, chronological words $Q_h$,
+full-$H$ operators $A_j$ of (11.1), and common pre-choice decoders.
+For every real $\theta$, integer $n\ge0$, finite or countable record
+alphabet $\mathcal A$, input-independent kernel $r(a\mid h)$ satisfying
+(1.6) for every length-$n$ history, and family of complex-linear CPTP
+maps $\mathcal D_a:M_5(\mathbb C)\to M_5(\mathbb C)$, put
+
+$$
+\begin{aligned}
+p_{h,a}&=2^{-n}r(a\mid h),\\
+\Phi_{h,a}(X)&=\mathcal D_a(BQ_hXQ_h^\dagger B^\dagger),\\
+\overline\Phi(X)&=\sum_{h,a}p_{h,a}\Phi_{h,a}(X).
+\end{aligned}
+\tag{13.1}
+$$
+
+The following statements are equivalent: all five averaged task
+equations (11.2) hold for every complex qutrit density input, for both
+late alternatives and every $j,y\in\{0,1\}$; the average satisfies
+
+$$
+\overline\Phi(X)=BXB^\dagger
+\quad\text{for every }X\in M_3(\mathbb C);
+\tag{13.2}
+$$
+
+and every positive original history/record branch satisfies
+
+$$
+\Phi_{h,a}(X)=BXB^\dagger
+\quad\text{for every }X\in M_3(\mathbb C)
+\quad\text{whenever }r(a\mid h)>0.
+\tag{13.3}
+$$
+
+Equivalently, the restriction of every successful record-selected
+physical decoder to its actual qutrit input is
+
+$$
+\mathcal D_a(BYB^\dagger)=BQ_h^\dagger YQ_hB^\dagger
+\quad\text{for every }Y\in M_3(\mathbb C)
+\quad\text{whenever }r(a\mid h)>0.
+\tag{13.4}
+$$
+
+For every finite untouched inaccessible reference of dimension $d$ and
+every joint density $\rho\in\mathsf D(\mathbb C^3\otimes\mathbb C^d)$,
+these same conclusions give
+
+$$
+\begin{aligned}
+(\overline\Phi\otimes\operatorname{id}_{M_d})(\rho)
+ &=(B\otimes I_d)\rho(B^\dagger\otimes I_d),\\
+(\Phi_{h,a}\otimes\operatorname{id}_{M_d})(\rho)
+ &=(B\otimes I_d)\rho(B^\dagger\otimes I_d)
+ \quad\text{if }r(a\mid h)>0.
+\end{aligned}
+\tag{13.5}
+$$
+
+No output-in-$R$ hypothesis or conditional future correctness is
+assumed. Formula (13.4) specifies only the decoder's action on
+$BM_3B^\dagger$, the matrices supported in $R$. Its action on inputs
+outside that corner, including coherences between $R$ and $R^\perp$,
+is not classified.
+
+Proof. Each $Q_h$ is unitary, $B^\dagger B=I_3$, and every
+$\Phi_{h,a}$ is CPTP. The actual original-history weights obey
+
+$$
+\sum_{h,a}p_{h,a}
+ =\sum_{h\in\{0,1\}^n}2^{-n}\sum_a r(a\mid h)=1.
+\tag{13.6}
+$$
+
+This includes $n=0$, when there is the sole empty history
+$Q_\varnothing=I_3$. In the unnormalized Choi convention a CPTP map
+$M_3\to M_5$ has a positive Choi matrix of trace three. Thus the
+countable sum in (13.1) converges in Choi trace norm, has positive
+Choi matrix and the trace-preserving partial trace, and defines a CPTP
+map $T=\overline\Phi$. All following identities concern this original
+average, with the chronological words and weights unchanged.
+
+Use the actual §5 coordinates and §11 effects:
+
+$$
+\begin{gathered}
+v_0=v_e=(\xi+e)/\sqrt2,\qquad p=Bv_0,\qquad
+P=pp^\dagger=\widehat E,\\
+t_j=A_j^\dagger p,\qquad
+w_0=w_+,\quad w_1=w_-,\qquad F_j=w_jw_j^\dagger,\\
+w_\pm=\frac{\xi-e/2\ \pm\ (\sqrt3/2)e^{2i\theta}f}{\sqrt2}.
+\end{gathered}
+\tag{13.7}
+$$
+
+Here $(\xi,e,f)$ and their physical embedding are exactly (1.1),
+(1.5), and (5.5)–(5.7). The three unit vectors $v_0,w_0,w_1$
+span $\mathbb C^3$ for every real angle: their difference supplies
+$f$, their sum supplies $\xi-e/2$, and $v_0$ supplies $\xi+e$.
+Their nonzero overlaps and the restricted action $A_jB=BV_j/\sqrt2$
+give the precise identities
+
+$$
+\begin{aligned}
+B^\dagger t_j&=e^{-i\theta}w_j/\sqrt2,&
+\langle v_0,w_j\rangle&=1/4,\\
+\langle p,t_j\rangle&=e^{-i\theta}/(4\sqrt2),&
+A_jBw_j&=e^{i\theta}p/\sqrt2.
+\end{aligned}
+\tag{13.8}
+$$
+
+The inner product is conjugate-linear in its first argument. These
+formulas use the actual full-$H$ operators on their embedded inputs;
+they impose no fairness law on leaked outputs.
+
+Assume (11.2). Density separation applied to those averaged equations,
+using (11.4) for $y=1$ and the actual complementary effect for $y=0$,
+gives
+
+$$
+\begin{aligned}
+T^\dagger(P)&=v_0v_0^\dagger,\\
+T^\dagger(t_jt_j^\dagger)&=\tfrac12 F_j,\\
+T^\dagger\!\bigl(A_j^\dagger(I_5-P)A_j\bigr)
+ &=\tfrac12(I_3-F_j)\qquad(j=0,1).
+\end{aligned}
+\tag{13.9}
+$$
+
+For the last identity the target compression is
+$B^\dagger A_j^\dagger(I_5-P)A_jB=(I_3-F_j)/2$, by
+$A_jB=BV_j/\sqrt2$. This compression is evaluated on the ideal
+embedded input only. In particular (13.9) does not replace the
+full-$H$ effect $A_j^\dagger A_j$ by $I_5/2$.
+All complex density inputs are used: a Hermitian matrix with zero
+expectation on every such density is zero, so the effect equalities
+are identities, not merely equalities on the three probes.
+
+Take a finite rectangular Kraus representation
+
+$$
+T(X)=\sum_\ell L_\ell XL_\ell^\dagger,\qquad
+L_\ell:\mathbb C^3\to\mathbb C^5,\qquad
+\sum_\ell L_\ell^\dagger L_\ell=I_3.
+\tag{13.10}
+$$
+
+The immediate sharp identity in (13.9) forces, for each $\ell$,
+
+$$
+L_\ell v_0=c_\ell p,\qquad
+L_\ell^\dagger p=\overline{c_\ell}v_0,\qquad
+\sum_\ell|c_\ell|^2=1.
+\tag{13.11}
+$$
+
+Indeed, for $x\perp v_0$ the identity gives
+$\sum_\ell|\langle p,L_\ell x\rangle|^2=0$, so every
+$L_\ell^\dagger p$ lies in $\mathbb Cv_0$. At $v_0$, trace
+preservation and that same identity give
+$\sum_\ell\|(I_5-P)L_\ell v_0\|^2=0$, so every
+$L_\ell v_0$ lies in $\mathbb Cp$. Taking the indicated inner
+products fixes the conjugation in (13.11), and Kraus normalization
+at $v_0$ fixes the sum of squared coefficients.
+
+The second identity of (13.9) is a positive rank-one sum:
+
+$$
+\sum_\ell(L_\ell^\dagger t_j)(L_\ell^\dagger t_j)^\dagger
+ =\tfrac12w_jw_j^\dagger.
+\tag{13.12}
+$$
+
+Testing on $w_j^\perp$ shows that every summand vector is
+$L_\ell^\dagger t_j=d_{\ell j}w_j$. By (13.8) and (13.11),
+
+$$
+\frac{d_{\ell j}}4
+ =\langle v_0,L_\ell^\dagger t_j\rangle
+ =\langle L_\ell v_0,t_j\rangle
+ =\frac{\overline{c_\ell}e^{-i\theta}}{4\sqrt2}.
+\tag{13.13}
+$$
+
+Define $N_\ell=L_\ell-c_\ell B$ and
+$S=\operatorname{span}\{p,t_0,t_1\}\subset H$. Equations
+(13.8), (13.11) and (13.13) now imply
+
+$$
+N_\ell v_0=0,\qquad N_\ell^\dagger p=0,\qquad
+N_\ell^\dagger t_0=N_\ell^\dagger t_1=0,\qquad
+\operatorname{range}N_\ell\subset S^\perp.
+\tag{13.14}
+$$
+
+The complementary equations in (13.9) supply the missing rectangular
+constraint. Evaluate their quadratic forms at $w_j$. Their right
+sides are zero, so
+
+$$
+\sum_\ell\|(I_5-P)A_jL_\ell w_j\|^2=0.
+\tag{13.15}
+$$
+
+Every summand vanishes. Subtracting $c_\ell A_jBw_j$, which lies
+in $\mathbb Cp$ by (13.8), gives
+$(I_5-P)A_jN_\ell w_j=0$. Its remaining $p$ component also
+vanishes because
+$p^\dagger A_jN_\ell w_j=t_j^\dagger N_\ell w_j=0$ by
+(13.14). Hence
+
+$$
+N_\ell w_j\in S^\perp\cap\ker A_j\qquad(j=0,1).
+\tag{13.16}
+$$
+
+It remains to compute these actual kernels on all of $H$. Put
+
+$$
+\alpha=\frac{\sqrt2+1}{\sqrt{12}},\qquad
+\beta=\frac{\sqrt2-2}{\sqrt{12}},\qquad
+p=\alpha u+\alpha v+\beta z,\qquad
+c=\cos\theta,\quad s=\sin\theta.
+\tag{13.17}
+$$
+
+Here $u,v,z$ are precisely the physical vectors in (1.1).
+In particular $\alpha\ne0$ and $\alpha-\beta=\sqrt3/2\ne0$.
+For $k=\sum_{i=0}^4 k_i e_i$, direct substitution in (11.1) gives
+
+$$
+\begin{aligned}
+A_0k&=(ck_0+is k_1)u
+       +\frac{e^{i\theta}k_2}{\sqrt2}v
+       +(is k_3+ck_4)z,\\
+A_1k&=(is k_0+ck_1)u
+       +\frac{e^{i\theta}k_2}{\sqrt2}v
+       +(ck_3+is k_4)z.
+\end{aligned}
+\tag{13.18}
+$$
+
+The coefficient of $v$ vanishes only when $k_2=0$.
+Since $c^2+s^2=1$, the row $(c,is)$ has kernel generated by
+$(-is,c)$ and the row $(is,c)$ has kernel generated by $(c,-is)$.
+For example the two rows $(c,is)$ and $(is,c)$ form an invertible
+matrix of determinant $c^2+s^2=1$, proving these descriptions
+without division by $c$ or $s$. Consequently the exact kernels are
+
+$$
+\begin{aligned}
+\ker A_0
+ &=\{x(-is e_0+c e_1)+y(c e_3-is e_4):x,y\in\mathbb C\},\\
+\ker A_1
+ &=\{x(c e_0-is e_1)+y(-is e_3+c e_4):x,y\in\mathbb C\}.
+\end{aligned}
+\tag{13.19}
+$$
+
+For $k$ in the first line, (13.18) gives $A_1k=xu+yz$ and
+
+$$
+\langle p,k\rangle
+ =\frac{\alpha e^{-i\theta}}{\sqrt2}(x+y),\qquad
+\langle t_1,k\rangle=\langle p,A_1k\rangle=\alpha x+\beta y.
+\tag{13.20}
+$$
+
+If also $k\in S^\perp$, both quantities vanish. The first says
+$x+y=0$, and the second then gives $(\alpha-\beta)x=0$.
+Thus $x=y=0$. For $k$ in the second line of (13.19), one instead
+has $A_0k=xu+yz$, the identical first formula in (13.20), and
+$\langle t_0,k\rangle=\alpha x+\beta y$. The same two equations
+again force $x=y=0$. Therefore
+
+$$
+S^\perp\cap\ker A_0=S^\perp\cap\ker A_1=\{0\}
+\quad\text{for every real }\theta.
+\tag{13.21}
+$$
+
+This includes $c=0$ and $s=0$. By (13.16), $N_\ell w_0=N_\ell w_1=0$.
+Together with $N_\ell v_0=0$ and the all-angle spanning in (13.7),
+this proves $N_\ell=0$. Thus $L_\ell=c_\ell B$, and (13.11)
+gives $T(X)=BXB^\dagger$ for every complex matrix $X$, proving
+(13.2) from the averaged task equations.
+
+To recover the individual branches, use the original mixture (13.1),
+not a relabelled or conditionally reweighted history law. With
+$|B\rangle\!\rangle=\sum_{i=0}^2|i\rangle\otimes B|i\rangle$,
+linearity and trace-norm convergence of the Choi sum give
+
+$$
+J(T)=\sum_{h,a}p_{h,a}J(\Phi_{h,a})
+ =|B\rangle\!\rangle\langle\!\langle B|.
+\tag{13.22}
+$$
+
+The right side is positive of rank one. For each $p_{h,a}>0$,
+positivity of every other summand, also for a countable alphabet,
+gives $0\le p_{h,a}J(\Phi_{h,a})\le J(T)$. Its support is
+therefore contained in the line $\mathbb C|B\rangle\!\rangle$.
+Write $J(\Phi_{h,a})=\lambda_{h,a}J(T)$ with
+$\lambda_{h,a}\ge0$. Both unweighted Choi matrices have trace
+three, since both maps are trace preserving. Hence
+$\lambda_{h,a}=1$, proving (13.3). Because $2^{-n}>0$, the positive
+branches are exactly those with $r(a\mid h)>0$, including $n=0$.
+This is the rank-one Choi mixture argument used in Theorem 5.2,
+now applied after establishing the rectangular identity.
+
+Conversely (13.3) and (13.6) imply (13.2). Substituting (13.2)
+into the actual immediate and joint $(j,y)$ tests gives precisely
+(11.2), including both complementary outcomes. Changing variables
+$Y=Q_hXQ_h^\dagger$ proves the equivalence of (13.3) and (13.4).
+For every positive record $a$ there is a compatible history, and
+its terminal qutrit input ranges over all qutrit densities as the
+original input varies. Thus (13.4) really restricts that decoder on
+its entire actual input corner; it is not a restriction to three
+probe states. Different compatible histories must give the same
+restriction. Their full word-class refinement is the existing
+Theorem 11.2, rather than an additional resource assertion here.
+
+Finally (13.2)–(13.3) are equalities of complex-linear maps on all
+$M_3$, so tensoring with $\operatorname{id}_{M_d}$ proves (13.5)
+for arbitrary joint inputs. This accesses no reference. In the
+original history/record mixture each positive block therefore has
+the same corrected embedded joint state, with its original weight
+$p_{h,a}$. Composing such an equality with the actual next instrument
+recovers its joint tests; no branchwise future equality was presumed
+in obtaining (13.9). $\square$
+
+The current exact classification under Definition 11.1 is therefore
+(13.2)–(13.4): every successful corrected $M_3\to M_5$ map is the
+original embedding, and every reached record selects the appropriate
+inverse on its actual qutrit input. This supplies the rectangular
+classification beyond the existence assertion of Theorem 11.2 and
+the corresponding unclassified case described in Definition 12.1.
+It leaves the physical $M_5\to M_5$ decoder's off-$R$ action
+unclassified.
+
+The existing square-system nondisturbance supplier is Mayer–Knill,
+[arXiv:1805.04491v1](https://arxiv.org/abs/1805.04491v1), Theorem 1,
+and the existing repository [ProbeComponentRigidity][PCR], including
+its `dual_fixed`, `kraus_commutes_projection` and `overlap_scalar`
+steps. Their square-output conclusion is not applied to the
+rectangular $T$ in (13.10). The observable-correction interface is
+[Bény–Kempf–Kribs, arXiv:0705.1574v1][BKK], Definition 8 and
+Theorem 9; its algebraic compressed-Kraus-product criterion does
+not turn an actual unsharp full-$H$ effect into a projection.
+Finite CP/Kraus representation, density separation, and positive
+Choi support are existing suppliers. The source-relative increment
+is the actual rectangular residual calculation (13.14)–(13.21)
+and its resulting classification for these specified source task
+equations. This increment is `repo-derived`; no global literature
+novelty assertion is made.
+
+This is an ordinary analytical theorem, not a Lean certification.
+Broader finite-precision bounds, storage minima for the leaked-output
+contract, minimum total controls, atomic or spatial realization, and
+the original critical causal-memory estimate are outside its scope.
+The qutrit-output storage conclusions of §10 and the independent
+realization requirements of §12 retain their stated hypotheses.
+
+## 追加锚（本行以下为增补区）
