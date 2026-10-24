@@ -19,7 +19,7 @@ internal sealed class RotorCoincidenceRightSpecialDocument : IScribeDocumentDefi
                 DeclarationHandle.Create(Prefix + "cutting"),
                 H("An arithmetic cutting sequence"),
                 StatementSource.FromAuthor(Disp(CuttingFormula())),
-                AssessedProvenance.FromRepo(Source),
+                AssessedProvenance.FromLiterature(Source),
                 Blocks(Paragraph(Text(
                     "The function cutting is defined for every real σ and natural m. It takes the value 3 "
                     + "exactly at indices of the form floor(kσ) + k with k a positive natural number, "
@@ -197,7 +197,7 @@ internal sealed class RotorCoincidenceRightSpecialDocument : IScribeDocumentDefi
         Some("i", Naturals, All("t", Naturals,
             All("h", LT(X("t"), Length(X("w"))),
                 Equal(Apply(X("R"), Add(X("i"), X("t"))),
-                    Seq(X("w"), OpenBracket, X("t"), CloseBracket)))))));
+                    Apply(Qualified("GetElem", "getElem"), X("w"), X("t"), X("h"))))))));
 
     private static Formula RightSpecialFormula()
     {
