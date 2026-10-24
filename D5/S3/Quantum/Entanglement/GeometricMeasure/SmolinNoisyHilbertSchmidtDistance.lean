@@ -235,15 +235,111 @@ private theorem trace_S_noisy (p : ℝ) : (Matrix.trace (S * noisy p)).re = 3 * 
     Matrix.trace_smul, trace_S, trace_S_sq, RCLike.real_smul_eq_coe_mul]
   <;> ring
 
+private def triple (j : Fin 3) :
+    Matrix (Fin 2 × Fin 2 × Fin 2) (Fin 2 × Fin 2 × Fin 2) ℂ :=
+  sigma j.succ ⊗ₖ (sigma j.succ ⊗ₖ sigma j.succ)
+
+private theorem triple_hermitian (j : Fin 3) : (triple j)ᴴ = triple j := by
+  simp only [triple, Matrix.conjTranspose_kronecker, (sigma_properties _).1]
+
+private theorem triple_square (j : Fin 3) : triple j * triple j = 1 := by
+  simp only [triple, ← Matrix.mul_kronecker_mul, (sigma_properties _).2,
+    Matrix.one_kronecker_one]
+
+private theorem triple_anti (i j : Fin 3) (h : i ≠ j) :
+    triple i * triple j = -(triple j * triple i) := by
+  have hb : sigma i.succ * sigma j.succ = -(sigma j.succ * sigma i.succ) := by
+    fin_cases i <;> fin_cases j <;> try contradiction
+    all_goals ext a b; fin_cases a <;> fin_cases b
+    all_goals norm_num [sigma,
+      D5.S3.Quantum.Information.StabilizerPairLocalUnitaryInequivalence.pauliMatrix,
+      D5.S3.Quantum.FiniteDimensional.qubitX, D5.S3.Quantum.FiniteDimensional.qubitZ,
+      Matrix.mul_apply, Fin.sum_univ_two]
+  simp only [triple, ← Matrix.mul_kronecker_mul, hb]
+  ext a b
+  simp [Matrix.kroneckerMap_apply]
+
+private theorem triple_sum_square (t : Fin 3 → ℝ) :
+    (∑ j, (t j : ℂ) • triple j) * (∑ j, (t j : ℂ) • triple j) =
+      ((∑ j, t j ^ 2 : ℝ) : ℂ) • 1 := by
+  simp only [Fin.sum_univ_three, Matrix.add_mul, Matrix.mul_add, Matrix.smul_mul,
+    Matrix.mul_smul, smul_smul, Complex.ofReal_add, Complex.ofReal_pow]
+  rw [triple_square 0, triple_square 1, triple_square 2,
+    triple_anti 1 0 (by decide), triple_anti 2 0 (by decide),
+    triple_anti 2 1 (by decide)]
+  module
+
 private theorem witness_product (a : Matrix (Fin 2) (Fin 2) ℂ)
     (b : Matrix (Fin 2 × Fin 2 × Fin 2) (Fin 2 × Fin 2 × Fin 2) ℂ)
     (ha : IsDensity a) (hb : IsDensity b) :
     (Matrix.trace (S * (a ⊗ₖ b))).re ≤ 1 := by
-  sorry
+  let t : Fin 3 → ℝ := fun j => (triple j * b).trace.re
+  let T := ∑ j, (t j : ℂ) • triple j
+  let q := ∑ j, t j ^ 2
+  have hT : Tᴴ = T := by
+    simp only [T, Matrix.conjTranspose_sum, Matrix.conjTranspose_smul,
+      Complex.star_def, Complex.conj_ofReal, triple_hermitian]
+  have hsq : T * T = (q : ℂ) • 1 := triple_sum_square t
+  have hmean : (T * b).trace.re = q := by
+    simp [T, q, t, Matrix.sum_mul, Matrix.smul_mul, Matrix.trace_sum,
+      Matrix.trace_smul, Complex.mul_re, pow_two]
+  have hp := (Matrix.posSemidef_conjTranspose_mul_self (T - 1)).trace_mul_nonneg hb.1
+  have hpR := (Complex.nonneg_iff.mp hp).1
+  have he : (T - 1)ᴴ * (T - 1) * b = T * T * b - T * b - T * b + b := by
+    rw [Matrix.conjTranspose_sub, hT, Matrix.conjTranspose_one]
+    noncomm_ring
+  rw [he] at hpR
+  simp only [Matrix.trace_add, Matrix.trace_sub, Complex.add_re, Complex.sub_re,
+    hsq, Matrix.smul_mul, Matrix.one_mul, Matrix.trace_smul, hb.2, smul_eq_mul,
+    mul_one, Complex.ofReal_re, Complex.one_re, hmean] at hpR
+  have htq : q ≤ 1 := by linarith
+  have hqn : 0 ≤ q := Finset.sum_nonneg (fun _ _ => sq_nonneg _)
+  let r := D5.S3.Quantum.Information.ActualPureQubitCostInfimum.bloch a
+  have hn := D5.S3.Quantum.Information.ActualPureQubitCostInfimum.norm_bloch_le_trace_of_posSemidef
+    a ha.1
+  rw [ha.2, Complex.one_re] at hn
+  have hrq : ∑ j, r j ^ 2 ≤ 1 := by
+    have hn2 := (sq_le_sq₀ (norm_nonneg _) (by norm_num : (0 : ℝ) ≤ 1)).mpr hn
+    simpa only [EuclideanSpace.real_norm_sq_eq, one_pow] using hn2
+  have haeq : a = D5.S3.Quantum.Information.ActualPureQubitCostInfimum.blochMatrix 1 r := by
+    simpa only [ha.2, Complex.one_re] using
+      (D5.S3.Quantum.Information.ActualPureQubitCostInfimum.bloch_geometry_of_isHermitian
+        a ha.1.isHermitian).1
+  have hpa (j : Fin 3) : (sigma j.succ * a).trace = (r j : ℂ) := by
+    rw [haeq]
+    fin_cases j <;> apply Complex.ext
+    all_goals simp [sigma,
+      D5.S3.Quantum.Information.StabilizerPairLocalUnitaryInequivalence.pauliMatrix,
+      D5.S3.Quantum.FiniteDimensional.qubitX, D5.S3.Quantum.FiniteDimensional.qubitZ,
+      D5.S3.Quantum.Information.ActualPureQubitCostInfimum.blochMatrix,
+      Matrix.trace, Matrix.mul_apply, Fin.sum_univ_two, Complex.mul_re, Complex.mul_im]
+    all_goals ring
+  have hexp : S = ∑ j : Fin 3, sigma j.succ ⊗ₖ triple j := by
+    simp [S, four, triple, Fin.sum_univ_three]
+  rw [hexp]
+  simp only [Matrix.sum_mul, ← Matrix.mul_kronecker_mul, Matrix.trace_sum,
+    Matrix.trace_kronecker, hpa, Complex.re_sum, Complex.mul_re,
+    Complex.ofReal_re, Complex.ofReal_im, zero_mul, sub_zero]
+  change (∑ j, r j * t j) ≤ 1
+  have hc := Finset.sum_mul_sq_le_sq_mul_sq Finset.univ (fun j => r j) t
+  have hprod := mul_le_mul_of_nonneg_right hrq hqn
+  change (∑ j, r j ^ 2) * q ≤ 1 * q at hprod
+  change (∑ j, r j * t j) ^ 2 ≤ (∑ j, r j ^ 2) * q at hc
+  nlinarith
+
 
 private theorem witness_separable (σ : Matrix Q Q ℂ) (hσ : σ ∈ SepOneThree) :
     (Matrix.trace (S * σ)).re ≤ 1 := by
-  sorry
+  obtain ⟨n, p, a, b, hp, hsum, hd, he⟩ := hσ
+  rw [he]
+  simp only [Matrix.mul_sum, Matrix.mul_smul, Matrix.trace_sum, Matrix.trace_smul,
+    Complex.re_sum, smul_eq_mul, Complex.mul_re, Complex.ofReal_re,
+    Complex.ofReal_im, zero_mul, sub_zero]
+  calc
+    _ ≤ ∑ i, p i * 1 := Finset.sum_le_sum fun i _ =>
+      mul_le_mul_of_nonneg_left (witness_product (a i) (b i) (hd i).1 (hd i).2) (hp i)
+    _ = 1 := by simpa using hsum
+
 
 private theorem S_hermitian : Sᴴ = S := by
   simp only [S, four, Matrix.conjTranspose_add, Matrix.conjTranspose_kronecker,
