@@ -191,7 +191,7 @@ def chargedField (D : LatticeData) (hu : IsUnit D.G.det) (charge : Charge D) :
     by_contra hbound
     exact hexponent (hlower exponent (by omega)))
 
-private theorem creation_zero (D : LatticeData) (charge : Charge D) :
+theorem creation_zero (D : LatticeData) (charge : Charge D) :
     halfCreationCoeff D charge 0 = 1 := by
   have constant : PowerSeries.constantCoeff (halfCreationSeries D charge) = 0 := by
     simp [halfCreationSeries, ← PowerSeries.coeff_zero_eq_constantCoeff_apply]

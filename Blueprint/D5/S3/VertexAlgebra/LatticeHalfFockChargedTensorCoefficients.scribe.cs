@@ -24,6 +24,8 @@ internal sealed class LatticeHalfFockChargedTensorCoefficientsDocument : IScribe
         "Native charged coefficients on the actual twisted ground module",
         H("Actual Charged Tensor Laurent Coefficients"),
         Blocks(
+            Describe.Lean(DescribeId.Create("exposed-creation_zero"), DeclarationHandle.Create("D5/S3/VertexAlgebra/LatticeHalfFockChargedTensorCoefficients.creation_zero"), H("creation_zero"), StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(), Blocks(Paragraph(Text("The existing zero creation coefficient is one for every lattice and charge. Its proof body is unchanged; section 4.3 visibility exposure enables the consumed doubled-isotropic vacuum calculation in ActualChargeCompletion."))), DescribeRole.Theorem),
+            
             Paragraph(Text("Let D be an integral symmetric even-diagonal lattice datum of arbitrary finite rank. "
                 + "Assume IsUnit D.G.det only to obtain the actual twisted ground representation. "
                 + "The oscillator algebra is the full native polynomial algebra P=MvPolynomial(Fin(D.rank) times N,C), "

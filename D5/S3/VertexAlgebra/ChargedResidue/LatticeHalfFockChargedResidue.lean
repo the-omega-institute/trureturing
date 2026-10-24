@@ -109,7 +109,7 @@ private theorem corrected_coeff_smul (D : LatticeData) (hu : IsUnit D.G.det)
 /- The empty correction word is the charged singleton field on the actual
    tensor carrier.  This is the concrete bridge used by the projected slice
    expansion below; it does not introduce a second field construction. -/
-private theorem corrected_singleton_coeff_charged (D : LatticeData)
+theorem corrected_singleton_coeff_charged (D : LatticeData)
     (hu : IsUnit D.G.det) (charge : Charge D) (e : ℤ) (x : ActualTensor D hu) :
     (correctedField D hu (Finsupp.single charge (1 : Oscillator D))).coeff e x =
       (chargedField D hu charge).coeff e x := by
