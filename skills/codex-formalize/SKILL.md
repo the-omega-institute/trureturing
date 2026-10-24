@@ -53,6 +53,12 @@ Observation-only requests, including source/atom inspection and issue work, foll
 
 For formalization and digestion writes, first reuse a suitable linked worktree; create one only when isolation is needed. Check Git registration, repository identity, branch/commit and pin compatibility, existing material and cooperative scopes. A dispatcher-assigned lane can satisfy this check; reuse is not limited to dispatcher assignments or the current session.
 
+Prepare PATH for the mutation commands:
+
+```sh
+eval "$(sed -n '/^export PATH=/p' tools/scripts/local-harness-gate.sh)"
+```
+
 Only when isolation requires creating a tree, run:
 
 ```sh
@@ -63,7 +69,6 @@ cd <created-path-from-output>
 In the reused or created tree, run:
 
 ```sh
-eval "$(sed -n '/^export PATH=/p' tools/scripts/local-harness-gate.sh)"
 pwd -P && git rev-parse --show-toplevel && make -C tools dotnet
 ```
 
