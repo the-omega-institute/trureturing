@@ -15789,3 +15789,109 @@ scale. No sign of $D_A(N_x)$, $\Delta(N_x)$ or a Robin violation is
 inferred. A joint arithmetic estimate preserving the root reserve
 can still succeed; RH and strict Robin for every $n>5040$ remain
 unproved.
+
+
+## Fixed-degree transport retains a positive complete first-layer budget
+
+This application keeps the single degree $k=1$ in GPC, KTO and HLD.
+It reuses their full-response and root-tail estimates before their
+moving-degree limits. The delivered consumer retains the nonzero
+higher-layer term and the same original integer. No new xi-law,
+prime-distribution theorem, literature priority or Lean certification
+is claimed.
+
+Keep $A=\log n$, $L=\log A$, $T_A=\sqrt A L$ and the BPY law $\mu$
+from XLR1. Write
+
+$$
+m=\pi/3,\qquad h(s)=2m^{1-s}\xi(s),\qquad
+Q(z)=(1-z)(1-z/m),
+$$
+
+$$
+\nu_*=(1+1/m)\mu-\mu^{*2}/m,\qquad
+b=h(1/2),\qquad q_*=Q(b),\qquad H_*=1-q_*.
+\tag{FDW1}
+$$
+
+This is exactly GPC1 at $k=1$. Its mass, first clock moment and
+inverse first moment are one, and its Mellin transform vanishes at
+every actual nontrivial zero. Every fixed real absolute moment is
+finite by GPC2. Keep the same clamp, two correction atoms and KTO
+observation kernel:
+
+$$
+\chi_A(c)=\max\{c,e/A\},\qquad
+\delta_A=\int c^{-1}\,d(\chi_A)_\#\nu_*(c)-1,
+$$
+
+$$
+\eta_A=(\chi_A)_\#\nu_*-2\delta_A(\delta_1-\delta_2),\qquad
+\omega_A(E)=\int\kappa_{A,c}(E)\,d\eta_A(c).
+\tag{FDW2}
+$$
+
+For large $A$, KTO3 gives $\delta_A=O(A^{-3})$. KTO7--KTO8
+therefore retain exact mass and exact price mean
+$\int\lambda(Av)d\omega_A=\lambda(A)$, where
+$\lambda(x)=1/(x\log x)$. GPC5 applies to this fixed degree, since
+its first assertion is uniform over $1\le k\le\kappa\log A$.
+The finite-cutoff estimates in its proof, with fixed moments, give
+$T_A|J_{\nu_*}^\psi(A)|=O(A^{-1/2})$; the bounded responses at the
+two correction atoms cost $O(A^{-5/2}L)$. Thus the complete transported
+$\psi$ response is $o(1/T_A)$, with no zero-height or clock tail omitted.
+
+The quantitative transport in KTO9--KTO10 and HLD5 now has bounded
+weighted logarithmic moments. Their $O(L^{-3/4})$ allowances become
+$O(L^{-1})$: on $c\ge A^{-1/2}$ the error is the same
+$L^{-1}c^{-1/2}(1+|\log c|)$ times a fixed absolute moment; below
+that cut the full bounded, clamped integrand costs $O(A^{-3/2}L)$
+after root normalization. Consequently, before discarding any term,
+
+$$
+T_A\int R(Av)\,d\omega_A(v)=c_RH_*+O(L^{-1}),\qquad
+c_R=2(\sqrt2-1),
+$$
+
+$$
+T_A\mathcal J_2(A)=2\sqrt2q_*+O(L^{-1}).
+\tag{FDW3}
+$$
+
+Here $\mathcal J_2$ is HLD6's complete actual higher-pressure gap.
+It is not $o(1/T_A)$ for a fixed degree when $q_*\ne0$.
+Absolute integration and the entire kernel tail are the same as in
+KTO and HLD; no positive-power moment is assigned to $\omega_A$.
+
+Let $D_{1,A}(n)$ be the $\omega_A$ average of the complete actual
+first-layer defect, including occupied and absent primes at all primes.
+Let $G_{2,A}(n)=d_2(n,\lambda(A))\ge0$ be the original integer's
+complete higher-layer defect at its own price, as in HLD7.
+Exact mass and price give $D_{2,A}(n)=G_{2,A}(n)+\mathcal J_2(A)$.
+KTO's same-integer account, with FDW3 retained, yields
+
+$$
+\boxed{\displaystyle
+T_A\Delta(n)=T_A[D_{1,A}(n)+G_{2,A}(n)]
++c_*+O(L^{-1}),\qquad c_*=c_R+2q_*.}
+\tag{FDW4}
+$$
+
+The remainder is uniform over original integers at their own $A$.
+The coefficient $2q_*$ combines the higher-layer gap with the
+transported reserve: $c_R(1-q_*)+2\sqrt2q_*=c_R+2q_*$.
+It would be incorrect to retain the reserve gain while deleting the
+higher-layer contribution.
+
+XLR2 gives $1\le b\le\sqrt m$. The elementary quadratic minimum
+and $1<m<22/21$ give
+
+$$
+-\frac1{1848}<q_*\le0,\qquad
+c_*>\frac{207}{250}-\frac1{924}>\frac{33}{40}>0.
+\tag{FDW5}
+$$
+
+The rational square comparison $(707/500)^2<2$ pays the bound on
+$\sqrt2$. This positive constant is a complete fixed-degree budget,
+not a lower bound for the signed first-layer defect in FDW4.
