@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:f1ce7d37e4736f2df7caed8b234bf7670449b3595c8ac832f6b7285d9f9519ea
+  normalized_sha256: sha256:f1ce7d37e4736f2df7caed8b234bf7670449b3595c8ac832f6b7285d9f9519ea
+cas_ref: sha256:f1ce7d37e4736f2df7caed8b234bf7670449b3595c8ac832f6b7285d9f9519ea
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 亚里士多德共同焦点的原典解释与候选关系语言；ρ_j 只声明拟采用的关系类型，不断言数学存在或唯一性。
+    previous_atom_id: c94495c73ce063b287d83f73b55255058218610dabf3b1d35e97bbedfaa7812f
+    next_atom_id: dee364a326733e78f09a19ecd903c6b20e435d625ca664e1f13670cc727998dd
