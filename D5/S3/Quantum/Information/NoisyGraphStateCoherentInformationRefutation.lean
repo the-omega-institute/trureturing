@@ -7,8 +7,7 @@
    digest: A noisy graph state on five plus four qubits reverses subsystem coherent information. -/
 
 import D5.S3.Quantum.Entanglement.RandomizedGraphNegativityRefutation
-import D5.S3.Quantum.Information.PartialTraceMutualInformation
-import D5.S3.Quantum.Matrix.TwoPointFunctionalCalculus
+import D5.S3.Quantum.Information.FullwoodParzygnatSubadditivityRefutation
 
 /-! Uniformly dephased graph states can reverse the subsystem-size entropy ordering. -/
 
@@ -258,11 +257,18 @@ private def projectionA : Matrix (Fin 5 → Bool) (Fin 5 → Bool) ℂ :=
   fun a a' => if ∀ j, Even (∑ i, (M i j && Bool.xor (a i) (a' i)).toNat)
     then 1 / 4 else 0
 
-private def flipB : Matrix (Fin 4 → Bool) (Fin 4 → Bool) ℂ :=
-  fun b b' => if ∀ i, b i ≠ b' i then 1 else 0
+private lemma bitFlipMatrix_apply (b b' : Fin 4 → Bool) :
+    Equiv.Perm.permMatrix ℂ (Equiv.piCongrRight (fun _ : Fin 4 => Equiv.boolNot)) b b' =
+      if ∀ i, b i ≠ b' i then 1 else 0 := by
+  simp only [Equiv.Perm.permMatrix, PEquiv.toMatrix_apply, Equiv.toPEquiv_apply,
+    Option.mem_def, Option.some.injEq]
+  change (if (fun i => !(b i)) = b' then (1 : ℂ) else 0) =
+    if ∀ i, b i ≠ b' i then 1 else 0
+  simp only [funext_iff, Bool.not_eq_iff]
 
 private def projectionB : Matrix (Fin 4 → Bool) (Fin 4 → Bool) ℂ :=
-  (1 / 2 : ℂ) • (1 + flipB)
+  (1 / 2 : ℂ) •
+    (1 + Equiv.Perm.permMatrix ℂ (Equiv.piCongrRight (fun _ : Fin 4 => Equiv.boolNot)))
 
 private def u : ℝ := (127 / 128) ^ 2
 private def a₁ : ℝ := (1 + 3 * u) / 32
@@ -309,6 +315,8 @@ private lemma projectionB_is_projection :
     decide +kernel
   have hmap : projectionB = (Rat.castHom ℂ).mapMatrix q := by
     ext b b'
+    simp only [projectionB, Matrix.smul_apply, Matrix.add_apply, Matrix.one_apply,
+      bitFlipMatrix_apply]
     change (1 / 2 : ℂ) * ((if b = b' then 1 else 0) +
         (if ∀ i, b i ≠ b' i then 1 else 0)) = (q b b' : ℂ)
     dsimp only [q]
@@ -320,8 +328,7 @@ private lemma projectionB_is_projection :
     ext b b'
     rw [Matrix.conjTranspose_apply]
     dsimp only [projectionB]
-    simp only [Matrix.one_apply, Matrix.smul_apply, Matrix.add_apply]
-    dsimp only [flipB]
+    simp only [Matrix.one_apply, Matrix.smul_apply, Matrix.add_apply, bitFlipMatrix_apply]
     simp only [eq_comm, ne_comm]
     split_ifs <;> norm_num
 
@@ -331,8 +338,7 @@ private lemma projection_traces : Matrix.trace projectionA = 8 ∧ Matrix.trace 
     simp
   have hB (b : Fin 4 → Bool) : projectionB b b = 1 / 2 := by
     dsimp only [projectionB]
-    simp only [Matrix.smul_apply, Matrix.add_apply, Matrix.one_apply]
-    dsimp only [flipB]
+    simp only [Matrix.smul_apply, Matrix.add_apply, Matrix.one_apply, bitFlipMatrix_apply]
     simp
   constructor <;> simp [Matrix.trace, Matrix.diag_apply, hA, hB] <;> norm_num
 
@@ -366,8 +372,7 @@ private lemma marginal_B_spectral :
   rw [reduced_B]
   simp only [hkernel, Matrix.add_apply, Matrix.smul_apply, Matrix.sub_apply, Matrix.one_apply]
   dsimp only [projectionB]
-  simp only [Matrix.add_apply, Matrix.smul_apply, Matrix.one_apply]
-  dsimp only [flipB]
+  simp only [Matrix.add_apply, Matrix.smul_apply, Matrix.one_apply, bitFlipMatrix_apply]
   by_cases heq : b = b'
   · subst b'
     dsimp only [b₁, b₂, u]
@@ -396,27 +401,16 @@ private lemma two_projection_entropy {ι : Type} [Fintype ι] [DecidableEq ι]
     entropy2 (r • Q + s • (1 - Q)) =
       (-(Matrix.trace Q).re * r * Real.log r -
         (Fintype.card ι - (Matrix.trace Q).re) * s * Real.log s) / Real.log 2 := by
-  let H : Matrix ι ι ℂ := (2 : ℝ) • Q - 1
   have hQQ : Q * Q = Q := hQ.isIdempotentElem
   have hsa : IsSelfAdjoint Q := hQ.isSelfAdjoint
-  have hH : IsSelfAdjoint H :=
-    ((IsSelfAdjoint.all (2 : ℝ)).smul hsa).sub
-      Matrix.isHermitian_one
-  have hHH : H * H = 1 := by
-    dsimp only [H]
-    simp only [sub_mul, mul_sub, Matrix.smul_mul, Matrix.mul_smul, mul_one, one_mul,
-      hQQ, smul_smul]
-    module
-  have harg : ((r + s) / 2) • (1 : Matrix ι ι ℂ) + ((r - s) / 2) • H =
-      r • Q + s • (1 - Q) := by dsimp only [H]; module
-  have hlog := QuantumTwoPointFunctionalCalculus.two_point_cfc Real.log
-    ((r + s) / 2) ((r - s) / 2) H hH hHH
-  rw [harg, show (r + s) / 2 + (r - s) / 2 = r by ring,
-    show (r + s) / 2 - (r - s) / 2 = s by ring] at hlog
   have hlog' : cfc Real.log (r • Q + s • (1 - Q)) =
       Real.log r • Q + Real.log s • (1 - Q) := by
+    have harg : s • (1 : Matrix ι ι ℂ) + (r - s) • Q =
+        r • Q + s • (1 - Q) := by module
+    have hlog := FullwoodParzygnatSubadditivityRefutation.projection_cfc
+      Q hsa hQQ Real.log s (r - s)
+    rw [harg, show s + (r - s) = r by ring] at hlog
     rw [hlog]
-    dsimp only [H]
     module
   have hA : IsSelfAdjoint (r • Q + s • (1 - Q)) :=
     ((IsSelfAdjoint.all r).smul hsa).add
