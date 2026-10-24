@@ -43,7 +43,8 @@ internal sealed class StabilizerExtensionQuaternaryMinimalLengthDocument : IScri
                             + "Their images are self-orthogonal, the induced additive equivalence preserves Hamming weight, "
                             + "and the only coordinate permutation is the identity. If a determinant-one matrix extended "
                             + "this equivalence, the image of (1,0) would force its lower-left entry to be zero; "
-                            + "the image of (0,1) would then force 1 = 0 times w, a contradiction. Thus QEP 1 fails.")),
+                            + "its action on the source label (w,0), corresponding to the binary parameter (0,1), "
+                            + "would then force 1 = 0 times w, a contradiction. Thus QEP 1 fails.")),
                     Paragraph(Text(
                         "For length three, use the additive maps (a,b) ↦ ((a,b w),(a,b w),(0,0)) and "
                             + "(a,b) ↦ ((a+b,0),(a,0),(b,0)). Their images are self-orthogonal and the induced equivalence "
