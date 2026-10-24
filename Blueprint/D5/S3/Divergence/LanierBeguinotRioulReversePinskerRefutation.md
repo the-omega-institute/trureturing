@@ -48,6 +48,10 @@ $$\neg (\forall (n: \mathbb{N}), \forall (f: \mathbb{R} \to \mathbb{R}), (\opera
 
 *Proof.* Machine-checked in Lean as `D5/S3/Divergence/LanierBeguinotRioulReversePinskerRefutation.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/lanier-beguinot-rioul-2025-reverse-pinsker-condition-refutation` (refuted) by `D5/S3/Divergence/LanierBeguinotRioulReversePinskerRefutation.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"lanier-beguinot-rioul-2025-reverse-pinsker-condition-refutation","declaration_gid":"D5/S3/Divergence/LanierBeguinotRioulReversePinskerRefutation.result","resolution_kind":"refuted"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* D. Lanier; J. Béguinot; O. Rioul (2025). *From Classical to Quantum: Explicit Classical Distributions Achieving Maximal Quantum f-Divergence*. DOI: [10.48550/arXiv.2501.14340](https://doi.org/10.48550/arXiv.2501.14340). URL: <https://arxiv.org/abs/2501.14340v1>.
