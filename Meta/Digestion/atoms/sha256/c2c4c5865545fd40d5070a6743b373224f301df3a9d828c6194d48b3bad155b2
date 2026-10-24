@@ -1,7 +1,0 @@
-## —Source-specific old-curve precision and future root readout
-
-> **Machine contract.** This is a `generic-v1` theory reference volume. The
-> definitions and results below are ordinary mathematical prose, not Lean
-> declarations, and make no kernel-verification claim. Published batches are
-> append-only; the volume ends with an append anchor.
-

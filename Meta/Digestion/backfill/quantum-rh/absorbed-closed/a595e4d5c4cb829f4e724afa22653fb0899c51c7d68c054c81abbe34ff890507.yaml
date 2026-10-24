@@ -1,9 +1,0 @@
-fingerprints:
-  raw_sha256: sha256:a595e4d5c4cb829f4e724afa22653fb0899c51c7d68c054c81abbe34ff890507
-  normalized_sha256: sha256:a595e4d5c4cb829f4e724afa22653fb0899c51c7d68c054c81abbe34ff890507
-cas_ref: sha256:a595e4d5c4cb829f4e724afa22653fb0899c51c7d68c054c81abbe34ff890507
-coverage_gids:
-  - gid: D5/S3/Observer/Hilbert/FiniteSynthesisGramDistance.finite_synthesis_gram_distance_inverse
-    target_statement_id: sha256:86a23b816dd2bcec287ad931263802baa03e3c3694e481da581818997902ab63
-receipts:
-  unresolved_subitems: []

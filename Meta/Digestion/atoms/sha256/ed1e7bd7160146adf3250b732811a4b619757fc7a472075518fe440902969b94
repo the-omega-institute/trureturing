@@ -1,8 +1,0 @@
-## 25. 本批来源、有限核对与未解决边界
-
-| 核对的来源 | 使用的范围与限制 |
-| --- | --- |
-| [计算行为表示卷](COMPUTATIONAL_BEHAVIOR_REPRESENTATION_THEORY.md) §§5.1–5.5 | 复用词残余、最小线性维数、有限块恢复和无全局秩前提的障碍；式（22.1）显式换到预测坐标 |
-| [FIB 延拓几何卷](FIB_RELATIONAL_CONTINUATION_GEOMETRY.md) §6 | 复用任意域、联合词响应的线性关系检验；本批只用单输出，其后高到低数值读者不替代本卷低到高 End 合同 |
-| Kiefer，*Notes on Equivalence and Minimization of Weighted Automata*，arXiv:2009.01217v1 | §2 Propositions 2.1–2.2、Theorem 2.3 给可达基、零性及等价界；§§3–4 给最小性与 Hankel 自动机构造，均为精确域模型 |
-| Balle、Quattoni、Carreras，*Local Loss Optimization in Operator Models: A New Insight into Spectral Learning*，arXiv:1206.6393v1[^fib-wb-balle] | §2.3、Lemma 1 连接最小加权自动机与完整秩 Hankel 块的因子分解；本文用有理数方阵逆给具体适配，不外推为带噪全序列保证 |

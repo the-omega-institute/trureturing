@@ -1,4 +1,0 @@
-## 43. 互补三相位谱端点的最优线性稳定性
-
-第 41 节确定了实际互补相位行的 Fourier 能量端点。本节进一步控制接近端点时的自相关位置。所用 deltoid 参数像与判别式仍归于 Szöllősi，*A two-parameter family of complex Hadamard matrices of order 6 induced by hypocycloids*，式 (15) 与 Lemma 3.2，DOI [10.1090/S0002-9939-09-10102-8](https://doi.org/10.1090/S0002-9939-09-10102-8)。以下最优线性误差界由该域上的多项式估计推出（`repo-derived`），不把已知参数域和第 41 节的端点重新作为新结果。
-

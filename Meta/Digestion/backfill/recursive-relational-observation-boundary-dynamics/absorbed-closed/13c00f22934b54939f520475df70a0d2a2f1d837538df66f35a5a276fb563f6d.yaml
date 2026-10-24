@@ -1,9 +1,0 @@
-fingerprints:
-  raw_sha256: sha256:13c00f22934b54939f520475df70a0d2a2f1d837538df66f35a5a276fb563f6d
-  normalized_sha256: sha256:13c00f22934b54939f520475df70a0d2a2f1d837538df66f35a5a276fb563f6d
-cas_ref: sha256:13c00f22934b54939f520475df70a0d2a2f1d837538df66f35a5a276fb563f6d
-coverage_gids:
-  - gid: D5/S3/ObserverMemory/Algorithms/ControlRewriteDirectionalBound.rewrite_directional_sharpness
-    target_statement_id: sha256:87e5d0a0b91fae5d600dd2a75d399313a19057103fe73ce7343646f483e68ba0
-receipts:
-  unresolved_subitems: []

@@ -1,9 +1,0 @@
-fingerprints:
-  raw_sha256: sha256:402fd43ca78cb74aedf9745e68ebd85e4bba2aebcb078ab3413e1e17f8bfe9c2
-  normalized_sha256: sha256:402fd43ca78cb74aedf9745e68ebd85e4bba2aebcb078ab3413e1e17f8bfe9c2
-cas_ref: sha256:402fd43ca78cb74aedf9745e68ebd85e4bba2aebcb078ab3413e1e17f8bfe9c2
-coverage_gids:
-  - gid: D5/S3/ConceptDynamics/OperationalTuition/FirstClaimProtocolNonduplication.t4_atomic_visibility_nonduplication_and_collision_rate_monotone
-    target_statement_id: sha256:8f90461f7a58f3f1faca552a69ead9f589ac499224680c175dea99c8089e442a
-receipts:
-  unresolved_subitems: []

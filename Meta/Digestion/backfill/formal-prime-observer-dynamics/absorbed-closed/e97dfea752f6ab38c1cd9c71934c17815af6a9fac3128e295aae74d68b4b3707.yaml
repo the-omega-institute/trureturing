@@ -1,9 +1,0 @@
-fingerprints:
-  raw_sha256: sha256:e97dfea752f6ab38c1cd9c71934c17815af6a9fac3128e295aae74d68b4b3707
-  normalized_sha256: sha256:e97dfea752f6ab38c1cd9c71934c17815af6a9fac3128e295aae74d68b4b3707
-cas_ref: sha256:e97dfea752f6ab38c1cd9c71934c17815af6a9fac3128e295aae74d68b4b3707
-coverage_gids:
-  - gid: D5/S3/Observer/ArithmeticTomography/PrimeObservationDepthGeometry.horizontal_vertical_bit_cost_lower_bounds
-    target_statement_id: sha256:75737bb835d97f67451cd6fd16b077a5b9501c5b809cf82b45052b8931bc2115
-receipts:
-  unresolved_subitems: []

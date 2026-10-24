@@ -1,9 +1,0 @@
-fingerprints:
-  raw_sha256: sha256:9c81246577bed3dea75e41f0733185c8738a7ce125a078b53120278f72d11995
-  normalized_sha256: sha256:9c81246577bed3dea75e41f0733185c8738a7ce125a078b53120278f72d11995
-cas_ref: sha256:9c81246577bed3dea75e41f0733185c8738a7ce125a078b53120278f72d11995
-coverage_gids:
-  - gid: D5/S0/Computability/OriginalClauseClassification.lemma63
-    target_statement_id: sha256:5a5bb20fda484b15f5387f454ddf2ff29a3ce63de855e07c317dff88ba601602
-receipts:
-  unresolved_subitems: []

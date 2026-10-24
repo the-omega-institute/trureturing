@@ -1,9 +1,0 @@
-fingerprints:
-  raw_sha256: sha256:0a4f4421d225ff5a1970c7190ccb5d5edb143aa653d8365f0f09561652c9536a
-  normalized_sha256: sha256:0a4f4421d225ff5a1970c7190ccb5d5edb143aa653d8365f0f09561652c9536a
-cas_ref: sha256:0a4f4421d225ff5a1970c7190ccb5d5edb143aa653d8365f0f09561652c9536a
-coverage_gids:
-  - gid: D5/S3/Quantum/Recovery/KrausCompletion.complete_kraus_action
-    target_statement_id: sha256:9f0a30b85cec2eaa403c1811f46809d6ee49c8c6dbc0842b8066fb9902440212
-receipts:
-  unresolved_subitems: []

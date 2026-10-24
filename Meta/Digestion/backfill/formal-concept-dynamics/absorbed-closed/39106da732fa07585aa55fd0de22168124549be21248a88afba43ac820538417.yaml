@@ -1,9 +1,0 @@
-fingerprints:
-  raw_sha256: sha256:39106da732fa07585aa55fd0de22168124549be21248a88afba43ac820538417
-  normalized_sha256: sha256:39106da732fa07585aa55fd0de22168124549be21248a88afba43ac820538417
-cas_ref: sha256:39106da732fa07585aa55fd0de22168124549be21248a88afba43ac820538417
-coverage_gids:
-  - gid: D5/S3/ConceptDynamics/NormativeStructure/CurrentConsentFactorization.current_consent_not_history_only
-    target_statement_id: sha256:11c508d998da542bc3fb112a6cc8e30e173e802a295230c8a560c527379f2639
-receipts:
-  unresolved_subitems: []

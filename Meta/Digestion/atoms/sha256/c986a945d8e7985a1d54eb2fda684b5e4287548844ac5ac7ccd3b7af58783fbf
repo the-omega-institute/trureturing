@@ -1,6 +1,0 @@
-现在逐项处理射线位置。
-
-- 若 $\eta_4\notin A$，取其射线为 $B$。若 $\eta_5\notin A$，则（55.9）对 $n=3,m=4$ 会给 $\eta_3\parallel\eta_4$，矛盾。因此 $\eta_5\in A$。最后的 $\eta_6$ 或属于 $A$、或属于 $B$、或属于第三条射线 $C$，分别得到 $ABAA,ABAB,ABAC$。
-- 若 $\eta_4\in A$ 而 $\eta_5\notin A$，取后者射线为 $B$。若 $\eta_6\notin A$，则（55.9）对 $n=4,m=5$ 会给 $\eta_4\parallel\eta_5$，矛盾。因此 $\eta_6\in A$，得到 $AABA$。
-- 若 $\eta_4,\eta_5\in A$，则 $\eta_6\in A$ 给 $AAAA$，其余情况给 $AAAB$。
-

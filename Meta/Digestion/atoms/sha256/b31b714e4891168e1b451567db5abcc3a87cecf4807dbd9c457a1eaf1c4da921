@@ -1,7 +1,0 @@
-闭合路线：
-
-- `Z.zero_isNontrivial n` 给出该点是 zeta 非平凡零点；
-- 排除负偶数平凡零点和 $s=1$；
-- 直接应用 mathlib 的 `RiemannHypothesis` 定义；
-- 不调用显式公式或零点计数。
-
