@@ -113,3 +113,26 @@ nonnegative central tails by reflected-interval cancellation and balancing.
 `KarpZhangCatalanPower.Result.result` proves both coefficient signs for
 all nonnegative base parameters and nonnegative real shifts, reusing the sequence class
 and finite Abel identity from `KarpZhangReciprocal.Result`.
+
+## Conjecture 3.8, page 8
+
+> Assume that $\{f_n\}_{n=0}^{\infty}$ is log-concave and independent of $\mu$. Then the function
+>
+> $$
+> \mu\to f(\mu;x)=\sum_{n=1}^{\infty} f_n\frac{(\mu)_{3n}}{(3n-1)!}x^n
+> $$
+>
+> is coefficient-wise log-concave.
+
+The sum starts at $n=1$, so its degree-zero coefficient is zero.
+The sequence class is Definition 1.1, including interval support.
+Coefficient-wise log-concavity means nonnegativity of every finite Cauchy
+coefficient of
+$f(\mu+\alpha;x)f(\mu+\beta;x)-f(\mu;x)f(\mu+\alpha+\beta;x)$,
+for nonnegative real $\mu,\alpha,\beta$.
+
+Remark 3.7, on the same page, states that the analogous unweighted family
+with $(\mu)_{rn}/(rn-1)!$ is neither coefficient-wise log-convex nor
+coefficient-wise log-concave for $r\ge4$ by numerical computations.
+This is a source-reported numerical boundary, not an all-parameter
+formal refutation supplied by the $r=3$ assertion.
