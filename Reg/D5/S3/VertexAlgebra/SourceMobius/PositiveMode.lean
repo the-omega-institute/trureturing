@@ -61,7 +61,7 @@ def sourceProof : Registration arena (type_of% (@sugawara_one_single)) where
       sectorL1 oneLattice (unitCharge oneLattice 0) (MvPolynomial.X (0,0))
     simp [sectorL1, loweringVariable, bilinear, unitCharge, oneLattice]
     intro h
-    have hz := congrArg (MvPolynomial.coeff 0) h
+    have hz : (2 : ℂ) = 0 := MvPolynomial.C_eq_zero.mp h.symm
     norm_num at hz
 
 def sugawara_one_single_registration : Contract.Registration.{_,_,_,0,0,0,0,0,0,0,0,0}
