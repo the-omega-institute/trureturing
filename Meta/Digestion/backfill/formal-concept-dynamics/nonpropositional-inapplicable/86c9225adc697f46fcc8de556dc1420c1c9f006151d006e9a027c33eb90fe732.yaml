@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:86c9225adc697f46fcc8de556dc1420c1c9f006151d006e9a027c33eb90fe732
+  normalized_sha256: sha256:86c9225adc697f46fcc8de556dc1420c1c9f006151d006e9a027c33eb90fe732
+cas_ref: sha256:86c9225adc697f46fcc8de556dc1420c1c9f006151d006e9a027c33eb90fe732
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 这是定理 469 的单项前提 Y 为有限离散空间，不声称一般输出空间满足它，也不声称存在正最小间隔。
+    previous_atom_id: 1f0bdf1f7fb218172e927161ed68c7813c0c5282e52d04d2e2e445026066f445
+    next_atom_id: ee312fd5ab1884874cc466246315cf15318d7ab6b14a5cc176f066ff19c303d3
