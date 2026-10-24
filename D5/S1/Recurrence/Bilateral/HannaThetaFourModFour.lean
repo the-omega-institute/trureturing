@@ -77,7 +77,7 @@ open private Agree agree_refl agree_add agree_mul agree_pow agree_inv from
   D5.S1.Recurrence.Parity.BilateralQuarticPowerThetaModFour
 open D5.S1.Recurrence.Parity.BilateralQuarticPowerThetaModFour (map_inv)
 open private agree_sub from D5.S1.Recurrence.Parity.ScaledQuadraticReversionModSixteen
-open D5.S1.Recurrence.Bilateral.BilateralProductModFour
+open D5.S1.Recurrence.Bilateral.BilateralProductModFour (ofSeries_inverse)
 
 namespace D5.S1.Recurrence.Bilateral.HannaThetaFourModFour
 variable {R S : Type*} [CommRing R] [CommRing S]
