@@ -86,7 +86,7 @@ private theorem ratio_bound {y : ℕ → ℝ} (hy : IsLogConcave y)
           rw [← Nat.add_assoc a n 1, pow_two]
     exact hstep.trans (ih hmid)
 
-private theorem balanced_step {y : ℕ → ℝ} (hy : IsLogConcave y)
+theorem balanced_step {y : ℕ → ℝ} (hy : IsLogConcave y)
     (m k : ℕ) (hk : k < m / 2) :
     y k * y (m - k) ≤ y (k + 1) * y (m - (k + 1)) := by
   have hnonneg := mul_nonneg (hy.1 k) (hy.1 (m - k))
