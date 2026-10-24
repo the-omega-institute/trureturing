@@ -1040,8 +1040,7 @@ error correction and near-optimal recovery channels*, Theorem 1,
 [arXiv:0907.5391v4](https://arxiv.org/html/0907.5391v4).
 No equality with that fidelity optimization is assumed. The additional
 branch formulas and spectral classification below are repo-derived
-from (31.3) and finite-dimensional norm duality, relative to the
-supplied conditional and branch arguments. No global literature
+from (31.3) and finite-dimensional norm duality. No global literature
 novelty or priority assertion is made.
 
 **Definition 31.2 (The conditional root and pair).**
@@ -1630,7 +1629,7 @@ Thus the unsquared filter (32.8) says exactly that this quotient is
 stationary. The inverse in (32.9), using $a^2-b^2=s$, gives
 
 $$
-G_s(K)=H\oplus t,qquad E_p-G_s(K)=tS\oplus(-t).
+G_s(K)=H\oplus t,\qquad E_p-G_s(K)=tS\oplus(-t).
 \tag{33.8}
 $$
 
@@ -1656,7 +1655,7 @@ Using this formula, (33.8), and self-adjointness of $G_s$, (33.9)
 becomes
 
 $$
-\operatorname{Tr}(G_s(Z)K)=\sigma,qquad
+\operatorname{Tr}(G_s(Z)K)=\sigma,\qquad
 \operatorname{Tr}(G_s(Z')K)=\sigma'.
 \tag{33.10}
 $$
@@ -1664,8 +1663,8 @@ $$
 For $s<0$, substitute (33.6) and its derivative to obtain
 
 $$
-u^2x+2uz+y=0,qquad ux+z=0,qquad
-z=-ux,qquad y=u^2x.
+u^2x+2uz+y=0,\qquad ux+z=0,\qquad
+z=-ux,\qquad y=u^2x.
 \tag{33.11}
 $$
 
@@ -1673,7 +1672,7 @@ Thus $K_2=x\left(\begin{smallmatrix}1&-u\\-u&u^2\end{smallmatrix}\right)$
 has eigenvalues $0,x(1+u^2)$. For $s>0$, the same substitution gives
 
 $$
-u^2(1-x)-2uz+1-y=0,qquad u(1-x)-z=0,qquad
+u^2(1-x)-2uz+1-y=0,\qquad u(1-x)-z=0,\qquad
 z=u(1-x),\quad 1-y=u^2(1-x).
 \tag{33.12}
 $$
@@ -1753,8 +1752,8 @@ $Z=vv^{\mathsf T}\oplus(-b/a)$. Its trace norm is
 $u^2+1+b/a=u^2+1/a=N$. Its propagation is
 
 $$
-G_s(Z)=M\oplus0,qquad
-M=\begin{pmatrix}u^2&su\\su&s/a\end{pmatrix},qquad
+G_s(Z)=M\oplus0,\qquad
+M=\begin{pmatrix}u^2&su\\su&s/a\end{pmatrix},\qquad
 \det M=s(1/a-s)u^2<0.
 \tag{33.16}
 $$
@@ -1776,7 +1775,7 @@ The derivative of $(P-R)/(2N)$ vanishes exactly when (32.20) holds.
 In detail,
 
 $$
-P'N-2uP=L,qquad Q'N-4uQ=J,qquad
+P'N-2uP=L,\qquad Q'N-4uQ=J,\qquad
 2R\bigl((P-R)'N-(P-R)N'\bigr)=2RL-J.
 \tag{33.17}
 $$
@@ -1788,7 +1787,7 @@ fixed, using the positive eigenvalue derivative formula just proved.
 If $T_2=E_2-(G_s(K))_2$, the value and derivative identities give
 
 $$
-v^{\mathsf T}T_2v=t(u^2+1),qquad
+v^{\mathsf T}T_2v=t(u^2+1),\qquad
 (1,0)T_2v=tu.
 \tag{33.18}
 $$
@@ -1813,7 +1812,7 @@ one displayed there. Substituting $u=(t+q)/c$ into this quadratic
 and using $c^2=pq$ gives the two identities
 
 $$
-t=cu-q,qquad \alpha tu=c+(q-s^2)u.
+t=cu-q,\qquad \alpha tu=c+(q-s^2)u.
 \tag{33.19}
 $$
 
@@ -1872,5 +1871,596 @@ by a derivative. They therefore apply to every retained multiple root
 and to every non-strict boundary filter in Definition 32.7.
 The conditional case is Theorem 31.3 and the balanced case is
 Theorem 30.3. This completes the certificate proof. $\square$
+
+## 追加锚（本行以下为增补区）
+
+## 34. Nonemptiness and exhaustion of the algebraic prescription
+
+**Theorem 34.1 (No missing populations, witness ranks or endpoint branches).**
+For every $0<p<1$ and every finite integer $n\ge2$, either the conditional
+filter $y_0\le t_0$ holds or at least one family P, M, D or R has a
+retained root. This includes the exceptional value $s=-1/2$, scalar
+endpoints and all cross-family transition cases. Consequently Definition
+32.7 is well-defined on its whole stipulated domain.
+
+Proof. First produce a primal optimum and a supporting functional
+without any spectral-rank assumption. The real block effect interval
+is compact convex, and $G_s$ is linear, so its image is compact convex.
+The same value as the complex problem is attained there: entrywise
+conjugation preserves the effect interval and $G_s$, fixes $E_p$, and
+averaging a matrix with its conjugate cannot increase the operator norm
+of its residual. Pinching removes the other two coherences by the
+entire-image identity (31.3).
+
+Write $t$ for this distance and $K=K_2\oplus d$ for a real attaining
+effect, with $K_2=\left(\begin{smallmatrix}x&z\\z&y\end{smallmatrix}\right)$.
+Then
+
+$$
+0<t<1/2.
+\tag{34.1}
+$$
+
+For strict positivity, distance zero would give $by+ad=0$.
+Since $a,b>0$ and $y,d\ge0$, this forces $y=d=0$.
+Positivity of $K_2$ then forces $z=0$, contradicting the target
+coherence $c>0$.
+For the strict upper bound, choose any $0<\delta<1$.
+The map $G_s$ is invertible on the real block vector space:
+its coherence factor is $s\ne0$ and the population determinant
+is $a^2-b^2=s\ne0$. Let $L=G_s^{-1}(E_p-\delta I_3)$.
+For sufficiently small $\lambda>0$, the finite Hermitian matrix
+$I_3/2+\lambda L$ is an effect. Its image is
+$I_3/2+\lambda(E_p-\delta I_3)$, since $G_s(I_3)=I_3$.
+The residual eigenvalues are
+$1/2-\lambda(1-\delta)$ on $v_p$ and
+$-1/2+\lambda\delta$ on its orthogonal complement.
+All absolute values are strictly less than $1/2$ for sufficiently
+small positive $\lambda$. This inverse proves (34.1) only and is
+not a candidate in the finite prescription.
+
+Finite-dimensional separation of the attainable image from the open
+operator-norm ball of radius $t$ about $E_p$ supplies a nonzero
+Hermitian supporting functional. Dividing by its dual norm gives
+$Y$ with $\|Y\|_1=1$ and
+
+$$
+\begin{aligned}
+t&=\operatorname{Tr}(YE_p)-\operatorname{Tr}((G_s(Y))_+),\\
+\operatorname{Tr}(G_s(Y)K)&=\operatorname{Tr}((G_s(Y))_+),\\
+\operatorname{Tr}(Y(E_p-G_s(K)))&=t.
+\end{aligned}
+\tag{34.2}
+$$
+
+One may see the first equality directly from separation: the infimum
+of $\operatorname{Tr}(YX)$ on that open ball is
+$\operatorname{Tr}(YE_p)-t\|Y\|_1$, and it bounds the support of the
+attainable image from above. The reverse inequality is the elementary
+norm bound evaluated at an attaining $K$, so both bounds are equal.
+The last two equalities follow because each inequality in
+$\operatorname{Tr}(YE_p)-\operatorname{Tr}((G_s(Y))_+)
+\le\operatorname{Tr}(Y(E_p-G_s(K)))\le t$
+is then an equality.
+
+The support function is convex and the trace norm is convex. Averaging
+with the $W$ pinching and then with entrywise conjugation preserves
+$\operatorname{Tr}(YE_p)$ and cannot increase the support or norm.
+The resulting real block witness has dual value at least $t$ and
+norm at most one. The universal dual bound and $t>0$ force its norm
+to be one and its value to be $t$; otherwise rescaling improves that
+bound beyond the optimum. Thus such a witness can be chosen real block.
+If its third scalar were positive, replacing that scalar by zero would
+subtract a positive semidefinite matrix from its propagation and hence
+not increase its support, while strictly reducing its trace norm and
+leaving its target pairing fixed. Rescaling would again contradict
+optimality. We can therefore write
+
+$$
+Y=A\oplus(-\mu),\qquad A=A^{\mathsf T}\in M_2(\mathbb R),quad \mu\ge0.
+\tag{34.3}
+$$
+
+Changing $A_{01}$ to its negative preserves its trace norm and its
+propagated support, by conjugation with $\operatorname{diag}(1,-1)$
+on the upper block. It increases its target pairing if $A_{01}<0$.
+We may and do take $A_{01}\ge0$.
+
+In fact
+
+$$
+A_{01}>0.
+\tag{34.4}
+$$
+
+Here is the full exclusion of zero coherence. If $A$ is diagonal,
+write $A_{00}=r_0$, $A_{11}=v_0$. Its unnormalized dual numerator is
+
+$$
+r_0p-(r_0)_++v_0q-(av_0-b\mu)_+-(bv_0-a\mu)_+.
+\tag{34.5}
+$$
+
+For $r_0\ne0$, the first two terms have strictly negative sum:
+it is $-qr_0$ if $r_0>0$ and $pr_0$ if $r_0<0$.
+Removing this entry increases the positive numerator and reduces the
+norm $|r_0|+|v_0|+\mu$, contradicting optimality. Thus $r_0=0$.
+A positive value also forces $v_0>0$, since otherwise the remaining
+target pairing is nonpositive. Scale $v_0=1$ and write the rescaled
+negative scalar as $-\nu$, $\nu\ge0$. Its quotient is
+
+$$
+f(\nu)=\frac{q-(a-b\nu)_+-(b-a\nu)_+}{1+\nu}.
+\tag{34.6}
+$$
+
+For $s<0$ the breakpoints are $a/b<b/a$. On the first interval the
+numerator is $-p+\nu$, with positive quotient derivative
+$(1+p)/(1+\nu)^2$. On the middle interval the numerator is
+$q-b+a\nu$, with derivative $p/(1+\nu)^2>0$.
+Beyond $b/a$ the quotient is $q/(1+\nu)$, strictly decreasing.
+The unique maximizer is $\nu=b/a$, with value $aq$.
+For $s>0$, the breakpoints are $b/a<a/b$; the first derivative is
+the same, the middle numerator is $q-a+b\nu$ with derivative
+$p/(1+\nu)^2>0$, and the final derivative is negative.
+The unique maximizer is $\nu=a/b$, with value $bq$.
+
+If a zero-coherence witness were optimal, (34.6) would have to be
+at its unique maximum: every diagonal competitor is also a permitted
+dual witness. For $s<0$ this propagation has upper $ee$ entry
+$s/a<0$, upper $00$ entry zero, and scalar zero.
+Support at $K$ forces $y=0$, hence $z=0$. Equality in the
+trace/operator-norm bound forces $e$ to be an upper residual
+eigenvector for eigenvalue $t$, since the upper witness is
+$|e\rangle\langle e|$. Its off-diagonal residual entry would have
+to vanish, contradicting $c>0$.
+For $s>0$, its propagated upper block is zero and its scalar is
+$-s/b<0$, so support forces $d=0$. The same residual eigenvector
+condition, with $t=bq$, requires $ay=q-t=aq$ and $sz=c$;
+thus $y=q$ and $z=c/s$. Positivity of $K_2$ and $I_2-K_2$ gives
+
+$$
+x\ge z^2/q=p/s^2,\qquad 1-x\ge z^2/p=q/s^2.
+\tag{34.7}
+$$
+
+Their sum says $1\ge1/s^2$, impossible since $|s|<1$.
+This proves (34.4).
+
+The upper block $A$ cannot be negative semidefinite: its target
+pairing would be nonpositive and its support nonnegative, whereas
+$t>0$. It cannot be positive definite either. To justify the relevant
+norm-equality implication, diagonalize $A$. For a positive eigenvector
+with weight $\lambda>0$, its contribution to
+$\operatorname{Tr}(A T_2)\le t\operatorname{Tr}|A|$ is bounded by
+$\lambda t$, where $T_2$ is the upper residual and
+$-tI_2\le T_2\le tI_2$. Equality of the total sum forces equality
+for every nonzero weight. A positive semidefinite matrix with zero
+quadratic form on a vector annihilates that vector; apply this to
+$tI_2-T_2$. Negative weights similarly force eigenvalue $-t$.
+If $A$ were positive definite, both upper residual eigenvalues would
+be $t$, and the upper image would be $E_2-tI_2$, which is not positive
+semidefinite. Thus the only possibilities are
+
+$$
+\begin{cases}
+A\text{ indefinite},& T_2=t\operatorname{sign}(A),\\
+A\text{ positive of rank one},&T_2v=tv\text{ on }\operatorname{ran}A.
+\end{cases}
+\tag{34.8}
+$$
+
+In the second case both components of its range vector are nonzero
+by (34.4), and they have the same sign. Put
+
+$$
+r=by+ad\ge0,\qquad
+M=\begin{pmatrix}A_{00}&sA_{01}\\sA_{01}&aA_{11}-b\mu\end{pmatrix},\qquad
+\zeta=bA_{11}-a\mu.
+\tag{34.9}
+$$
+
+These are the bottom image and the upper and scalar parts of $G_s(Y)$.
+If $\mu>0$, norm equality in the scalar coordinate forces $r=t$.
+If $A$ is indefinite, $T_2$ has trace zero, so trace preservation gives
+
+$$
+\operatorname{Tr}K_2+d=1+r.
+\tag{34.10}
+$$
+
+The off-diagonal of $M$ is nonzero. Support equality says that $K_2$
+is one on its positive eigenspaces, zero on its negative eigenspaces,
+and is an effect on its kernel. Indeed in an eigenbasis of $M$,
+$\operatorname{Tr}(MK_2)\le\sum_{\lambda_j(M)>0}\lambda_j(M)$;
+equality forces the corresponding diagonal entries of $K_2$ to be
+one or zero, respectively. Positivity of $K_2$ and $I_2-K_2$ then
+annihilates their cross entries to such a coordinate, so this is also
+a statement about their whole eigenspaces.
+
+The upper effect is neither zero nor $I_2$. In the indefinite case,
+$K_2=0$ would give $d=1+r$ by (34.10), incompatible with $d\le1$
+and $r=ad>0$ when $d=1$. The case $K_2=I_2$ gives
+$2+d=1+r$, impossible since $r\le t<1/2$.
+For rank-one positive $A$, necessarily $\mu>0$: if $\mu=0$, the
+whole witness is positive, so its support is at least its pairing with
+$G_s(I_3)=I_3$, namely $\operatorname{Tr}Y$, and
+$\operatorname{Tr}(YE_p)\le\operatorname{Tr}Y$, giving no positive
+dual value. Then $r=t$. The case $K_2=0$ contradicts $M_{00}=A_{00}>0$.
+If $K_2=I_2$, the upper residual trace is $t-1-d$, so its eigenvalue
+other than $t$ is $-1-d$, outside the permitted interval.
+
+It follows that $K_2$ is either a rank-one projection, or has
+eigenvalues $0,\lambda$ with $0<\lambda<1$, or has eigenvalues
+$1,\lambda$ with $0<\lambda<1$. In the latter two cases $M$ is
+respectively negative rank one or positive rank one. The projection
+case selects the larger-eigenvalue direction of $M$, including a
+zero larger eigenvalue when $M$ is negative rank one. Its
+coherence has the sign of $M_{01}$, namely $\epsilon$, and is nonzero:
+the projection's off-diagonal equals $M_{01}$ divided by the
+strictly positive eigenvalue gap.
+
+Suppose first that $A$ is indefinite and $\mu=0$.
+A negative-rank-one $M$ has $aA_{11}<0$, hence $\zeta=bA_{11}<0$
+and $d=0$. But (34.10) would then give
+$\operatorname{Tr}K_2=1+r\ge1$, excluding eigenvalues $0,\lambda$
+with $\lambda<1$. A positive-rank-one $M$ has $A_{11}>0$,
+so $\zeta>0$ and $d=1$. It would give
+$\operatorname{Tr}K_2=r\le t<1/2$, excluding eigenvalues $1,\lambda$.
+Therefore $K_2$ is a projection. Its trace in (34.10) yields $d=r$,
+and $r=by+ad$ then yields $d=y$. Nonzero projection coherence gives
+$0<y<1$, so scalar support forces $\zeta=0$, hence $A_{11}=0$.
+
+Write $w=\sqrt{y(1-y)}$, $\ell=c-\tau w$ and $\Delta=y-q$.
+The upper residual is
+$\left(\begin{smallmatrix}\Delta&\ell\\\ell&-\Delta\end{smallmatrix}\right)$.
+Its sign equals $\operatorname{sign}(A)$; since $A_{01}>0$,
+this implies $\ell>0$. The equation $A_{11}=0$ and equality in
+(34.8) give, up to a positive scalar,
+
+$$
+A=\begin{pmatrix}2\Delta&\ell\\\ell&0\end{pmatrix}.
+\tag{34.11}
+$$
+
+For its propagation to support the projection with direction
+$(\sqrt{1-y},\epsilon\sqrt y)^{\mathsf T}$, the diagonal difference
+must equal its off-diagonal divided by $\epsilon w$ times $1-2y$.
+This is $2\Delta w=\tau\ell(1-2y)$, precisely the unsquared
+stationarity equation (31.11). Theorem 31.3 therefore makes $y=y_0$
+and the upper norm $t=t_0$. The bottom residual has magnitude $y$,
+so feasibility of the actual optimum gives $y_0\le t_0$.
+This is exactly the conditional pair, with the equality boundary retained.
+
+Next suppose $A$ is indefinite and $\mu>0$; then $r=t$.
+If $K_2$ is a projection, (34.10) yields $d=t$ and the bottom
+image equation yields $y=t$. Thus
+$x=1-t$ and $z=\epsilon\sqrt{t(1-t)}$.
+Its upper residual square is $t^2I_2$, which by (33.3) gives
+$V=2c\tau\sqrt{t(1-t)}>0$, the P quartic and its unsquared filter.
+Scale the raw witness so $A=hI_2+S$ with $S=T_2/t$;
+indefiniteness gives $-1<h<1$.
+Since $0<d=t<1$, scalar support forces $\zeta=0$ and
+$\mu=(b/a)(h-k)$. The projection's eigenvector condition for the
+upper propagation is the diagonal-difference equation in (33.4).
+Solving its coefficient $b/a>0$ for $h$ gives exactly (32.3).
+The support signs give $|T|\le\delta$. Thus this optimum is a
+retained P root, including when one support eigenvalue is zero.
+
+Continue with indefinite $A$, $\mu>0$ and a free upper eigenvalue.
+If $0<d<1$, scalar support gives $\zeta=0$ and
+$\mu=(b/a)A_{11}>0$, so $A_{11}>0$.
+Consequently $M_{11}=(s/a)A_{11}$, and the sign of the rank-one
+matrix $M$ is $\epsilon$. Put
+$\kappa_0=\tau A_{11}/a>0$ and $u=aA_{01}/A_{11}>0$.
+Dividing the entire raw witness by $\kappa_0$ gives
+
+$$
+M=\epsilon\begin{pmatrix}u^2&u\\u&1\end{pmatrix},\qquad
+A=\begin{pmatrix}\epsilon u^2&u/\tau\\u/\tau&a/\tau\end{pmatrix},\qquad
+\mu=b/\tau
+\tag{34.12}
+$$
+
+in this rescaled notation. These are exactly M's raw matrices.
+The normalized dual quotient along this family is $P(u)/(\sqrt Q+m)$
+by (33.5)–(33.6). It is a smooth function of $u>0$, and the actual
+optimum maximizes it there because every member is a legitimate
+normalized dual witness. Its derivative vanishes at the actual finite
+$u$, so (33.7) gives the unsquared equation (32.8).
+The value is positive and below $1/2$ by (34.1), and the inverse of
+its residual is exactly (32.9). Actual feasibility implies the scalar
+filters (32.10), by the identities (33.11)–(33.12).
+Thus this optimum is a retained M root.
+
+If the free-upper-eigenvalue case has a scalar endpoint, (34.10)
+leaves only $d=0$ with upper eigenvalues $1,t$, or $d=1$ with
+upper eigenvalues $0,t$. For eigenvalues $1,\lambda$ it says
+$\lambda=t-d$, so the endpoint $d=1$ is impossible.
+For eigenvalues $0,\lambda$ it says $\lambda=1+t-d$, so the
+endpoint $d=0$ is impossible.
+In the first remaining case $M$ is positive rank one, hence
+$M_{11}>0$. From $d=0$ its scalar satisfies $\zeta\le0$, which
+implies $\mu\ge(b/a)A_{11}$. Positivity of $M_{11}$ forces
+$A_{11}>0$, and then
+$M_{11}\le(s/a)A_{11}$ excludes $s<0$.
+Thus this is D+. The bottom equation gives $y=t/b$ and the trace
+gives $x=1-at/b$; the determinant $t$ gives
+$z=\epsilon\sqrt{at(b-t)}/b$. Nonzero coherence forces $t<b$.
+In the second case $M$ is negative rank one, so $M_{11}<0$.
+From $d=1$, $\zeta\ge0$ gives $\mu\le(b/a)A_{11}$ and
+$A_{11}>0$, whence $M_{11}\ge(s/a)A_{11}$ excludes $s>0$.
+Thus this is D−. The bottom and trace equations give
+$y=(t-a)/b$, $x=a(1-t)/b$, and determinant zero gives the
+stated $z$; its nonzero coherence forces $t>a$.
+In either case the residual gives $\ell>0$, (33.14)–(33.15) give
+the quartic with $L_i>0$, and writing $A=hI_2+S$ reconstructs
+$\kappa,h,\mu,\zeta$ exactly as (32.15). Actual witness and support
+conditions are precisely (32.16). These endpoint optima are retained D
+roots. This exhausts the indefinite case.
+
+It remains to treat rank-one positive $A$; we already know $\mu>0$
+and $r=t$. First suppose $K_2$ is a projection. Its trace is one,
+so the upper residual trace is $t-d$. Its eigenvalue on
+$\operatorname{ran}A$ is $t$, hence its other eigenvalue is $-d$.
+Thus $0\le d\le t<1/2$.
+The possibility $d=0$ requires special attention. It would make the
+upper residual positive semidefinite, so the positive upper image $H$
+would satisfy $0\le H\le E_2$ and therefore have rank at most one.
+For a projection upper effect with nonzero coherence and $d=0$,
+
+$$
+\det H=(a-s^2)y(1-y).
+\tag{34.13}
+$$
+
+Here $0<y<1$, so (31.2) forces $s=-1/2$ and $a=1/4$.
+At that value put $T=q+ap>0$. Since $H$ has range equal to that of
+$E_2$, its entries give the unique projection direction and image
+
+$$
+v_K=\frac{(\sqrt{ap},-\sqrt q)^{\mathsf T}}{\sqrt T},\qquad
+K_2=v_Kv_K^{\mathsf T},\qquad H=(a/T)E_2.
+\tag{34.14}
+$$
+
+To verify the coefficients, $x=1-y$ and $ay$ must be in ratio $p:q$,
+so $y=q/T$, $x=ap/T$; the projection coherence has negative sign
+and magnitude $\sqrt{apq}/T$. Multiplying by $s=-1/2$ gives
+$a c/T$, as required. The scalar image and nonzero residual eigenvalue
+are both $bq/T$, so the positive residual direction forces
+$A$ to be a positive multiple of $E_2$. Scale $A=E_2$.
+Then
+$M=\left(\begin{smallmatrix}p&-c/2\\-c/2&aq-b\mu\end{smallmatrix}\right)$.
+For the vector in (34.14) to be its supporting projection direction,
+it must be an eigenvector of $M$. The first row gives eigenvalue
+$p+q=1$. In the second row, divide by $\sqrt q$ and use
+$s\sqrt a=-a$ to obtain
+$-ap-aq+b\mu=-1$, that is $b\mu=-b$ and $\mu=-1$.
+This contradicts $\mu\ge0$. Thus $d=0$ is impossible even at the
+exceptional value, and
+
+$$
+0<d\le t<1/2.
+\tag{34.15}
+$$
+
+The scalar is now interior, so $\zeta=0$ and
+$\mu=(b/a)A_{11}$. Since $A$ is positive rank one with nonzero
+coherence, $A_{01}^2=A_{00}A_{11}$ and $A_{00},A_{11}>0$.
+It follows that
+
+$$
+\det M=s(1/a-s)A_{00}A_{11}.
+\tag{34.16}
+$$
+
+The factor $1/a-s$ is positive. If $s>0$, $M_{00}>0$ and this
+positive determinant make $M$ positive definite, forcing $K_2=I_2$,
+already excluded. Hence $s<0$, and $M$ is indefinite.
+Scale $A_{11}=1$ and put $u=\sqrt{A_{00}}>0$.
+Then $A=\left(\begin{smallmatrix}u^2&u\\u&1\end{smallmatrix}\right)$,
+$\mu=b/a$, and its propagation and support are exactly (33.16).
+The normalized quotient is $(P-\sqrt Q)/(2(u^2+1/a))$ of R−.
+This smooth dual family has an interior stationary point at the actual
+finite $u$, giving (32.20) by (33.17). Its supporting projection is
+uniquely (32.21), and $r=t$ fixes the scalar $d$ there.
+The actual norm bound gives $0\le d\le t$, so every R− filter holds.
+This is a retained R− root; the argument also covers $d=t$.
+
+Finally suppose $A$ is positive rank one and the upper effect has a
+free eigenvalue. Since $M_{00}=A_{00}>0$, a negative-rank-one $M$
+is impossible, so $M$ is positive rank one and $K_2$ has eigenvalues
+$1,\lambda$ with $0<\lambda<1$.
+The upper residual trace is $t-d-\lambda$ and its other eigenvalue
+is $-(d+\lambda)$. Thus $d+\lambda\le t<1/2$.
+If $0<d<1$, scalar support would force
+$\mu=(b/a)A_{11}$ and then (34.16) would be nonzero, contradicting
+rank-one $M$. Therefore $d=0$.
+Scale $A_{00}=1$, put $A_{11}=u^2$ and $A_{01}=u>0$.
+The equation $\det M=0$ gives
+$\mu=(a-s^2)u^2/b$. The scalar support condition for $d=0$ is
+
+$$
+\zeta=-s(1-as)u^2/b\le0.
+\tag{34.17}
+$$
+
+Since $s\ne0$ and $1-as>0$, this forces $s>0$.
+The normalized dual quotient of this family is
+
+$$
+f(u)=\frac{-q+2cu+(q-s^2)u^2}{1+\alpha u^2},\qquad \alpha=4a.
+\tag{34.18}
+$$
+
+At its actual interior maximizing $u$, the equations $f(u)=t$ and
+$f'(u)=0$ give
+$c+(q-s^2)u=\alpha tu$ and then $t=cu-q$:
+multiply the first equation by $u$ and subtract it from the value
+identity to obtain the latter. Eliminating $u$ gives exactly
+(32.24), whose unique positive root must therefore be this $t$.
+Support fixes the vector $(1,su)^{\mathsf T}$ in the upper effect,
+and $by=t$ fixes $y=t/b$. The two row equations then uniquely give
+$z=su(1-y)$ and $x=1-s^2u^2(1-y)$. Thus these are exactly R+'s
+entries. The residual bound gives $0\le\lambda\le t$, so it is a
+retained R+ candidate.
+
+The cases above exhaust (34.8) and the full spectral classification of
+$M$. The exceptional scalar endpoint was excluded explicitly in
+(34.13)–(34.15), rather than discarded by a division by $a-s^2$.
+Every parameter $u$ obtained from an actual witness is finite and
+strictly positive: the defining upper diagonal entries and coherence
+are nonzero in its case. Thus $u=0$ or an infinite parameter cannot
+represent an omitted optimal witness.
+
+If the conditional filter fails, the first case cannot occur, so one
+of P, M, D or R must have a retained root. At $p=1/2$, the separately
+reused Theorem 30.3 already supplies the prioritized pair.
+The classification used strict inequalities only for structural ranks
+and for root intervals. When a free eigenvalue reaches zero or one,
+it enters the projection case; when the scalar reaches zero or one,
+it enters D; semidefinite upper-witness limits are the rank-one positive
+case. All actual support and norm equalities in these cases obey the
+non-strict filters, including multiple roots and support eigenvalues
+zero. Consequently no transition is excluded by choosing an open
+structural case, and nonemptiness holds on the entire domain. $\square$
+
+## 追加锚（本行以下为增补区）
+
+## 35. Exact all-density value and a same-qutrit decoder
+
+**Theorem 35.1 (Total algebraic value for every population and finite horizon).**
+For the fixed actual channel, task and resources of Definition 31.1,
+Definition 32.7 selects a value $t$ and a pair $K,Y$ for every real
+$0<p<1$ and finite integer $n\ge2$. With
+
+$$
+B=U_0KU_0^\dagger,\qquad
+\mathcal D_B(X)=\operatorname{Tr}(BX)E_p
+       +\operatorname{Tr}((I_3-B)X)\frac{I_3-E_p}{2},
+\tag{35.1}
+$$
+
+one has
+
+$$
+\begin{gathered}
+0\le K\le I_3,quad 0\le B\le I_3,quad Y=Y^\dagger,quad
+\|Y\|_1=1,\\
+\eta_n(E_p)=t=\|(F^n)^\dagger(B)-E_p\|_{\rm op}
+ =\operatorname{Tr}(YE_p)-\operatorname{Tr}((F^n(Y))_+),\\
+\eta_n(E_p)=
+\min_{\substack{\mathcal D:M_3(\mathbb C)\to M_3(\mathbb C)\\
+                 \mathcal D\ {\rm CPTP}}}
+\sup_{\rho\in\mathsf D(\mathbb C^3)}
+\left|\operatorname{Tr}(E_p\mathcal D(F^n(\rho)))
+             -\operatorname{Tr}(E_p\rho)\right|,\\
+\sup_{\rho\in\mathsf D(\mathbb C^3)}
+\left|\operatorname{Tr}(E_p\mathcal D_B(F^n(\rho)))
+             -\operatorname{Tr}(E_p\rho)\right|=t.
+\end{gathered}
+\tag{35.2}
+$$
+
+All root choices and retained-root filters are exact as stated in
+Definitions 31.2 and 32.2–32.7. At $p=1/2$ the selected statement is
+exactly Definition 30.2 and Theorem 30.3. Otherwise it is the conditional
+quartic when its filter holds, or a root in P, M, D or R as ordered in
+Definition 32.7. Thus (35.2) is an existence and exactness theorem for
+the finite prescription, not an assumption embedded in a definition.
+
+Proof. The balanced assertion is Theorem 30.3. The conditional assertion
+is Theorem 31.3, including equality $y_0=t_0$. In all remaining cases
+Theorem 34.1 supplies a retained root and Theorem 33.1 proves (33.1)
+for every such root. The sets of roots are finite and nonempty in the
+first selected family, so their least member exists. If several
+families or several retained roots apply, each is bounded above and
+below by its own matching global certificate, hence each value is
+$\eta_n(E_p)$. This proves deterministic selection without relying on
+uniqueness of the optimizer or on a numerical choice among roots.
+
+For clarity, every denominator in the prescription has its own domain
+justification. The common $a,b,c,\tau,s$ are nonzero by (31.1)–(31.2).
+The conditional root has $w_0,\ell_0,t_0>0$ by Theorem 31.3.
+For P, $0<t<1/2$ gives $w>0$, and its strict $\ell$ filter gives
+$\delta>0$. For M, (33.5) gives $Q>0$ and $R+m>0$; its inverse uses
+only the finite nonzero $s$. For D, the stated open interval makes its
+radicand positive and $Q_{01}\ne0$, as proved following (33.13);
+$t>0$ and $1-t>0$ justify the two projection denominators.
+For R−, (33.16) gives $Q>0$, while $N=u^2+1/a>0$.
+For R+, $\alpha,c,N>0$ and the discriminant in (32.24) is strictly
+positive. Contact witnesses use $2+\mu\ge2$.
+The balanced denominators and root isolation are exactly those of
+Theorem 30.3. No root formula divides by $a-s^2$, a derivative, a
+vanishing population, or an infinite-horizon parameter. The
+exception $a-s^2=0$ was included in (34.13)–(34.15).
+Neither $s=0$ nor the excluded population endpoints $p=0,1$ is evaluated.
+These statements justify all finite formulas even at multiple roots,
+zero support eigenvalues and the retained transition equalities.
+
+Conjugation by $U_0$ preserves effect inequalities. Formula (35.1) is
+exactly the reused decoder [ERM, (27.5)][ERM], with the two prepared
+states $E_p$ and $(I_3-E_p)/2$. Its same-qutrit complete positivity and
+trace preservation can also be verified explicitly. Write
+$B=\sum_{j=1}^3 b_j|u_j\rangle\langle u_j|$ with orthonormal $u_j$
+and $0\le b_j\le1$, and let $w_1,w_2$ be an orthonormal basis of
+$\ker E_p$. The matrices
+
+$$
+L_j=\sqrt{b_j}\,|v_p\rangle\langle u_j|,\qquad
+M_{kj}=\sqrt{(1-b_j)/2}\,|w_k\rangle\langle u_j|,\qquad
+1\le j\le3,quad 1\le k\le2
+\tag{35.3}
+$$
+
+all act from $\mathbb C^3$ to $\mathbb C^3$.
+Their adjoint products sum to
+$\sum_j(b_j+1-b_j)|u_j\rangle\langle u_j|=I_3$.
+Their Kraus sum is (35.1), since the first family prepares $E_p$
+and the second prepares $(I_3-E_p)/2$ with the complementary
+measurement weight. Thus $\mathcal D_B$ is CPTP on the same input
+and output qutrit. The orthogonality of $v_p,w_1,w_2$ gives
+$\mathcal D_B^\dagger(E_p)=B$.
+Conversely, the adjoint of every permitted CPTP decoder is positive
+and unital, so its image of $E_p$ is an effect.
+
+For any Hermitian $T$ on the complex qutrit,
+
+$$
+\sup_{\rho\in\mathsf D(\mathbb C^3)}|\operatorname{Tr}(T\rho)|
+   =\max_j|\lambda_j(T)|=\|T\|_{\rm op}.
+\tag{35.4}
+$$
+
+The spectral theorem bounds every expectation between the two extreme
+eigenvalues, and an eigenstate attains the largest absolute value.
+Apply this to $T=(F^n)^\dagger(\mathcal D^\dagger(E_p))-E_p$.
+The converse effect statement and the explicit realization of every
+$B$ give the exact operational equality in (35.2). By (33.2) the
+normalized input witness $Y$ supplies the same lower bound through
+$F^n(Y)$, without any conjugation of the input functional.
+These arguments retain all complex inputs and all complex effects;
+real entries of the attaining pair are not an input-domain restriction.
+The decoder is one fixed channel for the chosen $p,n$ and is independent
+of the density matrix. $\square$
+
+**Corollary 35.2 (Complementary sharp task and scope).**
+For each task in Theorem 35.1 the complementary projection $I_3-E_p$
+has the same value, by [ERM, Proposition 27.8][ERM]. This does not give
+one common decoder for different prescribed tasks or horizons.
+The result supplies the whole $r=0,pq>0$ quantitative boundary named
+in [ERM, Definition 27.10][ERM]; it does not assert the remaining
+$p,q,r>0$ interior, retained-memory recovery or uniform recovery over
+unbounded horizons.
+
+Proof. The affine bijection $B\mapsto I_3-B$ negates the Hermitian
+residual for complementary targets, so preserves its operator norm.
+Exchange the prepared range and kernel states in the task/effect
+realization (27.5) to realize the complementary target. The task and
+horizon are fixed separately in each instance of this construction;
+none of its equalities quantifies a single decoder serving several
+instances. The other parameter and resource domains do not occur
+in (31.1) or (35.2). $\square$
 
 ## 追加锚（本行以下为增补区）
