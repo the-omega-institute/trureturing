@@ -11,6 +11,8 @@ import Mathlib.GroupTheory.FiniteAbelian.Basic
 import Mathlib.GroupTheory.PGroup
 import Mathlib.Algebra.DirectSum.Basic
 
+/-! Normalize abstract finite abelian two-groups without assuming positive exponents. -/
+
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
 
@@ -34,7 +36,7 @@ private theorem two_positive_of_noncyclic {r : ℕ} (e : Fin r → ℕ)
       · subst k
         exact hxy
       · haveI : Subsingleton (ZMod (2 ^ e k)) := by
-          rw [hz k hki]
+          rw [hz k hki, pow_zero]
           infer_instance
         exact Subsingleton.elim _ _
     exact hn (isAddCyclic_of_injective _ hinj)
@@ -43,7 +45,7 @@ private theorem two_positive_of_noncyclic {r : ℕ} (e : Fin r → ℕ)
       exact hex ⟨k, Nat.pos_of_ne_zero hk⟩
     letI : Subsingleton (Coordinates e) := ⟨fun x y => by
       funext k
-      haveI : Subsingleton (ZMod (2 ^ e k)) := by rw [hz k]; infer_instance
+      haveI : Subsingleton (ZMod (2 ^ e k)) := by rw [hz k, pow_zero]; infer_instance
       exact Subsingleton.elim _ _⟩
     exact hn inferInstance
 

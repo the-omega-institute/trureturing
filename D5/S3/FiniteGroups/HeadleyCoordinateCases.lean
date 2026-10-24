@@ -33,7 +33,7 @@ noncomputable def positiveEquiv {r : ℕ} (e : Fin r → ℕ) :
     by_cases hk : 0 < e k
     · exact congrFun hxy ⟨k, hk⟩
     · have hz : e k = 0 := by omega
-      haveI : Subsingleton (ZMod (2 ^ e k)) := by rw [hz]; infer_instance
+      haveI : Subsingleton (ZMod (2 ^ e k)) := by rw [hz, pow_zero]; infer_instance
       exact Subsingleton.elim _ _
   · intro y
     refine ⟨fun k => if hk : 0 < e k then y ⟨k,hk⟩ else 0, ?_⟩
@@ -46,8 +46,8 @@ noncomputable def elementaryCoordinates {r : ℕ} (e : Fin r → ℕ)
     (htwo : ∃ i j, i ≠ j ∧ 0 < e i ∧ 0 < e j) : RCycle (Coordinates e) := by
   classical
   let I := {i : Fin r // 0 < e i}
-  obtain ⟨i,j,hij,hi,hj⟩ := htwo
   have hcard : 2 ≤ Fintype.card I := by
+    obtain ⟨i,j,hij,hi,hj⟩ := htwo
     have hlt := Fintype.one_lt_card_iff.mpr
       (show ∃ a b : I, a ≠ b from ⟨⟨i,hi⟩,⟨j,hj⟩,fun h => hij (congrArg Subtype.val h)⟩)
     omega
@@ -68,7 +68,7 @@ noncomputable def twoCoordinatesEquiv {r : ℕ} (e : Fin r → ℕ) (i j : Fin r
       Subsingleton (ZMod (2 ^ e k.val.val)) := fun k => by
     have hki := k.val.property
     have hkj : k.val.val ≠ j := fun h => k.property (Subtype.ext h)
-    rw [hz k.val.val hki hkj]
+    rw [hz k.val.val hki hkj, pow_zero]
     infer_instance
   letI : Unique (Rest e i j hji) := { default := 0, uniq := fun _ => Subsingleton.elim _ _ }
   exact (chart e i j hji).trans AddEquiv.prodUnique

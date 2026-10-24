@@ -8,6 +8,8 @@
 
 import D5.S3.FiniteGroups.HeadleyCoordinateKernel
 
+/-! Literal subgroup kernels, doubled ranges and their E4 quotient. -/
+
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
 
@@ -84,6 +86,12 @@ def doubleCoordinates : Coordinates e →+ Coordinates e :=
 /-- The chosen kernel is exactly the doubled-coordinate range, without any splitting premise. -/
 theorem kernel_eq_doubled_range (hi : 0 < e i) (hj : 0 < e j) :
     (quotientHom e i j hji hi hj).ker = (doubleCoordinates e i j hji).range := by
+  have hd (y : Coordinates e) : chart e i j hji (doubleCoordinates e i j hji y) =
+      ((2 • (chart e i j hji y).1.1, 2 • (chart e i j hji y).1.2),
+        (chart e i j hji y).2) := by
+    change (chart e i j hji) ((chart e i j hji).symm _) = _
+    rw [AddEquiv.apply_symm_apply]
+    rfl
   ext x
   constructor
   · intro hx
@@ -96,14 +104,19 @@ theorem kernel_eq_doubled_range (hi : 0 < e i) (hj : 0 < e j) :
     obtain ⟨b, hb⟩ := hx2
     refine ⟨(chart e i j hji).symm ((a,b),(chart e i j hji x).2), ?_⟩
     apply (chart e i j hji).injective
-    simp only [doubleCoordinates, AddMonoidHom.comp_apply, AddEquiv.toAddMonoidHom_eq_coe,
-      AddEquiv.coe_toAddMonoidHom, AddEquiv.apply_symm_apply, AddMonoidHom.prodMap_apply,
-      AddMonoidHom.id_apply]
+    rw [hd, AddEquiv.apply_symm_apply]
     exact Prod.ext (Prod.ext ha hb) rfl
   · rintro ⟨y, rfl⟩
     change quotientHom e i j hji hi hj (doubleCoordinates e i j hji y) = 0
     change ((reduction (e i) hi).prodMap (reduction (e j) hj))
       ((chart e i j hji (doubleCoordinates e i j hji y)).1) = 0
-    simp [doubleCoordinates, map_nsmul, CharTwo.two_nsmul]
+    rw [hd]
+    apply Prod.ext
+    · change reduction (e i) hi (2 • _) = 0
+      rw [map_nsmul]
+      exact CharTwo.two_nsmul _
+    · change reduction (e j) hj (2 • _) = 0
+      rw [map_nsmul]
+      exact CharTwo.two_nsmul _
 
 end D5.S3.FiniteGroups.HeadleyDoubledCoordinates

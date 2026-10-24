@@ -15,6 +15,8 @@ import Mathlib.Algebra.Group.Action.End
 import Mathlib.LinearAlgebra.Dimension.Free
 import Mathlib.Algebra.GroupWithZero.Units.Equiv
 
+/-! Primitive field orbits and the small leaves used by two-primary induction. -/
+
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
 
@@ -24,7 +26,9 @@ open HeadleyExtension Function
 private noncomputable def fieldCycle (F : Type*) [Field F] [Finite F]
     (hcard : 2 < Nat.card F) : RCycle F := by
   classical
-  obtain ⟨z, hz⟩ := IsCyclic.exists_generator (α := Fˣ)
+  let z : Fˣ := Classical.choose (IsCyclic.exists_generator (α := Fˣ))
+  have hz : ∀ x : Fˣ, x ∈ Subgroup.zpowers z :=
+    Classical.choose_spec (IsCyclic.exists_generator (α := Fˣ))
   have hz1 : z ≠ 1 := by
     intro he
     have hc := orderOf_eq_card_of_forall_mem_zpowers hz
@@ -50,7 +54,8 @@ private noncomputable def fieldCycle (F : Type*) [Field F] [Finite F]
       rw [← map_zpow]
       change ((z ^ k : Fˣ) : F) * x = y
       rw [hk]
-      simp [hx]
+      simp only [Units.val_div_eq_div_val, Units.val_mk0]
+      exact div_mul_cancel₀ y hx
   · intro x
     change ((z : F) - 1) * x = (z : F) * x - x
     ring
@@ -72,7 +77,7 @@ noncomputable def elementaryCycle (k : ℕ) (hk : 2 ≤ k) :
 
 private def e4Word : List (ZMod 2 × ZMod 2) := [(1,0), (1,1), (0,1)]
 
-private def e4Cycle : RCycle (ZMod 2 × ZMod 2) where
+private noncomputable def e4Cycle : RCycle (ZMod 2 × ZMod 2) where
   successor := e4Word.formPerm
   successor_zero := by decide
   nonzero_cycle := by
@@ -83,9 +88,9 @@ private def e4Cycle : RCycle (ZMod 2 × ZMod 2) where
   difference_spec _ := rfl
 
 /-- The quotient seed has the consecutive triple (1,0),(1,1),(0,1). -/
-def e4RStar : RStar (ZMod 2 × ZMod 2) where
+noncomputable def e4RStar : RStar (ZMod 2 × ZMod 2) where
   toRCycle := e4Cycle
-  even_card := by decide
+  even_card := by norm_num [Nat.card_prod]
   a := (1,0)
   b := (1,1)
   c := (0,1)
@@ -101,7 +106,7 @@ private def c2c4Word : List (ZMod 2 × ZMod 4) :=
   [(0,2), (1,3), (0,3), (1,1), (1,0), (1,2), (0,1)]
 
 /-- The seven-vertex R-only leaf includes the final edge back to (0,2). -/
-def c2c4Cycle : RCycle (ZMod 2 × ZMod 4) where
+noncomputable def c2c4Cycle : RCycle (ZMod 2 × ZMod 4) where
   successor := c2c4Word.formPerm
   successor_zero := by decide
   nonzero_cycle := by
