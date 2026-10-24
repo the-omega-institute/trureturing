@@ -17,7 +17,7 @@ import Mathlib.Tactic.Linarith
 import Mathlib.Tactic.Push
 
 /-!
-admission_basis: escape-witness; witness: residue_filter.
+admission_basis: escape-witness; witness: T_nonneg.
 The trisection sums are evaluated by a six-periodic recurrence. All variables
 and degrees remain arbitrary; no numerical certificate is used.
 -/
@@ -26,7 +26,8 @@ set_option maxHeartbeats 400000
 open Finset
 namespace D5.S3.Analytic.KarpZhangNinh.Homogeneous
 
-/- proof_shape: bind-only definition; escape_witness: none; consumer: residue_succ, residue_filter. -/
+/- proof_shape: bind-only definition; escape_witness: none; consumer: A_formula, T_formula,
+residue_filter, residue_succ, weighted_succ. -/
 def residue (n r : ℕ) : ℤ :=
   ∑ k ∈ range (n+1), (n.choose k : ℤ) * if k % 3 = r then 1 else 0
 
@@ -42,7 +43,8 @@ private lemma residue_succ (n r : ℕ) (hr : r < 3) :
   have hm : (k+1)%3=r ↔ k%3=(r+2)%3 := by omega
   simp only [hm]
 
-/- proof_shape: bind-only definition; escape_witness: none; consumer: residue_filter. -/
+/- proof_shape: bind-only definition; escape_witness: none; consumer: A_formula, T_formula,
+residue_filter. -/
 def periodic (q : ℕ) : ℤ :=
   match q % 6 with
   | 0 => 2
@@ -68,7 +70,8 @@ theorem residue_filter (n : ℕ) :
       simp only [periodic, Nat.add_mod, Nat.mod_mod, h] at * <;>
       norm_num at * <;> simp only [pow_succ] <;> omega
 
-/- proof_shape: bind-only definition; escape_witness: none; consumer: weighted_succ, A, B, K_pos. -/
+/- proof_shape: bind-only definition; escape_witness: none; consumer: A, A_formula, A_nonneg, B,
+K_pos, T_diagonal, T_formula, derivative_coeff, moment_sum, second_succ, shear, weighted_succ. -/
 def weighted (n r : ℕ) : ℤ :=
   ∑ k ∈ range (n+1), (n.choose k : ℤ) * k * if k % 3 = r then 1 else 0
 
@@ -90,7 +93,8 @@ private lemma weighted_succ (n r : ℕ) (hr : r < 3) :
   simp only [hm]
   ring
 
-/- proof_shape: bind-only definition; escape_witness: none; consumer: second_succ, T. -/
+/- proof_shape: bind-only definition; escape_witness: none; consumer: B, K_pos, T, T_diagonal,
+T_formula, derivative_coeff, moment_sum, second_succ, shear. -/
 def second (n r : ℕ) : ℤ :=
   ∑ k ∈ range (n+1), (n.choose k : ℤ) * k * ((k:ℤ)-1) *
     if k % 3 = r then 1 else 0
@@ -113,14 +117,17 @@ private lemma second_succ (n r : ℕ) (hr : r < 3) :
   simp only [hm]
   ring
 
-/- proof_shape: bind-only definition; escape_witness: none; consumer: A_formula, A_nonneg, T_formula. -/
+/- proof_shape: bind-only definition; escape_witness: none; consumer: A_formula, A_nonneg, K_pos,
+T, T_diagonal, T_formula, T_nonneg, derivative_coeff. -/
 def A (n : ℕ) : ℤ := weighted n 0 - 2 * weighted (n-1) 0
 
-/- proof_shape: bind-only definition; escape_witness: none; consumer: T_formula, T_nonneg, derivative_expansion. -/
+/- proof_shape: bind-only definition; escape_witness: none; consumer: D, K, K_pos, T_diagonal,
+T_formula, T_nonneg, derivative_coeff, derivative_expansion, hasDerivAt_slice. -/
 def T (n N : ℕ) : ℤ :=
   ((N:ℤ)-1) * A n - (second n 0 - 2 * second (n-1) 0)
 
-/- proof_shape: bind-only definition; escape_witness: none; consumer: A_formula, A_nonneg, T_formula. -/
+/- proof_shape: bind-only definition; escape_witness: none; consumer: A_formula, A_nonneg,
+T_diagonal, T_formula, T_nonneg. -/
 def alpha (n : ℕ) : ℤ :=
   match n % 6 with
   | 0 => -3*n+4
@@ -130,7 +137,8 @@ def alpha (n : ℕ) : ℤ :=
   | 4 => 3*n-2
   | _ => 2
 
-/- proof_shape: bind-only definition; escape_witness: none; consumer: T_formula, T_nonneg. -/
+/- proof_shape: bind-only definition; escape_witness: none; consumer: T_diagonal, T_formula,
+T_nonneg. -/
 def beta (n : ℕ) : ℤ :=
   match n % 6 with
   | 0 => -3*n+4
@@ -140,7 +148,8 @@ def beta (n : ℕ) : ℤ :=
   | 4 => 4
   | _ => -3*n+8
 
-/- proof_shape: content; escape_witness: residue_filter; consumer: A_nonneg, T_nonneg. -/
+/- proof_shape: content; escape_witness: residue_filter; consumer: A_nonneg, T_formula, T_nonneg.
+-/
 theorem A_formula (n : ℕ) (hn : 1 ≤ n) :
     3 * A n = 2^(n-1) + alpha n := by
   rcases n with _|_|n
@@ -154,7 +163,7 @@ theorem A_formula (n : ℕ) (hn : 1 ≤ n) :
       simp [alpha, periodic, Nat.add_mod, h, pow_succ] at * <;>
       linear_combination ((n:ℤ)+2)*h₁ - 2*((n:ℤ)+1)*h₂
 
-/- proof_shape: content; escape_witness: residue_filter; consumer: T_nonneg. -/
+/- proof_shape: content; escape_witness: residue_filter; consumer: T_diagonal, T_nonneg. -/
 theorem T_formula (n N : ℕ) (hn : 1 ≤ n) :
     3 * T n N = ((N:ℤ)-n)*2^(n-1) + ((N:ℤ)-1)*alpha n -
       ((n:ℤ)-1)*beta n := by
@@ -220,8 +229,8 @@ theorem A_nonneg (n : ℕ) (hn : 1 ≤ n) : 0 ≤ A n := by
       interval_cases h : n % 6 <;> simp [alpha, h] <;> omega
     omega
 
-/- proof_shape: content; escape_witness: power_quadratic_one, power_quadratic_two;
-consumer: K_pos. -/
+/- proof_shape: content; escape_witness: power_quadratic_one, power_quadratic_two; consumer:
+K_pos. -/
 theorem T_nonneg (n N : ℕ) (hn : 1 ≤ n) (hN : N % 3 = 0) (hnN : n < N) :
     0 ≤ T n N := by
   have hf := T_formula n N hn
@@ -260,13 +269,13 @@ theorem T_nonneg (n N : ℕ) (hn : 1 ≤ n) (hN : N % 3 = 0) (hnN : n < N) :
     simp [alpha, beta, h] at hf ha
     nlinarith [mul_nonneg (by omega : (0:ℤ) ≤ (N:ℤ)-n) ha0]
 
-/- proof_shape: bind-only definition; escape_witness: none;
-consumer: P, Result.normalization_term, Result.Z_monotoneOn. -/
+/- proof_shape: bind-only definition; escape_witness: none; consumer: P, coeff_symm, shear,
+Result.Z_monotoneOn, Result.lift_normalization, Result.normalization_term. -/
 def coeff (N k : ℕ) : ℝ :=
   if k % 3 = 0 then (k:ℝ) * (N-k) * N.choose k else 0
 
-/- proof_shape: bind-only definition; escape_witness: none;
-consumer: shear, strictMonoOn_slice, Result.Z_monotoneOn. -/
+/- proof_shape: bind-only definition; escape_witness: none; consumer: hasDerivAt_slice, shear,
+strictMonoOn_slice, Result.Z_monotoneOn. -/
 def P (N : ℕ) (x y : ℝ) : ℝ :=
   ∑ k ∈ range (N+1), coeff N k * x^k * y^(N-k)
 
@@ -278,8 +287,8 @@ theorem coeff_symm (N k : ℕ) (hN : N % 3 = 0) (hk : k ≤ N) :
   rw [Nat.cast_sub hk]
   split_ifs <;> ring
 
-/- proof_shape: bind-only definition; escape_witness: none;
-consumer: shear, derivative_coeff, collect_derivative, hasDerivAt_slice. -/
+/- proof_shape: bind-only definition; escape_witness: none; consumer: collect_derivative,
+derivative_coeff, hasDerivAt_slice, shear. -/
 def B (N t : ℕ) : ℝ :=
   (N.choose t : ℝ) * ((((N:ℤ)-1)*weighted (N-t) 0-second (N-t) 0 : ℤ):ℝ)
 
@@ -394,13 +403,12 @@ private lemma collect_derivative (N : ℕ) (x d : ℝ) :
   rw [he]
   ring
 
-/- proof_shape: bind-only definition; escape_witness: none;
-consumer: hasDerivAt_slice, derivative_expansion. -/
+/- proof_shape: bind-only definition; escape_witness: none; consumer: derivative_expansion,
+hasDerivAt_slice, strictMonoOn_slice. -/
 def D (N : ℕ) (x d : ℝ) : ℝ :=
   ∑ t ∈ range N, ((N-t:ℕ):ℝ)*(N.choose t:ℝ)*(T (N-t) N:ℝ)*x^(N-t-1)*d^t
 
-/- proof_shape: bind-only; escape_witness: none;
-consumer: strictMonoOn_slice. -/
+/- proof_shape: bind-only; escape_witness: none; consumer: strictMonoOn_slice. -/
 theorem hasDerivAt_slice (N : ℕ) (S x : ℝ) :
     HasDerivAt (fun s => P N s (S-s)) (D N x (S-2*x)) x := by
   have hfun : (fun s => P N s (S-s)) =
@@ -429,8 +437,7 @@ theorem hasDerivAt_slice (N : ℕ) (S x : ℝ) :
     intro t ht
     ring
 
-/- proof_shape: bind-only; escape_witness: none;
-consumer: derivative_expansion. -/
+/- proof_shape: bind-only; escape_witness: none; consumer: derivative_expansion. -/
 private lemma T_diagonal (N : ℕ) (hN : N%3=0) : T N N = 0 := by
   by_cases hzero : N=0
   · subst N; norm_num [T, A, weighted, second]
@@ -438,13 +445,12 @@ private lemma T_diagonal (N : ℕ) (hN : N%3=0) : T N N = 0 := by
     have hm : N%6<6 := Nat.mod_lt _ (by omega)
     interval_cases h : N%6 <;> simp [alpha, beta, h] at hf <;> omega
 
-/- proof_shape: bind-only definition; escape_witness: none;
-consumer: derivative_expansion, K_pos. -/
+/- proof_shape: bind-only definition; escape_witness: none; consumer: K_pos, derivative_expansion,
+strictMonoOn_slice. -/
 def K (N : ℕ) (x d : ℝ) : ℝ :=
   ∑ n ∈ Icc 1 (N-1), (n:ℝ)*(N.choose n:ℝ)*(T n N:ℝ)*x^(n-1)*d^(N-n-1)
 
-/- proof_shape: bind-only; escape_witness: none;
-consumer: strictMonoOn_slice. -/
+/- proof_shape: bind-only; escape_witness: none; consumer: strictMonoOn_slice. -/
 theorem derivative_expansion (N : ℕ) (hN : N%3=0) (x d : ℝ) :
     D N x d = d*K N x d := by
   unfold D K
@@ -492,8 +498,7 @@ private theorem K_pos (N : ℕ) (hN : N%3=0) (h6 : 6 ≤ N) {x d : ℝ}
     have hc : (0:ℝ) < (N.choose 3:ℝ) := by exact_mod_cast Nat.choose_pos (by omega : 3≤N)
     positivity
 
-/- proof_shape: content; escape_witness: K_pos;
-consumer: Result.Z_monotoneOn. -/
+/- proof_shape: content; escape_witness: K_pos; consumer: Result.Z_monotoneOn. -/
 theorem strictMonoOn_slice (m : ℕ) (hm : 2 ≤ m) :
     StrictMonoOn (fun t => P (3*m) t (1-t)) (Set.Ioc 0 (1/2:ℝ)) := by
   apply strictMonoOn_of_deriv_pos (convex_Ioc 0 (1/2:ℝ))

@@ -12,7 +12,7 @@ internal sealed class HomogeneousDocument : IScribeDocumentDefinition
         "Trisection binomial coefficients give strict symmetric balancing.",
         H("The homogeneous trisection polynomial"),
         Blocks(
-            Paragraph(Text("All degree variables are natural numbers. Their subtraction is natural truncated subtraction; integer and real casts in the finite sums preserve these indices. The functions alpha and beta below are integer-valued, and their six cases are ordered by n modulo six. No root-of-unity choice is required: Pascal's recurrence proves the six-periodic filter formula.")),
+            Paragraph(Text("Degree variables and summation indices are natural numbers. Subtraction in indices and exponents is natural truncated subtraction. Scalar subtraction in the moment formulas takes place in the integers or reals, as specified below. The functions alpha and beta are integer-valued, and their six cases are ordered by n modulo six. No root-of-unity choice is required: Pascal's recurrence proves the six-periodic filter formula.")),
             Def("residue", "Binomial residue sums",
                 Ns(["n", "r"], Eq(C("residue", V("n"), V("r")),
                     Sum("k", Range(Add(V("n"), D(1))),
@@ -89,7 +89,7 @@ internal sealed class HomogeneousDocument : IScribeDocumentDefinition
                 Ns(["N", "k"], Eq(C("coeff", V("N"), V("k")),
                     Cond(Eq(Mod(V("k"), D(3)), D(0)),
                         Mul(Mul(V("k"), Sub(V("N"), V("k"))), Choose(V("N"), V("k"))), D(0)))),
-                "Only exponents divisible by three contribute. The endpoint factors make the k=0 and k=N terms zero."),
+                "Only exponents divisible by three contribute. The scalar N-k is the real difference, and the binomial coefficient is cast to the reals. The endpoint factors make the k=0 and k=N terms zero."),
             Def("P", "The homogeneous trisection polynomial",
                 Ns(["N"], Rs(["x", "y"], Eq(C("P", V("N"), V("x"), V("y")),
                     Sum("k", Range(Add(V("N"), D(1))),
