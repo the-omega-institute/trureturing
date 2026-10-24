@@ -141,9 +141,10 @@ The conjecture fails through strong log-concavity of the Gamma ratio
 $c(t)=\Gamma(t+1/2)^{-q}$ for large $q$: the degree-one coefficient pairs the
 balanced product $c(2)^2=\Gamma(5/2)^{-2q}$ against the unbalanced products
 $c(3/2)c(5/2)$, and since $(32/(9\pi))^q>2$ for $q\ge6$ the balanced product
-dominates. Shifts $\alpha,\beta<1$ are needed: Theorem 3 of the source covers
-$\alpha\in\mathbb N$, and the threshold $\mu\ge1$ does not compensate for
-fractional shifts once $q$ is large. The nearest statements that survive are
+dominates. In this family both shifts equal $1/2$. Theorem 3 of the source
+covers $\alpha\in\mathbb N$ and gives no guarantee for noninteger shifts, including
+noninteger $\alpha\ge1$; the threshold $\mu\ge1$ does not compensate once $q$ is
+large. The nearest statements that survive are
 the integer-shift case of Theorem 3 and, numerically, the regime of few
 denominator parameters.
 
