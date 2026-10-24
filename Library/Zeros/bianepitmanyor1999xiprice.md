@@ -671,3 +671,93 @@ This allowance is smaller than every fixed negative power of $L$.
 It is insufficient to guarantee a root-small actual quadrature error;
 the exact $\mathfrak E_A$ remains available when that precision is
 required.
+
+Combining IPX28--IPX31 gives the full literal-prime expansion
+
+$$
+\boxed{\quad
+\mathfrak N_A
+=\frac{a_A}{v_*}+\frac{M_{2,A}}{2v_*^2}
+ +O\!\left(\frac1{L^2\log L}\right)
+\sim\frac{a_+}{L}.\quad}
+\tag{IPX32}
+$$
+
+In particular this includes all negative first-prime responses from
+the natural boundary onward, rather than just IPX13's artificial
+$p>A^{16}$ tail. The continuous integral is used only with its paid
+literal activation and prime-quadrature errors. No improvement of
+the underlying PNT is asserted.
+
+For the same original integer $n$, let $h_{p,A}(n)$ be the observed
+first-layer response before multiplication by $\log p$: it is IPX7's
+nonnegative expectation when $p\mid n$ and
+$\mathcal H_A(t_p)$ when $p\nmid n$. Define its complete positive
+and negative first-layer parts by
+
+$$
+\mathfrak P_A(n)=\sum_p\log p\,(h_{p,A}(n))_+,\qquad
+\mathfrak N_A(n)=\sum_{p\nmid n}\log p\,g_A(t_p).
+$$
+
+The owned absolute convergence gives
+$D_{1,A}(n)=\mathfrak P_A(n)-\mathfrak N_A(n)$ and
+$\mathfrak N_A(n)\le\mathfrak N_A$.
+Reuse [ACC3--ACC5's actual strict products](../ArithSums/nicolas2025comparison.md#use-actual-strict-products-at-their-own-size)
+$N_x$, with $A=\log N_x\sim x$. Every prime factor lies below $x$,
+whereas $t_*/x\to\infty$. Thus eventually all negative first primes
+are absent from this same $N_x$, and
+$\mathfrak N_A(N_x)=\mathfrak N_A$ exactly.
+
+ACC5 also gives $0\le G_{2,A}(N_x)\le d_A(N_x)$ and
+$d_A(N_x)=O(e^{-d\sqrt L}/L)$ for some $d>0$.
+Use the unchanged exact account
+$\Delta(N_x)=d_A(N_x)+I_\psi(A)+R(A)$, IPX11 and the owned
+$R(A)=c_R/T_A+O(1/(T_AL))$. They give
+
+$$
+\begin{aligned}
+D_{1,A}(N_x)
+&=d_A(N_x)-G_{2,A}(N_x)+I_\psi(A)
+  -\frac{2(1-b_+)}{T_A}+O\!\left(\frac1{T_AL}\right)\\
+&=O(e^{-d_1\sqrt L})+O(T_A^{-1})
+ =o(L^{-m})\qquad\text{for every fixed }m>0,
+\end{aligned}
+$$
+
+for a fixed $d_1>0$, by the same effective PNT input as ACC2.
+Consequently on these actual integers,
+
+$$
+\mathfrak P_A(N_x)
+=\frac{a_A}{v_*}+\frac{M_{2,A}}{2v_*^2}
+ +O\!\left(\frac1{L^2\log L}\right),\qquad
+\frac{\mathfrak P_A(N_x)}{\mathfrak N_A(N_x)}\longrightarrow1.
+\tag{IPX33}
+$$
+
+Both parts use the same integer, source and literal prime set. This
+quantifies the full sign split at the natural boundary; ACC already
+owns the actual-integer qualitative compensation mechanism.
+
+The surviving sufficient estimate for IPX11 is, for some fixed
+$\epsilon>0$ and every sufficiently large original integer $n$,
+
+$$
+T_A[\mathfrak P_A(n)-\mathfrak N_A(n)+G_{2,A}(n)]
+\ge -c_++\epsilon,\qquad c_+=c_R+2(1-b_+).
+\tag{IPX34}
+$$
+
+It would imply eventual strict Robin; a complete proof above 5040
+would also have to cover the remaining integers. On the actual
+family in IPX33 the residual scale $T_A^{-1}$ is of relative order
+$A^{-1/2}$ compared with either sign part $\sim a_+/L$.
+The logarithmic remainder in IPX32--IPX33 and the unconditional
+prime-quadrature allowance do not supply that one-sided precision.
+A larger positive residual is favorable: no two-sided smallness of
+the actual difference is required or claimed. The joint bound
+IPX34, a certified numerical starting scale, full strict Robin and
+RH remain unproved. IPX26--IPX33 are paper-level applications of
+the cited source and existing arithmetic estimates, without Lean
+certification or a literature-priority claim.
