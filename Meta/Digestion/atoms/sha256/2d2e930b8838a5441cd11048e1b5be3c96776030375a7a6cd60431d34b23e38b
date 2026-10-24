@@ -1,0 +1,110 @@
+**Theorem 24.2 (record-to-actual-coefficient bounds).** Under Assumption 24.1
+put $\rho_0=R_1^2-R_0^2$, $\rho_1=R_2^2-R_1^2$, and $d=1-\cos1$. Define
+
+$$
+\begin{aligned}
+E_0&=2\epsilon+C_0\delta_t,\\
+E_1&=2\epsilon+C_0\delta_t+
+ A_0(2\delta_h+\delta_u+\delta_t).
+\end{aligned}
+\tag{24.3}
+$$
+
+Let finite arithmetic return rational centers $\widehat c,\widehat a$
+with certified bounds
+
+$$
+|\widehat c-\rho_0|\le\eta_c,\qquad
+|d\widehat a-(\rho_1-\rho_0)|\le\eta_a.
+\tag{24.4}
+$$
+
+Use upward bounds in the following finite computations:
+
+$$
+C=E_0+\eta_c,\qquad
+R_a=\tfrac{24}{11}(E_0+E_1+\eta_a),\qquad
+A=|\widehat a|+R_a.
+\tag{24.5}
+$$
+
+Then $|c-\widehat c|\le C$, $|a-\widehat a|\le R_a$ and $|a|\le A$.
+If $2\epsilon+\delta_t+\delta_u<1$, the acquired directed coordinate
+$R_2^1-R_1^1$ is strictly positive, furnishing an actual signed $X_1$
+anchor. For the three-axis comparison
+$V_0=\widehat c e_2$, $V_a=e_a$, at every source point and every setting,
+
+$$
+\begin{aligned}
+|v_1-e_1|&\le A,&v_2&=e_2,&v_3&=e_3,\\
+\|A_Q-Q\|&\le2A\|Q\|+A^2Q_{11},\\
+|b_Q^\Pi-\widehat c e_2|&\le C+\tfrac12Q_{11}A,
+\end{aligned}
+\tag{24.6}
+$$
+
+where $b_Q^\Pi$ is the actual projected Itô drift, not $v_0$.
+More precisely the actual generator residual is
+
+$$
+\begin{aligned}
+b_Q^\Pi&=(c+\tfrac12Q_{11}a\cos h)e_2,\\
+\mathcal L_Q(\psi\circ\Pi)
+ -(\widehat c\,\partial_2\psi+\tfrac12 Q:D^2\psi)\circ\Pi
+&=(c-\widehat c+\tfrac12Q_{11}a\cos h)\partial_2\psi
+ +\tfrac12(A_Q-Q):D^2\psi.
+\end{aligned}
+\tag{24.7}
+$$
+
+Thus these finitely acquired records control the source derivative needed
+by the actual second-order consumer on the entire declared template.
+
+Proof. Write $U_a(t)=\int_0^tu_a(s)ds$, with time measured from any
+chosen start. The complete deterministic solution, before killing, is
+
+$$
+\begin{aligned}
+h_t&=h_0+U_1(t),&k_t&=k_0+t+U_2(t),\\
+q_1(t)&=q_1(0)+U_1(t),&q_3(t)&=q_3(0)+U_3(t),\\
+q_2(t)&=q_2(0)+ct+U_2(t)
+ +a\{\cos h_0-\cos(h_0+U_1(t))\}.
+\end{aligned}
+\tag{24.8}
+$$
+
+Differentiation verifies all five equations and their initial values;
+local uniqueness then proves these are the actual paths. They exist for
+every finite-integral control. During acquisition $q_3$ is constant and
+positive, so every prefix, including every read, obeys the original guard.
+The hold leaves $h$ unchanged. Its second-coordinate increment is $c\tau_0$;
+the pulse increment is $c\tau_1+a(\cos h_0-\cos(h_0+U))$.
+Since $|U-1|\le\delta_u+\delta_t$ and cosine is $1$-Lipschitz,
+
+$$
+|\cos h_0-\cos(h_0+U)-d|
+\le2\delta_h+\delta_u+\delta_t.
+$$
+
+Endpoint errors add at most $2\epsilon$ to each increment, even though
+they share the middle record and need not be independent.
+This proves $|\rho_0-c|\le E_0$ and $|\rho_1-c-ad|\le E_1$.
+The alternating cosine series at $1$ gives
+$11/24\le d\le1/2$. Subtracting the increments and using (24.4)
+proves (24.5). This is the explicit two-parameter inverse inside this
+consumer, not an additional inverse or joint-diagonalization theorem.
+For example, a degree-$2N$ cosine truncation has remainder at most
+$1/(2N+2)!$; rational interval arithmetic therefore certifies (24.4)
+with finitely many operations, including output rounding in $\eta_a,\eta_c$.
+The first-coordinate pulse increment is $U$; its reported value is at
+least $1-\delta_u-\delta_t-2\epsilon$, proving the signed anchor.
+
+Finally $X_1r_1=a\cos h\,e_2$ and the other $X_ar_b$ vanish.
+The calculation (23.5), now inside (24.1), gives (24.7);
+the shear covariance expansion in the proof of (23.3) gives (24.6).
+Here global control of the derivative comes from the declared fixed-frequency
+source and the acquired parameter interval. Finitely many observations
+alone would not supply that membership premise, as Proposition 17.4
+already shows. At the pulse endpoint the actual hidden coordinates are
+$h_0+U$ and $k(s_0)+\tau_0+\tau_1$; they are retained, not reset. QED.
+
