@@ -2,6 +2,8 @@ import LeanInformationAuditInterface.Contract.Registration
 import D5.S3.Observer.CubicGain.FullWorldMeanSpan
 import Reg.Support.SingleDependentReadout
 
+/-! The unrestricted native mean map, varied over the complete original world family. -/
+
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
 noncomputable section
@@ -37,7 +39,7 @@ private theorem rejected_law : ¬ arena.Law rejected := by
     rw [h]
     trivial
   have he : (Pi.single 0 1 : Fin 17 → ℝ) = 0 :=
-    (AffineSubspace.mem_affineSpan_singleton ℝ (0 : Fin 17 → ℝ)).mp hm
+    by simpa only [AffineSubspace.mem_affineSpan_singleton] using hm
   have h0 := congrFun he 0
   norm_num at h0
 
