@@ -1714,3 +1714,120 @@ cutoff from the paid low-conductor portion and simplifies the sufficient
 full-coefficient target; the full inverse-fourth strict improvement,
 signed Robin restoration and RH remain open. No literature-priority or
 local Lean-certification claim is made.
+
+
+## Localizing the remaining contraction by the product squarepart
+
+The rectangular estimate before the conductor-cap step also pays a
+high-conductor sector. Reuse (C10)--(C11), with the same full original
+cube-free coefficient, row family, finite components and fixed or polylog
+cost contract. No new large-sieve input is needed.
+
+For an original pair write $a=h\alpha^2v$, $b=h\beta^2w$ as above, so
+$v,w$ are squarefree and coprime. Define the intrinsic product-squarepart
+norm
+
+$$
+P(a,b)=q_{h\alpha\beta}
+=\left(\frac{q_aq_b}{q_{r_2(ab)}}\right)^{1/2}.
+\tag{C16}
+$$
+
+Indeed, $ab=(h\alpha\beta)^2vw$ and $r_2(ab)=vw$. In the original
+coefficient coordinates $a=s_at_a^2$, $b=s_bt_b^2$, the same quantity is
+$q_{t_at_b(s_a,s_b)}$. Thus this cut retains the relationship between the
+two actual columns; it does not select two independently optimized
+coefficient vectors.
+
+For a fixed $0<r<1$ put $R=U^r$. The full original unequal-parity
+contraction on $P(a,b)\ge R$ satisfies
+
+$$
+\boxed{
+|E_{6,\,P\ge R}(c)|
+\ll U^\varepsilon
+\left(U^{13/12}+U^{7/6}R^{-1/3}\right).
+}
+\tag{C17}
+$$
+
+Here $c=g_D$, or any cube-free coefficient with the same normalized
+envelope. To prove this, impose the exact $P\ge R$ condition while fixing
+$h,\alpha,\beta$. It is then a scalar restriction on those parameters,
+independent of the remaining $e,r,s$ variables in the coprimality
+expansion. Retain all original cross-coprimality, finite-class and row
+collision masks. The norm-density cancellation in (C10) and the unmasked
+rectangular operator in (C11) therefore still apply; no primitive-conductor
+selector or staircase estimate is required here.
+
+On a nonempty $H,A,B$ block, $HAB\gg R$ and
+$X=U/(HA^2)$, $Y=U/(HB^2)$ satisfy $X,Y\ll U$. Consequently,
+
+$$
+\begin{aligned}
+\sqrt{F_6(U,X)F_6(U,Y)}
+&\ll U+U^{11/12}(X^{1/6}+Y^{1/6})
+       +U^{5/6}(XY)^{1/6}\\
+&\ll U^{13/12}+U^{7/6}(HAB)^{-1/3}.
+\end{aligned}
+$$
+
+Summing the permitted dyads costs only $U^\varepsilon$. This first
+bounds the total contraction including equal-parity pairs. On those
+pairs $r_2(ab)=1$, hence $P(a,b)=\sqrt{q_aq_b}\asymp U$. Since $r<1$,
+all of them belong to $P\ge U^r$ for sufficiently large $U$. Their
+subtraction is exactly the already paid full cubic block
+$H_2\ll U^{1+\varepsilon}$, with its actual coefficients and zeros.
+This proves (C17), without asserting positivity of the squarepart cut or
+introducing a new bound for a partially retained cubic block. The bounded
+initial range is absorbed in the implied constant.
+
+In particular, the full original coefficient obeys
+
+$$
+\boxed{
+|E_{6,\,P\ge U^{1/4}}^\mu|
+\ll U^{13/12+\varepsilon}.
+}
+\tag{C18}
+$$
+
+This pays more than a short-conductor phenomenon. From (C3), on the
+original annuli and fixed finite component,
+
+$$
+q_{\mathfrak f}\asymp_S\frac{U^2}{q_hP(a,b)},
+\qquad q_h\le P(a,b).
+\tag{C19}
+$$
+
+The paid locus can therefore have $q_h\asymp1$,
+$P(a,b)\asymp U^{1/4}$ and primitive conductor of size $U^{7/4}$.
+Conversely, the remaining locus $P<U^{1/4}$ forces
+$q_{\mathfrak f}\gg_S U^{3/2}$. These conductor comparisons retain their
+fixed constants; they do not identify the two sharp cutoffs.
+Equivalently, its parity-disagreement core has
+$q_{r_2(ab)}\gg U^{3/2}$.
+
+A sufficient remaining input for the full inverse-fourth improvement is
+now the conductor-unrestricted estimate
+
+$$
+\boxed{
+\operatorname{Re}E_{6,\,P<U^{1/4}}^\mu
+\ll U^{B_*-\nu+\varepsilon},
+\qquad 0<\nu<B_*-13/12.
+}
+\tag{C20}
+$$
+
+Indeed, the two $P$ regions partition the same original ordered sum;
+combine (C18), (C20) and the paid cubic block. No claim that masking
+reduces interference is used. This target retains the coprime squarefree
+pairs $h=\alpha=\beta=1$, so the hardest actual Möbius cross-core
+correlation remains. The gain is the additional paid sector and the
+removal of the total primitive-conductor selector from the sufficient
+unpaid input. The large parity-disagreement estimate (C20), full moment
+improvement, signed Robin restoration and RH remain unproved. This is
+an application of the existing operator bounds, without a literature-priority
+claim or local Lean certification.
