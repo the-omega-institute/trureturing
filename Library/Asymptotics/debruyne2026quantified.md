@@ -75,3 +75,49 @@ condition and is not supplied here. The usual subexponential PNT error
 does not pay that absolute tail budget. This source removes the specific
 residual-positivity obstruction of the preceding interface; it supplies
 no new root-scale estimate, signed Robin margin or RH proof.
+
+
+## Averaged growth retains a separate all-height pole condition
+
+Alberts, *An Explicit Tauberian Theorem taking Averaged Inputs with an
+Application to Counting Abelian Number Fields*,
+[arXiv:2508.20814v2](https://arxiv.org/html/2508.20814v2), revised
+19 October 2026, Theorem 1.1, permits twisted integral bounds instead of
+pointwise vertical growth bounds. Its transform is
+$D(s)=s\int_1^\infty N(x)x^{-s-1}\,dx$. Besides absolute convergence
+and the stated polynomial interior bounds, it requires meromorphic
+continuation to the whole closed half-plane $\Re s\ge\sigma_a-\delta$
+with only finitely many poles. On its left edge the input is
+
+$$
+\left|\int_T^{2T}D(\sigma_a-\delta\pm it)Z^{\pm it}\,dt\right|
+\ll T^\eta(\log T)^\beta,
+$$
+
+for both signs, all $Z\ge e/2$ and those $T\ge e$ whose corresponding
+dyadic vertical segment contains no pole of $D(s)/s$, with $\eta>0$ and
+$\beta\ge0$. The residue expansion then has power saving
+$\delta/\max\{\eta,1\}$ and the source's explicit logarithmic factor.
+This is a weaker growth-input interface than the pointwise PTBZ
+interface; it is not a supplied estimate for the present prime source.
+
+For $N=\psi$, $D=-\zeta'/\zeta$ and $\sigma_a=1$. A left edge at or
+below $1/2$ violates the finite-pole hypothesis because infinitely many
+actual critical-line zeros give poles. Finite zero subtraction does not
+repair that failure. For $\delta<1/2$, the displayed power saving is
+strictly below $1/2$, while all-height finiteness of the remaining poles
+is still an additional unproved input. Every retained zero residue also
+needs its signed estimate. Theorems 1.5 and 1.7 require an increment
+majorant $\widehat N$ with
+$|N(X)-N(Y)|\le\widehat N(X)-\widehat N(Y)$ for every $X\ge Y$,
+and the analytic and averaged hypotheses for both functions; the
+majorant $\psi+X$ for $\psi-X$ retains the same zero poles.
+
+The restricted-set variants are not imported here. Theorems 1.4 and 2.2
+print a minimum over distances to the set containing the point itself,
+whereas the floor/ceiling step in the proof uses consecutive-gap control.
+A proposed sparse cutoff set therefore needs an independently justified
+gap condition. Neither restricted sampling nor the free truncation
+parameter replaces the all-height analytic hypotheses. No new root-scale
+bound, complete signed Robin allowance or RH proof follows from this
+comparison.
