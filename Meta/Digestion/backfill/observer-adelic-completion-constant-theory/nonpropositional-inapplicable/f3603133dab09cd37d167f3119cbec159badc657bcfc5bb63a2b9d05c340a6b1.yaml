@@ -5,3 +5,7 @@ cas_ref: sha256:f3603133dab09cd37d167f3119cbec159badc657bcfc5bb63a2b9d05c340a6b1
 coverage_gids: []
 receipts:
   unresolved_subitems: []
+  nonpropositional:
+    justification: 隐藏纤维的术语列表项“residual measure”，本条没有独立数学断言。
+    previous_atom_id: 3ef8fc9c5869c272a7b1cef40325457f392398b40680a2d8b76e9111a2721f47
+    next_atom_id: 49775ff0608a802589cd7f6f25ed242ffd4d06f5344674c9fb8daa1b5b7fd2af

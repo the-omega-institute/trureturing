@@ -5,3 +5,7 @@ cas_ref: sha256:09df9c193827dccf0d446c12c36bcff328287a9ac6aef895e4774dacfcaa51f9
 coverage_gids: []
 receipts:
   unresolved_subitems: []
+  nonpropositional:
+    justification: 方法列表项“inclusion–exclusion”，本条仅列操作名称，没有独立数学断言。
+    previous_atom_id: b8b791b83959dd16ee341e4917c8516a6f86183b1f01810cccd6149222e82927
+    next_atom_id: 72551d2ae00ae795287bc9cf41736d0acc5ea2a1cf5a45ef38efa5dbd9e4cbe9
