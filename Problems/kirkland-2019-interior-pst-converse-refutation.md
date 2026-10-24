@@ -75,7 +75,7 @@ The formal refutation would not address the source question if the formal predic
 ## Evidence
 
 The canonical source is `D5/S3/Quantum/Dynamics/InteriorPathTransferConverseRefutation.lean` (237 lines).
-Frozen state: `Golden/Frozen/state/D5/S3/Quantum/Dynamics/InteriorPathTransferConverseRefutation.lean.json`, statement `sha256:9a131d80c22bcd9c98cecf0dfdfcc23ce988b9be485182400df5c70da4d051a5`.
+Frozen state: `Golden/Frozen/state/D5/S3/Quantum/Dynamics/InteriorPathTransferConverseRefutation.lean.json`, statement `sha256:2fafba2b83bb5e4a641eb88b6815903b93e2b2a9c5c4a7e4a7f4b8fe53892f3e`.
 Declaration statements:
 - `result`: `sha256:23d1fb572bff02e30e3fc97d9cce517c103d9db78eeee852ba8f79682bd85b52`;
 - `claim`: `sha256:cd07c7fe1582c8ce2785f7ed42cffa5b714813555f6322056ba64a46e58afffc`.
