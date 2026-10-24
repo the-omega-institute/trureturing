@@ -49,22 +49,31 @@ Follow these steps in order. Do not pass a step until its postcondition holds.
 
 ### 0. Establish the environment and isolation
 
-Run:
+Observation-only requests, including source/atom inspection and issue work, follow CLAUDE.md §6.1 in the main checkout or a suitable existing worktree without creating a worktree or running a build. Do not run the mutation steps below for such a request; if a chosen inspection command requires building the CLI, report that prerequisite or use available source reads instead of treating the build as read-only.
+
+For formalization and digestion writes, first reuse a suitable linked worktree; create one only when isolation is needed. Check Git registration, repository identity, branch/commit and pin compatibility, existing material and cooperative scopes. A dispatcher-assigned lane can satisfy this check; reuse is not limited to dispatcher assignments or the current session.
+
+Only when isolation requires creating a tree, run:
+
+```sh
+make worktree KIND=math NAME=<lane> DEST=<main-checkout-parent>/trureturing-<session-id>
+cd <created-path-from-output>
+```
+
+In the reused or created tree, run:
 
 ```sh
 eval "$(sed -n '/^export PATH=/p' tools/scripts/local-harness-gate.sh)"
-# If not already in a dispatcher-assigned isolated lane:
-make worktree KIND=math NAME=<lane> && cd <created-path-from-output>
 pwd -P && git rev-parse --show-toplevel && make -C tools dotnet
 ```
 
-Re-read the current `export PATH` from `tools/scripts/local-harness-gate.sh` for every task rather than trusting a list quoted elsewhere; its `/usr/sbin` entry must survive because the report supervisor requires `lsof`, which lives there. If a dispatcher already assigned an isolated lane, do not create a second one: confirm the existing lane with the same `pwd -P` / `git rev-parse --show-toplevel` check. Otherwise, the `make worktree` output is JSON whose `path` field names the created path; substitute that value for `<created-path-from-output>` and work only there.
+Re-read the current `export PATH` from `tools/scripts/local-harness-gate.sh` for every mutation task rather than trusting a list quoted elsewhere; its `/usr/sbin` entry must survive because the report supervisor requires `lsof`, which lives there. Confirm the reused tree with the same `pwd -P` / `git rev-parse --show-toplevel` check. When creating, the `make worktree` output is JSON whose `path` field names the created path; substitute that value for `<created-path-from-output>` and work only there.
 
 Build through the canonical `make -C tools dotnet` door because `make show-atom` runs the Release CLI with `--no-build`.
 
 Before any deposit, require `git status --short` to print nothing except the intended formalization changes. Prefer a fully clean tree before beginning the task. Deposit and cover only update the working tree; inspect their resulting delta and commit it through the normal repository workflow.
 
-Postcondition: the pinned toolchain is on PATH; `pwd -P` and `git rev-parse --show-toplevel` agree with the assigned or created isolated lane; `make -C tools dotnet` has built the CLI so `make show-atom` succeeds; and no unrelated or unexplained change is present.
+Postcondition for mutation tasks: the pinned toolchain is on PATH; `pwd -P` and `git rev-parse --show-toplevel` agree with the reused or created isolated lane; `make -C tools dotnet` has built the CLI so `make show-atom` succeeds; and no unrelated or unexplained change is present.
 
 ### 1. Choose exactly one target
 
