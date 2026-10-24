@@ -8,7 +8,7 @@ set_option maxHeartbeats 0 in
 run_cmd do
   enableInitializersExecution
   let base ← importModules #[{module := `Lean}] {} 0 (leakEnv := false) (loadExts := true)
-  let table ← onDemandLookup {environment := base}
+  let table ← onDemandLookup {environment := base, fixture := true}
   liftTermElabM do
     withEnv base do
       let entry : DiskLookup.Entry := {
