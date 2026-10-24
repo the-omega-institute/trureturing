@@ -68,7 +68,7 @@ theorem residue_filter (n : ℕ) :
       simp only [periodic, Nat.add_mod, Nat.mod_mod, h] at * <;>
       norm_num at * <;> simp only [pow_succ] <;> omega
 
-/- proof_shape: bind-only definition; escape_witness: none; consumer: weighted_succ, A, T. -/
+/- proof_shape: bind-only definition; escape_witness: none; consumer: weighted_succ, A, B, K_pos. -/
 def weighted (n r : ℕ) : ℤ :=
   ∑ k ∈ range (n+1), (n.choose k : ℤ) * k * if k % 3 = r then 1 else 0
 
@@ -240,9 +240,8 @@ theorem T_nonneg (n N : ℕ) (hn : 1 ≤ n) (hN : N % 3 = 0) (hnN : n < N) :
     · have h7 : 7 ≤ n := by omega
       have hpow := power_quadratic_one n h7
       have hg : (2:ℤ) ≤ (N:ℤ)-n := by omega
-      have hepow : (2:ℤ)^n=2*2^(n-1) := by
-        conv_lhs => rw [show n=(n-1)+1 by omega, pow_succ]
-        ring
+      have hepow : (2:ℤ)^n=2*2^(n-1) :=
+        (mul_pow_sub_one (by omega : n ≠ 0) (2:ℤ)).symm
       simp [alpha, beta, h] at hf ha
       rw [hepow] at hpow
       nlinarith [mul_nonneg (by omega : (0:ℤ) ≤ (N:ℤ)-n-2) ha0]
@@ -280,7 +279,7 @@ theorem coeff_symm (N k : ℕ) (hN : N % 3 = 0) (hk : k ≤ N) :
   split_ifs <;> ring
 
 /- proof_shape: bind-only definition; escape_witness: none;
-consumer: shear, derivative_coeff, derivative_expansion. -/
+consumer: shear, derivative_coeff, collect_derivative, hasDerivAt_slice. -/
 def B (N t : ℕ) : ℝ :=
   (N.choose t : ℝ) * ((((N:ℤ)-1)*weighted (N-t) 0-second (N-t) 0 : ℤ):ℝ)
 
@@ -429,6 +428,7 @@ theorem hasDerivAt_slice (N : ℕ) (S x : ℝ) :
     apply sum_congr rfl
     intro t ht
     ring
+
 /- proof_shape: bind-only; escape_witness: none;
 consumer: derivative_expansion. -/
 private lemma T_diagonal (N : ℕ) (hN : N%3=0) : T N N = 0 := by
@@ -473,8 +473,7 @@ theorem derivative_expansion (N : ℕ) (hN : N%3=0) (x d : ℝ) :
       rw [mul_sum]
       apply sum_congr rfl
       intro n hn
-      have he : N-n=(N-n-1)+1 := by simp only [mem_Icc] at hn; omega
-      conv_lhs => rw [he, pow_succ]
+      rw [← pow_sub_one_mul (by simp only [mem_Icc] at hn; omega : N-n ≠ 0) d]
       ring
 
 /- proof_shape: content; escape_witness: T_nonneg; consumer: strictMonoOn_slice. -/
@@ -483,13 +482,13 @@ private theorem K_pos (N : ℕ) (hN : N%3=0) (h6 : 6 ≤ N) {x d : ℝ}
   apply sum_pos'
   · intro n hn
     have hns := mem_Icc.mp hn
-    have hT : (0:ℝ) ≤ (T n N:ℝ) := by
-      exact_mod_cast T_nonneg n N hns.1 hN (by omega)
+    have hT : (0:ℝ) ≤ (T n N:ℝ) :=
+      Int.cast_nonneg (T_nonneg n N hns.1 hN (by omega))
     positivity
   · refine ⟨3, by simp only [mem_Icc]; omega, ?_⟩
     have hT : T 3 N = 3*((N:ℤ)-3) := by norm_num [T, A, weighted, second, sum_range_succ]; ring
     have hTpZ : (0:ℤ) < T 3 N := by rw [hT]; omega
-    have hTp : (0:ℝ) < (T 3 N:ℝ) := by exact_mod_cast hTpZ
+    have hTp : (0:ℝ) < (T 3 N:ℝ) := Int.cast_pos.mpr hTpZ
     have hc : (0:ℝ) < (N.choose 3:ℝ) := by exact_mod_cast Nat.choose_pos (by omega : 3≤N)
     positivity
 
