@@ -9,6 +9,7 @@
 import D5.S3.Quantum.Entanglement.RandomizedGraphNegativityRefutation
 import D5.S3.Quantum.Information.PartialTraceMutualInformation
 import Mathlib.Analysis.Complex.ExponentialBounds
+import D5.S3.Quantum.Matrix.TwoPointFunctionalCalculus
 import Mathlib.Analysis.CStarAlgebra.Projection
 
 set_option autoImplicit false
@@ -16,8 +17,10 @@ set_option relaxedAutoImplicit false
 
 namespace D5.S3.Quantum.Information.NoisyGraphStateCoherentInformationRefutation
 
-open scoped BigOperators
+open scoped BigOperators Matrix ComplexOrder CStarAlgebra
 open D5.S3.Quantum.Information.PartialTraceMutualInformation
+
+noncomputable section
 
 /-- Independent dephasing of the state `|+⟩`, with survival probability `P`. -/
 noncomputable def noisyQubit (P : ℝ) : Matrix Bool Bool ℂ :=
@@ -69,8 +72,8 @@ private def bipartiteGraph {m n : ℕ} (M : Fin m → Fin n → Bool) :
     | Sum.inl i, Sum.inr j => M i j = true
     | Sum.inr j, Sum.inl i => M i j = true
     | _, _ => False
-  symm := by intro x y; cases x <;> cases y <;> exact id
-  loopless := by intro x; cases x <;> simp
+  symm := ⟨by intro x y; cases x <;> cases y <;> exact id⟩
+  loopless := ⟨by intro x; cases x <;> simp⟩
 
 private instance bipartiteDecidable {m n : ℕ} (M : Fin m → Fin n → Bool) :
     DecidableRel (bipartiteGraph M).Adj := by
@@ -80,13 +83,145 @@ private instance bipartiteDecidable {m n : ℕ} (M : Fin m → Fin n → Bool) :
 private def distance {n : ℕ} (x y : Fin n → Bool) : ℕ :=
   ∑ i, if x i = y i then 0 else 1
 
+private lemma noisyQubit_entry (P : ℝ) (x y : Bool) :
+    noisyQubit P x y = (1 / 2 : ℂ) * (if x = y then 1 else 2 * (P : ℂ) - 1) := by
+  have hs : (Real.sqrt 2 : ℂ)⁻¹ * (Real.sqrt 2 : ℂ)⁻¹ = 1 / 2 := by
+    rw [← mul_inv_rev]
+    have h : (Real.sqrt 2 : ℂ) * (Real.sqrt 2 : ℂ) = 2 := by
+      exact_mod_cast Real.mul_self_sqrt (show (0 : ℝ) ≤ 2 by norm_num)
+    rw [h]
+    norm_num
+  cases x <;> cases y <;>
+    simp only [noisyQubit,
+      D5.S3.Quantum.Entanglement.RandomizedGraphNegativityRefutation.plusState,
+      pow_one, Complex.ofReal_inv, Matrix.add_apply, Matrix.smul_apply,
+      Matrix.vecMulVec_apply, Pi.star_apply, Complex.star_def, Complex.conj_ofReal,
+      Complex.conj_inv, Bool.false_eq_true, Bool.true_eq_false, ite_false, ite_true, one_mul, neg_mul,
+      mul_neg, neg_neg, map_neg, map_one, Complex.ofReal_sub, Complex.ofReal_one] <;>
+    rw [hs] <;> ring
+
+private lemma character_sum {n : ℕ} (k : Fin n → ℕ) :
+    (∑ b : Fin n → Bool, ∏ j, (-1 : ℂ) ^ (k j * (b j).toNat)) =
+      if ∀ j, Even (k j) then (2 : ℂ) ^ n else 0 := by
+  rw [← Fintype.prod_sum (fun (j : Fin n) (b : Bool) => (-1 : ℂ) ^ (k j * b.toNat))]
+  have hterm (j : Fin n) : (∑ b : Bool, (-1 : ℂ) ^ (k j * b.toNat)) =
+      if Even (k j) then 2 else 0 := by
+    simp only [Fintype.sum_bool, Bool.toNat_false, Bool.toNat_true,
+      Nat.mul_zero, Nat.mul_one, pow_zero, neg_one_pow_eq_ite]
+    split_ifs <;> norm_num
+  simp_rw [hterm]
+  rw [Fintype.prod_ite_zero]
+  simp
+
+private lemma bipartite_phase {m n : ℕ} (N : Fin m → Fin n → Bool)
+    (a : Fin m → Bool) (b : Fin n → Bool) :
+    czPhase (bipartiteGraph N) (Sum.elim a b) =
+      ∏ i, ∏ j, (-1 : ℂ) ^ ((N i j && a i && b j).toNat) := by
+  have hedges : (bipartiteGraph N).edgeFinset =
+      ((Finset.univ : Finset (Fin m × Fin n)).filter fun ij => N ij.1 ij.2 = true).image
+        (fun ij => s(Sum.inl ij.1, Sum.inr ij.2)) := by
+    ext e
+    induction e using Sym2.ind with
+    | h x y =>
+      cases x <;> cases y <;>
+        simp only [SimpleGraph.mem_edgeFinset, SimpleGraph.mem_edgeSet] <;>
+        dsimp only [bipartiteGraph] <;>
+        simp [Sym2.eq_iff]
+  unfold czPhase
+  rw [hedges, Finset.prod_image]
+  · rw [Finset.prod_filter, Fintype.prod_prod_type]
+    apply Finset.prod_congr rfl
+    intro i _
+    apply Finset.prod_congr rfl
+    intro j _
+    simp only [Sym2.map_mk,
+      D5.S3.Quantum.Entanglement.RandomizedGraphNegativityRefutation.czPhase,
+      Sym2.lift_mk, Function.comp_apply, Equiv.symm_apply_apply]
+    cases hN : N i j <;> cases ha : a i <;> cases hb : b j <;>
+      simp [hN, ha, hb]
+  · intro x _ y _ h
+    simpa only [Sym2.eq_iff, Sum.inl.injEq, Sum.inr.injEq, Sum.inl_ne_inr,
+      Sum.inr_ne_inl, false_and, or_false, Prod.ext_iff] using h
+
+private lemma qubit_product {n : ℕ} (P : ℝ) (x y : Fin n → Bool) :
+    (∏ i, noisyQubit P (x i) (y i)) =
+      (2 : ℂ)⁻¹ ^ n * (2 * (P : ℂ) - 1) ^ distance x y := by
+  simp_rw [noisyQubit_entry]
+  rw [Finset.prod_mul_distrib]
+  simp only [Finset.prod_const, Finset.card_univ, Fintype.card_fin, one_div]
+  congr 1
+  unfold distance
+  rw [← Finset.prod_pow_eq_pow_sum]
+  apply Finset.prod_congr rfl
+  intro i _
+  split_ifs <;> simp
+
+private lemma phase_pair_A {m n : ℕ} (N : Fin m → Fin n → Bool)
+    (a a' : Fin m → Bool) (b : Fin n → Bool) :
+    czPhase (bipartiteGraph N) (Sum.elim a b) *
+        star (czPhase (bipartiteGraph N) (Sum.elim a' b)) =
+      ∏ j, (-1 : ℂ) ^ ((∑ i, (N i j && Bool.xor (a i) (a' i)).toNat) *
+        (b j).toNat) := by
+  rw [bipartite_phase, bipartite_phase]
+  simp only [star_prod, star_pow, star_neg, star_one]
+  rw [← Finset.prod_mul_distrib]
+  calc
+    _ = ∏ i, ∏ j, (-1 : ℂ) ^
+        ((N i j && Bool.xor (a i) (a' i)).toNat * (b j).toNat) := by
+      apply Finset.prod_congr rfl
+      intro i _
+      rw [← Finset.prod_mul_distrib]
+      apply Finset.prod_congr rfl
+      intro j _
+      cases N i j <;> cases a i <;> cases a' i <;> cases b j <;> norm_num
+    _ = _ := by
+      rw [Finset.prod_comm]
+      apply Finset.prod_congr rfl
+      intro j _
+      rw [Finset.prod_pow_eq_pow_sum, Finset.sum_mul]
+
+private lemma phase_pair_B {m n : ℕ} (N : Fin m → Fin n → Bool)
+    (a : Fin m → Bool) (b b' : Fin n → Bool) :
+    czPhase (bipartiteGraph N) (Sum.elim a b) *
+        star (czPhase (bipartiteGraph N) (Sum.elim a b')) =
+      ∏ i, (-1 : ℂ) ^ ((∑ j, (N i j && Bool.xor (b j) (b' j)).toNat) *
+        (a i).toNat) := by
+  rw [bipartite_phase, bipartite_phase]
+  simp only [star_prod, star_pow, star_neg, star_one]
+  rw [← Finset.prod_mul_distrib]
+  apply Finset.prod_congr rfl
+  intro i _
+  rw [← Finset.prod_mul_distrib, Finset.sum_mul, ← Finset.prod_pow_eq_pow_sum]
+  apply Finset.prod_congr rfl
+  intro j _
+  cases N i j <;> cases a i <;> cases b j <;> cases b' j <;> norm_num
+
 private lemma reduced_A {m n : ℕ} (M : Fin m → Fin n → Bool) (P : ℝ)
     (a a' : Fin m → Bool) :
     partialTraceRight (graphState (bipartiteGraph M) P) a a' =
       (2 : ℂ)⁻¹ ^ m * (2 * (P : ℂ) - 1) ^ distance a a' *
         (if ∀ j, Even (∑ i, (M i j && Bool.xor (a i) (a' i)).toNat)
           then 1 else 0) := by
-  sorry
+  unfold partialTraceRight
+  have hentry (b : Fin n → Bool) : graphState (bipartiteGraph M) P (a, b) (a', b) =
+      ((2 : ℂ)⁻¹ ^ m * (2 * (P : ℂ) - 1) ^ distance a a' * (2 : ℂ)⁻¹ ^ n) *
+        ∏ j, (-1 : ℂ) ^ ((∑ i, (M i j && Bool.xor (a i) (a' i)).toNat) *
+          (b j).toNat) := by
+    unfold graphState
+    rw [Fintype.prod_sum_type]
+    dsimp only [Sum.elim_inl, Sum.elim_inr]
+    rw [qubit_product, qubit_product, show distance b b = 0 by simp [distance], pow_zero,
+      mul_one]
+    rw [show czPhase (bipartiteGraph M) (Sum.elim a b) *
+        ((2 : ℂ)⁻¹ ^ m * (2 * (P : ℂ) - 1) ^ distance a a' * (2 : ℂ)⁻¹ ^ n) *
+        star (czPhase (bipartiteGraph M) (Sum.elim a' b)) =
+      ((2 : ℂ)⁻¹ ^ m * (2 * (P : ℂ) - 1) ^ distance a a' * (2 : ℂ)⁻¹ ^ n) *
+        (czPhase (bipartiteGraph M) (Sum.elim a b) *
+          star (czPhase (bipartiteGraph M) (Sum.elim a' b))) by ring,
+      phase_pair_A]
+  simp_rw [hentry]
+  rw [← Finset.mul_sum, character_sum]
+  split_ifs <;> simp [mul_assoc, ← mul_pow]
 
 private lemma reduced_B {m n : ℕ} (M : Fin m → Fin n → Bool) (P : ℝ)
     (b b' : Fin n → Bool) :
@@ -94,7 +229,24 @@ private lemma reduced_B {m n : ℕ} (M : Fin m → Fin n → Bool) (P : ℝ)
       (2 : ℂ)⁻¹ ^ n * (2 * (P : ℂ) - 1) ^ distance b b' *
         (if ∀ i, Even (∑ j, (M i j && Bool.xor (b j) (b' j)).toNat)
           then 1 else 0) := by
-  sorry
+  unfold partialTraceLeft
+  have hentry (a : Fin m → Bool) : graphState (bipartiteGraph M) P (a, b) (a, b') =
+      ((2 : ℂ)⁻¹ ^ n * (2 * (P : ℂ) - 1) ^ distance b b' * (2 : ℂ)⁻¹ ^ m) *
+        ∏ i, (-1 : ℂ) ^ ((∑ j, (M i j && Bool.xor (b j) (b' j)).toNat) *
+          (a i).toNat) := by
+    unfold graphState
+    rw [Fintype.prod_sum_type]
+    dsimp only [Sum.elim_inl, Sum.elim_inr]
+    rw [qubit_product, qubit_product, show distance a a = 0 by simp [distance], pow_zero,
+      mul_one]
+    calc
+      _ = ((2 : ℂ)⁻¹ ^ n * (2 * (P : ℂ) - 1) ^ distance b b' * (2 : ℂ)⁻¹ ^ m) *
+          (czPhase (bipartiteGraph M) (Sum.elim a b) *
+            star (czPhase (bipartiteGraph M) (Sum.elim a b'))) := by ring
+      _ = _ := by rw [phase_pair_B]
+  simp_rw [hentry]
+  rw [← Finset.mul_sum, character_sum]
+  split_ifs <;> simp [mul_assoc, ← mul_pow]
 
 private def M : Fin 5 → Fin 4 → Bool :=
   ![![true, true, false, false], ![true, true, false, false],
@@ -109,13 +261,105 @@ private def flipB : Matrix (Fin 4 → Bool) (Fin 4 → Bool) ℂ :=
   fun b b' => if ∀ i, b i ≠ b' i then 1 else 0
 
 private def projectionB : Matrix (Fin 4 → Bool) (Fin 4 → Bool) ℂ :=
-  (1 + flipB) / 2
+  (1 / 2 : ℂ) • (1 + flipB)
 
 private def u : ℝ := (127 / 128) ^ 2
 private def a₁ : ℝ := (1 + 3 * u) / 32
 private def a₂ : ℝ := (1 - u) / 32
 private def b₁ : ℝ := (1 + u ^ 2) / 16
 private def b₂ : ℝ := (1 - u ^ 2) / 16
+
+set_option maxRecDepth 10000 in
+set_option maxHeartbeats 3000000 in
+private lemma projectionA_is_projection :
+    IsStarProjection (CStarMatrix.ofMatrix projectionA) := by
+  let q : Matrix (Fin 5 → Bool) (Fin 5 → Bool) ℚ :=
+    fun a a' => if ∀ j, Even (∑ i, (M i j && Bool.xor (a i) (a' i)).toNat)
+      then 1 / 4 else 0
+  have hq : q * q = q := by
+    apply Matrix.ext
+    decide +kernel
+  have hmap : projectionA = (Rat.castHom ℂ).mapMatrix q := by
+    ext a a'
+    change (if ∀ j, Even (∑ i, (M i j && Bool.xor (a i) (a' i)).toNat)
+        then (1 / 4 : ℂ) else 0) =
+      ((if ∀ j, Even (∑ i, (M i j && Bool.xor (a i) (a' i)).toNat)
+        then (1 / 4 : ℚ) else 0) : ℂ)
+    split_ifs <;> norm_num
+  constructor
+  · change projectionA * projectionA = projectionA
+    rw [hmap, ← map_mul, hq]
+  · change projectionAᴴ = projectionA
+    ext a a'
+    simp [Matrix.conjTranspose_apply, projectionA, Bool.xor_comm]
+
+set_option maxRecDepth 10000 in
+set_option maxHeartbeats 3000000 in
+private lemma projectionB_is_projection :
+    IsStarProjection (CStarMatrix.ofMatrix projectionB) := by
+  let q : Matrix (Fin 4 → Bool) (Fin 4 → Bool) ℚ :=
+    fun b b' => ((if b = b' then 1 else 0) +
+      (if ∀ i, b i ≠ b' i then 1 else 0)) / 2
+  have hq : q * q = q := by
+    apply Matrix.ext
+    decide +kernel
+  have hmap : projectionB = (Rat.castHom ℂ).mapMatrix q := by
+    ext b b'
+    change (1 / 2 : ℂ) * ((if b = b' then 1 else 0) +
+        (if ∀ i, b i ≠ b' i then 1 else 0)) = (q b b' : ℂ)
+    dsimp only [q]
+    push_cast
+    ring
+  constructor
+  · change projectionB * projectionB = projectionB
+    rw [hmap, ← map_mul, hq]
+  · change projectionBᴴ = projectionB
+    ext b b'
+    simp [Matrix.conjTranspose_apply, projectionB, flipB, Matrix.one_apply, ne_comm, eq_comm]
+
+private lemma projection_traces : Matrix.trace projectionA = 8 ∧ Matrix.trace projectionB = 8 := by
+  have hA (a : Fin 5 → Bool) : projectionA a a = 1 / 4 := by
+    simp [projectionA]
+  have hB (b : Fin 4 → Bool) : projectionB b b = 1 / 2 := by
+    simp [projectionB, flipB]
+  constructor <;> simp [Matrix.trace, Matrix.diag_apply, hA, hB] <;> norm_num
+
+private lemma marginal_A_spectral :
+    partialTraceRight (graphState (bipartiteGraph M) (255 / 256)) =
+      a₁ • projectionA + a₂ • (1 - projectionA) := by
+  have hweight : ∀ a a' : Fin 5 → Bool,
+      (∀ j, Even (∑ i, (M i j && Bool.xor (a i) (a' i)).toNat)) →
+        a = a' ∨ distance a a' = 2 := by decide +kernel
+  ext a a'
+  rw [reduced_A]
+  by_cases heq : a = a'
+  · subst a'
+    simp [projectionA, Matrix.one_apply, distance, a₁, a₂, u]
+    <;> norm_num <;> ring
+  · by_cases hk : ∀ j, Even (∑ i, (M i j && Bool.xor (a i) (a' i)).toNat)
+    · have hd := (hweight a a' hk).resolve_left heq
+      simp [projectionA, hk, Matrix.one_apply, heq, hd, a₁, a₂, u]
+      <;> norm_num <;> ring
+    · simp [projectionA, hk, Matrix.one_apply, heq]
+
+private lemma marginal_B_spectral :
+    partialTraceLeft (graphState (bipartiteGraph M) (255 / 256)) =
+      b₁ • projectionB + b₂ • (1 - projectionB) := by
+  have hkernel : ∀ b b' : Fin 4 → Bool,
+      (∀ i, Even (∑ j, (M i j && Bool.xor (b j) (b' j)).toNat)) ↔
+        b = b' ∨ ∀ i, b i ≠ b' i := by decide +kernel
+  ext b b'
+  rw [reduced_B]
+  simp only [hkernel]
+  by_cases heq : b = b'
+  · subst b'
+    simp [projectionB, flipB, Matrix.one_apply, distance, b₁, b₂, u]
+    <;> norm_num <;> ring
+  · by_cases hf : ∀ i, b i ≠ b' i
+    · have hd : distance b b' = 4 := by simp [distance, hf]
+      simp [projectionB, flipB, heq, hf, hd, Matrix.one_apply, b₁, b₂, u]
+      <;> norm_num <;> ring
+    · simp [projectionB, flipB, heq, hf, Matrix.one_apply]
 
 private lemma spectral_data :
     IsStarProjection (CStarMatrix.ofMatrix projectionA) ∧
@@ -126,17 +370,61 @@ private lemma spectral_data :
       a₁ • projectionA + a₂ • (1 - projectionA) ∧
     partialTraceLeft (graphState (bipartiteGraph M) (255 / 256)) =
       b₁ • projectionB + b₂ • (1 - projectionB) := by
-  have hA := reduced_A M (255 / 256)
-  have hB := reduced_B M (255 / 256)
-  sorry
+  exact ⟨projectionA_is_projection, projection_traces.1, projectionB_is_projection,
+    projection_traces.2, marginal_A_spectral, marginal_B_spectral⟩
 
-private lemma two_projection_entropy {ι : Type*} [Fintype ι] [DecidableEq ι]
+private lemma two_projection_entropy {ι : Type} [Fintype ι] [DecidableEq ι]
     (Q : Matrix ι ι ℂ) (hQ : IsStarProjection (CStarMatrix.ofMatrix Q))
     (r s : ℝ) (hr : 0 < r) (hs : 0 < s) :
     entropy2 (r • Q + s • (1 - Q)) =
       (-(Matrix.trace Q).re * r * Real.log r -
         (Fintype.card ι - (Matrix.trace Q).re) * s * Real.log s) / Real.log 2 := by
-  sorry
+  let H : Matrix ι ι ℂ := (2 : ℝ) • Q - 1
+  have hQQ : Q * Q = Q := hQ.isIdempotentElem
+  have hsa : IsSelfAdjoint Q := hQ.isSelfAdjoint
+  have hH : IsSelfAdjoint H :=
+    ((IsSelfAdjoint.all (2 : ℝ)).smul hsa).sub
+      Matrix.isHermitian_one
+  have hHH : H * H = 1 := by
+    dsimp only [H]
+    simp only [sub_mul, mul_sub, Matrix.smul_mul, Matrix.mul_smul, mul_one, one_mul,
+      hQQ, smul_smul]
+    module
+  have harg : ((r + s) / 2) • (1 : Matrix ι ι ℂ) + ((r - s) / 2) • H =
+      r • Q + s • (1 - Q) := by dsimp only [H]; module
+  have hlog := QuantumTwoPointFunctionalCalculus.two_point_cfc Real.log
+    ((r + s) / 2) ((r - s) / 2) H hH hHH
+  rw [harg, show (r + s) / 2 + (r - s) / 2 = r by ring,
+    show (r + s) / 2 - (r - s) / 2 = s by ring] at hlog
+  have hlog' : cfc Real.log (r • Q + s • (1 - Q)) =
+      Real.log r • Q + Real.log s • (1 - Q) := by
+    rw [hlog]
+    dsimp only [H]
+    module
+  have hA : IsSelfAdjoint (r • Q + s • (1 - Q)) :=
+    ((IsSelfAdjoint.all r).smul hsa).add
+      ((IsSelfAdjoint.all s).smul (Matrix.isHermitian_one.sub hsa))
+  have htransport : CStarMatrix.ofMatrix (cfc Real.log (r • Q + s • (1 - Q))) =
+      CFC.log (CStarMatrix.ofMatrix (r • Q + s • (1 - Q))) :=
+    StarAlgHomClass.map_cfc CStarMatrix.ofMatrixStarAlgEquiv Real.log _
+      ((r • Q + s • (1 - Q)).finite_real_spectrum.continuousOn _)
+      CStarMatrix.ofMatrixL.continuous hA hA
+  unfold entropy2
+  rw [← htransport]
+  change -(Matrix.trace ((r • Q + s • (1 - Q)) *
+    cfc Real.log (r • Q + s • (1 - Q)))).re / Real.log 2 = _
+  rw [hlog']
+  have hmul : (r • Q + s • (1 - Q)) *
+      (Real.log r • Q + Real.log s • (1 - Q)) =
+      (r * Real.log r) • Q + (s * Real.log s) • (1 - Q) := by
+    simp only [add_mul, mul_add, Matrix.smul_mul, Matrix.mul_smul, mul_sub, sub_mul,
+      mul_one, one_mul, hQQ, smul_sub, smul_smul]
+    module
+  rw [hmul, Matrix.trace_add, Matrix.trace_smul, Matrix.trace_smul, Matrix.trace_sub,
+    Matrix.trace_one]
+  simp only [Complex.add_re, Complex.smul_re, Complex.sub_re, Complex.natCast_re,
+    smul_eq_mul]
+  ring
 
 private lemma witness_entropies :
     entropy2 (partialTraceRight (graphState (bipartiteGraph M) (255 / 256))) =
@@ -156,7 +444,44 @@ private lemma witness_entropies :
 private lemma numerical_inequality :
     -8 * a₁ * Real.log a₁ - 24 * a₂ * Real.log a₂ <
       -8 * b₁ * Real.log b₁ - 8 * b₂ * Real.log b₂ := by
-  sorry
+  have h1 : Real.log a₁ = Real.log ((1 + 3 * u) / 4) - 3 * Real.log 2 := by
+    unfold a₁
+    rw [show (1 + 3 * u) / 32 = ((1 + 3 * u) / 4) / 2 ^ 3 by ring,
+      Real.log_div (by norm_num [u]) (by norm_num), Real.log_pow]
+    norm_num
+  have h2 : Real.log a₂ = Real.log (1 - u) - 5 * Real.log 2 := by
+    unfold a₂
+    rw [show (32 : ℝ) = 2 ^ 5 by norm_num,
+      Real.log_div (by norm_num [u]) (by norm_num), Real.log_pow]
+    norm_num
+  have h3 : Real.log b₁ = Real.log ((1 + u ^ 2) / 2) - 3 * Real.log 2 := by
+    unfold b₁
+    rw [show (1 + u ^ 2) / 16 = ((1 + u ^ 2) / 2) / 2 ^ 3 by ring,
+      Real.log_div (by norm_num [u]) (by norm_num), Real.log_pow]
+    norm_num
+  have h4 : Real.log b₂ = Real.log (1 - u) + Real.log (1 + u) - 4 * Real.log 2 := by
+    unfold b₂
+    rw [show (16 : ℝ) = 2 ^ 4 by norm_num,
+      Real.log_div (by norm_num [u]) (by norm_num), Real.log_pow,
+      show 1 - u ^ 2 = (1 - u) * (1 + u) by ring,
+      Real.log_mul (by norm_num [u]) (by norm_num [u])]
+    norm_num
+  have hc := Real.one_sub_inv_le_log_of_pos
+    (show 0 < (1 + 3 * u) / 4 by norm_num [u])
+  have hd := Real.log_le_sub_one_of_pos
+    (show 0 < (1 + u ^ 2) / 2 by norm_num [u])
+  have he : Real.log (1 - u) ≤ -6 * Real.log 2 := by
+    have h := Real.log_le_log (by norm_num [u] : 0 < 1 - u)
+      (by norm_num [u] : 1 - u ≤ 1 / 64)
+    have hlog : Real.log (1 / 64 : ℝ) = -6 * Real.log 2 := by
+      rw [show (1 / 64 : ℝ) = (2 ^ 6)⁻¹ by norm_num, Real.log_inv, Real.log_pow]
+      ring
+    rwa [hlog] at h
+  have hf := Real.log_le_log (by norm_num [u] : 0 < 1 + u)
+    (by norm_num [u] : 1 + u ≤ 2)
+  rw [h1, h2, h3, h4]
+  norm_num [u, a₁, a₂, b₁, b₂] at hc hd he hf ⊢
+  nlinarith [Real.log_two_lt_d9]
 
 private lemma witness_entropy_comparison :
     entropy2 (partialTraceRight (graphState (bipartiteGraph M) (255 / 256))) <
