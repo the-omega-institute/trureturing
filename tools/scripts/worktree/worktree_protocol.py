@@ -383,6 +383,7 @@ def reuse(options, allow_creation_base=False):
         if item.get("branch") != "refs/heads/" + options.branch:
             raise Refused("incompatible_branch")
         base = value(options.source, "rev-parse", "--verify", options.base + "^{commit}")
+        pin_revision = base
         if git(path, "merge-base", "--is-ancestor", base, "HEAD", check=False).returncode:
             if not allow_creation_base:
                 raise Refused("incompatible_base")
@@ -393,10 +394,11 @@ def reuse(options, allow_creation_base=False):
                 raise Refused("incompatible_base") from error
             if git(path, "merge-base", "--is-ancestor", creation, base, check=False).returncode:
                 raise Refused("incompatible_base")
+            pin_revision = creation
         # Toolchain/cache ownership is still enforced by the canonical Lean doors.
         # Reuse never materializes, repairs or replaces a cache.
         for pin in ("lean-toolchain", "lake-manifest.json"):
-            expected = git(options.source, "show", base + ":" + pin).stdout
+            expected = git(options.source, "show", pin_revision + ":" + pin).stdout
             if (path / pin).read_bytes() != expected:
                 raise Refused("incompatible_pin:" + pin)
         print(json.dumps(dict(event="worktree_init", status="reused", path=str(path),

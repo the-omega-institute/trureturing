@@ -195,6 +195,8 @@ class LockRecoveryCases:
 
     def test_owned_unregistered_branch_can_resume(self):
         target, branch, token = self.owned_initialization(registered=False)
+        (self.main / "lean-toolchain").write_text("leanprover/lean4:v4.34.2\n")
+        self.g(self.main, "add", "lean-toolchain")
         self.g(self.main, "commit", "--allow-empty", "-m", "advance requested base")
         advanced = self.g(self.main, "rev-parse", "HEAD").strip()
         for attempt in range(2):
@@ -203,6 +205,7 @@ class LockRecoveryCases:
             self.assertEqual("original\n" if attempt == 0 else "ordinary bytes\n",
                              (target / "owned").read_text())
             self.assertEqual(self.base, self.g(target, "rev-parse", "HEAD").strip())
+            self.assertEqual("leanprover/lean4:v4.34.1\n", (target / "lean-toolchain").read_text())
             (target / "owned").write_text("ordinary bytes\n")
 
     def test_ordinary_recovery_routing_keeps_shared_reuse_and_base_protection(self):
