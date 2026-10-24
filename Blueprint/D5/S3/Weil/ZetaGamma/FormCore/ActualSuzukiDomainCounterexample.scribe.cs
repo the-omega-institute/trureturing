@@ -53,17 +53,6 @@ internal sealed class ActualSuzukiDomainCounterexampleDocument : IScribeDocument
                         + "in the Fourier proof: u(t)=counterProfile(t/kappa)."))),
                 DescribeRole.Definition),
             Describe.Lean(
-                DescribeId.Create("actual-plus-unitary-fourier"),
-                DeclarationHandle.Create(Owner + "unitarySourceFourier"),
-                H("Actual positive angular Fourier convention"),
-                StatementSource.WithoutFormula(),
-                AssessedProvenance.FromRepo(),
-                Blocks(Paragraph(Text(
-                    "The actual transform is (sqrt(2*pi))^(-1) times the mathlib Fourier "
-                        + "transform at -xi/(2*pi). Equivalently its genuine L1 integral "
-                        + "has kernel exp(i*xi*t) and unitary angular normalization."))),
-                DescribeRole.Definition),
-            Describe.Lean(
                 DescribeId.Create("literal-reference-gamma-weight"),
                 DeclarationHandle.Create(Owner + "gammaWeight"),
                 H("Literal reference Gamma weight"),
