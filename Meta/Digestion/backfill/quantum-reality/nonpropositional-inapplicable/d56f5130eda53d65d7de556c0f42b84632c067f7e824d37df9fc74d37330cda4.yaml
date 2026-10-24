@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:d56f5130eda53d65d7de556c0f42b84632c067f7e824d37df9fc74d37330cda4
+  normalized_sha256: sha256:d56f5130eda53d65d7de556c0f42b84632c067f7e824d37df9fc74d37330cda4
+cas_ref: sha256:d56f5130eda53d65d7de556c0f42b84632c067f7e824d37df9fc74d37330cda4
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 'Nonpropositional: 仅解释传播速度和可区分消息容量分别回答什么实验问题，不给出二者的数学界。'
+    previous_atom_id: 2bb21d16e40db95594858a6548b43364a3439bea7f38ea6f0699158efa82f9d5
+    next_atom_id: 2a40017e596535a5784d98a4ea0441aeb8d3cc78533f79e2964b2aa74c6721d3
