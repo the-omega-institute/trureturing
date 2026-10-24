@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:a5cb65cb1dfbb3a16a444e2b4d30d18c47c66b61ef7f4201e21183eab79a00f6
+  normalized_sha256: sha256:a5cb65cb1dfbb3a16a444e2b4d30d18c47c66b61ef7f4201e21183eab79a00f6
+cas_ref: sha256:a5cb65cb1dfbb3a16a444e2b4d30d18c47c66b61ef7f4201e21183eab79a00f6
+coverage_gids:
+  - gid: D5/S3/ConceptDynamics/Control/InvariantConceptPrecludesOutcomeRemedy.invariant_concept_precludes_outcome_remedy
+    target_statement_id: sha256:975b388d4dfada720feea23f943a2b2333584b428f34b6acfb7913518a0f3dee
+receipts:
+  unresolved_subitems: []
