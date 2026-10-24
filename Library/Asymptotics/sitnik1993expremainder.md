@@ -55,7 +55,7 @@ The negative third difference at $(n,x)=(1,1)$ contradicts both readings.
 `result` states exactly the negation of `claim`.
 
 Equation (42), $R_n^2>R_{n-1}R_{n+1}$, gives the case $k=1$.
-The source identifies $k=2$ with Problem 1; the supplied follow-up
+The source identifies $k=2$ with Problem 1; the follow-up
 reference is K. Mehrez and S. M. Sitnik (2014),
 https://arxiv.org/abs/1410.6120.
 The bibliographic scope and unresolved ranges are stated in
