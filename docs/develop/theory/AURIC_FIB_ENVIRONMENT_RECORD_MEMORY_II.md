@@ -2376,6 +2376,14 @@ quartic when its filter holds, or a root in P, M, D or R as ordered in
 Definition 32.7. Thus (35.2) is an existence and exactness theorem for
 the finite prescription, not an assumption embedded in a definition.
 
+The complementary projection $I_3-E_p$ has this same algebraic value,
+by [ERM, Proposition 27.8][ERM], and the same decoder serves this
+complementary binary pair. No common decoder for arbitrary collections
+of prescribed tasks or different horizons is asserted. This supplies
+the whole $r=0,pq>0$ quantitative boundary of [ERM, Definition 27.10][ERM];
+the $p,q,r>0$ interior, retained-memory recovery and uniform recovery
+over unbounded horizons remain outside the statement.
+
 Proof. The balanced assertion is Theorem 30.3. The conditional assertion
 is Theorem 31.3, including equality $y_0=t_0$. In all remaining cases
 Theorem 34.1 supplies a retained root and Theorem 33.1 proves (33.1)
@@ -2449,25 +2457,9 @@ $F^n(Y)$, without any conjugation of the input functional.
 These arguments retain all complex inputs and all complex effects;
 real entries of the attaining pair are not an input-domain restriction.
 The decoder is one fixed channel for the chosen $p,n$ and is independent
-of the density matrix. $\square$
-
-**Corollary 35.2 (Complementary sharp task and scope).**
-For each task in Theorem 35.1 the complementary projection $I_3-E_p$
-has the same value, by [ERM, Proposition 27.8][ERM]. The same decoder
-serves this complementary binary pair. No common decoder for arbitrary
-collections of prescribed tasks or for different horizons is asserted.
-The result supplies the whole $r=0,pq>0$ quantitative boundary named
-in [ERM, Definition 27.10][ERM]; it does not assert the remaining
-$p,q,r>0$ interior, retained-memory recovery or uniform recovery over
-unbounded horizons.
-
-Proof. The affine bijection $B\mapsto I_3-B$ negates the Hermitian
-residual for complementary targets, so preserves its operator norm.
-Exchange the prepared range and kernel states in the task/effect
-realization (27.5) to realize the complementary target. The exchanged
-construction with effect $I_3-B$ is exactly the channel (35.1), and
-its adjoint sends $I_3-E_p$ to $I_3-B$. The choice of $p,n$ is still
-fixed in each instance. The other parameter and resource domains do not occur
-in (31.1) or (35.2). $\square$
+of the density matrix. Its unital adjoint also sends $I_3-E_p$ to
+$I_3-B$, so [ERM, Proposition 27.8][ERM] gives the asserted
+complementary value with this same channel. The parameter and resource
+domains remain exactly those of (31.1) and (35.2). $\square$
 
 ## 追加锚（本行以下为增补区）
