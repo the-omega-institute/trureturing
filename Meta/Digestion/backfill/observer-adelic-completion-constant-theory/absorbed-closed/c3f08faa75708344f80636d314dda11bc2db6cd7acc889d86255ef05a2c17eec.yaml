@@ -2,6 +2,8 @@ fingerprints:
   raw_sha256: sha256:c3f08faa75708344f80636d314dda11bc2db6cd7acc889d86255ef05a2c17eec
   normalized_sha256: sha256:c3f08faa75708344f80636d314dda11bc2db6cd7acc889d86255ef05a2c17eec
 cas_ref: sha256:c3f08faa75708344f80636d314dda11bc2db6cd7acc889d86255ef05a2c17eec
-coverage_gids: []
+coverage_gids:
+  - gid: D5/S3/Analytic/Asymptotics/CycleCayleyMeasureWeakLimit.cycle_cayley_measure_weak_limit
+    target_statement_id: sha256:6239920512fc4729381380dba5e95e5c12606c3d44a7ab27b2953d14f21c7d6a
 receipts:
   unresolved_subitems: []
