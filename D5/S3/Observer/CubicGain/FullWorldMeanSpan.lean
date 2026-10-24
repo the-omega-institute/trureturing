@@ -41,7 +41,7 @@ def fullMeanFamily : Set (Fin 17 → ℝ) :=
   fullWorldMean '' {W | FullWorld W}
 
 /-- Exact correspondence with the source's unconstrained (r,b,c,d,a) telescope. -/
-theorem full_world_source_iff (r b c d : ℝ) (a : Gain) :
+private theorem full_world_source_iff (r b c d : ℝ) (a : Gain) :
     (0 < r ∧ r < 1 ∧ 0 < b ∧ 0 < c ∧ b*c = r*(1-r) ∧
       Polynomial.ofFn 4 a ≠ 0) ↔
     (FullWorld (r,b,d,a) ∧ sourceMatrix r b = !![r,b;c,1-r]) := by
@@ -150,7 +150,8 @@ private theorem block_directions (k : Fin 4) (v : Fin 4 → ℝ) :
   simpa only [map_smul] using A.direction.smul_mem (w i) (hcol i)
 
 /-- The full native world family has affine span all of literal R^17. -/
-theorem full_world_mean_span : affineSpan ℝ fullMeanFamily = ⊤ := by
+theorem full_world_mean_span :
+    affineSpan ℝ (fullWorldMean '' {W : OriginalWorld | FullWorld W}) = ⊤ := by
   let A := affineSpan ℝ fullMeanFamily
   have hm (d : ℝ) : fullWorldMean (monomialWorld 0 0 1 d) ∈ A :=
     subset_affineSpan ℝ fullMeanFamily ⟨_,monomial_legal 0 0 1 d one_ne_zero,rfl⟩
