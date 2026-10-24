@@ -58,7 +58,7 @@ internal static partial class CleanLanesCommand
     internal static string Decode(byte[] bytes) => StrictUtf8.GetString(bytes);
 
     private static long? ReadLastUpdate(
-        RegisteredWorktree item, long reflogUpdated, IWorktreeProcessRunner runner)
+        RegisteredWorktree item, IWorktreeProcessRunner runner)
     {
         try
         {
@@ -67,7 +67,7 @@ internal static partial class CleanLanesCommand
                 "could not read HEAD commit time").StandardOutput).Trim();
             if (!long.TryParse(commitTime, NumberStyles.None, CultureInfo.InvariantCulture,
                     out var committed)) return null;
-            return Math.Max(reflogUpdated, committed);
+            return committed;
         }
         catch (Exception exception) when (exception is not OutOfMemoryException)
         {

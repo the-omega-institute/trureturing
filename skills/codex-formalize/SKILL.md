@@ -216,7 +216,7 @@ Missing or invalid compiled evidence still causes rejection; unrelated reverse d
 If the implementation seat delegates report production or emission to the caller, its handoff is
 explicitly **source-only, not publication-ready**: name the intended source paths, pending producers
 and expected committed projections, and report only the checks actually run. The caller must complete
-the producer work and the publication boundary in Step 7 before committing or pushing that logical
+the producer work and the publication boundary in Step 7 before publishing that logical
 unit, including an early review draft. A source-only handoff does not satisfy rendered fidelity.
 
 Run every shape check NOW, before Step 7: line 6 ends with ` -/`, the generality tag matches the weakest import and the module's nature, the scribe formulas obey the rejection taxonomy, the emitted `.md` mirrors every conjunct. After a successful deposit the module's bytes are pinned by the frozen ledger, so catch defects before depositing rather than creating a conflicting frozen state.
@@ -234,6 +234,8 @@ Postcondition: every checklist item has evidence and none is `ASSUMED-UNVERIFIED
 If any checklist item cannot be evidenced, end the task as `open` with no deposit, carrying the Step 8 evidence: statement echo, search trace, failed approaches with reasons, and machine diagnostics.
 
 ### 7. Deposit and cover, then commit the complete publication unit
+
+Checkpoint with `make worktree-checkpoint MESSAGE=FILE` after every recoverable unit of work, before long checks, before hand-off and before normal end. Label unfinished snapshots WIP in the message. A checkpoint certifies saved bytes only; it does not certify tests passed, publication or merge. Use no heartbeat or empty commits. Local WIP checkpoints may precede producer completion; the complete publication boundary below applies before publishing the unit.
 
 Only after Step 6 and an independent pre-freeze review pass, freeze through deposit and cover. The
 pre-freeze review is a read-only seat that did not produce the module; it checks the mirror, source
@@ -266,7 +268,7 @@ or capture `$?` immediately before formatting.
 
 If `make deposit`, `make deposit-uncovered` or `make cover` exits nonzero, stop and end as `open`. Report the failed command and exit code, machine diagnostics, touched paths, and the actual resulting tree state; deposit and cover do not commit their changes.
 
-**Publication boundary, including early review drafts.** Before committing or pushing a logical
+**Publication boundary, including early review drafts.** Before publishing a logical
 formalization unit, finish every intended source and its canonical committed projections. Complete
 pending report production and `make emit` as in Step 5; rerun the affected producers if their inputs
 changed. Inspect the complete intended delta, including new untracked paths, then stage the sources
@@ -293,7 +295,7 @@ committed projection is staged, with no intended changes left unstaged or untrac
 the builder-owned commit:
 
 ```sh
-git commit -F <commit-message-file>
+make worktree-checkpoint MESSAGE=<commit-message-file>
 ```
 
 This focused publication-completeness boundary reuses `filemap-conform`; it adds no required CI

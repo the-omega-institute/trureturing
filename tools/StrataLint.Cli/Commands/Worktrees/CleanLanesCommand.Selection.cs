@@ -20,27 +20,45 @@ internal static partial class CleanLanesCommand
         IWorktreeProcessRunner runner, DateTimeOffset now)
     {
         if (devCommit is null) return new("dev_unknown", "dev_unknown");
+        var updated = ReadLastUpdate(item, runner);
+        if (updated is null)
+            return new("update_unknown", "update_unknown", "head_commit_unreadable");
         var merged = IsAncestor(item.Path, item.Head, devCommit, runner);
         if (merged is null)
             return new("merged_state_unknown", "merged_state_unknown");
 
-        var log = ReadHeadLog(item.GitDirectory!, item.Head);
+        var log = ReadAllocationLog(Path.Combine(item.GitDirectory!, "logs", "HEAD"), item.Head);
         if (log.Error is not null)
             return new("update_unknown", "update_unknown", log.Error);
-        var updated = ReadLastUpdate(item, log.Updated!.Value, runner);
-        if (updated is null)
-            return new("update_unknown", "update_unknown");
+        var allocated = log.Allocated!.Value;
+        if (item.Branch is not null)
+        {
+            AllocationLog branchLog;
+            try
+            {
+                var common = ResolveCommonGitDirectory(item.Path, runner);
+                branchLog = ReadAllocationLog(Path.Combine(common, "logs", "refs", "heads", item.Branch), item.Head);
+            }
+            catch (Exception exception) when (exception is not OutOfMemoryException)
+            {
+                return new("update_unknown", "update_unknown", "branch_reflog_unreadable");
+            }
+            if (branchLog.Error is not null)
+                return new("update_unknown", "update_unknown", "branch_" + branchLog.Error);
+            allocated = Math.Max(allocated, branchLog.Allocated!.Value);
+        }
+        var ageAnchor = Math.Max(updated.Value, allocated);
 
         if (merged.Value)
         {
             var clean = ReadWorktreeClean(item, runner);
             if (clean is null) return new("unreadable", "unreadable");
             if (clean.Value)
-                return new(UpdateAgeBlockReason(updated.Value, MinimumMergedLaneAgeSeconds, now),
+                return new(UpdateAgeBlockReason(ageAnchor, MinimumMergedLaneAgeSeconds, now),
                     "merged_to_dev", null, LockModifiedTicks(item));
         }
 
-        var reason = OriginalReclaimBlockReason(item, baseCommit!, updated.Value, runner, now);
+        var reason = OriginalReclaimBlockReason(item, baseCommit!, ageAnchor, runner, now);
         return new(reason, "original_selectors", null, LockModifiedTicks(item));
     }
 
@@ -64,28 +82,27 @@ internal static partial class CleanLanesCommand
         }
     }
 
-    private static HeadLog ReadHeadLog(string gitDirectory, string observedHead)
+    private static AllocationLog ReadAllocationLog(string path, string observedHead)
     {
         try
         {
-            var path = Path.Combine(gitDirectory, "logs", "HEAD");
             var file = new FileInfo(path);
             if (!file.Exists) return new(Error: "reflog_missing");
             if (file.LinkTarget is not null) return new(Error: "reflog_invalid");
             var bytes = File.ReadAllBytes(path);
             using var reader = new StringReader(Decode(bytes));
-            long? updated = null;
+            long? allocated = null;
             string? newHead = null;
             while (reader.ReadLine() is { } line)
             {
                 if (!TryParseHeadLogRecord(line, out var record)) return new(Error: "reflog_invalid");
-                updated = Math.Max(updated ?? record!.Updated, record!.Updated);
+                allocated ??= record!.Updated;
                 newHead = record.NewHead;
             }
-            if (updated is null) return new(Error: "reflog_empty");
+            if (allocated is null) return new(Error: "reflog_empty");
             if (!string.Equals(newHead, observedHead, StringComparison.Ordinal))
                 return new(Error: "reflog_head_mismatch");
-            return new(updated);
+            return new(allocated);
         }
         catch (Exception exception) when (exception is not OutOfMemoryException)
         {
@@ -93,7 +110,7 @@ internal static partial class CleanLanesCommand
         }
     }
 
-    private sealed record HeadLog(long? Updated = null, string? Error = null);
+    private sealed record AllocationLog(long? Allocated = null, string? Error = null);
 
     private sealed record ReclaimSelection(string? BlockReason, string Reason,
         string? Detail = null, long? LockModifiedTicks = null)

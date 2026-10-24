@@ -70,6 +70,8 @@ Apply this scope to Steps 4–6. Exact-statement and accepted axiom-closure chec
 
 Formalize in the current linked worktree of this repository. When the current directory is not such a worktree, including the main checkout, which stays on `dev` (CLAUDE.md §6.1), create one with `make worktree KIND=<kind> NAME=<task-code> DEST=<main-checkout-parent>/trureturing-<session-id>` and work there. Never place a worktree under `/tmp`, `/private/tmp` or `$TMPDIR`. After delivery completes under CLAUDE.md §6.1, remove a worktree this run created with `make worktree-remove NAMES="<directory-name>"`; leave a pre-existing current worktree in place. When retained source stays undelivered, keep the worktree and report its path.
 
+Checkpoint with `make worktree-checkpoint MESSAGE=FILE` after every recoverable unit of work, before long checks, before hand-off and before normal end. Label unfinished snapshots WIP in the message. A checkpoint certifies saved bytes only; it does not certify tests passed, publication or merge. Use no heartbeat or empty commits.
+
 ## Method anchors
 
 `CLAUDE.md` item 5-double-prime solely owns the meanings of the eight disciplines and marks their use as agent reasoning as analogical. The registry below supplies only grep-resolvable frozen declaration addresses; it does not restate theorem content or assert a one-to-one discipline/declaration mapping. The forward-commitment discipline has no single frozen declaration and is carried by the existing machinery named in `CLAUDE.md`. The Pareto discipline has two anchors.
