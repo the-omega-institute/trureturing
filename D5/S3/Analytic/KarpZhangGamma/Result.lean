@@ -7,6 +7,7 @@
    digest: Paired gamma kernels give coefficientwise positivity of the two-variable transform. -/
 
 import D5.S3.Analytic.KarpZhangGamma.Smoothing
+import D5.S3.Analytic.KummerRatio.BetaIntegral
 import Mathlib.Analysis.SpecialFunctions.Gamma.BohrMollerup
 import Mathlib.RingTheory.Polynomial.Pochhammer
 import Mathlib.RingTheory.Binomial
@@ -21,7 +22,7 @@ propagates nonpositivity across arbitrary index gaps, contradicting an
 earlier positive entry. Pairing counts the middle term once. The nonnegative
 total and increasing smoothed weights prove two_variable_nonneg.
 The convolution helpers apply pinned Chu–Vandermonde through
-Ring.descPochhammer_smeval_add and Complex.Gamma_add_nat_div_Gamma_eq,
+Ring.descPochhammer_smeval_add and KummerRatio.BetaIntegral.gamma_pochhammer,
 then use Real.convexOn_log_Gamma. These helpers and the paired total are
 bind-only; the sign propagation supplies the module content.
 The gamma-series identification is supplied by Series, not this module.
@@ -29,6 +30,7 @@ The gamma-series identification is supplied by Series, not this module.
 Per-declaration proof_shape (Kernel names belong to the kernel namespace;
 other local names belong to Result; cross-module names have prefix D5.S3.Analytic):
 * Kernel.binomialGamma_sum: proof_shape: bind-only; escape_witness: none;
+  reuse: KummerRatio.BetaIntegral.gamma_pochhammer, divided by positive Gamma;
   consumers: reciprocalGamma_sum.
 * Kernel.reciprocalGamma_sum: proof_shape: bind-only; escape_witness: none;
   consumers: kernel_sum_nonneg.
@@ -76,8 +78,10 @@ other local names belong to Result; cross-module names have prefix D5.S3.Analyti
 * two_variable_nonneg: proof_shape: content; escape_witness: pairedKernel_sign;
   consumers: KarpZhangGamma.Series.gamma_half.
 
-Direct frozen D5 dependencies: none; all KarpZhang dependencies are
-same-delivery declarations. Consumers are taken from compiled proof
+Direct frozen D5 dependency: KummerRatio.BetaIntegral.gamma_pochhammer,
+used by Kernel.binomialGamma_sum and through it by reciprocalGamma_sum,
+kernel_sum_nonneg, pairedKernel_sum_nonneg and two_variable_nonneg.
+All KarpZhang dependencies are same-delivery declarations. Consumers are taken from compiled proof
 terms, with declaration types also counted for definitions. The listed
 content witnesses remain on the corresponding live mathematical paths.
 Utility is none: all statements are general identities or inequalities,
@@ -102,20 +106,8 @@ private theorem binomialGamma_sum (m : ℕ) : ∀ b c : ℝ, 0 < b → 0 < c →
   intro b c hb hc
   have ratio (x : ℝ) (hx : 0 < x) (n : ℕ) :
       Real.Gamma (x + n) / Real.Gamma x = (ascPochhammer ℝ n).eval x := by
-    apply Complex.ofReal_injective
-    have hz : ∀ k : ℕ, (x : ℂ) ≠ -k := by
-      intro k hk
-      have he := congrArg Complex.re hk
-      simp only [Complex.ofReal_re, Complex.neg_re, Complex.natCast_re] at he
-      have := Nat.cast_nonneg (α := ℝ) k
-      linarith
-    have h := Complex.Gamma_add_nat_div_Gamma_eq (n := n) (x : ℂ) hz
-    have heval : (ascPochhammer ℝ n).eval₂ Complex.ofRealHom (x : ℂ) =
-        Complex.ofReal ((ascPochhammer ℝ n).eval x) :=
-      eval₂_at_apply (p := ascPochhammer ℝ n) Complex.ofRealHom x
-    simpa only [← Complex.ofReal_natCast, ← Complex.ofReal_add,
-      Complex.Gamma_ofReal, ← Complex.ofReal_div,
-      ascPochhammer_eval₂ Complex.ofRealHom, heval] using h
+    exact (div_eq_iff (Real.Gamma_pos_of_pos hx).ne').2
+      (D5.S3.Analytic.KummerRatio.BetaIntegral.gamma_pochhammer hx n)
   have hv := Ring.descPochhammer_smeval_add (R := ℝ)
     (r := c + m - 1) (s := b + m - 1) m (Commute.all _ _)
   rw [Finset.Nat.sum_antidiagonal_eq_sum_range_succ_mk] at hv

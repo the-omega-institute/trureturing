@@ -18,7 +18,7 @@ namespace D5.S3.Analytic.KummerRatio.Series
 private lemma coeff_zero (s c : ℝ) : kummerCoeff s c 0 = 1 := by
   simp [kummerCoeff]
 
-private lemma coeff_succ (s : ℝ) {c : ℝ} (hc : 0 < c) (n : ℕ) :
+lemma coeff_succ (s : ℝ) {c : ℝ} (hc : 0 < c) (n : ℕ) :
     kummerCoeff s c (n + 1) =
       ((s + n) / (c + n) / (n + 1)) * kummerCoeff s c n := by
   have hpc := (ascPochhammer_pos n c hc).ne'

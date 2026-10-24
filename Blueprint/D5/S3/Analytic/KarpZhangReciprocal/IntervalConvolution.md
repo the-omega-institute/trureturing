@@ -142,3 +142,4 @@ On a translated interval 0,...,n, normalize the positive coefficient products to
 - Truth anchor: `D5/S3/Analytic/KarpZhangReciprocal/IntervalConvolution.shift_tail`
 - Truth anchor: `D5/S3/Analytic/KarpZhangReciprocal/IntervalConvolution.symmetric_tail`
 - Dependency: [D5/S3/Analytic/KarpZhangReciprocal/BirthDeath](BirthDeath.md)
+- Dependency: [D5/S3/Analytic/KummerRatio/Series](../KummerRatio/Series.md)

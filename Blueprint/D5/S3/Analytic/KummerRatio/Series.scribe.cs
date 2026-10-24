@@ -7,6 +7,8 @@ internal sealed class SeriesDocument : IScribeDocumentDefinition
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "Convergence, regularity, positivity and recurrences of the Kummer series.",
         H("The entire Kummer series"), Blocks(
+            Entry("kummer-coefficient-successor", "coeff_succ", "Successive Kummer coefficients",
+                "For every real s, positive real c and natural n, kummerCoeff s c (n+1) equals ((s+n)/(c+n)/(n+1)) times kummerCoeff s c n. KarpZhangReciprocal.Coeff.c_succ applies this recurrence at s=2t and c=t."),
             Entry("kummer-summable", "summable_kummer", "Convergence for every real argument",
                 "For every real upper parameter s, positive lower parameter c and real argument x, the defining series is summable. The recurrence between successive coefficients gives a multiplier tending to zero. The norm ratio bound proves absolute convergence even when the rising factorial in the numerator vanishes."),
             Entry("kummer-at-zero", "kummer_zero", "The value at zero",
