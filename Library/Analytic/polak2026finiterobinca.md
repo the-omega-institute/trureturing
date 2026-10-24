@@ -1982,6 +1982,178 @@ in (X2) is still present; the finite interval cannot be extrapolated
 to all clocks. This is a paper-level application of existing results,
 without a mathematical originality claim or Lean certification.
 
+## A uniform obstruction for adaptive positive-law absolute budgets
+
+The [GAK/GAD whole-law transport](../ArithSums/nicolas2025comparison.md#project-application-density-weighted-order-nine-transport-reaches-3e47)
+explains why a fixed positive-variance law has a growing transport
+allowance. The following application also covers arbitrary laws chosen
+anew at each clock. It concerns the existing certificate that multiplies
+one common tail-damping bound by a whole zero-mass allowance, then adds
+a nonnegative variance allowance. It does not lower-bound the actual
+signed response or the actual transport.
+
+The suppliers are the classical convexity and logarithm bounds, the
+global cosine inequality, the existing FV4 actual-zero count and the
+GAK23/GAD2 certificate. The cosine inequality is already available as
+[`Real.one_sub_sq_div_two_le_cos`](https://github.com/leanprover-community/mathlib4/blob/56a005855ea17e0b0958f73ec801ae140b0a1679/Mathlib/Analysis/SpecialFunctions/Trigonometric/Bounds.lean).
+Their proofs are not reconstructed as new general theorems. This is an
+ordinary application of those results, without a literature-priority
+claim or Lean certification of the application.
+
+### One fixed actual zero constrains every admissible positive law
+
+Keep $H=3\cdot10^{12}$ and put $a_0=99/100$, $b_0=101/100$.
+For each $A$, allow any positive probability law $\mu_A$ with
+$a_0\le C\le b_0$ and $\mathbb E C=1$. Write
+
+$$
+V_A=\mathbb E(C-1)^2,\qquad
+H_{\mu_A}(s)=\mathbb E C^{s-1},\qquad
+q_A\ge\sup_{\substack{\rho\text{ actual}\\|\Im\rho|>H}}
+                   |H_{\mu_A}(\rho)|.
+\tag{VDB1}
+$$
+
+All actual nontrivial zeros are retained, with their original real
+parts. No regularity of $A\mapsto\mu_A$ or $A\mapsto q_A$ is needed.
+In particular $q_A$ need only dominate the actual discrete zero set;
+no continuum of fictitious zero locations is substituted for it.
+
+To choose one fixed member of that set, reuse
+[FV3–FV4's existing zero-count application](../Zeros/lagarias2007li.md#an-explicit-positive-budget-above-c).
+Take the least Fibonacci number $c>H$. Its predecessor is at most $H$,
+so $c\le2H$, and $c$ is the sum of two adjacent positive Fibonacci
+numbers. Thus the original Fibonacci-cut hypotheses are preserved.
+FV4 supplies $N_+(2c)-N_+(c)>0$, hence an actual nontrivial zero
+$\rho_*=\beta_*+i\gamma_*$ with
+
+$$
+H<c<\gamma_*\le2c\le4H,\qquad 0<\beta_*<1.
+\tag{VDB2}
+$$
+
+This uses the same Hasanalizade–Shen–Wong counting premise, not a new
+zero computation. The zero is fixed before choosing any of the laws;
+no assumption that it is off the critical line is made.
+
+Convexity and the exact mean give $\mathbb E C^{\beta_*-1}\ge1$.
+On the full support,
+$|\log C|\le|C-1|/a_0$ and $C^{\beta_*-1}\le a_0^{-1}$.
+Apply $\cos x\ge1-x^2/2$ inside this same expectation:
+
+$$
+\begin{aligned}
+\Re H_{\mu_A}(\rho_*)
+&\ge\mathbb E C^{\beta_*-1}
+ -\frac{\gamma_*^2}{2}
+       \mathbb E[C^{\beta_*-1}(\log C)^2]\\
+&\ge1-\frac{\gamma_*^2}{2a_0^3}V_A.
+\end{aligned}
+$$
+
+Every integral exists on the compact positive support. Norm
+nonnegativity and (VDB1) therefore imply
+
+$$
+q_A\ge(1-K_*V_A)_+,\qquad
+K_*:=\frac{\gamma_*^2}{2a_0^3}>0.
+\tag{VDB3}
+$$
+
+The same positive law supplies both its variance and its response at
+this actual zero. Multiplicity does not alter this pointwise constraint.
+
+### Minimize the complete certificate jointly in damping and variance
+
+Let $\mathcal M(A)\ge0$ be the retained whole-tail mass allowance.
+Suppose the sufficient certificate keeps the GAK23 nonnegative costs,
+so in particular its numerical upper allowance obeys
+
+$$
+\mathcal U_A(\mu_A,q_A)
+\ge\mathcal M(A)q_A+\frac{13}{25}\sqrt A\,V_A.
+\tag{VDB4}
+$$
+
+The coefficient $13/25$ is the existing $.52$ transport coefficient;
+its additional $2\eta_0(A)$, the head, coefficient-remainder factors
+and elementary allowances are nonnegative. They may be retained or
+increased without weakening this lower bound on the certificate.
+
+Put $z=K_*V_A$ and $D_A=(13/25)\sqrt A/K_*$. For $0\le z\le1$,
+the right side of (VDB4) is at least
+$\mathcal M(A)(1-z)+D_Az$, a convex combination of its two endpoints.
+For $z\ge1$ it is at least $D_Az\ge D_A$. Hence, for every law and
+every certified $q_A$ simultaneously,
+
+$$
+\mathcal U_A(\mu_A,q_A)
+\ge\min\left\{\mathcal M(A),
+          \frac{26a_0^3}{25\gamma_*^2}\sqrt A\right\}
+\ge\min\left\{\mathcal M(A),
+          \frac{13a_0^3}{200H^2}\sqrt A\right\}.
+\tag{VDB5}
+$$
+
+Thus whenever the fixed-$H$ mass allowance $\mathcal M(A)$ tends
+to infinity, the infimum of this complete certificate over all the
+admissible positive laws also tends to infinity. This includes laws
+whose variance tends to zero and laws whose certified damping changes
+with $A$; it is not only a statement about a fixed convolution order.
+
+### An explicit restriction for the rationalized GAD allowance
+
+For a concrete consumer take the rationalized GAD2 supplier, with
+$L=\log A$, $h=\log H$ and $\alpha(\sigma)=(1+\sigma)/(2-\sigma)$:
+
+$$
+\begin{aligned}
+\mathcal M_H(A)={}&
+2\frac{37}{25\cdot10^{12}}A^{1/4}
+ +144Lh^4\int_{3/4}^{1}
+       A^{\sigma-1/2}(Hh)^{-\alpha(\sigma)}\,d\sigma\\
+&+30000H^{-2}(\sqrt A-A^{1/4}).
+\end{aligned}
+\tag{VDB6}
+$$
+
+This is the existing full density upper envelope after replacing
+$S_2(H)$ by its cited rational upper bound. Its explicit positive
+baseline is part of the chosen allowance, not a lower bound for the
+actual mass $B_2(A)$. The original (W5) baseline instead uses
+$Q_A(3/4)S_2(H)$; it is not assigned this rational numerical floor.
+
+For $A\ge256H^4=20736\cdot10^{48}$, all terms in (VDB6) are
+nonnegative and
+
+$$
+\mathcal M_H(A)\ge\frac{888}{25},\qquad
+\frac{13a_0^3}{200H^2}\sqrt A
+\ge\frac{26}{25}\left(\frac{99}{100}\right)^3
+=\frac{12613887}{12500000}>1.
+$$
+
+Consequently every certificate satisfying this specified contract has
+
+$$
+\mathcal U_A(\mu_A,q_A)>1>Q_R
+\qquad(A\ge256H^4),
+\tag{VDB7}
+$$
+
+where $Q_R$ is the unchanged GAK37 common reserve. Arbitrarily changing
+the narrow positive law cannot make the sufficient test
+$\mathcal U_A<Q_R$ hold on an unbounded range under this contract.
+
+This conclusion does not reverse GAK23's directed transport inequality.
+It lower-bounds the retained upper-allowance expression, not the actual
+transport, signed zero sum or Robin margin. It does not restrict a
+sharper mass supplier, a changing height, frequency-dependent joint
+weights, a signed or broad-support law, or an estimate coupled to the
+same integer's actual defect. The already paid GPP higher-power transport
+and BPY xi-law constructions remain available. The unpaid root-scale
+same-source signed estimate and RH remain open.
+
 ## A finite log-free density row lowers the complete upper envelope
 
 Chiara Bellotti, *An explicit log-free zero density estimate for the
