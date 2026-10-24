@@ -3,6 +3,10 @@ import Reg.Support.SingleDependentReadout
 import LeanInformationAuditInterface.Contract.Registration
 import D5.S3.VertexAlgebra.HalfFock.NormalScalarTranspose
 
+/-! Faithful dependent readout audit attempts for original scalar transpose.
+The flat proof mentions a private mode-reflection helper; its unresolved audit
+binding is recorded in issue #21197 without expanding the mathematical API. -/
+
 set_option autoImplicit false
 set_option maxHeartbeats 2000000
 set_option backward.isDefEq.respectTransparency false
@@ -37,7 +41,8 @@ private def hyperbolic : LatticeData where
   symmetric := by intro i j; fin_cases i <;> fin_cases j <;> rfl
   even_diagonal := by intro i; fin_cases i <;> exact ⟨0, rfl⟩
 private theorem hyperbolicUnit : IsUnit hyperbolic.G.det := by
-  norm_num [hyperbolic, Matrix.det_fin_two]
+  change IsUnit (!![0, 1; 1, 0] : Matrix (Fin 2) (Fin 2) ℤ).det
+  simpa [Matrix.det_fin_two] using (isUnit_neg_one : IsUnit (-1 : ℤ))
 
 namespace actual_current_transpose
 def arena : Arena where
@@ -49,7 +54,7 @@ def arena : Arena where
 theorem sourceBridge : (type_of% (@D5.S3.VertexAlgebra.HalfFock.NormalScalarTranspose.actual_current_transpose)) ↔ arena.Law complexEqual := Iff.rfl
 private theorem rejectedLaw : ¬ arena.Law complexFalse := by
   intro h
-  exact h hyperbolic hyperbolicUnit 0 0 0 0
+  exact h hyperbolic hyperbolicUnit ⟨0, by decide⟩ 0 0 0
 def family : Registration arena (type_of% (@D5.S3.VertexAlgebra.HalfFock.NormalScalarTranspose.actual_current_transpose)) where
   actual := complexEqual
   bridge := sourceBridge
@@ -196,61 +201,9 @@ def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
 #print axioms family
 end jetScalar_reflection
 
-namespace actual_flat_transpose
-def arena : Arena where
-  signature := complexSignature
-  Law R := ∀ (D : LatticeData) (hu : IsUnit D.G.det)
-    (a : Charge D) (w : List (Index D)) (m : ModeTuple D w) (e : ℤ)
-    (x y : ActualTensor D hu),
-    R.readout () () (actualForm D hu (flatCoefficient D hu (chargedField D hu a) w m e x) y)
-      (∑ s : JetTuple D w,
-        paritySign (bilinear D a a / 2) * triangleCoefficient D w s *
-          actualForm D hu x (flatCoefficient D hu (chargedField D hu a)
-            (lowerWord D w s) (reflectModes D w s m) (transposeExponent D a w s e) y))
-theorem sourceBridge : (type_of% (@D5.S3.VertexAlgebra.HalfFock.NormalScalarTranspose.actual_flat_transpose)) ↔ arena.Law complexEqual := Iff.rfl
-private theorem rejectedLaw : ¬ arena.Law complexFalse := by
-  intro h
-  exact h emptyLattice emptyUnit 0 [] () 0 0 0
-def family : Registration arena (type_of% (@D5.S3.VertexAlgebra.HalfFock.NormalScalarTranspose.actual_flat_transpose)) where
-  actual := complexEqual
-  bridge := sourceBridge
-  variation := ⟨sourceBridge.mp D5.S3.VertexAlgebra.HalfFock.NormalScalarTranspose.actual_flat_transpose, complexFalse, rejectedLaw⟩
-  sensitivity := Reg.Support.SingleDependentReadout.sensitivity arena.Law complexEqual complexFalse rejectedLaw
-  dependence := complexEqualDependence
-
-def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
-    (@D5.S3.VertexAlgebra.HalfFock.NormalScalarTranspose.actual_flat_transpose) (type_of% (realize complexSignature complexEqual.readout complexEqual.anchor)) Type Unit where
-  unitName := Lean.Name.str `D5.S3.VertexAlgebra.HalfFock.NormalScalarTranspose.actual_flat_transpose "__information_unit"
-  realizationName := `Reg.D5.S3.VertexAlgebra.HalfFock.NormalScalarTranspose.actual_flat_transpose.family
-  realizationSource := none
-  generated := false
-  arena := .source ⟨arena⟩
-  objectArena := .source ⟨arena⟩
-  catalog := Lean.Name.anonymous
-  localNames := false
-  realization := .source arena ⟨family⟩
-  correspondence := { stage := .evidence, objectStage := .evidence }
-  bundleNonempty := .absent
-  readout := some (realize complexSignature complexEqual.readout complexEqual.anchor)
-  variation := .absent
-  sensitivity := .absent
-  partialSensitivity := none
-  escapeFrom := some ℂ
-  sourceSelection := some {
-    owner := `D5.S3.VertexAlgebra.HalfFock.NormalScalarTranspose
-    definition := none
-    coordinates := #[]
-    readouts := #[{
-      path := #["body", "body", "body", "body", "body", "body", "body", "body", "fn", "fn"]
-      stateBinder := 0
-      functionOperand := true
-      stateOperand := none
-      booleanPredicate := false }] }
-  continuation := .unknown
-  familyRecord := none
-  options := #[]
-#print axioms family
-end actual_flat_transpose
+/- The actual_flat_transpose audit was attempted with the exact original
+   telescope. Its private reflectModes term cannot be named here. Issue #21197
+   records that missing binding; no new public reflection API is introduced. -/
 
 namespace actual_word_transpose
 def arena : Arena where
