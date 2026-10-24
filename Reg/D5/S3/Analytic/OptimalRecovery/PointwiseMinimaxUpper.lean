@@ -401,4 +401,80 @@ noncomputable def minimax_window_upperRegistration :
   familyRecord := none
   options := #[] }
 
+
+abbrev midpointSignature : Signature :=
+  _root_.Reg.Support.SingleDependentReadout.signature (Set ℝ) (fun _ => ℝ) (fun _ => ℝ)
+
+def midpointActual : Realization midpointSignature :=
+  realize midpointSignature (fun _ S x => (sInf S + sSup S) / 2 - x) (fun e => nomatch e)
+
+def midpointRejected : Realization midpointSignature :=
+  realize midpointSignature (fun _ _ _ => 1) (fun e => nomatch e)
+
+def midpointArena : Arena where
+  signature := midpointSignature
+  Law r := ∀ (S : Set ℝ) (x R : ℝ) (_hx : x ∈ S)
+    (_hb : BddBelow S) (_ha : BddAbove S)
+    (_hdiam : ∀ a ∈ S, ∀ b ∈ S, |a - b| ≤ 2 * R), |r.readout () S x| ≤ R
+
+private theorem midpointPositive : midpointArena.Law midpointActual := @midpoint_error
+
+private theorem midpointNegative : ¬ midpointArena.Law midpointRejected := by
+  intro h
+  have bad := h {0} 0 0 (by simp) (by simp) (by simp) (by simp)
+  norm_num [midpointRejected, realize] at bad
+
+private theorem midpointDependence : ObservationalDependence midpointSignature midpointActual := by
+  intro i
+  refine ⟨{0}, 0, 1, ?_⟩
+  simp only [midpointActual, realize, sub_zero]
+  intro he
+  linarith
+
+def midpointEvidence : Registration midpointArena (midpointArena.Law midpointActual) where
+  actual := midpointActual
+  bridge := Iff.rfl
+  variation := ⟨midpointPositive, midpointRejected, midpointNegative⟩
+  sensitivity := _root_.Reg.Support.SingleDependentReadout.sensitivity
+    midpointArena.Law midpointActual midpointRejected midpointNegative
+  dependence := midpointDependence
+
+def midpointRegistration : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
+    (@midpoint_error)
+    (type_of% (realize midpointSignature
+      (fun _ S x => (sInf S + sSup S) / 2 - x) (fun e => nomatch e))) Unit Unit := {
+  unitName := `D5.S3.Analytic.OptimalRecovery.PointwiseMinimaxUpper.midpoint_error.__information_unit
+  realizationName := `Reg.D5.S3.Analytic.OptimalRecovery.PointwiseMinimaxUpper.midpointEvidence
+  realizationSource := none
+  generated := false
+  arena := .source ⟨midpointArena⟩
+  objectArena := .source ⟨midpointArena⟩
+  catalog := Lean.Name.anonymous
+  localNames := false
+  realization := .source midpointArena ⟨midpointEvidence⟩
+  correspondence := { stage := .evidence, objectStage := .evidence }
+  bundleNonempty := .absent
+  readout := some (realize midpointSignature
+    (fun _ S x => (sInf S + sSup S) / 2 - x) (fun e => nomatch e))
+  variation := .absent
+  sensitivity := .absent
+  partialSensitivity := none
+  escapeFrom := none
+  sourceSelection := some {
+    owner := `D5.S3.Analytic.OptimalRecovery.PointwiseMinimaxUpper
+    definition := none
+    coordinates := #[0]
+    readouts := #[{
+      path := #["body", "body", "body", "body", "body", "body", "body", "fn", "arg", "arg"]
+      stateBinder := 1
+      functionOperand := false
+      stateOperand := none
+      booleanPredicate := false }] }
+  continuation := .unknown
+  familyRecord := none
+  options := #[] }
+
+#print axioms midpointEvidence
+#print axioms midpointRegistration
+
 end Reg.D5.S3.Analytic.OptimalRecovery.PointwiseMinimaxUpper

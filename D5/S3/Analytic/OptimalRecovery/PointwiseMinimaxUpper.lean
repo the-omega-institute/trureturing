@@ -119,7 +119,7 @@ private lemma rate_window_nonneg (d : ℕ) (ε U : ℝ) (hd : 1 ≤ d) (hε : 0 
     (zero_le_one.trans (le_max_left _ _)))) (sq_nonneg _)).trans
     (rate_window_term_le d 1 ε U ⟨le_rfl, hd⟩)
 
-private lemma midpoint_error (S : Set ℝ) (x R : ℝ) (hx : x ∈ S)
+lemma midpoint_error (S : Set ℝ) (x R : ℝ) (hx : x ∈ S)
     (hb : BddBelow S) (ha : BddAbove S)
     (hdiam : ∀ a ∈ S, ∀ b ∈ S, |a - b| ≤ 2 * R) :
     |(sInf S + sSup S) / 2 - x| ≤ R := by

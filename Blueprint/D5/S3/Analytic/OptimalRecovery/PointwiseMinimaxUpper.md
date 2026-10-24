@@ -78,7 +78,19 @@ Lean statement: `D5/S3/Analytic/OptimalRecovery/PointwiseMinimaxUpper.atomic_law
 
 Every AtomicLaw has g in [Elo,Ehi] and a nonnegative finitely supported real weight function w of total mass 1, supported in [g,Ehi], with w(g) >= eta and at most d support points. The original measure equals sum_x ofReal(w(x)) dirac(x), and for every real t its measureCurve equals atomicLaplace(w,t). This is an exact representation, including support collisions and all times.
 
-**Definition 1.7 (Ground energies compatible with one observation).**
+**Lemma 1.7 (The midpoint bound for a bounded real set).**
+
+Lean statement: `D5/S3/Analytic/OptimalRecovery/PointwiseMinimaxUpper.midpoint_error`
+
+*Proof.* Machine-checked in Lean as `D5/S3/Analytic/OptimalRecovery/PointwiseMinimaxUpper.midpoint_error` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+For every set S of real numbers and real x,R, if x belongs to S, S is bounded below and above, and |a-b|<=2*R for every a,b in S, then |(inf S+sup S)/2-x|<=R. The set need not be an interval or closed, and its extremal bounds need not be members. This applies both to compatible ground energies and to compatible quadratic-clock origins in a bounded prior.
+
+**Definition 1.8 (Ground energies compatible with one observation).**
 
 Lean statement: `D5/S3/Analytic/OptimalRecovery/PointwiseMinimaxUpper.compatibleGrounds`
 
@@ -90,7 +102,7 @@ Lean statement: `D5/S3/Analytic/OptimalRecovery/PointwiseMinimaxUpper.compatible
 
 For every observation Y on D, compatibleGrounds is the set of all g for which some AtomicLaw mu,g obeys the pointwise epsilon noise constraint for that same Y.
 
-**Definition 1.8 (The midpoint of the compatible grounds).**
+**Definition 1.9 (The midpoint of the compatible grounds).**
 
 Lean statement: `D5/S3/Analytic/OptimalRecovery/PointwiseMinimaxUpper.midpointEstimator`
 
@@ -104,7 +116,7 @@ Lean statement: `D5/S3/Analytic/OptimalRecovery/PointwiseMinimaxUpper.midpointEs
 
 The estimator assigns Y the midpoint of the infimum and supremum of compatibleGrounds, with value Elo when that set is empty. For every feasible Y the set is nonempty and bounded by [Elo,Ehi].
 
-**Theorem 1.9 (One estimator works for every feasible law and observation).**
+**Theorem 1.10 (One estimator works for every feasible law and observation).**
 
 Lean statement: `D5/S3/Analytic/OptimalRecovery/PointwiseMinimaxUpper.exists_window_estimator`
 
@@ -118,7 +130,7 @@ Lean statement: `D5/S3/Analytic/OptimalRecovery/PointwiseMinimaxUpper.exists_win
 
 For every 0 <= Elo < E, 0 < eta < 1, d >= 1, T > 0 and epsilon > 0, there exists one estimator G on arbitrary functions on [0,T] such that for every AtomicLaw mu,g and every pointwise epsilon-accurate observation Y, |G(Y)-g| <= (1024E/eta^2) rateWindow(d,epsilon,E*T). The midpoint estimator supplies this common choice; the joint Laplace certificate bounds the diameter of its compatible set.
 
-**Theorem 1.10 (A uniform finite-window minimax upper bound).**
+**Theorem 1.11 (A uniform finite-window minimax upper bound).**
 
 Lean statement: `D5/S3/Analytic/OptimalRecovery/PointwiseMinimaxUpper.minimax_window_upper`
 
@@ -132,7 +144,7 @@ Lean statement: `D5/S3/Analytic/OptimalRecovery/PointwiseMinimaxUpper.minimax_wi
 
 For every 0 <= Elo < E, 0 < eta < 1, d >= 1, T > 0 and epsilon > 0, minimaxRisk on [0,T] is at most ofReal((1024E/eta^2) rateWindow(d,epsilon,E*T)). The constant is independent of d and T. This holds also when E*T < 1 and epsilon >= 1.
 
-**Theorem 1.11 (A uniform all-time minimax upper bound).**
+**Theorem 1.12 (A uniform all-time minimax upper bound).**
 
 Lean statement: `D5/S3/Analytic/OptimalRecovery/PointwiseMinimaxUpper.minimax_all_upper`
 
@@ -154,6 +166,7 @@ For every 0 <= Elo < E, 0 < eta < 1, d >= 1 and epsilon > 0, minimaxRisk on all 
 - Truth anchor: `D5/S3/Analytic/OptimalRecovery/PointwiseMinimaxUpper.exists_window_estimator`
 - Truth anchor: `D5/S3/Analytic/OptimalRecovery/PointwiseMinimaxUpper.measureCurve`
 - Truth anchor: `D5/S3/Analytic/OptimalRecovery/PointwiseMinimaxUpper.midpointEstimator`
+- Truth anchor: `D5/S3/Analytic/OptimalRecovery/PointwiseMinimaxUpper.midpoint_error`
 - Truth anchor: `D5/S3/Analytic/OptimalRecovery/PointwiseMinimaxUpper.minimaxRisk`
 - Truth anchor: `D5/S3/Analytic/OptimalRecovery/PointwiseMinimaxUpper.minimax_all_upper`
 - Truth anchor: `D5/S3/Analytic/OptimalRecovery/PointwiseMinimaxUpper.minimax_window_upper`

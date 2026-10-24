@@ -59,6 +59,14 @@ internal sealed class PointwiseMinimaxUpperDocument : IScribeDocumentDefinition
                 Blocks(Paragraph(Text("Every AtomicLaw has g in [Elo,Ehi] and a nonnegative finitely supported real weight function w of total mass 1, supported in [g,Ehi], with w(g) >= eta and at most d support points. The original measure equals sum_x ofReal(w(x)) dirac(x), and for every real t its measureCurve equals atomicLaplace(w,t). This is an exact representation, including support collisions and all times."))),
                 DescribeRole.Lemma),
             Describe.Lean(
+                DescribeId.Create("optimalrecovery-pointwiseminimaxupper-midpoint-error"),
+                DeclarationHandle.Create(Prefix + "midpoint_error"),
+                H("The midpoint bound for a bounded real set"),
+                StatementSource.WithoutFormula(),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("For every set S of real numbers and real x,R, if x belongs to S, S is bounded below and above, and |a-b|<=2*R for every a,b in S, then |(inf S+sup S)/2-x|<=R. The set need not be an interval or closed, and its extremal bounds need not be members. This applies both to compatible ground energies and to compatible quadratic-clock origins in a bounded prior."))),
+                DescribeRole.Lemma),
+            Describe.Lean(
                 DescribeId.Create("optimalrecovery-pointwiseminimaxupper-compatiblegrounds"),
                 DeclarationHandle.Create(Prefix + "compatibleGrounds"),
                 H("Ground energies compatible with one observation"),
