@@ -404,8 +404,8 @@ def reuse(options, allow_recovered_base=False):
             expected = git(options.source, "show", pin_revision + ":" + pin).stdout
             if (path / pin).read_bytes() != expected:
                 raise Refused("incompatible_pin:" + pin)
-        print(json.dumps(dict(event="worktree_init", status="reused", path=str(path),
-                              branch=options.branch, base_revision=base)), flush=True)
+        return dict(event="worktree_init", status="reused", path=str(path),
+                    branch=options.branch, base_revision=base)
 
 
 def main(argv=None):
@@ -480,7 +480,7 @@ def main(argv=None):
                 options.argv.pop(0)
             with_command(options)
         elif options.action == "reuse":
-            reuse(options)
+            print(json.dumps(reuse(options)), flush=True)
         elif options.action in ("return", "claim", "pool"):
             from worktree_pool import return_tree, claim, sweep
             result = (return_tree(options) if options.action == "return" else claim(options)

@@ -21,10 +21,7 @@ internal static class WorktreePoolCommand
                 resolveGitDirectories: false).SingleOrDefault(item => item.Branch == options.Branch);
             if (attached is not null)
             {
-                var reused = attached.Locked && attached.LockReason?.StartsWith("worktree-init:", StringComparison.Ordinal) == true
-                    ? WorktreeCommand.RecoverInitialization(options with { Path = attached.Path }, runner)
-                    : WorktreeProtocolCommand.Run(options.Source,
-                        ["reuse", "--path", attached.Path, "--branch", options.Branch, "--base", options.Base], runner);
+                var reused = WorktreeCommand.RecoverInitialization(options with { Path = attached.Path }, runner);
                 if (reused.Success && LeanPinSet.TryReadWorktree(attached.Path, out var reason) is null)
                     throw new InvalidOperationException(reason);
                 return reused;

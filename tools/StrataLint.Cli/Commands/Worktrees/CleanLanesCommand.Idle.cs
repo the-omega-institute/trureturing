@@ -67,8 +67,8 @@ internal static partial class CleanLanesCommand
             else if (row.TryGetProperty("native_locks", out var failedLocks))
                 nativeLocks = failedLocks.Clone();
             if (row.TryGetProperty("recovery_roots", out var roots))
-                foreach (var root in roots.EnumerateArray())
-                    protectObservedWorktree(item with { Branch = root.GetString()!["refs/heads/".Length..] });
+                foreach (var reference in roots.EnumerateArray())
+                    protectObservedWorktree(item with { Branch = reference.GetString()!["refs/heads/".Length..] });
             if (recovery is not null)
                 protectObservedWorktree(item with { Branch = recovery["refs/heads/".Length..] });
             var removal = new LaneRemovalResult(outcome switch

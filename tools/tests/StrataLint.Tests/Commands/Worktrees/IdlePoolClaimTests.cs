@@ -58,6 +58,8 @@ public sealed partial class WorktreeCommandTests
         Assert.False(File.Exists(Path.Combine(GitWorktreeDirectory.Read(target)!, "locked")));
         Assert.False(Directory.Exists(fallback));
         Assert.Equal("partial initialization bytes\n", File.ReadAllText(Path.Combine(target, "README.md")));
+        File.WriteAllText(Path.Combine(repository.Path, "lean-toolchain"), "leanprover/lean4:v4.34.2\n");
+        TestGit.Run(repository.Path, "commit", "-am", "Advance requested base");
         var repeated = WorktreeCommand.Run(repository.Path, arguments);
         Assert.True(repeated.Success, repeated.Error);
         using var reuse = JsonDocument.Parse(repeated.Output);
