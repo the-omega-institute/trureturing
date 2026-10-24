@@ -146,5 +146,31 @@ internal sealed class ActualSuzukiDomainCounterexampleDocument : IScribeDocument
                             + "or a Robin conclusion. The conclusion concerns the literal "
                             + "simultaneous Gamma-domain obstruction on the original "
                             + "physical source."))),
+                DescribeRole.Theorem),
+            Describe.Lean(
+                DescribeId.Create("actual-gamma-weight-continuity"),
+                DeclarationHandle.Create(Owner + "finiteGammaWeight_continuous"),
+                H("Continuity of the actual reference Gamma weight"),
+                StatementSource.WithoutFormula(),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text(
+                    "The literal gammaWeight is continuous on the real frequency line. "
+                        + "The proof rewrites its density through the existing smooth mu "
+                        + "function and uses the nonsingular rational factor."))),
+                DescribeRole.Theorem),
+            Describe.Lean(
+                DescribeId.Create("actual-gamma-weight-quadratic-upper"),
+                DeclarationHandle.Create(Owner + "finiteGammaWeight_quadratic_upper"),
+                H("A global quadratic upper bound for the actual Gamma weight"),
+                StatementSource.WithoutFormula(),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text(
+                    "There is a real G>0 such that gammaWeight(xi)<=G*(1+xi^2) "
+                        + "for every real xi. The proof consumes the existing digamma "
+                        + "strip estimate and the actual rational factor bounds. "
+                        + "The finite cosine construction consumes this estimate with "
+                        + "its proved Fourier decay to obtain a genuinely integrable "
+                        + "Cauchy-kernel majorant; the growth bound alone asserts no "
+                        + "energy finiteness for arbitrary H6 sources."))),
                 DescribeRole.Theorem))));
 }

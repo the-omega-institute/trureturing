@@ -6,6 +6,8 @@
    utility: none
    digest: Sharp sixth-moment threshold for simultaneous actual Gamma-domain escape. -/
 
+import D5.S3.Weil.ZetaExplicit.VerticalLine
+import D5.S3.Weil.ZetaGamma.GammaFacts
 import D5.S3.Weil.ZetaGamma.FormCore.ActualSuzukiLacunaryProfile
 import D5.S3.Weil.ZetaGamma.GammaMu
 import D5.S3.Weil.ZetaGamma.GammaStirlingVert
@@ -48,12 +50,12 @@ def gammaWeight (ξ : ℝ) : ℝ :=
   (2 / Real.sqrt Real.pi) * (gammaRatio ξ * gammaDensity ξ) +
     1 + 4 * Real.sqrt Real.pi
 
-private def domainConstant : ℝ :=
+def domainConstant : ℝ :=
   2 * Real.sqrt Real.pi + 4 * (|Real.log Real.pi| + 5)
 
 -- The literal reference Gamma weight is strictly larger than one, and
 -- it dominates the positive logarithmic frequency weight up to a finite constant.
-private theorem actualGammaWeight_bounds (ξ : ℝ) :
+theorem actualGammaWeight_bounds (ξ : ℝ) :
     1 < gammaWeight ξ ∧
       max (Real.log |ξ|) 0 ≤ domainConstant * gammaWeight ξ := by
   let s : ℝ := Real.sqrt Real.pi
@@ -176,6 +178,79 @@ private theorem actualGammaWeight_shifted_log_bound (c : ℝ)
       mul_le_mul_of_nonneg_left hp hC
     _ = (domainConstant * (1 + |c|)) * (gammaWeight ξ + c) := by ring
 
+theorem finiteGammaWeight_continuous : Continuous gammaWeight := by
+  have hd : gammaDensity = fun ξ : ℝ => 2 * Real.pi * Zeta23.mu (2 * ξ) := by
+    funext ξ
+    have harg : (1 / 4 : ℂ) + Complex.I * ((2 * ξ : ℝ) : ℂ) / 2 =
+        ((((1 : ℝ) / 4 : ℝ) : ℂ) + Complex.I * (ξ : ℂ)) := by
+      push_cast
+      ring
+    dsimp [gammaDensity, Zeta23.mu]
+    rw [harg]
+    field_simp [Real.pi_ne_zero] <;> ring
+  have hc : Continuous gammaDensity := by
+    rw [hd]
+    exact continuous_const.mul
+      (Zeta23.mu_smooth.continuous.comp (continuous_const.mul continuous_id))
+  have hr : Continuous gammaRatio := by
+    unfold gammaRatio
+    exact ((continuous_id.pow 2).add continuous_const).div
+      ((continuous_id.pow 2).add continuous_const) (fun ξ => by positivity)
+  unfold gammaWeight
+  exact ((continuous_const.mul (hr.mul hc)).add continuous_const).add continuous_const
+
+-- Quadratic growth is enough because the finite tent Fourier square has
+-- fourth-order decay. Reuse the library's actual digamma strip bound.
+theorem finiteGammaWeight_quadratic_upper :
+    ∃ G : ℝ, 0 < G ∧ ∀ ξ : ℝ, gammaWeight ξ ≤ G * (1 + ξ ^ 2) := by
+  obtain ⟨A, hA, hpsi⟩ := Zeta23.WeilEF.digamma_growth_strip
+  let s : ℝ := Real.sqrt Real.pi
+  let D : ℝ := 2 * A + |Real.log Real.pi|
+  let G : ℝ := (2 / s) * D + 1 + 4 * s
+  have hs : 0 < s := Real.sqrt_pos.mpr Real.pi_pos
+  have hD : 0 < D := by dsimp [D]; positivity
+  have hG : 0 < G := by dsimp [G]; positivity
+  refine ⟨G, hG, ?_⟩
+  intro ξ
+  let w : ℝ := 1 + ξ ^ 2
+  have hw : 1 ≤ w := by dsimp [w]; nlinarith [sq_nonneg ξ]
+  have hlog : Real.log (2 + |ξ|) ≤ 2 * w := by
+    have hl := Real.log_le_sub_one_of_pos (by positivity : 0 < 2 + |ξ|)
+    have hx : |ξ| ≤ 1 + ξ ^ 2 := by
+      nlinarith [sq_nonneg (|ξ| - 1 / 2), sq_abs ξ]
+    dsimp [w]
+    nlinarith [hl, hx, sq_nonneg ξ]
+  have hp : ‖Complex.digamma ((1 / 4 : ℂ) + Complex.I * (ξ : ℂ))‖ ≤
+      A * Real.log (2 + |ξ|) := by
+    simpa using hpsi ((1 / 4 : ℂ) + Complex.I * (ξ : ℂ))
+      (by norm_num) (by norm_num)
+  have hd : gammaDensity ξ ≤ D * w := by
+    have hre := Complex.re_le_norm
+      (Complex.digamma ((1 / 4 : ℂ) + Complex.I * (ξ : ℂ)))
+    have ha := mul_le_mul_of_nonneg_left hlog hA.le
+    have hb := mul_le_mul_of_nonneg_left hw (abs_nonneg (Real.log Real.pi))
+    have hquarter : (((1 / 4 : ℝ) : ℂ)) = (1 / 4 : ℂ) := by norm_num
+    dsimp [gammaDensity, D]
+    rw [hquarter]
+    nlinarith [hp, hre, ha, hb, neg_le_abs (Real.log Real.pi)]
+  have hr0 : 0 ≤ gammaRatio ξ := by unfold gammaRatio; positivity
+  have hr1 : gammaRatio ξ ≤ 1 := by
+    unfold gammaRatio
+    exact (div_le_one (by positivity : 0 < ξ ^ 2 + 25 / 16)).mpr (by linarith)
+  have hrd : gammaRatio ξ * gammaDensity ξ ≤ D * w := by
+    calc
+      gammaRatio ξ * gammaDensity ξ ≤ gammaRatio ξ * (D * w) :=
+        mul_le_mul_of_nonneg_left hd hr0
+      _ ≤ D * w := mul_le_of_le_one_left
+        (mul_nonneg hD.le (by linarith [hw])) hr1
+  have hmul := mul_le_mul_of_nonneg_left hrd
+    (show 0 ≤ 2 / s by positivity)
+  have hshift := mul_le_mul_of_nonneg_left hw
+    (show 0 ≤ 1 + 4 * s by positivity)
+  change (2 / s) * (gammaRatio ξ * gammaDensity ξ) + 1 + 4 * s ≤ G * w
+  dsimp [G]
+  nlinarith [hmul, hshift]
+
 end D5.S3.Weil.ZetaGamma.FormCore.ActualSuzukiDomainCounterexample.Symbol
 
 
@@ -213,8 +288,8 @@ namespace D5.S3.Weil.ZetaGamma.FormCore.ActualSuzukiDomainCounterexample
 open MeasureTheory Set Filter
 open scoped ENNReal FourierTransform Topology
 
-private def compressedProfile (κ t : ℝ) : ℂ := counterProfile (t / κ)
-private def compressedFeature (κ : ℝ) : ℝ → ℂ := sourceOfProfile (compressedProfile κ)
+def compressedProfile (κ t : ℝ) : ℂ := counterProfile (t / κ)
+def compressedFeature (κ : ℝ) : ℝ → ℂ := sourceOfProfile (compressedProfile κ)
 
 private theorem compressed_zero (κ : ℝ) : compressedProfile κ 0 = 0 := by
   have hz : counterProfile 0 = 0 := profile_zero_off (by norm_num)
@@ -283,7 +358,7 @@ private theorem compressed_fourier_norm_sq {κ : ℝ} (hκ : 0 < κ) (ξ : ℝ) 
   rw [compressed_fourier hκ, norm_mul, Complex.norm_real, Real.norm_eq_abs,
     abs_of_pos hκ, mul_pow]
 
-private theorem compressed_logplus_comparison {κ : ℝ}
+theorem compressed_logplus_comparison {κ : ℝ}
     (hκ : 0 < κ) (hκ1 : κ ≤ 1) (ξ : ℝ) :
     max (Real.log |κ * ξ|) 0 ≤ max (Real.log |ξ|) 0 := by
   by_cases hξ : ξ = 0
@@ -363,7 +438,7 @@ private theorem compressedFeature_compact {κ : ℝ} (hκ : 0 < κ) :
 
 -- Clamp x at pi only for the continuity proof; the literal source definition
 -- and all physical/full-theta identities remain unchanged.
-private theorem compressedFeature_continuous {κ : ℝ} (hκ : 0 < κ) :
+theorem compressedFeature_continuous {κ : ℝ} (hκ : 0 < κ) :
     Continuous (compressedFeature κ) := by
   have he : compressedFeature κ = fun x : ℝ =>
       (((max Real.pi x) ^ (-9 / 4 : ℝ) : ℝ) : ℂ) *
@@ -436,7 +511,7 @@ private theorem compressed_sixth_integrable {κ : ℝ} (hκ : 0 < κ) :
   exact hc.integrable_of_hasCompactSupport
     (compressed_density_compact hκ (fun x : ℝ => (x / Real.pi) ^ (6 : ℕ)))
 
-private theorem compressed_original_h6 {κ : ℝ} (hκ : 0 < κ) :
+theorem compressed_original_h6 {κ : ℝ} (hκ : 0 < κ) :
     originalPhysicalH6 (compressedFeature κ) := by
   refine ⟨?_, (compressed_sixth_integrable hκ).integrableOn⟩
   exact ((compressedFeature_continuous hκ).memLp_of_hasCompactSupport
@@ -487,7 +562,7 @@ private theorem compressed_moment_ratio_bound {κ : ℝ} (hκ : 0 < κ) :
     rw [he] at hc
     exact mul_le_mul_of_nonneg_right hc (sq_nonneg _)
 
-private theorem compressedFeature_zero_high {κ : ℝ} (hκ : 0 < κ) (hκ1 : κ ≤ 1)
+theorem compressedFeature_zero_high {κ : ℝ} (hκ : 0 < κ) (hκ1 : κ ≤ 1)
     {x : ℝ} (hx : 4 * Real.pi ≤ x) : compressedFeature κ x = 0 := by
   by_contra hn
   have hs := (compressedFeature_support hκ hn).2
@@ -602,7 +677,7 @@ private theorem compressed_profile_mass_moment {κ : ℝ} (hκ : 0 < κ) :
   rw [he]
   exact lt_of_lt_of_le (mul_pos (by positivity) hp) hl
 
-private theorem compressed_not_form_domain {κ : ℝ} (hκ : 0 < κ) (hκ1 : κ ≤ 1)
+theorem compressed_not_form_domain {κ : ℝ} (hκ : 0 < κ) (hκ1 : κ ≤ 1)
     (c : ℝ) (hc : ∀ ξ : ℝ, 1 ≤ Symbol.gammaWeight ξ + c) :
     ¬ originalGammaFormDomain c (compressedFeature κ) := by
   intro hGamma
@@ -634,7 +709,7 @@ private theorem quarter_compression_bound : Real.exp (9 / 8 : ℝ) < 4 := by
   rw [Real.log_four_eq]
   linarith [Real.log_two_gt_d9]
 
-private theorem exists_cap_compression (K : ℝ) (hK : 1 < K) :
+theorem exists_cap_compression (K : ℝ) (hK : 1 < K) :
     ∃ κ : ℝ, 0 < κ ∧ κ ≤ 1 / 4 ∧ Real.exp (9 * κ / 2) < K := by
   by_cases h4 : 4 ≤ K
   · refine ⟨1 / 4, by norm_num, le_rfl, ?_⟩

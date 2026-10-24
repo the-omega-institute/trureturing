@@ -90,10 +90,36 @@ For the seed, the bands of radius one around exp(4^(n+1)) are pairwise disjoint.
 
 This theorem is an infinite analytic source-domain obstruction. It asserts neither a negative complete Weil energy nor RH or a Robin conclusion. The conclusion concerns the literal simultaneous Gamma-domain obstruction on the original physical source.
 
+**Theorem 1.7 (Continuity of the actual reference Gamma weight).**
+
+Lean statement: `D5/S3/Weil/ZetaGamma/FormCore/ActualSuzukiDomainCounterexample.finiteGammaWeight_continuous`
+
+*Proof.* Machine-checked in Lean as `D5/S3/Weil/ZetaGamma/FormCore/ActualSuzukiDomainCounterexample.finiteGammaWeight_continuous` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+The literal gammaWeight is continuous on the real frequency line. The proof rewrites its density through the existing smooth mu function and uses the nonsingular rational factor.
+
+**Theorem 1.8 (A global quadratic upper bound for the actual Gamma weight).**
+
+Lean statement: `D5/S3/Weil/ZetaGamma/FormCore/ActualSuzukiDomainCounterexample.finiteGammaWeight_quadratic_upper`
+
+*Proof.* Machine-checked in Lean as `D5/S3/Weil/ZetaGamma/FormCore/ActualSuzukiDomainCounterexample.finiteGammaWeight_quadratic_upper` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+There is a real G>0 such that gammaWeight(xi)<=G*(1+xi^2) for every real xi. The proof consumes the existing digamma strip estimate and the actual rational factor bounds. The finite cosine construction consumes this estimate with its proved Fourier decay to obtain a genuinely integrable Cauchy-kernel majorant; the growth bound alone asserts no energy finiteness for arbitrary H6 sources.
+
 ## References
 
 - Truth anchor: `D5/S3/Weil/ZetaGamma/FormCore/ActualSuzukiDomainCounterexample.actualGammaProfile`
 - Truth anchor: `D5/S3/Weil/ZetaGamma/FormCore/ActualSuzukiDomainCounterexample.actual_h6_gamma_domain_escape_iff`
+- Truth anchor: `D5/S3/Weil/ZetaGamma/FormCore/ActualSuzukiDomainCounterexample.finiteGammaWeight_continuous`
+- Truth anchor: `D5/S3/Weil/ZetaGamma/FormCore/ActualSuzukiDomainCounterexample.finiteGammaWeight_quadratic_upper`
 - Truth anchor: `D5/S3/Weil/ZetaGamma/FormCore/ActualSuzukiDomainCounterexample.fullTheta`
 - Truth anchor: `D5/S3/Weil/ZetaGamma/FormCore/ActualSuzukiDomainCounterexample.gammaWeight`
 - Truth anchor: `D5/S3/Weil/ZetaGamma/FormCore/ActualSuzukiDomainCounterexample.originalGammaFormDomain`
