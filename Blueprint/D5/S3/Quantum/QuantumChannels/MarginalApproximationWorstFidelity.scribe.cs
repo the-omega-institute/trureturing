@@ -60,7 +60,7 @@ internal sealed class MarginalApproximationWorstFidelityDocument : IScribeDocume
                 DescribeId.Create("worst-fidelity-claim"),
                 DeclarationHandle.Create(Module + ".claim"),
                 H("The universal lower bound and cyclic-shift attainment"),
-                StatementSource.FromAuthor(Disp(ClaimFormula())),
+                StatementSource.FromAuthor(Disp(IffTo(Seq(Operatorname, Grp(F.Id("claim"))), ClaimFormula()))),
                 AssessedProvenance.FromRepo(Source),
                 Blocks(
                     Paragraph(Text(
@@ -84,7 +84,7 @@ internal sealed class MarginalApproximationWorstFidelityDocument : IScribeDocume
                 DescribeId.Create("worst-fidelity-result"),
                 DeclarationHandle.Create(Module + ".result"),
                 H("The lower bound is sharp"),
-                StatementSource.FromAuthor(Disp(Seq(Operatorname, Grp(F.Id("claim"))))),
+                StatementSource.FromAuthor(Disp(ClaimFormula())),
                 AssessedProvenance.FromRepo(Source),
                 Blocks(
                     Paragraph(Text(
@@ -236,6 +236,6 @@ internal sealed class MarginalApproximationWorstFidelityDocument : IScribeDocume
         Formula attainment = All(N, Naturals, Imp(LE(Typed(D(2), Naturals), N),
             And(expansion, And(Call("IsProcessCPTP", ShiftDensity), And(marginals,
                 Equal(Call("sqFidelity", ShiftDensity, MarginalProduct(ShiftDensity)), Bound))))));
-        return IffTo(Seq(Operatorname, Grp(F.Id("claim"))), And(lowerBound, attainment));
+        return And(lowerBound, attainment);
     }
 }
