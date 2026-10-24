@@ -2,23 +2,13 @@
    generality: G
    mirror-B: D5/B/S3/Analytic/KarpZhangReciprocal/IntervalConvolution
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
-   anchors: [mathlib/module/Mathlib.RingTheory.Polynomial.Pochhammer, mathlib/module/Mathlib.Analysis.SpecialFunctions.Log.Deriv, mathlib/module/Mathlib.NumberTheory.Bernoulli, mathlib/module/Mathlib.Tactic.FieldSimp, mathlib/module/Mathlib.Tactic.GCongr, mathlib/module/Mathlib.Tactic.Linarith, mathlib/module/Mathlib.Tactic.Positivity, mathlib/module/Mathlib.Tactic.Ring, mathlib/module/Mathlib.Algebra.BigOperators.Field, mathlib/module/Mathlib.Analysis.Convex.Deriv, mathlib/module/Mathlib.Algebra.Order.BigOperators.Ring.Finset]
+   anchors: [mathlib/module/Mathlib.NumberTheory.Bernoulli]
    utility: none
    digest: Symmetric interval convolutions increase when positive parameters are balanced. -/
 
-import Mathlib.RingTheory.Polynomial.Pochhammer
-import Mathlib.Analysis.SpecialFunctions.Log.Deriv
 import Mathlib.NumberTheory.Bernoulli
-import Mathlib.Tactic.FieldSimp
-import Mathlib.Tactic.GCongr
-import Mathlib.Tactic.Linarith
-import Mathlib.Tactic.Positivity
-import Mathlib.Tactic.Ring
 import D5.S3.Analytic.KarpZhangReciprocal.BirthDeath
 import D5.S3.Analytic.KummerRatio.Series
-import Mathlib.Algebra.BigOperators.Field
-import Mathlib.Analysis.Convex.Deriv
-import Mathlib.Algebra.Order.BigOperators.Ring.Finset
 
 /-!
 admission_basis: escape-witness
@@ -113,9 +103,30 @@ prefix D5.S3.Analytic):
 * shift_tail: proof_shape: content; escape_witness: score_variance_bound;
   consumers: KarpZhangReciprocal.Result.reciprocal_half.
 
-Direct frozen D5 dependency: KummerRatio.Series.coeff_succ, used by
-Coeff.c_succ and through it by coefficient_calculus and the interval estimates.
-All KarpZhang dependencies are same-delivery declarations. Consumers are taken from compiled proof
+Direct frozen D5 dependencies, with same-delivery helpers recursively inlined:
+* F1: GID D5/S3/Analytic/KummerRatio/Defs.kummerCoeff;
+  owning-module statement_id:
+  sha256:5cf079c6c6485353b23899a601d983d268c87e75ce41e4e0775c9e2d03598d79.
+* F2: GID D5/S3/Analytic/KummerRatio/Series.coeff_succ;
+  owning-module statement_id:
+  sha256:cfdc803ed0e195e906152759e46264c46d5a946b91774cfa8e7653e0aba3e17b.
+Per-declaration live-path dependencies (F labels above; omitted declarations: none):
+* KarpZhangReciprocal.Coeff.c_succ: F1, F2.
+* KarpZhangReciprocal.Coeff.c_deriv: F1, F2.
+* KarpZhangReciprocal.Coeff.coefficient_calculus: F1, F2.
+* KarpZhangReciprocal.IntervalConvolution.weight_pos: F1, F2.
+* KarpZhangReciprocal.IntervalConvolution.total_pos: F1, F2.
+* KarpZhangReciprocal.IntervalConvolution.coefficient_step: F1, F2.
+* KarpZhangReciprocal.IntervalConvolution.balance: F1, F2.
+* KarpZhangReciprocal.IntervalConvolution.rate_curvature: F1, F2.
+* KarpZhangReciprocal.IntervalConvolution.score_variance_bound: F1, F2.
+* KarpZhangReciprocal.IntervalConvolution.weight_deriv: F1, F2.
+* KarpZhangReciprocal.IntervalConvolution.score_deriv: F1, F2.
+* KarpZhangReciprocal.IntervalConvolution.slice_concave: F1, F2.
+* KarpZhangReciprocal.IntervalConvolution.symmetric_tail: F1, F2.
+* KarpZhangReciprocal.IntervalConvolution.shift_tail: F1, F2.
+All KarpZhang dependencies are same-delivery declarations.
+Consumers are taken from compiled proof
 terms, with declaration types also counted for definitions. The listed
 content witnesses remain on the corresponding live mathematical paths.
 Utility is none: all statements are general identities or inequalities,

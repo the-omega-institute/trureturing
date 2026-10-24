@@ -2,16 +2,13 @@
    generality: G
    mirror-B: D5/B/S3/Analytic/KarpZhangGamma/Result
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
-   anchors: [mathlib/module/Mathlib.Analysis.SpecialFunctions.Gamma.BohrMollerup, mathlib/module/Mathlib.RingTheory.Polynomial.Pochhammer, mathlib/module/Mathlib.RingTheory.Binomial, mathlib/module/Mathlib.Analysis.SpecialFunctions.Gamma.Beta]
+   anchors: [mathlib/module/Mathlib.RingTheory.Binomial]
    utility: none
    digest: Paired gamma kernels give coefficientwise positivity of the two-variable transform. -/
 
 import D5.S3.Analytic.KarpZhangGamma.Smoothing
 import D5.S3.Analytic.KummerRatio.BetaIntegral
-import Mathlib.Analysis.SpecialFunctions.Gamma.BohrMollerup
-import Mathlib.RingTheory.Polynomial.Pochhammer
 import Mathlib.RingTheory.Binomial
-import Mathlib.Analysis.SpecialFunctions.Gamma.Beta
 
 /-!
 admission_basis: escape-witness
@@ -78,10 +75,18 @@ other local names belong to Result; cross-module names have prefix D5.S3.Analyti
 * two_variable_nonneg: proof_shape: content; escape_witness: pairedKernel_sign;
   consumers: KarpZhangGamma.Series.gamma_half.
 
-Direct frozen D5 dependency: KummerRatio.BetaIntegral.gamma_pochhammer,
-used by Kernel.binomialGamma_sum and through it by reciprocalGamma_sum,
-kernel_sum_nonneg, pairedKernel_sum_nonneg and two_variable_nonneg.
-All KarpZhang dependencies are same-delivery declarations. Consumers are taken from compiled proof
+Direct frozen D5 dependencies, with same-delivery helpers recursively inlined:
+* F1: GID D5/S3/Analytic/KummerRatio/BetaIntegral.gamma_pochhammer;
+  owning-module statement_id:
+  sha256:403cdfeb53a9066b63e47ab5a9e7588edbec1f5a1bdd02e2b97fb4c3d6bcdc40.
+Per-declaration live-path dependencies (F labels above; omitted declarations: none):
+* KarpZhangGamma.Kernel.binomialGamma_sum: F1.
+* KarpZhangGamma.Kernel.reciprocalGamma_sum: F1.
+* KarpZhangGamma.Kernel.kernel_sum_nonneg: F1.
+* KarpZhangGamma.Result.pairedKernel_sum_nonneg: F1.
+* KarpZhangGamma.Result.two_variable_nonneg: F1.
+All KarpZhang dependencies are same-delivery declarations.
+Consumers are taken from compiled proof
 terms, with declaration types also counted for definitions. The listed
 content witnesses remain on the corresponding live mathematical paths.
 Utility is none: all statements are general identities or inequalities,

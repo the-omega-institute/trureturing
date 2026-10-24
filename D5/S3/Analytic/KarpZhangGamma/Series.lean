@@ -2,12 +2,11 @@
    generality: G
    mirror-B: D5/B/S3/Analytic/KarpZhangGamma/Series
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
-   anchors: [mathlib/module/Mathlib.Algebra.BigOperators.Group.Finset.Sigma]
+   anchors: []
    utility: none
-   digest: A positive diagonal transformation transfers two_variable_nonneg to the gamma-series Turanian. -/
+   digest: Positive diagonal transforms transfer kernel positivity to gamma-series Turanians. -/
 
 import D5.S3.Analytic.KarpZhangGamma.Result
-import Mathlib.Algebra.BigOperators.Group.Finset.Sigma
 
 /-!
 admission_basis: escape-witness
@@ -80,8 +79,14 @@ cross-module names have prefix D5.S3.Analytic):
 * gamma_half: proof_shape: content; escape_witness: positive_beta_transform;
   consumers: KarpZhangConjecture.Result.result.
 
-Direct frozen D5 dependencies: none; all KarpZhang dependencies are
-same-delivery declarations. Consumers are taken from compiled proof
+Direct frozen D5 dependencies, with same-delivery helpers recursively inlined:
+* F1: GID D5/S3/Analytic/KummerRatio/BetaIntegral.gamma_pochhammer;
+  owning-module statement_id:
+  sha256:403cdfeb53a9066b63e47ab5a9e7588edbec1f5a1bdd02e2b97fb4c3d6bcdc40.
+Per-declaration live-path dependencies (F labels above; omitted declarations: none):
+* KarpZhangGamma.Series.gamma_half: F1.
+All KarpZhang dependencies are same-delivery declarations.
+Consumers are taken from compiled proof
 terms, with declaration types also counted for definitions. The listed
 content witnesses remain on the corresponding live mathematical paths.
 Utility is none: all statements are general identities or inequalities,

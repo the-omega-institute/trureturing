@@ -44,8 +44,17 @@ cross-module names have prefix D5.S3.Analytic):
 * reciprocal_half: proof_shape: content; escape_witness: KarpZhangReciprocal.IntervalConvolution.score_variance_bound;
   consumers: KarpZhangConjecture.Result.result.
 
-Direct frozen D5 dependencies: none; all KarpZhang dependencies are
-same-delivery declarations. Consumers are taken from compiled proof
+Direct frozen D5 dependencies, with same-delivery helpers recursively inlined:
+* F1: GID D5/S3/Analytic/KummerRatio/Defs.kummerCoeff;
+  owning-module statement_id:
+  sha256:5cf079c6c6485353b23899a601d983d268c87e75ce41e4e0775c9e2d03598d79.
+* F2: GID D5/S3/Analytic/KummerRatio/Series.coeff_succ;
+  owning-module statement_id:
+  sha256:cfdc803ed0e195e906152759e46264c46d5a946b91774cfa8e7653e0aba3e17b.
+Per-declaration live-path dependencies (F labels above; omitted declarations: none):
+* KarpZhangReciprocal.Result.reciprocal_half: F1, F2.
+All KarpZhang dependencies are same-delivery declarations.
+Consumers are taken from compiled proof
 terms, with declaration types also counted for definitions. The listed
 content witnesses remain on the corresponding live mathematical paths.
 Utility is none: all statements are general identities or inequalities,

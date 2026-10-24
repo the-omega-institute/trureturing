@@ -2,13 +2,12 @@
    generality: G
    mirror-B: D5/B/S3/Analytic/KarpZhangGamma/Weighting
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
-   anchors: [mathlib/module/Mathlib.Algebra.BigOperators.Ring.Finset, mathlib/module/Mathlib.Algebra.Order.BigOperators.Group.Finset, mathlib/module/Mathlib.Data.Nat.Find, mathlib/module/Mathlib.Data.Real.Basic, mathlib/module/Mathlib.Tactic.Ring]
+   anchors: [mathlib/module/Mathlib.Algebra.BigOperators.Ring.Finset, mathlib/module/Mathlib.Algebra.Order.BigOperators.Group.Finset, mathlib/module/Mathlib.Data.Real.Basic, mathlib/module/Mathlib.Tactic.Ring]
    utility: none
    digest: One negative-to-positive sign change permits increasing coefficientwise weights. -/
 
 import Mathlib.Algebra.BigOperators.Ring.Finset
 import Mathlib.Algebra.Order.BigOperators.Group.Finset
-import Mathlib.Data.Nat.Find
 import Mathlib.Data.Real.Basic
 import Mathlib.Tactic.Ring
 
@@ -28,8 +27,10 @@ cross-module names have prefix D5.S3.Analytic):
 * coefficientwise_weighting: proof_shape: content; escape_witness: weighted_sum_nonneg;
   consumers: KarpZhangGamma.Smoothing.smoothed_weighting.
 
-Direct frozen D5 dependencies: none; all KarpZhang dependencies are
-same-delivery declarations. Consumers are taken from compiled proof
+Direct frozen D5 dependencies, with same-delivery helpers recursively inlined:
+none.
+All KarpZhang dependencies are same-delivery declarations.
+Consumers are taken from compiled proof
 terms, with declaration types also counted for definitions. The listed
 content witnesses remain on the corresponding live mathematical paths.
 Utility is none: all statements are general identities or inequalities,

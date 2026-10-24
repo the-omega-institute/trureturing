@@ -17,8 +17,19 @@ Per-declaration proof_shape:
 * result: content; escape_witness: KarpZhangReciprocal.IntervalConvolution.score_variance_bound
   and KarpZhangGamma.Result.pairedKernel_sign, through reciprocal_half and gamma_half;
   consumer: external Conjecture 5.2 settlement.
-The two imported halves and their supporting modules are same-delivery content,
-not pre-existing frozen prerequisites. Direct frozen D5 dependencies: none.
+Direct frozen D5 dependencies, with same-delivery helpers recursively inlined:
+* F1: GID D5/S3/Analytic/KummerRatio/BetaIntegral.gamma_pochhammer;
+  owning-module statement_id:
+  sha256:403cdfeb53a9066b63e47ab5a9e7588edbec1f5a1bdd02e2b97fb4c3d6bcdc40.
+* F2: GID D5/S3/Analytic/KummerRatio/Defs.kummerCoeff;
+  owning-module statement_id:
+  sha256:5cf079c6c6485353b23899a601d983d268c87e75ce41e4e0775c9e2d03598d79.
+* F3: GID D5/S3/Analytic/KummerRatio/Series.coeff_succ;
+  owning-module statement_id:
+  sha256:cfdc803ed0e195e906152759e46264c46d5a946b91774cfa8e7653e0aba3e17b.
+Per-declaration live-path dependencies (F labels above; omitted declarations: none):
+* KarpZhangConjecture.Result.result: F1, F2, F3.
+All KarpZhang dependencies are same-delivery declarations.
 The utility is none: this is a uniform theorem about all coefficient degrees,
 not a bounded enumeration, checker, numerical reduction or certified instance.
 -/

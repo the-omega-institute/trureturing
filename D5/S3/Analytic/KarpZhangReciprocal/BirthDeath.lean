@@ -2,7 +2,7 @@
    generality: G
    mirror-B: D5/B/S3/Analytic/KarpZhangReciprocal/BirthDeath
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
-   anchors: [mathlib/module/Mathlib.Algebra.Order.BigOperators.Ring.Finset, mathlib/module/Mathlib.Data.Real.Basic, mathlib/module/Mathlib.Tactic.FieldSimp, mathlib/module/Mathlib.Tactic.Linarith, mathlib/module/Mathlib.Tactic.Positivity]
+   anchors: [mathlib/module/Mathlib.Algebra.Order.BigOperators.Ring.Finset, mathlib/module/Mathlib.Data.Real.Basic, mathlib/module/Mathlib.Tactic.FieldSimp, mathlib/module/Mathlib.Tactic.Linarith]
    utility: none
    digest: Finite reversible birth-and-death chains satisfy a curvature-weighted variance bound. -/
 
@@ -10,7 +10,6 @@ import Mathlib.Algebra.Order.BigOperators.Ring.Finset
 import Mathlib.Data.Real.Basic
 import Mathlib.Tactic.FieldSimp
 import Mathlib.Tactic.Linarith
-import Mathlib.Tactic.Positivity
 
 /-!
 admission_basis: escape-witness
@@ -39,8 +38,10 @@ cross-module names have prefix D5.S3.Analytic):
 * variance_bound: proof_shape: content; escape_witness: mean_zero_flux;
   consumers: KarpZhangReciprocal.IntervalConvolution.score_variance_bound.
 
-Direct frozen D5 dependencies: none; all KarpZhang dependencies are
-same-delivery declarations. Consumers are taken from compiled proof
+Direct frozen D5 dependencies, with same-delivery helpers recursively inlined:
+none.
+All KarpZhang dependencies are same-delivery declarations.
+Consumers are taken from compiled proof
 terms, with declaration types also counted for definitions. The listed
 content witnesses remain on the corresponding live mathematical paths.
 Utility is none: all statements are general identities or inequalities,

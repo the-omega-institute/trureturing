@@ -2,15 +2,12 @@
    generality: G
    mirror-B: D5/B/S3/Analytic/KarpZhangGamma/Smoothing
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
-   anchors: [mathlib/module/Mathlib.Data.Nat.Choose.Sum, mathlib/module/Mathlib.Algebra.BigOperators.Intervals, mathlib/module/Mathlib.Algebra.BigOperators.Field]
+   anchors: []
    utility: none
    digest: Exponential smoothing preserves balanced minors in every finite coefficient degree. -/
 
 import D5.S3.Analytic.KarpZhangGamma.Weighting
 import D5.S3.Analytic.KarpZhangReciprocal.Result
-import Mathlib.Data.Nat.Choose.Sum
-import Mathlib.Algebra.BigOperators.Intervals
-import Mathlib.Algebra.BigOperators.Field
 
 /-!
 admission_basis: escape-witness
@@ -43,8 +40,10 @@ cross-module names have prefix D5.S3.Analytic):
 * smoothed_weighting: proof_shape: content; escape_witness: binomial_minor;
   consumers: KarpZhangGamma.Result.two_variable_nonneg.
 
-Direct frozen D5 dependencies: none; all KarpZhang dependencies are
-same-delivery declarations. Consumers are taken from compiled proof
+Direct frozen D5 dependencies, with same-delivery helpers recursively inlined:
+none.
+All KarpZhang dependencies are same-delivery declarations.
+Consumers are taken from compiled proof
 terms, with declaration types also counted for definitions. The listed
 content witnesses remain on the corresponding live mathematical paths.
 Utility is none: all statements are general identities or inequalities,
