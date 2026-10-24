@@ -8,6 +8,7 @@ url: https://arxiv.org/abs/2610.03477v1
 claim: "Introduces packing k-domatic colourings and the invariant χ_{ρ,k}; proves χ_{ρ,k}(P_n) > k for k ≥ 12 and n ≥ k (Theorem 3.5) and asks in Problem 2 whether χ_{ρ,k}(P_n) ≤ k + 1 for k ≥ 3 and n ≥ 2k."
 strata_touched:
   - D5/S3/Combinatorics/PackingDomatic/PackingDomaticPath
+  - D5/S3/Combinatorics/PackingDomatic/PackingDomaticInfiniteSix
 license: citation-only
 triage: anchor
 ---
@@ -22,6 +23,12 @@ true that χ_{ρ,k}(P_n) ≤ k + 1 for any k ≥ 3 and any n ≥ 2k?"
 
 The module `D5/S3/Combinatorics/PackingDomatic/PackingDomaticPath` answers Problem 2 negatively.
 
+Theorem 3.6 gives a packing six-domatic colouring of the two-way infinite path with the repeating
+colour pattern [5,1,2,4,1,3] and a partition of period 30. It confines the six-class palette to {4,5}.
+Immediately afterwards, Section 3.2 asks: “For k=6, the problem is reduced to determining which of the
+two possible values in {4,5} is attained by χ_{ρ,6}(P∞), a question we leave for the reader.”
+This infinite-path reader question is distinct from finite-path Problem 2.
+
 ## Verified locator
 
 DOI: 10.48550/arXiv.2610.03477
@@ -29,3 +36,6 @@ DOI: 10.48550/arXiv.2610.03477
 URL: https://arxiv.org/abs/2610.03477v1
 
 - Locator: Section 1 (definitions); Section 3, Theorem 3.5; Section 5, Problem 2.
+
+- Infinite-path locator: Section 3.2, Theorem 3.6 and the immediately following reader question;
+  https://arxiv.org/html/2610.03477v1#S3.SS2.p8 .
