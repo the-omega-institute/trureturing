@@ -65,12 +65,12 @@ The proof would not settle the registered reading if conjugation, matrix powers,
 
 ## Evidence
 
-The canonical source is `D5/S3/Quantum/Divergence/UnifiedImaginarityMonotoneComparison.lean` (236 lines).
+The canonical source is `D5/S3/Quantum/Divergence/UnifiedImaginarityMonotoneComparison.lean` (235 lines).
 
 - **Proof.** It proves `result : claim`.
 - **Axioms.** It uses only the standard axioms `propext`, `Classical.choice` and `Quot.sound`; no `sorry`, `native_decide`, or new axiom.
 
-Frozen state: `Golden/Frozen/state/D5/S3/Quantum/Divergence/UnifiedImaginarityMonotoneComparison.lean.json`, statement `sha256:4c48b7bd53674c7a183752c9fa3f428bd86e6dbb0c115010faa30fc4308b52b3`.
+Frozen state: `Golden/Frozen/state/D5/S3/Quantum/Divergence/UnifiedImaginarityMonotoneComparison.lean.json`, statement `sha256:66006d944f4c2c4770177c85806e06a52f66ca64ff7a14f442b68c568cfecc3a`.
 
 Declaration statements:
 
