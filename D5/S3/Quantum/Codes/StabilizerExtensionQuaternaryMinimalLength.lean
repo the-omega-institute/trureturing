@@ -118,12 +118,12 @@ private lemma add_self_F4 (x : F4) : x + x = 0 := by
 private lemma one_add_omega_ne_zero : 1 + omega ≠ 0 := by
   simpa [add_comm] using omega_add_one_ne_zero
 
-private def tr (x : F4) : F4 := x + x ^ 2
+def tr (x : F4) : F4 := x + x ^ 2
 
-private def symp {n : ℕ} (u v : Fin n → A) : F4 :=
+def symp {n : ℕ} (u v : Fin n → A) : F4 :=
   tr (∑ i, ((u i).1 * (v i).2 - (v i).1 * (u i).2))
 
-private def wt {n : ℕ} (u : Fin n → A) : ℕ :=
+def wt {n : ℕ} (u : Fin n → A) : ℕ :=
   (Finset.univ.filter (fun i => u i ≠ 0)).card
 
 private lemma wt3_two_01 {u : Fin 3 → A} (h0 : u 0 ≠ 0) (h1 : u 1 ≠ 0)
@@ -147,12 +147,12 @@ private lemma wt3_two_12 {u : Fin 3 → A} (h0 : u 0 = 0) (h1 : u 1 ≠ 0)
   rw [wt, Finset.filter_congr (by intro i hi; exact hp i)]
   decide
 
-private def selfOrthogonal {n : ℕ} (C : AddSubgroup (Fin n → A)) : Prop :=
+def selfOrthogonal {n : ℕ} (C : AddSubgroup (Fin n → A)) : Prop :=
   ∀ u ∈ C, ∀ v ∈ C, symp u v = 0
 
 private def labelVec (x : A) : Fin 2 → F4 := ![x.1, x.2]
 
-private def act (τ : Matrix (Fin 2) (Fin 2) F4) (x : A) : A :=
+def act (τ : Matrix (Fin 2) (Fin 2) F4) (x : A) : A :=
   ((Matrix.mulVec τ (labelVec x)) 0, (Matrix.mulVec τ (labelVec x)) 1)
 
 private abbrev P := ZMod 2 × ZMod 2
@@ -389,7 +389,7 @@ private lemma f3_weight : ∀ u : C3,
         · simp [d3Hom, f2]
       exact hd.trans hc.symm
 
-private def qepWitness {n : ℕ} {C D : AddSubgroup (Fin n → A)} (f : C ≃+ D)
+def qepWitness {n : ℕ} {C D : AddSubgroup (Fin n → A)} (f : C ≃+ D)
     (π : Equiv.Perm (Fin n)) (τ : Fin n → Matrix (Fin 2) (Fin 2) F4) : Prop :=
   (∀ i, (τ i).det = 1) ∧ ∀ u : C, ∀ i,
     (f u : Fin n → A) i = act (τ i) ((u : Fin n → A) (π.symm i))
