@@ -5,7 +5,7 @@ year: 2026
 title: A truncated Fourier cutoff in the complete finite Robin transport
 doi: null
 url: https://github.com/the-omega-institute/trureturing/blob/dev/Library/Estimation/trureturing2026bandlimitedrobin.md
-claim: A truncated classical Fourier density has positive mean-normalized multiplicative law, variance at most approximately 10/H^2 and complete complex tail response below 10^-26 at H = 3 times 10^12. The application retains the original finite Robin transport and its analytic premises; RH remains unproved.
+claim: A truncated classical Fourier density has positive mean-normalized multiplicative law, variance at most approximately 10/H^2 and complete complex tail response below 10^-26 at H = 3 times 10^12. With the original five analytic premises this pays strict Robin for each integer with 8 times 10^46 < log n <= 17 times 10^47, without an added density or seven-eighths premise. RH remains unproved.
 strata_touched: []
 license: Apache-2.0
 triage: anchor
@@ -158,3 +158,91 @@ entire infinite tail. It is not an assertion that the truncated law
 has an exactly compactly supported transform. For every zero, including
 the verified head, positivity and concavity also give the unchanged
 bound $|\mathbb EC^{\rho-1}|\le M_*$ as in GAK9.
+
+
+## Consume the same complete response on a larger finite clock slab
+
+For every real clock in
+
+$$
+8\cdot10^{46}<A\le17\cdot10^{47},\qquad
+L=\log A,\quad T_A=\sqrt A L,\quad r=1.304\cdot10^{24},
+\tag{BFR8}
+$$
+
+the reused GAK25--GAK26 enclosures give $L>107$, $\sqrt A>10^{23}$
+and $\eta_0(A)<10^{-6}$; also $\sqrt A<r$ since $r^2>17\cdot10^{47}$.
+Apply the same complete coefficient and law-centered transport from
+GAK12--GAK24 to this $C$. No log-uniform-product formula is used in
+those law-general steps. The actual complex coefficient series,
+its elementary response and every cutoff atom remain included.
+
+The verified head has $\beta=1/2$ and is bounded by $M_*c_0$, with
+$c_0<1/20$. For the unverified tail use (BFR7), the full-strip inequality
+$A^{\beta-1/2}\le\sqrt A$, and the original
+$2S_2(H)<74/(25\cdot10^{12})$. The factor two already counts both
+ordinate signs with their actual multiplicities. The resulting allowance is
+
+$$
+\begin{aligned}
+U_h&=\frac{108}{107}\frac{527}{500}\frac{M_*}{20},\\
+U_t&=\frac{108}{107}\frac{10001}{10000}\,10^{-26}r
+               \frac{74}{25\cdot10^{12}},\\
+U_v&=\frac{260001}{500000}\,rV_*,\qquad
+U_e=\frac{5M_*}{10^{23}},\\
+-T_AI_\psi(A)&<U:=U_h+U_t+U_v+U_e<\frac{81}{100}.
+\end{aligned}
+\tag{BFR9}
+$$
+
+There is no additional inverse-moment multiplier on $U_t$: (BFR7)
+already bounds the normalized response. Exact rational substitution gives
+$U_h<0.0532$, $U_t<4\cdot10^{-14}$, $U_v<0.755$,
+$U_e<6\cdot10^{-23}$, and
+
+$$
+Q_R-U>\frac3{1000},\qquad
+Q_R=\frac{67838284064811}{83593750000000}.
+$$
+
+The last comparison uses the complete exact $U$, rather than adding the
+rounded component bounds. The same GAK37 unrestricted reserve gives,
+for each actual integer with $A=\log n$ in (BFR8), at its own price,
+
+$$
+\boxed{\quad
+T_A\left[\gamma+\log L-\log\frac{\sigma(n)}n\right]
+>\frac3{1000}+\frac{L}{(L+2)^3}+T_Ad_A(n)>0.
+\quad}
+\tag{BFR10}
+$$
+
+Here $d_A(n)\ge0$ is exactly GAK39's unrestricted-price defect of this
+same original integer. It is neither replaced by a different optimizer
+nor assumed zero. Thus this is strict Robin throughout the displayed
+all-integer slab, under the original five analytic premises and the
+classical Fourier identities used above. It needs no additional
+zero-density estimate or zero-free half-plane at unverified heights.
+
+The [prior GAD slab](../ArithSums/nicolas2025comparison.md#project-application-density-weighted-order-nine-transport-reaches-3e47)
+reaches $3\cdot10^{47}$ using density inputs, and
+[CDR1--CDR9](../Analytic/polak2026finiterobinca.md#a-seven-eighths-ceiling-in-the-complete-positive-law-robin-transport)
+reach $6\cdot10^{47}$ with an additional $7/8$ ceiling. Their conclusions
+and source conditions are preserved. The present change is the new
+whole-law estimate in their existing complete consumer. Classical
+Plancherel and the cosine window are reused; the project application
+and finite slab are not attributed to a new external theorem.
+The owning sources and targeted arXiv searches on Robin/Fourier smoothing
+were checked; this is not an exhaustive literature or originality claim.
+
+The [exact rational certificate](https://github.com/the-omega-institute/trureturing-experiments/tree/6f16e4e0df39286b91bb05a838de8e973612e403/experiments/robin-bandlimited-clock)
+checks 25 scalar inequalities and reuses the existing rational logarithm
+enclosure. It does not numerically certify the Fourier identities,
+reverify zeros, or audit the external analytic proofs. These are
+paper-level conditional results, without Lean/kernel certification.
+
+No all-integer assertion below the lower endpoint, least-counterexample
+bound or new verified zero height is inferred. For fixed $H$ the positive
+variance term in (BFR9) still grows with $\sqrt A$. Thus the original
+unbounded signed estimate, strict Robin for every integer above 5040,
+and RH remain unproved.
