@@ -23,6 +23,5 @@ For any prescribed coordinate subset T of size at most three and r at least twel
 ## References
 
 - Truth anchor: `D5/S3/Combinatorics/Sequenceability/PairedCircleEvents.adjacency_intersection_card`
-- Dependency: [D5/S3/Combinatorics/CircularWords/FiniteEventBonferroniThree](../CircularWords/FiniteEventBonferroniThree.md)
 - Dependency: [D5/S3/Combinatorics/CircularWords/SimultaneousPairContraction](../CircularWords/SimultaneousPairContraction.md)
 - Dependency: [D5/S3/Combinatorics/Sequenceability/PairedZeroSubsetSpectrum](PairedZeroSubsetSpectrum.md)

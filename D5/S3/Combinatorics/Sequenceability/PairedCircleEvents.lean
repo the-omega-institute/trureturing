@@ -8,7 +8,7 @@
 
 import D5.S3.Combinatorics.Sequenceability.PairedZeroSubsetSpectrum
 import D5.S3.Combinatorics.CircularWords.SimultaneousPairContraction
-import D5.S3.Combinatorics.CircularWords.FiniteEventBonferroniThree
+import Mathlib.Data.Finset.Powerset
 
 /-! These events use the original additive labels, with coefficient one. -/
 
@@ -20,7 +20,6 @@ open D5.S3.Combinatorics.Sequenceability.PairedZeroSubsetSpectrum
 open D5.S3.Combinatorics.CircularWords.DisjointBlockContraction
 open D5.S3.Combinatorics.CircularWords.CircularOrderCount
 open D5.S3.Combinatorics.CircularWords.SimultaneousPairContraction
-open D5.S3.Combinatorics.CircularWords.FiniteEventBonferroniThree
 open Finset
 open scoped BigOperators Classical
 noncomputable section

@@ -9,7 +9,7 @@
 import D5.S3.Combinatorics.Sequenceability.PairedNoAdjacencyEstimate
 import D5.S3.Combinatorics.Sequenceability.PairedResidualBlocks
 import D5.S3.Combinatorics.Sequenceability.ZeroTotalCircleGood
-import D5.S3.Combinatorics.CircularWords.CircleEventNormalization
+import D5.S3.Combinatorics.CircularWords.CircularOrderCount
 
 /-! Actual distinct original labels, original group addition and coefficient one throughout. -/
 
@@ -24,7 +24,6 @@ open D5.S3.Combinatorics.Sequenceability.PairedNoAdjacencyEstimate
 open D5.S3.Combinatorics.Sequenceability.ZeroTotalCircleGood
 open D5.S3.Combinatorics.CircularWords.DisjointBlockContraction
 open D5.S3.Combinatorics.CircularWords.CircularOrderCount
-open D5.S3.Combinatorics.CircularWords.CircleEventNormalization
 open Finset
 open scoped BigOperators Classical
 noncomputable section

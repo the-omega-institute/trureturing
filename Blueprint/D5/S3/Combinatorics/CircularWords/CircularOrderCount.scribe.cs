@@ -9,6 +9,22 @@ internal sealed class CircularOrderCountDocument : IScribeDocumentDefinition
         "Free rotation counts of original-label orders",
         H("Free rotation counts of original-label orders"),
         Blocks(
+            Describe.Lean(DescribeId.Create("event-normalization"),
+                DeclarationHandle.Create("D5/S3/Combinatorics/CircularWords/CircularOrderCount.event_order_card"),
+                H("Free rotation normalizes circular events"), StatementSource.FromAuthor(EventStatement()), AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text(
+                    "The carrier has decidable equality. P is any predicate on Cycle(alpha). RootEvent(A,P) "
+                    + "filters orders(A) by P of the actual rotation class; CircleEvent(A,P) filters circles(A) "
+                    + "by P."))), DescribeRole.Theorem),
+            Paragraph(Text(
+                    "An actual order of n distinct labels has n distinct rotations. The image in Mathlib "
+                    + "Cycle retains orientation and identifies precisely those rotations. Every circle fiber "
+                    + "therefore has exactly n rooted original-label words.")),
+            Paragraph(Text(
+                    "For any predicate on these circles, the number of rooted orders in that event is n times "
+                    + "the number of event circles. The paired Good criterion is transported to such a circle "
+                    + "predicate before this formula is used. A linear block event alone is not assumed "
+                    + "rotation invariant.")),
             Paragraph(Text(
                     "ArcInventory(A,S) is the actual subset of circles(A) satisfying Arc A S, and sdiff(A,S) is "
                     + "A minus S. The carrier has decidable equality.")),
@@ -25,10 +41,40 @@ internal sealed class CircularOrderCountDocument : IScribeDocumentDefinition
                     + "counts a single arc in this very same sample space. No independence assumption or quotient "
                     + "of original labels enters the argument."))), DescribeRole.Theorem),
             Paragraph(Text(
+                    "event_order_card is a consumed bind-only normalization helper. Its live consumer is "
+                    + "PairedQuantitativeOrdering.quantitative_good_orders; the arc contraction count provides the "
+                    + "substantive content of this module.")),
+            Paragraph(Text(
                     "Only single-arc multiplicity and free rotation normalization are asserted here. "
                     + "Multiple-block intersections, complement-class event accounting, Bonferroni truncation and "
                     + "the residual tail are separate obligations before an all-rank Good-order bound can be "
                     + "concluded.")))));
+
+    private static Formula EventStatement() =>
+        Disp(
+            A(
+                "alpha",
+                C("Type"),
+                A(
+                    "A",
+                    C("Finset", FormulaDsl.Id("alpha")),
+                    A(
+                        "P",
+                        C("PredicatesOn", C("Cycle", FormulaDsl.Id("alpha"))),
+                        Imp(
+                            C("Nonempty", FormulaDsl.Id("A")),
+                            E(
+                                C("card", C("RootEvent", FormulaDsl.Id("A"), FormulaDsl.Id("P"))),
+                                Mul(
+                                    C("card", FormulaDsl.Id("A")),
+                                    C("card", C("CircleEvent", FormulaDsl.Id("A"), FormulaDsl.Id("P")))
+                                )
+                            )
+                        )
+                    )
+                )
+            )
+        );
 
     private static Formula Statement() =>
         Disp(

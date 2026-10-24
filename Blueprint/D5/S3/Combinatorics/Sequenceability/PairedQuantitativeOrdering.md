@@ -25,7 +25,7 @@ This improves understanding of event overlap where the first-moment estimate fai
 ## References
 
 - Truth anchor: `D5/S3/Combinatorics/Sequenceability/PairedQuantitativeOrdering.quantitative_good_orders`
-- Dependency: [D5/S3/Combinatorics/CircularWords/CircleEventNormalization](../CircularWords/CircleEventNormalization.md)
+- Dependency: [D5/S3/Combinatorics/CircularWords/CircularOrderCount](../CircularWords/CircularOrderCount.md)
 - Dependency: [D5/S3/Combinatorics/Sequenceability/PairedNoAdjacencyEstimate](PairedNoAdjacencyEstimate.md)
 - Dependency: [D5/S3/Combinatorics/Sequenceability/PairedResidualBlocks](PairedResidualBlocks.md)
 - Dependency: [D5/S3/Combinatorics/Sequenceability/ZeroTotalCircleGood](ZeroTotalCircleGood.md)
