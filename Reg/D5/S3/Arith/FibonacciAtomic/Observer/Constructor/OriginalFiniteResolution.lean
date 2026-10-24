@@ -13,46 +13,55 @@ open _root_.D5.S3.ConceptDynamics.InformationEscape.DependentFamily
 namespace Reg.D5.S3.Arith.FibonacciAtomic.Observer.Constructor.OriginalFiniteResolution
 noncomputable section
 
-structure Parameters where
-  k : Nat
-  m : Nat
-  definitions : Definitions k m
-  mode : Fin k → Bool
+abbrev Parameters := Σ k : Nat, Σ m : Nat, Σ _ : Definitions k m, Fin k → Bool
 
 abbrev signature : Signature where
   Params := Parameters
-  State p := Expr p.k p.m
-  Role := Unit
+  State p := Expr p.1 p.2.1
+  Role := Fin 2
   finiteRole := inferInstance
   nonemptyRole := inferInstance
-  Output _ p := Option (FiniteExpr p.k)
+  Output _ p := Option (FiniteExpr p.1)
   Anchor := Empty
   finiteAnchor := inferInstance
 
 abbrev actual : Realization signature :=
-  realize signature (fun _ p e => compile p.definitions p.mode e) (fun e => nomatch e)
+  realize signature (fun _ p e => compile p.2.2.1 p.2.2.2 e) (fun e => nomatch e)
 
-abbrev rejected : Realization signature :=
-  realize signature (fun _ _ _ => none) (fun e => nomatch e)
+abbrev rejectedZero : Realization signature :=
+  realize signature (fun i p e => if i = 0 then none else compile p.2.2.1 p.2.2.2 e)
+    (fun e => nomatch e)
 
+abbrev rejectedOne : Realization signature :=
+  realize signature (fun i p e => if i = 1 then some (.ground (.of false)) else
+    compile p.2.2.1 p.2.2.2 e) (fun e => nomatch e)
+
+/-- The original telescope and both compiler occurrences are retained. -/
 abbrev arena : Arena where
   signature := signature
-  Law R := ∀ q : Parameters,
-    (∀ e : Expr q.k q.m, (R.readout () q e).isSome = true ↔
-      FiniteDerivation q.definitions q.mode e) ∧
-    (∀ (e : Expr q.k q.m) (f : FiniteExpr q.k), R.readout () q e = some f →
-      ∀ (p : Fin q.k → Nat) (v : Fin q.m → CompletionTree),
-        Solution q.definitions q.mode p v → value q.mode p v e = embed (finiteValue p f))
+  Law R := ∀ (k m : Nat) (E : Definitions k m) (mode : Fin k → Bool),
+    (∀ e : Expr k m, (R.readout 0 ⟨k, m, E, mode⟩ e).isSome = true ↔
+      FiniteDerivation E mode e) ∧
+    (∀ (e : Expr k m) (f : FiniteExpr k), R.readout 1 ⟨k, m, E, mode⟩ e = some f →
+      ∀ (p : Fin k → Nat) (v : Fin m → CompletionTree),
+        Solution E mode p v → value mode p v e = embed (finiteValue p f))
 
-private def emptyParameters : Parameters := ⟨0, 0, Fin.elim0, Fin.elim0⟩
-
-private theorem rejected_fails : ¬ arena.Law rejected := by
+private theorem rejected_zero_fails : ¬ arena.Law rejectedZero := by
   intro h
-  have fail := (h emptyParameters).1 (.ground (.of true))
-  have good : FiniteDerivation emptyParameters.definitions emptyParameters.mode
+  have fail := (h 0 0 Fin.elim0 Fin.elim0).1 (.ground (.of true))
+  have good : FiniteDerivation (k := 0) (m := 0) Fin.elim0 Fin.elim0
       (.ground (.of true)) := .ground _
   have : (none : Option (FiniteExpr 0)).isSome = true := fail.mpr good
   cases this
+
+private theorem rejected_one_fails : ¬ arena.Law rejectedOne := by
+  intro h
+  have eq := (h 0 0 Fin.elim0 Fin.elim0).2 (.ground (.of true)) (.ground (.of false))
+    rfl Fin.elim0 Fin.elim0 (by intro i; exact i.elim0)
+  have he := congrArg (fun X => (PFunctor.M.dest X).1) eq
+  have bad : (true : Bool) = false := Sum.inl.inj (by
+    simpa only [value, finiteValue, embed, leaf, PFunctor.M.dest_mk] using he)
+  cases bad
 
 abbrev Statement : Prop := ∀ (k m : Nat) (E : Definitions k m) (mode : Fin k → Bool),
   (∀ e : Expr k m, (compile E mode e).isSome = true ↔ FiniteDerivation E mode e) ∧
@@ -61,28 +70,33 @@ abbrev Statement : Prop := ∀ (k m : Nat) (E : Definitions k m) (mode : Fin k �
       value mode p v e = embed (finiteValue p f))
 
 def familyRegistration : Registration arena Statement := by
-  have positive : arena.Law actual := fun p =>
-    original_finite_resolution p.k p.m p.definitions p.mode
   refine {
     actual := actual
-    bridge := ⟨fun h p => h p.k p.m p.definitions p.mode,
-      fun h k m E b => h ⟨k, m, E, b⟩⟩
-    variation := ⟨positive, rejected, rejected_fails⟩
+    bridge := Iff.rfl
+    variation := ⟨original_finite_resolution, rejectedZero, rejected_zero_fails⟩
     sensitivity := ⟨?_, fun e => nomatch e⟩
     dependence := ?_ }
   · intro i
-    exact ⟨rejected, fun j h => (h (Subsingleton.elim j i)).elim, rfl, rejected_fails⟩
+    fin_cases i
+    · refine ⟨rejectedZero, ?_, rfl, rejected_zero_fails⟩
+      intro j hj
+      funext p e
+      simp only [actual, rejectedZero, realize, if_neg hj]
+    · refine ⟨rejectedOne, ?_, rfl, rejected_one_fails⟩
+      intro j hj
+      funext p e
+      simp only [actual, rejectedOne, realize, if_neg hj]
   · intro i
-    refine ⟨emptyParameters, .ground (.of true), .ground (.of false), ?_⟩
+    refine ⟨⟨0, 0, Fin.elim0, Fin.elim0⟩, .ground (.of true), .ground (.of false), ?_⟩
     intro h
-    have groundEq : (true : Bool) = false := by
+    have groundEq : (FreeMagma.of true : GenealogicalFiberTransport.Source) = .of false := by
       simpa [actual, realize, compile, resolve] using h
     cases groundEq
 
 noncomputable def registration :
     LeanInformationAudit.Contract.Registration.{0,0,1,0,0,0,0,0,0,0,0,0}
     original_finite_resolution
-    (type_of% (realize signature (fun _ p e => compile p.definitions p.mode e)
+    (type_of% (realize signature (fun _ p e => compile p.2.2.1 p.2.2.2 e)
       (fun e => nomatch e))) Unit Unit := {
   unitName := `Reg.D5.S3.Arith.FibonacciAtomic.Observer.Constructor.OriginalFiniteResolution.original_finite_resolution
   realizationName := `Reg.D5.S3.Arith.FibonacciAtomic.Observer.Constructor.OriginalFiniteResolution.familyRegistration
@@ -95,7 +109,7 @@ noncomputable def registration :
   realization := .source arena ⟨familyRegistration⟩
   correspondence := { stage := .evidence, objectStage := .evidence }
   bundleNonempty := .absent
-  readout := some (realize signature (fun _ p e => compile p.definitions p.mode e)
+  readout := some (realize signature (fun _ p e => compile p.2.2.1 p.2.2.2 e)
     (fun e => nomatch e))
   variation := .absent
   sensitivity := .absent
@@ -104,9 +118,14 @@ noncomputable def registration :
   sourceSelection := some {
     owner := `D5.S3.Arith.FibonacciAtomic.Observer.Constructor.OriginalFiniteResolution
     definition := none
-    coordinates := #[]
+    coordinates := #[0, 1, 2, 3]
     readouts := #[{
-      path := #["body", "body", "body", "body", "arg", "fn", "arg", "body", "fn", "arg", "fn", "arg", "arg"]
+      path := #["body", "body", "body", "body", "fn", "arg", "body", "fn", "arg", "fn", "arg", "arg", "fn"]
+      stateBinder := 0
+      functionOperand := true
+      stateOperand := none
+      booleanPredicate := false }, {
+      path := #["body", "body", "body", "body", "arg", "body", "body", "domain", "fn", "arg", "fn"]
       stateBinder := 0
       functionOperand := true
       stateOperand := none

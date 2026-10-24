@@ -14,7 +14,7 @@ internal sealed class OriginalFiniteResolutionDocument : IScribeDocumentDefiniti
                     Paragraph(Text("FiniteExpr contains finite grounds, parameter atoms, fixed powers and ordered pairs. finiteValue evaluates it in the existing finite Source. The function resolve substitutes successful finite expressions for state occurrences; a free state or an Omega token prevents resolution. Starting from an empty environment, each round resolves all original defining expressions simultaneously. A successful expression is preserved in every later round. Every nonstationary round adds a state to the finite support, so the environment is stationary after the number of original states. compile uses this derived bound and then resolves the supplied original expression.")),
                     Paragraph(Text("FiniteDerivation is an independent inductive syntactic relation. Its rules are finite grounds, finite-mode tokens, expansion through an actual original defining equation, and ordered pairing. The first conclusion proves that the terminating compiler succeeds exactly on this relation. Neither the relation nor the compiler inspects natural parameter values or semantic finiteness. The second conclusion proves that every successful finite expression denotes the exact original value in every solution, uniformly over all natural parameter assignments. The original expression may be any coordinate reconstruction, and retains every repeated occurrence and shared name.")),
                     Paragraph(Text("Nat includes zero. Definitions and parameter tuples may have empty domains; constants still resolve. Parameter atoms are never compared, expanded or bounded during resolution. Equal atoms, collapsing atomic pairs and repeated states require no special exclusions because the interpretation uses actual Source trees, the native embedding and actual rho. The formula uses Mode(k), RankTuple(k) and CompletionTuple(m) for functions from Fin(k) to Bool, from Fin(k) to Nat and from Fin(m) to CompletionTree, respectively. compile and FiniteDerivation take the original definitions E and mode b. This theorem asserts finite resolution and its rigidity; it does not assert existence of a solution or identify the unresolved expressions with infinite canonical values.")),
-                    Paragraph(Text("The support argument is a finite fixed-point argument on symbolic information. The semantic induction uses native rho preservation of the finite Source embedding. The result is uniform mathematical completeness and soundness of symbolic resolution, rather than a certified finite instance. No external novelty claim is made."))
+                    Paragraph(Text("The support argument is a finite fixed-point argument on symbolic information. The semantic induction uses native rho preservation of the finite Source embedding. The result gives uniform completeness and soundness of symbolic resolution. No external novelty claim is made."))
                 ), DescribeRole.Theorem)
         )));
 
@@ -23,19 +23,15 @@ internal sealed class OriginalFiniteResolutionDocument : IScribeDocumentDefiniti
         var k = V("k"); var m = V("m"); var e = V("e"); var f = V("f");
         var p = V("p"); var v = V("v"); var d = V("E"); var b = V("b");
         var compiled = Call("compile", d, b, e);
-        return StatementSource.FromAuthor(Disp(
-            All("k", V("Nat"), All("m", V("Nat"),
-            All("E", Call("Definitions", k, m), All("b", Call("Mode", k),
-            And(
-                All("e", Call("Expr", k, m), IffOf(
-                    EqOf(Call("isSome", compiled), V("true")),
-                    Call("FiniteDerivation", d, b, e))),
-                All("e", Call("Expr", k, m), All("f", Call("FiniteExpr", k),
-                    Imp(EqOf(compiled, Call("some", f)),
-                    All("p", Call("RankTuple", k), All("v", Call("CompletionTuple", m),
+        var syntax = All("e", Call("Expr", k, m), IffOf(
+            EqOf(Call("isSome", compiled), V("true")), Call("FiniteDerivation", d, b, e)));
+        var sound = All("e", Call("Expr", k, m), All("f", Call("FiniteExpr", k),
+            Imp(EqOf(compiled, Call("some", f)),
+                All("p", Call("RankTuple", k), All("v", Call("CompletionTuple", m),
                     Imp(Call("Solution", d, b, p, v),
-                        EqOf(Call("value", b, p, v, e),
-                            Call("embed", Call("finiteValue", p, f)))))))))))))));
+                        EqOf(Call("value", b, p, v, e), Call("embed", Call("finiteValue", p, f))))))));
+        return StatementSource.FromAuthor(Disp(All("k", V("Nat"), All("m", V("Nat"),
+            All("E", Call("Definitions", k, m), All("b", Call("Mode", k), And(syntax, sound))))));
     }
 
     private static Formula V(string name) => F.Id(name);
