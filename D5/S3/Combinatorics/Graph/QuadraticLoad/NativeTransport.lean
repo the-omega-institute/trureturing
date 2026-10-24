@@ -30,14 +30,12 @@ private theorem pullback_load_le (f : V → W) (hi : Function.Injective f)
     load G (fun v w => a (f v) (f w)) v ≤ load H a (f v) := by
   classical
   unfold load
-  rw [← sum_image (fun x _ y _ h => hi h)]
-  apply sum_le_sum_of_subset_of_nonneg
-  · intro w hw
-    obtain ⟨u, hu, rfl⟩ := mem_image.mp hw
-    exact (H.mem_neighborFinset _ _).mpr (hf _ _ ((G.mem_neighborFinset _ _).mp hu))
-  · intro w hw hn
-    exact sq_nonneg _
-
+  change (∑ c ∈ G.neighborFinset v, (a (f v) (f c)) ^ 2) ≤ _
+  calc
+    _ = ∑ c ∈ (G.neighborFinset v).image f, (a (f v) c) ^ 2 :=
+      (sum_image (fun x _ y _ h => hi h)).symm
+    _ ≤ _ := by
+    
 /-- Every ambient allocation restricts to the injectively embedded native graph. -/
 theorem kappa_le_of_injective_hom (f : V → W) (hi : Function.Injective f)
     (hf : ∀ v w, G.Adj v w → H.Adj (f v) (f w)) : kappa G ≤ kappa H := by
@@ -63,7 +61,7 @@ private theorem box_feasible (a : V → V → ℝ) (b : W → W → ℝ)
     unfold boxAllocation
     split_ifs <;> [exact hb.1 _ _; exact ha.1 _ _]
   · intro x y hxy
-    rcases hxy with ⟨hg, he⟩ | ⟨he, hh⟩
+    rcases hxy with ⟨hg, he⟩ | ⟨hh, he⟩
     · have hn := hg.ne
       simp only [boxAllocation, if_neg hn, if_neg hn.symm]
       exact ha.2 _ _ hg
@@ -149,6 +147,7 @@ private theorem exists_lower_law : ∃ p ∈ stdSimplex ℝ V,
     fun_prop
   have hd (a : V → V → ℝ) : Continuous (payoff G a) := by unfold payoff; fun_prop
   obtain ⟨a, ha, p, hp, hsp⟩ := Sion.exists_isSaddlePointOn
+    (X := {a : V → V → ℝ | Feasible G a}) (Y := stdSimplex ℝ V) (f := payoff G)
     ⟨_, half_feasible G⟩ (feasible_convex G) (feasible_compact G)
     (fun p hp => (hc p).continuousOn.lowerSemicontinuousOn)
     (fun p hp => (payoff_convex G p hp).quasiconvexOn)
@@ -182,7 +181,7 @@ theorem kappa_box : kappa (G □ H) = kappa G + kappa H := by
       exact Or.inl ⟨he, rfl⟩
     have hright (v : V) : Feasible H (fun w w' => A (v,w) (v,w')) := by
       refine ⟨fun w w' => hA.1 _ _, fun w w' he => hA.2 _ _ ?_⟩
-      exact Or.inr ⟨rfl, he⟩
+      exact Or.inr ⟨he, rfl⟩
     have hsplit (v : V) (w : W) : load (G □ H) A (v,w) =
         load G (fun v v' => A (v,w) (v',w)) v +
         load H (fun w w' => A (v,w) (v,w')) w := by
