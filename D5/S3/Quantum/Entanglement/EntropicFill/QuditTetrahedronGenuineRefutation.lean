@@ -82,8 +82,63 @@ private def psi (x : Fin 4 → Fin 8) : ℂ := by
   classical
   exact if supported x then ((Real.sqrt 8)⁻¹ : ℝ) else 0
 
+open scoped Classical
+
+private def label (t : Fin 8) : Fin 4 → Fin 8 :=
+  ![t, ⟨t.val / 4, by omega⟩, ⟨t.val / 2 % 2, by omega⟩, ⟨t.val % 2, by omega⟩]
+
+private theorem label_supported (t : Fin 8) : supported (label t) := by
+  dsimp [supported, label]
+  omega
+
+private theorem label_reconstruct (x : Fin 4 → Fin 8) (hx : supported x) :
+    label (x 0) = x := by
+  dsimp [supported] at hx
+  funext i
+  fin_cases i <;> apply Fin.ext <;> simp [label] <;> omega
+
+private theorem sum_supported {α : Type*} [AddCommMonoid α]
+    (f : (Fin 4 → Fin 8) → α) :
+    (∑ x, if supported x then f x else 0) = ∑ t : Fin 8, f (label t) := by
+  classical
+  rw [← Finset.sum_filter]
+  symm
+  refine Finset.sum_bij (fun t _ => label t) ?_ ?_ ?_ (fun _ _ => rfl)
+  · intro t _
+    simp only [Finset.mem_filter, Finset.mem_univ, true_and]
+    exact label_supported t
+  · intro t _ u _ h
+    simpa [label] using congrFun h 0
+  · intro x hx
+    exact ⟨x 0, Finset.mem_univ _, label_reconstruct x (Finset.mem_filter.mp hx).2⟩
+
+private theorem amplitude_square :
+    ((Real.sqrt 8)⁻¹ : ℝ) ^ 2 = 1 / 8 := by
+  rw [inv_pow, Real.sq_sqrt (by norm_num)]
+  norm_num
+
+private theorem supported_update (x : Fin 4 → Fin 8) (hx : supported x)
+    (i : Fin 4) (a : Fin 8) : supported (Function.update x i a) ↔ a = x i := by
+  constructor
+  · intro hy
+    dsimp [supported] at hx hy
+    fin_cases i <;> apply Fin.ext <;>
+      norm_num [Function.update_apply] at hy ⊢ <;> omega
+  · rintro rfl
+    simpa only [Function.update_eq_self] using hx
+
 private theorem normalized : ∑ x, ‖psi x‖ ^ 2 = 1 := by
-  sorry
+  classical
+  calc
+    _ = ∑ x, if supported x then (1 / 8 : ℝ) else 0 := by
+      apply Finset.sum_congr rfl
+      intro x _
+      by_cases hx : supported x
+      · simp only [psi, ite_eq_left hx, Complex.norm_real, Real.norm_eq_abs, sq_abs]
+        exact amplitude_square
+      · simp [psi, hx]
+    _ = ∑ _t : Fin 8, (1 / 8 : ℝ) := sum_supported (fun _ => (1 / 8 : ℝ))
+    _ = 1 := by norm_num
 
 private theorem marginal_A : rho1 psi 0 = Matrix.diagonal (fun _ => (1 / 8 : ℂ)) := by
   sorry
