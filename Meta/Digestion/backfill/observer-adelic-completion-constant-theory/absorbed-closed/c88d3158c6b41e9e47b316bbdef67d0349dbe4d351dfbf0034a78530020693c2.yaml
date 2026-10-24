@@ -1,9 +1,0 @@
-fingerprints:
-  raw_sha256: sha256:c88d3158c6b41e9e47b316bbdef67d0349dbe4d351dfbf0034a78530020693c2
-  normalized_sha256: sha256:c88d3158c6b41e9e47b316bbdef67d0349dbe4d351dfbf0034a78530020693c2
-cas_ref: sha256:c88d3158c6b41e9e47b316bbdef67d0349dbe4d351dfbf0034a78530020693c2
-coverage_gids:
-  - gid: D5/S3/Weil/Scattering/ShiftedXiObservationLayers.shifted_xi_observation_layers
-    target_statement_id: sha256:a10a390890e4ef657e91233b1f641854df5c1984b18b68bb2708ed9950c0d0bb
-receipts:
-  unresolved_subitems: []

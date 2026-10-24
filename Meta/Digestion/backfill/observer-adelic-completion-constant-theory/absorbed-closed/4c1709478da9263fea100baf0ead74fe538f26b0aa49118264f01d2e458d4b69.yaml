@@ -1,9 +1,0 @@
-fingerprints:
-  raw_sha256: sha256:4c1709478da9263fea100baf0ead74fe538f26b0aa49118264f01d2e458d4b69
-  normalized_sha256: sha256:4c1709478da9263fea100baf0ead74fe538f26b0aa49118264f01d2e458d4b69
-cas_ref: sha256:4c1709478da9263fea100baf0ead74fe538f26b0aa49118264f01d2e458d4b69
-coverage_gids:
-  - gid: D5/S3/Observer/HyperbolicTransport/GoldenHyperbolicInflation.golden_visible_hidden_hyperbolic_transport
-    target_statement_id: sha256:e51e6a46135c5e0bf1c0398e752887f4dc3d3c3a134aa460d04ac8997e5576d7
-receipts:
-  unresolved_subitems: []

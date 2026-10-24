@@ -1,9 +1,0 @@
-即使 $p$ 完整恢复，完整未来还可能依赖：
-
-- hidden depth；
-- phase；
-- active/pending/delivered 边界；
-- chronology；
-- selected-count bank；
-- native continuation 的高阶关系。
-

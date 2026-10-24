@@ -1,9 +1,0 @@
-fingerprints:
-  raw_sha256: sha256:fdfe26e3cf8a09f67410a910f6c22cbdff98617484392d8df6e22efcda10352b
-  normalized_sha256: sha256:fdfe26e3cf8a09f67410a910f6c22cbdff98617484392d8df6e22efcda10352b
-cas_ref: sha256:fdfe26e3cf8a09f67410a910f6c22cbdff98617484392d8df6e22efcda10352b
-coverage_gids:
-  - gid: D5/S1/Recurrence/Witt/PrimitiveEulerLedger.unique_primitive_euler_ledger
-    target_statement_id: sha256:d165385fc17ed8b6f40903b9a54d714049fa6c69196e3426b06a84e1c43430a7
-receipts:
-  unresolved_subitems: []

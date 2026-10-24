@@ -1,7 +1,0 @@
-## 3. Observation time as a fiber boundary
-
-`D5/S3/ObserverMemory/FourierFibers/ObservationTime.lean`
-
-reuses the repository's canonical future-readout and separation-time definitions. For an eventually separated pair:
-
-- every readout before `separationTime` agrees;

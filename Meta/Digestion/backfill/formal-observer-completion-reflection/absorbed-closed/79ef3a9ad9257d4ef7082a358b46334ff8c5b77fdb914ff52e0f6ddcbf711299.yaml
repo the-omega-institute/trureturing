@@ -1,9 +1,0 @@
-fingerprints:
-  raw_sha256: sha256:79ef3a9ad9257d4ef7082a358b46334ff8c5b77fdb914ff52e0f6ddcbf711299
-  normalized_sha256: sha256:79ef3a9ad9257d4ef7082a358b46334ff8c5b77fdb914ff52e0f6ddcbf711299
-cas_ref: sha256:79ef3a9ad9257d4ef7082a358b46334ff8c5b77fdb914ff52e0f6ddcbf711299
-coverage_gids:
-  - gid: D5/S3/ConceptDynamics/OperationalOntology/DuplicateActionLabelInvariance.duplicate_action_labels_preserve_effective_space
-    target_statement_id: sha256:62aa2157b735e11a34a5ce32dd7c999dcba5a163cbbbe351bdb51a022182906b
-receipts:
-  unresolved_subitems: []

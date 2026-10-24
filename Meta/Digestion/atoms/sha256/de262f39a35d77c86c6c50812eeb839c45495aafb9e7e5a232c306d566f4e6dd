@@ -1,8 +1,0 @@
-**Theorem 7.1 (mixed-radicand prime saturation).** Use the hypotheses and
-notation of Theorem 1.1, and write
-$S=\mathbb Z\cdot1+\mathbb Z\cdot\alpha+\mathbb Z\cdot\gamma$.
-Let $p$ be a positive prime satisfying one of the following conditions:
-
-1. $p\mid mn^2$, $p^2\nmid mn^2$, and $p$ is coprime to $3n$;
-2. $p\mid m^2n$, $p^2\nmid m^2n$, and $p$ is coprime to $3m$.
-

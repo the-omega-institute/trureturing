@@ -1,9 +1,0 @@
-fingerprints:
-  raw_sha256: sha256:d403ae7e55453b5e3273387b4bb47c762a297e10fce1f52efb10376e26d0dd79
-  normalized_sha256: sha256:d403ae7e55453b5e3273387b4bb47c762a297e10fce1f52efb10376e26d0dd79
-cas_ref: sha256:d403ae7e55453b5e3273387b4bb47c762a297e10fce1f52efb10376e26d0dd79
-coverage_gids:
-  - gid: D5/S3/ConceptDynamics/Provenance/FiniteProofGraphSourceSemantics.source_semantic_iff_valid_source_path
-    target_statement_id: sha256:cd95a99085337242fc9d26a41759adb2b533eff159fd227a5c7b434c1eb35a79
-receipts:
-  unresolved_subitems: []

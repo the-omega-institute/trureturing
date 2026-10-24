@@ -1,9 +1,0 @@
-fingerprints:
-  raw_sha256: sha256:a70ef1aaae2d45e827b5f6903c382cb18f7b2ea4881c6ccee89c8c75717ec461
-  normalized_sha256: sha256:a70ef1aaae2d45e827b5f6903c382cb18f7b2ea4881c6ccee89c8c75717ec461
-cas_ref: sha256:a70ef1aaae2d45e827b5f6903c382cb18f7b2ea4881c6ccee89c8c75717ec461
-coverage_gids:
-  - gid: D5/S3/ConceptDynamics/Dependency/BasicDependencyRules.basic_dependency_rules
-    target_statement_id: sha256:443a1984787e461c099f6fe233eae90b948b4e97e644ea9ce77c45906596fe44
-receipts:
-  unresolved_subitems: []

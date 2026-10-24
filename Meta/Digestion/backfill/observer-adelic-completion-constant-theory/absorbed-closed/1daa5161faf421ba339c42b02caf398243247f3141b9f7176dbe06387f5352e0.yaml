@@ -1,9 +1,0 @@
-fingerprints:
-  raw_sha256: sha256:1daa5161faf421ba339c42b02caf398243247f3141b9f7176dbe06387f5352e0
-  normalized_sha256: sha256:1daa5161faf421ba339c42b02caf398243247f3141b9f7176dbe06387f5352e0
-cas_ref: sha256:1daa5161faf421ba339c42b02caf398243247f3141b9f7176dbe06387f5352e0
-coverage_gids:
-  - gid: D5/S3/Weil/GoldenCriticalSpectrum/GoldenSamplingAtom.golden_sampling_atom_modulus_and_location
-    target_statement_id: sha256:02ca2cfa1d837744bc3bec19343c4ebae26ecf6aee6bdd25aec90d19bfb66a12
-receipts:
-  unresolved_subitems: []

@@ -1,8 +1,0 @@
-**定义 3.1（单值矩阵）。** 设 $v$ 是 $C_L$ 上的势,$j$ 是站点。站点 $j$ 处的单值矩阵是
-
-$$
-M_j=T(d_{j+L})\,T(d_{j+L-1})\cdots T(d_{j+1})=\begin{pmatrix}\alpha_j&\beta_j\\ \gamma_j&\delta_j\end{pmatrix},
-$$
-
-下标按模 $L$ 理解,故最左的因子是 $T(d_j)$。其中 $\alpha_j,\beta_j,\gamma_j,\delta_j\in\mathbb R[\lambda,t]$,且 $\det M_j=1$。
-

@@ -1,6 +1,0 @@
-这条链应只依赖仓库已有：
-
-- `ItineraryCompletion`；
-- `ControlledBehaviorUniversality`；
-- quotient / product setoid 基础。
-

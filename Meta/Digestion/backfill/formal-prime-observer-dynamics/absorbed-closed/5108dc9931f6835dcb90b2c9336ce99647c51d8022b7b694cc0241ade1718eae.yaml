@@ -1,9 +1,0 @@
-fingerprints:
-  raw_sha256: sha256:5108dc9931f6835dcb90b2c9336ce99647c51d8022b7b694cc0241ade1718eae
-  normalized_sha256: sha256:5108dc9931f6835dcb90b2c9336ce99647c51d8022b7b694cc0241ade1718eae
-cas_ref: sha256:5108dc9931f6835dcb90b2c9336ce99647c51d8022b7b694cc0241ade1718eae
-coverage_gids:
-  - gid: D5/S3/Estimation/DecisionRisk/PosteriorStoppingMapErrorBound.posterior_stopping_map_error_bound
-    target_statement_id: sha256:f61e316d70105da23b28445bedcc0ce3b39783696cb02b28e243dd19e0065971
-receipts:
-  unresolved_subitems: []

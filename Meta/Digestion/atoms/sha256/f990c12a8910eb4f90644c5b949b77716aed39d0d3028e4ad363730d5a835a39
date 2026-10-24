@@ -1,7 +1,0 @@
-## 7. Prime locality and golden depth are transverse coordinates
-
-`D5/S3/ObserverMemory/Refinement/ProductCoordinateTransversality.lean`
-
-formalizes a carrier `Local x Layer`. It proves:
-
-- a fixed local fiber and fixed layer fiber meet in one state;
