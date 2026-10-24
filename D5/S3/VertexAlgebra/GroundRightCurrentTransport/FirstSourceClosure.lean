@@ -38,7 +38,9 @@ private theorem native_product_at_locality
   have z0 : Z 0 (targetSlice D hu a gamma) = targetSlice D hu a gamma := by
     apply HVertexOperator.coeff_inj
     funext e
-    simp only [VertexOperator.coeff_eq_ncoeff, Z, VertexOperator.ncoeff_of_coeff, add_zero]
+    change (targetSlice D hu a gamma).coeff (e + 0) =
+      (targetSlice D hu a gamma).coeff e
+    rw [add_zero]
   change Valid (Z 0 (targetSlice D hu a gamma)) (targetSlice D hu b delta) KN at valid
   rw [z0] at valid
   change Q (targetSlice D hu a gamma) (targetSlice D hu b delta) gamma r KN =
