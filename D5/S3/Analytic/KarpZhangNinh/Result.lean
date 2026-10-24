@@ -160,6 +160,8 @@ private theorem Z_monotoneOn (m : ℕ) (hm : 2≤m) {S : ℝ} (hS : 0≤S) :
       (Set.Ioc 0 (1/2)) from (Homogeneous.strictMonoOn_slice m hm).monotoneOn) hS
   intro x hx y hy hxy
   have he := H hx hy hxy
+  change Beta.lift (Homogeneous.coeff (3*m)) (3*m) x (S-x) ≤
+    Beta.lift (Homogeneous.coeff (3*m)) (3*m) y (S-y) at he
   rw [lift_normalization, lift_normalization] at he
   exact (mul_le_mul_left (by positivity : (0:ℝ)<((3*m).factorial:ℝ))).mp he
 
@@ -183,6 +185,7 @@ private theorem full_tail_nonneg (m : ℕ) {μ α β : ℝ}
     have H := Z_monotoneOn m hm hS
       (show μ ∈ Set.Icc 0 (S/2) from ⟨hμ, hμs.trans hs⟩)
       (show s ∈ Set.Icc 0 (S/2) from ⟨hμ.trans hμs,hs⟩) hμs
+    change Z m μ (S-μ) ≤ Z m s (S-s) at H
     have hleft : S-μ=μ+α+β := by dsimp [S]; ring
     rw [hleft] at H
     have hright : Z m s (S-s) = Z m (μ+α) (μ+β) := by
@@ -203,7 +206,7 @@ private theorem tail_nonneg_pos (m q : ℕ) (hq : 2*q≤m) {μ α β : ℝ}
   · have he (k : ℕ) (hk : k≤m/2) : pair (raw μ α β m) m k = paired μ α β m k := by
       unfold pair paired
       have hh : 2*k≤m := by omega
-      split_ifs <;> try omega <;> rfl
+      split_ifs <;> (first | rfl | omega)
     intro i hi j hj hij hpi
     rw [he i hi] at hpi
     rw [he j hj]
@@ -217,7 +220,7 @@ private theorem tail_nonneg (m q : ℕ) (hq : 2*q≤m) {μ α β : ℝ}
     0≤∑ i ∈ range (m-q-q+1), raw μ α β m (q+i) := by
   have hc : Continuous (fun e : ℝ =>
       ∑ i ∈ range (m-q-q+1), raw (μ+e) (α+e) (β+e) m (q+i)) := by
-    apply continuous_finset_sum
+    apply continuous_finsetSum
     intro i hi
     have hmc : Continuous (fun e : ℝ => μ+e) := continuous_const.add continuous_id
     have hac : Continuous (fun e : ℝ => α+e) := continuous_const.add continuous_id
@@ -227,7 +230,7 @@ private theorem tail_nonneg (m q : ℕ) (hq : 2*q≤m) {μ α β : ℝ}
         (((a_continuous _).comp hmc).mul
           ((a_continuous _).comp ((hmc.add hac).add hbc)))
   have ht := hc.continuousAt.tendsto.mono_left (show 𝓝[>] (0:ℝ) ≤ 𝓝 0 from inf_le_left)
-  apply le_of_tendsto (by simpa only [add_zero] using ht)
+  apply ge_of_tendsto (by simpa only [add_zero] using ht)
   filter_upwards [self_mem_nhdsWithin] with e he
   exact tail_nonneg_pos m q hq (by linarith) (by linarith) (by linarith)
 
