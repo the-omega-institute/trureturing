@@ -62,6 +62,10 @@ $$\exists (p: \operatorname{Polynomial}\left(\mathbb{N}\right)), \forall (A: \op
 
 *Proof.* Machine-checked in Lean as `D5/S1/Recurrence/GallardoRahavandrainyCollatzLengthBound.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/arxiv-2510-07530-gallardo-rahavandrainy-collatz-length-bound` (proved) by `D5/S1/Recurrence/GallardoRahavandrainyCollatzLengthBound.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"arxiv-2510-07530-gallardo-rahavandrainy-collatz-length-bound","declaration_gid":"D5/S1/Recurrence/GallardoRahavandrainyCollatzLengthBound.result","resolution_kind":"proved"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* Luis H. Gallardo and Olivier Rahavandrainy (2025). *A variant of Collatz's Conjecture over Binary Polynomials*. DOI: [10.48550/arXiv.2510.07530](https://doi.org/10.48550/arXiv.2510.07530). URL: <https://arxiv.org/abs/2510.07530v1>.
