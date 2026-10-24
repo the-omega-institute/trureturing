@@ -166,7 +166,7 @@ worktree-finalize: export PUBLICATION_BRANCH := $(value HEAD)
 worktree-finalize: export FINALIZATION_JOINED := $(value WRITERS_JOINED)
 
 worktree-return:
-	@test "$$RETURN_JOINED" = 1 || { echo 'Host must join this task writers before return' >&2; exit 64; }; dotnet run --project tools/StrataLint.Cli/StrataLint.Cli.csproj --configuration Release -- worktree return --pr "$$RETURN_PR" --writers-joined
+	@test -n "$$RETURN_PR" || { echo 'PR is required for return' >&2; exit 64; }; test "$$RETURN_JOINED" = 1 || { echo 'Host must join this task writers before return' >&2; exit 64; }; dotnet run --project tools/StrataLint.Cli/StrataLint.Cli.csproj --configuration Release -- worktree return --pr "$$RETURN_PR" --writers-joined
 worktree-return: export RETURN_PR := $(value PR)
 worktree-return: export RETURN_JOINED := $(value WRITERS_JOINED)
 
