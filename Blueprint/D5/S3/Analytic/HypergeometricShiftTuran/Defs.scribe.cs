@@ -4,6 +4,9 @@ namespace StrataLint.Scribe.Blueprint.D5.S3.Analytic.HypergeometricShiftTuran;
 
 internal sealed class DefsDocument : IScribeDocumentDefinition
 {
+    private static readonly LibraryNoteRef Source =
+        LibraryNoteRef.Create("D5/L/Asymptotics/kalmykovkarp2017pfq");
+
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "Gamma product ratios and shifted Turanian coefficients.",
         H("The coefficient nonnegativity assertion"), Blocks(
@@ -21,6 +24,6 @@ internal sealed class DefsDocument : IScribeDocumentDefinition
     private static DocumentBlock Entry(string id, string name, string title, string text) =>
         Describe.Lean(DescribeId.Create(id),
             DeclarationHandle.Create("D5/S3/Analytic/HypergeometricShiftTuran/Defs." + name),
-            H(title), StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
+            H(title), StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(Source),
             Blocks(Paragraph(Text(text))), DescribeRole.Definition);
 }
