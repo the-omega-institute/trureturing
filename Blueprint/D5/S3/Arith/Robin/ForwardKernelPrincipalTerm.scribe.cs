@@ -15,8 +15,7 @@ internal sealed class ForwardKernelPrincipalTermDocument : IScribeDocumentDefini
                 DeclarationHandle.Create(Prefix + "principal_signed_tendsto"),
                 H("The complete signed principal limit"),
                 StatementSource.WithoutFormula(),
-                AssessedProvenance.FromRepo(
-                    LibraryNoteRef.Create("D5/L/Weil/nist2026criticalzeros")),
+                AssessedProvenance.FromRepo(),
                 Blocks(Paragraph(Text(
                     "For Re(s)>1/2, take the sum of Lambda(n)*n^(-s-1/2)/2 "
                     + "over 0<=n<=floor(b), and subtract the integral of t^(-s-1/2)/2 "
