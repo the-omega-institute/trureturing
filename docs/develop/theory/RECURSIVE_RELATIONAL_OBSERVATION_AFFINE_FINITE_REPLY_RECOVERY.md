@@ -3308,3 +3308,410 @@ unchanged-initialization and full relational-process objectives retain
 their stated open obligations.
 
 ## 追加锚（本行以下为增补区）
+
+## 19. Fresh private randomness at every finite complete handoff
+
+**Definition 19.1 (randomized complete-state origin experiment).** Keep
+Definition 11.1's entire raw source, delivery relation and canonical
+framing. A complete lawful world is
+
+$$
+\begin{aligned}
+W&=(\tau,A,B,\eta,k_0,k_1,k_2,k_3),\\
+\tau&\in[-4,1],\quad A\ge1,\quad A,B\in\mathbb R,\quad
+\eta\in[-1,1]^4,\\
+y_i&=A(i+\tau)^2+B+\eta_i,\qquad
+k_i\in\mathbb Z,\qquad |k_i/256-y_i|\le1/256
+\quad(0\le i\le3).
+\end{aligned}
+\tag{RC.1}
+$$
+
+All parameters are finite reals where applicable. The entire $W$,
+including errors and deliveries at unread indices, is fixed before
+all receiver randomness. The source supplies the fixed report for a
+requested index; it cannot change $W$ in response to coins or requests.
+Each acquired frame contains exactly the side tag, requested index,
+precision tag $8$, canonical signed binary integer $k_i$, delimiter
+and completion specified in Definition 11.1. Frame length is not
+bounded. There is no further variable field or informative delivery
+schedule.
+
+Fix a receiver $\mathcal R$ and its public operands independently of
+$W$. It reads exactly three side frames at strictly increasing indices
+$0,u,v$, where $u\in\{1,2\}$ and $v\in\{u+1,\ldots,3\}$. The
+indices may be chosen adaptively. At every handoff after a frame has
+been processed and before another report is requested, the receiver
+has one fixed finite nonempty complete usable carrier $Q$. Its initial
+state has a fixed distribution $\lambda$ on $Q$, independent of $W$.
+The stage, legal next index, controller and all other persistent
+quantities usable by future requests or answers factor through $Q$
+and the fixed public operands. Finite controller bookkeeping is
+charged to this carrier. In particular a randomized next-index choice
+is included in the retained state, so equal complete states at the
+same stage prescribe the same actual next index.
+
+At a frame the receiver uses a stochastic kernel from its current
+state, stage/index and that actual complete frame to a probability
+distribution on $Q$. The kernel may depend arbitrarily on the discrete
+frame. Fresh private randomness is independent of $W$ and of previous
+randomness conditional on the retained state and actual acquired
+input. No future influence of past randomness is available except
+through the new state. Every future-usable record, archive, backing
+store, length, address, informative timing or schedule, source write,
+persistent seed and retained random history is counted in $Q$, with
+the completeness meaning of Definition 15.1. There is no extra report,
+reset, copy, rereading of erased data, uncounted reusable random tape,
+source-dependent advice or physical timing channel. Neither an exact
+real input port nor an additional source service is supplied. Each
+reached frame is processed by arbitrary terminating local work, with
+variable transient scratch permitted. This bounds handoff states,
+not every intermediate configuration, frame length or total runtime.
+
+The final answer $T\in[-4,1]$ has any probability kernel $H(q,\cdot)$
+on the Borel subsets of $[-4,1]$, depending only on the final state
+$q\in Q$ and fixed public operands. Its randomization is included in
+the expectation below; the last input frame or erased transcript is
+not an additional final operand. Define
+
+$$
+\operatorname{Risk}(\mathcal R)
+   =\sup_{W\text{ satisfying }\mathrm{(RC.1)}}
+       \mathbb E_{\mathcal R,W}|T-\tau|.
+\tag{RC.2}
+$$
+
+Each receiver has its own fixed $Q$ throughout this supremum. There
+is no common bound on $|Q|$ across receivers. The expectation is over
+that receiver's initial distribution, frame randomization and final
+kernel for a fixed complete world, not over a world selected after
+seeing the coins.
+
+**Theorem 19.2 (randomized all-handoff origin minimax).** For the
+experiment of Definition 19.1,
+
+$$
+\inf_{\mathcal R}\operatorname{Risk}(\mathcal R)=\frac52.
+\tag{RC.3}
+$$
+
+More precisely, for every such $\mathcal R$ and every $\varepsilon>0$
+there are two complete worlds $W_-,W_+$, fixed before its coins, with
+$\tau_-=-4$, $\tau_+=1$, zero raw errors, a common integer gain
+$A\ge1$, a common integer offset $B$ and exact canonical integer
+reports, for which
+
+$$
+\max\left\{
+ \mathbb E_{\mathcal R,W_-}|T+4|,
+ \mathbb E_{\mathcal R,W_+}|T-1|
+\right\}\ge\frac52-\varepsilon.
+\tag{RC.4}
+$$
+
+The value in (RC.3) is attained by the constant-answer receiver of
+Theorem 15.2. The endpoint worlds in (RC.4) may depend on the receiver
+and $\varepsilon$; no endpoint pair is asserted to work for all
+receivers or all precisions.
+
+**Proof.** Fix $\mathcal R$, its public operands and $\varepsilon>0$.
+Enumerate its complete states as $Q=\{q_1,\ldots,q_m\}$, including
+all the charged control fields. For an integer $x$, write $\Phi_i(x)$
+for the complete canonical frame at index $i$ with payload $256x$.
+It is exactly a lawful delivery of the raw value $x$. For
+$j\in\{1,2,3\}$ and $i\in\{0,1,2,3\}$, let
+
+$$
+K_{j,i}(q,x)\in\Delta(Q)
+\tag{RC.5}
+$$
+
+be the distribution of the next complete cut state when frame
+$\Phi_i(x)$ is processed from state $q$ at read number $j$.
+These are the actual stochastic rows, including randomized control
+updates. There are only $12m$ row positions $(j,i,q)$, although each
+row can depend arbitrarily on $x$.
+
+A row belonging to an inconsistent or unreachable state/stage/input
+combination may lack an operational meaning. At any such combination
+where there is no specified normalized terminating row, assign the
+fixed distribution concentrated at $q_1$. This is only a totalization
+for the coloring, not a new source behavior. On every combination
+reached with positive probability in a lawful run use the receiver's
+actual normalized row, as required by Definition 19.1. Thus all rows
+in (RC.5), including defaults, are probability distributions. A
+possibly nonterminating off-path computation is not turned into a
+subprobability row. No default replaces a row on a lawful run or
+changes its next-index legality.
+
+Choose an integer $N\ge1$ such that
+
+$$
+\frac{15(m-1)}{2N}\le\varepsilon,
+\qquad \delta=\frac{m-1}{N}.
+\tag{RC.6}
+$$
+
+For a probability vector $p=(p_1,\ldots,p_m)$ define its finite
+simplex code by
+
+$$
+\begin{aligned}
+a_r(p)&=\lfloor Np_r\rfloor\quad(1\le r<m),\\
+a_m(p)&=N-\sum_{r<m}a_r(p),\qquad
+\widehat p_r=a_r(p)/N.
+\end{aligned}
+\tag{RC.7}
+$$
+
+The integers $a_r$ are nonnegative and sum to $N$, so $\widehat p$
+is a probability vector in a finite simplex grid. Moreover
+$d_{\rm TV}(p,\widehat p)\le(m-1)/N$: the first $m-1$
+coordinates are rounded down by less than $1/N$, and their total
+rounding deficit is exactly the last coordinate's excess. If $p,p'$
+have the same code, each of their first $m-1$ coordinate differences
+has absolute value at most $1/N$, and
+
+$$
+\begin{aligned}
+|p_m-p'_m|&\le\sum_{r<m}|p_r-p'_r|,\\
+d_{\rm TV}(p,p')
+ &=\frac12\sum_{r=1}^m|p_r-p'_r|
+ \le\sum_{r<m}|p_r-p'_r|\le\delta.
+\end{aligned}
+\tag{RC.8}
+$$
+
+When $m=1$ the code is $(N)$, every row is the same point mass and
+$\delta=0$. Thus (RC.8) also covers this case. In particular the
+same-cell bound is obtained directly, without adding two errors
+from comparison with a grid representative.
+
+Color each integer by all its row codes at once:
+
+$$
+C_N(x)=\bigl(a(K_{j,i}(q,x))\bigr)_{j,i,q}.
+\tag{RC.9}
+$$
+
+There are finitely many colors: each code has $m$ integer coordinates
+between $0$ and $N$, and there are $12m$ row positions. Equal colors
+therefore give the uniform estimate
+
+$$
+C_N(x)=C_N(x')\quad\Longrightarrow\quad
+ d_{\rm TV}\bigl(K_{j,i}(q,x),K_{j,i}(q,x')\bigr)\le\delta
+ \quad\text{for every }j,i,q.
+\tag{RC.10}
+$$
+
+This finite coloring concerns complete-frame transition laws, not
+frame bytes, lengths, parsing paths or individual coin realizations.
+It requires no regularity of the kernels as functions of the integer
+input.
+
+Use the classical homothetic-copy supplier already attributed in
+Definition 18.1 to this coloring of $\mathbb Z$ and
+$S=\{0,1,4,9,16\}$. Its parameters are the coloring $C_N$, the
+additive monoid $\mathbb Z$ and this five-element $S$. The positive
+natural dilation and integer translation supplied by
+`Combinatorics.exists_mono_homothetic_copy` at the mathlib revision
+specified there are denoted $a\ge1$ and $b\in\mathbb Z$. Thus
+$C_N$ is constant on $b+aS$. Equivalently, Gasarch's
+[Theorem 0.4.1 and Section 0.8](https://www.cs.umd.edu/~gasarch/TOPICS/vdw/hj.pdf)
+supply the finite-alphabet combinatorial line, with the
+sum-of-letters specialization in the proof of Theorem 15.2 giving
+this signed-integer copy. This is a reuse of that classical supplier
+inside the clock argument.
+
+Set, simultaneously for all four indices,
+
+$$
+\begin{aligned}
+W_-&=(-4,a,b,0,k^-_0,k^-_1,k^-_2,k^-_3),&
+k^-_i&=256\bigl(b+a(i-4)^2\bigr),\\
+W_+&=(1,a,b,0,k^+_0,k^+_1,k^+_2,k^+_3),&
+k^+_i&=256\bigl(b+a(i+1)^2\bigr).
+\end{aligned}
+\tag{RC.11}
+$$
+
+Here $0$ denotes the four-coordinate zero error vector. The raw
+report vectors $x^-=(y^-_i)_{i=0}^3$ and $x^+=(y^+_i)_{i=0}^3$ are
+
+$$
+x^-=b+a(16,9,4,1),\qquad
+x^+=b+a(1,4,9,16).
+\tag{RC.12}
+$$
+
+Every coordinate is an integer of the common color. Both worlds
+satisfy (RC.1) with delivery error exactly zero. All four canonical
+report words, including unread ones, are now fixed. They depend on
+$\mathcal R$ and $N$, but on no sampled initial state, private seed,
+coin sequence, requested triple or realized execution history.
+
+We next compare the actual three adaptive reads. For finite
+probability vectors the half-sum formula for total variation and a
+coupling with disagreement probability exactly that distance are the
+classical facts in Levin--Peres,
+[*Markov Chains and Mixing Times*, second edition, Propositions 4.2
+and 4.7](https://pages.uoregon.edu/dlevin/MARKOV/markovmixing.pdf).
+Apply these facts to the two rows in (RC.10). Such a coupling has
+agreement probability at least $1-\delta$. It can be selected for
+each pair of states and inputs needed below, since at each stage the
+state pairs and legal indices form finite sets. The coupling is an
+analysis of the two laws; it is not a resource given to a receiver.
+
+Draw one state with law $\lambda$ and use it as both initial states
+$Q^-_0,Q^+_0$. Their equality holds with probability one. At the first
+read both indices are $0$. Conditional on the common initial state
+$q$, couple $K_{1,0}(q,x^-_0)$ and $K_{1,0}(q,x^+_0)$ by the above
+row coupling. By (RC.10) its disagreement probability is at most
+$\delta$. Let $G_1=\{Q^-_1=Q^+_1\}$. Then
+
+$$
+\mathbb P(G_1^c)\le\delta.
+\tag{RC.13}
+$$
+
+On $G_1$ the complete state $q$ is common, including the selected
+second index. Hence both runs request the same $u\in\{1,2\}$,
+although $u$ need not be constant across executions. Conditional on
+this common history, couple the actual rows
+$K_{2,u}(q,x^-_u)$ and $K_{2,u}(q,x^+_u)$ with disagreement
+probability at most $\delta$. On $G_1^c$ use any coupling, for example
+the product of the two actual rows at their respective states and
+indices. Each run then still has its correct conditional transition
+law. For $G_2=G_1\cap\{Q^-_2=Q^+_2\}$ this gives
+
+$$
+\mathbb P(G_2^c)
+ \le\mathbb P(G_1^c)+\delta\mathbb P(G_1)
+ \le2\delta.
+\tag{RC.14}
+$$
+
+On $G_2$ the state after the second frame, and therefore the selected
+third index $v\in\{u+1,\ldots,3\}$, agree. Couple
+$K_{3,v}(q,x^-_v)$ and $K_{3,v}(q,x^+_v)$ with conditional
+disagreement probability at most $\delta$. On $G_2^c$ again use any
+coupling of the actual rows, allowing different lawful indices in
+the two runs. With $G_3=G_2\cap\{Q^-_3=Q^+_3\}$,
+
+$$
+\mathbb P(G_3^c)
+ \le\mathbb P(G_2^c)+\delta\mathbb P(G_2)
+ \le3\delta.
+\tag{RC.15}
+$$
+
+These successive couplings preserve both receivers' marginal path
+laws, including their adaptive requests. On every positive-probability
+history a row used here is an actual normalized lawful row, so none
+of the off-path defaults is invoked. If $\nu_-,\nu_+$ are the final
+state laws, the coupling inequality yields
+
+$$
+d_{\rm TV}(\nu_-,\nu_+)
+ \le\mathbb P(Q^-_3\ne Q^+_3)
+ \le\mathbb P(G_3^c)\le3\delta.
+\tag{RC.16}
+$$
+
+Thus there is no replacement of the adaptive menu by one fixed
+triple, and no inference from the first cut alone to the last cut.
+
+Include the arbitrary final probability kernel by writing
+$\mu_\pm(D)=\sum_q\nu_\pm(q)H(q,D)$ for Borel
+$D\subseteq[-4,1]$. Since $0\le H(q,D)\le1$ and the positive and
+negative parts of $\nu_- -\nu_+$ each have mass
+$d_{\rm TV}(\nu_-,\nu_+)$,
+
+$$
+\begin{aligned}
+|\mu_-(D)-\mu_+(D)|&\le d_{\rm TV}(\nu_-,\nu_+),\\
+d_{\rm TV}(\mu_-,\mu_+)
+ &:=\sup_{D\text{ Borel}}|\mu_-(D)-\mu_+(D)|\le3\delta.
+\end{aligned}
+\tag{RC.17}
+$$
+
+This is the same probability-kernel contraction as Levin--Peres,
+Exercise 4.2; the displayed calculation also covers the possibly
+continuous output law directly. It imposes no finite support or
+determinism on $H$.
+
+For every Borel function $0\le f\le5$, integrating the event
+probabilities of $\{f>t\}$ over $0\le t\le5$ gives
+
+$$
+\left|\int f\,d\mu_- -\int f\,d\mu_+\right|
+ \le5d_{\rm TV}(\mu_-,\mu_+)\le15\delta.
+\tag{RC.18}
+$$
+
+This is the bounded-loss form of the total-variation dual estimate
+(cf. Levin--Peres, Proposition 4.5). On the declared answer interval,
+$f_-(t)=|t+4|=t+4$ and $f_+(t)=|t-1|=1-t$ are between $0$ and $5$
+and have pointwise sum $5$. Consequently the actual endpoint risks
+$r_-=\int f_-\,d\mu_-$ and $r_+=\int f_+\,d\mu_+$ obey
+
+$$
+\begin{aligned}
+r_-+r_+
+ &\ge\int(f_-+f_+)\,d\mu_- -15\delta
+   =5-15\delta,\\
+\max\{r_-,r_+\}
+ &\ge\frac52-\frac{15\delta}{2}
+  \ge\frac52-\varepsilon.
+\end{aligned}
+\tag{RC.19}
+$$
+
+This proves (RC.4). In particular (RC.2) is at least
+$5/2-\varepsilon$ for every $\varepsilon>0$, so it is at least
+$5/2$. This conclusion uses a supremum of expected losses in
+complete worlds fixed before the coins. It neither interchanges
+supremum and expectation nor fixes a favorable seed and then selects
+a source. It also does not require an endpoint world attaining this
+supremum for an arbitrary receiver.
+
+Finally choose the indices $0,1,2$, pass over each complete productive
+frame with a finite stage controller and output $-3/2$ with probability
+one, as in Theorem 15.2. All controller states count toward $Q$.
+For every lawful $W$, $|-3/2-\tau|\le5/2$, so this lawful receiver
+has risk at most $5/2$. It belongs to Definition 19.1's randomized
+class as a deterministic special case. The lower bound just proved
+gives equality and attainment in (RC.3). $\square$
+
+**Definition 19.3 (scope of the randomized conclusion).** The
+arbitrary-randomness exclusion in Definition 18.2 is qualified exactly
+by Theorem 19.2 for the origin experiment of Definition 19.1: fresh
+private randomness, with complete finite states at all three
+handoffs and a final kernel from the last such state, does not improve
+the exact worst-world expected absolute-error value $5/2$.
+The classical suppliers used in its proof are the homothetic-copy
+result of Definition 18.1 and the cited total-variation and coupling
+facts. The additional `repo-derived` deduction connects quantized rows of this
+receiver to the two lawful square-pattern worlds and their adaptive
+three-read output laws; the suppliers themselves do not state this
+clock experiment. This mathematical correspondence makes no claim
+of global originality.
+
+Theorem 19.2 leaves unchanged the other boundaries of Definition
+18.2. It gives no stochastic first-cut-only minimax value, no noisy
+$5/4$ finite-first-cut upper bound, no acquisition memory-growth rate,
+no uniform running-time or within-frame-memory bound, and no optimal
+scale for the witness integers $a,b$. It supplies no exact-real port,
+extra source service or physical realization. It asserts no extension
+to the main-coordinate continuation or its consumer, no universal
+equivalence of the four views, and no physical memory impossibility.
+The original fixed-$G_{\rm gc}$, original-$Q$, parked-consumer,
+unchanged-initialization and full relational-process objectives retain
+their stated obligations. A receiver with unbounded accessible
+records, persistent random backing or a final answer using an erased
+frame is outside Definition 19.1; arbitrary terminating transient
+work within a frame is inside it.
+
+## 追加锚（本行以下为增补区）

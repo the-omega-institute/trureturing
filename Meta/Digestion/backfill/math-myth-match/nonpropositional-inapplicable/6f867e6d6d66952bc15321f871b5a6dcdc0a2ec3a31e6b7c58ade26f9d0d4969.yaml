@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:6f867e6d6d66952bc15321f871b5a6dcdc0a2ec3a31e6b7c58ade26f9d0d4969
+  normalized_sha256: sha256:6f867e6d6d66952bc15321f871b5a6dcdc0a2ec3a31e6b7c58ade26f9d0d4969
+cas_ref: sha256:6f867e6d6d66952bc15321f871b5a6dcdc0a2ec3a31e6b7c58ade26f9d0d4969
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 既有概率工具、综合贡献与文献归属的来源说明，不是这些定理的重复申报。
+    previous_atom_id: 44333b8fe244676699b6639300496f90ca9c83a206cb219feb95e7f7311953a0
+    next_atom_id: a313706fc78291556ae837198e75d623a5fa01492125335759d691d97345c7e6

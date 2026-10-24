@@ -3331,3 +3331,1318 @@ are `repo-derived`; this is not a global literature-priority claim
 for periodic diffusion, circle inequalities or homogenization.
 
 ## 追加锚（本行以下为增补区）
+
+## 65. A hard moving envelope on the unchanged native history
+
+**Definition 65.1 (moving-envelope class and exact scale).** Fix the native
+experiment, the inherited G/C/N/F premises, the deterministic initial
+state, signed original coordinates and original clock of Definitions 41.1
+and 49.1. Keep both absorbing height faces, the complete cemetery-inclusive
+killed-history space and the predeclared unit normal $e$. Put
+
+$$
+X_t=e\cdot(y_t-y_0),\qquad
+h=J_\kappa^{\mathsf T}e,\qquad
+ a(k)=h\cdot c_\kappa(k),\qquad
+\widehat m=\int_Ia(k)^2\phi(k)^2\,dk,
+$$
+
+and fix $0<\alpha<1/2$ and $r>0$. Write
+
+$$
+R(t)=r(1+t)^\alpha,\qquad \beta=1-2\alpha,
+\qquad c_{\alpha,r}=\frac{\pi^2\widehat m}{4r^2\beta}.
+\tag{65.1}
+$$
+
+The class $\mathcal C_{\alpha,r}$ consists of probability laws $V$ on the
+original full infinite canonical killed-history space such that the initial
+state is the prescribed deterministic one,
+
+$$
+V\!\left(\zeta=\infty,\ |X_t|<R(t)\ \text{for every }t\ge0\right)=1,
+\tag{65.2}
+$$
+
+and, for every finite $T>0$, the literal full prefix $V_T$ is absolutely
+continuous with respect to the original cemetery-inclusive prefix
+$\mathbb P_T$ and has finite natural-logarithm divergence
+$D(V_T\Vert\mathbb P_T)$. No law is required to have a global density with
+respect to the killed reference. The class is defined on one infinite path
+space; it is not replaced by a family of unrelated horizon laws.
+
+The exact question is whether $\mathcal C_{\alpha,r}$ is nonempty and
+whether one law $V_*$, chosen independently of $T$, satisfies
+
+$$
+\begin{aligned}
+\lim_{T\to\infty}
+ \frac{D((V_*)_T\Vert\mathbb P_T)-\lambda T}{T^\beta}
+ &=c_{\alpha,r},\\
+\lim_{T\to\infty}
+ \frac{\inf_{V\in\mathcal C_{\alpha,r}}D(V_T\Vert\mathbb P_T)-\lambda T}{T^\beta}
+ &=c_{\alpha,r}.
+\end{aligned}
+\tag{65.3}
+$$
+
+The height law, the full killed-prefix convention and all native coefficients in
+these formulas are those already fixed above. In particular, no homogeneous
+generator, operational controller, uniform rate, physical interpretation or
+finite-horizon optimizer is part of this definition.
+
+## 66. One consistent law for every expanding tube
+
+**Proposition 66.1 (native cosine construction).** Under Definition 65.1,
+there is one probability law $V_*=V_{*,\alpha,r}$ on the full infinite native
+history space with the prescribed initial state such that (65.2) holds. Its
+finite-prefix density with respect to $\mathbb P_T$ is
+
+$$
+L_T=\mathbf1_{\{\zeta>T\}}e^{\lambda T}
+       \frac{\phi(K_T)}{\phi(k_0)}M_T,
+\tag{66.1}
+$$
+
+where, under the conservative ground-height law $\mathbb Q$ of Definition
+41.1,
+
+$$
+\begin{aligned}
+\omega(t)&=\frac{\pi}{2R(t)},
+&H(t,x)&=\cos(\omega(t)x),\\
+\sigma&=\inf\{t\ge0:|X_t|\ge R(t)\},
+&b(t,x)&=\partial_t\log H(t,x)
+ =\frac{R'(t)}{R(t)}\omega(t)x\tan(\omega(t)x),\\
+M_t&=\mathbf1_{\{t<\sigma\}}H(t,X_t)
+ \exp\!\left\{\int_0^t
+ [\omega(s)^2a(K_s)^2-b(s,X_s)]\,ds\right\}.
+\end{aligned}
+\tag{66.2}
+$$
+
+The zero extension in (66.2) is a true $\mathbb Q$-martingale on every
+finite interval and satisfies
+$\mathbb E_{\mathbb Q}[M_T\mid K_{[0,T]}]=1$. Hence the height marginal
+of $V_*$ is exactly the supplied $\mathbb Q$ height law on each finite
+prefix. The law in (66.1) is locally absolutely continuous and has finite
+relative entropy for every finite $T$.
+
+Proof. Under $\mathbb Q$, conditional on the complete height history, the
+projection $X$ starts at zero and has the stochastic-integral form
+
+$$
+X_t=\sqrt2\int_0^ta(K_s)\,dW_s^2,
+\tag{66.3}
+$$
+
+where $W^2$ is independent of the height driver. The native signed
+coordinate map is still the one in (49.2); no coordinate is rescaled.
+On the open strip $|x|<R(t)$, $H>0$ and
+
+$$
+\partial_x^2H=-\omega(t)^2H,
+\qquad
+\frac{1}{H}\,\partial_tH=b(t,x)\ge0,
+\tag{66.4}
+$$
+
+because $R'(t)\ge0$ and $x\tan(\omega(t)x)\ge0$. Applying Itô's formula
+before $\sigma$ and using the quadratic variation
+$d\langle X\rangle_t=2a(K_t)^2dt$ gives
+
+$$
+ dM_t=M_t\sqrt2\,a(K_t)\partial_x\log H(t,X_t)\,dW_t^2,
+ \qquad t<\sigma.
+\tag{66.5}
+$$
+
+For a fixed finite $T$, $|a|\le C_a$ and (66.4) imply the deterministic
+bound
+
+$$
+0\le M_t\le
+\exp\!\left(C_a^2\int_0^T\omega(s)^2ds\right),\qquad 0\le t\le T.
+\tag{66.6}
+$$
+
+Stop additionally before $H$ falls below $1/n$. On this stopped region
+$\partial_x\log H$ is bounded on $[0,T]$, so the stopped local martingale
+has constant mean one. If $\sigma\le T$, continuity gives $H(t,X_t)\to0$
+as $t\uparrow\sigma$, while the exponential factor in (66.2) remains
+bounded by (66.6). Thus the stopped variables converge to the zero
+extension in (66.2) at a finite boundary hit. Dominated convergence removes
+both stops and proves $\mathbb E_{\mathbb Q}M_T=1$ and the martingale
+property. The same argument with a fixed continuous height path leaves only
+the Brownian integral in (66.5), and proves the conditional mean-one
+identity.
+
+Consequently the measures $M_T\mathbb Q_T$ are consistent under literal
+restriction from $[0,T]$ to $[0,S]$. The standard countable projective
+extension on the continuous native path restrictions gives one law $V_*$
+on $[0,\infty)$. For each integer $n$, its restriction to $[0,n]$ assigns
+probability one to $\zeta>n$ and $\sigma>n$. A countable union therefore
+shows that $\zeta=\infty$ and $|X_t|<R(t)$ for every real $t\ge0$, by path
+continuity. The prescribed initial state and all other native path
+coordinates are retained by the change of density.
+
+The ground-state identity in Definition 41.1 gives the full density (66.1),
+including the cemetery indicator. Since $\phi$ is bounded and positive at
+$k_0$, (66.6) bounds $L_T$ by a finite deterministic constant for each
+fixed $T$. Therefore $L_T\log L_T$ has an integrable positive part, while
+$z\log z\ge-1/e$ controls its negative part under $\mathbb P_T$. Thus
+$V_{*,T}\ll\mathbb P_T$ and $D((V_*)_T\Vert\mathbb P_T)<\infty$.
+
+The cosine factor and the time-dependent exponential are the native
+specialization of the time-dependent generalized Doob path-density formula
+in Chetrite and Touchette, *Nonequilibrium Markov processes conditioned on
+large deviations*, arXiv:1405.5157v2, §IV.1, equations (71)--(80). That
+classical identity is used only as an intermediate guide: (66.4)--(66.6)
+check normalization at the moving zero boundary directly. No positive-interior
+formula is used as a conservativity assertion.
+$\square$
+
+**Lemma 66.2 (upper entropy estimate for the common law).** For every
+fixed $\alpha,r$ in Definition 65.1,
+
+$$
+D((V_*)_T\Vert\mathbb P_T)
+\le \lambda T+\frac{\pi^2}{4}\int_0^T\frac{\mathbb E_{\mathbb Q}[a(K_s)^2]}{R(s)^2}\,ds+O(1).
+\tag{66.7}
+$$
+
+The $O(1)$ depends on the fixed native data and on $\alpha,r$, but not on
+$T$. Moreover,
+
+$$
+\mathbb E_{\mathbb Q}[a(K_s)^2]=\widehat m+O(e^{-3\lambda s})\quad(s\ge1),
+\tag{66.8}
+$$
+
+so
+
+$$
+\limsup_{T\to\infty}
+\frac{D((V_*)_T\Vert\mathbb P_T)-\lambda T}{T^\beta}
+\le c_{\alpha,r}.
+\tag{66.9}
+$$
+
+Proof. On the support of $V_*$, (66.1)--(66.2) give
+
+$$
+\log L_T=\lambda T+\log\frac{\phi(K_T)}{\phi(k_0)}
+ +\log H(T,X_T)+\int_0^T[\omega(s)^2a(K_s)^2-b(s,X_s)]ds.
+\tag{66.10}
+$$
+
+The last two terms are nonpositive except for the displayed quadratic
+term. Conditional mean-one normalization in Proposition 66.1 leaves the
+entire height marginal equal to $\mathbb Q$, so taking expectations in
+(66.10), using $\log H\le0$, $b\ge0$ and
+$\log\phi(K_T)\le\log\|\phi\|_\infty$, proves (66.7). The relative-kernel estimate
+(41.3), applied to the bounded function $a^2$, gives (66.8); the integral
+over $[0,1]$ is bounded because $a$ is bounded. Since
+
+$$
+\int_0^T\omega(s)^2ds
+=\frac{\pi^2}{4r^2}\frac{(1+T)^\beta-1}{\beta},
+\tag{66.11}
+$$
+
+and $\int_1^\infty e^{-3\lambda s}\omega(s)^2ds<\infty$, (66.9) follows.
+$\square$
+
+## 67. The matching lower bound from native fixed-strip bands
+
+For the native lower-bound argument, put
+
+$$
+E_T=\{\zeta>T,\ |X_s|<R(s)\text{ for every }0\le s\le T\}.
+\tag{67.1}
+$$
+
+As a classical intermediate step, every $V\in\mathcal C_{\alpha,r}$
+satisfies $V_T(E_T)=1$, and therefore
+
+$$
+D(V_T\Vert\mathbb P_T)\ge-\log\mathbb P_T(E_T).
+\tag{67.2}
+$$
+
+Indeed, the event in (67.1) is measurable on the full original killed prefix,
+including the cemetery coordinate. The entropy partition identity, or the
+Gibbs inequality applied to the restriction to $E_T$, gives (67.2), with
+no replacement by an endpoint event or a larger horizon-dependent class.
+
+**Lemma 67.2 (moving-strip probability bound).** There is a constant
+$C_0<\infty$ depending only on the fixed native data and the deterministic
+initial state such that, for every $T>1$,
+
+$$
+-\log\mathbb P_T(E_T)
+\ge \int_1^T\Lambda_\kappa(\omega(s)h)\,ds
+ -\frac12\log\bigl(2(u-l)R(T)\bigr)-\log C_0.
+\tag{67.3}
+$$
+
+Here $\Lambda_\kappa$ is the same two-height-Dirichlet band as in D
+(36.4)--(36.6), evaluated at the native frequency vector $\omega(s)h$.
+
+Proof. Project the original killed process to $(K,X)$. Conditional on the
+complete height path, (66.3) gives the autonomous projected generator
+
+$$
+\mathcal A=\varepsilon^2\partial_k^2+a(k)^2\partial_x^2
+\tag{67.4}
+$$
+
+with both height faces killed. For a fixed $A>0$, kill this projection also
+at $x=\pm A$ and let $S_A(t)$ be its zero-extended semigroup on
+$L^2(I\times\mathbb R)$. The sine expansion in the $x$ variable separates
+the operator into the height fibres
+
+$$
+-\varepsilon^2\partial_k^2+
+ \frac{n^2\pi^2}{4A^2}a(k)^2,\qquad n=1,2,\ldots,
+\tag{67.5}
+$$
+
+with the same two Dirichlet height faces. Since the potential is
+nonnegative, the variational monotonicity of the bottom eigenvalue and
+$L^2$ orthogonality give
+
+$$
+\|S_A(t)\|_{2\to2}
+ \le \exp\{-t\Lambda_\kappa(\pi h/(2A))\}.
+\tag{67.6}
+$$
+
+This is the native variable-coefficient band, not a homogenized or
+constant-volatility substitute.
+
+It remains to control the entrance at time one in the same $L^2$ space.
+The projected free killed kernel has Fourier representation with height
+kernel $K_{\kappa,\xi h}(1;k_0,k)$. The supplied all-frequency estimate
+D (36.6), restricted to $\eta=\xi h$, and Plancherel imply
+
+$$
+\int_{\mathbb R}\int_I
+ |K_{\kappa,\xi h}(1;k_0,k)|^2\,dk\,d\xi<\infty,
+\tag{67.7}
+$$
+
+because the nonzero native collar makes $h\ne0$ and the right-hand side is
+bounded by a constant times
+$\int_{\mathbb R}\exp[-2c_0\Psi(|\xi h|)]d\xi$. Restricting to $E_1$
+only decreases the nonnegative density, so its time-one subdensity $f_1$
+has $\|f_1\|_2\le C_0$.
+
+Take any partition $1=t_0<t_1<\cdots<t_N=T$. On the block
+$[t_{j-1},t_j]$, the event $E_T$ is contained in the event that the
+projection stays in the fixed strip of half-width $R(t_j)$, because $R$
+is increasing. The Markov property, zero-extension contractions and (67.6)
+therefore yield
+
+$$
+\mathbb P_T(E_T)
+\le C_0\,[2(u-l)R(T)]^{1/2}
+ \exp\!\left\{-\sum_{j=1}^N(t_j-t_{j-1})
+ \Lambda_\kappa(\omega(t_j)h)\right\}.
+\tag{67.8}
+$$
+
+The constant is the same for every partition. Continuity of the band in its
+frequency and refinement of right-endpoint sums give (67.3). This argument
+uses the full native projection and its cemetery-inclusive starting density;
+no infinite partition probability or guessed moving-domain eigenfunction is
+introduced.
+$\square$
+
+**Theorem 67.3 (native lower asymptotics).** With $\beta=1-2\alpha$,
+
+$$
+\liminf_{T\to\infty}
+\frac{-\log\mathbb P_T(E_T)-\lambda T}{T^\beta}
+\ge c_{\alpha,r}.
+\tag{67.9}
+$$
+
+Proof. The inherited band expansion D (36.4) gives
+
+$$
+\Lambda_\kappa(\omega(s)h)
+=\lambda+\widehat m\,\omega(s)^2+O(\omega(s)^4)
+=\lambda+\frac{\pi^2\widehat m}{4R(s)^2}+O(R(s)^{-4}).
+\tag{67.10}
+$$
+
+The contribution of the fixed interval $[0,1]$ is $O(1)$. For
+$0<\alpha<1/2$, writing $\beta=1-2\alpha$ gives
+
+$$
+\int_1^T R(s)^{-2}ds
+=\frac{(1+T)^\beta}{r^2\beta}+O(1),
+\tag{67.11}
+$$
+
+while
+
+$$
+\int_1^T R(s)^{-4}ds=
+\begin{cases}
+O(T^{1-4\alpha}),&0<\alpha<1/4,\\
+O(\log T),&\alpha=1/4,\\
+O(1),&1/4<\alpha<1/2,
+\end{cases}
+=o(T^\beta).
+\tag{67.12}
+$$
+
+Also $\log R(T)=o(T^\beta)$. Substituting (67.10)--(67.12) into
+(67.3) proves (67.9).
+$\square$
+
+## 68. The exact frontier and its native consumer
+
+**Theorem 68.1 (one-law sharp moving-envelope entropy frontier).** For every
+fixed $0<\alpha<1/2$ and $r>0$, the class $\mathcal C_{\alpha,r}$ of
+Definition 65.1 is nonempty. The law $V_*$ of Proposition 66.1 belongs to
+that class, is independent of the terminal horizon, and satisfies
+
+$$
+\begin{aligned}
+\lim_{T\to\infty}
+ \frac{D((V_*)_T\Vert\mathbb P_T)-\lambda T}{T^{1-2\alpha}}
+ &=\frac{\pi^2\widehat m}{4r^2(1-2\alpha)},\\
+\lim_{T\to\infty}
+ \frac{\inf_{V\in\mathcal C_{\alpha,r}}D(V_T\Vert\mathbb P_T)-\lambda T}{T^{1-2\alpha}}
+ &=\frac{\pi^2\widehat m}{4r^2(1-2\alpha)}.
+\end{aligned}
+\tag{68.1}
+$$
+
+Both limits use natural logarithms and the same full cemetery-inclusive native
+prefixes. The attaining law has the prescribed deterministic initial history,
+keeps the original signed coordinates and clock, survives both height exits,
+and obeys the strict tube for every time. The theorem makes no assertion of
+uniqueness, finite-$T$ optimality, a uniform convergence rate, a homogeneous
+generator, a global infinite-horizon density relative to $\mathbb P$, or an
+operational implementation.
+
+Proof. By Proposition 66.1 and Lemma 66.2,
+
+$$
+\limsup_{T\to\infty}
+\frac{D((V_*)_T\Vert\mathbb P_T)-\lambda T}{T^\beta}
+\le c_{\alpha,r}.
+\tag{68.2}
+$$
+
+For every $V\in\mathcal C_{\alpha,r}$, the support inequality (67.2) gives
+$D(V_T\Vert\mathbb P_T)\ge-\log\mathbb P_T(E_T)$. Taking the infimum and
+using Theorem 67.3 yields
+
+$$
+\liminf_{T\to\infty}
+\frac{\inf_{V\in\mathcal C_{\alpha,r}}D(V_T\Vert\mathbb P_T)-\lambda T}{T^\beta}
+\ge c_{\alpha,r}.
+\tag{68.3}
+$$
+
+Since $V_*$ belongs to the same class for every $T$,
+
+$$
+-\log\mathbb P_T(E_T)\le
+ \inf_{V\in\mathcal C_{\alpha,r}}D(V_T\Vert\mathbb P_T)
+\le D((V_*)_T\Vert\mathbb P_T).
+\tag{68.4}
+$$
+
+Equations (68.2)--(68.4) squeeze both limits to $c_{\alpha,r}$ and establish
+all clauses of (68.1). Corollary 52.1, as consumed by Proposition 53.2,
+leaves projective consistency unasserted for its horizon laws. Here the single
+law $V_*$ supplies a consistent infinite-law successor for that native
+entropy-rate selection question. The lower bound ranges over exactly
+$\mathcal C_{\alpha,r}$, the class newly defined in Definition 65.1.
+This consumer conclusion follows from the full sandwich.
+
+The scalar power-envelope/Q-process construction of Oçafrain,
+*Quasi-stationarity for one-dimensional renormalized Brownian motion*,
+arXiv:1809.07547v2, supplies the prior one-dimensional mechanism and its
+power-envelope clock. In the constant native scalar case, the generator
+normalization here gives the corresponding coefficient
+$\pi^2a_0^2/(4r^2\beta)$ after the native time change. No scalar stationary
+prefactor is imported into (66.1)--(68.4); normalization there comes from
+$H(0,0)=1$ and the proved martingale identity. The general native argument
+cannot be reduced to replacing the deterministic scalar clock by
+$\widehat m t$, because the actual clock is
+$\int_0^ta(K_s)^2ds$ and the tube is imposed in the original time.
+
+The measure-level support inequality (67.2) is the finite-prefix
+Gibbs/relative-entropy principle, and the reversible spectral comparison in
+(67.5)--(67.6) is the classical Rayleigh correspondence. They are credited
+as intermediate tools to Chetrite and Touchette, *Variational and optimal
+control representations of conditioned and driven processes*,
+arXiv:1506.05291v3, §III.4, equations (52)--(56), and Appendix A.2,
+equations (90)--(93). Those classical formulas do not supply the native
+moving-strip scale, the full-prefix starting-density estimate, or a common
+infinite law; these are the deductions in Proposition 66.1 and Lemma 67.2.
+$\square$
+
+**Corollary 68.2 (compatibility with the homogeneous height-only frontier).**
+Theorem 68.1 and Proposition 59.1 quantify over different, non-nested
+subclasses of the same ambient class of consistent infinite native history
+laws with local absolute continuity and finite full-prefix entropy.
+Proposition 59.1 restricts selections to fixed, height-only,
+phase-translation-covariant controllers with a finite excess-rate budget and obtains a positive
+three-direction tensor. The law $V_*$ in Theorem 68.1 is a time-dependent
+phase-position reweighting selected for the expanding boundary; its entropy
+excess is of order $T^{1-2\alpha}$ and its density depends on the moving
+cosine. This law is not a member of the homogeneous height-only class
+used in Proposition 59.1. The two conclusions are compatible: 59.1 retains
+its positive transport conclusion under its controller restrictions,
+while 68.1 gives the sharp all-time leading cost in the class
+$\mathcal C_{\alpha,r}$ of consistent infinite tube laws. Neither theorem
+changes the other's native premises or consumer.
+
+Proof. Proposition 59.1 applies its rate and tensor estimates only after the
+controller restrictions (54.1)--(54.2) and the finite rate budget have been
+imposed. Definition 65.1 imposes instead the full path support condition
+(65.2), local absolute continuity and finite prefix entropy, with no
+height-only or time-homogeneity restriction. The cosine factor in (66.2)
+depends on $t$ and on the signed phase coordinate $X_t$; the leading entropy
+rate $\lambda$ alone does not impose the controller restrictions of 59.1.
+
+For a direct check of non-nesting, the law $\mathbb Q=\mathbb V_{\phi,0}$
+has zero excess-rate budget and belongs to the homogeneous height-only
+class. By (66.3), conditional on the height history, $X_T$ is centered
+Gaussian with variance $2\int_0^T a(K_s)^2ds$. Positivity of $\widehat m$
+and (66.8) imply that this variance is positive with positive probability
+for some finite $T$. Thus
+$\mathbb Q(|X_T|\ge R(T))>0$, so $\mathbb Q\notin\mathcal C_{\alpha,r}$.
+Conversely, Theorem 55.1 makes every homogeneous height-only law equivalent
+to $\mathbb Q$ on that finite prefix, while (65.2) gives
+$V_*(|X_T|\ge R(T))=0$. Hence $V_*\in\mathcal C_{\alpha,r}$ is outside
+the homogeneous height-only class. The two quantified conclusions are
+compatible without an inclusion between their admissible classes.
+$\square$
+
+**Definition 68.3 (scope of the native result).** The assertions above are
+ordinary mathematical consequences of the inherited native G/C/N/F premises.
+They concern one fixed native experiment and every fixed pair
+$(\alpha,r)$ in the stated range. The lower bound uses the same class of
+consistent infinite laws as the infimum, and the upper bound uses one law
+constructed without a terminal horizon. The full original history, both
+height deaths, deterministic INITIAL, signed coordinates and natural-log
+entropy remain in force. No physical claim, command-level acquisition,
+global absolute continuity, uniform asymptotic rate, uniqueness or worldwide
+priority statement is asserted.
+
+## 追加锚（本行以下为增补区）
+
+## 69. Finite numerical permissions on the original signed source
+
+**Definition 69.1 (source, numerical data and the transport endpoint).**
+Retain G Definition 25.1, D Definitions 35.1 and 37.1, and Definitions
+49.1 and 60.1, except that no continuous height-bias or character-observation
+service is admitted here. Fix one signed nonzero $\kappa$ in the stated
+nonzero collar and one deterministic immutable INITIAL $=(k_0,y_0)$,
+$k_0\in I=(l,u)$, $y=(\theta,v,D)$. All preparation rotations and the
+negative amplitude convention remain fixed. In particular the probabilities,
+control fields and original-coordinate tensor are exactly
+
+$$
+\begin{aligned}
+p_\kappa(k)&=(k-2\kappa,H+\kappa-k,Z,H+\kappa-k,k),\quad H=(1-Z)/2,\\
+P&=\partial_k,\qquad
+Q_\kappa=\widehat c_\kappa(k)\cdot\partial_y,
+\qquad \widehat c_\kappa=(A_\kappa,B_\kappa,\kappa b_\kappa),\\
+F_\kappa(k)&=\widehat c_\kappa(k)\widehat c_\kappa(k)^{\mathsf T},
+\qquad \widehat M_\kappa=\int_l^u F_\kappa(k)\phi(k)^2dk.
+\end{aligned}
+\tag{69.1}
+$$
+
+The three rational functions in (69.1) are G (25.4), without a new
+coefficient fit. The native positivity interval is
+$\mathcal J_\kappa=(\max(0,2\kappa),H+\kappa)$ and
+$[l,u]\Subset\mathcal J_\kappa$. The reference $\mathbb P$ still dies at
+either $l$ or $u$. Its covariance is $\operatorname{diag}(\varepsilon^2,1)$,
+its clock is the original clock, and its Q law is the existing height
+Doob transform with phase equation
+$dy=\sqrt2\widehat c_\kappa(K)dW^2$ and invariant height density $\phi^2$.
+No stationary preparation is performed. D Theorems 36.1 and 39.1 supply
+$\widehat M_\kappa>0$, including its signed cross entries. We denote by
+$\widehat{\mathcal W}_{\kappa,b}$ its Brownian law on
+$C_0([0,b],\mathbb R^3)$, of covariance $2\min(s,t)\widehat M_\kappa$.
+The declared metric is the original Euclidean $y$ metric, with its uniform
+path metric; neither $D/\kappa$ nor a redefined microscopic clock is used.
+
+The fixed data needed for calibration have certified computable rational
+enclosures. In particular this is an assumption about the supplied INITIAL
+and source calibration, not an operation estimating an unknown initial
+height. For each requested finite precision, a permitted finite calculation
+returns the requisite enclosures and strict guard certificates. Write
+$U_{\rm src},S_{\rm src}$ for upper bounds on its bit operations and peak
+workspace plus retained certificate bits. These bounds are part of the
+finite-stage contract. The
+source's preparation phases need not be rational or numerically polled.
+The exact field action below is an independent execution premise.
+
+**Assumption 69.2 (finite services, rights and their charges).** At each
+finite stage, permission is given to generate a prescribed finite number
+of mutually independent fair bits; calculate a finite certified table;
+store its finite records; and install and execute a finite list of rational
+relative P/Q displacements with rational durations. Execution means the
+exact original ODE for those numerical velocities, including constant
+holds. It supplies no sensor. The source is held while this calculation
+and installation occur. There is no independently evolving external
+Brownian source to observe, halt or replay.
+
+The whole-command native guard and its refusal are retained: a numerical
+relative height command $a$, starting at $k$, has domain
+$k+\min a>\inf\mathcal J_\kappa$, $k+\max a<\sup\mathcal J_\kappa$.
+An additional promise to remain in $I$ is checked separately. The same
+command at another start has precisely that extrema domain, rather than
+a newly calculated feedback domain. Stop at any prefix holds the current
+state and discards the unused suffix; it does not reset INITIAL or remove
+either absorbing face from the reference model. Results about the full
+transport horizon concern uninterrupted service. An earlier Stop retains
+the legality assertion, not the full-horizon transport conclusion.
+
+Let $r_{\rm cpu},r_{\rm bit},r_{\rm write},r_{\rm load}>0$ be guaranteed
+throughputs in bit operations, fair bits, written bits and loaded timed
+pieces per unit original time. Let $t_0$ be an installation-time bound
+and $\ell$ a bound on each active-command transition latency. All are
+stage-dependent permitted service guarantees. Rational scheduled holds
+pad these upper bounds; there is no uncharged change of clock. If energy
+for these services is counted, let $E_0$, $e_{\rm cpu}$, $e_{\rm bit}$,
+$e_{\rm write}$, $e_{\rm load}$, $p_0$, $p_{\rm mem}$ be finite nonnegative
+upper tariffs for installation, the four respective operations, elapsed
+time, and retained bit-time. They are stipulated accounting units, not
+physical energy inferred from FIB. Native horizontal energy is separately
+the original-time integral (70.3). Exact execution, calibration, rights,
+fairness and these throughput guarantees are premises, not acquired
+hardware, a paid Read port or consequences of bare FIB.
+
+**Definition 69.3 (certified finite lattice and table).** Choose a positive
+rational height mesh $h$, integers $N\ge4$ and $1\le j_0<N$, and certify
+
+$$
+a=k_0-j_0h,\quad d=a+Nh,\qquad
+h<a-l<3h,\quad h<u-d<3h,\quad Nh\ge(u-l)/2.
+\tag{69.2}
+$$
+
+For all sufficiently small $h$ such integers exist: each interval of
+length $2h$ contains a multiple of $h$ strictly between its endpoints,
+and the positive initial gaps eventually contain the required margins.
+Strict rational enclosures find a choice without deciding an equality of
+arbitrary computable reals. Put $k_j=a+jh$, $1\le j<N$, $x=\pi/N$, and
+
+$$
+\begin{aligned}
+H_j&=\sin(jx),\qquad \rho=(1+\cos x)/2,\\
+p_j^\pm&=\frac{\sin((j\pm1)x)}{2(1+\cos x)\sin(jx)},
+\qquad p_j^0=\frac1{1+\cos x}.
+\end{aligned}
+\tag{69.3}
+$$
+
+The outward probabilities $p_1^-$ and $p_{N-1}^+$ are exactly zero.
+The row sums are one. These are numerical table values, not the five
+source probabilities $p_\kappa$ in (69.1). For an integer $B\ge2$, choose
+certified dyadic lower approximations
+
+$$
+0\le p_j^\pm-q_j^\pm\le2^{1-B},\qquad
+q_j^\pm\in2^{-B}\mathbb Z,\qquad
+q_j^0=1-q_j^--q_j^+,
+\tag{69.4}
+$$
+
+with the two forbidden entries exactly zero. All three $q$ entries are
+nonnegative. The total variation distance of each row from (69.3) is
+at most $4\,2^{-B}$. A $B$-bit uniform integer and the integer cumulative
+row counts therefore select one of $-1,0,1$ with exactly this dyadic law.
+There is no rejection of a random record according to its survival.
+
+The following explicit conservative calibration bounds fix the resource
+meaning of this definition. Set $R=B+2\lceil\log_2N\rceil+32$. A universal
+constant $C_0$ suffices for at most $C_0NR^{12}$ table-calculation bit
+operations and $C_0NR^6$ table, certificate and temporary bits. These are
+sufficient bounds, not optimal complexity claims. Indeed, rational partial
+sums of $\pi=16\arctan(1/5)-4\arctan(1/239)$ through $8R$ terms give
+an enclosing interval of width less than $2^{-4R}$, by the alternating
+series remainder. Rational sine and cosine Taylor bounds through $8R$
+terms, for arguments of absolute value at most four, have the same
+accuracy. Since $\sin(j\pi/N)\ge2/N$ for $1\le j<N$, interval division
+then encloses (69.3) within $2^{-B-2}$. Rounding a certified lower endpoint
+down to a $2^{-B}$ multiple, truncated below at zero, gives (69.4).
+Exact zeros are assigned from their indices. Rational sums, products,
+factorials and powers here can be performed with $O(R)$ arithmetic
+operations per row on integers of at most $CR^5$ bits, even if fractions
+are never reduced: summing the denominator lengths of all terms gives
+this bound. Elementary quadratic integer multiplication and division
+thus fit the displayed $C_0NR^{12}$ bound; their rational interval
+certificates fit $C_0NR^6$ bits. The classical series are used only as
+intermediate calibration tools for this particular native construction.
+
+Choose positive rationals $\delta,z$ satisfying
+
+$$
+e=\left|\frac{h^2}{4\varepsilon^2\delta}-1\right|\le\tfrac12,
+\qquad
+\alpha=\left|\frac{z^2}{2\delta}-1\right|\le\tfrac12.
+\tag{69.5}
+$$
+
+Thus $\delta\asymp h^2$; $e$ measures original height-clock calibration
+and $\alpha$ phase-increment precision. Their arbitrarily small values
+are obtained from the certified fixed data and rational enclosures of
+square roots. Only these finitely described rationals are executed.
+For example phase relative error at most $\alpha_*>0$ is ensured by
+an absolute dyadic error at most $c\alpha_*\sqrt\delta$ in $\sqrt{2\delta}$;
+it needs $O(1+|\log\delta|+|\log\alpha_*|)$ binary digits. Source enclosure
+costs for (69.2) and (69.5) are included in $U_{\rm src},S_{\rm src}$.
+
+## 70. A finite lawful generated history and its complete resource regime
+
+**Theorem 70.1 (finite numerical native generation).** Under Assumption
+69.2 choose an integer $m\ge1$ and nonnegative rational installation,
+per-cell latency and terminal holds $\iota,d_*,r_*$, with $d_*/2\ge\ell$.
+Generate $m(B+1)$ fair bits: $B$ bits $U_i$ for each table choice and one
+independent sign $\xi_i$ for each phase choice. Starting at $J_0=j_0$,
+use row $q_{J_{i-1}}$ and $U_i$ to set $J_i-J_{i-1}\in\{-1,0,1\}$.
+Precompute this entire height tape and the numerical command list before
+moving the source. Following the installation hold $\iota$, each cell is
+
+$$
+\begin{array}{c|c|c}
+\text{piece}&\text{relative displacement}&\text{original duration}\\ \hline
+P&h(J_i-J_{i-1})&\delta/2\\
+\text{hold}&0&d_*/2\\
+Q_\kappa&z\xi_i&\delta/2\\
+\text{hold}&0&d_*/2 .
+\end{array}
+\tag{70.1}
+$$
+
+Finish with hold $r_*$. Its duration is
+$\tau=\iota+m(\delta+d_*)+r_*$. Every stored command number and every
+piece duration is rational. The actual height and full signed phase
+record, denoted $(K^{\rm num},Y^{\rm num})$, obey exactly
+
+$$
+K_i=k_{J_i},\qquad
+Y_i=y_0+z\sum_{a=1}^i\xi_a\widehat c_\kappa(k_{J_a}).
+\tag{70.2}
+$$
+
+During each P piece the phase is fixed; during each Q piece the height
+is fixed and the phase follows the corresponding straight segment in
+(70.2). All other pieces hold both. This generates one own native
+history from INITIAL, without observing a continuously changing height,
+character or winding. Both coordinates of the relative command start
+at zero and are accumulated at joins; none is reset.
+
+All its prefixes are lawful in the original five-probability source and
+remain strictly inside $I$. The active command count is $2m$, with at
+most $4m+2$ timed pieces including all holds. For the original covariance
+$A=\operatorname{diag}(\varepsilon^2,1)$, the control variations, length
+and energy have the sufficient bounds
+
+$$
+\begin{aligned}
+V^a&\le mh,& V^b&=mz,\\
+\mathsf L_A&\le m(h/\varepsilon+z),&
+\mathsf E_A&=\int_0^\tau
+  ((\dot a/\varepsilon)^2+\dot b^2)dt
+ \le\frac{2m}{\delta}(h^2/\varepsilon^2+z^2).
+\end{aligned}
+\tag{70.3}
+$$
+
+Let $q_*$ bound the total binary lengths of the rational parameters and
+integer headers in (69.2), (69.5), (70.1), including $m,B$. For a universal
+constant $C_1$, sufficient finite-stage record, memory and computation
+quotas are
+
+$$
+\begin{aligned}
+F_*&=m(B+1),\\
+L_*&=F_*+C_1(m+1)q_*+C_0NR^6+S_{\rm src},\\
+U_*&=U_{\rm src}+C_0NR^{12}
+       +C_1mN(B+q_*+\lceil\log_2N\rceil)^2.
+\end{aligned}
+\tag{70.4}
+$$
+
+Here $F_*$ fair bits are retained, $L_*$ bounds peak stored and temporary
+bits, and $U_*$ bounds bit operations. In particular (70.4) pays for the
+whole table and its certificates, decoding, all finite precision and
+an explicitly written rational command tape, not an exact-real random
+seed or a continuously described feedback rule. An adequate installation
+hold, in the very same clock, is
+
+$$
+\iota\ \ge\ t_0+\frac{U_*}{r_{\rm cpu}}
+             +\frac{F_*}{r_{\rm bit}}+\frac{L_*}{r_{\rm write}}
+             +\frac{4m+2}{r_{\rm load}}.
+\tag{70.5}
+$$
+
+If the tariffs of Assumption 69.2 are imposed, a sufficient energy quota
+including installation, throughput, storage retention and terminal time is
+
+$$
+E_* =\frac{2m}{\delta}(h^2/\varepsilon^2+z^2)+E_0
+ +e_{\rm cpu}U_*+e_{\rm bit}F_*+e_{\rm write}L_*
+ +(4m+2)e_{\rm load}+(p_0+p_{\rm mem}L_*)\tau.
+\tag{70.6}
+$$
+
+In particular none of the preparation or terminal holds is removed from
+elapsed time or from a stipulated maintenance tariff.
+
+Proof. Formula (69.4) never chooses an outward jump. Consequently
+$1\le J_i<N$, and every height segment lies between two interior lattice
+nodes. Thus the whole command has heights in $[a+h,d-h]\Subset I$.
+This checks all prefixes, including partial P pieces, rather than merely
+checking the final height. N Theorem 9.2's exact domain and composition
+rule applies to the same numerical command on the original source;
+its derivative form is precisely G's P/Q pair. Integrating Q at its
+constant height gives (70.2). In particular the phases share one sign,
+not three independently generated drivers. This preserves their actual
+joint covariances, fixed preparation and signed $D$. The original two
+absorbing faces remain in the reference and refusal contract; avoidance
+by this particular command family is not a deletion of those faces.
+A Stop truncates a lawful path and appends a lawful hold.
+
+The P pieces have speed at most $2h/\delta$; the Q pieces have speed
+$2z/\delta$. Integrating their respective original durations gives
+(70.3). Holds contribute zero horizontal energy and positive elapsed
+time. Smooth native coefficients are bounded on $[l,u]$, so the actual
+phase variation is also at most $C mz$, and the lifted state-path
+variation at most $mh+C mz$. Finite state variation does not make the
+limiting transport tensor instantaneous rank three.
+
+There are $m$ independent $B$-bit table records and $m$ independent phase
+bits. The table calibration bound is Definition 69.3's; a rational command
+tape uses at most $C_1(m+1)q_*$ bits. One may find each selected row by
+scanning the finite table, compare its integer counts and update the
+integer $J_i$. Elementary bit operations, including tape writing, are
+bounded by the last term of $U_*$. Thus even a linear table scan suffices;
+no cost-free random-access or online real arithmetic is assumed. The
+source certificate counts are included separately. Performing all these
+services serially proves the sufficient bound (70.5); earlier completion
+is padded to $\iota$. Each transition is padded by its reserved hold in
+(70.1). The resulting schedule has exactly duration $\tau$. Charging each
+operation and all elapsed bit-time proves (70.6). Only finite known
+inputs and own fair records are used. This proves the theorem under its
+execution and calibration premises. $\square$
+
+**Proposition 70.2 (nonempty resource scaling in original time).** The
+finite contracts above and the joint regime (72.1) below have a simultaneous
+feasible sequence. For example, for integer $n\to\infty$, take
+
+$$
+\begin{gathered}
+h_n=n^{-1},\quad N_n\asymp n,\quad m_n=n^4,
+\quad B_n=\lceil8\log_2(n+1)\rceil,\\
+e_n,\alpha_n\le n^{-1},\quad
+\delta_n\asymp n^{-2},\quad z_n\asymp n^{-1},\quad
+q_{*,n}=O(\log(n+1)),\\
+\iota_n=n,\quad d_{*,n}=n^{-4},\quad r_{*,n}=1,
+\quad \ell_n\le(2n^4)^{-1}.
+\end{gathered}
+\tag{70.7}
+$$
+
+The geometry certificates in (69.2) are selected at that mesh. Assume
+$U_{{\rm src},n},S_{{\rm src},n}\le n^2$, $t_{0,n}\le1$ and each of the
+four throughputs at least $C n^6(1+\log(n+1))^{16}$ for a sufficiently
+large fixed $C$. These are a nonempty declared service regime; rational
+known source data with fixed interior gaps, for example, admit the stated
+source-enclosure bounds. The positive square-root and clock enclosures
+need only $O(\log n)$ digits. The original $\varepsilon,\kappa,k_0$,
+INITIAL and native fields are fixed throughout the sequence.
+
+Proof. For sufficiently large $n$, (69.2) has $N_n\asymp n$ and (69.5)
+can be met by dyadic rationals with $O(\log n)$ bits. For rational fixed
+source data all comparisons for (69.2), and the clock and square-root
+enclosures, have elementary polynomial bounds within the displayed
+source quotas. More generally those quotas are explicit extra premises
+on the chosen computable data. Equations (70.4) give
+
+$$
+F_*=O(n^4\log n),\qquad L_*=O(n^4\log n),\qquad
+U_*=O(n^5\log^2 n+n\log^{12}n+n^2).
+\tag{70.8}
+$$
+
+Thus the right side of (70.5) is at most $n$ eventually. All timed holds
+in (70.7) are rational and cover the stipulated latency. The total
+original duration is $\tau_n\asymp n^2$; installation takes $n$ of those
+units, latency at most one, and the terminal hold one. In particular
+these charges have not been hidden by defining time to start after
+installation. For bounded fixed tariffs, (70.3) gives $V^a,V^b,\mathsf L_A
+=O(n^3)$, $\mathsf E_A=O(n^4)$, and (70.6) gives, conservatively,
+$E_*=O(n^6(1+\log n)^{12})$. All are finite and may diverge.
+This verifies feasible sufficient budgets, not finite-resource acquisition
+at a fixed service throughput or a uniform energy bound. $\square$
+
+## 71. Uniform native occupation through simultaneous lattice refinement
+
+**Lemma 71.1 (a source-specific uniform occupation bound).** Let $J_i^h$
+start at the deterministic $j_0$ and use the exact rows (69.3). Let
+$\delta$ satisfy (69.5). Constants below depend on the fixed source and
+$\varepsilon$, but are independent of $h,N,m,j_0$ for all sufficiently
+small meshes satisfying (69.2). For every bounded function $G$ on the
+lattice, centered in its probability
+
+$$
+\mu_h(j)=\frac2N\sin^2(j\pi/N),\qquad 1\le j<N,
+\tag{71.1}
+$$
+
+one has
+
+$$
+\mathbb E_{j_0}\max_{0\le r\le m}
+ \left|\delta\sum_{i=0}^{r-1}G(J_i^h)\right|^2
+ \le C\|G\|_\infty^2(1+m\delta).
+\tag{71.2}
+$$
+
+In particular, for the exact native matrix $F_\kappa$ in (69.1),
+
+$$
+\left\|\sum_j\mu_h(j)F_\kappa(k_j)-\widehat M_\kappa\right\|\le Ch.
+\tag{71.3}
+$$
+
+These statements are uniform also over the fixed nonzero parameter collar
+and a compact interior set of INITIAL heights. They supply a refining
+chain estimate; fixed-stage ergodicity alone would not imply (71.2).
+
+Proof. The classical finite-chain Doob formula is used here only for
+its explicit numerical matrix. Let $S$ be the killed lazy walk on
+$1,\ldots,N-1$, with diagonal $1/2$, neighbouring entries $1/4$, and
+loss at both $0,N$. Its positive eigenvector is $H_j$ in (69.3),
+with eigenvalue $\rho$. Its transformed stochastic matrix
+$P_h(j,k)=S(j,k)H_k/(\rho H_j)$ is exactly (69.3).
+Symmetry of $S$ gives (71.1). More precisely its full relative kernel is
+
+$$
+\begin{aligned}
+\frac{P_h^r(j,k)}{\mu_h(k)}
+ &=1+\sum_{a=2}^{N-1}\beta_a^r U_a(j)U_a(k),\\
+\beta_a&=\frac{1+\cos(a\pi/N)}{1+\cos(\pi/N)},\qquad
+U_a(j)=\frac{\sin(aj\pi/N)}{\sin(j\pi/N)}.
+\end{aligned}
+\tag{71.4}
+$$
+
+The sine orthogonality identity makes $U_a$ orthonormal in $L^2(\mu_h)$.
+The elementary finite geometric sum for $\sin(at)/\sin t$ gives
+$|U_a(j)|\le a$. Also $0<\beta_a<1$ for $a\ge2$, and
+
+$$
+1-\beta_a
+ =\frac{2\sin((a+1)\pi/(2N))\sin((a-1)\pi/(2N))}
+          {1+\cos(\pi/N)}
+ \ge\frac{a^2-1}{N^2}.
+\tag{71.5}
+$$
+
+Here $\sin t\ge2t/\pi$ on $[0,\pi/2]$ applies to both factors.
+Since $N^2\delta$ stays between two positive fixed constants, summing
+$a^2\exp[-(a^2-1)r/N^2]$ proves
+
+$$
+\sup_{j,k}\left|\frac{P_h^r(j,k)}{\mu_h(k)}-1\right|
+ \le C e^{-c r\delta}\qquad(r\delta\ge1),
+\tag{71.6}
+$$
+
+with constants independent of refinement. In particular no vanishing
+one-step gap is used as if it were a uniform original-time gap. Laziness
+also removes the near-minus-one eigenvalue obstruction discussed in
+S §50.3; its different mixed-boundary chain is not being transferred.
+
+For centered $G$ set $\chi=\delta\sum_{r\ge0}P_h^rG$.
+The first unit of original time is bounded by contraction in supremum
+norm; (71.6) bounds the remaining sum. Thus
+$\|\chi\|_\infty\le C\|G\|_\infty$ and
+$\chi-P_h\chi=\delta G$. The martingale
+
+$$
+M_r=\sum_{i=0}^{r-1}\{\chi(J_{i+1}^h)-P_h\chi(J_i^h)\}
+\tag{71.7}
+$$
+
+satisfies $\delta\sum_{i<r}G(J_i^h)=\chi(J_0^h)-\chi(J_r^h)+M_r$.
+Its expected quadratic variation is bounded uniformly in the initial
+state by $C\|G\|_\infty^2(1+r\delta)$. Indeed,
+
+$$
+P_h\chi^2-(P_h\chi)^2
+ =P_h\chi^2-\chi^2+2\delta\chi G-\delta^2G^2;
+\tag{71.8}
+$$
+
+summing expectations telescopes the first two terms. The last term is
+nonpositive, and the middle term is at most
+$2\delta\|\chi\|_\infty\|G\|_\infty$ per step. Doob's squared maximum
+inequality and the bounded endpoint corrector prove (71.2). This estimate
+accounts for the deterministic starting state without a stationary
+burn-in or a source reset.
+
+Finally (71.1)'s matrix average is the Riemann sum for
+$\int_0^1 2\sin^2(\pi t)F_\kappa(a+Nht)dt$. The coefficients and their
+height derivatives are uniformly bounded on the supplied larger interval.
+The Riemann error is $O(N^{-1})=O(h)$. Equations (69.2) give
+$|a-l|+|Nh-(u-l)|=O(h)$, so replacing the argument by
+$l+(u-l)t$ has the same error. The resulting integral is exactly
+$\widehat M_\kappa$. This proves (71.3), preserving all cross entries.
+$\square$
+
+**Proposition 71.2 (finite-bit coupling and occupation in the full clock).**
+Fix $b>0$, set $T=\tau/b\ge1$, and put
+
+$$
+\omega=\frac{\iota+md_*+r_*+\delta}{T}.
+\tag{71.9}
+$$
+
+The finite-bit chain and the ideal chain of Lemma 71.1 admit a coupling
+on which their entire height tapes, commands and phase histories agree
+with probability at least $1-4m2^{-B}$. This lower bound is replaced by
+zero if it is negative. It is an analysis coupling, not extra random
+bits required by the service. For every $v>0$, actual uninterrupted
+numerical histories satisfy
+
+$$
+\begin{split}
+\mathbb P\left(
+\sup_{0\le s\le b}\left\|
+ \frac1T\int_0^{Ts}F_\kappa(K_r^{\rm num})dr
+       -s\widehat M_\kappa\right\|>C_b(h+\omega)+v\right)
+ \le \frac{C_b(1+T)}{v^2T^2}+4m2^{-B}.
+\end{split}
+\tag{71.10}
+$$
+
+Thus the occupation estimate concerns the whole original elapsed clock,
+including installation, transitions and terminal holds.
+
+Proof. Couple each pair of transition rows maximally as long as their
+indices agree; (69.4) bounds its failure probability by $4\,2^{-B}$.
+The union bound over $m$ transitions gives the stated tape coupling.
+Use exactly the same phase signs on it. Equality of both tapes gives
+equality of the original command and hence of the full native histories
+by the exact execution premise, not merely equality of endpoints.
+
+On the ideal tape apply (71.2) to each centered matrix entry and (71.3)
+to its mean. Replacing the sums over $J_i$ by sums over $J_{i+1}$ changes
+any prefix by at most $2\delta\|F_\kappa\|_\infty$. The height moves by
+at most $h$ during a P piece and is fixed during its Q piece, so replacing
+an active-cell integral by $\delta F_\kappa(k_{J_i})$ costs at most
+$C\delta h$ per cell. The installation, all latency holds, the terminal
+hold and one partial active cell together cost at most
+$C(\iota+md_*+r_*+\delta)$. This is also a bound on the discrepancy
+between active-cell count times $\delta$ and original elapsed time.
+Since $m\delta\le bT$, the normalized deterministic errors are at most
+$C_b(h+\omega)$. The squared maximum bound (71.2), Markov's inequality
+and the tape-coupling failure bound prove (71.10). $\square$
+
+## 72. One joint refinement and long-time transport theorem
+
+**Theorem 72.1 (finite records approaching the full Q transport).** Use
+Theorem 70.1 at every stage $n$, with its unchanged source, INITIAL,
+permissions, guard, tariffs and original Euclidean metric. Fix $b>0$.
+Suppose all its finite quotas and latency inequalities hold and
+
+$$
+\begin{gathered}
+h_n\longrightarrow0,\quad e_n\longrightarrow0,
+\quad \alpha_n\longrightarrow0,\quad T_n=\tau_n/b\longrightarrow\infty,\\
+m_n2^{-B_n}\longrightarrow0,\qquad
+\omega_n=\frac{\iota_n+m_nd_{*,n}+r_{*,n}+\delta_n}{T_n}
+ \longrightarrow0.
+\end{gathered}
+\tag{72.1}
+$$
+
+Then on these same finite numerical native histories, without discarding
+installation time, the joint three-vector paths obey
+
+$$
+X_n(s)=\frac{Y^{\rm num,n}_{T_ns}-y_0}{\sqrt{T_n}}
+ \ \Longrightarrow\ \widehat{\mathcal W}_{\kappa,b}
+ \quad\hbox{in }C_0([0,b],\mathbb R^3).
+\tag{72.2}
+$$
+
+Their endpoint covariance matrices converge to
+$2b\widehat M_\kappa$. The result is a simultaneous limit with the
+explicit sufficient precision relation
+$B_n-\log_2m_n\to+\infty$. It requires neither a separately taken
+fixed-window limit followed by long time, nor a uniform stationary
+approximation asserted without a refinement estimate. The sequence
+(70.7) satisfies all these conditions. Refinement compares alternative
+finite experiments from the same immutable INITIAL; it is not a reset
+operation on an already executed history and does not assert nested
+random tapes across stages.
+
+Proof. It suffices first to use the ideal height tape, by Proposition
+71.2's coupling with probability of any discrepancy tending to zero.
+Reveal that entire tape, and reveal the phase signs successively. This
+is a mathematical filtration for a distributional proof, not a sensor
+or a claim that the installed controller is ignorant of its stored tape.
+Independence of the phase bits makes the endpoint-increment process
+
+$$
+\mathcal M_n(s)=\frac{z_n}{\sqrt{T_n}}
+ \sum_{i:\,t_{i,Q}\le T_ns}\xi_i\widehat c_\kappa(k_{J_i^h})
+\tag{72.3}
+$$
+
+a square-integrable three-vector martingale. Here $t_{i,Q}$ is the
+original scheduled end of the $i$th Q piece, including all earlier
+holds. Its predictable bracket is the full matrix
+
+$$
+\langle\mathcal M_n\rangle(s)
+ =\frac{z_n^2}{T_n}\sum_{i:\,t_{i,Q}\le T_ns}F_\kappa(k_{J_i^h}).
+\tag{72.4}
+$$
+
+Apply (71.2) and (71.3) to this same sum, and use
+$z_n^2/\delta_n=2(1+O(\alpha_n))$. Scheduled time differs from its
+active-cell time by at most $\iota_n+m_nd_{*,n}+r_{*,n}+\delta_n$.
+Consequently
+
+$$
+\mathbb E\sup_{0\le s\le b}
+ \|\langle\mathcal M_n\rangle(s)-2s\widehat M_\kappa\|^2
+ \le C_b\left\{\frac{1+T_n}{T_n^2}
+                    +h_n^2+\alpha_n^2+\omega_n^2\right\}.
+\tag{72.5}
+$$
+
+The expected maximum squared martingale jump and maximum absolute
+bracket-entry jump are each at most $Cz_n^2/T_n$, tending to zero.
+Indeed $\delta_n\asymp h_n^2\to0$, $z_n^2\asymp\delta_n$, and
+$T_n\to\infty$. Whitt, Theorem 2.1(ii), in its finite-interval
+restriction, therefore applies with dimension three and covariance
+matrix $2\widehat M_\kappa$. This checks its predictable-covariation
+and both jump requirements; it does not assume three independent phase
+noises. It gives the martingale limit in the Skorohod topology with a
+continuous Brownian limit.
+
+The actual phase during a Q piece is the straight interpolation of its
+one increment; during P and all holds it is constant. Hence, on the ideal
+tape, its uniform distance from (72.3) is at most $Cz_n/\sqrt{T_n}$.
+Convergence to a continuous limit and this deterministic bound give
+(72.2) in the uniform continuous-path topology. The whole-history
+coupling transfers that conclusion to the actual finite-bit law. This
+uses (72.1) jointly: (72.5), interpolation and $m_n2^{-B_n}$ all vanish
+along the one chosen sequence.
+
+For completeness, endpoint second moments need no appeal to unproved
+uniform integrability. Conditional on either complete height tape,
+(70.2) has mean zero displacement and covariance
+$z_n^2\sum_{i=1}^{m_n}F_\kappa(k_{J_i})$. The corrector in (71.7) bounds
+the expectation of its ideal centered occupation sum by $C$ before
+division by $T_n$, hence by $C/T_n$ after normalization. The stationary
+mean error is $O(h_n)$, the relative phase error $O(\alpha_n)$, and the
+clock loss $O(\omega_n)$. The conditional normalized covariance is bounded uniformly,
+so the exceptional coupling contributes at most $C_bm_n2^{-B_n}$.
+Its limit is precisely $2b\widehat M_\kappa$.
+
+The height-clock calibration also has a direct source correspondence.
+Put $\phi_h(k)=\sin(\pi(k-a)/(Nh))$. For a smooth scalar test $f$,
+uniformly on compact subsets of $I$, the exact rows (69.3) give
+
+$$
+\frac{P_hf-f}{\delta}
+ =\frac{h^2}{4\delta}f''
+   +\frac{h^2}{2\delta}\frac{\phi_h'}{\phi_h}f'+O(h).
+\tag{72.6}
+$$
+
+Indeed $p_j^+-p_j^-=\cot(jx)\tan(x/2)$ and
+$p_j^++p_j^-=\cos x/(1+\cos x)$; Taylor expansion of $f(k_j\pm h)$
+proves the formula. Thus $e_n\to0$ and (69.2) recover the supplied Q
+height generator on those compact sets. Independent phase signs give
+zero height/phase cross increment, zero phase drift, and covariance per
+active time $2F_\kappa+o(1)$ there. Since (72.1) also implies
+$m_n\delta_n/T_n\to b$ and $d_{*,n}/\delta_n\to0$, the scheduled cell
+clock has that same local normalization. This identifies the intended
+source law; local generator consistency alone is not the uniform
+occupation or joint limit argument, which was (71.2)–(72.5).
+
+Finally (70.7) gives $T_n\asymp n^2$,
+$m_n2^{-B_n}=O(n^{-4})$ and $\omega_n=O(n^{-1})$, proving simultaneous
+feasibility of the sufficient regime. $\square$
+
+**Corollary 72.2 (the minimum-rate-Q transport consumer).** For the
+survival-selection task of Propositions 53.2 and 64.1, suppose the analytic
+selection is Q, as in the zero-excess member $f=1$ of the latter's stated
+reversible class. Under Definition 69.1 and Assumption 69.2, with the explicit finite
+resource regime (70.4)–(70.6), (72.1), its original-coordinate rank-three
+transport endpoint can be approached by lawful finite numerical P/Q
+histories from deterministic INITIAL. In particular the limit is the
+full correlated $y$ Brownian law with tensor $\widehat M_\kappa$, and the
+finite-stage ensemble endpoint covariance is positive definite for all
+sufficiently large stages. This is a sufficient generation bridge for
+that transport consumer, not a finite-stage entropy minimization result
+or a proof that a selection mechanism installs these services.
+
+Proof. The supplied Q law is the $f=1$ law, and Theorem 61.1 supplies its
+full-prefix entropy rate $\lambda$. Its exact tensor is (69.1), positive
+by D Theorems 36.1 and 39.1. Theorem 72.1 obtains that identical tensor
+and the identical original diffusive scaling through actual numerical
+commands under stated resource quotas. Its covariance convergence and
+positivity of the limiting smallest eigenvalue imply the finite-stage
+ensemble assertion. At each active instant there is only one phase
+control column, and the full source has two instantaneous control columns.
+These facts coexist with effective phase transport rank three. Neither
+the finite table size, controller storage, predictive state dimension,
+homogeneous heat dimension seven, a spectral dimension nor the number
+of physical spatial axes is identified with that rank.
+
+The fixed nonzero collar gives a uniform positive limit tensor in the
+original metric. If parameters are instead allowed to approach zero,
+(71.2)–(72.5) remain uniform using the supplied smooth coefficient bounds,
+but the limit tensors must be kept as $\widehat M_{\kappa_n}$. At the actual
+zero leaf the $D$ coordinate is frozen and the limiting rank is two,
+as in D Theorem 39.2. No division by $\kappa_n$ repairs this in the
+original Euclidean metric. $\square$
+
+## 73. Finite-path support, information and the remaining source bridges
+
+**Proposition 73.1 (weak transport does not transfer native path entropy).**
+For each finite stage with positive duration, the generated native law
+has finite support in the continuous-path space and is carried by
+absolutely continuous finite-variation histories. The continuous Q law
+is carried by histories of nonzero height quadratic variation and assigns
+zero probability to this finite-stage carrier. Its continuous-path support
+is therefore not the finite-stage support. In particular the finite law
+and Q are mutually singular. The same finite law is singular with respect
+to the original cemetery-inclusive killed reference on that horizon, with
+relative entropy $+\infty$. Thus (72.2) establishes neither finite-stage
+equality to Q, total variation convergence, nor transfer of Q's full-prefix
+entropy rate $\lambda$ to these numerical approximants.
+
+Proof. There are only $2^{m(B+1)}$ possible fair records. The deterministic
+table, schedule and exact command action send each to one continuous
+native history. Their support is consequently a finite closed set, each
+member absolutely continuous with the variation bound following (70.3).
+Along any refining deterministic partition its height quadratic variation
+is zero. Q has height quadratic variation $2\varepsilon^2t$ on each
+positive finite interval, since its added height drift is finite variation
+on every such realized compact interval. It stays in $I$ at finite times.
+Its supplied positive-time height transition density is nonatomic, so
+its topological path support cannot be a finite set.
+For the killed reference, on its surviving histories the same height
+quadratic variation is $2\varepsilon^2t$; the numerical histories all
+survive and have zero variation of that kind. The event that the height
+survives the finite horizon and has zero quadratic variation thus has
+numerical probability one and Q and reference probability zero. One may
+use dyadic partitions to make this a single Borel separating event.
+
+Alternatively the existing primitive identity
+$(2,-2,1)\cdot\widehat c_\kappa=1$ makes the Q character lift a Brownian
+motion of quadratic variation $2t$, whereas the finite command character
+is piecewise linear. Neither argument asserts disjoint topological
+supports: finite-variation paths may lie in the topological support of
+a diffusion. The assertion is different topological supports and disjoint
+full-measure carriers. Failure of absolute continuity gives infinite
+relative entropy to the killed reference. The fair record itself has
+Shannon entropy $m(B+1)\log2$, and the finite path's discrete Shannon
+entropy is at most that number; neither is its relative entropy against
+the continuous reference. These facts hold even while the rescaled
+transport laws converge weakly by Theorem 72.1. $\square$
+
+**Definition 73.2 (primary correspondence and the uncovered delta).**
+The numerical and occupation/limit composition above is `repo-derived`
+ordinary mathematics under the declared source and service assumptions;
+no Lean/kernel, empirical or worldwide literature-priority assertion is
+made. The classical discrete transform is a credited intermediate tool:
+Chetrite–Touchette, *Nonequilibrium Markov processes conditioned on large
+deviations*, [arXiv:1405.5157v3](https://arxiv.org/html/1405.5157v3),
+Appendix E, equations (210) and (216), gives
+$M^H(j,k)=M(j,k)H(k)/(MH)(j)$ and, for an eigenvector, the denominator
+$\rho H(j)$. In (71.4) the symmetric killed matrix is $S$, its positive
+interior eigenvector is $H_j$, and $SH=\rho H$; the left/right stationary
+product is $H_j^2/\sum H_a^2$. No driven-chain asymptotic equivalence or
+large-deviation theorem is needed to generate the finite rows.
+
+Mazzolo, *Sweetest taboo processes*,
+[arXiv:1805.07215v2](https://arxiv.org/html/1805.07215v2), §2.2,
+equations (14)–(25), supplies the classical interval taboo normalization.
+Translate its interval $[-L_0,L_0]$ to $(l,u)$ with $2L_0=u-l$, set its
+unconditioned drift to zero and its $\sigma=\sqrt2\varepsilon$. Its drift
+$\sigma^2\varphi_1'/\varphi_1$, invariant density and spectral gap become
+$2\varepsilon^2\phi'/\phi$, $\phi^2$ and
+$3\varepsilon^2\pi^2/(u-l)^2$ respectively. Those are the already supplied
+Q height data, not new native results here. The continuum bound in its
+(25) is not used as a uniform theorem about a refining finite chain;
+(71.4)–(71.8) prove the required discrete bound in original time.
+Whitt, *Proofs of the martingale FCLT*,
+[arXiv:0712.1929v2](https://arxiv.org/html/0712.1929v2), Theorem 2.1(ii),
+requires local square integrability, vanishing expected bracket jumps,
+vanishing expected squared martingale jumps and convergence of every
+predictable cross bracket to $C_{ij}t$. Equations (72.3)–(72.5) verify
+exactly these hypotheses with $C=2\widehat M_\kappa$, including the
+shared-sign correlations. It supplies the probability limit after the
+native occupation, numerical precision and service-time work.
+
+The repository suppliers are D §§35–39's exact signed source, Q law,
+tensor positivity and winding map; G Definition 25.1's coefficients,
+clock and two absorbing faces; and N Theorem 9.2 and Proposition 10.2's original
+partial-command action, guard and energy. Theorem 61.1 is used only to
+identify the analytic consumer's Q rate. S §§50.1–50.3 supplies mature
+finite-chain transform and stationary-law correspondence for its own
+mixed-boundary chain and explicitly does not supply arbitrary joint
+mesh/time limits. The present lazy two-face matrix and uniform corrector
+estimate meet that missing refinement obligation directly.
+
+[Variable-coefficient Green stability
+§§29.1–29.7](FIB_NATIVE_VARIABLE_COEFFICIENT_GREEN_STABILITY.md) already
+supplies finite-sign numerical command generation, fixed-window convergence
+and finite resource bounds for its declared killed two-phase source with
+exact-real evaluations. Its coefficients, initial-source contract, killed
+law and exact-real sampling operations are different. Those results are
+not repeated as a new theorem about that source. Here the target is the
+fixed signed three-phase Q transport, calibration and every issued number
+are finite, no continuous bias is executed, and (71.2), (71.10), (72.5)
+control a single simultaneous refinement/long-time sequence with charged
+installation and throughput. This is the additional native bridge.
+
+[Paid point-observation tracking
+§§50–54](FIB_NATIVE_PAID_POINT_OBSERVATION_TRACKING.md) instead consumes
+paid actual wrapped points from an unknown evolving source, an independent
+seed and its conditional bridges over a fixed horizon. No such observation
+port is used or obtained here. A generated own history is not the missing
+segment of an external one. Exact numerical execution and certified known
+calibration have been assumed, not obtained by observing this field or
+transferred from a different FIB acquisition interface.
+
+The remaining obligations are actual acquisition/installation of the
+stipulated services, robustness to command-execution error or unknown
+calibration, and any claim about external-source tracking. Same-source
+integrable nonlinear spatial realization, physical metric/clock
+identification, recursive/gluing spectral stability and wider causal
+controllers retain their separate hypotheses and unsupplied bridges.
+Nothing here infers point sources, second-order propagation or physical
+axes from bare FIB, equates transport rank with prediction capacity, or
+settles the complete why-three objective. Explicit model premises support
+the conditional transport theorem and its finite resources, with precisely
+the entropy and continuous-path support boundary in Proposition 73.1.
+
+## 追加锚（本行以下为增补区）

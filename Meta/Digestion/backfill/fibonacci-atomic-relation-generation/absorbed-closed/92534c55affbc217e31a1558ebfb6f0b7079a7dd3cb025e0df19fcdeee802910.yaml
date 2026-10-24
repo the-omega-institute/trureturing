@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:92534c55affbc217e31a1558ebfb6f0b7079a7dd3cb025e0df19fcdeee802910
+  normalized_sha256: sha256:92534c55affbc217e31a1558ebfb6f0b7079a7dd3cb025e0df19fcdeee802910
+cas_ref: sha256:92534c55affbc217e31a1558ebfb6f0b7079a7dd3cb025e0df19fcdeee802910
+coverage_gids:
+  - gid: D5/S3/Arith/Congruence/PrimePowerAffineBehavior.local_classification
+    target_statement_id: sha256:e3a8a66631d552a4404de5a1a06fb0292379bd24d39ae1c1bfafe091d5f9e995
+  - gid: D5/S3/Arith/FibonacciAtomic/GlobalGcdSampling.sparse_gcd_sampling
+    target_statement_id: sha256:a2b84a4e11e4eeccb86f3072692a5abbdf30c2f19fc987e1c82bb14a4d9b67ab
+receipts:
+  unresolved_subitems: []
