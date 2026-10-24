@@ -129,6 +129,8 @@ The whole process tree remains subject to the 12 GiB physical-footprint limit. N
 
 先核验两臂全部边和根的证书。基底上界为零时可认证 bind-only。`U_B ≤ U_{B∪S}` 时停止并给出 insufficient，不执行任何完整 NoHit 搜索。只有 `U_{B∪S} < U_B` 时才请求基底根、候选见证边及 `L_B` 最优路线上的 unknown 作者边的 R；每个请求的相同查询由原有缓存结算，失败或超限保留 unknown。只在 `L_B > U_{B∪S}` 且其他守卫完成时授予阳性。配对边和配对根不运行完整否定。决定集还包含 target-part 反向查询：严格区间下降、基底根 NoHit 和图完整性均成立，且所选种子的独立探针完成 NoHit、反向正证书仍未决时，才按成功优先的原有 R 补跑该反向查询；命中即停。反向 NoHit 只解除种子排除的未决状态，不计入任何图边价格。没有两臂全边守卫，也不要求有限的配对下界。
 
+当 `S=∅`、两臂上界相等且非零、默认正证书核验未闭合目标时，两臂保持 unknown，判 insufficient，不追加完整 R 查询。作者证明使用了某条基底引理，不等于已提交并核验该引理的名字证书；零次完整 R 查询既不是 NoHit，也不是 bind-only 证据。
+
 每个目标的生成审计模块执行 Lean 命令，保留逐边类型化的代价记录、`ObviousCertificate` 声明和 kernel 核验的证明声明。JSON 仅投影这些 Lean 计算结果，不作为判词输入。判词绑定图、B_T、R 版本、语言版本与规范证书池摘要；扩充证书池可以推翻旧阳性，不改写旧结算。NoHit 仍是完整机械 R 的相对否定；提名器或 LLM 未命中不能认证一价，也不能推出绝对不显然、不可证明或复杂度分离。
 
 `SEARCH_REDUCTION_FULL_EVAL=1` is a differential-test mode: it evaluates every unresolved baseline author edge and every eligible seed's independent and unresolved reverse query, without requesting paired negative prices. It uses the same candidate domain, budgets and classifier. `SEARCH_REDUCTION_B1_COMPARE=1` additionally measures the unsplit parent enumeration when a split is incomplete, then restores the split's Meta state and semantic budget accounting. Its comparison events are diagnostic requests, reported separately from production R requests, and never supply prices. `SEARCH_REDUCTION_TELEMETRY` changes diagnostic output only; successful assignments, candidate order, scheduling and termination on a hit are identical in both modes.

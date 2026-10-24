@@ -58,11 +58,12 @@ run_meta do
   at "b530df86e6e9c4709edecd3009bb96c3d4ebc8be"
   baseline [LeanInformationAuditRegTests.SearchReduction.Baseline]
   using [] as hiddenDependencyResult
--- Classical.choose_eq supplies a checked baseline certificate for the opaque
--- chosen datum, so both graph arms have zero construction depth.
-#guard hiddenDependencyResult = Verdict.bindOnly
-#guard hiddenDependencyResult.baseline = Run.found
-#guard hiddenDependencyResult.paired = Run.found
+-- No submitted certificate closes the opaque chosen datum. With S empty,
+-- equal upper bounds do not request full R (SPEC §3.5); missing positive
+-- evidence remains unknown in both arms, even when the author used choose_spec.
+#guard hiddenDependencyResult = Verdict.insufficient
+#guard hiddenDependencyResult.baseline = Run.incomplete Failure.undecided
+#guard hiddenDependencyResult.paired = Run.incomplete Failure.undecided
 
 #search_reduction LeanInformationAudit.Tests.SearchReduction.Candidates.content
   at "b530df86e6e9c4709edecd3009bb96c3d4ebc8be"
