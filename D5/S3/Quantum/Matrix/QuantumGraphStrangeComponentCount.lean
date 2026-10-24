@@ -4,7 +4,7 @@
    mirror-E: none(waiver:external-open-problem-resolution)
    anchors: []
    utility: none
-   digest: Quantum graph components equal graph components plus loop-free isolated strange edges. -/
+   digest: Quantum graph components equal graph components plus loopless isolated strange edges. -/
 
 import D5.S3.Quantum.Matrix.RecordCapacity
 import D5.S3.Quantum.Matrix.CfmRadialDerivative

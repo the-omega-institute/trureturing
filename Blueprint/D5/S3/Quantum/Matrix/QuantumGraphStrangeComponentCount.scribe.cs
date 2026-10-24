@@ -11,7 +11,7 @@ internal sealed class QuantumGraphStrangeComponentCountDocument : IScribeDocumen
         "D5/L/GraphInvariants/spitzernechita2026quantumgraph");
 
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
-        "Quantum graph components equal graph components plus loop-free isolated strange edges.",
+        "Quantum graph components equal graph components plus loopless isolated strange edges.",
         H("The exact component count of a strange quantum graph"),
         Blocks(
             Paragraph(Text(
