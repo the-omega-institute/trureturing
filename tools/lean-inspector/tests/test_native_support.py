@@ -774,6 +774,32 @@ def leaf_ids(selection):
     return names
 
 
+def require_native_python():
+    """Use Python 3.11+ for discovery and execution, including tomllib consumers.
+
+    STRATALINT_NATIVE_PYTHON selects an executable explicitly. Otherwise keep a
+    compatible current interpreter or find a versioned Python on PATH.
+    """
+    requested = os.environ.get('STRATALINT_NATIVE_PYTHON')
+    if not requested and sys.version_info >= (3, 11):
+        return
+    candidates = [requested] if requested else [f'python3.{minor}' for minor in range(11, 15)]
+    for command in candidates:
+        executable = shutil.which(command)
+        if executable is None:
+            continue
+        probe = subprocess.run([executable, '-B', '-c',
+            'import sys, tomllib; assert sys.version_info >= (3, 11); print(sys.executable)'],
+            text=True, capture_output=True)
+        if probe.returncode == 0:
+            executable = probe.stdout.strip()
+            if os.path.samefile(executable, sys.executable):
+                return
+            os.execv(executable, [executable, '-B', *sys.argv])
+    raise RuntimeError('native fixtures require Python 3.11+ with tomllib; '
+                       'set STRATALINT_NATIVE_PYTHON or put a compatible Python on PATH')
+
+
 def native_test_main(selection=None):
     import argparse
     parser = argparse.ArgumentParser(description=__doc__)
@@ -826,6 +852,7 @@ def native_test_main(selection=None):
 
 
 if __name__ == '__main__':
+    require_native_python()
     # The loader and its imported mixins must share this invocation's owners.
     sys.modules['test_native_support'] = sys.modules[__name__]
     if len(sys.argv) == 2 and not sys.argv[1].startswith('--'):
