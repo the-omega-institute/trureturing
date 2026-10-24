@@ -964,3 +964,551 @@ The two exceptional branches and $n\ge4$ exhaust the scope of (30.2).
 $\square$
 
 ## 追加锚（本行以下为增补区）
+
+## 31. The all-population spectator–e task and a conditional quartic
+
+**Definition 31.1 (Fixed task, signed coordinates and source correspondence).**
+Use the ordered orthonormal basis $(\xi,e,f)$ and exactly $W,U_0,F$ of
+(29.1). The chronological histories are fair and independently sampled
+and every record is erased, as in [ERM, Definition 27.1][ERM]. Fix
+
+$$
+\begin{gathered}
+0<p<1,\qquad q=1-p,\qquad c=\sqrt{pq},\qquad
+v_p=\sqrt p\,\xi+\sqrt q\,e,\qquad E_p=|v_p\rangle\langle v_p|,
+\\
+E_2=\begin{pmatrix}p&c\\c&q\end{pmatrix},\qquad E_p=E_2\oplus0,
+\qquad n\in\mathbb Z,\quad n\ge2,
+\\
+s=(-1/2)^{n-1},\qquad \tau=|s|,\qquad
+\epsilon=\operatorname{sgn}(s),\qquad a=(1+s)/2,\quad b=(1-s)/2.
+\end{gathered}
+\tag{31.1}
+$$
+
+All square roots of strictly positive quantities denote their positive
+real roots. In particular $a,b,c,\tau>0$, $s\ne0$, and
+
+$$
+a+b=1,\quad a-b=a^2-b^2=s,\quad
+-1/2\le s\le1/4,\quad a-s^2=b(1+2s)\ge0.
+\tag{31.2}
+$$
+
+The last equality can vanish only at $n=2$, when $s=-1/2$.
+For a block Hermitian matrix define, using the already established
+image map [ERM, (27.6)–(27.7)][ERM],
+
+$$
+G_s\!\left(\begin{pmatrix}x&z\\\overline z&y\end{pmatrix}\oplus d\right)
+ =\begin{pmatrix}x&sz\\s\overline z&ay+bd\end{pmatrix}\oplus(by+ad).
+\tag{31.3}
+$$
+
+The quantity to be determined is exactly
+
+$$
+\eta_n(E_p)=\min_{0\le B\le I_3}
+ \|(F^n)^\dagger(B)-E_p\|_{\rm op}
+ =\min_{\substack{0\le K_2\le I_2\\0\le d\le1}}
+ \|E_p-G_s(K_2\oplus d)\|_{\rm op}.
+\tag{31.4}
+$$
+
+The first minimum is over all complex qutrit effects. Each block effect
+$K$ in the second minimum is realized by the physical effect
+$B=U_0KU_0^\dagger$. The witness below is an input functional $Y$ itself;
+it is not conjugated by $U_0$. These statements reuse exactly
+[ERM, (27.4)–(27.7)][ERM]. When an inverse is used, it is only the
+finite-$s$, $r=0$ boundary inverse with the effect constraints of
+[ERM, (27.28)][ERM]; no interior Schur fraction is used.
+
+The task in (31.4) retains all complex input density matrices and one
+input-independent terminal CPTP decoder on the same qutrit. It grants
+no history, reference, smaller code, intermediate correction,
+postselection or larger output. At $p=1/2$ use Definition 30.2 and
+Theorem 30.3 verbatim, including their $n=2$, $n=3$ and $n\ge4$
+branches; none of their balanced formulas is redefined here.
+
+The Heisenberg correction framework is literature-attested in
+Bény–Kempf–Kribs, Definition 8, equation (7), Theorem 9 and Corollary 10
+[BKKDOI]. Its exact algebra-correction criterion and the elementary
+single-task interface in [BKKNOTE] are intermediate tools. The
+fixed-effect loss (31.4) is distinct from the worst-case entanglement
+fidelity in Bény–Oreshkov, *General conditions for approximate quantum
+error correction and near-optimal recovery channels*, Theorem 1,
+[arXiv:0907.5391v4](https://arxiv.org/html/0907.5391v4).
+No equality with that fidelity optimization is assumed. The additional
+branch formulas and spectral classification below are repo-derived
+from (31.3) and finite-dimensional norm duality, relative to the
+supplied conditional and branch arguments. No global literature
+novelty or priority assertion is made.
+
+**Definition 31.2 (The conditional root and pair).**
+For $0<y<1$ put
+
+$$
+\begin{gathered}
+w(y)=\sqrt{y(1-y)},\qquad \ell(y)=c-\tau w(y),\qquad
+D(y)=2(1-\tau^2)y+\tau^2-2q,\\
+\mathcal C(y)=D(y)^2y(1-y)-pq\tau^2(1-2y)^2.
+\end{gathered}
+\tag{31.5}
+$$
+
+Let $y_0$ be a real root in $(0,1)$ retained by the exact scalar filter
+
+$$
+\mathcal C(y_0)=0,\qquad D(y_0)(1-2y_0)\ge0.
+\tag{31.6}
+$$
+
+Set $w_0=w(y_0)$, $\ell_0=\ell(y_0)$, $\Delta=y_0-q$ and
+$t_0=\sqrt{\Delta^2+\ell_0^2}$. The conditional pair is retained exactly
+when $y_0\le t_0$; it is then
+
+$$
+K^{\rm C}=\begin{pmatrix}1-y_0&\epsilon w_0\\
+                    \epsilon w_0&y_0\end{pmatrix}\oplus y_0,
+\qquad
+Y^{\rm C}=\frac1{2t_0}
+             \begin{pmatrix}2\Delta&\ell_0\\\ell_0&0\end{pmatrix}\oplus0.
+\tag{31.7}
+$$
+
+For explicit coefficients, let $d_1=2(1-\tau^2)$ and
+$d_0=\tau^2-2q$. The coefficients of $\mathcal C$ in descending powers
+$y^4,y^3,y^2,y,1$ are
+
+$$
+\bigl(-d_1^2,\ d_1^2-2d_1d_0,\
+2d_1d_0-d_0^2-4pq\tau^2,\ d_0^2+4pq\tau^2,\ -pq\tau^2\bigr).
+\tag{31.8}
+$$
+
+**Theorem 31.3 (Existence, uniqueness and exact scope of the conditional pair).**
+The retained root (31.6) exists and is unique. Its $w_0,\ell_0,t_0$ are
+strictly positive and $t_0<1/2$. If $y_0\le t_0$, the pair (31.7)
+satisfies $0\le K^{\rm C}\le I_3$, $\|Y^{\rm C}\|_1=1$, and
+
+$$
+\|E_p-G_s(K^{\rm C})\|_{\rm op}=t_0
+ =\operatorname{Tr}(Y^{\rm C}E_p)
+       -\operatorname{Tr}((G_s(Y^{\rm C}))_+)=\eta_n(E_p).
+\tag{31.9}
+$$
+
+Proof. Define
+$g(y)=(y-q)^2+(c-\tau w(y))^2$. Expanding the squares, using
+$q^2+c^2=q$, and differentiating gives
+
+$$
+\begin{aligned}
+g(y)&=(1-\tau^2)y^2+(\tau^2-2q)y+q-2c\tau w(y),\\
+g'(y)&=D(y)-\frac{c\tau(1-2y)}{w(y)},\\
+g''(y)&=2(1-\tau^2)+\frac{c\tau}{2w(y)^3}>0.
+\end{aligned}
+\tag{31.10}
+$$
+
+The derivative tends to $-\infty$ at zero and $+\infty$ at one.
+There is exactly one stationary point in $(0,1)$. Squaring
+$D(y)w(y)=c\tau(1-2y)$ gives $\mathcal C(y)=0$.
+Conversely, equality of the squares and the sign filter in (31.6)
+give this unsquared equality, including when both sides vanish.
+Thus (31.6) specifies precisely that unique stationary point.
+
+If $q<1/2$, then $g'(q)=-\tau(1-\tau)(1-2q)<0$ and
+$g'(1/2)=1-2q>0$, so $q<y_0<1/2$. If $q>1/2$, the same expressions
+give $1/2<y_0<q$. At $q=1/2$ the root is $y_0=1/2$.
+Rewriting stationarity gives
+
+$$
+2(y_0-q)w_0=\tau\ell_0(1-2y_0).
+\tag{31.11}
+$$
+
+In the two unbalanced cases the two factors $y_0-q$ and $1-2y_0$
+have the same nonzero sign, so $\ell_0>0$. In the balanced case
+$\ell_0=(1-\tau)/2>0$. Also $w_0>0$ and $t_0>0$.
+Minimality of $g(y_0)$ gives
+$t_0^2\le g(q)=(1-\tau)^2pq<1/4$.
+
+The upper block of $K^{\rm C}$ is a rank-one projection, so it and its
+scalar block are effects. Its residual is
+
+$$
+E_p-G_s(K^{\rm C})=
+ \begin{pmatrix}\Delta&\ell_0\\\ell_0&-\Delta\end{pmatrix}\oplus(-y_0).
+\tag{31.12}
+$$
+
+The upper block has eigenvalues $t_0,-t_0$; the assumed filter gives
+residual norm $t_0$. The upper block of $Y^{\rm C}$ has determinant
+$-\ell_0^2/(4t_0^2)<0$ and trace norm
+$\sqrt{4\Delta^2+4\ell_0^2}/(2t_0)=1$.
+Its propagated scalar vanishes. If $M$ denotes its propagated upper
+block, then
+
+$$
+M=\begin{pmatrix}\Delta/t_0&s\ell_0/(2t_0)\\
+                 s\ell_0/(2t_0)&0\end{pmatrix},\qquad
+\delta=\frac{\tau\ell_0}{2t_0w_0}>0.
+\tag{31.13}
+$$
+
+Equation (31.11) says that the diagonal difference of $M$ is
+$\delta(1-2y_0)$. Its off-diagonal is
+$\epsilon\delta w_0$. Therefore
+$(\sqrt{1-y_0},\epsilon\sqrt{y_0})^{\mathsf T}$ is its eigenvector for
+the larger eigenvalue, the eigenvalue gap is $\delta$, and
+$\operatorname{Tr}M/\delta=1-2y_0\in(-1,1)$. Its eigenvalues have
+opposite signs, so $K^{\rm C}$ attains its effect support. Finally
+pairing (31.12) with (31.7) gives $t_0$.
+Self-adjointness of $G_s$ for the trace pairing and [ERM, (27.4)][ERM]
+give (31.9) against the entire complex effect interval. Equality
+$y_0=t_0$ requires no strict inequality in this argument. $\square$
+
+## 32. Four finite algebraic families
+
+**Definition 32.1 (Contact convention).**
+All matrices in this section are in $(\xi,e,f)$. The symbol
+$S=\left(\begin{smallmatrix}k&\ell/t\\\ell/t&-k\end{smallmatrix}\right)$
+in a contact family is required by its root equation to satisfy
+$S^2=I_2$. For $-1\le h\le1$ and $\mu\ge0$, put
+
+$$
+Y_{\rm raw}=(hI_2+S)\oplus(-\mu),\qquad
+Y=Y_{\rm raw}/(2+\mu).
+\tag{32.1}
+$$
+
+Then $\|Y_{\rm raw}\|_1=2+\mu$ and its pairing with
+$tS\oplus(-t)$ is $t(2+\mu)$. A real root is retained only if it
+satisfies every interval, sign and scalar filter stated for its family.
+The symbols defined within each family are local to that family.
+
+**Definition 32.2 (Family P).**
+For $0<t<1/2$ set
+
+$$
+V(t)=q+(\tau^2-2q)t-\tau^2t^2,\qquad
+\mathcal P_{\rm P}(t)=V(t)^2-4pq\tau^2t(1-t).
+\tag{32.2}
+$$
+
+Require $\mathcal P_{\rm P}(t)=0$ and $V(t)>0$. Define
+
+$$
+\begin{gathered}
+w=\sqrt{t(1-t)},\quad \ell=c-\tau w>0,\quad
+k=(t-q)/t,\quad
+S=\begin{pmatrix}k&\ell/t\\\ell/t&-k\end{pmatrix},\\
+\delta=\frac{\tau\ell}{tw},\qquad
+h=\frac{a\delta(1-2t)-(a+s)k}{b},\qquad
+\mu=\frac ba(h-k),\qquad
+T=h+k+\frac sa(h-k).
+\end{gathered}
+\tag{32.3}
+$$
+
+In addition to $\ell>0$, require
+
+$$
+-1\le h\le1,\qquad \mu\ge0,\qquad |T|\le\delta.
+\tag{32.4}
+$$
+
+The pair is
+
+$$
+K=\begin{pmatrix}1-t&\epsilon w\\\epsilon w&t\end{pmatrix}\oplus t,
+\qquad Y=\frac{(hI_2+S)\oplus(-\mu)}{2+\mu}.
+\tag{32.5}
+$$
+
+The descending quartic coefficients are
+
+$$
+\begin{gathered}
+\tau^4,\quad -2\tau^2(\tau^2-2q),\quad
+(\tau^2-2q)^2-2q\tau^2+4pq\tau^2,\\
+2q(\tau^2-2q)-4pq\tau^2,\quad q^2.
+\end{gathered}
+\tag{32.6}
+$$
+
+**Definition 32.3 (Family M).**
+Let $u>0$, and put
+
+$$
+\begin{gathered}
+\chi=(1+\epsilon)/2,\qquad
+A=\epsilon p-\chi,\quad B=2c/\tau,\quad C=aq/\tau-\chi,\\
+D=4/\tau^2-2\epsilon a/\tau,\quad E=a^2/\tau^2,\quad m=b/\tau,\\
+P(u)=Au^2+Bu+C,\qquad Q(u)=u^4+Du^2+E,\\
+J(u)=-2Bu^4+(2AD-4C)u^3+(4AE-2CD)u+2BE,\\
+\mathcal P_{\rm M}(u)=J(u)^2-4m^2(2Au+B)^2Q(u).
+\end{gathered}
+\tag{32.7}
+$$
+
+Require $\mathcal P_{\rm M}(u)=0$ and the unsquared filter
+
+$$
+J(u)+2m(2Au+B)\sqrt{Q(u)}=0,\qquad P(u)>0.
+\tag{32.8}
+$$
+
+Define
+
+$$
+\begin{gathered}
+R=\sqrt{Q(u)},\quad t=P(u)/(R+m),\qquad 0<t<1/2,\\
+A_{\rm raw}=\begin{pmatrix}\epsilon u^2&u/\tau\\u/\tau&a/\tau\end{pmatrix},
+\qquad
+S=\frac1R\begin{pmatrix}\epsilon u^2-a/\tau&2u/\tau\\
+                          2u/\tau&a/\tau-\epsilon u^2\end{pmatrix},\\
+H=E_2-tS,\qquad x=H_{00},\quad z=H_{01}/s,\qquad
+ y=(aH_{11}-bt)/s,\quad d=(at-bH_{11})/s.
+\end{gathered}
+\tag{32.9}
+$$
+
+The residual indices $0,1$ mean $\xi,e$. The remaining filters are
+
+$$
+0\le d\le1,\qquad
+\begin{cases}
+0\le x(1+u^2)\le1,&s<0,\\
+0\le(1-x)(1+u^2)\le1,&s>0.
+\end{cases}
+\tag{32.10}
+$$
+
+Take
+
+$$
+K=\begin{pmatrix}x&z\\z&y\end{pmatrix}\oplus d,\qquad
+Y=\frac{A_{\rm raw}\oplus(-m)}{R+m}.
+\tag{32.11}
+$$
+
+For fully explicit degree-eight coefficients, write
+$j_4=-2B$, $j_3=2AD-4C$, $j_1=4AE-2CD$, $j_0=2BE$.
+Then $\mathcal P_{\rm M}(u)=\sum_{i=0}^8 e_i u^i$, where
+
+$$
+\begin{aligned}
+e_8&=j_4^2,&e_7&=2j_4j_3,\\
+e_6&=j_3^2-16m^2A^2,&
+e_5&=2j_4j_1-16m^2AB,\\
+e_4&=2j_4j_0+2j_3j_1-4m^2(B^2+4A^2D),&
+e_3&=2j_3j_0-16m^2ABD,\\
+e_2&=j_1^2-4m^2(B^2D+4A^2E),&
+e_1&=2j_1j_0-16m^2ABE,\\
+e_0&=j_0^2-4m^2B^2E.
+\end{aligned}
+\tag{32.12}
+$$
+
+**Definition 32.4 (Family D and its two signed branches).**
+Use D+ only if $s>0$. Its root variable satisfies $0<t<b$. Put
+
+$$
+\begin{gathered}
+R_0(t)=at(b-t),\\
+L_0(t)=(s-as^2)t^2+ab(s^2-2q)t+b^2q,\\
+\mathcal P_{{\rm D}+}(t)=L_0(t)^2-4b^2pq\tau^2R_0(t),\\
+d=0,\qquad x=1-at/b,\quad y=t/b,\quad
+z=\epsilon\sqrt{R_0(t)}/b.
+\end{gathered}
+\tag{32.13}
+$$
+
+Require $\mathcal P_{{\rm D}+}(t)=0$ and $L_0(t)>0$.
+Use D− only if $s<0$. Its root variable satisfies $a<t<1/2$. Put
+
+$$
+\begin{gathered}
+R_1(t)=a(1-t)(t-a),\qquad h_0=s+bq,\\
+L_1(t)=(s-as^2)t^2+a\bigl(s^2(1+a)-2h_0\bigr)t
+          +h_0^2+b^2pq-s^2a^2,\\
+\mathcal P_{{\rm D}-}(t)=L_1(t)^2-4b^2pq\tau^2R_1(t),\\
+d=1,\qquad x=a(1-t)/b,\quad y=(t-a)/b,\quad
+z=\epsilon\sqrt{R_1(t)}/b.
+\end{gathered}
+\tag{32.14}
+$$
+
+Require $\mathcal P_{{\rm D}-}(t)=0$ and $L_1(t)>0$.
+For either branch set
+
+$$
+\begin{gathered}
+K_2=\begin{pmatrix}x&z\\z&y\end{pmatrix},\quad
+\ell=c-sz>0,\quad k=(ay+bd-q)/t,\quad
+S=\begin{pmatrix}k&\ell/t\\\ell/t&-k\end{pmatrix},\\
+Q=\begin{cases}(K_2-tI_2)/(1-t),&\mathrm{D+},\\
+                I_2-K_2/t,&\mathrm{D-},\end{cases}\\
+\kappa=\frac{s\ell}{tQ_{01}},\qquad h=\kappa Q_{00}-k,\qquad
+\mu=\frac{a(h-k)-\kappa Q_{11}}b,\qquad
+\zeta=b(h-k)-a\mu.
+\end{gathered}
+\tag{32.15}
+$$
+
+In addition to $\ell>0$, require
+
+$$
+-1\le h\le1,\qquad \mu\ge0,\qquad
+\begin{cases}\zeta\le0,&\mathrm{D+},\\\zeta\ge0,&\mathrm{D-}.
+\end{cases}
+\tag{32.16}
+$$
+
+Take $K=K_2\oplus d$ and $Y$ from (32.1).
+For either quartic, write $L_i=l_2t^2+l_1t+l_0$ and
+$R_i=r_2t^2+r_1t+r_0$, with
+
+$$
+\begin{array}{c|ccc|ccc}
+ &l_2&l_1&l_0&r_2&r_1&r_0\\ \hline
+\mathrm{D+}&s-as^2&ab(s^2-2q)&b^2q&-a&ab&0\\
+\mathrm{D-}&s-as^2&a(s^2(1+a)-2h_0)&h_0^2+b^2pq-s^2a^2
+ &-a&a(1+a)&-a^2
+\end{array}
+\tag{32.17}
+$$
+
+The descending coefficients of $\mathcal P_{{\rm D}\pm}$ are
+
+$$
+\bigl(l_2^2,\ 2l_2l_1,\ l_1^2+2l_2l_0-4b^2pq\tau^2r_2,\
+2l_1l_0-4b^2pq\tau^2r_1,\ l_0^2-4b^2pq\tau^2r_0\bigr).
+\tag{32.18}
+$$
+
+**Definition 32.5 (Family R−).**
+Use this family only if $s<0$. For $u>0$ define
+
+$$
+\begin{gathered}
+A=2p-1,\quad B=4c,\quad C=2q-s/a,\quad d_*=1/a,\\
+D=4s^2-2s/a,\quad E=s^2/a^2,\quad
+P(u)=Au^2+Bu+C,\quad Q(u)=u^4+Du^2+E,\\
+L(u)=-Bu^2+2(Ad_*-C)u+Bd_*,\\
+J(u)=(4d_*-2D)u^3+(2Dd_*-4E)u,\\
+\mathcal P_{{\rm R}-}(u)=4Q(u)L(u)^2-J(u)^2.
+\end{gathered}
+\tag{32.19}
+$$
+
+Require $\mathcal P_{{\rm R}-}(u)=0$ and the unsquared filter
+
+$$
+2\sqrt{Q(u)}\,L(u)=J(u).
+\tag{32.20}
+$$
+
+Set
+
+$$
+\begin{gathered}
+R=\sqrt{Q(u)},\qquad N=u^2+1/a,\qquad
+ t=\frac{P(u)-R}{2N},\qquad 0<t<1/2,\\
+x=\frac{1+(u^2-s/a)/R}{2},\qquad y=1-x,\qquad z=su/R,\\
+d=(t-by)/a,\qquad 0\le d\le t,\\
+K=\begin{pmatrix}x&z\\z&y\end{pmatrix}\oplus d,\qquad
+Y=\frac{\begin{pmatrix}u^2&u\\u&1\end{pmatrix}\oplus(-b/a)}N.
+\end{gathered}
+\tag{32.21}
+$$
+
+For its explicit coefficients put $l_2=-B$, $l_1=2(Ad_*-C)$,
+$l_0=Bd_*$, $j_3=4d_*-2D$, $j_1=2Dd_*-4E$.
+Then $\mathcal P_{{\rm R}-}(u)=\sum_{i=0}^8 f_i u^i$, where
+
+$$
+\begin{aligned}
+f_8&=4l_2^2,&f_7&=8l_2l_1,\\
+f_6&=4(l_1^2+2l_2l_0+Dl_2^2)-j_3^2,&
+f_5&=8(l_1l_0+Dl_2l_1),\\
+f_4&=4\bigl(l_0^2+D(l_1^2+2l_2l_0)+El_2^2\bigr)-2j_3j_1,&
+f_3&=8(Dl_1l_0+El_2l_1),\\
+f_2&=4\bigl(Dl_0^2+E(l_1^2+2l_2l_0)\bigr)-j_1^2,&
+f_1&=8El_1l_0,\\
+f_0&=4El_0^2.
+\end{aligned}
+\tag{32.22}
+$$
+
+**Definition 32.6 (Family R+).**
+Use this family only if $s>0$. Define
+
+$$
+\alpha=(1-s^2)/b=4a,\qquad \beta=q(\alpha-1)+s^2.
+\tag{32.23}
+$$
+
+Let $t$ be the positive root of the explicitly specified quadratic
+
+$$
+\alpha t^2+\beta t-q(1-s^2)=0,\qquad
+ t=\frac{-\beta+\sqrt{\beta^2+4\alpha q(1-s^2)}}{2\alpha}.
+\tag{32.24}
+$$
+
+Put
+
+$$
+\begin{gathered}
+u=(t+q)/c,\qquad y=t/b,\quad z=su(1-y),\quad
+x=1-s^2u^2(1-y),\quad \lambda=x+y-1,\\
+\mu=(a-s^2)u^2/b,\quad N=1+\alpha u^2,\quad d=0.
+\end{gathered}
+\tag{32.25}
+$$
+
+Retain this root exactly when $0<t<1/2$ and $0\le\lambda\le t$.
+Take
+
+$$
+K=\begin{pmatrix}x&z\\z&y\end{pmatrix}\oplus0,\qquad
+Y=\frac{\begin{pmatrix}1&u\\u&u^2\end{pmatrix}\oplus(-\mu)}N.
+\tag{32.26}
+$$
+
+**Definition 32.7 (Finite prescription and boundary conventions).**
+If $p=1/2$, select the pair and value of Definition 30.2. Otherwise
+first form the conditional root of Definition 31.2. If $y_0\le t_0$,
+select (31.7). If this filter fails, examine the ordered families
+P, M, D, R, with the signed D and R branches prescribed above.
+In each family take all real roots in its stated open interval and
+retain exactly those satisfying every stated scalar filter. In the
+first family with a retained root select its least retained root.
+Distinct repeated roots are counted once. The chosen root determines
+$t,K,Y$ by that family's formulas. Theorem 34.1 below establishes
+that this prescription is nonempty; nonemptiness is not an assumption
+in this definition.
+
+All admissibility inequalities are non-strict unless expressly written
+strictly. In particular the prescription retains $h=\pm1$, $\mu=0$,
+a zero propagated-support eigenvalue, $d=0,1$ in M, $d=t$ in R−,
+$\lambda=0,t$ in R+, and cross-family transition equalities.
+At a multiple root, the same unsquared equations and scalar filters
+apply without alteration. No formula divides by a polynomial
+derivative, by $P'$, by $J$ or by $L$; the unsquared equations are
+used even when their individual factors vanish.
+
+After the conditional quartic there are at most $4+8+4+8=24$ roots
+if $s<0$, or $4+8+4+2=18$ if $s>0$. The leading coefficients are
+$\tau^4>0$ for P, $4B^2>0$ for each degree-eight polynomial in its
+own notation, and $(s-as^2)^2>0$ for either D quartic. Here
+$s-as^2=s(1-as)\ne0$ by (31.2). The R+ quadratic has positive
+leading coefficient and negative constant, so has exactly one positive
+root. Thus every selected root is a member of an explicitly finite
+set of univariate algebraic roots. No further optimization parameter
+or implicit effect-feasibility problem is included in the prescription.
+
+## 追加锚（本行以下为增补区）
