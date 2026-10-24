@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:6aeff3e656f32844fbd5665f32938276c13469ccad86954c2a326d8cddf9490f
+  normalized_sha256: sha256:6aeff3e656f32844fbd5665f32938276c13469ccad86954c2a326d8cddf9490f
+cas_ref: sha256:6aeff3e656f32844fbd5665f32938276c13469ccad86954c2a326d8cddf9490f
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: Only assigns the name positive spectral profile to the displayed sequence; contains no equality, positivity claim, existence claim or recovery theorem.
+    previous_atom_id: e18474e3a9d02ae9f248738ff3731c589d0f6bcca731289ef2d26de94f274b9b
+    next_atom_id: bdc59e8a3578a894f5ca253e2115a435d84a9403a85f8e6a654582ca46a3a9a1

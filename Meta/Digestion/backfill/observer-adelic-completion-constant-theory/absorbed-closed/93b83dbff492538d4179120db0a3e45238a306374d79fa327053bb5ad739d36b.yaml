@@ -2,6 +2,8 @@ fingerprints:
   raw_sha256: sha256:93b83dbff492538d4179120db0a3e45238a306374d79fa327053bb5ad739d36b
   normalized_sha256: sha256:93b83dbff492538d4179120db0a3e45238a306374d79fa327053bb5ad739d36b
 cas_ref: sha256:93b83dbff492538d4179120db0a3e45238a306374d79fa327053bb5ad739d36b
-coverage_gids: []
+coverage_gids:
+  - gid: D5/S3/Weil/CayleyLaguerre/CayleyMomentTransport.budget_transport_error
+    target_statement_id: sha256:289122d724273b0765c08e4012c99fd93e14df5949794a5acd9da188070bbd12
 receipts:
   unresolved_subitems: []

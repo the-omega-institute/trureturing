@@ -5,3 +5,7 @@ cas_ref: sha256:1395662e21309d36357efd8184412c199dd5a58b68c9c80e68d311ecae42fc6d
 coverage_gids: []
 receipts:
   unresolved_subitems: []
+  nonpropositional:
+    justification: Suggested future Lean module/file layout only; no mathematical assertion.
+    previous_atom_id: 2dc08fec2ef6e9dc76e3c55a6a393fe59582f47d9c7bd6451ec34cd20d2d456d
+    next_atom_id: 70342ef37372ca0762618579f0e7d427d30cfa76cf77dba37ea9d9046c48b5e1
