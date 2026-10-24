@@ -2539,9 +2539,802 @@ premises, with no Lean/kernel certification or empirical claim.
 
 ## 追加锚（本行以下为增补区）
 
-## 60. A hard moving envelope on the unchanged native history
+## 60. Reversible feedback through the original primitive character
 
-**Definition 60.1 (moving-envelope class and exact scale).** Fix the native
+**Definition 60.1 (fixed source and the additional observation permission).**
+Retain Definitions 49.1 and 54.1's native data, not its restriction
+to height-only phase bias. Thus $I=(l,u)\Subset(0,H)$, $H=(1-Z)/2$,
+$\varepsilon>0$, $\mathcal K_\times$, $E$, $\phi$, $\lambda$ and
+$\pi(dk)=\phi(k)^2dk$ are fixed. Each experiment has one fixed signed
+$\kappa\in\mathcal K_\times$ and immutable deterministic
+INITIAL $=(k_0,y_0)$, $k_0\in E$, $y=(\theta,v,D)$. The original
+five probabilities are G (25.2), the rational coefficients are G
+(25.4), and the two control columns, covariance, preparation rotations,
+original clock and Euclidean $y$ metric are unchanged. Both height
+faces kill the reference $\mathbb P$; its cemetery histories remain
+part of the probability space. Original legal operations, refusals
+and Stop retain their meanings.
+
+In addition to the Q height bias already used in §§54--59, stipulate
+exact continuous observation of the original wrapped character
+
+$$
+n=(2,-2,1),\qquad |n|=3,\qquad
+\alpha=[n\cdot y]\in\mathbb R/(2\pi\mathbb Z),\qquad
+n\cdot\widehat c_\kappa(k)=1.
+\tag{60.1}
+$$
+
+The last identity and the character's primitivity are supplied by D
+Theorem 50.1, in its original signed coordinates. In particular the
+period is $2\pi$, not $2\pi/3$, and there is no division by $\kappa$.
+The observation for feedback is just this character and height. It
+does not include an unwrapped phase displacement or a fitted direction.
+The winding lift $y$ with its specified initial lift remains the
+mathematical record for transport and path entropy.
+
+Let $\sigma(d\alpha)=d\alpha/(2\pi)$ and $\langle a\rangle_\sigma=\int a\,d\sigma$.
+A policy is one fixed real function, chosen once before any horizon,
+
+$$
+f\in C^\infty(\mathbb R/(2\pi\mathbb Z)),\qquad f>0,\qquad
+\langle f^2\rangle_\sigma=1,\qquad g=f'/f.
+\tag{60.2}
+$$
+
+Primes on $f$ are derivatives in the original angle $\alpha$;
+primes on $\phi$ remain height derivatives.
+There is no common lower bound on $f$ or derivative bound across
+policies. Exact bias of the original phase driver is an additional
+analytic permission. The prescribed dynamics are
+
+$$
+\begin{aligned}
+dK_t&=\sqrt2\varepsilon\,dB_t^1
+       +2\varepsilon^2\frac{\phi'}\phi(K_t)dt,\\
+dy_t&=\sqrt2\widehat c_\kappa(K_t)dB_t^2
+       +2\widehat c_\kappa(K_t)g(\alpha_t)dt,
+       \qquad \alpha_t=[n\cdot y_t],
+\end{aligned}
+\tag{60.3}
+$$
+
+where $B^1,B^2$ are independent standard Brownian motions. These
+permissions change drifts along the existing columns only. They add
+no noise, reset, initial randomization, height actuator column,
+winding sensor or change of clock. They are assumptions about an
+available service, not a conclusion that native paid Reads install it.
+The reference still has both absorbing faces; controlled survival is
+a property of (60.3), not a new native refusal command.
+
+Define the circle energy, reciprocal-density coefficient and excess
+budget class by
+
+$$
+\mathcal J(f)=\langle(f')^2\rangle_\sigma,\qquad
+d_f=\langle f^{-2}\rangle_\sigma^{-1},\qquad
+\mathcal F_B=\{f\text{ satisfying (60.2)}:\mathcal J(f)\le B\},
+\quad B\ge0.
+\tag{60.4}
+$$
+
+Every limit below fixes the policy, INITIAL and source parameter
+first. Uniform bounds on the resulting tensors do not assert uniform
+convergence times across $\mathcal F_B$.
+
+## 61. One infinite native law and its exact information rate
+
+**Theorem 61.1 (primitive-character law, prefixes and survival cost).**
+For every policy (60.2), (60.3) has a unique conservative infinite
+continuous-path law $\mathbb V^f$ from the stated INITIAL. Every
+finite native prefix is equivalent to the supplied Q prefix and to
+the reference conditioned on survival to that prefix's endpoint.
+It is absolutely continuous with respect to the full killed reference,
+with density zero on histories dead by $T$. On surviving histories,
+
+$$
+\begin{aligned}
+Z_T&=\exp\left\{\sqrt2\int_0^T g(\alpha_t)dW_t^{Q,2}
+                       -\int_0^T g(\alpha_t)^2dt\right\},\\
+\frac{d\mathbb V_T^f}{d\mathbb P_T}
+ &=e^{\lambda T}\frac{\phi(K_T)}{\phi(k_0)}Z_T\\
+ &=e^{\lambda T}\frac{\phi(K_T)}{\phi(k_0)}
+       \frac{f(\alpha_T)}{f(\alpha_0)}
+       \exp\left\{-\int_0^T\frac{f''}{f}(\alpha_t)dt\right\}.
+\end{aligned}
+\tag{61.1}
+$$
+
+These are full-native-path densities, not densities on an enlarged
+space carrying unobserved drivers. The finite entropy and its rate are
+
+$$
+\begin{aligned}
+D(\mathbb V_T^f\Vert\mathbb P_T)
+ &=\lambda T+
+   \mathbb E_{\mathbb V^f}\log\frac{\phi(K_T)}{\phi(k_0)}
+   +\mathbb E_{\mathbb V^f}\int_0^T g(\alpha_t)^2dt,\\
+R(f)&=\lim_{T\to\infty}T^{-1}
+       D(\mathbb V_T^f\Vert\mathbb P_T)
+       =\lambda+\mathcal J(f).
+\end{aligned}
+\tag{61.2}
+$$
+
+The unique minimum-rate policy is $f=1$, giving the supplied Q law.
+The autonomous base $(K,\alpha)$ has reversible invariant probability
+and generator
+
+$$
+\begin{aligned}
+\mu_f(dk,d\alpha)&=\pi(dk)\,\nu_f(d\alpha),\qquad
+                 \nu_f=f^2\sigma,\\
+\mathcal A_f&=\mathcal L_K+\mathcal L_f,\qquad
+\mathcal L_K=\varepsilon^2\phi^{-2}\partial_k(\phi^2\partial_k),
+\qquad \mathcal L_f=f^{-2}\partial_\alpha(f^2\partial_\alpha).
+\end{aligned}
+\tag{61.3}
+$$
+
+This probability concerns height and one wrapped character, not all
+three unwrapped phases. It is never used to replace INITIAL by a
+stationary draw. On infinite histories $\mathbb V^f$ and $\mathbb P$
+are singular.
+
+Proof. Under the already supplied Q law, (60.1) gives
+$d(n\cdot y)=\sqrt2\,dW^{Q,2}$ and height is driven independently
+by $W^{Q,1}$. Since $g$ is bounded for a fixed policy, the bounded
+stochastic-exponential argument of Theorem 55.1 applies with shifts
+$(0,\sqrt2g(\alpha))$. It gives a positive mean-one martingale $Z_T$,
+consistent finite-prefix laws and independent new Brownian components
+$B^1=W^{Q,1}$ and
+$B^2=W^{Q,2}-\sqrt2\int_0^\cdot g(\alpha_t)dt$. Substitution gives
+(60.3) and
+
+$$
+d\alpha_t=\sqrt2\,dB_t^2+2g(\alpha_t)dt\pmod{2\pi}.
+\tag{61.4}
+$$
+
+The circle equation is globally well posed. The supplied Q height
+never reaches a face at finite time. Bounded $\widehat c_\kappa$
+and $g$ make the three phase integrals nonexplosive, so these laws
+extend to $[0,\infty)$. Interior pathwise uniqueness, first for
+height, then (61.4), then the phase integrals, proves uniqueness.
+Height and the circle are independent from the deterministic initial
+pair: they solve these two autonomous equations with independent
+drivers. The three phases themselves are coupled to that same circle
+driver, not independent copies of a scalar periodic diffusion.
+
+Under Q the native lift reconstructs
+$W_t^{Q,2}=n\cdot(y_t-y_0)/\sqrt2$. Thus $Z_T$ is measurable in
+the full native filtration. Multiplying by the original Q density
+from D (37.2) proves the second line of (61.1), including its zero
+value on cemetery histories. Itô's formula for the smooth periodic
+$\log f$ under Q gives the last line. Positivity gives equivalence
+to Q and to the finite terminal-survivor law, whose positive density
+relative to Q is D (37.5). It does not give equivalence to the full
+reference containing deaths.
+
+Integration by parts on the circle gives
+$\int a\mathcal L_f b\,d\nu_f=-\int a'b'\,d\nu_f$.
+The constant one is in this conservative circle form, so $\nu_f$
+is invariant. The height result is the supplied Q result; independence
+gives (61.3). For later use set $m_f=\min f$, $M_f=\max f$.
+The ordinary circle Poincare inequality, with first eigenvalue one
+in the coordinate $\alpha$ of period $2\pi$, implies
+
+$$
+\operatorname{Var}_{\nu_f}a
+ \le\frac{M_f^2}{m_f^2}\int |a'|^2d\nu_f.
+\tag{61.5}
+$$
+
+Indeed minimize over constants, compare to $\sigma$, apply its
+Poincare inequality, and compare back. Thus the circle has a positive
+gap for each fixed policy. Its transition density at every positive
+time is bounded relative to $\nu_f$. One direct justification is
+$f\mathcal L_f f^{-1}=\partial_\alpha^2-f''/f$: the potential is bounded,
+and the periodic heat kernel and Feynman--Kac formula bound its kernel;
+division by the positive bounded $f$ gives the claim. Combining this
+smoothing at time one with the gap proves convergence from each fixed
+$\alpha_0$ in $L^2(\nu_f)$ after that time. This proves convergence of
+expected time averages of every bounded circle function to its
+$\nu_f$ mean, without stationary preparation.
+
+The logarithm of $Z_T$ under the changed law has expectation
+$\mathbb E_{\mathbb V^f}\int_0^Tg(\alpha_t)^2dt$: its stochastic
+integral has mean zero by boundedness. The remaining height law is
+exactly Q, so the endpoint integrability and uniform bound for
+$T\ge1$ in (55.7), with height amplitude $\phi$, apply unchanged.
+This proves the finite formula in (61.2). The circle mean of $g^2$
+is $\langle(f')^2\rangle_\sigma$; the endpoint term divided by $T$
+vanishes. The rate formula follows. Its equality case is $f'=0$,
+and positive normalization gives $f=1$. Finally the reference dies
+eventually almost surely by D (37.4), whereas the controlled law
+survives forever. This proves the infinite-path singularity.
+$\square$
+
+## 62. The transported three-vector and its full effective tensor
+
+**Theorem 62.1 (fixed-INITIAL path limit and periodic variational law).**
+For each policy in Definition 60.1 the stationary mean phase velocity
+is zero. For every fixed $b>0$, under its single law $\mathbb V^f$,
+
+$$
+\left(\frac{y_{Ts}-y_0}{\sqrt T}\right)_{0\le s\le b}
+ \ \Longrightarrow\ (\mathcal B_s)_{0\le s\le b}
+ \quad\hbox{in }C([0,b];\mathbb R^3),\qquad
+\mathbb E\mathcal B_s\mathcal B_t^{\mathsf T}
+       =2\min(s,t)\,\mathsf D_{\kappa,f}.
+\tag{62.1}
+$$
+
+There is no ballistic subtraction in this formula. Define the form
+domain $\mathcal H_f$ to be the closure of smooth functions on
+$[l,u]\times\mathbb R/(2\pi\mathbb Z)$ in the norm
+$\int(v^2+\varepsilon^2v_k^2+v_\alpha^2)d\mu_f$. It has periodicity
+in $\alpha$ and the natural Q height boundary behavior, with no added
+Dirichlet condition on its functions. Let the vector $\chi$ be the
+unique mean-zero finite-energy solution of
+
+$$
+-\mathcal A_f\chi(k,\alpha)=2\widehat c_\kappa(k)g(\alpha),
+\qquad \int\chi\,d\mu_f=0.
+\tag{62.2}
+$$
+
+It is smooth in the interior; $\chi,\chi_k,\chi_\alpha$ are bounded,
+extend continuously to the height faces, and $\chi_k=0$ there.
+The tensor in (62.1) is the same-history tensor
+
+$$
+\mathsf D_{\kappa,f}
+ =\int\left[\varepsilon^2\chi_k\chi_k^{\mathsf T}
+      +(\widehat c_\kappa+\chi_\alpha)
+           (\widehat c_\kappa+\chi_\alpha)^{\mathsf T}\right]d\mu_f.
+\tag{62.3}
+$$
+
+For every real vector $e$, with $a_e(k)=e\cdot\widehat c_\kappa(k)$,
+its exact finite-energy periodic variational characterization is
+
+$$
+e^{\mathsf T}\mathsf D_{\kappa,f}e
+ =\min_{v\in\mathcal H_f}
+       \int\left[\varepsilon^2v_k^2+(a_e+v_\alpha)^2\right]d\mu_f.
+\tag{62.4}
+$$
+
+The minimizer is $e\cdot\chi$, unique modulo constants. In the
+original Euclidean metric the two-sided comparison and the exact
+primitive unit direction are
+
+$$
+d_f\widehat M_\kappa\ \le\ \mathsf D_{\kappa,f}
+                  \ \le\ \widehat M_\kappa,
+\qquad
+e_*:=n/3,\qquad
+e_*^{\mathsf T}\mathsf D_{\kappa,f}e_*=d_f/9.
+\tag{62.5}
+$$
+
+Consequently every admitted policy has strictly positive rank three.
+If $f=1$, the tensor is exactly the supplied $\widehat M_\kappa$.
+If $f$ is nonconstant, the upper comparison is strict in every
+nonzero direction; equality in the lower comparison occurs exactly
+in $\mathbb Rn$. Thus
+$\ker(\mathsf D_{\kappa,f}-d_f\widehat M_\kappa)=\mathbb Rn$
+for a nonconstant policy.
+
+Proof. The base generator and product probability are (61.3).
+Its mean phase velocity is
+$2\int\widehat c_\kappa d\pi\int g\,d\nu_f=0$, since
+$\int g\,d\nu_f=\langle ff'\rangle_\sigma=0$.
+The tensorization of (61.5) and the supplied height gap $3\lambda$
+gives a positive product gap, for example
+
+$$
+\beta_f=\min(3\lambda,m_f^2/M_f^2)>0,
+\qquad
+\operatorname{Var}_{\mu_f}v
+ \le\beta_f^{-1}\int(\varepsilon^2v_k^2+v_\alpha^2)d\mu_f.
+\tag{62.6}
+$$
+
+The right side of (62.2) has mean zero even at each fixed $k$.
+The energy form and (62.6) therefore give a unique centered weak
+solution. More explicitly, with $P_t^f$ the circle semigroup, it is
+
+$$
+\chi(k,\alpha)=2\int_0^\infty
+             (Q_t\widehat c_\kappa)(k)(P_t^fg)(\alpha)dt.
+\tag{62.7}
+$$
+
+Here the product is a vector times a scalar. The circle gap and
+positive-time smoothing imply
+$\|P_t^fg\|_{C^1}\le C_f e^{-\beta_f t}$ for $t\ge1$;
+on $[0,1]$ that norm is bounded because $g$ and the circle coefficients
+are smooth. This follows by applying the spectral-gap contraction
+up to time $t-1$ and the smooth bounded kernel over the last unit
+interval. Thus (62.7) and its $\alpha$ derivative converge uniformly.
+
+For the height derivative, the drift
+$b_K=2\varepsilon^2\phi'/\phi$ satisfies
+$b_K'=-2\lambda\csc^2(\pi(k-l)/(u-l))<0$.
+Two Q heights coupled with the same driver do not cross and their
+distance is nonincreasing: before an interior stopping time its
+derivative is the difference of their decreasing drifts; the supplied
+nonattainment of the faces removes the stops. Hence $Q_t$ preserves
+Lipschitz constants and
+$\|\partial_kQ_t\widehat c_\kappa\|_\infty
+\le\|\widehat c_\kappa'\|_\infty$.
+For $t>0$ the relative sine series D (37.9), differentiated termwise,
+also shows that this derivative extends to zero at both faces:
+every $\phi_j/\phi$ is a polynomial in
+$\cos(\pi(k-l)/(u-l))$, whose derivative vanishes there.
+The series and its derivatives converge for every fixed positive
+$t$. Dominated differentiation in (62.7) now proves boundedness
+and the asserted continuous zero-face extension of $\chi_k$.
+Applying the product generator to the integral proves (62.2), first
+weakly and then smoothly on interior compact sets by local elliptic
+regularity. These arguments justify its natural zero flux and every
+derivative used below; no stationary phase preparation is involved.
+
+Put $z_t=(K_t,\alpha_t)$. Itô's formula in interior stopped intervals,
+followed by nonattainment and the bounded derivatives just proved,
+gives the exact decomposition
+
+$$
+\begin{aligned}
+y_t-y_0&=N_t+\chi(z_0)-\chi(z_t),\\
+N_t&=\sqrt2\varepsilon\int_0^t\chi_k(z_r)dB_r^1
+   +\sqrt2\int_0^t[\widehat c_\kappa(K_r)+\chi_\alpha(z_r)]dB_r^2,\\
+\langle N\rangle_t
+ &=2\int_0^t\left[\varepsilon^2\chi_k\chi_k^{\mathsf T}
+       +(\widehat c_\kappa+\chi_\alpha)
+          (\widehat c_\kappa+\chi_\alpha)^{\mathsf T}\right](z_r)dr.
+\end{aligned}
+\tag{62.8}
+$$
+
+The $\chi_\alpha$ and $\widehat c_\kappa$ terms use the same driver;
+their cross terms must be kept. In contrast to (56.5)'s height-only
+correction, their sum can reduce diffusion. Independence of $B^1$
+and $B^2$ eliminates only the cross bracket between these two
+displayed stochastic integrals. Formula (62.8) also gives
+$\mathbb E|y_t-y_0|^2=O_f(1+t)$ and consequently
+$(y_t-y_0)/t\to0$ in $L^2$: the zero stationary velocity is the
+actual zero ballistic current from this deterministic INITIAL.
+
+For completeness, the required bracket average holds from that same
+point. The product relative kernel at time one is bounded by D
+(37.9) and the circle smoothing used in (61.5). Under stationary
+$\mu_f$, any bounded centered function $H$ satisfies
+
+$$
+\mathbb E_{\mu_f}
+ \left|\int_0^t H(z_r)dr\right|^2
+ \le\frac{2t}{\beta_f}\|H\|_{L^2(\mu_f)}^2.
+\tag{62.9}
+$$
+
+Indeed the covariance is
+$\langle H,e^{s\mathcal A_f}H\rangle_{\mu_f}$, bounded in absolute
+value by $e^{-\beta_fs}\|H\|_2^2$; integrate over the time square.
+The bounded density after time one transfers this estimate, with
+a fixed multiplicative constant, to the integral over $[1,t+1]$
+from $z_0$. Its first unit interval is bounded. Thus the centered
+average divided by $T$ converges in probability at every $Ts$.
+A finite grid and the bound $\|H\|_\infty$ give convergence uniformly
+in $0\le s\le b$. Apply this to every bounded bracket entry in
+(62.8). The brackets divided by $T$ converge uniformly in probability
+to $2s\mathsf D_{\kappa,f}$.
+
+The continuous martingale FCLT used in Theorem 56.1, namely Whitt
+[arXiv:0712.1929v2, Theorem 2.1(ii)](https://arxiv.org/html/0712.1929v2),
+now applies: the martingales are locally square integrable, all jumps
+and bracket jumps vanish, and every predictable bracket entry has
+the displayed limit. It yields the joint three-vector Brownian
+limit. The corrector in (62.8) is bounded and vanishes uniformly
+after division by $\sqrt T$. Continuous paths and a continuous
+limit give (62.1) in uniform-path topology. This proves (62.3) as
+the transported tensor on the actual common history.
+
+To prove (62.4), test the scalar projection of (62.2) against a
+smooth periodic $\eta$ and integrate by parts. It gives
+
+$$
+\int\left[\varepsilon^2(e\cdot\chi)_k\eta_k
+       +(a_e+(e\cdot\chi)_\alpha)\eta_\alpha\right]d\mu_f=0,
+\tag{62.10}
+$$
+
+because $\partial_\alpha(f^2a_e)=2a_egf^2$. There is no height boundary
+term: $\pi$ vanishes quadratically and the corrector derivatives
+are bounded. Density extends (62.10) to $\eta\in\mathcal H_f$.
+Writing $v=e\cdot\chi+\eta$ in the functional in (62.4), the cross
+term is zero by (62.10); its remainder is
+$\int(\varepsilon^2\eta_k^2+\eta_\alpha^2)d\mu_f$.
+The gap proves uniqueness modulo constants and proves (62.4).
+All scalar minimizers are projections of the same vector solution;
+polarization retains the signed off-diagonal covariances in (62.3).
+
+For the lower comparison use periodicity at each height. For every
+$v\in\mathcal H_f$, its slices have zero integral of $v_\alpha$ for
+almost every $k$, and weighted Cauchy--Schwarz gives
+
+$$
+a_e(k)^2
+ =\langle a_e(k)+v_\alpha(k,\cdot)\rangle_\sigma^2
+ \le\langle f^{-2}\rangle_\sigma
+        \langle f^2(a_e(k)+v_\alpha(k,\cdot))^2\rangle_\sigma.
+\tag{62.11}
+$$
+
+Integrating in $\pi$ and adding the nonnegative height energy proves
+the lower half of (62.5); taking $v=0$ proves the upper half. In
+particular $d_f>0$ and the supplied nonzero-collar tensor is positive,
+so the effective tensor has rank three for every fixed policy.
+For $e_*=n/3$, $a_{e_*}=1/3$. A smooth periodic corrector independent
+of height with derivative
+
+$$
+v_*'(\alpha)=\frac13\left(\frac{d_f}{f(\alpha)^2}-1\right)
+\tag{62.12}
+$$
+
+exists because the derivative has zero integral. It attains equality
+in (62.11), proving the exact $d_f/9$ and all factors of three.
+
+For the equality assertions, if $f=1$ the right side of (62.2)
+vanishes, so $\chi=0$. Suppose $f$ is nonconstant. Equality in the
+lower comparison in a nonzero direction requires $v_k=0$ and
+$a_e(k)+v_\alpha=a_e(k)d_f/f^2$ for its minimizer. Since
+$d_f/f^2-1$ is not identically zero, independence of $v$ from height
+forces $a_e$ constant in $k$. Conversely every constant $a_e$
+has the attaining corrector (62.12) with $1/3$ replaced by $a_e$.
+D Theorem 50.1 says exactly that these original-coordinate vectors
+are multiples of $n$. For the upper comparison the complete-square
+identity shows that its gap is the energy of $e\cdot\chi$.
+Zero energy would force $2a_e(k)g(\alpha)=0$ identically by (62.2).
+For a nonconstant $f$, this forces $a_e=0$ identically, which is
+impossible for nonzero $e$ since $\widehat M_\kappa>0$.
+This proves strictness and the stated kernel. $\square$
+
+## 63. The sharp excess-budget boundary and all attainment cases
+
+**Theorem 63.1 (exact primitive-direction frontier and uniform tensor protection).**
+For every fixed native source in $\mathcal K_\times$ and every
+$B\ge0$, with the same INITIAL and operations as Definition 60.1,
+
+$$
+\inf_{f\in\mathcal F_B}
+       e_*^{\mathsf T}\mathsf D_{\kappa,f}e_*
+              =\frac{\max(1-4B,0)}9.
+\tag{63.1}
+$$
+
+For $B=0$, the unique policy is $f=1$ and the infimum is attained.
+For $0<B<1/4$, all attaining policies, and only those policies, are
+
+$$
+f(\alpha)^2=1+r_B\cos(\alpha-\alpha_c),\qquad
+r_B=\sqrt{1-(1-4B)^2},\qquad
+\alpha_c\in\mathbb R/(2\pi\mathbb Z),
+\tag{63.2}
+$$
+
+with the positive square root understood. Their actual entropy rate
+is $\lambda+B$. For $B\ge1/4$ the zero infimum is never attained.
+It is approached by the same positive policies (63.2) with their
+energies increasing to $1/4$ from below.
+
+More strongly, the largest scalar that compares every resulting full
+tensor to its supplied tensor is exactly
+
+$$
+\inf_{\substack{\kappa\in\mathcal K_\times,\ f\in\mathcal F_B\\
+                         |e|=1}}
+ \frac{e^{\mathsf T}\mathsf D_{\kappa,f}e}
+      {e^{\mathsf T}\widehat M_\kappa e}
+           =\max(1-4B,0).
+\tag{63.3}
+$$
+
+For $B=0$ every direction and source parameter attains this ratio.
+For $0<B<1/4$, equality occurs exactly for (63.2), $e=\pm e_*$,
+and any allowed $\kappa$. For $B\ge1/4$ there is no attaining triple.
+In particular, if
+$m_\times=\min_{\kappa\in\mathcal K_\times}
+                     \lambda_{\min}(\widehat M_\kappa)>0$, then
+
+$$
+\begin{aligned}
+\mathsf D_{\kappa,f}&\ge(1-4B)\widehat M_\kappa
+                  \ge(1-4B)m_\times\mathrm{Id}
+       &&(0\le B<1/4, f\in\mathcal F_B),\\
+\inf_{\kappa\in\mathcal K_\times,\ f\in\mathcal F_B}
+       \lambda_{\min}(\mathsf D_{\kappa,f})&=0
+       &&(B\ge1/4).
+\end{aligned}
+\tag{63.4}
+$$
+
+The second infimum is already zero for each fixed $\kappa$. Every
+one of its admitted tensors remains strictly positive. The boundary
+$1/4$ is a rate in the specified original clock and character period.
+
+Proof. The classical circle spectral calculation needed inside this
+native optimization is as follows, including its critical equality
+cases. For a positive normalized $f$, set $d=d_f$ and
+
+$$
+\vartheta(\alpha)=\frac d2\int_0^\alpha f(s)^{-2}ds,\qquad
+z(\alpha)=f(\alpha)e^{i\vartheta(\alpha)}.
+\tag{63.5}
+$$
+
+Then $\vartheta(\alpha+2\pi)-\vartheta(\alpha)=\pi$, so $z$ is
+antiperiodic. Its squared norm is one and
+
+$$
+\langle|z'|^2\rangle_\sigma
+ =\mathcal J(f)+\frac{d^2}4\langle f^{-2}\rangle_\sigma
+ =\mathcal J(f)+\frac d4
+ \ge\frac14\langle|z|^2\rangle_\sigma=\frac14.
+\tag{63.6}
+$$
+
+The last inequality follows by expanding in the antiperiodic
+Fourier modes $e^{i(j+1/2)\alpha}$: every squared frequency is at least
+$1/4$. Thus
+
+$$
+d_f\ge1-4\mathcal J(f),\qquad d_f>0.
+\tag{63.7}
+$$
+
+Equality in (63.6) holds precisely when
+$z=Ae^{i\alpha/2}+Ce^{-i\alpha/2}$. Normalization gives
+$|A|^2+|C|^2=1$, and its positive phase current gives
+$|A|^2-|C|^2=d>0$, since
+$\operatorname{Im}(\overline z z')=f^2\vartheta'=d/2$.
+Consequently its amplitude has exactly the form
+$f^2=1+r\cos(\alpha-\alpha_c)$, $0\le r<1$. Conversely these amplitudes
+give equality. To check the reciprocal, energy and normalization
+without an equality assumption, the elementary substitution
+$t=\tan(\alpha/2)$ gives
+
+$$
+\left\langle\frac1{1+r\cos \alpha}\right\rangle_\sigma
+ =\frac1{\sqrt{1-r^2}},\qquad
+d_{f_r}=\sqrt{1-r^2},\qquad
+\mathcal J(f_r)=\frac{1-\sqrt{1-r^2}}4,
+\quad f_r=\sqrt{1+r\cos(\alpha-\alpha_c)}.
+\tag{63.8}
+$$
+
+For the last identity,
+$4(f_r')^2=r^2\sin^2(\alpha-\alpha_c)/(1+r\cos(\alpha-\alpha_c))$; use
+$r^2\sin^2 \alpha=(1+r\cos \alpha)(1-r\cos \alpha)-(1-r^2)$ and the first
+integral. This also verifies every nonconstant critical equality
+case in (63.6).
+
+The spectral step is classical, not an additional new circle
+theorem: the Fourier lower bound and amplitude/phase elimination
+are the tools in Dolbeault--Esteban--Laptev--Loss,
+[*Magnetic rings*, arXiv:1801.03810v2](https://arxiv.org/html/1801.03810v2),
+§II and §III's second and third reformulations. Their circle
+measure is exactly $d\alpha/(2\pi)$. The reciprocal contribution here is
+$\|f^{-1}\|_{L^2(\sigma)}^{-2}=d_f$, with inverse square of the
+norm, not the squared norm. The nonconstant equalities (63.8) are
+essential at the critical value; constant-only rigidity is not used.
+The related primary precedent Exner--Harrell--Loss,
+[*Optimal eigenvalues for some Laplacians and Schrödinger operators
+depending on curvature*, math-ph/9901022v1](https://arxiv.org/html/math-ph/9901022v1),
+§IV, minimizes the functional
+$\int_0^1|\zeta'|^2ds+4\pi^2q/\int_0^1\zeta^{-2}ds$ for
+$\int_0^1\zeta^2ds=1$. The substitution
+$\zeta(s)=f(2\pi s)$ makes it $4\pi^2(\mathcal J(f)+qd_f)$.
+Their Theorem 4(a) has $0<q<1/4$; its strict-range conclusion is
+not an endpoint equality classification. Equations (63.5)--(63.8)
+give that classification directly with the required normalization.
+
+Combine (63.7) with the exact primitive projection (62.5).
+If $0\le B<1/4$, it gives the lower bound in (63.1). For $B=0$
+positive normalization and zero derivative force $f=1$. If
+$0<B<1/4$, (63.8) with $r=r_B$ attains the bound. Any attaining
+policy must have $\mathcal J(f)=B$ and equality in (63.7); its
+equality classification gives exactly (63.2), with no other policies.
+For $B\ge1/4$, (63.8) with $r\uparrow1$ has
+$\mathcal J(f_r)<1/4\le B$ and $d_{f_r}\downarrow0$.
+Since every positive smooth $f$ has finite $\langle f^{-2}\rangle$,
+no such policy attains zero. The limiting amplitude
+$\sqrt{1+\cos(\alpha-\alpha_c)}$ has a zero and is not an admitted policy.
+
+The Loewner comparison (62.5) proves the lower bound in (63.3).
+For $e_*$ its denominator is exactly $1/9$, by (60.1), and its
+numerator is $d_f/9$. Thus the same actual policies prove sharpness
+for the tensor comparison, not merely for an unrelated scalar law.
+The equality cases follow from the preceding scalar classification
+and the equality cases of (62.5). For $B\ge1/4$ every ratio is
+positive and the same primitive-direction sequence tends to zero.
+Finally source continuity and the compact signed collar give
+$m_\times>0$ from D §§36,39. This proves the first line of (63.4).
+For the second line, at every fixed allowed $\kappa$,
+$\lambda_{\min}(\mathsf D_{\kappa,f_r})
+ \le e_*^{\mathsf T}\mathsf D_{\kappa,f_r}e_*=d_{f_r}/9\to0$.
+Positivity for each policy was proved in Theorem 62.1. All these
+are bounds on tensors obtained after each fixed-policy long-time
+limit; no policy is changed with its observation horizon.
+$\square$
+
+## 64. The native survival-selection consumer with character access
+
+**Proposition 64.1 (a sharp permission-dependent sufficient condition).**
+For the original transport-selection task in Proposition 53.2, admit
+exactly the persistent reversible primitive-character policies
+(60.2)--(60.3), with the analytic permissions in Definition 60.1.
+Then the full-native-path excess-rate constraint $R(f)-\lambda\le B$
+is exactly $f\in\mathcal F_B$. Minimum rate still selects Q uniquely.
+For $B<1/4$, all admitted laws protect all three original Euclidean
+transport directions uniformly by (63.4). For $B\ge1/4$ there is no
+positive uniform weakest-direction guarantee in this same family,
+although every admitted law has a rank-three continuous-path Brownian
+limit. The exact directional and relative-tensor frontiers, including
+attainment, are (63.1)--(63.3).
+
+Proof. Theorem 61.1 identifies the rate on these exact killed-reference
+histories. Theorem 62.1 gives their fixed-INITIAL path limits and
+the full tensor, rather than a scalar covariance fitted to a
+different process. Theorem 63.1 optimizes that identical tensor
+under that identical entropy rate. Its subcritical positive bound
+and supercritical sequence therefore apply simultaneously to the
+specified survival-selection consumer. The sequence keeps every
+source parameter, INITIAL, phase metric, clock, probability and
+driver column fixed. Only the admitted policy changes between
+experiments; each such experiment uses it for all times.
+
+Proposition 59.1's height-only selection class and this character-
+informed class have different hypotheses. The new class fixes the
+height amplitude at $\phi$, has no added height-dependent current,
+and permits the stated phase-dependent bias. Its full family is not
+the class of arbitrary phase-informed or nonreversible controls.
+The height-only inverse-square all-budget protection is not a
+bound for this enlarged observation permission. Conversely this
+family's sharp threshold does not classify the union with every
+height-only policy or every other feedback service. Corollary 52.1's
+finite-horizon selections retain their own larger quantifiers.
+No rank-two law has been constructed here: zero is an unattained
+infimum of positive diffusion coefficients, not an attained
+lower-rank selection. $\square$
+
+**Definition 64.2 (source, information, precision and resource correspondence).**
+The common source is the original five-probability native realization
+of D Definition 35.1 and G (25.2)--(25.5), with the signed winding
+map D (39.1). Their source/calibration premises remain premises.
+The autonomous identity and the original character are D Theorem
+50.1's existing results. The height survival transform, two-driver
+realization, endpoint estimates, tensor and its source continuity
+are supplied by D §§36--39 and this volume §§54--56. No old Q
+path limit, autonomous character classification, rational source
+identity or height-survival result is counted as additional content.
+The new composition is the wrapped-feedback native law (61.1),
+its full-prefix entropy, the common-history vector corrector tensor,
+its sharp comparison and their exact permission-dependent consumer.
+
+Each history has one deterministic original INITIAL. The invariant
+probability $\mu_f$ belongs only to the autonomous base and is used
+to compute long-time averages; stationarity is not a preparation
+operation. The actual phase drift is
+$2\widehat c_\kappa(K)f'(\alpha)/f(\alpha)$ along the existing phase column.
+It needs continuous wrapped-character observation, exact calibration
+and installed bias access. A complete winding record is used to
+state the three-vector path law and native-path likelihood; this
+does not add winding-dependent feedback. The reconstruction in
+Theorem 61.1 proves an entropy identity on the native history space,
+not the acquisition of that history by finitely many polls.
+
+The original metric is Euclidean in $(\theta,v,D)$ and the path
+topology is uniform on each fixed macroscopic interval $[0,b]$.
+The clock is unchanged, with $\sqrt T$ scaling for displacement.
+No tube precision or finite-horizon error rate is claimed. The
+number $1/4$ uses the original primitive period $2\pi$, circle
+generator coefficient one and this original time. Normalizing the
+direction divides the scalar character displacement by three and
+its diffusion coefficient by nine; it does not change the observation
+period or the entropy clock.
+
+The resource is relative entropy in nats per unit original time on
+full native prefixes, including the killed reference's two death
+faces. Survival costs $\lambda$ and phase bias costs $\mathcal J(f)$.
+These are not counts of paid Reads, controller states, bits of
+precision, commands, total actuator variation or physical energy.
+The exact continuous sensing and driver-bias permissions, including
+their latency, maintenance, refusal/Stop behavior and price in those
+other resources, remain explicit service premises. Finite precision,
+delay, noisy calibration and a uniform horizon for the limits are
+outside the quantifiers. The same policy may depend on fixed source,
+INITIAL and budget before generation, but not on a later selected
+observation horizon. The optimizing phase shifts in (63.2) are also
+chosen before the history.
+
+For comparison, [Atomic Boundary Trichotomy
+§§33--37](RECURSIVE_RELATIONAL_OBSERVATION_ATOMIC_BOUNDARY_TRICHOTOMY.md)
+uses an actual stationary free ordered binary tree, an authentic
+original leaf count, a promised unknown positive even substitution
+lag, an installed paid absolute-word Read port, root/order binding,
+current rights and variable owned backing. Its controller receives
+presence bits, not a continuous phase record; its continuation has
+the stated forward substitution actuator. Its lag is a substitution
+count, not this diffusion's clock. The source and operation maps
+needed to convert those attained finite acquisitions into (60.3)'s
+sensing and biases have not been supplied. Thus its acquisition
+theorem does not discharge these service premises.
+
+The nonzero collar is indispensable for uniform protection in the
+original metric. On the actual $\kappa=0$ leaf the original $D$
+coordinate is frozen, as in D Theorem 39.2; dividing by $\kappa$
+would change the metric and would not extend (63.4). These conditional
+selection theorems concern effective transport rank. Local direction
+rank, prediction-state dimension, spectral or homogeneous dimension,
+environmental geometry and physical-space dimension keep their
+distinct definitions. A same-source nonlinear spatial realization,
+integrability of transport, physical metric/clock identification,
+broader causal controls, finite paid installation and recursive
+stability remain additional mathematical or operational obligations.
+The conditional dynamics are explicit model premises, not a deduction
+of point sources, second-order propagation, physical axes or the
+native diffusion from bare FIB. The statements here are ordinary
+proofs under those premises, with no Lean/kernel or empirical
+certification and no assertion that the full why-three task is settled.
+
+**Definition 64.3 (classical scalar supply and the native tensor bridge).**
+The scalar diffusion in (61.4), on its real lift, is the reversible
+periodic diffusion with microscopic diffusion coefficient one and
+dimensionless potential $\beta U=-2\log f$. The primary text
+Kalnin--Berezhkovskii,
+[*Note: On the relation between Lifson--Jackson and Derrida formulas
+for effective diffusion coefficient*, J. Chem. Phys. 139, 196101,
+DOI 10.1063/1.4832035](https://pmc.ncbi.nlm.nih.gov/articles/PMC4108624/),
+equations (5)--(7), displays the classical Lifson--Jackson coefficient
+
+$$
+D_{\mathrm{LJ}}
+ =\left[\langle e^{-\beta U}\rangle
+              \langle e^{\beta U}/D_{\mathrm{micro}}\rangle\right]^{-1}.
+\tag{64.1}
+$$
+
+With period $2\pi$, $D_{\mathrm{micro}}=1$,
+$e^{-\beta U}=f^2$ and $\langle f^2\rangle=1$, their equilibrium
+density is $f^2/(2\pi)$ in raw $d\alpha$ and this formula is exactly
+$d_f$, with covariance $2d_ft$. Thus the autonomous scalar
+coefficient itself is a classical supplier. Equation (62.12)
+also derives it directly in the native law. It cannot be substituted
+componentwise for $y$: the actual three-vector coefficient varies
+with the independently moving native height and the feedback shares
+the phase noise. Equations (62.2)--(62.11) provide precisely that
+missing common-source vector transport and tensor comparison.
+
+The circle Fourier spectrum, reciprocal-amplitude variational
+functional and curvature-amplitude examples are classical tools
+attributed within Theorem 63.1 to the two primary circle texts.
+The corrected reciprocal normalization and its complete critical
+equalities are derived there before their use. Whitt's martingale
+FCLT supplies only the final probability limit after (62.8)--(62.9)
+verify its hypotheses. The new native joint use of these suppliers,
+the full killed-prefix information rate and its threshold consumer
+are `repo-derived`; this is not a global literature-priority claim
+for periodic diffusion, circle inequalities or homogenization.
+
+## 追加锚（本行以下为增补区）
+
+## 65. A hard moving envelope on the unchanged native history
+
+**Definition 65.1 (moving-envelope class and exact scale).** Fix the native
 experiment, the inherited G/C/N/F premises, the deterministic initial
 state, signed original coordinates and original clock of Definitions 41.1
 and 49.1. Keep both absorbing height faces, the complete cemetery-inclusive
@@ -2559,7 +3352,7 @@ and fix $0<\alpha<1/2$ and $r>0$. Write
 $$
 R(t)=r(1+t)^\alpha,\qquad \beta=1-2\alpha,
 \qquad c_{\alpha,r}=\frac{\pi^2\widehat m}{4r^2\beta}.
-\tag{60.1}
+\tag{65.1}
 $$
 
 The class $\mathcal C_{\alpha,r}$ consists of probability laws $V$ on the
@@ -2568,7 +3361,7 @@ state is the prescribed deterministic one,
 
 $$
 V\!\left(\zeta=\infty,\ |X_t|<R(t)\ \text{for every }t\ge0\right)=1,
-\tag{60.2}
+\tag{65.2}
 $$
 
 and, for every finite $T>0$, the literal full prefix $V_T$ is absolutely
@@ -2590,7 +3383,7 @@ $$
  \frac{\inf_{V\in\mathcal C_{\alpha,r}}D(V_T\Vert\mathbb P_T)-\lambda T}{T^\beta}
  &=c_{\alpha,r}.
 \end{aligned}
-\tag{60.3}
+\tag{65.3}
 $$
 
 The height law, the full killed-prefix convention and all native coefficients in
@@ -2598,17 +3391,17 @@ these formulas are those already fixed above. In particular, no homogeneous
 generator, operational controller, uniform rate, physical interpretation or
 finite-horizon optimizer is part of this definition.
 
-## 61. One consistent law for every expanding tube
+## 66. One consistent law for every expanding tube
 
-**Proposition 61.1 (native cosine construction).** Under Definition 60.1,
+**Proposition 66.1 (native cosine construction).** Under Definition 65.1,
 there is one probability law $V_*=V_{*,\alpha,r}$ on the full infinite native
-history space with the prescribed initial state such that (60.2) holds. Its
+history space with the prescribed initial state such that (65.2) holds. Its
 finite-prefix density with respect to $\mathbb P_T$ is
 
 $$
 L_T=\mathbf1_{\{\zeta>T\}}e^{\lambda T}
        \frac{\phi(K_T)}{\phi(k_0)}M_T,
-\tag{61.1}
+\tag{66.1}
 $$
 
 where, under the conservative ground-height law $\mathbb Q$ of Definition
@@ -2625,14 +3418,14 @@ M_t&=\mathbf1_{\{t<\sigma\}}H(t,X_t)
  \exp\!\left\{\int_0^t
  [\omega(s)^2a(K_s)^2-b(s,X_s)]\,ds\right\}.
 \end{aligned}
-\tag{61.2}
+\tag{66.2}
 $$
 
-The zero extension in (61.2) is a true $\mathbb Q$-martingale on every
+The zero extension in (66.2) is a true $\mathbb Q$-martingale on every
 finite interval and satisfies
 $\mathbb E_{\mathbb Q}[M_T\mid K_{[0,T]}]=1$. Hence the height marginal
 of $V_*$ is exactly the supplied $\mathbb Q$ height law on each finite
-prefix. The law in (61.1) is locally absolutely continuous and has finite
+prefix. The law in (66.1) is locally absolutely continuous and has finite
 relative entropy for every finite $T$.
 
 Proof. Under $\mathbb Q$, conditional on the complete height history, the
@@ -2640,7 +3433,7 @@ projection $X$ starts at zero and has the stochastic-integral form
 
 $$
 X_t=\sqrt2\int_0^ta(K_s)\,dW_s^2,
-\tag{61.3}
+\tag{66.3}
 $$
 
 where $W^2$ is independent of the height driver. The native signed
@@ -2651,7 +3444,7 @@ $$
 \partial_x^2H=-\omega(t)^2H,
 \qquad
 \frac{1}{H}\,\partial_tH=b(t,x)\ge0,
-\tag{61.4}
+\tag{66.4}
 $$
 
 because $R'(t)\ge0$ and $x\tan(\omega(t)x)\ge0$. Applying Itô's formula
@@ -2661,27 +3454,27 @@ $d\langle X\rangle_t=2a(K_t)^2dt$ gives
 $$
  dM_t=M_t\sqrt2\,a(K_t)\partial_x\log H(t,X_t)\,dW_t^2,
  \qquad t<\sigma.
-\tag{61.5}
+\tag{66.5}
 $$
 
-For a fixed finite $T$, $|a|\le C_a$ and (61.4) imply the deterministic
+For a fixed finite $T$, $|a|\le C_a$ and (66.4) imply the deterministic
 bound
 
 $$
 0\le M_t\le
 \exp\!\left(C_a^2\int_0^T\omega(s)^2ds\right),\qquad 0\le t\le T.
-\tag{61.6}
+\tag{66.6}
 $$
 
 Stop additionally before $H$ falls below $1/n$. On this stopped region
 $\partial_x\log H$ is bounded on $[0,T]$, so the stopped local martingale
 has constant mean one. If $\sigma\le T$, continuity gives $H(t,X_t)\to0$
-as $t\uparrow\sigma$, while the exponential factor in (61.2) remains
-bounded by (61.6). Thus the stopped variables converge to the zero
-extension in (61.2) at a finite boundary hit. Dominated convergence removes
+as $t\uparrow\sigma$, while the exponential factor in (66.2) remains
+bounded by (66.6). Thus the stopped variables converge to the zero
+extension in (66.2) at a finite boundary hit. Dominated convergence removes
 both stops and proves $\mathbb E_{\mathbb Q}M_T=1$ and the martingale
 property. The same argument with a fixed continuous height path leaves only
-the Brownian integral in (61.5), and proves the conditional mean-one
+the Brownian integral in (66.5), and proves the conditional mean-one
 identity.
 
 Consequently the measures $M_T\mathbb Q_T$ are consistent under literal
@@ -2693,9 +3486,9 @@ shows that $\zeta=\infty$ and $|X_t|<R(t)$ for every real $t\ge0$, by path
 continuity. The prescribed initial state and all other native path
 coordinates are retained by the change of density.
 
-The ground-state identity in Definition 41.1 gives the full density (61.1),
+The ground-state identity in Definition 41.1 gives the full density (66.1),
 including the cemetery indicator. Since $\phi$ is bounded and positive at
-$k_0$, (61.6) bounds $L_T$ by a finite deterministic constant for each
+$k_0$, (66.6) bounds $L_T$ by a finite deterministic constant for each
 fixed $T$. Therefore $L_T\log L_T$ has an integrable positive part, while
 $z\log z\ge-1/e$ controls its negative part under $\mathbb P_T$. Thus
 $V_{*,T}\ll\mathbb P_T$ and $D((V_*)_T\Vert\mathbb P_T)<\infty$.
@@ -2704,18 +3497,18 @@ The cosine factor and the time-dependent exponential are the native
 specialization of the time-dependent generalized Doob path-density formula
 in Chetrite and Touchette, *Nonequilibrium Markov processes conditioned on
 large deviations*, arXiv:1405.5157v2, §IV.1, equations (71)--(80). That
-classical identity is used only as an intermediate guide: (61.4)--(61.6)
+classical identity is used only as an intermediate guide: (66.4)--(66.6)
 check normalization at the moving zero boundary directly. No positive-interior
 formula is used as a conservativity assertion.
 $\square$
 
-**Lemma 61.2 (upper entropy estimate for the common law).** For every
-fixed $\alpha,r$ in Definition 60.1,
+**Lemma 66.2 (upper entropy estimate for the common law).** For every
+fixed $\alpha,r$ in Definition 65.1,
 
 $$
 D((V_*)_T\Vert\mathbb P_T)
 \le \lambda T+\frac{\pi^2}{4}\int_0^T\frac{\mathbb E_{\mathbb Q}[a(K_s)^2]}{R(s)^2}\,ds+O(1).
-\tag{61.7}
+\tag{66.7}
 $$
 
 The $O(1)$ depends on the fixed native data and on $\alpha,r$, but not on
@@ -2723,7 +3516,7 @@ $T$. Moreover,
 
 $$
 \mathbb E_{\mathbb Q}[a(K_s)^2]=\widehat m+O(e^{-3\lambda s})\quad(s\ge1),
-\tag{61.8}
+\tag{66.8}
 $$
 
 so
@@ -2732,41 +3525,41 @@ $$
 \limsup_{T\to\infty}
 \frac{D((V_*)_T\Vert\mathbb P_T)-\lambda T}{T^\beta}
 \le c_{\alpha,r}.
-\tag{61.9}
+\tag{66.9}
 $$
 
-Proof. On the support of $V_*$, (61.1)--(61.2) give
+Proof. On the support of $V_*$, (66.1)--(66.2) give
 
 $$
 \log L_T=\lambda T+\log\frac{\phi(K_T)}{\phi(k_0)}
  +\log H(T,X_T)+\int_0^T[\omega(s)^2a(K_s)^2-b(s,X_s)]ds.
-\tag{61.10}
+\tag{66.10}
 $$
 
 The last two terms are nonpositive except for the displayed quadratic
-term. Conditional mean-one normalization in Proposition 61.1 leaves the
+term. Conditional mean-one normalization in Proposition 66.1 leaves the
 entire height marginal equal to $\mathbb Q$, so taking expectations in
-(61.10), using $\log H\le0$, $b\ge0$ and
-$\log\phi(K_T)\le\log\|\phi\|_\infty$, proves (61.7). The relative-kernel estimate
-(41.3), applied to the bounded function $a^2$, gives (61.8); the integral
+(66.10), using $\log H\le0$, $b\ge0$ and
+$\log\phi(K_T)\le\log\|\phi\|_\infty$, proves (66.7). The relative-kernel estimate
+(41.3), applied to the bounded function $a^2$, gives (66.8); the integral
 over $[0,1]$ is bounded because $a$ is bounded. Since
 
 $$
 \int_0^T\omega(s)^2ds
 =\frac{\pi^2}{4r^2}\frac{(1+T)^\beta-1}{\beta},
-\tag{61.11}
+\tag{66.11}
 $$
 
-and $\int_1^\infty e^{-3\lambda s}\omega(s)^2ds<\infty$, (61.9) follows.
+and $\int_1^\infty e^{-3\lambda s}\omega(s)^2ds<\infty$, (66.9) follows.
 $\square$
 
-## 62. The matching lower bound from native fixed-strip bands
+## 67. The matching lower bound from native fixed-strip bands
 
 For the native lower-bound argument, put
 
 $$
 E_T=\{\zeta>T,\ |X_s|<R(s)\text{ for every }0\le s\le T\}.
-\tag{62.1}
+\tag{67.1}
 $$
 
 As a classical intermediate step, every $V\in\mathcal C_{\alpha,r}$
@@ -2774,15 +3567,15 @@ satisfies $V_T(E_T)=1$, and therefore
 
 $$
 D(V_T\Vert\mathbb P_T)\ge-\log\mathbb P_T(E_T).
-\tag{62.2}
+\tag{67.2}
 $$
 
-Indeed, the event in (62.1) is measurable on the full original killed prefix,
+Indeed, the event in (67.1) is measurable on the full original killed prefix,
 including the cemetery coordinate. The entropy partition identity, or the
-Gibbs inequality applied to the restriction to $E_T$, gives (62.2), with
+Gibbs inequality applied to the restriction to $E_T$, gives (67.2), with
 no replacement by an endpoint event or a larger horizon-dependent class.
 
-**Lemma 62.2 (moving-strip probability bound).** There is a constant
+**Lemma 67.2 (moving-strip probability bound).** There is a constant
 $C_0<\infty$ depending only on the fixed native data and the deterministic
 initial state such that, for every $T>1$,
 
@@ -2790,18 +3583,18 @@ $$
 -\log\mathbb P_T(E_T)
 \ge \int_1^T\Lambda_\kappa(\omega(s)h)\,ds
  -\frac12\log\bigl(2(u-l)R(T)\bigr)-\log C_0.
-\tag{62.3}
+\tag{67.3}
 $$
 
 Here $\Lambda_\kappa$ is the same two-height-Dirichlet band as in D
 (36.4)--(36.6), evaluated at the native frequency vector $\omega(s)h$.
 
 Proof. Project the original killed process to $(K,X)$. Conditional on the
-complete height path, (61.3) gives the autonomous projected generator
+complete height path, (66.3) gives the autonomous projected generator
 
 $$
 \mathcal A=\varepsilon^2\partial_k^2+a(k)^2\partial_x^2
-\tag{62.4}
+\tag{67.4}
 $$
 
 with both height faces killed. For a fixed $A>0$, kill this projection also
@@ -2812,7 +3605,7 @@ the operator into the height fibres
 $$
 -\varepsilon^2\partial_k^2+
  \frac{n^2\pi^2}{4A^2}a(k)^2,\qquad n=1,2,\ldots,
-\tag{62.5}
+\tag{67.5}
 $$
 
 with the same two Dirichlet height faces. Since the potential is
@@ -2822,7 +3615,7 @@ $L^2$ orthogonality give
 $$
 \|S_A(t)\|_{2\to2}
  \le \exp\{-t\Lambda_\kappa(\pi h/(2A))\}.
-\tag{62.6}
+\tag{67.6}
 $$
 
 This is the native variable-coefficient band, not a homogenized or
@@ -2836,7 +3629,7 @@ D (36.6), restricted to $\eta=\xi h$, and Plancherel imply
 $$
 \int_{\mathbb R}\int_I
  |K_{\kappa,\xi h}(1;k_0,k)|^2\,dk\,d\xi<\infty,
-\tag{62.7}
+\tag{67.7}
 $$
 
 because the nonzero native collar makes $h\ne0$ and the right-hand side is
@@ -2848,7 +3641,7 @@ has $\|f_1\|_2\le C_0$.
 Take any partition $1=t_0<t_1<\cdots<t_N=T$. On the block
 $[t_{j-1},t_j]$, the event $E_T$ is contained in the event that the
 projection stays in the fixed strip of half-width $R(t_j)$, because $R$
-is increasing. The Markov property, zero-extension contractions and (62.6)
+is increasing. The Markov property, zero-extension contractions and (67.6)
 therefore yield
 
 $$
@@ -2856,23 +3649,23 @@ $$
 \le C_0\,[2(u-l)R(T)]^{1/2}
  \exp\!\left\{-\sum_{j=1}^N(t_j-t_{j-1})
  \Lambda_\kappa(\omega(t_j)h)\right\}.
-\tag{62.8}
+\tag{67.8}
 $$
 
 The constant is the same for every partition. Continuity of the band in its
-frequency and refinement of right-endpoint sums give (62.3). This argument
+frequency and refinement of right-endpoint sums give (67.3). This argument
 uses the full native projection and its cemetery-inclusive starting density;
 no infinite partition probability or guessed moving-domain eigenfunction is
 introduced.
 $\square$
 
-**Theorem 62.3 (native lower asymptotics).** With $\beta=1-2\alpha$,
+**Theorem 67.3 (native lower asymptotics).** With $\beta=1-2\alpha$,
 
 $$
 \liminf_{T\to\infty}
 \frac{-\log\mathbb P_T(E_T)-\lambda T}{T^\beta}
 \ge c_{\alpha,r}.
-\tag{62.9}
+\tag{67.9}
 $$
 
 Proof. The inherited band expansion D (36.4) gives
@@ -2881,7 +3674,7 @@ $$
 \Lambda_\kappa(\omega(s)h)
 =\lambda+\widehat m\,\omega(s)^2+O(\omega(s)^4)
 =\lambda+\frac{\pi^2\widehat m}{4R(s)^2}+O(R(s)^{-4}).
-\tag{62.10}
+\tag{67.10}
 $$
 
 The contribution of the fixed interval $[0,1]$ is $O(1)$. For
@@ -2890,7 +3683,7 @@ $0<\alpha<1/2$, writing $\beta=1-2\alpha$ gives
 $$
 \int_1^T R(s)^{-2}ds
 =\frac{(1+T)^\beta}{r^2\beta}+O(1),
-\tag{62.11}
+\tag{67.11}
 $$
 
 while
@@ -2903,18 +3696,18 @@ O(\log T),&\alpha=1/4,\\
 O(1),&1/4<\alpha<1/2,
 \end{cases}
 =o(T^\beta).
-\tag{62.12}
+\tag{67.12}
 $$
 
-Also $\log R(T)=o(T^\beta)$. Substituting (62.10)--(62.12) into
-(62.3) proves (62.9).
+Also $\log R(T)=o(T^\beta)$. Substituting (67.10)--(67.12) into
+(67.3) proves (67.9).
 $\square$
 
-## 63. The exact frontier and its native consumer
+## 68. The exact frontier and its native consumer
 
-**Theorem 63.1 (one-law sharp moving-envelope entropy frontier).** For every
+**Theorem 68.1 (one-law sharp moving-envelope entropy frontier).** For every
 fixed $0<\alpha<1/2$ and $r>0$, the class $\mathcal C_{\alpha,r}$ of
-Definition 60.1 is nonempty. The law $V_*$ of Proposition 61.1 belongs to
+Definition 65.1 is nonempty. The law $V_*$ of Proposition 66.1 belongs to
 that class, is independent of the terminal horizon, and satisfies
 
 $$
@@ -2926,7 +3719,7 @@ $$
  \frac{\inf_{V\in\mathcal C_{\alpha,r}}D(V_T\Vert\mathbb P_T)-\lambda T}{T^{1-2\alpha}}
  &=\frac{\pi^2\widehat m}{4r^2(1-2\alpha)}.
 \end{aligned}
-\tag{63.1}
+\tag{68.1}
 $$
 
 Both limits use natural logarithms and the same full cemetery-inclusive native
@@ -2937,24 +3730,24 @@ uniqueness, finite-$T$ optimality, a uniform convergence rate, a homogeneous
 generator, a global infinite-horizon density relative to $\mathbb P$, or an
 operational implementation.
 
-Proof. By Proposition 61.1 and Lemma 61.2,
+Proof. By Proposition 66.1 and Lemma 66.2,
 
 $$
 \limsup_{T\to\infty}
 \frac{D((V_*)_T\Vert\mathbb P_T)-\lambda T}{T^\beta}
 \le c_{\alpha,r}.
-\tag{63.2}
+\tag{68.2}
 $$
 
-For every $V\in\mathcal C_{\alpha,r}$, the support inequality (62.2) gives
+For every $V\in\mathcal C_{\alpha,r}$, the support inequality (67.2) gives
 $D(V_T\Vert\mathbb P_T)\ge-\log\mathbb P_T(E_T)$. Taking the infimum and
-using Theorem 62.3 yields
+using Theorem 67.3 yields
 
 $$
 \liminf_{T\to\infty}
 \frac{\inf_{V\in\mathcal C_{\alpha,r}}D(V_T\Vert\mathbb P_T)-\lambda T}{T^\beta}
 \ge c_{\alpha,r}.
-\tag{63.3}
+\tag{68.3}
 $$
 
 Since $V_*$ belongs to the same class for every $T$,
@@ -2963,15 +3756,15 @@ $$
 -\log\mathbb P_T(E_T)\le
  \inf_{V\in\mathcal C_{\alpha,r}}D(V_T\Vert\mathbb P_T)
 \le D((V_*)_T\Vert\mathbb P_T).
-\tag{63.4}
+\tag{68.4}
 $$
 
-Equations (63.2)--(63.4) squeeze both limits to $c_{\alpha,r}$ and establish
-all clauses of (63.1). Corollary 52.1, as consumed by Proposition 53.2,
+Equations (68.2)--(68.4) squeeze both limits to $c_{\alpha,r}$ and establish
+all clauses of (68.1). Corollary 52.1, as consumed by Proposition 53.2,
 leaves projective consistency unasserted for its horizon laws. Here the single
 law $V_*$ supplies a consistent infinite-law successor for that native
 entropy-rate selection question. The lower bound ranges over exactly
-$\mathcal C_{\alpha,r}$, the class newly defined in Definition 60.1.
+$\mathcal C_{\alpha,r}$, the class newly defined in Definition 65.1.
 This consumer conclusion follows from the full sandwich.
 
 The scalar power-envelope/Q-process construction of Oçafrain,
@@ -2980,62 +3773,62 @@ arXiv:1809.07547v2, supplies the prior one-dimensional mechanism and its
 power-envelope clock. In the constant native scalar case, the generator
 normalization here gives the corresponding coefficient
 $\pi^2a_0^2/(4r^2\beta)$ after the native time change. No scalar stationary
-prefactor is imported into (61.1)--(63.4); normalization there comes from
+prefactor is imported into (66.1)--(68.4); normalization there comes from
 $H(0,0)=1$ and the proved martingale identity. The general native argument
 cannot be reduced to replacing the deterministic scalar clock by
 $\widehat m t$, because the actual clock is
 $\int_0^ta(K_s)^2ds$ and the tube is imposed in the original time.
 
-The measure-level support inequality (62.2) is the finite-prefix
+The measure-level support inequality (67.2) is the finite-prefix
 Gibbs/relative-entropy principle, and the reversible spectral comparison in
-(62.5)--(62.6) is the classical Rayleigh correspondence. They are credited
+(67.5)--(67.6) is the classical Rayleigh correspondence. They are credited
 as intermediate tools to Chetrite and Touchette, *Variational and optimal
 control representations of conditioned and driven processes*,
 arXiv:1506.05291v3, §III.4, equations (52)--(56), and Appendix A.2,
 equations (90)--(93). Those classical formulas do not supply the native
 moving-strip scale, the full-prefix starting-density estimate, or a common
-infinite law; these are the deductions in Proposition 61.1 and Lemma 62.2.
+infinite law; these are the deductions in Proposition 66.1 and Lemma 67.2.
 $\square$
 
-**Corollary 63.2 (compatibility with the homogeneous height-only frontier).**
-Theorem 63.1 and Proposition 59.1 quantify over different, non-nested
+**Corollary 68.2 (compatibility with the homogeneous height-only frontier).**
+Theorem 68.1 and Proposition 59.1 quantify over different, non-nested
 subclasses of the same ambient class of consistent infinite native history
 laws with local absolute continuity and finite full-prefix entropy.
 Proposition 59.1 restricts selections to fixed, height-only,
 phase-translation-covariant controllers with a finite excess-rate budget and obtains a positive
-three-direction tensor. The law $V_*$ in Theorem 63.1 is a time-dependent
+three-direction tensor. The law $V_*$ in Theorem 68.1 is a time-dependent
 phase-position reweighting selected for the expanding boundary; its entropy
 excess is of order $T^{1-2\alpha}$ and its density depends on the moving
 cosine. This law is not a member of the homogeneous height-only class
 used in Proposition 59.1. The two conclusions are compatible: 59.1 retains
 its positive transport conclusion under its controller restrictions,
-while 63.1 gives the sharp all-time leading cost in the class
+while 68.1 gives the sharp all-time leading cost in the class
 $\mathcal C_{\alpha,r}$ of consistent infinite tube laws. Neither theorem
 changes the other's native premises or consumer.
 
 Proof. Proposition 59.1 applies its rate and tensor estimates only after the
 controller restrictions (54.1)--(54.2) and the finite rate budget have been
-imposed. Definition 60.1 imposes instead the full path support condition
-(60.2), local absolute continuity and finite prefix entropy, with no
-height-only or time-homogeneity restriction. The cosine factor in (61.2)
+imposed. Definition 65.1 imposes instead the full path support condition
+(65.2), local absolute continuity and finite prefix entropy, with no
+height-only or time-homogeneity restriction. The cosine factor in (66.2)
 depends on $t$ and on the signed phase coordinate $X_t$; the leading entropy
 rate $\lambda$ alone does not impose the controller restrictions of 59.1.
 
 For a direct check of non-nesting, the law $\mathbb Q=\mathbb V_{\phi,0}$
 has zero excess-rate budget and belongs to the homogeneous height-only
-class. By (61.3), conditional on the height history, $X_T$ is centered
+class. By (66.3), conditional on the height history, $X_T$ is centered
 Gaussian with variance $2\int_0^T a(K_s)^2ds$. Positivity of $\widehat m$
-and (61.8) imply that this variance is positive with positive probability
+and (66.8) imply that this variance is positive with positive probability
 for some finite $T$. Thus
 $\mathbb Q(|X_T|\ge R(T))>0$, so $\mathbb Q\notin\mathcal C_{\alpha,r}$.
 Conversely, Theorem 55.1 makes every homogeneous height-only law equivalent
-to $\mathbb Q$ on that finite prefix, while (60.2) gives
+to $\mathbb Q$ on that finite prefix, while (65.2) gives
 $V_*(|X_T|\ge R(T))=0$. Hence $V_*\in\mathcal C_{\alpha,r}$ is outside
 the homogeneous height-only class. The two quantified conclusions are
 compatible without an inclusion between their admissible classes.
 $\square$
 
-**Definition 63.3 (scope of the native result).** The assertions above are
+**Definition 68.3 (scope of the native result).** The assertions above are
 ordinary mathematical consequences of the inherited native G/C/N/F premises.
 They concern one fixed native experiment and every fixed pair
 $(\alpha,r)$ in the stated range. The lower bound uses the same class of
