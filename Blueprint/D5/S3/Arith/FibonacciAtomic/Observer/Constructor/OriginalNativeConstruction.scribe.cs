@@ -52,11 +52,12 @@ internal sealed class OriginalNativeConstructionDocument : IScribeDocumentDefini
 
     private static StatementSource FiniteSoundStatement()
     {
+        var conclusion = For(Imp(Sol(V("E"), V("v")),
+            EqOf(Value(V("v"), V("e")), FnCall("embed", FnCall("finiteValue", V("p"), V("f"))))),
+            ("p", Parameters), ("v", Vector));
         return Statement(KM(For(Imp(EqOf(FnCall("finiteCompile", V("E"), V("mode"), V("e")),
-            FnCall("some", V("f"))), Imp(Sol(V("E"), V("v")),
-                EqOf(Value(V("v"), V("e")), FnCall("embed", FnCall("finiteValue", V("p"), V("f")))))),
-            ("E", Definitions), ("mode", Modes), ("e", Expressions), ("f", FiniteExpressions),
-            ("p", Parameters), ("v", Vector))));
+            FnCall("some", V("f"))), conclusion),
+            ("E", Definitions), ("mode", Modes), ("e", Expressions), ("f", FiniteExpressions))));
     }
 
     private static StatementSource ConstructionStatement()

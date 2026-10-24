@@ -351,53 +351,7 @@ theorem original_canonical_synthesis (E : Definitions k m) (mode : Fin k → Boo
     exact exactPrefix
 
 
--- BEGIN_TRANSIENT_EXACT_CHECKS
-private def zeroSystem : Definitions 0 0 := Fin.elim0
-private def positiveCycle : Definitions 0 1 := fun _ => some (.var 1 0)
-private def zeroCycle : Definitions 0 1 := fun _ => some (.var 0 0)
 
-#eval ("native-source-execution", [
-  (canonicalCompile edgeSystem (fun _ => true) (.var 0 0)).isSome,
-  (canonicalCompile edgeSystem (fun _ => true) (.var 9 1)).isSome,
-  !(canonicalCompile edgeSystem (fun _ => true) (.var 0 2)).isSome,
-  !(canonicalCompile edgeSystem (fun _ => true) (.var 0 3)).isSome,
-  (canonicalCompile edgeSystem (fun _ => true) (.pair (.token 0 1) (.token 1 0))).isSome,
-  decide (prefixReply edgeSystem (fun _ => true) (fun _ => 0) 0 (.var 0 0) [] = .alpha),
-  decide (prefixReply edgeSystem (fun _ => true) (fun _ => 0) 0 (.var 0 1) [] = .alpha),
-  decide (prefixReply edgeSystem (fun _ => true) (fun _ => 0) 0 (.var 0 2) [] = .branch),
-  decide (prefixReply edgeSystem (fun _ => true) (fun _ => 0) 3 (.var 0 2) [false] = .alpha),
-  decide (prefixReply edgeSystem (fun _ => true) (fun _ => 0) 3 (.var 0 2) [false, true] = .absent),
-  decide (prefixReply edgeSystem (fun _ => true) (fun _ => 0) 3 (.var 0 2) [true, true] = .branch),
-  decide (prefixReply edgeSystem (fun _ => true) (fun _ => 0) 2 (.ground (.of false)) [] = .beta),
-  decide (prefixReply edgeSystem (fun _ => true) (fun _ => 0) 2
-    (.pair (.token 0 1) (.token 1 0)) [false] = .beta),
-  decide (prefixReply edgeSystem (fun _ => true) (fun _ => 0) 2
-    (.pair (.token 0 1) (.token 1 0)) [true] = .alpha),
-  decide (prefixReply zeroSystem Fin.elim0 Fin.elim0 0 .omega [] = .branch),
-  decide (prefixReply zeroSystem Fin.elim0 Fin.elim0 3 .omega [true, false, true] = .branch),
-  decide (prefixReply positiveCycle Fin.elim0 Fin.elim0 3 (.var 0 0) [true, false] = .branch),
-  decide (prefixReply zeroCycle Fin.elim0 Fin.elim0 3 (.var 0 0) [false, true] = .branch)])
-
-example : IsFinite (value (k := 2) (fun _ => true) (fun _ => 0)
-    (canonical edgeSystem (fun _ => true) (fun _ => 0)) (.var 0 0)) :=
-  ((original_canonical_synthesis edgeSystem (fun _ => true) (fun _ => 0)).2.1 _).mp (by decide +kernel)
-
-example : ¬ IsFinite (value (k := 2) (fun _ => true) (fun _ => 0)
-    (canonical edgeSystem (fun _ => true) (fun _ => 0)) (.var 0 2)) :=
-  (original_canonical_synthesis edgeSystem (fun _ => true) (fun _ => 0)).2.2.2.1 _ (by decide +kernel)
-
-example (v : Fin 4 → CompletionTree) (hv : Solution edgeSystem (fun _ => true) (fun _ => 0) v) :
-    value (k := 2) (fun _ => true) (fun _ => 0) v (.var 0 0) = embed (.of true) := by
-  have h := (original_canonical_synthesis edgeSystem (fun _ => true) (fun _ => 0)).2.2.1
-    (.var 0 0) (.power 0 (.token 0 0)) (by decide +kernel) v hv
-  simpa [OriginalFiniteResolution.finiteValue] using h
-
-example {r : Nat} (C : FunctionalCase k m r) (p : Fin k → Nat) (_guard : C.guard p)
-    (i : Fin r) (h : Nat) (a : Address) (ha : a.length ≤ h) :
-    prefixReply C.definitions C.mode p h (C.original i) a =
-      completionReadout a (originalValues C p (canonical C.definitions C.mode p) i) :=
-  (original_canonical_synthesis C.definitions C.mode p).2.2.2.2 h (C.original i) a ha
--- END_TRANSIENT_EXACT_CHECKS
 
 #print axioms original_canonical_synthesis
 
