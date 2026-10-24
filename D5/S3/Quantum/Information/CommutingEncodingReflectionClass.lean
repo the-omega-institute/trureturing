@@ -13,6 +13,7 @@ import D5.S3.Quantum.BlockNorm.EssentiallyHermitian
 
 open scoped BigOperators
 open Matrix
+open D5.S3.Quantum.FiniteDimensional (qubitX qubitZ qubit_weyl_star)
 open D5.S3.Quantum.Information.StabilizerPairLocalUnitaryInequivalence
 open D5.S3.Quantum.Information.BinaryStabilizerGraphNormalForm (tensor_adj tensor_unitary)
 
@@ -284,6 +285,247 @@ private lemma traceless_unitary_phase_reflection (A : Matrix (Fin 2) (Fin 2) ℂ
           _ = _ := by rw [hKK, Matrix.one_mul, Matrix.mul_one]
       _ = _ := by rw [hKd, hdiag, Matrix.mul_smul, Matrix.smul_mul]
 
+private lemma pauli_of_two_signs (A : Matrix (Fin 2) (Fin 2) ℂ)
+    (hsq : A * A = 1)
+    (hZ : A * qubitZ = qubitZ * A ∨ A * qubitZ = -(qubitZ * A))
+    (hX : A * qubitX = qubitX * A ∨ A * qubitX = -(qubitX * A)) :
+    ∃ (c : ℂ) (p : Pauli), star c * c = 1 ∧ A = c • pauliMatrix p := by
+  have hs := congrArg (fun M : Matrix (Fin 2) (Fin 2) ℂ => M 0 0) hsq
+  simp only [Matrix.mul_apply, Matrix.vecMul, dotProduct, Fin.sum_univ_two, Matrix.one_apply_eq] at hs
+  have phase (c : ℂ) (hc : c ^ 2 = 1) : star c * c = 1 := by
+    rcases sq_eq_one_iff.mp hc with rfl | rfl <;> simp
+  rcases hZ with hZ | hZ
+  · have hz01 := congrArg (fun M : Matrix (Fin 2) (Fin 2) ℂ => M 0 1) hZ
+    have hz10 := congrArg (fun M : Matrix (Fin 2) (Fin 2) ℂ => M 1 0) hZ
+    simp [Matrix.mul_apply, Matrix.vecMul, dotProduct, Fin.sum_univ_two, qubitZ] at hz01 hz10
+    have h01 : A 0 1 = 0 := by linear_combination -(1 / 2 : ℂ) * hz01
+    have h10 : A 1 0 = 0 := by linear_combination (1 / 2 : ℂ) * hz10
+    have hc : (A 0 0) ^ 2 = 1 := by simpa [h01, h10, pow_two] using hs
+    rcases hX with hX | hX
+    · have hx := congrArg (fun M : Matrix (Fin 2) (Fin 2) ℂ => M 0 1) hX
+      simp [Matrix.mul_apply, Matrix.vecMul, dotProduct, Fin.sum_univ_two, qubitX] at hx
+      refine ⟨A 0 0, .I, phase _ hc, ?_⟩
+      ext i j
+      fin_cases i <;> fin_cases j <;> simp [pauliMatrix, h01, h10, hx]
+    · have hx := congrArg (fun M : Matrix (Fin 2) (Fin 2) ℂ => M 0 1) hX
+      simp [Matrix.mul_apply, Matrix.vecMul, dotProduct, Fin.sum_univ_two, qubitX] at hx
+      refine ⟨A 0 0, .Z, phase _ hc, ?_⟩
+      ext i j
+      fin_cases i <;> fin_cases j <;> simp [pauliMatrix, qubitZ, h01, h10, hx]
+  · have hz00 := congrArg (fun M : Matrix (Fin 2) (Fin 2) ℂ => M 0 0) hZ
+    have hz11 := congrArg (fun M : Matrix (Fin 2) (Fin 2) ℂ => M 1 1) hZ
+    simp [Matrix.mul_apply, Matrix.vecMul, dotProduct, Fin.sum_univ_two, qubitZ] at hz00 hz11
+    have h00 : A 0 0 = 0 := by linear_combination (1 / 2 : ℂ) * hz00
+    have h11 : A 1 1 = 0 := by linear_combination -(1 / 2 : ℂ) * hz11
+    rcases hX with hX | hX
+    · have hx := congrArg (fun M : Matrix (Fin 2) (Fin 2) ℂ => M 0 0) hX
+      simp [Matrix.mul_apply, Matrix.vecMul, dotProduct, Fin.sum_univ_two, qubitX] at hx
+      have hc : (A 0 1) ^ 2 = 1 := by simpa [h00, hx, pow_two] using hs
+      refine ⟨A 0 1, .X, phase _ hc, ?_⟩
+      ext i j
+      fin_cases i <;> fin_cases j <;> simp [pauliMatrix, qubitX, h00, h11, hx]
+    · have hx := congrArg (fun M : Matrix (Fin 2) (Fin 2) ℂ => M 0 0) hX
+      simp [Matrix.mul_apply, Matrix.vecMul, dotProduct, Fin.sum_univ_two, qubitX] at hx
+      have hc : (Complex.I * A 0 1) ^ 2 = 1 := by
+        calc
+          _ = -(A 0 1 * A 0 1) := by rw [mul_pow, Complex.I_sq]; ring
+          _ = 1 := by simpa [h00, hx, mul_neg] using hs
+      refine ⟨Complex.I * A 0 1, .Y, phase _ hc, ?_⟩
+      ext i j
+      fin_cases i <;> fin_cases j <;>
+        simp [pauliMatrix, qubitX, qubitZ, Matrix.mul_apply, Matrix.vecMul, dotProduct, Fin.sum_univ_two,
+          h00, h11, hx, mul_assoc] <;> ring_nf <;> simp
+
+private lemma nonscalar_reflection_frame (A : Matrix (Fin 2) (Fin 2) ℂ)
+    (hA : A.IsHermitian) (hsq : A * A = 1) (hn : ¬ ∃ c : ℂ, A = c • 1) :
+    ∃ V ∈ Matrix.unitaryGroup (Fin 2) ℂ,
+      V * A * Vᴴ = qubitZ ∨ V * A * Vᴴ = -qubitZ := by
+  classical
+  have hu : A ∈ Matrix.unitaryGroup (Fin 2) ℂ := by
+    apply Matrix.mem_unitaryGroup_iff'.mpr
+    change Aᴴ * A = 1
+    rw [hA.eq, hsq]
+  letI : IsStarNormal A := isStarNormal_of_mem_unitary hu
+  obtain ⟨K, hK, d, hd⟩ := Matrix.exists_mem_unitaryGroup_star_mul_mul_eq_diagonal A
+  have hKd : Kᴴ * A * K = diagonal d := hd
+  have hKK : K * Kᴴ = 1 := hK.2
+  have hKtK : Kᴴ * K = 1 := hK.1
+  have hrec : A = K * diagonal d * Kᴴ := by
+    rw [← hKd]
+    symm
+    calc
+      _ = (K * Kᴴ) * A * (K * Kᴴ) := by simp only [Matrix.mul_assoc]
+      _ = _ := by rw [hKK, Matrix.one_mul, Matrix.mul_one]
+  have hdeq : d 0 ≠ d 1 := by
+    intro he
+    apply hn
+    refine ⟨d 0, ?_⟩
+    have hh : diagonal d = d 0 • (1 : Matrix (Fin 2) (Fin 2) ℂ) := by
+      ext i j
+      fin_cases i <;> fin_cases j <;> simp [Matrix.diagonal, he]
+    rw [hrec, hh, Matrix.mul_smul, Matrix.mul_one, Matrix.smul_mul, hKK]
+  have hd2 : diagonal d * diagonal d = 1 := by
+    rw [← hKd]
+    calc
+      _ = Kᴴ * A * (K * Kᴴ) * A * K := by simp only [Matrix.mul_assoc]
+      _ = Kᴴ * (A * A) * K := by
+        rw [hKK, Matrix.mul_one]; simp only [Matrix.mul_assoc]
+      _ = 1 := by rw [hsq, Matrix.mul_one, hKtK]
+  have h0 : (d 0) ^ 2 = 1 := by
+    simpa only [Matrix.diagonal_mul_diagonal, Matrix.diagonal_apply_eq,
+      Matrix.one_apply_eq, pow_two] using congrArg (fun M => M 0 0) hd2
+  have h1 : (d 1) ^ 2 = 1 := by
+    simpa only [Matrix.diagonal_mul_diagonal, Matrix.diagonal_apply_eq,
+      Matrix.one_apply_eq, pow_two] using congrArg (fun M => M 1 1) hd2
+  have h10 : d 1 = -d 0 := by
+    rcases sq_eq_one_iff.mp h0 with h0 | h0 <;>
+      rcases sq_eq_one_iff.mp h1 with h1 | h1 <;> simp_all
+  refine ⟨Kᴴ, Unitary.star_mem hK, ?_⟩
+  simp only [Matrix.conjTranspose_conjTranspose]
+  rw [hKd]
+  rcases sq_eq_one_iff.mp h0 with h0 | h0
+  · left
+    ext i j
+    fin_cases i <;> fin_cases j <;> simp [Matrix.diagonal, qubitZ, h0, h10]
+  · right
+    ext i j
+    fin_cases i <;> fin_cases j <;> simp [Matrix.diagonal, qubitZ, h0, h10]
+
+private lemma commuting_Z_reflection_X_sign (A : Matrix (Fin 2) (Fin 2) ℂ)
+    (hsq : A * A = 1) (hZ : A * qubitZ = qubitZ * A) :
+    A * qubitX = qubitX * A ∨ A * qubitX = -(qubitX * A) := by
+  have hz01 := congrArg (fun M : Matrix (Fin 2) (Fin 2) ℂ => M 0 1) hZ
+  have hz10 := congrArg (fun M : Matrix (Fin 2) (Fin 2) ℂ => M 1 0) hZ
+  simp [Matrix.mul_apply, Matrix.vecMul, dotProduct, Fin.sum_univ_two, qubitZ] at hz01 hz10
+  have h01 : A 0 1 = 0 := by linear_combination -(1 / 2 : ℂ) * hz01
+  have h10 : A 1 0 = 0 := by linear_combination (1 / 2 : ℂ) * hz10
+  have h0 : (A 0 0) ^ 2 = 1 := by
+    simpa [Matrix.mul_apply, Matrix.vecMul, dotProduct, Fin.sum_univ_two, h01, h10, pow_two] using
+      congrArg (fun M : Matrix (Fin 2) (Fin 2) ℂ => M 0 0) hsq
+  have h1 : (A 1 1) ^ 2 = 1 := by
+    simpa [Matrix.mul_apply, Matrix.vecMul, dotProduct, Fin.sum_univ_two, h01, h10, pow_two] using
+      congrArg (fun M : Matrix (Fin 2) (Fin 2) ℂ => M 1 1) hsq
+  rcases sq_eq_sq_iff_eq_or_eq_neg.mp (h0.trans h1.symm) with he | he
+  · left
+    ext i j
+    fin_cases i <;> fin_cases j <;>
+      simp [Matrix.mul_apply, Matrix.vecMul, dotProduct, Fin.sum_univ_two, qubitX, h01, h10, he]
+  · right
+    ext i j
+    fin_cases i <;> fin_cases j <;>
+      simp [Matrix.mul_apply, Matrix.vecMul, dotProduct, Fin.sum_univ_two, qubitX, h01, h10, he]
+
+private lemma anticommuting_Z_reflection_frame (A : Matrix (Fin 2) (Fin 2) ℂ)
+    (hA : A.IsHermitian) (hsq : A * A = 1) (hZ : A * qubitZ = -(qubitZ * A)) :
+    ∃ D ∈ Matrix.unitaryGroup (Fin 2) ℂ,
+      D * qubitZ * Dᴴ = qubitZ ∧ D * A * Dᴴ = qubitX := by
+  classical
+  have hz00 := congrArg (fun M : Matrix (Fin 2) (Fin 2) ℂ => M 0 0) hZ
+  have hz11 := congrArg (fun M : Matrix (Fin 2) (Fin 2) ℂ => M 1 1) hZ
+  simp [Matrix.mul_apply, Matrix.vecMul, dotProduct, Fin.sum_univ_two, qubitZ] at hz00 hz11
+  have h00 : A 0 0 = 0 := by linear_combination (1 / 2 : ℂ) * hz00
+  have h11 : A 1 1 = 0 := by linear_combination -(1 / 2 : ℂ) * hz11
+  have h10 : A 1 0 = star (A 0 1) := by
+    simpa only [Matrix.conjTranspose_apply] using
+      (congrArg (fun M : Matrix (Fin 2) (Fin 2) ℂ => M 1 0) hA.eq).symm
+  have hz : A 0 1 * star (A 0 1) = 1 := by
+    simpa [Matrix.mul_apply, Matrix.vecMul, dotProduct, Fin.sum_univ_two, h00, h10] using
+      congrArg (fun M : Matrix (Fin 2) (Fin 2) ℂ => M 0 0) hsq
+  let d : Fin 2 → ℂ := ![1, A 0 1]
+  have hd : diagonal d ∈ Matrix.unitaryGroup (Fin 2) ℂ := by
+    rw [Matrix.diagonal_mem_unitary, Pi.mem_unitary_iff]
+    intro i
+    fin_cases i
+    · exact one_mem _
+    · constructor
+      · change star (A 0 1) * A 0 1 = 1
+        simpa only [mul_comm] using hz
+      · change A 0 1 * star (A 0 1) = 1
+        exact hz
+  refine ⟨diagonal d, hd, ?_, ?_⟩
+  · ext i j
+    fin_cases i <;> fin_cases j <;>
+      simp [Matrix.mul_apply, Fin.sum_univ_two, Matrix.diagonal, Matrix.conjTranspose_apply,
+        d, qubitZ, mul_assoc] <;> exact hz
+  · ext i j
+    fin_cases i <;> fin_cases j <;>
+      simp [Matrix.mul_apply, Fin.sum_univ_two, Matrix.diagonal, Matrix.conjTranspose_apply,
+        d, qubitX, h00, h11, h10, mul_assoc] <;> exact hz
+
+private lemma reflection_axes_two_pauli_frame {κ : Type*}
+    (H : κ → Matrix (Fin 2) (Fin 2) ℂ)
+    (hH : ∀ a, (H a).IsHermitian ∧ H a * H a = 1)
+    (hs : ∀ a b, H a * H b = H b * H a ∨ H a * H b = -(H b * H a)) :
+    ∃ V ∈ Matrix.unitaryGroup (Fin 2) ℂ, ∀ a,
+      ((V * H a * Vᴴ) * qubitZ = qubitZ * (V * H a * Vᴴ) ∨
+        (V * H a * Vᴴ) * qubitZ = -(qubitZ * (V * H a * Vᴴ))) ∧
+      ((V * H a * Vᴴ) * qubitX = qubitX * (V * H a * Vᴴ) ∨
+        (V * H a * Vᴴ) * qubitX = -(qubitX * (V * H a * Vᴴ))) := by
+  classical
+  by_cases hall : ∀ a, ∃ c : ℂ, H a = c • 1
+  · refine ⟨1, one_mem _, ?_⟩
+    intro a
+    obtain ⟨c, hc⟩ := hall a
+    constructor <;> left <;>
+      simp only [Matrix.one_mul, Matrix.conjTranspose_one, Matrix.mul_one, hc,
+        Matrix.smul_mul, Matrix.mul_smul, Matrix.one_mul, Matrix.mul_one]
+  · obtain ⟨a₀, ha₀⟩ := not_forall.mp hall
+    obtain ⟨V, hV, hVZ⟩ := nonscalar_reflection_frame (H a₀) (hH a₀).1 (hH a₀).2 ha₀
+    let C := Unitary.conjStarAlgAut ℂ (Matrix (Fin 2) (Fin 2) ℂ) ⟨V, hV⟩
+    let A (a : κ) := V * H a * Vᴴ
+    have hCA (a : κ) : C (H a) = A a := rfl
+    have hA (a : κ) : (A a).IsHermitian ∧ A a * A a = 1 := by
+      refine ⟨Matrix.isHermitian_mul_mul_conjTranspose V (hH a).1, ?_⟩
+      change C (H a) * C (H a) = 1
+      rw [← map_mul, (hH a).2, map_one]
+    have hsA (a b : κ) : A a * A b = A b * A a ∨ A a * A b = -(A b * A a) := by
+      rcases hs a b with h | h
+      · left
+        simpa only [map_mul, hCA] using congrArg C h
+      · right
+        simpa only [map_mul, map_neg, hCA] using congrArg C h
+    have hAZ (a : κ) : A a * qubitZ = qubitZ * A a ∨
+        A a * qubitZ = -(qubitZ * A a) := by
+      have hh := hsA a a₀
+      rcases hVZ with h | h
+      · change A a₀ = qubitZ at h
+        simpa only [h] using hh
+      · change A a₀ = -qubitZ at h
+        simpa only [h, mul_neg, neg_mul, neg_neg, neg_inj, neg_eq_iff_eq_neg] using hh
+    by_cases hallZ : ∀ a, A a * qubitZ = qubitZ * A a
+    · exact ⟨V, hV, fun a => ⟨Or.inl (hallZ a),
+        commuting_Z_reflection_X_sign (A a) (hA a).2 (hallZ a)⟩⟩
+    · obtain ⟨b, hb⟩ := not_forall.mp hallZ
+      obtain ⟨D, hD, hDZ, hDX⟩ := anticommuting_Z_reflection_frame (A b) (hA b).1
+        (hA b).2 ((hAZ b).resolve_left hb)
+      let E := Unitary.conjStarAlgAut ℂ (Matrix (Fin 2) (Fin 2) ℂ) ⟨D, hD⟩
+      let B (a : κ) := D * A a * Dᴴ
+      have hEB (a : κ) : E (A a) = B a := rfl
+      have hEZ : E qubitZ = qubitZ := hDZ
+      have hEX : E (A b) = qubitX := hDX
+      have hBZ (a : κ) : B a * qubitZ = qubitZ * B a ∨
+          B a * qubitZ = -(qubitZ * B a) := by
+        rcases hAZ a with h | h
+        · left
+          simpa only [map_mul, hEB, hEZ] using congrArg E h
+        · right
+          simpa only [map_mul, map_neg, hEB, hEZ] using congrArg E h
+      have hBX (a : κ) : B a * qubitX = qubitX * B a ∨
+          B a * qubitX = -(qubitX * B a) := by
+        rcases hsA a b with h | h
+        · left
+          simpa only [map_mul, hEX, hEB] using congrArg E h
+        · right
+          simpa only [map_mul, map_neg, hEX, hEB] using congrArg E h
+      refine ⟨D * V, (Matrix.unitaryGroup (Fin 2) ℂ).mul_mem hD hV, ?_⟩
+      intro a
+      have he : (D * V) * H a * (D * V)ᴴ = B a := by
+        dsimp only [B, A]
+        rw [Matrix.conjTranspose_mul]
+        simp only [Matrix.mul_assoc]
+      rw [he]
+      exact ⟨hBZ a, hBX a⟩
+
 private lemma reflection_axes_pauli_frame {κ : Type*}
     (H : κ → Matrix (Fin 2) (Fin 2) ℂ)
     (hH : ∀ a, (H a).IsHermitian ∧ H a * H a = 1)
@@ -292,7 +534,18 @@ private lemma reflection_axes_pauli_frame {κ : Type*}
       ∃ (c : κ → ℂ) (p : κ → Pauli),
         (∀ a, star (c a) * c a = 1) ∧
         (∀ a, V * H a * Vᴴ = c a • pauliMatrix (p a)) := by
-  sorry
+  classical
+  obtain ⟨V, hV, hv⟩ := reflection_axes_two_pauli_frame H hH hs
+  have hsq (a : κ) : (V * H a * Vᴴ) * (V * H a * Vᴴ) = 1 := by
+    calc
+      _ = V * H a * (Vᴴ * V) * H a * Vᴴ := by simp only [Matrix.mul_assoc]
+      _ = V * (H a * H a) * Vᴴ := by
+        rw [show Vᴴ * V = 1 from hV.1, Matrix.mul_one]
+        simp only [Matrix.mul_assoc]
+      _ = 1 := by rw [(hH a).2, Matrix.mul_one]; exact hV.2
+  have hp (a : κ) := pauli_of_two_signs (V * H a * Vᴴ) (hsq a) (hv a).1 (hv a).2
+  choose c p hc he using hp
+  exact ⟨V, hV, c, p, hc, he⟩
 
 private lemma pauli_site_frame {κ : Type*}
     (B : κ → Matrix (Fin 2) (Fin 2) ℂ)
