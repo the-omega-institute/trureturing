@@ -1234,10 +1234,14 @@ Möbius--Gauss transport, cubic coefficient interface (J4)--(J6),
 all-row common-gcd estimate (J8), its cube-free low-repeat extension
 (J11)--(J13), and the weighted all-core bound (J17), which pays
 $P\ge U^{1/5}$ for actual Type-II coefficients without a repeat cutoff.
-The note also records the sufficient aggregate small-$P$ targets
+The direct whole-tail bound (J22) instead permits a repeat cutoff
+$T=U^{1/12}$; retaining both core caps then pays $P\ge U^{1/6}$ by (J23).
+The note records the sufficient aggregate small-$P$ targets
 [(J15)](../Fourier/liu2026quasirhdual.md#truncate-before-the-positive-class-partition)
-and [(J20)](../Fourier/liu2026quasirhdual.md#an-untruncated-sufficient-target-for-the-actual-type-ii-factor).
-Neither target is supplied; the full inverse-fourth saving, signed Robin
+and [(J20)](../Fourier/liu2026quasirhdual.md#an-untruncated-sufficient-target-for-the-actual-type-ii-factor),
+and the smaller-$P$, truncated actual-Type-II target
+[(J24)](../Fourier/liu2026quasirhdual.md#a-direct-repeat-tail-and-a-smaller-sufficient-head).
+None of these head estimates is supplied; the full inverse-fourth saving, signed Robin
 restoration and RH remain open.
 
 ## Actual-family finite measurements

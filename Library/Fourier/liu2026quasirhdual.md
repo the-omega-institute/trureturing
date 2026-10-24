@@ -719,7 +719,7 @@ identification with or estimate of the original signed cross-class
 $E_6$. Nor is (J15) asserted necessary or equivalent to RH.
 For a truncated Type-II factor, its packets no longer have the two
 inverse-$L$ series used in the original Möbius tail proof.
-The coefficient-uniform sixth-order fallback only gives
+The fixed-core sixth-order sieve followed by Minkowski gives
 
 $$
 \mathcal T(h_{\mathrm{II},>T})
@@ -730,9 +730,11 @@ Indeed, at fixed $t$ the squarefree column length is $U/q_t^2$,
 the normalized squared coefficient norm is $\ll U^\varepsilon/q_t^2$,
 and $\chi_t(u)^2$ is a bounded row multiplier. Apply the existing
 sixth-order sieve and then Minkowski over $q_t>T$.
-This beats $B_*$ only for
+This particular certificate beats $B_*$ only for
 $\theta>(5\sqrt6-12)/2=0.123724\ldots$, incompatible with
-$\theta<1/72$. It cannot replace the Möbius tail in (J16).
+$\theta<1/72$. The [direct density bound](#a-direct-repeat-tail-and-a-smaller-sufficient-head)
+below is stronger, but also cannot pay a cutoff this small. Neither
+certificate replaces the Möbius tail in (J16).
 The residual (J15), full inverse-fourth improvement, signed Robin
 restoration and RH remain open. These are source-conditional
 applications of existing suppliers, not Lean-certified results.
@@ -961,3 +963,163 @@ The remaining large parity cores, other original auxiliary expansions
 and bad duals are outside (J21). This restricted result does not supply
 (J15) or (J20). All results in this note remain source-conditional
 applications, without analytic Lean certification or an RH proof.
+
+### A direct repeat tail and a smaller sufficient head
+
+The support-density argument already used in
+[(C35)](../Analytic/liu2026quasirh.md#rough-support-of-the-actual-type-ii-remainder)
+applies to a general repeat cutoff, without first fixing each repeated
+core. Combining it with the joint core constraints in (J19) gives a
+smaller sufficient head for every genuine $h_b$ in (J4), including the
+actual Type-II factor. These are applications of the same sixth-order
+and cubic suppliers, not new sieves or literature-priority claims.
+
+**Apply the sieve to the whole tail.** Write each supported column
+uniquely as $a=t_{\rm rep}(a)^2s$, with $t_{\rm rep}(a),s$ squarefree
+and coprime.
+For $1\le T\le\sqrt U$, put
+$h_{b,>T}=h_b\mathbf1_{q_{t_{\rm rep}(a)}>T}$. The original divisor envelope and
+ideal counting give
+
+$$
+\begin{aligned}
+\|h_{b,>T}\|_2^2
+&\ll C_b^4U^{-1+\varepsilon}
+ \sum_{q_t>T}\#\{s:q_s\ll U/q_t^2\}\\
+&\ll C_b^4U^\varepsilon\sum_{q_t>T}q_t^{-2}
+ \ll C_b^4U^\varepsilon T^{-1}.
+\end{aligned}
+$$
+
+Every such column is cube-free, hence sixth-power-free. Directly apply
+the [owned sixth-order supplier](../Analytic/faveri2026fixedorder.md#the-large-sieve-statement)
+at lengths $U,U$ to this one row-independent coefficient vector:
+
+$$
+\boxed{
+\mathcal T(h_{b,>T})
+\ll C_b^4U^{7/6+\varepsilon}T^{-1}.
+}
+\tag{J22}
+$$
+
+The fixed physical presentations, their twists and the original zeros
+are transported exactly as in that supplier's existing family interface.
+An enlargement is made only within the positive row norm. This is a
+fresh sieve application to a supported vector, not a contraction of an
+already estimated moment under a column mask. No inverse-$L$ identity
+or factorization of the truncated coefficient is required.
+The same estimate applies to the required finitely many profile
+derivatives within the original fixed or polylogarithmic height contract.
+
+Set $T=U^{1/12}$ and truncate before the positive ray partition:
+$c_{\tau,T}=h_b\mathbf1_{q_{t_{\rm rep}(a)}\le T}\mathbf1_{t(a)=\tau}$,
+where $t(a)=\tau$ denotes the existing ray label.
+The whole discarded tail is now paid at $C_b^4U^{13/12+\varepsilon}$.
+
+**Retain both repeat caps in the complete-dual estimate.** For each
+dyad $U^{1/6}\le P<U^{1/4}$, use (J18)--(J19) on these coefficients,
+retaining the complete original equal-ray, unequal-parity kernel.
+The cutoff is constant after fixing its cores; it does not change
+either actual convolution-factor vector. Then
+
+$$
+\boxed{
+|E_{6,\,P\le P(a,c)<\min(2P,U^{1/4})}(c_{\tau,T})|
+\ll C_b^4U^{13/12+\varepsilon},\qquad T=U^{1/12}.
+}
+\tag{J23}
+$$
+
+Here is the additional joint estimate needed beyond (J17).
+In its notation put $C=U^c,R=U^r,S=U^s,G=U^g$. The two caps give
+$c+r\le1/12$, $c+s\le1/12$, while
+$p=2c+r+s+g\ge1/6$. Fixed annular constants enter $U^\varepsilon$.
+For $\alpha=(1,1/6,5/6,1/3)$ and
+$\beta=(0,17/18,1/3,5/6)$, each of the sixteen positive terms has
+exponent
+
+$$
+\begin{aligned}
+f_{ij}={}&g+c+(r+s)/2
+ +\tfrac12(\alpha_i+\alpha_j)(1-4c-r-s-2g)\\
+&+\tfrac12\beta_i(1-2c-2r-g)
+ +\tfrac12\beta_j(1-2c-2s-g)\\
+&+\max\{0,(\alpha_i+\alpha_j)/2-5/6\}.
+\end{aligned}
+$$
+
+The last term already pays the original $\ell$ sum, exactly as in (J17).
+Across the sixteen terms, the largest coefficients of $c,r,s,g$ are
+respectively $-14/9,-1/12,-1/12,-5/18$. Thus each exponent decreases
+in each coordinate. Scaling all four coordinates down by $1/(6p)$
+preserves the two caps and can only increase the bound, so it suffices
+to treat $p=1/6$.
+On that face, $0\le r,s\le1/12-c$ and
+$g=1/6-2c-r-s$. Its square sections contract to the apex, giving exactly
+the following five vertices and maxima:
+
+| $(c,r,s,g)$ | $\max_{i,j}f_{ij}$ |
+|---|---|
+| $(0,0,0,1/6)$ | $13/12$ |
+| $(0,1/12,0,1/12)$ | $77/72$ |
+| $(0,0,1/12,1/12)$ | $77/72$ |
+| $(0,1/12,1/12,0)$ | $13/12$ |
+| $(1/12,0,0,0)$ | $1$ |
+
+Affine interpolation proves (J23). Occupancy ideals are omitted only
+from the increasing positive majorant, as in (J19). All original
+$\ell,r$, common-$e$ masks, fixed-core twists, collision zeros and
+bad-dual sums remain covered by that calculation. In particular no
+new principal bulk exception is introduced.
+
+**The sufficient original-coefficient input.** Use (C18) for
+$P\ge U^{1/4}$ and (J23) below it. Apply the existing cubic-block bound
+to each $c_{\tau,T}$ afresh through its divisor envelope. The additional
+sufficient estimate is now
+
+$$
+\boxed{
+\operatorname{Re}\sum_\tau
+E_{6,\,P<U^{1/6}}(c_{\tau,T})
+\ll C_b^4U^{B_*-\sigma+\varepsilon},
+\qquad T=U^{1/12},\quad\sigma>0.
+}
+\tag{J24}
+$$
+
+Assuming this uniformly for the original components and required
+profile derivatives, finite positive partition and the whole-tail
+norm triangle (J14), now with (J22), imply
+
+$$
+\boxed{
+\mathcal T(h_b)
+\ll C_b^4U^{\max\{13/12,B_*-\sigma\}+\varepsilon}.
+}
+\tag{J25}
+$$
+
+For actual $b=\lambda_{\mathrm{II},b}$, combine with (C30) by the direct
+$L^4$ triangle as in (J20). Every fixed
+$0<\nu<\min\{B_*-13/12,\sigma\}$ would then be an original Möbius
+fourth-moment saving. This remains conditional on (J24). It bounds the
+aggregate real head, without requiring separate absolute estimates
+for each ray or subtracting a masked moment from a full one.
+The small-cutoff original-Möbius route (J15) remains separate.
+
+**Two rough prime-overlap shapes remain.** For the actual rough factor
+$b=r_A\lambda_{\mathrm{II},b}$ in (C33), every prime exceeds
+$2A=2U^{1/12}$. A nonunit repeated core therefore exceeds $T$ and is
+already in the paid tail; the retained coefficient is precisely the
+squarefree part $g_{\rm sf}$ of (C34)--(C35).
+On two such columns $P=q_g$, where $g$ is their squarefree gcd.
+If $q_g<U^{1/6}$, then $g$ is either $1$ or one prime of norm
+$2U^{1/12}<q_g<U^{1/6}$, since a product of two supported primes
+exceeds $4U^{1/6}$.
+Thus in this rough specialization (J24) consists only of the coprime
+squarefree-column contraction and the one-common-prime contraction,
+with their actual coefficients, phases and zeros. Their combined real
+upper bound is not supplied. The nonrough Type-II part remains outside
+this specialization, so a saving for these rough shapes alone does not
+prove the full (J24), signed Robin restoration or RH.
