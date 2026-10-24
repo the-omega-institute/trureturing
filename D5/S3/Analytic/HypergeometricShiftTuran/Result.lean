@@ -28,21 +28,20 @@ private lemma first_coefficient_eq (q : ℕ) :
   have hsq : Real.sqrt Real.pi * Real.sqrt Real.pi = Real.pi :=
     Real.mul_self_sqrt Real.pi_pos.le
   have g2 : Real.Gamma 2 = 1 := by
-    rw [show (2 : ℝ) = 1 + 1 by norm_num, Real.Gamma_add_one (by norm_num), Real.Gamma_one]
+    rw [show (2 : ℝ) = ((1 : ℕ) : ℝ) + 1 by norm_num, Real.Gamma_nat_eq_factorial]
     norm_num
   have g3 : Real.Gamma 3 = 2 := by
-    rw [show (3 : ℝ) = 2 + 1 by norm_num, Real.Gamma_add_one (by norm_num), g2]
-    norm_num
+    rw [show (3 : ℝ) = ((2 : ℕ) : ℝ) + 1 by norm_num, Real.Gamma_nat_eq_factorial]
+    norm_num [Nat.factorial]
   have g32 : Real.Gamma (3 / 2) = Real.sqrt Real.pi / 2 := by
-    rw [show (3 / 2 : ℝ) = 1 / 2 + 1 by norm_num, Real.Gamma_add_one (by norm_num),
-      Real.Gamma_one_half_eq]
-    ring
+    rw [show (3 / 2 : ℝ) = ((1 : ℕ) : ℝ) + 1 / 2 by norm_num, Real.Gamma_nat_add_half]
+    norm_num [Nat.doubleFactorial]
   have g52 : Real.Gamma (5 / 2) = 3 * Real.sqrt Real.pi / 4 := by
-    rw [show (5 / 2 : ℝ) = 3 / 2 + 1 by norm_num, Real.Gamma_add_one (by norm_num), g32]
-    ring
+    rw [show (5 / 2 : ℝ) = ((2 : ℕ) : ℝ) + 1 / 2 by norm_num, Real.Gamma_nat_add_half]
+    norm_num [Nat.doubleFactorial]
   have g72 : Real.Gamma (7 / 2) = 15 * Real.sqrt Real.pi / 8 := by
-    rw [show (7 / 2 : ℝ) = 5 / 2 + 1 by norm_num, Real.Gamma_add_one (by norm_num), g52]
-    ring
+    rw [show (7 / 2 : ℝ) = ((3 : ℕ) : ℝ) + 1 / 2 by norm_num, Real.Gamma_nat_add_half]
+    norm_num [Nat.doubleFactorial]
   have hpi : 0 < Real.pi := Real.pi_pos
   have hs : 0 < Real.sqrt Real.pi := Real.sqrt_pos.2 hpi
   -- the four Gamma arguments occurring in the first coefficient
