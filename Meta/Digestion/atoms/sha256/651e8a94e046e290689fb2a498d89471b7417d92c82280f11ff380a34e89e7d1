@@ -1,7 +1,0 @@
-具体缺少：
-
-1. 一个公共可导入的实轴非零桥，用于排除正实离线零点；
-2. completed-\(\xi\) 在完整光滑紧支撑测试空间上的 canonical Weil distribution；
-3. 该分布与枚举无关 zero-side 和的识别；
-4. 与有限 prime-power cutoff 表达式的正式连接。
-

@@ -1,9 +1,0 @@
-fingerprints:
-  raw_sha256: sha256:e35556dac17ff67fd851f3a2f74f2894e1b8736e194c24cc986d94d63cbb2e43
-  normalized_sha256: sha256:e35556dac17ff67fd851f3a2f74f2894e1b8736e194c24cc986d94d63cbb2e43
-cas_ref: sha256:e35556dac17ff67fd851f3a2f74f2894e1b8736e194c24cc986d94d63cbb2e43
-coverage_gids:
-  - gid: D5/S3/ConceptDynamics/Policy/StrictPolicyPowerGrowth.strict_policy_power_growth
-    target_statement_id: sha256:895869ab0360b743b0d53c5fcd8c80769e79d579b636975ed1068cd9a8263069
-receipts:
-  unresolved_subitems: []

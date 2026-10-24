@@ -1,6 +1,0 @@
-**因此，离散临界的深层意义，不一定是某个局部状态发生异常；也可能是所有局部状态都仍然合法，却已经无法按照旧的时间规则、观察规则与归一化方式，拼成原来那一种整体。**
-
-[1]: https://arxiv.org/abs/2209.11733 "https://arxiv.org/abs/2209.11733"
-[2]: https://jmlr.org/papers/v24/22-0364.html "https://jmlr.org/papers/v24/22-0364.html"
-[3]: https://dlmf.nist.gov/27.4 "https://dlmf.nist.gov/27.4"
-[4]: https://arxiv.org/abs/1809.10813 "https://arxiv.org/abs/1809.10813"

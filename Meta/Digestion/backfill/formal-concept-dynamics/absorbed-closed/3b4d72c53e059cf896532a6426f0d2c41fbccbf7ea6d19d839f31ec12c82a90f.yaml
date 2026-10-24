@@ -1,9 +1,0 @@
-fingerprints:
-  raw_sha256: sha256:3b4d72c53e059cf896532a6426f0d2c41fbccbf7ea6d19d839f31ec12c82a90f
-  normalized_sha256: sha256:3b4d72c53e059cf896532a6426f0d2c41fbccbf7ea6d19d839f31ec12c82a90f
-cas_ref: sha256:3b4d72c53e059cf896532a6426f0d2c41fbccbf7ea6d19d839f31ec12c82a90f
-coverage_gids:
-  - gid: D5/S3/ConceptDynamics/Discussion/ForgottenDistinctionPrecludesRefinement.forgotten_distinction_precludes_refinement
-    target_statement_id: sha256:1678e56edb4da1a068b38e43477838c185972b33e345a547bfd97552a2f968bc
-receipts:
-  unresolved_subitems: []

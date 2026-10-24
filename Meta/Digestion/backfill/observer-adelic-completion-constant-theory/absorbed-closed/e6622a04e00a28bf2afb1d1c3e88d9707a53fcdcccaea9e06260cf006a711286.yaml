@@ -1,9 +1,0 @@
-fingerprints:
-  raw_sha256: sha256:e6622a04e00a28bf2afb1d1c3e88d9707a53fcdcccaea9e06260cf006a711286
-  normalized_sha256: sha256:e6622a04e00a28bf2afb1d1c3e88d9707a53fcdcccaea9e06260cf006a711286
-cas_ref: sha256:e6622a04e00a28bf2afb1d1c3e88d9707a53fcdcccaea9e06260cf006a711286
-coverage_gids:
-  - gid: D5/S3/PrimeForms/Splitting/GoldenLocalBranchClassification.golden_local_branch_classification
-    target_statement_id: sha256:5988f5b16cb3da5418dfa17ad86739c35262e7cd6073f920f10d63a3b8031ea3
-receipts:
-  unresolved_subitems: []

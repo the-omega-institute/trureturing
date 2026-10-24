@@ -1,9 +1,0 @@
-fingerprints:
-  raw_sha256: sha256:f9ab27f291e5b90f023c807c1d900af857b7328e0fd40d1e02bc1bfb4a85fe23
-  normalized_sha256: sha256:f9ab27f291e5b90f023c807c1d900af857b7328e0fd40d1e02bc1bfb4a85fe23
-cas_ref: sha256:f9ab27f291e5b90f023c807c1d900af857b7328e0fd40d1e02bc1bfb4a85fe23
-coverage_gids:
-  - gid: D5/S3/Observer/GoldenCoding/GoldenHyperbolicAxis.golden_hyperbolic_axis
-    target_statement_id: sha256:71a90b18d4fd42df11429740e5989ef532f32482d3d017ee2047bd52216ec054
-receipts:
-  unresolved_subitems: []

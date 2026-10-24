@@ -1,9 +1,0 @@
-fingerprints:
-  raw_sha256: sha256:cb54669afda0267de4b667254bb6b696940ba1ee729d0bd2ebcb3571bcbee76c
-  normalized_sha256: sha256:cb54669afda0267de4b667254bb6b696940ba1ee729d0bd2ebcb3571bcbee76c
-cas_ref: sha256:cb54669afda0267de4b667254bb6b696940ba1ee729d0bd2ebcb3571bcbee76c
-coverage_gids:
-  - gid: D5/S3/ConceptDynamics/Negation/InvolutiveNegation.imageSet_involutive
-    target_statement_id: sha256:0fdadcc1e64fc9000bb23906fa1a29071665e9f952413556e1499e6e01052a0c
-receipts:
-  unresolved_subitems: []

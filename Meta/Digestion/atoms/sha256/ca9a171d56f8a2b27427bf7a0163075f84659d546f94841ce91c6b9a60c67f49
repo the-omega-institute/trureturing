@@ -1,7 +1,0 @@
-## 5. The golden gap word is deterministic and constrained
-
-`D5/S3/Analytic/GoldenEulerGapWordConstraints.lean`
-
-uses the existing golden-word identification and desubstitution theorems to prove more than a two-value dichotomy:
-
-- a true golden letter gives a long `phi^2 log p` frequency gap;

@@ -1,9 +1,0 @@
-fingerprints:
-  raw_sha256: sha256:6b260dcb6bf4371bc195653b777b5229286c9b00ea4e0006e01a8021da3bab35
-  normalized_sha256: sha256:6b260dcb6bf4371bc195653b777b5229286c9b00ea4e0006e01a8021da3bab35
-cas_ref: sha256:6b260dcb6bf4371bc195653b777b5229286c9b00ea4e0006e01a8021da3bab35
-coverage_gids:
-  - gid: D5/S3/ConceptDynamics/Causal/FiniteCausalQueryHierarchy.finite_causal_query_hierarchy
-    target_statement_id: sha256:4a55efd1e36e468a51d6d6c51bfd25ea290f2a8e631a099b4ce2afdb59c57570
-receipts:
-  unresolved_subitems: []

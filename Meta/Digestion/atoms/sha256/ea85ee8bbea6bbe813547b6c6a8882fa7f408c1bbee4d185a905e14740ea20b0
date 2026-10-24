@@ -1,9 +1,0 @@
-则：
-
-* normal jets 是外幂正迹；
-* connected jets 是 Schatten traces；
-* Hankel matrices 是 Gram；
-* Toeplitz minors 是 Schur 正扇区；
-* 全部零点位于负实平方轴；
-* RH 成立。
-

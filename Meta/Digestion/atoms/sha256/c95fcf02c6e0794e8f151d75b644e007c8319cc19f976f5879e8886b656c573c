@@ -1,6 +1,0 @@
-**定理 4.3（单点缺陷原理）。** 设 $r\ge1$,$m\ge3$,$L=rm\ge3$,$u\in\mathbb R^r$ 是块,$\tilde u$ 是它生成的 $C_L$ 上的周期势(约定 2.3)。设 $q$ 是站点,势 $w\in\mathbb R^L$ 在 $q$ 以外的站点上与 $\tilde u$ 相同,$w_q$ 是任意实数。则:
-
-1. $\Psi_m(\sigma_u)$ 作为 $\lambda$ 的多项式次数为 $r\lfloor(m-1)/2\rfloor\ge1$,首项系数为 $\pm1$;
-2. 对每个实数 $t_0$ 与 $\Psi_m(\sigma_u(\cdot,t_0))$ 的每个复根 $\lambda_0$,$\lambda_0$ 是实数,并且 $H^w_{t_0}=\Delta_L+t_0\operatorname{diag}(w)$ 有本征值 $\lambda_0$ 的、在 $q$ 处为零的实本征向量;
-3. $\Psi_m(\sigma_u)$ 在 $\mathbb R(t)[\lambda]$ 中的每个首一不可约因子都整除 $w$ 在 $q$ 处的节点因子 $g_q$。
-

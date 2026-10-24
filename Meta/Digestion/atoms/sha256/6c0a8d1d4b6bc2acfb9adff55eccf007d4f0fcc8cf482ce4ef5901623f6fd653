@@ -1,6 +1,0 @@
-### 1.3 外部输入
-
-本卷使用以下外部数学接口：向量丛的 clutching 分类和 Chern–Weil 公式；正则奇
-Riemann–Hilbert 对应；Tannaka 重构；$Sp_4$ 与 $SO_5$ 的几何 Satake 等价；以及特征零
-无分歧几何朗兰兹中的 Hecke 本征对象存在性。它们的适用条件在相应章节逐项写出。
-

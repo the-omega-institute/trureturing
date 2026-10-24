@@ -1,7 +1,0 @@
-**命题 14.3（固定时钟的共同状态解码成本）。** 在[定义 11.7 的单份、精确、共同 CPTP 编解码合同](https://github.com/the-omega-institute/trureturing/blob/fecb0ec51a883ebb079d477888ecfdc4d27a97eb/docs/develop/theory/FIBONACCI_COHERENT_TRANSPORT_BOUNDARY.md#L1114)下，要求保持定理 14.1 的全部实际历史统计。免费经典 flag 为任意有限集合，其概率可依赖输入，编码与同一个状态解码均固定，无隐藏量子旁路或预共享纠缠。则成本为
-
-| 固定时钟条件 | 最小公共量子端口 $q$，有限经典 flag 免费 | 最小全计费 Hilbert 维数 |
-| --- | ---: | ---: |
-| $x=1$ | $4$ | $4$ |
-| $x^3=1, x\ne1$ | $4$ | $16$ |
-| $x^3\ne1$ | $12$ | $16$ |

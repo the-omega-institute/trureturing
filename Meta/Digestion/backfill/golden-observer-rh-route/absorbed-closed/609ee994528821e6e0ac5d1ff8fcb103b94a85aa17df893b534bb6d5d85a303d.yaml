@@ -1,9 +1,0 @@
-fingerprints:
-  raw_sha256: sha256:609ee994528821e6e0ac5d1ff8fcb103b94a85aa17df893b534bb6d5d85a303d
-  normalized_sha256: sha256:609ee994528821e6e0ac5d1ff8fcb103b94a85aa17df893b534bb6d5d85a303d
-cas_ref: sha256:609ee994528821e6e0ac5d1ff8fcb103b94a85aa17df893b534bb6d5d85a303d
-coverage_gids:
-  - gid: D5/S1/Deficit/Beatty/GoldenObserverRoute.golden_observer_route_w_c1
-    target_statement_id: sha256:8e97ab8ed163a9a4065e7f6c672f81da97540bc2fa39edd7a1a1130cc02f787f
-receipts:
-  unresolved_subitems: []

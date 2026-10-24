@@ -1,9 +1,0 @@
-## 35. The affine predictive-carrier obstruction
-
-Sections 2–7 construct a seventeen-coordinate program for the full
-world domain. They deliberately do not claim that seventeen is a minimum.
-This section supplies a minimum for a more specific and testable task: one
-common state must support affine readouts of every fixed word through the
-fifth action. The word horizon and the affine readout contract are part of
-the statement. They are not consequences of the source recursion.
-

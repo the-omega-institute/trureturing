@@ -1,2 +1,0 @@
-**定义 66.3（额外 Hermitian 括号表示）。** 对 Hermitian 算子定义 $B(U,V)=(UV-VU)/(2i)$，令 $q_\alpha=X,q_\beta=Y$。若扩到全有序树，则明确定义 $q_{\langle s,t\rangle}=B(q_s,q_t)$；这不是原树配对的恢复规则或未知态 CPTP 操作。
-

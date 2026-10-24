@@ -1,8 +1,0 @@
-### Correction and library-first reuse
-
-Scalar even Weil tests remain constant on multiplicity copies and under functional-equation reflection. The result concerns independently observable four-point orbit channels. Multiplicity sets a weight and margin, not extra scalar rank.
-
-The earlier basis constructor chose a witness after forgetting its full signed values. It is now selected from `exists_even_weil_frame_interpolant`. The public `frameOddBasisTest_target_values` and `frameOddSynthesis_target_values` retain the exact +a/-a values and hence zero target even channel.
-
-Eight previously private helper declarations in the existing single-orbit Burnol owner are made public with unchanged proof bodies. These supply the reflection quotient, gamma injectivity, sign separation, actual zero summability, geometric-depth choice, and equality of the symmetric zero sum with its ordinary tsum. They are reused rather than independently redefined.
-

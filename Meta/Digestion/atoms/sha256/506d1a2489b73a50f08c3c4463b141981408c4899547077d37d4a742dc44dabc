@@ -1,7 +1,0 @@
-Four notions must remain distinct:
-
-- a projection or postprocessing map can hide information;
-- a refinement adds information and shrinks observation fibers;
-- symmetry breaking occurs when two states that were previously observationally identical become distinguishable;
-- observation time is the first readout depth at which this distinction appears.
-
