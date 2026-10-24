@@ -1,12 +1,14 @@
 """Return, bounded idle retention and allocation probes using real Git."""
 
-from contextlib import ExitStack
+from contextlib import ExitStack, redirect_stdout
+from io import StringIO
 import json
 import os
 from pathlib import Path
 import subprocess
 import sys
 from unittest.mock import patch
+import uuid
 
 
 class IdlePoolCases:
@@ -153,7 +155,7 @@ class IdlePoolCases:
             target = self.tree if i == 0 else self.root / ("idle-" + str(i))
             if i:
                 self.g(self.main, "worktree", "add", "-b", "lane/governance/extra-" + str(i), target, self.base)
-            self.g(target, "switch", "-c", "lane/governance/idle-" + str(i), self.base)
+            self.make_idle(target, self.base)
             idle.append(target)
         with patch.object(pool, "available_fraction", return_value=1):
             result = pool.sweep(self.main, self.base, force=False)
@@ -164,3 +166,84 @@ class IdlePoolCases:
             result = pool.sweep(self.main, self.base, force=True)
             self.assertEqual(4, sum(row["outcome"] == "removed" for row in result["items"]))
         self.assertFalse(any(target.exists() for target in idle))
+
+    def pool_sweep_confirms_returned_tip_beyond_stale_tracking(self):
+        import worktree_pool as pool
+        (self.main / "owned").write_text("new dev\n")
+        self.g(self.main, "commit", "-am", "advance dev")
+        self.g(self.main, "push", "origin", "dev")
+        self.pool_return()
+        self.g(self.main, "update-ref", "refs/remotes/origin/dev", self.base)
+        with patch.object(pool, "available_fraction", return_value=0.04):
+            result = pool.sweep(self.main, self.base, force=True)
+        self.assertEqual(["removed"], [row["outcome"] for row in result["items"]])
+        self.assertEqual(self.base, self.g(self.main, "rev-parse", "origin/dev").strip())
+        self.assertFalse(self.tree.exists())
+
+    def pool_sweep_refuses_non_dev_idle_tip(self):
+        import worktree_pool as pool
+        self.pool_return()
+        (self.tree / "owned").write_text("not on dev\n")
+        self.g(self.tree, "commit", "-am", "unmerged work")
+        self.make_idle(self.tree, self.g(self.tree, "rev-parse", "HEAD").strip())
+        with patch.object(pool, "available_fraction", return_value=0.04):
+            result = pool.sweep(self.main, self.base, force=True)
+        self.assertEqual(["retained"], [row["outcome"] for row in result["items"]])
+        self.assertTrue(self.tree.exists())
+
+    def pool_eviction_failures_preserve_receipt_and_exit(self):
+        import worktree_pool as pool
+        import worktree_protocol as protocol
+        import worktree_preservation as preservation
+        import worktree_publication as publication
+        self.pool_return()
+        reference = self.g(self.tree, "symbolic-ref", "HEAD").strip()
+        native = preservation.git
+        for outcome in ("checkpoint_failed", "partial_or_indeterminate"):
+            with self.subTest(outcome=outcome):
+                def fail_remove(root, *args, **kwargs):
+                    if args[:2] == ("worktree", "remove"):
+                        raise subprocess.TimeoutExpired("git worktree remove", 300)
+                    return native(root, *args, **kwargs)
+                fault = (patch.object(publication, "commit_snapshot", side_effect=protocol.Refused("checkpoint blocker"))
+                         if outcome == "checkpoint_failed" else patch.object(preservation, "git", side_effect=fail_remove))
+                output = StringIO()
+                with patch.object(pool, "available_fraction", return_value=0.04), fault, redirect_stdout(output):
+                    code = protocol.main(["--source", str(self.main), "pool", "--dev", self.base, "--force"])
+                result = json.loads(output.getvalue())
+                self.assertEqual(outcome, result["items"][0]["outcome"])
+                self.assertEqual("failed", result["status"])
+                self.assertEqual(74, code)
+                item = result["items"][0]
+                self.assertTrue(item["error"])
+                self.assertIn("recovery_branch_candidate", item)
+                if outcome == "partial_or_indeterminate":
+                    self.assertEqual(reference, item["recovery_branch"])
+                    self.assertEqual(self.base, item["checkpoint"]["commit"])
+                self.assertTrue(self.tree.exists())
+
+    def pool_idle_prefixed_task_is_never_released_by_allocation(self):
+        import worktree_pool as pool
+        for returned in (False, True):
+            with self.subTest(returned=returned):
+                branch = "lane/governance/idle-" + uuid.uuid4().hex
+                if returned:
+                    self.pool_return()
+                    self.pool_claim(branch=branch, path=self.tree)
+                else:
+                    self.g(self.tree, "switch", "-c", branch, self.base)
+                self.assertEqual("no_idle", json.loads(self.pool_claim().stdout)["status"])
+                with patch.object(pool, "available_fraction", return_value=0.04):
+                    result = pool.sweep(self.main, self.base, force=True)
+                self.assertFalse(any(row["outcome"] == "removed" for row in result["items"]))
+                self.assertTrue(self.tree.exists())
+                self.assertEqual(self.base, self.g(self.main, "rev-parse", branch).strip())
+                self.assertEqual(branch, self.g(self.tree, "branch", "--show-current").strip())
+                self.pool_github(headRefName=branch)
+
+    def make_idle(self, target, commit):
+        token = uuid.uuid4().hex
+        reference = "refs/heads/lane/governance/idle-" + token
+        self.g(target, "update-ref", "--create-reflog", "-m", "worktree-idle:" + token,
+               reference, commit, "0" * len(commit))
+        self.g(target, "switch", reference.removeprefix("refs/heads/"))

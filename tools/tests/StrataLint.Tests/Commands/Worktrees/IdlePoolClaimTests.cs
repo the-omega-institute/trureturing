@@ -12,7 +12,11 @@ public sealed partial class WorktreeCommandTests
         InitializeRepository(repository.Path);
         TestGit.Run(repository.Path, "update-ref", "refs/remotes/origin/dev", "HEAD");
         var idle = Path.Combine(repository.Path, "idle");
-        TestGit.Run(repository.Path, "worktree", "add", "-b", "lane/governance/idle-fixture", idle, "HEAD");
+        var token = Guid.NewGuid().ToString("N");
+        var idleBranch = "refs/heads/lane/governance/idle-" + token;
+        TestGit.Run(repository.Path, "update-ref", "--create-reflog", "-m", "worktree-idle:" + token,
+            idleBranch, "HEAD");
+        TestGit.Run(repository.Path, "worktree", "add", idle, idleBranch);
 
         var result = CleanLanesCommand.Run(repository.Path, ["--force", "--lanes-only"],
             new DateTimeOffset(2030, 1, 2, 0, 0, 0, TestBudgets.ZeroDuration));
@@ -34,7 +38,11 @@ public sealed partial class WorktreeCommandTests
         InitializeRepository(repository.Path);
         TestGit.Run(repository.Path, "update-ref", "refs/remotes/origin/dev", "HEAD");
         var idle = Path.Combine(repository.Path, "idle");
-        TestGit.Run(repository.Path, "worktree", "add", "-b", "lane/governance/idle-fixture", idle, "HEAD");
+        var token = Guid.NewGuid().ToString("N");
+        var idleBranch = "refs/heads/lane/governance/idle-" + token;
+        TestGit.Run(repository.Path, "update-ref", "--create-reflog", "-m", "worktree-idle:" + token,
+            idleBranch, "HEAD");
+        TestGit.Run(repository.Path, "worktree", "add", idle, idleBranch);
         TestGit.Run(repository.Path, "config", "core.excludesFile", Path.Combine(repository.Path, "ignore"));
         File.WriteAllText(Path.Combine(repository.Path, "ignore"), ".lake/\n");
         Directory.CreateDirectory(Path.Combine(idle, ".lake"));
@@ -49,7 +57,10 @@ public sealed partial class WorktreeCommandTests
         Assert.True(result.Success, result.Error);
         using var receipt = JsonDocument.Parse(result.Output);
         Assert.Equal("claimed", receipt.RootElement.GetProperty("status").GetString());
-        Assert.Equal(idle, receipt.RootElement.GetProperty("path").GetString());
+        var registeredPath = WorktreeHookFixture.RunGit(idle, "rev-parse", "--show-toplevel").Trim();
+        Assert.Contains("worktree " + registeredPath + "\n",
+            WorktreeHookFixture.RunGit(repository.Path, "worktree", "list", "--porcelain"), StringComparison.Ordinal);
+        Assert.Equal(registeredPath, receipt.RootElement.GetProperty("path").GetString());
         Assert.False(Directory.Exists(fallback));
         Assert.Equal("cached bytes\n", File.ReadAllText(Path.Combine(idle, ".lake", "sentinel")));
         Assert.Equal("lane/math/claimed", WorktreeHookFixture.RunGit(idle, "branch", "--show-current").Trim());
@@ -58,6 +69,6 @@ public sealed partial class WorktreeCommandTests
         Assert.True(repeated.Success, repeated.Error);
         using var reuse = JsonDocument.Parse(repeated.Output);
         Assert.Equal("reused", reuse.RootElement.GetProperty("status").GetString());
-        Assert.Equal(idle, reuse.RootElement.GetProperty("path").GetString());
+        Assert.Equal(registeredPath, reuse.RootElement.GetProperty("path").GetString());
     }
 }

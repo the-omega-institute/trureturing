@@ -358,6 +358,7 @@ def main(argv=None):
             result = (return_tree(options) if options.action == "return" else claim(options)
                       if options.action == "claim" else sweep(options.source, options.dev, options.force))
             print(json.dumps(result), flush=True)
+            return 74 if result.get("pool", result).get("status") == "failed" else 0
         elif options.action == "remove":
             from worktree_preservation import remove
             result = remove(options)

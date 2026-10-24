@@ -45,21 +45,33 @@ def idle_state(source, path, dev):
     head = value(path, "rev-parse", "--verify", "HEAD^{commit}")
     if item.get("HEAD") != head or value(path, "rev-parse", "--verify", reference) != head:
         raise Refused("idle_identity_changed")
+    created = idle_creation(source, reference, head)
     clean(path, metadata)
-    if git(path, "merge-base", "--is-ancestor", head, dev, check=False).returncode:
-        raise Refused("idle_outside_dev")
+    ancestry = git(path, "merge-base", "--is-ancestor", head, dev, check=False).returncode
+    if ancestry == 1:
+        dev = confirm(path, "origin", "dev", head)["observed_tip"]
+    elif ancestry:
+        raise Refused("idle_dev_ancestry_unknown")
+    return dict(path=str(Path(path).resolve()), branch=reference, head=head, created=created, dev_commit=dev)
+
+
+def idle_creation(source, reference, head):
     log = common(source) / "logs" / reference
     if log.is_symlink():
         raise Refused("idle_creation_unknown")
     rows = log.read_bytes().splitlines()
     if not rows:
         raise Refused("idle_creation_unknown")
-    fields, _ = rows[0].split(b"\t", 1)
+    fields, message = rows[0].split(b"\t", 1)
+    token = reference[len(IDLE_PREFIX):]
+    if message != ("worktree-idle:" + token).encode("ascii"):
+        raise Refused("not_idle")
     old, new, rest = fields.split(b" ", 2)
     timestamp = int(rest.rsplit(b" ", 2)[1])
-    if old != b"0" * len(head) or new.decode("ascii") != head or not 0 <= timestamp <= time.time():
+    if (not re.fullmatch(r"[0-9a-f]{32}", token) or old != b"0" * len(head)
+            or new.decode("ascii") != head or not 0 <= timestamp <= time.time()):
         raise Refused("idle_creation_unknown")
-    return dict(path=str(Path(path).resolve()), branch=reference, head=head, created=timestamp)
+    return timestamp
 
 
 def available_fraction(source):
@@ -82,7 +94,7 @@ def sweep_locked(source, dev, force=False):
                 candidates.append(idle_state(source, path, dev))
         except (Refused, OSError, ValueError) as error:
             outcomes.append(dict(path=str(path), branch=item.get("branch"), head=item.get("HEAD"),
-                                 outcome="retained", reason=str(error)))
+                                 outcome="not_idle" if str(error) == "not_idle" else "retained", reason=str(error)))
     candidates.sort(key=lambda row: (row["created"], row["path"]))
     remaining = len(candidates)
     for observed in candidates:
@@ -103,13 +115,14 @@ def sweep_locked(source, dev, force=False):
                     preview=not force, expected=[json.dumps(dict(path=str(path), head=observed["head"],
                                                                branch=observed["branch"]))]))
                 removal = result["items"][0]
-                if removal["outcome"] not in ("removed", "would_remove"):
-                    raise Refused(removal.get("error", "idle_removal_failed"))
-                remaining -= 1
-                outcomes.append(dict(observed, outcome=removal["outcome"], reason=reason))
+                outcomes.append(dict(observed, **removal, reason=reason))
+                if removal["outcome"] in ("removed", "would_remove"):
+                    remaining -= 1
         except (Refused, OSError, ValueError) as error:
             outcomes.append(dict(observed, outcome="retained", reason=str(error)))
-    return dict(event="worktree_pool", capacity=IDLE_CAPACITY, items=outcomes)
+    return dict(event="worktree_pool", capacity=IDLE_CAPACITY, items=outcomes,
+                status="failed" if any(row["outcome"] in ("checkpoint_failed", "partial_or_indeterminate")
+                                       for row in outcomes) else "succeeded")
 
 
 def sweep(source, dev, force=False):
@@ -168,7 +181,14 @@ def returned_snapshot(options):
         endpoint = remote_endpoint(path, "origin", push=True)
         remote = confirm(path, "origin", "dev", evidence["mergeCommit"]["oid"], endpoint)
         dev = remote["observed_tip"]
-        already = idle_reference(branch)
+        already = False
+        if idle_reference(branch):
+            try:
+                idle_creation(options.source, branch, value(path, "rev-parse", "HEAD"))
+                already = True
+            except Refused as error:
+                if str(error) != "not_idle":
+                    raise
         task = "refs/heads/" + evidence["headRefName"]
         if already:
             idle_state(options.source, path, dev)
@@ -188,9 +208,12 @@ def returned_snapshot(options):
         checkpoint = commit_snapshot(path, metadata, branch, b"Checkpoint post-merge working tree before return\n")
         clean(path, metadata)
         outstanding = value(path, "rev-list", dev + ".." + checkpoint["commit"]).splitlines()
-        idle = IDLE_PREFIX + uuid.uuid4().hex
+        token = uuid.uuid4().hex
+        idle = IDLE_PREFIX + token
         acquire(stack, options.source, "ref:" + idle, True)
-        git(path, "-c", "core.logAllRefUpdates=true", "switch", "--no-overwrite-ignore", "--no-track", "-c", idle.removeprefix("refs/heads/"), dev)
+        git(path, "update-ref", "--create-reflog", "-m", "worktree-idle:" + token,
+            idle, dev, "0" * len(dev))
+        git(path, "switch", "--no-overwrite-ignore", "--", idle.removeprefix("refs/heads/"))
         idle_state(options.source, path, dev)
         if already:
             git(path, "update-ref", "-d", branch, checkpoint["commit"])
@@ -233,9 +256,6 @@ def claim(options):
                     if candidate.is_symlink():
                         raise Refused("linked_tree")
                     path = tree_scope(stack, options.source, candidate, True)
-                    tip = value(path, "rev-parse", "--verify", "HEAD^{commit}")
-                    if git(path, "merge-base", "--is-ancestor", tip, dev, check=False).returncode:
-                        dev = confirm(path, "origin", "dev", tip)["observed_tip"]
                     state = idle_state(options.source, path, dev)
                     _, metadata = identity(options.source, path)
                     git_scope(stack, options.source, path)
