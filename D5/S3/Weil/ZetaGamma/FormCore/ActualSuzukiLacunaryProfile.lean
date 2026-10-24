@@ -47,11 +47,11 @@ def carrierSeries (t : ℝ) : ℝ :=
 def counterProfileReal (t : ℝ) : ℝ := tent (t - 1 / 2) * carrierSeries t
 def counterProfile (t : ℝ) : ℂ := (counterProfileReal t : ℂ)
 
-private theorem coeff_nonneg (n : ℕ) : 0 ≤ coeff n := by
+theorem coeff_nonneg (n : ℕ) : 0 ≤ coeff n := by
   unfold coeff
   positivity
 
-private theorem coeff_hasSum : HasSum coeff 1 := by
+theorem coeff_hasSum : HasSum coeff 1 := by
   have h := (hasSum_geometric_of_abs_lt_one
     (by norm_num : |(1 / 2 : ℝ)| < 1)).mul_left (1 / 2 : ℝ)
   convert h using 1
@@ -76,7 +76,7 @@ private theorem tent_continuous : Continuous tent := by
 
 private theorem tent_nonneg (s : ℝ) : 0 ≤ tent s := le_max_right _ _
 
-private theorem tent_zero_of_quarter_le {s : ℝ} (hs : 1 / 4 ≤ |s|) :
+theorem tent_zero_of_quarter_le {s : ℝ} (hs : 1 / 4 ≤ |s|) :
     tent s = 0 := by
   apply max_eq_right
   linarith
@@ -130,19 +130,19 @@ def unitarySourceFourier (u : ℝ → ℂ) (ξ : ℝ) : ℂ :=
   ((Real.sqrt (2 * Real.pi) : ℝ) : ℂ)⁻¹ *
     𝓕 u (-ξ / (2 * Real.pi))
 
-private def tentSourceHat (ξ : ℝ) : ℝ :=
+def tentSourceHat (ξ : ℝ) : ℝ :=
   (1 / (4 * Real.sqrt (2 * Real.pi))) * Real.sinc (ξ / 8) ^ 2
 
-private def spectralTerm (n : ℕ) (ξ : ℝ) : ℝ :=
+def spectralTerm (n : ℕ) (ξ : ℝ) : ℝ :=
   (coeff n / 2) *
     (tentSourceHat (ξ - frequency n) + tentSourceHat (ξ + frequency n))
 
 private def spectralAmplitude (ξ : ℝ) : ℝ := ∑' n : ℕ, spectralTerm n ξ
 
-private def positiveBand (n : ℕ) : Set ℝ :=
+def positiveBand (n : ℕ) : Set ℝ :=
   Icc (frequency n - 1) (frequency n + 1)
 
-private theorem coeff_positive (n : ℕ) : 0 < coeff n := by
+theorem coeff_positive (n : ℕ) : 0 < coeff n := by
   dsimp [coeff]
   positivity
 
@@ -184,7 +184,7 @@ private theorem frequency_strictMono : StrictMono frequency := by
   intro n
   linarith [frequency_gap n]
 
-private theorem positiveBands_disjoint : Pairwise (Disjoint on positiveBand) := by
+theorem positiveBands_disjoint : Pairwise (Disjoint on positiveBand) := by
   have hforward (n m : ℕ) (hlt : n < m) :
       Disjoint (positiveBand n) (positiveBand m) := by
     have hstep : n + 1 ≤ m := Nat.succ_le_iff.mpr hlt
@@ -199,7 +199,7 @@ private theorem positiveBands_disjoint : Pairwise (Disjoint on positiveBand) := 
   · exact hforward n m hlt
   · exact (hforward m n hgt).symm
 
-private theorem coeff_sq_log_frequency (n : ℕ) :
+theorem coeff_sq_log_frequency (n : ℕ) :
     coeff n ^ 2 * Real.log (frequency n) = 1 := by
   rw [log_frequency]
   dsimp [coeff]
@@ -210,7 +210,7 @@ private theorem coeff_sq_log_frequency (n : ℕ) :
     _ = (((1 / 2 : ℝ) ^ 2) * 4) ^ (n + 1) := by rw [mul_pow]
     _ = 1 := by norm_num
 
-private theorem tentSourceHat_nonneg (ξ : ℝ) : 0 ≤ tentSourceHat ξ := by
+theorem tentSourceHat_nonneg (ξ : ℝ) : 0 ≤ tentSourceHat ξ := by
   dsimp [tentSourceHat]
   positivity
 
@@ -220,7 +220,7 @@ private theorem tentSourceHat_upper (ξ : ℝ) :
   have hsq : Real.sinc (ξ / 8) ^ 2 ≤ 1 := by nlinarith [hsinc.1, hsinc.2]
   exact (mul_le_mul_of_nonneg_left hsq (by positivity)).trans_eq (mul_one _)
 
-private theorem tentSourceHat_lower_unit {ξ : ℝ} (hξ : |ξ| ≤ 1) :
+theorem tentSourceHat_lower_unit {ξ : ℝ} (hξ : |ξ| ≤ 1) :
     1 / (16 * Real.sqrt (2 * Real.pi)) ≤ tentSourceHat ξ := by
   have hξsq : ξ ^ 2 ≤ 1 := by
     calc
@@ -244,7 +244,7 @@ private theorem tentSourceHat_lower_unit {ξ : ℝ} (hξ : |ξ| ≤ 1) :
       <;> ring
     _ ≤ tentSourceHat ξ := mul_le_mul_of_nonneg_left hsq (by positivity)
 
-private theorem spectralTerm_nonneg (n : ℕ) (ξ : ℝ) : 0 ≤ spectralTerm n ξ := by
+theorem spectralTerm_nonneg (n : ℕ) (ξ : ℝ) : 0 ≤ spectralTerm n ξ := by
   exact mul_nonneg (div_nonneg (coeff_positive n).le (by norm_num))
     (add_nonneg (tentSourceHat_nonneg _) (tentSourceHat_nonneg _))
 
@@ -290,7 +290,7 @@ private theorem spectralAmplitude_band_lower (n : ℕ) {ξ : ℝ}
     nlinarith [hmul, hnonneg]
   exact hterm.trans (spectralTerm_le_amplitude n ξ)
 
-private theorem positiveBand_log_lower (n : ℕ) {ξ : ℝ}
+theorem positiveBand_log_lower (n : ℕ) {ξ : ℝ}
     (hξ : ξ ∈ positiveBand n) :
     Real.log (frequency n) / 2 ≤ max (Real.log |ξ|) 0 := by
   have hfreq : 0 < frequency n := by linarith [frequency_ge_five n]
@@ -571,11 +571,11 @@ open scoped FourierTransform
 def sourcePhase (ξ t : ℝ) : ℂ :=
   Complex.exp (Complex.I * (ξ : ℂ) * (t : ℂ))
 
-private def spatialTerm (n : ℕ) (t : ℝ) : ℂ :=
+def spatialTerm (n : ℕ) (t : ℝ) : ℂ :=
   ((coeff n * tent (t - 1 / 2) *
     Real.cos (frequency n * (t - 1 / 2)) : ℝ) : ℂ)
 
-private theorem sourcePhase_norm (ξ t : ℝ) : ‖sourcePhase ξ t‖ = 1 := by
+theorem sourcePhase_norm (ξ t : ℝ) : ‖sourcePhase ξ t‖ = 1 := by
   simp [sourcePhase, Complex.norm_exp, Complex.mul_re, Complex.mul_im]
 
 private theorem tent_hasCompactSupport : HasCompactSupport tent := by
@@ -603,7 +603,7 @@ theorem unitarySourceFourier_eq_integral (u : ℝ → ℂ) (ξ : ℝ) :
   dsimp [sourcePhase]
   ring
 
-private theorem actual_spatial_series_hasSum (t : ℝ) :
+theorem actual_spatial_series_hasSum (t : ℝ) :
     HasSum (fun n : ℕ => spatialTerm n t) (counterProfile t) := by
   have hs : HasSum
       (fun n : ℕ => coeff n * Real.cos (frequency n * (t - 1 / 2)))
@@ -622,7 +622,7 @@ private theorem actual_spatial_series_hasSum (t : ℝ) :
     push_cast
     ring
 
-private theorem actual_kernel_term_norm_bound (ξ t : ℝ) (n : ℕ) :
+theorem actual_kernel_term_norm_bound (ξ t : ℝ) (n : ℕ) :
     ‖sourcePhase ξ t * spatialTerm n t‖ ≤ coeff n * tent (t - 1 / 2) := by
   rw [norm_mul, sourcePhase_norm, one_mul]
   dsimp [spatialTerm]
@@ -752,7 +752,7 @@ private theorem actual_centered_term_fourier (n : ℕ) (ξ : ℝ) :
       push_cast
       ring
 
-private theorem actual_spatial_term_fourier (n : ℕ) (ξ : ℝ) :
+theorem actual_spatial_term_fourier (n : ℕ) (ξ : ℝ) :
     unitarySourceFourier (spatialTerm n) ξ =
       sourcePhase ξ (1 / 2) * (spectralTerm n ξ : ℂ) := by
   have hterm : spatialTerm n = fun t : ℝ => centeredSpatialTerm n (t - 1 / 2) := rfl
