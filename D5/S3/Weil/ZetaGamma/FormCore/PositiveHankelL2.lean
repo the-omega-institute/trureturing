@@ -466,6 +466,7 @@ private theorem positive_hankel_rank_domain {k : ℝ} (hk : 0 < k)
   let w : ℝ → ℂ := fun s => (‖u s‖ : ℂ)
   have hw : MemLp w 2 halfline := hu.norm.ofReal
   have hW := right_exponential_tail_l2_integrable_and_sq_le hk w hw 0 le_rfl
+  simp only [zero_add] at hW
   have hn (s : ℝ) :
       ‖(Real.exp (-k * s) : ℂ) * w s‖ = a s := by
     simp only [w, a, norm_mul, Complex.norm_real, Real.norm_eq_abs,
