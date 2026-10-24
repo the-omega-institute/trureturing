@@ -15,57 +15,63 @@ set_option autoImplicit false
 set_option relaxedAutoImplicit false
 noncomputable section
 
-/-- Observe whether the complex characteristic polynomial has distinct roots. -/
+/-- Observe the admissible processes as the Gibbs weight vector varies. -/
 abbrev signature : Signature where
   Params := ℕ
-  State n := Matrix (Fin n) (Fin n) ℝ
+  State n := Fin n → ℝ
   Role := Unit
   finiteRole := inferInstance
   nonemptyRole := inferInstance
-  Output _ _ := Bool
+  Output _ n := Set (Matrix (Fin n) (Fin n) ℝ)
   Anchor := Empty
   finiteAnchor := inferInstance
 
 def actual : Realization signature :=
-  realize signature
-    (fun _ _ P => @decide (HasSimpleEigenvalues P) (Classical.propDecidable _))
-    (fun e => nomatch e)
+  realize signature (fun _ _ d => thermalProcesses d) (fun e => nomatch e)
 
 def rejected : Realization signature :=
-  realize signature (fun _ _ _ => false) (fun e => nomatch e)
+  realize signature (fun _ _ _ => ∅) (fun e => nomatch e)
 
 /-- Retain every dimension, positive weight vector, and Gibbs-stochastic condition. -/
 abbrev arena : Arena where
   signature := signature
   Law R := ∀ (n : ℕ) (d : Fin n → ℝ), (∀ i, 0 < d i) →
     ∃ P : Matrix (Fin n) (Fin n) ℝ,
-      P ∈ thermalProcesses d ∧ R.readout () n P = true
+      P ∈ R.readout () n d ∧ HasSimpleEigenvalues P
 
 theorem rejected_law : ¬ arena.Law rejected := by
   intro h
-  obtain ⟨P, _, hbad⟩ := h 1 (fun _ => 1) (by intro i; norm_num)
-  change false = true at hbad
-  cases hbad
+  obtain ⟨P, hbad, _⟩ := h 1 (fun _ => 1) (by intro i; norm_num)
+  exact hbad
 
-private theorem zero_not_simple :
-    ¬ HasSimpleEigenvalues (0 : Matrix (Fin 2) (Fin 2) ℝ) := by
-  have hmap : (0 : Matrix (Fin 2) (Fin 2) ℝ).map (algebraMap ℝ ℂ) = 0 := by
-    ext i j
-    simp
-  unfold HasSimpleEigenvalues
-  rw [hmap, Matrix.charpoly_zero, Fintype.card_fin, Polynomial.roots_X_pow]
-  norm_num [two_smul]
+private def reset : Matrix (Fin 2) (Fin 2) ℝ :=
+  fun i _ => if i = 0 then 1 else 0
 
 theorem dependence : ObservationalDependence signature actual := by
   intro i
-  obtain ⟨P, _, hP⟩ := result 2 (fun _ => 1) (by intro j; norm_num)
-  refine ⟨2, P, 0, ?_⟩
-  simp [actual, realize, hP, zero_not_simple]
+  have hstochastic : reset ∈ Matrix.colStochastic ℝ (Fin 2) := by
+    apply Matrix.mem_colStochastic_iff_sum.mpr
+    constructor
+    · intro i j
+      simp only [reset]
+      split_ifs <;> norm_num
+    · intro j
+      norm_num [reset, Fin.sum_univ_two]
+  have hzero : reset ∈ thermalProcesses (0 : Fin 2 → ℝ) :=
+    ⟨hstochastic, Matrix.mulVec_zero reset⟩
+  have hone : reset ∉ thermalProcesses (fun _ : Fin 2 => 1) := by
+    intro h
+    have hbad := congrFun h.2 (0 : Fin 2)
+    norm_num [reset, Matrix.mulVec, dotProduct, Fin.sum_univ_two] at hbad
+  refine ⟨2, 0, fun _ => 1, ?_⟩
+  change thermalProcesses (0 : Fin 2 → ℝ) ≠ thermalProcesses (fun _ : Fin 2 => 1)
+  intro heq
+  exact hone (heq ▸ hzero)
 
 def source_registration : Registration arena claim where
   actual := actual
-  bridge := by simp [claim, actual, realize]
-  variation := ⟨by simpa [claim, actual, realize] using result, rejected, rejected_law⟩
+  bridge := Iff.rfl
+  variation := ⟨result, rejected, rejected_law⟩
   sensitivity := by
     constructor
     · intro i
@@ -90,9 +96,8 @@ def registration :
   realization := .source arena ⟨source_registration⟩
   correspondence := { stage := .evidence, objectStage := .evidence }
   bundleNonempty := .absent
-  readout := some (realize signature
-    (fun _ _ P => @decide (HasSimpleEigenvalues P) (Classical.propDecidable _))
-    (fun e => nomatch e))
+  readout := some
+    (realize signature (fun _ _ d => thermalProcesses d) (fun e => nomatch e))
   variation := .absent
   sensitivity := .absent
   partialSensitivity := none
@@ -105,11 +110,11 @@ def registration :
       path := #[] }
     coordinates := #[0]
     readouts := #[{
-      path := #["body", "body", "body", "arg", "body", "arg"]
-      stateBinder := 0
+      path := #["body", "body", "body", "arg", "body", "fn", "arg", "fn", "arg"]
+      stateBinder := 1
       functionOperand := false
-      stateOperand := some #["arg"]
-      booleanPredicate := true }] }
+      stateOperand := none
+      booleanPredicate := false }] }
   continuation := .unknown
   familyRecord := none
   options := #[] }
