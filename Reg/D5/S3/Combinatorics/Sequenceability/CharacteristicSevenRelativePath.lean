@@ -1,4 +1,4 @@
-import D5.S1.Words.Sequenceability.CharacteristicSevenRelativePath
+import D5.S3.Combinatorics.Sequenceability.CharacteristicSevenRelativePath
 import LeanInformationAuditInterface.Contract.Registration
 import Reg.Support.DependentFamily
 import Mathlib.Algebra.Field.ULift

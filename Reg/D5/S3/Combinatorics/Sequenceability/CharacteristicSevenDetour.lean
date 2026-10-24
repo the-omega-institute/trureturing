@@ -1,4 +1,4 @@
-import D5.S1.Words.Sequenceability.CharacteristicSevenDetour
+import D5.S3.Combinatorics.Sequenceability.CharacteristicSevenDetour
 import LeanInformationAuditInterface.Contract.Registration
 import Reg.Support.DependentFamily
 import Mathlib.Algebra.Field.ULift

@@ -2,11 +2,11 @@ using static StrataLint.Scribe.DefinitionDsl;
 using static StrataLint.Scribe.FormulaDsl;
 using F = StrataLint.Scribe.FormulaDsl;
 
-namespace StrataLint.Scribe.Blueprint.D5.S1.Words.Sequenceability;
+namespace StrataLint.Scribe.Blueprint.D5.S3.Combinatorics.Sequenceability;
 
 internal sealed class CharacteristicSevenRelativePathDocument : IScribeDocumentDefinition
 {
-    private const string Prefix = "D5/S1/Words/Sequenceability/CharacteristicSevenRelativePath.";
+    private const string Prefix = "D5/S3/Combinatorics/Sequenceability/CharacteristicSevenRelativePath.";
     private static Formula V(string name) => F.Id(name);
     private static Formula Call(string name, params Formula[] args) =>
         new Formula.Apply(Seq(Operatorname, Grp(V(name))), [.. args]);

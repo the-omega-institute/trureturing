@@ -1,12 +1,12 @@
-/- GID: D5/S1/Words/Sequenceability/CharacteristicSevenRelativePath
+/- GID: D5/S3/Combinatorics/Sequenceability/CharacteristicSevenRelativePath
    generality: G
-   mirror-B: D5/B/S1/Words/Sequenceability/CharacteristicSevenRelativePath
+   mirror-B: D5/B/S3/Combinatorics/Sequenceability/CharacteristicSevenRelativePath
    mirror-E: none(waiver:unbounded-symbolic-proof)
    anchors: []
    utility: none
    digest: Marked-return connectivity and the complete characteristic-seven relative path. -/
 
-import D5.S1.Words.Sequenceability.CharacteristicSevenDetour
+import D5.S3.Combinatorics.Sequenceability.CharacteristicSevenDetour
 
 /-! The four actual marked returns connect the entire six-column carrier.
 Deleting the closing endpoint edge gives the exact relative path, including
