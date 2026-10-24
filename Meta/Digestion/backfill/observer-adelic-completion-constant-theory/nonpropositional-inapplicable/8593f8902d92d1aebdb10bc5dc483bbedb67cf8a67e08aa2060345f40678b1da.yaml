@@ -5,3 +5,7 @@ cas_ref: sha256:8593f8902d92d1aebdb10bc5dc483bbedb67cf8a67e08aa2060345f40678b1da
 coverage_gids: []
 receipts:
   unresolved_subitems: []
+  nonpropositional:
+    justification: 非命题。章节标题及审计表的列头和分隔线，没有数据行或数学断言。
+    previous_atom_id: d179a5cac59e9be0b443ad993f6afeeef2616e62121106e150820243cdb6bc57
+    next_atom_id: 59e78c5795bc82a0a24f133095f6cd7d75784589b094b4b68b79f87d34b9ed84
