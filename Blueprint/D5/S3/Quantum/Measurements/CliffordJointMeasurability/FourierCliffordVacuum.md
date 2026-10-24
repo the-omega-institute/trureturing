@@ -8,7 +8,7 @@ Formulas retain Lean application and binder notation. Omega denotes the outcome-
 
 **Lemma 1.1 (Vanishing self-anticommutator).**
 
-$$\begin{aligned}\forall \{R:\operatorname{Type}\},\\{}[\operatorname{Ring} R],\\{}[\operatorname{Algebra} \mathbb{C} R],\\{}[\operatorname{StarRing} R],\\{}[\operatorname{StarModule} \mathbb{C} R],\\\forall (b:R),\\(b\cdot b+b\cdot b=0) \to b\cdot b=0\end{aligned}$$
+$$\begin{aligned}\forall \{R:\operatorname{Type}*\},\\{}[\operatorname{Ring} R],\\{}[\operatorname{Algebra} \mathbb{C} R],\\{}[\operatorname{StarRing} R],\\{}[\operatorname{StarModule} \mathbb{C} R],\\\forall (b:R),\\(b\cdot b+b\cdot b=0) \to b\cdot b=0\end{aligned}$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Quantum/Measurements/CliffordJointMeasurability/FourierCliffordVacuum.CAR_nilpotent` (`✓ std3`). ∎
 
@@ -16,7 +16,7 @@ $$\begin{aligned}\forall \{R:\operatorname{Type}\},\\{}[\operatorname{Ring} R],\
 
 *Commentary.*
 
-In a complex algebra with compatible star, a vanishing self-anticommutator forces the square to vanish.
+In a complex algebra with compatible star, a vanishing self-anticommutator forces the square to vanish. Type* allows the algebra to lie in any universe.
 
 **Definition 1.2 (averaging).**
 
