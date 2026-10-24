@@ -28,7 +28,7 @@ public sealed partial class LeanCacheEnsureCommandTests
     }
 
     [Fact]
-    public void MissingColdClearCacheClonesOnlyWarmDonorBuildWithoutOverwritingLake()
+    public void MissingColdClearCacheClonesWarmBuildAndDependenciesWithoutOverwritingLake()
     {
         using var repository = new TemporaryDirectory();
         InitializeRepository(repository.Path);
@@ -56,7 +56,8 @@ public sealed partial class LeanCacheEnsureCommandTests
 
         Assert.True(result.Success, result.Error);
         Assert.False(concurrentWriterAcquired);
-        var clone = Assert.Single(cloner.Invocations);
+        Assert.Equal(2, cloner.Invocations.Count);
+        var clone = cloner.Invocations[0];
         Assert.Equal(fixture.DonorBuild, clone.Source);
         Assert.StartsWith(
             fixture.BuildStagePrefix,
@@ -64,11 +65,14 @@ public sealed partial class LeanCacheEnsureCommandTests
             StringComparison.Ordinal);
         Assert.Equal("preserve me\n", fixture.TargetOwnedText);
         Assert.True(fixture.HasClonedDonorOlean(donorOlean));
-        Assert.False(fixture.TargetPackagesExist);
+        Assert.True(fixture.TargetPackagesExist);
+        Assert.True(LeanCacheFixtureFile.MathlibProjectionExists(fixture.Target));
         Assert.True(fixture.StampMatches);
         using var receipt = ParseReceipt(result.Output);
         Assert.Equal("seeded", receipt.RootElement.GetProperty("status").GetString());
         Assert.Equal("missing", receipt.RootElement.GetProperty("stamp_miss").GetString());
+        Assert.Equal(0, receipt.RootElement.GetProperty("mathlib_missing_olean_files").GetInt32());
+        Assert.Equal(2, receipt.RootElement.GetProperty("clonefile_attempts").GetInt32());
         Assert.Equal(
             LeanCacheGuard.PhysicalPath(repository.Path),
             receipt.RootElement.GetProperty("donor").GetString());
@@ -107,7 +111,7 @@ public sealed partial class LeanCacheEnsureCommandTests
     }
 
     [Fact]
-    public void MissingStampWithWarmLaneProjectReplacesFromWarmMain()
+    public void MissingStampWithWarmLaneProjectAddsFromWarmMain()
     {
         using var repository = new TemporaryDirectory();
         using var sharedCache = new MathlibCacheFixture();
@@ -125,13 +129,13 @@ public sealed partial class LeanCacheEnsureCommandTests
             cloner);
 
         Assert.True(result.Success, result.Error);
-        Assert.Single(cloner.Invocations);
-        Assert.False(File.Exists(targetOlean));
+        Assert.Equal(2, cloner.Invocations.Count);
+        Assert.True(File.Exists(targetOlean));
         Assert.False(File.Exists(Path.Combine(target, ".lake", "cache-get.marker")));
     }
 
     [Fact]
-    public void MissingStampWithNonOleanBuildContentReplacesFromWarmMain()
+    public void MissingStampWithNonOleanBuildContentAddsFromWarmMain()
     {
         using var repository = new TemporaryDirectory();
         using var sharedCache = new MathlibCacheFixture();
@@ -151,8 +155,8 @@ public sealed partial class LeanCacheEnsureCommandTests
             cloner);
 
         Assert.True(result.Success, result.Error);
-        Assert.Single(cloner.Invocations);
-        Assert.False(Directory.Exists(Path.Combine(fixture.Target, ".lake", "build", "reports")));
+        Assert.Equal(2, cloner.Invocations.Count);
+        Assert.Equal("partial\n", fixture.PartialReportText);
         Assert.True(fixture.BuildCacheExists);
     }
 
@@ -282,7 +286,7 @@ public sealed partial class LeanCacheEnsureCommandTests
             probe);
 
         Assert.True(result.Success, result.Error);
-        Assert.Single(cloner.Invocations);
+        Assert.Equal(2, cloner.Invocations.Count);
         Assert.True(probe.Count(targetProjectRoot) >= 1);
         Assert.False(File.Exists(Path.Combine(target, ".lake", "cache-get.marker")));
     }
@@ -344,7 +348,8 @@ public sealed partial class LeanCacheEnsureCommandTests
             probe);
 
         Assert.False(result.Success);
-        Assert.Single(cloner.Invocations);
+        Assert.Equal(2, cloner.Invocations.Count);
+        Assert.True(fixture.TargetPackagesExist);
         Assert.Equal("arrived before final revalidation\n", fixture.RacedBuildText);
         Assert.False(fixture.BuildCacheExists);
         Assert.False(fixture.CacheGetMarkerExists);
@@ -453,7 +458,8 @@ public sealed partial class LeanCacheEnsureCommandTests
         Assert.Equal("failed", receipt.RootElement.GetProperty("status").GetString());
         AssertCrossDeviceCloneReceipt(receipt.RootElement);
         var reason = receipt.RootElement.GetProperty("reason").GetString();
-        Assert.EndsWith(LaneReseedRemediation(fixture.Target), reason, StringComparison.Ordinal);
+        Assert.Contains("existing target artifacts were retained", reason, StringComparison.Ordinal);
+        Assert.DoesNotContain("remove", reason, StringComparison.Ordinal);
         Assert.DoesNotContain(MainWarmRemediation(repository.Path), reason, StringComparison.Ordinal);
     }
 
@@ -748,7 +754,8 @@ public sealed partial class LeanCacheEnsureCommandTests
                 cloner,
                 FileSystemLeanCacheStateProbe.Instance,
                 wait: _ => { },
-                writeStamp: static (_, _) => throw new IOException("injected stamp write failure"));
+                writeStamp: static (_, _) => throw new IOException("injected stamp write failure"),
+                restoreDependencies: true);
         }
 
         internal bool TryAcquireWriter()
