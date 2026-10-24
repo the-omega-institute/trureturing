@@ -1079,3 +1079,272 @@ $$
 正噪声、已知宽度及完整原始误差合同均继续承担，恢复规则并非宽度未知的同一个映射。
 
 ## 追加锚（本行以下为增补区）
+
+## 28. 近似统一报告量的精确首项常数
+
+### 定义 28.1（整数贪心设计）
+
+沿用定义 27.1 的全部原始实验和 $K(\delta)$。记
+
+$$
+e=\frac{\delta}{1+\delta},\qquad \alpha=\sqrt e,\qquad N=2R.
+\tag{28.1}
+$$
+
+当 $0<\alpha\le1/2$ 时，对实数 $x\ge R$ 定义整数步长
+
+$$
+h(x)=\max\{1,\lfloor2\alpha(x-1)\rfloor\}.
+\tag{28.2}
+$$
+
+从 $x_0=R$ 开始，递推
+
+$$
+x_{j+1}=\min\{N,x_j+h(x_j)\},\qquad x_M=N,
+\tag{28.3}
+$$
+
+并在第一次到达 $N$ 时停止。取
+
+$$
+J=\{x_0,\ldots,x_M\}\cup\{N-x_0,\ldots,N-x_M\}.
+\tag{28.4}
+$$
+
+每一步至少前进一个整数，故递推有限终止。两半只在 $R$ 相交，因而
+$|J|=2M+1$，且 $0,R,N\in J$。该子集只依赖 $R,\delta$，在全部噪声比、宽度、
+报告和实际世界之前固定。
+
+### 引理 28.2（整数设计的原始风险保证）
+
+定义 28.1 的子集满足
+
+$$
+W_J(U,V)\ge(1-e)W_{I_R}(U,V)\qquad(U,V\in\mathbb R).
+\tag{28.5}
+$$
+
+因此，对每个 $c>0,H>0$，同一个 $J$ 均有
+
+$$
+\mathscr R_J(H)\le(1+\delta)\mathscr R_{I_R}(H).
+\tag{28.6}
+$$
+
+**证明。** 令 $p(k)=Uk^2+Vk$。$U=0$ 时两端点保持极差；用 $-p$ 代替 $p$ 可将
+$U<0$ 化为 $U>0$。在后一情形记实顶点 $v=-V/(2U)$。顶点位于 $[0,N]$ 外时，
+端点保持全部极差。子集关于 $R$ 对称，故只需处理 $R\le v\le N$。
+
+若顶点已经保留，最小值不变；否则令包含它的相邻保留位置为 $k,k+\ell$。
+当 $\ell=1$ 时，距顶点最近的原整数位置已经保留，最小值仍不变。
+当 $\ell\ge2$ 时，由递推式有
+
+$$
+\ell\le h(k)=\lfloor2\alpha(k-1)\rfloor\le2\alpha(k-1).
+\tag{28.7}
+$$
+
+两端点保持最大值。记 $d_I(v)=\operatorname{dist}(v,I_R)\le1/2$，则
+
+$$
+\begin{aligned}
+W_{I_R}(U,V)&=U\bigl(v^2-d_I(v)^2\bigr)
+             \ge U(k^2-1/4)\ge U(k-1)^2,\\
+W_{I_R}(U,V)-W_J(U,V)&\le U\ell^2/4
+                         \le\alpha^2U(k-1)^2
+                         \le eW_{I_R}(U,V).
+\end{aligned}
+\tag{28.8}
+$$
+
+反射给出左半区间的同一结论，故 (28.5) 成立。由于 $J$ 至少含三个位置，直接应用
+引理 27.2，得到因子 $(1-e)^{-1}=1+\delta$ 的 (28.6)。该应用保留原系数比值的
+分母、每世界共同增益及实际先验截断，不要求任何极差条件的反向等价。∎
+
+### 引理 28.3（跨全部整数网格的统一计数）
+
+对每个整数 $R\ge3$ 和 $0<\alpha\le1/2$，定义 28.1 的设计满足
+
+$$
+|J|\le\alpha^{-1}+5+2\log5.
+\tag{28.9}
+$$
+
+**证明。** 令
+
+$$
+f(t)=\frac1{\max\{1,\lfloor2t\rfloor\}},\qquad
+G(z)=2\int_{z/2}^{z}f(t)\,dt\quad(z\ge0).
+\tag{28.10}
+$$
+
+对 $0\le z\le1$，被积函数在积分区间上几乎处处等于 $1$，故 $G(z)=z$。
+$G$ 局部绝对连续，而对几乎处处的 $z\ge1$，
+
+$$
+G'(z)=2f(z)-f(z/2)\le0,
+\qquad \lfloor2z\rfloor\ge2\lfloor z\rfloor.
+\tag{28.11}
+$$
+
+于是 $G(z)\le1$ 对全部 $z\ge0$ 成立。取 $b=\alpha(R-1)$，换元给出
+
+$$
+\begin{aligned}
+\int_R^N\frac{dx}{h(x)}
+ &=\alpha^{-1}\int_b^{2b+\alpha}f(t)\,dt\\
+ &\le\alpha^{-1}\bigl(G(2b)/2+\alpha\bigr)
+ \le\frac1{2\alpha}+1.
+\end{aligned}
+\tag{28.12}
+$$
+
+这里保留了整数步长至少为一的区域，没有把取整误差按步数累加。
+对最后一步以外的每个完整贪心步 $x\mapsto y=x+h(x)$，单调性给出
+
+$$
+\int_x^y\frac{du}{h(u)}\ge\frac{h(x)}{h(y)},\qquad
+1\le\int_x^y\frac{du}{h(u)}+
+                  \log\frac{h(y)}{h(x)}.
+\tag{28.13}
+$$
+
+第二式使用 $1-r^{-1}\le\log r$，其中 $r=h(y)/h(x)\ge1$。对所有完整步求和，
+对数项望远镜消去，最后可能被截短的一步单独计一次，得到
+
+$$
+M\le\int_R^N\frac{dx}{h(x)}+\log\frac{h(N)}{h(R)}+1.
+\tag{28.14}
+$$
+
+令 $y=2\alpha(R-1)$。因为 $2\alpha\le1$，
+
+$$
+\frac{h(N)}{h(R)}
+ \le\frac{\max\{1,\lfloor2y+1\rfloor\}}
+          {\max\{1,\lfloor y\rfloor\}}\le5.
+\tag{28.15}
+$$
+
+最后一个不等式在 $0\le y<1$ 时由分子至多为 $2$ 得到；在 $y\ge1$ 时，
+令 $n=\lfloor y\rfloor\ge1$，分子至多为 $2n+2\le5n$。
+将 (28.12)、(28.15) 代入 (28.14)，并用 $|J|=2M+1$，即得 (28.9)。∎
+
+### 引理 28.4（临界尺度网格的全部内点必要性）
+
+若 $0<\alpha\le1/6$，取
+
+$$
+R=\left\lfloor\frac1{2\alpha}\right\rfloor,\qquad N=2R,\qquad c=1.
+\tag{28.16}
+$$
+
+则每个满足定义 27.1 近似要求的 $J\subseteq I_R$ 都包含 $1,\ldots,N-1$。
+特别地，
+
+$$
+K(\delta)\ge2\left\lfloor\frac1{2\alpha}\right\rfloor-1
+              \ge\alpha^{-1}-3.
+\tag{28.17}
+$$
+
+**证明。** $R\ge3$。对 $i=R,\ldots,N-1$，直接复用引理 26.2 的宽度
+
+$$
+H_i=N-i+2/i,\qquad
+2\mathscr R_{I_R}(H_i)=1/i,\qquad H_i>2/i.
+\tag{28.18}
+$$
+
+此时 $\delta=\alpha^2/(1-\alpha^2)\le1/35<1$。
+空子集的风险为 $H_i/2$，已经违反近似要求，所以 $J$ 非空。令
+
+$$
+r_i=\min_{k\in J}|k-i|,\qquad
+w_i=\operatorname{range}_{k\in J}(k^2-2ik).
+\tag{28.19}
+$$
+
+由于 $i\ge N/2$，二次式在整个 $[0,N]$ 上非正，因而 $w_i\le i^2-r_i^2$。
+引理 27.4 的有限共同报告世界构造在 $c=1$ 时给出
+
+$$
+2\mathscr R_J(H_i)\ge
+\min\left\{H_i,\frac{H_i+2i-N}{w_i+2}\right\}.
+\tag{28.20}
+$$
+
+这个下界也适用于只保留一、两个位置或 $w_i=0$ 的子集。
+另一方面，近似要求给出 $2\mathscr R_J(H_i)\le(1+\delta)/i$，而
+$H_i>(1+\delta)/i$。因此 (28.20) 的第二项不超过 $(1+\delta)/i$，从而
+
+$$
+w_i+2\ge\frac{i^2+2}{1+\delta},\qquad
+r_i^2\le e(i^2+2).
+\tag{28.21}
+$$
+
+现在 $N\le\alpha^{-1}$，所以
+
+$$
+e(i^2+2)\le\alpha^2\bigl((N-1)^2+2\bigr)
+ \le1-2\alpha+3\alpha^2<1.
+\tag{28.22}
+$$
+
+$r_i$ 是非负整数，故只能为零，所有 $i=R,\ldots,N-1$ 均须保留。
+反射 $k\mapsto N-k$、$\tau\mapsto-N-\tau$ 保持原先验、共同有限增益、自由零位
+和完整误差立方体；平方项及绝对原点损失也在此对应下保持。
+将同一结论用于反射后的子集，得到 $1,\ldots,R$ 也均须保留。
+这证明全部内点必要性。对 (28.16) 的网格和噪声比使用定义 27.1 的上确界，
+再用 $\lfloor x\rfloor\ge x-1$，得到 (28.17)。∎
+
+### 定理 28.5（首项常数为一）
+
+在定义 27.1 的原始共同校准实验中，对每个 $0<\delta\le1/35$，有
+
+$$
+\left(\frac{\delta}{1+\delta}\right)^{-1/2}-3
+ \le K(\delta)
+ \le\left(\frac{\delta}{1+\delta}\right)^{-1/2}+5+2\log5.
+\tag{28.23}
+$$
+
+特别地，
+
+$$
+\lim_{\delta\to0+}\sqrt\delta\,K(\delta)=1.
+\tag{28.24}
+$$
+
+**证明。** 引理 28.2 和 28.3 的同一个整数设计对每个 $R,c,H$ 都满足原始近似要求，
+给出上界；引理 28.4 给出下界。由于
+$\sqrt\delta\,e^{-1/2}=\sqrt{1+\delta}\to1$，两边的加性常数乘以
+$\sqrt\delta$ 后都趋于零，夹逼即得极限。∎
+
+### 定义 28.6（来源与首项结论的边界）
+
+原始模型及比值风险来自三索引设计卷假设 18.1 和定理 18.2；
+本节直接复用引理 27.2 的径向风险传递、引理 26.2 的完整网格宽度见证，
+以及引理 27.4 对任意非空子集的有限世界下界。
+本节的 `repo-derived` 内容是整数贪心设计的统一计数，及取整临界尺度上
+全部内点必要性对同一 $K(\delta)$ 强迫的匹配首项。
+
+光滑凸曲线自由顶点的最佳多边形逼近已有经典首项公式。
+Ludwig，*Asymptotic Approximation of Convex Curves; the Hausdorff Metric Case*，
+[作者稿引言 (1)](https://dmg.tuwien.ac.at/ludwig/haus.pdf)，
+[DOI:10.1007/s000130050203](https://doi.org/10.1007/s000130050203)，
+记述了 Fejes Tóth 对闭合 $C^2$ 正曲率凸曲线的 Hausdorff 首项，
+并在更强光滑条件下研究次项。该固定曲线、自由顶点和距离目标没有给出本节
+跨整数网格及全部噪声比的原始风险上确界；本节没有用它代替 (28.17) 或 (28.23)，
+也不主张新的通用凸曲线逼近定理或穷尽文献后的原创性结论。
+
+(28.23) 控制首项和一个统一有界的加性余量，未分类每个有限 $\delta$ 的精确整数阶梯、
+全部最优子集或最佳加性常数。下界网格随容差变化；上界构造在噪声尺度和已知宽度之前
+固定，但每次恢复规则仍可使用该次已知宽度。全部原始误差与校准条件继续承担，
+没有推出宽度未知的共同解码器、有限比特预算、计算时间、物理费用或原生取得权限。
+
+本节给出普通数学证明，未经过 Lean 编译；该极限命题的精确形式化仍未结算。
+
+## 追加锚（本行以下为增补区）
