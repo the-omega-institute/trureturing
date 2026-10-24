@@ -599,6 +599,245 @@ class FixtureDisposalTests(NativeFixture):
                               outcomes_per_order=9, retained_after_gc=True)), flush=True)
 
 
+class IntegrationResumeProbeTests(CleanupMakeTests):
+    """Transient native Make/CLI probes; interrupted records are constructed inputs."""
+
+    def setUp(self):
+        import hashlib
+        self.fixture_started = time.monotonic()
+        self.mark_phase("initialize")
+        self.root = self.workspace("cleanup-p3-20818-", directory=SOURCE.parent)
+        self.repository = self.root / "checkout"
+        self.repository.mkdir()
+        self.environment = dict(os.environ, TMPDIR=str(self.root / "tmp"),
+                                MSBUILDDISABLENODEREUSE="1", DOTNET_CLI_USE_MSBUILD_SERVER="0",
+                                UseSharedCompilation="false")
+        Path(self.environment["TMPDIR"]).mkdir()
+        self.git("init", "--initial-branch=dev")
+        self.git("config", "user.name", "Native P3 Probe")
+        self.git("config", "user.email", "native-p3@example.invalid")
+        (self.repository / "owned").write_text("ordinary snapshot\n")
+        (self.repository / "other").write_text("tracked deletion\n")
+        (self.repository / ".gitignore").write_text("bin/\nobj/\n")
+        self.git("add", ".")
+        self.git("commit", "-m", "native fixture baseline")
+        self.baseline = self.git("rev-parse", "HEAD")
+        self.mark_phase("source-copy")
+        copy_source(SOURCE, self.repository)
+        self.build_cli(self.repository)
+        assembly = self.repository / "tools/StrataLint.Cli/bin/Release/net10.0/StrataLint.dll"
+        binary = assembly.read_bytes()
+        modules = {}
+        for name in ("worktree_protocol", "worktree_publication", "worktree_preservation"):
+            relative = Path("tools/scripts/worktree") / (name + ".py")
+            original, copied = (SOURCE / relative).read_bytes(), (self.repository / relative).read_bytes()
+            self.assertEqual(original, copied)
+            offset = binary.find(copied)
+            self.assertGreaterEqual(offset, 0, "embedded candidate module " + name)
+            extracted = binary[offset:offset + len(copied)]
+            self.assertEqual(copied, extracted)
+            modules[name] = dict(source_sha256=hashlib.sha256(original).hexdigest(),
+                                 embedded_sha256=hashlib.sha256(extracted).hexdigest(),
+                                 offset=offset, bytes=len(extracted))
+        print(json.dumps(dict(event="p3_embedded_identity", checkout=str(SOURCE),
+                              checkout_head=self.git("rev-parse", "HEAD", cwd=SOURCE),
+                              assembly_sha256=hashlib.sha256(binary).hexdigest(), modules=modules)), flush=True)
+        for command in (["git", "--version"], ["python3", "--version"], ["dotnet", "--version"]):
+            self.run_command(command, phase="environment")
+        self.serial = 0
+
+    def lane(self):
+        self.serial += 1
+        tree = self.root / ("tree-" + str(self.serial))
+        branch = "lane/governance/p3-" + str(self.serial)
+        self.git("worktree", "add", "-b", branch, tree, self.baseline)
+        return tree, "refs/heads/" + branch
+
+    def seed(self, rules="/cache/\n*.tmp\n", nested=True):
+        import importlib.util
+        tree, reference = self.lane()
+        (tree / ".gitignore").write_text(rules)
+        if nested:
+            (tree / "nested").mkdir()
+            (tree / "nested/.gitignore").write_text("!keep.tmp\noutput/\n")
+        self.git("add", "-f", ".gitignore", *(["nested/.gitignore"] if nested else []), cwd=tree)
+        self.git("commit", "-m", "committed ignore snapshot", cwd=tree)
+        snapshot = self.git("rev-parse", "HEAD", cwd=tree)
+        metadata = Path(self.git("rev-parse", "--absolute-git-dir", cwd=tree))
+        # Reuse the production record writer only to construct a known partial input.
+        sys.path.insert(0, str(self.repository / "tools/scripts/worktree"))
+        import worktree_preservation
+        worktree_preservation.record_removal(metadata, snapshot, reference)
+        (tree / "other").unlink()
+        return tree, reference, snapshot, metadata
+
+    def state(self, tree, metadata):
+        import hashlib
+        def files(root, exclude_git=False):
+            result = {}
+            for path in sorted(root.rglob("*")):
+                if exclude_git and path.name == ".git":
+                    continue
+                key = str(path.relative_to(root))
+                if path.is_symlink():
+                    result[key] = ["link", os.readlink(path)]
+                elif path.is_file():
+                    result[key] = ["file", hashlib.sha256(path.read_bytes()).hexdigest()]
+            return result
+        return dict(working=files(tree, True), metadata=files(metadata),
+                    head=self.git("rev-parse", "HEAD", cwd=tree),
+                    refs=self.git("show-ref"),
+                    index=hashlib.sha256((metadata / "index").read_bytes()).hexdigest())
+
+    def native_remove(self, tree, error=None):
+        result = self.run_command(["make", "--no-print-directory", "worktree-remove", "NAMES=" + tree.name],
+                                  phase="native-make-remove", check=False)
+        self.assertEqual(0 if error is None else 2, result.returncode, result.stdout + result.stderr)
+        self.assertIn("WORKTREE_REMOVE_RESULT exit=" + ("0" if error is None else "74"), result.stdout)
+        items = [json.loads(line) for line in result.stdout.splitlines() if line.startswith('{"name":')]
+        self.assertEqual(1, len(items), result.stdout)
+        item = items[0]
+        self.assertEqual("removed" if error is None else "failed", item["outcome"])
+        self.assertEqual(error, item["error"])
+        print(json.dumps(dict(event="p3_native_verdict", case=self._testMethodName,
+                              make_exit=result.returncode, expected_error=error, item=item)), flush=True)
+        return item
+
+    def refuse(self, tree, metadata, error):
+        before = self.state(tree, metadata)
+        item = self.native_remove(tree, error)
+        self.assertEqual(before, self.state(tree, metadata))
+        self.assertTrue(tree.exists())
+        print(json.dumps(dict(event="p3_state_preserved", error=error, state=before)), flush=True)
+        return item
+
+    def recover(self, tree, reference, snapshot):
+        self.assertFalse(tree.exists())
+        self.assertEqual(snapshot, self.git("rev-parse", reference))
+        self.git("worktree", "add", tree, reference.removeprefix("refs/heads/"))
+        self.assertEqual(snapshot, self.git("rev-parse", "HEAD", cwd=tree))
+        self.assertEqual("ordinary snapshot\n", (tree / "owned").read_text())
+        self.assertEqual("tracked deletion\n", (tree / "other").read_text())
+        print(json.dumps(dict(event="p3_reconstructed", snapshot=snapshot, reference=reference,
+                              tree=self.git("rev-parse", "HEAD^{tree}", cwd=tree))), flush=True)
+
+    def test_allow_recorded_committed_ignore_native_make(self):
+        tree, reference, snapshot, metadata = self.seed()
+        for name in ("cache/generated", "nested/strange\nname.tmp", "nested/output/generated"):
+            path = tree / name
+            path.parent.mkdir(parents=True, exist_ok=True)
+            path.write_text("ignored generated bytes\n")
+            control = self.run_command(["git", "check-ignore", "--no-index", "-q", "--", name], cwd=tree, check=False)
+            self.assertEqual(0, control.returncode)
+        control = self.run_command(["git", "check-ignore", "--no-index", "-q", "--", "nested/keep.tmp"], cwd=tree, check=False)
+        self.assertEqual(1, control.returncode)
+        (tree / ".gitignore").unlink()
+        (tree / "nested/.gitignore").unlink()
+        self.assertEqual(reference, self.native_remove(tree)["recovery_branch"])
+        self.recover(tree, reference, snapshot)
+        self.assertEqual("/cache/\n*.tmp\n", (tree / ".gitignore").read_text())
+        self.assertEqual("!keep.tmp\noutput/\n", (tree / "nested/.gitignore").read_text())
+        self.assertFalse((tree / "cache/generated").exists())
+        self.kind_controls(allow=True)
+        for detached, dirty in ((False, False), (True, False), (True, True)):
+            tree, reference = self.lane()
+            if detached:
+                self.git("checkout", "--detach", cwd=tree)
+            before = self.git("rev-parse", "HEAD", cwd=tree)
+            if dirty:
+                (tree / "owned").write_text("final ordinary bytes\n")
+                (tree / "other").unlink()
+                (tree / "untracked").write_text("final untracked bytes\n")
+            item = self.native_remove(tree)
+            retained = item["recovery_branch"]
+            final = self.git("rev-parse", retained)
+            self.assertEqual(not dirty, before == final)
+            self.git("worktree", "add", tree, retained.removeprefix("refs/heads/"))
+            self.assertEqual("final ordinary bytes\n" if dirty else "ordinary snapshot\n", (tree / "owned").read_text())
+            if dirty:
+                self.assertEqual("final untracked bytes\n", (tree / "untracked").read_text())
+                self.assertFalse((tree / "other").exists())
+
+    def kind_controls(self, allow):
+        for kind in ("file", "link", "directory"):
+            for pattern in ("/nested/", "/nested"):
+                ignored = kind == "directory" or pattern == "/nested"
+                if ignored != allow:
+                    continue
+                tree, reference, snapshot, metadata = self.seed(pattern + "\n")
+                (tree / "nested/.gitignore").unlink()
+                if kind == "directory":
+                    (tree / "nested/later").write_text("generated\n")
+                else:
+                    (tree / "nested").rmdir()
+                    if kind == "link":
+                        (tree / "nested").symlink_to("owned")
+                    else:
+                        (tree / "nested").write_text("later file bytes\n")
+                control = self.run_command(["git", "check-ignore", "--no-index", "-q", "--", "nested"], cwd=tree, check=False)
+                self.assertEqual(0 if ignored else 1, control.returncode)
+                (tree / ".gitignore").unlink()
+                if ignored:
+                    self.native_remove(tree)
+                    self.recover(tree, reference, snapshot)
+                else:
+                    self.refuse(tree, metadata, "interrupted_removal_tree_changed")
+                print(json.dumps(dict(event="p3_kind_control", kind=kind, pattern=pattern,
+                                      native_ignore_exit=control.returncode, allowed=ignored)), flush=True)
+
+    def test_refuse_recorded_later_work_native_make(self):
+        for name, staged in (("later", False), ("nested/keep.tmp", False), ("owned", False), ("staged", True)):
+            tree, reference, snapshot, metadata = self.seed()
+            (tree / ".gitignore").unlink()
+            (tree / "nested/.gitignore").unlink()
+            (tree / name).write_text("later ordinary bytes\n")
+            if staged:
+                self.git("add", name, cwd=tree)
+            self.refuse(tree, metadata, "interrupted_removal_tree_changed")
+            self.assertEqual(snapshot, self.git("rev-parse", reference))
+        self.kind_controls(allow=False)
+
+    def test_refuse_unfinished_or_unmerged_native_make(self):
+        for recorded in (False, True):
+            if recorded:
+                tree, reference, snapshot, metadata = self.seed()
+            else:
+                tree, reference = self.lane()
+                metadata = Path(self.git("rev-parse", "--absolute-git-dir", cwd=tree))
+            for marker in ("MERGE_HEAD", "CHERRY_PICK_HEAD", "REVERT_HEAD", "rebase-merge", "rebase-apply", "sequencer"):
+                path = metadata / marker
+                if marker.endswith("HEAD"):
+                    path.write_text(self.baseline + "\n")
+                else:
+                    path.mkdir()
+                    (path / "state").write_text("unfinished operation\n")
+                self.refuse(tree, metadata, "unfinished_operation:" + marker)
+                if path.is_dir():
+                    (path / "state").unlink()
+                    path.rmdir()
+                else:
+                    path.unlink()
+            oid = self.git("rev-parse", "HEAD:owned", cwd=tree)
+            self.run_command(["git", "update-index", "--index-info"], cwd=tree,
+                             input=f"0 {'0' * len(oid)}\towned\n100644 {oid} 1\towned\n100644 {oid} 2\towned\n")
+            self.refuse(tree, metadata, "unmerged_index")
+
+    def test_refuse_snapshot_identity_native_make(self):
+        for moved in ("head", "ref", "record"):
+            tree, reference, snapshot, metadata = self.seed()
+            if moved == "head":
+                self.git("checkout", "--detach", self.baseline, cwd=tree)
+            elif moved == "ref":
+                self.git("checkout", "--detach", cwd=tree)
+                self.git("update-ref", reference, self.baseline, snapshot)
+            else:
+                record = metadata / "worktree-removal"
+                data = json.loads(record.read_text())
+                data["commit"] = self.baseline
+                record.write_text(json.dumps(data))
+            self.refuse(tree, metadata, "interrupted_removal_snapshot_moved")
+
+
 if __name__ == "__main__":
     NativeFixture.install_interrupt_handler()
     unittest.main()

@@ -10,6 +10,40 @@ namespace StrataLint.WorktreeContract.Tests;
 public sealed class WorktreeProtocolTests(ITestOutputHelper output)
 {
     [Fact]
+    public void TestAllowRecordedCommittedIgnoreNativeMake()
+    {
+        if (OperatingSystem.IsWindows()) return;
+        var root = TestRepositoryLayout.FindRoot();
+        var result = CaptureCleanupOutput((stdout, stderr) => TestProcessRunner.Run("python3",
+            ["-B", Path.Combine(root,
+                "tools/tests/StrataLint.WorktreeContract.Tests/Fixtures/cleanup_make_tests.py"),
+                root, "plain", "worktree-remove", "directory", "IntegrationResumeProbeTests.test_allow_recorded_committed_ignore_native_make"],
+            root, TimeSpan.FromSeconds(180), 1024 * 1024,
+            standardOutput: stdout, standardError: stderr,
+            interruptBeforeKill: TestProcessRunner.InterruptPythonFixture), output.WriteLine);
+        var text = Encoding.UTF8.GetString(result.StandardOutput);
+        Assert.True(result.ExitCode == 0, text + Encoding.UTF8.GetString(result.StandardError));
+        var events = text.Split('\n').Where(line => line.StartsWith('{'))
+            .Select(line => JsonDocument.Parse(line).RootElement.Clone()).ToArray();
+        var identity = Assert.Single(events, item => item.GetProperty("event").GetString() == "p3_embedded_identity");
+        foreach (var module in identity.GetProperty("modules").EnumerateObject())
+            Assert.Equal(module.Value.GetProperty("source_sha256").GetString(),
+                module.Value.GetProperty("embedded_sha256").GetString());
+        Assert.Contains(events, item => item.GetProperty("event").GetString() == "p3_native_verdict");
+        var completion = Assert.Single(events, item => item.GetProperty("event").GetString() == "fixture_completion");
+        Assert.True(completion.GetProperty("successful").GetBoolean());
+        Assert.True(completion.GetProperty("commands_settled").GetBoolean());
+        Assert.True(completion.GetProperty("owned_execution_settled").GetBoolean());
+        Assert.False(completion.GetProperty("interrupted").GetBoolean());
+        Assert.All(events.Where(item => item.GetProperty("event").GetString() == "fixture_command"
+            && item.GetProperty("status").GetString() != "started"), item =>
+        {
+            Assert.Equal("exited", item.GetProperty("status").GetString());
+            Assert.True(item.GetProperty("settled").GetBoolean());
+        });
+    }
+
+    [Fact]
     public void CleanupFixtureCopiesActualSourceInputs()
     {
         if (OperatingSystem.IsWindows()) return;
