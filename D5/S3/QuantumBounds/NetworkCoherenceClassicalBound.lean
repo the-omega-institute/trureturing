@@ -189,7 +189,60 @@ private lemma cube_bound (n : ℕ) (x y : Fin n → ℝ)
     (hx : ∀ i, x i ∈ Set.Icc (-1 : ℝ) 1)
     (hy : ∀ i, y i ∈ Set.Icc (-1 : ℝ) 1) :
     |(∏ i, x i) + (∏ i, y i) - 2 * ∏ i, ((x i + y i) / 2)| ≤ 2 := by
-  sorry
+  classical
+  have aux (s : Finset (Fin n)) :
+      |(∏ i ∈ s, x i) + (∏ i ∈ s, y i) - 2 * ∏ i ∈ s, ((x i + y i) / 2)| ≤ 2 := by
+    induction s using Finset.induction_on with
+    | empty => norm_num
+    | @insert i s hi ih =>
+      rw [Finset.prod_insert hi, Finset.prod_insert hi, Finset.prod_insert hi]
+      let P := ∏ j ∈ s, x j
+      let Q := ∏ j ∈ s, y j
+      let D := ∏ j ∈ s, ((x j + y j) / 2)
+      let F := P + Q - 2 * D
+      let u := (1 + x i) / 2
+      let v := (1 + y i) / 2
+      have hu : 0 ≤ u := by dsimp [u]; linarith [(hx i).1]
+      have hu' : 0 ≤ 1 - u := by dsimp [u]; linarith [(hx i).2]
+      have hv : 0 ≤ v := by dsimp [v]; linarith [(hy i).1]
+      have hv' : 0 ≤ 1 - v := by dsimp [v]; linarith [(hy i).2]
+      have hP : |P| ≤ 1 := by
+        dsimp [P]
+        rw [Finset.abs_prod]
+        exact Finset.prod_le_one₀ (fun j _ => abs_nonneg _) (fun j _ => abs_le.mpr (hx j))
+      have hQ : |Q| ≤ 1 := by
+        dsimp [Q]
+        rw [Finset.abs_prod]
+        exact Finset.prod_le_one₀ (fun j _ => abs_nonneg _) (fun j _ => abs_le.mpr (hy j))
+      have hPQ : |P - Q| ≤ 2 := (abs_sub P Q).trans (by linarith)
+      have hQP : |Q - P| ≤ 2 := by rw [abs_sub_comm]; exact hPQ
+      have hF : |F| ≤ 2 := ih
+      change |x i * P + y i * Q - 2 * (((x i + y i) / 2) * D)| ≤ 2
+      calc
+        _ = |u * v * F + u * (1 - v) * (P - Q) +
+            (1 - u) * v * (Q - P) + (1 - u) * (1 - v) * (-F)| := by
+          congr 1
+          dsimp [u, v, F]
+          ring
+        _ ≤ |u * v * F| + |u * (1 - v) * (P - Q)| +
+            |(1 - u) * v * (Q - P)| + |(1 - u) * (1 - v) * (-F)| := by
+          calc
+            _ ≤ |u * v * F + u * (1 - v) * (P - Q) +
+                (1 - u) * v * (Q - P)| + |(1 - u) * (1 - v) * (-F)| := abs_add_le _ _
+            _ ≤ (|u * v * F + u * (1 - v) * (P - Q)| +
+                |(1 - u) * v * (Q - P)|) + |(1 - u) * (1 - v) * (-F)| := by
+              gcongr
+              exact abs_add_le _ _
+            _ ≤ _ := by gcongr; exact abs_add_le _ _
+        _ = u * v * |F| + u * (1 - v) * |P - Q| +
+            (1 - u) * v * |Q - P| + (1 - u) * (1 - v) * |F| := by
+          simp only [abs_mul, abs_of_nonneg hu, abs_of_nonneg hu', abs_of_nonneg hv,
+            abs_of_nonneg hv', abs_neg]
+        _ ≤ u * v * 2 + u * (1 - v) * 2 +
+            (1 - u) * v * 2 + (1 - u) * (1 - v) * 2 := by
+          gcongr
+        _ = 2 := by ring
+  exact aux Finset.univ
 
 private lemma upper_bound (n : ℕ) (γ : ℝ) (hγ : γ ∈ Set.Icc (0 : ℝ) 1)
     (p q : Fin n → Bool → ℝ) (hp : ∀ i, IsBitDistribution (p i))
