@@ -8,9 +8,6 @@
 
 import D5.S3.Quantum.SpinChains.SupersymmetricFermion.HardCoreCompression
 import D5.S3.Quantum.Fermionic.FockMajoranaCarrier
-import Mathlib.Analysis.Normed.Algebra.MatrixExponential
-import Mathlib.Analysis.SpecialFunctions.Exponential
-import Mathlib.Analysis.Calculus.MeanValue
 
 /-! Endpoint vacuum contractions for the open XX chain in the Heisenberg picture. -/
 
@@ -63,7 +60,7 @@ private lemma mixed_CAR {N : ℕ} (i j : Fin N) :
   by_cases h : i = j
   · subst j
     simpa using fullC_CAR i
-  · rw [if_neg h]
+  · rw [ite_eq_right h]
     rcases lt_or_gt_of_ne h with h | h
     · exact fullC_mixed_anticomm_of_lt i j h
     · have ht := congrArg Matrix.conjTranspose (fullC_mixed_anticomm_of_lt j i h)
@@ -72,18 +69,28 @@ private lemma mixed_CAR {N : ℕ} (i j : Fin N) :
 
 private lemma creation_anticomm {N : ℕ} (i j : Fin N) :
     (fullC i)ᴴ * (fullC j)ᴴ + (fullC j)ᴴ * (fullC i)ᴴ = 0 := by
+  by_cases hij : i = j
+  swap
+  · rcases lt_or_gt_of_ne hij with h | h
+    · have ht := congrArg Matrix.conjTranspose (fullC_anticomm_of_lt i j h)
+      simpa only [Matrix.conjTranspose_add, Matrix.conjTranspose_mul,
+        Matrix.conjTranspose_zero, add_comm] using ht
+    · have ht := congrArg Matrix.conjTranspose (fullC_anticomm_of_lt j i h)
+      simpa only [Matrix.conjTranspose_add, Matrix.conjTranspose_mul,
+        Matrix.conjTranspose_zero, add_comm] using ht
+  subst j
   let g := D5.S3.Quantum.Fermionic.FockMajoranaCarrier.majorana (N := N)
   have hc := (majorana_clifford_and_parity N).2.2.2.1
-  have h00 := hc (i, false) (j, false)
-  have h11 := hc (i, true) (j, true)
-  have h01 := hc (i, false) (j, true)
-  have h10 := hc (i, true) (j, false)
-  have hz : (4 : ℂ) • ((fullC i)ᴴ * (fullC j)ᴴ + (fullC j)ᴴ * (fullC i)ᴴ) = 0 := by
+  have h00 := hc (i, false) (i, false)
+  have h11 := hc (i, true) (i, true)
+  have h01 := hc (i, false) (i, true)
+  have h10 := hc (i, true) (i, false)
+  have hz : (4 : ℂ) • ((fullC i)ᴴ * (fullC i)ᴴ + (fullC i)ᴴ * (fullC i)ᴴ) = 0 := by
     calc
-      _ = (g i false * g j false + g j false * g i false) -
-          (g i true * g j true + g j true * g i true) +
-          Complex.I • ((g i false * g j true + g j true * g i false) +
-            (g i true * g j false + g j false * g i true)) := by
+      _ = (g i false * g i false + g i false * g i false) -
+          (g i true * g i true + g i true * g i true) +
+          Complex.I • ((g i false * g i true + g i true * g i false) +
+            (g i true * g i false + g i false * g i true)) := by
         dsimp [g, D5.S3.Quantum.Fermionic.FockMajoranaCarrier.majorana]
         simp only [mul_add, add_mul, mul_sub, sub_mul, Matrix.smul_mul, Matrix.mul_smul,
           smul_add, smul_sub, smul_smul, Complex.I_mul_I]
@@ -91,7 +98,6 @@ private lemma creation_anticomm {N : ℕ} (i j : Fin N) :
         simp only [Matrix.add_apply, Matrix.sub_apply, Matrix.smul_apply, smul_eq_mul]
         ring
       _ = 0 := by
-        change (_ - _ + Complex.I • (_ + _)) = 0
         rw [h00, h11, h01, h10]
         simp
   exact (smul_eq_zero.mp hz).resolve_left (by norm_num)
@@ -175,10 +181,11 @@ private lemma creation_evolution {N : ℕ} (J μ t : ℝ) (j : Fin N) :
 private lemma hamiltonian_hermitian (N : ℕ) (J μ : ℝ) :
     (hamiltonian N J μ).IsHermitian := by
   have hh (i j : Fin N) : star (hopping N J μ i j) = hopping N J μ j i := by
+    rw [hopping.eq_1, hopping.eq_1]
     by_cases hij : i = j
     · subst j
-      simp [hopping]
-    · simp only [hopping, if_neg hij, if_neg (Ne.symm hij)]
+      simp
+    · simp only [ite_eq_right hij, ite_eq_right (Ne.symm hij)]
       split_ifs <;> simp_all
   change (hamiltonian N J μ)ᴴ = _
   unfold hamiltonian
@@ -191,7 +198,7 @@ private lemma evolve_adjoint {N : ℕ} (J μ t : ℝ) (A : FullOperator N) :
   have hK : ((((t : ℂ) * Complex.I) • hamiltonian N J μ) : FullOperator N)ᴴ =
       -(((t : ℂ) * Complex.I) • hamiltonian N J μ) := by
     rw [Matrix.conjTranspose_smul, (hamiltonian_hermitian N J μ).eq]
-    simp [Complex.star_def]
+    simp
   unfold evolve
   simp only [Matrix.conjTranspose_mul, ← Matrix.exp_conjTranspose,
     Matrix.conjTranspose_neg, hK, neg_neg, mul_assoc]
@@ -255,7 +262,7 @@ private lemma number_factor_diagonal {N : ℕ} (j : Fin N) :
               simp only [hs, ht]
             · have he' := congrFun he k
               simpa only [Function.update_of_ne hk] using he'.symm
-          simp [hbad, Matrix.diagonal_apply, hst]
+          simp [hbad, hst]
       · intro u hu hne
         have hz : fullC j u t = 0 := by rw [fullC_entry]; simp [ht, hne]
         rw [hz, mul_zero]
@@ -263,13 +270,13 @@ private lemma number_factor_diagonal {N : ℕ} (j : Fin N) :
         exact (hmem (Finset.mem_univ _)).elim
     · have hz (u : Assignment N) : fullC j u t = 0 := by rw [fullC_entry]; simp [ht]
       simp only [Matrix.mul_apply, hz, mul_zero, Finset.sum_const_zero]
-      by_cases hst : s = t <;> simp [Matrix.diagonal_apply, hst, ht]
+      by_cases hst : s = t <;> simp [hst, ht]
   rw [hn]
   ext s t
   by_cases hst : s = t
   · subst t
     cases hs : s j <;> norm_num [hs]
-  · simp [Matrix.diagonal_apply, hst, Matrix.one_apply]
+  · simp [hst]
 
 private lemma parity_prefix (N : ℕ) (hN : 0 < N) :
     (((List.finRange N).filter (fun j => j.val < N - 1)).map
@@ -288,7 +295,7 @@ private lemma parity_prefix (N : ℕ) (hN : 0 < N) :
     change Matrix.diagonal ((l.map S).prod) = Matrix.diagonal _
     congr 1
     funext s
-    simp only [Pi.list_prod_apply, List.map_map, Function.comp_apply]
+    simp only [Pi.list_prod_apply, List.map_map]
     rfl
   have he : (Finset.univ.filter (fun j : Fin N => j.val < N - 1)) =
       Finset.univ.erase last := by
@@ -408,8 +415,8 @@ private lemma evolved_endpoint (N : ℕ) (hN : 0 < N) (J μ t : ℝ) :
 
 private lemma vacuum_annihilator {N : ℕ} (j : Fin N) (s : Assignment N) :
     fullC j s (vacuumIndex N) = 0 := by
-  rw [fullC_entry]
-  simp [vacuumIndex]
+  rw [fullC_entry, vacuumIndex.eq_1]
+  simp
 
 private lemma vacuum_right_annihilator {N : ℕ} (j : Fin N) (M : FullOperator N)
     (s : Assignment N) : (M * fullC j) s (vacuumIndex N) = 0 := by
@@ -484,7 +491,7 @@ private lemma vacuum_contractions {N : ℕ} (a b : Fin N) (hab : a ≠ b)
   simp only [mul_sub, sub_mul, Finset.mul_sum, Finset.sum_mul, Matrix.mul_smul,
     Matrix.smul_mul, Matrix.sub_apply, Matrix.sum_apply, Matrix.smul_apply, smul_eq_mul,
     vacuum_annihilation_contraction, vacuum_four]
-  simp [hab, Ne.symm hab, eq_comm, sub_eq_add_neg]
+  simp [hab, Ne.symm hab, sub_eq_add_neg]
 
 private lemma complex_identity (N : ℕ) (hN : 2 ≤ N) (J μ t : ℝ) :
     let first : Fin N := ⟨0, by omega⟩
