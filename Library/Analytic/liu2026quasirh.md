@@ -852,6 +852,116 @@ The definition of $A_j$ in (3.2) and the Mellin identity (3.4) use the same all-
 
 **Application boundary.** Directly matching the existing kernel's $L$-argument $w=1/6+\delta$, $0<\delta<1/3$, would require $\Re\alpha=-1/3+\delta<0$, outside Theorem 1.3. The missing head also retains its actual Möbius coefficients, natural collision zeros and coherent finite components, and includes primitive pair-conductor norm exceeding $U^{1+\eta}$. Neither a first-moment identity nor fixed-modulus Gauss continuation supplies that joint estimate. The already recorded sufficient inverse-fourth target remains $B<B_*=(31-10\sqrt6)/6$; this source comparison gives no improvement to $B$, complete Robin bound or Lean certification.
 
+## Mollified central moments retain a shorter inverse length
+
+The relevant literature already treats mollified higher-order Hecke moments.
+Its central-value observable, field hypothesis and mollifier range must be
+retained before attempting to use it for the actual $M_\xi S_\xi$ moment.
+
+**The existing cubic supplier.** David–de Faveri–Dunn–Stucky,
+[*Non-vanishing for cubic Hecke $L$-functions*, arXiv:2410.03048v3](https://arxiv.org/html/2410.03048v3#S1.SS2),
+equations (1.26)–(1.27) and the following mollifier-length discussion,
+obtain an unconditional second mollified central-moment asymptotic with
+mollifier length $M\le X^{1/6-\delta}$ for fixed $\delta>0$. This is the
+squarefree cubic row family over the Eisenstein field. The cubic sieve
+and Gauss-series moments already used in the
+[fixed-order note](faveri2026fixedorder.md) remain reused inputs. The
+mollifier discussion supplies neither a sixth-order row theorem nor the
+balanced inverse length $D=\sqrt U$. Güloğlu–Yeşilyurt,
+[*Mollified moments of cubic Dirichlet $L$-functions over the Eisenstein field*,
+arXiv:2301.10979v3](https://arxiv.org/abs/2301.10979v3), published with
+[DOI 10.1016/j.jmaa.2023.128014](https://doi.org/10.1016/j.jmaa.2023.128014),
+obtain their higher mollified moments under GRH; their unconditional
+first mollified moment does not replace that assumption.
+
+**A general-order source.** Diaconu–Ion–Paşol–Popa,
+[*On the second moment and non-vanishing of central values of Hecke
+$L$-functions of $r$-th order characters*, arXiv:2607.27131v1](https://arxiv.org/html/2607.27131v1),
+Theorem 10.5.2, gives twisted second central moments for both squarefree
+rows ($\kappa=1$) and $r$-th-power-free rows ($\kappa=0$). The latter
+retains the positive local weight
+$Q_{\mathfrak a}=\prod_{\mathfrak p\mid\mathfrak a}v_{\mathfrak p}(\mathfrak a)$;
+the family is ordered by ideal norm rather than primitive conductor.
+The stated standing hypothesis in §1.1.1 and §2.1 is that the number
+field contains $\mu_{2r}$. For $r=6$, the current field
+$\mathbb Q(\sqrt{-3})$ does not satisfy that hypothesis. No extension
+removing it or transport from a larger number field is used here.
+Sections 1.4.1 and 4.1.8 explicitly discuss relaxing this premise through
+additional technical work; this leaves an extension to verify rather
+than a general obstruction.
+
+Even within a field allowed by that theorem, its published mollifier
+range is shorter than the required balanced length. Section 10.6,
+equation (38) and Proposition 10.6.3, give
+
+$$
+\theta_\kappa=
+\frac{1-\widetilde\delta_\kappa}
+ {1+(2r-1)(1-\widetilde\delta_\kappa)},
+\qquad M=X^{\theta_\kappa-\varepsilon}.
+$$
+
+For $r=6$ the source parameters specialize to
+
+| Row family | $\widetilde\delta_\kappa$ | $\theta_\kappa$ |
+|---|---|---|
+| Squarefree, $\kappa=1$ | $13/14$ | $1/25$ |
+| Sixth-power-free, $\kappa=0$ | $8/11$ | $3/44$ |
+
+Section 10.1, equation (29), already preserves primes used solely for
+zero extension when reducing a twist: a vanished residue exponent is
+replaced by exponent $r$ at that prime. Its collision zeros must be
+reused, rather than reported as missing from this central-moment source.
+
+The coefficient normalization itself need not be an obstruction. In the
+source's convention the mollifier is
+$\sum_{\mathfrak b}\lambda_{\mathfrak b}q_{\mathfrak b}^{1/2}
+\chi_{\mathfrak a}(\mathfrak b)$ with
+$\lambda_{\mathfrak b}\ll q_{\mathfrak b}^{-1+\varepsilon}$.
+For the current annular inverse factor the candidate coefficients are
+
+$$
+\lambda_{\mathfrak b}
+=D^{-1/2}\mu(\mathfrak b)\xi(\mathfrak b)
+ V(q_{\mathfrak b}/D)q_{\mathfrak b}^{-1/2}.
+$$
+
+On its fixed annulus this satisfies the same coefficient envelope.
+The source takes real mollifier coefficients; for a positive upper
+bound, split a complex candidate into its real and imaginary coefficient
+sequences, with at most a fixed factor two.
+The actual support still has length $D$, however; setting $X=U$ and
+$D=\sqrt U$ does not fit either displayed mollifier range. The published
+absolute summation of its twisted error has envelope
+
+$$
+X^{\widetilde\delta_\kappa+\varepsilon}
+ M^{1+(2r-1)(1-\widetilde\delta_\kappa)+\varepsilon}.
+$$
+
+At the formal balanced substitution $r=6$, $M=\sqrt X$, its exponents
+are $51/28$ for $\kappa=1$ and $30/11$ for $\kappa=0$. These are
+exponents of an available error bound, not lower bounds for the actual
+mollified moments. Retaining additional cancellation in this error
+would require another estimate.
+
+There is also an observable to transport: a bound for
+$|L^S(1/2,\chi_{\mathfrak a})\mathcal M(\mathfrak a)|^2$ does not by
+itself bound the arbitrary annular polynomial product
+$|M_\xi S_\xi|^2$. A central value combines the approximate-functional-
+equation pieces, which can cancel. No positive domination of each
+individual piece follows by deleting the others.
+
+McGoldrick's [*Distribution of central values of Hecke $L$-functions of
+$n$-th order characters*, arXiv:2610.17144v1](https://arxiv.org/html/2610.17144v1),
+Theorems 1.1–1.2, reuses the general-order twisted moment to obtain an
+upper-tail central limit bound and positive moments of order $2k$,
+$0<k<1$, on a squarefree family with the same $\mu_{2n}$ field premise.
+It supplies no inverse fourth moment or estimate of the present signed
+mixed polynomial. These are external analytic inputs with explicit
+application limits, not a new mixed-moment bound, an impossibility
+result, a Robin proof or Lean certification.
+
 ## Reusing the global ordinary-source frontier
 
 At the immutable [QuasiRiemannTracker snapshot `0ce80fdddebb03128d30a917006d8520e7a774b8`](https://github.com/GTimG/QuasiRiemannTracker/tree/0ce80fdddebb03128d30a917006d8520e7a774b8), the merged submissions [Collet #69](https://github.com/GTimG/QuasiRiemannTracker/pull/69) and [Lewko #70](https://github.com/GTimG/QuasiRiemannTracker/pull/70) state stronger boundaries than the Gao value compared above:
