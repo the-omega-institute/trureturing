@@ -371,7 +371,7 @@ def finiteCompile (E : Definitions k m) (mode : Fin k → Bool) (e : Expr k m) :
   (OriginalFiniteResolution.compile (encodeDefinitions E) (Fin.cases false mode) (encode e)).map
     decodeFinite
 
-private theorem finite_compile_sound (E : Definitions k m) (mode : Fin k → Bool)
+theorem finite_compile_sound (E : Definitions k m) (mode : Fin k → Bool)
     (e : Expr k m) (f : OriginalFiniteResolution.FiniteExpr k) (hf : finiteCompile E mode e = some f)
     (p : Fin k → Nat) (v : Fin m → CompletionTree) (hv : Solution E mode p v) :
     value mode p v e = embed (OriginalFiniteResolution.finiteValue p f) := by

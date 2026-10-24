@@ -183,24 +183,30 @@ private theorem elimination_semantics (E : Definitions k m) (i : Fin m)
           rw [value_subst, fixed mode p v hv]
           exact hv l g hE
 
+/-- The root-link substitution is determined by displayed syntax. -/
+def linkSub (i j : Fin m) (a : Nat) : Fin m → Expr k m :=
+  if j = i then
+    if a = 0 then fun l => .var 0 l
+    else fun l => if l = i then .omega else .var 0 l
+  else fun l => if l = i then .var a j else .var 0 l
+
 private theorem eliminate_link (E : Definitions k m) (i j : Fin m) (a : Nat)
     (he : E i = some (.var a j)) :
-    ∃ s : Fin m → Expr k m,
-      (∀ mode p u, Solution (eliminate E i s) mode p u →
-        Solution E mode p (reconstruct mode p s u)) ∧
+      (∀ mode p u, Solution (eliminate E i (linkSub i j a)) mode p u →
+        Solution E mode p (reconstruct mode p (linkSub i j a) u)) ∧
       (∀ mode p v, Solution E mode p v →
-        Solution (eliminate E i s) mode p v ∧ reconstruct mode p s v = v) := by
+        Solution (eliminate E i (linkSub i j a)) mode p v ∧
+          reconstruct mode p (linkSub i j a) v = v) := by
   by_cases hij : j = i
   · subst j
     by_cases ha : a = 0
     · subst a
-      let s : Fin m → Expr k m := fun l => .var 0 l
-      have ident : ∀ mode p u, reconstruct mode p s u = u := by intros; rfl
-      refine ⟨s, elimination_semantics E i (.var 0 i) he s (by intros; rfl) ?_ ?_⟩
-      · intros; rfl
-      · intro mode p v _; exact ident mode p v
-    · let s : Fin m → Expr k m := fun l => if l = i then .omega else .var 0 l
-      refine ⟨s, elimination_semantics E i (.var a i) he s ?_ ?_ ?_⟩
+      simp only [linkSub, ↓reduceIte]
+      exact elimination_semantics E i (.var 0 i) he (fun l => .var 0 l)
+        (by intros; rfl) (by intros; rfl) (by intros; rfl)
+    · simp only [linkSub, ↓reduceIte, ha]
+      let s : Fin m → Expr k m := fun l => if l = i then .omega else .var 0 l
+      apply elimination_semantics E i (.var a i) he s
       · intro l hl; simp [s, hl]
       · intro mode p u
         simp [reconstruct, s, value, iterate_omega]
@@ -211,8 +217,9 @@ private theorem eliminate_link (E : Definitions k m) (i j : Fin m) (a : Nat)
           have eq := positive_period a (Nat.pos_of_ne_zero ha) (v i) (hv i _ he)
           simpa [reconstruct, s, value] using eq.symm
         · simp [reconstruct, s, hl, value]
-  · let s : Fin m → Expr k m := fun l => if l = i then .var a j else .var 0 l
-    refine ⟨s, elimination_semantics E i (.var a j) he s ?_ ?_ ?_⟩
+  · simp only [linkSub, hij, ↓reduceIte]
+    let s : Fin m → Expr k m := fun l => if l = i then .var a j else .var 0 l
+    apply elimination_semantics E i (.var a j) he s
     · intro l hl; simp [s, hl]
     · intro mode p u
       simp [reconstruct, s, value, hij]
@@ -223,6 +230,58 @@ private theorem eliminate_link (E : Definitions k m) (i j : Fin m) (a : Nat)
         simpa [reconstruct, s, value] using (hv i _ he).symm
       · simp [reconstruct, s, hl, value]
 
+/-- Computable syntax and its exact simultaneous reconstruction contract. -/
+structure NormalForm (E : Definitions k m) where
+  system : Definitions k m
+  reconstruction : Fin m → Expr k m
+  guarded : PairGuarded system
+  sound : ∀ mode p u, Solution system mode p u →
+    Solution E mode p (reconstruct mode p reconstruction u)
+  recover : ∀ mode p v, Solution E mode p v →
+    Solution system mode p v ∧ reconstruct mode p reconstruction v = v
+
+/-- Each recursive call removes a root link. Selection uses the least displayed
+state name, and no parameter value or semantic equality is inspected. -/
+def normalize (E : Definitions k m) : NormalForm E := by
+  by_cases empty : links E = ∅
+  · exact ⟨E, fun i => .var 0 i, by
+      intro i a j he
+      have hi : i ∈ links E := by simp [links, he, isLink]
+      rw [empty] at hi
+      exact Finset.notMem_empty i hi,
+      fun _ _ _ hu => hu, fun _ _ _ hv => ⟨hv, rfl⟩⟩
+  · let i := (links E).min' (Finset.nonempty_iff_ne_empty.mpr empty)
+    have hi : i ∈ links E := Finset.min'_mem _ _
+    have link : isLink (E i) = true := (Finset.mem_filter.mp hi).2
+    cases he : E i with
+    | none => simp [he, isLink] at link
+    | some e =>
+      cases e with
+      | ground t => simp [he, isLink] at link
+      | token j c => simp [he, isLink] at link
+      | omega => simp [he, isLink] at link
+      | pair l r => simp [he, isLink] at link
+      | var a j =>
+        let s : Fin m → Expr k m := linkSub i j a
+        obtain ⟨sound, restrict⟩ := eliminate_link E i j a he
+        let q := normalize (eliminate E i s)
+        refine ⟨q.system, fun l => subst q.reconstruction (s l), q.guarded, ?_, ?_⟩
+        · intro mode p u hu
+          have h := sound mode p (reconstruct mode p q.reconstruction u) (q.sound mode p u hu)
+          have eq : reconstruct mode p (fun l => subst q.reconstruction (s l)) u =
+              reconstruct mode p s (reconstruct mode p q.reconstruction u) := by
+            funext l; exact value_subst mode p u q.reconstruction (s l)
+          rwa [eq]
+        · intro mode p v hv
+          obtain ⟨hv', hs⟩ := restrict mode p v hv
+          obtain ⟨hv'', hR⟩ := q.recover mode p v hv'
+          refine ⟨hv'', ?_⟩
+          funext l
+          rw [reconstruct, value_subst, hR]
+          exact congrFun hs l
+termination_by (links E).card
+decreasing_by exact eliminate_decreases E i s hi
+
 /-- Normalization retains all original names. Restriction of any original solution
 is a normalized solution; reconstruction fixes that original solution exactly.
 Every normalized solution reconstructs an original one. No solution is supplied. -/
@@ -231,38 +290,8 @@ theorem root_link_normalization (E : Definitions k m) :
       (∀ mode p u, Solution N mode p u → Solution E mode p (reconstruct mode p R u)) ∧
       (∀ mode p v, Solution E mode p v →
         Solution N mode p v ∧ reconstruct mode p R v = v) := by
-  by_cases empty : links E = ∅
-  · refine ⟨E, fun i => .var 0 i, ?_, ?_, ?_⟩
-    · intro i a j he
-      have hi : i ∈ links E := by simp [links, he, isLink]
-      rw [empty] at hi
-      exact Finset.notMem_empty i hi
-    · intro mode p u hu; exact hu
-    · intro mode p v hv; exact ⟨hv, rfl⟩
-  · obtain ⟨i, hi⟩ := Finset.nonempty_iff_ne_empty.mpr empty
-    have link : isLink (E i) = true := (Finset.mem_filter.mp hi).2
-    obtain ⟨a, j, he⟩ : ∃ a j, E i = some (.var a j) := by
-      cases he : E i with
-      | none => simp [he, isLink] at link
-      | some e => cases e <;> simp [he, isLink] at link ⊢
-    obtain ⟨s, sound, restrict⟩ := eliminate_link E i j a he
-    have dec := eliminate_decreases E i s hi
-    obtain ⟨N, R, guarded, nsound, nrestrict⟩ := root_link_normalization (eliminate E i s)
-    refine ⟨N, fun l => subst R (s l), guarded, ?_, ?_⟩
-    · intro mode p u hu
-      have h := sound mode p (reconstruct mode p R u) (nsound mode p u hu)
-      have eq : reconstruct mode p (fun l => subst R (s l)) u =
-          reconstruct mode p s (reconstruct mode p R u) := by
-        funext l; exact value_subst mode p u R (s l)
-      rwa [eq]
-    · intro mode p v hv
-      obtain ⟨hv', hs⟩ := restrict mode p v hv
-      obtain ⟨hv'', hR⟩ := nrestrict mode p v hv'
-      refine ⟨hv'', ?_⟩
-      funext l
-      rw [reconstruct, value_subst, hR]
-      exact congrFun hs l
-termination_by (links E).card
+  let q := normalize E
+  exact ⟨q.system, q.reconstruction, q.guarded, q.sound, q.recover⟩
 
 #print axioms root_link_normalization
 
