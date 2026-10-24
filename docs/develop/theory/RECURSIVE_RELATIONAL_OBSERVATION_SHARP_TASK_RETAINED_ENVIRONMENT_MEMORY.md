@@ -908,3 +908,815 @@ bounded task-relative contribution.
 [GPO]: https://github.com/the-omega-institute/trureturing/blob/d7305509a5999f9c6cd596ae3312d6d07bf2aaa3/docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION_ATOMIC_GLOBAL_PORT_ORIENTATION.md
 
 ## 追加锚（本行以下为增补区）
+
+## 8. The immediate task and the actual erased-label continuation
+
+**Definition 8.1 (Two alternative tests of one corrected qutrit).**
+Keep Definitions 1.1–1.2, including every real calibration $\theta$,
+all qutrit density inputs, the actual measured environment, and the
+absence of intermediate quantum feedback. In this section coordinates
+are in the ordered basis $(\xi,e,f)$, so that the same reflection is
+$W=\operatorname{diag}(1,1,-1)$. Put
+
+$$
+\begin{gathered}
+P_+=(I_3+W)/2,\qquad P_-=(I_3-W)/2,\qquad
+\Delta_W(X)=P_+XP_++P_-XP_-,\\
+\mathcal F(X)=\sum_{j=0}^1\mathcal J_j(X)
+ =\tfrac12(V_0XV_0^\dagger+V_1XV_1^\dagger)
+ =V_0\Delta_W(X)V_0^\dagger.
+\tag{8.1}
+\end{gathered}
+$$
+
+Thus $\mathcal F$ is the actual one-acquisition successor channel
+when its measured label is discarded; its physical output is
+$B\mathcal F(X)B^\dagger$ in $H$. The environment is still freshly
+prepared, interacted with and measured; discarding its label does not
+replace this operation by a different dilation or a resampled label.
+Since $e^{i\theta W}$ acts by a scalar on each diagonal block,
+$\mathcal F=\operatorname{Ad}_{U_0}\circ\Delta_W$.
+
+Let $E=E_e$, $E^{(1)}=E$, and $E^{(0)}=I_3-E$. A single CPTP
+correction $\mathcal T:M_3\to M_3$ is applied before a late choice
+between two alternatives. The first measures $E$ immediately. The
+second performs the actual acquisition, discards $j$, and then measures
+$E$. Correctness requires both alternatives for every density $\rho$:
+
+$$
+\begin{aligned}
+\operatorname{Tr}(E\mathcal T(\rho))&=\operatorname{Tr}(E\rho),\\
+\operatorname{Tr}(E\mathcal F(\mathcal T(\rho)))
+ &=\operatorname{Tr}(E\mathcal F(\rho)).
+\tag{8.2}
+\end{aligned}
+$$
+
+The complementary result probabilities follow by trace preservation.
+These are alternative tests of the same corrected specimen, not two
+measurements performed successively on fresh copies. The decoder does
+not depend on the late choice. A stronger, initially distinct contract
+requires the first equality and $\mathcal F\circ\mathcal T=\mathcal F$
+on all matrices.
+
+For $z\in\mathbb C$ define the block multiplier
+
+$$
+\mathcal D_z(X)=P_+XP_++P_-XP_-
+       +zP_+XP_-+\overline zP_-XP_+.
+\tag{8.3}
+$$
+
+The scalar parameter $z$ in (8.3) is distinct from the physical basis
+vector $z=e_2$ in (1.1).
+
+**Theorem 8.2 (Exact erased-continuation correction family).**
+For every real $\theta$ and every CPTP $\mathcal T:M_3\to M_3$,
+the following conditions are equivalent:
+
+1. Both actual task equalities (8.2) hold for every qutrit density.
+2. The immediate task is preserved and
+   $\mathcal F\circ\mathcal T=\mathcal F$ on $M_3$.
+3. $\mathcal T=\mathcal D_z$ for a unique $z$ with $|z|\le1$.
+
+In particular the two probability requirements already imply equality
+of the entire erased successor channel, with every untouched finite
+reference. This conclusion concerns the successor after the erased
+acquisition; it does not assert preservation of the state left by the
+immediate task measurement.
+
+Proof. Write $v=v_e$ and $r=(\xi-e)/\sqrt2$. The vectors $(v,r,f)$
+are an orthonormal basis, with $P_+=|v\rangle\langle v|+
+|r\rangle\langle r|$. Use the actual one-step effects (5.6), rather
+than treating the two discarded labels as two separately accessible
+tests. Their average is
+
+$$
+\begin{aligned}
+G:=\mathcal F^\dagger(E)
+ &=\tfrac12(F_0+F_1)
+   =|a\rangle\langle a|+\tfrac38|f\rangle\langle f|,\\
+a&=(\xi-e/2)/\sqrt2=\tfrac14v+\tfrac34r,\\
+G\big|_{(v,r,f)}
+ &=\begin{pmatrix}
+ 1/16&3/16&0\\3/16&9/16&0\\0&0&3/8
+ \end{pmatrix}.
+\tag{8.4}
+\end{aligned}
+$$
+
+This is independent of $\theta$, as is (8.1). All-density separation
+turns (8.2) into $\Phi(E)=E$ and $\Phi(G)=G$, where
+$\Phi=\mathcal T^\dagger$ is unital and completely positive.
+
+Use the fixed-projection implication in (5.8), equivalently the
+conserved-algebra argument of [Bény–Kempf–Kribs, Theorem 5][BKK]
+with input code projection $I_3$. For a normalized Kraus family
+$L_\ell$ of $\mathcal T$, fixing $E$ forces
+$EL_\ell=L_\ell E$ for every $\ell$. In particular
+
+$$
+\Phi(EX)=E\Phi(X),\qquad
+\Phi(XE)=\Phi(X)E
+\quad(X\in M_3).
+\tag{8.5}
+$$
+
+Apply (8.5) to $G$. Set $R_0=|r\rangle\langle r|$ and
+$N_0=|f\rangle\langle f|$. Both $I_3-E=R_0+N_0$ and
+
+$$
+(I_3-E)G(I_3-E)=\tfrac9{16}R_0+\tfrac38N_0
+\tag{8.6}
+$$
+
+are fixed by $\Phi$. Subtracting $3/8$ times the first fixed
+operator from the second gives $\Phi(R_0)=R_0$, because
+$9/16-3/8=3/16\ne0$. Hence $\Phi(N_0)=N_0$. Moreover
+
+$$
+EG(I_3-E)=\tfrac3{16}|v\rangle\langle r|
+\tag{8.7}
+$$
+
+is fixed, as is its adjoint. These four plus-block matrix units and
+$N_0$ span exactly
+
+$$
+\mathcal A=P_+M_3P_+\oplus\mathbb CP_-\simeq M_2\oplus\mathbb C.
+\tag{8.8}
+$$
+
+Thus $\Phi$ fixes this whole algebra. The same fixed-projection
+implication now makes every $L_\ell$ commute with all projections
+of $\mathcal A$. Commutation with $P_+,P_-$ removes cross blocks;
+commutation with the rank-one projections in the plus block makes
+that restriction scalar. Consequently
+
+$$
+L_\ell=\alpha_\ell P_++\beta_\ell P_-,\qquad
+\sum_\ell|\alpha_\ell|^2=\sum_\ell|\beta_\ell|^2=1.
+\tag{8.9}
+$$
+
+This is the component-scalar supplier of [ProbeComponentRigidity][PCR]
+applied to the evaluated algebra (8.8). Substitution in the Kraus sum
+gives (8.3), with
+$z=\sum_\ell\alpha_\ell\overline{\beta_\ell}$ and $|z|\le1$ by
+Cauchy–Schwarz. Its value is unique by testing any nonzero operator
+from the minus block to the plus block. This proves $1\Rightarrow3$.
+
+Conversely, for every $|z|\le1$ the two Kraus matrices
+
+$$
+K_1=P_++\overline zP_-,\qquad
+K_2=\sqrt{1-|z|^2}\,P_-
+\tag{8.10}
+$$
+
+have adjoint-Gram sum $I_3$ and give exactly $\mathcal D_z$.
+It is therefore CPTP. It preserves $E\in\mathcal A$ and satisfies
+$\Delta_W\mathcal D_z=\Delta_W$, so (8.1) gives
+$\mathcal F\mathcal D_z=\mathcal F$. Hence $3\Rightarrow2$;
+$2\Rightarrow1$ follows by taking the $E$ expectation of the successor.
+The successor identity is an identity of complex-linear maps, so it
+tensor-extends to every finite reference. $\square$
+
+The source-specific part of this theorem is the evaluated erased
+effect (8.4) and its implication (8.6)–(8.8) for this actual pair of
+tasks. The conserved-algebra and component-scalar implications are
+literature-attested suppliers, not new general nondisturbance results.
+The theorem is a `repo-derived` deduction at the stated task interface.
+
+## 9. Erasure with retained classical records and subsequent use
+
+**Definition 9.1 (Joint history interface).** Let $\lambda$ denote a
+finite or countable complete classical record obtained before the
+qutrit correction, with input-independent probabilities $p_\lambda$.
+Conditional on $\lambda$, let $\mathcal S_\lambda:M_3\to M_3$ be
+CPTP, and put $\mathcal T=\sum_\lambda p_\lambda\mathcal S_\lambda$.
+For the actual history acquisition one may take
+
+$$
+\lambda=(h,a),\qquad p_{h,a}=2^{-n}r(a\mid h),\qquad
+\mathcal S_{h,a}=\mathcal C_a\circ\operatorname{Ad}_{Q_h}.
+\tag{9.1}
+$$
+
+An actually retained subrecord is any classical postprocessing of
+$\lambda$; including the whole pair in a mathematical comparison
+does not install an unavailable history port. Reference inputs in
+this interface are arbitrary densities $\rho$ on $\mathbb C^3\otimes Z$,
+independent of the initial classical randomness. Actual fairness on
+the embedded qutrit gives the same $p_{h,a}$ also for these inputs.
+
+**Theorem 9.2 (Joint erased successor from averaged task correctness).**
+In Definition 9.1, if the average channel satisfies (8.2), then every
+$\mathcal S_\lambda$ with $p_\lambda>0$ is some
+$\mathcal D_{z_\lambda}$. Thus for every finite reference $Z$,
+
+$$
+\begin{aligned}
+\sum_\lambda p_\lambda|\lambda\rangle\langle\lambda|\otimes
+ ((\mathcal F\circ\mathcal S_\lambda)\otimes\operatorname{id}_Z)(\rho)
+ =\sum_\lambda p_\lambda|\lambda\rangle\langle\lambda|\otimes
+ (\mathcal F\otimes\operatorname{id}_Z)(\rho).
+\tag{9.2}
+\end{aligned}
+$$
+
+The corresponding joint immediate record/result probabilities also
+agree. After the erased acquisition, any common finite continuation
+instrument controlled by the actually retained subrecord has the same
+joint output and successor law on both sides of (9.2), including all
+its retained labels and the untouched reference.
+
+Proof. By Theorem 8.2, $\mathcal T=\mathcal D_z$, and its adjoint
+fixes every projection $P$ of $\mathcal A$. The effects
+$\mathcal S_\lambda^\dagger(P)$ have the projection $P$ as their
+$p_\lambda$-weighted average. Sharp-effect extremality, exactly as in
+the proof of Theorem 2.1, forces
+$\mathcal S_\lambda^\dagger(P)=P$ for each positive $p_\lambda$.
+One can apply this to a finite spanning set of projections of
+$\mathcal A$, so there is no issue of incompatible exceptional sets
+in a countable mixture. With $v=v_e$ and $r=(\xi-e)/\sqrt2$, the
+projections of $v,r,f$ and of $(v+r)/\sqrt2,(v+ir)/\sqrt2$ span its
+Hermitian part.
+The component-scalar argument (8.9) therefore applies to each
+$\mathcal S_\lambda$. In particular it preserves $E$ and its erased
+successor is exactly $\mathcal F$.
+
+Tensor-extension gives each summand of (9.2), proving the joint
+identity before any classical record is discarded. The immediate
+result equality follows from the same summandwise $E$ preservation;
+as a quantum-to-classical channel identity it also preserves the
+joint outcome/reference state. Classical postprocessing preserves
+these equalities. A record-controlled future instrument is one CP
+map on each classical block, with total trace-preserving sum.
+Composing those very maps with the equal blocks in (9.2) proves
+equality of their subnormalized outputs. Iteration proves the claim
+for every specified finite adaptive continuation. All added
+preparations, measurements, selectors, legal controls and records
+are still resources of that continuation. $\square$
+
+The erased first label is absent from (9.2). If it is retained, the
+relevant interface instead has blocks $\mathcal J_j\mathcal T$;
+equality of their sum is insufficient. Theorem 5.2 supplies the
+qutrit-output classification for that labelled task. Likewise (9.2)
+does not assert that an immediate destructive task read leaves the
+original state available for arbitrary further use.
+
+## 10. Coherent storage after correction
+
+**Definition 10.1 (Finite flag, one coherent port, no quantum bypass).**
+Use the finite classical-flag model of
+[Measurement-relative quantum boundary, Definition 1.3][MRQB], with
+system dimension three. For an integer $q\ge1$ and a finite alphabet
+$\mathsf L$, a storage implementation consists of CPTP maps
+
+$$
+\operatorname{Enc}:M_3\longrightarrow\bigoplus_{\ell\in\mathsf L}M_q,
+\qquad
+\operatorname{Dec}((Y_\ell)_\ell)=
+ \sum_\ell\operatorname{Dec}_\ell(Y_\ell),
+\qquad \mathcal T=\operatorname{Dec}\circ\operatorname{Enc}.
+\tag{10.1}
+$$
+
+Each $\operatorname{Dec}_\ell:M_q\to M_3$ is CPTP on the entire
+block. The maps are fixed before the unknown input and late task
+choice. Every input-dependent quantum carrier during the storage
+interval is included in the $q$-dimensional port; the original carrier,
+a quantum environment and preshared entanglement cannot bypass it.
+The flag can depend on the input. Its finite classical size is
+counted separately from $q$ and from the earlier input-independent
+history record. As in the supplier model, it is consumed or discarded
+by decoding before the future task unless a joint flag interface is
+explicitly retained.
+
+**Theorem 10.2 (Erased-task minimum and prescribed block multiplier).**
+In Definition 10.1, the minimum coherent dimension of a channel
+satisfying (8.2) is two. For a prescribed $\mathcal D_z$, $|z|\le1$,
+the exact minimum is
+
+$$
+q_{\min}(\mathcal D_z)=
+\begin{cases}
+2,&z=0,\\
+3,&z\ne0.
+\end{cases}
+\tag{10.2}
+$$
+
+Both values are attained by actual encoders and whole-block CPTP
+decoders. The two-dimensional construction has a two-value classical
+flag. If that flag is also retained at use, its joint successor is
+the flagged instrument described below, rather than an independent
+flag appended to $\mathcal F$.
+
+Proof. Use the rectangular Kraus factorization of the existing
+[CoherentFlagPort][CFP] and its [owning Scribe][CFPB]. Encoder
+operators $B_{\ell a}:\mathbb C^3\to\mathbb C^q$ obey
+$\sum_{\ell,a}B_{\ell a}^\dagger B_{\ell a}=I_3$; decoder operators
+$C_{\ell b}:\mathbb C^q\to\mathbb C^3$ obey
+$\sum_b C_{\ell b}^\dagger C_{\ell b}=I_q$ for each $\ell$.
+Every composite Kraus matrix
+$L_{\ell ba}=C_{\ell b}B_{\ell a}$ has rank at most $q$.
+This factorization applies to arbitrary CPTP maps in (10.1), by the
+finite rectangular Kraus supplier [FiniteKrausRepresentation][KRAUS].
+
+Theorem 8.2 and its fixed-algebra argument apply to this particular
+composite Kraus family, not only to the convenient representation
+(8.10). Thus every member has form (8.9). Normalization requires
+some $\alpha_{\ell ba}\ne0$, whose scalar restriction to the
+two-dimensional plus block gives rank at least two. Hence $q\ge2$.
+If the prescribed $z$ is nonzero, the identity
+
+$$
+z=\sum_{\ell,b,a}\alpha_{\ell ba}\overline{\beta_{\ell ba}}
+\tag{10.3}
+$$
+
+requires a term with both coefficients nonzero. That member is
+invertible on the direct sum of the two blocks and has rank three.
+Therefore $q\ge3$ for $z\ne0$, irrespective of the number of finite
+flags or Kraus operators.
+
+For attainment at $z=0$, take an orthonormal basis $(b_0,b_1)$ of
+$\mathbb C^2$ and the isometry $J:\mathbb C^2\to\mathbb C^3$
+given by $Jb_0=\xi$, $Jb_1=e$. With flag alphabet $\{+,-\}$ set
+
+$$
+\begin{aligned}
+\operatorname{Enc}_+(X)&=J^\dagger XJ,&
+\operatorname{Enc}_-(X)&=\langle f,Xf\rangle
+                              |b_0\rangle\langle b_0|,\\
+\operatorname{Dec}_+(Y)&=JYJ^\dagger,&
+\operatorname{Dec}_-(Y)&=\operatorname{Tr}(Y)|f\rangle\langle f|.
+\tag{10.4}
+\end{aligned}
+$$
+
+The encoder has branch Kraus matrices $J^\dagger$ and
+$|b_0\rangle\langle f|$ with adjoint-Gram sum $P_++P_-=I_3$.
+The plus decoder is trace preserving because $J^\dagger J=I_2$;
+the minus decoder has Kraus matrices $|f\rangle\langle b_i|$,
+$i=0,1$, whose adjoint-Gram sum is $I_2$. In particular it is a
+legal decoder also on the unused $b_1$ direction. Their composite
+is exactly $\Delta_W=\mathcal D_0$. This is the explicit
+orthogonal-component coding and complete padding construction of
+[OrthogonalCoherentEmbedding][OCE] and its [Scribe][OCEB] on the
+actual blocks of dimensions two and one.
+
+For every $z\ne0$ in the disk, take $q=3$, a single flag, the
+identity encoder, and decoder $\mathcal D_z$ with the normalized
+Kraus family (8.10). These maps attain the prescribed channel.
+Together with the lower bounds they prove (10.2), and allowing
+the choice $z=0$ gives the task minimum two.
+
+For completeness, retaining the flag of an arbitrary implementation
+of $\mathcal D_z$ gives CP subchannels
+$\mathcal K_\ell=\operatorname{Dec}_\ell\circ\operatorname{Enc}_\ell$.
+By the same composite Kraus formula put
+
+$$
+\begin{gathered}
+a_\ell=\sum_{b,a}|\alpha_{\ell ba}|^2,\quad
+b_\ell=\sum_{b,a}|\beta_{\ell ba}|^2,\quad
+c_\ell=\sum_{b,a}\alpha_{\ell ba}\overline{\beta_{\ell ba}},\\
+\mathcal K_\ell(X)=a_\ell P_+XP_++b_\ell P_-XP_-
+       +c_\ell P_+XP_-+\overline{c_\ell}P_-XP_+,\\
+\sum_\ell a_\ell=\sum_\ell b_\ell=1,\qquad
+\sum_\ell c_\ell=z.
+\tag{10.5}
+\end{gathered}
+$$
+
+Its actual flagged erased successor, on every matrix, is therefore
+
+$$
+\sum_\ell|\ell\rangle\langle\ell|\otimes
+ \mathcal F\bigl(a_\ell P_+XP_++b_\ell P_-XP_-\bigr).
+\tag{10.6}
+$$
+
+All these identities tensor-extend to a reference. The flag law is
+$\operatorname{Tr}((a_\ell P_++b_\ell P_-)X)$ on a density $X$;
+it need not be input independent. In (10.4), (10.6) is exactly
+
+$$
+\sum_{s\in\{+,-\}}|s\rangle\langle s|\otimes
+                       \mathcal F(P_sXP_s).
+\tag{10.7}
+$$
+
+Thus the joint comparison retaining this flag uses the same initial
+block measurement on the ideal route. Tracing out the flag gives
+$\mathcal F(X)$, but it does not justify replacing (10.7) by a
+product of that marginal and an independent classical flag. Subsequent
+flag-controlled use composes with (10.6) or (10.7), as appropriate.
+$\square$
+
+The finite-flag model and rank factorization are literature-attested
+suppliers: Bluhm–Rauber–Wolf,
+[Quantum compression relative to a set of measurements][BRW],
+Definition 4.1 and the proof of Lemma 5.2. Their Theorem 7.1 supplies
+the maximal-block upper construction; here the relevant algebra is
+the explicitly forced $M_2\oplus\mathbb C$ in (8.8). That theorem
+is an upper bound for general observable families, not a general
+assertion that a generated algebra always gives the exact minimum.
+The lower bounds here use (8.9) on every actual composite Kraus
+matrix, including the extra rank-three obstruction when $z\ne0$.
+This evaluated continuation and prescribed-channel resource cut is
+`repo-derived`; the generic coding construction is not a new result.
+
+**Definition 10.3 (Acquisition cut and storage cut).** The history
+record is retained through the required terminal inverse control.
+Only after that control is invoked does the storage interval of
+Definition 10.1 begin. At this interval the old record can be released
+if no later task requires it. The flag in (10.4) is new, is obtained
+from the actual specimen, and occupies a separate two-value classical
+carrier throughout storage and decoding. The discarded original
+quantum carrier is not an additional storage channel.
+
+For the immediate and erased tasks, use the effect-fiber record,
+its exact iff criterion and its minimum $m_n/2$ for $n\ge1$ from
+Theorem 2.1, with one value at $n=0$. No new record-count theorem is
+needed: the immediate task already supplies necessity. For sufficiency
+its existing representative inverse leaves each compatible history
+as $\rho$ or $W\rho W$. The two residual channels are
+$\mathcal D_1$ and $\mathcal D_{-1}$; (8.2) and
+the full joint successor (9.2) follow. Inserting (10.4) after that
+inverse leaves exactly $\Delta_W(\rho)$ on every history, since
+$\Delta_W\operatorname{Ad}_W=\Delta_W$. Hence the supplied minimum
+history record and the two-dimensional storage upper are attained
+on the same run under their respective control permissions. If both
+the old record and the new flag are retained, their actual erased
+successor is, with the weights of (9.1),
+
+$$
+\sum_{h,a,s}2^{-n}r(a\mid h)
+ |h,a,s\rangle\langle h,a,s|\otimes\mathcal F(P_s\rho P_s),
+\tag{10.8}
+$$
+
+with tensor-extension when a reference is present. Any accessible
+subrecord is obtained by the actual classical postprocessing.
+
+The acquired implementations and costs are the suppliers in
+Theorems 3.1–3.2. At $\theta=\pi/6$ they retain the actual suffix
+of $n-1$ bits and use $n$ inverse-letter invocations for $n\ge1$;
+at $\theta=0$ they use the three-position task accumulator and one
+selected inverse-permutation invocation, with the smaller reached
+alphabets at $n=0,1,2$ as in (3.4). These invocations precede the
+storage encoder. Every original run has $n$ fresh environment
+preparations, interactions, environment measurements and actual
+label acquisitions. The erased continuation adds one of each and
+discards its new label; its terminal task adds one binary measurement.
+The encoder and decoder in (10.4), their calibration, the storage
+flag and any physical addressing or timing apparatus are additional
+resources. No optimality of the combined actuation cost is implied.
+
+To implement a prescribed nonzero $z$ on the original unknown input,
+a valid same-run upper instead first uses the full-word-class inverse
+of ERM Theorem 16.1, and then the three-dimensional implementation
+of $\mathcal D_z$. The old class record remains readable until that
+inverse has been applied and may then be released. At $\pi/6$ the
+supplier retains $n$ labels and uses $n$ inverse-letter invocations;
+at zero angle its six-state permutation accumulator and selected
+inverse suffice. This is a supplied upper with the full-word record,
+not a claim that a nonzero $z$ can be installed after the minimum
+effect-fiber record has already erased the missing coherence. At
+$n=0$ no history acquisition or inverse is needed in either route.
+
+For an arbitrary fixed real calibration, Proposition 2.2 and ERM
+Theorem 16.1 supply existential finite tables on their respective
+record domains. They do not supply unknown-angle acquisition or a
+uniform effective procedure for exact-real word comparison or control
+synthesis. The storage cut does not remove those prerequisites.
+
+The following comparison credits its first and third entries to the
+existing sharp readout and labelled rigidity suppliers:
+
+| Qutrit-output task after the storage decoder | Minimum coherent dimension | Supplier or deduction |
+| --- | --- | --- |
+| Immediate sharp $E$ probability only | $1$ | Sharp measure-and-prepare readout, as in the observable-correction note [NOTE] and the commutative case of [BRW] Theorem 7.1 |
+| Immediate $E$ and the actual erased-label continuation (8.2) | $2$ | Theorems 8.2 and 10.2 on this actual source |
+| Immediate $E$ and the recorded joint $j,y$ continuation with qutrit output | $3$ | Theorem 5.2 forces identity; the existing coherent-port rank bound and the identity port attain dimension three |
+
+In the first entry the encoder measures $E$ and retains its binary
+result classically; the decoder prepares $v_e$ or $f$ according to
+that result. The one-dimensional coherent block carries no unknown
+quantum information. In the third entry identity has only scalar
+identity Kraus matrices, so a nonzero one has rank three. These are
+applications of the cited suppliers, not additional new dimension
+theorems. None of these three qutrit-output cuts classifies storage
+with unrestricted full-$H$ decoder output.
+
+## 11. A late actual full-H acquisition after unrestricted decoding
+
+**Definition 11.1 (Full-H output, common decoder, recorded future).**
+Keep exactly the original acquisition and complete finite or countable
+kernel (1.6). In particular the $n$ original histories are fair on
+all qutrit inputs, and the kernel is independent of that input.
+Allow arbitrary CPTP $\mathcal D_a:M_5\to M_5$, without requiring
+their outputs to lie in $R$. Apply this common decoder before a late
+choice. The two alternatives are the immediate binary test
+$(\widehat E,I_5-\widehat E)$ and one further actual full-$H$
+acquisition followed by that test, retaining its joint outcomes
+$(j,y)$. There is no new correction after the acquisition.
+
+The full-$H$ acquisition operators are exactly those of ERM
+Theorem 2.2. To fix their action also on leaked states, write
+
+$$
+\begin{aligned}
+K_0&=|u\rangle\langle e_0|+
+       2^{-1/2}|v\rangle\langle e_2|+|z\rangle\langle e_4|,\\
+K_1&=|u\rangle\langle e_1|+
+       2^{-1/2}|v\rangle\langle e_2|+|z\rangle\langle e_3|,\\
+A_0&=\cos\theta K_0+i\sin\theta K_1,\qquad
+A_1=i\sin\theta K_0+\cos\theta K_1,\\
+\mathcal A_j(X)&=A_jXA_j^\dagger,\qquad
+\widehat E^{(1)}=\widehat E=BE B^\dagger,\quad
+\widehat E^{(0)}=I_5-\widehat E.
+\tag{11.1}
+\end{aligned}
+$$
+
+Here the ket $v$ in the $K_j$ formulas is the physical vector of
+(1.1), not $v_e$. On $R$ the restricted formula is still
+$A_jB=BV_j/\sqrt2$; it is not substituted for (11.1) on other states.
+The complete task requires, for every qutrit density $\rho$,
+
+$$
+\begin{aligned}
+\sum_{h,a}p_{h,a}\operatorname{Tr}\bigl(
+ \widehat E\,\mathcal D_a(BQ_h\rho Q_h^\dagger B^\dagger)\bigr)
+ &=\operatorname{Tr}(E\rho),\\
+\sum_{h,a}p_{h,a}\operatorname{Tr}\bigl(
+ \widehat E^{(y)}\mathcal A_j(
+ \mathcal D_a(BQ_h\rho Q_h^\dagger B^\dagger))\bigr)
+ &=\operatorname{Tr}\bigl(
+ \widehat E^{(y)}\mathcal A_j(B\rho B^\dagger)\bigr)
+ \quad(j,y\in\{0,1\}),\\
+p_{h,a}&=2^{-n}r(a\mid h).
+\tag{11.2}
+\end{aligned}
+$$
+
+Thus the target is the joint law of the original actual acquisition
+on the original embedded input. Correctness is required for each late
+alternative, not only for an average over a chosen distribution of
+queries. Equation (11.2) assumes no conditional correctness in advance.
+
+**Theorem 11.2 (Full-word record necessity with arbitrary full-H decoding).**
+For every real $\theta$ and integer $n\ge0$, CPTP decoders satisfying
+(11.2) exist if and only if every positive record fiber refines
+$[Q_h]$:
+
+$$
+r(a\mid h)r(a\mid g)>0
+\quad\Longrightarrow\quad [Q_h]=[Q_g].
+\tag{11.3}
+$$
+
+Consequently the exact finite alphabet and fixed binary payload are
+the supplied full-word quantities
+$m_n(\theta)$ and $\lceil\log_2m_n(\theta)\rceil$ of ERM
+Theorem 16.1. They include one value and zero bits at $n=0$.
+Its actual class accumulation and inverse controls attain this
+existence statement on the same specimen. Including the actually
+retained old record in the required joint output leaves this
+existence criterion unchanged. This theorem makes no
+classification assertion about every successful rectangular
+corrected map $M_3\to M_5$.
+
+Proof. At $n=0$ the sole empty word makes (11.3) automatic, and
+identity decoding attains (11.2). For necessity at $n\ge1$, set
+$p=Bv_e$, $P=|p\rangle\langle p|=\widehat E$ and
+$t_j=A_j^\dagger p$. The actual full-$H$ effects for the future
+$y=1$ event are
+
+$$
+G_j^{H}=A_j^\dagger P A_j=|t_j\rangle\langle t_j|,
+\qquad B^\dagger G_j^{H}B=\tfrac12F_j.
+\tag{11.4}
+$$
+
+These are positive effects, not projections rescaled by an asserted
+full-$H$ fairness law. The complementary joint effect is
+$A_j^\dagger A_j-G_j^{H}$, and the two sum to the actual
+$A_j^\dagger A_j$ on all of $H$.
+
+For a fixed record $a$, take finite rectangular Kraus matrices
+$L_{a\nu}:\mathbb C^3\to H$ for
+$X\mapsto\mathcal D_a(BXB^\dagger)$. They obey
+$\sum_\nu L_{a\nu}^\dagger L_{a\nu}=I_3$. Define
+
+$$
+H_a=\sum_\nu L_{a\nu}^\dagger P L_{a\nu},\qquad
+M_{a,j}=\sum_\nu L_{a\nu}^\dagger G_j^{H}L_{a\nu}.
+\tag{11.5}
+$$
+
+Then $0\le H_a\le I_3$ and $M_{a,j}\ge0$. The first equality
+of (11.2) gives
+$\sum_{h,a}p_{h,a}Q_h^\dagger H_aQ_h=E$.
+By the existing sharp-effect argument of Theorem 2.1, every
+positive summand has $H_a=Q_hEQ_h^\dagger$. Its source-specific
+fiber calculation (2.2) says that histories sharing $a$ obey
+
+$$
+Q_h=Q_g\quad\hbox{or}\quad Q_h=Q_gW.
+\tag{11.6}
+$$
+
+The spectator phase in that calculation is retained; all these
+histories have the same known length. This use of Theorem 2.1
+already includes arbitrary full-$H$ output.
+
+The future equation for $j=0,y=1$ gives the positive-operator identity
+
+$$
+\sum_{h,a}p_{h,a}Q_h^\dagger M_{a,0}Q_h
+                   =\tfrac12F_0
+                   =\tfrac12|w_+\rangle\langle w_+|.
+\tag{11.7}
+$$
+
+Every positive summand on the left is supported in the line
+$\mathbb Cw_+$. Indeed its quadratic form on $w_+^\perp$ is
+nonnegative and has sum zero there, so it vanishes there; positivity
+then annihilates that subspace. This argument is valid for a
+countable record alphabet. In the Kraus expansion (11.5) it implies
+
+$$
+L_{a\nu}^\dagger t_0\in\mathbb C Q_hw_+
+\quad\text{for every }\nu\text{ whenever }r(a\mid h)>0.
+\tag{11.8}
+$$
+
+Suppose the second, unequal possibility of (11.6) occurs at one
+positive $a$. Since $Ww_+=w_-$, (11.8) puts each vector
+$L_{a\nu}^\dagger t_0$ in both $\mathbb C Q_gw_+$ and
+$\mathbb C Q_gw_-$. These are distinct lines: $w_+,w_-$ are
+unit vectors with overlap $1/4$, by (5.7). Their intersection is
+zero. Hence $L_{a\nu}^\dagger t_0=0$ for all $\nu$, and
+$M_{a,0}=0$.
+
+On the other hand $H_a=Q_gEQ_g^\dagger$ gives
+
+$$
+\operatorname{Tr}\bigl(P\,
+ \mathcal D_a(BQ_gEQ_g^\dagger B^\dagger)\bigr)=1.
+\tag{11.9}
+$$
+
+The argument of this $P$ expectation is a positive trace-one
+matrix. A rank-one projection has expectation one only on its
+own pure state: its orthogonal-complement trace is zero, positivity
+annihilates that complement, and trace one fixes the remaining
+coefficient. Thus the decoded state in (11.9) is exactly $P$.
+But the actual source supplies the nonzero overlap
+
+$$
+\begin{aligned}
+\langle t_0,p\rangle
+ &=\langle p,A_0p\rangle
+   =\frac{\langle v_e,V_0v_e\rangle}{\sqrt2}
+   =\frac{e^{i\theta}}{4\sqrt2},\\
+\operatorname{Tr}(G_0^{H}P)&=\frac1{32}>0.
+\tag{11.10}
+\end{aligned}
+$$
+
+Here the last equality follows from
+$V_0^\dagger v_e=e^{-i\theta}w_+$ and (5.7), with the
+conjugate-linear-first convention of ERM. Equations (11.9)–(11.10)
+make the future $G_0^{H}$ probability of that decoded state positive,
+whereas $M_{a,0}=0$ makes the same probability zero. This contradiction
+excludes $Q_h=Q_gW$. Therefore (11.3) is necessary. The proof uses
+only a positive support consequence of the future effect; it does
+not promote the unsharp equation (11.7) to branchwise equality
+with $F_0/2$.
+
+Conversely suppose (11.3). Choose a representative $Q_a$ for each
+positive record and use the supplied full-$H$ unitary inverse
+
+$$
+D_a=BQ_a^\dagger B^\dagger+(I_5-P_R),\qquad
+\mathcal D_a=\operatorname{Ad}_{D_a}.
+\tag{11.11}
+$$
+
+Its two orthogonal blocks are unitary. For every compatible history,
+$Q_a^\dagger Q_h$ is scalar, so it recovers $B\rho B^\dagger$
+on that very branch, also jointly with any untouched reference.
+Applying the actual maps $\mathcal A_j$ and the specified binary
+test proves all four future equations of (11.2), including the
+complementary outcomes, and the immediate equality. This is the
+same common decoder before either possible late choice.
+
+Every history has positive original probability. Different full
+word classes therefore require disjoint nonempty sets of positive
+record values, and recording the class attains that bound. The
+cardinality, fixed payload and acquired inverse uppers are precisely
+the suppliers of ERM Theorem 16.1; only their necessity for the
+present full-$H$ future task has been established here. When $n=0$
+there is only the empty class, and identity is the inverse in
+(11.11). No division of $m_0=1$ by two is involved. $\square$
+
+For this upper construction the full retained joint interface is
+explicit. For any finite reference density $\rho$ and every positive
+$(h,a)$, the state after correction is
+$(B\otimes I_Z)\rho(B^\dagger\otimes I_Z)$. The joint record and
+subnormalized successor after the new acquisition is consequently
+
+$$
+\sum_{h,a,j}2^{-n}r(a\mid h)|h,a,j\rangle\langle h,a,j|
+ \otimes\tfrac12(BV_j\otimes I_Z)\rho
+                              (V_j^\dagger B^\dagger\otimes I_Z).
+\tag{11.12}
+$$
+
+Applying the actual terminal binary test to each block gives its
+joint $(a,j,y)$ law, and any actually retained history subrecord
+can also be kept. This proves sufficiency for a joint task that
+also retains the old record; its necessity follows by forgetting
+that record and applying (11.2). Formula (11.12) is attained by
+(11.11); it is not inferred for every decoder satisfying only
+(11.2). Further
+successive instruments agree on this upper because the original
+embedded state was recovered before the late choice.
+
+There are the original $n$ preparations, interactions, environment
+measurements and label acquisitions. The continuation alternative
+adds one of each, retains the new label, and performs one terminal
+binary task measurement. The immediate alternative performs only
+the binary task measurement after correction. Full-word acquisition
+and inverse use at $\pi/6$ and zero angle are exactly the suppliers
+specified in Definition 10.3. Their history record is needed through
+the inverse, and can be released afterwards unless a later task
+requires it; retaining it instead uses (11.12). None of these
+attained costs is a minimum total hardware or control-cost theorem.
+
+The Heisenberg correction interface and positivity implications
+are those of [Bény–Kempf–Kribs, Definition 8 and Theorem 5][BKK].
+Their Theorem 9 concerns algebras with compressed Kraus-product
+commutators; it is not a license to replace the actual unsharp
+full-$H$ effects by fair qutrit projections. The source-relative
+increment in Theorem 11.2 is the combination of the supplied
+effect fiber with the actual full-$H$ rank-one support (11.7)
+and nonzero overlap (11.10). This `repo-derived` existence and
+record-minimum deduction does not assert rectangular corrected-map
+identity or transport Theorem 10.2 to full-$H$ storage.
+
+## 12. Domains and independent realization requirements
+
+**Definition 12.1 (Scope of the two continuation contracts).**
+Sections 8–10 use qutrit output, the actual erased-label acquisition,
+and the fixed finite-flag storage model. Section 11 uses unrestricted
+full-$H$ output and retains the actual future label; its conclusion
+is existence of decoders and the exact record refinement. The
+two output domains, the two future record interfaces, and the
+pre-correction and storage resource cuts are distinct. The preceding
+theorems resolve these bounded contracts without changing the
+erased-history minimax, signed P/Q, autonomous STOP or fixed-apparatus
+settlements cited in §7. A classification of all successful leaked
+corrected maps, a coherent-port minimum for that leaked-output
+contract, and finite-precision or unknown-calibration versions are
+not consequences of the results above.
+
+The common actual source throughout is (1.1)–(1.4), with all qutrit
+inputs, actual fresh-environment acquisitions, complete classical
+records, the same inaccessible references, and the stated calibrated
+control permissions. The finite-flag dimension counts do not infer
+new native controls or reduce the dimension of the physical output
+$H$. In particular the independent five-mode waiting and filter
+experiments of [MRQB] retain their own inputs, detectors, finite
+records and filter hypotheses; their all-filter classification is
+not an identification with this measured-label source.
+
+An independently meaningful spatial view would require its own
+acquisition and a proved correspondence to these actual preparations,
+actions and joint readouts. A physical-duration view would require
+more than the integer number of acquisitions. An identification with
+the native atomic $\alpha/\beta$ process would require a common
+initialization, lawful selectors and installed retained-use operations,
+with their resource and successor correspondence. None of these
+additional structures is assumed or constructed in §§8–11. The
+atomic global-port results, NCR/PVC/PR57/PG/Atlas results and the
+original fixed-model open bridges keep their original domains.
+Consequently the exact task-relative recovery statements above
+do not supply a mutually recoverable space/time/boundary/memory
+structure for the continuing programme.
+
+[MRQB]: RECURSIVE_RELATIONAL_OBSERVATION_MEASUREMENT_RELATIVE_QUANTUM_BOUNDARY.md
+[CFP]: ../../../D5/S3/Quantum/Reduction/CoherentFlagPort.lean
+[CFPB]: ../../../Blueprint/D5/S3/Quantum/Reduction/CoherentFlagPort.scribe.cs
+[OCE]: ../../../D5/S3/Quantum/Reduction/OrthogonalCoherentEmbedding.lean
+[OCEB]: ../../../Blueprint/D5/S3/Quantum/Reduction/OrthogonalCoherentEmbedding.scribe.cs
+[BRW]: https://arxiv.org/abs/1708.04898v4
+
+## 追加锚（本行以下为增补区）
