@@ -17,7 +17,7 @@ Per-declaration judgement form:
 * claim: proof_shape: bind-only (source assertion); consumer: result.
 * witness_neg: proof_shape: bind-only; consumer: result; escape_witness: none.
   The binomial expansion is supplied by fwdDiff_iter_eq_sum_shift; finite sums,
-  denominator clearing and the rational bounds on exp 1 finish by normalization.
+  rational bounds on each ratio from the bounds on exp 1 finish by linear arithmetic.
 * result: proof_shape: bind-only; settling result; escape_witness: none.
   Universal nonnegativity contradicts witness_neg at k = 3, n = 1, x = 1.
 -/
@@ -51,12 +51,6 @@ private theorem witness_neg : (fwdDiff 1)^[3] (fun m => g m 1) 1 < 0 := by
   have h2 : 0 < e - 5 / 2 := by linarith only [heLo]
   have h3 : 0 < e - 8 / 3 := by linarith only [heLo]
   have h4 : 0 < e - 65 / 24 := by linarith only [heLo]
-  have hsquare : e ^ 2 ≤ (2.7182818286 : ℝ) ^ 2 :=
-    pow_le_pow_left₀ hepos.le heHi.le 2
-  have hcube : e ^ 3 ≤ (2.7182818286 : ℝ) ^ 3 :=
-    pow_le_pow_left₀ hepos.le heHi.le 3
-  have hpoly : 12 * e ^ 3 + 34 * e ^ 2 - 457 * e + 750 < 0 := by
-    linarith only [heLo, hsquare, hcube]
   have hr0 : R 0 1 = e - 1 := by
     norm_num [R, Finset.sum_range_succ, Nat.factorial, e]
   have hr1 : R 1 1 = e - 2 := by
@@ -79,21 +73,17 @@ private theorem witness_neg : (fwdDiff 1)^[3] (fun m => g m 1) 1 < 0 := by
     norm_num only [g, Nat.reduceSub, hr0, hr1, hr2, hr3, hr4]
     <;> ring
   rw [hg]
-  have hid :
-      (e - 8 / 3) / (e - 65 / 24) - 3 * (e - 5 / 2) / (e - 8 / 3) +
-          3 * (e - 2) / (e - 5 / 2) - (e - 1) / (e - 2) =
-        (12 * e ^ 3 + 34 * e ^ 2 - 457 * e + 750) /
-          (288 * (e - 2) * (e - 5 / 2) * (e - 8 / 3) * (e - 65 / 24)) := by
-    have k1 : -2 + e ≠ 0 := by linarith only [heLo]
-    have k2 : -5 + e * 2 ≠ 0 := by linarith only [heLo]
-    have k3 : -8 + e * 3 ≠ 0 := by linarith only [heLo]
-    have k4 : -65 + e * 24 ≠ 0 := by linarith only [heLo]
-    rw [eq_div_iff (mul_pos (mul_pos (mul_pos (mul_pos (by norm_num) h1) h2) h3) h4).ne']
-    field_simp [ne_of_gt h1, ne_of_gt h2, ne_of_gt h3, ne_of_gt h4, k1, k2, k3, k4]
-    ring
-  rw [hid]
-  exact div_neg_of_neg_of_pos hpoly
-    (mul_pos (mul_pos (mul_pos (mul_pos (by norm_num) h1) h2) h3) h4)
+  have b4 : (e - 8 / 3) / (e - 65 / 24) < 5188239 / 1000000 := by
+    rw [div_lt_iff₀ h4]; linarith only [heLo]
+  have b3 : (4229025 / 1000000 : ℝ) < (e - 5 / 2) / (e - 8 / 3) := by
+    rw [lt_div_iff₀ h3]; linarith only [heHi]
+  have b2 : (e - 2) / (e - 5 / 2) < 3290617 / 1000000 := by
+    rw [div_lt_iff₀ h2]; linarith only [heLo]
+  have b1 : (2392211 / 1000000 : ℝ) < (e - 1) / (e - 2) := by
+    rw [lt_div_iff₀ h1]; linarith only [heHi]
+  have b3' : (e - 5 / 2) / (e - 8 / 3) * 3 = 3 * (e - 5 / 2) / (e - 8 / 3) := by ring
+  have b2' : (e - 2) / (e - 5 / 2) * 3 = 3 * (e - 2) / (e - 5 / 2) := by ring
+  linarith only [b4, b3, b2, b1, b3', b2']
 
 /-- Sitnik's universal forward-difference nonnegativity assertion is false. -/
 theorem result : ¬ claim := by
