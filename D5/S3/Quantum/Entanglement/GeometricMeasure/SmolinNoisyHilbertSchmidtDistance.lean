@@ -7,6 +7,7 @@
    digest: Exact Hilbert–Schmidt distances of noisy Smolin states for four partitions. -/
 
 import D5.S3.QuantumChannels.PauliThreeWeightBayesianInverseUniqueness
+import D5.S3.QuantumChannels.ChannelTimeReversalNoGo
 import D5.S3.Quantum.QuantumChannels.IptPptSquaredEquivalence
 import D5.S3.Quantum.Information.SLDSpectralEnergy
 import D5.S3.Quantum.QuantumChannels.PositiveFilterTransposeRefutation
@@ -149,19 +150,6 @@ private theorem axis_sigma (j : Fin 3) :
       sigma j.succ := by
   fin_cases j <;> rfl
 
-private theorem spectral_density (j : Fin 3) (s : Bool) :
-    IsDensity (D5.S3.Quantum.Magic.WignerDistanceMinimum.spectral (axis j)
-      (if s then 1 else 0)) := by
-  have hj : axis j ≠ .I := by fin_cases j <;> decide
-  obtain ⟨_, U, _, _, _, _, _, he⟩ :=
-    D5.S3.Quantum.Magic.WignerDistanceMinimum.spectral_stabilizer (axis j)
-      (if s then 1 else 0) hj
-  refine ⟨?_, ?_⟩
-  · rw [he]
-    exact Matrix.posSemidef_vecMulVec_self_star _
-  · exact D5.S3.Quantum.Information.SeparableStateLocalUnitaryStabilizerObstruction.pauli_projector_trace
-      (axis j) hj s
-
 private def parityProduct (j : Fin 3) (s : Bool × Bool × Bool) : Matrix Q Q ℂ :=
   let P := D5.S3.Quantum.Magic.WignerDistanceMinimum.spectral (axis j)
   P (if s.1 then 1 else 0) ⊗ₖ (P (if s.2.1 then 1 else 0) ⊗ₖ
@@ -188,9 +176,24 @@ private theorem tau_full (j : Fin 3) : tau j ∈ SepFull := by
   · norm_num
   · intro s _
     apply subset_convexHull ℝ _
-    refine ⟨_, _, _, _, spectral_density j s.1, spectral_density j s.2.1,
-      spectral_density j s.2.2,
-      spectral_density j (Bool.xor s.1 (Bool.xor s.2.1 s.2.2)), rfl⟩
+    refine ⟨_, _, _, _, ?_, ?_, ?_, ?_, rfl⟩
+    · exact ⟨by simpa [axis] using
+          D5.S3.QuantumChannels.ChannelTimeReversalNoGo.PauliChannels.density_psd j s.1,
+        by simpa [axis] using
+          D5.S3.QuantumChannels.ChannelTimeReversalNoGo.PauliChannels.density_trace j s.1⟩
+    · exact ⟨by simpa [axis] using
+          D5.S3.QuantumChannels.ChannelTimeReversalNoGo.PauliChannels.density_psd j s.2.1,
+        by simpa [axis] using
+          D5.S3.QuantumChannels.ChannelTimeReversalNoGo.PauliChannels.density_trace j s.2.1⟩
+    · exact ⟨by simpa [axis] using
+          D5.S3.QuantumChannels.ChannelTimeReversalNoGo.PauliChannels.density_psd j s.2.2,
+        by simpa [axis] using
+          D5.S3.QuantumChannels.ChannelTimeReversalNoGo.PauliChannels.density_trace j s.2.2⟩
+    · let e := Bool.xor s.1 (Bool.xor s.2.1 s.2.2)
+      exact ⟨by simpa [axis, e] using
+          D5.S3.QuantumChannels.ChannelTimeReversalNoGo.PauliChannels.density_psd j e,
+        by simpa [axis, e] using
+          D5.S3.QuantumChannels.ChannelTimeReversalNoGo.PauliChannels.density_trace j e⟩
 
 private theorem boundary_full : noisy (1 / 3) ∈ SepFull := by
   have he : noisy (1 / 3) = ∑ j : Fin 3, (1 / 3 : ℝ) • tau j := by
