@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:f8767d582295a04437d1511bea2a6691adcd3bee26a344f55b0d1354b7bf7721
+  normalized_sha256: sha256:f8767d582295a04437d1511bea2a6691adcd3bee26a344f55b0d1354b7bf7721
+cas_ref: sha256:f8767d582295a04437d1511bea2a6691adcd3bee26a344f55b0d1354b7bf7721
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 道、道迹、名系的词汇约定及黄金比例为道迹候选的归类；没有黄金比例的等式或存在性断言。
+    previous_atom_id: 82a974293ca699fc85e0eed013de605f96305732c6c7f99bb2665d322cb2fda4
+    next_atom_id: fdd6af0fb14b590bb2294533bf5f4c606f51d7675f1183ced23053b02444caf5

@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:d0d3019ea626d89ae62f1c207e79da339afaddc2360f3bb6f9f931688a686959
+  normalized_sha256: sha256:d0d3019ea626d89ae62f1c207e79da339afaddc2360f3bb6f9f931688a686959
+cas_ref: sha256:d0d3019ea626d89ae62f1c207e79da339afaddc2360f3bb6f9f931688a686959
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 后文条件命题的假设清单开头，列出二分要求；未断言具体动力满足它，也不包含黄金结论。
+    previous_atom_id: 4b42131679c7a3b075d5e2b95f231e30aec2efb8521b7ebcbfbe882104050ff4
+    next_atom_id: 30e154611b3afe9501ebcd218333399f20b3a86a6b269b330a1bf9da373e94ff

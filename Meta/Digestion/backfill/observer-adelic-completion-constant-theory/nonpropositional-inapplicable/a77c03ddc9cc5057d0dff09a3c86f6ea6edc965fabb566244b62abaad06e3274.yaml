@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:a77c03ddc9cc5057d0dff09a3c86f6ea6edc965fabb566244b62abaad06e3274
+  normalized_sha256: sha256:a77c03ddc9cc5057d0dff09a3c86f6ea6edc965fabb566244b62abaad06e3274
+cas_ref: sha256:a77c03ddc9cc5057d0dff09a3c86f6ea6edc965fabb566244b62abaad06e3274
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 哲学对立词列表中的离线及对偶层次的语义引言；不声称实际存在离线零点或反射定理。
+    previous_atom_id: a3f78d732cf92a8585508717c1c88369af8da4edb018a194badf224b74c19299
+    next_atom_id: 4aba88cb29245ca5cd62d6cc79e37207693a8f27dcd9261f3b3fb146dad6f09f

@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:2b675a42eebe41dfd5380258c0ed259a66848e633b4d5898d00eb3016542ad9d
+  normalized_sha256: sha256:2b675a42eebe41dfd5380258c0ed259a66848e633b4d5898d00eb3016542ad9d
+cas_ref: sha256:2b675a42eebe41dfd5380258c0ed259a66848e633b4d5898d00eb3016542ad9d
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: RH 路线的研究组织说明，明确不宣称证明 RH；三个研究对象的数学内容在后续 atom。
+    previous_atom_id: b1fcabad2ec3b80d26c9dca711e3c2cf67835fd8696cb5d4f5321e27ff31f2d0
+    next_atom_id: cf5cae47a27b617b9cc5e9ea9bf11244017b94e9d61a85f49cef659458ef5d12
