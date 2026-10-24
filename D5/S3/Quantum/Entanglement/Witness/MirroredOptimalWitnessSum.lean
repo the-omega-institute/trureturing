@@ -7,6 +7,11 @@
    digest: Distinct optimal witnesses have an optimal sum and overlapping detection sets. -/
 import D5.S3.Quantum.Entanglement.WitnessKernelTraceCriteriaRefutation
 import D5.S3.Quantum.Information.SLDSpectralEnergy
+import D5.S3.Quantum.Entanglement.ChoiKiemKye.ConstructionReduction
+import D5.S3.Quantum.QuantumChannels.TwoPositiveTransitionTrace
+import D5.S3.QuantumBounds.PeritoTsirelson
+import D5.S3.Quantum.Reduction.FiniteEdgeProbeCorrespondence
+import D5.S3.Observer.Existence.EmpiricalReflexiveSeparation
 
 /-! # Optimal witnesses with an optimal sum
 
@@ -21,6 +26,12 @@ open Matrix
 open scoped BigOperators ComplexOrder
 open D5.S3.Quantum.Entanglement.WitnessKernelTraceCriteriaRefutation (blockPositive)
 open D5.S3.Quantum.Information.SLDSpectralEnergy (IsDensity)
+open D5.S3.Quantum.Entanglement.ChoiKiemKye.ConstructionReduction (tensor)
+open D5.S3.Quantum.QuantumChannels.TwoPositiveTransitionTrace (trace_rank_one)
+open D5.S3.QuantumBounds.PeritoTsirelson (maxEntangledVector maxEntangled max_entangled_density)
+open D5.S3.QuantumBounds.CHSHWitness (complex_sqrt_two_ne_zero)
+open D5.S3.Quantum.Reduction.FiniteEdgeProbeCorrespondence (probes construction)
+open D5.S3.Observer.Existence.EmpiricalReflexiveSeparation (complex_sqrt_two_sq)
 
 /-- A Hermitian block-positive operator detecting a density matrix. -/
 def IsWitness {d : ℕ} (A : Matrix (Fin d × Fin d) (Fin d × Fin d) ℂ) : Prop :=
@@ -45,9 +56,6 @@ def claim : Prop :=
       (∃ ρ, Detects M ρ ∧ ¬ Detects W ρ) ∧
       (∃ ρ, Detects W ρ ∧ Detects M ρ)
 
-private def tensor {d : ℕ} (x y : Fin d → ℂ) : Fin d × Fin d → ℂ :=
-  fun p => x p.1 * y p.2
-
 private def wr {d : ℕ} [NeZero d] (r : Fin d) :
     Matrix (Fin d × Fin d) (Fin d × Fin d) ℂ :=
   single (0, r) (0, r) 1 + single (r, 0) (r, 0) 1 -
@@ -55,9 +63,6 @@ private def wr {d : ℕ} [NeZero d] (r : Fin d) :
 
 private def pairVector {d : ℕ} [NeZero d] (r : Fin d) : Fin d × Fin d → ℂ :=
   (Real.sqrt 2 : ℂ)⁻¹ • (Pi.single (0, 0) 1 + Pi.single (r, r) 1)
-
-private def omega {d : ℕ} : Fin d × Fin d → ℂ :=
-  fun p => if p.1 = p.2 then (Real.sqrt d : ℂ)⁻¹ else 0
 
 private theorem wr_hermitian {d : ℕ} [NeZero d] (r : Fin d) : (wr r).IsHermitian := by
   change (wr r)ᴴ = wr r
@@ -78,7 +83,8 @@ private theorem product_expectation {d : ℕ} [NeZero d] (r : Fin d) (x y : Fin 
     star (tensor x y) ⬝ᵥ (wr r *ᵥ tensor x y) =
       (Complex.normSq (x 0 * star (y r) - x r * star (y 0)) : ℂ) := by
   rw [wr_expectation, Complex.normSq_eq_conj_mul_self]
-  simp only [tensor, star_mul, Complex.star_def, map_sub, map_mul, Complex.conj_conj]
+  simp only [tensor, vecMulVec_apply, star_mul, Complex.star_def, map_sub, map_mul,
+    Complex.conj_conj]
   ring
 
 private theorem wr_blockPositive {d : ℕ} [NeZero d] (r : Fin d) :
@@ -88,32 +94,22 @@ private theorem wr_blockPositive {d : ℕ} [NeZero d] (r : Fin d) :
   rw [product_expectation, Complex.zero_le_real]
   exact Complex.normSq_nonneg _
 
-private theorem trace_projector {n : Type*} [Fintype n] (A : Matrix n n ℂ) (v : n → ℂ) :
-    (A * vecMulVec v (star v)).trace = star v ⬝ᵥ (A *ᵥ v) := by
-  rw [mul_vecMulVec, trace_vecMulVec, dotProduct_comm]
-
 private theorem pair_density {d : ℕ} [NeZero d] (r : Fin d) (hr : r ≠ 0) :
     IsDensity (vecMulVec (pairVector r) (star (pairVector r))) := by
   refine ⟨posSemidef_vecMulVec_self_star _, ?_⟩
-  have hz : (Real.sqrt 2 : ℂ) ≠ 0 := by
-    exact_mod_cast (ne_of_gt (Real.sqrt_pos.mpr (by norm_num : (0 : ℝ) < 2)))
-  have hsq : (Real.sqrt 2 : ℂ) ^ 2 = 2 := by
-    exact_mod_cast Real.sq_sqrt (by norm_num : (0 : ℝ) ≤ 2)
-  rw [trace_vecMulVec]
-  simp [pairVector, dotProduct_smul, dotProduct_add, star_smul, star_add,
-    dotProduct_single, hr, Ne.symm hr]
-  field_simp
-  linear_combination -hsq
+  rw [trace_vecMulVec, dotProduct_comm]
+  simpa only [probes, Prod.mk.injEq, true_and, false_and, Ne.symm hr, ite_false,
+    pairVector] using
+    (construction (fun _ : Unit => ((0 : Fin d), (0 : Fin d)))
+      (fun _ : Unit => (r, r))).1 (.inr ())
 
 private theorem pair_expectation {d : ℕ} [NeZero d] (r s : Fin d)
     (hr : r ≠ 0) :
     (wr r * vecMulVec (pairVector s) (star (pairVector s))).trace =
       if r = s then -1 else 0 := by
-  rw [trace_projector, wr_expectation]
-  have hz : (Real.sqrt 2 : ℂ) ≠ 0 := by
-    exact_mod_cast (ne_of_gt (Real.sqrt_pos.mpr (by norm_num : (0 : ℝ) < 2)))
-  have hsq : (Real.sqrt 2 : ℂ) ^ 2 = 2 := by
-    exact_mod_cast Real.sq_sqrt (by norm_num : (0 : ℝ) ≤ 2)
+  rw [trace_rank_one, wr_expectation]
+  have hz : (Real.sqrt 2 : ℂ) ≠ 0 := complex_sqrt_two_ne_zero
+  have hsq : (Real.sqrt 2 : ℂ) ^ 2 = 2 := complex_sqrt_two_sq
   by_cases h : r = s
   · subst s
     simp [pairVector, hr, Ne.symm hr]
@@ -122,27 +118,21 @@ private theorem pair_expectation {d : ℕ} [NeZero d] (r s : Fin d)
   · simp [pairVector, hr, h]
 
 private theorem omega_density {d : ℕ} [NeZero d] :
-    IsDensity (vecMulVec (omega (d := d)) (star omega)) := by
+    IsDensity (maxEntangled (Fin d)) := by
   refine ⟨posSemidef_vecMulVec_self_star _, ?_⟩
-  have hd : (d : ℝ) > 0 := by exact_mod_cast Nat.pos_of_ne_zero (NeZero.ne d)
-  have hz : (Real.sqrt d : ℂ) ≠ 0 := by
-    exact_mod_cast (ne_of_gt (Real.sqrt_pos.mpr hd))
-  have hsq : (Real.sqrt d : ℂ) ^ 2 = (d : ℂ) := by
-    exact_mod_cast Real.sq_sqrt (le_of_lt hd)
-  simp [trace_vecMulVec, dotProduct, omega, Fintype.sum_prod_type]
-  field_simp
-  linear_combination -hsq
+  exact (max_entangled_density (Fin d)).2
 
 private theorem omega_expectation {d : ℕ} [NeZero d] (r : Fin d) (hr : r ≠ 0) :
-    (wr r * vecMulVec (omega (d := d)) (star omega)).trace = -2 / (d : ℂ) := by
-  rw [trace_projector, wr_expectation]
+    (wr r * maxEntangled (Fin d)).trace = -2 / (d : ℂ) := by
+  rw [maxEntangled, trace_rank_one, wr_expectation]
   have hz : (Real.sqrt d : ℂ) ≠ 0 := by
     exact_mod_cast (ne_of_gt (Real.sqrt_pos.mpr
       (by exact_mod_cast Nat.pos_of_ne_zero (NeZero.ne d) : (0 : ℝ) < d)))
   have hsq : (Real.sqrt d : ℂ) ^ 2 = (d : ℂ) := by
     exact_mod_cast Real.sq_sqrt (by positivity : (0 : ℝ) ≤ d)
-  simp only [omega, hr, Ne.symm hr, ite_false, ite_true, star_zero, mul_zero, add_zero,
-    zero_sub, Complex.star_def, map_inv₀, Complex.conj_ofReal]
+  simp only [maxEntangledVector, Fintype.card_fin, Complex.ofReal_inv, hr, Ne.symm hr,
+    ite_false, ite_true, star_zero, mul_zero, add_zero, zero_sub, Complex.star_def,
+    map_inv₀, Complex.conj_ofReal]
   rw [div_eq_mul_inv, ← hsq]
   field_simp
   ring
@@ -160,15 +150,16 @@ private theorem conjugate_products_span (d : ℕ) :
           Complex.I • (tensor (x + Complex.I • y) (star (x + Complex.I • y)) -
             tensor x (star x) - tensor y (star y))) := by
     ext p
-    simp only [tensor, Pi.add_apply, Pi.sub_apply, Pi.smul_apply, Pi.star_apply,
+    simp only [tensor, vecMulVec_apply, Pi.add_apply, Pi.sub_apply, Pi.smul_apply, Pi.star_apply,
       smul_eq_mul, star_add, star_mul, Complex.star_def, Complex.conj_I]
     ring_nf <;> simp only [Complex.I_sq, Complex.I_pow_three] <;> ring
   have he (i j : Fin d) : Pi.single (i, j) (1 : ℂ) ∈ V := by
     have hid : tensor (Pi.single i (1 : ℂ)) (star (Pi.single j (1 : ℂ))) =
         Pi.single (i, j) (1 : ℂ) := by
-      ext ⟨k, l⟩
-      by_cases hk : k = i <;> by_cases hl : l = j <;>
-        simp [tensor, Pi.single_apply, hk, hl, eq_comm] <;> tauto
+      rw [Pi.star_single, star_one]
+      change Function.uncurry (vecMulVec (Pi.single i (1 : ℂ)) (Pi.single j 1)) = _
+      rw [← single_eq_single_vecMulVec_single, single_eq_of_single_single]
+      exact Pi.uncurry_single_single i j 1
     rw [← hid, hp]
     exact V.smul_mem _ (V.add_mem (V.sub_mem (V.sub_mem (hv _) (hv _)) (hv _))
       (V.smul_mem _ (V.sub_mem (V.sub_mem (hv _) (hv _)) (hv _))))
@@ -203,9 +194,7 @@ private theorem spanning_optimal {d : ℕ}
   have hl : P.mulVecLin = 0 :=
     (Submodule.linearMap_eq_zero_iff_of_span_eq_top _ hS).mpr (fun v => hk v v.property)
   apply hPn
-  ext i j
-  have hz := congrFun (LinearMap.congr_fun hl (Pi.single j 1)) i
-  simpa using hz
+  exact Matrix.toLin'.injective (hl.trans Matrix.mulVecLin_zero.symm)
 
 private theorem wr_zero {d : ℕ} [NeZero d] (r : Fin d) (x : Fin d → ℂ) :
     star (tensor x (star x)) ⬝ᵥ (wr r *ᵥ tensor x (star x)) = 0 := by
@@ -217,7 +206,7 @@ private theorem wr_optimal {d : ℕ} [NeZero d] (r : Fin d) (hr : r ≠ 0) :
     IsOptimalWitness (wr r) := by
   have hd : (0 : ℝ) < d := by exact_mod_cast Nat.pos_of_ne_zero (NeZero.ne d)
   have hw : IsWitness (wr r) := by
-    refine ⟨wr_hermitian r, wr_blockPositive r, vecMulVec omega (star omega),
+    refine ⟨wr_hermitian r, wr_blockPositive r, maxEntangled (Fin d),
       omega_density, ?_⟩
     rw [omega_expectation r hr]
     simpa using div_neg_of_neg_of_pos (by norm_num : (-2 : ℝ) < 0) hd
@@ -235,7 +224,7 @@ private theorem sum_optimal {d : ℕ} [NeZero d] (r s : Fin d) (hr : r ≠ 0) (h
     exact add_nonneg (wr_blockPositive r x y) (wr_blockPositive s x y)
   have hw : IsWitness (wr r + wr s) := by
     refine ⟨(wr_hermitian r).add (wr_hermitian s), hBP,
-      vecMulVec omega (star omega), omega_density, ?_⟩
+      maxEntangled (Fin d), omega_density, ?_⟩
     rw [add_mul, trace_add, omega_expectation r hr, omega_expectation s hs]
     have hneg : (-2 / (d : ℂ)).re < 0 := by
       simpa using div_neg_of_neg_of_pos (by norm_num : (-2 : ℝ) < 0) hd
@@ -256,7 +245,7 @@ private theorem detection_separation {d : ℕ} [NeZero d] (r s : Fin d)
     simpa using div_neg_of_neg_of_pos (by norm_num : (-2 : ℝ) < 0) hd
   refine ⟨⟨vecMulVec (pairVector r) (star (pairVector r)), ?_, ?_⟩,
     ⟨vecMulVec (pairVector s) (star (pairVector s)), ?_, ?_⟩,
-    ⟨vecMulVec omega (star omega), ?_, ?_⟩⟩
+    ⟨maxEntangled (Fin d), ?_, ?_⟩⟩
   · exact ⟨pair_density r hr, by rw [pair_expectation r r hr]; norm_num⟩
   · rintro ⟨_, h⟩
     rw [pair_expectation s r hs, ite_eq_right hrs.symm] at h
