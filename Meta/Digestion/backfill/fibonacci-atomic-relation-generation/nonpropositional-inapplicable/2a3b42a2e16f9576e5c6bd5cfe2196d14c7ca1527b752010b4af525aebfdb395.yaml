@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:2a3b42a2e16f9576e5c6bd5cfe2196d14c7ca1527b752010b4af525aebfdb395
+  normalized_sha256: sha256:2a3b42a2e16f9576e5c6bd5cfe2196d14c7ca1527b752010b4af525aebfdb395
+cas_ref: sha256:2a3b42a2e16f9576e5c6bd5cfe2196d14c7ca1527b752010b4af525aebfdb395
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 本项仅沿用第177至179节的实际来源与奇间距假设，并以 t=a+b、D=(-1)^b L_k 定义后续记号；不包含第二字符切面的数学结论。
+    previous_atom_id: cbae73efc03038b0b0ef273c6a326dbc764baf1ecb4ae278591375a5d020c9b9
+    next_atom_id: 834c4ac37521554682fbd5f61e1d7c97fc0ea603af40821555b2148063e698ed

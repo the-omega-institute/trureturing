@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:9f9e62e406ff32d0a6cae4773b13a1b65708f1d978e0147c20a20e5b7eeb2f3b
+  normalized_sha256: sha256:9f9e62e406ff32d0a6cae4773b13a1b65708f1d978e0147c20a20e5b7eeb2f3b
+cas_ref: sha256:9f9e62e406ff32d0a6cae4773b13a1b65708f1d978e0147c20a20e5b7eeb2f3b
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 该节首是曲率非零候选实例的引入，未给出度量、曲率公式或量化命题。
+    previous_atom_id: cc3c2cf6b09128792b9ebb3560931bf34c6e40e543dfce80726ee4c946720d0d
+    next_atom_id: a0af8ed4b33243af8bd64752be826507e296a9ff6a153803d8f61b0389e28016

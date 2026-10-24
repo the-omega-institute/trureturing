@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:d9e160a9de0cd8d9f06165bacc10493375e5004bf7a005fc45da2450e0907511
+  normalized_sha256: sha256:d9e160a9de0cd8d9f06165bacc10493375e5004bf7a005fc45da2450e0907511
+cas_ref: sha256:d9e160a9de0cd8d9f06165bacc10493375e5004bf7a005fc45da2450e0907511
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 限定新颖性检索范围以及只处理一个态和一个方向族，不陈述该族的判定结果。
+    previous_atom_id: a22373d2dff29c7478aa1f4d89dccfcabb821651de616a0aca3579b12443c384
+    next_atom_id: 9aafda815e52fdadf0d5caec4a9ce32df2d1251283d874181d89bd06f2a4f11d

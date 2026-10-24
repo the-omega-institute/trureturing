@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:60afbe208b26d88eeb743431af4a48d2318d279957fd73eae0937996d4a72c51
+  normalized_sha256: sha256:60afbe208b26d88eeb743431af4a48d2318d279957fd73eae0937996d4a72c51
+cas_ref: sha256:60afbe208b26d88eeb743431af4a48d2318d279957fd73eae0937996d4a72c51
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 'Nonpropositional: Residual 表格只列本轮讨论的资源和遗漏对象，没有给出这些对象之间的等式、界或存在性结论。'
+    previous_atom_id: 288471eed1bdab250b12533b79138b87e2c37dfe828f977bc9c209eaa8611a77
+    next_atom_id: 78f71ca862824eca23190787f5e0fe91f0c555d4bf6dc3b19ea53cde03a5be2f

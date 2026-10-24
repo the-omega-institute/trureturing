@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:983dc7de7e12bccd3e6a26e8b806575693fa410dc52942825f388e39aae3a82b
+  normalized_sha256: sha256:983dc7de7e12bccd3e6a26e8b806575693fa410dc52942825f388e39aae3a82b
+cas_ref: sha256:983dc7de7e12bccd3e6a26e8b806575693fa410dc52942825f388e39aae3a82b
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 本句规定可形式化语言应具备语义等价和物理误差证书，是规格要求而非证书存在定理。
+    previous_atom_id: 112f7e08c8d120c3a0af0a8d43b0bcfa2dafa2e5af242f9f99b8ffb29fd5b2fe
+    next_atom_id: 7a974be8d32bd964ecf2b9ab32ecfd8eaf0a11ac2017a7168ee16d10de7c8d05

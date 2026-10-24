@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:a22373d2dff29c7478aa1f4d89dccfcabb821651de616a0aca3579b12443c384
+  normalized_sha256: sha256:a22373d2dff29c7478aa1f4d89dccfcabb821651de616a0aca3579b12443c384
+cas_ref: sha256:a22373d2dff29c7478aa1f4d89dccfcabb821651de616a0aca3579b12443c384
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 限定不处理其他维数或临界点，并区分 Claim C 与作者原话，属于成果范围说明。
+    previous_atom_id: 376ac819d458a85c1c17a4d0d2ef207fbe3fba9c9c774547186045e4b11476d1
+    next_atom_id: d9e160a9de0cd8d9f06165bacc10493375e5004bf7a005fc45da2450e0907511

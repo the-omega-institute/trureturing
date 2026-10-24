@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:5dfca6ea50db94257d4f56c28f1db9946aa36f9d23c55c6d36c98d61a2f48b2f
+  normalized_sha256: sha256:5dfca6ea50db94257d4f56c28f1db9946aa36f9d23c55c6d36c98d61a2f48b2f
+cas_ref: sha256:5dfca6ea50db94257d4f56c28f1db9946aa36f9d23c55c6d36c98d61a2f48b2f
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 'Nonpropositional: 提出研究因果量子波、有限记录和受限控制的目标，没有宣称已证明这些结构的存在或唯一性。'
+    previous_atom_id: b7fcfbdd46a4cadc6c2704369dae17d704d7c02b705d6450e0b5e480cc849731
+    next_atom_id: b69bfd93896aaf07676d2f8d72c34a023540c3dd778e35a285e6981eee267751
