@@ -6,9 +6,9 @@
    utility: none
    digest: Every positive Gibbs weight vector admits a stochastic matrix with simple spectrum. -/
 
-import Mathlib.Analysis.Matrix.Spectrum
-import Mathlib.LinearAlgebra.Matrix.Stochastic
+import D5.S3.Combinatorics.Graph.LegalWords.ConstrainedHarmonicOptimizer
 import D5.S3.Quantum.Algebra.ZeitlinSixJ.Inverse
+import D5.S3.StatisticalMechanics.ThermalProcessSelfDualFactorizationRefutation
 
 /-! A birth–death chain preserving positive weights is similar to an irreducible real
 Jacobi matrix. -/
@@ -16,11 +16,9 @@ Jacobi matrix. -/
 namespace D5.S3.Quantum.Matrix.GibbsStochasticSimpleSpectrum
 
 open _root_.Matrix Finset
+open D5.S3.Combinatorics.Graph.LegalWords.ConstrainedHarmonicOptimizer (Near)
 open D5.S3.Quantum.Algebra.ZeitlinSixJ.Recurrence
-
-/-- Column stochasticity and preservation of the Gibbs weights. -/
-def IsGibbsStochastic {n : ℕ} (d : Fin n → ℝ) (P : Matrix (Fin n) (Fin n) ℝ) : Prop :=
-  P ∈ Matrix.colStochastic ℝ (Fin n) ∧ P *ᵥ d = d
+open D5.S3.StatisticalMechanics.ThermalProcessSelfDualFactorizationRefutation (thermalProcesses)
 
 /-- Every complex eigenvalue has algebraic multiplicity one. -/
 def HasSimpleEigenvalues {n : ℕ} (P : Matrix (Fin n) (Fin n) ℝ) : Prop :=
@@ -29,20 +27,17 @@ def HasSimpleEigenvalues {n : ℕ} (P : Matrix (Fin n) (Fin n) ℝ) : Prop :=
 /-- A simple-spectrum Gibbs-stochastic matrix exists for every positive Gibbs vector. -/
 def claim : Prop :=
   ∀ (n : ℕ) (d : Fin n → ℝ), (∀ i, 0 < d i) →
-    ∃ P : Matrix (Fin n) (Fin n) ℝ, IsGibbsStochastic d P ∧ HasSimpleEigenvalues P
+    ∃ P : Matrix (Fin n) (Fin n) ℝ, P ∈ thermalProcesses d ∧ HasSimpleEigenvalues P
 
 private noncomputable def weights {n : ℕ} (d : Fin n → ℝ) : Fin n → ℝ :=
   fun i => d i / ∑ j, d j
-
-private def adjacent {n : ℕ} (i j : Fin n) : Prop :=
-  i.val + 1 = j.val ∨ j.val + 1 = i.val
 
 private noncomputable def transition {n : ℕ} (g : Fin n → ℝ) :
     Matrix (Fin n) (Fin n) ℝ := by
   classical
   exact fun i j =>
-  if i = j then 1 - ∑ k, if adjacent k j then g k / 2 else 0
-  else if adjacent i j then g i / 2 else 0
+  if i = j then 1 - ∑ k, if Near k j then g k / 2 else 0
+  else if Near i j then g i / 2 else 0
 
 private noncomputable def symmetrization {n : ℕ} (g : Fin n → ℝ) :
     Matrix (Fin n) (Fin n) ℝ :=
@@ -63,10 +58,10 @@ private lemma weights_sum {m : ℕ} (d : Fin (m + 1) → ℝ) (hd : ∀ i, 0 < d
 private lemma transition_columns {n : ℕ} (g : Fin n → ℝ) (j : Fin n) :
     ∑ i, transition g i j = 1 := by
   classical
-  have hj : ¬ adjacent j j := by unfold adjacent; omega
+  have hj : ¬ Near j j := by unfold Near; omega
   have entry (i : Fin n) : transition g i j =
-      (if i = j then 1 - ∑ k, if adjacent k j then g k / 2 else 0 else 0) +
-      (if adjacent i j then g i / 2 else 0) := by
+      (if i = j then 1 - ∑ k, if Near k j then g k / 2 else 0 else 0) +
+      (if Near i j then g i / 2 else 0) := by
     by_cases h : i = j
     · subst i
       simp only [transition, ite_eq_right hj, add_zero]
@@ -84,7 +79,7 @@ private lemma transition_stochastic {n : ℕ} (g : Fin n → ℝ)
   intro i j
   by_cases h : i = j
   · subst i
-    have hb : (∑ k, if adjacent k j then g k / 2 else 0) ≤ (∑ k, g k) / 2 := by
+    have hb : (∑ k, if Near k j then g k / 2 else 0) ≤ (∑ k, g k) / 2 := by
       rw [sum_div]
       apply sum_le_sum
       intro k _
@@ -104,8 +99,8 @@ private lemma transition_stationary {n : ℕ} (g : Fin n → ℝ) :
   have balance (i j : Fin n) : transition g i j * g j = transition g j i * g i := by
     by_cases h : i = j
     · subst i; rfl
-    · have ha : adjacent i j ↔ adjacent j i := by unfold adjacent; exact or_comm
-      by_cases hij : adjacent i j
+    · have ha : Near i j ↔ Near j i := by unfold Near; exact or_comm
+      by_cases hij : Near i j
       · simp only [transition, ite_eq_right h, ite_eq_right (Ne.symm h),
           ite_eq_left hij, ite_eq_left (ha.mp hij)]
         ring
@@ -155,8 +150,7 @@ private lemma symmetrization_jacobi {m : ℕ} (g : Fin (m + 1) → ℝ)
     omega
   have hroot (i : Fin (m + 1)) : Real.sqrt (g i) ≠ 0 := (Real.sqrt_pos.mpr (hg i)).ne'
   have hscale (i : Fin (m + 1)) : (Real.sqrt (g i))⁻¹ * g i = Real.sqrt (g i) := by
-    rw [inv_mul_eq_iff_eq_mul₀ (hroot i)]
-    exact (Real.mul_self_sqrt (hg i).le).symm
+    simpa only [div_eq_inv_mul] using (Real.div_sqrt (x := g i))
   refine ⟨fun i => transition g i i, e, ?_, ?_⟩
   · intro t
     dsimp [e]
@@ -177,7 +171,7 @@ private lemma symmetrization_jacobi {m : ℕ} (g : Fin (m + 1) → ℝ)
     · rw [diagonal_apply_ne _ hij, zero_add]
       by_cases hu : i.val + 1 = j.val
       · have hl : ¬ j.val + 1 = i.val := by omega
-        have ha : adjacent i j := Or.inl hu
+        have ha : Near i j := Or.inl hu
         rw [ite_eq_left hu, ite_eq_right hl, add_zero, transition, ite_eq_right hij, ite_eq_left ha]
         dsimp [e]
         rw [hnext hu]
@@ -186,7 +180,7 @@ private lemma symmetrization_jacobi {m : ℕ} (g : Fin (m + 1) → ℝ)
               ((Real.sqrt (g i))⁻¹ * g i) * Real.sqrt (g j) / 2 := by ring
           _ = Real.sqrt (g i) * Real.sqrt (g j) / 2 := by rw [hscale]
       · by_cases hl : j.val + 1 = i.val
-        · have ha : adjacent i j := Or.inr hl
+        · have ha : Near i j := Or.inr hl
           rw [ite_eq_right hu, ite_eq_left hl, zero_add, transition,
             ite_eq_right hij, ite_eq_left ha]
           dsimp [e]
@@ -195,7 +189,7 @@ private lemma symmetrization_jacobi {m : ℕ} (g : Fin (m + 1) → ℝ)
             (Real.sqrt (g i))⁻¹ * (g i / 2) * Real.sqrt (g j) =
                 ((Real.sqrt (g i))⁻¹ * g i) * Real.sqrt (g j) / 2 := by ring
             _ = Real.sqrt (g j) * Real.sqrt (g i) / 2 := by rw [hscale]; ring
-        · have ha : ¬ adjacent i j := by unfold adjacent; exact not_or.mpr ⟨hu, hl⟩
+        · have ha : ¬ Near i j := by unfold Near; exact not_or.mpr ⟨hu, hl⟩
           rw [ite_eq_right hu, ite_eq_right hl, transition, ite_eq_right hij, ite_eq_right ha]
           ring
 
@@ -219,10 +213,8 @@ private lemma jacobi_simple (m : ℕ) (a e : Fin (m + 1) → ℝ)
     HasSimpleEigenvalues (jacobiMatrix m a e) := by
   classical
   have hJ : (jacobiMatrix m a e).IsHermitian := by
-    rw [isHermitian_iff_isSymm]
-    change (jacobiMatrix m a e)ᵀ = jacobiMatrix m a e
-    simp only [jacobiMatrix, transpose_add, diagonal_transpose, transpose_transpose]
-    ac_rfl
+    simpa only [jacobiMatrix, add_assoc, conjTranspose_eq_transpose_of_trivial] using
+      (isHermitian_diagonal a).add (isHermitian_add_transpose_self (upperBand m e))
   have endpoint (i : Fin (m + 1)) : hJ.eigenvectorBasis i (Fin.last m) ≠ 0 := by
     intro hi
     have hv := jacobi_eigenvector_zero m a e he _ _ (hJ.mulVec_eigenvectorBasis i) hi
@@ -264,7 +256,7 @@ private lemma jacobi_simple (m : ℕ) (a e : Fin (m + 1) → ℝ)
   exact Multiset.Nodup.map hinj Finset.univ.nodup
 
 private lemma empty_case (d : Fin 0 → ℝ) :
-    ∃ P : Matrix (Fin 0) (Fin 0) ℝ, IsGibbsStochastic d P ∧ HasSimpleEigenvalues P := by
+    ∃ P : Matrix (Fin 0) (Fin 0) ℝ, P ∈ thermalProcesses d ∧ HasSimpleEigenvalues P := by
   refine ⟨1, ⟨(Matrix.colStochastic ℝ (Fin 0)).one_mem, ?_⟩, ?_⟩
   · exact one_mulVec d
   · unfold HasSimpleEigenvalues
