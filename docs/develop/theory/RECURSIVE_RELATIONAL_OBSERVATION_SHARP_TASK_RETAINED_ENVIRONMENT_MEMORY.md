@@ -2385,7 +2385,7 @@ $$
 \|N\|_{\mathrm{HS}}^2
  &\le\tfrac43\bigl(\|Nv\|^2+\|Nw_0\|^2+\|Nw_1\|^2\bigr)\\
  &\le\tfrac43(1+2\cdot5538)q
-   =\tfrac{44308}{3}q<15000q,\\
+   =\tfrac{44308}{3}q\le15000q,\\
 \sum_\ell\|L_\ell-c_\ell B\|_{\mathrm{HS}}^2
  &\le135000\varepsilon,
  \qquad c_\ell=p^\dagger L_\ell v.
@@ -2482,8 +2482,7 @@ source version `e0e3018402506726c33d4521451e9d3153abd0bc`.
 The quantitative increment here is source-relative; no global
 literature novelty, optimal constant, or optimal exponent is claimed.
 
-This is an ordinary analytical result, with no Lean/kernel
-certification implied. It supplies no calibration-error model,
+The estimate supplies no calibration-error model,
 physical realization, resource minimum, or additional exact
 record/resource classification. The known instrument is held fixed
 when the defect is evaluated. The estimate does not transfer to
@@ -2491,10 +2490,9 @@ every rare history/record branch: approximate closeness of an
 average does not give Theorem 13.1's exact rank-one-mixture conclusion
 uniformly on branches with arbitrarily small weights. The original
 critical causal-memory and realization questions retain their own
-hypotheses and unresolved boundaries; the continuing quantum
-programme is not completed by this estimate.
+hypotheses and unresolved boundaries.
 
-Sharpness remains an unselected open candidate: for these same
+The optimal local modulus remains undetermined: for these same
 actual tests, determine whether a uniform local linear modulus is
 available or whether lawful CPTP perturbations require square-root
 behavior. Neither alternative is resolved here.
