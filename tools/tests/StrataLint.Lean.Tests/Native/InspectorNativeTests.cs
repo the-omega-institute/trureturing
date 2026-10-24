@@ -23,9 +23,11 @@ public sealed class InspectorNativeTests(InspectorCompilerFixture compiler) : IC
     [MemberData(nameof(LocalEntryCases))]
     public void LocalEntryBehavior(string test) => InspectorNativeTestRunner.Run(compiler, test);
 
-    [Fact]
-    public void PublicationConsumersStartWithPrivateColdProjects() => InspectorNativeTestRunner.Run(compiler,
-        "test_native.NativePublicationTests");
+    public static IEnumerable<object[]> PublicationCases() => InspectorNativeTestRunner.Cases("test_native.NativePublicationTests");
+
+    [Theory]
+    [MemberData(nameof(PublicationCases))]
+    public void PublicationConsumersStartWithPrivateColdProjects(string test) => InspectorNativeTestRunner.Run(compiler, test);
 
     [Fact]
     public void LocalRestoredSeedKeepsNativeIncrementalExtraction() => InspectorNativeTestRunner.Run(compiler,

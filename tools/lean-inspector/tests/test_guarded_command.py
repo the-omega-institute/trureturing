@@ -18,7 +18,7 @@ class GuardedCommandTests(unittest.TestCase):
             return [test.id()]
 
         for selection in ('test_native.NativeSemanticTests', 'test_native.NativeReportTests', 'test_local_entry',
-                          'test_native.NativeRoutingTests'):
+                          'test_native.NativeRoutingTests', 'test_native.NativePublicationTests'):
             with self.subTest(selection=selection):
                 loader = unittest.TestLoader()
                 expected = flatten(loader.loadTestsFromName(selection))
