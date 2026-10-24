@@ -13,6 +13,7 @@ import Mathlib.LinearAlgebra.Trace
 import Mathlib.Tactic.FinCases
 import Mathlib.Tactic.Linarith
 import Mathlib.Tactic.NormNum
+import Mathlib.Tactic.Positivity
 import Mathlib.Tactic.Ring
 
 noncomputable section
@@ -117,10 +118,77 @@ private theorem spectral_traces (x : ℝ) (hx : 0 < x) (hx' : x < 2 / 3)
       antisymmetricTrace G = 3 * Real.log (1 - x / 2) := by
   sorry
 
+private def hamiltonianMap (H : Matrix (Fin 3) (Fin 3) ℂ) :
+    Module.End ℂ (Matrix (Fin 3) (Fin 3) ℂ) :=
+  -Complex.I • (LinearMap.mulLeft ℂ H - LinearMap.mulRight ℂ H)
+
+private def dissipatorMap (V : Matrix (Fin 3) (Fin 3) ℂ) :
+    Module.End ℂ (Matrix (Fin 3) (Fin 3) ℂ) :=
+  LinearMap.mulLeftRight ℂ (V, Vᴴ) - (1 / 2 : ℂ) •
+    (LinearMap.mulLeft ℂ (Vᴴ * V) + LinearMap.mulRight ℂ (Vᴴ * V))
+
+private theorem matrix_supertrace
+    (F : Module.End ℂ (Matrix (Fin 3) (Fin 3) ℂ)) :
+    LinearMap.trace ℂ _ F = ∑ i, ∑ j, F (Matrix.single i j 1) i j := by
+  rw [LinearMap.trace_eq_matrix_trace ℂ (Matrix.stdBasis ℂ (Fin 3) (Fin 3))]
+  simp [Matrix.trace, LinearMap.toMatrix_apply, Fintype.sum_prod_type,
+    Matrix.stdBasis, ← Matrix.single_eq_of_single_single]
+
+private theorem sector_trace_hamiltonian (H : Matrix (Fin 3) (Fin 3) ℂ) :
+    symmetricTrace (hamiltonianMap H) - 5 * antisymmetricTrace (hamiltonianMap H) = 0 := by
+  unfold symmetricTrace antisymmetricTrace
+  rw [matrix_supertrace, matrix_supertrace]
+  simp [symmetricProjection, antisymmetricProjection, hamiltonianMap,
+    Matrix.trace, Matrix.mul_apply, Fin.sum_univ_succ, Matrix.single,
+    Matrix.one_apply, Matrix.transposeLinearEquiv, Complex.mul_re, Complex.mul_im]
+  ring
+
+private theorem sector_trace_dissipator (V : Matrix (Fin 3) (Fin 3) ℂ) :
+    symmetricTrace (dissipatorMap V) - 5 * antisymmetricTrace (dissipatorMap V) =
+      2 * (Complex.normSq (V 0 0 - V 1 1) + Complex.normSq (V 0 0 - V 2 2) +
+        Complex.normSq (V 1 1 - V 2 2)) +
+      3 * (Complex.normSq (V 0 1 + V 1 0) + Complex.normSq (V 0 2 + V 2 0) +
+        Complex.normSq (V 1 2 + V 2 1)) := by
+  unfold symmetricTrace antisymmetricTrace
+  rw [matrix_supertrace, matrix_supertrace]
+  simp [symmetricProjection, antisymmetricProjection, dissipatorMap,
+    Matrix.trace, Matrix.mul_apply, Fin.sum_univ_succ, Matrix.single,
+    Matrix.one_apply, Matrix.transposeLinearEquiv, Complex.mul_re, Complex.mul_im,
+    Complex.normSq_apply, Complex.add_re, Complex.add_im, Complex.sub_re, Complex.sub_im]
+  norm_num [show (Finset.univ : Finset (Fin 3)) = {0, 1, 2} by decide, Finset.filter_insert, Finset.filter_singleton, Finset.filter_empty]
+  ring
+
 private theorem gksl_trace_inequality
     (G : Module.End ℂ (Matrix (Fin 3) (Fin 3) ℂ)) (hG : IsGKSLGenerator G) :
     0 ≤ symmetricTrace G - 5 * antisymmetricTrace G := by
-  sorry
+  obtain ⟨m, H, V, _, hform⟩ := hG
+  have hG : G = hamiltonianMap H + ∑ k, dissipatorMap (V k) := by
+    ext X i j
+    simpa [hamiltonianMap, dissipatorMap, Matrix.mul_assoc] using congrArg (fun Y => Y i j) (hform X)
+  rw [hG]
+  have hS : symmetricTrace (hamiltonianMap H + ∑ k, dissipatorMap (V k)) =
+      symmetricTrace (hamiltonianMap H) + ∑ k, symmetricTrace (dissipatorMap (V k)) := by
+    simp only [symmetricTrace, ← Module.End.mul_eq_comp, add_mul, Finset.sum_mul,
+      map_add, map_sum, Complex.add_re, Complex.re_sum]
+  have hA : antisymmetricTrace (hamiltonianMap H + ∑ k, dissipatorMap (V k)) =
+      antisymmetricTrace (hamiltonianMap H) + ∑ k, antisymmetricTrace (dissipatorMap (V k)) := by
+    simp only [antisymmetricTrace, ← Module.End.mul_eq_comp, add_mul, Finset.sum_mul,
+      map_add, map_sum, Complex.add_re, Complex.re_sum]
+  rw [hS, hA]
+  have hham := sector_trace_hamiltonian H
+  have hsum : 0 ≤ ∑ k, (symmetricTrace (dissipatorMap (V k)) -
+      5 * antisymmetricTrace (dissipatorMap (V k))) := by
+    apply Finset.sum_nonneg
+    intro k _
+    rw [sector_trace_dissipator]
+    linarith [Complex.normSq_nonneg (V k 0 0 - V k 1 1),
+      Complex.normSq_nonneg (V k 0 0 - V k 2 2),
+      Complex.normSq_nonneg (V k 1 1 - V k 2 2),
+      Complex.normSq_nonneg (V k 0 1 + V k 1 0),
+      Complex.normSq_nonneg (V k 0 2 + V k 2 0),
+      Complex.normSq_nonneg (V k 1 2 + V k 2 1)]
+  rw [Finset.sum_sub_distrib, ← Finset.mul_sum] at hsum
+  linarith
 
 private theorem strict_log_inequality (x : ℝ) (hx : 0 < x) (hx' : x < 2 / 3) :
     5 * Real.log (1 - 3 * x / 2) < 15 * Real.log (1 - x / 2) := by
