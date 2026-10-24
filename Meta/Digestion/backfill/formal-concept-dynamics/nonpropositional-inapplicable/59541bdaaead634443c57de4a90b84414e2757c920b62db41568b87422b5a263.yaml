@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:59541bdaaead634443c57de4a90b84414e2757c920b62db41568b87422b5a263
+  normalized_sha256: sha256:59541bdaaead634443c57de4a90b84414e2757c920b62db41568b87422b5a263
+cas_ref: sha256:59541bdaaead634443c57de4a90b84414e2757c920b62db41568b87422b5a263
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 无知之幕表项描述删除身份坐标后要求群不变的规范选择准则，没有声称该选择必然存在或唯一。
+    previous_atom_id: 47a5518e4c92c9e5edc46a188b7cbaa62ff5571aa0ad609f072b4d7ac3be3a69
+    next_atom_id: 091aeb716bbaee7bae9c5847aaca758f61835c9c0517cdd0cbf3a563bfd4c4ee
