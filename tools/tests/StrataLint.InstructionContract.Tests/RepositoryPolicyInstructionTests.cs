@@ -5,6 +5,24 @@ namespace StrataLint.InstructionContract.Tests;
 public sealed class RepositoryPolicyInstructionTests
 {
     [Fact]
+    public void WorktreeCheckpointInstructionsSeparateSavingFromDelivery()
+    {
+        var root = TestRepositoryLayout.FindRoot();
+        foreach (var path in new[] { "CLAUDE.md", "skills/formal-thinking-and-answer/SKILL.md", "skills/codex-formalize/SKILL.md" })
+        {
+            var text = File.ReadAllText(Path.Combine(root, path), Encoding.UTF8);
+            Assert.Contains("make worktree-checkpoint MESSAGE=FILE", text, StringComparison.Ordinal);
+            Assert.Contains("after every recoverable unit", text, StringComparison.Ordinal);
+            Assert.Contains("before long checks", text, StringComparison.Ordinal);
+            Assert.Contains("before hand-off", text, StringComparison.Ordinal);
+            Assert.Contains("before normal end", text, StringComparison.Ordinal);
+            Assert.Contains("WIP", text, StringComparison.Ordinal);
+            Assert.Contains("saved bytes only", text, StringComparison.Ordinal);
+            Assert.Contains("no heartbeat or empty commits", text, StringComparison.Ordinal);
+        }
+    }
+
+    [Fact]
     public void PrToolDocumentationNoLongerRequiresCallerPolling()
     {
         var text = File.ReadAllText(
