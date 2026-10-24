@@ -54,7 +54,7 @@ Section VIII, p. 8: 'Conjecture 1. If d = 2^r and r > 1, the minimal number of M
 
 **Lemma 1.5 (Real normalization identity).**
 
-$$(\frac{1}{\operatorname{Real.sqrt}\left(8\right)}:\mathbb{R})^{2} = (\frac{1}{8}:\mathbb{R})$$
+$$((\operatorname{Real.sqrt}\left(8\right))^{-1}:\mathbb{R})^{2} = (\frac{1}{8}:\mathbb{R})$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Quantum/Entanglement/FourMUBBoundEntanglementRefutation.scale_sq` (`✓ std3`). ∎
 
@@ -68,7 +68,7 @@ The square of the reciprocal of the real square root of eight equals one eighth.
 
 **Lemma 1.6 (Complex normalization identity).**
 
-$$((\frac{1}{\operatorname{Real.sqrt}\left(8\right)}:\mathbb{R}):\mathbb{C})^{2} = (\frac{1}{8}:\mathbb{C})$$
+$$(((\operatorname{Real.sqrt}\left(8\right))^{-1}:\mathbb{R}):\mathbb{C})^{2} = (\frac{1}{8}:\mathbb{C})$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Quantum/Entanglement/FourMUBBoundEntanglementRefutation.scale_complex_sq` (`✓ std3`). ∎
 
