@@ -593,7 +593,7 @@ internal static class WorktreeCommand
         return "initialization material retained for same-DEST recovery or reclaim";
     }
 
-    private static CommandResult RecoverInitialization(WorktreeOptions options,
+    internal static CommandResult RecoverInitialization(WorktreeOptions options,
         IWorktreeProcessRunner runner, string? token = null)
     {
         var arguments = new List<string> { "recover-init", "--path", options.Path,

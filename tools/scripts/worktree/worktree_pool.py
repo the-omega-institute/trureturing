@@ -245,7 +245,8 @@ def returned_snapshot(options):
                         task_branch=task, idle_branch=branch)
         if not branch.startswith("refs/heads/"):
             raise Refused("return_current_branch_required")
-        checkpoint = commit_snapshot(path, metadata, branch, b"Checkpoint post-merge working tree before return\n")
+        checkpoint = commit_snapshot(path, metadata, branch,
+                                     b"Checkpoint post-merge working tree before return\n", stack, options.source)
         clean(path, metadata)
         outstanding = value(path, "rev-list", dev + ".." + checkpoint["commit"]).splitlines()
         token = uuid.uuid4().hex

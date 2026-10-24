@@ -60,6 +60,15 @@ internal static partial class CleanLanesCommand
             var reason = row.GetProperty("reason").GetString()!;
             string? ReadOptional(string name) => row.TryGetProperty(name, out var field) ? field.GetString() : null;
             var recovery = ReadOptional("recovery_branch");
+            JsonElement? nativeLocks = null;
+            if (row.TryGetProperty("checkpoint", out var checkpoint) && checkpoint.ValueKind == JsonValueKind.Object
+                && checkpoint.TryGetProperty("native_locks", out var locks))
+                nativeLocks = locks.Clone();
+            else if (row.TryGetProperty("native_locks", out var failedLocks))
+                nativeLocks = failedLocks.Clone();
+            if (row.TryGetProperty("recovery_roots", out var roots))
+                foreach (var root in roots.EnumerateArray())
+                    protectObservedWorktree(item with { Branch = root.GetString()!["refs/heads/".Length..] });
             if (recovery is not null)
                 protectObservedWorktree(item with { Branch = recovery["refs/heads/".Length..] });
             var removal = new LaneRemovalResult(outcome switch
@@ -73,7 +82,7 @@ internal static partial class CleanLanesCommand
             }, outcome == "sweep_failed" ? outcome + ":" + ReadOptional("stage") + ":" + ReadOptional("error")
                 : outcome is "checkpoint_failed" or "partial_or_indeterminate"
                 ? outcome + ":" + ReadOptional("error") : reason,
-                recovery, ReadOptional("recovery_branch_candidate"));
+                recovery, ReadOptional("recovery_branch_candidate"), NativeLocks: nativeLocks);
             reportedFailure |= removal.Outcome is LaneRemovalOutcome.CheckpointFailed
                 or LaneRemovalOutcome.WorktreeRemoveFailed or LaneRemovalOutcome.PoolSweepFailed;
             var removalEvent = RemovalEvent(item, removal);
