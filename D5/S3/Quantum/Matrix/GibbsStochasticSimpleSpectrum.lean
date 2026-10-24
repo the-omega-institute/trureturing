@@ -122,7 +122,7 @@ private lemma transition_preserves_weights {m : ℕ} (d : Fin (m + 1) → ℝ)
   have hdg : d = (∑ j, d j) • weights d := by
     funext i
     dsimp [weights]
-    field_simp [hs]
+    exact (mul_div_cancel₀ (d i) hs).symm
   calc
     transition (weights d) *ᵥ d = transition (weights d) *ᵥ ((∑ j, d j) • weights d) :=
       congrArg (fun v => transition (weights d) *ᵥ v) hdg
@@ -138,7 +138,7 @@ private lemma symmetrization_charpoly {n : ℕ} (g : Fin n → ℝ) (hg : ∀ i,
     congr 1
     funext i
     exact mul_inv_cancel₀ (Real.sqrt_pos.mpr (hg i)).ne'
-  unfold symmetrization
+  delta symmetrization
   rw [Matrix.charpoly_mul_comm, ← Matrix.mul_assoc, hcancel, one_mul]
 
 private lemma symmetrization_jacobi {m : ℕ} (g : Fin (m + 1) → ℝ)
@@ -155,15 +155,16 @@ private lemma symmetrization_jacobi {m : ℕ} (g : Fin (m + 1) → ℝ)
     omega
   have hroot (i : Fin (m + 1)) : Real.sqrt (g i) ≠ 0 := (Real.sqrt_pos.mpr (hg i)).ne'
   have hscale (i : Fin (m + 1)) : (Real.sqrt (g i))⁻¹ * g i = Real.sqrt (g i) := by
-    field_simp [hroot]
-    nlinarith [Real.sq_sqrt (hg i).le]
+    rw [inv_mul_eq_iff_eq_mul₀ (hroot i)]
+    exact (Real.mul_self_sqrt (hg i).le).symm
   refine ⟨fun i => transition g i i, e, ?_, ?_⟩
   · intro t
     dsimp [e]
     exact (div_pos (mul_pos (Real.sqrt_pos.mpr (hg _))
       (Real.sqrt_pos.mpr (hg _))) (by norm_num)).ne'
   · ext i j
-    simp only [symmetrization, mul_diagonal, diagonal_mul, jacobiMatrix, Matrix.add_apply,
+    delta symmetrization
+    simp only [mul_diagonal, diagonal_mul, jacobiMatrix, Matrix.add_apply,
       transpose_apply, upperBand]
     by_cases hij : i = j
     · subst j
