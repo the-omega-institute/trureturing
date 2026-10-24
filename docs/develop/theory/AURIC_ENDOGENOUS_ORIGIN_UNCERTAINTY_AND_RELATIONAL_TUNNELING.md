@@ -2423,3 +2423,908 @@ $$
 - [Q]：Flaminia Giacomini, Esteban Castro-Ruiz, Časlav Brukner, “Quantum mechanics and the covariance of physical laws in quantum reference frames”, *Nature Communications* **10**, 494 (2019), doi:10.1038/s41467-018-08155-0：量子参照的背景与协变条件。
 
 ## 追加锚（本行以下为增补区）
+
+## 8. 稳定读出、隐藏相位与关系返回
+
+### 8.1. 观察条件、来源类型与供应结构
+
+本节沿用第 1 节的五模式次序，并把几何端点记为 $a_i$；$p_s$ 专指模式概率。以下 $Q=P_{13}$ 是联合模式投影，不是第 5 节的内部投影；以下 $J$ 是对角能量的混合差分，不是第 5 节的桥耦合常数。各自的载体和动力学按本节定义使用。
+
+**约定 8.1（几何输入与观察稳定）。** 设几何模型另行给定实内积空间中的三个端点 $a_1,a_2,a_3$，并研究满足指定距离或正交条件的原点完成 $o$。例如，$(a_i-o)\cdot(a_j-o)=0$ 是一个明确的几何条件。端点在这一完成问题中固定，是模型的输入；它不推出模式 $F[1],F[2],F[3]$ 在所有动力学或本体解释中天然稳定。
+
+对来源状态集 $\mathcal S$ 和指定观察映射 $\mathcal O:\mathcal S\to\mathcal Y$，定义当前观察等价与纤维为
+
+$$
+s\sim_{\mathcal O}s'\iff\mathcal O(s)=\mathcal O(s'),
+\qquad
+\mathcal F_y=\{s\in\mathcal S:\mathcal O(s)=y\}.
+$$
+
+沿一条状态轨迹，观察稳定指 $\mathcal O(s_t)$ 不变；不同状态也可落在同一纤维。此定义始终相对于给定来源、读口、标架、标定及记录范围。若观察者的标架发生改变，须将效果拉回共同标架后比较；在不同未知标架下数值相同不自动表示同一观察稳定。
+
+**约定 8.2（概率与取得条件）。** 以下概率、期望与相关函数均为模型中的总体量。精确相等不是一份未知样本上同时取得全部精确参数的声明。用实验频率估计它们须另供制备、重复、测量及误差控制。公式描述相干演化的前提是中间没有未计入的退相干或破坏性仪器；若插入实际测量，须把它的状态更新和输出记录纳入模型。
+
+**定义 8.3（五模式与三个占位效果）。** 固定
+
+$$
+\Sigma=(0,1,2,3,13),\qquad
+\mathcal H=\mathbb C^5,
+$$
+
+并另供正交归一基 $(|s\rangle)_{s\in\Sigma}$。$0$ 表示空占位模式 $F[\mathrm{null}]$，$13$ 表示联合模式 $F[1,3]$；$|0\rangle$ 是单位向量，不是零向量。模式索引与几何端点是不同类型。采用下表的占位函数：
+
+| 模式 $s$ | 输入子集 | 位串 $(x,z,y)$ | 代数坐标 $(x,y,z)$ |
+| --- | --- | --- | --- |
+| $0$ | $\varnothing$ | $000$ | $(0,0,0)$ |
+| $1$ | $\{1\}$ | $100$ | $(1,0,0)$ |
+| $2$ | $\{2\}$ | $010$ | $(0,0,1)$ |
+| $3$ | $\{3\}$ | $001$ | $(0,1,0)$ |
+| $13$ | $\{1,3\}$ | $101$ | $(1,1,0)$ |
+
+这是关系丛卷 [B] 定义 3.1 的分量次序。在观察者相对卷 [O] 定义 4.1 中，同一输入模式记作 $s_0,s_1,s_2,s_3,s_{13}$，显示标签依次为 $\mathrm{null},[2],[3],[5],[2,5]$；标签 $[2,5]$ 不是数值乘积。[O] 使用 $(X,Z,Y)$ 排列三均值，本文使用 $(X,Y,Z)$，只交换后两行读出次序。
+
+令
+
+$$
+P_s=|s\rangle\langle s|,\qquad
+N_x=P_1+P_{13},\quad
+N_y=P_3+P_{13},\quad N_z=P_2,\qquad Q=P_{13}.
+$$
+
+对密度矩阵 $\rho\ge0$、$\operatorname{Tr}\rho=1$，写
+
+$$
+p_s=\operatorname{Tr}(P_s\rho),\qquad
+X=\operatorname{Tr}(N_x\rho)=p_1+p_{13},\quad
+Y=\operatorname{Tr}(N_y\rho)=p_3+p_{13},\quad Z=p_2.
+$$
+
+这些投影满足
+
+$$
+[N_i,N_j]=0,\qquad
+N_xN_y=Q\ne0,\qquad N_xN_z=N_yN_z=0.
+$$
+
+因此几何腿向量正交、模式基向量正交、占位效果可交换，是三个不同陈述。尤其 $N_x,N_y$ 虽可交换，却不是互斥的正交投影；它们的共同占位正是模式 $13$。由模式名称或五个标签，不能推出几何空间、此五维 Hilbert 空间和另一个量子位空间相互同一，也不能推出一个张量分解。
+
+这里消费的既有中间结果是：[B] 定理 3.2–3.3 的五点函数展开和概率纤维、定理 4.2 的复关系坐标、命题 8.9–8.10 与 10.3 的有条件控制接口、定理 7.3 与 8.4 的下降和输出解析闭包；[O] §4 的读口范围；[L] 定义 9.1 的局部 Bloch 接口及其取得限制；[C] 的逐输出闭包与平均通道之区别。[B79] 定理 8.4、命题 8.9–8.10、10.3 及 §18.1–18.2 已分别提供闭包、合法控制与关系相位的接口；本文对指定五模式准备和端点脉冲作具体应用，不以这些应用重新建立一套一般闭包或层析理论。以下各处列出参数对应及普通证明。
+
+### 8.2. 两种稳定三读口的完整概率纤维
+
+**命题 8.4（固定三个单模式概率）。** 令给定的三个实数为
+
+$$
+p_1=a,\qquad p_2=b,\qquad p_3=c.
+$$
+
+在概率单纯形 $\Delta^4=\{p_s\ge0:\sum_sp_s=1\}$ 中，相容纤维非空的充要条件是
+
+$$
+a,b,c\ge0,\qquad a+b+c\le1.
+$$
+
+满足这些条件时，置 $r_0=1-a-b-c$，全部相容概率恰为
+
+$$
+p(t)=(r_0-t,\ a,\ b,\ c,\ t),\qquad 0\le t\le r_0.
+$$
+
+其 $p_{13}$ 坐标宽度是 $r_0$，带符号隐藏方向为 $(1,0,0,0,-1)$ 的实倍数。若 $r_0>0$，纤维是非退化闭区间；若 $r_0=0$，纤维是一点；任一可行条件失败时纤维为空。
+
+**证明。** 归一化强制 $p_0+p_{13}=r_0$。令 $t=p_{13}$，则 $p_0=r_0-t$，两项非负恰给所列区间；另外三项的非负性恰给 $a,b,c\ge0$。反向把这些分量代回即可。$\square$
+
+故只有在此种读口下，剩余经典概率自由度才仅在空模式与联合模式之间反向转移。这里 $a,b,c$ 是概率数据，不是固定空间端点。
+
+**命题 8.5（固定三个占位均值）。** 给定实数 $(X,Y,Z)$，其完整相容概率纤维非空的充要条件是
+
+$$
+(X,Y,Z)\in\mathcal P
+:=\{X,Y,Z\ge0:\ X+Z\le1,\ Y+Z\le1\}.
+$$
+
+在此域内令
+
+$$
+r=1-Z,\qquad
+\kappa_-=\max(0,X+Y-r),\qquad
+\kappa_+=\min(X,Y).
+$$
+
+全部相容概率恰为
+
+$$
+p_\kappa=
+(r-X-Y+\kappa,\ X-\kappa,\ Z,\ Y-\kappa,\ \kappa),
+\qquad \kappa_-\le\kappa\le\kappa_+.
+$$
+
+其 $\kappa=p_{13}$ 坐标宽度为
+
+$$
+w=\kappa_+-\kappa_-=
+\min\{X,Y,r-X,r-Y\}.
+$$
+
+归一化带符号概率超平面上的读出核为
+
+$$
+\mathbb R\nu,\qquad \nu=(1,-1,0,-1,1).
+$$
+
+在 $\mathcal P$ 内，$w>0$ 当且仅当 $r>0$ 且 $0<X,Y<r$；这时纤维为非退化区间。$w=0$ 当且仅当四个数 $X,Y,r-X,r-Y$ 至少一个为零，这时纤维是一点。特别地，$Z=1$ 强制 $X=Y=0$ 且 $p_2=1$。在 $\mathcal P$ 外纤维为空，不能把形式核线称为实际非空的一维纤维。
+
+**证明。** 令 $\kappa=p_{13}$，占位方程依次给 $p_1=X-\kappa$、$p_3=Y-\kappa$、$p_2=Z$，归一化给 $p_0=r-X-Y+\kappa$。五项非负等价于
+
+$$
+Z\ge0,\qquad \max(0,X+Y-r)\le\kappa\le\min(X,Y).
+$$
+
+若区间非空，$\kappa\ge0$ 与 $\kappa\le X,Y$ 给 $X,Y\ge0$；而 $X+Y-r\le\kappa\le Y,X$ 给 $X,Y\le r$，因此数据在 $\mathcal P$。反之，在 $\mathcal P$ 内有 $0\le X,Y\le r$，从而下端点不超过上端点。单独写区间不等式时，不能遗漏 $Z\ge0$。
+
+计算宽度可先设 $X\le Y$。若 $X+Y\le r$，则 $w=X$，且 $X$ 是上述四数的最小值；若 $X+Y\ge r$，则 $w=r-Y$，且它是四数的最小值。交换 $X,Y$ 得到全部情形。由四项非负，宽度的严格正性与零宽边界也随即成立。
+
+若两个归一化实向量有相同占位，令其末分量之差为 $t$。占位方程使第一端、第三端分量差均为 $-t$，中模式分量差为零；归一化使空模式分量差为 $t$，故差为 $t\nu$。$\square$
+
+这是 [B] 定理 3.3 和 [O] 命题 4.3 的同一反解。它与固定 $p_1,p_2,p_3$ 的纤维使用不同观察映射，隐藏方向也不同。若仪器实际逐样本保留完整三元占位记录 $(x,y,z)$，五种取值已区分全部模式，其总体联合律给出全部 $p_s$；仅保留三个均值则遗漏 $\kappa$。均值稳定不等于完整记录律稳定。
+
+**命题 8.6（概率完整性与密度矩阵完整性）。** 记固定对角概率 $p$ 的密度矩阵集合为
+
+$$
+\mathcal D_p=\{\rho\ge0:\operatorname{Tr}\rho=1,\ \rho_{ss}=p_s\}.
+$$
+
+每个 $p\in\Delta^4$ 都有非空的 $\mathcal D_p$。它是一点当且仅当 $p$ 的支撑只有一个模式。因而一个概率纤维是一点，并不通常意味着其密度矩阵纤维也是一点；即使全部五个概率已给定，仍可留下相干区别。
+
+**证明。** 对角矩阵 $\operatorname{diag}p$ 总是合法。正半定矩阵的二阶主子式给
+
+$$
+|\rho_{st}|^2\le p_sp_t.
+$$
+
+若 $p_s=0$，第 $s$ 行列的非对角项全为零；若支撑只有一个模式，故只能有相应的 $P_s$。反之，取 $p_s,p_t>0$ 和 $0<\delta\le\sqrt{p_sp_t}$，则
+
+$$
+\operatorname{diag}p\ \pm\delta
+\bigl(|s\rangle\langle t|+|t\rangle\langle s|\bigr)
+$$
+
+具有非负的 $s,t$ 二阶块，其余是非负对角块，迹为一。这是两个不同的合法密度矩阵，且对角相同。$\square$
+
+特别地，在任一上述单点概率纤维中，只要唯一概率仍支持至少两个模式，量子纤维就不是单点。限制制备到对角态或某个更小族会改变这一问题，须使用那个族自己的观察纤维。
+
+### 8.3. 保持全部概率的联合相位轨道
+
+**假设 8.7（相干制备与可调用门）。** 在同一个五模式载体上，供应均匀相干态和联合相位门
+
+$$
+|\psi_0\rangle=\frac{|0\rangle+|1\rangle+|2\rangle+|3\rangle+|13\rangle}{\sqrt5},
+\qquad U_\theta=e^{-i\theta Q},\quad \theta\in\mathbb R.
+$$
+
+需要使用某个角度时，实际菜单须包含该角度的门及相应制备。$Q$ 作为效果存在，不自动供应其 Hamiltonian 或相位控制。这正是 [B] 命题 8.10、10.3 的资源条件。它们并未从原生替换算术或五个标签推出任意相位门。
+
+**命题 8.8（精确离散轨道）。** 对所有整数 $N\ge0$，
+
+$$
+|\psi_N\rangle=U_\theta^N|\psi_0\rangle
+=\frac{|0\rangle+|1\rangle+|2\rangle+|3\rangle+e^{-iN\theta}|13\rangle}{\sqrt5}.
+$$
+
+其全部五个概率均为 $1/5$，占位均值恒为 $(2/5,2/5,1/5)$。在四个底角振幅均非零的图上定义
+
+$$
+\zeta(\psi)=\frac{\psi_0\psi_{13}}{\psi_1\psi_3}.
+$$
+
+则 $\zeta(\psi_N)=e^{-iN\theta}$。
+
+**证明。** $Q$ 在 $|13\rangle$ 上取本征值一，在其余四个基向量上取零，因此 $U_\theta^N$ 只在联合模式上乘以 $e^{-iN\theta}$。各振幅模不变，范数平方仍为一。代入比值，分子、分母共同的 $1/5$ 消去，即得公式。$\square$
+
+$\zeta$ 对共同非零复标量不变，因此是纯态射线上的关系坐标。它对应 [B] 定理 4.2 的 $\zeta=e^{\tau/2-i\chi}$；这里 $\tau=\log(p_0p_{13}/p_1p_3)=0$，$\chi=N\theta\pmod{2\pi}$。[B] 命题 10.3 的相位门参数在此取 $N\theta$；命题 8.10 用 $e^{+i\vartheta f}$ 时，取 $f=\mathbf1_{13}$、$\vartheta=-\theta$，故 $J_f=1$，符号一致。
+
+四底角非零保证 $\zeta\in\mathbb C^\times$ 且其相位有定义。若分母为零，不使用此比值；若分子为零，也不把零的辐角当成关系相位。可用有定义的齐次乘积 $[\psi_0\psi_{13}:\psi_1\psi_3]$ 或支撑上的其他描述；两乘积同时为零时，连这个齐次对也无定义。对一般混态，不从五个对角概率选择一组振幅来定义一个唯一 $\zeta$。
+
+为讨论相位参数，定义数学族
+
+$$
+|\psi(\phi)\rangle=\frac{|0\rangle+|1\rangle+|2\rangle+|3\rangle+e^{-i\phi}|13\rangle}{\sqrt5},\qquad \phi\in\mathbb R.
+$$
+
+离散轨道取 $\phi=N\theta$；此族的数学定义不供应离散菜单之外的制备。两射线 $[\psi(\phi)],[\psi(\phi')]$ 相同当且仅当 $\phi'-\phi\in2\pi\mathbb Z$：前四个非零振幅固定，强制共同相位为一，末分量再给此条件。若 $\theta/(2\pi)=p/q$ 为最简有理数，离散态序列的最小正周期是 $q$；若该比值无理，则无正整数周期。$N$ 在此只是门的重复次数，无须先指定连续外部时间。
+
+### 8.4. 端点脉冲把相位返回原占位读口
+
+**假设 8.9（指定端点控制）。** 供应
+
+$$
+H_1=|0\rangle\langle1|+|1\rangle\langle0|
++|3\rangle\langle13|+|13\rangle\langle3|,
+\qquad R_1(\alpha)=e^{-i\alpha H_1}.
+$$
+
+它是 [B] 命题 8.9 中 $G_1=X_1P_2^0$ 在合法五态子空间上的限制：逐个作用于位串，得到 $0\leftrightarrow1$、$3\leftrightarrow13$，并湮灭 $|2\rangle$。因此其指数固定 $|2\rangle$、保持五态子空间，无须先测量中位。这里 $H_1$ 是无量纲归一化生成元；若物理 Hamiltonian 为 $gH_1$ 且作用时长为 $t$，则 $\alpha=gt/\hbar$，这些物理量须另供。
+
+**命题 8.10（完整振幅和概率计算）。** 令 $c_\alpha=\cos\alpha$、$s_\alpha=\sin\alpha$。在 $(0,1)$ 与 $(3,13)$ 两个有序二阶块上，脉冲矩阵均为
+
+$$
+\begin{pmatrix}c_\alpha&-is_\alpha\\-is_\alpha&c_\alpha\end{pmatrix}.
+$$
+
+对 $\psi(\phi)$，脉冲后的五个振幅依次为
+
+$$
+\frac1{\sqrt5}
+\bigl(c_\alpha-is_\alpha,\ c_\alpha-is_\alpha,\ 1,
+\ c_\alpha-is_\alpha e^{-i\phi},\ c_\alpha e^{-i\phi}-is_\alpha\bigr).
+$$
+
+因而完整概率为
+
+$$
+p_0'=p_1'=p_2'=\frac15,\qquad
+p_3'=\frac{1-\sin(2\alpha)\sin\phi}{5},\qquad
+p_{13}'=\frac{1+\sin(2\alpha)\sin\phi}{5},
+$$
+
+并有
+
+$$
+X_\phi(\alpha)=\frac25+\frac15\sin(2\alpha)\sin\phi,
+\qquad Y_\phi(\alpha)=\frac25,\qquad Z_\phi(\alpha)=\frac15.
+$$
+
+**证明。** 在每个二阶块中 $H_1^2=I_2$，指数的奇偶幂分别求和得到所列矩阵；中央块的指数为一。逐块乘上输入振幅即得完整输出。前两项的模平方为 $(c_\alpha^2+s_\alpha^2)/5=1/5$。末项中
+
+$$
+|c_\alpha e^{-i\phi}-is_\alpha|^2
+=c_\alpha^2+s_\alpha^2+2c_\alpha s_\alpha\sin\phi
+=1+\sin(2\alpha)\sin\phi.
+$$
+
+另一项给相反符号。所有分量非负，因为 $|\sin(2\alpha)\sin\phi|\le1$，且总和为一。取 $X'=p_1'+p_{13}'$ 得公式；$Y'=p_3'+p_{13}'$ 是第二块总质量，$Z'=p_2'$ 是固定中央质量。$\square$
+
+**例 8.11（同当前读数而不同未来读数）。** 若菜单供应 $\theta=\pi/2$ 的联合相位门和 $\alpha=\pi/4$ 的端点脉冲，取 $N=0$ 与 $N=1$ 的两个准备。它们当前全部五个模式概率相同，均为 $1/5$；当前三个占位均值也相同。但施加同一个端点脉冲后，前者的占位是
+
+$$
+(2/5,2/5,1/5),
+$$
+
+后者的占位是
+
+$$
+(3/5,2/5,1/5),
+$$
+
+后者的完整概率为 $(1/5,1/5,1/5,0,2/5)$。两输出均合法。一般地，任意两个相位的未来差是
+
+$$
+\Delta X=\frac{\sin(2\alpha)}5(\sin\phi-\sin\phi'),
+\qquad \Delta Y=\Delta Z=0.
+$$
+
+**命题 8.12（此读法的盲角与别名）。** 若 $\sin(2\alpha)=0$，即 $\alpha\in(\pi/2)\mathbb Z$，此脉冲对整个均匀相位族的末端占位都不敏感。若 $\sin(2\alpha)\ne0$，两个相位给相同末端三均值的充要条件是
+
+$$
+\sin\phi=\sin\phi'
+\iff
+\phi'\equiv\phi\ \text{或}\ \pi-\phi\pmod{2\pi}.
+$$
+
+因此这一读法只取得正弦，不唯一确定圆上的完整相位；例如 $\phi=0$ 与 $\phi=\pi$ 是不同态，却给同一响应。非盲脉冲下，响应回到基值 $X=2/5$ 当且仅当 $\phi\in\pi\mathbb Z$。对于固定 $\theta\in\pi\mathbb Z$，全部整数步的正弦都为零；若 $\theta\notin\pi\mathbb Z$，$N=0,1$ 已可由任一非盲脉冲区分。
+
+**证明。** 由差式先分离 $\sin(2\alpha)=0$ 的情形。在另一情形用
+
+$$
+\sin\phi-\sin\phi'
+=2\cos\frac{\phi+\phi'}2\sin\frac{\phi-\phi'}2
+$$
+
+得两类别名，其余结论由正弦零点得到。$\square$
+
+端点脉冲作为五维酉矩阵以 $2\pi$ 为周期；其对上述末端概率的作用以 $\pi$ 为周期。若另外知道制备相位、门参数及重复次数，控制历史已可确定 $N\theta\pmod{2\pi}$。所证明的不足性仅针对当前统计摘要，不是说完整已知控制历史也不含相位信息。
+
+**例 8.13（插入破坏性测量改变任务）。** 若在端点脉冲前实际执行模式投影测量并丢弃输出，其平均更新为
+
+$$
+\Delta(\rho)=\sum_sP_s\rho P_s.
+$$
+
+对上述所有相位态，$\Delta(|\psi(\phi)\rangle\langle\psi(\phi)|)=I_5/5$。再施加任意 $R_1(\alpha)$，仍得 $I_5/5$，于是没有相位响应。证明只是去掉全部非对角项并使用酉共轭保持单位阵。这说明“每步精确知道五个总体概率”和“在同一份相干输入上逐步实际测量模式”不是同一协议；测量即使使用与相位门对易的效果，也不能据此假定保留所需相干。
+
+### 8.5. 对角关系能量与连续相位速度
+
+**假设 8.14（另供的连续动力学）。** 固定实能量 $E_s$、$\hbar>0$ 和时间不变的对角 Hamiltonian
+
+$$
+H=\sum_{s\in\Sigma}E_sP_s.
+$$
+
+它是独立的动力学输入。模式的存在、空模式的“自身”解释或联合模式的“预测”解释，都不决定这些能量或实际时钟。
+
+**应用 8.15（五点函数展开的能量版本）。** [B] 定理 3.2 取 $f_s=E_s$，得到唯一展开
+
+$$
+H=E_0I+(E_1-E_0)N_x+(E_3-E_0)N_y+(E_2-E_0)N_z+JQ,
+$$
+
+其中
+
+$$
+J=E_{13}-E_1-E_3+E_0.
+$$
+
+**证明。** 将右侧依次作用于 $|0\rangle,|1\rangle,|3\rangle,|2\rangle$，其本征值分别强制常数项为 $E_0$，三个占位系数为 $E_1-E_0,E_3-E_0,E_2-E_0$；在 $|13\rangle$ 上比较，剩余系数被强制为 $J$。这些五个基向量张成 $\mathcal H$，故展开存在且唯一。$\square$
+
+$J$ 是底面四角的混合差分，度量不能由公共能量和两个分别占位项表达的联合能量部分。它不包括由 $E_2-E_0$ 单独确定的中央模式能量。对固定占位纤维，
+
+$$
+\operatorname{Tr}(H\rho)
+=E_0+(E_1-E_0)X+(E_3-E_0)Y+(E_2-E_0)Z+J\kappa.
+$$
+
+所以该纤维的平均能量范围宽度为 $|J|w$；仅在 $w>0$ 且 $J\ne0$ 时，经典隐藏自由度才使平均能量不唯一。这个平均能量差与下述固定概率上的相干演化是不同机制。
+
+**命题 8.16（连续相位演化）。** 纯态按 $e^{-iHt/\hbar}$ 演化时，每个模式概率保持不变。在四个底角初始振幅均非零的条件下，对全部实数 $t$ 有
+
+$$
+\zeta(t)=\zeta(0)e^{-iJt/\hbar},
+\qquad
+\frac{d\zeta}{dt}=-\frac{iJ}{\hbar}\zeta.
+$$
+
+若在连续时间的一个区间内选择辐角提升，则
+
+$$
+\frac{d}{dt}\arg\zeta=-\frac J\hbar.
+$$
+
+按 [B] 的 $\zeta=e^{\tau/2-i\chi}$ 记号，等价地 $\dot\chi=J/\hbar$，$\tau$ 不变。
+
+**证明。** 各振幅满足
+
+$$
+\psi_s(t)=e^{-iE_st/\hbar}\psi_s(0).
+$$
+
+相位因子模为一，故概率和非零支撑均不变。代入关系比值得
+
+$$
+\frac{\psi_0(t)\psi_{13}(t)}{\psi_1(t)\psi_3(t)}
+=\frac{\psi_0(0)\psi_{13}(0)}{\psi_1(0)\psi_3(0)}
+\exp\!\left[-\frac{i}{\hbar}(E_0+E_{13}-E_1-E_3)t\right].
+$$
+
+括号中的能量正是 $J$，微分即得速度公式。$\square$
+
+对 $J\ne0$，此非零关系坐标的连续周期是 $2\pi\hbar/|J|$，相位仍只按 $2\pi$ 识别。若底角振幅为零，概率不变的结论仍成立，但不把该比值或辐角公式延伸到无定义处。
+
+**例 8.17（离散门与连续模型的精确对应）。** 对 $H=JQ$，有
+
+$$
+e^{-iHt/\hbar}=U_{Jt/\hbar}.
+$$
+
+均匀初态在任意时刻的五个概率仍为 $1/5$，端点脉冲后
+
+$$
+X(t,\alpha)=\frac25+\frac15\sin(2\alpha)\sin(Jt/\hbar),
+\qquad Y=\frac25,\qquad Z=\frac15.
+$$
+
+若另给每步时长 $\Delta t$，则 $\theta=J\Delta t/\hbar$、$t=N\Delta t$，准确回到离散公式。此处相互作用能量表现为当前概率遗漏的关系相位变化；需要所声明的 Hamiltonian 和后续控制，才有物理势能及其读出的解释。
+
+对一般对角 $H$，$J$ 只单独控制 $\zeta$ 的关系速度，不单独确定任意端点响应。以均匀初态为例，直接使用两个二阶块给
+
+$$
+X(t,\alpha)=\frac25+\frac{\sin(2\alpha)}5
+\left[
+\sin\frac{(E_1-E_0)t}{\hbar}
++\sin\frac{(E_{13}-E_3)t}{\hbar}
+\right],\qquad Y=\frac25,\quad Z=\frac15.
+$$
+
+**证明。** 对任意一对输入振幅 $e^{-iE_at/\hbar}/\sqrt5,e^{-iE_bt/\hbar}/\sqrt5$，取出共同相位后，第二个分量正是前述计算中的 $e^{-i\phi}/\sqrt5$，其中 $\phi=(E_b-E_a)t/\hbar$。因此被 $N_x$ 读取的该对第二项概率为 $[1+\sin(2\alpha)\sin\phi]/5$；将两对相加即得公式，块总质量与中央质量仍不变。$\square$
+
+两个跃迁频率的差为 $J/\hbar$，但它们的正弦响应还可能相消。因此不能在未消除其他能量项时，把一般 $H$ 的此脉冲响应直接写成只依赖 $J$ 的单正弦。
+
+**反例 8.18（$J=0$ 不意味着完整态静止）。** 取 $\Delta\ne0$，令 $H=\Delta N_x$。即
+
+$$
+E_0=E_2=E_3=0,\qquad E_1=E_{13}=\Delta,
+$$
+
+于是 $J=0$。对均匀初态，$\zeta(t)=1$，全部概率不变，但
+
+$$
+\rho_{01}(t)=\frac15e^{i\Delta t/\hbar}
+$$
+
+随时间变化。一般混态的矩阵元满足
+
+$$
+\rho_{st}(t)=e^{-i(E_s-E_t)t/\hbar}\rho_{st}(0).
+$$
+
+故完整密度矩阵在所有时间静止，当且仅当 $(E_s-E_t)\rho_{st}(0)=0$ 对全部 $s,t$ 成立，亦即 $[H,\rho(0)]=0$。因此 $J=0$ 固定上述关系坐标，却不足以保证完整态静止；反过来，能量对角混态即使 $J\ne0$ 也可静止。一次离散时刻的偶然回归也不等于所有时间静止。
+
+### 8.6. 当前均值能否预测未来：已有下降判据的效果空间应用
+
+**定义 8.19（当前效果空间）。** 在五维模型中取
+
+$$
+\mathcal W=\operatorname{span}_{\mathbb R}\{I,N_x,N_y,N_z\}
+\subseteq\operatorname{Herm}(\mathcal H).
+$$
+
+它是四维实线性空间，包含单位阵；其元素是测得效果的实线性组合，不要求每个元素本身都是 $[0,I]$ 内的事件效果。两个态在当前三均值下相同，当且仅当它们对全部 $A\in\mathcal W$ 的期望相同。以下 Hilbert–Schmidt 内积不归一化：
+
+$$
+\langle A,B\rangle_{\mathrm{HS}}=\operatorname{Tr}(AB)
+\quad(A,B\ \text{Hermitian}),\qquad
+\|A\|_{\mathrm{HS}}^2=\operatorname{Tr}(A^\dagger A).
+$$
+
+**应用 8.20（全部密度矩阵上的精确一步预测）。** 固定一个对所有待比较输入都合法且实际供应的酉操作 $U$。存在仅依赖当前三个均值、对全部输入密度矩阵都准确预测 $U$ 后同组三均值的函数，当且仅当
+
+$$
+U^\dagger\mathcal WU\subseteq\mathcal W.
+$$
+
+函数不必事先要求线性；包含关系成立时可选择当前读数的仿射函数。这里应用 [B] 定理 7.3，而不是增加一个新的通用下降原理。精确参数对应为
+
+$$
+V=\operatorname{Herm}(\mathcal H),\qquad
+L(X)=\bigl(\operatorname{Tr}X,\operatorname{Tr}(N_xX),
+\operatorname{Tr}(N_yX),\operatorname{Tr}(N_zX)\bigr),
+\qquad T(X)=UXU^\dagger.
+$$
+
+该定理的读出核 $\ker L$ 正是 $\mathcal W^\perp$；核保持 $T(\ker L)\subseteq\ker L$ 经迹对偶化，就是上述效果空间包含关系。
+
+**普通应用证明。** 若包含关系成立，对每个读口 $A_j\in\{N_x,N_y,N_z\}$ 可写
+
+$$
+U^\dagger A_jU=c_{j0}I+c_{jx}N_x+c_{jy}N_y+c_{jz}N_z,
+$$
+
+因此未来读数为 $c_{j0}+c_{jx}X+c_{jy}Y+c_{jz}Z$，对任意输入态有效。
+
+反过来，若包含关系失败，则至少一个实际读口 $A_j$ 的拉回 $B=U^\dagger A_jU$ 不在 $\mathcal W$；否则所有生成元的拉回都在其中，包含关系不会失败。取其正交残差
+
+$$
+D=P_{\mathcal W^\perp}B\ne0.
+$$
+
+$D$ 是 Hermitian，且因 $I\in\mathcal W$ 而满足 $\operatorname{Tr}D=0$。写 $d=\dim\mathcal H$（此处 $d=5$），任选
+
+$$
+0<\varepsilon\le\frac1{d\|D\|_{\mathrm{op}}},\qquad
+\rho_\pm=\frac{I_d}{d}\pm\varepsilon D.
+$$
+
+对每个向量 $v$，
+
+$$
+\langle v,\rho_\pm v\rangle
+\ge\left(\frac1d-\varepsilon\|D\|_{\mathrm{op}}\right)\|v\|^2\ge0,
+\qquad \operatorname{Tr}\rho_\pm=1.
+$$
+
+故两者是合法密度矩阵；严格小于上界时正定。对所有 $A\in\mathcal W$，其当前期望差为 $2\varepsilon\operatorname{Tr}(AD)=0$。但由于 $B=P_{\mathcal W}B+D$，正交性给
+
+$$
+\operatorname{Tr}[A_jU(\rho_+-\rho_-)U^\dagger]
+=2\varepsilon\operatorname{Tr}(BD)
+=2\varepsilon\|D\|_{\mathrm{HS}}^2>0.
+$$
+
+同一当前读数因此对应两个不同未来读数，连非线性预测器也不能同时正确。这给出全部输入量词下的必要性，以及有明确正性半径的见证。$\square$
+
+**约定 8.21（受限制备与操作合法性）。** 若只允许某个制备族 $\mathcal S\subsetneq\mathcal D(\mathcal H)$，恰当条件是
+
+$$
+\mathcal O(\rho)=\mathcal O(\sigma)
+\Longrightarrow
+\mathcal O(U\rho U^\dagger)=\mathcal O(U\sigma U^\dagger)
+\qquad(\rho,\sigma\in\mathcal S).
+$$
+
+全空间的包含关系仍充分，却未必必要，因为上述内点状态对可能不在 $\mathcal S$。若合法菜单依赖输入，还须保证待比较状态上操作的可调用性也在相应观察纤维上相同，或把已知合法性信息并入观察；不能对一个状态合法、另一个不合法的门直接要求共同未来预测。有限步序列的论证也必须使用每一步实际可达的来源域。
+
+### 8.7. 实际端点脉冲的闭包残差及其消费者
+
+**命题 8.22（$H_1$ 拉回的精确非对角部分）。** 定义 Hermitian 矩阵
+
+$$
+K=i\bigl(|0\rangle\langle1|-|1\rangle\langle0|
++|3\rangle\langle13|-|13\rangle\langle3|\bigr).
+$$
+
+则
+
+$$
+K^2=I-N_z,\qquad \operatorname{Tr}K=0,\qquad
+K\perp\mathcal W,\qquad \|K\|_{\mathrm{HS}}^2=4.
+$$
+
+对任意实数 $\alpha$，
+
+$$
+B_\alpha:=R_1(\alpha)^\dagger N_xR_1(\alpha)
+=\sin^2\alpha\,(I-N_z)+\cos(2\alpha)N_x
++\frac{\sin(2\alpha)}2K,
+$$
+
+而
+
+$$
+R_1(\alpha)^\dagger N_yR_1(\alpha)=N_y,
+\qquad R_1(\alpha)^\dagger N_zR_1(\alpha)=N_z.
+$$
+
+所以 $B_\alpha$ 在 $\mathcal W^\perp$ 上的正交残差及其范数恰为
+
+$$
+D_\alpha=\frac{\sin(2\alpha)}2K,\qquad
+\|D_\alpha\|_{\mathrm{HS}}^2=\sin^2(2\alpha),\qquad
+\|D_\alpha\|_{\mathrm{op}}=\frac{|\sin(2\alpha)|}2.
+$$
+
+特别地，对全部密度矩阵，端点脉冲保持当前效果空间的充要条件是
+
+$$
+R_1(\alpha)^\dagger\mathcal WR_1(\alpha)\subseteq\mathcal W
+\iff\sin(2\alpha)=0.
+$$
+
+**证明。** 在每个 $(a,b)=(0,1),(3,13)$ 有序块上，$N_x$ 限制为 $\operatorname{diag}(0,1)$，所以
+
+$$
+\begin{pmatrix}c_\alpha&is_\alpha\\is_\alpha&c_\alpha\end{pmatrix}
+\begin{pmatrix}0&0\\0&1\end{pmatrix}
+\begin{pmatrix}c_\alpha&-is_\alpha\\-is_\alpha&c_\alpha\end{pmatrix}
+=
+\begin{pmatrix}s_\alpha^2&is_\alpha c_\alpha\\-is_\alpha c_\alpha&c_\alpha^2\end{pmatrix}.
+$$
+
+对角部分为 $s_\alpha^2I_2+\cos(2\alpha)\operatorname{diag}(0,1)$，非对角部分为 $[\sin(2\alpha)/2]\begin{pmatrix}0&i\\-i&0\end{pmatrix}$。中央块为零，两个块相加得到 $B_\alpha$。
+
+$K$ 的每个二阶块平方是 $I_2$，中央块是零，故 $K^2=I-N_z$；其全部对角元为零，因此与对角空间 $\mathcal W$ 正交，且平方迹为四。$B_\alpha$ 的其余项已经在 $\mathcal W$ 中，所以所列非对角项就是正交残差，两个范数公式由 $K$ 的本征值 $1,1,-1,-1,0$ 得到。
+
+$N_y$ 是第二块上的单位、第一块和中央块上的零，故被脉冲固定；$N_z$ 也固定。当 $\sin(2\alpha)=0$，全部生成元拉回均在 $\mathcal W$ 中；当其非零，$B_\alpha$ 的非零残差排除包含关系。$\square$
+
+这给 [B] 命题 10.4 的闭包残差一个实际消费者：检测的对象是所供应端点门对 $N_x$ 的具体拉回，不是从一般“隐藏关系”名称推断泄漏。
+
+**例 8.23（显式、统一合法的密度矩阵对）。** 对非盲角 $\sin(2\alpha)\ne0$，取
+
+$$
+\rho_\pm=\frac{I_5}{5}\pm\frac{D_\alpha}{5}.
+$$
+
+它们的迹为一，全部五个对角概率为 $1/5$。四个底面本征值是
+
+$$
+\frac15+\frac{\sin(2\alpha)}{10},\quad
+\frac15-\frac{\sin(2\alpha)}{10},
+$$
+
+各重复两次；中央本征值是 $1/5$。故所有本征值至少 $1/10$，两者均正定，且不同。当前三均值均为 $(2/5,2/5,1/5)$，而脉冲后的 $N_x$ 期望分别为
+
+$$
+\operatorname{Tr}(B_\alpha\rho_\pm)
+=\frac25\pm\frac{\sin^2(2\alpha)}5.
+$$
+
+差为 $2\sin^2(2\alpha)/5>0$；未来 $N_y,N_z$ 仍相同。这正是前述一般见证在 $d=5$、$\varepsilon=1/5$ 的合法实例，给出明确的归一化、正性及可读分离。
+
+同一个残差也直接消费前面的相干相位族。逐块计算有
+
+$$
+\langle\psi(\phi)|K|\psi(\phi)\rangle=\frac25\sin\phi.
+$$
+
+第一块的两个相同振幅贡献零；第二块贡献
+$i(e^{-i\phi}-e^{i\phi})/5=2\sin\phi/5$。因此在 $B_\alpha$ 分解中，对角部分贡献 $2/5$，残差部分贡献 $\sin(2\alpha)\sin\phi/5$，准确重现端点响应的符号与系数。
+
+对只允许对角输入的单次任务，$\operatorname{Tr}(K\rho)=0$，于是即使角度非盲，仍有
+
+$$
+X'=\sin^2\alpha\,(1-Z)+\cos(2\alpha)X,\qquad Y'=Y,\quad Z'=Z.
+$$
+
+这说明受限制备下均值可预测与全密度矩阵上的效果空间闭合有不同量词。脉冲输出一般已经不再对角，不能据此把同一制备限制未经检查地沿任意后续序列重复使用。
+
+### 8.8. 菜单、末端均值与完整仪器记录
+
+**应用 8.24（所供酉菜单的预测范围）。** 联合相位门及任意对角 $e^{-iHt/\hbar}$ 都与 $I,N_x,N_y,N_z$ 交换，故保持 $\mathcal W$。若所允许的全部酉生成元都保持 $\mathcal W$，则每个有限合法字也保持它：两个操作的复合 $VU$ 满足
+
+$$
+(VU)^\dagger\mathcal W(VU)
+=U^\dagger(V^\dagger\mathcal WV)U\subseteq\mathcal W,
+$$
+
+逐次归纳即可。反之，若菜单含一个非盲的 $R_1(\alpha)$，上述正定态对已使当前三均值不足以预测全部允许末端均值。若菜单只含对角门和盲角端点门，则这个较小菜单确实闭合。此处每一结论都相对于实际供应的菜单；不从此推断原生全可控性、额外相位层析资源或无限精度取得能力。
+
+可以定义当前被合并的区别具有相对于菜单 $\mathfrak M$ 的“未来返回能力”，是指存在同一当前纤维中的两态 $\rho,\sigma$、共同合法的有限操作字 $w$ 和一个指定末端读口 $A$，使
+
+$$
+\operatorname{Tr}(A\,U_w\rho U_w^\dagger)
+\ne\operatorname{Tr}(A\,U_w\sigma U_w^\dagger).
+$$
+
+这是预测上的可区分性条件。若使用“势能”一词，仍须另供前述能量单位与 Hamiltonian。一个操作下无分离不等于所有允许未来都无分离；一个非闭合见证也不说明每一对隐藏态都可由同一探针分离。
+
+**定义 8.25（输出解析记录任务）。** 固定有限动作集、每个动作的有限输出集，以及包含 $I$ 的有限末端效果族。若过程含实际仪器，令每个动作 $a$ 对应完全正映射族 $\{\Phi_{a,o}\}_o$，其和保迹；联合载体须包含本任务依赖的保留环境或仪器记忆。对时间顺序的词
+
+$$
+h=((a_1,o_1),\ldots,(a_m,o_m)),\qquad
+\Phi_h=\Phi_{a_m,o_m}\circ\cdots\circ\Phi_{a_1,o_1},
+$$
+
+有记录与末端效果 $0\le G\le I$ 的联合概率
+
+$$
+p_\rho(h,G)=\operatorname{Tr}[G\Phi_h(\rho)]
+=\operatorname{Tr}[\Phi_h^*(G)\rho].
+$$
+
+若需记录后的条件态，仅在 $p_\rho(h,I)>0$ 时定义 $\Phi_h(\rho)/p_\rho(h,I)$。
+
+[B] 定义 8.3、定理 8.4 和 [C] 的逐输出闭包供应此任务的现成判据：保留所有实际分支拉回 $\Phi_h^*(G)$ 的线性张成，才能检验全部记录统计。具体地，两态的全部上述联合概率相同，当且仅当其差与每个 $\Phi_h^*(G)$ 正交；这由所列迹差逐项为零及线性张成立即得到。若当前摘要含末端效果且对每个分支拉回不变，则所有有限词效果都在该摘要中，归纳即给充分性。
+
+只检查平均通道 $\sum_o\Phi_{a,o}$ 的不变性，只涉及丢弃输出后的相应任务，不能替代逐分支条件。例如，对模式测量 $\Phi_s(\rho)=P_s\rho P_s$，平均去相干通道固定 $\mathcal W$，但单分支 $13$ 的拉回为
+
+$$
+\Phi_{13}^*(I)=Q\notin\mathcal W.
+$$
+
+$Q$ 不在其中可逐模式检验：若 $Q=aI+bN_x+cN_y+dN_z$，在 $0,1,3,2$ 上依次得到 $a=b=c=d=0$，与其在 $13$ 上为一矛盾。故同一非退化占位纤维中的不同 $\kappa$ 会给不同模式输出律，尽管平均通道保持当前三均值。
+
+反之，前面的均匀相位对甚至有相同完整模式分布，模式测量仍不能读取它们的相位。完整模式概率、实际模式记录、相干未来、已知控制历史各自保留不同信息，须按所声明任务比较。反馈策略也只能使用已经取得的输出前缀；不能把隐态信息作为免费控制条件。
+
+### 8.9. 固定标架的局部量子位与变化的联合关系
+
+**约定 8.26（独立供应的复合系统）。** 本节另给 $\mathcal H_A=\mathbb C^2$、$\mathcal H_B=\mathbb C^2$，以及实际复合载体 $\mathcal H_A\otimes\mathcal H_B$。这是一个单独的量子模型；五维空间本身不能被识别为两个量子位的四维张量积。对五模式底面做编码也须另给具体等距映射与控制合同，不能从模式 $13$ 的标签取得该资源。
+
+**应用 8.27（已有局部 Bloch 接口的唯一性）。** 固定基、标架与测量标定，令
+
+$$
+\sigma_x=\begin{pmatrix}0&1\\1&0\end{pmatrix},\qquad
+\sigma_y=\begin{pmatrix}0&-i\\i&0\end{pmatrix},\qquad
+\sigma_z=\begin{pmatrix}1&0\\0&-1\end{pmatrix}.
+$$
+
+任意量子位密度矩阵唯一表示为
+
+$$
+\rho_A=\frac12(I_2+x\sigma_x+y\sigma_y+z\sigma_z),\qquad
+x=\operatorname{Tr}(\sigma_x\rho_A),\quad
+ y=\operatorname{Tr}(\sigma_y\rho_A),\quad
+ z=\operatorname{Tr}(\sigma_z\rho_A),
+$$
+
+且其合法域恰为 $x^2+y^2+z^2\le1$。因此同一固定标架中的三个 Pauli 总体期望严格不变，确实强制局部密度矩阵不变。
+
+**普通应用证明。** $I_2,\sigma_x,\sigma_y,\sigma_z$ 是二维 Hermitian 矩阵实空间的一组基，满足
+
+$$
+\operatorname{Tr}\sigma_j=0,\qquad
+\operatorname{Tr}(\sigma_j\sigma_k)=2\delta_{jk}.
+$$
+
+一般 Hermitian 矩阵先按此基展开，迹一固定单位项系数为 $1/2$，再与各 $\sigma_j$ 取迹，强制其余系数为 $x/2,y/2,z/2$，证明存在且唯一。Pauli 乘法给
+
+$$
+(x\sigma_x+y\sigma_y+z\sigma_z)^2=(x^2+y^2+z^2)I_2,
+$$
+
+因此 $\rho_A$ 的本征值为 $(1\pm\sqrt{x^2+y^2+z^2})/2$，正半定当且仅当该向量落在单位球内。$\square$
+
+这就是 [L] 定义 9.1 所消费的局部 Bloch 供应接口，其标准 Bloch 球及混态球解释见 IBM Quantum Learning [IBM]。该接口中 $r_x,r_y,r_z$ 在此分别为 $x,y,z$；这里的 Pauli 期望不是五模式的占位均值 $X,Y,Z$，也不是位置坐标。尤其不能在这组信息完备的局部读口之外，再宣称同一个局部密度矩阵中仍有未读出的额外密度参数。
+
+这一唯一性不提供在一份未知输入上同时无损取得三个精确数的仪器。Pauli 效果不对易；并且各方差为 $1-x^2,1-y^2,1-z^2$，总和 $3-x^2-y^2-z^2\ge2$。三个总体期望的重建需要相应制备与测量资源。它也不确定一个混态的唯一纯态集合分解、产生它的全部历史或环境联合态。
+
+**命题 8.28（局部恒定而 Bell 相位相关变化）。** 在所供复合系统中，令
+
+$$
+|\Phi_\varphi\rangle=\frac{|00\rangle+e^{i\varphi}|11\rangle}{\sqrt2},
+\qquad \rho_{AB}(\varphi)=|\Phi_\varphi\rangle\langle\Phi_\varphi|.
+$$
+
+对所有实数 $\varphi$，
+
+$$
+\rho_A(\varphi)=\operatorname{Tr}_B\rho_{AB}(\varphi)=\frac{I_2}{2},
+\qquad
+\rho_B(\varphi)=\operatorname{Tr}_A\rho_{AB}(\varphi)=\frac{I_2}{2},
+$$
+
+所以两边各自的三个 Pauli 期望全为零，但
+
+$$
+\langle\sigma_x\otimes\sigma_x\rangle_\varphi=\cos\varphi,
+\qquad
+\langle\sigma_x\otimes\sigma_y\rangle_\varphi=\sin\varphi.
+$$
+
+**证明。** 将密度矩阵展开为
+
+$$
+\rho_{AB}(\varphi)=\frac12\bigl(
+|00\rangle\langle00|+|11\rangle\langle11|
++e^{-i\varphi}|00\rangle\langle11|
++e^{i\varphi}|11\rangle\langle00|\bigr).
+$$
+
+部分迹对交叉项给零，例如
+$\operatorname{Tr}_B(|00\rangle\langle11|)=|0\rangle\langle1|\langle1|0\rangle=0$；两对角项分别留下 $|0\rangle\langle0|/2$ 与 $|1\rangle\langle1|/2$，故两约化态均为 $I_2/2$。Pauli 矩阵无迹，局部期望因而为零。
+
+$\sigma_x\otimes\sigma_x$ 交换 $|00\rangle,|11\rangle$，所以其期望为 $(e^{i\varphi}+e^{-i\varphi})/2=\cos\varphi$。而
+
+$$
+(\sigma_x\otimes\sigma_y)|00\rangle=i|11\rangle,\qquad
+(\sigma_x\otimes\sigma_y)|11\rangle=-i|00\rangle,
+$$
+
+其期望为 $(-ie^{i\varphi}+ie^{-i\varphi})/2=\sin\varphi$。态范数为一，外积自动正半定且迹一。$\square$
+
+若另行供应 $I_A\otimes\operatorname{diag}(1,e^{i\omega t})$，它把 $\Phi_0$ 送为 $\Phi_{\omega t}$，构成两个局部态恒定而联合相关连续变化的明确动力学路径。相位演化是否实际可调用，仍是操作输入。
+
+**命题 8.29（相关读数所需的实际联合访问）。** 若允许对同一联合制备的一对系统分别测量 Pauli 并保留配对输出 $a,b\in\{-1,1\}$，则
+
+$$
+\Pr(a,b\mid x,x)=\frac14(1+ab\cos\varphi),\qquad
+\Pr(a,b\mid x,y)=\frac14(1+ab\sin\varphi).
+$$
+
+边缘输出在两种设置下都均匀，与相位无关。对限定的 Bell 相位族，取得这两组相关总体量可确定 $\varphi\pmod{2\pi}$；仅一组余弦或正弦各自都有别名。该辨识结论不延伸为任意两量子位态的完整层析。
+
+**证明。** 对设置 $(j,k)$，联合效果是
+
+$$
+\frac{I_2+a\sigma_j}{2}\otimes\frac{I_2+b\sigma_k}{2}.
+$$
+
+展开取期望，两个局部一阶项均为零，余下常数项与 $ab$ 倍的上述联合相关，得到公式。各概率非负并求和为一，边缘求和为 $1/2$。余弦与正弦同时给出单位圆上的点，故在该一参数族上确定模 $2\pi$ 的相位。$\square$
+
+配对记录须来自同一联合态，不能把两个边缘统计拼成未取得的联合分布；两种不同设置的总体量也不声称在一份输入上同时精确测得。如果只访问 $A$，任何固定局部仪器的概率仅依赖 $\rho_A=I_2/2$，因此不能区分此族；局部后处理不能补回被部分迹合并的区别。若要把联合区别转成单边响应，须另外供应合适的联合控制或信息通道。[L] 定义 9.3 给出同一保留环境上 CNOT 返回的既有接口，但不能把换新环境的协议当成同一操作。
+
+故“知道自身局部态”与“知道自身与环境的联合关系”是两项不同的识别任务。前者在固定量子位模型中可由三 Pauli 期望完整确定，后者仍可在相同局部态上变化；这不把“联合关系中的位置”解释为未经供应的几何空间位置。
+
+### 8.10. 非负光谱、被动滤光与返回的三路差异
+
+**定义 8.30（线性光谱读口）。** 给定波长测度空间 $(\Lambda,\mu)$，来源光谱取 $S\in L^1(\Lambda,\mu)$、$S\ge0$。给定三个实值本质有界灵敏度函数 $s_i\in L^\infty$，定义
+
+$$
+C_i(S)=\int_\Lambda s_i(\lambda)S(\lambda)\,d\mu(\lambda),
+\qquad i=1,2,3.
+$$
+
+这保证每个读数绝对可积；若用非负探测器强度解释这些坐标，可再要求 $s_i\ge0$。此处不要求三个灵敏度互相正交或支撑不交。固定读口、色度系统和照明等比较条件，是解释同色异谱时的一部分输入。
+
+CIE 的词条 [CIE] 将 metameric colour stimuli 定义为在指定色度系统中三刺激值相同而光谱不同的颜色刺激，其性质称为 metamerism。下述线性核论证表达这一结构；具体灵敏度是否是某个实际 CIE 标准观察者或经标定的仪器响应，须由对应数据给出。
+
+**命题 8.31（合法光谱对与滤光后的差式）。** 设 $h\in L^1$ 满足
+
+$$
+\int s_i h\,d\mu=0\qquad(i=1,2,3),
+$$
+
+且 $S\ge0$、$S+h\ge0$ 几乎处处。则两合法光谱当前三路读数相同。若实际另供一个不混合波长的线性被动滤光器，其透射率 $a\in L^\infty$ 满足
+
+$$
+0\le a(\lambda)\le1\quad\text{几乎处处},
+\qquad T_a(S)=aS,
+$$
+
+则两个输出仍非负且可积，并且差为
+
+$$
+\Delta C_i'=C_i(T_a(S+h))-C_i(T_aS)
+=\int s_i a h\,d\mu.
+$$
+
+同一光谱对在这个滤光器后被区分，当且仅当至少一个积分非零。
+
+**证明。** 初始差由积分线性性给 $C_i(S+h)-C_i(S)=\int s_i h=0$。乘以 $0\le a\le1$ 保持非负，并由 $|aS|\le|S|$、$|a(S+h)|\le|S+h|$ 保证可积。再次使用线性性得到输出差式及其非零充要条件。$\square$
+
+非零 $h$ 在整个线性空间中存在，不保证任意选择的 $S$ 与 $S+h$ 都合法；逐点非负性必须核对。类似地，滤光器非恒定本身不保证区分。如果 $a=a_0$ 为常数，输出差恒为 $a_0\int s_i h=0$；如果 $a$ 在相关支撑上为零，或给定 $h$ 仍与所有 $a s_i$ 正交，也没有返回差异。更强的充分盲条件是每个 $a s_i$ 都在当前灵敏度的实线性张成内，此时对每个当前核方向 $h$ 都仍有零返回。
+
+这里是绝对三路线性读数，未在滤光后按总功率重新归一化。滤光通常减少总光强；若读口改成归一化色度、另换照明、加入荧光或波长混合，必须使用相应的新模型，不能直接套用同一个乘法差式。
+
+**例 8.32（四个波段上的严格非零返回）。** 取 $\Lambda=[0,4)$ 及 Lebesgue 测度，令
+
+$$
+B_1=[0,1),\quad B_2=[1,2),\quad B_3=[2,3),\quad B_4=[3,4).
+$$
+
+各波段测度为一，记指示函数为 $\mathbf1_{B_j}$，取三个非负有界灵敏度
+
+$$
+s_1=\mathbf1_{B_1}+\mathbf1_{B_4},\quad
+s_2=\mathbf1_{B_2}+\mathbf1_{B_4},\quad
+s_3=\mathbf1_{B_3}+\mathbf1_{B_4}.
+$$
+
+取 $0<\eta\le1$，定义两光谱
+
+$$
+S_0=\sum_{j=1}^4\mathbf1_{B_j},\qquad
+h=-\mathbf1_{B_1}-\mathbf1_{B_2}-\mathbf1_{B_3}+\mathbf1_{B_4},
+\qquad S_\eta=S_0+\eta h.
+$$
+
+其四波段值分别为
+
+$$
+S_0:(1,1,1,1),\qquad
+S_\eta:(1-\eta,1-\eta,1-\eta,1+\eta).
+$$
+
+这些值非负；$\eta<1$ 时全严格正，$\eta=1$ 时前三项为零仍合法。全部函数都可积，且
+
+$$
+C(S_0)=(2,2,2)=C(S_\eta),\qquad \int s_i h\,d\lambda=-1+1=0.
+$$
+
+现在供应只通过第四波段的被动滤光器 $a=\mathbf1_{B_4}$。则
+
+$$
+aS_0=\mathbf1_{B_4},\qquad
+aS_\eta=(1+\eta)\mathbf1_{B_4},
+$$
+
+从而
+
+$$
+C(aS_0)=(1,1,1),\qquad
+C(aS_\eta)=(1+\eta,1+\eta,1+\eta),
+\qquad \Delta C'=\eta(1,1,1)\ne0.
+$$
+
+**证明。** 每个 $s_i$ 在一个前波段和第四波段上取一，因此初始读数分别为 $1+1=2$ 和 $(1-\eta)+(1+\eta)=2$。滤光后只剩第四波段，故读数是该波段的值乘以一的测度。透射率只取零、一，符合被动条件；两个源的积分分别为 $4$ 与 $4-2\eta$，输出积分分别为 $1$ 与 $1+\eta$，都不超过各自输入。没有负光谱、负透射或增益。$\square$
+
+这是声明的分段常数三路传感器模型，不是采用实测 CIE 匹配曲线的数值实例，也不以该构造宣称某一现实颜色对已经实现。$\eta=0$ 时两源相同且返回为零；使用常数滤光器时，即使 $\eta>0$ 也仍同读数。与量子例子相同，取得末端差异需要实际可调用的后续操作与相应读数。
+
+### 8.11. 相同读出结构的对应与预测摘要的边界
+
+**定义 8.33（共同的纤维返回结构）。** 对观察映射 $\mathcal O$ 与共同合法的操作 $T$，当前观察能够唯一预测该操作后的同组观察，精确地要求 $\mathcal O\circ T$ 在 $\mathcal O$ 的每条实际纤维上恒定。以上例子的参数对应是：
+
+| 来源对象与当前区别 | 当前合并条件 | 指定操作后的读数差 |
+| --- | --- | --- |
+| 五模式密度矩阵差 $\delta\rho$ | $\operatorname{Tr}(A\delta\rho)=0$，$A\in\mathcal W$ | $\operatorname{Tr}(U^\dagger AU\,\delta\rho)$ |
+| 两量子位联合态差 $\delta\rho_{AB}$ | 给定局部部分迹相同 | 指定联合效果的期望差 |
+| 合法光谱差 $h$ | $\int s_i h=0$ | $\int s_i a h$ |
+
+五模式相位族在 $U_\theta$ 下留在当前概率纤维内，而非盲 $R_1(\alpha)$ 的残差可使其中某些区别返回占位读数；Bell 相位族留在相同局部态纤维内，而已供应的联合相关读口能区分相位；光谱核方向在当前三路下被合并，而所供滤光器可使其返回。三者对应的是观察纤维及其与操作的相容性，不是三种来源空间的同构。空间三坐标、颜色三刺激值和量子位三 Pauli 期望的定义域、合法域及可操作资源各自不同；共有三个实数不能识别这些载体，更不能由此推出同一种物理动力学。
+
+**推论 8.34（任务所需的摘要细化）。** 若指定任务必须准确预测一个菜单中的全部允许未来读数，而当前摘要有上述同当前、异未来的合法状态对，则任何完成此任务的摘要都必须区分这一对，或者已经包含能区分它们的历史信息。
+
+**证明。** 假设某个摘要仍把该对合并。只依赖此摘要的预测器对两态给相同答案，但该合法未来任务的正确答案不同，因此不可能同时正确。$\square$
+
+在五模式模型中，当前统计稳定、$\zeta$ 演化与后续返回读数可以同时成立；是否需要新增关系信息，由实际任务和菜单决定。闭合菜单下无需为这些末端均值再增加被永远合并的区别；非闭合菜单下，仅后处理旧摘要无法消除已给出的反例。这里所需的细化是预测任务中的区分能力，不自动意味着新增物理空间维数、无限记忆、可认证的全部状态或额外控制资源。关于完整仪器历史的细化，使用 [B]、[C] 已有的逐输出词效果闭包，不能以末端均值闭合替代。
+
+### 8.12. 数学来源与适用范围
+
+[B79]: https://github.com/the-omega-institute/trureturing/blob/79c480111cfceca83f9c2f191117ecd21d74431d/docs/develop/theory/AURIC_FIB_RELATIONAL_BUNDLE_AND_PREDICTIVE_CLOSURE_THEORY.md
+[L]: https://github.com/the-omega-institute/trureturing/blob/79c480111cfceca83f9c2f191117ecd21d74431d/docs/develop/theory/AURIC_FIB_OBSERVER_INTERNAL_THREE_AXIS_GEOMETRY_AND_PREDICTIVE_INTERFACE.md
+[C]: https://github.com/the-omega-institute/trureturing/blob/79c480111cfceca83f9c2f191117ecd21d74431d/docs/develop/theory/AURIC_FIB_ATOM_OUTPUT_RESOLVED_INSTRUMENT_CLOSURE.md
+[IBM]: https://quantum.cloud.ibm.com/learning/en/courses/general-formulation-of-quantum-information/density-matrices/bloch-sphere
+[CIE]: https://cie.co.at/eilvterm/17-23-008
+
+[B] 《AURIC FIB 关系丛与预测闭包理论》，[固定源正文](https://github.com/the-omega-institute/trureturing/blob/04dfb26329ca7ab2c9d3488f461fa376000e171f/docs/develop/theory/AURIC_FIB_RELATIONAL_BUNDLE_AND_PREDICTIVE_CLOSURE_THEORY.md)。定理 3.2–3.3 供应唯一五点展开、占位纤维与宽度；定理 4.2 供应非零图上的 $\zeta=e^{\tau/2-i\chi}$；定理 7.3 供应核保持下降；定义 8.1、8.3 与定理 8.4 供应有限维仪器及逐输出未来效果闭包；命题 8.9–8.10 供应有条件的合法端点与联合相位接口；命题 10.3–10.4 供应概率不变的关系相位门与闭包残差。本文取该卷的模式次序、正相位变量约定和不归一化迹内积，明确消费这些中间结构。
+
+[B79] 《AURIC FIB 关系丛与预测闭包理论》，定理 8.4、命题 8.9–8.10、10.3 及 §18.1–18.2：有限维逐分支闭包、有条件的端点与相位控制，以及图关系系数的对角统计和相位接口。相位保持概率并不蕴含菜单闭合；具体未来返回由本节的端点响应和拉回残差计算承担。
+
+[O] 《观察者相对的 Auric FIB–ATOM：局部模型、接口与未来可辨识性》，[固定源正文](https://github.com/the-omega-institute/trureturing/blob/04dfb26329ca7ab2c9d3488f461fa376000e171f/docs/develop/theory/AURIC_FIB_ATOM_OBSERVER_RELATIVE_LOCAL_MODELS_AND_FUTURE_IDENTIFIABILITY.md)，定义 4.1–4.2、命题 4.3。使用其输入模式及三均值与完整联合记录的区别；其读出次序 $(X,Z,Y)$ 在本文改排为 $(X,Y,Z)$，概率分量次序不变。
+
+[L] 《AURIC FIB 观察者内部三轴几何与预测接口》，[固定源正文](https://github.com/the-omega-institute/trureturing/blob/79c480111cfceca83f9c2f191117ecd21d74431d/docs/develop/theory/AURIC_FIB_OBSERVER_INTERNAL_THREE_AXIS_GEOMETRY_AND_PREDICTIVE_INTERFACE.md)，定义 9.1、9.3。前者供应固定 Pauli/Bloch 载体、合法球及取得条件，后者供应同一保留环境上的联合区别返回；它们不识别几何位置空间与局部算符空间。
+
+[C] 《Auric FIB ATOM：静态隐藏纤维、输出分辨未来商与可维护性》，[固定源正文](https://github.com/the-omega-institute/trureturing/blob/79c480111cfceca83f9c2f191117ecd21d74431d/docs/develop/theory/AURIC_FIB_ATOM_OUTPUT_RESOLVED_INSTRUMENT_CLOSURE.md)，§§15–16 及其适用条件。消费逐输出子核闭包和平均转移闭合不足以预测完整记录的区别；本文量子仪器的定义与证明采用 [B] 的完全正映射版本。
+
+[IBM] IBM Quantum Learning, [“Bloch sphere”](https://quantum.cloud.ibm.com/learning/en/courses/general-formulation-of-quantum-information/density-matrices/bloch-sphere)，General formulation of quantum information，Density matrices。该原始教学来源给出 Pauli 展开、纯态球与含混态的 Bloch 球体；本文的唯一性与正性计算按固定二维载体直接列出。
+
+[CIE] CIE, International Lighting Vocabulary, [17-23-008, “metameric colour stimuli”](https://cie.co.at/eilvterm/17-23-008)。采用其“指定色度系统中三刺激值相同而光谱不同”的定义；四波段例子另行明确其传感函数，未把它们当作实测标准观察者曲线。
+
+## 追加锚（本行以下为增补区）
