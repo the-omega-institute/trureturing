@@ -4,8 +4,7 @@
    mirror-E: none(waiver:unbounded-symbolic-proof)
    anchors: []
    utility: none
-   digest: Marked-return connectivity and the complete characteristic-seven relative path.
--/
+   digest: Marked-return connectivity and the complete characteristic-seven relative path. -/
 
 import D5.S1.Words.Sequenceability.CharacteristicSevenDetour
 

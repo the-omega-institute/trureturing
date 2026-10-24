@@ -4,8 +4,7 @@
    mirror-E: none(waiver:unbounded-symbolic-proof)
    anchors: []
    utility: none
-   digest: Six-column affine lift, endpoint seams and exact vector-label conservation.
--/
+   digest: Six-column affine lift, endpoint seams and exact vector-label conservation. -/
 
 import D5.S1.Words.Sequenceability.RowOrbitLift
 import D5.S3.Combinatorics.PerfectMatchings.FiniteEndpointPairing
