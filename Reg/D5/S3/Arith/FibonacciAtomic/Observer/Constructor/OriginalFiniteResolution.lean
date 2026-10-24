@@ -89,7 +89,7 @@ def familyRegistration : Registration arena Statement := by
   · intro i
     refine ⟨⟨0, 0, Fin.elim0, Fin.elim0⟩, .ground (.of true), .ground (.of false), ?_⟩
     intro h
-    have groundEq : (FreeMagma.of true : GenealogicalFiberTransport.Source) = .of false := by
+    have groundEq : (FreeMagma.of true : FreeMagma Bool) = .of false := by
       simpa [actual, realize, compile, resolve] using h
     cases groundEq
 
