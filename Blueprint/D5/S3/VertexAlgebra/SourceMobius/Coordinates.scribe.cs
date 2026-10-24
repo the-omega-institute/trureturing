@@ -7,13 +7,13 @@ internal sealed class CoordinatesDocument : IScribeDocumentDefinition
         "Coordinates", H("Coordinates"), Blocks(
             Paragraph(Text("This is the finite source-coordinate dependency of full corrected-field inversion. Arbitrary symmetric even integral lattices, rank zero, zero charge, empty supports and indefinite norms remain in scope. No positive energy, ground pairing or Jacobi premise is used.")),
             Describe.Lean(
-                DescribeId.Create("sourcemobius-coordinates-sectorFlow-X"),
+                DescribeId.Create("sourcemobius-coordinates-sectorflow-x"),
                 DeclarationHandle.Create("D5/S3/VertexAlgebra/SourceMobius/Coordinates.sectorFlow_X"),
                 H("sectorFlow_X"), StatementSource.WithoutFormula(),
                 AssessedProvenance.FromLiterature(Source),
                 Blocks(Paragraph(Text("The actual finite flow sends X(i,r) to the binomial sum plus the bilinear charge times u^(r+1). The proof calculates actual iterated lowering powers and their factorial cancellation."))), DescribeRole.Theorem),
             Describe.Lean(
-                DescribeId.Create("sourcemobius-coordinates-sectorFlow-eq-aeval"),
+                DescribeId.Create("sourcemobius-coordinates-sectorflow-eq-aeval"),
                 DeclarationHandle.Create("D5/S3/VertexAlgebra/SourceMobius/Coordinates.sectorFlow_eq_aeval"),
                 H("sectorFlow_eq_aeval"), StatementSource.WithoutFormula(),
                 AssessedProvenance.FromLiterature(Source),

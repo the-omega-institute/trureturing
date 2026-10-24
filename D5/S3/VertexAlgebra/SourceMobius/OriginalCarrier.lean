@@ -90,14 +90,18 @@ theorem actual_sugawara_one_bound (D : LatticeData) (hu : IsUnit D.G.det) (v : C
   rw [← singles, map_sum]
   apply Finset.sum_eq_zero
   intro a ha
-  rw [sugawara_pow_single D _ (Matrix.nonsing_inv_mul _ (gram_det_unit D hu))
-    (Matrix.mul_nonsing_inv _ (gram_det_unit D hu))]
-  have h : ((sectorL1 D a).toLinearMap ^ (R+1)) (v a) = 0 := by
-    have hl : weightedTotalDegree (sourceWeight D) (v a) ≤ R := Finset.le_sup (f := fun a => weightedTotalDegree (sourceWeight D) (v a)) ha
-    rw [show R+1 = (R - weightedTotalDegree (sourceWeight D) (v a)) +
-      (weightedTotalDegree (sourceWeight D) (v a) + 1) by omega,
-      pow_add, Module.End.mul_apply, sectorL1_degree_bound, map_zero]
-  exact (congrArg (Finsupp.single a) h).trans (Finsupp.single_zero a)
+  let p := v a
+  change (sugawaraMode D (gramComplex D)⁻¹ 1 ^ (R+1)) (Finsupp.single a p) = 0
+  rw [p.as_sum, Finsupp.single_finsetSum, map_sum]
+  apply Finset.sum_eq_zero
+  intro m hm
+  have hl : m.weight (sourceWeight D) ≤ R :=
+    (le_weightedTotalDegree (sourceWeight D) hm).trans
+      (Finset.le_sup (f := fun a => weightedTotalDegree (sourceWeight D) (v a)) ha)
+  have killed := actual_sugawara_one_monomial_bound D hu a m (p.coeff m)
+  rw [show R+1 = (R - m.weight (sourceWeight D)) +
+      (m.weight (sourceWeight D) + 1) by omega,
+    pow_add, Module.End.mul_apply, killed, map_zero]
 
 
 /-- Additive parameter composition on the full original finite direct sum. -/

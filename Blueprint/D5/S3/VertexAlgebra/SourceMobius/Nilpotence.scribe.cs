@@ -7,13 +7,13 @@ internal sealed class NilpotenceDocument : IScribeDocumentDefinition
         "Nilpotence", H("Nilpotence"), Blocks(
             Paragraph(Text("This is the finite source-coordinate dependency of full corrected-field inversion. Arbitrary symmetric even integral lattices, rank zero, zero charge, empty supports and indefinite norms remain in scope. No positive energy, ground pairing or Jacobi premise is used.")),
             Describe.Lean(
-                DescribeId.Create("sourcemobius-nilpotence-sectorL1-monomial-bound"),
+                DescribeId.Create("sourcemobius-nilpotence-sectorl1-monomial-bound"),
                 DeclarationHandle.Create("D5/S3/VertexAlgebra/SourceMobius/Nilpotence.sectorL1_monomial_bound"),
                 H("sectorL1_monomial_bound"), StatementSource.WithoutFormula(),
                 AssessedProvenance.FromLiterature(Source),
                 Blocks(Paragraph(Text("The sharp R+1 bound uses exactly Finsupp.weight(sourceWeight D), proved by a sharp Leibniz-product induction."))), DescribeRole.Theorem),
             Describe.Lean(
-                DescribeId.Create("sourcemobius-nilpotence-sectorL1-degree-bound"),
+                DescribeId.Create("sourcemobius-nilpotence-sectorl1-degree-bound"),
                 DeclarationHandle.Create("D5/S3/VertexAlgebra/SourceMobius/Nilpotence.sectorL1_degree_bound"),
                 H("sectorL1_degree_bound"), StatementSource.WithoutFormula(),
                 AssessedProvenance.FromLiterature(Source),

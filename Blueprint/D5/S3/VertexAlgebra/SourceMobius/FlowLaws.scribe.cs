@@ -7,19 +7,19 @@ internal sealed class FlowLawsDocument : IScribeDocumentDefinition
         "FlowLaws", H("FlowLaws"), Blocks(
             Paragraph(Text("This is the finite source-coordinate dependency of full corrected-field inversion. Arbitrary symmetric even integral lattices, rank zero, zero charge, empty supports and indefinite norms remain in scope. No positive energy, ground pairing or Jacobi premise is used.")),
             Describe.Lean(
-                DescribeId.Create("sourcemobius-flowlaws-sectorFlow-add"),
+                DescribeId.Create("sourcemobius-flowlaws-sectorflow-add"),
                 DeclarationHandle.Create("D5/S3/VertexAlgebra/SourceMobius/FlowLaws.sectorFlow_add"),
                 H("sectorFlow_add"), StatementSource.WithoutFormula(),
                 AssessedProvenance.FromLiterature(Source),
                 Blocks(Paragraph(Text("Taylor translation and the coefficient differential equation prove the additive composition law on every oscillator polynomial."))), DescribeRole.Theorem),
             Describe.Lean(
-                DescribeId.Create("sourcemobius-flowlaws-sectorFlow-zero"),
+                DescribeId.Create("sourcemobius-flowlaws-sectorflow-zero"),
                 DeclarationHandle.Create("D5/S3/VertexAlgebra/SourceMobius/FlowLaws.sectorFlow_zero"),
                 H("sectorFlow_zero"), StatementSource.WithoutFormula(),
                 AssessedProvenance.FromLiterature(Source),
                 Blocks(Paragraph(Text("The zero parameter is identity, including zero and constants. This supplies the inverse construction."))), DescribeRole.Theorem),
             Describe.Lean(
-                DescribeId.Create("sourcemobius-flowlaws-sectorFlow-neg"),
+                DescribeId.Create("sourcemobius-flowlaws-sectorflow-neg"),
                 DeclarationHandle.Create("D5/S3/VertexAlgebra/SourceMobius/FlowLaws.sectorFlow_neg"),
                 H("sectorFlow_neg"), StatementSource.WithoutFormula(),
                 AssessedProvenance.FromLiterature(Source),

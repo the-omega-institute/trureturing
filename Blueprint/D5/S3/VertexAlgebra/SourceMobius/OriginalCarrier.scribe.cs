@@ -13,7 +13,7 @@ internal sealed class OriginalCarrierDocument : IScribeDocumentDefinition
                 AssessedProvenance.FromLiterature(Source),
                 Blocks(Paragraph(Text("The original integer determinant-unit assumption supplies H = inverse(gramComplex D) by determinant mapping, retaining the sharp actual-weight monomial bound."))), DescribeRole.Theorem),
             Describe.Lean(
-                DescribeId.Create("sourcemobius-originalcarrier-actual-sourceFlow-eq-sum"),
+                DescribeId.Create("sourcemobius-originalcarrier-actual-sourceflow-eq-sum"),
                 DeclarationHandle.Create("D5/S3/VertexAlgebra/SourceMobius/OriginalCarrier.actual_sourceFlow_eq_sum"),
                 H("actual_sourceFlow_eq_sum"), StatementSource.WithoutFormula(),
                 AssessedProvenance.FromLiterature(Source),
@@ -23,9 +23,9 @@ internal sealed class OriginalCarrierDocument : IScribeDocumentDefinition
                 DeclarationHandle.Create("D5/S3/VertexAlgebra/SourceMobius/OriginalCarrier.actual_sugawara_one_bound"),
                 H("actual_sugawara_one_bound"), StatementSource.WithoutFormula(),
                 AssessedProvenance.FromLiterature(Source),
-                Blocks(Paragraph(Text("The same maximum original oscillator weighted degree plus one kills every original Carrier source."))), DescribeRole.Theorem),
+                Blocks(Paragraph(Text("The same maximum original oscillator weighted degree plus one kills every original Carrier source. The proof consumes the integer-hypothesis monomial bound through the actual finite charge and monomial supports."))), DescribeRole.Theorem),
             Describe.Lean(
-                DescribeId.Create("sourcemobius-originalcarrier-sourceFlow-add"),
+                DescribeId.Create("sourcemobius-originalcarrier-sourceflow-add"),
                 DeclarationHandle.Create("D5/S3/VertexAlgebra/SourceMobius/OriginalCarrier.sourceFlow_add"),
                 H("sourceFlow_add"), StatementSource.WithoutFormula(),
                 AssessedProvenance.FromLiterature(Source),
