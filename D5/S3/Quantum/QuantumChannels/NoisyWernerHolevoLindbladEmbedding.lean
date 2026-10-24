@@ -7,18 +7,27 @@
    digest: The noisy qutrit Werner–Holevo channel has a GKSL logarithm only at zero noise. -/
 
 import Mathlib.Analysis.Normed.Algebra.MatrixExponential
+import Mathlib.Analysis.Normed.Operator.NormedSpace
 import Mathlib.Analysis.SpecialFunctions.Log.Basic
+import Mathlib.Analysis.SpecialFunctions.Exponential
+import Mathlib.Analysis.Complex.Polynomial.Basic
+import Mathlib.Analysis.Complex.Trigonometric
+import Mathlib.LinearAlgebra.Eigenspace.Charpoly
+import Mathlib.Topology.Algebra.Module.FiniteDimension
 import Mathlib.LinearAlgebra.Matrix.ToLin
 import Mathlib.LinearAlgebra.Trace
 import Mathlib.Tactic.FinCases
 import Mathlib.Tactic.Linarith
+import Mathlib.Tactic.LinearCombination
 import Mathlib.Tactic.NormNum
 import Mathlib.Tactic.Positivity
 import Mathlib.Tactic.Ring
 
+set_option backward.isDefEq.respectTransparency false
+
 noncomputable section
 
-open scoped BigOperators Matrix
+open scoped BigOperators Matrix Matrix.Norms.Operator
 
 namespace D5.S3.Quantum.QuantumChannels.NoisyWernerHolevoLindbladEmbedding
 
@@ -90,6 +99,101 @@ private theorem generatorExp_injective
   have := congrArg (fun Z => hunit.unit.inv Z) hXY
   simpa only [Module.End.isUnit_inv_apply_apply_of_isUnit] using this
 
+private theorem generatorExp_continuous
+    (G : Module.End ℂ (Matrix (Fin 3) (Fin 3) ℂ)) :
+    LinearMap.toContinuousLinearMap (generatorExp G) =
+      NormedSpace.exp (LinearMap.toContinuousLinearMap G) := by
+  let e := (LinearMap.toMatrixAlgEquiv (Matrix.stdBasis ℂ (Fin 3) (Fin 3))).symm.trans
+    (Module.End.toContinuousLinearMap (Matrix (Fin 3) (Fin 3) ℂ))
+  have h := NormedSpace.map_exp e e.toLinearMap.continuous_of_finiteDimensional
+    (LinearMap.toMatrixAlgEquiv (Matrix.stdBasis ℂ (Fin 3) (Fin 3)) G)
+  dsimp only [e, AlgEquiv.trans_apply] at h
+  rw [AlgEquiv.symm_apply_apply] at h
+  unfold Module.End.toContinuousLinearMap at h
+  unfold generatorExp
+  exact h
+
+private theorem exponential_eigenvector {E : Type*} [NormedAddCommGroup E]
+    [NormedSpace ℂ E] [CompleteSpace E] (F : E →L[ℂ] E) (v : E) (μ : ℂ)
+    (hv : F v = μ • v) : (NormedSpace.exp F) v = Complex.exp μ • v := by
+  have hp (n : ℕ) : (F ^ n) v = μ ^ n • v := by
+    by_cases hzero : v = 0
+    · subst v
+      simp
+    have heig : Module.End.HasEigenvector F.toLinearMap μ v :=
+      ⟨Module.End.mem_eigenspace_iff.mpr hv, hzero⟩
+    change ((F ^ n : E →L[ℂ] E) : E →ₗ[ℂ] E) v = _
+    rw [ContinuousLinearMap.toLinearMap_pow]
+    exact heig.pow_apply n
+  have hF := (NormedSpace.exp_series_hasSum_exp' (𝕂 := ℂ) F).mapL
+    (ContinuousLinearMap.apply ℂ E v)
+  have hμ := (NormedSpace.exp_series_hasSum_exp' (𝕂 := ℂ) μ).smul_const v
+  have heq : (fun n : ℕ => (ContinuousLinearMap.apply ℂ E v)
+      ((n.factorial⁻¹ : ℂ) • F ^ n)) =
+      (fun n : ℕ => ((n.factorial⁻¹ : ℂ) • μ ^ n) • v) := by
+    funext n
+    simp only [map_smul, ContinuousLinearMap.apply_apply, hp, smul_smul, smul_eq_mul]
+  rw [heq] at hF
+  exact hF.unique (by simpa only [← Complex.exp_eq_exp_ℂ] using hμ)
+
+private theorem projected_log_trace
+    (G P : Module.End ℂ (Matrix (Fin 3) (Fin 3) ℂ))
+    (hP : IsIdempotentElem P) (hcomm : Commute G P)
+    (b : ℝ) (hb : 0 < b) (hexp : generatorExp G * P = (b : ℂ) • P) :
+    (LinearMap.trace ℂ _ (G * P)).re = (LinearMap.trace ℂ _ P).re * Real.log b := by
+  let W := LinearMap.range P
+  let i : W →ₗ[ℂ] Matrix (Fin 3) (Fin 3) ℂ := W.subtype
+  let p : Matrix (Fin 3) (Fin 3) ℂ →ₗ[ℂ] W := P.rangeRestrict
+  let F : Module.End ℂ W := p.comp (G.comp i)
+  have hPi (v : W) : P (v : Matrix (Fin 3) (Fin 3) ℂ) = v :=
+    (LinearMap.IsIdempotentElem.isProj_range P hP).map_id v v.property
+  have hGi (v : W) : G (v : Matrix (Fin 3) (Fin 3) ℂ) = (F v : Matrix (Fin 3) (Fin 3) ℂ) := by
+    change G v = P (G v)
+    have hh := congrArg (fun T : Module.End ℂ (Matrix (Fin 3) (Fin 3) ℂ) => T v) hcomm.eq
+    simpa only [Module.End.mul_apply, hPi] using hh
+  have hroot (μ : ℂ) (hμ : μ ∈ F.charpoly.roots) : μ.re = Real.log b := by
+    have heig : F.HasEigenvalue μ :=
+      (Module.End.hasEigenvalue_iff_isRoot_charpoly F μ).mpr
+        (Polynomial.isRoot_of_mem_roots hμ)
+    obtain ⟨v, hv⟩ := heig.exists_hasEigenvector
+    have hv0 : (v : Matrix (Fin 3) (Fin 3) ℂ) ≠ 0 := by
+      intro hz
+      exact hv.2 (Subtype.ext hz)
+    have hGeig : G (v : Matrix (Fin 3) (Fin 3) ℂ) = μ • (v : Matrix (Fin 3) (Fin 3) ℂ) := by
+      rw [hGi]
+      exact congrArg Subtype.val (Module.End.mem_eigenspace_iff.mp hv.1)
+    have he := exponential_eigenvector (LinearMap.toContinuousLinearMap G)
+      (v : Matrix (Fin 3) (Fin 3) ℂ) μ hGeig
+    rw [← generatorExp_continuous] at he
+    have hbv := congrArg (fun T : Module.End ℂ (Matrix (Fin 3) (Fin 3) ℂ) => T v) hexp
+    change generatorExp G (P v) = (b : ℂ) • P v at hbv
+    rw [hPi] at hbv
+    have hs : Complex.exp μ = (b : ℂ) := smul_left_injective ℂ hv0 (he.symm.trans hbv)
+    have hn := congrArg norm hs
+    rw [Complex.norm_exp, Complex.norm_real, Real.norm_eq_abs, abs_of_pos hb] at hn
+    exact (Real.log_exp μ.re).symm.trans (congrArg Real.log hn)
+  have hsplit : F.charpoly.Splits := IsAlgClosed.splits _
+  have htr : (LinearMap.trace ℂ W F).re = (Module.finrank ℂ W : ℝ) * Real.log b := by
+    rw [Module.End.trace_eq_sum_roots_charpoly_of_splits hsplit]
+    change Complex.reAddGroupHom F.charpoly.roots.sum = _
+    rw [map_multiset_sum]
+    have hm : F.charpoly.roots.map Complex.reAddGroupHom =
+        F.charpoly.roots.map (fun _ => Real.log b) := by
+      apply Multiset.map_congr rfl
+      intro μ hμ
+      exact hroot μ hμ
+    rw [hm]
+    simp only [Multiset.map_const', Multiset.sum_replicate, nsmul_eq_mul]
+    rw [← hsplit.natDegree_eq_card_roots, LinearMap.charpoly_natDegree]
+  have hcyc : LinearMap.trace ℂ _ (G * P) = LinearMap.trace ℂ W F := by
+    have hc := LinearMap.trace_comp_comm' p (G.comp i)
+    change LinearMap.trace ℂ _ ((G.comp W.subtype).comp P.rangeRestrict) = _ at hc
+    rw [LinearMap.comp_assoc, LinearMap.subtype_comp_rangeRestrict] at hc
+    exact hc
+  rw [hcyc, htr, (LinearMap.IsIdempotentElem.isProj_range P hP).trace]
+  simp only [Complex.natCast_re]
+  rfl
+
 private theorem endpoint_kernel :
     ∃ X : Matrix (Fin 3) (Fin 3) ℂ,
       X ≠ 0 ∧ wernerHolevo (2 / 3) X = 0 := by
@@ -110,13 +214,6 @@ private theorem endpoint_not_exp
   apply hX
   apply generatorExp_injective G
   rw [h, hkill, map_zero]
-
-private theorem spectral_traces (x : ℝ) (hx : 0 < x) (hx' : x < 2 / 3)
-    (G : Module.End ℂ (Matrix (Fin 3) (Fin 3) ℂ))
-    (hG : IsGKSLGenerator G) (hexp : generatorExp G = wernerHolevo x) :
-    symmetricTrace G = 5 * Real.log (1 - 3 * x / 2) ∧
-      antisymmetricTrace G = 3 * Real.log (1 - x / 2) := by
-  sorry
 
 private def hamiltonianMap (H : Matrix (Fin 3) (Fin 3) ℂ) :
     Module.End ℂ (Matrix (Fin 3) (Fin 3) ℂ) :=
@@ -189,6 +286,142 @@ private theorem gksl_trace_inequality
       Complex.normSq_nonneg (V k 1 2 + V k 2 1)]
   rw [Finset.sum_sub_distrib, ← Finset.mul_sum] at hsum
   linarith
+
+private theorem generatorExp_commute
+    (G : Module.End ℂ (Matrix (Fin 3) (Fin 3) ℂ)) : Commute G (generatorExp G) := by
+  apply (LinearMap.toMatrixAlgEquiv (Matrix.stdBasis ℂ (Fin 3) (Fin 3))).injective
+  simp only [map_mul, generatorExp, AlgEquiv.apply_symm_apply]
+  exact (Commute.refl _).exp_right.eq
+
+private theorem gksl_trace_zero
+    (G : Module.End ℂ (Matrix (Fin 3) (Fin 3) ℂ)) (hG : IsGKSLGenerator G)
+    (X : Matrix (Fin 3) (Fin 3) ℂ) : Matrix.trace (G X) = 0 := by
+  obtain ⟨m, H, V, _, hform⟩ := hG
+  rw [hform]
+  simp only [Matrix.trace_add, Matrix.trace_smul, Matrix.trace_sub, Matrix.trace_sum,
+    Matrix.trace_mul_comm H X, sub_self, smul_zero, zero_add]
+  apply Finset.sum_eq_zero
+  intro k _
+  rw [Matrix.trace_mul_cycle (V k) X (V k)ᴴ, Matrix.trace_mul_comm X ((V k)ᴴ * V k)]
+  ring
+
+private theorem wernerHolevo_one (x : ℝ) :
+    wernerHolevo x (1 : Matrix (Fin 3) (Fin 3) ℂ) = 1 := by
+  ext i j
+  fin_cases i <;> fin_cases j <;>
+    norm_num [wernerHolevo, Matrix.trace, Fin.sum_univ_succ,
+      Matrix.transposeLinearEquiv, Matrix.one_apply] <;> ring
+
+private theorem generator_unital (x : ℝ) (hx : x ≠ 0)
+    (G : Module.End ℂ (Matrix (Fin 3) (Fin 3) ℂ)) (hG : IsGKSLGenerator G)
+    (hexp : generatorExp G = wernerHolevo x) : G 1 = 0 := by
+  have hc := generatorExp_commute G
+  rw [hexp] at hc
+  have hfixed : wernerHolevo x (G 1) = G 1 := by
+    have hh := congrArg (fun F : Module.End ℂ (Matrix (Fin 3) (Fin 3) ℂ) => F 1) hc.eq
+    simpa only [Module.End.mul_apply, wernerHolevo_one] using hh.symm
+  have ht := gksl_trace_zero G hG 1
+  have hxC : (x : ℂ) ≠ 0 := Complex.ofReal_ne_zero.mpr hx
+  ext i j
+  have hij := congrArg (fun X : Matrix (Fin 3) (Fin 3) ℂ => X i j) hfixed
+  have hji := congrArg (fun X : Matrix (Fin 3) (Fin 3) ℂ => X j i) hfixed
+  simp [wernerHolevo, ht, Matrix.transposeLinearEquiv] at hij hji
+  have hz : (x : ℂ) * G 1 i j = 0 := by
+    linear_combination (-4 / 3 : ℂ) * hij + (2 / 3 : ℂ) * hji
+  exact (mul_eq_zero.mp hz).resolve_left hxC
+
+private theorem generator_transpose (x : ℝ) (hx : x ≠ 0)
+    (G : Module.End ℂ (Matrix (Fin 3) (Fin 3) ℂ)) (hG : IsGKSLGenerator G)
+    (hexp : generatorExp G = wernerHolevo x) (X : Matrix (Fin 3) (Fin 3) ℂ) :
+    G Xᵀ = (G X)ᵀ := by
+  have hc := generatorExp_commute G
+  rw [hexp] at hc
+  have hh := congrArg (fun F : Module.End ℂ (Matrix (Fin 3) (Fin 3) ℂ) => F X) hc.eq
+  have h1 := generator_unital x hx G hG hexp
+  have ht := gksl_trace_zero G hG X
+  have hxC : (x : ℂ) ≠ 0 := Complex.ofReal_ne_zero.mpr hx
+  ext i j
+  have hij := congrArg (fun Y : Matrix (Fin 3) (Fin 3) ℂ => Y i j) hh
+  simp [wernerHolevo, ht, h1, Matrix.transposeLinearEquiv] at hij
+  exact hij.resolve_right hx
+
+private theorem generator_projection_commute (x : ℝ) (hx : x ≠ 0)
+    (G : Module.End ℂ (Matrix (Fin 3) (Fin 3) ℂ)) (hG : IsGKSLGenerator G)
+    (hexp : generatorExp G = wernerHolevo x) :
+    Commute G symmetricProjection ∧ Commute G antisymmetricProjection := by
+  have h1 := generator_unital x hx G hG hexp
+  have ht := gksl_trace_zero G hG
+  have hT := generator_transpose x hx G hG hexp
+  constructor
+  · ext X i j
+    simp [symmetricProjection, Matrix.transposeLinearEquiv, h1, ht, hT]
+  · ext X i j
+    simp [antisymmetricProjection, Matrix.transposeLinearEquiv, hT]
+
+private theorem symmetricProjection_idempotent : IsIdempotentElem symmetricProjection := by
+  ext X i j
+  fin_cases i <;> fin_cases j <;>
+    norm_num [symmetricProjection, Matrix.trace, Fin.sum_univ_succ,
+      Matrix.transposeLinearEquiv, Matrix.one_apply] <;> ring
+
+private theorem antisymmetricProjection_idempotent : IsIdempotentElem antisymmetricProjection := by
+  ext X i j
+  fin_cases i <;> fin_cases j <;>
+    norm_num [antisymmetricProjection, Matrix.transposeLinearEquiv] <;> ring
+
+private theorem symmetricProjection_trace : LinearMap.trace ℂ _ symmetricProjection = 5 := by
+  rw [matrix_supertrace]
+  norm_num [symmetricProjection, Matrix.trace, Fin.sum_univ_succ,
+    Matrix.transposeLinearEquiv, Matrix.single, Matrix.one_apply]
+  norm_num [show (Finset.univ : Finset (Fin 3)) = {0, 1, 2} by decide,
+    Finset.filter_insert, Finset.filter_singleton, Finset.filter_empty]
+
+private theorem antisymmetricProjection_trace : LinearMap.trace ℂ _ antisymmetricProjection = 3 := by
+  rw [matrix_supertrace]
+  norm_num [antisymmetricProjection, Fin.sum_univ_succ,
+    Matrix.transposeLinearEquiv, Matrix.single]
+
+private theorem wernerHolevo_symmetricProjection (x : ℝ) :
+    wernerHolevo x * symmetricProjection = (1 - 3 * (x : ℂ) / 2) • symmetricProjection := by
+  ext X i j
+  fin_cases i <;> fin_cases j <;>
+    norm_num [symmetricProjection, wernerHolevo, Matrix.trace, Fin.sum_univ_succ,
+      Matrix.transposeLinearEquiv, Matrix.one_apply] <;> ring
+
+private theorem wernerHolevo_antisymmetricProjection (x : ℝ) :
+    wernerHolevo x * antisymmetricProjection = (1 - (x : ℂ) / 2) • antisymmetricProjection := by
+  ext X i j
+  fin_cases i <;> fin_cases j <;>
+    norm_num [antisymmetricProjection, wernerHolevo, Matrix.trace, Fin.sum_univ_succ,
+      Matrix.transposeLinearEquiv, Matrix.one_apply] <;> ring
+
+private theorem spectral_traces (x : ℝ) (hx : 0 < x) (hx' : x < 2 / 3)
+    (G : Module.End ℂ (Matrix (Fin 3) (Fin 3) ℂ))
+    (hG : IsGKSLGenerator G) (hexp : generatorExp G = wernerHolevo x) :
+    symmetricTrace G = 5 * Real.log (1 - 3 * x / 2) ∧
+      antisymmetricTrace G = 3 * Real.log (1 - x / 2) := by
+  obtain ⟨hS, hA⟩ := generator_projection_commute x hx.ne' G hG hexp
+  have hb : 0 < 1 - 3 * x / 2 := by linarith
+  have hc : 0 < 1 - x / 2 := by linarith
+  have hES : generatorExp G * symmetricProjection =
+      ((1 - 3 * x / 2 : ℝ) : ℂ) • symmetricProjection := by
+    rw [hexp, wernerHolevo_symmetricProjection]
+    push_cast
+    rfl
+  have hEA : generatorExp G * antisymmetricProjection =
+      ((1 - x / 2 : ℝ) : ℂ) • antisymmetricProjection := by
+    rw [hexp, wernerHolevo_antisymmetricProjection]
+    push_cast
+    rfl
+  have hTS := projected_log_trace G symmetricProjection symmetricProjection_idempotent
+    hS (1 - 3 * x / 2) hb hES
+  have hTA := projected_log_trace G antisymmetricProjection antisymmetricProjection_idempotent
+    hA (1 - x / 2) hc hEA
+  rw [symmetricProjection_trace] at hTS
+  rw [antisymmetricProjection_trace] at hTA
+  constructor
+  · simpa [symmetricTrace, Module.End.mul_eq_comp] using hTS
+  · simpa [antisymmetricTrace, Module.End.mul_eq_comp] using hTA
 
 private theorem strict_log_inequality (x : ℝ) (hx : 0 < x) (hx' : x < 2 / 3) :
     5 * Real.log (1 - 3 * x / 2) < 15 * Real.log (1 - x / 2) := by
