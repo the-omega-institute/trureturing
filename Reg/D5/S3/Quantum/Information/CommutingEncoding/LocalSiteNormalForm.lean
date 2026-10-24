@@ -105,22 +105,22 @@ universe u
 
 abbrev signature : Signature :=
   Reg.Support.SingleDependentReadout.signature Unit
-    (fun _ => Matrix (Fin 2) (Fin 2) ℂ) (fun _ => Bool)
+    (fun _ => Submonoid (Matrix (Fin 2) (Fin 2) ℂ))
+    (fun _ => Matrix (Fin 2) (Fin 2) ℂ → Prop)
 
 def actual : Realization signature :=
-  realize signature
-    (fun _ _ V => @decide (V ∈ Matrix.unitaryGroup (Fin 2) ℂ) (Classical.propDecidable _))
-    (fun e => nomatch e)
+  realize signature (fun _ _ G V => V ∈ G) (fun e => nomatch e)
 
 def rejected : Realization signature :=
-  realize signature (fun _ _ _ => false) (fun e => nomatch e)
+  realize signature (fun _ _ _ _ => False) (fun e => nomatch e)
 
 abbrev arena : Arena where
   signature := signature
   Law R := ∀ {κ : Type u} (B : κ → Matrix (Fin 2) (Fin 2) ℂ),
     (∀ a, B a ∈ Matrix.unitaryGroup (Fin 2) ℂ) →
     (∀ a b, B a * B b = B b * B a ∨ B a * B b = -(B b * B a)) →
-    ∃ V : Matrix (Fin 2) (Fin 2) ℂ, R.readout () () V = true ∧
+    ∃ V : Matrix (Fin 2) (Fin 2) ℂ,
+      R.readout () () (Matrix.unitaryGroup (Fin 2) ℂ) V ∧
       ((∀ a, ∃ d : Fin 2 → ℂ, V * B a * Vᴴ = diagonal d) ∨
         (∃ (c : κ → ℂ) (p : κ → Pauli), (∀ a, star (c a) * c a = 1) ∧
           (∀ a, V * B a * Vᴴ = c a • pauliMatrix (p a))))
@@ -129,22 +129,21 @@ private theorem rejected_law : ¬ arena.{u}.Law rejected := by
   intro h
   obtain ⟨V, hV, _⟩ := h (fun _ : PUnit.{u + 1} => (1 : Matrix (Fin 2) (Fin 2) ℂ))
     (fun _ => one_mem _) (fun _ _ => Or.inl rfl)
-  exact Bool.false_ne_true hV
+  exact hV
 
 private theorem dependence : ObservationalDependence signature actual := by
   intro i
-  refine ⟨(), 0, 1, ?_⟩
-  have hz : (0 : Matrix (Fin 2) (Fin 2) ℂ) ∉ Matrix.unitaryGroup (Fin 2) ℂ := by
-    intro h
-    have he := congrArg (fun A : Matrix (Fin 2) (Fin 2) ℂ => A 0 0) h.1
-    norm_num at he
-  simp [actual, realize, hz]
+  refine ⟨(), ⊥, ⊤, ?_⟩
+  intro h
+  have hz : (0 : Matrix (Fin 2) (Fin 2) ℂ) ∈
+      (⊥ : Submonoid (Matrix (Fin 2) (Fin 2) ℂ)) :=
+    (congrFun h 0).mpr (Submonoid.mem_top 0)
+  exact zero_ne_one (Submonoid.mem_bot.mp hz)
 
 def source_registration : Registration arena.{u} (type_of% @local_site_normal_form.{u}) where
   actual := actual
-  bridge := by simp [actual, realize]
-  variation := ⟨by simpa [arena, actual, realize] using @local_site_normal_form.{u},
-    rejected, rejected_law⟩
+  bridge := Iff.rfl
+  variation := ⟨@local_site_normal_form.{u}, rejected, rejected_law⟩
   sensitivity := by
     constructor
     · intro i
@@ -168,9 +167,7 @@ def registration :
   realization := .source arena.{u} ⟨source_registration.{u}⟩
   correspondence := { stage := .evidence, objectStage := .evidence }
   bundleNonempty := .absent
-  readout := some (realize signature
-    (fun _ _ V => @decide (V ∈ Matrix.unitaryGroup (Fin 2) ℂ) (Classical.propDecidable _))
-    (fun e => nomatch e))
+  readout := some (realize signature (fun _ _ G V => V ∈ G) (fun e => nomatch e))
   variation := .absent
   sensitivity := .absent
   partialSensitivity := none
@@ -180,11 +177,11 @@ def registration :
     definition := none
     coordinates := #[]
     readouts := #[{
-      path := #["body", "body", "body", "body", "arg", "body", "fn", "arg"]
+      path := #["body", "body", "body", "body", "arg", "body", "fn", "arg", "fn", "fn"]
       stateBinder := 0
-      functionOperand := false
-      stateOperand := some #["arg"]
-      booleanPredicate := true }] }
+      functionOperand := true
+      stateOperand := none
+      booleanPredicate := false }] }
   continuation := .unknown
   familyRecord := none
   options := #[] }
