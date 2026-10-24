@@ -293,8 +293,9 @@ private lemma projectionA_is_projection :
     rw [hmap, ← map_mul, hq]
   · change projectionAᴴ = projectionA
     ext a a'
-    unfold projectionA
-    simp only [Matrix.conjTranspose_apply, Bool.xor_comm]
+    rw [Matrix.conjTranspose_apply]
+    dsimp only [projectionA]
+    simp only [Bool.xor_comm]
     split_ifs <;> norm_num
 
 set_option maxRecDepth 10000 in
@@ -319,17 +320,21 @@ private lemma projectionB_is_projection :
     rw [hmap, ← map_mul, hq]
   · change projectionBᴴ = projectionB
     ext b b'
-    unfold projectionB flipB
-    simp only [Matrix.conjTranspose_apply, Matrix.one_apply, Matrix.smul_apply, Matrix.add_apply,
-      star_smul, star_add, eq_comm, ne_comm]
+    rw [Matrix.conjTranspose_apply]
+    dsimp only [projectionB]
+    simp only [Matrix.one_apply, Matrix.smul_apply, Matrix.add_apply]
+    dsimp only [flipB]
+    simp only [eq_comm, ne_comm]
     split_ifs <;> norm_num
 
 private lemma projection_traces : Matrix.trace projectionA = 8 ∧ Matrix.trace projectionB = 8 := by
   have hA (a : Fin 5 → Bool) : projectionA a a = 1 / 4 := by
-    unfold projectionA
+    dsimp only [projectionA]
     simp
   have hB (b : Fin 4 → Bool) : projectionB b b = 1 / 2 := by
-    unfold projectionB flipB
+    dsimp only [projectionB]
+    simp only [Matrix.smul_apply, Matrix.add_apply, Matrix.one_apply]
+    dsimp only [flipB]
     simp
   constructor <;> simp [Matrix.trace, Matrix.diag_apply, hA, hB] <;> norm_num
 
@@ -341,15 +346,16 @@ private lemma marginal_A_spectral :
         a = a' ∨ hammingDist a a' = 2 := by decide +kernel
   ext a a'
   rw [reduced_A]
+  simp only [Matrix.add_apply, Matrix.smul_apply, Matrix.sub_apply, Matrix.one_apply]
   by_cases heq : a = a'
   · subst a'
-    unfold projectionA a₁ a₂ u
+    dsimp only [projectionA, a₁, a₂, u]
     simp <;> norm_num
   · by_cases hk : ∀ j, Even (∑ i, (M i j && Bool.xor (a i) (a' i)).toNat)
     · have hd := (hweight a a' hk).resolve_left heq
-      unfold projectionA a₁ a₂ u
+      dsimp only [projectionA, a₁, a₂, u]
       simp [hk, heq, hd] <;> norm_num
-    · unfold projectionA
+    · dsimp only [projectionA]
       simp [hk, heq]
 
 private lemma marginal_B_spectral :
@@ -360,17 +366,19 @@ private lemma marginal_B_spectral :
         b = b' ∨ ∀ i, b i ≠ b' i := by decide +kernel
   ext b b'
   rw [reduced_B]
-  simp only [hkernel]
+  simp only [hkernel, Matrix.add_apply, Matrix.smul_apply, Matrix.sub_apply, Matrix.one_apply]
+  dsimp only [projectionB]
+  simp only [Matrix.add_apply, Matrix.smul_apply, Matrix.one_apply]
+  dsimp only [flipB]
   by_cases heq : b = b'
   · subst b'
-    unfold projectionB flipB b₁ b₂ u
+    dsimp only [b₁, b₂, u]
     simp <;> norm_num
   · by_cases hf : ∀ i, b i ≠ b' i
     · have hd : hammingDist b b' = 4 := by unfold hammingDist; simp [hf]
-      unfold projectionB flipB b₁ b₂ u
+      dsimp only [b₁, b₂, u]
       simp [heq, hf, hd] <;> norm_num
-    · unfold projectionB flipB
-      simp [heq, hf]
+    · simp [heq, hf]
 
 private lemma spectral_data :
     IsStarProjection (CStarMatrix.ofMatrix projectionA) ∧
