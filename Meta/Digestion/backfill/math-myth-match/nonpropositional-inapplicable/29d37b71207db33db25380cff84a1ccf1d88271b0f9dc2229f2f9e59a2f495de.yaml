@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:29d37b71207db33db25380cff84a1ccf1d88271b0f9dc2229f2f9e59a2f495de
+  normalized_sha256: sha256:29d37b71207db33db25380cff84a1ccf1d88271b0f9dc2229f2f9e59a2f495de
+cas_ref: sha256:29d37b71207db33db25380cff84a1ccf1d88271b0f9dc2229f2f9e59a2f495de
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 墨子兼爱中对国家家庭个人关系的解释；属于引文解释、建模约定或研究建议，没有另立待证数学断言，本收据不验证其文献或经验真值。
+    previous_atom_id: f84e5ddf2fcbe6a1bd27e1610e5a55cd473ee1d6b9a9def464aea026eb744165
+    next_atom_id: 10d066aa6d428b5227aa6b91c570d2e08b4cf644f4384931b310da1ba9894233

@@ -353,6 +353,110 @@ The exponent $1/4$ is only a sufficient choice in this application;
 no optimality is asserted. More generally the same comparison applies
 whenever $C_P\mid N$ and every prime factor of $N$ is at most $P$.
 
+### An absolute inventory allowance on every tail
+
+The same 2015 source supplies an absolute comparison at the additive
+root scale. Fix $s>0$. For sufficiently large $P$ in terms of $s$, put
+$\ell=\log P$, $\sigma=1-s/\ell$, and
+$\nu_p=\lfloor\ell/\log p\rfloor$. Define the finite Euler factors
+
+$$
+\zeta(\sigma,P)=\prod_{p\le P}(1-p^{-\sigma})^{-1},\qquad
+H_P(\sigma)=\prod_{p\le P}(1-p^{-(\nu_p+1)\sigma}).
+$$
+
+Their product is the ultrafriable Dirichlet polynomial in (1.3).
+Lemma 2.3, (2.5)–(2.6), has the independent parameter domain
+$1/\log P<\sigma\le2$ and gives
+
+$$
+V_P(\sigma):=
+\sum_{p\le P}\frac{(\nu_p+1)\log p}{p^{(\nu_p+1)\sigma}-1}
+\asymp
+\frac{P^{1/2-\sigma}(1+P^{1/2-\sigma})\log P}
+     {1+|1-2\sigma|\log P}.
+$$
+
+For example, $\ell\ge4(s+1)$ puts the chosen $\sigma$ in $[3/4,1)$
+and in that source domain. Since $(\nu_p+1)\log p>\ell$, the
+published bound directly gives
+
+$$
+\sum_{p\le P}p^{-(\nu_p+1)\sigma}
+\le\frac{V_P(\sigma)}\ell
+\ll_s\frac{P^{-1/2}}\ell.
+$$
+
+For the smooth factor, Lemma 2.2, (2.3)–(2.4), gives
+$g_-(t,P)=\sum_{p\le P}\log p/(p^t-1)\ll_s\ell$ uniformly on
+$\sigma\le t\le1$, with the removable value at $t=1$ understood.
+Together with the classical Mertens product estimate this yields
+
+$$
+\zeta(\sigma,P)
+=\zeta(1,P)\exp\!\left(\int_\sigma^1g_-(t,P)\,dt\right)
+\ll_s\ell.
+$$
+
+For every $N$ with $C_P\mid N$ and $P^+(N)\le P$, the same actual
+inventory inclusion and the Euler products therefore give
+
+$$
+\begin{aligned}
+\sum_{\substack{P^+(m)\le P\\m\nmid N}}m^{-\sigma}
+&\le\zeta(\sigma,P)[1-H_P(\sigma)]\\
+&\le\zeta(\sigma,P)
+       \sum_{p\le P}p^{-(\nu_p+1)\sigma}
+\ll_sP^{-1/2}.
+\end{aligned}
+$$
+
+For $m>P^u$, one has $m^{-1}\le e^{-su}m^{-\sigma}$. Rankin's
+inequality consequently gives, uniformly for **all** $u\ge0$,
+
+$$
+\boxed{
+0\le T(P,P^u)-T_N(P^u)\ll_sP^{-1/2}e^{-su}.}
+$$
+
+The threshold depends on the fixed $s$; no uniformity in $s$ or claim
+for all small $P$ is asserted. This application uses the general
+$\sigma$ lemma, not a substitution into (3.1)'s constrained
+saddle-point parameter. It requires no smooth-tail asymptotic domain.
+In particular, every $u(P)\to\infty$ gives an additive inventory error
+$o(P^{-1/2})$. This is not a relative estimate for an arbitrarily small
+tail, and does not by itself give $o(1/(\sqrt P\log P))$.
+
+There is an actual growing-branch consumer. Let $N$ tend to infinity
+through SA integers and let the integer-valued $r(N)\to\infty$.
+The existing fixed-branch Theorem 17 and monotonicity of the cutoffs
+already imply
+
+$$
+u_N:=\frac{\log d^{(r(N))}(N)}{\log P}\longrightarrow\infty.
+$$
+
+Indeed, $S_r\uparrow e^\gamma$ and strict increase of $J$ imply
+$\alpha_r\to\infty$. For any fixed $M$, choose a fixed $r_0$ with
+$\alpha_{r_0}>M$. Eventually $r(N)\ge r_0$, while Theorem 17 and
+$P\sim\log N$ give
+$\log d^{(r_0)}(N)/\log P\to\alpha_{r_0}>M$.
+Applying the absolute bound at this actual cutoff gives
+
+$$
+T(P,d^{(r(N))}(N))-T_N(d^{(r(N))}(N))=o(P^{-1/2}).
+$$
+
+This includes saturated cutoffs and needs no upper bound on $u_N$.
+For an unsaturated growing branch, the source's rounding estimate also
+gives $0\le\varepsilon_{r(N)}(N)\le P^{-u_N}=o(P^{-1/2})$.
+On unsaturated growing branches, inventory truncation and prefix
+rounding are therefore negligible at this additive root scale. A sufficiently precise evaluation of the smooth
+tail at the original cutoff and the sign of $Q_N$ are still needed;
+neither follows from this allowance. These are applications of the
+published Euler-factor estimates and fixed-branch theorem, not a new
+sieve, growing-branch inversion, originality claim or Lean result.
+
 ### Density-scale precision and the remaining signed budget
 
 The transfer error is small at the next-term scale:
