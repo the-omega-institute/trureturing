@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:73b0023a69a0146380398471117cd463fb3d1d4942c5a2ef86bebf3a2c248a6c
+  normalized_sha256: sha256:73b0023a69a0146380398471117cd463fb3d1d4942c5a2ef86bebf3a2c248a6c
+cas_ref: sha256:73b0023a69a0146380398471117cd463fb3d1d4942c5a2ef86bebf3a2c248a6c
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 科学理论章节标题和经验预测映射的类型设置，没有概率律恒等式或统计结论。
+    previous_atom_id: 6d758645a61b9bb88c75412dd6050c49c51877b33a8c3578db300d1eaeb1cb85
+    next_atom_id: f77aef770dd23ebcef71faa011099f46482a4e2821b7d3d2d2f73040ae0cc39d

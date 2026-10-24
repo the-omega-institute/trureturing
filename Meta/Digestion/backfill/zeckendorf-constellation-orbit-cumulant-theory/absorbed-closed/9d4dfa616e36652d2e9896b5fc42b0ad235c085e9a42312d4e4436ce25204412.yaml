@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:9d4dfa616e36652d2e9896b5fc42b0ad235c085e9a42312d4e4436ce25204412
+  normalized_sha256: sha256:9d4dfa616e36652d2e9896b5fc42b0ad235c085e9a42312d4e4436ce25204412
+cas_ref: sha256:9d4dfa616e36652d2e9896b5fc42b0ad235c085e9a42312d4e4436ce25204412
+coverage_gids:
+  - gid: D5/S3/Observer/AgencyHolonomy/ScalarMemoryBlindness.scalar_memory_blindness
+    target_statement_id: sha256:0ed2cd5189623ef4af789e6b1bf1614a54da914372e3fe8ece5307326d4d9c6f
+receipts:
+  unresolved_subitems: []

@@ -1687,3 +1687,625 @@ advances the conditional acquisition-to-retained-use route; it does not
 supply unrestricted four-way recovery or complete the larger programme.
 
 ## 追加锚（本行以下为增补区）
+
+## 13. A fixed scaffold with jointly unknown labels and authentic lag
+
+**Definition 13.1 (the actual finite comparison family).** Retain exactly
+Definition 1.1's free ordered source, substitution (GPO.1), physical
+alphabet, stable bound root and persistent global bijection $\pi$.
+Fix a finite nonempty ordered full binary scaffold $S$ whose $n\ge1$
+leaves, in left-to-right order, have addresses $p_1,\ldots,p_n$.
+Every leaf is a slot; there are no additional constant leaves. Put
+
+$$
+ d_i=|p_i|,\qquad \delta=\min_i d_i,\qquad
+ h=\max_i d_i,\qquad L=\sum_{i=1}^n d_i.
+ \tag{GPO.42}
+$$
+
+For $x\in\{0,1\}^n$, let $u_x=S[x_1,\ldots,x_n]$, with $0$
+meaning alpha and $1$ beta. For every integer $K\ge1$ the family is
+
+$$
+ \mathcal F(S,K)=
+ \{(x,k,v):x\in\{0,1\}^n,\quad K\le k\le2K-1,
+                       \quad v=\rho^{2k}u_x\}.
+ \tag{GPO.43}
+$$
+
+Each member is one authentic original, its actual positive even entrance
+lag and its one actual entrance register. The required output is precisely
+$(u_x,k)$, rather than some predecessor, current endpoint, or value of a
+smaller logical task. The scaffold fixes original occurrences, not a
+shared-subtree quotient. Distinct label vectors give distinct originals
+in the free algebra. Thus (GPO.43) has $K2^n$ different required outputs.
+For $n=1$ the scaffold is a single slot, its address is empty and
+$\delta=h=L=0$.
+
+**Assumption 13.2 (stronger comparison access and complete control).**
+In this comparison interface the true unlabelled ordered scaffold $S$,
+the true $\pi$ and the authentic lag bin $[K,2K-1]$ are common public
+inputs. Immediately at entrance there are current rights for total paid
+presence Read, arbitrary serial forward applyRho on this same register,
+localStep and stop. Between completed actions there is no concurrent
+update. A Read itself observes a stationary register. All other conditions
+of Assumption 1.2 are retained: the root and physical names remain stable,
+updates preserve $\pi$, and the full append writer is inaccessible to
+control. In particular its old-epoch fields, full four-valued replies,
+pre-entry prefix and internal work are not observations.
+
+At fixed $S,K,\pi$, every other initially accessible field is common
+across all $K2^n$ members. This includes program selection, control,
+identifiers, grants, backing contents, readable capacities, prior outputs,
+reply latches and allocation metadata. All later accessible source-bearing
+state must be obtained from the actually paid presence bits and common
+inputs. Errors, acknowledgement contents, schedules, resource identities,
+allocation choices, runtime and source size supply no further channel.
+Local calculations, evaluator transitions, construction and submission of
+literal words, backing growth, retention, output and handoff are real
+paid operations. Owned growing storage and completion of each finite
+legal calculation/request are supplied, without a uniform space or time
+bound. Update material, private actuator work, writer work, installation,
+authentication, reference maintenance and current-right maintenance also
+retain their actual separate prices.
+
+A competitor is any common deterministic effective protocol terminating
+with the correct pair on every member of (GPO.43). It may perform any
+finite number of forward updates, adaptively between Reads, and any
+finite local work on each member. There is no uniform update allowance,
+no requirement of a fixed update schedule and no ban on odd intermediate
+epochs. The finite family and sourcewise termination imply an a posteriori
+finite maximum run length for this particular competitor and these public
+inputs; that maximum is neither an input nor a stopping oracle. No reset,
+clone, inverse substitution, reroot, cursor, graft, hidden-source comparison
+or writer read is available.
+
+The three optimized coordinates are Definition 1.3's $Q,W,M_{\rm addr}$,
+with maximum zero if there is no Read. Every call, including repetition
+and absence, is charged. Each semantic word is translated by the public
+$\tau_\pi$ and submitted as an entire physical root word of the same
+length; there is no shared-prefix, cached-receipt or free-focus discount.
+Actual arithmetic and memory costs are not omitted merely because this
+optimization projects onto these three coordinates.
+
+The public grants in this assumption are a lower-bound relaxation of
+original acquisition: the controller has more information and earlier
+access. They are not a service installed by a theorem. The encoded scaffold,
+port bit and bin have their own acquisition, authentication, encoding,
+storage and access costs. They reveal neither $x$ nor $k$ within (GPO.43).
+For example a preorder scaffold has $2n-1$ branch/slot bits; its usable
+physical binding and authenticity are additional to that data. A fixed
+encoding of the bin may store $K$ and compute its endpoint by paid binary
+work. None of these costs is claimed bounded by a query count alone.
+
+## 14. Preserved original cones and common-prefix blind radii
+
+**Lemma 14.1 (actual register and one-cone replies).** For every
+competitor of Assumption 13.2, fix any reached prefix $H$ of paid presence
+replies, just before its next Read. There are a common finite extra-update
+count $e_H\ge0$ and a common next literal word. For every member compatible
+with that prefix, its actual register at that Read is
+
+$$
+ \rho^{2k+e_H}u_x
+       =S[(T_{2k+e_H+x_i})_{i=1}^n],\qquad T_j=\rho^j\alpha.
+ \tag{GPO.44}
+$$
+
+A semantic word that ends at a proper internal scaffold node has constant
+presence one. Every other word has a unique original-leaf prefix $p_i$;
+its answer depends only on $k,x_i,e_H$ and its suffix after $p_i$.
+It cannot inspect two original cones. This includes a suffix that fails
+inside its replacement and an empty suffix at its root.
+
+Proof. Source-free deterministic control, common initialization and the
+absence of auxiliary source channels imply that equal reply prefixes give
+equal controller states, local steps, update requests and next words.
+This is induction through the actual actions, including real acknowledgements,
+allocations and finite evaluator work. A compatible terminating run witnesses
+that the segment to the next Read is finite. The segment is identical for
+all compatible members; no computation of a termination bound is needed.
+Only its extra-update count $e_H$ is common: the hidden absolute epochs
+$2k+e_H$ need not agree and are not fed into this induction.
+
+Substitution distributes over pairing and preserves every pre-existing
+branch and its two child positions. Structural induction on $S$, followed
+by induction on the number of actual updates, gives (GPO.44), using
+$\rho^m\beta=T_{m+1}$. The finite scaffold's leaf addresses are
+prefix-incomparable. To classify any word, follow it in $S$. Either it
+ends at an internal node or it first reaches exactly one leaf. Full
+binarity leaves no missing scaffold child before that first leaf. In
+the latter case write the word uniquely as $p_iq$ and evaluate $q$ in
+the displayed $T_{2k+e_H+x_i}$. All scaffold branches have persisted,
+so that evaluation is the actual answer on this same register. $\square$
+
+**Lemma 14.2 (uniform present suffixes and the two stationary probes).**
+For every integer $a\ge0$, every rank $j\ge2a$ and every word $q$ with
+$|q|\le a$, $P_{T_j}(q)=1$. Consequently at the prefix in Lemma 14.1,
+all suffixes of length at most $k+\lfloor e_H/2\rfloor$ are present
+in both possible replacements for each fixed $k$ and original leaf.
+Any query that branches among compatible members of the entire bin has
+length at least $\delta+K+1$.
+
+At the stationary entrance, for every original leaf $p_i$ and every
+integer $s\ge0$,
+
+$$
+ \begin{aligned}
+ P_{\rho^{2k}u_x}(p_iR^s)&=1\quad\Longleftrightarrow\quad s\le k,\\
+ P_{\rho^{2k}u_x}(p_iR^{k-1}LL)&=x_i.
+ \end{aligned}
+ \tag{GPO.45}
+$$
+
+Proof. Use the existing recurrence
+$T_0=\alpha,T_1=\beta,T_{j+2}=\langle T_{j+1},T_j\rangle$.
+The general present-suffix fact is the `short` argument inside
+ActualFibonacciSupportChain, recalled explicitly here for its shared-prefix
+application. The empty word is present at every rank. If $q=Lq'$ or
+$Rq'$ has positive length and $j\ge2|q|$, then $j\ge2$ and the
+respective child has rank $j-1$ or $j-2$, each at least $2|q'|$.
+Induction on the word length proves the fact. For the two replacements
+the smaller rank is $2k+e_H\ge2(k+\lfloor e_H/2\rfloor)$.
+
+A branching query must enter a cone, by Lemma 14.1. If its suffix had
+length at most $K+\lfloor e_H/2\rfloor$, the same present-suffix
+fact would make its answer one for every compatible $k\ge K$ and
+both labels. Thus its suffix is longer, giving in particular length
+at least $d_i+K+1\ge\delta+K+1$. This statement is about presence;
+the full replies at these addresses can differ and remain hidden.
+
+For (GPO.45), the right-spine height of $T_j$ is $\lfloor j/2\rfloor$:
+a right edge is available at rank at least two and reduces rank by two,
+ending at rank zero or one. Both ranks $2k,2k+1$ therefore have right
+height $k$. Following $k-1$ right edges in those two trees reaches
+$T_2$ or $T_3$. In $T_2=\langle\beta,\alpha\rangle$ the suffix
+$LL$ is absent; in $T_3=\langle T_2,\beta\rangle$ it is present.
+Preserved original cones prove (GPO.45), including $k=1$ with no right
+edges before $LL$. This is exactly the leaf specialization of ABT12.3's
+existing even node table; it does not supply a free label observation.
+$\square$
+
+## 15. Sourcewise prices and one simultaneous worst realization
+
+**Theorem 15.1 (every-run lower bounds despite adaptive updates).**
+For every $S,K$ of Definition 13.1, every competitor of Assumption 13.2
+and every one of its actual runs on $(x,k)\in\mathcal F(S,K)$,
+
+$$
+ Q\ge n,\qquad M_{\rm addr}\ge h+k+1,\qquad
+ W\ge L+n(k+1).
+ \tag{GPO.46}
+$$
+
+Proof. Fix this complete actual run and an original leaf index $i$.
+Compare with the fixed alternative obtained by flipping just $x_i$ and
+keeping the same authentic $k$. It belongs to the same family, and
+correctness requires a different original in the output. If every Read
+along the fixed run had the same presence answer on this alternative,
+induction on the actual actions as in Lemma 14.1 would force identical
+updates, choices, stopping and output. This is impossible. Hence there
+is a first Read with different answers between these two runs.
+
+Before that Read their acquired prefixes agree, so their extra-update
+counts are the same $e_i$. This Read really occurs at the same point
+in both runs; subsequent schedules may differ without restriction.
+Its word must enter cone $i$, since every other cone and the scaffold
+are identical at this shared prefix. The two ranks there are
+$2k+e_i$ and $2k+e_i+1$. Lemma 14.2 therefore forces the selected
+word to have length at least
+
+$$
+ d_i+k+\lfloor e_i/2\rfloor+1\ \ge\ d_i+k+1.
+ \tag{GPO.47}
+$$
+
+Choose this first differing Read for every $i$. These are distinct
+Read occurrences: one word enters at most one original cone. The fixed
+run therefore contains at least $n$ such calls. Summing their lengths
+gives $L+n(k+1)$; all unselected calls have nonnegative costs. Selecting
+a deepest original leaf gives maximum at least $h+k+1$. These are
+three bounds on the same arbitrary actual run, without a fixed schedule
+or a separate optimum for each coordinate. Forward updates only increase
+the common blind radius in (GPO.47). $\square$
+
+**Theorem 15.2 (one fixed input pays all three bin lower bounds).**
+Put $r=\lceil\log_2K\rceil$, so $r=0$ when $K=1$. For every $S,K$
+and every competitor in Assumption 13.2 there exists one fixed
+$(x,k)\in\mathcal F(S,K)$ whose entire actual run simultaneously has
+
+$$
+ \begin{aligned}
+ Q&\ge n+r,\\
+ M_{\rm addr}&\ge h+K+1,\\
+ W&\ge L+n(K+1)+(\delta+K+1)r.
+ \end{aligned}
+ \tag{GPO.48}
+$$
+
+Proof. Take the union of the actual terminating runs on the finite
+$K2^n$-member family, with nodes indexed by reached reply prefixes.
+Each individual run, including all local work and updates, is finite;
+the union is finite. Common-prefix control makes the next query or
+terminal output unique at each such node. Terminal reply words are
+prefix-free: if one were a proper prefix of another, the latter run
+would be forced by the common intervening actions to stop at the former
+one's output. Distinct required pairs cannot have the same terminal
+reply word. Thus this finite reply tree has exactly $K2^n$ terminal
+leaves.
+
+Suppress its single-child queries and deterministic local/update segments
+for the counting argument only. They remain charged actions in the
+actual run. The resulting tree is binary, with each internal vertex an
+actual query that has both bit answers among the compatible members.
+A binary tree all of whose paths have at most $b$ branching vertices
+has at most $2^b$ leaves: for $b=0$ there is at most one leaf, and at
+an internal root the two subtrees each have at most $2^{b-1}$ leaves.
+Therefore some actual leaf has at least
+
+$$
+ \lceil\log_2(K2^n)\rceil=n+\lceil\log_2K\rceil=n+r
+ \tag{GPO.49}
+$$
+
+branching queries. Choose the original member $(x,k)$ that realizes
+that leaf. It is fixed for its entire run, rather than chosen anew at
+each query.
+
+On this very run, Theorem 15.1 selected $n$ distinct first-difference
+queries. Each is a branching vertex of the unsuppressed tree: its
+single-bit-flipped alternative with the same $k$ follows the whole
+prefix and supplies the opposite next bit. Thus all $n$ selected calls
+belong to the at least $n+r$ branching calls just counted. Charge their
+individual lengths by $d_i+K+1$, using (GPO.47) and $k\ge K$.
+There are at least $r$ other branching calls; charge each by
+$\delta+K+1$ using Lemma 14.2. These sets of actual occurrences are
+disjoint, so their sum is precisely the asserted lower bound for $W$.
+The deepest selected leaf also gives $M_{\rm addr}\ge h+k+1\ge h+K+1$,
+and branching calls alone give the $Q$ bound. No separately attained
+coordinate maxima have been added. The argument counts only reached
+finite segments and permits every adaptive finite update schedule in
+the competitor class. $\square$
+
+## 16. One stationary comparator and exact minimax Read count
+
+**Definition 16.1 (the paid zero-update comparator).** Choose the
+leftmost shortest public leaf $p_*$, so $|p_*|=\delta$. Maintain a
+binary-encoded interval $[l,z]$, initially $[K,2K-1]$. While $l<z$,
+form
+
+$$
+ s=l+\lfloor(z-l+1)/2\rfloor,
+ \qquad\text{submit the literal }\tau_\pi(p_*R^s).
+ \tag{GPO.50}
+$$
+
+On presence one set $l=s$; on zero set $z=s-1$. At the resulting
+singleton retain $k=l$. For each original leaf $i=1,\ldots,n$,
+submit once the whole literal $\tau_\pi(p_iR^{k-1}LL)$ and use its
+paid bit for $x_i$. Assemble $u_x$ using the public scaffold and these
+actually acquired labels. Write the pair $(u_x,k)$ into owned readable
+backing, preserving its same-root binding and current grants. There
+are no source updates in this procedure.
+
+**Theorem 16.2 (joint upper witness and exact minimax queries).** One
+deterministic effective implementation of Definition 16.1 works for
+every finite scaffold $S$ and every $K\ge1$. On every member of
+$\mathcal F(S,K)$ it terminates correctly with zero extra updates and
+simultaneously satisfies
+
+$$
+ \begin{aligned}
+ Q&\le n+r,\\
+ M_{\rm addr}&\le h+2K,\\
+ W&\le L+2Kn+(\delta+2K-1)r.
+ \end{aligned}
+ \tag{GPO.51}
+$$
+
+Consequently, even among competitors allowed arbitrary finite adaptive
+forward updates,
+
+$$
+ \min_A\ \max_{(x,k)\in\mathcal F(S,K)}Q_A(x,k)=n+r.
+ \tag{GPO.52}
+$$
+
+The same comparator's worst $W$ and $M_{\rm addr}$ are each at most
+twice their corresponding lower bounds in (GPO.48).
+
+Proof. The first line of (GPO.45) makes every clock bit exactly the
+threshold test $s\le k$, independent of the unknown label at $p_*$.
+Its update retains $k$ and reduces an interval of $m\ge2$ integers
+to one of sizes $\lfloor m/2\rfloor,\lceil m/2\rceil$. After $t$
+such tests its size is at most $\lceil K/2^t\rceil$. This follows
+inductively from halving integer interval sizes; equivalently, dividing
+an integer interval into its two nearly equal parts at each level leaves
+parts of size at most the ceiling of the original size divided by $2^t$.
+Since $2^r\ge K$, at most $r$ tests suffice. This includes bins whose
+size is not a power of two; their short branches may stop earlier.
+
+Whenever a test is made, its split obeys
+$K+1\le l+1\le s\le z\le2K-1$. Thus each clock word has length
+at most $\delta+2K-1$. When $K=1$ there is no clock query, $r=0$,
+and the public bin already fixes $k=1$; no nonexistent split is used.
+The second line of (GPO.45) makes the following $n$ label queries
+correct, each of length $d_i+k+1$. Their summed length is exactly
+$L+n(k+1)\le L+2Kn$, and their maximum is at most $h+2K$.
+The clock words have maximum at most $\delta+2K-1\le h+2K$.
+Adding the phases proves (GPO.51). For $n=1$ the empty original
+prefix incurs no extra letters, but every suffix is still fully
+submitted and every Read still paid. No balanced or perfect scaffold
+has been assumed.
+
+Here is an effective operational realization of these finite instructions.
+Parse the supplied finite preorder scaffold and use an ordinary stack
+and path buffer to list its leaves, lengths and a shortest leaf. Each
+extension, comparison, stack write and any copying is local work.
+Perform integer addition, subtraction, halving and comparison by finite
+binary tape routines. Construct each repeated suffix with a binary loop
+counter, concatenate its entire path and translate each physical letter
+by the supplied port bit. Retain the actual returned bits, then traverse
+the finite scaffold again to write its labelled output. All intermediate
+counters, words, stack frames and output bytes occupy real owned storage;
+none is obtained from a hidden parameter or a zero-cost selector. Each
+routine is finite on its actual finite operands, and the assumed progress
+and growing backing permit its completion. This proves termination and
+correct retention through handoff, without asserting any uniform workspace,
+local-time, writer-size or total-price optimum. The source remains exactly
+its entrance $\rho^{2k}u_x$ throughout.
+
+Theorem 15.2 gives the lower inequality in (GPO.52); (GPO.51) gives
+the upper inequality with this single comparator. For the claimed common
+factor, all quantities are nonnegative and
+
+$$
+ \begin{aligned}
+ h+2K&\le2(h+K+1),\\
+ L+2Kn+(\delta+2K-1)r
+   &\le2\bigl[L+n(K+1)+(\delta+K+1)r\bigr].
+ \end{aligned}
+ \tag{GPO.53}
+$$
+
+Indeed subtracting the left sides from the right gives respectively
+$h+2$ and $L+2n+(\delta+3)r$. These comparisons use the one-run
+lower bounds for every competitor and one common upper witness. They
+do not assert equality of optimal summed letters, a complete Pareto
+frontier or optimality for a weighted total service price. $\square$
+
+## 17. The original acquisition protocol's fixed-size lag orders
+
+**Corollary 17.1 (restriction, relaxation and the original upper bound).**
+Fix any $n\ge1$, any $n$-leaf ordered scaffold $S$ and one persistent
+$\pi$. Give the original acquisition problem authentic advice $A=B=n$.
+Every deterministic effective protocol correct for its full authentic
+entrance domain, even with arbitrary finite adaptive forward updates
+under a source-blind extension of its actuator schedule, obeys (GPO.46)
+on the restricted family (GPO.43), and has one member in each bin obeying
+all of (GPO.48).
+
+For the published first-completion protocol of Theorem 9.2, the exact
+upper bounds (GPO.32)–(GPO.33), specialized to $B=n$, imply, for this
+fixed $n$,
+
+$$
+ Q=O_n(\log(k+2)),\qquad M_{\rm addr}=O_n(k+1),\qquad
+ W=O_n((k+1)\log(k+2)).
+ \tag{GPO.54}
+$$
+
+Therefore its worst costs over $K\le k\le2K-1$ have the optimal lag
+orders $\log(K+2)$, $K+1$, and $(K+1)\log(K+2)$ in these three
+coordinates. The lower orders hold simultaneously on one fixed member
+of each such bin for every competing protocol. This is a binwise
+worst-case assertion, not a logarithmic per-run lower bound on $Q$.
+
+Proof. Restrict original inputs to the actual originals $u_x$ with this
+scaffold, this fixed orientation and lag in the stated bin. Then grant
+the controller the true $S,\pi,K$ and immediate Read/update permissions
+of Assumption 13.2. The original code can ignore those inputs and extra
+permissions and execute precisely its original actions, including its
+actual preparations. Its full output projects by finite local work to
+$(u_x,k)$, with unchanged Reads, words and source updates. Every other
+accessible field is still common at initialization, the writer remains
+hidden, and the same register realizes every transition. Thus it is a
+competitor in the relaxed class; Theorems 15.1–15.2 apply a fortiori to
+its original run. A protocol with a more restrictive grant schedule is
+included by simply respecting that schedule. No installation or advice
+cost is removed from the real original run by this comparison.
+
+For the upper bound reuse Theorem 9.2 exactly, rather than transplanting
+the stationary comparator into the unknown-scaffold problem. With $B=n$,
+$H\le k+n-1$, $h_a\le2k+n$ and $d_B=\lceil\log_2n\rceil$,
+its $q_o$ is $O_n(\log(k+2))$ and $D_o\le4(k+n+1)$ is $O_n(k+1)$.
+Its stated $W\le D_oq_o$ yields (GPO.54). This is its one actual
+preparation update and stationary odd-cut acquisition, not a new
+zero-update procedure for unknown $\pi$.
+
+On the bin, (GPO.48) has $r=\lceil\log_2K\rceil$ and in particular
+$W\ge(K+1)(n+r)$, $Q\ge n+r$, $M_{\rm addr}\ge K+1$.
+For $K\ge2$, these have the asserted three lower orders; $n\ge1$
+also covers $K=1$ with positive constant lower bounds. The uniform
+upper bounds (GPO.54) have the corresponding orders throughout the bin.
+All constants may depend on the fixed $n$ and scaffold. No optimal
+dependence on an unknown leaf count, unknown shape, or $n$-varying
+original problem has been deduced. $\square$
+
+**Convention 17.2 (what is acquired and what continues).** The authentic
+integer $k$ and all original labels are target coordinates here. The
+comparison controller actually pays its clock and leaf probes, their
+literal lengths and finite bit work to acquire them; the original
+controller actually pays Theorem 9.2's orientation, clock, cap tests,
+node probes and one material update. Neither uses a readable hidden epoch
+or writer. A restricted logical consumer can require less than $(u,k)$;
+these bounds are not assigned to every task or every memory representation.
+
+The independently meaningful observations for the original protocol remain
+exactly Definition 12.1's physical incidence $S_o$, terminal antichain
+$\partial_o$, authentic counts $T_{\rm ent}=2k,T_o=2k+1$, and acquired
+readable $\mathsf M_o=(\pi,u,k,n,1)$ with actual backing, same-root
+binding and current grants. Theorem 12.2 already supplies their attained
+incidence/boundary recovery, agreement and the recovery of counts from
+that record. Theorem 11.2 and Proposition 11.3 already supply lawful
+same-register successors, pending cuts and the additive costs of actual
+continued use. Those are reused conclusions. The new price bounds concern
+acquiring their authentic original/lag coordinates, without re-publishing
+those inverses or the continuation as new theorems.
+
+The comparator instead ends at the stationary even entrance. Its pair as
+abstract data is not automatically the original odd-cut usable record.
+Any handoff to a service requiring the odd relation must actually perform
+the permitted one extra update, retain its known phase, compute the needed
+adapter/offset and retain accessible backing, binding and current rights;
+those actions have their actual charges. Under those conditions the
+already proved odd-cut continuation applies. Merely supplying the same
+symbols to a decoder installs no new service. For any actual finite
+acquisition followed by lawful continuation with costs $Q_c,W_c,M_c$,
+the combined query coordinates are $Q+Q_c,W+W_c,\max(M_{\rm addr},M_c)$;
+actual updates, evaluator work and all retained material add their own
+charges, exactly as in Proposition 11.3.
+
+## 18. Mathematical correspondence and the remaining recovery scope
+
+**Convention 18.1 (reused proofs and source-specific content).** The
+joint family, adaptive-update price theorem and common comparator above
+are `repo-derived` ordinary mathematics. Their additional conclusion is
+the authentic even-lag bin's additive joint acquisition price, with one
+fixed realization witnessing all three lower bounds and one zero-update
+comparator attaining the exact minimax binary Read count. The structural,
+counting and search tools are suppliers, with the following precise
+correspondence.
+
+[GenealogicalFiberTransport][GFT] and its
+[owning Scribe](../../../Blueprint/D5/S3/Arith/FibonacciAtomic/GenealogicalFiberTransport.scribe.cs)
+use `Source = FreeMagma Bool`, true for alpha, false for beta, the same
+pair-distributing substitution, and actual ordered shape/leaf-label
+assembly. Its proof-local `no_alpha` serves substitution injectivity,
+not unknown-source acquisition. The algebra and homomorphic extension are
+Kenny Lau's `FreeMagma.of`, `mul`, `liftAux`, `lift` in the pinned
+[Mathlib/Algebra/Free.lean](https://github.com/leanprover-community/mathlib4/blob/56a005855ea17e0b0958f73ec801ae140b0a1679/Mathlib/Algebra/Free.lean).
+These do not provide physical order or a source port.
+
+[ActualFibonacciSupportChain](../../../D5/S3/Arith/FibonacciAtomic/Observer/ActualFibonacciSupportChain.lean)
+and its
+[owning Scribe](../../../Blueprint/D5/S3/Arith/FibonacciAtomic/Observer/ActualFibonacciSupportChain.scribe.cs)
+supply the actual recurrence and support blind radii, including the
+proof-local `recurrence`, `monotone`, `short` and `spine` arguments.
+Lemma 14.2 recalls the all-word present-suffix induction to expose its
+parameter $2k+e_H$; it does not claim that induction as a new theorem.
+The stationary leaf test is precisely ABT12.3, with its actual full-root
+word convention and authentic-domain conditions in ABT33.1–33.3.
+
+[NativeSerialMachine][NSM] and its
+[owning Scribe](../../../Blueprint/D5/S3/Arith/FibonacciAtomic/Observer/NativeSerialMachine.scribe.cs)
+supply source-blind control, deterministic reached-prefix replay and one
+actual register's forward chronology. [ActualTreeReadoutAcquisition](../../../D5/S3/Arith/FibonacciAtomic/ActualTreeReadoutAcquisition.lean)
+and its
+[owning Scribe](../../../Blueprint/D5/S3/Arith/FibonacciAtomic/ActualTreeReadoutAcquisition.scribe.cs)
+supply the literal `Address`, `Reply`, `readout` and leaf occurrence
+conventions. Only those definitions are imported here: that module's
+separate `paid` distinct-address objective is not this volume's
+per-invocation $Q$. [DelayedOriginalReadout][DOR] and its
+[owning Scribe](../../../Blueprint/D5/S3/Arith/FibonacciAtomic/Observer/DelayedOriginalReadout.scribe.cs),
+including private `clock_step`, `clock_at_step`, `label_clock_decode`
+and `guard_clock`, give the known-epoch full-reply clock/guard context.
+Both formal machine suppliers permit four-valued replies. Control here
+explicitly receives their presence projection; no hidden alpha/beta or
+branch distinction is borrowed as an extra bit.
+
+[Native Dynamic Acquisition Frontiers](RECURSIVE_RELATIONAL_OBSERVATION_NATIVE_DYNAMIC_ACQUISITION_FRONTIERS.md),
+Definitions 2.3–2.5, Lemma 3.2, Theorems 3.3,5.1,5.4, already supply
+single-occurrence dynamic locality, finite binary reply-tree counting
+and one-coordinate first-difference charging. Those methods are credited,
+not new lower-bound principles. Its $G_0/G_1$ bracket gadgets have a
+common all-alpha leaf word, permit the stated one-hole context operations,
+and yield $\sum_i(d_i+1)$; they are not the leaf-labelled originals
+$u_x$ with one shared unknown even lag. Equations (GPO.47)–(GPO.48)
+add the present source's lag-dependent blind radius and account for the
+extra bin information on the very same run as all label charges.
+
+[Acquired Orbit Resource Frontier](RECURSIVE_RELATIONAL_OBSERVATION_ACQUIRED_ORBIT_RESOURCE_FRONTIER.md),
+Definitions 8.1–8.2 and Theorems 8.3,9.1–9.3, solve stationary
+single-orbit interval identification with full four-valued replies,
+including the zero-origin boundary, bounded-query simulation and exact
+call/peak attainment. Its two singleton reply cells affect capacity;
+the presence-only interface here has only two outcomes, additional
+unknown original labels, arbitrary finite scaffolds and adaptive forward
+updates. Its exact lower bounds are not transferred to this different
+contract.
+
+[Native Alpha Task-Lag Realization](RECURSIVE_RELATIONAL_OBSERVATION_NATIVE_ALPHA_TASK_LAG_REALIZATION.md),
+Assumption 1.1, Theorem 2.2 and §§4–5, uses an actually acquired early
+encoder, a fixed complete later entry, a visible reference and full-reply
+adjacent ages to transport Boolean coordinate tasks with literal weights.
+Its original age cube, discarded/acquired state and lag target remain
+unchanged. [Literal Query Frontier](RECURSIVE_RELATIONAL_OBSERVATION_LITERAL_QUERY_FRONTIER.md),
+Definitions 1.1–1.2,2.1, likewise uses a complete acquired origin-code
+fiber, stationary full replies and no updates. Their guarded all-word
+navigation and coordinate methods are suppliers, not an acquisition of
+this unknown authentic $(u_x,k)$ from only presence bits.
+[Finite-Menu Minimal Memory](FIB_NATIVE_FINITE_MENU_MINIMAL_MEMORY.md),
+Definitions 2.2–2.4 and §§7–9, instead minimizes complete retained
+state for future menu values with a supplied count, and separately cites
+paid unknown-lag capture. A supplied count, a minimal retained alphabet
+and a bound on acquiring an unknown original/count are distinct contracts.
+No retained-alphabet minimum is deduced from (GPO.48).
+
+For primary comparison, Petra van den Bos and Frits Vaandrager,
+[*State Identification for Labeled Transition Systems with Inputs and
+Outputs*, arXiv:1907.11034v2](https://arxiv.org/abs/1907.11034v2),
+§6, Definition 33, Lemma 34 and Theorem 35 with its full proof (v2 PDF
+numbering, pp. 23–24), treat finite
+suspension automata with finite input/output alphabets. Their injective
+splits preserve the incompatibility of still possible states; the
+completeness theorem assumes every two distinct states incompatible.
+The common concern is preservation of distinctions through actions.
+A finite set of entrance candidates does not identify the unbounded
+forward register/controller state space with that finite automaton.
+No source-, action-, observation- and literal-cost-preserving reduction
+has been supplied here, and neither their synthesis nor its completeness
+is used as a theorem about (GPO.43). The proofs above use the actual
+finite run tree of each terminating competitor instead. This is bounded
+source correspondence, without an exhaustive literature or priority
+claim; absence of a theorem name or local dependency checkout supplies
+no novelty evidence. These ordinary proofs are not new Lean certification.
+
+**Convention 18.2 (precise limits of the acquired price).** The three
+coordinates price actual deterministic exact acquisition within the
+specified root-word and no-side-channel contract. They give neither an
+exact summed-letter optimum nor an exact joint Pareto frontier, no
+optimal unknown-size/shape dependence, and no uniform memory minimum,
+finite-state implementation, runtime or total-service optimum. They
+make no randomized, error-tolerant, extra-timing-channel or writer-readable
+claim. Forward-update competitors are included; additional observation
+channels are different hypotheses. Public scaffold, bin, orientation,
+installation, rights, actual expanding material and internal update work
+retain their separate nonzero resource accounts.
+
+The larger four-expression objective still lacks recovery of an original
+from time alone, unrestricted four-way recovery, physical metric and
+duration identification, removal/acquisition of all installed-reference
+and authenticity premises, and a universal reduction to two generators.
+The original fixed-apparatus, original-Q, parked-consumer and unchanged-
+initialization problems retain their exact assumptions and open
+obligations. The NCR/PVC/PR57/PG/Atlas interfaces are not altered.
+
+The independently published
+[sharp-task retained environment record](RECURSIVE_RELATIONAL_OBSERVATION_SHARP_TASK_RETAINED_ENVIRONMENT_MEMORY.md),
+Definitions 1.1–1.2 and §7, uses an actual measured quantum instrument,
+all-qutrit inputs, classical outcome words and task-dependent terminal
+CPTP decoders. [Environment Record Memory II](AURIC_FIB_ENVIRONMENT_RECORD_MEMORY_II.md),
+Definition 29.1, has its own erased-history qutrit-channel task.
+[Central-Noise Green Stability](FIB_NATIVE_CENTRAL_NOISE_GREEN_STABILITY.md),
+Definition 12.1 and §14, keeps its continuous stochastic cylinder,
+persistent driving source, actual paid tracking and matched weighted
+response. Binary measured labels and the continuous phase names are not
+the free-tree constructors in (GPO.1). No common-source map transporting
+initialization, observations, legal actions, backing, rights and resources
+between any of those processes and (GPO.43) is proved. Their newer
+conclusions therefore remain distinct suppliers with their own domains.
+This finite source-specific acquisition-price result does not complete
+the continuing common-source space/time/boundary/memory programme.
+
+## 追加锚（本行以下为增补区）

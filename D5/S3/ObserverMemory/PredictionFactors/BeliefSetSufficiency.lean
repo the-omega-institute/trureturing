@@ -93,7 +93,7 @@ private theorem mem_compatibleBeliefFrom_iff
       · rintro ⟨start, hcurrent, next, hupdate, hobserve, hfollow⟩
         exact ⟨next, ⟨start, hcurrent, hupdate, hobserve⟩, hfollow⟩
 
-private theorem mem_compatibleBelief_iff
+theorem mem_compatibleBelief_iff
     {X U O : Type*} (update : U -> X -> X) (observe : X -> O)
     (initialObservation : O) (history : List (U × O)) (final : X) :
     final ∈ compatibleBelief update observe initialObservation history <->

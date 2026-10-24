@@ -1781,3 +1781,609 @@ derives them from bare FIB nor supplies uncapped singular occupation
 or physical implementation. $\square$
 
 ## 追加锚（本行以下为增补区）
+
+## 55. Finite reports under the installed exact-point interface
+
+**Definition 55.1 (fixed source, calibration and accessible reports).**
+In §§55–59, K, U and N denote the volumes named in Definition 50.1,
+with their statements as present at
+`f798ec9bfccf53ae06465fbad0accff466978c92`.
+Fix every datum of K, Definitions 2.1–2.2 and 41.1: $0<Z<1$,
+$r=1-Z$, $H=r/2$, $0<l<k<u<H$, arbitrary preparation phases,
+$T>0$ and a fixed signed $\nu\ne0$. The actual target is (50.1)
+with $\lambda=0$, on the same persistent independent covariance-$2$
+triple $(W^1,W^2,C)$. Its held state is $X$, its height exit is
+$\tau$, and $S=T\wedge\tau$. Retain the probabilities
+$(k,H-k,Z,H-k,k)$, negative amplitude convention, both actual
+$2\pi$ periods, original clock and raw measure
+$d\mu=dk\,d\alpha\,d\beta$. The only controls are the original
+$P,Q$, with their ordinary chronology and extrema guards.
+Any history preceding the specified start keeps its separate charges.
+All constants below may depend on these fixed data, but not on
+$\eta,\delta$.
+
+The sensor remains the installed, paid exact-point
+$\operatorname{Read}(t)=X_t$ of K, Definition 41.1.
+A finite report means the following restriction on dependence, not a
+replacement sensing contract. At each prescribed Read the acquisition
+service applies a fixed Borel map $Q_\rho$ to the raw returned point.
+Only the resulting symbol is retained or made accessible to the issuer.
+No raw height, raw phase, comparison residue, discarded point, bridge,
+deck label or other source-dependent variable is accessible to it.
+The service has the analytic permission to apply this deterministic
+postprocessing to its already paid exact point; no physical coarsener,
+comparison tariff or sensing-precision bound is supplied by that
+permission. Calibration, clock and prior issued numerical commands
+are known. They are fixed data or functions of the report history,
+not additional target channels. No independent seed is needed.
+
+**Definition 55.2 (one source-preserving finite quantizer).** Put
+$w=u-l$. For $0<\rho\le1$ set
+
+$$
+m_h=\lceil w/\rho\rceil,\qquad
+m_\theta=\lceil2\pi/\rho\rceil.
+\tag{55.1}
+$$
+
+Partition $(l,u)$ into the $m_h$ equal height bins, choosing a fixed
+half-open convention at internal ties, and send each bin to its
+midpoint. Send height $l$ to $l$ and height $u$ to $u$, as two
+distinct boundary outcomes; no interior height is sent to a face.
+For each phase use the nearest point of its $m_\theta$-point circular
+grid, translated respectively by the known $\alpha_0,\beta_0$.
+Break any circular tie by the smaller grid index. Let $\mathcal A_\rho$
+be the product alphabet of the height and phase indices, and write
+$z(a)\in E_0=[l,u]\times\mathbb T^2$ for a symbol's decoded point.
+The known initial point $q_0$ may additionally be encoded by one
+calibration symbol. Thus, including that symbol,
+
+$$
+|\mathcal A_\rho|\le(m_h+2)m_\theta^2+1\le C\rho^{-3},\qquad
+ d_{\max}(z(Q_\rho(q)),q)\le\rho.
+\tag{55.2}
+$$
+
+Indeed the height and phase errors are each at most $\rho/2$;
+the weaker displayed bound will suffice. The bin and tie rules are
+Borel. The two death-face flags are exact comparisons before rounding,
+not inferences from a rounded value. Repeated held target points
+produce the same symbol. Every incoming or retained source report
+in what follows belongs to this single alphabet. Exact real entries
+of its calibrated decoding table are allowed numerical coefficients;
+a finite index is not a finite-bit representation of those entries.
+
+## 56. Direct numerical execution, including failed tracking histories
+
+**Definition 56.1 (one-grid service and the terminal fallback).**
+Choose any finite equal grid $t_i=ih$, $h=T/n$, $n\ge2$.
+Make and charge all $n$ Reads at $t_1,\ldots,t_n=T$, even after
+failure, terminal issuance or own death. Initially issue a zero hold
+and set the own endpoint $z=q_0$, in normal mode. Every movement
+issued at $t_i<T$ has its entire numerical profile fixed there,
+executes over duration $h$, and has constant continuation afterwards.
+At $T$ issue no new movement. The automatic own boundary hold is
+K, Definition 20.3's cutoff.
+
+In normal mode at $t_i<T$, decode $z_i=z(Q_\rho(X_{t_i}))$ and
+compute $(X_i^{\rm c},Y_i^{\rm c},D_i^{\rm c})$ from $(z,z_i)$
+by (44.1). Accept the local connector exactly when
+
+$$
+|X_i^{\rm c}|\le3\rho,\qquad
+|Y_i^{\rm c}|\le5\rho,\qquad
+|D_i^{\rm c}|\le6\rho.
+\tag{56.1}
+$$
+
+On acceptance use K, Definition 34.1's finite inward-rectangle
+connector, at scale $\rho$, with these three parameters.
+Parametrize its geometry $g_i$ by constant Euclidean arclength speed
+on $[0,1]$ and issue the numerical pair
+$g_i(\min(v/h,1))$ as a function of elapsed time $v\in[0,T]$.
+At its completed endpoint replace $z$ by $z_i$.
+A live endpoint leaves normal mode unchanged; a boundary endpoint
+makes this a terminal command, followed permanently by its hold.
+
+If (56.1) fails at a live report, replace the unexecuted continuation
+by a hold at the current own endpoint and enter failed mode.
+In failed mode keep that hold while reports are live. At the first
+boundary report, or immediately if (56.1) first fails on a boundary
+report, issue the straight height leg from the current own height to
+that reported face, with zero $b$ increment, over the whole duration
+$h$. This is the terminal fallback, followed by its hold.
+It uses neither the boundary phases nor an estimate of the unknown
+actual death time. A boundary first reported at $T$ causes no movement.
+After any terminal issuance only the prescribed Reads and own hold
+remain. Thus an abort of ordinary tracking never suppresses later
+boundary acquisition. No interruption uses an unseen target event.
+
+**Theorem 56.2 (legal finite factorization and unconditional own death).**
+Assume
+$\rho\le\min(1,w/8,\min(k-l,u-k)/2,\sqrt T)$.
+Definition 56.1 is a causal finite numerical issuer in the original
+paid-point class. Its entire issued profiles, their executed prefixes
+and their concatenation obey the original numerical domains and
+source guards. They preserve the actual chronology
+
+$$
+ j_N(t)=\int_0^t a_N(s)\,db_N(s),\qquad
+ D_{a_N,b_N}=(-\min a_N,H-\max a_N).
+\tag{56.2}
+$$
+
+For every realized absorbed target history, including histories on
+which (56.1) fails, there is no premature own exit, every own exit
+is at the target's actual face, and, with
+$S_N=T\wedge\tau_N$,
+
+$$
+0\le S_N-S\le2h.
+\tag{56.3}
+$$
+
+If $j$ is the first boundary Read index, then an own exit on this
+horizon occurs exactly at $t_j+h$ when $j<n$, including equality
+$t_j+h=T$; if $j=n$ it has no own exit on the horizon.
+If there is no boundary Read, it has no own exit on the horizon.
+Every issuance and the full executed held path factor exactly through
+the finite report word and the fixed calibration. Equal report words
+give identical numerical controls, not just equal endpoint laws.
+
+Proof. Before failure or terminal issuance, induction over grid cells
+shows that the own point at $t_i$ is $q_0$ for $i=1$ and otherwise
+the decoded preceding report. Formula (44.1) uses only this point
+and the new decoded point. Its endpoint calculation and K, Lemma 34.2
+show that the issued two-control path ends at exactly $z_i$, including
+its wrapped phases. No unwrapped own phase is needed: translation
+of its relative chronology contributes
+$a_N(t_i)Y_i^{\rm c}+D_i^{\rm c}$ to the single ordinary integral
+(56.2). K, Proposition 2.3 then supplies the endpoint and every
+prefix with the original negative phase convention.
+
+The connector's inward rectangles stay strictly in $(l,u)$.
+Its final height leg is strictly interior until its endpoint and
+can touch a face only if that report is a boundary report. Live
+quantization midpoints are strictly interior. A failed-mode hold
+therefore holds at an interior point. Its terminal straight leg is
+also interior until its final face endpoint. Every proposed whole
+profile includes its computed hold after its endpoint, so its whole
+height lies in $[l,u]\Subset(0,H)$, not merely its executed part.
+Its own first exit is precisely that endpoint. The concatenation is
+continuous and piecewise affine, with finitely many legs, so it is
+an AC original numerical history. Consequently
+$k+\min a_N\ge l>0$ and $k+\max a_N\le u<H$.
+For an individual increment profile starting at height $h_*$ the
+same check reads $h_*+\min x>0$, $h_*+\max x<H$.
+For another promised start $[k_-,k_+]$, its domain is still exactly
+$k_-+\min a_N>0$, $k_++\max a_N<H$; re-running the policy is not
+permission to change that realized command's domain.
+
+A first boundary report is possible only after actual target death.
+Before it, all own heights remain interior, even after tracking
+failure. If it arrives at $t_j<T$, either terminal rule reaches that
+same face exactly at $t_j+h$, without an earlier height touch.
+Since $t_{j-1}<\tau\le t_j$, this gives
+$0<t_j+h-\tau\le2h$. If the first boundary record is at $T$,
+then $S_N=T$ and $0\le T-\tau\le h$.
+If no boundary record arrives, $\tau>T$ and both horizon cutoffs
+are $T$. This proves (56.3), including the cases of death at a grid
+point and death or own death exactly at the horizon. Interruption
+and the horizon itself have not been counted as death.
+
+For factorization let $a_1,\ldots,a_i$ be a report prefix.
+Starting with the fixed calibration symbol, the preceding recursion
+chooses its mode, own endpoint, next whole numerical profile and
+all its own cutoff times from that word and the known grid.
+Each acceptance comparison, principal representative, ceiling in
+the rectangle count and arclength parametrization is a deterministic
+Borel operation. For this fixed $\rho$ the rectangle counts are
+bounded by $\lceil6/\rho\rceil$, so no infinite profile is issued.
+There are at most $n$ grid issuances, counting the initial hold and
+holds on failed histories. Prescribed own holds are already included;
+counting an automatic own hold separately adds at most one issuance.
+The operation times are deterministic grid times or computed own
+numerical endpoints. Hence there are Borel maps $\Phi_i$ and $\Phi$
+such that
+
+$$
+\gamma_i=\Phi_i(a_1,\ldots,a_i),\qquad
+ (a_N,b_N,j_N,\bar q_N)=
+ \Phi(Q_\rho(X_{t_1}),\ldots,Q_\rho(X_{t_n})).
+\tag{56.4}
+$$
+
+The fixed clock and calibration are implicit arguments, independent
+of the report word. The real chronology on the left is derived
+from the selected controls. Their accumulated lifts and numerical
+coefficients are likewise derived quantities; none is an extra
+measurement. Induction proves identical outputs for every two
+raw input streams with the same quantized word. In particular raw
+values cannot influence failure, a terminal choice, timing or a
+coefficient after their symbols are fixed. This verifies both
+causality in K, Definition 41.1 and exact finite-report dependence.
+The argument used only deterministic properties of each absorbed
+continuous target history; it did not discard unsuccessful outcomes.
+$\square$
+
+## 57. One finite-report chance tube and its joint original-time prices
+
+**Definition 57.1 (tolerance, risk and predetermined Read budget).**
+Let $0<\delta<1/4$, $0<\eta\le\eta_0$, and put
+
+$$
+ C_0=32(1+r^{-1}),\qquad \rho=\eta/C_0,\qquad
+ \ell=\log\frac{e}{\rho\delta},\qquad
+ b=[16(1+\nu^2)]^{-1}.
+\tag{57.1}
+$$
+
+Choose $\eta_0\le1$ small enough for Theorem 56.2 and for
+$(5/2+r^{-1})\rho<\pi$.
+Choose once $a\ge1$ so large that $ba>4$ and
+
+$$
+10\{a(1+T)+1\}
+ \exp\{-(ba-4)\log(4e)\}\le1.
+\tag{57.2}
+$$
+
+Such a choice exists by exponential domination of a linear prefactor.
+Use Definition 56.1 with
+
+$$
+ n=\left\lceil a(1+T)\rho^{-2}\ell\right\rceil,\qquad h=T/n.
+\tag{57.3}
+$$
+
+Decrease $\eta_0$ if necessary so that $n\ge2$.
+These are one family and one common grid for sensing, execution,
+death and every consumer below.
+
+**Theorem 57.2 (direct finite-message dependence at full held accuracy).**
+For every fixed native datum in Definition 55.1, every
+$0<\eta\le\eta_0$ and $0<\delta<1/4$, this single lawful family
+obeys
+
+$$
+\begin{aligned}
+\mathbb P\{D_{\max}(\bar q_N,X)\le\eta\}&\ge1-\delta,\\
+ M=n&\le C\eta^{-2}L_{\eta,\delta},\qquad
+ L_{\eta,\delta}=\log\frac{e}{\eta\delta},\\
+ |\mathcal A_\rho|&\le C\eta^{-3}.
+\end{aligned}
+\tag{57.4}
+$$
+
+Its factorization is exactly (56.4), under the original installed
+Read, not an exact-endpoint conditional replay theorem.
+
+Proof. Use the held real coordinates $\bar A,\bar B,\bar K$ and
+the relative $D^*_{s,t}$ of (44.2). Let $G$ be the event that in
+every grid cell $[t_{i-1},t_i]$ all three quantities
+$|\bar A_t-\bar A_{t_{i-1}}|$,
+$|\bar B_t-\bar B_{t_{i-1}}|$ and
+$|D^*_{t_{i-1},t}|$ remain below $\rho$.
+These are probability tests only, not observations or permissible
+source-dependent interrupt signals. Lemma 44.2 at $\lambda=0$
+and a union bound in the original enlarged Brownian filtration give
+
+$$
+\mathbb P(G^c)\le10n e^{-b\rho^2/h}\le\delta.
+\tag{57.5}
+$$
+
+For the last inequality write $C_a=a(1+T)+1$.
+Then $n\le C_a\rho^{-2}\ell$ and
+$\rho^2/h\ge a\ell$. Also $\ell\ge\log(4e)$ and
+$\rho^{-2}\ell/\delta\le e^{4\ell}$, since each of
+$\rho^{-1},\delta^{-1},\ell$ is at most $e^\ell$.
+Thus (57.5), divided by $\delta$, is at most
+$10C_a e^{-(ba-4)\ell}\le1$ by (57.2).
+This estimates the persistent, actually stopped target, including
+cells containing or following its death.
+
+On $G$, in any one cell, the target alpha increment has absolute
+value at most $\rho/2$ in its continuous local lift, while its beta
+increment is
+
+$$
+ \left(\tfrac12-X_{t_{i-1}}^{\rm height}/r\right)
+       (\bar B_t-\bar B_{t_{i-1}})
+       -D^*_{t_{i-1},t}/r.
+\tag{57.6}
+$$
+
+The coefficient lies in $(0,1/2)$, including at either killing face.
+Consequently the target's $d_{\max}$ oscillation relative to the
+left endpoint is at most $M_r\rho$, $M_r=1+r^{-1}$.
+For two successive decoded points, (55.2) adds at most $2\rho$
+to each coordinate increment. Starting from $q_0$ only reduces
+that error. The decoded height difference is at most $3\rho$;
+the decoded principal alpha increment is at most $5\rho/2$;
+the decoded principal beta increment is at most
+$(5/2+r^{-1})\rho$.
+The smallness condition in Definition 57.1 ensures that these
+principal representatives are the indicated local differences,
+including when a circular grid crosses its coordinate cut.
+Since the own decoded height is in $[l,u]$, (44.1) therefore gives
+
+$$
+ |X_i^{\rm c}|\le3\rho,\qquad
+ |Y_i^{\rm c}|\le5\rho,\qquad
+ |D_i^{\rm c}|\le(5r+1)\rho\le6\rho.
+\tag{57.7}
+$$
+
+Here $0<r<1$ was retained. Hence no local test fails on $G$,
+up to and including its terminal boundary connector.
+
+At a prefix of any such connector K, (34.3) gives
+$|x|\le3\rho$, $|y|\le5\rho$, $|j|\le6\rho$.
+The actual phase increments from its own start are $y/2$ and
+$(1/2-h_*/r)y-j/r$, by the original prefix chronology.
+Thus the own path stays within $C_r\rho$ of its decoded start,
+where $C_r=3+6/r$ is sufficient. During service on
+$[t_i,t_{i+1}]$, that start is within $\rho$ of the actual target
+at $t_{i-1}$. The actual target at the current time is within
+$2M_r\rho$ of that earlier target point, by the triangle inequality
+across at most two cells. The complete service error is therefore
+at most
+
+$$
+ (C_r+1+2M_r)\rho=(6+8/r)\rho<\eta.
+\tag{57.8}
+$$
+
+The initial hold has error at most $M_r\rho$.
+After a completed terminal connector the actual target is already
+held at its observed face, and its own quantized endpoint is within
+$\rho$ of that held point forever. If the boundary is first reported
+at $T$, the preceding service bound already covers the whole last
+cell, with no terminal acceleration. Thus (57.8) covers the full
+held path, not just grid values, live intervals or a first-level
+projection. It proves the first assertion of (57.4).
+Finally $\ell=L_{\eta,\delta}+\log C_0\le C L_{\eta,\delta}$,
+and (55.2), (57.3) give the other assertions. $\square$
+
+**Theorem 57.3 (pathwise joint charges and the unpriced services).**
+For this same family, on every history, with no conditioning on $G$,
+
+$$
+\begin{aligned}
+ V^a_N,\ V^b_N,\ L_N&\le C n,\\
+ E_N=\int_0^{S_N}(\dot a_N^2+\dot b_N^2)dt
+       &\le C n^2/T,\\
+ B_{\rm rep}=n\lceil\log_2|\mathcal A_\rho|\rceil
+       &\le Cn(1+\log(1/\eta)).
+\end{aligned}
+\tag{57.9}
+$$
+
+The bounds count all actually paid Reads and all actual execution,
+including failed, aborted, held and horizon-cut profiles. They are
+bounds on original analytic actuator resources and fixed-width
+report bits; they do not price a complete service or finite device.
+
+Proof. Every accepted connector satisfies K, (34.4) with $A=5$,
+$B=6$ and $\rho\le1$. Its two variations are at most $19,17$,
+and its Euclidean native length is at most $36$.
+Its constant arclength speed on duration $h$ has unhalved energy
+at most $36^2/h$. These are bounds for every accepted report pair,
+including those on $G^c$. A terminal fallback has length and height
+variation at most $w<1$, zero $b$ variation and energy at most
+$w^2/h$. Holds have zero actuator costs. At most $n-1$ nonzero
+profiles can be issued. Addition gives (57.9).
+A prefix executed for a fraction $\theta$ contributes its actual
+variation and length and $\theta L_i^2/h$ energy for a constant-speed
+profile of full length $L_i$; this also bounds a prefix cut inside
+a leg. No unexecuted suffix is charged or sped up. In this aligned
+grid construction the last nonconstant service completes at $T$;
+its prescribed later hold is cut by the horizon. A first boundary
+Read at $T$ is paid and has no executed terminal leg. A rejection
+aborts only future ordinary tracking: earlier completed services,
+the later fallback and every subsequent Read remain in the above
+count. This accounts for all censoring and failure cases rather
+than reporting a success-conditioned cost.
+
+The report alphabet includes both face outcomes and any calibration
+symbol. A fixed-width encoding, with padding, uses precisely the
+displayed $B_{\rm rep}$ bits for the $n$ incoming words. Storing
+all those words uses no more report bits; streaming is also possible.
+Equation (55.2) proves its upper bound. Any fixed finite mode flags
+change it by at most $Cn$.
+
+The price and permission coordinates are distinct. Sensing uses
+exactly $n$ units of the installed paid Read service, even though
+its raw replies are exact reals. Raw-to-finite acquisition uses the
+analytic $Q_\rho$ permission of Definition 55.1; its comparison and
+discard operations have no supplied physical tariff. Exact face
+equality, bin and principal-branch comparisons, integer ceilings and
+arclength parametrization are allowed analytic calculations; their
+physical execution cost is not zero by implication. Numerical
+coefficients use the fixed exact calibration and decoded table,
+not a source-dependent analog supplement. Installation of that
+table, exact coefficient access and actuation precision have no
+supplied bit or service bound. The report-storage count above
+bounds stored report indices only; clock state, working arithmetic,
+calibration and numerical own-control state are separate.
+Observation rights, source access, installation rights and their
+prices are precisely additional permissions required to provide
+the installed Read and its coarsening; the original two-control
+syntax alone supplies none of them. Storage access and arithmetic
+likewise have no given total-service tariff. Only the four
+actuator coordinates have the declared identity metric and
+original-time prices in K, (11.4). Without a specified joint tariff
+these different coordinates cannot be summed into a scalar optimum.
+In particular (56.4) supplies no finite-bit raw sensor, finite
+arithmetic, finite physical memory, computability for arbitrary
+noncomputable calibration constants or total controller-state bound.
+The positive logarithmic overhead in (57.9) also gives no new
+actuator optimum; the distinct exact-real replay family's established
+optimal statements remain those of §§50–54. $\square$
+
+## 58. The same finite-report family's bounded and fixed-cap consumers
+
+**Theorem 58.1 (bounded occupation on the actual killed coupling).**
+For $F\in C(E_0)$ let $M_F=\|F\|_\infty$ and
+$\omega_F(s)=\sup\{|F(x)-F(y)|:d_{\max}(x,y)\le s\}$.
+For precisely Definition 57.1's execution and its actual target,
+
+$$
+\begin{aligned}
+\mathbb E\left|\int_0^{S_N}F(\bar q_N(t))dt
+                    -\int_0^S F(X_t)dt\right|
+ &\le T\omega_F(\eta)+2hM_F+2T\delta M_F.
+\end{aligned}
+\tag{58.1}
+$$
+
+Consequently $\eta\to0$, $\delta\to0$ at fixed $T$ gives
+$L^1$ convergence of these occupations, also after any fixed
+Lipschitz clipping of the total integral. For nonnegative $F$ this
+includes a fixed total cap. Taking first that finite-horizon limit
+and then $T\to\infty$ in the unclipped bounded-integrand expectation
+gives exactly N, (1.6)'s full killed Green pairing
+$\int_\Omega\Gamma_{|\nu|,q_0}F\,d\mu$.
+A fixed total cap instead retains the expectation of the capped
+random total and is not that linear pairing.
+
+Proof. By Theorem 56.2 the common live interval is $[0,S]$ and
+the remaining own interval has length at most $2h$ on every
+outcome. On $G$ compare the integrands through $S$ by
+$\omega_F(\eta)$; on $G^c$ bound their absolute difference by
+$2M_F$. Integrating on the original clock, then taking expectations,
+proves (58.1) using (57.5). Lipschitz clipping follows by applying
+its Lipschitz constant to this $L^1$ bound. The target tail after
+$T$ is at most $C M_F e^{-\pi^2T/w^2}$ by N, Theorem 1.3.
+This proves the claimed iterated limit without a uniform infinite-
+time tail assumption on the native executions. Monotone convergence
+for a nonnegative capped total gives its stated different limit.
+No exact equality of shared two-time marginal laws was used.
+$\square$
+
+**Theorem 58.2 (fixed field cap and its original-clock response).**
+Fix the same source, pole $q_0$, $\epsilon=|\nu|>0$, $g>0$ and
+finite $B>0$. Let $V=\Gamma_{\epsilon,q_0}$ and let $V_B=V\wedge B$
+have value $B$ at the pole and zero at both absorbing faces.
+By N, Proposition 7.1 this is continuous on $E_0$.
+Set, for this family's actual execution,
+
+$$
+\begin{aligned}
+ A_{NB}&=\int_0^{S_N}V_B(\bar q_N(t))dt,&
+ A_B&=\int_0^S V_B(X_t)dt,\\
+ W_{NB}&=e^{gA_{NB}},& W_B&=e^{gA_B},\\
+ d_B&=T\omega_{V_B}(\eta)+2Bh+2BT\delta.
+\end{aligned}
+\tag{58.2}
+$$
+
+For any real Lipschitz $f$ on $E_0$ which vanishes on both faces,
+put $f(\dagger)=0$, $M_f=\|f\|_\infty$ and
+$K_f=\operatorname{Lip}_{d_{\max}}f$. Then
+
+$$
+\begin{aligned}
+ \mathbb E|A_{NB}-A_B|&\le d_B,\\
+ \mathbb E|W_{NB}-W_B|&\le g e^{gBT}d_B,\\
+ \left|\mathbb E[W_{NB}f(q_N^\dagger(T))]
+             -\mathbb E[W_B f(X^\dagger_T)]\right|
+ &\le e^{gBT}\{gM_f d_B+K_f\eta+2M_f\delta\}.
+\end{aligned}
+\tag{58.3}
+$$
+
+The limiting response as $\eta,\delta\to0$ at fixed $B,T$ is the
+continuous zero-boundary representative at $q_0$ of
+$e^{-T\mathsf H_B}f$, where $\mathsf H_B$ is the form operator
+of $T_\epsilon-g\int V_B|u|^2d\mu$ on N's actual
+$\mathcal F_\epsilon$. This is a bounded-potential response of
+the free killed target, not a native attractive-process sampler.
+
+Proof. The first inequality is (58.1), now proved for the present
+family. Both occupations lie in $[0,BT]$, so the exponential has
+Lipschitz constant $g e^{gBT}$ on their range, proving the second.
+Because $f$ vanishes on both faces, each killed terminal value equals
+$f$ of its held endpoint, even if exactly one process has died.
+The whole-held tube therefore bounds the terminal difference by
+$K_f\eta$ on $G$ and by $2M_f$ on $G^c$.
+Split the response difference into the weight difference times one
+terminal value and $W_B$ times the terminal difference; use
+$W_B\le e^{gBT}$. This gives the last inequality. All expectations
+include failed outcomes, terminal fallback executions and extra own
+lifetimes. For fixed $B$, uniform continuity of $V_B$ makes
+$d_B\to0$, proving the response limit.
+
+For the analytic identification use N, (12.17), which is proved for
+this actual killed operator and bounded potential by the ordered-time
+Duhamel expansion. The target, sign, raw measure, pole, two Dirichlet
+faces and clock here are exactly its parameters. In particular its
+operator is $L_\epsilon-gV_B$, not a retimed or normalized operator.
+The acquisition family in N, Definition 12.1 is different; its
+family-specific (12.6) and resource schedule are not transferred.
+Here their needed tracking, own lifetime and capped integrability
+hypotheses were supplied directly by Theorems 56.2, 57.2 and (58.1).
+N, §§15–20's unit-cell coefficients, threshold and universal profiles
+are likewise unchanged analytic consumers, not new realization claims.
+
+There is an explicit obstruction to deleting the field cap for this
+producer. The initial own hold lasts $h>0$ at the pole and occurs
+strictly before own exit. Since $V(q_0)=+\infty$,
+$\int_0^{S_N}V(\bar q_N(t))dt=+\infty$ for every family member.
+Thus (58.3) asserts only the fixed-field-cap response just stated;
+it implies neither uncapped native occupation nor uniform
+integrability of that uncapped exposure. A separate analytic cap
+limit for the target is not a change of this native obstruction.
+$\square$
+
+## 59. Mathematical correspondence and the remaining source bridge
+
+**Definition 59.1 (attributed intermediates and exact scope).**
+The new composition in §§55–58 is repository-derived: absolute finite
+reports of this specific wrapped source, direct guarded execution,
+unconditional same-face delayed death, joint pathwise prices and
+the consequent bounded and fixed-cap consumer for that execution.
+K, Definitions 2.1–2.2, 11.1–11.2, 20.2–20.3 and 41.1 supply its
+source, numerical class, guards, sensor and prices; K, Lemma 34.2
+supplies its existing finite legal connector. Equations (44.1)–(44.5)
+supply the local wrapped decoding and stopped oscillation estimate.
+The elementary finite grid quantization, union bound and Lipschitz
+calculations are intermediates in these proofs, not separate new
+classical theorem claims. N, Theorem 1.3, Proposition 7.1 and
+(12.17) are respectively the exact raw-measure killed Green,
+continuous field-cap and bounded-potential response correspondences.
+U's ideal-history actuator theorem and §§50–54's exact endpoint
+conditional-history theorem have different information hypotheses;
+neither is substituted for the present finite-report construction.
+
+The primary stochastic approximation comparisons are
+Creutzig–Müller-Gronbach–Ritter,
+[Free-Knot Spline Approximation of Stochastic Processes,
+§§1–2, Theorems 2–3](https://arxiv.org/pdf/math/0612313v1), and Slassi,
+[Free knot linear interpolation and the Milstein scheme for stochastic
+differential equations, §§1–2](https://arxiv.org/pdf/1306.4457v1).
+The former optimizes measurable free-knot spline approximants and
+their averaged errors. The latter explicitly grants complete
+individual-path information in §1 and uses the supremum-based
+free-knot times (13) in §2. Neither contract installs a sensor for
+this two-period source, supplies its actual area chronology, or
+prices guarded commands with its own absorbing faces. Their
+approximation results are literature-attested comparisons, not
+native sensor or control suppliers. The claimed content here is the
+explicit source-specific composition above; no worldwide novelty or
+formal certification is asserted.
+
+Finite reports do not identify source dimension, control rank,
+covariance rank, homogeneous dimension and three physical spatial
+axes. The native law, geometry, source, clock, operations and paid
+observation permissions remain premises. A common-source spatial
+realization and recursive gluing still require their own maps and
+joint compatibility conditions. Different qutrit, atomic-port or
+transport sources do not acquire these permissions from equality of
+dimensions. This finite-horizon finite-message bridge closes only
+the declared dependence obligation under the installed exact Read;
+it supplies no new preparation, reset, third control, law change,
+attractive sampler or unpriced total-service optimum.
+
+## 追加锚（本行以下为增补区）

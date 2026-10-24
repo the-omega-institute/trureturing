@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:4a96a93872278a75d87ab6780066ec10ad634746794fc1de854c4e0672604833
+  normalized_sha256: sha256:4a96a93872278a75d87ab6780066ec10ad634746794fc1de854c4e0672604833
+cas_ref: sha256:4a96a93872278a75d87ab6780066ec10ad634746794fc1de854c4e0672604833
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 'Repository reference list only: D5/S3/Observer/AgencyHolonomy/OrderedPrimeHolonomyCasimir; these addresses cite sources and state no mathematical assertion.'
+    previous_atom_id: 193a6a50cfd973f5004c07b50f701fb8a57a5760d098f9a0399e3b9d0af40fbf
+    next_atom_id: 9939bb8bb47929c4c656498b2ea9e3167cde3d8ad52bba7a0917ee66c35a39a8
