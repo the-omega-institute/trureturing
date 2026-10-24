@@ -934,3 +934,62 @@ The full signed finite head in (U8) still has no required one-sided
 Robin estimate. In particular the far-tail budget supplies no sign
 for that head, no square-root Möbius bound, no new Robin-safe integer
 range and no RH proof.
+
+## A uniform Halász input for the actual finite head
+
+Granville, Harper and Soundararajan, *A new proof of Halász's theorem,
+and its consequences*, [arXiv:1706.03749v1, §§1, 7.1–7.2](https://arxiv.org/html/1706.03749v1),
+give an existing uniform supplier. The inspected statements are their
+definition of $\mathcal C(\kappa)$, equation (7.3) and Proposition 7.2.
+The parameter correspondence below is a source application; no new
+mean-value theorem, critical estimate or Lean verification is claimed.
+
+Keep one actual filter $z$, including its unit, and put
+
+$$
+f_z(n)=\mu(n)\mathbf1_{P^-(n)>z},\qquad
+F_z(s)=\sum_{n\ge1}\frac{f_z(n)}{n^s}
+=\frac1{\zeta(s)E_z(s)},\qquad
+E_z(s)=\prod_{p\le z}(1-p^{-s}).
+$$
+
+For $\Re s>1$ the defining series converge absolutely. The coefficients
+of $-F_z'/F_z$ are $-\log p$ at $p^j$ with $p>z$, and zero at $p^j$
+with $p\le z$. Thus $f_z\in\mathcal C(1)$ with the same class constant
+for every $z$. No fixed-$u$ asymptotic is needed for this membership.
+
+For sufficiently large $X$ with $(\log X)^6\le z\le\sqrt X$, set
+$u=\log X/\log z$, $c_0=1+1/\log X$, and define $m=m_z(X)$ by
+
+$$
+\max_{|t|\le u}\left|\frac{F_z(c_0+it)}{c_0+it}\right|=e^{-m}u.
+$$
+
+Equation (7.3), with $\kappa=1$, directly gives
+
+$$
+|M_z(X)|\ll\frac X{\log X}\bigl((1+m)e^{-m}u+1\bigr).
+$$
+
+The constant is uniform in the actual filter. Proposition 7.2 also gives
+
+$$
+|F_z(c_0+it)|\ll u^{3/4}
+\left(\frac{\log(z+|t|)}{\log z}\right)^{1/4}.
+$$
+
+For the explicit (T12) head, write $L=\log z\ge100$.
+Every $z^2\le X<H_z=\exp(1024L^2)$ satisfies the source domain because
+$(\log X)^6\le(1024L^2)^6\le z$. Its frequency window has
+$|t|\le u\le1024L$, so the displayed maximum is $\ll u^{3/4}$.
+The lower rows retain the exact unit-and-prime formula
+$M_z(X)=1-\max\{\pi(X)-\pi(z),0\}$ for $1\le X\le z^2$.
+The value $L\ge100$ checks the parameter domain; it does not make the
+source's implicit constants or starting threshold numerical.
+
+This supplies uniform magnitude estimates across the explicit finite
+head. The same paper already bounds the Dirichlet maximum; its available
+strength and the complete signed pairing with $J_x^{\eta_z}$ remain
+distinct obligations. Taking absolute values does not retain that joint
+sign or supply the required critical lower bound. The smaller asymptotic
+cutoff in (U2)/(U8) remains available. No Robin/RH conclusion follows.
