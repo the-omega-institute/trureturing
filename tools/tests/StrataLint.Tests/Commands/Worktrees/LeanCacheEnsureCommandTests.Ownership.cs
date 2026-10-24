@@ -6,6 +6,78 @@ namespace StrataLint.Tests;
 public sealed partial class LeanCacheEnsureCommandTests
 {
     [Theory]
+    [InlineData(false, null)]
+    [InlineData(false, "1")]
+    [InlineData(true, null)]
+    public void MissingStampReaderRetiresFormerOwnersBeforeColdConsentOrWarmLaunch(
+        bool currentWarm, string? consent)
+    {
+        using var repository = new TemporaryDirectory();
+        InitializeRepository(repository.Path);
+        WriteCache(repository.Path, "donor build");
+        var donorFiles = WriteFormerOwners(repository.Path);
+        var donorBefore = donorFiles.ToDictionary(path => path, File.ReadAllBytes);
+        var target = AddWorktree(repository.Path, "writer-owner-transition");
+        WriteCache(target, "target build", stamp: false, mathlibComplete: false);
+        WriteSplitOwnership(target);
+        var retired = WriteFormerOwners(target);
+        var retained = currentWarm ? WriteCurrentOwners(target)
+            : [OwnershipOutput(target, "stratalint/raw-lean-report.json")];
+        var before = retained.ToDictionary(path => path,
+            path => (Bytes: File.ReadAllBytes(path), Mtime: File.GetLastWriteTimeUtc(path)));
+        var launches = 0;
+        var runner = new RecordingWorktreeProcessRunner
+        {
+            DuringWrappedLake = root =>
+            {
+                Assert.Equal(LeanCacheGuard.PhysicalPath(target), LeanCacheGuard.PhysicalPath(root));
+                Assert.All(retired, path => Assert.False(File.Exists(path), path));
+                using var competingWriter = LeanCacheWriterGuard.TryAcquire(Path.Combine(target, ".lake"));
+                Assert.Null(competingWriter);
+                launches++;
+            },
+        };
+        var cloner = new RecordingDirectoryCloner();
+        var previous = Environment.GetEnvironmentVariable("STRATALINT_ACCEPT_COLD_BUILD");
+        CommandResult result;
+        try
+        {
+            Environment.SetEnvironmentVariable("STRATALINT_ACCEPT_COLD_BUILD", consent);
+            result = WorktreeCommand.Run(repository.Path,
+                ["with-cache-reader", "--path", target, "--", "lake", "build", "Reg.D5.Fixture"],
+                runner, cloner);
+        }
+        finally
+        {
+            Environment.SetEnvironmentVariable("STRATALINT_ACCEPT_COLD_BUILD", previous);
+        }
+
+        var admitted = currentWarm || consent == "1";
+        Assert.True(result.Success == admitted, result.Error);
+        Assert.Equal(admitted ? 1 : 0, launches);
+        Assert.Equal(admitted ? 1 : 0, runner.Invocations.Count(call =>
+            call.FileName == "lake" && call.Arguments.SequenceEqual(["build", "Reg.D5.Fixture"])));
+        if (!admitted) Assert.Contains("COLD_BUILD_REFUSED project olean cache is cold", result.Error);
+        using var receipt = ParseReceipt(result.Output);
+        Assert.Equal(currentWarm ? "warm" : "cold", receipt.RootElement.GetProperty("project_olean_state").GetString());
+        Assert.Equal("warm", receipt.RootElement.GetProperty("mathlib_olean_state").GetString());
+        if (consent == "1") Assert.True(receipt.RootElement.GetProperty("cold_build_consent").GetBoolean());
+        else Assert.False(receipt.RootElement.TryGetProperty("cold_build_consent", out _));
+        Assert.Equal(2, cloner.Invocations.Count);
+        Assert.All(retired, path => Assert.False(File.Exists(path), path));
+        foreach (var path in retained)
+        {
+            Assert.Equal(before[path].Bytes, File.ReadAllBytes(path));
+            Assert.Equal(before[path].Mtime, File.GetLastWriteTimeUtc(path));
+        }
+        foreach (var (path, bytes) in donorBefore) Assert.Equal(bytes, File.ReadAllBytes(path));
+        Assert.Equal("target build", LeanCacheFixtureFile.ReadCacheText(target));
+        Assert.True(LeanCacheStamp.Matches(Path.Combine(target, ".lake"), ReadPins(target), out _));
+        using var released = LeanCacheWriterGuard.TryAcquire(Path.Combine(target, ".lake"));
+        Assert.NotNull(released);
+    }
+
+    [Theory]
     [InlineData(true)]
     [InlineData(false)]
     public void EnsureRetiresFormerRootOwnersAndRegButPreservesCurrentOwnersAndDependencyStamp(bool stamped)
