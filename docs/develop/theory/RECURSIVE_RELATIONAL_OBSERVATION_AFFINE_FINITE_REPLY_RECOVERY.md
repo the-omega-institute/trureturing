@@ -1628,3 +1628,427 @@ do not supply new Lean certification or complete the mutual-recovery
 programme.
 
 ## 追加锚（本行以下为增补区）
+
+## 10. First-report retention boundary for an uncalibrated quadratic clock
+
+The preceding calibrated-clock section changes the clock itself. This section
+keeps the uncalibrated three-index source and changes only what remains usable
+after its first observed report. The nuisance gain and offset below are the
+clock parameters $A,B$; they are independent of the $R,G,D$ parameters of the
+main source.
+
+**Definition 10.1 (three-index source and first-retention contract).** Fix
+integers $1\le u<v$, a real $m>0$, and a nonempty compact interval
+$K=[a,b]$. Put
+
+$$
+h=-\frac{u+v}{2},\qquad L=b-a,
+$$
+
+$$
+\ell_-=(\min\{b,h\}-a)_+,
+\qquad
+\ell_+=(b-\max\{a,h\})_+,
+\tag{FR.1}
+$$
+
+where $x_+=\max\{x,0\}$. For an origin $t\in K$, gain $A\ge m$, and
+offset $B\in\mathbb R$, let
+
+$$
+P_t(A,B)=\bigl(A(i+t)^2+B\bigr)_{i\in\{0,u,v\}}.
+\tag{FR.2}
+$$
+
+An allowed run observes
+
+$$
+y_i=A(i+t)^2+B+\eta_i,
+\qquad \eta=(\eta_0,\eta_u,\eta_v)\in[-\varepsilon,\varepsilon]^3,
+\tag{FR.3}
+$$
+
+with the whole closed cube allowed independently for each legal world. A
+first-report map is a fixed source-independent map $e:\mathbb R\to M$. At
+index $0$ it is applied to the actual observed value $y_0$; the later
+consumer receives the exact real values $y_u,y_v$ as reported, including
+their errors. The raw $y_0$ is not reread, archived for the consumer, or
+recoverable through an unlisted backing channel. For a finite $M$, define
+
+$$
+\mathcal R_\varepsilon(e,D)=
+\sup_{\substack{t\in K,\ A\ge m,\ B\in\mathbb R\\
+                  \eta\in[-\varepsilon,\varepsilon]^3}}
+\left|D\bigl(e(y_0),y_u,y_v\bigr)-t\right|,
+\tag{FR.4}
+$$
+
+for $D:M\times\mathbb R^2\to\mathbb R$. The finite alphabet concerns only
+the retained first message. The later exact real operands are not being
+replaced by finite bits, and no total observer-memory bound is part of this
+definition.
+
+**Theorem 10.2 (signed finite-fiber noiseless risk, endpoint and
+nonattainment cases).** In the noiseless case $\varepsilon=0$, for every
+finite $M$ and every $e:\mathbb R\to M$,
+
+$$
+\inf_D\mathcal R_0(e,D)
+ =\frac12\max\{\ell_-,\ell_+\}.
+\tag{FR.5}
+$$
+
+If $h\notin K$ and $L>0$, the larger stratum is all of $K$ and the lower
+bound is witnessed by a pair of finite legal worlds at the two endpoints
+$a,b$. If $h\in K$ and $L>0$, the value in (FR.5) is a supremum of finite
+collision witnesses: for every nonempty strict stratum and every
+$d$ below its length there is a finite legal collision with origin distance
+$d$, but no distinct collision can use the endpoint $h$ of that stratum.
+
+Proof. First note the signed difference identity
+
+$$
+P_t(A,B)_v-P_t(A,B)_u
+ =A(v-u)(u+v+2t)=2A(v-u)(t-h).
+\tag{FR.6}
+$$
+
+It identifies the sign stratum from the two later reports. In the noiseless
+case, output the midpoint of $K\cap(-\infty,h)$ when the difference in
+(FR.6) is negative, the midpoint of $K\cap(h,\infty)$ when it is positive,
+and $h$ when it is zero. Empty strata may be assigned arbitrary values.
+This decoder ignores $e(y_0)$ and has error at most the right side of
+(FR.5), proving the upper bound.
+
+For the lower bound, use the following finite-fiber fact explicitly. Since
+$M$ is finite and the fibers of $e$ cover $\mathbb R$, at least one fiber is
+unbounded above and at least one (possibly different) fiber is unbounded
+below. Thus, for either sign $\sigma\in\{-1,+1\}$ and every prescribed
+finite magnitude, one can choose two finite numbers $x_s,x_t$ in one fiber
+with $\sigma(x_s-x_t)>0$ and with $|x_s-x_t|$ larger than that magnitude.
+This is the oriented-difference step: if every fiber were bounded above (or
+below), their finite union would be bounded above (or below), contrary to
+$\mathbb R$.
+
+Choose $s<t$ in one strict stratum, set $d=t-s$, and write
+$H_x=u+v+2x$. Let $\sigma=\operatorname{sgn}(H_s)=\operatorname{sgn}(H_t)$.
+Choose the same-fiber values so that
+
+$$
+\Delta=x_s-x_t,\qquad
+\operatorname{sgn}(\Delta)=\sigma,\qquad
+\frac{|\Delta|\min\{|H_s|,|H_t|\}}{2uvd}\ge m.
+\tag{FR.7}
+$$
+
+Put
+
+$$
+r=\frac{\Delta}{2uvd},\qquad
+A_s=rH_t,\qquad A_t=rH_s,
+\tag{FR.8}
+$$
+
+$$
+B_s=x_s-A_ss^2,\qquad B_t=x_t-A_tt^2.
+\tag{FR.9}
+$$
+
+The signs in (FR.7) make both gains positive, and the last inequality makes
+them at least $m$; all parameters are finite. A direct expansion gives, for
+$i\in\{0,u,v\}$,
+
+$$
+\begin{aligned}
+&\bigl(A_s(i+s)^2+B_s\bigr)-\bigl(A_t(i+t)^2+B_t\bigr)\\
+&\qquad=\Delta+r\{H_t(i^2+2is)-H_s(i^2+2it)\}
+ =2rd(i-u)(i-v).
+\end{aligned}
+\tag{FR.10}
+$$
+
+Consequently the two later reports are exactly equal, while the first
+reports are $x_s,x_t$ and therefore have the same retained message. Giving
+both worlds zero sensor error is legal, so every decoder receives one common
+input on two separate legal runs. Its common answer has error at least
+$d/2$ for one of the origins. Letting $d$ increase to the length of either
+strict stratum proves the lower bound in (FR.5).
+
+If $h\notin K$, choose $s=a,t=b$ in (FR.7); this is a finite endpoint
+witness. If $h\in K$, the preceding construction uses only $s,t$ on one
+side of $h$, so it reaches but does not use $h$. Conversely, equality of the
+two later noiseless reports for distinct origins implies
+$A_sH_s=A_tH_t$. Positivity of the gains forces the same strict sign; if
+one factor is zero, both are zero and the origins are both $h$. Thus a
+distinct legal collision cannot have distance equal to a stratum length whose
+endpoint is $h$. This proves the endpoint and nonattainment statements. ∎
+
+**Theorem 10.3 (one-sided full-noise-cube plateau with finite endpoint
+witnesses).** Assume $L>0$ and either $a>h$ or $b<h$. For every finite $M$ and
+every $e:\mathbb R\to M$,
+
+$$
+\inf_D\mathcal R_\varepsilon(e,D)=\frac L2.
+\tag{FR.11}
+$$
+
+The lower bound is witnessed by finite legal nuisance parameters at the two
+prior endpoints and by zero errors, hence it is a witness inside every full
+closed noise cube.
+
+Proof. The constant midpoint $(a+b)/2$ gives the upper bound $L/2$. In the
+strictly positive stratum $a>h$, use $s=a,t=b$ and choose a fiber unbounded
+above, so that $\Delta>0$ in (FR.7). In the strictly negative stratum
+$b<h$, use a fiber unbounded below and choose $\Delta<0$. Equations
+(FR.8)--(FR.10) then give finite $A_s,A_t\ge m$ and finite $B_s,B_t$ with
+identical later reports and identical first messages. Set
+$\eta_s=\eta_t=0$. The two endpoint worlds are separate legal runs, and
+the common decoder input forces error at least $L/2$ in one of them. This
+proves (FR.11) for every $\varepsilon$, including zero. ∎
+
+**Theorem 10.4 (arbitrary-message exactness is exactly injectivity).** Let
+$K$ be nondegenerate ($a<b$), let $M$ be any set, and let
+$e:\mathbb R\to M$. There is a decoder $D:M\times\mathbb R^2\to\mathbb R$
+with exact noiseless recovery for every $t\in K$, $A\ge m$, and $B\in\mathbb R$
+if and only if $e$ is injective.
+
+Proof. If $e$ is not injective, choose $x\ne x'$ with $e(x)=e(x')$. A
+nondegenerate $K$ contains two distinct origins $s<t$ in one strict sign
+stratum. Take them close enough that the last inequality in (FR.7) holds
+with $|\Delta|=|x-x'|$, and assign $x_s,x_t$ to $x,x'$ in the orientation
+required by the common sign. Equations (FR.8)--(FR.10) give two distinct
+origins with the same complete consumer input, contradicting exactness.
+
+If $e$ is injective, its inverse on $e(\mathbb R)$ is a set-theoretic map.
+For a noiseless input $(y_0,y_u,y_v)$, set
+
+$$
+d_u=\frac{y_u-y_0}{u},\qquad
+d_v=\frac{y_v-y_0}{v},\qquad
+A=\frac{d_v-d_u}{v-u},
+\tag{FR.12}
+$$
+
+and return
+
+$$
+t=\frac{d_u/A-u}{2}.
+\tag{FR.13}
+$$
+
+On legal noiseless data $A\ge m>0$, so the denominator is nonzero. This
+gives exact recovery after replacing $y_0$ by the inverse of $e(y_0)$.
+The inverse need not be computable or installed. Since no injection exists
+from $\mathbb R$ into a countable set, no countable-valued first message can
+give uniform exact noiseless recovery. This statement is separate from the
+finite-alphabet noisy plateau in Theorem 10.3 and makes no countable plateau
+claim. ∎
+
+**Definition 10.5 (usable continuation and actual-source semantics).** A
+continuation may use the declared tuple
+
+$$
+\bigl(e(y_0),y_u,y_v,\mathsf{MainArchive}\bigr),
+\tag{FR.14}
+$$
+
+where the main archive contains every mandatory exact main report, its
+actual action and index identities, and the legal extension and stopping
+fields. The original main acquisition is side-blind: its actions are chosen
+from its main history and fixed public calibration, and every reached main
+report is retained and charged. Any later action, control, timing, selector,
+address, decoder parameter, or source-linked reference must be a fixed
+function of (FR.14) and public operands. In particular, there is no hidden
+raw-$y_0$ reread, timing or schedule signal, extra side report, or callable
+backing that still distinguishes the discarded first report. The $e$ in
+(FR.14) acts on the actual observed $y_0$ in (FR.3), while $y_u,y_v$ remain
+the exact noisy values actually reported; they are not silently replaced by
+their noiseless values.
+
+The contract constrains the operands actually accessible to the continuation;
+it does not assert physical erasure. A raw $y_0$ may remain in storage that is
+inaccessible to this consumer, and that existence neither enters (FR.14) nor
+distinguishes two permitted inputs. If a consumer-accessible archive or
+backing retains $y_0$, any source-dependent function of it, or a pointer whose
+backing can be followed, that data is an operand and must be included in
+(FR.14); omitting it violates the contract. A short pointer is finite only if
+its accessible backing is also inside the declared boundary. It also
+distinguishes a mathematical inverse from an installed recovery procedure,
+exact real operands from a finite bit budget, and the source acquisition bill
+from the full computation, encoding, decoding and storage cost.
+
+**Theorem 10.6 (transport to the nonconstant linear consumer).** Fix
+$C\ne0$, $B_0\in\mathbb R$, and
+
+$$
+R_0=\frac12\begin{pmatrix}1&1\\1&1\end{pmatrix},
+\qquad
+G_t(x)=C(x-t)+B_0,
+\qquad D_t(x)=0.
+\tag{FR.15}
+$$
+
+Use the same main world and original matrices as the source's Sections 7--8,
+with $\tau=t$. Then every member has the same effective main target
+$q=(R_0,x\mapsto Cx+B_0,0)$, because
+
+$$
+G_t(i+t)=Ci+B_0,
+\qquad
+z_i=(Ci+B_0)\operatorname{tr}(A_iR_0).
+\tag{FR.16}
+$$
+
+For every nonempty compact set $J\subset\mathbb R$, define
+
+$$
+\mathcal B(J)=\left\{f:J\to\mathbb R:
+\|f\|_{\infty,J}:=\sup_{x\in J}|f(x)|<\infty\right\}.
+\tag{FR.17a}
+$$
+
+The target $G_t|_J$ belongs to $\mathcal B(J)$ by compactness. Fix the
+public operands in Definition 10.5, let $\iota(t,A,B,\eta)$ be the actual
+available tuple (FR.14) in the resulting legal run, and let $\mathcal I$ be
+the range of these tuples. Define the corresponding origin and function
+risks by
+
+$$
+\begin{aligned}
+\rho^{\rm org}_\varepsilon
+  &=\inf_{d:\mathcal I\to\mathbb R}
+    \sup_{\substack{t\in K,\ A\ge m,\ B\in\mathbb R\\
+                    \eta\in[-\varepsilon,\varepsilon]^3}}
+    |d(\iota(t,A,B,\eta))-t|,\\
+\rho^{\rm fun}_{\varepsilon,J}
+  &=\inf_{\Gamma:\mathcal I\to\mathcal B(J)}
+    \sup_{\substack{t\in K,\ A\ge m,\ B\in\mathbb R\\
+                    \eta\in[-\varepsilon,\varepsilon]^3}}
+    \|\Gamma(\iota(t,A,B,\eta))-G_t|_J\|_{\infty,J}.
+\end{aligned}
+\tag{FR.17b}
+$$
+
+When $\iota$ is restricted to $(e(y_0),y_u,y_v)$, $\rho^{\rm org}_\varepsilon$
+is the infimum in (FR.4). Under Definition 10.5 and the first-report
+contract, for every such $J$,
+
+$$
+\rho^{\rm fun}_{\varepsilon,J}=|C|\,\rho^{\rm org}_\varepsilon.
+\tag{FR.17c}
+$$
+
+In particular, in the strictly one-sided case of Theorem 10.3, the same
+endpoint collision has identical permitted tuples even when MainArchive is
+included, so
+
+$$
+\rho^{\rm fun}_{\varepsilon,J}=|C|\frac{b-a}{2}.
+\tag{FR.17}
+$$
+
+If the raw first report is retained instead, the supplier result in
+[FIB_UNCALIBRATED_QUADRATIC_CLOCK_THREE_INDEX_DESIGN, Section 8.2](FIB_UNCALIBRATED_QUADRATIC_CLOCK_THREE_INDEX_DESIGN.md)
+gives the original full-report guarantee $|C|R^*_{u,v}$ under its original
+contract; the finite-message obstruction is therefore a change of retention
+interface, not a refutation of that result.
+
+Proof. The identity (FR.16) shows that two worlds used in
+(FR.7)--(FR.10), with their separately chosen clock parameters and errors,
+produce identical main histories whenever the same main actions are taken.
+The original main acquisition is side-blind, so its initial actions depend
+only on the common main history and public calibration. Starting from the
+common initialization, induction on main-action prefixes gives the same
+actions, reports and mandatory archive because (FR.16) makes every next main
+report equal. The collision equations make the three side inputs equal as
+well. Thus the complete tuple $\iota$ is equal when it becomes available;
+Definition 10.5 then makes every later action, control field, timing field,
+selector, reference and output equal. If a continuation is infinite, the
+same finite-prefix induction gives the same complete history. The comparison
+is between two separate legal runs; no run contains two worlds. Thus the
+collision argument applies to the full actual tuple $\iota$, not only to its
+three displayed side coordinates.
+
+For the upper bound, take any origin decoder $d$ and define
+
+$$
+\Gamma_d(\iota)(x)=C\bigl(x-d(\iota)\bigr)+B_0,
+\qquad x\in J.
+$$
+
+This is in $\mathcal B(J)$, and its uniform error is exactly
+$|C|\,|d(\iota)-t|$. Hence
+$\rho^{\rm fun}_{\varepsilon,J}\le|C|\rho^{\rm org}_\varepsilon$.
+Conversely, fix any $x_0\in J$. For a function decoder $\Gamma$ define
+
+$$
+d_\Gamma(\iota)=x_0-
+\frac{\Gamma(\iota)(x_0)-B_0}{C}.
+$$
+
+For every legal run,
+
+$$
+|d_\Gamma(\iota)-t|
+ =\frac{|\Gamma(\iota)(x_0)-G_t(x_0)|}{|C|}
+ \le\frac{\|\Gamma(\iota)-G_t|_J\|_{\infty,J}}{|C|}.
+$$
+
+Taking the supremum and then the infimum over $\Gamma$ gives the reverse
+inequality and proves (FR.17c). In the one-sided case, the finite endpoint
+worlds in Theorem 10.3 have zero errors and identical $\iota$, so the same
+pair forces $\rho^{\rm org}_\varepsilon\ge L/2$; the constant midpoint gives
+the reverse inequality. Substitution into (FR.17c) yields (FR.17).
+The full-report comparison is exactly the source-specific Section 8.2
+consumer, with no change to its raw-report assumptions. ∎
+
+For a side-blind main policy using $n_\pi$ main reports, acquisition of the
+three passive side reports at indices $0,u,v$ on the same trajectory has the
+actual counts
+
+$$
+\bigl(\text{main actions},\text{mandatory main reports},\text{side reports}\bigr)
+ =\bigl(\max(n_\pi-1,v),\max(n_\pi,v+1),3\bigr).
+\tag{FR.18}
+$$
+
+For the Section 8.2 instance with $n_\pi=1$, these are $v$, $v+1$, and $3$.
+This is one composed legal run: the passive side acquisition and the original
+main policy share that trajectory; the two-world comparison above uses two
+separate runs only to prove the lower bound.
+The associated source bill is, for nonnegative unit costs,
+$c_A\max(n_\pi-1,v)+c_M\max(n_\pi,v+1)+3c_S$.
+Encoding, retention, decoding, output and any archive access add their own
+costs; (FR.18) does not call those operations free, and a finite program does
+not imply bounded total memory.
+
+The exact source correspondence is as follows. The nuisance model (FR.2)--
+(FR.3) is the three-index source at published commit
+`23de8df989f92c6374b6979fe782d9ec8f27345c` in
+[FIB_UNCALIBRATED_QUADRATIC_CLOCK_THREE_INDEX_DESIGN, Sections 1--3](FIB_UNCALIBRATED_QUADRATIC_CLOCK_THREE_INDEX_DESIGN.md), whose
+full-report risk $R^*_{u,v}$ and finite-gain constructions are suppliers.
+The actual main orbit, side-blind continuation and mandatory archive use
+[FIB_SELF_CALIBRATING_RELATION_MATHEMATICS_II, Sections 77, 79 and 81](FIB_SELF_CALIBRATING_RELATION_MATHEMATICS_II.md).
+The source-specific delta here is the post-observation factor $e(y_0)$ and
+the signed finite-fiber collision (FR.7)--(FR.10), including its exact
+one-sided full-noise endpoint consequence. The elementary interpolation and
+midpoint arguments are also stated in those supplier sections. The supplier
+volume credits Casini--Garulli--Vicino, [*A linear programming approach to
+online set membership parameter estimation for linear regression models*,
+§4, equations (7)--(10)](https://control.dii.unisi.it/~casini/pdf/IJACSP_2017a.pdf),
+for its strip-intersection method; that theorem is not being imported as a
+proof of (FR.5) or (FR.11).
+The external literature credits and model limitations recorded by the
+supplier volume therefore remain in force, and no worldwide novelty claim is
+made.
+
+This appendix does not install an encoder or an effective inverse, does not
+turn the uncalibrated clock parameters into the main $\alpha/\beta$ sources,
+and does not provide spatial, boundary or four-view mutual recovery. The
+original raw-report, fixed-$G_{\rm gc}$, original-$Q$, parked-consumer and
+unchanged-initialization obligations retain their original scopes. The
+full programme remains open.
+
+
+
+## 追加锚（本行以下为增补区）

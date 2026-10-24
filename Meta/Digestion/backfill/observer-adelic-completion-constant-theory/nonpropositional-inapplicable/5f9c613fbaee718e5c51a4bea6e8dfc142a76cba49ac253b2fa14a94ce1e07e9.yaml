@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:5f9c613fbaee718e5c51a4bea6e8dfc142a76cba49ac253b2fa14a94ce1e07e9
+  normalized_sha256: sha256:5f9c613fbaee718e5c51a4bea6e8dfc142a76cba49ac253b2fa14a94ce1e07e9
+cas_ref: sha256:5f9c613fbaee718e5c51a4bea6e8dfc142a76cba49ac253b2fa14a94ce1e07e9
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: “道”的生成律解释和物理类比边界，未指定可检验的数学模型。
+    previous_atom_id: 5da1bd509f84c9b8363985c8105462f96e6f0a9de433484d63c189a12a996dee
+    next_atom_id: bbff07eaf3fbb64c1c7903c47fd9332b6706901e462a5b58aab0dfeb46ad6417

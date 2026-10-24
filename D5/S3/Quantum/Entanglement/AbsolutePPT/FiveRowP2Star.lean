@@ -190,18 +190,18 @@ theorem capped_tail_squares (u : ℝ) (d : Fin 15 → ℝ)
   nlinarith only [hs,hp]
 
 /-- Ten edge labels, four centre edges followed by all six leaf edges. -/
-private def edgeAt : Fin 10 → Edge 5 :=
+def edgeAt : Fin 10 → Edge 5 :=
   ![⟨(0,1),by decide⟩,⟨(0,2),by decide⟩,⟨(0,3),by decide⟩,
     ⟨(0,4),by decide⟩,⟨(1,2),by decide⟩,⟨(1,3),by decide⟩,
     ⟨(1,4),by decide⟩,⟨(2,3),by decide⟩,⟨(2,4),by decide⟩,
     ⟨(3,4),by decide⟩]
 
-private def edgeEquiv : Fin 10 ≃ Edge 5 :=
+def edgeEquiv : Fin 10 ≃ Edge 5 :=
   Equiv.ofBijective edgeAt (by decide)
 
-private def edgeSlots : Edge 5 ≃ Fin 10 := edgeEquiv.symm
+def edgeSlots : Edge 5 ≃ Fin 10 := edgeEquiv.symm
 
-private def tailSlots : BottomSlot 5 ≃ Fin 15 :=
+def tailSlots : BottomSlot 5 ≃ Fin 15 :=
   (Equiv.sumCongr (Equiv.refl (Fin 5)) edgeSlots).trans finSumFinEquiv
 
 /-- A finite same-vector coupling witness. The tail placement is ONE fixed

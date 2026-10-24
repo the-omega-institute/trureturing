@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:933c6108eaf36a130c1e56539f872eaa49c27c5a6ec4f0e889883bd442822b72
+  normalized_sha256: sha256:933c6108eaf36a130c1e56539f872eaa49c27c5a6ec4f0e889883bd442822b72
+cas_ref: sha256:933c6108eaf36a130c1e56539f872eaa49c27c5a6ec4f0e889883bd442822b72
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 只引入六元结构记号并解释字段 X，没有附带结构公理。
+    previous_atom_id: 962568fdcba7a3d4f29d5e0daf5615fa64f888be249bbcd48600b09fc23e7740
+    next_atom_id: 3f58ce9ccfc4ddd65c17cd6db2d32593dd0e896a77c5a1217e2fbca588306d72

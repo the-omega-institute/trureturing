@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:b6f330c1017e46e1aae8972e46ab9889aba8b0585e9c249756b96b8e646d8980
+  normalized_sha256: sha256:b6f330c1017e46e1aae8972e46ab9889aba8b0585e9c249756b96b8e646d8980
+cas_ref: sha256:b6f330c1017e46e1aae8972e46ab9889aba8b0585e9c249756b96b8e646d8980
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 提出待研究的完成方块并解释 Spec 的角色，没有断言方块交换或正实现存在。
+    previous_atom_id: 165eb198727500b2e080014744ea727e7b4fc7cb896818dd2c8c81c427ba8d9c
+    next_atom_id: af3001357726710f04186ba89dce797e2b4fa9178f25e7c1574c9a27adfd2806
