@@ -1468,12 +1468,233 @@ $M\le U^{3/4}$, and has exponent strictly below $B_*$ for
 $M\le U^m$ with fixed $m<13-5\sqrt6=0.752551\ldots$.
 The joint certificate improves the preceding cubic certificate once
 $M>U^{1/3}$; at $M=U$ it still costs $U^{7/6+\varepsilon}$.
-The low-core step (J3) uses the original Möbius convolution and is not
-asserted for the new Type-II coefficient. In particular (C31), a whole
-moment comparison, does not transport a selected dual sum. Other common
+The proof of (J3) above uses the original Möbius convolution; the
+coefficient interface below analyzes the new Type-II convolution
+directly. In particular (C31), a whole moment comparison, does not
+transport a selected dual sum. Other common
 gcds, original components, the full small-$P$ contraction, signed Robin
 restoration and RH remain outside (J1). This is an application of the
 cited suppliers, with no new sieve, priority or Lean-certification claim.
+
+### A coefficient interface for the cubic low-core estimate
+
+The cubic certificate, unlike the angular (B2) certificate, accepts
+arbitrary complex coefficient vectors. This permits a direct application
+to the actual Type-II factor, without a selected-sum transport theorem.
+The following `repo-derived` interface reuses the primary manuscript's
+`lem:fixed-gauss-phase`, its Gauss CRT formula and
+`eq:cubic-large-sieve` (Heath–Brown's cubic large sieve).
+
+Let $b(d)$ be supported on good squarefree ideals, independent of the
+physical row and dual ideal, with $|b(d)|\le C_b\tau_k(d)$ for fixed
+$k$. Keep the original fixed multiplicative ray twist $\xi$, and define
+the genuine self-convolution
+
+$$
+h_b(a)=D^{-1}\xi(a)\sum_{d_1d_2=a}
+ b(d_1)b(d_2)V(q_{d_1}/D)V(q_{d_2}/D),\qquad D=\sqrt U.
+\tag{J4}
+$$
+
+Define $\mathfrak E_{1,b}$ by substituting $h_b$ for $g_D$ in the same
+specified good-dual, equal-ray term. To bound one fixed dual ideal,
+detect $(x,y)=1$ as before, allocate $e=e_1e_2$ between the two factors
+of $x=euv$, and put
+$D'=D/q_{e_1}$, $N'=D/q_{e_2}$. The original squarefree column imposes
+$u,v$ squarefree, $(uv,e)=1$ and $(u,v)=1$.
+
+Write $\kappa_u(v)=\chi_u(v)^2$ and
+$\theta_e(w)=\chi_e(w)\chi_w(e)$. The already supplied CRT and
+reciprocity formulas give, on this coprime locus,
+
+$$
+\gamma_1(euv)=\gamma_1(e)\theta_e(u)\theta_e(v)
+ \mathcal R(u,v)\kappa_u(v)\gamma_1(u)\gamma_1(v).
+\tag{J5}
+$$
+
+The class factor $\mathcal R(u,v)$ is fixed after a finite partition of
+$t(u),t(v)$, with their product class still prescribed by $t(x)$.
+The two coefficient vectors retain $b(e_1u)$, $b(e_2v)$, the respective
+$V$ factors, $\xi$, $\gamma_1$, $\theta_e$, norm phases and the original
+$\overline{\chi_u(m)}$, $\overline{\chi_v(m)}$ zeros. The conditions
+$(u,e)=(v,e)=1$ are separate coefficient masks. The only coupled mask
+$(u,v)=1$ is exactly the zero extension of $\kappa_u(v)$.
+If $(e,m)>1$, the whole scalar is zero. The negative-root side is
+handled by conjugating its entire scalar. Thus these are legitimate
+arbitrary coefficient vectors for the cubic sieve; no Möbius–Gauss
+cancellation or removal of a bounded multiplier is required.
+
+For the unnormalized scalar $H_{e,m}^{e_1,e_2}$ from this allocation,
+the two squared vector norms are at most
+$C_b^2U^\varepsilon D'$ and $C_b^2U^\varepsilon N'$. Cauchy and the
+cubic sieve give
+
+$$
+|H_{e,m}^{e_1,e_2}|^2
+\ll C_b^4U^\varepsilon D'N'
+ \left[D'+N'+(D'N')^{2/3}\right],\qquad D'N'=U/q_e.
+\tag{J6}
+$$
+
+The allocation count costs a divisor loss. The first two terms sum
+$UD\sum_{e_1}q_{e_1}^{-2}\sum_{q_{e_2}\ll D}q_{e_2}^{-1}
+\ll U^{3/2+\varepsilon}$ and its transpose. The last sums
+$U^{5/3}\sum_e\tau(e)q_e^{-5/3}\ll U^{5/3}$.
+Restore the two factors $D^{-1}$, and apply Cauchy between the two
+scalars of each separated rectangular profile. The per-$m$ certificate
+is therefore $C_b^4U^{2/3+\varepsilon}$.
+The original compact Mellin separation pays all polynomial profile
+heights. No derivatives of $b$ are taken and no new power of the
+Type-I cutoff is introduced.
+
+Consequently (J1)–(J3) hold for $\mathfrak E_{1,b}$, with the factor
+$C_b^4$. In particular they hold for
+$b=\lambda_{\mathrm{II},b}$ and $b=r_A\lambda_{\mathrm{II},b}$,
+both bounded by $\tau_3$ on squarefree support. This directly pays their
+specified $M\le U^{3/4}$ prefix at $U^{13/12+\varepsilon}$ in the
+$P=1$ part of (C20). The angular branch $U^{1/2}M^2$ is not asserted
+for these arbitrary coefficients: its inner special Gauss sequence is
+a stronger hypothesis than the cubic sieve requires. Neither the
+full natural dual range nor the other original terms follow from
+this coefficient interface.
+
+### A common-gcd region with all original row expansions
+
+The same cubic interface and joint sextic estimate also pay an
+additional part of the original small-$P$ region. The result here remains
+an equal-ray, **total-squarefree-column** statement. For $h_b$ in (J4),
+using the complete original physical row kernel, define
+
+$$
+\mathcal E_{\tau,H}^{\rm sf}(b)=
+\sum_{\substack{a,c\ {\rm sf},\ q_a,q_c\asymp U\\
+ t(a)=t(c)=\tau,\ q_{(a,c)}\asymp H}}
+ h_b(a)\overline{h_b(c)}\mathcal K_{U,\Omega}(a,c).
+\tag{J7}
+$$
+
+For $1\ll H\ll U^{1/4}$, the source-conditional bound is
+
+$$
+\boxed{
+|\mathcal E_{\tau,H}^{\rm sf}(b)|
+\ll C_b^4U^\varepsilon
+\left[U+U^{7/6}H^{-1}+U^{10/9}H^{-5/18}
+             +U^{7/6}H^{-1/2}\right].
+}
+\tag{J8}
+$$
+
+**Keep the common support and row indicators.** Write $a=hx,c=hy$.
+The ideals $h,x,y$ are squarefree and pairwise coprime,
+$q_x,q_y\asymp B=U/H$, and
+$t(x)=t(y)=\tau/t(h)$. The primitive ratio conductor is $xy$,
+and its zero-only radical is $\operatorname{rad}(hS)$.
+Expand the sixth-power-free physical-row indicator with $\ell$, and
+its zero-only primes with $r\mid\operatorname{rad}(hS)$, exactly as in
+the source Poisson argument. Put $\kappa=q_\ell^6q_r$.
+Omit empty original row sums with $\kappa>c_\Omega U$ before applying
+Poisson; hence $q_\ell\ll U^{1/6}$. All original restrictions,
+including $(\ell,hxyS)=1$, remain in force.
+
+Poisson contributes $H/\kappa$ and natural full-dual length
+$\kappa U/H^2$. Detect $(x,y)=1$ by a common divisor $e$.
+At $q_e\asymp E$, the normalized column-vector norm product is
+$\ll C_b^4U^\varepsilon/(HE)$; $O(E)$ choices of $e$ cancel the
+$E^{-1}$. Summing $O(H)$ choices of $h$ leaves $H/\kappa$.
+All $r$ and finite-class phases remain column factors or collision
+masks accepted by the positive-norm estimates.
+
+For the scalar low-core bound allocate $h=h_1h_2$, $e=e_1e_2$
+between the two original factors. Their remaining lengths obey
+
+$$
+D'=\frac{D}{q_{h_1}q_{e_1}},\qquad
+N'=\frac{D}{q_{h_2}q_{e_2}},\qquad
+D'N'=\frac{U}{HE},\qquad D',N'\ll D.
+$$
+
+The argument of (J5)–(J6), with coefficients
+$b(h_1e_1u)$ and $b(h_2e_2v)$, gives for each fixed $h$ and full dual
+ideal, including the Poisson and coefficient normalization,
+
+$$
+\frac{C_b^4U^\varepsilon}{\kappa}
+ \left(U^{1/2}+U^{2/3}H^{-2/3}\right)
+\ll\frac{C_b^4U^{2/3+\varepsilon}H^{-2/3}}{\kappa}.
+$$
+
+The last comparison uses $H\ll U^{1/4}$; it is not assumed for larger
+$H$. Arbitrary divisor-bounded $b$ preserves these separate vectors.
+
+**Retain four high-core terms.** First take the dual ideal good and
+write it as $nv^6$, with $n$ sixth-power-free and no coprimality condition
+between $n,v$. For a good-dual dyad $M$ and $q_n>L$, the same
+sixth-order sieve gives
+
+$$
+\frac{C_b^4H}{\kappa}U^\varepsilon
+\left[M+B(M/L)^{1/6}+M^{5/6}B^{1/3}
+                         +M^{1/3}B^{5/6}\right].
+\tag{J9}
+$$
+
+The complementary low-core count costs
+$C_b^4\kappa^{-1}U^{2/3+\varepsilon}H^{1/3}M^{1/6}L^{5/6}$.
+For $M\ge B^{1/3}$, choose $L=B^{1/3}$ to balance it against
+the second term in (J9). At $M\ll\kappa U/H^2$, the four costs are
+
+$$
+C_b^4U^\varepsilon\left[
+\frac UH,
+\ \kappa^{-5/6}U^{10/9}H^{-5/18},
+\ \kappa^{-1/6}U^{7/6}H^{-1},
+\ \kappa^{-2/3}U^{7/6}H^{-1/2}\right].
+$$
+
+Unlike the $\ell=r=1$ case, the enlarged dual range can exceed $B$;
+none of these four terms is discarded. Summing $q_\ell\ll U^{1/6}$
+costs respectively $U^{1/6}$, a constant, $\log U$, and a constant.
+The sums over $r\mid\operatorname{rad}(hS)$ cost $U^\varepsilon$;
+their powers are respectively $r^0,r^{-5/6},r^{-1/6},r^{-2/3}$.
+For $M<B^{1/3}$, the scalar cubic certificate and $O(H)$ choices of
+$h$ instead give $C_b^4U^{1+\varepsilon}/\kappa$, summably.
+
+A general dual ideal is $sm_0$, with $s$ supported on the fixed bad
+primes $S$ and $m_0$ good. Its natural good-dual length is
+$M\ll\kappa U/(H^2q_s)$. The four endpoint costs gain
+$q_s^{-1},q_s^{-1/6},q_s^{-5/6},q_s^{-1/3}$, respectively; all
+four $S$-supported sums converge. For the small-$M$ certificate,
+rapid-decay truncation leaves a polylogarithmic number of $s$.
+The original radial transform and its logarithmic derivatives decay
+arbitrarily fast beyond the natural length, paying all further dyads.
+No bad-dual component or original auxiliary expansion is deleted.
+These sums prove (J8).
+
+In particular,
+
+$$
+\boxed{
+U^{1/6}\le H\le U^{1/4}
+\quad\Longrightarrow\quad
+|\mathcal E_{\tau,H}^{\rm sf}(b)|
+\ll C_b^4U^{13/12+\varepsilon}.
+}
+\tag{J10}
+$$
+
+For total-squarefree columns, $P=H$ and
+$q_{\mathfrak f}\asymp U^2/H^2$. Thus (J10) pays the additional
+same-class region $U^{1/6}\le P<U^{1/4}$, with conductor scales
+between $U^{3/2}$ and $U^{5/3}$. It applies to the original Möbius
+factor and directly to the actual Type-II and rough factors above.
+It does not pay nonsquarefree columns, smaller $H$, or the original
+signed cross-class contraction. A finite positive class partition is
+not an identification with that signed contraction. The complete
+inverse-fourth gain, signed Robin restoration and RH remain unproved.
+All Gauss, Poisson and sieve inputs are reused; the new region is a
+source-conditional application, without priority or Lean certification.
 
 ## Actual-family finite measurements
 
@@ -2748,6 +2969,98 @@ varying-profile assertion. The prime theorem and Haar inequality are
 reused classical inputs; cancellation in the actual row kernel,
 (C20), signed Robin restoration and RH remain open. No analytic Lean
 certification or literature-priority claim is made.
+
+### Cofactor recursion and the actual prime-slot capacity
+
+The same truncated coefficient has an exact least-prime recursion.
+For squarefree good $d$, define the algebraic extensions
+
+$$
+K_A(d)=\sum_{e\mid d}\mu(e)2^{\omega(e)}W(q_e/A),\qquad
+\Lambda_A(d)=\mu(d)+K_A(d).
+$$
+
+On the original inverse annulus,
+$\lambda_{\mathrm{II},b}(d)=\Lambda_A(d)$ with $A=U^{1/12}$.
+For a smaller cofactor, $\Lambda_A$ is an algebraic extension, not a
+claim about the original truncated-inverse coefficient with the same
+$z$. Dividing the divisors of $pm$ according to whether they contain
+$p$, for $p\nmid m$, gives
+
+$$
+K_A(pm)=K_A(m)-2K_{A/q_p}(m),\qquad
+\Lambda_A(pm)=\Lambda_A(m)-2\Lambda_{A/q_p}(m).
+\tag{C37}
+$$
+
+Choose a fixed prime-ideal order refining norm, and let $P^-(m)$ be its
+least factor, with $P^-(1)=\infty$. The actual polynomial is therefore
+
+$$
+M_{\mathrm{II},b}(u)=D^{-1/2}
+\sum_{m\ {\rm sf}}\psi_u(m)
+\sum_{p\prec P^-(m)}\psi_u(p)V(q_pq_m/D)
+ \left[\Lambda_A(m)-2\Lambda_{A/q_p}(m)\right].
+\tag{C38}
+$$
+
+Its ordering restriction, threshold and cofactor phase remain joint
+weights. Even on a smoothly separated block $PC\asymp D$, using only
+a conditional prime bound $P^a$ and then taking absolute values over
+all cofactors costs $D^{-1/2}CP^a=D^{a-1/2}C^{1-a}$.
+It does not supply the original inverse bound without that extra
+factor. An estimate retaining the cofactor phase is still required.
+
+There is also a concrete limit on identifying the actual rough primes
+with the fine auxiliary slots in
+[Liu v2, §10.1 and Proposition 29.1](https://arxiv.org/html/2610.12234v2#S29).
+Within that source's full hypotheses, including
+$13/18\le\kappa_{\rm src}\le1$,
+$\beta_*\le(1+\kappa_{\rm src})/2$ and its auxiliary length reserve,
+the proof permits total selected widths
+
+$$
+z_M\le\frac{4-c}{20-4c}<\frac15,\qquad
+z_S\le\frac c{12}=\frac1{18\kappa_{\rm src}}\le\frac1{13},
+\qquad c=\frac2{3\kappa_{\rm src}}.
+\tag{C39}
+$$
+
+The source selects whole factors from sufficiently fine, fixed prime
+slots, with a fixed margin in its moment inequalities. Every actual
+rough prime here has exponent at least $1/12+o(1)>1/13$, so none
+fits the plain branch's capacity. The supported balanced semiprimes
+$pq$ have two exponents $1/4+o(1)$, exceeding even the inverse
+capacity $z_M<1/5$. A prime cannot be replaced by several smaller
+prime factors to meet that hypothesis. External fine auxiliary slots
+remain available, but their amplitudes have not been related to these
+actual cofactor sums by a joint moment. Equation (C39) limits this
+specified identification, rather than all amplitude-sensitive methods.
+
+Finally, fix a squarefree good ideal $b_0$. For sufficiently large $U$,
+$q_{b_0}\le A$, and distinct primes with $q_p,q_q>2A$ outside $b_0$ satisfy
+
+$$
+K_A(b_0pq)=K_A(b_0)=\mu(b_0),\qquad
+\lambda_{\mathrm{II},b}(b_0pq)=2\mu(b_0)
+\tag{C40}
+$$
+
+on the original annulus. For $b_0\ne1$ these terms lie in the
+nonrough complement; they still contain the same balanced semiprime
+cofactor, at scale $D/q_{b_0}$. If $S_X$ denotes the corresponding
+normalized polynomial over $c=pq$ with coefficient $2$, this exact
+subfamily contributes
+$\mu(b_0)q_{b_0}^{-1/2}\psi_u(b_0)S_{D/q_{b_0}}(u)$,
+including its original collision zeros. Thus removing the rough part
+does not remove these coarse prime slots from the remaining coefficient.
+This identity gives no lower bound for the whole row moment or for a
+masked correlation, and does not preclude cancellation between different
+small factors. The unproved input is a coarse-slot or conditional-cofactor
+joint estimate on the same rows. The recursions and source-capacity
+comparison are applications of existing arithmetic and moment inputs;
+no new prime theorem, full inverse-fourth gain or Lean certification
+is asserted.
 
 ## Finite signs in the remaining small-squarepart sector
 
