@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:00a8241bcfe898489f48c51ce46239244fb2bc715e40a275734ac14614db5bc9
+  normalized_sha256: sha256:00a8241bcfe898489f48c51ce46239244fb2bc715e40a275734ac14614db5bc9
+cas_ref: sha256:00a8241bcfe898489f48c51ce46239244fb2bc715e40a275734ac14614db5bc9
+coverage_gids:
+  - gid: D5/S3/Observer/Completion/DiscreteCutReconstruction.discrete_cut_reconstruction
+    target_statement_id: sha256:95bbf6122ed84ac19568bb44945a2e6fa222d467f302f9c8bd2c8a9cc6f92816
+receipts:
+  unresolved_subitems: []

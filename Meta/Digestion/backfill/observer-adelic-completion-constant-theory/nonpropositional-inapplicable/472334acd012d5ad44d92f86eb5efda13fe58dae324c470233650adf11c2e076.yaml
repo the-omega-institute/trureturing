@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:472334acd012d5ad44d92f86eb5efda13fe58dae324c470233650adf11c2e076
+  normalized_sha256: sha256:472334acd012d5ad44d92f86eb5efda13fe58dae324c470233650adf11c2e076
+cas_ref: sha256:472334acd012d5ad44d92f86eb5efda13fe58dae324c470233650adf11c2e076
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 连分数尾部剥离过程的操作性描述“删除一个已命名方向”；无谱、正性或收敛断言。
+    previous_atom_id: 43685c68a4ef5453aed35f414ffae76a95032bfd122d28cf3bacdfed39e5056d
+    next_atom_id: 87453ad8d1d9a6d7af03e8146dc940f9268bee721b412e853b2bd18fe6bc4892
