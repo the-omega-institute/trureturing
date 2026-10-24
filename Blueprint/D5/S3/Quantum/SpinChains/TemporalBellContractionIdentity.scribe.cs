@@ -112,7 +112,10 @@ internal sealed class TemporalBellContractionIdentityDocument : IScribeDocumentD
                         "Take a = first, b = last, u i = conjugate(Gᵢ,last(t)) and v i = Gᵢ,last(t). "
                         + "Since N ≥ 2, first and last are distinct. Substitution of the evolved observable therefore proves the complex identity: "
                         + "the two vacuum contractions sum to G_last,last(t) − G_first,last(t). Taking Complex.re of both sides gives the stated real-part identity."))),
-                DescribeRole.Theorem))));
+                DescribeRole.Theorem,
+                openProblemResolutionClaim: new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("tononi-lewenstein-2025-temporal-bell-contraction-identity"),
+                    ResolutionKind.Proved)))));
 
     private static DocumentBlock Node(string name, string title, Formula formula, string prose,
         AssessedProvenance provenance) =>
