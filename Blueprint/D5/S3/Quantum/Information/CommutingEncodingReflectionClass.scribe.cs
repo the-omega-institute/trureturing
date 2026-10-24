@@ -59,7 +59,7 @@ internal sealed class CommutingEncodingReflectionClassDocument : IScribeDocument
                 DeclarationHandle.Create(Module + ".result"),
                 H("Reflection replacements for commuting product encodings"),
                 StatementSource.FromAuthor(Disp(ClaimBody())),
-                AssessedProvenance.FromRepo(),
+                AssessedProvenance.FromRepo(Source),
                 Blocks(
                     Paragraph(Text(
                         "Fix n ≥ 1, ψ and a commuting product encoding U. For two labels a and b, "
