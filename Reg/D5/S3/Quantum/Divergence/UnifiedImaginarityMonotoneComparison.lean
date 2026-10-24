@@ -147,9 +147,9 @@ def registration :
     coordinates := #[0, 4, 6]
     readouts := #[{
       path := #["body", "body", "body", "body", "body", "body", "body", "body", "arg"]
-      stateBinder := 2
+      stateBinder := 0
       functionOperand := false
-      stateOperand := none
+      stateOperand := some #["arg"]
       booleanPredicate := false }] }
   continuation := .unknown
   familyRecord := none
