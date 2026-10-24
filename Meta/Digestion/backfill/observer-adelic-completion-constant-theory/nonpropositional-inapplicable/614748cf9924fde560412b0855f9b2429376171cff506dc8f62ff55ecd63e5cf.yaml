@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:614748cf9924fde560412b0855f9b2429376171cff506dc8f62ff55ecd63e5cf
+  normalized_sha256: sha256:614748cf9924fde560412b0855f9b2429376171cff506dc8f62ff55ecd63e5cf
+cas_ref: sha256:614748cf9924fde560412b0855f9b2429376171cff506dc8f62ff55ecd63e5cf
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 理论审计表的标题及表头，没有数据命题。
+    previous_atom_id: 72707218f8eb6a05835970c0494af4241d46bcef8c9acb7e9f4fb18b7ce69efb
+    next_atom_id: 81cafdbd93672f4d2bc6db2bf7e6a077f2b85114616fd23e586b7db1e0633af9

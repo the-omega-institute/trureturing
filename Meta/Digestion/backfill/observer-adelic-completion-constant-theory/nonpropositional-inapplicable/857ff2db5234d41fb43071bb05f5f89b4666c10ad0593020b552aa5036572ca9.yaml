@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:857ff2db5234d41fb43071bb05f5f89b4666c10ad0593020b552aa5036572ca9
+  normalized_sha256: sha256:857ff2db5234d41fb43071bb05f5f89b4666c10ad0593020b552aa5036572ca9
+cas_ref: sha256:857ff2db5234d41fb43071bb05f5f89b4666c10ad0593020b552aa5036572ca9
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 因果完成的设计要求列表引言，没有断言既有对象已满足要求。
+    previous_atom_id: b3dbf30836764caa3b96de64c9a7d171a962a5fadc644640f93e30af735faefd
+    next_atom_id: d972fd0730e5d992a0e01b3b94a6bf49e1214f18bf489017aceb7943c5429fd8

@@ -1,0 +1,18 @@
+fingerprints:
+  raw_sha256: sha256:f6efb6a2d9b94d389c44fc7c5d3e96dba1caed7f444186ecd857a7af051e2c15
+  normalized_sha256: sha256:f6efb6a2d9b94d389c44fc7c5d3e96dba1caed7f444186ecd857a7af051e2c15
+cas_ref: sha256:f6efb6a2d9b94d389c44fc7c5d3e96dba1caed7f444186ecd857a7af051e2c15
+coverage_gids:
+  - gid: D5/S3/ConceptDynamics/SufficiencyQuotient/TaskIdentityGlobalIdentityCriterion.task_identity_global_identity_criterion
+    target_statement_id: sha256:b50a2eb76a5d626f47f531f3f3a7cdb723c7aef159d48a62b67eedfd513e4e88
+  - gid: D5/S3/Observer/AgencySelf/AgencyResidualDecomposition.completion_residual_exclusive
+    target_statement_id: sha256:7c637f4c1bc20fd441743bed06cc86c64e7f4e29b382c4576a875ed8e7bebd8f
+  - gid: D5/S3/Observer/AgencySelf/AgencyResidualDecomposition.current_relation_decomposition
+    target_statement_id: sha256:bfd1c1296dfe9572ee5e57a6855aa2e9f3dbfbae7e0495fac1f3325337518aa5
+receipts:
+  unresolved_subitems: []
+  chain_atoms:
+    - b6484c386ef30ef862dbf9d9baad785661c0114a304ee27c2384907d070e1836
+    - e25c9e84a4a7f1fe2f96bf55064b42370e22952b201b0428eb3a6f6349e03130
+    - bec4680c7eeafcc7bdb1ec2e06352f57d7b30eb50ef789f935c6e61e62f4b367
+    - 81ac4596dc5a36b9db02ac3b5a24e4d37793235f4d768e9357edac8076bec37a

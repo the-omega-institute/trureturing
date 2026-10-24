@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:af5da9b61df0b3f839f43ec6e751de27f5f903a9397f1f1a7f3d342b6e5704e6
+  normalized_sha256: sha256:af5da9b61df0b3f839f43ec6e751de27f5f903a9397f1f1a7f3d342b6e5704e6
+cas_ref: sha256:af5da9b61df0b3f839f43ec6e751de27f5f903a9397f1f1a7f3d342b6e5704e6
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 可接入研究接口的名称及项目接口说明，没有断言某个 Gram 矩阵正定。
+    previous_atom_id: 2bd9523e54dabfcbbdb4c6d59c972cb3d4a70c91536a586ca31fb17b2242189c
+    next_atom_id: 72707218f8eb6a05835970c0494af4241d46bcef8c9acb7e9f4fb18b7ce69efb
