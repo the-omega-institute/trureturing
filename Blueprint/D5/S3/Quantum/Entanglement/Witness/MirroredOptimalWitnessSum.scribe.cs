@@ -100,7 +100,10 @@ internal sealed class MirroredOptimalWitnessSumDocument : IScribeDocumentDefinit
                             + "in their intersection. Finally, for d ≥ 3 choose r = 1 and "
                             + "s = 2 in Fin d. These indices are nonzero and distinct. "
                             + "Taking W = Aᵣ and M = Aₛ proves all six conjuncts of claim."))),
-                DescribeRole.Theorem))));
+                DescribeRole.Theorem,
+                openProblemResolutionClaim: new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("seong-bae-2026-optimal-mirrored-witness-sum"),
+                    ResolutionKind.Proved)))));
 
     private static DocumentBlock Definition(string id, string declaration, string title,
         Formula formula, string prose) => Describe.Lean(
