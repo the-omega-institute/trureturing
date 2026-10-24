@@ -320,11 +320,11 @@ def clear_native_locks(source, path, locks):
         except (OSError, ValueError, subprocess.SubprocessError) as error:
             observation = dict(evidence, status="unverifiable")
             print(json.dumps(observation), file=sys.stderr, flush=True)
-            raise Refused("native_lock_unverifiable:" + str(lock), [observation]) from error
+            raise Refused("native_lock_unverifiable:" + str(lock), cleared + [observation]) from error
         if holders:
             observation = dict(evidence, status="held", holders=holders)
             print(json.dumps(observation), file=sys.stderr, flush=True)
-            raise Refused("native_lock_held:" + str(lock), [observation])
+            raise Refused("native_lock_held:" + str(lock), cleared + [observation])
         try:
             after = lock.lstat()
         except FileNotFoundError:
@@ -333,7 +333,7 @@ def clear_native_locks(source, path, locks):
         if after is None or fingerprint(before) != fingerprint(after):
             observation = dict(evidence, status="changed")
             print(json.dumps(observation), file=sys.stderr, flush=True)
-            raise Refused("native_lock_changed:" + str(lock), [observation])
+            raise Refused("native_lock_changed:" + str(lock), cleared + [observation])
         lock.unlink()
         cleared.append(dict(evidence, status="native_lock_cleared"))
         print(json.dumps(cleared[-1]), file=sys.stderr, flush=True)
@@ -368,7 +368,7 @@ def with_command(options):
         os.execvpe(options.argv[0], options.argv, git_environment())
 
 
-def reuse(options):
+def reuse(options, allow_creation_base=False):
     with ExitStack() as stack:
         if options.path.is_symlink():
             raise Refused("linked_tree")
@@ -384,7 +384,15 @@ def reuse(options):
             raise Refused("incompatible_branch")
         base = value(options.source, "rev-parse", "--verify", options.base + "^{commit}")
         if git(path, "merge-base", "--is-ancestor", base, "HEAD", check=False).returncode:
-            raise Refused("incompatible_base")
+            if not allow_creation_base:
+                raise Refused("incompatible_base")
+            from worktree_publication import creation_witness
+            try:
+                _, creation = creation_witness(options.source, item["branch"])
+            except Refused as error:
+                raise Refused("incompatible_base") from error
+            if git(path, "merge-base", "--is-ancestor", creation, base, check=False).returncode:
+                raise Refused("incompatible_base")
         # Toolchain/cache ownership is still enforced by the canonical Lean doors.
         # Reuse never materializes, repairs or replaces a cache.
         for pin in ("lean-toolchain", "lake-manifest.json"):
@@ -482,6 +490,9 @@ def main(argv=None):
             print(json.dumps(dict(checkpoint=checkpoint, publish=publish, finalize=finalize)[options.action](options)), flush=True)
         return 0
     except (Refused, OSError, ValueError, subprocess.SubprocessError) as error:
+        if options.action == "checkpoint" and getattr(error, "native_locks", []):
+            print(json.dumps(dict(event="worktree_checkpoint", status="failed", error=str(error),
+                                  native_locks=error.native_locks)), flush=True)
         print("WORKTREE_RETAINED " + str(error), file=sys.stderr, flush=True)
         return 68 if options.action == "remove" and str(error).startswith("locked_") else 73
 

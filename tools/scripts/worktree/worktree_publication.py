@@ -54,6 +54,11 @@ def recover_initialization(options):
     reference = "refs/heads/" + options.branch
     if options.path.is_symlink():
         raise Refused("linked_tree")
+    rows = [row for row in inventory(options.source)
+            if Path(row["worktree"]).resolve() == options.path.resolve()]
+    if rows and "locked" not in rows[0]:
+        reuse(options, allow_creation_base=True)
+        return dict(event="worktree_init", status="already_initialized", path=str(options.path.resolve()))
     with ExitStack() as stack:
         try:
             path = tree_scope(stack, options.source, options.path, True)
@@ -68,7 +73,7 @@ def recover_initialization(options):
                 raise Refused("intentional_worktree_lock")
             # Ordinary reuse uses its own shared entry and index/ref scopes.
             stack.close()
-            reuse(options)
+            reuse(options, allow_creation_base=True)
             return dict(event="worktree_init", status="already_initialized", path=str(path))
         token, creation = creation_witness(options.source, reference)
         expected = getattr(options, "expected_token", None)
@@ -102,12 +107,15 @@ def recover_initialization(options):
             raise Refused("initialization_metadata_identity_changed")
         if not (metadata / "HEAD").exists():
             acquire(stack, options.source, "ref:" + str(metadata) + ":HEAD", True)
-            git(options.source, "symbolic-ref", "-m", token,
-                "worktrees/" + metadata.name + "/HEAD", reference)
+            git(options.source, "update-ref", "--no-deref", "worktrees/" + metadata.name + "/HEAD",
+                creation, "0" * len(creation))
         else:
-            if rows[0].get("branch") != reference:
+            if rows[0].get("branch") != reference and (
+                    rows[0].get("branch") or rows[0].get("HEAD") != creation):
                 raise Refused("initialization_branch_identity_changed")
             acquire(stack, options.source, "ref:" + str(metadata) + ":HEAD", True)
+        if rows[0].get("branch") != reference:
+            git(path, "symbolic-ref", "-m", token, "HEAD", reference)
         item, verified = identity(options.source, path)
         if verified != metadata or item.get("branch") != reference:
             raise Refused("initialization_registration_changed")
@@ -198,8 +206,12 @@ def commit_snapshot(path, metadata, branch, message, stack, source):
             raise
         with exclusive_tree(stack, source, path):
             cleared = clear_native_locks(source, path, locks)
-            # A second failure is returned intact; recovery never loops or broadens locks.
-            return dict(ordinary_snapshot(path, metadata, branch, message), native_locks=cleared)
+            stack.native_locks = getattr(stack, "native_locks", []) + cleared
+            try:
+                return dict(ordinary_snapshot(path, metadata, branch, message), native_locks=cleared)
+            except (Refused, OSError, subprocess.SubprocessError) as retry_error:
+                retry_error.native_locks = cleared + getattr(retry_error, "native_locks", [])
+                raise
 
 
 def ordinary_snapshot(path, metadata, branch, message):

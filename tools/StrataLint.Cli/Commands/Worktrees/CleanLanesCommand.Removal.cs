@@ -138,13 +138,15 @@ internal static partial class CleanLanesCommand
                     return new(LaneRemovalOutcome.CheckpointFailed,
                         "checkpoint_failed:" + outcome.Value.GetProperty("error").GetString(), recoveryBranch, recoveryBranchCandidate,
                         NativeLocks: nativeLocks);
-                return new(LaneRemovalOutcome.WorktreeRemoveFailed, "worktree_remove_failed_state_indeterminate", recoveryBranch, recoveryBranchCandidate);
+                return new(LaneRemovalOutcome.WorktreeRemoveFailed, "worktree_remove_failed_state_indeterminate", recoveryBranch, recoveryBranchCandidate,
+                    NativeLocks: nativeLocks);
             }
         }
         catch (Exception exception) when (exception is not OutOfMemoryException)
         {
             return new LaneRemovalResult(LaneRemovalOutcome.WorktreeRemoveFailed,
-                "worktree_remove_failed_state_indeterminate", recoveryBranch, recoveryBranchCandidate);
+                "worktree_remove_failed_state_indeterminate", recoveryBranch, recoveryBranchCandidate,
+                NativeLocks: nativeLocks);
         }
 
         // Retain both observed branches and refs created for detached recovery

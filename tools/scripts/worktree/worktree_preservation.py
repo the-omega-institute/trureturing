@@ -56,11 +56,11 @@ def reflog_oids(path):
 REMOVAL_RECORD = "worktree-removal"
 
 
-def record_removal(metadata, commit, recovery_branch, predecessors=None):
+def record_removal(metadata, commit, recovery_branch, predecessors=None, native_locks=None):
     """Record the verified snapshot in Git metadata, which native removal deletes last."""
     staged = metadata / (REMOVAL_RECORD + ".tmp")
     staged.write_text(json.dumps(dict(commit=commit, recovery_branch=recovery_branch,
-                                     predecessors=predecessors or [])))
+                                     predecessors=predecessors or [], native_locks=native_locks or [])))
     os.replace(staged, metadata / REMOVAL_RECORD)
 
 
@@ -71,6 +71,18 @@ def interrupted_removal(target, metadata, stack, source, branch):
         return None
     removal = json.loads(record.read_text())
     commit = removal["commit"]
+    predecessors = removal.get("predecessors", [])
+    stack.recovery_roots = getattr(stack, "recovery_roots", []) + [
+        root["recovery_branch"] for root in predecessors]
+    stack.native_locks = getattr(stack, "native_locks", []) + removal.get("native_locks", [])
+    for root in predecessors:
+        reference = root["recovery_branch"]
+        git(source, "check-ref-format", reference)
+        if not any(handle.scope_key == "ref:" + reference
+                   for handle in getattr(stack, "scope_handles", [])):
+            acquire(stack, source, "ref:" + reference, True)
+        if value(target, "rev-parse", "--verify", reference + "^{commit}") != root["commit"]:
+            raise Refused("interrupted_removal_recovery_root_changed")
     if removal["recovery_branch"] != branch:
         acquire(stack, source, "ref:" + removal["recovery_branch"], True)
     recorded_tip = git(target, "rev-parse", "--verify", removal["recovery_branch"] + "^{commit}", check=False)
@@ -79,8 +91,7 @@ def interrupted_removal(target, metadata, stack, source, branch):
         from worktree_publication import commit_snapshot, recovery_root
         # Pin the old object before checkpointing; its former branch can have moved.
         predecessor = dict(commit=commit, recovery_branch=recovery_root(stack, source, target, commit))
-        predecessors = removal.get("predecessors", []) + [predecessor]
-        stack.recovery_roots += [root["recovery_branch"] for root in removal.get("predecessors", [])]
+        predecessors = predecessors + [predecessor]
         snapshot = commit_snapshot(target, metadata, branch,
             b"Checkpoint current work after interrupted removal\n", stack, source)
         current_root = recovery_root(stack, source, target, snapshot["commit"])
@@ -89,8 +100,10 @@ def interrupted_removal(target, metadata, stack, source, branch):
                 raise Refused("interrupted_removal_recovery_root_changed")
         if git(target, "status", "--porcelain", "--untracked-files=all").stdout:
             raise Refused("working_tree_changed_after_checkpoint")
-        record_removal(metadata, snapshot["commit"], current_root, predecessors)
-        return dict(commit=snapshot["commit"], recovery_branch=current_root, reconverged=True)
+        record_removal(metadata, snapshot["commit"], current_root, predecessors,
+                       getattr(stack, "native_locks", []))
+        return dict(commit=snapshot["commit"], recovery_branch=current_root, reconverged=True,
+                    native_locks=getattr(stack, "native_locks", []))
     # Native deletion only deletes files; other differences may be later changes.
     status = git(target, "status", "--porcelain", "--untracked-files=all").stdout.splitlines()
     if any(not line.startswith(b" D ") for line in status):
@@ -187,7 +200,8 @@ def remove(options):
                     # The earlier removal verified this snapshot clean before native
                     # deletion began; missing files are its effects, not changes.
                     checkpoint = dict(event="worktree_checkpoint", status="reconverged" if resumed.get("reconverged") else "resumed",
-                                      commit=resumed["commit"], branch=branch)
+                                      commit=resumed["commit"], branch=branch,
+                                      native_locks=resumed.get("native_locks", []))
                     recovery_branch = resumed["recovery_branch"]
                     refreshed = identity(source, target)[0]
                 else:
@@ -212,7 +226,8 @@ def remove(options):
                     # snapshot; do not silently discard ordinary outstanding files.
                     if git(target, "status", "--porcelain", "--untracked-files=all").stdout:
                         raise Refused("working_tree_changed_after_checkpoint")
-                    record_removal(metadata, checkpoint["commit"], recovery_branch)
+                    record_removal(metadata, checkpoint["commit"], recovery_branch,
+                                   native_locks=checkpoint.get("native_locks", []))
                 flags = ["--force", "--force"] if "locked" in refreshed else ["--force"]
                 removing = True
                 git(source, "worktree", "remove", *flags, "--", target,
@@ -225,7 +240,7 @@ def remove(options):
                 outcome="partial_or_indeterminate" if removing else "checkpoint_failed",
                 error=str(error), checkpoint=checkpoint, recovery_branch=recovery_branch,
                 recovery_branch_candidate=recovery_branch_candidate,
-                native_locks=getattr(error, "native_locks", []),
+                native_locks=getattr(error, "native_locks", []) or getattr(stack, "native_locks", []),
                 recovery_roots=getattr(stack, "recovery_roots", [])))
 
     return dict(event="worktree_removal", items=outcomes,

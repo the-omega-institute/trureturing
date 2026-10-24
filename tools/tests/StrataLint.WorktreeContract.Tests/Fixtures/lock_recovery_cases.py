@@ -3,6 +3,7 @@
 import argparse
 from contextlib import ExitStack
 import json
+import subprocess
 from pathlib import Path
 from unittest.mock import patch
 
@@ -91,6 +92,46 @@ class LockRecoveryCases:
         self.checkpoint(expect=73)
         self.assertTrue(lock.exists())
 
+    def test_native_clearance_survives_failed_checkpoint_retry(self):
+        metadata = Path(self.g(self.tree, "rev-parse", "--absolute-git-dir").strip())
+        lock = metadata / "index.lock"
+        hooks = self.root / "rejecting-hooks"
+        hooks.mkdir()
+        hook = hooks / "pre-commit"
+        hook.write_text("#!/bin/sh\nexit 1\n")
+        hook.chmod(0o755)
+        self.g(self.tree, "config", "core.hooksPath", hooks)
+        (self.tree / "owned").write_text("checkpoint retry bytes\n")
+        for action in ("checkpoint", "remove"):
+            with self.subTest(action=action):
+                lock.write_text("cleared before failed retry\n")
+                result = self.checkpoint(expect=73) if action == "checkpoint" else self.remove(expect=74)
+                receipt = json.loads(result.stdout)
+                if action == "remove":
+                    receipt = receipt["items"][0]
+                observation = receipt["native_locks"][0]
+                self.assertEqual("native_lock_cleared", observation["status"])
+                self.assertEqual(str(lock), observation["path"])
+                self.assertEqual(len("cleared before failed retry\n"), observation["size"])
+                self.assertIsInstance(observation["age_seconds"], float)
+                self.assertFalse(lock.exists())
+                self.assertTrue(self.tree.exists())
+
+    def test_reconvergence_receipt_retains_native_clearance(self):
+        self.interrupted_removal()
+        self.g(self.tree, "commit", "--allow-empty", "-m", "moved snapshot")
+        (self.tree / "owned").write_text("current bytes\n")
+        metadata = Path(self.g(self.tree, "rev-parse", "--absolute-git-dir").strip())
+        lock = metadata / "index.lock"
+        lock.write_text("reconvergence lock\n")
+        receipt = json.loads(self.remove().stdout)["items"][0]
+        self.assertEqual("reconverged", receipt["checkpoint"]["status"])
+        observation = receipt["checkpoint"]["native_locks"][0]
+        self.assertEqual("native_lock_cleared", observation["status"])
+        self.assertEqual(str(lock), observation["path"])
+        self.assertEqual(len("reconvergence lock\n"), observation["size"])
+        self.assertIsInstance(observation["age_seconds"], float)
+
     def test_dead_initializer_is_removable_without_lock_age(self):
         self.g(self.main, "worktree", "lock", "--reason", "worktree-init:dead", self.tree)
         self.remove()
@@ -156,10 +197,52 @@ class LockRecoveryCases:
         target, branch, token = self.owned_initialization(registered=False)
         self.g(self.main, "commit", "--allow-empty", "-m", "advance requested base")
         advanced = self.g(self.main, "rev-parse", "HEAD").strip()
-        self.run_protocol("recover-init", "--path", target, "--branch", branch,
-                          "--base", advanced, "--skip-restore")
-        self.assertEqual("original\n", (target / "owned").read_text())
-        self.assertEqual(self.base, self.g(target, "rev-parse", "HEAD").strip())
+        for attempt in range(2):
+            self.run_protocol("recover-init", "--path", target, "--branch", branch,
+                              "--base", advanced, "--skip-restore")
+            self.assertEqual("original\n" if attempt == 0 else "ordinary bytes\n",
+                             (target / "owned").read_text())
+            self.assertEqual(self.base, self.g(target, "rev-parse", "HEAD").strip())
+            (target / "owned").write_text("ordinary bytes\n")
+
+    def test_ordinary_recovery_routing_keeps_shared_reuse_and_base_protection(self):
+        self.hold("--write", "other")
+        (self.tree / "owned").write_text("ordinary bytes\n")
+        self.run_protocol("recover-init", "--path", self.tree, "--branch", self.branch,
+                          "--base", self.base, "--skip-restore")
+        self.g(self.main, "commit", "--allow-empty", "-m", "advance ordinary base")
+        advanced = self.g(self.main, "rev-parse", "HEAD").strip()
+        refused = self.run_protocol("recover-init", "--path", self.tree, "--branch", self.branch,
+                                    "--base", advanced, "--skip-restore", expect=73)
+        self.assertIn("incompatible_base", refused.stderr)
+        self.assertEqual("ordinary bytes\n", (self.tree / "owned").read_text())
+
+    def test_partial_registration_repairs_worktree_head_in_its_own_ref_store(self):
+        import worktree_publication as publication
+        target, branch, token = self.owned_initialization()
+        metadata = Path(self.g(target, "rev-parse", "--absolute-git-dir").strip())
+        (metadata / "HEAD").unlink()
+        native_git = publication.git
+        def strict_git(path, *arguments, **options):
+            if "symbolic-ref" in arguments and "-m" in arguments:
+                reference = arguments[arguments.index("symbolic-ref") + 3]
+                self.assertEqual("HEAD", reference)
+            return native_git(path, *arguments, **options)
+        def interrupt_reattachment(path, *arguments, **options):
+            result = strict_git(path, *arguments, **options)
+            if arguments[:2] == ("update-ref", "--no-deref") and arguments[2].startswith("worktrees/"):
+                raise OSError("HEAD reattachment interrupted")
+            return result
+        options = argparse.Namespace(source=self.main, path=target, branch=branch,
+                                     base=self.base, skip_restore=True)
+        with patch.object(publication, "git", side_effect=interrupt_reattachment):
+            with self.assertRaisesRegex(OSError, "HEAD reattachment interrupted"):
+                publication.recover_initialization(options)
+        self.assertEqual(token, (metadata / "locked").read_text().strip())
+        with patch.object(publication, "git", side_effect=strict_git):
+            publication.recover_initialization(options)
+        self.assertEqual("refs/heads/" + branch, self.g(target, "symbolic-ref", "HEAD").strip())
+        self.assertFalse((metadata / "locked").exists())
 
     def test_initialization_identity_changes_refuse_recovery(self):
         target, branch, token = self.owned_initialization()
@@ -212,3 +295,38 @@ class LockRecoveryCases:
         self.assertIn(original, refs)
         self.assertIn(self.g(self.tree, "rev-parse", "HEAD").strip(), refs)
         self.remove()
+
+    def test_resume_validates_and_coordinates_recorded_predecessors(self):
+        import worktree_protocol as protocol
+        import worktree_preservation as preservation
+        self.interrupted_removal()
+        self.g(self.tree, "commit", "--allow-empty", "-m", "moved snapshot")
+        (self.tree / "owned").write_text("new bytes\n")
+        metadata = Path(self.g(self.tree, "rev-parse", "--absolute-git-dir").strip())
+        native_git = preservation.git
+        def interrupt(path, *arguments, **options):
+            if arguments[:2] == ("worktree", "remove"):
+                raise subprocess.TimeoutExpired(["git", *arguments], 300)
+            return native_git(path, *arguments, **options)
+        options = argparse.Namespace(source=self.main, names="tree", path=[], force=False,
+                                     preview=False, expected=[])
+        with patch.object(preservation, "git", side_effect=interrupt):
+            result = preservation.remove(options)
+        self.assertEqual("failed", result["status"])
+        predecessor = json.loads((metadata / "worktree-removal").read_text())["predecessors"][0]
+        reference = predecessor["recovery_branch"]
+        with ExitStack() as holder:
+            protocol.acquire(holder, self.main, "ref:" + reference, True)
+            failed = preservation.remove(options)["items"][0]
+            self.assertEqual("checkpoint_failed", failed["outcome"])
+            self.assertIn("busy_scope:ref:" + reference, failed["error"])
+        self.g(self.main, "update-ref", reference, "HEAD")
+        # Use a distinct commit so the recorded predecessor cannot validate.
+        self.g(self.main, "commit", "--allow-empty", "-m", "foreign predecessor")
+        self.g(self.main, "update-ref", reference, "HEAD")
+        failed = preservation.remove(options)["items"][0]
+        self.assertEqual("checkpoint_failed", failed["outcome"])
+        self.assertIn("interrupted_removal_recovery_root_changed", failed["error"])
+        self.g(self.main, "update-ref", reference, predecessor["commit"])
+        resumed = json.loads(self.remove().stdout)["items"][0]
+        self.assertIn(reference, resumed["recovery_roots"])
