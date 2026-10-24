@@ -29,10 +29,10 @@ private theorem return_exists (q : Perm X) (S : Set X) (x : X) (hx : x ∈ S) :
   refine ⟨orderOf q, orderOf_pos q, ?_⟩
   simpa only [pow_orderOf_eq_one, Perm.one_apply] using hx
 
-private noncomputable def visitTime (q : Perm X) (S : Set X) (x : X) (hx : x ∈ S) : ℕ :=
+noncomputable def visitTime (q : Perm X) (S : Set X) (x : X) (hx : x ∈ S) : ℕ :=
   Nat.find (return_exists q S x hx)
 
-private theorem first_visit_visit_time (q : Perm X) (S : Set X) (x : X) (hx : x ∈ S) :
+theorem first_visit_visit_time (q : Perm X) (S : Set X) (x : X) (hx : x ∈ S) :
     FirstVisit q S x (visitTime q S x hx) := by
   classical
   unfold visitTime
@@ -52,7 +52,7 @@ private theorem FirstVisit.unique {q : Perm X} {S : Set X} {x : X} {m n : ℕ}
   · exact hmi n hnp h hns
 
 /-- The actual next marked point, not a supplied boundary pairing. -/
-private noncomputable def nextVisit (q : Perm X) (S : Set X) (x : S) : S :=
+noncomputable def nextVisit (q : Perm X) (S : Set X) (x : S) : S :=
   ⟨(q ^ visitTime q S x x.property) x,
     (first_visit_visit_time q S x x.property).2.1⟩
 
@@ -242,7 +242,7 @@ variable {X : Type*} [Finite X]
 
 omit [Finite X] in
 /-- Reattaching marked endpoints leaves every interior step unchanged. -/
-private theorem first_visit_reattach (q : Perm X) (S : Set X)
+theorem first_visit_reattach (q : Perm X) (S : Set X)
     [DecidablePred (· ∈ S)] (J : Perm S) (x : S) (n : ℕ)
     (hn : FirstVisit q S (J x) n) :
     FirstVisit (q * J.ofSubtype) S x n ∧
@@ -270,7 +270,7 @@ private theorem first_visit_reattach (q : Perm X) (S : Set X)
 
 /-- A permutation's cycles restricted to a marked subset are exactly the
 cycles of a proved first-return permutation. -/
-private theorem same_cycle_of_first_visit (f : Perm X) (S : Set X) (H : Perm S)
+theorem same_cycle_of_first_visit (f : Perm X) (S : Set X) (H : Perm S)
     (jump : ∀ x : S, ∃ n : ℕ, FirstVisit f S x n ∧ (f ^ n) x = H x)
     (x y : S) : f.SameCycle x y ↔ H.SameCycle x y := by
   classical
