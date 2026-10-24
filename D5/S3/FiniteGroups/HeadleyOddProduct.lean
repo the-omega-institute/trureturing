@@ -305,12 +305,14 @@ private theorem support_three (r : RStar X) : 3 ≤ (support (X := X)).card := b
     simp [r.pairwise_distinct.1, r.pairwise_distinct.2.1, r.pairwise_distinct.2.2]
   simpa only [hcard] using Finset.card_le_card hs
 
+private theorem support_card : (support (X := X)).card + 1 = Nat.card X := by
+  rw [Nat.card_eq_fintype_card]
+  simpa only [support, Finset.card_univ] using
+    (Finset.card_erase_add_one (Finset.mem_univ (0 : X)))
+
 private theorem tail_even (r : RStar X) : Even ((support (X := X)).card - 3) := by
   have ht := support_three r
-  have hc : (support (X := X)).card + 1 = Nat.card X := by
-    rw [Nat.card_eq_fintype_card]
-    simpa only [support, Finset.card_univ] using
-      (Finset.card_erase_add_one (Finset.mem_univ (0 : X)))
+  have hc := support_card (X := X)
   obtain ⟨k, hk⟩ := r.even_card
   refine ⟨k - 2, ?_⟩
   omega
@@ -447,13 +449,21 @@ private theorem tail_avoids_a (r : RStar X) (ds : List OddRadix) (h : Box ds)
       (by omega : 0 < (support (X := X)).card) (he.trans (column_zero r).symm)
     omega
 
+private theorem block_length (r : RStar X) (ds : List OddRadix) (h : Box ds) :
+    (support (X := X)).card - 3 + 1 + gadgetLength ds h =
+      if h = 0 then Nat.card X - 1 else Nat.card X := by
+  have ht := support_three r
+  have hc := support_card (X := X)
+  by_cases hz : h = 0 <;> simp only [gadgetLength, hz, ite_true, ite_false] <;> omega
+
 /-- The return is the actual first positive visit to the a-column, including closure.
 The block has M-1 steps on row zero and M steps on every other row. -/
 theorem box_first_return (r : RStar X) (ds : List OddRadix) (h : Box ds) :
-    let len := (support (X := X)).card - 3 + 1 + gadgetLength ds h
+    let len := if h = 0 then Nat.card X - 1 else Nat.card X
     (successor r ds ^ len) (r.a, h) = (r.a, predecessor ds h) ∧
       ∀ i : ℕ, 0 < i → i < len → ((successor r ds ^ i) (r.a, h)).1 ≠ r.a := by
   dsimp only
+  rw [← block_length r ds h]
   constructor
   · rw [pow_add, Equiv.Perm.mul_apply, gadget_power, tail_return_power]
     congr 1
@@ -467,7 +477,7 @@ theorem box_first_return (r : RStar X) (ds : List OddRadix) (h : Box ds) :
 
 private theorem return_cycle (r : RStar X) (ds : List OddRadix) (h : Box ds) :
     (successor r ds).SameCycle (r.a, h) (r.a, predecessor ds h) := by
-  exact ⟨(((support (X := X)).card - 3 + 1 + gadgetLength ds h : ℕ) : ℤ),
+  exact ⟨(((if h = 0 then Nat.card X - 1 else Nat.card X) : ℕ) : ℤ),
     by simpa using (box_first_return r ds h).1⟩
 
 private theorem anchor_cycle (r : RStar X) (ds : List OddRadix) (h : Box ds) :
