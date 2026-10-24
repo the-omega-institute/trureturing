@@ -9,7 +9,6 @@
 import Mathlib.Basic.Real.Basic
 import Mathlib.Algebra.BigOperators.Fin
 import Mathlib.Algebra.Order.BigOperators.Ring.Finset
-import Mathlib.Tactic.GCongr
 import Mathlib.Tactic.IntervalCases
 import Mathlib.Tactic.Linarith
 
