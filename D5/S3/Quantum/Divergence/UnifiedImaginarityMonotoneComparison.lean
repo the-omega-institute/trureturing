@@ -22,7 +22,6 @@ open Matrix
 open D5.S3.Quantum.Information.SLDSpectralEnergy (IsDensity)
 
 local notation "IsState" => IsDensity
-private local instance {d : ℕ} : Pow (Matrix (Fin d) (Fin d) ℂ) ℝ := ⟨CFC.rpow⟩
 
 /-- Entrywise conjugation in the fixed computational basis. -/
 def conj {d : ℕ} (ρ : Matrix (Fin d) (Fin d) ℂ) : Matrix (Fin d) (Fin d) ℂ :=
