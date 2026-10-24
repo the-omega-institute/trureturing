@@ -32,6 +32,15 @@ internal sealed class StabilizerAutocorrelationNormRefutationDocument : IScribeD
             Node("shift", "The cyclic shift", ShiftFormula(),
                 "The shift sends the computational vector at j to the vector at j + 1. Addition is in Fin(5).",
                 AssessedProvenance.FromLiterature(Source)),
+            Describe.Lean(
+                DescribeId.Create("stacey-autocorr-shift-power"),
+                DeclarationHandle.Create(Prefix + "shift_power"),
+                H("Powers of the cyclic shift"),
+                StatementSource.FromAuthor(Disp(ShiftPowerFormula())),
+                AssessedProvenance.FromRepo(Source),
+                Blocks(Paragraph(Text(
+                    "The val(p)-th power of the cyclic shift has entry one exactly when the row equals the column plus p modulo five."))),
+                DescribeRole.Theorem),
             Node("clock", "The clock matrix", ClockFormula(),
                 "The clock is diagonal, with entry ω to the power val(j) at j. Together X and Z are the standard Weyl generators.",
                 AssessedProvenance.FromLiterature(Source)),
@@ -177,6 +186,14 @@ internal sealed class StabilizerAutocorrelationNormRefutationDocument : IScribeD
         Formula i = F.Id("i"), j = F.Id("j");
         return Equal(F.Id("X"), LambdaOf(i, FinFive(), LambdaOf(j, FinFive(),
             If(Equal(i, Add(j, D(1))), D(1), D(0)))));
+    }
+
+    private static Formula ShiftPowerFormula()
+    {
+        Formula p = F.Id("p"), i = F.Id("i"), j = F.Id("j");
+        return All(p, FinFive(), All(i, FinFive(), All(j, FinFive(),
+            Equal(Apply(Power(F.Id("X"), Val(p)), i, j),
+                If(Equal(i, Add(j, p)), D(1), D(0))))));
     }
 
     private static Formula ClockFormula()

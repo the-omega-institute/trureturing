@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:572e07586fbf386097f0a0a8da78e2b40cac0b6951d2099350be826c3b903170
+  normalized_sha256: sha256:572e07586fbf386097f0a0a8da78e2b40cac0b6951d2099350be826c3b903170
+cas_ref: sha256:572e07586fbf386097f0a0a8da78e2b40cac0b6951d2099350be826c3b903170
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 'Nonpropositional: 表格界定 k_B 的单位换算角色并避免每次计算固定耗能的误读，没有给出热力学不等式。'
+    previous_atom_id: c0c03f77b70b53fdaa6de234842eba7e343b58695dd24aa0cb0cebc86e736b0a
+    next_atom_id: b330c12ee1a30b9a8d34cf5f4c6684457f54fbb92f9f776591fb8d8c368b1375

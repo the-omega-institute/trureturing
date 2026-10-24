@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:b330c12ee1a30b9a8d34cf5f4c6684457f54fbb92f9f776591fb8d8c368b1375
+  normalized_sha256: sha256:b330c12ee1a30b9a8d34cf5f4c6684457f54fbb92f9f776591fb8d8c368b1375
+cas_ref: sha256:b330c12ee1a30b9a8d34cf5f4c6684457f54fbb92f9f776591fb8d8c368b1375
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 'Nonpropositional: 表格在指定引力实现内解释 G 的角色，不把它定义为逃逸率，没有新增耦合关系或数值断言。'
+    previous_atom_id: 572e07586fbf386097f0a0a8da78e2b40cac0b6951d2099350be826c3b903170
+    next_atom_id: c1b19039d1efe5cad01eb2a4196406077d3963d1511f70d89835b91dbc663b12

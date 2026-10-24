@@ -3515,3 +3515,186 @@ Frédéric Jean。
 arXiv:1209.4387。
 
 ## 追加锚（本行以下为增补区）
+
+## 15. 五态边际均值遗漏的离散转移谱与联合读口
+
+**约定 15.1（同源、校准与记录菜单）。** 沿用定义 3.1 的次序 $\Sigma=(0,1,2,3,13)$，
+概率为列向量，转移为非负列随机矩阵。令
+
+$$
+O=\begin{pmatrix}1&1&1&1&1\\0&1&0&0&1\\0&0&0&1&1\\0&0&1&0&0\end{pmatrix},
+\qquad d=(1,-1,0,-1,1)^{\mathsf T},\qquad \ker O=\mathbb R d.
+$$
+
+这是定理 3.3 的质量增广观察；$d$ 是有符号差方向，不是可制备概率。
+对候选参数的每次比较，固定同一初始概率 $p$、状态标号、时步和读出校准。
+基础菜单 $\Pi_{\rm marg}$ 许可在独立重复的同一 $p$ 制备上选择 $n\ge0$，
+执行该候选转移 $n$ 次，再读一个 $r\in\{x,y,z\}$ 的终端二元值，或取得它的精确期望。
+种子律不随候选改变且独立于来源抽样；反馈只能用已有记录。每次试验只保留这个单读口结果，
+不保留同轨迹的配对时刻或同时占位联合值，也不额外供应其他控制。
+精确期望是律层面的理想权限，不是有限样本自动提供的数值。
+下面的联合菜单 $\Pi_{\rm lag}$ 则另供同一条经典轨迹上两个相邻时刻的非扰动读出，
+并许可保留其联合律或取得所示乘积的精确期望；有限次抽样不等于取得精确期望。
+候选比较均采用同一菜单与同一制备，符合[变化优先卷约定 11.1](AURIC_FIB_ATOM_CHANGE_FIRST_RELATIONAL_FIELD_AND_INTEGRABILITY.md)的共同协议合同。
+
+**命题 15.2（相同全部时刻均值而不同的离散隐藏谱）。** 置
+
+$$
+P_0=\frac{\mathbf1\mathbf1^{\mathsf T}}5,\qquad
+P_d=\frac{dd^{\mathsf T}}4,\qquad
+K_\eta=P_0+\eta P_d,\qquad -\frac45\le\eta\le\frac45.
+$$
+
+$K_\eta$ 是对称双随机矩阵，均匀律 $c=\mathbf1/5$ 是共同平稳制备。
+其特征多项式及全部正整数次幂为
+
+$$
+\det(tI-K_\eta)=t^3(t-1)(t-\eta),\qquad
+K_\eta^n=P_0+\eta^nP_d\quad(n\ge1),\qquad
+OK_\eta^n=OP_0.
+$$
+
+所以对每个共同初态 $p$，全部时刻的三均值不依赖 $\eta$；$n\ge1$ 时恒为 $(2/5,2/5,1/5)$。
+所有候选在 $\Pi_{\rm marg}$ 下具有相同完整记录律，
+但隐藏特征值可为负、为零或为正；$\eta=0$ 时零特征值重数为四。
+若在共同平稳制备 $c$ 下增加 $\Pi_{\rm lag}$ 的读口 $h(s)=d_s$，则
+
+$$
+\mathbb E_{c,K_\eta}[h(S_t)h(S_{t+1})]=\frac{4\eta}{5},
+\qquad \mathbb E_c h=0,\qquad \mathbb E_c h^2=\frac45.
+$$
+
+因此这个新增的同轨迹联合期望在律层面精确识别 $\eta$；单次配对样本不作此断言，
+该期望也不是基础菜单已经保留的边际均值。
+
+证明。$\mathbf1^{\mathsf T}d=0$、$d^{\mathsf T}d=4$，所以 $P_0,P_d$ 是正交的秩一投影。
+$K_\eta$ 的每项为 $1/5+\eta d_id_j/4$；$d_id_j\in\{-1,0,1\}$，
+且两种非零符号都出现，故非负性恰要求 $|\eta|\le4/5$。
+每行及每列的附加项和为零，故双随机且保持 $c$。
+在 $\mathbb R\mathbf1$、$\mathbb R d$ 及其三维共同正交补上的作用分别为 $1,\eta,0$，
+得到特征多项式与幂公式；后者只用于 $n\ge1$，不将它误作 $K^0=I$。
+$Od=0$ 再给观察公式。$n=0$ 的共同读数是 $Op$，同样不随参数改变。
+基础菜单的单次终端读数为 Bernoulli 变量，其参数已由相同的均值确定；
+独立重复制备使每个新读数的条件律相同。对反馈记录归纳即得全部有限记录同律，
+在柱集生成的无限记录合同上也同律。
+
+平稳制备时相邻状态的联合概率为 $\Pr(S_t=j,S_{t+1}=i)=(K_\eta)_{ij}/5$，
+所以配对期望为 $d^{\mathsf T}K_\eta d/5=\eta d^{\mathsf T}d/5=4\eta/5$。
+两个单时刻的 $h$ 分布却都来自同一个 $c$，并不随参数改变。
+这同时给出基础记录相同而联合目标不同的明确候选对，例如 $\eta=0$ 与 $\eta=-4/5$。证毕。
+
+### 15.3. 已有五态纤维、目标风险与校准的应用
+
+定理 3.2–3.3 给同一初始来源的
+
+$$
+p_\kappa=(1-X-Y-Z+\kappa,X-\kappa,Z,Y-\kappa,\kappa),
+\quad L=\max(0,X+Y+Z-1)\le\kappa\le U=\min(X,Y),
+$$
+
+以及 $\mathbb E_{p_\kappa}f=A_f+J_f\kappa$，其中
+$A_f=f_0+(f_1-f_0)X+(f_3-f_0)Y+(f_2-f_0)Z$。
+这里的 $J_f=f_{13}-f_1-f_3+f_0=f d$，不是一个另供的动力学本征值。
+对校准向量
+
+$$
+q_+=(0,2,3,5,7),\qquad q_\times=(1,2,3,5,10),\qquad
+q_{\max}=(0,2,3,5,5)
+$$
+
+分别有 $J=0,4,-2$。
+[基础公式卷命题 7.4](AURIC_FIB_ATOM_PYRAMID_FOUNDATIONAL_FORMULAS_AND_RELATIONS.md)的中点半径因此为 $|J_f|(U-L)/2$。
+允许预测器另外使用独立种子不会降低这个绝对损失半径：若两个端点目标为 $a,b$，
+逐种子有 $|\widehat\mu-a|+|\widehat\mu-b|\ge|a-b|$，取期望后至少一个端点风险不小于半长度；
+固定中点同时达到。$X=Y=1/2,Z=0$ 时，$q_\times$ 的期望范围为 $[3.5,5.5]$，最坏风险为 $1$。
+这是精确均值权限下对既有 minimax 公式的应用，未把有限样本风险或计算成本等同于它。
+
+若未知校准为 $f=(u,2,3,5,v)$、$(u,v)\in\mathbb R^2$，
+且另供已知的同源制备 $p^{(j)}$ 及其精确目标期望，减去已知 $q_+$ 基线得
+
+$$
+\mathbb E_{p^{(j)}}f-\mathbb E_{p^{(j)}}q_+
+=p^{(j)}_0u+p^{(j)}_{13}(v-7).
+$$
+
+因此识别整个校准参数对恰要求行 $(p^{(j)}_0,p^{(j)}_{13})$ 构成的矩阵秩为二：
+满列秩给唯一线性逆，秩不足的非零核给相同数据的参数对。
+这只是该已知制备合同中的线性代数应用；只知道三个均值不自动知道这两列。
+
+### 15.4. 未来控制的核条件与初始坐标反演
+
+另供一组在同一封闭五态载体上已校准的列随机控制 $K_a$，并许可独立重复同一初态后读取动作前后的精确均值。
+[隐藏 seam 卷 Q5–Q6](AURIC_FIB_ATOM_HIDDEN_SEAM_CAUSAL_READOUT_CLOSURE.md)及
+[未来商卷 Q8](AURIC_FIB_ATOM_SEAM_BILINEAR_CURVATURE_AND_OUTPUT_FUTURE_QUOTIENT.md)的既有核闭包判据在这里直接应用：
+若每个 $OK_a d=0$，则 $K_a d\in\ker O=\mathbb R d$，故任意有限控制词仍把 $d$ 送入此核线。
+若这个条件失败，质量守恒给 $\mathbf1^{\mathsf T}K_ad=0$，所以某个 $r\in\{x,y,z\}$ 已有 $rK_ad\ne0$。
+固定这一个动作和读口，令初始载体上的拉回效果 $f=rK_a$，则
+
+$$
+J_f=rK_ad,\qquad A_f=rK_ap_{\kappa=0},\qquad
+\kappa=\frac{rK_ap_\kappa-A_f}{J_f}.
+$$
+
+$A_f$ 使用初始 $X,Y,Z$；仿射基点 $p_{\kappa=0}$ 可以是有符号向量。
+分母是拉回效果的响应，不是未动作的 $r d$，也不是动作后 $xy$ 的概率。
+例如指定 $Ke_0=e_1,Ke_1=e_3,Ke_2=e_2,Ke_3=Ke_{13}=e_0$，则
+$Kd=e_1-e_3$、$xK=e_0^{\mathsf T}$，故 $J_{xK}=1$、$A_{xK}=1-X-Y-Z$。
+虽然动作后恒有 $p'_{13}=0$，仍由 $X'=p_0=1-X-Y-Z+\kappa$ 恢复初始 $\kappa$。
+取初始 $(X,Y,Z,\kappa)=(1/2,1/2,0,1/4)$，其像为 $(1/2,1/4,0,1/4,0)$，
+反演确实给 $1/4$。若许可中位翻转 $\tau_2$，它只交换 $0,2$，同理有
+$Z'=p_0$，从而 $\kappa=Z'+X+Y+Z-1$。
+
+所以在这些共同载体、共同控制、余维一及全部单步末端均值可读的条件下，
+不存在“所有单步盲而首次两步泄露”的情形。
+该结论不把平均更新矩阵代替逐输出仪器，也不把边际记录代替联合轨迹。
+命题 15.2 的 $K_\eta d=\eta d$ 正属核保持一侧；
+新增的 lag 记录是换读出合同，并非在旧边际菜单内发现迟延泄露。
+
+### 15.5. 相干相位与共同无限律的既有接口
+
+相位结论使用命题 8.10 的额外编码 $\mathbb C^2\otimes\mathbb C^2$、$|++\rangle$ 制备及可调用门
+$U_f(\tau)|ab\rangle=e^{-i\tau f_{ab}}|ab\rangle$，取该命题的 $\theta=-\tau$。
+系数矩阵为 $\frac12\bigl(\begin{smallmatrix}e^{-i\tau f_0}&e^{-i\tau f_3}\\e^{-i\tau f_1}&e^{-i\tau f_{13}}\end{smallmatrix}\bigr)$；
+因而可分恰在 $\tau J_f\in2\pi\mathbb Z$。
+[相位续卷命题 C-77.2](AURIC_FIB_ATOM_HIDDEN_RELATIONS_STATISTICS_PHASE_AND_SEAMS_CONTINUATION.md)的归一化四角谱公式给约化特征值
+$(1\pm|\cos(\tau J_f/2)|)/2$，它与该处条件底面矩阵采用同一归一化。
+$q_+$ 不产生纠缠，$q_\times$ 在 $\tau=\pi/4$ 给两个特征值 $1/2$，
+同时五态占位概率始终是 $(1/4,1/4,0,1/4,1/4)$。
+这里需要张量结构、相干制备、相位控制和分辨相位的读口；经典五点标签不供应这些权限。
+相同的 $J_f$ 在两种明定模型中分别控制线性目标响应与四角相位，并不把两种操作合同等同。
+
+共同未来律的接口也须另给。固定滤过参考概率 $P$，若 $L_t\ge0$ 为 $\mathcal F_t$ 可测且 $\mathbb E_P L_t=1$，
+令 $V_t(A)=\mathbb E_P[\mathbf1_A L_t]$，则前缀相容的条件是
+$\mathbb E_P[L_t\mid\mathcal F_s]=L_s$ 对每个 $s\le t$ 几乎处处成立：
+两边对每个 $A\in\mathcal F_s$ 积分正是限制测度相等，条件期望的唯一性给反向。
+逐个归一化不足以保证这个条件；无限路径扩张还需相应可测空间与限制映射的扩张条件。
+[原生长时卷命题 66.1](FIB_NATIVE_LONG_TIME_PHASE_QUANTITATIVE_BOUNDS.md)已经在其连续路径空间内以真鞅及可数前缀扩张构造共同律。
+
+具体沿用该卷定义 65.1 的同一来源、确定初态、原坐标、时钟及 G/C/N/F 前提，
+取 $0<\alpha<1/2,r>0,\widehat m>0$，定理 68.1 给一个不随终止 horizon 改变的 $V_*$，满足
+
+$$
+D((V_*)_T\Vert\mathbb P_T)
+=\lambda T+\frac{\pi^2\widehat m}{4r^2(1-2\alpha)}T^{1-2\alpha}
+ +o(T^{1-2\alpha}),\qquad
+|X_t|<r(1+t)^\alpha\quad\hbox{对所有 }t\ge0.
+$$
+
+故对每个固定 $b>0$，$\sup_{0\le s\le b}|X_{Ts}|/\sqrt T\le r(1+Tb)^\alpha/\sqrt T\to0$，
+而同卷定义 41.1、定理 42.2 的 $\mathbb Q$ 投影极限是方差率 $2\widehat m$ 的非退化 Brownian 运动。
+结合定理 55.1 的 $\mathbb Q$ 熵率 $\lambda$，这正是同一主导熵率不能选择该扩散行为的已有应用。
+推论 68.2 保留齐次 height-only 控制类与移动管约束类的不同量词；
+此处不独立认证原生前提链，也不将上述连续路径过程从五态矩阵推出。
+
+### 15.6. 转移谱的来源与适用边界
+
+命题 15.2 的离散矩阵、负或零隐藏根及新增 lag 证书为 `repo-derived` 的具体观察反例。
+其正交谱分解是经典中间工具，参见 Levin–Peres–Wilmer，
+[*Markov Chains and Mixing Times*, 第二版](https://pages.uoregon.edu/dlevin/MARKOV/mcmt2e.pdf)，第 12 章的可逆链谱方法；
+行随机约定在这里转置为列随机约定。
+[静态 seam 卷命题 30.12](AURIC_FIB_ATOM_STATIC_SEAMS_TRANSITION_CIRCULATION_AND_FIBONACCI_TOGGLE_CYCLES.md)已有连续时间隐藏谱及随机率锥，
+这里不重列那些结论；$K_\eta$ 的负根也不主张是该连续半群的指数。
+本节 $K_\eta$ 的转移谱、$\operatorname{diag}(f)$ 的读出谱、相干态的约化谱及定理 13.2 的替换矩阵谱是不同对象。
+本反例没有提供原生 FIB 转移实现、物理实现、一般 HMM 的识别分类或普适复杂度界。
+
+## 追加锚（本行以下为增补区）
