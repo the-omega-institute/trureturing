@@ -6,6 +6,95 @@
    utility: kind=certified-instance; basis=refutes=gid:D5/S3/Analytic/HypergeometricShiftTuran/FunctionResult.claim; result=D5/S3/Analytic/HypergeometricShiftTuran/FunctionResult.result; claim=D5/S3/Analytic/HypergeometricShiftTuran/FunctionResult.claim
    digest: A convergent Gamma-series counterexample to function nonnegativity in Conjecture 1. -/
 
+/-
+# Function nonnegativity fails for a convergent Gamma series
+
+admission_basis: open-problem-resolution (#21189; Refuted)
+All rows have proof_shape: bind-only and escape_witness: none.
+The ratio recurrence, summability, geometric tail and finite comparison use
+pinned Mathlib instantiation and normalization. The external conjecture
+settlement supplies the module's admission basis.
+The utility kind is certified-instance with basis refutes; claim and result
+are the closed universal assertion and its kernel-checked negation.
+
+Per-declaration judgement (compiled-value dependencies; new helpers inlined):
+* fval: proof_shape: bind-only; escape_witness: none.
+  consumers: fval_eq, turanian, witness_negative.
+  direct frozen D5 dependencies:
+    D5/S3/Analytic/HypergeometricShiftTuran/Defs.coeff; statement_id=sha256:0ed75eb9ee5b77546f2e79184697ab562a24a96cfe27b057ffe9cb70c1eb21f9.
+* turanian: proof_shape: bind-only; escape_witness: none.
+  consumers: claim, result, witness_negative.
+  direct frozen D5 dependencies:
+    D5/S3/Analytic/HypergeometricShiftTuran/Defs.coeff; statement_id=sha256:0ed75eb9ee5b77546f2e79184697ab562a24a96cfe27b057ffe9cb70c1eb21f9.
+* claim: proof_shape: bind-only; escape_witness: none.
+  consumers: result.
+  direct frozen D5 dependencies:
+    D5/S3/Analytic/HypergeometricShiftTuran/Defs.coeff; statement_id=sha256:0ed75eb9ee5b77546f2e79184697ab562a24a96cfe27b057ffe9cb70c1eb21f9.
+    D5/S3/Analytic/HypergeometricShiftTuran/Defs.cond13; statement_id=sha256:08256b9ba6de16b5aa66622ef958a49cb8be4a4a907921a8d68019d0d20fa4c1.
+* term: proof_shape: bind-only; escape_witness: none.
+  consumers: aterm_ratio, aterm_upper, fval_eq, half_lower, term_half, term_integer, term_nonneg, term_ratio, term_step, term_summable, witness_negative.
+  direct frozen D5 dependencies: none.
+* term_nonneg: proof_shape: bind-only; escape_witness: none.
+  consumers: aterm_ratio, half_lower, term_ratio, term_summable, witness_negative.
+  direct frozen D5 dependencies: none.
+* term_step: proof_shape: bind-only; escape_witness: none.
+  consumers: aterm_ratio, term_ratio.
+  direct frozen D5 dependencies: none.
+* term_ratio: proof_shape: bind-only; escape_witness: none.
+  consumers: term_summable.
+  direct frozen D5 dependencies: none.
+* term_summable: proof_shape: bind-only; escape_witness: none.
+  consumers: aterm_upper, fval_eq, half_lower.
+  direct frozen D5 dependencies: none.
+* aterm: proof_shape: bind-only; escape_witness: none.
+  consumers: aterm_upper, aterm_upper_numeric, term_integer, witness_negative.
+  direct frozen D5 dependencies: none.
+* hterm: proof_shape: bind-only; escape_witness: none.
+  consumers: half_lower, hterm_lower, term_half, witness_negative.
+  direct frozen D5 dependencies: none.
+* term_integer: proof_shape: bind-only; escape_witness: none.
+  consumers: aterm_upper.
+  direct frozen D5 dependencies: none.
+* term_half: proof_shape: bind-only; escape_witness: none.
+  consumers: half_lower.
+  direct frozen D5 dependencies: none.
+* rho: proof_shape: bind-only; escape_witness: none.
+  consumers: aterm_ratio, aterm_upper, aterm_upper_numeric, witness_negative.
+  direct frozen D5 dependencies: none.
+* aterm_ratio: proof_shape: bind-only; escape_witness: none.
+  consumers: aterm_upper.
+  direct frozen D5 dependencies: none.
+* aterm_upper: proof_shape: bind-only; escape_witness: none.
+  consumers: witness_negative.
+  direct frozen D5 dependencies: none.
+* aterm_upper_numeric: proof_shape: bind-only; escape_witness: none.
+  consumers: witness_negative.
+  direct frozen D5 dependencies: none.
+* hterm_lower: proof_shape: bind-only; escape_witness: none.
+  consumers: witness_negative.
+  direct frozen D5 dependencies: none.
+* half_lower: proof_shape: bind-only; escape_witness: none.
+  consumers: witness_negative.
+  direct frozen D5 dependencies: none.
+* fval_eq: proof_shape: bind-only; escape_witness: none.
+  consumers: witness_negative.
+  direct frozen D5 dependencies:
+    D5/S3/Analytic/HypergeometricShiftTuran/Defs.coeff; statement_id=sha256:0ed75eb9ee5b77546f2e79184697ab562a24a96cfe27b057ffe9cb70c1eb21f9.
+* witness_negative: proof_shape: bind-only; escape_witness: none.
+  consumers: result.
+  direct frozen D5 dependencies:
+    D5/S3/Analytic/HypergeometricShiftTuran/Defs.coeff; statement_id=sha256:0ed75eb9ee5b77546f2e79184697ab562a24a96cfe27b057ffe9cb70c1eb21f9.
+* result: proof_shape: bind-only; escape_witness: none.
+  consumers: external conjecture settlement #21189.
+  direct frozen D5 dependencies:
+    D5/S3/Analytic/HypergeometricShiftTuran/Defs.coeff; statement_id=sha256:0ed75eb9ee5b77546f2e79184697ab562a24a96cfe27b057ffe9cb70c1eb21f9.
+    D5/S3/Analytic/HypergeometricShiftTuran/Defs.cond13; statement_id=sha256:08256b9ba6de16b5aa66622ef958a49cb8be4a4a907921a8d68019d0d20fa4c1.
+    D5/S3/Analytic/HypergeometricShiftTuran/Defs.esymm; statement_id=sha256:4d8858460f0aad49d26a6547cf056cdd7fa4c7ed94938e4abfb0b427d2150a59.
+
+The only public theorem is the refutation result, exempt under the utility
+refutes rule. All proof helpers are private and have the named consumers.
+-/
+
 import D5.S3.Analytic.HypergeometricShiftTuran.Defs
 
 /-! A function-level refutation using convergent positive Gamma series. -/
