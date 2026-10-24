@@ -12,8 +12,6 @@ strata_touched:
   - D5/S3/Analytic/KarpZhangReciprocal/Result
   - D5/S3/Analytic/KarpZhangGamma/Series
   - D5/S3/Analytic/KarpZhangConjecture/Result
-  - D5/S3/Analytic/KarpZhangCatalanPower/Coeff
-  - D5/S3/Analytic/KarpZhangCatalanPower/Interval
   - D5/S3/Analytic/KarpZhangCatalanPower/Result
 license: citation-only
 triage: anchor
@@ -74,11 +72,28 @@ and parameter range.
 
 > Assume that $\{h_k\}_{k=0}^{\infty}$ is log-concave (log-convex ) and independent of $\mu$. Then the function $\mu\to h(\mu;x)$ defined in (15) is coefficient-wise log-concave (log-convex ).
 
-Formula (15) is
+Formula (15), page 8:
+
+> We consider the series
 
 $$
 h(\mu;x)=\sum_{k=0}^{\infty}h_k\frac{(\mu)_{2k}}{(\mu+1)_k k!}x^k.
 $$
+
+## Lemma 4.1(2), page 8
+
+> Lemma 4.1. [17, Lemma 7] The hypergeometric function $\lambda(\mu;x)$ has the following properties.
+>
+> 2. Index law
+>
+> $\lambda(\alpha;x)\lambda(\beta;x)=\lambda(\alpha+\beta;x)$.
+
+The source attributes this lemma to its reference [17], Lemma 7; no
+independent verification of that earlier reference is asserted here.
+Equating degree-$m$ Cauchy coefficients gives the finite index law used
+in `KarpZhangCatalanPower.Index.index_law`. Formula (15) and this index law
+are literature statements; the polynomial continuation and Lean proofs
+are authored formalizations.
 
 The log-convex clause of Definition 1.1, page 2, reads:
 

@@ -153,10 +153,10 @@ The source locator and quotations are in
 `Library/Asymptotics/karpzhang2023pochhammer.md`; the printed pages are 2 and 8
 of arXiv:2305.09029v3. The preregistration is
 https://github.com/the-omega-institute/trureturing/issues/21083.
-The coefficient/index/generator proof is in
-`D5/S3/Analytic/KarpZhangCatalanPower/Coeff.lean`; the reflected-interval and
-tail proof is in `D5/S3/Analytic/KarpZhangCatalanPower/Interval.lean`;
-`D5/S3/Analytic/KarpZhangCatalanPower/Result.lean` proves exactly `claim`.
+The coefficient, index, generator, reflected-interval and tail proofs share
+`D5/S3/Analytic/KarpZhangCatalanPower/Result.lean`, which proves exactly
+`claim`. The supporting declarations retain the `Coeff`, `Index` and
+`Interval` namespaces within that module.
 The sequence predicate, log-concave balancing and generic finite Abel identity
 are reused from `D5/S3/Analytic/KarpZhangReciprocal/Result.lean`.
 
