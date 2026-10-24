@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:7c731d8800930b873a243e1a8ce78e2e78468b61705a8f17e34dd977d0bef647
+  normalized_sha256: sha256:7c731d8800930b873a243e1a8ce78e2e78468b61705a8f17e34dd977d0bef647
+cas_ref: sha256:7c731d8800930b873a243e1a8ce78e2e78468b61705a8f17e34dd977d0bef647
+coverage_gids:
+  - gid: D5/S1/Words/AdmissibleWords/AdmissibleCount.adm_two_iff
+    target_statement_id: sha256:4d576bf029f1cd807eb75950e9acb5cba56571c07b1daf49e7313789d7cf8b96
+receipts:
+  unresolved_subitems: []
