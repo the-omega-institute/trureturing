@@ -4,7 +4,14 @@
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: [mathlib/module/Mathlib.RingTheory.Binomial]
    utility: none
-   digest: Signed current transpose, finite original scalar supports and original normal-source transpose with Corr-expanded corrected readout. -/
+   digest: Signed current transpose, finite original scalar supports and original
+   normal-source transpose with Corr-expanded corrected readout. -/
+
+import D5.S3.VertexAlgebra.TwistedGround.ActualChargedAdjoint
+import D5.S3.VertexAlgebra.LatticeHalfFockFockNormalField
+import D5.S3.VertexAlgebra.LatticeHalfFockFiniteCorrection
+import D5.S3.VertexAlgebra.LatticeHalfFockOriginalTranslation
+import Mathlib.RingTheory.Binomial
 
 /-!
 Native implementation of the independent finite normal scalar transpose proposal.
@@ -15,12 +22,6 @@ orientation. No symmetry, positivity, rank restriction or finite full weight spa
 is assumed. Original Corr covariance, exact weight conservation and source L1
 are separate dependencies; full corrected exp(L1) inversion remains open.
 -/
-
-import D5.S3.VertexAlgebra.TwistedGround.ActualChargedAdjoint
-import D5.S3.VertexAlgebra.LatticeHalfFockFockNormalField
-import D5.S3.VertexAlgebra.LatticeHalfFockFiniteCorrection
-import D5.S3.VertexAlgebra.LatticeHalfFockOriginalTranslation
-import Mathlib.RingTheory.Binomial
 
 set_option autoImplicit false
 set_option maxRecDepth 4096
@@ -125,7 +126,9 @@ private theorem scalar_rectangle (D : LatticeData) (hu : IsUnit D.G.det)
   | cons i w ih =>
     rcases m with ⟨k, t⟩
     change (k, t) ∈ (Finset.Icc (-(Uy : ℤ)) ((Ux : ℤ)-1)).product _
-    rw [Finset.mem_product, Finset.mem_Icc]
+    apply (Finset.mem_product (s := Finset.Icc (-(Uy : ℤ)) ((Ux : ℤ)-1))
+      (t := modeBox D w (-(Uy : ℤ)) ((Ux : ℤ)-1)) (p := (k,t))).mpr
+    rw [Finset.mem_Icc]
     by_cases hk : k < 0
     · have ht : B (flatCoefficient D hu F w t
           (e+2*k+2*i.2+3) x) (tensorCurrent D (ActualGround D hu) i.1 (-k-1) y) ≠ 0 := by
@@ -194,7 +197,7 @@ private theorem leftAction_transpose (D : LatticeData) (hu : IsUnit D.G.det)
       rw [← ih]
       simp only [map_smul, smul_eq_mul]
       ring
-    · exact ih x y
+    · apply ih
 
 private theorem charged_coeff_eq (D : LatticeData) (hu : IsUnit D.G.det)
     (a : Charge D) (e : ℤ) (x : ActualTensor D hu) :
@@ -220,6 +223,8 @@ private theorem charged_scalar_support (D : LatticeData) (hu : IsUnit D.G.det)
     Function.support (fun e => actualForm D hu (chargedCoefficient D hu a e x) y) ⊆
       chargedScalarWindow D hu a x y := by
   intro e he
+  change _ ≠ (0 : ℂ) at he
+  dsimp only at he
   change e ∈ Finset.Icc (chargedOrder D hu a x) (-chargedOrder D hu a y-2*chargeNorm D a)
   rw [Finset.mem_Icc]
   constructor
@@ -243,6 +248,8 @@ private theorem flat_exponent_support (D : LatticeData) (hu : IsUnit D.G.det)
       (flatCoefficient D hu (chargedField D hu a) w m e x) y) ⊆
       flatExponentWindow D hu a w m x y := by
   intro e he
+  change _ ≠ (0 : ℂ) at he
+  dsimp only at he
   have hn : actualForm D hu
       (chargedCoefficient D hu a (e+2*modeSum D w m+jetShift D w)
         (rightAction D hu w m x)) (leftTranspose D hu w m y) ≠ 0 := by
@@ -269,6 +276,8 @@ theorem actual_word_scalar_exponent_support (D : LatticeData) (hu : IsUnit D.G.d
     Function.support (fun e => actualForm D hu
       ((chargedWordField D hu a w).coeff e x) y) ⊆ wordExponentWindow D hu a w x y := by
   intro e he
+  change _ ≠ (0 : ℂ) at he
+  dsimp only at he
   by_contra outside
   apply he
   rw [chargedWordField, actual_word_scalar_rectangle]
@@ -299,7 +308,7 @@ theorem jetScalar_reflection (r : ℕ) (k : ℤ) :
   apply Finset.sum_congr rfl
   intro s hs
   have hs' : s ≤ r := Nat.le_of_lt_succ (Finset.mem_range.mp hs)
-  rw [Ring.choose_natCast, Nat.choose_symm (by omega : r-s ≤ r+1),
+  rw [Ring.choose_natCast, ← Nat.choose_symm (by omega : r-s ≤ r+1),
     show r+1-(r-s) = s+1 by omega, ← jetScalar_choose]
   ring
 
@@ -310,10 +319,17 @@ private theorem negative_jet_reflection (r : ℕ) (k : ℤ) :
     -jetScalar r k = ∑ s : Fin (r+1), jetTriangle r s * jetScalar s.val (-k-1) := by
   have h := jetScalar_reflection r (-k-1)
   rw [show -(-k-1)-1 = k by omega] at h
-  rw [h]
-  simp only [jetTriangle, pow_succ, Fin.sum_univ_eq_sum_range,
-    ← Finset.mul_sum]
-  ring
+  calc
+    -jetScalar r k = ∑ s ∈ Finset.range (r+1),
+        (-1 : ℂ)^(r+1) * ((r+1).choose (s+1) : ℂ) * jetScalar s (-k-1) := by
+      rw [h, Finset.mul_sum, ← Finset.sum_neg_distrib]
+      apply Finset.sum_congr rfl
+      intro s hs
+      rw [pow_succ]
+      ring
+    _ = _ := (Fin.sum_univ_eq_sum_range
+      (fun s : ℕ => (-1 : ℂ)^(r+1) * ((r+1).choose (s+1) : ℂ) *
+        jetScalar s (-k-1)) (r+1)).symm
 
 private theorem jet_transpose (D : LatticeData) (hu : IsUnit D.G.det)
     (i : Index D) (k : ℤ) (x y : ActualTensor D hu) :
@@ -383,8 +399,10 @@ private def modeReflection (D : LatticeData) (w : List (Index D)) (s : JetTuple 
     | cons i w ih =>
       rcases s with ⟨s,t⟩
       rcases m with ⟨k,m⟩
-      simp only [reflectModes, unreflectModes, Prod.mk.injEq]
-      exact ⟨by omega, ih t m⟩
+      change (-(-k-1)-1, reflectModes D w t (unreflectModes D w t m)) = (k,m)
+      apply Prod.ext
+      · dsimp only; omega
+      · exact ih t m
 
 def transposeExponent (D : LatticeData) (a : Charge D) (w : List (Index D))
     (s : JetTuple D w) (e : ℤ) : ℤ :=
@@ -457,8 +475,10 @@ private theorem reflected_scalar_finite (D : LatticeData) (hu : IsUnit D.G.det)
           (lowerWord D w s) (reflectModes D w s m) (transposeExponent D a w s e) y)) := by
   have h := (flatTerm_finite D hu (chargedField D hu a) (lowerWord D w s)
     (transposeExponent D a w s e) y).fun_comp (map_zero (actualForm D hu x))
-  have h' := h.fun_comp_of_injective (modeReflection D w s).injective
-  exact h'.mul_right (fun _ => paritySign (bilinear D a a / 2) * triangleCoefficient D w s)
+  have h' := Function.HasFiniteSupport.fun_comp_of_injective
+    (modeReflection D w s).injective h
+  exact Function.HasFiniteSupport.mul_right
+    (fun _ => paritySign (bilinear D a a / 2) * triangleCoefficient D w s) h'
 
 theorem actual_word_transpose (D : LatticeData) (hu : IsUnit D.G.det)
     (a : Charge D) (w : List (Index D)) (e : ℤ) (x y : ActualTensor D hu) :
@@ -470,7 +490,8 @@ theorem actual_word_transpose (D : LatticeData) (hu : IsUnit D.G.det)
   rw [chargedWordField, wordField_coefficient]
   change (actualForm D hu).flip y (∑ᶠ m, flatTerm D hu (chargedField D hu a) w e x m) = _
   rw [map_finsum _ (flatTerm_finite D hu (chargedField D hu a) w e x)]
-  simp only [LinearMap.flip_apply, flatTerm]
+  change (∑ᶠ m : ModeTuple D w,
+    actualForm D hu (flatCoefficient D hu (chargedField D hu a) w m e x) y) = _
   simp_rw [actual_flat_transpose]
   rw [finsum_sum_comm Finset.univ _ (fun s _ => reflected_scalar_finite D hu a w s e x y)]
   apply Finset.sum_congr rfl
@@ -586,6 +607,8 @@ theorem actual_source_scalar_exponent_support (D : LatticeData) (hu : IsUnit D.G
     Function.support (fun e => actualForm D hu ((sourceField D hu v).coeff e x) y) ⊆
       sourceExponentWindow D hu v x y := by
   intro e he
+  change _ ≠ (0 : ℂ) at he
+  dsimp only at he
   by_contra outside
   apply he
   rw [source_scalar_expansion]
@@ -689,6 +712,8 @@ theorem actual_corrected_scalar_exponent_support (D : LatticeData) (hu : IsUnit 
     Function.support (fun e => actualForm D hu ((correctedField D hu v).coeff e x) y) ⊆
       correctedExponentWindow D hu v x y := by
   intro e he
+  change _ ≠ (0 : ℂ) at he
+  dsimp only at he
   by_contra outside
   apply he
   rw [corrected_scalar_expansion]

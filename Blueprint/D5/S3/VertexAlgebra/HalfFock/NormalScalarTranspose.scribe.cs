@@ -124,5 +124,5 @@ internal sealed class NormalScalarTransposeDocument : IScribeDocumentDefinition
                 DeclarationHandle.Create(Prefix + "actual_corrected_scalar_normal_readout"),
                 H("actual corrected scalar normal readout"), StatementSource.WithoutFormula(),
                 AssessedProvenance.FromRepo(), Blocks(Paragraph(Text("The unconditional original correctedField readout retains Corr D a (v a) at each supported c and monomial weight Rm, with exponent -(e+2c)-2N-4Rm+2j. It assumes no Corr covariance, Corr homogeneity or source-L1 law."))),
-                DescribeRole.Theorem)))));
+                DescribeRole.Theorem))));
 }
