@@ -159,7 +159,7 @@ private theorem binomial_minor {y : ℕ → ℝ} (hy : IsLogConcave y) (N : ℕ)
   induction N with
   | zero =>
     intro p q hpq
-    simp only [binomialProduct, sum_range_one, Nat.choose_self, Nat.cast_one,
+    simp only [binomialProduct, Nat.zero_add, sum_range_one, Nat.choose_self, Nat.cast_one,
       Nat.add_zero, Nat.sub_zero, one_mul]
     by_cases heq : p = q + 1
     · subst p
