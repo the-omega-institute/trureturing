@@ -33,10 +33,13 @@ internal sealed class UniformRelativePathDocument : IScribeDocumentDefinition
             Paragraph(Text("The exact-telescope dependent-family Reg proof terms compile, but the "
                 + "terminal theorem's binding remains declared_unresolved: IE-C050 ClosedTruthReadout, "
                 + "reason unclassified_form, rule source.params. This is the same measured binding "
-                + "class tracked by https://github.com/the-omega-institute/trureturing/issues/16370; "
-                + "that issue concerns a different theorem and does not certify this one. The other "
-                + "four public construction/composition theorem audits remain unfinished. No "
-                + "declared_validated certificate or independent source review is claimed.")),
+                + "class disclosed for these five theorems at "
+                + "https://github.com/the-omega-institute/trureturing/issues/21090. The audits for "
+                + "p_ge_seven_column_setup, pge_whole_carrier_cycle, compose_full_path and "
+                + "exists_prime_ge_seven_relative_path remain unfinished. Accepted faithful "
+                + "source-parameter/readout reconstruction and binding evidence are missing; "
+                + "downstream sourceSelection validity is unestablished. No declared_validated "
+                + "certificate is claimed.")),
             Describe.Lean(
             DescribeId.Create("uniform-relative-path-column-setup"),
             DeclarationHandle.Create("D5/S3/Combinatorics/Sequenceability/UniformRelativePath.p_ge_seven_column_setup"),
