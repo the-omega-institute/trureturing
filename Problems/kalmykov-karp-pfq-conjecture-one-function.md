@@ -125,8 +125,9 @@ claim. The candidate and initial numerical witness are from the Claude Code
 orchestrator using Claude Opus 5.5; the formal implementation is by a Codex
 CLI seat.
 
-Experiment publication: EXPERIMENTS_LINK_TBD. The programs are supplied to the
-orchestrator for publication in `the-omega-institute/trureturing-experiments`.
+The programs are in the-omega-institute/trureturing-experiments at revision
+ed97a20d9cffa80f649d016ef2f8f5fbe695e0b3, directory `experiments/kalmykov-karp-pfq-function`
+(https://github.com/the-omega-institute/trureturing-experiments/tree/ed97a20d9cffa80f649d016ef2f8f5fbe695e0b3/experiments/kalmykov-karp-pfq-function).
 
 - Exact rational certificate: command `python3 kk1f-cert.py`, exit 0;
   script sha256 `05a32f42fcfc62c1019fc72e8af647583c002cf985fef9b197dc320aafe4f3a5`.
@@ -151,7 +152,7 @@ orchestrator for publication in `the-omega-institute/trureturing-experiments`.
   $q=12,x=5000$, independently of any coefficient-sign argument.
 - **COMPUTED:** the grid experiment above gives the following minima of
   $\Delta_f/f(3/2;x)^2$. Its command, exit code and script sha256 are in
-  Evidence; publication link: EXPERIMENTS_LINK_TBD.
+  Evidence; programs: https://github.com/the-omega-institute/trureturing-experiments/tree/ed97a20d9cffa80f649d016ef2f8f5fbe695e0b3/experiments/kalmykov-karp-pfq-function.
 
   | $q$ | minimum | $x$ |
   | --- | --- | --- |
@@ -166,7 +167,7 @@ orchestrator for publication in `the-omega-institute/trureturing-experiments`.
 
 - **COMPUTED:** failure starts between $q=9$ and $q=10$ on this scanned
   grid. The same grid command and script sha256 apply; exit 0;
-  EXPERIMENTS_LINK_TBD. This does not prove a sharp threshold over all $x$.
+  https://github.com/the-omega-institute/trureturing-experiments/tree/ed97a20d9cffa80f649d016ef2f8f5fbe695e0b3/experiments/kalmykov-karp-pfq-function. This does not prove a sharp threshold over all $x$.
 - **PROVED (source, Theorem 3):** the integer-shift theorem is unaffected;
   the counterexample has $\alpha=\beta=1/2$. Its proof and integer-shift
   hypothesis are separate from the conjectured extension.
@@ -180,5 +181,4 @@ orchestrator for publication in `the-omega-institute/trureturing-experiments`.
 
 Literature coverage, citation-index completeness and priority are unverified.
 The grid is a finite multiprecision computation with a fixed truncation,
-not a proof of a uniform threshold. EXPERIMENTS_LINK_TBD denotes unpublished
-experiment material, not a verified immutable repository citation.
+not a proof of a uniform threshold.
