@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:9b36731abcf5cc46fc6ae6c63599aff5d26b507c91e04f8c53a96d55e7c99379
+  normalized_sha256: sha256:9b36731abcf5cc46fc6ae6c63599aff5d26b507c91e04f8c53a96d55e7c99379
+cas_ref: sha256:9b36731abcf5cc46fc6ae6c63599aff5d26b507c91e04f8c53a96d55e7c99379
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 非命题结算：解释迈蒙尼德列举的不可能实例及其形而上学前提；几何例子是原文归属而非本条数学证明目标。
+    previous_atom_id: 804a274920de0e3b8bf0d1bfe42dbc2f110d2e3d1bba460ee2a062d9b87bdbd0
+    next_atom_id: 3555dd80d16ced45773e49b7ff608f63af89dee32e45ec1d5e6a496d05b8629e

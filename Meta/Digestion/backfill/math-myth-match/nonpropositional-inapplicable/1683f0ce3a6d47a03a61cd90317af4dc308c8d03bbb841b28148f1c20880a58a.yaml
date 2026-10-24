@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:1683f0ce3a6d47a03a61cd90317af4dc308c8d03bbb841b28148f1c20880a58a
+  normalized_sha256: sha256:1683f0ce3a6d47a03a61cd90317af4dc308c8d03bbb841b28148f1c20880a58a
+cas_ref: sha256:1683f0ce3a6d47a03a61cd90317af4dc308c8d03bbb841b28148f1c20880a58a
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: CBETA 固定版本、〈观行品〉阅读范围与颂注问答归属；后文用途说明未断言有限模型定理。
+    previous_atom_id: 7f03d0e8d6a86bcced9ebc578b22fba43ddb525c27c22b5fe5b47327dfe20cb6
+    next_atom_id: 0939ea78c094bf38e58466c1cbe76af794362ecdc7978f341dbd9f166ed73969

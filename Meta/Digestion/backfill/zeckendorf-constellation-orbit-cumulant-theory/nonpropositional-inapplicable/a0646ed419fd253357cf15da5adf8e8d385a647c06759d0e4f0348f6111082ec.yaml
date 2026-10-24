@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:a0646ed419fd253357cf15da5adf8e8d385a647c06759d0e4f0348f6111082ec
+  normalized_sha256: sha256:a0646ed419fd253357cf15da5adf8e8d385a647c06759d0e4f0348f6111082ec
+cas_ref: sha256:a0646ed419fd253357cf15da5adf8e8d385a647c06759d0e4f0348f6111082ec
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: A section heading and a reference-introduction fragment; no formula for the O-5 exponent or new mathematical conclusion is contained here.
+    previous_atom_id: 854eb9ace6761068461236cd71042573b9d966d4a67f2a75cfb72e0bf47bf85c
+    next_atom_id: 87986c7f3ea9f6d234017bc0323a5ccc81c8804350901387b9600b5b1ffc83cc

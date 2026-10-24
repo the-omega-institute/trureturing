@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:5fff902e7dcbae606f238027b3d707870bf1a3879c2370e51613b7c08d504b11
+  normalized_sha256: sha256:5fff902e7dcbae606f238027b3d707870bf1a3879c2370e51613b7c08d504b11
+cas_ref: sha256:5fff902e7dcbae606f238027b3d707870bf1a3879c2370e51613b7c08d504b11
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 本项仅设定双项来源的指标假设并用 L_s=F_{s-1}+F_{s+1} 引入 Lucas 数记号，最后说明乘积恒等式的使用目的；没有断言该恒等式或秩估计。
+    previous_atom_id: ec97f800406aed26c66b634f487c5179b9ca4262cf2df953e611a5fb830354b5
+    next_atom_id: bec3ee4314c7c67dee8e9f0275d4441415083a5975634ddec8474df829c5b147

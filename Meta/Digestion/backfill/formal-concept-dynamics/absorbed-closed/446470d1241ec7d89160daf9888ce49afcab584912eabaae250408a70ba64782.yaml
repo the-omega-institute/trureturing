@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:446470d1241ec7d89160daf9888ce49afcab584912eabaae250408a70ba64782
+  normalized_sha256: sha256:446470d1241ec7d89160daf9888ce49afcab584912eabaae250408a70ba64782
+cas_ref: sha256:446470d1241ec7d89160daf9888ce49afcab584912eabaae250408a70ba64782
+coverage_gids:
+  - gid: D5/S1/Deficit/Cocycles/AdditiveCarryCocycle.section_carry_cocycle
+    target_statement_id: sha256:4a931266d7e22261e7758f8d12cb0d171c8ec1bd5a1ee5c4db0758e4bcd84cbc
+receipts:
+  unresolved_subitems: []

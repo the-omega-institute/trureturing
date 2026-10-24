@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:8bba473e62b7f29e4d24a8455f18115484b0c3c8023798b03893d71ce5414f79
+  normalized_sha256: sha256:8bba473e62b7f29e4d24a8455f18115484b0c3c8023798b03893d71ce5414f79
+cas_ref: sha256:8bba473e62b7f29e4d24a8455f18115484b0c3c8023798b03893d71ce5414f79
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 只披露原环境没有编译器、候选源码未编译及适用范围，不认证任何数学结论。
+    previous_atom_id: 0b055a7e1cedcfbcd77ca1284480d254c08020bf1dfe6cb4b8a7a31f1773700f
+    next_atom_id: feb99385b510cfe282fb24b026a6c2a1dc88db2ada7dd0fe5011dce5a80a491c

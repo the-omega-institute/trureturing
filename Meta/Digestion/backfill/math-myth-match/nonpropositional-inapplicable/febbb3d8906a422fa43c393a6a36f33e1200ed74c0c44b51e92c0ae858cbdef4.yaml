@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:febbb3d8906a422fa43c393a6a36f33e1200ed74c0c44b51e92c0ae858cbdef4
+  normalized_sha256: sha256:febbb3d8906a422fa43c393a6a36f33e1200ed74c0c44b51e92c0ae858cbdef4
+cas_ref: sha256:febbb3d8906a422fa43c393a6a36f33e1200ed74c0c44b51e92c0ae858cbdef4
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 共同源头与共同机会的哲学解释及待研究方向。
+    previous_atom_id: 4008069a72c7c085ac8999cf2c1666a44c649c38422eba6fdccff385990a1801
+    next_atom_id: 0d19fb658d745488709237108178cdb32aa56fb5f6f3ba68e256ec59b1811abc

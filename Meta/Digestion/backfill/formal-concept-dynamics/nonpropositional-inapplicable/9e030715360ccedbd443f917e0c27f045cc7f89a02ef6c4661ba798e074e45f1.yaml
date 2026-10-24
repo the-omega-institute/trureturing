@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:9e030715360ccedbd443f917e0c27f045cc7f89a02ef6c4661ba798e074e45f1
+  normalized_sha256: sha256:9e030715360ccedbd443f917e0c27f045cc7f89a02ef6c4661ba798e074e45f1
+cas_ref: sha256:9e030715360ccedbd443f917e0c27f045cc7f89a02ef6c4661ba798e074e45f1
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 哲学解释分类中的“结构冲突”标签。
+    previous_atom_id: f7178cb564390da265d4622b28fa89feacf7ca094e8c414dea1c63bb33b2c04b
+    next_atom_id: b07ffa18f424cd9cddd1bddad4c020eac6f25ccfc9b5ed6e7ca28a42cc3c01c6

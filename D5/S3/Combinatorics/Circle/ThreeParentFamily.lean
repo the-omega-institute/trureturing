@@ -5,12 +5,15 @@
    anchors: [mathlib/module/Mathlib.Data.List.FinRange, mathlib/module/Mathlib.Data.Int.ModEq]
    utility: none
    digest: A sharp infinite actual-source family via binary child selection and a closed strip path. -/
-import D5.S3.Combinatorics.Circle.SourceWidth
+module
+public import D5.S3.Combinatorics.Circle.SourceWidth
 
 /-! A complete physical-label construction for one infinite family of centered sources. -/
 
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
+
+@[expose] public section
 
 namespace D5.S3.Combinatorics.Circle.ThreeParentFamily
 open SourceWidth
@@ -86,7 +89,7 @@ private theorem source_values (r : ℕ) (hr : 4 ≤ r) :
   simp only [actualSource, ht]
   exact ⟨hv0, hv1, hv2, hv3, hv4, tail⟩
 
-private theorem dyadic_ofFn {α : Type*} (f : α → ℤ) (n : ℕ) (b : ℤ)
+theorem dyadic_ofFn {α : Type*} (f : α → ℤ) (n : ℕ) (b : ℤ)
     (g : Fin n → α) (hg : ∀ i, f (g i) = 2 ^ i.val * b) :
     SourceWidth.Dyadic f b (List.ofFn g) := by
   induction n generalizing b with

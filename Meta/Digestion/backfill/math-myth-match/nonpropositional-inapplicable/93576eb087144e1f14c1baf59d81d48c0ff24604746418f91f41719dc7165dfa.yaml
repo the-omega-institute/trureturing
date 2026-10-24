@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:93576eb087144e1f14c1baf59d81d48c0ff24604746418f91f41719dc7165dfa
+  normalized_sha256: sha256:93576eb087144e1f14c1baf59d81d48c0ff24604746418f91f41719dc7165dfa
+cas_ref: sha256:93576eb087144e1f14c1baf59d81d48c0ff24604746418f91f41719dc7165dfa
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 巴哈伊经验断言与比喻效力的解释义务；属于引文解释、建模约定或研究建议，没有另立待证数学断言，本收据不验证其文献或经验真值。
+    previous_atom_id: 6b7333a1beda0f99bfbdf9ac999166bcb79b39fa81d22dd36017a9a3c7d359f0
+    next_atom_id: 52140e2a472657afc90ce18582876d93e74a5b4c51038ecfc0594ebfb75b76c9

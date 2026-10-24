@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:55573e1764c9c038deec7eb5b6b949d95749e80e7c545254e7f663119a662f4f
+  normalized_sha256: sha256:55573e1764c9c038deec7eb5b6b949d95749e80e7c545254e7f663119a662f4f
+cas_ref: sha256:55573e1764c9c038deec7eb5b6b949d95749e80e7c545254e7f663119a662f4f
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 规定修订时区分条件定理与实际应用，不提出需另证的对象级数学命题。
+    previous_atom_id: 210f6fa1cb9446c03c2bdf2bf33650f513c0bf135daeb78c430cb16a98ca0318
+    next_atom_id: 4e567ba789661ce675ffd9a5aa482645e0778ea5c0e50e59bb6699c404de4036

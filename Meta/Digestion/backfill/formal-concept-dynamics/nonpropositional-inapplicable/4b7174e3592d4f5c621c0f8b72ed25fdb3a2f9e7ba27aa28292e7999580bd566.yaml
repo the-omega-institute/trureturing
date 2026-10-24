@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:4b7174e3592d4f5c621c0f8b72ed25fdb3a2f9e7ba27aa28292e7999580bd566
+  normalized_sha256: sha256:4b7174e3592d4f5c621c0f8b72ed25fdb3a2f9e7ba27aa28292e7999580bd566
+cas_ref: sha256:4b7174e3592d4f5c621c0f8b72ed25fdb3a2f9e7ba27aa28292e7999580bd566
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 规定权利为禁止转换类并要求合法制度避开的规范性约定；集合式给出转换的类型，没有断言某具体 FLOW 或价值不等式成立。
+    previous_atom_id: 3feb8291781136cf492ba9a044672b8d1b8547c4e7d0d8b8a50d92efa8e60b46
+    next_atom_id: 782fbdf0be76cd64f09ebacebf718769dc256da02cec72ff6325660d2666f824

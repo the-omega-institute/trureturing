@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:b5df768cc9bef2b1f708e8bf9fb3f5fc05e5dfe98eedaf907728f3aac2537fef
+  normalized_sha256: sha256:b5df768cc9bef2b1f708e8bf9fb3f5fc05e5dfe98eedaf907728f3aac2537fef
+cas_ref: sha256:b5df768cc9bef2b1f708e8bf9fb3f5fc05e5dfe98eedaf907728f3aac2537fef
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 'Nonpropositional: 仅要求把关系坐标选择与无限质量背景近似区分开，并为近似承担条件，是建模纪律。'
+    previous_atom_id: 2c0385d961086a7f12b44fd257c94332c4ce79acfe3054246a03874c0d4f6a95
+    next_atom_id: 74a4671e6e2f81e20cc793c4d02b5b9550353caf75c897a9c3577989f8004bcb

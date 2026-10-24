@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:c4d10c4a3d32468a9ff390920629e5b30641217f9ae95ec05c3e0d5f11bb096f
+  normalized_sha256: sha256:c4d10c4a3d32468a9ff390920629e5b30641217f9ae95ec05c3e0d5f11bb096f
+cas_ref: sha256:c4d10c4a3d32468a9ff390920629e5b30641217f9ae95ec05c3e0d5f11bb096f
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 阿奎那出声祈祷的实践和礼仪语境；属于引文解释、建模约定或研究建议，没有另立待证数学断言，本收据不验证其文献或经验真值。
+    previous_atom_id: ff1f52f4ae62e5ba9a0be147caea6077b8dab1d271e88637d8f83c71a67cc99b
+    next_atom_id: 54130a7ae8b2a0f0b2532f0c3520af3014bd62dc36e7ed02bf8f8b3979e6446e

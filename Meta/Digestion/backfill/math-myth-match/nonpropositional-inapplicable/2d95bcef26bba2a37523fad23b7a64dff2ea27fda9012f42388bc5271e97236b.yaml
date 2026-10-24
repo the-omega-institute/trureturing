@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:2d95bcef26bba2a37523fad23b7a64dff2ea27fda9012f42388bc5271e97236b
+  normalized_sha256: sha256:2d95bcef26bba2a37523fad23b7a64dff2ea27fda9012f42388bc5271e97236b
+cas_ref: sha256:2d95bcef26bba2a37523fad23b7a64dff2ea27fda9012f42388bc5271e97236b
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 解释皮尔士信念固定原文中的习惯、真实怀疑和探究，不断言满足感等于真。
+    previous_atom_id: 6895e8cc762bf7e6c9eb729e562b34b593bb07db0a49ac2ebe7dfbd5e3321d20
+    next_atom_id: cdd3e618304d16b5eeddaf24ca313fce977dcf76b0683df231a3873f082ca9dc

@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:e445499355d88df6002773e059be6e5486155d994c394e6f280a011dca1cf3cd
+  normalized_sha256: sha256:e445499355d88df6002773e059be6e5486155d994c394e6f280a011dca1cf3cd
+cas_ref: sha256:e445499355d88df6002773e059be6e5486155d994c394e6f280a011dca1cf3cd
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 区分专注理想和现实可能过失，说明选择安全目标需要额外解释。
+    previous_atom_id: ae9b39830756d675c13997daf406efc5528bd8d2c6f776acf71bd2816aa20ce7
+    next_atom_id: c355555e08119b3fd2d6b57c3ec4627154eb4c53e3fa6a37c9ad5e3628d3b882
