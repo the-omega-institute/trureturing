@@ -28,7 +28,7 @@ The spanning property:
 
 > We write by product states $|\psi_k \otimes \phi_k\rangle$ that vanish on a witness $W$: $\langle \psi_k\otimes \phi_k| W |\psi_k \otimes \phi_k \rangle=0$. Then, we call a witness $W$ has the spanning property if $\mathrm{spanning~property:~}\mathrm{span}\{|\psi_k\otimes \phi_k\rangle \} = \H \otimes \H$, and $W$ is optimal.
 
-Generalized mirroring (Section VII):
+Generalized mirroring (Section V, "Bipartite systems: generalization"):
 
 > We here generalize mirrored EWs in Eq. (\ref{eq:mr}) such that they are connected by some other observable, not an identity, $W + M = \mathbbm{K}$, where it follows that $\mathbbm{K}$ block-positive, i.e., it is nonnegative for all separable states since $W$ and $M$ are EWs.
 
