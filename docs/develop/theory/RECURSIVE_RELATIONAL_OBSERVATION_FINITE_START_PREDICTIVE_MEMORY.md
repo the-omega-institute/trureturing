@@ -984,3 +984,229 @@ The existing FIB consumer is [Fiber Calculus Continuation II, Definitions 22.2 a
 The primary probability references for this section are Durrett, [*Probability: Theory and Examples*, fifth edition, Theorem A.3.1, pp.464–465, and Theorems 4.6.8–4.6.9, p.247](https://services.math.duke.edu/~rtd/PTE/PTE5_011119.pdf), for extension and upward conditional-expectation convergence; the finite-chain occupation statement is Theorem 5.6.1, pp.310–311, as well as the Levin–Peres–Wilmer source already cited in §10. The elementary finite-event and $L^1$ arguments above give the needed correspondences explicitly. Shalizi–Crutchfield's predictive-state conditioning frame cited in §7 retains its stationary entire-past and almost-sure scope. The source-specific deductions here concern every positive finite acquired history and every finite future horizon under the separate equation (11.1); capped-horizon, averaged, Bayesian-prior and eventual-learning targets have different quantifiers. The finite witness sizes need not have a uniform bound, and no efficient synthesis, effective arbitrary-real implementation or global novelty claim is made.
 
 ## 追加锚（本行以下为增补区）
+
+## 12. Checkpointed moving-current acquisition and finite continuation
+
+The static code of the ordered-tree source supplies an exact signature once its
+ancestor colours are available, and Theorem 5.1 supplies the whole-future
+diameter of a signature cell. The following result adds one explicit acquisition
+contract that makes those two facts usable on one source run. It is a new
+sampler contract; it is not inferred from the passive unit-seam heat law.
+
+**Definition 12.1 (the checkpointed parent sampler).** Retain the source
+$\mathcal P=\{L,R\}^{*}$, the colour $q$, depth $d$, and the source law of
+Definition 1.1 in the companion [FIB-ATOM finite-joint prediction,
+§§1--3](FIB_ATOM_RECURSIVE_HOLOGRAPHIC_BOUNDARY_GEOMETRY_FINITE_JOINT_PREDICTION.md).
+The observer is initially placed at an unknown address $p$, and receives only
+
+$$
+O(p)=(q(p),d(p)).
+$$
+
+In particular, the literal word $p$ and every unobserved ancestor colour are
+not supplied. During an acquisition window the passive heat clock is paused.
+At a nonroot current address $x$, one **TryUp** call draws an independent
+
+$$
+D\in\{\mathsf{up},\mathsf L,\mathsf R\},\qquad
+\mathbf P(D=\mathsf{up})=\mathbf P(D=\mathsf L)=\mathbf P(D=\mathsf R)=1/3.
+$$
+
+If $D=\mathsf{up}$, the source moves to $\operatorname{par}(x)$ and returns
+$O(\operatorname{par}(x))$ together with a one-use reverse token
+$\tau_x$. If $D=\mathsf L$ or $\mathsf R$, the source stays at $x$, returns
+$O(x)$, and returns no token. A reverse token may later be consumed exactly
+once, while the source is at its endpoint, to move along the same edge back to
+$x$. A rejected call and a token consumption each cost one sampler operation.
+The sampler has no address query, reset, clone, source-correlated random seed or
+future-response oracle.
+
+For $k\le d(p)$, **Acquire(k)** repeats **TryUp** until $k$ accepted calls have
+occurred, retaining the returned colours and the token stack. **Return(k)**
+consumes that stack in reverse order. Thus the source is again at the original
+current address $p$, although the observer still need not know the word $p$.
+Put
+
+$$
+S_k(p)=\bigl(d(p),q(p),q(\operatorname{par}p),\ldots,
+q(\operatorname{par}^{k}p)\bigr),\qquad
+k\le d(p),
+$$
+
+and let $M_k$ denote the retained record consisting of $O(p)$, these $k$
+new colours, and the $k$ reverse tokens. The colours are retained in acquisition
+order; a token is a capability for the particular acquired edge, not a printed
+address.
+
+**Lemma 12.2 (uniform availability and exact cost).** For every address $p$
+and every $0\le k\le d(p)$, **Acquire(k)** terminates almost surely. If $N_k$
+is its number of **TryUp** calls, then
+
+$$
+N_k=\sum_{j=1}^{k}G_j,\qquad
+\mathbf P(G_j=r)=\left(\frac23\right)^{r-1}\frac13,\qquad
+\mathbf E_pN_k=3k.
+\tag{12.1}
+$$
+
+The law of $N_k$ is independent of $p$, $q(p)$, and the literal address.
+After **Return(k)**, the current source is exactly $p$ and the retained colours
+are exactly $S_k(p)$. The complete sampler-run cost, including the $k$
+reverse calls and one prediction request, has expectation $4k+1$.
+
+**Proof.** At every nonroot address each trial is an independent Bernoulli
+success with probability $1/3$. The waiting time $G_j$ for the $j$th
+success is therefore geometric with the displayed mass function. A finite sum of
+such variables is finite almost surely and has expectation $3k$. The source
+depth drops by one on each accepted call, so $k\le d(p)$ keeps every accepted
+call above the root. The returned observation at the $j$th success is the
+colour of $\operatorname{par}^{j}p$, and the reverse token is bound to that
+actual edge. Consuming the tokens in last-in-first-out order reverses the exact
+accepted path, so the source returns to $p$. Adding $k$ reverse calls and
+one request gives $N_k+k+1$, whose expectation is $4k+1$. \square$
+
+**Definition 12.3 (a callable finite prediction task).** Fix $T>0$, an
+integer $H\ge0$, and a finite cylinder $C$ generated by the first $H$
+actual source jumps, their observed endpoint values in $E=C_m\times
+\mathbb N_0$, and rational intervals for the first $H$ waiting times in
+$[0,T]$. After **Acquire(k)** and **Return(k)**, the observer accepts the request
+
+$$
+\operatorname{Predict}_{T,H}(C;M_k):=
+\mathsf L_{r_k(S_k(p))}^{T}(C),
+\tag{12.2}
+$$
+
+where $r_k(s)$ is the lexicographically first address realizing the signature
+$s$, as in Definition 5.2 of the source companion. The request is made while
+the source remains at $p$; after the response the original source law may be
+resumed. The output is a symbolic finite sum of the path probabilities and
+exponential waiting-time integrals for the representative address. It is thus a
+finite task for every fixed $T,H,C$. Its evaluation enumerates at most
+$3^H$ jump routes after a representative search over at most $2^{d(p)}$
+level-$d(p)$ addresses. These are charged computation and output costs, not
+free state capacity.
+
+**Theorem 12.4 (moving-current acquisition-to-forecast bridge).** Let $p$ be
+any deterministic source start, let $h\ge0$, and put
+
+$$
+k=\min\{h,d(p)\}.
+$$
+
+Run the checkpointed sampler, perform **Acquire(k)** and **Return(k)**, and then
+answer every task (12.2) from the retained record. For every finite $T$,
+every $H$, and every requested cylinder $C$,
+
+$$
+\left|\mathsf L_p^T(C)-\operatorname{Predict}_{T,H}(C;M_k)\right|
+\le \min\{b_k(T),2^{-k}\},
+\tag{12.3}
+$$
+
+where $b_k$ is (4.1). The same representative law defines a coherent
+whole-future predictor and satisfies
+
+$$
+\left\|\mathsf L_p^\infty-\mathsf L_{r_k(S_k(p))}^\infty\right\|_{\rm TV}
+\le2^{-k}.
+\tag{12.4}
+$$
+
+If $d(p)\le h$, then $k=d(p)$, the error is zero, and the complete-signature
+classification gives $r_k(S_k(p))=p$. For arbitrary $p$, the acquisition is
+source-uniformly available with
+
+$$
+\mathbf E_pN_k=3k\le3h,\qquad
+\mathbf E_p(\text{all sampler and return calls})=4k+1\le4h+1.
+$$
+
+**Proof.** Lemma 12.2 gives almost-sure completion, the cost bounds, and the
+exact acquired record $S_k(p)$, while **Return(k)** restores the same source
+address. If $d(p)\le h$, the signature contains the complete ancestor list;
+source Theorem 2.1 together with its complete-ancestor clause (source
+Theorem 121.3) makes its realization unique, so $r_k(S_k(p))=p$ and the
+representative law is $\mathsf L_p$. If $d(p)>h$, the
+representative and $p$ lie in one $S_h$-cell. The source companion's
+Theorem 5.1 gives whole-future TV at most $2^{-k}$, and its direct
+same-signature finite-window bound (4.3) gives $b_k(T)$. Restriction to a
+finite cylinder cannot increase TV, proving (12.3); the whole-future statement
+is (12.4). The sampler acts on the same source and returns it to the same
+current address, so no independently realized source, marginal law, or
+post-prefix reset is used. \square$
+
+**Corollary 12.5 (accuracy target and growing acquired memory).** For a target
+$0<\varepsilon<1$, choose
+
+$$
+h_\varepsilon=\left\lceil\log_2(1/\varepsilon)\right\rceil,\qquad
+k_\varepsilon=\min\{h_\varepsilon,d(p)\}.
+$$
+
+The task (12.2) then has whole-future error at most $\varepsilon$, with
+$\mathbf E_pN_{k_\varepsilon}\le3h_\varepsilon$ and complete sampler/return
+cost at most $4h_\varepsilon+1$ in expectation. The retained memory is the
+actual sequence of $k_\varepsilon$ colours and $k_\varepsilon$ edge tokens,
+so its size grows linearly in the acquired depth (plus the unbounded depth
+coordinate in $O(p)$); it is not the fixed alphabet of Theorem 3.2. A finite
+program and finite colour alphabet do not make this memory uniformly bounded.
+For fixed $\varepsilon$, the newly acquired prefix is bounded by
+$h_\varepsilon$, but the supplied depth coordinate and the representative-search
+workspace remain unbounded over all starting depths; this is not a uniform
+finite-memory all-cuts guarantee.
+
+**Proof.** Since $2^{-h_\varepsilon}\le\varepsilon$, (12.4) gives the claim,
+and Lemma 12.2 gives the costs. If $d(p)<h_\varepsilon$, the zero-error case
+of Theorem 12.4 applies. Each successful acquisition appends one colour and one
+edge capability to $M_k$; rejected trials do not erase the retained prefix.
+Thus the record length, rather than the three-valued sampler alphabet, is the
+growing memory coordinate. \square$
+
+**Convention 12.6 (independent meanings and exact limits).** In this bridge,
+space is the actual ordered-tree current address exposed only through $O$ and
+the local edge relation; time is the ordered sampler chronology and its unit
+trial clock, distinct from the resumed passive heat time; boundary is the
+current-source future-law query (12.2); memory is the retained colour sequence
+and reverse-token stack. The proved direction is
+
+$$
+M_k\longrightarrow S_k(p)\longrightarrow\text{current-source forecast},
+$$
+
+with operational restoration supplied by the token stack. Apart from the
+proved exact-depth equality $r_{d(p)}(S_{d(p)}(p))=p$, no address output is part
+of the task; for $k<d(p)$ no literal starting-address recovery is claimed. No
+inverse from a forecast to $M_k$, no recovery of the full chronology or old
+archive, and no mutual recovery of the four views is claimed. The finite-start source remains countable and transient; finite
+stationary unifilar synchronization and entire-past causal-state results do not
+replace this contract. The static UniformSignatureCode and TrueJumpEndpoints
+constructions supply signature coding and endpoint laws, not this acquired
+sampler or its cost.
+
+**Physical-installation boundary.** The mathematical proof assumes a local
+direction sampler with independent $1/3$ trials, exact finite colour/depth
+readout, a one-use same-edge return capability, and a quiescent acquisition
+window. Installing such a sensor, preserving the token, and implementing its
+trial clock are separate physical assumptions and costs. This sampler is an
+alternative controlled interface to the source and differs from the original
+passive heat apparatus; no claim says that passive heat supplies **TryUp**, a
+pause, a return token, or exact online representative evaluation. The theorem
+also does not provide a universal $\alpha/\beta$ reduction, a fixed-memory
+all-cut guarantee, a full address or chronology archive, or a thermodynamic
+price.
+
+**Source and overlap statement.** The source-specific ingredients are the
+ordered-tree recursion and rate-three coupling in the sealed source packet,
+Theorems 2.1, 3.2, 4.1 and 5.1 there, and the corresponding finite-joint
+sections 1--6 of the published source at revision
+3345740d7052863ebbf662b371054295e29e2aa7. The existing finite-start volume
+§§1--9 records the static decoder, whole-law bound, nonclosure and one-trace
+boundary; this section adds only the checkpointed same-source acquisition and
+continued-use contract. Its §10--11 five-mode conditional-update results have
+different finite stationary hypotheses. The independently published
+finite-stationary synchronization (Travers--Crutchfield, arXiv:1008.4182v3)
+and stationary entire-past predictive-memory (Shalizi--Crutchfield,
+cond-mat/9907176v2) documents likewise do not contain this countable
+ordered-tree sampler; their hypotheses are different. No new Lean, Blueprint, Scribe,
+registry, executable mathematics, or physical experiment is asserted here.
