@@ -132,7 +132,7 @@ orchestrator for publication in `the-omega-institute/trureturing-experiments`.
   script sha256 `05a32f42fcfc62c1019fc72e8af647583c002cf985fef9b197dc320aafe4f3a5`.
   At $q=12,x=5000,N=8$, it checks
   $R_8S_8/(3.1416^{12}(A_8+A_8^{\rm term}/(1-\rho))^2)
-  \ge1.2589515657171606$.
+  \ge1.2589$.
 - Finite grid: command `python3 kk1f-scan.py`, exit 0; Python 3 with
   mpmath 1.3.0, 80 decimal digits, 400 terms per series;
   script sha256 `29176b8e5d52c1c84819fc7fd5b211c9843c6b30f38f9fdcfd6407e5b038acc6`.
