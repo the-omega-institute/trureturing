@@ -2,11 +2,15 @@
    generality: G
    mirror-B: D5/B/S3/Analytic/KarpZhangGamma/Result
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
-   anchors: []
+   anchors: [mathlib/module/Mathlib.Analysis.SpecialFunctions.Gamma.BohrMollerup, mathlib/module/Mathlib.RingTheory.Polynomial.Pochhammer, mathlib/module/Mathlib.RingTheory.Binomial, mathlib/module/Mathlib.Analysis.SpecialFunctions.Gamma.Beta]
    utility: none
    digest: Paired gamma kernels give coefficientwise positivity of the two-variable transform. -/
 
-import D5.S3.Analytic.KarpZhangGamma.Kernel
+import D5.S3.Analytic.KarpZhangGamma.Smoothing
+import Mathlib.Analysis.SpecialFunctions.Gamma.BohrMollerup
+import Mathlib.RingTheory.Polynomial.Pochhammer
+import Mathlib.RingTheory.Binomial
+import Mathlib.Analysis.SpecialFunctions.Gamma.Beta
 
 /-!
 admission_basis: escape-witness
@@ -16,10 +20,25 @@ backward step for the four-term bracket. pairedKernel_sign inductively
 propagates nonpositivity across arbitrary index gaps, contradicting an
 earlier positive entry. Pairing counts the middle term once. The nonnegative
 total and increasing smoothed weights prove two_variable_nonneg.
+The convolution helpers apply pinned Chu–Vandermonde through
+Ring.descPochhammer_smeval_add and Complex.Gamma_add_nat_div_Gamma_eq,
+then use Real.convexOn_log_Gamma. These helpers and the paired total are
+bind-only; the sign propagation supplies the module content.
 The gamma-series identification is supplied by Series, not this module.
 
-Per-declaration proof_shape (local names belong to this namespace;
-cross-module names have prefix D5.S3.Analytic):
+Per-declaration proof_shape (Kernel names belong to the kernel namespace;
+other local names belong to Result; cross-module names have prefix D5.S3.Analytic):
+* Kernel.binomialGamma_sum: proof_shape: bind-only; escape_witness: none;
+  consumers: reciprocalGamma_sum.
+* Kernel.reciprocalGamma_sum: proof_shape: bind-only; escape_witness: none;
+  consumers: kernel_sum_nonneg.
+* Kernel.gamma_balanced_shift: proof_shape: bind-only; escape_witness: none;
+  consumers: Kernel.kernel_sum_nonneg, reciprocalPair_balanced.
+* Kernel.kernel: proof_shape: definition; escape_witness: none;
+  consumers: Kernel.kernel_sum_nonneg, finite_pairing, pairedKernel, pairedKernel_bracket, pairedKernel_sum_nonneg, transformDelta, two_variable_nonneg, KarpZhangGamma.Series.transformed_delta.
+* Kernel.kernel_sum_nonneg: proof_shape: bind-only; escape_witness: none;
+  consumers: pairedKernel_sum_nonneg.
+
 * pairedKernel: proof_shape: definition; escape_witness: none;
   consumers: finite_pairing, pairedKernel_bracket, pairedKernel_sign, pairedKernel_sum_nonneg, two_variable_nonneg.
 * reciprocalPair: proof_shape: definition; escape_witness: none;
@@ -50,7 +69,7 @@ cross-module names have prefix D5.S3.Analytic):
   consumers: finite_pairing.
 * finite_pairing: proof_shape: bind-only; escape_witness: none;
   consumers: pairedKernel_sum_nonneg, two_variable_nonneg.
-* pairedKernel_sum_nonneg: proof_shape: content; escape_witness: KarpZhangGamma.Kernel.binomialGamma_sum;
+* pairedKernel_sum_nonneg: proof_shape: bind-only; escape_witness: none;
   consumers: two_variable_nonneg.
 * transformDelta: proof_shape: definition; escape_witness: none;
   consumers: two_variable_nonneg, KarpZhangGamma.Series.gamma_half, KarpZhangGamma.Series.transformed_delta.
@@ -68,6 +87,192 @@ not bounded enumeration, checkers, numerical reductions or certified instances.
 noncomputable section
 open scoped BigOperators
 open Finset
+
+open Polynomial
+
+namespace D5.S3.Analytic.KarpZhangGamma.Kernel
+
+open Smoothing
+
+private theorem binomialGamma_sum (m : ℕ) : ∀ b c : ℝ, 0 < b → 0 < c →
+    binomialProduct (fun k => 1 / Real.Gamma (b + k))
+      (fun k => 1 / Real.Gamma (c + k)) m =
+    (ascPochhammer ℝ m).eval (b + c + m - 1) /
+      (Real.Gamma (b + m) * Real.Gamma (c + m)) := by
+  intro b c hb hc
+  have ratio (x : ℝ) (hx : 0 < x) (n : ℕ) :
+      Real.Gamma (x + n) / Real.Gamma x = (ascPochhammer ℝ n).eval x := by
+    apply Complex.ofReal_injective
+    have hz : ∀ k : ℕ, (x : ℂ) ≠ -k := by
+      intro k hk
+      have he := congrArg Complex.re hk
+      simp only [Complex.ofReal_re, Complex.neg_re, Complex.natCast_re] at he
+      have := Nat.cast_nonneg (α := ℝ) k
+      linarith
+    have h := Complex.Gamma_add_nat_div_Gamma_eq (n := n) (x : ℂ) hz
+    have heval : (ascPochhammer ℝ n).eval₂ Complex.ofRealHom (x : ℂ) =
+        Complex.ofReal ((ascPochhammer ℝ n).eval x) :=
+      eval₂_at_apply (p := ascPochhammer ℝ n) Complex.ofRealHom x
+    simpa only [← Complex.ofReal_natCast, ← Complex.ofReal_add,
+      Complex.Gamma_ofReal, ← Complex.ofReal_div,
+      ascPochhammer_eval₂ Complex.ofRealHom, heval] using h
+  have hv := Ring.descPochhammer_smeval_add (R := ℝ)
+    (r := c + m - 1) (s := b + m - 1) m (Commute.all _ _)
+  rw [Finset.Nat.sum_antidiagonal_eq_sum_range_succ_mk] at hv
+  simp only [descPochhammer_smeval_eq_ascPochhammer,
+    ascPochhammer_smeval_eq_eval] at hv
+  have hl : c + (m : ℝ) - 1 + (b + m - 1) - m + 1 = b + c + m - 1 := by ring
+  rw [hl] at hv
+  have hgb : Real.Gamma (b + m) ≠ 0 := ne_of_gt (Real.Gamma_pos_of_pos (by positivity))
+  have hgc : Real.Gamma (c + m) ≠ 0 := ne_of_gt (Real.Gamma_pos_of_pos (by positivity))
+  apply (eq_div_iff (mul_ne_zero hgb hgc)).2
+  unfold binomialProduct
+  rw [sum_mul, hv]
+  apply sum_congr rfl
+  intro k hk
+  have hkm : k ≤ m := Nat.le_of_lt_succ (mem_range.mp hk)
+  dsimp only
+  have hec : c + (m : ℝ) - 1 - k + 1 = c + (m - k : ℕ) := by rw [Nat.cast_sub hkm]; ring
+  have heb : b + (m : ℝ) - 1 - (m - k : ℕ) + 1 = b + k := by rw [Nat.cast_sub hkm]; ring
+  rw [hec, heb, ← ratio (c + (m - k : ℕ)) (by positivity) k,
+    ← ratio (b + k) (by positivity) (m - k)]
+  have hec' : c + (m - k : ℕ) + k = c + m := by rw [Nat.cast_sub hkm]; ring
+  have heb' : b + (k : ℝ) + (m - k : ℕ) = b + m := by rw [Nat.cast_sub hkm]; ring
+  rw [hec', heb']
+  have hgbk : Real.Gamma (b + k) ≠ 0 := ne_of_gt (Real.Gamma_pos_of_pos (by positivity))
+  have hgck : Real.Gamma (c + (m - k : ℕ)) ≠ 0 := ne_of_gt (Real.Gamma_pos_of_pos (by positivity))
+  field_simp [hgbk, hgck]
+
+/-- Identity (3.11), stated as a finite sum. The m=0 case needs no positivity
+of the displayed Pochhammer argument. -/
+theorem reciprocalGamma_sum (b c : ℝ) (hb : 0 < b) (hc : 0 < c) (m : ℕ) :
+    (∑ k ∈ range (m + 1),
+      1 / ((k.factorial : ℝ) * ((m - k).factorial : ℝ) *
+        Real.Gamma (b + k) * Real.Gamma (c + (m - k)))) =
+    (ascPochhammer ℝ m).eval (b + c + m - 1) /
+      ((m.factorial : ℝ) * Real.Gamma (b + m) * Real.Gamma (c + m)) := by
+  calc
+    _ = productCoeff (fun k => 1 / Real.Gamma (b + k))
+        (fun k => 1 / Real.Gamma (c + k)) m := by
+      unfold productCoeff
+      apply sum_congr rfl
+      intro k hk
+      dsimp only
+      rw [Nat.cast_sub (Nat.le_of_lt_succ (mem_range.mp hk))]
+      simp only [div_eq_mul_inv, mul_inv_rev, one_mul]
+      ring
+    _ = _ := by
+      rw [productCoeff_eq, binomialGamma_sum m b c hb hc]
+      simp only [div_eq_mul_inv, mul_inv_rev]
+      ring
+
+theorem gamma_balanced_shift (a α β : ℝ) (ha : 0 < a)
+    (hα : 0 ≤ α) (hβ : 0 ≤ β) :
+    Real.Gamma (a + α) * Real.Gamma (a + β) ≤
+      Real.Gamma a * Real.Gamma (a + α + β) := by
+  by_cases hz : α + β = 0
+  · have hαz : α = 0 := by linarith
+    have hβz : β = 0 := by linarith
+    simp [hαz, hβz]
+  · have ht : 0 < α + β := lt_of_le_of_ne (add_nonneg hα hβ) (Ne.symm hz)
+    have hw : β / (α + β) + α / (α + β) = 1 := by
+      field_simp [ne_of_gt ht]
+      <;> ring
+    have hw' : α / (α + β) + β / (α + β) = 1 := by linarith
+    have harg1 : β / (α + β) * a + α / (α + β) * (a + α + β) = a + α := by
+      field_simp [ne_of_gt ht]
+      <;> ring
+    have harg2 : α / (α + β) * a + β / (α + β) * (a + α + β) = a + β := by
+      field_simp [ne_of_gt ht]
+      <;> ring
+    have h1 := Real.convexOn_log_Gamma.2 ha
+      (show 0 < a + α + β by linarith)
+      (div_nonneg hβ (le_of_lt ht)) (div_nonneg hα (le_of_lt ht)) hw
+    have h2 := Real.convexOn_log_Gamma.2 ha
+      (show 0 < a + α + β by linarith)
+      (div_nonneg hα (le_of_lt ht)) (div_nonneg hβ (le_of_lt ht)) hw'
+    simp only [Function.comp_apply, smul_eq_mul] at h1 h2
+    rw [harg1] at h1
+    rw [harg2] at h2
+    have hlog : Real.log (Real.Gamma (a + α)) + Real.log (Real.Gamma (a + β)) ≤
+        Real.log (Real.Gamma a) + Real.log (Real.Gamma (a + α + β)) := by
+      calc
+        _ ≤ (β / (α + β) * Real.log (Real.Gamma a) +
+              α / (α + β) * Real.log (Real.Gamma (a + α + β))) +
+            (α / (α + β) * Real.log (Real.Gamma a) +
+              β / (α + β) * Real.log (Real.Gamma (a + α + β))) := add_le_add h1 h2
+        _ = (β / (α + β) + α / (α + β)) * Real.log (Real.Gamma a) +
+              (α / (α + β) + β / (α + β)) *
+                Real.log (Real.Gamma (a + α + β)) := by ring
+        _ = _ := by rw [hw, hw', one_mul, one_mul]
+    have hp := Real.Gamma_pos_of_pos ha
+    have hpα := Real.Gamma_pos_of_pos (show 0 < a + α by linarith)
+    have hpβ := Real.Gamma_pos_of_pos (show 0 < a + β by linarith)
+    have hpαβ := Real.Gamma_pos_of_pos (show 0 < a + α + β by linarith)
+    apply (Real.log_le_log_iff (mul_pos hpα hpβ) (mul_pos hp hpαβ)).mp
+    rw [Real.log_mul (ne_of_gt hpα) (ne_of_gt hpβ),
+      Real.log_mul (ne_of_gt hp) (ne_of_gt hpαβ)]
+    exact hlog
+
+/-- The unpaired reciprocal-gamma kernel M from (3.3). -/
+def kernel (a α β : ℝ) (m k : ℕ) : ℝ :=
+  (1 / ((k.factorial : ℝ) * ((m - k).factorial : ℝ))) *
+    (1 / (Real.Gamma (a + α + k) * Real.Gamma (a + β + (m - k))) -
+      1 / (Real.Gamma (a + k) * Real.Gamma (a + α + β + (m - k))))
+
+/-- The total unpaired kernel is nonnegative for all nonnegative real shifts.
+This is the weak sum assertion needed by the weighting principle; it does
+not supply the separate one-sign-change hypothesis for the paired kernel. -/
+theorem kernel_sum_nonneg (a α β : ℝ) (ha : 0 < a)
+    (hα : 0 ≤ α) (hβ : 0 ≤ β) (m : ℕ) :
+    0 ≤ ∑ k ∈ range (m + 1), kernel a α β m k := by
+  have hsum : (∑ k ∈ range (m + 1), kernel a α β m k) =
+      (ascPochhammer ℝ m).eval (2 * a + α + β + m - 1) / (m.factorial : ℝ) *
+        (1 / (Real.Gamma (a + α + m) * Real.Gamma (a + β + m)) -
+          1 / (Real.Gamma (a + m) * Real.Gamma (a + α + β + m))) := by
+    calc
+      _ = (∑ k ∈ range (m + 1),
+          1 / ((k.factorial : ℝ) * ((m - k).factorial : ℝ) *
+            Real.Gamma (a + α + k) * Real.Gamma (a + β + (m - k)))) -
+          ∑ k ∈ range (m + 1),
+            1 / ((k.factorial : ℝ) * ((m - k).factorial : ℝ) *
+              Real.Gamma (a + k) * Real.Gamma (a + α + β + (m - k))) := by
+        rw [← sum_sub_distrib]
+        apply sum_congr rfl
+        intro k _
+        simp only [kernel, div_eq_mul_inv, mul_inv_rev, one_mul]
+        ring
+      _ = _ := by
+        rw [reciprocalGamma_sum (a + α) (a + β) (by linarith) (by linarith) m,
+          reciprocalGamma_sum a (a + α + β) ha (by linarith) m]
+        rw [show (a + α) + (a + β) + (m : ℝ) - 1 =
+            2 * a + α + β + m - 1 by ring,
+          show a + (a + α + β) + (m : ℝ) - 1 =
+            2 * a + α + β + m - 1 by ring]
+        simp only [div_eq_mul_inv, mul_inv_rev]
+        ring
+  have hp : 0 ≤ (ascPochhammer ℝ m).eval (2 * a + α + β + m - 1) := by
+    cases m with
+    | zero => simp
+    | succ n =>
+      apply le_of_lt
+      apply ascPochhammer_pos
+      push_cast
+      have hn : 0 ≤ (n : ℝ) := Nat.cast_nonneg n
+      linarith
+  have hbal := gamma_balanced_shift (a + m) α β (by positivity) hα hβ
+  have harg1 : (a + (m : ℝ)) + α = a + α + m := by ring
+  have harg2 : (a + (m : ℝ)) + β = a + β + m := by ring
+  have harg3 : (a + (m : ℝ)) + α + β = a + α + β + m := by ring
+  rw [harg3, harg1, harg2] at hbal
+  have hden : 0 < Real.Gamma (a + α + m) * Real.Gamma (a + β + m) :=
+    mul_pos (Real.Gamma_pos_of_pos (by positivity)) (Real.Gamma_pos_of_pos (by positivity))
+  rw [hsum]
+  exact mul_nonneg (div_nonneg hp (by positivity))
+    (sub_nonneg.mpr (one_div_le_one_div_of_le hden hbal))
+
+end D5.S3.Analytic.KarpZhangGamma.Kernel
+
 
 namespace D5.S3.Analytic.KarpZhangGamma.Result
 

@@ -14,7 +14,9 @@ Lean statement: `D5/S3/Analytic/KarpZhangReciprocal/Result.IsLogConcave`
 
 *Commentary.*
 
-Definition 1.1, page 2: Let (f_k), k >= 0, be a non-negative nontrivial real sequence. We call (f_k) log-concave (or Polya frequency two, PF2, or doubly positive) if f_k^2 >= f_(k-1) f_(k+1) for each natural k >= 1, and (f_k) is supported on an interval of integers (i.e., f_N = 0 implies either f_(N+i) = 0 for all natural i or f_(N-i) = 0 for i = 0, ..., N). The Lean predicate retains all four conditions: nonnegativity at every natural index, an index with nonzero value, the adjacent-product inequality for k >= 1, and the stated disjunction for every zero entry. Natural subtraction is used only with the stated bounds.
+Definition 1.1, page 2: Let $\{f_{k}\}_{k=0}^{\infty}$ be a non-negative nontrivial real sequence. We call $\{f_{k}\}_{k=0}^{\infty}$ log-concave (or Pólya frequency two – $PF_{2}$, or doubly positive) if $f_{k}^{2} \ge f_{k - 1}f_{k + 1}$ for each $k\in\mathbb{N}$, and $\{f_{k}\}_{k=0}^{\infty}$ is supported on an interval of integers (i.e., $f_{N} = 0$ implies either $f_{N + i} = 0$ for all $i\in\mathbb{N}_{0}$ or $f_{N - i} = 0$ for $i=0,...,N$).
+
+The Lean predicate retains all four conditions: nonnegativity at every natural index, an index with nonzero value, the adjacent-product inequality for k ≥ 1, and the stated disjunction for every zero entry. Natural subtraction is used only with the stated bounds.
 
 **Definition 1.2 (Finite Cauchy coefficient).**
 
@@ -30,7 +32,7 @@ For a real sequence y, real mu, alpha, beta and natural m, delta(y,mu,alpha,beta
 
 **Theorem 1.3 (Balancing one pair of indices).**
 
-Lean statement: `D5/S3/Analytic/KarpZhangReciprocal/Result.balanced_step`
+$$\forall y \in Nat \to Real,\; \operatorname{IsLogConcave}\left(y\right) \Rightarrow \left(\forall m \in Nat,\; \forall k \in Nat,\; k < \operatorname{Nat}.\operatorname{div}\left(m, 2\right) \Rightarrow y\left(k\right) \cdot y\left(m - k\right) \le y\left(k + 1\right) \cdot y\left(m - \left(k + 1\right)\right)\right)$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Analytic/KarpZhangReciprocal/Result.balanced_step` (`✓ std3`). ∎
 
@@ -44,7 +46,7 @@ For every real sequence y satisfying IsLogConcave, natural m and natural k stric
 
 **Theorem 1.4 (Abel summation identity).**
 
-Lean statement: `D5/S3/Analytic/KarpZhangReciprocal/Result.abel_reduction`
+$$\forall y \in Nat \to Real,\; \forall mu \in Real,\; \forall alpha \in Real,\; \forall beta \in Real,\; \forall m \in Nat,\; \operatorname{delta}\left(y, mu, alpha, beta, m\right) = y\left(0\right) \cdot y\left(m\right) \cdot \left(\operatorname{F}\left(m, 0, m, mu + alpha, mu + beta\right) - \operatorname{F}\left(m, 0, m, mu, mu + alpha + beta\right)\right) + \sum_{q \in \operatorname{Finset}.\operatorname{range}\left(\operatorname{Nat}.\operatorname{div}\left(m, 2\right)\right)} \left(y\left(q + 1\right) \cdot y\left(m - \left(q + 1\right)\right) - y\left(q\right) \cdot y\left(m - q\right)\right) \cdot \left(\operatorname{F}\left(m, q + 1, m - \left(q + 1\right), mu + alpha, mu + beta\right) - \operatorname{F}\left(m, q + 1, m - \left(q + 1\right), mu, mu + alpha + beta\right)\right)$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Analytic/KarpZhangReciprocal/Result.abel_reduction` (`✓ std3`). ∎
 
@@ -58,7 +60,7 @@ For every real sequence y, real mu, alpha, beta and natural m, put h=floor(m/2),
 
 **Theorem 1.5 (All coefficients are nonnegative).**
 
-Lean statement: `D5/S3/Analytic/KarpZhangReciprocal/Result.reciprocal_half`
+$$\forall y \in Nat \to Real,\; \operatorname{IsLogConcave}\left(y\right) \Rightarrow \left(\forall mu \in Real,\; \forall alpha \in Real,\; \forall beta \in Real,\; 0 < mu \Rightarrow \left(0 \le alpha \Rightarrow \left(0 \le beta \Rightarrow \left(\forall m \in Nat,\; 0 \le \operatorname{delta}\left(y, mu, alpha, beta, m\right)\right)\right)\right)\right)$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Analytic/KarpZhangReciprocal/Result.reciprocal_half` (`✓ std3`). ∎
 

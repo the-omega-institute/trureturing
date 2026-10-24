@@ -7,14 +7,9 @@ doi: 10.1007/s13540-023-00238-0
 url: https://arxiv.org/abs/2305.09029
 claim: "Conjecture 5.2 asserts coefficient-wise log-concavity of both the reciprocal-Pochhammer series and the related gamma series for a log-concave coefficient sequence."
 strata_touched:
-  - D5/S3/Analytic/KarpZhangReciprocal/Coeff
   - D5/S3/Analytic/KarpZhangReciprocal/BirthDeath
   - D5/S3/Analytic/KarpZhangReciprocal/IntervalConvolution
   - D5/S3/Analytic/KarpZhangReciprocal/Result
-  - D5/S3/Analytic/KarpZhangGamma/Weighting
-  - D5/S3/Analytic/KarpZhangGamma/Smoothing
-  - D5/S3/Analytic/KarpZhangGamma/Kernel
-  - D5/S3/Analytic/KarpZhangGamma/Result
   - D5/S3/Analytic/KarpZhangGamma/Series
   - D5/S3/Analytic/KarpZhangConjecture/Result
 license: citation-only

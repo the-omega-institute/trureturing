@@ -1,4 +1,6 @@
 using static StrataLint.Scribe.DefinitionDsl;
+using static StrataLint.Scribe.FormulaDsl;
+using F = StrataLint.Scribe.FormulaDsl;
 
 namespace StrataLint.Scribe.Blueprint.D5.S3.Analytic.KarpZhangGamma;
 
@@ -16,6 +18,26 @@ internal sealed class WeightingDocument : IScribeDocumentDefinition
     private static DocumentBlock Entry(string id, string name, string title, string text) =>
         Describe.Lean(DescribeId.Create(id),
             DeclarationHandle.Create("D5/S3/Analytic/KarpZhangGamma/Weighting." + name),
-            H(title), StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
+            H(title), TheoremStatement(name), AssessedProvenance.FromRepo(),
             Blocks(Paragraph(Text(text))), DescribeRole.Theorem);
+
+    private static StatementSource TheoremStatement(string name) =>
+        name == "weighted_sum_nonneg" ? StatementSource.FromAuthor(Disp(All("A", new Formula.TypeArrow(F.Id("Nat"), F.Id("Real")), All("W", new Formula.TypeArrow(F.Id("Nat"), F.Id("Real")), All("h", F.Id("Nat"), Implies(All("i", F.Id("Nat"), Implies(Le(F.Id("i"), F.Id("h")), All("j", F.Id("Nat"), Implies(Le(F.Id("j"), F.Id("h")), Implies(Lt(F.Id("i"), F.Id("j")), Implies(Lt(Num(0), App(F.Id("A"), F.Id("i"))), Le(Num(0), App(F.Id("A"), F.Id("j"))))))))), Implies(Le(Num(0), SumRange("i", Add(F.Id("h"), Num(1)), App(F.Id("A"), F.Id("i")))), Implies(All("i", F.Id("Nat"), Implies(Le(F.Id("i"), F.Id("h")), Le(Num(0), App(F.Id("W"), F.Id("i"))))), Implies(All("i", F.Id("Nat"), Implies(Le(F.Id("i"), F.Id("h")), All("j", F.Id("Nat"), Implies(Le(F.Id("j"), F.Id("h")), Implies(Le(F.Id("i"), F.Id("j")), Le(App(F.Id("W"), F.Id("i")), App(F.Id("W"), F.Id("j")))))))), Le(Num(0), SumRange("i", Add(F.Id("h"), Num(1)), Multiply(App(F.Id("A"), F.Id("i")), App(F.Id("W"), F.Id("i")))))))))))))) :
+        name == "coefficientwise_weighting" ? StatementSource.FromAuthor(Disp(All("A", new Formula.TypeArrow(F.Id("Nat"), F.Id("Real")), All("W", new Formula.TypeArrow(F.Id("Nat"), new Formula.TypeArrow(F.Id("Nat"), F.Id("Real"))), All("h", F.Id("Nat"), Implies(All("i", F.Id("Nat"), Implies(Le(F.Id("i"), F.Id("h")), All("j", F.Id("Nat"), Implies(Le(F.Id("j"), F.Id("h")), Implies(Lt(F.Id("i"), F.Id("j")), Implies(Lt(Num(0), App(F.Id("A"), F.Id("i"))), Le(Num(0), App(F.Id("A"), F.Id("j"))))))))), Implies(Le(Num(0), SumRange("i", Add(F.Id("h"), Num(1)), App(F.Id("A"), F.Id("i")))), Implies(All("N", F.Id("Nat"), All("i", F.Id("Nat"), Implies(Le(F.Id("i"), F.Id("h")), Le(Num(0), App(F.Id("W"), F.Id("i"), F.Id("N")))))), Implies(All("N", F.Id("Nat"), All("i", F.Id("Nat"), Implies(Le(F.Id("i"), F.Id("h")), All("j", F.Id("Nat"), Implies(Le(F.Id("j"), F.Id("h")), Implies(Le(F.Id("i"), F.Id("j")), Le(App(F.Id("W"), F.Id("i"), F.Id("N")), App(F.Id("W"), F.Id("j"), F.Id("N"))))))))), All("N", F.Id("Nat"), Le(Num(0), SumRange("i", Add(F.Id("h"), Num(1)), Multiply(App(F.Id("A"), F.Id("i")), App(F.Id("W"), F.Id("i"), F.Id("N"))))))))))))))) :
+        StatementSource.WithoutFormula();
+
+    private static Formula All(string name, Formula type, Formula body) =>
+        new Formula.Bind(FormulaQuantifier.ForAll, FormulaIdentifier.Create(name), type, body);
+    private static Formula Implies(Formula a, Formula b) =>
+        new Formula.Logic(a, FormulaLogicOperator.Implies, b);
+    private static Formula Le(Formula a, Formula b) =>
+        new Formula.Relation(a, FormulaRelationOperator.LessThanOrEqual, b);
+    private static Formula Lt(Formula a, Formula b) =>
+        new Formula.Relation(a, FormulaRelationOperator.LessThan, b);
+    private static Formula App(Formula f, params Formula[] args) => new Formula.Apply(f, [.. args]);
+    private static Formula SumRange(string name, Formula upper, Formula body) =>
+        Seq(Sum, Underscore, Grp(F.Id(name), Sp, InMacro, Sp,
+            App(Qualified("Finset", "range"), upper)), Sp, body);
+    private static Formula Qualified(string owner, string name) =>
+        Seq(Operatorname, Grp(F.Id(owner)), Dot, Operatorname, Grp(F.Id(name)));
 }

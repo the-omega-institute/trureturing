@@ -6,7 +6,7 @@ Both coefficient assertions of Karp and Zhang's Conjecture 5.2.
 
 **Definition 1.1 (Conjecture 5.2).**
 
-Lean statement: `D5/S3/Analytic/KarpZhangConjecture/Result.claim`
+$$claim \Leftrightarrow \left(\forall y \in Nat \to Real,\; \operatorname{KarpZhangReciprocal}.\operatorname{Result}.\operatorname{IsLogConcave}\left(y\right) \Rightarrow \left(\forall mu \in Real,\; \forall alpha \in Real,\; \forall beta \in Real,\; 0 < mu \Rightarrow \left(0 \le alpha \Rightarrow \left(0 \le beta \Rightarrow \left(\forall m \in Nat,\; 0 \le \operatorname{KarpZhangReciprocal}.\operatorname{Result}.\operatorname{delta}\left(y, mu, alpha, beta, m\right) \land 0 \le \operatorname{KarpZhangGamma}.\operatorname{Series}.\operatorname{gammaDelta}\left(y, mu, alpha, beta, m\right)\right)\right)\right)\right)\right)$$
 
 *Formalization.* `D5/S3/Analytic/KarpZhangConjecture/Result.claim` (`✓ std3`).
 
@@ -22,7 +22,7 @@ The reciprocal series has coefficient y(k)(2mu) rising factorial k divided by (m
 
 **Theorem 1.2 (Both halves hold for every coefficient).**
 
-Lean statement: `D5/S3/Analytic/KarpZhangConjecture/Result.result`
+$$claim$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Analytic/KarpZhangConjecture/Result.result` (`✓ std3`). ∎
 

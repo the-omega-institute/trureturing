@@ -2,7 +2,7 @@
    generality: G
    mirror-B: D5/B/S3/Analytic/KarpZhangReciprocal/BirthDeath
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
-   anchors: [mathlib/module/Mathlib.Algebra.Order.BigOperators.Ring.Finset]
+   anchors: [mathlib/module/Mathlib.Algebra.Order.BigOperators.Ring.Finset, mathlib/module/Mathlib.Data.Real.Basic, mathlib/module/Mathlib.Tactic.FieldSimp, mathlib/module/Mathlib.Tactic.Linarith, mathlib/module/Mathlib.Tactic.Positivity]
    utility: none
    digest: Finite reversible birth-and-death chains satisfy a curvature-weighted variance bound. -/
 

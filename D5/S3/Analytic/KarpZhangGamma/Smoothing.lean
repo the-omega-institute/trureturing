@@ -31,7 +31,7 @@ cross-module names have prefix D5.S3.Analytic):
 * balanced_product: proof_shape: content; escape_witness: KarpZhangReciprocal.Result.ratio_bound;
   consumers: binomial_minor.
 * binomialProduct_succ: proof_shape: bind-only; escape_witness: none;
-  consumers: KarpZhangGamma.Kernel.binomialGamma_sum, binomial_minor.
+  consumers: binomial_minor.
 * binomialProduct_comm: proof_shape: bind-only; escape_witness: none;
   consumers: KarpZhangGamma.Result.two_variable_nonneg, binomial_minor.
 * productCoeff_eq: proof_shape: bind-only; escape_witness: none;
