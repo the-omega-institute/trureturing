@@ -124,9 +124,10 @@ private theorem fourBracket_backward (x z α β : ℝ) (hx : 1 < x) (hxz : x ≤
     have h := reciprocalPair_balanced (x + α) (β - α) (z - x)
       (by linarith) (by linarith) (by linarith)
     change reciprocalPair (x + α) (z + β) ≤ reciprocalPair (x + β) (z + α)
-    simpa only [show x + α + (β - α) + (z - x) = z + β by ring,
+    rw [show x + α + (β - α) + (z - x) = z + β by ring,
       show x + α + (β - α) = x + β by ring,
-      show x + α + (z - x) = z + α by ring] using h
+      show x + α + (z - x) = z + α by ring] at h
+    exact h
   have hs : 0 ≤ s := by
     dsimp [s, reciprocalPair]
     exact le_of_lt (one_div_pos.mpr (mul_pos (Real.Gamma_pos_of_pos (by linarith))
@@ -195,19 +196,18 @@ private theorem bracket_backward_nat (a α β : ℝ) (ha : 0 < a)
       (h : fourBracket (a + (k + 1 : ℕ)) (a + (m - (k + 1))) α β ≤ 0) :
       fourBracket (a + k) (a + (m - k)) α β ≤ 0 := by
     have hcast : ((k + 1 : ℕ) : ℝ) = (k : ℝ) + 1 := by simp only [Nat.cast_add, Nat.cast_one]
-    have hcast' : ((m - k : ℕ) : ℝ) = ((m - (k + 1) : ℕ) : ℝ) + 1 := by
-      rw [show m - k = (m - (k + 1)) + 1 by omega]
-      simp only [Nat.cast_add, Nat.cast_one]
     have horder : k + 1 ≤ m - (k + 1) := by omega
+    have horder' : ((k + 1 : ℕ) : ℝ) ≤ ((m - (k + 1) : ℕ) : ℝ) := by
+      exact_mod_cast horder
+    rw [Nat.cast_sub (by omega : k + 1 ≤ m), hcast] at horder'
     have h := fourBracket_backward (a + (k + 1 : ℕ))
       (a + (m - (k + 1))) α β (by
         rw [hcast]
         have hk0 : (0 : ℝ) ≤ (k : ℝ) := by positivity
         linarith)
-      (add_le_add_left (by exact_mod_cast horder) a) hα hαβ h
+      (by rw [hcast]; linarith only [horder']) hα hαβ h
     have hxarg : a + ((k + 1 : ℕ) : ℝ) - 1 = a + k := by rw [hcast]; ring
-    have hzarg : a + ((m - (k + 1) : ℕ) : ℝ) + 1 = a + (m - k) := by
-      rw [hcast']; ring
+    have hzarg : a + ((m : ℝ) - ((k : ℝ) + 1)) + 1 = a + (m - k) := by ring
     rwa [hxarg, hzarg] at h
   by_cases hab : α ≤ β
   · exact hstep α β hα hab hB
@@ -220,13 +220,16 @@ private theorem pairedKernel_bracket (a α β : ℝ) (m k : ℕ) (hk : k ≤ m /
         (if 2 * k < m then (k.factorial : ℝ) * ((m - k).factorial : ℝ)
          else 2 * (k.factorial : ℝ) * ((m - k).factorial : ℝ)) := by
   have hmk : m - (m - k) = k := by omega
+  have hcast : ((m - k : ℕ) : ℝ) = (m : ℝ) - (k : ℝ) :=
+    Nat.cast_sub (by omega)
   unfold pairedKernel kernel fourBracket reciprocalPair
   split_ifs with h
-  · rw [hmk]
+  · rw [hmk, hcast, show (m : ℝ) - ((m : ℝ) - (k : ℝ)) = k by ring]
     simp only [add_assoc, add_left_comm, add_comm, div_eq_mul_inv, mul_inv_rev, one_mul]
     ring
   · have hmid : m - k = k := by omega
-    rw [hmid]
+    have hmid' : (m : ℝ) - (k : ℝ) = k := by rw [← hcast, hmid]
+    rw [hmid, hmid']
     simp only [add_assoc, add_left_comm, add_comm, div_eq_mul_inv, mul_inv_rev, one_mul]
     ring
 
@@ -248,7 +251,7 @@ theorem pairedKernel_sign (a α β : ℝ) (ha : 0 < a) (hα : 0 ≤ α) (hβ : 0
   by_contra hn
   have hBj : fourBracket (a + j) (a + (m - j)) α β ≤ 0 := le_of_lt (lt_of_not_ge hn)
   have hprop : ∀ d, i + d ≤ m / 2 →
-      fourBracket (a + (i + d)) (a + (m - (i + d))) α β ≤ 0 →
+      fourBracket (a + (i + d : ℕ)) (a + (m - (i + d : ℕ))) α β ≤ 0 →
       fourBracket (a + i) (a + (m - i)) α β ≤ 0 := by
     intro d
     induction d with
@@ -257,7 +260,7 @@ theorem pairedKernel_sign (a α β : ℝ) (ha : 0 < a) (hα : 0 ≤ α) (hβ : 0
       intro hd h
       apply ih (by omega)
       apply bracket_backward_nat a α β ha hα hβ m (i + d) (by omega)
-      simpa only [Nat.add_assoc] using h
+      simpa only [Nat.cast_add, Nat.cast_one, add_assoc] using h
   have h := hprop (j - i) (by omega) (by simpa only [show i + (j - i) = j by omega] using hBj)
   exact (not_le_of_gt hBi) h
 
