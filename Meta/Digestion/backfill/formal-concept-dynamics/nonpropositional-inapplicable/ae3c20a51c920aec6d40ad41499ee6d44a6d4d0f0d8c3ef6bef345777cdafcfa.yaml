@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:ae3c20a51c920aec6d40ad41499ee6d44a6d4d0f0d8c3ef6bef345777cdafcfa
+  normalized_sha256: sha256:ae3c20a51c920aec6d40ad41499ee6d44a6d4d0f0d8c3ef6bef345777cdafcfa
+cas_ref: sha256:ae3c20a51c920aec6d40ad41499ee6d44a6d4d0f0d8c3ef6bef345777cdafcfa
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 仅描述构造主义对显式项的要求，没有断言某个类型具有显式项。
+    previous_atom_id: f0c0a84fca87416a940fd05044036788acb66b4d245bafe7872b4f911f6f1276
+    next_atom_id: 7e2f4affba9f7ee63fe0334dc7e058b6798a8e916aafee4f60e87ef68da39a06

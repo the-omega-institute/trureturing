@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:c35d80d02a25b2ffc13da1855cc7e20b8c2467ac592a67fa5e9b6040364f7aac
+  normalized_sha256: sha256:c35d80d02a25b2ffc13da1855cc7e20b8c2467ac592a67fa5e9b6040364f7aac
+cas_ref: sha256:c35d80d02a25b2ffc13da1855cc7e20b8c2467ac592a67fa5e9b6040364f7aac
+coverage_gids:
+  - gid: D5/S3/ConceptDynamics/Dialectics/MinimalDialecticalRepair.IsCarryWitness
+    target_statement_id: sha256:6c92a946ba8035dcfb333d53eaa11c61d86b240982a5cabcb1525cdd2e72e450
+receipts:
+  unresolved_subitems: []

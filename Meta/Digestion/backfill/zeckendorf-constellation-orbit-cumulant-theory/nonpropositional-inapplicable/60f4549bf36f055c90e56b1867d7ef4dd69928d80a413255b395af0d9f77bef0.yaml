@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:60f4549bf36f055c90e56b1867d7ef4dd69928d80a413255b395af0d9f77bef0
+  normalized_sha256: sha256:60f4549bf36f055c90e56b1867d7ef4dd69928d80a413255b395af0d9f77bef0
+cas_ref: sha256:60f4549bf36f055c90e56b1867d7ef4dd69928d80a413255b395af0d9f77bef0
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: Research-output category Explicit counterexamples; no counterexample or proposition is asserted in this fragment.
+    previous_atom_id: 3fab146fc9a7f75d3bf9b3e9117f8ae6550a28fce68572f42268d05da6a6654c
+    next_atom_id: 19904479920d893fdb6297645393b519d6978220d34b9e0d43358f429f448ae0

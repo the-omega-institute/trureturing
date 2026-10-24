@@ -276,7 +276,7 @@ public sealed partial class CleanLanesCommandTests
     }
 
     [Fact]
-    public void RecentHeadActivityProtectsOldCheckoutEvenAfterResetToOldCommit()
+    public void ResetToOldCommitDoesNotRenewSavedWorkAge()
     {
         using var fixture = new CleanLanesFixture();
         var lane = fixture.AddLandedLane("harness/recent-reset");
@@ -287,8 +287,8 @@ public sealed partial class CleanLanesCommandTests
         var result = fixture.RunAt(now, "--force", "--lanes-only");
 
         Assert.True(result.Success, result.Error);
-        Assert.True(Directory.Exists(lane));
-        Assert.Equal("recently_updated", ReasonFor(result.Output, lane));
+        Assert.False(Directory.Exists(lane));
+        Assert.Equal("merged_to_dev", ReasonFor(result.Output, lane));
     }
 
     [Theory]
@@ -330,7 +330,7 @@ public sealed partial class CleanLanesCommandTests
     }
 
     [Fact]
-    public void ActivityBetweenClassificationAndRemovalPreventsDeletion()
+    public void AllocationChangeBetweenClassificationAndRemovalPreventsDeletion()
     {
         using var fixture = new CleanLanesFixture();
         var lane = fixture.AddLandedLane("harness/updated-during-sweep");
@@ -338,7 +338,7 @@ public sealed partial class CleanLanesCommandTests
         var runner = fixture.CreateRunner((file, args, directory) =>
         {
             if (args[0] == "worktree" && args[1] == "list" && ++reads == 2)
-                fixture.RewriteLastUpdate(lane, new DateTimeOffset(2030, 1, 2, 0, 0, 0, TimeSpan.Zero));
+                fixture.RewriteAllocation(lane, new DateTimeOffset(2030, 1, 2, 0, 0, 0, TimeSpan.Zero));
             return null;
         });
         var result = fixture.RunWithRaw(runner, "--force", "--lanes-only");

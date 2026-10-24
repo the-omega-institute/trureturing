@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:38a9954f68ed626a3d227bbb22c3608da124e922e713e2d174fb1a31106d850d
+  normalized_sha256: sha256:38a9954f68ed626a3d227bbb22c3608da124e922e713e2d174fb1a31106d850d
+cas_ref: sha256:38a9954f68ed626a3d227bbb22c3608da124e922e713e2d174fb1a31106d850d
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 'Nonpropositional citations and attribution of Chapter 16 methods: identifies the sources of branch data and response geometry and the coding/computable-analysis background, while explicitly excluding transfer of external theorems as substitutes for the chapter results.'
+    previous_atom_id: fc3c8354b9964ed2188695e206cf25782582dd790b860467edc16802c5c95752
+    next_atom_id: 480fc810243936d8495d491af850b56f7ff6c7e5c05a1e06d72b4cdd79887cf9

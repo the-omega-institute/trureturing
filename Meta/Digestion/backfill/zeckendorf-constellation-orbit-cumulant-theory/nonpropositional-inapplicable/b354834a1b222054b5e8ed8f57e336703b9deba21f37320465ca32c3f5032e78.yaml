@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:b354834a1b222054b5e8ed8f57e336703b9deba21f37320465ca32c3f5032e78
+  normalized_sha256: sha256:b354834a1b222054b5e8ed8f57e336703b9deba21f37320465ca32c3f5032e78
+cas_ref: sha256:b354834a1b222054b5e8ed8f57e336703b9deba21f37320465ca32c3f5032e78
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: In context this lists off-line-zero existence among conclusions not obtained; it does not assert the existence of such a zero.
+    previous_atom_id: 359235d7e1066eccf7bb547c4e33ca53f80ca5db88d357dce9d8f96b59034069
+    next_atom_id: ed97c9c6e5d73101aa63b09243e00c9a717ca0b30415940713857e8d128c8e57

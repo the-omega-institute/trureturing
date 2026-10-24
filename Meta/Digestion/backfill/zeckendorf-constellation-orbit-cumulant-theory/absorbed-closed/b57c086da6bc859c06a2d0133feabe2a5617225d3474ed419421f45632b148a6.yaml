@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:b57c086da6bc859c06a2d0133feabe2a5617225d3474ed419421f45632b148a6
+  normalized_sha256: sha256:b57c086da6bc859c06a2d0133feabe2a5617225d3474ed419421f45632b148a6
+cas_ref: sha256:b57c086da6bc859c06a2d0133feabe2a5617225d3474ed419421f45632b148a6
+coverage_gids:
+  - gid: D5/S0/Automata/BinaryZeckendorfLanguage.base_success_iff_noAdjacentOnes
+    target_statement_id: sha256:93f5fe0b28ae8327a446a8afc1862e05e6f82761af9af1f1b4a64bc3ee5d7856
+  - gid: D5/S3/Zeros/Symmetry/SignedZeckendorfOrbitCode.klein_actions_two_sign_bits
+    target_statement_id: sha256:e61e45103a72bb0faa673a4a787a9ec202282bae8d3341d8564b37b46cf2ade9
+receipts:
+  unresolved_subitems: []
