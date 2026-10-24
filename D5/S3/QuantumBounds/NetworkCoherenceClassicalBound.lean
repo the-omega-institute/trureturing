@@ -260,7 +260,28 @@ private lemma attainment (n : ℕ) (hn : 2 ≤ n) :
     ∃ γ ∈ Set.Icc (0 : ℝ) 1, ∃ p q : Fin n → Bool → ℝ,
       (∀ i, IsBitDistribution (p i)) ∧ (∀ i, IsBitDistribution (q i)) ∧
         (1 / 4 : ℝ) = coherenceMerit n (classicalMixture n γ p q) := by
-  sorry
+  classical
+  obtain ⟨k, rfl⟩ : ∃ k, n = k + 2 := ⟨n - 2, by omega⟩
+  let p : Fin (k + 2) → Bool → ℝ := fun _ b => if b then 0 else 1
+  let q : Fin (k + 2) → Bool → ℝ :=
+    fun i b => if i.val < 2 then (if b then 1 else 0) else (if b then 0 else 1)
+  have hp : ∀ i, IsBitDistribution (p i) := by intro i; norm_num [IsBitDistribution, p]
+  have hq : ∀ i, IsBitDistribution (q i) := by
+    intro i
+    unfold IsBitDistribution
+    dsimp [q]
+    split_ifs <;> norm_num
+  refine ⟨1 / 2, by norm_num, p, q, hp, hq, ?_⟩
+  rw [mixture_factorization (k + 2) (1 / 2) (by norm_num) p q hp hq]
+  have hP : (∏ i, (p i false - p i true)) = 1 := by simp [p]
+  have hQ : (∏ i, (q i false - q i true)) = 1 := by
+    simp only [Fin.prod_univ_succ]
+    simp [q]
+  have hD : (∏ i, ((p i false - p i true + (q i false - q i true)) / 2)) = 0 := by
+    apply Finset.prod_eq_zero (Finset.mem_univ (⟨0, by omega⟩ : Fin (k + 2)))
+    norm_num [p, q]
+  rw [hP, hQ, hD]
+  norm_num
 
 theorem result : claim := by
   intro n hn
