@@ -89,7 +89,7 @@ private theorem strange_zero_pos :
 private theorem strange_one_zero :
     loopFreeStrangeComponentCount halfMatrix 0 (fun _ => 1) = 0 := by
   classical
-  letI : IsEmpty {Q : (underlyingGraph halfMatrix 0).ConnectedComponent //
+  let : IsEmpty {Q : (underlyingGraph halfMatrix 0).ConnectedComponent //
       IsLoopFreeStrangeComponent halfMatrix 0 (fun _ => 1) Q} := ⟨by
     rintro ⟨Q, i, j, hij, hpair, hadj, hhalf, hdi, hdj⟩
     exact one_ne_zero hdi⟩
