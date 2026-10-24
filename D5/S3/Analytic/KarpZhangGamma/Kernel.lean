@@ -42,7 +42,12 @@ private theorem binomialGamma_sum (m : ℕ) : ∀ b c : ℝ, 0 < b → 0 < c →
     (ascPochhammer ℝ m).eval (b + c + m - 1) /
       (Real.Gamma (b + m) * Real.Gamma (c + m)) := by
   induction m with
-  | zero => intro b c _ _; simp [binomialProduct, one_div_mul_one_div]
+  | zero =>
+    intro b c _ _
+    simp only [binomialProduct, Nat.zero_add, sum_range_one, Nat.choose_self,
+      Nat.cast_one, Nat.cast_zero, Nat.sub_zero, add_zero, one_mul,
+      ascPochhammer_zero, eval_one, div_eq_mul_inv, mul_inv_rev]
+    ring
   | succ m ih =>
     intro b c hb hc
     have hbf : (fun k : ℕ => 1 / Real.Gamma (b + (k + 1 : ℕ))) =
@@ -87,7 +92,9 @@ theorem reciprocalGamma_sum (b c : ℝ) (hb : 0 < b) (hc : 0 < c) (m : ℕ) :
         (fun k => 1 / Real.Gamma (c + k)) m := by
       unfold productCoeff
       apply sum_congr rfl
-      intro k _
+      intro k hk
+      dsimp only
+      rw [Nat.cast_sub (Nat.le_of_lt_succ (mem_range.mp hk))]
       simp only [div_eq_mul_inv, mul_inv_rev, one_mul]
       ring
     _ = _ := by
@@ -114,13 +121,11 @@ theorem gamma_balanced_shift (a α β : ℝ) (ha : 0 < a)
     have harg2 : α / (α + β) * a + β / (α + β) * (a + α + β) = a + β := by
       field_simp [ne_of_gt ht]
       <;> ring
-    have h1 := Real.convexOn_log_Gamma.2 (x := a) ha (y := a + α + β)
+    have h1 := Real.convexOn_log_Gamma.2 ha
       (show 0 < a + α + β by linarith)
-      (a := β / (α + β)) (b := α / (α + β))
       (div_nonneg hβ (le_of_lt ht)) (div_nonneg hα (le_of_lt ht)) hw
-    have h2 := Real.convexOn_log_Gamma.2 (x := a) ha (y := a + α + β)
+    have h2 := Real.convexOn_log_Gamma.2 ha
       (show 0 < a + α + β by linarith)
-      (a := α / (α + β)) (b := β / (α + β))
       (div_nonneg hα (le_of_lt ht)) (div_nonneg hβ (le_of_lt ht)) hw'
     simp only [Function.comp_apply, smul_eq_mul] at h1 h2
     rw [harg1] at h1
@@ -195,7 +200,7 @@ theorem kernel_sum_nonneg (a α β : ℝ) (ha : 0 < a)
   have harg1 : (a + (m : ℝ)) + α = a + α + m := by ring
   have harg2 : (a + (m : ℝ)) + β = a + β + m := by ring
   have harg3 : (a + (m : ℝ)) + α + β = a + α + β + m := by ring
-  rw [harg1, harg2, harg3] at hbal
+  rw [harg3, harg1, harg2] at hbal
   have hden : 0 < Real.Gamma (a + α + m) * Real.Gamma (a + β + m) :=
     mul_pos (Real.Gamma_pos_of_pos (by positivity)) (Real.Gamma_pos_of_pos (by positivity))
   rw [hsum]
