@@ -107,6 +107,8 @@ private theorem environment_extends (E : Definitions k m) (mode : Fin k → Bool
       cases he : E i with
       | none => simp [environment, he] at hf
       | some e =>
+        change (E i).bind (resolve mode (environment E mode (n+1))) = some f
+        rw [he]
         exact resolve_extends mode ih e f (by simpa [environment, he] using hf)
 
 private def support (E : Definitions k m) (mode : Fin k → Bool) (n : Nat) : Finset (Fin m) :=
@@ -141,8 +143,9 @@ private theorem stable_succ (E : Definitions k m) (mode : Fin k → Bool) (n : N
     (h : environment E mode n = environment E mode (n+1)) :
     environment E mode (n+1) = environment E mode (n+2) := by
   funext i
-  simp only [environment]
-  rw [h]
+  change (E i).bind (resolve mode (environment E mode n)) =
+    (E i).bind (resolve mode (environment E mode (n+1)))
+  exact congrArg (fun s => (E i).bind (resolve mode s)) h
 
 /-- A nonstationary round adds a new original state; there are exactly m states. -/
 private theorem saturation_complete (E : Definitions k m) (mode : Fin k → Bool) :
@@ -211,7 +214,7 @@ private theorem environment_derivation (E : Definitions k m) (mode : Fin k → B
       cases he : E i with
       | none => simp [environment, he] at hf
       | some e =>
-        exact ⟨e, he, resolve_derivation E mode _ ih e f (by
+        exact ⟨e, rfl, resolve_derivation E mode _ ih e f (by
           simpa [environment, he] using hf)⟩
 
 private theorem derivation_compile (E : Definitions k m) (mode : Fin k → Bool)
@@ -228,7 +231,9 @@ private theorem derivation_compile (E : Definitions k m) (mode : Fin k → Bool)
   | pair e g _ _ ihe ihg =>
       obtain ⟨x, hx⟩ := ihe
       obtain ⟨y, hy⟩ := ihg
-      exact ⟨.pair x y, by simp [compile, resolve] at hx hy ⊢; rw [hx, hy]; rfl⟩
+      change resolve mode (environment E mode m) e = some x at hx
+      change resolve mode (environment E mode m) g = some y at hy
+      exact ⟨.pair x y, by simp only [compile, resolve]; rw [hx, hy]; rfl⟩
 
 private theorem resolve_sound (mode : Fin k → Bool) (p : Fin k → Nat)
     (v : Fin m → CompletionTree) (s : Fin m → Option (FiniteExpr k))
@@ -236,13 +241,18 @@ private theorem resolve_sound (mode : Fin k → Bool) (p : Fin k → Nat)
     ∀ e f, resolve mode s e = some f → value mode p v e = embed (finiteValue p f) := by
   intro e
   induction e with
-  | ground t => intro f hf; simpa [resolve] using hf ▸ (rfl : embed t = embed t)
+  | ground t =>
+      intro f hf
+      have eq : FiniteExpr.ground t = f := by simpa only [resolve, Option.some.injEq] using hf
+      subst f
+      rfl
   | token j c =>
       intro f hf
       by_cases h : mode j = true
       · have eq : FiniteExpr.token j c = f := by simpa [resolve, h] using hf
         subst f
-        simpa [value, h, finiteValue, atomic] using (iterate_embed (p j+c) (.of true))
+        simp only [value, h, ↓reduceIte, finiteValue, atomic]
+        exact iterate_embed (p j+c) (.of true)
       · simp [resolve, h] at hf
   | var a i =>
       intro f hf
