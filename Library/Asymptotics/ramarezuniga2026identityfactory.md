@@ -5,7 +5,7 @@ year: 2026
 title: "Möbius function and primes: an identity factory with applications"
 doi: 10.1090/mcom/4216
 url: https://arxiv.org/abs/2312.05138v3
-claim: "Theorems 1.1–1.2 supply a finite weighted identity and uniform coprime logarithmic Möbius positivity; their application to the complete filtered Robin kernel still requires regularity, signed residual and endpoint estimates."
+claim: "Theorems 1.1–1.2 supply a finite weighted identity and uniform coprime logarithmic Möbius positivity; the actual filtered Robin kernel has a positive logarithmic-scale curvature and an exact centered second-Abel application, while its growing-filter signed estimate remains open."
 strata_touched: []
 license: citation-only
 triage: anchor
@@ -118,9 +118,9 @@ $$
 -YP_x^{\eta_z}(Y)m_{P_z}(Y).
 $$
 
-This records the substitution only. Using Theorem 1.1 requires its
-local absolute-continuity hypothesis for $H_Y$, a specified admissible
-$h$, and an estimate for the actual residual
+The local absolute-continuity hypothesis for $H_Y$ is checked in the
+application below. Using Theorem 1.1 still requires a specified
+admissible $h$ and an estimate for the actual residual
 
 $$
 H_Y'(t)-\frac1t\sum_{n\le t}\frac{(-1)^{n+1}}n h(n/t).
@@ -151,3 +151,154 @@ remain separate obligations. The
 already supplies uniform rough-prefix information, including boundary
 compensation. Neither that input nor these weighted identities supplies
 the remaining complete signed Robin estimate or proves RH.
+
+## The actual logarithmic-scale curvature and centered second Abel formula
+
+The following is a paper-level application of the existing factorial
+Mellin identity in [FIB §432, SE.2–SE.3](../../docs/develop/theory/FIBONACCI_ATOMIC_RELATION_GENERATION.md)
+and the fixed-domain decomposition in [§471, FD.1–FD.5](../../docs/develop/theory/FIBONACCI_ATOMIC_RELATION_GENERATION_ROBIN_CURVATURE_APPROXIMATION.md).
+Classical parameter differentiation and two integrations by parts are
+reused; no new supplier theorem, priority or Lean verification is claimed.
+
+For $x\ge e$, write $\ell=\log x$, $Q_x(s)=sP_x^\eta(s)$ and
+
+$$
+\mathcal G_{z,x}(r)=e^rP_x^{\eta_z}(e^r)
+=\sum_{d\mid P_z}\frac{\mu(d)}d Q_x(de^r),\qquad
+E_z(s)=\prod_{p\le z}(1-p^{-s}),\qquad C_z=E_z(1)^{-1}.
+$$
+
+This $Q_x$ is the scaled factorial kernel, not the original $R$-kernel
+norm also denoted $Q_x$ in a separate source. The finite filter is shared
+by every term; in particular $d=1$ remains present.
+
+The substitution $t=sy$ in the original integral gives, for every $s>0$,
+
+$$
+Q_x(s)=\int_{x/s}^\infty\frac{\eta(y)}{y^2}
+\left[\frac1{\log(sy)}+\frac1{\log^2(sy)}\right]dy.
+$$
+
+On a compact positive $s$-interval the moving lower endpoint stays away
+from zero, $\log(sy)\ge\ell$, and $\eta$ is bounded on bounded
+$y$-intervals. On the remaining tail, $|\eta(y)|\le1+\log y$ supplies
+integrable bounds for the kernel and its scale derivative. Differences
+of the moving-boundary integrals are therefore bounded by a constant
+times the difference of their endpoints. Thus $Q_x$ is locally
+Lipschitz, including when $x/s$ crosses an integer. Finite filtering and
+smooth composition give the local absolute continuity of
+$H_Y(t)=\mathcal G_{z,x}(\log(Y/t))$ required by Theorem 1.1. This
+regularity pays no sign condition on the theorem's chosen-$h$ residual.
+
+For $r\ge\ell$ the existing decomposition is
+$Q_x(e^r)=F_\ell(r)+E(r)$, with
+$F_\ell(r)=r\log r+c_\ell r+d_\ell-r^{-1}$ and the complete
+high-domain $E$ of FD.3. Twice differentiating its fixed domain gives
+
+$$
+F_\ell''(r)=r^{-1}-2r^{-3},\qquad
+E''(r)=\int_1^\infty\frac{\eta(y)}{y^2}
+\left[\frac2{(r+\log y)^3}+\frac6{(r+\log y)^4}\right]dy.
+$$
+
+The same bound on $\eta$ justifies differentiation and absolute
+interchange. Substituting the existing Mellin identity
+
+$$
+\int_1^\infty\eta(y)y^{-2-t}dy
+=-\frac{\zeta'(1+t)}{1+t}-t^{-2}+t^{-1}\qquad(t>0)
+$$
+
+into the Laplace representations of these reciprocal powers cancels
+all elementary terms, leaving the actual full curvature
+
+$$
+\boxed{\displaystyle
+\mathcal G_{z,x}''(r)=\int_0^\infty e^{-rt}E_z(1+t)
+[-t^2\zeta'(1+t)]\,dt>0,\qquad r\ge\ell.}
+$$
+
+Indeed the factor before filtering is
+$1-t^2+(t^2+t^3)\int_1^\infty\eta(y)y^{-2-t}dy
+=-t^2\zeta'(1+t)$. At zero it tends to one; at infinity it decays
+exponentially times a polynomial. Finite filtering can therefore be
+performed inside the absolutely convergent integral. Positivity uses
+$E_z(1+t)>0$ and $-\zeta'(1+t)=\sum_{n\ge2}(\log n)n^{-1-t}>0$.
+This is the curvature of the original kernel; an unrelated positive
+Laplace approximant is not substituted for it. For integers $n\ge x$,
+the original adjacent-row kernel still is
+
+$$
+J_x^{\eta_z}(n)=\int_n^{n+1}
+\frac{\mathcal G_{z,x}(\log s)-\mathcal G_{z,x}'(\log s)}{s^2}\,ds.
+$$
+
+Thus positive second derivative does not imply a positive row kernel:
+the affine part of $\mathcal G$ is absent from its second derivative
+but remains in this expression and in the endpoints below.
+
+Set, for $r\ge0$,
+
+$$
+m_z(r)=\sum_{\substack{n\le e^r\\(n,P_z)=1}}\frac{\mu(n)}n,
+\qquad A_z(r)=\check m_{P_z}^{(1)}(e^r),\qquad
+\varepsilon_z(r)=A_z(r)-C_z.
+$$
+
+Here $A_z'=m_z$ almost everywhere, $A_z$ is continuous and locally
+absolutely continuous, and the jumps of the right-continuous $m_z$
+have their original weights $\mu(n)/n$. For integers $x\le D<Y$,
+put $a=\log D$, $b=\log Y$. The exact twice-integrated finite Abel
+identity is
+
+$$
+\boxed{\displaystyle
+\sum_{\substack{D<n\le Y\\(n,P_z)=1}}\mu(n)P_x^{\eta_z}(n)
+=\left[\mathcal G_{z,x}(r)m_z(r)
+-\mathcal G_{z,x}'(r)\varepsilon_z(r)\right]_a^b
++\int_a^b\varepsilon_z(r)\mathcal G_{z,x}''(r)\,dr.}
+$$
+
+First integrate $\mathcal G$ against the atomic measure $dm_z$;
+then integrate $m_z=A_z'$ against $\mathcal G'$. Replacing $A_z$
+by $\varepsilon_z+C_z$ cancels $C_z[\mathcal G']_a^b$ exactly.
+The lower atom $n=D$ is excluded and the upper atom $n=Y$ is
+included. Neither affine endpoint has been discarded.
+
+For each fixed $x,z$, CP.3 and $m_z(r)\to0$ give $m_z(r)=O_z(r^{-3})$
+by partial summation. Corollary 7.5 of the
+[logarithmic-sum source](zunigaalterman2026logmobius.md) gives
+$\varepsilon_z(r)=O_z(r^{-1})$. The same fixed finite-filter
+FD decomposition gives $\mathcal G=O_{x,z}(r\log r)$,
+$\mathcal G'=O_{x,z}(1+\log r)$ and
+$\mathcal G''=E_z(1)/r+O_z(r^{-2})$. Both upper endpoints vanish,
+and the last integral converges absolutely. The original finite
+summation-by-parts endpoint $M_z(Y)P_x^{\eta_z}(Y+1)$ also vanishes
+by CP.3. Consequently the complete pairing can be written as
+
+$$
+\begin{aligned}
+I_\psi(x)={}&
+\sum_{\substack{n\le D\\(n,P_z)=1}}\mu(n)P_x^{\eta_z}(n)
+-\mathcal G_{z,x}(a)m_z(a)
++\mathcal G_{z,x}'(a)\varepsilon_z(a)\\
+&+\int_a^\infty\varepsilon_z(r)\mathcal G_{z,x}''(r)\,dr.
+\end{aligned}
+$$
+
+The finite head includes the original unit. These limit arguments are
+for fixed $x,z$; their constants do not constitute a growing-primorial
+estimate. The constant $C_z[\mathcal G']_a^b$ is canceled in the finite identity
+before taking the infinite limit; the centered integral is not split
+into two separately convergent integrals.
+
+The missing estimate is now a common-filter estimate for the centered
+error against this actual positive curvature, with the displayed head
+and endpoints. Positivity of the curvature does not fix the sign of
+$\varepsilon_z$. Existing complete remote-tail bounds in
+[Alladi's application](../Analytic/alladi1982roughmobius.md#uniform-asymptotic-far-tails-for-a-polynomially-growing-filter)
+should be reused, rather than rederived; they leave the signed head.
+The final Robin consumer still includes the actual integer's pressure
+loss $d_N$ in $\Delta(N)=I_\psi(\log N)+R(\log N)+d_N$ as in
+[§§481, 491](../../docs/develop/theory/FIBONACCI_ATOMIC_RELATION_GENERATION_ROBIN_DYADIC_RESOLVENT.md).
+No sign for that complete quantity or proof of RH follows here.
