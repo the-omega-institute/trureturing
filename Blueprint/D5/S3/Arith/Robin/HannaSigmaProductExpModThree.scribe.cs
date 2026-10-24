@@ -37,7 +37,9 @@ internal sealed class HannaSigmaProductExpModThreeDocument : IScribeDocumentDefi
                 AssessedProvenance.FromRepo(Source)),
             Node("result", "The A382124 conjecture", ClaimBody(),
                 "The integer lift and its cube give the two coefficient witnesses; Frobenius proves their congruence at every index.", DescribeRole.Theorem,
-                AssessedProvenance.FromRepo(Source)))));
+                AssessedProvenance.FromRepo(Source),
+                new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("oeis-a382124-hanna-sigma-exponential-mod-three"), ResolutionKind.Proved)))));
 
     private static DocumentBlock Node(string name, string title, Formula formula, string prose,
         DescribeRole role, AssessedProvenance provenance,
