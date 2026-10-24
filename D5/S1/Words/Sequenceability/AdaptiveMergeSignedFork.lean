@@ -109,37 +109,15 @@ private lemma suffix_nested {L S T : List G} {P Q : List G}
     (hS : L = P ++ S) (hT : L = Q ++ T) :
     (S.length ≤ T.length → ∃ W, T = W ++ S) ∧
       (T.length ≤ S.length → ∃ W, S = W ++ T) := by
-  have hSL : S.length ≤ L.length := by rw [hS]; simp
-  have hTL : T.length ≤ L.length := by rw [hT]; simp
-  have hdropS : L.drop (L.length - S.length) = S := by
-    rw [hS]
-    simp [Nat.add_sub_cancel_left]
-  have hdropT : L.drop (L.length - T.length) = T := by
-    rw [hT]
-    simp [Nat.add_sub_cancel_left]
   constructor
   · intro hlen
-    let k := L.length - T.length
-    let d := T.length - S.length
-    have hk : k + d = L.length - S.length := by omega
-    refine ⟨(L.drop k).take d, ?_⟩
-    calc
-      T = L.drop k := by simpa [k] using hdropT.symm
-      _ = (L.drop k).take d ++ (L.drop k).drop d :=
-        (List.take_append_drop d (L.drop k)).symm
-      _ = (L.drop k).take d ++ L.drop (k + d) := by rw [List.drop_drop]
-      _ = (L.drop k).take d ++ S := by rw [hk, hdropS]
+    obtain ⟨W, hW⟩ :=
+      List.suffix_of_suffix_length_le ⟨P, hS.symm⟩ ⟨Q, hT.symm⟩ hlen
+    exact ⟨W, hW.symm⟩
   · intro hlen
-    let k := L.length - S.length
-    let d := S.length - T.length
-    have hk : k + d = L.length - T.length := by omega
-    refine ⟨(L.drop k).take d, ?_⟩
-    calc
-      S = L.drop k := by simpa [k] using hdropS.symm
-      _ = (L.drop k).take d ++ (L.drop k).drop d :=
-        (List.take_append_drop d (L.drop k)).symm
-      _ = (L.drop k).take d ++ L.drop (k + d) := by rw [List.drop_drop]
-      _ = (L.drop k).take d ++ T := by rw [hk, hdropT]
+    obtain ⟨W, hW⟩ :=
+      List.suffix_of_suffix_length_le ⟨Q, hT.symm⟩ ⟨P, hS.symm⟩ hlen
+    exact ⟨W, hW.symm⟩
 
 private lemma mixed_of_nested_suffixes {A : Finset G} {x y : G} {S W : List G}
     (hyA : y ∈ A) (hxy : x ≠ y)
