@@ -29,8 +29,15 @@ internal sealed class UniformRelativePathDocument : IScribeDocumentDefinition
                 + "audited mathematical chart. Its original column supplier uses the Walecki and "
                 + "four-block twizzler constructions of Ollis and Willmott. No novelty or model-diversity "
                 + "claim is made. The arbitrary-subset, same-M, Headley induction and odd-product "
-                + "parent problems remain open."))),
-        Blocks(Describe.Lean(
+                + "parent problems remain open.")),
+            Paragraph(Text("The exact-telescope dependent-family Reg proof terms compile, but the "
+                + "terminal theorem's binding remains declared_unresolved: IE-C050 ClosedTruthReadout, "
+                + "reason unclassified_form, rule source.params. This is the same measured binding "
+                + "class tracked by https://github.com/the-omega-institute/trureturing/issues/16370; "
+                + "that issue concerns a different theorem and does not certify this one. The other "
+                + "four public construction/composition theorem audits remain unfinished. No "
+                + "declared_validated certificate or independent source review is claimed.")),
+            Describe.Lean(
             DescribeId.Create("uniform-relative-path-column-setup"),
             DeclarationHandle.Create("D5/S3/Combinatorics/Sequenceability/UniformRelativePath.p_ge_seven_column_setup"),
             H("Original rotational columns and an internal primitive row unit"),
@@ -38,8 +45,8 @@ internal sealed class UniformRelativePathDocument : IScribeDocumentDefinition
             Blocks(Paragraph(Text("The original rotational-column existence theorem supplies both "
                 + "cyclic inventories and the three-column relation. Cyclicity of the finite field's "
                 + "unit group supplies the row multiplier; characteristic at least seven excludes -1."))),
-            DescribeRole.Theorem)),
-        Blocks(Describe.Lean(
+            DescribeRole.Theorem),
+            Describe.Lean(
             DescribeId.Create("uniform-relative-path-whole-cycle"),
             DeclarationHandle.Create("D5/S3/Combinatorics/Sequenceability/UniformRelativePath.pge_whole_carrier_cycle"),
             H("The actual successor is one cycle on the entire carrier"),
@@ -47,8 +54,8 @@ internal sealed class UniformRelativePathDocument : IScribeDocumentDefinition
             Blocks(Paragraph(Text("The zero and nonzero signed rows are the two exhaustive original "
                 + "orbits. The selected-head transposition merges them, then two more transpositions "
                 + "insert the endpoint singleton cycles using the original merge_cycles proof."))),
-            DescribeRole.Theorem)),
-        Blocks(Describe.Lean(
+            DescribeRole.Theorem),
+            Describe.Lean(
             DescribeId.Create("uniform-relative-path-composition"),
             DeclarationHandle.Create("D5/S3/Combinatorics/Sequenceability/UniformRelativePath.compose_full_path"),
             H("Enumerating a whole-carrier cycle gives every bounded-sum clause"),
@@ -56,8 +63,8 @@ internal sealed class UniformRelativePathDocument : IScribeDocumentDefinition
             Blocks(Paragraph(Text("The actual orbit Q^n(s) transports both punctured inventories. "
                 + "Cycle injectivity and telescoping make every empty-through-full prefix distinct, "
                 + "every nonempty bounded interval nonzero, and the total equal to the endpoint displacement."))),
-            DescribeRole.Theorem)),
-        Blocks(Describe.Lean(
+            DescribeRole.Theorem),
+            Describe.Lean(
             DescribeId.Create("uniform-relative-path-prime-ge-seven"),
             DeclarationHandle.Create("D5/S3/Combinatorics/Sequenceability/UniformRelativePath.exists_prime_ge_seven_relative_path"),
             H("The two-cut construction for every prime at least seven"),
@@ -65,8 +72,8 @@ internal sealed class UniformRelativePathDocument : IScribeDocumentDefinition
             Blocks(Paragraph(Text("All affine labels, both original orbits and all surgery seams "
                 + "are discharged internally for arbitrary finite K. No row generator, column word, "
                 + "logarithm order, inventory certificate or cycle certificate is a theorem premise."))),
-            DescribeRole.Theorem)),
-        Blocks(Describe.Lean(
+            DescribeRole.Theorem),
+            Describe.Lean(
             DescribeId.Create("uniform-relative-path-all-primes"),
             DeclarationHandle.Create("D5/S3/Combinatorics/Sequenceability/UniformRelativePath.exists_uniform_relative_path"),
             H("The complete universal finite-field relative path"),
