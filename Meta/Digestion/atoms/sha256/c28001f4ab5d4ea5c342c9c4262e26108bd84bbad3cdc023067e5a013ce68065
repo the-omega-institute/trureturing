@@ -1,7 +1,0 @@
-**Theorem 55.2 (uniform-kernel transport of observable agreement).** Suppose two
-sources have identical visible responses along a finite seed event $E$ and the
-same common rule is used. Then the complete output and resource record on $E$
-is identical at the two sources. Any subprobability law transported by $E$ is
-therefore dominated by both source laws. The greatest such common subprobability
-is the meet of the two output laws on the declared measurable carrier.
-

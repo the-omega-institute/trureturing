@@ -1,9 +1,0 @@
-**定理 55.1（三位置的共同量与相位平面）。** 将 $1,\omega,\omega^2$ 视为实单位向量 $v_2,v_3,v_5$，对实 $b_2,b_3,b_5$ 令 $\Phi=\sum b_iv_i,t=\sum b_i$。则
-
-$$
-b_i=\frac{t+2\langle\Phi,v_i\rangle}{3},\qquad
-\sum_i b_i^2=\frac{t^2}{3}+\frac23\|\Phi\|^2.
-$$
-
-证明（55.1）。不同向量内积为 $-1/2$，故 $\langle\Phi,v_i\rangle=b_i-(t-b_i)/2=(3b_i-t)/2$，给逆式。另有 $\|\Phi\|^2=\sum b_i^2-\sum_{i<j}b_ib_j=(3\sum b_i^2-t^2)/2$，给等式。第 48.1 条全域核恰为共同线；$N$ 与非法 $111$ 同相位零而 $t$ 分别为零、三。合法五点上 $\Phi$ 单射，不能由全域核声称此限制丢模式。整体 $U=\{2,3,5\}$ 的相位和零，故 $3\leftrightarrow25$ 补集取负，但全 $\mathbb R^3$ 与五合法点须保持不同范围。$\square$
-

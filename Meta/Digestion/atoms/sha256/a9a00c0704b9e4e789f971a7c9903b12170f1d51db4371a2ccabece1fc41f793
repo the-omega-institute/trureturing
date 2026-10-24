@@ -1,9 +1,0 @@
-\qquad
-\xi(u)=\frac{(1+u)\log(1+u)-(1-u)\log(1-u)}2.
-\tag{11.2}
-$$
-
-以下只在 $|u|<1$ 使用对数。相关的稀疏分布检测文献采用截断似然二阶矩，见
-[Bhattacharya–Mukherjee，§5.2.2](../../../Library/Dynamics/bhattacharya2024sparse.md)。
-其固定稀疏指数模型不包含这里恰好一个固定峰位及其弥散补偿的约束。
-

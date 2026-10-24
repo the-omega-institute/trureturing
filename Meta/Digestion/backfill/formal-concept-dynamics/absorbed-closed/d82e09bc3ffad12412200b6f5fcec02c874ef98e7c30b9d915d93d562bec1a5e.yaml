@@ -1,9 +1,0 @@
-fingerprints:
-  raw_sha256: sha256:d82e09bc3ffad12412200b6f5fcec02c874ef98e7c30b9d915d93d562bec1a5e
-  normalized_sha256: sha256:d82e09bc3ffad12412200b6f5fcec02c874ef98e7c30b9d915d93d562bec1a5e
-cas_ref: sha256:d82e09bc3ffad12412200b6f5fcec02c874ef98e7c30b9d915d93d562bec1a5e
-coverage_gids:
-  - gid: D5/S3/ConceptDynamics/InstitutionalCapture/IndependentSourceCaptureLowerBound.independent_source_capture_lower_bound
-    target_statement_id: sha256:1798e8de68bfdd6d16ecdadabcf6a7fa49dba3ec722776da1dd566cca9792100
-receipts:
-  unresolved_subitems: []

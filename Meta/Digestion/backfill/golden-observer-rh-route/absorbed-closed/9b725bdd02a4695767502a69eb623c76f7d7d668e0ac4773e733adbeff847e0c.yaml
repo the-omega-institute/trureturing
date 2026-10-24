@@ -1,9 +1,0 @@
-fingerprints:
-  raw_sha256: sha256:9b725bdd02a4695767502a69eb623c76f7d7d668e0ac4773e733adbeff847e0c
-  normalized_sha256: sha256:9b725bdd02a4695767502a69eb623c76f7d7d668e0ac4773e733adbeff847e0c
-cas_ref: sha256:9b725bdd02a4695767502a69eb623c76f7d7d668e0ac4773e733adbeff847e0c
-coverage_gids:
-  - gid: D5/S3/Analytic/GermWindow/GoldenGermThirdOrderWindowZeroCriterion.golden_third_residual_eq_zero_iff_exists_local_factor_zero
-    target_statement_id: sha256:65de851699180c59f62ea9b253b4d09a2d861928ceba59f800c2b452243207ca
-receipts:
-  unresolved_subitems: []

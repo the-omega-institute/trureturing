@@ -1,2 +1,0 @@
-**假设 15.1（零均值统计区分）。** 取二维非退化 Gaussian 来源 $N(0,S)$，$S\in\operatorname{SPD}_2(\mathbb R)$。用相对熵 $D_{\mathrm{KL}}$ 衡量两分布的局部区分，并令对称矩阵 $U,V$ 为协方差切向量。此选择给统计尺子，不由裸 FIB 组成唯一规定。一般正矩阵迹度量的来源是 Hiai–Petz，[*Riemannian metrics on positive definite matrices related to means*, 式 (0.2)–(0.5)](https://arxiv.org/abs/0809.4974)；该文式 (0.2) 为无 $1/2$ 的迹形式，本章采用 Gaussian 相对熵给出的半迹规范化。
-

@@ -1,9 +1,0 @@
-fingerprints:
-  raw_sha256: sha256:9b2a63ce0c88c8672a62adca9e21e6adcf955012d6ef6e34d37602df845ae4b5
-  normalized_sha256: sha256:9b2a63ce0c88c8672a62adca9e21e6adcf955012d6ef6e34d37602df845ae4b5
-cas_ref: sha256:9b2a63ce0c88c8672a62adca9e21e6adcf955012d6ef6e34d37602df845ae4b5
-coverage_gids:
-  - gid: D5/S3/Observer/ArithmeticTomography/ResidueCoordinateDimension.q2_q5_collision
-    target_statement_id: sha256:aee4cb793f55a64c28cc9e4972eae1aab0843bc14de74b5060eee457b72717f6
-receipts:
-  unresolved_subitems: []

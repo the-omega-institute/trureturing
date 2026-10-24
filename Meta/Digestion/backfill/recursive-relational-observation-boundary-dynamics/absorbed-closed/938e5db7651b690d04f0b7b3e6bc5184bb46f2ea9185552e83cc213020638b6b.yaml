@@ -1,9 +1,0 @@
-fingerprints:
-  raw_sha256: sha256:938e5db7651b690d04f0b7b3e6bc5184bb46f2ea9185552e83cc213020638b6b
-  normalized_sha256: sha256:938e5db7651b690d04f0b7b3e6bc5184bb46f2ea9185552e83cc213020638b6b
-cas_ref: sha256:938e5db7651b690d04f0b7b3e6bc5184bb46f2ea9185552e83cc213020638b6b
-coverage_gids:
-  - gid: D5/S3/ObserverMemory/Algorithms/SharedControlBitStorageBound.shared_control_bit_storage_bound
-    target_statement_id: sha256:5cb55503f03dc4e9923ddee1fd5bd277a4dc7520d120578dcbb935fdae8cdc92
-receipts:
-  unresolved_subitems: []

@@ -1,8 +1,0 @@
-证明结构是：
-
-1. 组成坐标经过固定的 Fibonacci 变换得到整数；
-2. 追加 null 后得到等长的 Zeckendorf 型无相邻 $1$ 编码；
-3. 精确 reply 等于该编码的 Fibonacci 值；
-4. 固定长度 canonical representation 的唯一性恢复整串编码；
-5. 三位窗口编码逐位恢复原始 $w$。
-

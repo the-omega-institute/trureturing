@@ -1,4 +1,0 @@
-**Corollary 77.3 (an integral nonsingular point forces a prime block).** Let $Q>5$ be prime. If $E_Q$ has an affine integral point $U$ with nonsingular reduction at $Q$, then every actual equality $B_N=QC^2$ as in Theorem 77.1 has $C=1$, hence $B_N=Q$.
-
-**Proof.** The point belongs to $G_0(Q)=\mathbb ZS$, so $U=[k]S$ with $k\ne0$. If a prime $p$ divided $C$, then $S$ would belong to the formal kernel at $p$. Its nonzero multiple $U$ would also be formal, with negative $X$-valuation, contradicting integrality of $U$. Thus $C$ has no prime divisor and equals one. ∎
-

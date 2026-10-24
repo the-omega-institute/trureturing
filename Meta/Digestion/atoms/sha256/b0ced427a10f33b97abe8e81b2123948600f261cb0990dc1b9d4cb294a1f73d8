@@ -1,9 +1,0 @@
-### 42.4 git 读数与边界
-
-相对最终合并后的 `origin/dev`，理论卷的差异只有两个纯插入 hunk；最终命令
-
-```sh
-git diff -U0 origin/dev..HEAD -- docs/develop/theory/CONTEXTUAL_SPACETIME_ARITHMETIC.md | grep '^@@'
-```
-
-应输出两个 `@@` 行，分别定位附录 PR7 段与文档末尾追加。允许的新增路径是本卷、`Meta/Digestion/atoms/sha256`、`Meta/Digestion/backfill/contextual-spacetime-arithmetic/residual-open`；不改旧定义、导航或其它理论正文。未完成项为：评审三席判词、CI 与合入仍由 caller 的后续流程负责，本实施席不预报其结果。

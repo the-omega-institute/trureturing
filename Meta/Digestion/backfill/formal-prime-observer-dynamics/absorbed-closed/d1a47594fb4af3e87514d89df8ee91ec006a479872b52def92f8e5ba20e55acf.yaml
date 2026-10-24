@@ -1,9 +1,0 @@
-fingerprints:
-  raw_sha256: sha256:d1a47594fb4af3e87514d89df8ee91ec006a479872b52def92f8e5ba20e55acf
-  normalized_sha256: sha256:d1a47594fb4af3e87514d89df8ee91ec006a479872b52def92f8e5ba20e55acf
-cas_ref: sha256:d1a47594fb4af3e87514d89df8ee91ec006a479872b52def92f8e5ba20e55acf
-coverage_gids:
-  - gid: D5/S3/Quantum/Tomography/DiagonalPhaseBlindness.diagonal_prime_observables_cannot_recover_relative_phase
-    target_statement_id: sha256:7dee8ccff35b2f76b467fda0da5a0901d43c9503e9f0226d5f5cc231507b3d1f
-receipts:
-  unresolved_subitems: []

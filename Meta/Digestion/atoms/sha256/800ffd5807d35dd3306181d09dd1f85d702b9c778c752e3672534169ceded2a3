@@ -1,4 +1,0 @@
-**证明。** 由 Markov 半群定义，
-\[
-\mathbb E_{\theta+\varepsilon h}[F(X_t)]
- =

@@ -1,9 +1,0 @@
-fingerprints:
-  raw_sha256: sha256:15e63495b480a6c6540a48cffd078b331530aeb20a3d142337d73e39509a1b3f
-  normalized_sha256: sha256:15e63495b480a6c6540a48cffd078b331530aeb20a3d142337d73e39509a1b3f
-cas_ref: sha256:15e63495b480a6c6540a48cffd078b331530aeb20a3d142337d73e39509a1b3f
-coverage_gids:
-  - gid: D5/S3/Analytic/Adelic/OffLineCurvatureDipole.off_line_curvature_dipole
-    target_statement_id: sha256:3b5f80d6bacc48dcc98b68ccb38cfbeaafb3a4b5f9bae0406efb8d74c160886f
-receipts:
-  unresolved_subitems: []

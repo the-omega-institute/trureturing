@@ -1,9 +1,0 @@
-fingerprints:
-  raw_sha256: sha256:2ea62cc274fada7daf6a1aa1d549ab060f325a3c13efcef7e9b11d7c93691c6a
-  normalized_sha256: sha256:2ea62cc274fada7daf6a1aa1d549ab060f325a3c13efcef7e9b11d7c93691c6a
-cas_ref: sha256:2ea62cc274fada7daf6a1aa1d549ab060f325a3c13efcef7e9b11d7c93691c6a
-coverage_gids:
-  - gid: D5/S3/Estimation/ExperimentCost/KernelTowerNilpotentRecovery.finite_kernel_tower_recovers_block_profile
-    target_statement_id: sha256:ae23dfbd5d06ac0b40adbda3eff8d3ce2d329e577c99be0530d712768448d832
-receipts:
-  unresolved_subitems: []

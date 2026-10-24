@@ -1,8 +1,0 @@
-**约定 37.11（同源恢复、供应与费用边界）。** 本节恢复的是每棵实际原树的初始 $q_H$，包括纯 $\alpha$、纯 $\beta$ 和全部有序括号化。行、列、伴随者、Euler 参数及 $(m,n,k_1)$ 是离线数学坐标，在线取得只使用实际当前 $E$、补充标签、公共 $H$ 和已经发生的守卫／计数记录。所用纯 $\alpha$ 宏的前两窗因子是 $A^{4T}=B^{4T}=1$，但接受拼接仍改变原树，不是复位。上界分割的 $h$ 必须在首次来源动作前从同一未修改的初始来源供应，认证实际解码表及所用正上下文是共同固定的供应或构造接口；本节未定义保持原树的标签生产器，不能先取得 $\Gamma_H$ 再假定可以复位。命题 36.10 的保持原树生产限制仍适用。
-
-$H+4$ 只计算读取、替换尝试和拼接尝试，包含所有最终拒绝。标签的生产、同源认证、认证数据的核验、传输与保留，实际表的生成和描述、正上下文的生成与供应、正规坐标转换、精确算术工作区、控制器和完整记录的存储、输出展开及物理时间分别属于不同资源项；字母表数的节省不自动给这些费用的节省，也不给总控制记忆最优值。
-
-恢复与静态充分性的数学接口沿用仓内 [TargetRecoveryCriterion](../../../D5/S3/ConceptDynamics/Restoration/TargetRecoveryCriterion.lean) 的 `target_recovery_criterion` 及 [IndexedTargetSufficiency](../../../D5/S3/ConceptDynamics/Restoration/IndexedTargetSufficiency.lean) 的 `indexed_target_sufficiency`：过程必须是同一实际协议在同一初始来源上取得的完整记录，目标取初始 $q_H$；同一完整记录纤维内目标恒定才许可解码。本节的实际执行器和定理 30.2 分别承担可取得性与永久合并，不能把分别可达的窗口拼成未执行的联合读数。有限静态 [MinimumCompleteObserverSetCover](../../../D5/S3/ConceptDynamics/ExperimentDesign/MinimumCompleteObserverSetCover.lean) 的 `minimum_complete_observer_is_set_cover` 须有共同供应的观察函数及相应加性费用；它不代替定理 35.4 的嵌套原始目标保持条件。[SafeActionRefinementMonotonicity](../../../D5/S3/ConceptDynamics/Decision/SafeActionRefinementMonotonicity.lean) 的 `safe_action_refinement_monotonicity` 只处理纤维上动作合法性；定理 37.9 表明一个合法动作仍能销毁初始区别。初态识别与首动作合并的文献语义沿用 §31.7 的既有引文，不移用其长度界来得到本节的来源特定容量公式。
-
-定理 37.2–37.10 是对本卷实际守卫合同及原子卷共同来源证书的普通数学推导，不据静态接口的存在宣告这些具体结论已获形式核验。一般最优分割、尖锐节省、标签生产与认证成本、来源调用和全部存储最优，以及原树括号、叶地址、绝对时间、物理空间与原树本身的恢复均未由上述容量界确定；这些对象与初始行为商的恢复不同。
-

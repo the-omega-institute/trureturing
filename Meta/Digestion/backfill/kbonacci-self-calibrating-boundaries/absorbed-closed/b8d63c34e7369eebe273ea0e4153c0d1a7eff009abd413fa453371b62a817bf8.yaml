@@ -1,9 +1,0 @@
-fingerprints:
-  raw_sha256: sha256:b8d63c34e7369eebe273ea0e4153c0d1a7eff009abd413fa453371b62a817bf8
-  normalized_sha256: sha256:b8d63c34e7369eebe273ea0e4153c0d1a7eff009abd413fa453371b62a817bf8
-cas_ref: sha256:b8d63c34e7369eebe273ea0e4153c0d1a7eff009abd413fa453371b62a817bf8
-coverage_gids:
-  - gid: D5/S1/Words/AdmissibleWords/KBonacciActualEndpointOperators.actual_endpoint_operators
-    target_statement_id: sha256:d5d513125a31ac09acd9e43d79289a1c93594d2600f5f8a0506679991d2c7605
-receipts:
-  unresolved_subitems: []

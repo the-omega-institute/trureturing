@@ -1,9 +1,0 @@
-fingerprints:
-  raw_sha256: sha256:e4e5fc17075801236e223cf408d51948be8ee3f6bd9668ffdaf401eb80bd1ae6
-  normalized_sha256: sha256:e4e5fc17075801236e223cf408d51948be8ee3f6bd9668ffdaf401eb80bd1ae6
-cas_ref: sha256:e4e5fc17075801236e223cf408d51948be8ee3f6bd9668ffdaf401eb80bd1ae6
-coverage_gids:
-  - gid: D5/S3/Analytic/ReflectedSpectrum/ConfluentNegativeJetBlock.confluent_negative_jet_block
-    target_statement_id: sha256:f1d061cc555904958f2c54fc8394c8ada676b7f58b1637755c8139f0d567fbc8
-receipts:
-  unresolved_subitems: []

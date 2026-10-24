@@ -1,9 +1,0 @@
-fingerprints:
-  raw_sha256: sha256:88755a96ce4deed5eb90068e280f50bef3d711243a0d6afac7e4e478bac16e5e
-  normalized_sha256: sha256:88755a96ce4deed5eb90068e280f50bef3d711243a0d6afac7e4e478bac16e5e
-cas_ref: sha256:88755a96ce4deed5eb90068e280f50bef3d711243a0d6afac7e4e478bac16e5e
-coverage_gids:
-  - gid: D5/S3/Factorization/ExponentCoordinates/PrimeExponentBijection.prime_exponent_product_formula
-    target_statement_id: sha256:6b0924fd266b4abdf50baa6098d602188e2a2c1c2c1ba447f31c2ef60dfbef9a
-receipts:
-  unresolved_subitems: []

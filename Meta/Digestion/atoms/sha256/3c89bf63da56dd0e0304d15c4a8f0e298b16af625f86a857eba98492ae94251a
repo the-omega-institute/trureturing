@@ -1,4 +1,0 @@
-## 463. 三重以上重复部分与剩余原列
-
-原列的乘法分解与 Minkowski 方法已有文献先例：[Blomer–Goldmakher–Louvel, *L-functions with n-th order twists*, §5, Corollary 1.6 的证明，（5.3）—（5.5）](https://arxiv.org/pdf/1112.1650v1)对原内变量使用 squarefree／squarefull 分解。本节复用这种范数方法与既有六次幂自由筛，保留完整三满部分截断和全部六次幂碰撞，再消费到原向量的完整交叉项；不将通常的满数计数或这些筛与范数方法认作本项目发明。
-
