@@ -6,7 +6,8 @@
    utility: kind=certified-instance; basis=refutes=gid:D5/S3/Quantum/Measurements/SteeringPowerPreservationRefutation.claim; result=D5/S3/Quantum/Measurements/SteeringPowerPreservationRefutation.result; claim=D5/S3/Quantum/Measurements/SteeringPowerPreservationRefutation.claim
    digest: An admissible five-dimensional projective family fails steering power preservation. -/
 
-import D5.S3.Observer.WindowRegister
+import D5.S3.Observer.MatrixUnitCertificate
+import D5.S3.Quantum.Algebra.WeylDisplacementPowers
 import Mathlib.LinearAlgebra.UnitaryGroup
 import Mathlib.Tactic.FinCases
 import Mathlib.Tactic.IntervalCases
@@ -142,22 +143,140 @@ private lemma coefficient_orthogonality (n : ℕ) (hn : 1 ≤ n) (hn' : n ≤ 4)
 private lemma phases_admissible : Admissible 5 phases := by
   exact ⟨phases_zero, coefficient_orthogonality⟩
 
+private lemma shift_entry (i j : Fin 5) : X i j = if i = j + 1 then 1 else 0 := by
+  calc
+    X i j = (shiftMatrix 5 ^ 1) ((ZMod.finEquiv 5) i) ((ZMod.finEquiv 5) j) := by
+      rw [pow_one]
+      rfl
+    _ = if (ZMod.finEquiv 5) i - (ZMod.finEquiv 5) j = (1 : ZMod 5)
+        then 1 else 0 :=
+      D5.S3.Observer.MatrixUnitCertificate.shift_matrix_pow_apply (M := 5) 1 _ _
+    _ = _ := by fin_cases i <;> fin_cases j <;> rfl
+
+set_option maxHeartbeats 2000000 in
+-- Fourier inversion leaves twenty-five nonzero matrix entries.
 private lemma reference_entry (y i j : Fin 5) :
     R y i j = if i = j + 1 then
       windowRoot 5 ^ ((![0, 4, 1, 0, 0] j + y.val * j.val) % 5) else 0 := by
-  sorry
+  have hz : Z = Matrix.diagonal (fun j : Fin 5 => windowRoot 5 ^ j.val) := rfl
+  simp only [R, hz, Matrix.diagonal_pow, Pi.pow_apply, Matrix.mul_diagonal,
+    Matrix.sum_apply, Matrix.smul_apply, smul_eq_mul, shift_entry]
+  by_cases hij : i = j + 1
+  · subst i
+    simp only [ite_true, one_mul]
+    have h4 : windowRoot 5 ^ 4 = -1 - windowRoot 5 - windowRoot 5 ^ 2 - windowRoot 5 ^ 3 := by
+      linear_combination root_relations.2.1
+    fin_cases y <;> fin_cases j <;>
+      norm_num [coefficient_formula, t, Fin.sum_univ_succ, Finset.sum_range_succ,
+        star_mul, star_pow, root_relations.2.2] <;>
+      ring_nf <;>
+      simp only [pow_eq_pow_mod _ root_relations.1, Nat.reduceMod, pow_zero, pow_one] <;>
+      rw [h4] <;> ring
+  · simp [hij]
 
+private def U : Matrix (Fin 5) (Fin 5) ℂ :=
+  Matrix.diagonal (fun j => windowRoot 5 ^ (![0, 0, 4, 0, 0] j : ℕ))
+
+private lemma diagonal_unitary : U ∈ Matrix.unitaryGroup (Fin 5) ℂ := by
+  apply Matrix.diagonal_mem_unitary.mpr
+  apply Pi.mem_unitary_iff.mpr
+  intro j
+  apply (unitary ℂ).pow_mem
+  apply Unitary.mem_iff_star_mul_self.mpr
+  rw [root_relations.2.2, ← pow_succ, root_relations.1]
+
+set_option maxHeartbeats 2000000 in
+-- The diagonal conjugation is checked on the twenty-five nonzero entries.
+private lemma reference_factorization (y : Fin 5) :
+    R y = U * (X * Z ^ y.val) * star U := by
+  have hz : Z = Matrix.diagonal (fun j : Fin 5 => windowRoot 5 ^ j.val) := rfl
+  ext i j
+  simp only [reference_entry, U, Matrix.star_eq_conjTranspose,
+    Matrix.diagonal_conjTranspose, Matrix.mul_diagonal, Matrix.diagonal_mul,
+    hz, Matrix.diagonal_pow, Pi.pow_apply, Pi.star_apply, shift_entry]
+  by_cases hij : i = j + 1
+  · subst i
+    simp only [ite_true, one_mul]
+    fin_cases y <;> fin_cases j <;>
+      norm_num [star_pow, root_relations.2.2] <;> ring_nf <;>
+      simp only [pow_eq_pow_mod _ root_relations.1, Nat.reduceMod, pow_zero, pow_one] <;>
+      norm_num
+  · simp [hij]
+
+set_option maxHeartbeats 1000000 in
+-- Transporting the frozen Weyl power law unfolds the finite matrix indices.
 private lemma reference_projective (y : Fin 5) :
     R y ∈ Matrix.unitaryGroup (Fin 5) ℂ ∧ R y ^ 5 = 1 := by
-  sorry
+  have hx : X ∈ Matrix.unitaryGroup (Fin 5) ℂ := by
+    apply Matrix.mem_unitaryGroup_iff'.2
+    exact (window_unitary (M := 5)).1
+  have hz : Z ∈ Matrix.unitaryGroup (Fin 5) ℂ := by
+    apply Matrix.mem_unitaryGroup_iff'.2
+    exact (window_unitary (M := 5)).2
+  have hm : X * Z ^ y.val ∈ Matrix.unitaryGroup (Fin 5) ℂ :=
+    (Matrix.unitaryGroup (Fin 5) ℂ).mul_mem hx
+      ((Matrix.unitaryGroup (Fin 5) ℂ).pow_mem hz _)
+  constructor
+  · rw [reference_factorization]
+    exact (Matrix.unitaryGroup (Fin 5) ℂ).mul_mem
+      ((Matrix.unitaryGroup (Fin 5) ℂ).mul_mem diagonal_unitary hm)
+      (Unitary.star_mem diagonal_unitary)
+  · have hp : (X * Z ^ y.val) ^ 5 = 1 := by
+      let e := Matrix.reindexRingEquiv ℂ (ZMod.finEquiv 5).toEquiv.symm
+      have hX : e (shiftMatrix 5) = X := rfl
+      have hZ : e (clockMatrix 5) = Z := rfl
+      have hbase : D5.S3.Quantum.Algebra.WeylDisplacement.displacement
+          5 1 ((ZMod.finEquiv 5) y) ^ 5 = 1 := by
+        rw [D5.S3.Quantum.Algebra.WeylDisplacementPowers.displacement_pow]
+        have h5 : ((5 : ℕ) : ZMod 5) = 0 := by decide
+        have h10 : ((Nat.choose 5 2 : ℕ) : ZMod 5) = 0 := by decide
+        simp only [h5, h10, zero_mul, ZMod.val_zero, pow_zero, one_smul,
+          D5.S3.Quantum.Algebra.WeylDisplacement.displacement, mul_one]
+      have hmap := congrArg e hbase
+      rw [map_pow, map_one] at hmap
+      have he : e (D5.S3.Quantum.Algebra.WeylDisplacement.displacement
+          5 1 ((ZMod.finEquiv 5) y)) = X * Z ^ y.val := by
+        have h1 : (1 : ZMod 5).val = 1 := rfl
+        have hy : ((ZMod.finEquiv 5) y).val = y.val := rfl
+        simp only [D5.S3.Quantum.Algebra.WeylDisplacement.displacement,
+          map_mul, map_pow, hX, hZ, h1, hy, pow_one]
+      rw [he] at hmap
+      exact hmap
+    let u : (Matrix (Fin 5) (Fin 5) ℂ)ˣ :=
+      ⟨U, star U, Unitary.mul_star_self_of_mem diagonal_unitary,
+        Unitary.star_mul_self_of_mem diagonal_unitary⟩
+    rw [reference_factorization]
+    change ((u : Matrix (Fin 5) (Fin 5) ℂ) * (X * Z ^ y.val) *
+      ((u⁻¹ : (Matrix (Fin 5) (Fin 5) ℂ)ˣ) : Matrix (Fin 5) (Fin 5) ℂ)) ^ 5 = 1
+    rw [Units.conj_pow, hp, mul_one, Units.mul_inv]
 
 private lemma witness_projective : IsProjectiveFamily 5 B := by
-  sorry
+  intro y
+  by_cases hy : y = 0
+  · subst y
+    rw [B, if_pos rfl]
+    constructor
+    · apply Matrix.mem_unitaryGroup_iff'.2
+      rw [star_smul, Matrix.smul_mul, Matrix.mul_smul, smul_smul,
+        Unitary.star_mul_self_of_mem (reference_projective 0).1,
+        root_relations.2.2, ← pow_succ, root_relations.1, one_smul]
+    · rw [smul_pow, root_relations.1, (reference_projective 0).2, one_smul]
+  · simpa only [B, if_neg hy] using reference_projective y
 
+set_option maxHeartbeats 3000000 in
+-- Each reconstruction uses only twenty-five matrix-entry identities.
 private lemma reconstruction :
     (∑ y, coeff 5 phases 1 y 0 • R y) = X ∧
     (∑ y, coeff 5 phases 2 y 0 • R y ^ 2) = X ^ 2 := by
-  sorry
+  have h4 : windowRoot 5 ^ 4 = -1 - windowRoot 5 - windowRoot 5 ^ 2 - windowRoot 5 ^ 3 := by
+    linear_combination root_relations.2.1
+  constructor <;> ext i j <;> fin_cases i <;> fin_cases j <;>
+    norm_num [coefficient_formula, t, Fin.sum_univ_succ, Finset.sum_range_succ,
+      Matrix.sum_apply, Matrix.smul_apply, smul_eq_mul, pow_two, Matrix.mul_apply,
+      reference_entry, shift_entry] <;>
+    ring_nf <;>
+    simp only [pow_eq_pow_mod _ root_relations.1, Nat.reduceMod, pow_zero, pow_one] <;>
+    rw [h4] <;> ring
 
 private lemma special_coefficients : coeff 5 phases 1 0 0 = g ∧
     coeff 5 phases 2 0 0 = g := by
@@ -189,7 +308,10 @@ private lemma transformed_two :
 private lemma defect_entry :
     ((transformed 5 phases B 1 0) ^ 2 - transformed 5 phases B 2 0) 0 3 =
       g * (g - 1) * (windowRoot 5 - 1) ^ 2 := by
-  sorry
+  rw [transformed_one, transformed_two]
+  norm_num [pow_two, Matrix.mul_apply, Matrix.add_apply, Matrix.sub_apply,
+    Matrix.smul_apply, smul_eq_mul, Fin.sum_univ_succ, reference_entry, shift_entry]
+  ring
 
 private lemma g_nontrivial : g ≠ 0 ∧ g ≠ 1 := by
   have hs : (windowRoot 5 + windowRoot 5 ^ 4) ^ 2 +
