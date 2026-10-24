@@ -1251,3 +1251,779 @@ source, law, measurement, geometry, clock, operation and resource
 correspondence. Equality of dimensions supplies none of those premises.
 
 ## 追加锚（本行以下为增补区）
+
+## 12. The unit whole-group model for the fixed native source
+
+**Definition 12.1 (source, domains and dimensionless coupling).** Retain
+exactly Definitions 1.1–1.2: $0<Z<1$, $r=1-Z$, $H=r/2$,
+$0<l<k_o<u<H$, arbitrary fixed preparation phases, both actual
+$2\pi$ phase periods, the pole $o$, and the raw measure
+$d\mu=dk\,d\alpha\,d\beta$ on $\Omega=(l,u)\times\mathbb T^2$.
+The target has the covariance-$2$ law (1.2), zero area drift, independent
+central coefficient $\nu$ with $\epsilon=|\nu|$, first-exit killing at
+both height faces and original clock $e^{-tL_\epsilon}$.
+The potential is the full unit-source field $\Gamma_{\epsilon,o}$ of
+(1.5), without source averaging, a time cutoff or survival normalization.
+For every $\epsilon>0$ use the entire original domain
+$\mathcal F_\epsilon$ of (1.3), including its periodicity and both zero
+height traces. At zero noise $\mathcal F_0$ is the horizontal closure;
+no identification with a positive-noise domain is made.
+
+In the exact chart (2.1),
+
+$$
+x=k-k_o,\quad y=2(\alpha-\alpha_o),\quad
+\theta=-r\{\beta-\beta_o-c(k_o)y\}-xy/2,
+\qquad d\mu=m_0\,d\xi,\quad m_0=(2r)^{-1},
+\tag{12.1}
+$$
+
+where $\xi=(x,y,\theta)$ and $(P,Q,Z_c)=(U,V,Z_H)$ as in (2.2).
+All whole-group integrals below use Lebesgue measure $d\xi$, not
+$d\mu$. Define the closed free unit-noise form and its associated
+positive operator $\mathcal L_1$ by
+
+$$
+\begin{aligned}
+\mathcal T_1[u]&=\|Uu\|_2^2+\|Vu\|_2^2+\|Z_Hu\|_2^2,\\
+\mathcal H_1&=\overline{C_c^\infty(\mathbb R^3)}
+ ^{(\|\cdot\|_2^2+\mathcal T_1)^{1/2}},\\
+\mathcal Q_\gamma[u]&=\mathcal T_1[u]
+ -\gamma\int_{\mathbb R^3}\mathcal G_1|u|^2\,d\xi,\\
+e(\gamma)&=\inf_{u\in\mathcal H_1,\ \|u\|_2=1}
+                         \mathcal Q_\gamma[u],\qquad \gamma>0.
+\end{aligned}
+\tag{12.2}
+$$
+
+The derivative closure is the whole-group form domain; it is not
+asserted to be the isotropic Euclidean $H^1(\mathbb R^3)$ domain.
+The coupling corresponding to the native form is $\gamma=g/m_0$.
+The intrinsic metric remains $d_\epsilon$, with the exact-comparison
+boundaries of Theorem 9.2, Corollary 9.3, Theorem 10.2 and Definition
+11.2: local constant-symbol readout, exact intrinsic Euclidean distance,
+and original-clock all-start full killed response are the respective
+excluded contracts. The local model (12.1) is the Heisenberg model of
+§2, with its actual deck transformations, not an exact Euclidean
+replacement for any of those contracts.
+
+**Proposition 12.2 (the unit variational problem and uniform native
+localization).** For every $\gamma>0$, $\mathcal Q_\gamma$ is closed
+and semibounded on exactly $\mathcal H_1$, has a form norm equivalent
+to a sufficiently shifted free norm, and
+
+$$
+-\infty<e(\gamma)\le0.
+\tag{12.3}
+$$
+
+Its normalized infimum can be taken over $C_c^\infty(\mathbb R^3)$.
+For each fixed finite $\epsilon_0>0$, a fixed injective source chart
+$U_o$ has the remainder bound (3.2), uniformly for
+$0<\epsilon\le\epsilon_0$. For every fixed neighbourhood $N$ of $o$
+there is $C_N<\infty$ such that
+
+$$
+\sup_{0<\epsilon\le\epsilon_0}\,
+\sup_{q\in\Omega\setminus N}\Gamma_{\epsilon,o}(q)\le C_N.
+\tag{12.4}
+$$
+
+**Proof.** The whole-group estimate (2.4), with unit noise, gives
+
+$$
+\sup_\xi h_1(t,\xi)\le
+                  \frac{C}{t^{3/2}(1+\sqrt t)}.
+\tag{12.5}
+$$
+
+This is the constant-coefficient scaled-frame application of
+Capogna–Citti–Manfredini, [arXiv:1212.6665v2, Proposition 2.2,
+(2.8), (2.11)](https://arxiv.org/html/1212.6665v2), with matrix $I_3$,
+combined with the ball volume in §2. The regularized gauge is the
+Capogna–Citti [Lemma 2.13](https://arxiv.org/html/1504.04762v1)
+intermediate, with coordinates $(x_1,x_2,x_3)=(x,y,2\theta)$ and
+regularization parameter $2\epsilon$. These correspondences do not
+rescale the original clock.
+
+Write $R_a=(\mathcal L_1+a)^{-1}$. Positivity, convolution of the
+whole-group heat kernels and Tonelli give
+
+$$
+R_a\mathcal G_1(\xi)
+ =\int_0^\infty\frac{1-e^{-at}}a h_1(t,\xi)\,dt.
+\tag{12.6}
+$$
+
+For $a\ge1$, split at $a^{-1}$ and $1$, and use
+$(1-e^{-at})/a\le\min(t,a^{-1})$. The three bounds are
+
+$$
+\begin{aligned}
+\|R_a\mathcal G_1\|_\infty
+&\le C\left\{\int_0^{a^{-1}}t^{-1/2}dt
+ +a^{-1}\int_{a^{-1}}^1t^{-3/2}dt
+ +a^{-1}\int_1^\infty t^{-2}dt\right\}\\
+&\le C_1a^{-1/2}.
+\end{aligned}
+\tag{12.7}
+$$
+
+For $W_M=\mathcal G_1\wedge M$, the positive symmetric kernel of
+$W_M^{1/2}R_aW_M^{1/2}$ has Schur bound $C_1a^{-1/2}$ with weight
+$W_M^{1/2}$: its weighted kernel integral is
+$W_M^{1/2}R_aW_M\le C_1a^{-1/2}W_M^{1/2}$.
+The adjoint operator gives the other Schur inequality. Equivalently,
+$\|W_M^{1/2}(\mathcal L_1+a)^{-1/2}\|^2\le C_1a^{-1/2}$.
+Apply this to $(\mathcal L_1+a)^{1/2}u$ and then let $M\uparrow\infty$.
+Monotone convergence proves, on the entire free domain,
+
+$$
+\int\mathcal G_1|u|^2\,d\xi
+ \le C_1a^{-1/2}
+            \{\mathcal T_1[u]+a\|u\|_2^2\},
+\qquad u\in\mathcal H_1.
+\tag{12.8}
+$$
+
+Thus the potential is infinitesimally form bounded. The classical KLMN
+theorem, Teschl, [*Mathematical Methods in Quantum Mechanics*, §6.5,
+Theorem 6.24](https://www.mat.univie.ac.at/~gerald/ftp/book-schroe/schroe.pdf),
+applies with $\gamma C_1a^{-1/2}<1$. It gives closedness and
+semiboundedness on the same domain. The two form norms are equivalent,
+so the defining smooth free core is also a core for $\mathcal Q_\gamma$.
+Potential integrals converge along that core by (12.8) and
+Cauchy–Schwarz in the weighted $L^2$ space. In particular their Rayleigh
+quotients converge, proving the core assertion and $e(\gamma)>-\infty$.
+
+For normalized $u\in C_c^\infty(\mathbb R^3)$ put
+$D_su=s^{-2}u\circ\delta_{1/s}$. The Jacobian is $s^4$, and exact
+homogeneity gives
+
+$$
+\|D_su\|_2=1,\qquad
+\mathcal T_1[D_su]
+=s^{-2}(\|Uu\|_2^2+\|Vu\|_2^2)+s^{-4}\|Z_Hu\|_2^2\longrightarrow0
+\quad(s\to\infty).
+\tag{12.9}
+$$
+
+Since $\mathcal G_1\ge0$, $e(\gamma)\le\mathcal Q_\gamma[D_su]
+\le\mathcal T_1[D_su]$. This proves $e(\gamma)\le0$ without an
+attainment assertion on the whole group.
+
+The uniform native remainder is Theorem 3.1, including its periodic
+image estimate and full killed-time tail. To verify (12.4), take a
+smaller smooth source neighbourhood $B\Subset N\cap U_o$ containing
+$o$. On $\partial B$, (3.2) and (2.4) bound the field uniformly:
+the compact boundary has $d_{\epsilon_0}(0,\cdot)>0$ and
+$d_\epsilon\ge d_{\epsilon_0}$ for $\epsilon\le\epsilon_0$.
+For each fixed positive $\epsilon$, the field is $L_\epsilon$-harmonic
+on $\Omega\setminus\overline B$, periodic in the actual phases,
+continuous with zero trace at both height faces, and smooth elsewhere
+there. The elliptic maximum principle bounds it by its inner-boundary
+supremum. This bound is independent of $\epsilon$; no uniform
+ellipticity constant is required by this application for each member.
+It proves (12.4), including near the killed faces. $\square$
+
+## 13. Exact small-noise coefficient, critical coupling and concentration
+
+**Theorem 13.1 (the coefficient on the full native form domain).** For
+every fixed $g>0$ and all fixed native data of Definition 12.1,
+
+$$
+\lim_{\epsilon\downarrow0}\epsilon^2E_\epsilon(g)=e(g/m_0).
+\tag{13.1}
+$$
+
+For each fixed finite $\epsilon_0>0$ there is $C_g<\infty$, depending
+also on those fixed data and $\epsilon_0$, such that
+
+$$
+E_\epsilon(g)\ge\epsilon^{-2}e(g/m_0)-C_g,
+\qquad 0<\epsilon\le\epsilon_0.
+\tag{13.2}
+$$
+
+**Proof.** For normalized $u\in C_c^\infty(\mathbb R^3)$ and small
+$\epsilon$, define a native function by
+
+$$
+f_\epsilon(\Phi_o(\delta_\epsilon\xi))
+       =m_0^{-1/2}\epsilon^{-2}u(\xi),
+\tag{13.3}
+$$
+
+and extend it by zero outside the source chart. Its support is compact
+inside that chart for sufficiently small $\epsilon$. Hence
+$f_\epsilon\in\mathcal F_\epsilon$ with both wall traces zero and
+$\|f_\epsilon\|_{L^2(\mu)}=1$. Exact field homogeneity and (2.5) give
+
+$$
+\begin{aligned}
+T_\epsilon[f_\epsilon]&=\epsilon^{-2}\mathcal T_1[u],\\
+V_\epsilon[f_\epsilon]
+ &=m_0^{-1}\epsilon^{-2}\int\mathcal G_1|u|^2\,d\xi+O(1),\\
+q_{\epsilon,g}[f_\epsilon]
+ &=\epsilon^{-2}\mathcal Q_{g/m_0}[u]+O_g(1).
+\end{aligned}
+\tag{13.4}
+$$
+
+The second line uses the full native remainder (3.2), whose error
+integral is at most $B\|f_\epsilon\|_2^2=B$.
+It retains all native deck images, both killing walls and the complete
+time integral. Taking the limsup and then the infimum over this core,
+as justified by Proposition 12.2, proves the upper bound in (13.1).
+
+For the lower bound, choose smooth real $\chi,\psi$ on the cylinder
+with $\chi^2+\psi^2=1$, $\chi=1$ near $o$,
+$\operatorname{supp}\chi\Subset U_o$, and $\psi=0$ near $o$.
+One construction is $\chi=\cos a$, $\psi=\sin a$, where $a=0$ near
+$o$ and $a=\pi/2$ outside a compact subset of $U_o$.
+Multiplication by either cutoff preserves every $\mathcal F_\epsilon$.
+The product rule and $\chi D\chi+\psi D\psi=0$ for each of
+$D=P,Q,Z_c$ give the IMS form identity
+
+$$
+\begin{aligned}
+q_{\epsilon,g}[f]
+ &=q_{\epsilon,g}[\chi f]+q_{\epsilon,g}[\psi f]
+                   -\int B_\epsilon|f|^2\,d\mu,\\
+B_\epsilon&=|P\chi|^2+|P\psi|^2+|Q\chi|^2+|Q\psi|^2
+                +\epsilon^2(|Z_c\chi|^2+|Z_c\psi|^2).
+\end{aligned}
+\tag{13.5}
+$$
+
+The classical IMS identity is Teschl, [Lemma 11.3, (11.12)–(11.13)](https://www.mat.univie.ac.at/~gerald/ftp/book-schroe/schroe.pdf).
+Here the displayed product calculation applies it to the actual three
+vector fields. First it holds on the native smooth core; Theorem 4.1's
+form continuity and cutoff continuity extend it to the full
+$\mathcal F_\epsilon$. Moreover
+$\|B_\epsilon\|_\infty\le C_{\rm IMS}$ uniformly for
+$0<\epsilon\le\epsilon_0$.
+
+For arbitrary $f\in\mathcal F_\epsilon$, form the zero-extended
+whole-group function
+
+$$
+u_\epsilon(\xi)=m_0^{1/2}\epsilon^2
+                         (\chi f)(\Phi_o(\delta_\epsilon\xi)).
+\tag{13.6}
+$$
+
+It belongs to $\mathcal H_1$. Indeed, multiplying a native smooth-core
+approximation by $\chi$ gives compact chart support, and the same
+pullback maps it into $C_c^\infty(\mathbb R^3)$ with convergence in the
+whole-group form norm. Its squared norm is $\|\chi f\|_2^2$, and
+exact scaling gives $T_\epsilon[\chi f]=\epsilon^{-2}
+\mathcal T_1[u_\epsilon]$. Consequently (3.2) implies
+
+$$
+q_{\epsilon,g}[\chi f]
+ \ge\epsilon^{-2}\mathcal Q_{g/m_0}[u_\epsilon]
+                         -gB\|\chi f\|_2^2
+ \ge\epsilon^{-2}e(g/m_0)\|\chi f\|_2^2-gB\|\chi f\|_2^2.
+\tag{13.7}
+$$
+
+By (12.4) and kinetic nonnegativity,
+$q_{\epsilon,g}[\psi f]\ge-gC_{\rm out}\|\psi f\|_2^2$.
+Thus for every normalized member of the entire native domain,
+
+$$
+q_{\epsilon,g}[f]
+ \ge\epsilon^{-2}e(g/m_0)\|\chi f\|_2^2-C_g
+ \ge\epsilon^{-2}e(g/m_0)-C_g,
+\tag{13.8}
+$$
+
+where one can take $C_g=g\max(B,C_{\rm out})+C_{\rm IMS}$.
+The last inequality uses $e(g/m_0)\le0$ and $\|\chi f\|_2^2\le1$.
+Taking the infimum proves (13.2). Multiplying by $\epsilon^2$ gives
+the lower bound in (13.1), completing the proof. $\square$
+
+**Definition 13.2 (unit Rayleigh threshold and the horizontal supplier).**
+Set
+
+$$
+\Lambda_*=
+ \inf_{0\ne u\in\mathcal H_1}
+       \frac{\mathcal T_1[u]}{\int\mathcal G_1|u|^2\,d\xi},
+\qquad g_*=m_0\Lambda_*.
+\tag{13.9}
+$$
+
+Every denominator is finite by (12.8) and strictly positive because
+$\mathcal G_1>0$ almost everywhere. Let $\lambda_0$ be precisely
+V, Definition 10.1 and Theorem 10.2's full-angular horizontal Hardy
+constant, with its natural, non-Dirichlet endpoint domain. In the
+present identity-covariance coordinates its angular form is
+
+$$
+\begin{aligned}
+J&=(-\pi/2,\pi/2),\quad c(a)=\cos a,\\
+\mathcal H_c&=\{b\in L^2(J):b\in AC_{\rm loc}(J),\
+                                   \sqrt c\,b'\in L^2(J)\},\\
+S b&=-4(cb')'+cb,\qquad S\phi=\lambda_0\phi,\quad\phi(0)=1,
+\end{aligned}
+\tag{13.10}
+$$
+
+where $\phi$ is the positive smooth regular endpoint branch and
+$c\phi'\to0$ at both endpoints. The supplied inequality and optimality
+are
+
+$$
+\|Uu\|_2^2+\|Vu\|_2^2
+ \ge\lambda_0\int R^{-2}|u|^2\,d\xi,
+\qquad u\in C_c^\infty(\mathbb R^3\setminus\{0\}),
+\quad\lambda_0>0.
+\tag{13.11}
+$$
+
+They impose no angular symmetry on $u$. The corresponding horizontal
+native coupling is $g_{\rm c}=2\pi m_0\lambda_0$, as in (5.1).
+
+**Theorem 13.3 (sharp uniform semiboundedness, including equality).**
+For the fixed source and every $g>0$,
+
+$$
+\begin{gathered}
+0<\Lambda_*\le2\pi\lambda_0,\qquad 0<g_*\le g_{\rm c},\\
+e(g/m_0)=0\quad\Longleftrightarrow\quad g\le g_*,\\
+e(g/m_0)<0\quad\Longleftrightarrow\quad g>g_*.
+\end{gathered}
+\tag{13.12}
+$$
+
+For every fixed finite $\epsilon_0>0$,
+
+$$
+\inf_{0<\epsilon\le\epsilon_0}E_\epsilon(g)>-\infty
+            \quad\Longleftrightarrow\quad g\le g_*.
+\tag{13.13}
+$$
+
+In particular $g=g_*$ has a uniform lower bound. No equality
+$\Lambda_*=2\pi\lambda_0$, numerical value of $\Lambda_*$, attainment
+of its quotient, or identification of a zero-noise critical completed
+domain with $\mathcal F_\epsilon$ is asserted.
+
+**Proof.** Integrating (2.4) at unit noise gives the whole-group bound
+$\mathcal G_1\le C/[d_1(1+d_1)]$, as in (3.5). The gauge comparison
+in §2 gives $d_1\ge cR^2$ when $R\le1$, and $d_1\ge cR$ when
+$R\ge1$. For the first assertion use
+$d_1\asymp\sqrt{x^2+y^2+\theta^2}$ in this bounded region and
+$R^2\asymp x^2+y^2+|\theta|$; the latter is at most a constant times
+the former there. The second assertion follows directly from the
+regularized gauge when $|\theta|\ge1$, and by compactness and the
+horizontal displacement bound in the remaining region $R\ge1$,
+$|\theta|\le1$. It follows that
+
+$$
+\mathcal G_1\le C'R^{-2},\qquad
+\int\mathcal G_1|u|^2\,d\xi
+ \le\frac{C'}{\lambda_0}(\|Uu\|_2^2+\|Vu\|_2^2)
+ \le\frac{C'}{\lambda_0}\mathcal T_1[u].
+\tag{13.14}
+$$
+
+Here (13.11) extends to $\mathcal H_1$ by form approximation and
+Fatou. To pass first from punctured tests to all smooth tests, cut out
+a Euclidean ball of radius $b$ about zero. On a fixed compact set the
+three fields have bounded coefficients, so the extra squared-gradient
+integral is $O(b)$ for a cutoff with derivative $O(b^{-1})$ in a
+ball of volume $O(b^3)$. This tends to zero, and Fatou gives the
+weighted inequality. Then use the defining whole-group core for every
+$u\in\mathcal H_1$. Thus (13.14) proves $\Lambda_*>0$.
+
+For the opposite bound, use the actual annular witnesses of V,
+(10.12)–(10.13), rather than a purely radial test class. In V's polar
+coordinates
+
+$$
+x=R\sqrt{\cos a}\cos\omega,\quad
+y=R\sqrt{\cos a}\sin\omega,\quad
+4\theta=R^2\sin a,
+\tag{13.15}
+$$
+
+choose nonzero real $\zeta\in C_c^\infty(\mathbb R)$ and set
+$v_L=R^{-1}\phi(a)\zeta(\log R/L)$, $L>0$.
+For each finite $L$ this is an actual smooth compact annular function
+on the full punctured group, including the central axis, by the
+regular endpoint branch of $\phi$. The supplied calculation is
+
+$$
+\frac{\|Uv_L\|_2^2+\|Vv_L\|_2^2}
+     {\int R^{-2}|v_L|^2\,d\xi}
+=\lambda_0+
+ \frac{\int_Jc\phi^2\,da}{\int_J\phi^2\,da}
+ \frac{\int_{\mathbb R}|\zeta'|^2\,dt}
+      {L^2\int_{\mathbb R}|\zeta|^2\,dt}.
+\tag{13.16}
+$$
+
+For any one of these fixed functions $v=v_L$, exact dilation gives
+
+$$
+\frac{\mathcal T_1[D_sv]}{\int\mathcal G_1|D_sv|^2\,d\xi}
+=\frac{\|Uv\|_2^2+\|Vv\|_2^2+s^{-2}\|Z_Hv\|_2^2}
+       {\int\mathcal G_{1/s}|v|^2\,d\xi}
+\longrightarrow
+2\pi\frac{\|Uv\|_2^2+\|Vv\|_2^2}{\int R^{-2}|v|^2\,d\xi}.
+\tag{13.17}
+$$
+
+The convergence uses (2.5) uniformly on that fixed compact annulus.
+First let $s\to\infty$ for fixed $L$, then $L\to\infty$ in (13.16).
+The definition of $\Lambda_*$ proves $\Lambda_*\le2\pi\lambda_0$.
+
+By (13.9), $\mathcal Q_\gamma[u]\ge0$ for every $u$ when
+$0<\gamma\le\Lambda_*$, including $\gamma=\Lambda_*$. Together
+with the spreading argument (12.9) this gives $e(\gamma)=0$.
+If $\gamma>\Lambda_*$, some quotient in (13.9) is strictly below
+$\gamma$, so its normalized $\mathcal Q_\gamma$ value is negative
+and $e(\gamma)<0$. Semiboundedness in Proposition 12.2 rules out
+$e(\gamma)=-\infty$. This proves (13.12), without assuming a
+minimizer at the threshold.
+
+For $g\le g_*$, (13.2) now reads $E_\epsilon(g)\ge-C_g$,
+including at equality. For $g>g_*$, (13.1) gives
+$\epsilon^2E_\epsilon(g)\to e(g/m_0)<0$, hence
+$E_\epsilon(g)\to-\infty$. This proves (13.13).
+Theorem 4.1 also bounds the remaining range $\epsilon\ge\epsilon_0$
+uniformly for each fixed positive $\epsilon_0$, if the family is taken
+over all positive noises. $\square$
+
+**Corollary 13.4 (source concentration of near minimizers).** Suppose
+$g>g_*$ and, for each positive $\epsilon$ tending to zero,
+$f_\epsilon\in\mathcal F_\epsilon$, $\|f_\epsilon\|_2=1$, satisfy
+
+$$
+q_{\epsilon,g}[f_\epsilon]
+             =E_\epsilon(g)+o(\epsilon^{-2}).
+\tag{13.18}
+$$
+
+Then for every fixed neighbourhood $N$ of the pole,
+
+$$
+\int_{\Omega\setminus N}|f_\epsilon|^2\,d\mu\longrightarrow0.
+\tag{13.19}
+$$
+
+The normalized ground states of Theorem 4.1 satisfy this conclusion.
+It asserts neither a unique rescaled profile nor strong convergence
+of rescaled profiles.
+
+**Proof.** Choose the cutoffs in (13.5) with
+$\operatorname{supp}\chi\Subset N\cap U_o$. Put
+$e=e(g/m_0)<0$ and $m_\epsilon=\|\chi f_\epsilon\|_2^2$.
+The first inequality in (13.8) gives
+
+$$
+\epsilon^2q_{\epsilon,g}[f_\epsilon]
+ \ge e m_\epsilon-C_g\epsilon^2
+ =e+|e|(1-m_\epsilon)-C_g\epsilon^2.
+\tag{13.20}
+$$
+
+By (13.1) and (13.18) its left side tends to $e$. Since
+$0\le m_\epsilon\le1$, we obtain $m_\epsilon\to1$.
+The mass outside $N$ is at most $1-m_\epsilon$, proving (13.19).
+The constants may depend on $N$; no shrinking-neighbourhood or profile
+compactness assertion follows from this estimate alone. $\square$
+
+## 14. Full self-field occupation and its fixed-source coefficient
+
+**Theorem 14.1 (complete occupation with the uniform square-difference
+estimate).** For the same source, clock and pole define
+
+$$
+J_\epsilon=\mathbb E_o\int_0^\tau
+                       \Gamma_{\epsilon,o}(q_t^\epsilon)\,dt
+           =\int_\Omega\Gamma_{\epsilon,o}^2\,d\mu,
+\qquad\epsilon>0.
+\tag{14.1}
+$$
+
+Each $J_\epsilon$ is finite. As $\epsilon\downarrow0$,
+
+$$
+\frac{J_\epsilon}{\log(1/\epsilon)}\longrightarrow\frac1{8m_0},
+\qquad
+J_\epsilon=\frac1{8m_0}\log(1/\epsilon)
+                         +o(\log(1/\epsilon)).
+\tag{14.2}
+$$
+
+The final remainder in (14.2) is not asserted to be $O(1)$.
+
+**Proof.** Proposition 7.1 gives finiteness at each positive noise.
+Its full-time identity follows also from Theorem 1.3 by monotone
+approximation of the nonnegative test $\Gamma_{\epsilon,o}$; it uses
+the full killed semigroup, not a time-truncated occupation. Fix finite
+$\epsilon_0>0$ and a gauge radius $b>0$ such that the closure of
+$B_b=\{\xi:R(\xi)<b\}$ lies in the injective source chart.
+Write $A_b=\Phi_o(B_b)$ and
+
+$$
+M=\frac{(k_o-l)(u-k_o)}2
+ =\int_\Omega\Gamma_{\epsilon,o}\,d\mu,
+\qquad w_\epsilon(\Phi_o(\xi))=m_0^{-1}\mathcal G_\epsilon(\xi).
+\tag{14.3}
+$$
+
+Here $|B_b|$ denotes Lebesgue chart volume and
+$\mu(A_b)=m_0|B_b|$ denotes native raw volume.
+Theorem 3.1 gives $|\Gamma_{\epsilon,o}-w_\epsilon|\le B$ on
+$A_b\setminus\{o\}$, with $B$ independent of
+$0<\epsilon\le\epsilon_0$. Positivity and (14.3) give the explicit
+uniform $L^1$ estimate
+
+$$
+\begin{aligned}
+\int_{B_b}\mathcal G_\epsilon\,d\xi
+ &=\int_{A_b}w_\epsilon\,d\mu\\
+ &\le\int_{A_b}\Gamma_{\epsilon,o}\,d\mu+B\mu(A_b)\\
+ &\le M+B m_0|B_b|.
+\end{aligned}
+\tag{14.4}
+$$
+
+In particular there is no extra factor $m_0$ in the first equality:
+the kernel factor $m_0^{-1}$ and measure factor $m_0$ cancel.
+It follows, without assuming a uniform square integral, that
+
+$$
+\begin{aligned}
+\int_{A_b}|\Gamma_{\epsilon,o}^2-w_\epsilon^2|\,d\mu
+ &\le B\int_{A_b}(\Gamma_{\epsilon,o}+w_\epsilon)\,d\mu\\
+ &\le2BM+B^2m_0|B_b|.
+\end{aligned}
+\tag{14.5}
+$$
+
+Let $C_b$ be the off-source bound (12.4) for
+$\Omega\setminus A_b$. Then
+$\int_{\Omega\setminus A_b}\Gamma_{\epsilon,o}^2d\mu\le C_bM$.
+Consequently the precise bounded-error reduction is
+
+$$
+\left|J_\epsilon-m_0^{-1}\int_{B_b}\mathcal G_\epsilon^2\,d\xi\right|
+ \le (2B+C_b)M+B^2m_0|B_b|,
+\qquad0<\epsilon\le\epsilon_0.
+\tag{14.6}
+$$
+
+All constants here belong to the same full native field and its fixed
+raw volume; (14.4) is the uniform $L^1$ calculation needed for
+the square-difference step. It is an $L^1$ bound on the deterministic
+spatial kernels, not a uniform-integrability theorem for random native
+command occupations.
+
+Now $\mathcal G_\epsilon(\delta_\epsilon\xi)
+=\epsilon^{-2}\mathcal G_1(\xi)$ and the dilation Jacobian is
+$\epsilon^4$. Thus the powers cancel in the square integral and
+(14.6) becomes
+
+$$
+J_\epsilon=m_0^{-1}\int_{R<b/\epsilon}\mathcal G_1^2\,d\xi+O(1).
+\tag{14.7}
+$$
+
+On the compact unit gauge sphere $R(\zeta)=1$, (2.5) gives
+$\mathcal G_\kappa(\zeta)\to(2\pi)^{-1}$ uniformly as
+$\kappa\downarrow0$. For $\xi=\delta_s\zeta$, $s=R(\xi)$,
+exact scaling yields
+
+$$
+\mathcal G_1(\xi)=s^{-2}\mathcal G_{1/s}(\zeta)
+                  =\frac{1+o(1)}{2\pi R(\xi)^2},
+\qquad R(\xi)\to\infty,
+\tag{14.8}
+$$
+
+uniformly over all directions, including the central axis.
+The unit gauge-ball volume in Lebesgue coordinates is
+
+$$
+\begin{aligned}
+|B_1|
+ &=2\pi\int_0^1\rho\,\frac12\sqrt{1-\rho^4}\,d\rho\\
+ &=\frac\pi2\int_0^1\sqrt{1-t^2}\,dt
+ =\frac{\pi^2}{8},\qquad |B_s|=s^4|B_1|.
+\end{aligned}
+\tag{14.9}
+$$
+
+Here $\rho=\sqrt{x^2+y^2}$ and $t=\rho^2$; the vertical interval has
+length $\frac12\sqrt{1-\rho^4}$. Integration against the radial volume
+function therefore gives, for $0<A<L$,
+
+$$
+\int_{A<R<L}R^{-4}\,d\xi
+ =4|B_1|\log(L/A)=\frac{\pi^2}{2}\log(L/A).
+\tag{14.10}
+$$
+
+This is the same shell normalization used by [Singular occupation and
+command-cap limits, Theorem 2.1, (2.3)–(2.4)](FIB_NATIVE_SINGULAR_OCCUPATION_AND_COMMAND_CAP_LIMITS.md).
+There it concerns a spatially truncated horizontal field. Here the
+consumer is the complete positive-noise field in (14.7).
+
+For completeness, $\mathcal G_1^2$ is integrable on each fixed ball:
+near zero (2.4) is the three-dimensional unit elliptic estimate
+$\mathcal G_1\le C/d_1$, with local volume comparable to $s^3$;
+its radial square majorant is $C\int_0^{s_0}ds<\infty$.
+Off zero it is smooth. Given $a\in(0,1)$, choose a fixed $A\ge1$
+so that, for every $R\ge A$, (14.8) bounds $\mathcal G_1$ between
+$(1-a)/(2\pi R^2)$ and $(1+a)/(2\pi R^2)$.
+For $L>A$, (14.10) sandwiches the outer integral between
+
+$$
+\frac{(1-a)^2}{8}\log(L/A)
+ \quad\hbox{and}\quad
+\frac{(1+a)^2}{8}\log(L/A).
+\tag{14.11}
+$$
+
+The fixed inner-ball integral divided by $\log L$ tends to zero.
+First let $L\to\infty$ and then $a\downarrow0$ to obtain
+$\int_{R<L}\mathcal G_1^2d\xi/\log L\to1/8$.
+Substitute $L=b/\epsilon$ into (14.7), and use
+$\log(b/\epsilon)/\log(1/\epsilon)\to1$. This proves (14.2).
+The bounded localization error in (14.7) does not give a bounded final
+error: (14.8) supplies uniform convergence without a rate, and its
+integrated error is only $o(\log L)$ by this argument. $\square$
+
+**Corollary 14.2 (source parameters and the native consumer boundary).**
+For every fixed datum of Definition 12.1,
+
+$$
+\lim_{\epsilon\downarrow0}\epsilon^2E_\epsilon(g)=e(2rg),
+\qquad g_*=\frac{\Lambda_*}{2r},\qquad
+\lim_{\epsilon\downarrow0}\frac{J_\epsilon}{\log(1/\epsilon)}=
+\frac r4.
+\tag{14.12}
+$$
+
+At fixed $r$, these leading quantities are independent of the pole,
+fixed preparation phases and wall positions. The bounded localization
+constants are allowed to depend on those fixed data, as are finite-noise
+quantities. This assertion is for fixed interior poles and fixed
+separated walls. It asserts no uniform bound when a pole approaches a
+wall, the interval degenerates or $r$ tends to zero.
+
+For a native finite-command consumer, retain Definition 6.1's actual
+two-control chronology, extrema guards, own death and original-time
+charges. For fixed $\epsilon>0$, Theorem 6.2 supplies occupation
+convergence for the fixed continuous spatial cap
+$\Gamma_{\epsilon,o}\wedge K$ under its stated ideal-history or
+decreasing-positive-risk paid-point hypotheses. Removing that cap
+requires a separate tail estimate, for example, for nonnegative total
+occupations $X_n=\int_0^{S_n}\Gamma_{\epsilon,o}(q_n(t))dt$, the
+uniform-integrability condition
+
+$$
+\lim_{K\to\infty}\sup_n
+       \mathbb E[X_n\mathbf1_{\{X_n>K\}}]=0,
+\tag{14.13}
+$$
+
+together with convergence in probability of the uncapped $X_n$ to the
+corresponding target occupation. Neither hypothesis is supplied merely
+by (14.12) or bounded-continuous path tracking. Alternatively a direct
+uniform tail estimate for the spatially capped integrals suffices to
+pass from their convergent expectations to the uncapped expectation.
+Infinite-time or joint noise/cap limits retain the corresponding
+uniform tail requirements as well.
+
+**Proof.** Substitute $m_0=(2r)^{-1}$ in (13.1), (13.9) and (14.2).
+The unit model and its $e,\Lambda_*$ are independent of the fixed
+native pole and walls; the exact chart and raw Jacobian (12.1) account
+for all leading source parameters. The proofs locate the remaining
+source dependence precisely in the fixed chart, the bound $B$,
+$C_{\rm out}$, $C_{\rm IMS}$, $C_b$ and the Green mass $M$.
+
+The fixed-cap conclusion is Theorem 6.2 and Proposition 7.1.
+Convergence in probability plus (14.13) implies convergence of
+expectations by truncating total occupations at a fixed level and then
+letting that level increase. For the alternative spatial-tail route,
+write $X_{n,K}=\int_0^{S_n}(\Gamma_{\epsilon,o}\wedge K)(q_n(t))dt$.
+The conditions
+$\lim_{K\to\infty}\sup_n\mathbb E(X_n-X_{n,K})=0$ and the analogous
+target tail, combined with convergence of $\mathbb EX_{n,K}$ at each
+fixed $K$, give the uncapped result by the triangle inequality.
+No such estimate is established for the central-noise native families
+here. Proposition 7.1's lawful positive hold at the pole makes $X_n$
+infinite despite path and lifetime convergence, so that convergence
+alone cannot remove the obligation. The horizontal finite-sign
+producer and its capped laws in [Singular occupation and command-cap
+limits, §9](FIB_NATIVE_SINGULAR_OCCUPATION_AND_COMMAND_CAP_LIMITS.md)
+have different source and execution hypotheses and do not supply
+(14.13) for this independent-central-noise target.
+
+The resource correspondence is the existing one of [Uniform joint
+noise and tolerance native resource crossover, Definitions 1.2–1.4 and
+Theorems 5.1, 6.1](FIB_NATIVE_UNIFORM_JOINT_NOISE_TOLERANCE_RESOURCE_CROSSOVER.md).
+Precisely, it fixes a finite horizon $T>0$ and a bounded noise range
+$|\nu|\le\bar\nu$, one persistent covariance-$2$ Wiener triple,
+zero area drift and the same stopped target. Its ideal stopped-history
+filtration may have an initially independent seed. An issuer chooses
+entire numerical absolutely continuous two-control profiles at stopping
+times; interruptions replace only unexecuted suffixes, joins are
+continuous, and issuance counts through own death or $T$ are almost
+surely finite, without a fixed dwell, speed or count cap. The native
+chronology is $j=\int a\,db$, and all prefixes retain the original
+height guard and their acquired numerical command domains. Own death
+is actual height exit, not target death or interruption. The class
+requires the complete held-path tube $D_{\max}\le\eta$ almost surely
+and $0\le S^{\rm N}-S\le\eta$, for each deterministic parameter pair.
+
+With $\epsilon=|\nu|$, let $\mathsf C_x$ be the respective infima of
+expected unhalved costs in that precise class. Their supplied orders,
+uniform for sufficiently small $\eta>0$ and bounded $\epsilon$, are
+
+$$
+\begin{aligned}
+\mathsf C_x(\eta,\epsilon)
+ &\asymp\eta^{-1}+\epsilon^2\eta^{-2},\qquad x=a,b,L,\\
+\mathsf C_E(\eta,\epsilon)
+ &\asymp\eta^{-2}+\epsilon^4\eta^{-4}.
+\end{aligned}
+\tag{14.14}
+$$
+
+The actual charges are
+$V^a=\int|\dot a|dt$, $V^b=\int|\dot b|dt$,
+$L=\int\sqrt{\dot a^2+\dot b^2}dt$ and
+$E=\int(\dot a^2+\dot b^2)dt$, including interrupted or aborted
+movement and movement after target death until own death or the
+horizon. Holds after own death cost zero. The supplier realizes all
+four upper orders with one simultaneous family; these are infimum
+orders, not sharp constants or exact attainment of the infima.
+Its bounded/capped occupation limit takes the approximation limit
+first and then $T\to\infty$, with any total cap removed afterwards.
+It does not transfer an uncapped singular source field.
+
+The different paid-point interface remains the one in Definition 6.1
+and O, Theorems 48.1–48.2: future paid Read times are chosen from past
+paid records and the clock, with no ideal-history observation. At fixed
+nonzero noise and positive risk $\delta$, it has
+$\mathbb EM=O(\eta^{-2}\log(e/(\eta\delta)))$,
+$\mathbb EV^a,\mathbb EV^b,\mathbb EL=O(\eta^{-2})$ and
+$\mathbb EE=O(\eta^{-4})$. These are not uniform small-noise prices;
+zero-risk finite paid tracking is excluded by K, Theorem 41.2.
+Neither observation interface is acquired by the analytic spectral
+calculation. The executed resource $E$, the form infimum
+$E_\epsilon(g)$ and the diffusion occupation $J_\epsilon$ are distinct
+objects. The exact symbol, distance and full-response boundaries
+cited in Definition 12.1 continue to apply to the native source;
+none of these scalar asymptotics supplies an excluded realization.
+$\square$
+
+## 追加锚（本行以下为增补区）
