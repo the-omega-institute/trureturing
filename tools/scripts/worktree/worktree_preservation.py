@@ -89,13 +89,16 @@ def snapshot_ignored(target, commit, paths):
         return set(result.stdout.split(b"\0")) - {b""}
 
 
-def interrupted_removal(target, metadata):
+def interrupted_removal(target, metadata, stack, branch):
     """Return the record of an earlier removal whose native deletion stopped part way."""
     record = metadata / REMOVAL_RECORD
     if not record.exists():
         return None
     removal = json.loads(record.read_text())
     commit = removal["commit"]
+    # Keep the recorded ref coordinated from validation through native removal.
+    if removal["recovery_branch"] != branch:
+        acquire(stack, target, "ref:" + removal["recovery_branch"], True)
     if (value(target, "rev-parse", "--verify", "HEAD^{commit}") != commit
             or value(target, "rev-parse", "--verify", removal["recovery_branch"] + "^{commit}") != commit):
         raise Refused("interrupted_removal_snapshot_moved")
@@ -185,15 +188,13 @@ def remove(options):
                 _, metadata = identity(source, target)
                 from worktree_publication import commit_snapshot, preflight_snapshot
                 preflight_snapshot(target, metadata)
-                resumed = interrupted_removal(target, metadata)
+                resumed = interrupted_removal(target, metadata, stack, branch)
                 if resumed:
                     # The earlier removal verified this snapshot clean before native
                     # deletion began; missing files are its effects, not changes.
                     checkpoint = dict(event="worktree_checkpoint", status="resumed",
                                       commit=resumed["commit"], branch=branch)
                     recovery_branch = resumed["recovery_branch"]
-                    if recovery_branch != branch:
-                        acquire(stack, source, "ref:" + recovery_branch, True)
                     refreshed = qualified[target]
                 else:
                     checkpoint = commit_snapshot(target, metadata, branch,

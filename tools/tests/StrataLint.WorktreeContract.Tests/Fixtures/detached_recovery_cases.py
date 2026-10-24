@@ -152,6 +152,81 @@ class DetachedRecoveryCases:
                                            "refs/heads/lane/governance/recovery-*").strip())
         self.assertEqual("detached before removal\n", self.g(self.main, "show", reference + ":owned"))
 
+    def test_detached_resume_ref_change_before_acquisition_is_retained(self):
+        import worktree_protocol as protocol
+        import worktree_preservation as preservation
+        self.g(self.tree, "checkout", "--detach")
+        (self.tree / "owned").write_text("recorded detached snapshot\n")
+        removal = self.interrupted_removal()
+        reference = removal["recovery_branch"]
+        snapshot = removal["checkpoint"]["commit"]
+        metadata = Path(self.g(self.tree, "rev-parse", "--absolute-git-dir").strip())
+        before = self.removal_state(metadata)
+        native_acquire = preservation.acquire
+        writers = []
+
+        def change_before_acquire(stack, source, key, exclusive):
+            if key == "ref:" + reference:
+                writers.append(self.run_protocol("with", "--path", self.main, "--ref", reference,
+                    "--", "git", "-C", self.main, "update-ref", reference, self.base, snapshot))
+            return native_acquire(stack, source, key, exclusive)
+
+        options = argparse.Namespace(source=self.main, names="tree", path=[], force=False,
+                                     preview=False, expected=[])
+        with patch.object(preservation, "acquire", side_effect=change_before_acquire):
+            result = preservation.remove(options)["items"][0]
+        self.note("recovery_ref_before_acquire", writer_exits=[writer.returncode for writer in writers],
+                  removal=result, target_exists=self.tree.exists(), snapshot=snapshot,
+                  recovery_tip=self.g(self.main, "rev-parse", reference).strip())
+        self.assertEqual([0], [writer.returncode for writer in writers])
+        self.assertEqual("checkpoint_failed", result["outcome"])
+        self.assertEqual("interrupted_removal_snapshot_moved", result["error"])
+        self.assertIsNone(result["checkpoint"])
+        self.assertIsNone(result["recovery_branch"])
+        self.assertEqual(self.base, self.g(self.main, "rev-parse", reference).strip())
+        self.assertEqual(1, protocol.git(self.main, "merge-base", "--is-ancestor", snapshot,
+                                         reference, check=False).returncode)
+        before["refs"] = self.g(self.main, "show-ref")  # The scoped writer's sole intended effect.
+        self.assertEqual(before, self.removal_state(metadata))
+
+    def test_detached_resume_ref_scope_covers_validation_and_removal(self):
+        import worktree_preservation as preservation
+        self.g(self.tree, "checkout", "--detach")
+        (self.tree / "owned").write_text("recorded detached snapshot\n")
+        removal = self.interrupted_removal()
+        reference = removal["recovery_branch"]
+        snapshot = removal["checkpoint"]["commit"]
+        native_value, native_git = preservation.value, preservation.git
+        blocked = []
+
+        def contend(phase):
+            writer = self.run_protocol("with", "--path", self.main, "--ref", reference,
+                "--", "git", "-C", self.main, "update-ref", reference, self.base, snapshot, expect=73)
+            self.assertIn("busy_scope:ref:" + reference, writer.stderr)
+            blocked.append(phase)
+
+        def read_under_scope(root, *args):
+            result = native_value(root, *args)
+            if args == ("rev-parse", "--verify", reference + "^{commit}"):
+                contend("validation")
+            return result
+
+        def remove_under_scope(root, *args, **kwargs):
+            if args[:2] == ("worktree", "remove"):
+                contend("native_removal")
+            return native_git(root, *args, **kwargs)
+
+        options = argparse.Namespace(source=self.main, names="tree", path=[], force=False,
+                                     preview=False, expected=[])
+        with patch.object(preservation, "value", side_effect=read_under_scope), \
+                patch.object(preservation, "git", side_effect=remove_under_scope):
+            result = preservation.remove(options)["items"][0]
+        self.assertEqual(["validation", "native_removal"], blocked)
+        self.assertEqual(("removed", "resumed"), (result["outcome"], result["checkpoint"]["status"]))
+        self.assertFalse(self.tree.exists())
+        self.assertEqual(snapshot, self.g(self.main, "rev-parse", reference).strip())
+        self.assertEqual("recorded detached snapshot\n", self.g(self.main, "show", reference + ":owned"))
+
     def test_detached_unfinished_and_unmerged_retained_before_staging(self):
         import worktree_protocol as protocol
         self.g(self.tree, "checkout", "--detach")
