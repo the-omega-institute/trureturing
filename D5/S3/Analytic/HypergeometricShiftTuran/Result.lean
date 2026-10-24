@@ -23,41 +23,54 @@ private lemma first_coefficient_eq (q : ℕ) :
         (16 / (15 * Real.pi)) ^ q := by
   have hc (t : ℝ) :
       coeff (fun _ : Fin 0 => 0) (fun _ : Fin q => (1 / 2 : ℝ)) t =
-        (1 / Real.Gamma (1 / 2 + t)) ^ q := by
-    simp [coeff, div_pow]
-  have htwo := Real.Gamma_nat_eq_factorial 1
-  have hthree := Real.Gamma_nat_eq_factorial 2
-  norm_num at htwo hthree
-  have hhalf1 := Real.Gamma_nat_add_half 1
-  have hhalf2 := Real.Gamma_nat_add_half 2
-  have hhalf3 := Real.Gamma_nat_add_half 3
-  norm_num [Nat.doubleFactorial] at hhalf1 hhalf2 hhalf3
-  have hsquare := Real.sq_sqrt Real.pi_pos.le
-  have hpair1 : Real.Gamma (5 / 2) * Real.Gamma (5 / 2) =
-      9 * Real.pi / 16 := by
-    rw [hhalf2]
-    nlinarith [hsquare]
-  have hpair2 : Real.Gamma (3 / 2) * Real.Gamma (7 / 2) =
-      15 * Real.pi / 16 := by
-    rw [hhalf1, hhalf3]
-    nlinarith [hsquare]
-  calc
-    turanCoeff (fun _ : Fin 0 => 0) (fun _ : Fin q => (1 / 2 : ℝ))
+        (Real.Gamma (1 / 2 + t))⁻¹ ^ q := by
+    simp [coeff, inv_pow]
+  have hsq : Real.sqrt Real.pi * Real.sqrt Real.pi = Real.pi :=
+    Real.mul_self_sqrt Real.pi_pos.le
+  have g2 : Real.Gamma 2 = 1 := Real.Gamma_two
+  have g3 : Real.Gamma 3 = 2 := by
+    rw [show (3 : ℝ) = 2 + 1 by norm_num, Real.Gamma_add_one (by norm_num), g2]
+    norm_num
+  have g32 : Real.Gamma (3 / 2) = Real.sqrt Real.pi / 2 := by
+    rw [show (3 / 2 : ℝ) = 1 / 2 + 1 by norm_num, Real.Gamma_add_one (by norm_num),
+      Real.Gamma_one_half_eq]
+    ring
+  have g52 : Real.Gamma (5 / 2) = 3 * Real.sqrt Real.pi / 4 := by
+    rw [show (5 / 2 : ℝ) = 3 / 2 + 1 by norm_num, Real.Gamma_add_one (by norm_num), g32]
+    ring
+  have g72 : Real.Gamma (7 / 2) = 15 * Real.sqrt Real.pi / 8 := by
+    rw [show (7 / 2 : ℝ) = 5 / 2 + 1 by norm_num, Real.Gamma_add_one (by norm_num), g52]
+    ring
+  have hpi : 0 < Real.pi := Real.pi_pos
+  have hs : 0 < Real.sqrt Real.pi := Real.sqrt_pos.2 hpi
+  -- the four Gamma arguments occurring in the first coefficient
+  have e1 : (Real.Gamma 2)⁻¹ ^ q * (Real.Gamma 3)⁻¹ ^ q = (1 / 2 : ℝ) ^ q := by
+    rw [g2, g3, ← mul_pow]; norm_num
+  have e2 : (Real.Gamma (5 / 2))⁻¹ ^ q * (Real.Gamma (5 / 2))⁻¹ ^ q =
+      (16 / (9 * Real.pi)) ^ q := by
+    rw [← mul_pow, g52]
+    congr 1
+    field_simp
+    nlinarith [hsq]
+  have e3 : (Real.Gamma (3 / 2))⁻¹ ^ q * (Real.Gamma (7 / 2))⁻¹ ^ q =
+      (16 / (15 * Real.pi)) ^ q := by
+    rw [← mul_pow, g32, g72]
+    congr 1
+    field_simp
+    nlinarith [hsq]
+  have expand :
+      turanCoeff (fun _ : Fin 0 => 0) (fun _ : Fin q => (1 / 2 : ℝ))
         1 (1 / 2) (1 / 2) 1 =
-        ((1 / Real.Gamma 2) ^ q * (1 / Real.Gamma 3) ^ q -
-          (1 / Real.Gamma (3 / 2)) ^ q * (1 / Real.Gamma (7 / 2)) ^ q) +
-        ((1 / Real.Gamma 3) ^ q * (1 / Real.Gamma 2) ^ q -
-          (1 / Real.Gamma (5 / 2)) ^ q * (1 / Real.Gamma (5 / 2)) ^ q) := by
-      norm_num [turanCoeff, Finset.sum_range_succ, hc]
-    _ = 2 * (1 / 2 : ℝ) ^ q -
-        ((1 / Real.Gamma (5 / 2)) * (1 / Real.Gamma (5 / 2))) ^ q -
-        ((1 / Real.Gamma (3 / 2)) * (1 / Real.Gamma (7 / 2))) ^ q := by
-      simp only [htwo, hthree, div_one, one_pow, one_mul, mul_one, mul_pow]
-      ring
-    _ = 2 * (1 / 2 : ℝ) ^ q - (16 / (9 * Real.pi)) ^ q -
-        (16 / (15 * Real.pi)) ^ q := by
-      rw [div_mul_div_comm, div_mul_div_comm, one_mul, hpair1, hpair2]
-      norm_num [one_div_div]
+        ((Real.Gamma 2)⁻¹ ^ q * (Real.Gamma 3)⁻¹ ^ q -
+            (Real.Gamma (3 / 2))⁻¹ ^ q * (Real.Gamma (7 / 2))⁻¹ ^ q) +
+          ((Real.Gamma 3)⁻¹ ^ q * (Real.Gamma 2)⁻¹ ^ q -
+            (Real.Gamma (5 / 2))⁻¹ ^ q * (Real.Gamma (5 / 2))⁻¹ ^ q) := by
+    simp only [turanCoeff, Finset.sum_range_succ, Finset.sum_range_zero, zero_add, hc,
+      Nat.cast_zero, Nat.cast_one, Nat.sub_zero, Nat.sub_self, Nat.factorial_zero,
+      Nat.factorial_one, mul_one, div_one, add_zero]
+    norm_num
+  rw [expand, mul_comm ((Real.Gamma 3)⁻¹ ^ q), e1, e2, e3]
+  ring
 
 /-- Every denominator multiplicity at least six gives a negative first
 coefficient at the positive half shifts and the unit base parameter. -/
