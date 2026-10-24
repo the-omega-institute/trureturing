@@ -56,9 +56,7 @@ condition is vacuous at $p=0$. `Defs.claim` retains all parameter vectors and
 all coefficient degrees with $\mu\ge1$, $\alpha,\beta\ge0$ and
 $\alpha\le\beta+1$.
 
-## Formal reading
-
-All Lean names below have prefix `D5.S3.Analytic.HypergeometricShiftTuran`.
+Formal correspondence. All Lean names below have prefix `D5.S3.Analytic.HypergeometricShiftTuran`.
 
 | Source object | Lean name | Correspondence |
 | --- | --- | --- |
