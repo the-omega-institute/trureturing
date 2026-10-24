@@ -84,6 +84,10 @@ $$\forall p \in \mathbb{N},\; (\forall q \in \mathbb{N},\; ((1 \le p) \Rightarro
 
 *Proof.* Machine-checked in Lean as `D5/S3/StatisticalMechanics/Sandpiles/ShkolnikovSandpileLimitDivisible.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/arxiv-2506-09912-shkolnikov-sandpile-limit-divisible` (proved) by `D5/S3/StatisticalMechanics/Sandpiles/ShkolnikovSandpileLimitDivisible.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"arxiv-2506-09912-shkolnikov-sandpile-limit-divisible","declaration_gid":"D5/S3/StatisticalMechanics/Sandpiles/ShkolnikovSandpileLimitDivisible.result","resolution_kind":"proved"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* Mikhail Shkolnikov (2025). *Algebraic Limits of Sandpiles*. DOI: [10.48550/arXiv.2506.09912](https://doi.org/10.48550/arXiv.2506.09912). URL: <https://arxiv.org/abs/2506.09912v3>.

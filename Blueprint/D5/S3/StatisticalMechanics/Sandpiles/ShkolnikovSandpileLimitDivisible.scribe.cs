@@ -35,7 +35,10 @@ internal sealed class ShkolnikovSandpileLimitDivisibleDocument : IScribeDocument
                 "claim", DescribeRole.Definition, AssessedProvenance.FromLiterature(Source)),
             Node("result", "Divisibility theorem", ClaimBody(),
                 "The reversible row recurrence closes on a finite denominator subgroup. Its period supplies a taller rectangle, and multiplying the lifted rows by k recovers the signed reflected embedding of the original harmonic function.",
-                "result", DescribeRole.Theorem, AssessedProvenance.FromRepo(Source))
+                "result", DescribeRole.Theorem, AssessedProvenance.FromRepo(Source),
+                new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("arxiv-2506-09912-shkolnikov-sandpile-limit-divisible"),
+                    ResolutionKind.Proved))
         ), []));
 
     private static DocumentBlock SourceQuotation() => Paragraph(Text(
@@ -44,11 +47,12 @@ internal sealed class ShkolnikovSandpileLimitDivisibleDocument : IScribeDocument
         + "It defines the rectangular monomorphism by the signed reflected formula and, after Proposition 5, states verbatim: “For instance, one may expect that it is a rational subtorus or a divisible group.”"));
 
     private static DocumentBlock Node(string id, string title, Formula formula, string prose,
-        string declaration, DescribeRole role, AssessedProvenance provenance) =>
+        string declaration, DescribeRole role, AssessedProvenance provenance,
+        OpenProblemResolutionClaim? resolution = null) =>
         Describe.Lean(DescribeId.Create("shkolnikov-sandpile-" + id),
             DeclarationHandle.Create(Prefix + declaration), H(title),
             StatementSource.FromAuthor(Disp(formula)), provenance,
-            Blocks(Paragraph(Text(prose))), role);
+            Blocks(Paragraph(Text(prose))), role, resolution);
 
     private static Formula Nat() => Seq(Mathbb, Grp(F.Id("N")));
     private static Formula Int() => Seq(Mathbb, Grp(F.Id("Z")));
