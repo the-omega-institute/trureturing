@@ -2762,25 +2762,25 @@ $\square$
 
 ## 62. The matching lower bound from native fixed-strip bands
 
-**Lemma 62.1 (full-prefix support inequality).** Let
+For the native lower-bound argument, put
 
 $$
 E_T=\{\zeta>T,\ |X_s|<R(s)\text{ for every }0\le s\le T\}.
 \tag{62.1}
 $$
 
-Every $V\in\mathcal C_{\alpha,r}$ satisfies $V_T(E_T)=1$, and therefore
+As a classical intermediate step, every $V\in\mathcal C_{\alpha,r}$
+satisfies $V_T(E_T)=1$, and therefore
 
 $$
 D(V_T\Vert\mathbb P_T)\ge-\log\mathbb P_T(E_T).
 \tag{62.2}
 $$
 
-Proof. The event in (62.1) is measurable on the full original killed prefix,
+Indeed, the event in (62.1) is measurable on the full original killed prefix,
 including the cemetery coordinate. The entropy partition identity, or the
 Gibbs inequality applied to the restriction to $E_T$, gives (62.2), with
 no replacement by an endpoint event or a larger horizon-dependent class.
-$\square$
 
 **Lemma 62.2 (moving-strip probability bound).** There is a constant
 $C_0<\infty$ depending only on the fixed native data and the deterministic
@@ -2946,7 +2946,7 @@ $$
 \tag{63.2}
 $$
 
-For every $V\in\mathcal C_{\alpha,r}$, Lemma 62.1 gives
+For every $V\in\mathcal C_{\alpha,r}$, the support inequality (62.2) gives
 $D(V_T\Vert\mathbb P_T)\ge-\log\mathbb P_T(E_T)$. Taking the infimum and
 using Theorem 62.3 yields
 
@@ -2967,11 +2967,12 @@ $$
 $$
 
 Equations (63.2)--(63.4) squeeze both limits to $c_{\alpha,r}$ and establish
-all clauses of (63.1). In particular, the single law $V_*$ supplies the
-projective-consistency witness left open by Proposition 53.2, while the lower
-bound ranges over exactly its original consistent infinite-law class. The
-consumer conclusion is this consequence of the full sandwich, not a second
-independent frontier claim.
+all clauses of (63.1). Corollary 52.1, as consumed by Proposition 53.2,
+leaves projective consistency unasserted for its horizon laws. Here the single
+law $V_*$ supplies a consistent infinite-law successor for that native
+entropy-rate selection question. The lower bound ranges over exactly
+$\mathcal C_{\alpha,r}$, the class newly defined in Definition 60.1.
+This consumer conclusion follows from the full sandwich.
 
 The scalar power-envelope/Q-process construction of Oçafrain,
 *Quasi-stationarity for one-dimensional renormalized Brownian motion*,
@@ -2985,41 +2986,53 @@ cannot be reduced to replacing the deterministic scalar clock by
 $\widehat m t$, because the actual clock is
 $\int_0^ta(K_s)^2ds$ and the tube is imposed in the original time.
 
-The measure-level support inequality used in Lemma 62.1 is the finite-prefix
+The measure-level support inequality (62.2) is the finite-prefix
 Gibbs/relative-entropy principle, and the reversible spectral comparison in
 (62.5)--(62.6) is the classical Rayleigh correspondence. They are credited
 as intermediate tools to Chetrite and Touchette, *Variational and optimal
 control representations of conditioned and driven processes*,
 arXiv:1506.05291v3, §III.4, equations (52)--(56), and Appendix A.2,
-equations (90)--(94). Those classical formulas do not supply the native
+equations (90)--(93). Those classical formulas do not supply the native
 moving-strip scale, the full-prefix starting-density estimate, or a common
-infinite law; these are the deductions in Propositions 61.1 and 62.2.
+infinite law; these are the deductions in Proposition 61.1 and Lemma 62.2.
 $\square$
 
 **Corollary 63.2 (compatibility with the homogeneous height-only frontier).**
-Theorem 63.1 and Proposition 59.1 quantify over different law classes. The
-latter restricts selections to fixed, height-only, phase-translation-covariant
-controllers with a finite excess-rate budget and obtains a positive
+Theorem 63.1 and Proposition 59.1 quantify over different, non-nested
+subclasses of the same ambient class of consistent infinite native history
+laws with local absolute continuity and finite full-prefix entropy.
+Proposition 59.1 restricts selections to fixed, height-only,
+phase-translation-covariant controllers with a finite excess-rate budget and obtains a positive
 three-direction tensor. The law $V_*$ in Theorem 63.1 is a time-dependent
 phase-position reweighting selected for the expanding boundary; its entropy
 excess is of order $T^{1-2\alpha}$ and its density depends on the moving
-cosine. It is therefore not a member of the homogeneous height-only class
+cosine. This law is not a member of the homogeneous height-only class
 used in Proposition 59.1. The two conclusions are compatible: 59.1 retains
-its positive transport conclusion under its stronger quantified restrictions,
-while 63.1 gives the sharp all-time leading cost in the larger class of
-consistent infinite tube laws. Neither theorem changes the other's native
-premises or consumer.
+its positive transport conclusion under its controller restrictions,
+while 63.1 gives the sharp all-time leading cost in the class
+$\mathcal C_{\alpha,r}$ of consistent infinite tube laws. Neither theorem
+changes the other's native premises or consumer.
 
 Proof. Proposition 59.1 applies its rate and tensor estimates only after the
 controller restrictions (54.1)--(54.2) and the finite rate budget have been
 imposed. Definition 60.1 imposes instead the full path support condition
 (60.2), local absolute continuity and finite prefix entropy, with no
 height-only or time-homogeneity restriction. The cosine factor in (61.2)
-depends on $t$ and on the signed phase coordinate $X_t$, so the law supplied
-by Proposition 61.1 does not satisfy the hypotheses of 59.1 merely because
-its leading entropy rate is $\lambda$. Thus the quantified statements concern
-nestedly different admissible sets, and no implication from one conclusion
-to the other is taken.
+depends on $t$ and on the signed phase coordinate $X_t$; the leading entropy
+rate $\lambda$ alone does not impose the controller restrictions of 59.1.
+
+For a direct check of non-nesting, the law $\mathbb Q=\mathbb V_{\phi,0}$
+has zero excess-rate budget and belongs to the homogeneous height-only
+class. By (61.3), conditional on the height history, $X_T$ is centered
+Gaussian with variance $2\int_0^T a(K_s)^2ds$. Positivity of $\widehat m$
+and (61.8) imply that this variance is positive with positive probability
+for some finite $T$. Thus
+$\mathbb Q(|X_T|\ge R(T))>0$, so $\mathbb Q\notin\mathcal C_{\alpha,r}$.
+Conversely, Theorem 55.1 makes every homogeneous height-only law equivalent
+to $\mathbb Q$ on that finite prefix, while (60.2) gives
+$V_*(|X_T|\ge R(T))=0$. Hence $V_*\in\mathcal C_{\alpha,r}$ is outside
+the homogeneous height-only class. The two quantified conclusions are
+compatible without an inclusion between their admissible classes.
 $\square$
 
 **Definition 63.3 (scope of the native result).** The assertions above are
