@@ -3211,3 +3211,593 @@ tariff, or recursive gluing construction. Equality of dimensions
 does not provide any of these missing correspondences.
 
 ## 追加锚（本行以下为增补区）
+
+## 21. Global native kinetic distances on the profile core
+
+**Definition 21.1 (fixed source and the distance comparison).** In
+§§21–25 retain exactly Definitions 15.1 and 18.1, including
+$g>g_{\rm c}=2\pi m_0\lambda_0$, the fixed $Z,r,H,l,u,o$,
+arbitrary fixed preparation phases, both actual $2\pi$ periods,
+raw $d\mu=dk\,d\alpha\,d\beta$, and the entire complex
+$\mathcal F_\epsilon$. Only $\epsilon=|\nu|\downarrow0$ varies;
+either nonzero sign is allowed. The conditional law remains (1.2),
+with its persistent independent covariance-$2$ triple, zero area drift,
+original clock, and first-exit absorption at both height faces.
+The form is $q_{\epsilon,g}=T_\epsilon-gV_\epsilon$, with its own
+full unit-source matched Green field and bottom $E_\epsilon(g)$.
+For a normalized complex $f\in\mathcal F_\epsilon$ put
+
+$$
+D_\epsilon(f)=\epsilon^2(q_{\epsilon,g}[f]-E_\epsilon(g))\ge0,
+\qquad \iota_\epsilon=\Phi_o\circ\delta_\epsilon,
+\qquad \lambda_g(d\xi)=h_g(\xi)^2\,d\xi .
+\tag{21.1}
+$$
+
+Here $h_g$ is exactly Theorem 18.2's normalized cell minimizer,
+not a new native preparation. Fix the source-adapted partition of
+Definition 18.1 once; its choice depends only on the fixed source.
+Write $w_\epsilon=\mathcal B_\epsilon f$. The measure $\lambda_g$
+is a probability measure, whereas the raw native measure is not.
+A genuine near-minimizer family means $D_\epsilon(f_\epsilon)\to0$,
+as in Theorem 20.1; no positivity, eigenfunction or tail hypothesis
+is included in that phrase.
+
+Let $d_\epsilon^\Omega$ be the **global** intrinsic length distance
+of the kinetic metric $g_\epsilon$ in (9.3): take the infimum of
+lengths of all piecewise smooth curves in the periodic open cylinder
+$\Omega$ joining the two points. The metric has orthonormal frame
+$(P,Q,\epsilon Z_c)$. Neither the absorbing faces nor the isolated
+cemetery are additional roads in this definition. Curves can explore
+the entire cylinder, including its phase periods. This is distinct
+from the wrapped tracking metric, command distance and command prices.
+On the whole group write $d_1$ for Definition 2.1's unit-noise length
+distance and $K_R=\{\xi:d_1(0,\xi)\le R\}$.
+
+**Proposition 21.2 (exact global localization, including all deck
+classes).** For every fixed finite $R>0$, $K_R$ is compact. For all
+sufficiently small $\epsilon>0$, $\iota_\epsilon$ is injective on
+$K_R$, its image is contained in $\{\chi=1\}\Subset\Omega$, and
+
+$$
+\begin{aligned}
+d_\epsilon^\Omega(\iota_\epsilon\xi,
+                     \iota_\epsilon\eta)&=\epsilon d_1(\xi,\eta)
+                     &&(\xi,\eta\in K_R),\\
+B_{d_\epsilon^\Omega}(o,\epsilon R)
+                     &=\iota_\epsilon(B_{d_1}(0,R)),\\
+\iota_\epsilon^*g_\epsilon&=\epsilon^2g_1,
+\qquad \iota_\epsilon^*d\mu=m_0\epsilon^4d\xi .
+\end{aligned}
+\tag{21.2}
+$$
+
+The same conclusions hold simultaneously for any finite collection
+of fixed radii. They concern the original-cylinder global distance,
+not a distance artificially restricted to the displayed core.
+
+Proof. Properness of $d_1$ is the regularized gauge estimate (2.4):
+bounded $d_1$ bounds $x,y,\theta$, and the smooth positive metric has
+the ordinary coordinate topology. Thus its closed balls are compact.
+Direct substitution of $\delta_\epsilon(x,y,\theta)
+=(\epsilon x,\epsilon y,\epsilon^2\theta)$ into (9.3) gives the
+metric identity in (21.2); the determinant and (15.1) give the raw
+measure identity. Images of fixed compact sets eventually lie in the
+fixed injective source chart and in $\{\chi=1\}$.
+
+To verify that global curves cannot shorten the distance, use the
+cover with height $x\in(l-k_o,u-k_o)$ and unwrapped $y,\theta$.
+The fields, metric and deck action there are exactly (2.2)–(2.3).
+For a curve of $g_\epsilon$ speed $v$, its coordinate derivatives
+satisfy
+
+$$
+|\dot x|,|\dot y|\le v,\qquad
+|\dot\theta|\le\epsilon v+
+                  \tfrac12(|y|\,|\dot x|+|x|\,|\dot y|).
+\tag{21.3}
+$$
+
+Choose $A$ bounding the absolute coordinates on $K_R$, and a fixed
+$L>2R+1$. A lifted curve starting at $\delta_\epsilon\xi$,
+$\xi\in K_R$, of length at most $\epsilon L$ obeys
+
+$$
+\begin{aligned}
+\sup(|x|\vee|y|)&\le\epsilon(A+L),\\
+\sup|\theta|&\le\epsilon^2\{A+L+(A+L)L\} .
+\end{aligned}
+\tag{21.4}
+$$
+
+This follows by integrating (21.3), including the initial coordinate
+bounds $|x|,|y|\le\epsilon A$, $|\theta|\le\epsilon^2A$.
+All these lifted curves stay in one fixed injective neighbourhood
+for small $\epsilon$. In particular their heights are strictly
+between the two faces, whose distances in the height coordinate
+from the pole are fixed positive numbers.
+
+For completeness, a cylinder curve ending at
+$\iota_\epsilon\eta$ could lift to a deck translate of
+$\delta_\epsilon\eta$. A nonzero $n$ in (2.3) changes $y$ by
+$4\pi n$, contradicting (21.4). When $n=0$, a nonzero $m$ changes
+$\theta$ by $-2\pi r m$, also contradicting (21.4).
+The shear for $n\ne0$ has not been discarded: that case was already
+excluded by its $y$ displacement. Consequently every curve of
+length less than $\epsilon L$ joining core points has the direct
+lift. Scaling that lift gives length divided by $\epsilon$ in
+$g_1$, and hence a lower bound $\epsilon d_1(\xi,\eta)$.
+Curves of length at least $\epsilon L$ satisfy this lower bound
+as well, since $d_1(\xi,\eta)\le2R<L$.
+
+Conversely, unit-group curves with length arbitrarily close to
+$d_1(\xi,\eta)$ can be chosen with length less than $L$.
+The unit version of (21.3) bounds their coordinates in a fixed
+compact set. Their dilations therefore lie entirely inside the
+source chart and strictly inside both faces for small $\epsilon$.
+Their native lengths are exactly $\epsilon$ times their unit
+lengths. Taking infima proves the first line of (21.2).
+Finally any cylinder curve starting at $o$ of length less than
+$\epsilon R$ obeys the same coordinate bound, so its endpoint has
+one chart representative whose scaled unit distance is less than
+$R$. Conversely every unit point of distance less than $R$ is
+reached by such a dilated curve. This proves the ball equality,
+also for endpoints not initially assumed to lie in the chart.
+There is no boundary or deck shortcut left in the infimum.
+No change of the stochastic clock was made. $\square$
+
+## 22. A positive Hilbert chord-error floor for the actual profile
+
+**Theorem 22.1 (uniform truncated pair error on one fixed native
+core).** Under Definition 21.1 there are a fixed $R\ge1$,
+$K=K_R$, constants $c_0,d_0,\epsilon_0>0$, and corresponding
+original-source cores $C_\epsilon=\iota_\epsilon K$, depending
+only on the fixed source and $g$, with the following property.
+For every $0<\epsilon<\epsilon_0$, every normalized complex
+$f\in\mathcal F_\epsilon$ with $D_\epsilon(f)\le d_0$, every
+separable real Hilbert space $\mathscr H$, and every Borel
+$F:C_\epsilon\to\mathscr H$, set
+
+$$
+\begin{aligned}
+\mu_f(dq)&=|f(q)|^2d\mu(q),\qquad
+ M_\epsilon=\mu_f(C_\epsilon),\\
+\ell_{\epsilon,F}(q,q')
+ &=\min\left\{1,\left(
+ \frac{\|F(q)-F(q')\|_{\mathscr H}-d_\epsilon^\Omega(q,q')}
+      {\epsilon}\right)^2\right\},\\
+I_{\epsilon,f}(F)
+ &=\int_{C_\epsilon}\int_{C_\epsilon}
+            \ell_{\epsilon,F}(q,q')\,\mu_f(dq)\mu_f(dq').
+\end{aligned}
+\tag{22.1}
+$$
+
+Then, uniformly in all these choices,
+
+$$
+\tfrac12\le M_\epsilon\le1,\qquad
+ I_{\epsilon,f}(F)\ge c_0,\qquad
+ \frac{I_{\epsilon,f}(F)}{M_\epsilon^2}\ge c_0 .
+\tag{22.2}
+$$
+
+The first integral is the unnormalized restriction of the pair
+probability $\mu_f\otimes\mu_f$ to the core. The last expression
+uses the core-conditioned probability
+$(\mu_f|_{C_\epsilon}/M_\epsilon)^{\otimes2}$.
+The map can depend on $f$ and $\epsilon$; its image, derivatives,
+rank, injectivity and output dimension have no imposed bounds.
+
+Proof. We first extract a strict finite configuration from the
+already computed native metric; this is an intermediate step in the
+profile statement, not a new general embedding classification.
+At unit noise, (9.10) gives
+$\langle R(U,Z_H)Z_H,U\rangle=1/4$ at zero, with the convention
+(9.8). In a sufficiently small convex normal neighbourhood set
+
+$$
+a_1=\operatorname{Exp}_0(tU),\quad
+ a_2=\operatorname{Exp}_0(-tU),\quad
+ a_3=\operatorname{Exp}_0(tZ_H),\quad
+ a_4=\operatorname{Exp}_0(-tZ_H),\qquad
+ (s_1,s_2,s_3,s_4)=(1,1,-1,-1).
+\tag{22.3}
+$$
+
+Here $t>0$ is fixed below, independently of $\epsilon$.
+The classical normal-coordinate distance expansion used is
+
+$$
+d_1(\operatorname{Exp}_0v,\operatorname{Exp}_0w)^2
+ =|v-w|^2-\tfrac13\langle R(v,w)w,v\rangle
+                      +O((|v|+|w|)^5).
+\tag{22.4}
+$$
+
+A primary supplier is Xavier Pennec, *Curvature effects on the
+empirical mean in Riemannian and affine Manifolds: a non-asymptotic
+high concentration expansion in the small-sample regime*,
+[arXiv:1906.07418v1, §3.3, (9)](https://arxiv.org/html/1906.07418v1#S3.SS3).
+Its curvature definition in §2, (1), is exactly (9.8).
+Its fourth-order term is
+$\langle R(w,v)w,v\rangle/3$, equal to the negative term in
+(22.4); its displayed fifth-order term is absorbed in the remainder.
+Only this local deterministic expansion is used, with no statistical
+sampling or empirical-mean hypothesis transferred from that paper.
+
+The two opposite radial distances in (22.3) are exactly $2t$.
+Each of the four cross squared distances is
+$2t^2-t^4/12+O(t^5)$. Thus
+
+$$
+\begin{aligned}
+S(a_1,a_2,a_3,a_4)
+ &:=\sum_{i,j=1}^4s_is_jd_1(a_i,a_j)^2\\
+ &=2\{4t^2+4t^2-4(2t^2-t^4/12)\}+O(t^5)
+   =\tfrac23t^4+O(t^5)>0
+\end{aligned}
+\tag{22.5}
+$$
+
+for one sufficiently small fixed $t$. These are global $d_1$
+distances: the normal neighbourhood is chosen small enough that its
+short radial and cross segments realize the ordinary Riemannian
+distance. Choose disjoint open neighbourhoods $A_i$ of these four
+points, with compact closures. By continuity, after shrinking them
+there is $\sigma>0$ such that
+
+$$
+S(\xi_1,\xi_2,\xi_3,\xi_4)\ge\sigma
+                  \quad(\xi_i\in A_i).
+\tag{22.6}
+$$
+
+Choose $R\ge1$ large enough that their closures lie inside $K_R$
+and $\lambda_g(K_R)\ge3/4$; this uses only $\int h_g^2=1$.
+Write $K=K_R$. Strict almost-everywhere positivity in Theorem 18.2
+gives
+
+$$
+b=\min_{1\le i\le4}\lambda_g(A_i)>0,\qquad
+ a=b/2,\qquad
+ \tau=\min\{1/2,\sigma/[24(4R+1)]\}>0.
+\tag{22.7}
+$$
+
+For any four vectors $v_i$ in any real Hilbert space, expansion of
+the squares and $\sum s_i=0$ give the elementary negative-type identity
+
+$$
+\sum_{i,j}s_is_j\|v_i-v_j\|^2
+                  =-2\left\|\sum_i s_iv_i\right\|^2\le0 .
+\tag{22.8}
+$$
+
+This is the necessary Hilbert squared-distance condition associated
+with the classical metric-embedding theory of I. J. Schoenberg,
+[*Metric spaces and positive definite functions*, Trans. Amer.
+Math. Soc. 44, 522–536](https://doi.org/10.1090/S0002-9947-1938-1501980-0).
+The identity above proves the precise necessity used here directly;
+no sufficiency or dimension bound from that theory is needed.
+If for a tuple in $\prod_i A_i$ all six errors
+$|\|v_i-v_j\|-d_1(\xi_i,\xi_j)|$ were less than $\tau$, then
+$d_1(\xi_i,\xi_j)\le2R$ would imply
+
+$$
+\left|\|v_i-v_j\|^2-d_1(\xi_i,\xi_j)^2\right|
+       <\tau(4R+1),\qquad
+ |S(\xi_1,\ldots,\xi_4)-S_{\mathscr H}(v_1,\ldots,v_4)|
+       <12\tau(4R+1)\le\sigma/2 .
+\tag{22.9}
+$$
+
+This contradicts (22.6) and (22.8). Consequently at least one of
+the six errors is at least $\tau$ for every tuple and every choice
+of its four images.
+
+We now use the actual near-minimizer density, rather than postulating
+that $f$ has a chosen shape. Theorem 20.1 gives constants $C_{20},d$
+and $\epsilon_g$, and a spatially constant phase, with
+$\|\zeta^{-1}w_\epsilon-h_g\|_2^2
+\le C_{20}(D_\epsilon(f)+\epsilon^2)$ when its stated bounds hold.
+Since $\|w_\epsilon\|_2\le1$, Cauchy–Schwarz gives
+
+$$
+\big\||w_\epsilon|^2-h_g^2\big\|_1
+ \le2\sqrt{C_{20}(D_\epsilon(f)+\epsilon^2)}
+ =:\eta_\epsilon(f).
+\tag{22.10}
+$$
+
+Choose $d_0\le d$ and $\epsilon_0\le\epsilon_g$ small enough that
+Proposition 21.2 applies to $K$ and
+$\eta_\epsilon(f)\le\min(b/16,1/16)$ whenever
+$D_\epsilon(f)\le d_0$, $\epsilon<\epsilon_0$.
+On $K$, $\chi\circ\iota_\epsilon=1$, so the exact raw-density
+identity is
+
+$$
+\iota_\epsilon^*(\mu_f|_{C_\epsilon})
+       =\mathbf1_K|w_\epsilon|^2d\xi=:\nu_\epsilon(d\xi),
+\quad
+\nu_\epsilon(A_i)\ge b-\eta_\epsilon\ge a,
+\quad M_\epsilon\ge3/4-\eta_\epsilon\ge1/2 .
+\tag{22.11}
+$$
+
+Define $G(\xi)=\epsilon^{-1}F(\iota_\epsilon\xi)$. By (21.2),
+the integrand of (22.1) pulls back exactly to
+$\ell_G(\xi,\eta)=\min\{1,(\|G(\xi)-G(\eta)\|-d_1(\xi,\eta))^2\}$.
+For every tuple in $\prod_i A_i$, (22.9) yields
+$\sum_{i<j}\ell_G(\xi_i,\xi_j)\ge\tau^2$.
+Integrate against the product of the four probabilities
+$\nu_\epsilon|_{A_i}/\nu_\epsilon(A_i)$. Tonelli gives
+
+$$
+\tau^2\le\sum_{i<j}
+ \frac{\int_{A_i\times A_j}\ell_G\,d\nu_\epsilon d\nu_\epsilon}
+      {\nu_\epsilon(A_i)\nu_\epsilon(A_j)}
+ \le a^{-2}\sum_{i<j}
+       \int_{A_i\times A_j}\ell_G\,d\nu_\epsilon d\nu_\epsilon .
+\tag{22.12}
+$$
+
+The six rectangles and their reverses are disjoint. Symmetry therefore
+implies $I_{\epsilon,f}(F)\ge2a^2\tau^2=:c_0>0$.
+Division by $M_\epsilon^2\le1$ gives the conditional bound.
+All functions integrated here are Borel and bounded; separability
+ensures the usual product-measurability of the Hilbert-valued pair
+map. No continuity or integrability of $F$ was used. The argument
+also applies to restrictions of Borel maps defined on all of $\Omega$.
+$\square$
+
+## 23. Optimal RMS order and retention of almost all profile mass
+
+**Corollary 23.1 (sharp order at the collapse scale).** With the
+constants and quantifiers of Theorem 22.1, define the possibly infinite
+unnormalized RMS and its core-conditioned version by
+
+$$
+\begin{aligned}
+\mathcal R_{\epsilon,f}(F)^2
+ &=\int_{C_\epsilon\times C_\epsilon}
+    (\|F(q)-F(q')\|-d_\epsilon^\Omega(q,q'))^2
+                          \,\mu_f(dq)\mu_f(dq'),\\
+\mathcal R^{\rm cond}_{\epsilon,f}(F)
+ &=\mathcal R_{\epsilon,f}(F)/M_\epsilon .
+\end{aligned}
+\tag{23.1}
+$$
+
+For either choice $\mathcal R^\star\in
+\{\mathcal R,\mathcal R^{\rm cond}\}$,
+
+$$
+\sqrt{c_0}\,\epsilon
+ \le\inf_{\mathscr H,F}\mathcal R^\star_{\epsilon,f}(F)
+ \le2R\epsilon .
+\tag{23.2}
+$$
+
+The infimum ranges over all separable real Hilbert spaces and all
+Borel maps as above. The upper bound is realized as a comparison
+bound by one constant map into $\mathbb R$; it is not an asserted
+optimal coefficient. The same two bounds hold for the infimum over
+maps into any one fixed nonempty separable real Hilbert space.
+
+Proof. Pointwise, the squared untruncated error divided by
+$\epsilon^2$ is at least the truncated loss. Hence (22.2) proves
+the lower bounds, including maps whose untruncated integral is
+infinite. For a constant map, its error is exactly
+$d_\epsilon^\Omega(q,q')\le2R\epsilon$ by (21.2).
+Its unnormalized RMS is at most $2R\epsilon M_\epsilon$ and its
+conditioned RMS is at most $2R\epsilon$. This proves the uniform
+upper bounds and the order claim. In particular absolute best error
+vanishes with $\epsilon$; the strictly positive floor is after
+normalization by the actual collapse length $\epsilon$. $\square$
+
+**Theorem 23.2 (deleting vanishing profile mass preserves the actual
+retained-pair floor).** Keep the same $K,c_0,d_0,\epsilon_0$.
+Let $A_\epsilon\subset C_\epsilon$ be any Borel retained set and
+put
+
+$$
+\delta_\epsilon=\mu_f(C_\epsilon\setminus A_\epsilon),\qquad
+ M_{\epsilon,A}=\mu_f(A_\epsilon),\qquad
+ \delta_0=\min(b/8,1/8),
+\tag{23.3}
+$$
+
+where $b$ is (22.7). If $\delta_\epsilon\le\delta_0$, then
+$M_{\epsilon,A}\ge1/2$ and, for every Borel Hilbert map on the
+retained set,
+
+$$
+\begin{aligned}
+\int_{A_\epsilon\times A_\epsilon}
+       \ell_{\epsilon,F}\,d\mu_f d\mu_f&\ge c_0,\\
+M_{\epsilon,A}^{-2}
+ \int_{A_\epsilon\times A_\epsilon}
+       \ell_{\epsilon,F}\,d\mu_f d\mu_f&\ge c_0 .
+\end{aligned}
+\tag{23.4}
+$$
+
+The two sharp-order RMS bounds (23.2) also hold with the core replaced
+by $A_\epsilon$ and conditioning by $M_{\epsilon,A}$.
+This applies to arbitrary retained sets depending on $f,\epsilon$
+and even on the proposed map. In particular it applies eventually
+when the deleted actual mass is $o(1)$. It also applies eventually
+if the deleted **profile** mass
+$\lambda_g(\iota_\epsilon^{-1}(C_\epsilon\setminus A_\epsilon))$
+is $o(1)$, uniformly for the states in Theorem 22.1.
+For genuine near-minimizer families these two notions of deleted
+mass differ by $o(1)$.
+
+Proof. Restrict $\nu_\epsilon$ in (22.11) to the pullback of the
+retained set. Each witness neighbourhood now has mass at least
+$b-\eta_\epsilon-\delta_\epsilon\ge b/2=a$.
+The retained core has mass at least
+$3/4-1/16-1/8>1/2$.
+The tuple inequality remains pointwise true, so (22.12) and its
+symmetric-rectangle argument prove exactly the same constant $c_0$.
+The truncated-to-untruncated lower bound and the constant-map upper
+bound are unchanged. No extension or regularity of a retained-set
+map is needed.
+
+For a deleted pullback set $B_\epsilon\subset K$, (22.10) gives
+
+$$
+|\mu_f(\iota_\epsilon B_\epsilon)-\lambda_g(B_\epsilon)|
+              \le\eta_\epsilon(f)\le\delta_0/2.
+\tag{23.5}
+$$
+
+Thus deleted profile mass at most $\delta_0/2$ implies the required
+actual deletion bound. If $D_\epsilon(f_\epsilon)\to0$, then
+$\eta_\epsilon(f_\epsilon)\to0$, proving the last statement.
+The pair measure in (23.4) is precisely
+$(\mu_f|_{A_\epsilon})\otimes(\mu_f|_{A_\epsilon})$:
+both actual points must be retained. If the original core mass is
+$M_\epsilon$, the removed pair mass is exactly
+
+$$
+M_\epsilon^2-M_{\epsilon,A}^2
+        =2M_\epsilon\delta_\epsilon-\delta_\epsilon^2
+        \le2\delta_\epsilon .
+\tag{23.6}
+$$
+
+This is not a permission to delete selected bad pairs while retaining
+their individual points. The product is an integration convention;
+it grants no independent copies, resampling or observation service.
+$\square$
+
+## 24. Vanishing mass in a smaller kinetic tangent window
+
+**Theorem 24.1 (a flat tangent window cannot contain a nonvanishing
+near-minimizer mass).** Under Definition 21.1, let
+$D_\epsilon(f_\epsilon)\to0$ and let $s_\epsilon>0$ satisfy
+$s_\epsilon/\epsilon\to0$. Then
+
+$$
+\int_{B_{d_\epsilon^\Omega}(o,s_\epsilon)}
+                   |f_\epsilon|^2d\mu\longrightarrow0 .
+\tag{24.1}
+$$
+
+The same conclusion holds for the image under the kinetic exponential
+map at $o$ of a tangent ball of $g_\epsilon(o)$-radius
+$s_\epsilon$, and for the frozen-symbol coordinate ellipsoid
+
+$$
+\Phi_o\{(x,y,\theta):x^2+y^2+\epsilon^{-2}\theta^2
+                                      \le s_\epsilon^2\}.
+\tag{24.2}
+$$
+
+These windows are centered at the specified pole. No claim about
+windows centered elsewhere, or about fixed positive scaled defect,
+is included in this vanishing-mass statement.
+
+Proof. Fix any radius $R>0$. For sufficiently small $\epsilon$,
+$s_\epsilon<\epsilon R$. Proposition 21.2, and the same direct-lift
+argument for any smaller radius, identify the ball in (24.1) exactly
+with $\iota_\epsilon B_{d_1}(0,s_\epsilon/\epsilon)$.
+It lies in $\{\chi=1\}$. Consequently (22.10) yields
+
+$$
+\int_{B_{d_\epsilon^\Omega}(o,s_\epsilon)}|f_\epsilon|^2d\mu
+ \le\lambda_g(B_{d_1}(0,s_\epsilon/\epsilon))
+                         +\eta_\epsilon(f_\epsilon)\longrightarrow0 .
+\tag{24.3}
+$$
+
+The first term tends to zero because $h_g^2\in L^1(d\xi)$ and
+these shrinking balls have intersection $\{0\}$, which has zero
+Lebesgue measure; the second tends to zero by the genuine
+near-minimizer hypothesis. Closed balls give the same bound.
+Each radial exponential curve has length equal to its initial tangent
+norm, so the tangent image lies in the corresponding closed intrinsic
+ball. It is defined here for small radii inside the local normal
+chart, as follows also by the homothety in (21.2) from the unit metric.
+Finally (24.2) pulls back under $\iota_\epsilon$ to the ordinary
+coordinate ball $x^2+y^2+\theta^2\le(s_\epsilon/\epsilon)^2$.
+The same $L^1$ discrepancy and absolute continuity prove its vanishing
+mass. Thus a window on which the rescaled geometry tends to its flat
+tangent cannot replace the fixed profile core while retaining a
+positive fraction of a genuine near-minimizer's mass. $\square$
+
+## 25. Correspondence and the remaining spatial-realization contract
+
+**Definition 25.1 (attribution and the precise consumer).** The
+classical deterministic intermediates in Theorem 22.1 are the
+normal-coordinate distance expansion attributed there to Pennec,
+§2, (1), and §3.3, (9), and the Hilbert squared-distance negative-type
+identity (22.8), within Schoenberg's classical metric-embedding
+framework. The necessary identity is proved directly and its
+sufficiency is not invoked. The metric, mixed sectional curvature,
+raw-density normalization and source dilation are the existing
+Definitions 2.1, 9.1, 15.1, 18.1 and (9.10). The positive profile and
+its full-complex-domain uniform approximation are Theorems 18.2 and
+20.1, not new variational or spectral claims.
+
+The additional source-specific composition is the global periodic
+killed-cylinder distance localization (21.2), the positive average
+error on its actual near-minimizer density (22.2), its retained-pair
+and sharp-order consequences, and the smaller-window mass exclusion.
+These are repo-derived ordinary mathematical results. They carry no
+worldwide novelty, experimental or Lean/kernel certification claim.
+Their named spatial consumer is the kinetic-distance branch of
+Definition 11.2: the exact smooth comparison of Corollary 9.3 is now
+supplemented by a quantitative average test for arbitrary Borel
+Euclidean or Hilbert **chord** readouts on the actual collapse core.
+The analytic error is normalized by $\epsilon$ and weighted by the
+actual $|f|^2d\mu$, rather than an imposed uniform coordinate density.
+
+A candidate common-source realization may require this distance
+contract in addition to its own law, clock and operations; if it does,
+Theorem 22.1 excludes vanishing normalized pair error under the stated
+near-minimizer conditions. It selects no physical spatial dimension.
+In particular an obstruction to all Hilbert chord targets does not
+prefer one Hilbert dimension over another. Curved targets, variable
+target metric, intrinsic submanifold distance, a specified task metric,
+coarser absolute error tolerances and a separately justified
+homogenization limit are different contracts. Theorems 22.1–24.1
+make no identification with any of them. The upper bound (23.2)
+explicitly permits absolute error tending to zero.
+
+The original law (1.2) and the raw full-field occupation in Theorem
+1.3 and §17 are distinct from the analytic variational probability
+$|f|^2d\mu$. That probability is neither a Brownian occupation law nor
+an acquired data source. Spatial dilation and multiplication of the
+comparison map by $\epsilon^{-1}$ in the proof install no clock or
+control operation. All native $P,Q$ chronologies remain
+$j=\int a_{\rm cmd}\,db_{\rm cmd}$, with the original extrema,
+whole-command and prefix guards, numerical domains, actual own death,
+and four unhalved original-time charges (6.1). The signed central
+noise remains a supplied independent law, not a third primitive.
+No charge or guard is inferred from the auxiliary kinetic lengths.
+
+The paid finite-report consumer in
+[Paid-point observation tracking, Definitions 55.1–55.2, Theorems
+57.2–57.3 and 58.2](FIB_NATIVE_PAID_POINT_OBSERVATION_TRACKING.md#55-finite-reports-under-the-installed-exact-point-interface)
+retains its installed paid exact-point Read, finite-message dependence,
+wrapped held-path accuracy, fixed-field-cap response and separately
+charged primitive execution. It is not physical finite-bit sensing;
+postprocessing an acquired exact point supplies no sensing precision
+or arithmetic/memory tariff. Its probabilities and metric are not
+(22.1), and its initial-hold obstruction to uncapped native exposure
+is not removed by a variational profile. Neither consumer supplies
+an attractive sampler, native preparation of $h_g$, reset, copies,
+independent resampling, finite arithmetic or memory, total service
+tariff, or recursive spectral gluing. A complete why-three
+correspondence still needs its common-source spatial map with a
+justified geometry, the preserved path law and original clock,
+actual paid acquisition and operation/resource accounting, and
+compatible recursive gluing maps on that same realization. Equality
+of dimensions or a product pair integral supplies none of these
+missing premises.
+
+## 追加锚（本行以下为增补区）
