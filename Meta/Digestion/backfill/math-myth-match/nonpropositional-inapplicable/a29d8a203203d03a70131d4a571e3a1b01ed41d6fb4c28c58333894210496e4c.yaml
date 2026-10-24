@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:a29d8a203203d03a70131d4a571e3a1b01ed41d6fb4c28c58333894210496e4c
+  normalized_sha256: sha256:a29d8a203203d03a70131d4a571e3a1b01ed41d6fb4c28c58333894210496e4c
+cas_ref: sha256:a29d8a203203d03a70131d4a571e3a1b01ed41d6fb4c28c58333894210496e4c
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 解释磋商中错误可能、机构决议、服从与复议的不同规范关系。
+    previous_atom_id: b25dcbb2cb17765661f83172dc7d33f53fa1ab23d86795186bf5efd08383faea
+    next_atom_id: 20146557414b9ed27e408054f73037ac3d1823e632ba179c7e631da24c6c1700
