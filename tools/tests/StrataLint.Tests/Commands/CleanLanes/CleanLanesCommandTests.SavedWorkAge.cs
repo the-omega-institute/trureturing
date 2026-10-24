@@ -100,11 +100,12 @@ public sealed partial class CleanLanesCommandTests
     {
         using var fixture = new CleanLanesFixture();
         var lane = fixture.AddWorkedLane("harness/wip-checkpoint");
-        var allocated = fixture.LastUpdate(lane).AddDays(-2);
+        var observed = fixture.LastUpdate(lane);
+        var allocated = observed.AddDays(-2);
         CleanLanesFixture.GitAt(lane, allocated, "commit", "--amend", "--no-edit");
         fixture.RewriteAllocation(lane, allocated);
         fixture.AdvanceBase(300);
-        var before = fixture.RunAt(DateTimeOffset.UtcNow.AddHours(1), "--lanes-only");
+        var before = fixture.RunAt(observed.AddHours(1), "--lanes-only");
         Assert.True(before.Success, before.Error);
         Assert.Equal("stale_behind", ReasonFor(before.Output, lane));
         File.WriteAllText(Path.Combine(lane, "wip.txt"), "recoverable unit\n");
