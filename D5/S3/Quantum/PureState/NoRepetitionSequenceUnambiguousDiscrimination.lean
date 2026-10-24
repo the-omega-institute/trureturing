@@ -181,7 +181,15 @@ private lemma eigenvalue_bound {N k : ℕ} (s a v : ℝ)
     (h : (kernel (N := N) (k := k) s - (a : ℂ) • 1).PosSemidef)
     (w : Label N k → ℂ) (hw : w ≠ 0) (he : kernel s *ᵥ w = (v : ℂ) • w) :
     a ≤ v := by
-  sorry
+  classical
+  have hn : 0 < (star w ⬝ᵥ w).re := by
+    simpa only [Matrix.one_mulVec, RCLike.re_eq_complex_re] using
+      (Matrix.PosDef.one : (1 : Matrix (Label N k) (Label N k) ℂ).PosDef).re_dotProduct_pos hw
+  have hb := h.re_dotProduct_nonneg w
+  simp only [Matrix.sub_mulVec, Matrix.smul_mulVec, Matrix.one_mulVec, he,
+    dotProduct_sub, dotProduct_smul, smul_eq_mul, RCLike.re_eq_complex_re, Complex.sub_re,
+    Complex.mul_re, Complex.ofReal_re, Complex.ofReal_im, zero_mul, sub_zero] at hb
+  nlinarith
 
 private lemma upper_bound {N k : ℕ} (hN : 3 ≤ N) (hk : 2 ≤ k)
     (hkN : k ≤ N) (s : ℝ) (ψ : Fin N → Fin N → ℂ) (hψ : IsEquiangular ψ s)
