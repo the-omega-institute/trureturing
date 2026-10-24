@@ -34,11 +34,11 @@ structure Inputs where
 attribute [instance] Inputs.normed Inputs.scalar Inputs.top Inputs.compact
   Inputs.hausdorff Inputs.disconnected
 
-def readout (P : Inputs.{u,v}) (c : ℝ) : Prop :=
+def readout (P : Inputs.{u, v}) (c : ℝ) : Prop :=
   0 < c ∧ ∀ p q : P.K, p ≠ q → c ≤ ‖WeakDual.toStrongDual (P.h p - P.h q)‖
 
 def signature : DependentFamily.Signature where
-  Params := Inputs.{u,v}
+  Params := Inputs.{u, v}
   State := fun _ => ℝ
   Role := Unit
   finiteRole := inferInstance
@@ -47,29 +47,35 @@ def signature : DependentFamily.Signature where
   Anchor := Empty
   finiteAnchor := inferInstance
 
-def actual : DependentFamily.Realization signature.{u,v} :=
+def actual : DependentFamily.Realization signature.{u, v} :=
   DependentFamily.realize signature (fun _ P c => readout P c) (fun a => nomatch a)
 
 def arena : DependentFamily.Arena where
-  signature := signature.{u,v}
+  signature := signature.{u, v}
   Law := fun R => ∀ P, ∃ c, R.readout () P c
 
-abbrev sourceScope := type_of% (@exists_pos_le_norm_sub.{u,v})
+abbrev sourceScope := type_of% (@exists_pos_le_norm_sub.{u, v})
 
-theorem source_bridge : sourceScope.{u,v} ↔ arena.{u,v}.Law actual.{u,v} := by
+theorem source_bridge : sourceScope.{u, v} ↔ arena.{u, v}.Law actual.{u, v} := by
   constructor
   · intro h P
+    letI := P.normed
+    letI := P.scalar
+    letI := P.top
+    letI := P.compact
+    letI := P.hausdorff
+    letI := P.disconnected
     exact h P.h P.continuous P.injective
   · intro h X normed scalar K top compact hausdorff disconnected f hf hi
     exact h ⟨X, normed, scalar, K, top, compact, hausdorff, disconnected, f, hf, hi⟩
 
-theorem actual_positive : arena.{u,v}.Law actual.{u,v} :=
-  source_bridge.mp (@exists_pos_le_norm_sub.{u,v})
+theorem actual_positive : arena.{u, v}.Law actual.{u, v} :=
+  source_bridge.mp (@exists_pos_le_norm_sub.{u, v})
 
-def rejected : DependentFamily.Realization signature.{u,v} :=
+def rejected : DependentFamily.Realization signature.{u, v} :=
   DependentFamily.realize signature (fun _ _ _ => False) (fun a => nomatch a)
 
-def sampleInputs : Inputs.{u,v} where
+noncomputable def sampleInputs : Inputs.{u, v} where
   X := ULift.{u} ℝ
   normed := inferInstance
   scalar := inferInstance
@@ -82,22 +88,25 @@ def sampleInputs : Inputs.{u,v} where
   continuous := continuous_const
   injective := fun _ _ _ => Subsingleton.elim _ _
 
-theorem rejected_law : ¬ arena.{u,v}.Law rejected := by
+theorem rejected_law : ¬ arena.{u, v}.Law rejected := by
   intro h
-  obtain ⟨c, hc⟩ := h sampleInputs.{u,v}
+  obtain ⟨c, hc⟩ := h sampleInputs.{u, v}
   exact hc
 
-theorem sample_readout_one : readout sampleInputs.{u,v} 1 := by
+theorem sample_readout_one : readout sampleInputs.{u, v} 1 := by
   refine ⟨by norm_num, ?_⟩
   intro p q hpq
+  haveI : Subsingleton sampleInputs.{u, v}.K := by
+    change Subsingleton (ULift.{v} Unit)
+    infer_instance
   exact (hpq (Subsingleton.elim _ _)).elim
 
-theorem sample_readout_zero_false : ¬ readout sampleInputs.{u,v} 0 := by
+theorem sample_readout_zero_false : ¬ readout sampleInputs.{u, v} 0 := by
   intro h
   exact (lt_irrefl (0 : ℝ)) h.1
 
 noncomputable def familyRegistration :
-    DependentFamily.Registration arena.{u,v} sourceScope.{u,v} where
+    DependentFamily.Registration arena.{u, v} sourceScope.{u, v} where
   actual := actual
   bridge := source_bridge
   variation := ⟨actual_positive, rejected, rejected_law⟩
@@ -112,27 +121,27 @@ noncomputable def familyRegistration :
       exact nomatch a
   dependence := by
     intro i
-    refine ⟨sampleInputs.{u,v}, (1 : ℝ), (0 : ℝ), ?_⟩
+    refine ⟨sampleInputs.{u, v}, (1 : ℝ), (0 : ℝ), ?_⟩
     intro he
-    have h : readout sampleInputs.{u,v} 1 = readout sampleInputs.{u,v} 0 := he
+    have h : readout sampleInputs.{u, v} 1 = readout sampleInputs.{u, v} 0 := he
     exact sample_readout_zero_false (h ▸ sample_readout_one)
 
 noncomputable def registration :
     LeanInformationAudit.Contract.Registration.{_, _, _, 0, 0, 0, _, _, 0, 0, 0, 0}
-      (@exists_pos_le_norm_sub.{u,v})
-      (DependentFamily.Realization signature.{u,v}) Type Unit where
+      (@exists_pos_le_norm_sub.{u, v})
+      (DependentFamily.Realization signature.{u, v}) Type Unit where
   unitName := `D5.S3.Topology.ExtremallyDisconnected.WeakStarNormSeparation.exists_pos_le_norm_sub.__information_unit
   realizationName := `Reg.D5.S3.Topology.ExtremallyDisconnected.WeakStarNormSeparation.familyRegistration
   realizationSource := none
   generated := false
-  arena := .source ⟨arena.{u,v}⟩
-  objectArena := .source ⟨arena.{u,v}⟩
+  arena := .source ⟨arena.{u, v}⟩
+  objectArena := .source ⟨arena.{u, v}⟩
   catalog := Lean.Name.anonymous
   localNames := false
-  realization := .source arena.{u,v} ⟨familyRegistration.{u,v}⟩
+  realization := .source arena.{u, v} ⟨familyRegistration.{u, v}⟩
   correspondence := { stage := .evidence, objectStage := .evidence }
   bundleNonempty := .evidence ⟨(show True from trivial)⟩ trivial
-  readout := some (DependentFamily.realize signature.{u,v}
+  readout := some (DependentFamily.realize signature.{u, v}
     (fun _ P c => readout P c) (fun a => nomatch a))
   variation := .evidence ⟨(show True from trivial)⟩ trivial
   sensitivity := .evidence ⟨(show True from trivial)⟩ trivial

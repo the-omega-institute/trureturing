@@ -4,7 +4,7 @@
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
    utility: none
-   digest: Weak-star continuous injections of compact Stonean spaces have a uniform strong-dual norm gap. -/
+   digest: Compact Stonean weak-star embeddings have a uniform strong-dual norm gap. -/
 
 import D5.S3.Topology.ExtremallyDisconnected.PointPairSeparation
 import Mathlib.Analysis.Normed.Module.WeakDual
@@ -60,7 +60,7 @@ private theorem uniform_positive_of_lowerSemicontinuous
       filter_upwards [hevent] with n hn
       have hout : (p n, q n) ∉ D := by
         intro hin
-        exact (not_lt_of_ge (hmin _ hin)) ((hlt n).trans hn)
+        exact (not_lt_of_ge (isMinOn_iff.mp hmin _ hin)) ((hlt n).trans hn)
       constructor
       · intro hp
         by_contra hq
@@ -96,7 +96,7 @@ theorem exists_pos_le_norm_sub
       (fun z : K × K => ‖WeakDual.toStrongDual (h z.1 - h z.2)‖) := by
     apply lowerSemicontinuous_iff_isClosed_preimage.mpr
     intro r
-    simpa only [Set.preimage, Metric.mem_closedBall, dist_zero_right, Set.mem_Iic] using
+    simpa only [Set.preimage, Metric.mem_closedBall, dist_zero_right, Set.mem_Iic, Set.mem_setOf_eq] using
       (WeakDual.isClosed_closedBall (0 : StrongDual ℝ X) r).preimage hdiff
   apply uniform_positive_of_lowerSemicontinuous _ hlsc
   intro p q hpq
