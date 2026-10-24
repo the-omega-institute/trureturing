@@ -24,7 +24,7 @@ The recurrence replaces the finite Cauchy--Binet expansion with an entirely
 finite induction proving the same coefficientwise inequality.
 bind-only helpers and consumers: balanced_product -> binomial_minor;
 binomialProduct_succ -> binomial_minor, Kernel.reciprocalGamma_sum;
-binomialProduct_comm -> binomial_minor; productCoeff_eq -> smoothing_minor,
+binomialProduct_comm -> binomial_minor, Result.two_variable_nonneg; productCoeff_eq -> smoothing_minor,
 Kernel.reciprocalGamma_sum.
 The content helper binomial_minor is consumed by smoothing_minor;
 smoothed_weighting consumes smoothing_minor and Weighting.coefficientwise_weighting.
@@ -123,7 +123,7 @@ theorem binomialProduct_succ (f g : ℕ → ℝ) (N : ℕ) :
   rw [hleft, hright]
   ring
 
-private theorem binomialProduct_comm (f g : ℕ → ℝ) (N : ℕ) :
+theorem binomialProduct_comm (f g : ℕ → ℝ) (N : ℕ) :
     binomialProduct f g N = binomialProduct g f N := by
   unfold binomialProduct
   rw [← sum_range_reflect (fun r => (N.choose r : ℝ) * f r * g (N - r)) (N + 1)]

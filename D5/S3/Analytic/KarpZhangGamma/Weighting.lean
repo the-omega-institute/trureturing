@@ -2,10 +2,11 @@
    generality: G
    mirror-B: D5/B/S3/Analytic/KarpZhangGamma/Weighting
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
-   anchors: [mathlib/module/Mathlib.Algebra.Order.BigOperators.Group.Finset, mathlib/module/Mathlib.Data.Nat.Find, mathlib/module/Mathlib.Data.Real.Basic]
+   anchors: [mathlib/module/Mathlib.Algebra.BigOperators.Ring.Finset, mathlib/module/Mathlib.Algebra.Order.BigOperators.Group.Finset, mathlib/module/Mathlib.Data.Nat.Find, mathlib/module/Mathlib.Data.Real.Basic]
    utility: none
    digest: One negative-to-positive sign change permits increasing coefficientwise weights. -/
 
+import Mathlib.Algebra.BigOperators.Ring.Finset
 import Mathlib.Algebra.Order.BigOperators.Group.Finset
 import Mathlib.Data.Nat.Find
 import Mathlib.Data.Real.Basic

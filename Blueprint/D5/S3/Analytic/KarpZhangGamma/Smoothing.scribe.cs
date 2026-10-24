@@ -15,6 +15,8 @@ internal sealed class SmoothingDocument : IScribeDocumentDefinition
                 "Let y satisfy D5.S3.Analytic.KarpZhangReciprocal.Result.IsLogConcave. For natural L,R,u,v satisfying L <= u, L <= v, u <= R, v <= R and u+v=L+R, y(L)y(R) <= y(u)y(v). The proof reuses the existing balanced_step theorem at fixed index sum, including sequences whose lower support boundary is positive.", DescribeRole.Theorem),
             Entry("karp-zhang-gamma-binomial-product-succ", "binomialProduct_succ", "Finite Leibniz recurrence",
                 "For every pair of real sequences f,g and natural N, binomialProduct(f,g,N+1) equals binomialProduct(r maps to f(r+1),g,N) plus binomialProduct(f,r maps to g(r+1),N). This follows from Pascal's identity, retaining both endpoint terms exactly.", DescribeRole.Theorem),
+            Entry("karp-zhang-gamma-binomial-product-comm", "binomialProduct_comm", "Commutativity of the finite convolution",
+                "For every pair of real sequences f,g and natural N, binomialProduct(f,g,N) equals binomialProduct(g,f,N). Reflection r maps to N-r preserves the binomial coefficient and interchanges the two factors. Together with productCoeff_eq this makes the smoothed weights symmetric around m/2.", DescribeRole.Theorem),
             Entry("karp-zhang-gamma-product-coeff-eq", "productCoeff_eq", "Factorial conversion",
                 "For every pair of real sequences f,g and natural N, productCoeff(f,g,N) equals binomialProduct(f,g,N) divided by N factorial. Nat.choose_mul_factorial_mul_factorial supplies the finite coefficient identity; factorials are positive.", DescribeRole.Theorem),
             Entry("karp-zhang-gamma-smoothing-minor", "smoothing_minor", "Every smoothed minor is nonnegative",
