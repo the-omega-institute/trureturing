@@ -60,16 +60,16 @@ private theorem diagonal_eq (f : ℕ → ℕ → ℝ) (n : ℕ) :
     omega
   · intro p hp q hq h
     rw [mem_indices] at hp hq
-    apply Prod.ext <;> dsimp at * <;> omega
+    apply Prod.ext <;> omega
   · intro j hj
     have hj' := mem_range.mp hj
     refine ⟨(n - 2 * j, j), ?_, rfl⟩
     rw [mem_indices]
-    dsimp
+    change n - 2 * j + 2 * j = n
     omega
   · intro p hp
     rw [mem_indices] at hp
-    dsimp
+    change f p.1 p.2 = f (n - 2 * p.2) p.2
     rw [show n - 2 * p.2 = p.1 by omega]
 
 private theorem diagonal_mul_left (c : ℝ) (f : ℕ → ℕ → ℝ) (n : ℕ) :
@@ -95,23 +95,23 @@ private theorem diagonal_rshift (f : ℕ → ℕ → ℝ) (n : ℕ) :
   · intro p hp
     simp only [s, mem_filter, mem_indices] at hp
     rw [mem_indices]
-    dsimp
+    change p.1 - 1 + 2 * p.2 = n
     omega
   · intro p hp q hq heq
     simp only [s, mem_filter, mem_indices] at hp hq
     have h1 := congrArg Prod.fst heq
     have h2 := congrArg Prod.snd heq
-    apply Prod.ext <;> dsimp at * <;> omega
+    apply Prod.ext <;> omega
   · intro p hp
     rw [mem_indices] at hp
     refine ⟨(p.1 + 1, p.2), ?_, ?_⟩
     · simp only [s, mem_filter, mem_indices]
-      dsimp
       omega
     · apply Prod.ext <;> simp
   · intro p hp
     simp only [s, mem_filter, mem_indices] at hp
-    dsimp
+    change (p.1 : ℝ) * f p.1 p.2 =
+      ((p.1 - 1 + 1 : ℕ) : ℝ) * f (p.1 - 1 + 1) p.2
     rw [show p.1 - 1 + 1 = p.1 by omega]
 
 private theorem diagonal_jshift (f : ℕ → ℕ → ℝ) (n : ℕ) :
@@ -133,24 +133,27 @@ private theorem diagonal_jshift (f : ℕ → ℕ → ℝ) (n : ℕ) :
   · intro p hp
     simp only [s, mem_filter, mem_indices] at hp
     rw [mem_indices]
-    dsimp
+    change p.1 + 2 * (p.2 - 1) = n
     omega
   · intro p hp q hq heq
     simp only [s, mem_filter, mem_indices] at hp hq
     have h1 := congrArg Prod.fst heq
     have h2 := congrArg Prod.snd heq
-    apply Prod.ext <;> dsimp at * <;> omega
+    apply Prod.ext <;> omega
   · intro p hp
     rw [mem_indices] at hp
     refine ⟨(p.1, p.2 + 1), ?_, ?_⟩
     · simp only [s, mem_filter, mem_indices]
-      dsimp
       omega
     · apply Prod.ext <;> simp
   · intro p hp
     simp only [s, mem_filter, mem_indices] at hp
-    dsimp
-    rw [show p.2 - 1 + 1 = p.2 by omega]
+    have hs : p.2 - 1 + 1 = p.2 := by omega
+    have hcast : ((p.2 - 1 : ℕ) : ℝ) + 1 = (p.2 : ℝ) := by
+      exact_mod_cast hs
+    change (2 * (p.2 : ℝ)) * f p.1 p.2 =
+      (2 * (((p.2 - 1 : ℕ) : ℝ) + 1)) * f p.1 (p.2 - 1 + 1)
+    rw [hs, hcast]
 
 private def atom (a : ℝ) (r j : ℕ) : ℝ :=
   1 / ((r.factorial : ℝ) * (j.factorial : ℝ) * Real.Gamma (a + j) *
@@ -332,36 +335,34 @@ private theorem diagonal_product (f g : ℕ → ℕ → ℝ) (n : ℕ) :
   simp only [diagonal_eq, sum_mul, mul_sum]
   simp only [← sum_product', sum_sigma']
   apply sum_bij (fun p _ =>
-    (⟨p.2.1 + p.2.2, (p.2.1, p.1 - 2 * p.2.1)⟩ : Σ _ : ℕ, ℕ × ℕ))
-  · rintro ⟨k, i, j⟩ hp
+    (⟨p.2.2 + p.2.1, (p.2.2, p.1 - 2 * p.2.2)⟩ : Σ _ : ℕ, ℕ × ℕ))
+  · rintro ⟨k, j, i⟩ hp
     simp only [mem_sigma, mem_product, mem_range] at hp ⊢
-    dsimp at *
     omega
-  · rintro ⟨k, i, j⟩ hp ⟨l, u, v⟩ hq heq
+  · rintro ⟨k, j, i⟩ hp ⟨l, v, u⟩ hq heq
     simp only [mem_sigma, mem_product, mem_range] at hp hq
     have h1 : i + j = u + v := congrArg Sigma.fst heq
     have h2 : (i, k - 2 * i) = (u, l - 2 * u) :=
       congrArg (fun p : Σ _ : ℕ, ℕ × ℕ => p.2) heq
-    have h3 := congrArg Prod.fst h2
-    have h4 := congrArg Prod.snd h2
-    have hk : k = l := by dsimp at *; omega
-    have hi : i = u := by simpa using h3
+    have hi : i = u := congrArg Prod.fst h2
+    have hdiff : k - 2 * i = l - 2 * u := congrArg Prod.snd h2
+    have hk : k = l := by omega
     have hj : j = v := by omega
     subst l; subst u; subst v
     rfl
   · rintro ⟨m, i, r⟩ hp
     simp only [mem_sigma, mem_product, mem_range] at hp
-    refine ⟨⟨r + 2 * i, (i, m - i)⟩, ?_, ?_⟩
+    refine ⟨⟨r + 2 * i, (m - i, i)⟩, ?_, ?_⟩
     · simp only [mem_sigma, mem_product, mem_range]
-      dsimp at *
       omega
     · have hm : i + (m - i) = m := by omega
       change (⟨i + (m - i), (i, r + 2 * i - 2 * i)⟩ : Σ _ : ℕ, ℕ × ℕ) =
         ⟨m, (i, r)⟩
       rw [hm, show r + 2 * i - 2 * i = r by omega]
-  · rintro ⟨k, i, j⟩ hp
+  · rintro ⟨k, j, i⟩ hp
     simp only [mem_sigma, mem_product, mem_range] at hp
-    dsimp at *
+    change f (k - 2 * i) i * g (n - k - 2 * j) j =
+      f (k - 2 * i) i * g (n - 2 * (i + j) - (k - 2 * i)) (i + j - i)
     rw [show i + j - i = j by omega,
       show n - 2 * (i + j) - (k - 2 * i) = n - k - 2 * j by omega]
 
@@ -382,6 +383,7 @@ private theorem atom_product (a b : ℝ) (N m r k : ℕ) (hr : r ≤ N) (hk : k 
           Real.Gamma (a + k) * Real.Gamma (b + (m - k)))) *
         (1 / ((r.factorial : ℝ) * ((N - r).factorial : ℝ))) := by
       simp only [atom, div_eq_mul_inv, mul_inv_rev, one_mul]
+      rw [Nat.cast_sub hk]
       ring
     _ = _ := by rw [h2, h16]
 
@@ -406,7 +408,6 @@ private theorem transformed_product (y : ℕ → ℝ) (a b : ℝ) (n : ℕ) :
   intro r hr
   have h := atom_product a b (n - 2 * m) m r k
     (by have := mem_range.mp hr; omega) (by have := mem_range.mp hk; omega)
-  dsimp only
   calc
     _ = (y (2 * k + r) * y (2 * (m - k) + (n - 2 * m - r))) *
         (atom a r k * atom b (n - 2 * m - r) (m - k)) := by ring
