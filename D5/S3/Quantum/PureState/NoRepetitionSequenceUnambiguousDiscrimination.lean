@@ -120,7 +120,50 @@ private lemma measurement_gram_bound {N k : ℕ}
     (E₀ : Matrix (Fin k → Fin N) (Fin k → Fin N) ℂ)
     (hE : IsUnambiguousMeasurement φ E E₀) :
     (gram φ - diagonal (fun x => (probabilities φ E x : ℂ))).PosSemidef := by
-  sorry
+  classical
+  let A : Matrix (Fin k → Fin N) (Label N k) ℂ := fun a x => φ x a
+  have hzero (x y : Label N k) (hy : y ≠ x) : E x *ᵥ φ y = 0 :=
+    ((hE.1 x).dotProduct_mulVec_zero_iff).mp (hE.2.2.2 x y hy)
+  have hreal (x : Label N k) :
+      star (φ x) ⬝ᵥ (E x *ᵥ φ x) = (probabilities φ E x : ℂ) := by
+    apply Complex.ext
+    · rfl
+    · exact (Complex.nonneg_iff.mp ((hE.1 x).dotProduct_mulVec_nonneg (φ x))).2.symm
+  have hentry (x y z : Label N k) :
+      (Aᴴ * E x * A) y z = star (φ y) ⬝ᵥ (E x *ᵥ φ z) := by
+    rw [Matrix.mul_assoc]
+    rfl
+  have hcompression : Aᴴ * (∑ x, E x) * A =
+      diagonal (fun x => (probabilities φ E x : ℂ)) := by
+    rw [Matrix.mul_sum, Matrix.sum_mul]
+    ext y z
+    simp only [Matrix.sum_apply, hentry]
+    by_cases hyz : y = z
+    · subst z
+      rw [diagonal_apply_eq]
+      rw [Finset.sum_eq_single y]
+      · exact hreal y
+      · intro x _ hxy
+        rw [hzero x y hxy.symm, dotProduct_zero]
+      · simp
+    · rw [diagonal_apply_ne _ hyz]
+      apply Finset.sum_eq_zero
+      intro x _
+      by_cases hzx : z = x
+      · subst z
+        rw [← (hE.1 x).isHermitian.star_dotProduct_mulVec_comm (φ x) (φ y),
+          hzero x y hyz, dotProduct_zero, star_zero]
+      · rw [hzero x z hzx, dotProduct_zero]
+  have htotal : E₀ = 1 - ∑ x, E x := by
+    exact eq_sub_of_add_eq' hE.2.2.1
+  have hgram : Aᴴ * A = gram φ := by
+    ext x y
+    rfl
+  have hidentity : Aᴴ * E₀ * A =
+      gram φ - diagonal (fun x => (probabilities φ E x : ℂ)) := by
+    rw [htotal, Matrix.mul_sub, Matrix.sub_mul, Matrix.mul_one, hgram, hcompression]
+  rw [← hidentity]
+  exact hE.2.1.conjTranspose_mul_mul_same A
 
 private lemma symmetrized_bound {N k : ℕ} (hk : k ≤ N) (s : ℝ)
     (q : Label N k → ℝ)
