@@ -56,7 +56,10 @@ internal sealed class StabilizerExtensionQuaternaryMinimalLengthDocument : IScri
                         "The first leastness assertion in the claim cannot hold because 1 is a positive member of its failure set, "
                             + "and the second cannot hold because 3 is a positive member of its failure set. The two smaller "
                             + "counterexample lengths contradict the asserted least value 5."))),
-                DescribeRole.Theorem)
+                DescribeRole.Theorem,
+                new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("mahmoud-2026-quaternary-extension-minimal-length-refutation"),
+                    ResolutionKind.Refuted))
         )));
 
     private static DocumentBlock Node(
