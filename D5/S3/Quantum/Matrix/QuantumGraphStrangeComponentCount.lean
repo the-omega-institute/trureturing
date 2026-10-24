@@ -666,6 +666,338 @@ private theorem commutant_upper_bound {n : ℕ} (A C : Mat n) (d : Fin n → ℂ
     (fun P hP hcomm i j hij hne hex =>
       commutant_offdiag_exceptional A C d hH hI hU P hP hcomm hij hne hex) k h
 
+attribute [local instance] Classical.propDecidable
+
+private def componentProjection {n : ℕ} (A C : Mat n)
+    (Q : (underlyingGraph A C).ConnectedComponent) : Mat n := by
+  classical
+  exact Matrix.diagonal (fun i => if (underlyingGraph A C).connectedComponentMk i = Q then 1 else 0)
+
+private theorem diagonal_commutes_columns {n : ℕ} (A C : Mat n) (d : Fin n → ℂ)
+    (f : Fin n → ℂ)
+    (hf : ∀ i j, (underlyingGraph A C).Adj i j → f i = f j) (q : Fin n × Fin n) :
+    Matrix.diagonal f * column A C d q = column A C d q * Matrix.diagonal f := by
+  ext i j
+  simp only [Matrix.diagonal_mul, Matrix.mul_diagonal]
+  by_cases hij : i = j
+  · subst j
+    exact mul_comm _ _
+  by_cases hedge : (underlyingGraph A C).Adj i j
+  · rw [hf i j hedge, mul_comm]
+  have ha : A i j = 0 := by
+    by_contra h
+    exact hedge ⟨hij, Or.inl h⟩
+  have hc : C i j = 0 := by
+    by_contra h
+    exact hedge ⟨hij, Or.inr (Or.inr (Or.inl h))⟩
+  simp [column, realignedProjector, hij, ha, hc]
+
+private theorem component_projection_projector {n : ℕ} (A C : Mat n)
+    (Q : (underlyingGraph A C).ConnectedComponent) :
+    IsOrthogonalProjector (componentProjection A C Q) := by
+  classical
+  constructor
+  · apply Matrix.isHermitian_diagonal_iff.mpr
+    intro i
+    split_ifs <;> simp
+  · simp only [componentProjection, Matrix.diagonal_mul_diagonal]
+    congr 1
+    funext i
+    split_ifs <;> simp
+
+private theorem component_projection_ne_zero {n : ℕ} (A C : Mat n)
+    (Q : (underlyingGraph A C).ConnectedComponent) : componentProjection A C Q ≠ 0 := by
+  classical
+  intro hz
+  have h := congrArg (fun M => M (representative (underlyingGraph A C) Q)
+    (representative (underlyingGraph A C) Q)) hz
+  simpa [componentProjection, representative_spec] using h
+
+private theorem component_projection_commutes {n : ℕ} (A C : Mat n) (d : Fin n → ℂ)
+    (Q : (underlyingGraph A C).ConnectedComponent) (q : Fin n × Fin n) :
+    componentProjection A C Q * column A C d q = column A C d q * componentProjection A C Q := by
+  classical
+  apply diagonal_commutes_columns
+  intro i j hij
+  rw [SimpleGraph.ConnectedComponent.connectedComponentMk_eq_of_adj hij]
+
+private theorem component_projection_sum {n : ℕ} (A C : Mat n) :
+    (∑ Q, componentProjection A C Q) = 1 := by
+  classical
+  ext i j
+  by_cases hij : i = j <;> simp [componentProjection, Matrix.sum_apply, Matrix.one_apply, hij]
+
+private theorem cross_component_columns_zero {n : ℕ} (A C : Mat n) (d : Fin n → ℂ)
+    (Q : (underlyingGraph A C).ConnectedComponent) {i j : Fin n}
+    (hi : i ∈ Q.supp) (hj : j ∉ Q.supp) :
+    column A C d (i, j) = 0 ∧ column A C d (j, i) = 0 := by
+  have hij : i ≠ j := by rintro rfl; exact hj hi
+  have hnadj : ¬(underlyingGraph A C).Adj i j := by
+    intro h
+    exact hj ((Q.mem_supp_congr_adj h).mp hi)
+  have hzero : A i j = 0 ∧ A j i = 0 ∧ C i j = 0 ∧ C j i = 0 := by
+    by_contra h
+    exact hnadj ⟨hij, by tauto⟩
+  simp only [column_off A C d hij, column_off A C d hij.symm,
+    hzero.1, hzero.2.1, hzero.2.2.1, hzero.2.2.2, Matrix.single_zero, add_zero, and_self]
+
+private structure ComponentSplit {n : ℕ} (A C : Mat n) (d : Fin n → ℂ)
+    (Q : (underlyingGraph A C).ConnectedComponent) where
+  plus : Mat n
+  minus : Mat n
+  plus_projector : IsOrthogonalProjector plus
+  minus_projector : IsOrthogonalProjector minus
+  plus_ne_zero : plus ≠ 0
+  minus_ne_zero : minus ≠ 0
+  complete : plus + minus = componentProjection A C Q
+  plus_commutes : ∀ q, plus * column A C d q = column A C d q * plus
+  minus_commutes : ∀ q, minus * column A C d q = column A C d q * minus
+
+private theorem phase_square_root (b : ℂ) (hb : b * star b = (1 / 4 : ℂ)) :
+    ∃ z : ℂ, z ^ 2 = 2 * b ∧ z * star z = 1 := by
+  obtain ⟨z, hz⟩ := IsAlgClosed.exists_pow_nat_eq (2 * b) (n := 2) (by norm_num)
+  refine ⟨z, hz, ?_⟩
+  have hs : (z * star z) ^ 2 = 1 := by
+    calc
+      _ = z ^ 2 * star (z ^ 2) := by simp only [star_pow]; ring
+      _ = 4 * (b * star b) := by rw [hz]; simp only [star_mul]; norm_num; ring
+      _ = 1 := by rw [hb]; norm_num
+  have hfactor : (z * star z - 1) * (z * star z + 1) = 0 := by linear_combination hs
+  rcases mul_eq_zero.mp hfactor with h | h
+  · exact sub_eq_zero.mp h
+  · have hneg : z * star z = -1 := eq_neg_of_add_eq_zero_left h
+    have hn := mul_star_self_nonneg z
+    rw [hneg] at hn
+    norm_num at hn
+
+private def pairDiagonal {n : ℕ} (i j : Fin n) : Mat n :=
+  Matrix.single i i 1 + Matrix.single j j 1
+
+private def edgeFlip {n : ℕ} (i j : Fin n) (z : ℂ) : Mat n :=
+  Matrix.single i j (star z) + Matrix.single j i z
+
+private def edgeProjection {n : ℕ} (i j : Fin n) (z : ℂ) : Mat n :=
+  (1 / 2 : ℂ) • (pairDiagonal i j + edgeFlip i j z)
+
+private theorem edge_projection_data {n : ℕ} {i j : Fin n} (hij : i ≠ j)
+    (z : ℂ) (hz : z * star z = 1) :
+    IsOrthogonalProjector (edgeProjection i j z) ∧ edgeProjection i j z ≠ 0 ∧
+      pairDiagonal i j * edgeProjection i j z = edgeProjection i j z ∧
+      edgeProjection i j z * pairDiagonal i j = edgeProjection i j z := by
+  have hDD : pairDiagonal i j * pairDiagonal i j = pairDiagonal i j := by
+    simp [pairDiagonal, add_mul, mul_add, hij, hij.symm]
+  have hDH : pairDiagonal i j * edgeFlip i j z = edgeFlip i j z := by
+    simp [pairDiagonal, edgeFlip, add_mul, mul_add, hij, hij.symm]
+  have hHD : edgeFlip i j z * pairDiagonal i j = edgeFlip i j z := by
+    simp [pairDiagonal, edgeFlip, add_mul, mul_add, hij, hij.symm, add_comm]
+  have hHH : edgeFlip i j z * edgeFlip i j z = pairDiagonal i j := by
+    have hz' : (starRingEnd ℂ) z * z = 1 := by rw [mul_comm]; exact hz
+    have hz'' : z * (starRingEnd ℂ) z = 1 := hz
+    simp [pairDiagonal, edgeFlip, add_mul, mul_add, hij, hij.symm, hz', hz'', add_comm]
+  have hproj : IsOrthogonalProjector (edgeProjection i j z) := by
+    constructor
+    · change (edgeProjection i j z)ᴴ = edgeProjection i j z
+      simp [edgeProjection, pairDiagonal, edgeFlip, Matrix.conjTranspose_smul,
+        Matrix.conjTranspose_add, add_comm, add_left_comm, add_assoc]
+    · simp only [edgeProjection, Matrix.smul_mul, Matrix.mul_smul, smul_smul,
+        add_mul, mul_add, hDD, hDH, hHD, hHH]
+      ext a b
+      simp only [Matrix.smul_apply, Matrix.add_apply, smul_eq_mul]
+      ring
+  have hne : edgeProjection i j z ≠ 0 := by
+    intro hz
+    have h := congrArg (fun M => M i i) hz
+    norm_num [edgeProjection, pairDiagonal, edgeFlip, Matrix.single, hij, hij.symm] at h
+  refine ⟨hproj, hne, ?_, ?_⟩
+  · simp only [edgeProjection, Matrix.mul_smul, mul_add, hDD, hDH]
+  · simp only [edgeProjection, Matrix.smul_mul, add_mul, hDD, hHD]
+
+private theorem component_projection_pair {n : ℕ} (A C : Mat n)
+    (Q : (underlyingGraph A C).ConnectedComponent) {i j : Fin n}
+    (hij : i ≠ j) (hpair : Q.supp = {i, j}) :
+    componentProjection A C Q = pairDiagonal i j := by
+  classical
+  unfold componentProjection pairDiagonal
+  rw [← Matrix.diagonal_single, ← Matrix.diagonal_single, Matrix.diagonal_add]
+  congr 1
+  funext a
+  have hm : (underlyingGraph A C).connectedComponentMk a = Q ↔ a = i ∨ a = j := by
+    change a ∈ Q.supp ↔ _
+    rw [hpair]
+    rfl
+  by_cases hai : a = i <;> by_cases haj : a = j <;>
+    simp_all [Pi.single_apply, eq_comm]
+
+private theorem pair_commutes_all {n : ℕ} (A C : Mat n) (d : Fin n → ℂ)
+    (Q : (underlyingGraph A C).ConnectedComponent) {i j : Fin n}
+    (hij : i ≠ j) (hpair : Q.supp = {i, j}) (hdi : d i = 0) (hdj : d j = 0)
+    (P : Mat n) (hDP : pairDiagonal i j * P = P) (hPD : P * pairDiagonal i j = P)
+    (hcij : P * column A C d (i, j) = column A C d (i, j) * P)
+    (hcji : P * column A C d (j, i) = column A C d (j, i) * P) :
+    ∀ q, P * column A C d q = column A C d q * P := by
+  intro ⟨a, b⟩
+  by_cases ha : a = i ∨ a = j
+  · by_cases hb : b = i ∨ b = j
+    · rcases ha with rfl | rfl <;> rcases hb with rfl | rfl
+      · simp [column_diag, hdi]
+      · exact hcij
+      · exact hcji
+      · simp [column_diag, hdj]
+    · have hma : a ∈ Q.supp := by simpa only [hpair, Set.mem_insert_iff, Set.mem_singleton_iff]
+        using ha
+      have hmb : b ∉ Q.supp := by simpa only [hpair, Set.mem_insert_iff, Set.mem_singleton_iff]
+        using hb
+      rw [(cross_component_columns_zero A C d Q hma hmb).1, Matrix.mul_zero, Matrix.zero_mul]
+  · by_cases hb : b = i ∨ b = j
+    · have hmb : b ∈ Q.supp := by simpa only [hpair, Set.mem_insert_iff, Set.mem_singleton_iff]
+        using hb
+      have hma : a ∉ Q.supp := by simpa only [hpair, Set.mem_insert_iff, Set.mem_singleton_iff]
+        using ha
+      rw [(cross_component_columns_zero A C d Q hmb hma).2, Matrix.mul_zero, Matrix.zero_mul]
+    · have hai : a ≠ i := fun h => ha (Or.inl h)
+      have haj : a ≠ j := fun h => ha (Or.inr h)
+      have hbi : b ≠ i := fun h => hb (Or.inl h)
+      have hbj : b ≠ j := fun h => hb (Or.inr h)
+      have hDK : pairDiagonal i j * column A C d (a, b) = 0 := by
+        by_cases hab : a = b
+        · subst b
+          simp [column_diag, pairDiagonal, add_mul, hai, haj, hai.symm, haj.symm]
+        · simp [column_off A C d hab, pairDiagonal, add_mul, mul_add,
+            hai, haj, hbi, hbj, hai.symm, haj.symm, hbi.symm, hbj.symm]
+      have hKD : column A C d (a, b) * pairDiagonal i j = 0 := by
+        have h := component_projection_commutes A C d Q (a, b)
+        rw [component_projection_pair A C Q hij hpair, hDK] at h
+        exact h.symm
+      calc
+        _ = (P * pairDiagonal i j) * column A C d (a, b) := by rw [hPD]
+        _ = 0 := by rw [Matrix.mul_assoc, hDK, Matrix.mul_zero]
+        _ = column A C d (a, b) * P := by
+          rw [← hDP, ← Matrix.mul_assoc, hKD, Matrix.zero_mul]
+
+private theorem exceptional_split {n : ℕ} (A C : Mat n) (d : Fin n → ℂ)
+    (hH : (realignedProjector A C d).IsHermitian)
+    (hI : realignedProjector A C d * realignedProjector A C d = realignedProjector A C d)
+    (hU : (offDiagonal A).IsHermitian)
+    (Q : {Q : (underlyingGraph A C).ConnectedComponent // IsLoopFreeStrangeComponent A C d Q}) :
+    Nonempty (ComponentSplit A C d Q.val) := by
+  obtain ⟨i, j, hij, hpair, hadj, hhalf, hdi, hdj⟩ := Q.prop
+  obtain ⟨ha, hreal, hcstar⟩ := block_hermitian A C d hH hU hij
+  have hcstar' : star (C j i) = C i j := by rw [hcstar, star_star]
+  have hprod : C i j * C j i = (1 / 4 : ℂ) := by
+    have h := (block_equations A C d hI hij).1
+    rw [hhalf] at h
+    linear_combination h
+  have hb : C j i * star (C j i) = (1 / 4 : ℂ) := by
+    rw [hcstar', mul_comm]
+    exact hprod
+  obtain ⟨z, hzsq, hzunit⟩ := phase_square_root (C j i) hb
+  let P := edgeProjection i j z
+  obtain ⟨hP, hPne, hDP, hPD⟩ := edge_projection_data hij z hzunit
+  have hD := component_projection_pair A C Q.val hij hpair
+  have hDH : pairDiagonal i j * edgeFlip i j z = edgeFlip i j z := by
+    simp [pairDiagonal, edgeFlip, add_mul, mul_add, hij, hij.symm]
+  have hHD : edgeFlip i j z * pairDiagonal i j = edgeFlip i j z := by
+    simp [pairDiagonal, edgeFlip, add_mul, mul_add, hij, hij.symm, add_comm]
+  have hPH : P * edgeFlip i j z = edgeFlip i j z * P := by
+    simp only [P, edgeProjection, Matrix.smul_mul, Matrix.mul_smul, add_mul, mul_add, hDH, hHD]
+  have hcol : column A C d (i, j) = (z / 2) • edgeFlip i j z := by
+    have h₁ : z / 2 * star z = (1 / 2 : ℂ) := by linear_combination (1 / 2 : ℂ) * hzunit
+    have h₂ : z / 2 * z = C j i := by linear_combination (1 / 2 : ℂ) * hzsq
+    simp only [column_off A C d hij, hhalf, edgeFlip, smul_add,
+      Matrix.smul_single, smul_eq_mul, h₁, h₂]
+  have hcij : P * column A C d (i, j) = column A C d (i, j) * P := by
+    rw [hcol, Matrix.mul_smul, Matrix.smul_mul, hPH]
+  have hcoladj : column A C d (j, i) = (column A C d (i, j))ᴴ := by
+    rw [column_off A C d hij.symm, column_off A C d hij]
+    simp [ha, hhalf, hcstar', Matrix.conjTranspose_add, add_comm]
+  have hcji : P * column A C d (j, i) = column A C d (j, i) * P := by
+    rw [hcoladj]
+    have h := congrArg Matrix.conjTranspose hcij
+    have hPHerm : Pᴴ = P := hP.1
+    simpa only [Matrix.conjTranspose_mul, hPHerm] using h.symm
+  have hcomm := pair_commutes_all A C d Q.val hij hpair hdi hdj P hDP hPD hcij hcji
+  let R := componentProjection A C Q.val - P
+  have hPR : IsOrthogonalProjector R := by
+    constructor
+    · exact (component_projection_projector A C Q.val).1.sub hP.1
+    · exact IsIdempotentElem.sub hP.2 (component_projection_projector A C Q.val).2
+        (by rw [hD]; exact hPD) (by rw [hD]; exact hDP)
+  have hRne : R ≠ 0 := by
+    intro hz
+    have he := congrArg (fun M => M i i) hz
+    norm_num [R, P, hD, edgeProjection, pairDiagonal, edgeFlip, Matrix.single, hij, hij.symm] at he
+  refine ⟨{
+    plus := P
+    minus := R
+    plus_projector := hP
+    minus_projector := hPR
+    plus_ne_zero := hPne
+    minus_ne_zero := hRne
+    complete := ?_
+    plus_commutes := hcomm
+    minus_commutes := ?_ }⟩
+  · dsimp only [R]
+    abel
+  · intro q
+    dsimp only [R]
+    rw [sub_mul, mul_sub, component_projection_commutes A C d Q.val q, hcomm q]
+
+private theorem resolution_from_splits {n : ℕ} (A C : Mat n) (d : Fin n → ℂ)
+    (split : ∀ Q : {Q : (underlyingGraph A C).ConnectedComponent //
+      IsLoopFreeStrangeComponent A C d Q}, ComponentSplit A C d Q.val) :
+    CommutantResolution A C d
+      (graphComponentCount A C + loopFreeStrangeComponentCount A C d) := by
+  classical
+  let F : CountIndex A C d → Mat n
+    | Sum.inl Q => if hQ : IsLoopFreeStrangeComponent A C d Q then
+        (split ⟨Q, hQ⟩).plus else componentProjection A C Q
+    | Sum.inr Q => (split Q).minus
+  have hprops (w : CountIndex A C d) :
+      (IsOrthogonalProjector (F w) ∧ F w ≠ 0) ∧
+        ∀ q, F w * column A C d q = column A C d q * F w := by
+    cases w with
+    | inl Q =>
+      by_cases hQ : IsLoopFreeStrangeComponent A C d Q
+      · simp only [F, dif_pos hQ]
+        exact ⟨⟨(split ⟨Q, hQ⟩).plus_projector, (split ⟨Q, hQ⟩).plus_ne_zero⟩,
+          (split ⟨Q, hQ⟩).plus_commutes⟩
+      · simp only [F, dif_neg hQ]
+        exact ⟨⟨component_projection_projector A C Q, component_projection_ne_zero A C Q⟩,
+          component_projection_commutes A C d Q⟩
+    | inr Q =>
+      exact ⟨⟨(split Q).minus_projector, (split Q).minus_ne_zero⟩, (split Q).minus_commutes⟩
+  have hsub : (∑ Q, (split Q).minus) =
+      ∑ Q, if hQ : IsLoopFreeStrangeComponent A C d Q then (split ⟨Q, hQ⟩).minus else 0 := by
+    apply Fintype.sum_of_injective (fun Q => Q.val) Subtype.val_injective
+    · intro Q hn
+      have hnot : ¬IsLoopFreeStrangeComponent A C d Q := by
+        intro hQ
+        exact hn ⟨⟨Q, hQ⟩, rfl⟩
+      simp only [dif_neg hnot]
+    · intro Q
+      simp only [dif_pos Q.prop]
+  have hsum : (∑ w, F w) = 1 := by
+    rw [Fintype.sum_sum_type]
+    change (∑ Q, F (Sum.inl Q)) + (∑ Q, (split Q).minus) = 1
+    rw [hsub, ← Finset.sum_add_distrib]
+    calc
+      _ = ∑ Q, componentProjection A C Q := by
+        apply Finset.sum_congr rfl
+        intro Q hQ
+        by_cases hx : IsLoopFreeStrangeComponent A C d Q
+        · simp only [F, dif_pos hx]
+          exact (split ⟨Q, hx⟩).complete
+        · simp only [F, dif_neg hx, add_zero]
+      _ = 1 := component_projection_sum A C
+  have hcard : Fintype.card (CountIndex A C d) =
+      graphComponentCount A C + loopFreeStrangeComponentCount A C d := by
+    simpa only [Nat.card_eq_fintype_card] using selected_card A C d
+  let e : Fin (graphComponentCount A C + loopFreeStrangeComponentCount A C d) ≃
+      CountIndex A C d :=
+    (finCongr hcard.symm).trans (Fintype.equivFin _).symm
+  exact ⟨fun s => F (e s), fun s => (hprops (e s)).1,
+    (Equiv.sum_comp e F).trans hsum, fun s q => (hprops (e s)).2 q⟩
+
 private theorem commutant_attainment {n : ℕ} (A C : Mat n) (d : Fin n → ℂ)
     (hA : ∀ i, A i i = d i) (hC : ∀ i, C i i = d i)
     (hH : (realignedProjector A C d).IsHermitian)
@@ -673,7 +1005,7 @@ private theorem commutant_attainment {n : ℕ} (A C : Mat n) (d : Fin n → ℂ)
     (hU : (offDiagonal A).IsHermitian) :
     CommutantResolution A C d
       (graphComponentCount A C + loopFreeStrangeComponentCount A C d) := by
-  sorry
+  exact resolution_from_splits A C d (fun Q => Classical.choice (exceptional_split A C d hH hI hU Q))
 
 theorem result : claim := by
   intro n A C d hA hC hH hI hU
