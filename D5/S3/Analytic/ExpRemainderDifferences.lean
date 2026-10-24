@@ -84,7 +84,13 @@ private theorem witness_neg : (fwdDiff 1)^[3] (fun m => g m 1) 1 < 0 := by
           3 * (e - 2) / (e - 5 / 2) - (e - 1) / (e - 2) =
         (12 * e ^ 3 + 34 * e ^ 2 - 457 * e + 750) /
           (288 * (e - 2) * (e - 5 / 2) * (e - 8 / 3) * (e - 65 / 24)) := by
-    field_simp [ne_of_gt h1, ne_of_gt h2, ne_of_gt h3, ne_of_gt h4] <;> ring
+    have k1 : -2 + e ≠ 0 := by linarith only [heLo]
+    have k2 : -5 + e * 2 ≠ 0 := by linarith only [heLo]
+    have k3 : -8 + e * 3 ≠ 0 := by linarith only [heLo]
+    have k4 : -65 + e * 24 ≠ 0 := by linarith only [heLo]
+    rw [eq_div_iff (mul_pos (mul_pos (mul_pos (mul_pos (by norm_num) h1) h2) h3) h4).ne']
+    field_simp [ne_of_gt h1, ne_of_gt h2, ne_of_gt h3, ne_of_gt h4, k1, k2, k3, k4]
+    ring
   rw [hid]
   exact div_neg_of_neg_of_pos hpoly
     (mul_pos (mul_pos (mul_pos (mul_pos (by norm_num) h1) h2) h3) h4)
