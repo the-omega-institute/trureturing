@@ -4,9 +4,9 @@
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
    utility: none
-   digest: Actual target-parity intertwining for corrected fields and its fixed-sector consumer.
+   digest: Actual target-parity intertwining for corrected fields and its fixed-sector consumer. -/
 
-   No Jacobi, field equivariance, positive-definiteness, or output transport
+/- No Jacobi, field equivariance, positive-definiteness, or output transport
    premise is added. Target parity is the already defined actualParity.
 
    New calculation: sigma intertwines the actual charged oscillator kernel;
