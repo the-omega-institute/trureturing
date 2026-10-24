@@ -57,7 +57,9 @@ private def columnTurn (r : RStar X) : Equiv.Perm X :=
 
 private theorem turn_a (r : RStar X) : columnTurn r r.a = 0 := by
   classical
-  simp [columnTurn, Equiv.Perm.mul_apply, r.a_ne_zero, r.b_ne_zero]
+  change Equiv.swap r.a r.b (Equiv.swap r.a 0 r.a) = 0
+  rw [Equiv.swap_apply_left,
+    Equiv.swap_apply_of_ne_of_ne r.a_ne_zero.symm r.b_ne_zero.symm]
 
 private theorem turn_zero (r : RStar X) : columnTurn r 0 = r.b := by
   classical
@@ -65,8 +67,9 @@ private theorem turn_zero (r : RStar X) : columnTurn r 0 = r.b := by
 
 private theorem turn_b (r : RStar X) : columnTurn r r.b = r.a := by
   classical
-  simp [columnTurn, Equiv.Perm.mul_apply, r.pairwise_distinct.1,
-    r.pairwise_distinct.1.symm, r.b_ne_zero]
+  change Equiv.swap r.a r.b (Equiv.swap r.a 0 r.b) = r.a
+  rw [Equiv.swap_apply_of_ne_of_ne r.pairwise_distinct.1.symm r.b_ne_zero,
+    Equiv.swap_apply_right]
 
 private theorem turn_other (r : RStar X) (x : X)
     (ha : x ≠ r.a) (hb : x ≠ r.b) (hz : x ≠ 0) : columnTurn r x = x := by
@@ -290,8 +293,13 @@ private def support : Finset X := Finset.univ.erase 0
 private theorem mem_support (x : X) : x ∈ support ↔ x ≠ 0 := by
   simp [support]
 
-private theorem base_cycle (r : RStar X) : r.successor.IsCycleOn (support : Set X) := by
-  simpa [support] using r.nonzero_cycle
+private theorem base_cycle (r : RStar X) :
+    r.successor.IsCycleOn (↑(support (X := X)) : Set X) := by
+  have hs : (↑(support (X := X)) : Set X) = {x : X | x ≠ 0} := by
+    ext x
+    exact mem_support x
+  rw [hs]
+  exact r.nonzero_cycle
 
 private theorem support_three (r : RStar X) : 3 ≤ (support (X := X)).card := by
   have hs : ({r.a, r.b, r.c} : Finset X) ⊆ support := by
@@ -485,6 +493,7 @@ private theorem anchor_cycle (r : RStar X) (ds : List OddRadix) (h : Box ds) :
   obtain ⟨n, hn⟩ := ((predecessor_cycle ds).2 (Set.mem_univ 0)
     (Set.mem_univ h)).exists_nat_pow_eq
   rw [← hn]
+  clear hn
   induction n with
   | zero => exact .refl _ _
   | succ n ih =>
@@ -542,7 +551,7 @@ private theorem coverage (r : RStar X) (ds : List OddRadix)
   have hp' : (successor r ds ^ (j + 1)) (r.c, t) = (x, h) := by
     simpa [show j + 3 = i by dsimp [j]; omega, he, t] using hp
   have hc : (successor r ds).SameCycle (r.c, t) (x, h) :=
-    ⟨((j + 1 : ℕ) : ℤ), by simpa using hp'⟩
+    ⟨((j + 1 : ℕ) : ℤ), by rw [zpow_natCast]; exact hp'⟩
   exact ((anchor_cycle r ds (-t)).trans (by simpa using gadget_cycle r ds (-t))).trans hc
 
 private theorem nonzero_bijOn {G : Type*} [Zero G] (s : Equiv.Perm G) (hz : s 0 = 0) :
@@ -637,6 +646,7 @@ theorem exists_rstar_product {H : Type*} [AddCommGroup H] [Finite H]
   obtain ⟨ds, ⟨e⟩⟩ := odd_box hH
   let E : X × H ≃+ X × Box ds := (AddEquiv.refl X).prodCongr e
   refine ⟨transportRStar E (boxRStar r ds), ?_, ?_, ?_⟩ <;>
-    simp [transportRStar, boxRStar, E]
+    change ((AddEquiv.refl X).prodCongr e).symm (_, 0) = (_, 0) <;>
+    exact Prod.ext rfl e.symm.map_zero
 
 end D5.S3.FiniteGroups.HeadleyOddProduct

@@ -21,7 +21,8 @@ private theorem residue_rank (ds : List OddRadix) (x : Box ds) :
   apply (rankEquiv ds).injective
   apply Fin.ext
   change rank ds (residue ds (rank ds x)) = rank ds x
-  rw [rank_residue, Nat.mod_eq_of_lt (rankEquiv ds x).isLt]
+  rw [rank_residue]
+  exact Nat.mod_eq_of_lt (rankEquiv ds x).isLt
 
 private theorem residue_volume (ds : List OddRadix) : residue ds (volume ds) = 0 := by
   rw [← residue_zero ds]
@@ -51,7 +52,6 @@ theorem predecessor_orbit (ds : List OddRadix) (i : ℕ) (hi : i ≤ volume ds) 
     change pred ds (residue ds (volume ds - i)) = _
     rw [pred_residue ds _ (by omega)]
     congr 1
-    omega
 
 /-- Every row belongs to the same predecessor cycle, including a singleton box. -/
 theorem predecessor_cycle (ds : List OddRadix) :
