@@ -5,7 +5,7 @@ year: 1999
 title: Probability laws related to the Jacobi theta and Riemann zeta functions, and Brownian excursions
 doi: null
 url: https://arxiv.org/abs/math/9912170v1
-claim: The classical positive xi law admits positive inverse-moment calibration for the Robin price observer. Every occupied exponent layer then has nonnegative observed cost; the complete signed Robin comparison remains unpaid.
+claim: The classical positive xi law admits positive inverse-moment calibration for the Robin price observer. Every occupied exponent layer then has nonnegative observed cost, and the complete higher-layer cost is eventually positive; the negative far-prime tail and the full signed Robin comparison remain unpaid.
 strata_touched: []
 license: citation-only
 triage: anchor
@@ -64,7 +64,8 @@ $$
 Hence $z_A\ge1/2$ eventually. The source $\eta_A$ is positive, has
 mass one, support $c\ge e/A$, and inverse moment exactly one. All
 fixed real and weighted logarithmic moments are uniformly bounded.
-In particular
+Its ordinary mean is $m+O(A^{-3})$, retaining a different normalization
+from the earlier mean-one source. In particular
 
 $$
 \int c^{-1/2}d\eta_A=b_++O(A^{-3}),\qquad
@@ -166,3 +167,129 @@ original integer at its own $A$. Negative observed contributions can
 only enter through unoccupied layers. Dropping positive occupied terms
 is a valid lower-bound step, but need not preserve the cancellation
 needed at the root scale.
+
+## Retain the complete higher layers and the original integer
+
+Use HLD1--HLD4's actual higher pressure and tail $F_2$, and KTO1's
+actual reserve $R$, without changing any exponent cutoff. Both have
+the owned quantitative form $c/(\sqrt x\log x)+O(1/(\sqrt x\log^2x))$
+and are bounded on $[e,\infty)$. KTO9--KTO10's root-tail argument,
+now with IPX3's bounded fixed moments, gives
+
+$$
+\begin{aligned}
+T_A\int R(Av)d\omega_A(v)&=c_Rb_++O(L^{-1}),
+ &c_R&=2(\sqrt2-1),\\
+T_A\int F_2(Av)d\omega_A(v)&=2\sqrt2b_++O(L^{-1}).
+\end{aligned}
+\tag{IPX9}
+$$
+
+Its small-clock bound and the complete later kernel support are the
+same as KTO's. No positive-power moment is assigned to $\omega_A$.
+Let $G_{2,A}(n)=d_2(n,\lambda(A))\ge0$ be the unchanged original
+higher-layer baseline, and $D_{2,A}(n)$ its observed complete defect.
+Exact mass and price, as in HLD7--HLD8, therefore give
+
+$$
+T_AD_{2,A}(n)=T_AG_{2,A}(n)+2\sqrt2(1-b_+)+O(L^{-1}).
+\tag{IPX10}
+$$
+
+Thus the actual complete higher-layer cost is eventually positive,
+uniformly for all original integers. On the actual strict CA family,
+[HCB3](polak2026finiterobinca.md#actual-strict-ca-sources-have-a-root-small-own-price-higher-baseline)
+makes its normalized limit exactly $2\sqrt2(1-b_+)>0$.
+This differs from HCB4's negative limit under its other, unchanged source.
+
+Let $D_{1,A}(n)$ be the complete observed first-layer defect for this
+$\omega_A$, with both occupied and absent primes retained. The same
+exact pressure account KTO12, IPX6 and IPX9--IPX10 yield
+
+$$
+\boxed{\quad
+T_A\Delta(n)=T_A[D_{1,A}(n)+G_{2,A}(n)]
++c_R+2(1-b_+)+O(L^{-1}).\quad}
+\tag{IPX11}
+$$
+
+Here $\Delta(n)=\gamma+\log\log\log n-\log(\sigma(n)/n)$.
+The new constant exceeds $c_R$, but it is paired with a different
+first-layer account. IPX11 is not a stronger proved Robin margin.
+
+## The same positive source produces a negative actual far tail
+
+Keep $P=A^{16}$, $Z=\log P=16L$, and define the exact actual-prime tail
+
+$$
+\mathscr U_A=\int\sum_{p>P}\log p\,(r_{p,1}-\lambda(Av))_+
+                          d\omega_A(v).
+\tag{IPX12}
+$$
+
+The full-pressure majorant in JPT3 applies because $\eta_A$ has
+uniform fixed moments. It proves absolute kernel/source Fubini and
+absolute interchange of the entire prime sum. Restricting the source
+to $A^{-1/2}\le c\le A^8$ costs $O(A^{-1}(1+\log L))$, by JPT4.
+For these clocks every far-prime atom sees zero hinge. Reuse JPT5's
+exact response, with $\lambda(t_p)=r_{p,1}$:
+
+$$
+\int(r_{p,1}-\lambda(Av))_+d\kappa_{A,c}(v)
+=-\frac{\log c}{t_p\log t_p\log(t_p/c)}.
+$$
+
+JPT6's complete prime-tail calculation, including $t_p=p+O(1)$ and
+the effective unconditional PNT error, gives on that source interval
+
+$$
+\int\sum_{p>P}\log p\,(r_{p,1}-\lambda(Av))_+
+                      d\kappa_{A,c}(v)
+=\log(1-\log c/Z)
+ +O\!\left(|\log c|e^{-d\sqrt Z}
+           +\frac{|\log c|}{P\log P}\right)
+$$
+
+for a fixed $d>0$. Since $|\log c|/Z\le1/2$, the Taylor remainder
+is bounded by $C(\log c)^2/Z^2$. IPX3 and the uniform second logarithmic
+moment, with the same source-tail bounds, consequently give
+
+$$
+\boxed{\quad\mathscr U_A=-\frac{a_+}{16L}+O(L^{-2})<0
+\quad\text{eventually}.\quad}
+\tag{IPX13}
+$$
+
+The comparison error here is not root-small; it determines the tail's
+sign and size, rather than replacing its exact value in IPX11.
+Exact mass and price keep the same original integer's entire far account:
+
+$$
+D_{\mathrm{far},A}(n)=\mathscr U_A+
+ \sum_{\substack{p>P\\p\mid n}}(\lambda(A)-r_{p,1})\log p.
+\tag{IPX14}
+$$
+
+Each occupied-prime correction is nonnegative. For an actual strict
+CA integer $N_x$, $A\sim x$ and every prime factor is less than $x$;
+therefore this correction is zero eventually. IPX13 is then a negative
+observed far defect on actual integers, although its integrand and
+its source $\eta_A$ are nonnegative. The sign is introduced by the
+transport kernel, not by an invented arithmetic model.
+
+At any actual own-price zero-defect source, $G_{2,A}=0$.
+Combining the original exact
+$\Delta(n)=I_\psi(A)+R(A)$ with IPX11 gives
+
+$$
+T_AD_{1,A}(n)=T_AI_\psi(A)-2(1-b_+)+O(L^{-1}).
+\tag{IPX15}
+$$
+
+Thus the apparent constant gain is compensated in the same first-layer
+account. The sign interface in IPX7--IPX8 locates negative observations
+in unoccupied layers, and IPX10 pays the complete higher sector, but
+neither supplies a sufficient lower bound for the remaining first-prime
+account. Its center and exact negative far tail still need a joint
+estimate. No improved finite verification range, unbounded Robin bound,
+RH proof or new Lean theorem follows from these applications.
