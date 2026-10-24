@@ -2,13 +2,13 @@
    generality: G
    mirror-B: D5/B/S3/Analytic/KarpZhangGamma/Smoothing
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
-   anchors: [mathlib/module/Mathlib.Data.Nat.Choose.Basic, mathlib/module/Mathlib.Algebra.BigOperators.Intervals, mathlib/module/Mathlib.Algebra.BigOperators.Field]
+   anchors: [mathlib/module/Mathlib.Data.Nat.Choose.Sum, mathlib/module/Mathlib.Algebra.BigOperators.Intervals, mathlib/module/Mathlib.Algebra.BigOperators.Field]
    utility: none
    digest: Exponential smoothing preserves balanced minors in every finite coefficient degree. -/
 
 import D5.S3.Analytic.KarpZhangGamma.Weighting
 import D5.S3.Analytic.KarpZhangReciprocal.Result
-import Mathlib.Data.Nat.Choose.Basic
+import Mathlib.Data.Nat.Choose.Sum
 import Mathlib.Algebra.BigOperators.Intervals
 import Mathlib.Algebra.BigOperators.Field
 
@@ -106,40 +106,16 @@ theorem binomialProduct_succ (f g : ℕ → ℝ) (N : ℕ) :
     binomialProduct f g (N + 1) =
       binomialProduct (fun r => f (r + 1)) g N +
         binomialProduct f (fun r => g (r + 1)) N := by
-  let T : ℝ := ∑ r ∈ range N,
-    (N.choose (r + 1) : ℝ) * f (r + 1) * g (N - (r + 1) + 1)
-  have htail : (∑ r ∈ range (N + 1),
-      (N.choose (r + 1) : ℝ) * f (r + 1) * g (N - r)) = T := by
-    rw [sum_range_succ]
-    simp only [Nat.choose_eq_zero_of_lt (Nat.lt_succ_self N), Nat.cast_zero,
-      zero_mul, add_zero]
+  have h := Finset.sum_choose_succ_mul (fun i j => f i * g j) N
+  have hshift : (∑ r ∈ range (N + 1), (N.choose r : ℝ) * (f r * g (N + 1 - r))) =
+      binomialProduct f (fun r => g (r + 1)) N := by
+    unfold binomialProduct
     apply sum_congr rfl
     intro r hr
-    rw [show N - r = N - (r + 1) + 1 by have := mem_range.mp hr; omega]
-  have hleft : binomialProduct f g (N + 1) =
-      binomialProduct (fun r => f (r + 1)) g N + T + f 0 * g (N + 1) := by
-    unfold binomialProduct
-    rw [sum_range_succ']
-    simp only [Nat.choose_zero_right, Nat.sub_zero, Nat.cast_one, one_mul]
-    have hs : (∑ r ∈ range (N + 1),
-        ((N + 1).choose (r + 1) : ℝ) * f (r + 1) * g (N + 1 - (r + 1))) =
-        (∑ r ∈ range (N + 1), (N.choose r : ℝ) * f (r + 1) * g (N - r)) +
-          ∑ r ∈ range (N + 1),
-            (N.choose (r + 1) : ℝ) * f (r + 1) * g (N - r) := by
-      rw [← sum_add_distrib]
-      apply sum_congr rfl
-      intro r _
-      rw [Nat.choose_succ_succ', Nat.cast_add,
-        show N + 1 - (r + 1) = N - r by omega]
-      ring
-    rw [hs, htail]
-  have hright : binomialProduct f (fun r => g (r + 1)) N = T + f 0 * g (N + 1) := by
-    unfold binomialProduct
-    rw [sum_range_succ']
-    simp only [Nat.choose_zero_right, Nat.sub_zero, Nat.cast_one, one_mul]
-    rfl
-  rw [hleft, hright]
-  ring
+    rw [show N + 1 - r = N - r + 1 by have := mem_range.mp hr; omega]
+    exact (mul_assoc _ _ _).symm
+  rw [hshift] at h
+  simpa only [binomialProduct, mul_assoc] using h.trans (add_comm _ _)
 
 theorem binomialProduct_comm (f g : ℕ → ℝ) (N : ℕ) :
     binomialProduct f g N = binomialProduct g f N := by
@@ -198,7 +174,7 @@ private theorem binomial_minor {y : ℕ → ℝ} (hy : IsLogConcave y) (N : ℕ)
       simp only [Nat.add_assoc, Nat.add_left_comm, Nat.add_comm] at h1 h2 ⊢
       linarith
 
-/-- Lemma 3 in finite coefficient form: the degree-N coefficient of
+/-- `smoothing_minor` in finite coefficient form: the degree-N coefficient of
 P(p+1)P(q+1)-P(p)P(q+2) is nonnegative whenever p <= q+1. -/
 theorem smoothing_minor {y : ℕ → ℝ} (hy : IsLogConcave y)
     (p q N : ℕ) (hpq : p ≤ q + 1) :
@@ -208,7 +184,7 @@ theorem smoothing_minor {y : ℕ → ℝ} (hy : IsLogConcave y)
   exact div_le_div_of_nonneg_right (binomial_minor hy N p q hpq) (by positivity)
 
 /-- The weights P(2k)P(2(m-k)) used by the transformed kernel are increasing.
-This theorem combines Lemmas 1 and 3 and leaves only scalar kernel hypotheses. -/
+This theorem combines `coefficientwise_weighting` and `smoothing_minor` and leaves only scalar kernel hypotheses. -/
 theorem smoothed_weighting {y : ℕ → ℝ} (hy : IsLogConcave y)
     (A : ℕ → ℝ) (m : ℕ)
     (hsign : ∀ i ≤ m / 2, ∀ j ≤ m / 2, i < j → 0 < A i → 0 ≤ A j)

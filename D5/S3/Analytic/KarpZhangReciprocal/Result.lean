@@ -147,13 +147,7 @@ theorem balanced_step {y : ℕ → ℝ} (hy : IsLogConcave y)
 
 private theorem telescope (W : ℕ → ℝ) (j : ℕ) :
     ∑ q ∈ range (j + 1), increment W q = W j := by
-  induction j with
-  | zero => simp [increment]
-  | succ j ih =>
-    rw [sum_range_succ, ih]
-    simp only [increment, Nat.add_eq_zero_iff, Nat.one_ne_zero, and_false,
-      ite_false, Nat.add_sub_cancel]
-    ring
+  simpa only [increment] using (Finset.eq_sum_range_sub' W j).symm
 
 private theorem layers (y : ℕ → ℝ) (m k : ℕ) (hk : k ≤ m) :
     y k * y (m - k) =

@@ -643,24 +643,13 @@ private theorem symmetric (m q : ℕ) (hq : 2 * q ≤ m) (s t : ℝ) :
   unfold F
   let n := m - q - q
   change (∑ i ∈ range (n + 1), _) = ∑ i ∈ range (n + 1), _
-  apply sum_bij (fun i _ => n - i)
-  · intro i hi
-    apply mem_range.mpr
-    have := mem_range.mp hi
-    omega
-  · intro i hi j hj hij
-    have := mem_range.mp hi
-    have := mem_range.mp hj
-    omega
-  · intro j hj
-    have hj' := mem_range.mp hj
-    refine ⟨n - j, mem_range.mpr (by omega), ?_⟩
-    omega
-  · intro i hi
-    have hi' := mem_range.mp hi
-    have h1 : q + (n - i) = m - (q + i) := by dsimp [n] at *; omega
-    have h2 : m - (q + (n - i)) = q + i := by dsimp [n] at *; omega
-    rw [h2, h1, mul_comm]
+  rw [← sum_range_reflect (fun i => c (q + i) s * c (m - (q + i)) t) (n + 1)]
+  apply sum_congr rfl
+  intro i hi
+  have hi' := mem_range.mp hi
+  simp only [Nat.add_sub_cancel]
+  rw [show q + (n - i) = m - (q + i) by dsimp [n] at *; omega,
+    show m - (m - (q + i)) = q + i by dsimp [n] at *; omega, mul_comm]
 
 /-- A symmetric interval convolution increases under a balancing of its positive parameters.
 The endpoint case `a = d` and all singleton index intervals are included. -/

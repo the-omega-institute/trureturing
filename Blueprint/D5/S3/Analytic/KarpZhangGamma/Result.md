@@ -112,7 +112,7 @@ Lean statement: `D5/S3/Analytic/KarpZhangGamma/Result.transformDelta`
 
 For a real sequence y, real a,alpha,beta and natural N,m, transformDelta(y,a,alpha,beta,N,m) is the sum over k=0,...,m of kernel(a,alpha,beta,m,k) times Smoothing.productCoeff(r maps to y(2k+r),r maps to y(2(m-k)+r),N). It is the coefficient of z to degree N and w to degree m in the Turanian of H(a;z,w), where H has coefficient y(2j+r)/(r factorial times j factorial times Real.Gamma(a+j)) in degree (r,j). All sums defining a fixed coefficient are finite.
 
-**Theorem 1.10 (Coefficient form of Theorem 5).**
+**Theorem 1.10 (Coefficient form of two_variable_nonneg).**
 
 $$\forall y \in Nat \to Real,\; \operatorname{IsLogConcave}\left(y\right) \Rightarrow \left(\forall a \in Real,\; \forall alpha \in Real,\; \forall beta \in Real,\; 0 < a \Rightarrow \left(0 \le alpha \Rightarrow \left(0 \le beta \Rightarrow \left(\forall N \in Nat,\; \forall m \in Nat,\; 0 \le \operatorname{transformDelta}\left(y, a, alpha, beta, N, m\right)\right)\right)\right)\right)$$
 
