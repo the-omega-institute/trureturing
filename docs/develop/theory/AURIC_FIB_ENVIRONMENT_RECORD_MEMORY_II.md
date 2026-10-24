@@ -1512,3 +1512,365 @@ set of univariate algebraic roots. No further optimization parameter
 or implicit effect-feasibility problem is included in the prescription.
 
 ## 追加锚（本行以下为增补区）
+
+## 33. Certificates for every retained root
+
+**Theorem 33.1 (Each retained candidate is a full complex optimum).**
+Every root retained in any family P, M, D or R defines an effect
+$0\le K\le I_3$ and a Hermitian matrix $Y$ of trace norm one. All its
+formulas have nonzero denominators. For its stated $t$,
+
+$$
+\begin{gathered}
+0<t<1/2,\qquad \|E_p-G_s(K)\|_{\rm op}=t,\\
+\operatorname{Tr}(G_s(Y)K)=\operatorname{Tr}((G_s(Y))_+),\qquad
+\operatorname{Tr}(Y(E_p-G_s(K)))=t,\\
+\eta_n(E_p)=t.
+\end{gathered}
+\tag{33.1}
+$$
+
+Consequently all retained candidates, including roots in different
+families, have the same value. Their ordering selects a single pair,
+not different possible values of the optimum.
+
+Proof. The general certificate implication is the following application
+of the reused interface. Self-adjointness of (31.3) gives
+$\operatorname{Tr}(YG_s(K))=\operatorname{Tr}(G_s(Y)K)$.
+For block $Y$, [ERM, (27.7)][ERM] gives
+
+$$
+\operatorname{Tr}((F^n(Y))_+)=\operatorname{Tr}((G_s(Y))_+).
+\tag{33.2}
+$$
+
+Thus the two equalities in the middle of (33.1) make the support
+lower bound [ERM, (27.4)][ERM] equal $t$. Effect feasibility and the
+residual norm give the opposite bound. This compares with all complex
+effects, since [ERM, (27.6)][ERM] describes their entire image.
+It remains to prove each certificate's identities and feasibility.
+
+For P, expanding the desired upper residual identity gives
+
+$$
+(t-q)^2+(c-\tau w)^2-t^2
+   =V(t)-2c\tau w.
+\tag{33.3}
+$$
+
+The quartic and $V>0$ give $V=2c\tau w$; this reverses the only
+squaring. Hence $S^2=I_2$. The upper block of (32.5) is a rank-one
+projection, and the third eigenvalue is $t\in(0,1)$.
+Its residual is $tS\oplus(-t)$. For the raw witness (32.1), its
+propagated scalar is zero, and its upper block is
+
+$$
+M=\begin{pmatrix}h+k&s\ell/t\\s\ell/t&(s/a)(h-k)\end{pmatrix}.
+\tag{33.4}
+$$
+
+Here the lower diagonal uses
+$a(h-k)-b\mu=(a^2-b^2)(h-k)/a$.
+The definition of $h$ makes its diagonal difference
+$\delta(1-2t)$, while its off-diagonal is
+$\epsilon\delta w$. It follows that the eigenvalue gap is $\delta>0$
+and its larger-eigenvalue direction is
+$(\sqrt{1-t},\epsilon\sqrt t)^{\mathsf T}$.
+Indeed, the squared gap is
+$\delta^2((1-2t)^2+4t(1-t))=\delta^2$ and substitution into either
+row verifies the direction. Its trace is $T$, so $|T|\le\delta$
+is exactly the condition that the larger eigenvalue be nonnegative
+and the smaller one nonpositive. The upper projection in $K$ then
+attains the support, including either zero-eigenvalue boundary.
+Its scalar block lies on a zero propagated scalar. Equation (32.1)
+normalizes the witness and pairs it with the residual as $t$.
+This proves every assertion for P, with $w,t,a,b,\delta>0$ and
+$2+\mu\ge2$ proving all denominator claims.
+
+For M, first compute the raw upper determinant and its spectral gap:
+
+$$
+\det A_{\rm raw}=\frac{(as-1)u^2}{\tau^2}<0,\qquad
+\|A_{\rm raw}\|_1^2
+ = (\epsilon u^2-a/\tau)^2+4u^2/\tau^2=Q(u)>0.
+\tag{33.5}
+$$
+
+The inequality $as<1$ follows from (31.2). A real symmetric
+indefinite $2\times2$ matrix has one positive and one negative
+eigenvalue; its trace norm is their gap. Its sign is its traceless
+part divided by half this gap. This proves that $R=\|A_{\rm raw}\|_1$
+and $S=\operatorname{sign}(A_{\rm raw})$ are exactly (32.9).
+In particular $S^2=I_2$.
+Propagation and the raw support are
+
+$$
+G_s(A_{\rm raw}\oplus(-m))
+ =\epsilon\begin{pmatrix}u^2&u\\u&1\end{pmatrix}\oplus0,
+\qquad
+\operatorname{Tr}((G_s(A_{\rm raw}\oplus(-m)))_+)
+ =\chi(1+u^2).
+\tag{33.6}
+$$
+
+The raw objective minus support is therefore exactly $P(u)$.
+Its normalized dual quotient is $P(u)/(R+m)$.
+The identity
+
+$$
+2P'Q-PQ'=J
+\tag{33.7}
+$$
+
+follows by multiplying $P=Au^2+Bu+C$ and $Q=u^4+Du^2+E$:
+the degree-five terms cancel, the degree-four term is $-2Bu^4$,
+the degree-three term is $(2AD-4C)u^3$, the degree-two term
+cancels, and the remaining terms are $(4AE-2CD)u+2BE$.
+Thus the unsquared filter (32.8) says exactly that this quotient is
+stationary. The inverse in (32.9), using $a^2-b^2=s$, gives
+
+$$
+G_s(K)=H\oplus t,qquad E_p-G_s(K)=tS\oplus(-t).
+\tag{33.8}
+$$
+
+These identities are algebraic and do not assume that $K$ is an effect.
+To obtain that fact without a hidden determinant test, let
+$Z(u)=A_{\rm raw}(u)\oplus(-m)$ and $\sigma(u)=\chi(1+u^2)$.
+At the retained root the value identity and stationarity read
+
+$$
+\operatorname{Tr}(Z E_p)-\sigma-t\|Z\|_1=0,\qquad
+\operatorname{Tr}(Z'E_p)-\sigma'-t(\|Z\|_1)'=0,
+\tag{33.9}
+$$
+
+where $t$ is held fixed in the second expression. For an invertible
+Hermitian matrix with one eigenvalue of each sign,
+$(\|A\|_1)'=\operatorname{Tr}(\operatorname{sign}(A)A')$.
+One can obtain this formula by differentiating each simple eigenvalue:
+if $Av=\lambda v$ and $v^\dagger v=1$, differentiation and left
+multiplication by $v^\dagger$ give $\lambda'=v^\dagger A'v$;
+subtract the negative eigenvalue derivative from the positive one.
+Using this formula, (33.8), and self-adjointness of $G_s$, (33.9)
+becomes
+
+$$
+\operatorname{Tr}(G_s(Z)K)=\sigma,qquad
+\operatorname{Tr}(G_s(Z')K)=\sigma'.
+\tag{33.10}
+$$
+
+For $s<0$, substitute (33.6) and its derivative to obtain
+
+$$
+u^2x+2uz+y=0,qquad ux+z=0,qquad
+z=-ux,qquad y=u^2x.
+\tag{33.11}
+$$
+
+Thus $K_2=x\left(\begin{smallmatrix}1&-u\\-u&u^2\end{smallmatrix}\right)$
+has eigenvalues $0,x(1+u^2)$. For $s>0$, the same substitution gives
+
+$$
+u^2(1-x)-2uz+1-y=0,qquad u(1-x)-z=0,qquad
+z=u(1-x),\quad 1-y=u^2(1-x).
+\tag{33.12}
+$$
+
+The complement $I_2-K_2$ then has eigenvalues
+$0,(1-x)(1+u^2)$. These are precisely the scalar filters (32.10)
+needed for effect feasibility; the scalar $d$ is also filtered there.
+Equation (33.10) is already the raw support equality.
+The norm of $Z$ is $R+m$, and (33.8) pairs with it as $t(R+m)$.
+This proves (33.1). Here $Q>0$, $R+m>0$, $u>0$ and $s\ne0$
+prove every denominator assertion. Squaring the stationary equation
+produces exactly $\mathcal P_{\rm M}$, but (32.8) retains the
+unsquared equation, so no implication used the squared equation alone.
+
+For D+, the explicit upper block has trace $1+t$ and determinant $t$.
+Indeed its determinant is
+
+$$
+(1-at/b)t/b-at(b-t)/b^2=t.
+\tag{33.13}
+$$
+
+Its eigenvalues are therefore $1,t$. For D− the trace is $t$ and
+its determinant is zero, since $xy=z^2=a(1-t)(t-a)/b^2$.
+Its eigenvalues are $0,t$. Thus both prescribed $K$ are effects,
+and their matrices $Q$ in (32.15) are rank-one projections: the
+one-eigenspace projection for D+, the kernel projection for D−.
+The radicands are positive on the stated open intervals, so $z\ne0$
+and $Q_{01}\ne0$. In D+ it has the sign of $z$, namely positive;
+in D− it has the sign of $-z$, also positive. Consequently
+$\kappa>0$ in D+ and $\kappa<0$ in D−.
+
+In both branches the bottom image is $t$ and the upper image has trace
+one. Put $h_e=ay+bd$. The upper residual is
+$\left(\begin{smallmatrix}h_e-q&\ell\\\ell&q-h_e\end{smallmatrix}\right)$.
+In D+, $h_e=at/b$, and expansion gives
+
+$$
+ b^2\bigl((h_e-q)^2+c^2-t^2\bigr)+s^2R_0(t)=L_0(t).
+\tag{33.14}
+$$
+
+In D−, $h_e=(at-s)/b$ and $h_e-q=(at-h_0)/b$; the corresponding
+expansion is
+
+$$
+ b^2\bigl((h_e-q)^2+c^2-t^2\bigr)+s^2R_1(t)=L_1(t).
+\tag{33.15}
+$$
+
+For clarity the first expansion has quadratic coefficient
+$a^2-b^2-as^2=s-as^2$, linear coefficient
+$ab(s^2-2q)$, and constant $b^2(q^2+c^2)=b^2q$.
+The second has the same quadratic coefficient, linear coefficient
+$a(s^2(1+a)-2h_0)$, and constant
+$h_0^2+b^2pq-s^2a^2$. These are the displayed $L_i$.
+The quartic and $L_i>0$ are equivalent to
+$L_i=2bc\tau\sqrt{R_i}$. Since $sz=\tau\sqrt{R_i}/b$,
+(33.14) or (33.15) then gives
+$(h_e-q)^2+(c-sz)^2=t^2$. This proves $S^2=I_2$ and the residual
+$tS\oplus(-t)$ without an irreversible squaring.
+
+The definitions of $h$ and $\mu$ make the propagated raw upper block
+exactly $\kappa Q$: the $00$ and $11$ entries are specified by those
+two equations, and its off-diagonal is $s\ell/t=\kappa Q_{01}$.
+The propagated scalar is $\zeta$. For D+, the positive upper
+support is attained because $K_2Q=Q$ and $\kappa>0$, and $d=0$
+attains the scalar support because $\zeta\le0$. For D− the upper
+support is zero and attained because $K_2Q=0$ and $\kappa<0$;
+$d=1$ attains the scalar support because $\zeta\ge0$.
+The contact normalization (32.1) completes (33.1).
+All denominators are nonzero: $a,b,s,t,Q_{01}$ are nonzero,
+$1-t>0$, and $2+\mu\ge2$.
+
+For R−, let $v=(u,1)^{\mathsf T}$ and
+$Z=vv^{\mathsf T}\oplus(-b/a)$. Its trace norm is
+$u^2+1+b/a=u^2+1/a=N$. Its propagation is
+
+$$
+G_s(Z)=M\oplus0,qquad
+M=\begin{pmatrix}u^2&su\\su&s/a\end{pmatrix},qquad
+\det M=s(1/a-s)u^2<0.
+\tag{33.16}
+$$
+
+The eigenvalue gap of $M$ is $R=\sqrt Q>0$. The upper block in
+(32.21) is exactly its positive spectral projection: for a symmetric
+matrix with diagonal difference $d_0$ and off-diagonal $z_0$, this
+projection is
+$\frac12\left(I_2+\left(\begin{smallmatrix}d_0&2z_0\\2z_0&-d_0\end{smallmatrix}\right)/
+\sqrt{d_0^2+4z_0^2}\right)$, which here gives $d_0=u^2-s/a$
+and $z_0=su$.
+Thus $K_2$ is an effect independently of the scalar filter.
+Its propagated upper support is $(u^2+s/a+R)/2$. Subtracting that
+from $v^{\mathsf T}E_2v$ gives $(P-R)/2$, so the raw value identity
+is exactly $\operatorname{Tr}(ZE_p)-\operatorname{Tr}(M_+)=tN$.
+Also $by+ad=t$ by definition of $d$.
+
+The derivative of $(P-R)/(2N)$ vanishes exactly when (32.20) holds.
+In detail,
+
+$$
+P'N-2uP=L,qquad Q'N-4uQ=J,qquad
+2R\bigl((P-R)'N-(P-R)N'\bigr)=2RL-J.
+\tag{33.17}
+$$
+
+The first two identities follow by multiplying the polynomials in
+(32.19). In the last identity the left side uses $N'=2u$ and
+$R'=Q'/(2R)$. Differentiate the raw value identity with $t$ held
+fixed, using the positive eigenvalue derivative formula just proved.
+If $T_2=E_2-(G_s(K))_2$, the value and derivative identities give
+
+$$
+v^{\mathsf T}T_2v=t(u^2+1),qquad
+(1,0)T_2v=tu.
+\tag{33.18}
+$$
+
+Here the first equality subtracts the scalar contribution $(b/a)t$
+from $tN$. For the second, $Z'$ has upper block
+$e_0v^{\mathsf T}+ve_0^{\mathsf T}$, where $e_0=(1,0)^{\mathsf T}$,
+and no scalar derivative, while $N'=2u$.
+Since $v_1=1$, these two equalities imply $T_2v=tv$.
+Trace preservation of $G_s$, $\operatorname{Tr}K_2=1$ and bottom
+image $t$ give $\operatorname{Tr}T_2=t-d$. Its other eigenvalue
+is therefore $-d$. The filter $0\le d\le t$ gives both effect
+feasibility and residual norm $t$, including $d=t$.
+The support is attained by the positive projection and zero scalar
+propagation; pairing with $Z/N$ gives $t$. This proves (33.1) for
+R−. Its denominators $R,N,a$ are strictly positive.
+
+For R+, $\alpha=4a>0$, and $q(1-s^2)>0$.
+The quadratic in (32.24) has roots of opposite signs, and its
+discriminant is strictly positive. Its positive root is exactly the
+one displayed there. Substituting $u=(t+q)/c$ into this quadratic
+and using $c^2=pq$ gives the two identities
+
+$$
+t=cu-q,qquad \alpha tu=c+(q-s^2)u.
+\tag{33.19}
+$$
+
+For example, after multiplying the second by $c$, its difference
+from zero is
+$\alpha t(t+q)-c^2-(q-s^2)(t+q)$, precisely the quadratic.
+The upper $K_2$ in (32.25) fixes $(1,su)^{\mathsf T}$:
+its first row gives $1$ on that vector and its second gives $su$.
+Its other eigenvalue is its trace minus one, namely $\lambda$.
+The filter $0\le\lambda\le t<1/2$ therefore proves it is an effect.
+Since $d=0$ and $by=t$, the bottom residual is $-t$.
+Writing $T_2=E_2-(G_s(K))_2$, its entries are
+
+$$
+\begin{aligned}
+(T_2)_{00}&=-q+s^2u^2(1-y),\\
+(T_2)_{01}&=c-s^2u(1-y),\\
+(T_2)_{11}&=q-ay.
+\end{aligned}
+\tag{33.20}
+$$
+
+The first row applied to $(1,u)^{\mathsf T}$ is $cu-q=t$.
+The second row applied to it is
+$c+(q-s^2)u-(a-s^2)uy$. Since $y=t/b$ and
+$\alpha=1+(a-s^2)/b$, (33.19) makes this $tu$.
+Thus $t$ is an upper residual eigenvalue. Its trace is
+$1-x-ay=t-\lambda$, so its other eigenvalue is $-\lambda$.
+The scalar filter proves the full residual norm is $t$.
+
+Let $Z=\left(\begin{smallmatrix}1&u\\u&u^2\end{smallmatrix}\right)
+\oplus(-\mu)$. Here $\mu\ge0$ by (31.2), and
+$\|Z\|_1=1+u^2+\mu=1+\alpha u^2=N$.
+Its propagation is
+
+$$
+G_s(Z)=\begin{pmatrix}1&su\\su&s^2u^2\end{pmatrix}
+ \oplus\left(-\frac{s(1-as)u^2}{b}\right).
+\tag{33.21}
+$$
+
+The upper block is positive rank one and its range is fixed by $K_2$.
+The scalar is strictly negative, and $d=0$ attains its support.
+The upper input witness is positive rank one on the residual
+eigenvector $(1,u)^{\mathsf T}$; the negative scalar pairs with
+$-t$. The raw pairing is consequently $t(1+u^2+\mu)=tN$.
+Normalization gives (33.1). All denominators $a,b,c,\alpha,N$
+are strictly positive.
+
+The coefficient formulas (31.8), (32.6), (32.12), (32.18) and (32.22)
+are obtained by the displayed finite polynomial products; their
+nonzero leading coefficients and the intervals of the definitions
+establish the asserted finite degree and root counts. None of the
+certificate arguments differentiated an algebraic root or divided
+by a derivative. They therefore apply to every retained multiple root
+and to every non-strict boundary filter in Definition 32.7.
+The conditional case is Theorem 31.3 and the balanced case is
+Theorem 30.3. This completes the certificate proof. $\square$
+
+## 追加锚（本行以下为增补区）
