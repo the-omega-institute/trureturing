@@ -57,7 +57,7 @@ the $K^{7/6+o(1)}$ scale appearing in the project's balanced joint-contour
 target. The source's $\Xi_3$ and $\Xi_4$ use squarefree rows and columns;
 its prediction concerns the analogous family. The paper does not prove
 the $n=6$ case or this prediction in general. The later de Faveri upper
-bound, recorded in [the fixed-order card](faveri2026fixedorder.md), applies
+bound, recorded in [the fixed-order card](../Analytic/faveri2026fixedorder.md), applies
 to $n$-th-power-free supports and hence to their squarefree restriction.
 This does not supply a matching all-range lower bound on the
 squarefree-squarefree family: a lower bound on the larger support cannot
