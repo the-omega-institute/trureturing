@@ -5,8 +5,8 @@ namespace StrataLint.Scribe.Blueprint.D5.S3.Topology.Measures;
 internal sealed class SignedGrothendieckCriterionDocument : IScribeDocumentDefinition
 {
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
-        "Full signed raw restriction splitting and a sufficient Grothendieck sequence criterion.",
-        H("Signed raw splitting and the disjoint-variation criterion"),
+        "Full signed raw restriction splitting and Grothendieck sequence criteria.",
+        H("Signed raw splitting and clopen oscillation"),
         Blocks(
             Paragraph(Text(
                 "The intended ambient space K is compact Hausdorff with its Borel measurable structure, in an arbitrary universe. "
@@ -84,5 +84,37 @@ internal sealed class SignedGrothendieckCriterionDocument : IScribeDocumentDefin
                         "This is a reusable sufficient implication, assembled from classical splitting, signed representation and uniform boundedness. "
                         + "It assumes neither positivity, nonempty K, metrizability, separability, atomlessness, countable generation nor a nonzero measure. "
                         + "It establishes no CH instance of H, no transfinite induction or capture/global endpoint, and no solution or official acceptance of Problem 8.2."))),
+                DescribeRole.Theorem),
+            Describe.Lean(
+                DescribeId.Create("weak-of-signed-clopen-oscillation"),
+                DeclarationHandle.Create("D5/S3/Topology/Measures/SignedGrothendieckCriterion.weak_of_signed_clopen_oscillation"),
+                H("Grothendieck convergence from signed clopen oscillation"),
+                StatementSource.WithoutFormula(),
+                AssessedProvenance.FromRepo(LibraryNoteRef.Create("D5/L/Topology/kania2026talagrand")),
+                Blocks(
+                    Paragraph(Text(
+                        "Let K be any compact Hausdorff zero-dimensional Borel space, in any universe. The property O quantifies over regular signed measures t(n) and pairwise disjoint nonempty clopens W(n). "
+                        + "If TV(t(n))(K)=1, the positive Jordan mass is at least one half, and TV(t(n))(W(n)-complement)=0, O supplies a single clopen Z for which both sets of indices t(n)(Z)>=1/6 and t(n)(Z)=0 are infinite. "
+                        + "Under exactly O, every pointwise-convergent sequence F(n) in the real continuous dual of C(K,Real) converges to the same limit under every continuous double-dual test. "
+                        + "There is no norm-bound premise on F, nor any nonempty, metric, separable, countable-base or positivity assumption on K or F.")),
+                    Paragraph(Text(
+                        "First consider regular signed norm-one measures carried by actual pairwise disjoint Borel sets and suppose their continuous-function evaluations converge. "
+                        + "ClopenDisjointization.exists_signed_clopen_disjointization with parameter 1/96 supplies two strictly increasing selectors, norm-one clopen-carried approximants and one constant sign. "
+                        + "Apply that sign to the approximants and selected originals together. The signed approximants have positive Jordan mass at least one half and their total-variation error from the signed originals is strictly less than 1/48. "
+                        + "Property O gives one clopen Z with infinitely recurring high and zero values. Its continuous indicator tests the convergent signed originals. "
+                        + "At the high indices their evaluations exceed 7/48; at the zero indices their absolute evaluations are below 1/48. "
+                        + "Convergence is impossible: a real limit below 1/12 contradicts a sufficiently late high index, while a limit at least 1/12 contradicts a sufficiently late zero index. "
+                        + "The error is fixed. Neither convergence of the approximants, convergence of the retained mass to one, nor a vanishing approximation error is asserted.")),
+                    Paragraph(Text(
+                        "Center the arbitrary dual sequence and use Banach-Steinhaus and signed RMK to obtain bounded regular signed representatives with all continuous evaluations tending to zero. "
+                        + "For every initial selector tending to infinity, apply exists_signed_raw_restriction_splitting to the selected sequence. Its literal complementary restrictions are a(n) and b(n), with pairwise disjoint measurable carriers for a, captured masses q(n) tending to r>=0, and b converging under all double-dual tests. "
+                        + "Evaluation tests show that a converges weak-star to the negative of the b limit. If r>0, choose a finite tail with q(n)>r/2 and normalize a(n) by q(n) inverse. "
+                        + "These measures remain regular, retain the same disjoint Borel carriers, and have TV norm exactly one. Reciprocal continuity at nonzero r and signed-functional scalar linearity give a genuine weak-star limit for this normalized tail. "
+                        + "The preceding fixed-error contradiction excludes that limit, forcing r=0.")),
+                    Paragraph(Text(
+                        "Now a tends to zero in TV and hence in dual norm. The b limit has zero evaluation at every continuous function by uniqueness of scalar limits, so weak_limit_zero_of_evaluation identifies it as the zero functional. "
+                        + "For each double-dual Phi, the selected centered sequence therefore tends to zero under Phi. Filter.tendsto_of_subseq_tendsto applies because the initial selector was arbitrary; adding back Phi(FInf) proves full weak convergence. "
+                        + "This is a generic analytic implication using classical signed representation, uniform boundedness, raw splitting and clopen selection. It does not assume the earlier diagonal-TV hypothesis H. "
+                        + "No CH construction or instance of O is supplied, and neither the full signed-ball endpoint nor an anti-homeomorphism conclusion nor a solution of Problem 8.2 follows here."))),
                 DescribeRole.Theorem))));
 }

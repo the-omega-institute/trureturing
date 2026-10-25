@@ -46,8 +46,8 @@ Per declaration: name | proof_shape | direct consumers | frozen owner dependenci
   witness | bind-only | result | B, S
   half_noninteger | bind-only | result | none
   result | bind-only | settling result | B, S
-The utility is certified-instance with basis refutes. The only public theorem
-is result, whose conclusion is exactly the negation of claim.
+The utility is certified-instance with basis refutes. The public theorems are
+result, whose conclusion is exactly the negation of claim, and half_noninteger.
 -/
 
 import D5.S3.Analytic.BesselRatioLogConcavity.Result
@@ -282,7 +282,7 @@ private lemma witness :
   obtain ⟨ht0,ht1⟩ := exp_bound
   nlinarith [mul_nonneg ht0.le (show 0 ≤ 1/7 - Real.exp (-2) by linarith)]
 
-private lemma half_noninteger (k : ℤ) : ∀ n : ℤ, (k:ℝ)+1/2 ≠ (n:ℝ) := by
+lemma half_noninteger (k : ℤ) : ∀ n : ℤ, (k:ℝ)+1/2 ≠ (n:ℝ) := by
   intro n hn
   have hh : ((2*k+1:ℤ):ℝ) = ((2*n:ℤ):ℝ) := by push_cast; linarith
   have hi : 2*k+1 = 2*n := Int.cast_inj.mp hh
