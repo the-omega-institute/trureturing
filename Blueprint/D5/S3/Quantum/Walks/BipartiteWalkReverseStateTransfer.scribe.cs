@@ -93,7 +93,10 @@ internal sealed class BipartiteWalkReverseStateTransferDocument : IScribeDocumen
                             + "coordinate zero of Uᵏ e₅ = γ • e₀ would equal γ and would have norm one. "
                             + "This contradicts the coordinate bound. Applying the argument with s = −1 to Udef "
                             + "and with s = 1 to Udisp proves both exclusions."))),
-                DescribeRole.Theorem))));
+                DescribeRole.Theorem,
+                openProblemResolutionClaim: new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("chen-godsil-sobchuk-zhan-2024-bipartite-walk-reverse-state-transfer"),
+                    ResolutionKind.Proved)))));
 
     private static DocumentBlock Definition(string id, string declaration, string title,
         Formula formula, string prose, AssessedProvenance provenance) => Describe.Lean(
