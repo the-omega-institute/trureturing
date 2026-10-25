@@ -27,6 +27,7 @@ internal sealed class NilpotencySpectrumRefutationDocument : IScribeDocumentDefi
     private static Formula Inst(Formula t, Formula body) => Seq(OpenBracket, t, CloseBracket, Sp, body);
     private static Formula Arrow(Formula a, Formula b) => Seq(Open, a, Sp, To, Sp, b, Close);
     private static Formula Nat => Seq(Mathbb, Grp(X("N")));
+    private static Formula Integer => Seq(Mathbb, Grp(X("Z")));
     private static Formula Rat => Seq(Mathbb, Grp(X("Q")));
     private static Formula Type => N("Type");
     private static Formula K => X("K");
@@ -39,10 +40,10 @@ internal sealed class NilpotencySpectrumRefutationDocument : IScribeDocumentDefi
     private static Formula Powers(Formula degree) => C("ordinaryPower", Mu, degree);
     private static Formula Context(Formula b) => All("K", Type, Inst(C("Field", K), All("V", Type,
         Inst(C("AddCommGroup", V), Inst(C("Module", K, V), All("mu", Bilinear, b))))));
-    private static Formula BinaryCount => C("count", C("digits", D(2), X("k")), D(1));
+    private static Formula BinaryCount => C("count", C("digits", D(2), C("toNat", X("k"))), D(1));
     private static Formula Predicted => Or(Some("a", Nat, And(Eq(X("k"), new Formula.Power(D(2), X("a"))),
-        Le(C("Int", X("a")), Sub(C("Int", X("n")), D(1))))),
-        And(Le(D(2), BinaryCount), Le(Add(C("Int", C("log", D(2), X("k"))), C("Int", BinaryCount)), Sub(C("Int", X("n")), D(1)))));
+        Le(C("Int", X("a")), Sub(X("n"), D(1))))),
+        And(Le(D(2), BinaryCount), Le(Add(C("Int", C("log", D(2), C("toNat", X("k")))), C("Int", BinaryCount)), Sub(X("n"), D(1)))));
     private static Formula Lam(string x, Formula t, Formula body) =>
         Seq(N("fun"), Sp, Open, X(x), Colon, t, Close, Sp, Mapsto, Sp, body);
     private static Formula SomeClass(Formula t, Formula body) =>
@@ -65,9 +66,9 @@ internal sealed class NilpotencySpectrumRefutationDocument : IScribeDocumentDefi
     {
         get
         {
-            var body = Iff(C("indexExists", K, X("n"), X("k")), C("predicted", X("n"), X("k")));
-            body = Imp(Le(D(1), X("k")), body);
-            body = All("n", Nat, All("k", Nat, body));
+            var body = Iff(C("indexExists", K, C("toNat", X("n")), C("toNat", X("k"))), C("predicted", X("n"), X("k")));
+            body = Imp(Le(D(0), X("n")), Imp(Le(D(1), X("k")), body));
+            body = All("n", Integer, All("k", Integer, body));
             return All("K", Type, Inst(C("Field", K), Inst(C("Infinite", K), body)));
         }
     }
@@ -126,10 +127,10 @@ internal sealed class NilpotencySpectrumRefutationDocument : IScribeDocumentDefi
             Desc("indexExists", All("K", Type, Inst(C("Field", K), All("n", Nat, All("k", Nat,
                 Eq(C("indexExists", K, X("n"), X("k")), ExistsBody))))),
                 "The existential quantifiers range over the vector space, its additive group and scalar module structures, its finite-dimensionality, and the bilinear product. The natural-basis predicate is the existing evolution-algebra definition: commutativity and a basis with zero mixed products. Zero squares are permitted.", source: true),
-            Desc("predicted", All("n", Nat, All("k", Nat, Eq(C("predicted", X("n"), X("k")), Predicted))),
-                "The first branch is a power of two. In the second branch the number of digits equal to one in the base-two expansion is at least two. The function log here means the integer floor of the base-two logarithm. The dimension bound is the integer n minus one. Int denotes the cast from natural numbers to integers.", source: true),
+            Desc("predicted", All("n", Integer, All("k", Integer, Eq(C("predicted", X("n"), X("k")), Predicted))),
+                "The first branch is a power of two. In the second branch the number of digits equal to one in the base-two expansion is at least two. The function log here means the integer floor of the base-two logarithm. The dimension bound is the integer n minus one. Int denotes the cast from natural numbers to integers; toNat converts the nonnegative integer argument to its natural-number representative.", source: true),
             Desc("claim", Eq(N("claim"), WholeClaim),
-                "Conjecture 9 of Kaygorodov, Martin Gonzalez and Viruel, arXiv:2610.22248v1, section 2.3, asserts this equivalence for every infinite field and every dimension, at each positive k. The nilpotency index in its wording is k+1.", source: true),
+                "Conjecture 9 of Kaygorodov, Martin Gonzalez and Viruel, arXiv:2610.22248v1, section 2.3, asserts this equivalence for every infinite field and every nonnegative integer dimension n, at each positive integer k. The nilpotency index in its wording is k+1.", source: true),
             Desc("product", ProductFormula,
                 "In one-based coordinates the natural square rows r are: e2+e3+e5; -e4-e5; e4+e5; -e6-e8; e6+e8; e7+e8; -e9-e14; e9+e14; e10; e11; e12; e13+e14; -e15; e15; 0. The displayed vector uses zero-based coordinate subscripts; the square-row description uses one-based subscripts. The standard coordinate vectors form a natural basis. All mixed products vanish."),
             Desc("result", Seq(Neg, Sp, N("claim")),

@@ -48,16 +48,16 @@ def indexExists (K : Type) [Field K] (n k : ℕ) : Prop :=
       ordinaryPower μ (k + 1) = ⊥ ∧ ordinaryPower μ k ≠ ⊥
 
 /-- Both alternatives of the conjectured binary spectrum. Bounds use integer n-1. -/
-def predicted (n k : ℕ) : Prop :=
-  (∃ a : ℕ, k = 2 ^ a ∧ (a : ℤ) ≤ (n : ℤ) - 1) ∨
-  (2 ≤ ((Nat.digits 2 k).count 1) ∧
-    (Nat.log 2 k : ℤ) + ((Nat.digits 2 k).count 1 : ℤ) ≤ (n : ℤ) - 1)
+def predicted (n k : ℤ) : Prop :=
+  (∃ a : ℕ, k = 2 ^ a ∧ (a : ℤ) ≤ n - 1) ∨
+  (2 ≤ ((Nat.digits 2 k.toNat).count 1) ∧
+    (Nat.log 2 k.toNat : ℤ) + ((Nat.digits 2 k.toNat).count 1 : ℤ) ≤ n - 1)
 
 /-- KMV, arXiv:2610.22248v1, section 2.3, Conjecture 9, with its entire universal
 field/dimension/positive-k domain and both directions of the equivalence. -/
 def claim : Prop :=
-  ∀ (K : Type) [Field K] [Infinite K] (n k : ℕ), 1 ≤ k →
-    (indexExists K n k ↔ predicted n k)
+  ∀ (K : Type) [Field K] [Infinite K] (n k : ℤ), 0 ≤ n → 1 ≤ k →
+    (indexExists K n.toNat k.toNat ↔ predicted n k)
 
 private abbrev A := Fin 15 → ℚ
 private def rows : Fin 15 → A := ![
@@ -319,13 +319,6 @@ private theorem arithmetic_failure : ¬ predicted 15 255 := by
 /-- The complete original universal equivalence is false. -/
 theorem result : ¬ claim := by
   intro h
-  exact arithmetic_failure ((h ℚ 15 255 (by decide)).mp rational_instance)
-
-example : ∀ m : ℕ, ordinaryPower (0 : ℚ →ₗ[ℚ] ℚ →ₗ[ℚ] ℚ) m ≤
-    (if m ≤ 1 then ⊤ else ⊥ : Submodule ℚ ℚ) := by
-  apply power_le_filtration
-  · simp
-  · intro r s x y hx hy
-    simp
+  exact arithmetic_failure ((h ℚ 15 255 (by decide) (by decide)).mp rational_instance)
 
 end D5.S3.QuadraticForms.EvolutionAlgebras.NilpotencySpectrumRefutation
