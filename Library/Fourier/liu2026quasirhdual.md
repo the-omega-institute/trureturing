@@ -2215,3 +2215,752 @@ aggregation costs remain in the original contract. In particular,
 No new analytic estimate, literature-originality claim, Lean
 certification, inverse-fourth saving, signed Robin restoration or RH
 completion follows.
+
+The two-factor predecessors C21–C50 and the explicit reciprocal premise
+are in the [analytic note](../Analytic/liu2026quasirh.md#the-actual-radial-column-mean-with-both-type-ii-coefficients).
+The following C51–C76 concern the four-factor exceptional interface of
+this Fourier note; they retain the original signed J40 scope.
+
+## Four inverse factors on the same coprime realization
+
+Retain $K=\mathbb Q(\sqrt{-3})$, $q_d=Nd$, the fixed $S$, and the
+ideal-counting convention of [(C41)](../Analytic/liu2026quasirh.md#the-actual-radial-column-mean-with-both-type-ii-coefficients). Let $D=U^{1/2}$ and $A=U^\alpha$,
+where $0<\alpha<1/4$ is fixed. On the original inverse annulus use exactly
+$b_A=\mu+K_A$ of [(C37)](../Analytic/liu2026quasirh.md#cofactor-recursion-and-the-actual-prime-slot-capacity), with its original smooth $W$ and collision zeros.
+The support condition $2A<z\asymp U^{1/4}$ then holds eventually in
+[(C25)](../Analytic/liu2026quasirh.md#a-smooth-type-i-cutoff-using-the-existing-reciprocal-strip). All statements below are paper-level `repo-derived` deductions;
+$R_\beta$ always means the explicit principal reciprocal hypothesis
+[(C48)](../Analytic/liu2026quasirh.md#the-coupled-euler-product-under-an-explicit-reciprocal-strip), including polynomial vertical growth on smaller closed strips.
+In particular $R_{7/8}$ is source-conditional on the
+[pinned manuscript](https://github.com/openai/math/blob/adc7f1241b42e322a6451854ab7e4b4c146bf78a/preprints/The-Quasi-Riemann-Hypothesis-September-30-2026/build/paper.tex),
+`thm:main` and `lem:logarithmic-control`, and is not certified here.
+
+For a smooth complex $\Psi$ supported on a fixed compact rectangle in
+$(0,\infty)^4$, and squarefree $P$ outside $S$, put
+
+$$
+\begin{aligned}
+Q_4(P;\Psi)&=\sum_{\substack{d_1d_2d_3d_4\ {\rm sf}\\
+ (d_1d_2d_3d_4,SP)=1}}
+ \prod_{i=1}^4b_A(d_i)\,
+ \Psi(q_{d_1}/D,\ldots,q_{d_4}/D),\qquad I_\Psi=\int\Psi(\mathbf x)\,d\mathbf x,\\
+C_4(P)&=\kappa^4\prod_{p\in S}(1-q_p^{-1})^4
+ \prod_{p\notin S}(1+4q_p^{-1})(1-q_p^{-1})^4
+ \prod_{p\mid P}(1+4q_p^{-1})^{-1},\\
+\Theta_{4,A}(P)&=\sum_{\substack{e_1e_2e_3e_4\ {\rm sf}\\
+ (e_1e_2e_3e_4,SP)=1}}
+ \frac{\prod_{i=1}^4\mu(e_i)2^{\omega(e_i)}W(q_{e_i}/A)}
+ {\prod_{p\mid e_1e_2e_3e_4}(q_p+4)},
+ \qquad \kappa=\mathop{\rm Res}_{s=1}\zeta_K(s).
+\end{aligned}
+\tag{C51}
+$$
+
+The squarefree product forces all four factors to be pairwise coprime.
+This is the actual relation obtained from squarefree columns
+$s=d_1d_2$, $t=d_3d_4$ and common-column gcd $(s,t)=1$.
+Squaring [(C41)](../Analytic/liu2026quasirh.md#the-actual-radial-column-mean-with-both-type-ii-coefficients) would allow primes shared across the two columns; even
+its unforced local factor would be $(1+2/q_p)^2$, instead of
+$1+4/q_p$. Thus neither $\Theta_A(P)^2$ nor independent copies of the
+two-variable mean describe this realization. The old two-variable
+result remains applicable in its original scope.
+
+**Four-factor absolute-error theorem.** Suppose $1/2\le\beta<1$ and
+$R_\beta$. For every fixed polynomial range $q_P\le U^C$ and
+$\varepsilon>0$, a finite derivative order $J$ gives
+
+$$
+\begin{aligned}
+Q_4(P;\Psi)&=D^4C_4(P)I_\Psi\Theta_{4,A}(P)
+ +O_\varepsilon\!\left(\mathcal N_J(Uq_P)^\varepsilon
+ [D^{3+\beta}+D^{7/2}A^{1/2}]\right),\\
+|\Theta_{4,A}(P)|&\ll_\varepsilon
+ A^{-4(1-\beta)+\varepsilon}q_P^\varepsilon,
+\qquad 0<C_4(P)\ll_{K,S}1.
+\end{aligned}
+\tag{C52}
+$$
+
+Here $\mathcal N_J$ is the maximum of the partial derivatives of
+$\Psi$ up to order $J$ in each variable on that rectangle. Constants
+depend on $C,\alpha,K,S,W$, supports, strip margins and the reciprocal
+growth constants. The displayed $q_P^\varepsilon$ version is retained
+when summing frequency shells; no condition $q_P\le A^2$ is imposed.
+
+**Proof.** Reuse the divisor identity [(C37)](../Analytic/liu2026quasirh.md#cofactor-recursion-and-the-actual-prime-slot-capacity), the literal Euler-factor
+method [(C44)](../Analytic/liu2026quasirh.md#the-actual-radial-column-mean-with-both-type-ii-coefficients), the deleted-factor estimate [(C45)](../Analytic/liu2026quasirh.md#the-actual-radial-column-mean-with-both-type-ii-coefficients) under [(C48)](../Analytic/liu2026quasirh.md#the-coupled-euler-product-under-an-explicit-reciprocal-strip), and the
+normal-convergence argument [(C47)](../Analytic/liu2026quasirh.md#the-coupled-euler-product-under-an-explicit-reciprocal-strip). Expand first the $K_A^4$ term and
+fix the four $e_i$. Its series is $\prod_i\zeta_K(s_i)G_{\mathbf e,P}(\mathbf s)$.
+Writing $x_i=q_p^{-s_i}$, the local factors of $G$ are
+
+$$
+\begin{array}{c|c}
+p\nmid SPe_1e_2e_3e_4&(1+x_1+x_2+x_3+x_4)\prod_i(1-x_i)\\
+p\mid e_j&x_j\prod_i(1-x_i)\\
+p\mid SP&\prod_i(1-x_i).
+\end{array}
+\tag{C53}
+$$
+
+The first factor has no linear term. The literal product therefore
+converges normally whenever every $\Re s_i>1/2$; one never divides
+by its potentially vanishing numerator. On smaller closed strips its
+bound is $\ll_\eta(q_P\prod_iq_{e_i})^\eta
+\prod_iq_{e_i}^{-\Re s_i}$. At $\mathbf s=\mathbf1$, forcing a prime
+into any one variable gives $q_p^{-1}/(1+4q_p^{-1})=(q_p+4)^{-1}$.
+Four smooth Mellin inversions and successive contour shifts to
+$1/2+\delta$ give the residue in (C52). For a subset of $j\ge1$
+shifted variables, summing the forced divisors costs
+
+$$
+\mathcal N_J(Uq_P)^\varepsilon D^{4-j/2}A^{j/2},
+\qquad j=1,2,3,4.
+\tag{C54}
+$$
+
+This follows from the same sums $\sum_{q_e\le2A}\tau(e)q_e^{-1/2-\delta}$
+and $\sum_{q_e\le2A}\tau(e)/q_e$ as [(C44)](../Analytic/liu2026quasirh.md#the-actual-radial-column-mean-with-both-type-ii-coefficients). Since $A<D$, the $j=1$
+term dominates. Choose $J$ once to pay four Mellin integrals, their
+horizontal joins and the ordinary zeta growth.
+
+There are fifteen other terms in $(\mu+K_A)^4$. In each choose one
+$\mu$ variable, fix the other three, and use [(C45)](../Analytic/liu2026quasirh.md#the-actual-radial-column-mean-with-both-type-ii-coefficients)/[(C48)](../Analytic/liu2026quasirh.md#the-coupled-euler-product-under-an-explicit-reciprocal-strip) with
+$r=\operatorname{rad}(SP\prod_{i\ne j}d_i)$, so $q_r\ll q_PD^3$.
+That inner sum is $O(\mathcal N_JD^{\beta+\varepsilon}q_P^\varepsilon)$;
+each remaining absolute mass is $O(D\log^2(2A))$, or $O(D)$ for a
+$\mu$ factor, by [(C46)](../Analytic/liu2026quasirh.md#the-actual-radial-column-mean-with-both-type-ii-coefficients). This proves the $D^{3+\beta}$ error for their
+entire sum. Only the principal reciprocal is used: there is no
+application to nontrivial ray or angular Hecke inverses.
+
+Finally the four-variable Mellin series of $\Theta_{4,A}$ is
+
+$$
+\prod_{p\notin SP}\left(1-\frac{2\sum_iq_p^{-z_i}}{q_p+4}\right)
+ =\prod_i\zeta_K(1+z_i)^{-2}H_{4,P}(\mathbf z).
+\tag{C55}
+$$
+
+After dividing by $\prod_i(1-q_p^{-1-z_i})^2$, the local correction
+minus one has only terms $O(\sum_iq_p^{-2-\Re z_i}
++\sum_{i,j}q_p^{-2-\Re z_i-\Re z_j})$ on smaller strips. Thus $H_{4,P}$
+is holomorphic for every $\Re z_i>-1/2$, normally convergent and
+$\ll_\eta q_P^\eta$ uniformly in the heights there. Excluded primes
+have factor $\prod_i(1-q_p^{-1-z_i})^{-2}$, costing $q_P^\eta$.
+Move all four lines to $\beta-1+\delta$. The simple pole of each
+$\widehat W$ at zero is canceled by its corresponding double
+reciprocal-zeta zero. Rapid Mellin decay and [(C48)](../Analytic/liu2026quasirh.md#the-coupled-euler-product-under-an-explicit-reciprocal-strip) prove the second
+line of (C52), with no residue or mixed polar divisor. This completes
+the proof. Fixed polynomial ranges allow $\delta,\eta$ to be allocated
+within any final $U^\varepsilon$ loss.
+
+## The constant-ray exceptional component with actual columns
+
+Use [Xu–Sang v2, §3.1 (3.3)–(3.4), §3.2 (3.8), and §3.3
+(3.11)](https://arxiv.org/html/2610.17675v2#S3), only as finite Gauss,
+Poisson and exceptional-frequency identities. Their field is this same
+$K$; columns use the literal raw sextic symbol and its zero extension.
+Fix the corefree branch, original common-$e=1$, and source common-column
+gcd $C=1$. This $C$ is not a repeated-column core. The source moving
+twist ideal is the unit ideal. No arbitrary-arithmetic-weight version
+of its Proposition 3.1 or Lemma 5.1 is assumed.
+
+**Normalization and the multiplier.** In the source conventions set
+
+$$
+\begin{aligned}
+e_K(z)&=\exp(4\pi i\operatorname{Im}z/\sqrt3),\qquad
+ d\mu(z)=(2/\sqrt3)\,d\operatorname{Re}z\,d\operatorname{Im}z,\\
+\widehat w(y)&=\int_{\mathbb C}w(z)e_K(-zy)\,d\mu(z)
+ =\widehat w_{\rm rad}(|y|^2),\\
+G(s,k)&=q_s^{-1/2}\sum_{x\bmod s}\chi_s(x)e_K(kx/s)
+ =\gamma_1(s)\overline{\chi_s(k)}\quad(s\ {\rm good\ sf}).
+\end{aligned}
+\tag{C56}
+$$
+
+The lattice is self-dual for this measure. The last equality includes
+collision zeros, since the raw character is primitive at every prime
+of a good squarefree $s$. It is the same Gauss convention as the
+pinned manuscript's `eq:sextic-sieve-pair-gauss` and (J5).
+Consequently an original side scalar $\gamma_1(s)\overline{\chi_s(m)}$
+is $\chi_s(-1)G(s,-m)$. The true change-of-form multiplier is
+$\chi_s(-1)$, together with the original $\xi(s)$ and finite
+ray/angular factors; it is not an extra inverse Gauss sum and is not
+a replacement of $b_A$ by $1$. The original (J5) CRT factors are
+already inside $\gamma_1(s)$ and must not be inserted a second time.
+
+Fix a common refined total ray $[s]=[t]=\sigma$ and include its
+selectors in both original side weights. For one such component write
+its arithmetic column as
+
+$$
+c_s=\mathbf1_{s\ {\rm good\ sf}}
+ \sum_{d_1d_2=s}b_A(d_1)b_A(d_2)
+ V_1(q_{d_1}/D)V_2(q_{d_2}/D)\,a(d_1,d_2),
+\tag{C57}
+$$
+
+where $a$ retains the original factor-class selectors, $\xi(s)$,
+$\chi_s(-1)$ and original angular factors in this orientation.
+Separated norm heights belong to the $V_i$, with their actual
+polynomial seminorm costs. Distinct side profiles are allowed by
+polarization. Consider the unnormalized element-row Gauss pairing
+$\mathcal E=\sum_m w(m/\sqrt U)
+ (\sum_s c_sG(s,-m))\overline{(\sum_t c'_tG(t,-m))}$.
+This specifies a local Gauss object with actual columns, not the full
+physical-row moment or a selected positive part of J40. The source
+normalization is $U^{-1}$ on each column; taking its column profile to
+be $t^{1/2}c_s$ shows that $\mathcal E$ is $U^2$ times that normalized
+pairing. This use is an identity before any smooth-column estimate.
+Equivalently, direct opening gives Poisson multiplier
+$U/\sqrt{q_sq_t}=(t_st_t)^{-1/2}$, $t_s=q_s/U$.
+The original $D^{-1}$ side normalizations of (J4), and all physical
+row/core prefactors, still have to be restored in their own contraction.
+
+On the $C=1$ branch the finite correlation is exactly
+$\chi_s(k)\overline{\chi_t(-k)}\mathfrak r(s,t)$.
+The source's refined equal-total-ray condition gives
+$\mathfrak r(s,t)\overline{\chi_t(-1)}=1$.
+Its exceptional frequencies have the unique form
+
+$$
+k=\epsilon e_S(\mathbf r)a^6,\qquad
+\epsilon\in\mathcal O^\times,\quad
+0\le r_p\le5\ (p\in S),\quad
+ e_S(\mathbf r)=\prod_{p\in S}\pi_p^{r_p},\qquad
+P_a=\operatorname{rad}(a)\big|_{p\notin S}.
+\tag{C58}
+$$
+
+Here $a$ ranges once over integral ideals, including its possible
+$S$ factors, with fixed generators; all six units occur. $P_a$ is a
+frequency puncture, not the original product-squarepart $P$ of J40.
+The characters of $\epsilon e_S(\mathbf r)$ are constant on a refined
+total ray fiber, so they cancel between its two columns. Sixth powers
+leave precisely the original mask $\mathbf1_{(st,a)=1}$. There is no
+coprimality replacement on a different row family.
+
+After that cancellation, let $\Omega_{\epsilon,\mathbf r}(\mathbf d)$
+be the remaining actual four-factor finite-ray/angular weight, including
+both total-class selectors and the original component coefficient.
+Expand only this given weight under its original presentation contract.
+Let $\eta_{\epsilon,\mathbf r}$ be the coefficient with four trivial
+ray characters and zero angular modes, with normalized counting measure
+on each ray group and normalized Haar measure on each angular circle.
+This defines a linear component even when it is zero. For four specified
+factor classes in a ray group of order $h$, with no further multiplier,
+the coefficient is $h^{-4}$; a total-class relation or any additional
+weight must instead be averaged as its actual table. In particular,
+one must not assign $h^{-4}$ to a general total-class selector.
+All nontrivial characters and angular modes remain in
+$\Omega-\eta$. This is a coefficient expansion, not independence of
+the four actual ideal classes or angles.
+
+Write $z=q_{e_S(\mathbf r)}q_a^6/U$ and
+
+$$
+\begin{aligned}
+\Psi_z(\mathbf x)&=V_1(x_1)V_2(x_2)
+ \overline{V_3(x_3)V_4(x_4)}
+ (x_1x_2x_3x_4)^{-1/2}
+ \widehat w_{\rm rad}\!\left(\frac z{x_1x_2x_3x_4}\right),\\
+I_4(z)&=\int\Psi_z(\mathbf x)\,d\mathbf x,\\
+\mathcal E_{\rm exc}&=\mathcal E_{\rm rad}+\mathcal R_{\rm tw},\qquad
+\mathcal E_{\rm rad}=\sum_{\epsilon,\mathbf r}\eta_{\epsilon,\mathbf r}
+ \sum_a Q_4(P_a;\Psi_{q_{e_S(\mathbf r)}q_a^6/U}).
+\end{aligned}
+\tag{C59}
+$$
+
+Precisely, $\mathcal R_{\rm tw}$ is the very same sum over
+$\epsilon,\mathbf r,a,d_1,d_2,d_3,d_4$, with the squarefree product,
+$(\prod d_i,SP_a)=1$, the same $\prod b_A(d_i)\Psi_z$, and weight
+$\Omega_{\epsilon,\mathbf r}(\mathbf d)-\eta_{\epsilon,\mathbf r}$.
+This is an exact signed residual. No absolute value, new beta row,
+positivity of the selected frequencies, or monotonicity under selection
+of physical rows is asserted. The $k=0$ diagonal is outside (C59).
+
+The proof of (C59) is finite opening of the two Gauss sums, row Poisson
+with (C56), the $C=1$ correlation above, and (C58). Squarefreeness of
+each column and their gcd $1$ give exactly (C51)'s four-way mask.
+The correlation phases cancel on each original total-class fiber before
+taking the stated linear coefficient. Thus no unproved arithmetic
+column-mean theorem is used to identify this component.
+
+**Summing the proved component.** Assume $R_\beta$ and the same fixed
+or polylogarithmic aggregate profile/height contract. Applying (C52)
+to (C59) gives
+
+$$
+\begin{aligned}
+\mathcal E_{\rm rad}
+ &=U^2\sum_{\epsilon,\mathbf r}\eta_{\epsilon,\mathbf r}
+   \sum_a C_4(P_a)\Theta_{4,A}(P_a)
+       I_4(q_{e_S(\mathbf r)}q_a^6/U)
+   +\mathcal R_{KK}+\mathcal R_\mu,\\
+|\mathcal R_{KK}|&\ll_\varepsilon\mathcal N_J
+ U^{23/12+\varepsilon}A^{1/2},\qquad
+|\mathcal R_\mu|\ll_\varepsilon\mathcal N_J
+ U^{(10+3\beta)/6+\varepsilon},\\
+|\mathcal E_{\rm rad}|&\ll_\varepsilon\mathcal N_JU^\varepsilon
+ [U^{13/6}A^{-4(1-\beta)}
+   +U^{(10+3\beta)/6}+U^{23/12}A^{1/2}].
+\end{aligned}
+\tag{C60}
+$$
+
+Here $\mathcal R_\mu$ is exactly the aggregate of the fifteen
+$\mu$-containing terms in (C59); $\mathcal R_{KK}$ is the remainder of
+the all-$K_A$ term after its displayed residue. The finite sum over
+units and $S$ exponents remains visible in the main term.
+There is no additional planar area multiplier: $\kappa^4$ already
+accounts for counting ideals once, and (C56) fixes the Fourier measure.
+
+To justify the full frequency sum, on each shell $z\asymp R\ge1$
+all the required derivatives of $\Psi_z$ are
+$O_B(\mathcal N_{J,B}R^{-B})$. Ideal counting gives
+$O((RU)^{1/6})$ possible $a$; the ball $z\le1$ has $O(U^{1/6})$.
+First retain any fixed polynomial shell range. Its $q_{P_a}^\varepsilon$
+factor in (C52) is paid by choosing its internal loss smaller; one
+cannot discard frequencies merely because $q_{P_a}>A^2$.
+For the remaining shells the original divisor envelope bounds the four
+columns absolutely, and arbitrary Fourier decay makes their sum smaller
+than any prescribed power by enlarging the fixed shell cutoff and $B$.
+The same argument bounds the residue tail using the absolute divisor
+mass of $\Theta_{4,A}$. It proves (C60) without truncating the actual
+frequency identity. In (C59)–(C68), $\mathcal N_J$ denotes the original
+aggregate of component seminorms against the absolute coefficient
+measures, including the $|\eta_{\epsilon,\mathbf r}|$ costs; it is required
+to be fixed or polylogarithmic. One derivative order is chosen for all shells,
+finite components and separated heights. If their growth has degree $h$,
+log-Fourier decay of order greater than $h+5$ is integrable in four
+variables. Derivatives act only on the external profiles, never on
+$b_A$, and no budget is restarted per $a$ or ray class.
+
+## Joint cutoff certificate and the unpaid estimates
+
+Put $B_*=(31-10\sqrt6)/6$ and
+$\Delta=7/6-B_*=(5\sqrt6-12)/3=0.082482904638630\ldots$.
+The unnormalized local energy comparison exponent is $1+B_*$;
+restoring the original $D^{-2}=U^{-1}$ coefficient normalization gives
+the exponent $B_*$ used in J40. This comparison does not identify the
+entire Gauss object (C59) with J40 or pay its omitted parameters.
+At the unchanged $A=U^{1/12}$, (C52) and (C60), conditionally on
+$R_{7/8}$, give the following explicit certificate:
+
+$$
+\begin{aligned}
+\Theta_{4,A}(P)&\ll_\varepsilon U^{-1/24+\varepsilon}q_P^\varepsilon,\\
+|\mathcal E_{\rm rad}|&\ll_\varepsilon\mathcal N_JU^\varepsilon
+ (U^{17/8}+U^{101/48}+U^{47/24}),\\
+17/8-(1+B_*)&=0.040816237971963\ldots,\\
+101/48-(1+B_*)&=0.019982904638630\ldots,\qquad
+1+B_*=2.084183762028037\ldots.
+\end{aligned}
+\tag{C61}
+$$
+
+The $101/48$ term is the fifteen-$\mu$ aggregate, not the smaller
+error that would result from squaring the two-factor mean. These are
+upper-bound certificate gaps, not lower bounds for any actual term.
+No full energy improvement follows, and no selected Poisson component
+has been declared nonnegative.
+
+**The same coefficient pays Type I.** For $A=U^\alpha$, keep the
+actual split [(C25)](../Analytic/liu2026quasirh.md#a-smooth-type-i-cutoff-using-the-existing-reciprocal-strip), the original physical family, all finite ray
+presentations, original zero extensions and the shared finite-height
+allowance. Reuse [(C29)](../Analytic/liu2026quasirh.md#combining-two-bounds-on-the-same-buffered-type-i-bin), whose primary suppliers are the
+[pinned manuscript](https://github.com/openai/math/blob/adc7f1241b42e322a6451854ab7e4b4c146bf78a/preprints/The-Quasi-Riemann-Hypothesis-September-30-2026/build/paper.tex),
+`lem:buffered-bins`, `lem:detector-dyads`, and the zero-prime-slot
+case of `lem:plain`. These require the original nonprincipal inducing
+rows, polynomial-size original deletion masks, bounded annular length
+ranges, and finite internal Mellin heights whose total lies within
+the same buffer. There is no new conductor lower bound. The proof of
+[(C29)](../Analytic/liu2026quasirh.md#combining-two-bounds-on-the-same-buffered-type-i-bin) is uniform in $Q\ll U^\alpha$, since only the smooth profile's
+$Q/A$ ratio changes. It supplies, on the very same bin,
+
+$$
+\begin{aligned}
+T_Q(\delta)&\ll U^\varepsilon
+ \min\{U^{f(\delta)},U^{1+2\alpha\delta}\},\\
+f(\delta)&=R(\delta)+\delta
+ =\delta+\frac{15-16\delta}{15-6\delta}
+ \quad(1/50<\delta\le5/6),\qquad
+f(\delta)=1\quad(5/6\le\delta\le1).
+\end{aligned}
+\tag{C62}
+$$
+
+The floor separately costs $U^{1+\alpha/25+\varepsilon}$. Norm heights
+and all internal Mellin variables share the original buffer; the
+Fourier/Mellin tail orders are chosen once after the desired loss.
+There is no infinite-local-contour extension or differentiation of
+$b_A$. Dyadic and fixed/polylog aggregate costs are absorbed only
+within the original common envelope.
+
+Differentiation gives $f'(\delta)=1-150/(15-6\delta)^2$ and
+$f''(\delta)=-1800/(15-6\delta)^3<0$. Hence the unique maximum is
+
+$$
+\delta_*=(15-5\sqrt6)/6=0.458758547680685\ldots,\qquad
+f(\delta_*)=B_*,\qquad
+\alpha_I=\frac{B_*-1}{2\delta_*}
+ =\frac{3-\sqrt6}{6}=0.091751709536137\ldots.
+\tag{C63}
+$$
+
+This bin is also inside the range $\delta\le3/4$ if that restriction
+is imposed from the source's $7/8$ Hecke region. For the full bin range,
+the envelope $\max_\delta\min\{f(\delta),1+2\alpha\delta\}$ has a
+strict gap below $B_*$ exactly when $0<\alpha<\alpha_I$.
+Indeed at $\delta_*$ its minimum is $B_*$ for $\alpha\ge\alpha_I$.
+Below that threshold, the increasing line intersects the decreasing
+side of $f$ at
+
+$$
+\delta_\alpha=\frac{15-10/(1-2\alpha)}6>\delta_*,\qquad
+\tau(\alpha)=1+2\alpha\delta_\alpha<B_*.
+\tag{C64}
+$$
+
+Before this crossing the minimum is at most the line's value there;
+after it, $f$ decreases to $1$. The floor is smaller since
+$2\delta_\alpha>1/25$. Thus $\tau$ is an admissible full-range Type-I
+exponent, and $\tau(1/12)=13/12$, recovering [(C30)](../Analytic/liu2026quasirh.md#combining-two-bounds-on-the-same-buffered-type-i-bin).
+This is a limit of these two UPPER BOUND inputs. It does not assert
+that the critical bin is populated at its counting bound or that any
+actual Type-I moment attains that exponent.
+
+For $\alpha<\alpha_I$, the same positive $L^4$ Minkowski argument as
+[(C31)](../Analytic/liu2026quasirh.md#combining-two-bounds-on-the-same-buffered-type-i-bin) gives $\mathcal T_{\rm II}\ll U^{B_*+\varepsilon}$ and
+
+$$
+|\mathcal T_\mu-\mathcal T_{\rm II}|
+ \ll U^{(3B_*+\tau(\alpha))/4+\varepsilon}.
+\tag{C65}
+$$
+
+The original cubic and large-product-squarepart payments add $13/12$,
+so the full difference-transfer exponent is
+$\max\{13/12,(3B_*+\tau(\alpha))/4\}$, with reserve
+$\min\{B_*-13/12,(B_*-\tau(\alpha))/4\}$.
+Here $B_*-13/12=0.000850428694703\ldots$.
+At $\alpha_I$ the interference reserve vanishes. A one-sided triangle
+transfer also needs a Type-I exponent below $B_*$ and does not repair
+this envelope limit.
+
+**The coupled-current-input incompatibility.** Making just the
+four-factor residue upper bound in (C60) smaller than $U^{1+B_*}$
+requires the sufficient-estimate inequality
+$4\alpha(1-\beta)>\Delta$. At $\beta=7/8$ this becomes
+
+$$
+\alpha>\alpha_G=2\Delta
+ =0.164965809277260\ldots,
+\qquad\hbox{whereas the paid Type-I envelope requires }\alpha<\alpha_I.
+\tag{C66}
+$$
+
+The windows are disjoint, though both endpoints satisfy the exact-split
+support limit $\alpha<1/4$. As $\alpha\uparrow\alpha_I$ the residue
+certificate approaches exponent $13/6-\alpha_I/2
+=2.120790811898598\ldots>1+B_*$, while the Type-I reserve tends to
+zero. Moreover the $R_{7/8}$ bound for $\mathcal R_\mu$ in (C60)
+is $U^{101/48+\varepsilon}$ for every such cutoff, so merely changing
+$A$ does not pay that error either. The $KK$ contour error alone is
+below target throughout this Type-I window.
+
+For general $\beta$, the main-term and Type-I inequalities can overlap
+only if $\beta<2-\sqrt6/2=0.775255128608411\ldots$; at the fixed
+$\alpha=1/12$ the main-term inequality is
+$\beta<13-5\sqrt6=0.752551286084110\ldots$.
+The separate errors still require
+$(10+3\beta)/6<1+B_*$ and $23/12+\alpha/2<1+B_*$.
+These are conditional algebraic thresholds for the displayed estimates,
+not new zero-free regions, necessary RH conditions, actual lower bounds
+or a global impossibility theorem. A hypothetical squared-two-factor
+interface has the same formal residue exponent, but (C51) shows why it
+cannot replace this four-factor theorem or its fifteen-term error.
+
+**The next exceptional input has a fixed meaning.** Define
+
+$$
+\mathscr S_4(U)=U^{-1/6}\sum_{\epsilon,\mathbf r}\eta_{\epsilon,\mathbf r}
+ \sum_a C_4(P_a)\Theta_{4,A}(P_a)
+ I_4(q_{e_S(\mathbf r)}q_a^6/U).
+\tag{C67}
+$$
+
+At the unchanged cutoff a sufficient new frequency-average estimate is
+$|\mathscr S_4(U)|\ll\mathcal N_JU^{-\Delta-\sigma+\varepsilon}$
+for some fixed $\sigma>0$. Currently (C52) supplies only
+$U^{-1/24+\varepsilon}$. This target asks for cancellation on the
+same coupled frequency realization. It must be accompanied by
+$|\mathcal R_\mu|,|\mathcal R_{\rm tw}|
+\ll\mathcal N_JU^{1+B_*-\sigma+\varepsilon}$, or a bound of this
+strength for their same-object signed sum together with the residue.
+The $KK$ remainder is already smaller. Principal $R_\beta$ supplies
+neither the ray/angular residual estimate nor a nonprincipal inverse
+Hecke estimate. All these targets are unproved.
+
+**A sufficient local nonexceptional interface, also unproved.** The
+precise gap in [Xu–Sang v2, (2.6), (3.6)–(3.7) and Lemma
+3.2](https://arxiv.org/html/2610.17675v2#S3.SS2) concerns arithmetic
+columns on the same Poisson row. Freeze its $C,\mathfrak b$,
+$g=(\operatorname{rad}C,k)$, tensor branch and ray term. Put
+$X=L^2/q$, $N=L/(q_Cq_{\mathfrak b})$, $N_i=N/q_{f_i}$,
+$K_{\rm row}\asymp RX/q_C$ and $k=gk'$. Let $D_{\rm src}=N\mathfrak d$
+be the source moving-twist radical norm, distinct from $D=\sqrt U$,
+and let $R_{C,g}$ be its (3.7). The fixed $\Pi_i$ masks are independent
+of $k'$. Let $d_i(n)$ be the actual compressed column coefficient at
+$C\mathfrak b f_i n$, including its original side/core allocations;
+for actual squarefree columns the admissible branch has $C$ squarefree
+and $f_i=1$. A sufficient hypothesis $W(\lambda)$ is
+
+$$
+\sum_{\substack{0<q_{k'}\ll K_{\rm row}/q_g\\\psi^*_{k'}\ne1}}
+\left|\sum_n d_i(n)\nu_i(n)\chi_n(k')
+ \chi_n(gd_{\mathbf e}C^\flat)\mathbf1_{(n,\Pi_i)=1}
+ V_i(q_n/N_i)\right|^2
+\ll N_i(K_{\rm row}/q_g)D_{\rm src}R_{C,g}
+ U^{\lambda+\varepsilon}.
+\tag{C68}
+$$
+
+The symbols $\nu_i,d_{\mathbf e},C^\flat,\psi^*_{k'}$ are exactly those
+of the frozen source branch (3.6). Quantification includes all its
+original polynomial-size masks, collision zeros, fixed twists and
+prescribed bounded profiles, with fixed polynomial height costs and
+no new conductor lower bound. It is not a claim for optimized or plain
+columns. Divisor-boundedness gives $\sum|d_i(n)|^2\ll N_iU^\varepsilon$;
+that mass statement does not prove (C68).
+
+To check local sufficiency, Cauchy on the same $k'$ row gives
+$w_{C,g}\sqrt{M_1M_2}$, where $M_i$ is the left side of (C68).
+The source relation $w_{C,g}R_{C,g}/q_g\le q_C$ bounds this by
+$NRXD_{\rm src}U^{\lambda+\varepsilon}$. On dyads
+$q_C\asymp C_0,q_{\mathfrak b}\asymp B_0$, restoring $q/L^3$ and the
+$O(C_0B_0)$ frozen labels gives $RD_{\rm src}U^{\lambda+\varepsilon}$.
+Shell decay pays $R$. In the corefree $q=L=U$, $D_{\rm src}=1$
+normalization of (C59), restoration of $U^2$ therefore gives
+$U^{2+\lambda+\varepsilon}$. Thus $\lambda<B_*-1$ would suffice
+locally; $\lambda=1/12$ would leave the reserve
+$B_*-13/12$ above. The original plain-coefficient (2.6) does not
+supply (C68). Its proof would be a new actual-coefficient estimate.
+External log-Fourier separation pays its fixed polynomial height
+cost with sufficiently rapid decay; derivatives still avoid $b_A$.
+
+Even these exceptional and nonexceptional local targets together do
+not close J40. They must be placed back on its original common beta
+rows, with all product-squareparts $P<U^{1/6}$, common-$e$ signed
+Möbius detector, $\rho$, nontrivial cores, common-column gcds, unit/ray/
+angular terms, bad duals and full natural dual dyads. Moving
+$D_{\rm src}$ losses and every profile/height coefficient must then be
+summed under the one original fixed/polylog aggregate budget; they
+cannot enter an unspecified constant. A physical squarefree-row subset
+may be restricted after a complete positive energy bound, not by
+monotonicity of a signed nonexceptional or exceptional component.
+The actual same-beta signed contraction, signed Robin restoration and
+RH remain open. No Lean, source-major-proof or priority certification
+is made.
+
+## Exact frequency residue and the averaged coupled theta
+
+This continuation evaluates only the displayed all-$K_A$ residue sum
+in (C60). Retain (C51), (C58)–(C60), their original profiles and finite
+coefficients, and set $A=U^{1/12}$. For each fixed
+$d=q_{e_S(\mathbf r)}>0$, put $X=(U/d)^{1/6}$ and $C_0=C_4(1)$.
+All sums below count integral ideals once, including the $S$ factors
+of $a$. Define the signed or complex functional and Mellin transforms
+
+$$
+T_d(U)=\sum_a C_4(P_a)\Theta_{4,A}(P_a)I_4((q_a/X)^6),\quad
+\widehat I(v)=\int_0^\infty I_4(t)t^{v-1}\,dt,\quad
+\widehat W(z)=\int_0^\infty W(t)t^{z-1}\,dt.
+\tag{C69}
+$$
+
+Here $I_4$ is smooth at zero and rapidly decreasing with the original
+profile envelope; $\widehat I$ is holomorphic for $\Re v>0$.
+The original cutoff is $1$ below $1$ and $0$ above $2$.
+Omit its four factors temporarily and define
+
+$$
+\mathcal D(s,\mathbf z)=
+\sum_{\substack{a;\ e_1e_2e_3e_4\ {\rm sf}\\
+ (e_1e_2e_3e_4,S)=1,\ (a,e_1e_2e_3e_4)=1}}
+\frac{C_4(P_a)q_a^{-s}\prod_i\mu(e_i)2^{\omega(e_i)}q_{e_i}^{-z_i}}
+ {\prod_{p\mid e_1e_2e_3e_4}(q_p+4)}.
+\tag{C70}
+$$
+
+In (C70), $a$ is unrestricted; only the product of the four $e_i$ is
+squarefree. Absolute convergence holds for $\Re s>1$, $\Re z_i>0$.
+For $q=q_p$, $Q=q^{-s}$, $Z=\sum_iq^{-z_i}$, the normalized local
+factor of $\mathcal D/C_0$ is $(1-Q)^{-1}$ at $p\in S$, and otherwise
+
+$$
+1-\frac{2Z}{q+4}+\frac q{q+4}\frac Q{1-Q}
+=\frac{1-[4Q+2(1-Q)Z]/(q+4)}{1-Q}.
+\quad
+\mathcal D=C_0\zeta_K(s)\prod_i\zeta_K(1+z_i)^{-2}H(s,\mathbf z).
+\tag{C71}
+$$
+
+Indeed a prime dividing $a$ contributes $q/(q+4)$ to $C_4(P_a)/C_0$
+and cannot divide any $e_i$; otherwise it may enter exactly one $e_i$.
+Outside $S$, $H_p$ is the numerator in (C71) divided by
+$\prod_i(1-q^{-1-z_i})^2$; inside $S$ it is just that inverse product.
+No numerator is inverted. Write $\sigma=\Re s$, $\tau_i=\Re z_i$.
+For large $q$, uniformly in all heights on fixed closed real substrips,
+
+$$
+H_p-1=O\left(q^{-1-\sigma}+\sum_iq^{-2-\tau_i}
+ +\sum_iq^{-1-\sigma-\tau_i}
+ +\sum_{i,j}q^{-2-\tau_i-\tau_j}\right),\qquad
+\sigma>0,\quad\tau_i>-1/2,\quad\sigma+\tau_i>0.
+\tag{C72}
+$$
+
+Every exponent then exceeds $1$, proving normal convergence and a
+uniform bound for $H$. Its finite denominators do not vanish in this
+domain. In particular $H$ introduces no mixed polar divisor.
+
+**Exact residue.** Put $L_q=1-4/[q(q+4)]$ and
+$\bar D_q=(q^2+4q-4)/(q-1)=q+5+1/(q-1)$. At $s=1$ the numerator
+in (C71) is $L_q(1-2Z/\bar D_q)$. Consequently
+
+$$
+\begin{aligned}
+\mathop{\rm Res}_{s=1}\mathcal D(s,\mathbf z)&=\bar C\bar F(\mathbf z),\\
+\bar C&=\kappa C_0\prod_{p\notin S}L_{q_p}
+ =\kappa^5\prod_{p\in S}(1-q_p^{-1})^4
+ \prod_{p\notin S}(1+4/q_p-4/q_p^2)(1-q_p^{-1})^4,\\
+\bar F(\mathbf z)&=\prod_{p\notin S}
+ (1-2\textstyle\sum_iq_p^{-z_i}/\bar D_{q_p})
+ =\prod_i\zeta_K(1+z_i)^{-2}\bar H(\mathbf z),\\
+\bar Q_A&=\sum_{\substack{e_1e_2e_3e_4\ {\rm sf}\\(e_1e_2e_3e_4,S)=1}}
+ \frac{\prod_i\mu(e_i)2^{\omega(e_i)}W(q_{e_i}/A)}
+ {\prod_{p\mid e_1e_2e_3e_4}\bar D_{q_p}}.
+\end{aligned}
+\tag{C73}
+$$
+
+The Euler product for $\bar F$ is literal for $\Re z_i>0$; elsewhere
+use its displayed factorization. Outside $S$, $\bar H_p$ is its
+numerator divided by $\prod_i(1-q_p^{-1-z_i})^2$, and inside $S$ it
+is the inverse denominator. Cancellation of linear terms proves normal
+convergence for every $\Re z_i>-1/2$, with uniform bounds on fixed
+closed real substrips, as in (C55). Thus the $a$ average changes the
+prime denominator to $q+5+1/(q-1)$, while each of the four inverse-zeta
+exponents stays $-2$. This is a coupled theta, not a square of a
+two-variable theta.
+
+**Conditional absolute-error evaluation.** Assume the explicit
+[$R_\beta$](../Analytic/liu2026quasirh.md#the-coupled-euler-product-under-an-explicit-reciprocal-strip).
+For fixed $0<h<\min\{1-\beta,1/2\}$ and $h<\sigma<1$,
+
+$$
+T_d(U)=\frac{\bar C}{6}X\widehat I(1/6)\bar Q_A
+ +O_{K,S,W,h,\sigma,R_\beta}(\mathcal N_JX^\sigma A^{-4h}),
+\qquad |\bar Q_A|\ll_{K,S,W,h,R_\beta}A^{-4h}.
+\tag{C74}
+$$
+
+These are absolute bounds, uniform for the specified fixed finite $d$
+family and profiles in one common envelope. The moment is signed or
+complex; it is not a positive mass or a claimed nonzero number.
+
+**Proof.** Fivefold Mellin inversion initially on $\Re s>1$,
+$\Re z_i>0$ gives the integral of
+$[\widehat I(s/6)/6]X^s\prod_i[\widehat W(z_i)A^{z_i}]
+\mathcal D(s,\mathbf z)$, with measure $(2\pi i)^{-5}ds\,d\mathbf z$.
+Move the four $z_i$ lines to $-h$, then the $s$ line to $\sigma$.
+The condition $\sigma>h$ keeps all mixed terms inside (C72).
+Only $s=1$ contributes a residue, exactly (C73) and its fourfold Mellin
+integral $\bar Q_A$. The factor $1/6$ is from the sixth norm power.
+Moreover
+$\widehat W(z)=-z^{-1}\int_1^2W'(t)t^z\,dt$ has only a simple pole
+at zero, with residue $1$. The corresponding double zero of
+$\zeta_K(1+z_i)^{-2}$ cancels it throughout this deformation.
+There are no $z_i=0$ residues. This cancellation says nothing about
+poles at $z_i=\rho-1$ for zeros $\rho$ of $\zeta_K$.
+
+For explicit height control set $\delta=1-\beta-h>0$. The premise
+$R_\beta$ bounds each inverse-zeta square by
+$O((1+|\Im z_i|)^{2B_\delta})$ on the shifted strips.
+Fixed-field meromorphic continuation supplies polynomial zeta growth
+of some finite degree $L$ on the $s$ strip away from $1$; bounded-height
+joins detour that pole. Choose one finite
+$J>L+8B_\delta+20$, enlarged for the original derivative contract.
+A sufficient envelope bounds
+$\sup_{t\ge0}(1+t)^{J+3}|I_4^{(j)}(t)|$ for $0\le j\le J$,
+together with the required original-profile and cutoff seminorms.
+Integration by parts gives rapid Mellin decay on the fixed positive
+$s/6$ strips and on the $z_i$ lines. This pays all five vertical
+integrals, horizontal joins and tails by absolute integrability, giving
+the error in (C74). The fourfold argument for $\bar F$ proves its
+second bound. No growing-height or new reciprocal allowance is used.
+All component/height seminorms are aggregated against absolute
+coefficient measures within the same fixed or polylogarithmic budget.
+
+There is no extra $\prod_{p\in S}(1-1/q_p)$ from $a$: its ideals
+include all $S$ factors, accounting for the fifth $\kappa$.
+The factor $d^{-1/6}$ is already in $X$. The six units remain in the explicit finite sum with
+$\eta_{\epsilon,\mathbf r}$, without an extra factor or division by six.
+The original $U^2$, $D^{-1}$ side factors and physical-row/core
+prefactors of (C59)–(C60) must all be restored in their original places.
+
+**Scale and remaining obligation.** At source-conditional $R_{7/8}$,
+choose $h$ just below $1/8$ and $\sigma$ just above $h$, allocating fixed
+margins to $\varepsilon$. For every $\varepsilon>0$ this yields
+
+$$
+\begin{aligned}
+\bar Q_A&\ll_\varepsilon U^{-1/24+\varepsilon},\\
+T_d(U)&=\frac{\bar C}{6}d^{-1/6}U^{1/6}\widehat I(1/6)\bar Q_A
+ +O_\varepsilon(\mathcal N_JU^{-1/48+\varepsilon}),\\
+T_d(U)/X&=\frac{\bar C}{6}\widehat I(1/6)\bar Q_A
+ +O_\varepsilon(\mathcal N_JU^{-3/16+\varepsilon}).
+\end{aligned}
+\tag{C75}
+$$
+
+Thus this isolated $U^2T_d$ has principal bound
+$O(\mathcal N_JU^{17/8+\varepsilon})$ and evaluation error
+$O(\mathcal N_JU^{95/48+\varepsilon})$, times its original prefactor
+in modulus. Relative to $U^{13/6}$ the principal saving is still $1/24$;
+the new error saves $3/16>\Delta$. Since
+$\Delta-1/24=0.040816237971963\ldots$, the principal bound still misses
+the sufficient local target $U^{1+B_*-\nu}$. The evaluation error is
+below that target when $\varepsilon+\nu<3/16-\Delta$.
+
+If the same $I_4$ is used throughout the finite sum, its leading scalar
+is $\widehat I(1/6)\sum_{\epsilon,\mathbf r}
+\eta_{\epsilon,\mathbf r}d_{\mathbf r}^{-1/6}$.
+If profiles differ, retain their individual moments inside that sum.
+An exact vanishing of this scalar would remove this residue, but must
+be proved from the actual profiles and coefficient tables. Smoothness
+alone neither forces nor excludes it; no such cancellation is proved
+here. Without it, one sufficient new hypothesis, with the same uniform
+cutoff/derivative contract, is
+
+$$
+|\bar Q_A|\ll_\varepsilon A^{-12(\Delta+\nu)+\varepsilon},\qquad
+12\Delta=0.989794855663562\ldots,
+\tag{C76}
+$$
+
+or a sufficient signed bound for the actual finite aggregate. The
+provided contour gives exponent $1/2$, not this exponent. Further
+joint deformation must control the residue itself: $R_{7/8}$ does not
+exclude zeros at or left of $7/8$, bound crossed zero residues, or
+force $\bar H$ to vanish there. No new zero-free input or inverse-zeta
+pole cancellation is assumed. All old (C60) error estimates remain
+unchanged. The target bounds for the other fifteen $\mu$ terms,
+$\mathcal R_{\rm tw}$, (C68), other cores/gcds, bad duals and the
+original same-$\beta$ signed J40 aggregation remain unpaid. A selected Poisson component has no
+positivity or monotonicity under physical-row selection. This reduction
+is paper-level only and does not strengthen the principal estimate,
+prove a lower bound or impossibility theorem, certify the manuscript,
+or close J40, signed Robin restoration or RH.
