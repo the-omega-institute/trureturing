@@ -91,5 +91,52 @@ internal sealed class ActualSuzukiFiniteGammaEnergyDocument : IScribeDocumentDef
                             + "an explicit Fourier form-domain obstruction and finite "
                             + "energy growth. It asserts no sign for the complete Weil "
                             + "energy and proves no RH or Robin conclusion."))),
+                DescribeRole.Theorem),
+            Describe.Lean(
+                DescribeId.Create("actual-mean-zero-positive-full-theta-excess-all-gamma-domains"),
+                DeclarationHandle.Create(Owner + "actual_h6_mean_zero_positive_fullTheta_excess_all_gamma_domains"),
+                H("Actual mean zero with positive original and full theta excess"),
+                StatementSource.WithoutFormula(),
+                AssessedProvenance.FromRepo(),
+                Blocks(
+                    Paragraph(Text(
+                        "SOURCE_ONLY.UNCOMPILED proposal. There exists one original "
+                            + "physical H6 source F with integral over the real line of "
+                            + "actualSuzukiEvenBProfile(F) equal to zero. This same F "
+                            + "belongs to originalGammaFormDomain(c,F) for every real c, "
+                            + "and for every x>=pi the complete physicalTerm series has "
+                            + "HasSum F(x). Both literal integrals over x>pi of "
+                            + "((x/pi)^6-1)*norm(F(x))^2 and "
+                            + "((x/pi)^6-1)*norm(fullTheta(F,x))^2 are strictly positive.")),
+                    Paragraph(Text(
+                        "Two compactly supported finite features with scales 1 and "
+                            + "1/4 supply the construction inside this owner, using its "
+                            + "private finite support and Fourier proofs. If the small "
+                            + "feature already has zero actual even-B mean, choose it. "
+                            + "Otherwise subtract its mean-normalized multiple from the "
+                            + "large feature. The complete mean functional is linear: "
+                            + "L1 tail mass and the exact even dilation identity retain "
+                            + "the endpoint trace. At the large feature center the small "
+                            + "feature vanishes, so cancellation cannot erase the source.")),
+                    Paragraph(Text(
+                        "Continuity and compact support pay original H6 and the "
+                            + "integrability needed by the mean and Fourier calculations. "
+                            + "Finite Fourier decay and a quadratic bound for the Gamma "
+                            + "weight pay every constant-shift form domain of the actual "
+                            + "constructed source. Each branch supplies its own complete "
+                            + "same-input HasSum. Its tsum equality identifies fullTheta "
+                            + "with F on x>=pi and transfers the original excess to the "
+                            + "literal fullTheta excess. This existence result supplies "
+                            + "no Gamma domain for an arbitrary H6 mean-zero input and "
+                            + "requires no additional trace-zero premise.")),
+                    Paragraph(Text(
+                        "The proposed mirrored registration preserves the entire "
+                            + "existential source law and varies only its final literal "
+                            + "fullTheta-excess scalar. Zero readout makes final positivity "
+                            + "impossible. Actual observational dependence compares zero "
+                            + "with the same constructed positive-fullTheta witness. "
+                            + "Kernel compilation, Scribe emission and producer validation "
+                            + "of the raw source selector remain pending. No registration "
+                            + "acceptance or RH conclusion is asserted."))),
                 DescribeRole.Theorem))));
 }
