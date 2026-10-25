@@ -49,7 +49,7 @@ theorem half_successor (degree : ℕ) :
     Nat.cast_add, Nat.cast_one]
   field_simp
 
-private theorem half_binomial_transform (degree : ℕ) :
+theorem half_binomial_transform (degree : ℕ) :
     ∑ index ∈ Finset.range (degree + 1),
       (degree.choose index : ℂ) * halfBinomial index =
         (-1 : ℂ) ^ degree * halfBinomial degree := by
@@ -396,7 +396,7 @@ def labelledRemainders (D : LatticeData) :
 def wordWeight (D : LatticeData) (word : List (Index D)) : ℕ :=
   (word.map (sourceWeight D)).sum
 
-private theorem labelledRemainders_size (D : LatticeData) (word : List (Index D))
+theorem labelledRemainders_size (D : LatticeData) (word : List (Index D))
     (entry : Index D × List (Index D)) (member : entry ∈ labelledRemainders D word) :
     entry.2.length + 1 = word.length ∧
       wordWeight D entry.2 + sourceWeight D entry.1 = wordWeight D word := by
@@ -557,7 +557,7 @@ theorem Corr_monomial_enumeration (D : LatticeData) (charge : Charge D)
             (LatticeAllStateField.occurrences D exponent))) (monomial exponent 1))) = _
   rw [basis, ← correctionWord_permutation D charge word _ enumeration]
 
-private theorem wordWeight_occurrences (D : LatticeData) (exponent : Index D →₀ ℕ) :
+theorem wordWeight_occurrences (D : LatticeData) (exponent : Index D →₀ ℕ) :
     wordWeight D (LatticeAllStateField.occurrences D exponent) =
       Finsupp.weight (sourceWeight D) exponent := by
   classical

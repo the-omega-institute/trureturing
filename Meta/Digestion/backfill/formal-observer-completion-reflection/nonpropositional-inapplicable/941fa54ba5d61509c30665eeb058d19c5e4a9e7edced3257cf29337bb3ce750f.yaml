@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:941fa54ba5d61509c30665eeb058d19c5e4a9e7edced3257cf29337bb3ce750f
+  normalized_sha256: sha256:941fa54ba5d61509c30665eeb058d19c5e4a9e7edced3257cf29337bb3ce750f
+cas_ref: sha256:941fa54ba5d61509c30665eeb058d19c5e4a9e7edced3257cf29337bb3ce750f
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 'nonpropositional: 仅列状态编码 h:W→X 作为物理实现需要提供的数据，不声称该编码已经存在。'
+    previous_atom_id: 6e85b2540433d8c2bcfc9659fb55ed0958be326209d3d00eed8b1e8b8bbe2b45
+    next_atom_id: b6cf5e12fd88dd44314453de44bc3485ce6b184afd85d981cbf9bf04f6877c62

@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:737b4be8c146fb607a6fbc8f812dc3a9841d1ecc791e7bee15258e3640be1581
+  normalized_sha256: sha256:737b4be8c146fb607a6fbc8f812dc3a9841d1ecc791e7bee15258e3640be1581
+cas_ref: sha256:737b4be8c146fb607a6fbc8f812dc3a9841d1ecc791e7bee15258e3640be1581
+coverage_gids:
+  - gid: D5/S3/ConceptDynamics/DecisionValue/ContributionIncentiveThreshold.compensatedUtility
+    target_statement_id: sha256:9d6a65681e391484ab60ec6f23d858d8164fa23f53550f58537582aeaaef6d39
+  - gid: D5/S3/ConceptDynamics/DecisionValue/ContributionIncentiveThreshold.contribution_incentive_threshold
+    target_statement_id: sha256:e68707bdbc716877158f9332756978bd26a5dcdafa67a277f5110dac67b66d86
+receipts:
+  unresolved_subitems: []

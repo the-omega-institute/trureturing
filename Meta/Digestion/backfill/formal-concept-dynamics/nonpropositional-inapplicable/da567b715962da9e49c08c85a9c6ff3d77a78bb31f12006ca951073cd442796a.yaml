@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:da567b715962da9e49c08c85a9c6ff3d77a78bb31f12006ca951073cd442796a
+  normalized_sha256: sha256:da567b715962da9e49c08c85a9c6ff3d77a78bb31f12006ca951073cd442796a
+cas_ref: sha256:da567b715962da9e49c08c85a9c6ff3d77a78bb31f12006ca951073cd442796a
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 'Upstream-only general repair-kernel statement. For arbitrary kernels K1,K2 on X×X, Set.symmDiff_eq_empty identifies empty curvature with equality, and Set.nonempty_iff_ne_empty plus Set.mem_symmDiff supplies a state pair with different equality judgments when curvature is nonempty. Pinned mathlib 56a005855ea17e0b0958f73ec801ae140b0a1679: Mathlib/Data/Set/SymmDiff.lean, Mathlib/Data/Set/Basic.lean. D5/**/*.lean including private searched for symmDiff, curvature, repair order and kernel difference; FixedTargetCompletionFlatness supplies only fixed-target completion, not arbitrary Phi and Psi. No available frozen declaration was found supplying this general assertion.'
+    previous_atom_id: d23542e9485bee23dd6ba47685bfc5d7751efeeecd672aed7f4f6468fff34c1c
+    next_atom_id: 9c45f47d7d883e078ae2f69f8889ef906d7f52a60d793bdaea80edeb9cfaaac2

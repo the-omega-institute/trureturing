@@ -114,7 +114,43 @@ $$\forall n \in \mathrm{Nat},\; \forall G \in \operatorname{SimpleGraph}\left(\o
 
 An automorphism-invariant weight function has the same value on each edge and its image under every graph automorphism. This condition constrains edges only.
 
-**Definition 1.10 (The Section 5 conjecture).**
+**Definition 1.10 (The labelled complete bipartite graph).**
+
+$$\operatorname{K23} = \operatorname{SimpleGraph}.\operatorname{comap}\left(\operatorname{Equiv}.\operatorname{symm}\left(\operatorname{finSumFinEquiv}\left(2, 3\right)\right), \operatorname{completeBipartiteGraph}\left(\operatorname{Fin}\left(2\right), \operatorname{Fin}\left(3\right)\right)\right)$$
+
+*Formalization.* `D5/S3/Combinatorics/SpectralGraph/FiedlerResistanceInvariantWeightsRefutation.K23` (`✓ std3`).
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+The inverse of finSumFinEquiv labels the two hubs by 0 and 1 and the three leaves by 2, 3 and 4.
+
+**Definition 1.11 (Decidable adjacency).**
+
+$$\operatorname{DecidableRel}\left(\operatorname{SimpleGraph}.\operatorname{Adj}\left(\operatorname{K23}\right)\right)$$
+
+*Formalization.* `D5/S3/Combinatorics/SpectralGraph/FiedlerResistanceInvariantWeightsRefutation.K23_dec` (`✓ std3`).
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+Adjacency in the labelled complete bipartite graph is decidable.
+
+**Lemma 1.12 (Connectivity of the complete bipartite graph).**
+
+$$\operatorname{SimpleGraph}.\operatorname{Connected}\left(\operatorname{K23}\right)$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/SpectralGraph/FiedlerResistanceInvariantWeightsRefutation.K23_connected` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+Every vertex is reachable from vertex 2 by a path of length at most two.
+
+**Definition 1.13 (The Section 5 conjecture).**
 
 $$\operatorname{claim} = \left(\forall n \in \mathrm{Nat},\; \forall G \in \operatorname{SimpleGraph}\left(\operatorname{Fin}\left(n\right)\right),\; [\operatorname{DecidableRel}\left(\operatorname{SimpleGraph}.\operatorname{Adj}\left(G\right)\right)] \operatorname{SimpleGraph}.\operatorname{Connected}\left(G\right) \Rightarrow \left(3 \le n \Rightarrow \left(\exists w \in \operatorname{Sym2}\left(\operatorname{Fin}\left(n\right)\right) \to \mathrm{Real},\; \operatorname{Feasible}\left(G, w\right) \land \left(\operatorname{AutInvariant}\left(G, w\right) \land \left(\forall v \in \operatorname{Sym2}\left(\operatorname{Fin}\left(n\right)\right) \to \mathrm{Real},\; \operatorname{Feasible}\left(G, v\right) \Rightarrow \operatorname{lambda2}\left(G, v\right) \le \operatorname{lambda2}\left(G, w\right)\right)\right)\right)\right)\right)$$
 
@@ -126,7 +162,7 @@ $$\operatorname{claim} = \left(\forall n \in \mathrm{Nat},\; \forall G \in \oper
 
 Section 5, page 7, states verbatim: “We conjecture that – in the same fashion of what happens with the absolute algebraic connectivity – the maximal value of (3) is attained always for weight distributions that are invariant under automorphisms of the graph.” Equation (3) defines ă(G) = max {λ2(G;ω) | R(G;ω)=R(G)}. The encoding quantifies over connected finite simple graphs of order at least three and asserts an invariant feasible assignment dominating every feasible assignment; it does not assume existence of a maximum separately.
 
-**Theorem 1.11 (Refutation on K23).**
+**Theorem 1.14 (Refutation on K23).**
 
 $$\neg \operatorname{claim}$$
 
@@ -149,6 +185,9 @@ Let the hubs be 0 and 1 and the leaves be 2, 3 and 4. Conductances 32/23 on the 
 - Truth anchor: `D5/S3/Combinatorics/SpectralGraph/FiedlerResistanceInvariantWeightsRefutation.AutInvariant`
 - Truth anchor: `D5/S3/Combinatorics/SpectralGraph/FiedlerResistanceInvariantWeightsRefutation.Feasible`
 - Truth anchor: `D5/S3/Combinatorics/SpectralGraph/FiedlerResistanceInvariantWeightsRefutation.Harmonic`
+- Truth anchor: `D5/S3/Combinatorics/SpectralGraph/FiedlerResistanceInvariantWeightsRefutation.K23`
+- Truth anchor: `D5/S3/Combinatorics/SpectralGraph/FiedlerResistanceInvariantWeightsRefutation.K23_connected`
+- Truth anchor: `D5/S3/Combinatorics/SpectralGraph/FiedlerResistanceInvariantWeightsRefutation.K23_dec`
 - Truth anchor: `D5/S3/Combinatorics/SpectralGraph/FiedlerResistanceInvariantWeightsRefutation.claim`
 - Truth anchor: `D5/S3/Combinatorics/SpectralGraph/FiedlerResistanceInvariantWeightsRefutation.effRes`
 - Truth anchor: `D5/S3/Combinatorics/SpectralGraph/FiedlerResistanceInvariantWeightsRefutation.harmonicExt`

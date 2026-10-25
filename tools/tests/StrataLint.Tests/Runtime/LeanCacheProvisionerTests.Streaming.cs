@@ -8,9 +8,11 @@ namespace StrataLint.Tests;
 public sealed partial class LeanCacheProvisionerTests
 {
     [Theory]
-    [InlineData(false)]
-    [InlineData(true)]
-    public void CanonicalReaderPreservesRestoredDependencyBytesAndDetectsDirtyContent(bool dirty)
+    [InlineData(false, false)]
+    [InlineData(false, true)]
+    [InlineData(true, false)]
+    [InlineData(true, true)]
+    public void CanonicalReaderPreservesRestoredDependencyBytesAndDetectsDirtyContent(bool dirty, bool quiet)
     {
         if (OperatingSystem.IsWindows()) return;
         using var fixture = new PrivateReaderFixture();
@@ -18,12 +20,101 @@ public sealed partial class LeanCacheProvisionerTests
         if (dirty) File.AppendAllText(Path.Combine(dependency, "tracked.txt"), "dirty-content\n");
         var before = GitMaterialBytes(dependency);
 
-        var result = RunGitReader(fixture, dependency, "diff", "--exit-code", "HEAD");
+        var result = RunGitReader(fixture, dependency,
+            quiet ? ["diff", "--quiet", "HEAD"] : ["diff", "--exit-code", "HEAD"]);
 
-        Assert.Equal(dirty ? 1 : 0, result.ExitCode);
+        var configuration = RunGitReader(fixture, dependency, "config", "--show-origin", "--get-regexp",
+            @"^(core|diff|extensions)\.");
+        Assert.True(result.ExitCode == (dirty ? 1 : 0),
+            $"diff exit={result.ExitCode}; expected={(dirty ? 1 : 0)}; lexical={dependency}; "
+            + $"physical={LeanCacheGuard.PhysicalPath(dependency)}; "
+            + Encoding.UTF8.GetString(configuration.StandardOutput)
+            + Encoding.UTF8.GetString(result.StandardError));
         var output = Encoding.UTF8.GetString(result.StandardOutput);
         Assert.Contains("preserved-value\n", output, StringComparison.Ordinal);
-        Assert.Equal(dirty, output.Contains("+dirty-content", StringComparison.Ordinal));
+        Assert.Equal(dirty && !quiet, output.Contains("+dirty-content", StringComparison.Ordinal));
+        Assert.Equal(before, GitMaterialBytes(dependency));
+    }
+
+    [Theory]
+    [InlineData(false)]
+    [InlineData(true)]
+    public void CanonicalReaderDiffRespectsAndPreservesAnAlternateIndex(bool stagedDeletion)
+    {
+        if (OperatingSystem.IsWindows()) return;
+        using var fixture = new PrivateReaderFixture();
+        var dependency = CreateRestoredGitDependency(fixture);
+        var index = Path.Combine(fixture.Reader, "alternate index");
+        File.Copy(Path.Combine(dependency, ".git", "index"), index);
+        string[] environment = ["GIT_INDEX_FILE=" + index];
+        if (stagedDeletion)
+            Assert.Equal(0, RunGitReaderWithEnvironment(fixture, dependency, "02", environment,
+                "update-index", "--force-remove", "tracked.txt").ExitCode);
+        var before = GitMaterialBytes(dependency);
+        var indexBefore = File.ReadAllBytes(index);
+
+        var result = RunGitReaderWithEnvironment(fixture, dependency, "02", environment,
+            "diff", "--exit-code", "HEAD");
+
+        Assert.Equal(stagedDeletion ? 1 : 0, result.ExitCode);
+        Assert.Equal(stagedDeletion, Encoding.UTF8.GetString(result.StandardOutput)
+            .Contains("deleted file", StringComparison.Ordinal));
+        Assert.Equal(indexBefore, File.ReadAllBytes(index));
+        Assert.Equal(before, GitMaterialBytes(dependency));
+    }
+
+    [Fact]
+    public void CanonicalReaderDiffPreservesASplitIndex()
+    {
+        if (OperatingSystem.IsWindows()) return;
+        using var fixture = new PrivateReaderFixture();
+        var dependency = CreateRestoredGitDependency(fixture);
+        Assert.Equal(0, RunGitReader(fixture, dependency, "update-index", "--split-index").ExitCode);
+        File.SetLastWriteTimeUtc(Path.Combine(dependency, "tracked.txt"), DateTime.UnixEpoch);
+        var before = GitMaterialBytes(dependency);
+
+        var result = RunGitReader(fixture, dependency, "diff", "--exit-code", "HEAD");
+
+        Assert.Equal(0, result.ExitCode);
+        Assert.Equal(before, GitMaterialBytes(dependency));
+    }
+
+    [Theory]
+    [InlineData("--exec-path")]
+    [InlineData("--version")]
+    [InlineData("--help")]
+    [InlineData("--html-path")]
+    [InlineData("--man-path")]
+    [InlineData("--info-path")]
+    public void CanonicalReaderForwardsTerminalGitQueries(string query)
+    {
+        if (OperatingSystem.IsWindows()) return;
+        using var fixture = new PrivateReaderFixture();
+        var dependency = CreateRestoredGitDependency(fixture);
+        string[] arguments = ["-c", "man.viewer=fixture", "-c", "man.fixture.cmd=false", query, "diff"];
+        var native = TestProcessRunner.Run("git", ["-C", dependency, .. arguments], dependency,
+            TestBudgets.ScriptProcessHangGuard, 64 * 1024);
+
+        var result = RunGitReader(fixture, dependency, arguments);
+
+        Assert.Equal(native.ExitCode, result.ExitCode);
+        Assert.EndsWith(Encoding.UTF8.GetString(native.StandardOutput),
+            Encoding.UTF8.GetString(result.StandardOutput), StringComparison.Ordinal);
+        Assert.Equal(native.StandardError, result.StandardError);
+    }
+
+    [Fact]
+    public void CanonicalReaderDiffPreservesNativeErrors()
+    {
+        if (OperatingSystem.IsWindows()) return;
+        using var fixture = new PrivateReaderFixture();
+        var dependency = CreateRestoredGitDependency(fixture);
+        var before = GitMaterialBytes(dependency);
+
+        var result = RunGitReader(fixture, dependency, "diff", "--exit-code", "refs/heads/missing");
+
+        Assert.Equal(128, result.ExitCode);
+        Assert.Contains("refs/heads/missing", Encoding.UTF8.GetString(result.StandardError), StringComparison.Ordinal);
         Assert.Equal(before, GitMaterialBytes(dependency));
     }
 
@@ -99,12 +190,17 @@ public sealed partial class LeanCacheProvisionerTests
 
     private static StrataLint.Runtime.ProcessOutput RunGitReaderWithConfiguration(
         PrivateReaderFixture fixture, string dependency, string count, params string[] arguments)
+        => RunGitReaderWithEnvironment(fixture, dependency, count, [], arguments);
+
+    private static StrataLint.Runtime.ProcessOutput RunGitReaderWithEnvironment(
+        PrivateReaderFixture fixture, string dependency, string count, string[] environment, params string[] arguments)
     {
         var script = Path.Combine(fixture.Reader, "tools/scripts/worktree/lean-cache-run.sh");
         Directory.CreateDirectory(Path.GetDirectoryName(script)!);
+        CopyReaderGit(fixture.Reader);
         File.Copy(Path.Combine(TestRepositoryLayout.FindRoot(), "tools/scripts/worktree/lean-cache-run.sh"), script, true);
         return TestProcessRunner.Run("/usr/bin/env",
-            ["STRATALINT_LEAN_PRODUCER_DLL=" + typeof(LeanProgram).Assembly.Location,
+            [.. environment, "STRATALINT_LEAN_PRODUCER_DLL=" + typeof(LeanProgram).Assembly.Location,
                 "LAKE_BIN=" + fixture.Lake, "GIT_CONFIG_COUNT=" + count,
                 "GIT_CONFIG_KEY_0=test.preserved", "GIT_CONFIG_VALUE_0=preserved-value",
                 "GIT_CONFIG_KEY_1=diff.autoRefreshIndex", "GIT_CONFIG_VALUE_1=true",
@@ -193,10 +289,21 @@ public sealed partial class LeanCacheProvisionerTests
         finally { StopReader(process); }
     }
 
+    private static void CopyReaderGit(string root)
+    {
+        const string relative = "tools/scripts/worktree/lean-git/git";
+        var target = Path.Combine(root, relative);
+        Directory.CreateDirectory(Path.GetDirectoryName(target)!);
+        File.Copy(Path.Combine(TestRepositoryLayout.FindRoot(), relative), target, true);
+        if (!OperatingSystem.IsWindows())
+            File.SetUnixFileMode(target, UnixFileMode.UserRead | UnixFileMode.UserWrite | UnixFileMode.UserExecute);
+    }
+
     private static Process StartStreamingReader(PrivateReaderFixture fixture, int childExit, string? commandBody = null)
     {
         var script = Path.Combine(fixture.Reader, "tools/scripts/worktree/lean-cache-run.sh");
         Directory.CreateDirectory(Path.GetDirectoryName(script)!);
+        CopyReaderGit(fixture.Reader);
         File.Copy(Path.Combine(TestRepositoryLayout.FindRoot(), "tools/scripts/worktree/lean-cache-run.sh"), script);
         var command = Path.Combine(fixture.Reader, "command.sh");
         File.WriteAllText(command, commandBody ?? $$"""

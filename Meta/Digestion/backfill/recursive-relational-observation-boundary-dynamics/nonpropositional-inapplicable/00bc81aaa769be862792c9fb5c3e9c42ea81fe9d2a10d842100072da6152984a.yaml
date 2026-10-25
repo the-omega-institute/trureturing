@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:00bc81aaa769be862792c9fb5c3e9c42ea81fe9d2a10d842100072da6152984a
+  normalized_sha256: sha256:00bc81aaa769be862792c9fb5c3e9c42ea81fe9d2a10d842100072da6152984a
+cas_ref: sha256:00bc81aaa769be862792c9fb5c3e9c42ea81fe9d2a10d842100072da6152984a
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: Explanation of metric completion notation and bibliographic references, with an instruction to retain their hypotheses.
+    previous_atom_id: a7903bbbfc99aa1461ec794fe8eff956ab514cf0b2d5eb37e24fcad7fbf8b8c9
+    next_atom_id: 9c3cf4f1f8732aaa5bf54cf75935ec1be4bfc7a6bafbdb5e0ed7c67c3bdca92e

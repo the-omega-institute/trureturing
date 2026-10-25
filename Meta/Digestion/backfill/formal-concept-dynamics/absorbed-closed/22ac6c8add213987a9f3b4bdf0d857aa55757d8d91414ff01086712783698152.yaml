@@ -1,0 +1,19 @@
+fingerprints:
+  raw_sha256: sha256:22ac6c8add213987a9f3b4bdf0d857aa55757d8d91414ff01086712783698152
+  normalized_sha256: sha256:22ac6c8add213987a9f3b4bdf0d857aa55757d8d91414ff01086712783698152
+cas_ref: sha256:22ac6c8add213987a9f3b4bdf0d857aa55757d8d91414ff01086712783698152
+coverage_gids:
+  - gid: D5/S3/ObserverMemory/PredictionFactors/ReachableBehaviorCore.reachable_behavior_core
+    target_statement_id: sha256:ffe94b9c9944d7b4cff05302f44b3c0404fa85b3fe068b3b66e356546d2e9d82
+  - gid: D5/S3/ObserverMemory/PredictionFactors/ReachableBehaviorMinimality.ReachableBehaviorQuotient
+    target_statement_id: sha256:2f4c4d9cf5847658a51cae7753b965e453b3d8dcef542c24a99ddeb2f2c4e0a6
+  - gid: D5/S3/ObserverMemory/PredictionFactors/ReachableBehaviorMinimality.ReachableOrbit
+    target_statement_id: sha256:2fc622fac78d37061511025d700458b6d568447441f015dbaccf3d928f5b3d3b
+  - gid: D5/S3/ObserverMemory/PredictionFactors/ReachableBehaviorMinimality.futureBehavior
+    target_statement_id: sha256:20624aa60e2fbc0666001f9c87655ae4b9808b9751942eb0761b032d7b3ec684
+receipts:
+  unresolved_subitems: []
+  chain_atoms:
+    - 80cb6eac687a69440f633a3d98a64c21410b4775b1852fe36854a6a010a06b0e
+    - 081039ee6bc5996b0fff4e4f840c95d973bb707c8b05a003b448f0a5defb6e07
+    - 9f81c91ec64e3f547b52b4e67b815a8282a8ea81cc980fa4fd28ef60681c308b

@@ -1,0 +1,15 @@
+fingerprints:
+  raw_sha256: sha256:caf356c1497e1c27095eeb4dac76d60d0911088c2b86923d71d33dfd7bcdefa3
+  normalized_sha256: sha256:caf356c1497e1c27095eeb4dac76d60d0911088c2b86923d71d33dfd7bcdefa3
+cas_ref: sha256:caf356c1497e1c27095eeb4dac76d60d0911088c2b86923d71d33dfd7bcdefa3
+coverage_gids:
+  - gid: D5/S0/Conventions/WDigits.decode_wdigits
+    target_statement_id: sha256:6d2a39606fefb80f159dfd0824e770116148025e1a8420a62d36b2120fc0a7b2
+  - gid: D5/S0/Conventions/WDigits.wdigits_isCanonical
+    target_statement_id: sha256:3cb605330e5e08d1497edc3e8a53692dfe62c788bd43944893a436ae9307332f
+  - gid: D5/S0/Conventions/WDigits.wdigits_unique
+    target_statement_id: sha256:a85c044d3f237c1d3c2a95a515470e2bcc94ebca613e89c39f603471e61bd20f
+  - gid: D5/S3/Arith/GoldenResource5040PriceInterval.target_exponent_eq_factorization_5040
+    target_statement_id: sha256:2602a5620f796e04972eb3e6ee2c00ddbb4f4d0a5d220ad82b2b953a362b16f1
+receipts:
+  unresolved_subitems: []

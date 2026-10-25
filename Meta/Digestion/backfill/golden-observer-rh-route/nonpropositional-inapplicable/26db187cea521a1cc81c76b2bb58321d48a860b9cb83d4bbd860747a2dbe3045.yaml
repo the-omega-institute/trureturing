@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:26db187cea521a1cc81c76b2bb58321d48a860b9cb83d4bbd860747a2dbe3045
+  normalized_sha256: sha256:26db187cea521a1cc81c76b2bb58321d48a860b9cb83d4bbd860747a2dbe3045
+cas_ref: sha256:26db187cea521a1cc81c76b2bb58321d48a860b9cb83d4bbd860747a2dbe3045
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 第二波补位条件、自然归属及消费者选择的研究安排；不是偶极或 jet 的数学断言。
+    previous_atom_id: f116bc1581aa1366bc2944505fdccd52d1e3ede4099b7793523da7f4ba46516f
+    next_atom_id: 05bde4d910974f37f4b9708e54f174ba6e85946dbe80b0650f378c18820d50d7

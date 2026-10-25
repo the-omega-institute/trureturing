@@ -1,0 +1,15 @@
+fingerprints:
+  raw_sha256: sha256:3f478ef7c3ee85d6133f874b151699a9e8b5c8c57cd9543f762a9605b1e6ea4c
+  normalized_sha256: sha256:3f478ef7c3ee85d6133f874b151699a9e8b5c8c57cd9543f762a9605b1e6ea4c
+cas_ref: sha256:3f478ef7c3ee85d6133f874b151699a9e8b5c8c57cd9543f762a9605b1e6ea4c
+coverage_gids:
+  - gid: D5/S3/Weil/TestFunctions/LiCurvatureCriterion.geometric_energy_second_difference
+    target_statement_id: sha256:1d1296c6fa650dba216b7aa214e1340e2edb09f93f4b439a9c4aae3710e8e68b
+  - gid: D5/S3/Weil/TestFunctions/LiCurvatureCriterion.li_curvature_criterion
+    target_statement_id: sha256:e8c57d1b89c2ab62565a6bffdf55a4ca7c472fa66dd5652d4c1c3a8d25d5e3f2
+  - gid: D5/S3/Weil/TestFunctions/LiCurvatureCriterion.second_difference_recurrence_unique
+    target_statement_id: sha256:626915622c50f66ac98c9decdb9fedfd1b23746039d97a2f7125a23ff91505be
+  - gid: D5/S3/Weil/TestFunctions/LiCurvatureCriterion.toeplitz_quadratic_eq_integral
+    target_statement_id: sha256:31ede984c83a1dc47c92f5fb87f0a993da975846e9d22ad057d31c6ae2f22385
+receipts:
+  unresolved_subitems: []

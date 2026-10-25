@@ -52,7 +52,49 @@ $$\forall (n: \mathbb{N}), \forall (rho: \operatorname{Matrix}\left(\operatornam
 
 Section III, after Eq. (13), p. 4: “The minimization could be solved analytically [2], leading to Cr(ρ) = S(ρdiag)−S(ρ), where S(ρ) = − Tr(ρ log₂ ρ) is the von Neuman entropy.” The scalar functional calculus uses base-two logarithms.
 
-**Definition 1.5 (Conjecture 7).**
+**Definition 1.5 (Reflection associated with a matrix).**
+
+$$\forall (n: \mathbb{N}), \forall (P: \operatorname{Matrix}\left(\operatorname{Fin}\left(n\right), \operatorname{Fin}\left(n\right), \mathbb{C}\right)), \operatorname{reflection}\left(P\right) = 2 \cdot P - 1$$
+
+*Formalization.* `D5/S3/Divergence/CoherenceL1RelativeEntropyBound.reflection` (`✓ std3`).
+
+*Source.* Repository-derived.
+
+*Acknowledgement.* Swapan Rana, Preeti Parashar, Maciej Lewenstein (2016). *Trace-distance measure of coherence*. DOI: [10.1103/PhysRevA.93.012110](https://doi.org/10.1103/PhysRevA.93.012110). URL: <https://arxiv.org/abs/1511.01854v2>.
+
+*Commentary.*
+
+The reflection associated with P is twice P minus the identity matrix.
+
+**Theorem 1.6 (Hermitian reflections).**
+
+$$\forall (n: \mathbb{N}), \forall (P: \operatorname{Matrix}\left(\operatorname{Fin}\left(n\right), \operatorname{Fin}\left(n\right), \mathbb{C}\right)), (\operatorname{IsHermitian}\left(P\right)) \Rightarrow (\operatorname{IsHermitian}\left(\operatorname{reflection}\left(P\right)\right))$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/Divergence/CoherenceL1RelativeEntropyBound.reflection_hermitian` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Acknowledgement.* Swapan Rana, Preeti Parashar, Maciej Lewenstein (2016). *Trace-distance measure of coherence*. DOI: [10.1103/PhysRevA.93.012110](https://doi.org/10.1103/PhysRevA.93.012110). URL: <https://arxiv.org/abs/1511.01854v2>.
+
+*Commentary.*
+
+The reflection associated with a Hermitian matrix is Hermitian.
+
+**Theorem 1.7 (Unitary reflections).**
+
+$$\forall (n: \mathbb{N}), \forall (P: \operatorname{Matrix}\left(\operatorname{Fin}\left(n\right), \operatorname{Fin}\left(n\right), \mathbb{C}\right)), (\operatorname{IsHermitian}\left(P\right)) \Rightarrow ((P \cdot P = P) \Rightarrow (\operatorname{reflection}\left(P\right) \in \operatorname{unitaryGroup}\left(\operatorname{Fin}\left(n\right), \mathbb{C}\right)))$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/Divergence/CoherenceL1RelativeEntropyBound.reflection_unitary` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Acknowledgement.* Swapan Rana, Preeti Parashar, Maciej Lewenstein (2016). *Trace-distance measure of coherence*. DOI: [10.1103/PhysRevA.93.012110](https://doi.org/10.1103/PhysRevA.93.012110). URL: <https://arxiv.org/abs/1511.01854v2>.
+
+*Commentary.*
+
+The reflection associated with a Hermitian idempotent matrix is unitary.
+
+**Definition 1.8 (Conjecture 7).**
 
 $$claim \Leftrightarrow \forall (n: \mathbb{N}), \forall (rho: \operatorname{Matrix}\left(\operatorname{Fin}\left(n\right), \operatorname{Fin}\left(n\right), \mathbb{C}\right)), (\operatorname{IsState}\left(rho\right)) \Rightarrow (\operatorname{coherenceRel}\left(rho\right) \le \operatorname{D5}.\operatorname{S3}.\operatorname{Quantum}.\operatorname{Information}.\operatorname{CorrelatedCoherenceMonogamyRefutation}.\operatorname{l1Coherence} (rho))$$
 
@@ -64,7 +106,7 @@ $$claim \Leftrightarrow \forall (n: \mathbb{N}), \forall (rho: \operatorname{Mat
 
 Section III.2, printed p. 5, verbatim: “Conjecture 7. For all states ρ, C_{l1}(ρ) ≥ C_r(ρ).” Here n ranges over every natural number and rho over every complex n by n matrix. The state predicate imposes positive semidefiniteness and unit trace, including singular states.
 
-**Theorem 1.6 (The coherence inequality).**
+**Theorem 1.9 (The coherence inequality).**
 
 $$\forall (n: \mathbb{N}), \forall (rho: \operatorname{Matrix}\left(\operatorname{Fin}\left(n\right), \operatorname{Fin}\left(n\right), \mathbb{C}\right)), (\operatorname{IsState}\left(rho\right)) \Rightarrow (\operatorname{coherenceRel}\left(rho\right) \le \operatorname{D5}.\operatorname{S3}.\operatorname{Quantum}.\operatorname{Information}.\operatorname{CorrelatedCoherenceMonogamyRefutation}.\operatorname{l1Coherence} (rho))$$
 
@@ -87,6 +129,9 @@ A binary pinching is the average of a state and its conjugate by the unitary ref
 - Truth anchor: `D5/S3/Divergence/CoherenceL1RelativeEntropyBound.IsState`
 - Truth anchor: `D5/S3/Divergence/CoherenceL1RelativeEntropyBound.claim`
 - Truth anchor: `D5/S3/Divergence/CoherenceL1RelativeEntropyBound.coherenceRel`
+- Truth anchor: `D5/S3/Divergence/CoherenceL1RelativeEntropyBound.reflection`
+- Truth anchor: `D5/S3/Divergence/CoherenceL1RelativeEntropyBound.reflection_hermitian`
+- Truth anchor: `D5/S3/Divergence/CoherenceL1RelativeEntropyBound.reflection_unitary`
 - Truth anchor: `D5/S3/Divergence/CoherenceL1RelativeEntropyBound.result`
 - Truth anchor: `D5/S3/Divergence/CoherenceL1RelativeEntropyBound.vonNeumann2`
 - Truth anchor: `D5/S3/Quantum/Information/CorrelatedCoherenceMonogamyRefutation.l1Coherence`

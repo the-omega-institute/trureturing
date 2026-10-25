@@ -110,6 +110,62 @@ public sealed class WorktreeRoutingInstructionTests
         Assert.Contains("create one only when isolation is needed", instructions, StringComparison.Ordinal);
     }
 
+    [Fact]
+    public void ReviewSeatsAllowFetchAndAssignedWorktreeBuildsWithoutChangingHeadOrStatus()
+    {
+        var instructions = Read("tools/scripts/agent/openproblem/templates/blocks/review-readonly-block.md");
+
+        Assert.Contains("git fetch origin dev", instructions, StringComparison.Ordinal);
+        Assert.Contains("Do not merge, rebase, commit, reset, stash or switch branches in this worktree, and do not push", instructions, StringComparison.Ordinal);
+        Assert.Contains("Builds and tests may run in the assigned worktree", instructions, StringComparison.Ordinal);
+        Assert.Contains("must leave `git status --short` empty", instructions, StringComparison.Ordinal);
+        Assert.Contains("`git rev-parse HEAD` equal to the assigned head", instructions, StringComparison.Ordinal);
+        Assert.DoesNotContain("Do not fetch", instructions, StringComparison.Ordinal);
+        Assert.DoesNotContain("Do not run builds or tests", instructions, StringComparison.Ordinal);
+    }
+
+    [Fact]
+    public void ReviewSeatsUsePinnedReadsAndAskCallerForAnotherWorktree()
+    {
+        var instructions = Read("tools/scripts/agent/openproblem/templates/blocks/review-readonly-block.md");
+
+        foreach (var command in new[]
+        {
+            "git show <commit>:<path>",
+            "git grep <pattern> <commit> -- <path>",
+            "git diff <base> <head> -- <path>",
+        })
+        {
+            Assert.Contains(command, instructions, StringComparison.Ordinal);
+            Assert.True(instructions.IndexOf("git fetch origin dev", StringComparison.Ordinal) <
+                instructions.IndexOf(command, StringComparison.Ordinal));
+        }
+
+        Assert.Contains("Do not create another worktree", instructions, StringComparison.Ordinal);
+        Assert.Contains("including under `/tmp`, `/private/tmp` or `$TMPDIR`", instructions, StringComparison.Ordinal);
+        Assert.Contains("If a check needs another worktree, report it to the caller", instructions, StringComparison.Ordinal);
+        Assert.Contains("who follows CLAUDE.md §6.1", instructions, StringComparison.Ordinal);
+        Assert.DoesNotContain("git worktree add", instructions, StringComparison.Ordinal);
+        Assert.DoesNotContain("or create a temporary worktree", instructions, StringComparison.Ordinal);
+        Assert.DoesNotContain("Report checks that need writes back to the caller", instructions, StringComparison.Ordinal);
+    }
+
+    [Theory]
+    [InlineData("61-reusable-collaborative-worktrees-and-merged-delivery",
+        "### 6.1 Reusable collaborative worktrees and MERGED delivery", 2)]
+    [InlineData("3-形式化逃逸内容用途与研究", "## 3. 形式化、逃逸内容、用途与研究", 1)]
+    [InlineData("52-工件产地与独立性披露", "### 5.2 工件产地与独立性披露", 1)]
+    [InlineData("75-base-判官永久禁令与-sl-030-边界", "### 7.5 base 判官永久禁令与 SL-030 边界", 1)]
+    public void ContributingPolicyLinksTargetCurrentHeadings(string anchor, string heading, int count)
+    {
+        var guide = Read("docs/CONTRIBUTING.md");
+        var link = $"../CLAUDE.md#{anchor}";
+
+        Assert.Contains(heading, Read("CLAUDE.md"), StringComparison.Ordinal);
+        Assert.Equal(count, guide.Split(link, StringSplitOptions.None).Length - 1);
+        Assert.DoesNotContain("#61-独立-worktree-与-merged-完成态", guide, StringComparison.Ordinal);
+    }
+
     private static string Read(string path) =>
         File.ReadAllText(Path.Combine(TestRepositoryLayout.FindRoot(), path));
 

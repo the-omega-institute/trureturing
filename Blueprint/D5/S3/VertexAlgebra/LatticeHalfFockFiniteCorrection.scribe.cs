@@ -42,6 +42,18 @@ internal sealed class LatticeHalfFockFiniteCorrectionDocument : IScribeDocumentD
         H("Finite Twisted Correction"),
         Blocks(
             Paragraph(Text("LatticeData consists of an arbitrary finite rank and a symmetric integral Gram matrix with even diagonal. Rank zero, degeneracy and indefinite forms are allowed. The source weight of (i,k) is k+1; the native half-Fock weight is 2k+1. The extra polynomial variable records physical negative shifts. Singleton weights are binomial(-1/2,m) times the charge pairing; pair weights are mn binomial(-1/2,m) binomial(-1/2,n)/(m+n) times the Gram pairing. No inverse Gram matrix, positivity, rank condition or occupation cutoff occurs.")),
+            Describe.Lean(DescribeId.Create("finite-correction-consumed-half-binomial-transform"),
+                DeclarationHandle.Create(Prefix + "half_binomial_transform"), H("The original half-binomial finite transform"),
+                StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(Background),
+                Blocks(Paragraph(Text("Visibility-only exposure of the existing theorem with its exact original statement and proof body preserved. The new ActualCorrCovariance singleton_scalar proof consumes this finite transform; no new binomial proof is asserted."))), DescribeRole.Theorem),
+            Describe.Lean(DescribeId.Create("finite-correction-consumed-labelled-remainders-size"),
+                DeclarationHandle.Create(Prefix + "labelledRemainders_size"), H("Length and exact weight of a labelled remainder"),
+                StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(Background),
+                Blocks(Paragraph(Text("Visibility-only exposure of the original joint length and wordWeight law. ActualCorrCovariance correctionWord_homogeneous consumes both clauses in the actual pair-matching branch, including repeated generators. Its proof body is unchanged."))), DescribeRole.Theorem),
+            Describe.Lean(DescribeId.Create("finite-correction-consumed-word-weight-occurrences"),
+                DeclarationHandle.Create(Prefix + "wordWeight_occurrences"), H("Exact weight of the original occurrences enumeration"),
+                StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(Background),
+                Blocks(Paragraph(Text("Visibility-only exposure of the original equality between wordWeight of occurrences and Finsupp.weight sourceWeight. ActualCorrCovariance consumes it to transport matching homogeneity to original oscillator polynomials. Its proof body is unchanged."))), DescribeRole.Theorem),
             Describe.Lean(
                 DescribeId.Create("half-fock-positive-source-convolution"),
                 DeclarationHandle.Create(Prefix + "halfBinomial_positive_convolution"),

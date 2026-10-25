@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:a728d1b3acaef4060013760e71e6368e415c5f9ec72d5c88dd77cdbc5a1e7fe2
+  normalized_sha256: sha256:a728d1b3acaef4060013760e71e6368e415c5f9ec72d5c88dd77cdbc5a1e7fe2
+cas_ref: sha256:a728d1b3acaef4060013760e71e6368e415c5f9ec72d5c88dd77cdbc5a1e7fe2
+coverage_gids:
+  - gid: D5/S3/ConceptDynamics/Experiments/ExperimentRefinementGainMonotone.targetDefects
+    target_statement_id: sha256:ecd2ca10582f3c0fb21b5130575eb748daaa301a2fd306ddb212efd9a9cf30c5
+receipts:
+  unresolved_subitems: []

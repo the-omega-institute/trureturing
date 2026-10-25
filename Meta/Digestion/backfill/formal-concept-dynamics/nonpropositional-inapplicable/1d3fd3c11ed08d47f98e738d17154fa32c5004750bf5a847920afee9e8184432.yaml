@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:1d3fd3c11ed08d47f98e738d17154fa32c5004750bf5a847920afee9e8184432
+  normalized_sha256: sha256:1d3fd3c11ed08d47f98e738d17154fa32c5004750bf5a847920afee9e8184432
+cas_ref: sha256:1d3fd3c11ed08d47f98e738d17154fa32c5004750bf5a847920afee9e8184432
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 哲学对照表把分类空间与实例映射作为形式与分有的建模语言；未断言某个映射单射、满射或具有截面。
+    previous_atom_id: a3e1b029cec9d94f1f3a17f8a953d52a1d060f9201a841a86f65d53af93ad66b
+    next_atom_id: 700210cfd6cce43618c9705714db71e049979a4a7dfa478d79e2c57b2eac56ea

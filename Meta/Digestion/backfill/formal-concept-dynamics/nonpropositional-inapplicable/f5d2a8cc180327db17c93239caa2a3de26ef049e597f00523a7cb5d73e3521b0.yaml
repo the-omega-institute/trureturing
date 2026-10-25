@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:f5d2a8cc180327db17c93239caa2a3de26ef049e597f00523a7cb5d73e3521b0
+  normalized_sha256: sha256:f5d2a8cc180327db17c93239caa2a3de26ef049e597f00523a7cb5d73e3521b0
+cas_ref: sha256:f5d2a8cc180327db17c93239caa2a3de26ef049e597f00523a7cb5d73e3521b0
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 仅设置可测空间和可测概念 C；生成 σ-代数的定义位于下一 atom。
+    previous_atom_id: 3271377b45eb25b36e60e84ead0551236d52b77e45f4037d0fb0d1ed2cd46b98
+    next_atom_id: 38e24d7f56ef2ed744cf79429923fd99c7a6b98792e27f4b9636f720cc9b6118

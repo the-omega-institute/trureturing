@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:d7579c47a836e22195c8cf7b642e975e2a4263539b0ca254070b912552f514b7
+  normalized_sha256: sha256:d7579c47a836e22195c8cf7b642e975e2a4263539b0ca254070b912552f514b7
+cas_ref: sha256:d7579c47a836e22195c8cf7b642e975e2a4263539b0ca254070b912552f514b7
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 只有机械历史部标题，不含窗口复杂度或容量断言。
+    previous_atom_id: bc0c938dd1deed105526d51a2b890cb9b3d404041fa6887b99aa99d69c4e366c
+    next_atom_id: a4ac2445058fc4b667f96344a1536419120d90a520d2f45f07ce81b3569ca9a8

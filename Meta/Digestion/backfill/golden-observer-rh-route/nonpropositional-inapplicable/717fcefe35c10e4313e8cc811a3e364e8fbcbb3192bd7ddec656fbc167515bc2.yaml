@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:717fcefe35c10e4313e8cc811a3e364e8fbcbb3192bd7ddec656fbc167515bc2
+  normalized_sha256: sha256:717fcefe35c10e4313e8cc811a3e364e8fbcbb3192bd7ddec656fbc167515bc2
+cas_ref: sha256:717fcefe35c10e4313e8cc811a3e364e8fbcbb3192bd7ddec656fbc167515bc2
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 约定预算读数记录证书及区间测试结果；未断言所有 slack 均通过测试。
+    previous_atom_id: 8991dd3d662d23d1e927e96b11e85d52422643d054f3f0228b6ba74799621743
+    next_atom_id: 1f1c1be2c468e7094f8105abac48d8df7d5e22379f463dc6d723633d18569060

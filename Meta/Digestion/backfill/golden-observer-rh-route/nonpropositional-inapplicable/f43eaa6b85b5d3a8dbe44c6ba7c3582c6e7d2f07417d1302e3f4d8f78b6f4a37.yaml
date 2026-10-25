@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:f43eaa6b85b5d3a8dbe44c6ba7c3582c6e7d2f07417d1302e3f4d8f78b6f4a37
+  normalized_sha256: sha256:f43eaa6b85b5d3a8dbe44c6ba7c3582c6e7d2f07417d1302e3f4d8f78b6f4a37
+cas_ref: sha256:f43eaa6b85b5d3a8dbe44c6ba7c3582c6e7d2f07417d1302e3f4d8f78b6f4a37
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: “Gödel 表明 RH 不可证”是被拒用的引述，不断言 RH 不可证。
+    previous_atom_id: 380c8309b6d57bbbda86c2993762bd83032c35ee367826d0e933065ed18341c5
+    next_atom_id: 407101690d02262d69bc8fd3b074d1ec4591b5f2c97adeab2781f085eeb917f1

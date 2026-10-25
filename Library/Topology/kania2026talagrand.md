@@ -5,7 +5,7 @@ year: 2026
 title: Talagrand compacta, 2DCP, and pointwise quotients
 doi: null
 url: https://arxiv.org/abs/2607.06808v2
-claim: Problem 8.2 asks whether the prediction principle in Theorem A can be weakened from diamond on a stationary co-stationary set to CH; the project suppliers prove common-stage clopen reflection, regular signed-measure lifting and exact eventual point-pair equality, without the CH induction.
+claim: Problem 8.2 asks whether the prediction principle in Theorem A can be weakened from diamond on a stationary co-stationary set to CH; the project suppliers prove common-stage clopen reflection, regular signed-measure lifting, exact eventual point-pair equality and uniform strong-dual norm separation of compact Stonean weak-star embeddings, without the CH induction.
 strata_touched:
   - D5/S3/Topology/InverseLimit
   - D5/S3/Topology/Measures
@@ -95,6 +95,71 @@ the signed-measure induction (A)–(G), or the retrospective paired-Dirac
 capture argument. Problem 8.2 remains unresolved here; no official
 acceptance is asserted.
 
+## Nonmetric clopen disjointization
+
+The local selection statement concerns arbitrary compact Hausdorff
+zero-dimensional Borel spaces. For regular probabilities mu_n carried by
+pairwise disjoint Borel E_n and 0 < eta < 1, its conclusion is an increasing
+subsequence and pairwise disjoint nonempty clopens retaining probability
+greater than 1-eta/2. The ordinary argument is a classical selection proof,
+not a novelty claim or a claim that this theorem originates in the cited
+Problem 8.2 article.
+
+The construction uses the pinned Mathlib general Prokhorov forward compactness
+instance for ProbabilityMeasure K. A cluster nu is regularized by applying
+positive RealRMK to its continuous integral functional; nu is not assumed
+regular. The representing lambda is finite on compact K before its integral
+of one proves probability mass. Continuous clopen indicators supply precisely
+the fixed-clopen convergence needed by the finite-history induction. They do
+not supply convergence on moving Borel carriers. Summability of lambda(E_n),
+regular compact cores, outer open approximations and a finite clopen sandwich
+complete the ordinary construction without a metric or countable base.
+
+For a real finite regular signed input, carrying means zero total variation
+on the complement of the carrier. Normalization uses
+q=totalVariation(u)(W), never the cancelling signed value u(W). Restriction
+and positive rescaling give t=q inverse times u restricted to W, total
+variation norm one, and exact error 2(1-q). On a further increasing
+subsequence a single sign makes positive Jordan mass at least one half.
+That sign acts on both t and the corresponding original u. A fixed positive
+error bound does not imply weak-star convergence of the approximants.
+
+The canonical implementation source is
+`D5.S3.Topology.Measures.ClopenDisjointization`; its corresponding Scribe
+states the full positive and paired-sign signed telescopes. Source presence
+is not kernel acceptance. Neither this selection statement nor its signed
+normalization establishes KPR, the signed (A)-(G) recursion, final capture,
+the Grothendieck endpoint or exclusion in the whole signed dual unit ball.
+
+The local source is kernel-checked under the pinned project toolchain. It
+contains the two public suppliers
+`D5.S3.Topology.Measures.ClopenDisjointization.exists_clopen_disjointization`
+and
+`D5.S3.Topology.Measures.ClopenDisjointization.exists_signed_clopen_disjointization`.
+The scoped report records statement identities
+`sha256:7d793bb2985eff9fa64f7451af62ac5c451f2692ecfce37248db61ac4ec3b867`
+and
+`sha256:db82e144a84a7e6ceb423a536d401f0006f2a0ac37c94eb7ab7ea23c50b8518f`,
+with type identities
+`sha256:5d83d13afbefa6152a937e5a6eacfcc6658b937475f2aa4b1e4a7b38defd9b74`
+and
+`sha256:931f69e143389d4d4e9147855d510b47b2ad4844f3ef31d908cd44bad809b542`.
+The accepted target axiom closure is `Classical.choice`, `Quot.sound` and
+`propext`; this is a local supplier record, not an attribution of the
+construction to Kania and Kąkol and not a novelty or solved-problem claim.
+The positive theorem has the arbitrary nonmetric compact Hausdorff
+zero-dimensional Borel hypotheses stated above. The signed theorem carries
+and normalizes by total variation, has exact error `2 * (1 - q)`, and uses one
+common sign on both sequences. No weak-star convergence is inferred.
+
+The information registration remains unfinished for both public suppliers.
+Issue https://github.com/the-omega-institute/trureturing/issues/20708 records
+the missing whole-family variation, sensitivity, observational dependence,
+enrolled readout binding and complete raw `sourceSelection` evidence; the
+broader reconstruction context is issue 16293. The issue is an unfinished
+audit disclosure, not a `declared_validated` registration, and no retry is
+claimed here.
+
 ## Eventual point-pair equality supplier
 
 The repository theorem
@@ -160,6 +225,87 @@ retrospective paired-Dirac capture and Theorem A closed-copy
 prohibition. Problem 8.2 and the complete analytic endpoints remain
 unresolved by this local supplier; no official acceptance is asserted.
 
+## Uniform strong-dual norm separation
+
+`D5.S3.Topology.ExtremallyDisconnected.WeakStarNormSeparation.exists_pos_le_norm_sub`
+states that for every real normed space X, compact Hausdorff extremally
+disconnected space K, and weak-star continuous injective h : K → WeakDual ℝ X,
+there exists a real c > 0 such that
+
+$$
+  p\ne q\quad\Longrightarrow\quad
+  c\le \|\operatorname{WeakDual.toStrongDual}(h(p)-h(q))\|
+  \qquad(p,q\in K).
+$$
+
+There is no nonempty, nontrivial, completeness, positivity-of-functionals
+or global norm-bound premise. The argument uses the weak-star topology
+on `WeakDual` and the operator norm on `StrongDual` separately; it
+establishes lower semicontinuity and does not use continuity of
+`WeakDual.toStrongDual`.
+
+The consumed private general lemma applies to every lower semicontinuous
+F : K × K → ℝ positive away from the diagonal. If no uniform lower bound
+exists, choose unequal pairs with F(p(n),q(n)) < 1/(n+1). For any clopen U,
+the symmetric cross (U × Uᶜ) ∪ (Uᶜ × U) is compact and disjoint from the
+diagonal. If nonempty, lower semicontinuity gives an attained strictly
+positive minimum. The chosen pair eventually lies outside this cross;
+an empty cross is always missed. Thus every clopen membership test
+agrees eventually. The point-pair theorem gives eventual equality,
+contradicting the chosen unequal pairs. Symmetry and triangle
+inequalities are not used.
+
+In the dual application subtraction is weak-star continuous. Pinned
+Mathlib's `WeakDual.isClosed_closedBall` makes the norm sublevel sets
+of the difference closed, hence the norm function is lower
+semicontinuous. Injectivity and the linear equivalence to the strong
+dual give positivity off the diagonal. `LowerSemicontinuousOn.exists_isMinOn`
+and `tendsto_one_div_add_atTop_nhds_zero_nat` provide the minimum and
+reciprocal-limit steps. These are ordinary library inputs; the compact
+cross composition is derived here from the supplied ordinary proof
+plan and the point-pair theorem, with no literature novelty claim.
+
+The consequence applies in particular to βℕ using the extremal
+disconnectedness obtained from `StoneCech.projective` and
+`CompactT2.Projective.extremallyDisconnected`. It supplies the local
+norm-gap implication. It does not construct the full signed dual ball,
+the CH recursion or conditions (A)–(G), the retrospective paired-Dirac
+capture, or the Theorem A closed-copy prohibition. Problem 8.2 and
+the complete CH/Talagrand endpoint remain unresolved here, and no
+official acceptance is asserted.
+
+## Literal successor-coordinate constructor
+
+`D5.S3.Topology.InverseLimit.SignedSuccessorCoordinates.exists_successor_coordinates`
+takes every `a : Ordinal.{0}`, `H : SignedProperLimit.Prefix (succ a)` and
+closed cover `Y ∪ Z = univ` of `K := H.Space ⟨a, lt_succ a⟩`, including
+`a = 0`, overlapping sides and either empty side. Its
+`Nonempty (Result H Y Z)` supplies a closed nonempty literal carrier
+`C ⊆ SignedProperLimit.Cube (succ a)` and a homeomorphism
+`e : SignedSplitSuccessor.splitCarrier Y Z ≃ₜ C`. The carrier is exactly
+the insertion range: `e(k,b)` reads `k(i)` at every `i < a` and `b` at
+coordinate `a`; its inverse reads the literal restriction to `a` and
+coordinate `a`. The output `Prefix (succ (succ a))` retains every old
+carrier exactly and has top carrier `C`. Its compatibility and onto
+fields cover every pair of stages. For every `c ≤ a`, the proved
+restriction equation identifies restriction from `C` to `c` with
+restriction of the inverse's old component. Old pairs reuse `H`; onto
+from the new stage to any old stage uses `H.onto` to lift to `K`, then
+the actual cover projection to choose a sheet and insert it.
+
+The construction reuses the original `SignedProperLimit` coordinate
+core and `SignedSplitSuccessor.splitCarrier`. Pinned Mathlib's
+`Homeomorph.funSplitAt` and `Homeomorph.piCongrLeft` supply splitting and
+reindexing; compactness of the closed split and the Hausdorff cube give
+the closed range and range homeomorphism via
+`Continuous.isClosedEmbedding` and `Topology.IsEmbedding.toHomeomorph`.
+This repository-derived local topology supplier is not attributed to
+Kania–Kąkol as a new theorem. It leaves full-history assembly, the signed
+measure system and (A)–(G), CH bookkeeping and the final CH/Talagrand
+endpoints open. Its information registration remains unfinished under
+https://github.com/the-omega-institute/trureturing/issues/21448; no
+`declared_validated` registration or solved-problem claim is made.
+
 ## Verified locator
 
 Canonical arXiv record: https://arxiv.org/abs/2607.06808v2.
@@ -174,3 +320,79 @@ Same-day bounded arXiv metadata searches found no CH answer within
 their stated Talagrand/Grothendieck scopes; this is not a global
 uniqueness or novelty certificate. No official solved receipt is
 asserted by this background formalization.
+
+## Classical subsequence splitting and weak extraction
+
+`D5.S3.Topology.Measures.L1RawSplitting.exists_raw_restriction_splitting`
+is the complete real L1 supplier. Its literal restriction operation is
+`L1Restriction.restrict`; `L1TailSelection`, `L1TailConcentration`,
+`L1Biting` and `L1Disjointization` construct the disjoint carriers.
+`L1WeakExtraction` and `L1UniformIntegrableWeak` supply genuine weak
+subsequence extraction, with every helper consumed by the full splitting.
+
+The real L1 subsequence splitting used in the signed-measure construction is
+classical Kadec–Pełczyński–Rosenthal mathematics. The required form uses literal
+restrictions to measurable, pairwise disjoint sets, a complementary remainder
+converging against every continuous real linear functional, and convergence
+of the disjoint-part norms. Uniform integrability alone is an intermediate
+property, not that weak convergence conclusion.
+
+A concrete disjointization construction appears in Dacunha-Castelle and
+Schreiber, Annales de l'Institut Henri Poincaré B 10 (1974), pp. 229–277,
+Definition 3.3.2 and Lemmas 3.3.3–3.3.4, pp. 263–266:
+https://www.numdam.org/item/AIHPB_1974__10_2_229_0/ . The inspected argument
+uses a nonatomic Lebesgue setting and additional Orlicz hypotheses. Those
+hypotheses cannot be silently transferred to arbitrary finite measure spaces.
+The classical subsequence splitting is also discussed in Peralta–Pfitzner,
+Studia Mathematica 227 (2015), pp. 77–95, DOI 10.4064/sm227-1-5,
+whose introduction cites Bourgain–Rosenthal, Israel Journal of Mathematics
+37 (1980), pp. 54–75, p. 68, DOI 10.1007/BF02762868. The latter page and
+Albiac–Kalton, Topics in Banach Space Theory, second edition, Lemma 5.2.7,
+are source leads; their proofs have not been acquired by the recorded access.
+
+The Hilbert approximation argument separates the weak-extraction obligation
+from the disjoint-carrier selection. All countably many hard truncations
+lie in a single closed separable Hilbert span, even when the original L2 is
+nonseparable. Compactness of the product of its weak dual balls supplies one
+common selector. A genuine bounded linear map from this span into L1 carries
+each weak limit to L1. Uniform norm errors then make these limits norm Cauchy
+by a Hahn–Banach norming functional of norm at most one; completeness and a
+three-term estimate give convergence against every L1 functional. This
+argument includes the zero space and requires no positive measure premise.
+It neither assumes nor proves the CH induction or the full signed endpoint.
+
+For the raw-restriction construction, choose the actual strongly measurable
+representative of each L1 class and use its integer hard-tail masses Q(n,k).
+A common scalar Hilbert subsequence makes these bounded masses converge for
+every k at once. Their limits c(k) decrease, and alpha is their infimum.
+At each recursive step a large cutoff makes c(k) close to alpha and makes
+its superlevel support have small integral for every input in the finite
+original prefix already passed. Markov's inequality controls that support's
+measure; uniform integrability of a finite family controls the old-input
+integrals. Selecting the next source index after these conditions are fixed
+makes its moving tail mass close to alpha. The effect of the ith support on
+every earlier selected input is at most 2 to the power minus i.
+
+Write A(i) for these actual measurable superlevel sets and let E(i) be A(i)
+minus the union of all later A(h). The E(i) are pairwise disjoint as sets.
+The countable-union integral inequality bounds the removed part by the
+geometric tail, at most 2 to the power minus i. Thus the norms of the literal
+restrictions to E(i) have the same limit alpha as the restrictions to A(i).
+For every positive fixed integer k below the moving cutoff, the k-tail mass
+of the literal complement of A(i) is exactly Q(i,k) minus the moving tail
+mass. Its limit is c(k) minus alpha. These limits vanish as k increases;
+a separate finite-prefix estimate gives uniform integrability of the entire
+complement sequence.
+
+The difference between the literal complements of E(i) and A(i) is exactly
+the restriction to A(i) intersected with the union of its later supports.
+Its L1 norm tends to zero by the same geometric bound. Apply the genuine
+weak-extraction argument to the complements of A(i), and transfer each
+continuous real functional across this norm-null difference. Passing to
+that final common subsequence preserves actual set disjointness, the
+indicator identities and the disjoint-norm limit. In particular, no input
+measure is corrected, no constant-norm assumption is inserted, and both
+summands are the literal restrictions of the same selected original L1
+class. Their sum and the sum of their norms equal the original class and
+its norm respectively. This is the classical analytic supplier only;
+the signed-measure transfer and full CH/Talagrand endpoint are separate.

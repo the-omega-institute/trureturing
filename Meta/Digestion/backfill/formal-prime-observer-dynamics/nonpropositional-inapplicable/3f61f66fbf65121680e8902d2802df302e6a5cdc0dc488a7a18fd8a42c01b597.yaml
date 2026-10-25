@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:3f61f66fbf65121680e8902d2802df302e6a5cdc0dc488a7a18fd8a42c01b597
+  normalized_sha256: sha256:3f61f66fbf65121680e8902d2802df302e6a5cdc0dc488a7a18fd8a42c01b597
+cas_ref: sha256:3f61f66fbf65121680e8902d2802df302e6a5cdc0dc488a7a18fd8a42c01b597
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: A design objective for automatic auditing, with no mathematical equality, existence or implication claim.
+    previous_atom_id: 444ba8bdca75b61afefb44fc97b5f84bfa6d7712f0c4b3f414f2be290edb8054
+    next_atom_id: 960eab65c8bd556817fec4bd0b1175b249488983b9b015da4c2cb0b19d19a753

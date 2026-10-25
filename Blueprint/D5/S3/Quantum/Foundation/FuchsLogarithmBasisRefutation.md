@@ -42,7 +42,43 @@ $$\forall (d: \mathbb{N}), (\forall (rho0: \operatorname{Matrix}\left(\operatorn
 
 Fuchs's source sentence is: "An interesting open question is whether there exists a basis in which to represent the operators ρ̂₀, ρ̂₁, etc., so that the matrix appearing in the logarithm above is diagonal. If so, this would greatly simply the computation of L(t)." (after equation (3.244), §3.5.3, pp. 77–78). The Lean proposition asks for a unitary basis change for every positive-definite trace-one pair with invertible difference and every t in (0,1].
 
-**Theorem 1.4 (The qutrit counterexample).**
+**Definition 1.4 (The diagonal qutrit state).**
+
+$$(\operatorname{D5.S3.Quantum.Foundation.FuchsLogarithmBasisRefutation.rho0}: \operatorname{Matrix}\left(\operatorname{Fin}\left(3\right), \operatorname{Fin}\left(3\right), \mathbb{C}\right)) = \operatorname{Matrix.diagonal}\left(![(\frac{1}{2}: \mathbb{C}), \frac{1}{3}, \frac{1}{6}]\right)$$
+
+*Formalization.* `D5/S3/Quantum/Foundation/FuchsLogarithmBasisRefutation.rho0` (`✓ std3`).
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+rho0 is the complex three-by-three diagonal matrix with entries 1/2, 1/3 and 1/6.
+
+**Theorem 1.5 (The qutrit state is positive definite).**
+
+$$\operatorname{Matrix.PosDef}\left(\operatorname{D5.S3.Quantum.Foundation.FuchsLogarithmBasisRefutation.rho0}\right)$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/Quantum/Foundation/FuchsLogarithmBasisRefutation.rho0_posDef` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+Every diagonal entry of rho0 is strictly positive, so rho0 is positive definite.
+
+**Theorem 1.6 (The qutrit state has trace one).**
+
+$$\operatorname{Matrix.trace}\left(\operatorname{D5.S3.Quantum.Foundation.FuchsLogarithmBasisRefutation.rho0}\right) = 1$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/Quantum/Foundation/FuchsLogarithmBasisRefutation.rho0_trace` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+The diagonal entries of rho0 sum to one.
+
+**Theorem 1.7 (The qutrit counterexample).**
 
 $$\neg (\forall (d: \mathbb{N}), (\forall (rho0: \operatorname{Matrix}\left(\operatorname{Fin}\left(d\right), \operatorname{Fin}\left(d\right), \mathbb{C}\right)), (\forall (rho1: \operatorname{Matrix}\left(\operatorname{Fin}\left(d\right), \operatorname{Fin}\left(d\right), \mathbb{C}\right)), ((\operatorname{Matrix.PosDef}\left(rho0\right)) \Rightarrow ((\operatorname{Matrix.PosDef}\left(rho1\right)) \Rightarrow ((\operatorname{Matrix.trace}\left(rho0\right) = 1) \Rightarrow ((\operatorname{Matrix.trace}\left(rho1\right) = 1) \Rightarrow ((\operatorname{Matrix.det}\left((rho1) - (rho0)\right) \ne 0) \Rightarrow (\forall (t: \mathbb{R}), ((0 < t) \Rightarrow ((t \le 1) \Rightarrow (\exists (U: \operatorname{Matrix}\left(\operatorname{Fin}\left(d\right), \operatorname{Fin}\left(d\right), \mathbb{C}\right)), ((U \in \operatorname{Matrix.unitaryGroup}\left(\operatorname{Fin}\left(d\right), \mathbb{C}\right)) \land (\operatorname{Matrix.IsDiag}\left(\operatorname{D5.S3.Quantum.Foundation.FuchsLogarithmBasisRefutation.logArg}\left(((\operatorname{star}\left(U\right)) \cdot (rho0)) \cdot (U), ((\operatorname{star}\left(U\right)) \cdot (rho1)) \cdot (U), t\right)\right)))))))))))))))$$
 
@@ -70,5 +106,8 @@ Thus the source's universal basis question is refuted by a faithful noncommuting
 - Truth anchor: `D5/S3/Quantum/Foundation/FuchsLogarithmBasisRefutation.ksum`
 - Truth anchor: `D5/S3/Quantum/Foundation/FuchsLogarithmBasisRefutation.logArg`
 - Truth anchor: `D5/S3/Quantum/Foundation/FuchsLogarithmBasisRefutation.result`
+- Truth anchor: `D5/S3/Quantum/Foundation/FuchsLogarithmBasisRefutation.rho0`
+- Truth anchor: `D5/S3/Quantum/Foundation/FuchsLogarithmBasisRefutation.rho0_posDef`
+- Truth anchor: `D5/S3/Quantum/Foundation/FuchsLogarithmBasisRefutation.rho0_trace`
 - Dependency: [D5/S3/Quantum/Dynamics/EntropyProductionCoherenceDeletionIdentity](../Dynamics/EntropyProductionCoherenceDeletionIdentity.md)
 - Dependency: [D5/S3/Resource/LogDet/PathSpectralClassical](../../Resource/LogDet/PathSpectralClassical.md)

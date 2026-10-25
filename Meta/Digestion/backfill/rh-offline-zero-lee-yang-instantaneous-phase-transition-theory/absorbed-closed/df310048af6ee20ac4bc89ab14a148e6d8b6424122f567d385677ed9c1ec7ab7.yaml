@@ -1,0 +1,15 @@
+fingerprints:
+  raw_sha256: sha256:df310048af6ee20ac4bc89ab14a148e6d8b6424122f567d385677ed9c1ec7ab7
+  normalized_sha256: sha256:df310048af6ee20ac4bc89ab14a148e6d8b6424122f567d385677ed9c1ec7ab7
+cas_ref: sha256:df310048af6ee20ac4bc89ab14a148e6d8b6424122f567d385677ed9c1ec7ab7
+coverage_gids:
+  - gid: D5/S3/QuantumBounds/ReferenceFrame/ChannelFidelityBridge.entanglement_fidelity_eq_average_norm_sq
+    target_statement_id: sha256:33196bf6d70b58a2d9456b5d285cee6748388db5971df22698dd88216200c844
+  - gid: D5/S3/QuantumBounds/ReferenceFrame/TopEigenspace.nearest_neighbor_quadratic_edge_is_sharp
+    target_statement_id: sha256:794c9eff816991bd934b433355406144340c6a4ae1fb91290d7cf67d5df75ce9
+  - gid: D5/S3/QuantumBounds/ReferenceFrame/TopEigenspace.squared_top_eigenspace_eq_top_mode_space
+    target_statement_id: sha256:38bf19debb16fe37d3b9a3611ca3e97e5f4ba7410093a97732f7f593ba2ad30d
+  - gid: D5/S3/QuantumBounds/ReferenceFrame/TopEigenspace.squared_top_eigenspace_finrank
+    target_statement_id: sha256:0f528d76346afb642c1b27955f18e715eb011e7aa276ae4084e612cf328b070f
+receipts:
+  unresolved_subitems: []

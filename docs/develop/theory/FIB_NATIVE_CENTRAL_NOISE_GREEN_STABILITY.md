@@ -2615,3 +2615,2226 @@ none of these scalar asymptotics supplies an excluded realization.
 $\square$
 
 ## 追加锚（本行以下为增补区）
+
+## 18. The simple unit-cell ground state in the fixed supercritical regime
+
+**Definition 18.1 (fixed data, free norm and adapted cutoff comparison).**
+In §§18–20 retain Definition 15.1 and its supplier conventions.
+Fix $0<Z<1$, $r=1-Z$, $H=r/2$, $0<l<k_o<u<H$, the pole
+$o=(k_o,\alpha_o,\beta_o)$ and arbitrary preparation phases.
+The probabilities and signed amplitudes remain those of Definitions
+1.1 and 9.1, both phase periods are $2\pi$, and
+$d\mu=dk\,d\alpha\,d\beta$ on
+$\Omega=(l,u)\times\mathbb T^2$ is unnormalized. Fix
+$g>g_{\rm c}=2\pi m_0\lambda_0$, where $m_0=(2r)^{-1}$ and
+$\lambda_0$ is exactly Definition 16.2's horizontal constant.
+Only $\epsilon=|\nu|\downarrow0$ varies, with either sign of $\nu$.
+The law is (1.2), with its persistent independent covariance-$2$
+triple, zero area drift, both first-exit absorbing faces and original
+clock. The field is the full unit-source $\Gamma_{\epsilon,o}$,
+and the native domain is the entire complex $\mathcal F_\epsilon$.
+
+Use, without changing its domain, the unit problem of (15.2), and write
+
+$$
+\gamma=g/m_0,\qquad W=\mathcal G_1,\qquad
+e_g=e(\gamma),\qquad
+\|v\|_{\mathcal H_1}^2=\|v\|_2^2+\mathcal T_1[v],
+\qquad \langle v,w\rangle=\int\overline v w\,d\xi .
+\tag{18.1}
+$$
+
+Thus all cell integrals use $d\xi=dx\,dy\,d\theta$ and
+$\mathcal Q_\gamma=\mathcal T_1-\gamma\int W|\cdot|^2$.
+Choose once a nonnegative smooth partition $\chi,\psi$ as in
+(16.5): $\chi^2+\psi^2=1$, $\chi=1$ near $o$,
+$\operatorname{supp}\chi\Subset U_o$, and $\psi=0$ near $o$.
+It is independent of the state and $\epsilon$. Define
+
+$$
+\begin{aligned}
+(\mathcal B_\epsilon f)(\xi)
+ &=m_0^{1/2}\epsilon^2
+                 (\chi f)(\Phi_o(\delta_\epsilon\xi)),\\
+\delta_\epsilon(x,y,\theta)&=(\epsilon x,\epsilon y,\epsilon^2\theta),
+\qquad
+d\mu(\Phi_o(\delta_\epsilon\xi))=m_0\epsilon^4\,d\xi .
+\end{aligned}
+\tag{18.2}
+$$
+
+Extend the pullback by zero outside the rescaled chart. It is exactly
+(16.6), with a name for this fixed choice of cutoff. The chart is
+(15.1), including $\theta=z-xy/2$ and
+$z=-r\{\beta-\beta_o-c(k_o)y\}$. An uncut periodic lift and an
+isotropic three-coordinate dilation are different maps.
+
+**Theorem 18.2 (attainment, complex simplicity and free-form coercivity
+for the matched cell).** Under Definition 18.1, $-\infty<e_g<0$.
+Its infimum is attained by a unique normalized positive real function
+$h_g\in\mathcal H_1$, where positive means strictly positive almost
+everywhere. Every normalized complex minimizer is $\zeta h_g$ with
+one spatially constant $|\zeta|=1$. The bottom eigenvalue is isolated,
+and there is $c_g>0$ such that, for every complex $v\in\mathcal H_1$,
+
+$$
+\mathcal Q_\gamma[v]-e_g\|v\|_2^2
+ \ge c_g\|v-\langle h_g,v\rangle h_g\|_{\mathcal H_1}^2.
+\tag{18.3}
+$$
+
+Proof. Closedness, semiboundedness and the free-domain equivalence are
+Proposition 15.2. Theorem 16.3 gives $e_g<0$, since
+$g>g_{\rm c}\ge g_*$. These existing results supply the variational
+problem and the strict sign; what is needed here is compactness and
+its spectral consequences.
+
+Integration of (2.4), as in (3.5), at unit noise gives
+
+$$
+0<W(\xi)\le
+ \frac{C}{d_1(0,\xi)(1+d_1(0,\xi))}.
+\tag{18.4}
+$$
+
+Locally at zero $d_1(0,\xi)\asymp|\xi|$. Its bounded closed balls are
+compact by the regularized gauge in (2.4), so $W$ tends uniformly to
+zero at infinity and is bounded outside every pole neighbourhood.
+The whole-group heat input here is the classical
+Capogna–Citti–Manfredini,
+[arXiv:1212.6665v2, Propositions 2.1–2.2,
+(2.8)](https://arxiv.org/html/1212.6665v2).
+The group is precisely Definition 2.1's step-two group, the scaled
+frame is $(U,V,\kappa Z_H)$ and the coefficient matrix is $I_3$;
+here $\kappa=1$. Their (2.11), used for the existing zero-noise
+suppliers, is positive-time kernel convergence, not a ground-state
+or native killed-tail theorem. The native tail remains Theorem 1.3.
+
+The free domain also equals the space of $L^2$ functions whose three
+weak derivatives $Uv,Vv,Z_Hv$ are in $L^2$. To check the direction
+needed for Sobolev operations, such derivatives imply local Euclidean
+$H^1$, because
+$\partial_x=U+(y/2)Z_H$,
+$\partial_y=V-(x/2)Z_H$ and $\partial_\theta=Z_H$.
+For a fixed compact smooth cutoff $\kappa$ equal to one near zero,
+put $\kappa_R=\kappa\circ\delta_{1/R}$. Its horizontal derivatives
+are bounded by $C/R$ and its central derivative by $C/R^2$.
+The product rule and dominated convergence give
+$\kappa_Rv\to v$ in the free norm. Each compactly supported
+$\kappa_Rv$ can then be smoothed in a fixed larger compact set in
+ordinary $H^1$, hence in the frame norm. This puts $v$ in the closure
+(15.2). The reverse direction follows by weak derivative closure.
+Consequently the local Sobolev chain rule, compact local Rellich
+embedding and multiplication by the cutoffs used below apply on
+exactly $\mathcal H_1$, without a global Euclidean $H^1$ assumption.
+
+Here is control of the pole in the compactness argument. Take a fixed
+smooth coordinate cutoff $\zeta$ equal to one on a small ball about
+zero. The classical three-dimensional Hardy inequality gives
+
+$$
+\int |\xi|^{-2}|\zeta v|^2\,d\xi
+ \le4\int|\nabla(\zeta v)|^2\,d\xi
+ \le C\|v\|_{\mathcal H_1}^2.
+\tag{18.5}
+$$
+
+For compact smooth functions its first inequality follows by
+integrating
+$\operatorname{div}(\xi/|\xi|^2)=|\xi|^{-2}$
+against $|\zeta v|^2$ and applying Cauchy–Schwarz; the boundary
+term on a removed radius-$s$ sphere tends to zero as $s\downarrow0$.
+Density extends it to the local $H^1$ functions just obtained.
+The second inequality uses the bounded frame coefficients on the
+cutoff support. Thus (18.4) implies
+
+$$
+\int_{|\xi|<s}W|v|^2\,d\xi
+                  \le Cs\|v\|_{\mathcal H_1}^2
+                  \qquad(0<s<s_0).
+\tag{18.6}
+$$
+
+Multiplication $J:v\mapsto W^{1/2}v$ is therefore compact from
+$\mathcal H_1$ to $L^2$. Indeed, restricting it to a bounded region
+separated from zero gives a bounded multiplier after compact local
+Rellich restriction. The squared operator norm of the omitted pole
+part is $O(s)$ by (18.6). Outside a sufficiently large $d_1$ ball
+it is at most the supremum of $W$ there, which tends to zero by
+(18.4). The full $J$ is an operator-norm limit of these compact
+restrictions.
+
+This uses the classical form-domain compactness criterion of
+Lenz–Stollmann–Wingert,
+[arXiv:0903.0280v2, Theorem 1.3(v),
+(vii)](https://arxiv.org/html/0903.0280v2) in its precise bounded
+multiplier scope: their semibounded self-adjoint $H$ is
+$\mathcal L_1$, and each truncated multiplier
+$B=\mathbf1_K W^{1/2}$, with $K$ bounded and separated from zero,
+is bounded on $L^2$. Their (v) is compactness on the form domain,
+and (vii) gives norm convergence on form-bounded weakly zero
+sequences. The full singular $W^{1/2}$ is not a bounded $L^2$
+multiplier; (18.6) and the decaying exterior supply the required
+norm-limit step. No compactness of the free global form embedding
+is asserted.
+
+Let $v_n$ be any normalized cell minimizing sequence.
+Equation (15.8), with its parameter large enough to make the relative
+bound at most $1/2$, bounds $v_n$ in $\mathcal H_1$.
+Pass to a weakly convergent subsequence there, with limit $v$.
+Compactness of $J$ gives $Jv_n\to Jv$. Lower semicontinuity, the
+definition of the bottom also for nonunit vectors, and $e_g<0$ give
+
+$$
+e_g\ge\mathcal Q_\gamma[v]
+       \ge e_g\|v\|_2^2\ge e_g.
+\tag{18.7}
+$$
+
+The last inequality uses $\|v\|_2\le1$.
+Equality forces $\|v\|_2=1$, so $v_n\to v$ in $L^2$.
+Furthermore
+$\mathcal T_1[v_n]=\mathcal Q_\gamma[v_n]+\gamma\|Jv_n\|_2^2
+ \to\mathcal Q_\gamma[v]+\gamma\|Jv\|_2^2=\mathcal T_1[v]$.
+Weak convergence of the derivative vector and equality of its norm
+give convergence in the full free norm. This proves attainment and
+subsequential free-norm compactness of every normalized minimizing
+sequence, including complex ones. Variation gives the weak eigenvalue
+equation on all of $\mathcal H_1$.
+
+The Sobolev chain rule gives $|v|\in\mathcal H_1$ and
+$\mathcal T_1[|v|]\le\mathcal T_1[v]$, so a normalized nonnegative
+minimizer exists. To prove strict positivity without an assumed
+pointwise eigenfunction regularity, let $\mathsf A_g$ be the operator
+of $\mathcal Q_\gamma$, and set $W_N=W\wedge N$.
+The free heat kernel is strictly positive by (2.4).
+The bounded-potential Duhamel series, whose terms preserve
+nonnegativity, gives on the positive cone
+
+$$
+e^{-t(\mathcal L_1-\gamma W_N)}
+                   \ge e^{-t\mathcal L_1},\qquad t>0.
+\tag{18.8}
+$$
+
+This domination passes to $\mathsf A_g$. In detail, (18.4) puts
+$\{W>N\}$ inside $|\xi|<C/N$ for large $N$, and (18.6) yields
+
+$$
+0\le\int(W-W_N)|v|^2\,d\xi
+                    \le C N^{-1}\|v\|_{\mathcal H_1}^2.
+\tag{18.9}
+$$
+
+Polarization by weighted Cauchy–Schwarz bounds the corresponding
+sesquilinear tail by $C/N$ times the two free norms.
+Proposition 15.2 provides one common shift making every capped form
+and the full form coercive in that norm. Their variational resolvent
+solutions for a right side $F\in L^2$ have free norm at most
+$C\|F\|_2$. Subtract their equations and test on the difference;
+(18.9) bounds that difference in free norm by $CN^{-1}\|F\|_2$.
+Thus the shifted resolvents converge in operator norm on $L^2$.
+Their spectra have a common lower bound. On that half-line
+$e^{-t\lambda}$ is a continuous function of the shifted inverse,
+with value zero at inverse value zero. Polynomial approximation in
+this bounded inverse interval gives operator-norm convergence of
+the semigroups at every $t>0$. Since the positive cone is closed,
+(18.8) holds with the full operator on the left. A nonzero
+nonnegative minimizer $h$ therefore satisfies
+
+$$
+h=e^{te_g}e^{-t\mathsf A_g}h
+       \ge e^{te_g}e^{-t\mathcal L_1}h>0
+                         \quad\hbox{almost everywhere}.
+\tag{18.10}
+$$
+
+For a real ground eigenfunction, locality of the weak derivatives
+splits its form and squared norm into those of its positive and
+negative parts. Each part has energy at least $e_g$ times its squared
+norm. If both were nonzero, equality of the sum would make both
+normalized parts nonnegative minimizers. Both would then be strictly
+positive almost everywhere by (18.10), contradicting their disjoint
+supports. Thus every nonzero real ground eigenfunction has one sign.
+Two independent real ground eigenfunctions would give a nonzero real
+one orthogonal to a positive one, which is impossible. The real
+eigenspace is one dimensional. The form is real, so the real and
+imaginary parts of any complex ground eigenfunction belong to that
+real eigenspace. This proves complex simplicity, uniqueness of the
+normalized positive $h_g$ and the constant-phase description.
+
+If the infimum of $\mathcal Q_\gamma[p]$ over normalized
+$p\perp h_g$ were $e_g$, its minimizing sequence would, by (18.7),
+have a strongly convergent subsequence with unit ground-state limit
+still orthogonal to $h_g$. Simplicity excludes this. Hence there
+is $\delta_g>0$ with
+
+$$
+\mathcal Q_\gamma[p]-e_g\|p\|_2^2
+                       \ge\delta_g\|p\|_2^2
+                    \qquad(p\perp h_g).
+\tag{18.11}
+$$
+
+The spectral theorem makes the bottom isolated. Also (15.8) gives
+$\mathcal Q_\gamma[p]\ge\frac12\mathcal T_1[p]-C\|p\|_2^2$.
+Combining this with (18.11) bounds $\|p\|_{\mathcal H_1}^2$ by a
+constant times its energy deficit. For
+$v=\langle h_g,v\rangle h_g+p$, the weak eigenvalue equation
+cancels the cross terms in that deficit. This proves (18.3).
+All compactness, positivity and spectral arguments above are
+classical intermediates applied to this matched unit cell. $\square$
+
+## 19. Bounded native energy remainder and a coercive exterior estimate
+
+**Theorem 19.1 (bounded comparison with the complete native field).**
+Under Definition 18.1 there are $C<\infty$ and $\epsilon_g>0$,
+depending only on the fixed source data, partition and $g$, such that
+
+$$
+\left|E_\epsilon(g)-\epsilon^{-2}e_g\right|\le C,
+                       \qquad 0<\epsilon<\epsilon_g.
+\tag{19.1}
+$$
+
+For every complex $f\in\mathcal F_\epsilon$ in that range, putting
+$w=\mathcal B_\epsilon f$, one also has
+
+$$
+\begin{aligned}
+\epsilon^2q_{\epsilon,g}[f]-e_g\|f\|_2^2
+ \ge{}&\mathcal Q_\gamma[w]-e_g\|w\|_2^2
+                    +\epsilon^2T_\epsilon[\psi f]\\
+ &+\tfrac12|e_g|\|\psi f\|_2^2
+                    -C\epsilon^2\|f\|_2^2 .
+\end{aligned}
+\tag{19.2}
+$$
+
+Proof. The lower half of (19.1) is already (16.2).
+Use the full-domain cutoff and IMS facts in (16.5)–(16.7).
+In the notation (18.2), their exact norm and kinetic identities and
+the two-sided version of the local remainder are
+
+$$
+\begin{aligned}
+\|w\|_2^2&=\|\chi f\|_2^2,&
+\mathcal T_1[w]&=\epsilon^2T_\epsilon[\chi f],\\
+\left|\epsilon^2q_{\epsilon,g}[\chi f]
+                  -\mathcal Q_\gamma[w]\right|
+ &\le gB\epsilon^2\|\chi f\|_2^2 .
+\end{aligned}
+\tag{19.3}
+$$
+
+These are statements on the whole original domain, not additional
+localization hypotheses on $f$. For the last line, (3.2) bounds
+the error pointwise by $B$, while (2.5) and the raw Jacobian
+$m_0\epsilon^4$ turn the comparison potential into
+$\gamma\int W|w|^2$. This gives the absolute bound, rather than only
+the lower inequality used in (16.7).
+For domain passage, multiply a native smooth-core approximation
+by the fixed $\chi$, zero extend and rescale exactly as in (16.6).
+It converges in the cell free norm by the kinetic identity.
+Equation (15.8) makes its cell potential integrals converge, and
+the bounded remainder makes the native potential integrals converge
+as well. Thus (19.3) requires no pointwise regularity of $f$.
+The same transfer identities hold for any native form function
+supported compactly in this chart, with its direct pullback.
+
+On $\operatorname{supp}\psi$ use exactly the existing bound (15.4),
+say $\Gamma_{\epsilon,o}\le C_{\rm out}$ for $0<\epsilon\le1$.
+It includes both boundary collars. The fixed IMS coefficient in
+(16.5) has $0\le B_\epsilon\le C_{\rm IMS}$ there.
+Retaining the exterior kinetic term, that identity and (19.3) give
+
+$$
+\begin{aligned}
+\epsilon^2q_{\epsilon,g}[f]-e_g\|f\|_2^2
+ \ge{}&\mathcal Q_\gamma[w]-e_g\|w\|_2^2
+                   +\epsilon^2T_\epsilon[\psi f]\\
+ &+(|e_g|-gC_{\rm out}\epsilon^2)\|\psi f\|_2^2
+                   -(gB+C_{\rm IMS})\epsilon^2\|f\|_2^2 .
+\end{aligned}
+\tag{19.4}
+$$
+
+Here $\|f\|_2^2=\|w\|_2^2+\|\psi f\|_2^2$ exactly.
+Choose $\epsilon_g$ small enough to retain half of $|e_g|$.
+This proves (19.2), with all native wall and exterior contributions
+present. Its cell deficit is nonnegative, and (18.3) controls it in
+the fixed free norm.
+
+To supply the upper half of (19.1), let
+$\widehat\chi=\chi\circ\Phi_o$, zero extended to the group, and put
+$\varphi_\epsilon=\widehat\chi\circ\delta_\epsilon$.
+It is compactly supported, tends pointwise to one, and satisfies
+
+$$
+|U\varphi_\epsilon|+|V\varphi_\epsilon|\le C\epsilon,
+\qquad |Z_H\varphi_\epsilon|\le C\epsilon^2.
+\tag{19.5}
+$$
+
+The weak ground-state equation of Theorem 18.2 can be tested against
+$\varphi_\epsilon^2h_g\in\mathcal H_1$.
+For each of the three fields the product rule cancels the cross
+term against that equation. Summing gives the exact identity
+
+$$
+\begin{aligned}
+\mathcal Q_\gamma[\varphi_\epsilon h_g]
+          -e_g\|\varphi_\epsilon h_g\|_2^2
+ &=\int\bigl(|U\varphi_\epsilon|^2+|V\varphi_\epsilon|^2
+                  +|Z_H\varphi_\epsilon|^2\bigr)h_g^2\,d\xi\\
+ &\le C\epsilon^2.
+\end{aligned}
+\tag{19.6}
+$$
+
+All products belong to the established free domain, and all integrals
+are finite by (15.8). Dominated convergence gives
+$\|\varphi_\epsilon h_g\|_2\to1$.
+For small $\epsilon$ define the normalized native trial
+
+$$
+F_\epsilon(\Phi_o(\delta_\epsilon\xi))
+ =m_0^{-1/2}\epsilon^{-2}
+      \frac{\varphi_\epsilon(\xi)h_g(\xi)}
+           {\|\varphi_\epsilon h_g\|_2},
+\tag{19.7}
+$$
+
+with zero extension. Its support is compact inside the injective
+chart. Compactly supported cell free-domain approximation, or local
+$H^1$ smoothing on that support followed by the inverse chart,
+puts it in the full native $\mathcal F_\epsilon$ with both zero
+wall traces and the prescribed periodicity. Applying the supported
+version of (19.3) directly to $F_\epsilon$, followed by (19.6), gives
+$q_{\epsilon,g}[F_\epsilon]\le\epsilon^{-2}e_g+C$.
+The variational principle and (16.2) prove (19.1).
+No rate for the tail of $h_g$ was assumed: its weak equation and
+the derivative bound (19.5) provide the bounded remainder. $\square$
+
+## 20. Universal complex profiles and the exact consumer boundary
+
+**Theorem 20.1 (all near-minimizers, no lost mass and quantitative
+free-form profile).** Under Definition 18.1 let
+$f_\epsilon\in\mathcal F_\epsilon$ be any family of normalized
+complex states, for all sufficiently small positive $\epsilon$, with
+
+$$
+D_\epsilon=\epsilon^2
+       (q_{\epsilon,g}[f_\epsilon]-E_\epsilon(g))\longrightarrow0.
+\tag{20.1}
+$$
+
+There are $C<\infty$, $d>0$ and $\epsilon_g>0$, depending only on
+the fixed data and partition, such that whenever
+$0<\epsilon<\epsilon_g$ and $D_\epsilon\le d$, one can choose a
+single spatially constant phase $|\zeta_\epsilon|=1$ for that state
+so that
+
+$$
+\|\zeta_\epsilon^{-1}\mathcal B_\epsilon f_\epsilon
+                         -h_g\|_{\mathcal H_1}^2
+ +\|\psi f_\epsilon\|_2^2
+ +\epsilon^2T_\epsilon[\psi f_\epsilon]
+                         \le C(D_\epsilon+\epsilon^2).
+\tag{20.2}
+$$
+
+In particular the cutoff pullbacks converge strongly to $h_g$
+modulo those phases along the entire family, and the exterior
+scaled kinetic energy disappears. There is no extra eigenfunction,
+regularity, tail or tightness assumption on $f_\epsilon$.
+For $B_1(R)=\{\xi:d_1(0,\xi)<R\}$, every fixed $R>0$ satisfies
+
+$$
+\begin{aligned}
+\lim_{\epsilon\downarrow0}
+ \int_{\Phi_o(\delta_\epsilon B_1(R))}|f_\epsilon|^2\,d\mu
+     &=\int_{B_1(R)}h_g^2\,d\xi,\\
+\lim_{R\to\infty}\limsup_{\epsilon\downarrow0}
+ \int_{\Omega\setminus\Phi_o(\delta_\epsilon B_1(R))}
+                          |f_\epsilon|^2\,d\mu&=0 .
+\end{aligned}
+\tag{20.3}
+$$
+
+For fixed $R$ these chart images are used only for sufficiently small
+$\epsilon$, when they lie where $\chi=1$.
+The full native kinetic and matched-potential coefficients obey
+
+$$
+\epsilon^2T_\epsilon[f_\epsilon]\longrightarrow\mathcal T_1[h_g],
+\qquad
+\epsilon^2gV_\epsilon[f_\epsilon]
+                  \longrightarrow\gamma\int W h_g^2\,d\xi .
+\tag{20.4}
+$$
+
+Proof. Set $w_\epsilon=\mathcal B_\epsilon f_\epsilon$ and
+$r_\epsilon=\mathcal Q_\gamma[w_\epsilon]
+                         -e_g\|w_\epsilon\|_2^2\ge0$.
+Equations (19.1)–(19.2) give
+
+$$
+r_\epsilon+\epsilon^2T_\epsilon[\psi f_\epsilon]
+       +\tfrac12|e_g|\|\psi f_\epsilon\|_2^2
+                           \le D_\epsilon+C\epsilon^2 .
+\tag{20.5}
+$$
+
+Write $c_\epsilon=\langle h_g,w_\epsilon\rangle$ and
+$p_\epsilon=w_\epsilon-c_\epsilon h_g$.
+Coercivity (18.3) and the exact raw norm identity (19.3) imply
+
+$$
+\|p_\epsilon\|_{\mathcal H_1}^2\le C r_\epsilon,\qquad
+|c_\epsilon|^2
+   =1-\|\psi f_\epsilon\|_2^2-\|p_\epsilon\|_2^2 .
+\tag{20.6}
+$$
+
+Fix $d$ and $\epsilon_g$ small enough that the right side is positive,
+and choose $\zeta_\epsilon=c_\epsilon/|c_\epsilon|$.
+This is one scalar, constant over space.
+Since $|c_\epsilon|\le1$,
+
+$$
+\begin{aligned}
+\zeta_\epsilon^{-1}w_\epsilon-h_g
+ &=\zeta_\epsilon^{-1}p_\epsilon+(|c_\epsilon|-1)h_g,\\
+(1-|c_\epsilon|)^2
+ &\le1-|c_\epsilon|^2
+   =\|\psi f_\epsilon\|_2^2+\|p_\epsilon\|_2^2 .
+\end{aligned}
+\tag{20.7}
+$$
+
+The triangle inequality squared in the free Hilbert norm,
+(20.5) and (20.6) prove (20.2).
+Thus (20.1) implies the stated strong convergence without extracting
+a subsequence. An $\epsilon$-dependent constant phase is essential:
+multiplying any normalized recovery family by $e^{i/\epsilon}$
+leaves all its energies unchanged.
+
+For each fixed $R$, properness of $d_1$ implies the bounded ball is
+eventually mapped into $\chi=1$.
+Its native raw mass is then exactly
+$\int_{B_1(R)}|w_\epsilon|^2\,d\xi$.
+Strong $L^2$ convergence modulo phase gives
+$\||w_\epsilon|^2-h_g^2\|_1\to0$, proving the first line of (20.3).
+The total native mass and $\int h_g^2$ are both one; letting
+$R\to\infty$ proves the second line. This excludes mass loss
+both outside the fixed source chart and at infinity in the expanding
+cell coordinates.
+
+The kinetic IMS identity from (16.5) and (19.3) give
+
+$$
+\epsilon^2T_\epsilon[f_\epsilon]
+ =\mathcal T_1[w_\epsilon]
+       +\epsilon^2T_\epsilon[\psi f_\epsilon]+O(\epsilon^2).
+\tag{20.8}
+$$
+
+The first term converges by (20.2), and the second tends to zero
+by (20.5). For the potential, the partition splits its integral
+exactly, and (3.2) and (15.4) give
+
+$$
+\begin{aligned}
+\epsilon^2gV_\epsilon[\chi f_\epsilon]
+       &=\gamma\int W|w_\epsilon|^2\,d\xi+O(\epsilon^2),\\
+0\le\epsilon^2gV_\epsilon[\psi f_\epsilon]
+       &\le gC_{\rm out}\epsilon^2\|\psi f_\epsilon\|_2^2 .
+\end{aligned}
+\tag{20.9}
+$$
+
+Multiplication by $W^{1/2}$ is continuous in the fixed free norm by
+(15.8); hence the first integral converges to $\int W h_g^2$.
+This proves (20.4) on the entire native form domain.
+The native ground states of Theorem 4.1 are included by taking
+$D_\epsilon=0$, but no ground-state equation for a native state
+was used. $\square$
+
+**Definition 20.2 (supplier correspondence and remaining realization
+obligations).** The coefficient and domain in (18.1) are those already
+defined and proved in Definition 15.1 and Proposition 15.2.
+The leading limit and uniform lower remainder are Theorem 16.1,
+the sharp uniform threshold is Theorem 16.3, and fixed-neighbourhood
+mass concentration is Corollary 16.4. Theorems 18.2–20.1 add the
+matched cell's simple isolated ground state and free-form coercivity,
+the bounded upper remainder in (19.1), and the universal quantitative
+profile with full-domain exterior and coefficient control. They
+retain the fixed $g>g_{\rm c}$ regime; the existence of $g_*$ does
+not change that scope. The self-field occupation in §17 has its
+separate consumer and is not identified with a form-domain profile.
+
+The ordinary compactness and spectral intermediates in Theorem 18.2
+are credited there to the precise whole-group Gaussian and bounded
+multiplier criteria, together with classical local Hardy, Rellich,
+closed-form representation, positive Duhamel expansion and the
+spectral theorem. Their application, the weak-equation cutoff
+remainder and the exact native profile transfer are repo-derived
+composition for this fixed source. No worldwide novelty or Lean
+certification is part of these statements.
+
+A native operational realization continues to mean the same
+two-control chronology $j=\int a\,db$, original extrema guards,
+numerical command domains, actual own death, original clock, and
+unhalved charges (6.1). The analytic amplitudes $f_\epsilon$ and
+$h_g$ are variational variables, not additional preparation or
+actuation operations; choosing their comparison phase is not a
+sensing operation. Definition 6.1's ideal-history and paid-point
+observation contracts remain distinct. In the paid contract future
+Read times use only acquired paid records and the clock, its seed
+is independent of the persistent target drivers, and all failed
+outcomes and executed partial legs retain their charges. The exact
+finite-horizon capped family, positive initial hold, response and
+resources are Definitions 12.1 and 14.1, Theorem 12.2 and
+Corollary 13.1, with their fixed-positive-noise constants.
+Equations (19.1)–(20.4) supply no uniform service constants for that
+family and do not remove its uncapped-exposure obstruction.
+
+The adapted chart does not identify three physical Euclidean axes.
+The exact symbol, kinetic-distance and all-start original-clock
+full-response exclusions of §§9–11 remain applicable.
+A physical spatial correspondence still requires its common-source
+law, geometry, clock, observations, operations, service costs and
+recursive gluing maps. The spectral profile supplies no attractive
+sampler, copies or reset operation, finite-bit evaluator, total
+tariff, or recursive gluing construction. Equality of dimensions
+does not provide any of these missing correspondences.
+
+## 追加锚（本行以下为增补区）
+
+## 21. Global native kinetic distances on the profile core
+
+**Definition 21.1 (fixed source and the distance comparison).** In
+§§21–25 retain exactly Definitions 15.1 and 18.1, including
+$g>g_{\rm c}=2\pi m_0\lambda_0$, the fixed $Z,r,H,l,u,o$,
+arbitrary fixed preparation phases, both actual $2\pi$ periods,
+raw $d\mu=dk\,d\alpha\,d\beta$, and the entire complex
+$\mathcal F_\epsilon$. Only $\epsilon=|\nu|\downarrow0$ varies;
+either nonzero sign is allowed. The conditional law remains (1.2),
+with its persistent independent covariance-$2$ triple, zero area drift,
+original clock, and first-exit absorption at both height faces.
+The form is $q_{\epsilon,g}=T_\epsilon-gV_\epsilon$, with its own
+full unit-source matched Green field and bottom $E_\epsilon(g)$.
+For a normalized complex $f\in\mathcal F_\epsilon$ put
+
+$$
+D_\epsilon(f)=\epsilon^2(q_{\epsilon,g}[f]-E_\epsilon(g))\ge0,
+\qquad \iota_\epsilon=\Phi_o\circ\delta_\epsilon,
+\qquad \lambda_g(d\xi)=h_g(\xi)^2\,d\xi .
+\tag{21.1}
+$$
+
+Here $h_g$ is exactly Theorem 18.2's normalized cell minimizer,
+not a new native preparation. Fix the source-adapted partition of
+Definition 18.1 once; its choice depends only on the fixed source.
+Write $w_\epsilon=\mathcal B_\epsilon f$. The measure $\lambda_g$
+is a probability measure, whereas the raw native measure is not.
+A genuine near-minimizer family means $D_\epsilon(f_\epsilon)\to0$,
+as in Theorem 20.1; no positivity, eigenfunction or tail hypothesis
+is included in that phrase.
+
+Let $d_\epsilon^\Omega$ be the **global** intrinsic length distance
+of the kinetic metric $g_\epsilon$ in (9.3): take the infimum of
+lengths of all piecewise smooth curves in the periodic open cylinder
+$\Omega$ joining the two points. The metric has orthonormal frame
+$(P,Q,\epsilon Z_c)$. Neither the absorbing faces nor the isolated
+cemetery are additional roads in this definition. Curves can explore
+the entire cylinder, including its phase periods. This is distinct
+from the wrapped tracking metric, command distance and command prices.
+On the whole group write $d_1$ for Definition 2.1's unit-noise length
+distance and $K_R=\{\xi:d_1(0,\xi)\le R\}$.
+
+**Proposition 21.2 (exact global localization, including all deck
+classes).** For every fixed finite $R>0$, $K_R$ is compact. For all
+sufficiently small $\epsilon>0$, $\iota_\epsilon$ is injective on
+$K_R$, its image is contained in $\{\chi=1\}\Subset\Omega$, and
+
+$$
+\begin{aligned}
+d_\epsilon^\Omega(\iota_\epsilon\xi,
+                     \iota_\epsilon\eta)&=\epsilon d_1(\xi,\eta)
+                     &&(\xi,\eta\in K_R),\\
+B_{d_\epsilon^\Omega}(o,\epsilon R)
+                     &=\iota_\epsilon(B_{d_1}(0,R)),\\
+\iota_\epsilon^*g_\epsilon&=\epsilon^2g_1,
+\qquad \iota_\epsilon^*d\mu=m_0\epsilon^4d\xi .
+\end{aligned}
+\tag{21.2}
+$$
+
+The same conclusions hold simultaneously for any finite collection
+of fixed radii. They concern the original-cylinder global distance,
+not a distance artificially restricted to the displayed core.
+
+Proof. Properness of $d_1$ is the regularized gauge estimate (2.4):
+bounded $d_1$ bounds $x,y,\theta$, and the smooth positive metric has
+the ordinary coordinate topology. Thus its closed balls are compact.
+Direct substitution of $\delta_\epsilon(x,y,\theta)
+=(\epsilon x,\epsilon y,\epsilon^2\theta)$ into (9.3) gives the
+metric identity in (21.2); the determinant and (15.1) give the raw
+measure identity. Images of fixed compact sets eventually lie in the
+fixed injective source chart and in $\{\chi=1\}$.
+
+To verify that global curves cannot shorten the distance, use the
+cover with height $x\in(l-k_o,u-k_o)$ and unwrapped $y,\theta$.
+The fields, metric and deck action there are exactly (2.2)–(2.3).
+For a curve of $g_\epsilon$ speed $v$, its coordinate derivatives
+satisfy
+
+$$
+|\dot x|,|\dot y|\le v,\qquad
+|\dot\theta|\le\epsilon v+
+                  \tfrac12(|y|\,|\dot x|+|x|\,|\dot y|).
+\tag{21.3}
+$$
+
+Choose $A$ bounding the absolute coordinates on $K_R$, and a fixed
+$L>2R+1$. A lifted curve starting at $\delta_\epsilon\xi$,
+$\xi\in K_R$, of length at most $\epsilon L$ obeys
+
+$$
+\begin{aligned}
+\sup(|x|\vee|y|)&\le\epsilon(A+L),\\
+\sup|\theta|&\le\epsilon^2\{A+L+(A+L)L\} .
+\end{aligned}
+\tag{21.4}
+$$
+
+This follows by integrating (21.3), including the initial coordinate
+bounds $|x|,|y|\le\epsilon A$, $|\theta|\le\epsilon^2A$.
+All these lifted curves stay in one fixed injective neighbourhood
+for small $\epsilon$. In particular their heights are strictly
+between the two faces, whose distances in the height coordinate
+from the pole are fixed positive numbers.
+
+For completeness, a cylinder curve ending at
+$\iota_\epsilon\eta$ could lift to a deck translate of
+$\delta_\epsilon\eta$. A nonzero $n$ in (2.3) changes $y$ by
+$4\pi n$, contradicting (21.4). When $n=0$, a nonzero $m$ changes
+$\theta$ by $-2\pi r m$, also contradicting (21.4).
+The shear for $n\ne0$ has not been discarded: that case was already
+excluded by its $y$ displacement. Consequently every curve of
+length less than $\epsilon L$ joining core points has the direct
+lift. Scaling that lift gives length divided by $\epsilon$ in
+$g_1$, and hence a lower bound $\epsilon d_1(\xi,\eta)$.
+Curves of length at least $\epsilon L$ satisfy this lower bound
+as well, since $d_1(\xi,\eta)\le2R<L$.
+
+Conversely, unit-group curves with length arbitrarily close to
+$d_1(\xi,\eta)$ can be chosen with length less than $L$.
+The unit version of (21.3) bounds their coordinates in a fixed
+compact set. Their dilations therefore lie entirely inside the
+source chart and strictly inside both faces for small $\epsilon$.
+Their native lengths are exactly $\epsilon$ times their unit
+lengths. Taking infima proves the first line of (21.2).
+Finally any cylinder curve starting at $o$ of length less than
+$\epsilon R$ obeys the same coordinate bound, so its endpoint has
+one chart representative whose scaled unit distance is less than
+$R$. Conversely every unit point of distance less than $R$ is
+reached by such a dilated curve. This proves the ball equality,
+also for endpoints not initially assumed to lie in the chart.
+There is no boundary or deck shortcut left in the infimum.
+No change of the stochastic clock was made. $\square$
+
+## 22. A positive Hilbert chord-error floor for the actual profile
+
+**Theorem 22.1 (uniform truncated pair error on one fixed native
+core).** Under Definition 21.1 there are a fixed $R\ge1$,
+$K=K_R$, constants $c_0,d_0,\epsilon_0>0$, and corresponding
+original-source cores $C_\epsilon=\iota_\epsilon K$, depending
+only on the fixed source and $g$, with the following property.
+For every $0<\epsilon<\epsilon_0$, every normalized complex
+$f\in\mathcal F_\epsilon$ with $D_\epsilon(f)\le d_0$, every
+separable real Hilbert space $\mathscr H$, and every Borel
+$F:C_\epsilon\to\mathscr H$, set
+
+$$
+\begin{aligned}
+\mu_f(dq)&=|f(q)|^2d\mu(q),\qquad
+ M_\epsilon=\mu_f(C_\epsilon),\\
+\ell_{\epsilon,F}(q,q')
+ &=\min\left\{1,\left(
+ \frac{\|F(q)-F(q')\|_{\mathscr H}-d_\epsilon^\Omega(q,q')}
+      {\epsilon}\right)^2\right\},\\
+I_{\epsilon,f}(F)
+ &=\int_{C_\epsilon}\int_{C_\epsilon}
+            \ell_{\epsilon,F}(q,q')\,\mu_f(dq)\mu_f(dq').
+\end{aligned}
+\tag{22.1}
+$$
+
+Then, uniformly in all these choices,
+
+$$
+\tfrac12\le M_\epsilon\le1,\qquad
+ I_{\epsilon,f}(F)\ge c_0,\qquad
+ \frac{I_{\epsilon,f}(F)}{M_\epsilon^2}\ge c_0 .
+\tag{22.2}
+$$
+
+The first integral is the unnormalized restriction of the pair
+probability $\mu_f\otimes\mu_f$ to the core. The last expression
+uses the core-conditioned probability
+$(\mu_f|_{C_\epsilon}/M_\epsilon)^{\otimes2}$.
+The map can depend on $f$ and $\epsilon$; its image, derivatives,
+rank, injectivity and output dimension have no imposed bounds.
+
+Proof. We first extract a strict finite configuration from the
+already computed native metric; this is an intermediate step in the
+profile statement, not a new general embedding classification.
+At unit noise, (9.10) gives
+$\langle R(U,Z_H)Z_H,U\rangle=1/4$ at zero, with the convention
+(9.8). In a sufficiently small convex normal neighbourhood set
+
+$$
+a_1=\operatorname{Exp}_0(tU),\quad
+ a_2=\operatorname{Exp}_0(-tU),\quad
+ a_3=\operatorname{Exp}_0(tZ_H),\quad
+ a_4=\operatorname{Exp}_0(-tZ_H),\qquad
+ (s_1,s_2,s_3,s_4)=(1,1,-1,-1).
+\tag{22.3}
+$$
+
+Here $t>0$ is fixed below, independently of $\epsilon$.
+The classical normal-coordinate distance expansion used is
+
+$$
+d_1(\operatorname{Exp}_0v,\operatorname{Exp}_0w)^2
+ =|v-w|^2-\tfrac13\langle R(v,w)w,v\rangle
+                      +O((|v|+|w|)^5).
+\tag{22.4}
+$$
+
+A primary supplier is Xavier Pennec, *Curvature effects on the
+empirical mean in Riemannian and affine Manifolds: a non-asymptotic
+high concentration expansion in the small-sample regime*,
+[arXiv:1906.07418v1, §3.3, (9)](https://arxiv.org/html/1906.07418v1#S3.SS3).
+Its curvature definition in §2, (1), is exactly (9.8).
+Its fourth-order term is
+$\langle R(w,v)w,v\rangle/3$, equal to the negative term in
+(22.4); its displayed fifth-order term is absorbed in the remainder.
+Only this local deterministic expansion is used, with no statistical
+sampling or empirical-mean hypothesis transferred from that paper.
+
+The two opposite radial distances in (22.3) are exactly $2t$.
+Each of the four cross squared distances is
+$2t^2-t^4/12+O(t^5)$. Thus
+
+$$
+\begin{aligned}
+S(a_1,a_2,a_3,a_4)
+ &:=\sum_{i,j=1}^4s_is_jd_1(a_i,a_j)^2\\
+ &=2\{4t^2+4t^2-4(2t^2-t^4/12)\}+O(t^5)
+   =\tfrac23t^4+O(t^5)>0
+\end{aligned}
+\tag{22.5}
+$$
+
+for one sufficiently small fixed $t$. These are global $d_1$
+distances: the normal neighbourhood is chosen small enough that its
+short radial and cross segments realize the ordinary Riemannian
+distance. Choose disjoint open neighbourhoods $A_i$ of these four
+points, with compact closures. By continuity, after shrinking them
+there is $\sigma>0$ such that
+
+$$
+S(\xi_1,\xi_2,\xi_3,\xi_4)\ge\sigma
+                  \quad(\xi_i\in A_i).
+\tag{22.6}
+$$
+
+Choose $R\ge1$ large enough that their closures lie inside $K_R$
+and $\lambda_g(K_R)\ge3/4$; this uses only $\int h_g^2=1$.
+Write $K=K_R$. Strict almost-everywhere positivity in Theorem 18.2
+gives
+
+$$
+b=\min_{1\le i\le4}\lambda_g(A_i)>0,\qquad
+ a=b/2,\qquad
+ \tau=\min\{1/2,\sigma/[24(4R+1)]\}>0.
+\tag{22.7}
+$$
+
+For any four vectors $v_i$ in any real Hilbert space, expansion of
+the squares and $\sum s_i=0$ give the elementary negative-type identity
+
+$$
+\sum_{i,j}s_is_j\|v_i-v_j\|^2
+                  =-2\left\|\sum_i s_iv_i\right\|^2\le0 .
+\tag{22.8}
+$$
+
+This is the necessary Hilbert squared-distance condition associated
+with the classical metric-embedding theory of I. J. Schoenberg,
+[*Metric spaces and positive definite functions*, Trans. Amer.
+Math. Soc. 44, 522–536](https://doi.org/10.1090/S0002-9947-1938-1501980-0).
+The identity above proves the precise necessity used here directly;
+no sufficiency or dimension bound from that theory is needed.
+If for a tuple in $\prod_i A_i$ all six errors
+$|\|v_i-v_j\|-d_1(\xi_i,\xi_j)|$ were less than $\tau$, then
+$d_1(\xi_i,\xi_j)\le2R$ would imply
+
+$$
+\left|\|v_i-v_j\|^2-d_1(\xi_i,\xi_j)^2\right|
+       <\tau(4R+1),\qquad
+ |S(\xi_1,\ldots,\xi_4)-S_{\mathscr H}(v_1,\ldots,v_4)|
+       <12\tau(4R+1)\le\sigma/2 .
+\tag{22.9}
+$$
+
+This contradicts (22.6) and (22.8). Consequently at least one of
+the six errors is at least $\tau$ for every tuple and every choice
+of its four images.
+
+We now use the actual near-minimizer density, rather than postulating
+that $f$ has a chosen shape. Theorem 20.1 gives constants $C_{20},d$
+and $\epsilon_g$, and a spatially constant phase, with
+$\|\zeta^{-1}w_\epsilon-h_g\|_2^2
+\le C_{20}(D_\epsilon(f)+\epsilon^2)$ when its stated bounds hold.
+Since $\|w_\epsilon\|_2\le1$, Cauchy–Schwarz gives
+
+$$
+\big\||w_\epsilon|^2-h_g^2\big\|_1
+ \le2\sqrt{C_{20}(D_\epsilon(f)+\epsilon^2)}
+ =:\eta_\epsilon(f).
+\tag{22.10}
+$$
+
+Choose $d_0\le d$ and $\epsilon_0\le\epsilon_g$ small enough that
+Proposition 21.2 applies to $K$ and
+$\eta_\epsilon(f)\le\min(b/16,1/16)$ whenever
+$D_\epsilon(f)\le d_0$, $\epsilon<\epsilon_0$.
+On $K$, $\chi\circ\iota_\epsilon=1$, so the exact raw-density
+identity is
+
+$$
+\iota_\epsilon^*(\mu_f|_{C_\epsilon})
+       =\mathbf1_K|w_\epsilon|^2d\xi=:\nu_\epsilon(d\xi),
+\quad
+\nu_\epsilon(A_i)\ge b-\eta_\epsilon\ge a,
+\quad M_\epsilon\ge3/4-\eta_\epsilon\ge1/2 .
+\tag{22.11}
+$$
+
+Define $G(\xi)=\epsilon^{-1}F(\iota_\epsilon\xi)$. By (21.2),
+the integrand of (22.1) pulls back exactly to
+$\ell_G(\xi,\eta)=\min\{1,(\|G(\xi)-G(\eta)\|-d_1(\xi,\eta))^2\}$.
+For every tuple in $\prod_i A_i$, (22.9) yields
+$\sum_{i<j}\ell_G(\xi_i,\xi_j)\ge\tau^2$.
+Integrate against the product of the four probabilities
+$\nu_\epsilon|_{A_i}/\nu_\epsilon(A_i)$. Tonelli gives
+
+$$
+\tau^2\le\sum_{i<j}
+ \frac{\int_{A_i\times A_j}\ell_G\,d\nu_\epsilon d\nu_\epsilon}
+      {\nu_\epsilon(A_i)\nu_\epsilon(A_j)}
+ \le a^{-2}\sum_{i<j}
+       \int_{A_i\times A_j}\ell_G\,d\nu_\epsilon d\nu_\epsilon .
+\tag{22.12}
+$$
+
+The six rectangles and their reverses are disjoint. Symmetry therefore
+implies $I_{\epsilon,f}(F)\ge2a^2\tau^2=:c_0>0$.
+Division by $M_\epsilon^2\le1$ gives the conditional bound.
+All functions integrated here are Borel and bounded; separability
+ensures the usual product-measurability of the Hilbert-valued pair
+map. No continuity or integrability of $F$ was used. The argument
+also applies to restrictions of Borel maps defined on all of $\Omega$.
+$\square$
+
+## 23. Optimal RMS order and retention of almost all profile mass
+
+**Corollary 23.1 (sharp order at the collapse scale).** With the
+constants and quantifiers of Theorem 22.1, define the possibly infinite
+unnormalized RMS and its core-conditioned version by
+
+$$
+\begin{aligned}
+\mathcal R_{\epsilon,f}(F)^2
+ &=\int_{C_\epsilon\times C_\epsilon}
+    (\|F(q)-F(q')\|-d_\epsilon^\Omega(q,q'))^2
+                          \,\mu_f(dq)\mu_f(dq'),\\
+\mathcal R^{\rm cond}_{\epsilon,f}(F)
+ &=\mathcal R_{\epsilon,f}(F)/M_\epsilon .
+\end{aligned}
+\tag{23.1}
+$$
+
+For either choice $\mathcal R^\star\in
+\{\mathcal R,\mathcal R^{\rm cond}\}$,
+
+$$
+\sqrt{c_0}\,\epsilon
+ \le\inf_{\mathscr H,F}\mathcal R^\star_{\epsilon,f}(F)
+ \le2R\epsilon .
+\tag{23.2}
+$$
+
+The infimum ranges over all separable real Hilbert spaces and all
+Borel maps as above. The upper bound is realized as a comparison
+bound by one constant map into $\mathbb R$; it is not an asserted
+optimal coefficient. The same two bounds hold for the infimum over
+maps into any one fixed nonempty separable real Hilbert space.
+
+Proof. Pointwise, the squared untruncated error divided by
+$\epsilon^2$ is at least the truncated loss. Hence (22.2) proves
+the lower bounds, including maps whose untruncated integral is
+infinite. For a constant map, its error is exactly
+$d_\epsilon^\Omega(q,q')\le2R\epsilon$ by (21.2).
+Its unnormalized RMS is at most $2R\epsilon M_\epsilon$ and its
+conditioned RMS is at most $2R\epsilon$. This proves the uniform
+upper bounds and the order claim. In particular absolute best error
+vanishes with $\epsilon$; the strictly positive floor is after
+normalization by the actual collapse length $\epsilon$. $\square$
+
+**Theorem 23.2 (deleting vanishing profile mass preserves the actual
+retained-pair floor).** Keep the same $K,c_0,d_0,\epsilon_0$.
+Let $A_\epsilon\subset C_\epsilon$ be any Borel retained set and
+put
+
+$$
+\delta_\epsilon=\mu_f(C_\epsilon\setminus A_\epsilon),\qquad
+ M_{\epsilon,A}=\mu_f(A_\epsilon),\qquad
+ \delta_0=\min(b/8,1/8),
+\tag{23.3}
+$$
+
+where $b$ is (22.7). If $\delta_\epsilon\le\delta_0$, then
+$M_{\epsilon,A}\ge1/2$ and, for every Borel Hilbert map on the
+retained set,
+
+$$
+\begin{aligned}
+\int_{A_\epsilon\times A_\epsilon}
+       \ell_{\epsilon,F}\,d\mu_f d\mu_f&\ge c_0,\\
+M_{\epsilon,A}^{-2}
+ \int_{A_\epsilon\times A_\epsilon}
+       \ell_{\epsilon,F}\,d\mu_f d\mu_f&\ge c_0 .
+\end{aligned}
+\tag{23.4}
+$$
+
+The two sharp-order RMS bounds (23.2) also hold with the core replaced
+by $A_\epsilon$ and conditioning by $M_{\epsilon,A}$.
+This applies to arbitrary retained sets depending on $f,\epsilon$
+and even on the proposed map. In particular it applies eventually
+when the deleted actual mass is $o(1)$. It also applies eventually
+if the deleted **profile** mass
+$\lambda_g(\iota_\epsilon^{-1}(C_\epsilon\setminus A_\epsilon))$
+is $o(1)$, uniformly for the states in Theorem 22.1.
+For genuine near-minimizer families these two notions of deleted
+mass differ by $o(1)$.
+
+Proof. Restrict $\nu_\epsilon$ in (22.11) to the pullback of the
+retained set. Each witness neighbourhood now has mass at least
+$b-\eta_\epsilon-\delta_\epsilon\ge b/2=a$.
+The retained core has mass at least
+$3/4-1/16-1/8>1/2$.
+The tuple inequality remains pointwise true, so (22.12) and its
+symmetric-rectangle argument prove exactly the same constant $c_0$.
+The truncated-to-untruncated lower bound and the constant-map upper
+bound are unchanged. No extension or regularity of a retained-set
+map is needed.
+
+For a deleted pullback set $B_\epsilon\subset K$, (22.10) gives
+
+$$
+|\mu_f(\iota_\epsilon B_\epsilon)-\lambda_g(B_\epsilon)|
+              \le\eta_\epsilon(f)\le\delta_0/2.
+\tag{23.5}
+$$
+
+Thus deleted profile mass at most $\delta_0/2$ implies the required
+actual deletion bound. If $D_\epsilon(f_\epsilon)\to0$, then
+$\eta_\epsilon(f_\epsilon)\to0$, proving the last statement.
+The pair measure in (23.4) is precisely
+$(\mu_f|_{A_\epsilon})\otimes(\mu_f|_{A_\epsilon})$:
+both actual points must be retained. If the original core mass is
+$M_\epsilon$, the removed pair mass is exactly
+
+$$
+M_\epsilon^2-M_{\epsilon,A}^2
+        =2M_\epsilon\delta_\epsilon-\delta_\epsilon^2
+        \le2\delta_\epsilon .
+\tag{23.6}
+$$
+
+This is not a permission to delete selected bad pairs while retaining
+their individual points. The product is an integration convention;
+it grants no independent copies, resampling or observation service.
+$\square$
+
+## 24. Vanishing mass in a smaller kinetic tangent window
+
+**Theorem 24.1 (a flat tangent window cannot contain a nonvanishing
+near-minimizer mass).** Under Definition 21.1, let
+$D_\epsilon(f_\epsilon)\to0$ and let $s_\epsilon>0$ satisfy
+$s_\epsilon/\epsilon\to0$. Then
+
+$$
+\int_{B_{d_\epsilon^\Omega}(o,s_\epsilon)}
+                   |f_\epsilon|^2d\mu\longrightarrow0 .
+\tag{24.1}
+$$
+
+The same conclusion holds for the image under the kinetic exponential
+map at $o$ of a tangent ball of $g_\epsilon(o)$-radius
+$s_\epsilon$, and for the frozen-symbol coordinate ellipsoid
+
+$$
+\Phi_o\{(x,y,\theta):x^2+y^2+\epsilon^{-2}\theta^2
+                                      \le s_\epsilon^2\}.
+\tag{24.2}
+$$
+
+These windows are centered at the specified pole. No claim about
+windows centered elsewhere, or about fixed positive scaled defect,
+is included in this vanishing-mass statement.
+
+Proof. Fix any radius $R>0$. For sufficiently small $\epsilon$,
+$s_\epsilon<\epsilon R$. Proposition 21.2, and the same direct-lift
+argument for any smaller radius, identify the ball in (24.1) exactly
+with $\iota_\epsilon B_{d_1}(0,s_\epsilon/\epsilon)$.
+It lies in $\{\chi=1\}$. Consequently (22.10) yields
+
+$$
+\int_{B_{d_\epsilon^\Omega}(o,s_\epsilon)}|f_\epsilon|^2d\mu
+ \le\lambda_g(B_{d_1}(0,s_\epsilon/\epsilon))
+                         +\eta_\epsilon(f_\epsilon)\longrightarrow0 .
+\tag{24.3}
+$$
+
+The first term tends to zero because $h_g^2\in L^1(d\xi)$ and
+these shrinking balls have intersection $\{0\}$, which has zero
+Lebesgue measure; the second tends to zero by the genuine
+near-minimizer hypothesis. Closed balls give the same bound.
+Each radial exponential curve has length equal to its initial tangent
+norm, so the tangent image lies in the corresponding closed intrinsic
+ball. It is defined here for small radii inside the local normal
+chart, as follows also by the homothety in (21.2) from the unit metric.
+Finally (24.2) pulls back under $\iota_\epsilon$ to the ordinary
+coordinate ball $x^2+y^2+\theta^2\le(s_\epsilon/\epsilon)^2$.
+The same $L^1$ discrepancy and absolute continuity prove its vanishing
+mass. Thus a window on which the rescaled geometry tends to its flat
+tangent cannot replace the fixed profile core while retaining a
+positive fraction of a genuine near-minimizer's mass. $\square$
+
+## 25. Correspondence and the remaining spatial-realization contract
+
+**Definition 25.1 (attribution and the precise consumer).** The
+classical deterministic intermediates in Theorem 22.1 are the
+normal-coordinate distance expansion attributed there to Pennec,
+§2, (1), and §3.3, (9), and the Hilbert squared-distance negative-type
+identity (22.8), within Schoenberg's classical metric-embedding
+framework. The necessary identity is proved directly and its
+sufficiency is not invoked. The metric, mixed sectional curvature,
+raw-density normalization and source dilation are the existing
+Definitions 2.1, 9.1, 15.1, 18.1 and (9.10). The positive profile and
+its full-complex-domain uniform approximation are Theorems 18.2 and
+20.1, not new variational or spectral claims.
+
+The additional source-specific composition is the global periodic
+killed-cylinder distance localization (21.2), the positive average
+error on its actual near-minimizer density (22.2), its retained-pair
+and sharp-order consequences, and the smaller-window mass exclusion.
+These are repo-derived ordinary mathematical results. They carry no
+worldwide novelty, experimental or Lean/kernel certification claim.
+Their named spatial consumer is the kinetic-distance branch of
+Definition 11.2: the exact smooth comparison of Corollary 9.3 is now
+supplemented by a quantitative average test for arbitrary Borel
+Euclidean or Hilbert **chord** readouts on the actual collapse core.
+The analytic error is normalized by $\epsilon$ and weighted by the
+actual $|f|^2d\mu$, rather than an imposed uniform coordinate density.
+
+A candidate common-source realization may require this distance
+contract in addition to its own law, clock and operations; if it does,
+Theorem 22.1 excludes vanishing normalized pair error under the stated
+near-minimizer conditions. It selects no physical spatial dimension.
+In particular an obstruction to all Hilbert chord targets does not
+prefer one Hilbert dimension over another. Curved targets, variable
+target metric, intrinsic submanifold distance, a specified task metric,
+coarser absolute error tolerances and a separately justified
+homogenization limit are different contracts. Theorems 22.1–24.1
+make no identification with any of them. The upper bound (23.2)
+explicitly permits absolute error tending to zero.
+
+The original law (1.2) and the raw full-field occupation in Theorem
+1.3 and §17 are distinct from the analytic variational probability
+$|f|^2d\mu$. That probability is neither a Brownian occupation law nor
+an acquired data source. Spatial dilation and multiplication of the
+comparison map by $\epsilon^{-1}$ in the proof install no clock or
+control operation. All native $P,Q$ chronologies remain
+$j=\int a_{\rm cmd}\,db_{\rm cmd}$, with the original extrema,
+whole-command and prefix guards, numerical domains, actual own death,
+and four unhalved original-time charges (6.1). The signed central
+noise remains a supplied independent law, not a third primitive.
+No charge or guard is inferred from the auxiliary kinetic lengths.
+
+The paid finite-report consumer in
+[Paid-point observation tracking, Definitions 55.1–55.2, Theorems
+57.2–57.3 and 58.2](FIB_NATIVE_PAID_POINT_OBSERVATION_TRACKING.md#55-finite-reports-under-the-installed-exact-point-interface)
+retains its installed paid exact-point Read, finite-message dependence,
+wrapped held-path accuracy, fixed-field-cap response and separately
+charged primitive execution. It is not physical finite-bit sensing;
+postprocessing an acquired exact point supplies no sensing precision
+or arithmetic/memory tariff. Its probabilities and metric are not
+(22.1), and its initial-hold obstruction to uncapped native exposure
+is not removed by a variational profile. Neither consumer supplies
+an attractive sampler, native preparation of $h_g$, reset, copies,
+independent resampling, finite arithmetic or memory, total service
+tariff, or recursive spectral gluing. A complete why-three
+correspondence still needs its common-source spatial map with a
+justified geometry, the preserved path law and original clock,
+actual paid acquisition and operation/resource accounting, and
+compatible recursive gluing maps on that same realization. Equality
+of dimensions or a product pair integral supplies none of these
+missing premises.
+
+## 追加锚（本行以下为增补区）
+
+## 26. A common analytic seam in the original free cylinder
+
+**Definition 26.1 (fixed laws, raw seam and slab operators).** Retain
+Definitions 1.1–1.2 verbatim, including $r=1-Z>0$, $c(k)=1/2-k/r$,
+both $2\pi$ periods, raw $d\mu=dk\,d\alpha\,d\beta$, the pole $o$,
+zero area drift, covariance-$2$ independent Brownian motions and the
+original clock. Fix $h\in(l,u)\setminus\{k_o\}$ and write
+
+$$
+\begin{aligned}
+\Sigma&=\{h\}\times\mathbb T^2,&d\sigma&=d\alpha\,d\beta,\\
+\Omega_-&=(l,h)\times\mathbb T^2,&
+\Omega_+&=(h,u)\times\mathbb T^2,\\
+\ell_-&=h-l,&\ell_+&=u-h,\qquad
+\ell=\ell_-+\ell_+,\quad d=\min(\ell_-,\ell_+),\\
+A_0&=\ell_-^{-1}+\ell_+^{-1},&
+\mathscr H&=L^2(\Omega,d\mu;\mathbb C),\quad
+\mathscr K=L^2(\Sigma,d\sigma;\mathbb C).
+\end{aligned}
+\tag{26.1}
+$$
+
+All pairings are linear in the first argument; in particular
+$\langle g,v\rangle_\Sigma=\int g\overline v\,d\sigma$.
+For each separately fixed supplied law $\epsilon=|\nu|>0$, let
+$L_{\epsilon,D,\pm}$ be the same differential expression as (1.4)
+on $\Omega_\pm$, with zero Dirichlet data at both its height faces.
+Put $L_{\epsilon,D}=L_{\epsilon,D,-}\oplus L_{\epsilon,D,+}$ on
+$\mathscr H$. The artificial Dirichlet condition at $h$ defines a
+comparison operator; it does not change the actual killing in (1.2).
+The variable $s\ge0$ below is a resolvent parameter, not time, a
+command, an area drift or a coupling. Varying $\epsilon$ compares
+supplied laws and grants no change-of-law operation.
+
+**Definition 26.2 (modal lift and summed outward flux).** Use the
+orthonormal basis for the raw seam measure
+
+$$
+e_{mn}(\alpha,\beta)=(2\pi)^{-1}e^{i(m\alpha+n\beta)},\qquad
+b=n/r,\quad t=|b|,\quad q=m/2+c(h)n,\qquad (m,n)\in\mathbb Z^2.
+\tag{26.2}
+$$
+
+In the height coordinate $x=k-h$, the exact mode expression is
+
+$$
+-\frac{d^2}{dx^2}+V_{mn}(x),\qquad
+V_{mn}(x)=(q-bx)^2+\epsilon^2b^2+s.
+\tag{26.3}
+$$
+
+Let $\phi_{mn,-}$ on $[-\ell_-,0]$ and $\phi_{mn,+}$ on
+$[0,\ell_+]$ solve $-\phi''+V_{mn}\phi=0$, with value $1$ at
+$0$ and value $0$ at the other endpoint. These are the unique
+energy minimizers with those endpoint values. Join them continuously
+at $0$, calling the resulting function $\phi_{mn}$. Define
+
+$$
+\begin{aligned}
+a_{mn}^\epsilon(s)
+ &=\phi'_{mn,-}(0)-\phi'_{mn,+}(0)\\
+ &=\min_{\substack{v\in H_0^1(-\ell_-,\ell_+)\\v(0)=1}}
+   \int_{-\ell_-}^{\ell_+}
+        \bigl(|v'|^2+V_{mn}|v|^2\bigr)\,dx,\\
+P_sg&=\sum_{m,n}g_{mn}\phi_{mn}(k-h)e_{mn}(\alpha,\beta),
+\qquad g_{mn}=\langle g,e_{mn}\rangle_\Sigma,\\
+\mathscr T_s&=\left\{g\in\mathscr K:
+                   \sum_{m,n}a_{mn}^\epsilon(s)|g_{mn}|^2<\infty\right\},\\
+D(N_\epsilon(s))&=\left\{g\in\mathscr K:
+                   \sum_{m,n}(a_{mn}^\epsilon(s))^2|g_{mn}|^2<\infty\right\},\\
+N_\epsilon(s)g&=\sum_{m,n}a_{mn}^\epsilon(s)g_{mn}e_{mn},
+\qquad C_\epsilon(s)=N_\epsilon(s)^{-1}.
+\end{aligned}
+\tag{26.4}
+$$
+
+The common-trace DtN form is
+$\mathfrak n_s(g,v)=\sum a_{mn}^\epsilon(s)g_{mn}\overline{v_{mn}}$
+on $\mathscr T_s$. For smooth traces its operator is exactly
+$\partial_k(P_sg)|_{h-}-\partial_k(P_sg)|_{h+}$: the two
+outward conormal derivatives sum, rather than cancel. The fields
+$Q,Z_c$ are tangent to $\Sigma$ and the height coefficient is one,
+so the pairing is the raw $d\sigma$, without a probability or chart
+Jacobian factor. The diagonal form and operator in (26.4) specify
+also the nonsmooth domains. The subscript $s$ on $P_s,\mathscr T_s$
+suppresses dependence on the same fixed $\epsilon,h$.
+
+**Proposition 26.3 (bounded Poisson realization).** The series for
+$P_s$ extends from finite Fourier sums to a bounded map
+$\mathscr K\to\mathscr H$, uniformly for every $s\ge0$ and
+$\epsilon>0$, and
+
+$$
+a_{mn}^\epsilon(s)\ge A_0,\qquad
+\|P_s\|_{\mathscr K\to\mathscr H}^2\le\ell/3,
+\qquad \|C_\epsilon(s)\|\le A_0^{-1}.
+\tag{26.5}
+$$
+
+At $s=0$ the bound on $P_s$ is an equality. For fixed
+$\epsilon>0,s\ge0$, the trace form domain is $H^{1/2}(\mathbb T^2)$
+and the strong DtN domain is $H^1(\mathbb T^2)$; these last norm
+equivalences are not asserted uniformly as $\epsilon\downarrow0$.
+For $g$ in the trace domain, $P_sg$ is the energy-minimizing
+piecewise harmonic $H^1$ function with common trace $g$ and zero
+outer-face trace. For arbitrary $g\in\mathscr K$ it is the bounded
+$L^2$ Poisson realization, without an assertion of finite $H^1$
+energy for every such $g$.
+
+Proof. On each affine endpoint space the one-dimensional energy is
+coercive and strictly convex. Its unique minimizer satisfies the ODE;
+integration by parts identifies its energy with the outward flux in
+(26.4). The derivative energy of any admissible mode is at least
+$\ell_-^{-1}+\ell_+^{-1}$ by Cauchy–Schwarz on the two intervals.
+The real ODE maximum principle gives $0\le\phi_{mn,\pm}\le1$;
+for example testing a negative part or an excess above $1$ in the
+variational equation proves these inequalities. Since
+$\phi''=V_{mn}\phi\ge0$, each half is bounded above by its linear
+endpoint interpolant. Thus
+$\int|\phi_{mn}|^2dx\le\ell/3$. Parseval proves the bounded
+extension and (26.5); $m=n=s=0$ has exactly those interpolants.
+The positive diagonal form is closed, and its associated operator
+and bounded inverse are exactly (26.4). The domain and trace
+identifications follow from the full-lattice estimate proved next:
+for fixed $\epsilon,s$, its weight is equivalent to
+$\sqrt{1+m^2+n^2}$. Parseval then identifies its form and operator
+domains with $H^{1/2}$ and $H^1$. Summing the modal minimum identity
+gives exactly $T_\epsilon[P_sg]+s\|P_sg\|_2^2=\mathfrak n_s(g,g)$.
+The fixed-$\epsilon$ kinetic norm is equivalent to $H^1$; the common
+modal endpoint values give its actual trace. Conversely any $H^1$
+competitor with that trace has at least each modal minimum, proving
+the asserted minimization and uniqueness. $\square$
+
+## 27. Uniform full-lattice native seam flux
+
+**Theorem 27.1 (all modes, including turning modes).** Define the
+explicit constants
+
+$$
+c_*=(19+A_0^{-1})^{-1},\qquad C_*=4+2/d,
+\qquad M=1+\sqrt s+|m/2+c(h)n|+\sqrt{|n|/r}
+                          +\epsilon|n|/r.
+\tag{27.1}
+$$
+
+For all $(m,n)\in\mathbb Z^2$, $s\ge0$ and $\epsilon>0$,
+
+$$
+c_*M\le a_{mn}^\epsilon(s)\le C_*M.
+\tag{27.2}
+$$
+
+In particular the constants are uniform for
+$0<\epsilon\le\epsilon_0<\infty$, with no dependence on
+$\epsilon_0,s,m,n$, the pole, preparation phases or the sign of
+$\nu$. Their geometry dependence is only the two fixed slab lengths;
+$r$ and $c(h)$ occur explicitly in the weight. No lower bound on
+$|q|/\sqrt t$ and no exclusion of a zero of $q-bx$ is imposed.
+The exact $n=0$ calibration is
+
+$$
+a_{m0}^\epsilon(s)=\omega\bigl[\coth(\omega\ell_-)
+                         +\coth(\omega\ell_+)\bigr],
+\qquad \omega=\sqrt{s+m^2/4}.
+\tag{27.3}
+$$
+
+Its value at $\omega=0$ is the continuous limit $A_0$.
+
+Proof. Write $E$ for the energy of an arbitrary admissible $v$ in
+(26.4), extended by zero to $\mathbb R$. The elementary full-line
+trace inequality is
+
+$$
+1=|v(0)|^2\le\|v'\|_2\|v\|_2.
+\tag{27.4}
+$$
+
+Indeed integrate $(|v|^2)'$ on each half-line, add the two absolute
+bounds and use Cauchy–Schwarz. The endpoint derivative bound gives
+$E\ge A_0$. With $\kappa=\sqrt{s+\epsilon^2t^2}$, (27.4) and
+$E\ge\|v'\|_2^2+\kappa^2\|v\|_2^2$ give
+$E\ge2\kappa$, hence $\sqrt s\le E/2$ and
+$\epsilon t\le E/2$.
+
+For $t>0$ put $w(x)=tx-\operatorname{sgn}(b)q$. Completing the
+classical harmonic-oscillator square, with the zero endpoint traces,
+gives
+
+$$
+0\le\int|v'+wv|^2dx
+ =\int\bigl(|v'|^2+(q-bx)^2|v|^2\bigr)dx-t\|v\|_2^2.
+\tag{27.5}
+$$
+
+Consequently $t\|v\|_2^2\le E$; combined with (27.4) this gives
+$\sqrt t\le E$. The same bound is trivial when $t=0$.
+If $|q|\ge\sqrt t$ and $q\ne0$, set $\delta_q=1/(2|q|)$.
+On $[0,\delta_q]$, $|q-bx|\ge|q|/2$. The zero extension is valid
+also when this interval crosses the outer face. For each such $x$,
+
+$$
+1\le2|v(x)|^2+2\delta_q\int_0^{\delta_q}|v'|^2dy.
+$$
+
+Averaging in $x$ and using the potential lower bound gives
+
+$$
+1\le\frac2{\delta_q}\int_0^{\delta_q}|v|^2dx+2\delta_q E
+ \le\frac{17E}{|q|}.
+\tag{27.6}
+$$
+
+If instead $|q|<\sqrt t$, (27.5) already gives $|q|\le E$.
+Thus in all cases $|q|\le17E$. Adding the five bounds proves
+$M\le(19+A_0^{-1})E$, and minimization proves the lower inequality.
+These arguments use no distance from a turning point.
+
+For the upper inequality set $\delta=\min(d,M^{-1})$ and use the
+admissible tent $v(x)=(1-|x|/\delta)_+$. Its integrals are
+
+$$
+\int|v'|^2=2/\delta,\qquad \int|v|^2=2\delta/3,
+\qquad \int x^2|v|^2=\delta^3/15.
+\tag{27.7}
+$$
+
+Since $t\le M^2$ and
+$2q^2+s+\epsilon^2t^2\le2M^2$, its energy is at most
+
+$$
+\frac2\delta+\frac43M^2\delta+\frac2{15}t^2\delta^3
+ \le2/d+\frac{52}{15}M\le C_*M.
+\tag{27.8}
+$$
+
+For $n=0$ the two elementary solutions are
+$\sinh(\omega(x+\ell_-))/\sinh(\omega\ell_-)$ and
+$\sinh(\omega(\ell_+-x))/\sinh(\omega\ell_+)$.
+Their outward derivatives give (27.3); their linear limits give
+$A_0$. Finally, for fixed $\epsilon,s$, the inequalities
+$|n|\le rM/\epsilon$ and
+$|m|\le2|q|+2|c(h)||n|$ bound
+$1+|m|+|n|$ by a fixed multiple of $M$. The reverse bound follows
+from (27.1), using $\sqrt{|n|}\le1+|n|$.
+This proves the fixed-parameter domain equivalences used above,
+without changing their nonuniformity at zero noise. $\square$
+
+## 28. Exact linear approximation rank and its noise crossover
+
+**Theorem 28.1 (optimal complex-linear seam approximation).** For
+$\eta>0$ let $d_\epsilon(\eta;s)$ be the minimum complex rank of a
+bounded complex-linear $B:\mathscr K\to\mathscr K$ such that
+$\|C_\epsilon(s)-B\|\le\eta$. Then
+
+$$
+d_\epsilon(\eta;s)
+ =\#\{(m,n)\in\mathbb Z^2:(a_{mn}^\epsilon(s))^{-1}>\eta\}.
+\tag{28.1}
+$$
+
+This is an exact count, with multiplicities in the original complex
+Fourier basis. A mode with $(a_{mn}^\epsilon(s))^{-1}=\eta$ need
+not be retained for this non-strict error contract. For the contract
+$\|C_\epsilon(s)-B\|<\eta$, the exact count instead uses
+$(a_{mn}^\epsilon(s))^{-1}\ge\eta$. No finite rank gives zero
+error.
+
+Fix $\epsilon_0\in(0,\infty)$ and $S_0\in[0,\infty)$, and set
+
+$$
+\eta_0=\frac1{4C_*(1+\sqrt{S_0})},\qquad
+K_- =\frac{r}{32C_*^3},\qquad
+K_+=\frac{5(1+\epsilon_0+4r)}{c_*^3}.
+\tag{28.2}
+$$
+
+For all $0<\epsilon\le\epsilon_0$, $0\le s\le S_0$ and
+$0<\eta\le\eta_0$,
+
+$$
+\frac{K_-}{\eta^2(\eta+\epsilon)}
+ \le d_\epsilon(\eta;s)
+ \le\frac{K_+}{\eta^2(\eta+\epsilon)}.
+\tag{28.3}
+$$
+
+Thus the uniform sharp order is $\eta^{-3}$ when $\eta\ge\epsilon$
+and $\epsilon^{-1}\eta^{-2}$ when $\eta\le\epsilon$, within this
+tolerance range. Both bounds include $\eta=\epsilon$ and every
+fixed comparable ratio. These are order bounds, not a leading
+coefficient, and their constants depend only on $r,\ell_-,\ell_+$
+and the displayed upper noise bound. The tolerance threshold also
+depends on $S_0$. No Diophantine hypothesis on $c(h)$ is needed.
+
+Proof. Theorem 27.1 makes $a_{mn}^\epsilon(s)\to\infty$ off finite
+lattice sets, so $C_\epsilon(s)$ is compact, positive and diagonal
+with eigenvalues $1/a_{mn}^\epsilon(s)$. Keep precisely those
+eigenvalues greater than $\eta$, setting the rest to zero. This
+bounded finite-rank operator attains error at most $\eta$.
+Conversely a map of smaller rank has a nonzero kernel vector in
+the span of the retained modes. On that finite-dimensional span
+$\|C_\epsilon(s)v\|>\eta\|v\|$, contradicting the proposed error
+bound on such a vector. This is the classical spectral-truncation
+and rank-nullity argument, not an additional approximation mechanism.
+Using the span with eigenvalues at least $\eta$ proves the lower
+bound for strict error. Keeping that span gives strict error because
+the compact positive diagonal has a largest omitted eigenvalue,
+strictly below $\eta$. Every mode has positive eigenvalue, proving
+the zero-error assertion.
+
+For the upper count put $R=(c_*\eta)^{-1}\ge1$. By (27.2), a
+mode counted in (28.1) must have
+
+$$
+|q|<R,\qquad |n|<r\min(R^2,R/\epsilon)
+                \le\frac{2rR^2}{1+\epsilon R}.
+\tag{28.4}
+$$
+
+There are at most $1+4rR^2/(1+\epsilon R)$ possible integers $n$.
+For each of them the interval $|m/2+c(h)n|<R$ contains at most
+$4R+1\le5R$ integers $m$, regardless of its translation.
+Since $R\ge1$ and $\epsilon\le\epsilon_0$,
+$1\le(1+\epsilon_0)R^2/(1+\epsilon R)$. Therefore
+
+$$
+d_\epsilon(\eta;s)
+ \le5(1+\epsilon_0+4r)\frac{R^3}{1+\epsilon R}
+ \le\frac{K_+}{\eta^2(\eta+\epsilon)}.
+\tag{28.5}
+$$
+
+For the lower count put $L=(C_*\eta)^{-1}$ and
+$T=rL^2/[16(1+\epsilon L)]$. The threshold (28.2) ensures
+$L\ge4(1+\sqrt{S_0})$. Retain every integer $n$ with $|n|\le T$
+and every integer $m$ with $|q|\le L/4$. For all these modes,
+
+$$
+1+\sqrt s\le L/4,\qquad \sqrt t\le L/4,\qquad
+\epsilon t\le L/16,\qquad M\le13L/16<L.
+\tag{28.6}
+$$
+
+Thus $a_{mn}^\epsilon(s)<C_*L=\eta^{-1}$, with a strict margin
+even on the endpoints of the retained integer intervals.
+There are $2\lfloor T\rfloor+1\ge T$ choices of $n$.
+For each, the closed interval for $m$ has length $L$, hence at
+least $L-1\ge L/2$ integer points. It follows that
+
+$$
+d_\epsilon(\eta;s)\ge\frac{rL^3}{32(1+\epsilon L)}
+ \ge\frac{r}{32C_*^3\eta^2(\eta+\epsilon)}.
+\tag{28.7}
+$$
+
+Here $C_*\ge1$, $c_*\le1$ justify the last rescalings in (28.5)
+and (28.7). The shifts $c(h)n$ were retained in every integer
+interval, including turning modes. $\square$
+
+## 29. Native resolvent, raw unit-pole Green and clock correspondence
+
+**Definition 29.1 (the exact consumer of the seam estimate).** Put
+$R_\epsilon(s)=(L_\epsilon+s)^{-1}$ and
+$R_{\epsilon,D}(s)=(L_{\epsilon,D}+s)^{-1}$. They exist also at
+$s=0$: the height Dirichlet bound for the original operator is
+$\pi^2/\ell^2$, and the slab bounds are at least this large.
+For every $s\ge0$ the native correspondence is
+
+$$
+R_\epsilon(s)=R_{\epsilon,D}(s)
+                       +P_sC_\epsilon(s)P_s^*.
+\tag{29.1}
+$$
+
+This is the consumed common-trace resolvent formula of Olaf Post,
+[*Boundary pairs associated with quadratic forms*,
+arXiv:1210.4707v2](https://arxiv.org/pdf/1210.4707v2),
+Theorem 4.3(ii) and Proposition 5.6(ii),(v), not a new general
+gluing theorem. Its exact substitutions are boundary space
+$\mathscr K$ with raw pairing, spectral variable $z=-s$, the two
+slab forms with their outer Dirichlet data, common trace at $h$,
+solution operator $P_s$, DtN operator $N_\epsilon(s)$ and decoupled
+operator $L_{\epsilon,D}$. The common trace range $H^{1/2}$ is
+dense in $\mathscr K$; Proposition 26.3 verifies the bounded
+$L^2$ solution realization required for Post's elliptic regularity.
+Both spectra exclude $-s$, including $s=0$. Thus the strong
+$L^2$ formula, not merely a formal boundary identity, applies.
+
+For the signs, the related elliptic coupling formulas in
+Alpay–Behrndt, [arXiv:0807.0095v1](https://arxiv.org/pdf/0807.0095v1),
+§4, (52)–(53), Theorem 4.4(ii), use the negative summed outward
+flux $Q$. On smooth traces their convention corresponds to
+$Q(-s)=-N_\epsilon(s)$, and their Dirichlet-minus-coupled resolvent
+difference has the opposite sign to (29.1). Their whole-space
+geometric hypotheses are not substituted for this periodic bounded
+cylinder; Post's abstract form statement is the supplier used here.
+
+For completeness, the variational correspondence can be checked
+directly on the native domains. Given $F\in\mathscr H$, set
+$u_D=R_{\epsilon,D}(s)F$, $g=C_\epsilon(s)P_s^*F$ and
+$u=u_D+P_sg$. The first term has zero seam trace and the second
+has the common trace $g\in D(N_\epsilon(s))\subset\mathscr T_s$;
+hence $u$ belongs to the original unsplit form domain.
+Every test $v$ in that domain decomposes as $v_D+P_s\gamma v$,
+where $v_D$ has zero seam trace and $\gamma v\in\mathscr T_s$.
+The harmonic equation gives zero cross terms with $v_D$ and
+$u_D$. With $T_{\epsilon,s}=T_\epsilon+s\langle\cdot,\cdot\rangle$,
+
+$$
+\begin{aligned}
+T_{\epsilon,s}(u,v)
+ &=\langle F,v_D\rangle
+       +\mathfrak n_s(g,\gamma v)\\
+ &=\langle F,v_D\rangle+\langle P_s^*F,\gamma v\rangle_\Sigma
+ =\langle F,v\rangle.
+\end{aligned}
+\tag{29.2}
+$$
+
+Coercivity proves (29.1) with its positive sign. In particular an
+arbitrary complex $L^2$ seam forcing $f$ gives the analytic response
+$g=C_\epsilon(s)f$, $P_sg$; it is not an acquired force, sensor
+value, boundary actuator or admissible native action.
+
+For every bounded complex-linear $B:\mathscr K\to\mathscr K$,
+retaining the exact slab resolvents gives the uniform bulk bound
+
+$$
+\left\|R_\epsilon(s)
+ -\bigl(R_{\epsilon,D}(s)+P_sBP_s^*\bigr)\right\|_{\mathscr H\to\mathscr H}
+ \le\frac\ell3\|C_\epsilon(s)-B\|_{\mathscr K\to\mathscr K}.
+\tag{29.3}
+$$
+
+This follows by factoring the difference and (26.5), for all
+$s\ge0,\epsilon>0$. In particular the truncation in (28.1) gives
+error at most $\ell\eta/3$ on the bulk unit ball. Neither (29.3)
+nor (28.3) is a sharp bulk-rank bound: the exact slab inverses are
+retained, and their ranks have not been replaced by zero or charged
+to $d_\epsilon$.
+
+Let $\Gamma_{\epsilon,D,o}$ be the raw unit-pole Green function in
+the one slab containing $o$, extended by zero on the other slab.
+Let $K_0(q,z)$ be the Poisson kernel of $P_0$ relative to
+$d\sigma(z)$. All modal functions in (29.4)–(29.7) are taken at
+$s=0$. Define the smooth seam function
+
+$$
+\begin{aligned}
+f_o(z)&=\overline{K_0(o,z)}
+       =\sum_{m,n}\phi_{mn}(k_o-h)
+                    \overline{e_{mn}(\alpha_o,\beta_o)}e_{mn}(z)\\
+ &=-\partial_{n_-}\Gamma_{\epsilon,D,o}|_{\Sigma,-}
+   -\partial_{n_+}\Gamma_{\epsilon,D,o}|_{\Sigma,+}.
+\end{aligned}
+\tag{29.4}
+$$
+
+The unused slab has zero contribution. Then the original complete
+Green field, with its original pole and raw normalization, is
+
+$$
+\Gamma_{\epsilon,o}(q)=\Gamma_{\epsilon,D,o}(q)
+                              +(P_0C_\epsilon(0)f_o)(q).
+\tag{29.5}
+$$
+
+Here $P_0^*\delta_o$ means precisely (29.4), not an application of
+a bounded $L^2$ operator to an $L^2$ point mass. To justify its
+regularity without a zero-noise trace assertion, fix $\epsilon>0$
+and set $c_I=\max_{k\in[l,u]}|c(k)|$. On the whole height interval,
+
+$$
+(m/2+c(k)n)^2+\epsilon^2n^2/r^2
+ \ge\kappa_\epsilon(m^2+n^2),\qquad
+\kappa_\epsilon=\bigl[8+(8c_I^2+1)r^2/\epsilon^2\bigr]^{-1}>0.
+\tag{29.6}
+$$
+
+Indeed $m^2\le8(m/2+c(k)n)^2+8c_I^2n^2$, while
+$n^2\le r^2[(m/2+c(k)n)^2+\epsilon^2n^2/r^2]/\epsilon^2$.
+Comparing the positive modal solution with the constant-potential
+hyperbolic-sine solution shows, whenever
+$\sqrt{\kappa_\epsilon(m^2+n^2)}\,d\ge(\log2)/2$,
+
+$$
+0\le\phi_{mn}(k_o-h)
+ \le2\exp\bigl(-\sqrt{\kappa_\epsilon(m^2+n^2)}\,|k_o-h|\bigr).
+\tag{29.7}
+$$
+
+For this comparison use the slab containing $o$ and its same two
+endpoint values; the constant-potential solution is a supersolution
+for (26.3). The stated threshold makes its denominator
+$1-e^{-2\sqrt{\kappa_\epsilon(m^2+n^2)}\ell_\pm}$ at least $1/2$.
+The positive pole-to-seam distance makes (29.4) smooth by absolute
+convergence of all tangential derivatives. Division by $a_{mn}$
+preserves this decay. The ODE, $0\le\phi\le1$, and its polynomial
+coefficients bound each fixed-order height derivative by a polynomial
+in $1+|m|+|n|$, so the harmonic correction is smooth on each closed
+slab. For the first derivative this follows from a difference
+quotient on a fixed half-interval and the bound on $\phi''=V\phi$;
+higher derivatives follow by differentiating that ODE. These
+smoothness bounds are for fixed positive $\epsilon$ and fixed
+positive pole-to-seam distance, without a uniform zero-noise claim.
+
+The one-dimensional Green identity with $\phi_{mn}$ gives exactly
+the negative outward-derivative equality in (29.4). Indeed its
+Dirichlet Green mode $G^D_{mn}(x,x_o)$ satisfies
+$(-\partial_x^2+V_{mn})G^D_{mn}=\delta_{x_o}$; integrating against
+$\phi_{mn}$ gives
+$-\partial_nG^D_{mn}(0,x_o)=\phi_{mn}(x_o)$.
+The raw torus delta is
+$\sum e_{mn}(\alpha,\beta)\overline{e_{mn}(\alpha_o,\beta_o)}$,
+so this also fixes every $2\pi$ factor in (29.4).
+In (29.5) the traces agree across $h$, and the summed flux is
+$-f_o+N_\epsilon(0)C_\epsilon(0)f_o=0$.
+There is therefore no seam delta; the only source is the unchanged
+raw unit delta at $o$, with zero outer data. This proves (29.5)
+mode by mode and hence in distributions. Uniqueness of the inverse
+of the positive Dirichlet operator identifies it with (1.5), and
+with its smooth representative off the pole. Equivalently one can
+apply (29.1) to smooth unit-mass sources supported near $o$ and
+pass to their distributional limit. No point-pole approximation
+error follows from the bulk norm bound (29.3).
+
+Finally, for every $s>0$, the original semigroup satisfies
+
+$$
+R_\epsilon(s)=\int_0^\infty e^{-st}H_t^\epsilon\,dt.
+\tag{29.8}
+$$
+
+The integral converges in operator norm by the height gap. Theorem
+1.3 identifies this $H_t^\epsilon$ with the original covariance-$2$
+killed path. Equation (29.1) for all $s>0$ reconstructs these very
+Laplace transforms; uniqueness of the scalar Laplace transform of
+the continuous bounded functions
+$\langle H_t^\epsilon F,G\rangle$ determines the semigroup on the
+original time parameter. For instance under $x=e^{-t}$, vanishing
+transforms at all positive integers imply vanishing integrals
+against all polynomials on $[0,1]$, then against all continuous
+functions, proving scalar uniqueness; strong continuity removes
+the exceptional times. No clock rescaling is present.
+
+## 30. Source-specific content and the remaining realization bridges
+
+**Definition 30.1 (supplier subtraction and contract).** Common-trace
+coupling, addition of outward DtN forms and the resolvent correction
+are the classical Post suppliers applied in (29.1)–(29.2), with the
+Alpay–Behrndt sign correspondence stated there. The square completion,
+one-dimensional trace estimate and spectral-truncation rank argument
+are classical intermediates proved explicitly above. The additional
+repository synthesis is the jointly uniform full-lattice bound
+(27.2), its native translated-lattice count (28.3), and the exact
+correspondence of that analytic seam to this cylinder's raw full
+Green field and original-clock law. These are ordinary mathematical
+results, with no worldwide-priority or Lean-certification claim.
+Local anisotropic trace orders or fixed-noise elliptic estimates
+alone do not supply their jointly uniform lattice count.
+
+The internal suppliers in §§1–25 keep their stated source pins.
+For the external repository consumers below use revision
+`951f5e04989107543a170dfadab4674a99a5e0b6`; the three acquisition
+and memory additions are instead read at
+`fe080f1052e2c5800b8b005064522a0b75565754` as linked below.
+These explicit correspondences specify the versions for §§26–30.
+
+The named original-source consumer is Definition 25.1's missing
+same-source analytic cut: (29.5) joins exact free slab responses to
+the already specified unit-pole field, and (29.8) retains its path
+law and clock. This does not replace Theorems 18.2–20.1's attractive
+profile, Theorem 22.1's Hilbert chord floor or their actual-density
+contracts. The seam result concerns bounded complex-linear spatial
+response approximation; it is not the scalar autonomous temporal
+rank of [Future Response, Theorem 57.7](RECURSIVE_RELATIONAL_OBSERVATION_FUTURE_RESPONSE_SUFFICIENCY.md),
+the acquired finite-report death certificates of [Paid-point
+Tracking, §§60–65](FIB_NATIVE_PAID_POINT_OBSERVATION_TRACKING.md),
+or the fixed full-$H$ qutrit-channel stability of [Sharp Task,
+Theorem 13.3](RECURSIVE_RELATIONAL_OBSERVATION_SHARP_TASK_RETAINED_ENVIRONMENT_MEMORY.md).
+A finite number of complex coefficients is a finite linear rank,
+not a finite information capacity or a sensing-precision tariff.
+
+The arithmetic acquisition-and-behavior-return results in
+[Arithmetic Acquisition Return, §§10–12](https://github.com/the-omega-institute/trureturing/blob/fe080f1052e2c5800b8b005064522a0b75565754/docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION_ARITHMETIC_ACQUISITION_RETURN.md),
+the unknown-source acquisition in [Finite-start Predictive Memory,
+§§19–22](https://github.com/the-omega-institute/trureturing/blob/fe080f1052e2c5800b8b005064522a0b75565754/docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION_FINITE_START_PREDICTIVE_MEMORY.md),
+and the initialized generated-law characterization in
+[Self-generated Predictive Memory, §§17–20](https://github.com/the-omega-institute/trureturing/blob/fe080f1052e2c5800b8b005064522a0b75565754/docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION_SELF_GENERATED_PREDICTIVE_MEMORY.md)
+retain their own sources, read interfaces and continuation contracts.
+Their memory or arithmetic correspondences do not identify their
+sources with the Brownian cylinder or grant this analytic seam an
+acquisition/actuation service.
+
+In particular (26.4) supplies no source sample, forcing right,
+reset, copy, actual seam read or actuator. The original acquired
+filtration, failures, holds, numerical command domains, native guards
+and chronology $j=\int a_{\rm cmd}\,db_{\rm cmd}$ retain their
+contracts. Every prefix keeps all four unhalved charges (6.1).
+There is no additional primitive central command, no physical unit
+identification and no selection of a spatial dimension by (28.3).
+The unresolved full correspondence still requires physical spatial
+realization and why-three selection; actual paid seam acquisition
+and actuation with a whole-service resource map; a map from original
+recursive occurrences to these analytic cuts; and attractive
+spectral gluing with infinite-depth uniform stability. The free
+positive-resolvent identities prove none of those additional premises.
+
+## 追加锚（本行以下为增补区）
+
+## 31. One lower face and the horizontal closed trace form
+
+**Definition 31.1 (one-face data and energy closure).** Retain the
+source, raw measures, fields and covariance-$2$ clock of §1. Write
+$h_I=u-l$, $x=k-l$, $\theta=(\alpha,\beta)$, and identify the lower
+face with $\mathscr K=L^2(\mathbb T^2,d\alpha\,d\beta;\mathbb C)$.
+Here $h_I$ is the interval length, distinct from §26's seam height.
+Allow $\epsilon=0$ by setting $\nu=0$ in (1.2), retaining the same
+two Brownian controls and removing only the central Brownian term.
+The upper-face trace is zero. Let $\mathcal V_\epsilon$ be the
+closure of smooth periodic functions on $[l,u]\times\mathbb T^2$
+vanishing at $u$, in the norm $(T_\epsilon+\|\cdot\|_2^2)^{1/2}$.
+This uses horizontal energy at zero noise. Its exact modal description,
+in the raw orthonormal basis (26.2), is
+
+$$
+\begin{aligned}
+a&=m/2+c(l)n,&b&=n/r,&t&=|b|,\\
+\mathcal V_\epsilon
+ &=\left\{v:\ v_{mn}\in H^1(0,h_I),\ v_{mn}(h_I)=0,\right.\\
+ &\hspace{16mm}\left.\sum_{m,n}\int_0^{h_I}
+ \bigl(|v'_{mn}|^2+[1+(a-bx)^2+\epsilon^2b^2]|v_{mn}|^2\bigr)dx
+ <\infty\right\}.
+\end{aligned}
+\tag{31.1}
+$$
+
+The trace $\gamma_l v=\sum v_{mn}(0)e_{mn}$ is defined in
+$\mathscr K$; $\|\gamma_l v\|_2^2\le h_I\|Pv\|_2^2$.
+The kernel of $\gamma_l$ is exactly $\mathcal F_\epsilon$ in (1.3).
+Indeed finite Fourier truncation converges in (31.1), and each finite
+collection is approximated in its one-dimensional $H^1$ norms by
+smooth functions with the stated endpoint values. When both endpoint
+values vanish, compact-height approximations give (1.3). This proves
+the closure and kernel identifications also at $\epsilon=0$.
+For positive noise $\mathcal V_\epsilon$ is periodic $H^1$ with
+zero upper trace; no such isotropic identification is imposed at zero.
+The height inequality $\|v\|_2^2\le h_I^2\|Pv\|_2^2/2$ holds on
+$\mathcal V_\epsilon$ by integrating from its zero upper endpoint.
+
+**Definition 31.2 (native one-face response).** For $s\ge0$ let
+$\psi_{mn}$ minimize
+
+$$
+\lambda_{mn}^\epsilon(s)
+ =\min_{\substack{v\in H^1(0,h_I)\\v(0)=1,\ v(h_I)=0}}
+ \int_0^{h_I}\bigl(|v'|^2+[(a-bx)^2+\epsilon^2b^2+s]|v|^2\bigr)dx.
+\tag{31.2}
+$$
+
+Thus $-\psi''+[(a-bx)^2+\epsilon^2b^2+s]\psi=0$,
+$\psi(0)=1$, $\psi(h_I)=0$, and
+$\lambda_{mn}^\epsilon(s)=-\psi'_{mn}(0)$.
+Define the lower-face Poisson map and trace form by
+
+$$
+\begin{aligned}
+\mathcal P_{\epsilon,s}g&=\sum g_{mn}\psi_{mn}(x)e_{mn}(\theta),\\
+\mathcal T_{\epsilon,s}
+ &=\{g\in\mathscr K:\ \sum\lambda_{mn}^\epsilon(s)|g_{mn}|^2<\infty\},\\
+\mathfrak l_{\epsilon,s}(g,z)
+ &=\sum\lambda_{mn}^\epsilon(s)g_{mn}\overline{z_{mn}},\\
+D(\Lambda_\epsilon(s))
+ &=\{g\in\mathscr K:\ \sum(\lambda_{mn}^\epsilon(s))^2|g_{mn}|^2<\infty\},\\
+\Lambda_\epsilon(s)g&=\sum\lambda_{mn}^\epsilon(s)g_{mn}e_{mn},
+\qquad \mathcal C_\epsilon(s)=\Lambda_\epsilon(s)^{-1}.
+\end{aligned}
+\tag{31.3}
+$$
+
+All pairings retain the complex convention of §26. These definitions
+include the constant mode. They are the classical trace-energy and
+associated-operator construction, here on the native modal closure;
+see Arendt–ter Elst, [arXiv:1005.0875](https://arxiv.org/abs/1005.0875),
+and the DtN framework surveyed by Girouard–Polterovich,
+[arXiv:1411.6567](https://arxiv.org/abs/1411.6567). The native weights
+and their zero-noise domains are specified by the following theorem.
+
+## 32. Uniform one-sided mode energy, including every turning point
+
+**Theorem 32.1 (native one-face energy and domains).** For every
+$(m,n)\in\mathbb Z^2$, $s\ge0$ and $\epsilon\ge0$, put
+
+$$
+M_l=h_I^{-1}+\sqrt s+|a|+\sqrt t+\epsilon t,
+\qquad c_l=1/37,\qquad C_l=2.
+\tag{32.1}
+$$
+
+Then $c_lM_l\le\lambda_{mn}^\epsilon(s)\le C_lM_l$.
+The constants are absolute; $r,l,h_I$ occur only in $M_l$.
+There is no restriction on the slope $c(l)$ or on a turning point
+$a-bx=0$. The form in (31.3) is densely defined and closed, with
+the displayed positive selfadjoint operator. Moreover
+
+$$
+\begin{aligned}
+\gamma_l\mathcal V_\epsilon&=\mathcal T_{\epsilon,s},\qquad
+(T_\epsilon+s\|\cdot\|_2^2)[\mathcal P_{\epsilon,s}g]
+ =\mathfrak l_{\epsilon,s}(g,g),\quad g\in\mathcal T_{\epsilon,s},\\
+\|\mathcal P_{\epsilon,s}\|^2&\le h_I/3,\qquad
+\|\mathcal C_\epsilon(s)\|
+ =\bigl[\sqrt s\coth(h_I\sqrt s)\bigr]^{-1}\le h_I.
+\end{aligned}
+\tag{32.2}
+$$
+
+The continuous value of the square bracket at $s=0$ is $h_I^{-1}$.
+For fixed positive $\epsilon$, the trace and operator domains are
+$H^{1/2}(\mathbb T^2)$ and $H^1(\mathbb T^2)$, respectively.
+At zero they are exactly the weighted domains in (31.3), with weights
+$M_l$ and $M_l^2$, respectively, without an elliptic $H^1$ premise.
+On $D(\Lambda_\epsilon(s))$ the weak lower outward conormal of the
+lift is $-\partial_k\mathcal P_{\epsilon,s}g=\Lambda_\epsilon(s)g$.
+
+Proof. Write $E$ for any competitor's energy in (31.2) and extend
+it by zero beyond $h_I$. Cauchy–Schwarz gives $h_I^{-1}\le E$.
+The half-line trace inequality
+$1\le2\|v'\|_2\|v\|_2$, proved by integrating $(|v|^2)'$,
+gives $E\ge\sqrt{s+\epsilon^2t^2}$. Thus both $\sqrt s$ and
+$\epsilon t$ are at most $E$.
+If $|a|\ge\sqrt t$ and $a\ne0$, use
+$\delta=(2|a|)^{-1}$. On $[0,\delta]$ one has
+$|a-bx|\ge|a|/2$. Averaging
+$1\le2|v(x)|^2+2\delta E$ there gives
+$1\le17E/|a|$, exactly by the local calculation (27.6).
+The zero extension makes this valid even if $\delta>h_I$.
+Consequently $|a|,\sqrt t\le17E$ in this case.
+If $|a|<\sqrt t$, put $\delta=t^{-1/2}$. On
+$[2\delta,3\delta]$, $|a-bx|\ge\sqrt t$ for either sign of $b$.
+For every point of this interval,
+$1\le2|v(x)|^2+6\delta E$. Its average gives
+$1\le2E/(\delta t)+6\delta E=8E/\sqrt t$.
+Hence $|a|,\sqrt t\le8E$. The remaining case $a=t=0$ is immediate.
+Adding the five bounds gives $M_l\le37E$.
+
+For the upper bound use the one-sided tent
+$v(x)=(1-x/\delta)_+$ with $\delta=M_l^{-1}\le h_I$.
+Its derivative, mass and second-moment integrals are
+$\delta^{-1}$, $\delta/3$, $\delta^3/30$.
+Using $(a-bx)^2\le2a^2+2t^2x^2$ and $t\le M_l^2$ gives
+
+$$
+E\le M_l+\frac{2a^2+s+\epsilon^2t^2}{3M_l}
+               +\frac{t^2}{15M_l^3}
+ \le\frac{26}{15}M_l<2M_l.
+\tag{32.3}
+$$
+
+Minimization proves both bounds. The one-dimensional maximum principle
+and convexity give $0\le\psi_{mn}(x)\le1-x/h_I$, so Parseval
+proves the Poisson bound. Summing the modal minimum proves the energy
+identity, the trace range and its minimizing property: any competitor
+has at least that sum, and the modal lift attains it in (31.1).
+The positive diagonal form is closed and gives precisely (31.3).
+Integration by parts against any $v\in\mathcal V_\epsilon$ gives
+$T_{\epsilon,s}(\mathcal P_{\epsilon,s}g,v)
+=\mathfrak l_{\epsilon,s}(g,\gamma_l v)$, first for finite modes
+and then by energy continuity. This defines the weak conormal.
+For $n=0$ the exact solution is
+$\sinh(\omega(h_I-x))/\sinh(\omega h_I)$,
+$\omega=\sqrt{s+m^2/4}$, with its linear zero-frequency limit.
+Every potential is at least $s$, so every modal minimum is at least
+$\lambda_{00}^\epsilon(s)=\sqrt s\coth(h_I\sqrt s)$.
+This proves the inverse norm, including its attained constant mode.
+The fixed-positive-noise domain comparison follows as in Theorem 27.1
+with $a=m/2+c(l)n$; at zero retain the actual weights. $\square$
+
+## 33. One-face best rank through the zero-noise crossover
+
+**Theorem 33.1 (uniform native boundary approximation capacity).** Let
+$d^l_\epsilon(\eta;s)$ be the least complex rank among all bounded
+complex-linear $B:\mathscr K\to\mathscr K$ with
+$\|\mathcal C_\epsilon(s)-B\|\le\eta$. Then, for $\eta>0$,
+
+$$
+d^l_\epsilon(\eta;s)
+ =\#\{(m,n):\lambda_{mn}^\epsilon(s)<\eta^{-1}\}.
+\tag{33.1}
+$$
+
+For strict error $<\eta$ replace the inequality in this count by
+$\lambda_{mn}^\epsilon(s)\le\eta^{-1}$. Both counts are finite;
+no finite rank gives error zero. Fix $\epsilon_0\in[0,\infty)$,
+$S_0\in[0,\infty)$ and define
+
+$$
+\begin{aligned}
+\eta_l&=[4C_l\max(1,h_I^{-1}+\sqrt{S_0})]^{-1},\\
+K_l^-&=r/(32C_l^3),\qquad
+K_l^+=5(1+\epsilon_0+4r)/c_l^3.
+\end{aligned}
+\tag{33.2}
+$$
+
+For $0\le\epsilon\le\epsilon_0$, $0\le s\le S_0$ and
+$0<\eta\le\eta_l$, including equality at the tolerance endpoints,
+
+$$
+\frac{K_l^-}{\eta^2(\eta+\epsilon)}
+ \le d^l_\epsilon(\eta;s)
+ \le\frac{K_l^+}{\eta^2(\eta+\epsilon)}.
+\tag{33.3}
+$$
+
+The same order bounds hold for the strict-error count. The constants
+have only the displayed $r,\epsilon_0$ dependence; the tolerance
+threshold also depends on $h_I,S_0$. Neither a phase slope, a pole
+nor a Diophantine condition enters them. At zero noise this is
+$\eta^{-3}$; below the positive-noise scale it is
+$\epsilon^{-1}\eta^{-2}$, as an order comparison of linear ranks.
+
+Proof. Theorem 32.1 makes the inverse positive and compact, also
+at zero noise. Apply the spectral-truncation and rank-nullity proof
+of (28.1) to its actual eigenvalues; it covers every bounded
+complex-linear approximant, with exactly the stated strictness.
+For the lattice count use (28.4)–(28.7) with
+$q=a$, $c_*=c_l$, $C_*=C_l$, and replace $1+\sqrt s$ by
+$h_I^{-1}+\sqrt s$. The new threshold ensures
+$L=(C_l\eta)^{-1}\ge4\max(1,h_I^{-1}+\sqrt{S_0})$.
+Thus the same lower rectangle has $M_l\le13L/16<L$, while the
+upper intervals have $R=(c_l\eta)^{-1}\ge1$ and
+$|n|<2rR^2/(1+\epsilon R)$. These expressions and the integer
+counts remain valid at $\epsilon=0$ without division by noise.
+The strict lower margin also works for the strict-error contract;
+closed upper intervals have the same $4R+1$ and
+$1+4rR^2/(1+\epsilon R)$ bounds. This proves (33.3).
+The count is derived from the native boundary energy, independently
+of bulk volume growth. $\square$
+
+## 34. The original killed source, its exit flux and the one-face inverse
+
+**Theorem 34.1 (same-source conormal and Poisson correspondence).**
+Let $R_\epsilon(s)=(L_\epsilon+s)^{-1}$ retain both original
+Dirichlet faces, and let $\Gamma_{\epsilon,s,o}$ be its raw unit-pole
+kernel. In particular $\Gamma_{\epsilon,0,o}=\Gamma_{\epsilon,o}$
+in (1.5). For every $\epsilon,s\ge0$, its lower trace is zero,
+whereas its negative outward conormal is the smooth boundary function
+
+$$
+\begin{aligned}
+f^l_{\epsilon,s,o}(z)
+ &:=-\partial_{n_l}\Gamma_{\epsilon,s,o}(z)
+   =\sum_{m,n}\psi_{mn}(k_o-l)
+                 \overline{e_{mn}(\theta_o)}e_{mn}(z),\\
+(\mathcal P_{\epsilon,s}g)(o)
+ &=\int_{\mathbb T^2}f^l_{\epsilon,s,o}(z)g(z)\,d\sigma(z),\\
+\partial_{n_l}R_\epsilon(s)F&=-\mathcal P_{\epsilon,s}^*F,
+\qquad F\in\mathscr H,\qquad \partial_{n_l}=-\partial_k.
+\end{aligned}
+\tag{34.1}
+$$
+
+For energy solutions conormal traces are defined by Green's identity
+on the energy domains. For a unit pole use that identity distributionally
+against smooth tests; the Fourier normal derivatives give precisely
+this distribution, without a finite-energy assertion at the pole.
+For positive noise these agree with the classical conormal traces.
+The lower Poisson response uses the actual killed law:
+
+$$
+(\mathcal P_{\epsilon,s}g)(o)
+ =\mathbb E_o[e^{-s\tau}g(q_\tau)\mathbf1_{\{k_\tau=l\}}].
+\tag{34.2}
+$$
+
+For $g\in\mathscr K$ the right side is its boundary-density integral;
+it is well defined for every fixed interior $o$. Write
+$f^u_{\epsilon,s,o}=-\partial_k\Gamma_{\epsilon,s,o}|_{k=u}$
+for the corresponding upper exit density. The actual lower and upper
+discounted exit masses, without survival normalization, are
+
+$$
+\begin{aligned}
+\int f^l_{\epsilon,s,o}\,d\sigma
+ &=\frac{\sinh(\sqrt s(u-k_o))}{\sinh(\sqrt s h_I)},\\
+\int f^u_{\epsilon,s,o}\,d\sigma
+ &=\frac{\sinh(\sqrt s(k_o-l))}{\sinh(\sqrt s h_I)}.
+\end{aligned}
+\tag{34.3}
+$$
+
+At $s=0$ these are $(u-k_o)/h_I$ and $(k_o-l)/h_I$ and sum
+to one. The constant boundary mode is retained, with inverse response
+$\mathcal C_\epsilon(0)e_{00}=h_I e_{00}$.
+
+Proof. Each Dirichlet Green mode $G_{mn}(x,y)$ solves
+$(-\partial_x^2+V_{mn})G_{mn}(x,y)=\delta_y$ on $(0,h_I)$,
+with zero endpoint values and
+$V_{mn}=(a-bx)^2+\epsilon^2b^2+s$.
+Integrating against $\psi_{mn}$ gives
+$\partial_xG_{mn}(0,y)=\psi_{mn}(y)$, with positive sign.
+The torus delta is $\sum e_{mn}(\theta)\overline{e_{mn}(\theta_o)}$,
+fixing the raw normalization in (34.1). Mode pairing gives both
+the Poisson kernel and $\partial_{n_l}R_\epsilon(s)F
+=-\mathcal P_{\epsilon,s}^*F$. Alternatively the latter follows
+from $T_{\epsilon,s}(R_\epsilon(s)F,\mathcal P_{\epsilon,s}g)=0$
+and Green's identity. This defines its $L^2$ weak conormal for every
+$F\in\mathscr H$, including at zero noise.
+
+Here convergence at an interior pole can be justified without an
+elliptic trace theorem. The nonnegative convex $\psi_{mn}$ is decreasing.
+For $0<y<h_I$ put $N=|a|+ty$. There is an interval
+$J\subset[0,y]$ of length $y/4$ on which $|a-bx|\ge N/24$.
+If $|a|\ge2ty$ this holds on the whole interval with a stronger
+constant. Otherwise the interval where $|a-bx|<ty/8$ has length
+at most $y/4$, and one complementary component has length at least
+$3y/8$; use any length-$y/4$ subinterval of it. The case $N=0$
+is harmless. On $J$, compare $\psi$ with the constant-potential
+solution having both endpoint values one. At its midpoint this gives
+$\psi\le1/\cosh(Ny/192)$; monotonicity then yields
+
+$$
+0\le\psi_{mn}(y)\le2\exp[-y(|a|+ty)/192].
+\tag{34.4}
+$$
+
+For each fixed $y>0$, $|a|+ty$ controls $|m|+|n|$ up to a
+fixed geometry constant. Thus the series in (34.1), with every
+tangential derivative, converges absolutely, uniformly in
+$\epsilon,s\ge0$. It defines a smooth density and a bounded
+evaluation functional on boundary $L^2$. The reality relation under
+$(m,n)\mapsto(-m,-n)$ identifies it with the Poisson integral's
+kernel rather than its complex conjugate. No $L^2$ point mass was
+inserted into an $L^2$ adjoint.
+
+For finite Fourier boundary data the lift is smooth and bounded on
+the closed cylinder and solves $(L_\epsilon+s)v=0$. Itô's formula
+for (1.2), stopped at $\tau$, gives (34.2). Its generator is
+$-L_\epsilon$ also when $\nu=0$, and the height exit is almost
+surely finite. Uniform approximation first extends the identity to
+continuous data, establishing positivity of the smooth density;
+its $L^2$ density then extends it to boundary $L^2$ data.
+For the constant datum the exact zero mode is
+$\psi_{00}(y)=\sinh(\sqrt s(h_I-y))/\sinh(\sqrt s h_I)$.
+The upper datum gives the other mass in (34.3). At $s=0$ the
+zero Green mode is
+$\min(x,y)(h_I-\max(x,y))/h_I$; its height integral is
+$y(h_I-y)/2$, exactly the original Green mass (1.6).
+These computations retain all raw $2\pi$ factors and the original
+covariance-$2$ time scale. $\square$
+
+**Theorem 34.2 (what the inverse response reconstructs).** For
+$f\in\mathscr K$, $w=\mathcal P_{\epsilon,s}\mathcal C_\epsilon(s)f$
+is the unique member of $\mathcal V_\epsilon$ satisfying
+
+$$
+T_{\epsilon,s}(w,v)=\langle f,\gamma_l v\rangle_\Sigma
+\quad(v\in\mathcal V_\epsilon).
+\tag{34.5}
+$$
+
+Its lower trace is $\mathcal C_\epsilon(s)f$, its upper trace is
+zero and its lower outward conormal is $f$. This is an analytic
+forcing-family problem for the same differential expression. If
+$A_{\epsilon,N}$ is the associated operator on $\mathcal V_\epsilon$
+with natural lower condition and zero upper trace, then
+
+$$
+(A_{\epsilon,N}+s)^{-1}
+ =R_\epsilon(s)+\mathcal P_{\epsilon,s}\mathcal C_\epsilon(s)
+                                     \mathcal P_{\epsilon,s}^*.
+\tag{34.6}
+$$
+
+In particular the original-pole field has the same-source identity
+$\Gamma_{\epsilon,s,o}+\mathcal P_{\epsilon,s}\mathcal C_\epsilon(s)
+f^l_{\epsilon,s,o}$ for this mixed Green kernel. Its lower flux
+vanishes, since the original killed contribution has flux $-f^l$
+and the harmonic correction has flux $+f^l$. The source remains
+the same raw unit delta. The mixed realization is distinct from the
+original process killed at both faces.
+
+Proof. The trace identity in Theorem 32.1 and the coercive height
+inequality prove (34.5) and uniqueness. Decompose every
+$v\in\mathcal V_\epsilon$ as
+$v_D+\mathcal P_{\epsilon,s}\gamma_l v$, with
+$v_D\in\mathcal F_\epsilon$. The orthogonality and variational
+calculation (29.2), now with only one trace, prove (34.6) with its
+positive sign. This is the same classical Post form-resolvent
+supplier already used in §29; (31.1) supplies the domains even at
+zero noise. For a pole, the smooth $f^l$ in (34.1) and its modal
+Green identity give the asserted distributional unit source and
+boundary fluxes, without treating $\delta_o$ as $L^2$ data.
+The killed resolvent itself remains
+$\int_0^\infty e^{-st}H_t^\epsilon dt$ as in (29.8), on the
+original clock; it has zero boundary value throughout.
+
+Finally, continuous dependence in each scalar ODE gives
+$\psi^\epsilon_{mn}\to\psi^0_{mn}$ and
+$\lambda^\epsilon_{mn}\to\lambda^0_{mn}$ as $\epsilon\downarrow0$.
+The uniform Poisson and inverse bounds in (32.2) give strong
+convergence of those operators by Fourier truncation. The same
+argument for the Dirichlet mode inverses uses the fixed height gap.
+Equation (34.4) gives convergence of every fixed-pole exit density
+in each tangential smooth norm. These are direct horizontal-domain
+extensions, without a uniform elliptic $H^1$ assumption. $\square$
+
+## 35. Boundary-family contract and dimensional scope
+
+**Definition 35.1 (linear capacity and correspondence limits).** The
+input family of (33.3) is the entire complex $L^2$ unit ball of
+lower conormal forcings; the output is its lower $L^2$ trace under
+$\mathcal C_\epsilon(s)$, with raw surface measure, fixed geometry
+and the declared resolvent range. The approximation is by arbitrary
+bounded complex-linear maps in the operator norm. Its cubic
+zero-noise rank order and quadratic positive-noise order quantify
+that analytic family. They specify neither finite-bit acquisition
+nor a physical spatial dimension. A single fixed pole supplies one
+particular smooth $f^l$ in this family after normalization, and the
+family rank lower bound is not a lower bound for that one datum.
+The internal-seam identity (29.1) reconstructs the original killed
+resolvent; the one-face identity (34.6) instead compares it with a
+different lower-boundary realization. Neither installs native forcing,
+measurement, reset or actuation. The original command, filtration,
+four unhalved charges and law/clock contracts in §30 remain in force.
+Infinite recursive gluing, attractive spectral stability, physical
+realization and why-three selection require their additional stated
+bridges. Classical trace/DtN, best-rank and resolvent tools are the
+intermediates cited in §§26–31; the native one-sided uniform energy,
+its full-lattice zero-noise composition and the unchanged-source exit
+correspondence are the mathematical synthesis here. No global
+priority or Lean certification is asserted.
+
+## 追加锚（本行以下为增补区）

@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:af261aefc12a100ec8efe2179ac2afb7ef423c60dc339a3ed2e993f216ca7fba
+  normalized_sha256: sha256:af261aefc12a100ec8efe2179ac2afb7ef423c60dc339a3ed2e993f216ca7fba
+cas_ref: sha256:af261aefc12a100ec8efe2179ac2afb7ef423c60dc339a3ed2e993f216ca7fba
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 仅约定有序事件、事件后坐标、间距和两个积分量的记号，不另断言更新式或安全性。
+    previous_atom_id: 40b8e9f30b658b91542992f8f65d5ed42821191ed582c55fa22f2d4e99ab9da8
+    next_atom_id: 227220c88f8e596148362c5d4cd1656cbf04a59b33cd9d4edc1f7463c227c73e
