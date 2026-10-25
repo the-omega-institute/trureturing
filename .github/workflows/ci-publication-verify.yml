@@ -86,7 +86,7 @@ jobs:
         run: case "$HIT" in true|false) ;; *) echo "CI_ENTRY_ERROR hit output is '$HIT'" >&2; exit 2 ;; esac
       - name: Read the pinned .NET SDK version
         id: dotnet-sdk
-        if:: steps.entry.outputs.hit == 'true'
+        if: steps.entry.outputs.hit == 'true'
         run: |
           version="$(jq -er '.sdk.version' global.json)"
           echo "version=$version" >> "$GITHUB_OUTPUT"
@@ -194,7 +194,7 @@ jobs:
         run: case "$HIT" in true|false) ;; *) echo "CI_ENTRY_ERROR hit output is '$HIT'" >&2; exit 2 ;; esac
       - name: Read the pinned .NET SDK version
         id: dotnet-sdk
-        if:: steps.entry.outputs.hit == 'true'
+        if: steps.entry.outputs.hit == 'true'
         run: |
           version="$(jq -er '.sdk.version' global.json)"
           echo "version=$version" >> "$GITHUB_OUTPUT"
