@@ -7,6 +7,7 @@
    digest: The pruned qutrit Dicke circuit loses a required amplitude at occupation (1,3,1). -/
 
 import D5.S3.Quantum.Entanglement.OccupancyWordSectors
+import D5.S3.Combinatorics.Graph.LegalWords.SignedBoundary
 
 /-! The pruned qutrit circuit can omit an amplitude required by its occupation sector. -/
 
@@ -17,7 +18,9 @@ namespace D5.S3.Quantum.PureState.QutritDickePruningRefutation
 
 noncomputable section
 
-abbrev Word (n : ℕ) := D5.S3.Quantum.Entanglement.OccupancyWordSectors.Word (Fin 3) n
+open D5.S3.Combinatorics.Graph.LegalWords.SignedBoundary (vertexDelta)
+
+local notation "Word" => D5.S3.Quantum.Entanglement.OccupancyWordSectors.Word (Fin 3)
 abbrev State (n : ℕ) := Word n → ℝ
 abbrev Occupation := Fin 3 → ℕ
 
@@ -75,19 +78,16 @@ def II (n m l₁ l₂ : ℕ) (f : State n) : State n :=
     (-Real.sqrt (1 - ((l₁ - l₂ : ℕ) : ℝ) / (m - l₂ : ℕ)))
   y (r₂ (y (x (r₁ (x f)))))
 
-/-- Inclusive natural-number interval, with an empty reversed interval. -/
-def increasingRange (lo hi : ℕ) : List ℕ := List.range' lo (hi + 1 - lo)
-
 def prunedTilde (n m : ℕ) (k : Occupation) (f : State n) : State n :=
   let kt := if k 0 = 0 then k 2 else max (k 1) (k 2)
-  (increasingRange (max (kt + m - n) 1) (min kt (m - 1))).foldl
+  (List.Ico (max (kt + m - n) 1) (min kt (m - 1) + 1)).foldl
     (fun g l => I n m l g) f
 
 def prunedTildeTilde (n m : ℕ) (k : Occupation) (f : State n) : State n :=
   let l₁ := k 1 + k 2
   let l₂ := k 2
-  (increasingRange (max (l₂ + m - n) 1) (min l₂ (m - 2))).foldl
-    (fun g b => (increasingRange (max (l₁ + m - n) (b + 1)) (min l₁ (m - 1))).foldl
+  (List.Ico (max (l₂ + m - n) 1) (min l₂ (m - 2) + 1)).foldl
+    (fun g b => (List.Ico (max (l₁ + m - n) (b + 1)) (min l₁ (m - 1) + 1)).foldl
       (fun h a => II n m a b h) g) f
 
 def prunedW (n m : ℕ) (k : Occupation) (f : State n) : State n :=
@@ -95,12 +95,10 @@ def prunedW (n m : ℕ) (k : Occupation) (f : State n) : State n :=
 
 /-- The largest register block acts first. -/
 def prunedU (n : ℕ) (k : Occupation) (f : State n) : State n :=
-  (increasingRange 2 n).reverse.foldl (fun g m => prunedW n m k g) f
+  (List.Ico 2 (n + 1)).reverse.foldl (fun g m => prunedW n m k g) f
 
 def initialWord (n : ℕ) (k : Occupation) : Word n :=
   fun w => if w.val < k 2 then 2 else if w.val < k 1 + k 2 then 1 else 0
-
-def basisState {n : ℕ} (t : Word n) : State n := fun u => if u = t then 1 else 0
 
 /-- The occupation counts use the existing multiset-of-letters representation. -/
 def dicke (n : ℕ) (k : Occupation) : State n :=
@@ -110,16 +108,13 @@ def dicke (n : ℕ) (k : Occupation) : State n :=
 
 def claim : Prop :=
   ∀ n : ℕ, 2 ≤ n → ∀ k₀ k₁ k₂ : ℕ, k₀ + k₁ + k₂ = n →
-    prunedU n ![k₀, k₁, k₂] (basisState (initialWord n ![k₀, k₁, k₂])) =
+    prunedU n ![k₀, k₁, k₂] (vertexDelta (initialWord n ![k₀, k₁, k₂])) =
       dicke n ![k₀, k₁, k₂]
 
 private def witnessOccupation : Occupation := ![1, 3, 1]
 private def inputWord : Word 5 := ![2, 1, 1, 1, 0]
 private def branchWord : Word 5 := ![0, 2, 1, 1, 1]
 private def targetWord : Word 5 := ![0, 1, 1, 1, 2]
-
-private def project {n : ℕ} (r : ℕ) (a : Fin 3) (f : State n) : State n :=
-  fun t => if wire t r = a then f t else 0
 
 private theorem wire_put_ne {n : ℕ} (t : Word n) (r q : ℕ) (a : Fin 3)
     (h : r ≠ q) : wire (put t q a) r = wire t r := by
@@ -128,18 +123,20 @@ private theorem wire_put_ne {n : ℕ} (t : Word n) (r q : ℕ) (a : Fin 3)
 
 private theorem project_x {n : ℕ} (r : ℕ) (a : Fin 3) (target : ℕ)
     (cs : List (ℕ × Fin 3)) (i j : Fin 3) (f : State n) (h : r ≠ target) :
-    project r a (controlledX target cs i j f) =
-      controlledX target cs i j (project r a f) := by
+    Set.indicator {t | wire t r = a} (controlledX target cs i j f) =
+      controlledX target cs i j (Set.indicator {t | wire t r = a} f) := by
   funext t
-  unfold project controlledX
+  unfold controlledX
+  simp only [Set.indicator_apply, Set.mem_setOf_eq]
   by_cases ht : wire t r = a <;> simp [wire_put_ne t r target _ h, ht]
 
 private theorem project_r {n : ℕ} (r : ℕ) (a : Fin 3) (target : ℕ)
     (cs : List (ℕ × Fin 3)) (i j : Fin 3) (c s : ℝ) (f : State n) (h : r ≠ target) :
-    project r a (controlledR target cs i j c s f) =
-      controlledR target cs i j c s (project r a f) := by
+    Set.indicator {t | wire t r = a} (controlledR target cs i j c s f) =
+      controlledR target cs i j c s (Set.indicator {t | wire t r = a} f) := by
   funext t
-  unfold project controlledR
+  unfold controlledR
+  simp only [Set.indicator_apply, Set.mem_setOf_eq]
   by_cases ht : wire t r = a <;> simp [wire_put_ne t r target _ h, ht]
 
 private theorem scale_x {n : ℕ} (a : ℝ) (target : ℕ)
@@ -148,7 +145,7 @@ private theorem scale_x {n : ℕ} (a : ℝ) (target : ℕ)
       fun t => a * controlledX target cs i j f t := by
   funext t
   unfold controlledX
-  split_ifs <;> rfl
+  exact (mul_ite _ _ _ _).symm
 
 private theorem scale_r {n : ℕ} (a : ℝ) (target : ℕ)
     (cs : List (ℕ × Fin 3)) (i j : Fin 3) (c s : ℝ) (f : State n) :
@@ -160,19 +157,21 @@ private theorem scale_r {n : ℕ} (a : ℝ) (target : ℕ)
 
 private theorem project_v (n m l r : ℕ) (a i j : Fin 3) (f : State n)
     (h0 : r ≠ n - m) (hl : r ≠ n - m + l) :
-    project r a (V n m l i j f) = V n m l i j (project r a f) := by
+    Set.indicator {t | wire t r = a} (V n m l i j f) =
+      V n m l i j (Set.indicator {t | wire t r = a} f) := by
   unfold V
   simp only [project_x r a _ _ _ _ _ hl, project_r r a _ _ _ _ _ _ _ h0]
 
 private theorem project_i (n m l r : ℕ) (a : Fin 3) (f : State n)
     (h0 : r ≠ n - m) (hl : r ≠ n - m + l) :
-    project r a (I n m l f) = I n m l (project r a f) := by
+    Set.indicator {t | wire t r = a} (I n m l f) = I n m l (Set.indicator {t | wire t r = a} f) := by
   unfold I
   simp only [project_v n m l r a _ _ _ h0 hl]
 
 private theorem project_ii (n m l₁ l₂ r : ℕ) (a : Fin 3) (f : State n)
     (h0 : r ≠ n - m) (h1 : r ≠ n - m + l₁) (h2 : r ≠ n - m + l₂) :
-    project r a (II n m l₁ l₂ f) = II n m l₁ l₂ (project r a f) := by
+    Set.indicator {t | wire t r = a} (II n m l₁ l₂ f) =
+      II n m l₁ l₂ (Set.indicator {t | wire t r = a} f) := by
   unfold II
   simp only [project_x r a _ _ _ _ _ h1, project_x r a _ _ _ _ _ h2,
     project_r r a _ _ _ _ _ _ _ h0]
@@ -214,43 +213,37 @@ private theorem r_apply {n : ℕ} (target : ℕ) (cs : List (ℕ × Fin 3))
       else f t
     else f t := rfl
 
-private theorem basis_apply {n : ℕ} (t u : Word n) :
-    basisState t u = if u = t then 1 else 0 := rfl
-
 set_option maxHeartbeats 800000 in
 -- The pointwise calculation checks all 3^5 register words.
-private theorem i53_input : I 5 5 3 (basisState inputWord) = basisState inputWord := by
+private theorem i53_input : I 5 5 3 (vertexDelta inputWord) = vertexDelta inputWord := by
   funext t
-  have ht : t = ![t 0, t 1, t 2, t 3, t 4] := by
-    ext i
-    fin_cases i <;> rfl
+  have ht : t = ![t 0, t 1, t 2, t 3, t 4] := List.ofFn_inj.mp rfl
   rw [ht]
   generalize t 0 = a, t 1 = b, t 2 = c, t 3 = d, t 4 = e
   fin_cases a <;> fin_cases b <;> fin_cases c <;> fin_cases d <;> fin_cases e
   all_goals
     unfold I V inputWord
     norm_num (config := { implicitDefEqProofs := false })
-      [x_apply, r_apply, controls_apply, wire_apply, put_apply, basis_apply,
+      [x_apply, r_apply, controls_apply, wire_apply, put_apply, vertexDelta, Pi.single_apply,
       Equiv.swap_apply_def, Function.update_apply, funext_iff, Fin.forall_fin_succ]
 
 set_option maxHeartbeats 800000 in
 -- The pointwise calculation checks all 3^5 register words.
 private theorem project_w5 :
-    project 0 0 (prunedW 5 5 witnessOccupation (basisState inputWord)) =
-      fun t => (1 / Real.sqrt 5) * basisState branchWord t := by
-  change project 0 0 (II 5 5 4 1 (I 5 5 3 (basisState inputWord))) = _
+    Set.indicator {t | wire t 0 = 0} (prunedW 5 5 witnessOccupation (vertexDelta inputWord)) =
+      fun t => (1 / Real.sqrt 5) * vertexDelta branchWord t := by
+  change Set.indicator {t | wire t 0 = 0} (II 5 5 4 1 (I 5 5 3 (vertexDelta inputWord))) = _
   rw [i53_input]
   funext t
-  have ht : t = ![t 0, t 1, t 2, t 3, t 4] := by
-    ext i
-    fin_cases i <;> rfl
+  have ht : t = ![t 0, t 1, t 2, t 3, t 4] := List.ofFn_inj.mp rfl
   rw [ht]
   generalize t 0 = a, t 1 = b, t 2 = c, t 3 = d, t 4 = e
   fin_cases a <;> fin_cases b <;> fin_cases c <;> fin_cases d <;> fin_cases e
   all_goals
-    unfold project II inputWord branchWord
+    unfold II inputWord branchWord
     norm_num (config := { implicitDefEqProofs := false })
-      [x_apply, r_apply, controls_apply, wire_apply, put_apply, basis_apply,
+      [x_apply, r_apply, controls_apply, wire_apply, put_apply, vertexDelta, Pi.single_apply,
+      Set.indicator_apply, Set.mem_setOf_eq,
       Equiv.swap_apply_def, Function.update_apply, funext_iff,
       Fin.forall_fin_succ, Real.sqrt_div (by norm_num : (0 : ℝ) ≤ 4)]
   all_goals ring
@@ -258,64 +251,58 @@ private theorem project_w5 :
 set_option maxHeartbeats 800000 in
 -- The pointwise calculation checks all 3^5 register words.
 private theorem i42_branch :
-    I 5 4 2 (basisState branchWord) = basisState branchWord := by
+    I 5 4 2 (vertexDelta branchWord) = vertexDelta branchWord := by
   funext t
-  have ht : t = ![t 0, t 1, t 2, t 3, t 4] := by
-    ext i
-    fin_cases i <;> rfl
+  have ht : t = ![t 0, t 1, t 2, t 3, t 4] := List.ofFn_inj.mp rfl
   rw [ht]
   generalize t 0 = a, t 1 = b, t 2 = c, t 3 = d, t 4 = e
   fin_cases a <;> fin_cases b <;> fin_cases c <;> fin_cases d <;> fin_cases e
   all_goals
     unfold I V branchWord
     norm_num (config := { implicitDefEqProofs := false })
-      [x_apply, r_apply, controls_apply, wire_apply, put_apply, basis_apply,
+      [x_apply, r_apply, controls_apply, wire_apply, put_apply, vertexDelta, Pi.single_apply,
       Equiv.swap_apply_def, Function.update_apply, funext_iff, Fin.forall_fin_succ]
 
 set_option maxHeartbeats 800000 in
 -- The pointwise calculation checks all 3^5 register words.
 private theorem i43_branch :
-    I 5 4 3 (basisState branchWord) = basisState branchWord := by
+    I 5 4 3 (vertexDelta branchWord) = vertexDelta branchWord := by
   funext t
-  have ht : t = ![t 0, t 1, t 2, t 3, t 4] := by
-    ext i
-    fin_cases i <;> rfl
+  have ht : t = ![t 0, t 1, t 2, t 3, t 4] := List.ofFn_inj.mp rfl
   rw [ht]
   generalize t 0 = a, t 1 = b, t 2 = c, t 3 = d, t 4 = e
   fin_cases a <;> fin_cases b <;> fin_cases c <;> fin_cases d <;> fin_cases e
   all_goals
     unfold I V branchWord
     norm_num (config := { implicitDefEqProofs := false })
-      [x_apply, r_apply, controls_apply, wire_apply, put_apply, basis_apply,
+      [x_apply, r_apply, controls_apply, wire_apply, put_apply, vertexDelta, Pi.single_apply,
       Equiv.swap_apply_def, Function.update_apply, funext_iff, Fin.forall_fin_succ]
 
 set_option maxHeartbeats 800000 in
 -- The pointwise calculation checks all 3^5 register words.
 private theorem ii431_branch :
-    II 5 4 3 1 (basisState branchWord) = basisState branchWord := by
+    II 5 4 3 1 (vertexDelta branchWord) = vertexDelta branchWord := by
   funext t
-  have ht : t = ![t 0, t 1, t 2, t 3, t 4] := by
-    ext i
-    fin_cases i <;> rfl
+  have ht : t = ![t 0, t 1, t 2, t 3, t 4] := List.ofFn_inj.mp rfl
   rw [ht]
   generalize t 0 = a, t 1 = b, t 2 = c, t 3 = d, t 4 = e
   fin_cases a <;> fin_cases b <;> fin_cases c <;> fin_cases d <;> fin_cases e
   all_goals
     unfold II branchWord
     norm_num (config := { implicitDefEqProofs := false })
-      [x_apply, r_apply, controls_apply, wire_apply, put_apply, basis_apply,
+      [x_apply, r_apply, controls_apply, wire_apply, put_apply, vertexDelta, Pi.single_apply,
       Equiv.swap_apply_def, Function.update_apply, funext_iff, Fin.forall_fin_succ]
 
 private theorem w4_branch :
-    prunedW 5 4 witnessOccupation (basisState branchWord) = basisState branchWord := by
-  change II 5 4 3 1 (I 5 4 3 (I 5 4 2 (basisState branchWord))) = basisState branchWord
+    prunedW 5 4 witnessOccupation (vertexDelta branchWord) = vertexDelta branchWord := by
+  change II 5 4 3 1 (I 5 4 3 (I 5 4 2 (vertexDelta branchWord))) = vertexDelta branchWord
   rw [i42_branch, i43_branch, ii431_branch]
 
 private theorem project_w4 (f : State 5) :
-    project 0 0 (prunedW 5 4 witnessOccupation f) =
-      prunedW 5 4 witnessOccupation (project 0 0 f) := by
-  change project 0 0 (II 5 4 3 1 (I 5 4 3 (I 5 4 2 f))) =
-    II 5 4 3 1 (I 5 4 3 (I 5 4 2 (project 0 0 f)))
+    Set.indicator {t | wire t 0 = 0} (prunedW 5 4 witnessOccupation f) =
+      prunedW 5 4 witnessOccupation (Set.indicator {t | wire t 0 = 0} f) := by
+  change Set.indicator {t | wire t 0 = 0} (II 5 4 3 1 (I 5 4 3 (I 5 4 2 f))) =
+    II 5 4 3 1 (I 5 4 3 (I 5 4 2 (Set.indicator {t | wire t 0 = 0} f)))
   rw [project_ii 5 4 3 1 0 0 _ (by decide) (by decide) (by decide),
     project_i 5 4 3 0 0 _ (by decide) (by decide),
     project_i 5 4 2 0 0 _ (by decide) (by decide)]
@@ -328,10 +315,10 @@ private theorem w4_scale (a : ℝ) (f : State 5) :
   rw [scale_i, scale_i, scale_ii]
 
 private theorem project_tail (r : ℕ) (hr : r ≤ 1) (a : Fin 3) (f : State 5) :
-    project r a (prunedW 5 2 witnessOccupation (prunedW 5 3 witnessOccupation f)) =
-      prunedW 5 2 witnessOccupation (prunedW 5 3 witnessOccupation (project r a f)) := by
-  change project r a (I 5 2 1 (II 5 3 2 1 (I 5 3 2 (I 5 3 1 f)))) =
-    I 5 2 1 (II 5 3 2 1 (I 5 3 2 (I 5 3 1 (project r a f))))
+    Set.indicator {t | wire t r = a} (prunedW 5 2 witnessOccupation (prunedW 5 3 witnessOccupation f)) =
+      prunedW 5 2 witnessOccupation (prunedW 5 3 witnessOccupation (Set.indicator {t | wire t r = a} f)) := by
+  change Set.indicator {t | wire t r = a} (I 5 2 1 (II 5 3 2 1 (I 5 3 2 (I 5 3 1 f)))) =
+    I 5 2 1 (II 5 3 2 1 (I 5 3 2 (I 5 3 1 (Set.indicator {t | wire t r = a} f))))
   rw [project_i 5 2 1 r a _ (by omega) (by omega),
     project_ii 5 3 2 1 r a _ (by omega) (by omega) (by omega),
     project_i 5 3 2 r a _ (by omega) (by omega),
@@ -340,33 +327,34 @@ private theorem project_tail (r : ℕ) (hr : r ≤ 1) (a : Fin 3) (f : State 5) 
 private theorem tail_zero (f : State 5)
     (h : ∀ t, wire t 0 = 0 → wire t 1 ≠ 2 → f t = 0) :
     prunedW 5 2 witnessOccupation (prunedW 5 3 witnessOccupation f) targetWord = 0 := by
-  have hf : project 0 0 f = project 1 2 (project 0 0 f) := by
+  have hf : Set.indicator {t | wire t 0 = 0} f =
+      Set.indicator {t | wire t 1 = 2} (Set.indicator {t | wire t 0 = 0} f) := by
     funext t
-    unfold project
+    simp only [Set.indicator_apply, Set.mem_setOf_eq]
     by_cases h0 : wire t 0 = 0 <;> by_cases h1 : wire t 1 = 2 <;>
       simp [h0, h1, h t]
   have h0 := congrFun (project_tail 0 (by decide) 0 f) targetWord
   rw [hf, ← project_tail 1 (by decide)] at h0
-  unfold project at h0
+  simp only [Set.indicator_apply, Set.mem_setOf_eq] at h0
   exact h0
 
 private theorem output_zero :
-    prunedU 5 witnessOccupation (basisState (initialWord 5 witnessOccupation)) targetWord = 0 := by
+    prunedU 5 witnessOccupation (vertexDelta (initialWord 5 witnessOccupation)) targetWord = 0 := by
   have hw5 := project_w5
-  have hw4 := project_w4 (prunedW 5 5 witnessOccupation (basisState inputWord))
+  have hw4 := project_w4 (prunedW 5 5 witnessOccupation (vertexDelta inputWord))
   rw [hw5, w4_scale, w4_branch] at hw4
   have h : ∀ t, wire t 0 = 0 → wire t 1 ≠ 2 →
       prunedW 5 4 witnessOccupation
-        (prunedW 5 5 witnessOccupation (basisState inputWord)) t = 0 := by
+        (prunedW 5 5 witnessOccupation (vertexDelta inputWord)) t = 0 := by
     intro t h0 h1
     have ht := congrFun hw4 t
     have hb : t ≠ branchWord := by
       intro he
       subst t
       exact h1 rfl
-    have hb0 : basisState branchWord t = 0 := by
-      exact ite_eq_right hb
-    unfold project at ht
+    have hb0 : vertexDelta branchWord t = 0 := by
+      exact Pi.single_eq_of_ne hb 1
+    simp only [Set.indicator_apply, Set.mem_setOf_eq] at ht
     simpa only [h0, hb0, ite_true, mul_zero] using ht
   have ht := tail_zero _ h
   have hi : initialWord 5 witnessOccupation = inputWord := by
@@ -392,7 +380,7 @@ private theorem target_nonzero : dicke 5 witnessOccupation targetWord ≠ 0 := b
 theorem result : ¬ claim := by
   intro hc
   have he := congrFun (hc 5 (by decide) 1 3 1 (by decide)) targetWord
-  change prunedU 5 witnessOccupation (basisState (initialWord 5 witnessOccupation)) targetWord =
+  change prunedU 5 witnessOccupation (vertexDelta (initialWord 5 witnessOccupation)) targetWord =
     dicke 5 witnessOccupation targetWord at he
   exact target_nonzero (he.symm.trans output_zero)
 
