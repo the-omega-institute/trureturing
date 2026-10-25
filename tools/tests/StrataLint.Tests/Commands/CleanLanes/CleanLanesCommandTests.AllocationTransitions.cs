@@ -100,7 +100,7 @@ public sealed partial class CleanLanesCommandTests
     [InlineData("short-oid")]
     [InlineData("HEAD^0")]
     [InlineData("dev^{commit}")]
-    public void NonBranchCheckoutDestinationHasBoundedAllocationAmbiguity(string revision)
+    public void CheckoutDestinationsUseOnlyApplicableAllocationAmbiguity(string revision)
     {
         using var fixture = new CleanLanesFixture();
         var lane = fixture.AddWorkedLane("harness/nonbranch-checkout");
@@ -113,7 +113,9 @@ public sealed partial class CleanLanesCommandTests
         var headLog = File.ReadAllLines(Path.Combine(fixture.WorktreeGitDirectory(lane), "logs", "HEAD"));
         Assert.EndsWith(" to " + destination, headLog[^1], StringComparison.Ordinal);
 
-        if (revision is not ("HEAD^0" or "dev^{commit}"))
+        var ambiguous = !revision.StartsWith("refs/", StringComparison.Ordinal)
+            && revision is not ("full-oid" or "HEAD^0" or "dev^{commit}");
+        if (ambiguous)
             foreach (var force in new[] { false, true })
             {
                 var recent = fixture.RunAt(checkout.AddSeconds(10799), force ? ["--force", "--lanes-only"] : ["--lanes-only"]);
@@ -125,7 +127,7 @@ public sealed partial class CleanLanesCommandTests
 
         foreach (var force in new[] { false, true })
         {
-            var result = fixture.RunAt(checkout.AddHours(revision is "HEAD^0" or "dev^{commit}" ? 1 : 3), force ? ["--force", "--lanes-only"] : ["--lanes-only"]);
+            var result = fixture.RunAt(checkout.AddHours(ambiguous ? 3 : 1), force ? ["--force", "--lanes-only"] : ["--lanes-only"]);
 
             Assert.True(result.Success, result.Error);
             Assert.Equal("merged_to_dev", ReasonFor(result.Output, lane));

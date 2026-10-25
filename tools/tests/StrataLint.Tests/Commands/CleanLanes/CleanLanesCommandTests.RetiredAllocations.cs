@@ -11,7 +11,7 @@ public sealed partial class CleanLanesCommandTests
     [InlineData("full-oid", true)]
     [InlineData("harness/retired-allocation", false)]
     [InlineData("harness/retired-allocation", true)]
-    public void NativeBranchRetirementPreservesBoundedAllocationGrace(string name, bool rename)
+    public void NativeBranchRetirementPreservesApplicableAllocationGrace(string name, bool rename)
     {
         using var fixture = new CleanLanesFixture();
         var lane = fixture.AddWorkedLane("harness/retired-allocation-origin");
@@ -36,7 +36,7 @@ public sealed partial class CleanLanesCommandTests
         if (name is "origin/dev" or "short-oid" or "full-oid")
             Assert.Equal(saved, CleanLanesFixture.Git(lane, "rev-parse", "--verify", branch + "^{commit}").Trim());
 
-        foreach (var force in new[] { false, true })
+        foreach (var force in name == "full-oid" ? Array.Empty<bool>() : new[] { false, true })
         {
             var recent = fixture.RunAt(allocated.AddSeconds(10799), force ? ["--force", "--lanes-only"] : ["--lanes-only"]);
 
@@ -48,7 +48,7 @@ public sealed partial class CleanLanesCommandTests
         }
         foreach (var force in new[] { false, true })
         {
-            var elapsed = fixture.RunAt(allocated.AddHours(3), force ? ["--force", "--lanes-only"] : ["--lanes-only"]);
+            var elapsed = fixture.RunAt(allocated.AddHours(name == "full-oid" ? 1 : 3), force ? ["--force", "--lanes-only"] : ["--lanes-only"]);
 
             Assert.True(elapsed.Success, elapsed.Error);
             Assert.Equal("merged_to_dev", ReasonFor(elapsed.Output, lane));
