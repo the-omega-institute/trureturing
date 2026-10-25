@@ -20,9 +20,58 @@ class ProbeCacheTests(unittest.TestCase):
                                              dir="build/lean-inspector")).absolute()
         self.key = bytes(range(32))
 
+    def test_wall_phases_use_a_system_clock_across_exec(self):
+        path = self.directory / "wall.log"
+        with patch.dict(os.environ, {"SEARCH_REDUCTION_PROFILE": str(path)}), \
+                patch.object(cache.time, "clock_gettime_ns", return_value=1234567), \
+                patch.object(cache.time, "monotonic_ns", side_effect=AssertionError(
+                    "Python 3.9 Darwin monotonic epochs are process-local")):
+            cache.wall_phase("test")
+        self.assertEqual(path.read_text(), "WALL 1234567 test\n")
+
+    def test_unchanged_inventory_does_not_rewrite_the_signed_memo(self):
+        root = self.directory / "cache"
+        root.mkdir()
+        request = self.directory / "request.lean"
+        request.write_text("first")
+        before_cwd = Path.cwd()
+        try:
+            os.chdir(self.directory)
+            with patch.dict(os.environ, {}, clear=True):
+                before = cache.input_identity(request, root, self.key)
+                with patch.object(cache, "write_signed", wraps=cache.write_signed) as writer, \
+                        patch.object(cache, "digest", wraps=cache.digest) as hasher:
+                    self.assertEqual(before, cache.input_identity(request, root, self.key))
+        finally:
+            os.chdir(before_cwd)
+        writer.assert_not_called()
+        hasher.assert_not_called()
+
+    def test_inventory_reads_each_file_stat_once(self):
+        tree = self.directory / "input"
+        tree.mkdir()
+        member = tree / "source.olean"
+        member.write_bytes(b"source")
+        import stat
+        ordinary_stat = cache.os.stat
+        reads = []
+
+        def counted(path, *args, **kwargs):
+            info = ordinary_stat(path, *args, **kwargs)
+            if stat.S_ISREG(info.st_mode):
+                reads.append(str(path))
+            return info
+
+        with patch.object(cache.os, "stat", side_effect=counted), \
+                patch.object(cache.Path, "stat", new=counted):
+            cache.tree_fingerprint(tree, {}, {})
+        self.assertEqual(reads, [str(member)])
+
     def test_each_semantic_input_invalidates_old_result(self):
         files = ["request.lean", "tools/lean-inspector/Judge.lean",
-                 "index/page.json", "library/Source.olean", "lake-manifest.json"]
+                 "index/page.json", "library/Source.olean", "lake-manifest.json",
+                 "lean-toolchain", ".lake/packages/mathlib/Mathlib.lean",
+                 ".lake/build/lean-inspector/reg/lib/Judge.olean"]
         for name in files + ["tools/scripts/search-reduction-probe-cache.py"]:
             path = self.directory / name
             path.parent.mkdir(parents=True, exist_ok=True)

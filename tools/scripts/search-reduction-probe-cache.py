@@ -11,6 +11,7 @@ import json
 import os
 from pathlib import Path
 import secrets
+import stat
 import subprocess
 import sys
 import tempfile
@@ -24,8 +25,11 @@ def wall_phase(label):
     """Outer-process timing, kept separate from Lean's monotonic clock."""
     path = os.environ.get("SEARCH_REDUCTION_PROFILE")
     if path:
+        # Python 3.9 on Darwin gives monotonic_ns a process-local epoch.
+        # CLOCK_UPTIME_RAW also matches Lean's mach_absolute_time clock.
+        clock = time.CLOCK_UPTIME_RAW if sys.platform == "darwin" else time.CLOCK_MONOTONIC
         with open(path, "a") as stream:
-            stream.write(f"WALL {time.monotonic_ns()} {label}\n")
+            stream.write(f"WALL {time.clock_gettime_ns(clock)} {label}\n")
 
 
 def native_run(command):
@@ -96,20 +100,40 @@ def files_under(path):
                     yield candidate
 
 
-def tree_fingerprint(path, memo, updated):
+def fingerprint_inventory(path, root_stat):
+    """Read each file's full change stamp once, without a second is_file stat."""
+    if stat.S_ISREG(root_stat.st_mode):
+        yield path, root_stat
+    elif stat.S_ISDIR(root_stat.st_mode):
+        for directory, names, files in os.walk(path):
+            names.sort()
+            for name in sorted(files):
+                candidate = os.path.join(directory, name)
+                info = os.stat(candidate)
+                if stat.S_ISREG(info.st_mode):
+                    yield candidate, info
+
+
+def tree_fingerprint(path, memo, updated, counts=None):
+    base = os.path.abspath(path)
     result = hashlib.sha256()
-    result.update(str(path.absolute()).encode())
-    result.update(b"directory" if path.is_dir() else b"file")
-    for candidate in files_under(path):
-        stat = candidate.stat()
-        stamp = [stat.st_dev, stat.st_ino, stat.st_size, stat.st_mtime_ns, stat.st_ctime_ns]
-        name = str(candidate.absolute())
+    result.update(base.encode())
+    try:
+        root_stat = os.stat(base)
+    except FileNotFoundError:
+        result.update(b"filemissing")
+        return result.hexdigest()
+    result.update(b"directory" if stat.S_ISDIR(root_stat.st_mode) else b"file")
+    for name, info in fingerprint_inventory(base, root_stat):
+        stamp = [info.st_dev, info.st_ino, info.st_size, info.st_mtime_ns, info.st_ctime_ns]
         prior = memo.get(name)
-        checksum = prior[1] if prior and prior[0] == stamp else digest(candidate)
+        reused = prior and prior[0] == stamp
+        checksum = prior[1] if reused else digest(name)
+        if counts is not None:
+            counts["checked"] += 1
+            counts["hashed"] += not bool(reused)
         updated[name] = [stamp, checksum]
-        result.update(canonical([str(candidate.relative_to(path)) if candidate != path else "", checksum]))
-    if not path.exists():
-        result.update(b"missing")
+        result.update(canonical([name[len(base) + 1:] if name != base else "", checksum]))
     return result.hexdigest()
 
 
@@ -142,13 +166,16 @@ def input_identity(request, root, key):
         inputs += [Path("build/lean-inspector/lookup-index"),
                    Path("build/lean-inspector/search-reduction-test-index")]
     fingerprint = []
+    counts = {"checked": 0, "hashed": 0}
     for path in inputs:
         wall_phase(f"fingerprint/tree-start path={path}")
-        fingerprint.append((str(path), tree_fingerprint(path, memo, updated)))
+        fingerprint.append((str(path), tree_fingerprint(path, memo, updated, counts)))
         wall_phase(f"fingerprint/tree-end path={path}")
-    wall_phase("fingerprint/memo-write-start")
-    write_signed(memo_path, updated, key)
-    wall_phase("fingerprint/memo-write-end")
+    if updated != memo:
+        wall_phase("fingerprint/memo-write-start")
+        write_signed(memo_path, updated, key)
+        wall_phase("fingerprint/memo-write-end")
+    wall_phase(f"fingerprint/inventory checked={counts['checked']} hashed={counts['hashed']} memo_changed={updated != memo}")
     # Profiling/telemetry paths do not change mathematical inputs. Unknown
     # SEARCH_REDUCTION options are conservative cache invalidators.
     operational = {"SEARCH_REDUCTION_REQUESTS", "SEARCH_REDUCTION_PROFILE",
