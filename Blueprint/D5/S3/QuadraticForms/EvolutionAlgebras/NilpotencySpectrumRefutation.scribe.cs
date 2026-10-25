@@ -87,8 +87,8 @@ internal sealed class NilpotencySpectrumRefutationDocument : IScribeDocumentDefi
         get
         {
             var degree = Add(X("n"), D(1));
-            var summand = C("productSpace", Mu, Powers(Add(X("i"), D(1))),
-                Powers(Sub(degree, X("i"))));
+            var summand = C("productSpace", Mu, Powers(Add(C("val", X("i")), D(1))),
+                Powers(Sub(degree, C("val", X("i")))));
             var sum = C("iSup", Lam("i", C("Fin", degree), summand));
             var recurrence = All("n", Nat, Eq(Powers(Add(X("n"), D(2))), sum));
             return Context(And(Eq(Powers(D(0)), Bottom), And(Eq(Powers(D(1)), Top), recurrence)));

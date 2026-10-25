@@ -102,11 +102,13 @@ private theorem power_le_filtration {K V : Type*} [Field K] [AddCommGroup V] [Mo
       intro i
       apply Submodule.span_le.mpr
       rintro z ⟨x, hx, y, hy, rfl⟩
+      change μ x y ∈ F (n + 1 + 1)
       have hh := hmul (i.val + 1) (n + 1 - i.val) x y
         (ih _ (by omega) hx) (ih _ (by omega) hy)
       have hi := i.isLt
       have hs : (i.val + 1) + (n + 1 - i.val) = n + 1 + 1 := by omega
-      simpa only [hs] using hh
+      rw [← hs]
+      exact hh
 
 private theorem mul_mem_power {K V : Type*} [Field K] [AddCommGroup V] [Module K V]
     (μ : V →ₗ[K] V →ₗ[K] V) (a b : ℕ) (ha : 0 < a) (hb : 0 < b)
@@ -167,6 +169,7 @@ private def coordinates (x : A) : Fin 15 → ℚ :=
     -x 8 - x 12 + x 13, -x 9 + x 14]
 
 set_option maxHeartbeats 2000000 in
+-- Expand the fifteen coordinate identities of the triangular reconstruction.
 private theorem reconstruction (x : A) : (∑ i : Fin 15, coordinates x i • v i) = x := by
   ext j
   fin_cases j <;> norm_num [coordinates, v, Fin.sum_univ_succ] <;> ring
@@ -202,6 +205,7 @@ private def output : Fin 15 → Fin 15 → Option (Fin 15) := ![
   ![none,none,none,none,none,none,none,none,none,none,none,none,none,none,none]]
 
 set_option maxHeartbeats 2000000 in
+-- Normalize all fifteen coordinate polynomials in the natural square table.
 private theorem product_coordinates (x y : A) : product x y =
     ![0,
       x 0 * y 0,
@@ -222,6 +226,7 @@ private theorem product_coordinates (x y : A) : product x y =
   fin_cases l <;> norm_num [product, rows, Fin.sum_univ_succ] <;> ring
 
 set_option maxHeartbeats 2000000 in
+-- Normalize every ordered pair in the fifteen-vector multiplication table.
 private theorem product_table : ∀ i j : Fin 15,
     product (v i) (v j) = match output i j with | none => 0 | some k => v k := by
   intro i j
@@ -230,6 +235,7 @@ private theorem product_table : ∀ i j : Fin 15,
   all_goals exact Subsingleton.elim _ _
 
 set_option maxHeartbeats 2000000 in
+-- Decide the finite implication for every triple of table indices.
 private theorem weight_table : ∀ i j k : Fin 15,
     output i j = some k → weight i + weight j ≤ weight k := by decide
 

@@ -11,11 +11,12 @@ strata_touched:
   - D5/S3/QuadraticForms/EvolutionAlgebras/HilbertNaturalBasisNonuniqueness
   - D5/S3/QuadraticForms/EvolutionAlgebras/EvolutionAutomorphismControl
   - D5/S3/QuadraticForms/EvolutionAlgebras/EvolutionBasisTransport
+  - D5/S3/QuadraticForms/EvolutionAlgebras/NilpotencySpectrumRefutation
 license: citation-only
 triage: anchor
 ---
 
-# Automorphisms of perfect evolution algebras
+# Evolution algebra automorphisms and ordinary nilpotency
 
 Multiplication is bilinear and may be nonassociative. Theorem 4 supplies
 monomiality for perfect evolution algebras. Section 2.1.6 describes the diagonal
