@@ -281,7 +281,31 @@ private theorem jointChoi_overlaps (Λ : MatrixMap (Fin 2) (Fin 2 × Fin 2) ℂ)
     (hL : ∀ X, partialTraceRight (Λ X) = depol X)
     (hR : ∀ X, partialTraceLeft (Λ X) = depol X) :
     (jointChoi Λ * P).trace = 31 / 40 ∧ (jointChoi Λ * Q).trace = 31 / 40 := by
-  sorry
+  have hl (i j : Fin 2) : (∑ b : Fin 2,
+      Λ (Matrix.single i j 1) (i, b) (j, b)) = depol (Matrix.single i j 1) i j :=
+    congrArg (fun M : Matrix (Fin 2) (Fin 2) ℂ => M i j) (hL (Matrix.single i j 1))
+  have hr (i j : Fin 2) : (∑ a : Fin 2,
+      Λ (Matrix.single i j 1) (a, i) (a, j)) = depol (Matrix.single i j 1) i j :=
+    congrArg (fun M : Matrix (Fin 2) (Fin 2) ℂ => M i j) (hR (Matrix.single i j 1))
+  have hp : (jointChoi Λ * P).trace = (1 / 4 : ℂ) *
+      ∑ i : Fin 2, ∑ j : Fin 2, ∑ b : Fin 2,
+        Λ (Matrix.single i j 1) (i, b) (j, b) := by
+    norm_num [jointChoi, P, Matrix.trace, Matrix.mul_apply, MatrixMap.choi_matrix,
+      Fintype.sum_prod_type, Fin.sum_univ_two, bellDensity, bellVector,
+      D5.S3.Quantum.QubitWitnesses.bellCoefficients, Matrix.vecMulVec_apply,
+      complex_sqrt_two_inv_mul_self]
+    ring
+  have hq : (jointChoi Λ * Q).trace = (1 / 4 : ℂ) *
+      ∑ i : Fin 2, ∑ j : Fin 2, ∑ a : Fin 2,
+        Λ (Matrix.single i j 1) (a, i) (a, j) := by
+    norm_num [jointChoi, Q, Matrix.trace, Matrix.mul_apply, MatrixMap.choi_matrix,
+      Fintype.sum_prod_type, Fin.sum_univ_two, bellDensity, bellVector,
+      D5.S3.Quantum.QubitWitnesses.bellCoefficients, Matrix.vecMulVec_apply,
+      complex_sqrt_two_inv_mul_self]
+    ring
+  rw [hp, hq]
+  simp_rw [hl, hr]
+  norm_num [depol, Fin.sum_univ_two]
 
 private theorem witness_positive :
     ((3 / 2 : ℂ) • (1 : Matrix ((Fin 2 × Fin 2) × Fin 2)
