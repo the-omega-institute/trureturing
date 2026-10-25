@@ -9,6 +9,7 @@
 import D5.S3.Quantum.Foundation.FiniteKrausChannel
 import D5.S3.Quantum.Information.PartialTraceMutualInformation
 import D5.S3.QuantumBounds.CHSHWitness
+import D5.S3.Quantum.Divergence.ConditionalHockeyStickOrthogonalReduction
 
 /-! The literal controlled-rotation family admits a conversion against its angle ordering. -/
 
@@ -25,6 +26,8 @@ open scoped BigOperators Kronecker Matrix
 open D5.S3.Quantum.Foundation.FiniteKrausChannel (finite_kraus_quantum_channel)
 open D5.S3.Quantum.Foundation.FiniteKrausChannel.PhyslibLeaf (MatrixMap)
 open D5.S3.Quantum.Information.PartialTraceMutualInformation
+open D5.S3.Quantum.Divergence.ConditionalHockeyStickOrthogonalReduction
+  (partialTraceRight_smul)
 open D5.S3.Quantum.FiniteDimensional (qubitX qubitZ)
 open D5.S3.QuantumBounds.CHSHWitness (bellDensity)
 
@@ -68,13 +71,9 @@ def assemblage (θ : ℝ) : Assemblage := fun a x =>
         Pi.add_apply, Matrix.mul_add, Matrix.add_mul, partialTraceRight_add, partialTraceLeft_add]
     map_smul' := by
       intro z ρ
-      have hR (T : Matrix ((Fin 2 × Fin 2) × Fin 2) ((Fin 2 × Fin 2) × Fin 2) ℂ) :
-          partialTraceRight (z • T) = z • partialTraceRight T := by
-        ext i j
-        simp only [partialTraceRight, Matrix.smul_apply, smul_eq_mul, Finset.mul_sum]
       dsimp only
       simp only [RingHom.id_apply, Matrix.kronecker_smul, Matrix.reindex_apply,
-        Matrix.submatrix_smul, Pi.smul_apply, Matrix.mul_smul, Matrix.smul_mul, hR]
+        Matrix.submatrix_smul, Pi.smul_apply, Matrix.mul_smul, Matrix.smul_mul, partialTraceRight_smul]
       ext i j
       simp only [partialTraceLeft, Matrix.smul_apply, smul_eq_mul, Finset.mul_sum] }
 
@@ -182,13 +181,49 @@ private lemma post_cptp (b : Fin 2) : IsCPTP (postMap b) := by
   rw [← hchannel ρ]
   exact channel.trace_preserving (CStarMatrix.ofMatrix ρ)
 
+private lemma memory_action (Φ : MatrixMap (Fin 2) (Fin 2) ℂ) (b : Fin 2)
+    (ρ : Matrix (Fin 2) (Fin 2) ℂ) :
+    postMap b (MatrixMap.kron Φ (LinearMap.id : MatrixMap (Fin 2) (Fin 2) ℂ)
+      (preMap ρ)) = (Φ (Matrix.single 0 0 1)).trace •
+        (targetUnitary b * ρ * (targetUnitary b).conjTranspose) := by
+  unfold preMap postMap MatrixMap.of_kraus
+  simp only [LinearMap.sum_apply, LinearMap.coe_mk, AddHom.coe_mk]
+  ext i j
+  simp only [Matrix.mul_apply, Matrix.sum_apply, Fintype.sum_prod_type]
+  simp_rw [MatrixMap.kron_def]
+  unfold Matrix.single Matrix.trace
+  simp [preKraus, postKraus, Matrix.mul_apply, Matrix.conjTranspose_apply,
+    Fintype.sum_prod_type, Fin.sum_univ_two, Matrix.vecMul, dotProduct]
+  ring
+
+private lemma source_branch_trace (θ : ℝ) (a : Fin 2) :
+    (assemblage θ a 0 (Matrix.single 0 0 1)).trace = (1 / 2 : ℂ) := by
+  have hcircle : (Real.cos (θ * (1 / 2)) : ℂ) ^ 2 +
+      (Real.sin (θ * (1 / 2)) : ℂ) ^ 2 = 1 := by
+    exact_mod_cast Real.cos_sq_add_sin_sq (θ * (1 / 2))
+  rw [free_form]
+  unfold Matrix.trace Matrix.single
+  fin_cases a <;>
+    simp [rotationY, Matrix.mul_apply, Matrix.conjTranspose_apply, Fin.sum_univ_two,
+      Matrix.vecMul, Matrix.vecHead, Matrix.vecTail, dotProduct, div_eq_mul_inv,
+      -Complex.ofReal_cos, -Complex.ofReal_sin] <;>
+    simp only [one_div] at hcircle <;>
+    linear_combination (1 / 2 : ℂ) * hcircle
+
 private lemma conversion_identity (a' x' : Fin 2) (ρ : Matrix (Fin 2) (Fin 2) ℂ) :
     assemblage (Real.pi / 2) a' x' ρ =
       ∑ l : Fin 2 × Fin 2, ∑ a : Fin 2, ∑ x : Fin 2,
         ((1 / 4 : ℝ) * alice l a' x a x') • postMap l.1
           (MatrixMap.kron (assemblage (Real.pi / 3) a x)
             (LinearMap.id : MatrixMap (Fin 2) (Fin 2) ℂ) (preMap ρ)) := by
-  sorry
+  rw [free_form]
+  fin_cases a' <;> fin_cases x'
+  all_goals norm_num only [Fintype.sum_prod_type, Fin.sum_univ_two, alice]
+  all_goals simp only [memory_action, source_branch_trace]
+  all_goals
+    ext i j
+    simp [targetUnitary, Matrix.smul_apply, smul_eq_mul, Matrix.add_apply]
+    ring
 
 private lemma conversion :
     LOSRConvertible (assemblage (Real.pi / 3)) (assemblage (Real.pi / 2)) := by
