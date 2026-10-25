@@ -232,4 +232,73 @@ end Separation
 #print axioms Group.registration
 #print axioms Haar.registration
 #print axioms Separation.registration
+
+namespace Monomials
+abbrev signature := ExponentWords.signature
+def readoutFunction := ExponentWords.readoutFunction
+def actual : Realization signature := ExponentWords.actual
+def shifted : Realization signature := realize signature
+  (fun _ r alpha => monomial (stateMatrix r) alpha + stateMatrix r 2 0) (fun e => nomatch e)
+abbrev arena : Arena where
+  signature := signature
+  Law R := ∀ (m N : ℕ) (r s : DensityState (Fin 3)),
+    sharedMoment m N r = sharedMoment m N s → ∀ alpha : Exponent,
+      degree alpha ≤ N → weight m alpha = 0 → R.readout () r alpha = R.readout () s alpha
+private theorem bridge : (type_of% moment_determines_monomials) ↔ arena.Law actual := Iff.rfl
+private theorem rejected : ¬ arena.Law shifted := by
+  intro h
+  have hzero : sharedMoment 2 0 rho = sharedMoment 2 0 (sigma 2) := by
+    rw [shared_haar_pinching, shared_haar_pinching]
+    exact sparse_low_pinching 2 0 (by omega) (by omega)
+  have he := h 2 0 rho (sigma 2) hzero 0 (by simp [degree]) (by simp [weight])
+  change monomial (stateMatrix rho) 0 + stateMatrix rho 2 0 =
+    monomial (stateMatrix (sigma 2)) 0 + stateMatrix (sigma 2) 2 0 at he
+  norm_num [monomial, stateMatrix, rho, sigma, sparseState, sparseMatrix, phase,
+    Circle.coe_exp, Complex.exp_pi_mul_I] at he
+private theorem dependence : ObservationalDependence signature actual :=
+  ExponentWords.family.dependence
+
+def family : Registration arena (type_of% moment_determines_monomials) where
+  actual := actual
+  bridge := bridge
+  variation := ⟨bridge.mp moment_determines_monomials, shifted, rejected⟩
+  sensitivity := ⟨fun i => ⟨shifted,
+    fun j h => (h (Subsingleton.elim j i)).elim, rfl, rejected⟩,
+    fun e => nomatch e⟩
+  dependence := dependence
+
+def registration : LeanInformationAudit.Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
+    moment_determines_monomials (Realization signature) Unit Unit where
+  unitName := `Reg.D5.S3.Quantum.Fibers.SharedEnergyCompactAction.Monomials.unit
+  realizationName := `Reg.D5.S3.Quantum.Fibers.SharedEnergyCompactAction.Monomials.family
+  realizationSource := none
+  generated := false
+  arena := .source ⟨arena⟩
+  objectArena := .source ⟨arena⟩
+  catalog := Lean.Name.anonymous
+  localNames := false
+  realization := .source arena ⟨family⟩
+  correspondence := { stage := .evidence, objectStage := .evidence }
+  bundleNonempty := .absent
+  readout := some (realize signature readoutFunction (fun e => nomatch e))
+  variation := .absent
+  sensitivity := .absent
+  partialSensitivity := none
+  escapeFrom := none
+  sourceSelection := some {
+    owner := `D5.S3.Quantum.Fibers.SharedEnergyCompactAction
+    definition := none
+    coordinates := #[2]
+    readouts := #[{
+      path := #["body", "body", "body", "body", "body", "body", "body", "body", "fn", "arg"]
+      stateBinder := 5
+      functionOperand := false
+      stateOperand := some #["arg"]
+      booleanPredicate := false }] }
+  continuation := .unknown
+  familyRecord := none
+  options := #[]
+end Monomials
+
+#print axioms Monomials.registration
 end Reg.D5.S3.Quantum.Fibers.SharedEnergyCompactAction

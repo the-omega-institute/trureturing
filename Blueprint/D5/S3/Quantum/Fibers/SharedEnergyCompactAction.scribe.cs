@@ -31,6 +31,11 @@ internal sealed class SharedEnergyCompactActionDocument : IScribeDocumentDefinit
                     + "A tensor entry acquires the circle character of its total-energy difference. Equal energies give the constant "
                     + "character; for unequal energies a group translation negates the integrand, forcing its integral to vanish. "
                     + "All complex cross entries inside degenerate total-energy blocks remain."),
+            Thm("moment-monomials", "moment_determines_monomials", "A moment determines all lower zero-weight monomials", MomentMonomials(),
+                "Equality of one actual shared Haar moment implies equality of every labelled zero-weight coordinate monomial "
+                    + "of no greater degree. Taking a native partial trace removes one copy: the equal head labels cancel in the energy condition, "
+                    + "and their diagonal sum is one. Repeating this step and using the exponent-to-word construction gives the conclusion "
+                    + "without dividing by any entry, including at degree zero and at deficient rank."),
             Def("same-energy-orbit", "SameEnergyOrbit", "Actual compact energy orbits",
                 "Two native states have the same energy orbit when an actual matrix in the compact subgroup conjugates the first state matrix to the second."),
             Thm("compact-separation", "sparse_compact_separation", "Sparse compact-orbit separation by actual Haar moments", CompactSeparation(),
@@ -89,4 +94,16 @@ internal sealed class SharedEnergyCompactActionDocument : IScribeDocumentDefinit
             C("sharedMoment", m, n, r), Eq, C("sharedMoment", m, n, s), Close, Sp, Land, RowBreak,
             C("sharedMoment", m, l, r), Neq, Sp, C("sharedMoment", m, l, s)));
     }
+    private static Formula MomentMonomials()
+    {
+        var m = F.Id("m"); var n = F.Id("N"); var r = F.Id("r"); var s = F.Id("s"); var a = F.Id("a");
+        return Disp(Seq(Forall, Sp, m, Comma, n, InMacro, C("Nat"), Comma,
+            Forall, Sp, r, Comma, s, InMacro, C("DensityState", C("Fin", D(3))), Comma,
+            C("sharedMoment", m, n, r), Eq, C("sharedMoment", m, n, s), Sp, Implies, RowBreak,
+            Forall, Sp, a, InMacro, C("Exponent"), Comma,
+            C("degree", a), Leq, Sp, n, Sp, Implies, Sp,
+            C("weight", m, a), Eq, D(0), Sp, Implies, Sp,
+            C("monomial", C("stateMatrix", r), a), Eq, C("monomial", C("stateMatrix", s), a)));
+    }
+
 }

@@ -287,6 +287,60 @@ theorem sparse_compact_separation (m : ℕ) (hm : 2 ≤ m) :
     exact sparse_low_pinching m n hm hn
   · simpa only [shared_haar_pinching] using hd
 
+
+private theorem pinched_marginal (m k : ℕ) (r : DensityState (Fin 3))
+    (I J : CopyIndex (Fin 3) (k+1)) :
+    (∑ i : Fin 3, pinchedCopies m (k+2) r (i,I) (i,J)) =
+      pinchedCopies m (k+1) r I J := by
+  simp only [native_pinch_entry, totalEnergy, add_right_inj]
+  change (∑ i : Fin 3, if totalEnergy m (k+1) I = totalEnergy m (k+1) J then
+      stateMatrix r i i * stateMatrix (copies r (k+1)) I J else 0) = _
+  by_cases he : totalEnergy m (k+1) I = totalEnergy m (k+1) J
+  · simp only [he, ite_true, ← Finset.sum_mul]
+    have ht : ∑ i, stateMatrix r i i = 1 := r.2.2
+    rw [ht, one_mul]
+  · simp [he]
+
+private theorem pinching_lower (m : ℕ) (r s : DensityState (Fin 3)) :
+    ∀ (N n : ℕ), n ≤ N → pinchedCopies m N r = pinchedCopies m N s →
+      pinchedCopies m n r = pinchedCopies m n s := by
+  intro N
+  induction N with
+  | zero =>
+    intro n hn he
+    have hn0 : n = 0 := by omega
+    simpa only [hn0] using he
+  | succ N ih =>
+    intro n hn he
+    by_cases hn0 : n = 0
+    · subst n
+      ext I J
+      simp [native_pinch_entry, totalEnergy, copies, stateMatrix]
+    · by_cases htop : n = N+1
+      · simpa only [htop] using he
+      · have hN : 1 ≤ N := by omega
+        have hp : pinchedCopies m N r = pinchedCopies m N s := by
+          obtain ⟨k, rfl⟩ := Nat.exists_eq_succ_of_ne_zero (by omega : N ≠ 0)
+          ext I J
+          rw [← pinched_marginal, ← pinched_marginal]
+          exact Finset.sum_congr rfl (fun i _ =>
+            congrArg (fun X => X (i,I) (i,J)) he)
+        exact ih n (by omega) hp
+
+/-- One actual shared Haar moment determines every labelled zero-weight
+monomial of no greater degree, for all native density states. -/
+theorem moment_determines_monomials (m N : ℕ) (r s : DensityState (Fin 3))
+    (he : sharedMoment m N r = sharedMoment m N s) (alpha : Exponent)
+    (hd : degree alpha ≤ N) (hw : weight m alpha = 0) :
+    monomial (stateMatrix r) alpha = monomial (stateMatrix s) alpha := by
+  rw [shared_haar_pinching, shared_haar_pinching] at he
+  have hl := pinching_lower m r s N (degree alpha) hd he
+  obtain ⟨I,J,ht⟩ := exponent_tensor_bridge m alpha
+  have hc := congrArg (fun X => X I J) hl
+  rw [(ht.2.2 r).2, (ht.2.2 s).2] at hc
+  simpa only [hw, ite_true] using hc
+
+#print axioms moment_determines_monomials
 #print axioms energy_group_realization
 #print axioms shared_haar_pinching
 #print axioms sparse_compact_separation
