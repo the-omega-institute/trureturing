@@ -2,7 +2,9 @@ fingerprints:
   raw_sha256: sha256:9dea6ff50f48aafe799d897300c4b0d863b662d5312f3d1cccd14561bef329ac
   normalized_sha256: sha256:9dea6ff50f48aafe799d897300c4b0d863b662d5312f3d1cccd14561bef329ac
 cas_ref: sha256:9dea6ff50f48aafe799d897300c4b0d863b662d5312f3d1cccd14561bef329ac
-coverage_gids: []
+coverage_gids:
+  - gid: D5/S3/Estimation/SequentialDecisionRisk/BeliefMarkovUpdate.actual_next_belief_eq_posterior_update
+    target_statement_id: sha256:18504944ab120b4da0d18967aacdf153abb29fdca721a887b664cd2719b0b1f4
 receipts:
   unresolved_subitems: []
   chain_atoms:
