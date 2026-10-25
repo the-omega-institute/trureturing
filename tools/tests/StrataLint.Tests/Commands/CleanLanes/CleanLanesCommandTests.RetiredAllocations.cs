@@ -57,6 +57,41 @@ public sealed partial class CleanLanesCommandTests
         }
     }
 
+    [Fact]
+    public void ExpiredAmbiguousCheckoutCannotValidateLostBranchCreation()
+    {
+        using var fixture = new CleanLanesFixture();
+        var lane = fixture.AddWorkedLane("harness/ambiguous-evidence-origin");
+        var saved = fixture.Head(lane);
+        var parent = CleanLanesFixture.Git(lane, "rev-parse", "HEAD^").Trim();
+        var checkout = fixture.LastUpdate(lane).AddDays(2);
+        const string surviving = "harness/ambiguous-evidence-survivor";
+        CleanLanesFixture.GitAt(lane, checkout.AddMinutes(-1), "branch", surviving);
+        CleanLanesFixture.GitAt(lane, checkout.AddSeconds(-1), "update-ref", "refs/heads/" + surviving, parent, saved);
+        CleanLanesFixture.GitAt(lane, checkout.AddSeconds(-1), "update-ref", "refs/heads/" + surviving, saved, parent);
+        var branchLog = Path.Combine(fixture.RepositoryRoot, ".git", "logs", "refs", "heads", surviving);
+        File.WriteAllLines(branchLog, File.ReadAllLines(branchLog).TakeLast(1));
+        Assert.Contains(File.ReadAllText(branchLog).Split(' ')[0], static c => c != '0');
+        CleanLanesFixture.GitAt(lane, checkout, "switch", "-c", "origin/dev");
+        var deletedLog = fixture.BranchLogPath(lane);
+        CleanLanesFixture.GitAt(lane, checkout.AddMinutes(1), "checkout", "--detach", "HEAD");
+        CleanLanesFixture.Git(lane, "branch", "-d", "origin/dev");
+        Assert.False(File.Exists(deletedLog));
+        CleanLanesFixture.GitAt(lane, checkout.AddMinutes(2), "switch", surviving);
+
+        foreach (var force in new[] { false, true })
+        {
+            var result = fixture.RunAt(checkout.AddDays(2), force ? ["--force", "--lanes-only"] : ["--lanes-only"]);
+
+            Assert.True(result.Success, result.Error);
+            Assert.Equal("update_unknown", ReasonFor(result.Output, lane));
+            AssertItemProperty(ReadItems(result.Output), "path", lane, "selection_detail", "branch_allocation_unverifiable");
+            Assert.True(Directory.Exists(lane));
+            Assert.True(fixture.WorktreeRegistered(lane));
+            Assert.Equal(saved, fixture.Head(lane));
+        }
+    }
+
     [Theory]
     [InlineData(false)]
     [InlineData(true)]
