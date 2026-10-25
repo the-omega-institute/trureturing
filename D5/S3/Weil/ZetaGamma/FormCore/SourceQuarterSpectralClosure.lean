@@ -73,7 +73,7 @@ private theorem unitarySourceFourier_extended_plancherel {f : ℝ → ℂ}
           ‖D5.S3.Weil.ZetaGamma.FormCore.LineFourier.angularFourier f ξ‖ₑ ^ 2 := by
       congr 1
       exact lintegral_neg_eq_self (fun ξ : ℝ =>
-        ‖D5.S3.Weil.ZetaGamma.FormCore.LineFourier.angularFourier f ξ‖ₑ ^ 2) volume
+        ‖D5.S3.Weil.ZetaGamma.FormCore.LineFourier.angularFourier f ξ‖ₑ ^ 2)
     _ = _ :=
       (D5.S3.Weil.ZetaGamma.FormCore.LineFourier.angular_extended_plancherel hf₁ hf₂).symm
 
@@ -162,7 +162,8 @@ private theorem source_unitary_add {f g : ℝ → ℂ}
       𝓕 (fun t => f t + g t) (-ξ / (2 * Real.pi)) =
         𝓕 f (-ξ / (2 * Real.pi)) + 𝓕 g (-ξ / (2 * Real.pi)) := by
     simpa only [Real.fourier_eq, Pi.add_apply] using congrFun
-      (VectorFourier.fourierIntegral_add Real.continuous_fourierChar (by fun_prop) hf hg)
+      (VectorFourier.fourierIntegral_add (L := innerₗ ℝ)
+        Real.continuous_fourierChar continuous_inner hf hg)
       (-ξ / (2 * Real.pi))
   simp only [unitarySourceFourier, hraw, mul_add]
 
@@ -248,7 +249,12 @@ theorem actual_constant_reflected_cross_re_zero {u : ℝ → ℂ}
             (unitarySourceFourier U ξ) * unitarySourceFourier U (-ξ)).re) volume :=
           hC.re.const_mul 2
         rw [integral_add hSum hTerm, integral_add hUF hVF,
-          integral_const_mul, integral_re hC]
+          integral_const_mul]
+        have hre : (∫ ξ : ℝ, ((starRingEnd ℂ) (unitarySourceFourier U ξ) *
+            unitarySourceFourier U (-ξ)).re) =
+            (∫ ξ : ℝ, (starRingEnd ℂ) (unitarySourceFourier U ξ) *
+              unitarySourceFourier U (-ξ)).re := integral_re hC
+        rw [hre]
   rw [actual_unitary_mass_integral hE₁ hE₂,
     actual_unitary_mass_integral hU₁ hU₂,
     actual_unitary_mass_integral hV₁ hV₂] at hFreq
@@ -481,13 +487,15 @@ private theorem actual_bare_quarter_partial_energy_identity (N : ℕ)
         dsimp only
         rw [actual_even_zero_fourier hu₁, source_norm_add_sq]
         dsimp [A, B, R, U]
-        simp only [Complex.mul_re, Complex.ofReal_re, Complex.ofReal_im,
+        simp only [Complex.mul_re, Complex.mul_im, Complex.ofReal_re, Complex.ofReal_im,
           zero_mul, zero_add, sub_zero]
         ring
     _ = (∫ ξ, A ξ) + (∫ ξ, B ξ) + 2 * (∫ ξ, R ξ).re := by
       have hSum : Integrable (fun ξ => A ξ + B ξ) volume := hA.add hB
       have hTerm : Integrable (fun ξ => 2 * (R ξ).re) volume := hR.re.const_mul 2
-      rw [integral_add hSum hTerm, integral_add hA hB, integral_const_mul, integral_re hR]
+      rw [integral_add hSum hTerm, integral_add hA hB, integral_const_mul]
+      have hre : (∫ ξ : ℝ, (R ξ).re) = (∫ ξ : ℝ, R ξ).re := integral_re hR
+      rw [hre]
     _ = _ := by rw [hReflect, hRi]; ring
 
 /-- The literal bare quarter weight, with its actual digamma input. -/
@@ -586,7 +594,6 @@ theorem actual_bare_quarter_even_zero_domain_and_identity
   have hH : (D5.S3.Weil.ZetaGamma.FormCore.PositiveHankelL2.actualHankel (1 / 4) u).re =
       ∑' n : ℕ, L n := by
     rw [hH₀]
-    simp only [Complex.ofReal_re]
     apply tsum_congr
     intro n
     simp [L, D5.S3.Weil.ZetaGamma.FormCore.PositiveHankelL2.literalLaplace, add_comm]
@@ -666,8 +673,11 @@ private theorem actual_bare_quarter_cross_integrable
   have hB : Integrable B volume := by
     simpa only [Function.comp_def, A, B, actual_bare_quarter_even] using
       (Measure.measurePreserving_neg volume).integrable_comp_of_integrable hA
-  have hF := (continuous_unitarySourceFourier (source_zero_l1 hu₁)).aestronglyMeasurable
-  have hFm := ((continuous_unitarySourceFourier (source_zero_l1 hu₁)).comp
+  have hF : AEStronglyMeasurable (unitarySourceFourier (zeroExtension u)) volume :=
+    (continuous_unitarySourceFourier (source_zero_l1 hu₁)).aestronglyMeasurable
+  have hFm : AEStronglyMeasurable
+      (fun ξ => unitarySourceFourier (zeroExtension u) (-ξ)) volume :=
+    ((continuous_unitarySourceFourier (source_zero_l1 hu₁)).comp
     (continuous_neg)).aestronglyMeasurable
   have hw : AEStronglyMeasurable (fun ξ => (actualBareQuarterWeight ξ : ℂ)) volume :=
     Complex.continuous_ofReal.comp_aestronglyMeasurable
@@ -719,13 +729,15 @@ theorem actual_bare_quarter_reflected_cross
           dsimp only [actualBareQuarterEnergy]
           rw [actual_even_zero_fourier hu₁, source_norm_add_sq]
           dsimp [A, B, R]
-          simp only [Complex.mul_re, Complex.ofReal_re, Complex.ofReal_im,
+          simp only [Complex.mul_re, Complex.mul_im, Complex.ofReal_re, Complex.ofReal_im,
             zero_mul, zero_add, sub_zero]
           ring
       _ = (∫ ξ, A ξ) + (∫ ξ, B ξ) + 2 * (∫ ξ, R ξ).re := by
         have hSum : Integrable (fun ξ => A ξ + B ξ) volume := hA.add hB
         have hTerm : Integrable (fun ξ => 2 * (R ξ).re) volume := hR.re.const_mul 2
-        rw [integral_add hSum hTerm, integral_add hA hB, integral_const_mul, integral_re hR]
+        rw [integral_add hSum hTerm, integral_add hA hB, integral_const_mul]
+        have hre : (∫ ξ : ℝ, (R ξ).re) = (∫ ξ : ℝ, R ξ).re := integral_re hR
+        rw [hre]
       _ = _ := by
         rw [hReflect]
         dsimp only [A, actualBareQuarterEnergy]
