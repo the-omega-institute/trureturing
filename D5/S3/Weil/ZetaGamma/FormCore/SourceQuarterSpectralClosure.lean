@@ -39,13 +39,13 @@ private theorem continuous_unitarySourceFourier {f : ℝ → ℂ} (hf : Integrab
     ((D5.S3.Weil.ZetaGamma.FormCore.LineFourier.continuous_raw_fourier hf).comp
       (by fun_prop))
 
-theorem unitarySourceFourier_eq_angular (f : ℝ → ℂ) (ξ : ℝ) :
+private theorem unitarySourceFourier_eq_angular (f : ℝ → ℂ) (ξ : ℝ) :
     unitarySourceFourier f ξ =
       ((Real.sqrt (2 * Real.pi) : ℝ) : ℂ)⁻¹ *
         D5.S3.Weil.ZetaGamma.FormCore.LineFourier.angularFourier f (-ξ) := by
   rfl
 
-theorem unitary_normalizing_enorm_sq :
+private theorem unitary_normalizing_enorm_sq :
     ‖((Real.sqrt (2 * Real.pi) : ℝ) : ℂ)⁻¹‖ₑ ^ 2 =
       ENNReal.ofReal (1 / (2 * Real.pi)) := by
   have hp : 0 ≤ 2 * Real.pi := by positivity
@@ -57,7 +57,7 @@ theorem unitary_normalizing_enorm_sq :
 
 /-- Canonical source Plancherel is a consequence of the existing actual
 angular theorem. No Fourier-energy equality is supplied as a hypothesis. -/
-theorem unitarySourceFourier_extended_plancherel {f : ℝ → ℂ}
+private theorem unitarySourceFourier_extended_plancherel {f : ℝ → ℂ}
     (hf₁ : Integrable f volume) (hf₂ : MemLp f 2 volume) :
     (∫⁻ ξ : ℝ, ‖unitarySourceFourier f ξ‖ₑ ^ 2) =
       ∫⁻ t : ℝ, ‖f t‖ₑ ^ 2 := by
@@ -106,7 +106,7 @@ theorem unitarySourceFourier_squared_integrable {f : ℝ → ℂ}
     (Eventually.of_forall fun ξ => sq_nonneg ‖unitarySourceFourier f ξ‖)).2 hfreqFinite
 
 /-- Real mass equality follows from the actual extended Plancherel supplier. -/
-theorem actual_unitary_mass_integral {f : ℝ → ℂ}
+private theorem actual_unitary_mass_integral {f : ℝ → ℂ}
     (hf₁ : Integrable f volume) (hf₂ : MemLp f 2 volume) :
     (∫ ξ : ℝ, ‖unitarySourceFourier f ξ‖ ^ 2) = ∫ t : ℝ, ‖f t‖ ^ 2 := by
   have hF := unitarySourceFourier_squared_integrable hf₁ hf₂
@@ -247,12 +247,12 @@ theorem actual_constant_reflected_cross_re_zero {u : ℝ → ℂ}
   linarith
 
 /-- Literal bare quarter increment, at a positive Laplace rate. -/
-def actualBareQuarterIncrement (c ξ : ℝ) : ℝ :=
+private def actualBareQuarterIncrement (c ξ : ℝ) : ℝ :=
   1 / c - c / (ξ ^ 2 + c ^ 2)
 
 /-- Each finite increment's real cross is minus half the literal Laplace
 square. Constant cancellation and resolvent inversion are actual suppliers. -/
-theorem actual_bare_quarter_increment_cross {c : ℝ} (hc : 0 < c)
+private theorem actual_bare_quarter_increment_cross {c : ℝ} (hc : 0 < c)
     {u : ℝ → ℂ} (hu₁ : Integrable u halfline) (hu₂ : MemLp u 2 halfline) :
     Integrable (fun ξ : ℝ => (actualBareQuarterIncrement c ξ : ℂ) *
       (starRingEnd ℂ) (unitarySourceFourier (zeroExtension u) ξ) *
@@ -296,10 +296,10 @@ theorem actual_bare_quarter_increment_cross {c : ℝ} (hc : 0 < c)
   <;> ring
 
 /-- Finite bare digamma approximant; no renormalizing constant is added. -/
-def actualBareQuarterPartial (N : ℕ) (ξ : ℝ) : ℝ :=
+private def actualBareQuarterPartial (N : ℕ) (ξ : ℝ) : ℝ :=
   ∑ n ∈ Finset.range N, actualBareQuarterIncrement ((n : ℝ) + 1 / 4) ξ
 
-theorem actual_bare_quarter_partial_cross (N : ℕ)
+private theorem actual_bare_quarter_partial_cross (N : ℕ)
     {u : ℝ → ℂ} (hu₁ : Integrable u halfline) (hu₂ : MemLp u 2 halfline) :
     Integrable (fun ξ : ℝ => (actualBareQuarterPartial N ξ : ℂ) *
       (starRingEnd ℂ) (unitarySourceFourier (zeroExtension u) ξ) *
@@ -431,7 +431,7 @@ theorem actual_even_zero_fourier {u : ℝ → ℂ}
 /-- Actual finite spectral energy identity. The right side has precisely
 the same u and the bare rates 1/4+n; no graph, energy equality, or jump
 Fubini theorem is a premise. -/
-theorem actual_bare_quarter_partial_energy_identity (N : ℕ)
+private theorem actual_bare_quarter_partial_energy_identity (N : ℕ)
     {u : ℝ → ℂ} (hu₁ : Integrable u halfline) (hu₂ : MemLp u 2 halfline) :
     (∫ ξ : ℝ, actualBareQuarterPartial N ξ *
       ‖unitarySourceFourier (actualEvenZeroExtension u) ξ‖ ^ 2) =

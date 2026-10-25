@@ -229,7 +229,7 @@ graph and the same complex source u. Arbitrary constant shifts cancel.
 The series uses the true resonant mixed moment rather than a diagonal
 proxy; quarter-rate cancellation and scalar tail compression may be
 performed afterwards on this paid actual identity. -/
-theorem actual_gamma_reflected_cross_complete_series
+private theorem actual_gamma_reflected_cross_complete_series
     (c : ℝ) {u : ℝ → ℂ} (hu₁ : Integrable u halfline) (hu₂ : MemLp u 2 halfline)
     (hGamma : Integrable (fun ξ : ℝ =>
       (gammaWeight ξ + c) * ‖unitarySourceFourier (zeroExtension u) ξ‖ ^ 2) volume) :
@@ -319,7 +319,7 @@ private theorem literal_shifted_gamma_even (c ξ : ℝ) :
 /-- Same-input actual Gamma energy difference, with the literal even
 extension u|t|. The original shifted Gamma domain supplies both energies'
 actual integrability through the proved domain equivalence. -/
-theorem actual_gamma_literal_even_energy_difference_complete_series
+private theorem actual_gamma_literal_even_energy_difference_complete_series
     (c : ℝ) {u : ℝ → ℂ} (hu₁ : Integrable u halfline) (hu₂ : MemLp u 2 halfline)
     (hGamma : Integrable (fun ξ : ℝ =>
       (gammaWeight ξ + c) * ‖unitarySourceFourier (zeroExtension u) ξ‖ ^ 2) volume) :

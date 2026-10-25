@@ -8,6 +8,7 @@ graph paid by ActualGammaResidualL1(a=2), never by the later Gamma owner.
 No native/report job has run. Source reconstruction, all four slots and
 sourceSelection AST paths below are uncompiled preparation candidates. -/
 
+import D5.S3.Weil.ZetaGamma.FormCore.ActualGammaResidualL1
 import LeanInformationAuditInterface.Contract.Registration
 import D5.S3.Weil.ZetaGamma.FormCore.SourceQuarterSpectralClosure
 import Reg.Support.DependentFamily
@@ -366,3 +367,196 @@ def registration : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
 end ReflectedCross
 
 end Reg.D5.S3.Weil.ZetaGamma.FormCore.SourceQuarterSpectralClosure
+
+/- Additional SOURCE_ONLY / UNCOMPILED full-source candidates. -/
+
+namespace Reg.D5.S3.Weil.ZetaGamma.FormCore.SourceQuarterSpectralClosure.BareQuarterWeightReadout
+
+abbrev signature : Signature where
+  Params := Unit
+  State _ := ℝ
+  Role := Unit
+  finiteRole := inferInstance
+  nonemptyRole := inferInstance
+  Output _ _ := ℝ
+  Anchor := Empty
+  finiteAnchor := inferInstance
+
+def actual : Realization signature :=
+  realize signature (fun _ _ ξ => actualBareQuarterWeight ξ) (fun e => nomatch e)
+
+def rejected : Realization signature :=
+  realize signature (fun _ _ _ => (-1 : ℝ)) (fun e => nomatch e)
+
+private theorem weight_zero : actualBareQuarterWeight 0 = 0 := by
+  simp [actualBareQuarterWeight]
+
+private theorem weight_one_lower : (64 / 17 : ℝ) ≤ actualBareQuarterWeight 1 := by
+  let f : ℕ → ℝ := fun n =>
+    1 / ((n : ℝ) + 1 / 4) -
+      ((n : ℝ) + 1 / 4) / ((1 : ℝ) ^ 2 + ((n : ℝ) + 1 / 4) ^ 2)
+  have hRaw :=
+    (D5.S3.Weil.ZetaGamma.FormCore.ActualGammaResidualL1.actual_digamma_quarter_resolvent_l1_domain_and_series
+      1 (by norm_num)).2.2.2.2 (1 : ℝ)
+  have hS : HasSum f (actualBareQuarterWeight 1) := by
+    simpa only [f, actualBareQuarterWeight] using hRaw
+  have hRow (n : ℕ) : 0 ≤ f n := by
+    dsimp only [f]
+    have hc : 0 < ((n : ℝ) + 1 / 4) := by positivity
+    have hd : 0 < (1 : ℝ) ^ 2 + ((n : ℝ) + 1 / 4) ^ 2 := by positivity
+    apply sub_nonneg.mpr
+    apply (div_le_div_iff₀ hd hc).2
+    nlinarith
+  have h0 : f 0 = (64 / 17 : ℝ) := by norm_num [f]
+  have hLe : f 0 ≤ ∑' n : ℕ, f n :=
+    hS.summable.le_tsum 0 (fun n _ => hRow n)
+  rw [h0, hS.tsum_eq] at hLe
+  exact hLe
+
+private theorem actual_dependence : ObservationalDependence signature actual := by
+  intro i
+  refine ⟨(), 0, 1, ?_⟩
+  change actualBareQuarterWeight 0 ≠ actualBareQuarterWeight 1
+  rw [weight_zero]
+  exact ne_of_lt (lt_of_lt_of_le (by norm_num : (0 : ℝ) < 64 / 17) weight_one_lower)
+
+namespace Nonneg
+
+abbrev arena : Arena where
+  signature := signature
+  Law r := ∀ ξ : ℝ, 0 ≤ r.readout () () ξ
+
+private theorem source_reconstruction :
+    (type_of% (@actual_bare_quarter_nonneg)) ↔ arena.Law actual := Iff.rfl
+
+private theorem rejected_law : ¬ arena.Law rejected := by
+  intro hall
+  have hBad := hall 0
+  norm_num [rejected, realize] at hBad
+
+def familyRegistration : Registration arena
+    (type_of% (@actual_bare_quarter_nonneg)) where
+  actual := actual
+  bridge := source_reconstruction
+  variation := ⟨@actual_bare_quarter_nonneg, rejected, rejected_law⟩
+  sensitivity := by
+    constructor
+    · intro i
+      refine ⟨rejected, ?_, rfl, rejected_law⟩
+      intro j hji
+      exact (hji (Subsingleton.elim j i)).elim
+    · intro e
+      exact nomatch e
+  dependence := actual_dependence
+
+/- UNINSPECTED AST candidate. Original ξ is binder0; .body.arg selects
+only W(ξ), the final RHS operand of LE.le. -/
+def registration : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
+    (@actual_bare_quarter_nonneg) (Realization signature) Type Unit where
+  unitName := `D5.S3.Weil.ZetaGamma.FormCore.SourceQuarterSpectralClosure.actual_bare_quarter_nonneg.__information_unit
+  realizationName := `Reg.D5.S3.Weil.ZetaGamma.FormCore.SourceQuarterSpectralClosure.BareQuarterWeightReadout.Nonneg.familyRegistration
+  realizationSource := none
+  generated := false
+  arena := .source ⟨arena⟩
+  objectArena := .source ⟨arena⟩
+  catalog := Lean.Name.anonymous
+  localNames := false
+  realization := .source arena ⟨familyRegistration⟩
+  correspondence := { stage := .evidence, objectStage := .evidence }
+  bundleNonempty := .absent
+  readout := some (realize signature
+    (fun _ _ ξ => actualBareQuarterWeight ξ) (fun e => nomatch e))
+  variation := .absent
+  sensitivity := .absent
+  partialSensitivity := none
+  escapeFrom := none
+  sourceSelection := some {
+    owner := `D5.S3.Weil.ZetaGamma.FormCore.SourceQuarterSpectralClosure
+    definition := none
+    coordinates := #[]
+    readouts := #[{
+      path := #["body", "arg"]
+      stateBinder := 0
+      functionOperand := false
+      stateOperand := none
+      booleanPredicate := false }] }
+  continuation := .unknown
+  familyRecord := none
+  options := #[]
+
+#print axioms familyRegistration
+#print axioms registration
+
+end Nonneg
+
+namespace Even
+
+abbrev arena : Arena where
+  signature := signature
+  Law r := ∀ ξ : ℝ, actualBareQuarterWeight (-ξ) = r.readout () () ξ
+
+private theorem source_reconstruction :
+    (type_of% (@actual_bare_quarter_even)) ↔ arena.Law actual := Iff.rfl
+
+private theorem rejected_law : ¬ arena.Law rejected := by
+  intro hall
+  have hBad : actualBareQuarterWeight (-(0 : ℝ)) = (-1 : ℝ) := hall 0
+  rw [neg_zero, weight_zero] at hBad
+  norm_num at hBad
+
+def familyRegistration : Registration arena
+    (type_of% (@actual_bare_quarter_even)) where
+  actual := actual
+  bridge := source_reconstruction
+  variation := ⟨@actual_bare_quarter_even, rejected, rejected_law⟩
+  sensitivity := by
+    constructor
+    · intro i
+      refine ⟨rejected, ?_, rfl, rejected_law⟩
+      intro j hji
+      exact (hji (Subsingleton.elim j i)).elim
+    · intro e
+      exact nomatch e
+  dependence := actual_dependence
+
+/- UNINSPECTED AST candidate. Original ξ is binder0; .body.arg selects
+only W(ξ), the final RHS operand of Eq. The literal W(-ξ) LHS stays fixed. -/
+def registration : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
+    (@actual_bare_quarter_even) (Realization signature) Type Unit where
+  unitName := `D5.S3.Weil.ZetaGamma.FormCore.SourceQuarterSpectralClosure.actual_bare_quarter_even.__information_unit
+  realizationName := `Reg.D5.S3.Weil.ZetaGamma.FormCore.SourceQuarterSpectralClosure.BareQuarterWeightReadout.Even.familyRegistration
+  realizationSource := none
+  generated := false
+  arena := .source ⟨arena⟩
+  objectArena := .source ⟨arena⟩
+  catalog := Lean.Name.anonymous
+  localNames := false
+  realization := .source arena ⟨familyRegistration⟩
+  correspondence := { stage := .evidence, objectStage := .evidence }
+  bundleNonempty := .absent
+  readout := some (realize signature
+    (fun _ _ ξ => actualBareQuarterWeight ξ) (fun e => nomatch e))
+  variation := .absent
+  sensitivity := .absent
+  partialSensitivity := none
+  escapeFrom := none
+  sourceSelection := some {
+    owner := `D5.S3.Weil.ZetaGamma.FormCore.SourceQuarterSpectralClosure
+    definition := none
+    coordinates := #[]
+    readouts := #[{
+      path := #["body", "arg"]
+      stateBinder := 0
+      functionOperand := false
+      stateOperand := none
+      booleanPredicate := false }] }
+  continuation := .unknown
+  familyRecord := none
+  options := #[]
+
+#print axioms familyRegistration
+#print axioms registration
+
+end Even
+
+end Reg.D5.S3.Weil.ZetaGamma.FormCore.SourceQuarterSpectralClosure.BareQuarterWeightReadout
