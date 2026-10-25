@@ -180,7 +180,21 @@ private lemma fraction_ne_one (a : ℤ) (n : ℕ) (hmod : (a : ZMod 3) ≠ 0) :
 private lemma amplitude_ne_one (s : ℤ) (U : Matrix (Fin 7) (Fin 7) ℂ)
     (h : (3 : ℂ) • U = (M s).map (Int.castRingHom ℂ)) (k : ℕ) :
     ‖((U ^ k).mulVec (Pi.single 5 1)) 0‖ ≠ 1 := by
-  sorry
+  rcases k with (_ | _ | _ | n)
+  · norm_num [Pi.single_apply]
+  · rw [pow_one, (first_steps s U h).1]
+    norm_num [Pi.single_apply]
+  · rw [pow_two, ← Matrix.mulVec_mulVec,
+      (first_steps s U h).1, (first_steps s U h).2]
+    norm_num [Pi.single_apply]
+  · change ‖((U ^ (n + 3)).mulVec (Pi.single 5 1)) 0‖ ≠ 1
+    rw [amplitude_formula s U h n]
+    apply fraction_ne_one
+    have hc : (((M s ^ n).mulVec v) 0 : ZMod 3) = -(2 : ZMod 3) ^ n := by
+      simpa [Function.comp_apply, Pi.smul_apply, smul_eq_mul, v] using
+        congrFun (orbit_mod s n) 0
+    rw [hc, show (2 : ZMod 3) = -1 by decide]
+    exact neg_ne_zero.mpr (isUnit_neg_one.pow n).ne_zero
 
 private lemma no_transfer (s : ℤ) (U : Matrix (Fin 7) (Fin 7) ℂ)
     (h : (3 : ℂ) • U = (M s).map (Int.castRingHom ℂ)) :
