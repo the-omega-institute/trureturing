@@ -182,6 +182,10 @@ $$\neg claim$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/ArithUnits/SelfConjugateEvenPolynomialRefutation.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/klostermeyer-self-conjugate-even-polynomial-conjecture-2` (refuted) by `D5/S3/ArithUnits/SelfConjugateEvenPolynomialRefutation.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"klostermeyer-self-conjugate-even-polynomial-conjecture-2","declaration_gid":"D5/S3/ArithUnits/SelfConjugateEvenPolynomialRefutation.result","resolution_kind":"refuted"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* William F. Klostermeyer (2026). *Prime Nullspace Matrices and Even Dominating Sets*. URL: <https://arxiv.org/html/2610.31475v1#Thmconj2>.
