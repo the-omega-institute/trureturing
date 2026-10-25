@@ -15,7 +15,7 @@ import Mathlib.Analysis.SpecialFunctions.Complex.Circle
 
 set_option autoImplicit false
 noncomputable section
-open scoped BigOperators Matrix MatrixOrder ComplexOrder
+open scoped BigOperators Matrix MatrixOrder ComplexOrder Kronecker
 
 namespace D5.S3.Quantum.Fibers.SharedEnergyCopyThreshold
 open Matrix
@@ -333,12 +333,44 @@ private theorem tensor_entry (r : DensityState (Fin 3)) :
     change stateMatrix r I.1 J.1 * stateMatrix (copies r (n+1)) I.2 J.2 = _
     rw [tensorExponent, monomial_add, coordinate_monomial, tensor_entry]
 
-/-- The complete total-energy pinching on the actual tensor carrier. Equal-energy
-matrix entries, including off-diagonal entries in degenerate blocks, are retained. -/
+/-- The full projection onto one total energy, with all its degeneracy retained. -/
+def energyProjector (m n : ℕ) (e : ℤ) :
+    Matrix (CopyIndex (Fin 3) n) (CopyIndex (Fin 3) n) ℂ :=
+  Matrix.diagonal (fun I => if totalEnergy m n I = e then 1 else 0)
+
+/-- Complete pinching by the actual total-energy projections. -/
 def pinchedCopies (m n : ℕ) (r : DensityState (Fin 3)) :
     Matrix (CopyIndex (Fin 3) n) (CopyIndex (Fin 3) n) ℂ :=
-  fun I J => if totalEnergy m n I = totalEnergy m n J then
-    stateMatrix (copies r n) I J else 0
+  ∑ e ∈ Finset.univ.image (totalEnergy m n),
+    energyProjector m n e * stateMatrix (copies r n) * energyProjector m n e
+
+private theorem pinched_apply (m n : ℕ) (r : DensityState (Fin 3))
+    (I J : CopyIndex (Fin 3) n) : pinchedCopies m n r I J =
+      if totalEnergy m n I = totalEnergy m n J then stateMatrix (copies r n) I J else 0 := by
+  simp only [pinchedCopies, Finset.sum_apply]
+  rw [Finset.sum_eq_single (totalEnergy m n I)]
+  · simp [energyProjector, Matrix.mul_diagonal, Matrix.diagonal_mul, eq_comm]
+  · intro e he hne
+    simp [energyProjector, Matrix.mul_diagonal, Matrix.diagonal_mul, Ne.symm hne]
+  · intro hnot
+    exact (hnot (Finset.mem_image.mpr ⟨I, Finset.mem_univ _, rfl⟩)).elim
+
+private theorem pinched_positive (m n : ℕ) (r : DensityState (Fin 3)) :
+    (pinchedCopies m n r).PosSemidef := by
+  apply Matrix.posSemidef_sum
+  intro e he
+  have hp : (energyProjector m n e).PosSemidef := by
+    apply Matrix.PosSemidef.diagonal
+    intro I
+    split_ifs <;> simp
+  simpa only [hp.isHermitian.eq] using
+    (density_posSemidef (copies r n)).mul_mul_conjTranspose_same (energyProjector m n e)
+
+private theorem pinched_trace (m n : ℕ) (r : DensityState (Fin 3)) :
+    Matrix.trace (pinchedCopies m n r) = 1 := by
+  have h : Matrix.trace (pinchedCopies m n r) = Matrix.trace (stateMatrix (copies r n)) := by
+    simp only [Matrix.trace, Matrix.diag, pinched_apply, ite_true]
+  exact h.trans (copies r n).2.2
 
 /-- Every actual tensor entry has the indicated labelled exponent, total degree
 and weight. Its total-energy pinching retains exactly the zero-weight entries. -/
@@ -347,18 +379,20 @@ theorem tensor_monomial_bridge (m n : ℕ) (r : DensityState (Fin 3))
     degree (tensorExponent n I J) = n ∧
     weight m (tensorExponent n I J) = totalEnergy m n I - totalEnergy m n J ∧
     stateMatrix (copies r n) I J = monomial (stateMatrix r) (tensorExponent n I J) ∧
-    pinchedCopies m n r I J = if weight m (tensorExponent n I J) = 0 then
-      monomial (stateMatrix r) (tensorExponent n I J) else 0 := by
-  refine ⟨tensor_degree n I J, tensor_weight m n I J, tensor_entry r n I J, ?_⟩
-  simp only [pinchedCopies, tensor_weight, sub_eq_zero, tensor_entry]
+    (pinchedCopies m n r I J = if weight m (tensorExponent n I J) = 0 then
+      monomial (stateMatrix r) (tensorExponent n I J) else 0) ∧
+    (pinchedCopies m n r).PosSemidef ∧ Matrix.trace (pinchedCopies m n r) = 1 := by
+  refine ⟨tensor_degree n I J, tensor_weight m n I J, tensor_entry r n I J, ?_,
+    pinched_positive m n r, pinched_trace m n r⟩
+  simp only [pinched_apply, tensor_weight, sub_eq_zero, tensor_entry]
 
 /-- Below twice the upper energy minus one, the literal sparse native tensor
 states have equal complete total-energy pinchings. -/
 theorem sparse_low_pinching (m n : ℕ) (hm : 2 ≤ m) (hn : n < 2*m-1) :
     pinchedCopies m n rho = pinchedCopies m n (sigma m) := by
   ext I J
-  rw [(tensor_monomial_bridge m n rho I J).2.2.2,
-    (tensor_monomial_bridge m n (sigma m) I J).2.2.2]
+  rw [(tensor_monomial_bridge m n rho I J).2.2.2.1,
+    (tensor_monomial_bridge m n (sigma m) I J).2.2.2.1]
   split_ifs with h
   · exact sparse_low_monomials m hm (tensorExponent n I J)
       (by rwa [tensor_degree]) h (phase m) (unit_phase _)
@@ -375,6 +409,7 @@ private theorem wordIndex_injective : ∀ n, Function.Injective (wordIndex n)
   | 1 => by
     intro f g h
     funext i
+    change f 0 = g 0 at h
     simpa only [Subsingleton.elim i 0] using h
   | n+2 => by
     intro f g h
@@ -394,17 +429,20 @@ private theorem word_entry (r : DensityState (Fin 3)) :
     ∀ (n : ℕ) (f g : Fin n → Fin 3),
     stateMatrix (copies r n) (wordIndex n f) (wordIndex n g) =
       ∏ k, stateMatrix r (f k) (g k)
-  | 0, f, g => by simp [copies, wordIndex, stateMatrix]
-  | 1, f, g => by simp [copies, wordIndex]
+  | 0, f, g => by
+    change (1 : Matrix PUnit PUnit ℂ) PUnit.unit PUnit.unit = _
+    simp
+  | 1, f, g => by rw [Fin.prod_univ_one]; rfl
   | n+2, f, g => by
     change stateMatrix r (f 0) (g 0) *
       stateMatrix (copies r (n+1)) (wordIndex (n+1) (Fin.tail f))
         (wordIndex (n+1) (Fin.tail g)) = _
-    rw [word_entry, Fin.prod_univ_succ]
+    conv_rhs => rw [Fin.prod_univ_succ]
+    rw [word_entry]
     rfl
 
 /-- The distinguishing batch length, written as the two actual block lengths. -/
-def copyOrder (m : ℕ) : ℕ := m + (m-1)
+abbrev copyOrder (m : ℕ) : ℕ := m + (m-1)
 
 /-- The actual word with m copies of level two followed by m minus one zeros. -/
 def wordI (m : ℕ) : CopyIndex (Fin 3) (copyOrder m) :=
@@ -414,10 +452,24 @@ def wordI (m : ℕ) : CopyIndex (Fin 3) (copyOrder m) :=
 def wordJ (m : ℕ) : CopyIndex (Fin 3) (copyOrder m) :=
   wordIndex _ (Fin.append (fun _ : Fin m => 1) (fun _ : Fin (m-1) => 2))
 
-/-- The total Hamiltonian in its fixed product energy basis. -/
-def totalHamiltonian (m n : ℕ) :
-    Matrix (CopyIndex (Fin 3) n) (CopyIndex (Fin 3) n) ℂ :=
-  Matrix.diagonal (fun I => (totalEnergy m n I : ℂ))
+/-- The sum of the one-copy Hamiltonians on the native tensor product. -/
+def totalHamiltonian (m : ℕ) : (n : ℕ) →
+    Matrix (CopyIndex (Fin 3) n) (CopyIndex (Fin 3) n) ℂ
+  | 0 => 0
+  | 1 => Matrix.diagonal (fun i => (energy m i : ℂ))
+  | n+2 => (Matrix.diagonal (fun i => (energy m i : ℂ))) ⊗ₖ 1 +
+      (1 : Matrix (Fin 3) (Fin 3) ℂ) ⊗ₖ totalHamiltonian m (n+1)
+
+private theorem total_hamiltonian_diagonal (m : ℕ) : ∀ n,
+    totalHamiltonian m n = Matrix.diagonal (fun I => (totalEnergy m n I : ℂ))
+  | 0 => by ext I J; simp [totalHamiltonian, totalEnergy, Matrix.diagonal]
+  | 1 => rfl
+  | n+2 => by
+    rw [totalHamiltonian, total_hamiltonian_diagonal]
+    ext I J
+    by_cases h₁ : I.1 = J.1 <;> by_cases h₂ : I.2 = J.2 <;>
+      simp [Matrix.kronecker_apply, Matrix.diagonal_apply, Matrix.one_apply,
+        totalEnergy, h₁, h₂, Prod.ext_iff]
 
 /-- The two explicit orthogonal product-basis words have energy m squared,
 and their actual tensor matrix element is the distinguished monomial. -/
@@ -453,6 +505,8 @@ def jointEffect (m : ℕ) :
 private theorem joint_effect_bounds (m : ℕ) (hm : 2 ≤ m) :
     (jointEffect m).PosSemidef ∧ (1 - jointEffect m).PosSemidef := by
   have h := pairEffect (wordI m) (wordJ m) (sparse_joint_words m hm).2.1
+  have he : jointEffect m = h.val := rfl
+  rw [he]
   exact ⟨h.2.1, h.2.2.1⟩
 
 private theorem joint_effect_commutes (m : ℕ) (hm : 2 ≤ m) :
@@ -461,7 +515,7 @@ private theorem joint_effect_commutes (m : ℕ) (hm : 2 ≤ m) :
   have hI := (sparse_joint_words m hm).2.2.1
   have hJ := (sparse_joint_words m hm).2.2.2.1
   ext a b
-  simp only [totalHamiltonian, Matrix.mul_diagonal, Matrix.diagonal_mul]
+  simp only [total_hamiltonian_diagonal, Matrix.mul_diagonal, Matrix.diagonal_mul]
   by_cases haI : a = wordI m <;> by_cases haJ : a = wordJ m <;>
     by_cases hbI : b = wordI m <;> by_cases hbJ : b = wordJ m <;>
     simp [jointEffect, Matrix.vecMulVec, Pi.single_apply, haI, haJ, hbI, hbJ,
@@ -482,14 +536,18 @@ private theorem sparse_diagonal_copies (u : ℂ) (hu : u * star u = 1) :
     ∀ (n : ℕ) (I : CopyIndex (Fin 3) n),
       stateMatrix (copies (sparseState u hu) n) I I = (1/3 : ℂ)^n
   | 0, I => by simp [copies, stateMatrix]
-  | 1, I => by fin_cases I <;> norm_num [copies, stateMatrix, sparseState, sparseMatrix]
+  | 1, I => by
+    change sparseMatrix u I I = (1/3 : ℂ)^1
+    fin_cases I <;> norm_num [sparseMatrix]
   | n+2, I => by
     change stateMatrix (sparseState u hu) I.1 I.1 *
       stateMatrix (copies (sparseState u hu) (n+1)) I.2 I.2 = _
     rw [sparse_diagonal_copies u hu (n+1)]
     have hd : stateMatrix (sparseState u hu) I.1 I.1 = (1/3 : ℂ) := by
-      fin_cases I.1 <;> norm_num [stateMatrix, sparseState, sparseMatrix]
-    rw [hd, pow_succ']
+      generalize I.1 = i
+      change sparseMatrix u i i = (1/3 : ℂ)
+      fin_cases i <;> norm_num [sparseMatrix]
+    simp only [hd, pow_succ']
 
 private theorem joint_born_laws (m : ℕ) (hm : 2 ≤ m) :
     Matrix.trace (jointEffect m * stateMatrix (copies rho (copyOrder m))) =
@@ -507,12 +565,12 @@ private theorem joint_born_laws (m : ℕ) (hm : 2 ≤ m) :
   · rw [joint_effect_trace, h, hw.2.2.2.2, hp.2.2.1]
     rw [show rho = sparseState 1 (by simp) from rfl,
       sparse_diagonal_copies, sparse_diagonal_copies, hw.1]
-    simp only [star_pow, star_div₀, star_one, star_natCast]
+    simp only [star_pow, star_div₀, star_one, star_natCast, star_ofNat]
     ring
   · rw [joint_effect_trace, h, hw.2.2.2.2, hp.2.2.2.1]
     rw [show sigma m = sparseState (phase m) (unit_phase _) from rfl,
       sparse_diagonal_copies, sparse_diagonal_copies, hw.1]
-    simp only [star_neg, star_pow, star_div₀, star_one, star_natCast]
+    simp only [star_neg, star_pow, star_div₀, star_one, star_natCast, star_ofNat]
     ring
 
 /-- The native equal-energy projection is an effect and gives the two exact,
@@ -534,33 +592,23 @@ theorem sparse_joint_effect (m : ℕ) (hm : 2 ≤ m) :
   have hp := joint_born_laws m hm
   refine ⟨hb.1, hb.2, joint_effect_commutes m hm, hp.1, hp.2,
     by positivity, ?_, ?_, ?_⟩
-  · have h₀ := hb.1.trace_mul_nonneg (density_posSemidef (copies rho (copyOrder m)))
-    have h₁ := hb.2.trace_mul_nonneg (density_posSemidef (copies rho (copyOrder m)))
-    rw [hp.1] at h₀
-    rw [Matrix.sub_mul, Matrix.one_mul, Matrix.trace_sub,
-      show Matrix.trace (stateMatrix (copies rho (copyOrder m))) = 1 from (copies rho _).2.2,
-      hp.1] at h₁
-    constructor <;> have := (Complex.nonneg_iff.mp h₀).1 <;>
-      have := (Complex.nonneg_iff.mp h₁).1 <;>
-      norm_num [Complex.add_re, Complex.sub_re] at * <;> assumption
-  · have h₀ := hb.1.trace_mul_nonneg (density_posSemidef (copies (sigma m) (copyOrder m)))
-    have h₁ := hb.2.trace_mul_nonneg (density_posSemidef (copies (sigma m) (copyOrder m)))
-    rw [hp.2] at h₀
-    rw [Matrix.sub_mul, Matrix.one_mul, Matrix.trace_sub,
-      show Matrix.trace (stateMatrix (copies (sigma m) (copyOrder m))) = 1 from
-        (copies (sigma m) _).2.2, hp.2] at h₁
-    constructor <;> have := (Complex.nonneg_iff.mp h₀).1 <;>
-      have := (Complex.nonneg_iff.mp h₁).1 <;>
-      norm_num [Complex.add_re, Complex.sub_re] at * <;> assumption
+  · have h₃ : (1/3 : ℝ)^(2*m-1) ≤ 1/3 :=
+      pow_le_of_le_one (by norm_num) (by norm_num) (by omega)
+    have h₁₂ : (1/12 : ℝ)^(2*m-1) ≤ 1/12 :=
+      pow_le_of_le_one (by norm_num) (by norm_num) (by omega)
+    exact ⟨by positivity, by linarith⟩
+  · refine ⟨sub_nonneg.mpr (pow_le_pow_left₀ (by norm_num) (by norm_num) _), ?_⟩
+    exact le_trans (sub_le_self _ (by positivity))
+      (pow_le_one₀ (by norm_num) (by norm_num))
   · intro he
     have hw := sparse_joint_words m hm
     have hE : totalEnergy m (copyOrder m) (wordI m) =
         totalEnergy m (copyOrder m) (wordJ m) := hw.2.2.1.trans hw.2.2.2.1.symm
     have he' := congrArg (fun X => X (wordI m) (wordJ m)) he
-    simp only [pinchedCopies, hE, ite_true, hw.2.2.2.2,
+    simp only [pinched_apply, hE, ite_true, hw.2.2.2.2,
       (sparse_pair_data m hm).2.2.1, (sparse_pair_data m hm).2.2.2.1] at he'
     have hz : (1/12 : ℂ)^(2*m-1) ≠ 0 := pow_ne_zero _ (by norm_num)
-    exact hz (by linear_combination he')
+    exact hz (by linear_combination (1/2 : ℂ) * he')
 
 #print axioms tensor_monomial_bridge
 #print axioms sparse_low_pinching
