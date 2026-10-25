@@ -8,6 +8,8 @@
 
 import D5.S3.Topology.Measures.SignedDelayedSplit
 
+/-! One delayed split supplies final row sets and all signed residual births. -/
+
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
 
@@ -106,9 +108,10 @@ theorem exists_delayed_successor
         (∀ e, M e ⊆ oldJ targetRow hTargetOld sourceD ∩ oldN targetRow hTargetOld sourceD e) ∧
         (∀ r, I r = {n | (∃ q, code r < q ∧ (c q).m r = n) ∨
           (r = targetRow ∧ n ∈ M 0 ∪ M 1)}) ∧
-        (∀ r d, J r d = (by classical exact
-          if r = targetRow ∧ d = sourceD then M 0 ∪ M 1
-          else {n | ∃ q, code r < q ∧ rho q = d ∧ (c q).m r = n})) ∧
+        (∀ r d, J r d = (by
+          classical
+          exact if r = targetRow ∧ d = sourceD then M 0 ∪ M 1
+            else (fun n => ∃ q, code r < q ∧ rho q = d ∧ (c q).m r = n))) ∧
         (∀ r hr d e, N r d e = oldN r hr d e) ∧
         (∀ d e, N newRow d e =
           {n | ∃ q, code newRow < q ∧ rho q = d ∧ q % 2 = (e : ℕ) ∧ (c q).m newRow = n}) ∧
@@ -146,6 +149,12 @@ theorem exists_delayed_successor
         (∃ C : TopologicalSpace.Clopens (splitCarrier Y Z),
           (∀ n ∈ M 0, ∀ x : splitCarrier Y Z, pR targetRow x.1.1 = y n → x ∈ C) ∧
           (∀ n ∈ M 1, ∀ x : splitCarrier Y Z, pR targetRow x.1.1 = y n → x ∉ C)) ∧
+        (∀ q (t : SignedMeasure (splitCarrier Y Z)),
+          t.map (fun x => pR targetRow x.1.1) = nuR targetRow targetD (c q).n →
+          t.totalVariation univ = (nuR targetRow targetD (c q).n).totalVariation univ →
+          (q % 2 = 0 → (13 : ℝ) / 48 < t {x | x.1.2 = true} ∧
+            (1 : ℝ) / 6 < t {x | x.1.2 = true}) ∧
+          (q % 2 ≠ 0 → t {x | x.1.2 = true} = 0)) ∧
         (∀ sigma : ℕ → SignedMeasure (splitCarrier Y Z),
           (∀ n, (sigma n).map (fun x => pR targetRow x.1.1) = nuR targetRow targetD n) →
           (∀ n, (sigma n).totalVariation univ = (nuR targetRow targetD n).totalVariation univ) →
@@ -403,7 +412,7 @@ theorem exists_delayed_successor
     · obtain ⟨heR, heD⟩ := he
       subst r
       subst d
-      simpa [J] using hSourceF
+      simpa [J, projection, Function.comp_def] using hSourceF
     · simpa only [J, if_neg he] using hFJ0 r d
   let splitCoord : Option Γ → C(splitCarrier Y Z, Bool) := fun c =>
     match c with
@@ -532,9 +541,11 @@ theorem exists_delayed_successor
         {n | sigma n {x | x.1.2 = true} = 0}.Infinite := by
     have heven : Function.Injective (fun k : ℕ => 2 * k) := by
       intro a b h
+      change 2 * a = 2 * b at h
       omega
     have hodd : Function.Injective (fun k : ℕ => 2 * k + 1) := by
       intro a b h
+      change 2 * a + 1 = 2 * b + 1 at h
       omega
     have hi0 : (Set.range (fun k : ℕ => (c (2 * k)).n)).Infinite :=
       Set.infinite_range_of_injective (hn.injective.comp heven)
@@ -553,7 +564,7 @@ theorem exists_delayed_successor
   refine ⟨Y, Z, hclosed, hY, hZ, hcov, hsurj, hZQ, M, I, J, N, c,
     hMinf, hMsub, (fun _ => rfl), (fun _ _ => rfl), hNold, hNnew,
     hJsub, hNdis, hC, hIinf, hIold, hJold, hFullE, hFJ, ?_, hWitness,
-    hGinf, hRealLifts, (fun r n => ⟨sA r n, hsAmap r n, hsAmass r n⟩)⟩
+    hG, hGinf, hRealLifts, (fun r n => ⟨sA r n, hsAmap r n, hsAmass r n⟩)⟩
   exact ⟨JA, NA, muA, fun r => ⟨hJAsub r, hNAdis r, hNAsub r, hNAinf r,
     hmuA r, hmuApos r, hmuAneg r, hmuAF r⟩⟩
 

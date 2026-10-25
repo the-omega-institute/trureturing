@@ -280,11 +280,9 @@ The construction-specific sources `SignedDelayedSplit` and
 `SignedDelayedSuccessor` in `D5.S3.Topology.Measures` implement the local
 delayed common-row step in the proposed CH construction. Their role is
 in the signed induction associated with the paper's conditions (A)–(G).
-The local refinement also uses a supplied ordinary mathematical candidate
-as fallible design input. It is a project synthesis of compact metric
-selection, norm-preserving signed lifting and the existing ordered-column
-and signed reference-convergence suppliers, with no literature novelty
-claim for this assembled proof.
+The local refinement combines compact metric selection, norm-preserving
+signed lifting, ordered columns and signed reference convergence. No
+literature novelty claim is made for this assembled proof.
 
 `exists_delayed_fibre_pools` starts with the actual continuous onto
 predecessor projection, original supports V(n), target points y(n) in
@@ -355,8 +353,10 @@ then splits J into two infinite reservoirs. Whole-support E transfers
 its regular reference to every signed lift selection. This includes
 old/old, new-row/old-label, old-row/residual and doubly new cases. The
 scheduled G witnesses are merely two infinite index sets, without an
-extra membership requirement in the updated I. Actual norm-preserving
-lift classes are inhabited for every old and residual label.
+extra membership requirement in the updated I. The same output also
+retains each even column's strict 13/48 and 1/6 bounds and each odd
+column's zero true-sheet mass. Actual norm-preserving lift classes are
+inhabited for every old and residual label.
 
 The result is a local compact metric split supplier. Literal ordinal
 successor insertion and readback, once-born raw I/J/N, stage-local delayed
