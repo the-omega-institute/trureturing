@@ -12,7 +12,6 @@ import Mathlib.Analysis.Normed.Ring.InfiniteSum
 import Mathlib.Analysis.SpecificLimits.Normed
 import Mathlib.Tactic.Ring
 import Mathlib.Tactic.FieldSimp
-import Mathlib.Tactic.Omega
 import D5.S3.VertexAlgebra.CollisionRationalExpansions
 
 /-!
@@ -23,7 +22,6 @@ the numerical infinite-sum and geometric-series tools are from mathlib
 (Apache 2.0). No point evaluation of an entire fraction field is used.
 -/
 
-set_option maxHeartbeats 2000000
 set_option backward.isDefEq.respectTransparency false
 
 noncomputable section
@@ -48,7 +46,7 @@ theorem monomial_family (w : Γ → ℂ) (s : HahnSeries.SummableFamily Γ ℂ �
   classical
   have fiber (g : Γ) : s.hsum.coeff g * w g =
       ∑' i : e ⁻¹' {g}, c i * w (e i) := by
-    rw [tsum_subtype]
+    rw [tsum_subtype (e ⁻¹' {g}) (fun i => c i * w (e i))]
     have eqfun : (e ⁻¹' {g}).indicator (fun i => c i * w (e i)) =
         fun i => (s i).coeff g * w g := by
       funext i
@@ -88,7 +86,7 @@ private lemma coefficientFamily_hsum (f : HahnSeries Γ ℂ) :
   rw [finsum_eq_single _ g]
   · simp
   · intro i hi
-    simp [hi]
+    simp [hi, Ne.symm hi]
 
 private lemma single_evaluates (w : Γ → ℂ) (g : Γ) (c : ℂ) :
     Evaluates w (HahnSeries.single g c) (c * w g) ‖c * w g‖ := by
@@ -97,18 +95,17 @@ private lemma single_evaluates (w : Γ → ℂ) (g : Γ) (c : ℂ) :
       Pi.single g (c * w g) := by
     funext h
     by_cases hh : h = g <;> simp [hh, HahnSeries.coeff_single, Pi.single_apply]
+  have hn : (fun h => ‖(HahnSeries.single g c).coeff h * w h‖) =
+      Pi.single g ‖c * w g‖ := by
+    funext h
+    rw [congrFun eqfun h]
+    by_cases hh : h = g <;> simp [Pi.single_apply, hh]
   constructor
-  · have hn : (fun h => ‖(HahnSeries.single g c).coeff h * w h‖) =
-        Pi.single g ‖c*w g‖ := by
-      funext h
-      rw [congrFun eqfun h]
-      by_cases hh : h = g <;> simp [Pi.single_apply, hh]
-    rw [hn]
+  · rw [hn]
     exact (hasSum_pi_single g ‖c*w g‖).summable
   · rw [eqfun]
     exact hasSum_pi_single g (c*w g)
-  · simp only [eqfun]
-    simp [Pi.single_apply]
+  · rw [hn, (hasSum_pi_single g ‖c * w g‖).tsum_eq]
 
 private lemma mul_evaluates {w : Γ → ℂ} (hw : ∀ g h, w (g+h) = w g * w h)
     {f k : HahnSeries Γ ℂ} {v u : ℂ} {M N : ℝ}
@@ -134,9 +131,14 @@ private lemma mul_evaluates {w : Γ → ℂ} (hw : ∀ g h, w (g+h) = w g * w h)
   rw [HahnSeries.SummableFamily.hsum_mul, coefficientFamily_hsum,
     coefficientFamily_hsum] at h
   refine ⟨h.summable_norm, h.hasSum, h.norm_sum_le.trans ?_⟩
-  simp_rw [term, norm_mul]
-  rw [← tsum_mul_tsum_of_summable_norm
-    (by simpa using hf.summable_norm) (by simpa using hk.summable_norm)]
+  simp_rw [term]
+  rw [show (∑' p : Γ × Γ, ‖(f.coeff p.1 * w p.1) * (k.coeff p.2 * w p.2)‖) =
+      (∑' g, ‖f.coeff g * w g‖) * (∑' g, ‖k.coeff g * w g‖) from by
+    simp_rw [norm_mul]
+    simpa only [norm_mul] using (tsum_mul_tsum_of_summable_norm
+      (f := fun g => ‖f.coeff g * w g‖) (g := fun g => ‖k.coeff g * w g‖)
+      (by simpa only [Real.norm_eq_abs, abs_norm] using hf.summable_norm)
+      (by simpa only [Real.norm_eq_abs, abs_norm] using hk.summable_norm)).symm]
   exact mul_le_mul hf.norm_sum_le hk.norm_sum_le (tsum_nonneg (fun _ => norm_nonneg _))
     ((tsum_nonneg (fun _ => norm_nonneg _)).trans hf.norm_sum_le)
 
@@ -170,7 +172,7 @@ private lemma one_evaluates (w : Γ → ℂ) (hw : w 0 = 1) :
   simpa [hw] using single_evaluates w 0 1
 
 private lemma pow_evaluates {w : Γ → ℂ} (hw0 : w 0 = 1)
-    (hw : ∀ g h, w (g+h) = w g*w h) {f : HahnSeries Γ ℂ}
+    (hw : ∀ g h, w (g + h) = w g * w h) {f : HahnSeries Γ ℂ}
     {v : ℂ} {M : ℝ} (hf : Evaluates w f v M) (m : ℕ) :
     Evaluates w (f^m) (v^m) (M^m) := by
   induction m with
@@ -178,7 +180,7 @@ private lemma pow_evaluates {w : Γ → ℂ} (hw0 : w 0 = 1)
   | succ m ih => simpa [pow_succ] using mul_evaluates hw ih hf
 
 private lemma geometric_evaluates (w : Γ → ℂ) (hw0 : w 0 = 1)
-    (hw : ∀ g h, w (g+h) = w g*w h) (g : Γ) (hg : 0 < g)
+    (hw : ∀ g h, w (g + h) = w g * w h) (g : Γ) (hg : 0 < g)
     (hz : ‖w g‖ < 1) :
     Evaluates w ((1-HahnSeries.single g 1)⁻¹) ((1-w g)⁻¹)
       ((1-‖w g‖)⁻¹) := by
@@ -220,10 +222,10 @@ def RadialChamber {n : ℕ} (sigma : Equiv.Perm (Fin n)) (z : Fin n → ℂ) : P
   (∀ i, z i ≠ 0) ∧ ∀ i j, i < j → ‖z (sigma j)‖ < ‖z (sigma i)‖
 
 def laurentValue {n : ℕ} (P : LabelledPolynomial ℂ n) (z : Fin n → ℂ) : ℂ :=
-  ∑ e ∈ P.support, P e * monomial z e
+  ∑ e ∈ P.coeff.support, P.coeff e * monomial z e
 
 def laurentMajorant {n : ℕ} (P : LabelledPolynomial ℂ n) (z : Fin n → ℂ) : ℝ :=
-  ∑ e ∈ P.support, ‖P e * monomial z e‖
+  ∑ e ∈ P.coeff.support, ‖P.coeff e * monomial z e‖
 
 private def weight {n : ℕ} (sigma : Equiv.Perm (Fin n)) (z : Fin n → ℂ)
     (g : Indices n) : ℂ := monomial z ((orderExponents n sigma).symm g)
@@ -260,14 +262,14 @@ private lemma numerator_evaluates {n : ℕ} (sigma : Equiv.Perm (Fin n))
     Evaluates (weight sigma z) (orderedPolynomialFor ℂ n sigma P)
       (laurentValue P z) (laurentMajorant P z) := by
   classical
-  have h := sum_evaluates P.support
-    (fun e => HahnSeries.single (orderExponents n sigma e) (P e))
-    (fun e => P e * monomial z e) (fun e => ‖P e * monomial z e‖)
+  have h := sum_evaluates P.coeff.support
+    (fun e => HahnSeries.single (orderExponents n sigma e) (P.coeff e))
+    (fun e => P.coeff e * monomial z e) (fun e => ‖P.coeff e * monomial z e‖)
     (fun e _ => by simpa [weight] using
-      single_evaluates (weight sigma z) (orderExponents n sigma e) (P e))
+      single_evaluates (weight sigma z) (orderExponents n sigma e) (P.coeff e))
   have hP : orderedPolynomialFor ℂ n sigma P =
-      ∑ e ∈ P.support, HahnSeries.single (orderExponents n sigma e) (P e) := by
-    conv_lhs => rw [← P.sum_single]
+      ∑ e ∈ P.coeff.support, HahnSeries.single (orderExponents n sigma e) (P.coeff e) := by
+    conv_lhs => rw [← P.sum_coeff_single]
     simp only [Finsupp.sum, map_sum, ordered_single]
   simpa only [hP, laurentValue, laurentMajorant] using h
 
@@ -290,7 +292,7 @@ private lemma exponents_single_lt (n : ℕ) : ∀ i j : Fin n, i < j →
         exact False.elim (not_lt_of_ge (Fin.le_last _) hij)
       · intro hij
         have rest (k : Fin n) : (fun r : Fin n =>
-            Pi.single k.castSucc (1 : ℤ) r.castSucc) = Pi.single k 1 := by
+            (Pi.single k.castSucc (1 : ℤ) : Fin (n+1) → ℤ) r.castSucc) = Pi.single k 1 := by
           funext r
           simp [Pi.single_apply]
         simp only [exponents]
@@ -304,12 +306,15 @@ private lemma label_single (n : ℕ) (sigma : Equiv.Perm (Fin n)) (i : Fin n) :
     orderExponents n sigma (Pi.single i (1 : ℤ)) =
       exponents n (Pi.single (sigma.symm i) 1) := by
   unfold orderExponents
-  change exponents n (fun j => Pi.single i (1 : ℤ) (sigma j)) = _
+  change exponents n (fun j => (Pi.single i (1 : ℤ) : Fin n → ℤ) (sigma j)) = _
   congr 1
   funext j
   by_cases hj : j = sigma.symm i
   · subst j; simp
-  · have hji : sigma j ≠ i := by simpa using hj
+  · have hji : sigma j ≠ i := by
+      intro h
+      apply hj
+      simpa only [Equiv.symm_apply_apply] using congrArg sigma.symm h
     simp [Pi.single_apply, hj, hji]
 
 private lemma ratio_positive {n : ℕ} (sigma : Equiv.Perm (Fin n)) (i j : Fin n)
@@ -374,13 +379,13 @@ private lemma oriented_inverse_evaluates {n : ℕ} (sigma : Equiv.Perm (Fin n))
       weight_sub sigma z hz.1, weight_single, weight_single]
     have hdiff : z i-z j ≠ 0 := sub_ne_zero.mpr (by
       intro heq
-      simpa only [heq, lt_self_iff_false] using hrad)
-    field_simp [hz.1 i, hdiff] <;> ring
+      simp only [heq, lt_self_iff_false] at hrad)
+    field_simp [hz.1 i, hdiff]
   have hmajorant : ‖(1 : ℂ)*weight sigma z (-gi)‖ *
       (1-‖weight sigma z (gj-gi)‖)⁻¹ = (‖z i‖-‖z j‖)⁻¹ := by
     rw [one_mul, weight_neg sigma z hz.1, weight_single,
       weight_sub sigma z hz.1, weight_single, weight_single, norm_inv, norm_div]
-    field_simp [norm_ne_zero_iff.mpr (hz.1 i), ne_of_gt (sub_pos.mpr hrad)] <;> ring
+    field_simp [norm_ne_zero_iff.mpr (hz.1 i), ne_of_gt (sub_pos.mpr hrad)]
   simpa only [hformal, hvalue, hmajorant] using h
 
 private lemma neg_evaluates {n : ℕ} {w : Indices n → ℂ} {f : HahnSeries (Indices n) ℂ}
@@ -469,8 +474,10 @@ theorem collision_absolute_evaluation {n : ℕ} (sigma : Equiv.Perm (Fin n))
           (∏ p ∈ labelledPairs n, pairPolynomial p.1 p.2 ^ m p)) =
       orderedPolynomialFor ℂ n sigma P *
         ∏ p ∈ labelledPairs n, (orderedPolynomialFor ℂ n sigma (pairPolynomial p.1 p.2))⁻¹ ^ m p := by
-    simp only [orderedRationalFor, map_div₀, IsFractionRing.lift_algebraMap,
-      map_prod, map_pow, div_eq_mul_inv, Finset.prod_inv_distrib, inv_pow]
+    simp only [orderedRationalFor, map_div₀, map_mul, map_inv₀,
+      IsFractionRing.lift_algebraMap, map_prod, map_pow, div_eq_mul_inv,
+      Finset.prod_inv_distrib, inv_pow]
+    rfl
   have hvalue : laurentValue P z * (∏ p ∈ labelledPairs n, (z p.1-z p.2)⁻¹ ^ m p) =
       laurentValue P z / ∏ p ∈ labelledPairs n, (z p.1-z p.2) ^ m p := by
     simp [div_eq_mul_inv, Finset.prod_inv_distrib, inv_pow]
@@ -478,13 +485,17 @@ theorem collision_absolute_evaluation {n : ℕ} (sigma : Equiv.Perm (Fin n))
   have habs := (orderExponents n sigma).toEquiv.summable_iff.mpr he.summable_norm
   have hsum := (orderExponents n sigma).toEquiv.hasSum_iff.mpr he.hasSum
   refine ⟨denominator_ne_zero sigma m z hz, ?_, ?_, ?_⟩
-  · simpa only [← hformal, weight, AddEquiv.symm_apply_apply] using habs
-  · simpa only [← hformal, weight, AddEquiv.symm_apply_apply] using hsum
-  · rw [hformal]
-    simpa only [← (orderExponents n sigma).toEquiv.tsum_eq
+  · simpa only [Function.comp_def, AddEquiv.toEquiv_eq_coe, EquivLike.coe_coe, ← hformal, weight,
+      AddEquiv.symm_apply_apply] using habs
+  · simpa only [Function.comp_def, AddEquiv.toEquiv_eq_coe, EquivLike.coe_coe, ← hformal, weight,
+      AddEquiv.symm_apply_apply] using hsum
+  · have ht := (orderExponents n sigma).toEquiv.tsum_eq
       (fun g => ‖(orderedPolynomialFor ℂ n sigma P *
-        ∏ p ∈ labelledPairs n, (orderedPolynomialFor ℂ n sigma (pairPolynomial p.1 p.2))⁻¹ ^ m p).coeff g * weight sigma z g‖),
-      weight, AddEquiv.symm_apply_apply] using he.norm_sum_le
+        ∏ p ∈ labelledPairs n, (orderedPolynomialFor ℂ n sigma (pairPolynomial p.1 p.2))⁻¹ ^ m p).coeff g * weight sigma z g‖)
+    have hb := he.norm_sum_le
+    rw [← ht] at hb
+    simpa only [Function.comp_def, AddEquiv.toEquiv_eq_coe, EquivLike.coe_coe, ← hformal, weight,
+      AddEquiv.symm_apply_apply] using hb
 
 end D5.S3.VertexAlgebra.CollisionAbsoluteEvaluation.Labelled
 
