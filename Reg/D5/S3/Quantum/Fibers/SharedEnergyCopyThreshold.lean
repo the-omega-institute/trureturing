@@ -703,10 +703,10 @@ abbrev arena : Arena where
 private theorem bridge : (type_of% exponent_tensor_bridge) ↔ arena.Law actual := Iff.rfl
 private theorem rejected : ¬ arena.Law zeroReadout := by
   intro h
-  obtain ⟨I, J, hIJ⟩ := h 2 0
+  have hzero := h 2 (0 : Exponent)
+  simp only [degree, Pi.zero_apply, Finset.sum_const_zero] at hzero
+  obtain ⟨I, J, hIJ⟩ := hzero
   have he := (hIJ.2.2 rho).1
-  have hd : degree (0 : Exponent) = 0 := by simp [degree]
-  simp only [hd] at he
   norm_num [zeroReadout, realize, copies, stateMatrix, Matrix.one_apply] at he
 private theorem dependence : ObservationalDependence signature actual := by
   intro i
@@ -853,13 +853,15 @@ private theorem bridge : (type_of% total_hamiltonian_diagonal) ↔ arena.Law act
 private theorem rejected : ¬ arena.Law zeroReadout := by
   intro h
   have he := congrArg (fun X => X (1 : Fin 3) (1 : Fin 3)) (h 2 1)
-  norm_num [zeroReadout, realize, totalEnergy, energy, Matrix.zero_apply, Matrix.diagonal_apply] at he
+  change (0 : ℂ) = 1 at he
+  exact zero_ne_one he
 private theorem dependence : ObservationalDependence signature actual := by
   intro i
   refine ⟨1, 2, 3, ?_⟩
   intro h
   have he := congrArg (fun X => X (2 : Fin 3) (2 : Fin 3)) h
-  norm_num [actual, readoutFunction, realize, totalHamiltonian, energy, Matrix.diagonal_apply] at he
+  change (2 : ℂ) = 3 at he
+  norm_num at he
 
 def family : Registration arena (type_of% total_hamiltonian_diagonal) where
   actual := actual
