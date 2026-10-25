@@ -129,7 +129,8 @@ private noncomputable def copyEquiv : (Fin 3 × Fin 2) ≃ Multifacet triangle :
 
 private theorem copy_incident (i : Fin 3) (x : Fin 3 × Fin 2) :
     i ∈ collapse (copy x) ↔ i ≠ x.1 := by
-  simp only [copy, collapse, Finset.mem_erase, Finset.mem_univ, and_true]
+  rw [collapse, copy]
+  simp only [Finset.mem_erase, Finset.mem_univ, and_true]
 
 private theorem group_cases (g : Multiplicative (ZMod 2)) :
     g = 1 ∨ g = Multiplicative.ofAdd 1 := by
