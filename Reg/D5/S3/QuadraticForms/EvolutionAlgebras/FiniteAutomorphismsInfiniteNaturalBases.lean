@@ -15,11 +15,12 @@ open _root_.D5.S3.ConceptDynamics.InformationEscape.DependentFamily
 noncomputable section
 
 abbrev signature : Signature :=
-  Reg.Support.SingleDependentReadout.signature (Σ _ : ℂ × ℂ, ℂ × ℂ)
-    (fun _ => (ℂ × ℂ) →ₗ[ℂ] (ℂ × ℂ) →ₗ[ℂ] (ℂ × ℂ)) (fun _ => ℂ × ℂ)
+  Reg.Support.SingleDependentReadout.signature
+    (Σ _ : (ℂ × ℂ) →ₗ[ℂ] (ℂ × ℂ) →ₗ[ℂ] (ℂ × ℂ), ℂ × ℂ)
+    (fun _ => ℂ × ℂ) (fun _ => ℂ × ℂ)
 
 def actual : Realization signature :=
-  realize signature (fun _ p μ => μ p.1 p.2) (fun e => nomatch e)
+  realize signature (fun _ p y => p.1 p.2 y) (fun e => nomatch e)
 
 def rejected : Realization signature :=
   realize signature (fun _ _ _ => 0) (fun e => nomatch e)
@@ -31,7 +32,7 @@ abbrev arena : Arena where
   Law R := ∃ μ : (ℂ × ℂ) →ₗ[ℂ] (ℂ × ℂ) →ₗ[ℂ] (ℂ × ℂ),
     Module.finrank ℂ (ℂ × ℂ) = 2 ∧
     (∀ x y, μ x y = μ y x) ∧
-    (∀ x, (∀ y, R.readout () ⟨x, y⟩ μ = 0) → x = 0) ∧
+    (∀ x, (∀ y, R.readout () ⟨μ, x⟩ y = 0) → x = 0) ∧
     Nonempty (NaturalBasis μ) ∧
     Finite (Aut μ) ∧ Infinite (Quotient (basisSetoid μ))
 
@@ -49,7 +50,7 @@ def source_registration : Registration arena (type_of% (@result)) where
     actual rejected rejected_law
   dependence := by
     intro i
-    refine ⟨⟨(1, 0), (1, 0)⟩, 0, mu, ?_⟩
+    refine ⟨⟨mu, (1, 0)⟩, 0, (1, 0), ?_⟩
     intro h
     have := congrArg Prod.fst h
     change (0 : ℂ) = 1 * 1 + 0 * 0 at this
@@ -68,7 +69,7 @@ def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
   realization := .source arena ⟨source_registration⟩
   correspondence := { stage := .evidence, objectStage := .evidence }
   bundleNonempty := .absent
-  readout := some (realize signature (fun _ p μ => μ p.1 p.2) (fun e => nomatch e))
+  readout := some (realize signature (fun _ p y => p.1 p.2 y) (fun e => nomatch e))
   variation := .absent
   sensitivity := .absent
   partialSensitivity := none
@@ -76,10 +77,10 @@ def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
   sourceSelection := some {
     owner := `D5.S3.QuadraticForms.EvolutionAlgebras.FiniteAutomorphismsInfiniteNaturalBases
     definition := none
-    coordinates := #[1, 2]
+    coordinates := #[0, 1]
     readouts := #[{
       path := #["arg", "body", "arg", "arg", "fn", "arg", "body", "domain", "body", "fn", "arg"]
-      stateBinder := 0
+      stateBinder := 2
       functionOperand := false
       stateOperand := none
       booleanPredicate := false }] }
