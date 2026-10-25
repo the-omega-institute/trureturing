@@ -92,7 +92,7 @@ basis, finite full automorphisms and an infinite exact quotient.
 
 ## Triage
 
-### What the settlement shows
+### What the result shows
 
 - The complete final interrogative has an affirmative answer over $\mathbb C$.
 - The mechanism is the distinction between orthogonal natural-basis changes
