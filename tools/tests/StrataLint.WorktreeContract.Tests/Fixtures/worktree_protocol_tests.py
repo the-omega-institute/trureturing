@@ -1037,7 +1037,13 @@ os.execv({real_git!r},[{real_git!r}]+sys.argv[1:])
 
 if __name__ == "__main__":
     NativeFixture.install_interrupt_handler()
-    if len(sys.argv) == 5 and sys.argv[1] == "--scoped-dotnet":
+    if len(sys.argv) == 4 and sys.argv[1] == "--implicit-claims":
+        fixture = ProtocolTests("implicit_requests_allocate_distinct_trees")
+        fixture.implicit_cli = sys.argv[2]
+        fixture.implicit_pool_busy = sys.argv[3] == "busy"
+        result = unittest.TextTestRunner(verbosity=2).run(fixture)
+        sys.exit(0 if result.wasSuccessful() else 1)
+    elif len(sys.argv) == 5 and sys.argv[1] == "--scoped-dotnet":
         fixture = ProtocolTests("scoped_dotnet_launch")
         fixture.scoped_cli, fixture.scoped_mode, fixture.scoped_ambient = sys.argv[2:]
         result = unittest.TextTestRunner(verbosity=2).run(fixture)

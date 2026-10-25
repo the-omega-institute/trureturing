@@ -8,6 +8,23 @@ namespace StrataLint.Tests;
 
 public sealed partial class WorktreeCommandTests
 {
+    [Theory]
+    [InlineData("busy")]
+    [InlineData("available")]
+    public void IdleConcurrentImplicitRequestsAllocateDistinctTrees(string poolState)
+    {
+        if (OperatingSystem.IsWindows()) return;
+        var root = TestRepositoryLayout.FindRoot();
+        var result = TestProcessRunner.Run("python3",
+            ["-B", Path.Combine(root,
+                "tools/tests/StrataLint.WorktreeContract.Tests/Fixtures/worktree_protocol_tests.py"),
+                root, "--implicit-claims", typeof(WorktreeCommand).Assembly.Location, poolState],
+            root, TestBudgets.LongWorkflowProcessHangGuard, 1024 * 1024,
+            interruptBeforeKill: TestProcessRunner.InterruptPythonFixture);
+        Assert.True(result.ExitCode == 0,
+            Encoding.UTF8.GetString(result.StandardOutput) + Encoding.UTF8.GetString(result.StandardError));
+    }
+
     [Fact]
     public void IdlePoolBypassesAutomaticAgeButAllowsNamedRemoval()
     {
