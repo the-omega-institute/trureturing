@@ -4,7 +4,7 @@
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
    utility: none
-   digest: Work in progress on the original all-source physical L1 Ward law. -/
+   digest: Original all-source physical L1 coefficient covariance by evaluated insertion. -/
 
 import D5.S3.VertexAlgebra.LatticeHalfFockOriginalTranslation
 import D5.S3.VertexAlgebra.LatticeHalfFockChargedLZero
@@ -12,15 +12,14 @@ import D5.S3.VertexAlgebra.LatticeHalfFockCurrentWard
 import D5.S3.VertexAlgebra.SourceMobius.PositiveMode
 import D5.S3.Quantum.Algebra.ConditionalPolynomialRigidity
 
-/- Classical twisted lattice construction; original conventions and notices
-are inherited from the imported owners. No replacement field is introduced.
-The intended endpoint is the all-source original corrected-field L1 law,
-not the charged calculation below. The endpoint remains unfinished. -/
+/-! Classical twisted lattice construction; original conventions and notices
+are inherited from the imported owners. The endpoint retains all original
+sources, signed exponents and the actual tensor action. Charged, singleton,
+scalar cancellation and insertion lemmas are consumed by the full-source proof.
+The physical coordinate is z = t². -/
 set_option autoImplicit false
 set_option maxHeartbeats 4000000
 set_option maxRecDepth 4096
-set_option pp.deepTerms false
-set_option pp.proofs false
 set_option backward.isDefEq.respectTransparency false
 
 namespace D5.S3.VertexAlgebra.HalfFock.ActualMobiusCovariance
@@ -945,11 +944,12 @@ private theorem insertion_l1 (D : LatticeData) (hu : IsUnit D.G.det)
   linear_combination (norm := module) lc
 
 
+set_option backward.isDefEq.respectTransparency true in
+set_option maxHeartbeats 1200000 in
+-- Keep the source-only induction within a dedicated elaboration budget.
 /-- Oscillator-length induction on the original charge sector. Positive
 currents differentiate and strictly lower length; mode zero remains the
 original charge scalar. -/
-set_option backward.isDefEq.respectTransparency true in
-set_option maxHeartbeats 1200000 in
 private theorem polynomial_l1 (D : LatticeData) (hu : IsUnit D.G.det)
     (q : Charge D) (p : Oscillator D) : L1Law D hu (Finsupp.single q p) := by
   classical
