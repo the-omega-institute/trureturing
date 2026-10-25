@@ -34,17 +34,19 @@ namespace D5.S3.Combinatorics.Graph.Rainbow.RankDescent
 variable {V C : Type*} [Fintype V]
 
 /-- The ordinary quiver of proofs of directed adjacency. -/
-def graphQuiver (G : Digraph V) : Quiver V := ⟨fun u v => PLift (G.Adj u v)⟩
+abbrev graphQuiver (G : Digraph V) : Quiver V := ⟨fun u v => PLift (G.Adj u v)⟩
 
 abbrev DPath (G : Digraph V) (u v : V) := @Quiver.Path V (graphQuiver G) u v
 
 /-- The word consists of the given literal edge colours in their directed order. -/
 def colours (G : Digraph V) (c : V → V → C) {u v : V} (P : DPath G u v) : List C :=
+  letI : Quiver V := graphQuiver G
   (P.weightOfEPs (fun x y => FreeMonoid.of (c x y))).toList
 
 /-- Only internal vertices are restricted; the two endpoints remain arbitrary. -/
 def Allowed (G : Digraph V) (c : V → V → C) (R A : Finset V) (S D : Finset C)
     {u v : V} (P : DPath G u v) : Prop :=
+  letI : Quiver V := graphQuiver G
   P.vertices.Nodup ∧ (colours G c P).Nodup ∧
     (∀ x ∈ P.vertices, x ≠ u → x ≠ v → x ∈ R ∧ x ∉ A) ∧
     (∀ d ∈ colours G c P, d ∈ S ∧ d ∉ D)
@@ -68,7 +70,9 @@ private theorem append_allowed (G : Digraph V) (c : V → V → C)
     (hP : Allowed G c R (insert w A) S (insert (c x w) D) P)
     (hwu : w ≠ u) (hwx : w ≠ x) (hx : x ∈ R ∧ x ∉ A)
     (hc : c x w ∈ S ∧ c x w ∉ D) :
+    letI : Quiver V := graphQuiver G
     Allowed G c R A S D (P.cons (PLift.up e)) := by
+  letI : Quiver V := graphQuiver G
   classical
   have hw : w ∉ P.vertices := by
     intro h
@@ -96,7 +100,7 @@ private theorem append_allowed (G : Digraph V) (c : V → V → C)
     rcases List.mem_append.mp hd' with hd' | hd'
     · have hh := hP.2.2.2 d hd'
       exact ⟨hh.1, fun h => hh.2 (mem_insert_of_mem h)⟩
-    · simpa only [List.mem_singleton] at hd'
+    · simp only [List.mem_singleton] at hd'
       simpa [hd'] using hc
 
 private theorem base_path (G : Digraph V) (c : V → V → C)
@@ -105,7 +109,9 @@ private theorem base_path (G : Digraph V) (c : V → V → C)
     (hin : ∀ w, Set.InjOn (fun x => c x w) {x | G.Adj x w})
     (R A : Finset V) (S D : Finset C) (u w : V) (huw : u ≠ w)
     (hcount : A.card + 2 * D.card < (sampledBase G c R S u w).card) :
+    letI : Quiver V := graphQuiver G
     ∃ P : DPath G u w, Allowed G c R A S D P ∧ P.length ≤ 2 := by
+  letI : Quiver V := graphQuiver G
   classical
   let T := sampledBase G c R S u w
   let L := T.filter (fun x => c u x ∈ D)
@@ -151,13 +157,13 @@ private theorem base_path (G : Digraph V) (c : V → V → C)
   · simp [hv, hxu, hxw, huw, Ne.symm hxu]
   · simp [hc, hdata.2.1]
   · intro y hy hyu hyw
-    simp only [hv, List.mem_cons, List.mem_singleton] at hy
+    simp only [hv, List.mem_cons, List.not_mem_nil, or_false] at hy
     rcases hy with rfl | rfl | rfl
     · exact (hyu rfl).elim
     · exact ⟨hdata.2.2.1, hxA⟩
     · exact (hyw rfl).elim
   · intro d hd
-    simp only [hc, List.mem_cons, List.mem_singleton] at hd
+    simp only [hc, List.mem_cons, List.not_mem_nil, or_false] at hd
     rcases hd with rfl | rfl
     · exact ⟨hdata.2.2.2.1, hleft⟩
     · exact ⟨hdata.2.2.2.2, hright⟩
@@ -176,10 +182,12 @@ private theorem rank_path (G : Digraph V) (c : V → V → C)
       Tr ≤ ((sampledPred G c R S (layer G ν u i \ layer G ν u 0) w).card : ℝ))
     (hb : (a : ℝ) + 2 * d + 3 * m < Tb)
     (hr : (a : ℝ) + d + 2 * m + B.card + 1 < Tr) :
+    letI : Quiver V := graphQuiver G
     ∀ i, i ≤ m → ∀ w, u ≠ w → w ∉ B →
       w ∈ robust G (ν / 2) (layer G ν u i) →
       ∀ (A : Finset V) (D : Finset C), A.card + i ≤ a + m → D.card + i ≤ d + m →
       ∃ P : DPath G u w, Allowed G c R A S D P ∧ P.length ≤ i + 2 := by
+  letI : Quiver V := graphQuiver G
   classical
   intro i
   induction i using Nat.strong_induction_on with
@@ -290,9 +298,11 @@ theorem robust_connector (G : Digraph V) (c : V → V → C)
         ((sampledPred G c R S (layer G ν u i \ layer G ν u 0) w).card : ℝ))
     (hincoming : ∀ w, 2 * b + 20 / ν ≤
       ((sampledPred G c R S univ w).card : ℝ)) :
+    letI : Quiver V := graphQuiver G
     ∀ u v, u ≠ v → ∀ (A : Finset V) (D : Finset C),
       (A.card : ℝ) ≤ b → (D.card : ℝ) ≤ b →
       ∃ P : DPath G u v, Allowed G c R A S D P ∧ (P.length : ℝ) ≤ ν⁻¹ + 1 := by
+  letI : Quiver V := graphQuiver G
   classical
   intro u v huv A D hA hD
   let B : V → Finset V := fun z =>

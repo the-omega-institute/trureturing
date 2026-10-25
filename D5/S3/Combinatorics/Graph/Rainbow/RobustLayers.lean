@@ -50,7 +50,7 @@ def ExteriorExpander (G : Digraph V) (ν τ : ℝ) : Prop :=
 
 /-- Zero-based indexing: layer zero is the root's outgoing star. -/
 noncomputable def layer (G : Digraph V) (ν : ℝ) (u : V) : ℕ → Finset V
-  | 0 => by classical; exact univ.filter (G.Adj u)
+  | 0 => univ.filter (G.Adj u)
   | i + 1 => layer G ν u i ∪ robust G ν (layer G ν u i)
 
 /-- The integer boundary is valid even when the expansion interval contains no integer.
@@ -76,7 +76,9 @@ theorem graph_parameter_bounds (G : Digraph V) (ν τ α : ℝ)
   have hcard := card_le_card hsub
   rw [card_erase_of_mem (mem_univ u), card_univ] at hcard
   have huNat : (layer G ν u 0).card + 1 ≤ Fintype.card V := by omega
-  have huR : ((layer G ν u 0).card : ℝ) + 1 ≤ n := by exact_mod_cast huNat
+  have huR : ((layer G ν u 0).card : ℝ) + 1 ≤ n := by
+    dsimp only [n]
+    exact_mod_cast huNat
   have hupper : α * n + 1 ≤ n := by dsimp [n] at *; linarith
   have hτone : τ < 1 := (mul_lt_mul_iff_right₀ hn).mp (by nlinarith)
   have hy : 0 ≤ (1 - τ) * n := mul_nonneg (by linarith) hn.le
@@ -100,14 +102,19 @@ theorem graph_parameter_bounds (G : Digraph V) (ν τ α : ℝ)
       have hp := card_sdiff_add_card_eq_card (subset_univ T)
       rw [card_univ, hTc] at hp
       have hcR : ((robust G ν T \ T).card : ℝ) + m ≤ n := by
+        dsimp only [n]
         exact_mod_cast (show (robust G ν T \ T).card + m ≤ Fintype.card V by omega)
       dsimp [n] at *
       nlinarith
     · let k : ℕ := Fintype.card V / 2
       have hk1 : 2 * k ≤ Fintype.card V := by dsimp [k]; omega
       have hk2 : Fintype.card V ≤ 2 * k + 1 := by dsimp [k]; omega
-      have hk1R : 2 * (k : ℝ) ≤ n := by exact_mod_cast hk1
-      have hk2R : n ≤ 2 * (k : ℝ) + 1 := by exact_mod_cast hk2
+      have hk1R : 2 * (k : ℝ) ≤ n := by
+        dsimp only [n]
+        exact_mod_cast hk1
+      have hk2R : n ≤ 2 * (k : ℝ) + 1 := by
+        dsimp only [n]
+        exact_mod_cast hk2
       have hτk : (k : ℝ) < τ * n := by
         by_contra! h
         have hk : (k : ℝ) ≤ (1 - τ) * n := by nlinarith
@@ -207,12 +214,14 @@ theorem early_covering_layer (G : Digraph V) (ν τ α : ℝ)
   classical
   let n : ℝ := Fintype.card V
   let K : ℕ := ⌊ν⁻¹⌋₊
-  have hn : 0 < n := by dsimp [n]; nlinarith [Nat.cast_nonneg (Fintype.card V)]
+  have hn : 0 < n := by
+    dsimp only [n]
+    exact_mod_cast Fintype.card_pos_iff.mpr (show Nonempty V from ⟨u⟩)
   have hK : 2 ≤ K := by
     apply Nat.le_floor
     change (2 : ℝ) ≤ ν⁻¹
     apply (mul_le_mul_iff_right₀ hν).mp
-    rw [inv_mul_cancel₀ (ne_of_gt hν)]
+    rw [mul_inv_cancel₀ (ne_of_gt hν)]
     linarith
   have hfloor := Nat.lt_floor_add_one (ν⁻¹)
   have hKν : 1 < ((K : ℝ) + 1) * ν := by
