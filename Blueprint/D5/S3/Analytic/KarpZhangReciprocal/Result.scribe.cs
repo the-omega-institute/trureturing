@@ -118,8 +118,6 @@ internal sealed class ResultDocument : IScribeDocumentDefinition
         name == "reciprocal_half" ? StatementSource.FromAuthor(Disp(All("y", new Formula.TypeArrow(F.Id("Nat"), F.Id("Real")), Implies(Call("IsLogConcave", F.Id("y")), All("mu", F.Id("Real"), All("alpha", F.Id("Real"), All("beta", F.Id("Real"), Implies(Lt(Num(0), F.Id("mu")), Implies(Le(Num(0), F.Id("alpha")), Implies(Le(Num(0), F.Id("beta")), All("m", F.Id("Nat"), Le(Num(0), Call("delta", F.Id("y"), F.Id("mu"), F.Id("alpha"), F.Id("beta"), F.Id("m")))))))))))))) :
         StatementSource.WithoutFormula();
 
-    private static Formula Parenthesized(Formula body) => Seq(Open, body, Close);
-
     private static Formula All(string name, Formula type, Formula body) =>
         new Formula.Bind(FormulaQuantifier.ForAll, FormulaIdentifier.Create(name), type, body);
     private static Formula Implies(Formula a, Formula b) =>

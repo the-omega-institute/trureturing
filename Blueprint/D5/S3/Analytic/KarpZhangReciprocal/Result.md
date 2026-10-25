@@ -46,7 +46,7 @@ At q=0 the increment is W(0); at a positive natural index it is W(q)-W(q-1). Tel
 
 **Theorem 1.4 (Reindexing a symmetric tail).**
 
-$$\forall K \in Nat \to Real,\; \forall m \in Nat,\; \forall q \in Nat,\; 2 \cdot q \le m \Rightarrow \sum_{k \in \operatorname{Finset}.\operatorname{range}\left(m + 1\right)} (\operatorname{if} q \le k \land q \le m - k \operatorname{then} K\left(k\right) \operatorname{else} 0) = \sum_{i \in \operatorname{Finset}.\operatorname{range}\left(m - q - q + 1\right)} K\left(q + i\right)$$
+$$\forall K \in Nat \to Real,\; \forall m \in Nat,\; \forall q \in Nat,\; 2 \cdot q \le m \Rightarrow \sum _{k \in \operatorname{Finset}.\operatorname{range}\left(m + 1\right)} ((\operatorname{if} q \le k \land q \le m - k \operatorname{then} K\left(k\right) \operatorname{else} 0)) = \sum _{i \in \operatorname{Finset}.\operatorname{range}\left(m - q - q + 1\right)} (K\left(q + i\right))$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Analytic/KarpZhangReciprocal/Result.tail_sum` (`✓ std3`). ∎
 
@@ -60,7 +60,7 @@ When 2q ≤ m, the indices satisfying q ≤ k and q ≤ m-k are exactly q+i with
 
 **Theorem 1.5 (Abel decomposition into symmetric layers).**
 
-$$\forall y \in Nat \to Real,\; \forall K \in Nat \to Real,\; \forall m \in Nat,\; \sum_{k \in \operatorname{Finset}.\operatorname{range}\left(m + 1\right)} y\left(k\right) \cdot y\left(m - k\right) \cdot K\left(k\right) = \sum_{q \in \operatorname{Finset}.\operatorname{range}\left(\operatorname{Nat}.\operatorname{div}\left(m, 2\right) + 1\right)} \operatorname{increment}\left((i: Nat \mapsto y\left(i\right) \cdot y\left(m - i\right)), q\right) \cdot (\sum_{i \in \operatorname{Finset}.\operatorname{range}\left(m - q - q + 1\right)} K\left(q + i\right))$$
+$$\forall y \in Nat \to Real,\; \forall K \in Nat \to Real,\; \forall m \in Nat,\; \sum _{k \in \operatorname{Finset}.\operatorname{range}\left(m + 1\right)} (y\left(k\right) \cdot y\left(m - k\right) \cdot K\left(k\right)) = \sum _{q \in \operatorname{Finset}.\operatorname{range}\left(\operatorname{Nat}.\operatorname{div}\left(m, 2\right) + 1\right)} (\operatorname{increment}\left((i: Nat \mapsto y\left(i\right) \cdot y\left(m - i\right)), q\right) \cdot (\sum _{i \in \operatorname{Finset}.\operatorname{range}\left(m - q - q + 1\right)} (K\left(q + i\right))))$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Analytic/KarpZhangReciprocal/Result.abel_layers` (`✓ std3`). ∎
 
