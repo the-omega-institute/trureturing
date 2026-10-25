@@ -4,7 +4,7 @@
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
    utility: none
-   digest: Signed raw splitting and the full real-dual implication from signed clopen oscillation. -/
+   digest: Signed raw splitting and the full real-dual clopen oscillation criterion. -/
 
 import D5.S3.Topology.Measures.SignedRieszRepresentation
 import D5.S3.Topology.Measures.L1RawSplitting
@@ -530,9 +530,9 @@ private lemma disjoint_norm_one_no_limit
     rw [(hct k).2.2.2, ← heq] at hb
     have hxk : (c • v (n (j k))) Z = x k := by
       dsimp [x, g]
-      rw [VectorMeasure.smul_apply, smul_eq_mul]
+      rw [smul_apply, smul_eq_mul]
       rw [signedFunctional_clopen _ Z hZ]
-    rw [VectorMeasure.sub_apply, hxk] at hb
+    rw [sub_apply, hxk] at hb
     linarith
   obtain ⟨N, hN⟩ := Metric.tendsto_atTop.mp hx (1 / 48) (by norm_num)
   by_cases hl : ell < (1 / 12 : ℝ)
@@ -589,7 +589,7 @@ private lemma disjoint_mass_limit_zero
   intro g
   have hi : Tendsto (fun k => (q (k + N))⁻¹) atTop (𝓝 r⁻¹) :=
     (hq.comp htail).inv₀ hrpos.ne'
-  simpa only [v, signedFunctional_smul, ContinuousLinearMap.smul_apply, smul_eq_mul] using
+  simpa only [v, signedFunctional_smul, smul_apply, smul_eq_mul, Function.comp_apply] using
     hi.mul ((hlim g).comp htail)
 
 /-- Quantitative signed clopen oscillation implies the full real-dual
@@ -623,6 +623,8 @@ theorem weak_of_signed_clopen_oscillation
         (fun n => NormPreservingLifts.signedFunctional (a n) g) atTop
         (𝓝 ((-NormPreservingLifts.signedFunctional sInf) g)) := by
       have hbtest := hweak (NormedSpace.inclusionInDoubleDual ℝ C(K, ℝ) g)
+      change Tendsto (fun n => NormPreservingLifts.signedFunctional (b n) g) atTop
+        (𝓝 (NormPreservingLifts.signedFunctional sInf g)) at hbtest
       have ht := (hselected g).sub hbtest
       have heval (n : ℕ) : NormPreservingLifts.signedFunctional (s (ns (j n))) g -
           NormPreservingLifts.signedFunctional (b n) g =
@@ -635,7 +637,7 @@ theorem weak_of_signed_clopen_oscillation
           Measure.restrict_apply (hE n).compl]
         simp) r hr hmass (-NormPreservingLifts.signedFunctional sInf) halim
     have hsmall : Tendsto (fun n => NormPreservingLifts.signedFunctional (a n))
-        atTop (𝓝 0) := signedFunctional_small a (by simpa only [hrzero] using hmass)
+        atTop (𝓝 0) := signedFunctional_small a (by simpa only [a, Function.comp_apply, hrzero] using hmass)
     have hbzero (g : C(K, ℝ)) : Tendsto
         (fun n => NormPreservingLifts.signedFunctional (b n) g) atTop (𝓝 0) := by
       have hsa : Tendsto (fun n => NormPreservingLifts.signedFunctional (a n) g)
