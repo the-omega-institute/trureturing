@@ -691,7 +691,8 @@ private theorem joint_born_laws (m : ℕ) (hm : 2 ≤ m) :
 
 /-- The native equal-energy projection is an effect and gives the two exact,
 unconditional Born probabilities. Their gap is strictly positive. The complete
-pinchings therefore differ at this batch length. -/
+pinchings differ at this batch length, while every compatible complex effect
+has equal probabilities at every smaller copy count. -/
 theorem sparse_joint_effect (m : ℕ) (hm : 2 ≤ m) :
     (jointEffect m).PosSemidef ∧ (1-jointEffect m).PosSemidef ∧
     jointEffect m * totalHamiltonian m (copyOrder m) =
@@ -703,11 +704,17 @@ theorem sparse_joint_effect (m : ℕ) (hm : 2 ≤ m) :
     (0 : ℝ) < 2*(1/12 : ℝ)^(2*m-1) ∧
     (1/3 : ℝ)^(2*m-1) + (1/12 : ℝ)^(2*m-1) ∈ Set.Icc (0 : ℝ) 1 ∧
     (1/3 : ℝ)^(2*m-1) - (1/12 : ℝ)^(2*m-1) ∈ Set.Icc (0 : ℝ) 1 ∧
-    pinchedCopies m (copyOrder m) rho ≠ pinchedCopies m (copyOrder m) (sigma m) := by
+    pinchedCopies m (copyOrder m) rho ≠ pinchedCopies m (copyOrder m) (sigma m) ∧
+    ∀ n : ℕ, n < 2*m-1 →
+      ∀ F : Matrix (CopyIndex (Fin 3) n) (CopyIndex (Fin 3) n) ℂ,
+        F.PosSemidef → (1-F).PosSemidef →
+        F * totalHamiltonian m n = totalHamiltonian m n * F →
+        Matrix.trace (F * stateMatrix (copies rho n)) =
+          Matrix.trace (F * stateMatrix (copies (sigma m) n)) := by
   have hb := joint_effect_bounds m hm
   have hp := joint_born_laws m hm
   refine ⟨hb.1, hb.2, joint_effect_commutes m hm, hp.1, hp.2,
-    by positivity, ?_, ?_, ?_⟩
+    by positivity, ?_, ?_, ?_, ?_⟩
   · have h₃ : (1/3 : ℝ)^(2*m-1) ≤ 1/3 :=
       pow_le_of_le_one (by norm_num) (by norm_num) (by omega)
     have h₁₂ : (1/12 : ℝ)^(2*m-1) ≤ 1/12 :=
@@ -725,6 +732,9 @@ theorem sparse_joint_effect (m : ℕ) (hm : 2 ≤ m) :
       (sparse_pair_data m hm).2.2.1, (sparse_pair_data m hm).2.2.2.1] at he'
     have hz : (1/12 : ℂ)^(2*m-1) ≠ 0 := pow_ne_zero _ (by norm_num)
     exact hz (by linear_combination (1/2 : ℂ) * he')
+  · intro n hn F hF hF₁ hFH
+    exact (compatible_effects_iff m n rho (sigma m)).mp
+      (sparse_low_pinching m n hm hn) F hF hF₁ hFH
 
 #print axioms tensor_monomial_bridge
 #print axioms compatible_effects_iff

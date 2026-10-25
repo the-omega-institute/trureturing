@@ -521,7 +521,13 @@ abbrev arena : Arena where
     (0 : ℝ) < 2*(1/12 : ℝ)^(2*m-1) ∧
     (1/3 : ℝ)^(2*m-1) + (1/12 : ℝ)^(2*m-1) ∈ Set.Icc (0 : ℝ) 1 ∧
     (1/3 : ℝ)^(2*m-1) - (1/12 : ℝ)^(2*m-1) ∈ Set.Icc (0 : ℝ) 1 ∧
-    pinchedCopies m (copyOrder m) rho ≠ pinchedCopies m (copyOrder m) (sigma m)
+    pinchedCopies m (copyOrder m) rho ≠ pinchedCopies m (copyOrder m) (sigma m) ∧
+    ∀ n : ℕ, n < 2*m-1 →
+      ∀ F : Matrix (CopyIndex (Fin 3) n) (CopyIndex (Fin 3) n) ℂ,
+        F.PosSemidef → (1-F).PosSemidef →
+        F * totalHamiltonian m n = totalHamiltonian m n * F →
+        Matrix.trace (F * stateMatrix (copies rho n)) =
+          Matrix.trace (F * stateMatrix (copies (sigma m) n))
 private theorem bridge : (type_of% sparse_joint_effect) ↔ arena.Law actual := Iff.rfl
 private theorem rejected : ¬ arena.Law zeroReadout := by
   intro h
@@ -617,7 +623,7 @@ private theorem dependence : ObservationalDependence signature actual := by
   cases i
   refine ⟨(2, copyOrder 2), rho, sigma 2, ?_⟩
   change pinchedCopies 2 (copyOrder 2) rho ≠ pinchedCopies 2 (copyOrder 2) (sigma 2)
-  exact (sparse_joint_effect 2 (by omega)).2.2.2.2.2.2.2.2
+  exact (sparse_joint_effect 2 (by omega)).2.2.2.2.2.2.2.2.1
 
 def family : Registration arena (type_of% compatible_effects_iff) where
   actual := actual

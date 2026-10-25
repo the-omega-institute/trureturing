@@ -113,7 +113,8 @@ internal sealed class SharedEnergyCopyThresholdDocument : IScribeDocumentDefinit
                 "The effect and its complement are positive semidefinite, and the effect commutes with the sum Hamiltonian. "
                     + "Its unconditional probabilities on the two native sparse tensor states are respectively one third to the "
                     + "copy count plus and minus one twelfth to that count. Both real probabilities lie between zero and one, "
-                    + "and their gap is positive. The complete total-energy pinchings differ at this copy count."),
+                    + "and their gap is positive. The complete total-energy pinchings differ at this copy count. "
+                    + "At every smaller copy count all compatible complex effects have equal probabilities on the two actual tensor states."),
             Paragraph(Text("The Haar-average identity, the upper bound on every labelled indecomposable zero-weight exponent, "
                 + "and the equivalence with the actual compact orbits are further requirements "
                 + "for the least uniform orbit-separating order. The explicit effect gives no Helstrom optimum, adaptive "
@@ -249,11 +250,13 @@ internal sealed class SharedEnergyCopyThresholdDocument : IScribeDocumentDefinit
     private static Formula Effect()
     {
         var m = F.Id("m"); var l = C("copyOrder", m); var q = C("jointEffect", m);
+        var n = F.Id("n"); var f = F.Id("F"); var hn = C("totalHamiltonian", m, n);
         var h = C("totalHamiltonian", m, l); var k = Length(m);
         var r = C("rho"); var s = C("sigma", m);
         var plus = Seq(P(Third, k), Plus, P(Twelfth, k));
         var minus = Seq(P(Third, k), Minus, P(Twelfth, k));
         Formula Prob(Formula x) => C("trace", Seq(q, Cdot, Sp, C("stateMatrix", C("copies", x, l))));
+        Formula LowProb(Formula x) => C("trace", Seq(f, Cdot, Sp, C("stateMatrix", C("copies", x, n))));
         return Disp(Seq(Forall, Sp, m, InMacro, C("Nat"), Comma,
             D(2), Leq, Sp, m, Sp, Implies, Sp, RowBreak,
             C("PosSemidef", q), Sp, Land, Sp, C("PosSemidef", Seq(D(1), Minus, q)), Sp, Land, RowBreak,
@@ -262,7 +265,14 @@ internal sealed class SharedEnergyCopyThresholdDocument : IScribeDocumentDefinit
             D(0), Lt, D(2), Cdot, Sp, P(Twelfth, k), Sp, Land, RowBreak,
             plus, InMacro, C("Icc", D(0), D(1)), Sp, Land, Sp,
             minus, InMacro, C("Icc", D(0), D(1)), Sp, Land, RowBreak,
-            C("pinchedCopies", m, l, r), Neq, Sp, C("pinchedCopies", m, l, s)));
+            C("pinchedCopies", m, l, r), Neq, Sp, C("pinchedCopies", m, l, s), Sp, Land, RowBreak,
+            Forall, Sp, n, InMacro, C("Nat"), Comma, n, Lt, k, Sp, Implies, Sp,
+            Forall, Sp, f, InMacro, C("Matrix", C("CopyIndex", C("Fin", D(3)), n),
+                C("CopyIndex", C("Fin", D(3)), n), C("Complex")), Comma, RowBreak,
+            C("PosSemidef", f), Sp, Implies, Sp,
+            C("PosSemidef", Seq(D(1), Minus, f)), Sp, Implies, Sp,
+            f, Cdot, Sp, hn, Eq, hn, Cdot, Sp, f, Sp, Implies, Sp,
+            LowProb(r), Eq, LowProb(s)));
     }
 
 }
