@@ -241,7 +241,7 @@ small enough to pay this puncture factor and all $U$ losses. Its
 seminorm is $O(\mathcal N_JR^{-B_0})$, and
 $\sum_{R\ge1}R^{1/6-B_0}<\infty$ over dyadic shells.
 For $R>U$ do not apply a nonuniform puncture estimate: use
-$|K_A(d)|\le3^{\omega(d)}$ on squarefree ideals, the original annulus,
+$|K_A(d)|\ll_W3^{\omega(d)}$ on squarefree ideals, the original annulus,
 and the fixed-field divisor bound. Each four-column absolute sum is
 $O_\varepsilon(D^{4+\varepsilon})$. Consequently the entire tail is
 
@@ -325,7 +325,8 @@ C_w&=\int_0^\infty\widehat w_{\rm rad}(t)t^{-5/6}dt
 $$
 
 The row constant is the cited radial identity with the stated measure
-and frequency scale. The last line follows directly by substituting
+and frequency scale; its gamma ratio is the standard Bessel Mellin
+value, not a new source arithmetic constant. The last line follows directly by substituting
 $t=z/(x_1x_2x_3x_4)$ in C59 and using Fubini; compact annular column
 support, smoothness at zero and rapid Fourier decay ensure absolute
 integrability. The resulting power of each $x_i$ is
