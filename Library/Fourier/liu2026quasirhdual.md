@@ -2976,4 +2976,6 @@ The [small reduced-frequency companion](liu2026quasirhreduced.md#a-small-reduced
 retains the conditional application C77–C86 to the actual bare-J4
 columns. It states the additional uniform finite-order source premises,
 the original and exact redesigned cutoff cases, and the unpaid
-complement. C51–C76 remain in this note.
+complement. Its [original-W0 dominant endpoint](liu2026quasirhreduced.md#a-source-conditional-dominant-endpoint-for-original-w0)
+adds C87–C92 on $q_r\asymp U$, with no strict C68 reserve.
+C51–C76 remain in this note.
