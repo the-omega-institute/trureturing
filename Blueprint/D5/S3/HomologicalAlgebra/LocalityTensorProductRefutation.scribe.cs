@@ -21,20 +21,20 @@ internal sealed class LocalityTensorProductRefutationDocument : IScribeDocumentD
                 "A relation on a K-vector space is a locality vector-space relation when it is symmetric, "
                     + "relates zero to zero, and every polar set is the underlying set of a linear subspace. "
                     + "The polar of U consists of all x related to every u in U. "
-                    + "This is Definition 1.1 of arXiv:2205.14616v1, main.tex, lines 340–359. "
+                    + "This is Definition 1.1 of arXiv:2205.14616v1, Clavier_Foissy_Lopez_Paycha_arxiv.tex, lines 340–359. "
                     + "SetLike.coe explicitly converts the submodule S to its underlying set.",
                 AssessedProvenance.FromLiterature(Source)),
             Definition("locality-product", "localityProduct", "The locality Cartesian product",
                 LocalityProductFormula(),
                 "For subspaces V and W of E, retain exactly the pairs with first component in V, "
                     + "second component in W, and related components. "
-                    + "This is the locality Cartesian product of main.tex, lines 387–394.",
+                    + "This is the locality Cartesian product of Clavier_Foissy_Lopez_Paycha_arxiv.tex, lines 387–394.",
                 AssessedProvenance.FromLiterature(Source)),
             Definition("span-relation", "spanRel", "The relation on a free span",
                 SpanRelationFormula(),
                 "Two finitely supported coefficient functions are related when every element of the first support "
                     + "is related to every element of the second support. Empty supports impose no condition. "
-                    + "The support formulation of main.tex, lines 755–769, needs only a zero coefficient, "
+                    + "The support formulation of Clavier_Foissy_Lopez_Paycha_arxiv.tex, lines 755–769, needs only a zero coefficient, "
                     + "so the definition allows an arbitrary type K with Zero K and an arbitrary relation s.",
                 AssessedProvenance.FromLiterature(Source)),
             Definition("bilinear-relations", "bilRelations", "The bilinearity submodule",
@@ -42,26 +42,26 @@ internal sealed class LocalityTensorProductRefutationDocument : IScribeDocumentD
                 "In the free K-vector space on all pairs from E, take the span of the two additivity relations "
                     + "and the two scalar relations, with a and b in V and x and y in W. "
                     + "Finsupp.single assigns the coefficient one in K to the indicated pair. "
-                    + "The generators are exactly those of main.tex, lines 422–430; they need not themselves have local support.",
+                    + "The generators are exactly those of Clavier_Foissy_Lopez_Paycha_arxiv.tex, lines 422–430; they need not themselves have local support.",
                 AssessedProvenance.FromLiterature(Source)),
             Definition("free-span", "freeSpan", "The free span of local pairs",
                 FreeSpanFormula(),
                 "This submodule consists of the finitely supported functions whose support lies in the locality Cartesian product. "
                     + "It realizes the free span K(V ×_⊤ W) used in the locality tensor product, "
-                    + "main.tex, lines 556–562, inside the free span on all pairs from E.",
+                    + "Clavier_Foissy_Lopez_Paycha_arxiv.tex, lines 556–562, inside the free span on all pairs from E.",
                 AssessedProvenance.FromLiterature(Source)),
             Definition("bilinear-ideal", "bilIdeal", "Bilinearity relations with local support",
                 BilinearIdealFormula(),
                 "Intersect the ambient bilinearity submodule with the free span of local pairs. "
                     + "Thus an element must both be a linear combination of bilinearity relations and have local support; "
                     + "the individual relations in that combination need not have local support. "
-                    + "This is the subspace I_bil intersected with K(V ×_⊤ W) in main.tex, "
+                    + "This is the subspace I_bil intersected with K(V ×_⊤ W) in Clavier_Foissy_Lopez_Paycha_arxiv.tex, "
                     + "lines 1984–1987, used as the denominator in lines 556–562. Min.min denotes the meet of submodules.",
                 AssessedProvenance.FromLiterature(Source)),
             Definition("locality-tensor", "localityTensor", "The locality tensor product",
                 LocalityTensorFormula(),
                 "The locality tensor product is the free span of local pairs modulo its bilinearity subspace, "
-                    + "as in the definition in main.tex, lines 556–562. "
+                    + "as in the definition in Clavier_Foissy_Lopez_Paycha_arxiv.tex, lines 556–562. "
                     + "CoeSort.coe explicitly regards the free-span submodule as a type of elements. "
                     + "Taking the inverse image under Submodule.subtype puts the denominator inside that type before forming the quotient.",
                 AssessedProvenance.FromLiterature(Source)),
@@ -71,7 +71,7 @@ internal sealed class LocalityTensorProductRefutationDocument : IScribeDocumentD
                     + "The pairs within each generator are included. This is the literal four-entry condition of "
                     + "arXiv:2506.09493v1, LOC.tex, lines 220 and 743–747. "
                     + "It implies the relational product Prod.RProd r r, namely r(v,v′) ∧ r(w,w′). "
-                    + "This componentwise reading is the relation of arXiv:2205.14616v1, main.tex, lines 447–449. "
+                    + "This componentwise reading is the relation of arXiv:2205.14616v1, Clavier_Foissy_Lopez_Paycha_arxiv.tex, lines 447–449. "
                     + "The two relations need not coincide even when V = W.",
                 AssessedProvenance.FromLiterature(QuotientSource)),
             Definition("quotient-relation", "quotientRel", "Existential locality on the quotient",
@@ -87,7 +87,7 @@ internal sealed class LocalityTensorProductRefutationDocument : IScribeDocumentD
                 "A subspace W is locality compatible when the following simultaneous adjustment is possible. "
                     + "If x is related to y and x + w is related to z for some w in W, "
                     + "then a single adjustment w′ in W makes x + w′ related to both y and z. "
-                    + "This is Definition 6.7 of main.tex, lines 1880–1886. The predicate itself is defined for any relation r.",
+                    + "This is Definition 6.7 of Clavier_Foissy_Lopez_Paycha_arxiv.tex, lines 1880–1886. The predicate itself is defined for any relation r.",
                 AssessedProvenance.FromLiterature(Source)),
             Definition("tensor-conjecture", "TensorConjecture", "The locality tensor-product conjecture",
                 TensorConjectureFormula(),
@@ -103,7 +103,7 @@ internal sealed class LocalityTensorProductRefutationDocument : IScribeDocumentD
                 "For the same unrestricted fields, vector spaces and subspaces, the conjecture asserts that "
                     + "the bilinearity subspace inside the free span of local pairs is locality compatible "
                     + "with the support relation induced by the chosen generator-relation rule s. "
-                    + "Conjectural statement 6.16 of main.tex, lines 1984–1987, uses componentwise locality. "
+                    + "Conjectural statement 6.16 of Clavier_Foissy_Lopez_Paycha_arxiv.tex, lines 1984–1987, uses componentwise locality. "
                     + "The four-way variant uses the thesis relation on the same generators.",
                 AssessedProvenance.FromLiterature(Source)),
             Definition("claim", "claim", "The disjunction of all four assertions",

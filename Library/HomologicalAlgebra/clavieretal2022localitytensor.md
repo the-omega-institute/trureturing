@@ -31,7 +31,7 @@ Conjectural statement 6.16:
 ## Verified locator
 
 Source: https://arxiv.org/abs/2205.14616v1
-- URL: https://arxiv.org/abs/2205.14616v1 (source `main.tex`, md5 `1f6041a82cd80114573aa776694ccf20`, 2896 lines):
+- URL: https://arxiv.org/abs/2205.14616v1 (source `Clavier_Foissy_Lopez_Paycha_arxiv.tex`, md5 `1f6041a82cd80114573aa776694ccf20`, 2896 lines):
   - locality sets and locality vector spaces, Definition `defn:basic_loc_defn`, l. 340–359;
   - the locality Cartesian product, l. 387–394;
   - the bilinear relations $I_{\rm bil}$, l. 422–430, and the relation $\top_{V\times_\top W}$, Eq. `eq:locreltoptimes`, l. 447–449;
