@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:952288fe743e8adde84a8bef4220e7131d5c057e027425227917ca252db587ba
+  normalized_sha256: sha256:952288fe743e8adde84a8bef4220e7131d5c057e027425227917ca252db587ba
+cas_ref: sha256:952288fe743e8adde84a8bef4220e7131d5c057e027425227917ca252db587ba
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 只定义 G_k 为无相邻 1 的二进制字数，未断言递推式或特定计数。
+    previous_atom_id: 012fdf6b875276bfb757f0de39c8d752f7e9d4ccae27b0bd618bfef7daf30ad5
+    next_atom_id: 9b2edc4dd3186d62c80fc92710aa341ab932678b5c2b0d7ead4d52c2704f9c7d

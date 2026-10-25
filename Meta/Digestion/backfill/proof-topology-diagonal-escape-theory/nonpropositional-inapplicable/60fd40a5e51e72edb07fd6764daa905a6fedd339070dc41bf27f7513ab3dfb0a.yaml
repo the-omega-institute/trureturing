@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:60fd40a5e51e72edb07fd6764daa905a6fedd339070dc41bf27f7513ab3dfb0a
+  normalized_sha256: sha256:60fd40a5e51e72edb07fd6764daa905a6fedd339070dc41bf27f7513ab3dfb0a
+cas_ref: sha256:60fd40a5e51e72edb07fd6764daa905a6fedd339070dc41bf27f7513ab3dfb0a
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 设定 Fibonacci 递推和黄金元素关系，并定义有限支撑原始载体及两种求值，不含两种求值相等的结论。
+    previous_atom_id: ef5efd81719698216fecc4d4423ece3ab70d5099beee18d233acf0245e52b0e3
+    next_atom_id: 56d7bb802bc6cf1d1c1c7f19149940ce1683c8b222eba5b648e9b29634e572cd
