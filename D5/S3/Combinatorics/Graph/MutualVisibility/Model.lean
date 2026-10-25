@@ -12,6 +12,8 @@ import Mathlib.Data.Fintype.Powerset
 import Mathlib.Data.Finset.SymmDiff
 import Mathlib.Tactic
 
+/-! Original-host mutual visibility and its finite reconfiguration geometry. -/
+
 set_option autoImplicit false
 
 namespace D5.S3.Combinatorics.Graph.MutualVisibility
@@ -57,21 +59,21 @@ noncomputable instance configurationFintype [Fintype V] (H : SimpleGraph V) :
 noncomputable instance reconfigurationDecidableAdj (H : SimpleGraph V) :
     DecidableRel (reconfiguration H).Adj := Classical.decRel _
 
-private theorem visible_mono {H : SimpleGraph V} {S T : Finset V}
+theorem visible_mono {H : SimpleGraph V} {S T : Finset V}
     (h : S ⊆ T) (hT : Visible H T) : Visible H S := by
   intro u hu v hv huv
   obtain ⟨p, hp, ha⟩ := hT u (h hu) v (h hv) huv
   exact ⟨p, hp, fun z hz hzs => ha z hz (h hzs)⟩
 
-private theorem visible_empty (H : SimpleGraph V) : Visible H ∅ := by
+theorem visible_empty (H : SimpleGraph V) : Visible H ∅ := by
   simp [Visible]
 
-private theorem visible_singleton (H : SimpleGraph V) (x : V) : Visible H {x} := by
+theorem visible_singleton (H : SimpleGraph V) (x : V) : Visible H {x} := by
   intro u hu v hv huv
   simp only [Finset.mem_singleton] at hu hv
   exact (huv (hu.trans hv.symm)).elim
 
-private theorem visible_pair {H : SimpleGraph V} (hH : H.Connected) (x y : V) :
+theorem visible_pair {H : SimpleGraph V} (hH : H.Connected) (x y : V) :
     Visible H {x, y} := by
   intro u hu v hv huv
   obtain ⟨p, hp⟩ := hH.exists_walk_length_eq_dist u v
@@ -91,7 +93,7 @@ private theorem visible_path {H : SimpleGraph V} {S : Finset V} (hS : Visible H 
   obtain ⟨p, hp, ha⟩ := hS u hu v hv hne
   exact ⟨p, p.isPath_of_length_eq_dist hp, hp, ha⟩
 
-private theorem mixedMove_insert (H : SimpleGraph V) (S : Finset V)
+theorem mixedMove_insert (H : SimpleGraph V) (S : Finset V)
     {x : V} (hx : x ∉ S) : MixedMove H S (insert x S) := by
   refine ⟨?_, Or.inl ?_⟩
   · intro h
@@ -101,7 +103,7 @@ private theorem mixedMove_insert (H : SimpleGraph V) (S : Finset V)
       by_cases hxy : y = x <;> by_cases hy : y ∈ S <;> simp_all [Finset.mem_symmDiff]
     rw [hd, Finset.card_singleton]
 
-private theorem mixedMove_erase (H : SimpleGraph V) (S : Finset V)
+theorem mixedMove_erase (H : SimpleGraph V) (S : Finset V)
     {x : V} (hx : x ∈ S) : MixedMove H S (S.erase x) := by
   have h := mixedMove_insert H (S.erase x) (Finset.notMem_erase x S)
   rw [Finset.insert_erase hx] at h
@@ -118,7 +120,7 @@ private theorem reaches_empty (H : SimpleGraph V) (S : Configuration H) :
         mixedMove_insert H S hx
       exact he.symm.reachable.trans (ih T.property)
 
-private theorem reconfiguration_connected (H : SimpleGraph V) :
+theorem reconfiguration_connected (H : SimpleGraph V) :
     (reconfiguration H).Connected := by
   letI : Nonempty (Configuration H) := ⟨⟨∅, visible_empty H⟩⟩
   exact ⟨fun S T => (reaches_empty H S).trans (reaches_empty H T).symm⟩

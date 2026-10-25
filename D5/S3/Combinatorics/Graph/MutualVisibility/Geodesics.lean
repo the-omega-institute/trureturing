@@ -8,8 +8,9 @@
 
 import D5.S3.Combinatorics.Graph.MutualVisibility.Model
 
+/-! Original-host mutual visibility and its finite reconfiguration geometry. -/
+
 set_option autoImplicit false
-set_option maxHeartbeats 800000
 
 namespace D5.S3.Combinatorics.Graph.MutualVisibility
 
@@ -59,6 +60,33 @@ private theorem mandatory_trans {a b c w : V}
   have hq := length_eq_dist_of_subwalk hp (p.isSubwalk_dropUntil hbmem)
   exact p.support_dropUntil_subset_support hbmem (ha _ hq)
 
+private theorem mandatory_ancestor (hH : H.Connected) {a b v w : V}
+    (ha : Mandatory H a v w) (hb : Mandatory H b v w) (hab : a ≠ b)
+    (hh : H.dist a w ≤ H.dist b w) : Mandatory H a b w := by
+  obtain ⟨p, hp⟩ := hH.exists_walk_length_eq_dist v w
+  have hbmem := hb p hp
+  have hprefix := length_eq_dist_of_subwalk hp (p.isSubwalk_takeUntil hbmem)
+  have hbd := shortest_member_dist hp hbmem
+  have had := mandatory_dist hH ha
+  intro q hq
+  have hlen : ((p.takeUntil b hbmem).append q).length = H.dist v w := by
+    simp only [Walk.length_append, hprefix, hq]
+    exact hbd
+  have hamem := ha _ hlen
+  rcases (Walk.mem_support_append_iff _ _).mp hamem with h | h
+  · have hprefa := shortest_member_dist hprefix h
+    have habpos := (hH a b).pos_dist_of_ne hab
+    omega
+  · exact h
+
+private theorem ancestors_comparable (hH : H.Connected) {a b v w : V}
+    (ha : Mandatory H a v w) (hb : Mandatory H b v w)
+    (haw : a ≠ w) (hbw : b ≠ w) (hab : a ≠ b) :
+    Dominates H w a b ∨ Dominates H w b a := by
+  rcases le_total (H.dist a w) (H.dist b w) with h | h
+  · exact Or.inl ⟨haw, hab, mandatory_ancestor hH ha hb hab h⟩
+  · exact Or.inr ⟨hbw, hab.symm, mandatory_ancestor hH hb ha hab.symm h⟩
+
 private theorem shortest_height_le {x w z : V} {p : H.Walk x w}
     (hp : p.length = H.dist x w) (hz : z ∈ p.support) :
     H.dist z w ≤ H.dist x w := by
@@ -79,7 +107,7 @@ private theorem mandatory_segment (hH : H.Connected) {w a b c : V}
     simp only [Walk.length_append, hp, hq]
     exact hacd
   have hmem := hb.2.2 (p.append q) hlen
-  rcases Walk.mem_support_append_iff.mp hmem with h | h
+  rcases (Walk.mem_support_append_iff _ _).mp hmem with h | h
   · exact h
   · have := shortest_height_le hq h
     omega
@@ -109,6 +137,181 @@ private theorem visible_pair_avoids_third {a b z : V}
   rcases ha z hz (by simp) with h | h
   · exact hza h
   · exact hzb h
+
+private theorem triple_visible_of_geodesics {a b c : V}
+    (hab : ∃ p : H.Walk a b, p.length = H.dist a b ∧ c ∉ p.support)
+    (hac : ∃ p : H.Walk a c, p.length = H.dist a c ∧ b ∉ p.support)
+    (hbc : ∃ p : H.Walk b c, p.length = H.dist b c ∧ a ∉ p.support) :
+    Visible H {a, b, c} := by
+  obtain ⟨p, hp, hcp⟩ := hab
+  obtain ⟨q, hq, hbq⟩ := hac
+  obtain ⟨r, hr, har⟩ := hbc
+  intro u hu v hv huv
+  simp only [Finset.mem_insert, Finset.mem_singleton] at hu hv
+  rcases hu with rfl | rfl | rfl <;> rcases hv with rfl | rfl | rfl
+  · exact (huv rfl).elim
+  · refine ⟨p, hp, ?_⟩
+    intro z hz hzs
+    simp only [Finset.mem_insert, Finset.mem_singleton] at hzs
+    rcases hzs with h | h | h
+    · exact Or.inl h
+    · exact Or.inr h
+    · exact (hcp (h ▸ hz)).elim
+  · refine ⟨q, hq, ?_⟩
+    intro z hz hzs
+    simp only [Finset.mem_insert, Finset.mem_singleton] at hzs
+    rcases hzs with h | h | h
+    · exact Or.inl h
+    · exact (hbq (h ▸ hz)).elim
+    · exact Or.inr h
+  · refine ⟨p.reverse, by simpa [H.dist_comm] using hp, ?_⟩
+    intro z hz hzs
+    have hz' : z ∈ p.support := by simpa using hz
+    simp only [Finset.mem_insert, Finset.mem_singleton] at hzs
+    rcases hzs with h | h | h
+    · exact Or.inr h
+    · exact Or.inl h
+    · exact (hcp (h ▸ hz')).elim
+  · exact (huv rfl).elim
+  · refine ⟨r, hr, ?_⟩
+    intro z hz hzs
+    simp only [Finset.mem_insert, Finset.mem_singleton] at hzs
+    rcases hzs with h | h | h
+    · exact (har (h ▸ hz)).elim
+    · exact Or.inl h
+    · exact Or.inr h
+  · refine ⟨q.reverse, by simpa [H.dist_comm] using hq, ?_⟩
+    intro z hz hzs
+    have hz' : z ∈ q.support := by simpa using hz
+    simp only [Finset.mem_insert, Finset.mem_singleton] at hzs
+    rcases hzs with h | h | h
+    · exact Or.inr h
+    · exact (hbq (h ▸ hz')).elim
+    · exact Or.inl h
+  · refine ⟨r.reverse, by simpa [H.dist_comm] using hr, ?_⟩
+    intro z hz hzs
+    have hz' : z ∈ r.support := by simpa using hz
+    simp only [Finset.mem_insert, Finset.mem_singleton] at hzs
+    rcases hzs with h | h | h
+    · exact (har (h ▸ hz')).elim
+    · exact Or.inr h
+    · exact Or.inl h
+  · exact (huv rfl).elim
+
+private theorem avoiding_geodesic {a u v : V} (h : ¬ Mandatory H a u v) :
+    ∃ p : H.Walk u v, p.length = H.dist u v ∧ a ∉ p.support := by
+  obtain ⟨p, hp⟩ := not_forall.mp h
+  exact ⟨p, not_imp.mp hp⟩
+
+private theorem nonvisible_triple_choice {w u v : V}
+    (huw : u ≠ w) (hvw : v ≠ w) (huv : u ≠ v)
+    (h : ¬ Visible H {u, v, w}) :
+    Mandatory H w u v ∨ Dominates H w u v ∨ Dominates H w v u := by
+  classical
+  by_contra hn
+  have h1 : ¬ Mandatory H w u v := fun hm => hn (Or.inl hm)
+  have h2 : ¬ Mandatory H u v w := fun hm => hn (Or.inr (Or.inl ⟨huw, huv, hm⟩))
+  have h3 : ¬ Mandatory H v u w := fun hm => hn (Or.inr (Or.inr ⟨hvw, huv.symm, hm⟩))
+  exact h (triple_visible_of_geodesics
+    (avoiding_geodesic h1) (avoiding_geodesic h3) (avoiding_geodesic h2))
+
+private theorem mandatory_prefix {a b u v : V}
+    (ha : Mandatory H a u v) (hb : Mandatory H b u a) : Mandatory H b u v := by
+  intro p hp
+  have hamem := ha p hp
+  have hq := length_eq_dist_of_subwalk hp (p.isSubwalk_takeUntil hamem)
+  exact p.support_takeUntil_subset_support hamem (hb _ hq)
+
+private theorem visible_mandatory_contradiction {S : Finset V} (hS : Visible H S)
+    {u v a : V} (hu : u ∈ S) (hv : v ∈ S) (ha : a ∈ S)
+    (huv : u ≠ v) (hau : a ≠ u) (hav : a ≠ v) (hm : Mandatory H a u v) : False := by
+  obtain ⟨p, hp, hx⟩ := hS u hu v hv huv
+  exact (hx a (hm p hp) ha).elim hau hav
+
+private theorem separated_not_dominates (hH : H.Connected) {w a b : V}
+    (hsep : Mandatory H w a b) (hdom : Dominates H w a b) : False := by
+  have hs := mandatory_dist hH hsep
+  have hd := mandatory_dist hH hdom.2.2
+  have hp := (hH a w).pos_dist_of_ne hdom.1
+  rw [H.dist_comm (u := w) (v := b)] at hs
+  rw [H.dist_comm (u := b) (v := a)] at hd
+  omega
+
+private theorem comparable_triple_obstruction (hH : H.Connected) {w u v z : V}
+    (hS : Visible H {u, v, z}) (hdom : Dominates H w u v)
+    (hzw : z ≠ w) (hzu : z ≠ u) (hzv : z ≠ v)
+    (hnuz : ¬ Visible H {u, z, w}) (hnvz : ¬ Visible H {v, z, w}) : False := by
+  have hvw : v ≠ w := by
+    have hh := dominates_height hH hdom
+    intro he
+    subst v
+    simp at hh
+  rcases nonvisible_triple_choice hdom.1 hzw hzu.symm hnuz with hus | huz | hzu'
+  · rcases nonvisible_triple_choice hvw hzw hzv.symm hnvz with hvs | hvz | hzv'
+    · have hum : Mandatory H u v z := mandatory_prefix hvs hdom.2.2
+      exact visible_mandatory_contradiction hS (by simp) (by simp) (by simp)
+        hzv.symm hdom.2.1 hzu.symm hum
+    · have htrans : Dominates H w u z :=
+        ⟨hdom.1, hzu.symm, mandatory_trans hdom.2.2 hvz.2.2⟩
+      exact separated_not_dominates hH hus htrans
+    · rcases ancestors_comparable hH hdom.2.2 hzv'.2.2 hdom.1 hzw hzu.symm with h | h
+      · exact separated_not_dominates hH hus h
+      · exact separated_not_dominates hH (mandatory_symm hus) h
+  · rcases nonvisible_triple_choice hvw hzw hzv.symm hnvz with hvs | hvz | hzv'
+    · have hvsd := mandatory_dist hH hvs
+      have huv := mandatory_dist hH hdom.2.2
+      have huzd := mandatory_dist hH huz.2.2
+      have hp := (hH u w).pos_dist_of_ne hdom.1
+      have ht := hH.dist_triangle (u := v) (v := u) (w := z)
+      rw [H.dist_comm (u := w) (v := z)] at hvsd
+      rw [H.dist_comm (u := z) (v := u)] at huzd
+      omega
+    · exact no_selected_chain hH hS (by simp) (by simp) (by simp) hdom hvz
+    · exact no_selected_chain hH hS (by simp) (by simp) (by simp) huz hzv'
+  · exact no_selected_chain hH hS (by simp) (by simp) (by simp) hzu' hdom
+
+private theorem root_hub (hH : H.Connected) {S : Finset V} {w : V}
+    (hS : Visible H S) (hcard : 3 ≤ S.card) (hw : w ∉ S)
+    (hn : ∀ u ∈ S, ∀ v ∈ S, u ≠ v → ¬ Visible H {u, v, w}) :
+    ∀ u ∈ S, ∀ v ∈ S, u ≠ v → Mandatory H w u v := by
+  intro u hu v hv huv
+  have huw : u ≠ w := fun h => hw (h ▸ hu)
+  have hvw : v ≠ w := fun h => hw (h ▸ hv)
+  rcases nonvisible_triple_choice huw hvw huv (hn u hu v hv huv) with hs | hd | hd
+  · exact hs
+  · have hsub : ({u, v} : Finset V) ⊆ S := by simp [Finset.insert_subset_iff, hu, hv]
+    have hpaircard : ({u, v} : Finset V).card = 2 := by simp [huv]
+    have hlt : ({u, v} : Finset V).card < S.card := by omega
+    obtain ⟨z, hz, hzpair⟩ := Finset.exists_mem_notMem_of_card_lt_card hlt
+    have hzu : z ≠ u := by simpa using fun h => hzpair (Finset.mem_insert.mpr (Or.inl h))
+    have hzv : z ≠ v := by simpa using fun h => hzpair (Finset.mem_insert.mpr (Or.inr (Finset.mem_singleton.mpr h)))
+    have hzw : z ≠ w := fun h => hw (h ▸ hz)
+    have hvis : Visible H {u, v, z} := visible_mono (by simp [Finset.insert_subset_iff, hu, hv, hz]) hS
+    exact (comparable_triple_obstruction hH hvis hd hzw hzu hzv
+      (hn u hu z hz hzu.symm) (hn v hv z hz hzv.symm)).elim
+  · have hpaircard : ({u, v} : Finset V).card = 2 := by simp [huv]
+    obtain ⟨z, hz, hzpair⟩ := Finset.exists_mem_notMem_of_card_lt_card (by omega : ({u, v} : Finset V).card < S.card)
+    have hzu : z ≠ u := by simpa using fun h => hzpair (Finset.mem_insert.mpr (Or.inl h))
+    have hzv : z ≠ v := by simpa using fun h => hzpair (Finset.mem_insert.mpr (Or.inr (Finset.mem_singleton.mpr h)))
+    have hzw : z ≠ w := fun h => hw (h ▸ hz)
+    have hvis : Visible H {v, u, z} := visible_mono (by simp [Finset.insert_subset_iff, hu, hv, hz]) hS
+    exact (comparable_triple_obstruction hH hvis hd hzw hzv hzu
+      (hn v hv z hz hzv.symm) (hn u hu z hz hzu.symm)).elim
+
+private theorem visible_comparability_triangle (hH : H.Connected) {S : Finset V}
+    (hS : Visible H S) {w a b c : V} (ha : a ∈ S) (hb : b ∈ S) (hc : c ∈ S)
+    (hab : Dominates H w a b ∨ Dominates H w b a)
+    (hac : Dominates H w a c ∨ Dominates H w c a)
+    (hbc : Dominates H w b c ∨ Dominates H w c b) : False := by
+  rcases hab with hab | hba <;> rcases hac with hac | hca <;> rcases hbc with hbc | hcb
+  · exact no_selected_chain hH hS ha hb hc hab hbc
+  · exact no_selected_chain hH hS ha hc hb hac hcb
+  · exact no_selected_chain hH hS hc ha hb hca hab
+  · exact no_selected_chain hH hS hc ha hb hca hab
+  · exact no_selected_chain hH hS hb ha hc hba hac
+  · exact no_selected_chain hH hS hb ha hc hba hac
+  · exact no_selected_chain hH hS hb hc ha hbc hca
+  · exact no_selected_chain hH hS hc hb ha hcb hba
 
 private theorem common_neighbor_height (hH : H.Connected) {w u v y : V}
     (hdom : Dominates H w u v) (huy : H.Adj u y) (hvy : H.Adj v y) :
@@ -146,18 +349,18 @@ private theorem inward_distances (hH : H.Connected) {w u v y p : V}
     H.dist p y = 2 ∧ H.dist p v = H.dist u v + 1 := by
   have hy := common_neighbor_height hH hdom huy hvy
   have hdomd := mandatory_dist hH hdom.2.2
-  rw [H.dist_comm v u] at hdomd
+  rw [H.dist_comm (u := v) (v := u)] at hdomd
   have hple : H.dist p y ≤ 2 := by
     have h := H.dist_le (Walk.cons hpu (Walk.cons huy .nil))
     simpa using h
   have hpybound := hH.dist_triangle (u := y) (v := p) (w := w)
-  rw [H.dist_comm y p] at hpybound
+  rw [H.dist_comm (u := y) (v := p)] at hpybound
   have hpvle : H.dist p v ≤ 1 + H.dist u v := by
     have h := hH.dist_triangle (u := p) (v := u) (w := v)
     rw [dist_eq_one_iff_adj.mpr hpu] at h
     exact h
   have hpvbound := hH.dist_triangle (u := v) (v := p) (w := w)
-  rw [H.dist_comm v p] at hpvbound
+  rw [H.dist_comm (u := v) (v := p)] at hpvbound
   constructor <;> omega
 
 private theorem inward_triple_visible (hH : H.Connected) {w u v y p : V}
@@ -183,7 +386,7 @@ private theorem inward_triple_visible (hH : H.Connected) {w u v y p : V}
   have hpypath : (Walk.cons hpu (Walk.cons huy .nil)).length = H.dist p y := by
     simpa using hdist.1.symm
   have hvpypath : v ∉ (Walk.cons hpu (Walk.cons huy .nil)).support := by
-    simp only [Walk.support_cons, Walk.support_nil, List.mem_cons, List.mem_singleton]
+    simp only [Walk.support_cons, Walk.support_nil, List.mem_cons, List.not_mem_nil, or_false]
     exact fun h => h.elim hpv.symm (fun h => h.elim hdom.2.1.symm hvy.ne)
   intro a ha b hb hab
   simp only [Finset.mem_insert, Finset.mem_singleton] at ha hb
@@ -204,7 +407,7 @@ private theorem inward_triple_visible (hH : H.Connected) {w u v y p : V}
   · refine ⟨(Walk.cons hpu q).reverse, ?_, ?_⟩
     · simpa [H.dist_comm] using hq'
     · intro z hz hzs
-      have hz' : z ∈ (Walk.cons hpu q).support := by simpa using hz
+      have hz' : z ∈ (Walk.cons hpu q).support := by simpa only [Walk.support_reverse, List.mem_reverse] using hz
       simp only [Finset.mem_insert, Finset.mem_singleton] at hzs
       rcases hzs with h | h | h
       · exact Or.inr h
@@ -218,7 +421,7 @@ private theorem inward_triple_visible (hH : H.Connected) {w u v y p : V}
   · refine ⟨(Walk.cons hpu (Walk.cons huy .nil)).reverse, ?_, ?_⟩
     · simpa [H.dist_comm] using hpypath
     · intro z hz hzs
-      have hz' : z ∈ (Walk.cons hpu (Walk.cons huy .nil)).support := by simpa using hz
+      have hz' : z ∈ (Walk.cons hpu (Walk.cons huy .nil)).support := by simpa only [Walk.support_reverse, List.mem_reverse] using hz
       simp only [Finset.mem_insert, Finset.mem_singleton] at hzs
       rcases hzs with h | h | h
       · exact Or.inr h
@@ -229,5 +432,55 @@ private theorem inward_triple_visible (hH : H.Connected) {w u v y p : V}
     · intro z hz _
       simpa using hz
   · exact (hab rfl).elim
+
+theorem inward_replacement (hH : H.Connected) {w u v y p : V}
+    (hdom : Dominates H w u v) (huy : H.Adj u y) (hvy : H.Adj v y)
+    (hpu : H.Adj p u) (hp : H.dist p w + 1 = H.dist u w)
+    (hS : Visible H {u, v, y}) :
+    p ≠ v ∧ p ≠ y ∧ ∃ Q P : Configuration H,
+      Q.val = {p, v, y} ∧ P.val = {p, y} ∧
+      (reconfiguration H).Adj ⟨{u, v, y}, hS⟩ Q ∧
+      (reconfiguration H).Adj Q P ∧
+      H.dist p w + H.dist y w < H.dist u w + H.dist v w := by
+  have hd := inward_distances hH hdom huy hvy hpu hp
+  have hpv : p ≠ v := by
+    intro he; subst p
+    simp only [H.dist_self] at hd
+    omega
+  have hpy : p ≠ y := by
+    intro he; subst p
+    simp only [H.dist_self] at hd
+    omega
+  have hQ : Visible H {p, v, y} := inward_triple_visible hH hdom huy hvy hpu hp hS
+  have hP : Visible H {p, y} := visible_pair hH p y
+  refine ⟨hpv, hpy, ⟨{p, v, y}, hQ⟩, ⟨{p, y}, hP⟩, rfl, rfl, ?_, ?_, ?_⟩
+  · have hs : ({u, v, y} : Finset V) \ {p, v, y} = {u} := by
+      ext z
+      simp only [Finset.mem_sdiff, Finset.mem_insert, Finset.mem_singleton]
+      have := hpu.ne
+      have := huy.ne
+      have := hdom.2.1
+      aesop
+    have ht : ({p, v, y} : Finset V) \ {u, v, y} = {p} := by
+      ext z
+      simp only [Finset.mem_sdiff, Finset.mem_insert, Finset.mem_singleton]
+      have := hpu.ne
+      aesop
+    refine ⟨?_, Or.inr ⟨u, p, hs, ht, hpu.symm⟩⟩
+    intro he
+    change ({u, v, y} : Finset V) = {p, v, y} at he
+    rw [he] at hs
+    simp at hs
+  · have he : ({p, v, y} : Finset V).erase v = {p, y} := by
+      ext z
+      simp only [Finset.mem_erase, Finset.mem_insert, Finset.mem_singleton]
+      have := hvy.ne
+      aesop
+    have hm := mixedMove_erase H ({p, v, y} : Finset V) (x := v) (by simp)
+    rw [he] at hm
+    exact hm
+  · have hy := common_neighbor_height hH hdom huy hvy
+    have hh := dominates_height hH hdom
+    omega
 
 end D5.S3.Combinatorics.Graph.MutualVisibility
