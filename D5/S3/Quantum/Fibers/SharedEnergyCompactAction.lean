@@ -372,8 +372,10 @@ private theorem all_monomials (m : ℕ) (hm : 2 ≤ m) (r s : DensityState (Fin 
     · exact moment_determines_monomials m (2*m-1) r s he a
         (SharedEnergyGapBound.indecomposable_degree_bound m hm a hind) hwa
     have hproper : ∃ b : Exponent, b ≤ a ∧ weight m b = 0 ∧ b ≠ 0 ∧ b ≠ a := by
-      simpa only [Indecomposable, ha0, hwa, not_false_eq_true, true_and,
-        not_forall, not_or, exists_prop, and_assoc] using hind
+      have hn : ¬ ∀ b : Exponent, b ≤ a → weight m b = 0 → b = 0 ∨ b = a :=
+        fun h => hind ⟨ha0, hwa, h⟩
+      push_neg at hn
+      exact hn
     obtain ⟨b, hba, hwb, hb0, hbn⟩ := hproper
     let c : Exponent := a-b
     have hsum : b+c = a := add_tsub_cancel_of_le hba
@@ -404,9 +406,9 @@ private theorem two_coordinate_relation (m : ℕ) (X Y : Matrix (Fin 3) (Fin 3) 
     (if u=i ∧ v=j then p else 0) + (if u=k ∧ v=l then q else 0)
   have ha : weight m a = 0 := by
     simpa [a, weight, Nat.cast_add, add_mul, Finset.sum_add_distrib,
-      ite_and, apply_ite] using hw
+      ite_and] using hw
   have he := h a ha
-  simpa [a, monomial, pow_add, Finset.prod_mul_distrib, ite_and, apply_ite] using he
+  simpa [a, monomial, pow_add, Finset.prod_mul_distrib, ite_and] using he
 
 private theorem equal_phase (x y : ℂ) (hx : x ≠ 0)
     (he : x * star x = y * star y) : ∃ u : Circle, y = (u : ℂ)*x := by
@@ -427,6 +429,105 @@ private theorem circle_root (u : Circle) (n : ℕ) (hn : n ≠ 0) :
   have he : (n : ℝ) * (Complex.arg (u : ℂ) / n) = Complex.arg (u : ℂ) := by
     field_simp
   rw [he, Circle.exp_arg]
+
+private theorem phase_relation (m : ℕ) (X Y : Matrix (Fin 3) (Fin 3) ℂ)
+    (hX : X.IsHermitian) (hY : Y.IsHermitian)
+    (h : ∀ a : Exponent, weight m a = 0 → monomial X a = monomial Y a)
+    (i j k l : Fin 3) (p q : ℕ) (hx : X i j ≠ 0) (hy : X k l ≠ 0)
+    (u v : Circle) (hu : Y i j = (u : ℂ)*X i j) (hv : Y k l = (v : ℂ)*X k l)
+    (hw : (p : ℤ)*(energy m i-energy m j) = (q : ℤ)*(energy m k-energy m l)) :
+    u ^ p = v ^ q := by
+  have hr : Y l k = star (v : ℂ)*X l k := by
+    rw [← hY.apply l k, hv, star_mul, hX.apply l k]
+  have hx' : X l k ≠ 0 := by
+    intro he
+    apply hy
+    rw [← hX.apply k l, he, star_zero]
+  have he := two_coordinate_relation m X Y h i j l k p q (by linear_combination hw)
+  have hprod : X i j ^ p * X l k ^ q ≠ 0 := mul_ne_zero (pow_ne_zero _ hx) (pow_ne_zero _ hx')
+  have hc : (u : ℂ)^p * star (v : ℂ)^q = 1 := by
+    apply mul_right_cancel₀ hprod
+    calc
+      ((u : ℂ)^p * star (v : ℂ)^q) * (X i j ^ p * X l k ^ q) =
+          Y i j ^ p * Y l k ^ q := by rw [hu, hr, mul_pow, mul_pow]; ring
+      _ = 1 * (X i j ^ p * X l k ^ q) := by rw [← he, one_mul]
+  have hvunit : star (v : ℂ)^q * (v : ℂ)^q = 1 := by
+    rw [← mul_pow]
+    have hv1 : star (v : ℂ)*(v : ℂ) = 1 := by
+      rw [mul_comm, Complex.star_def, Complex.mul_conj, Circle.normSq_coe, Complex.ofReal_one]
+    rw [hv1, one_pow]
+  apply Circle.coe_injective
+  simp only [Circle.coe_pow]
+  calc
+    (u : ℂ)^p = ((u : ℂ)^p * star (v : ℂ)^q) * (v : ℂ)^q := by
+      rw [mul_assoc, hvunit, mul_one]
+    _ = (v : ℂ)^q := by rw [hc, one_mul]
+
+private theorem recover_phase (m : ℕ) (hm : 2 ≤ m)
+    (X Y : Matrix (Fin 3) (Fin 3) ℂ) (hX : X.IsHermitian) (hY : Y.IsHermitian)
+    (h : ∀ a : Exponent, weight m a = 0 → monomial X a = monomial Y a) :
+    ∃ z : Circle, Y 1 0 = (z : ℂ)*X 1 0 ∧
+      Y 2 1 = (z : ℂ)^(m-1)*X 2 1 ∧ Y 2 0 = (z : ℂ)^m*X 2 0 := by
+  have phases (i j : Fin 3) : ∃ u : Circle, Y i j = (u : ℂ)*X i j := by
+    have he : X i j * star (X i j) = Y i j * star (Y i j) := by
+      simpa only [pow_one, hX.apply j i, hY.apply j i] using
+        two_coordinate_relation m X Y h i j j i 1 1 (by simp)
+    by_cases hx : X i j = 0
+    · have hy : Y i j = 0 := by
+        rw [hx, zero_mul] at he
+        rcases mul_eq_zero.mp he.symm with he | he
+        · exact he
+        · exact star_eq_zero.mp he
+      exact ⟨1, by simp [hx, hy]⟩
+    · exact equal_phase _ _ hx he
+  obtain ⟨a, ha⟩ := phases 1 0
+  obtain ⟨b, hb⟩ := phases 2 1
+  obtain ⟨c, hc⟩ := phases 2 0
+  have hm1 : 1 ≤ m := by omega
+  have hmcast : ((m-1 : ℕ) : ℤ) = (m : ℤ)-1 := by omega
+  by_cases hx : X 1 0 = 0
+  · by_cases hy : X 2 1 = 0
+    · obtain ⟨z, hz⟩ := circle_root c m (by omega)
+      refine ⟨z, ?_, ?_, ?_⟩
+      · simp [ha, hx]
+      · simp [hb, hy]
+      · rw [hc, ← hz, Circle.coe_pow]
+    · by_cases ht : X 2 0 = 0
+      · obtain ⟨z, hz⟩ := circle_root b (m-1) (by omega)
+        refine ⟨z, ?_, ?_, ?_⟩
+        · simp [ha, hx]
+        · rw [hb, ← hz, Circle.coe_pow]
+        · simp [hc, ht]
+      · have hbc : b^m = c^(m-1) :=
+          phase_relation m X Y hX hY h 2 1 2 0 m (m-1) hy ht b c hb hc (by
+            simp [energy, hmcast]; ring)
+        have hbpow : b^m = b^(m-1)*b := by
+          conv_lhs => rw [← Nat.sub_add_cancel hm1]
+          rw [pow_succ]
+        have hz : (c/b)^(m-1) = b := by
+          rw [div_pow, ← hbc, hbpow, mul_div_cancel_left]
+        have hz' : (c/b)^m = c := by
+          conv_lhs => rw [← Nat.sub_add_cancel hm1]
+          rw [pow_succ, hz]
+          exact mul_div_cancel_left c b
+        refine ⟨c/b, ?_, ?_, ?_⟩
+        · simp [ha, hx]
+        · rw [hb, ← hz, Circle.coe_pow]
+        · rw [hc, ← hz', Circle.coe_pow]
+  · refine ⟨a, ha, ?_, ?_⟩
+    · by_cases hy : X 2 1 = 0
+      · simp [hb, hy]
+      · have hab : a^(m-1) = b := by
+          simpa only [pow_one] using
+            phase_relation m X Y hX hY h 1 0 2 1 (m-1) 1 hx hy a b ha hb (by
+              simp [energy, hmcast])
+        rw [hb, ← hab, Circle.coe_pow]
+    · by_cases ht : X 2 0 = 0
+      · simp [hc, ht]
+      · have hac : a^m = c := by
+          simpa only [pow_one] using
+            phase_relation m X Y hX hY h 1 0 2 0 m 1 hx ht a c ha hc (by simp [energy])
+        rw [hc, ← hac, Circle.coe_pow]
 
 #print axioms moment_determines_monomials
 #print axioms energy_group_realization
