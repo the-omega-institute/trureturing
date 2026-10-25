@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:d398b8d2d432f0eb967897bab34cbfe437e11f1cfba262b3638ddd5637c9e606
+  normalized_sha256: sha256:d398b8d2d432f0eb967897bab34cbfe437e11f1cfba262b3638ddd5637c9e606
+cas_ref: sha256:d398b8d2d432f0eb967897bab34cbfe437e11f1cfba262b3638ddd5637c9e606
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: M6 计划给 λ_n 建立有限定义，未提供待证明的系数等式。
+    previous_atom_id: ac6a35a42ac4b4898bea68405279673c33f6f9e5e2c263f7888899d9d24c19f0
+    next_atom_id: 5839dc4e0630e5ae8d0206f60a0c42bf6a8cc761bc45645d8fe9727a53b9b362

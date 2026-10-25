@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:0e310f6e89d46aa7abcf3eda31859c62eb919dc575293ad9354fa08e9edffc30
+  normalized_sha256: sha256:0e310f6e89d46aa7abcf3eda31859c62eb919dc575293ad9354fa08e9edffc30
+cas_ref: sha256:0e310f6e89d46aa7abcf3eda31859c62eb919dc575293ad9354fa08e9edffc30
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 公理打印项在 M8 和 GFPT 状态派生清单中均为审计输入要求，不是公理闭包结论。
+    previous_atom_id: 608d2ca16d59de5a27466b8df78476d19eea29f372142eea7d0b5a9589030fbf
+    next_atom_id: fc442e7a5280bcd5f9cb3222fc653a6dc99f53a8c2926b7959c1e0f515beb13f
