@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:db918b227c2c671079087505c93ae34fc546daebcca36e194f8a52fcc5e87ea3
+  normalized_sha256: sha256:db918b227c2c671079087505c93ae34fc546daebcca36e194f8a52fcc5e87ea3
+cas_ref: sha256:db918b227c2c671079087505c93ae34fc546daebcca36e194f8a52fcc5e87ea3
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: Section 47 introduction of the communication problem and its contract; it asks which direction needs communication without answering it.
+    previous_atom_id: b868644f00ac149820b28799dc30238e2e4d620b01359cf6e0a5e29a479b0fac
+    next_atom_id: aa3e35f080204728c9f44cf7c26866c7a44c19e6de4103ae90d3e8e405b6f524

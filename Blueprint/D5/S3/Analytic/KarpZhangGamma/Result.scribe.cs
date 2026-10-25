@@ -9,6 +9,21 @@ internal sealed class ResultDocument : IScribeDocumentDefinition
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "Paired reciprocal-gamma kernels and the two-variable transform.",
         H("Pairing and the transformed Turanian"), Blocks(
+            Describe.Lean(DescribeId.Create("karp-zhang-gamma-pair-sum"),
+                DeclarationHandle.Create("D5/S3/Analytic/KarpZhangGamma/Result.pair_sum"),
+                H("Reflection of a finite sum"),
+                StatementSource.FromAuthor(Disp(
+                    All("f", new Formula.TypeArrow(F.Id("Nat"), F.Id("Real")),
+                        All("m", F.Id("Nat"),
+                            Equal(SumRange("k", Add(F.Id("m"), Num(1)), App(F.Id("f"), F.Id("k"))),
+                                SumRange("k", Add(App(Qualified("Nat", "div"), F.Id("m"), Num(2)), Num(1)),
+                                    PairConditional(
+                                        Lt(Multiply(Num(2), F.Id("k")), F.Id("m")),
+                                        Add(App(F.Id("f"), F.Id("k")), App(F.Id("f"), Subtract(F.Id("m"), F.Id("k")))),
+                                        App(F.Id("f"), F.Id("k"))))))))),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("For any real sequence f and natural m, reflect the strict upper half of the finite interval onto the lower half. Each reflected pair contributes its two values, while an even-degree middle term occurs once. Nat.div is natural division. This identity supplies the finite pairing of scalar kernels and the central-tail decomposition."))),
+                DescribeRole.Theorem),
             KernelEntry("karp-zhang-gamma-reciprocal-gamma-sum", "reciprocalGamma_sum", "Closed form for the finite convolution",
                 "For positive real b,c and every natural m, the sum over k=0,...,m of 1/[k factorial times (m-k) factorial times Real.Gamma(b+k) times Real.Gamma(c+m-k)] equals the evaluation of ascPochhammer at b+c+m-1 in degree m, divided by m factorial times Real.Gamma(b+m) times Real.Gamma(c+m). This is identity (3.11) of the gamma-series argument. It includes m=0 even when b+c-1 is nonpositive.", DescribeRole.Theorem),
             KernelEntry("karp-zhang-gamma-balanced-shift", "gamma_balanced_shift", "Balancing the Gamma product",
@@ -30,6 +45,11 @@ internal sealed class ResultDocument : IScribeDocumentDefinition
             Entry("karp-zhang-gamma-two-variable-nonneg", "two_variable_nonneg", "Coefficient form of two_variable_nonneg",
                 "For every real sequence y satisfying D5.S3.Analytic.KarpZhangReciprocal.Result.IsLogConcave, every positive real a, all nonnegative real alpha,beta and all natural N,m, transformDelta(y,a,alpha,beta,N,m) is nonnegative. There is no convergence or growth hypothesis. Commutativity of the finite smoothed convolution makes the weights symmetric; finite_pairing then expresses the coefficient in terms of pairedKernel. The one-sign-change theorem and nonnegative total supply the hypotheses of Smoothing.smoothed_weighting.", DescribeRole.Theorem),
             Paragraph(Text("For x=a+k, z=a+m-k and alpha <= beta, let u,v,r,s be the reciprocal Gamma products with first arguments x+alpha, x+beta, x and x+alpha+beta respectively. Gamma balancing gives r <= u <= v. If B=u+v-r-s is nonpositive, then v <= s and r <= s. With S=x+z+alpha+beta and F(t)=(t-1)/(S-t), Gamma recurrence writes the preceding bracket as F(x+alpha)B + v(F(x+beta)-F(x+alpha)) + r(F(x+alpha)-F(x)) - s(F(x+alpha+beta)-F(x+alpha)). The first term is nonpositive, and the rest is at most s times F(x+beta)-F(x)-F(x+alpha+beta)+F(x+alpha), which is nonpositive because F has increasing increments. The increment formula is beta times (S-1) divided by the product of the two positive endpoint denominators. Swapping alpha and beta covers the other shift order.")))));
+
+    private static Formula PairConditional(Formula condition, Formula yes, Formula no) =>
+        Seq(Operatorname, Grp(F.Id("if")), Sp, Seq(Open, condition, Close), Sp,
+            Operatorname, Grp(F.Id("then")), Sp, Seq(Open, yes, Close), Sp,
+            Operatorname, Grp(F.Id("else")), Sp, Seq(Open, no, Close));
 
     private static DocumentBlock Entry(string id, string name, string title, string text, DescribeRole role) =>
         Describe.Lean(DescribeId.Create(id),
