@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:4dbf9fe538779a45b9cf64bcc4501524a03f27e23d6dd97ffb6f4bf4ee46ca01
+  normalized_sha256: sha256:4dbf9fe538779a45b9cf64bcc4501524a03f27e23d6dd97ffb6f4bf4ee46ca01
+cas_ref: sha256:4dbf9fe538779a45b9cf64bcc4501524a03f27e23d6dd97ffb6f4bf4ee46ca01
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 本 atom 是共同焦点与关系角色的术语区分、亚里士多德历史论述及后文模型适用边界；没有给出现代模型中待证明的数学等式、界或分类断言，也没有声称历史名称推出因果律。
+    previous_atom_id: 2054c70e645f63c74b52bbf6ba28441b63bc021b632200860eed24bd6ffcd65d
+    next_atom_id: a525702c92ab0b04434fd2ec9dee5ce5261adb3464d89ac80ba7a7be6429d8f2
