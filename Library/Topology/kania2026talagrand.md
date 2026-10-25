@@ -377,7 +377,7 @@ transports the real L1 supplier to arbitrary regular signed inputs $s_n$
 with $\sup_n |s_n|(K)<\infty$.
 
 Set $\rho=\sum_n |s_n|$ and $\mu=\rho.\mathrm{toFinite}$. The sum is SFinite;
-it need not be finite or regular. Its finite equivalent $\mu$ includes the
+no finiteness or regularity of the sum is used. Its finite equivalent $\mu$ includes the
 all-zero case. Each $s_n$ has a real integrable RN density $q_n$ with respect
 to $\mu$, and its actual L1 class satisfies $\|q_n\|_1=|s_n|(K)$.
 `SignedMeasure.absolutelyContinuous_ennreal_iff` supplies the vector absolute
