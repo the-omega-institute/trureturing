@@ -3558,3 +3558,288 @@ positive-noise free domain, and no negative-eigenvalue counting
 asymptotic.
 
 ## 追加锚（本行以下为增补区）
+
+## 16. Quantitative lower counts for the original retained operator
+
+**Definition 16.1 (fixed source, strict count and angular gap).**
+Fix an integer $n\ge2$ and a real $g>\lambda_n=2\pi\mu_n$.
+Retain Definition 10.1's identity unit source $\delta_0$ on
+$H^n=\mathbb R^{2n}\times\mathbb R$, raw Lebesgue measure,
+horizontal covariance-$2$ clock and independent central covariance
+$2\epsilon^2$. In particular, for $\epsilon\ge0$ the potential is
+exactly the complete same-source marginal
+
+$$
+M_{n,\epsilon}(X_1,z)
+ =\int_0^\infty\int_{\mathbb R^{2n-2}}
+ (e^{-tL_{n,\epsilon}}\delta_0)(X_1,W,z)\,dW\,dt,
+\qquad
+L_{n,\epsilon}=-\sum_{j=1}^n(U_j^2+V_j^2)-\epsilon^2Z^2.
+\tag{16.1}
+$$
+
+The fields in this parent expression are those of (10.1).
+Both time endpoints and the whole unweighted omitted fibre are
+retained. Fix $\epsilon=1$ for the retained operator. On complex
+$L^2(\mathbb R^3,dx\,dy\,dz)$ put
+$U=\partial_x-(y/2)\partial_z$,
+$V=\partial_y+(x/2)\partial_z$, $Z=\partial_z$ and
+
+$$
+\begin{aligned}
+\mathcal E_H[f]&=\|Uf\|_2^2+\|Vf\|_2^2,\\
+\mathcal H_1
+ &=\overline{C_c^\infty(\mathbb R^3;\mathbb C)}^
+ {\left(\|f\|_2^2+\mathcal E_H[f]+\|Zf\|_2^2\right)^{1/2}},\\
+W_{n,\epsilon}[f]&=\int_{\mathbb R^3}M_{n,\epsilon}|f|^2\,dx\,dy\,dz,\\
+q_1[f]&=\mathcal E_H[f]+\|Zf\|_2^2-gW_{n,1}[f],
+\qquad D(q_1)=\mathcal H_1,\\
+N_{n,g}(E)&=\dim_{\mathbb C}\operatorname{Ran}
+ \mathbf1_{(-\infty,-E)}(A_{n,1,g}),\qquad E>0.
+\end{aligned}
+\tag{16.2}
+$$
+
+Here $A_{n,1,g}$ is exactly the Friedrichs operator associated
+with (15.1). Its domain has no angular, radial or real-valued
+restriction. Theorem 15.2 supplies lower semiboundedness and
+negative discreteness with finite complex multiplicity and no
+negative accumulation point. These imply $N_{n,g}(E)<\infty$
+for each $E>0$.
+
+Use $R$, $J=(-\pi/2,\pi/2)$, $c=\cos a$, $q_n$ and the natural
+angular domain $\mathcal H_c$ of (12.3)--(12.4). For a nonzero
+real $b\in C_c^\infty(J)$ define
+
+$$
+\begin{aligned}
+A_b&=\int_J(4c|b'|^2+c|b|^2)\,da,&
+Q_b&=\int_Jq_n|b|^2\,da,\\
+C_b&=\int_Jc|b|^2\,da>0,&
+D_b&=\frac{g}{2\pi}Q_b-A_b.
+\end{aligned}
+\tag{16.3}
+$$
+
+When $D_b>0$, write $\kappa_b=\sqrt{D_b/C_b}$.
+The natural angular variational problem still has no imposed
+endpoint traces. Compact angular functions here are only trials.
+The analytic premises used below are the original marginal and
+off-pole convergence of Theorem 10.2, the polar identities of
+§12, the natural-endpoint approximations of §13, the complete
+scaling of §14 and the form and spectral conclusions of §15.
+
+**Theorem 16.2 (finite-energy geometric count and angular lower coefficient).**
+With exactly Definition 16.1's source, parameters and full complex
+operator, let
+$h\in C_c^\infty(\mathbb R^3\setminus\{0\};\mathbb C)$ satisfy
+$\|h\|_2=1$ and
+$\gamma=gW_{n,0}[h]-\mathcal E_H[h]>0$.
+Choose $0<r_-<r_+<\infty$ with
+$\operatorname{supp}h\subset\{r_-\le R\le r_+\}$.
+There exists $a_*\ge1$ such that, for every $a\ge a_*$,
+
+$$
+a^{-2}\|Zh\|_2^2\le\frac\gamma4,
+\qquad
+g\left|W_{n,1/a}[h]-W_{n,0}[h]\right|\le\frac\gamma4.
+\tag{16.4}
+$$
+
+For any such $a_*$, any fixed $B>r_+/r_-$ and every $E>0$,
+
+$$
+\begin{aligned}
+N_{n,g}(E)&\ge
+ \max\left\{0,\left\lfloor
+ \frac{\log\bigl(\gamma/(2a_*^2E)\bigr)}{2\log B}
+ \right\rfloor\right\},\\
+\liminf_{E\downarrow0}\frac{N_{n,g}(E)}{\log(1/E)}
+ &\ge\frac1{2\log B}>0.
+\end{aligned}
+\tag{16.5}
+$$
+
+Such an $h$ exists for every fixed $n\ge2$ and $g>\lambda_n$.
+More precisely, every nonzero real $b\in C_c^\infty(J)$ with
+$D_b>0$ gives the bound
+
+$$
+\liminf_{E\downarrow0}\frac{N_{n,g}(E)}{\log(1/E)}
+ \ge\frac1{2\pi}\sqrt{\frac{D_b}{C_b}}>0.
+\tag{16.6}
+$$
+
+The set of these $b$ is nonempty for every such $n,g$.
+Consequently the supremum of the right side of (16.6) over this
+set is also an extended lower bound; no finiteness of that
+supremum is asserted.
+
+**Proof.** First fix any $h$ in the statement. Its compact support
+avoids the pole, so the locally uniform off-pole convergence in
+Theorem 10.2 implies $W_{n,1/a}[h]\to W_{n,0}[h]$.
+Also $\|Zh\|_2<\infty$. These facts give (16.4) simultaneously
+for every $a$ beyond a single $a_*$ depending on the fixed trial,
+$n$ and $g$.
+
+For $\delta_a(x,y,z)=(ax,ay,a^2z)$ set
+$h_a=a^{-2}h\circ\delta_{1/a}$. The raw Jacobian is $a^4$,
+and the original derivative and complete-field scaling (14.9)
+gives
+
+$$
+\begin{aligned}
+\|h_a\|_2^2&=1,&
+\mathcal E_H[h_a]&=a^{-2}\mathcal E_H[h],\\
+\|Zh_a\|_2^2&=a^{-4}\|Zh\|_2^2,&
+W_{n,1}[h_a]&=a^{-2}W_{n,1/a}[h],\\
+q_1[h_a]
+ &=a^{-2}\left(-\gamma+a^{-2}\|Zh\|_2^2
+              +g\bigl(W_{n,0}[h]-W_{n,1/a}[h]\bigr)\right)
+ \le-\frac\gamma{2a^2}\qquad(a\ge a_*).
+\end{aligned}
+\tag{16.7}
+$$
+
+Each $h_a$ is in the original fixed-noise compact smooth core.
+Take $a_j=a_*B^j$ for integers $j\ge0$.
+Their closed supports lie in
+$\{a_jr_-\le R\le a_jr_+\}$ and are separated because
+$B r_->r_+$. Locality of $U,V,Z$ and of the multiplication
+potential therefore makes both the form and the $L^2$ norm
+diagonal: for every finite complex coefficient family,
+
+$$
+\begin{aligned}
+\left\|\sum_jc_jh_{a_j}\right\|_2^2&=\sum_j|c_j|^2,\\
+(q_1+E\|\cdot\|_2^2)\left[\sum_jc_jh_{a_j}\right]
+ &\le\sum_j|c_j|^2
+       \left(E-\frac\gamma{2a_*^2B^{2j}}\right).
+\end{aligned}
+\tag{16.8}
+$$
+
+For a fixed $E>0$ put
+$X=\log(\gamma/(2a_*^2E))/(2\log B)$ and
+$k=\max\{0,\lfloor X\rfloor\}$.
+If $k>0$, every integer $0\le j<k$ satisfies $j<X$,
+including when $X$ is an integer. Thus each corresponding
+parenthesis in (16.8) is strictly negative. The $k$ orthonormal
+trials span a $k$-dimensional complex subspace on which
+$q_1+E\|\cdot\|_2^2$ is strictly negative away from zero.
+The classical form-domain min-max principle, as cited in
+Definition 15.3, gives at least $k$ eigenvalues in the strict
+interval $(-\infty,-E)$. For $k=0$ the inequality is automatic.
+This proves the finite-$E$ assertion without counting an
+eigenvalue at $-E$.
+
+For fixed $h,a_*,B$, as $E\downarrow0$ the quantity $X$ is
+$\log(1/E)/(2\log B)$ plus a constant. Taking a floor changes
+it by less than one, and eventually $X>0$. Division by
+$\log(1/E)$ proves the second line of (16.5).
+Existence of at least one normalized compact annular $h$ with
+positive $\gamma$ is supplied by (15.18). We next construct the
+trials which give the sharper coefficient.
+
+Since $g/(2\pi)>\mu_n$, the real compact angular approximations
+(13.6)--(13.8), with $Q_n[b_j]\to1$ and $A[b_j]\to\mu_n$,
+give a nonzero real $b$ for which $D_b>0$.
+This uses the natural-endpoint cutoff argument, not Dirichlet
+conditions on an angular minimizer. Now fix any such $b$ and
+any $L>\pi/\kappa_b$.
+The interval function $\sin(\pi\ell/L)$ belongs to
+$H_0^1(0,L)$ and has derivative-to-function squared-norm ratio
+$\pi^2/L^2<\kappa_b^2$.
+Classical $H_0^1$ density by real compact smooth functions,
+and continuity of both norms under this approximation, supply
+$0\ne\psi\in C_c^\infty(0,L;\mathbb R)$ with
+
+$$
+\frac{\|\psi'\|_{L^2(0,L)}^2}{\|\psi\|_{L^2(0,L)}^2}
+ <\frac{D_b}{C_b}.
+\tag{16.9}
+$$
+
+This interval Dirichlet sine only constructs a trial; it imposes
+no boundary condition on $A_{n,1,g}$.
+Extend $\psi$ by zero and form the actual Cartesian function
+$f=R^{-1}b(a)\psi(\log R)$.
+Its radial support is compact in $1<R<e^L$ and its angular
+support avoids both axes $\rho=0$. Extension by zero across
+those axes is smooth, and the pole is avoided. Consequently
+$f\in C_c^\infty(\mathbb R^3\setminus\{0\})$,
+$\|Zf\|_2<\infty$, and $f$ belongs to the original
+fixed-noise core.
+
+Set $\ell=\log R$. The raw measure is
+$R^4d\ell\,da\,d\theta/4$. In (12.12), the trial has
+$v=b(a)\psi(\ell)$ and $v_\theta=0$.
+Integration in $\theta$ contributes $2\pi$; the cross term
+vanishes because $\int\psi\psi'=0$.
+Using also $M_{n,0}=R^{-2}q_n/(2\pi)$ from (12.5) gives
+
+$$
+\begin{aligned}
+\|f\|_2^2
+ &=\frac\pi2\|b\|_{L^2(J)}^2
+                 \int_0^Le^{2\ell}|\psi(\ell)|^2\,d\ell
+ \in(0,\infty),\\
+\mathcal E_H[f]
+ &=\frac\pi2\left(C_b\|\psi'\|_2^2+A_b\|\psi\|_2^2\right),\\
+W_{n,0}[f]&=\frac14 Q_b\|\psi\|_2^2,\\
+\mathcal E_H[f]-gW_{n,0}[f]
+ &=\frac\pi2\left(C_b\|\psi'\|_2^2-D_b\|\psi\|_2^2\right)<0.
+\end{aligned}
+\tag{16.10}
+$$
+
+Thus $h=f/\|f\|_2$ is admitted in (16.5), with $r_-=1$,
+$r_+=e^L$ and positive gap
+$\gamma=(\pi/2)(D_b\|\psi\|_2^2-C_b\|\psi'\|_2^2)/\|f\|_2^2$.
+For this fixed $L$ and trial, every fixed $B>e^L$ gives
+$\liminf N_{n,g}(E)/\log(1/E)\ge1/(2\log B)$ by first taking
+$E\downarrow0$. Taking the supremum of these separate lower
+bounds as $B\downarrow e^L$ gives $1/(2L)$.
+For every $L>\pi/\kappa_b$ a trial can be chosen as above;
+then letting $L\downarrow\pi/\kappa_b$ proves (16.6).
+The constants $h,\gamma,a_*$ may change with $L$.
+No uniform estimate for them is needed, since the $E$ limit
+was taken separately for each fixed trial and $B$.
+Finally the left side of (16.6) is the same extended real number
+for all admitted $b$, so it bounds their supremum as stated.
+
+**Definition 16.3 (attribution and the unresolved counting boundary).**
+Theorem 16.2 is a repo-derived quantitative deduction for the exact
+retained-source form, conditional on the analytic premises listed
+in Definition 16.1. Its model-specific steps are the normalized
+complete-field dilation, the uniform-in-$a\ge a_*$ error bounds
+for each fixed annular trial, the disjoint complex trial spaces
+and the angular trial's raw normalization. The min-max principle
+is the classical result cited in Definition 15.3, and compact
+smooth density in $H_0^1(0,L)$ and the sine quotient are classical
+interval facts consumed in constructing (16.9). The natural
+angular endpoint approximation is the one already proved in §13.
+These suppliers are intermediate steps in the retained-source
+deduction, not separate new counting theorems.
+
+Hassell--Marshall,
+[*Eigenvalues of Schrödinger operators with potential asymptotically
+homogeneous of degree minus two*, Theorems 1--2](https://arxiv.org/abs/math/0510617v1),
+concerns Euclidean Laplacians, scalar inverse-square tails and a
+sphere angular operator under its stated remainder and threshold
+hypotheses. No correspondence of its form and domain to the
+present $U,V,Z$ form or of its sphere operator to the coupled
+$(\sigma,m)$ expressions of (12.13) is established here.
+Its counting coefficient and conclusions are not transferred.
+No literature originality claim is attached to (16.5)--(16.6).
+
+The count in (16.2) always concerns the original full complex
+operator, although the lower bounds use a single family of
+angular trials. Neither exhaustion of its angular modes nor an
+all-mode counting density follows. A finite logarithmic upper
+bound, finiteness of the variational supremum, an exact
+coefficient and existence of a finite positive limit of
+$N_{n,g}(E)/\log(1/E)$ remain unresolved. Pointwise finiteness
+of $N_{n,g}(E)$ does not supply any of those assertions.
+
+## 追加锚（本行以下为增补区）
