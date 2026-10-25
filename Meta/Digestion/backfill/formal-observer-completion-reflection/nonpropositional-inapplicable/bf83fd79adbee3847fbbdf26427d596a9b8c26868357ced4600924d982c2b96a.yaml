@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:bf83fd79adbee3847fbbdf26427d596a9b8c26868357ced4600924d982c2b96a
+  normalized_sha256: sha256:bf83fd79adbee3847fbbdf26427d596a9b8c26868357ced4600924d982c2b96a
+cas_ref: sha256:bf83fd79adbee3847fbbdf26427d596a9b8c26868357ced4600924d982c2b96a
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 非命题：规定对行为相同的状态取商，是规范化步骤，没有另外宣称商的分离性或普遍性质。
+    previous_atom_id: dbb97341c47be6b8e9e0bee900d4e5bcfd47f9145ea30325b65d393b0b542d53
+    next_atom_id: f8380b6d74550e0ff13e4a017607865c61f3a1a7b006586997c11d966124ab31

@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:121d801985dbb94725ce4270c7f71e13f8af7f2e74e619ac00322b5190d7449b
+  normalized_sha256: sha256:121d801985dbb94725ce4270c7f71e13f8af7f2e74e619ac00322b5190d7449b
+cas_ref: sha256:121d801985dbb94725ce4270c7f71e13f8af7f2e74e619ac00322b5190d7449b
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 非命题：只列出有限动作集 A 这一 Blackwell 假设。
+    previous_atom_id: 11ae973477b426d4729defea98a879035e942d885162c9fd76caedc444cf4b50
+    next_atom_id: 9819627c95f521099fd301827895fbbfcbc60075e898e01b93fa564df32bae76
