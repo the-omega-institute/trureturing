@@ -134,7 +134,7 @@ theorem actual_residual_layer_cross_value
       actualResidualLayerCrossValue a c u := by
   by_cases hca : c = a
   · subst c
-    simp [actualResidualLayerCrossValue]
+    rw [actualResidualLayerCrossValue, if_pos rfl]
     have hPoint (ξ : ℝ) :
         (actualResidualLayer a a ξ : ℂ) = actualResonantSymbol a ξ := by
       unfold actualResidualLayer actualResonantSymbol
@@ -161,12 +161,14 @@ theorem actual_residual_layer_cross_value
       congr 1
       funext ξ
       exact (mul_assoc _ _ _).symm
+      all_goals rfl
     have hCi : (∫ ξ, actualResolventSymbol c ξ * actualSourceSpectralCross u ξ) =
         (Complex.normSq (literalSourceLaplace c u) : ℂ) / ((2 * c : ℝ) : ℂ) := by
       convert hCi₀ using 1
       congr 1
       funext ξ
       exact (mul_assoc _ _ _).symm
+      all_goals rfl
     have hInt : (∫ ξ, (actualResidualLayer a c ξ : ℂ) * actualSourceSpectralCross u ξ) =
         ((c / (c ^ 2 - a ^ 2) : ℝ) : ℂ) *
           (Complex.normSq (literalSourceLaplace c u) : ℂ) / ((2 * c : ℝ) : ℂ) -
