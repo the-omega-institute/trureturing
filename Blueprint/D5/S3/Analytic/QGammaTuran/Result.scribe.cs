@@ -13,6 +13,15 @@ internal sealed class ResultDocument : IScribeDocumentDefinition
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "A negative Cauchy coefficient for a reciprocal q-gamma series.",
         H("The coefficient clause of Conjecture 1 is false"), Blocks(
+            Describe.Lean(DescribeId.Create("qgamma-product"),
+                DeclarationHandle.Create(Prefix + "qprod"),
+                H("The q-Pochhammer infinite product"),
+                StatementSource.FromAuthor(Disp(All("q", Seq(R, Sp), All("a", Seq(R, Sp),
+                    Eqn(new Formula.Apply(Seq(Operatorname, Grp(V("qprod")), Sp), [V("q"), V("a")]),
+                        Product("j", Sub(D(1), Mul(V("a"), Pow(V("q"), V("j")))))))))),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("The product with parameter a has factors 1−aqʲ. It supplies the normalized series in FunctionResult."))),
+                DescribeRole.Definition),
             Describe.Lean(DescribeId.Create("reciprocal-qgamma"),
                 DeclarationHandle.Create(Prefix + "rqgamma"),
                 H("Reciprocal q-gamma by its infinite product"),

@@ -8,6 +8,7 @@ url: https://arxiv.org/abs/1702.03788
 claim: "Conjecture 1 extends Theorem 3 from positive integral alpha to all positive real alpha, including the coefficient positivity assertion under its remaining parameter restrictions."
 strata_touched:
   - D5/S3/Analytic/QGammaTuran/Result
+  - D5/S3/Analytic/QGammaTuran/FunctionResult
 license: citation-only
 triage: anchor
 ---
@@ -70,7 +71,45 @@ codomain $\mathbb R_+$.
 `Result.qturanCoeff` is the finite Cauchy coefficient of the Turanian.
 `Result.claim` states the coefficient clause for real $\alpha,\beta>0$,
 $\mu\ge\max(-\beta,-1)$ and $\alpha\le\beta+1$.
-`Result.result` refutes that clause. The function-positivity and
-log-concavity clauses are not settled by this coefficient counterexample.
+`Result.result` refutes that clause. The function clause is separately refuted by `FunctionResult.result`;
+log-concavity restricted to nonnegative parameters $\mu$ remains **OPEN**.
 The bounded literature scope and computational evidence are stated in
 `Problems/kalmykov-karp-2018-qgamma-turanian-coefficients.md`.
+
+## Function clause
+
+`FunctionResult.qseries` is the infinite sum in (16), and
+`FunctionResult.radius q µ g` is Mathlib's scalar-series radius of (16)
+at the given $\mu$, with coefficients $g_nR_q(\mu+n)$. The claim
+requires $0<x<R_g$ for this radius. On p. 12 the source specifies:
+
+> Writing Rg > 0 for the radius of convergence in (16), we claim that the next conjecture is true.
+
+For the unit sequence, put $y=x(1-q)$ and
+
+$$H(a,y)=\sum_{n\ge0}y^n(aq^n;q)_\infty.$$
+
+Then $g(s;x)=H(q^s,y)/((q;q)_\infty(1-q)^{1-s})$.
+For $s\ge-1$ the terms after index zero are nonnegative and bounded by
+a geometric sequence when $0\le y<1$. At the example, absolute
+summability at $x=3/2$ proves $3/2\le R_g$, so
+$0<93/100<3/2\le R_g$. All four shifted series also converge
+absolutely at $x=93/100$.
+The function clause quoted from Theorem 3 above imposes no
+$\alpha\le\beta+1$ restriction. Its extension to positive real $\alpha$
+is false at $q=(93/100)^{10}$, $g_n=1$, $\mu=-7/10$,
+$\alpha=3/10$, $\beta=7/10$ and $x=93/100$.
+The corresponding dossier is
+`Problems/kalmykov-karp-2018-qgamma-turanian-function.md`.
+
+As a consequence in prose of `FunctionResult.witness_negative`, at the
+same $q,x$ and $g_n=1$ the function cannot be log-concave on an interval
+containing $[-7/10,3/10]$. The two convex combinations
+$-2/5=(7/10)(-7/10)+(3/10)(3/10)$ and
+$0=(3/10)(-7/10)+(7/10)(3/10)$ have respective right-endpoint weights
+$3/10$ and $7/10$. Log-concavity at both points would imply, after
+multiplication, $g(-2/5;x)g(0;x)\ge g(-7/10;x)g(3/10;x)$,
+contradicting the proved strict reverse inequality. The endpoint values
+are strictly positive by the normalized lower bounds and positive
+denominators. This consequence is not a separate Lean theorem.
+Log-concavity restricted to nonnegative parameters $\mu$ remains **OPEN**.
