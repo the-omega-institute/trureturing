@@ -105,7 +105,7 @@ private lemma integrated_bound (μ : Measure ℝ) [IsProbabilityMeasure μ]
     simpa only [pow_one] using hz
   have hsecond : (∫ x : ℝ, (x - mean μ) ^ 2 ∂μ) = a * b := by
     change centralMoment id 2 μ = a * (centralMoment id 2 μ / a)
-    field_simp [show a ≠ 0 from ne_of_gt ha]
+    exact (mul_div_cancel₀ (centralMoment id 2 μ) (show a ≠ 0 from ne_of_gt ha)).symm
   have hminor : ∀ᵐ x ∂μ,
       A * (x - mean μ) ^ 2 + B * (x - mean μ) + C ≤ (x - mean μ) ^ 5 := by
     filter_upwards [hL] with x hx
