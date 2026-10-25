@@ -1304,7 +1304,7 @@ $$
 $$
 s^2L(0)+s\sum_j\Re\bigl(L(t_j)+L(-t_j)\bigr)+nL(0)+\sum_{j\ne k}\Re L(t_j-t_k)\ge0 .
 $$
-各 $\Re L(-t_j)$ 与 $\Re L(t_j-t_k)$（$j\ne k$）都不大于零，故 $s^2L(0)-snc+nL(0)\ge0$ 对每个 $s\ge0$ 成立。若 $L(0)=0$，令 $s\to\infty$ 得矛盾；否则取 $s=nc/(2L(0))$ 得 (486.2)。证毕。
+各 $\Re L(-t_j)$ 与 $\Re L(t_j-t_k)$（$j\ne k$）都不大于零，故 $s^2L(0)-snc+nL(0)\ge0$ 对每个 $s\ge0$ 成立。若 $L(0)=0$，则 $-snc\ge0$ 对每个 $s>0$ 成立，故 $n=0$，(486.2) 成立；否则取 $s=nc/(2L(0))$ 得 (486.2)。证毕。
 
 **命题 486.2（间隙内的二次预算）。** 设 $\delta>0$，$t_1,\dots,t_n$ 两两不同且落在一个长度小于 $\delta$ 的区间内。设 $L$ 在点组 $\{0,t_1,\dots,t_n\}$ 的全部两两差处存在，并且其中满足 $0<|t|<\delta$ 的点处 $L(t)=0$。则
 $$
@@ -1325,7 +1325,7 @@ $$
 
 证明。(1) 取 $\mu$ 为 $(\mathcal T(x)+\kappa)\,dx/x$ 在 $(x_0,\infty)$ 上的测度经 $\log$ 的前推，它是正测度，且 $G(s)=\mathcal F(s)+\kappa x_0^{-s}/s$。如定理 485.2 证明的 RH 分支，取 $\alpha=1/2+\varepsilon$（$0<\varepsilon<1/5$）。命题 485.1 的余项在包含闭虚轴的半平面 $\Re s>\alpha-7/10$ 上全纯；由 Landau–Widder 定理，对每个 $\sigma>0$ 积分收敛，且 $G$ 在 $\Re s>0$ 上与延拓一致。逐点计算 $L$：$L(0)=\kappa$，因为 $\mathcal F$ 在 $0$ 正则；若 $1/2+it$ 是重数 $m$ 的零点，则 $L(t)=-m/2$；其余 $t\ne0$ 处 $\zeta(1/2+it)\ne0$，延拓在 $it$ 邻近全纯，故 $L(t)=0$。RH 下 $Z$ 中零点的纵坐标两两不同且非零（$\zeta(1/2)\ne0$）。以 $c=1/2$ 应用命题 486.1，得 $|Z|\le16\kappa^2$。非平凡零点有无穷多个，故不存在这样的 $\kappa$。
 
-(2) 对 $K-\mathcal T$ 作同样构造，$G(s)=Kx_0^{-s}/s-\mathcal F(s)$。此时 $L(0)=K$，重数 $m$ 的零点处 $L(t)=+m/2$，其余 $t\ne0$ 处 $L(t)=0$。由 $\zeta(1/2)\ne0$ 与连续性，存在 $\delta>0$ 使 $\zeta(1/2+it)\ne0$ 对 $0<|t|<\delta$ 成立；于是 $L$ 在 $0<|t|<\delta$ 上为零。对长度小于 $\delta$ 的区间内的零点应用命题 486.2，得 $\sum m^2/4\le K^2$，从而 $\sum m\le\sum m^2\le4K^2$。把 $(T,2T]$ 分成 $\lceil 2T/\delta\rceil$ 个长度为 $\delta/2$ 的区间，得 $N(T,2T)\le4K^2(2T/\delta+1)$，与 (486.1) 给出的 $N(T,2T)/T\to\infty$ 矛盾。证毕。
+(2) 对 $K-\mathcal T$ 作同样构造，$G(s)=Kx_0^{-s}/s-\mathcal F(s)$。此时 $L(0)=K$，重数 $m$ 的零点处 $L(t)=+m/2$，其余 $t\ne0$ 处 $L(t)=0$。由 $\zeta(1/2)\ne0$ 与连续性，存在 $\delta>0$ 使 $\zeta(1/2+it)\ne0$ 对 $0<|t|<\delta$ 成立；于是 $L$ 在 $0<|t|<\delta$ 上为零。对长度小于 $\delta$ 的区间内的零点应用命题 486.2，得 $\sum m^2/4\le K^2$，从而 $\sum m\le\sum m^2\le4K^2$。用 $\lceil 2T/\delta\rceil$ 个长度不超过 $\delta/2$ 的区间覆盖 $(T,2T]$，得 $N(T,2T)\le4K^2(2T/\delta+1)$，与 (486.1) 给出的 $N(T,2T)/T\to\infty$ 矛盾。证毕。
 
 **定理 486.4（无条件双侧无界性）。** 设 (485.1) 成立，则 $\liminf_{x\to\infty}\mathcal T(x)=-\infty$。再设 (486.1)，则 $\limsup_{x\to\infty}\mathcal T(x)=+\infty$。等价地，对每个实数 $\kappa$ 与每个有限 $X$，存在 $x\ge X$ 使 $T_\psi(x,x^{4/5})<-\kappa x^{11/10}$；在 (486.1) 下也存在 $x\ge X$ 使 $T_\psi(x,x^{4/5})>\kappa x^{11/10}$。
 

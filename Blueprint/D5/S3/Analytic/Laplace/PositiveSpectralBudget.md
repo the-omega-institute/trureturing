@@ -28,31 +28,7 @@ Lean statement: `D5/S3/Analytic/Laplace/PositiveSpectralBudget.boundary_positive
 
 Let mu be a positive measure on the real line such that exp(-sigma*y) is integrable for every sigma>0. Fix a finite family of frequencies t(j), and suppose the limit L(t(j)-t(k)) of sigma times the Laplace transform at sigma+i*(t(j)-t(k)) exists at each pairwise difference. For complex coefficients a(j), the double sum a(j)*conjugate(a(k))*L(t(j)-t(k)) is a nonnegative real number. This is the finite Gram positivity of the positive measure carried to boundary limits, as in step (a) of Proposition 486.1: characters give rank-one Gram matrices, integration preserves positivity, and the boundary limit preserves each finite matrix inequality.
 
-**Theorem 1.3 (Hermitian symmetry).**
-
-Lean statement: `D5/S3/Analytic/Laplace/PositiveSpectralBudget.boundary_conjugate`
-
-*Proof.* Machine-checked in Lean as `D5/S3/Analytic/Laplace/PositiveSpectralBudget.boundary_conjugate` (`✓ std3`). ∎
-
-*Source.* Repository-derived.
-
-*Commentary.*
-
-Whenever all boundary values exist, L(-t)=conjugate(L(t)).
-
-**Theorem 1.4 (The diagonal mass).**
-
-Lean statement: `D5/S3/Analytic/Laplace/PositiveSpectralBudget.boundary_zero_nonnegative`
-
-*Proof.* Machine-checked in Lean as `D5/S3/Analytic/Laplace/PositiveSpectralBudget.boundary_zero_nonnegative` (`✓ std3`). ∎
-
-*Source.* Repository-derived.
-
-*Commentary.*
-
-Under the integrability and boundary-limit assumptions, L(0) is a nonnegative real number.
-
-**Theorem 1.5 (A budget for negative boundary masses).**
+**Theorem 1.3 (A budget for negative boundary masses).**
 
 Lean statement: `D5/S3/Analytic/Laplace/PositiveSpectralBudget.same_sign_budget`
 
@@ -64,7 +40,7 @@ Lean statement: `D5/S3/Analytic/Laplace/PositiveSpectralBudget.same_sign_budget`
 
 Let t(1),...,t(n) be distinct nonzero frequencies. Suppose boundary limits exist at all pairwise differences of 0,t(1),...,t(n), and Re(L(u))<=0 at each nonzero such difference u. Suppose Re(L(t(j)))<=-c with c>0. Then n*c^2<=4*L(0)^2. Apply the finite Gram inequality to the augmented family 0,t(1),...,t(n), with a real nonnegative coefficient s at zero and coefficient one elsewhere, and optimize the resulting quadratic inequality.
 
-**Theorem 1.6 (A quadratic budget in a short window).**
+**Theorem 1.4 (A quadratic budget in a short window).**
 
 Lean statement: `D5/S3/Analytic/Laplace/PositiveSpectralBudget.gap_budget`
 
@@ -78,10 +54,8 @@ Let t(1),...,t(n) be a distinct finite family with abs(t(j)-t(k))<delta. Suppose
 
 ## References
 
-- Truth anchor: `D5/S3/Analytic/Laplace/PositiveSpectralBudget.boundary_conjugate`
 - Truth anchor: `D5/S3/Analytic/Laplace/PositiveSpectralBudget.boundary_limit_conjugate`
 - Truth anchor: `D5/S3/Analytic/Laplace/PositiveSpectralBudget.boundary_positive_definite`
-- Truth anchor: `D5/S3/Analytic/Laplace/PositiveSpectralBudget.boundary_zero_nonnegative`
 - Truth anchor: `D5/S3/Analytic/Laplace/PositiveSpectralBudget.gap_budget`
 - Truth anchor: `D5/S3/Analytic/Laplace/PositiveSpectralBudget.same_sign_budget`
 - Dependency: [D5/S3/Analytic/Fourier/PositiveDefinite/Closure](../Fourier/PositiveDefinite/Closure.md)

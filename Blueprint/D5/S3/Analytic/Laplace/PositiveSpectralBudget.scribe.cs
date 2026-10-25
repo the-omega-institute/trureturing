@@ -41,22 +41,6 @@ internal sealed class PositiveSpectralBudgetDocument : IScribeDocumentDefinition
                     + "limit preserves each finite matrix inequality."))),
                 DescribeRole.Theorem),
             Describe.Lean(
-                DescribeId.Create("boundary-conjugate"),
-                DeclarationHandle.Create(Prefix + "boundary_conjugate"),
-                H("Hermitian symmetry"),
-                StatementSource.WithoutFormula(),
-                AssessedProvenance.FromRepo(),
-                Blocks(Paragraph(Text("Whenever all boundary values exist, L(-t)=conjugate(L(t))."))),
-                DescribeRole.Theorem),
-            Describe.Lean(
-                DescribeId.Create("boundary-zero-nonnegative"),
-                DeclarationHandle.Create(Prefix + "boundary_zero_nonnegative"),
-                H("The diagonal mass"),
-                StatementSource.WithoutFormula(),
-                AssessedProvenance.FromRepo(),
-                Blocks(Paragraph(Text("Under the integrability and boundary-limit assumptions, L(0) is a nonnegative real number."))),
-                DescribeRole.Theorem),
-            Describe.Lean(
                 DescribeId.Create("same-sign-budget"),
                 DeclarationHandle.Create(Prefix + "same_sign_budget"),
                 H("A budget for negative boundary masses"),

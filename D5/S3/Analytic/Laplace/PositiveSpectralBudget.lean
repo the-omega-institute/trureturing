@@ -106,13 +106,6 @@ theorem boundary_positive_definite {μ : Measure ℝ}
   intro k _
   ring
 
-/-- The two opposite boundary values are complex conjugates. -/
-theorem boundary_conjugate {μ : Measure ℝ} {L : ℝ → ℂ}
-    (hL : ∀ t : ℝ, Tendsto (fun σ : ℝ => (σ : ℂ) *
-      complexMGF id μ (-((σ : ℂ) + (t : ℂ) * Complex.I))) (𝓝[>] 0) (𝓝 (L t)))
-    (t : ℝ) : L (-t) = conj (L t) :=
-  tendsto_nhds_unique (hL (-t)) (boundary_limit_conjugate (hL t))
-
 private lemma boundary_zero_nonnegative_of_limit {μ : Measure ℝ}
     (hc : ∀ σ : ℝ, 0 < σ → Integrable (fun y : ℝ => Real.exp (-σ * y)) μ)
     {z : ℂ} (hL : Tendsto (fun σ : ℝ => (σ : ℂ) *
@@ -120,15 +113,6 @@ private lemma boundary_zero_nonnegative_of_limit {μ : Measure ℝ}
     (0 : ℂ) ≤ z := by
   simpa using boundary_positive_definite hc (fun _ : Unit => (0 : ℝ))
     (L := fun _ => z) (fun _ => (1 : ℂ)) (fun _ _ => by simpa using hL)
-
-/-- The boundary value at zero is a nonnegative real number. -/
-theorem boundary_zero_nonnegative {μ : Measure ℝ}
-    (hc : ∀ σ : ℝ, 0 < σ → Integrable (fun y : ℝ => Real.exp (-σ * y)) μ)
-    {L : ℝ → ℂ}
-    (hL : ∀ t : ℝ, Tendsto (fun σ : ℝ => (σ : ℂ) *
-      complexMGF id μ (-((σ : ℂ) + (t : ℂ) * Complex.I))) (𝓝[>] 0) (𝓝 (L t))) :
-    (0 : ℂ) ≤ L 0 :=
-  boundary_zero_nonnegative_of_limit hc (by simpa using hL 0)
 
 private lemma augmented_nonnegative {μ : Measure ℝ}
     (hc : ∀ σ : ℝ, 0 < σ → Integrable (fun y : ℝ => Real.exp (-σ * y)) μ)
@@ -305,8 +289,6 @@ theorem gap_budget {μ : Measure ℝ}
 
 #print axioms boundary_limit_conjugate
 #print axioms boundary_positive_definite
-#print axioms boundary_conjugate
-#print axioms boundary_zero_nonnegative
 #print axioms same_sign_budget
 #print axioms gap_budget
 
