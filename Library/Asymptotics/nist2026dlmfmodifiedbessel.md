@@ -18,6 +18,8 @@ triage: anchor
 
 https://dlmf.nist.gov/10.32.E9
 
+DOI: 10.18434/T4J30S.
+
 Equation 10.32.9:
 
 > K_ν(z) = ∫_0^∞ exp(−z cosh t) cosh(νt) dt, |ph z| < ½π
