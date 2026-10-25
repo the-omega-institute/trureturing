@@ -7,6 +7,7 @@
    digest: Actual compact energy orbits, shared Haar moments and total-energy pinching. -/
 
 import D5.S3.Quantum.Fibers.SharedEnergyCopyThreshold
+import D5.S3.Quantum.Fibers.SharedEnergyGapBound
 import Mathlib.Analysis.Normed.Algebra.MatrixExponential
 import Mathlib.MeasureTheory.Measure.Haar.Basic
 import Mathlib.MeasureTheory.Group.Integral
@@ -343,6 +344,89 @@ theorem moment_determines_monomials (m N : ℕ) (r s : DensityState (Fin 3))
   have hc := congrArg (fun X => X I J) hl
   rw [(ht.2.2 r).2, (ht.2.2 s).2] at hc
   simpa only [hw, ite_true] using hc
+
+private theorem all_monomials (m : ℕ) (hm : 2 ≤ m) (r s : DensityState (Fin 3))
+    (he : sharedMoment m (2*m-1) r = sharedMoment m (2*m-1) s) :
+    ∀ alpha : Exponent, weight m alpha = 0 →
+      monomial (stateMatrix r) alpha = monomial (stateMatrix s) alpha := by
+  classical
+  have hz (a : Exponent) : degree a = 0 ↔ a = 0 := by
+    simp [degree, Finset.sum_eq_zero_iff, funext_iff]
+  have hd (a b : Exponent) : degree (a+b) = degree a + degree b := by
+    simp [degree, Finset.sum_add_distrib]
+  have hw (a b : Exponent) : weight m (a+b) = weight m a + weight m b := by
+    simp [weight, Nat.cast_add, add_mul, Finset.sum_add_distrib]
+  have hp (X : Matrix (Fin 3) (Fin 3) ℂ) (a b : Exponent) :
+      monomial X (a+b) = monomial X a * monomial X b := by
+    simp [monomial, pow_add, Finset.prod_mul_distrib]
+  suffices hall : ∀ n (alpha : Exponent), degree alpha = n → weight m alpha = 0 →
+      monomial (stateMatrix r) alpha = monomial (stateMatrix s) alpha by
+    exact fun a ha => hall (degree a) a rfl ha
+  intro n
+  induction n using Nat.strong_induction_on with
+  | h n ih =>
+    intro a ha hwa
+    by_cases ha0 : a = 0
+    · simp [ha0, monomial]
+    by_cases hind : Indecomposable m a
+    · exact moment_determines_monomials m (2*m-1) r s he a
+        (SharedEnergyGapBound.indecomposable_degree_bound m hm a hind) hwa
+    have hproper : ∃ b : Exponent, b ≤ a ∧ weight m b = 0 ∧ b ≠ 0 ∧ b ≠ a := by
+      simpa only [Indecomposable, ha0, hwa, not_false_eq_true, true_and,
+        not_forall, not_or, exists_prop, and_assoc] using hind
+    obtain ⟨b, hba, hwb, hb0, hbn⟩ := hproper
+    let c : Exponent := a-b
+    have hsum : b+c = a := add_tsub_cancel_of_le hba
+    have hc0 : c ≠ 0 := by
+      intro hc
+      apply hbn
+      simpa [hc] using hsum
+    have hdg : degree b + degree c = n := by rw [← hd, hsum, ha]
+    have hbd : degree b < n := by
+      have := (hz c).not.mpr hc0
+      omega
+    have hcd : degree c < n := by
+      have := (hz b).not.mpr hb0
+      omega
+    have hwc : weight m c = 0 := by
+      have heq := congrArg (weight m) hsum
+      rw [hw, hwb, hwa] at heq
+      simpa using heq
+    rw [← hsum, hp, hp, ih (degree b) hbd b rfl hwb, ih (degree c) hcd c rfl hwc]
+
+private theorem two_coordinate_relation (m : ℕ) (X Y : Matrix (Fin 3) (Fin 3) ℂ)
+    (h : ∀ a : Exponent, weight m a = 0 → monomial X a = monomial Y a)
+    (i j k l : Fin 3) (p q : ℕ)
+    (hw : (p : ℤ)*(energy m i-energy m j) +
+      (q : ℤ)*(energy m k-energy m l) = 0) :
+    X i j ^ p * X k l ^ q = Y i j ^ p * Y k l ^ q := by
+  let a : Exponent := fun u v =>
+    (if u=i ∧ v=j then p else 0) + (if u=k ∧ v=l then q else 0)
+  have ha : weight m a = 0 := by
+    simpa [a, weight, Nat.cast_add, add_mul, Finset.sum_add_distrib,
+      ite_and, apply_ite] using hw
+  have he := h a ha
+  simpa [a, monomial, pow_add, Finset.prod_mul_distrib, ite_and, apply_ite] using he
+
+private theorem equal_phase (x y : ℂ) (hx : x ≠ 0)
+    (he : x * star x = y * star y) : ∃ u : Circle, y = (u : ℂ)*x := by
+  have hn : ‖x‖ = ‖y‖ := by
+    have he' := congrArg Complex.re he
+    simp only [Complex.star_def, Complex.mul_conj, Complex.ofReal_re,
+      Complex.normSq_eq_norm_sq] at he'
+    nlinarith [norm_nonneg x, norm_nonneg y]
+  have hnorm : ‖y/x‖ = 1 := by rw [norm_div, ← hn, div_self (norm_ne_zero_iff.mpr hx)]
+  refine ⟨⟨y/x, ?_⟩, ?_⟩
+  · exact mem_sphere_zero_iff_norm.mpr hnorm
+  · exact (div_mul_cancel₀ y hx).symm
+
+private theorem circle_root (u : Circle) (n : ℕ) (hn : n ≠ 0) :
+    ∃ z : Circle, z ^ n = u := by
+  refine ⟨Circle.exp (Complex.arg (u : ℂ) / n), ?_⟩
+  rw [← Circle.exp_natCast_mul]
+  have he : (n : ℝ) * (Complex.arg (u : ℂ) / n) = Complex.arg (u : ℂ) := by
+    field_simp
+  rw [he, Circle.exp_arg]
 
 #print axioms moment_determines_monomials
 #print axioms energy_group_realization
