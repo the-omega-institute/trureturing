@@ -441,12 +441,15 @@ $$
 Uniqueness proves (3.1), and factorization proves (3.2). This is the
 strong form-resolvent identity of Olaf Post,
 [*Boundary pairs associated with quadratic forms*, arXiv:1210.4707v2](https://arxiv.org/pdf/1210.4707v2),
-Theorem 4.3(ii), with spectral variable $z=-s$, boundary map $\gamma_l$,
-Dirichlet operator $H^D_{\epsilon,g}$, full operator $H^M_{\epsilon,g}$
-and solution map $P$. The bounded bulk-$L^2$ extension required for
+Theorem 4.3(ii). To meet its nonnegative-form convention, use
+$h=q^M_{\epsilon,g}+B\|\cdot\|_2^2$, spectral variable $z=B-s$,
+boundary map $\gamma_l$, Dirichlet operator $H^D_{\epsilon,g}+B$,
+full operator $H^M_{\epsilon,g}+B$ and solution map $P$. At its
+reference point $z=-1$ this is exactly $s=s_0$. The bounded bulk-$L^2$ extension required for
 that strong version has been proved in (3.3)–(3.6); the weaker
 energy-dual identity alone would not justify the bounded-operator
-formula. Both spectra exclude $-s$ by (1.3). The direct computation
+formula. Both unshifted spectra exclude $-s$ by (1.3), so both shifted spectra
+exclude $z=B-s$. The direct computation
 (3.7) fixes its positive sign independently of conormal convention.
 $\square$
 
@@ -546,7 +549,8 @@ Factorization and the spectral tail prove (4.2). This is a single
 finite spectral correction to exact slab inverses, not a replacement
 of those inverses by finite-rank operators. The Post correspondence
 is the one stated after (3.7), with $(\gamma_l,H^M,H^D)$ replaced by
-$(\gamma_h,H^J,H^{\rm cut})$. All potential restrictions, measures,
+$(\gamma_h,H^J,H^{\rm cut})$, using the nonnegative shift $B_h$
+and spectral variable $z=B_h-s$. All potential restrictions, measures,
 source normalization and spectral parameters have remained identical.
 $\square$
 
