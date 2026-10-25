@@ -44,7 +44,7 @@ The question (PDF p. 6):
 
 Source: https://arxiv.org/abs/2110.03099v1
 - URL: https://arxiv.org/abs/2110.03099v1 (the e-print is a single gzip file whose header names `MutualUnbiasedQO.tex`; md5 `ea23a0dd97764fa2b7444408b910866f`, 576 lines):
-  - effects, sequential products, observables and conditioned observables, l. 96–124;
+  - effects, sequential products, observables and conditioned observables, l. 95–124;
   - Conditions (1) and (2), l. 174–182;
   - Theorem 2.1, l. 184–188;
   - the question, l. 223.
