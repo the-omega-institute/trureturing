@@ -84,12 +84,12 @@ def evidence : Registration arena.{z}
   sensitivity := Reg.Support.SingleDependentReadout.sensitivity arena.{z}.Law actual rejected negative
   dependence := by
     intro role
-    refine ⟨(),0,1,?_⟩
+    refine ⟨(),2,3,?_⟩
     intro equal
-    have atZero := congrFun equal 0
-    change ((0 : ℕ∞)=0) = ((1 : ℕ∞)=0) at atZero
-    have impossible : (1 : ℕ∞)=0 := atZero ▸ rfl
-    exact one_ne_zero impossible
+    have atTwo := congrFun equal 2
+    change ((2 : ℕ∞)=2) = ((3 : ℕ∞)=2) at atTwo
+    have impossible : (3 : ℕ∞)=2 := atTwo ▸ rfl
+    norm_num at impossible
 
 noncomputable def registration : LeanInformationAudit.Contract.Registration
     (@_root_.D5.S3.ObserverMemory.Algorithms.KBonacciAcquisition.AsymmetricThreeLabelCost.original_asymmetric_three_label_cost.{z})
