@@ -413,10 +413,10 @@ uses the following explicit sufficient hypothesis on $K$:
 $$\begin{gathered}
 \text{For every TV-bounded regular signed weak-star-null sequence }s_n,\\
 \text{and every pairwise disjoint measurable sequence }E_n,
-\quad |s_n\!\restriction_{E_n}|(K)\longrightarrow0.
+\quad \operatorname{TV}(s_n|_{E_n})(K)\longrightarrow0.
 \end{gathered}$$
 
-Here $|s_n\!\restriction_{E_n}|$ denotes the TV of the literal signed restriction
+Here $\operatorname{TV}(s_n|_{E_n})$ denotes the TV of the literal signed restriction
 $s_n|_{E_n}$. The hypothesis is over all such signed sequences and sets.
 It is not a weak convergence or splitting premise. Under this hypothesis,
 for arbitrary $F_n,F_\infty\in D$,

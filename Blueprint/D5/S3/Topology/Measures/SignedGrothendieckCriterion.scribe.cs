@@ -43,7 +43,7 @@ internal sealed class SignedGrothendieckCriterionDocument : IScribeDocumentDefin
                 DescribeId.Create("exists-signed-raw-restriction-splitting"),
                 DeclarationHandle.Create("D5/S3/Topology/Measures/SignedGrothendieckCriterion.exists_signed_raw_restriction_splitting"),
                 H("Unconditional signed raw restriction splitting"),
-                StatementSource.FromLean(),
+                StatementSource.WithoutFormula(),
                 AssessedProvenance.FromRepo(LibraryNoteRef.Create("D5/L/Topology/kania2026talagrand")),
                 Blocks(
                     Paragraph(Text(
@@ -64,7 +64,7 @@ internal sealed class SignedGrothendieckCriterionDocument : IScribeDocumentDefin
                 DescribeId.Create("weak-of-disjoint-diagonal-variation"),
                 DeclarationHandle.Create("D5/S3/Topology/Measures/SignedGrothendieckCriterion.weak_of_disjoint_diagonal_variation"),
                 H("The full signed sufficient criterion"),
-                StatementSource.FromLean(),
+                StatementSource.WithoutFormula(),
                 AssessedProvenance.FromRepo(LibraryNoteRef.Create("D5/L/Topology/kania2026talagrand")),
                 Blocks(
                     Paragraph(Text(

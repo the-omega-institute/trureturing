@@ -200,7 +200,7 @@ def rawRegistration :
   variation := .evidence ⟨(show True from trivial)⟩ trivial
   sensitivity := .evidence ⟨(show True from trivial)⟩ trivial
   partialSensitivity := none
-  escapeFrom := some ℝ
+  escapeFrom := none
   sourceSelection := some {
     owner := `D5.S3.Topology.Measures.SignedGrothendieckCriterion
     definition := none
@@ -230,7 +230,7 @@ def weakRegistration :
   variation := .evidence ⟨(show True from trivial)⟩ trivial
   sensitivity := .evidence ⟨(show True from trivial)⟩ trivial
   partialSensitivity := none
-  escapeFrom := some ℝ
+  escapeFrom := none
   sourceSelection := some {
     owner := `D5.S3.Topology.Measures.SignedGrothendieckCriterion
     definition := none
