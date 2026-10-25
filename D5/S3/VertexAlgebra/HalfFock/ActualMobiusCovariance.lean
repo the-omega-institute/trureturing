@@ -582,6 +582,87 @@ private theorem singleton_l1 (D : LatticeData) (hu : IsUnit D.G.det)
           (2 : ℂ) • (∑ᶠ j : ℤ, h j) + _ + B
       abel
 
+
+/-- The insertion scalar cancellation after the ORIGINAL corrected-field
+readout. The finite top boundary vanishes by the original source cutoff. -/
+private theorem evaluated_insertion_l1_cancel (D : LatticeData) (hu : IsUnit D.G.det)
+    (b : Carrier D) (i : Fin D.rank) (r N : ℕ)
+    (hN : LatticeSugawaraCurrents.vectorFrequencyBound D b < N)
+    (e : ℤ) (x : ActualTensor D hu) :
+    let f := fun n : ℕ =>
+      (LatticeHalfFockCorrectedField.correctedField D hu
+        (LatticeFiniteNegativeGeneration.neutralMode D i (n:ℤ) b)).coeff
+          (e+2*((r+n:ℕ):ℤ)) x
+    let k := fun n : ℕ => (r+1:ℂ)*halfBinomial (r+1)*halfBinomial n / ((r+1:ℂ)+(n:ℂ))
+    (1/2*halfBinomial r : ℂ) •
+        (∑ n ∈ Finset.range N, Ring.choose (1/2:ℂ) n • f n) =
+      (∑ n ∈ Finset.range N, (((r+1:ℂ)+(n:ℂ))*k n) • f n) +
+        (∑ n ∈ Finset.range N, ((n:ℂ)*k n) • f (n+1)) +
+        (if r = 0 then f 0 else (r+1:ℂ) •
+          ∑ n ∈ Finset.range N,
+            ((r:ℂ)*halfBinomial r*halfBinomial n / ((r:ℂ)+(n:ℂ))) • f n) := by
+  classical
+  dsimp only
+  let f := fun n : ℕ =>
+      (LatticeHalfFockCorrectedField.correctedField D hu
+        (LatticeFiniteNegativeGeneration.neutralMode D i (n:ℤ) b)).coeff
+          (e+2*((r+n:ℕ):ℤ)) x
+  let k := fun n : ℕ => (r+1:ℂ)*halfBinomial (r+1)*halfBinomial n / ((r+1:ℂ)+(n:ℂ))
+  let p := fun n : ℕ => if n=0 then 0 else ((n:ℂ)-1)*k (n-1)
+  let a := fun n : ℕ => if r=0 then (if n=0 then 1 else 0) else
+    (r+1:ℂ)*((r:ℂ)*halfBinomial r*halfBinomial n / ((r:ℂ)+(n:ℂ)))
+  have npos : 0 < N := by omega
+  have top : f N = 0 := by
+    have hz := LatticeSugawaraCurrents.neutralMode_vanish D i b (N:ℤ) (by exact_mod_cast hN)
+    simp [f, hz]
+  have scalar (n : ℕ) : (1/2*halfBinomial r : ℂ)*Ring.choose (1/2:ℂ) n =
+      ((r+1:ℂ)+(n:ℂ))*k n+p n+a n := by
+    exact insertion_l1_scalar r n
+  have distribute : (1/2*halfBinomial r : ℂ) •
+      (∑ n ∈ Finset.range N, Ring.choose (1/2:ℂ) n • f n) =
+      (∑ n ∈ Finset.range N, (((r+1:ℂ)+(n:ℂ))*k n) • f n) +
+        (∑ n ∈ Finset.range N, p n • f n) +
+        (∑ n ∈ Finset.range N, a n • f n) := by
+    rw [Finset.smul_sum]
+    simp only [smul_smul]
+    calc
+      _ = ∑ n ∈ Finset.range N, (((r+1:ℂ)+(n:ℂ))*k n+p n+a n) • f n := by
+        apply Finset.sum_congr rfl
+        intro n hn
+        rw [scalar]
+      _ = _ := by simp only [add_smul, Finset.sum_add_distrib]
+  let q := fun n : ℕ => p n • f n
+  have qzero : q 0 = 0 := by simp [q,p]
+  have qtop : q N = 0 := by simp [q,top]
+  have shift : (∑ n ∈ Finset.range N, q n) = ∑ n ∈ Finset.range N, q (n+1) := by
+    have hh := (Finset.sum_range_succ q N).symm.trans (Finset.sum_range_succ' q N)
+    simpa only [qtop,qzero,add_zero,zero_add] using hh
+  have qsucc (n : ℕ) : q (n+1) = ((n:ℂ)*k n) • f (n+1) := by
+    simp only [q,p,Nat.add_eq_zero_iff,Nat.one_ne_zero,and_false,ite_false,
+      Nat.add_sub_cancel,Nat.cast_add,Nat.cast_one,add_sub_cancel_right]
+  have previous : (∑ n ∈ Finset.range N, p n • f n) =
+      ∑ n ∈ Finset.range N, ((n:ℂ)*k n) • f (n+1) := by
+    change (∑ n ∈ Finset.range N, q n) = _
+    rw [shift]
+    exact Finset.sum_congr rfl (fun n hn => qsucc n)
+  have lower : (∑ n ∈ Finset.range N, a n • f n) =
+      if r=0 then f 0 else (r+1:ℂ) •
+        ∑ n ∈ Finset.range N,
+          ((r:ℂ)*halfBinomial r*halfBinomial n / ((r:ℂ)+(n:ℂ))) • f n := by
+    by_cases hr : r=0
+    · rw [if_pos hr, Finset.sum_eq_single 0
+        (fun n hn hn0 => by simp [a,hr,hn0])
+        (fun hn0 => False.elim (hn0 (Finset.mem_range.mpr npos)))]
+      simp [a,hr]
+    · simp only [a,if_neg hr,Finset.smul_sum,smul_smul]
+  change (1/2*halfBinomial r : ℂ) •
+      (∑ n ∈ Finset.range N, Ring.choose (1/2:ℂ) n • f n) =
+      (∑ n ∈ Finset.range N, (((r+1:ℂ)+(n:ℂ))*k n) • f n) +
+        (∑ n ∈ Finset.range N, ((n:ℂ)*k n) • f (n+1)) + _
+  rw [distribute,previous,lower]
+
+#print axioms evaluated_insertion_l1_cancel
+
 #print axioms singleton_l1
 
 #print axioms singleton_term_l1
