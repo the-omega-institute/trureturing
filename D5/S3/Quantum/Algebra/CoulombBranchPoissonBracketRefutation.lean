@@ -91,8 +91,9 @@ private lemma bracket_forces_zero {R : Type*} [CommRing R] [Algebra ℂ R] [IsRe
     (hxw : br x w = 0) (hxz : br x z = 0) : h = 0 := by
   have ha := hp.2.2.2.2.1
   have hz (a : R) : br a 0 = 0 := by
-    have hh := hp.2.2.1 a 0 0
-    simpa only [add_zero, left_eq_add] using hh
+    have hh := (hamiltonian br hp a).map_zero
+    unfold hamiltonian at hh
+    simpa only [Derivation.coe_mk', LinearMap.coe_mk, AddHom.coe_mk] using hh
   cases e with
   | zero => exact (Nat.not_succ_le_zero 0 he).elim
   | succ k =>
