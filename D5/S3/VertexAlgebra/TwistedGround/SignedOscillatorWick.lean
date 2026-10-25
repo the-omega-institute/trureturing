@@ -2,7 +2,7 @@
    generality: I
    mirror-B: D5/B/S3/VertexAlgebra/TwistedGround/SignedOscillatorWick
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
-   anchors: [mathlib/module/Mathlib.LinearAlgebra.BilinearForm.Basic]
+   anchors: [mathlib/module/Mathlib.LinearAlgebra.Matrix.NonsingularInverse]
    utility: none
    digest: The negative Gram Wick form transposes actual half-creation and translation and reflects every signed charged oscillator coefficient. -/
 
