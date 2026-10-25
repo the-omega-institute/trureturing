@@ -38,9 +38,17 @@ internal static partial class CleanLanesCommand
             try
             {
                 var common = ResolveCommonGitDirectory(item.Path, runner);
+                var path = Path.Combine(common, "logs", "refs", "heads", branch);
+                if (branch != item.Branch && !HasLocalAllocationEvidence(item.Path, branch, path, runner))
+                {
+                    // A resolvable revision without local evidence is not a branch allocation.
+                    // An unresolved historical name still fails closed.
+                    _ = ResolveCommit(item.Path, branch, runner);
+                    continue;
+                }
                 var tip = branch == item.Branch ? item.Head
                     : ResolveCommit(item.Path, "refs/heads/" + branch, runner);
-                branchLog = ReadAllocationLog(Path.Combine(common, "logs", "refs", "heads", branch), tip);
+                branchLog = ReadAllocationLog(path, tip);
             }
             catch (Exception exception) when (exception is not OutOfMemoryException)
             {
@@ -73,6 +81,16 @@ internal static partial class CleanLanesCommand
 
         var reason = OriginalReclaimBlockReason(item, baseCommit!, ageAnchor, runner, now);
         return new(reason, "original_selectors", null, LockModifiedTicks(item));
+    }
+
+    private static bool HasLocalAllocationEvidence(
+        string root, string branch, string logPath, IWorktreeProcessRunner runner)
+    {
+        if (Path.Exists(logPath) || new FileInfo(logPath).LinkTarget is not null) return true;
+        var reference = "refs/heads/" + branch;
+        var references = Decode(RunGit(root, ["for-each-ref", "--format=%(refname)", reference],
+            runner, "could not inspect allocation branch identity").StandardOutput);
+        return references.Split('\n', StringSplitOptions.RemoveEmptyEntries).Contains(reference, StringComparer.Ordinal);
     }
 
     private static long? LockModifiedTicks(RegisteredWorktree item) => item.Locked
@@ -158,7 +176,7 @@ internal static partial class CleanLanesCommand
     }
 
     private static bool IsAllocationBranchName(string value) =>
-        value.Length != 0 && value != "HEAD" && !IsObjectOid(value)
+        value.Length != 0 && value != "HEAD"
         && value[0] != '/' && value[^1] is not ('/' or '.')
         && !value.Contains("..", StringComparison.Ordinal)
         && !value.Contains("@{", StringComparison.Ordinal)
