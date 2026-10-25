@@ -20,7 +20,21 @@ Source attribution: the classical twisted lattice construction follows Frenkel, 
 
 This coefficient law is the charged-seed prerequisite of the original arbitrary-source physical translation endpoint for correctedField, whose shift is e to e+2 and scalar is (e+2)/2. Word permutation and polynomial insertion, singleton Leibniz and shift calculus, normalEvaluation_physical, Corr_sectorTranslation and the final arbitrary-source evaluator induction remain further obligations. The present theorem does not establish that endpoint, a full VOA or CFT, anomaly or fusion structures, string dynamics, spacetime reconstruction or AdS/CFT. The Monster moonshine to string and AdS/CFT programme remains active.
 
-**Theorem 1.1 (The actual all-tensor charged-seed coefficient law).**
+**Theorem 1.1 (The existing charged singleton support).**
+
+Lean statement: `D5/S3/VertexAlgebra/LatticeHalfFockChargedSeedPhysical.singleton_finite`
+
+*Proof.* Machine-checked in Lean as `D5/S3/VertexAlgebra/LatticeHalfFockChargedSeedPhysical.singleton_finite` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Acknowledgement.* Bojko Bakalov and Victor G. Kac (2004). *Twisted Modules over Lattice Vertex Algebras*. DOI: [10.1142/9789812702562_0001](https://doi.org/10.1142/9789812702562_0001). URL: <https://arxiv.org/abs/math/0402315v1>.
+
+*Commentary.*
+
+Visibility-only exposure of the original pointwise charged singleton finite-support result. The exact proof is preserved and the charged L1 quadratic-to-singleton summation consumes it for the two inverse Gram contractions.
+
+**Theorem 1.2 (The actual all-tensor charged-seed coefficient law).**
 
 $$\operatorname{K}\left(a, e, v\right)-\operatorname{smul}\left(\frac{\operatorname{q}\left(a\right)}{2}, \operatorname{E}\left(a, e+2, v\right)\right)=\operatorname{smul}\left(\frac{e+2}{2}, \operatorname{E}\left(a, e+2, v\right)\right)$$
 
@@ -37,4 +51,5 @@ For every D:LatticeData, hu:IsUnit D.G.det, a:Charge D, e:Int and v:ActualTensor
 ## References
 
 - Truth anchor: `D5/S3/VertexAlgebra/LatticeHalfFockChargedSeedPhysical.charged_seed_physical_coefficient`
+- Truth anchor: `D5/S3/VertexAlgebra/LatticeHalfFockChargedSeedPhysical.singleton_finite`
 - Dependency: [D5/S3/VertexAlgebra/LatticeHalfFockFockNormalField](LatticeHalfFockFockNormalField.md)

@@ -6,7 +6,6 @@
    utility: none
    digest: Original all-source physical L1 coefficient covariance by evaluated insertion. -/
 
-import D5.S3.VertexAlgebra.HalfFock.ActualMobiusCharged
 import D5.S3.VertexAlgebra.LatticeHalfFockOriginalTranslation
 import D5.S3.VertexAlgebra.LatticeHalfFockChargedLZero
 import D5.S3.VertexAlgebra.LatticeHalfFockCurrentWard
@@ -462,7 +461,7 @@ private theorem ground_l1 (D : LatticeData) (hu : IsUnit D.G.det)
   rw [inv,s1,s0]
   simp only [map_zero,map_smul,Pi.zero_apply,Pi.smul_apply,zero_add]
   simp only [coeff]
-  rw [ActualMobiusCharged.charged_l1_coefficient]
+  rw [LatticeHalfFockChargedSeedPhysical.charged_l1_coefficient]
   module
 
 
