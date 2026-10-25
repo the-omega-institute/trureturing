@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:ca57b7842a61cd872245fbdf8c38ece6354041cd5ae5b9555950c35391614176
+  normalized_sha256: sha256:ca57b7842a61cd872245fbdf8c38ece6354041cd5ae5b9555950c35391614176
+cas_ref: sha256:ca57b7842a61cd872245fbdf8c38ece6354041cd5ae5b9555950c35391614176
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 'Nonpropositional: 讨论归一化恒等式为何不构成未经归一化预算的证明，属于证明责任说明而非新增范数估计。'
+    previous_atom_id: 609887818a2f944a50b1f6ac3db5c6b51730f0ac10ad4f17fd560506f3519755
+    next_atom_id: 65a288717f8ae6c525aa77d85f132465e0720b6b3951e66bec9ceafa0f122450
