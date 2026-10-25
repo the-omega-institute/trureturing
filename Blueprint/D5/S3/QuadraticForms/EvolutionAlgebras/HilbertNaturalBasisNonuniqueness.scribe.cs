@@ -59,12 +59,22 @@ internal sealed class HilbertNaturalBasisNonuniquenessDocument : IScribeDocument
             And(All("i", P, Equal(Norm(App(X("c"), X("i"))), D(1))),
                 All("i", P, Equal(App(X("b"), X("i")),
                     Smul(App(X("c"), X("i")), App(X("a"), App(X("sigma"), X("i")))))))));
-    private static Formula Full(Formula k) => All("A", X("Type"),
-        Imp(Call("NormedAddCommGroup", A), Imp(Call("InnerProductSpace", k, A),
-        Imp(Call("CompleteSpace", A), Imp(Call("SeparableSpace", A),
-            All("m", Bilinear(k, A), All("a", Basis(k, A), All("b", Basis(k, A),
-                Imp(PositiveBound, Imp(Natural(X("a")), Imp(Natural(X("b")),
-                    Imp(DenseSquare(k), Identification(k)))))))))))));
+    private static Formula Full(Formula k)
+    {
+        var body = Identification(k);
+        body = Imp(DenseSquare(k), body);
+        body = Imp(Natural(X("b")), body);
+        body = Imp(Natural(X("a")), body);
+        body = Imp(PositiveBound, body);
+        body = All("b", Basis(k, A), body);
+        body = All("a", Basis(k, A), body);
+        body = All("m", Bilinear(k, A), body);
+        body = All("separable", Call("SeparableSpace", A), body);
+        body = All("complete", Call("CompleteSpace", A), body);
+        body = All("inner", Call("InnerProductSpace", k, A), body);
+        body = All("normed", Call("NormedAddCommGroup", A), body);
+        return All("A", X("Type"), body);
+    }
     private static Formula WholeClaim => And(Full(R), Full(C));
     private static DocumentBlock.Describe Desc(string name, string title, Formula formula, string text,
         AssessedProvenance provenance, DescribeRole role = DescribeRole.Definition) =>
@@ -111,10 +121,10 @@ internal sealed class HilbertNaturalBasisNonuniquenessDocument : IScribeDocument
                     + "Since e(1)^2=e(2)^2, the two mixed terms cancel and f is natural for the same multiplication. The equal-square rotation method occurs in Examples 3.6-3.7 of Hilbert evolution algebras, weighted digraphs, and nilpotency.",
                     AssessedProvenance.FromRepo(Rotation)),
                 Desc("uniqueness", "The scalar-specific universal assertion",
-                    All("k", X("Type"), Imp(Call("RCLike", X("k")),
+                    All("k", X("Type"), All("scalar", Call("RCLike", X("k")),
                         Iff(Call("uniqueness", X("k")), Full(X("k"))))),
                     "All complete separable Hilbert spaces over k, all bilinear products with the stated positive left bounds, and both complete natural orthonormal bases are quantified. A dense square is the only extra premise. "
-                    + "The conclusion allows every permutation of the positive integers and every scalar family of norm one. RCLike supplies the real and complex specializations used in claim.",
+                    + "The conclusion allows every permutation of the positive integers and every scalar family of norm one. The bound variables normed, inner, complete and separable denote the corresponding chosen Lean structures or instances. RCLike supplies the real and complex specializations used in claim.",
                     AssessedProvenance.FromLiterature(Survey)),
                 Desc("claim", "The entire real-or-complex source assertion",
                     Iff(X("claim"), WholeClaim),
