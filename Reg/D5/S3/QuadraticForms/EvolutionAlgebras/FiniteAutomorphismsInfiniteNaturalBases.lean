@@ -56,7 +56,7 @@ def source_registration : Registration arena (type_of% (@result)) where
     norm_num at this
 
 def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
-    (@result) (type_of% actual) Type Unit := {
+    (@result) (type_of% actual) Unit Unit := {
   unitName := Lean.Name.str ``result "__information_unit"
   realizationName := ``source_registration
   realizationSource := none
@@ -72,7 +72,7 @@ def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
   variation := .absent
   sensitivity := .absent
   partialSensitivity := none
-  escapeFrom := some ((ℂ × ℂ) →ₗ[ℂ] (ℂ × ℂ) →ₗ[ℂ] (ℂ × ℂ))
+  escapeFrom := none
   sourceSelection := some {
     owner := `D5.S3.QuadraticForms.EvolutionAlgebras.FiniteAutomorphismsInfiniteNaturalBases
     definition := none
