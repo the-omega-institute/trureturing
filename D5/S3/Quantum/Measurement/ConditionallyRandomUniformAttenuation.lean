@@ -22,7 +22,8 @@ variable {d m n : ℕ}
 
 def conditioned (A : Fin m → Matrix (Fin d) (Fin d) ℂ)
     (B : Fin n → Matrix (Fin d) (Fin d) ℂ) (y : Fin n) :
-    Matrix (Fin d) (Fin d) ℂ := ∑ x, luders (A x) (B y)
+    Matrix (Fin d) (Fin d) ℂ :=
+  D5.S3.Observer.Conditioning.unreadState (fun x => CFC.sqrt (A x)) (B y)
 
 def UniformAttenuation (A : Fin m → Matrix (Fin d) (Fin d) ℂ)
     (B : Fin n → Matrix (Fin d) (Fin d) ℂ) : Prop :=
@@ -50,7 +51,7 @@ private lemma sqrt_sandwich_trace (K X : Matrix (Fin d) (Fin d) ℂ)
     (Matrix.nonneg_iff_posSemidef.mp (CFC.sqrt_nonneg K)).isHermitian.eq
   have hRR : R * R = K := CFC.sqrt_mul_sqrt_self K hK.nonneg
   have hY : (R * X * R).conjTranspose = R * X * R := by
-    simp only [Matrix.conjTranspose_mul, hR, hX.eq, mul_assoc]
+    simpa only [hR] using (Matrix.isHermitian_mul_mul_conjTranspose R hX).eq
   change (X * (K * X * K)).trace = ((R * X * R).conjTranspose * (R * X * R)).trace
   rw [hY]
   calc
