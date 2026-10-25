@@ -13,6 +13,18 @@ internal sealed class ResultDocument : IScribeDocumentDefinition
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "A negative Cauchy coefficient for a reciprocal q-gamma series.",
         H("The coefficient clause of Conjecture 1 is false"), Blocks(
+            Shared("qprod", QAll("a", Eqn(P(V("a")), Product("j", Sub(D(1), Mul(V("a"), Pow(V("q"), V("j"))))))), "The q-Pochhammer infinite product.", DescribeRole.Definition),
+            Shared("qprod_multipliable", QHyp(All("a", R, Call("Multipliable", Lambda("j", Sub(D(1), Mul(V("a"), Pow(V("q"), V("j")))))))), "Geometric summability makes the q-product multipliable."),
+            Shared("qprod_step", QHyp(All("a", R, Eqn(P(V("a")), Mul(Sub(D(1), V("a")), P(Mul(V("a"), V("q"))))))), "Removing the first product factor shifts its parameter by q."),
+            Shared("qprod_nonneg", QA(false, Leq(D(0), P(V("a")))), "Nonnegative product factors give a nonnegative infinite product."),
+            Shared("qprod_ne_zero", QA(true, new Formula.Not(Eqn(P(V("a")), D(0)))), "Strictly positive factors and geometric convergence exclude a zero product."),
+            Shared("qprod_pos", QA(true, Positive(P(V("a")))), "The infinite product is positive for a in the half-open unit interval."),
+            Shared("qprod_le_one", QA(false, Leq(P(V("a")), D(1))), "Products of factors in the unit interval are at most one."),
+            Shared("qprod_lower", QA(false, Leq(Sub(D(1), new Formula.Fraction(V("a"), Sub(D(1), V("q")))), P(V("a")))), "The geometric sum bounds the loss of the product from one."),
+            Shared("qprod_split", QHyp(All("a", R, All("n", N, Eqn(P(V("a")), Mul(FiniteP(), P(Mul(V("a"), Pow(V("q"), V("n"))))))))), "A finite prefix times the remaining infinite product equals the full product."),
+            Shared("qprod_bounds", QA(false, All("n", N, Both(Leq(Mul(FiniteP(), Sub(D(1), new Formula.Fraction(Mul(V("a"), Pow(V("q"), V("n"))), Sub(D(1), V("q"))))), P(V("a"))), Leq(P(V("a")), FiniteP())))), "A finite prefix gives both bounds, using the geometric tail loss for the lower bound."),
+            Shared("rqgamma_eq", All("q", R, Imp(Positive(V("q")), All("x", R, Eqn(Reciprocal(V("x")), new Formula.Fraction(P(Pow(V("q"), V("x"))), Mul(P(V("q")), Pow(Sub(D(1), V("q")), Sub(D(1), V("x"))))))))), "The reciprocal q-gamma definition in q-Pochhammer notation."),
+            Shared("rqgamma_step", All("q", R, Imp(Positive(V("q")), Imp(Less(V("q"), D(1)), All("x", R, Eqn(Reciprocal(V("x")), Mul(new Formula.Fraction(Sub(D(1), Pow(V("q"), V("x"))), Sub(D(1), V("q"))), Reciprocal(Add(V("x"), D(1))))))))), "The q-gamma functional equation holds even at its reciprocal zeros."),
             Describe.Lean(DescribeId.Create("reciprocal-qgamma"),
                 DeclarationHandle.Create(Prefix + "rqgamma"),
                 H("Reciprocal q-gamma by its infinite product"),
@@ -34,7 +46,7 @@ internal sealed class ResultDocument : IScribeDocumentDefinition
                 AssessedProvenance.FromLiterature(Source),
                 Blocks(Paragraph(Text("Theorem 3, page 11 of arXiv:1702.03788v1: “For a real sequence {gₙ}ₙ≥₀ and fixed 0 < q < 1 define g(µ; x) = ∑ₙ₌₀∞ gₙxⁿ/Γq(µ + n). (16) Suppose {gₙ}∞ₙ₌₀ is doubly positive. Then (16) has a positive radius of convergence Rg and the generalized Turánian ∆g(α, β; x) = g(µ + α; x)g(µ + β; x) − g(µ; x)g(µ + α + β; x) is positive for 0 < x < Rg if α ∈ N, β > 0 and µ ≥ max(−β, −1). If, in addition, α ≤ β + 1, then ∆g(α, β; x) has positive power series coefficients at all powers of x.”")),
                     Paragraph(Text("Conjecture 1, page 12: “All conclusions of Theorem 3 are valid for all α > 0, while conditions on other parameters remain intact. In particular, µ → g(µ; x) is log-concave for each fixed 0 < x < Rg.” The claim retains α≤β+1 and asks only for the coefficient conclusion. A counterexample with that restriction refutes the coefficient conclusion under either reading of the preceding discussion about removing restrictions.")),
-                    Paragraph(Text("The definition on page 3 states: “A sequence f : N₀ → R₊ is PF₂ (Pólya frequency sub two) or doubly positive if it is nontrivial, log-concave, fₖ² ≥ fₖ₋₁fₖ₊₁, k ∈ N, and has no internal zeros. The last claim means that fN = 0 implies either fN+i = 0 for all i ∈ N₀ or fN−i = 0 for i = 0, . . . , N.” These are exactly the nontriviality, nonnegativity, log-concavity and no-internal-zeros conditions of the reused D5.S3.Analytic.ReciprocalGammaTuran.Defs.AdmissibleSeq. Its frozen theorem admissible_one supplies the constant sequence gₙ=1."))),
+                    Paragraph(Text("The definition on page 3 states: “A sequence f : N₀ → R₊ is PF₂ (Pólya frequency sub two) or doubly positive if it is nontrivial, log-concave, fₖ² ≥ fₖ₋₁fₖ₊₁, k ∈ N, and has no internal zeros. The last claim means that fN = 0 implies either fN+i = 0 for all i ∈ N₀ or fN−i = 0 for i = 0, . . . , N.” These are exactly the nontriviality, nonnegativity, log-concavity and no-internal-zeros conditions of the reused D5.S3.Analytic.ReciprocalGammaTuran.Defs.AdmissibleSeq. Its theorem admissible_one supplies the constant sequence gₙ=1."))),
                 DescribeRole.Definition),
             Describe.Lean(DescribeId.Create("qgamma-coefficient-refutation"),
                 DeclarationHandle.Create(Prefix + "result"),
@@ -49,9 +61,22 @@ internal sealed class ResultDocument : IScribeDocumentDefinition
                     ProblemSlugRef.Create("kalmykov-karp-2018-qgamma-turanian-coefficients"),
                     ResolutionKind.Refuted)))));
 
+    private static DocumentBlock.Describe Shared(string name, Formula formula, string prose, DescribeRole role = DescribeRole.Theorem) =>
+        Describe.Lean(DescribeId.Create("shared-" + name.Replace("_", "-")), DeclarationHandle.Create(Prefix + name),
+            H(prose), StatementSource.FromAuthor(Disp(formula)), AssessedProvenance.FromRepo(),
+            Blocks(Paragraph(Text(prose))), role);
+    private static Formula P(Formula a) => Call("qprod", V("q"), a);
+    private static Formula Both(Formula a, Formula b) => new Formula.Logic(Parenthesized(a), FormulaLogicOperator.And, Parenthesized(b));
+    private static Formula Less(Formula a, Formula b) => new Formula.Relation(a, FormulaRelationOperator.LessThan, b);
+    private static Formula Lambda(string n, Formula body) => Seq(Open, V(n), Colon, Sp, N, Close, Sp, Mapsto, Sp, Parenthesized(body));
+    private static Formula QAll(string n, Formula body) => All("q", R, All(n, R, body));
+    private static Formula QHyp(Formula body) => All("q", R, Imp(Leq(D(0), V("q")), Imp(Less(V("q"), D(1)), body)));
+    private static Formula QA(bool strict, Formula body) => QHyp(All("a", R, Imp(Leq(D(0), V("a")), Imp(strict ? Less(V("a"), D(1)) : Leq(V("a"), D(1)), body))));
+    private static Formula FiniteP() => Seq(new Formula.Subscript(Prod, Seq(V("j"), InMacro, Sp, Call("Finset.range", V("n")))), Sp, Parenthesized(Sub(D(1), Mul(V("a"), Pow(V("q"), V("j"))))));
+
     private static Formula V(string name) => F.Id(name);
-    private static Formula N => Seq(Mathbb, Grp(V("N")));
-    private static Formula R => Seq(Mathbb, Grp(V("R")));
+    private static Formula N => Seq(Mathbb, Grp(V("N")), Sp);
+    private static Formula R => Seq(Mathbb, Grp(V("R")), Sp);
     private static Formula Parenthesized(Formula value) => Seq(Open, value, Close);
     private static Formula Call(string name, params Formula[] args)
     {
@@ -61,7 +86,7 @@ internal sealed class ResultDocument : IScribeDocumentDefinition
             if (parts.Count > 0) parts.Add(Dot);
             parts.Add(V(word));
         }
-        return new Formula.Apply(Seq(Operatorname, Grp([.. parts])), [.. args]);
+        return new Formula.Apply(Seq(Operatorname, Grp([.. parts]), Sp), [.. args]);
     }
     private static Formula All(string name, Formula type, Formula body) =>
         new Formula.Bind(FormulaQuantifier.ForAll, FormulaIdentifier.Create(name), type, body);

@@ -171,9 +171,10 @@ not establish exhaustive coverage or priority.
 - **OPEN.** The dependence of coefficient positivity on $q$, including
   any uniform interval near $q=1$ or a positive result at $q=0.5$,
   is not settled by this witness or finite scan.
-- **OPEN.** The function-positivity and parameter log-concavity clauses
-  of Conjecture 1 are not addressed. A negative coefficient alone
-  does not establish failure of function positivity.
+- **PROVED.** The separate function-positivity clause is refuted by
+  `D5.S3.Analytic.QGammaTuran.FunctionResult.result`; see
+  [the function settlement](kalmykov-karp-2018-qgamma-turanian-function.md).
+- **OPEN.** Parameter log-concavity is not settled by either counterexample.
 - **OPEN.** The remaining conjectural extensions, and any results
   requiring them, receive no conclusion from this coefficient
   counterexample. The integral-shift assertion of Theorem 3 is outside

@@ -1,0 +1,474 @@
+# The function clause of Conjecture 1 is false
+
+## Abstract
+
+A convergent reciprocal q-gamma series whose function Turanian is negative.
+
+**Definition 1.1 (qseries).**
+
+$$\forall q \in \mathbb{R} ,\; \forall mu \in \mathbb{R} ,\; \forall x \in \mathbb{R} ,\; \forall g \in \mathbb{N}  \to \mathbb{R} ,\; \operatorname{qseries} \left(q, mu, x, g\right) = \sum'_{n: \mathbb{N} } ((g)\left(n\right) \cdot (x)^{n} \cdot \operatorname{Result.rqgamma} \left(q, mu + n\right))$$
+
+*Formalization.* `D5/S3/Analytic/QGammaTuran/FunctionResult.qseries` (`✓ std3`).
+
+*Citation.* S. I. Kalmykov and D. B. Karp (2018). *Inequalities for series in q-shifted factorials and q-gamma functions*. DOI: [10.1016/j.jmaa.2017.11.041](https://doi.org/10.1016/j.jmaa.2017.11.041). URL: <https://arxiv.org/abs/1702.03788>.
+
+*Commentary.*
+
+Theorem 3, printed page 11 of arXiv:1702.03788v1: “For a real sequence {gₙ}ₙ≥₀ and fixed 0 < q < 1 define g(µ; x) = ∑ₙ₌₀∞ gₙxⁿ/Γq(µ + n). (16)” The reciprocal is the infinite-product rqgamma of Result. Equation (6), printed page 4: “The q-gamma function is defined by Γq(z) = (1 − q)^(1−z) (q; q)∞/(q^z; q)∞ (6) for |q| < 1 and all complex z such that q^(z+k) ≠ 1 for k ∈ N₀.” At nonpositive integers the reciprocal extension is zero.
+
+**Definition 1.2 (ConvergesAt).**
+
+$$\forall q \in \mathbb{R} ,\; \forall mu \in \mathbb{R} ,\; \forall alpha \in \mathbb{R} ,\; \forall beta \in \mathbb{R} ,\; \forall x \in \mathbb{R} ,\; \forall g \in \mathbb{N}  \to \mathbb{R} ,\; \operatorname{ConvergesAt} \left(q, g, mu, alpha, beta, x\right) = \left((\operatorname{Summable} \left((n: \mathbb{N} ) \mapsto ((g)\left(n\right) \cdot (x)^{n} \cdot \operatorname{Result.rqgamma} \left(q, mu + alpha + n\right))\right)) \land ((\operatorname{Summable} \left((n: \mathbb{N} ) \mapsto ((g)\left(n\right) \cdot (x)^{n} \cdot \operatorname{Result.rqgamma} \left(q, mu + beta + n\right))\right)) \land ((\operatorname{Summable} \left((n: \mathbb{N} ) \mapsto ((g)\left(n\right) \cdot (x)^{n} \cdot \operatorname{Result.rqgamma} \left(q, mu + n\right))\right)) \land (\operatorname{Summable} \left((n: \mathbb{N} ) \mapsto ((g)\left(n\right) \cdot (x)^{n} \cdot \operatorname{Result.rqgamma} \left(q, mu + alpha + beta + n\right))\right))))\right)$$
+
+*Formalization.* `D5/S3/Analytic/QGammaTuran/FunctionResult.ConvergesAt` (`✓ std3`).
+
+*Source.* Repository-derived.
+
+*Acknowledgement.* S. I. Kalmykov and D. B. Karp (2018). *Inequalities for series in q-shifted factorials and q-gamma functions*. DOI: [10.1016/j.jmaa.2017.11.041](https://doi.org/10.1016/j.jmaa.2017.11.041). URL: <https://arxiv.org/abs/1702.03788>.
+
+*Commentary.*
+
+Convergence is required for each of the four series in the Turanian. This formulation also allows convergent boundary points. The example below lies strictly inside a common convergence disk. For the constant sequence, normalized terms are yⁿ(q^(s+n);q)∞ with y=x(1−q). The geometric comparison proves absolute convergence for every 0≤x<1/(1−q) and every s≥−1. The example has x=93/100 strictly inside this interval; hence it also refutes the source's assertion on the open disk, independently of any question about boundary convergence.
+
+**Definition 1.3 (claim).**
+
+$$claim = \left(\forall q \in \mathbb{R} ,\; (0 < q) \Rightarrow ((q < 1) \Rightarrow (\forall g \in \mathbb{N}  \to \mathbb{R} ,\; (\operatorname{D5.S3.Analytic.ReciprocalGammaTuran.Defs.AdmissibleSeq} \left(g\right)) \Rightarrow (\forall mu \in \mathbb{R} ,\; \forall alpha \in \mathbb{R} ,\; \forall beta \in \mathbb{R} ,\; (0 < alpha) \Rightarrow ((0 < beta) \Rightarrow ((\operatorname{max} \left(-beta, -1\right) \le mu) \Rightarrow (\forall x \in \mathbb{R} ,\; (0 < x) \Rightarrow ((\operatorname{ConvergesAt} \left(q, g, mu, alpha, beta, x\right)) \Rightarrow (0 < \operatorname{qseries} \left(q, mu + alpha, x, g\right) \cdot \operatorname{qseries} \left(q, mu + beta, x, g\right) - \operatorname{qseries} \left(q, mu, x, g\right) \cdot \operatorname{qseries} \left(q, mu + alpha + beta, x, g\right)))))))))\right)$$
+
+*Formalization.* `D5/S3/Analytic/QGammaTuran/FunctionResult.claim` (`✓ std3`).
+
+*Citation.* S. I. Kalmykov and D. B. Karp (2018). *Inequalities for series in q-shifted factorials and q-gamma functions*. DOI: [10.1016/j.jmaa.2017.11.041](https://doi.org/10.1016/j.jmaa.2017.11.041). URL: <https://arxiv.org/abs/1702.03788>.
+
+*Commentary.*
+
+Theorem 3, printed page 11: “Suppose {gₙ}∞ₙ₌₀ is doubly positive. Then (16) has a positive radius of convergence Rg and the generalized Turánian ∆g(α, β; x) = g(µ + α; x)g(µ + β; x) − g(µ; x)g(µ + α + β; x) is positive for 0 < x < Rg if α ∈ N, β > 0 and µ ≥ max(−β, −1). If, in addition, α ≤ β + 1, then ∆g(α, β; x) has positive power series coefficients at all powers of x.” Conjecture 1, printed page 12: “All conclusions of Theorem 3 are valid for all α > 0, while conditions on other parameters remain intact. In particular, µ → g(µ; x) is log-concave for each fixed 0 < x < Rg.” The function clause has no α≤β+1 restriction. AdmissibleSeq is the nontrivial, nonnegative, log-concave sequence condition with no internal zeros; admissible_one supplies gₙ=1.
+
+**Definition 1.4 (hsum).**
+
+$$\forall q \in \mathbb{R} ,\; \forall a \in \mathbb{R} ,\; \forall y \in \mathbb{R} ,\; \operatorname{hsum} \left(q, a, y\right) = \sum'_{n: \mathbb{N} } ((y)^{n} \cdot \operatorname{Result.qprod} \left(q, a \cdot (q)^{n}\right))$$
+
+*Formalization.* `D5/S3/Analytic/QGammaTuran/FunctionResult.hsum` (`✓ std3`).
+
+*Source.* Repository-derived.
+
+*Acknowledgement.* S. I. Kalmykov and D. B. Karp (2018). *Inequalities for series in q-shifted factorials and q-gamma functions*. DOI: [10.1016/j.jmaa.2017.11.041](https://doi.org/10.1016/j.jmaa.2017.11.041). URL: <https://arxiv.org/abs/1702.03788>.
+
+*Commentary.*
+
+The normalized series is expressed with a=q^s and y=x(1−q). This form includes the pole at s=0 without division by a vanishing q-number.
+
+**Definition 1.5 (plower).**
+
+$$\forall q \in \mathbb{R} ,\; \forall a \in \mathbb{R} ,\; \forall N \in \mathbb{N} ,\; \operatorname{plower} \left(q, a, N\right) = \prod_{j\in \operatorname{Finset.range} \left(N\right)} (1 - a \cdot (q)^{j}) \cdot \left(1 - \frac{a \cdot (q)^{N}}{1 - q}\right)$$
+
+*Formalization.* `D5/S3/Analytic/QGammaTuran/FunctionResult.plower` (`✓ std3`).
+
+*Source.* Repository-derived.
+
+*Acknowledgement.* S. I. Kalmykov and D. B. Karp (2018). *Inequalities for series in q-shifted factorials and q-gamma functions*. DOI: [10.1016/j.jmaa.2017.11.041](https://doi.org/10.1016/j.jmaa.2017.11.041). URL: <https://arxiv.org/abs/1702.03788>.
+
+*Commentary.*
+
+A finite q-product multiplied by the lower bound on its remaining factors.
+
+**Definition 1.6 (pupper).**
+
+$$\forall q \in \mathbb{R} ,\; \forall a \in \mathbb{R} ,\; \forall N \in \mathbb{N} ,\; \operatorname{pupper} \left(q, a, N\right) = \prod_{j\in \operatorname{Finset.range} \left(N\right)} (1 - a \cdot (q)^{j})$$
+
+*Formalization.* `D5/S3/Analytic/QGammaTuran/FunctionResult.pupper` (`✓ std3`).
+
+*Source.* Repository-derived.
+
+*Acknowledgement.* S. I. Kalmykov and D. B. Karp (2018). *Inequalities for series in q-shifted factorials and q-gamma functions*. DOI: [10.1016/j.jmaa.2017.11.041](https://doi.org/10.1016/j.jmaa.2017.11.041). URL: <https://arxiv.org/abs/1702.03788>.
+
+*Commentary.*
+
+The finite product bounds the full product from above.
+
+**Theorem 1.7 (hsummable).**
+
+$$\forall q \in \mathbb{R} ,\; \forall a \in \mathbb{R} ,\; \forall y \in \mathbb{R} ,\; (0 \le q) \Rightarrow ((q < 1) \Rightarrow ((0 \le a) \Rightarrow ((a \le 1) \Rightarrow ((0 \le y) \Rightarrow ((y < 1) \Rightarrow (\operatorname{Summable} \left((n: \mathbb{N} ) \mapsto ((y)^{n} \cdot \operatorname{Result.qprod} \left(q, a \cdot (q)^{n}\right))\right)))))))$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/Analytic/QGammaTuran/FunctionResult.hsummable` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Acknowledgement.* S. I. Kalmykov and D. B. Karp (2018). *Inequalities for series in q-shifted factorials and q-gamma functions*. DOI: [10.1016/j.jmaa.2017.11.041](https://doi.org/10.1016/j.jmaa.2017.11.041). URL: <https://arxiv.org/abs/1702.03788>.
+
+*Commentary.*
+
+When a and y lie in the unit interval, normalized terms are nonnegative and bounded by yⁿ. The geometric series proves summability.
+
+**Theorem 1.8 (hshift).**
+
+$$\forall q \in \mathbb{R} ,\; \forall a \in \mathbb{R} ,\; \forall y \in \mathbb{R} ,\; (0 \le q) \Rightarrow ((q < 1) \Rightarrow ((0 \le a) \Rightarrow ((a \cdot q \le 1) \Rightarrow ((0 \le y) \Rightarrow ((y < 1) \Rightarrow (\operatorname{hsum} \left(q, a, y\right) = \operatorname{Result.qprod} \left(q, a\right) + y \cdot \operatorname{hsum} \left(q, a \cdot q, y\right)))))))$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/Analytic/QGammaTuran/FunctionResult.hshift` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Acknowledgement.* S. I. Kalmykov and D. B. Karp (2018). *Inequalities for series in q-shifted factorials and q-gamma functions*. DOI: [10.1016/j.jmaa.2017.11.041](https://doi.org/10.1016/j.jmaa.2017.11.041). URL: <https://arxiv.org/abs/1702.03788>.
+
+*Commentary.*
+
+Separating the first term shifts a to aq. This identity also applies when a exceeds one but aq does not.
+
+**Theorem 1.9 (hbounds).**
+
+$$\forall q \in \mathbb{R} ,\; \forall a \in \mathbb{R} ,\; \forall y \in \mathbb{R} ,\; (0 \le q) \Rightarrow ((q < 1) \Rightarrow ((0 \le a) \Rightarrow ((a \le 1) \Rightarrow ((0 \le y) \Rightarrow ((y < 1) \Rightarrow (\forall K \in \mathbb{N} ,\; \forall N \in \mathbb{N} ,\; (\sum_{n\in \operatorname{Finset.range} \left(K\right)} ((y)^{n} \cdot \operatorname{plower} \left(q, a \cdot (q)^{n}, N\right)) \le \operatorname{hsum} \left(q, a, y\right)) \land (\operatorname{hsum} \left(q, a, y\right) \le \sum_{n\in \operatorname{Finset.range} \left(K\right)} ((y)^{n} \cdot \operatorname{pupper} \left(q, a \cdot (q)^{n}, N\right)) + \frac{(y)^{K}}{1 - y})))))))$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/Analytic/QGammaTuran/FunctionResult.hbounds` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Acknowledgement.* S. I. Kalmykov and D. B. Karp (2018). *Inequalities for series in q-shifted factorials and q-gamma functions*. DOI: [10.1016/j.jmaa.2017.11.041](https://doi.org/10.1016/j.jmaa.2017.11.041). URL: <https://arxiv.org/abs/1702.03788>.
+
+*Commentary.*
+
+Result.qprod_bounds bounds each product in a finite prefix. Summable.sum_le_tsum supplies the lower bound; the omitted normalized terms are at most a geometric tail y^K/(1−y).
+
+**Theorem 1.10 (normalizedTerm).**
+
+$$\forall q \in \mathbb{R} ,\; (0 < q) \Rightarrow ((q < 1) \Rightarrow (\forall s \in \mathbb{R} ,\; \forall x \in \mathbb{R} ,\; \forall n \in \mathbb{N} ,\; (x)^{n} \cdot \operatorname{Result.rqgamma} \left(q, s + n\right) = \frac{(x \cdot \left(1 - q\right))^{n} \cdot \operatorname{Result.qprod} \left(q, (q)^{s} \cdot (q)^{n}\right)}{\operatorname{Result.qprod} \left(q, q\right) \cdot (1 - q)^{1 - s}}))$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/Analytic/QGammaTuran/FunctionResult.normalizedTerm` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Acknowledgement.* S. I. Kalmykov and D. B. Karp (2018). *Inequalities for series in q-shifted factorials and q-gamma functions*. DOI: [10.1016/j.jmaa.2017.11.041](https://doi.org/10.1016/j.jmaa.2017.11.041). URL: <https://arxiv.org/abs/1702.03788>.
+
+*Commentary.*
+
+Result.rqgamma_eq and the real power addition law normalize each term. The denominator is independent of n.
+
+**Theorem 1.11 (series eq).**
+
+$$\forall q \in \mathbb{R} ,\; (0 < q) \Rightarrow ((q < 1) \Rightarrow (\forall s \in \mathbb{R} ,\; \forall x \in \mathbb{R} ,\; \operatorname{qseries} \left(q, s, x, (n: \mathbb{N} ) \mapsto (1)\right) = \frac{\operatorname{hsum} \left(q, (q)^{s}, x \cdot \left(1 - q\right)\right)}{\operatorname{Result.qprod} \left(q, q\right) \cdot (1 - q)^{1 - s}}))$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/Analytic/QGammaTuran/FunctionResult.series_eq` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Acknowledgement.* S. I. Kalmykov and D. B. Karp (2018). *Inequalities for series in q-shifted factorials and q-gamma functions*. DOI: [10.1016/j.jmaa.2017.11.041](https://doi.org/10.1016/j.jmaa.2017.11.041). URL: <https://arxiv.org/abs/1702.03788>.
+
+*Commentary.*
+
+Taking the infinite sum gives the normalized expression for the constant-sequence q-gamma series.
+
+**Theorem 1.12 (hsummable any).**
+
+$$\forall q \in \mathbb{R} ,\; \forall a \in \mathbb{R} ,\; \forall y \in \mathbb{R} ,\; (0 \le q) \Rightarrow ((q < 1) \Rightarrow ((0 \le a) \Rightarrow ((a \cdot q \le 1) \Rightarrow ((0 \le y) \Rightarrow ((y < 1) \Rightarrow (\operatorname{Summable} \left((n: \mathbb{N} ) \mapsto ((y)^{n} \cdot \operatorname{Result.qprod} \left(q, a \cdot (q)^{n}\right))\right)))))))$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/Analytic/QGammaTuran/FunctionResult.hsummable_any` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Acknowledgement.* S. I. Kalmykov and D. B. Karp (2018). *Inequalities for series in q-shifted factorials and q-gamma functions*. DOI: [10.1016/j.jmaa.2017.11.041](https://doi.org/10.1016/j.jmaa.2017.11.041). URL: <https://arxiv.org/abs/1702.03788>.
+
+*Commentary.*
+
+The first term may have either sign. After removing it, aq≤1 permits geometric domination.
+
+**Theorem 1.13 (series summable).**
+
+$$\forall q \in \mathbb{R} ,\; (0 < q) \Rightarrow ((q < 1) \Rightarrow (\forall s \in \mathbb{R} ,\; \forall x \in \mathbb{R} ,\; ((q)^{s} \cdot q \le 1) \Rightarrow ((0 \le x \cdot \left(1 - q\right)) \Rightarrow ((x \cdot \left(1 - q\right) < 1) \Rightarrow (\operatorname{Summable} \left((n: \mathbb{N} ) \mapsto (((n: \mathbb{N} ) \mapsto (1))\left(n\right) \cdot (x)^{n} \cdot \operatorname{Result.rqgamma} \left(q, s + n\right))\right))))))$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/Analytic/QGammaTuran/FunctionResult.series_summable` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Acknowledgement.* S. I. Kalmykov and D. B. Karp (2018). *Inequalities for series in q-shifted factorials and q-gamma functions*. DOI: [10.1016/j.jmaa.2017.11.041](https://doi.org/10.1016/j.jmaa.2017.11.041). URL: <https://arxiv.org/abs/1702.03788>.
+
+*Commentary.*
+
+The normalized geometric comparison proves convergence of the original q-gamma series.
+
+**Definition 1.14 (r).**
+
+$$r = \frac{93}{100}$$
+
+*Formalization.* `D5/S3/Analytic/QGammaTuran/FunctionResult.r` (`✓ std3`).
+
+*Source.* Repository-derived.
+
+*Acknowledgement.* S. I. Kalmykov and D. B. Karp (2018). *Inequalities for series in q-shifted factorials and q-gamma functions*. DOI: [10.1016/j.jmaa.2017.11.041](https://doi.org/10.1016/j.jmaa.2017.11.041). URL: <https://arxiv.org/abs/1702.03788>.
+
+*Commentary.*
+
+The rational base.
+
+**Definition 1.15 (q).**
+
+$$q = (r)^{10}$$
+
+*Formalization.* `D5/S3/Analytic/QGammaTuran/FunctionResult.q` (`✓ std3`).
+
+*Source.* Repository-derived.
+
+*Acknowledgement.* S. I. Kalmykov and D. B. Karp (2018). *Inequalities for series in q-shifted factorials and q-gamma functions*. DOI: [10.1016/j.jmaa.2017.11.041](https://doi.org/10.1016/j.jmaa.2017.11.041). URL: <https://arxiv.org/abs/1702.03788>.
+
+*Commentary.*
+
+The q parameter.
+
+**Definition 1.16 (y).**
+
+$$y = r \cdot \left(1 - q\right)$$
+
+*Formalization.* `D5/S3/Analytic/QGammaTuran/FunctionResult.y` (`✓ std3`).
+
+*Source.* Repository-derived.
+
+*Acknowledgement.* S. I. Kalmykov and D. B. Karp (2018). *Inequalities for series in q-shifted factorials and q-gamma functions*. DOI: [10.1016/j.jmaa.2017.11.041](https://doi.org/10.1016/j.jmaa.2017.11.041). URL: <https://arxiv.org/abs/1702.03788>.
+
+*Commentary.*
+
+The normalized series variable at x=r.
+
+**Theorem 1.17 (qpos).**
+
+$$0 < q$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/Analytic/QGammaTuran/FunctionResult.qpos` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Acknowledgement.* S. I. Kalmykov and D. B. Karp (2018). *Inequalities for series in q-shifted factorials and q-gamma functions*. DOI: [10.1016/j.jmaa.2017.11.041](https://doi.org/10.1016/j.jmaa.2017.11.041). URL: <https://arxiv.org/abs/1702.03788>.
+
+*Commentary.*
+
+The example has positive q.
+
+**Theorem 1.18 (qlt).**
+
+$$q < 1$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/Analytic/QGammaTuran/FunctionResult.qlt` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Acknowledgement.* S. I. Kalmykov and D. B. Karp (2018). *Inequalities for series in q-shifted factorials and q-gamma functions*. DOI: [10.1016/j.jmaa.2017.11.041](https://doi.org/10.1016/j.jmaa.2017.11.041). URL: <https://arxiv.org/abs/1702.03788>.
+
+*Commentary.*
+
+The example has q less than one.
+
+**Theorem 1.19 (ypos).**
+
+$$0 \le y$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/Analytic/QGammaTuran/FunctionResult.ypos` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Acknowledgement.* S. I. Kalmykov and D. B. Karp (2018). *Inequalities for series in q-shifted factorials and q-gamma functions*. DOI: [10.1016/j.jmaa.2017.11.041](https://doi.org/10.1016/j.jmaa.2017.11.041). URL: <https://arxiv.org/abs/1702.03788>.
+
+*Commentary.*
+
+The normalized series variable is nonnegative.
+
+**Theorem 1.20 (ylt).**
+
+$$y < 1$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/Analytic/QGammaTuran/FunctionResult.ylt` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Acknowledgement.* S. I. Kalmykov and D. B. Karp (2018). *Inequalities for series in q-shifted factorials and q-gamma functions*. DOI: [10.1016/j.jmaa.2017.11.041](https://doi.org/10.1016/j.jmaa.2017.11.041). URL: <https://arxiv.org/abs/1702.03788>.
+
+*Commentary.*
+
+The example lies strictly in the geometric convergence disk.
+
+**Theorem 1.21 (numH3).**
+
+$$(\frac{621758}{1000000} \le \operatorname{hsum} \left(q, (r)^{3}, y\right)) \land (\operatorname{hsum} \left(q, (r)^{3}, y\right) \le \frac{627611}{1000000})$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/Analytic/QGammaTuran/FunctionResult.numH3` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Acknowledgement.* S. I. Kalmykov and D. B. Karp (2018). *Inequalities for series in q-shifted factorials and q-gamma functions*. DOI: [10.1016/j.jmaa.2017.11.041](https://doi.org/10.1016/j.jmaa.2017.11.041). URL: <https://arxiv.org/abs/1702.03788>.
+
+*Commentary.*
+
+Ten series terms and six factors enclose the normalized value at s=3/10.
+
+**Theorem 1.22 (numH6).**
+
+$$(\frac{779999}{1000000} \le \operatorname{hsum} \left(q, (r)^{6}, y\right)) \land (\operatorname{hsum} \left(q, (r)^{6}, y\right) \le \frac{786930}{1000000})$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/Analytic/QGammaTuran/FunctionResult.numH6` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Acknowledgement.* S. I. Kalmykov and D. B. Karp (2018). *Inequalities for series in q-shifted factorials and q-gamma functions*. DOI: [10.1016/j.jmaa.2017.11.041](https://doi.org/10.1016/j.jmaa.2017.11.041). URL: <https://arxiv.org/abs/1702.03788>.
+
+*Commentary.*
+
+Ten series terms and six factors enclose the normalized value at s=6/10.
+
+**Theorem 1.23 (numH10).**
+
+$$(\frac{986336}{1000000} \le \operatorname{hsum} \left(q, (r)^{10}, y\right)) \land (\operatorname{hsum} \left(q, (r)^{10}, y\right) \le \frac{993832}{1000000})$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/Analytic/QGammaTuran/FunctionResult.numH10` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Acknowledgement.* S. I. Kalmykov and D. B. Karp (2018). *Inequalities for series in q-shifted factorials and q-gamma functions*. DOI: [10.1016/j.jmaa.2017.11.041](https://doi.org/10.1016/j.jmaa.2017.11.041). URL: <https://arxiv.org/abs/1702.03788>.
+
+*Commentary.*
+
+Ten series terms and six factors enclose the normalized value at s=1.
+
+**Theorem 1.24 (numP3).**
+
+$$(\frac{80786}{1000000} \le \operatorname{Result.qprod} \left(q, (r)^{3}\right)) \land (\operatorname{Result.qprod} \left(q, (r)^{3}\right) \le \frac{82438}{1000000})$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/Analytic/QGammaTuran/FunctionResult.numP3` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Acknowledgement.* S. I. Kalmykov and D. B. Karp (2018). *Inequalities for series in q-shifted factorials and q-gamma functions*. DOI: [10.1016/j.jmaa.2017.11.041](https://doi.org/10.1016/j.jmaa.2017.11.041). URL: <https://arxiv.org/abs/1702.03788>.
+
+*Commentary.*
+
+Six factors enclose the product with parameter r³.
+
+**Theorem 1.25 (numP6).**
+
+$$(\frac{177796}{1000000} \le \operatorname{Result.qprod} \left(q, (r)^{6}\right)) \land (\operatorname{Result.qprod} \left(q, (r)^{6}\right) \le \frac{180709}{1000000})$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/Analytic/QGammaTuran/FunctionResult.numP6` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Acknowledgement.* S. I. Kalmykov and D. B. Karp (2018). *Inequalities for series in q-shifted factorials and q-gamma functions*. DOI: [10.1016/j.jmaa.2017.11.041](https://doi.org/10.1016/j.jmaa.2017.11.041). URL: <https://arxiv.org/abs/1702.03788>.
+
+*Commentary.*
+
+Six factors enclose the product with parameter r⁶.
+
+**Theorem 1.26 (qpower).**
+
+$$\forall n \in \mathbb{N} ,\; (q)^{\frac{n}{10}} = (r)^{n}$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/Analytic/QGammaTuran/FunctionResult.qpower` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Acknowledgement.* S. I. Kalmykov and D. B. Karp (2018). *Inequalities for series in q-shifted factorials and q-gamma functions*. DOI: [10.1016/j.jmaa.2017.11.041](https://doi.org/10.1016/j.jmaa.2017.11.041). URL: <https://arxiv.org/abs/1702.03788>.
+
+*Commentary.*
+
+The required fractional powers of q are rational powers of r.
+
+**Theorem 1.27 (series product).**
+
+$$\forall q \in \mathbb{R} ,\; (0 < q) \Rightarrow ((q < 1) \Rightarrow (\forall s \in \mathbb{R} ,\; \forall t \in \mathbb{R} ,\; \forall x \in \mathbb{R} ,\; \operatorname{qseries} \left(q, s, x, (n: \mathbb{N} ) \mapsto (1)\right) \cdot \operatorname{qseries} \left(q, t, x, (n: \mathbb{N} ) \mapsto (1)\right) = \frac{\operatorname{hsum} \left(q, (q)^{s}, x \cdot \left(1 - q\right)\right) \cdot \operatorname{hsum} \left(q, (q)^{t}, x \cdot \left(1 - q\right)\right)}{(\operatorname{Result.qprod} \left(q, q\right))^{2} \cdot (1 - q)^{2 - s - t}}))$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/Analytic/QGammaTuran/FunctionResult.series_product` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Acknowledgement.* S. I. Kalmykov and D. B. Karp (2018). *Inequalities for series in q-shifted factorials and q-gamma functions*. DOI: [10.1016/j.jmaa.2017.11.041](https://doi.org/10.1016/j.jmaa.2017.11.041). URL: <https://arxiv.org/abs/1702.03788>.
+
+*Commentary.*
+
+Products with the same sum of shifts have the same positive normalization denominator.
+
+**Theorem 1.28 (negative bounds).**
+
+$$(0 \le \operatorname{hsum} \left(q, ((r)^{4})^{-1}, y\right)) \land ((\operatorname{hsum} \left(q, ((r)^{4})^{-1}, y\right) \le \frac{317763}{1000000}) \land ((\frac{243809}{1000000} \le \operatorname{hsum} \left(q, ((r)^{7})^{-1}, y\right)) \land ((\frac{0}{1000000} \le \operatorname{hsum} \left(q, 1, y\right)) \land (\operatorname{hsum} \left(q, 1, y\right) \le \frac{476937}{1000000}))))$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/Analytic/QGammaTuran/FunctionResult.negative_bounds` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Acknowledgement.* S. I. Kalmykov and D. B. Karp (2018). *Inequalities for series in q-shifted factorials and q-gamma functions*. DOI: [10.1016/j.jmaa.2017.11.041](https://doi.org/10.1016/j.jmaa.2017.11.041). URL: <https://arxiv.org/abs/1702.03788>.
+
+*Commentary.*
+
+The first-factor product equation and hshift transfer positive-parameter estimates to s=−2/5 and s=−7/10. At s=0 the product's zero makes hsum(q,1,y)=y hsum(q,q,y).
+
+**Theorem 1.29 (witness negative).**
+
+$$\operatorname{qseries} \left(q, \frac{-2}{5}, r, (n: \mathbb{N} ) \mapsto (1)\right) \cdot \operatorname{qseries} \left(q, 0, r, (n: \mathbb{N} ) \mapsto (1)\right) - \operatorname{qseries} \left(q, \frac{-7}{10}, r, (n: \mathbb{N} ) \mapsto (1)\right) \cdot \operatorname{qseries} \left(q, \frac{3}{10}, r, (n: \mathbb{N} ) \mapsto (1)\right) < 0$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/Analytic/QGammaTuran/FunctionResult.witness_negative` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Acknowledgement.* S. I. Kalmykov and D. B. Karp (2018). *Inequalities for series in q-shifted factorials and q-gamma functions*. DOI: [10.1016/j.jmaa.2017.11.041](https://doi.org/10.1016/j.jmaa.2017.11.041). URL: <https://arxiv.org/abs/1702.03788>.
+
+*Commentary.*
+
+At gₙ=1, q=(93/100)^10 and x=93/100, the product of normalized values at −2/5 and zero is at most 0.151552931931. The product at −7/10 and 3/10 is at least 0.151590196222. Their common normalization denominator is positive, so the original Turanian is strictly negative.
+
+**Theorem 1.30 (witness converges).**
+
+$$\operatorname{ConvergesAt} \left(q, (n: \mathbb{N} ) \mapsto (1), \frac{-7}{10}, \frac{3}{10}, \frac{7}{10}, r\right)$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/Analytic/QGammaTuran/FunctionResult.witness_converges` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Acknowledgement.* S. I. Kalmykov and D. B. Karp (2018). *Inequalities for series in q-shifted factorials and q-gamma functions*. DOI: [10.1016/j.jmaa.2017.11.041](https://doi.org/10.1016/j.jmaa.2017.11.041). URL: <https://arxiv.org/abs/1702.03788>.
+
+*Commentary.*
+
+All four series at the example converge absolutely by the geometric comparison.
+
+**Theorem 1.31 (Refutation of the function clause).**
+
+$$\neg claim$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/Analytic/QGammaTuran/FunctionResult.result` (`✓ std3`). ∎
+
+*Resolves.* `Problems/kalmykov-karp-2018-qgamma-turanian-function` (refuted) by `D5/S3/Analytic/QGammaTuran/FunctionResult.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"kalmykov-karp-2018-qgamma-turanian-function","declaration_gid":"D5/S3/Analytic/QGammaTuran/FunctionResult.result","resolution_kind":"refuted"} -->
+
+*Source.* Repository-derived.
+
+*Acknowledgement.* S. I. Kalmykov and D. B. Karp (2018). *Inequalities for series in q-shifted factorials and q-gamma functions*. DOI: [10.1016/j.jmaa.2017.11.041](https://doi.org/10.1016/j.jmaa.2017.11.041). URL: <https://arxiv.org/abs/1702.03788>.
+
+*Commentary.*
+
+Take gₙ=1, µ=−7/10, α=3/10, β=7/10, q=(93/100)^10 and x=93/100. The shifts satisfy µ=max(−β,−1). The strictly negative function value contradicts the universal strict positivity assertion. The integer-shift theorem and the separate log-concavity question are not conclusions of this refutation.
+
+## References
+
+- Truth anchor: `D5/S3/Analytic/QGammaTuran/FunctionResult.ConvergesAt`
+- Truth anchor: `D5/S3/Analytic/QGammaTuran/FunctionResult.claim`
+- Truth anchor: `D5/S3/Analytic/QGammaTuran/FunctionResult.hbounds`
+- Truth anchor: `D5/S3/Analytic/QGammaTuran/FunctionResult.hshift`
+- Truth anchor: `D5/S3/Analytic/QGammaTuran/FunctionResult.hsum`
+- Truth anchor: `D5/S3/Analytic/QGammaTuran/FunctionResult.hsummable`
+- Truth anchor: `D5/S3/Analytic/QGammaTuran/FunctionResult.hsummable_any`
+- Truth anchor: `D5/S3/Analytic/QGammaTuran/FunctionResult.negative_bounds`
+- Truth anchor: `D5/S3/Analytic/QGammaTuran/FunctionResult.normalizedTerm`
+- Truth anchor: `D5/S3/Analytic/QGammaTuran/FunctionResult.numH10`
+- Truth anchor: `D5/S3/Analytic/QGammaTuran/FunctionResult.numH3`
+- Truth anchor: `D5/S3/Analytic/QGammaTuran/FunctionResult.numH6`
+- Truth anchor: `D5/S3/Analytic/QGammaTuran/FunctionResult.numP3`
+- Truth anchor: `D5/S3/Analytic/QGammaTuran/FunctionResult.numP6`
+- Truth anchor: `D5/S3/Analytic/QGammaTuran/FunctionResult.plower`
+- Truth anchor: `D5/S3/Analytic/QGammaTuran/FunctionResult.pupper`
+- Truth anchor: `D5/S3/Analytic/QGammaTuran/FunctionResult.q`
+- Truth anchor: `D5/S3/Analytic/QGammaTuran/FunctionResult.qlt`
+- Truth anchor: `D5/S3/Analytic/QGammaTuran/FunctionResult.qpos`
+- Truth anchor: `D5/S3/Analytic/QGammaTuran/FunctionResult.qpower`
+- Truth anchor: `D5/S3/Analytic/QGammaTuran/FunctionResult.qseries`
+- Truth anchor: `D5/S3/Analytic/QGammaTuran/FunctionResult.r`
+- Truth anchor: `D5/S3/Analytic/QGammaTuran/FunctionResult.result`
+- Truth anchor: `D5/S3/Analytic/QGammaTuran/FunctionResult.series_eq`
+- Truth anchor: `D5/S3/Analytic/QGammaTuran/FunctionResult.series_product`
+- Truth anchor: `D5/S3/Analytic/QGammaTuran/FunctionResult.series_summable`
+- Truth anchor: `D5/S3/Analytic/QGammaTuran/FunctionResult.witness_converges`
+- Truth anchor: `D5/S3/Analytic/QGammaTuran/FunctionResult.witness_negative`
+- Truth anchor: `D5/S3/Analytic/QGammaTuran/FunctionResult.y`
+- Truth anchor: `D5/S3/Analytic/QGammaTuran/FunctionResult.ylt`
+- Truth anchor: `D5/S3/Analytic/QGammaTuran/FunctionResult.ypos`
+- Dependency: [D5/S3/Analytic/QGammaTuran/Result](Result.md)

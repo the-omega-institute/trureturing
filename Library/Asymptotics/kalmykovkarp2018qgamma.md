@@ -8,6 +8,7 @@ url: https://arxiv.org/abs/1702.03788
 claim: "Conjecture 1 extends Theorem 3 from positive integral alpha to all positive real alpha, including the coefficient positivity assertion under its remaining parameter restrictions."
 strata_touched:
   - D5/S3/Analytic/QGammaTuran/Result
+  - D5/S3/Analytic/QGammaTuran/FunctionResult
 license: citation-only
 triage: anchor
 ---
@@ -70,7 +71,26 @@ codomain $\mathbb R_+$.
 `Result.qturanCoeff` is the finite Cauchy coefficient of the Turanian.
 `Result.claim` states the coefficient clause for real $\alpha,\beta>0$,
 $\mu\ge\max(-\beta,-1)$ and $\alpha\le\beta+1$.
-`Result.result` refutes that clause. The function-positivity and
-log-concavity clauses are not settled by this coefficient counterexample.
+`Result.result` refutes that clause. The function clause is separately refuted by `FunctionResult.result`;
+the log-concavity clause remains open.
 The bounded literature scope and computational evidence are stated in
 `Problems/kalmykov-karp-2018-qgamma-turanian-coefficients.md`.
+
+## Function clause
+
+`FunctionResult.qseries` is the infinite sum in (16), and
+`FunctionResult.ConvergesAt` requires convergence at each of the four shifts.
+For the unit sequence, put $y=x(1-q)$ and
+
+$$H(a,y)=\sum_{n\ge0}y^n(aq^n;q)_\infty.$$
+
+Then $g(s;x)=H(q^s,y)/((q;q)_\infty(1-q)^{1-s})$.
+For $s\ge-1$ the terms after index zero are nonnegative and bounded by
+a geometric sequence when $0\le y<1$. Thus the example is strictly
+inside a common convergence disk, not merely a point of boundary convergence.
+The function clause quoted from Theorem 3 above imposes no
+$\alpha\le\beta+1$ restriction. Its extension to positive real $\alpha$
+is false at $q=(93/100)^{10}$, $g_n=1$, $\mu=-7/10$,
+$\alpha=3/10$, $\beta=7/10$ and $x=93/100$.
+The corresponding dossier is
+`Problems/kalmykov-karp-2018-qgamma-turanian-function.md`.

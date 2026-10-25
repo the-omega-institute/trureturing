@@ -4,9 +4,153 @@
 
 A negative Cauchy coefficient for a reciprocal q-gamma series.
 
-**Definition 1.1 (Reciprocal q-gamma by its infinite product).**
+**Definition 1.1 (The q-Pochhammer infinite product.).**
 
-$$\forall q \in \mathbb{R},\; \forall x \in \mathbb{R},\; \operatorname{rqgamma}\left(q, x\right) = \frac{\prod'_{j: \mathbb{N}} (1 - (q)^{x + j})}{\prod'_{j: \mathbb{N}} (1 - (q)^{j + 1}) \cdot (1 - q)^{1 - x}}$$
+$$\forall q \in \mathbb{R} ,\; \forall a \in \mathbb{R} ,\; \operatorname{qprod} \left(q, a\right) = \prod'_{j: \mathbb{N} } (1 - a \cdot (q)^{j})$$
+
+*Formalization.* `D5/S3/Analytic/QGammaTuran/Result.qprod` (`✓ std3`).
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+The q-Pochhammer infinite product.
+
+**Theorem 1.2 (Geometric summability makes the q-product multipliable.).**
+
+$$\forall q \in \mathbb{R} ,\; (0 \le q) \Rightarrow ((q < 1) \Rightarrow (\forall a \in \mathbb{R} ,\; \operatorname{Multipliable} \left((j: \mathbb{N} ) \mapsto (1 - a \cdot (q)^{j})\right)))$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/Analytic/QGammaTuran/Result.qprod_multipliable` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+Geometric summability makes the q-product multipliable.
+
+**Theorem 1.3 (Removing the first product factor shifts its parameter by q.).**
+
+$$\forall q \in \mathbb{R} ,\; (0 \le q) \Rightarrow ((q < 1) \Rightarrow (\forall a \in \mathbb{R} ,\; \operatorname{qprod} \left(q, a\right) = \left(1 - a\right) \cdot \operatorname{qprod} \left(q, a \cdot q\right)))$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/Analytic/QGammaTuran/Result.qprod_step` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+Removing the first product factor shifts its parameter by q.
+
+**Theorem 1.4 (Nonnegative product factors give a nonnegative infinite product.).**
+
+$$\forall q \in \mathbb{R} ,\; (0 \le q) \Rightarrow ((q < 1) \Rightarrow (\forall a \in \mathbb{R} ,\; (0 \le a) \Rightarrow ((a \le 1) \Rightarrow (0 \le \operatorname{qprod} \left(q, a\right)))))$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/Analytic/QGammaTuran/Result.qprod_nonneg` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+Nonnegative product factors give a nonnegative infinite product.
+
+**Theorem 1.5 (Strictly positive factors and geometric convergence exclude a zero product.).**
+
+$$\forall q \in \mathbb{R} ,\; (0 \le q) \Rightarrow ((q < 1) \Rightarrow (\forall a \in \mathbb{R} ,\; (0 \le a) \Rightarrow ((a < 1) \Rightarrow (\neg \operatorname{qprod} \left(q, a\right) = 0))))$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/Analytic/QGammaTuran/Result.qprod_ne_zero` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+Strictly positive factors and geometric convergence exclude a zero product.
+
+**Theorem 1.6 (The infinite product is positive for a in the half-open unit interval.).**
+
+$$\forall q \in \mathbb{R} ,\; (0 \le q) \Rightarrow ((q < 1) \Rightarrow (\forall a \in \mathbb{R} ,\; (0 \le a) \Rightarrow ((a < 1) \Rightarrow (0 < \operatorname{qprod} \left(q, a\right)))))$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/Analytic/QGammaTuran/Result.qprod_pos` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+The infinite product is positive for a in the half-open unit interval.
+
+**Theorem 1.7 (Products of factors in the unit interval are at most one.).**
+
+$$\forall q \in \mathbb{R} ,\; (0 \le q) \Rightarrow ((q < 1) \Rightarrow (\forall a \in \mathbb{R} ,\; (0 \le a) \Rightarrow ((a \le 1) \Rightarrow (\operatorname{qprod} \left(q, a\right) \le 1))))$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/Analytic/QGammaTuran/Result.qprod_le_one` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+Products of factors in the unit interval are at most one.
+
+**Theorem 1.8 (The geometric sum bounds the loss of the product from one.).**
+
+$$\forall q \in \mathbb{R} ,\; (0 \le q) \Rightarrow ((q < 1) \Rightarrow (\forall a \in \mathbb{R} ,\; (0 \le a) \Rightarrow ((a \le 1) \Rightarrow (1 - \frac{a}{1 - q} \le \operatorname{qprod} \left(q, a\right)))))$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/Analytic/QGammaTuran/Result.qprod_lower` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+The geometric sum bounds the loss of the product from one.
+
+**Theorem 1.9 (A finite prefix times the remaining infinite product equals the full product.).**
+
+$$\forall q \in \mathbb{R} ,\; (0 \le q) \Rightarrow ((q < 1) \Rightarrow (\forall a \in \mathbb{R} ,\; \forall n \in \mathbb{N} ,\; \operatorname{qprod} \left(q, a\right) = \prod_{j\in \operatorname{Finset.range} \left(n\right)} (1 - a \cdot (q)^{j}) \cdot \operatorname{qprod} \left(q, a \cdot (q)^{n}\right)))$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/Analytic/QGammaTuran/Result.qprod_split` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+A finite prefix times the remaining infinite product equals the full product.
+
+**Theorem 1.10 (A finite prefix gives both bounds, using the geometric tail loss for the lower bound.).**
+
+$$\forall q \in \mathbb{R} ,\; (0 \le q) \Rightarrow ((q < 1) \Rightarrow (\forall a \in \mathbb{R} ,\; (0 \le a) \Rightarrow ((a \le 1) \Rightarrow (\forall n \in \mathbb{N} ,\; (\prod_{j\in \operatorname{Finset.range} \left(n\right)} (1 - a \cdot (q)^{j}) \cdot \left(1 - \frac{a \cdot (q)^{n}}{1 - q}\right) \le \operatorname{qprod} \left(q, a\right)) \land (\operatorname{qprod} \left(q, a\right) \le \prod_{j\in \operatorname{Finset.range} \left(n\right)} (1 - a \cdot (q)^{j}))))))$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/Analytic/QGammaTuran/Result.qprod_bounds` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+A finite prefix gives both bounds, using the geometric tail loss for the lower bound.
+
+**Theorem 1.11 (The reciprocal q-gamma definition in q-Pochhammer notation.).**
+
+$$\forall q \in \mathbb{R} ,\; (0 < q) \Rightarrow (\forall x \in \mathbb{R} ,\; \operatorname{rqgamma} \left(q, x\right) = \frac{\operatorname{qprod} \left(q, (q)^{x}\right)}{\operatorname{qprod} \left(q, q\right) \cdot (1 - q)^{1 - x}})$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/Analytic/QGammaTuran/Result.rqgamma_eq` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+The reciprocal q-gamma definition in q-Pochhammer notation.
+
+**Theorem 1.12 (The q-gamma functional equation holds even at its reciprocal zeros.).**
+
+$$\forall q \in \mathbb{R} ,\; (0 < q) \Rightarrow ((q < 1) \Rightarrow (\forall x \in \mathbb{R} ,\; \operatorname{rqgamma} \left(q, x\right) = \frac{1 - (q)^{x}}{1 - q} \cdot \operatorname{rqgamma} \left(q, x + 1\right)))$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/Analytic/QGammaTuran/Result.rqgamma_step` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+The q-gamma functional equation holds even at its reciprocal zeros.
+
+**Definition 1.13 (Reciprocal q-gamma by its infinite product).**
+
+$$\forall q \in \mathbb{R} ,\; \forall x \in \mathbb{R} ,\; \operatorname{rqgamma} \left(q, x\right) = \frac{\prod'_{j: \mathbb{N} } (1 - (q)^{x + j})}{\prod'_{j: \mathbb{N} } (1 - (q)^{j + 1}) \cdot (1 - q)^{1 - x}}$$
 
 *Formalization.* `D5/S3/Analytic/QGammaTuran/Result.rqgamma` (`✓ std3`).
 
@@ -16,9 +160,9 @@ $$\forall q \in \mathbb{R},\; \forall x \in \mathbb{R},\; \operatorname{rqgamma}
 
 Equation (6), page 4 of arXiv:1702.03788v1: “The q-gamma function is defined by Γq(z) = (1 − q)^(1−z) (q; q)∞/(q^z; q)∞ (6) for |q| < 1 and all complex z such that q^(z+k) ≠ 1 for k ∈ N₀.” The preceding definition is “(a; q)∞ = lim n→∞ (a; q)n”, with (a; q)n the product of 1−aq^k for k from zero to n−1. For real 0<q<1 the numerator in rqgamma is (q^x;q)∞ and its denominator is (q;q)∞ times (1−q)^(1−x). Thus rqgamma is the reciprocal of equation (6) wherever Γq is finite. For 0<q<1 the denominator is nonzero. The numerator vanishes exactly when x is a nonpositive integer: a factor is zero precisely when x+j=0 for some natural j. This gives the reciprocal extension by zero used for the series coefficients.
 
-**Definition 1.2 (The exact Cauchy coefficient).**
+**Definition 1.14 (The exact Cauchy coefficient).**
 
-$$\forall q \in \mathbb{R},\; \forall g \in \mathbb{N} \to \mathbb{R},\; \forall mu \in \mathbb{R},\; \forall alpha \in \mathbb{R},\; \forall beta \in \mathbb{R},\; \forall m \in \mathbb{N},\; \operatorname{qturanCoeff}\left(q, g, mu, alpha, beta, m\right) = \sum_{k\in \operatorname{Finset.range}\left(m + 1\right)} g\left(k\right) \cdot g\left(m - k\right) \cdot (\operatorname{rqgamma}\left(q, k + mu + alpha\right) \cdot \operatorname{rqgamma}\left(q, m - k + mu + beta\right) - \operatorname{rqgamma}\left(q, k + mu\right) \cdot \operatorname{rqgamma}\left(q, m - k + mu + alpha + beta\right))$$
+$$\forall q \in \mathbb{R} ,\; \forall g \in \mathbb{N}  \to \mathbb{R} ,\; \forall mu \in \mathbb{R} ,\; \forall alpha \in \mathbb{R} ,\; \forall beta \in \mathbb{R} ,\; \forall m \in \mathbb{N} ,\; \operatorname{qturanCoeff} \left(q, g, mu, alpha, beta, m\right) = \sum_{k\in \operatorname{Finset.range} \left(m + 1\right)} g\left(k\right) \cdot g\left(m - k\right) \cdot (\operatorname{rqgamma} \left(q, k + mu + alpha\right) \cdot \operatorname{rqgamma} \left(q, m - k + mu + beta\right) - \operatorname{rqgamma} \left(q, k + mu\right) \cdot \operatorname{rqgamma} \left(q, m - k + mu + alpha + beta\right))$$
 
 *Formalization.* `D5/S3/Analytic/QGammaTuran/Result.qturanCoeff` (`✓ std3`).
 
@@ -28,9 +172,9 @@ $$\forall q \in \mathbb{R},\; \forall g \in \mathbb{N} \to \mathbb{R},\; \forall
 
 Theorem 3 uses g(µ;x)=∑ₙ₌₀∞ gₙxⁿ/Γq(µ+n) and ∆g(α,β;x)=g(µ+α;x)g(µ+β;x)−g(µ;x)g(µ+α+β;x). The coefficient of x^m in these two Cauchy products is exactly qturanCoeff: k runs from zero to m and the second index is m−k. The subtraction order is unchanged.
 
-**Definition 1.3 (The coefficient assertion for positive real shifts).**
+**Definition 1.15 (The coefficient assertion for positive real shifts).**
 
-$$claim = \left(\forall q \in \mathbb{R},\; (0 < q) \Rightarrow ((q < 1) \Rightarrow (\forall g \in \mathbb{N} \to \mathbb{R},\; (\operatorname{D5.S3.Analytic.ReciprocalGammaTuran.Defs.AdmissibleSeq}\left(g\right)) \Rightarrow (\forall mu \in \mathbb{R},\; \forall alpha \in \mathbb{R},\; \forall beta \in \mathbb{R},\; (0 < alpha) \Rightarrow ((0 < beta) \Rightarrow ((\operatorname{max}\left(-beta, -1\right) \le mu) \Rightarrow ((alpha \le beta + 1) \Rightarrow (\forall m \in \mathbb{N},\; 0 < \operatorname{qturanCoeff}\left(q, g, mu, alpha, beta, m\right))))))))\right)$$
+$$claim = \left(\forall q \in \mathbb{R} ,\; (0 < q) \Rightarrow ((q < 1) \Rightarrow (\forall g \in \mathbb{N}  \to \mathbb{R} ,\; (\operatorname{D5.S3.Analytic.ReciprocalGammaTuran.Defs.AdmissibleSeq} \left(g\right)) \Rightarrow (\forall mu \in \mathbb{R} ,\; \forall alpha \in \mathbb{R} ,\; \forall beta \in \mathbb{R} ,\; (0 < alpha) \Rightarrow ((0 < beta) \Rightarrow ((\operatorname{max} \left(-beta, -1\right) \le mu) \Rightarrow ((alpha \le beta + 1) \Rightarrow (\forall m \in \mathbb{N} ,\; 0 < \operatorname{qturanCoeff} \left(q, g, mu, alpha, beta, m\right))))))))\right)$$
 
 *Formalization.* `D5/S3/Analytic/QGammaTuran/Result.claim` (`✓ std3`).
 
@@ -42,9 +186,9 @@ Theorem 3, page 11 of arXiv:1702.03788v1: “For a real sequence {gₙ}ₙ≥₀
 
 Conjecture 1, page 12: “All conclusions of Theorem 3 are valid for all α > 0, while conditions on other parameters remain intact. In particular, µ → g(µ; x) is log-concave for each fixed 0 < x < Rg.” The claim retains α≤β+1 and asks only for the coefficient conclusion. A counterexample with that restriction refutes the coefficient conclusion under either reading of the preceding discussion about removing restrictions.
 
-The definition on page 3 states: “A sequence f : N₀ → R₊ is PF₂ (Pólya frequency sub two) or doubly positive if it is nontrivial, log-concave, fₖ² ≥ fₖ₋₁fₖ₊₁, k ∈ N, and has no internal zeros. The last claim means that fN = 0 implies either fN+i = 0 for all i ∈ N₀ or fN−i = 0 for i = 0, . . . , N.” These are exactly the nontriviality, nonnegativity, log-concavity and no-internal-zeros conditions of the reused D5.S3.Analytic.ReciprocalGammaTuran.Defs.AdmissibleSeq. Its frozen theorem admissible_one supplies the constant sequence gₙ=1.
+The definition on page 3 states: “A sequence f : N₀ → R₊ is PF₂ (Pólya frequency sub two) or doubly positive if it is nontrivial, log-concave, fₖ² ≥ fₖ₋₁fₖ₊₁, k ∈ N, and has no internal zeros. The last claim means that fN = 0 implies either fN+i = 0 for all i ∈ N₀ or fN−i = 0 for i = 0, . . . , N.” These are exactly the nontriviality, nonnegativity, log-concavity and no-internal-zeros conditions of the reused D5.S3.Analytic.ReciprocalGammaTuran.Defs.AdmissibleSeq. Its theorem admissible_one supplies the constant sequence gₙ=1.
 
-**Theorem 1.4 (A negative coefficient of degree two).**
+**Theorem 1.16 (A negative coefficient of degree two).**
 
 $$\neg claim$$
 
@@ -69,8 +213,20 @@ The conclusion concerns the coefficient clause. The function-positivity and para
 ## References
 
 - Truth anchor: `D5/S3/Analytic/QGammaTuran/Result.claim`
+- Truth anchor: `D5/S3/Analytic/QGammaTuran/Result.qprod`
+- Truth anchor: `D5/S3/Analytic/QGammaTuran/Result.qprod_bounds`
+- Truth anchor: `D5/S3/Analytic/QGammaTuran/Result.qprod_le_one`
+- Truth anchor: `D5/S3/Analytic/QGammaTuran/Result.qprod_lower`
+- Truth anchor: `D5/S3/Analytic/QGammaTuran/Result.qprod_multipliable`
+- Truth anchor: `D5/S3/Analytic/QGammaTuran/Result.qprod_ne_zero`
+- Truth anchor: `D5/S3/Analytic/QGammaTuran/Result.qprod_nonneg`
+- Truth anchor: `D5/S3/Analytic/QGammaTuran/Result.qprod_pos`
+- Truth anchor: `D5/S3/Analytic/QGammaTuran/Result.qprod_split`
+- Truth anchor: `D5/S3/Analytic/QGammaTuran/Result.qprod_step`
 - Truth anchor: `D5/S3/Analytic/QGammaTuran/Result.qturanCoeff`
 - Truth anchor: `D5/S3/Analytic/QGammaTuran/Result.result`
 - Truth anchor: `D5/S3/Analytic/QGammaTuran/Result.rqgamma`
+- Truth anchor: `D5/S3/Analytic/QGammaTuran/Result.rqgamma_eq`
+- Truth anchor: `D5/S3/Analytic/QGammaTuran/Result.rqgamma_step`
 - Dependency: [D5/S3/Analytic/ReciprocalGammaTuran/Defs](../ReciprocalGammaTuran/Defs.md)
 - Dependency: [D5/S3/Factorization/JordanCototientRecordLimitInfinity](../../Factorization/JordanCototientRecordLimitInfinity.md)
