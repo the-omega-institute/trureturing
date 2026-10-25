@@ -26,7 +26,7 @@ internal static partial class CleanLanesCommand
         }
         catch (Exception exception) when (exception is not OutOfMemoryException)
         {
-            return Refused("unreadable");
+            return IdentityReadFailure(item, exception);
         }
 
         string actualBranch;
@@ -40,7 +40,7 @@ internal static partial class CleanLanesCommand
         }
         catch (Exception exception) when (exception is not OutOfMemoryException)
         {
-            return Refused("unreadable");
+            return IdentityReadFailure(item, exception);
         }
 
         protectObservedWorktree?.Invoke(item with
@@ -68,7 +68,7 @@ internal static partial class CleanLanesCommand
         }
         catch (Exception exception) when (exception is not OutOfMemoryException)
         {
-            return Refused("unreadable");
+            return IdentityReadFailure(item, exception);
         }
 
         if (refreshed is null) return Refused("race_changed");
@@ -81,8 +81,10 @@ internal static partial class CleanLanesCommand
 
         if (refreshed.Locked != item.Locked || refreshed.LockReason != item.LockReason)
             return Refused("race_changed");
-        var gitDirectory = TryResolveRegisteredGitDirectory(item.Path, runner);
-        if (!string.Equals(gitDirectory, item.GitDirectory, StringComparison.Ordinal))
+        var observation = ObserveRegisteredGitDirectory(item.Path, runner);
+        if (observation.Failure is not null)
+            return new(LaneRemovalOutcome.QualificationFailed, observation.Failure);
+        if (!string.Equals(observation.GitDirectory, item.GitDirectory, StringComparison.Ordinal))
             return Refused("race_changed");
         var refreshedSelection = SelectForReclaim(item, baseCommit, devCommit, runner, now);
         if (refreshedSelection != selection) return Refused("race_changed");
@@ -201,6 +203,11 @@ internal static partial class CleanLanesCommand
 
     private static LaneRemovalResult Refused(string reason) =>
         new(LaneRemovalOutcome.Refused, reason);
+
+    private static LaneRemovalResult IdentityReadFailure(RegisteredWorktree item, Exception exception) =>
+        Directory.Exists(item.Path) && HasGitMarker(item.Path)
+            ? new(LaneRemovalOutcome.QualificationFailed, IdentityFailure(exception))
+            : Refused("race_changed");
 
     private static CleanLaneEvent RemovalEvent(
         RegisteredWorktree item,

@@ -107,10 +107,13 @@ class QualificationCases:
                                   "--path", str(refused), "--path", str(slow), "--path", str(unreached)])
         self.assertEqual(74, code)
         rows = [json.loads(line) for line in output.getvalue().splitlines()]
-        self.assertEqual(["refused", "failed", "deferred"], [row["outcome"] for row in rows[:-1]])
-        self.assertEqual("locked_recent", rows[0]["reason"])
-        self.assertIn("deadline", rows[1]["reason"])
-        self.assertIn("deadline", rows[2]["reason"])
+        starts = [row["path"] for row in rows if row["event"] == "worktree_qualification_started"]
+        self.assertEqual(list(map(str, (refused, slow))), starts)
+        items = [row for row in rows if row["event"] == "worktree_qualification_item"]
+        self.assertEqual(["refused", "failed", "deferred"], [row["outcome"] for row in items])
+        self.assertEqual("locked_recent", items[0]["reason"])
+        self.assertIn("deadline", items[1]["reason"])
+        self.assertIn("deadline", items[2]["reason"])
         self.assertEqual("failed", rows[-1]["status"])
 
     def pool_removal_qualification_preserves_refusal_and_operational_failure(self):

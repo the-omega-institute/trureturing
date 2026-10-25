@@ -175,7 +175,7 @@ def qualification_deadline(seconds):
         signal.signal(signal.SIGALRM, handler)
 
 
-def qualify_batch(options, emit=None):
+def qualify_batch(options, emit=None, emit_started=None):
     """Qualify independently within min(600 seconds per path, 3600 seconds).
 
     Completed rows are emitted immediately. The deadline covers snapshot reads
@@ -207,6 +207,8 @@ def qualify_batch(options, emit=None):
                 report(path, "deferred", "qualification_failed:deferred:batch qualification deadline expired")
                 continue
             try:
+                if emit_started:
+                    emit_started(path)
                 with qualification_deadline(remaining):
                     qualify(options.source, path, snapshot=snapshot)
                 report(path, "qualified", None)

@@ -510,7 +510,10 @@ def main(argv=None):
             from worktree_preservation import qualify_batch
             def emit(row):
                 print(json.dumps(dict(event="worktree_qualification_item", **row)), flush=True)
-            result = qualify_batch(options, emit if options.stream else None)
+            def emit_started(path):
+                print(json.dumps(dict(event="worktree_qualification_started", path=str(path))), flush=True)
+            result = qualify_batch(options, emit if options.stream else None,
+                                   emit_started if options.stream else None)
             if options.stream:
                 result = dict(event=result["event"], status=result["status"], item_count=len(result["items"]))
             print(json.dumps(result), flush=True)

@@ -16,6 +16,7 @@ public sealed partial class CleanLanesCommandTests
     [InlineData("duplicate")]
     [InlineData("missing")]
     [InlineData("deadline")]
+    [InlineData("active_deadline")]
     [InlineData("completed_deadline")]
     public void QualificationMappingUsesPathsAndPreservesCompletedResults(string mode)
     {
@@ -29,9 +30,12 @@ public sealed partial class CleanLanesCommandTests
             { @event = "worktree_qualification_item", row.path, row.outcome, row.reason }))) + "\n";
         output += JsonSerializer.Serialize(new { @event = "worktree_qualification",
             status = mode == "mixed" ? "failed" : "succeeded", item_count = rows.Count }) + "\n";
-        var runner = new QualificationStreamRunner(mode == "deadline" ? JsonSerializer.Serialize(new
-            { @event = "worktree_qualification_item", path = paths[0], outcome = "refused", reason = "locked_recent" }) + "\n" : output,
-            mode == "mixed" ? 74 : 0, mode is "deadline" or "completed_deadline");
+        var partial = JsonSerializer.Serialize(new
+            { @event = "worktree_qualification_item", path = paths[0], outcome = "refused", reason = "locked_recent" }) + "\n";
+        if (mode == "active_deadline") partial += JsonSerializer.Serialize(new
+            { @event = "worktree_qualification_started", path = paths[1] }) + "\n";
+        var runner = new QualificationStreamRunner(mode is "deadline" or "active_deadline" ? partial : output,
+            mode == "mixed" ? 74 : 0, mode is "deadline" or "active_deadline" or "completed_deadline");
         var candidates = paths.Concat([paths[0]]).Select(path => new RegisteredWorktree(path, "head", "branch", "metadata", true, "manual")).ToArray();
         var method = typeof(CleanLanesCommand).GetMethod("QualifyLockedLanes", BindingFlags.Static | BindingFlags.NonPublic)!;
         var results = (IDictionary)method.Invoke(null, ["/fixture", candidates, runner])!;
@@ -57,12 +61,17 @@ public sealed partial class CleanLanesCommandTests
             Assert.Contains("outer deadline", Reason(string.Empty));
             Assert.Null(Reason(paths[2]));
         }
-        else if (mode == "deadline")
+        else if (mode is "deadline" or "active_deadline")
         {
             foreach (var path in paths.Skip(1))
             {
                 Assert.True(Failed(path));
-                Assert.Contains("deferred", Reason(path));
+                if (mode == "active_deadline" && path == paths[1])
+                {
+                    Assert.DoesNotContain("deferred", Reason(path));
+                    Assert.Contains("timeout", Reason(path));
+                }
+                else Assert.Contains("deferred", Reason(path));
                 Assert.Contains("outer deadline", Reason(path));
             }
         }

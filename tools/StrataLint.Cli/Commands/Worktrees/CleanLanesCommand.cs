@@ -263,9 +263,20 @@ internal static partial class CleanLanesCommand
             incomplete = true;
             events.Add(new CleanLaneEvent("worktree_qualification", null, null, null, "failed", batchFailure.Reason!));
         }
+        // Account for every obtained failure before any later eligibility guard.
+        var failedPaths = new HashSet<string>(StringComparer.Ordinal);
+        foreach (var item in inventory.Where(item => !poolPaths.Contains(item.Path)))
+        {
+            var failure = qualifications.GetValueOrDefault(item.Path);
+            if (failure?.Failed != true && item.IdentityFailure is null) continue;
+            incomplete = true;
+            failedPaths.Add(item.Path);
+            events.Add(QualificationEvent(item, failure?.Failed == true ? failure
+                : new QualificationResult(item.IdentityFailure, QualificationOutcome.Failed)));
+        }
         foreach (var item in inventory.OrderByDescending(static item => item.Path.Length))
         {
-            if (poolPaths.Contains(item.Path)) continue;
+            if (poolPaths.Contains(item.Path) || failedPaths.Contains(item.Path)) continue;
             if (string.Equals(item.Path, inventory[0].Path, StringComparison.Ordinal)
                 || string.Equals(item.GitDirectory, commonGitDirectory, StringComparison.Ordinal))
             {
@@ -303,7 +314,6 @@ internal static partial class CleanLanesCommand
             var qualification = qualifications.GetValueOrDefault(item.Path);
             if (qualification?.Reason is not null)
             {
-                incomplete |= qualification.Failed;
                 events.Add(QualificationEvent(item, qualification));
                 continue;
             }

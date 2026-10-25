@@ -9,6 +9,35 @@ namespace StrataLint.Tests;
 public sealed partial class CleanLanesCommandTests
 {
     [Theory]
+    [InlineData(false, false)]
+    [InlineData(true, false)]
+    [InlineData(false, true)]
+    [InlineData(true, true)]
+    public void NestedQualificationFailureCannotBeHiddenByStructuralGuards(bool force, bool disappears)
+    {
+        using var fixture = new CleanLanesFixture();
+        var parent = fixture.AddLandedLane("harness/failed-parent");
+        var child = fixture.AddNestedWorktree(parent);
+        CleanLanesFixture.Git(child, "commit", "--allow-empty", "-m", "retained nested work");
+        fixture.LockLane(parent, "worktree-init:malformed");
+        var runner = fixture.CreateRunner((file, args, _) =>
+        {
+            if (file != "python3" || !IsProtocol(args, "qualify")) return null;
+            if (disappears) File.Delete(Path.Combine(parent, ".git"));
+            throw new Win32Exception("nested qualification unavailable");
+        });
+        var result = fixture.RunWithRaw(runner, force ? ["--force"] : []);
+        Assert.False(result.Success);
+        AssertQualificationPublicExit(result, force, 2);
+        Assert.Equal(1, ReadSummary(result.Output).GetProperty("failed_count").GetInt32());
+        Assert.Equal("deferred", ReadSummary(result.Output).GetProperty("extra_sweeps").GetString());
+        Assert.Contains("nested qualification unavailable", ReasonFor(result.Output, parent));
+        Assert.Contains(ReadItems(result.Output), item => ItemMatches(item, parent, "failed", ReasonFor(result.Output, parent)));
+        Assert.True(Directory.Exists(parent));
+        Assert.True(Directory.Exists(child));
+    }
+
+    [Theory]
     [InlineData(false, "timeout")]
     [InlineData(true, "timeout")]
     [InlineData(false, "unavailable")]
