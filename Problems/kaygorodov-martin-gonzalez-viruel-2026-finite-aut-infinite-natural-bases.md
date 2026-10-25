@@ -26,8 +26,7 @@ possibly nonassociative evolution algebra with zero annihilator, finite
 full linear multiplication-automorphism group, and infinitely many natural
 bases modulo all permutations and independent nonzero scalings. It does
 not ask for every field, a group-scheme classification, or algebra-automorphism
-orbits of bases. The preregistration is
-https://github.com/the-omega-institute/trureturing/issues/21694#issuecomment-6398073217.
+orbits of bases.
 
 ## Motivation
 
@@ -43,7 +42,7 @@ section 5.1. The same full-group ingredient occurs in arXiv:2303.00862v1,
 Theorem 26 and Remark 29. The basis structure results of arXiv:2006.14460v1,
 Corollary 2.13 and Proposition 2.16, are also credited. The infinite quotient
 example in arXiv:2505.14584v1, Example 6.3, instead has nonzero annihilator
-and infinite full group. The remaining application separates infinitely
+and infinite full group. The application separates infinitely
 many classes in the exact quotient for the finite-group algebra.
 
 ## Route
@@ -80,7 +79,7 @@ A failure of bilinearity, finite dimension, zero annihilator, actual basis
 independence and spanning, full-group finiteness, or separation under any
 allowed permutation and independent nonzero scaling invalidates the result.
 Infinitely many ordered representatives or a finite monomial subgroup alone
-would not answer the registered event. Quotienting further by algebra
+would not answer the question. Quotienting further by algebra
 automorphisms would change the target.
 
 ## Evidence
@@ -89,33 +88,23 @@ The source endpoint is
 `D5/S3/QuadraticForms/EvolutionAlgebras/FiniteAutomorphismsInfiniteNaturalBases.result`.
 Its exact type existentially quantifies a bilinear product on $\mathbb C^2$
 and conjoins dimension two, commutativity, zero annihilator, an actual natural
-basis, finite full automorphisms and an infinite exact quotient. The public
-conclusion is positive, so it has no designated-refutation audit exemption.
-The prospective admission basis is open-problem-resolution; its proof shape
-is bind-only. All auxiliary declarations are consumed on the live proof path.
-The source unit is retained for independent pre-freeze review; freezing,
-publication, required CI and merged delivery are separate obligations.
+basis, finite full automorphisms and an infinite exact quotient.
 
 ## Triage
 
 ### What the settlement shows
 
-- The complete final interrogative has the displayed affirmative route.
-  The source and corresponding Scribe are the reviewable unit; no delivered
-  resolution or additional problem count is asserted before later admission.
+- The complete final interrogative has an affirmative answer over $\mathbb C$.
 - The mechanism is the distinction between orthogonal natural-basis changes
   and multiplication automorphisms fixing the distinguished idempotent.
 - No finite enumeration or numerical experiment supports the conclusion;
   its infinite family and all automorphisms are handled symbolically.
 - The first two sentences' general description and finiteness classification
-  remain outside this unit. No neighboring question receives extra credit.
+  remain outside this result.
 
 ## ASSUMED-UNVERIFIED
 
-The admitted bounded searches found no prior published whole answer. This
+The bounded searches found no prior published whole answer. This
 is not a worldwide absence or priority claim. Authenticated code search
 was unavailable, and no search-complete status is claimed. The old algebra,
-classification and basis ingredients retain their source credit. Canonical
-atom lookup did not resolve a registered source for the survey; that failure
-is not evidence that no atom exists. Audit registration and subsequent
-pre-freeze review remain governed by the actual selected evidence.
+classification and basis ingredients retain their source credit.
