@@ -70,7 +70,24 @@ private lemma psd_sum_sandwich_zero
     (hK : ∀ x, (K x).PosSemidef) (X : Matrix (Fin d) (Fin d) ℂ)
     (hX : X.IsHermitian) (hsum : ∑ x, K x * X * K x = 0) :
     ∀ x, K x * X * K x = 0 := by
-  sorry
+  have hnonneg (x : Fin m) : 0 ≤ (X * (K x * X * K x)).trace := by
+    rw [sqrt_sandwich_trace (K x) X (hK x) hX]
+    exact (Matrix.posSemidef_conjTranspose_mul_self _).trace_nonneg
+  have htrace : ∑ x, (X * (K x * X * K x)).trace = 0 := by
+    rw [← Matrix.trace_sum, ← Matrix.mul_sum, hsum, mul_zero, Matrix.trace_zero]
+  intro x
+  have htx := (Finset.sum_eq_zero_iff_of_nonneg (fun x _ => hnonneg x)).mp
+    htrace x (Finset.mem_univ x)
+  have hy : CFC.sqrt (K x) * X * CFC.sqrt (K x) = 0 := by
+    apply Matrix.trace_conjTranspose_mul_self_eq_zero_iff.mp
+    rwa [← sqrt_sandwich_trace (K x) X (hK x) hX]
+  have hroot := CFC.sqrt_mul_sqrt_self (K x) (hK x).nonneg
+  calc
+    K x * X * K x = (CFC.sqrt (K x) * CFC.sqrt (K x)) * X *
+        (CFC.sqrt (K x) * CFC.sqrt (K x)) := by simp only [hroot]
+    _ = CFC.sqrt (K x) * (CFC.sqrt (K x) * X * CFC.sqrt (K x)) *
+        CFC.sqrt (K x) := by simp only [mul_assoc]
+    _ = 0 := by rw [hy, mul_zero, zero_mul]
 
 private lemma attenuation_of_conditioned
     (A : Fin m → Matrix (Fin d) (Fin d) ℂ) (hA : IsObservable A)
