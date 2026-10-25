@@ -1,0 +1,76 @@
+---
+bibkey: kalmykovkarp2018qgamma
+authors: S. I. Kalmykov and D. B. Karp
+year: 2018
+title: Inequalities for series in q-shifted factorials and q-gamma functions
+doi: 10.1016/j.jmaa.2017.11.041
+url: https://arxiv.org/abs/1702.03788
+claim: "Conjecture 1 extends Theorem 3 from positive integral alpha to all positive real alpha, including the coefficient positivity assertion under its remaining parameter restrictions."
+strata_touched:
+  - D5/S3/Analytic/QGammaTuran/Result
+license: citation-only
+triage: anchor
+---
+
+# Reciprocal q-gamma Turanian coefficients
+
+## Verified locator
+
+DOI: 10.1016/j.jmaa.2017.11.041
+
+Source: https://arxiv.org/abs/1702.03788
+
+Pinned source: https://arxiv.org/abs/1702.03788v1. Journal publication:
+*Journal of Mathematical Analysis and Applications* 460 (2018), 332–351.
+The page numbers below are the printed pages of the arXiv version.
+
+## Source statements
+
+Conjecture 1, p. 12:
+
+> All conclusions of Theorem 3 are valid for all α > 0, while conditions on other parameters remain intact. In particular, µ → g(µ; x) is log-concave for each fixed 0 < x < Rg.
+
+Theorem 3, p. 11:
+
+> For a real sequence {gₙ}ₙ≥₀ and fixed 0 < q < 1 define
+>
+> $g(\mu;x)=\displaystyle\sum_{n=0}^{\infty}\frac{g_nx^n}{\Gamma_q(\mu+n)}.$ (16)
+>
+> Suppose {gₙ}∞ₙ₌₀ is doubly positive. Then (16) has a positive radius of convergence Rg and the generalized Turánian
+>
+> $\Delta_g(\alpha,\beta;x)=g(\mu+\alpha;x)g(\mu+\beta;x)-g(\mu;x)g(\mu+\alpha+\beta;x)$
+>
+> is positive for 0 < x < Rg if α ∈ N, β > 0 and µ ≥ max(−β, −1). If, in addition, α ≤ β + 1, then Δg(α, β; x) has positive power series coefficients at all powers of x.
+
+Definition (6), p. 4:
+
+> The q-gamma function is defined by
+>
+> $\Gamma_q(z)=(1-q)^{1-z}\displaystyle\frac{(q;q)_\infty}{(q^z;q)_\infty}$ (6)
+>
+> for |q| < 1 and all complex z such that qᶻ⁺ᵏ ≠ 1 for k ∈ N₀.
+
+The sequence definition on p. 3 reads:
+
+> A sequence f : N₀ → R₊ is PF₂ (Pólya frequency sub two) or doubly positive if it is nontrivial, log-concave, fₖ² ≥ fₖ₋₁fₖ₊₁, k ∈ N, and has no internal zeros. The last claim means that fN = 0 implies either fN+i = 0 for all i ∈ N₀ or fN−i = 0 for i = 0, . . . , N.
+
+## Mathematical correspondence
+
+The reciprocal of (6), on real arguments and $0<q<1$, is
+
+$$R_q(x)=\frac{\prod_{j\ge0}(1-q^{x+j})}
+{\left(\prod_{j\ge0}(1-q^{j+1})\right)(1-q)^{1-x}}.$$
+
+The numerator vanishes at $x\in-\mathbb N_0$, giving the reciprocal
+extension by zero. This is the object `Result.rqgamma`. The existing
+`D5.S3.Analytic.ReciprocalGammaTuran.Defs.AdmissibleSeq` expresses exactly
+the printed sequence assumptions, including nonnegativity from the
+codomain $\mathbb R_+$.
+
+`Result.qturanCoeff` is the finite Cauchy coefficient of the Turanian.
+`Result.claim` states the coefficient clause for real $\alpha,\beta>0$,
+$\mu\ge\max(-\beta,-1)$ and $\alpha\le\beta+1$.
+`Result.result` refutes that clause. The function-positivity and
+log-concavity clauses are not settled by this coefficient counterexample.
+The bounded literature scope and computational evidence are stated in
+`Problems/kalmykov-karp-2018-qgamma-turanian-coefficients.md`.
