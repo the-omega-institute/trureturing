@@ -60,10 +60,10 @@ private lemma multiplicity_lower : 3 ≤ maxMultiplicity graph := by
     intro x
     rw [Module.End.mem_eigenspace_iff]
     change graph.adjMatrix ℝ *ᵥ f x = (0 : ℝ) • f x
-    unfold SimpleGraph.adjMatrix
+    unfold SimpleGraph.adjMatrix graph
     ext i
     fin_cases i <;>
-      simp [f, Matrix.mulVec, dotProduct, Fin.sum_univ_succ, graph] <;> ring
+      simp [f, Matrix.mulVec, dotProduct, Fin.sum_univ_succ] <;> ring
   let f0 := f.codRestrict (Module.End.eigenspace (graph.adjMatrix ℝ).mulVecLin 0) hf
   have hinj : Function.Injective f0 := by
     intro x y h
@@ -92,19 +92,19 @@ private noncomputable def polynomial : Matrix (Fin 5) (Fin 5) ℝ :=
   (1 / 3 : ℝ) • (graph.adjMatrix ℝ * graph.adjMatrix ℝ) - 1
 
 private lemma polynomial_swap : polynomial *ᵥ Pi.single 0 1 = Pi.single 1 1 := by
-  unfold polynomial SimpleGraph.adjMatrix
+  unfold polynomial SimpleGraph.adjMatrix graph
   funext i
   fin_cases i <;>
-    norm_num [Matrix.mulVec, Matrix.mul_apply, dotProduct, Fin.sum_univ_succ, graph,
+    norm_num [Matrix.mulVec, Matrix.mul_apply, dotProduct, Fin.sum_univ_succ,
       Pi.single_apply, Matrix.one_apply]
 
 private lemma adjacency_cubic :
     graph.adjMatrix ℝ * graph.adjMatrix ℝ * graph.adjMatrix ℝ =
       (6 : ℝ) • graph.adjMatrix ℝ := by
-  unfold SimpleGraph.adjMatrix
+  unfold SimpleGraph.adjMatrix graph
   ext i j
   fin_cases i <;> fin_cases j <;>
-    norm_num [Matrix.mul_apply, Fin.sum_univ_succ, graph]
+    norm_num [Matrix.mul_apply, Fin.sum_univ_succ]
 
 private lemma eigenvalue_support (θ : ℝ) (v : Fin 5 → ℝ) (hne : v ≠ 0)
     (hv : graph.adjMatrix ℝ *ᵥ v = θ • v) : θ = 0 ∨ θ ^ 2 = 6 := by
@@ -208,6 +208,7 @@ theorem result : ¬ claim := by
   have hb := h 5 graph graph_connected {0, 1} pairwise_witness
   have hc : ({0, 1} : Finset (Fin 5)).card = 2 := by decide
   rw [hc] at hb
-  exact bound_contradiction (maxMultiplicity graph) multiplicity_lower (by simpa using hb)
+  change (2 : ℝ) ≤ 5 / (maxMultiplicity graph : ℝ) at hb
+  exact bound_contradiction (maxMultiplicity graph) multiplicity_lower hb
 
 end D5.S3.Quantum.Dynamics.StrongCospectralMultiplicityBoundRefutation
