@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:7e2f4affba9f7ee63fe0334dc7e058b6798a8e916aafee4f60e87ef68da39a06
+  normalized_sha256: sha256:7e2f4affba9f7ee63fe0334dc7e058b6798a8e916aafee4f60e87ef68da39a06
+cas_ref: sha256:7e2f4affba9f7ee63fe0334dc7e058b6798a8e916aafee4f60e87ef68da39a06
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 仅描述结构主义如何采用同构作为对象身份准则，没有断言给定对象之间存在同构。
+    previous_atom_id: ae3c20a51c920aec6d40ad41499ee6d44a6d4d0f0d8c3ef6bef345777cdafcfa
+    next_atom_id: b7e680ad9ea9311c63e33c4672ee871dae2a436a5b12794353e2d1e0c2f8d5f2

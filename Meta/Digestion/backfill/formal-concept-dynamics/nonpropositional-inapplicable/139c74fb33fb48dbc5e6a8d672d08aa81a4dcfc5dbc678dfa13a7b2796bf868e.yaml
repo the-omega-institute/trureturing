@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:139c74fb33fb48dbc5e6a8d672d08aa81a4dcfc5dbc678dfa13a7b2796bf868e
+  normalized_sha256: sha256:139c74fb33fb48dbc5e6a8d672d08aa81a4dcfc5dbc678dfa13a7b2796bf868e
+cas_ref: sha256:139c74fb33fb48dbc5e6a8d672d08aa81a4dcfc5dbc678dfa13a7b2796bf868e
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: Declares a comparison span and a target family. It asserts neither existence of a compatible span nor equality of transported targets.
+    previous_atom_id: a6346e4c076c54b43aba70934d0af3c15eb9b8b4d24d78c5e3781ab6f9e7850d
+    next_atom_id: 22966d8d38b20aa58cfefdd4b4a370d8f6395cdaba0e8f9f5ee236e275105a95

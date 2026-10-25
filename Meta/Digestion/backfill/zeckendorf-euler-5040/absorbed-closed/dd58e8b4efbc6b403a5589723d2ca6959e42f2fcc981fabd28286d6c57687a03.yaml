@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:dd58e8b4efbc6b403a5589723d2ca6959e42f2fcc981fabd28286d6c57687a03
+  normalized_sha256: sha256:dd58e8b4efbc6b403a5589723d2ca6959e42f2fcc981fabd28286d6c57687a03
+cas_ref: sha256:dd58e8b4efbc6b403a5589723d2ca6959e42f2fcc981fabd28286d6c57687a03
+coverage_gids:
+  - gid: D5/S3/Arith/GoldenResource5040PriceInterval.golden_layer_marginal_lt_one_div_nat
+    target_statement_id: sha256:967c302aac9df317d27eafc48502dd096d4228fa25dbabff6f50ac5f5e70391e
+  - gid: D5/S3/Arith/GoldenResource5040PriceInterval.one_div_nat_lt_golden_layer_marginal
+    target_statement_id: sha256:8a165651317e221200fcd0bbe084d10e5c46ecffc809eb66b9c4f577118abe4b
+receipts:
+  unresolved_subitems: []

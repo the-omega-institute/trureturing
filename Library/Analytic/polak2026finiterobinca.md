@@ -2853,3 +2853,17 @@ HCB8 retains their exact tangent loss. RH and strict Robin for every
 integer above 5040 remain unresolved. These are paper applications
 of the cited inventory, pressure, curvature and prime-count inputs,
 with no Lean certification or literature-priority claim.
+
+
+## A truncated Fourier law in the same complete finite consumer
+
+The [truncated Fourier-law application](../Estimation/trureturing2026bandlimitedrobin.md),
+BFR1--BFR10, reuses GAK's original five analytic premises and unrestricted
+reserve. Its positive mean-normalized law has a second-moment allowance
+near $10/H^2$ and complete complex tail response below $10^{-26}$ at
+$H=3\cdot10^{12}$. The same full transport then pays strict Robin for
+each integer in $8\cdot10^{46}<\log n\le17\cdot10^{47}$, retaining its
+own nonnegative price defect. This extends the finite slab without
+CDR2's additional $7/8$ ceiling or a new density premise. It is a
+paper-level conditional application, not a new zero verification,
+Lean certification, least-counterexample bound or unbounded RH estimate.

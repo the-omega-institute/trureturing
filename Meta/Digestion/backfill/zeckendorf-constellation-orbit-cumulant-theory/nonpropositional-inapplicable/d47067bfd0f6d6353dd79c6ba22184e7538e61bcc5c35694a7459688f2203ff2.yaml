@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:d47067bfd0f6d6353dd79c6ba22184e7538e61bcc5c35694a7459688f2203ff2
+  normalized_sha256: sha256:d47067bfd0f6d6353dd79c6ba22184e7538e61bcc5c35694a7459688f2203ff2
+cas_ref: sha256:d47067bfd0f6d6353dd79c6ba22184e7538e61bcc5c35694a7459688f2203ff2
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: Defines the joint exponential generating functional and introduces the connected orbit-cumulant definition, without a derivative identity beyond that definition.
+    previous_atom_id: d1b6fbd5a5dbfb39efbb815a682a6cc44f1804fc7fee88409a6d26487a78fdbd
+    next_atom_id: 19b79ed45dfbdfc202687fea594349fcac92584c7ffe5c9bdf416404297dad77

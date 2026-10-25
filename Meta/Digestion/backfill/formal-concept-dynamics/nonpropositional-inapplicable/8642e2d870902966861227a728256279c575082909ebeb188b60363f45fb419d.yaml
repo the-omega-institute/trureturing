@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:8642e2d870902966861227a728256279c575082909ebeb188b60363f45fb419d
+  normalized_sha256: sha256:8642e2d870902966861227a728256279c575082909ebeb188b60363f45fb419d
+cas_ref: sha256:8642e2d870902966861227a728256279c575082909ebeb188b60363f45fb419d
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 分布式可靠性的概念要素提纲，未指定阈值、概率或可靠性谓词，因而没有可核验的充分条件定理。
+    previous_atom_id: 6a2f72bcac76c3049a10bf268d824e64420e5927e8707888b021688888d450e4
+    next_atom_id: fef2dbe09bdb9b6698376f36075366fb39776ae7a04685f2eb5dcd82ee080ec9

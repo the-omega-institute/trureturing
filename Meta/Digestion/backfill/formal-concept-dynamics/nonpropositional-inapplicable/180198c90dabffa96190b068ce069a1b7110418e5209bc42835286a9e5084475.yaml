@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:180198c90dabffa96190b068ce069a1b7110418e5209bc42835286a9e5084475
+  normalized_sha256: sha256:180198c90dabffa96190b068ce069a1b7110418e5209bc42835286a9e5084475
+cas_ref: sha256:180198c90dabffa96190b068ce069a1b7110418e5209bc42835286a9e5084475
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 列出定位缺陷首次显现接口这一审计问题，没有断言特定接口出错。
+    previous_atom_id: fa4ce011075ad86c4949e5a11f70d98a13b18e4e46b194ad1961dfda99e578df
+    next_atom_id: 1a2476e6c751d74346cf50289975099c00990f3f337228ae9452c7c95e279822

@@ -1,0 +1,17 @@
+fingerprints:
+  raw_sha256: sha256:ebd3b5f4bcbf5a2c44899607f710daf24c51e6571a7229193d7a8eaf214cc82e
+  normalized_sha256: sha256:ebd3b5f4bcbf5a2c44899607f710daf24c51e6571a7229193d7a8eaf214cc82e
+cas_ref: sha256:ebd3b5f4bcbf5a2c44899607f710daf24c51e6571a7229193d7a8eaf214cc82e
+coverage_gids:
+  - gid: D5/S3/ConceptDynamics/Epistemic/RobustKnowledgeRefinementMonotonicity.robust_knowledge_monotone_under_refinement
+    target_statement_id: sha256:6f48aadde44ed79cf63db5229b5a247d72589f230febf00214752bd883861efc
+  - gid: D5/S3/ConceptDynamics/Postprocessing/InjectivePostprocessingKernelEquality.injective_postprocessing_preserves_kernel
+    target_statement_id: sha256:d084f9c1b6a56de1ded5b685567b631c12c2fad69ac6149038d5ffa32fa6de99
+  - gid: D5/S3/ConceptDynamics/Postprocessing/PostprocessingKernelMonotonicity.postprocessing_kernel_mono
+    target_statement_id: sha256:4173c1ba9673e8496230b83e66c0a1d066fb01e91f1f9a094a45b0765dd0605f
+  - gid: D5/S3/ConceptDynamics/Postprocessing/PostprocessingStrictLossWitness.collapsed_distinction_witnesses_strict_loss
+    target_statement_id: sha256:8f457f8d142c49f6ec1a94e25188cad7343baf457fc3aafc2d6b640ee610d9c6
+  - gid: D5/S3/ConceptDynamics/Postprocessing/RecoverablePostprocessingKernelEquality.recoverable_postprocessing_preserves_kernel
+    target_statement_id: sha256:53ebafc59ae25d0c4abd12419eeecda3a90079744b06db16cf54a060562e2aeb
+receipts:
+  unresolved_subitems: []

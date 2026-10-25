@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:1d09be5cc23b8815707f09b83f821b6cac4ddf738ffa81789e8a95845520b2a7
+  normalized_sha256: sha256:1d09be5cc23b8815707f09b83f821b6cac4ddf738ffa81789e8a95845520b2a7
+cas_ref: sha256:1d09be5cc23b8815707f09b83f821b6cac4ddf738ffa81789e8a95845520b2a7
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: Interpretive list fragment naming ordinary Zeckendorf serialization, without a coding theorem.
+    previous_atom_id: 6302941224242ce7792ea8f7089922914ba1d8024ce68ee6350ff2a8d3e3435d
+    next_atom_id: 3e2af0c3162504c8e4c16073427de1c5af4dfaec7e44222fe598fd2f40b67dbf

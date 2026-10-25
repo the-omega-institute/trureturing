@@ -125,7 +125,7 @@ private lemma twirl_real_unit_invariance (g : ι → R)
 end
 noncomputable section
 variable {R : Type*} [Ring R] [Algebra ℂ R] [StarRing R] [StarModule ℂ R]
-private lemma CAR_nilpotent (b : R) (hbb : b * b + b * b = 0) : b * b = 0 := by
+lemma CAR_nilpotent (b : R) (hbb : b * b + b * b = 0) : b * b = 0 := by
   have hhalf := congrArg (fun X : R => (1 / 2 : ℂ) • X) hbb
   calc
     b * b = (1 / 2 : ℂ) • (b * b + b * b) := by module
