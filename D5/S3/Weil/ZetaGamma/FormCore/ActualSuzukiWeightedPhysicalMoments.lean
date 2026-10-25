@@ -76,7 +76,7 @@ private theorem dual_affine_cube_domain_integral (N d K : ℝ)
   let φ : ℝ → ℝ := fun x => 6 * x - d
   have hφ : ∀ x ∈ Ioi N, HasDerivWithinAt φ 6 (Ioi N) x := by
     intro x hx
-    simpa only [φ, mul_one] using
+    simpa only [φ, mul_one, id_eq] using
       (((hasDerivAt_id x).const_mul 6).sub_const d).hasDerivWithinAt
   have hInj : InjOn φ (Ioi N) := by
     intro x hx y hy hxy
@@ -106,6 +106,7 @@ private theorem dual_affine_cube_domain_integral (N d K : ℝ)
   have hi : IntegrableOn (fun x : ℝ => K / (6 * x - d) ^ 3) (Ioi N) := by
     apply (hScaled.const_mul (K / 6)).congr
     exact Eventually.of_forall fun x => by
+      dsimp only
       rw [dual_rpow_neg_three]
       ring
   have hChange : (∫ y : ℝ in Ioi (6 * N - d), y ^ (-3 : ℝ)) =
@@ -118,7 +119,10 @@ private theorem dual_affine_cube_domain_integral (N d K : ℝ)
     _ = (K / 6) * ∫ x : ℝ in Ioi N, 6 * (6 * x - d) ^ (-3 : ℝ) := by
       rw [← integral_const_mul]
       apply integral_congr_ae
-      exact Eventually.of_forall fun x => by rw [dual_rpow_neg_three]; ring
+      exact Eventually.of_forall fun x => by
+        dsimp only
+        rw [dual_rpow_neg_three]
+        ring
     _ = (K / 6) * ∫ y : ℝ in Ioi (6 * N - d), y ^ (-3 : ℝ) := by rw [hChange]
     _ = (K / 6) * (-(6 * N - d) ^ (-2 : ℝ) / (-2 : ℝ)) := by
       rw [integral_Ioi_rpow_of_lt (by norm_num : (-3 : ℝ) < -1) hB]
@@ -135,7 +139,7 @@ private theorem dual_affine_cube_antitone (N d K : ℝ)
   have hx0 : 0 < 6 * x - d := by linarith [show N ≤ x from hx]
   have hy0 : 0 < 6 * y - d := by linarith [show N ≤ y from hy]
   exact div_le_div_of_nonneg_left hK (pow_pos hx0 3)
-    (by gcongr; linarith)
+    (by gcongr)
 
 private theorem dual_majorant00_domain_integral :
     IntegrableOn dualMajorant00 (Ioi 2) ∧
@@ -156,7 +160,7 @@ private theorem dual_coefficient00_positive_formula (n : ℕ) :
       (dualRate n * (dualRate n - 5 / 4) * (dualRate n - 5 / 2)) := by
   have hb := dual_rate_ge_five n
   unfold dualCoefficient00
-  field_simp [show dualRate n ≠ 0 by linarith,
+  field_simp only [show dualRate n ≠ 0 by linarith,
     show dualRate n - 5 / 4 ≠ 0 by linarith,
     show dualRate n - 5 / 2 ≠ 0 by linarith]
   <;> ring
@@ -189,7 +193,7 @@ private theorem dual_majorant00_nat_summable :
     (dual_affine_cube_antitone 2 (7 / 2) (25 / 8) (by norm_num) (by norm_num))
     dual_majorant00_domain_integral.1
   intro x hx
-  unfold dualMajorant00
+  change 0 ≤ (25 / 8 : ℝ) / (6 * x - 7 / 2) ^ 3
   have : 0 < 6 * x - 7 / 2 := by linarith [show (2 : ℝ) < x from hx]
   positivity
 
@@ -199,7 +203,7 @@ private theorem dual_majorant11_nat_summable :
     (dual_affine_cube_antitone 3 1 2 (by norm_num) (by norm_num))
     dual_majorant11_domain_integral.1
   intro x hx
-  unfold dualMajorant11
+  change 0 ≤ (2 : ℝ) / (6 * x - 1) ^ 3
   have : 0 < 6 * x - 1 := by linarith [show (3 : ℝ) < x from hx]
   positivity
 
@@ -210,18 +214,18 @@ private theorem dual_coefficient00_summable : Summable dualCoefficient00 := by
     (summable_nat_add_iff 1).2 dual_majorant00_nat_summable
 
 private theorem dual_coefficient11_summable : Summable dualCoefficient11 := by
-  simpa only [dualCoefficient11, dualMajorant11, dualRate, Nat.cast_add, Nat.cast_one] using
-    (summable_nat_add_iff 1).2 dual_majorant11_nat_summable
+  apply ((summable_nat_add_iff 1).2 dual_majorant11_nat_summable).congr
+  intro n
+  simp only [dualCoefficient11, dualMajorant11, dualRate, Nat.cast_add, Nat.cast_one]
 
 private theorem dual_coefficient00_series_bound :
     (∑' n : ℕ, dualCoefficient00 n) ≤ 3 / 40 := by
   have htail : (∑' n : ℕ, dualCoefficient00 (n + 2)) ≤ 25 / 6936 := by
     calc
       _ ≤ ∑' n : ℕ, dualMajorant00 ((n + 2 + 1 : ℕ) : ℝ) := by
-        apply tsum_le_tsum
+        apply ((summable_nat_add_iff 2).2 dual_coefficient00_summable).tsum_le_tsum
           (fun n => by simpa only [Nat.cast_add, Nat.cast_one] using
             dual_coefficient00_majorant (n + 2))
-          ((summable_nat_add_iff 2).2 dual_coefficient00_summable)
         simpa only [Nat.add_assoc] using
           (summable_nat_add_iff 3).2 dual_majorant00_nat_summable
       _ ≤ ∫ x : ℝ in Ioi 2, dualMajorant00 x := by
@@ -229,7 +233,7 @@ private theorem dual_coefficient00_series_bound :
           (dual_affine_cube_antitone 2 (7 / 2) (25 / 8) (by norm_num) (by norm_num))
           dual_majorant00_domain_integral.1
         intro x hx
-        unfold dualMajorant00
+        change 0 ≤ (25 / 8 : ℝ) / (6 * x - 7 / 2) ^ 3
         have : 0 < 6 * x - 7 / 2 := by linarith [show (2 : ℝ) < x from hx]
         positivity
       _ = _ := dual_majorant00_domain_integral.2
@@ -246,9 +250,11 @@ private theorem dual_coefficient11_series_bound :
     have h := AntitoneOn.tsum_comp_add_le_integral 3
       (dual_affine_cube_antitone 3 1 2 (by norm_num) (by norm_num))
       dual_majorant11_domain_integral.1 (fun x hx => by
-        unfold dualMajorant11
+        change 0 ≤ (2 : ℝ) / (6 * x - 1) ^ 3
         have : 0 < 6 * x - 1 := by linarith [show (3 : ℝ) < x from hx]
         positivity)
+    change (∑' n : ℕ, dualMajorant11 ((n + 3 + 1 : ℕ) : ℝ)) ≤
+      ∫ x : ℝ in Ioi 3, dualMajorant11 x at h
     rw [dual_majorant11_domain_integral.2] at h
     have hsum : (∑' n : ℕ, dualCoefficient11 (n + 3)) =
         ∑' n : ℕ, dualMajorant11 ((n + 3 + 1 : ℕ) : ℝ) := by
@@ -306,8 +312,11 @@ private theorem dual_layer00_domain_integral (n : ℕ) :
     funext (dual_layer00_expansion n)
   rw [hfun]
   refine ⟨(hA.1.sub (hB.1.const_mul 2)).add hC.1, ?_⟩
-  rw [integral_add (hA.1.sub (hB.1.const_mul 2)) hC.1,
-    integral_sub hA.1 (hB.1.const_mul 2), integral_const_mul, hA.2, hB.2, hC.2]
+  have hAdd := integral_add (hA.1.sub (hB.1.const_mul 2)) hC.1
+  have hSub := integral_sub hA.1 (hB.1.const_mul 2)
+  dsimp only [Pi.sub_apply, Pi.add_apply] at hAdd hSub
+  dsimp only
+  rw [hAdd, hSub, integral_const_mul, hA.2, hB.2, hC.2]
   rfl
 
 private theorem dual_layer11_domain_integral (n : ℕ) :
@@ -445,7 +454,10 @@ private theorem dual_time00_domain_series :
     (fun n => (dual_layer00_domain_integral n).1)
     (fun n => (dual_layer00_domain_integral n).2)
     dual_coefficient00_summable
-    (by unfold dualTimeDensity00; fun_prop)
+    (by
+      apply Measurable.aestronglyMeasurable
+      unfold dualTimeDensity00
+      fun_prop)
   · filter_upwards [self_mem_ae_restrict measurableSet_Ioi] with t ht
     change 0 < t at ht
     have hden : 0 < Real.exp (6 * t) - 1 := by
@@ -467,7 +479,10 @@ private theorem dual_time11_domain_series :
     (fun n => (dual_layer11_domain_integral n).1)
     (fun n => (dual_layer11_domain_integral n).2)
     dual_coefficient11_summable
-    (by unfold dualTimeDensity11; fun_prop)
+    (by
+      apply Measurable.aestronglyMeasurable
+      unfold dualTimeDensity11
+      fun_prop)
   · filter_upwards [self_mem_ae_restrict measurableSet_Ioi] with t ht
     change 0 < t at ht
     have hden : 0 < Real.exp (6 * t) - 1 := by
@@ -487,6 +502,7 @@ private theorem dual_log_coordinate00 (t : ℝ) :
     ring
   have h6 : (Real.exp t) ^ (6 : ℕ) = Real.exp (6 * t) := by
     rw [← Real.exp_nat_mul]
+    norm_num
   unfold dualDensity00 dualTimeDensity00
   rw [hp, h6]
   ring
@@ -495,6 +511,7 @@ private theorem dual_log_coordinate11 (t : ℝ) :
     Real.exp t * dualDensity11 (Real.exp t) = dualTimeDensity11 t := by
   have h6 : (Real.exp t) ^ (6 : ℕ) = Real.exp (6 * t) := by
     rw [← Real.exp_nat_mul]
+    norm_num
   unfold dualDensity11 dualTimeDensity11
   rw [Real.log_exp, h6]
   ring
@@ -549,7 +566,9 @@ private theorem original_gamma_excess_nonneg (F : ℝ → ℂ) :
   apply integral_nonneg_of_ae
   filter_upwards [ae_restrict_mem measurableSet_Ioi] with x hx
   have hxpi : 1 ≤ x / Real.pi :=
-    (le_div_iff₀ Real.pi_pos).2 (by linarith [hx])
+    (le_div_iff₀ Real.pi_pos).2 (by
+      have hx' : Real.pi < x := hx
+      linarith)
   exact mul_nonneg (sub_nonneg.2 (one_le_pow₀ hxpi)) (sq_nonneg _)
 
 
@@ -660,8 +679,10 @@ private theorem original_physical_weighted_cs
   let f : ℝ → ℂ := fun x => ((k x / Real.sqrt (originalPhysicalExcessWeight x) : ℝ) : ℂ)
   let g : ℝ → ℂ := fun x => ((Real.sqrt (originalPhysicalExcessWeight x) : ℝ) : ℂ) * U x
   have hfmeas : AEStronglyMeasurable f (volume.restrict (Ioi Real.pi)) := by
-    dsimp [f, originalPhysicalExcessWeight]
-    fun_prop
+    dsimp only [f]
+    apply Measurable.aestronglyMeasurable
+    exact Complex.continuous_ofReal.measurable.comp
+      (hkm.div (by unfold originalPhysicalExcessWeight; fun_prop))
   have hgmeas : AEStronglyMeasurable g (volume.restrict (Ioi Real.pi)) := by
     exact ((show Continuous
       (fun x : ℝ => ((Real.sqrt (originalPhysicalExcessWeight x) : ℝ) : ℂ)) by
@@ -686,7 +707,7 @@ private theorem original_physical_weighted_cs
       (fun x : ℝ => originalPhysicalExcessWeight x * ‖U x‖ ^ 2)
       (volume.restrict (Ioi Real.pi)) := by
     have hs := (memLp_two_iff_integrable_sq_norm hU.1.aestronglyMeasurable).1 hU.1
-    simpa only [originalPhysicalExcessWeight, sub_mul, one_mul] using hU.2.sub hs
+    simpa only [Pi.sub_apply, originalPhysicalExcessWeight, sub_mul, one_mul] using hU.2.sub hs
   have hgint : Integrable (fun x : ℝ => ‖g x‖ ^ 2)
       (volume.restrict (Ioi Real.pi)) := hUint.congr hgsq.symm
   have hf : MemLp f 2 (volume.restrict (Ioi Real.pi)) :=
