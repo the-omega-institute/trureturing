@@ -6,7 +6,7 @@
    utility: kind=certified-instance; basis=refutes=gid:D5/S3/Quantum/Decoherence/DephasingTwoClassicalityBlockRefutation.claim; result=D5/S3/Quantum/Decoherence/DephasingTwoClassicalityBlockRefutation.result; claim=D5/S3/Quantum/Decoherence/DephasingTwoClassicalityBlockRefutation.claim
    digest: A block measurement refutes MUB necessity for time-dependent two-classical dephasing. -/
 
-import D5.S3.Quantum.Decoherence.ProjectedUnistochasticDynamics
+import D5.S3.Quantum.Dynamics.PositivePauliClockOrder
 import D5.S3.Observer.Existence.EmpiricalReflexiveSeparation
 
 /-! A three-level block measurement has consistent, nonconstant two-time statistics. -/
@@ -19,6 +19,8 @@ namespace D5.S3.Quantum.Decoherence.DephasingTwoClassicalityBlockRefutation
 open scoped BigOperators ComplexOrder Kronecker Matrix
 open D5.S3.Quantum.Decoherence.ProjectedUnistochasticDynamics
 open D5.S3.Quantum.PureState.PureStateHandshake
+open D5.S3.Quantum.FiniteDimensional (qubitZ qubit_weyl_star)
+open D5.S3.Quantum.Dynamics.PositivePauliClockOrder (sigma mixedState)
 
 noncomputable section
 
@@ -89,9 +91,7 @@ def claim : Prop :=
     notFullyCompatible V → twoClassical Hs σ ρ V t₀ → timeDependent Hs σ ρ V t₀ →
     ∀ j x, Complex.normSq (V.val j x) = 1 / (d : ℝ)
 
-private def bathZ : Matrix (Fin 2) (Fin 2) ℂ := Matrix.diagonal ![1, -1]
-private def blocks : Fin 3 → Matrix (Fin 2) (Fin 2) ℂ := ![0, bathZ, (2 : ℂ) • bathZ]
-private def bathState : Matrix (Fin 2) (Fin 2) ℂ := (1 / 2 : ℂ) • 1
+private def blocks : Fin 3 → Matrix (Fin 2) (Fin 2) ℂ := ![0, qubitZ, (2 : ℂ) • qubitZ]
 private def systemState : Matrix (Fin 3) (Fin 3) ℂ := Matrix.diagonal ![1/2, 1/3, 1/6]
 private def amplitude : ℂ := (Real.sqrt 2 : ℂ) / 2
 private def measurementRaw : Matrix (Fin 3) (Fin 3) ℂ :=
@@ -134,22 +134,22 @@ private theorem projector_formula (x : Fin 3) :
     linear_combination amplitude_sq
 
 private theorem states_valid :
-    bathState.PosSemidef ∧ Matrix.trace bathState = 1 ∧
+    sigma.PosSemidef ∧ Matrix.trace sigma = 1 ∧
     systemState.PosSemidef ∧ Matrix.trace systemState = 1 ∧
     (∀ i j, i ≠ j → systemState i j = 0) ∧ systemState ≠ (1 / (3 : ℂ)) • 1 := by
   refine ⟨?_, ?_, ?_, ?_, ?_, ?_⟩
-  · unfold bathState
+  · unfold sigma
     rw [← Matrix.diagonal_one, ← Matrix.diagonal_smul]
     apply Matrix.PosSemidef.diagonal
     intro i
     norm_num [Complex.le_def]
-  · unfold bathState Matrix.trace
-    norm_num [Fin.sum_univ_succ]
+  · exact mixedState.property.2
   · unfold systemState
     apply Matrix.PosSemidef.diagonal
     intro i
     fin_cases i <;> norm_num [Complex.le_def]
-  · unfold systemState Matrix.trace
+  · unfold systemState
+    rw [Matrix.trace_diagonal]
     norm_num [Fin.sum_univ_succ]
   · intro i j hij
     exact Matrix.diagonal_apply_ne _ hij
@@ -158,11 +158,15 @@ private theorem states_valid :
     norm_num [systemState] at hh
 
 private theorem blocks_hermitian : ∀ j, (blocks j).IsHermitian := by
+  have hz : qubitZ.IsHermitian := by
+    unfold Matrix.IsHermitian
+    rw [← Matrix.star_eq_conjTranspose]
+    exact qubit_weyl_star.2.2.1
   intro j
-  unfold Matrix.IsHermitian
-  fin_cases j <;>
-    norm_num [blocks, bathZ, Matrix.diagonal_conjTranspose,
-      Matrix.conjTranspose_smul]
+  fin_cases j
+  · exact Matrix.isHermitian_zero
+  · exact hz
+  · exact hz.smul (by change star (2 : ℂ) = 2; norm_num)
 
 private def energies (k : Fin 3 × Fin 2) : ℂ := (k.1 : ℂ) * ![1, -1] k.2
 
@@ -170,7 +174,7 @@ private theorem hamiltonian_diagonal : hamiltonian blocks = Matrix.diagonal ener
   ext ⟨i, b⟩ ⟨j, c⟩
   unfold hamiltonian basisProjector
   fin_cases i <;> fin_cases b <;> fin_cases j <;> fin_cases c <;>
-    norm_num [blocks, bathZ, energies, Fin.sum_univ_succ, Matrix.sum_apply,
+    norm_num [blocks, qubitZ, energies, Fin.sum_univ_succ, Matrix.sum_apply,
       Matrix.kronecker_apply, Matrix.single_apply, Matrix.diagonal_apply]
 
 private theorem propagator_diagonal (t : ℝ) :
@@ -211,16 +215,16 @@ private theorem evolution_entries (t : ℝ)
       ring
 
 private theorem initial_stationary (t : ℝ) :
-    unitaryEvolution (propagator blocks t) (systemState ⊗ₖ bathState) =
-      systemState ⊗ₖ bathState := by
+    unitaryEvolution (propagator blocks t) (systemState ⊗ₖ sigma) =
+      systemState ⊗ₖ sigma := by
   ext ⟨i, b⟩ ⟨j, c⟩
   rw [evolution_entries]
   fin_cases i <;> fin_cases b <;> fin_cases j <;> fin_cases c <;>
-    norm_num [systemState, bathState, Matrix.kronecker_apply, Matrix.diagonal_apply]
+    norm_num [systemState, sigma, Matrix.kronecker_apply, Matrix.diagonal_apply]
 
 private theorem post_measurement (x : Fin 3) :
-    luders measurement x (systemState ⊗ₖ bathState) =
-      ![(5/12 : ℂ), 5/12, 1/6] x • (projectors x ⊗ₖ bathState) := by
+    luders measurement x (systemState ⊗ₖ sigma) =
+      ![(5/12 : ℂ), 5/12, 1/6] x • (projectors x ⊗ₖ sigma) := by
   unfold luders
   rw [projector_formula, ← Matrix.mul_kronecker_mul, ← Matrix.mul_kronecker_mul,
     one_mul, mul_one, ← Matrix.smul_kronecker]
@@ -232,11 +236,11 @@ private theorem post_measurement (x : Fin 3) :
     norm_num [projectors, systemState, Fin.sum_univ_succ, Matrix.diagonal_apply]
 
 private theorem one_time (t : ℝ) (y : Fin 3) :
-    prob1 blocks bathState systemState measurement 0 y t = ![(5/12 : ℂ), 5/12, 1/6] y := by
+    prob1 blocks sigma systemState measurement 0 y t = ![(5/12 : ℂ), 5/12, 1/6] y := by
   unfold prob1
   rw [initial_stationary, post_measurement, Matrix.trace_smul, Matrix.trace_kronecker]
   unfold Matrix.trace
-  fin_cases y <;> norm_num [projectors, bathState, Fin.sum_univ_succ]
+  fin_cases y <;> norm_num [projectors, sigma, Fin.sum_univ_succ]
 
 private def jointLaw (u : ℝ) : Matrix (Fin 3) (Fin 3) ℂ :=
   let a := 5 * (2 + Complex.exp (Complex.I * (u : ℂ)) +
@@ -262,26 +266,26 @@ private theorem luders_trace (y : Fin 3)
   rw [projector_formula, Matrix.trace_mul_cycle, ← Matrix.mul_kronecker_mul, hp, one_mul]
 
 private theorem two_time (t₁ t₂ : ℝ) (x y : Fin 3) :
-    prob2 blocks bathState systemState measurement 0 y t₂ x t₁ = jointLaw (t₂ - t₁) y x := by
+    prob2 blocks sigma systemState measurement 0 y t₂ x t₁ = jointLaw (t₂ - t₁) y x := by
   unfold prob2
   rw [initial_stationary, post_measurement, luders_trace]
   have he : unitaryEvolution (propagator blocks (t₂ - t₁))
-      (![(5/12 : ℂ), 5/12, 1/6] x • (projectors x ⊗ₖ bathState)) =
+      (![(5/12 : ℂ), 5/12, 1/6] x • (projectors x ⊗ₖ sigma)) =
       fun i j => Complex.exp (-((t₂ - t₁ : ℝ) : ℂ) * Complex.I * (energies i - energies j)) *
-        (![(5/12 : ℂ), 5/12, 1/6] x • (projectors x ⊗ₖ bathState)) i j := by
+        (![(5/12 : ℂ), 5/12, 1/6] x • (projectors x ⊗ₖ sigma)) i j := by
     ext i j
     exact evolution_entries _ _ i j
   rw [he]
   change (∑ i : Fin 3 × Fin 2, ∑ j : Fin 3 × Fin 2,
     (projectors y i.1 j.1 * (1 : Matrix (Fin 2) (Fin 2) ℂ) i.2 j.2) *
       (Complex.exp (-((t₂ - t₁ : ℝ) : ℂ) * Complex.I * (energies j - energies i)) *
-        (![(5/12 : ℂ), 5/12, 1/6] x * (projectors x j.1 i.1 * bathState j.2 i.2)))) = _
+        (![(5/12 : ℂ), 5/12, 1/6] x * (projectors x j.1 i.1 * sigma j.2 i.2)))) = _
   fin_cases x <;> fin_cases y <;>
     norm_num [Fintype.sum_prod_type, Fin.sum_univ_succ, Matrix.kroneckerMap_apply,
-      energies, projectors, bathState, jointLaw,
+      energies, projectors, sigma, jointLaw,
       neg_mul, mul_comm ((t₂ - t₁ : ℝ) : ℂ) Complex.I] <;> ring
 
-private theorem consistency : twoClassical blocks bathState systemState measurement 0 := by
+private theorem consistency : twoClassical blocks sigma systemState measurement 0 := by
   intro t₁ t₂ _ _
   refine ⟨?_, ?_, ?_⟩
   · simp only [one_time]
@@ -293,7 +297,7 @@ private theorem consistency : twoClassical blocks bathState systemState measurem
     simp only [two_time, one_time]
     fin_cases x <;> norm_num [jointLaw, Fin.sum_univ_succ] <;> ring
 
-private theorem dependence : timeDependent blocks bathState systemState measurement 0 := by
+private theorem dependence : timeDependent blocks sigma systemState measurement 0 := by
   refine ⟨0, 0, 0, Real.pi, le_refl _, le_refl _, le_refl _, Real.pi_pos.le, 0, 0, ?_⟩
   rw [two_time, two_time]
   norm_num [jointLaw, Complex.exp_neg, mul_comm Complex.I (Real.pi : ℂ),
@@ -314,7 +318,7 @@ private theorem biased : Complex.normSq (measurement.val 2 0) ≠ 1 / (3 : ℝ) 
 theorem result : ¬ claim := by
   intro h
   obtain ⟨hσ, htσ, hρ, htρ, hd, hn⟩ := states_valid
-  exact biased (h 3 2 blocks bathState systemState measurement 0 blocks_hermitian
+  exact biased (h 3 2 blocks sigma systemState measurement 0 blocks_hermitian
     hσ htσ hρ htρ hd hn incompatible consistency dependence 2 0)
 
 end
