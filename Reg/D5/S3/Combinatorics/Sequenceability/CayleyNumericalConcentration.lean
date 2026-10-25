@@ -5,8 +5,8 @@ import Mathlib.Algebra.Group.ULift
 import Mathlib.Data.ZMod.Basic
 
 /-! Full-telescope dependent-family audit candidate for the full structural
-result. Source-selection binding must be taken from the current compiled
-expression after the caller hands off; no accepted binding is asserted here. -/
+result. The source observation is selected from the current raw compiler
+expression; source-audit acceptance is a separate report judgment. -/
 
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
@@ -19,6 +19,7 @@ open _root_.D5.S3.Combinatorics.Sequenceability.CayleySubgroupConcentration
 open _root_.D5.S3.ConceptDynamics.InformationEscape.DependentFamily
 open LeanInformationAudit
 open scoped BigOperators
+attribute [local instance] Classical.propDecidable
 
 abbrev Params := Σ G : Type u, Group G × Fintype G × Finset G
 
@@ -106,9 +107,9 @@ def family : Registration arena.{u} (type_of% (@exists_subgroup_concentration.{u
     intro he
     norm_num [actual, realize, p, retained, htop] at he
 
-/-- This is a concrete full-source candidate, with binding deliberately absent
-until the exact current compiler expression is available. It is not a
-`declared_validated` registration or evidence that issue 21342 is resolved. -/
+/-- Full-source registration attempt. Kernel checking the family proofs does
+not itself establish `declared_validated` source binding, nor resolve the
+separate localization audit issue 21342. -/
 def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
     (@exists_subgroup_concentration.{u}) (Realization signature.{u})
     (type_of% (@Subgroup.{u})) Unit where
@@ -130,26 +131,20 @@ def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
   sensitivity := .absent
   partialSensitivity := none
   escapeFrom := some (@Subgroup.{u})
-  sourceSelection := none
+  sourceSelection := some {
+    owner := `D5.S3.Combinatorics.Sequenceability.CayleyNumericalConcentration
+    definition := none
+    coordinates := #[0, 1, 2, 3]
+    readouts := #[{
+      path := #["body", "body", "body", "body", "body", "body", "body", "body",
+        "arg", "body", "body", "body", "body", "body", "fn", "arg", "arg"]
+      stateBinder := 8
+      functionOperand := false
+      stateOperand := none
+      booleanPredicate := false }] }
   continuation := .unknown
   familyRecord := none
   options := #[]
 
 end Reg.D5.S3.Combinatorics.Sequenceability.CayleyNumericalConcentration
 end
-
--- Temporary current-expression diagnostic; removed before delivery.
-run_cmd do
-  let info ← Lean.getConstInfo
-    `D5.S3.Combinatorics.Sequenceability.CayleySubgroupConcentration.exists_subgroup_concentration
-  let rec walk (e : Lean.Expr) (path : List String) : Lean.Elab.Command.CommandElabM Unit := do
-    if e.getAppFn.constName? == some ``Nat.cast then
-      Lean.logInfo m!"FULL_CORE_CAST {repr path} {repr e}"
-    match e with
-    | .forallE _ d b _ | .lam _ d b _ => walk d (path ++ ["domain"]); walk b (path ++ ["body"])
-    | .letE _ t v b _ => walk t (path ++ ["type"]); walk v (path ++ ["value"]); walk b (path ++ ["body"])
-    | .app f a => walk f (path ++ ["fn"]); walk a (path ++ ["arg"])
-    | .mdata _ b => walk b (path ++ ["body"])
-    | .proj _ _ b => walk b (path ++ ["body"])
-    | _ => pure ()
-  walk info.type []
