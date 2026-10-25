@@ -1,5 +1,8 @@
 using System.Text.Json;
+using System.Text;
 using StrataLint.Cli;
+using StrataLint.Engine;
+using StrataLint.Runtime;
 
 namespace StrataLint.Tests;
 
@@ -65,6 +68,78 @@ public sealed partial class WorktreeCommandTests
         using var reuse = JsonDocument.Parse(repeated.Output);
         Assert.Equal("reused", reuse.RootElement.GetProperty("status").GetString());
         Assert.Equal(actual, reuse.RootElement.GetProperty("path").GetString());
+    }
+
+    [Theory]
+    [InlineData(false, "restore")]
+    [InlineData(true, "restore")]
+    [InlineData(false, "checkout")]
+    [InlineData(true, "checkout")]
+    [InlineData(false, "protocol-timeout")]
+    [InlineData(true, "protocol-timeout")]
+    public void SameTaskRecoveryFailureReportsActualTargetWithoutFallback(bool implicitTarget, string failure)
+    {
+        using var repository = new TemporaryDirectory();
+        InitializeRepository(repository.Path);
+        const string branch = "lane/math/interrupted-init";
+        var target = Path.Combine(repository.Path, "retained-initialization");
+        var fallback = Path.Combine(repository.Path, "fallback");
+        var token = Guid.NewGuid().ToString("N");
+        var creation = WorktreeHookFixture.RunGit(repository.Path, "rev-parse", "HEAD").Trim();
+        TestGit.Run(repository.Path, "update-ref", "--create-reflog", "-m", "worktree-init:" + token,
+            "refs/heads/" + branch, creation, new string('0', creation.Length));
+        TestGit.Run(repository.Path, "worktree", "add", "--no-checkout", "--lock", "--reason",
+            "worktree-init:" + token, target, branch);
+        target = WorktreeHookFixture.RunGit(target, "rev-parse", "--show-toplevel").Trim();
+        File.WriteAllText(Path.Combine(target, "README.md"), "partial initialization bytes\n");
+        if (failure == "checkout")
+            WorktreeHookFixture.Install(repository.Path, "post-checkout",
+                "echo 'recovery checkout failed' >&2\nexit 37\n");
+        var arguments = new List<string> { "--kind", "math", "--name", "interrupted-init",
+            "--base", "HEAD", "--path", implicitTarget ? fallback : target };
+        if (implicitTarget) arguments.Add("--prefer-idle");
+        if (failure != "restore") arguments.Add("--skip-restore");
+        var runner = new RecoveryTimeoutRunner(failure == "protocol-timeout");
+
+        var result = WorktreeCommand.Run(repository.Path, arguments, runner);
+
+        Assert.False(result.Success);
+        Assert.Equal(failure == "protocol-timeout" ? 124 : 73, result.ExitCode);
+        Assert.StartsWith("WORKTREE_FAILED ", result.Error, StringComparison.Ordinal);
+        using var receipt = JsonDocument.Parse(result.Error["WORKTREE_FAILED ".Length..]);
+        var root = receipt.RootElement;
+        Assert.Equal("worktree_init", root.GetProperty("event").GetString());
+        Assert.Equal("failed", root.GetProperty("status").GetString());
+        Assert.Equal("recovery", root.GetProperty("stage").GetString());
+        Assert.Equal(target, root.GetProperty("path").GetString());
+        Assert.Equal(target, root.GetProperty("target").GetString());
+        Assert.Equal(branch, root.GetProperty("branch").GetString());
+        Assert.Equal(target, root.GetProperty("retained_material").GetProperty("path").GetString());
+        Assert.Equal(branch, root.GetProperty("retained_material").GetProperty("branch").GetString());
+        Assert.Equal("WORKTREE_RETAINED " + (failure switch
+        {
+            "restore" => "initialization_restore_failed:1",
+            "checkout" => "recovery checkout failed",
+            _ => "recovery protocol timed out",
+        }) + "\n", root.GetProperty("reason").GetString());
+        Assert.Equal("rerun make worktree with the same KIND/NAME/DEST; or reclaim the registered target with make worktree-remove",
+            root.GetProperty("recovery_action").GetString());
+        Assert.False(Directory.Exists(fallback));
+        Assert.True(File.Exists(Path.Combine(GitWorktreeDirectory.Read(target)!, "locked")));
+        Assert.Equal(creation, WorktreeHookFixture.RunGit(target, "rev-parse", "HEAD").Trim());
+        Assert.Equal("partial initialization bytes\n", File.ReadAllText(Path.Combine(target, "README.md")));
+        Assert.DoesNotContain(runner.Inner.Invocations, call => call.FileName == "git"
+            && call.Arguments.Take(2).SequenceEqual(["worktree", "add"]));
+    }
+
+    private sealed class RecoveryTimeoutRunner(bool timeout) : IWorktreeProcessRunner
+    {
+        internal RecordingWorktreeProcessRunner Inner { get; } = new();
+
+        public ProcessOutput Run(string fileName, IReadOnlyList<string> arguments, string workingDirectory, TimeSpan budget) =>
+            timeout && fileName == "python3" && arguments.Contains("recover-init")
+                ? new ProcessOutput(124, [], Encoding.UTF8.GetBytes("WORKTREE_RETAINED recovery protocol timed out\n"))
+                : Inner.Run(fileName, arguments, workingDirectory, budget);
     }
 
     [Theory]

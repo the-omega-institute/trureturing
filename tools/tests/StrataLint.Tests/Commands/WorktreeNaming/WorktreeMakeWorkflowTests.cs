@@ -42,6 +42,26 @@ public sealed class WorktreeMakeWorkflowTests
         var pathFlag = Array.IndexOf(arguments, "--path");
         Assert.True(pathFlag >= 0, "worktree adapter must pass --path");
         Assert.Equal(target, arguments[pathFlag + 1]);
+        Assert.DoesNotContain("--prefer-idle", arguments);
+    }
+
+    [Fact]
+    public void MakePrefersIdleWhenDestinationIsOmitted()
+    {
+        if (OperatingSystem.IsWindows()) return;
+        using var fixture = new TemporaryDirectory();
+        var marker = PrepareFixture(fixture.Path);
+
+        var result = RunMake(fixture.Path, marker, "worktree", "KIND=math", "NAME=implicit", "BASE=HEAD");
+
+        Assert.Equal(0, result.ExitCode);
+        Assert.True(File.Exists(marker));
+        var arguments = System.Text.Encoding.UTF8.GetString(result.StandardOutput)
+            .Split('\n', StringSplitOptions.RemoveEmptyEntries);
+        Assert.Contains("--prefer-idle", arguments);
+        var pathFlag = Array.IndexOf(arguments, "--path");
+        Assert.True(pathFlag >= 0, "worktree adapter must pass --path");
+        Assert.False(Directory.Exists(arguments[pathFlag + 1]));
     }
 
     [Fact]
