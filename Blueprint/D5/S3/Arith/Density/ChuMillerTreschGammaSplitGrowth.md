@@ -48,6 +48,10 @@ $$\forall p \in \mathbb{R},\; (0 \le p) \Rightarrow ((p \le 1) \Rightarrow (\exi
 
 *Proof.* Machine-checked in Lean as `D5/S3/Arith/Density/ChuMillerTreschGammaSplitGrowth.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/chu-miller-tresch-2025-gamma-split-linear-growth` (proved) by `D5/S3/Arith/Density/ChuMillerTreschGammaSplitGrowth.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"chu-miller-tresch-2025-gamma-split-linear-growth","declaration_gid":"D5/S3/Arith/Density/ChuMillerTreschGammaSplitGrowth.result","resolution_kind":"proved"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* Hùng Việt Chu, Steven J. Miller, and Garrett Tresch (2025). *Problems Regarding a Pair of Diophantine Equations*. DOI: [10.48550/arXiv.2512.12681](https://doi.org/10.48550/arXiv.2512.12681). URL: <https://arxiv.org/abs/2512.12681v1>.

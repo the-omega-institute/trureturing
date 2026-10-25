@@ -49,12 +49,16 @@ internal sealed class ChuMillerTreschGammaSplitGrowthDocument : IScribeDocumentD
                 + "and a n ≤ 8n + 15, while 0 ≤ pN − zeroCount a N < 5. Squeezing the real "
                 + "ratios gives the required limit, including p=0 and p=1. The polynomial bound "
                 + "uses k=1 and C=23. No assertion of optimality of the coefficient is made.",
-                DescribeRole.Theorem, AssessedProvenance.FromRepo(Source)))));
+                DescribeRole.Theorem, AssessedProvenance.FromRepo(Source),
+                new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("chu-miller-tresch-2025-gamma-split-linear-growth"),
+                    ResolutionKind.Proved)))));
 
     private static DocumentBlock Node(string id, string title, string name, Formula formula,
-        string prose, DescribeRole role, AssessedProvenance provenance) => Describe.Lean(
+        string prose, DescribeRole role, AssessedProvenance provenance,
+        OpenProblemResolutionClaim? resolution = null) => Describe.Lean(
         DescribeId.Create(id), DeclarationHandle.Create(Prefix + name), H(title),
-        StatementSource.FromAuthor(formula), provenance, Blocks(Paragraph(Text(prose))), role);
+        StatementSource.FromAuthor(formula), provenance, Blocks(Paragraph(Text(prose))), role, resolution);
 
     private static Formula GammaFormula()
     {
