@@ -154,6 +154,8 @@ class ProbeCacheTests(unittest.TestCase):
         cache.write_signed(path / "manifest.json",
                            {"identity": "input", "files": cache.record_files(path)}, self.key)
         cache.valid_record(path, "input", self.key)
+        (self.directory / "Judge.olean").write_bytes(b"changed current program")
+        cache.valid_record(path, "input", self.key)
         source.write_bytes(b"changed mathematical data")
         with self.assertRaisesRegex(ValueError, "mathematical input data changed"):
             cache.valid_record(path, "input", self.key)
@@ -173,6 +175,14 @@ class ProbeCacheTests(unittest.TestCase):
             source.write_bytes(b"changed mathematical data")
             with self.assertRaisesRegex(ValueError, "mathematical input data changed"):
                 cache.snapshot_source_data(path)
+
+    def test_source_data_inventory_authentication_is_required(self):
+        path = self.make_record()
+        (path / "source-data.json").write_text('{"data":{},"mac":"forged"}')
+        cache.write_signed(path / "manifest.json",
+                           {"identity": "input", "files": cache.record_files(path)}, self.key)
+        with self.assertRaisesRegex(ValueError, "authentication failed"):
+            cache.valid_record(path, "input", self.key)
 
     def test_authenticated_entry_skips_wrapper_and_kernel_failure_replays_original(self):
         path = self.make_record()

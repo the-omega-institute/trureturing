@@ -575,6 +575,9 @@ by explicit versions, and judge modules never contribute program bytes. -/
 private def snapshotProbeSourceData (directory : System.FilePath)
     (source : Environment) (request : Request) : IO Unit := do
   let (scope, declarations) ← IO.ofExcept (probeSourceInputs source request)
+  for root in #[request.target] ++ request.additions do
+    unless (source.getModuleIdxFor? root).isSome do
+      throw <| IO.userError s!"search.cache_source_without_compiled_owner:{root}"
   let program := fun (name : Name) =>
     name.toString.startsWith "LeanInformationAudit" &&
       !name.toString.startsWith "LeanInformationAuditRegTests."
@@ -746,7 +749,7 @@ unsafe def replayProbeCache (directory : System.FilePath) (identity : String)
   auditProbeCertificates source request record.result
   profilePhase "probe/publication-start"
   liftTermElabM <| publish name record.result (some source) (some record.targetHeader)
-  emitLookupRecord "PROBE_CACHE_CURRENT_CLASSIFIER checked=true"
+  emitLookupRecord "PROBE_CACHE_CURRENT_CLASSIFIER checked=true input_versions=explicit"
   profilePhase "probe/publication-end"
   let auditModule := s!"SearchReductionAudit_{hash request.target}_{← IO.monoNanosNow}"
   let auditDirectory : System.FilePath := "build/lean-inspector/search-reduction-audits/" ++ auditModule
