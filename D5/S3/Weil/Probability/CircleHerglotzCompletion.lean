@@ -146,7 +146,7 @@ theorem circle_herglotz_iff (c : ℤ → ℂ) (normalized : c 0 = 1) :
     rw [← hseq]
     exact circle_moment_toeplitz_posSemidef _ N
 
-private theorem moment_profile_isEmbedding :
+theorem moment_profile_isEmbedding :
     IsEmbedding (fun μ : ProbabilityMeasure Circle =>
       fun n : ℤ => circleMoment (μ : Measure Circle) n) := by
   have hcontinuous : Continuous (fun μ : ProbabilityMeasure Circle =>

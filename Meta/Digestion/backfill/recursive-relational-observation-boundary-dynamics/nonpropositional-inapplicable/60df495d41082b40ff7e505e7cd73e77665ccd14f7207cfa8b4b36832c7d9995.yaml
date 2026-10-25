@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:60df495d41082b40ff7e505e7cd73e77665ccd14f7207cfa8b4b36832c7d9995
+  normalized_sha256: sha256:60df495d41082b40ff7e505e7cd73e77665ccd14f7207cfa8b4b36832c7d9995
+cas_ref: sha256:60df495d41082b40ff7e505e7cd73e77665ccd14f7207cfa8b4b36832c7d9995
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 本条只是有效分辨率卷的文献入口，未给出受控动作或失败状态的数学断言。
+    previous_atom_id: 1a876a00594f4548dd8936fcf4f73a8f5ec05c2bcd65033b36894dc93c61bcdf
+    next_atom_id: 12e4a50dc96051ee5cc9fce6030e882ecd807a6038177ad74bb8bf6e68205e28

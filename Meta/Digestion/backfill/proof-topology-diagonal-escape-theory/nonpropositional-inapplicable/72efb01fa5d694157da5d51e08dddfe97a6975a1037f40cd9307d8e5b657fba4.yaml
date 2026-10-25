@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:72efb01fa5d694157da5d51e08dddfe97a6975a1037f40cd9307d8e5b657fba4
+  normalized_sha256: sha256:72efb01fa5d694157da5d51e08dddfe97a6975a1037f40cd9307d8e5b657fba4
+cas_ref: sha256:72efb01fa5d694157da5d51e08dddfe97a6975a1037f40cd9307d8e5b657fba4
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 只有 AT.8 章节标题，没有三寄存器的模态断言。
+    previous_atom_id: c3c62c02b6705f7d6c2605b65ace91364310149af1757c2d57a67ab51a615191
+    next_atom_id: ef162ee18fea219e1d8d37c671abf532e083d330ab165119291c557e9dd4d19c
