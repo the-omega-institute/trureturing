@@ -1,11 +1,13 @@
 #!/usr/bin/env python3
-"""Reuse test snapshots only when all compiler and snapshot bytes are unchanged."""
+"""Reuse test snapshots by data inputs, explicit formats and output integrity."""
 import argparse
 import hashlib
 import json
 import pathlib
 import subprocess
 import time
+
+VERSION = "snapshot-cache-v2/discrtree-pickle-v5/membership-alpha-syntax-v5-qualified-parts-memo-2000000"
 
 
 class ContentHashes:
@@ -61,9 +63,8 @@ def outputs(directory, basis):
 
 def ensure_snapshot(directory, basis, roots, producer, produce, hashes):
     directory = pathlib.Path(directory)
-    configuration = {"schema": 1, "basis": basis, "roots": roots,
-                     "producer": hashes.digest(producer)}
-    if configuration["producer"] is None:
+    configuration = {"version": VERSION, "basis": basis, "roots": roots}
+    if not pathlib.Path(producer).is_file():
         raise ValueError("snapshot producer is not built")
     cache_path = directory / "cache-sha256.json"
     try:

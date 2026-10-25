@@ -18,7 +18,9 @@ import tempfile
 import time
 
 
-VERSION = "probe-cache-v4"
+VERSION = "probe-cache-v5"
+# Explicit procedure identity, checked against Lean's configuration by tests.
+R_VERSION = "R_lookup/v18/obvious-v1/lazy-interval/scope-B_T/primary-index-only/candidate-200000/preparation-8000000/G-340000000/memo-target-basis-R-v2/N-memo-2000000/checkpoint-v5/views-kappa/analytic-cut-k2/200000"
 
 
 def wall_phase(label):
@@ -146,19 +148,14 @@ def input_identity(request, root, key):
         memo = {}
     wall_phase("fingerprint/memo-read-end")
     updated = {}
-    # Hash source and the actual compiled judge/dependency closure. The research
-    # library and production index are fingerprinted in their entirety.
-    inputs = [Path(request), Path("Makefile"), Path("lean-toolchain"), Path("lake-manifest.json"),
-              Path("tools/lean-inspector-reg/lakefile.lean"),
-              Path("tools/lean-inspector"),
-              Path("tools/lean-inspector-interface"), Path("Reg"),
-              Path(".lake/build/lean-inspector/reg/lib"),
-              Path(".lake/build/lean-inspector/interface/lib"),
-              Path(".lake/build/lean-inspector/producer/lib"),
-              Path(".lake/build/reg/lib/lean"),
+    # These are request/data populations and explicit dependency pins. Judge
+    # source, build configuration and compiled programs are not reuse inputs.
+    # Lean additionally compares current target declarations and their complete
+    # mathematical dependency closure before accepting a typed probe record.
+    inputs = [Path(request), Path("lean-toolchain"), Path("lake-manifest.json"),
+              Path("D5"), Path("Golden/Frozen/state"),
               Path(".lake/packages/mathlib/lake-manifest.json"),
-              Path(".lake/packages/mathlib/Mathlib.lean"),
-              Path("tools/scripts/search-reduction-runner.sh"), Path(__file__)]
+              Path(".lake/packages/mathlib/Mathlib.lean")]
     for variable in ["SEARCH_REDUCTION_INDEX", "SEARCH_REDUCTION_SOURCE_LIBRARY"]:
         if os.environ.get(variable):
             inputs.append(Path(os.environ[variable]))
@@ -186,7 +183,7 @@ def input_identity(request, root, key):
                    "SEARCH_REDUCTION_PROBE_PLANNED"}
     environment = {k: v for k, v in os.environ.items()
                    if k.startswith("SEARCH_REDUCTION_") and k not in operational}
-    return hashlib.sha256(canonical([VERSION, fingerprint, environment,
+    return hashlib.sha256(canonical([VERSION, R_VERSION, fingerprint, environment,
                                     os.environ.get("LEAN_PATH"),
                                     os.environ.get("LEAN_SYSROOT")])).hexdigest()
 

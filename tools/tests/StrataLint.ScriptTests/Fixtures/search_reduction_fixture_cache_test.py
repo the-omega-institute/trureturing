@@ -4,6 +4,7 @@ import json
 import pathlib
 import tempfile
 import unittest
+from unittest.mock import patch
 
 ROOT = pathlib.Path(__file__).resolve().parents[3]
 SPEC = importlib.util.spec_from_file_location(
@@ -53,10 +54,14 @@ class FixtureCacheTests(unittest.TestCase):
             (directory / "members/page.pickle").write_bytes(b"corrupt page")
             self.assertEqual(ensure(), "generated")
             producer.write_bytes(b"changed producer")
+            self.assertEqual(ensure(), "reused")
+            with patch.object(cache, "VERSION", "different-explicit-format"):
+                self.assertEqual(ensure(), "generated")
+                self.assertEqual(ensure(), "reused")
             self.assertEqual(ensure(), "generated")
             self.assertEqual(ensure(("Fixture", "Another")), "generated")
             self.assertEqual(ensure(("Fixture", "Another")), "reused")
-            self.assertEqual(len(calls), 5)
+            self.assertEqual(len(calls), 6)
 
     def test_failed_or_incomplete_producer_cannot_publish_cache(self):
         with tempfile.TemporaryDirectory() as temporary:

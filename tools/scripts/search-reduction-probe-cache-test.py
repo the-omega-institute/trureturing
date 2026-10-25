@@ -3,6 +3,7 @@
 import importlib.util
 import json
 import os
+import re
 from pathlib import Path
 import tempfile
 import unittest
@@ -68,11 +69,19 @@ class ProbeCacheTests(unittest.TestCase):
         self.assertEqual(reads, [str(member)])
 
     def test_each_semantic_input_invalidates_old_result(self):
-        files = ["request.lean", "tools/lean-inspector/Judge.lean",
+        files = ["request.lean", "D5/Target.lean", "Golden/Frozen/state/Target.json",
                  "index/page.json", "library/Source.olean", "lake-manifest.json",
                  "lean-toolchain", ".lake/packages/mathlib/Mathlib.lean",
-                 ".lake/build/lean-inspector/reg/lib/Judge.olean"]
-        for name in files + ["tools/scripts/search-reduction-probe-cache.py"]:
+                 ".lake/packages/mathlib/lake-manifest.json"]
+        programs = ["Makefile", "tools/lean-inspector/Judge.lean",
+                    "tools/lean-inspector-interface/Contract.lean", "Reg/Registration.lean",
+                    "tools/lean-inspector-reg/lakefile.lean",
+                    "tools/scripts/search-reduction-runner.sh",
+                    "tools/scripts/search-reduction-probe-cache.py",
+                    ".lake/build/lean-inspector/reg/lib/Judge.olean",
+                    ".lake/build/lean-inspector/interface/lib/Contract.olean",
+                    ".lake/build/lean-inspector/producer/lib/Producer.olean"]
+        for name in files + programs:
             path = self.directory / name
             path.parent.mkdir(parents=True, exist_ok=True)
             path.write_bytes(b"first")
@@ -98,10 +107,30 @@ class ProbeCacheTests(unittest.TestCase):
                         path.write_bytes(b"first")
                         self.assertEqual(baseline, cache.input_identity(
                             "request.lean", root, self.key))
+                for name in programs:
+                    with self.subTest(program=name):
+                        Path(name).write_bytes(b"changed program")
+                        self.assertEqual(baseline, cache.input_identity(
+                            "request.lean", root, self.key))
+                for version in ["VERSION", "R_VERSION"]:
+                    with self.subTest(version=version), patch.object(cache, version, "other"):
+                        self.assertNotEqual(baseline, cache.input_identity(
+                            "request.lean", root, self.key))
+                with patch.dict(os.environ, {"SEARCH_REDUCTION_MEMO": "0"}):
+                    self.assertNotEqual(baseline, cache.input_identity(
+                        "request.lean", root, self.key))
                 Path("index/new-page.json").write_bytes(b"new")
                 self.assertNotEqual(baseline, cache.input_identity("request.lean", root, self.key))
         finally:
             os.chdir(before_cwd)
+
+    def test_explicit_r_version_matches_current_lean_configuration(self):
+        sources = Path("tools/lean-inspector/LeanInformationAuditRegAnalysis/SearchReduction")
+        lookup = re.search(r'abbrev lookupVersion : String := "([^"]+)"',
+                           (sources / "Lookup.lean").read_text()).group(1)
+        local = re.search(r'abbrev localConfiguration : String := lookupVersion \+\+ "([^"]+)"',
+                          (sources / "Local.lean").read_text()).group(1)
+        self.assertEqual(cache.R_VERSION, lookup + local)
 
     def make_record(self):
         path = self.directory / "record"
