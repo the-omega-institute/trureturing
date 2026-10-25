@@ -6,7 +6,7 @@
    utility: none
    digest: The complete R-only exceptional odd product in original coordinates. -/
 
-import D5.S3.FiniteGroups.HeadleyExceptionalRows
+import D5.S3.FiniteGroups.HeadleyCubeOddProduct
 import Mathlib.Data.ZMod.Basic
 
 /-! The order-eight table is a consumed coefficient of an unbounded odd-group construction.
@@ -14,7 +14,7 @@ Successor swaps and label-source swaps have different pairings. -/
 
 noncomputable section
 namespace D5.S3.FiniteGroups.HeadleyC2C4OddProduct
-open HeadleyExtension HeadleyExceptionalRows
+open HeadleyExtension HeadleyCubeOddProduct
 
 private abbrev K := ZMod 2 × ZMod 4
 private def a : K := (0, 2)
