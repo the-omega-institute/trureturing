@@ -32,7 +32,7 @@ $$U = X^{4} + X^{2}$$
 
 *Commentary.*
 
-In characteristic two, (X+1)^2 = X^2+1 and (X+1)^4 = X^4+1. The two constant terms cancel, so U.comp(X+1)=U. Its highest term has coefficient one, and its degree is four. Also U=(X^2+X)^2. The general description of translation invariants as polynomials in X^p-X is the existing result in Section 5 of the second reference; the family calculation here uses Frobenius directly.
+In characteristic two, (X+1)^2 = X^2+1 and (X+1)^4 = X^4+1. The two constant terms cancel, so U.comp(X+1)=U. Its highest term has coefficient one, and its degree is four. Also U=(X^2+X)^2. More generally, for any prime p and field K of characteristic p, with indeterminate T, the polynomials in K[T] fixed by translation T+1 are polynomials in T^p-T. This is the existing result in Section 5 of the second reference; the family calculation here uses Frobenius directly.
 
 **Definition 1.3 (The entire power family).**
 
@@ -68,7 +68,7 @@ $\forall r \in \mathbb{N},\; \left(\operatorname{Odd}\left(r\right) \land 3 \le 
 
 For every odd natural r at least three these properties hold. To see the even-exponent clause, write P(r) as the expansion by two of (X^2+X)^r: expansion replaces X by X^2, so its coefficients vanish at odd exponents. Since r is positive, evaluation at zero is zero, which is also the constant coefficient and implies divisibility by X. Evaluation at one is zero because U(1)=1+1=0. Every nonzero coefficient in F2 is one, so evaluation at one equals the support cardinality cast into F2. Its vanishing gives even support cardinality. The degree 4r is even, and the reflection identity follows from -X=X in characteristic two.
 
-The degree obstruction is uniform: odd r is coprime to 2 and therefore to every 2^k. If 4r=2^k, then r divides 2^k, forcing r=1, contrary to r at least three. Monicity gives coefficient one at exponent 4r. Each proposed powers-of-two monomial has coefficient zero there; an arbitrary constant also has coefficient zero because 4r is positive. Finite addition preserves that zero coefficient, independently of cancellations or repeated indices. This contradicts formal polynomial equality.
+The degree obstruction is uniform: odd r is coprime to 2 and therefore to every 2^k for every natural k. If 4r=2^k, then r divides 2^k, forcing r=1, contrary to r at least three. Monicity gives coefficient one at exponent 4r. Each proposed powers-of-two monomial has coefficient zero there; an arbitrary constant also has coefficient zero because 4r is positive. Finite addition preserves that zero coefficient, independently of cancellations or repeated indices. This contradicts formal polynomial equality.
 
 **Definition 1.5 (Six explicit conventional domains).**
 
@@ -108,7 +108,7 @@ $$\forall p \in R,\; \forall m \in \mathbb{N},\; \operatorname{SourceParity}\lef
 
 *Commentary.*
 
-The phrase that X^0 is a term means that the constant coefficient of p is nonzero. SourceParity retains the implication to odd m in that case and the implication to even m otherwise. The zero-constant family therefore belongs to the m-even source branch. The contradiction already excludes all m before imposing this restriction.
+The phrase that X^0 is a term means that the constant coefficient of p is nonzero. SourceParity retains the implication to odd m in that case and the implication to even m otherwise. For the zero-constant family, this source rule would require even m. The contradiction already excludes all m before imposing this restriction.
 
 **Definition 1.8 (The literal displayed representation).**
 
