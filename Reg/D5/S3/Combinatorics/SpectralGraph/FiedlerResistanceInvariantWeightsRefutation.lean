@@ -55,7 +55,8 @@ def registration :
   unitName :=
     `Reg.D5.S3.Combinatorics.SpectralGraph.FiedlerResistanceInvariantWeightsRefutation.unit
   realizationName :=
-    `Reg.D5.S3.Combinatorics.SpectralGraph.FiedlerResistanceInvariantWeightsRefutation.source_registration
+    .str `Reg.D5.S3.Combinatorics.SpectralGraph.FiedlerResistanceInvariantWeightsRefutation
+      "source_registration"
   realizationSource := none
   generated := false
   arena := .source ⟨arena⟩
