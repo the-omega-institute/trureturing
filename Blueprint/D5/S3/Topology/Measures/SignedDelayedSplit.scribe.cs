@@ -8,7 +8,7 @@ internal sealed class SignedDelayedSplitDocument : IScribeDocumentDefinition
 
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "Delayed whole-fibre signed splitting",
-        "D5.S3.Topology.Measures.SignedDelayedSplit",
+        H("Delayed whole-fibre signed splitting"),
         Blocks(
             Describe.Lean(DescribeId.Create("delayed-fibre-pools"),
                 DeclarationHandle.Create(Owner + "exists_delayed_fibre_pools"),
