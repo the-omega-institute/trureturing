@@ -109,41 +109,6 @@ private theorem corrected_coeff_smul (D : LatticeData) (hu : IsUnit D.G.det)
 /- The empty correction word is the charged singleton field on the actual
    tensor carrier.  This is the concrete bridge used by the projected slice
    expansion below; it does not introduce a second field construction. -/
-private theorem corrected_singleton_coeff_charged (D : LatticeData)
-    (hu : IsUnit D.G.det) (charge : Charge D) (e : ℤ) (x : ActualTensor D hu) :
-    (correctedField D hu (Finsupp.single charge (1 : Oscillator D))).coeff e x =
-      (chargedField D hu charge).coeff e x := by
-  have emptyEnumeration : ([] : List (Index D)).Perm
-      (LatticeAllStateField.occurrences D (0 : Index D →₀ ℕ)) := by
-    simp [LatticeAllStateField.occurrences]
-  have correction := Corr_monomial_enumeration D charge 0 [] emptyEnumeration
-  have corrOne : Corr D charge (1 : Oscillator D) =
-      Finsupp.single 0 (1 : Oscillator D) := by
-    calc
-      _ = shiftCoefficients D (1 : Polynomial (Oscillator D)) := by
-        simpa only [show (MvPolynomial.monomial 0 (1 : ℂ) : Oscillator D) = 1 by simp,
-          correctionWord, map_one] using correction
-      _ = _ := by
-        apply Finsupp.ext
-        intro n
-        change (1 : Polynomial (Oscillator D)).coeff n = (Finsupp.single 0 1) n
-        simp [Polynomial.coeff_one, Finsupp.single_apply, eq_comm]
-  rw [correctedField, Finsupp.lsum_single, correctedPolynomial, LinearMap.comp_apply,
-    corrOne, correctedSum, Finsupp.lsum_single, LinearMap.comp_apply]
-  rw [shiftField_coefficient_public]
-  simp only [Nat.cast_zero, mul_zero, add_zero]
-  rw [show (1 : Oscillator D) = MvPolynomial.monomial 0 (1 : ℂ) by simp,
-    polynomialField_monomial_public]
-  have emptyOccurrences : LatticeHalfFockFockNormalField.occurrences D
-      (0 : Index D →₀ ℕ) = [] := by
-    simp [LatticeHalfFockFockNormalField.occurrences]
-  rw [emptyOccurrences]
-  rw [wordField_coefficient]
-  change (∑ᶠ _ : Unit, (chargedField D hu charge).coeff e x) = _
-  rw [finsum_eq_single _ () (by
-    intro modes distinct
-    exact (distinct (Subsingleton.elim _ _)).elim)]
-
 /- The two projected components are expanded before any residue regrouping.
    This keeps the two signed charge fields and the projected sign explicit on
    the original actual tensor carrier. -/
@@ -159,7 +124,7 @@ theorem projectedGround_slice_mode_expansion (D : LatticeData)
     (correctedField D hu (projectedGround D alpha epsilon)) shift mode,
     projectedGround_expansion]
   simp only [corrected_coeff_add, corrected_coeff_smul,
-    corrected_singleton_coeff_charged]
+    LatticeHalfFockCorrectedField.corrected_singleton_coeff_charged]
   rw [physicalSlice_mode D hu (chargedField D hu alpha) shift mode,
     physicalSlice_mode D hu (chargedField D hu (-alpha)) shift mode]
 

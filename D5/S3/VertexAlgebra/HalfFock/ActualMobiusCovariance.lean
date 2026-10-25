@@ -661,6 +661,43 @@ private theorem evaluated_insertion_l1_cancel (D : LatticeData) (hu : IsUnit D.G
         (∑ n ∈ Finset.range N, ((n:ℂ)*k n) • f (n+1)) + _
   rw [distribute,previous,lower]
 
+
+/-- Charged source base for the original full-source induction. -/
+private theorem ground_l1 (D : LatticeData) (hu : IsUnit D.G.det)
+    (q : Charge D) (e : ℤ) :
+    let a : Carrier D := Finsupp.single q (1 : Oscillator D)
+    let T := tensorL D (ActualGround D hu) (HalfFockSpectralFiberSource.actualInverse D) 1
+    let S := LatticeSugawaraCurrents.sugawaraMode D (LatticeSugawaraCurrents.gramComplex D)⁻¹
+    T * (LatticeHalfFockCorrectedField.correctedField D hu a).coeff e -
+      (LatticeHalfFockCorrectedField.correctedField D hu a).coeff e * T =
+      (LatticeHalfFockCorrectedField.correctedField D hu (S 1 a)).coeff e +
+        ((e:ℂ)/2-1) • (LatticeHalfFockCorrectedField.correctedField D hu a).coeff (e-2) +
+        (2:ℂ) • (LatticeHalfFockCorrectedField.correctedField D hu (S 0 a)).coeff (e-2) := by
+  let a : Carrier D := Finsupp.single q (1 : Oscillator D)
+  let H := HalfFockSpectralFiberSource.actualInverse D
+  have inv : (LatticeSugawaraCurrents.gramComplex D)⁻¹ = H :=
+    Matrix.inv_eq_left_inv (HalfFockSpectralFiberSource.actualInverse_left D hu)
+  have s1 : LatticeSugawaraCurrents.sugawaraMode D H 1 a = 0 :=
+    LatticeSugawaraVirasoro.sugawaraMode_ground_positive D H q 1 (by omega)
+  have s0 : LatticeSugawaraCurrents.sugawaraMode D H 0 a = (bilinear D q q : ℂ)/2 • a := by
+    rw [LatticeSugawaraVirasoro.sugawaraMode_ground_zero,
+      LatticeSugawaraConformal.chargeQuadratic_eq D H
+        (HalfFockSpectralFiberSource.actualInverse_left D hu)
+        (HalfFockSpectralFiberSource.actualInverse_right D hu)]
+  have coeff (d : ℤ) : (LatticeHalfFockCorrectedField.correctedField D hu a).coeff d =
+      chargedCoefficient D hu q d := by
+    apply LinearMap.ext
+    intro x
+    rw [LatticeHalfFockCorrectedField.corrected_singleton_coeff_charged]
+    simp only [chargedField,HVertexOperator.coeff_of_coeff]
+  dsimp only
+  rw [inv,s1,s0]
+  simp only [map_zero,map_smul,Pi.zero_apply,Pi.smul_apply,zero_add]
+  rw [coeff,coeff,charged_l1_coefficient]
+  module
+
+#print axioms ground_l1
+
 #print axioms evaluated_insertion_l1_cancel
 
 #print axioms singleton_l1
