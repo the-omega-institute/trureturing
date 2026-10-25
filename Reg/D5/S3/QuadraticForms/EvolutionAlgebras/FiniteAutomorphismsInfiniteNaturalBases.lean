@@ -53,7 +53,7 @@ def source_registration : Registration arena (type_of% (@result)) where
     refine ⟨⟨mu, (1, 0)⟩, 0, (1, 0), ?_⟩
     intro h
     have := congrArg Prod.fst h
-    change (0 : ℂ) = 1 * 1 + 0 * 0 at this
+    change (1 * 0 + 0 * 0 : ℂ) = 1 * 1 + 0 * 0 at this
     norm_num at this
 
 def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
