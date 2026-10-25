@@ -7,6 +7,8 @@
    digest: Global ZZ couplings admit nonnegative sign schedules within the sharp parity bound. -/
 
 import D5.S3.Observer.Linear.FiniteRealZeroFillRegister
+import D5.S3.Entropy.Forgetting.CapacityMonotone
+import D5.S3.ConceptDynamics.CausalMoments.BipartiteMediatorPricing
 
 /-! Nonnegative sign schedules from round-robin matchings and their product laws. -/
 
@@ -20,6 +22,9 @@ open scoped BigOperators
 namespace D5.S3.Quantum.Optimization.GlobalZZGateTimeBound
 
 open D5.S3.Observer.Linear.FiniteRealZeroFillRegister (bitSign)
+open D5.S3.Entropy.Forgetting.CapacityMonotone (pushforward)
+open D5.S3.ConceptDynamics.CausalMoments.BipartiteMediatorPricing
+  (flipTable flipTable_involutive)
 
 abbrev SignVec (n : ℕ) :=
   {s : Fin n → Bool // ∀ i, i.val + 1 = n → s i = false}
@@ -175,13 +180,6 @@ private theorem matching_subset {n : ℕ} {R S : Finset (Fin n × Fin n)}
 private def spin {n : ℕ} (s : Fin n → Bool) (i : Fin n) : ℝ :=
   bitSign (s i)
 
-private theorem flip_involutive {n : ℕ} (A : Finset (Fin n)) :
-    Function.Involutive (fun s => A.piecewise (fun i => !(s i)) s) := by
-  intro s
-  funext i
-  unfold Finset.piecewise
-  by_cases hi : i ∈ A <;> simp only [hi, ite_true, ite_false, Bool.not_not]
-
 private theorem spin_flip {n : ℕ} (A : Finset (Fin n)) (s : Fin n → Bool) (i : Fin n) :
     spin (A.piecewise (fun i => !(s i)) s) i = if i ∈ A then -spin s i else spin s i := by
   unfold spin bitSign Finset.piecewise
@@ -195,7 +193,9 @@ private theorem sum_flip_zero {n : ℕ} (A : Finset (Fin n)) (F : (Fin n → Boo
     (fun s => by rw [hF, add_neg_cancel])
     (fun s hne hfix => hne ((CharZero.eq_neg_self_iff (R := ℝ)).mp
       ((congrArg F hfix).symm.trans (hF s))))
-    (fun _ => Finset.mem_univ _) (flip_involutive A)
+    (fun _ => Finset.mem_univ _) (fun s => by
+      simpa +unfoldPartialApp only [flipTable, Bool.decide_iff, Finset.piecewise] using
+        flipTable_involutive (fun i => decide (i ∈ A)) s)
 
 private def matchingWeight {n : ℕ} (R : Finset (Fin n × Fin n))
     (c : Fin n → Fin n → ℝ) (s : Fin n → Bool) : ℝ :=
@@ -354,6 +354,7 @@ private theorem fold_law {n : ℕ} (hn : 2 ≤ n) (p : (Fin n → Bool) → ℝ)
       ∀ i j, (∑ m, q m * ((-1 : ℝ) ^ (m.val i).toNat * (-1 : ℝ) ^ (m.val j).toNat)) =
         ∑ s, p s * ((-1 : ℝ) ^ (s i).toNat * (-1 : ℝ) ^ (s j).toNat) := by
   classical
+  letI : DecidableEq (SignVec n) := Classical.decEq _
   let last : Fin n := ⟨n - 1, by omega⟩
   let f : (Fin n → Bool) → SignVec n := fun s =>
     ⟨fun i => if s last then !(s i) else s i, by
@@ -366,18 +367,27 @@ private theorem fold_law {n : ℕ} (hn : 2 ≤ n) (p : (Fin n → Bool) → ℝ)
         (-1 : ℝ) ^ (s i).toNat * (-1 : ℝ) ^ (s j).toNat := by
     dsimp only [f]
     cases s last <;> cases s i <;> cases s j <;> norm_num
-  refine ⟨fun m => ∑ s, if f s = m then p s else 0, ?_, ?_, ?_⟩
+  refine ⟨pushforward f p, ?_, ?_, ?_⟩
   · intro m
-    exact Finset.sum_nonneg fun s _ => by split_ifs <;> simp_all
-  · rw [Finset.sum_comm]
-    exact Finset.sum_congr rfl fun s _ => by simp
+    change 0 ≤ ∑ s, if f s = m then p s else 0
+    exact Finset.sum_nonneg fun s _ => ite_nonneg (hp s) le_rfl
+  · simpa only [pushforward, Finset.sum_filter] using Finset.sum_fiberwise Finset.univ f p
   · intro i j
-    dsimp only
-    simp_rw [Finset.sum_mul]
-    rw [Finset.sum_comm]
-    apply Finset.sum_congr rfl
-    intro s _
-    simp only [ite_mul, zero_mul, Finset.sum_ite_eq, Finset.mem_univ, ite_true, hprod]
+    let g : SignVec n → ℝ := fun m =>
+      (-1 : ℝ) ^ (m.val i).toNat * (-1 : ℝ) ^ (m.val j).toNat
+    change (∑ m, pushforward f p m * g m) = _
+    calc
+      _ = ∑ m, ∑ s with f s = m, p s * g (f s) := by
+        simp only [pushforward, Finset.sum_filter, Finset.sum_mul]
+        apply Finset.sum_congr rfl
+        intro m _
+        apply Finset.sum_congr rfl
+        intro s _
+        split_ifs with hs
+        · rw [hs]
+        · simp only [zero_mul]
+      _ = ∑ s, p s * g (f s) := Finset.sum_fiberwise Finset.univ f (fun s => p s * g (f s))
+      _ = _ := by simp only [g, hprod]
 
 private theorem offDiagSup_nonneg {n : ℕ} (M : Matrix (Fin n) (Fin n) ℝ) :
     0 ≤ offDiagSup M := by
