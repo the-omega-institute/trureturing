@@ -35,18 +35,18 @@ open D5.S3.Quantum.QuantumChannels.TracePreservingEigenvalueBound (depolarized)
 
 namespace D5.S3.Quantum.QuantumChannels.ProjectiveTestChannelCompatibilityRefutation
 
-def basisPOVM {d : ℕ} (Φ : MatrixMap (Fin d) (Fin d) ℂ)
+def basisPOVM {d : ℕ} (φ : MatrixMap (Fin d) (Fin d) ℂ)
     (U : unitaryGroup (Fin d) ℂ) : Fin d → Matrix (Fin d) (Fin d) ℂ :=
-  fun i => Φ.dual (measurementProjector U i)
+  fun i => φ.dual (measurementProjector U i)
 
-def ChannelCompatible {d : ℕ} (Φ Ψ : MatrixMap (Fin d) (Fin d) ℂ) : Prop :=
-  ∃ Λ : MatrixMap (Fin d) (Fin d × Fin d) ℂ, IsCPTP Λ ∧
-    (∀ X, partialTraceRight (Λ X) = Φ X) ∧ (∀ X, partialTraceLeft (Λ X) = Ψ X)
+def ChannelCompatible {d : ℕ} (φ ψ : MatrixMap (Fin d) (Fin d) ℂ) : Prop :=
+  ∃ J : MatrixMap (Fin d) (Fin d × Fin d) ℂ, IsCPTP J ∧
+    (∀ X, partialTraceRight (J X) = φ X) ∧ (∀ X, partialTraceLeft (J X) = ψ X)
 
 def claim : Prop :=
-  ∀ (d : ℕ) (Φ Ψ : MatrixMap (Fin d) (Fin d) ℂ), IsCPTP Φ → IsCPTP Ψ →
-    (∀ U V : unitaryGroup (Fin d) ℂ, Compatible (basisPOVM Φ U) (basisPOVM Ψ V)) →
-      ChannelCompatible Φ Ψ
+  ∀ (d : ℕ) (φ ψ : MatrixMap (Fin d) (Fin d) ℂ), IsCPTP φ → IsCPTP ψ →
+    (∀ U V : unitaryGroup (Fin d) ℂ, Compatible (basisPOVM φ U) (basisPOVM ψ V)) →
+      ChannelCompatible φ ψ
 
 private def depol : MatrixMap (Fin 2) (Fin 2) ℂ :=
   depolarized LinearMap.id (3 / 10)
@@ -271,9 +271,9 @@ private theorem all_projective_tests (U V : unitaryGroup (Fin 2) ℂ) :
     exact parent_positive U V a b
   · simpa only [Fintype.sum_prod_type] using hn
 
-private def jointChoi (Λ : MatrixMap (Fin 2) (Fin 2 × Fin 2) ℂ) :
+private def jointChoi (J : MatrixMap (Fin 2) (Fin 2 × Fin 2) ℂ) :
     Matrix ((Fin 2 × Fin 2) × Fin 2) ((Fin 2 × Fin 2) × Fin 2) ℂ :=
-  (1 / 2 : ℂ) • Λ.choi_matrix
+  (1 / 2 : ℂ) • J.choi_matrix
 
 private def P : Matrix ((Fin 2 × Fin 2) × Fin 2) ((Fin 2 × Fin 2) × Fin 2) ℂ :=
   (bellDensity ⊗ₖ (1 : Matrix (Fin 2) (Fin 2) ℂ)).submatrix
@@ -283,51 +283,51 @@ private def Q : Matrix ((Fin 2 × Fin 2) × Fin 2) ((Fin 2 × Fin 2) × Fin 2) �
   (bellDensity ⊗ₖ (1 : Matrix (Fin 2) (Fin 2) ℂ)).submatrix
     (fun x => ((x.1.2, x.2), x.1.1)) (fun x => ((x.1.2, x.2), x.1.1))
 
-private theorem jointChoi_positive (Λ : MatrixMap (Fin 2) (Fin 2 × Fin 2) ℂ)
-    (hΛ : IsCPTP Λ) : (jointChoi Λ).PosSemidef := by
-  exact ((MatrixMap.choi_PSD_iff_CP_map Λ).mp hΛ.1).smul
+private theorem jointChoi_positive (J : MatrixMap (Fin 2) (Fin 2 × Fin 2) ℂ)
+    (hJ : IsCPTP J) : (jointChoi J).PosSemidef := by
+  exact ((MatrixMap.choi_PSD_iff_CP_map J).mp hJ.1).smul
     (show (0 : ℂ) ≤ 1 / 2 by norm_num [Complex.le_def])
 
-private theorem jointChoi_trace (Λ : MatrixMap (Fin 2) (Fin 2 × Fin 2) ℂ)
-    (hΛ : IsCPTP Λ) : (jointChoi Λ).trace = 1 := by
+private theorem jointChoi_trace (J : MatrixMap (Fin 2) (Fin 2 × Fin 2) ℂ)
+    (hJ : IsCPTP J) : (jointChoi J).trace = 1 := by
   rw [jointChoi.eq_1, Matrix.trace_smul]
   change (1 / 2 : ℂ) * (∑ p : (Fin 2 × Fin 2) × Fin 2,
-    Λ (Matrix.single p.2 p.2 1) p.1 p.1) = 1
+    J (Matrix.single p.2 p.2 1) p.1 p.1) = 1
   rw [Fintype.sum_prod_type, Finset.sum_comm]
-  change (1 / 2 : ℂ) * (∑ i : Fin 2, (Λ (Matrix.single i i 1)).trace) = 1
-  simp_rw [hΛ.2]
+  change (1 / 2 : ℂ) * (∑ i : Fin 2, (J (Matrix.single i i 1)).trace) = 1
+  simp_rw [hJ.2]
   unfold Matrix.trace Matrix.single
   norm_num [Fin.sum_univ_two]
 
-private theorem jointChoi_overlaps (Λ : MatrixMap (Fin 2) (Fin 2 × Fin 2) ℂ)
-    (hL : ∀ X, partialTraceRight (Λ X) = depol X)
-    (hR : ∀ X, partialTraceLeft (Λ X) = depol X) :
-    (jointChoi Λ * P).trace = 31 / 40 ∧ (jointChoi Λ * Q).trace = 31 / 40 := by
+private theorem jointChoi_overlaps (J : MatrixMap (Fin 2) (Fin 2 × Fin 2) ℂ)
+    (hL : ∀ X, partialTraceRight (J X) = depol X)
+    (hR : ∀ X, partialTraceLeft (J X) = depol X) :
+    (jointChoi J * P).trace = 31 / 40 ∧ (jointChoi J * Q).trace = 31 / 40 := by
   have hl (i j : Fin 2) : (∑ b : Fin 2,
-      Λ (Matrix.single i j 1) (i, b) (j, b)) = depol (Matrix.single i j 1) i j :=
+      J (Matrix.single i j 1) (i, b) (j, b)) = depol (Matrix.single i j 1) i j :=
     congrArg (fun M : Matrix (Fin 2) (Fin 2) ℂ => M i j) (hL (Matrix.single i j 1))
   have hr (i j : Fin 2) : (∑ a : Fin 2,
-      Λ (Matrix.single i j 1) (a, i) (a, j)) = depol (Matrix.single i j 1) i j :=
+      J (Matrix.single i j 1) (a, i) (a, j)) = depol (Matrix.single i j 1) i j :=
     congrArg (fun M : Matrix (Fin 2) (Fin 2) ℂ => M i j) (hR (Matrix.single i j 1))
-  have hp : (jointChoi Λ * P).trace = (1 / 4 : ℂ) *
+  have hp : (jointChoi J * P).trace = (1 / 4 : ℂ) *
       ∑ i : Fin 2, ∑ j : Fin 2, ∑ b : Fin 2,
-        Λ (Matrix.single i j 1) (i, b) (j, b) := by
+        J (Matrix.single i j 1) (i, b) (j, b) := by
     rw [jointChoi, Matrix.smul_mul, Matrix.trace_smul]
     change (1 / 2 : ℂ) *
       (∑ x : (Fin 2 × Fin 2) × Fin 2, ∑ y : (Fin 2 × Fin 2) × Fin 2,
-        Λ (Matrix.single x.2 y.2 1) x.1 y.1 * P y x) = _
+        J (Matrix.single x.2 y.2 1) x.1 y.1 * P y x) = _
     norm_num [P,
       Fintype.sum_prod_type, Fin.sum_univ_two, bellDensity, bellVector,
       D5.S3.Quantum.QubitWitnesses.bellCoefficients, Matrix.vecMulVec_apply,
       complex_sqrt_two_inv_mul_self]
     ring
-  have hq : (jointChoi Λ * Q).trace = (1 / 4 : ℂ) *
+  have hq : (jointChoi J * Q).trace = (1 / 4 : ℂ) *
       ∑ i : Fin 2, ∑ j : Fin 2, ∑ a : Fin 2,
-        Λ (Matrix.single i j 1) (a, i) (a, j) := by
+        J (Matrix.single i j 1) (a, i) (a, j) := by
     rw [jointChoi, Matrix.smul_mul, Matrix.trace_smul]
     change (1 / 2 : ℂ) *
       (∑ x : (Fin 2 × Fin 2) × Fin 2, ∑ y : (Fin 2 × Fin 2) × Fin 2,
-        Λ (Matrix.single x.2 y.2 1) x.1 y.1 * Q y x) = _
+        J (Matrix.single x.2 y.2 1) x.1 y.1 * Q y x) = _
     norm_num [Q,
       Fintype.sum_prod_type, Fin.sum_univ_two, bellDensity, bellVector,
       D5.S3.Quantum.QubitWitnesses.bellCoefficients, Matrix.vecMulVec_apply,
@@ -373,10 +373,10 @@ private theorem witness_positive :
     (show (0 : ℂ) ≤ 1 / 2 by norm_num [Complex.le_def])).add hD
 
 private theorem no_joint_channel : ¬ ChannelCompatible depol depol := by
-  rintro ⟨Λ, hΛ, hL, hR⟩
-  have hn := (jointChoi_positive Λ hΛ).trace_mul_nonneg witness_positive
-  have ht := jointChoi_trace Λ hΛ
-  obtain ⟨hp, hq⟩ := jointChoi_overlaps Λ hL hR
+  rintro ⟨J, hJ, hL, hR⟩
+  have hn := (jointChoi_positive J hJ).trace_mul_nonneg witness_positive
+  have ht := jointChoi_trace J hJ
+  obtain ⟨hp, hq⟩ := jointChoi_overlaps J hL hR
   rw [Matrix.mul_sub, Matrix.mul_sub, Matrix.mul_smul, Matrix.mul_one,
     Matrix.trace_sub, Matrix.trace_sub, Matrix.trace_smul, ht, hp, hq] at hn
   norm_num [Complex.le_def] at hn

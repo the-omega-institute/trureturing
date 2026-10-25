@@ -17,24 +17,24 @@ internal sealed class ProjectiveTestChannelCompatibilityRefutationDocument : ISc
             Node("basis-povm", "basisPOVM", "The adjoint image of a basis measurement", BasisPOVMFormula(),
                 AssessedProvenance.FromLiterature(Source),
                 "The columns of the unitary matrix U form an orthonormal basis. For each i, apply the trace dual "
-                    + "of the complex linear map Φ to the rank-one projector onto column i. "
+                    + "of the complex linear map φ to the rank-one projector onto column i. "
                     + "These are the projective-test effects in article.tex, lines 239-241 and 263-264. "
                     + "The definition applies to every complex linear matrix map; complete positivity and trace preservation "
                     + "are imposed separately when these effects are used as a POVM."),
             Node("channel-compatible", "ChannelCompatible", "A joint channel with two prescribed marginals", ChannelCompatibleFormula(),
                 AssessedProvenance.FromLiterature(Source),
                 "A joint completely positive trace-preserving map sends an input matrix to a matrix on the product "
-                    + "of the two output spaces. Tracing out the right output gives Φ, and tracing out the left output gives Ψ, "
+                    + "of the two output spaces. Tracing out the right output gives φ, and tracing out the left output gives ψ, "
                     + "on every complex input matrix. This is the equal-output-dimension case of the channel compatibility "
                     + "definition in article.tex, lines 138-146. The predicate requires the joint map to be a channel; "
-                    + "it places no separate channel hypotheses on Φ and Ψ."),
+                    + "it places no separate channel hypotheses on φ and ψ."),
             Node("claim", "claim", "The proposed converse from projective tests", ClaimFormula(),
                 AssessedProvenance.FromRepo(Source),
-                "For every natural dimension d and every two completely positive trace-preserving maps Φ and Ψ, "
+                "For every natural dimension d and every two completely positive trace-preserving maps φ and ψ, "
                     + "suppose that every pair of unitary bases gives compatible adjoint-image POVMs. "
                     + "Compatibility of POVMs means that a positive normalized family on the product outcome set "
                     + "has the two given families as its marginals, as in article.tex, lines 192-199. "
-                    + "The assertion is that Φ and Ψ must then have a joint channel. "
+                    + "The assertion is that φ and ψ must then have a joint channel. "
                     + "This expresses the conjecture in article.tex, lines 261-266, using unitaries to parameterize bases. "
                     + "The displayed quantifier also includes dimension zero; the counterexample has dimension two."),
             Describe.Lean(
@@ -45,10 +45,10 @@ internal sealed class ProjectiveTestChannelCompatibilityRefutationDocument : ISc
                 AssessedProvenance.FromRepo(Source),
                 Blocks(
                     Paragraph(Text(
-                        "Consider the qubit map Φ(X) = (7/10)X + (3/20)tr(X)I. "
+                        "Consider the qubit map φ(X) = (7/10)X + (3/20)tr(X)I. "
                             + "Its Pauli representation has probabilities 31/40, 3/40, 3/40 and 3/40. "
-                            + "They are nonnegative and sum to one, so Φ is completely positive and trace preserving. "
-                            + "Cyclicity of the trace pairing shows that its trace dual equals Φ.")),
+                            + "They are nonnegative and sum to one, so φ is completely positive and trace preserving. "
+                            + "Cyclicity of the trace pairing shows that its trace dual equals φ.")),
                     Paragraph(Text(
                         "For arbitrary unitary bases U and V, let Eₐ and Fᵦ be their rank-one projectors. "
                             + "Each projector is Hermitian, has trace one and squares to itself; each pair sums to I. "
@@ -66,22 +66,22 @@ internal sealed class ProjectiveTestChannelCompatibilityRefutationDocument : ISc
                             + "Consequently H = (H*H + cI)/(2α) is positive semidefinite, and Gₐᵦ = H/4 is positive semidefinite.")),
                     Paragraph(Text(
                         "Summing over b cancels the centered B terms and the mixed trace terms, leaving "
-                            + "sum over b of Gₐᵦ = Φ(Eₐ). Cyclicity of trace and exchange of A and B give "
-                            + "sum over a of Gₐᵦ = Φ(Fᵦ). Summing again gives I. "
+                            + "sum over b of Gₐᵦ = φ(Eₐ). Cyclicity of trace and exchange of A and B give "
+                            + "sum over a of Gₐᵦ = φ(Fᵦ). Summing again gives I. "
                             + "The marginals are themselves positive semidefinite and normalized, so the four effects form "
                             + "a joint POVM for the two adjoint-image measurements. This holds for every U and V.")),
                     Paragraph(Text(
-                        "Now suppose that a joint channel Λ for Φ and itself exists. Order its Choi indices as ((a,b),r), "
+                        "Now suppose that a joint channel J for φ and itself exists. Order its Choi indices as ((a,b),r), "
                             + "with a and b the two output indices and r the reference index. Its normalized Choi matrix R "
-                            + "has entries R(((a,b),r),((c,d),s)) = Λ(|r><s|)((a,b),(c,d))/2. "
+                            + "has entries R(((a,b),r),((c,d),s)) = J(|r><s|)((a,b),(c,d))/2. "
                             + "Complete positivity makes R positive semidefinite. Trace preservation gives "
-                            + "tr(R) = (tr(Λ(|0><0|)) + tr(Λ(|1><1|)))/2 = 1.")),
+                            + "tr(R) = (tr(J(|0><0|)) + tr(J(|1><1|)))/2 = 1.")),
                     Paragraph(Text(
                         "Let S be the Bell projection on the first output and reference, tensored with the identity "
                             + "on the second output, and let T be the corresponding projection for the second output and reference. "
                             + "The Bell vector is (|00> + |11>)/√2. Expanding the two partial-trace equalities on the matrix units "
-                            + "gives tr(RS) = (sum over r,s,b of Λ(|r><s|)((r,b),(s,b)))/4 "
-                            + "= (sum over r,s of Φ(|r><s|)(r,s))/4 = 31/40. "
+                            + "gives tr(RS) = (sum over r,s,b of J(|r><s|)((r,b),(s,b)))/4 "
+                            + "= (sum over r,s of φ(|r><s|)(r,s))/4 = 31/40. "
                             + "The other marginal gives tr(RT) = 31/40 in the same way.")),
                     Paragraph(Text(
                         "The matrix (3/2)I − S − T is positive semidefinite by an explicit Gram decomposition. "
@@ -93,8 +93,8 @@ internal sealed class ProjectiveTestChannelCompatibilityRefutationDocument : ISc
                     Paragraph(Text(
                         "The trace of the product of two positive semidefinite matrices is nonnegative. Applying this to R "
                             + "and (3/2)I − S − T gives 0 ≤ (3/2)tr(R) − tr(RS) − tr(RT) "
-                            + "= 3/2 − 31/40 − 31/40 = −1/20, a contradiction. Thus Φ has no joint channel with itself. "
-                            + "Applying claim in dimension two to Φ twice would provide just such a joint channel, "
+                            + "= 3/2 − 31/40 − 31/40 = −1/20, a contradiction. Thus φ has no joint channel with itself. "
+                            + "Applying claim in dimension two to φ twice would provide just such a joint channel, "
                             + "because both maps are channels and all their projective-test pairs have the joint POVMs above. "
                             + "Therefore claim is false."))),
                 DescribeRole.Theorem))));
@@ -105,33 +105,33 @@ internal sealed class ProjectiveTestChannelCompatibilityRefutationDocument : ISc
             StatementSource.FromAuthor(Disp(formula)), provenance, Blocks(Paragraph(Text(prose))), DescribeRole.Definition);
 
     private static Formula BasisPOVMFormula() =>
-        All("d", Naturals(), All("Φ", MapType(FinD(), FinD()), All("U", UnitaryType(),
-            Equal(Typed(LocalCall("basisPOVM", X("Φ"), X("U")), Arrow(FinD(), MatrixType())),
-                LambdaOf("i", FinD(), At(CoerceFunction(At(MapMember("dual"), X("Φ"))),
+        All("d", Naturals(), All("φ", MapType(FinD(), FinD()), All("U", UnitaryType(),
+            Equal(Typed(LocalCall("basisPOVM", X("φ"), X("U")), Arrow(FinD(), MatrixType())),
+                LambdaOf("i", FinD(), At(CoerceFunction(At(MapMember("dual"), X("φ"))),
                     At(Qualified("D5", "S3", "Quantum", "Decoherence", "DephasingTwoClassicalityBlockRefutation",
                         "measurementProjector"), X("U"), X("i"))))))));
 
     private static Formula ChannelCompatibleFormula()
     {
         Formula first = All("X", MatrixType(), Equal(
-            At(PartialTrace("partialTraceRight"), At(CoerceFunction(X("Λ")), X("X"))),
-            At(CoerceFunction(X("Φ")), X("X"))));
+            At(PartialTrace("partialTraceRight"), At(CoerceFunction(X("J")), X("X"))),
+            At(CoerceFunction(X("φ")), X("X"))));
         Formula second = All("X", MatrixType(), Equal(
-            At(PartialTrace("partialTraceLeft"), At(CoerceFunction(X("Λ")), X("X"))),
-            At(CoerceFunction(X("Ψ")), X("X"))));
-        Formula joint = Some("Λ", MapType(FinD(), Product(FinD(), FinD())),
-            And(CPTP(X("Λ")), And(first, second)));
-        return All("d", Naturals(), All("Φ", MapType(FinD(), FinD()), All("Ψ", MapType(FinD(), FinD()),
-            Iff(LocalCall("ChannelCompatible", X("Φ"), X("Ψ")), joint))));
+            At(PartialTrace("partialTraceLeft"), At(CoerceFunction(X("J")), X("X"))),
+            At(CoerceFunction(X("ψ")), X("X"))));
+        Formula joint = Some("J", MapType(FinD(), Product(FinD(), FinD())),
+            And(CPTP(X("J")), And(first, second)));
+        return All("d", Naturals(), All("φ", MapType(FinD(), FinD()), All("ψ", MapType(FinD(), FinD()),
+            Iff(LocalCall("ChannelCompatible", X("φ"), X("ψ")), joint))));
     }
 
     private static Formula ClaimFormula()
     {
         Formula tests = All("U", UnitaryType(), All("V", UnitaryType(),
             At(Qualified("D5", "S3", "Quantum", "QuantumChannels", "ConcealmentKernelNecessityRefutation", "Compatible"),
-                LocalCall("basisPOVM", X("Φ"), X("U")), LocalCall("basisPOVM", X("Ψ"), X("V")))));
-        Formula statement = All("d", Naturals(), All("Φ", MapType(FinD(), FinD()), All("Ψ", MapType(FinD(), FinD()),
-            Arrow(CPTP(X("Φ")), Arrow(CPTP(X("Ψ")), Arrow(tests, LocalCall("ChannelCompatible", X("Φ"), X("Ψ"))))))));
+                LocalCall("basisPOVM", X("φ"), X("U")), LocalCall("basisPOVM", X("ψ"), X("V")))));
+        Formula statement = All("d", Naturals(), All("φ", MapType(FinD(), FinD()), All("ψ", MapType(FinD(), FinD()),
+            Arrow(CPTP(X("φ")), Arrow(CPTP(X("ψ")), Arrow(tests, LocalCall("ChannelCompatible", X("φ"), X("ψ"))))))));
         return Iff(Local("claim"), statement);
     }
 
@@ -157,9 +157,8 @@ internal sealed class ProjectiveTestChannelCompatibilityRefutationDocument : ISc
     private static Formula LocalCall(string name, params Formula[] args) => At(Local(name), args);
     private static Formula X(string name) => name switch
     {
-        "Φ" => Phi,
-        "Ψ" => Psi,
-        "Λ" => Lambda,
+        "φ" => Phi,
+        "ψ" => Psi,
         _ => F.Id(name),
     };
     private static Formula Qualified(params string[] parts)
