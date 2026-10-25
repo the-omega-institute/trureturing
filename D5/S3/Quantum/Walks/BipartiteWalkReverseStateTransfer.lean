@@ -75,30 +75,41 @@ private def w : Fin 7 → ℤ := ![2, 0, 0, -2, 2, -1, 0]
 
 private lemma integer_form_def :
     (3 : ℂ) • Udef = (M (-1)).map (Int.castRingHom ℂ) := by
-  sorry
+  ext i j
+  fin_cases i <;> fin_cases j <;>
+    norm_num [Udef, P, Q, M, Matrix.mul_apply, Fin.sum_univ_succ,
+      Matrix.one_apply]
 
 private lemma integer_form_disp :
     (3 : ℂ) • Udisp = (M 1).map (Int.castRingHom ℂ) := by
-  sorry
+  ext i j
+  fin_cases i <;> fin_cases j <;> norm_num [Udisp, M]
 
 private lemma scaled_matrix (s : ℤ) (U : Matrix (Fin 7) (Fin 7) ℂ)
     (h : (3 : ℂ) • U = (M s).map (Int.castRingHom ℂ)) :
     U = (1/3 : ℂ) • (M s).map (Int.castRingHom ℂ) := by
-  sorry
+  rw [← h, smul_smul]
+  norm_num
 
 private lemma integer_first_column (s : ℤ) :
     (M s).mulVec (Pi.single 1 1) = v := by
-  sorry
+  rw [Matrix.mulVec_single_one]
+  ext i
+  fin_cases i <;> norm_num [M, v, Matrix.col_apply]
 
 private lemma integer_invariant (s : ℤ) :
     (M s).mulVec v = (2 : ℤ) • v + (3 : ℤ) • w := by
-  sorry
+  ext i
+  fin_cases i <;> norm_num [M, v, w, Matrix.mulVec, dotProduct, Fin.sum_univ_succ]
 
 private lemma first_steps (s : ℤ) (U : Matrix (Fin 7) (Fin 7) ℂ)
     (h : (3 : ℂ) • U = (M s).map (Int.castRingHom ℂ)) :
     U.mulVec (Pi.single 5 1) = Pi.single 6 1 ∧
     U.mulVec (Pi.single 6 1) = Pi.single 1 1 := by
-  sorry
+  rw [scaled_matrix s U h]
+  constructor <;> ext i <;> fin_cases i <;>
+    norm_num [M, Matrix.smul_mulVec, Matrix.mulVec_single_one,
+      Matrix.col_apply, Pi.single_apply]
 
 private lemma orbit_mod (s : ℤ) (n : ℕ) :
     (Int.castRingHom (ZMod 3)) ∘ ((M s ^ n).mulVec v) =
