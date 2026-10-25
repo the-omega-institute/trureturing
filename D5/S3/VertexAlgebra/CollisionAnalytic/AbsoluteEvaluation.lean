@@ -498,5 +498,3 @@ theorem collision_absolute_evaluation {n : ℕ} (sigma : Equiv.Perm (Fin n))
       AddEquiv.symm_apply_apply] using hb
 
 end D5.S3.VertexAlgebra.CollisionAbsoluteEvaluation.Labelled
-
-
