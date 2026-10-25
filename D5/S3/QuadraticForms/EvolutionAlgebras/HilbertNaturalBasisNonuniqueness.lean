@@ -8,14 +8,6 @@
 
 import Mathlib.Analysis.Normed.Lp.lpHolder
 import Mathlib.Analysis.InnerProductSpace.l2Space
-import Mathlib.Analysis.Normed.Operator.Mul
-import Mathlib.Data.PNat.Equiv
-import Mathlib.Tactic.NormNum
-import Mathlib.Tactic.Positivity
-import Mathlib.Tactic.GCongr
-import Mathlib.Tactic.Linarith
-import Mathlib.Tactic.Ring
-import Mathlib.Tactic.Module
 
 /-!
 The multiplication table is from arXiv:2505.14584v1, Example 3.7.
