@@ -309,22 +309,24 @@ private theorem graph_admissible_separation :
 
 namespace ShiftedGraph
 
+open Classical
+
 abbrev signature : Signature where
   Params := ℝ
   State _ := ℝ → ℂ
   Role := Unit
   finiteRole := inferInstance
   nonemptyRole := inferInstance
-  Output _ _ := Prop
+  Output _ _ := Bool
   Anchor := Empty
   finiteAnchor := inferInstance
 
 def actual : Realization signature :=
-  realize signature (fun _ _ f => InActualBareQuarterGraph f)
+  realize signature (fun _ _ f => decide (InActualBareQuarterGraph f))
     (fun e => nomatch e)
 
 def rejected : Realization signature :=
-  realize signature (fun _ _ _ => (True : Prop)) (fun e => nomatch e)
+  realize signature (fun _ _ _ => true) (fun e => nomatch e)
 
 /- Whole original telescope and iff. Only its entire original RHS is
 observed; original global L1 and L2 remain hypotheses, never conclusions
@@ -335,34 +337,36 @@ abbrev arena : Arena where
     (_hf₂ : MemLp f 2 volume) (c : ℝ),
     Integrable (fun ξ : ℝ =>
       (gammaWeight ξ + c) * ‖unitarySourceFourier f ξ‖ ^ 2) volume ↔
-        r.readout () c f
+        r.readout () c f = true
 
 private theorem source_reconstruction :
     (type_of% (@shifted_actual_gamma_graph_equivalence)) ↔
-      arena.Law actual := Iff.rfl
+      arena.Law actual := by
+  simp only [arena, actual, realize, decide_eq_true_eq]
 
 private theorem rejected_law : ¬ arena.Law rejected := by
   intro hall
   obtain ⟨f, hf₁, hf₂, hNotGamma⟩ := exists_legal_non_gamma_source
   have hbad := hall hf₁ hf₂ 0
   change (Integrable (fun ξ : ℝ =>
-    (gammaWeight ξ + (0 : ℝ)) * ‖unitarySourceFourier f ξ‖ ^ 2) volume ↔ True) at hbad
-  exact hNotGamma (hbad.mpr trivial)
+    (gammaWeight ξ + (0 : ℝ)) * ‖unitarySourceFourier f ξ‖ ^ 2) volume ↔ true = true) at hbad
+  exact hNotGamma (hbad.mpr rfl)
 
 private theorem actual_dependence : ObservationalDependence signature actual := by
   intro i
   obtain ⟨f₀, f₁, _hf₀₁, _hf₀₂, _hf₁₁, _hf₁₂, hGraph, hNotGraph⟩ :=
     graph_admissible_separation
   refine ⟨(0 : ℝ), f₀, f₁, ?_⟩
-  change InActualBareQuarterGraph f₀ ≠ InActualBareQuarterGraph f₁
-  intro heq
-  exact hNotGraph (heq ▸ hGraph)
+  change decide (InActualBareQuarterGraph f₀) ≠ decide (InActualBareQuarterGraph f₁)
+  simp [hGraph, hNotGraph]
 
 def familyRegistration : Registration arena
     (type_of% (@shifted_actual_gamma_graph_equivalence)) where
   actual := actual
   bridge := source_reconstruction
-  variation := ⟨@shifted_actual_gamma_graph_equivalence, rejected, rejected_law⟩
+  variation := ⟨(by
+    simpa only [arena, actual, realize, decide_eq_true_eq] using
+      @shifted_actual_gamma_graph_equivalence), rejected, rejected_law⟩
   sensitivity := by
     constructor
     · intro i
@@ -373,10 +377,10 @@ def familyRegistration : Registration arena
       exact nomatch e
   dependence := actual_dependence
 
-/- SOURCE_ONLY raw selector proposal: f=0,hf1=1,hf2=2,c=3.
-All four binders are crossed; select the complete Iff RHS. Output Prop
-uses the existing predicate-valued dependent-family pattern directly.
-No boolean predicate reification or function-operand mode is used. -/
+/- All four original binders f,hf1,hf2,c remain in the source law.
+The selected complete Iff RHS is observed through its Boolean reflection;
+decide_eq_true_eq reconstructs precisely the original proposition.
+The selected f operand supplies the state after the shift coordinate c. -/
 def registration : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
     (@shifted_actual_gamma_graph_equivalence) (Realization signature) Type Unit where
   unitName := `D5.S3.Weil.ZetaGamma.FormCore.SourceActualGammaCross.shifted_actual_gamma_graph_equivalence.__information_unit
@@ -390,7 +394,7 @@ def registration : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
   realization := .source arena ⟨familyRegistration⟩
   correspondence := { stage := .evidence, objectStage := .evidence }
   bundleNonempty := .absent
-  readout := some (realize signature (fun _ _ f => InActualBareQuarterGraph f)
+  readout := some (realize signature (fun _ _ f => decide (InActualBareQuarterGraph f))
     (fun e => nomatch e))
   variation := .absent
   sensitivity := .absent
@@ -404,8 +408,8 @@ def registration : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
       path := #["body", "body", "body", "body", "arg"]
       stateBinder := 0
       functionOperand := false
-      stateOperand := none
-      booleanPredicate := false }] }
+      stateOperand := some #["arg"]
+      booleanPredicate := true }] }
   continuation := .unknown
   familyRecord := none
   options := #[]
