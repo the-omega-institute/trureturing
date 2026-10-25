@@ -9,11 +9,41 @@
 /-
 admission_basis: open-problem-resolution (#21440; Refuted)
 escape_witness: none
-Every theorem has proof_shape: bind-only. The proof uses pinned series,
-Gamma recurrence, geometric comparison, and exact rational normalization.
-Definitions have proof_shape: bind-only (definition).
+Gamma recurrence, ratio summability, geometric comparison and rational
+normalization instantiate frozen D5 and pinned Mathlib results.
 The designated result is the only public theorem.
-Per-declaration judgement and producing-report identities follow below.
+Per-declaration judgement: name | proof_shape | direct consumers | frozen dependencies.
+All escape_witness fields are none. Helpers are expanded for frozen dependencies.
+The frozen declaration alias gamma_pochhammer below means exactly:
+  GID D5/S3/Analytic/KummerRatio/BetaIntegral.gamma_pochhammer
+  Lean D5.S3.Analytic.KummerRatio.BetaIntegral.gamma_pochhammer
+  DECLARATION statement_id sha256:1059688f4875284d841121819603b9b49cf825aab8e4de735ff76c3e200ab797
+Identity source: .lake/build/stratalint/scoped-lean-report.json.
+  besselI | bind-only (definition) | claim, bessel_eq, bessel_ratio, bessel_pos, witness, result | none
+  claim | bind-only (definition) | result | none
+  term | bind-only (definition) | term_nonneg, term_step, term_summable, bessel_term_eq, bessel_summable, bessel_eq, series, series_pos, term_cast, series_lower, tail_ratio, series_upper, bessel_ratio | none
+  term_nonneg | bind-only | series_pos, series_lower, tail_ratio | none
+  term_step | bind-only | term_summable, term_cast, tail_ratio | none
+  term_summable | bind-only | bessel_summable, series_pos, series_lower, series_upper | none
+  bessel_term_eq | bind-only | bessel_summable, bessel_eq | gamma_pochhammer
+  bessel_summable | bind-only | bessel_pos | gamma_pochhammer
+  bessel_eq | bind-only | bessel_ratio | gamma_pochhammer
+  series | bind-only (definition) | series_pos, series_lower, series_upper, series_product, witness | none
+  series_pos | bind-only | series_product, witness | none
+  qterm | bind-only (definition) | qlower, qupper, term_cast, series_lower, series_upper, numeric_certificate | none
+  qlower | bind-only (definition) | qupper, series_lower, series_upper, numeric_certificate, series_product | none
+  qratio | bind-only (definition) | qupper, tail_ratio, series_upper, numeric_certificate, series_product | none
+  qupper | bind-only (definition) | series_upper, numeric_certificate, series_product | none
+  term_cast | bind-only | series_lower, series_upper | none
+  series_lower | bind-only | series_product | none
+  tail_ratio | bind-only | series_upper | none
+  series_upper | bind-only | series_product | none
+  bessel_ratio | bind-only | witness | gamma_pochhammer
+  bessel_pos | bind-only | result | gamma_pochhammer
+  numeric_certificate | bind-only | series_product | none
+  series_product | bind-only | witness | none
+  witness | bind-only | result | gamma_pochhammer
+  result | bind-only | settling result | gamma_pochhammer
 -/
 
 import D5.S3.Analytic.KummerRatio.BetaIntegral
@@ -91,8 +121,6 @@ private lemma bessel_eq {ν z : ℝ} (hν : -1 < ν) (hz : 0 < z) :
   unfold besselI
   simp_rw [bessel_term_eq hν hz]
   rw [tsum_mul_left]
-
-
 
 private def series (w : ℝ) : ℝ := ∑' k, term (1/10) w k
 
@@ -225,7 +253,6 @@ private lemma series_product :
     _ ≤ (15316/1000:ℝ)^2 * (4447/1000) * 264068 := by gcongr
     _ < (1584/1000:ℝ) * (223368/1000) * (894574/1000)^2 := by norm_num
     _ ≤ _ := by gcongr
-
 
 private lemma witness :
     (besselI (1/10) (9/2) / besselI (1/10) 9)^2 <
