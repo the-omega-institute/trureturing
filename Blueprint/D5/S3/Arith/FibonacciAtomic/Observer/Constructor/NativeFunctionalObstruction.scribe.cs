@@ -92,7 +92,7 @@ internal sealed class NativeFunctionalObstructionDocument : IScribeDocumentDefin
                                 AndAlso(Call("Satisfies", s, w), ExistsTyped("t", V("Source"),
                                     AndAlso(Seq(Call("embed", t), Sp, Eq, Sp, Call("valueAt", w, i)),
                                         Imp(Seq(Call("valueAt", u, i), Sp, Neq, Sp, Call("valueAt", v, i)),
-                                            Seq(V("0"), Sp, Lt, Sp, Call("gamma", t)))))))))))))))));
+                                            Seq(D(0), Sp, Lt, Sp, Call("gamma", t)))))))))))))))));
     }
 
     private static StatementSource ObstructionStatement()
