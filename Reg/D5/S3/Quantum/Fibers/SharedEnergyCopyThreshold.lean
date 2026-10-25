@@ -587,7 +587,7 @@ end Effect
 
 namespace Compatible
 abbrev signature : Signature where
-  Params := ℕ × ℕ
+  Params := Σ _ : ℕ, ℕ
   State _ := _root_.D5.S3.Quantum.Divergence.QuantumRelativeEntropyDefectComposition.DensityState (Fin 3)
   Role := Unit
   finiteRole := inferInstance
@@ -603,8 +603,8 @@ def zeroReadout : Realization signature :=
   realize signature (fun _ _ _ => 0) (fun e => nomatch e)
 abbrev arena : Arena where
   signature := signature
-  Law R := ∀ (m n : ℕ) (r s : signature.State (m,n)),
-    R.readout () (m,n) r = R.readout () (m,n) s ↔
+  Law R := ∀ (m n : ℕ) (r s : signature.State ⟨m,n⟩),
+    R.readout () ⟨m,n⟩ r = R.readout () ⟨m,n⟩ s ↔
       ∀ F : Matrix (CopyIndex (Fin 3) n) (CopyIndex (Fin 3) n) ℂ,
         F.PosSemidef → (1-F).PosSemidef →
         F * totalHamiltonian m n = totalHamiltonian m n * F →
@@ -621,7 +621,7 @@ private theorem rejected : ¬ arena.Law zeroReadout := by
 private theorem dependence : ObservationalDependence signature actual := by
   intro i
   cases i
-  refine ⟨(2, copyOrder 2), rho, sigma 2, ?_⟩
+  refine ⟨⟨2, copyOrder 2⟩, rho, sigma 2, ?_⟩
   change pinchedCopies 2 (copyOrder 2) rho ≠ pinchedCopies 2 (copyOrder 2) (sigma 2)
   exact (sparse_joint_effect 2 (by omega)).2.2.2.2.2.2.2.2.1
 
