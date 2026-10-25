@@ -1226,3 +1226,399 @@ the linear-target/product-measurability comparisons of
 Krieg--Novak--Ullrich, Sections 1--2, cited in Section 1. $\square$
 
 ## 追加锚（本行以下为增补区）
+
+## 7. Stronger joint-fiber budgets and an unrestricted exact region
+
+**Definition 7.1 (coefficient and terminal budgets).** Use exactly
+the complete worlds and private strategies of Definitions 1.1--1.2.
+For every $m>0$, $c>0$ and
+$c/3<E\le(1+c)/2$, retain $P,G$ from (1.8) and
+$\chi,q,r,h$ from (6.2), and put
+
+$$
+\gamma=\frac c3,\qquad
+\alpha=\min\{1,\gamma\},\qquad
+V=\frac G2+\frac{(1-\alpha)\chi}{4}
+ =\frac{P+G-\alpha\chi}{4}.
+\tag{7.1}
+$$
+
+For $-E\le x\le E$ define candidate-origin budgets
+
+$$
+\rho^\alpha_{13}(z+x)=
+\begin{cases}
+G/2-\alpha h(-x),&-E\le x\le0,\\[2pt]
+(P-\alpha\chi)/2+\alpha h(x),&0<x\le E,
+\end{cases}
+\qquad
+\rho^\alpha_{23}(t)=\rho^\alpha_{13}(-3-t).
+\tag{7.2}
+$$
+
+As in (6.3), the center belongs to the first case for each design.
+Only candidate origins in the compatible set are arguments of these
+budgets; the unknown true origin is not an acquired-history operand.
+
+**Theorem 7.2 (joint-fiber compatibility at the larger coefficient).**
+For $m>0$, $c>0$ and $c/3<E\le(1+c)/2$, every real
+three-report history with $C=C_j\ne\varnothing$,
+$j\in\{13,23\}$, has budgets (7.2) that
+are positive and bounded, and satisfy
+
+$$
+|s-t|\le\rho^\alpha_j(s)+\rho^\alpha_j(t)
+\qquad(s,t\in C).
+\tag{7.3}
+$$
+
+Consequently the interval and answer
+
+$$
+\begin{aligned}
+J^\alpha_j(C)&=[L^\alpha_j(C),U^\alpha_j(C)],\\
+L^\alpha_j(C)&=\sup_{t\in C}(t-\rho^\alpha_j(t)),\qquad
+U^\alpha_j(C)=\inf_{t\in C}(t+\rho^\alpha_j(t)),\\
+d^\alpha_j(C)&=\frac{L^\alpha_j(C)+U^\alpha_j(C)}2
+\end{aligned}
+\tag{7.4}
+$$
+
+are well defined and finite, with $J^\alpha_j(C)\ne\varnothing$ and
+
+$$
+|d^\alpha_j(C)-t|\le\rho^\alpha_j(t)\qquad(t\in C).
+\tag{7.5}
+$$
+
+For an empty compatible set set $d^\alpha_j=z$.
+
+**Proof.** The identities (4.4), (6.7) and (6.8) give
+
+$$
+\begin{gathered}
+0<q<r<E,\qquad r\le\frac12,\qquad r-q=\chi>0,\\
+G=\gamma(1+r)=\gamma+(1+2\gamma)\chi,\qquad
+0<\alpha\le1,\qquad \alpha\le\gamma.
+\end{gathered}
+\tag{7.6}
+$$
+
+In particular every budget in (7.2) is at least
+$G/2-\alpha\chi$ and at most $(P+\alpha\chi)/2$, since
+the smallest second-case budget exceeds $G/2-\alpha\chi$ by
+$(1+\alpha)\chi/2$. Moreover,
+
+$$
+G-2\alpha\chi
+ =\gamma+(1+2\gamma-2\alpha)\chi
+ \ge\gamma+\chi>\gamma>0.
+\tag{7.7}
+$$
+
+This proves positivity and boundedness.
+
+For $013$ use the full-prior, favorable-half and cross-center
+restrictions (6.10), supplied by Three-Index Design, Theorems 2.1
+and 3.1. Its local original-coordinate restriction (6.11) says
+that if $z-y,z-x$ belong to this same fiber, $0\le x<y\le E$
+and $x<r$, then, with $d=y-x$ and $w=r-x$,
+
+$$
+d\le\frac{c(1+x)}3=G-\gamma w.
+\tag{7.8}
+$$
+
+Indeed $0\le x<r\le1/2$ puts $k_L(x)=3/(1+x)$ in the
+near branch of the exact separation theorem for $u=1,v=3$.
+The two compatible noiseless triples differ by at most $mc$
+in the original maximum norm. Their exact minimum distance is
+$3md/(1+x)$, which gives (7.8), including $x=0$.
+This uses jointly compatible gains, offsets and original errors;
+no independent box for difference errors is used.
+
+Take first $z-y\le z-x\le z$ in $C_{13}$. Equal origins
+satisfy (7.3) by positivity. If $x\ge r$, both tapers vanish,
+so their radius sum is $G$, sufficient by (6.10). Suppose
+$x<r$ and $d>0$. If $d\le\chi$, then $h(x),h(y)\le\chi$
+and (7.6) imply
+
+$$
+d+\alpha(h(x)+h(y))
+ \le(1+2\alpha)\chi
+ \le(1+2\gamma)\chi=G-\gamma<G.
+\tag{7.9}
+$$
+
+If $d\ge\chi$, the two tapers instead satisfy
+
+$$
+h(x)+h(y)
+ =\min\{\chi,w\}+\min\{\chi,(w-d)_+\}\le w.
+\tag{7.10}
+$$
+
+For $w\le\chi$ the first term is $w$ and the second is zero,
+because $d\ge\chi\ge w$. For $w>\chi$ the first term is
+$\chi$, and $(w-d)_+\le w-\chi$. These two cases prove
+(7.10). Using (7.8) and $\alpha\le\gamma$ now gives
+
+$$
+d+\alpha(h(x)+h(y))
+ \le G-\gamma w+\alpha w\le G.
+\tag{7.11}
+$$
+
+Both (7.9) and (7.11) are precisely
+$d\le G-\alpha(h(x)+h(y))$, the required radius sum for
+these two origins. The separation by $d\le\chi$ or $d\ge\chi$
+is what permits the coefficient in (7.1).
+
+For two origins $z<z+x\le z+y$ in $C_{13}$, if $x\le q$,
+then $h(x)=\chi$, so their radius sum is
+$P+\alpha h(y)\ge P\ge y-x$. If $x>q$, (6.8) gives
+$\chi-h(x)\le x-q$, while the prior gives $y-x\le E-x$.
+Thus
+
+$$
+\begin{aligned}
+\rho^\alpha_{13}(z+x)+\rho^\alpha_{13}(z+y)
+ &=P-\alpha\chi+\alpha(h(x)+h(y))\\
+ &\ge P-\alpha(x-q)
+ \ge P-(x-q)=E-x\ge y-x.
+\end{aligned}
+\tag{7.12}
+$$
+
+Here $\alpha\le1$ is used in the second inequality.
+For $s\le z<t$, (6.10) bounds $t-s$ by $\gamma$,
+whereas (7.7) bounds the two radii's sum below by
+$G-2\alpha\chi>\gamma$. The convention at $z$ is therefore
+also covered. These cases prove (7.3) on every $013$ fiber.
+The exact complete-source reflection (2.7) and (7.2) prove it
+on every $023$ fiber. Reflection relates fixed experiments;
+it is not an acquisition operation.
+
+The scalar budget-intersection argument of Theorem 2.1 applies
+to (7.3): every $s-\rho^\alpha_j(s)$ is at most every
+$t+\rho^\alpha_j(t)$. Its supremum is therefore at most their
+infimum. The nonempty compatible set lies in the bounded prior,
+and the budgets are bounded, so both endpoints in (7.4) are
+finite. Every point of their interval belongs to every
+$[t-\rho^\alpha_j(t),t+\rho^\alpha_j(t)]$, giving (7.5).
+The empty-set convention completes totality. The fixed-pair
+separation, reflection and scalar-intersection ingredients are
+the suppliers already identified in Sections 1--2 and 6;
+(7.9)--(7.11) supply the stronger joint-fiber estimate.
+$\square$
+
+**Definition 7.3 (acquired-history strategy).** Let $\Gamma^\alpha$
+use the source-independent fair seed space $\{13,23\}$ with its
+power-set sigma-algebra and the total acquisition functions (6.14).
+On terminal pairs $(1,3)$ and $(2,3)$, for either seed, use
+$d^\alpha_{13}$ and $d^\alpha_{23}$ from (7.4), respectively,
+formed solely from that pair's three acquired reports.
+On terminal pair $(1,2)$ use the midpoint of $C_{12}$ when
+nonempty, and $z$ when empty. These rules apply on every real
+history, including histories unreachable under that seed.
+All parameters in (7.1)--(7.2) are public and independent of $W$.
+At $E=c/3$ use the existing $\Gamma_{1/2}$ of Definition 3.1.
+
+**Theorem 7.4 (fixed-complete-world upper bound and exact strategy risk).**
+For $m>0$, $c>0$ and $c/3<E\le(1+c)/2$,
+$\Gamma^\alpha$ is lawful under Definition 1.2. Every complete
+world of (1.2), with all its original errors fixed before the seed,
+satisfies
+
+$$
+\mathbb E_{\Gamma^\alpha}|T-\tau|
+ \le
+ \begin{cases}
+ V,&\tau\ne z,\\
+ G/2-\alpha\chi,&\tau=z,
+ \end{cases}
+ \qquad
+ \boxed{\mathcal R(\Gamma^\alpha)=V.}
+\tag{7.13}
+$$
+
+At $E=c/3$ the specified endpoint rule has exact risk $E/2$.
+
+**Proof.** The acquisition functions (6.14) read exactly $013$
+or $023$, each consisting of three actual increasing integer
+indices. Their second continuation is $3$ on every legal
+history, also when the first continuation is $2$.
+Theorem 7.2 gives total finite terminal rules for both these
+pairs. The compact-interval supplier for $C_{12}$ in Definition
+1.3 gives the same property on the unused pair. Thus empty and
+unreachable histories have total finite answers. For each fixed
+complete world, the actual indices and answer are maps on the
+two-point power-set probability space, hence measurable. No world
+measurability or history regularity is required.
+
+Fix one complete $W$. Its gain is any finite $A\ge m$,
+its offset is any $B\in\mathbb R$, and its four original errors
+are any fixed member of the closed cube in (1.2).
+Its true origin belongs to each corresponding compatible set.
+For $x=|\tau-z|>0$, (7.5) bounds the two branch losses, in the
+appropriate order for the sign of $\tau-z$, by
+
+$$
+\frac{P-\alpha\chi}{2}+\alpha h(x),
+ \qquad \frac G2-\alpha h(x).
+\tag{7.14}
+$$
+
+Their fair average is $V$. At $\tau=z$ both budgets are
+$G/2-\alpha\chi$, smaller than $V$ by
+$(1+3\alpha)\chi/4$. This proves the uniform bound using both
+losses in the same complete world. Each execution uses only its
+own acquired history.
+
+For attainment reuse the complete world $W_b$ of (4.5), with its
+gain $m$, finite offset, origin $b$ and all four displayed original
+errors fixed before the seed. The original-coordinate witnesses
+(4.7)--(4.11) give exactly the fibers (6.19). On its $013$ fiber,
+$x=t-z$ runs over $[q,E]$, which is strictly positive.
+On this interval
+$x\mapsto x-\rho^\alpha_{13}(z+x)$ is nondecreasing because
+$h$ is nonincreasing. The map
+$x\mapsto x+\rho^\alpha_{13}(z+x)$ is also nondecreasing:
+for $x_1<x_2$ its increment is at least
+$(1-\alpha)(x_2-x_1)\ge0$ by the Lipschitz bound in (6.8).
+Strict monotonicity is unnecessary, so this includes $\alpha=1$.
+With $h(q)=\chi$ and $h(E)=0$, (7.4) consequently gives
+
+$$
+\begin{aligned}
+L^\alpha_{13}
+ &=b-\frac{P-\alpha\chi}{2},\\
+U^\alpha_{13}
+ &=b-P+\frac{P+\alpha\chi}{2}
+  =b-\frac{P-\alpha\chi}{2}.
+\end{aligned}
+\tag{7.15}
+$$
+
+The $013$ answer therefore has loss $(P-\alpha\chi)/2$.
+On the same world's $023$ fiber, $x\in[r,E]$ and $h(x)=0$,
+so $\rho^\alpha_{23}(z+x)=G/2$ throughout. The fiber is
+$[b-G,b]$, and its budget intersection is the singleton
+$\{b-G/2\}$. This branch's loss is $G/2$. Thus this one
+complete world has expected loss
+$(P-\alpha\chi+G)/4=V$, proving exactness in (7.13).
+
+At the included upper endpoint $E=(1+c)/2$, one has $r=1/2$;
+the near-branch separation used in (7.8) and the finite original
+witnesses (4.7)--(4.11) remain valid. The cases $x=q,r,E$ in
+the taper are closed in (6.8), so no additional endpoint convention
+is needed. At $E=c/3$, the reused endpoint rule has risk $E/2$
+by Theorem 4.1. $\square$
+
+**Corollary 7.5 (unrestricted improvement and a matching region).**
+On exactly the source and arbitrary-seed class of Definitions
+1.1--1.2, for every $m>0$, $c>0$ and
+$c/3<E\le(1+c)/2$,
+
+$$
+\boxed{
+\frac G2\le R_{\mathrm{private}}
+ \le\min\{R_{\mathrm{ad},3},V\},\qquad
+V=\frac G2+\frac{(1-\min\{1,c/3\})(P-G)}4.
+}
+\tag{7.16}
+$$
+
+On this entire strict band $V<U_{\mathrm{new}}$.
+Wherever $U_{\mathrm{new}}\le R_{\mathrm{ad},3}$,
+(7.16) strictly improves the upper bound in (6.22).
+In particular this holds on the nonempty band
+$c/3<E\le(1+2c)/4$ for every $c>0$.
+For $c\ge3$, including $c=3$, the unrestricted value is
+
+$$
+\boxed{
+R_{\mathrm{private}}(c,E)=\frac G2
+ =\frac{c(1+E)}{2(3+c)}
+ \quad\left(\frac c3\le E\le\frac{1+c}{2}\right).
+}
+\tag{7.17}
+$$
+
+The endpoint $E=c/3$ has the already known value $E/2$ for
+every $c>0$. For $0<c<3$ the remaining certified width on the
+strict band is
+
+$$
+0\le R_{\mathrm{private}}-\frac G2
+ \le\frac{(3-c)(P-G)}{12}.
+\tag{7.18}
+$$
+
+**Proof.** Theorem 3.3 applies to every permitted seed probability
+space and supplies the lower bound $H/2=G/2$ on this band.
+Its same two complete legal full-grid worlds are fixed before
+every seed; the original pointwise sum inequality (3.5) is
+integrable using only per-world measurability. Theorem 7.4
+supplies a lawful upper strategy, and one-point seed spaces
+still supply the upper bound $R_{\mathrm{ad},3}$. This proves
+(7.16) for the whole competitor class.
+
+With $\kappa=c/(c+6)$ as in Section 6, one has
+$\alpha>\kappa$: if $c\le3$, $c/3>c/(c+6)$, and if
+$c\ge3$, $1>c/(c+6)$. Therefore
+
+$$
+U_{\mathrm{new}}-V
+ =\frac{(\alpha-\kappa)\chi}{4}>0.
+\tag{7.19}
+$$
+
+When the old upper bound is active, its value is
+$U_{\mathrm{new}}$, and
+$\min\{R_{\mathrm{ad},3},V\}\le V<U_{\mathrm{new}}$.
+On the specified narrower band, Uniform Report Designs,
+Theorem 31.4, gives $R_{\mathrm{ad},3}=P/2$ and
+
+$$
+\frac P2-U_{\mathrm{new}}
+ =\frac{(1+\kappa)\chi}{4}>0.
+\tag{7.20}
+$$
+
+That band has positive length
+$(1+2c)/4-c/3=(3+2c)/12$, and its upper endpoint is included.
+This verifies strict improvement on a nonempty active-bound
+domain without requiring a classification of every active domain.
+
+For $c\ge3$ one has $\alpha=1$, so (7.16) matches the
+unrestricted lower bound, proving (7.17) on the strict band.
+At $E=c/3$, $P=G=E$, and the inherited endpoint result
+completes its closed lower boundary. For $0<c<3$,
+$\alpha=c/3$, and subtraction gives (7.18).
+The threshold $c\ge3$ is sufficient for this matching argument;
+no necessity assertion about that threshold follows.
+
+The comparison literature remains exactly scoped as in Section 1:
+Krieg--Novak--Ullrich, Sections 1--2, concerns a linear target and
+a class with additional product measurability, and
+Casini--Garulli--Vicino, Section 4, equations (7)--(10), supplies
+regression strips rather than this nonlinear target's minimax value.
+The deductions (7.9)--(7.19) use the cited repository separation,
+joint fibers, scalar feasibility and complete-world witnesses.
+
+For $0<c<3$ and $c/3<E\le(1+c)/2$, (7.18) has positive
+right-hand width; it determines no unrestricted equality there.
+For every $c>0$ the intermediate domain
+$(1+c)/2<E<E_\star(c)$ from Definition 5.1 also remains beyond
+this matching argument. In that domain $r>1/2$, so (7.8) is no
+longer supplied on all of the tapered region by the same
+near-separation branch. Determining these remaining values requires
+stronger lawful fixed-world upper or lower estimates on the original
+class. The inherited exact regions (5.2) remain available.
+The two-point seed used to construct $\Gamma^\alpha$ gives no
+reduction of the unrestricted infimum to finite seeds; unrestricted
+equality in (7.17) follows from matching an upper strategy to the
+arbitrary-seed lower certificate. $\square$
+
+## 追加锚（本行以下为增补区）
