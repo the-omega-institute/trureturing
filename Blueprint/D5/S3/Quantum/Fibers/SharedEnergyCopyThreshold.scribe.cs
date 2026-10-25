@@ -90,6 +90,11 @@ internal sealed class SharedEnergyCopyThresholdDocument : IScribeDocumentDefinit
                     + "the recursively constructed exponent has that copy count as degree and the total-energy difference as weight. "
                     + "The actual tensor entry equals its coordinate monomial. Complete total-energy pinching keeps exactly the "
                     + "zero-weight entries, including off-diagonals inside degenerate blocks. The pinched matrix is positive semidefinite with trace one."),
+            Thm("exponent-bridge", "exponent_tensor_bridge", "Every exponent has native tensor words", ExponentBridge(),
+                "Every labelled exponent is realized by two words whose length is its degree. "
+                    + "Their energy difference is its weight, and their tensor entry is its monomial on every native state. "
+                    + "The construction successively removes one actual coordinate occurrence. It includes the empty exponent, "
+                    + "zero matrix entries, deficient rank and repeated numerical gaps."),
             Thm("low-pinching", "sparse_low_pinching", "Low-order complete pinchings agree", LowPinching(),
                 "For every m at least two and every copy count below twice m minus one, the complete total-energy "
                     + "pinchings of the actual sparse tensor states agree. This uses all labelled entries and includes zero exponents."),
@@ -115,6 +120,16 @@ internal sealed class SharedEnergyCopyThresholdDocument : IScribeDocumentDefinit
                     + "copy count plus and minus one twelfth to that count. Both real probabilities lie between zero and one, "
                     + "and their gap is positive. The complete total-energy pinchings differ at this copy count. "
                     + "At every smaller copy count all compatible complex effects have equal probabilities on the two actual tensor states."),
+            Def("indecomposable", "Indecomposable", "Labelled indecomposable zero-weight exponents",
+                "An exponent is nonzero, has weight zero, and contains no nonzero proper subexponent of weight zero. "
+                    + "This definition retains diagonal coordinates and distinguishes coordinates with equal numerical gaps."),
+            Def("star-exponent", "starExponent", "Exponent of the sparse relation",
+                "The ordered coordinate (2,1) has multiplicity m and (0,2) has multiplicity m minus one; all other multiplicities vanish."),
+            Thm("star-indecomposable", "star_indecomposable", "The sparse relation is indecomposable", StarIndecomposable(),
+                "For every m at least two, this exponent is indecomposable and has degree twice m minus one. "
+                    + "Its monomial agrees with the distinguished relation on every complex matrix. A zero-weight subexponent "
+                    + "has multiplicities in the consecutive-gap integer kernel; its coordinate bounds force the integer multiple "
+                    + "to be zero or one. The argument includes m equal to two without merging its coordinate labels."),
             Paragraph(Text("The Haar-average identity, the upper bound on every labelled indecomposable zero-weight exponent, "
                 + "and the equivalence with the actual compact orbits are further requirements "
                 + "for the least uniform orbit-separating order. The explicit effect gives no Helstrom optimum, adaptive "
@@ -216,6 +231,29 @@ internal sealed class SharedEnergyCopyThresholdDocument : IScribeDocumentDefinit
         return Disp(Seq(Forall, Sp, m, Comma, n, InMacro, C("Nat"), Comma,
             D(2), Leq, Sp, m, Sp, Implies, Sp, n, Lt, Length(m), Sp, Implies, Sp,
             C("pinchedCopies", m, n, C("rho")), Eq, C("pinchedCopies", m, n, C("sigma", m))));
+    }
+    private static Formula ExponentBridge()
+    {
+        var m = F.Id("m"); var a = F.Id("a"); var i = F.Id("I"); var j = F.Id("J"); var r = F.Id("r");
+        var n = C("degree", a); var x = C("monomial", C("stateMatrix", r), a);
+        return Disp(Seq(Forall, Sp, m, InMacro, C("Nat"), Comma,
+            Forall, Sp, a, InMacro, C("Exponent"), Comma,
+            Exists, Sp, i, Comma, j, InMacro, C("CopyIndex", C("Fin", D(3)), n), Comma, RowBreak,
+            C("tensorExponent", n, i, j), Eq, a, Sp, Land, Sp,
+            C("totalEnergy", m, n, i), Minus, C("totalEnergy", m, n, j), Eq, C("weight", m, a), Sp, Land, RowBreak,
+            Forall, Sp, r, InMacro, C("DensityState", C("Fin", D(3))), Comma,
+            Entry(C("stateMatrix", C("copies", r, n)), i, j), Eq, x, Sp, Land, RowBreak,
+            Entry(C("pinchedCopies", m, n, r), i, j), Eq,
+            C("ite", Seq(C("weight", m, a), Eq, D(0)), x, D(0))));
+    }
+    private static Formula StarIndecomposable()
+    {
+        var m = F.Id("m"); var x = F.Id("X"); var a = C("starExponent", m);
+        return Disp(Seq(Forall, Sp, m, InMacro, C("Nat"), Comma,
+            D(2), Leq, Sp, m, Sp, Implies, Sp,
+            C("Indecomposable", m, a), Sp, Land, Sp, C("degree", a), Eq, Length(m), Sp, Land, RowBreak,
+            Forall, Sp, x, InMacro, C("Matrix", C("Fin", D(3)), C("Fin", D(3)), C("Complex")), Comma,
+            C("monomial", x, a), Eq, C("starMonomial", m, x)));
     }
     private static Formula CompatibleEffects()
     {
