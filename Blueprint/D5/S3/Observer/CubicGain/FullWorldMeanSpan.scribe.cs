@@ -35,7 +35,7 @@ internal sealed class FullWorldMeanSpanDocument : IScribeDocumentDefinition
     private static Formula MeanDefinition()
     {
         Formula w = F.Id("W");
-        Formula Block(int k) => Call("vec", Seq(Call("a", w, D(k)), Call("P", w)));
+        Formula Block(byte k) => Call("vec", Seq(Call("a", w, D(k)), Call("P", w)));
         return Disp(Seq(Forall, Sp, w, Sp, InMacro, Sp, Mathcal, Grp(w), Comma, Sp,
             Sub(F.Id("m"), w), Eq, Open, Call("d", w), Comma,
             Block(0), Comma, Block(1), Comma, Block(2), Comma, Block(3), Close,
