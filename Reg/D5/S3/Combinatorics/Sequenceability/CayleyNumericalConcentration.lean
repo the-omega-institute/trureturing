@@ -60,16 +60,17 @@ abbrev arena : Arena where
         directedCut T X Y = directedCut T Y X) ∧
       (∀ z : H → ℂ, (∑ x : H, z x) = 0 →
         (∑ x : H, ∑ t ∈ T, z (x * t)) = 0) ∧
-      (∀ (λ : ℂ) (z : H → ℂ),
+      (∀ (lam : ℂ) (z : H → ℂ),
         (∑ x : H, z x) = 0 → z ≠ 0 →
-        (∀ x : H, (∑ t ∈ T, z (x * t)) = λ * z x) →
-        λ.re ≤ (1 - η) * (T.card : ℝ)) ∧
+        (∀ x : H, (∑ t ∈ T, z (x * t)) = lam * z x) →
+        lam.re ≤ (1 - η) * (T.card : ℝ)) ∧
       (∀ a : G,
         Function.Bijective (leftCosetMap H a) ∧
         (∀ (h k : H) (s : G),
           (s ∈ S ∧ (leftCosetMap H a k : G) = (leftCosetMap H a h : G) * s) ↔
             ∃ t ∈ T, (t : G) = s ∧ k = h * t)) ∧
-      ((H.index : ℝ) ≤ 1 / ((1 - ε) * σ) ∧ (H.index : ℝ) < 2 / σ)
+      ((H.index : ℝ) ≤ 1 / ((1 - ε) * σ) ∧
+        1 / ((1 - ε) * σ) < 2 / σ ∧ (H.index : ℝ) < 2 / σ)
 
 private abbrev Bit := ULift.{u} (Multiplicative (ZMod 2))
 
@@ -136,3 +137,19 @@ def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
 
 end Reg.D5.S3.Combinatorics.Sequenceability.CayleyNumericalConcentration
 end
+
+-- Temporary current-expression diagnostic; removed before delivery.
+run_cmd do
+  let info ← Lean.getConstInfo
+    `D5.S3.Combinatorics.Sequenceability.CayleySubgroupConcentration.exists_subgroup_concentration
+  let rec walk (e : Lean.Expr) (path : List String) : Lean.Elab.Command.CommandElabM Unit := do
+    if e.getAppFn.constName? == some ``Nat.cast then
+      Lean.logInfo m!"FULL_CORE_CAST {repr path} {repr e}"
+    match e with
+    | .forallE _ d b _ | .lam _ d b _ => walk d (path ++ ["domain"]); walk b (path ++ ["body"])
+    | .letE _ t v b _ => walk t (path ++ ["type"]); walk v (path ++ ["value"]); walk b (path ++ ["body"])
+    | .app f a => walk f (path ++ ["fn"]); walk a (path ++ ["arg"])
+    | .mdata _ b => walk b (path ++ ["body"])
+    | .proj _ _ b => walk b (path ++ ["body"])
+    | _ => pure ()
+  walk info.type []

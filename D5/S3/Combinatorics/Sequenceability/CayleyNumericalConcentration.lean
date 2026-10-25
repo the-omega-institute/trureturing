@@ -14,8 +14,7 @@ import Mathlib.Basic.Complex.BigOperators
 /-! Numerical stopping and embedded subgroup descent for Section 4 of Bedert,
 Bucić, Kravitz, Montgomery and Müyesser, arXiv:2508.18254v1. The imported
 localization theorem is used without alteration. Neither symmetry nor normality
-nor exclusion of the identity is assumed. This module is staged source until a
-current kernel build checks it; it does not assert an acceptance receipt. -/
+nor exclusion of the identity is assumed. -/
 
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
@@ -37,7 +36,7 @@ def NumericalGap {K : Type*} [Group K] [Fintype K]
 /-- Ordered original-label edges; identity labels give loops, as intended. -/
 def directedCut {K : Type*} [Group K] [Fintype K]
     (T X Y : Finset K) : ℕ :=
-  ((X.product Y).filter (fun xy => xy.1⁻¹ * xy.2 ∈ T)).card
+  ((X ×ˢ Y).filter (fun xy => xy.1⁻¹ * xy.2 ∈ T)).card
 
 /-- Coordinates on a left coset, with the explicit membership convention. -/
 def leftCosetMap {G : Type*} [Group G]
@@ -56,12 +55,13 @@ private theorem retained_card_le {G : Type*} [Group G] [Fintype G]
     intro t u h
     apply Subtype.ext
     apply Subtype.ext
-    exact congrArg Subtype.val h
+    exact congrArg (fun v : {s // s ∈ S} => (v.val : G)) h
   simpa only [Fintype.card_coe] using Fintype.card_le_of_injective f hf
 
 private theorem retained_top_card {G : Type*} [Group G] [Fintype G]
     (S : Finset G) : (retained S (⊤ : Subgroup G)).card = S.card := by
-  apply Finset.card_bij (fun t _ => (t : G))
+  apply Finset.card_bij (s := retained S (⊤ : Subgroup G)) (t := S)
+    (fun (t : (⊤ : Subgroup G)) _ => (t : G))
   · intro t ht
     exact (retained_mem S ⊤ t).mp ht
   · intro t ht u hu h
@@ -173,18 +173,18 @@ private theorem stage_estimates {G : Type*} [Group G] [Fintype G]
     have hbound : p * (S.card : ℝ) ≤ 2 * (Fintype.card G : ℝ) * τ := by linarith
     rw [← hσg] at hbound
     have hcancel : p * σ ≤ 2 * τ := by
-      apply (mul_le_mul_right hg).mp
+      apply (mul_le_mul_iff_left₀ hg).mp
       convert hbound using 1 <;> ring
     linarith
   have hdensity : σ ≤ τ := by
     by_cases hj : j = 0
     · have htop := st.initial hj
       subst H
-      dsimp [σ, τ, density]
-      rw [retained_top_card]
-      congr 1
-      exact_mod_cast (show Fintype.card (⊤ : Subgroup G) = Fintype.card G from
-        by simpa only [Nat.card_eq_fintype_card] using (Subgroup.card_top (G := G)))
+      have htopcard : Fintype.card (⊤ : Subgroup G) = Fintype.card G := by
+        simpa only [Nat.card_eq_fintype_card] using (Subgroup.card_top (G := G))
+      change (S.card : ℝ) / Fintype.card G ≤
+        ((retained S (⊤ : Subgroup G)).card : ℝ) / Fintype.card (⊤ : Subgroup G)
+      rw [retained_top_card, htopcard]
     · obtain ⟨k, rfl⟩ := Nat.exists_eq_succ_of_ne_zero hj
       have hk : (1 : ℝ) ≤ 2 ^ k := one_le_pow₀ (by norm_num)
       have hp2 : 2 ≤ p := by dsimp [p]; rw [pow_succ]; linarith
@@ -238,6 +238,7 @@ private theorem embedded_localization {G : Type*} [Group G] [Fintype G]
       _ ≤ Fintype.card L * L.index := Nat.mul_le_mul_left _ hi
   refine ⟨hle, hret, hhalf, ?_⟩
   have hpos : 0 < Fintype.card H' := Fintype.card_pos
+  change Fintype.card H' < Fintype.card H
   omega
 
 private theorem numerical_descent {G : Type*} [Group G] [Fintype G]
@@ -268,7 +269,8 @@ private theorem numerical_descent {G : Type*} [Group G] [Fintype G]
           have hτpos := density_pos _ hT
           have hsq := mul_self_le_mul_self hσ.le hτ
           have hepssq : ε * density S ^ 2 ≤ density S ^ 2 :=
-            mul_le_mul_of_nonneg_right (by linarith : ε ≤ 1) (sq_nonneg _)
+            by simpa only [one_mul] using
+              mul_le_mul_of_nonneg_right (by linarith : ε ≤ 1) (sq_nonneg (density S))
           dsimp [η]
           nlinarith
         obtain ⟨L, hL, hlabels⟩ := localize_failure (retained S H) hT η hη.le hβ hgap
@@ -338,7 +340,7 @@ private theorem regular_sum {K : Type*} [Group K] [Fintype K]
 The inverse keeps the original colour x⁻¹y. -/
 private theorem directedCut_labelled {K : Type*} [Group K] [Fintype K]
     (T X Y : Finset K) :
-    directedCut T X Y = ((X.product T).filter (fun xt => xt.1 * xt.2 ∈ Y)).card := by
+    directedCut T X Y = ((X ×ˢ T).filter (fun xt => xt.1 * xt.2 ∈ Y)).card := by
   unfold directedCut
   symm
   apply Finset.card_bij (fun xt _ => (xt.1, xt.1 * xt.2))
@@ -348,9 +350,11 @@ private theorem directedCut_labelled {K : Type*} [Group K] [Fintype K]
     simp only [Finset.mem_filter, Finset.mem_product]
     exact ⟨⟨hX, hY⟩, by simpa [mul_assoc] using hT⟩
   · intro xt hxt zu hzu heq
-    have hx := congrArg Prod.fst heq
-    have ht := congrArg Prod.snd heq
-    exact Prod.ext hx (mul_left_cancel (by simpa only [hx] using ht))
+    rcases xt with ⟨x, t⟩
+    rcases zu with ⟨y, u⟩
+    simp only [Prod.mk.injEq] at heq
+    obtain ⟨rfl, ht⟩ := heq
+    exact Prod.ext rfl (mul_left_cancel ht)
   · intro xy hxy
     rcases Finset.mem_filter.mp hxy with ⟨hxy, hT⟩
     rcases Finset.mem_product.mp hxy with ⟨hX, hY⟩
@@ -454,8 +458,10 @@ private theorem numerical_cut {K : Type*} [Group K] [Fintype K]
     rw [hy]
     field_simp [hn.ne']
     <;> ring
+  change (directedCut T X X : ℝ) - d * x ^ 2 / n ≤
+    (1 - η) * d * (x - x ^ 2 / n) at h
   rw [htarget, hout]
-  nlinarith
+  linear_combination h
 
 /-- Complex adjacency preserves the actual zero-sum space by right-translation
 reindexing; this does not require normality of the operator. -/
@@ -468,9 +474,9 @@ private theorem adjacency_mean_zero {K : Type*} [Group K] [Fintype K]
 
 private theorem numerical_complex {K : Type*} [Group K] [Fintype K]
     (T : Finset K) (η : ℝ) (hgap : NumericalGap T η)
-    (λ : ℂ) (z : K → ℂ) (hmean : (∑ x : K, z x) = 0) (hz : z ≠ 0)
-    (heigen : ∀ x : K, (∑ t ∈ T, z (x * t)) = λ * z x) :
-    λ.re ≤ (1 - η) * (T.card : ℝ) := by
+    (lam : ℂ) (z : K → ℂ) (hmean : (∑ x : K, z x) = 0) (hz : z ≠ 0)
+    (heigen : ∀ x : K, (∑ t ∈ T, z (x * t)) = lam * z x) :
+    lam.re ≤ (1 - η) * (T.card : ℝ) := by
   let u : K → ℝ := fun x => (z x).re
   let v : K → ℝ := fun x => (z x).im
   have humean : (∑ x : K, u x) = 0 := by
@@ -479,17 +485,17 @@ private theorem numerical_complex {K : Type*} [Group K] [Fintype K]
     simpa [v] using congrArg Complex.im hmean
   have hu := hgap u humean
   have hv := hgap v hvmean
-  have hre (x : K) : (∑ t ∈ T, u (x * t)) = λ.re * u x - λ.im * v x := by
+  have hre (x : K) : (∑ t ∈ T, u (x * t)) = lam.re * u x - lam.im * v x := by
     simpa [u, v, Complex.mul_re] using congrArg Complex.re (heigen x)
-  have him (x : K) : (∑ t ∈ T, v (x * t)) = λ.re * v x + λ.im * u x := by
+  have him (x : K) : (∑ t ∈ T, v (x * t)) = lam.re * v x + lam.im * u x := by
     simpa [u, v, Complex.mul_im] using congrArg Complex.im (heigen x)
   have henergy : (∑ x : K, ∑ t ∈ T, u x * u (x * t)) +
         (∑ x : K, ∑ t ∈ T, v x * v (x * t)) =
-      λ.re * ((∑ x : K, u x ^ 2) + (∑ x : K, v x ^ 2)) := by
+      lam.re * ((∑ x : K, u x ^ 2) + (∑ x : K, v x ^ 2)) := by
     simp_rw [← Finset.mul_sum, hre, him]
     rw [← Finset.sum_add_distrib]
-    simp_rw [show ∀ x : K, u x * (λ.re * u x - λ.im * v x) +
-      v x * (λ.re * v x + λ.im * u x) = λ.re * (u x ^ 2 + v x ^ 2) by intro; ring]
+    simp_rw [show ∀ x : K, u x * (lam.re * u x - lam.im * v x) +
+      v x * (lam.re * v x + lam.im * u x) = lam.re * (u x ^ 2 + v x ^ 2) by intro; ring]
     rw [← Finset.mul_sum, Finset.sum_add_distrib]
   have hmass : 0 < (∑ x : K, u x ^ 2) + (∑ x : K, v x ^ 2) := by
     obtain ⟨x, hx⟩ : ∃ x : K, z x ≠ 0 := by
@@ -504,11 +510,11 @@ private theorem numerical_complex {K : Type*} [Group K] [Fintype K]
       Finset.single_le_sum (fun y _ => add_nonneg (sq_nonneg _) (sq_nonneg _)) (Finset.mem_univ x)
     rw [Finset.sum_add_distrib] at hle
     linarith
-  have hbound : λ.re * ((∑ x : K, u x ^ 2) + (∑ x : K, v x ^ 2)) ≤
+  have hbound : lam.re * ((∑ x : K, u x ^ 2) + (∑ x : K, v x ^ 2)) ≤
       ((1 - η) * (T.card : ℝ)) * ((∑ x : K, u x ^ 2) + (∑ x : K, v x ^ 2)) := by
     rw [← henergy]
     nlinarith
-  exact (mul_le_mul_right hmass).mp hbound
+  exact (mul_le_mul_iff_left₀ hmass).mp hbound
 
 private theorem original_colour_coset {G : Type*} [Group G] [Fintype G]
     (S : Finset G) (H : Subgroup G) (a : G) :
@@ -533,8 +539,7 @@ private theorem original_colour_coset {G : Type*} [Group G] [Fintype G]
         simpa only [leftCosetMap, mul_assoc] using he
       let t : H := h⁻¹ * k
       have ht : (t : G) = s := by
-        dsimp [t]
-        simp only [Subgroup.coe_mul, Subgroup.coe_inv]
+        change (h : G)⁻¹ * (k : G) = s
         rw [hk]
         simp [mul_assoc]
       refine ⟨t, (retained_mem S H t).mpr (by simpa only [ht] using hs), ht, ?_⟩
@@ -547,7 +552,8 @@ private theorem original_colour_coset {G : Type*} [Group G] [Fintype G]
 private theorem retained_index {G : Type*} [Group G] [Fintype G]
     (S : Finset G) (hS : S.Nonempty) (ε : ℝ) (hεhalf : ε < (1 / 2 : ℝ))
     (H : Subgroup G) (hret : (1 - ε) * (S.card : ℝ) ≤ (retained S H).card) :
-    (H.index : ℝ) ≤ 1 / ((1 - ε) * density S) ∧ (H.index : ℝ) < 2 / density S := by
+    (H.index : ℝ) ≤ 1 / ((1 - ε) * density S) ∧
+      1 / ((1 - ε) * density S) < 2 / density S ∧ (H.index : ℝ) < 2 / density S := by
   have hσ : 0 < density S := density_pos S hS
   have he : 0 < 1 - ε := by linarith
   have hden : 0 < (1 - ε) * density S := mul_pos he hσ
@@ -564,12 +570,13 @@ private theorem retained_index {G : Type*} [Group G] [Fintype G]
     apply (le_div_iff₀ hden).mpr
     rw [hcard] at hbound
     rw [← hσg] at hbound
-    apply (mul_le_mul_right hg).mp
+    apply (mul_le_mul_iff_left₀ hg).mp
     convert hbound using 1 <;> ring
-  refine ⟨hi, lt_of_le_of_lt hi ?_⟩
-  apply (div_lt_div_iff₀ hden hσ).mpr
-  have hstrict := mul_pos (show 0 < 1 - 2 * ε by linarith) hσ
-  nlinarith
+  have hrecip : 1 / ((1 - ε) * density S) < 2 / density S := by
+    apply (div_lt_div_iff₀ hden hσ).mpr
+    have hstrict := mul_pos (show 0 < 1 - 2 * ε by linarith) hσ
+    nlinarith
+  exact ⟨hi, hrecip, lt_of_le_of_lt hi hrecip⟩
 
 /-- Full original-label Cayley concentration. The subgroup is constructed by
 well-founded cardinal descent from a failed numerical inequality. The directed
@@ -594,20 +601,22 @@ theorem exists_subgroup_concentration
         directedCut T X Y = directedCut T Y X) ∧
       (∀ z : H → ℂ, (∑ x : H, z x) = 0 →
         (∑ x : H, ∑ t ∈ T, z (x * t)) = 0) ∧
-      (∀ (λ : ℂ) (z : H → ℂ),
+      (∀ (lam : ℂ) (z : H → ℂ),
         (∑ x : H, z x) = 0 → z ≠ 0 →
-        (∀ x : H, (∑ t ∈ T, z (x * t)) = λ * z x) →
-        λ.re ≤ (1 - η) * (T.card : ℝ)) ∧
+        (∀ x : H, (∑ t ∈ T, z (x * t)) = lam * z x) →
+        lam.re ≤ (1 - η) * (T.card : ℝ)) ∧
       (∀ a : G,
         Function.Bijective (leftCosetMap H a) ∧
         (∀ (h k : H) (s : G),
           (s ∈ S ∧ (leftCosetMap H a k : G) = (leftCosetMap H a h : G) * s) ↔
             ∃ t ∈ T, (t : G) = s ∧ k = h * t)) ∧
-      ((H.index : ℝ) ≤ 1 / ((1 - ε) * σ) ∧ (H.index : ℝ) < 2 / σ) := by
+      ((H.index : ℝ) ≤ 1 / ((1 - ε) * σ) ∧
+        1 / ((1 - ε) * σ) < 2 / σ ∧ (H.index : ℝ) < 2 / σ) := by
   obtain ⟨H, hretain, hdense, hgap⟩ := numerical_descent S hS ε hε hεhalf
   refine ⟨H, hretain, hdense, hgap, ?_, ?_, ?_, ?_, ?_⟩
   · intro X Y hdisj hcover
-    obtain ⟨hcut, hbalance⟩ := numerical_cut _ _ hgap X Y hdisj hcover
+    obtain ⟨hcut, hbalance⟩ := numerical_cut _ _ hgap X Y hdisj
+      (by simpa only [Finset.ext_iff, Finset.mem_union, Finset.mem_univ] using hcover)
     refine ⟨hcut, ?_, hbalance⟩
     have hσ := density_pos S hS
     have hbase : ε * density S ^ 3 / 1000 ≤
