@@ -3,7 +3,7 @@
    mirror-B: none(waiver:unbounded-symbolic-proof)
    mirror-E: none(waiver:unbounded-symbolic-proof)
    anchors: []
-   utility: none
+   utility: kind=checker; basis=consumer=D5/S3/Arith/FibonacciAtomic/Observer/Constructor/OriginalNativeConstruction.finite_compile_sound; instance=D5/S3/Arith/FibonacciAtomic/Observer/Constructor/OriginalCanonicalClassification.edgeSystem
    digest: Finite symbolic resolution and parameter-uniform rigidity of original functional expressions. -/
 
 import D5.S3.Arith.FibonacciAtomic.Observer.CompletionPositiveDriftRegion
