@@ -236,9 +236,8 @@ private theorem dense_ball_proper_stabilizer {K : Type*} [Group K] [Fintype K]
   have hstabilize : ∀ b ∈ lengthBall (displacement v) (τ / 5),
       b ∈ MulAction.stabilizer K X := by
     intro b hb
-    apply MulAction.mem_stabilizer_finset_iff_smul_finset_subset.mpr
-    intro y hy
-    obtain ⟨x, hx, rfl⟩ := Finset.mem_smul_finset.mp hy
+    apply MulAction.mem_stabilizer_finset'.mpr
+    intro x hx
     apply (mem_lengthBall _ _ _).mpr
     have hbx : displacement v (b * x) ≤ (k : ℝ) * (τ / 5) := by
       have hb' := (mem_lengthBall _ _ _).mp hb
@@ -253,9 +252,8 @@ private theorem dense_ball_proper_stabilizer {K : Type*} [Group K] [Fintype K]
     intro htop
     obtain ⟨g, hg⟩ := exists_large_displacement v hv hmean
     have hgmem : g ∈ MulAction.stabilizer K X := by rw [htop]; trivial
-    have hsub := MulAction.mem_stabilizer_finset_iff_smul_finset_subset.mp hgmem
-    have hgin : g ∈ X := hsub (by
-      simpa using Finset.smul_mem_smul_finset g hone)
+    have hgin : g ∈ X := by
+      simpa using MulAction.mem_stabilizer_finset'.mp hgmem hone
     exact (not_lt_of_ge (hsmall g hgin)) hg
   exact ⟨X, hone, hsmall, hproper, hstabilize⟩
 
@@ -279,7 +277,7 @@ theorem near_invariant_localization {K : Type*} [Group K] [Fintype K]
   have hsq (g : K) : displacement v g ^ 2 =
       2 - 2 * ∑ x : K, v x * v (x * g) := by
     simp only [displacement, norm_sub_sq_real, (regularIso g).norm_map, hv,
-      PiLp.inner_apply, real_inner_eq_mul, regularIso_apply]
+      PiLp.inner_apply, real_inner_eq_mul, regularIso_apply, mul_comm]
     ring
   have hsecond : (∑ t ∈ T, displacement v t ^ 2) ≤ 2 * β * T.card := by
     simp_rw [hsq]
