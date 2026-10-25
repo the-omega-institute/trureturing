@@ -711,6 +711,14 @@ class NativeColdPublicationTests:
         # Unstage admits only compiler artifacts; each fixture still creates
         # its own producer build, reports, utility inputs, and ensure stamp.
         self.assertFalse((self.root / '.lake/build/lean-inspector').exists())
+        # Both compiler tools must restore through Lake without compilation.
+        # Restoring compiler outputs must leave all project/report work cold.
+        self.run_lake('--no-build', '-d', 'tools/lean-inspector', 'build',
+                      'reportInspector', 'inputDiscovery')
+        for package in [self.root, self.root / 'Reg']:
+            self.assertFalse((package / '.lake/build/lib/lean').exists())
+        self.assertFalse((self.root / '.lake/build/lean-inspector/modules').exists())
+        self.assertFalse((self.root / '.lake/build/lean-inspector/report.zip').exists())
         for name in before:
             if name == 'outputs.jsonl':
                 continue
