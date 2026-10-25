@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:ad51e6c71fc672eb1fbc7535a5fab23c9f7f54e783cd95e176ef9e577db0c0d7
+  normalized_sha256: sha256:ad51e6c71fc672eb1fbc7535a5fab23c9f7f54e783cd95e176ef9e577db0c0d7
+cas_ref: sha256:ad51e6c71fc672eb1fbc7535a5fab23c9f7f54e783cd95e176ef9e577db0c0d7
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 闭/本质自伴是 Hilbert–Pólya 的待证明条件，不是具体算子的自伴性定理。
+    previous_atom_id: 76f5131aee211d87370613079ad53d08c4775258aa51b835473f2b61bcc21852
+    next_atom_id: ddd8a3eefe4520344e74c022a0b9d5877db6b1c7d151570c60882aa177fb994f

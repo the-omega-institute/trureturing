@@ -1763,3 +1763,455 @@ The complement includes the natural $M\asymp U$ squarefree good duals;
 its aggregate real part still requires joint cancellation. This
 application proves no complete J24 estimate, inverse-fourth saving,
 signed Robin restoration or RH conclusion.
+
+
+### Retaining the shorter modulus and both actual side lengths
+
+The same sector $\mathfrak D_{P,\le H}$ defined before (J26) admits
+an estimate with no $P^{1/3}$ loss. Reuse de Faveri v1 Proposition 8.1,
+(8.1), and Example 2.2 in exactly the character correspondence of
+(J28)--(J31), together with the owned Gauss, Poisson and smooth-calculus
+applications through (J33). For the original $c_{\tau,T}$ of (J24),
+$T=U^{1/12}$, and its actual $b=\lambda_{\mathrm{II},b}$, or the stated
+$C_b\tau_k$ envelope, the source-conditional strengthening is
+
+$$
+\boxed{
+|\mathfrak D_{P,\le H}|
+ \ll C_b^4U^{1+\varepsilon}(H^{1/2}+H^{2/3}),
+ \qquad 1\le P<U^{1/6},\quad H\ge1.
+}
+\tag{J34}
+$$
+
+This is the identical complete weighted sector: the parity selector is
+still inserted in each original Poisson series, before separation and
+common-$e$ detection. In particular all repeated cores, occupancies,
+common-$e$ signs, original $\ell,r$ expansions, bad duals, finite
+components and derivative profiles in that definition remain present.
+The constants and aggregate profile/height costs are those of
+(J26)--(J33). Uniformly in the same $P$ range,
+
+$$
+\boxed{
+H=U^{1/8}
+ \quad\Longrightarrow\quad
+|\mathfrak D_{P,\le U^{1/8}}|
+ \ll C_b^4U^{13/12+\varepsilon}.
+}
+\tag{J35}
+$$
+
+This fixed cutoff also pays the sum over all the $P$ dyads with their
+original signs. It enlarges the tapered paid sector of (J27), whose
+cutoff is $U^{1/8}P^{-1/2}$; it does not change that earlier estimate.
+
+**Orient each actual allocation before applying the supplier.** In
+(J28)--(J29), fix the cores, the original finite component and heights,
+$\widetilde s$, $e$ and its allocations, and the squarefree parity
+ideal $\beta$. Let
+
+$$
+Q=\min(L_1,L_2),\qquad L=\max(L_1,L_2),\qquad
+K=QL\asymp X/q_e,\qquad W_a=D/q_{t_a}.
+$$
+
+On nonempty annuli $Q,L\ge1$ up to fixed annular constants, which are
+absorbed throughout, and $L\ll W_a$. Cubic reciprocity in the pinned
+`lem:fixed-gauss-phase` gives $\kappa_u(v)=\kappa_v(u)$ on coprime
+primary inputs. Both sides are zero on collisions, so this equality
+also holds on the algebraically extended scalar in (J29). If $v$ is
+the shorter variable, interchange the two entire vectors and their
+separate masks and heights. The scalar and its fixed outside phases
+are unchanged. In particular this operation does not replace sextic
+reciprocity by a sign-free assertion: its original $\mathcal R$ factor
+and the negative-root side's $-1$ factor remain exactly as in (J28).
+
+The shorter variable is now the squarefree modulus $\mathfrak q$ in
+Proposition 8.1. Its actual vector is the corresponding vector of
+(J28) multiplied by $\overline{\chi_{\mathfrak q}(\beta)}$, as in
+(J30), and is independent of the other original convolution variable
+and $z$. The remaining convolution coefficient, including its dual
+zeros, is removed only by the same Cauchy inequality used for (J31).
+Thus (J31) applies with $(A,B;Q)=(L,Z;Q)$; it is not an application
+to a moving vector or a new optimized vector. Example 2.2 and the
+precise primary cubic reciprocity already checked there identify the
+source character in either orientation. Its exclusion of the prime
+above $3$ is fixed; the other original excluded primes and core
+characters stay coefficient masks or factors, not growing bad data
+for the supplier. The outer $z$ remains arbitrary, and $(\beta,z)>1$
+is allowed. No cube-free inner extension from Remark 8.2 is needed.
+
+For the function $F$ in (J31), retaining the actual product gives
+
+$$
+F(L,Z;Q)\ll LZ+K^{2/3}Z^{2/3},
+ \qquad 1\le Q\le L,\quad Z\ge1.
+\tag{J36}
+$$
+
+Indeed, if $Z\le L$, the two mixed terms are
+$Z^{2/3}L^{1/3}Q$ and $Z^{1/3}L^{2/3}Q^{2/3}$.
+Their ratios to $K^{2/3}Z^{2/3}$ are respectively
+$(Q/L)^{1/3}$ and $Z^{-1/3}$, both at most one.
+If $Z\ge L$, the ratios are $(Q/Z)^{1/3}$ and $L^{-1/3}$,
+again at most one. This comparison has no upper restriction on $Z$.
+It preserves $K$ in place of the earlier bound $D^2$ and uses the
+shorter modulus in the first ratio.
+
+Consequently a single allocation satisfies
+
+$$
+\sum_{z\sim Z}|H_{\beta z^2}|^2
+ \ll C_b^4(UZ)^\varepsilon K
+       [W_aZ+K^{2/3}Z^{2/3}].
+$$
+
+Both original coefficients $b(k_1u)b(k_2v)$ remain those in (J28).
+Their separate squared norms supply the factor $C_b^4K$; their fixed
+allocated divisor factors are absorbed by $U^\varepsilon$.
+No multiplicativity, cancellation or differentiability of $b$ is used.
+For $m_{\rm good}=\beta z^2\sim M$, use the same parity counts as in
+(J32): the sums of $Z$ and $Z^{2/3}$ over $q_\beta\le H$ are at most
+$M^{1/2}H^{1/2}$ and $M^{1/3}H^{2/3}$. Empty boxes are omitted, so
+these statements hold also for $H>M$. Cauchy over the actual
+allocations costs only divisors. Summing the common ideal $e$ uses
+$\sum_{q_e\ll X}\tau_j(e)/q_e\ll U^\varepsilon$ for the first term
+and the convergent $\sum_e\tau_j(e)/q_e^{5/3}$ for the second, with
+fixed $j$. Thus the complete positive side norm obeys
+
+$$
+\boxed{
+\sum_{\substack{e,\,m_{\rm good}\sim M\\
+ q_{r_2(m_{\rm good})}\le H}}|H_{a,e}(m)|^2
+ \ll C_b^4(UM)^\varepsilon X
+ \left[W_aM^{1/2}H^{1/2}
+           +X^{2/3}M^{1/3}H^{2/3}\right].
+}
+\tag{J37}
+$$
+
+The other side has its own shorter-variable choice, actual $Y$ and
+$W_c=D/q_{t_c}$. The choices need not agree across the two sides or
+across allocations: each bounds a complete positive side norm.
+Cauchy then pairs the two norms on the same original $(e,m)$ set.
+The common-$e$ Möbius coefficient, $\overline{\rho(m)}$ and all other
+outer phases are retained in the signed pairing, with their absolute
+values bounded at this step. No positivity of the selected physical
+contraction is asserted.
+
+**Restore all four unequal-side cross products.** Keep
+$C,R,S,G,X_0,Y_0$ from (J19). The actual lengths satisfy
+$X\le X_0=U/(C^2R^2G)$ and $Y\le Y_0=U/(C^2S^2G)$, while
+$W_a\asymp D/(CR)$ and $W_c\asymp D/(CS)$. Restoring the two
+original $D^{-1}$ coefficients and the original Poisson factor, then
+counting the cores in their dyads, gives the positive majorant
+
+$$
+\frac{C_b^4(UM)^\varepsilon GC\sqrt{RS}}{\kappa}
+ \sqrt{\mathcal B_a(M,H)\mathcal B_c(M,H)},
+\quad
+\begin{cases}
+\mathcal B_a=W_aM^{1/2}H^{1/2}+X_0^{2/3}M^{1/3}H^{2/3},\\
+\mathcal B_c=W_cM^{1/2}H^{1/2}+Y_0^{2/3}M^{1/3}H^{2/3}.
+\end{cases}
+\tag{J38}
+$$
+
+Occupancy ideals remain in the original coefficients, conductor and
+zeros. They are omitted only from this increasing positive majorant:
+they decrease $X,Y$ and the natural dual length and have only a divisor
+number of choices. In particular they do not increase $W_a,W_c$.
+The original caps $q_{t_a},q_{t_c}\le T$ are retained, although no
+additional use of them is needed for the bound below.
+
+For each fixed bad-prime dual part $s$, the natural good-dual scale is
+bounded above by the same
+$N_s=\kappa U/(C^4RSG^2q_s)$ as before (J33).
+Expand the square root in (J38) into its four positive cross products
+before summing dual dyads. Their $M$ powers are $1/2,5/12,5/12,1/3$.
+The original transform and required logarithmic derivatives supply
+arbitrary decay above $N_s$. The dyadic inequality used for (J33)
+therefore replaces each $M^\alpha$ by $N_s^\alpha$, including when
+$N_s<1$, without truncating the complete dual. With a smaller input
+epsilon, the source length loss is absorbed exactly as for (J32).
+The resulting four core costs, in the order first--first,
+first--second, second--first, second--second, are bounded by
+
+$$
+\begin{aligned}
+C_b^4U^{1+\varepsilon}\big[&
+ C^{-2}(RS)^{-1/2}\kappa^{-1/2}q_s^{-1/2}H^{1/2}\\
+&+C^{-11/6}G^{-1/6}R^{-5/12}S^{-7/12}
+       \kappa^{-7/12}q_s^{-5/12}H^{7/12}\\
+&+C^{-11/6}G^{-1/6}R^{-7/12}S^{-5/12}
+       \kappa^{-7/12}q_s^{-5/12}H^{7/12}\\
+&+C^{-5/3}G^{-1/3}(RS)^{-1/2}
+       \kappa^{-2/3}q_s^{-1/3}H^{2/3}\big].
+\end{aligned}
+\tag{J39}
+$$
+
+All four products are needed for asymmetric $X,Y$; no equality of the
+side lengths or allocations is assumed. Every displayed core power
+is nonpositive, so there is no $P$ loss when summing their dyads.
+Since $\kappa=q_\ell^6q_r$, the original $\ell$ sums are respectively
+$\sum q_\ell^{-3}$, $\sum q_\ell^{-7/2}$ and
+$\sum q_\ell^{-4}$, all convergent. The original $r\mid R_0$ sums
+retain powers $q_r^{-1/2},q_r^{-7/12},q_r^{-2/3}$ and cost divisors.
+The bad-prime dual sums have strictly positive decay powers
+$1/2,5/12,1/3$ and converge. Core dyads and allocations cost the
+original $U^\varepsilon$ allowance. The bulk lengths still satisfy
+$X,Y\gg U/P^2\gg U^{1/2}$, so no principal $x=y=1$ exception is added.
+
+Profile separation and restoration are precisely those already
+justified for (J31)--(J33): separate the whole original coupled profile
+on annuli before the fixed-vector application, use smoothness at zero
+and rapid decay at infinity, and restore it by its common coefficient
+measure. The shorter-variable choice depends only on the allocation's
+lengths, not on a moving row. It only exchanges the two original
+separating phases; the source norm bound is uniform in them.
+Minkowski restores all original finite ray/angular presentations and
+required derivatives with the same fixed or polylogarithmic aggregate
+seminorm/height cost. No derivative falls on $b$ and no height budget
+is renewed per component. Since $H^{7/12}\le H^{2/3}$ for $H\ge1$,
+(J39) proves (J34). At $H=U^{1/8}$ the endpoint powers are
+$U^{17/16+\varepsilon}$ and $U^{13/12+\varepsilon}$, proving (J35).
+
+**The enlarged sector has its own exact signed complement.** Let
+$\mathfrak D_{>}^{\rm unif}$ be the actual original expanded sum in
+(J24) selected, in every $P<U^{1/6}$ dyad, by
+$q_{r_2(m_{\rm good})}>U^{1/8}$. Keep every original coefficient,
+parameter, phase, zero, bad dual and profile on this complementary
+support. Exact complementary selectors give
+
+$$
+\operatorname{Re}\sum_\tau E_{6,\,P<U^{1/6}}(c_{\tau,T})
+ =\operatorname{Re}\mathfrak D_{>}^{\rm unif}
+   +\operatorname{Re}\sum_{P<U^{1/6}}
+                      \mathfrak D_{P,\le U^{1/8}},
+ \qquad T=U^{1/12}.
+\tag{J40}
+$$
+
+This complement differs from the tapered $\mathfrak D_{>}$ after
+(J33); the selector $U^{1/8}P^{-1/2}$ there has not been silently
+changed. The second term in (J40) is paid at
+$C_b^4U^{13/12+\varepsilon}$ by (J35). A uniform aggregate real bound
+$\operatorname{Re}\mathfrak D_{>}^{\rm unif}
+\ll C_b^4U^{B_*-\sigma+\varepsilon}$ for some $\sigma>0$, under the
+same original component and derivative contract, would supply the
+saving needed in (J24)--(J25), with exponent
+$\max\{13/12,B_*-\sigma\}<B_*$. That complementary bound is not
+supplied. In particular the natural $M\asymp U$ squarefree good duals
+remain in it and still require joint cancellation. The refinement is
+a source-conditional application of the cited suppliers, with no new
+sieve, literature-priority or Lean-certification claim. It proves no
+large-parity complement estimate, full (J24), inverse-fourth saving,
+signed Robin restoration or RH conclusion.
+
+### An every-split support obstruction for the actual Type-II convolution
+
+The standard well-factorable import has a support obstruction for both
+the actual $b=\lambda_{\mathrm{II},b}$ on its original inverse annulus
+and the genuine joint coefficient $h_b$ in (J4). This is a
+`repo-derived` applicability result, using the existing coefficient
+identities and fixed-ray prime-ideal supply below. It supplies no
+strict inverse-fourth improvement and does not settle (J24) or (J40).
+
+**The source definition and its domain.** The existing owner is the
+[Maynard well-factorable section](../Analytic/shortuniformity2026robininterfaces.md#well-factorable-distribution-preserves-the-total-prime-baseline).
+In the pinned primary, [Definition 1](https://arxiv.org/html/2006.07088v1#Thmdfntn1)
+requires, for **every real** $Q=Q_1Q_2$, $Q_i\ge1$, a convolution of
+two 1-bounded sequences, the $i$th supported on $1\le n\le Q_i$.
+[Definition 2](https://arxiv.org/html/2006.07088v1#Thmdfntn2)
+requires the same for every real $Q=Q_1Q_2Q_3$, with three separately
+prescribed supports. One convenient internal factorization or fixed
+prime block is insufficient. Theorem A and Theorem 1.1 estimate the
+integer prime-AP discrepancy
+$\pi(x;q,a)-\pi(x)/\varphi(q)$, at levels respectively
+$Q\le x^{4/7-\varepsilon}$ and $Q\le x^{3/5-\varepsilon}$, with fixed
+$a$ and arbitrary fixed logarithmic saving. They supply no Hecke
+ideal-coefficient or common-$\beta$ signed-contraction theorem here;
+even satisfying their weight definition would leave that transport
+unproved.
+
+For the support calculation only, **define** the following ideal-norm
+analogue, without importing an analytic theorem. For $j=2$ or $3$ and
+$Q\ge1$, write $\mathsf S_j(a;Q)$ when every real factorization
+$Q=\prod_{i=1}^jQ_i$, $Q_i\ge1$, permits
+
+$$
+a(\mathfrak n)=
+\sum_{\mathfrak d_1\cdots\mathfrak d_j=\mathfrak n}
+ \prod_{i=1}^j\gamma_i(\mathfrak d_i),
+\qquad
+\gamma_i(\mathfrak d)=0\quad\text{if }N\mathfrak d>Q_i.
+\tag{J41}
+$$
+
+The convolution is over good integral ideals, each counted once, and
+the complex $\gamma_i$ may depend on the split. There is **no amplitude
+bound** in this definition. Thus failure of $\mathsf S_j$ also rules
+out the literal ideal-norm version with 1-bounded or divisor-bounded
+factors. This definition does not aggregate different ideals of equal
+norm into an integer-modulus weight.
+
+**A nonzero semiprime forces a larger level.** If
+$a(\mathfrak n)\ne0$, $\mathfrak n=\mathfrak p\mathfrak q$ for
+distinct prime ideals, and $p_0=\min(N\mathfrak p,N\mathfrak q)$, then
+
+$$
+\mathsf S_j(a;Q)\quad\Longrightarrow\quad
+Q\ge N\mathfrak n\,p_0^{\,j-1},\qquad j=2,3.
+\tag{J42}
+$$
+
+Indeed, any supported convolution first forces $Q\ge N\mathfrak n$.
+For $1\le r<p_0$, prescribe $Q_1=\cdots=Q_{j-1}=r$ and
+$Q_j=Q/r^{j-1}$. All prescribed lengths are at least one: for these
+two values of $j$, $Q\ge N\mathfrak n\ge p_0^{j-1}$.
+Every divisor of $\mathfrak n$ other than the unit has norm at least
+$p_0$, so the first $j-1$ factors must all be units. The last must
+be $\mathfrak n$, forcing $Q\ge N\mathfrak n\,r^{j-1}$.
+Let $r\uparrow p_0$ to obtain (J42).
+
+Apply this to $b$ restricted to the original annulus
+$q_d\asymp D=\sqrt U$, with the original $A=A_{\rm b}=U^{1/12}$.
+The balanced nonzero semiprimes in
+[C33/C36](../Analytic/liu2026quasirh.md#the-new-remainder-also-excludes-a-norm-only-payment)
+already have $b(\mathfrak p\mathfrak q)=2$ and
+$N\mathfrak p,N\mathfrak q\asymp U^{1/4}$. Their identity is reused,
+not rederived. The fixed-ray prime-ideal supply chooses their product
+inside a fixed interval where the original $V$ is nonzero. Hence the
+obstruction also holds with the actual $V(q_d/D)$ and unit-modulus
+ray twist included. Formula (J42) requires levels at least
+$U^{3/4+o(1)}$ for binary and $U^{1+o(1)}$ for triple factorability;
+neither is available at the original $Q=U^{1/2+o(1)}$.
+These are necessary levels, not existence results at larger levels.
+
+This failure is a common zero of all convolution terms at an offending
+split. Changing amplitude bounds cannot fill it. A finite signed sum
+of convolutions with those same prescribed support bounds, or smaller
+ones, also vanishes there, regardless of its coefficients. A fixed
+block decomposition that does not admit the offending split is a
+different hypothesis and is not ruled out by this observation.
+
+**The joint $h_b$ has its own obstruction.** Fix the original nonzero
+smooth **complex** annular $V$ of one (J4) component, and choose $t_0>0$
+with $v_0=V(t_0)\ne0$. Fix $c>2$. Choose a sufficiently small fixed
+$\delta>0$ such that $c(1-\delta)>2$ and
+
+$$
+|V(t)-v_0|\le |v_0|/10
+\quad\text{for }t_0(1-\delta)^2\le t\le t_0(1+\delta)^2.
+$$
+
+Using the
+[existing fixed-ray prime-pair supply](../Analytic/liu2026quasirh.md#the-original-convolution-norm-before-sixth-power-compression),
+choose four distinct good prime ideals with
+
+$$
+N\mathfrak q_j\in cU^{1/12}[1-\delta,1+\delta],\qquad
+N\mathfrak p_i\in(t_0/c)U^{5/12}[1-\delta,1+\delta],
+\qquad i,j=1,2.
+$$
+
+The cited fixed-ray prime-ideal theorem applies in each of these
+fixed relative intervals as its length tends to infinity. Delete $S$
+and the finitely many coincidences. For the displayed (J4), the inner
+ideal conditions are goodness and squarefree support, and $\xi$ has
+modulus one there. If a further original ray selector is retained,
+qualify the construction to an allowed component as follows: take
+$t(\mathfrak q_1)=t(\mathfrak q_2)=r$ and
+$t(\mathfrak p_1)=t(\mathfrak p_2)=s$, with $sr=\kappa$ an allowed
+factor class on which the original multiplier is nonzero. A retained
+column class must then allow $\tau=\kappa^2$. The same supply provides
+these primes in the fixed classes. No assertion is made for an
+incompatible selector, a zero component, or an arbitrary varying
+profile. The fixed unit representatives and finite ray multipliers
+are retained; four independent ray phases are not substituted for
+the multiplicative $\xi$ of (J4).
+
+The formula below is for (J4). A compatible further selector keeps
+all four terms; any additional nonzero multiplier constant on these
+fixed classes is retained as their common scalar.
+
+Put $w=\mathfrak p_1\mathfrak p_2\mathfrak q_1\mathfrak q_2$ and
+$t_{ij}=N(\mathfrak p_i\mathfrak q_j)/D$. All $t_{ij}$ lie in the
+displayed nonzero neighborhood of $t_0$. Since both primes in each
+mixed pair exceed $2A$, the existing
+[C40 with $b_0=1$](../Analytic/liu2026quasirh.md#cofactor-recursion-and-the-actual-prime-slot-capacity)
+gives $b(\mathfrak p_i\mathfrak q_j)=2$ on this original annulus.
+The only divisors of $w$ in the $D$ annulus are the four mixed pairs:
+single primes and $\mathfrak q_1\mathfrak q_2$ are below it,
+$\mathfrak p_1\mathfrak p_2$ and every triple are above it.
+Thus exactly four **ordered** factorizations contribute to (J4),
+each with $b(d_1)b(d_2)=4$, and multiplicativity gives
+
+$$
+h_b(w)=8D^{-1}\xi(w)
+ \left[V(t_{11})V(t_{22})+V(t_{12})V(t_{21})\right]\ne0.
+\tag{J43}
+$$
+
+For completeness, each product in brackets differs from $v_0^2$ by
+at most $(21/100)|v_0|^2$, so the bracket differs from $2v_0^2$ by
+at most $(21/50)|v_0|^2<2|v_0|^2$. This continuity estimate is valid
+for complex $V$ and retains interference between both pairings; it
+uses neither positivity nor an absolute-value replacement of the sum.
+
+Here $Nw\asymp U$. A divisor of $w$ without a $\mathfrak p_i$ has
+norm $O(U^{1/6})$; one containing a $\mathfrak p_i$ has norm
+$\gg U^{5/12}$. At the natural level $L=U^{1+o(1)}$, prescribe the
+binary split $Q_1=U^{1/3}$, $Q_2=L/U^{1/3}=U^{2/3+o(1)}$.
+Both lengths are at least one for large $U$. The first divisor can
+contain no $\mathfrak p_i$, so its complement contains both and has
+norm at least $N\mathfrak p_1N\mathfrak p_2\asymp U^{5/6}>Q_2$.
+Every supported convolution is zero at $w$, contradicting (J43).
+Thus genuine joint $h_b$, not merely $b$, fails binary factorability
+at its natural level.
+
+There are also the following stronger necessary levels for this
+witness. Write $p_*=\min_iN\mathfrak p_i$. If
+$\mathsf S_2(h_b;L)$ holds, nonvanishing first gives $L\ge Nw$.
+Prescribe $Q_1=r$, $1\le r<p_*$, approaching $p_*$ from below, and
+$Q_2=L/r$.
+These lengths are at least one. Again the second divisor must contain
+both large primes, so $L\ge rN\mathfrak p_1N\mathfrak p_2$.
+For triple factorability the equal split requires that some factor
+can contain each large prime. Consequently
+
+$$
+\begin{aligned}
+\mathsf S_2(h_b;L)&\Longrightarrow
+ L\ge p_*N\mathfrak p_1N\mathfrak p_2\gg_{V,c,\delta}U^{5/4},\\
+\mathsf S_3(h_b;L)&\Longrightarrow
+ L\ge\left(\max_iN\mathfrak p_i\right)^3
+ \gg_{V,c,\delta}U^{5/4}.
+\end{aligned}
+\tag{J44}
+$$
+
+The equal triple split has all lengths $L^{1/3}\ge1$; below its stated
+threshold no factor can carry the largest prime. These are necessary
+bounds only, with no sufficiency or optimality assertion. The same
+common-zero argument covers arbitrary amplitudes and finite signed
+sums with the offending support bounds.
+
+**Limit of the obstruction.** Opening $b$ into its actual prime or
+cofactor blocks remains legitimate, but cannot certify standard
+every-split well-factorability at these original levels. General
+fixed-block multilinear estimates and signed cancellation are not
+excluded. Nothing here is an energy lower bound, a lower bound or
+obstruction for the signed (J40) complement, or a joint estimate reaching
+the sufficient local exponent $1+B_*-\sigma$ for $\sigma>0$.
+The exponent $13/6$ is the generic local energy baseline.
+The original Hecke domain,
+raw sextic collision zeros, common $\beta$, signs and common-$e$
+detector, fixed/polylog profile seminorms, and all unit/ray/core/bad-dual
+aggregation costs remain in the original contract. In particular,
+(J40) and its unpaid aggregate real complementary bound are unchanged.
+No new analytic estimate, literature-originality claim, Lean
+certification, inverse-fourth saving, signed Robin restoration or RH
+completion follows.

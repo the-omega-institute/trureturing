@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:f5f437e7d86eab547e2d2c6520c81525bea7407bf20f323862d3cfec35cb4ff3
+  normalized_sha256: sha256:f5f437e7d86eab547e2d2c6520c81525bea7407bf20f323862d3cfec35cb4ff3
+cas_ref: sha256:f5f437e7d86eab547e2d2c6520c81525bea7407bf20f323862d3cfec35cb4ff3
+coverage_gids:
+  - gid: D5/S1/Deficit/Beatty/GoldenObserverRoute.golden_observer_route_w_c1
+    target_statement_id: sha256:8e97ab8ed163a9a4065e7f6c672f81da97540bc2fa39edd7a1a1130cc02f787f
+receipts:
+  unresolved_subitems: []

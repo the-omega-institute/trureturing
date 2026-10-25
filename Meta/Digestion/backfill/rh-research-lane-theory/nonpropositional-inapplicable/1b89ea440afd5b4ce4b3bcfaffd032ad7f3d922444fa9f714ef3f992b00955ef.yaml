@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:1b89ea440afd5b4ce4b3bcfaffd032ad7f3d922444fa9f714ef3f992b00955ef
+  normalized_sha256: sha256:1b89ea440afd5b4ce4b3bcfaffd032ad7f3d922444fa9f714ef3f992b00955ef
+cas_ref: sha256:1b89ea440afd5b4ce4b3bcfaffd032ad7f3d922444fa9f714ef3f992b00955ef
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: “Pick negative square”是候选观察器名称，没有给出负平方的存在断言。
+    previous_atom_id: 4b52158ff3dae8c3323c016e91d8811376178529cb2a82da75d38b1d8eec4efc
+    next_atom_id: 477295ee7027f4598cd455db27dfee2d7b6f84fb9ecc1383d819a3d04b0c16a1

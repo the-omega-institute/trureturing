@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:9936532034c9fc0a379d4c3102ee4725cc27fc34241a859e37199f720d943fef
+  normalized_sha256: sha256:9936532034c9fc0a379d4c3102ee4725cc27fc34241a859e37199f720d943fef
+cas_ref: sha256:9936532034c9fc0a379d4c3102ee4725cc27fc34241a859e37199f720d943fef
+coverage_gids:
+  - gid: D5/S3/Observer/BlockStructure/FourBlockDecomposition.four_block_decomposition
+    target_statement_id: sha256:faf379ac8e214b1d77ee2bdfe5981c6147ba6283804cce214f440f605e90b369
+receipts:
+  unresolved_subitems: []

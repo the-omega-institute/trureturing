@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:ac6b35c03bd38894c6299d7239ee32410ba0e2614dc90b3166cd929e282fffa2
+  normalized_sha256: sha256:ac6b35c03bd38894c6299d7239ee32410ba0e2614dc90b3166cd929e282fffa2
+cas_ref: sha256:ac6b35c03bd38894c6299d7239ee32410ba0e2614dc90b3166cd929e282fffa2
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 'nonpropositional: L10 的 Nicolas 论文和 primorial 主题定位，未给出待证明的不等式。'
+    previous_atom_id: 86a711ad897e415b829aa08c8200a8a08a5ff89af816a2ca108bebce4defa53e
+    next_atom_id: 93d20ac54188f8ef3d507f45961c644bd65788423058e3840bc9d4686c6f4ac1

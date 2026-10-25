@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:8c4fabf5696d429377183ec707821d3b6873e038830fb5e94fc7a15888c4ca76
+  normalized_sha256: sha256:8c4fabf5696d429377183ec707821d3b6873e038830fb5e94fc7a15888c4ca76
+cas_ref: sha256:8c4fabf5696d429377183ec707821d3b6873e038830fb5e94fc7a15888c4ca76
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 本项位于“本层不声明”清单，说明不承诺所有 ZeroData 构造无条件存在。
+    previous_atom_id: f7dba8a2c886722aa18597d1fd994ed177272f66b9d756a1059c91c09eed845c
+    next_atom_id: 38b90a5fe4e70462c9c7dd4ec790b780e0c5c1dcd39280814c59b68821896249
