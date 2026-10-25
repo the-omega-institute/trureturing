@@ -16,25 +16,24 @@ set_option autoImplicit false
 set_option relaxedAutoImplicit false
 noncomputable section
 
-/-- Observe the uniform-attenuation predicate as the second observable varies. -/
+/-- Observe an outcome effect of the second observable. -/
 abbrev signature : Signature where
-  Params := Σ d : ℕ, Σ m : ℕ, Σ _n : ℕ,
-    Fin m → Matrix (Fin d) (Fin d) ℂ
-  State p := Fin p.2.2.1 → Matrix (Fin p.1) (Fin p.1) ℂ
+  Params := Σ d : ℕ, Σ m : ℕ, Σ n : ℕ,
+    Σ _A : Fin m → Matrix (Fin d) (Fin d) ℂ,
+      Fin n → Matrix (Fin d) (Fin d) ℂ
+  State p := Fin p.2.2.1
   Role := Unit
   finiteRole := inferInstance
   nonemptyRole := inferInstance
-  Output _ _ := Bool
+  Output _ p := Matrix (Fin p.1) (Fin p.1) ℂ
   Anchor := Empty
   finiteAnchor := inferInstance
 
-open Classical in
 def actual : Realization signature :=
-  realize signature (fun _ p B => decide (UniformAttenuation p.2.2.2 B))
-    (fun e => nomatch e)
+  realize signature (fun _ p y => p.2.2.2.2 y) (fun e => nomatch e)
 
 def rejected : Realization signature :=
-  realize signature (fun _ _ _ => false) (fun e => nomatch e)
+  realize signature (fun _ _ _ => 0) (fun e => nomatch e)
 
 /-- Keep every original parameter and hypothesis, observing the complete conclusion. -/
 abbrev arena : Arena where
@@ -42,7 +41,8 @@ abbrev arena : Arena where
   Law r := ∀ (d m n : ℕ) (A : Fin m → Matrix (Fin d) (Fin d) ℂ)
     (B : Fin n → Matrix (Fin d) (Fin d) ℂ),
     0 < m → 0 < n → IsPOVM A → IsPOVM B →
-    ConditionallyRandom A B → r.readout () ⟨d, m, n, A⟩ B = true
+    ConditionallyRandom A B →
+      UniformAttenuation A (fun y => r.readout () ⟨d, m, n, A, B⟩ y)
 
 private theorem singleton_povm :
     IsPOVM (fun _ : Fin 1 => (1 : Matrix (Fin 1) (Fin 1) ℂ)) := by
@@ -60,44 +60,21 @@ private theorem singleton_random :
 
 theorem rejected_law : ¬ arena.Law rejected := by
   intro h
-  have hbad := h 1 1 1 (fun _ => 1) (fun _ => 1)
-    (by decide) (by decide) singleton_povm singleton_povm singleton_random
-  change false = true at hbad
-  cases hbad
+  have hbad := (h 1 1 1 (fun _ => 1) (fun _ => 1)
+    (by decide) (by decide) singleton_povm singleton_povm singleton_random 0 0).1
+  have he := congrArg (fun M : Matrix (Fin 1) (Fin 1) ℂ => M 0 0) hbad
+  norm_num [rejected, realize, luders] at he
 
 theorem dependence : ObservationalDependence signature actual := by
-  classical
   intro i
-  refine ⟨⟨1, 1, 1, fun _ => 1⟩, (fun _ => 1), (fun _ => 0), ?_⟩
-  have hgood : UniformAttenuation
-      (fun _ : Fin 1 => (1 : Matrix (Fin 1) (Fin 1) ℂ)) (fun _ : Fin 1 => 1) := by
-    intro x y
-    simp [luders]
-  have hbad : ¬ UniformAttenuation
-      (fun _ : Fin 1 => (1 : Matrix (Fin 1) (Fin 1) ℂ)) (fun _ : Fin 1 => 0) := by
-    intro h
-    have he := (h 0 0).1
-    have he' := congrArg (fun M : Matrix (Fin 1) (Fin 1) ℂ => M 0 0) he
-    norm_num [luders] at he'
-  change decide (UniformAttenuation
-      (fun _ : Fin 1 => (1 : Matrix (Fin 1) (Fin 1) ℂ)) (fun _ : Fin 1 => 1)) ≠
-    decide (UniformAttenuation
-      (fun _ : Fin 1 => (1 : Matrix (Fin 1) (Fin 1) ℂ)) (fun _ : Fin 1 => 0))
-  simp [hgood, hbad]
+  refine ⟨⟨1, 1, 2, (fun _ => 1), (fun y => if y = 0 then 1 else 0)⟩, 0, 1, ?_⟩
+  change (1 : Matrix (Fin 1) (Fin 1) ℂ) ≠ 0
+  exact one_ne_zero
 
 def source_registration : Registration arena claim where
   actual := actual
-  bridge := by
-    classical
-    constructor
-    · intro h d m n A B hm hn hA hB hr
-      exact decide_eq_true (h d m n A B hm hn hA hB hr)
-    · intro h d m n A B hm hn hA hB hr
-      exact of_decide_eq_true (h d m n A B hm hn hA hB hr)
-  variation := ⟨by
-    classical
-    intro d m n A B hm hn hA hB hr
-    exact decide_eq_true (result d m n A B hm hn hA hB hr), rejected, rejected_law⟩
+  bridge := Iff.rfl
+  variation := ⟨result, rejected, rejected_law⟩
   sensitivity := by
     constructor
     · intro i
@@ -106,7 +83,6 @@ def source_registration : Registration arena claim where
       exact nomatch e
   dependence := dependence
 
-open Classical in
 def registration :
     LeanInformationAudit.Contract.Registration.{_, _, _, 0, 0, 0, _, _, _, _, _, 0}
       (@_root_.D5.S3.Quantum.Measurement.ConditionallyRandomUniformAttenuation.result)
@@ -124,7 +100,7 @@ def registration :
   correspondence := { stage := .evidence, objectStage := .evidence }
   bundleNonempty := .absent
   readout := some (realize signature
-    (fun _ p B => decide (UniformAttenuation p.2.2.2 B)) (fun e => nomatch e))
+    (fun _ p y => p.2.2.2.2 y) (fun e => nomatch e))
   variation := .absent
   sensitivity := .absent
   partialSensitivity := none
@@ -135,13 +111,13 @@ def registration :
       owner := `D5.S3.Quantum.Measurement.ConditionallyRandomUniformAttenuation
       name := `D5.S3.Quantum.Measurement.ConditionallyRandomUniformAttenuation.claim
       path := #[] }
-    coordinates := #[0, 1, 2, 3]
+    coordinates := #[0, 1, 2, 3, 4]
     readouts := #[{
-      path := #["body", "body", "body", "body", "body", "body", "body", "body", "body", "body"]
+      path := #["body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "arg"]
       stateBinder := 0
-      functionOperand := false
-      stateOperand := some #["arg"]
-      booleanPredicate := true }] }
+      functionOperand := true
+      stateOperand := none
+      booleanPredicate := false }] }
   continuation := .unknown
   familyRecord := none
   options := #[] }
