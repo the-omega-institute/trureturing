@@ -48,6 +48,10 @@ $$\neg \left(\operatorname{D5.S3.Quantum.QuantumChannels.ProjectiveTestChannelCo
 
 *Proof.* Machine-checked in Lean as `D5/S3/Quantum/QuantumChannels/ProjectiveTestChannelCompatibilityRefutation.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/zhang-nechita-2022-projective-test-channel-compatibility-refutation` (refuted) by `D5/S3/Quantum/QuantumChannels/ProjectiveTestChannelCompatibilityRefutation.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"zhang-nechita-2022-projective-test-channel-compatibility-refutation","declaration_gid":"D5/S3/Quantum/QuantumChannels/ProjectiveTestChannelCompatibilityRefutation.result","resolution_kind":"refuted"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* Qing-Hua Zhang; Ion Nechita (2022). *A Fisher information-based incompatibility criterion for quantum channels*. DOI: [10.3390/e24060805](https://doi.org/10.3390/e24060805). URL: <https://arxiv.org/abs/2204.09963v1>.

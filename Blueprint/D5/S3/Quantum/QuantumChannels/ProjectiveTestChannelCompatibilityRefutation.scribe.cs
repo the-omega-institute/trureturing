@@ -97,7 +97,10 @@ internal sealed class ProjectiveTestChannelCompatibilityRefutationDocument : ISc
                             + "Applying claim in dimension two to φ twice would provide just such a joint channel, "
                             + "because both maps are channels and all their projective-test pairs have the joint POVMs above. "
                             + "Therefore claim is false."))),
-                DescribeRole.Theorem))));
+                DescribeRole.Theorem,
+                openProblemResolutionClaim: new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("zhang-nechita-2022-projective-test-channel-compatibility-refutation"),
+                    ResolutionKind.Refuted)))));
 
     private static DocumentBlock Node(string id, string declaration, string title, Formula formula,
         AssessedProvenance provenance, string prose) =>
