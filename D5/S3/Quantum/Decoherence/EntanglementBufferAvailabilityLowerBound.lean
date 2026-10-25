@@ -6,15 +6,15 @@
    utility: none
    digest: The always-failing purification policy minimizes buffer availability. -/
 
-import Mathlib.Analysis.SpecialFunctions.Exp
+import Mathlib.Analysis.Complex.Exponential
 import Mathlib.Data.Nat.Choose.Sum
 import Mathlib.Algebra.BigOperators.Fin
 import Mathlib.Tactic.FieldSimp
 import Mathlib.Tactic.Positivity
 
-noncomputable section
 /-! Availability bound for the discrete-time entanglement-buffer formula. -/
 
+noncomputable section
 open scoped BigOperators
 namespace D5.S3.Quantum.Decoherence.EntanglementBufferAvailabilityLowerBound
 
@@ -129,7 +129,7 @@ private lemma aggregate_endpoints {n : ℕ} (pg : ℝ) (hp : 0 ≤ pg) (hp1 : pg
     h0.2, by constructor <;> linarith [h1.2.1, h1.2.2]⟩
 
 private lemma two_state_mass (u v w z ell mu h : ℝ)
-    (hu : 0 ≤ u) (hv : 0 ≤ v) (hw : 0 ≤ w) (hz : 0 ≤ z)
+    (hv : 0 ≤ v) (hw : 0 ≤ w)
     (hmu : 0 < mu) (hh : 0 ≤ h) (hh1 : h ≤ 1)
     (hl0 : ell ≤ u + w) (hl1 : ell ≤ v + z)
     (hc0 : u + w ≤ 1 - mu) (hc1 : v + z ≤ 1 - mu) :
@@ -163,7 +163,75 @@ private lemma scalar_mass (g mu q e h a b c d : ℝ)
     let x := e - (1 - q * g) * (1 - mu)
     let det := (x - t * a) * (p - t * d) - t ^ 2 * b * c
     0 < x ∧ 0 < p ∧ 0 < det ∧ 1 ≤ p * ((x - t * a + t * c * h) / det) := by
-  sorry
+  dsimp only
+  let t := q * (1 - mu)
+  let ell := (1 - q * g) * (1 - mu)
+  let p := mu + q * g * (1 - mu)
+  let r := 1 / e
+  let u := (ell + t * (a + 4 / 3 * b)) * r + t * (4 / 3 * b) * (1 - r)
+  let v := t * (4 / 3 * b)
+  let w := t * (d + 3 / 4 * c - a - 4 / 3 * b) * r +
+    (ell + t * (d - 4 / 3 * b)) * (1 - r)
+  let z := ell + t * (d - 4 / 3 * b)
+  let det := (1 - u) * (1 - z) - v * w
+  let num := (1 - z + w) * (4 / 3 * h) + (v + 1 - u) * (1 - 4 / 3 * h)
+  have hep : 0 < e := by linarith
+  have hr : 0 ≤ r := (div_pos zero_lt_one hep).le
+  have hr1 : r ≤ 1 := (div_le_one hep).mpr he
+  have ht : 0 ≤ t := mul_nonneg hq (sub_nonneg.mpr hm1)
+  have hqg : q * g ≤ 1 := by nlinarith [mul_nonneg hq (sub_nonneg.mpr hg1)]
+  have hl : 0 ≤ ell := mul_nonneg (sub_nonneg.mpr hqg) (sub_nonneg.mpr hm1)
+  have hp : 0 < p := by
+    dsimp [p]
+    exact add_pos_of_pos_of_nonneg hm (mul_nonneg (mul_nonneg hq hg.le)
+      (sub_nonneg.mpr hm1))
+  have hpell : p = 1 - ell := by dsimp [p, ell]; ring
+  have htell : ell + t * g = 1 - mu := by dsimp [ell, t]; ring
+  have ha1 : 0 ≤ d + 3 / 4 * c - a - 4 / 3 * b := by linarith [ha.2]
+  have hb1 : 0 ≤ d - 4 / 3 * b := by linarith [hb.2]
+  have hv : 0 ≤ v := mul_nonneg ht (mul_nonneg (by norm_num) hb.1)
+  have hw : 0 ≤ w :=
+    add_nonneg (mul_nonneg (mul_nonneg ht ha1) hr)
+      (mul_nonneg (add_nonneg hl (mul_nonneg ht hb1)) (sub_nonneg.mpr hr1))
+  have hm0 : 0 ≤ r * (3 / 4 * c + d) + (1 - r) * d :=
+    add_nonneg (mul_nonneg hr hc.1) (mul_nonneg (sub_nonneg.mpr hr1) hd.1)
+  have hm1' : r * (3 / 4 * c + d) + (1 - r) * d ≤ g := by
+    nlinarith [mul_nonneg hr (sub_nonneg.mpr hc.2),
+      mul_nonneg (sub_nonneg.mpr hr1) (sub_nonneg.mpr hd.2)]
+  have hc0 : u + w = ell + t * (r * (3 / 4 * c + d) + (1 - r) * d) := by
+    dsimp [u, w]; ring
+  have hc1 : v + z = ell + t * d := by dsimp [v, z]; ring
+  have hmasses := two_state_mass u v w z ell mu (4 / 3 * h) hv hw hm
+    (mul_nonneg (by norm_num) hh) (by linarith only [hh1])
+    (by rw [hc0]; exact le_add_of_nonneg_right (mul_nonneg ht hm0))
+    (by rw [hc1]; exact le_add_of_nonneg_right (mul_nonneg ht hd.1))
+    (by rw [hc0, ← htell]; exact add_le_add le_rfl (mul_le_mul_of_nonneg_left hm1' ht))
+    (by rw [hc1, ← htell]; exact add_le_add le_rfl (mul_le_mul_of_nonneg_left hd.2 ht))
+  change 0 < det ∧ det ≤ (1 - ell) * num at hmasses
+  have hid : e * det =
+      (e - ell - t * a) * (p - t * d) - t ^ 2 * b * c := by
+    rw [hpell]
+    dsimp only [det, u, v, w, z, r]
+    field_simp [hep.ne']
+    ring
+  have hin : e * num = e - ell - t * a + t * c * h := by
+    dsimp only [num, u, v, w, z, r]
+    field_simp [hep.ne']
+    ring
+  have hdpos : 0 < (e - ell - t * a) * (p - t * d) - t ^ 2 * b * c := by
+    rw [← hid]
+    exact mul_pos hep hmasses.1
+  refine ⟨by change 0 < e - ell; linarith, hp, hdpos, ?_⟩
+  have hbound : (e - ell - t * a) * (p - t * d) - t ^ 2 * b * c ≤
+      p * (e - ell - t * a + t * c * h) := calc
+    _ = e * det := hid.symm
+    _ ≤ e * ((1 - ell) * num) := mul_le_mul_of_nonneg_left hmasses.2 hep.le
+    _ = p * (e * num) := by rw [hpell, mul_left_comm e (1 - ell)]
+    _ = _ := by rw [hin]
+  change 1 ≤ p * ((e - ell - t * a + t * c * h) /
+    ((e - ell - t * a) * (p - t * d) - t ^ 2 * b * c))
+  rw [← mul_div_assoc, le_div_iff₀ hdpos, one_mul]
+  exact hbound
 
 private lemma policy_bound (n : ℕ) (pg pc q gam fnew : ℝ)
     (a b c d : Fin n → ℝ) (hn : 1 ≤ n) (hp : 0 < pg) (hp1 : pg ≤ 1)
@@ -179,13 +247,77 @@ private lemma policy_bound (n : ℕ) (pg pc q gam fnew : ℝ)
     (aggregate pg a) (aggregate pg b) (aggregate pg c) (aggregate pg d)
     hg.2.1 hg.2.2 hm hm1 hq hq1 hexp (by linarith) (by linarith)
     hab.1 hab.2.1 hab.2.2.1 hab.2.2.2
-  sorry
+  let g := 1 - (1 - pg) ^ n
+  let t := q * (1 - pc)
+  let p := pc + q * g * (1 - pc)
+  let x := Real.exp gam - (1 - q + q * (1 - pg) ^ n) * (1 - pc)
+  let aa := aggregate pg a
+  let bb := aggregate pg b
+  let cc := aggregate pg c
+  let dd := aggregate pg d
+  let det := (x - t * aa) * (p - t * dd) - t ^ 2 * bb * cc
+  let num := x - t * aa + t * cc * (fnew - 1 / 4)
+  let s := num / det
+  have hxeq : Real.exp gam - (1 - q * g) * (1 - pc) = x := by
+    dsimp [g, x]; ring
+  rw [hxeq] at hs
+  change 0 < x ∧ 0 < p ∧ 0 < det ∧ 1 ≤ p * s at hs
+  have hsp : 0 < s := by nlinarith only [hs.2.1, hs.2.2.2]
+  have hdeltaeq : (1 - t * aa / x) * (1 - t * dd / p) -
+      (t * bb / p) * (t * cc / x) = det / (x * p) := by
+    dsimp only [det]
+    field_simp [hs.1.ne', hs.2.1.ne']
+  have hdelta : 0 < (1 - t * aa / x) * (1 - t * dd / p) -
+      (t * bb / p) * (t * cc / x) := by
+    rw [hdeltaeq]
+    exact div_pos hs.2.2.1 (mul_pos hs.1 hs.2.1)
+  have hocc : (1 - t * aa / x + t * cc / x * (fnew - 1 / 4)) /
+      (((1 - t * aa / x) * (1 - t * dd / p) - (t * bb / p) * (t * cc / x)) * p) = s := by
+    apply (div_eq_iff (mul_pos hdelta hs.2.1).ne').mpr
+    rw [hdeltaeq]
+    dsimp only [s, num]
+    field_simp [hs.1.ne', hs.2.1.ne', hs.2.2.1.ne']
+  have hform : availability n pg pc q gam fnew a b c d = s / (1 / g + s) := by
+    unfold availability
+    change ((1 - t * aa / x + t * cc / x * (fnew - 1 / 4)) /
+      (((1 - t * aa / x) * (1 - t * dd / p) - (t * bb / p) * (t * cc / x)) * p)) /
+        (1 / g + (1 - t * aa / x + t * cc / x * (fnew - 1 / 4)) /
+          (((1 - t * aa / x) * (1 - t * dd / p) - (t * bb / p) * (t * cc / x)) * p)) = _
+    rw [hocc]
+  have hpmax : p ≤ pc + (1 - pc) * g := by
+    dsimp only [p]
+    nlinarith only [mul_nonneg (mul_nonneg (sub_nonneg.mpr hq1) hg.2.1.le)
+      (sub_nonneg.mpr hm1)]
+  have hmass : 1 ≤ s * (pc + (1 - pc) * g) := by
+    have ht := mul_le_mul_of_nonneg_right hpmax hsp.le
+    nlinarith only [ht, hs.2.2.2]
+  have hden : 0 < pc + (2 - pc) * g :=
+    add_pos hm (mul_pos (by linarith only [hm1]) hg.2.1)
+  rw [hform]
+  apply (div_le_div_iff₀ hden (add_pos (div_pos zero_lt_one hg.2.1) hsp)).mpr
+  have hid : g * (1 / g + s) = 1 + g * s := by
+    rw [mul_add, mul_one_div, div_self hg.2.1.ne']
+  rw [hid]
+  nlinarith only [hmass]
 
 private lemma failing_value (n : ℕ) (pg pc gam fnew : ℝ)
     (hg : 0 < 1 - (1 - pg) ^ n) (hm : 0 < pc) (hm1 : pc ≤ 1) :
     availability n pg pc 1 gam fnew 0 0 0 0 =
       (1 - (1 - pg) ^ n) / (pc + (2 - pc) * (1 - (1 - pg) ^ n)) := by
-  sorry
+  let g := 1 - (1 - pg) ^ n
+  let p := pc + g * (1 - pc)
+  have hp : 0 < p := add_pos_of_pos_of_nonneg hm
+    (mul_nonneg hg.le (sub_nonneg.mpr hm1))
+  unfold availability aggregate
+  simp only [Pi.zero_apply, zero_mul, Finset.sum_const_zero, mul_zero, zero_div,
+    sub_zero, one_mul, mul_one, add_zero]
+  change (1 / p) / (1 / g + 1 / p) = g / (pc + (2 - pc) * g)
+  have hid : pc + (2 - pc) * g = g + p := by dsimp [p]; ring
+  rw [hid]
+  have hg0 : g ≠ 0 := hg.ne'
+  have hgp : g + p ≠ 0 := (add_pos (show 0 < g from hg) hp).ne'
+  field_simp [hg0, hp.ne', hgp]
+  rw [add_comm p g, div_self hgp]
 
 theorem result : claim := by
   intro n hn pg pc gam fnew hp hp1 hm hm1 he hf hf1 a b c d ha q hq hq1
