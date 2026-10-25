@@ -248,7 +248,8 @@ internal static class BoundedProcessRunner
         CompletionObservations observations,
         string channel)
     {
-        observations.Record($"{channel}.bytes", "0");
+        var byteStage = $"{channel}.bytes";
+        observations.Record(byteStage, 0);
         using var memory = new MemoryStream();
         var buffer = new byte[8192];
         while (true)
@@ -259,8 +260,7 @@ internal static class BoundedProcessRunner
                 observations.Record($"{channel}.eof", "observed");
                 return memory.ToArray();
             }
-            observations.Record($"{channel}.bytes", (memory.Length + count).ToString(
-                System.Globalization.CultureInfo.InvariantCulture));
+            observations.Record(byteStage, memory.Length + count);
             if (memory.Length + count > maximumBytes)
             {
                 throw new InvalidOperationException($"process output exceeded {maximumBytes} bytes");
@@ -283,19 +283,26 @@ internal static class BoundedProcessRunner
     internal sealed class CompletionObservations
     {
         private readonly object gate = new();
-        private readonly Dictionary<string, string> entries = new(StringComparer.Ordinal);
+        private readonly Dictionary<string, Observation> entries = new(StringComparer.Ordinal);
+        private readonly Dictionary<string, Observation> beforeCancellation = new(StringComparer.Ordinal);
+        private readonly record struct Observation(object Value, int Sequence, bool CancellationRequested)
+        {
+            public override string ToString() =>
+                $"{Convert.ToString(Value, System.Globalization.CultureInfo.InvariantCulture)}#{Sequence}"
+                + $"(cancel-requested={CancellationRequested.ToString().ToLowerInvariant()})";
+        }
         private int sequence;
         internal CancellationToken Cancellation { private get; set; }
 
-        internal void Record(string name, string value)
+        internal void Record(string name, object value)
         {
             lock (gate)
             {
                 var canceled = Cancellation.IsCancellationRequested;
-                var entry = $"{value}#{++sequence}(cancel-requested={canceled.ToString().ToLowerInvariant()})";
+                var entry = new Observation(value, ++sequence, canceled);
                 entries[name] = entry;
                 // Keep a useful pre-request lower bound even if a later read/probe wins the snapshot.
-                if (!canceled) entries[$"{name}.before-cancel"] = entry;
+                if (!canceled) beforeCancellation[name] = entry;
             }
         }
 
@@ -343,15 +350,19 @@ internal static class BoundedProcessRunner
                 var stages = new[] { "stdin", "stdin.write", "stdin.flush", "stdin.close", "stdout.bytes",
                     "stdout.eof", "stdout.complete", "stderr.bytes", "stderr.eof", "stderr.complete",
                     "exit-wait.complete", "cancellation.callback", "has-exited.before-cleanup" };
-                var bounds = new[] { "stdout.bytes.before-cancel", "stderr.bytes.before-cancel" };
+                var bounds = new[] { "stdout.bytes", "stderr.bytes" };
                 return "completion observations [record-order-only; unknown=not-observed; snapshot=non-atomic-before-cleanup; "
                     + $"exception-site={operation}; exception-type={exception.GetType().FullName}; exception-message={exception.Message}; token={origin}; "
                     + $"caller-cancel-requested={caller.IsCancellationRequested.ToString().ToLowerInvariant()}; "
-                    + string.Join("; ", stages.Concat(bounds).Select(name => $"{name}={entries.GetValueOrDefault(name, "unknown")}"))
+                    + string.Join("; ", stages.Select(name => $"{name}={Read(entries, name)}")
+                        .Concat(bounds.Select(name => $"{name}.before-cancel={Read(beforeCancellation, name)}")))
                     + $"; task-status-sampled-before-cleanup: stdout={Status(stdout)}, stderr={Status(stderr)}, "
                     + $"stdin={Status(stdin)}, exit-wait={Status(exitWait)}]";
             }
         }
+
+        private static string Read(Dictionary<string, Observation> source, string name) =>
+            source.TryGetValue(name, out var entry) ? entry.ToString() : "unknown";
 
         private static string Status(Task? task) => task?.Status.ToString() ?? "not-created";
     }
