@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:7cd2a0fec2d76f46a020e4aa52cf2238a8af58cf7c32caba07908540bcbbfe7f
+  normalized_sha256: sha256:7cd2a0fec2d76f46a020e4aa52cf2238a8af58cf7c32caba07908540bcbbfe7f
+cas_ref: sha256:7cd2a0fec2d76f46a020e4aa52cf2238a8af58cf7c32caba07908540bcbbfe7f
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 'Nonpropositional: 以目标在纤维上常值及 kernel 包含规定知识判据，没有断言某目标满足判据。'
+    previous_atom_id: ad4e46570ad0cd77b97b70df7bf7a7eff5ade3eb273658f34ae01e26efe145c4
+    next_atom_id: 077b5d7b8eba0c04084a7f4bc3bb26413b0dd5cdaa99aefaea956f044a047242
