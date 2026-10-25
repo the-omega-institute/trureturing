@@ -6,7 +6,7 @@
    utility: kind=certified-instance; basis=refutes=gid:D5/S3/Quantum/QuantumChannels/ProjectiveTestChannelCompatibilityRefutation.claim; result=D5/S3/Quantum/QuantumChannels/ProjectiveTestChannelCompatibilityRefutation.result; claim=D5/S3/Quantum/QuantumChannels/ProjectiveTestChannelCompatibilityRefutation.claim
    digest: Projective tests miss self-incompatibility of the qubit depolarizing channel at 7/10. -/
 
-import D5.S3.QuantumChannels.PauliThreeWeightBayesianInverseUniqueness
+import D5.S3.QuantumChannels.PurelyNonUnitalEternalNonMarkovianity
 import D5.S3.Quantum.QuantumChannels.ChannelAssemblageLOSRRefutation
 import D5.S3.Quantum.Decoherence.DephasingTwoClassicalityBlockRefutation
 import D5.S3.Quantum.QuantumChannels.ConcealmentKernelNecessityRefutation
@@ -26,7 +26,7 @@ open D5.S3.Quantum.Foundation.FiniteKrausChannel.PhyslibLeaf
 open D5.S3.Quantum.Information.PartialTraceMutualInformation
 open D5.S3.Quantum.PureState.PureStateHandshake
 open D5.S3.QuantumBounds.CHSHWitness
-open D5.S3.QuantumChannels.PauliThreeWeightBayesianInverseUniqueness
+open D5.S3.QuantumChannels.PurelyNonUnitalEternalNonMarkovianity (dep_cptp)
 open D5.S3.Quantum.QuantumChannels.ChannelAssemblageLOSRRefutation (IsCPTP)
 open D5.S3.Quantum.Decoherence.DephasingTwoClassicalityBlockRefutation (measurementProjector)
 open D5.S3.Quantum.QuantumChannels.ConcealmentKernelNecessityRefutation (Compatible IsPOVM)
@@ -50,25 +50,6 @@ def claim : Prop :=
 
 private def depol : MatrixMap (Fin 2) (Fin 2) ℂ :=
   depolarized LinearMap.id (3 / 10)
-
-private theorem depol_cptp : IsCPTP depol := by
-  have heq : depol = pauliChannel ![31 / 40, 3 / 40, 3 / 40, 3 / 40] := by
-    rw [depol.eq_1]
-    norm_num only [depolarized, Complex.ofReal_sub, Complex.ofReal_div,
-      Complex.ofReal_one, Complex.ofReal_ofNat, sub_self, one_div]
-    ext X i j
-    simp only [LinearMap.add_apply, LinearMap.smul_apply, LinearMap.id_apply,
-      LinearMap.smulRight_apply, Matrix.traceLinearMap_apply]
-    unfold Matrix.trace
-    fin_cases i <;> fin_cases j <;>
-      norm_num [depol, depolarized, pauliChannel, sigma,
-        D5.S3.Quantum.Information.StabilizerPairLocalUnitaryInequivalence.pauliMatrix,
-        D5.S3.Quantum.FiniteDimensional.qubitX, D5.S3.Quantum.FiniteDimensional.qubitZ,
-        Matrix.mul_apply, Matrix.vecMul_apply_eq_sum, Fin.sum_univ_succ] <;>
-      ring_nf <;> norm_num [Complex.I_sq] <;> ring
-  rw [heq]
-  exact channel_cptp _ (by intro i; fin_cases i <;> norm_num)
-    (by norm_num [Fin.sum_univ_succ])
 
 private theorem depol_dual : depol.dual = depol := by
   apply LinearMap.ext
@@ -383,6 +364,10 @@ private theorem no_joint_channel : ¬ ChannelCompatible depol depol := by
 
 theorem result : ¬ claim := by
   intro h
-  exact no_joint_channel (h 2 depol depol depol_cptp depol_cptp all_projective_tests)
+  have hc : IsCPTP depol := by
+    rw [depol.eq_1]
+    simpa only [IsCPTP, D5.S3.QuantumChannels.CoPRelativeQuantumnessRefutation.IsCPTP,
+      show (1 - (7 / 10 : ℝ)) = 3 / 10 by norm_num] using dep_cptp (7 / 10) (by norm_num) (by norm_num)
+  exact no_joint_channel (h 2 depol depol hc hc all_projective_tests)
 
 end D5.S3.Quantum.QuantumChannels.ProjectiveTestChannelCompatibilityRefutation

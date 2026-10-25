@@ -27,6 +27,9 @@ internal sealed class PurelyNonUnitalEternalNonMarkovianityDocument : IScribeDoc
             Entry("eternal", "EternallyNonMarkovian", "A negative generator direction at every positive time", EternalFormula(),
                 "At every t > 0 there is a time-local generator L with a negative direction in its conditional Choi form. This is the weak eternal non-Markovianity criterion of a negative canonical rate at every positive time; it imposes no lower bound on the magnitude as t tends to infinity.",
                 AssessedProvenance.FromRepo(Source)),
+            Entry("depolarizing-cptp", "dep_cptp", "Completely positive trace-preserving qubit depolarization", DepCptpFormula(),
+                "For every real eta in [0,1], depolarized LinearMap.id (1 − eta) is completely positive and trace preserving. It sends X to eta X + (1 − eta) Matrix.trace(X) I/2. Its Pauli weights are eta + (1 − eta)/4 and three copies of (1 − eta)/4, which are nonnegative and sum to one.",
+                AssessedProvenance.FromRepo(Source), DescribeRole.Theorem),
             Entry("conjecture", "claim", "The qubit specialization of the conjecture", ClaimFormula(),
                 "Section IV, page 11: \"These diverse examples examined in the Section suggest that a purely non-unital channel (i.e., one lacking any unital component) is impossible. Although we have only studied the qubit case, we conjecture that it is true for non-unital channels in arbitrary finite dimensions.\" Section V, page 11: \"However, we conjecture that for a non-unital channel with no such unital component (in the above sense) to be ENM, is impossible.\" The universal claim here concerns qubits, starts at the identity map, and requires IsCPTP at every nonnegative time. A qubit counterexample refutes the assertion for arbitrary finite dimensions.",
                 AssessedProvenance.FromLiterature(Source)),
@@ -96,6 +99,11 @@ internal sealed class PurelyNonUnitalEternalNonMarkovianityDocument : IScribeDoc
         Imp(All("t", Real(), Imp(Le(D(0), V("t")), Call("IsCPTP", App(V("Phi"), V("t"))))),
             Imp(All("X", Mat(), Equal(App(V("Phi"), D(0), V("X")), V("X"))),
                 Imp(Call("PurelyNonUnital", V("Phi")), Seq(Neg, Sp, Call("EternallyNonMarkovian", V("Phi")))))))));
+
+    private static Formula DepCptpFormula() => Disp(All("eta", Real(),
+        Imp(Le(D(0), V("eta")), Imp(Le(V("eta"), D(1)),
+            Call("IsCPTP", Call("depolarized",
+                Parenthesized(Seq(Qualified("LinearMap", "id"), Colon, Sp, Map())), Sub(D(1), V("eta"))))))));
 
     private static Formula V(string name) => F.Id(name);
     private static Formula Real() => Seq(Mathbb, Grp(V("R")));

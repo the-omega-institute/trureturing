@@ -85,4 +85,4 @@ The trace of the product of two positive semidefinite matrices is nonnegative. A
 - Dependency: [D5/S3/Quantum/QuantumChannels/ChannelAssemblageLOSRRefutation](ChannelAssemblageLOSRRefutation.md)
 - Dependency: [D5/S3/Quantum/QuantumChannels/ConcealmentKernelNecessityRefutation](ConcealmentKernelNecessityRefutation.md)
 - Dependency: [D5/S3/Quantum/QuantumChannels/TracePreservingEigenvalueBound](TracePreservingEigenvalueBound.md)
-- Dependency: [D5/S3/QuantumChannels/PauliThreeWeightBayesianInverseUniqueness](../../QuantumChannels/PauliThreeWeightBayesianInverseUniqueness.md)
+- Dependency: [D5/S3/QuantumChannels/PurelyNonUnitalEternalNonMarkovianity](../../QuantumChannels/PurelyNonUnitalEternalNonMarkovianity.md)
