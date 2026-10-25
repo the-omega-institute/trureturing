@@ -403,3 +403,327 @@ The global sharp complete-target count remains unresolved, both with the countab
 All counts concern exact observations in the stated mathematical model. These textual proofs carry no Lean or kernel certification, external-priority or literature-completeness claim, empirical or general-learning conclusion, stability guarantee, or assertion about bit, time, resource, or physical acquisition costs. The broader research programme remains open.
 
 ## 追加锚（本行以下为增补区）
+
+## 8. Polynomial drift and the entire calibrated source fiber
+
+**Definition 8.1 (polynomial calibrated continuation).** Fix integers $k,d\ge0$. In Sections 8–12 the source, atoms, cumulative matrices, original consecutive integer clocks, and mandatory immediate reads are those of (1.2), but the observation and complete target are
+
+$$
+z_i=H(i)\operatorname{tr}(A_iP)+D(i),\qquad
+(P,H,D),\qquad
+0\ne H\in\mathbb R[t],\quad \deg H\le k,\quad D\in\Pi_d.
+\tag{8.1}
+$$
+
+Here $\Pi_d$ is the space of real polynomials of degree at most $d$, including the zero polynomial; $P$ is entrywise strictly positive of rank one and trace one, and $s=\deg H$. There is no bound on the legal coefficients and no restriction on gain signs, degree drops, initial or later roots, or root multiplicities. An unnormalized positive rank-one $R$ with gain $G$ represents this target by $P=R/\operatorname{tr}R$ and $H=(\operatorname{tr}R)G$. Every atom in $\{M,J\}$ has its own next read; the initial read is counted. Resets, copies, empty actions, skipped reads, unread composite actions, and side sensors are unavailable.
+
+At a calibrated state following the actual pure-$M$ prefix through clock $T\ge2$, the exact polynomials $H,D$ and the scalar $b=\operatorname{tr}(MP)>0$ are known. The compatible sources are the entire set
+
+$$
+\mathcal F_b=\{P\in\operatorname{Mat}_2(\mathbb R):
+P_{ab}>0,\ \operatorname{rank}P=1,\ \operatorname{tr}P=1,
+\ \operatorname{tr}(MP)=b\}.
+\tag{8.2}
+$$
+
+No choice of a representative or further promise about $P$ is supplied. Uniform recovery means correctness for every source in this set, with arbitrary deterministic history-dependent actions, stopping, and nonlinear answers. Additional reads start at $T+1$; the existing read at $T$ is not repeated.
+
+**Proposition 8.2 (the full common-history fiber).** For every $b>0$, $\mathcal F_b$ contains infinitely many actual sources. For fixed $H,D$, all of them have the same entire pure-$M$ history, including every sampled gain root. In particular, neither the calibrated data nor additional pure-$M$ reads distinguish them.
+
+**Proof.** Every positive rank-one trace-one matrix can be written uniquely as
+
+$$
+P(r,q)=\frac1{1+rq}
+\begin{pmatrix}1&q\\r&rq\end{pmatrix},\qquad r,q>0.
+\tag{8.3}
+$$
+
+Indeed the row ratio is $r=P_{21}/P_{11}$, the column ratio is $q=P_{12}/P_{11}$, and rank one and trace one give the displayed formula. Its $M$ trace is $b$ exactly when
+
+$$
+r+q+rq=b(1+rq).
+\tag{8.4}
+$$
+
+For all sufficiently small $r>0$, set
+
+$$
+q=\frac{b-r}{1-(b-1)r}>0.
+\tag{8.5}
+$$
+
+This gives (8.4), and different $r$ give different sources. Finally $M^2=M+I$ implies
+
+$$
+\operatorname{tr}(M^iP)=f_i+F_i b\quad(i\ge0),
+\qquad f_0=1,\quad f_i=F_{i-1}\ (i\ge1).
+\tag{8.6}
+$$
+
+The two initial values are $1,b$, and both sides obey the same recurrence. Substitution into (8.1) proves equality of every pure-$M$ observation, without dividing by any gain. Conversely every source compatible with the known $b$ satisfies (8.2), so no other source information is implicit in this history. $\square$
+
+## 9. Exact whole-fiber classification of the first mixed trace
+
+**Theorem 9.1 (closed exterior sectors and interior collisions).** For every integer $T\ge2$, let
+
+$$
+L_T=\min\left\{\frac{F_T}{F_{T-1}},\frac{F_{T+1}}{F_T}\right\},
+\qquad
+U_T=\max\left\{\frac{F_T}{F_{T-1}},\frac{F_{T+1}}{F_T}\right\}.
+\tag{9.1}
+$$
+
+For every $b>0$, the map
+
+$$
+P\longmapsto\operatorname{tr}(JM^TP)
+\tag{9.2}
+$$
+
+is injective on the entire $\mathcal F_b$ if and only if $b\notin(L_T,U_T)$. Both equality endpoints are injective. For every interior $b$ there exist distinct strictly positive actual sources in $\mathcal F_b$ with equal (9.2), hence with the same entire pure-$M$ history and the same next $J$ observation for every common $H,D$. The value $b=\phi$ lies strictly in this interior for every finite $T\ge2$.
+
+**Proof.** Put
+
+$$
+a=F_{T-1},\qquad c=F_T,\qquad \rho=a/c>0.
+$$
+
+Induction using the Fibonacci recurrence gives
+
+$$
+M^T=\begin{pmatrix}a&c\\c&a+c\end{pmatrix},\qquad
+JM^T=\begin{pmatrix}c&a+c\\a&c\end{pmatrix}.
+\tag{9.3}
+$$
+
+Write $P=\left(\begin{smallmatrix}1-t&u\\v&t\end{smallmatrix}\right)$. The trace and $M$ trace conditions give $u+v+t=b$, while
+
+$$
+\operatorname{tr}(JM^TP)=c+au+(a+c)v.
+\tag{9.4}
+$$
+
+Consequently two distinct sources with the same $b$ and (9.2) differ by a nonzero multiple of
+
+$$
+K_\rho=\begin{pmatrix}-1&-(1+\rho)\\\rho&1\end{pmatrix}.
+\tag{9.5}
+$$
+
+Interchange their names so that $Q-P=hK_\rho$ with $h>0$. Write the positive rank-one matrices as
+
+$$
+P=\begin{pmatrix}p&q\\xp&xq\end{pmatrix},\qquad
+Q=\begin{pmatrix}p'&q'\\yp'&yq'\end{pmatrix}.
+$$
+
+Since $p'=p-h>0$ and $yp'=xp+h\rho$, one has $y>x>0$. The two column equations now give
+
+$$
+(y-x)p=h(y+\rho),\qquad
+(y-x)q=h((1+\rho)y+1).
+$$
+
+Define
+
+$$
+\Delta=(1+\rho)xy+x+y+\rho>0.
+$$
+
+The trace-one condition gives $h=(y-x)/\Delta$. Thus every colliding pair has exactly the form
+
+$$
+\begin{aligned}
+P_{x,y}&=\frac1\Delta
+\begin{pmatrix}
+y+\rho&(1+\rho)y+1\\
+x(y+\rho)&x((1+\rho)y+1)
+\end{pmatrix},\\
+Q_{x,y}&=\frac1\Delta
+\begin{pmatrix}
+x+\rho&(1+\rho)x+1\\
+y(x+\rho)&y((1+\rho)x+1)
+\end{pmatrix},\qquad 0<x<y.
+\end{aligned}
+\tag{9.6}
+$$
+
+Conversely (9.6) gives two strictly positive rank-one trace-one matrices, whose difference is $(y-x)K_\rho/\Delta$. They are distinct, their mixed traces agree, and their common $M$ trace is
+
+$$
+b(x,y)=\frac{(2+\rho)xy+(1+\rho)(x+y)+1}
+{(1+\rho)xy+(x+y)+\rho}.
+\tag{9.7}
+$$
+
+This quotient is a weighted average, with strictly positive weights $(1+\rho)xy$, $x+y$, and $\rho$, of
+
+$$
+\frac{2+\rho}{1+\rho},\qquad 1+\rho,\qquad \frac1\rho.
+\tag{9.8}
+$$
+
+The first number lies strictly between the last two. In fact
+
+$$
+\frac{2+\rho}{1+\rho}-\frac1\rho
+=\frac{\rho^2+\rho-1}{\rho(1+\rho)},\qquad
+\frac{2+\rho}{1+\rho}-(1+\rho)
+=-\frac{\rho^2+\rho-1}{1+\rho}.
+\tag{9.9}
+$$
+
+Here $\rho^2+\rho-1\ne0$, since $\rho$ is rational and its positive root is $\phi^{-1}$. Hence (9.7) lies strictly between $1/\rho$ and $1+\rho$, which are precisely the two endpoints in (9.1). This proves absence of collisions everywhere outside the open interval, including at both endpoints; strict positivity of all weights is essential at the endpoints.
+
+For existence at every interior $b$, set
+
+$$
+y(x)=\frac{1-b\rho+(1+\rho-b)x}
+{b-1-\rho+\bigl(b(1+\rho)-(2+\rho)\bigr)x}.
+\tag{9.10}
+$$
+
+Because $b$ is strictly between $1/\rho$ and $1+\rho$, both $1-b\rho$ and $b-1-\rho$ are nonzero and have the same sign. Thus $y(x)$ is defined near zero and tends to
+
+$$
+y(0)=\frac{1-b\rho}{b-1-\rho}>0.
+$$
+
+Choose any sufficiently small $x>0$ so that $y(x)>x$. Equation (9.10), multiplied by its nonzero denominator, is exactly $b(x,y(x))=b$. The pair (9.6) therefore realizes the desired collision by actual strictly positive sources, without a limiting or zero-entry source. Proposition 8.2 gives their common pure-$M$ history, and multiplying their equal mixed traces by the same next gain and adding the same drift preserves equality.
+
+Finally
+
+$$
+1+\rho-\phi=\rho-\phi^{-1},\qquad
+\rho^{-1}-\phi=-\frac\phi\rho(\rho-\phi^{-1}).
+$$
+
+Their product is strictly negative, again by irrationality of $\phi^{-1}$. Thus $\phi$ is strictly between the endpoints, and (9.6)–(9.10) apply to it as well. $\square$
+
+**Corollary 9.2 (an explicit exterior inverse and a singleton interior response).** On either closed exterior sector of Theorem 9.1, a realized value $\lambda=\operatorname{tr}(JM^TP)$ determines $P$ by the following quadratic inverse. Set $c=F_T$ and $\rho=F_{T-1}/F_T$, and put
+
+$$
+w=\lambda/c-1-\rho b.
+$$
+
+There is exactly one real root $t$ of
+
+$$
+(\rho^2+\rho-1)t^2+
+\bigl(1-\rho b+(1+2\rho)w\bigr)t+w^2-bw=0
+\tag{9.11}
+$$
+
+that satisfies $0<t<1$, $v=w+\rho t>0$, and $u=b-t-v>0$. It returns $P=\left(\begin{smallmatrix}1-t&u\\v&t\end{smallmatrix}\right)$. Failure of whole-fiber injectivity in the interior does not imply that every individual response fiber collides: at $b=\phi$ the response of $P_* =\nu\nu^{\mathsf T}$ from Theorem 5.1 has a singleton fiber for (9.2).
+
+**Proof.** Equations (9.4) and $u+v+t=b$ give $v-\rho t=w$. Substitution into $t(1-t)=uv$ gives (9.11). The stated inequalities give strict positivity and the equation gives rank one. The actual source proves existence, and Theorem 9.1 proves uniqueness among these admissible roots. The coefficient $\rho^2+\rho-1$ is nonzero, but no lower bound on it is needed for exact inversion.
+
+For the singleton assertion, Theorem 5.1 exhausts $\mathcal F_\phi$ by $P_x,Q_y$ with their common point $P_*$. In (5.4) for $A=JM^T$, its two slopes are
+
+$$
+a_A=\phi^T\gamma,\qquad b_A=\psi^T\gamma,\qquad
+\gamma=w_0^{\mathsf T}J\nu=-\frac\phi{1+\phi^2}\ne0,
+$$
+
+where $w_0=(-\phi,1)^{\mathsf T}/\sqrt{1+\phi^2}$ denotes the vector called $w$ in (5.1). Both slopes are nonzero. On either branch only its zero parameter gives the response of $P_*$, and those zero parameters give the same source. $\square$
+
+## 10. The exact one-additional-read criterion
+
+**Theorem 10.1 (uniform one-read recovery).** At any calibrated state of Definition 8.1, for fixed known $H,D,b$, a deterministic protocol recovering the complete target uniformly on the entire $\mathcal F_b$ with at most one additional read exists if and only if
+
+$$
+H(T+1)\ne0\qquad\hbox{and}\qquad b\notin(L_T,U_T).
+\tag{10.1}
+$$
+
+This equivalence allows arbitrary adaptive or nonlinear protocols and uses no restriction on the gain or drift beyond Definition 8.1.
+
+**Proof.** If (10.1) holds, perform $J$ at the next clock, retain its mandatory observation, and compute
+
+$$
+\lambda=\frac{z_{T+1}-D(T+1)}{H(T+1)}.
+$$
+
+Theorem 9.1, or the explicit inverse (9.11), recovers the unique actual $P$. Together with the known $H,D$ this is the complete target.
+
+For necessity, Proposition 8.2 shows that the complete calibrated histories coincide on an infinite family of sources, so a uniformly correct protocol cannot stop without another read. Its next action is fixed on this common history. If $H(T+1)=0$, either action returns just $D(T+1)$ on every source, so recovery is impossible. If the action is $M$, (8.6) makes its read independent of the source within $\mathcal F_b$, even at nonzero gain. The only remaining action is $J$ with nonzero gain. For every interior $b$, Theorem 9.1 supplies a pair of distinct actual sources with identical new response and the same previous history. The protocol has the same action, stopping decision, and answer on that pair, and cannot be correct on both. Processing the response by an arbitrary nonlinear rule cannot remove equality of the input histories. This proves necessity without any regularity assumption on the protocol. The statement is uniform; Corollary 9.2 explains why it is not a claim about every individual interior response. $\square$
+
+## 11. Exact exterior continuation budgets
+
+**Theorem 11.1 (root wait and sharp exterior uniform budgets).** Fix $T\ge2$ and any $b>0$ with $b\notin(L_T,U_T)$. For a particular known nonzero polynomial $H$ define
+
+$$
+\tau_T(H)=\min\{j\ge1:H(T+j)\ne0\}.
+\tag{11.1}
+$$
+
+For every fixed known $D$, the optimal number of additional reads sufficient uniformly for all $P\in\mathcal F_b$ is exactly $\tau_T(H)$. Over all actual degree-$s$ gains, the optimal uniform additional-read budget is exactly $s+1$. Over the nonzero gains of degree at most $k$ it is exactly $k+1$. These sharp statements retain the atomic immediate-read contract and allow arbitrary deterministic adaptive and nonlinear competitors.
+
+**Proof.** First the exterior condition persists through every later pure-$M$ clock. Put $r_n=F_{n+1}/F_n$ for $n\ge1$. For $n\ge2$,
+
+$$
+r_{n+1}=\frac{F_n r_n+F_{n-1}r_{n-1}}{F_n+F_{n-1}}.
+\tag{11.2}
+$$
+
+The consecutive ratios are distinct: the determinants $F_{n+1}F_{n-1}-F_n^2$ alternate sign from the initial value $1$ at $n=2$, by the Fibonacci recurrence. Thus (11.2) is strictly between its two terms. Each interval $(L_{S+1},U_{S+1})$ is contained in $(L_S,U_S)$ for $S\ge2$. Induction gives
+
+$$
+b\notin(L_T,U_T)\ \Longrightarrow\
+b\notin(L_S,U_S)\quad\hbox{for every }S\ge T.
+\tag{11.3}
+$$
+
+A nonzero degree-$s$ polynomial has at most $s$ distinct roots, so $\tau=\tau_T(H)$ exists and $\tau\le s+1$. Perform individual $M$ actions, with every immediate read, at the clocks $T+1,\ldots,T+\tau-1$. These are all gain roots. Then perform $J$ and read at clock $T+\tau$. Before that last action the actual state is still the pure prefix $M^S$ with $S=T+\tau-1$. The known calibration data have not changed, (11.3) gives the exterior condition at $S$, and the gain at $S+1$ is nonzero. Theorem 10.1 therefore recovers $P$ in this last read. There are exactly $\tau$ new actions and reads, including every root clock; the wait has no empty or unread action.
+
+For the lower bound with this particular $H$, fix any two distinct sources in $\mathcal F_b$ before the continuation starts. Such a pair exists by Proposition 8.2. They share the entire prefix and supplied calibration data. At each of the first $\tau-1$ additional clocks the gain is zero, independently of which actions are chosen. Its response is $D$ at that same original clock. Induction on these clocks makes all actions and actual histories common to this fixed pair. A correct deterministic protocol cannot stop at any of those histories because the targets differ. Thus it needs at least $\tau$ reads in the worst case. This proves the exact fixed-$H$ root wait.
+
+For sharpness uniformly over all actual degree-$s$ gains, fix before any adaptive choices the two sources just described, any $D_*$ in the allowed drift space, and the single common gain
+
+$$
+H_*(t)=c_*\prod_{j=1}^{s}(t-(T+j)),\qquad c_*\in\mathbb R\setminus\{0\}.
+\tag{11.4}
+$$
+
+The empty product for $s=0$ is $1$. These are two complete fixed legal worlds of actual degree $s$, sharing their entire pure-$M$ prefix and the same known $H_*,D_*,b$. Their first $s$ future gains are zero. Whatever deterministic adaptive actions are chosen, induction keeps their histories equal through all these reads, so no uniform protocol can finish within $s$ reads. All worlds and coefficients in this argument were fixed before the adaptive actions, with no response-dependent source selection. The upper bound already proved is $s+1$, so it is exact. Taking $s=k$ proves the lower bound for degree at most $k$, and root counting gives its matching upper bound. Negative $c_*$ is equally legal. Earlier roots and repeated roots in a general known $H$ affect (11.1) only when they occur at those distinct future integer clocks. $\square$
+
+## 12. Paid calibration and the exterior consumer
+
+**Theorem 12.1 (paid polynomial calibration with a sharper exterior branch).** In the full model (8.1), put
+
+$$
+N=2k+d+3,\qquad T=N-1.
+\tag{12.1}
+$$
+
+There is a single deterministic complete-target protocol starting with the paid pure-$M$ prefix through $T$ which has the following total-read bounds, where $s=\deg H$:
+
+$$
+\begin{cases}
+N+s+1=2k+d+s+4\le3k+d+4,
+& b\notin(L_T,U_T),\\
+N+s+2=2k+d+s+5\le3k+d+5,
+& b\in(L_T,U_T).
+\end{cases}
+\tag{12.2}
+$$
+
+In particular the global $3k+d+5$ guarantee is preserved, while the whole closed exterior branch saves one read in its actual-degree and degree-at-most-$k$ guarantees. These are bounds for the stated paid-prefix architecture; no unrestricted global optimum or optimum for an earlier-mixing architecture is asserted.
+
+**Proof.** Apply the prefix part of Theorem 39.2 of [*FIB Self-Calibrating Relation Mathematics*](FIB_SELF_CALIBRATING_RELATION_MATHEMATICS.md#39-任意已知有限次共同增益的零安全固定历史恢复), with its normalized $R_0$ identified with the present $P$. Its already established linear inverse on the first $N$ reads returns the same actual $H,D,b$ used in Definition 8.1. In that theorem the auxiliary coefficient polynomials are $H$ and $bH$; selecting a nonzero coefficient of $H$ determines $b$, without division by a sampled gain. The known-node confluent interpolation ingredient is the one credited there to Batenkov–Yomdin, §2B, [arXiv:1106.1137v3](https://arxiv.org/abs/1106.1137v3). No separate calibration is needed here, and all $N$ prefix reads, including the initial read, are paid. Since $k,d\ge0$, this $T$ is at least $2$.
+
+Test the now known scalar $b$ against (9.1). On the exterior branch apply Theorem 11.1 to the same actual source and original clock. Its cost is $\tau_T(H)\le s+1$. Adding the paid $N$ gives the first line of (12.2).
+
+On the interior branch use precisely the existing moving-trace decoder of Theorem 4.1: perform $J$ once and thereafter individual $M$ actions, retaining the first two reads with nonzero gain. The only change to its observation formula (4.2) is the subtraction of the already known polynomial drift at the actual clock:
+
+$$
+h_r=\frac{z_{T+1+r}-D(T+1+r)}{H(T+1+r)}
+=\operatorname{tr}(M^rJM^TP),\qquad H(T+1+r)\ne0.
+\tag{12.3}
+$$
+
+Every zero-gain clock still has its mandatory action and read. Among $s+2$ consecutive clocks two are nonroots, and Lemmas 3.1–3.2 give exactly the same four-trace inverse from those actual two indices and the known $1,b$. Thus the existing decoder returns this same $P$ within $s+2$ additional reads. Known $H,D$ complete the target. Polynomial drift of any allowed degree, including zero drift, has no further role after its pointwise subtraction. Adding $N$ gives the second line of (12.2).
+
+All gain signs, initial roots, later roots, repeated roots, degree drops, and unbounded legal coefficients remain in the argument. Every trace used by either decoder comes from the same fixed source and one continuing legal trajectory. $\square$
+
+## 追加锚（本行以下为增补区）

@@ -5,7 +5,7 @@ year: 2026
 title: Reduced-frequency applications to the actual C68 columns
 doi: null
 url: https://arxiv.org/abs/2610.12234v2
-claim: Repo-derived source-conditional applications to actual bare-J4 C68 columns pay the nonunit reduced-frequency sector up to U^(1/5) for the original and exact redesigned cutoffs, and give the original-W0 dominant endpoint where the reduced-frequency norm is comparable to U, with all its sixth-power repetitions. Strict and full C68, other unpaid annuli and branches, J40 and signed Robin restoration remain unresolved.
+claim: Repo-derived source-conditional applications to actual bare-J4 C68 columns give the original-W0 endpoint for all nonunit reduced frequencies and strict bounds on physical reduced frequencies with a small valuation-one good-prime product, retaining all sixth-power repetitions and one original coupled envelope. The powerful sector retains its U^(27/13+epsilon) raw bound; the parameterized extension has raw exponent E((1+eta)/2) for each fixed 0<=eta<(13-5sqrt6)/3. The sharper dominant-annulus dependence and the small sector up to U^(1/5) for both original and exact redesigned cutoffs remain valid. Full C68, other branches, J40, signed Robin restoration and RH remain unresolved.
 strata_touched: []
 license: citation-only
 triage: anchor
@@ -18,7 +18,7 @@ of the [Liu source card](../Analytic/liu2026quasirh.md), the
 [complete-dual application](liu2026quasirhdual.md), and the
 [joint mixed-Mobius and residue companion](liu2026quasirhresidue.md).
 C1–C50 remain in the source card, C51–C76 in the complete-dual owner,
-and R1–R46 in the residue companion. C77–C92 belong only to this note.
+and R1–R46 in the residue companion. C77–C113 belong only to this note.
 The deductions are conditional paper mathematics, without a source-proof
 audit or Lean certification.
 
@@ -300,9 +300,11 @@ reserve. The cutoff $q_r\le U^{1/5}$ is unbounded as $U$ grows; it is
 not a finite-conductor application. The conclusion holds separately
 for $b_A$ with $W_0$ and for the exact $b_U$ with $W_U$.
 
-**Unpaid complement.** Nonexceptional frequencies with $q_r>U^{1/5}$
-retain the same actual coefficients and require a new estimate; C84
-supplies no full C68 $W(1/12)$. The $r=1$ frequencies are C58's
+**Scope beyond the small sector.** C84 alone supplies no full C68
+$W(1/12)$. For original $W_0$, C93–C97 below give a bare endpoint
+on every nonunit reduced-frequency annulus, including $q_r>U^{1/5}$;
+the exact redesigned $W_U$ application here remains restricted to
+this small sector. The $r=1$ frequencies are C58's
 exceptional sector: R46 already pays their specified redesigned
 bare-J4 realization, whereas the original-$W_0$ principal scalar
 retains its stated obstruction. This application neither duplicates
@@ -355,9 +357,10 @@ weighted shell seminorm and the original component/height measure
 are part of the **one** base-envelope premise below. This is an
 application to the prescribed coefficient, rather than the prime
 coefficient of [Xu–Sang v2, Theorem 1.2](https://arxiv.org/html/2610.17675v2#S1.Thmtheorem2),
-which already has the same numerical exponent. The preceding unpaid
-complement still requires a strict/full C68 estimate; C87 supplies
-only an endpoint on this dominant annulus.
+which already has the same numerical exponent. C93–C97 below cover
+the other original-W0 nonunit annuli at the bare endpoint; C87 retains
+the sharper $R^{1/6}$ dependence on this dominant annulus. Neither
+application supplies strict/full C68.
 
 **Source correspondence and common bins.** Reuse C80–C81 and R4–R5/R44
 for the literal two-slot series, including the complete defining-modulus
@@ -601,9 +604,10 @@ There is **zero strict reserve**: local C68 sufficiency asks for
 $\lambda<B_*-1$, whereas C87 gives equality. A coefficient-sensitive
 positive-power improvement at the critical $\alpha_*$ bins, or
 cancellation in the original common-beta signed aggregate, is still
-missing. Beyond C77–C86's paid small-$r$ sector, other reduced-frequency
-annuli are not paid here. The original-W0 exceptional principal
-scalar, $k=0$, other cores/common-$e$ and common-column branches,
+missing. The all-annulus original-W0 endpoint C93–C97 below closes
+the nonunit annular coverage gap at this same endpoint power. The
+original-W0 exceptional principal scalar, $k=0$, other cores/common-$e$
+and common-column branches,
 other source $C/\mathfrak b$, generalized finite/angular factors and
 their actual measure, bad duals, physical-row restoration and the
 original signed common-beta Mobius detector/$\rho$ aggregation remain
@@ -611,3 +615,871 @@ unresolved. R46's redesigned exceptional payment is not transferred
 to W0. Full C68, J40, Robin and RH remain open. All conclusions here
 are source-conditional paper deductions, without source-proof audit,
 Lean certification or originality certification.
+
+## A source-conditional all-annulus endpoint for original W0
+
+Retain the literal $B_i=B_{i,0}$ of C80 and exactly C87's bare branch,
+original $W_0$, $b_A=\mu+K_{A;0}$, $D=U^{1/2}$ and $A=U^{1/12}$.
+All four $\mu/K$ terms, product squarefreeness, original signs and
+phases, class selectors and defining-modulus/collision zeros remain.
+For sufficiently large $U$, under C77–C92's source premises and the
+same original coupled-envelope premise, every final $\varepsilon>0$
+admits one finite original seminorm order $J$ such that
+
+$$
+\begin{aligned}
+ M_i^{>1}(R)
+ &:=\sum_{\substack{0<q_k\ll RU\\
+                 k\text{ as in C79},\ q_r>1}}
+                 |B_i(k;\Pi_i)|^2\\
+ &\ll_{H,S,C_\Pi,\varepsilon}
+       \mathcal H_{i,J}(R)^2 R U^{\kappa+\varepsilon},
+       \qquad 1\le R\le U,\qquad
+       \kappa=1+B_*=\frac{37-10\sqrt6}{6}.
+\end{aligned}
+\tag{C93}
+$$
+
+There is no restriction $q_r\asymp U$, $a=1$, $(a,r)=1$, or
+squarefreeness of $a$. Each frequency includes its six-unit label,
+original $S$ label and complete ideal sixth power, with $S$ factors
+and overlaps retained. C87 remains the sharper $R^{1/6}$ estimate
+when $q_r\asymp U$. C93 is an application of the existing density
+count and maximization to these actual columns, not a new density
+theorem or a use of Xu–Sang's prime-coefficient estimate.
+
+**Independent row and column scales.** Set $\theta=1/5$. C84 with
+$t=\theta$ already pays $1<q_r\le U^\theta$, for original $W_0$,
+by $\mathcal H_{i,J}(R)^2R^{1/6}U^{25/12+\varepsilon}$.
+This is within C93 since $25/12<\kappa$. For the remaining rows use
+disjoint physical dyads $q_r\asymp Q$, with
+$U^\theta\ll Q\ll RU\ll U^2$. The source row parameter is $Q$;
+the column scales stay $D=U^{1/2}$ and $A=U^{1/12}$. Neither is
+reset to a power of $Q$, nor is $Q$ identified with $Q_\rho$.
+
+Use precisely C87–C90's common fixed $\Theta$ and
+$\mathcal X_r=\{\nu(n)\chi_n(r)^{\pm1}:\nu\in\Theta\}$ for both
+original sides, all fixed ray/orientation twists and their conjugates.
+The rows are the original good sixth-power-free nonunits, including
+inducing orders properly dividing six. Good-prime ramification still
+makes every primitive inducer nonprincipal. Xu–Sang §6.1 (6.1) gives
+$Q_\rho\ll_{H,S}Q$ and the original row-deletion radical of norm
+$O_{H,S}(Q)$; its zero extension is retained. The extra $\Pi_i,a$
+deletions enter C81's $H$, not a growing $\Theta$, a new detector
+polynomial or a different family of zeros.
+
+Apply the same Lemma 6.2 and Proposition 6.3 on each $Q$ dyad, with
+$\alpha_0=51/100$, fixed $0<e<10^{-3}$ sufficiently small and
+$I=\lceil1/e\rceil+2$. The common bins have $1\le\ell<I$,
+$\alpha\in(\alpha_0+e\mathbb Z_{\ge0})\cap[\alpha_0,1]$,
+$\alpha\le M_\ell(r)<\alpha+e$ and
+$M_{\ell+1}(r)<\alpha+2e$, where $M_j$ is the common primitive-zero
+maximum through height $3jH_1$, floored at $\alpha_0$.
+Use $H_1=Q^\tau$, $0<\tau\le1/100$. Fix the final losses, small
+$e$ and finite internal moment/detector/parameter-Sobolev orders
+first; then choose $\tau$ for those height costs and detector
+hypotheses, and only then choose the external Mellin-tail orders.
+All these choices are uniform over $U^\theta\ll Q\ll U^2$.
+Floor bins have $O(Q)$ rows and above-floor bins have
+$O(Q^{\mathcal R(\alpha)+\eta})$ rows, with exactly (459.7)'s
+$\mathcal R$ and arbitrarily small prescribed $\eta>0$.
+This reuses the source's permitted witness lengths, finite smooth
+parameter dependence and polynomial height costs; no moment estimate
+for the actual bilinear coefficient is substituted for that count.
+
+**Uniform finite contours when $Q\ne U$.** Use C88's exact joint
+integrand separately for all four actual choices. Truncate every
+imaginary coordinate at $T_0=Q^\tau/16$ before shifting either $s$
+segment from $2$ to $\alpha+8e$, with each $z$ line fixed at $e$.
+The numerator and reciprocal arguments, including every $s_j+z_j$,
+stay in C89's common buffered disks: their heights are at most
+$2T_0$ and their real parts are at least $\alpha+8e$ or
+$\alpha+9e$. The local logarithmic-control premise supplies both
+$L$ directions; C77 alone is not used below its right strip.
+Nonprincipality and positive $z$ lines exclude principal or cutoff
+residues, and R5 controls the joint correction throughout. All
+horizontal faces and intersections use that same finite buffer.
+
+On these dyads $q_a\ll(RU/Q)^{1/6}$, and the actual puncture satisfies
+
+$$
+ q_P\ll U^{C_\Pi}Q(RU/Q)^{1/6}\ll U^{C_\Pi+2}.
+$$
+
+Thus deletion costs and the at most six numerator/reciprocal losses
+fit inside a prescribed $U^\varepsilon$, uniformly in $Q,r,a$ and
+the original masks. C89's scale cost is still
+$D^{2\alpha+16e}A^{|T|e}\le U^{\alpha+49e/6}$.
+The original absolute-line tails and all horizontal joins have
+C89's bound $O(\mathcal H_{i,J}(R)U^{C_0}T_0^{-N})$, with one fixed
+$C_0$ independent of the external order $N$. Since $Q\gg U^{1/5}$,
+choose one finite $N$ with $N\tau/5>C_0+10$ and enlarge $J$ once.
+Every tail and join is then $O(\mathcal H_{i,J}(R)U^{-10})$,
+uniformly even at the smallest retained $Q$. This does not increase
+the already fixed internal source height order. No moved vertical
+segment is extended to infinity, and no derivative acts on $b_A$.
+
+Also retain C81–C82's global right-strip contour in this fixed
+polynomial range $q_r\ll U^2$, $q_a\ll U^{1/3}$. C77 supplies its
+uniform $U^{7/8+\varepsilon}$ bound, with the same masks and one
+common enlarged $J$. Taking the better of these two bounds gives
+
+$$
+ |B_i(k;\Pi_i)|
+ \ll\mathcal H_{i,J}(R)
+             U^{\min\{\alpha,7/8\}+\varepsilon},
+ \qquad r\in\mathcal B_{\ell,\alpha}(Q),\quad q_k\ll RU.
+\tag{C94}
+$$
+
+**Density with every repetition.** Put $d_{\alpha_0}=1$ for floor
+bins and $d_\alpha=\mathcal R(\alpha)$ otherwise. For each fixed
+unit/$S$ label and ideal $a$, the source count applies to the same
+physical $r$ family; imposing the original frequency and collision
+restrictions only decreases its positive energy. Sum over every
+$a$ with $q_a\ll(RU/Q)^{1/6}$ by ordinary ideal counting.
+C94 and the existing bin count therefore give
+
+$$
+ \sum_{\substack{0<q_k\ll RU,\ k\text{ as in C79}\\
+                    r\in\mathcal B_{\ell,\alpha}(Q)}}
+              |B_i(k;\Pi_i)|^2
+ \ll\mathcal H_{i,J}(R)^2
+       (RU)^{1/6}Q^{d_\alpha-1/6}
+       U^{2\min\{\alpha,7/8\}+\varepsilon}.
+\tag{C95}
+$$
+
+The six units and finite $S$ labels cost only their original fixed
+sum, including $q_{e_S}^{-1/6}$. No primitive-inducer multiplicity
+is discarded. The bound is uniform in the $a$-dependent deletion
+mask, while the bins themselves are independent of that mask.
+
+For $d_\alpha\ge1/6$, use $Q\ll RU$ and $d_\alpha\le1$ to bound
+C95 by
+$\mathcal H_{i,J}(R)^2R^{d_\alpha}
+ U^{d_\alpha+2\min\{\alpha,7/8\}+\varepsilon}$.
+Reuse C90 and (459.12): above the floor,
+$\mathcal R(\alpha)+2\alpha\le\kappa$, with equality at
+$\alpha_*=(21-5\sqrt6)/12<7/8$; the floor gives
+$1+2\alpha_0=101/50<\kappa$. Hence this part is at most
+$\mathcal H_{i,J}(R)^2R U^{\kappa+\varepsilon}$.
+For $d_\alpha<1/6$, the negative $Q$ exponent in C95 and C77's cap
+give instead
+$\mathcal H_{i,J}(R)^2R^{1/6}U^{1/6+7/4+\varepsilon}
+ =\mathcal H_{i,J}(R)^2R^{1/6}U^{23/12+\varepsilon}$.
+In particular the high branch $\alpha>11/12$ does not create an
+unpaid repetition cost. Sum the $O_e(1)$ bins and $O(\log U)$
+physical dyads, absorbing their losses internally. Together with
+the small-$Q$ C84 estimate this proves C93 without redoing the
+density or its optimization.
+
+**Original weighted tail and coupled restoration.** For $R>U$,
+apply no bin estimate or polynomial-puncture extrapolation. The
+original divisor bound gives
+$|B_i|\ll\mathcal H_{i,J}(R)U^{1+\varepsilon}$, uniformly in
+every deletion. There are $O(RU)$ full element frequencies in the
+ball, so all nonunit reduced parts and all their repetitions have
+energy $O(\mathcal H_{i,J}(R)^2RU^{3+\varepsilon})$.
+Use exactly C91–C92's original coupled measure $dc$ and shell
+seminorms, with one fixed $B\ge4$ and one finite $J$ large enough
+for all the preceding bounds:
+
+$$
+\begin{aligned}
+ \int|dc|\,\mathcal H_{1,J}(R)\mathcal H_{2,J}(R)
+ &\ll\mathcal N_{{\rm base},J}(1+R)^{-B},\\
+ \mathcal N_{{\rm base},J}U^{3+\varepsilon}
+       \sum_{R>U\ {\rm dyadic}}R^{1-B}
+ &\ll\mathcal N_{{\rm base},J}U^{4-B+\varepsilon}.
+\end{aligned}
+\tag{C96}
+$$
+
+The same fixed or polylogarithmic $\mathcal N_{{\rm base},J}$ pays
+all original components and norm heights, masks, classes, units/$S$
+labels, bins, dyads and repetitions. An eta-only envelope still
+costs R43–R46's fixed $h^2$ to recover this base envelope. No
+allowance is restarted at $Q$, $r$, $a$, or a component. Its actual
+finite-order availability remains an applicability premise.
+
+For $1\le R\le U$, Cauchy uses the two actual columns on the same
+full nonunit $k$ set, followed by integration against this same
+$dc$. C93 costs $R U^{\kappa+\varepsilon}$ before the shell decay;
+the ball uses $R=1$. Sum with C96's decay and include its $R>U$
+tail. In this bare branch $N_i=U$, $K_{\rm row}\asymp RU$ and
+$D_{\rm src}=1$, so C93 has C68's endpoint scaling
+$\lambda=\kappa-2=B_*-1$. Restore $q/L^3=U^{-2}$ and C57–C59's
+raw Gauss-pairing $U^2$ exactly once; they cancel. For precisely the
+original signed local nonunit contribution $\mathcal E_0^{>1}$,
+
+$$
+ |\mathcal E_0^{>1}|
+ \ll\mathcal N_{{\rm base},J}U^{\kappa+\varepsilon},
+ \qquad
+ D^{-2}|\mathcal E_0^{>1}|
+ \ll\mathcal N_{{\rm base},J}U^{B_*+\varepsilon}.
+\tag{C97}
+$$
+
+Here $D^{-2}=U^{-1}$ restores the original $D^{-1}$ on each side.
+C56's self-dual planar measure, the six units and ideals counted
+once introduce no extra area, inverse Gauss, unit division or second
+$U^2$. There is no unweighted infinite-energy assertion.
+
+**Exact scope.** C93–C97 close the original-W0 bare nonunit annular
+coverage gap, with **zero strict reserve**: local sufficiency still
+requires $\lambda<B_*-1$, while this application gives equality.
+The critical $\alpha_*$ bin is below C77's cap, so that cap supplies
+no strict saving there. A coefficient-sensitive improvement or
+cancellation in the same original signed aggregate remains needed.
+The exact redesigned $W_U$ remains covered here only by C77–C86's
+small nonunit sector and R46's specified exceptional realization;
+no all-annulus $W_U$ bound or signed cutoff-change estimate is added.
+
+The original-W0 $r=1$ principal scalar, $k=0$, other cores/common-$e$
+and common-column branches, other source $C/\mathfrak b$, generalized
+finite/angular factors and their actual measure, bad duals, full
+physical-row restoration and the original common-beta signed Mobius
+detector/$\rho$ aggregation remain unresolved. No positivity under
+physical-row selection is assumed. All deductions retain the
+unaudited source main, local logarithmic-control and density inputs,
+and the actual one-envelope condition. There is no source-proof,
+Lean or originality certification, unconditional or strict-C68
+claim, or completion of full C68, J40, signed Robin restoration or RH.
+
+## A source-conditional strict sector for powerful physical frequencies
+
+Keep the literal original-$W_0$ columns $B_i=B_{i,0}$ of C80, on
+C87's bare corefree/common-$e=1$, $C=\mathfrak b=D_{\rm src}=1$,
+$q=L=U$ branch, with $D=U^{1/2}$ and $A=U^{1/12}$. Define
+$\mathscr P$ to be the nonunit good sixth-power-free reduced parts
+$r$ of C79 for which every nonzero good-prime valuation belongs to
+$\{2,3,4,5\}$. Thus $(r)$ is powerful, and $q_r>1$. This restricts
+the actual physical reduced frequency, with no restriction
+$q_r\asymp U$ and no identification with a primitive conductor.
+For each original component retain its original frequency-independent
+$\Pi_i$, with $q_{\Pi_i}\le U^{C_\Pi}$, fixed before the frequency
+sum. The additional radical $P=\operatorname{rad}(\Pi_i r a)|_{p\notin S}$
+in C81 still varies with the actual $r,a$.
+
+All four terms of $b_A(d_1)b_A(d_2)=(\mu+K_{A;0})(d_1)
+(\mu+K_{A;0})(d_2)$, product squarefreeness, signs, fixed twists,
+total-class selection and defining-modulus/collision zeros are
+unchanged. Retain every C79 presentation
+$k=\epsilon e_S(\mathbf j)r a^6$ with $r\in\mathscr P$: all six
+units, all original $S$ labels, every ideal $a$, its $S$ factors and
+its overlaps with $r$. In particular $\chi_n(a^6)$ remains the
+collision mask $\mathbf1_{(n,a)=1}$.
+
+Conditional on C77–C96's source main, local logarithmic-control and
+physical-row density premises, and on the same original finite
+coupled profile/height/shell envelope at the order used below, for
+every final $\varepsilon>0$ one finite $J$ gives, for sufficiently
+large $U$,
+
+$$
+\begin{aligned}
+ M_i^{\mathscr P}(R)
+ &:=\sum_{\substack{0<q_k\ll RU,\ k\text{ as in C79}\\
+                    r\in\mathscr P}}|B_i(k;\Pi_i)|^2\\
+ &\ll_{H,S,C_\Pi,\varepsilon}
+       \mathcal H_{i,J}(R)^2 R^{1/2}U^{27/13+\varepsilon},
+       \qquad 1\le R\le U.
+\end{aligned}
+\tag{C98}
+$$
+
+Here $R$ is the original Fourier ball/shell scale and $U$ is the
+column scale. The source's physical-row dyad $Q\asymp q_r$ is a
+third parameter; neither $D$ nor $A$ is reset to a power of $Q$.
+The seminorm and measure are exactly those of C94–C96, with one
+common finite enlargement described below.
+
+**Intersect the existing physical-row counts.** The fixed
+[primary, powerful-ideal count, lines 5272–5282](https://github.com/openai/math/blob/adc7f1241b42e322a6451854ab7e4b4c146bf78a/preprints/The-Quasi-Riemann-Hypothesis-September-30-2026/build/paper.tex#L5272)
+already supplies
+$\#\{r\in\mathscr P:q_r\le Y\}\ll_{K,S}Y^{1/2}$ for $Y\ge1$.
+Reuse that classical count; no new counting or multiplicative-sieve
+theorem is asserted. C94–C95 use the common physical-row bins from
+[Xu–Sang v2, §6.1, Lemma 6.2 and Proposition 6.3](https://arxiv.org/html/2610.17675v2#S6)
+with the owned exponent
+[(459.7)](../../docs/develop/theory/FIBONACCI_ANALYTIC_FRONTIER_INTERFACES.md#459-缓冲零点分箱下的完整原卷积联合估计).
+Set $d_{\alpha_0}=1$ at the floor $\alpha_0=51/100$, and above
+the floor set
+
+$$
+ d_\alpha=\mathcal R(\alpha)=
+ \begin{cases}
+ (31-32\alpha)/(21-12\alpha),&\alpha\le11/12,\\
+ 2(1-\alpha),&\alpha\ge11/12.
+ \end{cases}
+$$
+
+For every one of those same bins and every prescribed small
+$\eta>0$, the two upper counts give
+
+$$
+ \#\bigl(\mathcal B_{\ell,\alpha}(Q)\cap\mathscr P\bigr)
+ \ll Q^{m_\alpha+\eta},\qquad
+ m_\alpha=\min\{d_\alpha,1/2\},\qquad
+ m_{\alpha_0}=1/2.
+\tag{C99}
+$$
+
+The restriction is imposed after forming the original bins. The
+fixed common $\Theta$ still contains both sides' original ray,
+unit/$S$, $\xi$, orientation twists and conjugates; the presentations
+remain $\nu(n)\chi_n(r)^{\pm1}$. Good-prime ramification in C80
+makes every primitive inducer nonprincipal even for valuations
+$2,3,4,5$, including inducing orders properly dividing six.
+The primitive conductor satisfies only the existing
+$Q_\rho\ll_{H,S}Q$. Neither $a$ nor $\Pi_i$ changes the family
+of zeros used to define a bin. In particular C99 does not assert
+a new density theorem for a masked witness or for the actual
+bilinear coefficient.
+
+**The small physical dyads.** Set $\theta=1/5$ as in C93–C95.
+Partial summation of the supplied powerful count gives
+$\sum_{r\in\mathscr P,\ q_r\le Y}q_r^{-1/6}\ll Y^{1/3}$.
+Counting all ideal sixth powers exactly as in C83, with the
+original finite sum of $6q_{e_S(\mathbf j)}^{-1/6}$, consequently
+bounds the number of frequencies with $q_r\le U^\theta$ by
+$(RU)^{1/6}U^{\theta/3}$. C82, with the same original masks,
+therefore gives
+
+$$
+ \sum_{\substack{0<q_k\ll RU,\ k\text{ as in C79}\\
+              r\in\mathscr P,\ q_r\le U^{1/5}}}
+       |B_i(k;\Pi_i)|^2
+ \ll\mathcal H_{i,J}(R)^2 R^{1/6}
+             U^{119/60+\varepsilon},\qquad
+ \frac{119}{60}<\frac{27}{13}.
+\tag{C100}
+$$
+
+This directly pays every small-$Q$ row at the stronger target
+power. C84's $25/12$ bound for its larger row family remains valid;
+it is not the small-$Q$ input for C98.
+
+**Every remaining dyad, bin and repetition.** On disjoint physical
+dyads $U^{1/5}\ll Q\ll RU\ll U^2$, use C88's exact joint series
+and C94's pointwise estimate. Its finite contours have
+$T_0=Q^\tau/16$, both $s$ lines moved to $\alpha+8e$, and all
+present $z$ lines kept at $e>0$. Every actual numerator and
+reciprocal, including $L(s_j+z_j,\rho^*)^{-2}$, remains in the
+same source buffer. C81's joint correction retains the product
+squarefree condition and all deletions, with
+$q_P\ll U^{C_\Pi+2}$. The global right-strip contour supplies
+the simultaneous cap at $7/8$. Thus C94 applies without a change
+to either $\mu/K$ slot or to the original profiles.
+
+Keep the same choice order: final losses, $e$ and internal source
+orders, then sufficiently small $\tau>0$, then a finite external
+Mellin-tail order with $N\tau/5>C_0+10$. C94's tails and joins
+are uniformly $O(\mathcal H_{i,J}(R)U^{-10})$ on these dyads;
+no moved segment is extended beyond its finite buffer and no
+derivative acts on $b_A$.
+
+For each $r$ there are $O((RU/Q)^{1/6})$ ideal choices of $a$.
+C99 and C94, or equivalently C95 with its count intersected
+before summing, now give
+
+$$
+ \sum_{\substack{0<q_k\ll RU,\ k\text{ as in C79}\\
+          r\in\mathcal B_{\ell,\alpha}(Q)\cap\mathscr P}}
+       |B_i(k;\Pi_i)|^2
+ \ll\mathcal H_{i,J}(R)^2 (RU)^{1/6}
+       Q^{m_\alpha-1/6}
+       U^{2\min\{\alpha,7/8\}+\varepsilon}.
+\tag{C101}
+$$
+
+The positive count includes every admissible $a$, without
+$(a,r)=1$ or squarefreeness of $a$. Original collision restrictions
+can only reduce that count. Uniformity in the actual $a$-dependent
+radical pays its full energy; no primitive-inducer multiplicity
+or sixth-power repetition is discarded.
+
+If $m_\alpha\ge1/6$, use $Q\ll RU$ in C101 to obtain
+$\mathcal H_{i,J}(R)^2R^{m_\alpha}
+ U^{m_\alpha+2\min\{\alpha,7/8\}+\varepsilon}$.
+Here $R^{m_\alpha}\le R^{1/2}$. If $m_\alpha<1/6$, use $Q\ge1$
+and the cap instead, giving
+$\mathcal H_{i,J}(R)^2R^{1/6}U^{23/12+\varepsilon}$.
+This handles in particular every high-branch bin above $11/12$.
+
+For the remaining bins, the continuous upper bound over the source
+range has the exact maximum
+
+$$
+ \max_{\substack{\alpha\in[\alpha_0,1]\\
+                  m_\alpha\ge1/6}}
+ \bigl(m_\alpha+2\min\{\alpha,7/8\}\bigr)
+ =\frac{27}{13},\qquad
+ \alpha_c=\frac{41}{52},\quad
+ \mathcal R(\alpha_c)=\frac12.
+\tag{C102}
+$$
+
+Indeed, up to $\alpha_c$ the intersected exponent is
+$1/2+2\alpha$, increasing to $27/13$; the floor contributes
+$1/2+2\alpha_0=38/25$. From $\alpha_c$ to $7/8$ the derivative
+of $\mathcal R(\alpha)+2\alpha$ is
+$2-300/(21-12\alpha)^2\le-19/75<0$. From $7/8$ to $11/12$,
+$\mathcal R(\alpha)+7/4$ decreases from $57/28<27/13$.
+At $11/12$ the count exponent is $1/6$, and above it the
+$23/12$ bound already applies. Thus neither the floor nor the
+second density branch is omitted. The $O_e(1)$ bins and
+$O(\log U)$ dyads, together with C100, prove C98 after allocating
+all internal losses inside the final $\varepsilon$.
+
+**One original envelope and the complete weighted tail.** Choose
+one finite $J$ for all four terms, bins, dyads, masks, repetitions,
+units/$S$ labels, components, norm heights and shells. Require
+exactly C96's original coupled measure and shell contract
+$\int|dc|\,\mathcal H_{1,J}(R)\mathcal H_{2,J}(R)
+ \ll\mathcal N_{{\rm base},J}(1+R)^{-B}$, with one fixed
+$B\ge4$ and fixed or polylogarithmic $\mathcal N_{{\rm base},J}$.
+Its availability at this finite order is a premise. All polynomial
+norm-height derivative costs belong to it. An eta-only envelope
+costs the same fixed $h^2$ to recover the base envelope. No
+allowance restarts at a dyad, bin, mask, $r$, $a$ or component.
+
+For $R>U$, restrict C96's positive energy tail to this same
+powerful sector. The original absolute divisor bound and
+$O(RU)$ full-frequency count give the unchanged sufficient bound
+$\mathcal N_{{\rm base},J}U^{3+\varepsilon}
+ \sum_{R>U\ {\rm dyadic}}R^{1-B}
+ \ll\mathcal N_{{\rm base},J}U^{4-B+\varepsilon}$.
+This includes all large-$a$ masks and repetitions, without applying
+a bin or polynomial-puncture estimate beyond $R=U$.
+
+For $1\le R\le U$ apply Cauchy on the same powerful $k$ set
+to the two actual columns, then integrate against that same $dc$.
+Sum C98 against the stipulated decay; the ball uses $R=1$.
+Restore the original $q/L^3=U^{-2}$ and the raw Gauss-pairing
+$U^2$ exactly once, as in C97. For precisely this original signed
+local sector contribution $\mathcal E_0^{\mathscr P}$ this yields
+
+$$
+ |\mathcal E_0^{\mathscr P}|
+ \ll\mathcal N_{{\rm base},J}U^{27/13+\varepsilon},\qquad
+ D^{-2}|\mathcal E_0^{\mathscr P}|
+ \ll\mathcal N_{{\rm base},J}U^{14/13+\varepsilon}.
+\tag{C103}
+$$
+
+Here $D^{-2}=U^{-1}$ restores the original factor on each side.
+C56's self-dual measure introduces no extra area, inverse Gauss,
+unit division or second $U^2$. Since $R^{1/2}\le R$, C98 has
+restricted C68 scaling
+
+$$
+ \lambda_{\mathscr P}=\frac1{13}<B_*-1,\qquad
+ \kappa-\frac{27}{13}
+ =\frac{319-130\sqrt6}{78}>0,
+ \qquad 319^2-6\cdot130^2=361.
+\tag{C104}
+$$
+
+Take the final loss and absorption of the stipulated polylogarithms
+smaller than this reserve. The unrestricted nonunit endpoint
+C93–C97, the sharper dominant-annulus $R^{1/6}$ dependence of C87,
+and C77–C86 for both original and exact redesigned cutoffs retain
+their stated strengths and scopes.
+
+**Exact scope and remaining critical family.** C98–C104 are a
+`repo-derived` strict application to C79's powerful physical
+reduced frequencies in the actual original-$W_0$ bare columns.
+Their suppliers are the cited classical count, existing density
+and C94's actual-coefficient contour; none is asserted as a new
+count, large sieve, conductor-compression or multiplicity theorem.
+C9–C10 in the source card concern column squareparts, and
+PR1–PR10 in the [reflection companion](../Analytic/openai2026quasirh.md)
+concern reflection choices; those distinct applications are not
+being counted as this physical-row result.
+
+Within the bare nonunit complement of $\mathscr P$, at least one
+good prime necessarily has $v_p(r)=1$. This is a necessary
+condition for a remaining critical row in that complement, not
+a sufficient condition to be critical. No strict estimate for
+all such rows follows here. The original-$W_0$ $r=1$ principal
+scalar, $k=0$, other cores/common-$e$ and common-column branches,
+other source $C/\mathfrak b$, generalized angular/finite families
+and their actual measure, bad duals, full physical-row restoration
+and the original common-beta signed Mobius detector/$\rho$
+aggregation remain unresolved. No positivity or monotonicity under
+physical-row selection, signed cutoff-change estimate, or
+all-annulus redesigned-$W_U$ extension is asserted. The unaudited
+source main/logarithmic-control/density inputs and the actual
+one-envelope premise remain conditions throughout. There is no
+source-proof audit, Lean or originality certification, or completion
+of full C68, J40, signed Robin restoration or RH.
+
+## A source-conditional strict sector with a small valuation-one product
+
+Retain C98's literal original-$W_0$ C80 columns and bare branch:
+$C=\mathfrak b=D_{\rm src}=1$, corefree/common-$e=1$, $q=L=U$,
+$D=U^{1/2}$ and $A=U^{1/12}$. For a nonunit good sixth-power-free
+physical reduced part $r$ of C79, define the ideals
+
+$$
+ \mathfrak s_1(r)=\prod_{\substack{p\notin S\\v_p(r)=1}}p,
+ \qquad
+ \mathfrak t(r)=\prod_{\substack{p\notin S\\2\le v_p(r)\le5}}
+                       p^{v_p(r)},
+ \qquad (r)=\mathfrak t(r)\mathfrak s_1(r).
+\tag{C105}
+$$
+
+Thus $\mathfrak s_1$ is exactly the product of valuation-one good
+primes, not the radical of $r$; it is squarefree and coprime to the
+powerful ideal $\mathfrak t$. Fix, independently of $U$,
+
+$$
+ 0\le\eta<\eta_\star:=\frac{13-5\sqrt6}{3},\qquad
+ \theta=\frac{1+\eta}{2},\qquad
+ \mathscr P_\eta=\{r\text{ as in C79}:q_r>1,
+                     N(\mathfrak s_1(r))\le q_r^\eta\}.
+$$
+
+This selects $r$, not the full frequency
+$k=\epsilon e_S(\mathbf j)r a^6$. If $a$ overlaps a prime of
+$\mathfrak s_1(r)$, that prime has valuation $1+6v_p(a)$ in $k$,
+so the valuation-one product of the full $k$ need not equal
+$\mathfrak s_1(r)$. All ideals $a$, including overlaps and $S$
+factors, remain in the frequency sum, together with every original
+unit and $S$ label.
+
+Each component's original $\Pi_i$ is frequency-independent, fixed
+before that sum, and satisfies $q_{\Pi_i}\le U^{C_\Pi}$. Retain
+literally $b_A=\mu+K_{A;0}$, all four $\mu/K$ terms in C80, the
+product-squarefree condition, original signs and phases, total-class
+selector, fixed twists and every defining-modulus/collision zero.
+In particular the original $\chi_n(a^6)=\mathbf1_{(n,a)=1}$ stays
+in C81's joint correction with
+$P=\operatorname{rad}(\Pi_i r a)|_{p\notin S}$. Neither the
+coefficient law nor the original column scales are reset at a
+physical dyad $Q\asymp q_r$.
+
+**Source correspondence and the intersected count.** The pinned
+[primary, physical ideal split and stratum count, lines 5238–5294](https://github.com/openai/math/blob/adc7f1241b42e322a6451854ab7e4b4c146bf78a/preprints/The-Quasi-Riemann-Hypothesis-September-30-2026/build/paper.tex#L5238)
+already contains this split and its $Q V^{-1/2}$ upper count.
+In that source's notation, take $u=r$, its supported factor
+$\mathfrak s=1$ because $r$ is good, its powerful factor
+$\mathfrak w=\mathfrak t(r)$ and its residual ideal
+$\mathfrak k=\mathfrak s_1(r)$; the source scale $U$ there is
+the present physical scale $Q$, not the column scale $U$ here.
+Its residual $k$ is also distinct from C79's full frequency $k$.
+Use the original fixed generators/unit convention, leaving C79's
+external six-unit and finite $S$ labels in their original sums.
+
+For $q_r\asymp Q$ and $N(\mathfrak t(r))\asymp V$, the actual
+residual annulus is $N(\mathfrak s_1(r))\asymp Q/V$. The sector
+condition forces $V\gg Q^{1-\eta}$. Sum the source's existing
+$Q V^{-1/2}$ bound over these dyadic $V\ll Q$, including bounded
+unit ranges. This geometric sum, with all physical restrictions
+retained or enlarged only for a positive upper count, gives
+
+$$
+ \#\{r\in\mathscr P_\eta:q_r\asymp Q\}
+ \ll_{K,S,\eta}Q^\theta,
+ \qquad
+ \#(\mathcal B_{\ell,\alpha}(Q)\cap\mathscr P_\eta)
+ \ll Q^{m_\alpha+\delta},\qquad
+ m_\alpha=\min\{d_\alpha,\theta\}.
+\tag{C106}
+$$
+
+Here $\delta>0$ is an arbitrarily small internal count loss,
+$d_{\alpha_0}=1$ at $\alpha_0=51/100$, and $d_\alpha$ above
+the floor is exactly C99's existing piecewise $\mathcal R(\alpha)$.
+In particular $m_{\alpha_0}=\theta$. The density half of the
+intersection is precisely C94–C99's
+[Xu–Sang v2, §6.1, Lemma 6.2 and Proposition 6.3](https://arxiv.org/html/2610.17675v2#S6)
+with [(459.7)](../../docs/develop/theory/FIBONACCI_ANALYTIC_FRONTIER_INTERFACES.md#459-缓冲零点分箱下的完整原卷积联合估计).
+The primary's powerful count and stratum count are suppliers, not
+new results of this application. C106 is an intersection of two
+upper counts on the same physical rows; no independence or new
+sieve is assumed.
+
+Form those bins first with C94–C99's one fixed $\Theta$ containing
+both original sides' ray, unit/$S$, $\xi$, orientation twists and
+conjugates. The family remains
+$\mathcal X_r=\{\nu(n)\chi_n(r)^{\pm1}:\nu\in\Theta\}$,
+including inducing orders properly dividing six. C80's good-prime
+ramification makes every primitive inducer nonprincipal and gives
+only $Q_\rho\ll_{H,S}Q$. Intersect afterwards with
+$\mathscr P_\eta$. Neither $\mathfrak t$ nor $\mathfrak s_1$
+is substituted for $r$ in the characters, primitive conductors,
+zeros or density family. Additional $\Pi_i,a$ deletions stay in
+C81's correction. The density is not applied to a new masked
+witness or to the actual bilinear coefficient as a witness.
+
+**The small physical scales and all repetitions.** Summing the
+first count in C106 over dyads and partially summing gives
+$\sum_{r\in\mathscr P_\eta,\ q_r\le Y}q_r^{-1/6}
+\ll Y^{\theta-1/6}$. C83's complete sixth-power count therefore
+pays every $1<q_r\le U^{1/5}$. With C82's original-$W_0$ bound,
+
+$$
+ \sum_{\substack{0<q_k\ll RU,\ k\text{ as in C79}\\
+       r\in\mathscr P_\eta,\ q_r\le U^{1/5}}}
+       |B_i(k;\Pi_i)|^2
+ \ll\mathcal H_{i,J}(R)^2R^{1/6}
+       U^{113/60+\theta/5+\varepsilon},\qquad 1\le R\le U.
+\tag{C107}
+$$
+
+The multiplier being counted is the full original finite sum of
+$6q_{e_S(\mathbf j)}^{-1/6}$ and all integral ideals $a$, not one
+representative per primitive inducer. Since
+$1/2\le\theta<\theta_\star:=(16-5\sqrt6)/6<2/3$, the small-scale
+exponent is at most $121/60<27/13$. At $\eta=0$, C107 is exactly
+C100's $119/60$ exponent. No application of a finite buffered
+contour at bounded $Q$ is required.
+
+**Exact optimization of the remaining $Q,R$ majorant.** For
+$U^{1/5}\ll Q\ll RU\ll U^2$, reuse C94's simultaneous local
+contour and global $7/8$ cap, with its tails and choice order.
+For each $r$ there are $O((RU/Q)^{1/6})$ ideal choices of $a$;
+this allows every overlap and $S$ factor. C106 and C94 give
+
+$$
+ \sum_{\substack{0<q_k\ll RU,\ k\text{ as in C79}\\
+           r\in\mathcal B_{\ell,\alpha}(Q)\cap\mathscr P_\eta}}
+       |B_i(k;\Pi_i)|^2
+ \ll\mathcal H_{i,J}(R)^2(RU)^{1/6}
+       Q^{m_\alpha-1/6}
+       U^{2\min\{\alpha,7/8\}+\varepsilon}.
+\tag{C108}
+$$
+
+All original masks are paid uniformly through C94; collision
+restrictions can only decrease this positive energy. Put
+$\rho=\log_U R\in[0,1]$ and $x=\log_U Q$. Up to the fixed
+dyadic endpoint constants, the exponent to maximize is
+$ (1+\rho)/6+(m_\alpha-1/6)x+2\min\{\alpha,7/8\}$,
+with $1/5\le x\le1+\rho$. Its continuous upper majorant has
+the exact maximum, for every such $\rho$,
+
+$$
+\begin{aligned}
+ \max_{\substack{\alpha_0\le\alpha\le1\\1/5\le x\le1+\rho}}
+ \left\{\frac{1+\rho}{6}+
+      (m_\alpha-\tfrac16)x+2\min\{\alpha,7/8\}\right\}
+ &=\rho\theta+E(\theta),\\
+ \alpha_\theta&=\frac{31-21\theta}{32-12\theta},\qquad
+ E(\theta)=\theta+\frac{2(31-21\theta)}{32-12\theta}.
+\end{aligned}
+\tag{C109}
+$$
+
+To see all endpoints, when $m_\alpha\ge1/6$ the maximizing
+$x$ is $1+\rho$, giving
+$(1+\rho)m_\alpha+2\min\{\alpha,7/8\}$. Above the floor,
+$\mathcal R(\alpha_\theta)=\theta$ and
+$\alpha_*<\alpha_\theta\le41/52<7/8$, where
+$\alpha_*=(21-5\sqrt6)/12$. Up to $\alpha_\theta$ the expression
+is $(1+\rho)\theta+2\alpha$, increasing. Between
+$\alpha_\theta$ and $7/8$, its derivative is
+$2-300(1+\rho)/(21-12\alpha)^2<0$. Thus its maximum is the
+displayed $\rho\theta+E(\theta)$. The floor contributes only
+$(1+\rho)\theta+2\alpha_0$, strictly less.
+
+On $7/8\le\alpha\le11/12$, the capped expression decreases
+from $57/28+2\rho/7$, below
+$E(\theta)+\rho\theta$ since $57/28<27/13\le E(\theta)$
+and $2/7<\theta$. At $11/12$, $m_\alpha=1/6$.
+For $\alpha>11/12$ the negative $Q$ exponent is maximized
+instead at $x=1/5$, giving
+$113/60+\rho/6+m_\alpha/5\le23/12+\rho/6$.
+This too is below $E(\theta)+\rho\theta$. These statements
+include the high density branch, the cap junction, and both
+physical-dyad endpoints for every $R$. Equality in the continuous
+majorant occurs at $x=1+\rho$, $\alpha=\alpha_\theta$; this
+does not assert an occupied bin, simultaneous saturation of the
+two counts, or attained sharpness for actual columns.
+
+C107, C108–C109 and the original bin/dyad sums yield, for every
+fixed $\eta$ in the stated range and every final $\varepsilon>0$,
+under C77–C96's source main/logarithmic-control/density premises,
+
+$$
+\begin{aligned}
+ M_i^\eta(R)
+ &:=\sum_{\substack{0<q_k\ll RU,\ k\text{ as in C79}\\
+                      r\in\mathscr P_\eta}}
+                 |B_i(k;\Pi_i)|^2\\
+ &\ll_{H,S,C_\Pi,\eta,\varepsilon}
+       \mathcal H_{i,J}(R)^2 R^\theta
+       U^{E(\theta)+\varepsilon},\qquad 1\le R\le U.
+\end{aligned}
+\tag{C110}
+$$
+
+One finite $J$ suffices for these bounds, conditional on the
+original finite envelope at that order for their restoration.
+At $\eta=0$ this recovers C98's $R^{1/2}U^{27/13+\varepsilon}$,
+rather than replacing that sharper bound with a positive-$\eta$
+specialization.
+
+**One actual envelope, loss budget and original restoration.**
+Use exactly C96's coupled measure $dc$ and shell contract, with
+one fixed $B\ge4$ and one common finite $J$:
+$\int|dc|\,\mathcal H_{1,J}(R)\mathcal H_{2,J}(R)
+\ll\mathcal N_{{\rm base},J}(1+R)^{-B}$, where
+$\mathcal N_{{\rm base},J}$ is fixed or polylogarithmic in $U$.
+This is an applicability premise for the actual profiles and
+norm heights at the required order. An unspecified polynomial
+envelope does not qualify. All component, class, mask, unit/$S$,
+dyad and repetition costs belong to this one envelope, including
+the original height derivative costs. An envelope supplied only
+for R43–R46's $h^{-2}$ component costs the same fixed $h^2$.
+No allowance restarts at $Q,r,a$, a bin or a component.
+
+For $R>U$ use the complete C96 weighted tail, restricted only
+in its positive energy to $\mathscr P_\eta$:
+$\mathcal N_{{\rm base},J}U^{3+\varepsilon}
+\sum_{R>U\ {\rm dyadic}}R^{1-B}
+\ll\mathcal N_{{\rm base},J}U^{4-B+\varepsilon}$.
+It includes every large-$a$ repetition and collision mask; no
+polynomial-puncture or bin estimate is extended past $R=U$.
+For $R\le U$, Cauchy uses both original columns on the same
+full $k$ sector and the same $dc$. Sum C110 with its stipulated
+shell decay, using $R=1$ for the ball. Restore $q/L^3=U^{-2}$
+and the original raw Gauss-pairing $U^2$ once, as in C97/C103,
+and then $D^{-2}=U^{-1}$ once. For precisely this original signed
+local contribution $\mathcal E_0^\eta$ the result is
+
+$$
+ |\mathcal E_0^\eta|
+ \ll\mathcal N_{{\rm base},J}U^{E(\theta)+\varepsilon},\qquad
+ D^{-2}|\mathcal E_0^\eta|
+ \ll\mathcal N_{{\rm base},J}U^{E(\theta)-1+\varepsilon},\qquad
+ \lambda_\eta=E(\theta)-2.
+\tag{C111}
+$$
+
+The restricted C68 scaling uses $R^\theta\le R$. The self-dual
+measure, unit count and fixed ideal generators introduce no extra
+area, inverse Gauss, unit division or second normalization.
+
+The strict reserve is
+
+$$
+\begin{aligned}
+ \Delta(\eta)&=\kappa-E(\theta)>0,
+       &0\le\eta<\eta_\star,\\
+ E'(\theta)&=1-\frac{600}{(32-12\theta)^2}>0,
+       &\tfrac12\le\theta<\theta_\star,\\
+ E(\tfrac12)&=27/13,\qquad
+ \lim_{\theta\uparrow\theta_\star}E(\theta)=\kappa,
+       &\theta_\star=\frac{16-5\sqrt6}{6}.
+\end{aligned}
+\tag{C112}
+$$
+
+For a concrete strict allocation fix $\eta$ first and choose
+$0<b<\min\{\varepsilon,\Delta(\eta)\}/16$. Budget at most
+$b$ each for the following seven total energy/restoration losses:
+the buffered contour displacement; the numerator/reciprocal
+factors; the deleted joint Euler correction; the density loss
+and its internal height/parameter costs; the bin/dyad sums; the
+alternative right-strip/small-$Q$/absolute-tail estimates; and
+absorption of the stipulated fixed or polylogarithmic envelope.
+For example take $49e/3<b$, bound each of the at most twelve
+$L$ or reciprocal factors after squaring by $U^{b/12}$, and take
+the correction's internal exponent smaller than
+$b/[2(C_\Pi+2)]$, using $q_P\ll U^{C_\Pi+2}$.
+The density exponent loss can be taken smaller than $b/2$
+since $Q\ll U^2$, with a further reduction to fit its internal
+height costs in that same allowance. The original count has
+only $O_e(1)$ bins and $O(\log U)$ dyads. All seven losses
+together are at most $7b<\min\{\varepsilon,\Delta(\eta)\}$;
+fixed Fourier masses, units and $S$ labels add constants only.
+
+Preserve C94's source choice order: after fixing this loss budget,
+fix sufficiently small $e$ and finite internal source
+moment/detector/parameter-Sobolev orders, then sufficiently small
+$0<\tau\le1/100$, and only then an external Mellin-tail order
+$N$ with $N\tau/5>C_0+10$. Enlarge one common finite $J$ to
+pay those tails, all joins and the chosen shell decay. The actual
+envelope must be available at this $J$. Its existence is not
+inferred from a lower-order envelope or an arbitrary smoothness
+assertion. Thus C111 has strict restricted scaling after losses,
+$\lambda_\eta+7b<B_*-1$. No generic $\varepsilon$ larger than
+the reserve can be used for that conclusion. As
+$\eta\uparrow\eta_\star$, $\Delta(\eta)\downarrow0$; the method
+supplies neither strictness at the endpoint nor a uniform finite
+$J$ up to it.
+
+For the fixed nonzero choice $\eta=1/4<\eta_\star$, the exact
+parameters and reserves are
+
+$$
+\begin{aligned}
+ \theta&=5/8,\qquad \alpha_\theta=143/196,\qquad
+ E(\theta)=817/392,\\
+ E(\theta)-1&=425/392,\qquad
+ \lambda_{1/4}=33/392,\\
+ \Delta(1/4)&=\frac{4801-1960\sqrt6}{1176}
+   =\frac{1}{1176(4801+1960\sqrt6)}
+   \simeq8.86\mathbin{\cdot}10^{-8}>0,\\
+ 4801^2-6\cdot1960^2&=1.
+\end{aligned}
+\tag{C113}
+$$
+
+The contour, density, tail, dyadic and envelope losses just listed
+must all fit inside this very small reserve for this example.
+The displayed exponents are limiting upper majorants with a
+chosen smaller positive loss, not zero-loss asymptotics.
+
+**Domain gain and bounded nonduplication.** At $\eta=0$,
+$N(\mathfrak s_1)=1$ is precisely the powerful sector
+$\mathscr P$. Every fixed $\eta>0$ admits nonpowerful physical
+rows beyond the small-$Q$ region. For example fix a good prime
+ideal $\mathfrak p$ and let a different good prime ideal
+$\mathfrak q$ grow. The fixed-generator row with
+$(r)=\mathfrak p\mathfrak q^2$ has
+$\mathfrak s_1(r)=\mathfrak p$ and eventually
+$N(\mathfrak p)\le q_r^\eta$. With $U=q_r$, $a=1$ and the
+unit $S$ label it lies on $Q\asymp U$, beyond $U^{1/5}$ and
+in the original $R=1$ frequency ball. This demonstrates a larger
+permitted domain; it gives no lower bound on its energy and
+does not assert that a particular C80 column is nonzero.
+
+The primary already owns the physical split, powerful count and
+$QV^{-1/2}$ stratum estimate. C9–C10 in the
+[source card](../Analytic/liu2026quasirh.md#removing-the-repeated-factor-cutoff-from-the-low-conductor-estimate)
+and [§462](../../docs/develop/theory/FIBONACCI_ANALYTIC_FRONTIER_INTERFACES.md#462-原卷积的大重复部分与完整交叉项)
+concern repeated factors of the inverse-square columns and their
+interference; PR1–PR10 in the
+[reflection companion](../Analytic/openai2026quasirh.md#joint-control-of-all-powerful-prime-reflection-choices)
+sum reflection choices on original numerators. Neither is the
+C80 physical-$r$ sector defined in C105. Within these bounded
+source correspondences, the retained application is their
+existing row count intersected with C94's density bins and
+optimized on the actual C80 columns, with all repetitions and
+one original envelope. It claims no new supplier theorem or
+literature priority. C77–C104 retain all their stated strengths,
+including C87's sharper dominant-annulus dependence.
+
+For each fixed $\eta$, the bare nonunit complement now has
+$N(\mathfrak s_1(r))>q_r^\eta$; this necessary condition does
+not make a row critical or bound that complement strictly.
+The original-$W_0$ principal $r=1$ scalar, $k=0$, other
+cores/common-$e$ and common-column branches, other source
+$C/\mathfrak b$, generalized finite/angular families and their
+actual measure, bad duals, full physical-row restoration and
+the original common-beta signed Mobius detector/$\rho$
+aggregation remain unpaid. There is no positivity or monotonicity
+under signed physical-row selection, all-annulus redesigned-$W_U$
+extension or signed cutoff-change bound. C105–C113 remain
+source-conditional application exposition, with source main,
+logarithmic-control, physical density and the actual finite
+coupled envelope as premises; they certify neither those source
+proofs nor Lean, originality, full C68, J40, signed Robin
+restoration or RH.

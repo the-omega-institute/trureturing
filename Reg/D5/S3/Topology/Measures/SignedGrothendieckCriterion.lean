@@ -241,4 +241,116 @@ def weakRegistration :
   familyRecord := none
   options := #[]
 
+@[reducible] def oscillationSignature : DependentFamily.Signature where
+  Params := Unit
+  State := fun _ => ℝ
+  Role := Unit
+  finiteRole := inferInstance
+  nonemptyRole := inferInstance
+  Output := fun _ _ => Filter ℝ
+  Anchor := Empty
+  finiteAnchor := inferInstance
+
+def oscillationActual : DependentFamily.Realization oscillationSignature :=
+  DependentFamily.realize oscillationSignature (fun _ _ r => 𝓝 r) (fun a => nomatch a)
+
+def oscillationLaw (R : DependentFamily.Realization oscillationSignature) : Prop :=
+  ∀ {K : Type u} [TopologicalSpace K] [CompactSpace K] [T2Space K]
+    [MeasurableSpace K] [BorelSpace K],
+  ∀ [ZeroDimensionalSpace K],
+  ∀ (O : ∀ t : ℕ → SignedMeasure K, ∀ W : ℕ → Set K,
+    (∀ n, (t n).totalVariation.Regular) →
+    (∀ n, IsClopen (W n) ∧ (W n).Nonempty) →
+    Pairwise (fun i n => Disjoint (W i) (W n)) →
+    (∀ n, (t n).totalVariation.real univ = 1) →
+    (∀ n, (1 / 2 : ℝ) ≤ (t n).toJordanDecomposition.posPart.real univ) →
+    (∀ n, (t n).totalVariation (W n)ᶜ = 0) →
+    ∃ Z : Set K, IsClopen Z ∧
+      {n | (1 / 6 : ℝ) ≤ t n Z}.Infinite ∧ {n | t n Z = 0}.Infinite)
+    (F : ℕ → StrongDual ℝ C(K, ℝ)) (FInf : StrongDual ℝ C(K, ℝ))
+    (hF : ∀ g : C(K, ℝ), Tendsto (fun n => F n g) atTop (𝓝 (FInf g))) ,
+    ∀ Φ : StrongDual ℝ (StrongDual ℝ C(K, ℝ)),
+      Tendsto (fun n => Φ (F n)) atTop (R.readout () () (Φ FInf))
+
+@[reducible] def oscillationArena : DependentFamily.Arena where
+  signature := oscillationSignature
+  Law := oscillationLaw.{u}
+abbrev oscillationScope := type_of% (@weak_of_signed_clopen_oscillation.{u})
+theorem oscillationBridge : oscillationScope.{u} ↔ oscillationArena.{u}.Law oscillationActual := Iff.rfl
+
+def oscillationRejected : DependentFamily.Realization oscillationSignature :=
+  DependentFamily.realize oscillationSignature (fun _ _ _ => (⊥ : Filter ℝ)) (fun a => nomatch a)
+
+theorem oscillationPositive : oscillationArena.{u}.Law oscillationActual :=
+  oscillationBridge.mp (@weak_of_signed_clopen_oscillation.{u})
+
+theorem oscillationNegative : ¬ oscillationArena.{u}.Law oscillationRejected := by
+  intro h
+  have Oempty : ∀ t : ℕ → SignedMeasure (ULift.{u} Empty),
+      ∀ W : ℕ → Set (ULift.{u} Empty),
+      (∀ n, (t n).totalVariation.Regular) →
+      (∀ n, IsClopen (W n) ∧ (W n).Nonempty) →
+      Pairwise (fun i n => Disjoint (W i) (W n)) →
+      (∀ n, (t n).totalVariation.real univ = 1) →
+      (∀ n, (1 / 2 : ℝ) ≤ (t n).toJordanDecomposition.posPart.real univ) →
+      (∀ n, (t n).totalVariation (W n)ᶜ = 0) →
+      ∃ Z : Set (ULift.{u} Empty), IsClopen Z ∧
+        {n | (1 / 6 : ℝ) ≤ t n Z}.Infinite ∧ {n | t n Z = 0}.Infinite := by
+    intro t W ht hW hd hn hp hc
+    obtain ⟨x, hx⟩ := (hW 0).2
+    exact x.down.elim
+  have ht := h (K := ULift.{u} Empty) Oempty (fun _ => 0) 0
+    (fun g => by simpa using tendsto_const_nhds) 0
+  have hbot : (⊥ : Filter ℝ).NeBot := by simpa only [oscillationRejected, DependentFamily.realize] using ht.neBot
+  exact (Filter.not_neBot.mpr rfl) hbot
+
+def oscillationFamily : DependentFamily.Registration oscillationArena.{u} oscillationScope.{u} where
+  actual := oscillationActual
+  bridge := oscillationBridge
+  variation := ⟨oscillationPositive, oscillationRejected, oscillationNegative⟩
+  sensitivity := by
+    constructor
+    · intro i
+      refine ⟨oscillationRejected, ?_, rfl, oscillationNegative⟩
+      intro j hji
+      exact (hji (Subsingleton.elim _ _)).elim
+    · intro a
+      exact nomatch a
+  dependence := by
+    intro i
+    refine ⟨(), 0, 1, ?_⟩
+    change (𝓝 (0 : ℝ)) ≠ (𝓝 (1 : ℝ))
+    exact fun he => zero_ne_one (nhds_injective he)
+
+
+def oscillationRegistration :
+    LeanInformationAudit.Contract.Registration.{_, _, _, 0, 0, 0, _, _, 0, 0, 0, 0}
+      (@weak_of_signed_clopen_oscillation.{u})
+      (DependentFamily.Realization oscillationSignature) Type Unit where
+  unitName := `D5.S3.Topology.Measures.SignedGrothendieckCriterion.weak_of_signed_clopen_oscillation.__information_unit
+  realizationName := `Reg.D5.S3.Topology.Measures.SignedGrothendieckCriterion.oscillationFamily
+  realizationSource := none
+  generated := false
+  arena := .source ⟨oscillationArena.{u}⟩
+  objectArena := .source ⟨oscillationArena.{u}⟩
+  catalog := Lean.Name.anonymous
+  localNames := false
+  realization := .source oscillationArena.{u} ⟨oscillationFamily.{u}⟩
+  correspondence := { stage := .evidence, objectStage := .evidence }
+  bundleNonempty := .evidence ⟨(show True from trivial)⟩ trivial
+  readout := some (DependentFamily.realize oscillationSignature
+    (fun _ _ r => 𝓝 r) (fun a => nomatch a))
+  variation := .evidence ⟨(show True from trivial)⟩ trivial
+  sensitivity := .evidence ⟨(show True from trivial)⟩ trivial
+  partialSensitivity := none
+  escapeFrom := none
+  sourceSelection := some {
+    owner := `D5.S3.Topology.Measures.SignedGrothendieckCriterion
+    definition := none
+    coordinates := #[]
+    readouts := #[{ path := #["body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "arg"], stateBinder := 0, functionOperand := false, stateOperand := some #["arg"], booleanPredicate := false }] }
+  continuation := .unknown
+  familyRecord := none
+  options := #[]
+
 end Reg.D5.S3.Topology.Measures.SignedGrothendieckCriterion
