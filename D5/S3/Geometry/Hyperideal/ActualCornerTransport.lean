@@ -116,6 +116,44 @@ def Transport (q : Pairing T) (u v : S → Corner T) (w : S → K) (B : K) : Pro
       ∑ s, w s * ((if u s = c then 1 else 0) - (if v s = c then 1 else 0))) ∧
     (∀ o, |lift q paths w o| ≤ 3 * B)
 
+/-- The local lifts at paired slots have the same actual global-edge sums. -/
+theorem mlocal (q : Pairing T) (i : Slot T) (e : GlobalEdge q) :
+    M q (localLift (J q i) : Occurrence T → K) e = M q (localLift i) e := by
+  classical
+  have edge_labels (i : Slot T) : P q (edge i) = P q (edge (J q i)) :=
+    Quotient.sound (Relation.EqvGen.rel _ _ ⟨i,rfl,rfl⟩)
+  have mform (i : Slot T) (e : GlobalEdge q) :
+      M q (localLift i : Occurrence T → K) e =
+        ∑ r : Fin 3, (if i.2 = r then (1:K)/2 else -1/2) *
+          (if P q (i.1.1,faceEdge i.1.2 r) = e then 1 else 0) := by
+    unfold M localLift
+    calc
+      (∑ o : Occurrence T, if P q o = e then
+          ∑ r : Fin 3, if (i.1.1,faceEdge i.1.2 r) = o then
+            (if i.2 = r then (1:K)/2 else -1/2) else 0 else 0) =
+        ∑ o : Occurrence T, ∑ r : Fin 3,
+          if (i.1.1,faceEdge i.1.2 r) = o then
+            (if P q o = e then (if i.2 = r then (1:K)/2 else -1/2) else 0) else 0 := by
+        apply Finset.sum_congr rfl
+        intro o _
+        split_ifs with h
+        · apply Finset.sum_congr rfl
+          intro r _
+          simp
+        · simp
+      _ = _ := by
+        rw [Finset.sum_comm]
+        simp [eq_comm,mul_ite]
+  rw [mform,mform,← Equiv.sum_comp (q.sigma i.1) (fun r : Fin 3 =>
+    (if (J q i).2 = r then (1:K)/2 else -1/2) *
+      (if P q ((J q i).1.1,faceEdge (J q i).1.2 r) = e then 1 else 0))]
+  apply Finset.sum_congr rfl
+  intro r _
+  have he := edge_labels (i.1,r)
+  change P q (i.1.1,faceEdge i.1.2 r) =
+    P q ((q.p i.1).1,faceEdge (q.p i.1).2 (q.sigma i.1 r)) at he
+  simp only [J,Equiv.apply_eq_iff_eq,← he]
+
 set_option maxHeartbeats 2000000 in
 -- The proof checks every local face/corner and edge/face/slot coefficient.
 set_option maxRecDepth 10000 in
@@ -287,41 +325,6 @@ theorem actual_corner_transport (q : Pairing T) (u v : S → Corner T) (w : S �
         norm_num [Q,localLift,b,faceVertex,faceEdge,endpoints,Fin.sum_univ_succ] <;>
         simp only [Fin.ext_iff] <;> norm_num
     · simp [Q,localLift,b,Prod.mk.injEq,ht]
-  have edge_labels (i : Slot T) : P q (edge i) = P q (edge (J q i)) :=
-    Quotient.sound (Relation.EqvGen.rel _ _ ⟨i,rfl,rfl⟩)
-  have mform (i : Slot T) (e : GlobalEdge q) :
-      M q (localLift i : Occurrence T → K) e =
-        ∑ r : Fin 3, (if i.2 = r then (1:K)/2 else -1/2) *
-          (if P q (i.1.1,faceEdge i.1.2 r) = e then 1 else 0) := by
-    unfold M localLift
-    calc
-      (∑ o : Occurrence T, if P q o = e then
-          ∑ r : Fin 3, if (i.1.1,faceEdge i.1.2 r) = o then
-            (if i.2 = r then (1:K)/2 else -1/2) else 0 else 0) =
-        ∑ o : Occurrence T, ∑ r : Fin 3,
-          if (i.1.1,faceEdge i.1.2 r) = o then
-            (if P q o = e then (if i.2 = r then (1:K)/2 else -1/2) else 0) else 0 := by
-        apply Finset.sum_congr rfl
-        intro o _
-        split_ifs with h
-        · apply Finset.sum_congr rfl
-          intro r _
-          simp
-        · simp
-      _ = _ := by
-        rw [Finset.sum_comm]
-        simp [eq_comm,mul_ite]
-  have mlocal (i : Slot T) (e : GlobalEdge q) :
-      M q (localLift (J q i) : Occurrence T → K) e = M q (localLift i) e := by
-    rw [mform,mform,← Equiv.sum_comp (q.sigma i.1) (fun r : Fin 3 =>
-      (if (J q i).2 = r then (1:K)/2 else -1/2) *
-        (if P q ((J q i).1.1,faceEdge (J q i).1.2 r) = e then 1 else 0))]
-    apply Finset.sum_congr rfl
-    intro r _
-    have he := edge_labels (i.1,r)
-    change P q (i.1.1,faceEdge i.1.2 r) =
-      P q ((q.p i.1).1,faceEdge (q.p i.1).2 (q.sigma i.1 r)) at he
-    simp only [J,Equiv.apply_eq_iff_eq,← he]
   have mlinear (e : GlobalEdge q) :
       M q (lift q paths w) e = ∑ i : Slot T, load q paths w i * M q (localLift i) e := by
     unfold M lift
@@ -339,7 +342,7 @@ theorem actual_corner_transport (q : Pairing T) (u v : S → Corner T) (w : S �
     have hre := je.sum_comp (fun i => load q paths w i * M q (localLift i) e)
     dsimp only [je] at hre
     change (∑ i, load q paths w (J q i) * M q (localLift (J q i)) e) = _ at hre
-    simp only [load_anti,mlocal,neg_mul,Finset.sum_neg_distrib] at hre
+    simp only [load_anti,mlocal q,neg_mul,Finset.sum_neg_distrib] at hre
     linarith
   have qlinear (c : Corner T) :
       Q (lift q paths w) c = ∑ i : Slot T, load q paths w i * Q (localLift i) c := by

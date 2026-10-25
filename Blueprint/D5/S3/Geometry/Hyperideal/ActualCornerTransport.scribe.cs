@@ -30,6 +30,29 @@ internal sealed class ActualCornerTransportDocument : IScribeDocumentDefinition
                 + "on its opposite face edge, -1/2 on the other two face edges, and zero elsewhere. "
                 + "The SAME vector a(o)=sum_i A(i)localLift(i,o) is used in every conclusion.")),
             Describe.Lean(
+                DescribeId.Create("actual-paired-local-lift-edge-sums"),
+                DeclarationHandle.Create(
+                    "D5/S3/Geometry/Hyperideal/ActualCornerTransport.mlocal"),
+                H("Paired local lifts have equal actual global-edge sums"),
+                StatementSource.FromAuthor(F.Disp(MlocalStatement())),
+                AssessedProvenance.FromRepo(),
+                Blocks(
+                    Paragraph(Text("T is any finite type, including the empty type, and K is a "
+                        + "linearly ordered field with its compatible ordered-ring structure. "
+                        + "For every actual Pairing q, Slot i and GlobalEdge e, the occurrence "
+                        + "vectors localLift(J(q,i)) and localLift(i), with coefficients in K, "
+                        + "have the same M(q,-,e) sum. The sum retains every occurrence with "
+                        + "P(q,o)=e, including repeated labels and self-gluings. If T is empty, "
+                        + "there is no slot i or global edge e, so this assertion is vacuous.")),
+                    Paragraph(Text("Expand each local lift into its three half-coefficient "
+                        + "terms and reindex the paired face by the actual permutation sigma. "
+                        + "Each source edge and its paired edge have the same P-label, and the "
+                        + "permutation preserves which slot has coefficient +1/2. The global "
+                        + "edge sums therefore agree. In actual_corner_transport this equality "
+                        + "combines with load(J(q,i))=-load(i): reindexing the weighted sum by "
+                        + "J cancels its M-image."))),
+                DescribeRole.Theorem),
+            Describe.Lean(
                 DescribeId.Create("actual-paired-corner-weighted-lift"),
                 DeclarationHandle.Create(
                     "D5/S3/Geometry/Hyperideal/ActualCornerTransport.actual_corner_transport"),
@@ -391,6 +414,21 @@ internal sealed class ActualCornerTransportDocument : IScribeDocumentDefinition
                         + " conclusion, global Euler identity or genus formula follows from this application.")),
                     Paragraph(Text("The transport and linear image, dimension and span applications assume no angle positivity, edge-degree bound, link-surface condition or common geometric length. The strictification application adds precisely the initial positivity, nonnegative deficit and positive component-total conditions above. The dimension counts real linear angle directions with fixed M and Q; it does not assert that arbitrary changes preserve angle inequalities. These results establish neither the link Euler identity, the minimum-degree conclusion of Theorem 42.2, nor compatibility of geometric edge lengths."))),
                 DescribeRole.Theorem))));
+
+    private static Formula MlocalStatement()
+    {
+        var T=F.Id("T"); var K=F.Id("K");
+        var q=F.Id("q"); var i=F.Id("i"); var e=F.Id("e");
+        var vector=new Formula.TypeArrow(Call("Occurrence",T),K);
+        var paired=F.Seq(F.Open,Call("localLift",Call("J",q,i)),F.Colon,vector,F.Close);
+        var original=F.Seq(F.Open,Call("localLift",i),F.Colon,vector,F.Close);
+        var premises=And(Call("Fintype",T),Call("Field",K),
+            Call("LinearOrder",K),Call("IsStrictOrderedRing",K));
+        return All([("T",F.Id("Type")),("K",F.Id("Type")),
+            ("q",Call("Pairing",T)),("i",Call("Slot",T)),("e",Call("GlobalEdge",q))],
+            new Formula.Logic(premises,FormulaLogicOperator.Implies,
+                Eq(Call("M",q,paired,e),Call("M",q,original,e))));
+    }
 
     private static Formula Statement()
     {
