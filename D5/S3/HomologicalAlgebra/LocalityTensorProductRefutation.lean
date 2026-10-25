@@ -198,21 +198,112 @@ private theorem rel_locality : IsLocalityVectorSpace ℝ rel := by
       forall_exists_index, and_imp, forall_apply_eq_imp_iff₂]
     rfl
 
+private theorem diagonal_supported (v : Fin 5 → ℝ) (i : Fin 6)
+    (hp : project v = direction i) (h3 : v 3 = 0) (h4 : v 4 = 0) :
+    Finsupp.single (v, v) 1 ∈ freeSpan rel (⊤ : Submodule ℝ (Fin 5 → ℝ)) ⊤ := by
+  apply Finsupp.single_mem_supported
+  refine ⟨Submodule.mem_top, Submodule.mem_top, ?_⟩
+  unfold rel
+  refine ⟨Or.inr (Or.inr ⟨i, ?_, ?_⟩), ?_⟩
+  · rw [hp]; exact Submodule.mem_span_singleton_self _
+  · rw [hp]; exact Submodule.mem_span_singleton_self _
+  · simp only [h3, h4, zero_mul, and_self]
+
 private theorem X_supported (k : Fin 5) (hk : k = 1 ∨ k = 2) :
     X k ∈ freeSpan rel (⊤ : Submodule ℝ (Fin 5 → ℝ)) ⊤ := by
-  sorry
+  rcases hk with rfl | rfl
+  · unfold X
+    apply Submodule.sub_mem
+    · apply Submodule.add_mem
+      · apply Submodule.smul_mem; apply diagonal_supported _ 1 <;>
+        norm_num [project, direction, e, Pi.single_apply, funext_iff, Fin.forall_fin_succ]
+      · apply Submodule.smul_mem; apply diagonal_supported _ 2 <;>
+        norm_num [project, direction, e, Pi.single_apply, funext_iff, Fin.forall_fin_succ]
+    · apply diagonal_supported _ 0 <;>
+        norm_num [project, direction, e, Pi.single_apply, funext_iff, Fin.forall_fin_succ]
+  · unfold X
+    apply Submodule.sub_mem
+    · apply Submodule.add_mem
+      · apply Submodule.smul_mem; apply diagonal_supported _ 4 <;>
+        norm_num [project, direction, e, Pi.single_apply, funext_iff, Fin.forall_fin_succ]
+      · apply Submodule.smul_mem; apply diagonal_supported _ 5 <;>
+        norm_num [project, direction, e, Pi.single_apply, funext_iff, Fin.forall_fin_succ]
+    · apply diagonal_supported _ 3 <;>
+        norm_num [project, direction, e, Pi.single_apply, funext_iff, Fin.forall_fin_succ]
 
 private theorem Y_supported (i : Fin 5) (hi : i = 3 ∨ i = 4) :
     Y i ∈ freeSpan rel (⊤ : Submodule ℝ (Fin 5 → ℝ)) ⊤ := by
-  sorry
+  unfold Y
+  apply Finsupp.single_mem_supported
+  refine ⟨Submodule.mem_top, Submodule.mem_top, ?_⟩
+  rcases hi with rfl | rfl <;>
+    norm_num [rel, project, e, Pi.single_apply, show (![0, 0, 0] : Fin 3 → ℝ) = 0 by ext j; fin_cases j <;> rfl]
+
+private theorem X_support_cases (k : Fin 5) {p} (hp : p ∈ (X k).support) :
+    p = (e 0 + e k, e 0 + e k) ∨ p = (e 0 - e k, e 0 - e k) ∨ p = (e k, e k) := by
+  classical
+  unfold X at hp
+  rcases Finset.mem_union.mp (Finsupp.support_sub hp) with hp | hp
+  · rcases Finset.mem_union.mp (Finsupp.support_add hp) with hp | hp
+    · exact Or.inl (Finset.mem_singleton.mp
+        (Finsupp.support_single_subset (Finsupp.support_smul hp)))
+    · exact Or.inr (Or.inl (Finset.mem_singleton.mp
+        (Finsupp.support_single_subset (Finsupp.support_smul hp))))
+  · exact Or.inr (Or.inr (Finset.mem_singleton.mp (Finsupp.support_single_subset hp)))
+
+private theorem X_polarization (k : Fin 5) :
+    X k - Y 0 ∈ bilRelations (⊤ : Submodule ℝ (Fin 5 → ℝ)) ⊤ := by
+  let S := bilRelations (⊤ : Submodule ℝ (Fin 5 → ℝ)) ⊤
+  let B (a x : Fin 5 → ℝ) := Finsupp.single (a, x) (1 : ℝ)
+  let L (a b x : Fin 5 → ℝ) := B (a + b) x - B a x - B b x
+  let R (a x y : Fin 5 → ℝ) := B a (x + y) - B a x - B a y
+  let C (a x : Fin 5 → ℝ) := B (-a) x + B a x
+  let D (a x : Fin 5 → ℝ) := B a (-x) + B a x
+  have hL a b x : L a b x ∈ S :=
+    Submodule.subset_span (Or.inl ⟨a, Submodule.mem_top, b, Submodule.mem_top,
+      x, Submodule.mem_top, rfl⟩)
+  have hR a x y : R a x y ∈ S :=
+    Submodule.subset_span (Or.inr (Or.inl ⟨a, Submodule.mem_top, x, Submodule.mem_top,
+      y, Submodule.mem_top, rfl⟩))
+  have hC a x : C a x ∈ S := by
+    have h : B ((-1 : ℝ) • a) x - (-1 : ℝ) • B a x ∈ S :=
+      Submodule.subset_span (Or.inr (Or.inr (Or.inl ⟨a, Submodule.mem_top,
+        x, Submodule.mem_top, -1, rfl⟩)))
+    simpa only [neg_one_smul, sub_neg_eq_add] using h
+  have hD a x : D a x ∈ S := by
+    have h : B a ((-1 : ℝ) • x) - (-1 : ℝ) • B a x ∈ S :=
+      Submodule.subset_span (Or.inr (Or.inr (Or.inr ⟨a, Submodule.mem_top,
+        x, Submodule.mem_top, -1, rfl⟩)))
+    simpa only [neg_one_smul, sub_neg_eq_add] using h
+  let a := e 0
+  let b := e k
+  have hp := S.add_mem (S.add_mem (hL a b (a + b)) (hR a a b)) (hR b a b)
+  have hm := S.add_mem (S.add_mem (hL a (-b) (a - b)) (hR a a (-b)))
+    (hR (-b) a (-b))
+  have hs := S.sub_mem (S.add_mem (S.add_mem (S.add_mem hm (hD a b))
+    (hC b a)) (hC b (-b))) (hD b b)
+  have h := S.smul_mem (1 / 2 : ℝ) (S.add_mem hp hs)
+  convert h using 1 <;>
+    dsimp only [X, Y, a, b, L, R, C, D, B] <;>
+    simp only [← sub_eq_add_neg] <;> module
 
 private theorem X_difference :
     X 2 - X 1 ∈ bilRelations (⊤ : Submodule ℝ (Fin 5 → ℝ)) ⊤ := by
-  sorry
+  have h := (bilRelations (⊤ : Submodule ℝ (Fin 5 → ℝ)) ⊤).sub_mem
+    (X_polarization 2) (X_polarization 1)
+  simpa only [sub_sub_sub_cancel_right] using h
 
 private theorem X_related (k i : Fin 5) (h : (k = 1 ∧ i = 3) ∨ (k = 2 ∧ i = 4)) :
     spanRel (pairRel rel) (X k) (Y i) := by
-  sorry
+  classical
+  intro p hp q hq
+  have hq : q = (e i, e i) := (Finsupp.mem_support_single _ _ _).mp hq |>.1
+  subst q
+  rcases X_support_cases k hp with rfl | rfl | rfl <;>
+    rcases h with ⟨rfl, rfl⟩ | ⟨rfl, rfl⟩ <;>
+    unfold pairRel rel <;>
+    norm_num [project, e, Pi.single_apply,
+      show (![0, 0, 0] : Fin 3 → ℝ) = 0 by ext j; fin_cases j <;> rfl]
 
 private theorem phi_vanishes (i : Fin 5) {a} (ha :
     a ∈ bilRelations (⊤ : Submodule ℝ (Fin 5 → ℝ)) ⊤) : phi i a = 0 := by
