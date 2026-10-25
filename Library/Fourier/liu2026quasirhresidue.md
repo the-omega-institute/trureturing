@@ -786,7 +786,7 @@ $\zeta_K(2)^{-1}\le|\zeta_K(2+i\tau_n)|\le\zeta_K(2)$,
 so $|g(2+i\tau_n)|\asymp Q_n$. Thus this is a Dedekind-specific
 normalization; it imports no lower bound inside the zero strip.
 
-In Buck's notation take $u=1/p_n$, scale $s=2$, derivative index
+In Buck's notation take $u=1/p_n$, scale $s=2$, zero-count parameter
 $m=0$, and $\epsilon=r/48$, where $r=10^{-6}$ is fixed. Jensen's
 identity, with zero additive constant because $p_n(0)=1$, gives
 $T(16,1/p_n)=T(16,p_n)\le\log V_n$. Lemma 2.4 consequently supplies
