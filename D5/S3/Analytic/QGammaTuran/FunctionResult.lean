@@ -6,6 +6,48 @@
    utility: kind=certified-instance; basis=refutes=gid:D5/S3/Analytic/QGammaTuran/FunctionResult.claim; result=D5/S3/Analytic/QGammaTuran/FunctionResult.result; claim=D5/S3/Analytic/QGammaTuran/FunctionResult.claim
    digest: A convergent reciprocal q-gamma series with a strictly negative function Turanian. -/
 
+/-
+admission_basis: open-problem-resolution (Conjecture 1, function clause; Refuted).
+All declarations in this module have proof_shape: bind-only after expansion
+of same-delivery helpers; escape_witness: none. The series estimates instantiate
+Mathlib's geometric domination, sum/tsum comparison and finite-prefix splitting.
+The rational certificates use norm_num, and the final comparison uses linarith.
+The settling result supplies the external-open-problem-resolution basis.
+Per-declaration consumers:
+* hsum: hshift, hbounds, series_eq, series_product, negative_bounds.
+* hsummable: hshift, hbounds, hsummable_any.
+* hshift: negative_bounds.
+* plower, pupper: hbounds.
+* hbounds: numH3, numH6, numH10.
+* qseries: claim, series_eq, series_product, witness_negative, result.
+* ConvergesAt: claim, witness_converges.
+* claim: result.
+* normalizedTerm: series_eq, series_summable.
+* series_eq: series_product.
+* hsummable_any: series_summable.
+* series_summable: witness_converges.
+* r: q, y, qpower, certificates and witnesses.
+* q: y, qpos, qlt, certificates and witnesses.
+* y: ypos, ylt, certificates and negative_bounds.
+* qpos, qlt: certificates, negative_bounds, witness_negative, witness_converges.
+* ypos, ylt: certificates, negative_bounds, witness_converges.
+* numH3: negative_bounds, witness_negative.
+* numH6, numH10, numP3, numP6: negative_bounds.
+* qpower: witness_negative.
+* series_product, negative_bounds: witness_negative.
+* witness_negative, witness_converges: result.
+* result: settlement of the function clause.
+Same-delivery helpers from Result (not frozen prerequisites): rqgamma,
+qprod, rqgamma_eq, qprod_step, qprod_nonneg, qprod_le_one, qprod_bounds,
+qprod_pos and their product-convergence prerequisites.
+Direct frozen D5 dependencies after same-delivery expansion:
+* claim and result: D5/S3/Analytic/ReciprocalGammaTuran/Defs.AdmissibleSeq,
+  declaration statement_id sha256:abfc032d4781455ce9be9b5d79eeec0ec7d429144bd78d17dfed678546f63347.
+* result also: D5/S3/Analytic/ReciprocalGammaTuran/Defs.admissible_one,
+  declaration statement_id sha256:542b2ef036086b557abca79ec9fd79a7a609bad51893576abe9466237f76c069.
+* Every other declaration: none.
+-/
+
 import D5.S3.Analytic.QGammaTuran.Result
 noncomputable section
 open scoped BigOperators
@@ -124,41 +166,41 @@ private lemma qpos : 0 < q := by norm_num [q,r]
 private lemma qlt : q < 1 := by norm_num [q,r]
 private lemma ypos : 0 ≤ y := by norm_num [y,q,r]
 private lemma ylt : y < 1 := by norm_num [y,q,r]
-private lemma numH3 : (6217/10000:ℝ) ≤ hsum q (r^3) y ∧ hsum q (r^3) y ≤ 6241/10000 := by
+private lemma numH3 : (621758/1000000:ℝ) ≤ hsum q (r^3) y ∧ hsum q (r^3) y ≤ 627611/1000000 := by
   have h := hbounds qpos.le qlt (by norm_num [r] : 0 ≤ r^3)
-    (by norm_num [r]) ypos ylt 10 8
+    (by norm_num [r]) ypos ylt 10 6
   constructor
   · refine le_trans ?_ h.1
     norm_num [r,q,y,plower,Finset.sum_range_succ,Finset.prod_range_succ]
   · refine le_trans h.2 ?_
     norm_num [r,q,y,pupper,Finset.sum_range_succ,Finset.prod_range_succ]
-private lemma numH6 : (7800/10000:ℝ) ≤ hsum q (r^6) y ∧ hsum q (r^6) y ≤ 7826/10000 := by
+private lemma numH6 : (779999/1000000:ℝ) ≤ hsum q (r^6) y ∧ hsum q (r^6) y ≤ 786930/1000000 := by
   have h := hbounds qpos.le qlt (by norm_num [r] : 0 ≤ r^6)
-    (by norm_num [r]) ypos ylt 10 8
+    (by norm_num [r]) ypos ylt 10 6
   constructor
   · refine le_trans ?_ h.1
     norm_num [r,q,y,plower,Finset.sum_range_succ,Finset.prod_range_succ]
   · refine le_trans h.2 ?_
     norm_num [r,q,y,pupper,Finset.sum_range_succ,Finset.prod_range_succ]
-private lemma numH10 : (9863/10000:ℝ) ≤ hsum q (r^10) y ∧ hsum q (r^10) y ≤ 9891/10000 := by
+private lemma numH10 : (986336/1000000:ℝ) ≤ hsum q (r^10) y ∧ hsum q (r^10) y ≤ 993832/1000000 := by
   have h := hbounds qpos.le qlt (by norm_num [r] : 0 ≤ r^10)
-    (by norm_num [r]) ypos ylt 10 8
+    (by norm_num [r]) ypos ylt 10 6
   constructor
   · refine le_trans ?_ h.1
     norm_num [r,q,y,plower,Finset.sum_range_succ,Finset.prod_range_succ]
   · refine le_trans h.2 ?_
     norm_num [r,q,y,pupper,Finset.sum_range_succ,Finset.prod_range_succ]
-private lemma numP3 : (8079/100000:ℝ) ≤ qprod q (r^3) ∧ qprod q (r^3) ≤ 8118/100000 := by
+private lemma numP3 : (80786/1000000:ℝ) ≤ qprod q (r^3) ∧ qprod q (r^3) ≤ 82438/1000000 := by
   have h := qprod_bounds qpos.le qlt (by norm_num [r] : 0 ≤ r^3)
-    (by norm_num [r]) 8
+    (by norm_num [r]) 6
   constructor
   · refine le_trans ?_ h.1
     norm_num [r,q,Finset.prod_range_succ]
   · refine le_trans h.2 ?_
     norm_num [r,q,Finset.prod_range_succ]
-private lemma numP6 : (17781/100000:ℝ) ≤ qprod q (r^6) ∧ qprod q (r^6) ≤ 17849/100000 := by
+private lemma numP6 : (177796/1000000:ℝ) ≤ qprod q (r^6) ∧ qprod q (r^6) ≤ 180709/1000000 := by
   have h := qprod_bounds qpos.le qlt (by norm_num [r] : 0 ≤ r^6)
-    (by norm_num [r]) 8
+    (by norm_num [r]) 6
   constructor
   · refine le_trans ?_ h.1
     norm_num [r,q,Finset.prod_range_succ]
@@ -179,9 +221,9 @@ private lemma series_product {q : ℝ} (hq0 : 0 < q) (hq1 : q < 1) (s t x : ℝ)
     _ = (qprod q q)^2*((1-q)^(1-s)*(1-q)^(1-t)) := by ring
     _ = _ := by rw [← Real.rpow_add (sub_pos.mpr hq1)]; congr 2; ring
 private lemma negative_bounds :
-    (0:ℝ) ≤ hsum q ((r^4)⁻¹) y ∧ hsum q ((r^4)⁻¹) y ≤ 316/1000 ∧
-    (244/1000:ℝ) ≤ hsum q ((r^7)⁻¹) y ∧
-    (0:ℝ) ≤ hsum q 1 y ∧ hsum q 1 y ≤ 475/1000 := by
+    (0:ℝ) ≤ hsum q ((r^4)⁻¹) y ∧ hsum q ((r^4)⁻¹) y ≤ 317763/1000000 ∧
+    (243809/1000000:ℝ) ≤ hsum q ((r^7)⁻¹) y ∧
+    (0:ℝ) ≤ hsum q 1 y ∧ hsum q 1 y ≤ 476937/1000000 := by
   have hr4 : (r^4)⁻¹*q = r^6 := by norm_num [q,r]
   have hr7 : (r^7)⁻¹*q = r^3 := by norm_num [q,r]
   have h4 := hshift qpos.le qlt (by norm_num [r] : 0 ≤ (r^4)⁻¹)
@@ -198,7 +240,7 @@ private lemma negative_bounds :
   have hp6 := numP6
   have hh3 := numH3
   have hh6 := numH6
-  have hh10 : (9863/10000:ℝ) ≤ hsum q q y ∧ hsum q q y ≤ 9891/10000 := numH10
+  have hh10 : (986336/1000000:ℝ) ≤ hsum q q y ∧ hsum q q y ≤ 993832/1000000 := numH10
   have h4n : 1-(r^4)⁻¹ ≤ 0 := by norm_num [r]
   have h7n : 1-(r^7)⁻¹ ≤ 0 := by norm_num [r]
   have h4l := mul_le_mul_of_nonpos_left hp6.2 h4n
