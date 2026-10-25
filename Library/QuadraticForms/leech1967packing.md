@@ -15,6 +15,18 @@ triage: anchor
 
 # Golay digits and Leech's integral coordinates
 
+## Verified locator
+
+John Leech, Notes on Sphere Packings, Canadian Journal of Mathematics 19
+(1967), section 2.31, printed pages 262-263 (PDF pages 12-13).
+DOI: 10.4153/CJM-1967-017-0.
+URL: https://doi.org/10.4153/CJM-1967-017-0
+
+This locator covers the common-parity coordinates, Golay twos digits,
+fours-digit parity rule and integer minimum squared length 32.
+
+## Formalized scope
+
 Leech, Canadian Journal of Mathematics 19 (1967), 251-267, section 2.31,
 printed pages 262-263, uses common-parity integer coordinates with twos
 digits in the extended Golay code, and a further fours-digit parity rule.
