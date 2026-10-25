@@ -820,3 +820,812 @@ Renou 等，[*Quantum theory based on real numbers can be experimentally falsifi
 
 ## 追加锚（本行以下为增补区）
 
+## 62. 非例外角度的一般实最小维数
+
+**定理 62.1（完整原生联合表的精确实维数）。** 对每个 $0<d<1$ 和每个满足 $\sin(2\theta)\ne0$ 的实角度，在定义 54.3 的原合同下，
+
+$$
+m_{\min}(\theta,d)=6.
+\tag{62.1}
+$$
+
+量词包括任意实 Kraus CP 分支、分支和 TP、完整复集合 $\mathcal K_d$ 上的同一个仿射制备、同一个合法效果、所有原时间词和两种终端结果及其 $2^{-|h|}$ 联合权重。没有预设编码忠实、分支分别公平、动态可逆、制备协变或不存在隐藏纤维。
+
+此等式细化定理 60.1 的 $4\le m_{\min}\le6$，并确定定义 61.3 中非例外角度的一般实维数问题。上界直接取既有 (60.6)，不另作上界构造。下界由 §§63–70 的证明给出：先由实际记录将任意 $m\le5$ 模型约化到匹配的 $1\oplus\mathbb R^4$ 正交作用，再用原集合中的纯曲线排除所有仿射制备和合法效果。这里的数学闭包只延续精确表的等式，不授予闭包点或逆的操作权限。
+
+**定义 62.2（证明中的固定源与记号）。** 以下固定定理 62.1 的参数，置 $c=d/2\in(0,1/2)$。在 $(\xi,e,f)$ 基中，去掉不影响共轭作用的公共相位，原生成元为
+
+$$
+\begin{gathered}
+V'_j=1\oplus B_j,\qquad z_\theta=e^{-2\mathrm i\theta},\qquad
+R=\begin{pmatrix}-1/2&\sqrt3/2\\\sqrt3/2&1/2\end{pmatrix},\qquad
+Z=\operatorname{diag}(1,-1),\\
+D_\theta=\operatorname{diag}(1,z_\theta),\qquad
+B_0=RD_\theta,\quad B_1=B_0Z.
+\end{gathered}
+\tag{62.2}
+$$
+
+当一个实模型被假定存在时，记 $T_j=2\Phi_j$、$T_h=T_{j_n}\cdots T_{j_1}$、$X_{h,\rho}=T_h\sigma(\rho)$。由两终端等式而非额外公平性假设，
+
+$$
+\operatorname{Tr}X_{h,\rho}=1,\qquad
+\operatorname{Tr}(F X_{h,\rho})=
+\operatorname{Tr}(E V_h\rho V_h^\dagger).
+\tag{62.3}
+$$
+
+$V_h$ 与 $V'_h$ 在此处有同一共轭作用。所有闭包均取有限维线性映射的通常范数拓扑；实 CP 映射始终指在完整实矩阵代数上的实 Kraus 映射，而非只在对称矩阵锥上为正的映射。
+
+## 63. 实际生成元的紧闭包与真实 SU(2) 子群
+
+**引理 63.1（所有非例外角度的源闭包）。** (62.2) 的正词酉闭包是紧群，其下二阶块包含实际 $SU(2)$。特别地，源共轭闭包包含 $\operatorname{Ad}(1\oplus u)$、$u\in SU(2)$；此作用保留中心元 $u=-I_2$ 对交叉相干的非平凡作用。
+
+证明。在紧酉群中，对每个酉矩阵 $Q$，其有限个本征相位有同时回归的正整数子列，故 $Q^{n_\nu}\to I$，$Q^{n_\nu-1}\to Q^{-1}$。这证明正词闭包是群，而不要求原菜单可执行逆。由原矩阵得到
+
+$$
+Z=B_0^{-1}B_1,\qquad
+R=Z(B_0ZB_0^{-1})Z,\qquad
+D_\theta=RB_0.
+\tag{63.1}
+$$
+
+第二式只用 $Z R Z R Z=R$，以及 $D_\theta Z=ZD_\theta$。因此下块闭包包含 $R,D_\theta$。
+
+先证其在 $PU(2)\simeq SO(3)$ 中的像无限。若 $z_\theta$ 不是单位根，$D_\theta$ 的投影已有无限阶。若 $z_\theta$ 是单位根，假设投影群有限。选取平方根 $z_\theta^{1/2}$，则
+
+$$
+Q=(\mathrm iR)(z_\theta^{-1/2}D_\theta)\in SU(2),\qquad
+\kappa=\operatorname{Tr}Q=
+\frac{\mathrm i}{2}(z_\theta^{1/2}-z_\theta^{-1/2}).
+\tag{63.2}
+$$
+
+有限投影群在 $SU(2)$ 的双覆盖原像有限，故 $Q$ 有限阶，$\kappa$ 必为代数整数。在包含 $\mathrm i,z_\theta^{1/2}$ 的圆分域中，每个共轭将这两个根映到同阶单位根；因而 $\kappa$ 的每个共轭都是实数，模至多一。非例外性给 $z_\theta\notin\{1,-1\}$，所以原共轭满足 $0<|\kappa|<1$。所有共轭均非零，非零代数整数的域范数于是是绝对值严格小于一的非零整数，矛盾。这覆盖 $\theta/\pi$ 为有理数的全部非例外角度，没有用无理角稠密性替代它们。
+
+再排除无限真闭子群。这里使用闭矩阵子群的 Lie 结构和局部指数映射，参见 Hall，[*An Elementary Introduction to Groups and Representations*](https://arxiv.org/html/math-ph/0005032v1)，定理 3.23 及其连通群由指数生成的推论。适用对象是已经取闭的紧矩阵群。$\mathfrak{so}(3)$ 的非零真子代数只能是一维：在 $\mathbb R^3$ 的叉积模型中，两个独立向量的叉积不在其二维张成内。因此无限真闭子群的单位分支是一条轴的旋转环面，整个子群正规化该轴。角度既非零也非 $\pi$ 的 $D_\theta$ 在这种正规化子中只能绕该轴旋转，故轴必须是第三坐标轴。但 $R$ 的投影是绕 $(\sqrt3/2,0,-1/2)$ 的半转，将第三轴的单位向量送到
+
+$$
+(-\sqrt3/2,0,-1/2)^{\mathsf T},
+\tag{63.3}
+$$
+
+不是第三轴或其相反轴。故投影闭包只能是整个 $SO(3)$。
+
+设下块闭群为 $G_2\subseteq U(2)$。其 Lie 代数到 $\mathfrak{so}(3)$ 的投影满射，交换子代数落在 $\mathfrak{su}(2)$，又满射到 $\mathfrak{so}(3)$，故等于 $\mathfrak{su}(2)$。由指数生成，$G_2$ 包含实际 $SU(2)$，不只是其投影像。相应源作用为 $1\oplus u$；$u=-I_2$ 把 $\xi$–下块交叉列变号，故不能在后续表示论中将它换成仅有整数自旋的 $SO(3)$。∎
+
+## 64. 可达支持、完整矩阵幂界与正确的观察商
+
+**引理 64.1（任意隐藏模型的可达压缩与有界 CP 半群）。** 假定定义 54.3 的实模型存在。可将它限制到全部 $X_{h,\rho}$ 的联合实支持 $H_{\rm r}$，保留仿射制备、合法效果、原分支和 TP 及全部记录。在该支持上，$T_h$ 在完整实矩阵代数及其复化的所有矩阵层上一致有界；其闭包 $\mathscr S$ 是紧实 CP 半群。
+
+证明。由 (62.3)，每个 $X_{h,\rho}$ 都是正的迹一矩阵。令 $H_{\rm r}$ 为这些矩阵像空间的实线性张成。有限维性允许选取有限多个可达密度矩阵及正权重，使其凸组合 $\Omega$ 满足
+
+$$
+\Omega\succ0\text{ 于 }H_{\rm r},\qquad
+\operatorname{Tr}\Omega=1,\qquad
+\operatorname{Tr}(T_h\Omega)=1\quad(\text{全部 }h).
+\tag{64.1}
+$$
+
+最后一式由词的拼接和两终端总质量推出。
+
+逐个原 Kraus 算子都保持 $H_{\rm r}$。事实上，若 $v\perp H_{\rm r}$，则对可达 $X$，$T_j(X)$ 也可达，并且
+
+$$
+0=v^{\mathsf T}T_j(X)v
+=2\sum_\alpha\|X^{1/2}L_{j\alpha}^{\mathsf T}v\|^2.
+\tag{64.2}
+$$
+
+各项非负，故每个 $L_{j\alpha}$ 将 $\operatorname{ran}X$ 送入 $H_{\rm r}$；这些像空间张成整个 $H_{\rm r}$。因而限制后的 Kraus 平方和仍是 $I_{H_{\rm r}}$，效果压缩仍在零与一之间，所有实际等式原样保留。未被到达的块在此之前没有受到任何限制。
+
+选 $\varepsilon>0$ 使 $\Omega\succeq\varepsilon I_{H_{\rm r}}$。正性给
+
+$$
+0\preceq T_h(I_{H_{\rm r}})
+\preceq\varepsilon^{-1}T_h(\Omega),\qquad
+\|T_h(I_{H_{\rm r}})\|_{\rm op}\le\varepsilon^{-1}.
+\tag{64.3}
+$$
+
+实 Kraus 复化是 $M_{\dim H_{\rm r}}(\mathbb C)$ 上的 CP 映射。使用 CP 映射的成熟范数恒等式 $\|T\|_{\rm cb}=\|T(I)\|$：对任意矩阵层的收缩 $X$，正块矩阵 $\left(\begin{smallmatrix}I&X\\X^\dagger&I\end{smallmatrix}\right)$ 经放大映射后仍正，其非对角块范数至多 $\|T(I)\|$；$X=I$ 给反向不等式。因此
+
+$$
+\sup_h\|T_h\|_{\rm cb}\le\varepsilon^{-1}.
+\tag{64.4}
+$$
+
+这同时控制对称和反对称实矩阵，不能只以对称可达空间上的幂界代替。有限维下，有界闭集紧，实 Choi 正锥闭，故完整线性映射闭包 $\mathscr S=\overline{\{T_h\}}$ 是紧实 CP 半群。此时只证明了可达态上的质量等式，尚未证明任何 $T_j$ 在整个支持上 TP。∎
+
+**引理 64.2（八维源空间上的良定义商）。** 令
+
+$$
+\begin{gathered}
+\mathscr R=\operatorname{span}_{\mathbb R}\{X_{h,\rho}:h\in\{0,1\}^{<\infty},\ \rho\in\mathcal K_d\},\\
+\mathscr V=\operatorname{span}_{\mathbb R}\{V_h\rho V_h^\dagger:h\in\{0,1\}^{<\infty},\ \rho\in\mathcal K_d\},\qquad
+\mathscr S_c=\{X\in\operatorname{Herm}_3(\mathbb C):
+X_{\xi\xi}=c\operatorname{Tr}X\}.
+\end{gathered}
+\tag{64.5}
+$$
+
+其中 $h$ 遍历所有有限词。则 $\mathscr V=\mathscr S_c$，实维数为八，且
+
+$$
+L(X_{h,\rho})=V_h\rho V_h^\dagger
+\tag{64.6}
+$$
+
+唯一延伸为良定义满射 $L:\mathscr R\to\mathscr S_c$。它给出连续满射半群同态
+
+$$
+\pi:\mathscr S\longrightarrow G,
+\tag{64.7}
+$$
+
+其中 $G$ 是实际源词作用在 $\mathscr S_c$ 上的紧群闭包；$LT_j=\operatorname{Ad}(V_j)L$。
+
+证明。首先精确区分效果空间与状态空间。第二卷定理 40.1 供应的是
+
+$$
+\{I_3\}\cup\{2^{-|k|}M_k:k\in\mathcal H\},\qquad
+\mathcal H=(\varnothing,0,1,00,10,000,010,100),
+\tag{64.8}
+$$
+
+这九个元素的行列式是 (60.3)，非零。八个词效果单独不是九维基；$I_3$ 必须由两终端总质量或迹配对另行供应。
+
+若 $\sum_\nu a_\nu X_{h_\nu,\rho_\nu}=0$，将关系与每个继续词的 $F T_k$ 配对，得到
+
+$$
+\operatorname{Tr}\!\left(M_k\sum_\nu a_\nu
+V_{h_\nu}\rho_\nu V_{h_\nu}^\dagger\right)=0.
+\tag{64.9}
+$$
+
+将原关系取迹，又给源关系与 $I_3$ 的配对为零，因为两边的每个生成矩阵迹均为一。由 (64.8)，源关系为零。因此 (64.6) 良定义、满射到 $\mathscr V$，且词的拼接给交织关系。没有假设 $\sigma$ 单射，也没有先删除不可观察的隐藏纤维。
+
+每个源可达矩阵满足 $X_{\xi\xi}=c\operatorname{Tr}X$，所以 $\mathscr V\subseteq\mathscr S_c$。为证反向，只需一个实际合法纯态
+
+$$
+\psi_0=\sqrt d\,a+\mathrm i\sqrt{1-d}\,g,\qquad
+\rho_0=\psi_0\psi_0^\dagger.
+\tag{64.10}
+$$
+
+它范数为一，$\rho_{0,aa}=d$、$\operatorname{Tr}(C\rho_0)=d$、$\operatorname{Tr}(E\rho_0)=(6-5d)/16$。取分解 $A=\rho_0,D=0$，即属于原 (54.2)。由引理 63.1，源词闭包包含它的 $SU(2)$ 轨道；有限维线性张成闭，故该轨道位于 $\mathscr V$。写成
+
+$$
+\rho_0=\begin{pmatrix}c&z_0^\dagger\\z_0&Q_0\end{pmatrix}_{(\xi,e,f)}.
+\tag{64.11}
+$$
+
+纯性给 $\|z_0\|^2=c(1-c)>0$，$Q_0$ 是迹 $1-c$ 的秩一矩阵，故其无迹部分非零。$\mathscr S_c$ 在 $SU(2)$ 下分解为互不同构的
+
+$$
+\mathbb R\operatorname{diag}(c,(1-c)I_2/2)
+\ \oplus\ \mathbb R^4_{\rm fund}
+\ \oplus\ \mathbb R^3_{\rm ad}.
+\tag{64.12}
+$$
+
+第一个分量来自群平均；交叉列给实四维基本表示，$Q_0$ 的无迹部分给三维伴随表示，两者都不可约且非零。紧群完全可约性或相应等型投影表明该轨道张成所有三个分量。因此 $\mathscr V=\mathscr S_c$，而非九维的全部 $\operatorname{Herm}_3(\mathbb C)$。这里没有说初始 $\mathcal K_d$ 是八维；其仿射维数仍为六。
+
+最后，$\mathscr R$ 和 $\ker L$ 对每个 $T_h$ 不变，故对其闭包不变。选任意线性右逆 $J:\mathscr S_c\to\mathscr R$，定义
+
+$$
+\pi(s)=L s J.
+\tag{64.13}
+$$
+
+因 $\ker L$ 不变，此式与 $J$ 无关，且 $Ls=\pi(s)L$。它连续并保持乘法。每个 $s$ 是词映射的极限，故 $\pi(s)$ 是源词作用的极限；反过来任意源极限可借 $\mathscr S$ 的紧性选择同一词子列的映射极限。因此像恰为 $G$。同一极限也保持 $\operatorname{Tr}(F s\sigma(\rho))=\operatorname{Tr}(E\pi(s)\rho)$，其中 $\pi(s)$ 按源共轭作用解释。其 $SU(2)$ 子群在 (64.12) 上忠实：基本表示使 $-I_2$ 也可见。∎
+
+## 65. 最小全矩阵秩幂等元与实完全序收缩
+
+**引理 65.1（紧闭包内的角群和自伴观察商）。** 在引理 64.1 的紧闭包中，存在按完整实矩阵映射秩取最小值的 CP 幂等元 $P$。角半群
+
+$$
+\mathscr K=P\mathscr S P
+\tag{65.1}
+$$
+
+是以 $P$ 为单位的紧群，群逆仍由 CP 映射表示，$\pi(\mathscr K)=G$，并且 $LP=L$ 于 $\mathscr R$。其像经过忠实序单位的合同变换，成为一个有限维实 $C^*$ 代数 $\mathcal A$；$\mathscr K$ 在 $\mathcal A$ 上作用为实 $*$ 自同构。
+
+证明。这里以成熟的有限维紧半群最小秩与角群方法为中间工具；所需假设是完整矩阵映射组成乘法封闭的紧集，已由引理 64.1 给出。先在已经闭合的 $\mathscr S$ 中选一个最小秩元素 $a$，记此秩为 $r$，秩是在 $M_{\dim H_{\rm r}}(\mathbb R)$ 全空间上计算。因 $a^2\in\mathscr S$，$\operatorname{rank}(a^2)=r$，所以零本征值处没有非平凡幂零 Jordan 块。有界幂排除模大于一的本征值及单位圆上的非平凡 Jordan 块。若非零本征值有模严格小于一者，取所有单位模本征值同时回归一的幂子列；其极限的秩严格小于 $r$，矛盾。因此同一回归过程给
+
+$$
+a^{n_\nu}\longrightarrow P,\qquad P^2=P,\quad
+\operatorname{rank}P=r.
+\tag{65.2}
+$$
+
+闭性给 $P$ 为实 CP。$\pi(P)$ 是群中的幂等元，必为单位。故 $LP=L$ 于 $\mathscr R$，$L:P\mathscr R\to\mathscr S_c$ 仍满射。
+
+每个 $PsP$ 的秩至多 $r$，又因它在 $\mathscr S$ 中而至少为 $r$；限制到 $\operatorname{ran}P$ 后便是可逆线性变换。$P\mathscr S P$ 紧，且限制映射忠实：角元素由其在 $\operatorname{ran}P$ 上的值确定。紧的可逆矩阵半群是群；具体地，对任意元素，同时回归的正幂趋于单位，前一幂趋于其逆，紧性将逆留在该半群内。因此 (65.1) 是紧群，逆代表也 CP。$\pi(PsP)=\pi(s)$ 给满射性。此时 $P\mathscr R$ 对角群不变，后续的源表示正是此自伴不变子空间的商。
+
+再作支持约化。置
+
+$$
+H_1=\operatorname{supp}(P\Omega).
+\tag{65.3}
+$$
+
+因 $\Omega$ 在 $H_{\rm r}$ 上忠实，$\operatorname{supp}(P\Omega)=\operatorname{supp}(P I)$。若 $P(X)=\sum_\alpha W_\alpha XW_\alpha^{\mathsf T}$，此支持等于所有 $W_\alpha$ 像空间的张成。因此每个完整矩阵 $P(X)$ 的左右支持都在 $H_1$，包括反对称矩阵。仅用正矩阵张成对称部分不足以推出这一全矩阵结论。
+
+$P\Omega$ 是 $\operatorname{ran}P$ 的序单位：若 $Y\succeq0$ 且 $P(Y)=Y$，由 $Y\preceq b\Omega$ 得 $Y\preceq bP\Omega$。对 $k\in\mathscr K$，$k(P\Omega)$ 仍在该正锥内，且由 $k^{-1}(P\Omega)\preceq bP\Omega$ 得
+
+$$
+P\Omega\preceq b\,k(P\Omega).
+\tag{65.4}
+$$
+
+故每个 $k(P\Omega)$ 在 $H_1$ 上忠实。用紧群的归一化 Haar 测度置
+
+$$
+\Omega_1=\int_{\mathscr K}k(P\Omega)\,dk\succ0
+\quad\text{于 }H_1.
+\tag{65.5}
+$$
+
+它被角群逐点固定。将 $P$ 及角群限制到 $H_1$ 保持其全部像与群恒等式。此处只对 $P$ 和 $\mathscr K$ 使用 $H_1$；没有假设原 $T_j$ 保持这个较小支持，也没有假设 $P$ 是忠实映射。
+
+记 $D_1=\Omega_1^{1/2}$、$n_1=\dim H_1$，在 $M_{n_1}(\mathbb R)$ 上置
+
+$$
+\widetilde P(X)=D_1^{-1}P(D_1XD_1)D_1^{-1},\qquad
+\widetilde k(X)=D_1^{-1}k(D_1XD_1)D_1^{-1}.
+\tag{65.6}
+$$
+
+$\widetilde P$ 是保单位的 CP 幂等映射，$\widetilde k$ 与其角群逆在像上是互逆的保单位 CP 映射。实 Kraus 复化使 $\widetilde P_{\mathbb C}$ 成为 $M_{n_1}(\mathbb C)$ 上保单位、CP、幂等的线性映射；保单位性又给收缩性。
+
+在此准确使用 Choi–Effros 乘法定理，采用 Prunaru，[*On the Choi–Effros multiplication*](https://arxiv.org/html/1304.6664v2)，定理 1 的表述：复 $C^*$ 代数上的完全正、收缩、幂等线性映射之像，以
+
+$$
+x\star y=\widetilde P_{\mathbb C}(xy)
+\tag{65.7}
+$$
+
+为乘法、原伴随为 involution，并继承完整矩阵序，成为与该像完全序同构的 $C^*$ 代数。这里的代数是 $M_{n_1}(\mathbb C)$，映射是 (65.6) 的复化，三个假设均已给出。逐项复共轭与实 Kraus 映射交换，且保持 (65.7)，其不动实形就是所需实代数 $\mathcal A$。这不是声称像在环境通常乘法下已经封闭。
+
+在 $\mathcal A$ 上，$\widetilde k$ 和其逆都是保单位 CP。两次 Kadison–Schwarz 不等式给对每个 $a$ 的等号，从而 $\widetilde k(a^*\star a)=\widetilde k(a)^*\star\widetilde k(a)$，也给 $a\star a^*$ 的等号；成熟的乘法域判据于是给 $*$ 乘法性。故角群作用为实 $*$ 自同构。∎
+
+## 66. 抽象收缩的表示成本与低维刚性
+
+**引理 66.1（源基本表示迫使五维全实矩阵代数）。** 假定原模型 $m\le5$。引理 65.1 的代数必为 $\mathcal A\simeq M_5(\mathbb R)$；$m=\dim H_{\rm r}=\dim H_1=5$，且 $P=I$ 是完整矩阵映射。相应共同源 $SU(2)$ 的正交提升在底层五维实空间上等价于 $1\oplus\mathbb R^4_{\rm fund}$。因此 $m\le4$ 已不可能。
+
+证明。先给必须用于比较物理维数的表示成本，而不把完全序嵌入误认为代数嵌入。记
+
+$$
+i:\mathcal A\longrightarrow M_{n_1}(\mathbb R),\qquad
+r=i^{-1}\widetilde P:M_{n_1}(\mathbb R)\longrightarrow\mathcal A.
+\tag{66.1}
+$$
+
+$i$ 是完全序包含，$r$ 是到抽象代数的保单位 CP 收缩，$ri=\operatorname{id}_{\mathcal A}$。对任意 $a\in\mathcal A$，先对 $i$ 用 Schwarz、再作用 $r$，以及直接对 $r$ 用 Schwarz，分别给
+
+$$
+r(i(a)^*i(a))\preceq a^*\star a,
+\qquad
+a^*\star a\preceq r(i(a)^*i(a)).
+\tag{66.2}
+$$
+
+同样有 $aa^*$ 的等号。因此 $i(a)$ 属于抽象收缩 $r$ 的乘法域。由乘法域的左右乘法恒等式，$r$ 限制到
+
+$$
+\mathcal D=C^*_{\mathbb R}(i(\mathcal A))\subseteq M_{n_1}(\mathbb R)
+\tag{66.3}
+$$
+
+是满射实 $*$ 同态到 $\mathcal A$。此论断的余域是带 $\star$ 乘法的 $\mathcal A$；不声称 $i$ 保持通常乘法，也不声称环境投影 $\widetilde P$ 的通常乘法域等于其像。
+
+有限维实 $C^*$ 结构定理把 $\mathcal D$ 分解为 $M_s(\mathbb R)$、$M_s(\mathbb C)$、$M_s(\mathbb H)$ 因子的直和。实不可约表示的三种交换子类型参见 Rosenberg，[*Structure and applications of real C*-algebras*](https://arxiv.org/html/1505.04091)，定理 1.3、推论 1.4；其假设是实 Hilbert 空间上的不可约 $*$ 表示，这里施于各简单因子的不可约矩阵模。各因子的最小忠实实表示维数为
+
+$$
+\operatorname{cost}_{\mathbb R}M_s(\mathbb R)=s,\qquad
+\operatorname{cost}_{\mathbb R}M_s(\mathbb C)=2s,\qquad
+\operatorname{cost}_{\mathbb R}M_s(\mathbb H)=4s.
+\tag{66.4}
+$$
+
+这些数是各除环上的列模的实维数。不同因子的中心投影要求互相正交的非零模，故直和成本相加。有限维理想是若干整因子的直和；由 (66.3) 的核丢弃相应因子，并在 $\mathbb R^{n_1}$ 的忠实表示中保留剩余中心投影的物理子空间，便得到 $\mathcal A$ 的忠实实表示。因此
+
+$$
+\operatorname{cost}_{\mathbb R}\mathcal A\le n_1\le m.
+\tag{66.5}
+$$
+
+下一步把源基本表示放入这个代数的自伴部分。$\mathscr K$ 在 $\operatorname{ran}P$ 上忠实地是紧矩阵群，故为紧 Lie 群；$\pi:\mathscr K\to G$ 是连续满射。紧 Lie 群的分支数有限，故 $G/\pi(\mathscr K^0)$ 有限，而 $G^0$ 连通，得到 $\pi(\mathscr K^0)=G^0$；相应 Lie 代数映射满射。用紧 Lie 代数上的 Ad 不变正内积，将核理想取正交补；该正交补仍是理想，并同构于 $\operatorname{Lie}(G)$。在补理想中提升源的实际 $\mathfrak{su}(2)$，再从单连通 $SU(2)$ 积分，得到
+
+$$
+\lambda:SU(2)\longrightarrow\mathscr K,
+\qquad \pi\lambda(u)=\operatorname{Ad}(1\oplus u)|_{\mathscr S_c}.
+\tag{66.6}
+$$
+
+这里使用的是紧 Lie 代数理想分裂与单连通群的 Lie 同态积分；参数域确为单连通 $SU(2)$，不是 $SO(3)$。两个同态的微分一致且域连通，故它们在整个群上一致。
+
+$P\mathscr R$ 在该作用下不变，$L:P\mathscr R\to\mathscr S_c$ 满射。Haar 平均内积给紧群完全可约性，所以 (64.12) 中的实四维基本表示必须出现在 $\mathcal A_{\rm sa}$ 中。它在中心 $-I_2$ 下变号。
+
+现在逐因子排除成本至多五的其他可能。连通 $SU(2)$ 不能置换有限个简单因子，也不能进入离散外自同构分支。对于 $M_s(\mathbb R)$，实 $*$ 自同构为正交内自同构；从单连通 $SU(2)$ 到投影正交群的作用可提升到 $O(s)$。低维实不可约 $SU(2)$ 模只有维数 $1,3,4,5$。具体地，复最高权 $k$ 的模 $\operatorname{Sym}^k\mathbb C^2$ 有复维数 $k+1$，中心作用为 $(-1)^k$，不变反线性结构的平方为 $(-1)^k$；偶 $k$ 为实型、奇 $k$ 为四元数型。因此维数至多五时，唯一中心非平凡的实不可约模是四维基本模。对于 $s\le4$，底层模不是全由中心为正的模组成，就是恰为实四维基本模；两种情形中心都是标量，故共轭在 $\operatorname{Sym}_s(\mathbb R)$ 上中心平凡，不能产生所需基本分量。
+
+成本至多五的非实非交换因子只有 $M_2(\mathbb C)$ 和 $\mathbb H$。前者的自伴部分是 $1\oplus\mathbb R^3_{\rm ad}$，连通实 $*$ 自同构群为 $PU(2)\simeq SO(3)$；从 $SU(2)$ 的同态在中心上平凡。$\mathbb C$ 的额外共轭自同构离散，不能改变结论。$\mathbb H$ 的自伴部分只有实标量。其余复、四元数矩阵因子成本超过五。不同直和因子间不存在交叉矩阵条目，不能拼出一个中心非平凡的基本分量。
+
+所以总成本至多五时，唯一余项是 $\mathcal A=M_5(\mathbb R)$，底层实表示必须为 $1\oplus\mathbb R^4_{\rm fund}$；整数自旋五维或 $3\oplus1\oplus1$ 的中心平凡，均不合要求。相应自伴分解为
+
+$$
+\operatorname{Sym}^2(\mathbb R^4_{\rm fund})
+=1\oplus3\,\mathbb R^3_{\rm ad},\qquad
+\operatorname{Sym}^2(1\oplus\mathbb R^4_{\rm fund})
+=2\cdot1\oplus\mathbb R^4_{\rm fund}\oplus3\,\mathbb R^3_{\rm ad}.
+\tag{66.7}
+$$
+
+最后用的是全矩阵维数，不是自伴维数：$\dim_{\mathbb R}M_5(\mathbb R)=25$，而
+
+$$
+25=\dim_{\mathbb R}\operatorname{ran}P
+\le (\dim H_1)^2\le (\dim H_{\rm r})^2\le m^2\le25.
+\tag{66.8}
+$$
+
+全部等号成立，$H_1=H_{\rm r}=\mathbb R^5$，$P$ 为满秩幂等线性映射，故 $P=I$。因最小秩已经是全秩，每个 $s\in\mathscr S$ 都可逆，紧半群本身成为群。至此才消除了原支持与角支持之间的区别。∎
+
+## 67. 原分支和 TP 迫使逐支正交
+
+**引理 67.1（从任意 CP 分支导出的匹配正交五维模型）。** 若原模型 $m\le5$，则在原五维实空间上，存在正交矩阵 $O_0,O_1$ 使
+
+$$
+T_j(X)=O_jXO_j^{\mathsf T},\qquad
+\Phi_j(X)=\tfrac12O_jXO_j^{\mathsf T}.
+\tag{67.1}
+$$
+
+同一紧闭包内的 (66.6) 在固定正交坐标中作用为 $O(u)=1\oplus\mathcal R(u)$，其中 $\mathcal R$ 是复二维基本表示的实四维形式。原来的 $\sigma$ 与 $F$ 仍满足全族仿射性和合法性。
+
+证明。由引理 66.1，$P=I$，$\mathscr S$ 是完整矩阵 CP 映射的紧群，逆也 CP。每个实 CP 序同构是可逆实合同
+
+$$
+T_j(X)=A_jXA_j^{\mathsf T}.
+\tag{67.2}
+$$
+
+其成熟完全序证明在此可直接适配：先用 $T_j(I)^{1/2}$ 保单位化，再对保单位映射及其 CP 逆使用两次 Schwarz，得到实全矩阵 $*$ 自同构；该自同构是正交内自同构，再还原合同。转置仅是反自同构，不能作为此 CP 双向同构的替代。
+
+从紧群 Haar 平均 $I_5$ 得到被整个 $\mathscr S$ 固定的 $\Omega_2\succ0$。定义
+
+$$
+B_j=\Omega_2^{-1/2}A_j\Omega_2^{1/2}.
+\tag{67.3}
+$$
+
+由 $A_j\Omega_2A_j^{\mathsf T}=\Omega_2$ 得 $B_j$ 正交。仅此不能推出原 $A_j$ 正交；必须使用原仪器的 TP 和。现在 $H_1=H_{\rm r}$ 已经成立，(54.10) 在这个完整支持上给
+
+$$
+A_0^{\mathsf T}A_0+A_1^{\mathsf T}A_1=2I_5,
+\qquad
+B_0^{\mathsf T}\Omega_2B_0+B_1^{\mathsf T}\Omega_2B_1=2\Omega_2.
+\tag{67.4}
+$$
+
+置 $D_j=B_j^{\mathsf T}\Omega_2B_j$。正交共轭保持 Hilbert–Schmidt 范数，故严格凸性的精确等号式为
+
+$$
+\sum_{j=0}^1\|D_j-\Omega_2\|_{\rm HS}^2
+=\sum_{j=0}^1\|D_j\|_{\rm HS}^2-2\|\Omega_2\|_{\rm HS}^2=0.
+\tag{67.5}
+$$
+
+所以 $D_j=\Omega_2$，$B_j$ 与 $\Omega_2$ 交换，(67.3) 还原为 $A_j=B_j$。这才导出每个 $T_j$ 全局 TP 和原坐标中的正交性，而不是从可达公平性预设它们。
+
+$\mathscr S$ 因而是正交共轭群的闭子群；(66.6) 的 $SU(2)$ 作用从投影正交群提升到 $O(5)$，由单连通性可选连续群提升。引理 66.1 的表示分类将它正交共轭成 $1\oplus\mathcal R(u)$。此最后坐标变换为正交变换，故只将 $\sigma,F$ 一同正交共轭，保持密度、迹一、仿射性和 $0\preceq F\preceq I$。原制备上的所有隐藏分量在这一证明之前一直被允许；这里没有以制备协变替换原概率合同。∎
+
+## 68. 任意纯制备的零圆与秩约束
+
+**引理 68.1（不指定编码的纯态响应与零圆）。** 在引理 67.1 导出的匹配正交表示中，设 $\rho\in\mathcal K_d$ 为任意纯态，$\Sigma=\sigma(\rho)$。则固定合法效果必有 $\operatorname{rank}F\le2$；若 $\operatorname{rank}F=2$，则 $\operatorname{rank}\Sigma=1$。结论不假定 $\mathcal P_5$、制备协变或下块无隐藏分量。
+
+证明。由 (62.3) 及共同紧闭包，对每个 $u\in SU(2)$，同一个源状态与同一个编码状态的响应等式仍成立。因 $\rho_{\xi\xi}=c$，选其不影响密度矩阵的总体相位，可写
+
+$$
+\psi=\sqrt c\,\xi+\sqrt{1-c}\,r_0,
+\qquad r_0\in\xi^\perp,\quad\|r_0\|=1.
+\tag{68.1}
+$$
+
+$SU(2)$ 在复二维单位球上传递。选 $H\in SU(2)$ 使 $He=r_0$，将群变量写为 $g=uH^{-1}$。在编码侧只把本次响应式中的 $\Sigma$ 换成 $O(H^{-1})\Sigma O(H^{-1})^{\mathsf T}$，保持其正性、迹和秩。这是等式的变量代换，不是对源集合添加制备，也不改变固定效果。于是要研究的响应为
+
+$$
+\begin{gathered}
+u=(u_1,u_2)\in\mathbb C^2,\quad |u_1|^2+|u_2|^2=1,\qquad
+U(u)=\begin{pmatrix}u_1&-\bar u_2\\u_2&\bar u_1\end{pmatrix},\\
+\operatorname{Tr}\bigl(F O(u)\Sigma O(u)^{\mathsf T}\bigr)
+=f_c(u):=\tfrac12|\sqrt c+\sqrt{1-c}\,u_1|^2.
+\end{gathered}
+\tag{68.2}
+$$
+
+此处实下块按 $(\Re z_1,\Im z_1,\Re z_2,\Im z_2)$ 排列。令
+
+$$
+\alpha=\sqrt{c/(1-c)}\in(0,1),\qquad
+R_c=\sqrt{1-\alpha^2}>0.
+\tag{68.3}
+$$
+
+目标响应在整个圆 $u_1=-\alpha$、$u_2=R_c e^{\mathrm i\varphi}$ 上为零。
+
+若两个正矩阵的迹配对为零，则它们的支持正交。因此把 $F,\Sigma$ 作任意实秩一谱分解，零圆上的每个幅度分别为零；等价地，对所有 $w\in\operatorname{ran}F$、$v\in\operatorname{ran}\Sigma$，
+
+$$
+w_0v_0+\Re\bigl(w_{\rm low}^\dagger U(u)v_{\rm low}\bigr)=0
+\quad(u_1=-\alpha,\ u_2=R_ce^{\mathrm i\varphi}).
+\tag{68.4}
+$$
+
+$f_c(u)-f_c(-u)$ 的非零一次项要求 $\Sigma$ 的标量–下块交叉非零。因此可选 $v\in\operatorname{ran}\Sigma$，其标量 $s$ 和下块范数 $r$ 均非零。把实四维基本模看作左四元数模；单位右四元数变换与每个 $U(u)$ 交换，并在下块单位球上传递。用这种固定正交变换可令 $v=(s,r,0)$，下块复坐标为 $(r,0)$，且不改变 (68.2) 的同一个 $u$。
+
+对 $w=(w_0,w_1,w_2)$，(68.4) 变为
+
+$$
+sw_0-\alpha r\Re w_1+
+ rR_c\Re(\bar w_2e^{\mathrm i\varphi})=0
+\quad(\text{所有 }\varphi).
+\tag{68.5}
+$$
+
+故 $w_2=0$、$w_0=(\alpha r/s)\Re w_1$。所有 $w$ 位于一个实二维平面，得到 $\operatorname{rank}F\le2$。
+
+若秩恰为二，$w_1$ 在该支持上遍历整个 $\mathbb C$。对任意其他支持向量 $v'=(s',x+\mathrm iy,z+\mathrm it)$，代回 (68.4)。$e^{-\mathrm i\varphi}$ 系数对所有 $w_1$ 为零，给 $z=t=0$；剩余常数式为
+
+$$
+\frac{\alpha r}{s}s'\Re w_1
+-\alpha\Re\bigl(\bar w_1(x+\mathrm iy)\bigr)=0
+\quad(\text{所有 }w_1\in\mathbb C).
+\tag{68.6}
+$$
+
+所以 $y=0$、$x=(r/s)s'$。全部 $v'$ 均在同一实直线上，$\operatorname{rank}\Sigma=1$。这些约束覆盖原任意下块；没有删除伴随表示或其他中心偶分量。∎
+
+**引理 68.2（秩一效果的完整排除）。** (68.2) 对 $0<c<1/2$ 不可能由任意实密度矩阵 $\Sigma$ 与合法秩一效果 $F$ 实现。因此在假定的实五维模型中，$F$ 恰为秩二，每个合法源纯态的编码均为秩一密度矩阵。
+
+证明。若 $F=ww^{\mathsf T}$，合法性给 $\|w\|^2\le1$。标量或下块任一为零都会消去 (68.2) 的中心奇一次项，故两者非零。以不影响 $F$ 的整体符号、标量轴的符号及交换的右四元数变换，写
+
+$$
+w=(a,b,0),\qquad a,b>0,\qquad a^2+b^2\le1,
+\qquad
+\Sigma=\begin{pmatrix}p&h^{\mathsf T}\\h&M\end{pmatrix}.
+\tag{68.7}
+$$
+
+令 $u_1=\lambda_0+\mathrm i\lambda_1$、$u_2=\lambda_2+\mathrm i\lambda_3$，$\lambda\in S^3$。此时 $w^{\mathsf T}O(u)=(a,b\lambda_0,-b\lambda_1,-b\lambda_2,-b\lambda_3)$；目标多项式是 $c/2+(1-c)(\lambda_0^2+\lambda_1^2)/2+\sqrt{c(1-c)}\lambda_0$。匹配一次、二次及常数系数，得到
+
+$$
+\begin{gathered}
+h=\left(\frac{\sqrt{c(1-c)}}{2ab},0,0,0\right)^{\mathsf T},\qquad
+t_c=\frac{1-c}{2b^2},\\
+M=\operatorname{diag}(t_c+\beta,t_c+\beta,\beta,\beta),\qquad
+a^2p+b^2\beta=c/2.
+\end{gathered}
+\tag{68.8}
+$$
+
+这里不能将 $\beta$ 擅自置零：两个次数至多二的实多项式在单位球面相等，其二次差允许是 $\beta b^2(\|u\|^2-1)$。具体地，先在 $u$ 与 $-u$ 比较确定一次项；在各坐标单位向量上比较得到所有对角差相同；在 $(e_i\pm e_j)/\sqrt2$ 上比较则所有非对角项为零。这正好留下 (68.8) 的一个标量球面歧义，并把相应常数吸收到最后一式。
+
+正性给 $p\ge0$、$\beta\ge0$。迹一则要求
+
+$$
+1=p+\frac{1-c}{b^2}+4\beta.
+\tag{68.9}
+$$
+
+置 $x=a^2>0$、$y=b^2>0$，$x+y\le1$。由 $xp+y\beta=c/2$，
+
+$$
+p+4\beta\ge\frac{c/2}{\max\{x,y/4\}}.
+\tag{68.10}
+$$
+
+若最大值为 $x$，Cauchy–Schwarz 给
+
+$$
+\begin{aligned}
+1&\ge\frac{1-c}{y}+\frac{c}{2x}\\
+&\ge\frac{(\sqrt{1-c}+\sqrt{c/2})^2}{x+y}
+\ge(\sqrt{1-c}+\sqrt{c/2})^2>1.
+\end{aligned}
+\tag{68.11}
+$$
+
+最后严格不等式等价于 $\sqrt{2c(1-c)}>c/2$，平方后的差为 $c(8-9c)/4>0$。若最大值为 $y/4$，则
+
+$$
+1\ge\frac{1-c}{y}+\frac{2c}{y}=\frac{1+c}{y}>1.
+\tag{68.12}
+$$
+
+并列最大值同时落入上述两种论证。$x=0$ 或 $y=0$ 已由非零奇响应排除；$p=0$ 或 $\beta=0$ 并未被除掉，仍包含于 (68.10)；秩零效果因目标不恒零也不可能。于是 $F$ 必秩二，再由引理 68.1 对每个合法纯态得到编码秩一。∎
+
+## 69. 固定效果迫使同一个交叉映射
+
+**引理 69.1（无协变前提的交叉刚性）。** 在匹配正交五维模型中，以固定源下块坐标写
+
+$$
+\rho=\begin{pmatrix}c&z^\dagger\\z&Q_{\rm src}\end{pmatrix},\qquad
+\sigma(\rho)=\begin{pmatrix}p(\rho)&h(\rho)^{\mathsf T}\\h(\rho)&M(\rho)\end{pmatrix},
+\quad
+F=\begin{pmatrix}F_{00}&b^{\mathsf T}\\b&F_{\rm low}\end{pmatrix}.
+\tag{69.1}
+$$
+
+存在与 $\rho$ 无关的 $k>0$ 和正交实矩阵 $Q_*$，使对全部 $\rho\in\mathcal K_d$，
+
+$$
+h(\rho)=kQ_*z_R.
+\tag{69.2}
+$$
+
+此结论不要求整个制备对群作用协变，也不要求初始源仿射包络为全部 Hermitian 空间。
+
+证明。先说明表示结构。源中心 $\operatorname{Ad}(1\oplus(-I_2))$ 的奇部分恰是 $z_R$ 的实四维交叉块；编码侧 $\operatorname{Ad}(1\oplus(-I_4))$ 的奇部分恰是 $h$。由 (66.7)，两边都只有一个基本模，其他对角块均为中心偶。$L$ 在可达线性空间上的交织、满射及该基本模的不可约性，迫使这一交叉对应为非零同构。
+
+此处实 Schur 引理只给非零交织的可逆性，不能把实四维基本模的交换子误写成 $\mathbb R$；它是右四元数代数 $\mathbb H$。其对称交换子却只有实标量：任何交换的对称矩阵的本征子空间均不变，而基本模不可约。故任意非零交织 $T$ 的 $T^{\mathsf T}T$ 为正标量，$T$ 是正标量乘正交矩阵。这里使用 Hall 定理 5.28(1) 的实版本，而不套用仅对复不可约表示成立的标量交换子部分。
+
+还可直接由固定效果系数推出 (69.2)，以避免在这一步隐含制备协变。设 $m\in\mathbb R^4$ 是源读出 $E=(\xi+e)(\xi+e)^\dagger/2$ 的单位下块向量；更换固定下块基后仍有 $\|m\|=1$。分别比较群元 $u$ 和 $-u$，所有中心偶块消去，留下
+
+$$
+2b^{\mathsf T}\mathcal R(u)h(\rho)
+=m^{\mathsf T}\mathcal R(u)z_R
+\quad(\text{全部 }u\in SU(2),\ \rho\in\mathcal K_d).
+\tag{69.3}
+$$
+
+合法纯态给非零源交叉列；其 $SU(2)$ 轨道的右端不恒零，故 $b\ne0$。
+
+将单位四元数参数写为 $u=(u_0,u_1,u_2,u_3)\in S^3$，并写
+
+$$
+\mathcal R(u)=\sum_{\nu=0}^3u_\nu M_\nu,\qquad M_0=I_4,
+\qquad K(v)_{\nu,\cdot}=v^{\mathsf T}M_\nu.
+\tag{69.4}
+$$
+
+在 (68.2) 的坐标约定下，该实矩阵明确为
+
+$$
+\mathcal R(u)=\begin{pmatrix}
+u_0&-u_1&-u_2&-u_3\\
+u_1&u_0&u_3&-u_2\\
+u_2&-u_3&u_0&u_1\\
+u_3&u_2&-u_1&u_0
+\end{pmatrix}.
+$$
+
+左四元数乘法的矩阵满足 $M_\nu M_\mu^{\mathsf T}+M_\mu M_\nu^{\mathsf T}=2\delta_{\nu\mu}I$，所以
+
+$$
+K(v)K(v)^{\mathsf T}=\|v\|^2I_4.
+\tag{69.5}
+$$
+
+比较 (69.3) 的四个一次系数，得到 $2K(b)h=K(m)z_R$，从而
+
+$$
+h=\frac{K(b)^{\mathsf T}K(m)}{2\|b\|^2}z_R,
+\qquad
+k=\frac1{2\|b\|},\qquad
+Q_*=\frac{K(b)^{\mathsf T}K(m)}{\|b\|}\in O(4).
+\tag{69.6}
+$$
+
+同一个 $b,m$ 用于整个原集合，故不存在依赖输入的坐标选择、仿射常数偏移或来自下对角块的混入。由 (69.3) 对群变量的平移及解的唯一性，$Q_*$ 也与相应基本作用交织。这个直接推导只使用每个实际初始态在共同闭包下的响应；即使初始仿射包络是恰当子空间，系数等式仍逐态成立。∎
+
+## 70. 原完整集合中的开纯曲线与仿射矛盾
+
+**引理 70.1（对每个内点参数的实际纯曲线及原五维提升）。** 令
+
+$$
+\begin{gathered}
+\delta_d=\min\left\{1,\sqrt{\frac{1-d}{2d}}\right\}>0,
+\qquad |t|<\delta_d,\\
+f_d(t)=\sqrt{\frac{1-3d+2d\cos t}{13-12\cos t}},\\
+\psi_t=\sqrt d\,a+\sqrt d(e^{\mathrm it}-1)h_{\rm out}
++\mathrm i(3e^{\mathrm it}-2)f_d(t)g,\qquad
+\rho_t=\psi_t\psi_t^\dagger.
+\end{gathered}
+\tag{70.1}
+$$
+
+则每个 $\rho_t$ 属于原完整 $\mathcal K_d$，并有原五维 CPTP 提升 $\mathcal T_t\in\mathcal F_{\sqrt d}$，其后继为 $S_{\rho_t}$。特别地，这不是仅满足松弛人口界或两个矩的曲线。
+
+证明。由 $1-\cos t\le t^2/2$，
+
+$$
+1-3d+2d\cos t=1-d-2d(1-\cos t)
+>\frac{1-d}{2}>0,
+\qquad 13-12\cos t\ge1.
+\tag{70.2}
+$$
+
+因此区间对每个 $0<d<1$ 非空，$f_d$ 正、偶且连续。在 $(a,h_{\rm out},g)$ 正交基中，置 $x=\cos t$，直接得
+
+$$
+\begin{gathered}
+\|\psi_t\|^2=d+2d(1-x)+(13-12x)f_d(t)^2=1,
+\qquad (\rho_t)_{aa}=d,\\
+\operatorname{Tr}(C\rho_t)=|\sqrt d+\sqrt d(e^{\mathrm it}-1)|^2=d,\\
+\operatorname{Tr}(E\rho_t)
+=\frac{d(13-12x)+6(1-3d+2dx)}{16}
+=\frac{6-5d}{16}.
+\end{gathered}
+\tag{70.3}
+$$
+
+最后一式也可由 $q^\dagger\psi_t=(3e^{\mathrm it}-2)(\sqrt d+\mathrm i\sqrt6 f_d(t))/4$ 直接读出。取 $A=\rho_t,D=0$，即满足 (54.2) 的原分解；此时 $s=0$，$B_d(\rho_t)$ 是 $a,\ell$ 振幅的正秩一 Gram 矩阵。
+
+明确给出原物理提升。为区别于证明中的实支持，仍以 $H=\mathbb C^5$ 表示 (54.1) 的物理空间，置
+
+$$
+\begin{gathered}
+p_{\rm phys}=Bq,\qquad
+c_{\rm phys}=(e_0+e_1-e_3-e_4)/2,\\
+\eta_t=\sqrt d\,p_{\rm phys}
++\sqrt d(e^{\mathrm it}-1)Br
++\mathrm i(3e^{\mathrm it}-2)f_d(t)c_{\rm phys}.
+\end{gathered}
+\tag{70.4}
+$$
+
+三个物理向量 $p_{\rm phys},Br,c_{\rm phys}$ 正交归一，故 $\|\eta_t\|=1$。用原 $K_0,K_1$，而非重选仪器，有
+
+$$
+\begin{gathered}
+K_jp_{\rm phys}=Ba/\sqrt2,
+\qquad K_jBr=Bh_{\rm out}/\sqrt2,
+\qquad K_jc_{\rm phys}=Bg/\sqrt2\quad(j=0,1),\\
+K_0\eta_t=K_1\eta_t=B\psi_t/\sqrt2.
+\end{gathered}
+\tag{70.5}
+$$
+
+因此取两个 Kraus 算子 $BP_+$、$\eta_tf^\dagger$，得到
+
+$$
+\mathcal T_t(X)=BP_+XP_+B^\dagger
++(f^\dagger Xf)\eta_t\eta_t^\dagger,
+\qquad P_++\|\eta_t\|^2ff^\dagger=I_3.
+\tag{70.6}
+$$
+
+它是原域 $M_3(\mathbb C)\to M_5(\mathbb C)$ 的 CPTP 通道，(70.5) 给 $\mathcal G\mathcal T_t=S_{\rho_t}$。
+
+再核对完整原效果，而不只核对 $ff^\dagger$ 上的输出。第一卷 (35.3) 的原 $J_0=P,J_1,J_2$ 在 $(q,r,f)$ 输入基中的供应值为
+
+$$
+\begin{gathered}
+Y_0=\operatorname{diag}(1,0,d),\qquad
+Y_1=\frac1{16}\begin{pmatrix}1&3&0\\3&9&0\\0&0&6-5d\end{pmatrix},\\
+Y_2=\frac1{32}\begin{pmatrix}17&3&0\\3&9&0\\0&0&6+11d\end{pmatrix}.
+\end{gathered}
+\tag{70.7}
+$$
+
+(70.6) 的伴随为 $P_+B^\dagger J_jBP_++\langle\eta_t,J_j\eta_t\rangle ff^\dagger$，故跨扇区条目全部为零，$q,r$ 块是同一个原供应块。标量条目分别是 $d$、$\operatorname{Tr}(E\rho_t)=e_d$、$\operatorname{Tr}(F_{\rm src}\rho_t)=(6+11d)/32$，其中 $F_{\rm src}=B^\dagger J_1B$ 是第一卷的原 qutrit 效果，满足 $E+2F_{\rm src}=3I/4+3C/8$。前者来自 $|p_{\rm phys}^\dagger\eta_t|^2=d$；由 $J_1=\mathcal G^\dagger(P)$、$J_2=\mathcal G^\dagger(J_1)$ 和 (70.5)，后两者分别是 $\psi_t^\dagger E\psi_t$ 与 $\psi_t^\dagger F_{\rm src}\psi_t$。这给 $\mathcal T_t^\dagger(J_j)=Y_j$，$j=0,1,2$，作为完整矩阵的等式。原递推 $J_{j+2}=(J_j+J_{j+1})/2$ 对 $j\ge1$ 将它们延续到全部深度。因此 $\mathcal T_t\in\mathcal F_{\sqrt d}$。此处复用第一卷的原提升接口与递推，只把当前曲线的所有参数明确代入。∎
+
+**引理 70.2（纯曲线上的完整仿射函数空间）。** 令 $x=\cos t$、$y=\sin t$、$f=f_d(t)$。当实仿射泛函 $\Lambda$ 遍历 $\mathcal K_d$ 的仿射包络上的所有泛函时，$\Lambda(\rho_t)$ 所成的实函数空间恰为
+
+$$
+\operatorname{span}_{\mathbb R}\{1,x,y,f,xf,yf\}.
+\tag{70.8}
+$$
+
+证明。有限维仿射泛函可延伸到环境 Hermitian 空间。各矩阵条目直接为
+
+$$
+\begin{gathered}
+(\rho_t)_{aa}=d,\qquad
+(\rho_t)_{h_{\rm out}h_{\rm out}}=2d(1-x),\qquad
+(\rho_t)_{gg}=1-3d+2dx,\\
+(\rho_t)_{a h_{\rm out}}=d(x-1)-\mathrm i d y,\\
+(\rho_t)_{ag}=-3\sqrt d\,yf-\mathrm i\sqrt d(3x-2)f,\\
+(\rho_t)_{h_{\rm out}g}=\sqrt d\,yf+5\mathrm i\sqrt d(x-1)f.
+\end{gathered}
+\tag{70.9}
+$$
+
+因此每个仿射泛函均在 (70.8) 中。反向，常函数由迹得到，而
+
+$$
+\begin{aligned}
+x&=1-\frac{(\rho_t)_{h_{\rm out}h_{\rm out}}}{2d},
+&y&=-\frac{\Im(\rho_t)_{a h_{\rm out}}}{d},\\
+yf&=\frac{\Re(\rho_t)_{h_{\rm out}g}}{\sqrt d},
+&f&=-\frac{\Im(\rho_t)_{ag}+(3/5)\Im(\rho_t)_{h_{\rm out}g}}{\sqrt d},\\
+xf&=f+\frac{\Im(\rho_t)_{h_{\rm out}g}}{5\sqrt d}.
+\end{aligned}
+\tag{70.10}
+$$
+
+所以六个生成函数全部都是矩阵条目的实仿射组合。结论是函数空间的张成等式，不需要先假定它们线性独立。∎
+
+**定理 70.3（所有仿射正交五维实现均不可能）。** 对任意 $0<d<1$，不存在一个完整 $\mathcal K_d$ 上的仿射密度制备和固定合法效果，在匹配的 $1\oplus\mathbb R^4_{\rm fund}$ 正交作用下满足全部原精确响应。因此定理 62.1 的任意实 CP 实现必须有 $m\ge6$。
+
+证明。反设存在。由引理 68.2，每个 $\sigma(\rho_t)$ 都秩一。令
+
+$$
+v=(a-h_{\rm out})/\sqrt2,
+\qquad \xi=(a+h_{\rm out})/\sqrt2,
+\tag{70.11}
+$$
+
+并在固定 $(\xi,v,g)$ 基中取源交叉列 $z_t$。这是源下块的固定基变换，仍用引理 69.1 的固定 $k,Q_*$。直接由 (70.1)，
+
+$$
+(\rho_t)_{\xi\xi}=c,\qquad
+(\rho_t)_{v\xi}=c(2e^{-\mathrm it}-1),\qquad
+\|(z_t)_R\|^2=c(1-c)>0.
+\tag{70.12}
+$$
+
+把编码写成 (69.1)。秩一、正性、迹一及 $h_t=kQ_*(z_t)_R$ 给
+
+$$
+p(t)(1-p(t))=\|h_t\|^2=k^2c(1-c)>0.
+\tag{70.13}
+$$
+
+若右端大于 $1/4$，已经矛盾；否则该方程至多有两个实根，且都在 $(0,1)$。一个保持全部凸组合的有限维仿射映射在其仿射包络上有唯一仿射延伸，因而连续；证明可在凸集的相对内点附近取一组仿射基，凸组合恒等式先给局部线性，再沿线段延伸。这里的包络可以是恰当仿射子空间，无需假定全 Hermitian 制备域。故 $p(t)$ 在连通开区间上连续，只能恒为一个 $p_0\in(0,1)$；重根 $p_0=1/2$ 同样包含。
+
+秩一的 Schur 等号于是给整个编码下块
+
+$$
+M(t)=\frac{h_th_t^{\mathsf T}}{p_0}
+=\frac{k^2}{p_0}Q_*(z_t)_R(z_t)_R^{\mathsf T}Q_*^{\mathsf T}.
+\tag{70.14}
+$$
+
+取源下块实协向量 $e_{v,\Re}$，并在编码侧取固定 $Q_*e_{v,\Re}$。由于 $M(\rho)$ 是同一个仿射制备的下块，(70.14) 迫使
+
+$$
+\bigl(\Re(\rho_t)_{v\xi}\bigr)^2
+=c^2(2\cos t-1)^2
+\tag{70.15}
+$$
+
+是 $\rho_t$ 的一个实仿射泛函，比例常数 $k^2/p_0$ 非零。
+
+由引理 70.2 并取 $t\leftrightarrow-t$ 的偶部，存在实常数 $A,B,C,D$ 使
+
+$$
+c^2(2x-1)^2=A+Bx+(C+Dx)
+\sqrt{\frac{1-3d+2dx}{13-12x}}
+\quad(\cos\delta_d<x<1).
+\tag{70.16}
+$$
+
+分母在该非空开区间为正。移项、平方并乘分母，得到区间上的多项式恒等式
+
+$$
+\bigl[c^2(2x-1)^2-A-Bx\bigr]^2(13-12x)
+=(C+Dx)^2(1-3d+2dx).
+\tag{70.17}
+$$
+
+左边的 $x^5$ 系数为 $-12(4c^2)^2=-12d^4\ne0$；右边次数至多三。多项式不可能在开区间相等，矛盾。平方只作为必要条件使用，未由平方后等式反推原根式，故没有符号分支遗漏。
+
+此排除适用于每个 $d\in(0,1)$，包括 (70.13) 的两根合并情形；没有将特定 $d$ 或一小段参数区间代替全域。引理 64.1–67.1 已从一般实 CP 合同导出这一正交模型，故所有 $m\le5$ 都被排除。与既有 (60.6) 的六维上界合用，得 (62.1)。∎
+
+## 71. 条件综合、供应工具与剩余问题
+
+**定义 71.1（本源综合的数学归属）。** 定理 62.1 及其原对象对应属于 `repo-derived` 的源特定综合，不主张全域新颖性或优先权。承重差额是：从原完整联合表的可达公平性，经过全矩阵紧 CP 半群、抽象完全序收缩的实表示成本及原 TP 和，约化所有隐藏实五维模型；再以原 $\mathcal K_d$ 的实际纯曲线，排除所有仿射制备及合法效果。命题 60.3 的指定编码失败仍只是其原限制结论，不能代替这一全称排除。
+
+原供应分别为：定义 54.1 和第一卷定理 35.4 的完整集合与原域提升；假设 54.2 和第二卷定理 39.3–39.4 的原标签、两终端与全部联合权重；第二卷定理 40.1 的 $I_3$ 加八个实际词效果；以及 (60.6) 的成熟六维实化上界。它们在证明中按这些接口被消费，没有作为新的独立结果重述。
+
+成熟中间工具包括紧矩阵群的回归、紧半群最小秩角群、Haar 平均、闭子群与 Lie 代数提升、实 $SU(2)$ 表示分类、CP Schwarz 与乘法域、Choi–Effros 乘法以及有限维实 $C^*$ 结构。Prunaru 定理 1 的三个假设在 (65.6) 的复化上满足；Rosenberg 的三种实不可约类型给 (66.4) 的参数成本；Hall 的实 Schur 及闭矩阵群条件分别用于 (69.2) 和 (63.3)。这些是中间供应，不是本源所发明的工具。表示成本使用抽象 $r$ 的乘法域；较小支持只先用于角群；原分支的逐支 TP 只在全支持及原 TP 和共同给出后成立。
+
+**定义 71.2（等式的适用边界）。** 定理 62.1 精确解决定义 61.3 所列的非例外角度实维数部分；定理 60.1 的旧界仍为其成立的弱推论。它没有确定例外角度 $d>2/3$ 的经典最小状态数，没有给定理 56.1 的固定噪声或有限样本记忆增长律，没有提供完整集合的无限状态经典构造，也没有解决第一卷定义 38.3 的原全参数最小最大中心。端点 $d=0,1$、非仿射制备、近似表及不同操作菜单不在此等式的量词内。
+
+本合同以复 Hilbert 空间、Born 概率、原 CPTP 通道及仪器组合为前提，比较者还以实 Kraus CP、一个全族仿射制备和一个合法固定效果为前提。真实 $SU(2)$、逆、角群及 Haar 平均都是由精确表导出的数学约束，没有获得任意控制、选支、独立副本、相位参考或环境访问。精确表等式也不等同于有限样本已经取得这些概率。因此实维数六的必要性并不从信息守恒、共同整体来源或确定到不确定的层级本身导出量子原则；物理起源与取得这些结构的桥梁仍需各自的模型及证据。
+
+## 追加锚（本行以下为增补区）
+
