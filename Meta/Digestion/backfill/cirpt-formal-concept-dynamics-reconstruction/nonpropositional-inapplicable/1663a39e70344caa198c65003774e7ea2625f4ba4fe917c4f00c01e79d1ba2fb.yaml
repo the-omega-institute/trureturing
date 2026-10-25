@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:1663a39e70344caa198c65003774e7ea2625f4ba4fe917c4f00c01e79d1ba2fb
+  normalized_sha256: sha256:1663a39e70344caa198c65003774e7ea2625f4ba4fe917c4f00c01e79d1ba2fb
+cas_ref: sha256:1663a39e70344caa198c65003774e7ea2625f4ba4fe917c4f00c01e79d1ba2fb
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 列举不可逆余量丢失这一时间解释条件，没有指定丢失映射或断言其不可逆。
+    previous_atom_id: 1778d3fc6cdeed6aa234f13b2b83b083e4710c38ee9918af8eda9e5020f2ca88
+    next_atom_id: 6472d6dbfc3623d6685768a024217fea1e056acc30fa4dd6f5d0be326b4efa17
