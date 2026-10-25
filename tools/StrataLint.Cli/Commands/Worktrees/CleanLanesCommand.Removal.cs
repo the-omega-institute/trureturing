@@ -120,17 +120,17 @@ internal static partial class CleanLanesCommand
                 if (state == "refused" && removal.ExitCode is 68 or 73
                     && receipt.GetProperty("status").GetString() == "refused")
                 {
-                    var reason = outcome.Value.GetProperty("reason").GetString();
-                    if (string.IsNullOrWhiteSpace(reason)) throw new InvalidOperationException("missing refusal reason");
-                    return Refused(reason);
+                    var receiptReason = outcome.Value.GetProperty("reason").GetString();
+                    if (string.IsNullOrWhiteSpace(receiptReason)) throw new InvalidOperationException("missing refusal reason");
+                    return Refused(receiptReason);
                 }
                 if (state == "qualification_failed" && removal.ExitCode == 74
                     && receipt.GetProperty("status").GetString() == "failed")
                 {
-                    var reason = outcome.Value.GetProperty("reason").GetString();
-                    if (reason is null || !reason.StartsWith("qualification_failed:", StringComparison.Ordinal))
+                    var receiptReason = outcome.Value.GetProperty("reason").GetString();
+                    if (receiptReason is null || !receiptReason.StartsWith("qualification_failed:", StringComparison.Ordinal))
                         throw new InvalidOperationException("missing qualification failure diagnostic");
-                    return new(LaneRemovalOutcome.QualificationFailed, reason);
+                    return new(LaneRemovalOutcome.QualificationFailed, receiptReason);
                 }
                 if (state is not ("removed" or "checkpoint_failed" or "partial_or_indeterminate")
                     || receipt.GetProperty("status").GetString() != (state == "removed" ? "succeeded" : "failed"))

@@ -61,7 +61,7 @@ public sealed partial class CleanLanesCommandTests
         Assert.True(injected);
         var failed = outcome is not ("eligible" or "refused");
         Assert.Equal(!failed, result.Success);
-        Assert.Equal(failed, result.ExitCode != 0);
+        AssertQualificationPublicExit(result, force, failed ? 2 : 0);
         Assert.Equal(failed ? 1 : 0, ReadSummary(result.Output).GetProperty("failed_count").GetInt32());
         if (outcome == "eligible")
         {
@@ -111,7 +111,7 @@ public sealed partial class CleanLanesCommandTests
         });
         var result = fixture.RunWithRaw(runner, force ? ["--force"] : []);
         Assert.False(result.Success);
-        Assert.NotEqual(0, result.ExitCode);
+        AssertQualificationPublicExit(result, force, 2);
         Assert.True(Directory.Exists(lane));
         var reason = ReasonFor(result.Output, lane);
         Assert.StartsWith("qualification_failed:", reason);
@@ -121,4 +121,14 @@ public sealed partial class CleanLanesCommandTests
         Assert.Equal(1, ReadSummary(result.Output).GetProperty("failed_count").GetInt32());
         Assert.Equal("deferred", ReadSummary(result.Output).GetProperty("extra_sweeps").GetString());
     }
+    private static void AssertQualificationPublicExit(CommandResult result, bool force, int expected)
+    {
+        var console = new BufferedConsole();
+        var environment = new StubCliEnvironment(new AdmissionOutcome.InfrastructureFailure("unused"), cleanLanes: result);
+        var exit = CliApplication.Run(force ? ["clean-lanes", "--force"] : ["clean-lanes"], environment, console);
+        Assert.Equal(expected, exit);
+        Assert.Equal(result.Output, console.Output);
+        Assert.Equal(result.Error, console.Error);
+    }
+
 }
