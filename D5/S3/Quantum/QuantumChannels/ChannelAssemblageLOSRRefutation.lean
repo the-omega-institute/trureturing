@@ -8,6 +8,7 @@
 
 import D5.S3.Quantum.Foundation.FiniteKrausChannel
 import D5.S3.QuantumBounds.CHSHWitness
+import D5.S3.QuantumBounds.StatisticalStrengthMagicSquare
 import D5.S3.Quantum.Dynamics.PositivePauliClockOrder
 import D5.S3.Quantum.Divergence.ConditionalHockeyStickOrthogonalReduction
 
@@ -30,6 +31,8 @@ open D5.S3.Quantum.Divergence.ConditionalHockeyStickOrthogonalReduction
   (partialTraceRight_smul)
 open D5.S3.Quantum.FiniteDimensional (qubitX qubitZ)
 open D5.S3.QuantumBounds.CHSHWitness (bellDensity)
+open D5.S3.QuantumBounds.StatisticalStrengthMagicSquare (chshAlice)
+open D5.S3.Quantum.Dynamics.PositivePauliClockOrder (controlled)
 
 /-- Complete positivity at all finite amplifications, and trace preservation on all matrices. -/
 def IsCPTP {A B : Type} [Fintype A] [DecidableEq A] [Fintype B]
@@ -40,30 +43,20 @@ abbrev Assemblage := Fin 2 → Fin 2 → MatrixMap (Fin 2) (Fin 2) ℂ
 
 /-- Rotation around the y axis, with the source's half-angle convention. -/
 def rotationY (θ : ℝ) : Matrix (Fin 2) (Fin 2) ℂ :=
-  !![(Real.cos (θ / 2) : ℂ), -(Real.sin (θ / 2) : ℂ);
-    (Real.sin (θ / 2) : ℂ), (Real.cos (θ / 2) : ℂ)]
-
-/-- The first factor controls a rotation on the second factor. -/
-def controlledRotation (θ : ℝ) : Matrix (Fin 2 × Fin 2) (Fin 2 × Fin 2) ℂ :=
-  fun i j => if i.1 = j.1 then
-    (if i.1 = 0 then (1 : Matrix (Fin 2) (Fin 2) ℂ) i.2 j.2
-      else rotationY θ i.2 j.2) else 0
-
-/-- Alice's two binary Pauli measurements. -/
-def measurement (a x : Fin 2) : Matrix (Fin 2) (Fin 2) ℂ :=
-  (1 / 2 : ℂ) • (1 + (-1 : ℂ) ^ a.val • (if x = 0 then qubitZ else qubitX))
+  (Matrix.planeConformalMatrix (Real.cos (θ / 2) : ℂ) (Real.sin (θ / 2) : ℂ)
+    (by exact_mod_cast (Real.cos_sq_add_sin_sq (θ / 2)).trans_ne one_ne_zero)).val
 
 /-- Equation CRfam: Bell input, controlled rotation, trace B, then measurement and trace A. -/
 def assemblage (θ : ℝ) : Assemblage := fun a x =>
   { toFun := fun ρ =>
-      let gate := (1 : Matrix (Fin 2) (Fin 2) ℂ) ⊗ₖ controlledRotation θ
+      let gate := (1 : Matrix (Fin 2) (Fin 2) ℂ) ⊗ₖ controlled 1 (rotationY θ)
       let joint := Matrix.reindex (Equiv.prodAssoc (Fin 2) (Fin 2) (Fin 2))
         (Equiv.prodAssoc (Fin 2) (Fin 2) (Fin 2)) (bellDensity ⊗ₖ ρ)
       let evolved := gate * joint * gate.conjTranspose
       let reduced := partialTraceRight (evolved.submatrix
         (fun p : (Fin 2 × Fin 2) × Fin 2 => (p.1.1, (p.2, p.1.2)))
         (fun p : (Fin 2 × Fin 2) × Fin 2 => (p.1.1, (p.2, p.1.2))))
-      partialTraceLeft ((measurement a x ⊗ₖ (1 : Matrix (Fin 2) (Fin 2) ℂ)) * reduced)
+      partialTraceLeft ((chshAlice x a ⊗ₖ (1 : Matrix (Fin 2) (Fin 2) ℂ)) * reduced)
     map_add' := by
       intro ρ σ
       dsimp only
@@ -110,13 +103,6 @@ private lemma free_form (θ : ℝ) (a x : Fin 2) (ρ : Matrix (Fin 2) (Fin 2) �
       (if a = 0 then (1 / 2 : ℂ) • ρ
         else (1 / 2 : ℂ) • (rotationY θ * ρ * (rotationY θ).conjTranspose))
       else (1 / 4 : ℂ) • (ρ + rotationY θ * ρ * (rotationY θ).conjTranspose) := by
-  have hcontrolled : controlledRotation θ =
-      D5.S3.Quantum.Dynamics.PositivePauliClockOrder.controlled 1 (rotationY θ) := by
-    ext ⟨b, i⟩ ⟨c, j⟩
-    fin_cases b <;> fin_cases c <;>
-      simp [controlledRotation.eq_1,
-        D5.S3.Quantum.Dynamics.PositivePauliClockOrder.controlled,
-        Matrix.blockDiagonal_apply]
   ext i j
   unfold assemblage
   simp only [LinearMap.coe_mk, AddHom.coe_mk, Matrix.reindex_apply]
@@ -124,9 +110,8 @@ private lemma free_form (θ : ℝ) (a x : Fin 2) (ρ : Matrix (Fin 2) (Fin 2) �
   simp only [Matrix.mul_apply, Matrix.kroneckerMap_apply]
   unfold partialTraceRight
   simp only [Matrix.submatrix_apply, Matrix.mul_apply, Matrix.conjTranspose_apply]
-  simp only [hcontrolled]
   fin_cases a <;> fin_cases x <;> fin_cases i <;> fin_cases j <;>
-    with_unfolding_all simp [measurement.eq_1,
+    with_unfolding_all simp [D5.S3.QuantumBounds.StatisticalStrengthMagicSquare.chshAlice,
       D5.S3.Quantum.Dynamics.PositivePauliClockOrder.controlled,
       Matrix.blockDiagonal_apply, rotationY.eq_1, Matrix.mul_apply, Matrix.one_apply,
       Matrix.reindex_apply, Matrix.submatrix_apply,
@@ -271,7 +256,7 @@ private lemma witness_angles :
   constructor
   · constructor <;> linarith
   constructor
-  · exact ⟨by positivity, le_rfl⟩
+  · exact ⟨Real.pi_div_two_pos, le_rfl⟩
   · linarith
 
 theorem result : ¬ claim := by
