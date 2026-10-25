@@ -145,7 +145,75 @@ private def parent (U V : unitaryGroup (Fin 2) ℂ) (a b : Fin 2) :
 
 private theorem parent_positive (U V : unitaryGroup (Fin 2) ℂ) (a b : Fin 2) :
     (parent U V a b).PosSemidef := by
-  sorry
+  let A := centered U a
+  let B := centered V b
+  let K := A + B
+  obtain ⟨hA, htA, hsA, _⟩ := centered_facts U a
+  obtain ⟨hB, htB, hsB, _⟩ := centered_facts V b
+  have hK : K.IsHermitian := hA.add hB
+  have hs : K * K = (2 + (A * B).trace) • 1 := by
+    calc
+      K * K = A * A + B * B + (A * B + B * A) := by dsimp only [K]; noncomm_ring
+      _ = (2 + (A * B).trace) • 1 := by
+        rw [hsA, hsB, traceless_anticommutator A B htA htB]
+        module
+  have hp := Matrix.posSemidef_conjTranspose_mul_self K
+  rw [hK.eq, hs] at hp
+  have hd : (0 : ℂ) ≤ 2 + (A * B).trace := by
+    simpa using hp.diag_nonneg (i := 0)
+  let τ : ℝ := (A * B).trace.re
+  have hr : (A * B).trace = (τ : ℂ) := by
+    apply Complex.ext
+    · rfl
+    · have := (Complex.nonneg_iff.mp hd).2
+      norm_num at this
+      simpa using this.symm
+  have ht : -2 ≤ τ := by
+    have := (Complex.nonneg_iff.mp hd).1
+    norm_num at this
+    change 0 ≤ 2 + τ at this
+    linarith
+  rw [hr] at hs
+  let α : ℝ := 1 + 49 / 200 * τ
+  let c : ℝ := 1 / 50 + 2401 / 40000 * τ ^ 2
+  have ha : 0 < α := by dsimp only [α]; linarith
+  have hc : 0 < c := by dsimp only [c]; nlinarith [sq_nonneg τ]
+  have hce : (c : ℂ) = (α : ℂ) ^ 2 - (49 / 100 : ℂ) * (2 + (τ : ℂ)) := by
+    dsimp only [c, α]
+    push_cast
+    ring
+  let H := (α : ℂ) • (1 : Matrix (Fin 2) (Fin 2) ℂ) + (7 / 10 : ℂ) • K
+  have hH : H.IsHermitian :=
+    (Matrix.isHermitian_one.smul (by simp [IsSelfAdjoint])).add (hK.smul (by norm_num [IsSelfAdjoint]))
+  have he : H.conjTranspose * H + (c : ℂ) • 1 = (2 * (α : ℂ)) • H := by
+    rw [hH.eq]
+    dsimp only [H]
+    simp only [Matrix.add_mul, Matrix.mul_add, Matrix.smul_mul, Matrix.mul_smul,
+      Matrix.one_mul, Matrix.mul_one, smul_smul, hs]
+    rw [hce]
+    module
+  have han : (α : ℂ) ≠ 0 := by exact_mod_cast ne_of_gt ha
+  have hi : H = (1 / (2 * (α : ℂ))) • (H.conjTranspose * H + (c : ℂ) • 1) := by
+    rw [he, smul_smul]
+    have hz : (1 / (2 * (α : ℂ))) * (2 * (α : ℂ)) = 1 := by field_simp
+    rw [hz, one_smul]
+  have hcp : (0 : ℂ) ≤ (c : ℂ) := by exact_mod_cast le_of_lt hc
+  have hfactor : (0 : ℂ) ≤ 1 / (2 * (α : ℂ)) := by
+    rw [show (1 / (2 * (α : ℂ))) = ((1 / (2 * α) : ℝ) : ℂ) by push_cast; rfl]
+    exact_mod_cast le_of_lt (div_pos (by norm_num) (mul_pos (by norm_num) ha))
+  have hpos : H.PosSemidef := by
+    rw [hi]
+    exact ((Matrix.posSemidef_conjTranspose_mul_self H).add
+      (Matrix.PosSemidef.one.smul hcp)).smul hfactor
+  have hae : (α : ℂ) = 1 + (49 / 200 : ℂ) * (τ : ℂ) := by
+    dsimp only [α]
+    push_cast
+    rfl
+  unfold parent
+  change ((1 / 4 : ℂ) • ((1 + (49 / 200 : ℂ) * (A * B).trace) • 1 +
+    (7 / 10 : ℂ) • K)).PosSemidef
+  rw [hr, ← hae]
+  exact hpos.smul (show (0 : ℂ) ≤ 1 / 4 by norm_num [Complex.le_def])
 
 private theorem parent_marginals (U V : unitaryGroup (Fin 2) ℂ) :
     (∑ a, ∑ b, parent U V a b) = 1 ∧
