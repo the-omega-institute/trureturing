@@ -4045,7 +4045,7 @@ field coordinates and Corollary 81.3's supplied-family consequences
 are compared. No total runtime or peak-memory dominance is asserted.
 
 The returned four-view inverse includes its actual annotation in space
-and boundary, and causal successful-event time rather than total physical
+and boundary, and the serial successful-generation word rather than total physical
 history. It has no all-busy-cut, crash-recovery or interrupted-write
 inverse. Observable exhaustion, concurrent raw clients, noise, revocation
 and arbitrary extra physical observations enlarge the task and lie
