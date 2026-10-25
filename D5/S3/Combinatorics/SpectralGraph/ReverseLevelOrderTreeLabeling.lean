@@ -14,13 +14,10 @@ import Mathlib.Combinatorics.SimpleGraph.AdjMatrix
 namespace D5.S3.Combinatorics.SpectralGraph.ReverseLevelOrderTreeLabeling
 
 /-- Labels `0, …, n - 1` represent the source's labels `1, …, n`. -/
-def IsReverseLevelOrder {n : ℕ} (g : SimpleGraph (Fin n)) (r : Fin n)
-    (l : Fin n ≃ Fin n) : Prop :=
-  ∀ u v, g.dist r u < g.dist r v → l v < l u
-
 def claim : Prop :=
   ∀ (n : ℕ) (g : SimpleGraph (Fin n)) [DecidableRel g.Adj],
-    g.IsTree → ∀ (r : Fin n) (l : Fin n ≃ Fin n), IsReverseLevelOrder g r l →
+    g.IsTree → ∀ (r : Fin n) (l : Fin n ≃ Fin n),
+      @StrictAnti (Fin n) (Fin n) (Preorder.lift (g.dist r)) inferInstance l →
       ∀ i : Fin n, i.val + 1 < n →
         ∃! j : Fin n, i < j ∧ g.adjMatrix ℕ (l.symm j) (l.symm i) ≠ 0
 
@@ -53,19 +50,25 @@ private lemma unique_parent {n : ℕ} {g : SimpleGraph (Fin n)} (ht : g.IsTree)
 
 private lemma larger_label_iff_parent {n : ℕ} {g : SimpleGraph (Fin n)}
     (ht : g.IsTree) {r : Fin n} {l : Fin n ≃ Fin n}
-    (hl : IsReverseLevelOrder g r l) {v w : Fin n} (ha : g.Adj v w) :
+    (hl : @StrictAnti (Fin n) (Fin n) (Preorder.lift (g.dist r)) inferInstance l)
+    {v w : Fin n} (ha : g.Adj v w) :
     l v < l w ↔ g.dist r w + 1 = g.dist r v := by
   constructor
   · intro h
     rcases ht.dist_eq_dist_add_one_of_adj r ha with hp | hc
     · exact hp.symm
-    · exact (lt_asymm h (hl v w (by omega))).elim
+    · exact (lt_asymm h (hl (a := v) (b := w) (by
+        change g.dist r v < g.dist r w
+        omega))).elim
   · intro hp
-    exact hl w v (by omega)
+    exact hl (a := w) (b := v) (by
+      change g.dist r w < g.dist r v
+      omega)
 
 private lemma column_vertex_ne_root {n : ℕ} {g : SimpleGraph (Fin n)}
     (ht : g.IsTree) {r : Fin n} {l : Fin n ≃ Fin n}
-    (hl : IsReverseLevelOrder g r l) (i : Fin n) (hi : i.val + 1 < n) :
+    (hl : @StrictAnti (Fin n) (Fin n) (Preorder.lift (g.dist r)) inferInstance l)
+    (i : Fin n) (hi : i.val + 1 < n) :
     l.symm i ≠ r := by
   intro h
   let j : Fin n := ⟨i.val + 1, hi⟩
@@ -78,7 +81,7 @@ private lemma column_vertex_ne_root {n : ℕ} {g : SimpleGraph (Fin n)}
   have hd : g.dist r r < g.dist r (l.symm j) := by
     rw [SimpleGraph.dist_self]
     exact ht.connected.pos_dist_of_ne hj.symm
-  have hlt := hl r (l.symm j) hd
+  have hlt := hl (a := r) (b := l.symm j) hd
   rw [l.apply_symm_apply, ← h, l.apply_symm_apply] at hlt
   have hval : j.val < i.val := hlt
   dsimp [j] at hval
@@ -86,7 +89,8 @@ private lemma column_vertex_ne_root {n : ℕ} {g : SimpleGraph (Fin n)}
 
 private lemma column_tail_unique {n : ℕ} {g : SimpleGraph (Fin n)}
     [DecidableRel g.Adj] (ht : g.IsTree) {r : Fin n} {l : Fin n ≃ Fin n}
-    (hl : IsReverseLevelOrder g r l) (i : Fin n) (hv : l.symm i ≠ r) :
+    (hl : @StrictAnti (Fin n) (Fin n) (Preorder.lift (g.dist r)) inferInstance l)
+    (i : Fin n) (hv : l.symm i ≠ r) :
     ∃! j : Fin n, i < j ∧ g.adjMatrix ℕ (l.symm j) (l.symm i) ≠ 0 := by
   obtain ⟨w, hw, hu⟩ := unique_parent ht r (l.symm i) hv
   have hlabel : i < l w := by
