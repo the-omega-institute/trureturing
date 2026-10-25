@@ -25,7 +25,7 @@ open LatticeGeneratingFieldLocality LatticeHalfFock
 def actualInverse (D : LatticeData) : Matrix (Fin D.rank) (Fin D.rank) ℂ :=
   (D.G⁻¹).map (Int.castRingHom ℂ)
 
-private theorem actualInverse_left (D : LatticeData) (hu : IsUnit D.G.det) :
+theorem actualInverse_left (D : LatticeData) (hu : IsUnit D.G.det) :
     actualInverse D * gramComplex D = 1 := by
   have h := congrArg (fun M : Matrix (Fin D.rank) (Fin D.rank) ℤ =>
     M.map (Int.castRingHom ℂ)) (Matrix.nonsing_inv_mul D.G hu)
@@ -33,7 +33,7 @@ private theorem actualInverse_left (D : LatticeData) (hu : IsUnit D.G.det) :
   rw [← Matrix.map_mul]
   simpa using h
 
-private theorem actualInverse_right (D : LatticeData) (hu : IsUnit D.G.det) :
+theorem actualInverse_right (D : LatticeData) (hu : IsUnit D.G.det) :
     gramComplex D * actualInverse D = 1 := by
   have h := congrArg (fun M : Matrix (Fin D.rank) (Fin D.rank) ℤ =>
     M.map (Int.castRingHom ℂ)) (Matrix.mul_nonsing_inv D.G hu)
