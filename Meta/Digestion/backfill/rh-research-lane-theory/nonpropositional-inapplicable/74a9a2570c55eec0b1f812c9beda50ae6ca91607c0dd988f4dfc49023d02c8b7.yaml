@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:74a9a2570c55eec0b1f812c9beda50ae6ca91607c0dd988f4dfc49023d02c8b7
+  normalized_sha256: sha256:74a9a2570c55eec0b1f812c9beda50ae6ca91607c0dd988f4dfc49023d02c8b7
+cas_ref: sha256:74a9a2570c55eec0b1f812c9beda50ae6ca91607c0dd988f4dfc49023d02c8b7
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 约定 Candidate 指尚待准入的形式化，不给出数学断言。
+    previous_atom_id: 49020fd6b44e47713ffb8c2080c91c35069a7f14f3b181445630117447b86afe
+    next_atom_id: e898b0a731d7f5c147ff9fdf2a6259e9470518233f945a6c3650f37de9fcfd34
