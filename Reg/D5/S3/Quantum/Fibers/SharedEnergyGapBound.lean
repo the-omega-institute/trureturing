@@ -4,6 +4,7 @@ import D5.S3.Quantum.Fibers.SharedEnergyGapBound
 /-! Labelled-degree audit for all indecomposable zero-weight exponents. -/
 set_option autoImplicit false
 noncomputable section
+open scoped Matrix BigOperators
 namespace Reg.D5.S3.Quantum.Fibers.SharedEnergyGapBound
 open _root_.D5.S3.ConceptDynamics.InformationEscape.DependentFamily
 open _root_.D5.S3.Quantum.Fibers.SharedEnergyCopyThreshold
@@ -68,9 +69,16 @@ private theorem rejected : ¬ arena.Law shifted := by
         ext i
         fin_cases i
         simpa [A, Matrix.mulVec, dotProduct, Fin.sum_univ_succ] using hk
+      have hgc : Finset.univ.gcd v = 1 := by
+        have h₀ : Finset.univ.gcd v ∣ v 0 := Finset.gcd_dvd (Finset.mem_univ _)
+        have h₁ : Finset.univ.gcd v ∣ v 1 := Finset.gcd_dvd (Finset.mem_univ _)
+        have hd : Finset.univ.gcd v ∣ 1 := by
+          convert dvd_add h₀ h₁ using 1
+          norm_num [v]
+        have hn := normalize_eq_one.mpr (isUnit_iff_dvd_one.mpr hd)
+        simpa only [Finset.normalize_gcd] using hn
       obtain ⟨ell, he⟩ := _root_.D5.S3.Arith.Lattices.CofactorKernel.primitive_kernel_span
-        A hdet v hv (by norm_num [v, Fin.sum_univ_succ])
-        (by norm_num [v, Fin.sum_univ_succ]) _ hx
+        A hdet v hv (by norm_num [v, Fin.sum_univ_succ]) hgc _ hx
       have he₁ : (beta 2 1 : ℤ) = ell*2 := by simpa [v] using he 0
       have he₂ : -(beta 0 2 : ℤ) = ell*(-1) := by simpa [v] using he 1
       have hb : beta 2 1 ≤ 2 := by simpa [alpha] using hle 2 1
@@ -93,10 +101,10 @@ private theorem rejected : ¬ arena.Law shifted := by
   norm_num [degree, alpha, Fin.sum_univ_succ] at he
 private theorem dependence : ObservationalDependence signature actual := by
   intro i
-  refine ⟨(), 0, coordinateExponent 0 0, ?_⟩
+  refine ⟨(), 0, (fun _ _ => 1), ?_⟩
   intro h
-  change degree 0 = degree (coordinateExponent 0 0) at h
-  norm_num [degree, coordinateExponent, Fin.sum_univ_succ] at h
+  change degree 0 = degree (fun _ _ => 1) at h
+  norm_num [degree, Fin.sum_univ_succ] at h
 
 def family : Registration arena (type_of% indecomposable_degree_bound) where
   actual := actual
