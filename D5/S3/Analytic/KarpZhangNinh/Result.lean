@@ -9,6 +9,7 @@
 import D5.S3.Analytic.KarpZhangNinh.Homogeneous
 import D5.S3.Analytic.KarpZhangNinh.Beta
 import D5.S3.Analytic.KarpZhangGamma.Result
+import D5.S3.Analytic.SeriesInequalities.KarpQuadraticTruncations
 
 /-!
 admission_basis: open-problem-resolution (#21124; Proved)
@@ -78,34 +79,30 @@ lemma a_continuous (n : ℕ) : Continuous (a n) := by
 
 /- proof_shape: bind-only; escape_witness: none;
 consumers: _private.D5.S3.Analytic.KarpZhangNinh.Result.0.D5.S3.Analytic.KarpZhangNinh.Result.Kernel.pair_step_lengths;
-direct_frozen_dependencies: none;
+direct_frozen_dependencies: D5/S3/Analytic/SeriesInequalities/KarpQuadraticTruncations.pochhammer_turan_nonneg (D5.S3.Analytic.SeriesInequalities.KarpQuadraticTruncations.pochhammer_turan_nonneg) statement_id=sha256:9b9547e6ee28fad6d1a405777a4a27ec734321727ef590923b24a36c509a1439;
 stacked_dependencies: none. -/
 private theorem strict_four_product (n : ℕ) {a b c : ℝ}
     (ha : 0 < a) (hb : 0 < b) (hc : 0 < c) (hn : 0 < n) :
     (ascPochhammer ℝ n).eval a * (ascPochhammer ℝ n).eval (a+b+c) <
       (ascPochhammer ℝ n).eval (a+b) * (ascPochhammer ℝ n).eval (a+c) := by
-  induction n with
-  | zero => omega
-  | succ n ih =>
-    rw [ascPochhammer_succ_eval, ascPochhammer_succ_eval,
-      ascPochhammer_succ_eval, ascPochhammer_succ_eval]
-    have hfactor : (a + n) * (a + b + c + n) < (a + b + n) * (a + c + n) := by
-      nlinarith [mul_pos hb hc]
-    have hleft := ascPochhammer_pos n a ha
-    have hright := ascPochhammer_pos n (a+b+c) (by linarith)
-    have hle : (ascPochhammer ℝ n).eval a * (ascPochhammer ℝ n).eval (a+b+c) ≤
-        (ascPochhammer ℝ n).eval (a+b) * (ascPochhammer ℝ n).eval (a+c) := by
-      by_cases hzero : n = 0
-      · subst n; simp
-      · exact (ih (by omega)).le
-    calc
-      _ = ((ascPochhammer ℝ n).eval a * (ascPochhammer ℝ n).eval (a+b+c)) *
-          ((a+n) * (a+b+c+n)) := by ring
-      _ < ((ascPochhammer ℝ n).eval (a+b) * (ascPochhammer ℝ n).eval (a+c)) *
-          ((a+b+n) * (a+c+n)) :=
-        mul_lt_mul_of_le_of_lt_of_pos_of_nonneg hle hfactor
-          (mul_pos hleft hright) (by positivity)
-      _ = _ := by ring
+  obtain ⟨n, rfl⟩ := Nat.exists_eq_succ_of_ne_zero (Nat.ne_of_gt hn)
+  rw [ascPochhammer_succ_eval, ascPochhammer_succ_eval,
+    ascPochhammer_succ_eval, ascPochhammer_succ_eval]
+  have hfactor : (a + n) * (a + b + c + n) < (a + b + n) * (a + c + n) := by
+    nlinarith [mul_pos hb hc]
+  have hleft := ascPochhammer_pos n a ha
+  have hright := ascPochhammer_pos n (a+b+c) (by linarith)
+  have hle := sub_nonneg.mp
+    (D5.S3.Analytic.SeriesInequalities.KarpQuadraticTruncations.pochhammer_turan_nonneg
+      n a b c ha hb.le hc.le)
+  calc
+    _ = ((ascPochhammer ℝ n).eval a * (ascPochhammer ℝ n).eval (a+b+c)) *
+        ((a+n) * (a+b+c+n)) := mul_mul_mul_comm _ _ _ _
+    _ < ((ascPochhammer ℝ n).eval (a+b) * (ascPochhammer ℝ n).eval (a+c)) *
+        ((a+b+n) * (a+c+n)) :=
+      mul_lt_mul_of_le_of_lt_of_pos_of_nonneg hle hfactor
+        (mul_pos hleft hright) (by positivity)
+    _ = _ := (mul_mul_mul_comm _ _ _ _).symm
 
 /- proof_shape: bind-only; escape_witness: none;
 consumers: _private.D5.S3.Analytic.KarpZhangNinh.Result.0.D5.S3.Analytic.KarpZhangNinh.Result.Kernel.pair_step_lengths;
@@ -195,7 +192,7 @@ private theorem four_numbers_step {U V R Q x b c C : ℝ}
 
 /- proof_shape: bind-only; escape_witness: none;
 consumers: D5.S3.Analytic.KarpZhangNinh.Result.Kernel.paired_sign_step;
-direct_frozen_dependencies: none;
+direct_frozen_dependencies: D5/S3/Analytic/SeriesInequalities/KarpQuadraticTruncations.pochhammer_turan_nonneg (D5.S3.Analytic.SeriesInequalities.KarpQuadraticTruncations.pochhammer_turan_nonneg) statement_id=sha256:9b9547e6ee28fad6d1a405777a4a27ec734321727ef590923b24a36c509a1439;
 stacked_dependencies: none. -/
 private theorem pair_step_lengths {a b c : ℝ} (ha : 0 < a) (hb : 0 < b)
     (hc : 0 < c) (n l : ℕ) (hnl : n+1 ≤ l)
@@ -256,7 +253,7 @@ private theorem pair_step_lengths {a b c : ℝ} (ha : 0 < a) (hb : 0 < b)
 /-- A nonpositive pair forces strict negativity at the preceding index. -/
 /- proof_shape: bind-only; escape_witness: none;
 consumers: D5.S3.Analytic.KarpZhangNinh.Result.Kernel.paired_sign;
-direct_frozen_dependencies: none;
+direct_frozen_dependencies: D5/S3/Analytic/SeriesInequalities/KarpQuadraticTruncations.pochhammer_turan_nonneg (D5.S3.Analytic.SeriesInequalities.KarpQuadraticTruncations.pochhammer_turan_nonneg) statement_id=sha256:9b9547e6ee28fad6d1a405777a4a27ec734321727ef590923b24a36c509a1439;
 stacked_dependencies: none. -/
 theorem paired_sign_step {a b c : ℝ} (ha : 0 < a) (hb : 0 < b)
     (hc : 0 < c) {N k : ℕ} (hk : 1 ≤ k) (hkN : 2*k ≤ N)
@@ -298,7 +295,7 @@ private theorem paired_relation (μ α β : ℝ) (m k : ℕ)
 /-- No positive paired kernel can precede a negative one. -/
 /- proof_shape: bind-only; escape_witness: none;
 consumers: _private.D5.S3.Analytic.KarpZhangNinh.Result.0.D5.S3.Analytic.KarpZhangNinh.Result.tail_nonneg_pos;
-direct_frozen_dependencies: none;
+direct_frozen_dependencies: D5/S3/Analytic/SeriesInequalities/KarpQuadraticTruncations.pochhammer_turan_nonneg (D5.S3.Analytic.SeriesInequalities.KarpQuadraticTruncations.pochhammer_turan_nonneg) statement_id=sha256:9b9547e6ee28fad6d1a405777a4a27ec734321727ef590923b24a36c509a1439;
 stacked_dependencies: none. -/
 theorem paired_sign {μ α β : ℝ} (hμ : 0 < μ) (hα : 0 < α) (hβ : 0 < β)
     (m : ℕ) :
@@ -356,8 +353,8 @@ private def pair (K : ℕ → ℝ) (m k : ℕ) : ℝ :=
 
 /- proof_shape: bind-only; escape_witness: none;
 consumers: _private.D5.S3.Analytic.KarpZhangNinh.Result.0.D5.S3.Analytic.KarpZhangNinh.Result.central_tail_of_sign;
-direct_frozen_dependencies: none;
-stacked_dependencies: D5/S3/Analytic/KarpZhangGamma/Result.pair_sum (D5.S3.Analytic.KarpZhangGamma.Result.pair_sum); D5/S3/Analytic/KarpZhangReciprocal/Result.tail_sum (D5.S3.Analytic.KarpZhangReciprocal.Result.tail_sum). -/
+direct_frozen_dependencies: D5/S3/Analytic/KarpZhangGamma/Result.pair_sum (D5.S3.Analytic.KarpZhangGamma.Result.pair_sum) statement_id=sha256:8b8de24a133e92ce41bfd64f52ec4220d8e69256816912f55e8a2fc7e91f1326; D5/S3/Analytic/KarpZhangReciprocal/Result.tail_sum (D5.S3.Analytic.KarpZhangReciprocal.Result.tail_sum) statement_id=sha256:47b3c03268296e64f4b0bf24d2c278d331ce0da2c2acf1874e481088ac6793fd;
+stacked_dependencies: none. -/
 private theorem tail_pair (K : ℕ → ℝ) (m q : ℕ) (hq : 2*q≤m) :
     (∑ i ∈ range (m-q-q+1), K (q+i)) =
       ∑ k ∈ range (m/2+1), pair K m k * (if q≤k then 1 else 0) := by
@@ -375,8 +372,8 @@ private theorem tail_pair (K : ℕ → ℝ) (m q : ℕ) (hq : 2*q≤m) :
 
 /- proof_shape: bind-only; escape_witness: none;
 consumers: _private.D5.S3.Analytic.KarpZhangNinh.Result.0.D5.S3.Analytic.KarpZhangNinh.Result.tail_nonneg_pos;
-direct_frozen_dependencies: none;
-stacked_dependencies: D5/S3/Analytic/KarpZhangGamma/Result.pair_sum (D5.S3.Analytic.KarpZhangGamma.Result.pair_sum); D5/S3/Analytic/KarpZhangGamma/Weighting.weighted_sum_nonneg (D5.S3.Analytic.KarpZhangGamma.Weighting.weighted_sum_nonneg); D5/S3/Analytic/KarpZhangReciprocal/Result.tail_sum (D5.S3.Analytic.KarpZhangReciprocal.Result.tail_sum). -/
+direct_frozen_dependencies: D5/S3/Analytic/KarpZhangGamma/Result.pair_sum (D5.S3.Analytic.KarpZhangGamma.Result.pair_sum) statement_id=sha256:8b8de24a133e92ce41bfd64f52ec4220d8e69256816912f55e8a2fc7e91f1326; D5/S3/Analytic/KarpZhangGamma/Weighting.weighted_sum_nonneg (D5.S3.Analytic.KarpZhangGamma.Weighting.weighted_sum_nonneg) statement_id=sha256:21a3c16ca411f5688e6d008390c044d80ff0f7c00cd4bb0f2640224c3f40eca6; D5/S3/Analytic/KarpZhangReciprocal/Result.tail_sum (D5.S3.Analytic.KarpZhangReciprocal.Result.tail_sum) statement_id=sha256:47b3c03268296e64f4b0bf24d2c278d331ce0da2c2acf1874e481088ac6793fd;
+stacked_dependencies: none. -/
 private theorem central_tail_of_sign (K : ℕ → ℝ) (m q : ℕ) (hq : 2*q≤m)
     (hsign : ∀ i≤m/2, ∀ j≤m/2, i<j → 0<pair K m i → 0≤pair K m j)
     (htotal : 0≤∑ k ∈ range (m+1), K k) :
@@ -542,8 +539,8 @@ private theorem full_tail_nonneg (m : ℕ) {μ α β : ℝ}
 
 /- proof_shape: content; escape_witness: full_tail_nonneg;
 consumers: _private.D5.S3.Analytic.KarpZhangNinh.Result.0.D5.S3.Analytic.KarpZhangNinh.Result.tail_nonneg;
-direct_frozen_dependencies: D5/S3/Analytic/IncompleteBeta/Comparison.betaMean (D5.S3.Analytic.IncompleteBeta.Comparison.betaMean) statement_id=sha256:52c1879a896c372f1717b74579f07258b6c1526a22f27baddf0c9a2d6d9c8d4d; D5/S3/Analytic/IncompleteBeta/Comparison.betaMean_strictAntiOn (D5.S3.Analytic.IncompleteBeta.Comparison.betaMean_strictAntiOn) statement_id=sha256:8e5cc3dcb0b903667c4ed8ac30429217f113e1e1e09d26451dfd2b0252bacacc; D5/S3/Analytic/KummerRatio/BetaIntegral.gamma_pochhammer (D5.S3.Analytic.KummerRatio.BetaIntegral.gamma_pochhammer) statement_id=sha256:1059688f4875284d841121819603b9b49cf825aab8e4de735ff76c3e200ab797; D5/S3/Analytic/KummerRatio/BetaIntegral.integral_beta (D5.S3.Analytic.KummerRatio.BetaIntegral.integral_beta) statement_id=sha256:fcc3a54a2a2111346d704d8d357ee41b6843e3310e722bd37de37805d8db9a45; D5/S3/Analytic/KummerRatio/BetaIntegral.intervalIntegrable_beta (D5.S3.Analytic.KummerRatio.BetaIntegral.intervalIntegrable_beta) statement_id=sha256:e5a0a5542de6599ee2c9cccab09e8ca6fa72a102e012c68c1531e2633f1e2986;
-stacked_dependencies: D5/S3/Analytic/KarpZhangGamma/Result.pair_sum (D5.S3.Analytic.KarpZhangGamma.Result.pair_sum); D5/S3/Analytic/KarpZhangGamma/Weighting.weighted_sum_nonneg (D5.S3.Analytic.KarpZhangGamma.Weighting.weighted_sum_nonneg); D5/S3/Analytic/KarpZhangReciprocal/Result.tail_sum (D5.S3.Analytic.KarpZhangReciprocal.Result.tail_sum). -/
+direct_frozen_dependencies: D5/S3/Analytic/IncompleteBeta/Comparison.betaMean (D5.S3.Analytic.IncompleteBeta.Comparison.betaMean) statement_id=sha256:52c1879a896c372f1717b74579f07258b6c1526a22f27baddf0c9a2d6d9c8d4d; D5/S3/Analytic/IncompleteBeta/Comparison.betaMean_strictAntiOn (D5.S3.Analytic.IncompleteBeta.Comparison.betaMean_strictAntiOn) statement_id=sha256:8e5cc3dcb0b903667c4ed8ac30429217f113e1e1e09d26451dfd2b0252bacacc; D5/S3/Analytic/KarpZhangGamma/Result.pair_sum (D5.S3.Analytic.KarpZhangGamma.Result.pair_sum) statement_id=sha256:8b8de24a133e92ce41bfd64f52ec4220d8e69256816912f55e8a2fc7e91f1326; D5/S3/Analytic/KarpZhangGamma/Weighting.weighted_sum_nonneg (D5.S3.Analytic.KarpZhangGamma.Weighting.weighted_sum_nonneg) statement_id=sha256:21a3c16ca411f5688e6d008390c044d80ff0f7c00cd4bb0f2640224c3f40eca6; D5/S3/Analytic/KarpZhangReciprocal/Result.tail_sum (D5.S3.Analytic.KarpZhangReciprocal.Result.tail_sum) statement_id=sha256:47b3c03268296e64f4b0bf24d2c278d331ce0da2c2acf1874e481088ac6793fd; D5/S3/Analytic/KummerRatio/BetaIntegral.gamma_pochhammer (D5.S3.Analytic.KummerRatio.BetaIntegral.gamma_pochhammer) statement_id=sha256:1059688f4875284d841121819603b9b49cf825aab8e4de735ff76c3e200ab797; D5/S3/Analytic/KummerRatio/BetaIntegral.integral_beta (D5.S3.Analytic.KummerRatio.BetaIntegral.integral_beta) statement_id=sha256:fcc3a54a2a2111346d704d8d357ee41b6843e3310e722bd37de37805d8db9a45; D5/S3/Analytic/KummerRatio/BetaIntegral.intervalIntegrable_beta (D5.S3.Analytic.KummerRatio.BetaIntegral.intervalIntegrable_beta) statement_id=sha256:e5a0a5542de6599ee2c9cccab09e8ca6fa72a102e012c68c1531e2633f1e2986; D5/S3/Analytic/SeriesInequalities/KarpQuadraticTruncations.pochhammer_turan_nonneg (D5.S3.Analytic.SeriesInequalities.KarpQuadraticTruncations.pochhammer_turan_nonneg) statement_id=sha256:9b9547e6ee28fad6d1a405777a4a27ec734321727ef590923b24a36c509a1439;
+stacked_dependencies: none. -/
 private theorem tail_nonneg_pos (m q : ℕ) (hq : 2*q≤m) {μ α β : ℝ}
     (hμ : 0<μ) (hα : 0<α) (hβ : 0<β) :
     0≤∑ i ∈ range (m-q-q+1), raw μ α β m (q+i) := by
@@ -560,8 +557,8 @@ private theorem tail_nonneg_pos (m q : ℕ) (hq : 2*q≤m) {μ α β : ℝ}
 
 /- proof_shape: content; escape_witness: tail_nonneg_pos and the polynomial limit;
 consumers: D5.S3.Analytic.KarpZhangNinh.Result.result;
-direct_frozen_dependencies: D5/S3/Analytic/IncompleteBeta/Comparison.betaMean (D5.S3.Analytic.IncompleteBeta.Comparison.betaMean) statement_id=sha256:52c1879a896c372f1717b74579f07258b6c1526a22f27baddf0c9a2d6d9c8d4d; D5/S3/Analytic/IncompleteBeta/Comparison.betaMean_strictAntiOn (D5.S3.Analytic.IncompleteBeta.Comparison.betaMean_strictAntiOn) statement_id=sha256:8e5cc3dcb0b903667c4ed8ac30429217f113e1e1e09d26451dfd2b0252bacacc; D5/S3/Analytic/KummerRatio/BetaIntegral.gamma_pochhammer (D5.S3.Analytic.KummerRatio.BetaIntegral.gamma_pochhammer) statement_id=sha256:1059688f4875284d841121819603b9b49cf825aab8e4de735ff76c3e200ab797; D5/S3/Analytic/KummerRatio/BetaIntegral.integral_beta (D5.S3.Analytic.KummerRatio.BetaIntegral.integral_beta) statement_id=sha256:fcc3a54a2a2111346d704d8d357ee41b6843e3310e722bd37de37805d8db9a45; D5/S3/Analytic/KummerRatio/BetaIntegral.intervalIntegrable_beta (D5.S3.Analytic.KummerRatio.BetaIntegral.intervalIntegrable_beta) statement_id=sha256:e5a0a5542de6599ee2c9cccab09e8ca6fa72a102e012c68c1531e2633f1e2986;
-stacked_dependencies: D5/S3/Analytic/KarpZhangGamma/Result.pair_sum (D5.S3.Analytic.KarpZhangGamma.Result.pair_sum); D5/S3/Analytic/KarpZhangGamma/Weighting.weighted_sum_nonneg (D5.S3.Analytic.KarpZhangGamma.Weighting.weighted_sum_nonneg); D5/S3/Analytic/KarpZhangReciprocal/Result.tail_sum (D5.S3.Analytic.KarpZhangReciprocal.Result.tail_sum). -/
+direct_frozen_dependencies: D5/S3/Analytic/IncompleteBeta/Comparison.betaMean (D5.S3.Analytic.IncompleteBeta.Comparison.betaMean) statement_id=sha256:52c1879a896c372f1717b74579f07258b6c1526a22f27baddf0c9a2d6d9c8d4d; D5/S3/Analytic/IncompleteBeta/Comparison.betaMean_strictAntiOn (D5.S3.Analytic.IncompleteBeta.Comparison.betaMean_strictAntiOn) statement_id=sha256:8e5cc3dcb0b903667c4ed8ac30429217f113e1e1e09d26451dfd2b0252bacacc; D5/S3/Analytic/KarpZhangGamma/Result.pair_sum (D5.S3.Analytic.KarpZhangGamma.Result.pair_sum) statement_id=sha256:8b8de24a133e92ce41bfd64f52ec4220d8e69256816912f55e8a2fc7e91f1326; D5/S3/Analytic/KarpZhangGamma/Weighting.weighted_sum_nonneg (D5.S3.Analytic.KarpZhangGamma.Weighting.weighted_sum_nonneg) statement_id=sha256:21a3c16ca411f5688e6d008390c044d80ff0f7c00cd4bb0f2640224c3f40eca6; D5/S3/Analytic/KarpZhangReciprocal/Result.tail_sum (D5.S3.Analytic.KarpZhangReciprocal.Result.tail_sum) statement_id=sha256:47b3c03268296e64f4b0bf24d2c278d331ce0da2c2acf1874e481088ac6793fd; D5/S3/Analytic/KummerRatio/BetaIntegral.gamma_pochhammer (D5.S3.Analytic.KummerRatio.BetaIntegral.gamma_pochhammer) statement_id=sha256:1059688f4875284d841121819603b9b49cf825aab8e4de735ff76c3e200ab797; D5/S3/Analytic/KummerRatio/BetaIntegral.integral_beta (D5.S3.Analytic.KummerRatio.BetaIntegral.integral_beta) statement_id=sha256:fcc3a54a2a2111346d704d8d357ee41b6843e3310e722bd37de37805d8db9a45; D5/S3/Analytic/KummerRatio/BetaIntegral.intervalIntegrable_beta (D5.S3.Analytic.KummerRatio.BetaIntegral.intervalIntegrable_beta) statement_id=sha256:e5a0a5542de6599ee2c9cccab09e8ca6fa72a102e012c68c1531e2633f1e2986; D5/S3/Analytic/SeriesInequalities/KarpQuadraticTruncations.pochhammer_turan_nonneg (D5.S3.Analytic.SeriesInequalities.KarpQuadraticTruncations.pochhammer_turan_nonneg) statement_id=sha256:9b9547e6ee28fad6d1a405777a4a27ec734321727ef590923b24a36c509a1439;
+stacked_dependencies: none. -/
 private theorem tail_nonneg (m q : ℕ) (hq : 2*q≤m) {μ α β : ℝ}
     (hμ : 0≤μ) (hα : 0≤α) (hβ : 0≤β) :
     0≤∑ i ∈ range (m-q-q+1), raw μ α β m (q+i) := by
@@ -586,8 +583,8 @@ private theorem tail_nonneg (m q : ℕ) (hq : 2*q≤m) {μ α β : ℝ}
 /-- The exact universal coefficient inequality of Conjecture 3.8. -/
 /- proof_shape: bind-only; escape_witness: none;
 consumers: D5.S3.Analytic.KarpZhangNinh.Result.result;
-direct_frozen_dependencies: none;
-stacked_dependencies: D5/S3/Analytic/KarpZhangReciprocal/Result.IsLogConcave (D5.S3.Analytic.KarpZhangReciprocal.Result.IsLogConcave). -/
+direct_frozen_dependencies: D5/S3/Analytic/KarpZhangReciprocal/Result.IsLogConcave (D5.S3.Analytic.KarpZhangReciprocal.Result.IsLogConcave) statement_id=sha256:b42cbcf21ac638e1b04c3104e1ecca467dd7f5283382d61727edd4354b0c30a0;
+stacked_dependencies: none. -/
 def claim : Prop :=
   ∀ (f : ℕ → ℝ) (μ α β : ℝ) (m : ℕ),
     KarpZhangReciprocal.Result.IsLogConcave f → 0≤μ → 0≤α → 0≤β →
@@ -596,8 +593,8 @@ def claim : Prop :=
 /-- The triple-Pochhammer coefficient assertion for every admissible sequence. -/
 /- proof_shape: content; escape_witness: full_tail_nonneg;
 consumers: external Conjecture 3.8 settlement;
-direct_frozen_dependencies: D5/S3/Analytic/IncompleteBeta/Comparison.betaMean (D5.S3.Analytic.IncompleteBeta.Comparison.betaMean) statement_id=sha256:52c1879a896c372f1717b74579f07258b6c1526a22f27baddf0c9a2d6d9c8d4d; D5/S3/Analytic/IncompleteBeta/Comparison.betaMean_strictAntiOn (D5.S3.Analytic.IncompleteBeta.Comparison.betaMean_strictAntiOn) statement_id=sha256:8e5cc3dcb0b903667c4ed8ac30429217f113e1e1e09d26451dfd2b0252bacacc; D5/S3/Analytic/KummerRatio/BetaIntegral.gamma_pochhammer (D5.S3.Analytic.KummerRatio.BetaIntegral.gamma_pochhammer) statement_id=sha256:1059688f4875284d841121819603b9b49cf825aab8e4de735ff76c3e200ab797; D5/S3/Analytic/KummerRatio/BetaIntegral.integral_beta (D5.S3.Analytic.KummerRatio.BetaIntegral.integral_beta) statement_id=sha256:fcc3a54a2a2111346d704d8d357ee41b6843e3310e722bd37de37805d8db9a45; D5/S3/Analytic/KummerRatio/BetaIntegral.intervalIntegrable_beta (D5.S3.Analytic.KummerRatio.BetaIntegral.intervalIntegrable_beta) statement_id=sha256:e5a0a5542de6599ee2c9cccab09e8ca6fa72a102e012c68c1531e2633f1e2986;
-stacked_dependencies: D5/S3/Analytic/KarpZhangGamma/Result.pair_sum (D5.S3.Analytic.KarpZhangGamma.Result.pair_sum); D5/S3/Analytic/KarpZhangGamma/Weighting.weighted_sum_nonneg (D5.S3.Analytic.KarpZhangGamma.Weighting.weighted_sum_nonneg); D5/S3/Analytic/KarpZhangReciprocal/Result.IsLogConcave (D5.S3.Analytic.KarpZhangReciprocal.Result.IsLogConcave); D5/S3/Analytic/KarpZhangReciprocal/Result.abel_layers (D5.S3.Analytic.KarpZhangReciprocal.Result.abel_layers); D5/S3/Analytic/KarpZhangReciprocal/Result.balanced_step (D5.S3.Analytic.KarpZhangReciprocal.Result.balanced_step); D5/S3/Analytic/KarpZhangReciprocal/Result.increment (D5.S3.Analytic.KarpZhangReciprocal.Result.increment); D5/S3/Analytic/KarpZhangReciprocal/Result.tail_sum (D5.S3.Analytic.KarpZhangReciprocal.Result.tail_sum). -/
+direct_frozen_dependencies: D5/S3/Analytic/IncompleteBeta/Comparison.betaMean (D5.S3.Analytic.IncompleteBeta.Comparison.betaMean) statement_id=sha256:52c1879a896c372f1717b74579f07258b6c1526a22f27baddf0c9a2d6d9c8d4d; D5/S3/Analytic/IncompleteBeta/Comparison.betaMean_strictAntiOn (D5.S3.Analytic.IncompleteBeta.Comparison.betaMean_strictAntiOn) statement_id=sha256:8e5cc3dcb0b903667c4ed8ac30429217f113e1e1e09d26451dfd2b0252bacacc; D5/S3/Analytic/KarpZhangGamma/Result.pair_sum (D5.S3.Analytic.KarpZhangGamma.Result.pair_sum) statement_id=sha256:8b8de24a133e92ce41bfd64f52ec4220d8e69256816912f55e8a2fc7e91f1326; D5/S3/Analytic/KarpZhangGamma/Weighting.weighted_sum_nonneg (D5.S3.Analytic.KarpZhangGamma.Weighting.weighted_sum_nonneg) statement_id=sha256:21a3c16ca411f5688e6d008390c044d80ff0f7c00cd4bb0f2640224c3f40eca6; D5/S3/Analytic/KarpZhangReciprocal/Result.IsLogConcave (D5.S3.Analytic.KarpZhangReciprocal.Result.IsLogConcave) statement_id=sha256:b42cbcf21ac638e1b04c3104e1ecca467dd7f5283382d61727edd4354b0c30a0; D5/S3/Analytic/KarpZhangReciprocal/Result.abel_layers (D5.S3.Analytic.KarpZhangReciprocal.Result.abel_layers) statement_id=sha256:1f4c98d526cdc81a6201b601b53c9ae3d7f1341af0d6daaf3cd848ef99f7e763; D5/S3/Analytic/KarpZhangReciprocal/Result.balanced_step (D5.S3.Analytic.KarpZhangReciprocal.Result.balanced_step) statement_id=sha256:140a2a4910e9527641f28cb4c26ce135410f92b1634e3f35f50ae0c8d6efd5f6; D5/S3/Analytic/KarpZhangReciprocal/Result.increment (D5.S3.Analytic.KarpZhangReciprocal.Result.increment) statement_id=sha256:1207b96dae6c500c52707f41fe79b5e5058f4c0aa52be6412607471cb02c05b8; D5/S3/Analytic/KarpZhangReciprocal/Result.tail_sum (D5.S3.Analytic.KarpZhangReciprocal.Result.tail_sum) statement_id=sha256:47b3c03268296e64f4b0bf24d2c278d331ce0da2c2acf1874e481088ac6793fd; D5/S3/Analytic/KummerRatio/BetaIntegral.gamma_pochhammer (D5.S3.Analytic.KummerRatio.BetaIntegral.gamma_pochhammer) statement_id=sha256:1059688f4875284d841121819603b9b49cf825aab8e4de735ff76c3e200ab797; D5/S3/Analytic/KummerRatio/BetaIntegral.integral_beta (D5.S3.Analytic.KummerRatio.BetaIntegral.integral_beta) statement_id=sha256:fcc3a54a2a2111346d704d8d357ee41b6843e3310e722bd37de37805d8db9a45; D5/S3/Analytic/KummerRatio/BetaIntegral.intervalIntegrable_beta (D5.S3.Analytic.KummerRatio.BetaIntegral.intervalIntegrable_beta) statement_id=sha256:e5a0a5542de6599ee2c9cccab09e8ca6fa72a102e012c68c1531e2633f1e2986; D5/S3/Analytic/SeriesInequalities/KarpQuadraticTruncations.pochhammer_turan_nonneg (D5.S3.Analytic.SeriesInequalities.KarpQuadraticTruncations.pochhammer_turan_nonneg) statement_id=sha256:9b9547e6ee28fad6d1a405777a4a27ec734321727ef590923b24a36c509a1439;
+stacked_dependencies: none. -/
 theorem result : claim := by
   intro f μ α β m hf hμ hα hβ
   rw [delta, KarpZhangReciprocal.Result.abel_layers]

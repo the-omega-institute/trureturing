@@ -162,3 +162,4 @@ Trisection binomial identities prove homogeneous balancing. The general symmetri
 - Dependency: [D5/S3/Analytic/KarpZhangGamma/Result](../KarpZhangGamma/Result.md)
 - Dependency: [D5/S3/Analytic/KarpZhangNinh/Beta](Beta.md)
 - Dependency: [D5/S3/Analytic/KarpZhangNinh/Homogeneous](Homogeneous.md)
+- Dependency: [D5/S3/Analytic/SeriesInequalities/KarpQuadraticTruncations](../SeriesInequalities/KarpQuadraticTruncations.md)

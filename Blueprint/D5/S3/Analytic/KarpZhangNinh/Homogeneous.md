@@ -160,7 +160,7 @@ $$\forall (n: \mathbb{N}), \forall (N: \mathbb{N}), (1 \le n) \Rightarrow ((\ope
 
 *Commentary.*
 
-The six residue cases reduce to the nonnegative slope and two exponential bounds against quadratics. For the offsets q=n-7 and q=n-8, respectively, the proof squares the Bernoulli estimate one_add_mul_le_pow at q/2, splits q into twice its natural quotient by two plus its remainder, and normalizes the two parity cases.
+The six residue cases reduce to the nonnegative slope and two exponential bounds against quadratics. For q=n-7, the first bound squares the Bernoulli estimate one_add_mul_le_pow at q/2, splits q into twice its natural quotient by two plus its remainder, and normalizes the two parity cases. The second bound applies the first at n-1 and normalizes the shifted quadratic.
 
 **Definition 1.14 (Homogeneous binomial coefficients).**
 

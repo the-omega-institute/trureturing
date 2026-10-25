@@ -228,7 +228,7 @@ private lemma power_linear (n : ℕ) (hn : 5 ≤ n) : (3:ℤ)*n-2 ≤ 2^(n-1) :=
   nlinarith [(show (0 : ℤ) ≤ (n - 5 : ℕ) by positivity)]
 
 /- proof_shape: bind-only; escape_witness: none;
-consumers: D5.S3.Analytic.KarpZhangNinh.Homogeneous.T_nonneg;
+consumers: D5.S3.Analytic.KarpZhangNinh.Homogeneous.T_nonneg; _private.D5.S3.Analytic.KarpZhangNinh.Homogeneous.0.D5.S3.Analytic.KarpZhangNinh.Homogeneous.power_quadratic_two;
 direct_frozen_dependencies: none;
 stacked_dependencies: none. -/
 private lemma power_quadratic_one (n : ℕ) (hn : 7 ≤ n) :
@@ -272,37 +272,10 @@ direct_frozen_dependencies: none;
 stacked_dependencies: none. -/
 private lemma power_quadratic_two (n : ℕ) (hn : 8 ≤ n) :
     (3:ℤ)*n^2-9*n+8 ≤ 2^(n-1) := by
-  have hbase (q : ℕ) :
-      (3 : ℤ) * q ^ 2 + 39 * q + 128 ≤ 128 * 2 ^ q := by
-    have hBernHalf : (1 : ℤ) + (q / 2 : ℕ) ≤ (2 : ℤ) ^ (q / 2) := by
-      simpa using (one_add_mul_le_pow (a := (1 : ℤ)) (by norm_num) (q / 2))
-    have hsq : ((1 : ℤ) + (q / 2 : ℕ)) ^ 2 ≤ ((2 : ℤ) ^ (q / 2)) ^ 2 :=
-      (sq_le_sq₀ (by positivity) (by positivity)).mpr hBernHalf
-    have hp : (2 : ℤ) ^ q =
-        ((2 : ℤ) ^ (q / 2)) ^ 2 * (2 : ℤ) ^ (q % 2) := by
-      calc
-        _ = (2 : ℤ) ^ (q / 2 * 2 + q % 2) := by congr 1; omega
-        _ = _ := by rw [pow_add, pow_mul]
-    have ht : q % 2 = 0 ∨ q % 2 = 1 := Nat.mod_two_eq_zero_or_one q
-    rcases ht with ht | ht
-    · rw [hp, ht, pow_zero, mul_one]
-      have hc : (q : ℤ) = 2 * (q / 2 : ℕ) := by
-        exact_mod_cast (show q = 2 * (q / 2) by omega)
-      rw [hc]
-      nlinarith [sq_nonneg ((q / 2 : ℕ) : ℤ), (show (0 : ℤ) ≤ (q / 2 : ℕ) by positivity)]
-    · rw [hp, ht, pow_one]
-      have hc : (q : ℤ) = 2 * (q / 2 : ℕ) + 1 := by
-        exact_mod_cast (show q = 2 * (q / 2) + 1 by omega)
-      rw [hc]
-      nlinarith [sq_nonneg ((q / 2 : ℕ) : ℤ), (show (0 : ℤ) ≤ (q / 2 : ℕ) by positivity)]
-  have hp : (2 : ℤ) ^ (n - 1) = 128 * (2 : ℤ) ^ (n - 8) := by
-    calc
-      _ = (2 : ℤ) ^ ((n - 8) + 7) := by congr 1; omega
-      _ = _ := by rw [pow_add]; norm_num; ring
-  have hc : (n : ℤ) = (n - 8 : ℕ) + 8 := by
-    exact_mod_cast (show n = (n - 8) + 8 by omega)
-  have hb := hbase (n - 8)
-  rw [hp, hc]
+  have h := power_quadratic_one (n - 1) (Nat.sub_le_sub_right hn 1)
+  have hcast : ((n - 1 : ℕ) : ℤ) = (n : ℤ) - 1 :=
+    Nat.cast_sub (le_trans (Nat.le_add_right 1 7) hn)
+  rw [hcast] at h
   nlinarith
 
 /- proof_shape: content; escape_witness: residue_filter;

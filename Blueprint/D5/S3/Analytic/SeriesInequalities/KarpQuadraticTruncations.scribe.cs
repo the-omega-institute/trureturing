@@ -1,4 +1,6 @@
 using static StrataLint.Scribe.DefinitionDsl;
+using static StrataLint.Scribe.FormulaDsl;
+using F = StrataLint.Scribe.FormulaDsl;
 
 namespace StrataLint.Scribe.Blueprint.D5.S3.Analytic.SeriesInequalities;
 
@@ -18,6 +20,28 @@ internal sealed class KarpQuadraticTruncationsDocument : IScribeDocumentDefiniti
                     + "symbols, Fractional Calculus and Applied Analysis 27 (2024), 458-486, "
                     + "DOI 10.1007/s13540-023-00238-0. The results concern only the specified "
                     + "truncations of Conjectures 1 and 2, not either full series conjecture.")),
+            Describe.Lean(
+                DescribeId.Create("pochhammer-turan-nonneg"),
+                DeclarationHandle.Create(Prefix + "pochhammer_turan_nonneg"),
+                H("Nonnegative equal-degree Pochhammer difference"),
+                StatementSource.FromAuthor(Disp(
+                    All("n", F.Id("Nat"), All("mu", F.Id("Real"),
+                        All("alpha", F.Id("Real"), All("beta", F.Id("Real"),
+                            Implies(Lt(Num(0), F.Id("mu")),
+                                Implies(Le(Num(0), F.Id("alpha")),
+                                    Implies(Le(Num(0), F.Id("beta")),
+                                        Le(Num(0), Subtract(
+                                            Multiply(Poch(Add(F.Id("mu"), F.Id("alpha"))),
+                                                Poch(Add(F.Id("mu"), F.Id("beta")))),
+                                            Multiply(Poch(F.Id("mu")),
+                                                Poch(Add(Add(F.Id("mu"), F.Id("alpha")), F.Id("beta"))))))))))))))),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text(
+                    "For every natural degree, positive real base and nonnegative real shifts, "
+                        + "the product at the two intermediate parameters dominates the product "
+                        + "at the endpoints. Each Pochhammer symbol is Mathlib's ascending "
+                        + "Pochhammer polynomial in degree n evaluated at its parameter."))),
+                DescribeRole.Theorem),
             Describe.Lean(
                 DescribeId.Create("r2-polynomial"),
                 DeclarationHandle.Create(Prefix + "r2Polynomial"),
@@ -71,4 +95,18 @@ internal sealed class KarpQuadraticTruncationsDocument : IScribeDocumentDefiniti
                         + "shifts are arbitrary nonnegative reals, extending the integer-shift "
                         + "scope of the paper's Theorem 3 for this truncation."))),
                 DescribeRole.Theorem))));
+    private static Formula All(string name, Formula type, Formula body) =>
+        Seq(Forall, Sp, Seq(Open, F.Id(name), Colon, Sp, type, Close), Comma, Sp, body);
+    private static Formula Poch(Formula t) =>
+        App(Qualified("Polynomial", "eval"), t,
+            App(F.Id("ascPochhammer"), F.Id("Real"), F.Id("n")));
+    private static Formula Implies(Formula a, Formula b) =>
+        new Formula.Logic(a, FormulaLogicOperator.Implies, b);
+    private static Formula Le(Formula a, Formula b) =>
+        new Formula.Relation(a, FormulaRelationOperator.LessThanOrEqual, b);
+    private static Formula Lt(Formula a, Formula b) =>
+        new Formula.Relation(a, FormulaRelationOperator.LessThan, b);
+    private static Formula App(Formula f, params Formula[] args) => new Formula.Apply(f, [.. args]);
+    private static Formula Qualified(string owner, string name) =>
+        Seq(Operatorname, Grp(F.Id(owner)), Dot, Operatorname, Grp(F.Id(name)));
 }
