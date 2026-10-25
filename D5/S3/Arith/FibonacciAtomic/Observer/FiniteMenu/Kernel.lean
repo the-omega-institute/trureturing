@@ -33,11 +33,11 @@ private theorem same_trans {S : Menu} {u v w : Source}
     (h : Same S u v) (g : Same S v w) : Same S u w :=
   fun q hq k => (h q hq k).trans (g q hq k)
 
-theorem iter_mul (k : Nat) (x y : Source) :
+private theorem iter_mul (k : Nat) (x y : Source) :
     substitution^[k] (.mul x y) = .mul (substitution^[k] x) (substitution^[k] y) :=
   Function.Semiconj₂.iterate (fun s t => substitution.map_mul s t) k x y
 
-theorem beta_shift (k : Nat) :
+private theorem beta_shift (k : Nat) :
     substitution^[k] (.of false) = substitution^[k+1] (.of true) := by
   rw [Function.iterate_succ_apply]
   rfl

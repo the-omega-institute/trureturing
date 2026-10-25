@@ -4,10 +4,11 @@
    mirror-E: none(waiver:unbounded-symbolic-proof)
    anchors: []
    utility: none
-   digest: Complete native temporal factors and relative prefix cylinders on canonical trees. -/
+   digest: Canonical blocking-factor classes, realized cylinders and relative prefix projections. -/
 
 import D5.S3.Arith.FibonacciAtomic.Observer.Constructor.NativeConstructorArrays
-import D5.S3.Arith.FibonacciAtomic.Observer.FiniteMenu.Kernel
+import D5.S3.Arith.FibonacciAtomic.Observer.NativeRankedNavigationCompiler
+import D5.S3.Arith.FibonacciAtomic.Observer.NativeFiniteMenuCode
 import Mathlib.Data.List.TakeDrop
 
 set_option autoImplicit false
@@ -40,12 +41,6 @@ def gamma : Address → Source → Factor
   | [], .mul _ _ => (0,false)
   | false :: q, .mul l _ => gamma q l
   | true :: q, .mul _ r => gamma q r
-
-/-- Original complete trajectory decoder, with Boolean zero/one coordinate. -/
-def predict (z : Factor) (k : Nat) : Reply :=
-  if z.1 ≤ k then .branch
-  else if k + 1 = z.1 then .beta
-  else if z.2 = true ∧ k + 2 = z.1 then .alpha else .absent
 
 /-- The factor attached to a prefix position and a genuine leaf label. -/
 def descriptor (q : Address) (i : Nat) (b : Bool) : Factor := leafFactor (q.drop i) b
@@ -161,14 +156,11 @@ private theorem descriptor_class (q : Address) (i : Nat) (b : Bool)
     (hi : i ≤ q.length) :
     (∀ j : Nat, j ≤ q.length → ∀ c : Bool,
       descriptor q j c = descriptor q i b ↔ j = i ∧ c = b) ∨
-    ∃ k : Nat, DoubleAt q k ∧ descriptor q i b = descriptor q k false ∧
-      ∀ j : Nat, j ≤ q.length → ∀ c : Bool,
-        descriptor q j c = descriptor q i b ↔
-          (j = k ∧ c = false) ∨ (j = k+1 ∧ c = true) := by
+    ∃ k : Nat, DoubleAt q k ∧ descriptor q i b = descriptor q k false := by
   classical
   by_cases hd : ∃ k : Nat, DoubleAt q k ∧ descriptor q i b = descriptor q k false
   · obtain ⟨k,hk,he⟩ := hd
-    exact Or.inr ⟨k,hk,he,fun j hj c => by rw [he]; exact double_descriptors q k hk j c hj⟩
+    exact Or.inr ⟨k,hk,he⟩
   · left
     intro j hj c
     constructor
@@ -390,7 +382,7 @@ private theorem classify_level (d : Nat) (q : Address) (hq : q.length < d)
       exact ⟨v,(gamma_zero q v.val).mpr hv,hv⟩
   · have he : z = descriptor q i b := hu.symm.trans hg
     rw [he]
-    rcases descriptor_class q i b hi with hs | ⟨k,hk,he,hc⟩
+    rcases descriptor_class q i b hi with hs | ⟨k,hk,he⟩
     · right; left
       refine ⟨i,b,hi,hs,level_single d q i b hi hs,?_⟩
       ext y
@@ -459,112 +451,6 @@ private theorem box_from_classification (d : Nat) (q : Address) (z : Factor)
     · exact (test u).mpr ⟨by simpa [pl] using h (q.take i) (List.take_prefix i q),
         by simpa [pr] using h (q.take (i+1)) (List.take_prefix (i+1) q)⟩
 
-private theorem predict_shift (a : Bool) (q : Address) (k : Nat) :
-    predict (leafFactor (a :: q) true) (k+2) =
-      predict (leafFactor q true) (k + if a then 0 else 1) := by
-  cases q with
-  | nil => cases a <;> simp [predict, leafFactor, pathCost, lastRight] <;>
-      split_ifs <;> simp_all <;> omega
-  | cons b q =>
-      have hp : 0 < pathCost (b :: q) := by cases b <;> simp [pathCost] <;> omega
-      have cost : pathCost (a :: b :: q) = (if a then 2 else 1) + pathCost (b :: q) := rfl
-      simp only [leafFactor, List.cons_ne_nil, ↓reduceIte]
-      rw [cost, last_cons a (b :: q) (by simp)]
-      cases a <;> simp only [Bool.false_eq_true, ite_false, ite_true, Nat.add_zero]
-      all_goals unfold predict; simp only [Prod.fst,Prod.snd]; split_ifs <;> simp_all <;> omega
-
-private theorem atomic_trajectory (q : Address) (k : Nat) :
-    readout q (substitution^[k] (.of true)) = predict (leafFactor q true) k := by
-  induction q generalizing k with
-  | nil =>
-      cases k with
-      | zero => rfl
-      | succ k => cases k with
-        | zero => rfl
-        | succ k =>
-            rw [show k+1+1 = k+2 by omega, NativeRankedEqualityCompiler.atomic_pair]
-            simp [readout, predict, leafFactor, pathCost]
-  | cons a q ih =>
-      cases k with
-      | zero =>
-          have hp : 0 < pathCost (a :: q) := by cases a <;> simp [pathCost] <;> omega
-          change Reply.absent = predict (leafFactor (a :: q) true) 0
-          unfold predict leafFactor
-          simp only [Prod.fst,Prod.snd]
-          split_ifs <;> simp_all <;> omega
-      | succ k => cases k with
-        | zero =>
-            cases q with
-            | nil => cases a <;> rfl
-            | cons b q =>
-                have hp : 2 ≤ pathCost (a :: b :: q) := by
-                  cases a <;> cases b <;> simp [pathCost] <;> omega
-                change Reply.absent = predict (leafFactor (a :: b :: q) true) 1
-                unfold predict leafFactor
-                simp only [Prod.fst,Prod.snd]
-                split_ifs <;> simp_all <;> omega
-        | succ k =>
-            rw [show k+1+1 = k+2 by omega, NativeRankedEqualityCompiler.atomic_pair,
-              predict_shift]
-            cases a
-            · change readout q (substitution^[k+1] (.of true)) = _
-              exact ih (k+1)
-            · change readout q (substitution^[k] (.of true)) = _
-              exact ih k
-
-private theorem beta_decoder (q : Address) (k : Nat) :
-    predict (leafFactor q true) (k+1) = predict (leafFactor q false) k := by
-  cases q with
-  | nil => simp [predict, leafFactor, pathCost]
-  | cons a q =>
-      have hp : 0 < pathCost (a :: q) := by cases a <;> simp [pathCost] <;> omega
-      unfold predict leafFactor
-      simp only [List.cons_ne_nil, ↓reduceIte]
-      split_ifs <;> simp_all <;> omega
-
-private theorem native_trajectory (q : Address) (u : Source) (k : Nat) :
-    readout q (substitution^[k] u) = predict (gamma q u) k := by
-  induction q generalizing u with
-  | nil =>
-      cases u with
-      | of b => cases b with
-        | true => exact atomic_trajectory [] k
-        | false =>
-            rw [FiniteMenu.Kernel.beta_shift, atomic_trajectory, beta_decoder]; rfl
-      | mul l r =>
-          rw [FiniteMenu.Kernel.iter_mul]
-          simp [readout, gamma, predict]
-  | cons a q ih =>
-      cases u with
-      | of b => cases b with
-        | true => exact atomic_trajectory (a :: q) k
-        | false =>
-            rw [FiniteMenu.Kernel.beta_shift, atomic_trajectory, beta_decoder]; rfl
-      | mul l r =>
-          rw [FiniteMenu.Kernel.iter_mul]
-          cases a <;> simpa [readout, gamma] using ih _
-
-private theorem decoder_injective (z w : Factor)
-    (hz : z.2 = true → 2 ≤ z.1) (hw : w.2 = true → 2 ≤ w.1)
-    (same : ∀ k : Nat, predict z k = predict w k) : z = w := by
-  have first : z.1 = w.1 := by
-    have h₁ := same z.1
-    have h₂ := same w.1
-    unfold predict at h₁ h₂
-    split_ifs at h₁ h₂ <;> simp_all <;> omega
-  apply Prod.ext first
-  by_contra h
-  rcases z with ⟨b,c⟩
-  rcases w with ⟨e,f⟩
-  simp only [Prod.fst, Prod.snd] at *
-  subst e
-  cases c <;> cases f <;> simp_all only [Bool.false_eq_true, Bool.true_eq_false,
-    not_true_eq_false, not_false_eq_true, false_implies, true_implies]
-  all_goals
-    have hs := same (b-2)
-    unfold predict at hs
-    split_ifs at hs <;> simp_all <;> omega
-
 private theorem factor_guard (q : Address) (u : Source) :
     (gamma q u).2 = true → 2 ≤ (gamma q u).1 := by
   induction q generalizing u with
@@ -577,9 +463,9 @@ private theorem factor_guard (q : Address) (u : Source) :
         cases b <;> simp [gamma, leafFactor] <;> omega
     | mul l r => cases a <;> simpa [gamma] using ih _
 
-/-- Every attained complete factor has exactly its actual relative prefix box,
+/-- Every attained blocking factor has exactly its actual relative prefix box,
 with all cylinders and both collision alternatives realized canonically. -/
-theorem relative_prefix_boxes (d : Nat) (q : Address)
+theorem canonical_factor_levels (d : Nat) (q : Address)
     (hq : q.length < d) (z : Factor) (attained : ∃ u : S d, gamma q u.val = z) :
     level d q z = {u : S d | ∀ v : Address, v.IsPrefix q →
       readout v u.val ∈ projection d q v z} ∧
@@ -590,24 +476,14 @@ theorem relative_prefix_boxes (d : Nat) (q : Address)
     (∀ i : Nat, i ≤ q.length → ∀ b : Bool,
       ∃ u : S d, readout (q.take i) u.val = leafReply b) ∧
     (∃ u : S d, readout q u.val = .branch) ∧
-    (∀ (u : Source) (k : Nat), readout q (substitution^[k] u) = predict (gamma q u) k) ∧
-    (∀ u v : Source, gamma q u = gamma q v ↔
-      ∀ k : Nat, readout q (substitution^[k] u) = readout q (substitution^[k] v)) ∧
     (∀ u : Source, (gamma q u).2 = true → 2 ≤ (gamma q u).1) ∧
     (∀ u : Source, readout q u = .absent →
       ∃ i : Nat, i < q.length ∧ ∃ b : Bool,
         readout (q.take i) u = leafReply b ∧ gamma q u = descriptor q i b) := by
   have hc := classify_level d q hq z attained
   have wa := cylinders_attained d q hq
-  refine ⟨box_from_classification d q z hc,hc,?_,wa.1,wa.2,native_trajectory q,?_,factor_guard q,?_⟩
+  refine ⟨box_from_classification d q z hc,hc,?_,wa.1,wa.2,factor_guard q,?_⟩
   · intro i j b c hi hj hij; exact descriptor_collision q i j b c hi hj hij
-  · intro u v
-    constructor
-    · intro h k; rw [native_trajectory, native_trajectory, h]
-    · intro h
-      exact decoder_injective _ _ (factor_guard q u) (factor_guard q v)
-        (fun k => (native_trajectory q u k).symm.trans ((h k).trans (native_trajectory q v k)))
-
   · intro u ha
     rcases actual_blocker q u with ⟨_,hr⟩ | ⟨i,hi,b,hr,hg⟩
     · rw [ha] at hr; cases hr
@@ -617,6 +493,6 @@ theorem relative_prefix_boxes (d : Nat) (q : Address)
       rw [he, List.take_length, ha] at hr
       cases b <;> cases hr
 
-#print axioms relative_prefix_boxes
+#print axioms canonical_factor_levels
 
 end D5.S3.Arith.FibonacciAtomic.Observer.NativeRelativePrefixBoxes

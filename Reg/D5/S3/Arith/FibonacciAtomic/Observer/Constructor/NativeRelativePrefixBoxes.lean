@@ -46,26 +46,25 @@ abbrev arena : Arena where
     (∀ i : Nat, i ≤ q.length → ∀ b : Bool,
       ∃ u : S d, readout (q.take i) u.val = leafReply b) ∧
     (∃ u : S d, readout q u.val = .branch) ∧
-    (∀ (u : Source) (k : Nat), readout q (substitution^[k] u) =
-      predict (R.readout () ⟨d,q,z⟩ u) k) ∧
-    (∀ u v : Source, gamma q u = gamma q v ↔
-      ∀ k : Nat, readout q (substitution^[k] u) = readout q (substitution^[k] v)) ∧
     (∀ u : Source, (gamma q u).2 = true → 2 ≤ (gamma q u).1) ∧
     (∀ u : Source, readout q u = .absent →
       ∃ i : Nat, i < q.length ∧ ∃ b : Bool,
-        readout (q.take i) u = leafReply b ∧ gamma q u = descriptor q i b)
+        readout (q.take i) u = leafReply b ∧ R.readout () ⟨d,q,z⟩ u = descriptor q i b)
 
-private theorem positive : arena.Law actual := relative_prefix_boxes
+private theorem positive : arena.Law actual := canonical_factor_levels
 
 private theorem negative : ¬ arena.Law rejected := by
   intro h
-  have hr := h 1 [] (by decide) (2,true)
-    ⟨⟨.of true,by trivial⟩,rfl⟩
-  have bad := hr.2.2.2.2.2.1 (.of true) 0
-  change Reply.alpha = Reply.branch at bad
-  cases bad
+  have hr := h 2 [false] (by decide) (2,false)
+    ⟨⟨.of false,by trivial⟩,rfl⟩
+  obtain ⟨i,hi,b,_,hg⟩ := hr.2.2.2.2.2.2 (.of false) rfl
+  have he : i = 0 := by simpa using hi
+  subst i
+  have bad := congrArg Prod.fst hg
+  cases b <;> norm_num [rejected,realize,descriptor,leafFactor,
+    Observer.NativeRankedNavigationCompiler.pathCost] at bad
 
-def evidence : Registration arena (type_of% (@relative_prefix_boxes)) where
+def evidence : Registration arena (type_of% (@canonical_factor_levels)) where
   actual := actual
   bridge := Iff.rfl
   variation := ⟨positive,rejected,negative⟩
@@ -79,8 +78,8 @@ def evidence : Registration arena (type_of% (@relative_prefix_boxes)) where
     omega
 
 def registration : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
-    (@relative_prefix_boxes) (Realization signature) Unit Unit where
-  unitName := `D5.S3.Arith.FibonacciAtomic.Observer.NativeRelativePrefixBoxes.relative_prefix_boxes.__information_unit
+    (@canonical_factor_levels) (Realization signature) Unit Unit where
+  unitName := `D5.S3.Arith.FibonacciAtomic.Observer.NativeRelativePrefixBoxes.canonical_factor_levels.__information_unit
   realizationName := `Reg.D5.S3.Arith.FibonacciAtomic.Observer.NativeRelativePrefixBoxes.evidence
   realizationSource := none
   generated := false
@@ -102,8 +101,8 @@ def registration : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
     coordinates := #[0,1,3]
     readouts := #[{
       path := #["body","body","body","body","body",
-        "arg","arg","arg","arg","arg","fn","arg",
-        "body","body","arg","fn","arg","fn"]
+        "arg","arg","arg","arg","arg","arg","body","body",
+        "arg","body","arg","arg","body","arg","fn","arg","fn"]
       stateBinder := 0
       functionOperand := true
       stateOperand := none
