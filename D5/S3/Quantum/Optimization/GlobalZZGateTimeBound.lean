@@ -6,8 +6,6 @@
    utility: none
    digest: Global ZZ couplings admit nonnegative sign schedules within the sharp parity bound. -/
 
-import Mathlib.LinearAlgebra.Matrix.Symmetric
-import Mathlib.Data.ZMod.Basic
 import D5.S3.Observer.Linear.FiniteRealZeroFillRegister
 
 set_option autoImplicit false
