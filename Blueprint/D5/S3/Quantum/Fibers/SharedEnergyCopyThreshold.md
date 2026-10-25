@@ -2,7 +2,7 @@
 
 ## Abstract
 
-Sparse positive density matrices in the fixed three-level energy basis have a primitive phase-sensitive relation of degree twice the upper energy minus one.
+Sparse positive density matrices in the fixed three-level energy basis have a phase-sensitive relation of degree twice the upper energy minus one.
 
 **Definition 1.1 (Literal sparse Hermitian matrices).**
 
@@ -14,7 +14,7 @@ Lean statement: `D5/S3/Quantum/Fibers/SharedEnergyCopyThreshold.sparseMatrix`
 
 *Commentary.*
 
-The diagonal entries are one third. The entries between the first and second basis vectors vanish. The two entries into the third basis vector have modulus one twelfth, with a unit phase on the first edge. The reverse entries are the complex conjugates in this same basis.
+The diagonal entries are one third. The entries between the first and second basis vectors vanish. Entries (2,0) and (0,2) are u divided by twelve and its conjugate; entries (2,1) and (1,2) are one twelfth. Both edge moduli are one twelfth when u has unit modulus.
 
 **Theorem 1.2 (Positive density spectrum).**
 
@@ -76,7 +76,7 @@ Lean statement: `D5/S3/Quantum/Fibers/SharedEnergyCopyThreshold.sigma`
 
 The second native state has the same diagonal and zero entries and uses the resonant phase on the edge between the first and third levels.
 
-**Definition 1.7 (The primitive supported monomial).**
+**Definition 1.7 (The phase-sensitive supported monomial).**
 
 Lean statement: `D5/S3/Quantum/Fibers/SharedEnergyCopyThreshold.starMonomial`
 
