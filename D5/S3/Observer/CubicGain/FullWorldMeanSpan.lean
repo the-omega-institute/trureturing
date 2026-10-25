@@ -40,28 +40,9 @@ def fullWorldMean (W : OriginalWorld) : Fin 17 → ℝ :=
 def fullMeanFamily : Set (Fin 17 → ℝ) :=
   fullWorldMean '' {W | FullWorld W}
 
-/-- Exact correspondence with the source's unconstrained (r,b,c,d,a) telescope. -/
-private theorem full_world_source_iff (r b c d : ℝ) (a : Gain) :
-    (0 < r ∧ r < 1 ∧ 0 < b ∧ 0 < c ∧ b*c = r*(1-r) ∧
-      Polynomial.ofFn 4 a ≠ 0) ↔
-    (FullWorld (r,b,d,a) ∧ sourceMatrix r b = !![r,b;c,1-r]) := by
-  constructor
-  · rintro ⟨hr,hr1,hb,hc,hbc,ha⟩
-    have he : r*(1-r)/b=c := (div_eq_iff (ne_of_gt hb)).2 (by nlinarith [hbc])
-    refine ⟨⟨hr,hr1,hb,ha⟩,?_⟩
-    ext i j
-    fin_cases i <;> fin_cases j <;> simp [sourceMatrix,he]
-  · rintro ⟨⟨hr,hr1,hb,ha⟩,hP⟩
-    have he : r*(1-r)/b=c := congrFun (congrFun hP 1) 0
-    have hc : 0 < c := he ▸ div_pos (mul_pos hr (sub_pos.mpr hr1)) hb
-    refine ⟨hr,hr1,hb,hc,?_,ha⟩
-    rw [← he]
-    field_simp
-
-/-- The four legal source programs, before eliminating c by its defining equation. -/
+/-- The four source programs in the native (r,b) coordinates. -/
 def sourceR : Fin 4 → ℝ := ![1/4,1/4,1/4,1/3]
 def sourceB : Fin 4 → ℝ := ![1/8,1/6,1/4,1/8]
-def sourceC : Fin 4 → ℝ := ![3/2,9/8,3/4,16/9]
 
 def programColumns : Matrix (Fin 4) (Fin 4) ℝ :=
   fun j i => sourceVector (sourceR i) (sourceB i) j
@@ -69,12 +50,11 @@ def programColumns : Matrix (Fin 4) (Fin 4) ℝ :=
 /-- Exact arithmetic premises for the unrestricted-family construction. -/
 private theorem source_certificate :
     (∀ i : Fin 4, 0 < sourceR i ∧ sourceR i < 1 ∧
-      0 < sourceB i ∧ 0 < sourceC i ∧
-      sourceB i*sourceC i=sourceR i*(1-sourceR i)) ∧
+      0 < sourceB i) ∧
     programColumns.det = 1/768 := by
   constructor
   · intro i
-    fin_cases i <;> norm_num [sourceR,sourceB,sourceC]
+    fin_cases i <;> norm_num [sourceR,sourceB]
   · norm_num [programColumns,sourceVector,sourceMatrix,sourceR,sourceB,
       Matrix.det_succ_row_zero,Fin.sum_univ_succ,Matrix.det_unique,
       Matrix.submatrix_apply,Fin.succAbove]
@@ -84,14 +64,13 @@ private def monomialWorld (i k : Fin 4) (q d : ℝ) : OriginalWorld :=
 
 private theorem monomial_legal (i k : Fin 4) (q d : ℝ) (hq : q ≠ 0) :
     FullWorld (monomialWorld i k q d) := by
-  obtain ⟨hr,hr1,hb,hc,hbc⟩ := source_certificate.1 i
+  obtain ⟨hr,hr1,hb⟩ := source_certificate.1 i
   have hn : Polynomial.ofFn 4 (Pi.single k q : Gain) ≠ 0 := by
     intro hz
     have he := congrArg (fun p : Polynomial ℝ => p.coeff k.val) hz
     simp [Polynomial.ofFn_coeff_eq_val_of_lt _ k.isLt] at he
     exact hq he
-  exact ((full_world_source_iff (sourceR i) (sourceB i) (sourceC i) d
-    (Pi.single k q)).mp ⟨hr,hr1,hb,hc,hbc,hn⟩).1
+  exact ⟨hr,hr1,hb,hn⟩
 
 private def blockMap (k : Fin 4) : (Fin 4 → ℝ) →ₗ[ℝ] (Fin 17 → ℝ) where
   toFun v := meanCoordinates 0 (Pi.single k 1) v
@@ -170,6 +149,5 @@ theorem full_world_mean_span :
   apply A.direction.add_mem hd
   exact A.direction.sum_mem (fun k _ => block_directions k (b k))
 
-#print axioms full_world_source_iff
 #print axioms full_world_mean_span
 end D5.S3.Observer.CubicGain.FullWorldMeanSpan
