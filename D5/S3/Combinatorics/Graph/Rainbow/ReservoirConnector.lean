@@ -39,7 +39,8 @@ def vertexReservoir (G : Digraph V) (c : V → V → C)
 def colourReservoir (G : Digraph V) (c : V → V → C)
     (ω : (V ⊕ ActualPalette G c) → Bool) : Finset C := by
   classical
-  exact (univ.filter (fun q => ω (Sum.inr q) = true)).image Subtype.val
+  exact (univ.filter (fun q => ω (Sum.inr q) = true)).map
+    ⟨fun q : ActualPalette G c => q.val, fun _ _ h => Subtype.ext h⟩
 
 /-- B1, both directions of B2, and B3 with all forbidden sets chosen after the
 single outcome. Colours outside the actual palette remain allowed in D. -/
@@ -64,13 +65,19 @@ private theorem literal_selected (G : Digraph V) (c : V → V → C)
     (ω : (V ⊕ ActualPalette G c) → Bool) (q : ActualPalette G c) :
     q.val ∈ colourReservoir G c ω ↔ ω (Sum.inr q) = true := by
   classical
-  simp only [colourReservoir, mem_image, mem_filter, mem_univ, true_and]
+  change q.val ∈ (univ.filter (fun r : ActualPalette G c => ω (Sum.inr r) = true)).map
+    ⟨fun r => r.val, fun _ _ h => Subtype.ext h⟩ ↔ _
   constructor
-  · rintro ⟨r, hr, he⟩
-    have : r = q := Subtype.ext he
-    simpa [this] using hr
   · intro h
-    exact ⟨q, h, rfl⟩
+    obtain ⟨r, hr, he⟩ := Finset.mem_map.mp h
+    have : r = q := Subtype.ext he
+    subst r
+    exact (mem_filter.mp hr).2
+  · intro h
+    have hq : q ∈ (univ : Finset (ActualPalette G c)) := mem_univ q
+    have hs : q ∈ univ.filter (fun r : ActualPalette G c => ω (Sum.inr r) = true) :=
+      mem_filter.mpr ⟨hq, h⟩
+    exact Finset.mem_map.mpr ⟨q, hs, rfl⟩
 
 private theorem edge_selected (G : Digraph V) (c : V → V → C)
     (q₀ : ActualPalette G c) (ω : (V ⊕ ActualPalette G c) → Bool)
@@ -136,7 +143,7 @@ private theorem base_count (G : Digraph V) (c : V → V → C)
   · by_cases hxw : G.Adj x w
     · simp [rainbow, twoStep, outNeighbors, sampledBase, layer, vertexReservoir,
         hux, hxw, palette_colour_eq_iff G c q₀ u x x w hux hxw,
-        edge_selected G c q₀ ω u x hux, edge_selected G c q₀ ω x w hxw, and_assoc]
+        edge_selected G c q₀ ω u x hux, edge_selected G c q₀ ω x w hxw]
     · simp [rainbow, twoStep, outNeighbors, sampledBase, layer, hxw]
   · simp [rainbow, twoStep, outNeighbors, sampledBase, layer, hux]
 
@@ -157,7 +164,7 @@ private theorem loss_complement {Q : Type*}
     exact_mod_cast h
   linarith
 
-private theorem retained_out (G : Digraph V) (c : V → V → C)
+private theorem retained_out [DecidableEq V] [DecidableEq C] (G : Digraph V) (c : V → V → C)
     (q₀ : ActualPalette G c) (ω : (V ⊕ ActualPalette G c) → Bool) (u : V) :
     retainedOut G (paletteColour G c q₀) u ω =
       (((outNeighbors G u).filter (fun x => x ∉ vertexReservoir G c ω ∧
@@ -170,7 +177,7 @@ private theorem retained_out (G : Digraph V) (c : V → V → C)
   · simp [outNeighbors, vertexReservoir, hux, edge_selected G c q₀ ω u x hux]
   · simp [outNeighbors, hux]
 
-private theorem retained_in (G : Digraph V) (c : V → V → C)
+private theorem retained_in [DecidableEq V] [DecidableEq C] (G : Digraph V) (c : V → V → C)
     (q₀ : ActualPalette G c) (ω : (V ⊕ ActualPalette G c) → Bool) (w : V) :
     retainedIn G (paletteColour G c q₀) w ω =
       (((incoming G univ w).filter (fun x => x ∉ vertexReservoir G c ω ∧
