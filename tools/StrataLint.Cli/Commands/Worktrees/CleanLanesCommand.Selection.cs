@@ -112,11 +112,12 @@ internal static partial class CleanLanesCommand
     {
         var reference = "refs/heads/" + branch;
         var historical = reference;
-        foreach (var rename in branchLog.Renames!.AsEnumerable().Reverse())
+        foreach (var rename in branchLog.BranchTransfers!.AsEnumerable().Reverse())
         {
             if (rename.Updated < checkout.Updated) continue;
             // Different logs cannot order operations within the same second.
             if (rename.Updated == checkout.Updated) return false;
+            if (!rename.Message.StartsWith("Branch: renamed ", StringComparison.Ordinal)) return false;
             var names = rename.Message["Branch: renamed ".Length..].Split(" to ", StringSplitOptions.None);
             if (names.Length != 2 || names[1] != historical) return false;
             historical = names[0];
@@ -167,7 +168,7 @@ internal static partial class CleanLanesCommand
             string? newHead = null;
             var checkouts = new Dictionary<string, List<HeadLogRecord>>(StringComparer.Ordinal);
             var explicitAllocation = false;
-            var renames = new List<HeadLogRecord>();
+            var branchTransfers = new List<HeadLogRecord>();
             HeadLogRecord? firstRecord = null;
             while (reader.ReadLine() is { } line)
             {
@@ -175,8 +176,8 @@ internal static partial class CleanLanesCommand
                 firstRecord ??= record;
                 allocated ??= record!.Updated;
                 newHead = record!.NewHead;
-                if (!treeLog && record.Message.StartsWith("Branch: renamed ", StringComparison.Ordinal))
-                    renames.Add(record);
+                if (!treeLog && record.Message.StartsWith("Branch: ", StringComparison.Ordinal))
+                    branchTransfers.Add(record);
                 const string allocationPrefix = "worktree-allocation:";
                 if (treeLog && record.Message.StartsWith(allocationPrefix, StringComparison.Ordinal))
                 {
@@ -204,7 +205,7 @@ internal static partial class CleanLanesCommand
             if (allocated is null) return new(Error: "reflog_empty");
             if (!string.Equals(newHead, observedHead, StringComparison.Ordinal))
                 return new(Error: "reflog_head_mismatch");
-            return new(allocated, Checkouts: checkouts, ExplicitAllocation: explicitAllocation, FirstRecord: firstRecord, Renames: renames);
+            return new(allocated, Checkouts: checkouts, ExplicitAllocation: explicitAllocation, FirstRecord: firstRecord, BranchTransfers: branchTransfers);
         }
         catch (Exception exception) when (exception is not OutOfMemoryException)
         {
@@ -230,7 +231,7 @@ internal static partial class CleanLanesCommand
 
     private sealed record AllocationLog(long? Allocated = null, string? Error = null,
         Dictionary<string, List<HeadLogRecord>>? Checkouts = null, bool ExplicitAllocation = false,
-        HeadLogRecord? FirstRecord = null, List<HeadLogRecord>? Renames = null);
+        HeadLogRecord? FirstRecord = null, List<HeadLogRecord>? BranchTransfers = null);
 
     private sealed record ReclaimSelection(string? BlockReason, string Reason,
         string? Detail = null, long? LockModifiedTicks = null)
