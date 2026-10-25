@@ -2621,3 +2621,309 @@ state-conditioned interaction, native higher-contact realization
 or physical-space or response-rank interpretation.
 
 ## 追加锚（本行以下为增补区）
+
+## 13. The exact retained zero-noise constant and full-domain nonattainment
+
+**Definition 13.1 (the original quotient and its transformed remainder).**
+Fix an integer $n\ge2$ and retain exactly Definition 12.1: the same
+$H^n$ identity unit pole, raw Lebesgue density, covariance-$2$
+horizontal clock, complete unweighted same-source marginal $M_{n,0}$,
+and original full complex horizontal closure $\mathcal H_0$.
+Use its $J$, $c$, $q_n$, $\mathcal H_c$, $A$, $\mu_n$, $W_n$ and
+$\Lambda_n$, and write
+
+$$
+\begin{aligned}
+q_*&=\frac1{(n-1)I_n}>0,&
+Q_n[b]&=\int_Jq_n|b|^2\,da,&
+C[b]&=\int_Jc|b|^2\,da,&
+\lambda_n&=2\pi\mu_n.
+\end{aligned}
+\tag{13.1}
+$$
+
+Theorem 12.2 supplies $q_*\le q_n\le1$, the attained natural
+angular infimum, and $\mathcal E_H\ge\lambda_nW_n$ on
+$\mathcal H_0$. For a measurable $f$ use the same polar coordinates
+as (12.12), set $\ell=\log R$, and put $v_f=Rf$. The raw
+nonnegative-integral change of variables gives
+
+$$
+W_n[f]=\frac1{8\pi}
+ \int_{\mathbb R\times J\times\mathbb T}q_n(a)|v_f|^2
+                  \,d\ell\,da\,d\theta.
+\tag{13.2}
+$$
+
+For $f\in\mathcal H_0$, finiteness of $W_n[f]$ and $q_*>0$
+therefore give $v_f\in L^2(d\ell\,da\,d\theta)$.
+Take the unitary Fourier transform in $\ell$ and unitary Fourier
+series in $\theta$, and write the transformed coefficient as
+$e^{-ima/2}b_{f,\sigma,m}(a)$, for $m\in\mathbb Z$ and
+$\sigma\in\mathbb R$. Define the initially extended nonnegative
+quantity
+
+$$
+B_n[f]=\sum_{m\in\mathbb Z}\int_{\mathbb R}\int_J
+ c(a)\bigl(\sigma+m\tan a\bigr)^2
+              |b_{f,\sigma,m}(a)|^2\,da\,d\sigma.
+\tag{13.3}
+$$
+
+These transforms concern all angular modes of the original state;
+no symmetry condition is imposed on $\mathcal H_0$.
+
+**Theorem 13.2 (sharp constant, full-domain remainder and nonattainment).**
+For every integer $n\ge2$, with precisely Definition 13.1's source
+and domains,
+
+$$
+\begin{aligned}
+\Lambda_n&=2\pi\mu_n,\\
+\mathcal E_H[f]-2\pi\mu_nW_n[f]&\ge\frac14B_n[f]\ge0
+                                  &&(f\in\mathcal H_0),\\
+B_n[f]=0&\quad\Longleftrightarrow\quad f=0
+                                  &&(f\in\mathcal H_0).
+\end{aligned}
+\tag{13.4}
+$$
+
+In particular $B_n[f]$ is finite on the original domain, and every
+nonzero complex $f\in\mathcal H_0$ satisfies
+
+$$
+\mathcal E_H[f]>2\pi\mu_nW_n[f].
+\tag{13.5}
+$$
+
+Thus the exact quotient has no nonzero original-domain extremizer,
+although the natural angular infimum is attained.
+
+**Proof.** Fix $n$. The lower bound
+$\Lambda_n\ge2\pi\mu_n$ is already Theorem 12.2. To construct
+legal upper trials, first approximate its angular minimizer in the
+natural form norm, rather than impose boundary values on it.
+Normalize a minimizer by $Q_n[b]=1$. The Sobolev modulus chain
+rule on compact subintervals, with the weighted derivative integral,
+gives $|b|\in\mathcal H_c$ and $A[|b|]\le A[b]$. The variational
+infimum makes $|b|$ another minimizer, so take $b\ge0$ real.
+The bounded value truncations $b_N=\min(b,N)$ converge to $b$
+in $L^2(J)$ and in the seminorm $\|\sqrt c\,b'\|_2$, by
+dominated convergence for the function and derivative tails.
+
+For each fixed bounded truncation cut off its two endpoints
+logarithmically. If $d$ denotes distance to either endpoint and
+$0<\varepsilon<1/4$, use
+
+$$
+\eta_\varepsilon(d)=
+\begin{cases}
+0,&d\le\varepsilon^2,\\
+\displaystyle\frac{\log(d/\varepsilon^2)}{\log(1/\varepsilon)},
+                    &\varepsilon^2<d<\varepsilon,\\
+1,&d\ge\varepsilon,
+\end{cases}
+\tag{13.6}
+$$
+
+and take the product of the two endpoint cutoffs. Near either
+endpoint $c=\sin d\le d$, so its derivative cost satisfies
+
+$$
+\int c\,|\eta_\varepsilon'|^2\,da
+ \le\frac1{\log(1/\varepsilon)^2}
+                 \int_{\varepsilon^2}^{\varepsilon}\frac{dd}{d}
+ =\frac1{\log(1/\varepsilon)}\longrightarrow0.
+\tag{13.7}
+$$
+
+The bound on $b_N$ controls the added term $b_N\eta_\varepsilon'$.
+Integrability of $c|b_N'|^2$ controls the removed derivative tail,
+and dominated convergence controls the $L^2$ error. The product
+therefore converges to $b_N$ in the natural form norm. On its
+remaining compact support, $c$ is bounded below by a positive
+number, so ordinary interior $H^1$ mollification gives real
+compact smooth approximations. A diagonal choice yields nonzero
+$b_j\in C_c^\infty(J;\mathbb R)$ with
+
+$$
+Q_n[b_j]\longrightarrow1,\qquad A[b_j]\longrightarrow\mu_n.
+\tag{13.8}
+$$
+
+Boundedness of $q_n$ ensures the first convergence. This argument
+uses the original natural finite-energy endpoints; it introduces
+no Dirichlet trace requirement.
+
+Choose a nonzero real $\chi\in C_c^\infty(\mathbb R)$ and, for
+$L>0$, define the actual Cartesian trial
+
+$$
+f_{j,L}(x,y,z)=R^{-1}b_j(a)\chi(\log R/L).
+\tag{13.9}
+$$
+
+Each trial has compact annular radial support away from the pole.
+Its angular support is separated from the two central axes, so
+extension by zero there is smooth. Thus
+$f_{j,L}\in C_c^\infty(\mathbb R^3\setminus\{0\})
+\subset\mathcal H_0$. In particular its original $L^2$ condition
+holds: the raw Jacobian gives
+
+$$
+\|f_{j,L}\|_2^2=\frac\pi2\|b_j\|_2^2
+              \int_{\mathbb R}e^{2\ell}|\chi(\ell/L)|^2\,d\ell
+ <\infty.
+\tag{13.10}
+$$
+
+No uniform bound on these $L^2$ norms is needed for the quotient.
+Using (12.12), the exact multiplier (12.5), and
+$\int\chi\chi'=0$, one obtains
+
+$$
+\begin{aligned}
+\mathcal E_H[f_{j,L}]
+ &=\frac\pi2\left(L\|\chi\|_2^2A[b_j]
+                  +L^{-1}\|\chi'\|_2^2C[b_j]\right),\\
+W_n[f_{j,L}]&=\frac14L\|\chi\|_2^2Q_n[b_j],\\
+\frac{\mathcal E_H[f_{j,L}]}{W_n[f_{j,L}]}
+ &=2\pi\left(\frac{A[b_j]}{Q_n[b_j]}
+       +\frac{C[b_j]}{Q_n[b_j]}
+                   \frac{\|\chi'\|_2^2}{L^2\|\chi\|_2^2}\right).
+\end{aligned}
+\tag{13.11}
+$$
+
+Since $C[b_j]/Q_n[b_j]\le1/q_*$, take $L=j$ and use (13.8).
+The quotient tends to $2\pi\mu_n$, proving the matching upper
+bound and hence the first line of (13.4). The symmetric functions
+here are only upper trials, not a restriction on the lower-bound
+domain.
+
+For the remainder, take an arbitrary complex punctured compact
+smooth $f$. The full all-mode identity (12.13) gives
+
+$$
+\begin{aligned}
+\mathcal E_H[f]-\lambda_nW_n[f]
+ &=\frac14\sum_{m\in\mathbb Z}\int_{\mathbb R}
+       \left(A[b_{f,\sigma,m}]-\mu_nQ_n[b_{f,\sigma,m}]\right)
+                      \,d\sigma+\frac14B_n[f]\\
+ &\ge\frac14B_n[f].
+\end{aligned}
+\tag{13.12}
+$$
+
+Every admissible fibre lies in the supplied natural $\mathcal H_c$,
+so each angular difference is nonnegative. This uses all integer
+angular modes and almost every real radial frequency.
+
+Now let $f\in\mathcal H_0$ be arbitrary. The pole cutoff in the
+proof of Theorem 12.2 makes the punctured smooth core form dense:
+for a fixed compact smooth function its added squared horizontal
+derivative cost is $O(\delta^3\delta^{-2})=O(\delta)$, and the
+removed original derivative and $L^2$ tails tend to zero.
+A diagonal choice therefore supplies punctured smooth $f_k\to f$
+in the original horizontal form norm. Apply Theorem 12.2 to the
+actual difference $f_k-f\in\mathcal H_0$:
+
+$$
+W_n[f_k-f]\le\lambda_n^{-1}\mathcal E_H[f_k-f]
+                         \longrightarrow0.
+\tag{13.13}
+$$
+
+Thus $W_n[f_k]\to W_n[f]$, and the form convergence also gives
+$\mathcal E_H[f_k]\to\mathcal E_H[f]$. Equation (13.2), with
+$q_n\ge q_*$, gives
+
+$$
+\|v_{f_k}-v_f\|_2^2\le\frac{8\pi}{q_*}W_n[f_k-f]
+                         \longrightarrow0.
+\tag{13.14}
+$$
+
+The unitary Fourier maps and the unit-modulus angular gauge
+therefore give strong $L^2$ convergence of $b_{f_k,\sigma,m}$
+to $b_{f,\sigma,m}$ in counting measure on $\mathbb Z$ times
+Lebesgue measure on $\mathbb R\times J$. Choose an almost-everywhere
+convergent subsequence and relabel it. Fatou and (13.12) imply
+
+$$
+\begin{aligned}
+B_n[f]&\le\liminf_k B_n[f_k]
+       \le\limsup_k B_n[f_k]\\
+ &\le4\lim_k\left(\mathcal E_H[f_k]-\lambda_nW_n[f_k]\right)
+  =4\left(\mathcal E_H[f]-\lambda_nW_n[f]\right).
+\end{aligned}
+\tag{13.15}
+$$
+
+This proves the remainder and its finiteness on every original
+complex $\mathcal H_0$ state. It requires no unproved equality
+between closed direct-integral domains.
+
+Finally, for every fixed $m\in\mathbb Z$ and $a\in J$, $c(a)>0$
+and the multiplier in (13.3) vanishes only at the singleton
+$\sigma=-m\tan a$. Tonelli makes its zero set null in the
+$(a,\sigma)$ product measure; the countable union over $m$
+is still null in the stated counting-product measure.
+Consequently $B_n[f]=0$ forces every transformed coefficient
+to vanish almost everywhere. Plancherel gives $v_f=0$, and the
+coordinate change gives $f=0$ off the null axes and pole, hence
+$f=0$ in the original $L^2$ space. The converse is immediate.
+Equation (13.15) proves (13.5), completing the proof. $\square$
+
+**Corollary 13.3 (the exact nonnegative retained coupling interval).**
+For each integer $n\ge2$ define, on exactly $\mathcal H_0$,
+
+$$
+\mathfrak q_{n,g}[f]=\mathcal E_H[f]-gW_n[f],\qquad g\ge0.
+\tag{13.16}
+$$
+
+Then $\mathfrak q_{n,g}\ge0$ on its entire original domain if and
+only if $0\le g\le2\pi\mu_n$. At $g=2\pi\mu_n$ it is strictly
+positive on every nonzero original-domain state. For every
+$g>2\pi\mu_n$ there is a nonzero compact smooth state with
+$\mathfrak q_{n,g}[f]<0$.
+
+**Proof.** Nonnegativity throughout the stated interval follows
+from (12.14), and endpoint strictness is (13.5). For larger $g$,
+the actual trials $f_{j,j}$ in (13.9) have positive denominator
+and quotient tending to $2\pi\mu_n<g$. A sufficiently large
+$j$ is therefore a compact smooth negative direction. $\square$
+
+**Definition 13.4 (mathematical attribution and scope).**
+The exact multiplier, natural angular minimization, lower bound
+and all-mode core identity are the supplies of §12, with V's
+pinned natural angular form and polar identities. The passage
+from these supplies to actual sharp trials, full-domain strictness
+and the exact retained coupling interval is repo-derived.
+Value truncation, the modulus chain rule, logarithmic endpoint
+cutoffs, interior mollification, unitary Fourier theory and Fatou
+are classical intermediate principles; see L. C. Evans,
+*Partial Differential Equations*, second edition, Chapters 5 and 8,
+and G. B. Folland, *Real Analysis*, second edition, Chapters 2, 6
+and 8. These general principles are not new standalone results.
+The Folland fundamental solution and the Hardy literature retain
+the limited attribution in §10. In particular Kombe,
+[*Sharp Hardy type inequalities on the Carnot Group*, Theorem 3.1](https://arxiv.org/html/math/0501522v1),
+uses the gradient-weighted multiplier rather than this actual
+unweighted marginal. D'Arca–Fanelli–Franceschi–Prandi,
+[Theorem 1.2](https://arxiv.org/html/2603.04086v1), supplies the
+lower-bound comparison identified in V, rather than the present
+exact $q_n$ quotient. No exhaustive literature priority is asserted.
+
+The coupling form here remains Definition 10.3's retained analytic
+reference form, not an autonomous projected generator or a
+state-conditioned interaction. Angular attainment and actual
+annular sharpness do not yield a whole-space optimizer; (13.5)
+excludes one in the original domain. No uniform-in-$n$ margin,
+positive-noise sharpness, attractive completed-domain identification,
+native source-to-state realization or physical dimension conclusion
+is supplied. The parent self-field collapse and nonautonomous
+retention statements of §10 are unchanged.
+
+## 追加锚（本行以下为增补区）
