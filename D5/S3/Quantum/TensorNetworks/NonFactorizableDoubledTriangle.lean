@@ -9,7 +9,6 @@
 import Mathlib.Algebra.BigOperators.Fin
 import Mathlib.Algebra.Group.TypeTags.Finite
 import Mathlib.Basic.Real.Basic
-import Mathlib.Data.ZMod.Basic
 import Mathlib.SetTheory.Cardinal.Finite
 import Mathlib.Tactic.FinCases
 import Mathlib.Tactic.NormNum
