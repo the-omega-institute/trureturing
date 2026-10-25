@@ -382,12 +382,12 @@ theorem result : ¬ claim := by
       (hy : (s.2:ℝ)/d ≤ ∏ j ∈ Finset.range n, (1-a*q^j)) :
       a*q^(n+ts.length) ≤ ((ts.getLastD s).1:ℝ)/d ∧
       ((ts.getLastD s).2:ℝ)/d ≤ ∏ j ∈ Finset.range (n+ts.length), (1-a*q^j) := by
-    have hd' : (0:ℝ) < d := by exact_mod_cast hd
+    have hd' : (0:ℝ) < d := Nat.cast_pos'.mpr hd
     induction ts generalizing n s with
     | nil => simpa using And.intro hx hy
     | cons t ts ih =>
       rcases hc with ⟨hs, hxt, hyt, hc⟩
-      have hs' : (s.1:ℝ) ≤ d := by exact_mod_cast hs
+      have hs' : (s.1:ℝ) ≤ d := Nat.cast_le.mpr hs
       have hxt' : (s.1:ℝ)*b ≤ (t.1:ℝ)*d := by exact_mod_cast hxt
       have hyt' : (t.2:ℝ)*d ≤ (s.2:ℝ)*(d-s.1) := by
         exact_mod_cast hyt
@@ -424,12 +424,12 @@ theorem result : ¬ claim := by
       (hy : (∏ j ∈ Finset.range n, (1-a*q^j)) ≤ (s.2:ℝ)/d) :
       ((ts.getLastD s).1:ℝ)/d ≤ a*q^(n+ts.length) ∧
       (∏ j ∈ Finset.range (n+ts.length), (1-a*q^j)) ≤ ((ts.getLastD s).2:ℝ)/d := by
-    have hd' : (0:ℝ) < d := by exact_mod_cast hd
+    have hd' : (0:ℝ) < d := Nat.cast_pos'.mpr hd
     induction ts generalizing n s with
     | nil => simpa using And.intro hx hy
     | cons t ts ih =>
       rcases hc with ⟨hs, hxt, hyt, hc⟩
-      have hs' : (s.1:ℝ) ≤ d := by exact_mod_cast hs
+      have hs' : (s.1:ℝ) ≤ d := Nat.cast_le.mpr hs
       have hxt' : (t.1:ℝ)*d ≤ (s.1:ℝ)*b := by exact_mod_cast hxt
       have hyt' : (s.2:ℝ)*(d-s.1) ≤ (t.2:ℝ)*d := by exact_mod_cast hyt
       have hnon : 0 ≤ 1-a*q^n := by nlinarith [pow_le_one₀ hq0 hq1 (n := n)]
