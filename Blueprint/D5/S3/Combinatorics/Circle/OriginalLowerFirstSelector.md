@@ -40,6 +40,7 @@ This is a local prefix result in the circle configuration problem of Damasdi, Fr
 - Dependency: [D5/S3/Combinatorics/Circle/M5AttainedMesh](M5AttainedMesh.md)
 - Dependency: [D5/S3/Combinatorics/Circle/M5SourceRows](M5SourceRows.md)
 - Dependency: [D5/S3/Combinatorics/Circle/OriginalLowerFullBank](OriginalLowerFullBank.md)
+- Dependency: [D5/S3/Combinatorics/Circle/OriginalLowerSelectorArithmetic](OriginalLowerSelectorArithmetic.md)
 - Dependency: [D5/S3/Combinatorics/Circle/OriginalRowBounds](OriginalRowBounds.md)
 - Dependency: [D5/S3/Combinatorics/Circle/SourcePrefixInventory](SourcePrefixInventory.md)
 - Dependency: [D5/S3/Combinatorics/Circle/TwoLargeOrdering](TwoLargeOrdering.md)
