@@ -629,7 +629,7 @@ theorem weak_of_signed_clopen_oscillation
       have heval (n : ℕ) : NormPreservingLifts.signedFunctional (s (ns (j n))) g -
           NormPreservingLifts.signedFunctional (b n) g =
           NormPreservingLifts.signedFunctional (a n) g := by rw [heq]; simp
-      simpa only [heval, zero_sub] using ht
+      simpa only [heval, zero_sub, neg_apply] using ht
     have hrzero : r = 0 := disjoint_mass_limit_zero O a (fun n => (hreg n).1)
       E hE hdisj (fun n => by
         dsimp [a]
