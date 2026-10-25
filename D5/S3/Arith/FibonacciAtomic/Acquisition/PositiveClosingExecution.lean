@@ -40,7 +40,9 @@ private theorem small_period (H : ℕ) (hH : 0 < H) :
       Units.val_injective
     have ho := orderOf_le_card_univ (x := matrixUnit H)
     have hm : Fintype.card (Matrix (Fin 2) (Fin 2) (ZMod H)) = H ^ 4 := by
-      simp [Matrix, Fintype.card_fun, ZMod.card, ← pow_mul]
+      change Fintype.card (Fin 2 → Fin 2 → ZMod H) = H ^ 4
+      rw [Fintype.card_fun, Fintype.card_fun]
+      simp [ZMod.card, ← pow_mul]
     exact ho.trans (hm ▸ hc)
   · exact congrArg Units.val (pow_orderOf_eq_one (matrixUnit H))
 
@@ -280,6 +282,7 @@ private theorem rounds_run (H : ℕ) (hH : 0 < H) (entry : ℕ × ℕ) (s : Bool
         (runWord (actions H (stageDirection H s) r.2) current) es t out l →
       Run (controller H) H (.stage s j a y) current
         (events H (stageDirection H s) r.2 ++ es) t out l := by
+  dsimp only
   induction j generalizing a with
   | zero => intro current hc es t out l hr; exact hr
   | succ j ih =>
@@ -309,7 +312,7 @@ private theorem rounds_run (H : ℕ) (hH : 0 < H) (entry : ℕ × ℕ) (s : Bool
 
 private theorem paid_append (x y : List Event) : paidReads (x ++ y) = paidReads x + paidReads y := by
   induction x with
-  | nil => rfl
+  | nil => simp [paidReads]
   | cons e x ih => cases e <;> simp [paidReads, ih, Nat.add_assoc, Nat.add_comm, Nat.add_left_comm]
 
 private theorem read_count (H k : ℕ) (tape : List (ℕ × ℕ)) :
@@ -368,10 +371,10 @@ private theorem word_growth (w : List Bool) (v : ℕ × ℕ) :
     have hs := step_growth b v
     refine ⟨hs.1.trans ht.1, ?_⟩
     cases b
-    · simpa [runWord, List.count_cons, hs.2, Nat.mul_add, Nat.add_mul,
+    · have hg : quantity (step false v) = quantity v + 2 := hs.2
+      simpa [runWord, List.count_cons, hg, Nat.mul_add, Nat.add_mul,
         Nat.add_assoc, Nat.add_comm, Nat.add_left_comm] using ht.2
-    · simp only [runWord, List.count_cons, beq_self_eq_true, ↓reduceIte, Bool.false_eq_true,
-        Bool.true_eq_false, Nat.add_zero, pow_succ]
+    · simp [runWord, List.count_cons, pow_succ]
       simp only [↓reduceIte] at hs
       nlinarith [Nat.mul_le_mul_left (2 ^ w.count true) hs.2,
         Nat.zero_le (2 ^ w.count true * w.count false)]
@@ -482,9 +485,9 @@ private theorem execution_counts (H : ℕ) (hH : 1 ≤ H) (v : ℕ × ℕ) :
   have count0 := actions_counts H (direction H) (by omega) (stageData H v false).2
   have count1 := actions_counts H (direction H + 1) (by omega) (stageData H v true).2
   have hs : (executionWord H v).count false = H * graftSum H v := by
-    simp only [executionWord, if_neg h1, List.count_append, count0.2, count1.2,
-      graftSum, schedule, stage, if_neg h1, List.map_append, List.map_map, List.sum_append,
-      stageData, stageDirection, Bool.false_eq_true, ↓reduceIte, Function.comp_def, Nat.mul_add]
+    rw [executionWord, if_neg h1, List.count_append, count0.2, count1.2]
+    simp [graftSum, schedule, stage, h1, stageData, stageDirection,
+      Function.comp_def, Nat.mul_add]
   refine ⟨?_, ?_, ?_, ?_, hs, ?_⟩
   · simp [executionEvents, h1, paid_append, paidReads, read_count, tests]
   · simp [tests, h1, stageData, rounds_length]
@@ -498,7 +501,7 @@ private theorem execution_counts (H : ℕ) (hH : 1 ≤ H) (v : ℕ × ℕ) :
           intro x hx
           obtain ⟨t, ht, rfl⟩ := List.mem_map.mp hx
           exact ((effective_scheduler H hH v).2.2.2 t ht).2.2.2.1)
-      simpa [List.length_map, nsmul_eq_mul, Nat.mul_comm] using hb
+      simpa [graftSum, List.length_map, nsmul_eq_mul, Nat.mul_comm] using hb
     have len := (effective_scheduler H hH v).2.2.1
     rw [if_neg h1] at len
     rw [hs]

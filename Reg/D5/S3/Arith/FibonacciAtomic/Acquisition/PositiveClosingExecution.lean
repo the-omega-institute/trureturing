@@ -9,7 +9,7 @@ set_option relaxedAutoImplicit false
 
 open _root_.D5.S3.Arith.FibonacciAtomic.Acquisition.PositiveClosingExecution
 open _root_.D5.S3.Arith.FibonacciAtomic.Acquisition.ContinuousAcquisitionTransport
-  (Run paidReads)
+  (Run paidReads Instruction continuous_transport)
 open _root_.D5.S3.Arith.FibonacciAtomic.TerminalGcdAcquisitionCost
   (residueSource runWord replace quantity costBound)
 open _root_.D5.S3.Arith.FibonacciAtomic.SourceCoordinates.PositiveProbeCompiler
@@ -25,7 +25,8 @@ abbrev signature : Signature where
   Role := Unit
   finiteRole := inferInstance
   nonemptyRole := inferInstance
-  Output _ _ := List Bool × List (_root_.D5.S3.Arith.FibonacciAtomic.Acquisition.ContinuousAcquisitionTransport.Event)
+  Output _ _ := List Bool × List
+    (_root_.D5.S3.Arith.FibonacciAtomic.Acquisition.ContinuousAcquisitionTransport.Event)
   Anchor := Empty
   finiteAnchor := inferInstance
 
@@ -41,7 +42,8 @@ abbrev arena : Arena where
     let w := (R.readout () H v).1
     let es := (R.readout () H v).2
     (∃ t, Run (controller H) H (controller H).initial v es t (runWord w v) (residueSource H v)) ∧
-    _root_.D5.S3.Arith.FibonacciAtomic.Acquisition.ContinuousAcquisitionTransport.finalWord [] es = w ∧
+    _root_.D5.S3.Arith.FibonacciAtomic.Acquisition.ContinuousAcquisitionTransport.finalWord
+      [] es = w ∧
     residueSource H (runWord w v) = residueSource H v ∧
     1 ≤ period H ∧ period H ≤ H ^ 4 ∧ matrix H ^ period H = 1 ∧
     (∀ k, 1 ≤ k → matrix H ^ k = 1 → period H ≤ k) ∧
@@ -70,7 +72,22 @@ private theorem dependence : ObservationalDependence signature actual := by
   refine ⟨2, (0, 0), (1, 0), ?_⟩
   change (executionWord 2 (0, 0), executionEvents 2 (0, 0)) ≠
     (executionWord 2 (1, 0), executionEvents 2 (1, 0))
-  decide +kernel
+  intro h
+  have he : executionEvents 2 (0, 0) = executionEvents 2 (1, 0) := congrArg Prod.snd h
+  obtain ⟨t₀, r₀⟩ := (positive_execution 2 (by decide) (0, 0)).1
+  obtain ⟨t₁, r₁⟩ := (positive_execution 2 (by decide) (1, 0)).1
+  have c₀ := (continuous_transport (controller 2) 2 _ _ _ _ _ r₀).2.1
+  have c₁ := (continuous_transport (controller 2) 2 _ _ _ _ _ r₁).2.1
+  rw [he] at c₀
+  have ht : t₀ = t₁ := congrArg Prod.fst (c₀.symm.trans c₁)
+  have terminal {s x es t y l} (hr : Run (controller 2) 2 s x es t y l) :
+      (controller 2).code t = Instruction.halt l := by
+    induction hr <;> assumption
+  have hl : residueSource 2 (0, 0) = residueSource 2 (1, 0) := by
+    apply Instruction.halt.inj
+    exact (terminal r₀).symm.trans ((congrArg (controller 2).code ht).trans (terminal r₁))
+  have hx := congrArg Prod.fst hl
+  norm_num [residueSource] at hx
 
 def sourceRegistration : Registration arena (type_of% positive_execution) where
   actual := actual
@@ -84,7 +101,8 @@ def sourceRegistration : Registration arena (type_of% positive_execution) where
 def registration : Contract.Registration.{0,1,1,0,0,0,0,0,0,0,0,0}
     (@positive_execution) (Realization signature) Type Unit where
   unitName := `positiveClosingExecution
-  realizationName := `Reg.D5.S3.Arith.FibonacciAtomic.Acquisition.PositiveClosingExecution.sourceRegistration
+  realizationName :=
+    `Reg.D5.S3.Arith.FibonacciAtomic.Acquisition.PositiveClosingExecution.sourceRegistration
   realizationSource := none
   generated := false
   arena := .source ⟨arena⟩
