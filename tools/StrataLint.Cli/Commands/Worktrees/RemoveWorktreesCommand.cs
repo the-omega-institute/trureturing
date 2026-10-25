@@ -93,10 +93,10 @@ internal static class RemoveWorktreesCommand
         {
             return Complete(74, items.Select(item => item with
             {
-                Outcome = "failed", Error = exception.Message, ExitCode = 74,
+                Outcome = "failed", Error = BoundedDiagnostic(exception.Message), ExitCode = 74,
             }).ToArray());
         }
-        if (removal.ExitCode is 68 or 73)
+        if (removal.ExitCode is 68 or 73 && removal.Output.Length == 0)
             return Complete(removal.ExitCode.Value, items.Select(item => item with
             {
                 Outcome = removal.ExitCode == 68 ? "locked" : "identity_refused", Error = removal.Error, ExitCode = removal.ExitCode.Value,
@@ -119,18 +119,26 @@ internal static class RemoveWorktreesCommand
                         && checkpoint.TryGetProperty("native_locks", out var locks) ? locks.Clone()
                         : outcome.TryGetProperty("native_locks", out var failedLocks) ? failedLocks.Clone() : null,
                 };
+                if (outcome.GetProperty("outcome").GetString() == "refused")
+                {
+                    var reason = outcome.GetProperty("reason").GetString()!;
+                    var code = reason.StartsWith("locked_", StringComparison.Ordinal) ? 68 : 73;
+                    return item with { Outcome = code == 68 ? "locked" : "identity_refused", Error = reason, ExitCode = code };
+                }
                 return outcome.GetProperty("outcome").GetString() == "removed"
                     ? item with { Outcome = "removed" }
                     : item with { Outcome = "failed", ExitCode = 74,
                         Error = outcome.GetProperty("error").GetString() };
             }).ToArray();
-            return Complete(resolved.Any(item => item.ExitCode != 0) ? 74 : 0, resolved);
+            return Complete(resolved.Any(item => item.ExitCode == 74) ? 74
+                : resolved.FirstOrDefault(item => item.ExitCode != 0)?.ExitCode ?? 0, resolved);
         }
         catch (Exception exception) when (exception is not OutOfMemoryException)
         {
             return Complete(74, items.Select(item => item with
             {
-                Outcome = "failed", Error = "removal result indeterminate: " + removal.Error + exception.Message, ExitCode = 74,
+                Outcome = "failed", Error = "removal result indeterminate: " + BoundedDiagnostic(removal.Error)
+                    + BoundedDiagnostic(exception.Message), ExitCode = 74,
             }).ToArray());
         }
     }

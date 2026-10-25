@@ -73,6 +73,7 @@ internal static partial class CleanLanesCommand
             var removal = new LaneRemovalResult(outcome switch
             {
                 "removed" or "would_remove" => LaneRemovalOutcome.Removed,
+                "qualification_failed" => LaneRemovalOutcome.QualificationFailed,
                 "checkpoint_failed" => LaneRemovalOutcome.CheckpointFailed,
                 "partial_or_indeterminate" => LaneRemovalOutcome.WorktreeRemoveFailed,
                 "sweep_failed" => LaneRemovalOutcome.PoolSweepFailed,
@@ -82,7 +83,7 @@ internal static partial class CleanLanesCommand
                 : outcome is "checkpoint_failed" or "partial_or_indeterminate"
                 ? outcome + ":" + ReadOptional("error") : reason,
                 recovery, ReadOptional("recovery_branch_candidate"), NativeLocks: nativeLocks);
-            reportedFailure |= removal.Outcome is LaneRemovalOutcome.CheckpointFailed
+            reportedFailure |= removal.Outcome is LaneRemovalOutcome.QualificationFailed or LaneRemovalOutcome.CheckpointFailed
                 or LaneRemovalOutcome.WorktreeRemoveFailed or LaneRemovalOutcome.PoolSweepFailed;
             var removalEvent = RemovalEvent(item, removal);
             events.Add(removalEvent with

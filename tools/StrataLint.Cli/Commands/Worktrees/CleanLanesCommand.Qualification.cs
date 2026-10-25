@@ -12,42 +12,79 @@ internal static partial class CleanLanesCommand
     {
         if (candidates.Count == 0) return new Dictionary<string, QualificationResult>();
         var paths = candidates.Select(item => item.Path).ToHashSet(StringComparer.Ordinal);
+        var results = new Dictionary<string, QualificationResult>(StringComparer.Ordinal);
+        var summarySeen = false;
+        Exception? receiptError = null;
         CommandResult? result = null;
         try
         {
-            var arguments = new List<string> { "qualify" };
+            var budget = Math.Min(600L * paths.Count, 3600L);
+            var arguments = new List<string> { "qualify", "--stream", "--budget-seconds",
+                budget.ToString(System.Globalization.CultureInfo.InvariantCulture) };
             foreach (var path in paths) arguments.AddRange(["--path", path]);
-            result = WorktreeProtocolCommand.Run(root, arguments, runner, TimeSpan.FromSeconds(600));
-            if (result.ExitCode is not (0 or 74) || result.Error.Length != 0)
-                throw new InvalidOperationException("unexpected qualification exit or stderr");
-            using var document = JsonDocument.Parse(result.Output);
-            var receipt = document.RootElement;
-            if (receipt.GetProperty("event").GetString() != "worktree_qualification")
-                throw new InvalidOperationException("unexpected qualification event");
-            var results = new Dictionary<string, QualificationResult>(StringComparer.Ordinal);
-            foreach (var row in receipt.GetProperty("items").EnumerateArray())
+            result = WorktreeProtocolCommand.RunLines(root, arguments, runner, TimeSpan.FromSeconds(budget), line =>
             {
-                var path = row.GetProperty("path").GetString()!;
-                var outcome = row.GetProperty("outcome").GetString();
-                var reason = row.GetProperty("reason").GetString();
-                if (!paths.Contains(path) || results.ContainsKey(path)
-                    || outcome == "qualified" && reason is not null
-                    || outcome is "refused" or "failed" && string.IsNullOrWhiteSpace(reason)
-                    || outcome == "failed" && !reason!.StartsWith("qualification_failed:", StringComparison.Ordinal)
-                    || outcome is not ("qualified" or "refused" or "failed"))
-                    throw new InvalidOperationException("invalid qualification item");
-                results.Add(path, new QualificationResult(reason, outcome == "failed"));
+                if (receiptError is not null) return;
+                try
+                {
+                    using var document = JsonDocument.Parse(line);
+                    var row = document.RootElement;
+                    if (summarySeen) throw new InvalidOperationException("rows after qualification summary");
+                    if (row.GetProperty("event").GetString() == "worktree_qualification")
+                    {
+                        var failed = results.Values.Any(item => item.Failed);
+                        if (row.GetProperty("item_count").GetInt32() != paths.Count || results.Count != paths.Count
+                            || row.GetProperty("status").GetString() != (failed ? "failed" : "succeeded"))
+                            throw new InvalidOperationException("incomplete or inconsistent qualification receipt");
+                        summarySeen = true;
+                        return;
+                    }
+                    if (row.GetProperty("event").GetString() != "worktree_qualification_item")
+                        throw new InvalidOperationException("unexpected qualification event");
+                    var path = row.GetProperty("path").GetString()!;
+                    var outcome = row.GetProperty("outcome").GetString();
+                    var reason = row.GetProperty("reason").GetString();
+                    if (!paths.Contains(path) || results.ContainsKey(path)
+                        || outcome == "qualified" && reason is not null
+                        || outcome is "refused" or "failed" or "deferred" && string.IsNullOrWhiteSpace(reason)
+                        || outcome is "failed" or "deferred" && !reason!.StartsWith("qualification_failed:", StringComparison.Ordinal)
+                        || outcome is not ("qualified" or "refused" or "failed" or "deferred"))
+                        throw new InvalidOperationException("invalid or duplicate qualification item");
+                    results.Add(path, new QualificationResult(reason, outcome is "failed" or "deferred"));
+                }
+                catch (Exception error) when (error is not OutOfMemoryException)
+                {
+                    receiptError = new InvalidOperationException("invalid qualification row:" + BoundedDiagnostic(line), error);
+                }
+            });
+            if (receiptError is not null) throw receiptError;
+            if (!summarySeen || result.Error.Length != 0
+                || result.ExitCode != (results.Values.Any(item => item.Failed) ? 74 : 0))
+                throw new InvalidOperationException("missing summary or inconsistent qualification exit");
+            return results;
+        }
+        catch (TimeoutException exception)
+        {
+            // RunStreaming drains its callback before returning/throwing.
+            // Completed observations survive; no receipt grants removal authority.
+            if (receiptError is not null)
+            {
+                var invalid = QualificationFailure(receiptError, result);
+                return paths.ToDictionary(path => path, _ => invalid with
+                    { Reason = "qualification_failed:batch_protocol_error:" + invalid.Reason }, StringComparer.Ordinal);
             }
-            var failed = results.Values.Any(item => item.Failed);
-            if (results.Count != paths.Count || result.ExitCode != (failed ? 74 : 0)
-                || receipt.GetProperty("status").GetString() != (failed ? "failed" : "succeeded"))
-                throw new InvalidOperationException("incomplete or inconsistent qualification receipt");
+            var failure = QualificationFailure(exception, result);
+            if (results.Count == paths.Count && !results.Values.Any(item => item.Failed))
+                results.Add(string.Empty, failure);
+            foreach (var path in paths)
+                results.TryAdd(path, failure with { Reason = "qualification_failed:deferred:" + failure.Reason });
             return results;
         }
         catch (Exception exception) when (exception is not OutOfMemoryException)
         {
             var failure = QualificationFailure(exception, result);
-            return paths.ToDictionary(path => path, _ => failure, StringComparer.Ordinal);
+            return paths.ToDictionary(path => path, _ => failure with
+                { Reason = "qualification_failed:batch_protocol_error:" + failure.Reason }, StringComparer.Ordinal);
         }
     }
 
@@ -90,14 +127,18 @@ internal static partial class CleanLanesCommand
 
     private static QualificationResult QualificationFailure(Exception exception, CommandResult? result)
     {
-        var diagnostic = exception.GetType().Name + ":" + exception.Message;
+        const string prefix = "WORKTREE_FAILED ";
+        if (result?.ExitCode == 74 && result.Output.Length == 0 && result.Error.StartsWith(prefix, StringComparison.Ordinal))
+            return new(BoundedDiagnostic(result.Error[prefix.Length..].TrimEnd('\r', '\n')), Failed: true);
+        var diagnostic = exception.GetType().Name + ":" + BoundedDiagnostic(exception.Message);
         return new("qualification_failed:" + (result is not null
-            ? "protocol_error:exit=" + result.ExitCode + ":stderr=" + FirstLine(result.Error)
-                + ":stdout=" + FirstLine(result.Output) + ":" + diagnostic
+            ? "protocol_error:exit=" + result.ExitCode + ":stderr=" + BoundedDiagnostic(result.Error)
+                + ":stdout=" + BoundedDiagnostic(result.Output) + ":" + diagnostic
             : (exception is TimeoutException ? "timeout:" : "unavailable:") + diagnostic), Failed: true);
     }
 
-    private static string FirstLine(string value) => value.Split(['\r', '\n'], 2)[0];
+    internal static string BoundedDiagnostic(string value) => value.Length <= 4096 ? value
+        : value[..2048] + "...[truncated]..." + value[^2048..];
 
     private static CleanLaneEvent QualificationEvent(RegisteredWorktree item, QualificationResult result) =>
         BlockedWorktree(item, result.Reason!) with { Action = result.Failed ? "failed" : "skipped" };

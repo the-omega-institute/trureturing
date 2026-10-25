@@ -136,7 +136,9 @@ def sweep_locked(source, dev, force=False):
                     preview=not force, expected=[json.dumps(dict(path=str(path), head=observed["head"],
                                                                branch=observed["branch"]))]))
                 for removal in result["items"]:
-                    outcomes.append(dict(observed, **removal, reason=reason))
+                    outcomes.append(dict(observed, **dict(removal,
+                        outcome="retained" if removal["outcome"] == "refused" else removal["outcome"],
+                        reason=removal.get("reason", reason))))
                     if removal["outcome"] in ("removed", "would_remove"):
                         remaining -= 1
                 if result["status"] == "failed":

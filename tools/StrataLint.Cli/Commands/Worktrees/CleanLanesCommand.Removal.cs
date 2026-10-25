@@ -92,6 +92,7 @@ internal static partial class CleanLanesCommand
         string? recoveryBranch = null;
         string? recoveryBranchCandidate = null;
         System.Text.Json.JsonElement? nativeLocks = null;
+        CommandResult? removal = null;
         try
         {
             var arguments = new List<string> { "remove", "--path", item.Path };
@@ -103,12 +104,29 @@ internal static partial class CleanLanesCommand
                 locked = item.Locked ? item.LockReason ?? "" : null,
             };
             arguments.Add(System.Text.Json.JsonSerializer.Serialize(expected));
-            var removal = WorktreeProtocolCommand.Run(repositoryRoot, arguments, runner, TimeSpan.FromSeconds(600));
+            removal = WorktreeProtocolCommand.Run(repositoryRoot, arguments, runner, TimeSpan.FromSeconds(600));
+            var refusal = CanonicalRefusal(removal);
+            if (refusal is not null) return Refused(refusal);
             System.Text.Json.JsonElement? outcome = null;
             if (removal.Output.Length > 0)
             {
                 using var document = System.Text.Json.JsonDocument.Parse(removal.Output);
-                outcome = document.RootElement.GetProperty("items").EnumerateArray().Single().Clone();
+                var receipt = document.RootElement;
+                outcome = receipt.GetProperty("items").EnumerateArray().Single().Clone();
+                if (receipt.GetProperty("event").GetString() != "worktree_removal"
+                    || outcome.Value.GetProperty("path").GetString() != item.Path)
+                    throw new InvalidOperationException("invalid removal receipt");
+                var state = outcome.Value.GetProperty("outcome").GetString();
+                if (state == "refused" && removal.ExitCode is 68 or 73
+                    && receipt.GetProperty("status").GetString() == "refused")
+                    return Refused(outcome.Value.GetProperty("reason").GetString()!);
+                if (state == "qualification_failed" && removal.ExitCode == 74
+                    && receipt.GetProperty("status").GetString() == "failed")
+                    return new(LaneRemovalOutcome.QualificationFailed,
+                        outcome.Value.GetProperty("reason").GetString()!);
+                if (state is not ("removed" or "checkpoint_failed" or "partial_or_indeterminate")
+                    || receipt.GetProperty("status").GetString() != (state == "removed" ? "succeeded" : "failed"))
+                    throw new InvalidOperationException("inconsistent removal receipt");
                 if (outcome.Value.TryGetProperty("recovery_branch", out var recovery))
                     recoveryBranch = recovery.GetString();
                 if (outcome.Value.TryGetProperty("recovery_branch_candidate", out var candidate))
@@ -133,20 +151,23 @@ internal static partial class CleanLanesCommand
             }
             if (!removal.Success)
             {
-                var refusal = CanonicalRefusal(removal);
-                if (refusal is not null) return Refused(refusal);
                 if (outcome?.GetProperty("outcome").GetString() == "checkpoint_failed")
                     return new(LaneRemovalOutcome.CheckpointFailed,
                         "checkpoint_failed:" + outcome.Value.GetProperty("error").GetString(), recoveryBranch, recoveryBranchCandidate,
                         NativeLocks: nativeLocks);
+                if (outcome is null)
+                    return new(LaneRemovalOutcome.QualificationFailed,
+                        QualificationFailure(new InvalidOperationException("missing removal receipt"), removal).Reason!);
                 return new(LaneRemovalOutcome.WorktreeRemoveFailed, "worktree_remove_failed_state_indeterminate", recoveryBranch, recoveryBranchCandidate,
                     NativeLocks: nativeLocks);
             }
+            if (outcome?.GetProperty("outcome").GetString() != "removed" || removal.Error.Length != 0)
+                throw new InvalidOperationException("missing or unsuccessful removal receipt");
         }
         catch (Exception exception) when (exception is not OutOfMemoryException)
         {
-            return new LaneRemovalResult(LaneRemovalOutcome.WorktreeRemoveFailed,
-                "worktree_remove_failed_state_indeterminate", recoveryBranch, recoveryBranchCandidate,
+            return new LaneRemovalResult(LaneRemovalOutcome.QualificationFailed,
+                QualificationFailure(exception, removal).Reason!, recoveryBranch, recoveryBranchCandidate,
                 NativeLocks: nativeLocks);
         }
 
@@ -167,7 +188,7 @@ internal static partial class CleanLanesCommand
                 BlockedWorktree(item, result.Reason),
             LaneRemovalOutcome.Removed =>
                 new("stale_worktree", item.Path, item.Branch, item.Head, "removed", result.Reason),
-            LaneRemovalOutcome.CheckpointFailed or LaneRemovalOutcome.PoolSweepFailed =>
+            LaneRemovalOutcome.QualificationFailed or LaneRemovalOutcome.CheckpointFailed or LaneRemovalOutcome.PoolSweepFailed =>
                 new("stale_worktree", item.Path, item.Branch, item.Head, "failed", result.Reason),
             LaneRemovalOutcome.WorktreeRemoveFailed =>
                 new(
@@ -187,6 +208,7 @@ internal static partial class CleanLanesCommand
         Removed,
         WorktreeRemoveFailed,
         CheckpointFailed,
+        QualificationFailed,
         PoolSweepFailed,
     }
 

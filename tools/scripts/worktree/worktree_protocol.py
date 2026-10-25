@@ -463,6 +463,8 @@ def main(argv=None):
     removal.add_argument("--expected", action="append", default=[])
     qualification = commands.add_parser("qualify")
     qualification.add_argument("--path", action="append", type=Path, required=True)
+    qualification.add_argument("--stream", action="store_true")
+    qualification.add_argument("--budget-seconds", type=float)
     retirement = commands.add_parser("retire-branch")
     retirement.add_argument("--branch", required=True)
     retirement.add_argument("--commit", required=True)
@@ -506,13 +508,19 @@ def main(argv=None):
             print(json.dumps(recover_initialization(options)), flush=True)
         elif options.action == "qualify":
             from worktree_preservation import qualify_batch
-            result = qualify_batch(options)
+            def emit(row):
+                print(json.dumps(dict(event="worktree_qualification_item", **row)), flush=True)
+            result = qualify_batch(options, emit if options.stream else None)
+            if options.stream:
+                result = dict(event=result["event"], status=result["status"], item_count=len(result["items"]))
             print(json.dumps(result), flush=True)
             return 74 if result["status"] == "failed" else 0
         elif options.action == "remove":
             from worktree_preservation import remove
             result = remove(options)
             print(json.dumps(result), flush=True)
+            if result["status"] == "refused":
+                return 68 if all(row.get("reason", "").startswith("locked_") for row in result["items"]) else 73
             return 74 if result["status"] == "failed" else 0
         elif options.action == "retire-branch":
             from worktree_preservation import retire_branch
@@ -531,7 +539,16 @@ def main(argv=None):
             from worktree_publication import checkpoint, publish, finalize
             print(json.dumps(dict(checkpoint=checkpoint, publish=publish, finalize=finalize)[options.action](options)), flush=True)
         return 0
-    except (Refused, OSError, ValueError, subprocess.SubprocessError) as error:
+    except Exception as error:
+        # Only remove/qualify use the qualification failure boundary. Other
+        # commands retain their existing refusal and exception contracts.
+        if options.action in ("remove", "qualify") and (
+                isinstance(error, GitFailure) or not isinstance(error, Refused)):
+            from worktree_preservation import qualification_failure
+            print("WORKTREE_FAILED " + qualification_failure(error), file=sys.stderr, flush=True)
+            return 74
+        if not isinstance(error, (Refused, OSError, ValueError, subprocess.SubprocessError)):
+            raise
         if options.action == "checkpoint" and getattr(error, "native_locks", []):
             print(json.dumps(dict(event="worktree_checkpoint", status="failed", error=str(error),
                                   native_locks=error.native_locks)), flush=True)

@@ -257,6 +257,11 @@ internal static partial class CleanLanesCommand
             && !poolPaths.Contains(item.Path) && item.Path != inventory[0].Path
             && item.GitDirectory is not null && item.GitDirectory != commonGitDirectory
             && Directory.Exists(item.Path) && HasGitMarker(item.Path)).ToArray(), runner);
+        if (qualifications.TryGetValue(string.Empty, out var batchFailure))
+        {
+            incomplete = true;
+            events.Add(new CleanLaneEvent("worktree_qualification", null, null, null, "failed", batchFailure.Reason!));
+        }
         foreach (var item in inventory.OrderByDescending(static item => item.Path.Length))
         {
             if (poolPaths.Contains(item.Path)) continue;

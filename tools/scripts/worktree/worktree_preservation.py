@@ -1,11 +1,12 @@
 """User-directed worktree removal and independent non-worktree retention policies."""
 
-from contextlib import ExitStack
+from contextlib import ExitStack, contextmanager
 import hashlib
 import json
 import os
 from pathlib import Path
 import re
+import signal
 import subprocess
 import time
 import uuid
@@ -147,41 +148,76 @@ def qualify(source, path, stack=None, snapshot=None):
     return item
 
 
+def bounded_diagnostic(value, limit=4096):
+    text = str(value)
+    return text if len(text) <= limit else text[:limit // 2] + "...[truncated]..." + text[-limit // 2:]
+
+
 def qualification_failure(error):
     kind = "timeout" if isinstance(error, subprocess.TimeoutExpired) else "unavailable"
     detail = type(error).__name__ + ":" + str(error)
     if isinstance(error, subprocess.TimeoutExpired) and error.stderr:
         stderr = error.stderr
         detail += ":stderr=" + (stderr.decode(errors="replace") if isinstance(stderr, bytes) else stderr)
-    return "qualification_failed:" + kind + ":" + detail
+    return "qualification_failed:" + kind + ":" + bounded_diagnostic(detail)
 
 
-def qualify_batch(options):
-    """Preview each path independently; the snapshot grants no mutation authority.
+@contextmanager
+def qualification_deadline(seconds):
+    def expired(signum, frame):
+        raise subprocess.TimeoutExpired(["qualify"], seconds, stderr=b"batch qualification deadline expired")
+    handler = signal.signal(signal.SIGALRM, expired)
+    previous = signal.setitimer(signal.ITIMER_REAL, seconds)
+    try:
+        yield
+    finally:
+        signal.setitimer(signal.ITIMER_REAL, *previous)
+        signal.signal(signal.SIGALRM, handler)
 
-    Initialization probes may create cooperative scope metadata and briefly take
-    exclusive entry. No checkpoint, ref update, unlock or removal occurs here.
+
+def qualify_batch(options, emit=None):
+    """Qualify independently within min(600 seconds per path, 3600 seconds).
+
+    Completed rows are emitted immediately. The deadline covers snapshot reads
+    and qualification; native Git termination may additionally take 30 seconds.
+    Preview grants no mutation authority and only probes cooperative entry.
     """
     paths = list(dict.fromkeys(options.path))
     outcomes = []
+    budget = getattr(options, "budget_seconds", None)
+    budget = min(budget if budget is not None else 600 * len(paths), 600 * len(paths), 3600)
+    if budget <= 0:
+        raise ValueError("qualification budget must be positive")
+    deadline = time.monotonic() + budget
+    def report(path, outcome, reason):
+        row = dict(path=str(path), outcome=outcome, reason=reason)
+        outcomes.append(row)
+        if emit:
+            emit(row)
     try:
-        snapshot = inventory(options.source), common(options.source)
+        with qualification_deadline(budget):
+            snapshot = inventory(options.source), common(options.source)
     except Exception as error:
-        outcomes = [dict(path=str(path), outcome="failed", reason=qualification_failure(error))
-                    for path in paths]
+        for path in paths:
+            report(path, "failed", qualification_failure(error))
     else:
         for path in paths:
+            remaining = deadline - time.monotonic()
+            if remaining <= 0:
+                report(path, "deferred", "qualification_failed:deferred:batch qualification deadline expired")
+                continue
             try:
-                qualify(options.source, path, snapshot=snapshot)
-                outcomes.append(dict(path=str(path), outcome="qualified", reason=None))
+                with qualification_deadline(remaining):
+                    qualify(options.source, path, snapshot=snapshot)
+                report(path, "qualified", None)
             except GitFailure as error:
-                outcomes.append(dict(path=str(path), outcome="failed", reason=qualification_failure(error)))
+                report(path, "failed", qualification_failure(error))
             except Refused as error:
-                outcomes.append(dict(path=str(path), outcome="refused", reason=str(error)))
+                report(path, "refused", str(error))
             except Exception as error:
-                outcomes.append(dict(path=str(path), outcome="failed", reason=qualification_failure(error)))
+                report(path, "failed", qualification_failure(error))
     return dict(event="worktree_qualification", items=outcomes,
-                status="failed" if any(item["outcome"] == "failed" for item in outcomes) else "succeeded")
+                status="failed" if any(item["outcome"] in ("failed", "deferred") for item in outcomes) else "succeeded")
 
 
 def remove(options):
@@ -226,12 +262,14 @@ def remove(options):
         recovery_branch = None
         recovery_branch_candidate = None
         removing = False
+        qualifying = True
         try:
             with ExitStack() as stack:
                 # Initialization needs the dead initializer's exclusive entry.
                 # Ordinary removal has no participation or activity prerequisite.
                 if qualify(source, target, stack) != qualified[target]:
                     raise Refused("observed_identity_changed")
+                qualifying = False
                 branch = git_scope(stack, source, target)
                 _, metadata = identity(source, target)
                 resumed = interrupted_removal(target, metadata, stack, source, branch)
@@ -275,6 +313,12 @@ def remove(options):
                                      recovery_branch=recovery_branch,
                                      recovery_roots=getattr(stack, "recovery_roots", [])))
         except Exception as error:
+            if qualifying:
+                refused = isinstance(error, Refused) and not isinstance(error, GitFailure)
+                reason = str(error) if refused else qualification_failure(error)
+                outcomes.append(dict(path=str(target), outcome="refused" if refused else "qualification_failed",
+                                     reason=reason, error=reason))
+                continue
             outcomes.append(dict(path=str(target),
                 outcome="partial_or_indeterminate" if removing else "checkpoint_failed",
                 error=str(error), checkpoint=checkpoint, recovery_branch=recovery_branch,
@@ -283,7 +327,8 @@ def remove(options):
                 recovery_roots=getattr(stack, "recovery_roots", [])))
 
     return dict(event="worktree_removal", items=outcomes,
-                status="failed" if any(item["outcome"] not in ("removed", "would_remove") for item in outcomes) else "succeeded")
+                status="failed" if any(item["outcome"] not in ("removed", "would_remove", "refused") for item in outcomes)
+                else "refused" if any(item["outcome"] == "refused" for item in outcomes) else "succeeded")
 
 
 def retire_branch(options):

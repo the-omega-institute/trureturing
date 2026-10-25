@@ -113,6 +113,7 @@ public sealed partial class CleanLanesCommandTests
     }
 
     [Theory]
+    [InlineData("qualification_failed", "failed")]
     [InlineData("checkpoint_failed", "failed")]
     [InlineData("partial_or_indeterminate", "partially_removed")]
     public void IdlePoolFailurePreservesRecoveryAndDefersExtraSweeps(string outcome, string action)
@@ -127,7 +128,7 @@ public sealed partial class CleanLanesCommandTests
         {
             @event = "worktree_pool", status = "failed", capacity = 4,
             items = new[] { new { path, branch = "refs/heads/" + branch, head = fixture.Head(path),
-                outcome, reason = "idle_disk_pressure", error = "native failure detail",
+                outcome, reason = outcome == "qualification_failed" ? "qualification_failed:native failure detail" : "idle_disk_pressure", error = "native failure detail",
                 recovery_branch = recovery, recovery_branch_candidate = candidate } },
         });
         var runner = fixture.CreateRunner((file, args, _) => file == "python3" && args.Contains("pool")

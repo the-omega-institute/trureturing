@@ -56,3 +56,59 @@ class QualificationCases:
         self.assertIn("OSError:qualification file unavailable", items[2]["reason"])
         self.assertIn("RuntimeError:unexpected error", items[3]["reason"])
         self.assertEqual("initialization_in_progress", items[4]["reason"])
+
+    def qualification_process_boundary_distinguishes_operational_errors(self):
+        import worktree_protocol as protocol
+        import worktree_preservation as preservation
+        from contextlib import redirect_stderr
+        for action in ("qualify", "preview", "preflight", "scoped"):
+            for error in (protocol.GitFailure("fatal: native qualification broke"),
+                          OSError("qualification filesystem broke"),
+                          subprocess.TimeoutExpired(["git"], 300, stderr=b"inner deadline"),
+                          protocol.Refused("initialization_in_progress")):
+                with self.subTest(action=action, error=type(error).__name__):
+                    original = preservation.qualify
+                    calls = []
+                    def injected(*args, **kwargs):
+                        calls.append(True)
+                        if len(calls) == (2 if action == "scoped" else 1):
+                            raise error
+                        return original(*args, **kwargs)
+                    args = ["--source", str(self.main), "qualify" if action == "qualify" else "remove",
+                            "--path", str(self.tree)]
+                    if action == "preview":
+                        args.append("--preview")
+                    output, errors = io.StringIO(), io.StringIO()
+                    with patch.object(preservation, "qualify", side_effect=injected), redirect_stdout(output), redirect_stderr(errors):
+                        code = protocol.main(args)
+                    refused = type(error) is protocol.Refused
+                    self.assertEqual((0 if action == "qualify" else 73) if refused else 74, code)
+                    self.assertTrue(self.tree.is_dir())
+                    text = output.getvalue() + errors.getvalue()
+                    self.assertIn("initialization_in_progress" if refused else "qualification_failed:", text)
+                    if not refused:
+                        self.assertIn("inner deadline" if isinstance(error, subprocess.TimeoutExpired) else str(error), text)
+
+    def qualification_stream_preserves_completed_and_defers_unreached(self):
+        import worktree_protocol as protocol
+        import worktree_preservation as preservation
+        refused, slow, unreached = [self.root / name for name in ("refused", "slow", "unreached")]
+        def injected(source, path, **kwargs):
+            if path == refused:
+                raise protocol.Refused("locked_recent")
+            if path == slow:
+                import time
+                time.sleep(1)
+            self.fail("unreached tree was qualified")
+        output = io.StringIO()
+        snapshot, common = preservation.inventory(self.main), preservation.common(self.main)
+        with patch.object(preservation, "inventory", return_value=snapshot), patch.object(preservation, "common", return_value=common), patch.object(preservation, "qualify", side_effect=injected), redirect_stdout(output):
+            code = protocol.main(["--source", str(self.main), "qualify", "--stream", "--budget-seconds", "0.02",
+                                  "--path", str(refused), "--path", str(slow), "--path", str(unreached)])
+        self.assertEqual(74, code)
+        rows = [json.loads(line) for line in output.getvalue().splitlines()]
+        self.assertEqual(["refused", "failed", "deferred"], [row["outcome"] for row in rows[:-1]])
+        self.assertEqual("locked_recent", rows[0]["reason"])
+        self.assertIn("deadline", rows[1]["reason"])
+        self.assertIn("deadline", rows[2]["reason"])
+        self.assertEqual("failed", rows[-1]["status"])
