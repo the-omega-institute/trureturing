@@ -114,7 +114,22 @@ private lemma first_steps (s : ℤ) (U : Matrix (Fin 7) (Fin 7) ℂ)
 private lemma orbit_mod (s : ℤ) (n : ℕ) :
     (Int.castRingHom (ZMod 3)) ∘ ((M s ^ n).mulVec v) =
       (2 : ZMod 3) ^ n • ((Int.castRingHom (ZMod 3)) ∘ v) := by
-  sorry
+  have heigen : (M s).map (Int.castRingHom (ZMod 3)) *ᵥ
+      ((Int.castRingHom (ZMod 3)) ∘ v) =
+      (2 : ZMod 3) • ((Int.castRingHom (ZMod 3)) ∘ v) := by
+    ext i
+    rw [← RingHom.map_mulVec, integer_invariant]
+    simp [Pi.add_apply, Pi.smul_apply, smul_eq_mul,
+      show (3 : ZMod 3) = 0 by decide]
+  have hpow : ((M s).map (Int.castRingHom (ZMod 3)) ^ n) *ᵥ
+      ((Int.castRingHom (ZMod 3)) ∘ v) =
+      (2 : ZMod 3) ^ n • ((Int.castRingHom (ZMod 3)) ∘ v) := by
+    induction n with
+    | zero => simp
+    | succ n ih =>
+      rw [pow_succ', ← Matrix.mulVec_mulVec, ih, Matrix.mulVec_smul, heigen,
+        smul_smul, pow_succ]
+  simpa only [Function.comp_def, RingHom.map_mulVec, Matrix.map_pow] using hpow
 
 private lemma amplitude_formula (s : ℤ) (U : Matrix (Fin 7) (Fin 7) ℂ)
     (h : (3 : ℂ) • U = (M s).map (Int.castRingHom ℂ)) (n : ℕ) :
