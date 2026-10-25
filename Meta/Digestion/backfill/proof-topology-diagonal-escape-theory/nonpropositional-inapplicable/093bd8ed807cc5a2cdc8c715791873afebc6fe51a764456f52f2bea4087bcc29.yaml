@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:093bd8ed807cc5a2cdc8c715791873afebc6fe51a764456f52f2bea4087bcc29
+  normalized_sha256: sha256:093bd8ed807cc5a2cdc8c715791873afebc6fe51a764456f52f2bea4087bcc29
+cas_ref: sha256:093bd8ed807cc5a2cdc8c715791873afebc6fe51a764456f52f2bea4087bcc29
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 仅引入目标残差 E(q;T):=ker(q)\ker(T) 的定义并解释记号，没有额外恒等式断言。
+    previous_atom_id: 9b2720deba7ce54272bb3ab8a8d92ea09f20997c488cb8110c1e4590e79fd3af
+    next_atom_id: c4771b136e997f48dafc9c7d8bcb3966e1c93bafd1cbda174cabcd083ed03724
