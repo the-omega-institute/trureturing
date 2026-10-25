@@ -86,8 +86,7 @@ private lemma integer_form_disp :
 private lemma scaled_matrix (s : ℤ) (U : Matrix (Fin 7) (Fin 7) ℂ)
     (h : (3 : ℂ) • U = (M s).map (Int.castRingHom ℂ)) :
     U = (1/3 : ℂ) • (M s).map (Int.castRingHom ℂ) := by
-  rw [← h, smul_smul]
-  norm_num
+  simpa only [one_div] using (eq_inv_smul_iff₀ (by norm_num : (3 : ℂ) ≠ 0)).mpr h
 
 private lemma integer_first_column (s : ℤ) :
     (M s).mulVec (Pi.single 1 1) = v := by
