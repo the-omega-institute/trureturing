@@ -84,12 +84,12 @@ The canonical source is `D5/S3/HomologicalAlgebra/LocalityTensorProductRefutatio
 - **Axioms.** It uses only the standard axioms `propext`, `Classical.choice` and `Quot.sound`; no `sorry`, `native_decide`, or new axiom.
 - **Escape registrations.** `result` is the designated refutation result of the `utility` header and is exempt. The module has no other public theorem.
 
-Frozen state: `Golden/Frozen/state/D5/S3/HomologicalAlgebra/LocalityTensorProductRefutation.lean.json`, statement `sha256:d388319ab259bf0ab8a842703044d5a28342cc26a5758fdad557bba7023cda33`.
+Frozen state: `Golden/Frozen/state/D5/S3/HomologicalAlgebra/LocalityTensorProductRefutation.lean.json`, statement `sha256:9c40c09ff4b6a5e8e249fb391980e842c2086fc897585835600410d35a40ecf9`.
 
 Declaration statements:
 
 - `result`: `sha256:499d4a8e8eec2070dc1c31af1890839a779f151817f50da5021aacf343ccce25`;
-- `claim`: `sha256:f91ca8b569fc2d130e6592b2f6215f16015442908a8ea1f690ae355f6d2c7d6f`.
+- `claim`: `sha256:2949345f6ba19ae99ba62b93f7d9f6799036d583955387d6890b4e8ae1c9b14e`.
 
 ## Triage
 
