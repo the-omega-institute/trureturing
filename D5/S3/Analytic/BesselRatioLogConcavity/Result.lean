@@ -2,7 +2,7 @@
    generality: G
    mirror-B: D5/B/S3/Analytic/BesselRatioLogConcavity/Result
    mirror-E: none(waiver:external-open-problem-resolution)
-   anchors: [mathlib/module/Mathlib.Analysis.SpecificLimits.Normed, mathlib/module/Mathlib.Analysis.Convex.Function]
+   anchors: []
    utility: kind=certified-instance; basis=refutes=gid:D5/S3/Analytic/BesselRatioLogConcavity/Result.claim; result=D5/S3/Analytic/BesselRatioLogConcavity/Result.result; claim=D5/S3/Analytic/BesselRatioLogConcavity/Result.claim
    digest: A rational series certificate refutes positive-order Bessel-ratio log-concavity. -/
 
@@ -47,8 +47,6 @@ Identity source: .lake/build/stratalint/scoped-lean-report.json.
 -/
 
 import D5.S3.Analytic.KummerRatio.BetaIntegral
-import Mathlib.Analysis.SpecificLimits.Normed
-import Mathlib.Analysis.Convex.Function
 
 noncomputable section
 open Filter Topology
