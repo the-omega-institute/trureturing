@@ -9,6 +9,10 @@ public sealed partial class CleanLanesCommandTests
     [InlineData("short-oid", true)]
     [InlineData("full-oid", false)]
     [InlineData("full-oid", true)]
+    [InlineData("sha256-length-hex", false)]
+    [InlineData("sha256-length-hex", true)]
+    [InlineData("refs/heads/retired-allocation", false)]
+    [InlineData("refs/heads/retired-allocation", true)]
     [InlineData("harness/retired-allocation", false)]
     [InlineData("harness/retired-allocation", true)]
     public void NativeBranchRetirementPreservesApplicableAllocationGrace(string name, bool rename)
@@ -18,7 +22,10 @@ public sealed partial class CleanLanesCommandTests
         var saved = fixture.Head(lane);
         var allocated = fixture.LastUpdate(lane).AddDays(2);
         CleanLanesFixture.Git(lane, "update-ref", "refs/remotes/origin/dev", saved);
-        var branch = name == "short-oid" ? saved[..7] : name == "full-oid" ? saved : name;
+        Assert.Equal("sha1", CleanLanesFixture.Git(lane, "rev-parse", "--show-object-format").Trim());
+        var branch = name == "short-oid" ? saved[..7] : name == "full-oid" ? saved
+            : name == "sha256-length-hex" ? new string('a', 64) : name;
+        Assert.Equal(branch, CleanLanesFixture.Git(lane, "check-ref-format", "--branch", branch).Trim());
         CleanLanesFixture.GitAt(lane, allocated, "switch", "-c", branch);
         var log = fixture.BranchLogPath(lane);
         if (rename)
@@ -36,7 +43,7 @@ public sealed partial class CleanLanesCommandTests
         if (name is "origin/dev" or "short-oid" or "full-oid")
             Assert.Equal(saved, CleanLanesFixture.Git(lane, "rev-parse", "--verify", branch + "^{commit}").Trim());
 
-        foreach (var force in name == "full-oid" ? Array.Empty<bool>() : new[] { false, true })
+        foreach (var force in new[] { false, true })
         {
             var recent = fixture.RunAt(allocated.AddSeconds(10799), force ? ["--force", "--lanes-only"] : ["--lanes-only"]);
 
@@ -48,7 +55,7 @@ public sealed partial class CleanLanesCommandTests
         }
         foreach (var force in new[] { false, true })
         {
-            var elapsed = fixture.RunAt(allocated.AddHours(name == "full-oid" ? 1 : 3), force ? ["--force", "--lanes-only"] : ["--lanes-only"]);
+            var elapsed = fixture.RunAt(allocated.AddHours(3), force ? ["--force", "--lanes-only"] : ["--lanes-only"]);
 
             Assert.True(elapsed.Success, elapsed.Error);
             Assert.Equal("merged_to_dev", ReasonFor(elapsed.Output, lane));

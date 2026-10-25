@@ -113,8 +113,7 @@ public sealed partial class CleanLanesCommandTests
         var headLog = File.ReadAllLines(Path.Combine(fixture.WorktreeGitDirectory(lane), "logs", "HEAD"));
         Assert.EndsWith(" to " + destination, headLog[^1], StringComparison.Ordinal);
 
-        var ambiguous = !revision.StartsWith("refs/", StringComparison.Ordinal)
-            && revision is not ("full-oid" or "HEAD^0" or "dev^{commit}");
+        var ambiguous = revision is not ("HEAD^0" or "dev^{commit}");
         if (ambiguous)
             foreach (var force in new[] { false, true })
             {
@@ -128,6 +127,36 @@ public sealed partial class CleanLanesCommandTests
         foreach (var force in new[] { false, true })
         {
             var result = fixture.RunAt(checkout.AddHours(ambiguous ? 3 : 1), force ? ["--force", "--lanes-only"] : ["--lanes-only"]);
+
+            Assert.True(result.Success, result.Error);
+            Assert.Equal("merged_to_dev", ReasonFor(result.Output, lane));
+            Assert.Equal(!force, Directory.Exists(lane));
+            Assert.Equal(!force, fixture.WorktreeRegistered(lane));
+        }
+    }
+
+    [Theory]
+    [InlineData("HEAD")]
+    [InlineData("HEAD~1")]
+    [InlineData("@{-1}")]
+    [InlineData("x^0")]
+    [InlineData("a..b")]
+    [InlineData(":path")]
+    public void RevisionExpressionCheckoutDoesNotAllocateTree(string destination)
+    {
+        using var fixture = new CleanLanesFixture();
+        var lane = fixture.AddWorkedLane("harness/revision-expression");
+        var checkout = fixture.LastUpdate(lane).AddDays(2);
+        CleanLanesFixture.GitAt(lane, checkout, "checkout", "--detach", "HEAD");
+        var log = Path.Combine(fixture.WorktreeGitDirectory(lane), "logs", "HEAD");
+        var lines = File.ReadAllLines(log);
+        Assert.EndsWith(" to HEAD", lines[^1], StringComparison.Ordinal);
+        lines[^1] = lines[^1][..^4] + destination;
+        File.WriteAllLines(log, lines);
+
+        foreach (var force in new[] { false, true })
+        {
+            var result = fixture.RunAt(checkout.AddHours(1), force ? ["--force", "--lanes-only"] : ["--lanes-only"]);
 
             Assert.True(result.Success, result.Error);
             Assert.Equal("merged_to_dev", ReasonFor(result.Output, lane));
