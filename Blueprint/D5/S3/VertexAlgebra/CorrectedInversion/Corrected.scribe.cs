@@ -17,5 +17,5 @@ internal sealed class CorrectedDocument : IScribeDocumentDefinition
         Describe.Lean(DescribeId.Create("original-full-corrected-monomial-inversion"), DeclarationHandle.Create(Prefix + "actual_corrected_monomial_inversion"),
             H("Consumed original monomial instance"), StatementSource.WithoutFormula(),
             AssessedProvenance.FromRepo(LibraryNoteRef.Create("D5/L/VertexAlgebra/flm1988monster")),
-            Blocks(Paragraph(Text("The homogeneous identity is applied to the existing monomial basis, with R equal to its sourceWeight. This bind-only helper is used by dualReadout_monomial in the finite functional-dual proof; it is not a separate novelty claim."))), DescribeRole.Theorem))));
+            Blocks(Paragraph(Text("The homogeneous identity specializes to the existing monomial basis, with R equal to its sourceWeight. The resulting formula supplies dualReadout_monomial, which extends the corrected-field pairing identity linearly from monomials to arbitrary finitely supported source vectors."))), DescribeRole.Theorem))));
 }
