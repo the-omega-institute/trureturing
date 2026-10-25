@@ -59,7 +59,10 @@ theorem exists_disjoint_restrictions (f : ℕ → Lp ℝ 1 μ) (A : ℕ → Set 
           rw [← ofReal_norm]
           exact ENNReal.ofReal_le_ofReal (hcross i _ (by omega))
         _ = ∑' m : ℕ, (2⁻¹ : ℝ≥0∞) ^ (i + 1 + m) := by
-          apply tsum_congr; intro m; norm_num [ENNReal.ofReal_pow (by norm_num), ENNReal.ofReal_div_of_pos (by norm_num)]
+          apply tsum_congr; intro m
+          rw [ENNReal.ofReal_pow (by norm_num : 0 ≤ (1 / 2 : ℝ)),
+            ENNReal.ofReal_div_of_pos (by norm_num : 0 < (2 : ℝ))]
+          norm_num
         _ = (2⁻¹ : ℝ≥0∞) ^ i := by
           simp only [pow_add, ENNReal.tsum_mul_left, ENNReal.tsum_geometric_two, pow_one]
           rw [mul_assoc, ENNReal.inv_mul_cancel (by norm_num) (by norm_num), mul_one]

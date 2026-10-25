@@ -70,14 +70,15 @@ theorem uniformIntegrable_complements
   apply uniformIntegrable_of_eventual_tailNorm g B (fun n => (norm_le _ _ _).trans (hb n))
   intro ε hε
   have hcsmall : ∀ᶠ k in atTop, c k - α < ε / 2 := by
-    have h := (tendsto_order.1 (hc.sub tendsto_const_nhds)).2 (ε / 2) (by linarith)
-    simpa using h
+    have hz : Tendsto (fun k => c k - α) atTop (𝓝 0) := by
+      simpa using hc.sub (tendsto_const_nhds : Tendsto (fun _ : ℕ => α) atTop (𝓝 α))
+    exact (tendsto_order.1 hz).2 (ε / 2) (by linarith)
   obtain ⟨k, hk, hck⟩ : ∃ k : ℕ, 0 < k ∧ c k - α < ε / 2 :=
     ((eventually_gt_atTop 0).and hcsmall).exists
   have heq : (fun n => tailNorm k (g n)) =ᶠ[atTop]
       (fun n => tailNorm k (f n) - tailNorm (K n) (f n)) := by
     filter_upwards [eventually_ge_atTop k] with n hn
-    exact tailNorm_compl (f n) k (K n) hk (by omega)
+    exact tailNorm_compl (f n) k (K n) hk (hn.trans (hK n).le)
   have ht : Tendsto (fun n => tailNorm k (g n)) atTop (𝓝 (c k - α)) :=
     ((hfixed k).sub hmoving).congr' heq.symm
   obtain ⟨N, hN⟩ := eventually_atTop.1 ((tendsto_order.1 ht).2 ε (by linarith))

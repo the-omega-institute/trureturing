@@ -62,6 +62,6 @@ theorem exists_raw_restriction_splitting (f : ℕ → Lp ℝ 1 μ)
   have hsmall := φ.continuous.continuousAt.tendsto.comp (herror.comp ha.tendsto_atTop)
   have heq (n : ℕ) : φ (g (a n)) + φ (w (a n) - g (a n)) = φ (w (a n)) := by
     rw [map_sub, ← add_sub_assoc, add_sub_cancel_left]
-  simpa only [heq, map_zero, add_zero] using (hweak φ).add hsmall
+  simpa only [Function.comp_apply, heq, map_zero, add_zero] using (hweak φ).add hsmall
 
 end D5.S3.Topology.Measures.L1RawSplitting

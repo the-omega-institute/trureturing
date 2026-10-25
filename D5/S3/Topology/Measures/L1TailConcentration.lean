@@ -59,7 +59,7 @@ theorem eventually_small_cross_tails
   have hbound : eLpNorm ((tailSet K (f m)).indicator (f n)) 1 μ ≤ ENNReal.ofReal ε := by
     rw [eLpNorm_indicator_eq_eLpNorm_restrict (measurable_tailSet K (f m)).nullMeasurableSet]
     exact hsmall ⟨n, by omega⟩ (tailSet K (f m)) (hμ.trans hKd.le)
-  rw [restrict, Lp.norm_toLp]
+  rw [L1Restriction.restrict, Lp.norm_toLp]
   simpa only [ENNReal.toReal_ofReal hε.le] using
     ENNReal.toReal_mono ENNReal.ofReal_ne_top hbound
 
