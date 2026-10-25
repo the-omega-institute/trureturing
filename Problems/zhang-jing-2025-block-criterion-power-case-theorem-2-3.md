@@ -30,12 +30,12 @@ The notation is “$|A| = (A^*A)^{1/2}$ and $A^*$ is the conjugate transpose of 
 | $1/2\le a\le1$ | claim quantifies a, with both inequalities | Both endpoints are included. |
 | Every n and $A\in M_n$ | claim quantifies n and A : Matrix (Fin n) (Fin n) Complex | The full finite-dimensional family is retained, including n=0. |
 | The block is positive semidefinite iff A is normal | claim uses Matrix.PosSemidef and $A^*A=A A^*$ | Every block and the normality equality are retained. |
-| $1/2\le a<1$ survives | claimBelowOne uses the strict upper bound | This is the proved neighboring statement. |
+| $1/2\le a<1$ survives | The owning Scribe displays the full strict-interval quantified application | Both directions, singular matrices, the half endpoint and dimension zero are retained as an application of canonical suppliers. |
 | The closed interval fails | result : \lnot claim | The conclusion is the literal refutation. |
 
 ## Motivation
 
-The source left the upper interval open. The settling result is D5/S3/Quantum/Matrix/ZhangJingPowerCaseSettlement.result, with admission basis open-problem-resolution (#18757; Refuted at a = 1; Proved below one).
+The source left the upper interval open. The settling result is D5/S3/Quantum/Matrix/ZhangJingPowerCaseSettlement.result, with admission basis open-problem-resolution (#18757; Refuted at a = 1). The complete positive interval is an application in the same owning Blueprint Scribe, not a retained companion declaration.
 
 ## Gap
 
@@ -47,16 +47,16 @@ The proof uses a finite singular-value decomposition $A=VDW^*$ with nonnegative 
 
 ## Falsifier
 
-The refutation would fail if result did not prove the negation of the full closed-interval claim, or if below_one did not prove the strict interval with singular matrices and dimension zero included. Both declarations compile in the delivered module.
+The refutation would fail if result did not prove the negation of the full closed-interval claim, or if the strict-interval application failed to establish both directions with singular matrices, the half endpoint and dimension zero included. The exact temporary application must compile from canonical suppliers and local calculations without importing any removed positive helper; until then its bridge is unverified/open. Checkpoints do not certify mathematics.
 
 ## Evidence
 
-The kernel-checked declarations are:
+The retained Lean refutation and the distinct application are:
 
 - D5/S3/Quantum/Matrix/ZhangJingPowerCaseSettlement.result : \lnot claim, the designated refutation result.
-- D5/S3/Quantum/Matrix/ZhangJingPowerCaseSettlement.below_one : claimBelowOne.
+- The owning ZhangJingPowerCaseSettlement Scribe displays the literal positive telescope and complete source-to-supplier derivation in both directions. This application has no theorem Describe, GID, resolution marker or registry.
 
-The public result is the designated refutation result (basis=refutes) and is exempt from four-slot escape registration (CLAUDE.md §3.9). The escape audit for below_one is unfinished under issue #19914; no declared_validated registration is claimed.
+The public result is the designated refutation result (basis=refutes) and is exempt from four-slot escape registration (CLAUDE.md §3.9). The public canonical CFC supplier's dependent/pointwise arena, exact source reconstruction, whole-family intervention and sensitivity audit remains unfinished under issue #19914; removing a positive application declaration does not settle that historical audit. No declared_validated registration is claimed.
 
 Experiment: zhang-jing-2025-theorem-2-3-power-case at commit 03fcc97da76c2b464b6ab79d8383aa17c8910f07, https://github.com/the-omega-institute/trureturing-experiments/tree/03fcc97da76c2b464b6ab79d8383aa17c8910f07/docs/reports/zhang-jing-2025-theorem-2-3-power-case. Command: python3 check.py; exit 0; script SHA-256 fd68b9499f5e398726827824c3abee5776b1ce07c86a7f7eaae01ed59b8a0b3d. The checked scope is $a\in\{0.5,0.55,0.6,0.75,0.9,0.99\}$, $n\in\{2,3,4\}$, ranks $n,n-1,1$, 1350 random normal/nonnormal pairs, the singular $a=3/4$ example, and the endpoint Gram witness. These computations support the formal result; they do not establish a uniform theorem.
 
@@ -67,9 +67,9 @@ Experiment: zhang-jing-2025-theorem-2-3-power-case at commit 03fcc97da76c2b464b6
 | Item | Status and evidence | Scope |
 | --- | --- | --- |
 | Refutation at $a=1$ | Proved in Lean: result refutes claim. | The block is a Gram matrix for every finite complex square matrix; the fixed nonnormal witness supplies the failure of the equivalence. |
-| Equivalence for $1/2\le a<1$ | Proved in Lean: below_one proves claimBelowOne. | Every finite dimension, including zero, every complex square matrix, including singular matrices. |
+| Equivalence for $1/2\le a<1$ | Application of existing canonical results in the owning Scribe; exact temporary compilation unverified/open. | Every finite dimension, including zero, every complex square matrix, including singular matrices. |
 | Failure mechanism | Proved in prose and used by Lean: the endpoint has constant lower-right power $x^0=1$, while below one the positive exponent is injective on nonnegative singular values. | Endpoint versus strict interval. |
-| Whole source interval $0\le a<1$ | Proved in this delivery for the upper half; literature reading for the lower half: published Theorem 2.3 covers $0\le a\le1/2$. | The lower half was not independently formalized here; the combined equivalence is stated with that boundary. |
+| Whole source interval $0\le a<1$ | Derived application for the upper half, with its exact compile still unverified; literature reading for the lower half: published Theorem 2.3 covers $0\le a\le1/2$. | The lower half was not independently formalized here; the combined equivalence is stated with that boundary. |
 | Correction to #18699 | Proved in prose: $g(x)=x^{2(1-a)}$ is injective on $[0,\infty)$ for $a<1$ in this range and is constant at $a=1$. | The endpoint qualification corrects the corresponding open-case discussion. |
 | Infinite-dimensional operators | Open: no statement is made by the delivered declarations. | Operators on infinite-dimensional spaces are outside the finite-matrix theorem. |
 | Parameters outside $[0,1]$ | Open: no statement is made by the delivered declarations. | The source interval is the only parameter range settled here. |
@@ -79,8 +79,8 @@ Experiment: zhang-jing-2025-theorem-2-3-power-case at commit 03fcc97da76c2b464b6
 
 | Target item | Dossier evidence | Status | Evidence kind |
 | --- | --- | --- | --- |
-| Refuted at $a=1$; proved for $1/2\le a<1$, singular matrices included | What the settlement shows, first two rows | proved | kernel-checked declarations result and below_one |
-| Together with published Theorem 2.3 for $0\le a\le1/2$, equivalence throughout $0\le a<1$ | What the settlement shows, whole-source row | proved for the upper half; literature reading for the lower half | kernel-checked upper-half theorem plus source reading |
+| Refuted at $a=1$; proved for $1/2\le a<1$, singular matrices included | What the settlement shows, first two rows | proved | retained result plus complete supplier application; exact application compilation unverified/open |
+| Together with published Theorem 2.3 for $0\le a\le1/2$, equivalence throughout $0\le a<1$ | What the settlement shows, whole-source row | derived upper-half application, exact compilation unverified/open; literature reading for the lower half | canonical-supplier application plus source reading |
 | $g(x)=x^{2(1-a)}$ injective for $a<1$ and constant at $a=1$ | What the settlement shows, correction row | proved | proof mechanism in the delivered argument and source correction |
 | Infinite-dimensional operators | What the settlement shows, open row | open | scope boundary |
 | Parameters outside $[0,1]$ | What the settlement shows, open row | open | scope boundary |

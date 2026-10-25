@@ -49,7 +49,7 @@ The matrix absolute value is `CFC.sqrt (Aᴴ * A)`. Real powers use `Real.rpow`,
 
 ## Mathematical consequences
 
-The repository proves the equivalence for 1/2 ≤ a < 1, including singular matrices. At a = 1 the block is the Gram matrix of [A,I], so it is positive semidefinite for every A. The nonnormal matrix [[0,1],[2,0]] refutes the extension to the closed upper endpoint. The paper's lower interval is cited here and is not independently formalized by this module.
+The existing owning Blueprint Scribe derives the complete equivalence for 1/2 ≤ a < 1 as an application of canonical suppliers, including singular matrices and dimension zero. No named positive theorem is retained; its exact temporary application compile is unverified until a current successful check. At a = 1 the block is the Gram matrix of [A,I], so it is positive semidefinite for every A. The nonnormal matrix [[0,1],[2,0]] refutes the extension to the closed upper endpoint. The paper's lower interval is cited here and is not independently formalized by this module.
 
 ## Supporting computation
 
@@ -58,3 +58,5 @@ The experiment [zhang-jing-2025-question-2-14](https://github.com/the-omega-inst
 ## Literature boundary
 
 Preregistration #18699 records the source reading and literature screen. Completeness and the unsettled status in later literature are ASSUMED-UNVERIFIED. The later articles with DOIs 10.1002/mma.70420, 10.1007/s13226-026-00949-z and 10.1007/s13226-026-00960-4 were not independently read by this implementation seat. No claim of exhaustive novelty is made.
+
+The power-interval application is distinct from the Question 2.14 scalar-pair refutation. Its canonical CFC supplier's audit remains unfinished under #19914; neither exposition nor removal of a companion theorem finishes that audit. The original source quotations, DOI and page locators above remain the source boundary.

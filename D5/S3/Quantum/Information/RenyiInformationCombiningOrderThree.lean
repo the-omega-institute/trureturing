@@ -14,6 +14,7 @@ Direct frozen dependencies: F1--F6 are declaration identities, not module pins.
 F1: D5/S3/Quantum/Dynamics/ProjectionProbabilityFlow.trace_hermitian_product_real
   declaration statement_id: sha256:d57aafbe2afd1228c9b5e26bf06684ec80accc922d16f29290f16819337adc81
 F2: D5/S3/Quantum/Information/SLDSpectralEnergy.IsDensity
+  Identity-comment correspondence: ASSUMED-UNVERIFIED pending a current scoped report.
   declaration statement_id: sha256:fc9bb0824d5818ff419f72f26095faecc04e62ab59bf26f4f2bcefbb2d380448
 F3: D5/S3/Quantum/Information/PartialTraceMutualInformation.kronecker_eq_conj_diagonal_eigenvalues
   declaration statement_id: sha256:8b1b61a640dd9dac61868bff2b7627714c90764e99b8c320fdb404ae694c4b19
@@ -88,7 +89,7 @@ proof_shape: cfc_real_diagonal: bind-only; escape_witness: none
   consumers (cfc_real_diagonal): cfc_unitary_diagonal
 proof_shape: cfc_unitary_diagonal: bind-only; escape_witness: none
   Direct frozen dependencies (cfc_unitary_diagonal): F6
-  consumers (cfc_unitary_diagonal): kronecker_rpow, ZhangJingPowerCaseSettlement.cfc_unitary_diagonal
+  consumers (cfc_unitary_diagonal): kronecker_rpow
 proof_shape: kronecker_rpow: bind-only; escape_witness: none
   Direct frozen dependencies (kronecker_rpow): F3, F6
   consumers (kronecker_rpow): xor_sandwiches
