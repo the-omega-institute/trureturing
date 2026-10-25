@@ -58,7 +58,7 @@ theorem dependence : ObservationalDependence signature.{u} actual.{u} := by
   cases hc
 
 def source_registration : Registration arena.{u} (type_of% @CAR_nilpotent.{u}) where
-  actual := actual
+  actual := realize signature (fun _ p op => op p.2) (fun e => Empty.elim e)
   bridge := Iff.rfl
   variation := ⟨CAR_nilpotent, rejected, rejected_law⟩
   sensitivity := by
