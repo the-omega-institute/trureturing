@@ -160,11 +160,11 @@ private theorem charged_normal_sum_l1 (D : LatticeData) (hu : IsUnit D.G.det)
     ← finsum_sub_distrib (pairfinite (chargedCoefficient D hu a e x))
       ((pairfinite x).fun_comp (map_zero (chargedCoefficient D hu a e))),
     finsum_congr pair]
-  have sumsplit : (∑ᶠ j : ℤ, ql • fi j + qi • fl (-j) + boundary j) =
+  have sumsplit : (∑ᶠ j : ℤ, (ql • fi j + qi • fl (-j) + boundary j)) =
       (∑ᶠ j : ℤ, ql • fi j) + (∑ᶠ j : ℤ, qi • fl (-j)) +
         ∑ᶠ j : ℤ, boundary j := by
     calc
-      _ = (∑ᶠ j : ℤ, ql • fi j + qi • fl (-j)) + ∑ᶠ j : ℤ, boundary j := by
+      _ = (∑ᶠ j : ℤ, (ql • fi j + qi • fl (-j))) + ∑ᶠ j : ℤ, boundary j := by
         exact finsum_add_distrib ((hfi.fun_comp (smul_zero ql)).add
           (hflneg.fun_comp (smul_zero qi))) hboundary
       _ = _ := by
