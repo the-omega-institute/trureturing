@@ -118,7 +118,10 @@ internal sealed class ChannelAssemblageLOSRRefutationDocument : IScribeDocumentD
                         "Finally pi is positive, so pi/3 and pi/2 both belong to the required interval, "
                             + "and pi/3 is strictly below pi/2. If claim held, its forward implication applied "
                             + "to this conversion would give pi/3 at least pi/2, a contradiction."))),
-                DescribeRole.Theorem))));
+                DescribeRole.Theorem,
+                openProblemResolutionClaim: new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("zjawin-schmid-hoban-sainz-2023-channel-assemblage-losr-refutation"),
+                    ResolutionKind.Refuted)))));
 
     private static DocumentBlock Node(string id, string declaration, string title, Formula formula,
         AssessedProvenance provenance, string prose) => Describe.Lean(
