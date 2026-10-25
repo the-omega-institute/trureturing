@@ -763,78 +763,6 @@ def registration : LeanInformationAudit.Contract.Registration.{_,_,_,0,0,0,_,_,_
   options := #[]
 end ExponentWords
 
-namespace StarIndecomposable
-abbrev signature : Signature where
-  Params := Unit
-  State _ := ℕ
-  Role := Unit
-  finiteRole := inferInstance
-  nonemptyRole := inferInstance
-  Output _ _ := Exponent
-  Anchor := Empty
-  finiteAnchor := inferInstance
-
-def readoutFunction : Unit → Unit → ℕ → Exponent := fun _ _ m => starExponent m
-def actual : Realization signature := realize signature readoutFunction (fun e => nomatch e)
-def zeroReadout : Realization signature := realize signature (fun _ _ _ => 0) (fun e => nomatch e)
-abbrev arena : Arena where
-  signature := signature
-  Law R := ∀ m : ℕ, 2 ≤ m →
-    Indecomposable m (R.readout () () m) ∧ degree (R.readout () () m) = 2*m-1 ∧
-      ∀ X : Matrix (Fin 3) (Fin 3) ℂ,
-        monomial X (R.readout () () m) = starMonomial m X
-private theorem bridge : (type_of% star_indecomposable) ↔ arena.Law actual := Iff.rfl
-private theorem rejected : ¬ arena.Law zeroReadout := by
-  intro h
-  exact (h 2 (by omega)).1.1 rfl
-private theorem dependence : ObservationalDependence signature actual := by
-  intro i
-  refine ⟨(), 2, 3, ?_⟩
-  intro h
-  have he := congrArg (fun a : Exponent => a 2 1) h
-  norm_num [actual, readoutFunction, realize, starExponent] at he
-
-def family : Registration arena (type_of% star_indecomposable) where
-  actual := actual
-  bridge := bridge
-  variation := ⟨bridge.mp star_indecomposable, zeroReadout, rejected⟩
-  sensitivity := ⟨fun i => ⟨zeroReadout,
-    fun j h => (h (Subsingleton.elim j i)).elim, rfl, rejected⟩,
-    fun e => nomatch e⟩
-  dependence := dependence
-
-def registration : LeanInformationAudit.Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
-    star_indecomposable (Realization signature) Unit Unit where
-  unitName := `Reg.D5.S3.Quantum.Fibers.SharedEnergyCopyThreshold.StarIndecomposable.unit
-  realizationName := `Reg.D5.S3.Quantum.Fibers.SharedEnergyCopyThreshold.StarIndecomposable.family
-  realizationSource := none
-  generated := false
-  arena := .source ⟨arena⟩
-  objectArena := .source ⟨arena⟩
-  catalog := Lean.Name.anonymous
-  localNames := false
-  realization := .source arena ⟨family⟩
-  correspondence := { stage := .evidence, objectStage := .evidence }
-  bundleNonempty := .absent
-  readout := some (realize signature readoutFunction (fun e => nomatch e))
-  variation := .absent
-  sensitivity := .absent
-  partialSensitivity := none
-  escapeFrom := none
-  sourceSelection := some {
-    owner := `D5.S3.Quantum.Fibers.SharedEnergyCopyThreshold
-    definition := none
-    coordinates := #[]
-    readouts := #[{
-      path := #["body", "body", "fn", "arg", "arg"]
-      stateBinder := 0
-      functionOperand := false
-      stateOperand := some #["arg"]
-      booleanPredicate := false }] }
-  continuation := .unknown
-  familyRecord := none
-  options := #[]
-end StarIndecomposable
 
 namespace Hamiltonian
 abbrev signature : Signature where
@@ -910,6 +838,5 @@ def registration : LeanInformationAudit.Contract.Registration.{_,_,_,0,0,0,_,_,_
 end Hamiltonian
 
 #print axioms ExponentWords.registration
-#print axioms StarIndecomposable.registration
 #print axioms Hamiltonian.registration
 end Reg.D5.S3.Quantum.Fibers.SharedEnergyCopyThreshold

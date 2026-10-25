@@ -795,70 +795,10 @@ def Indecomposable (m : ℕ) (alpha : Exponent) : Prop :=
   alpha ≠ 0 ∧ weight m alpha = 0 ∧
     ∀ beta : Exponent, beta ≤ alpha → weight m beta = 0 → beta = 0 ∨ beta = alpha
 
-/-- The actual exponent of the distinguished sparse relation. -/
-def starExponent (m : ℕ) : Exponent := fun i j =>
-  if i = 2 ∧ j = 1 then m else if i = 0 ∧ j = 2 then m-1 else 0
-
-/-- The distinguished relation is a labelled indecomposable, has the claimed
-degree, and evaluates to the stated monomial on every complex matrix. -/
-theorem star_indecomposable (m : ℕ) (hm : 2 ≤ m) :
-    Indecomposable m (starExponent m) ∧ degree (starExponent m) = 2*m-1 ∧
-      ∀ X : Matrix (Fin 3) (Fin 3) ℂ,
-        monomial X (starExponent m) = starMonomial m X := by
-  refine ⟨⟨?_, ?_, ?_⟩, ?_, ?_⟩
-  · intro h
-    have he := congrFun (congrFun h 2) 1
-    simp [starExponent] at he
-    omega
-  · simp [weight, starExponent, energy, Fin.sum_univ_succ,
-      Nat.cast_sub (by omega : 1 ≤ m)]
-    ring
-  · intro beta hle hw
-    have hs : beta = fun i j => if i = 2 ∧ j = 1 then beta 2 1 else
-        if i = 0 ∧ j = 2 then beta 0 2 else 0 := by
-      ext i j
-      split_ifs with h₁ h₂
-      · obtain ⟨rfl, rfl⟩ := h₁; rfl
-      · obtain ⟨rfl, rfl⟩ := h₂; rfl
-      · have h := hle i j
-        simpa [starExponent, h₁, h₂] using h
-    have hk : ((m : ℤ)-1)*(beta 2 1 : ℤ) + (m : ℤ)*(-(beta 0 2 : ℤ)) = 0 := by
-      rw [hs] at hw
-      simp [weight, energy, Fin.sum_univ_succ] at hw
-      linear_combination hw
-    obtain ⟨ell, he₁, he₂⟩ := (supported_kernel_iff (m : ℤ) _ _).mp hk
-    have hb : beta 2 1 ≤ m := by simpa [starExponent] using hle 2 1
-    have hm' : (2 : ℤ) ≤ m := by exact_mod_cast hm
-    have hnonneg : (0 : ℤ) ≤ beta 2 1 := by positivity
-    have hbound : (beta 2 1 : ℤ) ≤ m := by exact_mod_cast hb
-    have he : ell = 0 ∨ ell = 1 := by
-      have h₀ : 0 ≤ ell := by nlinarith
-      have h₁ : ell ≤ 1 := by nlinarith
-      omega
-    rcases he with rfl | rfl
-    · left
-      have h₁ : beta 2 1 = 0 := by simpa using he₁
-      have h₂ : beta 0 2 = 0 := by simpa using he₂
-      rw [hs]
-      simp only [h₁, h₂, ite_self]
-      rfl
-    · right
-      have h₁ : beta 2 1 = m := by exact_mod_cast (by simpa using he₁ : (beta 2 1 : ℤ) = m)
-      have h₂ : beta 0 2 = m-1 := by
-        have ht : (beta 0 2 : ℤ) = (m : ℤ)-1 := by linarith
-        omega
-      rw [hs]
-      simp only [h₁, h₂]
-      rfl
-  · simp [degree, starExponent, Fin.sum_univ_succ]
-    omega
-  · intro X
-    simp [monomial, starExponent, starMonomial, Fin.prod_univ_succ, mul_comm]
 
 
 #print axioms total_hamiltonian_diagonal
 #print axioms exponent_tensor_bridge
-#print axioms star_indecomposable
 #print axioms tensor_monomial_bridge
 #print axioms compatible_effects_iff
 #print axioms sparse_low_pinching
