@@ -1629,3 +1629,814 @@ $$
 
 ## 追加锚（本行以下为增补区）
 
+## 72. 有限完整记录的加权误差与任意正比较器
+
+**定义 72.1（相同原对象上的有限比较）。** 沿用定义 54.1、假设 54.2 的全部复相容集合、五维仪器和固定终端测量。特别地，初始域仍为
+
+$$
+\begin{split}
+\mathcal K_d=\{\rho=A+D:\;&A,D\succeq0,\quad D\ell=0,\quad
+\operatorname{Tr}\rho=1,\\
+&a^\dagger Aa=d,\quad \operatorname{Tr}(C\rho)=d,\quad
+\operatorname{Tr}(E\rho)=e_d\},\qquad 0<d<1,
+\end{split}
+\tag{72.1}
+$$
+
+其中 $C=2\xi\xi^\dagger$、$e_d=(6-5d)/16$，各向量及矩阵取 (54.1)，不限制为实态或纯态。对每个 $\rho$，第一卷定理 35.4 供应原域 $T\in\mathcal F_{\sqrt d}$，其后继为 (54.6) 的 $S_\rho$。第二卷定理 39.3–39.4 供应实际五维桥
+
+$$
+\begin{gathered}
+h=(j_1,\ldots,j_n),\quad
+A_h=A_{j_n}\cdots A_{j_1},\quad V_h=V_{j_n}\cdots V_{j_1},\\
+V_0=Ue^{\mathrm i\theta W},\quad V_1=V_0W,\quad
+A_hB=2^{-n/2}BV_h,\quad M_h=V_h^\dagger EV_h,\\
+p_\rho(h,1)=2^{-n}\operatorname{Tr}(\rho M_h),\qquad
+p_\rho(h,0)=2^{-n}[1-\operatorname{Tr}(\rho M_h)].
+\end{gathered}
+\tag{72.2}
+$$
+
+最左字母最早作用；空词取单位矩阵。概率表可以理解为在 $B\rho B^\dagger$ 上执行原仪器，也可以理解为原输入 $ff^\dagger$ 经 $S_\rho$ 后执行同一仪器。两种终端结果和全部历史均保留；每个历史的总质量是 $2^{-n}$。
+
+令 $\mathcal D\subseteq\mathcal K_d$ 非空。一个 $k\ge1$ 状态比较器 $q$ 取固定的
+
+$$
+T_0,T_1\in\mathbb R_+^{k\times k},\qquad
+\mathbf1^{\mathsf T}(T_0+T_1)=\mathbf1^{\mathsf T},\qquad
+f_{\rm cl}\in[0,1]^k,
+\tag{72.3}
+$$
+
+以及任意函数 $\rho\mapsto p(\rho)\in\Delta_{k-1}$，并置
+
+$$
+\begin{aligned}
+q_\rho(h,1)&=f_{\rm cl}^{\mathsf T}T_hp(\rho),\\
+q_\rho(h,0)&=(\mathbf1-f_{\rm cl})^{\mathsf T}T_hp(\rho),
+\qquad T_h=T_{j_n}\cdots T_{j_1}.
+\end{aligned}
+\tag{72.4}
+$$
+
+对整数 $H\ge0$，定义实际完整记录误差
+
+$$
+\Delta_H(\mathcal D;q)
+=\sup_{\rho\in\mathcal D}\ \max_{0\le n\le H}
+\frac12\sum_{h\in\{0,1\}^n}\sum_{b=0}^1
+|p_\rho(h,b)-q_\rho(h,b)|.
+\tag{72.5}
+$$
+
+记 $k_{\mathcal D}(H,\varepsilon)$ 为满足 $\Delta_H\le\varepsilon$ 的最小正整数状态数，没有有限比较器时为 $\infty$；$k(H,\varepsilon)$ 专指 $\mathcal D=\mathcal K_d$。角度及 $d$ 在这些记号中固定。
+
+这里不要求制备函数仿射，不要求隐藏状态逐支公平、最小、可达、可观察或不可约。只有分支和列随机；单独的 $2T_0$ 或 $2T_1$ 不预设随机性。固定矩阵和效果必须同时用于全部深度与全部 $\rho$。在每个深度，两张完整表都是概率分布：对经典表求和使用 $\mathbf1^{\mathsf T}(T_0+T_1)^n p=1$。
+
+后文使用 TV 的标准事件不等式在本源上的对应。若 $\rho_+,\rho_-\in\mathcal D$ 且 $\Delta_H(\mathcal D;q)\le\varepsilon$，则对每个 $0\le n\le H$，令 $p_\pm=p(\rho_\pm)$，有
+
+$$
+\begin{aligned}
+|\mathbf1^{\mathsf T}T_0^np_\pm-2^{-n}|&\le\varepsilon,\\
+|f_{\rm cl}^{\mathsf T}T_0^np_\pm-p_{\rho_\pm}(0^n,1)|&\le\varepsilon,\\
+|f_{\rm cl}^{\mathsf T}T_0^n(p_+-p_-)
+ -[p_{\rho_+}(0^n,1)-p_{\rho_-}(0^n,1)]|&\le2\varepsilon.
+\end{aligned}
+\tag{72.6}
+$$
+
+证明。两个归一化概率分布的任一事件概率差不超过它们的 TV。第一行的事件是“全部标签为零”，包含两个终端结果；第二行是其中终端为是的联合事件。分别对两个制备使用第二行，再取差，得第三行。这些界没有除以 $2^{-n}$；归一化稀有词会把绝对误差放大，不能保留同一个 $\varepsilon$。∎
+
+## 73. 一个有显式余量的原域双世界及其四阶递推
+
+**定理 73.1（实际见证的统一半径与正号对比）。** 在 (55.2) 的严格相容点取
+
+$$
+\begin{gathered}
+\eta=\frac{d(1-d)}{100},\qquad t=\frac\eta{16}
+ =\frac{d(1-d)}{1600},\\
+\rho_*=
+\begin{pmatrix}
+d+\eta&-\eta&4\eta/\sqrt6\\
+-\eta&\eta&0\\
+4\eta/\sqrt6&0&1-d-2\eta
+\end{pmatrix}_{(a,h_{\rm out},g)},\\
+D_0=\mathrm i(\xi e^\dagger-e\xi^\dagger),\qquad
+\rho_\pm=\rho_*\pm tD_0.
+\end{gathered}
+\tag{73.1}
+$$
+
+这里 $t$ 是双世界的扰动幅度，不是第一卷原通道参数 $\sqrt d$。两个世界属于引理 55.1 已有的见证线段，均严格满足完整复 $\mathcal K_d$ 的条件，并有原五维通道提升。
+
+置 $\zeta=e^{-2\mathrm i\theta}$、$c=\cos(2\theta)$、$s_\theta=\sin(2\theta)$，以及
+
+$$
+B_\zeta=
+\begin{pmatrix}-1/2&\sqrt3\zeta/2\\\sqrt3/2&\zeta/2\end{pmatrix},
+\qquad u_n=\Im(B_\zeta^n)_{11}.
+\tag{73.2}
+$$
+
+实际加权终端对比恰为
+
+$$
+a_n:=p_{\rho_+}(0^n,1)-p_{\rho_-}(0^n,1)
+=2t\,2^{-n}u_n.
+\tag{73.3}
+$$
+
+其符号为正的 $2t$，补终端结果的对比是 $-a_n$。未加权序列 $u_n$ 的一个首一消去多项式是
+
+$$
+Q_\theta(x)=x^4+(1-c)x^3+\frac{1-5c}{2}x^2+(1-c)x+1.
+\tag{73.4}
+$$
+
+因此 $a_n$ 的相应首一消去多项式是 $Q_\theta(2x)/16$，而不是直接用 $Q_\theta(x)$。
+
+证明。先给严格正性的显式下界。对 $z=(z_a,z_h,z_g)$，用
+
+$$
+\begin{aligned}
+2\eta|z_a z_h|&\le2\eta|z_a|^2+\frac\eta2|z_h|^2,\\
+\frac{8\eta}{\sqrt6}|z_a z_g|
+&\le\frac d4|z_a|^2+\frac{32\eta^2}{3d}|z_g|^2
+\end{aligned}
+\tag{73.5}
+$$
+
+估计二次型，得到
+
+$$
+z^\dagger\rho_*z\ge
+\left(\frac{3d}4-\eta\right)|z_a|^2
++\frac\eta2|z_h|^2
++\left(1-d-2\eta-\frac{32\eta^2}{3d}\right)|z_g|^2
+\ge\frac\eta2\|z\|^2.
+\tag{73.6}
+$$
+
+最后一步只用 $\eta\le d/100$、$\eta\le(1-d)/100$：第三个系数至少为 $(100-2-8/75)\eta>\eta/2$，第一个也大于 $\eta/2$。另由 (54.5)，
+
+$$
+\begin{aligned}
+\det B_d(\rho_*)&=\frac43\eta\left(\frac d{\sqrt2}-\eta\right),\\
+\operatorname{Tr}B_d(\rho_*)&=d(1+\tau/6)+\frac43\eta,
+\qquad \tau=3-2\sqrt2.
+\end{aligned}
+\tag{73.7}
+$$
+
+两对角条目正、行列式正，故此二阶块正定。使用 $1/\sqrt2>7/10$、$\tau<1/5$ 及 $\eta\le d/100$，其最小本征值满足
+
+$$
+\lambda_{\min}(B_d(\rho_*))
+\ge\frac{\det B_d(\rho_*)}{\operatorname{Tr}B_d(\rho_*)}
+>\frac{138}{157}\eta>\frac\eta2.
+\tag{73.8}
+$$
+
+也可直接用 Sylvester 判据表达同一余量。写 $d=x/(1+x)$、$x>0$，则 $\rho_*-\eta I_3/2$ 的三个顺序主子式为
+
+$$
+\frac{x(200x+201)}{200(1+x)^2},\qquad
+\frac{x^2(200x+197)}{40000(1+x)^4},\qquad
+\frac{x^2(117000x^2+235213x+118200)}{24000000(1+x)^6},
+\tag{73.9}
+$$
+
+均严格正；而
+
+$$
+\det(B_d(\rho_*)-\eta I_2/2)
+=\frac{d^2(1-d)(21d-921+1000\sqrt2)}{120000}>0
+\tag{73.10}
+$$
+
+且首对角元 $d-\eta/2>0$。这也给两个严格本征值下界。
+
+矩阵 $D_0$ 的范数为一，且在全部实向量上的二次型为零。因此迹、$C,E$ 矩和 $aa$ 人口不变；$s=\rho_{aa}-d=\eta>0$ 不变。$B_d$ 的扰动仅有共轭非对角条目，范数至多 $t$，因为 $a,\ell$ 为单位向量。(73.6)、(73.8) 和 $t=\eta/16$ 保留两个正定条件。引理 55.1 的线段半径是两个最小本征值的较小者的四分之一，至少 $\eta/8$，故本定理的两个端点均在该线段内。
+
+原域提升具体复用 (55.4)–(55.5)：令
+
+$$
+\begin{gathered}
+L_\rho=\ell^\dagger\rho\ell,\quad
+A_{\min,\rho}=\rho\ell\ell^\dagger\rho/L_\rho,\quad
+\alpha_\rho=\frac{d-a^\dagger A_{\min,\rho}a}
+ {a^\dagger\rho a-a^\dagger A_{\min,\rho}a},\\
+A_\rho=(1-\alpha_\rho)A_{\min,\rho}+\alpha_\rho\rho,
+\quad D_\rho=\rho-A_\rho,\\
+\omega_\rho=D_+^\dagger A_\rho D_++D_-^\dagger D_\rho D_-,\qquad
+T_{\omega_\rho}(X)=BP_+XP_+B^\dagger+(f^\dagger Xf)\omega_\rho.
+\end{gathered}
+\tag{73.11}
+$$
+
+其中 $D_\pm:\mathbb C^5\to\mathbb C^3$ 是 (55.5) 的原矩阵。严格条件保证分母正、$0<\alpha_\rho<1$；供应定理给 $T_{\omega_\rho}\in\mathcal F_{\sqrt d}$ 及 $\mathcal GT_{\omega_\rho}=S_\rho$。因此这里的双世界并非只满足部分人口约束的替代态。
+
+在 $(\xi,e,f)$ 基中，$V_0$ 去掉公共相位后是 $1\oplus B_\zeta$，而 $E=(\xi+e)(\xi+e)^\dagger/2$。对任意二阶 $G$，直接配对得
+
+$$
+\operatorname{Tr}\bigl[D_0(1\oplus G)^\dagger E(1\oplus G)\bigr]
+=\mathrm i(\overline{G_{11}}-G_{11})/2=\Im G_{11}.
+\tag{73.12}
+$$
+
+取 $G=B_\zeta^n$ 并保留联合权重，得到 (73.3)。由
+
+$$
+\det(xI_2-B_\zeta)=x^2+\frac{1-\zeta}{2}x-\zeta,
+\qquad
+Q_\theta(x)=\det(xI_2-B_\zeta)\det(xI_2-\overline{B_\zeta}),
+\tag{73.13}
+$$
+
+Cayley–Hamilton 给 (73.4)。为明确随后有限矩阵的全部条目，前七项为
+
+$$
+\begin{aligned}
+u_0&=u_1=0,\qquad u_2=-3s_\theta/4,\\
+u_3&=3(1-c)s_\theta/4,\\
+u_4&=-3(1+c+2c^2)s_\theta/8,\\
+u_5&=3(1-c)(c^2+3c+1)s_\theta/4,\\
+u_6&=3(-4c^4-14c^3+9c^2-3)s_\theta/16.
+\end{aligned}
+\tag{73.14}
+$$
+
+这些式子也可由 $u_{n+4}+(1-c)u_{n+3}+(1-5c)u_{n+2}/2+(1-c)u_{n+1}+u_n=0$ 逐项得到。∎
+
+## 74. 精确有限终点的线性状态下界
+
+**定理 74.1（只转移全零词质量与对比的有限判据）。** 固定 $0<d<1$、$\sin(2\theta)\ne0$ 及 (73.1) 的两个实际制备。若一个 $k$ 状态比较器满足
+
+$$
+\begin{aligned}
+\mathbf1^{\mathsf T}T_0^np_\pm&=2^{-n},\\
+f_{\rm cl}^{\mathsf T}T_0^n(p_+-p_-)&=a_n
+\end{aligned}
+\qquad(0\le n\le k+3),
+\tag{74.1}
+$$
+
+则产生矛盾。这里不要求其他词的匹配，也不声称有限匹配迫使全部无限历史匹配。
+
+证明。令 $A=2T_0$，$\chi_A(x)=\det(xI_k-A)$。Cayley–Hamilton 使序列 $\mathbf1^{\mathsf T}A^np_\pm$ 及 $f_{\rm cl}^{\mathsf T}A^n(p_+-p_-)$ 均被 $\chi_A$ 消去。因常数序列被 $x-1$ 消去，质量误差
+
+$$
+m_n^\pm=\mathbf1^{\mathsf T}A^np_\pm-1
+\tag{74.2}
+$$
+
+被首一多项式 $\chi_A(x)(x-1)$ 消去，其次数为 $k+1$。(74.1) 给 $m_0^\pm,\ldots,m_k^\pm=0$，恰足以用首一递推向前推出全部 $m_n^\pm=0$。
+
+同理，(73.4) 使对比误差
+
+$$
+z_n=f_{\rm cl}^{\mathsf T}A^n(p_+-p_-)-2tu_n
+\tag{74.3}
+$$
+
+被首一多项式 $\chi_A(x)Q_\theta(x)$ 消去，次数为 $k+4$。有限数据恰给 $z_0,\ldots,z_{k+3}=0$，故全部 $z_n=0$。这一步没有把四阶递推误当为 $k$ 阶递推，也没有把加权序列的递推直接用于 $A$。
+
+所得无限恒等式正是定理 55.2 证明中的全零词障碍所需的质量与对比恒等式。该已证障碍只使用这些恒等式：质量使两个制备的可达支持并集上的 $A$ 幂有界；该非负有限矩阵的外围频率为单位根；引理 55.1 的 $u_n$ 有可见的非单位根频率。故 (74.2)–(74.3) 不可能同时恒零。这里直接复用这一障碍，不另作 C1 的全角度分类。∎
+
+**定理 74.2（实际双世界已迫使线性精确界）。** 对每个整数 $H\ge0$，若 $\mathcal D\subseteq\mathcal K_d$ 包含 (73.1) 的两个世界，且 $\sin(2\theta)\ne0$，则
+
+$$
+k_{\mathcal D}(H,0)\ge\max\{1,H-2\}.
+\tag{74.4}
+$$
+
+特别地，原完整复集合的 $k(H,0)$ 满足同一界。
+
+证明。状态数至少为一。若 $H\ge k+3$，精确完整记录匹配会给 (74.1)，违反定理 74.1。因此任一有限匹配模型均有 $k>H-3$，即 $k\ge H-2$。对 $H\le3$ 只保留正整数下界。这将定理 56.1 中未指定的排除终点具体化为 $H(k)\le k+3$；使用的无限正实现障碍仍是 §55 的供应结果。∎
+
+## 75. 不归一化稀有词的四状态噪声证书
+
+**定理 75.1（实际完整 TV 中的四状态障碍）。** 固定 $0<d<1$、$\sin(2\theta)\ne0$，$\mathcal D\subseteq\mathcal K_d$ 包含 (73.1) 的两个世界。若 $H\ge6$ 且
+
+$$
+\Delta_H(\mathcal D;q)\le\varepsilon
+<\frac{d(1-d)|\sin(2\theta)|}{1638400},
+\tag{75.1}
+$$
+
+则比较器至少需要四个状态。特别地，在 $\theta=\pi/4$，更强的充分条件为
+
+$$
+\varepsilon<\frac{3d(1-d)}{2867200};
+\qquad d=1/2\text{ 时为 }\varepsilon<\frac3{11468800}.
+\tag{75.2}
+$$
+
+证明。保留 (73.3) 的原始联合权重，构造完整四阶 Hankel 矩阵
+
+$$
+J=(a_{i+j})_{i,j=0}^3=
+\begin{pmatrix}
+a_0&a_1&a_2&a_3\\
+a_1&a_2&a_3&a_4\\
+a_2&a_3&a_4&a_5\\
+a_3&a_4&a_5&a_6
+\end{pmatrix},\qquad a_n=2t\,2^{-n}u_n.
+\tag{75.3}
+$$
+
+式 (73.14) 指定了它的每一个条目。代入并展开行列式，得到
+
+$$
+\det J=\frac{81t^4s_\theta^4}{65536},\qquad
+J^{-1}=\frac{M(c)}{ts_\theta},
+\tag{75.4}
+$$
+
+其中完整逆矩阵的分子为
+
+$$
+M(c)=\frac13
+\begin{pmatrix}
+2c^2+c+1&10c^2-8c-2&8c^2-16c&16-16c\\
+10c^2-8c-2&50c^2-20c-6&40c^2-48c+8&16-80c\\
+8c^2-16c&40c^2-48c+8&32(c-1)^2&64(1-c)\\
+16-16c&16-80c&64(1-c)&128
+\end{pmatrix}.
+\tag{75.5}
+$$
+
+这些是多项式恒等式：将 (73.14) 代入 $J$，在 (73.4) 的递推下相乘，得 $JM(c)=ts_\theta I_4$；行列式展开给 (75.4)。它们只要求 $s_\theta\ne0$，没有非共振常数或一般位置假设。
+
+对任意经典比较器，令
+
+$$
+y_n=f_{\rm cl}^{\mathsf T}T_0^n(p_+-p_-),\qquad
+Y=(y_{i+j})_{i,j=0}^3.
+\tag{75.6}
+$$
+
+矩阵 $Y$ 分解为四行 $f_{\rm cl}^{\mathsf T}T_0^i$ 与四列 $T_0^j(p_+-p_-)$ 的乘积，故 $\operatorname{rank}Y\le k$。式 (72.6) 的事件误差界给 $|y_n-a_n|\le2\varepsilon$，并且 $i+j\le6$，于是
+
+$$
+\|J-Y\|_2\le\|J-Y\|_{\rm F}\le8\varepsilon.
+\tag{75.7}
+$$
+
+对 $|c|\le1$，对 (75.5) 各项的系数绝对值求和，四行依次给
+
+$$
+\sum_j|M_{1j}(c)|\le80/3,\quad
+\sum_j|M_{2j}(c)|\le96,\quad
+\sum_j|M_{3j}(c)|\le376/3,\quad
+\sum_j|M_{4j}(c)|\le128.
+\tag{75.8}
+$$
+
+$M(c)$ 对称，故 $\|J^{-1}\|_1=\|J^{-1}\|_\infty$，从而
+
+$$
+\|J^{-1}\|_2\le\|J^{-1}\|_\infty
+\le\frac{128}{t|s_\theta|}.
+\tag{75.9}
+$$
+
+若 $\varepsilon<t|s_\theta|/1024$，则 $\|J^{-1}(Y-J)\|_2<1$，Neumann 逆级数使 $Y$ 可逆。因此 $k\ge4$。代入 $t=d(1-d)/1600$，恰得 (75.1)。
+
+当 $\theta=\pi/4$ 时 $c=0$、$s_\theta=1$，(75.5) 四行的实际绝对值和分别为
+
+$$
+19/3,\qquad32/3,\qquad104/3,\qquad224/3.
+\tag{75.10}
+$$
+
+于是 $\|J^{-1}\|_2\le224/(3t)$，严格条件 $8\varepsilon\cdot224/(3t)<1$ 等价于 $\varepsilon<3t/1792$，给 (75.2)。全程比较的都是实际联合事件；没有把 $a_n$ 除以 $2^{-n}$。这证明一个固定的四状态下界，并不证明在同一个正误差下随 $H$ 发散。∎
+
+## 76. 有理源数据的任意状态数多项式
+
+**定义 76.1（有理坐标子族与全部常数）。** 另加源数据条件
+
+$$
+\begin{gathered}
+d=u/v,\qquad 0<u<v,\quad \gcd(u,v)=1,\\
+\zeta=e^{-2\mathrm i\theta}=(a+\mathrm ib)/C,\quad
+ a,b\in\mathbb Z,\quad C\in\mathbb Z_{\ge1},\quad
+ a^2+b^2=C^2,\quad b\ne0.
+\end{gathered}
+\tag{76.1}
+$$
+
+这里 $a,b$ 是整数坐标，不是 (54.1) 的基向量或终端结果记号。条件是 $\zeta$ 的两个坐标有理，不是 $\theta/\pi$ 有理。此前的定理 74.2、75.1 没有这一有理性限制。
+
+对每个整数 $k\ge1$，定义
+
+$$
+\begin{gathered}
+N=k+3,\qquad \nu=k^2+3k,\qquad m=k^2+5k+2,\qquad D=2N+4,\\
+Q=800v^2(4C)^N,\qquad
+L=32(N+1)Q^2k^{2N+4},\qquad
+\widetilde L=\max\{L,2\nu+2m\}.
+\end{gathered}
+\tag{76.2}
+$$
+
+这些都是明确整数；$D$ 为正偶数，$\nu\ge4$。$Q$ 是共同清分母数，不要求是最小公分母。
+
+**定义 76.2（任意比较器的紧参数多面体）。** 取变量
+
+$$
+R=(R_{ij})\in\mathbb R^{k\times k},\qquad
+f_{\rm cl},p_+,p_-\in\mathbb R^k
+\tag{76.3}
+$$
+
+及多面体 $\mathcal P_k$，其完整约束为
+
+$$
+\begin{gathered}
+\sum_i(p_+)_i-1=0,\qquad \sum_i(p_-)_i-1=0,\\
+R_{ij}\ge0\ (1\le i,j\le k),\qquad
+1-\sum_iR_{ij}\ge0\ (1\le j\le k),\\
+(f_{\rm cl})_i\ge0,\quad 1-(f_{\rm cl})_i\ge0,\quad
+(p_+)_i\ge0,\quad(p_-)_i\ge0\ (1\le i\le k).
+\end{gathered}
+\tag{76.4}
+$$
+
+有 $k^2+3k=\nu$ 个变量、两个等式和 $k^2+5k$ 个不等式，共 $m$ 个约束多项式，次数及整数系数绝对值均至多一。非负性和列和界使 $R$ 的各项在 $[0,1]$，两个制备为概率向量；效果亦在 $[0,1]^k$。故 $\mathcal P_k$ 非空、闭、有界且凸，是其自身唯一的紧连通分支。等式约束造成的空内部不妨碍这些性质。
+
+每个 (72.3) 的比较器给 $R=T_0$ 及 $\mathcal P_k$ 中一点。反之，每个 $\mathcal P_k$ 中一点都可取
+
+$$
+T_0=R,\qquad
+T_1=\operatorname{diag}\left(1-\sum_iR_{i1},\ldots,1-\sum_iR_{ik}\right)
+\tag{76.5}
+$$
+
+完成为合法分支和。因此这一参数域没有加入逐支公平性，也没有删去不可约性失败、不可达状态或隐藏冗余。
+
+在此域上定义实际目标多项式
+
+$$
+\begin{split}
+g(R,f_{\rm cl},p_+,p_-)=Q^2\sum_{n=0}^N\big[&
+ (\mathbf1^{\mathsf T}R^np_+-2^{-n})^2
+ +(\mathbf1^{\mathsf T}R^np_--2^{-n})^2\\
+ &+(f_{\rm cl}^{\mathsf T}R^n(p_+-p_-)-a_n)^2\big],
+\end{split}
+\tag{76.6}
+$$
+
+其中 $a_n$ 是同一实际双世界 (73.1) 的加权对比，$R^0=I_k$。
+
+## 77. 源分母、减去目标后的高度与严格正最小值
+
+**定理 77.1（实际目标的整数性、次数和系数界）。** 在 (76.1)–(76.6) 下，$g$ 为 $\nu$ 变量整数多项式，次数恰为 $D$，每个系数的绝对值严格小于 $L$，并且
+
+$$
+g_*:=\min_{\mathcal P_k}g>0.
+\tag{77.1}
+$$
+
+证明。令 $b_n=(B_\zeta^n)_{11}$。二阶特征多项式给
+
+$$
+b_0=1,\qquad b_1=-1/2,\qquad
+b_n=\frac{\zeta-1}{2}b_{n-1}+\zeta b_{n-2}\quad(n\ge2).
+\tag{77.2}
+$$
+
+由归纳 $(2C)^nb_n\in\mathbb Z[\mathrm i]$。特别地，$u_n=\Im b_n$ 为有理数，分母整除 $(2C)^n$。又
+
+$$
+2t=\frac{u(v-u)}{800v^2},\qquad
+ a_n=\frac{u(v-u)}{800v^2}\,2^{-n}\Im b_n,
+\tag{77.3}
+$$
+
+故 $a_n$ 的分母整除 $800v^2(4C)^n$；$Q$ 对全部 $0\le n\le N$ 同时清除它们和 $2^{-n}$ 的分母。尽管 $B_\zeta$ 含 $\sqrt3$，实际所需的对角元通过 (77.2) 没有引入该无理数。每个 $Q$ 倍残差均为整数多项式，因此 (76.6) 是整数多项式。
+
+写 $\|P\|_{\rm coeff,1}$ 为多项式全部系数绝对值之和。尚未减去目标的预测多项式满足
+
+$$
+\begin{aligned}
+\|\mathbf1^{\mathsf T}R^np_\pm\|_{\rm coeff,1}&\le k^{n+1},\\
+\|f_{\rm cl}^{\mathsf T}R^n(p_+-p_-)\|_{\rm coeff,1}&\le2k^{n+2}.
+\end{aligned}
+\tag{77.4}
+$$
+
+前者由 $n$ 次转移的路径求和计数，后者还保留效果变量和两个制备的符号；重复单项式合并不会增大系数绝对值之和。由于 $|2^{-n}|\le1$、$|a_n|\le1$，减去目标以后必须使用
+
+$$
+\begin{aligned}
+\|\mathbf1^{\mathsf T}R^np_\pm-2^{-n}\|_{\rm coeff,1}&\le2k^{n+1},\\
+\|f_{\rm cl}^{\mathsf T}R^n(p_+-p_-)-a_n\|_{\rm coeff,1}&\le3k^{n+2}.
+\end{aligned}
+\tag{77.5}
+$$
+
+未减目标的 (77.4) 不能直接充当残差界。系数范数的次乘性于是给
+
+$$
+\begin{aligned}
+\|g\|_{\rm coeff,1}
+&\le Q^2\sum_{n=0}^N
+ \big[8k^{2n+2}+9k^{2n+4}\big]\\
+&\le17(N+1)Q^2k^{2N+4}<L.
+\end{aligned}
+\tag{77.6}
+$$
+
+这逐项控制整数系数高度，包括 $k=1$。质量残差次数至多 $n+1$，对比残差次数至多 $n+2$，所以 $\deg g\le2N+4=D$。在 $n=N$ 的对比中，最高次齐次多项式 $f_{\rm cl}^{\mathsf T}R^N(p_+-p_-)$ 非零；它的平方是 (76.6) 中唯一次数 $2N+4$ 的项，故次数实际等于 $D$。这里的次数是环境变量多项式的次数，不是在等式约束商环中约去变量后的次数。
+
+若 $g$ 在 $\mathcal P_k$ 上有零点，平方和迫使 $0\le n\le k+3$ 的两个质量及对比残差同时为零。使用 (76.5) 完成分支，便得到定理 74.1 所排除的 (74.1)。所以处处 $g>0$；紧性和连续性给正的达到最小值 (77.1)。这个论证没有用其他历史的零误差，也没有要求制备来自任何仿射映射。∎
+
+## 78. 任意状态数的显式消失误差下界
+
+**定理 78.1（有理数据的实际完整记录阈值）。** 固定 (76.1) 的源数据，对每个 $k\ge1$ 定义
+
+$$
+\varepsilon_k=
+\frac{(16\widetilde L D^\nu)^{-\nu 2^{\nu-1}D^\nu}}
+ {Q\sqrt{6(N+1)}},
+\tag{78.1}
+$$
+
+全部常数取 (76.2)。若 $\mathcal D\subseteq\mathcal K_d$ 包含 (73.1) 的双世界，且
+
+$$
+H\ge k+3,\qquad
+\Delta_H(\mathcal D;q)\le\varepsilon<\varepsilon_k,
+\tag{78.2}
+$$
+
+则比较器不能只有至多 $k$ 个状态。因而对全部整数 $H\ge0$，
+
+$$
+k_{\mathcal D}(H,\varepsilon)\ge
+1+\max\left(\{k\in\mathbb Z:1\le k\le H-3,\quad
+ \varepsilon<\varepsilon_k\}\cup\{0\}\right).
+\tag{78.3}
+$$
+
+证明。这里作为中间工具使用 Jeronimo–Perrucci–Tsigaridas，[*On the minimum of a polynomial function on a basic closed semialgebraic set and applications*](https://arxiv.org/html/1112.0544v1)，Theorem 1。其原定理的条件是：$n$ 变量整数约束多项式定义的基本闭半代数集，一个紧连通分支 $\mathscr C$，全部约束次数由正偶数 $d_{\rm J}$ 控制、系数绝对值由 $H_{\rm J}$ 控制；整数目标的次数 $d_0\le d_{\rm J}$、高度 $H_0\le H_{\rm J}$。若目标在 $\mathscr C$ 上的最小值非零，其绝对值至少为
+
+$$
+\left(2^{4-n/2}\max\{H_{\rm J},2n+2m_{\rm J}\}
+ d_{\rm J}^{\,n}\right)^{-n2^n d_{\rm J}^{\,n}},
+\tag{78.4}
+$$
+
+并且该最小值的代数次数至多 $2^{n-1}d_{\rm J}^{\,n}$。$m_{\rm J}$ 计等式与不等式的总数。此定理不要求紧连通分支有内部，不要求约束正则或极小点孤立。
+
+在本源中的逐项对应为
+
+$$
+\begin{gathered}
+n=\nu,\qquad m_{\rm J}=m,\qquad d_{\rm J}=D,\qquad
+H_{\rm J}=L,\qquad d_0=D,\quad H_0<L,\\
+\mathscr C=\mathcal P_k,\qquad \text{目标}=g,\qquad
+\min_{\mathscr C}g=g_*>0.
+\end{gathered}
+\tag{78.5}
+$$
+
+定义 76.2 给整数、次数一、高度一的全部 $m$ 个约束，及整个域的唯一紧连通分支；定理 77.1 给目标整数性、次数、高度及非零最小值。因此没有把只在数值样本上为正当作定理的非零前提。由于 $2^{4-\nu/2}\le16$，用更大的底数弱化 (78.4)，得到
+
+$$
+g_*\ge(16\widetilde L D^\nu)^{-\nu2^\nu D^\nu}.
+\tag{78.6}
+$$
+
+另一方面，假设有 $k$ 状态比较器满足 (78.2)，取 $R=T_0$ 及它的两个实际制备。式 (72.6) 的事件误差界给每个质量残差至多 $\varepsilon$、对比残差至多 $2\varepsilon$，故
+
+$$
+g\le Q^2(N+1)(\varepsilon^2+\varepsilon^2+4\varepsilon^2)
+=6Q^2(N+1)\varepsilon^2.
+\tag{78.7}
+$$
+
+由 (78.1) 的严格不等式，(78.7) 小于 (78.6)，矛盾。较少状态的模型可补上零制备、互不相连的隐藏状态，使总状态数为 $k$；给新增状态任选合法分支和效果不会改变记录。因此排除涵盖“至多 $k$”，再取最大值即得 (78.3)。阈值处的等号没有被排除。∎
+
+**定理 78.2（仅在固定有理源数据下的误差反演）。** 固定 (76.1) 中的 $u,v,a,b,C$，令 $k\to\infty$，则 (78.1) 满足
+
+$$
+\log\log(1/\varepsilon_k)=\Theta(k^2\log k).
+\tag{78.8}
+$$
+
+因此存在仅依赖这些固定数据的 $c_0>0$，使充分小的 $\varepsilon>0$ 对应
+
+$$
+K(\varepsilon)=\left\lfloor c_0
+\sqrt{\frac{\log\log(1/\varepsilon)}
+ {\log\log\log(1/\varepsilon)}}\right\rfloor\ge1,
+\tag{78.9}
+$$
+
+且在 $H\ge K(\varepsilon)+3$ 时，
+$k_{\mathcal D}(H,\varepsilon)\ge K(\varepsilon)+1$。
+
+证明。写 $B_k=16\widetilde L D^\nu$ 和 $E_k=\nu2^{\nu-1}D^\nu$，则
+
+$$
+\log(1/\varepsilon_k)
+=E_k\log B_k+\log Q+\tfrac12\log(6(N+1)).
+\tag{78.10}
+$$
+
+固定数据给 $\log Q=O(k)$、$\log L=\Theta(k\log k)$，且充分大时 $\widetilde L=L$。又 $\nu=\Theta(k^2)$、$D=\Theta(k)$，所以 $\log B_k=\Theta(k^2\log k)$，而
+
+$$
+\log E_k=\log\nu+(\nu-1)\log2+\nu\log D
+=\Theta(k^2\log k).
+\tag{78.11}
+$$
+
+在 (78.10) 再取对数即得 (78.8)。用其上界选取充分小的常数 $c_0$，使 $k=K(\varepsilon)$ 时 $\varepsilon<\varepsilon_k$，再用定理 78.1。这一反演让误差趋零，并要求相应终点足够长；它不是固定正误差下关于 $H$ 的发散定理，也不给一般实角度的统一有效常数。上述双重指数阈值只承担明确的存在与排除量，不承担实用精度或采样成本保证。∎
+
+## 79. 完整相容集合上靠近例外角度的共同小模型
+
+**定理 79.1（原始联合记录的全角度连续上界）。** 对任意 $0<d<1$、任意 $\theta\in\mathbb R$，写
+
+$$
+\theta=\theta_*+\delta,\qquad \theta_*=m\pi/2,\quad m\in\mathbb Z.
+\tag{79.1}
+$$
+
+用定理 57.1 在例外角度 $\theta_*$ 的同一个全 $\mathcal K_d$ 模型作为比较器 $q^{(*)}$，则其状态数为三（$d\le2/3$）或六（$d>2/3$），并且对全部整数 $H\ge0$，
+
+$$
+\Delta_H(\mathcal K_d;q^{(*)})
+\le\min\{1,2H|\sin(\delta/2)|\}
+\le\min\{1,H|\delta|\}.
+\tag{79.2}
+$$
+
+这些分支、效果和全族制备固定，既不随终点改变，也不按实际随机词选择。
+
+证明。先具体指定所复用的比较器。置 $\Sigma=(6+3d)/8$、$s_\rho=\rho_{aa}-d$ 和
+
+$$
+b(\rho)=(e_d,d+s_\rho,e_d-s_\rho)^{\mathsf T},\qquad
+P_0b=(b_2,b_1,b_3)^{\mathsf T},\quad
+P_1b=(b_3,b_1,b_2)^{\mathsf T}.
+\tag{79.3}
+$$
+
+当 $d\le2/3$ 时，取
+
+$$
+p^{(*)}(\rho)=b(\rho)/\Sigma,\qquad
+f_{\rm cl}^{(*)}=(\Sigma,0,0)^{\mathsf T},\qquad
+T_0^{(*)}=P_0/2,\quad T_1^{(*)}=P_1/2.
+\tag{79.4}
+$$
+
+当 $m$ 为奇数时交换两个标签；偶数时不交换。定理 57.1 保证这是全部复 $\mathcal K_d$ 上的合法仿射制备与固定效果，并精确匹配 $\theta_*$ 的两种终端联合记录。
+
+当 $d>2/3$ 时，使用该定理的六顶点构造：顶点是 $(1,\Sigma-1,0)$ 的全部置换，动态是 (79.3) 在这些顶点上诱导的两个置换各乘 $1/2$，效果为顶点的第一坐标。为 $s_\rho$ 的可行区间 $[0,s_{\max}]$ 的两个端点各固定一个顶点凸分解，再按 $s_\rho/s_{\max}$ 插值其权重，得到整个 $\mathcal K_d$ 上同一个仿射制备。奇数 $m$ 同样交换标签。此处只复用合法上构造，不断言六状态最小。
+
+现在比较两角度的实际酉。对 $j=0,1$，
+
+$$
+\|V_j(\theta)-V_j(\theta_*)\|_{\rm op}
+=\|e^{\mathrm i\delta W}-I_3\|_{\rm op}
+=2|\sin(\delta/2)|.
+\tag{79.5}
+$$
+
+长度 $n$ 的相同时间词逐项望远镜展开，所有其他因子均酉，故
+
+$$
+\|V_h(\theta)-V_h(\theta_*)\|_{\rm op}
+\le2n|\sin(\delta/2)|.
+\tag{79.6}
+$$
+
+对任意密度 $\rho$ 和两个酉 $V,V'$，由二元测量的迹距离收缩及乘积差展开，
+
+$$
+\begin{aligned}
+|\operatorname{Tr}(E[V\rho V^\dagger-V'\rho(V')^\dagger])|
+&\le\tfrac12\|V\rho V^\dagger-V'\rho(V')^\dagger\|_1\\
+&\le\|V-V'\|_{\rm op}.
+\end{aligned}
+\tag{79.7}
+$$
+
+每个词的两个概率差互为负数，两角度的词质量又都为 $2^{-n}$，所以完整 TV 恰为
+
+$$
+\begin{split}
+&\frac12\sum_{h,b}|p_\rho^{(\theta)}(h,b)
+ -q_\rho^{(*)}(h,b)|\\
+&\quad=2^{-n}\sum_{h\in\{0,1\}^n}
+|\operatorname{Tr}(E[V_h(\theta)\rho V_h(\theta)^\dagger
+ -V_h(\theta_*)\rho V_h(\theta_*)^\dagger])|\\
+&\quad\le\min\{1,2n|\sin(\delta/2)|\}.
+\end{split}
+\tag{79.8}
+$$
+
+这是均匀平均而非对某个稀有词的条件化。对 $\rho$ 和 $n\le H$ 取上确界，得到 (79.2)。选择另一个例外角度或改变 $\delta$ 的正负都不改变证明；比较器始终使用其规定的标签交换。∎
+
+**定理 79.2（正误差不能照搬原线性精确界）。** 对实际源
+
+$$
+d=1/2,\qquad \theta=10^{-6},\qquad H=10000,
+\tag{79.9}
+$$
+
+存在一个在整个复 $\mathcal K_{1/2}$ 上共同的三状态比较器，使 $\Delta_H\le0.01$，而精确匹配至少需要 $9998$ 个状态。
+
+证明。在定理 79.1 取 $\theta_*=0$，则 $H|\delta|=0.01$。其三状态模型对整个相容集合合法。实际角度满足 $\sin(2\theta)\ne0$，定理 74.2 给 $H-2=9998$。这是解析上界与精确下界的同一实例。该例排除将 (74.4) 在所有非例外角度上原样搬到正误差；它不给这个固定非零角度下同一小误差的全 $H$ 有界模型。∎
+
+## 80. 对全部终点统一的一状态大误差上界
+
+**定理 80.1（完整复集合上的共同常数预测）。** 对任意实角度、任意 $0<d<1$，置
+
+$$
+r=d/2,\qquad
+U_d=\frac12+\sqrt{r(1-r)}
+=\frac12+\sqrt{(d/2)(1-d/2)}.
+\tag{80.1}
+$$
+
+共同的一状态模型
+
+$$
+T_0=T_1=1/2,\qquad p(\rho)=1,\qquad f_{\rm cl}=U_d/2
+\tag{80.2}
+$$
+
+满足
+
+$$
+\sup_{H\ge0}\Delta_H(\mathcal K_d;q)
+\le\frac{U_d}{2}
+=\frac14+\frac12\sqrt{(d/2)(1-d/2)}<\frac12.
+\tag{80.3}
+$$
+
+证明。由 $C=2\xi\xi^\dagger$ 和 (72.1)，每个初始态的 $\xi$ 人口恰为 $r$。又 $V_j\xi=e^{\mathrm i\theta}\xi$，所以每个词后的归一化数学态 $\rho_h=V_h\rho V_h^\dagger$ 仍有相同人口。写 $x_h=e^\dagger\rho_he$，则
+
+$$
+0\le x_h\le1-r,\qquad
+|\xi^\dagger\rho_he|\le\sqrt{rx_h}
+\tag{80.4}
+$$
+
+来自迹一和正的二阶主子块。因此
+
+$$
+\begin{aligned}
+0\le\operatorname{Tr}(\rho_h E)
+&=\tfrac12\big[r+x_h+2\Re(\xi^\dagger\rho_he)\big]\\
+&\le\tfrac12+\sqrt{r(1-r)}=U_d.
+\end{aligned}
+\tag{80.5}
+$$
+
+一状态模型同样保留每词 $2^{-|h|}$ 的质量，且终端是的条件参数恒为 $U_d/2$。区间 $[0,U_d]$ 中任意数与其中点相差至多 $U_d/2$；对全部词按原权重平均，得到每深度 TV 的同一界，因而得到 (80.3)。最后 $0<r<1/2$ 使 $\sqrt{r(1-r)}<1/2$。
+
+这是仅在相对大误差区间 $\varepsilon\ge U_d/2$ 供应的全终点模型。它否定“每一个正误差都必迫使状态数发散”这一全称断言；它不解决比该区间小的一个固定正误差。∎
+
+## 81. 有限精度结论的量词、文献接口与物理前提
+
+**定义 81.1（同一源上的结论域）。** 定理 74.2 对全部非例外角度给精确有限终点的线性下界；定理 75.1 对同一全部角度给实际加权 TV 中的四状态严格阈值；定理 78.1 在有理坐标条件 (76.1) 下给任意 $k$ 的明确正阈值，定理 78.2 的反演固定这些有理数据并让误差趋零。定理 79.1、80.1 则对全部角度和完整复 $\mathcal K_d$ 给共同模型上界。这些陈述的 $T_j,f_{\rm cl}$ 均在各自模型内固定；下界允许任意制备函数，上界恰好具有共同仿射制备。
+
+特别地，固定某个 $\sin(2\theta)\ne0$，再固定一个小正数 $\varepsilon$，是否有
+
+$$
+\lim_{H\to\infty}k(H,\varepsilon)=\infty,
+\quad\text{或存在 }k<\infty\text{ 及同一个 }q
+\text{ 使 }\sup_H\Delta_H(\mathcal K_d;q)\le\varepsilon,
+\tag{81.1}
+$$
+
+在上述小误差范围内仍未确定。这里“小误差范围”指没有被 (80.3) 的大误差模型直接覆盖的正误差；四状态排除并不排除更大的固定状态数。(78.1) 随 $k$ 缩小，不能把“每个 $k$ 存在正阈值”交换成“存在一个正阈值适用于全部 $k$”。(79.2) 对固定非零 $\delta$ 随 $H$ 增长，不能交换成对全部 $H$ 的同一小误差。精确递推转移 (74.1) 也不能在正误差下任意放大稀有事件。
+
+**定义 81.2（成熟工具与源特定对应）。** 本增补的 `repo-derived` 内容是：(73.1) 在真实原纤维中的明确半径与加权对比，(74.1) 的有限转移终点，(75.3)–(75.10) 的实际有限矩阵证书，(76.4)–(78.7) 对有理源数据的整数优化对应，以及 (79.2)、(80.3) 的同一全复相容集合上界。Cayley–Hamilton、有限序列的 Hankel 分解、矩阵逆扰动、紧性、迹距离收缩及多项式最小值下界均是成熟工具，不以其一般定理为本源的新结果，也不作文献优先权主张。
+
+源接口的对应为：第一卷 §17.1 固定原五维 $K_j$、$U,W,E$；第一卷定理 35.2、35.4、35.6 供应全部复输入上的后继约化、忠实 $\mathcal K_d$ 与五维 CPTP 提升；第二卷定理 39.3–39.4 供应时间词、全部原始联合权重和两种终端结果；第二卷定理 42.4 与本卷引理 55.1 供应严格见证点及其可见对比；定理 55.2 证明中的正实现障碍只在 §74 所列两个无限恒等式处调用；定理 57.1 供应 §79 的共同例外模型。§§62–71 的实实现结论不参与这些有限经典误差界。
+
+Jeronimo–Perrucci–Tsigaridas 的上述 Theorem 1 是 `literature-attested` 的有效实代数中间工具，完整参数对应为 (78.5)，不是仅凭“半代数”一词借用其结论。§55 已引用的 Monras–Winter 与 Fanizza–Lumbreras–Winter 供应正实现及外围谱方法；后者 Theorem 6 对其 FRDN 动态加入指定退极化混合，并在变化角度上给精确实现的最坏情形界。改变后的精确过程不是本源固定过程的有限完整 TV 邻域，故其噪声参数不直接成为本卷的 $\varepsilon$。
+
+其他鲁棒性工具与本源的对应条件也须明确。[arXiv:2608.23669v1](https://arxiv.org/html/2608.23669v1) 的 Result 11 使用素数模数 $p$ 的承诺分类、每个类中选取的单一一元代表词，以及长度 $np$ 的随机填充，其分布为 $\alpha(1-\alpha)^n$。在该输入分布下，少于 $p$ 个状态的经典代理损失至少为 $1-1/K-\epsilon_{\mathcal A}(\alpha)$，其中 $\epsilon_{\mathcal A}(\alpha)\to0$ 随 $\alpha\to0$，收敛依赖代理。选定代表词、填充分布和分类终端不是 (72.2) 的固定独立公平二元标签及 Born 终端；没有这些接口的已证映射，不能把该损失界直接换成 (72.5)。
+
+[*Approximation of stationary processes by Hidden Markov Models*](https://arxiv.org/html/math/0606591) 的 Theorem 4.2 假设两个输出过程平稳、候选过程 $Q$ 的每个有限块相对于 HMM 过程 $P$ 绝对连续、存在所述不变测度，并满足几何遍历条件，结论为有限 KL 散度率的存在。本源的制备索引终端实验没有被这些假设识别为该平稳过程；即使另给识别，每时间 KL 率也不自行给各深度最大 TV。静态 Hankel 分解的存在又不自行给同一组动态矩阵。
+
+[*Some upper and lower bounds on PSD-rank*](https://arxiv.org/html/1407.4308v1) 的 Theorem 43 对非负 $n\times n$ 表要求对角元恰为一、非对角元至多 $\gamma$，得到 psd 秩至少 $n/[1+\gamma(n-1)]$。用于本源前，需从实际联合事件得到这种近单位表，并证明原始误差如何进入它；对稀有词作行列放大不保持 (72.5)。本卷的 (75.3) 是直接保留权重的对比矩阵，使用的是普通秩分解和显式逆，而不是借用一个尚未构造的近单位非负表。
+
+[*On the Spectral Region of n-Cycle Stochastic Matrices*](https://arxiv.org/html/2606.10143v2) 的 Theorem 1.1 分类的是支持于单一有向 $n$ 圈并允许自环、各圈边严格为正的行随机矩阵。本源允许任意可约正比较器，$2T_0$ 本身甚至不预设随机性；该支撑类的谱区域不能替代这些比较器的通用有限误差界。
+
+[arXiv:2411.15724v1](https://arxiv.org/html/2411.15724v1) 的 Theorem 1.1 使用整数独立同分布增量、满足全部 $q\ge1$ 上 $\|q\alpha\|\ge C_0q^{-\gamma}$ 的无理 $\alpha$，以及特征函数在零邻域的下界 $|1-\varphi(x)|\ge c_0|x|^\beta$，其中 $\gamma\ge1$、$C_0,c_0>0$、$0<\beta\le2$；它控制 $1\le p<\infty$ 的圆上经验测度期望 Wasserstein 距离。本源未供应相应本征相位的这些常数，二元非交换词也没有被识别为该可交换圆游走；Wasserstein 距离更不是完整记录 TV。这些成熟结果的条件及指标不能仅由无理性或正实现术语省略。
+
+**假设 81.3（概率、取得与量子结构的分层）。** 全部比较以 (72.2) 的概率函数和完整相容集合为数学对象，沿用原合同实际供应的环境就绪、重复仪器、固定测量及丢弃规则。对整个集合取上确界，或在证明中取两个指定端点，不授予制备这些态、独立重复这些制备、取得副本、改变角度、插入控制、读取环境、选支或取得精确实概率的操作权。若另行供应独立重复制备与相应终端实验，有限事件概率才可在该额外采样模型内讨论统计估计；现有 TV 阈值本身不是样本数或置信度结论。
+
+复 Hilbert 空间、Born 配对、CP 分支、CPTP 组合及五维物理提升均为这些条件定理的前提。完整预测表中的正实现障碍说明在这些前提下某些有限经典表示不足，并未从信息守恒、共同整体来源或确定到不确定的连续层级推出 Hilbert、Born 或 CP 原则。原擦除标签菜单的全参数最小最大问题、实际资源取得与量子结构的物理起源均保持其各自的问题域。
+
+## 追加锚（本行以下为增补区）
+
