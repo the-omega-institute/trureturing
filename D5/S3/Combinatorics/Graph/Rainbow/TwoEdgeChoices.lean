@@ -9,11 +9,17 @@
 import D5.S3.Combinatorics.Graph.Brooks.Coloring
 import Mathlib.Combinatorics.Digraph.Basic
 import Mathlib.Combinatorics.Enumerative.DoubleCounting
-import Mathlib.Data.Real.Basic
+import Mathlib.Basic.Real.Basic
 import Mathlib.Tactic.Linarith
 import Mathlib.Tactic.NormNum
 import Mathlib.Tactic.FieldSimp
 import Mathlib.Tactic.Positivity
+
+/-!
+Repeated-colour endpoint mass and disjoint tagged-coordinate classes for actual
+two-edge choices in a properly coloured directed graph. The quantitative consumer
+retains an arbitrary deterministic base family and the original vertex count.
+-/
 
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
@@ -86,13 +92,17 @@ noncomputable def colourPair (a b : V → C) (x : V) : Finset C := by
 noncomputable def choiceConflict (A : Finset V) (a b : V → C) : SimpleGraph A where
   Adj x y := x ≠ y ∧ ¬ Disjoint (colourPair a b x) (colourPair a b y)
   symm := by
+    constructor
     intro x y h
     exact ⟨h.1.symm, fun hd => h.2 hd.symm⟩
   loopless := by
+    constructor
     intro x h
     exact h.1 rfl
 
+omit [Fintype V] in
 private theorem conflict_degree_le_two (A : Finset V) (a b : V → C)
+    [DecidableRel (choiceConflict A a b).Adj]
     (ha : Set.InjOn a A) (hb : Set.InjOn b A) (x : A) :
     (choiceConflict A a b).degree x ≤ 2 := by
   classical
@@ -112,7 +122,7 @@ private theorem conflict_degree_le_two (A : Finset V) (a b : V → C)
       (((mem_filter.mp hy).2).symm.trans (mem_filter.mp hz).2)
   have hsub : (choiceConflict A a b).neighborFinset x ⊆ L ∪ R := by
     intro y hy
-    have hxy := SimpleGraph.mem_neighborFinset.mp hy
+    have hxy := (SimpleGraph.mem_neighborFinset _ _ _).mp hy
     have hne : (x : V) ≠ y := fun he => hxy.1 (Subtype.ext he)
     have haa : a x ≠ a y := fun he => hne (ha x.property y.property he)
     have hbb : b x ≠ b y := fun he => hne (hb x.property y.property he)
@@ -145,6 +155,7 @@ def ThreeClasses (A : Finset V) (a b : V → C) (T : Fin 3 → Finset V) : Prop 
     Disjoint (taggedSupport a b x) (taggedSupport a b y))) ∧
   (∑ i : Fin 3, (T i).card) = A.card
 
+omit [Fintype V] in
 /-- Separate injectivity gives degree at most two in the actual colour-conflict graph.
 The existing greedy colouring supplier then constructs three disjoint-coordinate classes. -/
 theorem exists_three_disjoint_classes (A : Finset V) (a b : V → C)
@@ -179,7 +190,7 @@ theorem exists_three_disjoint_classes (A : Finset V) (a b : V → C)
     have hcol : k ⟨x, hxA⟩ = k ⟨y, hyA⟩ := by
       have h1 := (mem_filter.mp hx).2
       have h2 := (mem_filter.mp hy).2
-      simpa only [label, dif_pos hxA, dif_pos hyA] using h1.trans h2.symm
+      simpa only [label, dite_eq_left hxA, dite_eq_left hyA] using h1.trans h2.symm
     have hd : Disjoint (colourPair a b x) (colourPair a b y) := by
       by_contra hn
       exact k.valid (show H.Adj ⟨x, hxA⟩ ⟨y, hyA⟩ from
@@ -195,7 +206,7 @@ theorem exists_three_disjoint_classes (A : Finset V) (a b : V → C)
       apply (disjoint_left.mp hd)
       · simpa [taggedSupport, colourPair] using hzx
       · simpa [taggedSupport, colourPair] using hzy
-  · simpa only [T, mem_univ, filter_true_of_mem] using
+  · simpa [T] using
       sum_card_fiberwise_eq_card_filter A (univ : Finset (Fin 3)) label
 
 /-- Threshold exceptions are defined using the actual repeated-colour fibers. -/
@@ -243,7 +254,7 @@ private theorem rainbow_card_add_loss (G : Digraph V) (c : V → V → C)
 For any actual base family at a nonexceptional distinct endpoint, produce enough genuine
 rainbow simple two-edge paths and partition all of them into disjoint tagged-coordinate classes. -/
 theorem deterministic_rainbow_choice_core (G : Digraph V) (c : V → V → C)
-    (hout : OutProper G c) (hin : InProper G c) (hloop : Irreflexive G.Adj)
+    (hout : OutProper G c) (hin : InProper G c) (hloop : ∀ x, ¬ G.Adj x x)
     (ν : ℝ) (hν : 0 < ν) (hn : 0 < Fintype.card V) (u : V) :
     let n : ℝ := Fintype.card V
     let B := exceptions G c u (ν * n / 16)
@@ -259,10 +270,13 @@ theorem deterministic_rainbow_choice_core (G : Digraph V) (c : V → V → C)
   classical
   dsimp only
   let n : ℝ := Fintype.card V
-  have hn' : 0 < n := by exact_mod_cast hn
+  have hn' : 0 < n := by
+    dsimp only [n]
+    exact_mod_cast hn
   have ht : 0 < ν * n / 16 := by positivity
   constructor
   · have h := exception_card_lt G c hout u (ν * n / 16) ht hn
+    change ((exceptions G c u (ν * n / 16)).card : ℝ) < n / (ν * n / 16) at h
     have he : n / (ν * n / 16) = 16 / ν := by
       field_simp [ne_of_gt hν, ne_of_gt hn']
     simpa only [he] using h
