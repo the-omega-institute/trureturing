@@ -88,17 +88,17 @@ internal sealed class PetrovScottAltQCharlierPositivityDocument : IScribeDocumen
 
     private static Formula DominantDeterminantFormula()
     {
-        Formula index = F.Id("I"), matrix = F.Id("M"), i = F.Id("i"), j = F.Id("j");
+        Formula index = Iota, matrix = F.Id("M"), i = F.Id("i"), j = F.Id("j");
         Formula diagonal = All([B("i", index)], Lt(D(0), App(matrix, i, i)));
         Formula offDiagonal = App(Q("Finset", "sum"),
             App(Q("Finset", "erase"), Q("Finset", "univ"), i),
-            Lambda("j", index, Seq(Vert, App(matrix, i, j), Vert)));
+            Lambda("j", index, Seq(Vert, Sp, App(matrix, i, j), Sp, Vert)));
         Formula dominance = All([B("i", index)], Lt(offDiagonal, App(matrix, i, i)));
         Formula body = All([B("M", Call("Matrix", index, index, Real()))],
             Implies(diagonal, Implies(dominance, Lt(D(0), App(Q("Matrix", "det"), matrix)))));
         body = Seq(OpenBracket, Call("Fintype", index), CloseBracket, Sp,
             OpenBracket, Call("DecidableEq", index), CloseBracket, Sp, body);
-        return Disp(All([B("I", F.Id("Type"))], body));
+        return Disp(Seq(Forall, Sp, Cast(index, F.Id("Type")), Comma, Sp, body));
     }
 
     private static Formula DeterminantFormula(bool second)
