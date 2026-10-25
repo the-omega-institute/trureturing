@@ -560,3 +560,651 @@ def registration : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
 end Even
 
 end Reg.D5.S3.Weil.ZetaGamma.FormCore.SourceQuarterSpectralClosure.BareQuarterWeightReadout
+
+/- Additional full-source laws: SOURCE_ONLY / UNCOMPILED. -/
+
+namespace Reg.D5.S3.Weil.ZetaGamma.FormCore.SourceQuarterSpectralClosure.RemainingCorrelationCandidates
+
+/- Reconstruct identical source-private definitions by their bodies. No
+source-private compiled name, proof, additional source premise or graph
+assumption is imported. The actual readout is the entire original lambda. -/
+private abbrev halfline : Measure ℝ := volume.restrict (Ioi (0 : ℝ))
+private def zeroExtension (u : ℝ → ℂ) : ℝ → ℂ := (Ioi (0 : ℝ)).indicator u
+
+private def spectralCross (u : ℝ → ℂ) : ℝ → ℂ := fun ξ =>
+  (starRingEnd ℂ) (unitarySourceFourier (zeroExtension u) ξ) *
+    unitarySourceFourier (zeroExtension u) (-ξ)
+
+/- These L1, L2 and exact plus-phase Fourier witnesses are the same legal
+0/exp(-2t) mechanism already prepared in this Reg owner's core candidates.
+No Gamma graph, later actual-Gamma theorem or target conclusion is used. -/
+private def decayingInput (t : ℝ) : ℂ := (Real.exp ((-2 : ℝ) * t) : ℂ)
+
+private theorem decayingInput_l1 : Integrable decayingInput halfline := by
+  exact (integrableOn_exp_mul_Ioi (by norm_num : (-2 : ℝ) < 0) 0).ofReal
+
+private theorem decayingInput_l2 : MemLp decayingInput 2 halfline := by
+  apply (memLp_two_iff_integrable_sq_norm decayingInput_l1.aestronglyMeasurable).2
+  have h := integrableOn_exp_mul_Ioi (by norm_num : (-4 : ℝ) < 0) 0
+  convert h using 1
+  funext t
+  simp only [decayingInput, Complex.norm_real, Real.norm_eq_abs,
+    abs_of_pos (Real.exp_pos _), pow_two]
+  rw [← Real.exp_add]
+  congr 1
+  ring
+
+private theorem decayingInput_fourier (ξ : ℝ) :
+    unitarySourceFourier (zeroExtension decayingInput) ξ =
+      ((Real.sqrt (2 * Real.pi) : ℝ) : ℂ)⁻¹ *
+        (-(1 : ℂ) / ((-2 : ℂ) + Complex.I * (ξ : ℂ))) := by
+  let m : ℂ := (-2 : ℂ) + Complex.I * (ξ : ℂ)
+  have hm : m.re < 0 := by
+    dsimp [m]
+    norm_num
+  have hPoint : (fun t : ℝ => sourcePhase ξ t * zeroExtension decayingInput t) =
+      (Ioi (0 : ℝ)).indicator (fun t : ℝ => Complex.exp (m * (t : ℂ))) := by
+    funext t
+    by_cases ht : t ∈ Ioi (0 : ℝ)
+    · simp only [zeroExtension, Set.indicator_of_mem ht, decayingInput, sourcePhase]
+      rw [Complex.ofReal_exp, ← Complex.exp_add]
+      congr 1
+      push_cast
+      dsimp [m]
+      ring
+    · simp [zeroExtension, ht]
+  rw [unitarySourceFourier_eq_integral, hPoint,
+    integral_indicator measurableSet_Ioi, integral_exp_mul_complex_Ioi hm 0]
+  simp only [Complex.ofReal_zero, mul_zero, Complex.exp_zero]
+
+private theorem decayingInput_fourier_zero_ne :
+    unitarySourceFourier (zeroExtension decayingInput) 0 ≠ 0 := by
+  have hs : (((Real.sqrt (2 * Real.pi) : ℝ) : ℂ)) ≠ 0 := by
+    exact_mod_cast (Real.sqrt_pos.2
+      (mul_pos (by norm_num : (0 : ℝ) < 2) Real.pi_pos)).ne'
+  rw [decayingInput_fourier]
+  apply mul_ne_zero (inv_ne_zero hs)
+  norm_num
+
+private theorem spectralCross_zero (ξ : ℝ) :
+    spectralCross (fun _ : ℝ => (0 : ℂ)) ξ = 0 := by
+  simp [spectralCross, zeroExtension, unitarySourceFourier_eq_integral]
+
+private theorem spectralCross_decaying_zero_ne : spectralCross decayingInput 0 ≠ 0 := by
+  change (starRingEnd ℂ) (unitarySourceFourier (zeroExtension decayingInput) 0) *
+    unitarySourceFourier (zeroExtension decayingInput) (-0) ≠ 0
+  simp only [neg_zero]
+  exact mul_ne_zero (by
+    simpa only [starRingEnd_apply, star_ne_zero] using decayingInput_fourier_zero_ne)
+    decayingInput_fourier_zero_ne
+
+/- Both states are legal under EVERY original source hypothesis. The
+separation is of complete functions; evaluation at xi=0 only proves their
+inequality and does not replace the selected original function readout. -/
+private theorem admissible_cross_separation :
+    Integrable (fun _ : ℝ => (0 : ℂ)) halfline ∧
+    MemLp (fun _ : ℝ => (0 : ℂ)) 2 halfline ∧
+    Integrable decayingInput halfline ∧ MemLp decayingInput 2 halfline ∧
+    spectralCross (fun _ : ℝ => (0 : ℂ)) ≠ spectralCross decayingInput := by
+  refine ⟨by simp, MemLp.zero', decayingInput_l1, decayingInput_l2, ?_⟩
+  intro heq
+  have hzero := congrFun heq (0 : ℝ)
+  rw [spectralCross_zero] at hzero
+  exact spectralCross_decaying_zero_ne hzero.symm
+
+abbrev signature : Signature where
+  Params := Unit
+  State _ := ℝ → ℂ
+  Role := Unit
+  finiteRole := inferInstance
+  nonemptyRole := inferInstance
+  Output _ _ := ℝ → ℂ
+  Anchor := Empty
+  finiteAnchor := inferInstance
+
+def actual : Realization signature :=
+  realize signature (fun _ _ u => spectralCross u) (fun e => nomatch e)
+
+private theorem actual_dependence : ObservationalDependence signature actual := by
+  intro i
+  refine ⟨(), (fun _ : ℝ => (0 : ℂ)), decayingInput, ?_⟩
+  change spectralCross (fun _ : ℝ => (0 : ℂ)) ≠ spectralCross decayingInput
+  exact admissible_cross_separation.2.2.2.2
+
+namespace UnweightedIntegrable
+
+/- A nonzero constant over all of R is genuinely nonintegrable. -/
+def rejected : Realization signature :=
+  realize signature (fun _ _ _ _ => (1 : ℂ)) (fun e => nomatch e)
+
+abbrev arena : Arena where
+  signature := signature
+  Law r := ∀ {u : ℝ → ℂ} (_hu₁ : Integrable u halfline) (_hu₂ : MemLp u 2 halfline),
+    Integrable (r.readout () () u) volume
+
+private theorem source_reconstruction :
+    (type_of% (@actual_unweighted_reflected_cross_integrable)) ↔
+      arena.Law actual := Iff.rfl
+
+private theorem rejected_law : ¬ arena.Law rejected := by
+  intro hall
+  have hbad := hall (u := fun _ : ℝ => (0 : ℂ)) (by simp) MemLp.zero'
+  change Integrable (fun _ : ℝ => (1 : ℂ)) volume at hbad
+  have hFinite : IsFiniteMeasure (volume : Measure ℝ) :=
+    (integrable_const_iff_isFiniteMeasure (by norm_num : (1 : ℂ) ≠ 0)).mp hbad
+  have hfin := @measure_lt_top ℝ _ (volume : Measure ℝ) hFinite univ
+  simpa using hfin
+
+def familyRegistration : Registration arena
+    (type_of% (@actual_unweighted_reflected_cross_integrable)) where
+  actual := actual
+  bridge := source_reconstruction
+  variation := ⟨@actual_unweighted_reflected_cross_integrable, rejected, rejected_law⟩
+  sensitivity := by
+    constructor
+    · intro i
+      refine ⟨rejected, ?_, rfl, rejected_law⟩
+      intro j hji
+      exact (hji (Subsingleton.elim j i)).elim
+    · intro e
+      exact nomatch e
+  dependence := actual_dependence
+
+/- SOURCE_ONLY raw selector proposal; not elaborated/AST-verified.
+Cross all three original binders u=0,hu1=1,hu2=2. Integrable applies
+its original function before its final measure, so select fn/arg.
+The complete function is selected OUTSIDE its xi-lambda: Output=R->C,
+stateBinder=0 is original u, and functionOperand is deliberately false. -/
+def registration : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
+    (@actual_unweighted_reflected_cross_integrable) (Realization signature) Type Unit where
+  unitName := `D5.S3.Weil.ZetaGamma.FormCore.SourceQuarterSpectralClosure.actual_unweighted_reflected_cross_integrable.__information_unit
+  realizationName := `Reg.D5.S3.Weil.ZetaGamma.FormCore.SourceQuarterSpectralClosure.RemainingCorrelationCandidates.UnweightedIntegrable.familyRegistration
+  realizationSource := none
+  generated := false
+  arena := .source ⟨arena⟩
+  objectArena := .source ⟨arena⟩
+  catalog := Lean.Name.anonymous
+  localNames := false
+  realization := .source arena ⟨familyRegistration⟩
+  correspondence := { stage := .evidence, objectStage := .evidence }
+  bundleNonempty := .absent
+  readout := some (realize signature (fun _ _ u => spectralCross u)
+    (fun e => nomatch e))
+  variation := .absent
+  sensitivity := .absent
+  partialSensitivity := none
+  escapeFrom := some (ℝ → ℂ)
+  sourceSelection := some {
+    owner := `D5.S3.Weil.ZetaGamma.FormCore.SourceQuarterSpectralClosure
+    definition := none
+    coordinates := #[]
+    readouts := #[{
+      path := #["body", "body", "body", "fn", "arg"]
+      stateBinder := 0
+      functionOperand := false
+      stateOperand := none
+      booleanPredicate := false }] }
+  continuation := .unknown
+  familyRecord := none
+  options := #[]
+
+#print axioms familyRegistration
+#print axioms registration
+
+end UnweightedIntegrable
+
+namespace ConstantRealCrossZero
+
+/- This compactly supported L1 counter-readout has ACTUAL real integral 1.
+It avoids relying on totalization of a divergent Bochner integral. -/
+private def rejectedIntegrand : ℝ → ℂ :=
+  (Ioc (0 : ℝ) 1).indicator (fun _ : ℝ => (1 : ℂ))
+
+def rejected : Realization signature :=
+  realize signature (fun _ _ _ => rejectedIntegrand) (fun e => nomatch e)
+
+abbrev arena : Arena where
+  signature := signature
+  Law r := ∀ {u : ℝ → ℂ} (_hu₁ : Integrable u halfline) (_hu₂ : MemLp u 2 halfline),
+    (∫ ξ : ℝ, r.readout () () u ξ).re = 0
+
+private theorem source_reconstruction :
+    (type_of% (@actual_constant_reflected_cross_re_zero)) ↔
+      arena.Law actual := Iff.rfl
+
+private theorem rejected_law : ¬ arena.Law rejected := by
+  intro hall
+  have hbad := hall (u := fun _ : ℝ => (0 : ℂ)) (by simp) MemLp.zero'
+  change (∫ ξ : ℝ, (Ioc (0 : ℝ) 1).indicator (fun _ : ℝ => (1 : ℂ)) ξ).re = 0 at hbad
+  rw [integral_indicator measurableSet_Ioc] at hbad
+  norm_num at hbad
+
+def familyRegistration : Registration arena
+    (type_of% (@actual_constant_reflected_cross_re_zero)) where
+  actual := actual
+  bridge := source_reconstruction
+  variation := ⟨@actual_constant_reflected_cross_re_zero, rejected, rejected_law⟩
+  sensitivity := by
+    constructor
+    · intro i
+      refine ⟨rejected, ?_, rfl, rejected_law⟩
+      intro j hji
+      exact (hji (Subsingleton.elim j i)).elim
+    · intro e
+      exact nomatch e
+  dependence := actual_dependence
+
+/- SOURCE_ONLY raw selector proposal; not elaborated/AST-verified.
+Cross u/hu1/hu2, then Eq's original LHS (fn/arg), Complex.re's argument,
+and integral's final integrand argument (arg,arg). Select the WHOLE lambda.
+The source's scalar RHS 0, integration, and .re all remain in the Law. -/
+def registration : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
+    (@actual_constant_reflected_cross_re_zero) (Realization signature) Type Unit where
+  unitName := `D5.S3.Weil.ZetaGamma.FormCore.SourceQuarterSpectralClosure.actual_constant_reflected_cross_re_zero.__information_unit
+  realizationName := `Reg.D5.S3.Weil.ZetaGamma.FormCore.SourceQuarterSpectralClosure.RemainingCorrelationCandidates.ConstantRealCrossZero.familyRegistration
+  realizationSource := none
+  generated := false
+  arena := .source ⟨arena⟩
+  objectArena := .source ⟨arena⟩
+  catalog := Lean.Name.anonymous
+  localNames := false
+  realization := .source arena ⟨familyRegistration⟩
+  correspondence := { stage := .evidence, objectStage := .evidence }
+  bundleNonempty := .absent
+  readout := some (realize signature (fun _ _ u => spectralCross u)
+    (fun e => nomatch e))
+  variation := .absent
+  sensitivity := .absent
+  partialSensitivity := none
+  escapeFrom := some (ℝ → ℂ)
+  sourceSelection := some {
+    owner := `D5.S3.Weil.ZetaGamma.FormCore.SourceQuarterSpectralClosure
+    definition := none
+    coordinates := #[]
+    readouts := #[{
+      path := #["body", "body", "body", "fn", "arg", "arg", "arg"]
+      stateBinder := 0
+      functionOperand := false
+      stateOperand := none
+      booleanPredicate := false }] }
+  continuation := .unknown
+  familyRecord := none
+  options := #[]
+
+#print axioms familyRegistration
+#print axioms registration
+
+end ConstantRealCrossZero
+
+end Reg.D5.S3.Weil.ZetaGamma.FormCore.SourceQuarterSpectralClosure.RemainingCorrelationCandidates
+
+/- Additional full-source laws: SOURCE_ONLY / UNCOMPILED. -/
+
+namespace Reg.D5.S3.Weil.ZetaGamma.FormCore.SourceQuarterSpectralClosure.RemainingFourierReadouts
+
+private theorem source_extension_zero :
+    zeroExtension (fun _ : ℝ => (0 : ℂ)) = (fun _ : ℝ => (0 : ℂ)) := by
+  funext t
+  simp [zeroExtension]
+
+private theorem even_extension_zero :
+    actualEvenZeroExtension (fun _ : ℝ => (0 : ℂ)) = (fun _ : ℝ => (0 : ℂ)) := by
+  funext t
+  change zeroExtension (fun _ : ℝ => (0 : ℂ)) t +
+    zeroExtension (fun _ : ℝ => (0 : ℂ)) (-t) = 0
+  simp [zeroExtension]
+
+private theorem unitary_zero (ξ : ℝ) :
+    unitarySourceFourier (fun _ : ℝ => (0 : ℂ)) ξ = 0 := by
+  simp [unitarySourceFourier_eq_integral]
+
+private theorem normalizer_ne_zero :
+    ((Real.sqrt (2 * Real.pi) : ℝ) : ℂ)⁻¹ ≠ 0 := by
+  have hS : 0 < Real.sqrt (2 * Real.pi) := Real.sqrt_pos.2 (by positivity)
+  exact inv_ne_zero (Complex.ofReal_ne_zero.mpr hS.ne')
+
+private theorem global_exp_fourier_square_positive :
+    0 < ‖unitarySourceFourier (zeroExtension decayingInput) 0‖ ^ 2 := by
+  rw [decayingInput_fourier_sq]
+  exact div_pos (sq_pos_of_pos (norm_pos_iff.mpr normalizer_ne_zero)) (by norm_num)
+
+private theorem lawful_zero_input :
+    Integrable (fun _ : ℝ => (0 : ℂ)) halfline ∧
+    MemLp (fun _ : ℝ => (0 : ℂ)) 2 halfline ∧
+    Integrable (fun _ : ℝ => (0 : ℂ)) volume ∧
+    MemLp (fun _ : ℝ => (0 : ℂ)) 2 volume := by
+  exact ⟨by simp, MemLp.zero', by simp, MemLp.zero'⟩
+
+private theorem lawful_exp_input :
+    Integrable decayingInput halfline ∧
+    MemLp decayingInput 2 halfline ∧
+    Integrable (zeroExtension decayingInput) volume ∧
+    MemLp (zeroExtension decayingInput) 2 volume ∧
+    0 < ‖unitarySourceFourier (zeroExtension decayingInput) 0‖ ^ 2 := by
+  exact ⟨decayingInput_l1, decayingInput_l2,
+    (integrable_indicator_iff measurableSet_Ioi).2 decayingInput_l1,
+    (memLp_indicator_iff_restrict measurableSet_Ioi.nullMeasurableSet).2 decayingInput_l2,
+    global_exp_fourier_square_positive⟩
+
+private theorem exp_fourier_nonzero :
+    unitarySourceFourier (zeroExtension decayingInput) 0 ≠ 0 := by
+  intro hZero
+  have hPositive := lawful_exp_input.2.2.2.2
+  simp [hZero] at hPositive
+
+private theorem even_exp_fourier_nonzero :
+    unitarySourceFourier (actualEvenZeroExtension decayingInput) 0 ≠ 0 := by
+  have hEq := actual_even_zero_fourier lawful_exp_input.1 (0 : ℝ)
+  change unitarySourceFourier (actualEvenZeroExtension decayingInput) 0 =
+    unitarySourceFourier (zeroExtension decayingInput) 0 +
+      unitarySourceFourier (zeroExtension decayingInput) (-(0 : ℝ)) at hEq
+  rw [neg_zero] at hEq
+  rw [hEq]
+  simpa only [two_mul] using
+    (mul_ne_zero (show (2 : ℂ) ≠ 0 by norm_num) exp_fourier_nonzero)
+
+namespace SquaredIntegrable
+
+abbrev signature : Signature where
+  Params := Unit
+  State _ := ℝ → ℂ
+  Role := Unit
+  finiteRole := inferInstance
+  nonemptyRole := inferInstance
+  Output _ _ := ℝ → ℝ
+  Anchor := Empty
+  finiteAnchor := inferInstance
+
+def actual : Realization signature :=
+  realize signature (fun _ _ f => fun ξ : ℝ => ‖unitarySourceFourier f ξ‖ ^ 2)
+    (fun e => nomatch e)
+
+def rejected : Realization signature :=
+  realize signature (fun _ _ _ => fun _ : ℝ => (1 : ℝ)) (fun e => nomatch e)
+
+abbrev arena : Arena where
+  signature := signature
+  Law r := ∀ {f : ℝ → ℂ} (_hf₁ : Integrable f volume) (_hf₂ : MemLp f 2 volume),
+    Integrable (r.readout () () f) volume
+
+private theorem source_reconstruction :
+    (type_of% (@unitarySourceFourier_squared_integrable)) ↔ arena.Law actual := Iff.rfl
+
+private theorem rejected_law : ¬ arena.Law rejected := by
+  intro hall
+  have hBad : Integrable (fun _ : ℝ => (1 : ℝ)) volume :=
+    hall (f := fun _ : ℝ => (0 : ℂ)) lawful_zero_input.2.2.1 lawful_zero_input.2.2.2
+  have hFinite : IsFiniteMeasure (volume : Measure ℝ) :=
+    (integrable_const_iff_isFiniteMeasure (μ := (volume : Measure ℝ))
+      (c := (1 : ℝ)) (by norm_num)).mp hBad
+  exact ((not_isFiniteMeasure_iff (μ := (volume : Measure ℝ))).2 Real.volume_univ) hFinite
+
+private theorem actual_dependence : ObservationalDependence signature actual := by
+  intro i
+  refine ⟨(), (fun _ : ℝ => (0 : ℂ)), zeroExtension decayingInput, ?_⟩
+  intro h
+  have hAt := congrFun h (0 : ℝ)
+  change ‖unitarySourceFourier (fun _ : ℝ => (0 : ℂ)) 0‖ ^ 2 =
+    ‖unitarySourceFourier (zeroExtension decayingInput) 0‖ ^ 2 at hAt
+  rw [unitary_zero, norm_zero, zero_pow (by decide : (2 : ℕ) ≠ 0)] at hAt
+  exact (ne_of_gt lawful_exp_input.2.2.2.2) hAt.symm
+
+def familyRegistration : Registration arena
+    (type_of% (@unitarySourceFourier_squared_integrable)) where
+  actual := actual
+  bridge := source_reconstruction
+  variation := ⟨@unitarySourceFourier_squared_integrable, rejected, rejected_law⟩
+  sensitivity := by
+    constructor
+    · intro i
+      refine ⟨rejected, ?_, rfl, rejected_law⟩
+      intro j hji
+      exact (hji (Subsingleton.elim j i)).elim
+    · intro e
+      exact nomatch e
+  dependence := actual_dependence
+
+/- UNINSPECTED AST candidate. The original f/u is state binder0.
+Output is the COMPLETE selected frequency function; no frequency binder is
+hoisted, fixed, manufactured or used as an extra premise. -/
+def registration : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
+    (@unitarySourceFourier_squared_integrable) (Realization signature) Type Unit where
+  unitName := `D5.S3.Weil.ZetaGamma.FormCore.SourceQuarterSpectralClosure.unitarySourceFourier_squared_integrable.__information_unit
+  realizationName := `Reg.D5.S3.Weil.ZetaGamma.FormCore.SourceQuarterSpectralClosure.RemainingFourierReadouts.SquaredIntegrable.familyRegistration
+  realizationSource := none
+  generated := false
+  arena := .source ⟨arena⟩
+  objectArena := .source ⟨arena⟩
+  catalog := Lean.Name.anonymous
+  localNames := false
+  realization := .source arena ⟨familyRegistration⟩
+  correspondence := { stage := .evidence, objectStage := .evidence }
+  bundleNonempty := .absent
+  readout := some (realize signature (fun _ _ f => fun ξ : ℝ => ‖unitarySourceFourier f ξ‖ ^ 2) (fun e => nomatch e))
+  variation := .absent
+  sensitivity := .absent
+  partialSensitivity := none
+  escapeFrom := none
+  sourceSelection := some {
+    owner := `D5.S3.Weil.ZetaGamma.FormCore.SourceQuarterSpectralClosure
+    definition := none
+    coordinates := #[]
+    readouts := #[{
+      path := #["body", "body", "body", "fn", "arg"]
+      stateBinder := 0
+      functionOperand := false
+      stateOperand := none
+      booleanPredicate := false }] }
+  continuation := .unknown
+  familyRecord := none
+  options := #[]
+
+#print axioms familyRegistration
+#print axioms registration
+
+end SquaredIntegrable
+
+namespace EvenZeroFourier
+
+abbrev signature : Signature where
+  Params := Unit
+  State _ := ℝ → ℂ
+  Role := Unit
+  finiteRole := inferInstance
+  nonemptyRole := inferInstance
+  Output _ _ := ℝ → ℂ
+  Anchor := Empty
+  finiteAnchor := inferInstance
+
+def actual : Realization signature :=
+  realize signature (fun _ _ u => unitarySourceFourier (zeroExtension u)) (fun e => nomatch e)
+
+def rejected : Realization signature :=
+  realize signature (fun _ _ _ => fun _ : ℝ => (-1 : ℂ)) (fun e => nomatch e)
+
+/- Only the FIRST original RHS Fourier FUNCTION is read out.
+The LHS and the literal second negative-frequency summand remain unchanged. -/
+abbrev arena : Arena where
+  signature := signature
+  Law r := ∀ {u : ℝ → ℂ} (_hu : Integrable u halfline) (ξ : ℝ),
+    unitarySourceFourier (actualEvenZeroExtension u) ξ =
+      r.readout () () u ξ + unitarySourceFourier (zeroExtension u) (-ξ)
+
+private theorem source_reconstruction :
+    (type_of% (@actual_even_zero_fourier)) ↔ arena.Law actual := Iff.rfl
+
+private theorem rejected_law : ¬ arena.Law rejected := by
+  intro hall
+  have hBad := hall (u := fun _ : ℝ => (0 : ℂ)) lawful_zero_input.1 (0 : ℝ)
+  change unitarySourceFourier (actualEvenZeroExtension (fun _ : ℝ => (0 : ℂ))) 0 =
+    (-1 : ℂ) + unitarySourceFourier (zeroExtension (fun _ : ℝ => (0 : ℂ))) (-(0 : ℝ)) at hBad
+  rw [even_extension_zero, source_extension_zero] at hBad
+  norm_num [unitary_zero] at hBad
+
+private theorem actual_dependence : ObservationalDependence signature actual := by
+  intro i
+  refine ⟨(), (fun _ : ℝ => (0 : ℂ)), decayingInput, ?_⟩
+  intro h
+  have hAt := congrFun h (0 : ℝ)
+  change unitarySourceFourier (zeroExtension (fun _ : ℝ => (0 : ℂ))) 0 =
+    unitarySourceFourier (zeroExtension decayingInput) 0 at hAt
+  rw [source_extension_zero, unitary_zero] at hAt
+  exact exp_fourier_nonzero hAt.symm
+
+def familyRegistration : Registration arena
+    (type_of% (@actual_even_zero_fourier)) where
+  actual := actual
+  bridge := source_reconstruction
+  variation := ⟨@actual_even_zero_fourier, rejected, rejected_law⟩
+  sensitivity := by
+    constructor
+    · intro i
+      refine ⟨rejected, ?_, rfl, rejected_law⟩
+      intro j hji
+      exact (hji (Subsingleton.elim j i)).elim
+    · intro e
+      exact nomatch e
+  dependence := actual_dependence
+
+/- UNINSPECTED AST candidate. The original f/u is state binder0.
+Output is the COMPLETE selected frequency function; no frequency binder is
+hoisted, fixed, manufactured or used as an extra premise. -/
+def registration : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
+    (@actual_even_zero_fourier) (Realization signature) Type Unit where
+  unitName := `D5.S3.Weil.ZetaGamma.FormCore.SourceQuarterSpectralClosure.actual_even_zero_fourier.__information_unit
+  realizationName := `Reg.D5.S3.Weil.ZetaGamma.FormCore.SourceQuarterSpectralClosure.RemainingFourierReadouts.EvenZeroFourier.familyRegistration
+  realizationSource := none
+  generated := false
+  arena := .source ⟨arena⟩
+  objectArena := .source ⟨arena⟩
+  catalog := Lean.Name.anonymous
+  localNames := false
+  realization := .source arena ⟨familyRegistration⟩
+  correspondence := { stage := .evidence, objectStage := .evidence }
+  bundleNonempty := .absent
+  readout := some (realize signature (fun _ _ u => unitarySourceFourier (zeroExtension u)) (fun e => nomatch e))
+  variation := .absent
+  sensitivity := .absent
+  partialSensitivity := none
+  escapeFrom := none
+  sourceSelection := some {
+    owner := `D5.S3.Weil.ZetaGamma.FormCore.SourceQuarterSpectralClosure
+    definition := none
+    coordinates := #[]
+    readouts := #[{
+      path := #["body", "body", "body", "arg", "fn", "arg", "fn"]
+      stateBinder := 0
+      functionOperand := false
+      stateOperand := none
+      booleanPredicate := false }] }
+  continuation := .unknown
+  familyRecord := none
+  options := #[]
+
+#print axioms familyRegistration
+#print axioms registration
+
+end EvenZeroFourier
+
+namespace LiteralEvenFourier
+
+abbrev signature : Signature where
+  Params := Unit
+  State _ := ℝ → ℂ
+  Role := Unit
+  finiteRole := inferInstance
+  nonemptyRole := inferInstance
+  Output _ _ := ℝ → ℂ
+  Anchor := Empty
+  finiteAnchor := inferInstance
+
+def actual : Realization signature :=
+  realize signature (fun _ _ u => unitarySourceFourier (actualEvenZeroExtension u))
+    (fun e => nomatch e)
+
+def rejected : Realization signature :=
+  realize signature (fun _ _ _ => fun _ : ℝ => (-1 : ℂ)) (fun e => nomatch e)
+
+/- Original arbitrary u and real ξ stay unrestricted: no L1/L2 premise is
+added to this literal AE-invariance theorem. Those hypotheses certify only
+our chosen dependence witness, not the original source law. -/
+abbrev arena : Arena where
+  signature := signature
+  Law r := ∀ (u : ℝ → ℂ) (ξ : ℝ),
+    unitarySourceFourier (fun t : ℝ => u |t|) ξ = r.readout () () u ξ
+
+private theorem source_reconstruction :
+    (type_of% (@actual_literal_even_fourier)) ↔ arena.Law actual := Iff.rfl
+
+private theorem rejected_law : ¬ arena.Law rejected := by
+  intro hall
+  have hBad := hall (fun _ : ℝ => (0 : ℂ)) (0 : ℝ)
+  change unitarySourceFourier (fun _ : ℝ => (0 : ℂ)) 0 = (-1 : ℂ) at hBad
+  norm_num [unitary_zero] at hBad
+
+private theorem actual_dependence : ObservationalDependence signature actual := by
+  intro i
+  refine ⟨(), (fun _ : ℝ => (0 : ℂ)), decayingInput, ?_⟩
+  intro h
+  have hAt := congrFun h (0 : ℝ)
+  change unitarySourceFourier (actualEvenZeroExtension (fun _ : ℝ => (0 : ℂ))) 0 =
+    unitarySourceFourier (actualEvenZeroExtension decayingInput) 0 at hAt
+  rw [even_extension_zero, unitary_zero] at hAt
+  exact even_exp_fourier_nonzero hAt.symm
+
+def familyRegistration : Registration arena
+    (type_of% (@actual_literal_even_fourier)) where
+  actual := actual
+  bridge := source_reconstruction
+  variation := ⟨@actual_literal_even_fourier, rejected, rejected_law⟩
+  sensitivity := by
+    constructor
+    · intro i
+      refine ⟨rejected, ?_, rfl, rejected_law⟩
+      intro j hji
+      exact (hji (Subsingleton.elim j i)).elim
+    · intro e
+      exact nomatch e
+  dependence := actual_dependence
+
+/- UNINSPECTED AST candidate. The original f/u is state binder0.
+Output is the COMPLETE selected frequency function; no frequency binder is
+hoisted, fixed, manufactured or used as an extra premise. -/
+def registration : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
+    (@actual_literal_even_fourier) (Realization signature) Type Unit where
+  unitName := `D5.S3.Weil.ZetaGamma.FormCore.SourceQuarterSpectralClosure.actual_literal_even_fourier.__information_unit
+  realizationName := `Reg.D5.S3.Weil.ZetaGamma.FormCore.SourceQuarterSpectralClosure.RemainingFourierReadouts.LiteralEvenFourier.familyRegistration
+  realizationSource := none
+  generated := false
+  arena := .source ⟨arena⟩
+  objectArena := .source ⟨arena⟩
+  catalog := Lean.Name.anonymous
+  localNames := false
+  realization := .source arena ⟨familyRegistration⟩
+  correspondence := { stage := .evidence, objectStage := .evidence }
+  bundleNonempty := .absent
+  readout := some (realize signature (fun _ _ u => unitarySourceFourier (actualEvenZeroExtension u)) (fun e => nomatch e))
+  variation := .absent
+  sensitivity := .absent
+  partialSensitivity := none
+  escapeFrom := none
+  sourceSelection := some {
+    owner := `D5.S3.Weil.ZetaGamma.FormCore.SourceQuarterSpectralClosure
+    definition := none
+    coordinates := #[]
+    readouts := #[{
+      path := #["body", "body", "arg", "fn"]
+      stateBinder := 0
+      functionOperand := false
+      stateOperand := none
+      booleanPredicate := false }] }
+  continuation := .unknown
+  familyRecord := none
+  options := #[]
+
+#print axioms familyRegistration
+#print axioms registration
+
+end LiteralEvenFourier
+
+end Reg.D5.S3.Weil.ZetaGamma.FormCore.SourceQuarterSpectralClosure.RemainingFourierReadouts
