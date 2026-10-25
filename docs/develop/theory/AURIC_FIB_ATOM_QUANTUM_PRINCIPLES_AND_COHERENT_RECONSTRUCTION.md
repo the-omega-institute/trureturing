@@ -3862,3 +3862,787 @@ PDE 读口的已证源和拓扑由 §23 原样保留，不用其资源集中替�
 观察到的变化、破缺和稳定由读口、保留端口及极限条件共同决定。证毕。
 
 ## 追加锚（本行以下为增补区）
+
+## 25. 关系谱作为共同预测对象：谱值、切面与有向组合
+
+**定义 25.1（有类型的关系描述与表示）。** 一个关系描述指定准备、输入输出边界、可接续操作、停止和失败记录、读出及其共同标定；只有输出类型与输入类型匹配的词才可复合。
+在一个共同边界内，复合写成有单位复 $*$-代数 $\mathcal A_0$ 的乘法，$ab$ 表示先 $b$ 后 $a$，伴随反转词序。
+在多个边界间可用矩阵角表示匹配端口；把不匹配的词强行相乘不属于本定义。
+完整关系数据包含全部合法词矩、跨描述比较和分支权重，不只是某个算子的本征值及重数。
+本节称其为关系谱；这不是标准单算子谱的别名，也不预设图的点边为唯一表示。
+静态指这些共同关系同时被规定，不要求局部乘法可交换，也不另加全局外部钟。
+
+**应用 25.2（同一读口下的谱值不足）。** 取 $M_2(\mathbb C)$、$\rho_0=|0\rangle\langle0|$、$\rho_+=|+\rangle\langle+|$、$|+\rangle=(|0\rangle+|1\rangle)/\sqrt2$。
+二态本征值都为 $(1,0)$，固定效果 $F=|0\rangle\langle0|$ 却给概率 $1$ 与 $1/2$。
+这是[预测波 §1](AURIC_COMPATIBLE_PREDICTIVE_WAVES_AND_RELATIONAL_SPECTRA.md)谱值不足机制在准备—效果关系中的直接实例。
+同时以同一酉变换状态和效果，$\rho'=U\rho U^\dagger,F'=UFU^\dagger$，则 $\operatorname{Tr}(\rho'F')=\operatorname{Tr}(\rho F)$；这才是保该关系的被动表示改变。
+
+对任意有限含单位交换 $*$-子代数 $\mathcal B\subset M_d$，令其最小非零投影为 $P_j$，则 $P_jP_k=\delta_{jk}P_j$、$\sum_jP_j=I$。
+所有 $B_i\in\mathcal B$ 同时写为 $B_i=\sum_jb_{ij}P_j$，状态限制是 $\mu_j=\operatorname{Tr}(\rho P_j)$，故
+
+$$
+\operatorname{Tr}\bigl[\rho f(B_1,\ldots,B_k)\bigr]
+ =\sum_j\mu_j f(b_{1j},\ldots,b_{kj}). \tag{25.1}
+$$
+
+投影的正交乘法先证明多项式公式；有限联合谱上的任意函数都由其谱值定义，给一般 $f$。
+一个这样的切面有经典联合结果，不代表不同切面的结果已有同一非上下文赋值。
+同步转置 $\rho\mapsto\rho^{\mathsf T},A\mapsto A^{\mathsf T}$ 保持每个自伴谱和迹配对，且在每个交换切面内保持乘法；一般却只有 $(AB)^{\mathsf T}=B^{\mathsf T}A^{\mathsf T}$。
+具体取
+
+$$
+X=\begin{pmatrix}0&1\\1&0\end{pmatrix},\quad
+Y=\begin{pmatrix}0&-i\\i&0\end{pmatrix},\quad
+Z=\operatorname{diag}(1,-1).
+$$
+
+$XY=iZ$，而 $X^{\mathsf T}=X,Y^{\mathsf T}=-Y,Z^{\mathsf T}=Z$，所以 $(XY)^{\mathsf T}=iZ$、$X^{\mathsf T}Y^{\mathsf T}=-iZ$。
+在同步不变的 $\rho_0$ 上，两种有向词矩分别为 $i,-i$。
+这说明交换切面数据不规定跨切面的有向组合，并未凭空授予测量这些复词矩的读口。
+转置也不能作为任意复参考下的合法量子过程：令 $|\Omega\rangle=(|00\rangle+|11\rangle)/\sqrt2$，则
+
+$$
+(\operatorname{id}_2\otimes {\mathsf T})(|\Omega\rangle\langle\Omega|)
+ =\tfrac12\sum_{j,k=0}^1|j\rangle\langle k|\otimes|k\rangle\langle j|
+ =\tfrac12\mathrm{Swap}.
+$$
+
+它在反对称单位向量 $(|01\rangle-|10\rangle)/\sqrt2$ 上的本征值是 $-1/2$，违反正性。
+这正是本卷 §7 的“每个有限复参考、全部联合正输入”条件区别于单系统正性的用途（标准 Choi–Kraus/Watrous 完全正性准则）。
+
+为检验把静态关系强制改为经典答案表的后果，消费标准 Mermin–Peres 方阵（Mermin，PRL 65, 3373；Cabello，[arXiv:0808.2456](https://arxiv.org/abs/0808.2456)）：
+
+$$
+\begin{array}{ccc}
+X\otimes I&I\otimes X&X\otimes X\\
+I\otimes Y&Y\otimes I&Y\otimes Y\\
+X\otimes Y&Y\otimes X&Z\otimes Z
+\end{array}. \tag{25.2}
+$$
+
+九个算子自伴、平方为单位，每行每列两两对易。三行乘积及前两列乘积均为 $I_4$，末列乘积为 $-I_4$。
+例如 $(X\otimes Y)(Y\otimes X)=Z\otimes Z$，而 $(X\otimes X)(Y\otimes Y)=-Z\otimes Z$；其余四项由不同张量因子对易直接得到。
+若为九格赋与上下文无关的 $\pm1$，并在每个交换上下文保持乘法，则六个约束相乘时每格出现两次，左边为 $+1$，右边为 $-1$，矛盾。
+方阵本身是一致的静态量子表示；排除的是这个明确的非上下文确定赋值条件，不是所有隐变量模型。
+因此 (25.1)、复合方向与 (25.2) 是关系描述必须分别保留的条件；单个谱表或“静态”一词不能替代它们。
+
+## 26. 有界有向词矩在完整递归原子中的闭合应用
+
+**定义 26.1（代数输入与有限生成元界）。** 在定义 25.1 的共同边界上，令 $\Gamma$ 为对伴随封闭的生成字母族，$\mathcal A_0$ 是按已声明 $*$-关系取商的有单位复代数。
+给每个 $g\in\Gamma$ 一个有限的 **非负** 实数 $M_g\in[0,\infty)$；允许 $M_g=0$，不以负常数表示范数界。
+给定复线性 $\ell:\mathcal A_0\to\mathbb C$，对全部 $p\in\mathcal A_0,g\in\Gamma$ 要求
+
+$$
+\ell(1)=1,\quad\ell(p^*p)\ge0,\qquad
+\ell(p^*g^*gp)\le M_g^2\ell(p^*p). \tag{26.1}
+$$
+
+正性不等式指实数不等式。给定的商关系必须已被 $\ell$ 尊重；只给未指定拼接的图不构成该输入。
+本节将这些全称代数假设接入 §§6、12 的完整分支与条件态接口；完整词矩并不声称已由有限样本取得。
+
+**应用 26.2（有界表示、递归条件泛函与零分支）。** 对定义 26.1 的每个输入，可构造最小循环有界 $*$-表示 $(H_\ell,\pi,\Omega)$，满足
+
+$$
+\|\Omega\|=1,\quad \ell(a)=\langle\Omega,\pi(a)\Omega\rangle,
+\quad\|\pi(g)\|\le M_g,\quad
+\overline{\pi(\mathcal A_0)\Omega}=H_\ell. \tag{26.2}
+$$
+
+同一完整泛函的两个这样的最小表示有唯一保 $\Omega$、交织全部标记操作的酉同构。
+这里内积第一变量共轭线性。标准 GNS 的出处是 Weber–Li–Voigt 的 [ISEM24 讲义，Lemma 5.17、Theorem 5.18](https://www.math.uni-sb.de/ag/speicher/weber/ISem24/ISem24LectureNotes.pdf)；其 $C^*$-代数假设不能直接取代 (26.1) 的代数有界性。
+所需桥梁如下。
+
+由 $\ell((p+zq)^*(p+zq))\ge0$ 对全部 $z\in\mathbb C$ 成立，先取实、虚参数极化，得到 $\ell(q^*p)=\overline{\ell(p^*q)}$，再取二次式的最小值得
+
+$$
+|\ell(p^*q)|^2\le\ell(p^*p)\ell(q^*q).
+$$
+
+所以 $\mathcal N=\{p:\ell(p^*p)=0\}$ 与所有向量半正交，并为线性空间。
+(26.1) 给 $p\in\mathcal N\Rightarrow gp\in\mathcal N$。对字母的有限乘积迭代，再用线性，得 $ap\in\mathcal N$ 对每个 $a\in\mathcal A_0$ 成立；故 $\mathcal N$ 是左理想。
+在商上置 $\langle[p],[q]\rangle=\ell(p^*q)$、$\pi_0(a)[p]=[ap]$，良定义且为正定内积。
+对生成元，$\|\pi_0(g)[p]\|^2\le M_g^2\|[p]\|^2$；对每个有限多项式 $a=\sum_w a_ww$，还有
+
+$$
+\|\pi_0(a)\|\le\sum_w|a_w|\prod_{g\text{ in }w}M_g<\infty.
+$$
+
+故各算子延拓到商的 Hilbert 完备化。关系 $\langle[p],\pi_0(a)[q]\rangle=\langle\pi_0(a^*)[p],[q]\rangle$ 给 $*$-表示；$\Omega=[1]$ 给 (26.2) 及循环性。
+两个表示间在稠密循环子空间定义 $U\pi_1(a)\Omega_1=\pi_2(a)\Omega_2$。
+两边任意有限线性组合的内积都由同一 $\ell(a^*b)$ 给出，故映射良定义且等距；循环性给稠密值域，延拓后满射。
+它保循环向量并交织每个 $\pi(a)$，这些性质在稠密集上也强制唯一性。
+这完成代数输入到有界生成元的桥梁；只有正性而无 (26.1) 时，左乘可无界，不能称有界量子门。
+
+现在对每个已许可前缀 $h$，供应有限结果集 $A_h$ 与有限隐藏 Kraus 下标 $\mu$，取 $m_{h,a,\mu}\in\mathcal A_0$，满足完整关系
+
+$$
+\sum_{a\in A_h,\mu}m_{h,a,\mu}^*m_{h,a,\mu}=1. \tag{26.3}
+$$
+
+成功、失败、停止都须纳入结果；停止可用一个恒等吸收分支，任意有限记录树因而仍完整。
+定义未归一泛函 $L_\varnothing=\ell$，并递推
+
+$$
+L_{ha}(x)=\sum_\mu L_h(m_{h,a,\mu}^*xm_{h,a,\mu}),\quad
+p(h)=L_h(1),\quad\ell_h=L_h/p(h)\quad(p(h)>0). \tag{26.4}
+$$
+
+对每个合法有限前缀，这些泛函均正，满足 $p(h)\ge0$、$p(\varnothing)=1$、$\sum_ap(ha)=p(h)$。
+正概率时 $\ell_h$ 归一且满足与 (26.1) **相同** 的生成元界。
+证明是对深度归纳：$L_h(m^*x^*xm)=L_h((xm)^*(xm))\ge0$；将已有的界用于 $pm$，再对 $\mu$ 求和，即
+
+$$
+L_{ha}(p^*g^*gp)\le M_g^2L_{ha}(p^*p).
+$$
+
+(26.3) 插入 (26.4) 给前缀权重相容。除以正的 $p(h)$ 保持界。
+若 $p(h)=0$，正泛函的 Cauchy–Schwarz 给 $|L_h(x)|^2\le L_h(1)L_h(x^*x)=0$，故 $L_h=0$，所有后继也为零；没有可除的条件态。
+
+展开 (26.4) 时，每个隐藏路径取有向乘积 $m_{h,\boldsymbol\mu}=m_{h_{n-1},a_n,\mu_n}\cdots m_{\varnothing,a_1,\mu_1}$，有
+
+$$
+L_h(x)=\sum_{\boldsymbol\mu}\ell(m_{h,\boldsymbol\mu}^*xm_{h,\boldsymbol\mu}),\qquad
+p(h)=\sum_{\boldsymbol\mu}\|\pi(m_{h,\boldsymbol\mu})\Omega\|^2. \tag{26.5}
+$$
+
+隐藏下标是概率和，不是将 $m$ 的振幅先相加。对当前条件泛函或这些未归一向量分别作和，得到同一记录律；输入无关随机控制也按其实际权重混合。
+在 (26.2) 中 $\sum_{a,\mu}\pi(m_{h,a,\mu})^*\pi(m_{h,a,\mu})=I$，故 $v\mapsto\bigoplus_{a,\mu}\pi(m_{h,a,\mu})v$ 为等距。
+这将本卷定理 6.2、6.4 的分支等距与概率接口具体实例化：共同相干分支已被供应，遗忘 $\mu$ 给相应 CP 分支，遗忘全部结果给保迹更新。
+有限矩阵边界上，这些 Kraus 公式张量任意有限复参考仍正；没有因条件化而删去参考或零概率边界。
+
+最后，循环向量不保证原代数态纯。取 $\mathcal A_0=M_d$、$\ell(A)=\operatorname{Tr}(A)/d$，其表示是 Hilbert–Schmidt 空间 $M_d$ 上的左乘，$\Omega=I/\sqrt d$。
+$\langle\Omega,A\Omega\rangle=\operatorname{Tr}(A)/d$，左乘轨道张成全空间，故循环且最小；$d>1$ 时原态 $I/d$ 仍是多个正交纯态的非平凡混合。
+因此 (26.2) 不能把候选解释不确定性改称原系统纯叠加，(26.5) 也没有从归一正性独自推出实际频率标定。∎
+
+## 27. 跨描述核与物理相干接口
+
+**应用 27.1（相容内部描述到共同相干比较的缺项）。** 取两个有限描述集的内部复 Gram 核 $A\succeq0,B\succeq0$，大小分别为 $r,s$。
+本卷 §§6、15 的正核表示若要包含两个描述集，尚须一个 $r\times s$ 的交叉块 $C$，使
+
+$$
+K=\begin{pmatrix}A&C\\C^\dagger&B\end{pmatrix}\succeq0.
+$$
+
+这里消费标准奇异块收缩分解：[Watrous，arXiv:1207.5726v2，Lemma 2](https://arxiv.org/abs/1207.5726v2) 给同大小正块版本，不要求正定；不同大小可补零到共同大小。
+其精确参数对应为该引理的 $P=A,Q=B,X=C$（补零时同时补交叉块）。结论是
+
+$$
+C=A^{1/2}TB^{1/2},\qquad T:\mathbb C^s\to\mathbb C^r,\quad\|T\|\le1. \tag{27.1}
+$$
+
+为保留奇异边界，若 $u\in\ker A$，对全部 $z\in\mathbb C,v$ 取 $(zu,v)$ 的二次型；没有 $|z|^2$ 项使线性交叉项必须为零，故 $u^\dagger Cv=0$。
+同理 $C$ 消去 $\ker B$。在两个支撑空间用逆平方根合同，得到 $\left(\begin{smallmatrix}I&T\\T^\dagger&I\end{smallmatrix}\right)\succeq0$。
+取 $(-Ty,y)$ 得 $\|Ty\|\le\|y\|$，在核上补零得到 (27.1)；反之收缩性给
+$\|x\|^2+2\operatorname{Re}\langle x,Ty\rangle+\|y\|^2\ge(\|x\|-\|y\|)^2\ge0$，再合同即得 $K\succeq0$。
+所以两个内部核一般没有决定它们的共同表示；缺的是收缩交叉关系，而非各自再作一次 GNS。
+
+例如 $A=B=[1]$ 时 $C=[z]$ 可取整个 $|z|\le1$ 圆盘，且 $z$ 可由同一 Hilbert 空间单位向量 $v_0,v_1$ 的内积实现。
+若额外供应共同参考和实际控制准备
+
+$$
+|\Psi\rangle=(|0\rangle v_0+|1\rangle v_1)/\sqrt2,
+\qquad\langle v_0,v_1\rangle=z,
+$$
+
+再另供路径效果 $|+_\phi\rangle\langle+_\phi|$、$|+_\phi\rangle=(|0\rangle+e^{i\phi}|1\rangle)/\sqrt2$，则
+
+$$
+p(+_\phi)=\|(v_0+e^{-i\phi}v_1)/2\|^2
+ =\tfrac12[1+\operatorname{Re}(e^{-i\phi}z)]. \tag{27.2}
+$$
+
+这个推导区分三个资源：数学上允许的共同核、能制备该相干控制态的接口、能读取相位的效果。
+相容候选的存在不提供后两者，也不提供先验权重；$1/\sqrt2$ 是此处另供的平衡准备，不由候选数推出。
+若改给经典权重 $p,1-p$，它们也是额外选择，并不自动给 (27.2) 的交叉项。
+故“概念也在谱中”的可用含义是将概念编码、交叉关系、实际比较及权重分别纳入共同模型；不能以多个自洽解释替代相干性。∎
+
+## 28. 完整观察者闭包在稳定概念任务中的应用
+
+**定义 28.1（有限控制、记忆与共同合法词）。** 取一个固定有限维完整载体 $H$、$d=\dim H$；准备、观察者存储、有限控制状态及所用参考标定都已包含其中。
+每个菜单动作 $u$ 给有限结果 CP 分支 $\Phi_{u,a}:M_d\to M_d$，$\sum_a\Phi_{u,a}$ 为 CPTP；末端效果族 $\mathcal M$ 有限。
+若动作合法性依赖控制状态 $c\in C$，将 $c$ 作为有限正交寄存器并入载体，分支同时更新 $c$ 与记忆。
+只许依赖已记录前缀的控制；不匹配的端口不复合。需把动作延拓为全载体映射时，将非法尝试作为明确拒绝结果并声明其后继，不能从记录分布删去。
+等价地可在各控制块的直和上只列实际可达的型别词；以下使用已经完成这种编译的共同菜单。
+持续增长的记忆、未列入的环境再用、无限结果或不可统一的合法域不在这个有限载体假设内。
+
+令
+
+$$
+V_0=\operatorname{span}_{\mathbb R}(\{I\}\cup\mathcal M),\qquad
+V_{n+1}=\operatorname{span}_{\mathbb R}\bigl(V_n\cup
+\{\Phi_{u,a}^\dagger F:F\in V_n\}\bigr),\quad V=\bigcup_nV_n. \tag{28.1}
+$$
+
+完整有限协议包括所有记录、失败、停止及末端效果的两结果测试；有限自适应树的每条叶路径都是同一合同内的词。
+对仅允许经典控制块的来源，可在其块对角自伴空间内取相同闭包；以下 $d^2$ 仍是上界，仿射维数结论另需所声称的全部态来源。
+
+**应用 28.2（从既有闭包判据到概念翻译的检验）。** 本卷定义 11.3、定理 11.4 的参数逐项取
+
+$$
+W_0=V_0,\quad\mathcal G_{11}=\{I\}\cup\mathcal M,
+\quad (a,o)_{11}=(u,a),\quad\Phi_{a,o}^*=\Phi_{u,a}^\dagger.
+$$
+
+其完整载体就是定义 28.1 的 $H$，不是只保留物理系统而删去控制记忆的空间。
+因此 $W_n=V_n$、$W_\infty=V$，至多 $d^2-\dim V_0$ 次严格扩张后稳定；全密度来源的预测像实仿射维数为 $\dim V-1$。
+两个态在全部这些有限记录与自适应策略上同律，当且仅当
+
+$$
+\operatorname{Tr}[(\rho-\sigma)F]=0\qquad(F\in V). \tag{28.2}
+$$
+
+具体地，一条路径 $h=((u_1,a_1),\ldots,(u_n,a_n))$ 的未归一响应是
+$\operatorname{Tr}[\rho\,\Phi_{u_1,a_1}^\dagger\cdots\Phi_{u_n,a_n}^\dagger(F)]$，$F=I$ 或末端效果。
+这些路径效果按深度张成 (28.1)，故 (28.2) 检查的是完整前缀质量，而非仅比较各自归一后的成功态。
+固定反馈规则后，相同前缀选择相同动作；叶路径响应相等，求和得到同一协议分布。反向选一条固定路径及终端测试即得必要性。
+零质量前缀没有条件分母；随机反馈先条件化其输入无关的随机种子再平均。
+有限维保证一旦 $V_{n+1}=V_n$ 就已被全部分支拉回保持。
+$I/d$ 的邻域中任意足够小迹零自伴扰动仍为态，归一限制像因而在 $\dim V-1$ 个方向满秩；这解释既有仿射维数公式需要全来源的原因。
+若实际只供一个受限准备族，不能据该公式宣称已取得这么多维的响应。
+这直接消费关系丛 §8 及本卷 §11 的已有结果，不另建观察闭包生产者。
+
+本应用给表示翻译一个具体检查：若摘要删除方向 $D$ 却存在 $F\in V$ 使 $\operatorname{Tr}(DF)\ne0$，则在 $I/d$ 附近取 $\rho_\pm=I/d\pm tD$，它们当前摘要相同而某许可未来记录不同；摘要不对该未来任务闭合。
+若所有被删除差都在 $V^\perp$，则由 (28.2) 翻译保全部协议律；这只是语义充分性，尚未构造正线性压缩或物理解码器。
+本卷推论 11.5 的全酉菜单给 $V=\operatorname{Herm}_5$、二十四个归一实坐标；对角保持菜单则按命题 11.6 仅看人口。
+命题 11.7 的实帧盲区可持续到全部有限协议，新增相位操作会改变 $V$，并非在同一商上无条件换名字。
+
+对共同测试族 $\mathfrak T$ 还可定义
+
+$$
+d_O(\rho,\sigma)=\sup_{\pi\in\mathfrak T}\operatorname{TV}(P_\rho^\pi,P_\sigma^\pi).
+$$
+
+删去测试只缩小上确界；对所有来源使用同一个随机后处理 $K$ 时，$\|K(p-q)\|_1\le\|p-q\|_1$，所以它也不增 $d_O$。
+此结论比较共同校准的测试，不能用来源依赖译码或不合法动作来扩大区分。
+它区分保全响应的同构、针对任务的有损商、以及实际扩充读口三种“切面变化”。
+
+**应用 28.3（菜单相对的可见平衡）。** 固定同载体 CPTP $\Phi$、效果菜单 $\mathcal M$，令
+
+$$
+W_{\mathcal M}=\operatorname{span}_{\mathbb R}
+\{I,(\Phi^\dagger)^nF:F\in\mathcal M,n\ge0\},\qquad
+N_{\mathcal M}=W_{\mathcal M}^{\perp}
+$$
+
+采用自伴空间上的迹配对。对每个密度 $\rho$，全部菜单响应 $\operatorname{Tr}[F\Phi^n(\rho)]$ 对 $n\ge0$ 不变，当且仅当
+
+$$
+(\Phi-I)\rho\in N_{\mathcal M}. \tag{28.3}
+$$
+
+因为相邻深度差恰为 $\operatorname{Tr}[(\Phi^\dagger)^nF\,(\Phi-I)\rho]$；其全为零等价于与所有生成元正交，单位项由保迹自动为零。
+有限求和把相邻差零变为每层等于初层，反向显然。故 (28.3) 是充分且必要的菜单判据，弱于全态固定。
+若要求保分支记录，应以 (28.1) 的完整分支闭包检查，不能只用擦标签 $\Phi$ 的幂。
+
+对 §29 的实际三码，取 $A_0=i(E_{12}-E_{21})$、$\rho_t=I_3/3+tA_0$、$0<|t|\le1/3$，再嵌入为 $B\rho_tB^\dagger$。
+$A_0$ 的本征值为 $1,-1,0$，所以这是合法态。$WA_0W=-A_0$ 使 $\mathcal T(A_0)=0$，故该态并非固定态，一步后成为 $BI_3B^\dagger/3$。
+但码人口与五个物理人口从初层起就分别恒为 $(1/3,1/3,1/3)$、$(1/6,1/6,1/3,1/6,1/6)$，因为 $A_0$ 对角零且 $B$ 的三列支撑不交叠。
+因此以五个模式投影为 $\mathcal M$ 时，$(\mathcal G-I)(B\rho_tB^\dagger)\in N_{\mathcal M}$，精确实例化 (28.3)，而 $\mathcal G(\rho)\ne\rho$（此处 $\rho=B\rho_tB^\dagger$）。
+若扩充终端效果以读取相应虚相干，当前层与下一层即可不同；菜单相对平衡不是不依读口的属性。
+
+**应用 28.4（忠实固定乘法与近似概念组合）。** 当一个切面的效果转换为 UCP 映射 $\Theta:M_d\to M_d$，并 **另有** 密度 $\varrho\succ0$ 满足
+$\operatorname{Tr}[\varrho\Theta(A)]=\operatorname{Tr}(\varrho A)$ 对所有复 $A$ 成立时，稳定概念可用普通乘法。
+这里消费忠实不变态与乘法域的标准机制（Carbone–Girotti，[*Absorption in Invariant Domains for Semigroups of Quantum Channels*](https://doi.org/10.1007/s00023-021-01016-5)）；对本应用所需的全部条件和估计展开如下。
+若 $\Theta(A)=A$，Schwarz 差 $D=\Theta(A^\dagger A)-A^\dagger A\succeq0$ 且 $\operatorname{Tr}(\varrho D)=0$，忠实性迫使 $D=0$；$AA^\dagger$ 同理。
+写 $\Theta(X)=V^\dagger(X\otimes I)V$、$V^\dagger V=I$，差为
+
+$$
+D=V^\dagger(A^\dagger\otimes I)(I-VV^\dagger)(A\otimes I)V.
+$$
+
+故 $(A\otimes I)V=VA$；由 $A^\dagger$ 的同一关系也得 $V^\dagger(A\otimes I)=AV^\dagger$。
+于是 $\Theta(AB)=A\Theta(B)$、$\Theta(BA)=\Theta(B)A$。
+当 $B$ 也固定时乘积固定；单位、线性、伴随与有限维闭性均保持，故固定集为普通 $C^*$-子代数。
+若若干 UCP 映射各自有这样的忠实不变密度，其共同固定集是这些子代数的交；不要求它们有同一个密度，但不能省略各自忠实性。
+
+对近似稳定概念，还须定量保留密度下界及算子收缩条件：设 $\varrho\succeq mI$、$m>0$，$\|A\|,\|B\|\le1$，记 $\delta_A=\|\Theta(A)-A\|$、$\delta_B=\|\Theta(B)-B\|$。则
+
+$$
+\|\Theta(AB)-AB\|\le
+\delta_A+\delta_B+\frac2m\sqrt{\delta_A\delta_B}. \tag{28.4}
+$$
+
+证明。置 $\Delta(A)=\Theta(A^\dagger A)-\Theta(A)^\dagger\Theta(A)\succeq0$。
+不变性、$\|\Theta(A)\|\le\|A\|\le1$ 与 $\operatorname{Tr}\varrho=1$ 给
+
+$$
+\operatorname{Tr}[\varrho\Delta(A)]
+ =\operatorname{Tr}[\varrho(A^\dagger A-\Theta(A)^\dagger\Theta(A))]
+ \le2\delta_A.
+$$
+
+而 $m\operatorname{Tr}\Delta(A)\le\operatorname{Tr}[\varrho\Delta(A)]$，所以 $\|\Delta(A)\|\le2\delta_A/m$；对 $A^\dagger$ 亦然，因为 UCP 保伴随。
+Stinespring 的两侧缺陷因子给
+
+$$
+\begin{aligned}
+\Theta(AB)-\Theta(A)\Theta(B)
+ &=V^\dagger(A\otimes I)(I-VV^\dagger)(B\otimes I)V,\\
+\|\Theta(AB)-\Theta(A)\Theta(B)\|
+ &\le\sqrt{\|\Delta(A^\dagger)\|\,\|\Delta(B)\|}
+ \le\frac2m\sqrt{\delta_A\delta_B}.
+\end{aligned}
+$$
+
+再用 $\|\Theta(A)\Theta(B)-AB\|\le\delta_A+\delta_B$ 得 (28.4)。它适用于复算子，不只自伴效果。
+因此读数近似稳定还需控制乘法关系的误差；$m\downarrow0$ 时不能宣称同一个统一误差界。
+下节实际五维通道没有满秩不变密度，正是不能直接应用普通固定代数结论的情形。∎
+
+## 29. 实际五维返回系统的稳定概念及其两标量解释
+
+**定义 29.1（同一供应的输入、码与符号对应）。** 本节完整沿用定义 18.1–18.2 的物理基 $e_0,\ldots,e_4$、等距 $B=(u,v,z)$、Kraus 算子 $K_0,K_1$、擦标签通道 $\mathcal G:M_5\to M_5$ 和码通道 $\mathcal T:M_3\to M_3$。
+这里码的 $z=e_2$，且空模式 $e_0$ 范数为一。
+令
+
+$$
+\xi=(1,1,1)^{\mathsf T}/\sqrt3,\quad P=\xi\xi^\dagger,\quad Q=I_3-P,
+\quad\chi=B\xi,\quad d=(e_0-e_1-e_3+e_4)/2,
+$$
+
+$$
+R=BB^\dagger-\chi\chi^\dagger=BQB^\dagger,\qquad
+J=\chi\chi^\dagger+\tfrac23dd^\dagger,\qquad M=R/2. \tag{29.1}
+$$
+
+本节 $R$ 是秩二投影；§18 的 $R=\operatorname{Ran}B$ 是整个三码子空间，两个类型不互换。
+供应[Half-Gram 分类，Corollary 6.1、(6.1)–(6.7)](AURIC_FIB_FIVE_WINDOW_HALF_GRAM_CLASSIFICATION.md)取规范 gauge $D=I$，其参数对应为
+
+| Half-Gram 符号 | 本节符号与类型 |
+| --- | --- |
+| $\Phi_\circ$ | 同一完整通道 $\mathcal G:M_5\to M_5$ |
+| recurrent $F$，基 $(u,v,z)$ | 经 $B$ 识别的码通道 $\mathcal T:M_3\to M_3$ |
+| $s,P,M,E$ | $\chi,\chi\chi^\dagger,R/2,J$ |
+| full limit $T$ | $\mathcal E_G:M_5\to M_5$，**不是**码通道 $\mathcal T$ |
+
+五窗口量子记忆定理 18.1、18.3、19.1–19.2 则供应 Kraus、固定族、全瞬态、幂和完全范数极限，本卷 §18 已给逐项对应。
+这些是同一实际矩阵，不从“维数都等于三”推断同构。
+
+**应用 29.2（有限分辨、输入效果与返回乘法）。** 直接消费上述供应：
+
+$$
+\begin{gathered}
+\operatorname{Fix}(\mathcal T)=\operatorname{span}_{\mathbb C}\{P,Q\},\quad
+\tau_p=pP+(1-p)Q/2\quad(0\le p\le1),\\
+\operatorname{spec}\mathcal T=\{1\ [2],-1/2\ [3],0\ [4]\},\quad
+\mathcal E(X)=\operatorname{Tr}(PX)P+\operatorname{Tr}(QX)Q/2,\\
+\mathcal T^n=\mathcal E+(-1/2)^{n-1}(\mathcal T-\mathcal E)\quad(n\ge1),\\
+\mathcal E_G(X)=\operatorname{Tr}(JX)\chi\chi^\dagger+
+\operatorname{Tr}[(I_5-J)X]R/2\qquad(X\in M_5(\mathbb C)). \tag{29.2}
+\end{gathered}
+$$
+
+$\mathcal T$ 的最小多项式无重根，故可对角化；完整 $\mathcal G$ 仅有供应多项式 $\mathcal G^2(\mathcal G-I)(\mathcal G+I/2)=0$，保留二阶零瞬态，不能从码内可对角化推出全输入可对角化。
+对全部 $n\ge2$，供应给
+
+$$
+\mathcal G^n-\mathcal E_G=(-1/2)^{n-2}(\mathcal G^2-\mathcal E_G),\qquad
+\|\mathcal G^n-\mathcal E_G\|_\diamond\le\tfrac43\,2^{-(n-2)}. \tag{29.3}
+$$
+
+diamond 上确界包含每个有限未触动复参考与任意复矩阵输入，采用未除二范数。
+因此对态和任一效果，概率误差还可取 (29.3) 的一半；有限精度可控制，并不表示某个有限幂已经等于极限。
+例如令 $D_0=\operatorname{diag}(1,-2,1)$、$\rho_\pm=I_3/3\pm tD_0$、$0<t\le1/6$。
+三对角元均非负、迹一，且码通道作用是
+
+$$
+\mathcal T(\operatorname{diag}(a,b,c))
+=\operatorname{diag}((a+b)/2,c,(a+b)/2),\qquad
+\mathcal T(D_0)=-D_0/2.
+$$
+
+所以 $\rho_\pm$ 同趋 $I_3/3$，但效果 $F=\operatorname{diag}(0,1,0)$ 的差为 $4t2^{-n}>0$，对每个有限 $n\ge0$ 都可在精确响应上区分。
+容差 $\varepsilon>0$ 下，$n\ge\max\{0,\lceil\log_2(4t/\varepsilon)\rceil\}$ 才使该响应差至多 $\varepsilon$；样本可得性与误差标定另需实验合同。
+同样，$\tau_p$ 的码人口总是 $(1/3,1/3,1/3)$，完整五人口总是 $(1/6,1/6,1/3,1/6,1/6)$。
+所以相同人口不能读出 $p$；不是所有状态都已等于一个平衡态。
+
+全输入效果结论已经由 Half-Gram 6.1 证明：
+
+$$
+\operatorname{Fix}(\mathcal G^\dagger)
+=\operatorname{Ran}\mathcal E_G^\dagger
+=\operatorname{span}_{\mathbb C}\{I_5,J\},\qquad
+\mathcal E_G^\dagger(A)=\langle\chi,A\chi\rangle J+
+\tfrac12\operatorname{Tr}(RA)(I_5-J). \tag{29.4}
+$$
+
+本应用把它解释为共同的两标量读出：$A=aI_5+bJ$ 对任意密度 $\rho$ 的值是 $a+b p_\rho$，$p_\rho=\operatorname{Tr}(J\rho)$。
+$J$ 在 $\chi,d$ 及其三维正交补上的本征值为 $1,2/3,0$；故 $A$ 自伴当且仅当 $a,b\in\mathbb R$，且
+
+$$
+A\succeq0\ \Longleftrightarrow\ a\ge0,\ a+b\ge0,\qquad
+0\le A\le I\ \Longleftrightarrow\ 0\le a,a+b\le1. \tag{29.5}
+$$
+
+中间值 $a+2b/3$ 是两端值的凸组合。该解释包含任意复系数及其伴随；在每个矩阵放大上，对 $C_0\otimes I+C_1\otimes J$，正性也恰为 $C_0\succeq0,C_0+C_1\succeq0$，因为第三块 $C_0+2C_1/3$ 是同一凸组合。
+因此两标量对应不仅保标量次序，也保每个有限参考下的矩阵次序。
+
+普通乘法不能把稳定效果变成投影：供应已给 $J^2-J=-2dd^\dagger/9\ne0$，且 $J^2\notin\operatorname{span}\{I,J\}$。
+返回规则则给已存在的 Choi–Effros 乘法 $A\circ C=\mathcal E_G^\dagger(AC)$；代入 (29.4) 有
+
+$$
+(aI+bJ)\circ(cI+eJ)=acI+(ae+bc+be)J,\qquad
+J\circ J=J,\qquad aI+bJ\longmapsto(a,a+b). \tag{29.6}
+$$
+
+两端系数逐分量相乘，故是保单位、保伴随及上述全部次序的 $\mathbb C^2$ 表示。
+这里使用 Half-Gram 的既有返回乘法事实和标准 Choi–Effros 机制（JFA 24, 156–209），没有另造生产者。
+码内 $B^\dagger JB=P$ 是普通投影；完整输入 $dd^\dagger$ 却有 $p_\rho=2/3$，其极限是 $\widehat\tau_{2/3}$，预先投影到码会错误删除这项进料。
+完整空间的不变态全在码内，故无满秩不变密度，不能套用应用 28.4 的忠实普通固定代数结论。
+
+对任意有限参考 $Z$ 和任意复 $X\in M_5\otimes M_Z$，同一供应公式是
+
+$$
+(\mathcal E_G\otimes\operatorname{id}_Z)(X)
+ =\chi\chi^\dagger\otimes X_++(R/2)\otimes X_-,\quad
+X_\pm=\operatorname{Tr}_H[(J_\pm\otimes I)X],\quad J_+=J,\ J_-=I-J. \tag{29.7}
+$$
+
+对联合正输入，$X_\pm\succeq0$：部分迹中可用 $(\sqrt{J_\pm}\otimes I)X(\sqrt{J_\pm}\otimes I)$ 代替左乘式。
+其迹和为总质量，归一输入遂给乘积态的凸组合，正是供应的 reference-inclusive entanglement-breaking 极限；一般复输入上 (29.7) 是线性恒等，不声称 $X_\pm$ 为态。
+秩二扇区只保留一个密度 $R/2$，不是持续的 $M_2$ 量子存储。
+维数五的输入、维数三的输出支撑、八维码态参数、二维固定自伴空间、一维固定态段及人口菜单零个渐近输入参数可同时成立。
+擦除环境得到的 EB 极限也不表示完整等距扩张中的所有关联都已消失。∎
+
+## 30. 原实菜单的符号纤维与相位读口的应用边界
+
+**定义 30.1（与预测波 §29 的精确符号映射）。** 沿用 §29 的同一 $B,K_j,U,W,\xi$，令
+
+$$
+f=(1,-1,0)^{\mathsf T}/\sqrt2,\quad e=(1,1,-2)^{\mathsf T}/\sqrt6,\quad
+q=(\xi+e)/\sqrt2,\quad p_0=Bq,\quad P_+=(I_3+W)/2,
+$$
+
+$$
+c=(e_0+e_1-e_3-e_4)/2,\quad a=Uq,\quad g=Uf,\quad
+\alpha_t=\sqrt{1-t^2},\quad w_\pm=\alpha_tc\pm itp_0,\quad0<t<1,
+$$
+
+$$
+T_\pm(X)=BP_+XP_+B^\dagger+(f^\dagger Xf)w_\pm w_\pm^\dagger,
+\qquad S_\pm=\mathcal G T_\pm,\qquad J_s=(\mathcal G^\dagger)^s(p_0p_0^\dagger).
+\tag{30.1}
+$$
+
+[预测波定义 29.1、定理 29.2–29.3](AURIC_COMPATIBLE_PREDICTIVE_WAVES_AND_RELATIONAL_SPECTRA.md)中的 $p,P,T_{t,\pm},S_\pm,J_s$ 分别就是这里的 $p_0,p_0p_0^\dagger,T_\pm,S_\pm,J_s$；其 $c$ 是本节 $c$，不是 §29 的 $d$，其 $P$ 也不是码投影 $\xi\xi^\dagger$。
+原数据合同只有全部 $s\ge0$ 的完整效果算子，不含分支标签、任意后选择历史、新相位控制或全效果菜单。
+该映射把既有双世界直接接入概念查询，不把有限随机读数当作已知完整效果。
+
+**应用 30.2（同一概念数据的后继风险）。** 供应给每个实对称效果 $F$ 的完整算子相等
+$T_+^\dagger(F)=T_-^\dagger(F)$，特别是全部 $J_s$；同时
+
+$$
+\|S_+-S_-\|_\diamond=4t\alpha_t,\qquad
+\inf_{A:M_3\to M_5\ {\rm CPTP}}
+\max_{\pm}\|A-S_\pm\|_\diamond=2t\alpha_t. \tag{30.2}
+$$
+
+其参数满足 $B^\dagger c=0$、$c,p_0$ 单位正交、$P_++ff^\dagger=I_3$；所以 (30.1) 的两个 Kraus 算子完备，通道在整个复域 CPTP。
+实 $F$ 的交叉项是实数，$w_\pm^\dagger Fw_\pm=\alpha_t^2c^\dagger Fc+t^2p_0^\dagger Fp_0$，符号消失；$K_j,p_0$ 全实使 $J_s$ 对每个深度仍实。
+这实例化了 §28 的盲空间：在同一个实效果族内增加深度不切开该纤维；它不证明扩大菜单后的同律。
+
+为明确 (30.2) 的完整复参考域，供应的实际关系是 $K_jc=Bg/\sqrt2$、$K_jp_0=Ba/\sqrt2$，$g,a$ 单位正交。
+置 $v_\pm=\alpha_tg\pm ita$，则
+
+$$
+(S_+-S_-)(X)=(f^\dagger Xf)BDB^\dagger,\quad
+D=v_+v_+^\dagger-v_-v_-^\dagger
+=\begin{pmatrix}0&-2it\alpha_t\\2it\alpha_t&0\end{pmatrix}_{(g,a)}.
+$$
+
+本征值为 $\pm2t\alpha_t$。对任意有限参考和任意复矩阵 $Z$，放大输出是 $Z_{ff}\otimes BDB^\dagger$，其中 $Z_{ff}=(I\otimes f^\dagger)Z(I\otimes f)$。
+压缩的迹范数不增、张量迹范数相乘，故范数比至多 $\|D\|_1=4t\alpha_t$；输入 $ff^\dagger$ 达到它。
+任意仅据共同数据给出的同一个重建 $A$，由三角不等式最坏误差至少为端点距离一半；CPTP 中点 $(S_++S_-)/2$ 达到它。
+这些是定理 29.2–29.3 的同一证明接口，不将只对状态输入的计算冒充 diamond 范数证明。
+对更大的完整相容纤维，(30.2) 只给风险下界；中点未必控制其余世界。
+
+供应的新效果 $E_y=Bhh^\dagger B^\dagger$、$h=(g+ia)/\sqrt2$ 合法，因为 $Bh$ 为单位向量，并满足
+
+$$
+\operatorname{Tr}[E_yS_\pm(ff^\dagger)]=\tfrac12\pm t\alpha_t. \tag{30.3}
+$$
+
+这是 $|h^\dagger v_\pm|^2=(\alpha_t\pm t)^2/2$ 的直接代入。
+$t=1/\sqrt2$ 时概率为一、零；一般 $t$ 时概率不同不等于有限样本必定判对。
+$E_y$ 有虚交叉项，超出原实菜单。它证明一个新增关系如何区分这对世界；能否由原生许可原语取得该效果、参考与控制，仍是实现问题。
+原菜单的效果误差 $\delta=t^2$、到基准 $S_B=\mathcal G\operatorname{Ad}_B$ 的距离 $2t$ 亦由供应给出；它们与双世界半径 $2t\sqrt{1-t^2}$ 不同，不能相互替换。
+后者在 $t\uparrow1$ 趋零尤其不能解释成到基准的误差也趋零。∎
+
+## 31. 选择、隐藏维数与可重复记录的不同合同
+
+**应用 31.1（幸存支持与隐藏总维数）。** 一个真正的成功选择是 CP 迹不增映射 $\Lambda$，成功率 $s_\rho=\operatorname{Tr}\Lambda(\rho)$，只在 $s_\rho>0$ 时定义成功态 $\Lambda(\rho)/s_\rho$。
+若来源 $i$ 的经典权重为 $p_i$、成功率为 $s_i$，则联合成功质量为 $p_is_i$，归一成功记录的权重是 $p_is_i/\sum_jp_js_j$，不是原来的 $p_i$。
+§29 的 $\mathcal G$ 是保迹通道，码内输出来自 Kraus 值域，不能改称丢掉失败样本的选择。
+
+对任意有限 $H_v$、任意态 $\rho_v$、任意有限 $H_h$ 及其任意态 $\sigma_h$，令
+
+$$
+\rho=p\rho_v\oplus(1-p)\sigma_h\quad(0<p<1),\qquad
+\Lambda(X)=P_vXP_v\quad\text{在 }H_v\oplus H_h\text{ 上}.
+$$
+
+直接压缩给 $\Lambda(\rho)=p\rho_v$，成功率 $p$、成功态 $\rho_v$，与隐藏维数及隐藏态无关。
+即使记录成功与失败频率从而估计 $p$，也没有识别隐藏态或总维数。
+任意正整数 $r$ 都可为反复选择后的稳定支持秩：取 $d\ge r$、秩 $r$ 投影 $P_r$、初态 $I_d/d$，成功率 $r/d$，成功态 $P_r/r$ 再过滤保持不变。
+因此仅“幸存且稳定”不选择数字三。
+
+更强的非选择性隐藏扩张已有原归属：[静态相容纤维，标题 §63，定义 82.1、定理 82.2、推论 82.3](AURIC_OMEGA_STATIC_COMPATIBILITY_FIBER_THEORY.md)。
+其逻辑输入是 $\iota:\mathbb C^4\to\mathcal C\subset\mathcal H=\mathbb C^5$ 的 **四维** 编码，按原合同处理辅助 $|010\rangle$。
+对任意有限 $K$，每个原语 $m$ 扩为 $\widetilde m=m\oplus V_m$、$V_m\in U(K)$，且 $\widetilde\iota=J_0\iota$、$J_0:\mathcal H\hookrightarrow\mathcal H\oplus K$。
+若原字 $W=m_s\cdots m_1$ 每个前缀保码且 $W\iota=e^{i\gamma}\iota U$，则直接使用供应等式
+
+$$
+\widetilde W=W\oplus V_{m_s}\cdots V_{m_1},\qquad
+\widetilde W\widetilde\iota=e^{i\gamma}\widetilde\iota U.
+$$
+
+它对每个前缀和脉冲中途成立，张量每个有限被动参考仍给完全相同的逻辑联合通道；效果 $\widetilde F$ 对应原效果 $J_0^\dagger\widetilde FJ_0$，迹配对相同。
+参数取 $K=\mathbb C^r$ 给任意 $5+r$ 环境维数而不改变这些响应。
+这个合同不是 §29 的三维码 $B:\mathbb C^3\to\mathbb C^5$；也不包含跨编码与辅助或新隐藏块的相干干涉权限，后者需另给相位资源。
+由此两类不同输入任务都说明可见响应不提供隐藏总维数上界，但不能把四维编码的证明直接套给三码。
+
+同一选择映射上的误差可定量控制。若 $\rho,\sigma$ 为态、$\operatorname{Tr}\Lambda(\rho),\operatorname{Tr}\Lambda(\sigma)\ge s_0>0$，则
+
+$$
+\left\|\frac{\Lambda(\rho)}{\operatorname{Tr}\Lambda(\rho)}-
+\frac{\Lambda(\sigma)}{\operatorname{Tr}\Lambda(\sigma)}\right\|_1
+\le\min\{2,\ 2\|\rho-\sigma\|_1/s_0\}. \tag{31.1}
+$$
+
+置 $X=\Lambda(\rho),Y=\Lambda(\sigma),p=\operatorname{Tr}X,q=\operatorname{Tr}Y$。
+分解 $X/p-Y/q=(X-Y)/p+Y(1/p-1/q)$ 得上界 $(\|X-Y\|_1+|p-q|)/p\le2\|X-Y\|_1/s_0$。
+CP 迹不增对自伴差迹范数收缩：用差的正负分解，各正部分的输出迹至多原迹，再用三角不等式。
+归一态差范数至多二，得 (31.1)。这里必须是共同的 $\Lambda$；两个不同模型若有不同选择映射，还须先控制未归一输出差。
+本卷命题 19.3 已供应有限网络、全参考返回误差的后选择放大；(31.1) 是同图同映射、仅初态不同这一较窄接口的显式形式。
+小成功率能放大误差，但不因此把所有突变都判为新动力学。
+
+**应用 31.2（记录正交性和条件 Bloch 三方向）。** 本卷定理 10.4 已给无扰动记录恒等式：若等距 $V$ 满足
+$V(|\psi_i\rangle|r\rangle)=|\psi_i\rangle|r_i\rangle$，则
+
+$$
+\langle\psi_i,\psi_j\rangle
+=\langle\psi_i,\psi_j\rangle\langle r_i,r_j\rangle. \tag{31.2}
+$$
+
+其参数是同一未改动的源纯态与共同空白记录；内积保持直接证明等式。
+非正交时 $\langle r_i,r_j\rangle=1$，严格保持相位的约定下记录相同，不会新增可区分记录。
+反向对任意有限正交组定义 $V|i\rangle=|i\rangle|i\rangle$，线性延拓为等距，即可留任意多个正交记录。
+此机制解释记录为何筛选某些区分，未限制结果数为三；环境冗余还需子系统划分、可访问性与实际复制关联（Zurek，*Quantum Darwinism*，[arXiv:0903.5082](https://arxiv.org/abs/0903.5082)）。
+
+若另已确定有效访问代数为 $M_2(\mathbb C)$，本卷推论 10.1 的 Pauli 参数取 §25 的 $X,Y,Z$，每个态唯一写为
+
+$$
+\rho=\tfrac12(I+r_xX+r_yY+r_zZ),\quad r\in\mathbb R^3,\quad\|r\|\le1.
+$$
+
+$I,X,Y,Z$ 是自伴空间正交基，迹一固定单位方向；$(r\cdot\sigma)^2=\|r\|^2I$ 给本征值 $(1\pm\|r\|)/2$，故正性正好是单位球。
+有限维复 $C^*$-代数的最小非交换单块确为 $M_2$；这里三个方向是非交换读出坐标，不是三个互斥态，也不来自一般幸存选择。
+三码系统的归一态有八个实参数，不能改称 Bloch 球或三维物理空间。∎
+
+## 32. 可修订概念的纤维、连续查询与共同响应维数
+
+**定义 32.1（候选世界和共同概念）。** 一个世界 $\omega$ 指定类型与代数或核、态、读口、控制、观察者记忆及记录译码；它也可把对象划分、尺子和“稳定”的标准作为候选内容。
+仍须一个共同测试合同 $\mathfrak T$，使各世界的 $P_\omega^\pi$ 在相同结果语义中比较；若合法性未知，明确包含失败结果或仅取共同合法域。
+证据保留非空相容集 $K_h$，概念查询为同一语义函数 $f:\Omega\to Y$，预测是集合 $f(K_h)$。
+未给世界权重时，不对该集合擅自取概率平均。
+
+**应用 32.2（概念识别与剩余宽度）。** 本卷命题 14.3 的全部共同响应取
+$R_O(\omega)=(P_\omega^\pi)_{\pi\in\mathfrak T}$，其等价 $\omega\sim_O\omega'$ 就是 $R_O(\omega)=R_O(\omega')$。
+概念 $f$ 由这些完整响应唯一确定，当且仅当它在每个等价类常值；此时
+
+$$
+f=\bar f\circ q,\qquad q:\Omega\to\Omega/{\sim_O},
+\quad\bar f([\omega])=f(\omega). \tag{32.1}
+$$
+
+常值性恰给良定义，商映射满射给唯一性；反向由因子化立即得同响应同概念。
+这应用于“点还是边”“哪个关系稳定”“有效维数”等已经对齐的查询，不表示存在有限样本算法或可实现 CPTP 压缩。
+后来新增读口会细分旧纤维，必须重新检查 (32.1)，不能静默沿用旧等价。
+
+连续查询的有限精度结论由[预测波命题 28.2](AURIC_COMPATIBLE_PREDICTIVE_WAVES_AND_RELATIONAL_SPECTRA.md)直接供应。
+精确参数取该命题的紧度量世界空间为本节 $\Omega$、闭非空嵌套相容集为 $K_n$、查询为连续 $f:\Omega\to(Y,d_Y)$；则
+
+$$
+K_\infty=\bigcap_nK_n\ne\varnothing,\qquad
+\operatorname{diam}f(K_n)\downarrow\operatorname{diam}f(K_\infty). \tag{32.2}
+$$
+
+$Y$ 可为任意度量空间，不限实数。若菜单 $Q_0$ 本身非空紧度量，且 $F:Q_0\times\Omega\to Y$ 联合连续，供应还给
+
+$$
+\sup_{q\in Q_0}\operatorname{diam}F(q,K_n)
+\downarrow\sup_{q\in Q_0}\operatorname{diam}F(q,K_\infty). \tag{32.3}
+$$
+
+在每层紧集上选达到直径的点对（及菜单点），取收敛子列，嵌套闭性使极限落在交集；连续性给等式，包含关系给反向不等式。
+这个参数化应用保留了供应的完整 metric-valued 域，不将它重新列为一个新紧性定理。
+特别地，任意正查询精度最终可达，当且仅当查询在极限纤维上常值；不要求世界本身唯一。
+这仍是语义存在结论，没有提供可算停止层数或采样成本。
+
+对经典窗口，使用[静态接缝定义 33.1、命题 33.2、33.4–33.5](AURIC_FIB_ATOM_STATIC_SEAMS_TRANSITION_CIRCULATION_AND_FIBONACCI_TOGGLE_CYCLES.md)：
+参数是其独立五事件 $L(b,c)$、过滤 $e^{-sL}$、增益阈值 $\varepsilon$，不是 $\mathcal G$ 或 $\mathcal T$。
+$c>b$ 时恰保三几何可见方向的区间是 $\ell/(4c+b)<s\le\ell/\max(2c+b,5b)$；$c=2b$ 给同速 $5b$ 与高率 $9b$。
+对同一合法实对称 Laplacian 的 $\Delta\mathbf1=0$、$\|\Delta\|\le\eta<2b$，供应的应用结论给 $\ell/(9b-\eta)<s\le\ell/(5b+\eta)$ 和整体低簇投影差至多 $\eta/(4b-\eta)$。
+合法性仍须非对角非正、零行和及对称，不能由范数界推断；常数模态始终保留，簇内命名轴可以改变。
+$c=b$ 有阈值并列不能恰选三；$c<b$ 的三慢方向可含原隐藏模态而丢掉 $e_z$。
+这些是指定过滤的有限分辨窗口，不是三个方向永久不衰减：有限 $s$ 的精确增益都非零，无限过滤只剩常数，硬投影还有原命题 30.12 的负概率反例。
+输入须激发相应符号模态、概率实现须取均匀附近小扰动、离散许可参数须实际落入窗口，以上都由该 owner 保留。
+
+从 (32.2) 推出“有效维数连续”仍需谱隙或离阈值裕量：阈值等号处模态数会跳变。
+精确固定性、无限全称句、零振幅处的相位也未必连续，不能直接套用该命题。
+在有谱隙的紧参数子类上，谱投影连续；再与本节的查询宽度配合，才能控制同一几何概念的剩余变化。
+§30 的双世界则提供另一具体消费：原效果查询宽度全零，而 diamond 度量的后继查询宽度仍为 $4t\sqrt{1-t^2}$，所以原菜单不能完成该后继概念识别。
+
+**应用 32.3（带噪共同响应排除低维实现）。** 设 $m$ 个效果 $0\le F_i\le I$ 和 $n$ 个态 $\rho_j$ 确属同一个 $d$ 维复模型，$H_{ij}=\operatorname{Tr}(F_i\rho_j)$。
+在 $d^2$ 维实自伴空间取 Hilbert–Schmidt 正交基，将效果及态系数分别组成矩阵，得 $H=AB$，所以 $\operatorname{rank}_{\mathbb R}H\le d^2$。
+若 $|H_{{\rm obs},ij}-H_{ij}|\le\epsilon$ 对每项成立，则
+
+$$
+\|H_{\rm obs}-H\|_{\rm op}\le\|H_{\rm obs}-H\|_F\le\epsilon\sqrt{mn},\qquad
+\sigma_k(H_{\rm obs})>\epsilon\sqrt{mn}
+\ \Longrightarrow\ d\ge\lceil\sqrt k\rceil. \tag{32.4}
+$$
+
+最后一步用标准奇异值极小极大扰动界 $\sigma_k(H)\ge\sigma_k(H_{\rm obs})-\|H_{\rm obs}-H\|_{\rm op}>0$。
+严格大于不能换成大于等于；等号不能排除真实奇异值为零。共同实现是秩分解的必要前提，每项各找一个无关世界不产生该结论。
+
+给这个证书一个本应用的实际数学消费者：在 §29 的同一三码 $M_3$ 上，**若另供**下述九个准备和九个效果，则共同响应可排除任何二能级共同模型。
+取矩阵单位 $E_{jk}$、$1\le j,k\le3$，令 $H_1,\ldots,H_8$ 是六个 $E_{jk}+E_{kj}$、$-i(E_{jk}-E_{kj})$（$j<k$），以及 $\operatorname{diag}(1,-1,0)$、$\operatorname{diag}(1,1,-2)/\sqrt3$。
+它们迹零、$\operatorname{Tr}(H_jH_k)=2\delta_{jk}$、$\|H_j\|\le2/\sqrt3$。置 $a=1/8$，
+
+$$
+\rho_0=I_3/3,\quad \rho_j=I_3/3+aH_j,\qquad
+F_0=I_3,\quad F_i=I_3/2+H_i/4\quad(1\le i,j\le8). \tag{32.5}
+$$
+
+$1/3-a(2/\sqrt3)>0$ 保证准备为态，$\|H_i/4\|<1/2$ 保证效果合法；虚方向效果是额外相位资源，未声称原实菜单可达。
+直接迹配对得九乘九响应
+
+$$
+H=\begin{pmatrix}1&\mathbf1^{\mathsf T}\\
+\tfrac12\mathbf1&\tfrac12\mathbf1\mathbf1^{\mathsf T}+\beta I_8
+\end{pmatrix},\quad\beta=a/2=1/16,
+\quad H=L\operatorname{diag}(1,\beta I_8)U,
+$$
+
+$$
+L=\begin{pmatrix}1&0\\\tfrac12\mathbf1&I_8\end{pmatrix},\qquad
+U=\begin{pmatrix}1&\mathbf1^{\mathsf T}\\0&I_8\end{pmatrix}. \tag{32.6}
+$$
+
+减去首行一半即可见 $\det H=\beta^8\ne0$；因此真实秩九已排除 $d=2$ 的上界四。
+为使证书能承受明确误差，$\|L^{-1}\|\le1+\sqrt2$、$\|U^{-1}\|\le1+2\sqrt2$，因为各自偏离单位的单块范数为 $\sqrt2,2\sqrt2$。
+所以
+
+$$
+\sigma_9(H)\ge\gamma:=\frac{\beta}{(1+\sqrt2)(1+2\sqrt2)}>0.
+$$
+
+若同一响应的每项采集误差至多 $\epsilon<\gamma/18$，则 $\sigma_9(H_{\rm obs})\ge\gamma-9\epsilon>9\epsilon$，(32.4) 取 $k=9$ 给任何与该误差合同相容的共同模型 $d\ge3$。
+这是一项有限准备—效果接口的充分应用，不是已取得这些准备或层析的声明。
+它既不给隐藏总维上界，也不把三码的八参数等同于三根物理轴；增加直和隐藏环境仍与同一可见响应相容。∎
+
+## 33. 实际四视图与原 PDE 读口的精确消费
+
+**应用 33.1（准备相位上的四种表达）。** 取[原生叶边界定义 21.1、定理 21.2–21.3](RECURSIVE_RELATIONAL_OBSERVATION_NATIVE_LEAF_BOUNDARY_ACQUISITION.md)的实际安装、原有序材料树、单位邻接法则、源绑定、当前权利和已取得端点 onset 数据 $\sigma(t)$。
+真实执行 Reset 后 Add$(1,1)$，以该 Add 完成处为原点 $o$；从 $o$ 到所考察切面无增长、Reset 或非零 Add，场只由实际 Tick 更新，Reads、Holds 可穿插。
+取每个符合此条件的有限被动前缀，年龄 $k\ge2$ 是实际 Tick 链的长度，不是物理时长或全部事件计数。
+切面须实际收到连续相邻被动 epoch $k-1,k$ 的两次 Read$(1)$，且第二次后无 Tick；两次同 epoch 的重复读不满足条件。
+保留的预测器已同步。上述条件正是供应的 $\mathcal P_2$，不由两个数值反推出权限、准备或来源。
+
+参数 $t$ 是已建递归项，$A_t$ 是其单位邻接，$e=e_{\ell_1}$ 是真实单位源，$x_k=A_t^ke$，$m_r=e^{\mathsf T}A_t^re$。
+四个视图的对应为
+
+| 视图 | 在实际像上暴露的供应数据 |
+| --- | --- |
+| Space $\mathsf S$ | 无根单位材料树、有序端点、完整当前场，模保持端点序的同构 |
+| Time $\mathsf T$ | 实际带标签 LAB 出生/生命周期偏序 $E(t)$，及从 $o$ 起实际 $k$-Tick 链的序型 |
+| Boundary $\mathsf B$ | 已取得的 $\sigma(t)$ 与字面末端相邻样本 $(m_{k-1},m_k)$ |
+| Memory $\mathsf M$ | 在原绑定且具权利的入口保留的递归项、当前预测向量和端点序号表 |
+
+供应定理 21.2 的同一对象 $Q$ 就是实际达到的三元组集合 $\{(t,k,x_k):\text{上述条件成立}\}$；每个观察 $V_i$ 的恢复映射 $D_i$ 在其实际像上给同一个三元组。
+从 Space 用树恢复 $t$，以完整场恢复年龄；从 Time 用真实 LAB 偏序恢复 $t$，实际链长给年龄，准备与被动性再给 $A_t^ke$。
+从 Boundary 用 onset 恢复 $t$、用实际相邻样本对恢复 $k$；从 Memory 的已同步向量算同一前向样本对，再恢复 $k$。
+年龄逆的供应是定理 19.3：$m_{2n+1}=0,s_0=s_1=1,s_{n+1}>s_n$（$n\ge1,s_n=m_{2n}$），从而 $k\mapsto(m_{k-1},m_k)$ 在 $k\ge2$ 单射；$p_1=p_3=(1,0)$ 说明不能扩到所有正年龄。
+恢复不要求 $A_t$ 可逆或单位源循环，也不恢复偏序的某个指定线性扩张。
+
+每条转换均是供应证明中已经使用的 $C_{ji}=v_jD_i$，其中 $v_i:Q\to V_i(Q)$ 是实际视图编码，$D_iv_i=\operatorname{id}_Q$。
+因此 $C_{lj}C_{ji}=v_lD_jv_jD_i=v_lD_i=C_{li}$；在实际像上 $C_{ij}C_{ji}=\operatorname{id}$。
+这是供应的通路一致性在当前概念翻译中的直接消费，不新增一个泛用图册生产者。
+未找到解码不证明信息丢失；反之实际非单射视图才是针对 $Q$ 的有损商。
+同数值重算不执行新的 Read，也不补回丢失的原测量来源；计算链长也不重建旧物理事件。
+
+接续用同一供应定理 21.3，而不止当前数据相等。宏 $\mathrm{Tick};\mathrm{Read}(1);\mathrm{Hold}$ 给完整 Tick 确认、字面 $m_{k+1}$ 和 Hold 确认，实际场变为 $A_tx_k$，保留对变成 $(m_k,m_{k+1})$，四个后继都恢复 $(t,k+1,A_t^{k+1}e)$。
+在固定绑定与权利下，任一视图相等恰有供应 Assumption 10.2 的完整有限自适应接续核：同三元组给同回复及相应后继；异项可由 Reset 后 onset 测试分开，同项异年龄可由 Read、Tick、Read 的前向样本对分开。
+非零 Add、Reset 或成功增长破坏这里的准备相位，不能继续套用这个被动年龄逆；完整原动作预测器仍按供应定理 12.2 工作。
+这把“几何、时间、边界、记忆是同一预测对象的表达”限定到其真实域，并保留额外继续操作的合同。
+
+**应用 33.2（已供应无逃逸结论与概念稳定性的拓扑）。** 原 PDE 的对象不是五事件 Laplacian，也不是 §29 的量子通道。
+本卷定义 23.1、应用 23.2 已消费[全息附录原定理 105.1](FIB_ATOM_RECURSIVE_HOLOGRAPHIC_BOUNDARY_GEOMETRY_CONTINUATION_III_APPENDIX.md)；这里保持同一个供应范围：
+群 $G=\mathrm H^1\times\mathbb R$、原 Haar 测度 $d\mu$、单位元源 $e$、原 $-3$ 次 Green 权重 $\Gamma$、原自由算子 $L,D_w$ 及谱单位、固定 $a,\eta>0$。
+对每个 $\sigma_n>2\to2$，任意选实际达到的非零临界零态 $u_n$，只作振幅归一 $V[u_n]=\int\Gamma|u_n|^2d\mu=1$，不以试探态或坐标重标定替代。
+它们在原复形式域满足定义 23.1 的弱方程。令 $M_n=\|u_n\|_2^2>0$、$v_n=u_n/\sqrt{M_n}$，同一实际态有两个读口
+
+$$
+\mu_n=|v_n|^2d\mu,\qquad \nu_n=\Gamma|u_n|^2d\mu=M_n\Gamma\mu_n.
+$$
+
+原供应 103.3 给 $M_n\to0$，104.5 给移动球两读口分离，105.1 给
+
+$$
+\lim_{R\to\infty}\limsup_{n\to\infty}\mu_n\{\rho>R\}=0,\qquad
+m_\infty=0,\qquad \|v\|_2^2+m_e=1 \tag{33.1}
+$$
+
+其中最后的分解沿原定理 104.2 的同时子列，$\rho$ 是原齐次范数。
+同一弱态子列对每个固定有界、在 $e$ 邻域消失的可测截断 $\zeta$ 有 $\zeta v_n\to\zeta v$ 于原 $L^2$ 强拓扑。
+本应用不把 $m_\infty$ 重新列作未知，也不从无逃逸推出 $m_e$ 的数值、非零弱剖面、唯一形状或其可达性。
+单点紧化测度的弱收敛、固定中心谱单位的窄收敛、原态的 $L^2$ 或形式域收敛是不同查询拓扑；$u_n\to0$ 不自动给归一 $v_n$ 的概率结论。
+因此 (33.1) 是“稳定必须指定源、态与读口拓扑”的既有实例，不是由一般观察性推出物理三维或量子原则的桥梁。∎
+
+## 34. 完整关系重建的充分接口与开放方向
+
+**定义 34.1（本应用的共同重建对象）。** 取
+
+$$
+\mathfrak R=(\text{合法类型与组合},\{\ell_\omega\},
+\text{跨核与共同参考},\text{完整分支与标定读出},
+\text{有限观察者合同},K_h).
+$$
+
+作为本卷定义 12.1、20.2、24.1 的关系表示实例，其充分接口如下；这些条件不声称逻辑独立或最小。
+
+1. 每个输入输出类型、接续词、保留端口和记录的同一性已规定。局部复合可非交换，无全局钟不删去方向；不同表示须保相同类型与组合关系。
+2. 同一边界的全部复词矩满足 (26.1)，包括伴随、正性及每个生成元有限非负界；跨描述相干须有 (27.1) 的完整正块与共同比较，而不只是各自内部权重。
+3. 每个合法前缀有完整有限分支，包括失败、停止及隐藏 Kraus 下标，满足 (26.3)。分支提升保持所声称的全部交叉关系；(26.4)–(26.5) 给相容未归一柱权重，条件化只在正权重处进行。
+4. 每个声明为量子过程的有限矩阵边界映射，对每个有限复参考 $M_n$ 及所有联合正输入均正，即完全正；在输入 $M_d$ 时标准 Choi 准则检查 $n=d$ 足够。各分支迹不增、分支和保迹，混合来源相融；这些形式合法性不自动授予实验参考、控制或环境资源。
+5. 状态、效果和权重与实际概率采用同一归一及加权标定；全效果赋值的相容可加性按本卷定义 5.2、定理 5.3 给 Born 形式。$\|\pi(m)\Omega\|^2$ 的代数表达不以“未知”替代频率合同。
+6. 观察者的控制、精度、记忆、共同测试及模型类明确；应用 28.2 的词域完整、来源量词符合所用维数结论。修订 $K_h$ 或扩充菜单后，重新检查纤维、未来闭包和查询的连续性条件。
+
+**应用 34.2（表示、稳定与可实现性的条件综合）。** 在同一个满足定义 34.1 的模型中，(26.2) 构造有界循环表示，(26.3) 给分支等距，(26.5) 给平方权重与条件正泛函，有限矩阵及参考接口给 CP 仪器。
+这是本卷 §§6、7、12 的充分重建链在有向词输入上的应用；它不是从裸图或一般不确定性无条件推出全部量子理论。
+保全全部词矩与标记操作的最小表示由应用 26.2 唯一酉交织；仅保一个交换切面则只有 (25.1) 的经典限制，不能省略跨切面方向、参考或上下文条件。
+(27.1) 说明为什么概念候选的共同物理相干还需新关系和控制，(28.2) 则检验给定概念译码是否保全部许可未来回复。
+
+在其稳定子任务中，(28.3) 判菜单可见平衡；忠实不变密度下的 (28.4) 控制普通组合。
+缺少忠实性时，§29 的同一实际 $\mathcal G$ 由 Half-Gram 供应返回两标量代数，不能把普通效果 $J$ 当投影，也不能将 EB 极限当任意三码量子信息的保留。
+§30 的实际符号世界使全部原深度效果仍相同而后继关系有非零宽度；§32 的共同响应证书在另供准备和效果时给最低模型维数，既不提供隐藏总维上界也不宣称已经取得层析。
+静态接缝 §33 的独立经典窗口给“有效三方向”一个合法概率实例，保留谱隙、阈值、扰动合法性、输入激发和参数可达性的条件。
+§33 的四视图则在真实准备/被动域保同一个 $(t,k,x_k)$ 与许可接续；PDE 读口保留它自己的实际源、形式域与概率拓扑。
+所有应用的组合都只在各自供应的共同实现与接口上成立，不能将分别可实现的最优值拼成未经证明的同时实现。
+
+数学归属。§26 的新增承重点是有界生成元代数输入与完整条件泛函在该重建接口中的闭合桥梁；GNS 为已归属的中间机制。
+§27 使用 Watrous 的奇异块分解定位跨候选关系及实际相干资源的缺项，未将标准分解当作新定理。
+§§25、28、31 的上下文、乘法域、正交记录和 Bloch 事实分别为标准工具或本卷既有结果；此处保留其在关系概念任务中的条件及定量消费。
+§29 全固定系统、非普通乘法、返回乘法和含参考 EB 皆来自 Half-Gram 6.1；§30 的双世界、距离和风险来自预测波 29.1–29.3；§32 的紧度量查询来自该卷 28.2，四视图和 PDE 来自 §33 明列的供应。
+本应用的定量响应证书有 (32.5)–(32.6) 的具体共同响应消费者；经典窗口和低簇扰动推导在静态接缝 §33 归位。
+这些是已归属工具的条件应用与仓内综合推导，不因符号或组织改变而主张文献首创。
+
+本关系应用保留以下三个开放方向，它们不作为前面条件数学结果成立的附加前置。
+
+1. **原生相位读口。** 对固定安装、许可等待/读出/Stop、辅助和参考限制，能否给一条真实可执行操作链取得 §30 的 $E_y$，并量化误差与成本？它的数学合法性和双世界响应已给；重复原实菜单不能供应虚交叉项或独立相位参考。
+2. **原生窗口选择。** 原生粗粒化能否实际实现静态接缝 §33 的八棱 $L(b,c)$，取得 $c>b$ 的分离、是否进一步取得 $c=2b$ 的同速，并使允许的离散过滤参数落入严格/弱端点的窗口？已有窗口与合法扰动证明不决定这个实现桥梁。
+3. **概念翻译的未来闭合。** 对候选图、谱与记忆表达，能否在同一合法控制、记录、参考和来源合同中构造满足 (28.2) 的最小观察商及可取得的翻译？匹配当前人口不够；实际四视图只解决其声明域，响应秩证书只在共同模型和误差界下给下界。
+
+这三问分别要求新操作资源、原生过滤机制及保全未来关系的翻译，不由一般稳定、循环向量或三根可见轴替代。∎
+
+## 追加锚（本行以下为增补区）
