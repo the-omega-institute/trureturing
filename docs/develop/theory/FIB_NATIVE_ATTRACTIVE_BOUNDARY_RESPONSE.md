@@ -4767,9 +4767,13 @@ $$
 
 The logarithmic endpoints are Dirichlet interfaces. The
 localized original form domain maps into this natural homogeneous
-domain: the full identity (12.12), its form closure, and the
-angular core density above give precisely this inclusion.
-Only longitudinal interfaces have been introduced.
+domain. On a compact log interval, its cylinder $L^2$ norm is
+controlled by the original $L^2$ norm. Approximate first in the
+original smooth core, truncate the angular Fourier series, and
+apply the angular cutoffs above and longitudinal smoothing.
+Identity (12.12) controls convergence in the positive homogeneous
+form norm. Passing to the original form closure proves the
+inclusion. Only longitudinal interfaces have been introduced.
 
 The inner cutoff is supported in a fixed bounded gauge ball
 (for fixed $L,h,\ell_0$). Its Dirichlet original realization,
@@ -4867,10 +4871,9 @@ conditional deduction carries no literature-priority claim.
 
 Equation (18.3) answers the limit question (17.27) under the
 stated analytic hypotheses. It does not identify the single-trial
-supremum $S_{n,g}$ with $L_{n,g}$, evaluate a numerical coefficient,
-or imply an individual eigenvalue asymptotic. There is no
-uniformity in $n$ or $g$, no physical realization assertion and
-no kernel certification of these ordinary analytic statements.
+supremum $S_{n,g}$ with $L_{n,g}$ or evaluate a numerical
+coefficient. No individual eigenvalue law, uniformity in $n$ or
+$g$, or physical realization is asserted.
 A sharper, separately quantified remainder assertion is
 
 $$
