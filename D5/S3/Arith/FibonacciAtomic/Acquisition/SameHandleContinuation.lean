@@ -34,11 +34,12 @@ structure SourceService (Handle World : Type) where
 
 /-- Completion under retained authority and adequate provision. This is a
 service/material premise, not a consequence of finite code or residue size.
-World may include changing finite allocations; no fixed capacity is asserted. -/
+Only the actual fixed public modulus is required to be readable. World may
+include changing finite allocations; no fixed capacity is asserted. -/
 structure Completion {Handle World : Type}
-    (B : SourceService Handle World) (h : Handle) : Prop where
+    (B : SourceService Handle World) (h : Handle) (H : ℕ) : Prop where
   action : ∀ b x, B.lawful h x → ∃ y, B.action h b x y
-  read : ∀ H x, B.lawful h x → ∃ g y, B.read h H x g y
+  read : ∀ x, B.lawful h x → ∃ g y, B.read h H x g y
 
 /-- External service-work tariffs. They are not controller observations. -/
 structure Tariffs where
@@ -73,7 +74,7 @@ inductive ServiceRun {Handle World : Type} {S L : Type*} (B : SourceService Hand
       ServiceRun B h p P H s x (.reply g :: es) t y l (p.read (B.value h x) + n)
 
 private theorem lift_run {Handle World : Type} {S L : Type*} (B : SourceService Handle World)
-    (h : Handle) (complete : Completion B h) (p : Tariffs) {P : Controller S L} {H : ℕ}
+    (h : Handle) {H : ℕ} (complete : Completion B h H) (p : Tariffs) {P : Controller S L}
     {s t : S} {v u : ℕ × ℕ} {es : List Event} {l : L}
     (hr : Run P H s v es t u l) :
     ∀ x, B.lawful h x → B.value h x = v →
@@ -96,13 +97,71 @@ private theorem lift_run {Handle World : Type} {S L : Type*} (B : SourceService 
     simpa only [serviceBill, hv] using ServiceRun.action hs ha hy
   | @read s k v es t u l hs hr ih =>
     intro x hx hv
-    obtain ⟨g, x', ha⟩ := complete.read H x hx
+    obtain ⟨g, x', ha⟩ := complete.read x hx
     obtain ⟨he, hg, hl⟩ := B.read_effect h H x g x' hx ha
     have hg' : g = Nat.gcd (quantity v) H := by simpa only [hv] using hg
     obtain ⟨y, hy, hu, hl'⟩ := ih x' hl (he.trans hv)
     refine ⟨y, ?_, hu, hl'⟩
     rw [hg'] at ha
     simpa only [serviceBill, hv] using ServiceRun.read hs ha hy
+
+/-- All successful backend choices follow the same source-blind run, with
+its exact tape, result, arithmetic endpoint and pre-call tariff sum. -/
+private theorem service_agrees {Handle World : Type} {S L : Type*}
+    (B : SourceService Handle World) (h : Handle) (p : Tariffs)
+    {P : Controller S L} {H : ℕ} {s t : S} {v u : ℕ × ℕ}
+    {es : List Event} {l : L} (hr : Run P H s v es t u l) :
+    ∀ x, B.lawful h x → B.value h x = v →
+      ∀ {rs t' y l' n}, ServiceRun B h p P H s x rs t' y l' n →
+        rs = es ∧ t' = t ∧ B.value h y = u ∧ l' = l ∧
+          n = serviceBill p es v ∧ B.lawful h y := by
+  induction hr with
+  | halt hs =>
+    intro x hx hv rs t' y l' n actual
+    cases actual with
+    | halt ht =>
+      cases Instruction.halt.inj (hs.symm.trans ht)
+      exact ⟨rfl, rfl, hv, rfl, rfl, hx⟩
+    | compute ht _ => simp only [hs] at ht
+    | action ht _ _ => simp only [hs] at ht
+    | read ht _ _ => simp only [hs] at ht
+  | compute hs _ ih =>
+    intro x hx hv rs t' y l' n actual
+    cases actual with
+    | halt ht => simp only [hs] at ht
+    | compute ht tail =>
+      cases Instruction.compute.inj (hs.symm.trans ht)
+      obtain ⟨rfl, rfl, hu, rfl, hn, hl⟩ := ih x hx hv tail
+      exact ⟨rfl, rfl, hu, rfl, hn, hl⟩
+    | action ht _ _ => simp only [hs] at ht
+    | read ht _ _ => simp only [hs] at ht
+  | @action s s' v b es t u l hs _ ih =>
+    intro x hx hv rs t' y l' n actual
+    cases actual with
+    | halt ht => simp only [hs] at ht
+    | compute ht _ => simp only [hs] at ht
+    | action ht ha tail =>
+      obtain ⟨rfl, rfl⟩ := Instruction.action.inj (hs.symm.trans ht)
+      have he := B.action_effect _ _ _ _ hx ha
+      obtain ⟨rfl, rfl, hu, rfl, hn, hl⟩ :=
+        ih _ he.2 (he.1.trans (congrArg (step b) hv)) tail
+      refine ⟨rfl, rfl, hu, rfl, ?_, hl⟩
+      simp only [serviceBill, hv, hn]
+    | read ht _ _ => simp only [hs] at ht
+  | @read s k v es t u l hs _ ih =>
+    intro x hx hv rs t' y l' n actual
+    cases actual with
+    | halt ht => simp only [hs] at ht
+    | compute ht _ => simp only [hs] at ht
+    | action ht _ _ => simp only [hs] at ht
+    | @read _ k' _ x' g _ _ _ _ _ ht ha tail =>
+      cases Instruction.read.inj (hs.symm.trans ht)
+      obtain ⟨he, hg, hl⟩ := B.read_effect _ _ _ _ _ hx ha
+      rw [hv] at hg
+      subst g
+      obtain ⟨rfl, rfl, hu, rfl, hn, hl'⟩ := ih x' hl (he.trans hv) tail
+      refine ⟨rfl, rfl, hu, rfl, ?_, hl'⟩
+      simp only [serviceBill, hv, hn]
 
 private theorem empty_service {Handle World : Type} {S L : Type*} {B : SourceService Handle World}
     {h : Handle} {p : Tariffs} {P : Controller S L} {H : ℕ}
@@ -238,7 +297,7 @@ private theorem protocol_invariant {Handle World : Type} (B : SourceService Hand
     exact ⟨ht.1, ht.2.trans hi.2⟩
 
 private theorem continuation_exists {Handle World : Type} (B : SourceService Handle World)
-    (h : Handle) (complete : Completion B h) (H : ℕ) (w : List Bool)
+    (h : Handle) (H : ℕ) (complete : Completion B h H) (w : List Bool)
     (x : World) (e c : ZMod H × ZMod H) (hx : B.lawful h x) :
     ∃ y, ProtocolRun B h H ⟨x, e, c, .ready⟩ (continuationEvents w)
         ⟨y, e, scratch H c w, .ready⟩ ∧
@@ -286,69 +345,45 @@ private theorem continuation_endpoint {Handle World : Type}
               · simpa only [scratch_cons] using ht.1
               · simpa only [runWord, he.1] using ht.2.1
 
-/-- Full same-binding return, earned labels, every intermediate protocol cut,
-all finite continuations and the read optimum for the unrestricted continuous
-competitor class. Completion and lawful authority remain supplied premises.
-The external bill is exact; no polynomial local-work/space bound is asserted. -/
-theorem same_handle_return {Handle World : Type} (H : ℕ) (hH : 1 ≤ H)
-    (B : SourceService Handle World) (h : Handle) (complete : Completion B h)
-    (p : Tariffs) (x : World) (hx : B.lawful h x) :
-    let v := B.value h x
-    let w := PositiveClosingExecution.executionWord H v
-    let es := PositiveClosingExecution.executionEvents H v
-    let e := residueSource H v
-    ∃ t y,
-      ServiceRun B h p (PositiveClosingExecution.controller H) H
-        (PositiveClosingExecution.controller H).initial x es t y e (serviceBill p es v) ∧
-      B.value h y = runWord w v ∧ B.lawful h y ∧
-      paidReads es = (if H = 1 then 0 else 2 * costBound H) ∧
-      (H = 1 → y = x) ∧
-      (∀ (S : Type*) (P : Controller S (ZMod H × ZMod H)) (J : ℕ),
-        (∀ z : ℕ × ℕ, ∃ rs s u,
-          Run P H P.initial z rs s u (residueSource H z) ∧ paidReads rs ≤ J) →
-        paidReads es ≤ J) ∧
-      let start : Frame World H := ⟨y, e, e, .ready⟩
-      Aligned B h H start ∧
-      (∀ signals f, ProtocolRun B h H start signals f →
-        f.memory.entry = e ∧ Aligned B h H f ∧
-        (f.memory.phase = .ready →
-          f.memory.current = residueSource H (B.value h f.world) ∧
-          (∀ W, predict H f.memory.current W = terminalGcd H W (B.value h f.world)) ∧
-          ∀ V, ∃ z, ProtocolRun B h H f (continuationEvents V)
-              ⟨z, e, scratch H f.memory.current V, .ready⟩ ∧
-            B.value h z = runWord V (B.value h f.world) ∧
-            scratch H f.memory.current V = residueSource H (B.value h z) ∧
-            ∀ W, predict H (scratch H f.memory.current V) W =
-              terminalGcd H (V ++ W) (B.value h f.world))) ∧
-      (∀ V, ∃ z, ProtocolRun B h H start (continuationEvents V)
-          ⟨z, e, scratch H e V, .ready⟩ ∧
-        B.value h z = runWord V (B.value h y) ∧
-        scratch H e V = residueSource H (B.value h z) ∧
-        ∀ W, predict H (scratch H e V) W = terminalGcd H (V ++ W) v) ∧
-      (∀ V f, ProtocolRun B h H start (continuationEvents V) f →
-        f.memory.phase = .ready ∧ f.memory.current = scratch H e V ∧
-        B.value h f.world = runWord V (B.value h y) ∧
-        ∀ W, predict H f.memory.current W = terminalGcd H (V ++ W) v) ∧
-      (∀ W, predict H e W = terminalGcd H W (B.value h y) ∧
-        terminalGcd H W (B.value h y) = terminalGcd H W v) := by
-  dsimp only
-  let v := B.value h x
-  have hd := PositiveClosingExecution.positive_execution H hH v
-  obtain ⟨t, hr⟩ := hd.1
-  obtain ⟨y, hy, hv, hl⟩ := lift_run B h complete p hr x hx rfl
-  have he : residueSource H (B.value h y) = residueSource H v := hv ▸ hd.2.2.1
+/-- The complete installed continuation interface, including all actual
+prefixes, all reachable callable cuts and every finite future word. -/
+def Continued {Handle World : Type} (B : SourceService Handle World)
+    (h : Handle) (H : ℕ) (v : ℕ × ℕ) (e : ZMod H × ZMod H) (y : World) : Prop :=
+  let start : Frame World H := ⟨y, e, e, .ready⟩
+  Aligned B h H start ∧
+  (∀ signals f, ProtocolRun B h H start signals f →
+    f.memory.entry = e ∧ Aligned B h H f ∧
+    (f.memory.phase = .ready →
+      f.memory.current = residueSource H (B.value h f.world) ∧
+      (∀ W, predict H f.memory.current W = terminalGcd H W (B.value h f.world)) ∧
+      ∀ V, ∃ z, ProtocolRun B h H f (continuationEvents V)
+          ⟨z, e, scratch H f.memory.current V, .ready⟩ ∧
+        B.value h z = runWord V (B.value h f.world) ∧
+        scratch H f.memory.current V = residueSource H (B.value h z) ∧
+        ∀ W, predict H (scratch H f.memory.current V) W =
+          terminalGcd H (V ++ W) (B.value h f.world))) ∧
+  (∀ V, ∃ z, ProtocolRun B h H start (continuationEvents V)
+      ⟨z, e, scratch H e V, .ready⟩ ∧
+    B.value h z = runWord V (B.value h y) ∧
+    scratch H e V = residueSource H (B.value h z) ∧
+    ∀ W, predict H (scratch H e V) W = terminalGcd H (V ++ W) v) ∧
+  (∀ V f, ProtocolRun B h H start (continuationEvents V) f →
+    f.memory.phase = .ready ∧ f.memory.current = scratch H e V ∧
+    B.value h f.world = runWord V (B.value h y) ∧
+    ∀ W, predict H f.memory.current W = terminalGcd H (V ++ W) v) ∧
+  (∀ W, predict H e W = terminalGcd H W (B.value h y) ∧
+    terminalGcd H W (B.value h y) = terminalGcd H W v)
+
+private theorem continued_return {Handle World : Type} (H : ℕ) (hH : 1 ≤ H)
+    (B : SourceService Handle World) (h : Handle) (complete : Completion B h H)
+    (v : ℕ × ℕ) (y : World) (hl : B.lawful h y)
+    (he : residueSource H (B.value h y) = residueSource H v) :
+    Continued B h H v (residueSource H v) y := by
+  dsimp only [Continued]
   have aligned : Aligned B h H
       (⟨y, residueSource H v, residueSource H v, .ready⟩ : Frame World H) :=
     ⟨hl, he.symm⟩
-  have reads := hd.2.2.2.2.2.2.2.2.1
-  refine ⟨t, y, hy, hv, hl, reads, ?_, ?_, aligned, ?_, ?_, ?_, ?_⟩
-  · intro h1
-    have hes := (hd.2.2.2.2.2.2.2.2.2.2.2.2.2.2.2.2.2 h1).2
-    rw [hes] at hy
-    exact empty_service hy
-  · intro S P J successful
-    rw [reads]
-    exact ContinuousAcquisitionTransport.continuous_acquisition_lower_bound H hH P J successful
+  refine ⟨aligned, ?_, ?_, ?_, ?_⟩
   · intro signals f run
     have hi := protocol_invariant B h H hH run aligned
     refine ⟨hi.2, hi.1, ?_⟩
@@ -358,7 +393,7 @@ theorem same_handle_return {Handle World : Type} (H : ℕ) (hH : 1 ≤ H)
       simpa only [hf] using hc
     refine ⟨hc, fun W => hc ▸ predict_sound H hH W (B.value h f.world), ?_⟩
     intro V
-    obtain ⟨z, hz, hvz, hlz⟩ := continuation_exists B h complete H V f.world
+    obtain ⟨z, hz, hvz, hlz⟩ := continuation_exists B h H complete V f.world
       f.memory.entry f.memory.current hi.1.1
     have hfeta : (⟨f.world, f.memory.entry, f.memory.current, .ready⟩ : Frame World H) = f := by
       cases f with
@@ -374,7 +409,7 @@ theorem same_handle_return {Handle World : Type} (H : ℕ) (hH : 1 ≤ H)
     unfold terminalGcd
     rw [SourceCoordinates.PositiveProbeCompiler.run_append]
   · intro V
-    obtain ⟨z, hz, hvz, hlz⟩ := continuation_exists B h complete H V y
+    obtain ⟨z, hz, hvz, hlz⟩ := continuation_exists B h H complete V y
       (residueSource H v) (residueSource H v) hl
     have hi := protocol_invariant B h H hH hz aligned
     have hc : scratch H (residueSource H v) V = residueSource H (B.value h z) := hi.1.2
@@ -396,6 +431,60 @@ theorem same_handle_return {Handle World : Type} (H : ℕ) (hH : 1 ≤ H)
     have hp := predict_sound H hH W (B.value h y)
     rw [he] at hp
     exact ⟨hp, hp.symm.trans (predict_sound H hH W v)⟩
+
+
+/-- Full same-binding return, earned labels, every intermediate protocol cut,
+all finite continuations, every admitted completed backend outcome and the read
+optimum for the unrestricted continuous competitor class. Completion and lawful authority remain supplied premises.
+The external bill is exact; no polynomial local-work/space bound is asserted. -/
+theorem same_handle_return {Handle World : Type} (H : ℕ) (hH : 1 ≤ H)
+    (B : SourceService Handle World) (h : Handle) (complete : Completion B h H)
+    (p : Tariffs) (x : World) (hx : B.lawful h x) :
+    let v := B.value h x
+    let w := PositiveClosingExecution.executionWord H v
+    let es := PositiveClosingExecution.executionEvents H v
+    let e := residueSource H v
+    ∃ t y,
+      ServiceRun B h p (PositiveClosingExecution.controller H) H
+        (PositiveClosingExecution.controller H).initial x es t y e (serviceBill p es v) ∧
+      B.value h y = runWord w v ∧ B.lawful h y ∧
+      paidReads es = (if H = 1 then 0 else 2 * costBound H) ∧
+      (H = 1 → y = x) ∧
+      (∀ (S : Type*) (P : Controller S (ZMod H × ZMod H)) (J : ℕ),
+        (∀ z : ℕ × ℕ, ∃ rs s u,
+          Run P H P.initial z rs s u (residueSource H z) ∧ paidReads rs ≤ J) →
+        paidReads es ≤ J) ∧
+      Continued B h H v e y ∧
+      (∀ rs t' y' l' n',
+        ServiceRun B h p (PositiveClosingExecution.controller H) H
+          (PositiveClosingExecution.controller H).initial x rs t' y' l' n' →
+        rs = es ∧ t' = t ∧ l' = e ∧
+        B.value h y' = runWord w v ∧ B.lawful h y' ∧
+        n' = serviceBill p es v ∧ (H = 1 → y' = x) ∧ Continued B h H v e y') := by
+  dsimp only
+  let v := B.value h x
+  have hd := PositiveClosingExecution.positive_execution H hH v
+  obtain ⟨t, hr⟩ := hd.1
+  obtain ⟨y, hy, hv, hl⟩ := lift_run B h complete p hr x hx rfl
+  have he : residueSource H (B.value h y) = residueSource H v := hv ▸ hd.2.2.1
+  have reads := hd.2.2.2.2.2.2.2.2.1
+  refine ⟨t, y, hy, hv, hl, reads, ?_, ?_,
+    continued_return H hH B h complete v y hl he, ?_⟩
+  · intro h1
+    have hes := (hd.2.2.2.2.2.2.2.2.2.2.2.2.2.2.2.2.2 h1).2
+    rw [hes] at hy
+    exact empty_service hy
+  · intro S P J successful
+    rw [reads]
+    exact ContinuousAcquisitionTransport.continuous_acquisition_lower_bound H hH P J successful
+  · intro rs t' y' l' n' actual
+    obtain ⟨hes, ht, hu, he', hn, hl'⟩ := service_agrees B h p hr x hx rfl actual
+    refine ⟨hes, ht, he', hu, hl', hn, ?_,
+      continued_return H hH B h complete v y' hl' (hu ▸ hd.2.2.1)⟩
+    intro h1
+    have hempty := (hd.2.2.2.2.2.2.2.2.2.2.2.2.2.2.2.2.2 h1).2
+    rw [hes, hempty] at actual
+    exact empty_service actual
 
 #print axioms same_handle_return
 

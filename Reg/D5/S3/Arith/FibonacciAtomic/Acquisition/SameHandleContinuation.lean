@@ -47,7 +47,7 @@ def rejected : Realization signature :=
 abbrev arena : Arena where
   signature := signature
   Law R := ∀ {Handle World : Type} (H : ℕ) (_hH : 1 ≤ H)
-    (B : SourceService Handle World) (h : Handle) (_complete : Completion B h)
+    (B : SourceService Handle World) (h : Handle) (_complete : Completion B h H)
     (p : Tariffs) (x : World) (_hx : B.lawful h x) ,
     let v := B.value h x
     let w := PositiveClosingExecution.executionWord H v
@@ -63,55 +63,39 @@ abbrev arena : Arena where
         (∀ z : ℕ × ℕ, ∃ rs s u,
           Run P H P.initial z rs s u (residueSource H z) ∧ paidReads rs ≤ J) →
         paidReads es ≤ J) ∧
-      let start : Frame World H := ⟨y, e, e, .ready⟩
-      Aligned B h H start ∧
-      (∀ signals f, ProtocolRun B h H start signals f →
-        f.memory.entry = e ∧ Aligned B h H f ∧
-        (f.memory.phase = .ready →
-          f.memory.current = residueSource H (B.value h f.world) ∧
-          (∀ W, predict H f.memory.current W = terminalGcd H W (B.value h f.world)) ∧
-          ∀ V, ∃ z, ProtocolRun B h H f (continuationEvents V)
-              ⟨z, e, scratch H f.memory.current V, .ready⟩ ∧
-            B.value h z = runWord V (B.value h f.world) ∧
-            scratch H f.memory.current V = residueSource H (B.value h z) ∧
-            ∀ W, predict H (scratch H f.memory.current V) W =
-              terminalGcd H (V ++ W) (B.value h f.world))) ∧
-      (∀ V, ∃ z, ProtocolRun B h H start (continuationEvents V)
-          ⟨z, e, scratch H e V, .ready⟩ ∧
-        B.value h z = runWord V (B.value h y) ∧
-        scratch H e V = residueSource H (B.value h z) ∧
-        ∀ W, predict H (scratch H e V) W = terminalGcd H (V ++ W) v) ∧
-      (∀ V f, ProtocolRun B h H start (continuationEvents V) f →
-        f.memory.phase = .ready ∧ f.memory.current = scratch H e V ∧
-        B.value h f.world = runWord V (B.value h y) ∧
-        ∀ W, predict H f.memory.current W = terminalGcd H (V ++ W) v) ∧
-      (∀ W, predict H e W = terminalGcd H W (B.value h y) ∧
-        terminalGcd H W (B.value h y) = terminalGcd H W v)
+      Continued B h H v e y ∧
+      (∀ rs t' y' l' n',
+        ServiceRun B h p (PositiveClosingExecution.controller H) H
+          (PositiveClosingExecution.controller H).initial x rs t' y' l' n' →
+        rs = es ∧ t' = t ∧ l' = e ∧
+        B.value h y' = runWord w v ∧ B.lawful h y' ∧
+        n' = serviceBill p es v ∧ (H = 1 → y' = x) ∧ Continued B h H v e y')
 
-private def arithmeticService : SourceService Unit (ℕ × ℕ) where
+private def arithmeticService (H : ℕ) : SourceService Unit (ℕ × ℕ) where
   value _ x := x
   lawful _ _ := True
   action _ b x y := y = step b x
-  read _ H x g y := y = x ∧ g = Nat.gcd (quantity x) H
+  read _ K x g y := K = H ∧ y = x ∧ g = Nat.gcd (quantity x) H
   action_effect := by
     intro h b x y hx ha
     exact ⟨ha, trivial⟩
   read_effect := by
     intro h H x g y hx hr
-    exact ⟨hr.1, hr.2, trivial⟩
+    rcases hr with ⟨rfl, rfl, rfl⟩
+    exact ⟨rfl, rfl, trivial⟩
 
-private theorem arithmeticComplete : Completion arithmeticService () :=
+private theorem arithmeticComplete (H : ℕ) : Completion (arithmeticService H) () H :=
   ⟨fun b x _ => ⟨step b x, rfl⟩,
-    fun H x _ => ⟨Nat.gcd (quantity x) H, x, rfl, rfl⟩⟩
+    fun x _ => ⟨Nat.gcd (quantity x) H, x, rfl, rfl, rfl⟩⟩
 
 private def zeroTariffs : Tariffs := ⟨fun _ => 0, fun _ => 0, fun _ => 0⟩
 
 private theorem rejected_law : ¬ arena.{u}.Law rejected := by
   intro bad
-  obtain ⟨t, y, hr, hv, hl, reads, h1, competitor, aligned, cuts,
-    continuations, actualWords, future⟩ :=
-    @bad Unit (ℕ × ℕ) 2 (by decide) arithmeticService () arithmeticComplete
+  obtain ⟨t, y, hr, hv, hl, reads, h1, competitor, continued, allAcquisitions⟩ :=
+    @bad Unit (ℕ × ℕ) 2 (by decide) (arithmeticService 2) () (arithmeticComplete 2)
       zeroTariffs (1, 0) trivial
+  obtain ⟨aligned, cuts, continuations, actualWords, future⟩ := continued
   have hf := (future [true]).1.trans (future [true]).2
   have hp : predict 2 (0, 0) [true] = 2 := by decide +kernel
   have hq : terminalGcd 2 [true] (1, 0) = 1 := by decide +kernel
@@ -121,7 +105,7 @@ private theorem rejected_law : ¬ arena.{u}.Law rejected := by
 
 private theorem dependence : ObservationalDependence signature actual := by
   intro i
-  refine ⟨⟨Unit, ℕ × ℕ, 2, arithmeticService, (), zeroTariffs⟩, (0, 0), (1, 0), ?_⟩
+  refine ⟨⟨Unit, ℕ × ℕ, 2, arithmeticService 2, (), zeroTariffs⟩, (0, 0), (1, 0), ?_⟩
   intro h
   have he := congrArg Prod.fst h
   change (0 : ZMod 2) = 1 at he
@@ -173,5 +157,31 @@ def registration : Contract.Registration.{1,1,1,0,0,0,1,0,0,0,0,0} (@same_handle
     { name := `relaxedAutoImplicit, value := .bool false }]
 
 #print axioms sourceRegistration
+
+
+-- Transient exact fixed-H hypothesis/domain check; removed after compilation.
+example (H : ℕ) (hH : 1 ≤ H) (x : ℕ × ℕ) :
+    (∃ t y, ServiceRun (arithmeticService H) () zeroTariffs
+      (PositiveClosingExecution.controller H) H
+      (PositiveClosingExecution.controller H).initial x
+      (PositiveClosingExecution.executionEvents H x) t y (residueSource H x)
+      (serviceBill zeroTariffs (PositiveClosingExecution.executionEvents H x) x)) ∧
+    (∀ K, K ≠ H → ¬ Completion (arithmeticService H) () K) := by
+  constructor
+  · obtain ⟨t, y, hr, _⟩ :=
+      @same_handle_return.{u} Unit (ℕ × ℕ) H hH (arithmeticService H) ()
+        (arithmeticComplete H) zeroTariffs x trivial
+    exact ⟨t, y, hr⟩
+  · intro K hKH complete
+    obtain ⟨g, y, hr⟩ := complete.read x trivial
+    exact hKH hr.1
+
+run_cmd do
+  let allowed : Array Lean.Name := #[``propext, ``Classical.choice, ``Quot.sound]
+  for name in #[``registration] do
+    let axioms ← Lean.collectAxioms name
+    for axiomName in axioms do
+      unless allowed.contains axiomName do
+        throwError "nonstandard axiom {axiomName} in {name}"
 
 end Reg.D5.S3.Arith.FibonacciAtomic.Acquisition.SameHandleContinuation
