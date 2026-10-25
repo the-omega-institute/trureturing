@@ -37,10 +37,10 @@ private noncomputable def l2ToL1 : Lp ℝ 2 μ →L[ℝ] Lp ℝ 1 μ := by
   change (eLpNorm f 1 μ).toReal ≤ C.toReal * (eLpNorm f 2 μ).toReal
   have h : eLpNorm f 1 μ ≤ eLpNorm f 2 μ * C := by
     have h := eLpNorm_le_eLpNorm_mul_rpow_measure_univ
-      (show (1 : ℝ≥0∞) ≤ 2 by norm_num) f.aestronglyMeasurable
+      (show (1 : ℝ≥0∞) ≤ 2 by norm_num) (Lp.aestronglyMeasurable f)
     norm_num at h
     exact h
-  have hfin : eLpNorm f 2 μ * C ≠ ∞ := ENNReal.mul_ne_top f.eLpNorm_lt_top.ne hC
+  have hfin : eLpNorm f 2 μ * C ≠ ∞ := ENNReal.mul_ne_top (Lp.memLp f).eLpNorm_lt_top.ne hC
   simpa only [ENNReal.toReal_mul, mul_comm] using ENNReal.toReal_mono hfin h
 
 /-- Weak sequential compactness of a uniformly integrable real L1 sequence.
@@ -59,16 +59,14 @@ theorem exists_weak_subsequence (f : ℕ → Lp ℝ 1 μ)
     exact ⟨C, hC⟩
   let g (m n : ℕ) : Ω → ℝ := {x | ‖f n x‖₊ < C m}.indicator (f n)
   have hg (m n : ℕ) : AEStronglyMeasurable (g m n) μ :=
-    (f n).aestronglyMeasurable.indicator₀
-      (nullMeasurableSet_lt (f n).aestronglyMeasurable.nnnorm.aemeasurable aemeasurable_const)
+    (Lp.aestronglyMeasurable (f n)).indicator₀
+      (nullMeasurableSet_lt (Lp.aestronglyMeasurable (f n)).nnnorm.aemeasurable aemeasurable_const)
   have hgb (m n : ℕ) : ∀ᵐ x ∂μ, ‖g m n x‖ ≤ (C m : ℝ) := by
     filter_upwards with x
     by_cases hx : ‖f n x‖₊ < C m
-    · simp only [g, indicator_of_mem hx]
-      exact_mod_cast hx.le
-    · simp only [g, indicator_of_notMem hx, norm_zero]
-      exact (C m).coe_nonneg
-  have hgm (m n : ℕ) : MemLp (g m n) 2 μ := (hg m n).of_bound (C m) (hgb m n)
+    · simpa [g, hx] using (show ‖f n x‖ ≤ (C m : ℝ) by exact_mod_cast hx.le)
+    · simpa [g, hx] using (C m).coe_nonneg
+  have hgm (m n : ℕ) : MemLp (g m n) 2 μ := MemLp.of_bound (hg m n) (C m) (hgb m n)
   let t (m n : ℕ) : Lp ℝ 2 μ := (hgm m n).toLp (g m n)
   let R (m : ℕ) : ℝ := (μ univ ^ (1 / 2 : ℝ) * (C m : ℝ≥0∞)).toReal
   have hb (m n : ℕ) : ‖t m n‖ ≤ R m := by
@@ -76,7 +74,7 @@ theorem exists_weak_subsequence (f : ℕ → Lp ℝ 1 μ)
     apply ENNReal.toReal_mono (by finiteness)
     simpa [R] using eLpNorm_le_of_ae_bound (p := (2 : ℝ≥0∞)) (hg m n) (hgb m n)
   have herr (m n : ℕ) : ‖f n - l2ToL1 μ (t m n)‖ ≤ δ m := by
-    have heq : ((f n - l2ToL1 μ (t m n)) : Ω → ℝ) =ᵐ[μ]
+    have heq : ⇑(f n - l2ToL1 μ (t m n) : Lp ℝ 1 μ) =ᵐ[μ]
         {x | C m ≤ ‖f n x‖₊}.indicator (f n) := by
       filter_upwards [Lp.coeFn_sub (f n) (l2ToL1 μ (t m n)), (hgm m n).coeFn_toLp]
         with x hsub ht
