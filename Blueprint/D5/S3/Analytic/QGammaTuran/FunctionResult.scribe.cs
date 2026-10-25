@@ -14,13 +14,13 @@ internal sealed class FunctionResultDocument : IScribeDocumentDefinition
             Node("qseries", BindR("q mu x", All("g", new Formula.TypeArrow(N, R),
                 Eqn(QS(V("mu"), V("x"), V("g")), InfiniteSum("n", Term(V("mu"), V("x"), V("g")))))),
                 "Theorem 3, printed page 11 of arXiv:1702.03788v1: “For a real sequence {gₙ}ₙ≥₀ and fixed 0 < q < 1 define g(µ; x) = ∑ₙ₌₀∞ gₙxⁿ/Γq(µ + n). (16)” The reciprocal is the infinite-product rqgamma of Result. Equation (6), printed page 4: “The q-gamma function is defined by Γq(z) = (1 − q)^(1−z) (q; q)∞/(q^z; q)∞ (6) for |q| < 1 and all complex z such that q^(z+k) ≠ 1 for k ∈ N₀.” At nonpositive integers the reciprocal extension is zero.", DescribeRole.Definition, true),
-            Node("ConvergesAt", BindR("q mu alpha beta x", All("g", new Formula.TypeArrow(N, R),
-                Eqn(Call("ConvergesAt", V("q"), V("g"), V("mu"), V("alpha"), V("beta"), V("x")),
-                    Both(SummableTerm(Add(V("mu"), V("alpha"))), Both(SummableTerm(Add(V("mu"), V("beta"))),
-                        Both(SummableTerm(V("mu")), SummableTerm(Add(Add(V("mu"), V("alpha")), V("beta"))))))))),
-                "Convergence is required for each of the four series in the Turanian. This formulation also allows convergent boundary points. The example below lies strictly inside a common convergence disk. For the constant sequence, normalized terms are yⁿ(q^(s+n);q)∞ with y=x(1−q). The geometric comparison proves absolute convergence for every 0≤x<1/(1−q) and every s≥−1. The example has x=93/100 strictly inside this interval; hence it also refutes the source's assertion on the open disk, independently of any question about boundary convergence.", DescribeRole.Definition),
+            Node("radius", BindR("q mu", All("g", new Formula.TypeArrow(N, R),
+                Eqn(Radius(V("mu"), V("g")), Call("FormalMultilinearSeries.radius",
+                    Call("FormalMultilinearSeries.ofScalars", R, Lambda("n",
+                        Mul(new Formula.Apply(Parenthesized(V("g")), [V("n")]), RG(Add(V("mu"), V("n")))))))))),
+                "Rg is the radius of series (16) at the given µ, with coefficients gₙ rqgamma(q,µ+n). It takes values in the extended nonnegative reals. The standard scalar formal power series has coefficient norms |gₙ rqgamma(q,µ+n)|. Its Mathlib radius is the supremum of nonnegative radii at which these norms times the corresponding powers are bounded; equivalently it is the supremum of radii of absolute summability. Printed page 12: “Writing Rg > 0 for the radius of convergence in (16), we claim that the next conjecture is true.”", DescribeRole.Definition, true),
             Node("claim", Eqn(V("claim"), ClaimBody()),
-                "Theorem 3, printed page 11: “Suppose {gₙ}∞ₙ₌₀ is doubly positive. Then (16) has a positive radius of convergence Rg and the generalized Turánian ∆g(α, β; x) = g(µ + α; x)g(µ + β; x) − g(µ; x)g(µ + α + β; x) is positive for 0 < x < Rg if α ∈ N, β > 0 and µ ≥ max(−β, −1). If, in addition, α ≤ β + 1, then ∆g(α, β; x) has positive power series coefficients at all powers of x.” Conjecture 1, printed page 12: “All conclusions of Theorem 3 are valid for all α > 0, while conditions on other parameters remain intact. In particular, µ → g(µ; x) is log-concave for each fixed 0 < x < Rg.” The function clause has no α≤β+1 restriction. AdmissibleSeq is the nontrivial, nonnegative, log-concave sequence condition with no internal zeros; admissible_one supplies gₙ=1.", DescribeRole.Definition, true),
+                "Theorem 3, printed page 11: “Suppose {gₙ}∞ₙ₌₀ is doubly positive. Then (16) has a positive radius of convergence Rg and the generalized Turánian ∆g(α, β; x) = g(µ + α; x)g(µ + β; x) − g(µ; x)g(µ + α + β; x) is positive for 0 < x < Rg if α ∈ N, β > 0 and µ ≥ max(−β, −1). If, in addition, α ≤ β + 1, then ∆g(α, β; x) has positive power series coefficients at all powers of x.” Conjecture 1, printed page 12: “All conclusions of Theorem 3 are valid for all α > 0, while conditions on other parameters remain intact. In particular, µ → g(µ; x) is log-concave for each fixed 0 < x < Rg.” The function clause quantifies over 0<x<Rg, where radius(q,µ,g) is the radius of (16) at the given µ. It has no α≤β+1 restriction. AdmissibleSeq is the nontrivial, nonnegative, log-concave sequence condition with no internal zeros; admissible_one supplies gₙ=1.", DescribeRole.Definition, true),
             Node("hsum", BindR("q a y", Eqn(HS(V("a")), InfiniteSum("n", Hterm()))),
                 "The normalized series is expressed with a=q^s and y=x(1−q). This form includes the pole at s=0 without division by a vanishing q-number.", DescribeRole.Definition),
             Node("plower", BindR("q a", All("N", N, Eqn(Call("plower", V("q"), V("a"), V("N")),
@@ -48,7 +48,7 @@ internal sealed class FunctionResultDocument : IScribeDocumentDefinition
             Node("series_summable", QPositive(BindR("s x", Imp(Leq(Mul(Pow(V("q"), V("s")), V("q")), D(1)),
                 Imp(Leq(D(0), Mul(V("x"), Sub(D(1), V("q")))), Imp(Less(Mul(V("x"), Sub(D(1), V("q"))), D(1)),
                     Call("Summable", Lambda("n", Term(V("s"), V("x"), One())))))))),
-                "The normalized geometric comparison proves convergence of the original q-gamma series."),
+                "The normalized geometric comparison proves summability of the original real q-gamma series, hence absolute summability. It applies to all four shifts at the example."),
             Node("r", Eqn(V("r"), Rat(93, 100)), "The rational base.", DescribeRole.Definition),
             Node("q", Eqn(V("q"), Pow(V("r"), new Formula.Number(10))), "The q parameter.", DescribeRole.Definition),
             Node("y", Eqn(V("y"), Mul(V("r"), Sub(D(1), V("q")))), "The normalized series variable at x=r.", DescribeRole.Definition),
@@ -75,12 +75,12 @@ internal sealed class FunctionResultDocument : IScribeDocumentDefinition
                 "The first-factor product equation and hshift transfer positive-parameter estimates to s=−2/5 and s=−7/10. At s=0 the product's zero makes hsum(q,1,y)=y hsum(q,q,y)."),
             Node("witness_negative", Less(WitnessDelta(), D(0)),
                 "At gₙ=1, q=(93/100)^10 and x=93/100, the product of normalized values at −2/5 and zero is at most 0.151552931931. The product at −7/10 and 3/10 is at least 0.151590196222. Their common normalization denominator is positive, so the original Turanian is strictly negative."),
-            Node("witness_converges", Call("ConvergesAt", V("q"), One(), Rat(-7, 10), Rat(3, 10), Rat(7, 10), V("r")),
-                "All four series at the example converge absolutely by the geometric comparison."),
+            Node("witness_radius", Less(Call("ENNReal.ofReal", V("r")), Radius(Rat(-7, 10), One())),
+                "At µ=−7/10 and gₙ=1, series_summable gives absolute convergence at x=3/2, since (3/2)(1−q)<1. FormalMultilinearSeries.le_radius_of_summable gives 3/2≤Rg. As 93/100<3/2, the negative Turanian occurs strictly inside the disk of convergence of (16)."),
             Describe.Lean(DescribeId.Create("function-clause-refuted"), DeclarationHandle.Create(Prefix + "result"),
                 H("Refutation of the function clause"), StatementSource.FromAuthor(Disp(new Formula.Not(V("claim")))),
                 AssessedProvenance.FromRepo(Source), Blocks(Paragraph(Text(
-                    "Take gₙ=1, µ=−7/10, α=3/10, β=7/10, q=(93/100)^10 and x=93/100. The shifts satisfy µ=max(−β,−1). The strictly negative function value contradicts the universal strict positivity assertion. The integer-shift theorem and the separate log-concavity question are not conclusions of this refutation."))),
+                    "Take gₙ=1, µ=−7/10, α=3/10, β=7/10, q=(93/100)^10 and x=93/100. The shifts satisfy µ=max(−β,−1), and witness_radius proves 0<x<Rg for the radius of (16) at µ. The strictly negative function value contradicts the universal strict positivity assertion. The integer-shift theorem and the separate log-concavity question are not conclusions of this refutation."))),
                 DescribeRole.Theorem, openProblemResolutionClaim: new OpenProblemResolutionClaim(
                     ProblemSlugRef.Create("kalmykov-karp-2018-qgamma-turanian-function"), ResolutionKind.Refuted)))));
 
@@ -137,7 +137,7 @@ internal sealed class FunctionResultDocument : IScribeDocumentDefinition
     private static Formula PrefixProduct() => Finite("prod", "j", V("N"), Sub(D(1), Mul(V("a"), Pow(V("q"), V("j")))));
     private static Formula QS(Formula s, Formula x, Formula g) => Call("qseries", V("q"), s, x, g);
     private static Formula Term(Formula s, Formula x, Formula g) => Mul(Mul(new Formula.Apply(Parenthesized(g), [V("n")]), Pow(x, V("n"))), RG(Add(s, V("n"))));
-    private static Formula SummableTerm(Formula s) => Call("Summable", Lambda("n", Term(s, V("x"), V("g"))));
+    private static Formula Radius(Formula s, Formula g) => Call("radius", V("q"), s, g);
     private static Formula Interval(int lo, int hi, int d, Formula v) => Both(Leq(Rat(lo, d), v), Leq(v, Rat(hi, d)));
     private static Formula QPositive(Formula body) => All("q", R, Imp(Positive(V("q")), Imp(Less(V("q"), D(1)), body)));
     private static Formula QAY(bool shifted, Formula body) => BindR("q a y", Imp(Leq(D(0), V("q")), Imp(Less(V("q"), D(1)),
@@ -147,7 +147,7 @@ internal sealed class FunctionResultDocument : IScribeDocumentDefinition
     private static Formula ClaimBody() => QPositive(All("g", new Formula.TypeArrow(N, R),
         Imp(Call("D5.S3.Analytic.ReciprocalGammaTuran.Defs.AdmissibleSeq", V("g")), BindR("mu alpha beta", Imp(Positive(V("alpha")), Imp(Positive(V("beta")),
         Imp(Leq(Call("max", new Formula.Negate(V("beta")), new Formula.Negate(D(1))), V("mu")), All("x", R, Imp(Positive(V("x")),
-        Imp(Call("ConvergesAt", V("q"), V("g"), V("mu"), V("alpha"), V("beta"), V("x")), Positive(Sub(
+        Imp(Less(Call("ENNReal.ofReal", V("x")), Radius(V("mu"), V("g"))), Positive(Sub(
             Mul(QS(Add(V("mu"), V("alpha")), V("x"), V("g")), QS(Add(V("mu"), V("beta")), V("x"), V("g"))),
             Mul(QS(V("mu"), V("x"), V("g")), QS(Add(Add(V("mu"), V("alpha")), V("beta")), V("x"), V("g")))))))))))))));
 }

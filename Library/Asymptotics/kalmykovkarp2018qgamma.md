@@ -79,15 +79,22 @@ The bounded literature scope and computational evidence are stated in
 ## Function clause
 
 `FunctionResult.qseries` is the infinite sum in (16), and
-`FunctionResult.ConvergesAt` requires convergence at each of the four shifts.
+`FunctionResult.radius q µ g` is Mathlib's scalar-series radius of (16)
+at the given $\mu$, with coefficients $g_nR_q(\mu+n)$. The claim
+requires $0<x<R_g$ for this radius. On p. 12 the source specifies:
+
+> Writing Rg > 0 for the radius of convergence in (16), we claim that the next conjecture is true.
+
 For the unit sequence, put $y=x(1-q)$ and
 
 $$H(a,y)=\sum_{n\ge0}y^n(aq^n;q)_\infty.$$
 
 Then $g(s;x)=H(q^s,y)/((q;q)_\infty(1-q)^{1-s})$.
 For $s\ge-1$ the terms after index zero are nonnegative and bounded by
-a geometric sequence when $0\le y<1$. Thus the example is strictly
-inside a common convergence disk, not merely a point of boundary convergence.
+a geometric sequence when $0\le y<1$. At the example, absolute
+summability at $x=3/2$ proves $3/2\le R_g$, so
+$0<93/100<3/2\le R_g$. All four shifted series also converge
+absolutely at $x=93/100$.
 The function clause quoted from Theorem 3 above imposes no
 $\alpha\le\beta+1$ restriction. Its extension to positive real $\alpha$
 is false at $q=(93/100)^{10}$, $g_n=1$, $\mu=-7/10$,

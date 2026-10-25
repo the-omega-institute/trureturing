@@ -54,15 +54,22 @@ except for the reused reciprocal and sequence condition.
 | Reciprocal of (6) | `Result.rqgamma` | The same real infinite-product quotient as in the coefficient settlement. |
 | Doubly positive sequence | `D5.S3.Analytic.ReciprocalGammaTuran.Defs.AdmissibleSeq` | Nontriviality, nonnegativity, log-concavity and no internal zeros. |
 | Series (16) | `qseries` | The real infinite sum, in the printed order of factors. |
-| Four convergent series | `ConvergesAt` | Summability at each shift in the Turanian. |
-| Function clause | `claim` | All permitted parameters and every positive x with these four series summable. |
+| Radius of (16) at the given $\mu$ | `radius` | Mathlib scalar-series radius in $[0,\infty]$, for coefficients $g_n\,\texttt{rqgamma}(q,\mu+n)$. |
+| Function clause | `claim` | All permitted parameters and every $0<x<R_g$, with $R_g=\texttt{radius}\ q\ \mu\ g$. |
 | Refutation | `result` | Exactly $\neg\,\texttt{claim}$. |
 
-The summability condition can include convergent boundary points.
-At the example, the geometric comparison proves convergence throughout
-$0\le x<1/(1-q)$, so $x=93/100$ lies strictly inside a common disk of
-convergence. The refutation therefore also applies to the printed
-$0<x<R_g$ clause; it does not depend on including a convergent endpoint.
+The radius is taken for series (16) at the theorem's given $\mu$.
+As the source states on printed p. 12, “Writing Rg > 0 for the radius
+of convergence in (16), we claim that the next conjecture is true.”
+Mathlib's `FormalMultilinearSeries.ofScalars` represents its coefficient
+sequence, and `FormalMultilinearSeries.radius` supplies the standard
+extended nonnegative radius. For this scalar series the coefficient-map
+norm is exactly the absolute value of the coefficient.
+
+At the example, absolute summability at $x=3/2$ gives $3/2\le R_g$.
+Thus $0<93/100<3/2\le R_g$, so the refutation holds strictly inside
+the disk of convergence of (16). The same geometric comparison proves
+summability of all four shifted series at $x=93/100$.
 
 ## Motivation
 
@@ -169,7 +176,9 @@ not establish exhaustive coverage or priority.
 ### What the settlement shows
 
 - **PROVED** (`D5.S3.Analytic.QGammaTuran.FunctionResult.result`):
-  the function clause fails for the displayed constant-sequence example.
+  the function clause fails for the displayed constant-sequence example
+  at a point strictly inside the disk of convergence of (16):
+  $0<93/100<3/2\le R_g$.
   A permitted negative initial shift produces one negative reciprocal
   q-gamma term before a positive tail; the two shifted products do not
   preserve the conjectured order.

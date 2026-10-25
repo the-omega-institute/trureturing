@@ -16,23 +16,21 @@ $$\forall q \in \mathbb{R} ,\; \forall mu \in \mathbb{R} ,\; \forall x \in \math
 
 Theorem 3, printed page 11 of arXiv:1702.03788v1: “For a real sequence {gₙ}ₙ≥₀ and fixed 0 < q < 1 define g(µ; x) = ∑ₙ₌₀∞ gₙxⁿ/Γq(µ + n). (16)” The reciprocal is the infinite-product rqgamma of Result. Equation (6), printed page 4: “The q-gamma function is defined by Γq(z) = (1 − q)^(1−z) (q; q)∞/(q^z; q)∞ (6) for |q| < 1 and all complex z such that q^(z+k) ≠ 1 for k ∈ N₀.” At nonpositive integers the reciprocal extension is zero.
 
-**Definition 1.2 (ConvergesAt).**
+**Definition 1.2 (radius).**
 
-$$\forall q \in \mathbb{R} ,\; \forall mu \in \mathbb{R} ,\; \forall alpha \in \mathbb{R} ,\; \forall beta \in \mathbb{R} ,\; \forall x \in \mathbb{R} ,\; \forall g \in \mathbb{N}  \to \mathbb{R} ,\; \operatorname{ConvergesAt} \left(q, g, mu, alpha, beta, x\right) = \left((\operatorname{Summable} \left((n: \mathbb{N} ) \mapsto ((g)\left(n\right) \cdot (x)^{n} \cdot \operatorname{Result.rqgamma} \left(q, mu + alpha + n\right))\right)) \land ((\operatorname{Summable} \left((n: \mathbb{N} ) \mapsto ((g)\left(n\right) \cdot (x)^{n} \cdot \operatorname{Result.rqgamma} \left(q, mu + beta + n\right))\right)) \land ((\operatorname{Summable} \left((n: \mathbb{N} ) \mapsto ((g)\left(n\right) \cdot (x)^{n} \cdot \operatorname{Result.rqgamma} \left(q, mu + n\right))\right)) \land (\operatorname{Summable} \left((n: \mathbb{N} ) \mapsto ((g)\left(n\right) \cdot (x)^{n} \cdot \operatorname{Result.rqgamma} \left(q, mu + alpha + beta + n\right))\right))))\right)$$
+$$\forall q \in \mathbb{R} ,\; \forall mu \in \mathbb{R} ,\; \forall g \in \mathbb{N}  \to \mathbb{R} ,\; \operatorname{radius} \left(q, mu, g\right) = \operatorname{FormalMultilinearSeries.radius} \left(\operatorname{FormalMultilinearSeries.ofScalars} \left(\mathbb{R} , (n: \mathbb{N} ) \mapsto ((g)\left(n\right) \cdot \operatorname{Result.rqgamma} \left(q, mu + n\right))\right)\right)$$
 
-*Formalization.* `D5/S3/Analytic/QGammaTuran/FunctionResult.ConvergesAt` (`✓ std3`).
+*Formalization.* `D5/S3/Analytic/QGammaTuran/FunctionResult.radius` (`✓ std3`).
 
-*Source.* Repository-derived.
-
-*Acknowledgement.* S. I. Kalmykov and D. B. Karp (2018). *Inequalities for series in q-shifted factorials and q-gamma functions*. DOI: [10.1016/j.jmaa.2017.11.041](https://doi.org/10.1016/j.jmaa.2017.11.041). URL: <https://arxiv.org/abs/1702.03788>.
+*Citation.* S. I. Kalmykov and D. B. Karp (2018). *Inequalities for series in q-shifted factorials and q-gamma functions*. DOI: [10.1016/j.jmaa.2017.11.041](https://doi.org/10.1016/j.jmaa.2017.11.041). URL: <https://arxiv.org/abs/1702.03788>.
 
 *Commentary.*
 
-Convergence is required for each of the four series in the Turanian. This formulation also allows convergent boundary points. The example below lies strictly inside a common convergence disk. For the constant sequence, normalized terms are yⁿ(q^(s+n);q)∞ with y=x(1−q). The geometric comparison proves absolute convergence for every 0≤x<1/(1−q) and every s≥−1. The example has x=93/100 strictly inside this interval; hence it also refutes the source's assertion on the open disk, independently of any question about boundary convergence.
+Rg is the radius of series (16) at the given µ, with coefficients gₙ rqgamma(q,µ+n). It takes values in the extended nonnegative reals. The standard scalar formal power series has coefficient norms |gₙ rqgamma(q,µ+n)|. Its Mathlib radius is the supremum of nonnegative radii at which these norms times the corresponding powers are bounded; equivalently it is the supremum of radii of absolute summability. Printed page 12: “Writing Rg > 0 for the radius of convergence in (16), we claim that the next conjecture is true.”
 
 **Definition 1.3 (claim).**
 
-$$claim = \left(\forall q \in \mathbb{R} ,\; (0 < q) \Rightarrow ((q < 1) \Rightarrow (\forall g \in \mathbb{N}  \to \mathbb{R} ,\; (\operatorname{D5.S3.Analytic.ReciprocalGammaTuran.Defs.AdmissibleSeq} \left(g\right)) \Rightarrow (\forall mu \in \mathbb{R} ,\; \forall alpha \in \mathbb{R} ,\; \forall beta \in \mathbb{R} ,\; (0 < alpha) \Rightarrow ((0 < beta) \Rightarrow ((\operatorname{max} \left(-beta, -1\right) \le mu) \Rightarrow (\forall x \in \mathbb{R} ,\; (0 < x) \Rightarrow ((\operatorname{ConvergesAt} \left(q, g, mu, alpha, beta, x\right)) \Rightarrow (0 < \operatorname{qseries} \left(q, mu + alpha, x, g\right) \cdot \operatorname{qseries} \left(q, mu + beta, x, g\right) - \operatorname{qseries} \left(q, mu, x, g\right) \cdot \operatorname{qseries} \left(q, mu + alpha + beta, x, g\right)))))))))\right)$$
+$$claim = \left(\forall q \in \mathbb{R} ,\; (0 < q) \Rightarrow ((q < 1) \Rightarrow (\forall g \in \mathbb{N}  \to \mathbb{R} ,\; (\operatorname{D5.S3.Analytic.ReciprocalGammaTuran.Defs.AdmissibleSeq} \left(g\right)) \Rightarrow (\forall mu \in \mathbb{R} ,\; \forall alpha \in \mathbb{R} ,\; \forall beta \in \mathbb{R} ,\; (0 < alpha) \Rightarrow ((0 < beta) \Rightarrow ((\operatorname{max} \left(-beta, -1\right) \le mu) \Rightarrow (\forall x \in \mathbb{R} ,\; (0 < x) \Rightarrow ((\operatorname{ENNReal.ofReal} \left(x\right) < \operatorname{radius} \left(q, mu, g\right)) \Rightarrow (0 < \operatorname{qseries} \left(q, mu + alpha, x, g\right) \cdot \operatorname{qseries} \left(q, mu + beta, x, g\right) - \operatorname{qseries} \left(q, mu, x, g\right) \cdot \operatorname{qseries} \left(q, mu + alpha + beta, x, g\right)))))))))\right)$$
 
 *Formalization.* `D5/S3/Analytic/QGammaTuran/FunctionResult.claim` (`✓ std3`).
 
@@ -40,7 +38,7 @@ $$claim = \left(\forall q \in \mathbb{R} ,\; (0 < q) \Rightarrow ((q < 1) \Right
 
 *Commentary.*
 
-Theorem 3, printed page 11: “Suppose {gₙ}∞ₙ₌₀ is doubly positive. Then (16) has a positive radius of convergence Rg and the generalized Turánian ∆g(α, β; x) = g(µ + α; x)g(µ + β; x) − g(µ; x)g(µ + α + β; x) is positive for 0 < x < Rg if α ∈ N, β > 0 and µ ≥ max(−β, −1). If, in addition, α ≤ β + 1, then ∆g(α, β; x) has positive power series coefficients at all powers of x.” Conjecture 1, printed page 12: “All conclusions of Theorem 3 are valid for all α > 0, while conditions on other parameters remain intact. In particular, µ → g(µ; x) is log-concave for each fixed 0 < x < Rg.” The function clause has no α≤β+1 restriction. AdmissibleSeq is the nontrivial, nonnegative, log-concave sequence condition with no internal zeros; admissible_one supplies gₙ=1.
+Theorem 3, printed page 11: “Suppose {gₙ}∞ₙ₌₀ is doubly positive. Then (16) has a positive radius of convergence Rg and the generalized Turánian ∆g(α, β; x) = g(µ + α; x)g(µ + β; x) − g(µ; x)g(µ + α + β; x) is positive for 0 < x < Rg if α ∈ N, β > 0 and µ ≥ max(−β, −1). If, in addition, α ≤ β + 1, then ∆g(α, β; x) has positive power series coefficients at all powers of x.” Conjecture 1, printed page 12: “All conclusions of Theorem 3 are valid for all α > 0, while conditions on other parameters remain intact. In particular, µ → g(µ; x) is log-concave for each fixed 0 < x < Rg.” The function clause quantifies over 0<x<Rg, where radius(q,µ,g) is the radius of (16) at the given µ. It has no α≤β+1 restriction. AdmissibleSeq is the nontrivial, nonnegative, log-concave sequence condition with no internal zeros; admissible_one supplies gₙ=1.
 
 **Definition 1.4 (hsum).**
 
@@ -180,7 +178,7 @@ $$\forall q \in \mathbb{R} ,\; (0 < q) \Rightarrow ((q < 1) \Rightarrow (\forall
 
 *Commentary.*
 
-The normalized geometric comparison proves convergence of the original q-gamma series.
+The normalized geometric comparison proves summability of the original real q-gamma series, hence absolute summability. It applies to all four shifts at the example.
 
 **Definition 1.14 (r).**
 
@@ -406,11 +404,11 @@ $$\operatorname{qseries} \left(q, \frac{-2}{5}, r, (n: \mathbb{N} ) \mapsto (1)\
 
 At gₙ=1, q=(93/100)^10 and x=93/100, the product of normalized values at −2/5 and zero is at most 0.151552931931. The product at −7/10 and 3/10 is at least 0.151590196222. Their common normalization denominator is positive, so the original Turanian is strictly negative.
 
-**Theorem 1.30 (witness converges).**
+**Theorem 1.30 (witness radius).**
 
-$$\operatorname{ConvergesAt} \left(q, (n: \mathbb{N} ) \mapsto (1), \frac{-7}{10}, \frac{3}{10}, \frac{7}{10}, r\right)$$
+$$\operatorname{ENNReal.ofReal} \left(r\right) < \operatorname{radius} \left(q, \frac{-7}{10}, (n: \mathbb{N} ) \mapsto (1)\right)$$
 
-*Proof.* Machine-checked in Lean as `D5/S3/Analytic/QGammaTuran/FunctionResult.witness_converges` (`✓ std3`). ∎
+*Proof.* Machine-checked in Lean as `D5/S3/Analytic/QGammaTuran/FunctionResult.witness_radius` (`✓ std3`). ∎
 
 *Source.* Repository-derived.
 
@@ -418,7 +416,7 @@ $$\operatorname{ConvergesAt} \left(q, (n: \mathbb{N} ) \mapsto (1), \frac{-7}{10
 
 *Commentary.*
 
-All four series at the example converge absolutely by the geometric comparison.
+At µ=−7/10 and gₙ=1, series_summable gives absolute convergence at x=3/2, since (3/2)(1−q)<1. FormalMultilinearSeries.le_radius_of_summable gives 3/2≤Rg. As 93/100<3/2, the negative Turanian occurs strictly inside the disk of convergence of (16).
 
 **Theorem 1.31 (Refutation of the function clause).**
 
@@ -436,11 +434,10 @@ $$\neg claim$$
 
 *Commentary.*
 
-Take gₙ=1, µ=−7/10, α=3/10, β=7/10, q=(93/100)^10 and x=93/100. The shifts satisfy µ=max(−β,−1). The strictly negative function value contradicts the universal strict positivity assertion. The integer-shift theorem and the separate log-concavity question are not conclusions of this refutation.
+Take gₙ=1, µ=−7/10, α=3/10, β=7/10, q=(93/100)^10 and x=93/100. The shifts satisfy µ=max(−β,−1), and witness_radius proves 0<x<Rg for the radius of (16) at µ. The strictly negative function value contradicts the universal strict positivity assertion. The integer-shift theorem and the separate log-concavity question are not conclusions of this refutation.
 
 ## References
 
-- Truth anchor: `D5/S3/Analytic/QGammaTuran/FunctionResult.ConvergesAt`
 - Truth anchor: `D5/S3/Analytic/QGammaTuran/FunctionResult.claim`
 - Truth anchor: `D5/S3/Analytic/QGammaTuran/FunctionResult.hbounds`
 - Truth anchor: `D5/S3/Analytic/QGammaTuran/FunctionResult.hshift`
@@ -462,12 +459,13 @@ Take gₙ=1, µ=−7/10, α=3/10, β=7/10, q=(93/100)^10 and x=93/100. The shift
 - Truth anchor: `D5/S3/Analytic/QGammaTuran/FunctionResult.qpower`
 - Truth anchor: `D5/S3/Analytic/QGammaTuran/FunctionResult.qseries`
 - Truth anchor: `D5/S3/Analytic/QGammaTuran/FunctionResult.r`
+- Truth anchor: `D5/S3/Analytic/QGammaTuran/FunctionResult.radius`
 - Truth anchor: `D5/S3/Analytic/QGammaTuran/FunctionResult.result`
 - Truth anchor: `D5/S3/Analytic/QGammaTuran/FunctionResult.series_eq`
 - Truth anchor: `D5/S3/Analytic/QGammaTuran/FunctionResult.series_product`
 - Truth anchor: `D5/S3/Analytic/QGammaTuran/FunctionResult.series_summable`
-- Truth anchor: `D5/S3/Analytic/QGammaTuran/FunctionResult.witness_converges`
 - Truth anchor: `D5/S3/Analytic/QGammaTuran/FunctionResult.witness_negative`
+- Truth anchor: `D5/S3/Analytic/QGammaTuran/FunctionResult.witness_radius`
 - Truth anchor: `D5/S3/Analytic/QGammaTuran/FunctionResult.y`
 - Truth anchor: `D5/S3/Analytic/QGammaTuran/FunctionResult.ylt`
 - Truth anchor: `D5/S3/Analytic/QGammaTuran/FunctionResult.ypos`

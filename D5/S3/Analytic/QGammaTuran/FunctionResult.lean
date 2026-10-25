@@ -11,40 +11,57 @@ admission_basis: open-problem-resolution (Conjecture 1, function clause; Refuted
 All declarations in this module have proof_shape: bind-only after expansion
 of same-delivery helpers; escape_witness: none. The series estimates instantiate
 Mathlib's geometric domination, sum/tsum comparison and finite-prefix splitting.
-The rational certificates use norm_num, and the final comparison uses linarith.
+The radius estimate applies Mathlib's le_radius_of_summable to the absolute
+geometric majorant. The rational certificates use norm_num, and the final
+comparison uses linarith.
 The settling result supplies the external-open-problem-resolution basis.
-Per-declaration consumers:
-* hsum: hshift, hbounds, series_eq, series_product, negative_bounds.
-* hsummable: hshift, hbounds, hsummable_any.
-* hshift: negative_bounds.
-* plower, pupper: hbounds.
-* hbounds: numH3, numH6, numH10.
-* qseries: claim, series_eq, series_product, witness_negative, result.
-* ConvergesAt: claim, witness_converges.
+Per-declaration consumers (from elaborated declaration values):
 * claim: result.
-* normalizedTerm: series_eq, series_summable.
-* series_eq: series_product.
+* hbounds: numH10, numH3, numH6.
+* hshift: negative_bounds.
+* hsum: hbounds, hshift, negative_bounds, numH10, numH3, numH6, series_eq, series_product,
+  witness_negative.
+* hsummable: hbounds, hshift, hsummable_any.
 * hsummable_any: series_summable.
-* series_summable: witness_converges.
-* r: q, y, qpower, certificates and witnesses.
-* q: y, qpos, qlt, certificates and witnesses.
-* y: ypos, ylt, certificates and negative_bounds.
-* qpos, qlt: certificates, negative_bounds, witness_negative, witness_converges.
-* ypos, ylt: certificates, negative_bounds, witness_converges.
+* negative_bounds: witness_negative.
+* normalizedTerm: series_eq, series_summable.
+* numH10: negative_bounds.
 * numH3: negative_bounds, witness_negative.
-* numH6, numH10, numP3, numP6: negative_bounds.
+* numH6: negative_bounds.
+* numP3: negative_bounds.
+* numP6: negative_bounds.
+* plower: hbounds, numH10, numH3, numH6.
+* pupper: hbounds, numH10, numH3, numH6.
+* q: negative_bounds, numH10, numH3, numH6, numP3, numP6, qlt, qpos, qpower, result,
+  witness_negative, witness_radius, y, ylt, ypos.
+* qlt: negative_bounds, numH10, numH3, numH6, numP3, numP6, result, witness_negative,
+  witness_radius.
+* qpos: negative_bounds, numH10, numH3, numH6, numP3, numP6, result, witness_negative,
+  witness_radius.
 * qpower: witness_negative.
-* series_product, negative_bounds: witness_negative.
-* witness_negative, witness_converges: result.
+* qseries: claim, result, series_eq, series_product, witness_negative.
+* r: negative_bounds, numH10, numH3, numH6, numP3, numP6, q, qlt, qpos, qpower, result,
+  witness_negative, witness_radius, y, ylt, ypos.
+* radius: claim, witness_radius.
 * result: settlement of the function clause.
+* series_eq: series_product.
+* series_product: witness_negative.
+* series_summable: witness_radius.
+* witness_negative: result.
+* witness_radius: result.
+* y: negative_bounds, numH10, numH3, numH6, witness_negative, ylt, ypos.
+* ylt: negative_bounds, numH10, numH3, numH6.
+* ypos: negative_bounds, numH10, numH3, numH6.
 Same-delivery helpers from Result (not frozen prerequisites): rqgamma,
 qprod, rqgamma_eq, qprod_step, qprod_nonneg, qprod_le_one, qprod_bounds,
 qprod_pos and their product-convergence prerequisites.
 Direct frozen D5 dependencies after same-delivery expansion:
-* claim and result: D5/S3/Analytic/ReciprocalGammaTuran/Defs.AdmissibleSeq,
-  declaration statement_id sha256:abfc032d4781455ce9be9b5d79eeec0ec7d429144bd78d17dfed678546f63347.
-* result also: D5/S3/Analytic/ReciprocalGammaTuran/Defs.admissible_one,
-  declaration statement_id sha256:542b2ef036086b557abca79ec9fd79a7a609bad51893576abe9466237f76c069.
+* claim and result: module GID D5/S3/Analytic/ReciprocalGammaTuran/Defs;
+  declaration D5.S3.Analytic.ReciprocalGammaTuran.Defs.AdmissibleSeq;
+  DECLARATION statement_id sha256:abfc032d4781455ce9be9b5d79eeec0ec7d429144bd78d17dfed678546f63347.
+* result also: module GID D5/S3/Analytic/ReciprocalGammaTuran/Defs;
+  declaration D5.S3.Analytic.ReciprocalGammaTuran.Defs.admissible_one;
+  DECLARATION statement_id sha256:542b2ef036086b557abca79ec9fd79a7a609bad51893576abe9466237f76c069.
 * Every other declaration: none.
 -/
 
@@ -117,15 +134,12 @@ private lemma hbounds {q a y : ℝ} (hq0 : 0 ≤ q) (hq1 : q < 1)
       mul_le_mul_of_nonneg_left (hp n).2 (pow_nonneg hy0 n)) htail
 open D5.S3.Analytic.ReciprocalGammaTuran.Defs
 def qseries (q μ x : ℝ) (g : ℕ → ℝ) : ℝ := ∑' n : ℕ, g n*x^n*rqgamma q (μ+n)
-def ConvergesAt (q : ℝ) (g : ℕ → ℝ) (μ α β x : ℝ) : Prop :=
-  Summable (fun n : ℕ => g n*x^n*rqgamma q (μ+α+n)) ∧
-  Summable (fun n : ℕ => g n*x^n*rqgamma q (μ+β+n)) ∧
-  Summable (fun n : ℕ => g n*x^n*rqgamma q (μ+n)) ∧
-  Summable (fun n : ℕ => g n*x^n*rqgamma q (μ+α+β+n))
+def radius (q μ : ℝ) (g : ℕ → ℝ) : ENNReal :=
+  (FormalMultilinearSeries.ofScalars ℝ (fun n => g n * rqgamma q (μ+n))).radius
 def claim : Prop :=
   ∀ q : ℝ, 0 < q → q < 1 → ∀ g : ℕ → ℝ, AdmissibleSeq g →
   ∀ μ α β : ℝ, 0 < α → 0 < β → max (-β) (-1) ≤ μ →
-  ∀ x : ℝ, 0 < x → ConvergesAt q g μ α β x →
+  ∀ x : ℝ, 0 < x → ENNReal.ofReal x < radius q μ g →
   0 < qseries q (μ+α) x g * qseries q (μ+β) x g -
     qseries q μ x g * qseries q (μ+α+β) x g
 private lemma normalizedTerm {q : ℝ} (hq0 : 0 < q) (hq1 : q < 1)
@@ -278,25 +292,23 @@ private lemma witness_negative :
       (Real.rpow_pos_of_pos (sub_pos.mpr qlt) _)
   rw [← sub_div, div_neg_iff]
   exact Or.inr ⟨by linarith, hden⟩
-private lemma witness_converges : ConvergesAt q (fun _ => 1) (-7/10) (3/10) (7/10) r := by
-  have hs (s : ℝ) (hs : 0 ≤ s+1) :
-      Summable (fun n : ℕ => (1:ℝ)*r^n*rqgamma q (s+n)) := by
-    apply series_summable qpos qlt ?_ ypos ylt
+private lemma witness_radius : ENNReal.ofReal r < radius q (-7/10) (fun _ => 1) := by
+  have hs : Summable (fun n : ℕ => (1:ℝ)*(3/2)^n*rqgamma q (-7/10+n)) := by
+    apply series_summable qpos qlt ?_ (by norm_num [q,r]) (by norm_num [q,r])
     rw [← Real.rpow_add_one (ne_of_gt qpos)]
-    exact Real.rpow_le_one qpos.le qlt.le hs
-  unfold ConvergesAt
-  constructor
-  · exact hs _ (by norm_num)
-  constructor
-  · exact hs _ (by norm_num)
-  constructor
-  · exact hs _ (by norm_num)
-  · exact hs _ (by norm_num)
+    exact Real.rpow_le_one qpos.le qlt.le (by norm_num)
+  have hrad : ((3/2 : NNReal) : ENNReal) ≤ radius q (-7/10) (fun _ => 1) := by
+    apply FormalMultilinearSeries.le_radius_of_summable
+    simpa only [FormalMultilinearSeries.ofScalars_norm, norm_mul, norm_pow,
+      Real.norm_eq_abs, abs_of_nonneg (by norm_num : (0:ℝ) ≤ 3/2),
+      one_mul, NNReal.coe_div, NNReal.coe_ofNat, mul_comm] using hs.norm
+  exact lt_of_lt_of_le
+    ((ENNReal.ofReal_lt_coe_iff (by norm_num [r] : 0 ≤ r)).2 (by norm_num [r])) hrad
 theorem result : ¬ claim := by
   intro hclaim
   have h := hclaim q qpos qlt (fun _ => 1) admissible_one
     (-7/10) (3/10) (7/10) (by norm_num) (by norm_num) (by norm_num)
-    r (by norm_num [r]) witness_converges
+    r (by norm_num [r]) witness_radius
   norm_num only at h
   exact (not_lt_of_ge h.le) (by simpa only [neg_div] using witness_negative)
 end D5.S3.Analytic.QGammaTuran.FunctionResult
