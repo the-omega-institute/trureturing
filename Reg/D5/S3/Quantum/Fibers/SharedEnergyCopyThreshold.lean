@@ -277,6 +277,7 @@ private theorem dependence : ObservationalDependence signature actual := by
   intro i
   refine ⟨1, rho, sigma 2, ?_⟩
   intro h
+  cases i
   have he := congrArg (fun X => X (2 : Fin 3) (0 : Fin 3)) h
   change (1/12 : ℂ) = (1/12 : ℂ) * (phase 2 : ℂ) at he
   norm_num [phase, Circle.coe_exp, Complex.exp_pi_mul_I] at he
@@ -335,7 +336,8 @@ abbrev signature : Signature where
 
 def lowestEnergyState :=
   _root_.D5.S3.Quantum.Dynamics.EnergyEigenstateStationarity.pureDensityState
-    (Pi.single (0 : Fin 3) (1 : ℂ)) (by simp [dotProduct])
+    (Pi.single (0 : Fin 3) (1 : ℂ)) (by
+      norm_num [dotProduct, Fin.sum_univ_succ, Pi.single_apply])
 def readoutFunction : Unit → Unit → ℕ → signature.Output () () := fun _ _ m => sigma m
 def actual : Realization signature := realize signature readoutFunction (fun e => nomatch e)
 def zeroReadout : Realization signature :=
@@ -354,8 +356,12 @@ private theorem rejected : ¬ arena.Law zeroReadout := by
     (tensor_monomial_bridge 2 1 lowestEnergyState (0 : Fin 3) (0 : Fin 3)).2.2.2.1] at he
   norm_num [tensorExponent, coordinateExponent, weight, energy, monomial,
     Fin.sum_univ_succ, Fin.prod_univ_succ] at he
-  change (1/3 : ℂ) = 1 at he
-  norm_num at he
+  change sparseMatrix 1 0 0 =
+    _root_.D5.S3.Quantum.PureState.PureStateHandshake.rankOneDensity
+      (Pi.single (0 : Fin 3) (1 : ℂ)) 0 0 at he
+  norm_num [sparseMatrix,
+    _root_.D5.S3.Quantum.PureState.PureStateHandshake.rankOneDensity,
+    Matrix.vecMulVec, Pi.single_apply] at he
 private theorem dependence : ObservationalDependence signature actual := by
   intro i
   refine ⟨(), 2, 3, ?_⟩
@@ -364,6 +370,8 @@ private theorem dependence : ObservationalDependence signature actual := by
   change (1/12 : ℂ) * (phase 2 : ℂ) = (1/12 : ℂ) * (phase 3 : ℂ) at he
   norm_num [phase, Circle.coe_exp, Complex.exp_pi_mul_I,
     Complex.exp_pi_div_two_mul_I] at he
+  have hr := congrArg Complex.re he
+  norm_num at hr
 
 def family : Registration arena (type_of% sparse_low_pinching) where
   actual := actual
