@@ -57,6 +57,7 @@ private def depol : MatrixMap (Fin 2) (Fin 2) ℂ :=
 
 private theorem depol_cptp : IsCPTP depol := by
   have heq : depol = pauliChannel ![31 / 40, 3 / 40, 3 / 40, 3 / 40] := by
+    rw [depol.eq_1]
     ext X i j
     fin_cases i <;> fin_cases j <;>
       norm_num [depol, pauliChannel, sigma,
@@ -97,8 +98,9 @@ private theorem effect_facts (U : unitaryGroup (Fin 2) ℂ) (i : Fin 2) :
     have h := congrArg (fun M : Matrix (Fin 2) (Fin 2) ℂ => M i i)
       (Matrix.UnitaryGroup.star_mul_self U)
     simpa [Matrix.star_eq_conjTranspose, Matrix.mul_apply, dotProduct] using h
-  refine ⟨(Matrix.posSemidef_vecMulVec_self_star _).isHermitian, ?_,
-    (pure_state_handshake _ hn 1).1, ?_⟩
+  refine ⟨?_, ?_, (pure_state_handshake _ hn 1).1, ?_⟩
+  · rw [effect.eq_1]
+    exact (Matrix.posSemidef_vecMulVec_self_star _).isHermitian
   · change (rankOneDensity _).trace = 1
     simpa only [rankOneDensity, Matrix.trace_vecMulVec, dotProduct, Pi.star_apply,
       mul_comm] using hn
@@ -114,7 +116,8 @@ private theorem centered_facts (U : unitaryGroup (Fin 2) ℂ) (i : Fin 2) :
       centered U i * centered U i = 1 ∧ centered U 0 + centered U 1 = 0 := by
   obtain ⟨hh, ht, hs, hc⟩ := effect_facts U i
   refine ⟨(hh.smul (by norm_num)).sub Matrix.isHermitian_one, ?_, ?_, ?_⟩
-  · simp only [centered, Matrix.trace_sub, Matrix.trace_smul, ht, Matrix.trace_one,
+  · rw [centered.eq_1]
+    simp only [Matrix.trace_sub, Matrix.trace_smul, ht, Matrix.trace_one,
       Fintype.card_fin]
     norm_num
   · unfold centered
@@ -268,8 +271,7 @@ private theorem jointChoi_positive (Λ : MatrixMap (Fin 2) (Fin 2 × Fin 2) ℂ)
 
 private theorem jointChoi_trace (Λ : MatrixMap (Fin 2) (Fin 2 × Fin 2) ℂ)
     (hΛ : IsCPTP Λ) : (jointChoi Λ).trace = 1 := by
-  unfold jointChoi
-  rw [Matrix.trace_smul]
+  rw [jointChoi.eq_1, Matrix.trace_smul]
   change (1 / 2 : ℂ) * (∑ p : (Fin 2 × Fin 2) × Fin 2,
     Λ (Matrix.single p.2 p.2 1) p.1 p.1) = 1
   rw [Fintype.sum_prod_type, Finset.sum_comm]
@@ -330,11 +332,12 @@ private theorem witness_positive :
     change (3 / 2 : ℂ) * (1 : Matrix ((Fin 2 × Fin 2) × Fin 2)
       ((Fin 2 × Fin 2) × Fin 2) ℂ) x y - P x y - Q x y =
         (1 / 2 : ℂ) * (∑ k : Fin 4, star (B k x) * B k y) + D x y
+    rw [P.eq_1, Q.eq_1]
     rcases x with ⟨⟨a, b⟩, r⟩
     rcases y with ⟨⟨c, d⟩, s⟩
     fin_cases a <;> fin_cases b <;> fin_cases r <;>
       fin_cases c <;> fin_cases d <;> fin_cases s <;>
-      norm_num [P, Q, B, D, Fin.sum_univ_succ,
+      norm_num [B, D, Fin.sum_univ_succ,
         bellDensity, bellVector, D5.S3.Quantum.QubitWitnesses.bellCoefficients,
         Matrix.vecMulVec_apply, complex_sqrt_two_inv_mul_self]
   rw [he]
