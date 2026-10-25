@@ -1,0 +1,19 @@
+fingerprints:
+  raw_sha256: sha256:7f087f3c06f53c01a8186cfcddf18c7c74b2669dfc9e768bf50b3141d647630c
+  normalized_sha256: sha256:7f087f3c06f53c01a8186cfcddf18c7c74b2669dfc9e768bf50b3141d647630c
+cas_ref: sha256:7f087f3c06f53c01a8186cfcddf18c7c74b2669dfc9e768bf50b3141d647630c
+coverage_gids:
+  - gid: D5/S1/Digit/Infinite/SignedSeriesFibres.digitsOf
+    target_statement_id: sha256:e30f0b232abb8ece7ba7fbd836cd133d5b715b1302bf7f284af7408beab8432b
+  - gid: D5/S1/Digit/Infinite/SignedSeriesFibres.f
+    target_statement_id: sha256:f365b2c2b72c2cd78dff13565e72266373c2a2a0cd7cc70bdb5126e274cfb776
+  - gid: D5/S1/Digit/Infinite/SignedSeriesFibres.len
+    target_statement_id: sha256:768897d87d4c6dfd95d51f96500ab4aba7c136045a78a0e5e49a3c66f2f0a352
+  - gid: D5/S1/Digit/Infinite/WindowCylinderPartition.completedDigits
+    target_statement_id: sha256:1ed2533d1da4773eea5e70747ddbc9449d71da61c8416d1f0748607ce15ae2d6
+  - gid: D5/S1/Digit/Infinite/WindowCylinderPartition.d
+    target_statement_id: sha256:f2189cc526dfc3e2f7d7d38f79ce282f5252b527de42bddc58558ed25e1f6bb2
+  - gid: D5/S1/Digit/Infinite/WindowCylinderPartition.window_cylinder_partition
+    target_statement_id: sha256:99a45c0281146aa85c4abb581fdb6e19844ed3d8da4050332419cf1f97aca900
+receipts:
+  unresolved_subitems: []
