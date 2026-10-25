@@ -160,9 +160,15 @@ private theorem dual_coefficient00_positive_formula (n : ℕ) :
       (dualRate n * (dualRate n - 5 / 4) * (dualRate n - 5 / 2)) := by
   have hb := dual_rate_ge_five n
   unfold dualCoefficient00
-  field_simp only [show dualRate n ≠ 0 by linarith,
+  have h2 : dualRate n * 2 - 5 ≠ 0 := by linarith
+  have h4 : dualRate n * 4 - 5 ≠ 0 := by linarith
+  have hp : 25 - dualRate n * 30 + dualRate n ^ 2 * 8 ≠ 0 := by
+    have : 0 < 25 - dualRate n * 30 + dualRate n ^ 2 * 8 := by
+      nlinarith [sq_nonneg (dualRate n - 5)]
+    exact this.ne'
+  field_simp [show dualRate n ≠ 0 by linarith,
     show dualRate n - 5 / 4 ≠ 0 by linarith,
-    show dualRate n - 5 / 2 ≠ 0 by linarith]
+    show dualRate n - 5 / 2 ≠ 0 by linarith, h2, h4, hp]
   <;> ring
 
 private theorem dual_coefficient00_nonneg (n : ℕ) : 0 ≤ dualCoefficient00 n := by
@@ -317,7 +323,8 @@ private theorem dual_layer00_domain_integral (n : ℕ) :
   dsimp only [Pi.sub_apply, Pi.add_apply] at hAdd hSub
   dsimp only
   rw [hAdd, hSub, integral_const_mul, hA.2, hB.2, hC.2]
-  rfl
+  unfold dualCoefficient00
+  ring
 
 private theorem dual_layer11_domain_integral (n : ℕ) :
     Integrable (dualLayer11 n) dualTime ∧
@@ -707,7 +714,10 @@ private theorem original_physical_weighted_cs
       (fun x : ℝ => originalPhysicalExcessWeight x * ‖U x‖ ^ 2)
       (volume.restrict (Ioi Real.pi)) := by
     have hs := (memLp_two_iff_integrable_sq_norm hU.1.aestronglyMeasurable).1 hU.1
-    simpa only [Pi.sub_apply, originalPhysicalExcessWeight, sub_mul, one_mul] using hU.2.sub hs
+    apply (hU.2.sub hs).congr
+    exact Eventually.of_forall fun x => by
+      dsimp [originalPhysicalExcessWeight]
+      ring
   have hgint : Integrable (fun x : ℝ => ‖g x‖ ^ 2)
       (volume.restrict (Ioi Real.pi)) := hUint.congr hgsq.symm
   have hf : MemLp f 2 (volume.restrict (Ioi Real.pi)) :=
