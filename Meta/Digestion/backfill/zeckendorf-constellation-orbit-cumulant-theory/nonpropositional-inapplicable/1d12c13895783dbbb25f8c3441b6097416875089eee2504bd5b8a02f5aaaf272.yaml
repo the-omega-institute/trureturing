@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:1d12c13895783dbbb25f8c3441b6097416875089eee2504bd5b8a02f5aaaf272
+  normalized_sha256: sha256:1d12c13895783dbbb25f8c3441b6097416875089eee2504bd5b8a02f5aaaf272
+cas_ref: sha256:1d12c13895783dbbb25f8c3441b6097416875089eee2504bd5b8a02f5aaaf272
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: Output-field name for ternary gap curvature in the atlas specification, without a value or curvature law.
+    previous_atom_id: 2b791b5033f664348e4b458ecab534d869ee16e965558f1a5507a7a98700cdf9
+    next_atom_id: bd0d0e32b7b3ee1fa70a8774f2e81879e56bfb1f7783c0c42b7d3cfd0a634c01

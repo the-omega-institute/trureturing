@@ -259,3 +259,560 @@ $$
 $Z(Sp_4)=\mu_2$ 不连通，故 I Theorem 6.1.3(5) 的中心连通前提不满足，本结论不包含其特征循环等式。谱侧 $S_{E_n}=1$ 不能替代自动侧中心连通。该应用给本征对象的精确范畴指定及存在性，不给有限闭式、物理制备或复杂度界，也没有由抽象三元组唯一选择 $E_n$；选择仍依赖定义 86.1 的路径数据。各引述成熟定理仅承担所标注中间输入，本卷的构造与恢复证明不主张文献首创。$\square$
 
 ## 追加锚（本行以下为增补区）
+
+## 71. 可取得预测商接入路径输运的条件
+
+**定义 91.1（效果列、观测核与原连接）。** 取[可取得预测丛卷定义 1.1、2.1](AURIC_FIB_OBTAINABLE_PREDICTIVE_BUNDLE_THEORY.md)的固定许可效果与资源合同。在一个常秩参数域 $B$ 上，令 $E=\operatorname{Herm}_0(\mathscr H)$，内积为 $\operatorname{tr}(XY)$，$C_{\mathrm{sup}}:\mathbb R^m\to E$ 的列为中心化效果。此处的观测映射、隐藏核与可见子丛为
+
+$$
+C_{\mathrm{VI}}=C_{\mathrm{sup}}^{\mathsf T}:E\longrightarrow B\times\mathbb R^m,
+\qquad N=\ker C_{\mathrm{VI}}=\ker C_{\mathrm{sup}}^{\mathsf T},
+\qquad W=N^\perp=\operatorname{ran}C_{\mathrm{sup}}.
+$$
+
+因此实际概率偏移为 $C_{\mathrm{VI}}(\rho-I/d)$，不是 $C_{\mathrm{sup}}(\rho-I/d)$。固定正定数据权重不改变 $N$。设 $q:E\to Q=E/N$，$P:E\to W$ 为正交投影，另给环境连接 $\nabla^E$，定义下降缺陷
+
+$$
+\mathcal B_N(n)=(\operatorname{id}_{T^*B}\otimes q)\nabla^E n,
+\qquad n\in\Gamma(N).
+$$
+
+Leibniz 法则及 $qn=0$ 使它属于 $\Omega^1(B;\operatorname{Hom}(N,Q))$。若所用效果列张成全部允许未来事件，才把 $Q$ 解释为该合同的全未来商；输出分支的归一化后验仍只在该分支概率严格正时定义。这里消费[关系丛卷定理 8.6](AURIC_FIB_RELATIONAL_BUNDLE_AND_PREDICTIVE_CLOSURE_THEORY.md)的常秩像核丛及分支更新，不把参数路径输运加入原许可菜单。
+
+**命题 91.2（指定预测商的连续泄漏与有限拉回障碍）。** 对定义 91.1 的同一观测核，原连接能唯一下降为
+
+$$
+\nabla^Q(qs)=(\operatorname{id}\otimes q)\nabla^E s
+$$
+
+当且仅当 $\mathcal B_N=0$。在度量相容情形，这等价于 $\nabla^E P=0$；环境连接平坦时，能够下降的商连接也平坦。在同一度量相容条件下，若 $T(t,0)$ 是一条 $C^1$ 参数路径 $\gamma:[0,a]\to B$ 上的环境平行输运，则对每个 $h\in N_{\gamma(0)}$ 及 $0\le t\le a$，
+
+$$
+\|P_{\gamma(t)}T(t,0)h\|
+\le \|h\|\int_0^t
+\|\nabla^E_{\dot\gamma(s)}P\|_{\mathrm{op}}\,ds.
+\tag{91.1}
+$$
+
+若 $(\nabla^E_{\dot\gamma(0)}P)h\ne0$，在初始纤维的平行识别中，可见分量为
+$t(\nabla^E_{\dot\gamma(0)}P)h+o(t)$，因而小正时间已有非零泄漏。
+
+特别地，对[可取得预测丛卷命题 2.13](AURIC_FIB_OBTAINABLE_PREDICTIVE_BUNDLE_THEORY.md#obsq:prop:tangent)的球面菜单，保留向外取向、$W_n=n^\perp$ 及复结构 $J_n v=n\times v$。其两个正观测奇异值均为 $1/\sqrt2$，而作为这个指定的复线丛有
+
+$$
+F_{P d}=-i\omega_{S^2},\qquad \deg(W,J)=2.
+$$
+
+对任意光滑连通紧复曲线间的非恒定有限映射 $f:Y\to X$、次数 $d\ge1$，任一复可见子丛满足
+
+$$
+\deg(f^*W)=d\deg W.
+\tag{91.2}
+$$
+
+因此上述球面复线及其正次数有限拉回的次数分别为 $2$、$2d$，均不承载平坦复连接。这里排除的是保留该复结构的谱接口；观测谱隙、平坦性和可执行输运是分别需要的条件。
+
+**证明。** [关系丛卷定理 7.3–7.4](AURIC_FIB_RELATIONAL_BUNDLE_AND_PREDICTIVE_CLOSURE_THEORY.md#thm-parallel-kernel)已把单路径下降等同于 $T_\gamma N_b\subseteq N_c$，并把全部可逆路径下降等同于核平行。将其中 $L,K,D$ 分别取为 $C_{\mathrm{VI}},N,\nabla^E$。具体到此商，下降公式对 $s$ 与 $s+n$ 的差恰为 $q\nabla^E n$，所以它良定义的充要条件正是显示的缺陷消失；Leibniz 法则给连接，$q$ 满射给唯一性。曲率满足
+
+$$
+F_{\nabla^Q}(qs)=q(F_{\nabla^E}s).
+$$
+
+度量相容时，$N$ 平行也使 $N^\perp$ 平行，因为对 $w\perp n$ 微分 $\langle w,n\rangle=0$。这等同于 $\nabla^E P=0$。在平凡环境丛 $(B\times E_0,d)$ 中，此条件要求 $P$ 在每个连通分支上为常矩阵；它不能由一个正观测谱隙推出。
+
+为得到本观测商的连续误差量，将所有纤维平行识别回初始纤维，置 $\bar P(t)=T(0,t)P_{\gamma(t)}T(t,0)$。于是
+
+$$
+\bar P'(t)=T(0,t)(\nabla^E_{\dot\gamma(t)}P)T(t,0),
+\qquad \bar P(0)h=0.
+$$
+
+积分并用输运保范数得到 (91.1)；在零点微分得到所述首阶项。这测量的是实际另行允许的路径对隐藏输入的作用；原球面菜单只允许恒等动力学，故数学上的 $T$ 不自动成为其可调用操作。
+
+对曲率和整数障碍，只需在该消费者中使用经典特征类自然性，[Hatcher, *Vector Bundles and K-Theory*, 第 3 章、定理 3.2(a)](https://pi.math.cornell.edu/~hatcher/VBKT/VB.pdf)。关系丛定理 8.6 给投影连接与
+
+$$
+F_{P d}=P(dP\wedge dP)|_W,\qquad
+\deg W=\frac{i}{2\pi}\int_X\operatorname{tr}F_{P d}.
+$$
+
+该整数与连接无关：两个连接相差全局 $\operatorname{End}(W)$ 值一形式 $A$，曲率迹之差为 $d\operatorname{tr}A$，积分不变。平坦连接的曲率迹为零。拉回连接的曲率是拉回曲率，且 $f_*[Y]=d[X]$，得到 (91.2)，允许有限分歧。球面菜单的曲率、谱隙和次数直接采用上述命题 2.13，不重算其效果菜单。其指定复线可由复线性映射 $v\mapsto v-iJ_nv$ 嵌入平凡 $\mathbb C^3$ 丛；这是 $J_n$ 对应的复线，而不是把实切丛整体复化后所得的秩二复丛。非零次数排除的是这同一对象的平坦化，不影响原固定参数统计任务。$\square$
+
+## 72. 标准型增强十四维路径接口
+
+**定义 92.1（标准型与精确有限路径数据）。** 令 $G=SO_5(\mathbb C)$，沿用定义 86.1、88.1 的
+
+$$
+W_{14}=\operatorname{Sym}^2_0(\mathbb C^5),\quad
+R(g)S=gSg^{\mathsf T},\quad
+b_0(S,T)=\operatorname{tr}(ST),\quad
+ d_0(S,T,U)=\operatorname{tr}(STU).
+$$
+
+设 $X$ 连通、局部路径连通且半局部单连通。标准型增强局部系统是三元组 $(L,b,d)$：$L$ 为秩十四复局部系统，$b,d$ 是平行的对称二次、三次协变张量，且在一点有
+
+$$
+(W_{14},b_0,d_0)\simeq(L_x,b_x,d_x).
+$$
+
+平行性与连通性使每点均为该型。态射是保持张量实际数值的平行同构；只保持两条张量直线，或仅给 $b$ 非退化和 $d\ne0$，均非此定义。主局部系统的同构覆盖 $X$ 的恒等。
+
+对标记闭曲面，使用
+
+$$
+\pi_1(X,x)=\langle a_1,b_1,\ldots,a_g,b_g\mid
+\prod_{i=1}^g[a_i,b_i]=1\rangle.
+$$
+
+在一个校准到标准型的纤维内，有限路径输入是 $2g$ 个实际输运矩阵 $T_{a_i},T_{b_i}\in GL(W_{14})$。静态态的十四个坐标不等于这些路径矩阵。
+
+**定理 92.2（标准型接口的对象、态射和自同构下降）。** 关联构造 $E\mapsto(E(W_{14}),b_E,d_E)$ 给主 $G$ 局部系统与定义 92.1 的增强局部系统之间的群胚等价，无单值稠密性要求。有限路径输入定义这样的系统，当且仅当
+
+$$
+T_s^*b_0=b_0,\qquad T_s^*d_0=d_0\quad(s=a_i,b_i),
+\qquad \prod_i[T_{a_i},T_{b_i}]=I.
+\tag{92.1}
+$$
+
+这里 $T^*$ 表示协变张量的拉回。此时存在唯一 $A_i,B_i\in G$，满足 $R(A_i)=T_{a_i}$、$R(B_i)=T_{b_i}$，而 $\prod_i[A_i,B_i]=1$。增强同时共轭正好对应主局部系统同构，全部自同构群也由此恢复。
+
+**证明。** 定理 88.2 中已有的共同稳定子计算给
+
+$$
+\operatorname{Stab}_{GL(W_{14})}(b_0,d_0)=R(G),
+\qquad R:G\hookrightarrow GL(W_{14})\text{ 为忠实闭浸入}.
+\tag{92.2}
+$$
+
+此处消费该计算。具体标架证明是经典张量稳定子重构在此标准型的应用；背景见 [Deligne–Milne, *Tannakian Categories*, §2，定理 2.11、命题 2.20–2.21](https://www.jmilne.org/math/xnotes/tc2022.pdf)。对每点取
+
+$$
+\mathscr P_x=\operatorname{Isom}((W_{14},b_0,d_0),(L_x,b_x,d_x)),
+\qquad \phi\cdot g=\phi\circ R(g).
+$$
+
+标准型保证非空，(92.2) 保证右作用自由且传递。$L$ 的平行输运保持张量，将 $\mathscr P_x$ 等变地送到 $\mathscr P_y$，且保持路径合成、恒等和同伦。因此 $\mathscr P$ 是主 $G$ 局部系统，评价给自然同构
+
+$$
+\mathscr P\times^G W_{14}\longrightarrow L,\qquad [\phi,v]\longmapsto\phi(v).
+$$
+
+反向从 $E$ 的主标架得到 $E(W_{14})$ 的增强标架；(92.2) 和忠实性说明得到全部标架并唯一还原 $E$。一个增强平行同构 $T:L\to L'$ 在标架上作用为 $\phi\mapsto T\phi$，给唯一的主同构；关联构造给反向，二者互逆且保持复合。这同时证明对象、全部同构及自同构的对应；例如平凡系统的增强自同构是 $G$，无需使用稠密域的 Schur 论证。
+
+在标记曲面上，(92.2) 给每个 $T_s$ 的唯一原像。关系式经 $R$ 等于恒等，由忠实性原群中的关系也等于恒等，因此自由群赋值下降为曲面群表示。反向由局部系统输运的同伦相容性给出。群胚中的同构在校准纤维内正是 (92.2) 内的同时共轭，得到 (92.1) 的全部断言。
+
+同一构造还给该接口所需的连接计算。若光滑丛上的 $b,d$ 处处标准型，则增强标架是光滑主 $G$ 丛：把普通标架下的张量对视为 $GL(W_{14})/R(G)$ 中的光滑截面，局部提升即给增强标架。若 $\nabla b=\nabla d=0$，在这些标架内连接形式取值于共同无穷小稳定子，所以唯一写成
+
+$$
+A=R_*(a),\qquad a\in\Omega^1(X;\mathfrak{so}_5(\mathbb C)).
+$$
+
+微分表示保持 Lie 括号，故
+
+$$
+F_\nabla=dA+A\wedge A
+=R_*(da+a\wedge a)=R_*(F_a).
+\tag{92.3}
+$$
+
+标架变换律由 $R$ 传回主连接变换律；$R_*$ 单射给唯一性和两侧平坦性等价。这是该标准型消费者的支持计算，并未从静态读数产生一个连接或输运服务。射影复曲线上的路径系统可再按定理 86.2 所用的 Riemann–Hilbert 与 GAGA 供应解释为代数平坦系统；不在此改变其来源和适用范围。$\square$
+
+## 73. 两参考来源的输运取得
+
+**定义 93.1（附加参考制备合同）。** 令 $K=SO(5,\mathbb R)$。另行供应两个已知实密度矩阵的独立制备及同一个确定性未知 $U\in K$ 的输运服务：
+
+$$
+S_0=\frac15I+\frac1{50}\operatorname{diag}(-2,-1,0,1,2),\qquad
+T_0=\frac15I+\frac1{50}(\mathbf1\mathbf1^{\mathsf T}-I),\qquad
+\mathbf1=(1,1,1,1,1)^{\mathsf T}.
+$$
+
+允许对两个输出取得完整实对称矩阵。记
+
+$$
+\Phi(U)=(US_0U^{\mathsf T},UT_0U^{\mathsf T}),\qquad
+\varepsilon(U,V)=\max_{H\in\{S_0,T_0\}}
+\|UHU^{\mathsf T}-VHV^{\mathsf T}\|_F.
+$$
+
+原固定未知来源接口不供应这两个已知参考态。若输运由指定原始门词实现，其内部执行另按该词计费。
+
+**定理 93.2（该参考合同的最小数量与全局逆常数）。** $S_0,T_0$ 严格正定且迹为一，$\Phi$ 在 $K$ 上单射，并且对所有 $U,V\in K$，
+
+$$
+\|U-V\|_F\le1600\,\varepsilon(U,V).
+\tag{93.1}
+$$
+
+在只读固定实密度参考态的完整共轭输出这一合同内，单个参考不能辨认全部 $U\in K$，因此两个是最少数量。常数为一个全局上界，不要求最优。
+
+**证明。** 两参考的谱分别为 $(.16,.18,.20,.22,.24)$ 和 $(.28,.18,.18,.18,.18)$。若 $C=V^{\mathsf T}U$ 同时固定它们，$S_0$ 的简单谱使 $C$ 为对角符号矩阵，$T_0$ 的非零非对角项使全部符号相同；五维行列式一排除 $-I$，故 $C=I$。
+
+令 $\varepsilon=\varepsilon(U,V)$。第一输出差的 Frobenius 范数等于 $CS_0-S_0C$ 的范数，谱间距至少 $1/50$，所以
+
+$$
+a=\|\operatorname{offdiag}C\|_F\le50\varepsilon.
+$$
+
+当 $\varepsilon\le1/400$ 时 $a\le1/8$。正交性给 $|c_{ii}|=\sqrt{1-\sum_{j\ne i}c_{ij}^2}>0$。取 $D=\operatorname{diag}(\operatorname{sgn}c_{ii})$，由 $1-\sqrt{1-t}\le t$ 得
+
+$$
+\|C-D\|_F^2\le a^2+a^4,\qquad
+\|C-D\|_F\le\frac98a\le\frac9{64}.
+$$
+
+不同行列式分支的实正交矩阵间距离至少为二：其比有特征值 $-1$。因此 $D\in K$。若 $D\ne I$，负号数为二或四；跨符号的有序非对角项至少八个，每项在 $DT_0D-T_0$ 内绝对值为 $1/25$，故
+
+$$
+\|DT_0D-T_0\|_F\ge\frac{2\sqrt2}{25}.
+$$
+
+但 $\|T_0\|_{\mathrm{op}}=7/25$，三角不等式给
+
+$$
+\|DT_0D-T_0\|_F
+\le\varepsilon+\frac{14}{25}\|C-D\|_F
+\le\frac1{400}+\frac{14}{25}\frac9{64}
+=\frac{13}{160}<\frac{2\sqrt2}{25},
+$$
+
+矛盾。所以 $D=I$，$\|C-I\|_F\le(225/4)\varepsilon$。当 $\varepsilon\ge1/400$ 时，奇数维 $C\in SO(5)$ 至少有一个特征值一，其余四个特征值到一的平方距离总和至多十六，故
+$\|C-I\|_F\le4\le1600\varepsilon$，得到 (93.1)。
+
+任一单独实对称参考可在正交本征基内同时翻转两个坐标，产生非恒等的 $K$ 稳定子元素。因而它的全部共轭输出也不能确定 $U$。这个数量下界只针对定义 93.1 的合同。$\square$
+
+**推论 93.3（有限参考记录的置信界与资源）。** 对每个输出使用五个效果 $e_ie_i^{\mathsf T}$ 及十个效果 $(e_i+e_j)(e_i+e_j)^{\mathsf T}/2$，每设置独立制备并输运 $N\ge1$ 次。设 $0<\delta<1$、$\tau\ge0$。以至少 $1-\delta$ 的概率，两个矩阵估计 $\widehat H_S,\widehat H_T$ 各有 Frobenius 误差至多
+
+$$
+\zeta=\sqrt{\frac{85\log(60/\delta)}{2N}}.
+$$
+
+任一 $\widehat U\in K$ 若其最大两输出拟合残差不超过最小残差加 $\tau$，则同一事件上
+
+$$
+\|\widehat U-U\|_F\le1600(2\zeta+\tau).
+\tag{93.2}
+$$
+
+费用为 $30N$ 次参考制备和输运；若每次输运词长为 $\ell$，另有 $30N\ell$ 次原始门执行。$\tau$ 是优化容差；此处没有最优位复杂度或精确有限数字优化器的断言。
+
+**证明。** 三十个 Bernoulli 设置的 Hoeffding 不等式及并合界给每个概率同时误差至多
+$t=\sqrt{\log(60/\delta)/(2N)}$。这里使用 [Hoeffding, *Probability inequalities for sums of bounded random variables*, 定理 2](https://doi.org/10.1080/01621459.1963.10500830) 的经典浓缩界。对角元误差至多 $t$；非对角元由加号效果概率减去两对角元之半得到，误差至多 $2t$。因此每个输出的平方 Frobenius 误差至多
+
+$$
+5t^2+2\binom52(2t)^2=85t^2.
+$$
+
+真实 $U$ 的最大残差不超过 $\zeta$；紧群上连续残差达到最小值，故任意所述拟合的残差不超过 $\zeta+\tau$。将拟合输出和真实输出经同一估计矩阵比较，差至多 $2\zeta+\tau$，代入 (93.1)。该单副本已知参考合同的 $N^{-1/2}$ 输出误差与[量子边界卷](RECURSIVE_RELATIONAL_OBSERVATION_MEASUREMENT_RELATIVE_QUANTUM_BOUNDARY.md)未知反对称态的实两副本合同不同，不能互换来源与资源。$\square$
+
+## 74. 十四维近似路径的正则修正
+
+**定义 94.1（实张量缺陷与曲面关系）。** 在 $W_{14,\mathbb R}=\operatorname{Sym}^2_0(\mathbb R^5)$ 的迹内积中固定正交基，张量范数为该基诱导的欧氏范数，记 $\mathcal K=R(K)\subset O(14)$。对实可逆矩阵 $M$ 及 $z=(A_1,B_1,\ldots,A_g,B_g)\in K^{2g}$，置
+
+$$
+\mathcal D(M)=(M^*b_0-b_0,M^*d_0-d_0),\qquad
+\mathcal R(z)=\prod_i[A_i,B_i],
+$$
+
+$$
+\mathfrak z_z=\{Z\in\mathfrak{so}(5):[Z,A_i]=[Z,B_i]=0\ (1\le i\le g)\}.
+$$
+
+对 $2g$ 个实可逆十四维矩阵，定义
+
+$$
+\operatorname{Def}(M)=\max_s\|\mathcal D(M_s)\|
++\left\|\prod_i[M_{a_i},M_{b_i}]-I\right\|_F.
+\tag{94.1}
+$$
+
+**定理 94.2（该有限路径接口的局部线性修正）。** 设 $g\ge1$，固定 $z_0\in K^{2g}$，$\mathcal R(z_0)=I$ 且 $\mathfrak z_{z_0}=0$。在 $R(z_0)$ 的一个邻域上存在光滑修正选择 $M\mapsto\widehat z\in\mathcal R^{-1}(I)$，以及有限常数 $C_{z_0}$，使
+
+$$
+\max_s\|M_s-R(\widehat z_s)\|_F
+\le C_{z_0}\operatorname{Def}(M).
+\tag{94.2}
+$$
+
+这些常数和邻域是局部的。修正给一个真正 $K$ 曲面表示，不要求该表示唯一，也不辨认未知来源的精确表示。
+
+**证明。** 先在本消费者内建立紧实张量投影估计。由 (92.2)，若一个实矩阵固定两个张量，其唯一复原像 $g\in G$ 满足 $R(\bar g)=R(g)$，故 $g=\bar g\in K$。于是
+$\mathcal D^{-1}(0)=\mathcal K$。在 $p\in\mathcal K$，$D\mathcal D_p$ 的核恰为 $T_p\mathcal K$：平移到单位元后，无穷小张量稳定子的元素经指数形成固定张量的一参数群，反向由微分成立。因此导数在法空间单射。紧致的法单位球丛给统一正下界 $c_0$。取紧子流形的管状邻域与光滑最近点投影 $\Pi$，写 $M=p+n$、$n\perp T_p\mathcal K$，统一 Taylor 估计为
+
+$$
+\|\mathcal D(M)\|\ge c_0\|n\|_F-C\|n\|_F^2.
+$$
+
+缩小管状邻域后，得到
+
+$$
+\|M-\Pi(M)\|_F\le c\|\mathcal D(M)\|.
+\tag{94.3}
+$$
+
+而张量缺陷充分小的全部实矩阵都在这个邻域：否则取缺陷趋零但远离邻域的序列，二次缺陷就是 $M^{\mathsf T}M-I\to0$，使矩阵及其逆有统一界；收敛子列的极限固定两个张量，属于 $\mathcal K$，矛盾。这里实数和紧致性不可用一般复矩阵替代。
+
+再计算曲面关系的精确导数。取 $\mathfrak{so}(5)$ 的 Ad 不变内积，用 $\delta A_i=X_iA_i$、$\delta B_i=Y_iB_i$ 平凡化切向量，置 $C_i=[A_i,B_i]$、$P_i=C_1\cdots C_{i-1}$。在 $\mathcal R(z)=I$ 处，逐项乘法微分给
+
+$$
+D\mathcal R_z(X,Y)=\sum_i\operatorname{Ad}_{P_i}
+\left[(I-\operatorname{Ad}_{A_iB_iA_i^{-1}})X_i
++(\operatorname{Ad}_{A_i}-\operatorname{Ad}_{C_i})Y_i\right].
+\tag{94.4}
+$$
+
+其像的正交补恰为 $\mathfrak z_z$，从而给余核的自然识别。为直接验证，若 $Z$ 与像正交，写 $Z_i=\operatorname{Ad}_{P_i^{-1}}Z$，则
+
+$$
+\operatorname{Ad}_{A_iB_iA_i^{-1}}Z_i=Z_i,
+\qquad \operatorname{Ad}_{A_i^{-1}}Z_i
+=\operatorname{Ad}_{C_i^{-1}}Z_i.
+$$
+
+第一式及 $A_iB_iA_i^{-1}=C_iB_i$ 又给右侧等于 $\operatorname{Ad}_{B_i}Z_i$。令 $V_i=\operatorname{Ad}_{A_i^{-1}}Z_i$，第一式还说明 $\operatorname{Ad}_{B_i}V_i=V_i$；连同 $V_i=\operatorname{Ad}_{B_i}Z_i$ 得 $V_i=Z_i$。因此 $Z_i$ 被 $A_i,B_i,C_i$ 固定，$Z_{i+1}=Z_i$，归纳得到 $Z$ 同时中心化全部生成元。反向把共同固定的 $Z$ 代入 (94.4) 即得正交性。故零共同 Lie 中心化子恰使导数满射；这是曲面表示经典形变计算在此门群的具体形式。
+
+对每个 $M_s$ 用 (94.3)，得 $\Pi(M_s)=R(\widetilde U_s)$。闭嵌入 $R:K\to\mathcal K$ 的逆光滑。在固定小邻域内，乘法、求逆及有限关系词的导数有统一界，故
+
+$$
+\|R(\mathcal R(\widetilde U))-I\|_F\le C_1\operatorname{Def}(M),
+\qquad
+\|\log\mathcal R(\widetilde U)\|\le C_2\operatorname{Def}(M).
+$$
+
+第二式用 $R_*$ 在恒等处单射及局部矩阵对数。$\log\circ\mathcal R$ 在 $z_0$ 的导数满射，取其核的补空间，经典隐函数定理给局部坐标 $(v,w)$，其中 $w=\log\mathcal R$；将 $(v,w)$ 送到 $(v,0)$ 得光滑局部回缩，改变量至多 $C_3\|w\|$。这给精确元组 $\widehat z$，合并两次修正得到 (94.2)。隐函数与管状邻域只承担上述支持步骤，没有提供全局修正模。$\square$
+
+**命题 94.3（该修正的奇异边界与不可约开条件）。** 在平凡表示附近，存在精确固定 $b_0,d_0$ 的十四维元组，关系缺陷为 $\Theta(t^2)$，而到精确关系集的距离为 $\Theta(t)$。另方面，五维复表示不可约是有限生成元元组的开条件；从这样的正则基点出发，充分小的定理 94.2 修正保留它。共同 Lie 中心化子为零本身不等同于五维复不可约。
+
+**证明。** 取 $X=J_{12}$、$Y=J_{23}$，则 $[X,Y]=J_{13}\ne0$。令
+
+$$
+A_1(t)=e^{tX},\quad B_1(t)=e^{tY},\qquad
+A_i(t)=B_i(t)=I\quad(i>1).
+$$
+
+其十四维像都在 $\mathcal K$，张量缺陷为零，而乘法的二阶展开为
+
+$$
+\mathcal R(z(t))=I+t^2[X,Y]+O(t^3).
+$$
+
+$R_*$ 单射使十四维关系缺陷也为 $\Theta(t^2)$。到平凡元组距离 $O(t)$ 给上界。若无 $\Omega(t)$ 下界，可取 $t_j\downarrow0$ 与精确表示元组 $\widehat z_j$，距离为 $o(t_j)$。在恒等附近取矩阵对数并除以 $t_j$；第一对趋于 $X,Y$，其余对趋零。精确关系的二阶展开迫使 $[X,Y]=0$，矛盾。$R$ 的光滑局部逆将两种矩阵距离互相控制，得所述十四维反例。
+
+对于每个 $1\le k\le4$，共同不变 $k$ 维子空间与元组构成闭关联集；复 Grassmann 流形紧致，使其到有限元组空间的投影闭。取这四个闭集的并，便得可约元组闭，故不可约开。五维复不可约由 Schur 引理排除非零共同 Lie 中心化子；逆向不成立，见命题 97.3 的具体元组。这里不在自守 $D$-模上定义数值误差范数，也不从 (94.2) 推出 Hecke 对象的数值 Lipschitz 界。$\square$
+
+## 75. 选层、全局取向和 Spin 存在性的共同覆盖
+
+**定义 95.1（固定投影、中心缺陷与来源选择）。** 令 $X$ 为亏格 $g\ge1$ 的光滑连通射影复曲线，给定定义 92.1 的标记及
+
+$$
+\rho:\pi_1(X)\to SO_5(\mathbb C),\qquad
+p:\operatorname{Spin}_5(\mathbb C)\simeq Sp_4(\mathbb C)\to SO_5(\mathbb C).
+$$
+
+对各生成元像 $A_i,B_i$ 任取提升 $\widetilde A_i,\widetilde B_i$，记
+
+$$
+\kappa(\rho)=\prod_i[\widetilde A_i,\widetilde B_i]\in\ker p=\mu_2=\{\pm1\}.
+\tag{95.1}
+$$
+
+另按[退化与分歧卷定义 5.1](AURIC_LANGLANDS_DEGENERATION_RAMIFICATION_AND_STABLE_RECOVERY_THEORY.md)给定完整来源的有限 étale 覆盖 $C\to U=X\setminus D$，$D$ 有限，及基点处合法取得的指定来源 $\omega$。其整个纤维的置换单值为 $\nu:\pi_1(U)\to F\le S_n$，置
+
+$$
+H=F_\omega,\qquad m=[F:H],\qquad
+\varepsilon=\operatorname{sgn}\circ\nu.
+$$
+
+选择 $\omega$ 的最小带锚连通覆盖 $U_0\to U$ 对应 $\nu^{-1}(H)$；令 $Y_0$ 为光滑射影紧化，$\varepsilon_0$ 为 $\varepsilon$ 在 $\pi_1(U_0)$ 上的限制。共同任务要求指定来源有水平选择、整个取向字符平凡，且拉回的给定 $\rho$ 在覆盖紧化上存在某个 Spin 提升。没有预先规定穿孔曲线上的提升。
+
+**定理 95.2（该来源与谱系统共同任务的精确次数）。** 在定义 95.1 下，共同任务在连通有限 étale 覆盖 $U'\to U$ 中的最小次数为
+
+$$
+D_{\min}=\begin{cases}
+m,&\varepsilon_0=1\text{ 且 }(\kappa(\rho)=1\text{ 或 }m\text{ 为偶数}),\\
+2m,&\text{其余情形}.
+\end{cases}
+\tag{95.2}
+$$
+
+紧化映射允许在删点上方分歧。所用中心数据满足：$\kappa$ 与生成元提升选择无关且共轭不变；给定 $\rho$ 的 Spin 提升存在当且仅当 $\kappa=1$。存在时，保留到该五维系统的投影识别的提升同构类构成 $H^1(X;\mu_2)$ 挠集，恰有 $2^{2g}$ 类。任意次数 $d$ 的非恒定有限映射 $f:Y\to X$ 满足
+
+$$
+\kappa(f^*\rho)=\kappa(\rho)^d.
+\tag{95.3}
+$$
+
+**证明。** 先在这个共同覆盖消费者内给出经典中心提升的具体矩阵计算；一般 Spin 障碍与选择的归属为 [Perutz, *Smooth 4-manifolds and the Seiberg–Witten equations*, 定理 17.3](https://web.ma.utexas.edu/users/perutz/GaugeTheory/FullCourse.pdf)。曲面关系使 (95.1) 落在中心核，乘任一提升以 $-1$ 不改变其交换子，同时共轭也不改变中心乘积。若表示已有提升，其生成元满足关系，故 $\kappa=1$；反之 $\kappa=1$ 使任取的生成元提升满足唯一关系，因而从自由群下降为曲面群表示。
+
+固定一个提升 $\widetilde\rho_0$，其他同一投影的提升唯一形如 $\chi\widetilde\rho_0$。中心性使同态条件等价于 $\chi:\pi_1(X)\to\mu_2$ 为字符，作用自由传递。曲面群的 $2g$ 个生成元符号任意，故数目为 $2^{2g}$。相对同构投影为恒等，只能取中心核的平行规范变换，不能把不同字符合并；若忘记到给定 $\rho$ 的投影识别，则不能无条件保留这个计数。
+
+用好覆盖上的转移函数提升，三重交集的中心差给 $o(\rho)\in H^2(X;\mu_2)$；改变提升只改变余边界，拉回保持其余循环。曲面唯一二维胞腔沿交换子乘积粘贴，所以基本类评价是 (95.1) 的符号。紧实约化时它是正交五维丛的 $w_2$，不是底层实十维丛的 $w_2$。自然性与 $f_*[Y]=d[X]$ 给
+
+$$
+\langle o(f^*\rho),[Y]\rangle
+=\langle o(\rho),d[X]\rangle\quad\text{于 }\mathbb Z/2,
+$$
+
+即 (95.3)；分歧点不改变拓扑次数。正亏格曲线有非平凡 $\mu_2$ 字符，因此有连通无分歧二重覆盖。于是单独消去提升存在性障碍的最小次数在 $\kappa=1$ 时为一，在 $\kappa=-1$ 时为二。
+
+现在用退化与分歧卷定理 5.2 的选层/全取向供应。任何带同一锚点来源选择的覆盖因子化经过 $U_0$，故次数是 $m$ 的正整数倍。如果 $\varepsilon_0\ne1$，它在 $U_0$ 上的核给最小二重进一步覆盖，总次数为 $2m$。此总次数为偶，由 (95.3)，紧化上的 $\rho$ 也有提升，因而达到共同任务的下界。
+
+若 $\varepsilon_0=1$，在 $Y_0$ 上的障碍为 $\kappa^m$。它为一时 $m$ 已足够；它为负一时 $m$ 奇且 $\kappa=-1$，任何成功总次数都须为偶，因而至少 $2m$。Riemann–Hurwitz 给 $g(Y_0)\ge1$，可取 $Y_0$ 的连通无分歧二重覆盖，限制到 $U_0$ 仍连通，既消去障碍又保留已平凡的取向，达到 $2m$。这也说明取向所需的那个因子二可以同时消去 Spin 存在性障碍，无须把次数再乘成 $4m$。
+
+若任务改成延拓事先指定的穿孔曲线提升 $\widetilde\rho_U$，还须逐个满足
+
+$$
+\widetilde\rho_U(\delta_x)^{e_y}=1\qquad(y\mid x\in D),
+\tag{95.4}
+$$
+
+因为紧化基本群的核由外围圈正规生成。在退化与分歧卷定理 5.3 的原提升及取向扭曲情形，(95.4) 正是其 $\varepsilon(\delta_x)^{e_y}=1$ 条件。外围值全平凡后仍可能有该卷 (5.6) 的剩余 Picard 二阶类；它也平凡才使整个取向字符平凡。这些判据仍归该供应负责。存在某个紧化提升不等于延拓给定穿孔提升。$\square$
+
+**命题 95.3（稠密无提升的门扩充例与既有族的六十四提升）。** 允许在定义 86.1 的三个门之外另加下述两个确定半周门时，存在稠密 $SO(5)$ 曲面表示而没有 Spin 提升。相反，定理 86.2 的每个亏格三 $\rho_n$ 有 $\kappa=1$，在给定投影识别下恰有 $64$ 个提升类。
+
+**证明。** 将既有三个稠密门重标号到坐标 $1,\ldots,5$，仍记为 $U_1,U_2,U_3$。新增门为
+
+$$
+P_0=\operatorname{diag}(-1,-1,1,1,1),\qquad
+Q_0=\operatorname{diag}(1,-1,-1,1,1).
+$$
+
+在紧实 Clifford 约定 $e_i^2=-1$ 下，$e_1e_2$ 与 $e_2e_3$ 分别提升它们且反对易，交换子为 $-1$。在亏格四曲面令
+
+$$
+\rho(a_1)=P_0,\quad\rho(b_1)=Q_0,\qquad
+\rho(a_{j+1})=U_j,\quad\rho(b_{j+1})=I\quad(1\le j\le3).
+$$
+
+所有正交交换子为恒等，故关系成立；像包含定理 86.2 的稠密门群，而提升交换子乘积为 $-1$，所以没有提升。此例的新增两个门是明确的额外权限，没有证明它们是原三门菜单的精确有限字。
+
+对既有 $\rho_n$，任选 $\widetilde U_j$，令 $\widetilde\rho_n(a_j)=\widetilde U_j$、$\widetilde\rho_n(b_1)=\widetilde U_1^n$、另两个 $b$ 像为一。每个交换子为一，得一个提升。定理 95.2 给 $2^{2\cdot3}=64$ 个相对类。稠密正交像的中心化子为一，所以即使允许普通 Spin 主共轭，不同字符也不合并；不同 $n$ 的投影已不同构，故其提升也不合并。提升像的 Zariski 闭包映满 $SO_5$，有限核给相同维数，故它是连通的 $\operatorname{Spin}_5$，中心化子为 $\mu_2$，每个提升有这个中心自同构群。这里的 $64$ 是原亏格三族的数目。
+
+谱侧 $SO_5$ 对应自守侧 $Sp_4$，无需先选 Spin 提升；另行细化为 $\operatorname{Spin}_5\simeq Sp_4$ 谱系统时，自守对偶改为 $SO_5$。这两种消费不构成自守侧基变换函子。[实际全局端口取向卷定义 1.1–1.2](RECURSIVE_RELATIONAL_OBSERVATION_ATOMIC_GLOBAL_PORT_ORIENTATION.md)中的付费持久双射 $\{a,b\}\to\{L,R\}$ 是绑定实际来源的端口数据，来源取向是 $H^1(U;\mu_2)$ 字符，提升障碍是 $H^2(X;\mu_2)$ 类，障碍消失后的提升标签又是一个 $H^1(X;\mu_2)$ 挠集；没有额外映射时，二值性不识别这些对象。$\square$
+
+## 76. 全生成元参考记录、修正与局部 Spin 数据
+
+**推论 96.1（同一置信事件上的精确拟合谱接口）。** 固定定理 94.2 的正则元组 $z_0$ 和一个充分小的修正图，设真正未知的 $K$ 曲面元组 $z$ 位于一个较小图内。对每个 $2g$ 生成元输运，按定义 93.1、推论 93.3 使用每设置 $N$ 次参考制备，且拟合优化容差至多 $\tau$。定义
+
+$$
+\zeta_g=\sqrt{\frac{85\log(120g/\delta)}{2N}},\qquad
+ a_N=1600(2\zeta_g+\tau).
+$$
+
+若 $a_N$ 小于图的固定余量，则以至少 $1-\delta$ 的概率，全部拟合 $\widehat U_s\in K$ 同时满足 $\|\widehat U_s-z_s\|_F\le a_N$，并可修正为精确表示 $\rho^\sharp:\pi_1(X)\to K$，使
+
+$$
+\max_s\|R(\rho^\sharp(s))-R(z_s)\|_F\le C_{\mathrm{chart}}a_N.
+\tag{96.1}
+$$
+
+费用为 $60gN$ 次参考制备与输运。若给定生成元词长为 $\ell_s$，内部原始门调用总数为 $30N\sum_s\ell_s$。修正后的共同 Lie 中心化子仍为零，且
+
+$$
+\kappa(\rho^\sharp)=\kappa(z)=\kappa(z_0).
+\tag{96.2}
+$$
+
+固定定义 95.1 的来源覆盖、候选与取向时，修正前后的共同最小覆盖次数 (95.2) 不变。若 $z_0$ 的五维复表示不可约，还可缩图使拟合精确表示保留它。
+
+**证明。** 对每个生成元在推论 93.3 取失败概率 $\delta/(2g)$，并合界给所有误差同时至多 $a_N$；不需要不同生成元的失败事件独立。对 $U,V\in K$，任一单位 Frobenius 范数的 $S\in W_{14,\mathbb R}$ 满足
+
+$$
+\|USU^{\mathsf T}-VSV^{\mathsf T}\|_F
+\le2\|U-V\|_{\mathrm{op}}\le2\|U-V\|_F,
+$$
+
+所以在十四维正交基上
+
+$$
+\|R(U)-R(V)\|_F\le2\sqrt{14}\|U-V\|_F.
+$$
+
+取 $M_s=R(\widehat U_s)$，其张量缺陷为零，有限关系词在固定图内 Lipschitz，真实关系为一，故 $\operatorname{Def}(M)\le C a_N$。用定理 94.2 并合并到真实矩阵的距离，得 (96.1)。共同 Lie 中心化子是一个连续系数线性映射的核；在 $z_0$ 处核为零，某个最大阶子式非零，缩图后仍非零。不可约性的保持则用命题 94.3。
+
+最后，Spin 双覆盖在每个 $z_{0,s}$ 周围有连续局部分支。选择各生成元的局部提升，在全部附近元组上形成连续乘积
+$\prod_i[\widetilde A_i,\widetilde B_i]$，其在 $z_0$ 的值为 $\kappa(z_0)$。先将整个图缩小，使此乘积的像位于不含另一个中心符号的邻域；对其中每个精确关系元组，乘积属于 $\mu_2$，故只能取原符号。真实 $z$ 和修正元组都在这个图中，得到 (96.2)，无需假设精确关系集连通。来源、候选、取向固定后 $m,\varepsilon_0$ 固定，(95.2) 随之不变。
+
+此推论产生附近的精确拟合对象及矩阵误差，既不从有限噪声记录取得未知来源的精确同构类，也不选出 $H^1$ 挠集的某个标签，更不识别拟合对象与原对象的实际 Hecke 层。对既有 $\rho_n$ 的充分小图，(96.2) 保持 $\kappa=1$ 和每个拟合对象的 $64$ 个相对提升类；其简单 Hecke 消费条件由下一节给出。$\square$
+
+## 77. 精确接口的半扭 Sp4 Hecke 消费
+
+**定义 97.1（一般亏格的固定规范及对象边界）。** 取亏格 $g\ge2$ 的光滑连通射影复曲线，沿用定义 90.1 的 theta characteristic、半扭行列式 gerbe、Borel、torus、pinning 与 Whittaker 规范，不将其换为普通 $D$-模。记
+
+$$
+\mathcal D=\operatorname{Dmod}_{1/2}(\operatorname{Bun}_{Sp_4}(X)),\qquad
+\mathcal A=\operatorname{QCoh}(\operatorname{LocSys}^{\mathrm{dR}}_{SO_5}(X)),
+\qquad
+\mathcal D_{\mathrm{Hecke},E}=\mathcal D\underset{\mathcal A}{\otimes}\operatorname{Vect}_{\mathbb C}.
+$$
+
+这里 $E^*$ 给 $\mathcal A$ 对 $\operatorname{Vect}$ 的作用，$E_*$ 给原文的忘却函子；相对张量积与谱作用均按完整导出 DG 模块范畴解释。称 $E$ 无真抛物约化，当且仅当其单值不包含于 $SO_5$ 的任一共轭真抛物子群。$S_E$ 是非导出的谱自同构群。
+
+本接口的载体是曲线上的局部系统；[中央噪声卷定义 11.2、定理 9.2、推论 9.3、定理 10.2](FIB_NATIVE_CENTRAL_NOISE_GREEN_STABILITY.md)所用载体则是固定源、原始测度、原时钟和两吸收壁的扩散。后者的固定正中央噪声合同排除精确局部常扩散符号读出、精确局部欧氏动能长度/距离和原时钟的全起点全测试杀死响应对应。单一极点的拟合等式不等于这些全测试合同。这些既有排除不被这里的有限矩阵输运或 Hecke 谱点替代；匹配 Green 吸引形式的谱底和完整自场占用也不是 $E$ 或其自守对象。
+
+**定理 97.2（紧实正则接口的实际半单本征对象）。** 若定理 92.2 的精确接口给 $K$ 值曲面表示，且其共同实 Lie 中心化子为零，则其复化谱局部系统 $E$ 无真抛物约化，$S_E$ 为有限群。在定义 97.1 的规范下，取 [Gaitsgory–Raskin I, §6.1.1](https://arxiv.org/html/2405.03599v3#S6.SS1.SSS1) 的等价下对应于
+
+$$
+\mathbb C[-20(g-1)]\in\operatorname{Vect}_{\mathbb C}
+\tag{97.1}
+$$
+
+的本征范畴对象 $\widetilde{\mathcal F}_E$。其实际忘却对象 $\mathcal F_E$ 非零、正则 holonomic、位于半扭 $D$-模的 heart，且奇异支撑包含于全局 nilpotent cone，并有
+
+$$
+\mathcal F_E\simeq
+\bigoplus_{\tau\in\operatorname{Irrep}(S_E)}
+\mathcal F_{E,\tau}^{\oplus\dim\tau},
+\tag{97.2}
+$$
+
+每个 $\mathcal F_{E,\tau}$ 是非零简单对象，彼此不同构。它携带对每个 $B\in\operatorname{Rep}(SO_5)$ 的
+
+$$
+\mathsf H_B(\mathcal F_E)\simeq E_B\boxtimes\mathcal F_E,
+\tag{97.3}
+$$
+
+以及态射、单位、张量、交换、不同点外积、对角融合与导出高阶相容性。紧实正则条件本身不保证 $S_E=1$ 或 $\mathcal F_E$ 简单。
+
+**证明。** 在标准 $\mathbb C^5$ 内写对称形式 $b(v,w)=v^{\mathsf T}w$，实单值还保持共轭和正 Hermitian 形式 $b(v,\bar v)$。若有非零不变全迷向子空间 $L$，则 $L\cap\bar L=0$：否则某个非零 $v$ 的 $v,\bar v$ 同在 $L$，与 $b(v,\bar v)>0$ 矛盾。$L$ 与 $\bar L$ 的交叉配对非退化，因其 Hermitian Gram 矩阵正定，故
+
+$$
+\mathbb C^5=(L\oplus\bar L)\oplus(L\oplus\bar L)^\perp
+$$
+
+是单值不变且共轭相容的正交分解。令 $J$ 在 $L$ 上为 $i$，在 $\bar L$ 上为 $-i$，在余项上为零。它与共轭交换，是非零实算子；由 $L,\bar L$ 各自全迷向且交叉特征值之和为零，$b(Jv,w)+b(v,Jw)=0$。因此 $J\in\mathfrak{so}(5)$ 且中心化全部单值，矛盾。正交群真抛物子群稳定一个非零全迷向子空间，反向相应稳定子为抛物，故无真抛物约化。这一步用紧实实形式，不能对任意复单值仅凭一个实中心化子断言同样结论。
+
+由于各生成元实，复 Lie 中心化子是实 Lie 中心化子的复化，故为零。代数中心化子 $S_E\subset SO_5(\mathbb C)$ 是零维代数群，特征零下为有限群。路径系统按定理 86.2 所用的 Riemann–Hilbert/GAGA 解释为代数 de Rham 谱点。
+
+后续消费已有的外部 GLC 供应，归属和规范不变：[Gaitsgory–Raskin V, §5.5](https://arxiv.org/html/2409.09856v3#S5.SS5)完成的全局等价适用于 $g\ge2$、almost simple、simply connected 且非 $SL_2$ 的 $Sp_4$；[I, §6.1.1、定理 6.1.3(1)–(4)](https://arxiv.org/html/2405.03599v3#S6.SS1.SSS2)对无真抛物约化的谱点给所述本征范畴等价、实际对象性质和分解。这里“不可约谱点”是原文的无真抛物约化条件，而非另行假设五维复不可约。
+
+规范化移位沿用定理 90.2 的计算，在一般 $g$ 为
+
+$$
+\dim\operatorname{Bun}_{Sp_4}=10(g-1),\qquad
+\dim\operatorname{Bun}_{N,\varrho(\omega_X)}=-10(g-1).
+$$
+
+具体地，四个正根高度 $1,1,2,3$ 给分次线丛 $\omega_X,\omega_X,\omega_X^2,\omega_X^3$，Riemann–Roch 的 Euler 数之和为 $[1+1+3+5](g-1)=10(g-1)$，unipotent 丛堆维数为其负数。因此 I §6.1.1 的移位恰为 (97.1)。实际忘却对象的正则性、nilpotent 奇异支撑、heart 性和 (97.2) 来自 I 定理 6.1.3(1)–(4)；简单项非零，故实际对象非零，不能只从本征范畴对象非零推出这一点。完整 Hecke 相容性由定义 97.1 的 DG 基变换与原文忘却函子保留，而非逐个任取孤立本征同构。$Z(Sp_4)=\mu_2$ 不连通，所以不使用 I 定理 6.1.3(5) 的额外特征循环等式。$\square$
+
+**命题 97.3（正则与简单性的有限单值区别）。** 在亏格二曲面将四个标准生成元依次送到
+
+$$
+\begin{aligned}
+D_1&=\operatorname{diag}(-1,-1,1,1,1),&
+D_2&=\operatorname{diag}(-1,1,-1,1,1),\\
+D_3&=\operatorname{diag}(-1,1,1,-1,1),&
+D_4&=\operatorname{diag}(-1,1,1,1,-1).
+\end{aligned}
+$$
+
+这给 $K$ 表示，公共 Lie 中心化子为零，但五维复表示可约；无真抛物约化，而 $S_E\simeq\mu_2^4$ 有十六个元素。定理 97.2 的实际规范对象恰有十六个彼此不同构的非零简单直和项，各出现一次。
+
+**证明。** 四矩阵对角、行列式为一且交换，曲面关系成立。它们独立生成整个行列式一对角符号群。五个坐标的共同特征依次为 $(-,-,-,-)$、$(-,+,+,+)$、$(+,-,+,+)$、$(+,+,-,+)$、$(+,+,+,-)$，彼此不同。因此任一共同交换矩阵为对角矩阵；对角反对称矩阵为零，给零 Lie 中心化子。$SO_5(\mathbb C)$ 中对角交换元满足各对角元平方为一且乘积为一，故中心化子恰为 $\mu_2^4$。每个不变子空间为若干不同特征坐标线的和，标准对称形式在其上非退化，故不存在非零全迷向不变子空间，同时每条坐标线不变，五维表示可约。有限交换群 $\mu_2^4$ 有十六个一维不可约表示，代入 (97.2) 即得最后结论。$\square$
+
+**推论 97.4（五维复不可约精确接口的简单对象）。** 若定义 92.1 的精确增强路径输入在光滑射影 $X$、$g\ge2$ 上给五维复不可约的 $SO_5(\mathbb C)$ 单值，则 $S_E=1$，定义 97.1 下对应 $\mathbb C[-20(g-1)]$ 的本征对象，其实际忘却对象本身是非零简单、正则 holonomic 的半扭 $Sp_4$ 本征层，位于 heart 且有 nilpotent 奇异支撑，并保留 (97.3) 的全部高阶相容数据。此结论无需 Spin 提升，也无需单值稠密。
+
+**证明。** 任一真抛物约化给非零真全迷向不变子空间，与五维复不可约矛盾。Schur 引理使标准表示的全部交换算子为标量；$SO_5$ 中的标量满足 $c^2=c^5=1$，所以 $c=1$，即 $S_E=1$。使用定理 97.2 证明中已列的同一外部 GLC 供应及一般亏格的移位计算；其中外部应用只需无真抛物约化，不依赖该定理前半部的紧实推导。分解 (97.2) 于是只有一个非零简单项。定理 94.2 的修正若从五维复不可约基点出发，可由命题 94.3 缩图保留这一假设。对既有亏格三稠密 $\rho_n$，标准五维表示不可约，本推论直接复用定理 90.2 的 $-40$ 对象；不另构造第二份该族。有限记录的附近精确拟合对象也只在它自己的谱点消费这一结论，没有由矩阵误差产生自守范畴误差范数、有限闭式、物理制备或复杂度界。$\square$
+
+## 追加锚（本行以下为增补区）

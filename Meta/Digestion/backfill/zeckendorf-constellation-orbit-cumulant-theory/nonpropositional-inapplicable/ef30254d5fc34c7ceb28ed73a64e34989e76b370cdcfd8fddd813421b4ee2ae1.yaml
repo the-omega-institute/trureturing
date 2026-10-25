@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:ef30254d5fc34c7ceb28ed73a64e34989e76b370cdcfd8fddd813421b4ee2ae1
+  normalized_sha256: sha256:ef30254d5fc34c7ceb28ed73a64e34989e76b370cdcfd8fddd813421b4ee2ae1
+cas_ref: sha256:ef30254d5fc34c7ceb28ed73a64e34989e76b370cdcfd8fddd813421b4ee2ae1
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 本段提出定义有限 Gram 矩阵和 separation cost 后研究右逆范数是否爆炸的研究问题，未断言爆炸成立或不存在受控右逆。
+    previous_atom_id: 2d98eb89897f093f2f28bb6f76d6ba062a5041f63b13180b8f6b4fb2a0bda508
+    next_atom_id: 666ae4f2c3a0844b0d3ed198bfb222592b697bc52129715064093347474999a0

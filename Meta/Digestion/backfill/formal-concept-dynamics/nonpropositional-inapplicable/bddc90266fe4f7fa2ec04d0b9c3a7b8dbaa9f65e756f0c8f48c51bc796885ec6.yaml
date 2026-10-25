@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:bddc90266fe4f7fa2ec04d0b9c3a7b8dbaa9f65e756f0c8f48c51bc796885ec6
+  normalized_sha256: sha256:bddc90266fe4f7fa2ec04d0b9c3a7b8dbaa9f65e756f0c8f48c51bc796885ec6
+cas_ref: sha256:bddc90266fe4f7fa2ec04d0b9c3a7b8dbaa9f65e756f0c8f48c51bc796885ec6
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 把实验解释为观察或干预界面的术语总览，未主张所有实验满足某个充分性条件。
+    previous_atom_id: e30610290b6605f269543d2c1169a8b3052963e79c479b05d4b64925ecb9c769
+    next_atom_id: 7a55696f810afbd465ca231da1f11c0d89e584ccc27df541db04d264b6f41e5a

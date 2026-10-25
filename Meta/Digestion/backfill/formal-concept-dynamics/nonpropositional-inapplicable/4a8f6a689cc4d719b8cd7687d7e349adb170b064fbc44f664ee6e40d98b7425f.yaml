@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:4a8f6a689cc4d719b8cd7687d7e349adb170b064fbc44f664ee6e40d98b7425f
+  normalized_sha256: sha256:4a8f6a689cc4d719b8cd7687d7e349adb170b064fbc44f664ee6e40d98b7425f
+cas_ref: sha256:4a8f6a689cc4d719b8cd7687d7e349adb170b064fbc44f664ee6e40d98b7425f
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 第一人称权威的目标相对性及神经状态例子是解释性限定，没有提出独立数学命题。
+    previous_atom_id: ca0155a8421b5acbf2ce8dec0aadde23116f010e31d02794780871dfd4197870
+    next_atom_id: 79192c467306aa28e91280f0ffb504dfe673806352bffbf65365a503bb8bde6b

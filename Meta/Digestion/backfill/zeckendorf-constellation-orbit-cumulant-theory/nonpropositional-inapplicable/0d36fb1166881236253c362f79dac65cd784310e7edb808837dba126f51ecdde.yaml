@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:0d36fb1166881236253c362f79dac65cd784310e7edb808837dba126f51ecdde
+  normalized_sha256: sha256:0d36fb1166881236253c362f79dac65cd784310e7edb808837dba126f51ecdde
+cas_ref: sha256:0d36fb1166881236253c362f79dac65cd784310e7edb808837dba126f51ecdde
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 此条仅是需要区分的关系类别名称 zero–zero transform coupling，不断言任一具体零点系统满足该关系。
+    previous_atom_id: e00acd08b3c91593ffb178a2becf22c528095d4309543a7bf8873a39b8938cb9
+    next_atom_id: a78da6b182e8d7eabca9c015a7c325ab2adfb1f22011ce0dfdf8bf7938e67017

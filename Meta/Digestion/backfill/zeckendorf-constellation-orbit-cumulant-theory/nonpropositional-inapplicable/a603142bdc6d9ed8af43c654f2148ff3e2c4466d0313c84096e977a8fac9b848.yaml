@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:a603142bdc6d9ed8af43c654f2148ff3e2c4466d0313c84096e977a8fac9b848
+  normalized_sha256: sha256:a603142bdc6d9ed8af43c654f2148ff3e2c4466d0313c84096e977a8fac9b848
+cas_ref: sha256:a603142bdc6d9ed8af43c654f2148ff3e2c4466d0313c84096e977a8fac9b848
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: Defines the editorial label conjecture and its falsifiability requirement; it does not assert the conjecture.
+    previous_atom_id: 8669a56f089b96a2d4849f94b35aae9c0f248c2fc009257f83a52622f8f75f3d
+    next_atom_id: 170224aa51690ff2932992418a98f55a5a38fa482cc5b6c8c471d63d5d1edf44

@@ -11,7 +11,7 @@ import time
 import uuid
 
 from worktree_protocol import (Refused, git, value, common, inventory, identity,
-                               acquire, git_scope, remote_endpoint)
+                               acquire, git_scope, remote_endpoint, tree_scope)
 
 
 def remote_roots(source, branch):
@@ -56,23 +56,54 @@ def reflog_oids(path):
 REMOVAL_RECORD = "worktree-removal"
 
 
-def record_removal(metadata, commit, recovery_branch):
+def record_removal(metadata, commit, recovery_branch, predecessors=None, native_locks=None):
     """Record the verified snapshot in Git metadata, which native removal deletes last."""
     staged = metadata / (REMOVAL_RECORD + ".tmp")
-    staged.write_text(json.dumps(dict(commit=commit, recovery_branch=recovery_branch)))
+    staged.write_text(json.dumps(dict(commit=commit, recovery_branch=recovery_branch,
+                                     predecessors=predecessors or [], native_locks=native_locks or [])))
     os.replace(staged, metadata / REMOVAL_RECORD)
 
 
-def interrupted_removal(target, metadata):
+def interrupted_removal(target, metadata, stack, source, branch):
     """Return the record of an earlier removal whose native deletion stopped part way."""
     record = metadata / REMOVAL_RECORD
     if not record.exists():
         return None
     removal = json.loads(record.read_text())
     commit = removal["commit"]
+    predecessors = removal.get("predecessors", [])
+    stack.recovery_roots = getattr(stack, "recovery_roots", []) + [
+        root["recovery_branch"] for root in predecessors]
+    stack.native_locks = getattr(stack, "native_locks", []) + removal.get("native_locks", [])
+    for root in predecessors:
+        reference = root["recovery_branch"]
+        git(source, "check-ref-format", reference)
+        if not any(handle.scope_key == "ref:" + reference
+                   for handle in getattr(stack, "scope_handles", [])):
+            acquire(stack, source, "ref:" + reference, True)
+        if value(target, "rev-parse", "--verify", reference + "^{commit}") != root["commit"]:
+            raise Refused("interrupted_removal_recovery_root_changed")
+    if removal["recovery_branch"] != branch:
+        acquire(stack, source, "ref:" + removal["recovery_branch"], True)
+    recorded_tip = git(target, "rev-parse", "--verify", removal["recovery_branch"] + "^{commit}", check=False)
     if (value(target, "rev-parse", "--verify", "HEAD^{commit}") != commit
-            or value(target, "rev-parse", "--verify", removal["recovery_branch"] + "^{commit}") != commit):
-        raise Refused("interrupted_removal_snapshot_moved")
+            or recorded_tip.returncode or os.fsdecode(recorded_tip.stdout).strip() != commit):
+        from worktree_publication import commit_snapshot, recovery_root
+        # Pin the old object before checkpointing; its former branch can have moved.
+        predecessor = dict(commit=commit, recovery_branch=recovery_root(stack, source, target, commit))
+        predecessors = predecessors + [predecessor]
+        snapshot = commit_snapshot(target, metadata, branch,
+            b"Checkpoint current work after interrupted removal\n", stack, source)
+        current_root = recovery_root(stack, source, target, snapshot["commit"])
+        for root in predecessors + [dict(commit=snapshot["commit"], recovery_branch=current_root)]:
+            if value(target, "rev-parse", "--verify", root["recovery_branch"] + "^{commit}") != root["commit"]:
+                raise Refused("interrupted_removal_recovery_root_changed")
+        if git(target, "status", "--porcelain", "--untracked-files=all").stdout:
+            raise Refused("working_tree_changed_after_checkpoint")
+        record_removal(metadata, snapshot["commit"], current_root, predecessors,
+                       getattr(stack, "native_locks", []))
+        return dict(commit=snapshot["commit"], recovery_branch=current_root, reconverged=True,
+                    native_locks=getattr(stack, "native_locks", []))
     # Native deletion only deletes files; other differences may be later changes.
     status = git(target, "status", "--porcelain", "--untracked-files=all").stdout.splitlines()
     if any(not line.startswith(b" D ") for line in status):
@@ -83,7 +114,7 @@ def interrupted_removal(target, metadata):
 LOCK_AGE_SECONDS = 24 * 60 * 60
 
 
-def qualify(source, path):
+def qualify(source, path, stack=None):
     """Validate identity and Git lock age, without inspecting users or contents."""
     if Path(path).is_symlink():
         raise Refused("linked_tree")
@@ -95,6 +126,16 @@ def qualify(source, path):
     if any(path in Path(row["worktree"]).resolve().parents for row in rows):
         raise Refused("nested_worktree")
     if "locked" in item:
+        if item["locked"].startswith("worktree-init:"):
+            try:
+                if stack is None:
+                    with ExitStack() as probe:
+                        tree_scope(probe, source, path, True)
+                else:
+                    tree_scope(stack, source, path, True)
+            except Refused as error:
+                raise Refused("initialization_in_progress") from error
+            return item
         lock = metadata / "locked"
         if lock.is_symlink() or not lock.is_file():
             raise Refused("locked_age_unknown")
@@ -148,26 +189,25 @@ def remove(options):
         removing = False
         try:
             with ExitStack() as stack:
-                # Only the compound Git operation is coordinated. No entry,
-                # activity, file-use or cache-use lock qualifies disposal.
-                branch = git_scope(stack, source, target)
-                if qualify(source, target) != qualified[target]:
+                # Initialization needs the dead initializer's exclusive entry.
+                # Ordinary removal has no participation or activity prerequisite.
+                if qualify(source, target, stack) != qualified[target]:
                     raise Refused("observed_identity_changed")
+                branch = git_scope(stack, source, target)
                 _, metadata = identity(source, target)
-                resumed = interrupted_removal(target, metadata)
+                resumed = interrupted_removal(target, metadata, stack, source, branch)
                 if resumed:
                     # The earlier removal verified this snapshot clean before native
                     # deletion began; missing files are its effects, not changes.
-                    checkpoint = dict(event="worktree_checkpoint", status="resumed",
-                                      commit=resumed["commit"], branch=branch)
+                    checkpoint = dict(event="worktree_checkpoint", status="reconverged" if resumed.get("reconverged") else "resumed",
+                                      commit=resumed["commit"], branch=branch,
+                                      native_locks=resumed.get("native_locks", []))
                     recovery_branch = resumed["recovery_branch"]
-                    if recovery_branch != branch:
-                        acquire(stack, source, "ref:" + recovery_branch, True)
-                    refreshed = qualified[target]
+                    refreshed = identity(source, target)[0]
                 else:
                     from worktree_publication import commit_snapshot
                     checkpoint = commit_snapshot(target, metadata, branch,
-                        b"Checkpoint working tree before recycling\n")
+                        b"Checkpoint working tree before recycling\n", stack, source)
                     if branch.startswith("refs/heads/"):
                         recovery_branch = branch
                     else:
@@ -178,7 +218,7 @@ def remove(options):
                         git(target, "branch", "--", recovery_branch_candidate.removeprefix("refs/heads/"),
                             checkpoint["commit"])
                         recovery_branch = recovery_branch_candidate
-                    refreshed = qualify(source, target)
+                    refreshed = identity(source, target)[0]
                     expected = dict(qualified[target], HEAD=checkpoint["commit"])
                     if refreshed != expected:
                         raise Refused("observed_identity_changed_after_checkpoint")
@@ -186,18 +226,22 @@ def remove(options):
                     # snapshot; do not silently discard ordinary outstanding files.
                     if git(target, "status", "--porcelain", "--untracked-files=all").stdout:
                         raise Refused("working_tree_changed_after_checkpoint")
-                    record_removal(metadata, checkpoint["commit"], recovery_branch)
+                    record_removal(metadata, checkpoint["commit"], recovery_branch,
+                                   native_locks=checkpoint.get("native_locks", []))
                 flags = ["--force", "--force"] if "locked" in refreshed else ["--force"]
                 removing = True
                 git(source, "worktree", "remove", *flags, "--", target,
                     timeout=None if options.force else 300)
                 outcomes.append(dict(path=str(target), outcome="removed", checkpoint=checkpoint,
-                                     recovery_branch=recovery_branch))
+                                     recovery_branch=recovery_branch,
+                                     recovery_roots=getattr(stack, "recovery_roots", [])))
         except (Refused, OSError, subprocess.SubprocessError) as error:
             outcomes.append(dict(path=str(target),
                 outcome="partial_or_indeterminate" if removing else "checkpoint_failed",
                 error=str(error), checkpoint=checkpoint, recovery_branch=recovery_branch,
-                recovery_branch_candidate=recovery_branch_candidate))
+                recovery_branch_candidate=recovery_branch_candidate,
+                native_locks=getattr(error, "native_locks", []) or getattr(stack, "native_locks", []),
+                recovery_roots=getattr(stack, "recovery_roots", [])))
 
     return dict(event="worktree_removal", items=outcomes,
                 status="failed" if any(item["outcome"] not in ("removed", "would_remove") for item in outcomes) else "succeeded")

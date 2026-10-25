@@ -174,6 +174,78 @@ $$\forall G \in Type,\; [AddCommGroup\left(G\right)] \forall C \in Set\left(G\ri
 
 Let r=a+b occur at t outside [h,k). Both cuts t and t+1 are exterior, so their prefixes are fixed; their difference proves the actual letter at t is still r. The prescribed inserted value q=P(t)+a is unchanged and belongs to removed I. Exact inventory replacement proves q is absent from the new inventory, rather than assuming a successful expansion. Expansion inserts only q into the prefix path. All old cut equalities retain the endpoint exception and q collides with none, so the expanded word is Good. Permutation cancellation removes the unique new r and inserts the original adjacent a,b, proving the exact A inventory, nonzero labels and unchanged total. The same compression space and legal pair are retained. The collision value witnesses that the new compression differs from the input. No Good A-order, desired cycle/inventory, or extra subset induction is supplied.
 
+**Theorem 1.15 (Original proper-interval and prefix equivalence).**
+
+$$\forall G \in Type,\; [AddCommGroup\left(G\right)] \forall w \in List\left(G\right),\; (Good\left(w\right)) \Leftrightarrow (\forall i \in Nat,\; \forall j \in Nat,\; ((i < j) \land ((j \le length\left(w\right)) \land (pref\left(w, i\right) = pref\left(w, j\right)))) \Rightarrow ((i = 0) \land (j = length\left(w\right))))$$
+
+*Proof.* Machine-checked in Lean as `D5/S1/Words/Sequenceability/SeparatedPrefixReflection.good_iff` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+AdaptiveMergePrefix.good_iff_proper_intervals consumes this original equivalence in reverse. Only empty/full equality is exempt, including at zero total.
+
+**Theorem 1.16 (Prefix before an append cut).**
+
+$$\forall G \in Type,\; [AddCommGroup\left(G\right)] \forall L \in List\left(G\right),\; \forall R \in List\left(G\right),\; \forall j \in Nat,\; (j \le length\left(L\right)) \Rightarrow (pref\left(append\left(L, R\right), j\right) = pref\left(L, j\right))$$
+
+*Proof.* Machine-checked in Lean as `D5/S1/Words/Sequenceability/SeparatedPrefixReflection.pref_append_left` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+Consumed by AdaptiveMergePrefix.bad_expand_implies_collision to identify a left suffix collision. This is the original normalization helper.
+
+**Theorem 1.17 (Prefix after an append cut).**
+
+$$\forall G \in Type,\; [AddCommGroup\left(G\right)] \forall L \in List\left(G\right),\; \forall R \in List\left(G\right),\; \forall j \in Nat,\; (length\left(L\right) \le j) \Rightarrow (pref\left(append\left(L, R\right), j\right) = sum\left(L\right) + pref\left(R, j - length\left(L\right)\right))$$
+
+*Proof.* Machine-checked in Lean as `D5/S1/Words/Sequenceability/SeparatedPrefixReflection.pref_append_right` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+Consumed by AdaptiveMergePrefix.bad_expand_implies_collision to identify a right prefix collision. Both the append cut and the full cut are included.
+
+**Theorem 1.18 (An inventory value has an actual bounded cut).**
+
+$$\forall G \in Type,\; [AddCommGroup\left(G\right)] \forall w \in List\left(G\right),\; \forall x \in G,\; (mem\left(x, inventory\left(w\right)\right)) \Leftrightarrow (\exists j \in Nat,\; (j \le length\left(w\right)) \land (pref\left(w, j\right) = x))$$
+
+*Proof.* Machine-checked in Lean as `D5/S1/Words/Sequenceability/SeparatedPrefixReflection.mem_inventory` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+AdaptiveMergePrefix.bad_expand_implies_collision consumes the original finite-image equivalence. All cuts, including empty and full, are represented.
+
+**Theorem 1.19 (A fresh inserted value preserves proper intervals).**
+
+$$\forall G \in Type,\; [AddCommGroup\left(G\right)] \forall L \in List\left(G\right),\; \forall R \in List\left(G\right),\; \forall a \in G,\; \forall b \in G,\; ((Good\left(append\left(L, cons\left(a + b, R\right)\right)\right)) \land (\neg mem\left(sum\left(L\right) + a, inventory\left(append\left(L, cons\left(a + b, R\right)\right)\right)\right))) \Rightarrow (Good\left(append\left(L, cons\left(a, cons\left(b, R\right)\right)\right)\right))$$
+
+*Proof.* Machine-checked in Lean as `D5/S1/Words/Sequenceability/SeparatedPrefixReflection.expansion_good` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+This original theorem is used contrapositively by AdaptiveMergePrefix.bad_expand_implies_collision. It has no separation or strict-cone hypothesis and includes empty sides and zero-total words.
+
+**Theorem 1.20 (The prescribed expansion restores the original alphabet).**
+
+$$\forall G \in Type,\; [AddCommGroup\left(G\right)] \forall A \in Finset\left(G\right),\; \forall a \in G,\; \forall b \in G,\; \forall w \in List\left(G\right),\; \forall t \in Nat,\; ((mem\left(a, A\right)) \land ((mem\left(b, A\right)) \land ((a \ne b) \land ((\neg mem\left(a + b, A\right)) \land ((Perm\left(w, toList\left(compressed\left(A, a, b\right)\right)\right)) \land ((t < length\left(w\right)) \land (getElem\left(w, t\right) = a + b))))))) \Rightarrow (Perm\left(expandAt\left(w, t, a, b\right), toList\left(A\right)\right))$$
+
+*Proof.* Machine-checked in Lean as `D5/S1/Words/Sequenceability/SeparatedPrefixReflection.expansion_inventory` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+AdaptiveMergeRepair.expanded_permutation consumes the original theorem at t = length(L), with w = L ++ [a+b] ++ R and the actual LegalPair membership, distinctness and sum-exclusion facts. This normalization helper is also used by same_pair_repair.
+
 The strict cone is extra structure. A nonempty strict cone cannot exist in a finite group, and the nonempty block interior supplies a cone element. This result does not settle finite torsion, unrestricted adaptive AM, or the original arbitrary-subset, same-M, original-coordinate, coefficient-one parent. The missing global inference is that nonempty Omega for every legal pair forces a usable escape for some actual order. No universal escape, termination, or H-to-cap implication is proved.
 
 Provenance: the supplied standalone native separated-block construction and independent reconstruction supply the argument. The implementation is repo-prior-exposed Codex of the same model family. ChosenMergeExpansionRefutation.Good and expand are specialized to ZMod 2 times ZMod 4, and are not generic APIs. BlockSpliceOrdering requires a supplied injective cycle and exact chord, absent here. IntegerStrongOrdering, attributed there to Kravitz, proves integer existence and does not transform this prescribed compression. Pinned Mathlib supplies list splitting, reversal permutation, prefix sums and finset cardinality. Its AddGroupCone contains zero; StrictCone here states the required strict addition-closed subset instead. No private supplier proof is copied and no literature novelty claim is made.
@@ -189,9 +261,15 @@ Escape registration remains unfinished: both exact-telescope Reg families compil
 - Truth anchor: `D5/S1/Words/Sequenceability/SeparatedPrefixReflection.StrictCone`
 - Truth anchor: `D5/S1/Words/Sequenceability/SeparatedPrefixReflection.compressed`
 - Truth anchor: `D5/S1/Words/Sequenceability/SeparatedPrefixReflection.expandAt`
+- Truth anchor: `D5/S1/Words/Sequenceability/SeparatedPrefixReflection.expansion_good`
+- Truth anchor: `D5/S1/Words/Sequenceability/SeparatedPrefixReflection.expansion_inventory`
+- Truth anchor: `D5/S1/Words/Sequenceability/SeparatedPrefixReflection.good_iff`
 - Truth anchor: `D5/S1/Words/Sequenceability/SeparatedPrefixReflection.interior`
 - Truth anchor: `D5/S1/Words/Sequenceability/SeparatedPrefixReflection.inventory`
+- Truth anchor: `D5/S1/Words/Sequenceability/SeparatedPrefixReflection.mem_inventory`
 - Truth anchor: `D5/S1/Words/Sequenceability/SeparatedPrefixReflection.pref`
+- Truth anchor: `D5/S1/Words/Sequenceability/SeparatedPrefixReflection.pref_append_left`
+- Truth anchor: `D5/S1/Words/Sequenceability/SeparatedPrefixReflection.pref_append_right`
 - Truth anchor: `D5/S1/Words/Sequenceability/SeparatedPrefixReflection.reflected`
 - Truth anchor: `D5/S1/Words/Sequenceability/SeparatedPrefixReflection.reverseBlock`
 - Truth anchor: `D5/S1/Words/Sequenceability/SeparatedPrefixReflection.same_pair_repair`

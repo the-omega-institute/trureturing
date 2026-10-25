@@ -13,6 +13,9 @@ internal sealed class FourierCliffordVacuumDocument : IScribeDocumentDefinition
         H("Fourier Clifford Vacuum"),
         Blocks(
             Paragraph(Text("Formulas retain Lean application and binder notation. Omega denotes the outcome-index type Ω, whereas ω denotes an outcome. Square brackets denote anonymous typeclass assumptions. Scalar coercions display their target types; angle brackets suppress the proof field of a Fin value. The identity is written as 1. Products of matrices and scalar actions use a centered dot; the operand types distinguish them. Infix Matrix.kronecker denotes the Lean kronecker notation.")),
+            Node("car-nilpotent", "Vanishing self-anticommutator", NilpotentFormula(),
+                "In a complex algebra with compatible star, a vanishing self-anticommutator forces the square to vanish. Type* allows the algebra to lie in any universe.",
+                "CAR_nilpotent", DescribeRole.Lemma, AssessedProvenance.FromRepo()),
             Node("averaging", "averaging", F0(),
                 "The displayed expression defines averaging.", "averaging",
                 DescribeRole.Definition, AssessedProvenance.FromRepo()),
@@ -76,6 +79,18 @@ internal sealed class FourierCliffordVacuumDocument : IScribeDocumentDefinition
 
     private static Formula Call(string name) => Seq(Operatorname, Grp(F.Id(name)));
     private static Formula Parenthesized(Formula value) => Seq(Open, value, Close);
+    private static Formula NilpotentFormula() => Disp(new Formula.Aligned([
+        Seq(Forall, Sp, OpenBrace, F.Id("R"), Colon, Seq(Call("Type"), Star), CloseBrace, Comma),
+        Seq(Grp(), OpenBracket, Call("Ring"), Sp, F.Id("R"), CloseBracket, Comma),
+        Seq(Grp(), OpenBracket, Call("Algebra"), Sp, Seq(Mathbb, Grp(F.Id("C"))), Sp,
+            F.Id("R"), CloseBracket, Comma),
+        Seq(Grp(), OpenBracket, Call("StarRing"), Sp, F.Id("R"), CloseBracket, Comma),
+        Seq(Grp(), OpenBracket, Call("StarModule"), Sp, Seq(Mathbb, Grp(F.Id("C"))), Sp,
+            F.Id("R"), CloseBracket, Comma),
+        Seq(Forall, Sp, Parenthesized(Seq(F.Id("b"), Colon, F.Id("R"))), Comma),
+        Seq(Parenthesized(Seq(F.Id("b"), Cdot, Sp, F.Id("b"), Plus, F.Id("b"), Cdot,
+            Sp, F.Id("b"), Eq, D(0))), Sp, To, Sp, F.Id("b"), Cdot, Sp, F.Id("b"), Eq, D(0))
+    ]));
     private static Formula F0() => Disp(new Formula.Aligned([
             Seq(Forall, Sp, Parenthesized(Seq(F.Id("R"), Sp, Colon, Sp, Call("Type"))), Comma),
             Seq(Grp(), OpenBracket, Seq(Call("Ring"), Sp, F.Id("R")), CloseBracket, Sp, Comma),

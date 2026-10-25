@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:4a93f059eea62b194bdb1a78d9ccc9fd696d823b51aa7b956771ab827c028082
+  normalized_sha256: sha256:4a93f059eea62b194bdb1a78d9ccc9fd696d823b51aa7b956771ab827c028082
+cas_ref: sha256:4a93f059eea62b194bdb1a78d9ccc9fd696d823b51aa7b956771ab827c028082
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 限制共同因子增长的隐私政策解释，不主张实际泄漏已经受某个界控制。
+    previous_atom_id: c8570c06b9f772f63b17d396f0163233d65ab2705a42c9beb0f8e390a0827079
+    next_atom_id: 0db0a017d9dc08513239338a708bbc37e008662cb423074061280d7f1250ec4f

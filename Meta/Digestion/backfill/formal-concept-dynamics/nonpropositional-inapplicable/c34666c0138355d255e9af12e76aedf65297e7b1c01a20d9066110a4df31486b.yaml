@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:c34666c0138355d255e9af12e76aedf65297e7b1c01a20d9066110a4df31486b
+  normalized_sha256: sha256:c34666c0138355d255e9af12e76aedf65297e7b1c01a20d9066110a4df31486b
+cas_ref: sha256:c34666c0138355d255e9af12e76aedf65297e7b1c01a20d9066110a4df31486b
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 方格在此只列出 X、Y、概念界面及过程箭头，并说明水平箭头的角色；未断言方格交换或下降存在。
+    previous_atom_id: 36e08946faf602836812e2d93686c6c2be405ca1666d2b3571e384808db8f55d
+    next_atom_id: b84e307935209fe33a1427332705faaae863fcbb68cbaab877f2f9dc7da01f83

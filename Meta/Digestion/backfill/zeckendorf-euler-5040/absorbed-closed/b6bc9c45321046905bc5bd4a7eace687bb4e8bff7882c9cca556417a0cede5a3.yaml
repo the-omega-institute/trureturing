@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:b6bc9c45321046905bc5bd4a7eace687bb4e8bff7882c9cca556417a0cede5a3
+  normalized_sha256: sha256:b6bc9c45321046905bc5bd4a7eace687bb4e8bff7882c9cca556417a0cede5a3
+cas_ref: sha256:b6bc9c45321046905bc5bd4a7eace687bb4e8bff7882c9cca556417a0cede5a3
+coverage_gids:
+  - gid: D5/S0/Tower/GoldenNames.golden_name_card
+    target_statement_id: sha256:aa66dc68642e208670a0a93e6aaa0d6ef78791885e2736ad9d35f1de20ab6297
+  - gid: D5/S3/Observer/GoldenCoding/FiniteZeckendorfEulerIdentity.finite_zeckendorf_interval_and_euler
+    target_statement_id: sha256:54164db5d402f7eadf47d54eece74989ea8ef37e9cbbac2080191134a450921d
+receipts:
+  unresolved_subitems: []
