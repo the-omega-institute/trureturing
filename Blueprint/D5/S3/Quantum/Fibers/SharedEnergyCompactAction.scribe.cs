@@ -42,8 +42,17 @@ internal sealed class SharedEnergyCompactActionDocument : IScribeDocumentDefinit
                 "For every m at least two the literal sparse positive states belong to distinct actual compact orbits. "
                     + "Their shared Haar moments agree at every smaller copy count and differ at the stated count. "
                     + "Orbit conjugation preserves each complete total-energy pinching, so the explicit high-order tensor entry excludes orbit equivalence."),
-            Paragraph(Text("The all-state upper implication and the least uniform orbit-separating order require further arguments. "
-                + "The explicit sparse effect gives no Helstrom optimum, adaptive protocol bound or postselection advantage.")))));
+            Thm("least-uniform-order", "least_uniform_order", "The exact least positive uniform copy order", LeastOrder(),
+                "For every m at least two, twice m minus one is the least positive order at which equality of actual shared Haar moments "
+                    + "is equivalent to membership in the same actual compact energy orbit, uniformly over every native three-dimensional density state. "
+                    + "Every zero-weight exponent decomposes by strictly decreasing degree into labelled indecomposable exponents. "
+                    + "Their degree bound and monomial multiplication extend one moment's equality to all zero-weight monomials. "
+                    + "Hermitian coordinate pairs give equal moduli and identical zero supports. If the weight-one coordinate is nonzero, its phase ratio "
+                    + "determines the common circle phase. If it vanishes, the remaining two nonzero coordinates have consecutive weights, "
+                    + "so their zero-weight relation gives a common phase by a ratio. A single nonzero coordinate admits a circle root, "
+                    + "and the empty support is immediate. These cases give an actual conjugating matrix, including deficient rank and m equal to two. "
+                    + "Orbit conjugation gives the reverse implication at every order. The literal positive sparse pair excludes every smaller positive order."),
+            Paragraph(Text("The explicit sparse effect gives no Helstrom optimum, adaptive protocol bound or postselection advantage.")))));
     private static DocumentBlock Def(string id, string name, string title, string text) =>
         Describe.Lean(DescribeId.Create(id), DeclarationHandle.Create(Module + name), H(title),
             StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
@@ -104,6 +113,18 @@ internal sealed class SharedEnergyCompactActionDocument : IScribeDocumentDefinit
             C("degree", a), Leq, Sp, n, Sp, Implies, Sp,
             C("weight", m, a), Eq, D(0), Sp, Implies, Sp,
             C("monomial", C("stateMatrix", r), a), Eq, C("monomial", C("stateMatrix", s), a)));
+    }
+
+    private static Formula LeastOrder()
+    {
+        var m = F.Id("m"); var n = F.Id("N"); var r = F.Id("r"); var s = F.Id("s");
+        var orders = Seq(OpenBrace, n, Colon, C("Nat"), Sp, Mid, Sp,
+            D(0), Lt, n, Sp, Land, Sp,
+            Forall, Sp, r, Comma, s, InMacro, C("DensityState", C("Fin", D(3))), Comma,
+            Open, C("sharedMoment", m, n, r), Eq, C("sharedMoment", m, n, s), Sp,
+            Iff, Sp, C("SameEnergyOrbit", m, r, s), Close, CloseBrace);
+        return Disp(Seq(Forall, Sp, m, InMacro, C("Nat"), Comma,
+            D(2), Leq, Sp, m, Sp, Implies, Sp, C("IsLeast", orders, Length(m))));
     }
 
 }

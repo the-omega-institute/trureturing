@@ -407,8 +407,18 @@ private theorem two_coordinate_relation (m : ℕ) (X Y : Matrix (Fin 3) (Fin 3) 
   have ha : weight m a = 0 := by
     simpa [a, weight, Nat.cast_add, add_mul, Finset.sum_add_distrib,
       ite_and] using hw
-  have he := h a ha
-  simpa [a, monomial, pow_add, Finset.prod_mul_distrib, ite_and] using he
+  have value (Z : Matrix (Fin 3) (Fin 3) ℂ) :
+      monomial Z a = Z i j ^ p * Z k l ^ q := by
+    have single (i j : Fin 3) (p : ℕ) :
+        (∏ u, ∏ v, Z u v ^ (if u=i ∧ v=j then p else 0)) = Z i j ^ p := by
+      have entry (u v : Fin 3) : Z u v ^ (if u=i ∧ v=j then p else 0) =
+          if u=i ∧ v=j then Z u v ^ p else 1 := by split_ifs <;> simp
+      simp_rw [entry, ite_and]
+      simp
+    simp only [monomial, a, pow_add]
+    simp_rw [Finset.prod_mul_distrib]
+    rw [single, single]
+  exact (value X).symm.trans ((h a ha).trans (value Y))
 
 private theorem equal_phase (x y : ℂ) (hx : x ≠ 0)
     (he : x * star x = y * star y) : ∃ u : Circle, y = (u : ℂ)*x := by
@@ -439,6 +449,7 @@ private theorem phase_relation (m : ℕ) (X Y : Matrix (Fin 3) (Fin 3) ℂ)
     u ^ p = v ^ q := by
   have hr : Y l k = star (v : ℂ)*X l k := by
     rw [← hY.apply l k, hv, star_mul, hX.apply l k]
+    ring
   have hx' : X l k ≠ 0 := by
     intro he
     apply hy
@@ -509,11 +520,13 @@ private theorem recover_phase (m : ℕ) (hm : 2 ≤ m)
         have hz' : (c/b)^m = c := by
           conv_lhs => rw [← Nat.sub_add_cancel hm1]
           rw [pow_succ, hz]
-          exact mul_div_cancel_left c b
+          group
         refine ⟨c/b, ?_, ?_, ?_⟩
         · simp [ha, hx]
-        · rw [hb, ← hz, Circle.coe_pow]
-        · rw [hc, ← hz', Circle.coe_pow]
+        · exact hb.trans (by simpa only [Circle.coe_pow] using
+            congrArg (fun w : Circle => (w : ℂ)*X 2 1) hz.symm)
+        · exact hc.trans (by simpa only [Circle.coe_pow] using
+            congrArg (fun w : Circle => (w : ℂ)*X 2 0) hz'.symm)
   · refine ⟨a, ha, ?_, ?_⟩
     · by_cases hy : X 2 1 = 0
       · simp [hb, hy]
@@ -529,6 +542,62 @@ private theorem recover_phase (m : ℕ) (hm : 2 ≤ m)
             phase_relation m X Y hX hY h 1 0 2 0 m 1 hx ht a c ha hc (by simp [energy])
         rw [hc, ← hac, Circle.coe_pow]
 
+private theorem orbit_of_monomials (m : ℕ) (hm : 2 ≤ m) (r s : DensityState (Fin 3))
+    (h : ∀ a : Exponent, weight m a = 0 →
+      monomial (stateMatrix r) a = monomial (stateMatrix s) a) : SameEnergyOrbit m r s := by
+  let X := stateMatrix r
+  let Y := stateMatrix s
+  have hX : X.IsHermitian :=
+    (D5.S3.Quantum.Information.PartialTraceMutualInformation.density_posSemidef r).isHermitian
+  have hY : Y.IsHermitian :=
+    (D5.S3.Quantum.Information.PartialTraceMutualInformation.density_posSemidef s).isHermitian
+  obtain ⟨z, h10, h21, h20⟩ := recover_phase m hm X Y hX hY h
+  let U := (energyRepresentation m z).val
+  let C := U * X * Uᴴ
+  have hC : C.IsHermitian := Matrix.isHermitian_mul_mul_conjTranspose U hX
+  have diag (i : Fin 3) : Y i i = C i i := by
+    have hd := two_coordinate_relation m X Y h i i 0 0 1 0 (by simp)
+    have hc := orbit_tensor_entry m 1 z X i i
+    simpa only [matrixCopies, totalEnergy, sub_self, zpow_zero, one_mul,
+      pow_one, pow_zero, mul_one] using hd.symm.trans hc.symm
+  have entry (i j : Fin 3) : C i j = (z : ℂ)^(energy m i-energy m j)*X i j :=
+    orbit_tensor_entry m 1 z X i j
+  have hc10 : Y 1 0 = C 1 0 := by simpa [entry, energy] using h10
+  have hcast : ((m-1 : ℕ) : ℤ) = (m : ℤ)-1 := by omega
+  have hc21 : Y 2 1 = C 2 1 := by simpa [entry, energy, ← hcast] using h21
+  have hc20 : Y 2 0 = C 2 0 := by simpa [entry, energy] using h20
+  refine ⟨⟨energyRepresentation m z, ⟨z, rfl⟩⟩, ?_⟩
+  change Y = C
+  ext i j
+  fin_cases i <;> fin_cases j
+  · exact diag 0
+  · rw [← hY.apply 0 1, ← hC.apply 0 1, hc10]
+  · rw [← hY.apply 0 2, ← hC.apply 0 2, hc20]
+  · exact hc10
+  · exact diag 1
+  · rw [← hY.apply 1 2, ← hC.apply 1 2, hc21]
+  · exact hc20
+  · exact hc21
+  · exact diag 2
+
+/-- On the entire native density-state domain, the exact least positive order
+that separates actual compact energy orbits is twice m minus one. -/
+theorem least_uniform_order (m : ℕ) (hm : 2 ≤ m) :
+    IsLeast {N : ℕ | 0 < N ∧ ∀ r s : DensityState (Fin 3),
+      sharedMoment m N r = sharedMoment m N s ↔ SameEnergyOrbit m r s} (2*m-1) := by
+  constructor
+  · refine ⟨by omega, fun r s => ⟨?_, ?_⟩⟩
+    · intro he
+      exact orbit_of_monomials m hm r s (all_monomials m hm r s he)
+    · intro ho
+      rw [shared_haar_pinching, shared_haar_pinching]
+      exact orbit_pinching_equal m (2*m-1) r s ho
+  · intro N hN
+    by_contra! hsmall
+    have hs := sparse_compact_separation m hm
+    exact hs.1 ((hN.2 rho (sigma m)).mp (hs.2.1 N hsmall))
+
+#print axioms least_uniform_order
 #print axioms moment_determines_monomials
 #print axioms energy_group_realization
 #print axioms shared_haar_pinching
