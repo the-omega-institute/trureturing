@@ -1194,3 +1194,445 @@ do not discharge either additional realization premise or select a
 universal physical spatial dimension.
 
 ## 追加锚（本行以下为增补区）
+## 9. The exact full-Green threshold and its attractive response
+
+**Definition 9.1 (whole-group free forms and the natural angular constant).**
+Use C, Definitions 15.1 and 16.2, and V, Definition 10.1 and
+Theorem 10.2. Write the central coordinate of C, (15.1), as $z$
+(the coordinate denoted $\theta$ there), and write $\vartheta$ for
+the horizontal polar angle. Thus, on the whole group,
+
+$$
+\begin{aligned}
+\xi&=(x,y,z),&d\xi&=dx\,dy\,dz,\\
+U&=\partial_x-\tfrac y2\partial_z,&
+V&=\partial_y+\tfrac x2\partial_z,&Z_H&=\partial_z,\\
+\rho&=(x^2+y^2)^{1/2},&
+R&=(\rho^4+16z^2)^{1/4},\\
+\mathcal E_H[f]&=\|Uf\|_2^2+\|Vf\|_2^2,&
+\mathcal T_\epsilon[f]&=\mathcal E_H[f]+\epsilon^2\|Z_Hf\|_2^2.
+\end{aligned}
+\tag{9.1}
+$$
+
+For $\epsilon=0,1$, let $\mathcal H_\epsilon$ be the closure of
+complex $C_c^\infty(\mathbb R^3)$ in
+$(\|f\|_2^2+\mathcal T_\epsilon[f])^{1/2}$. At $\epsilon=0$
+only the horizontal derivatives occur. Its associated free operator
+is $\mathcal L_\epsilon=-(U^2+V^2+\epsilon^2 Z_H^2)$.
+Let $h_\epsilon(t,\xi)$ be its Lebesgue unit-source heat kernel,
+with the original clock $e^{-t\mathcal L_\epsilon}$, and put
+
+$$
+\mathcal G_\epsilon(\xi)=\int_0^\infty h_\epsilon(t,\xi)\,dt,
+\qquad \mathcal G_0(\xi)=\frac1{2\pi}R^{-2}.
+\tag{9.2}
+$$
+
+The second identity is the horizontal normalization supplied by V,
+Theorem 10.2; the density factor $m_0$ is absent from the whole-group
+Lebesgue kernel. Define, on the complex domain,
+
+$$
+\begin{aligned}
+J&=(-\pi/2,\pi/2),\qquad c(a)=\cos a,\\
+\mathcal H_c&=\{b\in L^2(J;\mathbb C):
+ b\in AC_{\mathrm{loc}}(J),\ \sqrt c\,b'\in L^2(J)\},\\
+\lambda_0&=\inf_{0\ne b\in\mathcal H_c}
+ \frac{\int_J(4c|b'|^2+c|b|^2)\,da}{\int_J|b|^2\,da},
+ \qquad K=2\pi\lambda_0>0.
+\end{aligned}
+\tag{9.3}
+$$
+
+These are natural finite-energy endpoints, with no imposed Dirichlet
+values. Splitting real and imaginary parts leaves the infimum
+unchanged. The whole-group free forms $\mathcal T_\epsilon$ and
+$\mathcal H_\epsilon$ are distinct from the slab forms $T_\epsilon$,
+$q^M_{\epsilon,g}$ and $q^D_{\epsilon,g}$ in Definition 1.1.
+The latter use $d\mu$, the original killed field
+$\Gamma_{\epsilon,o}$ and their stated wall traces; neither those
+traces nor the factor $m_0=(2r)^{-1}$ are inserted into (9.1)–(9.3).
+The partial Fourier convention throughout this section is
+
+$$
+\widehat f(X,k)=\int_{\mathbb R}e^{-ikz}f(X,z)\,dz,
+\qquad f(X,z)=\frac1{2\pi}\int_{\mathbb R}e^{ikz}\widehat f(X,k)\,dk,
+\qquad X=(x,y).
+\tag{9.4}
+$$
+
+**Theorem 9.2 (the exact full-Green inequality on the original free domain).**
+For every complex $u\in\mathcal H_1$, including $u=0$,
+
+$$
+\mathcal T_1[u]\ \ge\ 2\pi\lambda_0
+       \int_{\mathbb R^3}\mathcal G_1(\xi)|u(\xi)|^2\,d\xi.
+\tag{9.5}
+$$
+
+The weight is the complete heat integral (9.2). The assertion includes
+all angular modes and imposes no symmetry on $u$.
+
+Proof. First extend the precise horizontal input of V, Theorem 10.2,
+to the domain needed below:
+
+$$
+\mathcal E_H[f]\ge\lambda_0\int R^{-2}|f|^2\,d\xi
+       =K\int\mathcal G_0|f|^2\,d\xi,
+       \qquad f\in\mathcal H_1.
+\tag{9.6}
+$$
+
+The supplied theorem applies to every complex smooth punctured test.
+For a compact smooth test $f$, choose a cutoff zero on the Euclidean
+ball of radius $\delta$, one outside the ball of radius $2\delta$,
+with derivatives $O(\delta^{-1})$. On the fixed compact support all
+three frame coefficients are bounded. The additional squared-derivative
+cost is $O(\delta^3\delta^{-2})=O(\delta)$; the removed original
+norms and derivative integrals tend to zero. Thus the punctured tests
+converge in the $\mathcal H_1$ norm. Fatou proves (9.6) on the full
+smooth compact core. A defining core approximation to any
+$f\in\mathcal H_1$, followed by an almost-everywhere convergent
+subsequence and Fatou again, proves (9.6) as stated. In particular its
+weighted integral is finite. This uses the supplied horizontal theorem,
+not an identification of $\mathcal H_1$ with Euclidean $H^1$.
+
+Next compute the exact central Fourier heat columns. For $t>0$,
+$k\ne0$ and $\kappa=|k|$, they are
+
+$$
+\begin{aligned}
+q_\epsilon(t,\rho,k)
+ &:=\int_{\mathbb R}e^{-ikz}h_\epsilon(t,\rho,z)\,dz\\
+ &=e^{-\epsilon^2tk^2}
+   \frac{\kappa}{4\pi\sinh(\kappa t)}
+   \exp\!\left(-\frac{\kappa\rho^2}{4}\coth(\kappa t)\right),\\
+q_\epsilon(t,\rho,0)
+ &=\frac1{4\pi t}\exp\!\left(-\frac{\rho^2}{4t}\right),
+ \qquad 0\le q_1(t,\rho,k)\le q_0(t,\rho,k).
+\end{aligned}
+\tag{9.7}
+$$
+
+Here the value at zero is the continuous limit, not an omitted mode.
+To justify both the formula and its operator domain, Plancherel in
+(9.4) transforms the free form into the direct integral, with measure
+$dk/(2\pi)$, of the closed magnetic forms
+
+$$
+\| (\partial_x-iky/2)F\|_{L^2_X}^2
+ +\| (\partial_y+ikx/2)F\|_{L^2_X}^2
+ +\epsilon^2k^2\|F\|_{L^2_X}^2.
+\tag{9.8}
+$$
+
+This identity first holds on smooth tests. For the closure, truncate
+$k$ and $X$, using horizontal cutoffs whose product-rule errors tend
+to zero. On the resulting bounded sets the coefficients are bounded,
+so smoothing gives compact smooth approximants in $(X,k)$ in the
+direct-integral form norm. Their inverse transforms are smooth,
+compactly supported in $X$ and rapidly decreasing in $z$. Cut them
+off at $|z|\le 2N$ by cutoffs equal to one for $|z|\le N$.
+The extra $U,V$ derivatives are $-(y/2)\chi_N' f$ and
+$(x/2)\chi_N'f$; their norms tend to zero because the horizontal
+support is bounded and $\|\chi_N'\|_\infty=O(N^{-1})$.
+The central derivative error, when present, has the same bound.
+The original derivatives converge by their integrable tails.
+This gives the original compact smooth core, and identifies (9.8)
+with its original Friedrichs closure, for both $\epsilon=0$ and $1$.
+
+The fiber operator is $B_k+\epsilon^2k^2$, where
+
+$$
+B_k=-\Delta_X-ik\partial_\vartheta+k^2\rho^2/4.
+\tag{9.9}
+$$
+
+It commutes with horizontal rotations. On the radial reducing
+subspace its closed form is exactly that of
+$H_\kappa=-\Delta_X+\kappa^2|X|^2/4$; only on that subspace does
+the angular term vanish. The source $\delta_{X=0}$ is radial.
+Applying the fiber semigroup to radial smooth approximate identities
+therefore computes its source column from $H_\kappa$, with the
+additional scalar $e^{-\epsilon^2tk^2}$.
+
+The classical two-dimensional oscillator Mehler formula is
+
+$$
+M_\kappa(t;X,Y)=\frac{\kappa}{4\pi\sinh(\kappa t)}
+ \exp\!\left[-\frac{\kappa}{4\sinh(\kappa t)}
+ \{\cosh(\kappa t)(|X|^2+|Y|^2)-2X\cdot Y\}\right].
+\tag{9.10}
+$$
+
+Its Gaussian integral in the intermediate variable gives the
+semigroup identity, and differentiation gives
+$\partial_tM_\kappa=-H_\kappa M_\kappa$. As $t\downarrow0$
+it has the Euclidean heat approximate-identity limit; these properties
+identify the oscillator Friedrichs semigroup. At $Y=0$ its Gaussian
+parameters $A=\kappa/(4\pi\sinh(\kappa t))$ and
+$B=\kappa\coth(\kappa t)/4$ satisfy
+$A'/A=-4B$ and $B'=\kappa^2/4-4B^2$, with
+$A\sim(4\pi t)^{-1}$ and $B\sim(4t)^{-1}$.
+This proves (9.7) for $k\ne0$, and the ordinary two-dimensional
+Gaussian gives the zero mode. Both whole-group heat kernels are
+nonnegative and invariant under horizontal rotations. Their horizontal
+projection is the semigroup with generator $\Delta_X$, since the
+fields on functions independent of $z$ reduce to $\partial_x,\partial_y$.
+Consequently their $z$ marginal is exactly the Gaussian in (9.7),
+and $h_\epsilon(t,\rho,\cdot)\in L^1(\mathbb R)$.
+This also justifies the Fourier columns as ordinary integrals.
+The factors $\kappa t$, $e^{-tk^2}$ and $(4\pi t)^{-1}$ retain
+the stated clock and the Lebesgue unit source.
+
+Now let $u\in C_c^\infty(\mathbb R^3;\mathbb C)$ be arbitrary,
+and use normalized angular averaging $\langle\cdot\rangle_\vartheta$
+to construct
+
+$$
+w(\rho,z)=\big\langle |u(\rho,\vartheta,z)|^2
+                         \big\rangle_\vartheta^{1/2},
+\qquad
+D=\rho^{-1}\partial_\vartheta+\tfrac\rho2\partial_z.
+\tag{9.11}
+$$
+
+For $\rho>0$ the horizontal energy density is
+$|u_\rho|^2+|Du|^2$. Where $w>0$, the norm derivative and periodicity
+give
+
+$$
+\begin{aligned}
+w w_\rho&=\operatorname{Re}\langle\overline u u_\rho\rangle_\vartheta,
+ &w w_z&=\operatorname{Re}\langle\overline u u_z\rangle_\vartheta,\\
+\operatorname{Re}\langle\overline u u_\vartheta\rangle_\vartheta&=0,
+ &\tfrac\rho2 w w_z
+    &=\operatorname{Re}\langle\overline u Du\rangle_\vartheta,\\
+|w_\rho|^2&\le\langle|u_\rho|^2\rangle_\vartheta,
+ &\tfrac{\rho^2}{4}|w_z|^2&\le\langle|Du|^2\rangle_\vartheta.
+\end{aligned}
+\tag{9.12}
+$$
+
+These are Cauchy–Schwarz inequalities. The weak norm chain rule gives
+the same inequalities almost everywhere on the zero set of $w$, and
+also $|w_z|^2\le\langle|u_z|^2\rangle_\vartheta$.
+For a global regularity justification, regard $w(X,z)$ as the norm
+of the Hilbert-valued map $\vartheta\mapsto u(R_\vartheta X,z)$,
+where $R_\vartheta$ is planar rotation. The Lipschitz norm map
+shows directly that its radial extension is compactly supported
+Euclidean $H^1(\mathbb R^3)$, with no boundary condition at the axis.
+Smooth approximation in Euclidean $H^1$ with support in a fixed compact
+set then gives $w\in\mathcal H_1$, because the frame coefficients
+are bounded there. Integrating (9.12) with $2\pi\rho\,d\rho\,dz$
+and using rotation invariance of $\mathcal G_1$ yields
+
+$$
+\mathcal E_H[w]\le\mathcal E_H[u],\qquad
+\int\mathcal G_1|w|^2\,d\xi=\int\mathcal G_1|u|^2\,d\xi.
+\tag{9.13}
+$$
+
+The weighted identity follows directly from Tonelli; it does not
+restrict the angular modes of the initial input.
+
+Apply (9.4) to $w$, and define a second auxiliary function by
+
+$$
+F(\rho,k)=\widehat w(\rho,k),\qquad
+\psi(\rho,k)=|F(\rho,k)|,\qquad
+v(\rho,z)=\frac1{2\pi}\int_{\mathbb R}e^{ikz}\psi(\rho,k)\,dk.
+\tag{9.14}
+$$
+
+Initially the inverse is understood in $L^2$. Since $w$ is Euclidean
+$H^1$, its partial transform has square-integrable horizontal
+derivatives and $kF\in L^2$. The Sobolev modulus rule contracts those
+derivatives and preserves $k^2|F|^2$. Thus $v$ is Euclidean $H^1$,
+is radial in $X$ and has the same bounded horizontal support as $w$.
+For radial functions the exact horizontal energy is
+
+$$
+\mathcal E_H[w]
+ =2\pi\int_0^\infty\int_{\mathbb R}
+    \rho\big(|w_\rho|^2+\rho^2|w_z|^2/4\big)\,dz\,d\rho.
+\tag{9.15}
+$$
+
+Plancherel and $|\partial_\rho|F||\le|\partial_\rho F|$
+almost everywhere show $\mathcal E_H[v]\le\mathcal E_H[w]$;
+the $\rho^2 k^2$ term is unchanged. For membership in the original
+closure, cut off the $z$ tail of $v$ and then mollify in Euclidean
+$H^1$, keeping horizontal support in a fixed larger box. The
+coefficients of $U,V,Z_H$ are bounded on that box, independently of
+$z$. The cutoff errors are bounded by a constant times
+$N^{-1}\|v\|_2$, and the derivative tails tend to zero. Hence
+
+$$
+v\in\mathcal H_1,\qquad
+\mathcal E_H[v]\le\mathcal E_H[w].
+\tag{9.16}
+$$
+
+No compact central support or smoothness of $v$ is required.
+
+For almost every $\rho>0$, $w(\rho,\cdot)\in H^1(\mathbb R)$.
+Cauchy–Schwarz with $(1+k^2)^{-1}$ gives
+
+$$
+\int_{\mathbb R}|F(\rho,k)|\,dk
+ \le\left(\int_{\mathbb R}(1+k^2)|F(\rho,k)|^2\,dk\right)^{1/2}
+     \left(\int_{\mathbb R}\frac{dk}{1+k^2}\right)^{1/2}<\infty.
+\tag{9.17}
+$$
+
+Thus both inversions in (9.14) are also ordinary absolutely convergent
+inversions at those radii. For each $t>0$, Fourier inversion and the
+$L^1_z$ marginal of the heat kernel give
+
+$$
+\int_{\mathbb R}h_\epsilon(t,\rho,z)|w(\rho,z)|^2\,dz
+ =\frac1{(2\pi)^2}\iint_{\mathbb R^2}
+ q_\epsilon(t,\rho,k-\ell)
+ F(\rho,k)\overline{F(\rho,\ell)}\,dk\,d\ell.
+\tag{9.18}
+$$
+
+The evenness of $q_\epsilon$ removes the sign from the inverse
+Fourier exponents. This is an absolutely convergent identity:
+$|q_\epsilon|\le\|h_\epsilon(t,\rho,\cdot)\|_1$ and (9.17)
+bound the absolute double integral. The left side is nonnegative.
+Taking the absolute value on the right and using the nonnegative
+ordering in (9.7) bounds it, for $\epsilon=1$, by
+
+$$
+\begin{aligned}
+&\frac1{(2\pi)^2}\iint q_0(t,\rho,k-\ell)
+                     \psi(\rho,k)\psi(\rho,\ell)\,dk\,d\ell\\
+&\hspace{30mm}=\int_{\mathbb R}h_0(t,\rho,z)|v(\rho,z)|^2\,dz.
+\end{aligned}
+\tag{9.19}
+$$
+
+The last equality is the same absolutely convergent inversion formula
+for $\psi$. Integrate this nonnegative fixed-time inequality against
+$2\pi\rho\,d\rho$ and then over every $0<t<\infty$. Tonelli,
+or increasing finite time intervals, gives the full comparison
+
+$$
+\int\mathcal G_1|w|^2\,d\xi
+       \le\int\mathcal G_0|v|^2\,d\xi<\infty.
+\tag{9.20}
+$$
+
+Finiteness follows from (9.6) and (9.16). There is no exchange of a
+signed infinite-time Fourier integral: absolute convergence was used
+at fixed time, and the subsequent integration has nonnegative
+integrands. Both time endpoints and all spatial tails are retained.
+This is a comparison after transforming the test function; it makes
+no assertion of pointwise domination $\mathcal G_1\le\mathcal G_0$.
+
+Combining the established inequalities in their indicated directions,
+
+$$
+\begin{aligned}
+\mathcal T_1[u]&\ge\mathcal E_H[u]
+ \ge\mathcal E_H[w]\ge\mathcal E_H[v]\\
+&\ge K\int\mathcal G_0|v|^2\,d\xi
+ \ge K\int\mathcal G_1|w|^2\,d\xi
+ =K\int\mathcal G_1|u|^2\,d\xi.
+\end{aligned}
+\tag{9.21}
+$$
+
+Finally, for arbitrary complex $u\in\mathcal H_1$, take its defining
+compact smooth core sequence $u_j$. It converges in $L^2$ and in
+all three derivative norms, so $\mathcal T_1[u_j]\to\mathcal T_1[u]$.
+Along an almost-everywhere convergent subsequence Fatou and (9.21)
+give
+
+$$
+K\int\mathcal G_1|u|^2\,d\xi
+ \le\liminf_j K\int\mathcal G_1|u_j|^2\,d\xi
+ \le\lim_j\mathcal T_1[u_j]=\mathcal T_1[u].
+\tag{9.22}
+$$
+
+For $u=0$ both sides vanish. The argument uses neither an optimizer
+nor equality of different form domains. $\square$
+
+**Theorem 9.3 (threshold identity and the original response consumers).**
+The constants of Definition 1.1 and C, Definition 16.2, satisfy
+
+$$
+\Lambda_*=2\pi\lambda_0,\qquad
+ g_*=g_{\mathrm c}=2\pi m_0\lambda_0,\qquad m_0=(2r)^{-1}.
+\tag{9.23}
+$$
+
+Consequently the uniform shifted realization, positive response,
+rank estimates and resolvent reconstruction of Theorems 1.2,
+2.2–2.3 and 3.1 hold on their original domains and with their stated
+shift and parameter conditions for the entire coupling interval
+$0\le g\le g_{\mathrm c}$, including $g=g_{\mathrm c}$.
+At zero noise the critical bulk domain is the ground-transform
+completion (1.8); at positive noise it remains the corresponding
+free domain. The trace domain remains exactly (1.4).
+For $g>g_{\mathrm c}$ Theorem 5.1 excludes a common fixed shift
+with a positive minimizing response down to arbitrarily small
+positive noise, in exactly its stated sense.
+
+Proof. C, Definition 16.2, gives finite strictly positive denominators
+for every nonzero $u\in\mathcal H_1$. Dividing (9.5) by that
+denominator and taking the infimum yields $\Lambda_*\ge K$.
+The annular upper bound of C, Theorem 16.3, gives
+$\Lambda_*\le2\pi\lambda_0=K$. This proves (9.23) without
+attainment of the quotient. Substitution into (1.2) makes the original
+range $0\le g\le g_*$ exactly $0\le g\le g_{\mathrm c}$.
+Thus (1.3)–(1.4), (2.2)–(2.4), (2.6)–(2.7) and (3.1)–(3.2)
+apply with their same shifts, raw complex forcing unit ball,
+normalizations and domains. In particular the rank orders remain
+$\eta^{-3}$ at zero noise and $\epsilon^{-1}\eta^{-2}$ below positive
+noise, with the crossover and endpoint strictness already specified
+in Theorem 2.3. This substitution neither diagonalizes the attractive
+operator nor changes the exact killed inverse retained in (3.1).
+The domain distinction is precisely Theorem 1.2's distinction at the
+now included endpoint, not a new domain identification. Finally
+$g>g_{\mathrm c}$ is now exactly $g>g_*$, so Theorem 5.1 applies.
+The small-coupling inverse of Theorems 6.2–8.1 retains its existing
+hypotheses and does not supply an unshifted critical response. $\square$
+
+**Definition 9.4 (mathematical suppliers and scope of the comparison).**
+The horizontal sharp inequality, its natural endpoint domain and
+$\mathcal G_0=(2\pi)^{-1}R^{-2}$ in (9.6) are the exact inputs of
+V, Definition 10.1 and Theorem 10.2. C, Definition 16.2 and
+Theorem 16.3, supply denominator positivity and finiteness and the
+opposite annular bound used in (9.23). Fourier inversion, Plancherel,
+the Sobolev modulus chain rule and the oscillator Mehler formula are
+classical intermediate ingredients; (9.8)–(9.10) fix their magnetic
+source-column correspondence and normalization here. For the Mehler
+formula see also S. Thangavelu, *Lectures on Hermite and Laguerre
+Expansions*, Chapter 1. Fourier-majorant arguments are discussed in
+Lenzmann–Sok, [*A sharp rearrangement principle in Fourier space and
+symmetry results for PDEs with arbitrary order*, §5, Lemma 5.1](https://arxiv.org/html/1805.06294v3).
+That unweighted upper-majorant result is not a supplier of the
+weighted magnetic comparison (9.18)–(9.20), and no symmetric decreasing
+rearrangement is invoked here. The source-relative additional
+comparison is the combination of the rotation norm (9.11), central
+Fourier modulus (9.14), ordered exact heat columns (9.7) and the
+full-time passage (9.20); the sharp horizontal input is reused.
+These attributions do not assert global literature priority.
+
+The conclusion concerns the original analytic attractive family.
+It adds no quotient optimizer, no new trace condition and no
+identification of the zero-noise completed bulk domain with a
+positive-noise free domain. The common fixed-shift exclusion above
+$g_{\mathrm c}$ leaves noise-dependent shifts and indefinite or
+meromorphic response constructions outside that exclusion. Neither
+(9.5) nor (9.23) supplies a physical forcing or actuator, a common-source
+physical realization, a different native process or clock, or a
+physical spatial dimension. Such a realization still requires the
+separate correspondence specified in Definitions 5.2 and 8.2.
+
+## 追加锚（本行以下为增补区）
