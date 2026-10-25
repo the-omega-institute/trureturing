@@ -135,7 +135,10 @@ internal sealed class SelfConjugateEvenPolynomialRefutationDocument : IScribeDoc
         Describe.Lean(DescribeId.Create("self-conjugate-" + name.ToLowerInvariant()),
             DeclarationHandle.Create(Prefix + name), H(title),
             formula is null ? StatementSource.WithoutFormula() : StatementSource.FromAuthor(Disp(formula)),
-            provenance, Blocks(exposition), role);
+            provenance, Blocks(exposition), role,
+            name == "result" ? new OpenProblemResolutionClaim(
+                ProblemSlugRef.Create("klostermeyer-self-conjugate-even-polynomial-conjecture-2"),
+                ResolutionKind.Refuted) : null);
 
     private static Formula Pow(Formula value, Formula exponent) => new Formula.Power(value, exponent);
     private static Formula All(string name, Formula domain, Formula body) =>
