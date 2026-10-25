@@ -34,13 +34,21 @@ internal sealed class FiniteAutomorphismsInfiniteNaturalBasesDocument : IScribeD
             Equal(App(m, App(b, X("i")), App(b, X("j"))), D(0)))));
     private static Formula Nondegenerate(Formula m) => All("x", A,
         Imp(All("y", A, Equal(App(m, X("x"), X("y")), D(0))), Equal(X("x"), D(0))));
-    private static Formula Full => Some("m", Product(A),
-        And(Equal(Call("finrank", C, A), D(2)),
-        And(All("x", A, All("y", A, Equal(App(X("m"), X("x"), X("y")), App(X("m"), X("y"), X("x"))))),
-        And(Nondegenerate(X("m")),
-        And(Call("Nonempty", Call("NaturalBasis", X("m"))),
-        And(Call("Finite", Call("EvolutionAutomorphismControlAut", X("m"))),
-            Call("Infinite", Call("Quotient", Call("basisSetoid", X("m")))))))));
+    private static Formula Full
+    {
+        get
+        {
+            var m = X("m");
+            var body = And(Call("Finite", App(Seq(Name("EvolutionAutomorphismControl"), Dot, Name("Aut")), m)),
+                Call("Infinite", Call("Quotient", Call("basisSetoid", m))));
+            body = And(Call("Nonempty", Call("NaturalBasis", m)), body);
+            body = And(Nondegenerate(m), body);
+            body = And(All("x", A, All("y", A,
+                Equal(App(m, X("x"), X("y")), App(m, X("y"), X("x"))))), body);
+            body = And(Equal(Call("finrank", C, A), D(2)), body);
+            return Some("m", Product(A), body);
+        }
+    }
     private static Formula WithCarrier(Formula body) => All("V", X("Type"), Seq(
         OpenBracket, Call("AddCommGroup", X("V")), CloseBracket, Sp,
         OpenBracket, Call("Module", C, X("V")), CloseBracket, Comma, Sp,
