@@ -13,6 +13,14 @@ internal sealed class EffectProbabilityExtensionDocument : IScribeDocumentDefini
             Paragraph(Text("The positive and negative parts of a Hermitian matrix define its real-linear extension. Equality of two differences is equality of cross sums, which proves well-definedness. Real and imaginary Hermitian parts then give the complex-linear extension. Existing trace-dual positivity represents this functional by a positive matrix. Normalization gives trace one, and the effect span gives uniqueness.")),
             Paragraph(Text("This converse includes dimension two. It supplies the probability representation assumed by the finite-instrument application; neither static event structure nor positive history length implies its probability hypotheses. Busch supplies the mathematical source, while the finite-dimensional construction uses only binary additivity.")),
             Describe.Lean(
+                DescribeId.Create("effect-trace-unique"),
+                DeclarationHandle.Create("D5/S3/Quantum/Foundation/EffectProbabilityExtension.effect_trace_unique"),
+                H("All complex effects separate matrices"),
+                StatementSource.WithoutFormula(),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("Two arbitrary finite complex matrices are equal if their trace pairings agree on every positive contraction in the native C-star matrix algebra. The positive contractions span that algebra. Shared-energy pinching consumes this separation after pinching each test effect into the full total-energy commutant."))),
+                DescribeRole.Theorem),
+            Describe.Lean(
                 DescribeId.Create("effect-density-representation"),
                 DeclarationHandle.Create("D5/S3/Quantum/Foundation/EffectProbabilityExtension.effect_density_representation"),
                 H("Unique density representation"),

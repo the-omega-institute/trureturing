@@ -47,6 +47,38 @@ internal sealed class FuchsLogarithmBasisRefutationDocument : IScribeDocumentDef
                         + "The Lean proposition asks for a unitary basis change for every positive-definite trace-one pair with invertible difference and every t in (0,1]."))),
                 DescribeRole.Definition),
             Describe.Lean(
+                DescribeId.Create("fuchs-qutrit-rho0"),
+                DeclarationHandle.Create(Prefix + "rho0"),
+                H("The diagonal qutrit state"),
+                StatementSource.FromAuthor(Disp(Equal(
+                    Typed(Local("rho0"), MatrixType(FinOf(D(3)))),
+                    Apply(Q("Matrix", "diagonal"), Seq(Bang, OpenBracket,
+                        Typed(new Formula.Fraction(D(1), D(2)), Complexes()), Comma, Sp,
+                        new Formula.Fraction(D(1), D(3)), Comma, Sp,
+                        new Formula.Fraction(D(1), D(6)), CloseBracket))))),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text(
+                    "rho0 is the complex three-by-three diagonal matrix with entries 1/2, 1/3 and 1/6."))),
+                DescribeRole.Definition),
+            Describe.Lean(
+                DescribeId.Create("fuchs-qutrit-rho0-positive-definite"),
+                DeclarationHandle.Create(Prefix + "rho0_posDef"),
+                H("The qutrit state is positive definite"),
+                StatementSource.FromAuthor(Disp(Apply(Q("Matrix", "PosDef"), Local("rho0")))),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text(
+                    "Every diagonal entry of rho0 is strictly positive, so rho0 is positive definite."))),
+                DescribeRole.Theorem),
+            Describe.Lean(
+                DescribeId.Create("fuchs-qutrit-rho0-trace-one"),
+                DeclarationHandle.Create(Prefix + "rho0_trace"),
+                H("The qutrit state has trace one"),
+                StatementSource.FromAuthor(Disp(Equal(Apply(Q("Matrix", "trace"), Local("rho0")), D(1)))),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text(
+                    "The diagonal entries of rho0 sum to one."))),
+                DescribeRole.Theorem),
+            Describe.Lean(
                 DescribeId.Create("fuchs-physical-basis-result"),
                 DeclarationHandle.Create(Prefix + "result"),
                 H("The qutrit counterexample"),

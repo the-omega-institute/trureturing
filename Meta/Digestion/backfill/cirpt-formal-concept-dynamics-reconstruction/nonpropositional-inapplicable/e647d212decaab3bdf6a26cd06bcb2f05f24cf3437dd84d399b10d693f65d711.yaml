@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:e647d212decaab3bdf6a26cd06bcb2f05f24cf3437dd84d399b10d693f65d711
+  normalized_sha256: sha256:e647d212decaab3bdf6a26cd06bcb2f05f24cf3437dd84d399b10d693f65d711
+cas_ref: sha256:e647d212decaab3bdf6a26cd06bcb2f05f24cf3437dd84d399b10d693f65d711
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 本条为增补 RS 的任务范围说明：沿用固定零标签任务，允许重谱，区分三种识别目标；没有给出四步、擦除或稳定性定理。
+    previous_atom_id: d5095c47893e9c18f224bf4e870d4f9296618454f261a608727cbcd3fd32c306
+    next_atom_id: 600e3af6ab4b2ff025754da4beba25068f625aa1f4584d56ee73e58e3fac25a1

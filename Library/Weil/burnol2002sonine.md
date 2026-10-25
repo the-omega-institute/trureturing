@@ -5,7 +5,7 @@ year: 2002
 title: Sur les « espaces de Sonine » associés par de Branges à la transformation de Fourier
 doi: 10.1016/S1631-073X(02)02546-3
 url: https://comptes-rendus.academie-sciences.fr/mathematique/item/10.1016/S1631-073X(02)02546-3.pdf
-claim: The physical even Sonin projection has an explicit truncated-Fourier resolvent formula, and its completed Mellin space has a genuine entire de Branges generator. The source does not estimate the projection after an Euler-factor change of metric.
+claim: The physical even Sonin projection has an explicit truncated-Fourier resolvent formula, and its completed Mellin space has a genuine entire de Branges generator. The source does not estimate the projection after an Euler-factor change of metric. Its radial actual-source application exhibits the boundary-recovery obstruction on unrestricted reciprocal sources and restores the test-norm comparison under the selected source's fixed excess separation, with a supporting-multiplier-independent coefficient.
 strata_touched: []
 license: citation-only
 triage: anchor
@@ -366,3 +366,336 @@ to that radical subfamily. This does not give the example a negative
 Weil energy, a global supporting-null equation, or any favorable full
 arithmetic sign. The relevant matched-branch sign estimate, RH and
 strict all-integer Robin remain unresolved.
+
+## The selected source pays its radial boundary recovery cost
+
+The [ordinary radial-domain application](../Fourier/grafakosteschl2013radial.md#the-matched-actual-null-enters-the-ordinary-hankel-domain)
+puts a selected matched null in radial $L^2(\mathbb R^9)$.
+For that selected source, the already established small-excess
+positivity restores a bounded transport from the radial logarithmic
+form to the actual arithmetic test, with a constant independent of
+the supporting multiplier. Reciprocity by itself is insufficient:
+the explicit obstruction below lies in the ORIGINAL $\mathcal V$
+but has positive complete energy. Keeping both statements identifies
+which source-selection condition pays the boundary division.
+
+The construction uses the truncated-Fourier resolvent method already
+supplied by this article, Section 3, Lemma 2, Theorem 4 and
+Corollary 5, printed p.691. Those statements concern the even
+one-dimensional carrier. The radial version needed here is justified
+below; it is not attributed to the article as an exact nine-dimensional
+statement. No new common-gap existence theorem, projection algorithm
+or logarithmic uncertainty principle is claimed. This is a
+`repo-derived` actual-source application, without Lean/kernel
+certification or a literature-priority claim.
+
+### Keep the actual recovery map and its boundary division
+
+Use $\mathcal F_9$ with kernel $e^{-2\pi iz\cdot\xi}$ and write
+$T_F(z)=\tau_F(|z|)$ as in RF3. Set, for $y\ge0$,
+
+$$
+\begin{aligned}
+ f(y)&=(\pi e^{2y})^{9/4}F(\pi e^{2y}),\\
+ A(y)&=e^{9y/2}\tau_F(e^y),\\
+ (\Theta f)(y)&=\sum_{n\ge1}n^{-1/2}f(y+\log n),\\
+ (V_cf)(y)&=\int_0^\infty e^{-cs}f(y+s)\,ds.
+\end{aligned}
+$$
+
+W338's ACTUAL test, with every theta dilation retained, is exactly
+
+$$
+ A(y)=\pi^{-23/4}e^{5y}(1-e^{-12y})f(y),\qquad
+ g_F(y)=(I-3V_{5/2})\Theta f(y)\quad(y\ge0),
+ \qquad g_F(-y)=g_F(y).                              \tag{BT1}
+$$
+
+The first equality transports the radial density, not its quantity
+interpretation; the second is W338 after $t=2y$. In particular this
+map divides by a factor with a simple zero at $y=0$ before applying
+the actual theta and Volterra operators. It is not a unitary Mellin
+change of variables on $A$.
+
+For an anti-Fourier vector with the unit-ball gap define its
+nonnegative radial logarithmic form by
+
+$$
+ \mathcal C_9(T)=
+ \int_{\mathbb R^9}\log|z|\,|T(z)|^2dz+
+ \int_{\mathbb R^9}\log|\xi|\,|\mathcal F_9T(\xi)|^2d\xi
+ =2\int_{|z|\ge1}\log|z|\,|T(z)|^2dz.              \tag{BT2}
+$$
+
+Finiteness is required. This is the ordinary log-position plus
+log-frequency expectation on the radial carrier; no arithmetic
+prime or pole term is part of its definition. There is NO universal
+constant $C$ such that
+
+$$
+ \|g_F\|_2^2\le C[\|T_F\|_2^2+\mathcal C_9(T_F)]     \tag{BT3}
+$$
+
+for all reciprocal actual sources for which its right side is finite.
+Here reciprocal means RF3, not the stronger matched global-null
+condition HI1.
+
+### Make a common-gap shell without losing the boundary trace
+
+Let $P$ be multiplication by the indicator of the unit ball and
+$C_0=P\mathcal F_9P$ on radial $L^2$ functions supported there.
+This is compact and self-adjoint. Its norm is strictly below one:
+an extremizer at norm one would have both its value and Fourier
+transform supported in the ball, which Fourier analytic uniqueness
+excludes. Compactness then gives $\|C_0\|<1$.
+Thus the same truncated-transform resolvent used in the supplier
+is available here, with fixed finite inverse norm.
+
+For $0<\epsilon<1/4$ take two real smooth radial bumps obtained by scaling fixed profiles
+to disjoint subshells of widths proportional to $\epsilon$ inside $1+\epsilon<r<1+2\epsilon$. Normalize their span in
+$L^2(\mathbb R^9)$ so every unit vector $a_\epsilon$ in this
+two-dimensional space obeys
+
+$$
+ \|a_\epsilon\|_2=1,\qquad
+ \|a_\epsilon\|_1\le C\sqrt\epsilon,\qquad
+ \|\nabla a_\epsilon\|_2\le C\epsilon^{-1}.
+$$
+
+For such a vector form, on the closed ball,
+
+$$
+ h_\epsilon=(I-C_0)^{-1}P\mathcal F_9a_\epsilon.
+$$
+
+Its $L^2$ norm is $O(\sqrt\epsilon)$. The equation
+$h_\epsilon=P\mathcal F_9a_\epsilon+C_0h_\epsilon$
+then gives $\|h_\epsilon\|_{C^j(\overline B)}
+\le C_j\sqrt\epsilon$ for every fixed $j$.
+The real boundary value $h_\epsilon(1)$ is one linear functional
+on the two-dimensional shell space. Choose a unit vector in its
+kernel, and extend $h_\epsilon$ by zero outside the ball.
+Its zero trace makes that extension $H^1$, with norm
+$O(\sqrt\epsilon)$. Set
+
+$$
+ T_\epsilon=(I-\mathcal F_9)(a_\epsilon+h_\epsilon).
+                                                               \tag{BT4}
+$$
+
+Radial Fourier inversion and the resolvent equation give
+$\mathcal F_9T_\epsilon=-T_\epsilon$ and $PT_\epsilon=0$
+exactly. Write outside the ball
+$T_\epsilon(r)=a_\epsilon(r)+q_\epsilon(r)$, where
+$q_\epsilon=-\mathcal F_9(a_\epsilon+h_\epsilon)$.
+The boundary choice gives
+
+$$
+ q_\epsilon(1)=0,\qquad
+ \|q_\epsilon\|_{C^1([1,2])}\le C\sqrt\epsilon,
+ \qquad |q_\epsilon(r)|+|q_\epsilon'(r)|
+          \le C\sqrt\epsilon\,r^{-4}\quad(r\ge2).       \tag{BT5}
+$$
+
+The last bound is the published radial Bessel formula with
+$\nu=7/2$. On $r\rho\ge1$ its kernel and fixed radial derivatives
+are $O(\rho^{-4})$ after the compact input-radius factors are
+integrated; the $r\rho<1$ portion of the ball is
+$O(\sqrt\epsilon\,\rho^{-9})$. The shell has $L^1$ norm
+$O(\sqrt\epsilon)$ and the ball correction has uniformly bounded
+derivatives of that size. All constants in BT5 are independent of
+the chosen unit combination and $\epsilon$.
+
+### Pay the original source domain and retain the actual theta tail
+
+Return by the exact RF3 density map:
+
+$$
+ F_\epsilon(\pi r^2)=
+ \frac{(\pi r^2)^{7/2}}{r^{12}-1}T_\epsilon(r),
+ \qquad r>1.                                         \tag{BT6}
+$$
+
+BT5 cancels the denominator's simple zero for the correction.
+This gives a smooth source on the closed physical half-line;
+its value at $\pi$ need not be zero. Away from the shell the
+correction is $O(\sqrt\epsilon)$ on bounded intervals and
+$O(\sqrt\epsilon\,r^{-9})$ for $r\ge2$.
+The same estimates on the differentiated Bessel kernel give
+$xF_\epsilon'(x)=O(\sqrt\epsilon\,x^{-4})$ in the tail.
+Consequently $M_6(F_\epsilon)<\infty$.
+
+For each fixed $\epsilon$ the actual theta profile $u(t)$ of W338
+and its derivative are in $L^1\cap L^2(0,\infty)$: the tail bounds
+above make their differentiated dilation series absolutely convergent.
+The zero extension retains its possible jump at zero. Integration
+by parts bounds its Fourier transform by
+$C_\epsilon\min(1,|\xi|^{-1})$, which pays the full logarithmic
+Gamma norm. Thus $F_\epsilon\in\mathcal V$, not merely an auxiliary
+Hankel space, and RF3 gives its exact weighted Laplace reciprocity.
+
+In BT1 split $f=f_a+f_q$ according to BT5. The shell part has
+width $O(\epsilon)$ near $y=0$, with
+
+$$
+ \|f_a\|_2\asymp\epsilon^{-1},\qquad
+ \|f_a\|_1\le C\epsilon^{-1/2},\qquad
+ \Theta f_a=f_a.
+$$
+
+The last equality uses $e^y\ge1$ and $n\ge2$ outside the shell.
+BT5 gives
+$|f_q(y)|\le C\sqrt\epsilon\,e^{-9y/2}$ after enlarging $C$
+on a fixed compact interval. Thus the COMPLETE remaining theta
+sum is $O(\sqrt\epsilon)$ in $L^2(0,\infty)$; its coefficients
+are bounded by the convergent sum $\sum n^{-5}$.
+The forward Volterra image of $f_a$ is supported in an interval
+of length $O(\epsilon)$ and has supremum
+$O(\epsilon^{-1/2})$, so its $L^2$ norm is $O(1)$.
+The Volterra operator is bounded on the correction's $L^2$ space.
+BT1 therefore yields
+
+$$
+ \|g_{F_\epsilon}\|_2\ge c\epsilon^{-1}.             \tag{BT7}
+$$
+
+This does not assume invertibility of the half-line Volterra
+combination; it retains that operator on the actual shell and tail.
+
+### The radial logarithmic payment grows only logarithmically
+
+Put $v_\epsilon=a_\epsilon+h_\epsilon$. Its support is in the
+ball of radius two, $\|v_\epsilon\|_2\asymp1$, and
+$\|\nabla v_\epsilon\|_2\le C\epsilon^{-1}$.
+Fourier Plancherel and Jensen's inequality for the concave logarithm
+give
+
+$$
+ \int\log(2+|\xi|)\,|\mathcal F_9v_\epsilon(\xi)|^2d\xi
+ \le C[1+\log(\epsilon^{-1})].
+$$
+
+Together with BT4 and compact support of $v_\epsilon$, this implies
+
+$$
+ \|T_\epsilon\|_2^2\le C,\qquad
+ 0\le\mathcal C_9(T_\epsilon)
+       \le C[1+\log(\epsilon^{-1})].                 \tag{BT8}
+$$
+
+BT7--BT8 refute BT3, including its restriction to reciprocal actual
+sources. No estimates of the complete arithmetic energy were used
+to manufacture that norm mismatch.
+
+Finally these sources satisfy, with the ORIGINAL moments,
+
+$$
+ H(F_\epsilon)\asymp\epsilon^{-2},\qquad
+ D(F_\epsilon)=M_6(F_\epsilon)-H(F_\epsilon)
+                 \asymp\epsilon^{-1},\qquad
+ \frac{D(F_\epsilon)}{H(F_\epsilon)}=O(\epsilon).       \tag{BT9}
+$$
+
+The shell pays the leading terms; the correction has $M_6=O(\epsilon)$.
+The [existing small-excess positivity MR4](hernandezsantamaria2025optimal.md#2-transfer-the-existing-small-excess-positivity-into-the-completed-domain)
+therefore gives $\mathfrak E(F_\epsilon)>0$ for small $\epsilon$.
+They cannot be nonzero matched global nulls with $\lambda>0$.
+
+An estimate of the BT3 type must therefore retain an additional
+boundary recovery cost or restrict its source class by further
+conditions. The selected branch's global null equation and excess
+separation remain available for a restricted comparison. Failure of
+BT3 does not rule out such a comparison or another signed argument;
+it gives no negative Weil example or RH/Robin conclusion.
+
+
+### Restore the comparison with the selected source's excess gap
+
+The obstruction BT9 has $D/H\to0$. For a fixed $0<\delta\le1$,
+restrict instead to actual sources with $D(F)\ge\delta H(F)$ and
+ordinary radial $L^2$ density. Define the exact radial payment
+
+$$
+ R_0(F)=\int_\pi^\infty (x/\pi)^{-7/2}w(x)^2|F(x)|^2dx
+       =\pi^{7/2}\Gamma(9/2)\|T_F\|_2^2.
+$$
+
+For $t=x/\pi\ge1$, $w=t^6-1$ and $0<\eta\le1$,
+
+$$
+ w\le\eta+2\eta^{-1}t^{-7/2}w^2.
+$$
+
+Indeed when $w\ge\eta$, the increasing function
+$w/(1+w)^{7/12}$ is at least $\eta/2$; when $w<\eta$ the
+first term suffices. Integrating and taking $\eta=\delta/2$ gives
+
+$$
+ H(F)\le8\delta^{-2}R_0(F),\qquad
+ D(F)\le8\delta^{-1}R_0(F),\qquad
+ M_6(F)\le16\delta^{-2}R_0(F).                       \tag{BT10}
+$$
+
+W338's existing actual-profile bound $\|g_F\|_2^2\le CM_6(F)$
+retains all theta terms and the actual Volterra operator. Thus
+BT10 already controls the actual test by the ordinary radial norm
+on this restricted class. No new theta-bound theorem or inverse of
+its half-line Volterra combination is needed.
+
+For reciprocal sources the radial logarithmic form also pays that
+ordinary norm by a fixed uncertainty cost. Choose $R>1$ such that
+$|\{z\in\mathbb R^9:1\le|z|\le R\}|=1/4$, and let $Q$ be
+cutoff to this annulus. The ordinary Fourier kernel has modulus one,
+so the classical Hilbert--Schmidt estimate gives
+$\|Q\mathcal F_9Q\|\le1/4$. For
+$v=QT_F$ and $z=(I-Q)T_F$, the unit-ball gap places $z$ outside
+radius $R$. Anti-reciprocity gives
+$\|v\|_2\le\tfrac14\|v\|_2+\|z\|_2$.
+Orthogonality of the cutoffs therefore gives
+
+$$
+ \|z\|_2^2\ge\frac9{25}\|T_F\|_2^2,\qquad
+ \mathcal C_9(T_F)\ge\frac{18}{25}\log R\,\|T_F\|_2^2.
+                                                               \tag{BT11}
+$$
+
+This only consumes the elementary finite-volume Fourier cutoff
+bound on the actual anti-eigenvector; it is not a new uncertainty
+principle. BT10--BT11 supply, for reciprocal actual sources with finite radial
+logarithmic form,
+
+$$
+ \boxed{\quad
+ \|g_F\|_2^2\le C\delta^{-2}\mathcal C_9(T_F)
+ \quad\text{if }D(F)\ge\delta H(F).
+ \quad}                                                       \tag{BT12}
+$$
+
+The existing bounds even give an explicit coefficient: W338 has
+$\|g_F\|_2^2\le S(F)$, and W324 gives
+$S(F)\le\pi^{7/2}\zeta(3)^2M_6(F)$. Hence $C$ in BT12 can be
+chosen as
+
+$$
+ C=\frac{200\pi^7\Gamma(9/2)\zeta(3)^2}{9\log R},\qquad
+ R=\left(1+\frac1{4|B_9|}\right)^{1/9}.
+$$
+
+No numerical optimization or smallness of this coefficient is claimed.
+
+For the SAME selected matched global null, MR5 gives the fixed
+separation $\delta_*:=\min(1,\epsilon_*)>0$, while HI2 gives a
+moment strictly above $17/2$. That moment pays both ordinary radial
+$L^2$ and its logarithmic position integral; reciprocity pays the
+Fourier integral. Thus BT12 applies with $\delta=\delta_*$.
+The comparison constant has no dependence on the positive supporting
+multiplier $\lambda$; the size of $\mathcal C_9(T_F)$ itself is
+not claimed uniform in $\lambda$.
+
+This restores precisely a norm comparison that fails on the full
+reciprocal class. It does not insert $\mathcal C_9$ as an additional
+positive term in the actual Weil form. A signed comparison with
+W362's positive energies and the complete prime discrepancy still
+has to be proved on the SAME selected source. No exclusion of the
+matched negative branch, RH or all-integer Robin inequality follows
+from BT12 alone.

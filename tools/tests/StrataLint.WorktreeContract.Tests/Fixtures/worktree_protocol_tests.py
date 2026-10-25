@@ -22,6 +22,7 @@ from mirror_fixture import MirrorCases
 from cleanup_anchor_cases import CleanupAnchorCases
 from detached_recovery_cases import DetachedRecoveryCases
 from lock_recovery_cases import LockRecoveryCases
+from scoped_dotnet_cases import ScopedDotnetCases
 
 ROOT = Path(sys.argv.pop(1)).resolve()
 SCRIPT = ROOT / "tools/scripts/worktree/worktree_protocol.py"
@@ -30,7 +31,7 @@ import worktree_protocol as protocol
 import worktree_preservation as preservation
 
 
-class ProtocolTests(IdlePoolCases, LockRecoveryCases, DetachedRecoveryCases, CleanupAnchorCases, MirrorCases, NativeFixture):
+class ProtocolTests(ScopedDotnetCases, IdlePoolCases, LockRecoveryCases, DetachedRecoveryCases, CleanupAnchorCases, MirrorCases, NativeFixture):
     source_root = ROOT
 
     def setUp(self):
@@ -168,6 +169,24 @@ class ProtocolTests(IdlePoolCases, LockRecoveryCases, DetachedRecoveryCases, Cle
                   'printf "%s=%s " "$k" "$(git config --get "$k")"; done')
         job = self.run_protocol("with", "--path", self.tree, "--git", "--", "sh", "-c", script)
         self.assertEqual(expected, job.stdout.strip())
+
+    def native_lock_inspector_receives_scoped_environment(self):
+        observed = self.root / "inspector.json"
+        inspector = self.root / "lsof"
+        expected = {"MSBUILDDISABLENODEREUSE": "1", "DOTNET_CLI_USE_MSBUILD_SERVER": "0",
+                    "UseSharedCompilation": "false", "UseRazorBuildServer": "false",
+                    "_RazorForceBuildServer": "false"}
+        inspector.write_text(
+            "#!/usr/bin/env python3\nimport json,os,sys\nfrom pathlib import Path\n"
+            f"Path({str(observed)!r}).write_text(json.dumps({{k:os.environ.get(k) for k in {list(expected)!r}}}))\n"
+            "sys.exit(1)\n")
+        inspector.chmod(0o755)
+        with ExitStack() as stack, patch.object(protocol.shutil, "which", return_value=str(inspector)), \
+                patch.dict(os.environ, MSBUILDDISABLENODEREUSE="0", DOTNET_CLI_USE_MSBUILD_SERVER="1",
+                           UseSharedCompilation="true", UseRazorBuildServer="true", _RazorForceBuildServer="true"):
+            protocol.tree_scope(stack, self.main, self.tree, True)
+            self.assertEqual([], protocol.native_lock_holders(self.tree / "index.lock"))
+        self.assertEqual(expected, json.loads(observed.read_text()))
 
     def timed_out_git_releases_index_lock(self):
         ready = self.root / "filter.ready"
@@ -1036,7 +1055,18 @@ os.execv({real_git!r},[{real_git!r}]+sys.argv[1:])
 
 if __name__ == "__main__":
     NativeFixture.install_interrupt_handler()
-    if len(sys.argv) == 3 and sys.argv[1] == "--initializer":
+    if len(sys.argv) == 4 and sys.argv[1] == "--implicit-claims":
+        fixture = ProtocolTests("implicit_requests_allocate_distinct_trees")
+        fixture.implicit_cli = sys.argv[2]
+        fixture.implicit_pool_busy = sys.argv[3] == "busy"
+        result = unittest.TextTestRunner(verbosity=2).run(fixture)
+        sys.exit(0 if result.wasSuccessful() else 1)
+    elif len(sys.argv) == 5 and sys.argv[1] == "--scoped-dotnet":
+        fixture = ProtocolTests("scoped_dotnet_launch")
+        fixture.scoped_cli, fixture.scoped_mode, fixture.scoped_ambient = sys.argv[2:]
+        result = unittest.TextTestRunner(verbosity=2).run(fixture)
+        sys.exit(0 if result.wasSuccessful() else 1)
+    elif len(sys.argv) == 3 and sys.argv[1] == "--initializer":
         fixture = ProtocolTests("initializer_lifetime")
         fixture.initializer_cli = sys.argv[2]
         result = unittest.TextTestRunner(verbosity=2).run(fixture)

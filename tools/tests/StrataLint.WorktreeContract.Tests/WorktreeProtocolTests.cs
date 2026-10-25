@@ -246,6 +246,7 @@ public sealed class WorktreeProtocolTests(ITestOutputHelper output)
 
     [Theory]
     [InlineData("scoped_git_configuration_disables_background_git")]
+    [InlineData("native_lock_inspector_receives_scoped_environment")]
     [InlineData("timed_out_git_releases_index_lock")]
     public void ScopedGitLeavesNoLockHolderBehind(string probe)
     {
@@ -288,6 +289,8 @@ public sealed class WorktreeProtocolTests(ITestOutputHelper output)
 
     [Theory]
     [InlineData("pool_return_preserves_post_merge_work_branch_and_cache")]
+    [InlineData("pool_scope_contention_has_no_tree_effect")]
+    [InlineData("pool_implicit_claim_busy_has_no_allocation")]
     [InlineData("pool_return_checkpoint_without_native_lock_never_inspects_holders")]
     [InlineData("pool_return_checkpoint_reports_cleared_native_locks")]
     [InlineData("pool_return_requires_join_and_real_merge_evidence")]

@@ -159,7 +159,10 @@ def sweep(source, dev, force=False):
             acquire(stack, source, "operation:idle-pool", True)
             receipt = sweep_locked(source, dev, force)
     except Exception as error:
-        sweep_failure(receipt, dict(path=str(source), branch=None, head=dev), "pool_scope", error)
+        receipt["failure"] = dict(scope="operation:idle-pool", stage="pool_scope",
+                                  outcome="refused" if isinstance(error, Refused) else "failed",
+                                  error=str(error), error_type=type(error).__name__)
+        receipt["status"] = "failed"
     return receipt
 
 
@@ -278,7 +281,12 @@ def allocation_record(path, metadata, commit):
 
 def claim(options):
     with ExitStack() as pool_scope:
-        acquire(pool_scope, options.source, "operation:idle-pool", True)
+        try:
+            acquire(pool_scope, options.source, "operation:idle-pool", True)
+        except Refused as error:
+            if options.path is not None or str(error) != "busy_scope:operation:idle-pool":
+                raise
+            return dict(event="worktree_init", status="no_idle", reason=str(error))
         rows = inventory(options.source)
         candidates = ([options.path] if options.path else
                       [Path(row["worktree"]) for row in rows if idle_reference(row.get("branch", ""))])

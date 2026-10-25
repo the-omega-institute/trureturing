@@ -104,7 +104,8 @@ public sealed class StandaloneLeanBootstrapScriptTests
             root = Path.Combine(temporary.Path, "candidate with spaces");
             bin = Path.Combine(temporary.Path, "bin");
             ScriptHarnessScratch.EnsureDirectory(bin);
-            foreach (var path in new[] { "Makefile", WrapperPath("lean"), WrapperPath("lean-cache-ensure") })
+            foreach (var path in new[] { "Makefile", WrapperPath("lean"), WrapperPath("lean-cache-ensure"),
+                "tools/scripts/worktree/lean-git/git" })
                 ScriptHarnessScratch.CopyScriptInto(Path.Combine(TestRepositoryLayout.FindRoot(), path), Path.Combine(root, path));
             var physicalRoot = TestProcessRunner.Run("/bin/pwd", ["-P"], root,
                 TestBudgets.ScriptProcessHangGuard, 1024);

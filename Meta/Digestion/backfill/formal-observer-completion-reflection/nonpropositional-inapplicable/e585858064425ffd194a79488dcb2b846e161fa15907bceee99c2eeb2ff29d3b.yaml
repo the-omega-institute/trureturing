@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:e585858064425ffd194a79488dcb2b846e161fa15907bceee99c2eeb2ff29d3b
+  normalized_sha256: sha256:e585858064425ffd194a79488dcb2b846e161fa15907bceee99c2eeb2ff29d3b
+cas_ref: sha256:e585858064425ffd194a79488dcb2b846e161fa15907bceee99c2eeb2ff29d3b
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 'nonpropositional: 只在受信知识的定义条件清单中列完整性规则，没有声称任何实际记录通过完整性检验。'
+    previous_atom_id: 3f7ca26486c9393534a42e302d2968e13ac0a6a2c589efe612f688923be3aa83
+    next_atom_id: 3cacb8112b54ebca588948b18e74dc5e3fa079fc99b5c64005b1cb542a0861ed
